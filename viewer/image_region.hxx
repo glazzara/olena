@@ -22,6 +22,7 @@ void
 ImageRegion::setOutline(bool outline)
 {
   outline_ = outline;
+  scene()->invalidate();
   update();
 }
 
@@ -30,6 +31,7 @@ void
 ImageRegion::setPrecise(bool precise)
 {
   precise_ = precise;
+  scene()->invalidate();
   update();
 }
 
@@ -55,6 +57,7 @@ ImageRegion::setDrawIfSameId(int id, bool draw)
 {
   if (id == id_)
     draw_ = draw;
+  scene()->invalidate();
   update();
 }
 

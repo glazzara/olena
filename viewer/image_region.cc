@@ -48,7 +48,7 @@ ImageRegion::ImageRegion(region::RegionId id,
   shape_.lineTo(QPoint(0, 0));
 
   rect_ = shape_.boundingRect();
-  setPos(points[0]);
+  setPos(points[0] + QPointF(0.5, 0.5));
 
   prepareGeometryChange();
 }
