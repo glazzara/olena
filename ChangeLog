@@ -1,0 +1,6 @@
+2006-01-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add Vcs helper.
+
+	* vcs/oln.rb: New.
+
