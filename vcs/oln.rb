@@ -7,7 +7,7 @@ class Vcs
 
   def olena_commit! ( *args )
     common_commit!("<%= rev %>: <%= title %>", *args) do |subject|
-      mail!(:to => %w['olena-patches@lrde.epita.fr'], :subject => subject)
+      mail!(:to => %w[olena-patches@lrde.epita.fr], :subject => subject)
     end
   end
   alias_command  :olnci, :olena_commit
