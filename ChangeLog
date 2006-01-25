@@ -1,3 +1,46 @@
+2006-01-25  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Clean up of core mlc classes and add some documentation.
+
+	A lot of cleanups.  Client concrete classes in mlc are now all
+	postfixed by '_'.  For instance, we have and_, int_, and so on.
+
+	* metalic: New.
+	* metalic/mlc: New.
+	* metalic/mlc/type.hh: New.
+	* metalic/mlc/bool.hh: New.
+	(abstract::boolean): New class.
+	(bool_): New class.
+	(value, true_type, false_type): Rename as...
+	(value_, true_, false_): ...these.
+	(ors, ands): Rename as...
+	(ors_, ands_): ...these.
+	(internal): Cosmetic change.
+	(is_true, is_false): Remove.
+	(true_, false_): New typedef ensure_t.
+	* metalic/mlc/is_a.hh: New.
+	(form): Move in the internal namespace cause names are too long
+	for a decent client use.
+	* metalic/mlc/value.hh: New.
+	(value): Rename as...
+	(value_): ...this.
+	(mlc_internal_decl_unsigned_): New macro.
+	(mlc_internal_decl_signed_): New macro.
+	(uchar_, ushort_, uint_, ulong_): New classes.
+	(schar_, short_, int_, long_): New classes.
+	(is_value, is_not_value): New meta-functions.
+	* metalic/mlc/flags.hh: New.
+	(flag): New abstract class.
+	(undefined_type, unknown_type, no_type): Rename as...
+	(undefined, unknown, none): ...these.
+	(not_ok): Remove cause useless.
+	* metalic/mlc/cmp.hh: New.
+	(eq, neq): Rename as...
+	(eq_, neq_): ...these.
+	(is_found, is_not_found, is_ok): Remove cause irrelevant here.
+	(mlc_is_found, mlc_is_not_found): Likewise.
+	* metalic/mlc/typedef.hh: New.
+
 2006-01-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	* vcs/oln.rb: Fix e-mail address.
