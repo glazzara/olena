@@ -1,3 +1,9 @@
+2006-01-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Static `if'.
+
+	* mlc/if.hh: New file.
+
 2006-01-26  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Add mlc::ensure_ and update. .
