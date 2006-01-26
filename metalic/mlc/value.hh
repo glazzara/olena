@@ -162,22 +162,25 @@ namespace mlc {
 
 
 # include <mlc/bool.hh>
-# include <mlc/is_a.hh>
 
 
-namespace mlc {
+// FIXME: the following code causes inclusion recursion...
 
-  template <typename T>
-  struct is_value : public mlc_is_a(T, mlc::abstract::value)
-  {
-  };
+// # include <mlc/is_a.hh>
 
-  template <typename T>
-  struct is_not_value : public not_<mlc_is_a(T, mlc::abstract::value)>
-  {
-  };
+// namespace mlc {
 
-} // end of namespace mlc
+//   template <typename T>
+//   struct is_value : public mlc_is_a(T, mlc::abstract::value)
+//   {
+//   };
+
+//   template <typename T>
+//   struct is_not_value : public not_<mlc_is_a(T, mlc::abstract::value)>
+//   {
+//   };
+
+// } // end of namespace mlc
 
 
 #endif // ! METALIC_VALUE_HH

@@ -1,3 +1,20 @@
+2006-01-26  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Add mlc::ensure_ and update. .
+
+	* mlc/bool.hh: Update documentation.
+	(internal::value_<bool,b>::ret): Rename as...
+	(internal::value_<bool,b>::eval): ...this.
+	(bool_<true>::ensure_t): Rename as...
+	(bool_<true>::internal_ensure_): ...this.
+	(internal::ensure_item<i,expr>): New class.
+	(internal::none_): Relocate.
+	(internal::none_::internal_ensure_): New typedef.
+	(ensure_): New class.
+	* mlc/value.hh (is_value, is_not_value): Move to...
+	* mlc/cmp.hh (is_value, is_not_value): ...here.
+	(eq_, neq_): Update static checks.
+
 2006-01-25  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Clean up of core mlc classes and add some documentation.

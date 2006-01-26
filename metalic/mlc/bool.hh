@@ -115,7 +115,7 @@ namespace mlc
       */
       static const bool value = b;
 
-      /*! \typedef ret
+      /*! \typedef eval
       **
       ** Returns mlc::true_ or mlc::false_.
       **
@@ -127,11 +127,13 @@ namespace mlc
       ** Please note that, however, we usually do not need expression
       ** evaluation.  The most common use of a Boolean expression is
       ** to check that it is verified (true) and, for that, we provide
-      ** ::ensure() and ::ensure_t.
+      ** "expr::ensure();" and "ensure_<expr..>".  For instance:
+      **   or_<mlc_is_a(T, int), mlc_is_a(T, unsigned)>::ensure();
+      ** ensures that T is int or unsigned without using ::eval.
       **
-      ** \see mlc::true_ and mlc::false_
+      ** \see mlc::true_, mlc::false_, mlc::ensure_<expr..>.
       */
-      typedef bool_<b> ret;
+      typedef bool_<b> eval;
 
     private:
 
@@ -146,7 +148,110 @@ namespace mlc
       template <typename T> friend class get_bool;
     };
 
+
+    /*! \class mlc::internal::ensure_item<i, expr>
+    **
+    ** Internal so do not use it.  This class is for use in the
+    ** definition of mlc::ensure_<..>.
+    **
+    ** Design note: this class does not derive from abstract::type
+    ** because it is used in inheritance so a ctor should exist.
+    **
+    ** \see mlc::ensure_<..>
+    */
+
+    template <unsigned i, typename expr>
+    struct ensure_item
+    {
+    };
+
+
+    /*! \class mlc::internal::none_
+    **
+    ** Internal so do not use it.  This class is for use in the
+    ** definition of mlc::ensure_<..>.
+    **
+    ** Design notes: 1) This class does not derive from abstract::type
+    ** because it is used in inheritance so a ctor should exist. 2)
+    ** This class provides internal_ensure_ so that it acts like the
+    ** value 'true' in a sequence of 'and'; it thus has no effect when
+    ** appearing in an ensure_item.
+    **
+    ** \see mlc::ensure_<..>
+    */
+
+    struct none_
+    {
+      typedef none_ internal_ensure_; // provided such as in classes inheriting from true_
+    };
+
+
   } // end of namespace mlc::internal
+
+
+
+  /*! \class mlc::ensure_<expr1..>
+  **
+  ** This class is a replacement for a sequence of instructions:
+  ** "expr1::ensure(); .." when there is no room for having
+  ** instructions.  The typical use is to express a constraint (or
+  ** several constraints) upon a parameter (or several parameters)
+  ** of a templated class.
+  **
+  ** ensure_<..> has a variadic list of parameters.  It expects at
+  ** least one parameter and handles up to 9 parameters.  Each parameter
+  ** has to be a Boolean expression type.
+  **
+  ** Sample uses:
+  ** 
+  **   template <class T>
+  **   struct dummy : private ensure_< neq_<T, int> >
+  **   { ... 
+  **   };
+  ** means that T can be any type but int.
+  **
+  **   template <class T1, class T2>
+  **   struct dummy2 : private ensure_< neq_<T1, int> >,
+  **                   private ensure_< neq_<T2, int> >
+  **   { ... 
+  **   };
+  ** is equivalent to:
+  **   template <class T1, class T2>
+  **   struct dummy2 : private ensure_< neq_<T1, int>,
+  **                                    neq_<T2, int> >
+  **   { ... 
+  **   };
+  **
+  ** Design notes: 1) This class does not derive from abstract::type
+  ** because it is used in inheritance so a ctor should exist.  2)
+  ** This class relies on mlc::internal::ensure_item to check that
+  ** each expression is true.
+  **
+  */
+
+  template <typename expr_1,
+	    typename expr_2 = internal::none_,
+	    typename expr_3 = internal::none_, 
+	    typename expr_4 = internal::none_,
+	    typename expr_5 = internal::none_,
+	    typename expr_6 = internal::none_, 
+	    typename expr_7 = internal::none_,
+	    typename expr_8 = internal::none_,
+	    typename expr_9 = internal::none_>
+  struct ensure_ :
+    private internal::ensure_item<1, typename expr_1::internal_ensure_>,
+    private internal::ensure_item<2, typename expr_2::internal_ensure_>,
+    private internal::ensure_item<3, typename expr_3::internal_ensure_>,
+    private internal::ensure_item<4, typename expr_4::internal_ensure_>,
+    private internal::ensure_item<5, typename expr_5::internal_ensure_>,
+    private internal::ensure_item<6, typename expr_6::internal_ensure_>,
+    private internal::ensure_item<7, typename expr_7::internal_ensure_>,
+    private internal::ensure_item<8, typename expr_8::internal_ensure_>,
+    private internal::ensure_item<9, typename expr_9::internal_ensure_>
+  {
+  };
+
+
 
 
   /*! \class mlc::bool_<true>
@@ -177,55 +282,29 @@ namespace mlc
     ** "Expr::ensure();"
     **
     ** When there is no room in code for an instruction, use
-    ** ensure_t instead.
+    ** mlc::ensure_<expr1..> instead.
     **
     ** Design note:  This member is a no-op (it has no cost at
     ** run-time).
+    **
+    ** \see: mlc::ensure<expr1..>
     */
     static void ensure() {}
 
-    /*! \typedef ensure_t
+    /*! \typedef internal_ensure_
     **
-    ** This typedef is inherited in every Boolean expression types that
-    ** derive from mlc::true_.  This typedef is not provided in
+    ** This is internal stuff so do not use it.
+    **
+    ** This typedef is inherited in every Boolean expression types
+    ** that derive from mlc::true_.  This typedef is not provided in
     ** mlc::false_.  The type returned by this typedef has no meaning
-    ** (and thus no significant value).
-    ** 
-    ** A static check to ensure that a Boolean expression type, say
-    ** Expr, is verified can thus be written through the typedef
-    ** access: "Expr::ensure_t".  This is a replacement for the
-    ** instruction "Expr::ensure();" when there is no room in code for
-    ** an instruction.
+    ** (and thus no significant value).  A static check via
+    ** "mlc::ensure_<..>" uses this typedef.
     **
-    ** Sample use:
-    **   template <class T>
-    **   struct foo
-    **     : private mlc_is_a(T, base)::ensure_t
-    **   {
-    **     //...
-    **   };
-    ** meaning that foo's parameter is constrainted to be a sub-class
-    ** of base.
-    **
-    ** Limitation: when using ensure_t to express several
-    ** constraints through private inheritance, such as in the sample
-    ** use above, one should express the set of constraints by a
-    ** single expression.  The following code is not ok:
-    **   template <class T1, class T2>
-    **   struct foo
-    **     : private mlc_is_a(T1, base)::ensure_t,
-    **       private mlc_is_a(T2, base)::ensure_t
-    **   { ... };
-    ** the problem being that we mulitply inherit from the same
-    ** class.  The correct code should be written with a single
-    ** Boolean; practically the following code is ok:
-    **   template <class T1, class T2>
-    **   struct foo
-    **     : private mlc::and_<mlc_is_a(T1, base), 
-    **                         mlc_is_a(T2, base)>::ensure_t
-    **   { ... };
+    ** \see mlc::internal::ensure_item<i, expr>
     */
-    typedef struct{} ensure_t;
+    typedef internal::none_ internal_ensure_;
+
   };
 
   typedef bool_<true>  true_;
@@ -238,9 +317,9 @@ namespace mlc
   ** derive either from this type or from mlc::true_.
   **
   ** Conversely to mlc::true_, this class does not feature ensure()
-  ** nor ensure_t.  So, when a Boolean expression type, say Expr,
+  ** nor ensure_.  So, when a Boolean expression type, say Expr,
   ** is evaluated to false, the static checks "Expr::ensure();" and
-  ** "Expr::ensure_t" do not compile.
+  ** "Expr::ensure_" do not compile.
   **
   ** Design notes: 1) This specialization is defined so that mlc
   ** Booleans derive from mlc::abstract::boolean.  2) This
@@ -321,7 +400,6 @@ namespace mlc
 
   namespace internal
   {
-    struct none_;
 
     // ors_2_
     template <typename A1, typename A2> struct ors_2_                : public or_<A1, A2> {};

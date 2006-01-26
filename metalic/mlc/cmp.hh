@@ -39,18 +39,31 @@
 
 namespace mlc
 {
+  // FIXME: code moved from the end of value.hh
+
+  template <typename T>
+  struct is_value : public mlc_is_a(T, mlc::abstract::value)
+  {
+  };
+
+  template <typename T>
+  struct is_not_value : public not_<mlc_is_a(T, mlc::abstract::value)>
+  {
+  };
+
 
 
   /// Equality test between a couple of types.
 
   template <typename T1, typename T2>
-  struct eq_ : private and_< is_not_value<T1>, is_not_value<T2> >::ensure_type,
+  struct eq_ : private ensure_< is_not_value<T1>,
+				is_not_value<T2> >,
 	       public false_
   {
   };
 
   template <typename T>
-  struct eq_ <T, T> : private is_not_value<T>::ensure_type,
+  struct eq_ <T, T> : private ensure_< is_not_value<T> >,
 		      public true_
   {
   };
@@ -59,13 +72,14 @@ namespace mlc
   /// Inequality test between a couple of types.
 
   template <typename T1, typename T2>
-  struct neq_ : private and_< is_not_value<T1>, is_not_value<T2> >::ensure_type,
+  struct neq_ : private ensure_< is_not_value<T1>,
+				 is_not_value<T2> >,
 		public true_
   {
   };
 
   template <typename T>
-  struct neq_ <T, T> : private is_not_value<T>::ensure_type,
+  struct neq_ <T, T> : private ensure_< is_not_value<T> >,
 		       public false_
   {
   };
