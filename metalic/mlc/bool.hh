@@ -190,7 +190,56 @@ namespace mlc
 
 
 
-  /*! \class mlc::ensure_<expr1..>
+  /*! \class mlc::ensure_<expr>
+  **
+  ** This class is a replacement for the instruction "expr::ensure();"
+  ** when there is no room for having instruction.  The typical use
+  ** is to express a constraint (or several constraints) upon a
+  ** parameter (or several parameters) of a templated class.
+  **
+  ** ensure_<expr> only accepts one parameter, which has to be a
+  ** Boolean expression type.  An equivalent version for a variadic
+  ** list of parameters is ensure_list_<expr1,..>
+  **
+  ** Sample uses:
+  ** 
+  **   template <class T>
+  **   struct dummy : private ensure_< neq_<T, int> >
+  **   { ... 
+  **   };
+  ** means that T can be any type but int.
+  **
+  **   template <class T1, class T2>
+  **   struct dummy2 : private ensure_< neq_<T1, int> >,
+  **                   private ensure_< neq_<T2, float> >
+  **   { ... 
+  **   };
+  ** means that T1 should not be int and that T2 should not be float.
+  ** This last example is equivalent to:
+  **   template <class T1, class T2>
+  **   struct dummy2 : private ensure_list_< neq_<T1, int>,
+  **                                         neq_<T2, float> >
+  **   { ... 
+  **   };
+  **
+  ** Design notes: 1) This class does not derive from abstract::type
+  ** because it is used in inheritance so a ctor should exist.  2)
+  ** This class relies on mlc::internal::ensure_item to check that
+  ** the expression is true.
+  **
+  ** \see ensure_list_<expr1,..>
+  **
+  */
+
+  template <typename expr>
+  struct ensure_ :
+    private internal::ensure_item<0, typename expr::internal_ensure_>
+  {
+  };
+
+
+
+  /*! \class mlc::ensure_list_<expr1..>
   **
   ** This class is a replacement for a sequence of instructions:
   ** "expr1::ensure(); .." when there is no room for having
@@ -198,9 +247,10 @@ namespace mlc
   ** several constraints) upon a parameter (or several parameters)
   ** of a templated class.
   **
-  ** ensure_<..> has a variadic list of parameters.  It expects at
-  ** least one parameter and handles up to 9 parameters.  Each parameter
-  ** has to be a Boolean expression type.
+  ** ensure_list_<..> has a variadic list of parameters.  It expects
+  ** at least 2 parameters and handles up to 9 parameters.  Each
+  ** parameter has to be a Boolean expression type.  To check only a
+  ** single expression, the appropriate tool is ensure_<expr>.
   **
   ** Sample uses:
   ** 
@@ -217,8 +267,8 @@ namespace mlc
   **   };
   ** is equivalent to:
   **   template <class T1, class T2>
-  **   struct dummy2 : private ensure_< neq_<T1, int>,
-  **                                    neq_<T2, int> >
+  **   struct dummy2 : private ensure_list< neq_<T1, int>,
+  **                                        neq_<T2, int> >
   **   { ... 
   **   };
   **
@@ -227,10 +277,11 @@ namespace mlc
   ** This class relies on mlc::internal::ensure_item to check that
   ** each expression is true.
   **
+  ** \see ensure_<expr>
   */
 
   template <typename expr_1,
-	    typename expr_2 = internal::none_,
+	    typename expr_2,
 	    typename expr_3 = internal::none_, 
 	    typename expr_4 = internal::none_,
 	    typename expr_5 = internal::none_,
@@ -238,7 +289,7 @@ namespace mlc
 	    typename expr_7 = internal::none_,
 	    typename expr_8 = internal::none_,
 	    typename expr_9 = internal::none_>
-  struct ensure_ :
+  struct ensure_list_ :
     private internal::ensure_item<1, typename expr_1::internal_ensure_>,
     private internal::ensure_item<2, typename expr_2::internal_ensure_>,
     private internal::ensure_item<3, typename expr_3::internal_ensure_>,

@@ -28,210 +28,211 @@
 #ifndef METALIC_TYPEDEF_HH
 # define METALIC_TYPEDEF_HH
 
-# include <mlc/types.hh>
+# include <mlc/flags.hh>
 # include <mlc/bool.hh>
 
 
-// do not use the macro below if you equip a namespace with properties
+/*! \macro mlc_decl_typedef(TypedefName)
+**
+** This macro is for declaring the use of a typedef embedded in
+** classes.  After having declaring a typedef, accessing the typedef
+** is performed through the mlc_typedef macro.  The main difference
+** between the classic access, "Type::TypedefName", and its
+** equivalent, "mlc_typedef(Type, TypedefName)", is that the latter
+** also works when the access is ill-formed.  Put differently,
+** mlc_typedef also works when Type does not have TypedefName in its
+** interface; the result is then the special type mlc::not_found.
+**
+**
+** Sample use: Let us declare the "value_type" typedef name in the
+** global namespace.
+**
+**   mlc_decl_typedef(value_type);
+**
+** The following couple of typedef access:
+**
+**      typename std::vector<int>::value_type
+**   mlc_typedef(std::vector<int>, value_type)
+**
+** are exactly equivalent and give "int" as result.  However, with
+** "type" being "std::pair<int, int>", the access:
+**
+**   typename type::value_type
+**
+** is invalid and does not compile (because there is no value_type
+** defined in the interface of std::pair), wheras the replacement
+** access:
+**
+**   mlc_typedef(type, value_type)
+**
+** does compile and gives mlc::not_found.
+**
+**
+** When the declaration mlc_decl_typedef is located in a particular
+** namespace, mlc_typedef can be used within this namespace and its
+** sub-namespaces.  However, it is highly recommended to define a
+** particular access macro if you want to call mlc_typedef from
+** another namespace (the global one for instance).
+**
+**   namespace my {
+**   
+**     struct foo {
+**       typedef float value_type;
+**     };
+**   
+**     mlc_decl_typedef(value_type);
+**   
+**     namespace sub {
+**   
+**       template <class T>
+**       void bar()
+**       {
+**         mlc_typedef(foo, value_type) tmp; // ok
+**       }
+**   
+**     } // end of namespace my::sub
+**   
+**   } // end of namespace my
+**   
+**   int main()
+**   {
+**     {
+**       mlc_typedef_(my::foo, value_type) tmp; // KO
+**     }
+**     {
+**       using my::typedef_;
+**       mlc_typedef_(my::foo, value_type) tmp; // ok
+**     }
+**   }
+**
+** better:
+**
+**  #define my_typedef(Type, TypedefName)  mlc_typedef_in(my, Type, TypedefName)
+**  #define my_typedef_(Type, TypedefName) mlc_typedef_in_(my, Type, TypedefName)
+**
+** and then:
+**
+**   int main()
+**   {
+**     my_typedef_(my::foo, value_type) tmp; // ok
+**   }
+**
+**
+** Design notes:
+** The declaration of a typedef name leads to the creation of the type
+** "typedef_::TypedefName" located in the namespace where the
+** declaration has been performed.  This type can be used as a flag to
+** designate a particular class typedef, whatever the classes it can
+** be applied to.
+**
+** \see mlc_typedef(Type, TypedefName)
+*/
 
-# define mlc_equip_namespace_with_typedef()				\
-namespace internal							\
-{									\
-									\
-  template <typename type, typename typedef_type>			\
-  struct get_typedef							\
-  {									\
-    typedef mlc::internal::not_found ret;				\
-  };									\
-									\
-  template <typename type, typename typedef_type, typename cond>	\
-  struct get_typedef_onlyif						\
-  {									\
-    typedef mlc::internal::not_found ret;				\
-  };									\
-									\
-}									\
+# define mlc_decl_typedef(TypedefName)				\
+								\
+namespace typedef_ {						\
+								\
+  namespace internal {						\
+								\
+    struct TypedefName						\
+    {								\
+      typedef char yes;						\
+      struct no { char tmp[2]; };				\
+								\
+      template <class T,					\
+		typename alias = typename T::TypedefName>	\
+      struct run_on;						\
+								\
+      template <class T>					\
+      static yes selector(run_on<T>*);				\
+								\
+      template <class T>					\
+      static no selector(...);					\
+								\
+      template <class T, bool found>				\
+      struct result;						\
+								\
+      template <class T>					\
+      struct result <T, true> {					\
+	typedef typename T::TypedefName ret;			\
+      };							\
+								\
+      template <class T>					\
+      struct result <T, false> {				\
+	typedef mlc::not_found ret;				\
+      };							\
+								\
+    };								\
+								\
+  }								\
+								\
+  struct TypedefName						\
+  {								\
+    template <class T>						\
+    struct in_							\
+    {								\
+    private:							\
+      typedef internal::TypedefName helper_;			\
+      enum {							\
+	found_ =						\
+	(sizeof(helper_::selector<T>(0)) == 1)			\
+      };							\
+    public:							\
+      typedef							\
+      typename helper_::result<T, found_>::ret			\
+      ret;							\
+    };								\
+								\
+    template <class T, bool b>					\
+    struct in_onlyif_;						\
+								\
+								\
+    template <class T>						\
+    struct in_onlyif_ <T, true>					\
+    {								\
+      typedef typename in_<T>::ret ret;				\
+    };								\
+								\
+    template <class T>						\
+    struct in_onlyif_ <T, false>				\
+    {								\
+      typedef mlc::dummy ret;					\
+    };								\
+								\
+  private:							\
+    TypedefName() {}						\
+  };								\
+								\
+}								\
+								\
 struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
-
-
-/*! \macro  mlc_decl_typedef (TypedefName)
+/*! \macro mlc_typedef(Type, TypedefName)
 **
-** Macro to equip mlc with a static mechanism for a typedef retrieval.
-**
-** FIXME
+** FIXME: doc
 */
 
-# define mlc_decl_typedef(TypedefName)							\
-namespace  internal									\
-{											\
-											\
-  namespace typedef_									\
-  {											\
-    struct TypedefName;									\
-  }											\
-											\
-  struct helper_get_typedef__##TypedefName						\
-  {											\
-    typedef char yes;									\
-    struct no { char tmp[2]; };								\
-											\
-    template <typename type, typename alias = typename type::TypedefName>		\
-    struct run_on;									\
-											\
-    template <typename type>								\
-    static yes selector(run_on<type>*);							\
-											\
-    template <typename type>								\
-    static no selector(...);								\
-											\
-    template <typename type, bool found>						\
-    struct result;									\
-											\
-    template <typename type>								\
-    struct result <type, true>								\
-    {											\
-      typedef typename type::TypedefName ret;						\
-    };											\
-											\
-    template <typename type>								\
-    struct result <type, false>								\
-    {											\
-      typedef mlc::internal::not_found ret;						\
-    };											\
-  };											\
-											\
-  template <typename type>								\
-  struct get_typedef__##TypedefName							\
-  {											\
-    typedef  helper_get_typedef__##TypedefName  helper_type;				\
-    static const bool found = ( sizeof(helper_type::selector<type>(0)) == 1 );		\
-    typedef typename helper_type::result<type, found>::ret ret;				\
-  };											\
-											\
-  template <typename type>								\
-  struct get_typedef <type, typedef_::TypedefName>					\
-  {											\
-    typedef typename get_typedef__##TypedefName <type> ::ret ret;			\
-  };											\
-											\
-											\
-  template <typename type, bool cond>							\
-  struct helper_get_typedef_onlyif__##TypedefName;					\
-											\
-  template <typename type>								\
-  struct helper_get_typedef_onlyif__##TypedefName <type, false>				\
-  {											\
-    typedef mlc::internal::not_ok ret;							\
-  };											\
-											\
-  template <typename type>								\
-  struct helper_get_typedef_onlyif__##TypedefName <type, true>				\
-  {											\
-    typedef typename type::TypedefName ret;						\
-  };											\
-											\
-  template <typename type, typename cond>						\
-  struct get_typedef_onlyif__##TypedefName						\
-    : public helper_get_typedef_onlyif__##TypedefName <type, mlc_bool(cond)>		\
-  {											\
-    typedef helper_get_typedef_onlyif__##TypedefName <type, mlc_bool(cond)> super;	\
-    using super::ret;									\
-  };											\
-											\
-  template <typename type, typename cond>						\
-  struct get_typedef_onlyif <type, typedef_::TypedefName, cond>				\
-  {											\
-    typedef typename get_typedef_onlyif__##TypedefName <type, cond> ::ret ret;		\
-  };											\
-											\
-											\
-}											\
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+#define mlc_typedef(Type, TypedefName) \
+  typename typedef_::TypedefName::in_<Type>::ret
 
-
-
-// FIXME: mlc should be equipped for typedef retrieval
-// FIXME: and should provide at least facilities for 'ret'
-
-// namespace mlc
-// {
-//   mlc_equip_namespace_with_typedef();
-//   mlc_decl_typedef(ret);
-// } // end of namespace mlc
+#define mlc_typedef_(Type, TypedefName) \
+  typedef_::TypedefName::in_<Type>::ret
 
 
 
 
-// sample code to understand why mlc_typedef_onlyif_of is required
-// in particular situations:
-
-//     #include <mlc/typedef.hh>
-
-//     mlc_equip_namespace_with_typedef();
-//     mlc_decl_typedef(ret);
-
-//     struct toto
-//     {
-//       typedef float does_not_exist;
-//     };
-
-//     template <class T>
-//     struct ok
-//     {
-// 	 typedef double ret;
-// 	 typedef typename T::does_not_exist err;
-//     };
-
-//     template <class T>
-//     struct ko
-//     {
-//     };
-
-//     template <class T>
-//     void foo()
-//     {
-// 	 typedef mlc_typedef_of(T, ret) type;
-//     }
-
-//     template <class T, class B>
-//     void bar()
-//     {
-// 	 typedef mlc_typedef_onlyif_of(T, ret, B) type;
-//     }
-
-//     int main()
-//     {
-// 	 // code that does not compile:
-// 	 // foo< ok<int> >();
-// 	 // bar< ok<int>, mlc::true_type >();
-
-// 	 // code that works:
-// 	 foo< ok<toto> >();
-// 	 bar< ok<toto>, mlc::true_type >();
-// 	 bar< ok<int>, mlc::false_type >();
-//     }
-
-
-/*! \macro  mlc_typedef_of( FromType, TypedefName )
+/*! \macro mlc_typedef_onlyif(Type, TypedefName, Bexpr)
 **
-** FIXME
-** Sample use: mlc_typedef_of(std::vector<int>, value_type)
+** FIXME: doc
 */
-# define mlc_typedef_of_(FromType, TypedefName)		\
-internal::get_typedef__##TypedefName <FromType>::ret
 
-# define mlc_typedef_of(FromType, TypedefName)	\
-typename mlc_typedef_of_(FromType, TypedefName)
+#define mlc_typedef_onlyif(Type, TypedefName, Bexpr) \
+  typename typedef_::TypedefName::in_onlyif_<Type, mlc_bool(Bexpr)>::ret
 
+#define mlc_typedef_onlyif_(Type, TypedefName, Bexpr) \
+  typedef_::TypedefName::in_onlyif_<Type, mlc_bool(Bexpr)>::ret
 
-
-# define mlc_typedef_onlyif_of_(FromType, TypedefName, Condition)	\
-internal::get_typedef_onlyif__##TypedefName <FromType, Condition>::ret
-
-# define mlc_typedef_onlyif_of(FromType, TypedefName, Condition)	\
-typename mlc_typedef_onlyif_of_(FromType, TypedefName, Condition)
 
 
 

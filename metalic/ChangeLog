@@ -1,3 +1,14 @@
+2006-02-07  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Add documentation.
+
+	* mlc/is_a.hh (wrap): Move to...
+	* mlc/wrap.hh: ...this new file.
+	* mlc/bool.hh (ensure_): Take just one parameter; the former variadic
+	version is now handled by...
+	(ensure_list_): ...this new class.
+	* mlc/typedef.hh: Rename some internals.
+
 2006-01-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Static `if'.
