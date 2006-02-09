@@ -31,7 +31,7 @@
 
 namespace mlc
 {
-  /*! \class mlc::wrap<T>
+  /*! \class mlc::wrap_<T>
   **
   ** This class is a workaround to the problem of implicit typename
   ** that appears when writting something like:
@@ -41,7 +41,7 @@ namespace mlc
   **   typedef typename outer_struct::inner_struct temp;
   **   temp::value
   ** you can write directly:
-  **   wrap< typename outer_struct::inner_struct >::value
+  **   wrap_< typename outer_struct::inner_struct >::value
   **
   ** This class is used by the mlc_is_a macro.
   **
@@ -50,7 +50,7 @@ namespace mlc
   */
 
   template <class T>
-  struct wrap : public T
+  struct wrap_ : public T
   {
     typedef T unwrap;
   };
@@ -67,7 +67,7 @@ namespace mlc
 #include <iostream>
 #include <mlc/bool.hh>
 
-template <class T> struct wrap : public T {};
+template <class T> struct wrap_ : public T {};
 
 namespace my 
 {

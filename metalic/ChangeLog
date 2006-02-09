@@ -1,3 +1,15 @@
+2006-02-09  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Modify slightly the ensure_ and ensure_list_ tools.
+
+	* mlc/wrap.hh (wrap): Rename into...
+	(wrap_): ...this.
+	* mlc/bool.hh (ensure_item): Rename into...
+	(ensure_item_): ...this and add a parameter to ease disambiguation.
+	(ensure_list_): Update.
+	(documentation): Update.
+	* mlc/cmp.hh: Update.
+
 2006-02-07  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Add documentation.

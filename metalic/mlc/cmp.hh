@@ -56,8 +56,8 @@ namespace mlc
   /// Equality test between a couple of types.
 
   template <typename T1, typename T2>
-  struct eq_ : private ensure_< is_not_value<T1>,
-				is_not_value<T2> >,
+  struct eq_ : private ensure_list_< is_not_value<T1>,
+				     is_not_value<T2> >,
 	       public false_
   {
   };
@@ -72,8 +72,8 @@ namespace mlc
   /// Inequality test between a couple of types.
 
   template <typename T1, typename T2>
-  struct neq_ : private ensure_< is_not_value<T1>,
-				 is_not_value<T2> >,
+  struct neq_ : private ensure_list_< is_not_value<T1>,
+				      is_not_value<T2> >,
 		public true_
   {
   };

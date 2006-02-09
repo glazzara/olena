@@ -149,7 +149,7 @@ namespace mlc
     };
 
 
-    /*! \class mlc::internal::ensure_item<i, expr>
+    /*! \class mlc::internal::ensure_item_<i, expr, check>
     **
     ** Internal so do not use it.  This class is for use in the
     ** definition of mlc::ensure_<..>.
@@ -160,8 +160,8 @@ namespace mlc
     ** \see mlc::ensure_<..>
     */
 
-    template <unsigned i, typename expr>
-    struct ensure_item
+    template <unsigned i, typename expr, typename check>
+    struct ensure_item_
     {
     };
 
@@ -175,7 +175,7 @@ namespace mlc
     ** because it is used in inheritance so a ctor should exist. 2)
     ** This class provides internal_ensure_ so that it acts like the
     ** value 'true' in a sequence of 'and'; it thus has no effect when
-    ** appearing in an ensure_item.
+    ** appearing in an ensure_item_.
     **
     ** \see mlc::ensure_<..>
     */
@@ -201,31 +201,43 @@ namespace mlc
   ** Boolean expression type.  An equivalent version for a variadic
   ** list of parameters is ensure_list_<expr1,..>
   **
-  ** Sample uses:
+  ** Sample use:
   ** 
   **   template <class T>
-  **   struct dummy : private ensure_< neq_<T, int> >
+  **   struct foo : private virtual ensure_< neq_<T, int> >
   **   { ... 
   **   };
   ** means that T can be any type but int.
   **
+  **
+  ** Please avoid the following code:
   **   template <class T1, class T2>
-  **   struct dummy2 : private ensure_< neq_<T1, int> >,
-  **                   private ensure_< neq_<T2, float> >
+  **   struct bar : private virtual ensure_< neq_<T1, int> >,
+  **                private virtual ensure_< neq_<T2, int> >
   **   { ... 
   **   };
-  ** means that T1 should not be int and that T2 should not be float.
-  ** This last example is equivalent to:
+  ** a better replacement is:
   **   template <class T1, class T2>
-  **   struct dummy2 : private ensure_list_< neq_<T1, int>,
-  **                                         neq_<T2, float> >
+  **   struct bar : private virtual ensure_list_< neq_<T1, int>,
+  **                                              neq_<T2, int> >
   **   { ... 
   **   };
+  ** see the design notes below for details.
+  **
+  ** Also prefer the use of ensure_list_<expr1, expr2> than the
+  ** equivalent ensure_< and_<expr1, expr2> >.  Actually, the former
+  ** provides better error messages since the compiler is able to
+  ** say which expr is not verified, whereas the latter cannot.
+  **
   **
   ** Design notes: 1) This class does not derive from abstract::type
   ** because it is used in inheritance so a ctor should exist.  2)
-  ** This class relies on mlc::internal::ensure_item to check that
-  ** the expression is true.
+  ** This class relies on mlc::internal::ensure_item_ to check that
+  ** the expression is true.  3) When several contrains such as
+  ** "private ensure_<..>" appear through a hierarchy of classes or
+  ** for a given class, the program may not compile because of
+  ** multiple inheritance of the same base class; the solution is to
+  ** systematically write "private virtual ensure_<..>".
   **
   ** \see ensure_list_<expr1,..>
   **
@@ -233,7 +245,7 @@ namespace mlc
 
   template <typename expr>
   struct ensure_ :
-    private internal::ensure_item<0, typename expr::internal_ensure_>
+    private virtual internal::ensure_item_<0, expr, typename expr::internal_ensure_>
   {
   };
 
@@ -252,30 +264,20 @@ namespace mlc
   ** parameter has to be a Boolean expression type.  To check only a
   ** single expression, the appropriate tool is ensure_<expr>.
   **
-  ** Sample uses:
-  ** 
-  **   template <class T>
-  **   struct dummy : private ensure_< neq_<T, int> >
-  **   { ... 
-  **   };
-  ** means that T can be any type but int.
   **
+  ** Sample use:
+  ** 
   **   template <class T1, class T2>
-  **   struct dummy2 : private ensure_< neq_<T1, int> >,
-  **                   private ensure_< neq_<T2, int> >
-  **   { ... 
-  **   };
-  ** is equivalent to:
-  **   template <class T1, class T2>
-  **   struct dummy2 : private ensure_list< neq_<T1, int>,
-  **                                        neq_<T2, int> >
+  **   struct foo : private virtual ensure_list_< neq_<T1, int>,
+  **                                              neq_<T2, int> >
   **   { ... 
   **   };
   **
   ** Design notes: 1) This class does not derive from abstract::type
   ** because it is used in inheritance so a ctor should exist.  2)
-  ** This class relies on mlc::internal::ensure_item to check that
-  ** each expression is true.
+  ** This class relies on mlc::internal::ensure_item_ to check that
+  ** each expression is true. 3) using "virtual" allow to encompass
+  ** the multiple base class problem.
   **
   ** \see ensure_<expr>
   */
@@ -290,15 +292,15 @@ namespace mlc
 	    typename expr_8 = internal::none_,
 	    typename expr_9 = internal::none_>
   struct ensure_list_ :
-    private internal::ensure_item<1, typename expr_1::internal_ensure_>,
-    private internal::ensure_item<2, typename expr_2::internal_ensure_>,
-    private internal::ensure_item<3, typename expr_3::internal_ensure_>,
-    private internal::ensure_item<4, typename expr_4::internal_ensure_>,
-    private internal::ensure_item<5, typename expr_5::internal_ensure_>,
-    private internal::ensure_item<6, typename expr_6::internal_ensure_>,
-    private internal::ensure_item<7, typename expr_7::internal_ensure_>,
-    private internal::ensure_item<8, typename expr_8::internal_ensure_>,
-    private internal::ensure_item<9, typename expr_9::internal_ensure_>
+    private virtual internal::ensure_item_<1, expr_1, typename expr_1::internal_ensure_>,
+    private virtual internal::ensure_item_<2, expr_2, typename expr_2::internal_ensure_>,
+    private virtual internal::ensure_item_<3, expr_3, typename expr_3::internal_ensure_>,
+    private virtual internal::ensure_item_<4, expr_4, typename expr_4::internal_ensure_>,
+    private virtual internal::ensure_item_<5, expr_5, typename expr_5::internal_ensure_>,
+    private virtual internal::ensure_item_<6, expr_6, typename expr_6::internal_ensure_>,
+    private virtual internal::ensure_item_<7, expr_7, typename expr_7::internal_ensure_>,
+    private virtual internal::ensure_item_<8, expr_8, typename expr_8::internal_ensure_>,
+    private virtual internal::ensure_item_<9, expr_9, typename expr_9::internal_ensure_>
   {
   };
 
@@ -352,7 +354,7 @@ namespace mlc
     ** (and thus no significant value).  A static check via
     ** "mlc::ensure_<..>" uses this typedef.
     **
-    ** \see mlc::internal::ensure_item<i, expr>
+    ** \see mlc::internal::ensure_item_<i, expr>
     */
     typedef internal::none_ internal_ensure_;
 
