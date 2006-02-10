@@ -1,3 +1,15 @@
+2006-02-10  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Add implies, comma, typedef ret handling; then update.
+
+	* mlc/implies.hh: New file.
+	* mlc/is_a.hh: Update.
+	* mlc/comma.hh: New file.
+	* mlc/typedef.hh (in_, in_onlyif_): Rename as...
+	(from_, from_only_if_): ...this.
+	(mlc_typedef_in, mlc_typedef_in_): New macros.
+	(mlc_ret): New macro.
+
 2006-02-09  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Modify slightly the ensure_ and ensure_list_ tools.

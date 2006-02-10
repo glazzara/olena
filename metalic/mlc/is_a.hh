@@ -237,7 +237,7 @@ namespace mlc
 */
 
 # define mlc_is_a(T, U) \
-mlc::wrap<typename mlc::internal::is_a<sizeof(mlc::form::of<U >())>::ret<T,U > >
+mlc::wrap_<typename mlc::internal::is_a<sizeof(mlc::form::of<U >())>::ret<T,U > >
 
 
 /*! \macro mlc_is_a_(T, U)
@@ -249,7 +249,7 @@ mlc::wrap<typename mlc::internal::is_a<sizeof(mlc::form::of<U >())>::ret<T,U > >
 */
 
 # define mlc_is_a_(T, U) \
-mlc::wrap<mlc::internal::is_a< sizeof(mlc::form::of<U >())>::ret<T,U > >
+mlc::wrap_<mlc::internal::is_a< sizeof(mlc::form::of<U >())>::ret<T,U > >
 
 
 #endif // ! METALIC_IS_A_HH

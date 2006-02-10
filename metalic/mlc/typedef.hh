@@ -169,7 +169,7 @@ namespace typedef_ {						\
   struct TypedefName						\
   {								\
     template <class T>						\
-    struct in_							\
+    struct from_						\
     {								\
     private:							\
       typedef internal::TypedefName helper_;			\
@@ -184,17 +184,17 @@ namespace typedef_ {						\
     };								\
 								\
     template <class T, bool b>					\
-    struct in_onlyif_;						\
+    struct from_onlyif_;					\
 								\
 								\
     template <class T>						\
-    struct in_onlyif_ <T, true>					\
+    struct from_onlyif_ <T, true>				\
     {								\
-      typedef typename in_<T>::ret ret;				\
+      typedef typename from_<T>::ret ret;			\
     };								\
 								\
     template <class T>						\
-    struct in_onlyif_ <T, false>				\
+    struct from_onlyif_ <T, false>				\
     {								\
       typedef mlc::dummy ret;					\
     };								\
@@ -213,12 +213,24 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 ** FIXME: doc
 */
 
-#define mlc_typedef(Type, TypedefName) \
-  typename typedef_::TypedefName::in_<Type>::ret
+# define mlc_typedef(Type, TypedefName) \
+   typename typedef_::TypedefName::from_<Type>::ret
 
-#define mlc_typedef_(Type, TypedefName) \
-  typedef_::TypedefName::in_<Type>::ret
+# define mlc_typedef_(Type, TypedefName) \
+   typedef_::TypedefName::from_<Type>::ret
 
+
+
+/*! \macro mlc_typedef_in(Namespace, Type, TypedefName)
+**
+** FIXME: doc
+*/
+
+# define mlc_typedef_in(Namespace, Type, TypedefName) \
+   typename Namespace::typedef_::TypedefName::from_<Type>::ret
+
+# define mlc_typedef_in_(Namespace, Type, TypedefName) \
+   Namespace::typedef_::TypedefName::from_<Type>::ret
 
 
 
@@ -227,12 +239,23 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 ** FIXME: doc
 */
 
-#define mlc_typedef_onlyif(Type, TypedefName, Bexpr) \
-  typename typedef_::TypedefName::in_onlyif_<Type, mlc_bool(Bexpr)>::ret
+# define mlc_typedef_onlyif(Type, TypedefName, Bexpr) \
+   typename typedef_::TypedefName::from_onlyif_<Type, mlc_bool(Bexpr)>::ret
 
-#define mlc_typedef_onlyif_(Type, TypedefName, Bexpr) \
-  typedef_::TypedefName::in_onlyif_<Type, mlc_bool(Bexpr)>::ret
+# define mlc_typedef_onlyif_(Type, TypedefName, Bexpr) \
+   typedef_::TypedefName::from_onlyif_<Type, mlc_bool(Bexpr)>::ret
 
+
+
+/*! \FIXME: what's the correct comment flag here?
+**
+** Since we often rely on having a typedef named "ret" in types, we offer
+** a default equipment for this particular typedef.  FIXME: doc
+*/
+
+mlc_decl_typedef(ret);
+
+# define mlc_ret(Type) typename typedef_::ret::from_<Type>::ret
 
 
 
