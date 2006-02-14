@@ -1,5 +1,12 @@
 2006-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add the old properties system.
+
+	* tests/properties.cc, mlc/to_string.hh: New files.
+	* mlc/properties.hh: New test.
+
+2006-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix mlc::is_ok definition.
 
 	* mlc/cmp.hh (mlc::is_ok): Add missing template declarator.
