@@ -1,3 +1,9 @@
+2006-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add TODO.
+
+	* TODO: New.
+
 2006-01-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move Metalic-related entries in their own ChangeLog.

@@ -1,0 +1,27 @@
+See also the TODO in oln-proto-1.0 and oln-proto-stl-style
+
+* Metalic
+
+** Modules
+Split Metalic into several modules:
+
+  mlc : core Metalic tools
+  stc : static inheritance
+  xtd : meta-functions and operator traits (for built-in types)
+  dyn : static-dynamic bridge (work of Damien Thivolle and Nicolas
+        Pouillard)
+
+** Static inheritance
+
+*** mlc/properties -- Roland
+
+
+* Olena
+
+
+* Integre
+
+
+Local Variables:
+mode: outline
+End:
