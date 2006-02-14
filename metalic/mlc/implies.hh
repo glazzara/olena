@@ -31,9 +31,9 @@
 # include <mlc/bool.hh>
 
 
-/*! \macro mlc_implies(Left_BExpr, Right_BExpr)
+/*! \def mlc_implies(Left_BExpr, Right_BExpr)
 **
-** Macro correponding to mlc::implies_<L, R>, for use in a template
+** Macro corresponding to mlc::implies_<L, R>, for use in a template
 ** context.
 **
 ** \see mlc::implies_<L, R>

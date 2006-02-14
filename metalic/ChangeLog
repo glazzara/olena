@@ -1,3 +1,15 @@
+2006-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add some documentation and types to Metalic.
+
+	* mlc/cmp.hh: More documentation.
+	(is_found, is_not_found, is_ok): New.
+	* mlc/implies.hh, mlc/is_a.hh: Fix Doxygen comment.
+	* mlc/flags.hh: More documentation.
+	(dummy, locked): New.
+	From Thierry Géraud.
+	* mlc/value.hh: Remove dead code.
+
 2006-02-10  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Add implies, comma, typedef ret handling; then update.

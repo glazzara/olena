@@ -39,13 +39,14 @@
 
 namespace mlc
 {
-  // FIXME: code moved from the end of value.hh
 
+  /// Check whether \a T is a mlc::abstract::value.
   template <typename T>
   struct is_value : public mlc_is_a(T, mlc::abstract::value)
   {
   };
 
+  /// Check whether \a T is not a mlc::abstract::value.
   template <typename T>
   struct is_not_value : public not_<mlc_is_a(T, mlc::abstract::value)>
   {
@@ -54,7 +55,7 @@ namespace mlc
 
 
   /// Equality test between a couple of types.
-
+  /// \{
   template <typename T1, typename T2>
   struct eq_ : private ensure_list_< is_not_value<T1>,
 				     is_not_value<T2> >,
@@ -67,10 +68,10 @@ namespace mlc
 		      public true_
   {
   };
-
+  /// \}
 
   /// Inequality test between a couple of types.
-
+  /// \{
   template <typename T1, typename T2>
   struct neq_ : private ensure_list_< is_not_value<T1>,
 				      is_not_value<T2> >,
@@ -83,7 +84,33 @@ namespace mlc
 		       public false_
   {
   };
+  /// \}
 
+
+  /*--------------------------------------.
+  | Syntactic sugar for flag comparison.  |
+  `--------------------------------------*/
+
+  /// Shortcuts for comparison with mlc::not_found.
+  /// \{
+  template <typename T>
+  struct is_found : public neq_<T, not_found>
+  {
+  };
+
+  template <typename T>
+  struct is_not_found : public neq_<T, not_found>
+  {
+  };
+  /// \}
+
+
+  /// Check whether a type is a sound (supposedly before using it).
+  struct is_ok : public ands_< neq_<T, not_found>,
+			       neq_<T, not_ok>,
+			       neq_<T, undefined > >
+  {
+  };
 
 } // end of namespace mlc
 

@@ -205,7 +205,7 @@ namespace mlc
 
 
 
-/*! \macro mlc_is_a(T, U)
+/*! \def mlc_is_a(T, U)
 **
 ** Macro that answers if T is an U.  T should be a type and U can have
 ** different forms: class, template class, etc.  The result is a
@@ -240,7 +240,7 @@ namespace mlc
 mlc::wrap_<typename mlc::internal::is_a<sizeof(mlc::form::of<U >())>::ret<T,U > >
 
 
-/*! \macro mlc_is_a_(T, U)
+/*! \def mlc_is_a_(T, U)
 **
 ** Macro equivalent as mlc_is_a(T, U) for use in a non templated
 ** context.  The result is a Boolean expression type.
