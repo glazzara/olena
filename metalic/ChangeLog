@@ -1,5 +1,11 @@
 2006-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix mlc::is_ok definition.
+
+	* mlc/cmp.hh (mlc::is_ok): Add missing template declarator.
+
+2006-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add tests for mlc_is_a, mlc_if and mlc_typedef.
 
 	* tests/is_a.cc, tests/if.cc, tests/typedef.cc: New tests.
