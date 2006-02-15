@@ -29,14 +29,22 @@
 # define METALIC_BOOL_HH
 
 # include <mlc/value.hh>
+# include <mlc/flags.hh>
 
 
-/*! \macro mlc_bool(T)
+/*! \macro mlc_bool(BExpr)
 **
-** Macro that retrieves a Boolean value from a Boolean expression type
-** T.  Its result is either true or false.
+** Macro that retrieves a Boolean value from a Boolean expression type.
+** Its result is either true or false.
 */
-# define mlc_bool(Type)  mlc::internal::get_bool<Type>::value
+# define mlc_bool(BExpr)  mlc::internal::get_bool<BExpr>::value
+
+
+
+// FIXME: keep it or not?
+# define mlc_type_when(T, BExpr) \
+   typename type_when_<T, BExpr>::ret
+
 
 
 namespace mlc
@@ -166,7 +174,7 @@ namespace mlc
     };
 
 
-    /*! \class mlc::internal::none_
+    /*! \class mlc::internal::retrieve_ensure_
     **
     ** Internal so do not use it.  This class is for use in the
     ** definition of mlc::ensure_<..>.
@@ -180,9 +188,16 @@ namespace mlc
     ** \see mlc::ensure_<..>
     */
 
-    struct none_
+    template <typename bexpr>
+    struct retrieve_ensure_
     {
-      typedef none_ internal_ensure_; // provided such as in classes inheriting from true_
+      typedef typename bexpr::internal_ensure_ ret; // provided such as in classes inheriting from true_
+    };
+
+    template <>
+    struct retrieve_ensure_ < mlc::none >
+    {
+      typedef mlc::dummy ret;
     };
 
 
@@ -239,14 +254,24 @@ namespace mlc
   ** multiple inheritance of the same base class; the solution is to
   ** systematically write "private virtual ensure_<..>".
   **
-  ** \see ensure_list_<expr1,..>
+  ** \see ensure_list_<bexpr1,..>
   **
   */
 
-  template <typename expr>
+  template <typename bexpr>
   struct ensure_ :
-    private virtual internal::ensure_item_<0, expr, typename expr::internal_ensure_>
+    private virtual internal::ensure_item_<0, bexpr,
+					   typename internal::retrieve_ensure_<bexpr>::ret>
   {
+  };
+
+
+  // FIXME: keep it or not?
+  template <typename T, typename bexpr>
+  struct type_when_ :
+    private ensure_<bexpr>
+  {
+    typedef T ret;
   };
 
 
@@ -282,25 +307,34 @@ namespace mlc
   ** \see ensure_<expr>
   */
 
-  template <typename expr_1,
-	    typename expr_2,
-	    typename expr_3 = internal::none_, 
-	    typename expr_4 = internal::none_,
-	    typename expr_5 = internal::none_,
-	    typename expr_6 = internal::none_, 
-	    typename expr_7 = internal::none_,
-	    typename expr_8 = internal::none_,
-	    typename expr_9 = internal::none_>
+  template <typename bexpr1,
+	    typename bexpr2,
+	    typename bexpr3 = none, 
+	    typename bexpr4 = none,
+	    typename bexpr5 = none,
+	    typename bexpr6 = none, 
+	    typename bexpr7 = none,
+	    typename bexpr8 = none,
+	    typename bexpr9 = none>
   struct ensure_list_ :
-    private virtual internal::ensure_item_<1, expr_1, typename expr_1::internal_ensure_>,
-    private virtual internal::ensure_item_<2, expr_2, typename expr_2::internal_ensure_>,
-    private virtual internal::ensure_item_<3, expr_3, typename expr_3::internal_ensure_>,
-    private virtual internal::ensure_item_<4, expr_4, typename expr_4::internal_ensure_>,
-    private virtual internal::ensure_item_<5, expr_5, typename expr_5::internal_ensure_>,
-    private virtual internal::ensure_item_<6, expr_6, typename expr_6::internal_ensure_>,
-    private virtual internal::ensure_item_<7, expr_7, typename expr_7::internal_ensure_>,
-    private virtual internal::ensure_item_<8, expr_8, typename expr_8::internal_ensure_>,
-    private virtual internal::ensure_item_<9, expr_9, typename expr_9::internal_ensure_>
+    private virtual internal::ensure_item_<1, bexpr1,
+					   typename internal::retrieve_ensure_<bexpr1>::ret>,
+    private virtual internal::ensure_item_<2, bexpr2,
+					   typename internal::retrieve_ensure_<bexpr2>::ret>,
+    private virtual internal::ensure_item_<3, bexpr3,
+					   typename internal::retrieve_ensure_<bexpr3>::ret>,
+    private virtual internal::ensure_item_<4, bexpr4,
+					   typename internal::retrieve_ensure_<bexpr4>::ret>,
+    private virtual internal::ensure_item_<5, bexpr5,
+					   typename internal::retrieve_ensure_<bexpr5>::ret>,
+    private virtual internal::ensure_item_<6, bexpr6,
+					   typename internal::retrieve_ensure_<bexpr6>::ret>,
+    private virtual internal::ensure_item_<7, bexpr7,
+					   typename internal::retrieve_ensure_<bexpr7>::ret>,
+    private virtual internal::ensure_item_<8, bexpr8,
+					   typename internal::retrieve_ensure_<bexpr8>::ret>,
+    private virtual internal::ensure_item_<9, bexpr9,
+					   typename internal::retrieve_ensure_<bexpr9>::ret>
   {
   };
 
@@ -356,7 +390,7 @@ namespace mlc
     **
     ** \see mlc::internal::ensure_item_<i, expr>
     */
-    typedef internal::none_ internal_ensure_;
+    typedef dummy internal_ensure_;
 
   };
 
@@ -390,158 +424,10 @@ namespace mlc
   typedef bool_<false> false_;
 
 
-  /*! \class mlc::not_<T>
-  **
-  ** Logical unary 'not' operator on a Boolean expression type.  This
-  ** class is also a Boolean expression type.
-  */
-  template <typename T> struct not_ : public bool_<(!mlc_bool(T))> {};
-
-
-  /*! \class mlc::and_<L,R>
-  **
-  ** Logical binary 'and' operator on a couple of Boolean expression
-  ** types.  This class is also a Boolean expression type.
-  **
-  ** \see mlc::ands_<..>
-  */
-  template <typename L, typename R> struct and_  : public bool_<  (mlc_bool(L) && mlc_bool(R)) > {};
-
-  /*! \class mlc::nand_<L,R>
-  **
-  ** Logical binary 'not and' operator on a couple of Boolean
-  ** expression types.  This class is also a Boolean expression type.
-  **
-  ** Design note: an equivalent is mlc::not_< mlc::and_<L,R> >.
-  */
-  template <typename L, typename R> struct nand_ : public bool_<(!(mlc_bool(L) && mlc_bool(R)))> {}; 
-
-  /*! \class mlc::or_<L,R>
-  **
-  ** Logical binary 'or' operator on a couple of Boolean expression
-  ** types.  This class is also a Boolean expression type.
-  **
-  ** \see mlc::ors_<..>
-  */
-  template <typename L, typename R> struct or_   : public bool_<  (mlc_bool(L) || mlc_bool(R)) > {};
-
-  /*! \class mlc::nor_<L,R>
-  **
-  ** Logical binary 'not or' operator on a couple of Boolean
-  ** expression types.  This class is also a Boolean expression type.
-  **
-  ** Design note: an equivalent is mlc::not_< mlc::or_<L,R> >.
-  */
-  template <typename L, typename R> struct nor_  : public bool_<(!(mlc_bool(L) || mlc_bool(R)))> {};
-
-  /*! \class mlc::xor_<L,R>
-  **
-  ** Logical binary 'exclusive or' operator on a couple of Boolean
-  ** expression types.  This class is also a Boolean expression type.
-  */
-  template <typename L, typename R> struct xor_  : public bool_<  (mlc_bool(L) != mlc_bool(R)) > {};
-
-  /*! \class mlc::xnor_<L,R>
-  **
-  ** Logical binary 'exclusive not or' operator on a couple of Boolean
-  ** expression types.  This class is also a Boolean expression type.
-  */
-  template <typename L, typename R> struct xnor_ : public bool_<(!(mlc_bool(L) != mlc_bool(R)))> {};
-
-
-  /// Internal helpers for logical operators between several Boolean types
-
-  namespace internal
-  {
-
-    // ors_2_
-    template <typename A1, typename A2> struct ors_2_                : public or_<A1, A2> {};
-    template <>                         struct ors_2_ <none_, none_> : public true_ {};
-    template <typename A1>              struct ors_2_ <A1, none_>    : public A1 {};
-    template <typename A2>              struct ors_2_ <none_, A2>;
-    // ors_4_
-    template <typename A1, typename A2,
-	      typename A3, typename A4>
-    struct ors_4_ : public ors_2_< ors_2_<A1, A2>,
-				   ors_2_<A3, A4> > {};
-    template <>
-    struct ors_4_ <none_, none_, none_, none_> : public true_ {};
-    // ors_8_
-    template <typename A1, typename A2, typename A3, typename A4,
-	      typename A5, typename A6, typename A7, typename A8>
-    struct ors_8_ : public ors_2_< ors_4_<A1, A2, A3, A4>,
-				   ors_4_<A5, A6, A7, A8> > {};
-    // ands_2_
-    template <typename A1, typename A2> struct ands_2_                : public and_<A1, A2> {};
-    template <>                         struct ands_2_ <none_, none_> : public true_ {};
-    template <typename A1>              struct ands_2_ <A1, none_>    : public A1 {};
-    template <typename A2>              struct ands_2_ <none_, A2>;
-    // ands_4_
-    template <typename A1, typename A2,
-	      typename A3, typename A4>
-    struct ands_4_ : public ands_2_< ands_2_<A1, A2>,
-				     ands_2_<A3, A4> > {};
-    template <>
-    struct ands_4_ <none_, none_, none_, none_> : public true_ {};
-    // ands_8_
-    template <typename A1, typename A2, typename A3, typename A4,
-	      typename A5, typename A6, typename A7, typename A8>
-    struct ands_8_ : public ands_2_< ands_4_<A1, A2, A3, A4>,
-				     ands_4_<A5, A6, A7, A8> > {};
-
-  } // end of mlc::internal
-
-
-  /*! \class mlc::ors_<..>
-  **
-  ** Logical n-ary 'or' operator on a set of Boolean expression types.
-  ** The number of arguments (parameters) should be at least 3 and at
-  ** most 8.  This class is also a Boolean expression type.
-  **
-  ** Sample use:
-  ** mlc::ors_< mlc::eq_<T, int>,
-  **            mlc_is_a(T, mlc::int_),
-  **            mlc_is_a(T, my::integer) >
-  **
-  ** \see mlc::or_<L,R> mlc::ands_<..>
-  */
-
-  template <typename A1,
-	    typename A2,
-	    typename A3,
-	    typename A4 = internal::none_,
-	    typename A5 = internal::none_,
-	    typename A6 = internal::none_,
-	    typename A7 = internal::none_,
-	    typename A8 = internal::none_>
-  struct ors_ : public internal::ors_8_< A1, A2, A3, A4, A5, A6, A7, A8 >
-  {
-  };
-
-
-  /*! \class mlc::ands_<..>
-  **
-  ** Logical n-ary 'and' operator on a set of Boolean expression types.
-  ** The number of arguments (parameters) should be at least 3 and at
-  ** most 8.  This class is also a Boolean expression type.
-  **
-  ** \see mlc::and_<L,R> mlc::ors_<..>
-  */
-
-  template <typename A1,
-	    typename A2,
-	    typename A3,
-	    typename A4 = internal::none_,
-	    typename A5 = internal::none_,
-	    typename A6 = internal::none_,
-	    typename A7 = internal::none_,
-	    typename A8 = internal::none_>
-  struct ands_ : public internal::ands_8_< A1, A2, A3, A4, A5, A6, A7, A8 >
-  {
-  };
-
-
 } // end of namespace mlc
+
+
+# include <mlc/logic.hh>
 
 
 #endif // ! METALIC_BOOL_HH

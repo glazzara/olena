@@ -1,3 +1,12 @@
+2006-02-15  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Split bool.hh to move logical ops in an independant file.
+
+	* mlc/bool.hh: Move logical ops in...
+	* mlc/logic.hh: this new file.
+	(ors_, ands_): Rename as...
+	(or_list_, and_list_): ...these.
+
 2006-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add the old properties system.
