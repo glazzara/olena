@@ -107,9 +107,9 @@ namespace mlc
 
   /// Check whether a type is a sound (supposedly before using it).
   template <typename T>
-  struct is_ok : public ands_< neq_<T, not_found>,
-			       neq_<T, not_ok>,
-			       neq_<T, undefined > >
+  struct is_ok : public and_list_< neq_<T, not_found>,
+				   neq_<T, not_ok>,
+				   neq_<T, undefined > >
   {
   };
 

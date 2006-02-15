@@ -1,5 +1,16 @@
 2006-02-15  Thierry Geraud  <theo@lrde.epita.fr>
 
+	Add new features such as variadic type list.
+
+	* mlc/elt.hh: New file.
+	* mlc/bool.hh (iff_): New class.
+	* mlc/pair.hh: New file.
+	* mlc/valist.hh: New file.
+	* mlc/cmp.hh: Update.
+	* mlc/uint.hh: New file.
+
+2006-02-15  Thierry Geraud  <theo@lrde.epita.fr>
+
 	Split bool.hh to move logical ops in an independant file.
 
 	* mlc/bool.hh: Move logical ops in...

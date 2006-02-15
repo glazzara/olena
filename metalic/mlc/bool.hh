@@ -30,9 +30,10 @@
 
 # include <mlc/value.hh>
 # include <mlc/flags.hh>
+# include <mlc/wrap.hh>
 
 
-/*! \macro mlc_bool(BExpr)
+/*! \def mlc_bool(BExpr)
 **
 ** Macro that retrieves a Boolean value from a Boolean expression type.
 ** Its result is either true or false.
@@ -41,9 +42,14 @@
 
 
 
-// FIXME: keep it or not?
-# define mlc_type_when(T, BExpr) \
-   typename type_when_<T, BExpr>::ret
+/*! \def mlc_iff(Type, BExpr)
+**
+** FIXME: doc
+*/
+# define mlc_iff(Type, BExpr)  typename mlc::iff_<Type, BExpr>::ret
+# define mlc_iff_(Type, BExpr) mlc::iff_<Type, BExpr>::ret
+
+
 
 
 
@@ -266,9 +272,13 @@ namespace mlc
   };
 
 
-  // FIXME: keep it or not?
+  /*! \class mlc::iff_<T, bexpr>
+  **
+  ** FIXME: doc
+  ** T iff bexpr
+  */
   template <typename T, typename bexpr>
-  struct type_when_ :
+  struct iff_ :
     private ensure_<bexpr>
   {
     typedef T ret;
