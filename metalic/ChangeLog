@@ -1,3 +1,10 @@
+2006-02-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Switch to the new properties system.
+
+	* mlc/properties.hh: Switch to the new properties system.
+	* tests/properties.cc: Adjust test.
+
 2006-02-16  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Replace ensure_ (ensure_list_) with assert_ (multiple_assert_).

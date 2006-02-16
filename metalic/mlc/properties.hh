@@ -25,6 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+// \file mlc/properties.hh
+// \brief Property mechanism.
+//
+// From Theo's presentation (olena-06-jan.pdf).
+
 #ifndef METALIC_PROPERTIES_HH
 # define METALIC_PROPERTIES_HH
 
@@ -34,209 +39,237 @@
 # include <mlc/cmp.hh>
 # include <mlc/if.hh>
 # include <mlc/is_a.hh>
-# include <mlc/implies.hh>
 
-// Note: TypedefName must be of the form `typedef_::foo'.
-# define mlc_internal_get_typedef_(Type, TypedefName) \
+
+/*------------.
+| Equipment.  |
+`------------*/
+
+// Note: TypedefName *must* be of the form `typedef_::foo'.
+# define mlc_internal_get_typedef(Type, TypedefName) \
    typename TypedefName::template from_< Type >::ret
 
-
+// FIXME: Add support for hierarchies with several super classes.
 # define mlc_equip_namespace_with_properties()				    \
 									    \
-  template <template <typename> class abstraction>			    \
-  struct is_a								    \
-  {									    \
-    template <typename E>						    \
-    struct instantiated_with						    \
-    {									    \
-      typedef abstraction<E> ret;					    \
-    };									    \
-  };									    \
+  /* ------------------------- */					    \
+  /* Inheritance declaration.  */					    \
+  /* ------------------------- */					    \
 									    \
-  template <typename type, unsigned i = 0>				    \
+  template <typename type>						    \
   struct set_super_type							    \
   {									    \
     typedef mlc::none ret;						    \
   };									    \
 									    \
-  template <typename type, unsigned i = 0>				    \
-  struct set_category							    \
-  {									    \
-    typedef mlc::none ret;						    \
-  };									    \
 									    \
-  template <typename category>						    \
-  struct set_default_props						    \
-  {									    \
-  };									    \
+  /* ---------------------------------------- */			    \
+  /* ``Internal'' associated types facility.  */			    \
+  /* ---------------------------------------- */			    \
 									    \
-  template <typename category, typename type>				    \
-  struct set_props							    \
-  {									    \
-  };									    \
-									    \
-  template <typename category, typename type>				    \
-  struct get_props							    \
-  {									    \
-  };									    \
-									    \
-  template <typename category, typename from_type, typename typedef_type>   \
-  struct set_type							    \
-  {									    \
-  };									    \
-									    \
-  namespace internal							    \
-  {									    \
-									    \
-    template <typename type, unsigned i = 0>				    \
-    struct get_super_type : public set_super_type <type, i>		    \
-    {									    \
-    };									    \
-									    \
-    template <typename type, unsigned i = 0>				    \
-    struct get_category : public set_category <type, i>			    \
-    {									    \
-    };									    \
-									    \
-    template <typename category>					    \
-    struct get_default_props : public set_default_props <category>	    \
-    {									    \
-    };									    \
-									    \
-    template <typename category, typename type>				    \
-    struct get_props : public set_props <category, type>		    \
-    {									    \
-    };									    \
-									    \
-    template <typename category, typename from_type, typename typedef_type> \
-    struct get_type : public set_type <category, from_type, typedef_type>   \
-    {									    \
-      ~get_type()							    \
-      {									    \
-	typedef set_type <category, from_type, typedef_type> super_type;    \
-	typedef mlc_internal_get_typedef_(get_default_props<category>,	    \
-					  typedef_type) prop_type;	    \
-									    \
-	mlc::implies_< mlc::neq_< mlc_ret(super_type),			    \
-	                          mlc::not_found >,			    \
-	               mlc::eq_< prop_type,				    \
-                                 mlc::not_found > >::ensure();		    \
-      }									    \
-    };									    \
-									    \
-									    \
-    template <typename category, typename from_type, typename typedef_type> \
-    struct f_rec_get_prop						    \
-    {									    \
-      typedef get_props<category, from_type> props;			    \
-      typedef mlc_internal_get_typedef_(props, typedef_type) prop;	    \
-									    \
-      typedef typename							    \
-      mlc::if_< mlc::neq_< prop, mlc::not_found >,			    \
-	        prop,							    \
-	   typename f_rec_get_prop< category,				    \
-				typename get_super_type<from_type, 0>::ret, \
-				typedef_type >::ret			    \
-      >::ret ret;							    \
-    };									    \
-									    \
-    template <typename category, typename typedef_type>			    \
-    struct f_rec_get_prop <category, mlc::none, typedef_type>		    \
-    {									    \
-      typedef mlc_internal_get_typedef_(get_default_props<category>,	    \
-					typedef_type) ret;		    \
-      ~f_rec_get_prop()							    \
-      {									    \
-	mlc::and_< mlc::neq_< ret, mlc::not_found >,			    \
-	           mlc::neq_< ret, mlc::undefined > >::ensure();	    \
-      }									    \
-    };									    \
-									    \
-									    \
-    template <typename category, typename from_type, typename typedef_type> \
-    struct f_rec_get_type						    \
-    {									    \
-      typedef get_type<category, from_type, typedef_type> client_type;	    \
-      typedef mlc_ret(client_type) type;				    \
-									    \
-      typedef typename							    \
-      mlc::if_< mlc::neq_< type, mlc::not_found >,			    \
-	   type,							    \
-	   typename f_rec_get_type< category,				    \
-				typename get_super_type<from_type, 0>::ret, \
-				typedef_type >::ret			    \
-      >::ret ret;							    \
-    };									    \
-									    \
-    template <typename category, typename typedef_type>			    \
-    struct f_rec_get_type <category, mlc::none, typedef_type>		    \
-    {									    \
-      typedef mlc::not_found ret;					    \
-    };									    \
-									    \
-    template <typename category, typename from_type, typename typedef_type> \
-    struct f_get_type							    \
-    {									    \
-      typedef								    \
-      mlc_internal_get_typedef_(get_default_props<category>, typedef_type)  \
-      default_prop;							    \
-									    \
-      typedef								    \
-      typename f_rec_get_prop<category, from_type, typedef_type>::ret	    \
-      prop;								    \
-									    \
-      typedef								    \
-      typename f_rec_get_type<category, from_type, typedef_type>::ret	    \
-      type;								    \
-									    \
-      ~f_get_type()							    \
-      {									    \
-	mlc::implies_< mlc::is_found<default_prop>,			    \
-	              mlc::is_not_found<type> >::ensure();		    \
-	mlc::xor_< mlc::is_found<prop>,					    \
-	           mlc::is_found<type> >::ensure();			    \
-      }									    \
-									    \
-      typedef typename mlc::if_< mlc::is_ok<prop>,			    \
-				 prop,					    \
-				 typename mlc::if_< mlc::is_ok<type>,	    \
-						    type,		    \
-						    mlc::not_ok		    \
-                                                  > ::ret		    \
-                               > ::ret ret;				    \
-    };									    \
-									    \
+  /** Fwd decl.  */							    \
+  namespace internal {							    \
+    template <typename category, typename from_type> struct get_types;	    \
   }									    \
 									    \
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+  /** Specialize this class to set ``internal'' associated types.  */	    \
+  template <typename category, typename from_type>			    \
+  struct set_types							    \
+  {									    \
+  };									    \
+									    \
+  /** \brief Specialize this class to redefine ``internal''       */	    \
+  /** associated types.                                           */	    \
+  /**                                                             */	    \
+  /** Notice the inheritance relation, which enable the automatic */	    \
+  /** retrieval of the types associated to the super class of \a  */	    \
+  /** from_type.                                                  */	    \
+  template <typename category, typename from_type>			    \
+  struct redefine_types : public mlc_super_types(category, from_type)	    \
+  {      								    \
+  };									    \
+									    \
+									    \
+  /* ----------------------------------------- */			    \
+  /* ``External'' associated types machinery.  */			    \
+  /* ----------------------------------------- */			    \
+									    \
+  /** Fwd decl.  */							    \
+  namespace internal {							    \
+    template <typename category, typename from_type, typename typedef_type> \
+    struct get_ext_type;						    \
+  }									    \
+									    \
+  /** Specialize this class to set an ``external'' associated type.  */	    \
+  template <typename category, typename from_type, typename typedef_type>   \
+  struct set_ext_type							    \
+  {									    \
+  };									    \
+									    \
+  /** \brief Specialize this class to redefine an ``external''    */	    \
+  /** associated type.                                            */	    \
+  /**                                                             */	    \
+  /** Notice the inheritance relation, which enable the automatic */	    \
+  /** retrieval of the types associated to the super class of \a  */	    \
+  /** from_type.                                                  */	    \
+  template <typename category, typename from_type, typename typedef_type>   \
+  struct redefine_ext_type :						    \
+    public mlc_super_ext_type(category, from_type, typedef_type)	    \
+  {      								    \
+  };									    \
+									    \
+									    \
+  /* -------------------- */						    \
+  /* Internal machinery.  */						    \
+  /* -------------------- */						    \
+									    \
+  /** The classes enclosed in this namespace must not be specialized */	    \
+  /** by the user (they are part of the automatic associated types   */	    \
+  /** retrieval mechanism).                                          */	    \
+  namespace internal							    \
+  {									    \
+    template <typename category, typename from_type>			    \
+    struct get_types :							    \
+      public set_types<category, from_type>,				    \
+      public redefine_types<category, from_type>			    \
+    {      								    \
+    };									    \
+									    \
+    /** End of the recursive construction of any get_types<> hierarchy.  */ \
+    template <typename category>					    \
+    struct get_types<category, mlc::none>				    \
+    {									    \
+    };									    \
+									    \
+    template <typename category, typename from_type, typename typedef_type> \
+    struct get_ext_type :						    \
+      public set_ext_type<category, from_type, typedef_type>,		    \
+      public redefine_ext_type<category, from_type, typedef_type>	    \
+    {									    \
+    };									    \
+									    \
+    /** End of the recursive construction of any get_ext_type<> */	    \
+    /** hierarchy.                                              */	    \
+    template <typename category, typename typedef_type>			    \
+    struct get_ext_type<category, mlc::none, typedef_type>		    \
+    {									    \
+    };									    \
+									    \
+    /** Typedef selector.  */						    \
+    /** \{ */								    \
+    /** Fwd decl.  */							    \
+    template <bool external_typedef_p, bool internal_typedef_p,		    \
+	      typename external_typedef, typename internal_typedef>	    \
+    struct select_typedef;						    \
+									    \
+    /** The typedef is found in both an external and an internal */	    \
+    /** type definitions: error.                                 */	    \
+    template <typename external_typedef, typename internal_typedef>	    \
+    struct select_typedef<true, true, external_typedef, internal_typedef>   \
+    {									    \
+      /* No ret member.  */						    \
+    };									    \
+									    \
+    /** The typedef is found neither in an external nor in an */	    \
+    /** internal type definition: error.                      */	    \
+    template <typename external_typedef, typename internal_typedef>	    \
+    struct select_typedef<false, false, external_typedef, internal_typedef> \
+    {									    \
+      /* No ret member.  */						    \
+    };									    \
+									    \
+    /** The typedef is found in an extternal definition only: good.  */	    \
+    template <typename external_typedef, typename internal_typedef>	    \
+    struct select_typedef<true, false, external_typedef, internal_typedef>  \
+    {									    \
+      typedef external_typedef ret;					    \
+    };									    \
+									    \
+    /** The typedef is found in an internal definition only: good.  */	    \
+    template <typename external_typedef, typename internal_typedef>	    \
+    struct select_typedef<false, true, external_typedef, internal_typedef>  \
+    {									    \
+      typedef internal_typedef ret;					    \
+    };									    \
+    /** \} */								    \
+   									    \
+  } /** End of namespace internal.  */					    \
+									    \
+									    \
+  /** FIXME: Don't query from_type directly, but */			    \
+  /** exact_type(from_type) instead              */			    \
+  template <typename category, typename from_type, typename typedef_type>   \
+  struct typeof_							    \
+  {									    \
+    typedef internal::get_types<category, from_type> types;		    \
+    /* FIXME: Add a check in typeof_ to ensure that get_ext_type */	    \
+    /* derives from get_ext_type<none>                           */	    \
+    typedef								    \
+    internal::get_ext_type<category, from_type, typedef_type> ext_type;	    \
+    /* FIXME: Add a check in typeof_ to ensure that get_ext_type */	    \
+    /* derives from get_ext_type<none>                           */	    \
+									    \
+    /** Look for the typedef as an external type.  */			    \
+    typedef								    \
+    mlc_internal_get_typedef(ext_type, typedef_::ret) external_typedef;	    \
+    /** Look for the typedef in internal types.  */			    \
+    typedef								    \
+    mlc_internal_get_typedef(types, typedef_type) internal_typedef;	    \
+									    \
+    static const bool found_external_p =				    \
+      mlc::is_found<external_typedef>::value;				    \
+    static const bool found_internal_p =				    \
+      mlc::is_found<internal_typedef>::value;				    \
+									    \
+    typedef typename							    \
+    internal::select_typedef<found_external_p, found_internal_p,	    \
+			     external_typedef, internal_typedef>::ret ret;  \
+    };									    \
+									    \
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
+/*---------.
+| Macros.  |
+`---------*/
 
-# define mlc_type_of_(Namespace, Category, FromType, Alias)		   \
-   Namespace::internal::f_get_type<Category,				   \
-                                   FromType,				   \
-                                   Namespace::typedef_::Alias##_type>::ret
+/* FIXME: I don't know this macro will be really usable; what if T is
+   a template class?  */
+// mlc_set_super_type(T, S)  to declare the immediate base class S of T
+# define mlc_set_super(Type, Super)		\
+   template <>					\
+   struct set_super_type<Type>			\
+   {						\
+     typedef Super ret;				\
+   }
 
-# define mlc_type_2_of_(Namespace, Category, FromType,_2, Alias)	  \
-   Namespace::internal::f_get_type<Category,				  \
-                                  FromType,_2,				  \
-                                  Namespace::typedef_::Alias##_type>::ret
+/// \def Get the immediate base class of T
+# define mlc_super(T)				\
+   set_super_type<T>::ret
 
+// FIXME: Doc.
+# define mlc_super_types(Category, FromType)			\
+   internal::get_types<Category, typename mlc_super(FromType)>
 
-# define mlc_type_of(Namespace, Category, FromType, Alias)	\
-   typename mlc_type_of_(Namespace, Category, FromType, Alias)
+// FIXME: Doc.
+# define mlc_super_types_(Category, FromType)		\
+   internal::get_types<Category, mlc_super(FromType)>
 
-# define mlc_type_2_of(Namespace, Category, FromType,_2, Alias)		\
-   typename mlc_type_2_of_(Namespace, Category, FromType,_2, Alias)
+// FIXME: Doc.
+# define mlc_super_ext_type(Category, FromType, Typedef)		   \
+   internal::get_ext_type<Category, typename mlc_super(FromType), Typedef>
 
+// FIXME: Doc.
+# define mlc_super_ext_type_(Category, FromType, Typedef)		\
+   internal::get_ext_type<Category, mlc_super(FromType), Typedef>
 
+/// Get the property \a Typedef from \a FromType (version with typename).
+#define mlc_typeof(Category, FromType, Typedef)				\
+  typename typeof_<Category, FromType, typedef_:: Typedef##_type >::ret
 
-// FIXME: TODO-list
-//
-// f_get_type lance d'une part f_rec_get_prop et d'autre part f_rec_get_type
-// fusion des résultats: si 2 not_found err, si 1 ok + 1 not_found -> ok
-//
-// f_rec_get_prop et f_rec_get_type examine plusieurs super (i=0,1,2)
+/// Get the property \a Typedef from \a FromType (version without typename).
+#define mlc_typeof_(Category, FromType, Typedef)		\
+  typeof_<Category, FromType, typedef_:: Typedef##_type >::ret
 
 
 #endif // ! METALIC_PROPERTIES_HH
