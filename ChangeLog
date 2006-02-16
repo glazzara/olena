@@ -1,3 +1,11 @@
+2006-02-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Autoconfiscate the project and automate the tests.
+
+	* configure.ac: New file.
+	* Makefile.am, build-aux/Makefile.am, metalic/Makefile.am,
+	* metalic/mlc/Makefile.am, metalic/tests/Makefile.am: New file.
+
 2006-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add TODO.
