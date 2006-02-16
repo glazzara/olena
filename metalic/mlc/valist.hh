@@ -46,7 +46,7 @@
 # define mlc_internal_valist_elt_spe(I)				\
    template < mlc_internal_valist_decl_params_ >		\
    struct valist_elt_ < mlc_internal_valist_params_, I >	\
-     : private ensure_< neq_<E##I, internal::valist_none> >	\
+     : private assert_< neq_<E##I, internal::valist_none> >	\
    {								\
      typedef E##I ret;						\
    }
@@ -89,7 +89,7 @@ namespace mlc
       valist_<mlc_internal_valist_params_> >::value;
 
     template <unsigned i>
-    struct elt : private ensure_list_< uint_greater_or_equal_<i, 1>,
+    struct elt : private multiple_assert_< uint_greater_or_equal_<i, 1>,
 				       uint_less_or_equal_<i, size_value> >,
 		 public internal::valist_elt_<mlc_internal_valist_params_, i>
     {

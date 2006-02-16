@@ -1,3 +1,24 @@
+2006-02-16  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Replace ensure_ (ensure_list_) with assert_ (multiple_assert_).
+
+	* tests/properties.cc: Fix bug to get compatibility with g++-3.3.
+	* mlc/bool.hh (ensure_item_<i, expr, check>): Rename as...
+	(check_item_<i, bexpr, result>): ...this.
+	(check_<bexpr, result>): New class dedicated to assert_.
+	(retrieve_ensure_): Remove.
+	(ASSERTION_FAILED_, AN_ASSERTION_FAILED_): New internal classes
+	mimicking respectively the old ensure_ and ensure_list_.
+	(no_error_message, no_bexpr): New classes.
+	(ensure_, ensure_list_): Rename as...
+	(assert_, multiple_assert_): ...these.
+	* mlc/pair.hh: Update.
+	* mlc/logic.hh: Update.
+	* mlc/valist.hh: Update.
+	* mlc/implies.hh: Update.
+	* mlc/is_a.hh: Update.
+	* mlc/cmp.hh: Update.
+
 2006-02-15  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Add new features such as variadic type list.

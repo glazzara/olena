@@ -99,7 +99,7 @@ namespace my
     typedef mlc::undefined baz_type;
   };
 
-  class A
+  struct A
   {
     // Aliases.
     typedef my_type_of_(A, foo) foo_type;
@@ -136,7 +136,7 @@ namespace my
   };
 
   // FIXME: Is there any `set_super_type(T)'' sugar available?
-  class B : public internal::get_super_type<B>
+  struct B : public internal::get_super_type<B>
   {
     // Aliases.
     typedef my_type_of_(B, foo) foo_type;

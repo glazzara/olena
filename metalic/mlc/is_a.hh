@@ -218,7 +218,7 @@ namespace mlc
 ** A constraint on the parameter of a class, which should be any
 ** subclass of base<B>, whatever B, can then be easily written:
 **   template <class T>
-**   struct foo : private mlc::ensure_< mlc_is_a(T, base) > {
+**   struct foo : private mlc::assert_< mlc_is_a(T, base) > {
 **     // ...
 **   };
 **

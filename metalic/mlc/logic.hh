@@ -259,7 +259,7 @@ namespace mlc
 	    typename A6 = none,
 	    typename A7 = none,
 	    typename A8 = none>
-  struct or_list_ : private ensure_list_< internal::is_bexpr_or_none_<A1>,
+  struct or_list_ : private multiple_assert_< internal::is_bexpr_or_none_<A1>,
 					  internal::is_bexpr_or_none_<A2>,
 					  internal::is_bexpr_or_none_<A3>,
 					  internal::is_bexpr_or_none_<A4>,
@@ -297,7 +297,7 @@ namespace mlc
 	    typename A6 = none,
 	    typename A7 = none,
 	    typename A8 = none>
-  struct and_list_ : private ensure_list_< internal::is_bexpr_or_none_<A1>,
+  struct and_list_ : private multiple_assert_< internal::is_bexpr_or_none_<A1>,
 					   internal::is_bexpr_or_none_<A2>,
 					   internal::is_bexpr_or_none_<A3>,
 					   internal::is_bexpr_or_none_<A4>,

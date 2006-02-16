@@ -59,7 +59,7 @@ namespace mlc
     typedef E2 second_elt;
 
     template <unsigned i>
-    struct elt : private ensure_< or_< uint_equal_<i, 1>,
+    struct elt : private assert_< or_< uint_equal_<i, 1>,
 				       uint_equal_<i, 2> > >,
 		 public internal::pair_elt_<E1, E2, i>
     {

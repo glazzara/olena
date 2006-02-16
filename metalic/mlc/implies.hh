@@ -55,7 +55,7 @@ namespace mlc
   ** expression types.  This class is also a Boolean expression type.
   **
   ** Sample use:
-  **   mlc::implies_< mlc_is_builtin(T), mlc_eq(T, int) >::ensure();
+  **   mlc::implies_< mlc_is_builtin(T), mlc_eq(T, int) >::assert();
   ** which means "if T is a buit-in type, it has to be int".
   */
 
