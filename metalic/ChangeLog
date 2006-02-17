@@ -1,5 +1,14 @@
 2006-02-17  Thierry Geraud  <theo@lrde.epita.fr>
 
+	Enhance error handling in mlc::switch_.
+
+	* tests/switch.cc: New file.
+	* mlc/switch.hh (case_true, case_false): New classes.
+	(case_type): New typedef in classes.
+	(case_, switch_): Modify error handling.
+
+2006-02-17  Thierry Geraud  <theo@lrde.epita.fr>
+
 	Modify mlc::assert_ to handle explicit error messages; also.
 
 	* mlc/elt.hh: Fix bug.

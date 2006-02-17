@@ -34,6 +34,7 @@
 # include <mlc/implies.hh>
 # include <mlc/comma.hh>
 # include <mlc/cmp.hh>
+# include <mlc/if.hh>
 
 
 namespace mlc
@@ -41,10 +42,35 @@ namespace mlc
 
   // FIXME: doc
 
+  namespace internal
+  {
+    struct case_true  {};
+    struct case_false {};
+
+  } // end of namespace mlc::internal
+
+
   template <typename bexpr>
-  struct where_ : public bexpr::eval
+  struct where_ : public mlc_if_( typename bexpr::eval,
+				  internal::case_true,
+				  internal::case_false )
   {
   };
+
+//   template <typename bexpr>
+//   struct where_ : public where_<typename bexpr::eval>
+//   {
+//   };
+
+//   template <>
+//   struct where_<true_>
+//   {
+//   };
+
+//   template <>
+//   struct where_<false_>
+//   {
+//   };
 
 
 
@@ -56,6 +82,7 @@ namespace mlc
   struct case_ : public undefined
   {
   };
+
 
   template <typename context,
 	    typename data>
@@ -73,7 +100,9 @@ namespace mlc
   {
     struct A_case_STATEMENT_IN_mlc_switch_SHOULD_DERIVE_FROM_mlc_where_;
     struct A_default_case_STATEMENT_IN_mlc_switch_SHOULD_NOT_DERIVE_FROM_mlc_where_;
-    struct RESULT_NOT_FOUND;
+    struct SWITCH_DOES_NOT_HAVE_A_CASE_FOR_YOUR_DATA;
+    struct RESULT_IS_NOT_FOUND_IN_default_case_;
+    template <unsigned i> struct RESULT_IS_NOT_FOUND_IN_case_;
 
   } // end of namespace mlc::ERROR
 
@@ -87,81 +116,124 @@ namespace mlc
     struct handle_case_;
 
 
+
     // impossible situation
+
     template <typename context, typename data, unsigned i>
     struct handle_case_ <context, data, i,
 			 1, 1>;
 
+
+
+    // default case
+
     template <typename context, typename data>
     struct handle_default_case_
+
       : private assert_< implies_< mlc_is_not_a(mlc_comma_1(default_case_<context, data>),
 						undefined),
 				   mlc_is_not_a(mlc_comma_1(default_case_<context, data>),
 						where_) >,
-			 ERROR::A_default_case_STATEMENT_IN_mlc_switch_SHOULD_NOT_DERIVE_FROM_mlc_where_ >
+			 ERROR::A_default_case_STATEMENT_IN_mlc_switch_SHOULD_NOT_DERIVE_FROM_mlc_where_ >,
+
+        private assert_< implies_< mlc_is_not_a(mlc_comma_1(default_case_<context, data>),
+						undefined),
+				   neq_<mlc_ret(mlc_comma_1(default_case_<context, data>)),
+					not_found> >,
+			 ERROR::RESULT_IS_NOT_FOUND_IN_default_case_ >
+
     {
-      typedef mlc_ret( mlc_comma_1(default_case_<context, data>) ) ret;
+      typedef default_case_<context, data> current_t;
+      typedef typename mlc::if_<mlc_is_a(current_t, undefined),
+	                        none,
+	                        current_t>::ret case_type;
+      typedef mlc_ret(current_t) ret;
     };
 
+
+
     // there is no more user-defined cases
-    // so go to the default case
+    // so go to the default case (the last case handled here)
+
     template <typename context, typename data, unsigned i>
     struct handle_case_ <context, data, i,
 			 0, 0>
+
       : private assert_< implies_< mlc_is_not_a(mlc_comma_2(case_<context, data, i>),
 						undefined),
 				   mlc_is_a(mlc_comma_2(case_<context, data, i>),
 					    where_) >,
 			 ERROR::A_case_STATEMENT_IN_mlc_switch_SHOULD_DERIVE_FROM_mlc_where_ >
+
     {
-      typedef mlc_ret( mlc_comma_1(handle_default_case_<context, data>) ) ret;
+      typedef handle_default_case_<context, data> last_t;
+      typedef typename last_t::case_type case_type;
+      typedef typename last_t::ret ret;
     };
 
 
     // current case is the one
+
     template <typename context, typename data, unsigned i>
     struct handle_case_ <context, data, i,
 			 1, 0>
+
       : private assert_< or_< mlc_is_a(mlc_comma_2(case_<context, data, i>),
 				       where_),
 			      mlc_is_a(mlc_comma_2(case_<context, data, i>),
 				       undefined) >,
-			 ERROR::A_case_STATEMENT_IN_mlc_switch_SHOULD_DERIVE_FROM_mlc_where_ >
+			 ERROR::A_case_STATEMENT_IN_mlc_switch_SHOULD_DERIVE_FROM_mlc_where_ >,
+
+        private assert_< implies_< mlc_is_not_a(mlc_comma_2(case_<context, data, i>),
+						undefined),
+				   neq_<mlc_ret(mlc_comma_2(case_<context, data, i>)),
+					not_found> >,
+			 ERROR::RESULT_IS_NOT_FOUND_IN_case_<i> >
+
     {
-      typedef mlc_ret( mlc_comma_2(case_<context, data, i>) ) ret;
+      typedef case_<context, data, i> case_type;
+      typedef mlc_ret(case_type) ret;
     };
+
 
 
     // current case is not the one
     // so go to the next case
+
     template <typename context, typename data, unsigned i>
     struct handle_case_ <context, data, i,
 			 0, 1>
+
       : private assert_< or_< mlc_is_a(mlc_comma_2(case_<context, data, i>),
 				       where_),
 			      mlc_is_a(mlc_comma_2(case_<context, data, i>),
 				       undefined) >,
 			 ERROR::A_case_STATEMENT_IN_mlc_switch_SHOULD_DERIVE_FROM_mlc_where_ >
+
     {
       typedef handle_case_ < context, data, i+1,
 	                     mlc_is_a(mlc_comma_2(case_<context, data, i+1>),
-				      true_)::value,
+				      internal::case_true)::value,
 	                     mlc_is_a(mlc_comma_2(case_<context, data, i+1>),
-				      false_)::value > next_t;
+				      internal::case_false)::value > next_t;
+      typedef typename next_t::case_type case_type;
       typedef typename next_t::ret ret;
     };
 
 
+
     // switch_
+
     template <typename context, typename data>
     struct switch_
     {
-      typedef typename internal::handle_case_ < context, data, 1,
-						mlc_is_a(mlc_comma_2(case_<context, data, 1>),
-							 true_)::value,
-						mlc_is_a(mlc_comma_2(case_<context, data, 1>),
-							 false_)::value
-						>::ret ret;
+      typedef internal::handle_case_ < context, data, 1,
+				       mlc_is_a(mlc_comma_2(case_<context, data, 1>),
+						internal::case_true)::value,
+				       mlc_is_a(mlc_comma_2(case_<context, data, 1>),
+						internal::case_false)::value > handle_t;
+      typedef typename handle_t::case_type case_type;
+      typedef typename handle_t::ret ret;
     };
 
 
@@ -173,10 +245,11 @@ namespace mlc
 
   template <typename context, typename data>
   struct switch_
-    : private assert_< neq_<typename internal::switch_<context, data>::ret,
-			    not_found>,
-		       ERROR::RESULT_NOT_FOUND >
+    : private assert_< neq_< mlc_comma_1(typename internal::switch_<context, data>::case_type),
+			     none >,
+		       ERROR::SWITCH_DOES_NOT_HAVE_A_CASE_FOR_YOUR_DATA >
   {
+    typedef typename internal::switch_<context, data>::case_type case_type;
     typedef typename internal::switch_<context, data>::ret ret;
   };
 
