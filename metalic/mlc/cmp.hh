@@ -58,7 +58,7 @@ namespace mlc
   /// \{
   template <typename T1, typename T2>
   struct eq_ : private multiple_assert_< is_not_value<T1>,
-				     is_not_value<T2> >,
+					 is_not_value<T2> >,
 	       public false_
   {
   };
@@ -74,7 +74,7 @@ namespace mlc
   /// \{
   template <typename T1, typename T2>
   struct neq_ : private multiple_assert_< is_not_value<T1>,
-				      is_not_value<T2> >,
+					  is_not_value<T2> >,
 		public true_
   {
   };

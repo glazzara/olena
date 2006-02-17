@@ -1,3 +1,20 @@
+2006-02-17  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Modify mlc::assert_ to handle explicit error messages; also.
+
+	* mlc/elt.hh: Fix bug.
+	* mlc/pair.hh: Add explicit error messages.
+	* mlc/valist.hh: Likewise.
+	* mlc/bool.hh (ASSERTION_FAILED_, AN_ASSERTION_FAILED_): Remove
+	so that error messages are more concise.
+	(iff_, mlc_iff): Rename as...
+	(type_iff_, mlc_type_iff): ...these.
+	(assert_): Update.
+	* mlc/switch.hh: New.
+	* mlc/is_a.hh (internal::is_a): Move and rename as...
+	(is_a_): ...this so error messages are shortern.
+	* mlc/cmp.hh: Pretty print.
+
 2006-02-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Switch to the new properties system.

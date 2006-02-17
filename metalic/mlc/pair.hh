@@ -46,6 +46,15 @@ namespace mlc
   } // end of namespace mlc::internal
 
 
+
+  namespace ERROR
+  {
+    struct PAIR_ELT_INDEX_SHOULD_BE_1_OR_2;
+
+  } // end of namespace mlc::ERROR
+
+
+
   /*! \class mlc::pair_<E1, E2>
   **
   ** This class is FIXME  */
@@ -60,7 +69,8 @@ namespace mlc
 
     template <unsigned i>
     struct elt : private assert_< or_< uint_equal_<i, 1>,
-				       uint_equal_<i, 2> > >,
+				       uint_equal_<i, 2> >,
+				  ERROR::PAIR_ELT_INDEX_SHOULD_BE_1_OR_2 >,
 		 public internal::pair_elt_<E1, E2, i>
     {
     };

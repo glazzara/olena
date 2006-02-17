@@ -42,12 +42,12 @@
 
 
 
-/*! \def mlc_iff(Type, BExpr)
+/*! \def mlc_type_iff(Type, BExpr)
 **
 ** FIXME: doc
 */
-# define mlc_iff(Type, BExpr)  typename mlc::iff_<Type, BExpr>::ret
-# define mlc_iff_(Type, BExpr) mlc::iff_<Type, BExpr>::ret
+# define mlc_type_iff(Type, BExpr)  typename mlc::type_iff_<Type, BExpr>::ret
+# define mlc_type_iff_(Type, BExpr) mlc::type_iff_<Type, BExpr>::ret
 
 
 
@@ -196,41 +196,6 @@ namespace mlc
     {
     };
 
-
-    // FIXME: doc
-
-    template <typename bexpr, typename err>
-    struct ASSERTION_FAILED_ :
-      private virtual check_<bexpr, typename bexpr::is_true>
-    {
-    };
-
-
-    // FIXME: doc
-
-    template <typename bexpr1,
-	      typename bexpr2,
-	      typename bexpr3, 
-	      typename bexpr4,
-	      typename bexpr5,
-	      typename bexpr6, 
-	      typename bexpr7,
-	      typename bexpr8,
-	      typename bexpr9>
-    struct AN_ASSERTION_FAILED_ :
-      private virtual check_item_<1, bexpr1, typename bexpr1::is_true>,
-      private virtual check_item_<2, bexpr2, typename bexpr2::is_true>,
-      private virtual check_item_<3, bexpr3, typename bexpr3::is_true>,
-      private virtual check_item_<4, bexpr4, typename bexpr4::is_true>,
-      private virtual check_item_<5, bexpr5, typename bexpr5::is_true>,
-      private virtual check_item_<6, bexpr6, typename bexpr6::is_true>,
-      private virtual check_item_<7, bexpr7, typename bexpr7::is_true>,
-      private virtual check_item_<8, bexpr8, typename bexpr8::is_true>,
-      private virtual check_item_<9, bexpr9, typename bexpr9::is_true>
-    {
-    };
-
-
   } // end of namespace mlc::internal
 
 
@@ -310,22 +275,35 @@ namespace mlc
   */
 
   template <typename bexpr, typename err = no_error_message>
-  struct assert_ : public internal::ASSERTION_FAILED_<bexpr, err>
+  struct assert_ :
+    private virtual internal::check_<bexpr, typename bexpr::is_true>
   {
-    static void run() {}
+    typedef dummy is_true;
   protected:
     assert_() {}
   };
 
 
-  /*! \class mlc::iff_<T, bexpr>
+  /*! \class mlc::type_iff_<T, bexpr>
   **
   ** FIXME: doc
-  ** T iff bexpr
+  ** returns type T iff bexpr
   */
   template <typename T, typename bexpr>
-  struct iff_ :
+  struct type_iff_ :
     private assert_<bexpr>
+  {
+    typedef T ret;
+  };
+
+
+  /*! \class mlc::literal_<T>
+  **
+  ** FIXME: doc
+  */
+
+  template <typename T>
+  struct literal_
   {
     typedef T ret;
   };
@@ -373,21 +351,20 @@ namespace mlc
 	    typename bexpr7 = no_bexpr,
 	    typename bexpr8 = no_bexpr,
 	    typename bexpr9 = no_bexpr>
-  struct multiple_assert_ : public internal::AN_ASSERTION_FAILED_<bexpr1,
-								  bexpr2,
-								  bexpr3,
-								  bexpr4,
-								  bexpr5,
-								  bexpr6,
-								  bexpr7,
-								  bexpr8,
-								  bexpr9>
+  struct multiple_assert_ :
+      private virtual internal::check_item_<1, bexpr1, typename bexpr1::is_true>,
+      private virtual internal::check_item_<2, bexpr2, typename bexpr2::is_true>,
+      private virtual internal::check_item_<3, bexpr3, typename bexpr3::is_true>,
+      private virtual internal::check_item_<4, bexpr4, typename bexpr4::is_true>,
+      private virtual internal::check_item_<5, bexpr5, typename bexpr5::is_true>,
+      private virtual internal::check_item_<6, bexpr6, typename bexpr6::is_true>,
+      private virtual internal::check_item_<7, bexpr7, typename bexpr7::is_true>,
+      private virtual internal::check_item_<8, bexpr8, typename bexpr8::is_true>,
+      private virtual internal::check_item_<9, bexpr9, typename bexpr9::is_true>
   {
-    static void run() {}
   protected:
     multiple_assert_() {}
   };
-
 
 
   /*! \class mlc::bool_<true>

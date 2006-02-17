@@ -46,7 +46,6 @@
 # define mlc_internal_valist_elt_spe(I)				\
    template < mlc_internal_valist_decl_params_ >		\
    struct valist_elt_ < mlc_internal_valist_params_, I >	\
-     : private assert_< neq_<E##I, internal::valist_none> >	\
    {								\
      typedef E##I ret;						\
    }
@@ -74,6 +73,15 @@ namespace mlc
   **
   ** This class is FIXME  */
 
+
+  namespace ERROR
+  {
+    struct VALIST_ELT_INDEX_SHOULD_BE_1_OR_GREATER;
+    struct VALIST_ELT_INDEX_IS_GREATER_THAN_LIST_SIZE;
+
+  } // end of namespace mlc::ERROR
+
+
   template < typename E1 = internal::valist_none,
 	     typename E2 = internal::valist_none,
 	     typename E3 = internal::valist_none,
@@ -89,8 +97,10 @@ namespace mlc
       valist_<mlc_internal_valist_params_> >::value;
 
     template <unsigned i>
-    struct elt : private multiple_assert_< uint_greater_or_equal_<i, 1>,
-				       uint_less_or_equal_<i, size_value> >,
+    struct elt : private assert_< uint_greater_or_equal_<i, 1>,
+				  ERROR::VALIST_ELT_INDEX_SHOULD_BE_1_OR_GREATER >,
+                 private assert_< uint_less_or_equal_<i, size_value>,
+				  ERROR::VALIST_ELT_INDEX_IS_GREATER_THAN_LIST_SIZE >,
 		 public internal::valist_elt_<mlc_internal_valist_params_, i>
     {
     };

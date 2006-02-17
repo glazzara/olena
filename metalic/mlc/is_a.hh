@@ -34,7 +34,7 @@
 
 // private macro so do _not_ use it
 # define mlc_internal_is_a_result_		\
-sizeof(helper<T,U>::select((T*)helper<T,U>::makeT())) == sizeof(yes_)
+sizeof(helper<T,U>::select((T*)helper<T,U>::makeT())) == sizeof(internal::yes_)
 
 
 namespace mlc
@@ -81,125 +81,126 @@ namespace mlc
     typedef char yes_;
     struct no_ { char dummy[2]; };
 
-
-    // dev note : below, is_a<T,id> is a better factorization
-    //            but g++ 2.95.4 has some trouble with it
-
-    template<unsigned id>
-    struct is_a;
-
-    // class_
-
-    template<>
-    struct is_a< form::class_ >
-    {
-      typedef is_a< form::class_ > self;
-
-      template<class T,    class U>
-      struct helper
-      {
-	static yes_ select(U*);
-	static no_  select(...);
-	static T* makeT();
-      };
-
-      template<class T,    class U>
-      struct ret
-	: public bool_<( mlc_internal_is_a_result_ )>
-      {
-      };
-    };
-
-    // template_l_class_r_class_
-
-    template<>
-    struct is_a< form::template_l_class_r_class_ >
-    {
-      typedef is_a< form::template_l_class_r_class_ > self;
-
-      template<class T,    template < class > class U>
-      struct helper
-      {
-	template<class V>
-	static yes_ select(U<V>*);
-	static no_  select(...);
-	static T* makeT();
-      };
-
-      template<class T,    template < class > class U>
-      struct ret
-	: public bool_<( mlc_internal_is_a_result_ )>
-      {
-      };
-    };
-
-    // template_l_class_class_r_class_
-
-    template<>
-    struct is_a< form::template_l_class_class_r_class_ >
-    {
-      typedef is_a< form::template_l_class_class_r_class_ > self;
-
-      template<class T,    template < class,class > class U>
-      struct helper
-      {
-	template<class V, class W>
-	static yes_ select(U<V,W>*);
-	static no_  select(...);
-	static T* makeT();
-      };
-
-      template<class T,    template < class,class > class U>
-      struct ret
-	: public bool_<( mlc_internal_is_a_result_ )>
-      {};
-    };
-
-    // template_l_template_l_class_r_class_r_class_
-
-    template<>
-    struct is_a< form::template_l_template_l_class_r_class_r_class_ >
-    {
-      typedef is_a< form::template_l_template_l_class_r_class_r_class_ > self;
-
-      template<class T,    template < template < class > class > class U>
-      struct helper
-      {
-	template<template<class> class V>
-	static yes_ select(U<V>*);
-	static no_  select(...);
-	static T* makeT();
-      };
-
-      template<class T,    template < template < class > class > class U>
-      struct ret
-	: public bool_<( mlc_internal_is_a_result_ )>
-      {};
-    };
-
-    // template_l_template_l_class_class_r_class_r_class_
-
-    template<>
-    struct is_a< form::template_l_template_l_class_class_r_class_r_class_ >
-    {
-      typedef is_a< form::template_l_template_l_class_class_r_class_r_class_ > self;
-
-      template<class T,    template < template < class,class > class > class U>
-      struct helper
-      {
-	template<template<class,class> class V>
-	static yes_ select(U<V>*);
-	static no_  select(...);
-	static T* makeT();
-      };
-
-      template<class T,    template < template < class,class > class > class U>
-      struct ret
-	: public bool_<( mlc_internal_is_a_result_ )>
-      {};
-    };
-
   } // end of namespace mlc::internal
+
+
+  // dev note : below, is_a_<T,id> is a better factorization
+  //            but g++ 2.95.4 has some trouble with it
+
+  template<unsigned id>
+  struct is_a_;
+
+  // class_
+
+  template<>
+  struct is_a_< form::class_ >
+  {
+    typedef is_a_< form::class_ > self;
+
+    template<class T,    class U>
+    struct helper
+    {
+      static internal::yes_ select(U*);
+      static internal::no_  select(...);
+      static T* makeT();
+    };
+
+    template<class T,    class U>
+    struct ret
+      : public bool_<( mlc_internal_is_a_result_ )>
+    {
+    };
+  };
+
+  // template_l_class_r_class_
+
+  template<>
+  struct is_a_< form::template_l_class_r_class_ >
+  {
+    typedef is_a_< form::template_l_class_r_class_ > self;
+
+    template<class T,    template < class > class U>
+    struct helper
+    {
+      template<class V>
+      static internal::yes_ select(U<V>*);
+      static internal::no_  select(...);
+      static T* makeT();
+    };
+
+    template<class T,    template < class > class U>
+    struct ret
+      : public bool_<( mlc_internal_is_a_result_ )>
+    {
+    };
+  };
+
+  // template_l_class_class_r_class_
+
+  template<>
+  struct is_a_< form::template_l_class_class_r_class_ >
+  {
+    typedef is_a_< form::template_l_class_class_r_class_ > self;
+
+    template<class T,    template < class,class > class U>
+    struct helper
+    {
+      template<class V, class W>
+      static internal::yes_ select(U<V,W>*);
+      static internal::no_  select(...);
+      static T* makeT();
+    };
+
+    template<class T,    template < class,class > class U>
+    struct ret
+      : public bool_<( mlc_internal_is_a_result_ )>
+    {};
+  };
+
+  // template_l_template_l_class_r_class_r_class_
+
+  template<>
+  struct is_a_< form::template_l_template_l_class_r_class_r_class_ >
+  {
+    typedef is_a_< form::template_l_template_l_class_r_class_r_class_ > self;
+
+    template<class T,    template < template < class > class > class U>
+    struct helper
+    {
+      template<template<class> class V>
+      static internal::yes_ select(U<V>*);
+      static internal::no_  select(...);
+      static T* makeT();
+    };
+
+    template<class T,    template < template < class > class > class U>
+    struct ret
+      : public bool_<( mlc_internal_is_a_result_ )>
+    {};
+  };
+
+  // template_l_template_l_class_class_r_class_r_class_
+
+  template<>
+  struct is_a_< form::template_l_template_l_class_class_r_class_r_class_ >
+  {
+    typedef is_a_< form::template_l_template_l_class_class_r_class_r_class_ > self;
+
+    template<class T,    template < template < class,class > class > class U>
+    struct helper
+    {
+      template<template<class,class> class V>
+      static internal::yes_ select(U<V>*);
+      static internal::no_  select(...);
+      static T* makeT();
+    };
+
+    template<class T,    template < template < class,class > class > class U>
+    struct ret
+      : public bool_<( mlc_internal_is_a_result_ )>
+    {};
+  };
+
 
 } // end of namespace mlc
 
@@ -237,19 +238,25 @@ namespace mlc
 */
 
 # define mlc_is_a(T, U) \
-mlc::wrap_<typename mlc::internal::is_a<sizeof(mlc::form::of<U >())>::ret<T,U > >
+mlc::wrap_< typename mlc::is_a_<sizeof(mlc::form::of<U >())>::ret<T,U > >
+
+# define mlc_is_a_(T, U) \
+mlc::is_a_< sizeof(mlc::form::of<U >())>::ret<T,U >
 
 
-/*! \def mlc_is_a_(T, U)
+/*! \def mlc_is_not_a(T, U)
 **
-** Macro equivalent as mlc_is_a(T, U) for use in a non templated
-** context.  The result is a Boolean expression type.
+** Macro equivalent as "not mlc_is_a(T, U)".  The result is a Boolean
+** expression type.
 **
 ** \see mlc_is_a(T, U)
 */
 
-# define mlc_is_a_(T, U) \
-mlc::wrap_<mlc::internal::is_a< sizeof(mlc::form::of<U >())>::ret<T,U > >
+# define mlc_is_not_a(T, U) \
+mlc::not_< typename mlc::is_a_<sizeof(mlc::form::of<U >())>::ret<T,U > >
+
+# define mlc_is_not_a_(T, U) \
+mlc::not_< mlc::is_a_< sizeof(mlc::form::of<U >())>::ret<T,U > >
 
 
 #endif // ! METALIC_IS_A_HH
