@@ -14,22 +14,23 @@
 
 namespace my
 {
+  /*-----------.
+  | Typedefs.  |
+  `-----------*/
+
+  mlc_decl_typedef(foo_type);
+  mlc_decl_typedef(bar_type);
+  mlc_decl_typedef(baz_type);
+  mlc_decl_typedef(quux_type);
+  mlc_decl_typedef(yin_type);
+  mlc_decl_typedef(zorg_type);
+
+
   /*----------------------.
   | Namespace equipment.  |
   `----------------------*/
 
   mlc_equip_namespace_with_properties();
-
-
-  /*-----------.
-  | Typedefs.  |
-  `-----------*/
-
-  mlc_decl_typedef(ptr_type);
-  mlc_decl_typedef(foo_type);
-  mlc_decl_typedef(bar_type);
-  mlc_decl_typedef(baz_type);
-  mlc_decl_typedef(quux_type);
 
 
   /*-----------.
@@ -43,7 +44,6 @@ namespace my
   }
 
 
-
   /*----.
   | A.  |
   `----*/
@@ -51,10 +51,9 @@ namespace my
   // Forward declaration.
   struct A;
 
-  // FIXME: Rename as set_types<> when mlc/properties.hh is updated.
-  // Associated types.
+  /// Types associated to my::A.
   template<>
-  struct set_types<category::my_cat, my::A>
+  struct vtypes<category::my_cat, my::A>
   {
     typedef int            foo_type;
     typedef float          bar_type;
@@ -80,47 +79,93 @@ namespace my
   // Warning, this sugar might me remove from properties.hh.
   mlc_set_super(B, A);
 
-  /// \brief Redefined types associated to \a B.
-  ///
-  /// Keeping the inheritance is absolutely capital here (i.e., when
-  /// you redefine an associated type with redefine_types).
+  /// Types associated to my::B.
   template<>
-  struct redefine_types<category::my_cat, B> :
-    mlc_super_types_(category::my_cat, B)
+  struct vtypes<category::my_cat, B>
   {
+    // (foo is left untouched.)
+
     // A type redefined here.
     typedef double bar_type;
     // A type defined here (but declared abstract in the super class).
     typedef char baz_type;
-  };
-
-  /// \brief New types associated to \a B.
-  template<>
-  struct set_types<category::my_cat, B>
-  {
     // A type defined only here (and not in the super class).
     typedef long quux_type;
   };
 
-  struct B : public mlc_super(B)
+  /// An external type associated to my::B.
+  template<>
+  struct ext_vtype<category::my_cat, B, typedef_::yin_type>
+  {
+    typedef unsigned long ret;
+  };
+
+  struct B : public mlc_super_(B)
   {
     // Aliases.
     typedef my_type_of_(B, foo) foo_type;
     typedef my_type_of_(B, bar) bar_type;
     typedef my_type_of_(B, baz) baz_type;
     typedef my_type_of_(B, quux) quux_type;
+    typedef my_type_of_(B, yin) yin_type;
   };
+
+
+  /*---.
+  | C. |
+  `---*/
+
+  // Forward declaration.
+  struct C;
+
+  // C do not derive from B, but we want its vtypes to ``inherit''
+  // from B's vtypes (see the specilization
+  // vtypes<category::my_cat, C>.
+
+  /// Types associated to my::C.
+  template<>
+  struct vtypes<category::my_cat, C>
+  {
+    // FIXME: Having this link here is not elegant when you consider
+    // ext_vtype<>: this means that even if you have only a vtype
+    // declared as ext_vtype, you'll still have to define a
+    // corresponding vtypes<>, at least to define the pseudosuper
+    // class.  What about externalizing this information, maybe with
+    // set_pseudosuper_type<>, and a macro set_pseudosuper() as sugar?
+
+    /// Link to B (``pseudo'' inheritance).
+    typedef B pseudosuper_type;
+
+    // A type defined only here (and not in the super class).
+    typedef double zorg_type;
+  };
+
+  struct C // no inheritance
+  {
+    // Aliases.
+    typedef my_type_of_(C, foo) foo_type;
+    typedef my_type_of_(C, quux) quux_type;
+    typedef my_type_of_(C, zorg) zorg_type;
+  };
+
 }
+
 
 int
 main()
 {
-  // Check associated types.
+  // Check types associated to A.
   mlc_eq(my::A::foo_type, int)::ensure ();
   mlc_eq(my::A::bar_type, float)::ensure ();
 
-  // Check associated types.
+  // Check types associated to B.
   mlc_neq(my::B::bar_type, my::A::bar_type)::ensure ();
   mlc_eq(my::B::baz_type, char)::ensure ();
   mlc_eq(my::B::quux_type, long)::ensure ();
+  mlc_eq(my::B::yin_type, unsigned long)::ensure ();
+
+  // Check types associated to C.
+  mlc_eq(my::C::foo_type, int)::ensure ();
+  mlc_eq(my::C::quux_type, long)::ensure ();
+  mlc_eq(my::C::zorg_type, double)::ensure ();
 }

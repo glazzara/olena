@@ -50,182 +50,295 @@
    typename TypedefName::template from_< Type >::ret
 
 // FIXME: Add support for hierarchies with several super classes.
-# define mlc_equip_namespace_with_properties()				    \
-									    \
-  /* ------------------------- */					    \
-  /* Inheritance declaration.  */					    \
-  /* ------------------------- */					    \
-									    \
-  template <typename type>						    \
-  struct set_super_type							    \
-  {									    \
-    typedef mlc::none ret;						    \
-  };									    \
-									    \
-									    \
-  /* ---------------------------------------- */			    \
-  /* ``Internal'' associated types facility.  */			    \
-  /* ---------------------------------------- */			    \
-									    \
-  /** Fwd decl.  */							    \
-  namespace internal {							    \
-    template <typename category, typename from_type> struct get_types;	    \
-  }									    \
-									    \
-  /** Specialize this class to set ``internal'' associated types.  */	    \
-  template <typename category, typename from_type>			    \
-  struct set_types							    \
-  {									    \
-  };									    \
-									    \
-  /** \brief Specialize this class to redefine ``internal''       */	    \
-  /** associated types.                                           */	    \
-  /**                                                             */	    \
-  /** Notice the inheritance relation, which enable the automatic */	    \
-  /** retrieval of the types associated to the super class of \a  */	    \
-  /** from_type.                                                  */	    \
-  template <typename category, typename from_type>			    \
-  struct redefine_types : public mlc_super_types(category, from_type)	    \
-  {      								    \
-  };									    \
-									    \
-									    \
-  /* ----------------------------------------- */			    \
-  /* ``External'' associated types machinery.  */			    \
-  /* ----------------------------------------- */			    \
-									    \
-  /** Fwd decl.  */							    \
-  namespace internal {							    \
-    template <typename category, typename from_type, typename typedef_type> \
-    struct get_ext_type;						    \
-  }									    \
-									    \
-  /** Specialize this class to set an ``external'' associated type.  */	    \
-  template <typename category, typename from_type, typename typedef_type>   \
-  struct set_ext_type							    \
-  {									    \
-  };									    \
-									    \
-  /** \brief Specialize this class to redefine an ``external''    */	    \
-  /** associated type.                                            */	    \
-  /**                                                             */	    \
-  /** Notice the inheritance relation, which enable the automatic */	    \
-  /** retrieval of the types associated to the super class of \a  */	    \
-  /** from_type.                                                  */	    \
-  template <typename category, typename from_type, typename typedef_type>   \
-  struct redefine_ext_type :						    \
-    public mlc_super_ext_type(category, from_type, typedef_type)	    \
-  {      								    \
-  };									    \
-									    \
-									    \
-  /* -------------------- */						    \
-  /* Internal machinery.  */						    \
-  /* -------------------- */						    \
-									    \
-  /** The classes enclosed in this namespace must not be specialized */	    \
-  /** by the user (they are part of the automatic associated types   */	    \
-  /** retrieval mechanism).                                          */	    \
-  namespace internal							    \
-  {									    \
-    template <typename category, typename from_type>			    \
-    struct get_types :							    \
-      public set_types<category, from_type>,				    \
-      public redefine_types<category, from_type>			    \
-    {      								    \
-    };									    \
-									    \
-    /** End of the recursive construction of any get_types<> hierarchy.  */ \
-    template <typename category>					    \
-    struct get_types<category, mlc::none>				    \
-    {									    \
-    };									    \
-									    \
-    template <typename category, typename from_type, typename typedef_type> \
-    struct get_ext_type :						    \
-      public set_ext_type<category, from_type, typedef_type>,		    \
-      public redefine_ext_type<category, from_type, typedef_type>	    \
-    {									    \
-    };									    \
-									    \
-    /** End of the recursive construction of any get_ext_type<> */	    \
-    /** hierarchy.                                              */	    \
-    template <typename category, typename typedef_type>			    \
-    struct get_ext_type<category, mlc::none, typedef_type>		    \
-    {									    \
-    };									    \
-									    \
-    /** Typedef selector.  */						    \
-    /** \{ */								    \
-    /** Fwd decl.  */							    \
-    template <bool external_typedef_p, bool internal_typedef_p,		    \
-	      typename external_typedef, typename internal_typedef>	    \
-    struct select_typedef;						    \
-									    \
-    /** The typedef is found in both an external and an internal */	    \
-    /** type definitions: error.                                 */	    \
-    template <typename external_typedef, typename internal_typedef>	    \
-    struct select_typedef<true, true, external_typedef, internal_typedef>   \
-    {									    \
-      /* No ret member.  */						    \
-    };									    \
-									    \
-    /** The typedef is found neither in an external nor in an */	    \
-    /** internal type definition: error.                      */	    \
-    template <typename external_typedef, typename internal_typedef>	    \
-    struct select_typedef<false, false, external_typedef, internal_typedef> \
-    {									    \
-      /* No ret member.  */						    \
-    };									    \
-									    \
-    /** The typedef is found in an extternal definition only: good.  */	    \
-    template <typename external_typedef, typename internal_typedef>	    \
-    struct select_typedef<true, false, external_typedef, internal_typedef>  \
-    {									    \
-      typedef external_typedef ret;					    \
-    };									    \
-									    \
-    /** The typedef is found in an internal definition only: good.  */	    \
-    template <typename external_typedef, typename internal_typedef>	    \
-    struct select_typedef<false, true, external_typedef, internal_typedef>  \
-    {									    \
-      typedef internal_typedef ret;					    \
-    };									    \
-    /** \} */								    \
-   									    \
-  } /** End of namespace internal.  */					    \
-									    \
-									    \
-  /** FIXME: Don't query from_type directly, but */			    \
-  /** exact_type(from_type) instead              */			    \
-  template <typename category, typename from_type, typename typedef_type>   \
-  struct typeof_							    \
-  {									    \
-    typedef internal::get_types<category, from_type> types;		    \
-    /* FIXME: Add a check in typeof_ to ensure that get_ext_type */	    \
-    /* derives from get_ext_type<none>                           */	    \
-    typedef								    \
-    internal::get_ext_type<category, from_type, typedef_type> ext_type;	    \
-    /* FIXME: Add a check in typeof_ to ensure that get_ext_type */	    \
-    /* derives from get_ext_type<none>                           */	    \
-									    \
-    /** Look for the typedef as an external type.  */			    \
-    typedef								    \
-    mlc_internal_get_typedef(ext_type, typedef_::ret) external_typedef;	    \
-    /** Look for the typedef in internal types.  */			    \
-    typedef								    \
-    mlc_internal_get_typedef(types, typedef_type) internal_typedef;	    \
-									    \
-    static const bool found_external_p =				    \
-      mlc::is_found<external_typedef>::value;				    \
-    static const bool found_internal_p =				    \
-      mlc::is_found<internal_typedef>::value;				    \
-									    \
-    typedef typename							    \
-    internal::select_typedef<found_external_p, found_internal_p,	    \
-			     external_typedef, internal_typedef>::ret ret;  \
-    };									    \
-									    \
+# define mlc_equip_namespace_with_properties()				      \
+									      \
+  /* ----------------------- */						      \
+  /* Typedefs declarations.  */						      \
+  /* ----------------------- */						      \
+									      \
+  /* FIXME: Should we use the `ret' typdef defined in the global */	      \
+  /* namespace instead ? (see at the end mlc/typedef.hh). */		      \
+  mlc_decl_typedef(ret);						      \
+									      \
+  /* Declare the ``uplink'' typedef (access to a pseudosuper class).  */      \
+  mlc_decl_typedef(pseudosuper_type);					      \
+									      \
+									      \
+  /* ------------- */							      \
+  /* Inheritance.  */							      \
+  /* ------------- */							      \
+									      \
+  template <typename type>						      \
+  struct set_super_type							      \
+  {									      \
+    typedef mlc::none ret;						      \
+  };									      \
+									      \
+									      \
+  /* --------------- */							      \
+  /* Virtual types.  */							      \
+  /* --------------- */							      \
+									      \
+  /** \brief Internal virtual types associated to \a from_type. */	      \
+  /**								*/	      \
+  /** Specialize this class for the desired \a from_type.	*/	      \
+  template <typename category, typename from_type>			      \
+  struct vtypes								      \
+  {									      \
+  };									      \
+									      \
+  /** End of the recursive construction of any vtypes hierarchy.  */	      \
+  template <typename category>						      \
+  struct vtypes<category, mlc::none>					      \
+  {									      \
+  };									      \
+									      \
+  /** \brief An external virtual type associated to \a from_type. */	      \
+  /**								  */	      \
+  /** Specialize this class for the desired \a from_type.	  */	      \
+  template <typename category, typename from_type, typename typedef_type>     \
+  struct ext_vtype							      \
+  {									      \
+  };									      \
+									      \
+  /** End of the recursive construction of any ext_vtype<> */		      \
+  /** hierarchy.                                           */		      \
+  template <typename category, typename typedef_type>			      \
+  struct ext_vtype<category, mlc::none, typedef_type>			      \
+  {									      \
+  };									      \
+									      \
+									      \
+  /* -------------------- */						      \
+  /* Internal machinery.  */						      \
+  /* -------------------- */						      \
+									      \
+  /** The classes enclosed in this namespace must not be specialized */	      \
+  /** by the user (they are part of the automatic associated types   */	      \
+  /** retrieval mechanism).                                          */	      \
+  namespace internal							      \
+  {									      \
+    /* ------------------------------------------ */			      \
+    /* Recursive retrieval of an internal vtype.  */			      \
+    /* ------------------------------------------ */			      \
+									      \
+    /* FIXME: Do a basic scheme of the algorithm in pseudo-code.  */	      \
+									      \
+    /* FIXME: Check for mlc::undefined?  */				      \
+									      \
+    /* FIXME: The presence of `vtypes' is the only thing that makes */	      \
+    /* this code different from the retrieval within an external    */	      \
+    /* vtype.  How can we factor this?                              */	      \
+    template <typename category, typename from_type, typename typedef_type>   \
+    struct rec_get_vtype						      \
+    {									      \
+      /** Set of vtypes associated with FROM_TYPE.  */			      \
+      typedef vtypes<category, from_type> types;			      \
+      /** Typedef in the current vtypes (maybe mlc::not_found).  */	      \
+      typedef mlc_internal_get_typedef(types, typedef_type) type;	      \
+									      \
+      /** Implicit parent (i.e. super), if any.  */			      \
+      typedef mlc_super(from_type) super;				      \
+      /** Pseudosuper class, if any.  */				      \
+      typedef mlc_internal_get_typedef(types, typedef_::pseudosuper_type)     \
+	pseudosuper;							      \
+									      \
+      typedef typename							      \
+      mlc::if_<								      \
+	mlc::neq_< type, mlc::not_found >,				      \
+	/* then	*/							      \
+	/*   return it					*/		      \
+	/*   (the typedef has been found in the vtypes	*/		      \
+	/*   associated to FROM_TYPE)			*/		      \
+	type,								      \
+	/* else	*/							      \
+	/*   check if the vtype of the `super' of FROM_TYPE */		      \
+	/*   has the typedef				    */		      \
+	typename							      \
+	mlc::if_< mlc::neq_< typename rec_get_vtype< category,		      \
+						     super,		      \
+						     typedef_type >::ret,     \
+			     mlc::not_found >,				      \
+		  /* then */						      \
+		  /*   return it */					      \
+		  typename rec_get_vtype< category,			      \
+					  super,			      \
+					  typedef_type >::ret,		      \
+		  /* else */						      \
+		  /*   check if the FROM_TYPE has a decl_parent */	      \
+		  /*   and try to retrieve the typedef from it. */	      \
+		  typename rec_get_vtype< category,			      \
+					  pseudosuper,			      \
+					  typedef_type >::ret >::ret >::ret   \
+      ret;								      \
+    };									      \
+									      \
+    /** Ends of the recursive retrieval (mlc::none is at the end of the */    \
+    /** transitive closure of every `super' relation).			*/    \
+    /** \{ */								      \
+    /** Case where \a from_type = mlc::none (end of a recursive	*/	      \
+    /** retrieval following `super' types).			*/	      \
+    template <typename category, typename typedef_type>			      \
+    struct rec_get_vtype<category, mlc::none, typedef_type>		      \
+    {									      \
+      typedef mlc::not_found ret;					      \
+    };									      \
+    /** Case where \a from_type = mlc::not_found (end of a recursive */	      \
+    /** retrieval following `super' types).			     */	      \
+    template <typename category, typename typedef_type>			      \
+    struct rec_get_vtype<category, mlc::not_found, typedef_type>	      \
+    {									      \
+      typedef mlc::not_found ret;					      \
+    };									      \
+    /** \} */								      \
+									      \
+    /* ------------------------------------------ */			      \
+    /* Recursive retrieval of an external vtype.  */			      \
+    /* ------------------------------------------ */			      \
+									      \
+    /* FIXME: Merge this with rec_get_vtype.  */			      \
+									      \
+    template <typename category, typename from_type, typename typedef_type>   \
+    struct rec_get_ext_vtype						      \
+    {									      \
+      /** Set of vtypes associated with FROM_TYPE.  */			      \
+      typedef ext_vtype<category, from_type, typedef_type> ext_type;	      \
+      /** Typedef in the current vtypes (maybe mlc::not_found).  */	      \
+      typedef mlc_internal_get_typedef(ext_type, typedef_::ret) type;	      \
+									      \
+      /** Implicit parent (i.e. super), if any.  */			      \
+      typedef mlc_super(from_type) super;				      \
+      /** Pseudosuper class, if any.  */				      \
+      /* FIXME: Looking for this information is not elegant. Have a  */	      \
+      /* look at metalic/tests/properties.cc for a better suggestion.  */     \
+      typedef vtypes<category, from_type> types;			      \
+      typedef mlc_internal_get_typedef(types, typedef_::pseudosuper_type)     \
+	pseudosuper;							      \
+									      \
+      typedef typename							      \
+      mlc::if_<								      \
+	mlc::neq_< type, mlc::not_found >,				      \
+	/* then	*/							      \
+	/*   return it					*/		      \
+	/*   (the typedef has been found in the vtypes	*/		      \
+	/*   associated to FROM_TYPE)			*/		      \
+	type,								      \
+	/* else	*/							      \
+	/*   check if the vtype of the `super' of FROM_TYPE */		      \
+	/*   has the typedef				    */		      \
+	typename							      \
+	mlc::if_< mlc::neq_< typename rec_get_ext_vtype< category,	      \
+							 super,		      \
+							 typedef_type >::ret, \
+			     mlc::not_found >,				      \
+		  /* then */						      \
+		  /*   return it */					      \
+		  typename rec_get_ext_vtype< category,			      \
+					      super,			      \
+					      typedef_type >::ret,	      \
+		  /* else */						      \
+		  /*   check if the FROM_TYPE has a decl_parent */	      \
+		  /*   and try to retrieve the typedef from it. */	      \
+		  typename rec_get_ext_vtype< category,			      \
+					      pseudosuper,		      \
+					      typedef_type >::ret>::ret>::ret \
+      ret;								      \
+    };									      \
+									      \
+    /** Ends of the recursive retrieval (mlc::none is at the end of the */    \
+    /** transitive closure of every `super' relation).			*/    \
+    /** \{ */								      \
+    /** Case where \a from_type = mlc::none (end of a recursive	*/	      \
+    /** retrieval following `super' types).			*/	      \
+    template <typename category, typename typedef_type>			      \
+    struct rec_get_ext_vtype<category, mlc::none, typedef_type>		      \
+    {									      \
+      typedef mlc::not_found ret;					      \
+    };									      \
+    /** Case where \a from_type = mlc::not_found (end of a recursive */	      \
+    /** retrieval following `super' types).			     */	      \
+    template <typename category, typename typedef_type>			      \
+    struct rec_get_ext_vtype<category, mlc::not_found, typedef_type>	      \
+    {									      \
+      typedef mlc::not_found ret;					      \
+    };									      \
+    /** \} */								      \
+									      \
+    /* ------------------------------------- */				      \
+    /* External/internal typedef selection.  */				      \
+    /* ------------------------------------- */				      \
+									      \
+    /** \brief Typedef selector.                                        */    \
+    /**                                                                 */    \
+    /** A virtual type is considered valid if and only if it has been   */    \
+    /** found as an internal vtype or (exclusive) as an external vtype. */    \
+    /** Other cases (no definition or a double definition) are invalid. */    \
+    /**                                                                 */    \
+    /** \{                                                              */    \
+    /** Fwd decl.  */							      \
+    template <bool external_typedef_p, bool internal_typedef_p,		      \
+	      typename external_typedef, typename internal_typedef>	      \
+    struct select_typedef;						      \
+									      \
+    /** The typedef is found in both an external and an internal */	      \
+    /** type definitions: error.                                 */	      \
+    template <typename external_typedef, typename internal_typedef>	      \
+    struct select_typedef<true, true, external_typedef, internal_typedef>     \
+    {									      \
+      /* No ret member.  */						      \
+    };									      \
+									      \
+    /** The typedef is found neither in an external nor in an */	      \
+    /** internal type definition: error.                      */	      \
+    template <typename external_typedef, typename internal_typedef>	      \
+    struct select_typedef<false, false, external_typedef, internal_typedef>   \
+    {									      \
+      /* No ret member.  */						      \
+    };									      \
+									      \
+    /** The typedef is found in an extternal definition only: good.  */	      \
+    template <typename external_typedef, typename internal_typedef>	      \
+    struct select_typedef<true, false, external_typedef, internal_typedef>    \
+    {									      \
+      typedef external_typedef ret;					      \
+    };									      \
+									      \
+    /** The typedef is found in an internal definition only: good.  */	      \
+    template <typename external_typedef, typename internal_typedef>	      \
+    struct select_typedef<false, true, external_typedef, internal_typedef>    \
+    {									      \
+      typedef internal_typedef ret;					      \
+    };									      \
+    /** \} */								      \
+									      \
+  } /** End of namespace internal.  */					      \
+									      \
+									      \
+  /* FIXME: Don't query from_type directly, but exact_type(from_type) */      \
+  /* instead.  We need mlc::any for this.  */				      \
+  template <typename category, typename from_type, typename typedef_type>     \
+  struct typeof_							      \
+  {									      \
+    /* Look for the typedef as an external type.  */			      \
+    typedef typename							      \
+    internal::rec_get_ext_vtype<category, from_type, typedef_type>::ret	      \
+    external_typedef;							      \
+    /* Look for the typedef in internal types.  */			      \
+    typedef typename							      \
+    internal::rec_get_vtype<category, from_type, typedef_type>::ret	      \
+    internal_typedef;							      \
+									      \
+    /* Did we found the virtual type? */				      \
+    static const bool found_external_p =				      \
+      mlc::is_found<external_typedef>::value;				      \
+    static const bool found_internal_p =				      \
+      mlc::is_found<internal_typedef>::value;				      \
+									      \
+    typedef typename							      \
+    internal::select_typedef<found_external_p, found_internal_p,	      \
+			     external_typedef, internal_typedef>::ret ret;    \
+    };									      \
+									      \
   struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
@@ -243,25 +356,13 @@
      typedef Super ret;				\
    }
 
-/// \def Get the immediate base class of T
+/// \def Get the immediate base class of T (version with typename).
 # define mlc_super(T)				\
+   typename set_super_type<T>::ret
+
+/// \def Get the immediate base class of T (version without typename).
+# define mlc_super_(T)				\
    set_super_type<T>::ret
-
-// FIXME: Doc.
-# define mlc_super_types(Category, FromType)			\
-   internal::get_types<Category, typename mlc_super(FromType)>
-
-// FIXME: Doc.
-# define mlc_super_types_(Category, FromType)		\
-   internal::get_types<Category, mlc_super(FromType)>
-
-// FIXME: Doc.
-# define mlc_super_ext_type(Category, FromType, Typedef)		   \
-   internal::get_ext_type<Category, typename mlc_super(FromType), Typedef>
-
-// FIXME: Doc.
-# define mlc_super_ext_type_(Category, FromType, Typedef)		\
-   internal::get_ext_type<Category, mlc_super(FromType), Typedef>
 
 /// Get the property \a Typedef from \a FromType (version with typename).
 #define mlc_typeof(Category, FromType, Typedef)				\
