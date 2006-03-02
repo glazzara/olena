@@ -276,9 +276,8 @@ namespace mlc
 
   template <typename bexpr, typename err = no_error_message>
   struct assert_ :
-    private virtual internal::check_<bexpr, typename bexpr::is_true>
+    public virtual internal::check_<bexpr, typename bexpr::is_true>
   {
-    typedef dummy is_true;
   protected:
     assert_() {}
   };
@@ -338,6 +337,9 @@ namespace mlc
   ** This class relies on mlc::internal::assert_item_ to check that
   ** each expression is true. 3) using "virtual" allow to encompass
   ** the multiple base class problem.
+  **
+  ** Limitation: no error message can be provided with this present
+  ** version of multiple_assert_ so prefer using several assert_.
   **
   ** \see assert_<bexpr, err>
   */

@@ -1,3 +1,24 @@
+2006-03-02  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Add meta switch-case; disambiguate typedef_.
+
+		"typedef exists but its value is not_found" and "typedef is
+		not found because it does not exist".
+
+	* tests/case.cc: New file.
+	* tests/switch.cc (where_): Precise name.
+	* tests/ret.cc: New file.
+	* mlc/bool.hh (assert): Remove is_true to avoid cryptic error
+	message such as "is_true" inaccessible.
+	* mlc/flags.hh (found): New class.
+	* mlc/typedef.hh (result2): New inner class to disambiguate between
+	"typedef is found but its value is not_found" and "typedef is not
+	found".
+	(mlc_ret, mlc_decl_typedef(ret)): Move to...
+	* mlc/ret.hh: ...this new file.
+	* mlc/switch.hh: Change that makes this file soon obsolete.
+	* mlc/case.hh: New file.
+
 2006-02-17  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Enhance error handling in mlc::switch_.

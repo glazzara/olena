@@ -151,6 +151,15 @@ namespace mlc {
   struct not_found : public abstract::flag {};
 
 
+  /*! \class mlc::found
+  **
+  ** The class corresponding to "not mlc::not_found".
+  **
+  ** \see mlc::not_found
+  */
+  struct found : public abstract::flag {};
+
+
   /*! \class mlc::undefined
   **
   ** Flag class to state that a type is undefined, that is, declared

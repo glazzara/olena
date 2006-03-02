@@ -1,4 +1,4 @@
-// Copyright (C) 2005 EPITA Research and Development Laboratory
+// Copyright (C) 2005, 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,6 +30,8 @@
 
 # include <mlc/flags.hh>
 # include <mlc/bool.hh>
+# include <mlc/pair.hh>
+# include <mlc/cmp.hh>
 
 
 /*! \macro mlc_decl_typedef(TypedefName)
@@ -149,7 +151,7 @@ namespace typedef_ {						\
       template <class T>					\
       static no selector(...);					\
 								\
-      template <class T, bool found>				\
+      template <class T, bool found_>				\
       struct result;						\
 								\
       template <class T>					\
@@ -160,6 +162,21 @@ namespace typedef_ {						\
       template <class T>					\
       struct result <T, false> {				\
 	typedef mlc::not_found ret;				\
+      };							\
+								\
+      template <class T, bool found_>				\
+      struct result2;						\
+								\
+      template <class T>					\
+      struct result2 <T, true> {				\
+	typedef mlc::pair_<mlc::found,				\
+			   typename T::TypedefName> ret;	\
+      };							\
+								\
+      template <class T>					\
+      struct result2 <T, false> {				\
+	typedef mlc::pair_<mlc::not_found,			\
+			   mlc::dummy> ret;			\
       };							\
 								\
     };								\
@@ -181,6 +198,10 @@ namespace typedef_ {						\
       typedef							\
       typename helper_::result<T, found_>::ret			\
       ret;							\
+								\
+      typedef							\
+      typename helper_::result2<T, found_>::ret			\
+      ret2;							\
     };								\
 								\
     template <class T, bool b>					\
@@ -205,7 +226,7 @@ namespace typedef_ {						\
 								\
 }								\
 								\
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n			\
 
 
 /*! \macro mlc_typedef(Type, TypedefName)
@@ -244,19 +265,6 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 # define mlc_typedef_onlyif_(Type, TypedefName, Bexpr) \
    typedef_::TypedefName::from_onlyif_<Type, mlc_bool(Bexpr)>::ret
-
-
-
-/*! \FIXME: what's the correct comment flag here?
-**
-** Since we often rely on having a typedef named "ret" in types, we offer
-** a default equipment for this particular typedef.  FIXME: doc
-*/
-
-mlc_decl_typedef(ret);
-
-# define mlc_ret(Type) typename typedef_::ret::from_<Type>::ret
-
 
 
 #endif // ! METALIC_TYPEDEF_HH
