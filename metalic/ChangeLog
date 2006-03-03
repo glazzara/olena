@@ -1,3 +1,11 @@
+2006-03-03  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Update Makefiles and switch file.
+
+	* tests/Makefile.am: Update.
+	* mlc/switch.hh: Replace obsolete contents by inclusion of case.hh.
+	* mlc/Makefile.am: Update.
+
 2006-03-02  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Add meta switch-case; disambiguate typedef_.

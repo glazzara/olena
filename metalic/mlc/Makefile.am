@@ -3,6 +3,7 @@
 mlcdir = $(includedir)/mlc
 nobase_mlc_HEADERS = 				\
   bool.hh					\
+  case.hh					\
   cmp.hh					\
   comma.hh					\
   elt.hh					\
@@ -13,6 +14,7 @@ nobase_mlc_HEADERS = 				\
   logic.hh					\
   pair.hh					\
   properties.hh					\
+  ret.hh					\
   to_string.hh					\
   type.hh					\
   typedef.hh					\
