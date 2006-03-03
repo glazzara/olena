@@ -1,3 +1,15 @@
+2006-03-03  Thierry Geraud  <theo@lrde.epita.fr>
+
+	New sub-project ('extended'; 'xtd' for short) and update.
+
+	* extended: New sub-project.
+	* extended/xtd: New directory.
+	* extended/tests: New directory.
+	* extended/tests/Makefile.am: New.
+	* extended/Makefile.am: New.
+	* configure.ac: Update.
+	* Makefile.am: Update.
+
 2006-02-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Revamp the virtual types (aka properties) system.

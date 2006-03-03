@@ -39,7 +39,7 @@ fi
 
 # Students should create their test suite in tests/.  Add the needed
 # configure options here.
-AC_CONFIG_FILES([metalic/tests/Makefile])
+AC_CONFIG_FILES([metalic/tests/Makefile extended/tests/Makefile])
 
 
 ## --------------- ##
@@ -54,6 +54,8 @@ AC_CONFIG_FILES([
   Makefile
     metalic/Makefile
       metalic/mlc/Makefile
+    extended/Makefile
+      extended/xtd/Makefile
 ])
 
 # Checks for library functions.
