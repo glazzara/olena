@@ -1,3 +1,13 @@
+2006-03-07  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Some non significative update.
+
+	* mlc/ret.hh (typedef_::ret): Move from namespace global to mlc and
+	update file contents.
+	* mlc/bool.hh (assert_::ensure): New method so that the user can form
+	"assert_<bexpr, error_msg>::ensure();"
+	* mlc/TODO: New.
+
 2006-03-03  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Update Makefiles and switch file.

@@ -278,6 +278,8 @@ namespace mlc
   struct assert_ :
     public virtual internal::check_<bexpr, typename bexpr::is_true>
   {
+  public:
+    static void ensure() {} 
   protected:
     assert_() {}
   };

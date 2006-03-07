@@ -38,14 +38,21 @@
 ** a default equipment for this particular typedef.  FIXME: doc
 */
 
-mlc_decl_typedef(ret);
+namespace mlc
+{
 
-# define mlc_ret(Type) typename typedef_::ret::from_<Type>::ret
+  mlc_decl_typedef(ret);
+
+} // end of namespace mlc
+
+
+
+# define mlc_ret(Type) typename mlc::typedef_::ret::from_<Type>::ret
 
 
 // test code
 
-# define mlc_ret2(Type) typename typedef_::ret::from_<Type>::ret2
+# define mlc_ret2(Type) typename mlc::typedef_::ret::from_<Type>::ret2
 
 
 namespace mlc
@@ -53,7 +60,7 @@ namespace mlc
 
   template <typename T>
   struct ret_found_in_
-    : public mlc::eq_< typename typedef_::ret::from_<T>::ret2::first_elt,
+    : public mlc::eq_< typename mlc::typedef_::ret::from_<T>::ret2::first_elt,
 		       mlc::found >
   {};
 

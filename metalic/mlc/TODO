@@ -1,0 +1,5 @@
+		-*- outline -*-
+
+* files
+
+create assert.hh from bool.hh
