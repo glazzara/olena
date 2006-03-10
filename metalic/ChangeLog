@@ -1,3 +1,9 @@
+2006-03-10  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Minor addition.
+
+	* mlc/comma.hh: Add version for 4 commas.
+
 2006-03-07  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Some non significative update.

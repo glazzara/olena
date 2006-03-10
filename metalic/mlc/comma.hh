@@ -31,9 +31,10 @@
 
 // FIXME: doc
 
-# define mlc_comma_1(a, b)        a, b
-# define mlc_comma_2(a, b, c)     a, b, c
-# define mlc_comma_3(a, b, c, d)  a, b, c, d
+# define mlc_comma_1(a, b)           a, b
+# define mlc_comma_2(a, b, c)        a, b, c
+# define mlc_comma_3(a, b, c, d)     a, b, c, d
+# define mlc_comma_4(a, b, c, d, e)  a, b, c, d, e
 
 
 #endif // ! METALIC_COMMA_HH
