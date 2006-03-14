@@ -1,3 +1,19 @@
+2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with recent changes and fix some tests of Metalic.
+
+	* metalic/mlc/properties.hh (mlc_equip_namespace_with_properties):
+	Catch up with recent changes in typedef.hh/ret.hh.
+	Don't declare a local `ret' typedef; include mlc/ret.hh, and use
+	the `mlc_ret' macro instead.
+	* metalic/mlc/cmp.hh (eq_<T, T>): Solve ambiguous calls to
+	ensure().
+	* metalic/tests/ret.cc: Include mlc/ret.hh instead of
+	mlc/typedef.hh.
+	* extended/tests/Makefile.am (mlcdir, nobase_mlc_HEADERS): Remove.
+	(AM_CPPFLAGS): New.
+	* extended/xtd/Makefile.am: New file.
+
 2006-03-03  Thierry Geraud  <theo@lrde.epita.fr>
 
 	New sub-project ('extended'; 'xtd' for short) and update.

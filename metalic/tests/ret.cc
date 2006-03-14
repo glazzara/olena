@@ -1,5 +1,5 @@
 # include <iostream>
-# include <mlc/typedef.hh>
+# include <mlc/ret.hh>
 
 struct yes
 {

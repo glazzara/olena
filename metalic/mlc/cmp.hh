@@ -67,6 +67,9 @@ namespace mlc
   struct eq_ <T, T> : private assert_< is_not_value<T> >,
 		      public true_
   {
+    // Solve the ambiguity on ensure(), a static member function
+    // inherited both from true_ and assert_.
+    using true_::ensure;
   };
   /// \}
 

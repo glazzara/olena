@@ -35,6 +35,7 @@
 
 # include <mlc/flags.hh>
 # include <mlc/typedef.hh>
+# include <mlc/ret.hh>
 # include <mlc/bool.hh>
 # include <mlc/cmp.hh>
 # include <mlc/if.hh>
@@ -55,10 +56,6 @@
   /* ----------------------- */						      \
   /* Typedefs declarations.  */						      \
   /* ----------------------- */						      \
-									      \
-  /* FIXME: Should we use the `ret' typdef defined in the global */	      \
-  /* namespace instead ? (see at the end mlc/typedef.hh). */		      \
-  mlc_decl_typedef(ret);						      \
 									      \
   /* Declare the ``uplink'' typedef (access to a pseudosuper class).  */      \
   mlc_decl_typedef(pseudosuper_type);					      \
@@ -134,7 +131,7 @@
     {									      \
       /** Set of vtypes associated with FROM_TYPE.  */			      \
       typedef vtypes<category, from_type> types;			      \
-      /** Typedef in the current vtypes (maybe mlc::not_found).  */	      \
+      /** Typedef in the current vtypes (may be mlc::not_found).  */	      \
       typedef mlc_internal_get_typedef(types, typedef_type) type;	      \
 									      \
       /** Implicit parent (i.e. super), if any.  */			      \
@@ -203,8 +200,8 @@
     {									      \
       /** Set of vtypes associated with FROM_TYPE.  */			      \
       typedef ext_vtype<category, from_type, typedef_type> ext_type;	      \
-      /** Typedef in the current vtypes (maybe mlc::not_found).  */	      \
-      typedef mlc_internal_get_typedef(ext_type, typedef_::ret) type;	      \
+      /** Typedef in the current vtypes (may be mlc::not_found).  */	      \
+      typedef mlc_ret(ext_type) type;					      \
 									      \
       /** Implicit parent (i.e. super), if any.  */			      \
       typedef mlc_super(from_type) super;				      \
