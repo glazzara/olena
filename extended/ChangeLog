@@ -1,0 +1,5 @@
+2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	* tests/Makefile.am (mlcdir, nobase_mlc_HEADERS): Remove.
+	(AM_CPPFLAGS): New.
+	* xtd/Makefile.am: New file.

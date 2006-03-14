@@ -1,5 +1,10 @@
 2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	* ChangeLog, metalic/ChangeLog: Clean up ChangeLogs.
+	* extended/ChangeLog: New.
+
+2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	New subproject: Static (`stc' for short).
 	Move the SCOOP machinery (virtual types/properties) from Metalic
 	to Static.
@@ -28,22 +33,6 @@
 	* extended/tests/Makefile.am (AM_CPPFLAGS): Add
 	-I$(top_srcdir)/metalic.
 
-2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
-
-	Catch up with recent changes and fix some tests of Metalic.
-
-	* metalic/mlc/properties.hh (mlc_equip_namespace_with_properties):
-	Catch up with recent changes in typedef.hh/ret.hh.
-	Don't declare a local `ret' typedef; include mlc/ret.hh, and use
-	the `mlc_ret' macro instead.
-	* metalic/mlc/cmp.hh (eq_<T, T>): Solve ambiguous calls to
-	ensure().
-	* metalic/tests/ret.cc: Include mlc/ret.hh instead of
-	mlc/typedef.hh.
-	* extended/tests/Makefile.am (mlcdir, nobase_mlc_HEADERS): Remove.
-	(AM_CPPFLAGS): New.
-	* extended/xtd/Makefile.am: New file.
-
 2006-03-03  Thierry Geraud  <theo@lrde.epita.fr>
 
 	New sub-project ('extended'; 'xtd' for short) and update.
@@ -55,33 +44,6 @@
 	* extended/Makefile.am: New.
 	* configure.ac: Update.
 	* Makefile.am: Update.
-
-2006-02-20  Roland Levillain  <roland@lrde.epita.fr>
-
-	Revamp the virtual types (aka properties) system.
-
-	No longer use the C++'s inheritance mechanism to ``pack'' the
-	internal vtypes of a class.  Rely on a metacode algorithm to
-	recursively look for vtypes in internal and external vtypes
-	instead, using both the super link and a ``pseudosuper'' link to
-	visit the upper classes.  The set/get classes have been replaced
-	by a single class (in fact, by two classes, one for internal
-	vtypes, the other for external vtypes).  The pseudosuper link is
-	used to inherit (or fetch) the vtypes from a given class, without
-	needing to inherit from this class.
-
-	* metalic/mlc/properties.hh (mlc_equip_namespace_with_properties):
-	Rewrite this macro.
-	(set_types, set_ext_types): Rename as...
-	(vtypes, ext_vtypes): ...this.
-	(get_types, get_ext_type): Remove.
-	* metalic/tests/properties.cc: Update the test.
-	Check for new cases (external vtype, pseudo inheritance of
-	vtypes).
-	(rec_get_vtype, rec_get_ext_vtype): New.
-	This class holds the algorithm for the recursive retrieval of
-	internal/external vtypes.
-	(typeof_): Adjust.
 
 2006-02-16  Roland Levillain  <roland@lrde.epita.fr>
 
