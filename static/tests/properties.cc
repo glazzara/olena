@@ -118,24 +118,18 @@ namespace my
   // Forward declaration.
   struct C;
 
-  // C do not derive from B, but we want its vtypes to ``inherit''
-  // from B's vtypes (see the specilization
-  // vtypes<category::my_cat, C>.
+  // C doesn't derive from B, but we want its vtypes to ``inherit''
+  // from B's vtypes (see the specialization
+  // types<category::my_cat, C>).
+
+  // Warning, this sugar might me remove from properties.hh.
+  /// Link to B (``pseudo'' inheritance).
+  stc_set_pseudosuper(C, B);
 
   /// Types associated to my::C.
   template<>
   struct vtypes<category::my_cat, C>
   {
-    // FIXME: Having this link here is not elegant when you consider
-    // ext_vtype<>: this means that even if you have only a vtype
-    // declared as ext_vtype, you'll still have to define a
-    // corresponding vtypes<>, at least to define the pseudosuper
-    // class.  What about externalizing this information, maybe with
-    // set_pseudosuper_type<>, and a macro set_pseudosuper() as sugar?
-
-    /// Link to B (``pseudo'' inheritance).
-    typedef B pseudosuper_type;
-
     // A type defined only here (and not in the super class).
     typedef double zorg_type;
   };

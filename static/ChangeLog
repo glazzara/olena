@@ -1,0 +1,12 @@
+2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Set the pseudosuper link using a separate class instead of an
+	internal virtual type.
+
+	* stc/properties.hh (stc_equip_namespace_with_properties):
+	Generate a set_pseudosuper_type struct.  Use it to get the
+	pseudosuper links in recursive vtype retrieval algorithms.
+	(stc_set_pseudosuper, stc_pseudosuper, stc_pseudosuper_): New
+	macros.
+	* tests/properties.cc: Adjust.
+

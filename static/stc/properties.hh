@@ -72,6 +72,17 @@
   };									      \
 									      \
 									      \
+  /* ------------------------ */					      \
+  /* ``Pseudo'' inheritance.  */					      \
+  /* ------------------------ */					      \
+									      \
+  template <typename type>						      \
+  struct set_pseudosuper_type						      \
+  {									      \
+    typedef mlc::none ret;						      \
+  };									      \
+									      \
+									      \
   /* --------------- */							      \
   /* Virtual types.  */							      \
   /* --------------- */							      \
@@ -137,8 +148,7 @@
       /** Implicit parent (i.e. super), if any.  */			      \
       typedef stc_super(from_type) super;				      \
       /** Pseudosuper class, if any.  */				      \
-      typedef stc_internal_get_typedef(types, typedef_::pseudosuper_type)     \
-	pseudosuper;							      \
+      typedef stc_pseudosuper(from_type) pseudosuper;			      \
 									      \
       typedef typename							      \
       mlc::if_<								      \
@@ -206,11 +216,7 @@
       /** Implicit parent (i.e. super), if any.  */			      \
       typedef stc_super(from_type) super;				      \
       /** Pseudosuper class, if any.  */				      \
-      /* FIXME: Looking for this information is not elegant. Have a  */	      \
-      /* look at static/tests/properties.cc for a better suggestion.  */     \
-      typedef vtypes<category, from_type> types;			      \
-      typedef stc_internal_get_typedef(types, typedef_::pseudosuper_type)     \
-	pseudosuper;							      \
+      typedef stc_pseudosuper(from_type) pseudosuper;			      \
 									      \
       typedef typename							      \
       mlc::if_<								      \
@@ -343,14 +349,28 @@
 | Macros.  |
 `---------*/
 
-/* FIXME: I don't know this macro will be really usable; what if T is
-   a template class?  */
+/* FIXME: I don't know whether this macro will be really usable; what
+   if Type is a template class?  We would have to provide additional
+   versions of this macro, with support for one parameter, two
+   parameters, etc.  */
 /// \def Declare the immediate base class \a Super of \a Type.
 # define stc_set_super(Type, Super)		\
    template <>					\
    struct set_super_type<Type>			\
    {						\
      typedef Super ret;				\
+   }
+
+/* FIXME: I don't know whether this macro will be really usable; what
+   if Type is a template class?  We would have to provide additional
+   versions of this macro, with support for one parameter, two
+   parameters, etc.  */
+/// \def Declare the pseudosuper class \a PseudoSuper of \a Type.
+# define stc_set_pseudosuper(Type, PseudoSuper)	\
+   template <>					\
+   struct set_pseudosuper_type<Type>		\
+   {						\
+     typedef PseudoSuper ret;			\
    }
 
 /// \def Get the immediate base class of T (version with typename).
@@ -360,6 +380,14 @@
 /// \def Get the immediate base class of T (version without typename).
 # define stc_super_(T)				\
    set_super_type<T>::ret
+
+/// \def Get the pseudosuper class of T (version with typename).
+# define stc_pseudosuper(T)			\
+   typename set_pseudosuper_type<T>::ret
+
+/// \def Get the pseudosuper class of T (version without typename).
+# define stc_pseudosuper_(T)			\
+   set_pseudosuper_type<T>::ret
 
 /// Get the property \a Typedef from \a FromType (version with typename).
 #define stc_typeof(Category, FromType, Typedef)				\
