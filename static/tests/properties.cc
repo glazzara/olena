@@ -1,16 +1,16 @@
-#include <mlc/properties.hh>
+#include <stc/properties.hh>
 #include <mlc/cmp.hh>
 
 
 // FIXME: Split this test into several smaller tests?  For instance,
 // we have to test inheritance, properties/associated types,
 // ``external properties'', etc.  The best approach is probably to
-// browse mlc/properties.hh so as to make a list of the features to be
+// browse stc/properties.hh so as to make a list of the features to be
 // checked.
 
 // Helper macro.
 #define my_type_of_(FromType, Typedef)		\
-  mlc_typeof_(my::category::my_cat, FromType, Typedef)
+  stc_typeof_(my::category::my_cat, FromType, Typedef)
 
 namespace my
 {
@@ -30,7 +30,7 @@ namespace my
   | Namespace equipment.  |
   `----------------------*/
 
-  mlc_equip_namespace_with_properties();
+  stc_equip_namespace_with_properties();
 
 
   /*-----------.
@@ -77,7 +77,7 @@ namespace my
   struct B;
 
   // Warning, this sugar might me remove from properties.hh.
-  mlc_set_super(B, A);
+  stc_set_super(B, A);
 
   /// Types associated to my::B.
   template<>
@@ -100,7 +100,7 @@ namespace my
     typedef unsigned long ret;
   };
 
-  struct B : public mlc_super_(B)
+  struct B : public stc_super_(B)
   {
     // Aliases.
     typedef my_type_of_(B, foo) foo_type;

@@ -13,7 +13,6 @@ nobase_mlc_HEADERS = 				\
   is_a.hh					\
   logic.hh					\
   pair.hh					\
-  properties.hh					\
   ret.hh					\
   to_string.hh					\
   type.hh					\

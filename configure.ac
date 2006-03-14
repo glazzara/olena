@@ -20,7 +20,7 @@ AM_INIT_AUTOMAKE([1.9.4 foreign check-news dist-bzip2 -Wall])
 
 
 ## --------------------- ##
-## C++ Compiler Set up.  ##
+## C++ compiler set up.  ##
 ## --------------------- ##
 
 # Look for a C++ compiler.
@@ -39,7 +39,11 @@ fi
 
 # Students should create their test suite in tests/.  Add the needed
 # configure options here.
-AC_CONFIG_FILES([metalic/tests/Makefile extended/tests/Makefile])
+AC_CONFIG_FILES([
+  metalic/tests/Makefile
+  extended/tests/Makefile
+  static/tests/Makefile
+])
 
 
 ## --------------- ##
@@ -56,6 +60,8 @@ AC_CONFIG_FILES([
       metalic/mlc/Makefile
     extended/Makefile
       extended/xtd/Makefile
+    static/Makefile
+      static/stc/Makefile
 ])
 
 # Checks for library functions.

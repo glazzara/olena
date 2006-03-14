@@ -1,3 +1,3 @@
 ## Process this file through Automake to produce Makefile.in -*- Makefile -*-
 
-SUBDIRS = build-aux metalic extended
+SUBDIRS = build-aux metalic extended static

@@ -1,5 +1,35 @@
 2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	New subproject: Static (`stc' for short).
+	Move the SCOOP machinery (virtual types/properties) from Metalic
+	to Static.
+
+	* configure.ac (static/Makefile, static/stc/Makefile)
+	(static/tests/Makefile): Configure these files.
+	* metalic/stc/properties.hh: Move...
+	* static/stc/properties.hh: ...here.
+	(mlc_internal_get_typedef, mlc_equip_namespace_with_properties)
+	(mlc_set_super, mlc_super, mlc_super_, mlc_typeof, mlc_typeof_):
+	Rename as...
+	(stc_internal_get_typedef, stc_equip_namespace_with_properties)
+	(stc_set_super, stc_super, stc_super_, stc_typeof, stc_typeof_):
+	...this.
+	Adjust.
+	* metalic/tests/properties.cc: Move...
+	* static/tests/properties.cc: ...here.
+	Adjust.
+	* Makefile.am (SUBDIRS): Add static.
+	* static/Makefile.am, static/stc/Makefile.am,
+	* static/tests/Makefile.am: New.
+	* metalic/mlc/Makefile.am (nobase_mlc_HEADERS): Remove
+	properties.hh.
+	* metalic/tests/Makefile.am (check_PROGRAMS): Remove properties.
+	(properties_SOURCES): Remove.
+	* extended/tests/Makefile.am (AM_CPPFLAGS): Add
+	-I$(top_srcdir)/metalic.
+
+2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with recent changes and fix some tests of Metalic.
 
 	* metalic/mlc/properties.hh (mlc_equip_namespace_with_properties):

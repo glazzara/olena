@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-// \file mlc/properties.hh
+// \file stc/properties.hh
 // \brief Property mechanism.
 //
 // From Theo's presentation (olena-06-jan.pdf).
 
-#ifndef METALIC_PROPERTIES_HH
-# define METALIC_PROPERTIES_HH
+#ifndef STATIC_PROPERTIES_HH
+# define STATIC_PROPERTIES_HH
 
 # include <mlc/flags.hh>
 # include <mlc/typedef.hh>
@@ -47,11 +47,11 @@
 `------------*/
 
 // Note: TypedefName *must* be of the form `typedef_::foo'.
-# define mlc_internal_get_typedef(Type, TypedefName) \
+# define stc_internal_get_typedef(Type, TypedefName) \
    typename TypedefName::template from_< Type >::ret
 
 // FIXME: Add support for hierarchies with several super classes.
-# define mlc_equip_namespace_with_properties()				      \
+# define stc_equip_namespace_with_properties()				      \
 									      \
   /* ----------------------- */						      \
   /* Typedefs declarations.  */						      \
@@ -132,12 +132,12 @@
       /** Set of vtypes associated with FROM_TYPE.  */			      \
       typedef vtypes<category, from_type> types;			      \
       /** Typedef in the current vtypes (may be mlc::not_found).  */	      \
-      typedef mlc_internal_get_typedef(types, typedef_type) type;	      \
+      typedef stc_internal_get_typedef(types, typedef_type) type;	      \
 									      \
       /** Implicit parent (i.e. super), if any.  */			      \
-      typedef mlc_super(from_type) super;				      \
+      typedef stc_super(from_type) super;				      \
       /** Pseudosuper class, if any.  */				      \
-      typedef mlc_internal_get_typedef(types, typedef_::pseudosuper_type)     \
+      typedef stc_internal_get_typedef(types, typedef_::pseudosuper_type)     \
 	pseudosuper;							      \
 									      \
       typedef typename							      \
@@ -204,12 +204,12 @@
       typedef mlc_ret(ext_type) type;					      \
 									      \
       /** Implicit parent (i.e. super), if any.  */			      \
-      typedef mlc_super(from_type) super;				      \
+      typedef stc_super(from_type) super;				      \
       /** Pseudosuper class, if any.  */				      \
       /* FIXME: Looking for this information is not elegant. Have a  */	      \
-      /* look at metalic/tests/properties.cc for a better suggestion.  */     \
+      /* look at static/tests/properties.cc for a better suggestion.  */     \
       typedef vtypes<category, from_type> types;			      \
-      typedef mlc_internal_get_typedef(types, typedef_::pseudosuper_type)     \
+      typedef stc_internal_get_typedef(types, typedef_::pseudosuper_type)     \
 	pseudosuper;							      \
 									      \
       typedef typename							      \
@@ -345,8 +345,8 @@
 
 /* FIXME: I don't know this macro will be really usable; what if T is
    a template class?  */
-// mlc_set_super_type(T, S)  to declare the immediate base class S of T
-# define mlc_set_super(Type, Super)		\
+/// \def Declare the immediate base class \a Super of \a Type.
+# define stc_set_super(Type, Super)		\
    template <>					\
    struct set_super_type<Type>			\
    {						\
@@ -354,20 +354,20 @@
    }
 
 /// \def Get the immediate base class of T (version with typename).
-# define mlc_super(T)				\
+# define stc_super(T)				\
    typename set_super_type<T>::ret
 
 /// \def Get the immediate base class of T (version without typename).
-# define mlc_super_(T)				\
+# define stc_super_(T)				\
    set_super_type<T>::ret
 
 /// Get the property \a Typedef from \a FromType (version with typename).
-#define mlc_typeof(Category, FromType, Typedef)				\
+#define stc_typeof(Category, FromType, Typedef)				\
   typename typeof_<Category, FromType, typedef_:: Typedef##_type >::ret
 
 /// Get the property \a Typedef from \a FromType (version without typename).
-#define mlc_typeof_(Category, FromType, Typedef)		\
+#define stc_typeof_(Category, FromType, Typedef)		\
   typeof_<Category, FromType, typedef_:: Typedef##_type >::ret
 
 
-#endif // ! METALIC_PROPERTIES_HH
+#endif // ! STATIC_PROPERTIES_HH
