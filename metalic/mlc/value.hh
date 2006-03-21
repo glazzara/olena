@@ -29,56 +29,8 @@
 # define METALIC_VALUE_HH
 
 # include <mlc/type.hh>
-// # include <mlc/wrap.hh>
-
-
-
-/** \def mlc_value(T)
- ** \brief Returns the value of a value type.
- **
- ** Only works when \a T is a value type such as mlc::bool_<b> or
- ** mlc::int_<i>.  The result is respectively a bool value and an int
- ** value.  Please prefer using this macro to a direct call to
- ** T::value because such a direct call may not compile (read the
- ** design notes below for details).
- **
- ** Design notes: FIXME: doc
- */
-
-// # define mlc_value(T) mlc::wrap_<T>::value
-
-
-
-/// Internal macros.
-
-
-# define mlc_internal_decl_unsigned_(Type, TypeName)		\
-namespace internal						\
-{								\
-  template <Type val>						\
-  struct value_ <Type, val> : public abstract::unsigned_integer	\
-  {								\
-    typedef Type type;						\
-    static const Type value = val;				\
-  };								\
-}								\
-template <Type val>						\
-struct TypeName : public internal::value_<Type, val> {}
-
-
-# define mlc_internal_decl_signed_(Type, TypeName)		\
-namespace internal						\
-{								\
-  template <Type val>						\
-  struct value_ <Type, val> : public abstract::signed_integer	\
-  {								\
-    typedef Type type;						\
-    static const Type value = val;				\
-  };								\
-}								\
-template <Type val>						\
-struct TypeName : public internal::value_<Type, val> {}
-
+// # include <mlc/assert.hh>
+// # include <mlc/is_a.hh>
 
 
 
@@ -99,86 +51,43 @@ namespace mlc {
     {
     };
 
-    /// Abstractions for integer values as types.
-
-    struct          integer : public value   {};
-    struct unsigned_integer : public integer {};
-    struct   signed_integer : public integer {};
-    
   } // end of namespace mlc::abstract
 
 
   namespace internal
   {
 
-    /*! \class mlc::internal::value_<T, val>
-    **
-    ** Base class for values to be represented by types.  This class
-    ** is in the internal namespace so you should not use it.  Its
-    ** purpose is only to factor code for derived classes that are not
-    ** internal (for instance, mlc::true_ or mlc::int_<51>).
-    **
-    ** Design note: this class can only be used for values that can be
-    ** a parameter (mlc::internal::value_<float, 3.14f> is incorrect).
-    **
-    ** Parameter T is the type of the value.  Parameter val is the
-    ** value itself.
-    **
-    ** \see mlc/bool.hh
-    */
-    
-    template <typename T, T val>
-    struct value_ : public abstract::value
+    template <typename T>
+    struct value_of_
+    // FIXME: commented below to avoid circular dependances
+    // : private assert_< mlc_is_a(T, mlc::abstract::value) >
     {
-      /*! \typedef type
-      **
-      ** Gives the regular type of the value.  For instance,
-      ** mlc::true_::type is bool and mlc::int_<51>::type is int.
-      */
-      typedef T type;
-
-      /*! \member value
-      **
-      ** Gives the regular value.  For instance,
-      ** mlc::true_::value is true and mlc::int_<51>::value is 51.
-      */
-      static const T value = val;
+      static const typename T::type ret = T::value;
     };
 
   } // end of namespace mlc::internal
 
 
-
-
-  // Dedicated sub-classes for builtin types.
-
-  mlc_internal_decl_unsigned_( unsigned char,  uchar_ );
-  mlc_internal_decl_unsigned_( unsigned short, ushort_ );
-  mlc_internal_decl_unsigned_( unsigned int,   uint_   );
-  mlc_internal_decl_unsigned_( unsigned long,  ulong_  );
-
-  mlc_internal_decl_signed_(     signed char,  schar_ );
-  mlc_internal_decl_signed_(     signed short, short_ );
-  mlc_internal_decl_signed_(     signed int,   int_   );
-  mlc_internal_decl_signed_(     signed long,  long_  );
-
-
-  // char
-
-  template <char c>
-  struct char_ : public internal::value_<char, c>
-  {
-  };
-
-
-  // Boolean values as types are defined elsewhere
-  // see:  mlc/bool.hh
-
-
 } // end of namespace mlc
 
 
-# include <mlc/bool.hh>
+
+/** \def mlc_value(T)
+ ** \brief Returns the value of a value type.
+ **
+ ** Only works when \a T is a value type such as mlc::bool_<b> or
+ ** mlc::int_<i>.  The result is respectively a bool value and an int
+ ** value; for instance mlc_value(mlc::int_<51>) gives 51.  Please
+ ** prefer using this macro to a direct call to T::value because such
+ ** a direct call may not compile (read the design notes below for
+ ** details).
+ **
+ ** Design notes: FIXME: doc
+ */
+
+# define mlc_value(T) mlc::internal::value_of_<T>::ret
+
+
 
 
 #endif // ! METALIC_VALUE_HH

@@ -1,5 +1,61 @@
 2006-03-21  Thierry Geraud  <theo@lrde.epita.fr>
 
+	Disambiguate Boolean value types and Boolean expression types.
+
+	* tests/ret.cc: Update.
+	* mlc/ret.hh: Fix missing include.
+
+	The Boolean value classes are re-written and internal::value_ is
+	removed; this class was too ambiguous since precise types, e.g.,
+	int_<i>, are provided and it was weirdly located in the value class
+	hierarchy.
+
+	* mlc/bool.hh (bool_<true>, bool_<false>): Merge those
+	specializations into the single and once for all written class
+	bool_<b>.
+	(bool_<true>::is_true): Remove since this mark is now factored
+	in the base class bexpr_is_<b>.
+	(bool_<b>): Add inheritance so that a Boolean value can be
+	considered as a Boolean expression type.
+	(internal::value_<bool, b>): Remove this specialization since
+	the class internal::value_ is also removed.
+	(logic.hh): Remove inclusion.
+	(mlc_bool): Move to...
+
+	The Boolean expression types are now handled by special classes.
+	Yet mlc::true_ and mlc::false_ remain expression types in addition
+	of value types.
+
+	* mlc/bexpr.hh: ...this file.  This macro only applies on Boolean
+	expression types.
+	(bexpr_): Remove this obsolete wrapper.
+	(bexpr_is_<b>): New base class with its couple of specializations
+	which act as a replacement for bool_<b> for expression types.
+	(internal::bool_of_): Replace the meta-code for mlc_bool.
+
+	Those changes induce a lot of updates described below.
+
+	* mlc/pair.hh: Update includes.
+	* mlc/logic.hh: Update.  Instead of deriving from bool_<b>
+	Boolean expression types now derive from bexpr_is_<b>.
+	(and_list_, or_list_): Comment to postpone updating while keeping
+	code compile.
+	* mlc/implies.hh: Update inheritance.
+	* mlc/if.hh: Update includes and add assertion.
+	* mlc/assert.hh: Update includes.
+	* mlc/valist.hh: Likewise.
+	* mlc/wrap.hh: Remove obsolete code.
+	* mlc/is_a.hh: Update inheritance.
+	(bexpr_): Replace by wrap_.
+	* mlc/case.hh: Update.  Now use mlc_bool instead of ::value.
+	* mlc/cmp.hh: Update inheritance.
+	(eq_::ensure): Remove this obsolete feature.
+	* mlc/value.hh: Move sub-classes of value to...
+	* mlc/int.hh, mlc/char.hh: ...these new files.
+	* mlc/values.hh: New file that includes the whole value types material.
+
+2006-03-21  Thierry Geraud  <theo@lrde.epita.fr>
+
 	First step towards explicit bexpr.
 
 	* mlc/bool.hh: Fix doc typo.

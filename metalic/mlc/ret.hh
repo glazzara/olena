@@ -29,6 +29,7 @@
 # define METALIC_RET_HH
 
 # include <mlc/typedef.hh>
+# include <mlc/cmp.hh>
 
 
 

@@ -28,22 +28,9 @@
 #ifndef METALIC_WRAP_HH
 # define METALIC_WRAP_HH
 
-# include <mlc/is_a.hh>
-
 
 namespace mlc
 {
-
-  /// Forward declarations of types used in specific version of wrap_.
-  /// \{
-  namespace abstract
-  {
-    struct value;
-    struct boolean;
-  }
-  /// \}
-
-
 
   /*! \class mlc::wrap_<T>
   **
@@ -69,48 +56,6 @@ namespace mlc
   template <class T>
   struct wrap_ : public T
   {
-    // FIXME: there's no use to unwrap so disabled(?)
-    // typedef T unwrap;
-  };
-
-
-
-  /*! \class mlc::value_wrap_<T>
-  **
-  ** This class acts like mlc::wrap_<T> but is dedicated to 
-  ** value types.  The parameter \a T should be a value type.
-  ** 
-  ** \see mlc::wrap_<T>
-  */
-
-  template <class T>
-  struct value_wrap_ : private assert_< mlc_is_a(T, mlc::abstract::value) >,
-		       public T
-  {
-    typedef typename T::type type;
-    static const T value = T::value;
-  };
-
-
-
-  /*! \class mlc::boolean_wrap_<T>
-  **
-  ** This class acts like mlc::wrap_<T> but is dedicated to Boolean.
-  ** The parameter \a T should be a Boolean expression type.  FIXME:
-  ** there is a confusion between the Boolean value type and Boolean
-  ** expression types!!!
-  ** 
-  ** \see mlc::wrap_<T>
-  */
-
-  template <class T>
-  struct boolean_wrap_ : private assert_< mlc_is_a(T, mlc::abstract::boolean) >,
-			 public T
-  {
-    typedef typename T::type type;
-    static const T value = T::value;
-
-    typedef typename T::eval eval;
   };
 
 

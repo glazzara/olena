@@ -12,6 +12,6 @@ struct no
 
 int main()
 {
-  std::cout << mlc::ret_found_in_<yes>::value << std::endl;
-  std::cout << mlc::ret_found_in_<no>::value << std::endl;
+  std::cout << mlc_bool( mlc::ret_found_in_<yes> ) << std::endl;
+  std::cout << mlc_bool( mlc::ret_found_in_<no>  ) << std::endl;
 }

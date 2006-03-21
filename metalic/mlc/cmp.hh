@@ -28,8 +28,9 @@
 #ifndef METALIC_CMP_HH
 # define METALIC_CMP_HH
 
-# include <mlc/bool.hh>
+# include <mlc/bexpr.hh>
 # include <mlc/is_a.hh>
+# include <mlc/logic.hh>
 
 
 /// Macros mlc_eq and mlc_neq.
@@ -59,17 +60,14 @@ namespace mlc
   template <typename T1, typename T2>
   struct eq_ : private multiple_assert_< is_not_value<T1>,
 					 is_not_value<T2> >,
-	       public false_
+	       public bexpr_is_<false>
   {
   };
 
   template <typename T>
   struct eq_ <T, T> : private assert_< is_not_value<T> >,
-		      public true_
+		      public bexpr_is_<true>
   {
-    // Solve the ambiguity on ensure(), a static member function
-    // inherited both from true_ and assert_.
-    using true_::ensure;
   };
   /// \}
 
@@ -78,13 +76,13 @@ namespace mlc
   template <typename T1, typename T2>
   struct neq_ : private multiple_assert_< is_not_value<T1>,
 					  is_not_value<T2> >,
-		public true_
+		public bexpr_is_<true>
   {
   };
 
   template <typename T>
   struct neq_ <T, T> : private assert_< is_not_value<T> >,
-		       public false_
+		       public bexpr_is_<false>
   {
   };
   /// \}
@@ -110,9 +108,9 @@ namespace mlc
 
   /// Check whether a type is a sound (supposedly before using it).
   template <typename T>
-  struct is_ok : public and_list_< neq_<T, not_found>,
-				   neq_<T, not_ok>,
-				   neq_<T, undefined > >
+  struct is_ok : public and_< neq_<T, not_found>,
+			      and_< neq_<T, not_ok>,
+				    neq_<T, undefined > > >
   {
   };
 

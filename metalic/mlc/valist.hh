@@ -28,7 +28,7 @@
 #ifndef METALIC_VALIST_HH
 # define METALIC_VALIST_HH
 
-# include <mlc/bool.hh>
+# include <mlc/assert.hh>
 # include <mlc/cmp.hh>
 # include <mlc/uint.hh>
 

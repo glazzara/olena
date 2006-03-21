@@ -30,6 +30,7 @@
 
 # include <mlc/bool.hh>
 # include <mlc/bexpr.hh>
+# include <mlc/wrap.hh>
 
 
 // private macro so do _not_ use it
@@ -107,7 +108,7 @@ namespace mlc
 
     template<class T,    class U>
     struct ret
-      : public bool_<( mlc_internal_is_a_result_ )>
+      : public mlc::bexpr_is_<( mlc_internal_is_a_result_ )>
     {
     };
   };
@@ -130,7 +131,7 @@ namespace mlc
 
     template<class T,    template < class > class U>
     struct ret
-      : public bool_<( mlc_internal_is_a_result_ )>
+      : public mlc::bexpr_is_<( mlc_internal_is_a_result_ )>
     {
     };
   };
@@ -153,7 +154,7 @@ namespace mlc
 
     template<class T,    template < class,class > class U>
     struct ret
-      : public bool_<( mlc_internal_is_a_result_ )>
+      : public mlc::bexpr_is_<( mlc_internal_is_a_result_ )>
     {};
   };
 
@@ -175,7 +176,7 @@ namespace mlc
 
     template<class T,    template < template < class > class > class U>
     struct ret
-      : public bool_<( mlc_internal_is_a_result_ )>
+      : public mlc::bexpr_is_<( mlc_internal_is_a_result_ )>
     {};
   };
 
@@ -197,7 +198,7 @@ namespace mlc
 
     template<class T,    template < template < class,class > class > class U>
     struct ret
-      : public bool_<( mlc_internal_is_a_result_ )>
+      : public mlc::bexpr_is_<( mlc_internal_is_a_result_ )>
     {};
   };
 
@@ -238,7 +239,7 @@ namespace mlc
 */
 
 # define mlc_is_a(T, U) \
-mlc::bexpr_< typename mlc::is_a_< sizeof(mlc::form::of< U >()) >::ret< T, U > >
+mlc::wrap_< typename mlc::is_a_< sizeof(mlc::form::of< U >()) >::ret< T, U > >
 
 # define mlc_is_a_(T, U) \
 mlc::is_a_< sizeof(mlc::form::of< U >()) >::ret< T, U >

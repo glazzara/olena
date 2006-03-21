@@ -25,47 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_IMPLIES_HH
-# define METALIC_IMPLIES_HH
-
-# include <mlc/bexpr.hh>
+#ifndef METALIC_VALUES_HH
+# define METALIC_VALUES_HH
 
 
-/*! \def mlc_implies(Left_BExpr, Right_BExpr)
+
+/*!
 **
-** Macro corresponding to mlc::implies_<L, R>, for use in a template
-** context.
-**
-** \see mlc::implies_<L, R>
+** This file is provided to group all value types.
 */
 
-# define mlc_implies(Left_BExpr, Right_BExpr) \
-   mlc::bexpr_< typename mlc::implies_<Left_BExpr, Right_BExpr>::ret >
+# include <mlc/value.hh>
+# include <mlc/bool.hh>
+# include <mlc/char.hh>
+# include <mlc/int.hh>
+# include <mlc/uint.hh>
 
-# define mlc_implies_(Left_BExpr, Right_BExpr) \
-   mlc::implies_<Left_BExpr, Right_BExpr>::ret
 
-
-namespace mlc
-{
-
-  /*! \class mlc::implies_<L, R>
-  **
-  ** Logical implication "L => R" with L and R being Boolean
-  ** expression types.  This class is also a Boolean expression type.
-  **
-  ** Sample use:
-  **   mlc::implies_< mlc_is_builtin(T), mlc_eq(T, int) >::assert();
-  ** which means "if T is a buit-in type, it has to be int".
-  */
-
-  template <typename L, typename R>
-  struct implies_
-    : public mlc::bexpr_is_<( !mlc_bool(L) || mlc_bool(R) )>
-  {};
-
-} // end of namespace mlc
+// ...
 
 
 
-#endif // ! METALIC_IMPLIES_HH
+#endif // ! METALIC_VALUES_HH

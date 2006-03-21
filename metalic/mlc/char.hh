@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2005, 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,86 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_PAIR_HH
-# define METALIC_PAIR_HH
+#ifndef METALIC_CHAR_HH
+# define METALIC_CHAR_HH
 
-# include <mlc/assert.hh>
-# include <mlc/logic.hh>
-# include <mlc/uint.hh>
-
+# include <mlc/value.hh>
 
 
 
 namespace mlc
 {
 
-  namespace internal
+  // char
+
+  template <char c>
+  struct char_ : public abstract::value
   {
-
-    template <typename E1, typename E2, unsigned i>
-    struct pair_elt_;
-
-  } // end of namespace mlc::internal
-
-
-
-  namespace ERROR
-  {
-    struct PAIR_ELT_INDEX_SHOULD_BE_1_OR_2;
-
-  } // end of namespace mlc::ERROR
-
-
-
-  /*! \class mlc::pair_<E1, E2>
-  **
-  ** This class is FIXME  */
-
-  template <typename E1, typename E2>
-  struct pair_ : public mlc::abstract::type
-  {
-    static const unsigned size_value = 2;
-
-    typedef E1 first_elt;
-    typedef E2 second_elt;
-
-    template <unsigned i>
-    struct elt : private assert_< or_< uint_equal_<i, 1>,
-				       uint_equal_<i, 2> >,
-				  ERROR::PAIR_ELT_INDEX_SHOULD_BE_1_OR_2 >,
-		 public internal::pair_elt_<E1, E2, i>
-    {
-    };
+    typedef char type;
+    static const char value = c;
   };
 
-
-
-  namespace internal
-  {
-
-    template <typename E1, typename E2>
-    struct pair_elt_ <E1, E2, 1>
-    {
-      typedef E1 ret;
-    };
-
-    template <typename E1, typename E2>
-    struct pair_elt_ <E1, E2, 2>
-    {
-      typedef E2 ret;
-    };
-
-  } // end of namespace mlc::internal
-  
-  
 
 } // end of namespace mlc
 
 
-
-# include <mlc/elt.hh>
-
-
-
-
-#endif // ! METALIC_PAIR_HH
+#endif // ! METALIC_CHAR_HH

@@ -28,7 +28,9 @@
 #ifndef METALIC_IF_HH
 # define METALIC_IF_HH
 
-# include <mlc/bool.hh>
+# include <mlc/bexpr.hh>
+# include <mlc/assert.hh>
+# include <mlc/is_a.hh>
 
 
 /** \def mlc_if(Cond, Then, Else)
@@ -85,7 +87,10 @@ namespace mlc
  ** evaluated, whatever the result of \a Cond.
  */
   template <typename cond_type, typename then_type, typename else_type>
-  struct if_ : public internal::if_ < mlc_bool(cond_type), then_type, else_type >
+  struct if_ :
+    // FIXME: enable the static assertion below!!!
+    private assert_< mlc_is_a(cond_type, mlc::abstract::bexpr) >,
+    public internal::if_ < mlc_bool(cond_type), then_type, else_type >
   {
   };
 

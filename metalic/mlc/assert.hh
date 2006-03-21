@@ -28,8 +28,6 @@
 #ifndef METALIC_ASSERT_HH
 # define METALIC_ASSERT_HH
 
-# include <mlc/bool.hh>
-
 
 
 namespace mlc
@@ -228,7 +226,4 @@ namespace mlc
 } // end of namespace mlc
 
 
-# include <mlc/logic.hh>
-
-
-#endif // ! METALIC_BOOL_HH
+#endif // ! METALIC_ASSERT_HH
