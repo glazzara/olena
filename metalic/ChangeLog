@@ -1,3 +1,19 @@
+2006-03-21  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Create assert.hh from bool.hh contents.
+
+	* mlc/bool.hh (mlc_type_iff, mlc::type_iff_): Remove cause soon obsolete.
+	(bool_<true>::ensure()): Remove to force the client to use assert_.
+	(bool_): Add using clauses to make contents explicit.
+	(internal::check_, internal::check_item_): Move to...
+	(literal_, no_error_message, no_bexpr): Move to...
+	(assert_, multiple_assert_): Move to...
+	* mlc/assert.hh: ... this new file.
+	* tests/is_a.cc: Update.
+	* tests/if.cc: Update.
+	* tests/typedef.cc: Update.
+	* mlc/logic.hh: Update.
+
 2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Catch up with recent changes and fix some tests of Metalic.

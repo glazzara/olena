@@ -29,6 +29,7 @@
 # define METALIC_LOGIC_HH
 
 # include <mlc/bool.hh>
+# include <mlc/assert.hh>
 # include <mlc/flags.hh>
 
 
