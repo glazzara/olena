@@ -32,7 +32,7 @@
 # include <mlc/flags.hh>
 
 
-/*! \def mlc_bool(&Bexpr)
+/*! \def mlc_bool(Bexpr)
 **
 ** Macro that retrieves a Boolean value from a Boolean expression type.
 ** Its result is either true or false.

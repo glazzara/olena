@@ -29,7 +29,7 @@
 # define METALIC_IS_A_HH
 
 # include <mlc/bool.hh>
-# include <mlc/wrap.hh>
+# include <mlc/bexpr.hh>
 
 
 // private macro so do _not_ use it
@@ -238,10 +238,10 @@ namespace mlc
 */
 
 # define mlc_is_a(T, U) \
-mlc::wrap_< typename mlc::is_a_<sizeof(mlc::form::of<U >())>::ret<T,U > >
+mlc::bexpr_< typename mlc::is_a_< sizeof(mlc::form::of< U >()) >::ret< T, U > >
 
 # define mlc_is_a_(T, U) \
-mlc::is_a_< sizeof(mlc::form::of<U >())>::ret<T,U >
+mlc::is_a_< sizeof(mlc::form::of< U >()) >::ret< T, U >
 
 
 /*! \def mlc_is_not_a(T, U)

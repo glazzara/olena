@@ -2,4 +2,36 @@
 
 * files
 
-create assert.hh from bool.hh
+** bool.hh
+
+create assert.hh from parts of bool.hh
+
+** boolean and bexpr
+
+there is a confusion between mlc::abstract::boolean and the notion of
+bexpr (Boolean expression type)!
+
+** value.hh
+
+This file mixes bool_, int_, etc. so I should be split into several
+parts and all value-related files should be re-organized.  The current
+situation is weird:  internal::value is not in value.hh;  uint.hh does
+not define mlc::uint_;  etc.
+
+
+* renaming
+
+** cmp.hh
+
+eq_ -> equal_ etc.
+
+** comma.hh
+
+mlc_comma_N -> mlc_cmN  (the shorter the better)
+
+
+* design
+
+** mlc_is_a
+
+It uses wrap_; though, is it really useful?

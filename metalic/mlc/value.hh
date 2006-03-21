@@ -29,6 +29,23 @@
 # define METALIC_VALUE_HH
 
 # include <mlc/type.hh>
+// # include <mlc/wrap.hh>
+
+
+
+/** \def mlc_value(T)
+ ** \brief Returns the value of a value type.
+ **
+ ** Only works when \a T is a value type such as mlc::bool_<b> or
+ ** mlc::int_<i>.  The result is respectively a bool value and an int
+ ** value.  Please prefer using this macro to a direct call to
+ ** T::value because such a direct call may not compile (read the
+ ** design notes below for details).
+ **
+ ** Design notes: FIXME: doc
+ */
+
+// # define mlc_value(T) mlc::wrap_<T>::value
 
 
 

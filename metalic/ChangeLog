@@ -1,5 +1,19 @@
 2006-03-21  Thierry Geraud  <theo@lrde.epita.fr>
 
+	First step towards explicit bexpr.
+
+	* mlc/bool.hh: Fix doc typo.
+	* mlc/TODO: Update.
+	* mlc/wrap.hh (unwrap): Remove cause useless.
+	(value_wrap_, boolean_wrap_): New dedicated wrappers.
+	* mlc/bexpr.hh: New file. It provides an explicit wrapper for Boolean
+	expression types; it is a first step towards the disambiguation between
+	the Boolean value type and the many Boolean expression types.
+	* mlc/is_a.hh (mlc_is_a): Update; now use bexpr_ instead of wrap_.
+	* mlc/value.hh (mlc_value): Suggest this macro.
+
+2006-03-21  Thierry Geraud  <theo@lrde.epita.fr>
+
 	Create assert.hh from bool.hh contents.
 
 	* mlc/bool.hh (mlc_type_iff, mlc::type_iff_): Remove cause soon obsolete.
