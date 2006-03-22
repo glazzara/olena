@@ -1,6 +1,6 @@
 #include <stc/properties.hh>
 #include <mlc/cmp.hh>
-
+#include <mlc/assert.hh>
 
 // FIXME: Split this test into several smaller tests?  For instance,
 // we have to test inheritance, properties/associated types,
@@ -149,17 +149,17 @@ int
 main()
 {
   // Check types associated to A.
-  mlc_eq(my::A::foo_type, int)::ensure ();
-  mlc_eq(my::A::bar_type, float)::ensure ();
+  mlc::assert_<mlc_eq(my::A::foo_type, int)>::check();
+  mlc::assert_<mlc_eq(my::A::bar_type, float)>::check();
 
   // Check types associated to B.
-  mlc_neq(my::B::bar_type, my::A::bar_type)::ensure ();
-  mlc_eq(my::B::baz_type, char)::ensure ();
-  mlc_eq(my::B::quux_type, long)::ensure ();
-  mlc_eq(my::B::yin_type, unsigned long)::ensure ();
+  mlc::assert_<mlc_neq(my::B::bar_type, my::A::bar_type)>::check();
+  mlc::assert_<mlc_eq(my::B::baz_type, char)>::check();
+  mlc::assert_<mlc_eq(my::B::quux_type, long)>::check();
+  mlc::assert_<mlc_eq(my::B::yin_type, unsigned long)>::check();
 
   // Check types associated to C.
-  mlc_eq(my::C::foo_type, int)::ensure ();
-  mlc_eq(my::C::quux_type, long)::ensure ();
-  mlc_eq(my::C::zorg_type, double)::ensure ();
+  mlc::assert_<mlc_eq(my::C::foo_type, int)>::check();
+  mlc::assert_<mlc_eq(my::C::quux_type, long)>::check();
+  mlc::assert_<mlc_eq(my::C::zorg_type, double)>::check();
 }

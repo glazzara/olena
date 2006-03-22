@@ -1,3 +1,11 @@
+2006-03-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with changes in Metalic.
+
+	* stc/properties.hh (stc_equip_namespace_with_properties): Use
+	mlc_bool to extract the value of mlc::abstract::bexpr's.
+	* stc/properties.hh: Update test (use mlc::assert_).
+
 2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Set the pseudosuper link using a separate class instead of an

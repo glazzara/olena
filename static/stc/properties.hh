@@ -333,9 +333,9 @@
 									      \
     /* Did we found the virtual type? */				      \
     static const bool found_external_p =				      \
-      mlc::is_found<external_typedef>::value;				      \
+      mlc_bool(mlc::is_found<external_typedef>);			      \
     static const bool found_internal_p =				      \
-      mlc::is_found<internal_typedef>::value;				      \
+      mlc_bool(mlc::is_found<internal_typedef>);			      \
 									      \
     typedef typename							      \
     internal::select_typedef<found_external_p, found_internal_p,	      \
