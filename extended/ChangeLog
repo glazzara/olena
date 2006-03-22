@@ -1,3 +1,37 @@
+2006-03-22  Thierry Geraud  <theo@lrde.epita.fr>
+
+	First draft of extended functions.
+
+	* xtd/math.hh: New file.
+	* xtd/res.hh: New file.
+	* xtd/cast.hh: New file.
+	* xtd/math: New file.
+	* xtd/math/trigo.hh: New file.
+	* xtd/math/arith.hh: New file.
+	* xtd/math/id.hh: New file.
+	* xtd/mexpr.hh: New file.
+	* xtd/args.hh: New file.
+	* xtd/literal.hh: New file.
+	* xtd/ops_expr.hh: New file.
+	* xtd/abstract: New file.
+	* xtd/abstract/nary_fun.hh: New file.
+	* xtd/abstract/exact.hh: New file.
+	* xtd/abstract/fun_expr.hh: New file.
+	* xtd/abstract/any.hh: New file.
+	* xtd/abstract/fun.hh: New file.
+	* xtd/abstract/plain_fun.hh: New file.
+	* xtd/abstract/meta_fun.hh: New file.
+	* xtd/mfun.hh: New file.
+	* xtd/traits.hh: New file.
+	* xtd/builtin: New file.
+	* xtd/builtin/traits.hh: New file.
+	* xtd/arg.hh: New file.
+	* xtd/case.hh: New file.
+	* tests/id.cc: New file.
+	* tests/cos.cc: New file.
+	* tests/cast.cc: New file.
+	* tests/Makefile.am: Update.
+
 2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/Makefile.am (mlcdir, nobase_mlc_HEADERS): Remove.
