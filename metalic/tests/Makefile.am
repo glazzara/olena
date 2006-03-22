@@ -11,6 +11,7 @@ check_PROGRAMS =				\
   case						\
   if						\
   is_a						\
+  or						\
   ret						\
   switch					\
   typedef
@@ -18,6 +19,7 @@ check_PROGRAMS =				\
 case_SOURCES = case.cc
 if_SOURCES = if.cc
 is_a_SOURCES = is_a.cc
+or_SOURCES = or.cc
 ret_SOURCES = ret.cc
 switch_SOURCES = switch.cc
 typedef_SOURCES = typedef.cc

@@ -121,200 +121,202 @@ namespace mlc
   {};
   
 
-//   /// Internal helpers for logical operators between several Boolean types
-
-//   namespace internal
-//   {
-//     // FIXME: doc
-
-//     template <typename A>
-//     struct is_bexpr_or_none_ : public true_ // FIXME: pb using mlc_is_a because of circular deps
-//     {
-//     };
 
 
-//     // va_eval_
+  /// Internal helpers for logical operators between several Boolean types
 
-//     template <typename A>
-//     struct va_eval_
-//     {
-//       typedef typename A::eval ret;
-//     };
+  namespace internal
+  {
+    // FIXME: doc
 
-//     template <>
-//     struct va_eval_ <none>
-//     {
-//       typedef none ret;
-//     };
+    template <typename A>
+    struct is_bexpr_or_none_ : public true_ // FIXME: pb using mlc_is_a because of circular deps
+    {
+    };
 
 
-//     // or_list_2_
+    // va_eval_
 
-//     template <typename A1, typename A2>
-//     struct or_list_2_
-//       : public or_<A1, A2>::eval
-//     {};
+    template <typename A>
+    struct va_eval_
+    {
+      typedef typename A::eval ret;
+    };
 
-//     template <>
-//     struct or_list_2_ <none, none>
-//       : public true_
-//     {};
-
-//     template <typename A1>
-//     struct or_list_2_ <A1, none>
-//       : public A1
-//     {};
-
-//     template <typename A2>
-//     struct or_list_2_ <none, A2>; // forbidden
-
-//     // or_list_4_
-
-//     template <typename A1, typename A2, typename A3, typename A4>
-//     struct or_list_4_
-//       : public or_list_2_< typename or_list_2_<A1, A2>::eval,
-// 			   typename or_list_2_<A3, A4>::eval >::eval
-//     {};
-
-//     template <>
-//     struct or_list_4_ <none, none, none, none>
-//       : public true_
-//     {};
-
-//     // or_list_
-
-//     template <typename A1, typename A2, typename A3, typename A4,
-// 	      typename A5, typename A6, typename A7, typename A8>
-//     struct or_list_
-//       : public or_list_2_< typename or_list_4_<A1, A2, A3, A4>::eval,
-// 			   typename or_list_4_<A5, A6, A7, A8>::eval >::eval
-//     {};
+    template <>
+    struct va_eval_ <none>
+    {
+      typedef none ret;
+    };
 
 
-//     // and_list_2_
+    // or_list_2_
 
-//     template <typename A1, typename A2>
-//     struct and_list_2_
-//       : public and_<A1, A2>::eval
-//     {};
+    template <typename A1, typename A2>
+    struct or_list_2_
+      : public or_<A1, A2>::eval
+    {};
 
-//     template <>
-//     struct and_list_2_ <none, none>
-//       : public true_
-//     {};
+    template <>
+    struct or_list_2_ <none, none>
+      : public false_
+    {};
 
-//     template <typename A1>
-//     struct and_list_2_ <A1, none>
-//       : public A1
-//     {};
+    template <typename A1>
+    struct or_list_2_ <A1, none>
+      : public A1
+    {};
 
-//     template <typename A2>
-//     struct and_list_2_ <none, A2>; // forbidden
+    template <typename A2>
+    struct or_list_2_ <none, A2>; // forbidden
 
-//     // and_list_4_
+    // or_list_4_
 
-//     template <typename A1, typename A2, typename A3, typename A4>
-//     struct and_list_4_
-//       : public and_list_2_< typename and_list_2_<A1, A2>::eval,
-// 			    typename and_list_2_<A3, A4>::eval >::eval
-//     {};
+    template <typename A1, typename A2, typename A3, typename A4>
+    struct or_list_4_
+      : public or_list_2_< typename or_list_2_<A1, A2>::eval,
+			   typename or_list_2_<A3, A4>::eval >::eval
+    {};
 
-//     template <>
-//     struct and_list_4_ <none, none, none, none>
-//       : public true_
-//     {};
+    template <>
+    struct or_list_4_ <none, none, none, none>
+      : public false_
+    {};
 
-//     // and_list_
+    // or_list_
 
-//     template <typename A1, typename A2, typename A3, typename A4,
-// 	      typename A5, typename A6, typename A7, typename A8>
-//     struct and_list_
-//       : public and_list_2_< typename and_list_4_<A1, A2, A3, A4>::eval,
-// 			    typename and_list_4_<A5, A6, A7, A8>::eval >::eval
-//     {};
-
-//   } // end of mlc::internal
+    template <typename A1, typename A2, typename A3, typename A4,
+	      typename A5, typename A6, typename A7, typename A8>
+    struct or_list_
+      : public or_list_2_< typename or_list_4_<A1, A2, A3, A4>::eval,
+			   typename or_list_4_<A5, A6, A7, A8>::eval >::eval
+    {};
 
 
+    // and_list_2_
 
-//   /*! \class mlc::or_list_<..>
-//   **
-//   ** Logical n-ary 'or' operator on a set of Boolean expression types.
-//   ** The number of arguments (parameters) should be at least 3 and at
-//   ** most 8.  This class is also a Boolean expression type.
-//   **
-//   ** Sample use:
-//   ** mlc::or_list_< mlc::eq_<T, int>,
-//   **                mlc_is_a(T, mlc::int_),
-//   **                mlc_is_a(T, my::integer) >
-//   **
-//   ** \see mlc::or_<L,R> mlc::and_list_<..>
-//   */
+    template <typename A1, typename A2>
+    struct and_list_2_
+      : public and_<A1, A2>::eval
+    {};
 
-//   template <typename A1,
-// 	    typename A2,
-// 	    typename A3,
-// 	    typename A4 = none,
-// 	    typename A5 = none,
-// 	    typename A6 = none,
-// 	    typename A7 = none,
-// 	    typename A8 = none>
-//   struct or_list_ : private multiple_assert_< internal::is_bexpr_or_none_<A1>,
-// 					  internal::is_bexpr_or_none_<A2>,
-// 					  internal::is_bexpr_or_none_<A3>,
-// 					  internal::is_bexpr_or_none_<A4>,
-// 					  internal::is_bexpr_or_none_<A5>,
-// 					  internal::is_bexpr_or_none_<A6>,
-// 					  internal::is_bexpr_or_none_<A7>,
-// 					  internal::is_bexpr_or_none_<A8> >,
-// 		    public internal::or_list_< typename internal::va_eval_<A1>::ret,
-// 					       typename internal::va_eval_<A2>::ret,
-// 					       typename internal::va_eval_<A3>::ret,
-// 					       typename internal::va_eval_<A4>::ret,
-// 					       typename internal::va_eval_<A5>::ret,
-// 					       typename internal::va_eval_<A6>::ret,
-// 					       typename internal::va_eval_<A7>::ret,
-// 					       typename internal::va_eval_<A8>::ret >
-//   {
-//   };
+    template <>
+    struct and_list_2_ <none, none>
+      : public true_
+    {};
+
+    template <typename A1>
+    struct and_list_2_ <A1, none>
+      : public A1
+    {};
+
+    template <typename A2>
+    struct and_list_2_ <none, A2>; // forbidden
+
+    // and_list_4_
+
+    template <typename A1, typename A2, typename A3, typename A4>
+    struct and_list_4_
+      : public and_list_2_< typename and_list_2_<A1, A2>::eval,
+			    typename and_list_2_<A3, A4>::eval >::eval
+    {};
+
+    template <>
+    struct and_list_4_ <none, none, none, none>
+      : public true_
+    {};
+
+    // and_list_
+
+    template <typename A1, typename A2, typename A3, typename A4,
+	      typename A5, typename A6, typename A7, typename A8>
+    struct and_list_
+      : public and_list_2_< typename and_list_4_<A1, A2, A3, A4>::eval,
+			    typename and_list_4_<A5, A6, A7, A8>::eval >::eval
+    {};
+
+  } // end of mlc::internal
 
 
 
-//   /*! \class mlc::and_list_<..>
-//   **
-//   ** Logical n-ary 'and' operator on a set of Boolean expression types.
-//   ** The number of arguments (parameters) should be at least 3 and at
-//   ** most 8.  This class is also a Boolean expression type.
-//   **
-//   ** \see mlc::and_<L,R> mlc::or_list_<..>
-//   */
+  /*! \class mlc::or_list_<..>
+  **
+  ** Logical n-ary 'or' operator on a set of Boolean expression types.
+  ** The number of arguments (parameters) should be at least 3 and at
+  ** most 8.  This class is also a Boolean expression type.
+  **
+  ** Sample use:
+  ** mlc::or_list_< mlc::eq_<T, int>,
+  **                mlc_is_a(T, mlc::int_),
+  **                mlc_is_a(T, my::integer) >
+  **
+  ** \see mlc::or_<L,R> mlc::and_list_<..>
+  */
 
-//   template <typename A1,
-// 	    typename A2,
-// 	    typename A3,
-// 	    typename A4 = none,
-// 	    typename A5 = none,
-// 	    typename A6 = none,
-// 	    typename A7 = none,
-// 	    typename A8 = none>
-//   struct and_list_ : private multiple_assert_< internal::is_bexpr_or_none_<A1>,
-// 					   internal::is_bexpr_or_none_<A2>,
-// 					   internal::is_bexpr_or_none_<A3>,
-// 					   internal::is_bexpr_or_none_<A4>,
-// 					   internal::is_bexpr_or_none_<A5>,
-// 					   internal::is_bexpr_or_none_<A6>,
-// 					   internal::is_bexpr_or_none_<A7>,
-// 					   internal::is_bexpr_or_none_<A8> >,
-// 		     public internal::and_list_< typename internal::va_eval_<A1>::ret,
-// 						 typename internal::va_eval_<A2>::ret,
-// 						 typename internal::va_eval_<A3>::ret,
-// 						 typename internal::va_eval_<A4>::ret,
-// 						 typename internal::va_eval_<A5>::ret,
-// 						 typename internal::va_eval_<A6>::ret,
-// 						 typename internal::va_eval_<A7>::ret,
-// 						 typename internal::va_eval_<A8>::ret >
-//   {
-//   };
+  template <typename A1,
+	    typename A2,
+	    typename A3,
+	    typename A4 = none,
+	    typename A5 = none,
+	    typename A6 = none,
+	    typename A7 = none,
+	    typename A8 = none>
+  struct or_list_ : private multiple_assert_< internal::is_bexpr_or_none_<A1>,
+					      internal::is_bexpr_or_none_<A2>,
+					      internal::is_bexpr_or_none_<A3>,
+					      internal::is_bexpr_or_none_<A4>,
+					      internal::is_bexpr_or_none_<A5>,
+					      internal::is_bexpr_or_none_<A6>,
+					      internal::is_bexpr_or_none_<A7>,
+					      internal::is_bexpr_or_none_<A8> >,
+		    public internal::or_list_< typename internal::va_eval_<A1>::ret,
+					       typename internal::va_eval_<A2>::ret,
+					       typename internal::va_eval_<A3>::ret,
+					       typename internal::va_eval_<A4>::ret,
+					       typename internal::va_eval_<A5>::ret,
+					       typename internal::va_eval_<A6>::ret,
+					       typename internal::va_eval_<A7>::ret,
+					       typename internal::va_eval_<A8>::ret >
+  {
+  };
+
+
+
+  /*! \class mlc::and_list_<..>
+  **
+  ** Logical n-ary 'and' operator on a set of Boolean expression types.
+  ** The number of arguments (parameters) should be at least 3 and at
+  ** most 8.  This class is also a Boolean expression type.
+  **
+  ** \see mlc::and_<L,R> mlc::or_list_<..>
+  */
+
+  template <typename A1,
+	    typename A2,
+	    typename A3,
+	    typename A4 = none,
+	    typename A5 = none,
+	    typename A6 = none,
+	    typename A7 = none,
+	    typename A8 = none>
+  struct and_list_ : private multiple_assert_< internal::is_bexpr_or_none_<A1>,
+					       internal::is_bexpr_or_none_<A2>,
+					       internal::is_bexpr_or_none_<A3>,
+					       internal::is_bexpr_or_none_<A4>,
+					       internal::is_bexpr_or_none_<A5>,
+					       internal::is_bexpr_or_none_<A6>,
+					       internal::is_bexpr_or_none_<A7>,
+					       internal::is_bexpr_or_none_<A8> >,
+		     public internal::and_list_< typename internal::va_eval_<A1>::ret,
+						 typename internal::va_eval_<A2>::ret,
+						 typename internal::va_eval_<A3>::ret,
+						 typename internal::va_eval_<A4>::ret,
+						 typename internal::va_eval_<A5>::ret,
+						 typename internal::va_eval_<A6>::ret,
+						 typename internal::va_eval_<A7>::ret,
+						 typename internal::va_eval_<A8>::ret >
+  {
+  };
 
 
 } // end of namespace mlc

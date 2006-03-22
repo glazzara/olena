@@ -1,3 +1,12 @@
+2006-03-22  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Re-enable or_list_ and and_list_.
+
+	* tests/or.cc: New file.
+	* tests/Makefile.am: Update.
+	* mlc/logic.hh (or_list_, and_list_): Uncomment, update, and bug fix.
+	* mlc/assert.hh: Fix missing include.
+
 2006-03-21  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Disambiguate Boolean value types and Boolean expression types.

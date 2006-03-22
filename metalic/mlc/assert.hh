@@ -28,6 +28,8 @@
 #ifndef METALIC_ASSERT_HH
 # define METALIC_ASSERT_HH
 
+# include <mlc/flags.hh>
+
 
 
 namespace mlc
@@ -89,7 +91,7 @@ namespace mlc
     
   struct no_bexpr
   {
-    typedef dummy is_true;
+    typedef mlc::dummy is_true;
   };
 
 
