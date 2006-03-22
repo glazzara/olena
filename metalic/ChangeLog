@@ -1,5 +1,11 @@
 2006-03-22  Thierry Geraud  <theo@lrde.epita.fr>
 
+	Tiny fix.
+
+	* mlc/logic.hh: Fix missing include.
+
+2006-03-22  Thierry Geraud  <theo@lrde.epita.fr>
+
 	Re-enable or_list_ and and_list_.
 
 	* tests/or.cc: New file.

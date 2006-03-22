@@ -28,6 +28,7 @@
 #ifndef METALIC_LOGIC_HH
 # define METALIC_LOGIC_HH
 
+# include <mlc/bool.hh>
 # include <mlc/bexpr.hh>
 # include <mlc/assert.hh>
 
