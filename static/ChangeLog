@@ -1,3 +1,13 @@
+2006-03-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Extensible entry points in a class hierarchy (first version).
+
+	* stc/entry.hh: New.
+	* tests/entry.cc: New test.
+	* stc/Makefile.am (nobase_stc_HEADERS): Add entry.hh.
+	* tests/Makefile.am (check_PROGRAMS): Add `entry'.
+	(entry_SOURCES): New.
+
 2006-03-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Catch up with changes in Metalic.
@@ -17,4 +27,3 @@
 	(stc_set_pseudosuper, stc_pseudosuper, stc_pseudosuper_): New
 	macros.
 	* tests/properties.cc: Adjust.
-
