@@ -1,3 +1,8 @@
+2006-03-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	* tests/ret.cc (main): Don't write test results on the standard
+	output.
+
 2006-03-22  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Tiny fix.

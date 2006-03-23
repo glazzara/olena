@@ -1,3 +1,4 @@
+# include <cassert>
 # include <iostream>
 # include <mlc/ret.hh>
 
@@ -12,6 +13,6 @@ struct no
 
 int main()
 {
-  std::cout << mlc_bool( mlc::ret_found_in_<yes> ) << std::endl;
-  std::cout << mlc_bool( mlc::ret_found_in_<no>  ) << std::endl;
+  assert(mlc_bool( mlc::ret_found_in_<yes> ) == true);
+  assert(mlc_bool( mlc::ret_found_in_<no>  ) == false);
 }
