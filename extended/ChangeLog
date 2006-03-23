@@ -1,3 +1,9 @@
+2006-03-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add Metalic's include path to Extended's tests.
+
+	* tests/Makefile.am (AM_CPPFLAGS): Add -I$(top_srcdir)/metalic.
+
 2006-03-22  Thierry Geraud  <theo@lrde.epita.fr>
 
 	First draft of extended functions.
