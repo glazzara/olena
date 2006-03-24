@@ -19,6 +19,11 @@ situation is weird:  internal::value is not in value.hh;  uint.hh does
 not define mlc::uint_;  etc.
 
 
+* addition
+
+mlc_eval (such as mlc_bool and mlc_value)
+
+
 * renaming
 
 ** cmp.hh
@@ -34,4 +39,29 @@ mlc_comma_N -> mlc_cmN  (the shorter the better)
 
 ** mlc_is_a
 
-It uses wrap_; though, is it really useful?
+It uses wrap_; though, is it really useful?  the answer seems to be yes.
+The code below:
+
+template <typename T>
+struct ok : public something< mlc_is_a(T, int) >
+{
+};
+
+works well and we do not have to write mlc_is_a_ with the '_' at the end
+so that's better.   yet is it a direct consequence of the wrapping?
+
+** boolean and bexpr
+
+the last part of the disambiguation between boolean and bexpr is to
+remove the inheritance between true_ (resp. false_) and bexpr.
+
+that should lead to:
+*** new types
+true_expr_ and false_expr_
+*** update
+concrete bexprs should not be related to true_ and false_
+static checks should change
+*** remove
+eval in true_ and false_
+
+

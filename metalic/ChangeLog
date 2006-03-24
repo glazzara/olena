@@ -1,3 +1,10 @@
+2006-03-24  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Add mlc::abort_ for use in invalid code blocks.
+
+	* mlc/abort.hh: New.
+	* mlc/TODO: Update.
+
 2006-03-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/ret.cc (main): Don't write test results on the standard
