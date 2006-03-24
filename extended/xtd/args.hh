@@ -29,23 +29,22 @@
 # define EXTENDED_ARGS_HH
 
 # include <mlc/flags.hh>
-
-
-
-// FIXME: doc
-// FIXME: this code should be rewritten to check that 
-// FIXME: xtd::nargs_<F>::ret is properly defined; see for
-// FIXME: instance, the code of xtd_res or xtd_arg1...
-
-# define xtd_nargs(F) xtd::nargs_<F>::ret
+# include <mlc/assert.hh>
+# include <mlc/is_a.hh>
 
 
 
 namespace xtd
 {
 
+
   namespace abstract
   {
+
+    // fwd decl
+    template <typename E> struct fun_expr_;
+
+
     /*! \class xtd::abstract::args
     **
     ** FIXME: Abstract base class for args_<..>
@@ -58,20 +57,6 @@ namespace xtd
     };
 
   } // end of namespace xtd::abstract
-
-
-
-
-  /*! \class xtd::nargs_<F>
-  **
-  ** FIXME: doc
-  ** FIXME: and add a mechanism so that the type of F is checked
-  ** FIXME: Cf. get_res0_ in xtd/abstract/meta_fun.hh 
-  */
-
-  template <typename F>
-  struct nargs_;
-
 
 
 

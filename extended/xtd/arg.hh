@@ -36,14 +36,8 @@
 
 
 
-
-# define xtd_nargs(F) xtd::nargs_<F>::ret
-
-
-
 namespace xtd
 {
-
 
 
   namespace internal

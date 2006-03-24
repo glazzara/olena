@@ -30,12 +30,14 @@
 
 # include <mlc/case.hh>
 # include <mlc/assert.hh>
+# include <mlc/logic.hh>
 # include <mlc/is_a.hh>
 
-# include <xtd/args.hh>
-# include <xtd/res.hh>
 # include <xtd/abstract/nary_fun.hh>
 # include <xtd/abstract/fun_expr.hh>
+# include <xtd/args.hh>
+# include <xtd/res.hh>
+# include <xtd/literal.hh>
 
 
 
@@ -46,6 +48,13 @@ namespace xtd
 
   namespace ERROR
   {
+
+    struct MIXED_ARGUMENTS_IN_CALLING_A_BINARY_META_FUNCTION__EXPR_VALUE;
+    struct MIXED_ARGUMENTS_IN_CALLING_A_BINARY_META_FUNCTION__VALUE_EXPR;
+
+    struct MIXED_ARGUMENTS_IN_CALLING_A_TERNARY_META_FUNCTION__EXPR1;
+    struct MIXED_ARGUMENTS_IN_CALLING_A_TERNARY_META_FUNCTION__EXPR2;
+    struct MIXED_ARGUMENTS_IN_CALLING_A_TERNARY_META_FUNCTION__EXPR3;
 
     struct FIXME;
 
@@ -86,7 +95,13 @@ namespace xtd
   template <typename F>
   struct m0expr_
 
-    : public abstract::nary_fun_expr_< 0, m0expr_<F> >
+    : private mlc::assert_< mlc_is_a(F, abstract::nary_fun_<0>),
+			    ERROR::FIXME >,
+
+      private mlc::assert_< mlc_is_a(F, abstract::meta_fun_),
+			    ERROR::FIXME >,
+
+      public abstract::nary_fun_expr_< 0, m0expr_<F> >
   {
     const F f;
 
@@ -120,6 +135,9 @@ namespace xtd
   template <typename F,
 	    typename Expr>
   struct nargs_< m1expr_<F, Expr> >
+
+    : private mlc::assert_< mlc_is_a(Expr, abstract::fun_expr_),
+			    xtd::ERROR::FIXME >
   {
     static const unsigned ret = xtd_nargs(Expr);
   };
@@ -141,7 +159,16 @@ namespace xtd
 	    typename Expr>
   struct m1expr_
 
-    : public abstract::nary_fun_expr_< xtd_nargs(Expr),
+    : private mlc::assert_< mlc_is_a(F, abstract::nary_fun_<1>),
+			    ERROR::FIXME >,
+
+      private mlc::assert_< mlc_is_a(F, abstract::meta_fun_),
+			    ERROR::FIXME >,
+
+      private mlc::assert_< mlc_is_a(Expr, abstract::fun_expr_),
+			    xtd::ERROR::FIXME >,
+
+      public abstract::nary_fun_expr_< xtd_nargs(Expr),
 				       m1expr_<F, Expr> >
   {
     typedef m1expr_<F, Expr> self;
@@ -159,7 +186,7 @@ namespace xtd
       expr(exact_of(expr))
     {}
 
-    m1expr_(const F& f,
+    m1expr_(const F& f, // FIXME: constraint?
 	    const abstract::fun_expr_<Expr>& expr) :
       f(f),
       expr(exact_of(expr))
@@ -189,6 +216,10 @@ namespace xtd
   template <typename F,
 	    typename Expr1, typename Expr2>
   struct nargs_< m2expr_<F, Expr1, Expr2> >
+
+    : private mlc::assert_< mlc::and_< mlc_is_a(Expr1, abstract::fun_expr_),
+				       mlc_is_a(Expr2, abstract::fun_expr_) >,
+			    xtd::ERROR::FIXME >
   {
     static const unsigned ret = n_max< xtd_nargs(Expr1),
 				       xtd_nargs(Expr2) >::ret;
@@ -212,7 +243,17 @@ namespace xtd
 	    typename Expr1, typename Expr2>
   struct m2expr_
 
-    : public abstract::nary_fun_expr_< xtd_nargs(mlc_comma_2(m2expr_<F, Expr1, Expr2>)),
+    : private mlc::assert_< mlc_is_a(F, abstract::nary_fun_<2>),
+			    ERROR::FIXME >,
+
+      private mlc::assert_< mlc_is_a(F, abstract::meta_fun_),
+			    ERROR::FIXME >,
+
+      private mlc::assert_< mlc::and_< mlc_is_a(Expr1, abstract::fun_expr_),
+				       mlc_is_a(Expr2, abstract::fun_expr_) >,
+			    xtd::ERROR::FIXME >,
+
+      public abstract::nary_fun_expr_< xtd_nargs(mlc_comma_2(m2expr_<F, Expr1, Expr2>)),
 				       m2expr_<F, Expr1, Expr2> >
   {
     typedef m2expr_<F, Expr1, Expr2> self;
@@ -264,6 +305,11 @@ namespace xtd
   template <typename F,
 	    typename Expr1, typename Expr2, typename Expr3>
   struct nargs_< m3expr_<F, Expr1, Expr2, Expr3> >
+
+    : private mlc::assert_< mlc::and_list_< mlc_is_a(Expr1, abstract::fun_expr_),
+					    mlc_is_a(Expr2, abstract::fun_expr_),
+					    mlc_is_a(Expr3, abstract::fun_expr_) >,
+			    xtd::ERROR::FIXME >
   {
     static const unsigned ret = n_max< xtd_nargs(Expr1),
 				       n_max< xtd_nargs(Expr2),
@@ -289,7 +335,18 @@ namespace xtd
 	    typename Expr1, typename Expr2, typename Expr3>
   struct m3expr_
 
-    : public abstract::nary_fun_expr_< xtd_nargs(mlc_comma_3(m3expr_<F, Expr1, Expr2, Expr3>)),
+    : private mlc::assert_< mlc_is_a(F, abstract::nary_fun_<3>),
+			    ERROR::FIXME >,
+
+      private mlc::assert_< mlc_is_a(F, abstract::meta_fun_),
+			    ERROR::FIXME >,
+
+      private mlc::assert_< mlc::and_list_< mlc_is_a(Expr1, abstract::fun_expr_),
+					    mlc_is_a(Expr2, abstract::fun_expr_),
+					    mlc_is_a(Expr3, abstract::fun_expr_) >,
+			    xtd::ERROR::FIXME >,
+
+      public abstract::nary_fun_expr_< xtd_nargs(mlc_comma_3(m3expr_<F, Expr1, Expr2, Expr3>)),
 				       m3expr_<F, Expr1, Expr2, Expr3> >
   {
     typedef m3expr_<F, Expr1, Expr2, Expr3> self;
@@ -358,26 +415,38 @@ namespace xtd
   };
 
 
-  //   meta_nary_fun_<2, F>::operator()(const fun_expr_<Expr1>& expr1,
-  // 				        const fun_expr_<Expr2>& expr2) const
+
+  // meta_nary_fun_<2, F>::operator()(const fun_expr_<Expr1>& expr1,
+  // 				      const fun_expr_<Expr2>& expr2) const
+
 
   template <typename F, typename Expr1, typename Expr2>
   struct case_< tag::meta_2ary_fun_operator,
 		mlc::valist_<F, Expr1, Expr2>,
 		1 >
-    : public mlc::where_< mlc::and_< mlc_is_a(Expr1, abstract::fun_expr_),
-				     mlc_is_a(Expr2, abstract::fun_expr_) > >
+    : public mlc::where_< mlc::or_< mlc_is_a(Expr1, abstract::fun_expr_),
+				    mlc_is_a(Expr2, abstract::fun_expr_) > >,
+
+      private mlc::assert_< mlc::implies_< mlc_is_a(Expr1, abstract::fun_expr_),
+					   mlc_is_a(Expr2, abstract::fun_expr_) >,
+			    xtd::ERROR::MIXED_ARGUMENTS_IN_CALLING_A_BINARY_META_FUNCTION__EXPR_VALUE >,
+
+      private mlc::assert_< mlc::implies_< mlc_is_a(Expr2, abstract::fun_expr_),
+					   mlc_is_a(Expr1, abstract::fun_expr_) >,
+			    xtd::ERROR::MIXED_ARGUMENTS_IN_CALLING_A_BINARY_META_FUNCTION__VALUE_EXPR >
   {
     typedef m2expr_<F, Expr1, Expr2> res;
 
     static res impl(const abstract::meta_nary_fun_<2, F>* this_,
 		    const abstract::fun_expr_<Expr1>& expr1,
 		    const abstract::fun_expr_<Expr2>& expr2)
-    {
-      res tmp(exact_of(*this_), expr1, expr2);
-      return tmp;
-    }
+      {
+	res tmp(exact_of(*this_), expr1, expr2);
+	return tmp;
+      }
+
   };
+
 
 
   //   meta_nary_fun_<3, F>::operator()(const fun_expr_<Expr1>& expr1,
@@ -388,9 +457,27 @@ namespace xtd
   struct case_< tag::meta_3ary_fun_operator,
 		mlc::valist_<F, Expr1, Expr2, Expr3>,
 		1 >
-    : public mlc::where_< mlc::and_< mlc_is_a(Expr1, abstract::fun_expr_),
-			  mlc::and_< mlc_is_a(Expr2, abstract::fun_expr_),
-				     mlc_is_a(Expr3, abstract::fun_expr_) > > >
+    : public mlc::where_< mlc::or_list_< mlc_is_a(Expr1, abstract::fun_expr_),
+					 mlc_is_a(Expr2, abstract::fun_expr_),
+					 mlc_is_a(Expr3, abstract::fun_expr_) > >,
+
+      // FIXME: try to get more precise error detections below...
+
+      private mlc::assert_< mlc::implies_< mlc_is_a(Expr1, abstract::fun_expr_),
+					   mlc::and_< mlc_is_a(Expr2, abstract::fun_expr_),
+						      mlc_is_a(Expr3, abstract::fun_expr_) > >,
+			    xtd::ERROR::MIXED_ARGUMENTS_IN_CALLING_A_TERNARY_META_FUNCTION__EXPR1 >,
+
+      private mlc::assert_< mlc::implies_< mlc_is_a(Expr2, abstract::fun_expr_),
+					   mlc::and_< mlc_is_a(Expr1, abstract::fun_expr_),
+						      mlc_is_a(Expr3, abstract::fun_expr_) > >,
+			    xtd::ERROR::MIXED_ARGUMENTS_IN_CALLING_A_TERNARY_META_FUNCTION__EXPR2 >,
+
+      private mlc::assert_< mlc::implies_< mlc_is_a(Expr3, abstract::fun_expr_),
+					   mlc::and_< mlc_is_a(Expr1, abstract::fun_expr_),
+						      mlc_is_a(Expr2, abstract::fun_expr_) > >,
+			    xtd::ERROR::MIXED_ARGUMENTS_IN_CALLING_A_TERNARY_META_FUNCTION__EXPR3 >
+
   {
     typedef m3expr_<F, Expr1, Expr2, Expr3> res;
 

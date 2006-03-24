@@ -37,7 +37,9 @@ int main()
     xtd::plain_id_<float> id_float;
     std::cout << id_float(5.1f) << std::endl;
 
+    // xfail tests:
+    // xtd::id(id_int);
+    // xtd::id(xtd::id);
   }
 
-    
 }

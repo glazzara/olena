@@ -9,11 +9,15 @@ AM_CPPFLAGS = -I$(top_srcdir)/extended -I$(top_srcdir)/metalic
 
 check_PROGRAMS =				\
   id						\
+  bind						\
   cast						\
-  cos
+  cos						\
+  lit
 
 id_SOURCES = id.cc
+bind_SOURCES = bind.cc
 cast_SOURCES = cast.cc
 cos_SOURCES = cos.cc
+lit_SOURCES = lit.cc
 
 TESTS = $(check_PROGRAMS)

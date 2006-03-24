@@ -1,3 +1,34 @@
+2006-03-24  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Add material for literals, binding arguments, and static checks.
+
+	* xtd/res.hh (xtd_res_0_ et al.): New; versions without typename.
+	(xtd_internal_res_0, internal::get_res_0_unchecked): New; this
+	equipment is for use in hierarchies to avoid partial definitions.
+	* xtd/mexpr.hh: Add static assertions.
+	* xtd/literal.hh (literal_): Rename as...
+	(plain_literal_): ...this.
+	(meta_literal_): New class.
+	(literal_expr_): Add static assertions.
+	(lit): New routine.
+	(bind_1, bind_2, bind_3): New; method implementation for
+	nary_fun_expr_<n, E>::bind_i. 
+	* xtd/arg.hh (xtd_nargs): Remove this duplicate.
+	* xtd/args.hh (xtd_nargs, nargs_): Move to...
+	* xtd/abstract/fun_expr.hh: ...this file.
+	(fun_expr_<E>::nargs): Remove; xtd_nargs does it.
+	(xtd_res_0): Replace by...
+	(xtd_internal_res_0): ...this.
+	(bind_1, bind_2, bind_3): New methods.
+	* xtd/abstract/exact.hh: Remove; the routine exact_of has moved...
+	* xtd/abstract/fun.hh: ...here.
+	* xtd/abstract/plain_fun.hh (operator()): Add static check.
+	* xtd/abstract/meta_fun.hh: Add static checks.
+	* tests/id.cc: Add xfail tests.
+	* tests/bind.cc: New.
+	* tests/lit.cc: New.
+	* tests/Makefile.am: Update.
+
 2006-03-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add Metalic's include path to Extended's tests.

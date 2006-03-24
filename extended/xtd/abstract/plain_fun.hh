@@ -29,11 +29,12 @@
 # define EXTENDED_ABSTRACT_PLAIN_FUN_HH
 
 # include <mlc/flags.hh>
-# include <mlc/bool.hh> // FIXME: should be assert.hh
+# include <mlc/assert.hh>
 # include <mlc/is_a.hh>
 # include <mlc/typedef.hh>
+# include <mlc/assert.hh>
+# include <mlc/abort.hh>
 
-# include <xtd/abstract/exact.hh>
 # include <xtd/abstract/fun.hh>
 # include <xtd/abstract/nary_fun.hh>
 
@@ -70,10 +71,15 @@ namespace xtd
 
     struct YOU_SHOULD_NOT_DERIVE_FROM_xtd_plain_fun_BUT_FROM_xtd_plain_nary_fun;
 
+    struct FIXME;
+
+    struct AN_xtd_plain_function_DOES_NOT_ACCEPT_AN_xtd_function_AS_ARGUMENT;
+
     // FIXME: add error messages corresponding to definitions without sense
     // FIXME: such as having arg2 when the plain function is unary
 
   } // end of namespace xtd::ERROR
+
 
 
   template <typename F>
@@ -81,6 +87,7 @@ namespace xtd
   {
     // nothing
   };
+
 
   mlc_decl_typedef(arg_type);
 
@@ -94,8 +101,12 @@ namespace xtd
   namespace abstract
   {
 
-    // fwd decl
+    /// Forward declarations.
+    /// \{
     template <unsigned n, typename E> class plain_nary_fun_;
+    template <typename E> class meta_fun_;
+    template <typename E> class fun_expr_;
+    /// \}
 
 
 
@@ -157,10 +168,12 @@ namespace xtd
 	public nary_fun_<0>
     {
     public:
+
       xtd_res(E) operator()() const
       {
 	return exact_of(this)->impl_op();
       }
+
     protected:
       plain_nary_fun_() {}
     };
@@ -185,10 +198,19 @@ namespace xtd
                               xtd::ERROR::xtd_fun_traits_SHOULD_DEFINE_arg_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_1 >
     {
     public:
+
+      template <typename F>
+      void operator()(const abstract::fun_<F>&) const
+      {
+ 	mlc::abort_< F,
+	             xtd::ERROR::AN_xtd_plain_function_DOES_NOT_ACCEPT_AN_xtd_function_AS_ARGUMENT >::check();
+      }
+
       xtd_res(E) operator()(const xtd_arg(E)& arg) const
       {
 	return exact_of(this)->impl_op(arg);
       }
+
     protected:
       plain_nary_fun_() {}
     };

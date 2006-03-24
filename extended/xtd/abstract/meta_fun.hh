@@ -28,10 +28,10 @@
 #ifndef EXTENDED_ABSTRACT_META_FUN_HH
 # define EXTENDED_ABSTRACT_META_FUN_HH
 
+# include <mlc/flags.hh>
 # include <mlc/pair.hh>
 # include <mlc/valist.hh>
 
-# include <xtd/abstract/exact.hh>
 # include <xtd/abstract/fun.hh>
 # include <xtd/abstract/nary_fun.hh>
 # include <xtd/args.hh>
@@ -45,6 +45,23 @@
 
 namespace xtd
 {
+
+
+  namespace ERROR
+  {
+    struct ARG_SHOULD_NOT_BE_A_PLAIN_FUN;
+    struct ARG1_SHOULD_NOT_BE_A_PLAIN_FUN;
+    struct ARG2_SHOULD_NOT_BE_A_PLAIN_FUN;
+    struct ARG3_SHOULD_NOT_BE_A_PLAIN_FUN;
+
+    struct ARG_SHOULD_NOT_BE_A_META_NON_EXPR_FUN;
+    struct ARG1_SHOULD_NOT_BE_A_META_NON_EXPR_FUN;
+    struct ARG2_SHOULD_NOT_BE_A_META_NON_EXPR_FUN;
+    struct ARG3_SHOULD_NOT_BE_A_META_NON_EXPR_FUN;
+
+  }// end of namespace xtd
+
+
 
   // FIXME: document case stuff...
 
@@ -109,6 +126,8 @@ namespace xtd
 } // end of namespace xtd
 
 
+
+
 namespace xtd
 {
 
@@ -131,9 +150,9 @@ namespace xtd
       meta_fun_()
       {
 	// FIXME: mlc_is_a does not work with unsigned parameter...
-// 	mlc::assert_< mlc_is_a(E, xtd::abstract::meta_nary_fun_),
-// 	              xtd::ERROR::YOU_SHOULD_NOT_DERIVE_DIRECTLY_FROM_xtd_meta_fun_BUT_FROM_xtd_meta_nary_fun_
-// 	            >::check();
+	// 	mlc::assert_< mlc_is_a(E, xtd::abstract::meta_nary_fun_),
+	// 	              xtd::ERROR::YOU_SHOULD_NOT_DERIVE_DIRECTLY_FROM_xtd_meta_fun_BUT_FROM_xtd_meta_nary_fun_
+	// 	            >::check();
       }
     };
 
@@ -169,7 +188,16 @@ namespace xtd
     {
     public:
 
-      xtd_res_0(E)
+      /*
+      ** This member is not templated so its behavior at compile-time
+      ** is different than meta_nary_fun_<n,E>::operator() where n >
+      ** 0.  Here the return type should be known before the hierarchy
+      ** classes are fully compiled thus static assertions in the
+      ** macro xtd_res_0 do *not* work.  An alternate macro is thus
+      ** in use. 
+      */
+
+      xtd_internal_res_0(E)
       operator()() const
       {
 	return exact_of(this)->impl_calc();
@@ -198,8 +226,17 @@ namespace xtd
     public:
 
       template <typename A>
-      struct case_ : public xtd::case_< xtd::tag::meta_1ary_fun_operator,
-					mlc::pair_<E, A> >::ret
+      struct case_ 
+
+	: private mlc::assert_< mlc_is_not_a(A, xtd::abstract::plain_fun_),
+				xtd::ERROR::ARG_SHOULD_NOT_BE_A_PLAIN_FUN >,
+
+	  private mlc::assert_< mlc::implies_< mlc_is_a(A, xtd::abstract::meta_fun_),
+					       mlc_is_a(A, xtd::abstract::fun_expr_) >,
+				xtd::ERROR::ARG_SHOULD_NOT_BE_A_META_NON_EXPR_FUN >,
+
+	  public xtd::case_< xtd::tag::meta_1ary_fun_operator,
+			     mlc::pair_<E, A> >::ret
       {};
 
       template <typename A>
@@ -232,8 +269,24 @@ namespace xtd
     public:
 
       template <typename A1, typename A2>
-      struct case_ : public xtd::case_< xtd::tag::meta_2ary_fun_operator,
-					mlc::valist_<E, A1, A2> >::ret
+      struct case_
+
+	: private mlc::assert_< mlc_is_not_a(A1, xtd::abstract::plain_fun_),
+				xtd::ERROR::ARG1_SHOULD_NOT_BE_A_PLAIN_FUN >,
+
+	  private mlc::assert_< mlc::implies_< mlc_is_a(A1, xtd::abstract::meta_fun_),
+					       mlc_is_a(A1, xtd::abstract::fun_expr_) >,
+				xtd::ERROR::ARG1_SHOULD_NOT_BE_A_META_NON_EXPR_FUN >,
+
+	  private mlc::assert_< mlc_is_not_a(A2, xtd::abstract::plain_fun_),
+				xtd::ERROR::ARG2_SHOULD_NOT_BE_A_PLAIN_FUN >,
+
+	  private mlc::assert_< mlc::implies_< mlc_is_a(A2, xtd::abstract::meta_fun_),
+					       mlc_is_a(A2, xtd::abstract::fun_expr_) >,
+				xtd::ERROR::ARG2_SHOULD_NOT_BE_A_META_NON_EXPR_FUN >,
+
+	  public xtd::case_< xtd::tag::meta_2ary_fun_operator,
+			     mlc::valist_<E, A1, A2> >::ret
       {};
 
       template <typename A1, typename A2>
@@ -265,8 +318,31 @@ namespace xtd
     public:
 
       template <typename A1, typename A2, typename A3>
-      struct case_ : public xtd::case_< xtd::tag::meta_3ary_fun_operator,
-					mlc::valist_<E, A1, A2, A3> >::ret
+      struct case_
+
+	: private mlc::assert_< mlc_is_not_a(A1, xtd::abstract::plain_fun_),
+				xtd::ERROR::ARG1_SHOULD_NOT_BE_A_PLAIN_FUN >,
+
+	  private mlc::assert_< mlc::implies_< mlc_is_a(A1, xtd::abstract::meta_fun_),
+					       mlc_is_a(A1, xtd::abstract::fun_expr_) >,
+				xtd::ERROR::ARG1_SHOULD_NOT_BE_A_META_NON_EXPR_FUN >,
+
+	  private mlc::assert_< mlc_is_not_a(A2, xtd::abstract::plain_fun_),
+				xtd::ERROR::ARG2_SHOULD_NOT_BE_A_PLAIN_FUN >,
+
+	  private mlc::assert_< mlc::implies_< mlc_is_a(A2, xtd::abstract::meta_fun_),
+					       mlc_is_a(A2, xtd::abstract::fun_expr_) >,
+				xtd::ERROR::ARG2_SHOULD_NOT_BE_A_META_NON_EXPR_FUN >,
+
+	  private mlc::assert_< mlc_is_not_a(A3, xtd::abstract::plain_fun_),
+				xtd::ERROR::ARG3_SHOULD_NOT_BE_A_PLAIN_FUN >,
+
+	  private mlc::assert_< mlc::implies_< mlc_is_a(A3, xtd::abstract::meta_fun_),
+					       mlc_is_a(A3, xtd::abstract::fun_expr_) >,
+				xtd::ERROR::ARG3_SHOULD_NOT_BE_A_META_NON_EXPR_FUN >,
+
+	  public xtd::case_< xtd::tag::meta_3ary_fun_operator,
+			     mlc::valist_<E, A1, A2, A3> >::ret
       {};
 
       template <typename A1, typename A2, typename A3>
