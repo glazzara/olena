@@ -33,68 +33,104 @@
 # include <xtd/mfun.hh>
 
 
+// FIXME: doc
+
+# define xtd_internal_decl_plain_unary_fun_op(OperatorName,  OperatorSymbol)	\
+										\
+  template <typename T>								\
+  struct plain_##OperatorName##_;						\
+										\
+  template <typename T>								\
+  struct fun_traits_< plain_##OperatorName##_<T> >				\
+  {										\
+    typedef T arg_type;								\
+    typedef xtd_##OperatorName(T) res_type;					\
+  };										\
+										\
+  template <typename T>								\
+  struct plain_##OperatorName##_						\
+										\
+    : public abstract::plain_nary_fun_< 1, plain_##OperatorName##_<T> >		\
+  {										\
+    typedef plain_##OperatorName##_<T> self;					\
+    xtd_res(self) impl_op(const T& arg) const					\
+    {										\
+      return OperatorSymbol arg;						\
+    }										\
+  };										\
+										\
+  typedef m1fun_<plain_##OperatorName##_> OperatorName##_type;			\
+  const OperatorName##_type OperatorName;					\
+										\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+
+
+# define xtd_internal_decl_plain_binary_fun_op(OperatorName,  OperatorSymbol)	\
+										\
+  template <typename T1, typename T2>						\
+  struct plain_##OperatorName##_;						\
+										\
+  template <typename T1, typename T2>						\
+  struct fun_traits_< plain_##OperatorName##_<T1, T2> >				\
+  {										\
+    typedef T1 arg1_type;							\
+    typedef T2 arg2_type;							\
+    typedef xtd_##OperatorName(T1, T2) res_type;				\
+  };										\
+  										\
+  template <typename T1, typename T2>						\
+  struct plain_##OperatorName##_						\
+										\
+    : public abstract::plain_nary_fun_< 2, plain_##OperatorName##_<T1, T2> >	\
+  {										\
+    typedef plain_##OperatorName##_<T1, T2> self;				\
+    xtd_res(self) impl_op(const T1& arg1, const T2& arg2) const			\
+    {										\
+      return arg1 OperatorSymbol arg2;						\
+    }										\
+  };										\
+										\
+  typedef m2fun_<plain_##OperatorName##_> OperatorName##_type;			\
+  const OperatorName##_type OperatorName;					\
+										\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+
 
 namespace xtd
 {
 
+  // logic
 
-  /*! \class xtd::plain_plus_<T>
-  **
-  ** FIXME: doc
-  */
+  xtd_internal_decl_plain_binary_fun_op( land, and );
+  xtd_internal_decl_plain_binary_fun_op( lor,  or );
+  xtd_internal_decl_plain_binary_fun_op( lxor, xor );
 
-  template <typename T1, typename T2> struct plain_plus_; // fwd decl
-
-  template <typename T1, typename T2>
-  struct fun_traits_< plain_plus_<T1, T2> >
-  {
-    typedef T1 arg1_type;
-    typedef T2 arg2_type;
-    typedef xtd_plus(T1, T2) res_type;
-  };
-  
-  template <typename T1, typename T2>
-  struct plain_plus_ : public abstract::plain_nary_fun_< 2, plain_plus_<T1, T2> >
-  {
-    typedef plain_plus_<T1, T2> self;
-    xtd_res(self) impl_op(const T1& arg1, const T2& arg2) const
-    {
-      return arg1 + arg2;
-    }
-  };
-
-  typedef m2fun_<plain_plus_> plus_type;
-  const plus_type plus;
+  xtd_internal_decl_plain_unary_fun_op( lnot, not );
 
 
+  // cmp
 
-  /*! \class xtd::plain_mult_<T>
-  **
-  ** FIXME: doc
-  */
+  xtd_internal_decl_plain_binary_fun_op( eq,      == );
+  xtd_internal_decl_plain_binary_fun_op( neq,     != );
+  xtd_internal_decl_plain_binary_fun_op( less,    <  );
+  xtd_internal_decl_plain_binary_fun_op( leq,     <= );
+  xtd_internal_decl_plain_binary_fun_op( greater, >  );
+  xtd_internal_decl_plain_binary_fun_op( geq,     >= );
 
-  template <typename T1, typename T2> struct plain_mult_; // fwd decl
 
-  template <typename T1, typename T2>
-  struct fun_traits_< plain_mult_<T1, T2> >
-  {
-    typedef T1 arg1_type;
-    typedef T2 arg2_type;
-    typedef xtd_mult(T1, T2) res_type;
-  };
-  
-  template <typename T1, typename T2>
-  struct plain_mult_ : public abstract::plain_nary_fun_< 2, plain_mult_<T1, T2> >
-  {
-    typedef plain_mult_<T1, T2> self;
-    xtd_res(self) impl_op(const T1& arg1, const T2& arg2) const
-    {
-      return arg1 * arg2;
-    }
-  };
+  // arith
 
-  typedef m2fun_<plain_mult_> mult_type;
-  const mult_type mult;
+  xtd_internal_decl_plain_binary_fun_op( plus,  + );
+  xtd_internal_decl_plain_binary_fun_op( minus, - );
+  xtd_internal_decl_plain_binary_fun_op( mult,  * );
+  xtd_internal_decl_plain_binary_fun_op( div,   / );
+  xtd_internal_decl_plain_binary_fun_op( mod,   % );
+
+  xtd_internal_decl_plain_unary_fun_op( uminus, - );
 
 
 } // end of namespace xtd

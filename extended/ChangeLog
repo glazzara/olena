@@ -1,5 +1,22 @@
 2006-03-25  Thierry Geraud  <theo@lrde.epita.fr>
 
+	Add a lot of material for operators (arith, logical, cmp).
+
+	* xtd/cast.hh: Fix doc.
+	* xtd/cfun.hh: New file dedicated to C functions.
+	* xtd/traits.hh: Add a lot of material.
+	* xtd/math/arith.hh: Update.
+	* xtd/ops_expr.hh: Update.
+	* xtd/builtin/traits.hh: Update.
+	* xtd/literal.hh: Add static assertions.
+	* xtd/abstract/fun_expr.hh (nargs): Move to...
+	* xtd/abstract/nary_fun.hh: ...this file.
+	(n): New method.
+	* tests/cfun.cc: New file.
+	* tests/Makefile.am: Update.
+
+2006-03-25  Thierry Geraud  <theo@lrde.epita.fr>
+
 	Separate xtd function expressions from meta functions. .
 
 	The design has changed: now an nary_fun_expr is not a subclass of

@@ -96,7 +96,7 @@ namespace xtd
   **
   ** This function mimics the behavior of the method:
   **
-  **    xtd::meta_nary_fun_<1, E>::operator(const A& a)
+  **    xtd::open_nary_fun_<1, E>::operator(const A& a)
   **
   ** The method is thus turned into a function where E, the
   ** unary meta function actually is meta_cast_<Dest>.

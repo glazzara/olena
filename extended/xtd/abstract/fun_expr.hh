@@ -74,11 +74,6 @@ namespace xtd
 	return this->exact().impl_eval(arglist);
       }
 
-      unsigned nargs() const
-      {
-	return xtd_nargs(E);
-      }
-
     protected:
       fun_expr_() {}
     };

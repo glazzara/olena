@@ -33,48 +33,93 @@
 # include <xtd/math/arith.hh>
 
 
+
+
+// FIXME: doc
+
+
+
+# define xtd_internal_decl_unary_operator(OperatorName, OperatorSymbol)	\
+									\
+  template <typename Expr>						\
+  xtd::m1expr_<xtd::OperatorName##_type, Expr>				\
+  operator OperatorSymbol (const xtd::abstract::fun_expr_<Expr>& expr)	\
+  {									\
+    xtd::m1expr_<xtd::OperatorName##_type, Expr> tmp(expr);		\
+    return tmp;								\
+  }									\
+									\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+// FIXME: add something like:
+
+//   template <typename Expr>
+//   struct OperatorName##_trait_ < Expr >
+//   {
+//     typedef xtd::m1expr_<xtd::OperatorName##_type, Expr> ret;
+//   };
+
+
+
+
+# define xtd_internal_decl_binary_operator(OperatorName, OperatorSymbol)	\
+										\
+  template <typename Lexpr, typename Rexpr>					\
+  xtd::m2expr_<xtd::OperatorName##_type, Lexpr, Rexpr>				\
+  operator OperatorSymbol (const xtd::abstract::fun_expr_<Lexpr>& lexpr,	\
+			   const xtd::abstract::fun_expr_<Rexpr>& rexpr)	\
+  {										\
+    xtd::m2expr_<xtd::OperatorName##_type, Lexpr, Rexpr> tmp(lexpr, rexpr);	\
+    return tmp;									\
+  }										\
+										\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+// FIXME: add something like:
+
+//   template <typename Lexpr, typename Rexpr>
+//   struct OperatorName##_trait_ < Lexpr, Rexpr >
+//   {
+//     typedef xtd::m2expr_<xtd::OperatorName##_type, Lexpr, Rexpr> ret;
+//   };
+
+
+
+
+
 namespace xtd
 {
 
-//   namespace abstract
-//   {
+  // logic
+
+  xtd_internal_decl_binary_operator( land, and );
+  xtd_internal_decl_binary_operator( lor,  or );
+  xtd_internal_decl_binary_operator( lxor, xor );
+
+  xtd_internal_decl_unary_operator( lnot, not );
 
 
-  // +
+  // cmp
 
-    template <typename L, typename R>
-    xtd::m2expr_<xtd::plus_type, L, R>
-    operator + (const xtd::abstract::fun_expr_<L>& lexpr,
-		const xtd::abstract::fun_expr_<R>& rexpr)
-    {
-      xtd::m2expr_<xtd::plus_type, L, R> tmp(lexpr, rexpr);
-      return tmp;
-    }
-
-  // HERE
-
-//     template <typename R>
-//     xtd::m2expr_<xtd::plus_type, m0expr<literal_<int> >, R>
-//     operator + (int i,
-// 		const xtd::abstract::fun_expr_<R>& rexpr)
-//     {
-//       xtd::m2expr<xtd::plus_type, L, R> tmp;
-//       return tmp;
-//     }
+  xtd_internal_decl_binary_operator( eq,      == );
+  xtd_internal_decl_binary_operator( neq,     != );
+  xtd_internal_decl_binary_operator( less,    <  );
+  xtd_internal_decl_binary_operator( leq,     <= );
+  xtd_internal_decl_binary_operator( greater, >  );
+  xtd_internal_decl_binary_operator( geq,     >= );
 
 
-  // *
+  // arith
 
-    template <typename L, typename R>
-    xtd::m2expr_<xtd::mult_type, L, R>
-    operator * (const xtd::abstract::fun_expr_<L>& lexpr,
-		const xtd::abstract::fun_expr_<R>& rexpr)
-    {
-      xtd::m2expr_<xtd::mult_type, L, R> tmp(lexpr, rexpr);
-      return tmp;
-    }
+  xtd_internal_decl_binary_operator( plus,  + );
+  xtd_internal_decl_binary_operator( minus, - );
+  xtd_internal_decl_binary_operator( mult,  * );
+  xtd_internal_decl_binary_operator( div,   / );
+  xtd_internal_decl_binary_operator( mod,   % );
 
-//   } // end of namespace xtd::abstract
+  xtd_internal_decl_unary_operator( uminus, - );
 
 } // end of namespace xtd
 

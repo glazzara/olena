@@ -37,9 +37,15 @@ namespace xtd
 
     // FIXME: doc!
 
-    template <unsigned n>
+    template <unsigned n_>
     class nary_fun_
     {
+    public:
+
+      enum { nargs = n_ };
+
+      unsigned n() const { return n_; }
+
     protected:
       nary_fun_()
       {}

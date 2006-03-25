@@ -31,12 +31,103 @@
 # include <mlc/flags.hh>
 
 
-# define xtd_plus(L, R) typename xtd::plus_trait_< L, R >::ret 
-# define xtd_mult(L, R) typename xtd::mult_trait_< L, R >::ret 
+
+// logic
+
+# define xtd_land(L, R)  typename xtd::land_trait_<L, R>::ret 
+# define xtd_lor(L, R)   typename xtd::lor_trait_<L, R>::ret 
+# define xtd_lxor(L, R)  typename xtd::lxor_trait_<L, R>::ret 
+
+# define xtd_lnot(T)     typename xtd::lnot_trait_<T>::ret 
+
+
+// cmp
+
+# define xtd_eq(L, R)      typename xtd::eq_trait_<L, R>::ret 
+# define xtd_neq(L, R)     typename xtd::neq_trait_<L, R>::ret 
+# define xtd_less(L, R)    typename xtd::less_trait_<L, R>::ret 
+# define xtd_leq(L, R)     typename xtd::leq_trait_<L, R>::ret 
+# define xtd_greater(L, R) typename xtd::greater_trait_<L, R>::ret 
+# define xtd_geq(L, R)     typename xtd::geq_trait_<L, R>::ret 
+
+
+// arith
+
+# define xtd_plus(L, R)  typename xtd::plus_trait_<L, R>::ret 
+# define xtd_minus(L, R) typename xtd::minus_trait_<L, R>::ret 
+# define xtd_mult(L, R)  typename xtd::mult_trait_<L, R>::ret 
+# define xtd_div(L, R)   typename xtd::div_trait_<L, R>::ret 
+# define xtd_mod(L, R)   typename xtd::mod_trait_<L, R>::ret 
+
+# define xtd_uminus(T)   typename xtd::uminus_trait_<T>::ret 
+
+
+
+// FIXME: xtd_plus(L, R) should be xtd::INTERNAL::plus_trait_< L, R >::ret
+// FIXME: which checks that the trait *is* defined
+
 
 
 namespace xtd
 {
+
+  // logic
+
+  template <typename L, typename R>
+  struct land_trait_ : public mlc::undefined
+  {
+  };
+
+  template <typename L, typename R>
+  struct lor_trait_ : public mlc::undefined
+  {
+  };
+
+  template <typename L, typename R>
+  struct lxor_trait_ : public mlc::undefined
+  {
+  };
+
+  template <typename T>
+  struct lnot_trait_ : public mlc::undefined
+  {
+  };
+
+
+  // cmp
+
+  template <typename L, typename R>
+  struct eq_trait_ : public mlc::undefined
+  {
+  };
+
+  template <typename L, typename R>
+  struct neq_trait_ : public mlc::undefined
+  {
+  };
+
+  template <typename L, typename R>
+  struct less_trait_ : public mlc::undefined
+  {
+  };
+
+  template <typename L, typename R>
+  struct leq_trait_ : public mlc::undefined
+  {
+  };
+
+  template <typename L, typename R>
+  struct greater_trait_ : public mlc::undefined
+  {
+  };
+
+  template <typename L, typename R>
+  struct geq_trait_ : public mlc::undefined
+  {
+  };
+
+
+  // arith
 
   template <typename L, typename R>
   struct plus_trait_ : public mlc::undefined
@@ -44,9 +135,31 @@ namespace xtd
   };
 
   template <typename L, typename R>
-  struct mult_trait_ : public mlc::undefined
+  struct minus_trait_ : public mlc::undefined
   {
   };
+
+  template <typename L, typename R>
+  struct mult_trait_ : public mlc::undefined // FIXME: or "times"?
+  {
+  };
+
+  template <typename L, typename R>
+  struct div_trait_ : public mlc::undefined
+  {
+  };
+
+  template <typename L, typename R>
+  struct mod_trait_ : public mlc::undefined
+  {
+  };
+
+  template <typename T>
+  struct uminus_trait_ : public mlc::undefined
+  {
+  };
+
+
 
 } // end of namespace xtd
 

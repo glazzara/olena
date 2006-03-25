@@ -59,7 +59,12 @@ namespace xtd
   };
   
   template <typename T>
-  struct plain_literal_ : public abstract::plain_nary_fun_< 0, plain_literal_<T> >
+  struct plain_literal_
+
+    : private mlc::assert_< mlc_is_not_a(T, abstract::fun_),
+			    xtd::ERROR::FIXME >,
+
+      public abstract::plain_nary_fun_< 0, plain_literal_<T> >
   {
     const T value;
 
@@ -92,7 +97,12 @@ namespace xtd
   */
 
   template <typename T>
-  struct meta_literal_ : public abstract::meta_nary_fun_< 0, meta_literal_<T> >
+  struct meta_literal_
+
+    : private mlc::assert_< mlc_is_not_a(T, abstract::fun_),
+			    xtd::ERROR::FIXME >,
+
+      public abstract::meta_nary_fun_< 0, meta_literal_<T> >
   {
     const T value;
 

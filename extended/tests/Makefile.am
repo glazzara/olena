@@ -11,12 +11,14 @@ check_PROGRAMS =				\
   id						\
   bind						\
   cast						\
+  cfun						\
   cos						\
   lit
 
 id_SOURCES = id.cc
 bind_SOURCES = bind.cc
 cast_SOURCES = cast.cc
+cfun_SOURCES = cfun.cc
 cos_SOURCES = cos.cc
 lit_SOURCES = lit.cc
 

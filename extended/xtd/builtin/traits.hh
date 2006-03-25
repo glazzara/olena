@@ -31,56 +31,92 @@
 # include <xtd/traits.hh>
 
 
+
+// FIXME: this is dummy and incomplete code!
+
+
+# define xtd_internal_DUMMY_builtin_arith_traits(OperatorName)						\
+													\
+  template <typename T>											\
+  struct OperatorName##_trait_ < T, T >									\
+  {													\
+    typedef T ret;											\
+  };													\
+													\
+  template <> struct OperatorName##_trait_ < float, int > { typedef float ret; };			\
+  template <> struct OperatorName##_trait_ < int, float > { typedef float ret; };			\
+  template <> struct OperatorName##_trait_ < double, int > { typedef double ret; };			\
+  template <> struct OperatorName##_trait_ < int, double > { typedef double ret; };			\
+  template <> struct OperatorName##_trait_ < double, float > { typedef double ret; };			\
+  template <> struct OperatorName##_trait_ < float, double > { typedef double ret; };			\
+													\
+  template <> struct OperatorName##_trait_ < long double, int > { typedef long double ret; };		\
+  template <> struct OperatorName##_trait_ < int, long double > { typedef long double ret; };		\
+  template <> struct OperatorName##_trait_ < long double, float > { typedef long double ret; };		\
+  template <> struct OperatorName##_trait_ < float, long double > { typedef long double ret; };		\
+  template <> struct OperatorName##_trait_ < long double, double > { typedef long double ret; };	\
+  template <> struct OperatorName##_trait_ < double, long double > { typedef long double ret; };	\
+													\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+# define xtd_internal_DUMMY_builtin_logic_traits(OperatorName)	\
+								\
+  template <>							\
+  struct OperatorName##_trait_ < bool, bool >			\
+  {								\
+    typedef bool ret;						\
+  };								\
+								\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+# define xtd_internal_DUMMY_builtin_cmp_traits(OperatorName)	\
+								\
+  template <typename T>						\
+  struct OperatorName##_trait_ < T, T >				\
+  {								\
+    typedef bool ret;						\
+  };								\
+								\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+  
+
 namespace xtd
 {
 
-  // FIXME: this is dummy and incomplete code!
+  // logic
+
+  xtd_internal_DUMMY_builtin_logic_traits( land );
+  xtd_internal_DUMMY_builtin_logic_traits( lor );
+  xtd_internal_DUMMY_builtin_logic_traits( lxor );
+
+  template <> struct lnot_trait_< bool > { typedef bool ret; };
+
+  // cmp
+
+  xtd_internal_DUMMY_builtin_cmp_traits( eq );
+  xtd_internal_DUMMY_builtin_cmp_traits( neq );
+  xtd_internal_DUMMY_builtin_cmp_traits( less );
+  xtd_internal_DUMMY_builtin_cmp_traits( leq );
+  xtd_internal_DUMMY_builtin_cmp_traits( greater );
+  xtd_internal_DUMMY_builtin_cmp_traits( geq );
 
 
-  // plus
+  // arith
 
-  template <typename T>
-  struct plus_trait_ < T, T >
-  {
-    typedef T ret;
-  };
+  xtd_internal_DUMMY_builtin_arith_traits( plus );
+  xtd_internal_DUMMY_builtin_arith_traits( minus );
+  xtd_internal_DUMMY_builtin_arith_traits( mult );
+  xtd_internal_DUMMY_builtin_arith_traits( div );
+  xtd_internal_DUMMY_builtin_arith_traits( mod );
 
-  template <> struct plus_trait_ < float, int > { typedef float ret; };
-  template <> struct plus_trait_ < int, float > { typedef float ret; };
-  template <> struct plus_trait_ < double, int > { typedef double ret; };
-  template <> struct plus_trait_ < int, double > { typedef double ret; };
-  template <> struct plus_trait_ < double, float > { typedef double ret; };
-  template <> struct plus_trait_ < float, double > { typedef double ret; };
-
-  template <> struct plus_trait_ < long double, int > { typedef long double ret; };
-  template <> struct plus_trait_ < int, long double > { typedef long double ret; };
-  template <> struct plus_trait_ < long double, float > { typedef long double ret; };
-  template <> struct plus_trait_ < float, long double > { typedef long double ret; };
-  template <> struct plus_trait_ < long double, double > { typedef long double ret; };
-  template <> struct plus_trait_ < double, long double > { typedef long double ret; };
-
-
-  // mult
-
-  template <typename T>
-  struct mult_trait_ < T, T >
-  {
-    typedef T ret;
-  };
-
-  template <> struct mult_trait_ < float, int > { typedef float ret; };
-  template <> struct mult_trait_ < int, float > { typedef float ret; };
-  template <> struct mult_trait_ < double, int > { typedef double ret; };
-  template <> struct mult_trait_ < int, double > { typedef double ret; };
-  template <> struct mult_trait_ < double, float > { typedef double ret; };
-  template <> struct mult_trait_ < float, double > { typedef double ret; };
-
-  template <> struct mult_trait_ < long double, int > { typedef long double ret; };
-  template <> struct mult_trait_ < int, long double > { typedef long double ret; };
-  template <> struct mult_trait_ < long double, float > { typedef long double ret; };
-  template <> struct mult_trait_ < float, long double > { typedef long double ret; };
-  template <> struct mult_trait_ < long double, double > { typedef long double ret; };
-  template <> struct mult_trait_ < double, long double > { typedef long double ret; };
+  template <> struct uminus_trait_< int > { typedef int ret; };
+  template <> struct uminus_trait_< float > { typedef float ret; };
+  template <> struct uminus_trait_< double > { typedef double ret; };
+  template <> struct uminus_trait_< long double > { typedef long double ret; };
 
 
 } // end of namespace xtd
