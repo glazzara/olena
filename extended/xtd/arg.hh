@@ -28,12 +28,7 @@
 #ifndef EXTENDED_ARG_HH
 # define EXTENDED_ARG_HH
 
-# include <mlc/assert.hh>
-# include <mlc/is_a.hh>
-
-# include <xtd/args.hh>
-# include <xtd/mexpr.hh>
-
+# include <xtd/abstract/fun_nary_expr.hh>
 
 
 namespace xtd
@@ -122,7 +117,7 @@ namespace xtd
   template <unsigned i>
   struct arg_
 
-    : public abstract::nary_fun_expr_< i, arg_<i> >,
+    : public abstract::fun_nary_expr_< i, arg_<i> >,
 
       public internal::impl_arg_<i>
 

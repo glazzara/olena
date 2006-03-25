@@ -28,9 +28,13 @@
 #ifndef EXTENDED_ARGS_HH
 # define EXTENDED_ARGS_HH
 
-# include <mlc/flags.hh>
-# include <mlc/assert.hh>
-# include <mlc/is_a.hh>
+# include <xtd/internal/mlc.hh>
+
+
+
+// FIXME: doc
+
+# define xtd_nargs(F) xtd::internal::get_nargs_<F>::ret
 
 
 
@@ -57,6 +61,7 @@ namespace xtd
     };
 
   } // end of namespace xtd::abstract
+
 
 
 
@@ -156,6 +161,52 @@ namespace xtd
     args_<A1,A2> tmp(arg1, arg2);
     return tmp;
   }
+
+
+
+
+
+
+  namespace ERROR
+  {
+
+    struct SPECIALIZATION_OF_xtd_nargs_IS_FOR_xtd_fun_expr_ONLY;
+    struct SPECIALIZATION_OF_xtd_nargs_NOT_FOUND_FOR_AN_xtd_fun_expr;
+
+  } // end of namespace xtd::ERROR
+
+
+
+  /*! \class xtd::nargs_<F>
+  **
+  ** FIXME: doc
+  */
+
+  template <typename F>
+  struct nargs_ : public mlc::undefined
+  {
+  };
+
+
+  namespace internal
+  {
+
+    template <typename F>
+    struct get_nargs_
+
+      : // private mlc::assert_< mlc_is_a(F, xtd::abstract::fun_expr_),
+	//	                 xtd::ERROR::SPECIALIZATION_OF_xtd_nargs_IS_FOR_xtd_fun_expr_ONLY >,
+        // FIXME: the static assertion above does *not* compile...
+
+	private mlc::assert_< mlc_is_not_a(xtd::nargs_<F>, mlc::undefined),
+			      xtd::ERROR::SPECIALIZATION_OF_xtd_nargs_NOT_FOUND_FOR_AN_xtd_fun_expr >
+    {
+      static const unsigned ret = xtd::nargs_<F>::ret;
+    };
+
+  } // end of xtd::internal
+
+
 
 
 } // end of namespace xtd

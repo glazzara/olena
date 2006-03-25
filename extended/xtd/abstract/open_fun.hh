@@ -25,13 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_CASE_HH
-# define EXTENDED_CASE_HH
+#ifndef EXTENDED_ABSTRACT_OPEN_FUN_HH
+# define EXTENDED_ABSTRACT_OPEN_FUN_HH
 
-# include <mlc/case.hh>
-
-
-mlc_case_equipment_for_namespace(xtd);
+# include <xtd/internal/mlc.hh>
 
 
-#endif // ! EXTENDED_CASE_HH
+namespace xtd
+{
+
+  namespace abstract
+  {
+
+    /*! \class xtd::abstract::open_fun_<E>
+    **
+    ** FIXME: doc
+    **
+    ** Parameter n is the number of arguments with n being 1, 2, or 3.
+    ** Parameter E is the exact type of the function.
+    */
+
+    template <typename E>
+    class open_fun_
+    {
+    protected:
+
+      open_fun_()
+      {}
+
+    public:
+
+      const E& exact_() const
+      {
+	return *(const E*)(const void*)(this);
+      }
+    };
+
+
+  } // end of namespace xtd::abstract
+
+} // end of namespace xtd
+
+
+
+#endif // ! EXTENDED_ABSTRACT_OPEN_FUN_HH

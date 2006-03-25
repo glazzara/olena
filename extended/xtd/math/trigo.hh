@@ -30,11 +30,7 @@
 
 # include <cmath>
 
-# include <mlc/assert.hh>
-# include <mlc/logic.hh>
-# include <mlc/cmp.hh>
-
-# include <xtd/abstract/plain_fun.hh>
+# include <xtd/abstract/plain_nary_fun.hh>
 # include <xtd/mfun.hh>
 
 

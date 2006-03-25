@@ -28,7 +28,7 @@
 #ifndef EXTENDED_MATH_ID_HH
 # define EXTENDED_MATH_ID_HH
 
-# include <xtd/abstract/plain_fun.hh>
+# include <xtd/abstract/plain_nary_fun.hh>
 # include <xtd/mfun.hh>
 
 

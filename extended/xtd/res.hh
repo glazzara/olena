@@ -28,19 +28,12 @@
 #ifndef EXTENDED_RES_HH
 # define EXTENDED_RES_HH
 
-# include <mlc/flags.hh>
-# include <mlc/bool.hh> // FIXME: should be assert.hh
-# include <mlc/if.hh>
-# include <mlc/is_a.hh>
-# include <mlc/comma.hh>
-# include <mlc/cmp.hh>
-# include <mlc/ret.hh>
-
-# include <xtd/abstract/nary_fun.hh>
+# include <xtd/internal/mlc.hh>
 
 
 
-// forward declarations ...............................
+/// Forward declarations.
+/// \{
 
 namespace xtd
 {
@@ -49,32 +42,27 @@ namespace xtd
   {
 
     template <typename E>
-    class meta_fun_;
+    class open_fun_;
 
-    template <unsigned n, typename E>
-    class meta_nary_fun_;
+    template <typename E>
+    class meta_fun_;
 
     template <typename E>
     class fun_expr_;
 
+    template <unsigned n>
+    class nary_fun_;
+
+    class args;
+
   } // end of namespace xtd::abstract
 
-  template <typename F,
-	    typename Expr>
-  struct m1expr;
-
-  template <typename F,
-	    typename Expr1, typename Expr2>
-  struct m2expr;
-
-  template <typename F,
-	    typename Expr1, typename Expr2, typename Expr3>
-  struct m3expr;
+  template <typename A1, typename A2, typename A3>
+  struct args_;
 
 } // end of namespace xtd
 
-
-// end of forward declarations ........................
+/// \}
 
 
 
@@ -160,7 +148,7 @@ namespace xtd
     // FIXME: doc...
 
 
-    // for meta_fun that are *not* fun_expr
+    // for meta_fun
     // ------------------------------------
 
 
@@ -264,7 +252,7 @@ namespace xtd
 
 
 
-    // for meta_fun that *are* fun_expr
+    // for fun_expr
     // ------------------------------------
 
     template <typename F,
@@ -295,9 +283,13 @@ namespace xtd
 	      typename A1 = mlc::none,
 	      typename A2 = mlc::none,
 	      typename A3 = mlc::none>
-    struct get_res_ : public mlc::if_< mlc_is_a(F, xtd::abstract::fun_expr_),
-				       get_expr_res_<F, xtd::args_<A1, A2, A3> >,
-				       do_get_res_<F, A1, A2, A3> >::ret
+    struct get_res_
+
+    // FIXME: add assertion "F is an xtd::abstract::open_fun_"
+
+      : public mlc::if_< mlc_is_a(F, xtd::abstract::fun_expr_),
+			 get_expr_res_<F, xtd::args_<A1, A2, A3> >,
+			 do_get_res_<F, A1, A2, A3> >::ret
     {};
 
     // FIXME: add extra assertions here(?)

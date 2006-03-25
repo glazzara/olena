@@ -13,9 +13,9 @@ int main()
 
   (_1 + _2)(_1, lit(1.f));
 
-  (_1 + _2).bind_2(1.f);
+  ;
 
-  std::cout << (_1 + _2)(5., 1.) << std::endl;
+  std::cout << (_1 + _2) .bind_2(2.6f) (2.5f) << std::endl;
 
 //   std::cout << (_1 + _2)(_1, 1.)(5.) << std::endl;
 

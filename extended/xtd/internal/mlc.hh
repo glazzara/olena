@@ -25,58 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_OPS_EXPR_HH
-# define EXTENDED_OPS_EXPR_HH
+#ifndef EXTENDED_INTERNAL_MLC_HH
+# define EXTENDED_INTERNAL_MLC_HH
 
-# include <xtd/abstract/fun_expr.hh>
-# include <xtd/mexpr.hh>
-# include <xtd/math/arith.hh>
+# include <mlc/flags.hh>
+# include <mlc/comma.hh>
 
+# include <mlc/typedef.hh>
+# include <mlc/ret.hh>
 
-namespace xtd
-{
+# include <mlc/assert.hh>
+# include <mlc/is_a.hh>
+# include <mlc/logic.hh>
+# include <mlc/cmp.hh>
+# include <mlc/if.hh>
 
-//   namespace abstract
-//   {
-
-
-  // +
-
-    template <typename L, typename R>
-    xtd::m2expr_<xtd::plus_type, L, R>
-    operator + (const xtd::abstract::fun_expr_<L>& lexpr,
-		const xtd::abstract::fun_expr_<R>& rexpr)
-    {
-      xtd::m2expr_<xtd::plus_type, L, R> tmp(lexpr, rexpr);
-      return tmp;
-    }
-
-  // HERE
-
-//     template <typename R>
-//     xtd::m2expr_<xtd::plus_type, m0expr<literal_<int> >, R>
-//     operator + (int i,
-// 		const xtd::abstract::fun_expr_<R>& rexpr)
-//     {
-//       xtd::m2expr<xtd::plus_type, L, R> tmp;
-//       return tmp;
-//     }
+# include <mlc/pair.hh>
+# include <mlc/valist.hh>
 
 
-  // *
-
-    template <typename L, typename R>
-    xtd::m2expr_<xtd::mult_type, L, R>
-    operator * (const xtd::abstract::fun_expr_<L>& lexpr,
-		const xtd::abstract::fun_expr_<R>& rexpr)
-    {
-      xtd::m2expr_<xtd::mult_type, L, R> tmp(lexpr, rexpr);
-      return tmp;
-    }
-
-//   } // end of namespace xtd::abstract
-
-} // end of namespace xtd
 
 
-#endif // ! EXTENDED_OPS_EXPR_HH
+# include <mlc/case.hh>
+
+mlc_case_equipment_for_namespace(xtd);
+
+
+#endif // ! EXTENDED_INTERNAL_MLC_HH

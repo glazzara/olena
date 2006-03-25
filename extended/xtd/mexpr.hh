@@ -28,16 +28,8 @@
 #ifndef EXTENDED_MEXPR_HH
 # define EXTENDED_MEXPR_HH
 
-# include <mlc/case.hh>
-# include <mlc/assert.hh>
-# include <mlc/logic.hh>
-# include <mlc/is_a.hh>
-
-# include <xtd/abstract/nary_fun.hh>
-# include <xtd/abstract/fun_expr.hh>
-# include <xtd/args.hh>
-# include <xtd/res.hh>
-# include <xtd/literal.hh>
+# include <xtd/abstract/meta_nary_fun.hh>
+# include <xtd/abstract/fun_nary_expr.hh>
 
 
 
@@ -57,6 +49,9 @@ namespace xtd
     struct MIXED_ARGUMENTS_IN_CALLING_A_TERNARY_META_FUNCTION__EXPR3;
 
     struct FIXME;
+    struct FIXME1;
+    struct FIXME2;
+    struct FIXME3;
 
   } // end of namespace xtd::ERROR
 
@@ -98,10 +93,10 @@ namespace xtd
     : private mlc::assert_< mlc_is_a(F, abstract::nary_fun_<0>),
 			    ERROR::FIXME >,
 
-      private mlc::assert_< mlc_is_a(F, abstract::meta_fun_),
-			    ERROR::FIXME >,
+      private mlc::assert_< mlc_is_a(F, abstract::open_fun_),
+			    ERROR::FIXME2 >,
 
-      public abstract::nary_fun_expr_< 0, m0expr_<F> >
+      public abstract::fun_nary_expr_< 0, m0expr_<F> >
   {
     const F f;
 
@@ -109,11 +104,9 @@ namespace xtd
       f()
     {}
 
-    m0expr_(const F& f) :
-     f(f)
+    m0expr_(const abstract::open_nary_fun_<0, F>& f) :
+     f(f.exact_())
     {
-      mlc::assert_< mlc_is_a(F, abstract::nary_fun_<0>),
-	            ERROR::FIXME >::check();
     }
 
     template <typename Args>
@@ -162,13 +155,13 @@ namespace xtd
     : private mlc::assert_< mlc_is_a(F, abstract::nary_fun_<1>),
 			    ERROR::FIXME >,
 
-      private mlc::assert_< mlc_is_a(F, abstract::meta_fun_),
-			    ERROR::FIXME >,
+      private mlc::assert_< mlc_is_a(F, abstract::open_fun_),
+			    ERROR::FIXME2 >,
 
       private mlc::assert_< mlc_is_a(Expr, abstract::fun_expr_),
 			    xtd::ERROR::FIXME >,
 
-      public abstract::nary_fun_expr_< xtd_nargs(Expr),
+      public abstract::fun_nary_expr_< xtd_nargs(Expr),
 				       m1expr_<F, Expr> >
   {
     typedef m1expr_<F, Expr> self;
@@ -183,16 +176,14 @@ namespace xtd
 
     m1expr_(const abstract::fun_expr_<Expr>& expr) :
       f(),
-      expr(exact_of(expr))
+      expr(expr.exact())
     {}
 
-    m1expr_(const F& f, // FIXME: constraint?
+    m1expr_(const abstract::open_nary_fun_<1, F>& f,
 	    const abstract::fun_expr_<Expr>& expr) :
-      f(f),
-      expr(exact_of(expr))
+      f(f.exact_()),
+      expr(expr.exact())
     {
-      mlc::assert_< mlc_is_a(F, abstract::nary_fun_<1>),
-	            ERROR::FIXME >::check();
     }
 
     template <typename Args>
@@ -244,16 +235,16 @@ namespace xtd
   struct m2expr_
 
     : private mlc::assert_< mlc_is_a(F, abstract::nary_fun_<2>),
-			    ERROR::FIXME >,
+			    ERROR::FIXME1 >,
 
-      private mlc::assert_< mlc_is_a(F, abstract::meta_fun_),
-			    ERROR::FIXME >,
+      private mlc::assert_< mlc_is_a(F, abstract::open_fun_),
+			    ERROR::FIXME2 >,
 
       private mlc::assert_< mlc::and_< mlc_is_a(Expr1, abstract::fun_expr_),
 				       mlc_is_a(Expr2, abstract::fun_expr_) >,
-			    xtd::ERROR::FIXME >,
+			    xtd::ERROR::FIXME3 >,
 
-      public abstract::nary_fun_expr_< xtd_nargs(mlc_comma_2(m2expr_<F, Expr1, Expr2>)),
+      public abstract::fun_nary_expr_< xtd_nargs(mlc_comma_2(m2expr_<F, Expr1, Expr2>)),
 				       m2expr_<F, Expr1, Expr2> >
   {
     typedef m2expr_<F, Expr1, Expr2> self;
@@ -271,19 +262,17 @@ namespace xtd
     m2expr_(const abstract::fun_expr_<Expr1>& expr1,
 	    const abstract::fun_expr_<Expr2>& expr2) :
       f(),
-      expr1(exact_of(expr1)),
-      expr2(exact_of(expr2))
+      expr1(expr1.exact()),
+      expr2(expr2.exact())
     {}
 
-    m2expr_(const F& f,
+    m2expr_(const abstract::open_nary_fun_<2, F>& f,
 	    const abstract::fun_expr_<Expr1>& expr1,
 	    const abstract::fun_expr_<Expr2>& expr2) :
-      f(f),
-      expr1(exact_of(expr1)),
-      expr2(exact_of(expr2))
+      f(f.exact_()),
+      expr1(expr1.exact()),
+      expr2(expr2.exact())
     {
-      mlc::assert_< mlc_is_a(F, abstract::nary_fun_<2>),
-	            ERROR::FIXME >::check();
     }
 
     template <typename Args>
@@ -338,15 +327,15 @@ namespace xtd
     : private mlc::assert_< mlc_is_a(F, abstract::nary_fun_<3>),
 			    ERROR::FIXME >,
 
-      private mlc::assert_< mlc_is_a(F, abstract::meta_fun_),
-			    ERROR::FIXME >,
+      private mlc::assert_< mlc_is_a(F, abstract::open_fun_),
+			    ERROR::FIXME2 >,
 
       private mlc::assert_< mlc::and_list_< mlc_is_a(Expr1, abstract::fun_expr_),
 					    mlc_is_a(Expr2, abstract::fun_expr_),
 					    mlc_is_a(Expr3, abstract::fun_expr_) >,
 			    xtd::ERROR::FIXME >,
 
-      public abstract::nary_fun_expr_< xtd_nargs(mlc_comma_3(m3expr_<F, Expr1, Expr2, Expr3>)),
+      public abstract::fun_nary_expr_< xtd_nargs(mlc_comma_3(m3expr_<F, Expr1, Expr2, Expr3>)),
 				       m3expr_<F, Expr1, Expr2, Expr3> >
   {
     typedef m3expr_<F, Expr1, Expr2, Expr3> self;
@@ -367,22 +356,20 @@ namespace xtd
 	    const abstract::fun_expr_<Expr2>& expr2,
 	    const abstract::fun_expr_<Expr3>& expr3) :
       f(),
-      expr1(exact_of(expr1)),
-      expr2(exact_of(expr2)),
-      expr3(exact_of(expr3))
+      expr1(expr1.exact()),
+      expr2(expr2.exact()),
+      expr3(expr3.exact())
     {}
 
-    m3expr_(const F& f,
+    m3expr_(const abstract::open_nary_fun_<3, F>& f,
 	    const abstract::fun_expr_<Expr1>& expr1,
 	    const abstract::fun_expr_<Expr2>& expr2,
 	    const abstract::fun_expr_<Expr3>& expr3) :
-      f(f),
-      expr1(exact_of(expr1)),
-      expr2(exact_of(expr2)),
-      expr3(exact_of(expr3))
+      f(f.exact_()),
+      expr1(expr1.exact()),
+      expr2(expr2.exact()),
+      expr3(expr3.exact())
     {
-      mlc::assert_< mlc_is_a(F, abstract::nary_fun_<3>),
-	            ERROR::FIXME >::check();
     }
 
     template <typename Args>
@@ -396,32 +383,32 @@ namespace xtd
 
 
 
-  // meta_nary_fun_<1, F>::operator()(abstract::fun_expr_<Expr>& expr) const
+  // open_nary_fun_<1, F>::operator()(abstract::fun_expr_<Expr>& expr) const
 
   template <typename F, typename Expr>
-  struct case_< tag::meta_1ary_fun_operator,
+  struct case_< tag::fun_operator_1,
 		mlc::pair_<F, Expr>,
 		1 >
     : public mlc::where_< mlc_is_a(Expr, abstract::fun_expr_) >
   {
     typedef m1expr_<F, Expr> res;
 
-    static res impl(const abstract::meta_nary_fun_<1, F>* this_,
+    static res impl(const abstract::open_nary_fun_<1, F>& target,
 		    const abstract::fun_expr_<Expr>& expr)
     {
-      res tmp(exact_of(*this_), expr);
+      res tmp(target, expr);
       return tmp;
     }
   };
 
 
 
-  // meta_nary_fun_<2, F>::operator()(const fun_expr_<Expr1>& expr1,
+  // open_nary_fun_<2, F>::operator()(const fun_expr_<Expr1>& expr1,
   // 				      const fun_expr_<Expr2>& expr2) const
 
 
   template <typename F, typename Expr1, typename Expr2>
-  struct case_< tag::meta_2ary_fun_operator,
+  struct case_< tag::fun_operator_2,
 		mlc::valist_<F, Expr1, Expr2>,
 		1 >
     : public mlc::where_< mlc::or_< mlc_is_a(Expr1, abstract::fun_expr_),
@@ -437,11 +424,11 @@ namespace xtd
   {
     typedef m2expr_<F, Expr1, Expr2> res;
 
-    static res impl(const abstract::meta_nary_fun_<2, F>* this_,
+    static res impl(const abstract::open_nary_fun_<2, F>& target,
 		    const abstract::fun_expr_<Expr1>& expr1,
 		    const abstract::fun_expr_<Expr2>& expr2)
       {
-	res tmp(exact_of(*this_), expr1, expr2);
+	res tmp(target, expr1, expr2);
 	return tmp;
       }
 
@@ -449,12 +436,12 @@ namespace xtd
 
 
 
-  //   meta_nary_fun_<3, F>::operator()(const fun_expr_<Expr1>& expr1,
-  // 				        const fun_expr_<Expr2>& expr2,
-  // 				        const fun_expr_<Expr3>& expr3) const
+  // open_nary_fun_<3, F>::operator()(const fun_expr_<Expr1>& expr1,
+  // 				      const fun_expr_<Expr2>& expr2,
+  // 				      const fun_expr_<Expr3>& expr3) const
 
   template <typename F, typename Expr1, typename Expr2, typename Expr3>
-  struct case_< tag::meta_3ary_fun_operator,
+  struct case_< tag::fun_operator_3,
 		mlc::valist_<F, Expr1, Expr2, Expr3>,
 		1 >
     : public mlc::where_< mlc::or_list_< mlc_is_a(Expr1, abstract::fun_expr_),
@@ -481,12 +468,12 @@ namespace xtd
   {
     typedef m3expr_<F, Expr1, Expr2, Expr3> res;
 
-    static res impl(const abstract::meta_nary_fun_<3, F>* this_,
+    static res impl(const abstract::open_nary_fun_<3, F>& target,
 		    const abstract::fun_expr_<Expr1>& expr1,
 		    const abstract::fun_expr_<Expr2>& expr2,
 		    const abstract::fun_expr_<Expr3>& expr3)
     {
-      res tmp(exact_of(*this_), expr1, expr2, expr3);
+      res tmp(target, expr1, expr2, expr3);
       return tmp;
     }
   };

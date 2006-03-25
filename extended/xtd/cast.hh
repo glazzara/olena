@@ -28,10 +28,8 @@
 #ifndef EXTENDED_CAST_HH
 # define EXTENDED_CAST_HH
 
-# include <mlc/pair.hh>
-
-# include <xtd/abstract/plain_fun.hh>
-# include <xtd/abstract/meta_fun.hh>
+# include <xtd/abstract/plain_nary_fun.hh>
+# include <xtd/abstract/meta_nary_fun.hh>
 # include <xtd/mexpr.hh>
 
 
@@ -105,16 +103,16 @@ namespace xtd
   */
 
   template <typename Dest, typename A>
-  typename xtd::case_< xtd::tag::meta_1ary_fun_operator,
+  typename xtd::case_< xtd::tag::fun_operator_1,
 		       mlc::pair_< meta_cast_<Dest>,
 				   A >
                      >::ret::res
   cast_(const A& a)
   {
-    typedef typename xtd::case_< xtd::tag::meta_1ary_fun_operator,
+    typedef typename xtd::case_< xtd::tag::fun_operator_1,
                                  mlc::pair_< meta_cast_<Dest>, A> >::ret case_t;
-    static const meta_cast_<Dest> the_;
-    return case_t::impl(&the_, a);
+    static const meta_cast_<Dest> target;
+    return case_t::impl(target, a);
   }
 
 

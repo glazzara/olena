@@ -28,24 +28,10 @@
 #ifndef EXTENDED_ABSTRACT_PLAIN_FUN_HH
 # define EXTENDED_ABSTRACT_PLAIN_FUN_HH
 
-# include <mlc/flags.hh>
-# include <mlc/assert.hh>
-# include <mlc/is_a.hh>
-# include <mlc/typedef.hh>
-# include <mlc/assert.hh>
-# include <mlc/abort.hh>
-
 # include <xtd/abstract/fun.hh>
-# include <xtd/abstract/nary_fun.hh>
 
 
-// macros
-
-# define xtd_arg(F)  typename xtd::typedef_::arg_type::from_<xtd::fun_traits_<F> >::ret
-
-# define xtd_arg1(F) typename xtd::typedef_::arg1_type::from_<xtd::fun_traits_<F> >::ret
-# define xtd_arg2(F) typename xtd::typedef_::arg2_type::from_<xtd::fun_traits_<F> >::ret
-# define xtd_arg3(F) typename xtd::typedef_::arg3_type::from_<xtd::fun_traits_<F> >::ret
+// macro
 
 # define xtd_res(F)  typename xtd::typedef_::res_type::from_<xtd::fun_traits_<F> >::ret
 
@@ -59,24 +45,7 @@ namespace xtd
   {
     struct SPECIALIZATION_OF_xtd_fun_traits_NOT_FOUND_FOR_AN_xtd_plain_fun;
     struct xtd_fun_traits_SHOULD_DEFINE_res_type_FOR_AN_xtd_plain_fun;
-
-    struct xtd_fun_traits_SHOULD_DEFINE_arg_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_1;
-
-    struct xtd_fun_traits_SHOULD_DEFINE_arg1_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_2;
-    struct xtd_fun_traits_SHOULD_DEFINE_arg2_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_2;
-
-    struct xtd_fun_traits_SHOULD_DEFINE_arg1_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_3;
-    struct xtd_fun_traits_SHOULD_DEFINE_arg2_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_3;
-    struct xtd_fun_traits_SHOULD_DEFINE_arg3_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_3;
-
     struct YOU_SHOULD_NOT_DERIVE_FROM_xtd_plain_fun_BUT_FROM_xtd_plain_nary_fun;
-
-    struct FIXME;
-
-    struct AN_xtd_plain_function_DOES_NOT_ACCEPT_AN_xtd_function_AS_ARGUMENT;
-
-    // FIXME: add error messages corresponding to definitions without sense
-    // FIXME: such as having arg2 when the plain function is unary
 
   } // end of namespace xtd::ERROR
 
@@ -85,30 +54,14 @@ namespace xtd
   template <typename F>
   struct fun_traits_ : public mlc::undefined
   {
-    // nothing
   };
 
-
-  mlc_decl_typedef(arg_type);
-
-  mlc_decl_typedef(arg1_type);
-  mlc_decl_typedef(arg2_type);
-  mlc_decl_typedef(arg3_type);
 
   mlc_decl_typedef(res_type);
 
 
   namespace abstract
   {
-
-    /// Forward declarations.
-    /// \{
-    template <unsigned n, typename E> class plain_nary_fun_;
-    template <typename E> class meta_fun_;
-    template <typename E> class fun_expr_;
-    /// \}
-
-
 
     /*! \class xtd::abstract::plain_fun_
     **
@@ -130,157 +83,10 @@ namespace xtd
     protected:
       plain_fun_(){
 	// FIXME: unsigned is parameter so mlc_is_a does not work
-// 	mlc::assert_< mlc_is_a(E, plain_nary_fun_),
-// 	              xtd::ERROR::YOU_SHOULD_NOT_DERIVE_FROM_xtd_plain_fun_BUT_FROM_xtd_plain_nary_fun
-// 	  >::check();
+	// 	mlc::assert_< mlc_is_a(E, plain_nary_fun_),
+	// 	              xtd::ERROR::YOU_SHOULD_NOT_DERIVE_FROM_xtd_plain_fun_BUT_FROM_xtd_plain_nary_fun
+	// 	  >::check();
       }
-    };
-
-
-    /*! \class xtd::abstract::plain_nary_fun_<n, E>
-    **
-    ** Abstract base class for plain functions with an explicit number
-    ** of arguments.
-    **
-    ** Parameter n is the number of arguments with n being 0, 1, 2, or
-    ** 3.
-    **
-    ** Parameter E is the exact type of the function.
-    */
-
-    template <unsigned n, typename E>
-    class plain_nary_fun_;
-
-
-
-    /*! \class xtd::abstract::plain_nary_fun_<0, E>
-    **
-    ** Abstract base class for plain functions taking no argument.
-    ** This class is defined as a specialization.
-    **
-    ** Parameter E is the exact type of the function.
-    */
-
-    template <typename E>
-    class plain_nary_fun_< 0, E >
-
-      : public plain_fun_<E>,
-	public nary_fun_<0>
-    {
-    public:
-
-      xtd_res(E) operator()() const
-      {
-	return exact_of(this)->impl_op();
-      }
-
-    protected:
-      plain_nary_fun_() {}
-    };
-
-
-
-    /*! \class xtd::abstract::plain_nary_fun_<1, E>
-    **
-    ** Abstract base class for plain functions taking one argument.
-    ** This class is defined as a specialization.
-    **
-    ** Parameter E is the exact type of the function.
-    */
-
-    template <typename E>
-    class plain_nary_fun_< 1, E >
-
-      : public plain_fun_<E>,
-	public nary_fun_<1>,
-
-	private mlc::assert_< mlc::neq_<xtd_arg(E), mlc::not_found>,
-                              xtd::ERROR::xtd_fun_traits_SHOULD_DEFINE_arg_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_1 >
-    {
-    public:
-
-      template <typename F>
-      void operator()(const abstract::fun_<F>&) const
-      {
- 	mlc::abort_< F,
-	             xtd::ERROR::AN_xtd_plain_function_DOES_NOT_ACCEPT_AN_xtd_function_AS_ARGUMENT >::check();
-      }
-
-      xtd_res(E) operator()(const xtd_arg(E)& arg) const
-      {
-	return exact_of(this)->impl_op(arg);
-      }
-
-    protected:
-      plain_nary_fun_() {}
-    };
-
-
-
-    /*! \class xtd::abstract::plain_nary_fun_<2, E>
-    **
-    ** Abstract base class for plain functions taking two arguments.
-    ** This class is defined as a specialization.
-    **
-    ** Parameter E is the exact type of the function.
-    */
-
-    template <typename E>
-    class plain_nary_fun_< 2, E >
-
-      : public plain_fun_<E>,
-	public nary_fun_<2>,
-
-	private mlc::assert_< mlc::neq_<xtd_arg1(E), mlc::not_found>,
-                              xtd::ERROR::xtd_fun_traits_SHOULD_DEFINE_arg1_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_2 >,
-
-	private mlc::assert_< mlc::neq_<xtd_arg2(E), mlc::not_found>,
-                              xtd::ERROR::xtd_fun_traits_SHOULD_DEFINE_arg2_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_2 >
-    {
-    public:
-      xtd_res(E) operator()(const xtd_arg1(E)& arg1,
-			    const xtd_arg2(E)& arg2) const
-      {
-	return exact_of(this)->impl_op(arg1, arg2);
-      }
-    protected:
-      plain_nary_fun_() {}
-    };
-
-
-
-    /*! \class xtd::abstract::plain_nary_fun_<3, E>
-    **
-    ** Abstract base class for plain functions taking three arguments.
-    ** This class is defined as a specialization.
-    **
-    ** Parameter E is the exact type of the function.
-    */
-
-    template <typename E>
-    class plain_nary_fun_< 3, E >
-
-      : public plain_fun_<E>,
-	public nary_fun_<3>,
-
-	private mlc::assert_< mlc::neq_<xtd_arg1(E), mlc::not_found>,
-                              xtd::ERROR::xtd_fun_traits_SHOULD_DEFINE_arg1_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_3 >,
-
-	private mlc::assert_< mlc::neq_<xtd_arg2(E), mlc::not_found>,
-                              xtd::ERROR::xtd_fun_traits_SHOULD_DEFINE_arg2_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_3 >,
-
-	private mlc::assert_< mlc::neq_<xtd_arg3(E), mlc::not_found>,
-                              xtd::ERROR::xtd_fun_traits_SHOULD_DEFINE_arg3_type_FOR_AN_xtd_plain_nary_fun_WITH_n_BEING_3 >
-    {
-    public:
-      xtd_res(E) operator()(const xtd_arg1(E)& arg1,
-			    const xtd_arg2(E)& arg2,
-			    const xtd_arg3(E)& arg3) const
-      {
-	return exact_of(this)->impl_op(arg1, arg2, arg3);
-      }
-    protected:
-      plain_nary_fun_() {}
     };
 
 

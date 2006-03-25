@@ -28,6 +28,8 @@
 #ifndef EXTENDED_ABSTRACT_FUN_HH
 # define EXTENDED_ABSTRACT_FUN_HH
 
+# include <xtd/internal/mlc.hh>
+
 
 namespace xtd
 {
@@ -44,28 +46,19 @@ namespace xtd
     template <typename E>
     class fun_
     {
+    public:
+
+      const E& exact() const
+      {
+	return *(const E*)(const void*)(this);
+      }
+      
     protected:
       fun_() {}
     };
 
 
   } // end of namespace xtd::abstract
-
-
-
-  // FIXME: doc
-
-  template <typename E>
-  const E* exact_of(const abstract::fun_<E>* f)
-  {
-    return (const E*)(const void*)(f);
-  }
-
-  template <typename E>
-  const E& exact_of(const abstract::fun_<E>& f)
-  {
-    return *(const E*)(const void*)(&f);
-  }
 
 
 } // end of namespace xtd

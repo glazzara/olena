@@ -28,12 +28,8 @@
 #ifndef EXTENDED_MFUN_HH
 # define EXTENDED_MFUN_HH
 
-# include <mlc/assert.hh>
-# include <mlc/logic.hh>
-# include <mlc/is_a.hh>
-
 # include <xtd/abstract/plain_fun.hh>
-# include <xtd/abstract/meta_fun.hh>
+# include <xtd/abstract/meta_nary_fun.hh>
 
 
 

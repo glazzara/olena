@@ -1,6 +1,5 @@
 #include <iostream>
 
-
 #include <xtd/math/id.hh>
 
 

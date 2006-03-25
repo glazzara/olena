@@ -1,3 +1,42 @@
+2006-03-25  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Separate xtd function expressions from meta functions. .
+
+	The design has changed: now an nary_fun_expr is not a subclass of
+	meta_nary_fun.  Both fun_nary_expr and meta_nary_fun inherit from
+	open_nary_fun, which contains the shared part of nary_fun_expr
+	and meta_nary_fun.  Precisely, it provides the operator() that accepts
+	different input: values or function expressions.
+
+	* xtd/res.hh: Update.
+	* xtd/cast.hh: Update.
+	* xtd/math/trigo.hh: Update.
+	* xtd/math/arith.hh: Update.
+	* xtd/math/id.hh: Update.
+	* xtd/mexpr.hh: Update.
+	* xtd/args.hh: Update.
+	* xtd/literal.hh: Update.
+	* xtd/ops_expr.hh: Update.
+	* xtd/abstract/open_nary_fun.hh: New.
+	* xtd/abstract/plain_nary_fun.hh: New.
+	* xtd/abstract/fun_expr.hh: Update.
+	* xtd/abstract/meta_nary_fun.hh: New.
+	* xtd/abstract/fun.hh: Update.
+	* xtd/abstract/open_fun.hh: New.
+	* xtd/abstract/plain_fun.hh: Update.
+	* xtd/abstract/meta_fun.hh: Update.
+	* xtd/abstract/fun_nary_expr.hh: New.
+	* xtd/mfun.hh: Update.
+	* xtd/TODO: New.
+	* xtd/arg.hh: Update.
+	* xtd/case.hh: Remove.
+	* xtd/bind.hh: New.
+	* xtd/internal: New.
+	* xtd/internal/mlc.hh: New.
+	* tests/id.cc: Update.
+	* tests/bind.cc: Update.
+	* tests/lit.cc: Update.
+
 2006-03-24  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Add material for literals, binding arguments, and static checks.

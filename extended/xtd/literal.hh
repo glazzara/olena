@@ -28,12 +28,9 @@
 #ifndef EXTENDED_LITERAL_HH
 # define EXTENDED_LITERAL_HH
 
-# include <mlc/assert.hh>
-# include <mlc/is_a.hh>
-
-# include <xtd/abstract/plain_fun.hh>
-# include <xtd/abstract/meta_fun.hh>
-# include <xtd/abstract/fun_expr.hh>
+# include <xtd/abstract/plain_nary_fun.hh>
+# include <xtd/abstract/meta_nary_fun.hh>
+# include <xtd/abstract/fun_nary_expr.hh>
 
 
 
@@ -139,7 +136,7 @@ namespace xtd
     : private mlc::assert_< mlc_is_not_a(T, abstract::fun_),
 			    xtd::ERROR::FIXME >,
 
-      public abstract::nary_fun_expr_< 0, literal_expr_<T> >
+      public abstract::fun_nary_expr_< 0, literal_expr_<T> >
   {
     const T value;
 
@@ -164,76 +161,6 @@ namespace xtd
     return tmp;
   }
 
-
-} // end of namespace xtd
-
-
-# include <xtd/mexpr.hh>
-# include <xtd/arg.hh>
-
-
-namespace xtd
-{
-
-  namespace abstract
-  {
-
-    // nary_fun_expr_< 2, E >::bind_i
-
-    template <typename E>
-    template <typename T>
-    m2expr_< E, literal_expr_<T>, arg_<2> >
-    nary_fun_expr_< 2, E >::bind_1(const T& value) const
-    {
-      typedef m2expr_< E, literal_expr_<T>, arg_<2> > ret;
-      ret tmp(exact_of(this), lit(value), arg_<2>());
-      return tmp;
-    }
-
-    template <typename E>
-    template <typename T>
-    m2expr_< E, arg_<1>, literal_expr_<T> >
-    nary_fun_expr_< 2, E >::bind_2(const T& value) const
-    {
-      typedef m2expr_< E, arg_<1>, literal_expr_<T> > ret;
-      ret tmp(exact_of(this), arg_<1>(), lit(value));
-      return tmp;
-    }
-
-
-    // nary_fun_expr_< 3, E >::bind_i
-
-    template <typename E>
-    template <typename T>
-    m3expr_< E, literal_expr_<T>, arg_<2>, arg_<3> >
-    nary_fun_expr_< 3, E >::bind_1(const T& value) const
-    {
-      typedef m3expr_< E, literal_expr_<T>, arg_<2>, arg_<3> > ret;
-      ret tmp(exact_of(this), lit(value), arg_<2>(), arg_<3>());
-      return tmp;
-    }
-
-    template <typename E>
-    template <typename T>
-    m3expr_< E, arg_<1>, literal_expr_<T>, arg_<3> >
-    nary_fun_expr_< 3, E >::bind_2(const T& value) const
-    {
-      typedef m3expr_< E, arg_<1>, literal_expr_<T>, arg_<3> > ret;
-      ret tmp(exact_of(this), arg_<1>(), lit(value), arg_<3>());
-      return tmp;
-    }
-
-    template <typename E>
-    template <typename T>
-    m3expr_< E, arg_<1>, arg_<2>, literal_expr_<T> >
-    nary_fun_expr_< 3, E >::bind_3(const T& value) const
-    {
-      typedef m3expr_< E, arg_<1>, arg_<2>, literal_expr_<T> > ret;
-      ret tmp(exact_of(this), arg_<1>(), arg_<2>(), lit(value));
-      return tmp;
-    }
-
-  } // end of namespace xtd::abstract
 
 } // end of namespace xtd
 
