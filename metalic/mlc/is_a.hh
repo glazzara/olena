@@ -108,7 +108,7 @@ namespace mlc
 
     template<class T,    class U>
     struct ret
-      : public mlc::bexpr_is_<( mlc_internal_is_a_result_ )>
+      : public mlc::bexpr_<( mlc_internal_is_a_result_ )>
     {
     };
   };
@@ -131,7 +131,7 @@ namespace mlc
 
     template<class T,    template < class > class U>
     struct ret
-      : public mlc::bexpr_is_<( mlc_internal_is_a_result_ )>
+      : public mlc::bexpr_<( mlc_internal_is_a_result_ )>
     {
     };
   };
@@ -154,7 +154,7 @@ namespace mlc
 
     template<class T,    template < class,class > class U>
     struct ret
-      : public mlc::bexpr_is_<( mlc_internal_is_a_result_ )>
+      : public mlc::bexpr_<( mlc_internal_is_a_result_ )>
     {};
   };
 
@@ -176,7 +176,7 @@ namespace mlc
 
     template<class T,    template < template < class > class > class U>
     struct ret
-      : public mlc::bexpr_is_<( mlc_internal_is_a_result_ )>
+      : public mlc::bexpr_<( mlc_internal_is_a_result_ )>
     {};
   };
 
@@ -198,7 +198,7 @@ namespace mlc
 
     template<class T,    template < template < class,class > class > class U>
     struct ret
-      : public mlc::bexpr_is_<( mlc_internal_is_a_result_ )>
+      : public mlc::bexpr_<( mlc_internal_is_a_result_ )>
     {};
   };
 

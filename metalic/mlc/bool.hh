@@ -57,8 +57,7 @@ namespace mlc
   */
   
   template <bool b>
-  struct bool_ : public bexpr_is_<b>,
-		 public abstract::boolean
+  struct bool_ : public abstract::boolean
 		 
   {
     /*! \typedef type

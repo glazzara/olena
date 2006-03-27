@@ -28,7 +28,8 @@
 #ifndef METALIC_CASE_HH
 # define METALIC_CASE_HH
 
-# include <mlc/bool.hh>
+# include <mlc/bexpr.hh>
+# include <mlc/assert.hh>
 # include <mlc/ret.hh>
 # include <mlc/is_a.hh>
 # include <mlc/implies.hh>
@@ -64,13 +65,17 @@ namespace mlc
     struct NO_case_STATEMENT_CAN_BE_SELECTED;
     struct A_default_case_STATEMENT_IN_A_switch_SHOULD_HAVE_A_ret;
     struct A_case_STATEMENT_IN_A_switch_SHOULD_HAVE_A_ret;
+    struct PARAMETER_OF_mlc_where_SHOULD_BE_A_BEXPR;
   }
 
 
   template <typename bexpr>
-  struct where_ : public mlc_if_( typename bexpr::eval,
-				  case_selected,
-				  case_not_selected )
+  struct where_ :
+
+    private assert_< mlc_is_a(bexpr, mlc::abstract::bexpr),
+		     mlc::ERROR::PARAMETER_OF_mlc_where_SHOULD_BE_A_BEXPR >,
+
+    public mlc_if_( bexpr, case_selected, case_not_selected )
   {
   };
   

@@ -29,9 +29,11 @@
 # define METALIC_IMPLIES_HH
 
 # include <mlc/bexpr.hh>
+# include <mlc/assert.hh>
+# include <mlc/is_a.hh>
 
 
-/*! \def mlc_implies(Left_BExpr, Right_BExpr)
+/*! \def mlc_implies(L, R)
 **
 ** Macro corresponding to mlc::implies_<L, R>, for use in a template
 ** context.
@@ -39,15 +41,19 @@
 ** \see mlc::implies_<L, R>
 */
 
-# define mlc_implies(Left_BExpr, Right_BExpr) \
-   mlc::bexpr_< typename mlc::implies_<Left_BExpr, Right_BExpr>::ret >
-
-# define mlc_implies_(Left_BExpr, Right_BExpr) \
-   mlc::implies_<Left_BExpr, Right_BExpr>::ret
+# define mlc_implies(L, R)  mlc::implies_<L, R>
 
 
 namespace mlc
 {
+
+  namespace ERROR
+  {
+    struct FIRST_PARAMETER_OF_mlc_implies_SHOULD_BE_A_BEXPR;
+    struct SECOND_PARAMETER_OF_mlc_implies_SHOULD_BE_A_BEXPR;
+
+  } // end of namespace mlc::ERROR
+
 
   /*! \class mlc::implies_<L, R>
   **
@@ -55,13 +61,20 @@ namespace mlc
   ** expression types.  This class is also a Boolean expression type.
   **
   ** Sample use:
-  **   mlc::implies_< mlc_is_builtin(T), mlc_eq(T, int) >::assert();
+  **   mlc::assert_< mlc::implies_< mlc_is_builtin(T), mlc_eq(T, int) > >::check();
   ** which means "if T is a buit-in type, it has to be int".
   */
 
   template <typename L, typename R>
   struct implies_
-    : public mlc::bexpr_is_<( !mlc_bool(L) || mlc_bool(R) )>
+
+    : private assert_< mlc_is_a(L, mlc::abstract::bexpr),
+		       mlc::ERROR::FIRST_PARAMETER_OF_mlc_implies_SHOULD_BE_A_BEXPR >,
+
+      private assert_< mlc_is_a(R, mlc::abstract::bexpr),
+		       mlc::ERROR::SECOND_PARAMETER_OF_mlc_implies_SHOULD_BE_A_BEXPR >,
+
+      public mlc::bexpr_<( !mlc_bool(L) || mlc_bool(R) )>
   {};
 
 } // end of namespace mlc

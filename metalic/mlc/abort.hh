@@ -59,7 +59,7 @@ namespace mlc
     template <typename T>
     struct always_false_
 
-      : public bexpr_is_<false>
+      : public bexpr_<false>
     {
     protected:
       always_false_() {}

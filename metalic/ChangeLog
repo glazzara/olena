@@ -1,3 +1,21 @@
+2006-03-27  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Remove remaining dependencies between Boolean values and exprs.
+
+	* mlc/bool.hh (bool_): Remove inheritance from bexpr_is_.
+	* mlc/bexpr.hh (bexpr_is_): Rename as...
+	(bexpr_): ...this.
+	(bexpr_<b>::bexpr): New typedef so that bexprs can be simplified.
+	* tests/if.cc: Update.
+	* mlc/logic.hh: Add macros; add static checks; update.
+	* mlc/if.hh: Add static check.
+	* mlc/implies.hh: Add static check and update.
+	* mlc/abort.hh: Update.
+	* mlc/is_a.hh (where_): Add static check.
+	Update.
+	* mlc/case.hh: Update.
+	* mlc/cmp.hh: Update.
+
 2006-03-24  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Add mlc::abort_ for use in invalid code blocks.

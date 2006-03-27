@@ -51,6 +51,12 @@
 namespace mlc
 {
 
+  namespace ERROR
+  {
+    struct FIXME;
+
+  } // end of mlc::ERROR
+
   namespace internal
   {
 
@@ -89,7 +95,8 @@ namespace mlc
   template <typename cond_type, typename then_type, typename else_type>
   struct if_ :
     // FIXME: enable the static assertion below!!!
-    private assert_< mlc_is_a(cond_type, mlc::abstract::bexpr) >,
+    private assert_< mlc_is_a(cond_type, mlc::abstract::bexpr),
+		     mlc::ERROR::FIXME >,
     public internal::if_ < mlc_bool(cond_type), then_type, else_type >
   {
   };

@@ -54,9 +54,9 @@ namespace mlc
     **
     ** When you define a new class for a Boolean expression type, you
     ** should not directly derive from this class from fom its
-    ** subclass: bexpr_is_<b>.
+    ** subclass: bexpr_<b>.
     **
-    ** \see bexpr_is_<b>
+    ** \see bexpr_<b>
     */
 
     struct bexpr : public type
@@ -68,7 +68,7 @@ namespace mlc
 
 
 
-  /*! \class mlc::bexpr_is_<b>
+  /*! \class mlc::bexpr_<b>
   **
   ** Base class for any class of mlc Boolean expression types.
   ** When you define a new class for a Boolean expression type, you
@@ -77,50 +77,57 @@ namespace mlc
   ** This class provides the typedef 'eval' which evaluates to either
   ** mlc::true_ or mlc::false_ the expression.
   **
-  ** \see mlc::bexpr_is_<true>, mlc::bexpr_is_<false>
+  ** \see mlc::bexpr_<true>, mlc::bexpr_<false>
   */
 
-  template <bool b> struct bexpr_is_;
+  template <bool b> struct bexpr_;
 
 
-  /*! \class mlc::bexpr_is_<true>
+  /*! \class mlc::bexpr_<true>
   **
-  ** Specialization of mlc::bexpr_is_<b> when b is 'true'.  This class
+  ** Specialization of mlc::bexpr_<b> when b is 'true'.  This class
   ** provides the typedef member 'is_true' to every Boolean expression
   ** type that evaluates to true_.
   ** 
-  ** \see mlc::bexpr_is_<b>, mlc::bexpr_is_<false>
+  ** \see mlc::bexpr_<b>, mlc::bexpr_<false>
   */
 
   template <>
-  struct bexpr_is_ < true > : public abstract::bexpr
+  struct bexpr_ < true > : public abstract::bexpr
   {
+    // FIXME: doc
     typedef mlc::true_ eval;
 
     /*! \typedef is_true
     **
     ** This member is inherited in every Boolean expression type that
     ** evaluates to true_.  Conversely, such member does not appear in
-    ** bexpr_is_<false> so it does not exist in every Boolean
+    ** bexpr_<false> so it does not exist in every Boolean
     ** expression type that evaluates to false_.
     */
     typedef mlc::dummy is_true;
+
+    // FIXME: doc
+    typedef bexpr_<true> bexpr;
   };
+  
 
 
-  /*! \class mlc::bexpr_is_<false>
+  /*! \class mlc::bexpr_<false>
   **
-  ** Specialization of mlc::bexpr_is_<b> when b is 'false'.  This class
+  ** Specialization of mlc::bexpr_<b> when b is 'false'.  This class
   ** does not provide the typedef member 'is_true' to every Boolean expression
   ** type that evaluates to false_.
   ** 
-  ** \see mlc::bexpr_is_<b>, mlc::bexpr_is_<true>
+  ** \see mlc::bexpr_<b>, mlc::bexpr_<true>
   */
 
   template <>
-  struct bexpr_is_ < false > : public abstract::bexpr
+  struct bexpr_ < false > : public abstract::bexpr
   {
     typedef mlc::false_ eval;
+
+    typedef bexpr_<false> bexpr;
   };
 
 
@@ -129,31 +136,19 @@ namespace mlc
   namespace internal
   {
 
-    /// \class mlc::internal::bool_of_<bexpr>
+    /// \class mlc::internal::bool_<bexpr>
     /// \brief Returns the bool value corresponding to a Boolean expression type.
     /// \note Internal class, don't use it directly.
 
     template <typename bexpr>
-    struct bool_of_
+    struct bool_of_bexpr_
     // FIXME: commented below to avoid circular dependances
     // : private assert_< mlc_is_a(bexpr, mlc::abstract::bexpr) >
     {
-      // 1) the bexpr evaluates to either mlc::true_ or mlc::false_
-      //    so the expected result comes from the value of b in
-      //    mlc::bool_<b>
-      // 2) retrieving b is performed by the specialization of
-      //    internal::bool_of_ provided few lines below
-      static const bool ret = internal::bool_of_<typename bexpr::eval>::ret;
-    };
-
-    /// \class mlc::internal::bool_of_< mlc::bool_<b> >
-    /// \brief Specialization of mlc::internal::bool_of_<bexpr>
-    /// \note Internal class, don't use it directly.
-    /// \see mlc::internal::bool_of_<bexpr>
-    template <bool b>
-    struct bool_of_ < mlc::bool_<b> >
-    {
-      static const bool ret = b;
+      // 1) evaluate the bexpr to get either mlc::true_ or mlc::false_
+      typedef typename bexpr::eval eval;
+      // 2) retrieve the Boolean value
+      static const bool ret = eval::value;
     };
 
   } // end of namespace mlc::internal
@@ -169,10 +164,10 @@ namespace mlc
  ** Returns the bool value corresponding to a Boolean expression type.
  **
  ** \note Value retrieval is performed by
- ** mlc::internal::bool_of_<Bexpr>
+ ** mlc::internal::bool_of_bexpr_<Bexpr>
  */
 
-# define mlc_bool(Bexpr) mlc::internal::bool_of_<Bexpr>::ret
+# define mlc_bool(Bexpr) mlc::internal::bool_of_bexpr_<Bexpr>::ret
 
 
 

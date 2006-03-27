@@ -28,24 +28,69 @@
 #ifndef METALIC_LOGIC_HH
 # define METALIC_LOGIC_HH
 
-# include <mlc/bool.hh>
 # include <mlc/bexpr.hh>
 # include <mlc/assert.hh>
+# include <mlc/is_a.hh>
+
+
+
+
+/// Macros corresponding to binary logic Boolean expressions.
+/// \{
+
+# define  mlc_and(L, R)   mlc::and_ < L, R >
+# define  mlc_nand(L, R)  mlc::nand_< L, R >
+# define  mlc_or(L, R)    mlc::or_  < L, R >
+# define  mlc_nor(L, R)   mlc::nor_ < L, R >
+# define  mlc_xor(L, R)   mlc::xor_ < L, R >
+# define  mlc_xnor(L, R)  mlc::xnor_< L, R >
+
+/// \}
+
 
 
 
 namespace mlc
 {
 
+  namespace ERROR
+  {
+
+    struct PARAMETER_OF_mlc_not_SHOULD_BE_A_BEXPR;
+
+    struct FIRST_PARAMETER_OF_mlc_and_SHOULD_BE_A_BEXPR;
+    struct FIRST_PARAMETER_OF_mlc_nand_SHOULD_BE_A_BEXPR;
+    struct FIRST_PARAMETER_OF_mlc_or_SHOULD_BE_A_BEXPR;
+    struct FIRST_PARAMETER_OF_mlc_nor_SHOULD_BE_A_BEXPR;
+    struct FIRST_PARAMETER_OF_mlc_xor_SHOULD_BE_A_BEXPR;
+    struct FIRST_PARAMETER_OF_mlc_xnor_SHOULD_BE_A_BEXPR;
+
+    struct SECOND_PARAMETER_OF_mlc_and_SHOULD_BE_A_BEXPR;
+    struct SECOND_PARAMETER_OF_mlc_nand_SHOULD_BE_A_BEXPR;
+    struct SECOND_PARAMETER_OF_mlc_or_SHOULD_BE_A_BEXPR;
+    struct SECOND_PARAMETER_OF_mlc_nor_SHOULD_BE_A_BEXPR;
+    struct SECOND_PARAMETER_OF_mlc_xor_SHOULD_BE_A_BEXPR;
+    struct SECOND_PARAMETER_OF_mlc_xnor_SHOULD_BE_A_BEXPR;
+
+  } // end of mlc::ERROR
+
+
+
   /*! \class mlc::not_<T>
   **
   ** Logical unary 'not' operator on a Boolean expression type.  This
   ** class is also a Boolean expression type.
   */
+
   template <typename T>
   struct not_
-    : public bexpr_is_<( !mlc_bool(T) )>
+
+    : private assert_< mlc_is_a(T, mlc::abstract::bexpr),
+		       mlc::ERROR::PARAMETER_OF_mlc_not_SHOULD_BE_A_BEXPR >,
+
+      public bexpr_<( !mlc_bool(T) )>
   {};
+
 
 
   /*! \class mlc::and_<L,R>
@@ -55,10 +100,19 @@ namespace mlc
   **
   ** \see mlc::and_list_<..>
   */
+
   template <typename L, typename R>
   struct and_
-    : public bexpr_is_<( mlc_bool(L) && mlc_bool(R) )>
+
+    : private assert_< mlc_is_a(L, mlc::abstract::bexpr),
+		       mlc::ERROR::FIRST_PARAMETER_OF_mlc_and_SHOULD_BE_A_BEXPR >,
+
+      private assert_< mlc_is_a(R, mlc::abstract::bexpr),
+		       mlc::ERROR::SECOND_PARAMETER_OF_mlc_and_SHOULD_BE_A_BEXPR >,
+
+      public bexpr_<( mlc_bool(L) && mlc_bool(R) )>
   {};
+
 
 
   /*! \class mlc::nand_<L,R>
@@ -68,10 +122,19 @@ namespace mlc
   **
   ** Design note: an equivalent is mlc::not_< mlc::and_<L,R> >.
   */
+
   template <typename L, typename R>
   struct nand_
-    : public bexpr_is_<( !(mlc_bool(L) && mlc_bool(R)) )>
+
+    : private assert_< mlc_is_a(L, mlc::abstract::bexpr),
+		       mlc::ERROR::FIRST_PARAMETER_OF_mlc_nand_SHOULD_BE_A_BEXPR >,
+
+      private assert_< mlc_is_a(R, mlc::abstract::bexpr),
+		       mlc::ERROR::SECOND_PARAMETER_OF_mlc_nand_SHOULD_BE_A_BEXPR >,
+
+      public bexpr_<( !(mlc_bool(L) && mlc_bool(R)) )>
   {}; 
+
 
 
   /*! \class mlc::or_<L,R>
@@ -81,10 +144,19 @@ namespace mlc
   **
   ** \see mlc::or_list_<..>
   */
+
   template <typename L, typename R>
   struct or_
-    : public bexpr_is_<( mlc_bool(L) || mlc_bool(R) )>
+
+    : private assert_< mlc_is_a(L, mlc::abstract::bexpr),
+		       mlc::ERROR::FIRST_PARAMETER_OF_mlc_or_SHOULD_BE_A_BEXPR >,
+
+      private assert_< mlc_is_a(R, mlc::abstract::bexpr),
+		       mlc::ERROR::SECOND_PARAMETER_OF_mlc_or_SHOULD_BE_A_BEXPR >,
+      
+      public bexpr_<( mlc_bool(L) || mlc_bool(R) )>
   {};
+
 
 
   /*! \class mlc::nor_<L,R>
@@ -94,10 +166,19 @@ namespace mlc
   **
   ** Design note: an equivalent is mlc::not_< mlc::or_<L,R> >.
   */
+
   template <typename L, typename R>
   struct nor_
-    : public bexpr_is_<( !(mlc_bool(L) || mlc_bool(R)) )>
+
+    : private assert_< mlc_is_a(L, mlc::abstract::bexpr),
+		       mlc::ERROR::FIRST_PARAMETER_OF_mlc_nor_SHOULD_BE_A_BEXPR >,
+
+      private assert_< mlc_is_a(R, mlc::abstract::bexpr),
+		       mlc::ERROR::SECOND_PARAMETER_OF_mlc_nor_SHOULD_BE_A_BEXPR >,
+    
+      public bexpr_<( !(mlc_bool(L) || mlc_bool(R)) )>
   {};
+
 
 
   /*! \class mlc::xor_<L,R>
@@ -105,9 +186,17 @@ namespace mlc
   ** Logical binary 'exclusive or' operator on a couple of Boolean
   ** expression types.  This class is also a Boolean expression type.
   */
+
   template <typename L, typename R>
   struct xor_
-    : public bexpr_is_<( mlc_bool(L) != mlc_bool(R) )>
+
+    : private assert_< mlc_is_a(L, mlc::abstract::bexpr),
+		       mlc::ERROR::FIRST_PARAMETER_OF_mlc_xor_SHOULD_BE_A_BEXPR >,
+
+      private assert_< mlc_is_a(R, mlc::abstract::bexpr),
+		       mlc::ERROR::SECOND_PARAMETER_OF_mlc_xor_SHOULD_BE_A_BEXPR >,
+
+      public bexpr_<( mlc_bool(L) != mlc_bool(R) )>
   {};
 
 
@@ -116,9 +205,17 @@ namespace mlc
   ** Logical binary 'exclusive not or' operator on a couple of Boolean
   ** expression types.  This class is also a Boolean expression type.
   */
+
   template <typename L, typename R>
   struct xnor_
-    : public bexpr_is_<( !(mlc_bool(L) != mlc_bool(R)) )>
+
+    : private assert_< mlc_is_a(L, mlc::abstract::bexpr),
+		       mlc::ERROR::FIRST_PARAMETER_OF_mlc_xnor_SHOULD_BE_A_BEXPR >,
+
+      private assert_< mlc_is_a(R, mlc::abstract::bexpr),
+		       mlc::ERROR::SECOND_PARAMETER_OF_mlc_xnor_SHOULD_BE_A_BEXPR >,
+
+      public bexpr_<( !(mlc_bool(L) != mlc_bool(R)) )>
   {};
   
 
@@ -131,21 +228,27 @@ namespace mlc
     // FIXME: doc
 
     template <typename A>
-    struct is_bexpr_or_none_ : public true_ // FIXME: pb using mlc_is_a because of circular deps
+    struct is_bexpr_or_none_
+      : public mlc_is_a(A, mlc::abstract::bexpr)
     {
-    };
-
-
-    // va_eval_
-
-    template <typename A>
-    struct va_eval_
-    {
-      typedef typename A::eval ret;
     };
 
     template <>
-    struct va_eval_ <none>
+    struct is_bexpr_or_none_ < none >
+      : public bexpr_<true>
+    {
+    };
+
+    // va_bexpr_
+
+    template <typename A>
+    struct va_bexpr_
+    {
+      typedef typename A::bexpr ret;
+    };
+
+    template <>
+    struct va_bexpr_ <none>
     {
       typedef none ret;
     };
@@ -155,17 +258,17 @@ namespace mlc
 
     template <typename A1, typename A2>
     struct or_list_2_
-      : public or_<A1, A2>::eval
+      : public or_<A1, A2>
     {};
 
     template <>
     struct or_list_2_ <none, none>
-      : public false_
+      : public bexpr_<false>
     {};
 
     template <typename A1>
     struct or_list_2_ <A1, none>
-      : public A1
+      : public A1::bexpr
     {};
 
     template <typename A2>
@@ -175,13 +278,13 @@ namespace mlc
 
     template <typename A1, typename A2, typename A3, typename A4>
     struct or_list_4_
-      : public or_list_2_< typename or_list_2_<A1, A2>::eval,
-			   typename or_list_2_<A3, A4>::eval >::eval
+      : public or_list_2_< typename or_list_2_<A1, A2>::bexpr,
+			   typename or_list_2_<A3, A4>::bexpr >::bexpr
     {};
 
     template <>
     struct or_list_4_ <none, none, none, none>
-      : public false_
+      : public bexpr_<false>
     {};
 
     // or_list_
@@ -189,8 +292,8 @@ namespace mlc
     template <typename A1, typename A2, typename A3, typename A4,
 	      typename A5, typename A6, typename A7, typename A8>
     struct or_list_
-      : public or_list_2_< typename or_list_4_<A1, A2, A3, A4>::eval,
-			   typename or_list_4_<A5, A6, A7, A8>::eval >::eval
+      : public or_list_2_< typename or_list_4_<A1, A2, A3, A4>::bexpr,
+			   typename or_list_4_<A5, A6, A7, A8>::bexpr >::bexpr
     {};
 
 
@@ -198,12 +301,12 @@ namespace mlc
 
     template <typename A1, typename A2>
     struct and_list_2_
-      : public and_<A1, A2>::eval
+      : public and_<A1, A2>
     {};
 
     template <>
     struct and_list_2_ <none, none>
-      : public true_
+      : public bexpr_<true>
     {};
 
     template <typename A1>
@@ -218,13 +321,13 @@ namespace mlc
 
     template <typename A1, typename A2, typename A3, typename A4>
     struct and_list_4_
-      : public and_list_2_< typename and_list_2_<A1, A2>::eval,
-			    typename and_list_2_<A3, A4>::eval >::eval
+      : public and_list_2_< typename and_list_2_<A1, A2>::bexpr,
+			    typename and_list_2_<A3, A4>::bexpr >::bexpr
     {};
 
     template <>
     struct and_list_4_ <none, none, none, none>
-      : public true_
+      : public bexpr_<true>
     {};
 
     // and_list_
@@ -232,8 +335,8 @@ namespace mlc
     template <typename A1, typename A2, typename A3, typename A4,
 	      typename A5, typename A6, typename A7, typename A8>
     struct and_list_
-      : public and_list_2_< typename and_list_4_<A1, A2, A3, A4>::eval,
-			    typename and_list_4_<A5, A6, A7, A8>::eval >::eval
+      : public and_list_2_< typename and_list_4_<A1, A2, A3, A4>::bexpr,
+			    typename and_list_4_<A5, A6, A7, A8>::bexpr >::bexpr
     {};
 
   } // end of mlc::internal
@@ -262,22 +365,25 @@ namespace mlc
 	    typename A6 = none,
 	    typename A7 = none,
 	    typename A8 = none>
-  struct or_list_ : private multiple_assert_< internal::is_bexpr_or_none_<A1>,
-					      internal::is_bexpr_or_none_<A2>,
-					      internal::is_bexpr_or_none_<A3>,
-					      internal::is_bexpr_or_none_<A4>,
-					      internal::is_bexpr_or_none_<A5>,
-					      internal::is_bexpr_or_none_<A6>,
-					      internal::is_bexpr_or_none_<A7>,
-					      internal::is_bexpr_or_none_<A8> >,
-		    public internal::or_list_< typename internal::va_eval_<A1>::ret,
-					       typename internal::va_eval_<A2>::ret,
-					       typename internal::va_eval_<A3>::ret,
-					       typename internal::va_eval_<A4>::ret,
-					       typename internal::va_eval_<A5>::ret,
-					       typename internal::va_eval_<A6>::ret,
-					       typename internal::va_eval_<A7>::ret,
-					       typename internal::va_eval_<A8>::ret >
+  struct or_list_ :
+
+    private multiple_assert_< internal::is_bexpr_or_none_<A1>,
+			      internal::is_bexpr_or_none_<A2>,
+			      internal::is_bexpr_or_none_<A3>,
+			      internal::is_bexpr_or_none_<A4>,
+			      internal::is_bexpr_or_none_<A5>,
+			      internal::is_bexpr_or_none_<A6>,
+			      internal::is_bexpr_or_none_<A7>,
+			      internal::is_bexpr_or_none_<A8> >,
+
+    public internal::or_list_< typename internal::va_bexpr_<A1>::ret,
+			       typename internal::va_bexpr_<A2>::ret,
+			       typename internal::va_bexpr_<A3>::ret,
+			       typename internal::va_bexpr_<A4>::ret,
+			       typename internal::va_bexpr_<A5>::ret,
+			       typename internal::va_bexpr_<A6>::ret,
+			       typename internal::va_bexpr_<A7>::ret,
+			       typename internal::va_bexpr_<A8>::ret >
   {
   };
 
@@ -300,22 +406,25 @@ namespace mlc
 	    typename A6 = none,
 	    typename A7 = none,
 	    typename A8 = none>
-  struct and_list_ : private multiple_assert_< internal::is_bexpr_or_none_<A1>,
-					       internal::is_bexpr_or_none_<A2>,
-					       internal::is_bexpr_or_none_<A3>,
-					       internal::is_bexpr_or_none_<A4>,
-					       internal::is_bexpr_or_none_<A5>,
-					       internal::is_bexpr_or_none_<A6>,
-					       internal::is_bexpr_or_none_<A7>,
-					       internal::is_bexpr_or_none_<A8> >,
-		     public internal::and_list_< typename internal::va_eval_<A1>::ret,
-						 typename internal::va_eval_<A2>::ret,
-						 typename internal::va_eval_<A3>::ret,
-						 typename internal::va_eval_<A4>::ret,
-						 typename internal::va_eval_<A5>::ret,
-						 typename internal::va_eval_<A6>::ret,
-						 typename internal::va_eval_<A7>::ret,
-						 typename internal::va_eval_<A8>::ret >
+  struct and_list_ :
+
+    private multiple_assert_< internal::is_bexpr_or_none_<A1>,
+			      internal::is_bexpr_or_none_<A2>,
+			      internal::is_bexpr_or_none_<A3>,
+			      internal::is_bexpr_or_none_<A4>,
+			      internal::is_bexpr_or_none_<A5>,
+			      internal::is_bexpr_or_none_<A6>,
+			      internal::is_bexpr_or_none_<A7>,
+			      internal::is_bexpr_or_none_<A8> >,
+
+    public internal::and_list_< typename internal::va_bexpr_<A1>::ret,
+				typename internal::va_bexpr_<A2>::ret,
+				typename internal::va_bexpr_<A3>::ret,
+				typename internal::va_bexpr_<A4>::ret,
+				typename internal::va_bexpr_<A5>::ret,
+				typename internal::va_bexpr_<A6>::ret,
+				typename internal::va_bexpr_<A7>::ret,
+				typename internal::va_bexpr_<A8>::ret >
   {
   };
 
