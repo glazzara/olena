@@ -1,0 +1,378 @@
+			-*- outline -*-
+
+
+* forwords
+
+** subject
+
+dyn!
+
+** intents
+
+compile C++ static library components at run-time
+safe compile time when dev cycle
+
+** naming
+
+lib: the static library concerned by users
+dyn: the library we provide to ease the use of lib
+
+
+
+
+* actors
+
+
+** lib user in C++, thru dyn, without a dyn|lib interface
+*** direct C++ user
+
+writes a C++ program using a static library (lib) + use of dyn facilities
+instead of direct use of lib contents
+
+nota: can use both (FIXME: explain)
+
+she does not want to write lib types (such as image2d<int> or more
+complex ones); instead she write dyn::var, a more general type for
+data.  calling an algorithm is performed thru dyn,
+e,g,. dyn::call("algo").
+
+
+** lib user in C++, thru dyn, with a dyn|lib interface
+*** C++ interface user
+
+FIXME
+
+
+
+** mix user in C++; so use both dyn and lib, but with a dyn|lib interface
+** mix user in C++; so use both dyn and lib, but without a dyn|lib interface
+
+
+** cmd line user (no interface created)
+
+FIXME
+
+
+** cmd line user (an interface has been created)
+
+FIXME
+
+
+** global administrator
+*** lab admin
+
+when used in a lab, it installs the lib (and optionally the interface
+dyn|lib), creates a repository for binaries, chooses a policy to
+manage the repository, allows clients to access this pool and perform
+some tasks (for instance extend the binary pool thanks to a gui), and
+manage the pool.
+
+
+** individual administrator
+
+use local pool so performs local operations
+
+
+** lib developer
+*** lib dev
+
+she can modify some lib files so makes the interface and/or binaries
+obsolete
+
+
+** bin generator
+can be explicit or not
+can be thru a gui or not (so thru what?)
+can be 1 generation or a package generation
+
+
+** interface creator
+pb!
+
+
+
+
+* use cases
+
+** parameterization
+
+say:
+ where is the lib or entities within
+ where is/are the repository/ries
+ how to compile (g++? options?)
+ ...
+
+** ?
+
+???
+
+** direct lib use
+
+we use dyn user in C++
+
+*** type
+
+alias or not
+with qualifiers (const, *, &)
+
+
+*** object
+
+
+
+
+ex: c4
+
+**** creation
+
+With or without default value. Const or not. With alias ?
+
+dyn::var v;
+define a variable towards a mutable object
+here, no object is associated with this variable
+
+dyn::var v("vname");
+// alternative writing: 
+dyn::var v = "vname";
+same as above + the variable is named
+
+define a variable that handles a constant object
+dyn::val v
+dyn::val v(cobj); \ these two lines are ambiguous because cobj may be
+dyn::val v(name); / of type std::string so just looks like a var name
+dyn::val v(cobj, name = "");
+this is ambiguous...
+
+**** deletion
+
+deletion of the object designated by a dyn::var
+  assumption: the object was dynamically allocated
+  otherwise: what happens when:
+
+  int i;
+  dyn::var v = i;
+  dyn::delete_(v); // ?
+
+rmk:
+delete v; // ambiguous!!!
+
+
+*** routine
+
+**** procedure
+
+**** (regular) method
+
+regular means neither ctor, dtor, assignment, nor operator
+
+***** alias
+dyn::fun foo_2d("lib::foo<2d>");
+
+***** call
+
+we want, if possible, a unique way to call a procedure:
+dyn::call(something)
+
+we try to avoid if possible several calling routines:
+dyn::cal(..)  dyn::call2(..)  dyn::call3(..)
+
+hint: calling a procedure means there's a '(' and a ')' in the code
+ex:  foo()  foo(3)
+
+we want to pass as argument of a call either dyn::var's or lib objects
+ex:
+  lib::obj o;
+  dyn::var v = o;
+
+  dyn::call("lib::foo(v)"); means we are in the dyn world
+  dyn::call("lib::foo(o)"); is impossible to handle
+
+  code sample:
+        namespace lib {
+          struct obj { void m() {} };
+        }
+        namespace dyn {
+          void call(std::string& txt) {
+            // impossible access to 'main::o'!
+          }
+        }
+        int main() {
+          lib::obj o;
+          dyn::call("o");
+        }
+
+so (no choice!) we must have:
+
+  dyn::call("lib::foo", o);
+
+and that's great because the user has not to create a dyn::var to
+access to dyn::call
+
+
+yet we want this couple of mechanisms to work:
+  dyn::call("lib::foo(i)"); // full txt
+  here the text embed parenthesis
+and
+  dyn::call("lib::foo", i); // routine name + arg list
+  here the text does not
+
+that's of prime importance to be able to disambiguate between
+  dyn::call("lib::bar()");
+and
+  dyn::call("lib::bar");
+
+
+in the arg list, we can have either dyn::var's or lib::obj's
+
+
+
+question: why not have 2 different names for both operations?
+
+ex:
+  dyn::run("lib::foo(i)");
+  dyn::run("i = read(lena), j = lib::foo(i), display(j)");
+and
+  dyn::call("lib::foo", i);
+
+with the latter, it's a single call
+with the former, we can have several instructions and so we need
+some parsing.
+
+if we are ok with: dyn::run("lib::foo(i)")
+we do some parsing that we can avoid (so that's not so good)
+
+with: dyn::run("some txt to be parsed")
+the inner variables (such as i and j in the example above) do not
+exist elsewhere.
+
+on one side:
+  // nothing here
+  dyn::run("i = read(lena), j = lib::foo(i), display(j)");
+on the other side:
+  dyn::var i; //...
+  dyn::run("lib::foo(i)");
+  here 'i' refers to the variable
+
+
+last, dyn::run has much more work to perform and many more capabilities than
+dyn::call;  both features cannot (should not) be confused.
+
+
+conclusion :
+we can have two different call features
+  dyn::var i("I"); //...
+  dyn::call("lib::foo(I)"); // 1st case
+and
+  dyn::var i; //...
+  dyn::call("lib::foo", i); // 2nd case
+
+explaination: we cannot have
+  dyn::var i;
+  dyn::call("lib::foo(i)");
+because i is unknow (unaccessible) in dyn world.
+
+  
+when there is no argument, the ambiguity can be supressed with the
+presence of parenthesis:
+  dyn::call("lib::bar()");  means: 1st case
+and
+  dyn::call("lib::bar");    means: 2nd case
+
+
+so what with the samples below?
+   lib::foo_2d(42);
+   dyn::call_fun("bar()");
+   dyn::assign_fun("sqrt(42)", result);
+
+
+**** special method
+
+special as the contrary of regular
+
+dyn::ctor mk_image2d_int("image2d<int>");
+var ima = mk_image2c_int(3, 3);
+
+
+**** operator
+
+-> sugar only
+
+*** link between data abstraction class and the lib classes
+
+**** conversion
+dyn::var  i = 5;
+int       j;
+j = i; ?
+dyn::convert_data_to(i, *j);
+
+**** transparent usage in function call
+
+int      i = 5;
+dyn::var j = 6;
+dyn::fun power("power");
+factor(i, j);
+
+**** usage of reference or copy the data ?
+
+we want to use
+lib {
+    void sinc(int& a) {++a;}
+}
+int i = 0;
+var v = i;
+dyn::call("lib::sinc");
+cout << i
+
+instead of
+
+int i = 0;
+lib::inc(i);
+cout << i
+
+So, v should be a reference to i.  (then, "var" is maybe not really appropriate)
+
+Other really amiguous example :
+int i = 1, j = 2;
+var v = i;
+var w = j;
+v = w;  !!not clear -> If v is a reference, why could we reassignate it ? If v is a copy, it means that i will be equal to 1 at the end, is it what we want ?
+
+Possible issue : Split "var" into 2 cases : "var" for variable (copy data), "ref" for reference (do not copy data, just reference it)
+
+Other issue : Keep "var" class, and add a hidden "ret" class. ret would be the return type of call, so that a var can receive a ret but not another var. Interest : "v = w" would be forbidden, but v = dyn::call("sinc") will still be avaible.
+
+The main problem is to recognize tempory data which must not be stored by reference.
+
+
+
+We recall that these two prototypes can't be used together:
+<T> var(T)
+<T> var(T&)
+=>ambiguous
+
+But this is allowed:
+<T> var(T&)
+<T> var(const T&)  -> this handle temporary data (but not only, which is the problem !) 
+
+=> We stay on the idea that var is a reference, so we forbid var v = 5;  (by using only var(T&) constructor which don't handle temporary data)
+
+
+
+How to choose the right policy about the return type of the function ?
+Use the operator,
++ some struct and sizeof...
+
+Final decision (up to now !) :
+Var is almost like a reference.
+int i = 0;
+var i_v = i;
+after this line i_v has the same behavior than i.
+
+Link everything thanks to pointer, even with copied data (dynamic allocation in this case).
+
+
+probleme with destruction ? (use flag to specify wheter a var handle a temporary data or not)
+var i = 4;
+var j = i;
+i = 3; //j = 3;
+j and i represent the same data. So if i die we must not delete the data. But when j die too, the data has to be freed.
