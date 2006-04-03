@@ -33,9 +33,31 @@
 # include <mlc/logic.hh>
 
 
-/// Macros mlc_eq and mlc_neq.
+
+/// \{
+/// Macros mlc_eq(T1, T2) and mlc_neq(T1, T2).
+
 # define mlc_eq( T1, T2) mlc::eq_ <T1, T2>
 # define mlc_neq(T1, T2) mlc::neq_<T1, T2>
+
+/// \}
+
+
+
+/// \{
+/// Macros mlc_something(T) corresponding to mlc::something_<T>.
+
+# define mlc_is_found(T)     mlc::is_found_<T>
+# define mlc_is_not_found(T) mlc::is_not_found_<T>
+
+# define mlc_is_undefined(T) mlc::is_undefined_<T>
+# define mlc_is_defined(T)   mlc::is_defined_<T>
+
+# define mlc_is_ok(T)     mlc::is_ok_<T>
+# define mlc_is_not_ok(T) mlc::is_not_ok_<T>
+
+/// \}
+
 
 
 namespace mlc
@@ -43,13 +65,13 @@ namespace mlc
 
   /// Check whether \a T is a mlc::abstract::value.
   template <typename T>
-  struct is_value : public mlc_is_a(T, mlc::abstract::value)
+  struct is_value : public mlc_is_a(T, mlc::abstract::value)::bexpr
   {
   };
 
   /// Check whether \a T is not a mlc::abstract::value.
   template <typename T>
-  struct is_not_value : public not_<mlc_is_a(T, mlc::abstract::value)>
+  struct is_not_value : public not_<mlc_is_a(T, mlc::abstract::value)>::bexpr
   {
   };
 
@@ -70,6 +92,8 @@ namespace mlc
   {
   };
   /// \}
+
+
 
   /// Inequality test between a couple of types.
   /// \{
@@ -95,24 +119,48 @@ namespace mlc
   /// Shortcuts for comparison with mlc::not_found.
   /// \{
   template <typename T>
-  struct is_found : public neq_<T, not_found>
+  struct is_not_found_ : public mlc_is_a(T, mlc::not_found)::bexpr
   {
   };
 
   template <typename T>
-  struct is_not_found : public neq_<T, not_found>
+  struct is_found_ : public mlc_is_not_a(T, mlc::not_found)::bexpr
+  {
+  };
+  /// \}
+
+
+  /// Shortcuts for testing inheritance from mlc::undefined.
+  /// \{
+  template <typename T>
+  struct is_undefined_ : public mlc_is_a(T, mlc::undefined)::bexpr
+  {
+  };
+
+  template <typename T>
+  struct is_defined_ : public mlc_is_not_a(T, mlc::undefined)::bexpr
   {
   };
   /// \}
 
 
   /// Check whether a type is a sound (supposedly before using it).
+  /// \{
   template <typename T>
-  struct is_ok : public and_< neq_<T, not_found>,
-			      and_< neq_<T, not_ok>,
-				    neq_<T, undefined > > >
+  struct is_not_ok_ : public or_list_< is_not_found_<T>,
+				       is_undefined_<T>,
+				       mlc_is_a(T, mlc::not_ok) >::bexpr
   {
   };
+
+  template <typename T>
+  struct is_ok_ : public and_list_< is_found_<T>,
+				    is_defined_<T>,
+				    mlc_is_not_a(T, mlc::not_ok) >::bexpr
+  {
+  };
+  /// \}
+
 
 } // end of namespace mlc
 

@@ -2,15 +2,6 @@
 
 * files
 
-** bool.hh
-
-create assert.hh from parts of bool.hh
-
-** boolean and bexpr
-
-there is a confusion between mlc::abstract::boolean and the notion of
-bexpr (Boolean expression type)!
-
 ** value.hh
 
 This file mixes bool_, int_, etc. so I should be split into several
@@ -21,7 +12,22 @@ not define mlc::uint_;  etc.
 
 * addition
 
-mlc_eval (such as mlc_bool and mlc_value)
+** macros
+
+*** mlc_eval
+
+mlc_eval should exist (in a similar way to mlc_bool and mlc_value)
+
+*** mlc_value
+
+rec pb
+
+** cmp.hh
+
+clearly check that params are neither values not bexprs
+
+clearly state the difference (and use cases) between mlc_eq and mlc_is_a
+then check that is_something facilities conform to the use case rules
 
 
 * renaming
@@ -50,6 +56,29 @@ struct ok : public something< mlc_is_a(T, int) >
 works well and we do not have to write mlc_is_a_ with the '_' at the end
 so that's better.   yet is it a direct consequence of the wrapping?
 
+** if_
+
+then_type and else_type are not protected; find a solution
+
+** logic.hh
+
+add some tests to check that err msg are ok
+(the pb is that they may propagate...)
+
+
+
+
+* DONE!
+
+** bool.hh
+
+create assert.hh from parts of bool.hh
+
+** boolean and bexpr
+
+there is a confusion between mlc::abstract::boolean and the notion of
+bexpr (Boolean expression type)!
+
 ** boolean and bexpr
 
 the last part of the disambiguation between boolean and bexpr is to
@@ -63,5 +92,3 @@ concrete bexprs should not be related to true_ and false_
 static checks should change
 *** remove
 eval in true_ and false_
-
-

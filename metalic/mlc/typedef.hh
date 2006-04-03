@@ -242,6 +242,9 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n			\
 
 
 
+
+
+
 /*! \macro mlc_typedef_in(Namespace, Type, TypedefName)
 **
 ** FIXME: doc
@@ -252,7 +255,6 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n			\
 
 # define mlc_typedef_in_(Namespace, Type, TypedefName) \
    Namespace::typedef_::TypedefName::from_<Type>::ret
-
 
 
 /*! \macro mlc_typedef_onlyif(Type, TypedefName, Bexpr)

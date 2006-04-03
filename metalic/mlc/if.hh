@@ -53,9 +53,10 @@ namespace mlc
 
   namespace ERROR
   {
-    struct FIXME;
+    struct THE_FIRST_PARAMETER_OF_AN_mlc_if_SHOULD_BE_AN_mlc_bexpr;
 
   } // end of mlc::ERROR
+
 
   namespace internal
   {
@@ -84,21 +85,24 @@ namespace mlc
   } // end of namespace mlc::internal
 
 
-/** \brief Static `if' on types.
- **
- ** If \a Cond is true, evaluate to type \a Then, otherwise evaluate to
- ** type \a Else.  The \a ret member holds the result.
- **
- ** \note \a Then and \a Else must be valid types, since they are both
- ** evaluated, whatever the result of \a Cond.
- */
+  /** \brief Static `if' on types.
+   **
+   ** If \a Cond is true, evaluate to type \a Then, otherwise evaluate to
+   ** type \a Else.  The \a ret member holds the result.
+   **
+   ** \note \a Then and \a Else must be valid types, since they are both
+   ** evaluated, whatever the result of \a Cond.
+   */
+
   template <typename cond_type, typename then_type, typename else_type>
   struct if_ :
-    // FIXME: enable the static assertion below!!!
+
     private assert_< mlc_is_a(cond_type, mlc::abstract::bexpr),
-		     mlc::ERROR::FIXME >,
-    public internal::if_ < mlc_bool(cond_type), then_type, else_type >
+		     mlc::ERROR::THE_FIRST_PARAMETER_OF_AN_mlc_if_SHOULD_BE_AN_mlc_bexpr >
   {
+    typedef typename internal::if_< mlc_bool(cond_type),
+                                    then_type,
+                                    else_type >::ret ret;
   };
 
 } // end of namespace mlc

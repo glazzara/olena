@@ -48,7 +48,14 @@ namespace mlc
 
 
 
-# define mlc_ret(Type) typename mlc::typedef_::ret::from_<Type>::ret
+/// \{
+/// Macros mlc_ret and mlc_ret_.
+
+# define mlc_ret(Type)  typename mlc::typedef_::ret::from_<Type>::ret
+# define mlc_ret_(Type)          mlc::typedef_::ret::from_<Type>::ret
+
+/// \}
+
 
 
 // test code
@@ -62,10 +69,14 @@ namespace mlc
   template <typename T>
   struct ret_found_in_
     : public mlc::eq_< typename mlc::typedef_::ret::from_<T>::ret2::first_elt,
-		       mlc::found >
+		       mlc::found >::bexpr
   {};
 
 } // end of namespace mlc
+
+
+# define  mlc_ret_found_in(T)  mlc::ret_found_in_<T>
+
 
 
 #endif // ! METALIC_RET_HH

@@ -32,4 +32,16 @@
 # include <mlc/case.hh>
 
 
+/// Macros mlc_switch and mlc_switch_.
+/// \{
+
+# define mlc_switch(Namespace, Context, Data) \
+  typename Namespace::switch_<Context, Data>::ret
+
+# define mlc_switch_(Namespace, Context, Data) \
+  Namespace::switch_<Context, Data>::ret
+
+/// \}
+
+
 #endif // ! METALIC_SWITCH_HH
