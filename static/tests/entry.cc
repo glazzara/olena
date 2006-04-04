@@ -5,13 +5,7 @@
 #include <mlc/case.hh>
 #include <mlc/assert.hh>
 #include <mlc/is_a.hh>
-
-// FIXME: Fake.  Remove this when mlc::abort_ is added to the project.
-namespace mlc
-{
-  template <typename T>
-  class abort_ {};
-}
+#include <mlc/abort.hh>
 
 
 /*----------.

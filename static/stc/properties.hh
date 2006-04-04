@@ -331,11 +331,11 @@
     internal::rec_get_vtype<category, from_type, typedef_type>::ret	      \
     internal_typedef;							      \
 									      \
-    /* Did we found the virtual type? */				      \
+    /* Did we found the virtual type?  */				      \
     static const bool found_external_p =				      \
-      mlc_bool(mlc::is_found<external_typedef>);			      \
+      mlc_bool(mlc::is_found_<external_typedef>);			      \
     static const bool found_internal_p =				      \
-      mlc_bool(mlc::is_found<internal_typedef>);			      \
+      mlc_bool(mlc::is_found_<internal_typedef>);			      \
 									      \
     typedef typename							      \
     internal::select_typedef<found_external_p, found_internal_p,	      \
