@@ -8,6 +8,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/metalic
 # when oln.m4 is available in the distribution.
 
 check_PROGRAMS =				\
+  any						\
   case						\
   if						\
   is_a						\
@@ -17,13 +18,14 @@ check_PROGRAMS =				\
   switch					\
   typedef
 
-case_SOURCES = case.cc
-if_SOURCES = if.cc
-is_a_SOURCES = is_a.cc
-or_SOURCES = or.cc
+any_SOURCES       = any.cc
+case_SOURCES      = case.cc
+if_SOURCES        = if.cc
+is_a_SOURCES      = is_a.cc
+or_SOURCES        = or.cc
 protected_SOURCES = protected.cc
-ret_SOURCES = ret.cc
-switch_SOURCES = switch.cc
-typedef_SOURCES = typedef.cc
+ret_SOURCES       = ret.cc
+switch_SOURCES    = switch.cc
+typedef_SOURCES   = typedef.cc
 
 TESTS = $(check_PROGRAMS)

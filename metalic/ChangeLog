@@ -1,3 +1,18 @@
+2006-04-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add mlc::any.
+
+	* mlc/contract.hh: New (imported from Olena proto-1.0).
+	* mlc/any.hh: New (imported from Olena proto-1.0).
+	Aesthetic changes.
+	(any__simple): New class.
+	* mlc/is_a.hh (mlc_is_a, mlc_is_not_a): Use the `template' keyword
+	to remove an ambiguity w.r.t the nature of the template struct
+	`ret' within mlc::form::of.
+	* tests/any.cc: New test.
+	* tests/Makefile.am (check_PROGRAMS): Add any.
+	(any_SOURCES): New.
+
 2006-04-03  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Add protection mechanism to case definitions and update.

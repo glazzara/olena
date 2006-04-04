@@ -2,6 +2,7 @@
 
 mlcdir = $(includedir)/mlc
 nobase_mlc_HEADERS = 				\
+  any.hh					\
   bool.hh					\
   case.hh					\
   cmp.hh					\

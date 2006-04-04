@@ -238,8 +238,10 @@ namespace mlc
 **      template < template < class, class > class > class
 */
 
-# define mlc_is_a(T, U) \
-mlc::wrap_< typename mlc::is_a_< sizeof(mlc::form::of< U >()) >::ret< T, U > >
+# define mlc_is_a(T, U)							    \
+mlc::wrap_<								    \
+  typename mlc::is_a_< sizeof(mlc::form::of< U >()) >::template ret< T, U > \
+>
 
 # define mlc_is_a_(T, U) \
 mlc::is_a_< sizeof(mlc::form::of< U >()) >::ret< T, U >
@@ -253,11 +255,13 @@ mlc::is_a_< sizeof(mlc::form::of< U >()) >::ret< T, U >
 ** \see mlc_is_a(T, U)
 */
 
-# define mlc_is_not_a(T, U) \
-mlc::not_< typename mlc::is_a_<sizeof(mlc::form::of<U >())>::ret<T,U > >
+# define mlc_is_not_a(T, U)						 \
+mlc::not_<								 \
+  typename mlc::is_a_<sizeof(mlc::form::of<U >())>::template ret< T, U > \
+>
 
 # define mlc_is_not_a_(T, U) \
-mlc::not_< mlc::is_a_< sizeof(mlc::form::of<U >())>::ret<T,U > >
+mlc::not_< mlc::is_a_< sizeof(mlc::form::of<U >())>::ret< T, U > >
 
 
 #endif // ! METALIC_IS_A_HH
