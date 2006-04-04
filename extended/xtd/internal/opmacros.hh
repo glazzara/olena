@@ -25,21 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_OPS_EXPR_HH
-# define EXTENDED_OPS_EXPR_HH
+#ifndef EXTENDED_INTERNAL_OPMACROS_HH
+# define EXTENDED_INTERNAL_OPMACROS_HH
+
+# include <xtd/math/includes.hh>
 
 # include <xtd/abstract/fun_expr.hh>
 # include <xtd/mexpr.hh>
-# include <xtd/math/arith.hh>
+# include <xtd/literal.hh>
 
-
-
-
-// FIXME: doc
+# include <xtd/optraits.hh>
+# include <xtd/builtin/traits.hh>
 
 
 
 # define xtd_internal_decl_unary_operator(OperatorName, OperatorSymbol)	\
+									\
+									\
+  template <typename T>							\
+  struct plain_##OperatorName##_;					\
+									\
+  template <typename T>							\
+  struct fun_traits_< plain_##OperatorName##_<T> >			\
+  {									\
+    typedef T arg_type;							\
+    typedef xtd_##OperatorName(T) res_type;				\
+  };									\
+									\
+									\
+  template <typename T>							\
+  struct plain_##OperatorName##_					\
+									\
+    : public abstract::plain_nary_fun_< 1, plain_##OperatorName##_<T> >	\
+  {									\
+    typedef plain_##OperatorName##_<T> self;				\
+    xtd_res(self) impl_op(const T& arg) const				\
+    {									\
+      return OperatorSymbol arg;					\
+    }									\
+  };									\
+									\
+									\
+  typedef m1fun_<plain_##OperatorName##_> OperatorName##_type;		\
+  const OperatorName##_type OperatorName;				\
+									\
 									\
   template <typename Expr>						\
   xtd::m1expr_<xtd::OperatorName##_type, Expr>				\
@@ -49,10 +78,11 @@
     return tmp;								\
   }									\
 									\
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+									\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n				\
 
 
-// FIXME: add something like:
+//   FIXME: does not specialize any template arguments
 
 //   template <typename Expr>
 //   struct OperatorName##_trait_ < Expr >
@@ -62,8 +92,37 @@
 
 
 
-
 # define xtd_internal_decl_binary_operator(OperatorName, OperatorSymbol)	\
+										\
+										\
+  template <typename T1, typename T2>						\
+  struct plain_##OperatorName##_;						\
+										\
+  template <typename T1, typename T2>						\
+  struct fun_traits_< plain_##OperatorName##_<T1, T2> >				\
+  {										\
+    typedef T1 arg1_type;							\
+    typedef T2 arg2_type;							\
+    typedef xtd_##OperatorName(T1, T2) res_type;				\
+  };										\
+										\
+										\
+  template <typename T1, typename T2>						\
+  struct plain_##OperatorName##_						\
+										\
+    : public abstract::plain_nary_fun_< 2, plain_##OperatorName##_<T1, T2> >	\
+  {										\
+    typedef plain_##OperatorName##_<T1, T2> self;				\
+    xtd_res(self) impl_op(const T1& arg1, const T2& arg2) const			\
+    {										\
+      return arg1 OperatorSymbol arg2;						\
+    }										\
+  };										\
+										\
+										\
+  typedef m2fun_<plain_##OperatorName##_> OperatorName##_type;			\
+  const OperatorName##_type OperatorName;					\
+										\
 										\
   template <typename Lexpr, typename Rexpr>					\
   xtd::m2expr_<xtd::OperatorName##_type, Lexpr, Rexpr>				\
@@ -74,10 +133,11 @@
     return tmp;									\
   }										\
 										\
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+										\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n					\
 
 
-// FIXME: add something like:
+//   FIXME: does not specialize any template arguments
 
 //   template <typename Lexpr, typename Rexpr>
 //   struct OperatorName##_trait_ < Lexpr, Rexpr >
@@ -86,42 +146,4 @@
 //   };
 
 
-
-
-
-namespace xtd
-{
-
-  // logic
-
-  xtd_internal_decl_binary_operator( land, and );
-  xtd_internal_decl_binary_operator( lor,  or );
-  xtd_internal_decl_binary_operator( lxor, xor );
-
-  xtd_internal_decl_unary_operator( lnot, not );
-
-
-  // cmp
-
-  xtd_internal_decl_binary_operator( eq,      == );
-  xtd_internal_decl_binary_operator( neq,     != );
-  xtd_internal_decl_binary_operator( less,    <  );
-  xtd_internal_decl_binary_operator( leq,     <= );
-  xtd_internal_decl_binary_operator( greater, >  );
-  xtd_internal_decl_binary_operator( geq,     >= );
-
-
-  // arith
-
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
-
-  xtd_internal_decl_unary_operator( uminus, - );
-
-} // end of namespace xtd
-
-
-#endif // ! EXTENDED_OPS_EXPR_HH
+#endif // ! EXTENDED_INTERNAL_OPMACROS_HH

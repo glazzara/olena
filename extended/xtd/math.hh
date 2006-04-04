@@ -28,17 +28,61 @@
 #ifndef EXTENDED_MATH_HH
 # define EXTENDED_MATH_HH
 
-# include <cmath>
 
-# include <xtd/abstract/plain_fun.hh>
-# include <xtd/mfun.hh>
-# include <xtd/arg.hh>
-# include <xtd/ops_expr.hh>
+
+// FIXME: preconditions are not handled in code included below...
+
+
+
+/// \{
+/// Definition of xtd cmath-like functions.
+
+# include <xtd/math/abs.hh>
+# include <xtd/math/acos.hh>
+# include <xtd/math/asin.hh>
+# include <xtd/math/atan.hh>
+# include <xtd/math/atan2.hh>
+# include <xtd/math/ceil.hh>
+# include <xtd/math/cos.hh>
+# include <xtd/math/cosh.hh>
+# include <xtd/math/exp.hh>
+// 'fabs' is obsolete
+# include <xtd/math/floor.hh>
+// fmod
+// frexp
+// ldexp
+# include <xtd/math/log.hh>
+# include <xtd/math/log10.hh>
+// modf
+# include <xtd/math/pow.hh>
+# include <xtd/math/sin.hh>
+# include <xtd/math/sinh.hh>
+# include <xtd/math/sqrt.hh>
+# include <xtd/math/tan.hh>
+# include <xtd/math/tanh.hh>
+
+/// \}
+
+
+
+/// \{
+/// Definition of xtd operators and related functions.
+
+# include <xtd/math/arith.hh>
+# include <xtd/math/logic.hh>
+# include <xtd/math/cmp.hh>
+
+/// \}
+
+
+
+/// \{
+/// Misc functions.
 
 # include <xtd/math/id.hh>
-# include <xtd/math/trigo.hh>
-# include <xtd/math/arith.hh>
-// # include <xtd/math/logic.hh>
+
+/// \}
+
 
 
 

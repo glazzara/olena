@@ -1,3 +1,44 @@
+2006-04-04  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Add some math functions and clean up file deps.
+
+	* xtd/math.hh: Add includes.
+	* xtd/math/log.hh: New.
+	* xtd/math/floor.hh: New.
+	* xtd/math/log10.hh: New.
+	* xtd/math/tan.hh: New.
+	* xtd/math/atan.hh: New.
+	* xtd/math/cos.hh: New.
+	* xtd/math/trigo.hh: Remove; dispatch contents into several files.
+	* xtd/math/acos.hh: New.
+	* xtd/math/sin.hh: New.
+	* xtd/math/sqrt.hh: New.
+	* xtd/math/asin.hh: New.
+	* xtd/math/tanh.hh: New.
+	* xtd/math/exp.hh: New.
+	* xtd/math/cosh.hh: New.
+	* xtd/math/id.hh: Update includes.
+	* xtd/math/sinh.hh: New.
+	* xtd/math/atan2.hh: New.
+	* xtd/math/abs.hh: New.
+	* xtd/math/pow.hh: New.
+	* xtd/math/includes.hh: New.
+	* xtd/math/constraints.hh: New.
+	* xtd/math/ceil.hh: New.
+	* xtd/ops_expr.hh: Remove; dispatch contents into...
+	* xtd/internal/opmacros.hh: ...this new file and the following three
+	files.
+	* xtd/math/arith.hh: Update.
+	* xtd/math/cmp.hh: New.
+	* xtd/math/logic.hh: New.
+	* xtd/traits.hh: Rename as...
+	* xtd/optraits.hh: ...this; update.
+	* xtd/builtin/traits.hh: Update.
+	* tests/cos.cc: Update.
+	* tests/Makefile.am: Update.
+	* tests/math.cc: New.
+	* tests/cast.cc: Update.
+
 2006-03-25  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Add a lot of material for operators (arith, logical, cmp).

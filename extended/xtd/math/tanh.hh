@@ -25,26 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef EXTENDED_MATH_TANH_HH
+# define EXTENDED_MATH_TANH_HH
 
-# include <xtd/internal/opmacros.hh>
+# include <xtd/math/includes.hh>
 
 
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
+  /// \{
+  /// Definition of xtd hyperbolic tangent functions.
 
-  xtd_internal_decl_unary_operator( uminus, - );
+
+  template <typename T> struct tanh_;
+
+  template <> struct constraints_< tanh_, float > {};
+  template <> struct constraints_< tanh_, double > {};
+  template <> struct constraints_< tanh_, long double > {};
+
+  template <typename T>
+  struct fun_traits_< tanh_<T> >
+  {
+    typedef T arg_type;
+    typedef T res_type;
+  };
+
+
+  template <typename T>
+  struct tanh_
+
+    : public abstract::plain_nary_fun_< 1, tanh_<T> >,
+
+      private constraints_< tanh_, T >
+  {
+    xtd_res(tanh_<T>) impl_op(const T& arg) const
+    {
+      return std::tanh(arg);
+    }
+  };
+
+
+  typedef m1fun_<tanh_> tanh_type;
+
+
+  /// \}
+
+
+
+  /// \brief Plain function object xtd::tanh_f : float -> float.
+  const tanh_<float>       tanh_f;
+
+  /// \brief Plain function object xtd::tanh_d : double -> double.
+  const tanh_<double>      tanh_d;
+
+  /// \brief Plain function object xtd::tanh_ld : long double -> long double.
+  const tanh_<long double> tanh_ld;
+
+  /// \brief Meta function object xtd::tanh.
+  const tanh_type          tanh;
 
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_TANH_HH

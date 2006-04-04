@@ -25,26 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef EXTENDED_MATH_TAN_HH
+# define EXTENDED_MATH_TAN_HH
 
-# include <xtd/internal/opmacros.hh>
+# include <xtd/math/includes.hh>
 
 
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
+  /// \{
+  /// Definition of xtd tangent functions.
 
-  xtd_internal_decl_unary_operator( uminus, - );
+
+  template <typename T> struct tan_;
+
+  template <> struct constraints_< tan_, float > {};
+  template <> struct constraints_< tan_, double > {};
+  template <> struct constraints_< tan_, long double > {};
+
+  template <typename T>
+  struct fun_traits_< tan_<T> >
+  {
+    typedef T arg_type;
+    typedef T res_type;
+  };
+
+
+  template <typename T>
+  struct tan_
+
+    : public abstract::plain_nary_fun_< 1, tan_<T> >,
+
+      private constraints_< tan_, T >
+  {
+    xtd_res(tan_<T>) impl_op(const T& arg) const
+    {
+      return std::tan(arg);
+    }
+  };
+
+
+  typedef m1fun_<tan_> tan_type;
+
+
+  /// \}
+
+
+
+  /// \brief Plain function object xtd::tan_f : float -> float.
+  const tan_<float>       tan_f;
+
+  /// \brief Plain function object xtd::tan_d : double -> double.
+  const tan_<double>      tan_d;
+
+  /// \brief Plain function object xtd::tan_ld : long double -> long double.
+  const tan_<long double> tan_ld;
+
+  /// \brief Meta function object xtd::tan.
+  const tan_type          tan;
 
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_TAN_HH

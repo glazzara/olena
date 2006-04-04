@@ -25,26 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef EXTENDED_MATH_ACOS_HH
+# define EXTENDED_MATH_ACOS_HH
 
-# include <xtd/internal/opmacros.hh>
+# include <xtd/math/includes.hh>
 
 
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
+  /// \{
+  /// Definition of xtd arc cosine functions.
 
-  xtd_internal_decl_unary_operator( uminus, - );
+
+  template <typename T> struct acos_;
+
+  template <> struct constraints_< acos_, float > {};
+  template <> struct constraints_< acos_, double > {};
+  template <> struct constraints_< acos_, long double > {};
+
+  template <typename T>
+  struct fun_traits_< acos_<T> >
+  {
+    typedef T arg_type;
+    typedef T res_type;
+  };
+
+
+  template <typename T>
+  struct acos_
+
+    : public abstract::plain_nary_fun_< 1, acos_<T> >,
+
+      private constraints_< acos_, T >
+  {
+    xtd_res(acos_<T>) impl_op(const T& arg) const
+    {
+      return std::acos(arg);
+    }
+  };
+
+
+  typedef m1fun_<acos_> acos_type;
+
+
+  /// \}
+
+
+
+  /// \brief Plain function object xtd::acos_f : float -> float.
+  const acos_<float>       acos_f;
+
+  /// \brief Plain function object xtd::acos_d : double -> double.
+  const acos_<double>      acos_d;
+
+  /// \brief Plain function object xtd::acos_ld : long double -> long double.
+  const acos_<long double> acos_ld;
+
+  /// \brief Meta function object xtd::acos.
+  const acos_type          acos;
 
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_ACOS_HH

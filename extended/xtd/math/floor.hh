@@ -25,26 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef EXTENDED_MATH_FLOOR_HH
+# define EXTENDED_MATH_FLOOR_HH
 
-# include <xtd/internal/opmacros.hh>
+# include <xtd/math/includes.hh>
 
 
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
+  /// \{
+  /// Definition of xtd floor functions.
 
-  xtd_internal_decl_unary_operator( uminus, - );
+
+  template <typename T> struct floor_;
+
+  template <> struct constraints_< floor_, float > {};
+  template <> struct constraints_< floor_, double > {};
+  template <> struct constraints_< floor_, long double > {};
+
+  template <typename T>
+  struct fun_traits_< floor_<T> >
+  {
+    typedef T arg_type;
+    typedef T res_type;
+  };
+
+
+  template <typename T>
+  struct floor_
+
+    : public abstract::plain_nary_fun_< 1, floor_<T> >,
+
+      private constraints_< floor_, T >
+  {
+    xtd_res(floor_<T>) impl_op(const T& arg) const
+    {
+      return std::floor(arg);
+    }
+  };
+
+
+  typedef m1fun_<floor_> floor_type;
+
+
+  /// \}
+
+
+
+  /// \brief Plain function object xtd::floor_f : float -> float.
+  const floor_<float>       floor_f;
+
+  /// \brief Plain function object xtd::floor_d : double -> double.
+  const floor_<double>      floor_d;
+
+  /// \brief Plain function object xtd::floor_ld : long double -> long double.
+  const floor_<long double> floor_ld;
+
+  /// \brief Meta function object xtd::floor.
+  const floor_type          floor;
 
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_FLOOR_HH

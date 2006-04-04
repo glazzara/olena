@@ -25,26 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef EXTENDED_MATH_CONSTRAINTS_HH
+# define EXTENDED_MATH_CONSTRAINTS_HH
 
-# include <xtd/internal/opmacros.hh>
+# include <mlc/abort.hh>
 
 
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
+  namespace ERROR
+  {
+    struct FIXME;
 
-  xtd_internal_decl_unary_operator( uminus, - );
+  } // end of namespace xtd::ERROR
+
+
+  template < template<typename> class pfun,
+	     typename T >
+  struct constraints_ : private mlc::abort_< ERROR::FIXME >
+  {
+  };
+
+
+  template < template<typename, typename> class pfun,
+	     typename T1,
+	     typename T2 >
+  struct constraints_2_ : private mlc::abort_< ERROR::FIXME >
+  {
+  };
 
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_CONSTRAINTS_HH

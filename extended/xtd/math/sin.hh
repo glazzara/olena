@@ -25,26 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef EXTENDED_MATH_SIN_HH
+# define EXTENDED_MATH_SIN_HH
 
-# include <xtd/internal/opmacros.hh>
+# include <xtd/math/includes.hh>
 
 
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
+  /// \{
+  /// Definition of xtd sine functions.
 
-  xtd_internal_decl_unary_operator( uminus, - );
+
+  template <typename T> struct sin_;
+
+  template <> struct constraints_< sin_, float > {};
+  template <> struct constraints_< sin_, double > {};
+  template <> struct constraints_< sin_, long double > {};
+
+  template <typename T>
+  struct fun_traits_< sin_<T> >
+  {
+    typedef T arg_type;
+    typedef T res_type;
+  };
+
+
+  template <typename T>
+  struct sin_
+
+    : public abstract::plain_nary_fun_< 1, sin_<T> >,
+
+      private constraints_< sin_, T >
+  {
+    xtd_res(sin_<T>) impl_op(const T& arg) const
+    {
+      return std::sin(arg);
+    }
+  };
+
+
+  typedef m1fun_<sin_> sin_type;
+
+
+  /// \}
+
+
+
+  /// \brief Plain function object xtd::sin_f : float -> float.
+  const sin_<float>       sin_f;
+
+  /// \brief Plain function object xtd::sin_d : double -> double.
+  const sin_<double>      sin_d;
+
+  /// \brief Plain function object xtd::sin_ld : long double -> long double.
+  const sin_<long double> sin_ld;
+
+  /// \brief Meta function object xtd::sin.
+  const sin_type          sin;
 
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_SIN_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ID_HH
-# define EXTENDED_MATH_ID_HH
+#ifndef EXTENDED_MATH_ATAN2_HH
+# define EXTENDED_MATH_ATAN2_HH
 
 # include <xtd/math/includes.hh>
 
@@ -34,34 +34,61 @@
 namespace xtd
 {
 
-  /*! \class xtd::plain_id_<T>
-  **
-  ** FIXME: doc
-  */
+  /// \{
+  /// Definition of xtd arc tangent functions taking two arguments.
 
-  template <typename T> struct plain_id_; // fwd decl
+
+  template <typename T1, typename T2> struct atan2_;
+
+  template <> struct constraints_2_< atan2_, float, float > {};
+  template <> struct constraints_2_< atan2_, double, double > {};
+  template <> struct constraints_2_< atan2_, long double, long double > {};
 
   template <typename T>
-  struct fun_traits_< plain_id_<T> >
+  struct fun_traits_< atan2_<T, T> >
   {
-    typedef T arg_type;
+    typedef T arg1_type;
+    typedef T arg2_type;
     typedef T res_type;
   };
-  
-  template <typename T>
-  struct plain_id_ : public abstract::plain_nary_fun_< 1, plain_id_<T> >
+
+
+  template <typename T1, typename T2>
+  struct atan2_
+
+    : public abstract::plain_nary_fun_< 2, atan2_<T1, T2> >,
+
+      private constraints_2_< atan2_, T1, T2 >
   {
-    T impl_op(const T& arg) const
+    xtd_res(mlc_comma_1(atan2_<T1,T2>)) impl_op(const T1& arg1, const T2& arg2) const
     {
-      return arg;
+      return std::atan2(arg1, arg2);
     }
   };
 
-  // id
-  const m1fun_<plain_id_> id;
+
+  typedef m2fun_<atan2_> atan2_type;
+
+
+  /// \}
+
+
+
+  /// \brief Plain function object xtd::atan2_f : (float, float) -> float.
+  const atan2_<float, float>             atan2_f;
+
+  /// \brief Plain function object xtd::atan2_d : (double, double) -> double.
+  const atan2_<double, double>           atan2_d;
+
+  /// \brief Plain function object xtd::atan2_ld : (long double, long double) -> long double.
+  const atan2_<long double, long double> atan2_ld;
+
+  /// \brief Meta function object xtd::atan2.
+  const atan2_type                       atan2;
+
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ID_HH
+#endif // ! EXTENDED_MATH_ATAN2_HH

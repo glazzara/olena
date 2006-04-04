@@ -25,26 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef EXTENDED_MATH_CEIL_HH
+# define EXTENDED_MATH_CEIL_HH
 
-# include <xtd/internal/opmacros.hh>
+# include <xtd/math/includes.hh>
 
 
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
+  /// \{
+  /// Definition of xtd ceil functions.
 
-  xtd_internal_decl_unary_operator( uminus, - );
+
+  template <typename T> struct ceil_;
+
+  template <> struct constraints_< ceil_, float > {};
+  template <> struct constraints_< ceil_, double > {};
+  template <> struct constraints_< ceil_, long double > {};
+
+  template <typename T>
+  struct fun_traits_< ceil_<T> >
+  {
+    typedef T arg_type;
+    typedef T res_type;
+  };
+
+
+  template <typename T>
+  struct ceil_
+
+    : public abstract::plain_nary_fun_< 1, ceil_<T> >,
+
+      private constraints_< ceil_, T >
+  {
+    xtd_res(ceil_<T>) impl_op(const T& arg) const
+    {
+      return std::ceil(arg);
+    }
+  };
+
+
+  typedef m1fun_<ceil_> ceil_type;
+
+
+  /// \}
+
+
+
+  /// \brief Plain function object xtd::ceil_f : float -> float.
+  const ceil_<float>       ceil_f;
+
+  /// \brief Plain function object xtd::ceil_d : double -> double.
+  const ceil_<double>      ceil_d;
+
+  /// \brief Plain function object xtd::ceil_ld : long double -> long double.
+  const ceil_<long double> ceil_ld;
+
+  /// \brief Meta function object xtd::ceil.
+  const ceil_type          ceil;
 
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_CEIL_HH

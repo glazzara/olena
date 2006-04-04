@@ -25,26 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef EXTENDED_MATH_ATAN_HH
+# define EXTENDED_MATH_ATAN_HH
 
-# include <xtd/internal/opmacros.hh>
+# include <xtd/math/includes.hh>
 
 
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
+  /// \{
+  /// Definition of xtd arc tangent functions.
 
-  xtd_internal_decl_unary_operator( uminus, - );
+
+  template <typename T> struct atan_;
+
+  template <> struct constraints_< atan_, float > {};
+  template <> struct constraints_< atan_, double > {};
+  template <> struct constraints_< atan_, long double > {};
+
+  template <typename T>
+  struct fun_traits_< atan_<T> >
+  {
+    typedef T arg_type;
+    typedef T res_type;
+  };
+
+
+  template <typename T>
+  struct atan_
+
+    : public abstract::plain_nary_fun_< 1, atan_<T> >,
+
+      private constraints_< atan_, T >
+  {
+    xtd_res(atan_<T>) impl_op(const T& arg) const
+    {
+      return std::atan(arg);
+    }
+  };
+
+
+  typedef m1fun_<atan_> atan_type;
+
+
+  /// \}
+
+
+
+  /// \brief Plain function object xtd::atan_f : float -> float.
+  const atan_<float>       atan_f;
+
+  /// \brief Plain function object xtd::atan_d : double -> double.
+  const atan_<double>      atan_d;
+
+  /// \brief Plain function object xtd::atan_ld : long double -> long double.
+  const atan_<long double> atan_ld;
+
+  /// \brief Meta function object xtd::atan.
+  const atan_type          atan;
 
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_ATAN_HH

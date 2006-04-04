@@ -25,26 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
-
-# include <xtd/internal/opmacros.hh>
+#ifndef EXTENDED_MATH_INCLUDES_HH
+# define EXTENDED_MATH_INCLUDES_HH
 
 
-namespace xtd
-{
+# include <cmath>
+# include <cassert>
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
-
-  xtd_internal_decl_unary_operator( uminus, - );
+# include <xtd/abstract/plain_nary_fun.hh>
+# include <xtd/mfun.hh>
+# include <xtd/math/constraints.hh>
 
 
-} // end of namespace xtd
-
-
-
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_INCLUDES_HH

@@ -28,7 +28,7 @@
 #ifndef EXTENDED_BUILTIN_TRAITS_HH
 # define EXTENDED_BUILTIN_TRAITS_HH
 
-# include <xtd/traits.hh>
+# include <xtd/optraits.hh>
 
 
 

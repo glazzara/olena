@@ -1,7 +1,7 @@
 #include <iostream>
 #include <xtd/cast.hh>
 #include <xtd/arg.hh>
-#include <xtd/math/trigo.hh>
+#include <xtd/math/cos.hh>
 
 
 int main()

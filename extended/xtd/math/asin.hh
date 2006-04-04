@@ -25,26 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef EXTENDED_MATH_ASIN_HH
+# define EXTENDED_MATH_ASIN_HH
 
-# include <xtd/internal/opmacros.hh>
+# include <xtd/math/includes.hh>
 
 
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
+  /// \{
+  /// Definition of xtd arc sine functions.
 
-  xtd_internal_decl_unary_operator( uminus, - );
+
+  template <typename T> struct asin_;
+
+  template <> struct constraints_< asin_, float > {};
+  template <> struct constraints_< asin_, double > {};
+  template <> struct constraints_< asin_, long double > {};
+
+  template <typename T>
+  struct fun_traits_< asin_<T> >
+  {
+    typedef T arg_type;
+    typedef T res_type;
+  };
+
+
+  template <typename T>
+  struct asin_
+
+    : public abstract::plain_nary_fun_< 1, asin_<T> >,
+
+      private constraints_< asin_, T >
+  {
+    xtd_res(asin_<T>) impl_op(const T& arg) const
+    {
+      return std::asin(arg);
+    }
+  };
+
+
+  typedef m1fun_<asin_> asin_type;
+
+
+  /// \}
+
+
+
+  /// \brief Plain function object xtd::asin_f : float -> float.
+  const asin_<float>       asin_f;
+
+  /// \brief Plain function object xtd::asin_d : double -> double.
+  const asin_<double>      asin_d;
+
+  /// \brief Plain function object xtd::asin_ld : long double -> long double.
+  const asin_<long double> asin_ld;
+
+  /// \brief Meta function object xtd::asin.
+  const asin_type          asin;
 
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_ASIN_HH

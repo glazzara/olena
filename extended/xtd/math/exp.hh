@@ -25,26 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef EXTENDED_MATH_EXP_HH
+# define EXTENDED_MATH_EXP_HH
 
-# include <xtd/internal/opmacros.hh>
+# include <xtd/math/includes.hh>
 
 
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
+  /// \{
+  /// Definition of xtd exponential functions.
 
-  xtd_internal_decl_unary_operator( uminus, - );
+
+  template <typename T> struct exp_;
+
+  template <> struct constraints_< exp_, float > {};
+  template <> struct constraints_< exp_, double > {};
+  template <> struct constraints_< exp_, long double > {};
+
+  template <typename T>
+  struct fun_traits_< exp_<T> >
+  {
+    typedef T arg_type;
+    typedef T res_type;
+  };
+
+
+  template <typename T>
+  struct exp_
+
+    : public abstract::plain_nary_fun_< 1, exp_<T> >,
+
+      private constraints_< exp_, T >
+  {
+    xtd_res(exp_<T>) impl_op(const T& arg) const
+    {
+      return std::exp(arg);
+    }
+  };
+
+
+  typedef m1fun_<exp_> exp_type;
+
+
+  /// \}
+
+
+
+  /// \brief Plain function object xtd::exp_f : float -> float.
+  const exp_<float>       exp_f;
+
+  /// \brief Plain function object xtd::exp_d : double -> double.
+  const exp_<double>      exp_d;
+
+  /// \brief Plain function object xtd::exp_ld : long double -> long double.
+  const exp_<long double> exp_ld;
+
+  /// \brief Meta function object xtd::exp.
+  const exp_type          exp;
 
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_EXP_HH

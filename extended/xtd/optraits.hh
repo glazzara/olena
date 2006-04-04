@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_TRAITS_HH
-# define EXTENDED_TRAITS_HH
+#ifndef EXTENDED_OPTRAITS_HH
+# define EXTENDED_OPTRAITS_HH
 
 # include <mlc/flags.hh>
 
@@ -165,4 +165,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_TRAITS_HH
+#endif // ! EXTENDED_OPTRAITS_HH

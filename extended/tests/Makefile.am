@@ -13,7 +13,8 @@ check_PROGRAMS =				\
   cast						\
   cfun						\
   cos						\
-  lit
+  lit						\
+  math
 
 id_SOURCES = id.cc
 bind_SOURCES = bind.cc
@@ -21,5 +22,6 @@ cast_SOURCES = cast.cc
 cfun_SOURCES = cfun.cc
 cos_SOURCES = cos.cc
 lit_SOURCES = lit.cc
+math_SOURCES = math.cc
 
 TESTS = $(check_PROGRAMS)

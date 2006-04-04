@@ -25,26 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef EXTENDED_MATH_LOG_HH
+# define EXTENDED_MATH_LOG_HH
 
-# include <xtd/internal/opmacros.hh>
+# include <xtd/math/includes.hh>
 
 
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( plus,  + );
-  xtd_internal_decl_binary_operator( minus, - );
-  xtd_internal_decl_binary_operator( mult,  * );
-  xtd_internal_decl_binary_operator( div,   / );
-  xtd_internal_decl_binary_operator( mod,   % );
+  /// \{
+  /// Definition of xtd (base-2) logarithm functions.
 
-  xtd_internal_decl_unary_operator( uminus, - );
+
+  template <typename T> struct log_;
+
+  template <> struct constraints_< log_, float > {};
+  template <> struct constraints_< log_, double > {};
+  template <> struct constraints_< log_, long double > {};
+
+  template <typename T>
+  struct fun_traits_< log_<T> >
+  {
+    typedef T arg_type;
+    typedef T res_type;
+  };
+
+
+  template <typename T>
+  struct log_
+
+    : public abstract::plain_nary_fun_< 1, log_<T> >,
+
+      private constraints_< log_, T >
+  {
+    xtd_res(log_<T>) impl_op(const T& arg) const
+    {
+      return std::log(arg);
+    }
+  };
+
+
+  typedef m1fun_<log_> log_type;
+
+
+  /// \}
+
+
+
+  /// \brief Plain function object xtd::log_f : float -> float.
+  const log_<float>       log_f;
+
+  /// \brief Plain function object xtd::log_d : double -> double.
+  const log_<double>      log_d;
+
+  /// \brief Plain function object xtd::log_ld : long double -> long double.
+  const log_<long double> log_ld;
+
+  /// \brief Meta function object xtd::log.
+  const log_type          log;
 
 
 } // end of namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! EXTENDED_MATH_LOG_HH
