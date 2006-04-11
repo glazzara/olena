@@ -68,7 +68,7 @@ namespace xtd
   {
     const T value;
 
-    plain_literal_(const T& value)
+    plain_literal_(T value)
       : value(value)
     {} 
 
@@ -106,7 +106,7 @@ namespace xtd
   {
     const T value;
 
-    meta_literal_(const T& value)
+    meta_literal_(T value)
       : value(value)
     {} 
 
@@ -150,7 +150,7 @@ namespace xtd
   {
     const T value;
 
-    literal_expr_(const T& value) :
+    literal_expr_(T value) :
       value(value)
     {}
 
@@ -165,7 +165,7 @@ namespace xtd
   // FIXME: doc
 
   template <typename T>
-  literal_expr_<T> lit(const T& value)
+  literal_expr_<T> lit(T value)
   {
     literal_expr_<T> tmp(value);
     return tmp;

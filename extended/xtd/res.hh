@@ -69,25 +69,25 @@ namespace xtd
 
 // macros
 
-# define xtd_res_0(F)                 typename xtd::internal::get_res_<F>::ret
-# define xtd_res_0_(F)                         xtd::internal::get_res_<F>::ret
+# define xtd_res_0(F)                 typename xtd::internal::get_res_< F >::ret
+# define xtd_res_0_(F)                         xtd::internal::get_res_< F >::ret
 
-# define xtd_res_1(F, A1)             typename xtd::internal::get_res_<F, A1>::ret
-# define xtd_res_1_(F, A1)                     xtd::internal::get_res_<F, A1>::ret
+# define xtd_res_1(F, A1)             typename xtd::internal::get_res_< F, A1 >::ret
+# define xtd_res_1_(F, A1)                     xtd::internal::get_res_< F, A1 >::ret
 
-# define xtd_res_2(F, A1, A2)         typename xtd::internal::get_res_<F, A1, A2>::ret
-# define xtd_res_2_(F, A1, A2)                 xtd::internal::get_res_<F, A1, A2>::ret
+# define xtd_res_2(F, A1, A2)         typename xtd::internal::get_res_< F, A1, A2 >::ret
+# define xtd_res_2_(F, A1, A2)                 xtd::internal::get_res_< F, A1, A2 >::ret
 
-# define xtd_res_3(F, A1, A2, A3)     typename xtd::internal::get_res_<F, A1, A2, A3>::ret
-# define xtd_res_3_(F, A1, A2, A3)             xtd::internal::get_res_<F, A1, A2, A3>::ret
+# define xtd_res_3(F, A1, A2, A3)     typename xtd::internal::get_res_< F, A1, A2, A3 >::ret
+# define xtd_res_3_(F, A1, A2, A3)             xtd::internal::get_res_< F, A1, A2, A3 >::ret
 
-# define xtd_expr_res(F, Args)        typename xtd::internal::get_expr_res_<F, Args>::ret
-# define xtd_expr_res_(F, Args)                xtd::internal::get_expr_res_<F, Args>::ret
+# define xtd_expr_res(F, Args)        typename xtd::internal::get_expr_res_< F, Args >::ret
+# define xtd_expr_res_(F, Args)                xtd::internal::get_expr_res_< F, Args >::ret
 
 
 
 // internal so do not use it; prefer xtd_res_0(F)
-# define xtd_internal_res_0(F) typename xtd::internal::get_res_0_unchecked<F>::ret
+# define xtd_internal_res_0(F) typename xtd::internal::get_res_0_unchecked< F >::ret
 
 
 

@@ -46,7 +46,7 @@ namespace xtd
     template <typename E>
     template <typename T>
     m2expr_< E, literal_expr_<T>, arg_<2> >
-    fun_nary_expr_< 2, E >::bind_1(const T& value) const
+    fun_nary_expr_< 2, E >::bind_1(T value) const
     {
       typedef m2expr_< E, literal_expr_<T>, arg_<2> > ret;
       ret tmp(this->exact(), lit(value), arg_<2>());
@@ -56,7 +56,7 @@ namespace xtd
     template <typename E>
     template <typename T>
     m2expr_< E, arg_<1>, literal_expr_<T> >
-    fun_nary_expr_< 2, E >::bind_2(const T& value) const
+    fun_nary_expr_< 2, E >::bind_2(T value) const
     {
       typedef m2expr_< E, arg_<1>, literal_expr_<T> > ret;
       ret tmp(this->exact(), arg_<1>(), lit(value));
@@ -69,7 +69,7 @@ namespace xtd
     template <typename E>
     template <typename T>
     m3expr_< E, literal_expr_<T>, arg_<2>, arg_<3> >
-    fun_nary_expr_< 3, E >::bind_1(const T& value) const
+    fun_nary_expr_< 3, E >::bind_1(T value) const
     {
       typedef m3expr_< E, literal_expr_<T>, arg_<2>, arg_<3> > ret;
       ret tmp(this->exact(), lit(value), arg_<2>(), arg_<3>());
@@ -79,7 +79,7 @@ namespace xtd
     template <typename E>
     template <typename T>
     m3expr_< E, arg_<1>, literal_expr_<T>, arg_<3> >
-    fun_nary_expr_< 3, E >::bind_2(const T& value) const
+    fun_nary_expr_< 3, E >::bind_2(T value) const
     {
       typedef m3expr_< E, arg_<1>, literal_expr_<T>, arg_<3> > ret;
       ret tmp(this->exact(), arg_<1>(), lit(value), arg_<3>());
@@ -89,7 +89,7 @@ namespace xtd
     template <typename E>
     template <typename T>
     m3expr_< E, arg_<1>, arg_<2>, literal_expr_<T> >
-    fun_nary_expr_< 3, E >::bind_3(const T& value) const
+    fun_nary_expr_< 3, E >::bind_3(T value) const
     {
       typedef m3expr_< E, arg_<1>, arg_<2>, literal_expr_<T> > ret;
       ret tmp(this->exact(), arg_<1>(), arg_<2>(), lit(value));

@@ -102,6 +102,7 @@ namespace xtd
   const pow_type                       pow;
 
 
+
 } // end of namespace xtd
 
 

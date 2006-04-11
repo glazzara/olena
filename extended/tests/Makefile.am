@@ -8,20 +8,24 @@ AM_CPPFLAGS = -I$(top_srcdir)/extended -I$(top_srcdir)/metalic
 # when oln.m4 is available in the distribution.
 
 check_PROGRAMS =				\
-  id						\
+  abs						\
   bind						\
   cast						\
   cfun						\
   cos						\
+  id						\
   lit						\
-  math
+  math						\
+  optraits
 
-id_SOURCES = id.cc
+abs_SOURCES = abs.cc
 bind_SOURCES = bind.cc
 cast_SOURCES = cast.cc
 cfun_SOURCES = cfun.cc
 cos_SOURCES = cos.cc
+id_SOURCES = id.cc
 lit_SOURCES = lit.cc
 math_SOURCES = math.cc
+optraits_SOURCES = optraits.cc
 
 TESTS = $(check_PROGRAMS)

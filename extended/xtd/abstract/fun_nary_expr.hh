@@ -170,11 +170,11 @@ namespace xtd
 
       template <typename T>
       m2expr_< E, literal_expr_<T>, arg_<2> >
-      bind_1(const T& value) const;
+      bind_1(T value) const;
 
       template <typename T>
       m2expr_< E, arg_<1>, literal_expr_<T> >
-      bind_2(const T& value) const;
+      bind_2(T value) const;
 
     protected:
       fun_nary_expr_() {}
@@ -207,15 +207,15 @@ namespace xtd
 
       template <typename T>
       m3expr_< E, literal_expr_<T>, arg_<2>, arg_<3> >
-      bind_1(const T& value) const;
+      bind_1(T value) const;
 
       template <typename T>
       m3expr_< E, arg_<1>, literal_expr_<T>, arg_<3> >
-      bind_2(const T& value) const;
+      bind_2(T value) const;
 
       template <typename T>
       m3expr_< E, arg_<1>, arg_<2>, literal_expr_<T> >
-      bind_3(const T& value) const;
+      bind_3(T value) const;
 
     protected:
       fun_nary_expr_() {}

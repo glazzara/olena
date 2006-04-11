@@ -37,10 +37,18 @@ namespace xtd
   namespace abstract
   {
 
-    /*! \class xtd::abstract::fun_
+    /*! \class xtd::abstract::fun_<E>
     **
-    ** Abstract base class for xtd functions.  Parameter E is the
-    ** exact type of the function.
+    ** Abstract base class for xtd functions.  These functions are
+    ** pure (non imperative); they can be plain, meta, or expr.
+    ** Parameter E is the exact type of the function.
+    ** 
+    ** \note 1) This base class is useful to check if a type is the
+    ** one of an xtd function.  2) As an xtd function is pure, all
+    ** imperative operators are disabled.
+    **
+    ** \see xtd::abstract::plain_fun_<E>, xtd::abstract::meta_fun_<E>,
+    ** xtd::abstract::fun_expr_<E>
     */
 
     template <typename E>
@@ -48,12 +56,40 @@ namespace xtd
     {
     public:
 
+      /// Static dispatch of this towards its exact type.
       const E& exact() const
       {
 	return *(const E*)(const void*)(this);
       }
+
+      /// \{
+      /// Imperative operators are disabled.
+      template <typename T> void operator %= (const T&) const;
+      template <typename T> void operator &= (const T&) const;
+      template <typename T> void operator *= (const T&) const;
+      template <typename T> void operator += (const T&) const;
+      template <typename T> void operator -= (const T&) const;
+      template <typename T> void operator /= (const T&) const;
+      template <typename T> void operator ^= (const T&) const;
+      template <typename T> void operator |= (const T&) const;
+      template <typename T> void operator = (const T&);
+      void operator ++ () const;
+      void operator -- () const;
+      void operator ++ (int) const;
+      void operator -- (int) const;
+      /// \}
+
+      /// \{
+      /// Operators "*(x)" and "(x)->" are disabled.
+      void operator *  () const;
+      void operator -> () const;
+      /// \}
+
+      /// Conversion operator is disabled.
+      template <typename T> operator T () const;
       
     protected:
+      /// Ctor is protected so that this class seems abstract.
       fun_() {}
     };
 

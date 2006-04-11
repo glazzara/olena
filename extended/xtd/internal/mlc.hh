@@ -37,6 +37,7 @@
 # include <mlc/assert.hh>
 # include <mlc/is_a.hh>
 # include <mlc/logic.hh>
+# include <mlc/implies.hh>
 # include <mlc/cmp.hh>
 # include <mlc/if.hh>
 

@@ -56,12 +56,12 @@ namespace xtd
 
   namespace internal {
 
-    int           abs_(int i)           { return std::abs(i); }
-    long int      abs_(long int i)      { return std::abs(i); }
+    int           abs_(int x)           { return x < 0 ? -x : x; }
+    long int      abs_(long int x)      { return x < 0 ? -x : x; }
 
-    float         abs_(float i)         { return std::fabs(i); }
-    double        abs_(double i)        { return std::fabs(i); }
-    long double   abs_(long double i)   { return std::fabs(i); }
+    float         abs_(float x)         { return std::abs(x); }
+    double        abs_(double x)        { return std::abs(x); }
+    long double   abs_(long double x)   { return std::abs(x); }
 
   } // end of namespace xtd::internal
 

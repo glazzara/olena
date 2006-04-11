@@ -34,7 +34,7 @@
 
 // FIXME: doc
 
-# define xtd_nargs(F) xtd::internal::get_nargs_<F>::ret
+# define xtd_nargs(F) xtd::internal::get_nargs_< F >::ret
 
 
 

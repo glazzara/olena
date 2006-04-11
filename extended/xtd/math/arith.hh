@@ -39,6 +39,7 @@ namespace xtd
   xtd_internal_decl_binary_operator( mult,  * );
   xtd_internal_decl_binary_operator( div,   / );
   xtd_internal_decl_binary_operator( mod,   % );
+//   xtd_internal_decl_binary_operator( pow,   ^ );  // Cf. xtd/math/pow.hh
 
   xtd_internal_decl_unary_operator( uminus, - );
 

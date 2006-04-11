@@ -28,96 +28,150 @@
 #ifndef EXTENDED_BUILTIN_TRAITS_HH
 # define EXTENDED_BUILTIN_TRAITS_HH
 
-# include <xtd/optraits.hh>
+# include <xtd/traits.hh>
 
 
 
-// FIXME: this is dummy and incomplete code!
+# define xtd_intprom(Type) typename xtd::internal::intprom_<Type>::ret
 
 
-# define xtd_internal_DUMMY_builtin_arith_traits(OperatorName)						\
-													\
-  template <typename T>											\
-  struct OperatorName##_trait_ < T, T >									\
-  {													\
-    typedef T ret;											\
-  };													\
-													\
-  template <> struct OperatorName##_trait_ < float, int > { typedef float ret; };			\
-  template <> struct OperatorName##_trait_ < int, float > { typedef float ret; };			\
-  template <> struct OperatorName##_trait_ < double, int > { typedef double ret; };			\
-  template <> struct OperatorName##_trait_ < int, double > { typedef double ret; };			\
-  template <> struct OperatorName##_trait_ < double, float > { typedef double ret; };			\
-  template <> struct OperatorName##_trait_ < float, double > { typedef double ret; };			\
-													\
-  template <> struct OperatorName##_trait_ < long double, int > { typedef long double ret; };		\
-  template <> struct OperatorName##_trait_ < int, long double > { typedef long double ret; };		\
-  template <> struct OperatorName##_trait_ < long double, float > { typedef long double ret; };		\
-  template <> struct OperatorName##_trait_ < float, long double > { typedef long double ret; };		\
-  template <> struct OperatorName##_trait_ < long double, double > { typedef long double ret; };	\
-  template <> struct OperatorName##_trait_ < double, long double > { typedef long double ret; };	\
-													\
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
-
-
-# define xtd_internal_DUMMY_builtin_logic_traits(OperatorName)	\
-								\
-  template <>							\
-  struct OperatorName##_trait_ < bool, bool >			\
-  {								\
-    typedef bool ret;						\
-  };								\
-								\
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
-
-
-# define xtd_internal_DUMMY_builtin_cmp_traits(OperatorName)	\
-								\
-  template <typename T>						\
-  struct OperatorName##_trait_ < T, T >				\
-  {								\
-    typedef bool ret;						\
-  };								\
-								\
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
-
-
-  
 
 namespace xtd
 {
 
-  // logic
+  // built-in traits and usual arithmetic conversions
 
-  xtd_internal_DUMMY_builtin_logic_traits( land );
-  xtd_internal_DUMMY_builtin_logic_traits( lor );
-  xtd_internal_DUMMY_builtin_logic_traits( lxor );
+  namespace internal
+  {
 
-  template <> struct lnot_trait_< bool > { typedef bool ret; };
-
-  // cmp
-
-  xtd_internal_DUMMY_builtin_cmp_traits( eq );
-  xtd_internal_DUMMY_builtin_cmp_traits( neq );
-  xtd_internal_DUMMY_builtin_cmp_traits( less );
-  xtd_internal_DUMMY_builtin_cmp_traits( leq );
-  xtd_internal_DUMMY_builtin_cmp_traits( greater );
-  xtd_internal_DUMMY_builtin_cmp_traits( geq );
+    // see page 90 of ISO-IEC_14882.2003.pdf
 
 
-  // arith
+    struct UAC; // for "usual arithmetic conversions"
 
-  xtd_internal_DUMMY_builtin_arith_traits( plus );
-  xtd_internal_DUMMY_builtin_arith_traits( minus );
-  xtd_internal_DUMMY_builtin_arith_traits( mult );
-  xtd_internal_DUMMY_builtin_arith_traits( div );
-  xtd_internal_DUMMY_builtin_arith_traits( mod );
+    // Integral promotion such as defined in FIXME: std.
 
-  template <> struct uminus_trait_< int > { typedef int ret; };
-  template <> struct uminus_trait_< float > { typedef float ret; };
-  template <> struct uminus_trait_< double > { typedef double ret; };
-  template <> struct uminus_trait_< long double > { typedef long double ret; };
+    template <class T>
+    struct intprom_
+    {
+      typedef T ret;
+    };
 
+    // FIXME: approx?
+
+    template <> struct intprom_ <char> { typedef int ret; };
+    template <> struct intprom_ <signed char> { typedef int ret; };
+    template <> struct intprom_ <unsigned char> { typedef int ret; };
+    template <> struct intprom_ <unsigned short int> { typedef int ret; };
+
+    template <> struct intprom_ <bool> { typedef int ret; }; // FIXME: right?
+
+  } // end of namespace mlc::internal
+
+
+  // 1) Prevent bool to be involved in arithmetics.
+  template <typename L, typename R>
+  struct case_ < internal::UAC, mlc::pair_<L, R>,
+		 1 >
+    : public mlc::where_< mlc::or_< mlc::eq_<L, bool>,
+				    mlc::eq_<R, bool> > >
+  {
+    typedef mlc::undefined ret;
+  };
+
+  // 2) If either operand is of type long double, the other shall be
+  // 2) converted to long double.
+  template <typename L, typename R>
+  struct case_ < internal::UAC, mlc::pair_<L, R>,
+		 2 >
+    : public mlc::where_< mlc::or_< mlc::eq_<L, long double>,
+				    mlc::eq_<R, long double> > >
+  {
+    typedef long double ret;
+  };
+
+  // 3) Otherwise, if either operand is double, the other shall be
+  // 3) converted to double.
+  template <typename L, typename R>
+  struct case_ < internal::UAC, mlc::pair_<L, R>,
+		 3 >
+    : public mlc::where_< mlc::or_< mlc::eq_<L, double>,
+				    mlc::eq_<R, double> > >
+  {
+    typedef double ret;
+  };
+
+  // 4) Otherwise, if either operand is float, the other shall be
+  // 4) converted to float.
+  template <typename L, typename R>
+  struct case_ < internal::UAC, mlc::pair_<L, R>,
+		 4 >
+    : public mlc::where_< mlc::or_< mlc::eq_<L, float>,
+				    mlc::eq_<R, float> > >
+  {
+    typedef float ret;
+  };
+  
+  // 5) If either operand is unsigned long the other shall be
+  // 5) converted to unsigned long.
+  template <typename L, typename R>
+  struct case_ < internal::UAC, mlc::pair_<L, R>,
+		 5 >
+    : public mlc::where_< mlc::or_< mlc::eq_<L, unsigned long>,
+				    mlc::eq_<R, unsigned long> > >
+  {
+    typedef unsigned long ret;
+  };
+  
+  // 6) Otherwise, if one operand is a long int and the other unsigned
+  // 6) int, then if a long int can represent all the values of an
+  // 6) unsigned int, the unsigned int shall be converted to a long
+  // 6) int; otherwise both operands shall be converted to unsigned
+  // 6) long int.
+  template <typename L, typename R>
+  struct case_ < internal::UAC, mlc::pair_<L, R>,
+		 6 >
+    : public mlc::where_< mlc::or_< mlc::and_< mlc::eq_<xtd_intprom(L), long int>,
+					       mlc::eq_<xtd_intprom(R), unsigned int> >,
+				    mlc::and_< mlc::eq_<xtd_intprom(R), long int>,
+					       mlc::eq_<xtd_intprom(L), unsigned int> > > >
+  {
+    typedef long int ret; // FIXME: approx...
+  };
+
+  // 7) Otherwise, if either operand is long, the other shall be
+  // 7) converted to long.
+  template <typename L, typename R>
+  struct case_ < internal::UAC, mlc::pair_<L, R>,
+		 7 >
+    : public mlc::where_< mlc::or_< mlc::eq_<xtd_intprom(L), long>,
+				    mlc::eq_<xtd_intprom(R), long> > >
+  {
+    typedef long ret;
+  };
+
+  // 8) Otherwise, if either operand is unsigned, the other shall be
+  // 8) converted to unsigned.
+  template <typename L, typename R>
+  struct case_ < internal::UAC, mlc::pair_<L, R>,
+		 8 >
+    : public mlc::where_< mlc::or_< mlc::eq_<xtd_intprom(L), unsigned>,
+				    mlc::eq_<xtd_intprom(R), unsigned> > >
+  {
+    typedef unsigned ret;
+  };
+
+
+  // 0) Note: otherwise, the only remaining case is that both operands
+  // 0) are int.
+  template <typename L, typename R>
+  struct default_case_ < internal::UAC, mlc::pair_<L, R> >
+  {
+    // FIXME: test that:
+    // mlc::or_<mlc::eq_<xtd_intprom(L), int>, mlc::eq_<xtd_intprom(R), int> >
+    typedef int ret;
+  };
+  
 
 } // end of namespace xtd
 

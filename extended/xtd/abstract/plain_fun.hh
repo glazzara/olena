@@ -31,9 +31,10 @@
 # include <xtd/abstract/fun.hh>
 
 
-// macro
-
-# define xtd_res(F)  typename xtd::typedef_::res_type::from_<xtd::fun_traits_<F> >::ret
+/** \def xtd_res(F)
+ ** \brief Macro to get the result type of a plain function of type F.
+ */
+# define xtd_res(F)  typename xtd::typedef_::res_type::from_< xtd::fun_traits_< F > >::ret
 
 
 
@@ -50,6 +51,12 @@ namespace xtd
   } // end of namespace xtd::ERROR
 
 
+  /*! \class xtd::fun_traits_<F>
+  **
+  ** Traits class for a plain function of type F.  This class should
+  ** be specialized to provide (thru typedefs) the result type and
+  ** the argument types.
+  */
 
   template <typename F>
   struct fun_traits_ : public mlc::undefined
@@ -63,10 +70,27 @@ namespace xtd
   namespace abstract
   {
 
-    /*! \class xtd::abstract::plain_fun_
+    /*! \class xtd::abstract::plain_fun_<E>
     **
     ** Abstract base class for plain functions.  Parameter E is the
     ** exact type of the function.
+    **
+    ** A plain function is a function object knowing the types of its
+    ** input (and consequently of its output).  For instance,
+    ** xtd::cos_f is an instance of xtd::cos_<float>.  This function
+    ** explicitly takes a float (and thus returns a float); so it is a
+    ** plain function.
+    **
+    ** A plain function of type F should define the type of its
+    ** result.  For that the traits class associated with this
+    ** function type, fun_traits_<F>, should be specialized and
+    ** contain a typedef res_type.  The result type is then accessible
+    ** thru the macro xtd_res(F) where F is the type of the plain
+    ** function.
+    **
+    ** An xtd plain function is an xtd function.
+    **
+    ** \see xtd::fun_traits_<F>, xtd_res(F)
     */
 
     template <typename E>
@@ -80,6 +104,8 @@ namespace xtd
 
 	public fun_<E>
     {
+    public:
+
     protected:
       plain_fun_(){
 	// FIXME: unsigned is parameter so mlc_is_a does not work

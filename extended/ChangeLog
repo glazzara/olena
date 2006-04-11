@@ -1,3 +1,45 @@
+2006-04-11  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Fix some icpc remarks and update operator traits.
+
+	* xtd/res.hh (macros): Add spaces to fix pb with icpc preproc.
+	* xtd/args.hh (xtd_nargs): Likewise.
+	* xtd/math/abs.hh (internal::int_): Handwrite code.
+	* xtd/math/pow.hh: Cosmetics.
+	* xtd/math/arith.hh: Add comments.
+	* xtd/literal.hh (argument): Remove reference so that temporaries
+	are copied.
+	* xtd/abstract/fun_nary_expr.hh: Likewise.
+	* xtd/bind.hh: Likewise.
+	* xtd/abstract/any.hh: Remove cause obsolete.
+	* xtd/abstract/fun.hh: Add doc.
+	(abstract::fun_): Disable imperative operators.
+	* xtd/abstract/plain_fun.hh: Add doc.
+	* xtd/optraits.hh: Rewrite.
+	* xtd/traits.hh: New.
+	* xtd/builtin/traits.hh: Replace dummy code by effective one.
+	* xtd/internal/opmacros.hh: Rewrite.
+	* xtd/internal/mlc.hh: Add include.
+	* tests: Add ignore rule for '.deps'.
+	* tests/cfun.cc: Fix icpc remark.
+	* tests/abs.cc: New.
+	* tests/optraits.cc: New.
+	* tests/Makefile.am: Update.
+	* tests/bi_traits: New directory to test builtin op traits.
+	* tests/bi_traits/bool.cc: New.
+	* tests/bi_traits/char.cc: New.
+	* tests/bi_traits/sint.cc: New.
+	* tests/bi_traits/uint.cc: New.
+	* tests/bi_traits/schar.cc: New.
+	* tests/bi_traits/slong.cc: New.
+	* tests/bi_traits/uchar.cc: New.
+	* tests/bi_traits/sshort.cc: New.
+	* tests/bi_traits/ulong.cc: New.
+	* tests/bi_traits/ushort.cc: New.
+	* tests/bi_traits/float.cc: New.
+	* tests/bi_traits/ldouble.cc: New.
+	* tests/bi_traits/double.cc: New.
+
 2006-04-04  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Add some math functions and clean up file deps.

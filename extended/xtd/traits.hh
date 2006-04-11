@@ -25,43 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_ABSTRACT_ANY_HH
-# define EXTENDED_ABSTRACT_ANY_HH
+#ifndef EXTENDED_TRAITS_HH
+# define EXTENDED_TRAITS_HH
 
+# include <xtd/internal/mlc.hh>
 
 
 namespace xtd
 {
 
-  namespace abstract
+  namespace ERROR
+  {
+    struct FIXME;
+
+  } // end of namespace xtd::ERROR
+
+
+
+  template < typename subject,
+	     typename T1,
+	     typename T2 = mlc::none >
+  struct set_trait_ : public mlc::undefined
+  {
+  };
+
+
+
+  namespace internal
   {
 
-    /*! \class xtd::abstract::any
-    **
-    ** Abstract base class for static hierarchies in xtd.  Parameter E
-    ** is the exact type.
-    */
+    template < typename subject,
+	       typename T1,
+	       typename T2 = mlc::none >
+    struct get_trait_
 
-    template <class E>
-    class any
+      : private mlc::assert_< mlc::is_defined_< xtd::set_trait_<subject, T1, T2> >,
+			      xtd::ERROR::FIXME >
     {
-    public:
-
-      typedef E exact_type;
-
-      // exact is not provided by stc::any so that xtd is independant
-      // from the stc lib.
-      E& exact() { return *(E*)(void*)(this); }
-      const E& exact() const { return *(const E*)(const void*)(this); }
-
-    protected:
-      any() {}
     };
 
+  } // end of namespace xtd::internal
 
-  } // end of namespace abstract::xtd
 
 } // end of namespace xtd
- 
 
-#endif // ! EXTENDED_ABSTRACT_ANY_HH
+
+
+#endif // ! EXTENDED_TRAITS_HH

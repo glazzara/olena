@@ -7,12 +7,12 @@
 namespace my
 {
 
-  float foo()
+  static float foo()
   {
     return 5.1f;
   }
 
-  float bar(int i)
+  static float bar(int i)
   {
     return float(i) * 3.f;
   }
