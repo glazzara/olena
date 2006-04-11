@@ -28,7 +28,7 @@
 #ifndef METALIC_FLAGS_HH
 # define METALIC_FLAGS_HH
 
-# include <mlc/type.hh>
+# include <mlc/abstract/type.hh>
 
 
 namespace mlc {

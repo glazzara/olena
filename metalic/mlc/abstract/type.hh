@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_TYPE_HH
-# define METALIC_TYPE_HH
+#ifndef METALIC_ABSTRACT_TYPE_HH
+# define METALIC_ABSTRACT_TYPE_HH
 
 
 namespace mlc {
@@ -48,8 +48,8 @@ namespace mlc {
 
     struct type
     {
-    private:
-      /// Ctor is private to prevent instantiations.
+    protected:
+      /// Ctor is protected to prevent instantiations.
       type() {}
     };
 
@@ -58,4 +58,4 @@ namespace mlc {
 } // end of namespace mlc
 
 
-#endif // ! METALIC_TYPE_HH
+#endif // ! METALIC_ABSTRACT_TYPE_HH

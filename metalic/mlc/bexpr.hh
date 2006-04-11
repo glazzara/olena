@@ -28,7 +28,7 @@
 #ifndef METALIC_BEXPR_HH
 # define METALIC_BEXPR_HH
 
-# include <mlc/type.hh>
+# include <mlc/abstract/bexpr.hh>
 # include <mlc/flags.hh>
 
 
@@ -43,28 +43,6 @@ namespace mlc
   typedef bool_<true>  true_;
   typedef bool_<false> false_;
   /// \}
-
-
-
-  namespace abstract {
-
-    /*! \class mlc::abstract::bexpr
-    **
-    ** Abstract base class for mlc Boolean expression types.
-    **
-    ** When you define a new class for a Boolean expression type, you
-    ** should not directly derive from this class from fom its
-    ** subclass: bexpr_<b>.
-    **
-    ** \see bexpr_<b>
-    */
-
-    struct bexpr : public type
-    {
-      // typedef void eval;
-    };
-
-  } // end of namespace mlc::abstract
 
 
 
@@ -109,6 +87,10 @@ namespace mlc
 
     // FIXME: doc
     typedef bexpr_<true> bexpr;
+
+  protected:
+    /// Ctor is protected to prevent instantiations.
+    bexpr_() {}
   };
   
 
@@ -128,6 +110,10 @@ namespace mlc
     typedef mlc::false_ eval;
 
     typedef bexpr_<false> bexpr;
+
+  protected:
+    /// Ctor is protected to prevent instantiations.
+    bexpr_() {}
   };
 
 
@@ -167,7 +153,7 @@ namespace mlc
  ** mlc::internal::bool_of_bexpr_<Bexpr>
  */
 
-# define mlc_bool(Bexpr) mlc::internal::bool_of_bexpr_<Bexpr>::ret
+# define mlc_bool(Bexpr) mlc::internal::bool_of_bexpr_< Bexpr >::ret
 
 
 

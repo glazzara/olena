@@ -52,9 +52,9 @@ namespace client
 
 
 template <class T>
-void print()
+static void print()
 {
-  int tmp;
+  T tmp;
 }
 
 

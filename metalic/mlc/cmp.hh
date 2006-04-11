@@ -50,11 +50,15 @@
 # define mlc_is_found(T)     mlc::is_found_<T>
 # define mlc_is_not_found(T) mlc::is_not_found_<T>
 
+// FIXME: or (?) mlc_is_not_defined below
 # define mlc_is_undefined(T) mlc::is_undefined_<T>
 # define mlc_is_defined(T)   mlc::is_defined_<T>
 
 # define mlc_is_ok(T)     mlc::is_ok_<T>
 # define mlc_is_not_ok(T) mlc::is_not_ok_<T>
+
+# define mlc_is_builtin(T)     mlc::is_builtin_<T>
+# define mlc_is_not_builtin(T) mlc::is_not_builtin_<T>
 
 /// \}
 
@@ -159,6 +163,46 @@ namespace mlc
 				    mlc_is_not_a(T, mlc::not_ok) >::bexpr
   {
   };
+  /// \}
+
+
+
+  /// Check whether a type is a builtin type.
+  /// \{
+
+  template <typename T>
+  struct is_builtin_ : public bexpr_<false>
+  {
+  };
+
+  template <typename T> struct is_builtin_ < const T > : public is_builtin_< T >::bexpr {};
+  template <typename T> struct is_builtin_ < T*      > : public is_builtin_< T >::bexpr {};
+  template <typename T> struct is_builtin_ < T[]     > : public is_builtin_< T >::bexpr {};
+  template <typename T,
+            unsigned n> struct is_builtin_ < T[n]    > : public is_builtin_< T >::bexpr {};
+
+  template <> struct is_builtin_ < void > : public bexpr_<true> {}; // FIXME: ?
+  template <> struct is_builtin_ < bool > : public bexpr_<true> {};
+  template <> struct is_builtin_ < char > : public bexpr_<true> {};
+
+  template <> struct is_builtin_ <          float  > : public bexpr_<true> {};
+  template <> struct is_builtin_ <          double > : public bexpr_<true> {};
+  template <> struct is_builtin_ <     long double > : public bexpr_<true> {};
+
+  template <> struct is_builtin_ < unsigned char   > : public bexpr_<true> {};
+  template <> struct is_builtin_ <   signed char   > : public bexpr_<true> {};
+  template <> struct is_builtin_ < unsigned short  > : public bexpr_<true> {};
+  template <> struct is_builtin_ <   signed short  > : public bexpr_<true> {};
+  template <> struct is_builtin_ < unsigned int    > : public bexpr_<true> {};
+  template <> struct is_builtin_ <   signed int    > : public bexpr_<true> {};
+  template <> struct is_builtin_ < unsigned long   > : public bexpr_<true> {};
+  template <> struct is_builtin_ <   signed long   > : public bexpr_<true> {};
+
+  template <typename T>
+  struct is_not_builtin_ : public not_< is_builtin_<T> >::bexpr
+  {
+  };
+
   /// \}
 
 

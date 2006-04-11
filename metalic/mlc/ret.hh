@@ -51,8 +51,8 @@ namespace mlc
 /// \{
 /// Macros mlc_ret and mlc_ret_.
 
-# define mlc_ret(Type)  typename mlc::typedef_::ret::from_<Type>::ret
-# define mlc_ret_(Type)          mlc::typedef_::ret::from_<Type>::ret
+# define mlc_ret(Type)  typename mlc::typedef_::ret::from_< Type >::ret
+# define mlc_ret_(Type)          mlc::typedef_::ret::from_< Type >::ret
 
 /// \}
 
@@ -60,7 +60,7 @@ namespace mlc
 
 // test code
 
-# define mlc_ret2(Type) typename mlc::typedef_::ret::from_<Type>::ret2
+# define mlc_ret2(Type) typename mlc::typedef_::ret::from_< Type >::ret2
 
 
 namespace mlc
@@ -75,7 +75,7 @@ namespace mlc
 } // end of namespace mlc
 
 
-# define  mlc_ret_found_in(T)  mlc::ret_found_in_<T>
+# define  mlc_ret_found_in(T)  mlc::ret_found_in_< T >
 
 
 

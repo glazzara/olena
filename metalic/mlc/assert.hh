@@ -156,6 +156,7 @@ namespace mlc
   {
   public:
     static void check() {} 
+    virtual ~assert_() {}
   protected:
     assert_() {}
   };

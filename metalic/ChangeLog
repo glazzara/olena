@@ -1,3 +1,24 @@
+2006-04-11  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Fix some warnings with icpc; add is_built_in_.
+
+	* tests (svn:ignore): Add '.deps'.
+	* tests/case.cc: Fix warning with icpc.
+	* tests/gcase.cc: New file.
+	* mlc/abstract: New directory.
+	* mlc/type.hh: Rename as...
+	* mlc/abstract/type.hh: ...this.
+	* mlc/bexpr.hh (abstract::bexpr): Move to...
+	* mlc/abstract/bexpr.hh: ...this new file.
+	* mlc/flags.hh: Update include.
+	* mlc/value.hh: Update include.
+	* mlc/ret.hh: Add separators in macros to fix error with icpc.
+	* mlc/assert.hh: Add dtor to fix warning with icpc.
+	* mlc/case.hh (internal::a_get_case): New flag.
+	(get_case_): New class; it differs from case_ in remaining silent
+	when no case matches.
+	* mlc/cmp.hh (is_builtin_): New class with its specializations.
+
 2006-04-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add mlc::any.

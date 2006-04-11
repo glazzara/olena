@@ -64,6 +64,7 @@ namespace mlc
 
   namespace internal
   {
+    struct a_get_case;
     struct a_simple_case;
     struct a_switch_case;
 
@@ -203,6 +204,22 @@ namespace NAMESPACE																	\
     struct handle_default_case_;															\
 																			\
 																			\
+    template <typename context, typename data>														\
+    struct handle_default_case_ < mlc::internal::a_get_case, context, data >										\
+																			\
+      : private mlc::assert_< mlc::implies_< mlc::is_defined_< NAMESPACE::default_case_<context, data> >,						\
+					     mlc_is_not_a(mlc_comma_1(NAMESPACE::default_case_<context, data>),						\
+							  mlc::where_) >,										\
+			      mlc::ERROR::A_default_case_STATEMENT_SHOULD_NOT_DERIVE_FROM_mlc_where_ >							\
+    {																			\
+      typedef NAMESPACE::default_case_<context, data> case_t;												\
+      typedef typename protected_in_<case_t>::the protected_case_t;											\
+																			\
+      typedef typename mlc::if_< mlc::is_found_<protected_case_t>,											\
+	                         protected_case_t,													\
+	                         case_t >::ret ret;													\
+    };																			\
+																			\
 																			\
     template <typename context, typename data>														\
     struct handle_default_case_ < mlc::internal::a_simple_case, context, data >										\
@@ -261,7 +278,8 @@ namespace NAMESPACE																	\
 						      mlc::where_) >,											\
 			      mlc::ERROR::A_case_STATEMENT_SHOULD_DERIVE_FROM_mlc_where_ >,								\
 																			\
-	private mlc::assert_< mlc::is_defined_< NAMESPACE::default_case_<context, data> >,								\
+	private mlc::assert_< mlc::implies_< mlc::neq_< use, mlc::internal::a_get_case >,								\
+					     mlc::is_defined_< NAMESPACE::default_case_<context, data> > >,						\
 			      mlc::WARNING::NO_default_case_STATEMENT_HAS_BEEN_DEFINED >								\
 																			\
     {																			\
@@ -377,6 +395,13 @@ namespace NAMESPACE																	\
 																			\
 																			\
   }																			\
+																			\
+																			\
+  template <typename context, typename data>														\
+  struct get_case_																	\
+  {																			\
+    typedef typename NAMESPACE::internal::select_case_<mlc::internal::a_get_case, context, data>::ret ret;						\
+  };																			\
 																			\
 																			\
   template <typename context, typename data>														\

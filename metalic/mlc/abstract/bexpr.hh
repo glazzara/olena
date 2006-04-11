@@ -1,4 +1,4 @@
-// Copyright (C) 2005, 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,69 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_VALUE_HH
-# define METALIC_VALUE_HH
+#ifndef METALIC_ABSTRACT_BEXPR_HH
+# define METALIC_ABSTRACT_BEXPR_HH
 
 # include <mlc/abstract/type.hh>
-// # include <mlc/assert.hh>
-// # include <mlc/is_a.hh>
+# include <mlc/flags.hh>
 
 
 
-namespace mlc {
+namespace mlc
+{
 
-
-  namespace abstract {
-
-    /*! \class mlc::abstract::value
-    **
-    ** Abstract base class for mlc types that represent values.
-    **
-    ** For instance, the types mlc::true_ and mlc::int_<51> derive
-    ** from this abstraction.
-    */
-
-    struct value : public type
-    {
-    };
-
-  } // end of namespace mlc::abstract
-
-
-  namespace internal
+  namespace abstract
   {
 
-    template <typename T>
-    struct value_of_
-    // FIXME: commented below to avoid circular dependances
-    // : private assert_< mlc_is_a(T, mlc::abstract::value) >
+    /*! \class mlc::abstract::bexpr
+    **
+    ** Abstract base class for mlc Boolean expression types.
+    **
+    ** When you define a new class for a Boolean expression type, you
+    ** should not directly derive from this class from fom its
+    ** subclass: bexpr_<b>.
+    **
+    ** \see bexpr_<b>
+    */
+
+    struct bexpr : public mlc::abstract::type
     {
-      static const typename T::type ret = T::value;
+      // typedef void eval;
     };
 
-  } // end of namespace mlc::internal
 
+  } // end of namespace mlc::abstract
 
 } // end of namespace mlc
 
 
 
-/** \def mlc_value(T)
- ** \brief Returns the value of a value type.
- **
- ** Only works when \a T is a value type such as mlc::bool_<b> or
- ** mlc::int_<i>.  The result is respectively a bool value and an int
- ** value; for instance mlc_value(mlc::int_<51>) gives 51.  Please
- ** prefer using this macro to a direct call to T::value because such
- ** a direct call may not compile (read the design notes below for
- ** details).
- **
- ** Design notes: FIXME: doc
- */
-
-# define mlc_value(T) mlc::internal::value_of_<T>::ret
-
-
-
-
-#endif // ! METALIC_VALUE_HH
+#endif // ! METALIC_ABSTRACT_BEXPR_HH
