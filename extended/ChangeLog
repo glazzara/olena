@@ -1,3 +1,7 @@
+2006-04-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	* xtd/Makefile.am (nobase_xtd_HEADERS): Add missing files.
+
 2006-04-11  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Fix some icpc remarks and update operator traits.
