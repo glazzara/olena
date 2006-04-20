@@ -62,6 +62,7 @@ AC_CONFIG_FILES([
       extended/xtd/Makefile
     static/Makefile
       static/stc/Makefile
+    olena/Makefile
 ])
 
 # Checks for library functions.

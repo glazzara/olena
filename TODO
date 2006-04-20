@@ -1,27 +1,17 @@
 See also the TODO in oln-proto-1.0 and oln-proto-stl-style
 
-* Metalic
 
-** Modules
-Split Metalic into several modules:
+* Release process
+This is to be done later, before the release of the whole project or
+of one or some of its components.
 
-  mlc : core Metalic tools
-  stc : static inheritance
-  xtd : meta-functions and operator traits (for built-in types)
-  dyn : static-dynamic bridge (work of Damien Thivolle and Nicolas
-        Pouillard)
+** Tests output
+The tests should print nothing on the stantard output, nor on the
+standard error.
 
-** Static inheritance
-
-*** mlc/properties -- Roland
-
-
-* Olena
-
-
-* Integre
 
 
 Local Variables:
 mode: outline
+ispell-local-dictionary: "american"
 End:

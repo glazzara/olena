@@ -1,3 +1,13 @@
+2006-04-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Start the Olena subproject.
+
+	* Makefile.am (SUBDIRS): Add olena.
+	* olena/Makefile.am, olena/oln/Makefile.am,
+	* olena/tests/Makefile.am: New files.
+	* configure.ac: Configure them.
+	* TODO: Update.
+
 2006-03-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	* ChangeLog, metalic/ChangeLog: Clean up ChangeLogs.
