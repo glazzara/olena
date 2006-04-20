@@ -76,7 +76,7 @@ namespace my
   // Forward declaration.
   struct B;
 
-  // Warning, this sugar might me remove from properties.hh.
+  // Warning, this sugar might be removed in the future.
   stc_set_super(B, A);
 
   /// Types associated to my::B.
@@ -122,7 +122,7 @@ namespace my
   // from B's vtypes (see the specialization
   // types<category::my_cat, C>).
 
-  // Warning, this sugar might me remove from properties.hh.
+  // Warning, this sugar might be removed in the future.
   /// Link to B (``pseudo'' inheritance).
   stc_set_pseudosuper(C, B);
 

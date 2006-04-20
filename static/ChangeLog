@@ -1,3 +1,13 @@
+2006-04-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add an abstraction manipulator.
+
+	* stc/properties.hh (std::is_a): New helper.
+	(stc_super, stc_pseudosuper, stc_typeof): Simplify the definitions
+	of these macros, using their ``underscored'' version.
+	(stc_typeof_in_namespace, stc_typeof_in_namespace_): New macro.
+	* tests/properties.cc: Typos in comments.
+
 2006-03-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Extensible entry points in a class hierarchy (first version).

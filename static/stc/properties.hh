@@ -345,6 +345,26 @@
   struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
+/*---------------------.
+| Abstraction helper.  |
+`---------------------*/
+
+namespace stc
+{
+  /// Allow the manipulation of an abstraction (i.e., a template type)
+  /// as a plain type.
+  template <template <typename> class abstraction>
+  struct is_a
+  {
+    template <typename E>
+    struct instantiated_with
+    {
+      typedef abstraction<E> ret;
+    };
+  };
+}
+
+
 /*---------.
 | Macros.  |
 `---------*/
@@ -373,29 +393,45 @@
      typedef PseudoSuper ret;			\
    }
 
-/// \def Get the immediate base class of T (version with typename).
+/// \def Get the immediate base class of T (version to be used inside
+/// a template).
 # define stc_super(T)				\
-   typename set_super_type<T>::ret
+   typename stc_super_(T)
 
-/// \def Get the immediate base class of T (version without typename).
+/// \def Get the immediate base class of T (version to be used outside
+/// a template).
 # define stc_super_(T)				\
    set_super_type<T>::ret
 
-/// \def Get the pseudosuper class of T (version with typename).
+/// \def Get the pseudosuper class of T (version to be used inside a
+/// template).
 # define stc_pseudosuper(T)			\
-   typename set_pseudosuper_type<T>::ret
+   typename stc_pseudosuper_(T)
 
-/// \def Get the pseudosuper class of T (version without typename).
+/// \def Get the pseudosuper class of T (version to be used outside a
+/// template).
 # define stc_pseudosuper_(T)			\
    set_pseudosuper_type<T>::ret
 
-/// Get the property \a Typedef from \a FromType (version with typename).
-#define stc_typeof(Category, FromType, Typedef)				\
-  typename typeof_<Category, FromType, typedef_:: Typedef##_type >::ret
+/// Get the property \a Typedef from \a FromType (version to be used
+/// inside a template).
+#define stc_typeof(Category, FromType, Typedef)		\
+  typename stc_typeof_(Category, FromType, Typedef)
 
-/// Get the property \a Typedef from \a FromType (version without typename).
+/// Get the property \a Typedef from \a FromType (version to be used
+/// outside a template).
 #define stc_typeof_(Category, FromType, Typedef)		\
   typeof_<Category, FromType, typedef_:: Typedef##_type >::ret
 
+/// Get the property \a Typedef, declared in \a Namespace, from \a
+/// FromType (version to be used inside a template).
+#define stc_typeof_in_namespace(Namespace, Category, FromType, Typedef)	    \
+  typename stc_typeof_in_namespace_(Namespace, Category, FromType, Typedef)
+
+/// Get the property \a Typedef, declared in \a Namespace, from \a
+/// FromType (version to be used outside a template).
+#define stc_typeof_in_namespace_(Namespace, Category, FromType, Typedef) \
+  Namespace::typeof_<Category, FromType,				 \
+                     Namespace::typedef_:: Typedef##_type >::ret
 
 #endif // ! STATIC_PROPERTIES_HH
