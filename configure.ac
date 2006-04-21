@@ -43,6 +43,7 @@ AC_CONFIG_FILES([
   metalic/tests/Makefile
   extended/tests/Makefile
   static/tests/Makefile
+  olena/tests/Makefile
 ])
 
 
@@ -63,6 +64,7 @@ AC_CONFIG_FILES([
     static/Makefile
       static/stc/Makefile
     olena/Makefile
+      olena/oln/Makefile
 ])
 
 # Checks for library functions.
