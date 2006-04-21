@@ -2,5 +2,6 @@
 
 stcdir = $(includedir)/stc
 nobase_stc_HEADERS =				\
+  any.hh					\
   entry.hh					\
   properties.hh

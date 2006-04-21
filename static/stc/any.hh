@@ -27,11 +27,11 @@
 // Public License.
 
 
-#ifndef METALIC_ANY_HH
-# define METALIC_ANY_HH
+#ifndef STATIC_ANY_HH
+# define STATIC_ANY_HH
 
-/// \file mlc/any.hh
-/// \brief Implementation of mlc::any classes (top of static hierachies).
+/// \file stc/any.hh
+/// \brief Implementation of stc::any classes (top of static hierachies).
 
 
 # include <mlc/contract.hh>
@@ -41,10 +41,10 @@
 #define any_mem(E) any<E, dispatch_policy::best_memory>
 
 
-namespace mlc
+namespace stc
 {
 
-  /// Tags selecting a dispatch for mlc::any.
+  /// Tags selecting a dispatch for stc::any.
   struct dispatch_policy
   {
     struct best_speed;
@@ -59,7 +59,7 @@ namespace mlc
 
 
   /*-----------------------.
-  | mlc::any__best_speed.  |
+  | stc::any__best_speed.  |
   `-----------------------*/
 
   /// "Best speed" version of `any'.
@@ -112,7 +112,7 @@ namespace mlc
 
 
   /*------------------------.
-  | mlc::any__best_memory.  |
+  | stc::any__best_memory.  |
   `------------------------*/
 
   /// "Best memory" version of 'any'
@@ -177,7 +177,7 @@ namespace mlc
 
 
   /*-------------------.
-  | mlc::any__simple.  |
+  | stc::any__simple.  |
   `-------------------*/
 
   /// "Simple" version of `any'.
@@ -205,8 +205,7 @@ namespace mlc
     any__simple() : super() {}
   };
 
+} // end of namespace stc
 
-} // end of namespace mlc
 
-
-#endif // ! METALIC_ANY_HH
+#endif // ! STATIC_ANY_HH

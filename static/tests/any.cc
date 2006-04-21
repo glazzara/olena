@@ -1,18 +1,18 @@
-/// Test mlc::any.
+/// Test stc::any.
 
-#include <mlc/any.hh>
+#include <stc/any.hh>
 #include <mlc/cmp.hh>
 #include <mlc/assert.hh>
 #include <mlc/logic.hh>
 #include <mlc/is_a.hh>
 
-// FIXME: Test other flavors of mlc::any.
+// FIXME: Test other flavors of stc::any.
 
 /* Linear hierachy.
 
    - Abstractions.
 
-                           mlc::any<Exact>
+                           stc::any<Exact>
                                   ^
                                   |
                                A<Exact>
@@ -26,7 +26,7 @@
 
    -  Concrete class C, deriving from B.
 
-                             mlc::any<C>
+                             stc::any<C>
                                   ^
                                   |
                                  A<C>
@@ -40,7 +40,7 @@
 */
 
 template <typename Exact>
-struct A : public mlc::any__simple< Exact > {};
+struct A : public stc::any__simple< Exact > {};
 
 template <typename Exact>
 struct B : public A< Exact > {};
@@ -52,7 +52,7 @@ struct C : public B<C> {};
 
    - Abstractions.
 
-                           mlc::any<Exact>
+                           stc::any<Exact>
                                   ^
                                   |
                                T<Exact>
@@ -67,7 +67,7 @@ struct C : public B<C> {};
    - Concrete classes V and Z, deriving from U and from X and Y resp.
 
 
-                 mlc::any<Z>          mlc::any<Z>
+                 stc::any<Z>          stc::any<Z>
                      ^                    ^
                      |                    |
                     T<Z>                 T<Z>
@@ -81,7 +81,7 @@ struct C : public B<C> {};
 */
 
 template <typename Exact>
-struct T : public mlc::any__simple< Exact > {};
+struct T : public stc::any__simple< Exact > {};
 
 template <typename Exact>
 struct U : public T< Exact > {};

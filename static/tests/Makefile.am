@@ -8,9 +8,11 @@ AM_CPPFLAGS = -I$(top_srcdir)/static -I$(top_srcdir)/metalic
 # when oln.m4 is available in the distribution.
 
 check_PROGRAMS =				\
+  any						\
   entry						\
   properties
 
+any_SOURCES       = any.cc
 properties_SOURCES = properties.cc
 entry_SOURCES = entry.cc
 

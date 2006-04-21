@@ -29,7 +29,7 @@
 #ifndef OLENA_CORE_ABSTRACT_ANY_HH
 # define OLENA_CORE_ABSTRACT_ANY_HH
 
-# include <mlc/any.hh>
+# include <stc/any.hh>
 # include <mlc/bool.hh>
 # include <mlc/is_a.hh>
 
@@ -40,10 +40,10 @@ namespace oln {
 
 
     template <typename E>
-    struct any : public mlc::any<E, mlc::dispatch_policy::simple>
+    struct any : public stc::any<E, stc::dispatch_policy::simple>
     {
     protected:
-      typedef mlc::any<E, mlc::dispatch_policy::simple> super;
+      typedef stc::any<E, stc::dispatch_policy::simple> super;
       any(E* exact_ptr) : super(exact_ptr) {}
       any() {}
     };
@@ -51,10 +51,10 @@ namespace oln {
 
     template <typename E>
     struct any_best_speed :
-      public mlc::any<E, mlc::dispatch_policy::best_speed>
+      public stc::any<E, stc::dispatch_policy::best_speed>
     {
     protected:
-      typedef mlc::any<E, mlc::dispatch_policy::best_speed> super;
+      typedef stc::any<E, stc::dispatch_policy::best_speed> super;
       any_best_speed(E* exact_ptr = 0) : super(exact_ptr) {}
     };
 

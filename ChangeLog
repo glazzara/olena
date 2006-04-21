@@ -1,5 +1,23 @@
 2006-04-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move mlc::any to stc::.
+
+	* metalic/mlc/any.hh: Move file...
+	* static/stc/any.hh: ...here.
+	Adjust.
+	* olena/oln/core/abstract/any.hh: Adjust client.
+	* metalic/tests/any.cc: Move test...
+	* static/tests/any.cc: ...here.
+	Adjust test.
+	* metalic/mlc/Makefile.am (nobase_mlc_HEADERS): Move any.cc...
+	* static/stc/Makefile.am (nobase_stc_HEADERS): ...here.
+	* metalic/tests/Makefile.am (check_PROGRAMS): Move any
+	* static/tests/Makefile.am (check_PROGRAMS): ...here
+	* metalic/tests/Makefile.am (any_SOURCES): Move variable...
+	* static/tests/Makefile.am (any_SOURCES): ...here
+
+2006-04-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Configure olena/oln/Makefile and
 	olena/tests/Makefile.
 
