@@ -1,0 +1,14 @@
+2006-04-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Lay the foundation stone of abstract::image.
+
+	* oln/core/abstract/any.hh, oln/core/typedefs.hh,
+	* oln/core/abstract/image.hh,
+	* oln/core/abstract/internal/image_impl.hh
+	* oln/core/abstract/image_entry.hh
+	* oln/core/abstract/image_dimension.hh: New files (imported from
+	Olena proto-1.0, and modified).
+	* oln/core/abstract/macros.hh: New file.
+	* tests/image_entry.cc: New test.
+	* Makefile.am, oln/Makefile.am, tests/Makefile.am: New files.
+
