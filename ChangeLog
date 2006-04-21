@@ -1,5 +1,12 @@
 2006-04-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add COPYING and NEWS.
+
+	* COPYING: New (imported from oln proto-1.0).
+	* NEWS: New (imported from oln 0.10).
+
+2006-04-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix copyright notices.
 
 	* extended/xtd/res.hh,

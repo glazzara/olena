@@ -1,0 +1,299 @@
+Olena 1.0
+
+	* SCOOP 2 paradigm.
+
+
+Olena 0.10	April 15, 2004
+
+	* New documentation system.
+	  Now any comment should use doxygen style (i.e. /*! ... */).
+	  You can also write some programs inside the comments. They are
+	  compiled at documentation generation time. It is useful to
+          illustrate some algorithms with concrete input and output. To
+ 	  use this feature the program has to be between \code and \endcode
+	  tags. If you produce an image, you can include it in the comments
+	  with the \image command, using the same name you used to produce
+	  it, but with the png extension. To make sure your image will not
+	  overwrite another existing one, you should name it taking care of
+	  the namespace you are using: e.g. if you comment the function
+	  oln::boo::bar::fun, the image should be named oln_foo_bar_fun.ppm.
+	  The macros IMG_IN and IMG_OUT correspond to the path of the images.
+
+	* Border behavior can be controlled with the behavior hierarchy.
+	  If an algorithm support it, you can choose the way the image
+          border will be seen. Three behaviors are available: mirror,
+	  replicate or user defined value.
+
+	* Attribute opening/closing enhancement
+	  - Make the algorithm more generic.
+	  - Add a lot of attributes (area, disk, square, dist,
+            rectangle, volume, height, maxvalue, minvalue).
+
+	* Change the color conversion system
+	  - CIE RGB is the main color system i.e. it can be converted
+	    directly into any other color system.
+	  - Conversion between 2 color systems should pass by the RGB one.
+
+	* Generic and concrete morphers are now implemented in Olena.
+	  - Five morphers are included in this release:
+		 Color morpher
+		 Sub quantifying morpher
+		 Piece morpher
+		 Iter morpher
+		 Slicing morpher
+	  - These morphers can be manipulated as if they were normal images.
+
+
+Olena 0.9	August 8, 2003
+
+        * New static hierarchy paradigm
+	  - Complete rewrite of the image hierarchy.
+          - The new hierarchy benefits from multiple inheritance and
+	    diamond constructs.
+          - Objects' abstract interfaces made available, leading to
+            safer and easier algorithm writing.
+	  - Label images such as binary_image or vectorial_image added.
+
+        * Partial rewrite of images I/O
+          - Support for 1d, 3d images and windows.
+          - Better handling of built-in types.
+
+        * Color conversions fixed and improved.
+
+        * Cleanup and coding style conformance.
+
+        * Many bug fixes.
+        * Improved test-suite.
+
+
+Olena 0.8	April 10, 2003
+
+	IMPORTANT NOTE: This version is not compatible with older
+	versions of Olena. The project has been split into three part,
+	so many header files have moved and new namespaces have been
+	created. Please read the UPGRADING file for more informations.
+
+	* Many source code cleanups.
+	* The source code has been split into 3 parts: image
+	  processing (olena/), data types (integre/) and meta-programming
+	  tools (metalic/).
+	* First part of the new static hierarchy paradigm implementation.
+	* Support for combinatorial maps.
+	* Many bug fixes.
+
+
+Olena 0.7	February 10, 2003
+
+	* Manual pages for the command-line utilities.
+	* New, saner, source tree layout.
+	* Each `part' of the source tree can be excluded from the
+	  build process with configuration flags.
+	* New `oln.m4' file for use by autoconf'ed user projects.
+	* Major documentation updates.
+	* New `oln-config.sh' scripts for user Makefiles.
+	* Olena now works on MacOS X, NetBSD, FreeBSD and cygwin.
+
+
+Olena 0.6       January 15, 2003
+
+        * Complete rewriting of data types.
+        * Command line utilities.
+        * Fully implementation of convolutions
+        * Fast Fourier Transform (FFT)
+        * Discrete Wavelet Transform (Daubechie's wavelet) (DWT)
+        * Many bug fixes.
+
+
+Olena 0.5       July 25, 2002
+
+        * Documentation in LaTeX (instead of Texinfo).
+        * Support reading/writing gziped images
+          (include <oln/io/gz.hh> and link with libz).
+        * Complete rewrite of the static arrays
+          (meta::array1d, meta::array2d, meta::array3d).
+        * Preliminary implementation of convolutions
+          (oln::convol::convolve)
+        * All headers should now be referenced with the `oln/' prefix,
+          as in `#include <oln/basics2d.hh>'.
+        * New conversion operator: convert::stretch.
+        * Many bug fixes.
+
+
+Olena 0.4.1	April 25, 2002
+
+	* Buglet in the 0.4 Makefiles.
+
+
+Olena 0.4	April 24, 2002
+
+	* New morpho:: operators:
+	  - thinning
+	  - thickening
+	* New convert:: operators:
+	  - ng_to_se
+	  - ng_to_cse
+	* First sketch of a test suite.
+	* Many bug fixes.
+
+
+Olena 0.3	January 14, 2002
+
+	* fast_morpho() speeded-up.
+	* Minor bug fixes.
+	* "Documentation" updates.
+
+
+Olena 0.2b	December 13, 2001
+
+	* Value:
+	  - Support for HSL and HSV color systems.
+	  - Define internal::default_less<vec<N,T>>.
+
+	* Core:
+	  - New window generator: mk_win_ellipse, mk_win_disc,
+	    mk_win_ellipsoid, and mk_win_ball.
+
+	* Various #include fixes.
+
+
+Olena 0.2	November 28, 2001
+
+	* Color:
+	  - nrgb_8, nrgb_16, nrgb_32: new types for NTSC RGB.  The
+            conversion from and to YIQ and HSI which assumed NTSC RGB
+	    has been adjusted to actually use nrgb_* (instead of rgb_*)
+	    and renamed accordingly.
+	  - yuv_8, yuv_16, yuv_32: New types.
+
+	  The currently available conversions are
+
+                    hsi   yuv
+                      \  /
+	       rgb -- nrgb
+                \     /  \
+                  xyz     yiq
+
+	* Various cleanups and bug fixes.  Especially:
+	  - border handling (mirroring, copying) simplified and fixed.
+	  - ++k, --k: return a value with the same type as k.
+
+	* I/O:
+	  - pnm/P1, pnm/P3, and pnm/P6 support for image_3d.
+
+
+Olena 0.1f	November 22, 2001
+
+	* Core:
+	  - Several bug fixes in memory handling.
+
+	* Types:
+	  - New color types: HSI, YIQ; with conversions to and from RGB.
+	  - `min()' and `max()' are now defined with the types (i.e.
+	    not in math/macros.hh), along with the other operators.
+	    Also, these procedures will two arguments of different
+	    types.
+
+	* Casts:
+	  - `cast::round': similar to C's round()
+	  - `cast::rbound': ditto, but constrained to fit the
+            output type's range.
+
+	* I/O:
+	  - Support for `image_3d<int_u<N> >' (as PNM P2 & P5).
+
+	* Processings
+	  - `level::is_greater_or_equal', `level::is_greater',
+	    `level::is_lower_or_equal', `level::is_lower',
+	    `level::is_equal': Comparisons between images.
+	  - `level::connected_component': Number connected components.
+	  - `morpho::geodesic_dilation', `morpho::simple_geodesic_dilation'.
+	  - `morpho::geodesic_erosion', `morpho::simple_geodesic_erosion'.
+          - `morpho::get_plus_se_only', `morpho::get_plus_se_p',
+	    `morpho::get_minus_se_only', `morpho::get_minus_se_p': Split
+	    a structural element in a `plus' (lexicaly before than the center)
+	    and `minus' (after).
+
+	* Misc:
+	  - `utils::timer': for benchmarking
+	  - `level::lut', `level::hlut': Lookup tables.
+
+
+Olena 0.1d	November 15, 2001
+
+	* Core:
+	  - `point's, `dpoint's, and `image_size's feature a `nth()' method,
+	    that returns the value of the nth coordinate.
+	  - `fold': new high order operator.
+
+	* Types:
+	  - `vec<N,T>' uses an array to store its elements
+            and accepts builtin types.
+	  - `rgb<T>' has been replaced by `rgb_8', `rgb_16', `rgb_32'
+	  - `xyz_8', `xyz_16', `xyz_32' are new types.
+	  - the latter six types are instances of the `color' type.
+
+	* Processings:
+	  - All basic morpholohical processings (`opening',
+	    `hit_or_miss', `beucher_gradient', etc.) from namespace
+	    `morpho::' have their fast equivalent in namespace
+	    `morpho::fast::'.
+	  - `convert::apply' is similar to `apply' but will work
+	    for all types of conversions while `apply' can only work
+	    on `conversion_to_type' conversions.
+
+	* Tools:
+	  - `utils::fill': fill an image
+	  - `utils::f_moments', `utils::f_minmax': statistical functors.
+
+	* Casts:
+	  - `cast::bound': similar to `convert::bound'.
+
+	* I/O:
+	  - It's possible to load and save as PPM any kind of image2d
+	    whose color has 3 components on 8 bits.
+
+
+Olena 0.1b	November 8, 2001
+
+	* New type: rgb<T>
+
+	* New processings:
+	  - morpho::watershed_con
+	  - convol::fast::gaussian
+	  - convol::fast::gaussian_derivative
+	  - convol::fast::gaussian_second_derivative
+
+	* Conversion are organized in the following hierarchy
+
+	    conversion<Inferior>
+                  ^
+		  |
+	    conversion_to_type<To,Inferior>
+                  ^
+		  |
+	    conversion_from_type_to_type<From,To,Inferior>
+
+	  All children of conversion_from_type_to_type are models of
+	  Adaptable Unary Function.  See conversion.hh for more comments.
+
+	* The only two functions that perform file i/o are `load' and
+ 	  `save'.  The other functions (`read', `write', `read_pnm',
+	  `write_pnm') have been removed.
+
+	* image2d<rgb<int_u8> > can be loaded and saved as ppm.
+
+	* All iterators support a new method, cur(), that returns
+	  the current point (or dpoint).  It is meant to be used
+	  at places where the compiler is unable to implicitly convert
+	  an iterator into a point (or dpoint).
+
+	* Bug fixes:
+	  - Olena now compiles successfully with -pedantic.
+	  - `image2d<int_u8> lena = load("lena.pgm");' works.
+	  - Multiplications and subtractions on 'vec' no longer
+	    perform additions.
+
+
+Olena 0.1	November 1, 2001
+
+        * Initial public release.
