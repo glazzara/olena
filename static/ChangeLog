@@ -1,3 +1,14 @@
+2006-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a facility for virtual types packing.
+
+	* stc/properties.hh (packed_vtypes): New packing structure, to
+	be specialized by the user.  When properly defined, this structure
+	can be used to check if all the virtual types of a class are sound.
+	* tests/properties.cc (my_type_of): New macro.
+	Define a packed_vtypes structure for the top-most class (my::A) and
+	check these virtual types in my::A's subclasses.
+
 2006-04-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add an abstraction manipulator.

@@ -29,14 +29,14 @@
 #include <mlc/cmp.hh>
 #include <mlc/assert.hh>
 
-// FIXME: Split this test into several smaller tests?  For instance,
-// we have to test inheritance, properties/associated types,
-// ``external properties'', etc.  The best approach is probably to
-// browse stc/properties.hh so as to make a list of the features to be
-// checked.
+// This test focuses on the virtual types system, so the exact type of
+// classes is not propagated here (stc::any is not used).
 
-// Helper macro.
-#define my_type_of_(FromType, Typedef)		\
+// Helper macros.
+#define my_type_of(FromType, Typedef)		\
+  typename my_type_of_(FromType, Typedef)
+
+#define my_type_of_(FromType, Typedef)			\
   stc_typeof_(my::category::my_cat, FromType, Typedef)
 
 namespace my
@@ -87,12 +87,35 @@ namespace my
     typedef mlc::undefined baz_type;
   };
 
+  /// Packing of virtual types of any A class.
+  template <typename T>
+  struct packed_vtypes <category::my_cat, T>
+  {
+    typedef my_type_of(T, foo) foo_type;
+    typedef my_type_of(T, bar) bar_type;
+    typedef my_type_of(T, baz) baz_type;
+
+    static void ensure()
+    {
+      mlc::assert_< mlc_is_ok(foo_type) >::check();
+      mlc::assert_< mlc_is_ok(bar_type) >::check();
+      mlc::assert_< mlc_is_ok(baz_type) >::check();
+    }
+  };
+
   struct A
   {
     // Aliases.
     typedef my_type_of_(A, foo) foo_type;
     typedef my_type_of_(A, bar) bar_type;
     typedef my_type_of_(A, baz) baz_type;
+
+    ~A()
+    {
+      // packed_vtypes<category::my, A> is not checked here, since A's
+      // baz_type virtual type is undefined.
+    }
+
   };
 
 
@@ -135,6 +158,12 @@ namespace my
     typedef my_type_of_(B, baz) baz_type;
     typedef my_type_of_(B, quux) quux_type;
     typedef my_type_of_(B, yin) yin_type;
+
+    // Check B's vtypes.
+    ~B()
+    {
+      packed_vtypes<category::my_cat, B>::ensure();
+    }
   };
 
 
@@ -167,6 +196,12 @@ namespace my
     typedef my_type_of_(C, foo) foo_type;
     typedef my_type_of_(C, quux) quux_type;
     typedef my_type_of_(C, zorg) zorg_type;
+
+    // Check C's vtypes.
+    ~C()
+    {
+      packed_vtypes<category::my_cat, C>::ensure();
+    }
   };
 
 }

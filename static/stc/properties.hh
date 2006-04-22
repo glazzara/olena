@@ -116,6 +116,13 @@
   {									      \
   };									      \
 									      \
+  /** Optional packing structure, to be specialized by the user.  */	      \
+  /** See tests/properties.hh for an example of use.              */	      \
+  template <typename category, typename from_type>			      \
+  struct packed_vtypes							      \
+  {									      \
+  };									      \
+									      \
 									      \
   /* -------------------- */						      \
   /* Internal machinery.  */						      \
