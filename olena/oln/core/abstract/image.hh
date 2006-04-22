@@ -29,6 +29,7 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_HH
 
+# include <mlc/assert.hh>
 # include <mlc/cmp.hh>
 # include <mlc/to_string.hh>
 # include <oln/core/abstract/internal/image_impl.hh>
@@ -92,16 +93,9 @@ namespace oln {
     typedef mlc::undefined image_dimension_type;
   };
 
-  // FIXME: This should be placed into stc/properties.hh.
-  template <typename Category, typename T>
-  struct packed_vtypes
-  {
-    // Empty.
-  };
-
-  /// Retrieval of any image type properties (FIXME: say 'packing').
+  /// Packing of the virtual types of any image class.
   template <typename I>
-  struct packed_vtypes < category::image, I >
+  struct packed_vtypes<category::image, I>
   {
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
@@ -138,37 +132,37 @@ namespace oln {
     static void echo(std::ostream& ostr)
     {
       ostr
-	<< "props_of( oln::category::image, " << mlc_to_string(I) << " ) ="
+	<< "vtypes_of(oln::category::image, " << mlc_to_string(I) << ") ="
 	<< std::endl
 	<< "{" << std::endl
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-// 	<< "\t grid_type = " << mlc_to_string(grid_type) << std::endl
+// 	<< "  grid_type = " << mlc_to_string(grid_type) << std::endl
 
-// 	<< "\t concrete_type = " << mlc_to_string(concrete_type) << std::endl
-// 	<< "\t value_type = " << mlc_to_string(value_type) << std::endl
-// 	<< "\t point_type = " << mlc_to_string(point_type) << std::endl
-// 	<< "\t size_type = " << mlc_to_string(size_type) << std::endl
+// 	<< "  concrete_type = " << mlc_to_string(concrete_type) << std::endl
+// 	<< "  value_type = " << mlc_to_string(value_type) << std::endl
+// 	<< "  point_type = " << mlc_to_string(point_type) << std::endl
+// 	<< "  size_type = " << mlc_to_string(size_type) << std::endl
 
-// 	<< "\t piter_type = " << mlc_to_string(piter_type) << std::endl
-// 	<< "\t fwd_piter_type = " << mlc_to_string(fwd_piter_type) << std::endl
-// 	<< "\t bkd_piter_type = " << mlc_to_string(bkd_piter_type) << std::endl
+// 	<< "  piter_type = " << mlc_to_string(piter_type) << std::endl
+// 	<< "  fwd_piter_type = " << mlc_to_string(fwd_piter_type) << std::endl
+// 	<< "  bkd_piter_type = " << mlc_to_string(bkd_piter_type) << std::endl
 
-// 	<< "\t value_storage_type = " << mlc_to_string(value_storage_type) << std::endl
-// 	<< "\t storage_type = " << mlc_to_string(storage_type) << std::endl
+// 	<< "  value_storage_type = " << mlc_to_string(value_storage_type) << std::endl
+// 	<< "  storage_type = " << mlc_to_string(storage_type) << std::endl
 // ---------------------------------------------------------------------
-	<< "\t delegated_type = " << mlc_to_string(delegated_type) << std::endl
+	<< "  delegated_type = " << mlc_to_string(delegated_type) << std::endl
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-// 	<< "\t neighb_type = " << mlc_to_string(neighb_type) << std::endl
+// 	<< "  neighb_type = " << mlc_to_string(neighb_type) << std::endl
 
-// 	<< "\t image_neighbness_type = " << mlc_to_string(image_neighbness_type) << std::endl
-// 	<< "\t image_constness_type = " << mlc_to_string(image_constness_type) << std::endl
-// 	<< "\t image_rawness_type = " << mlc_to_string(image_rawness_type) << std::endl
+// 	<< "  image_neighbness_type = " << mlc_to_string(image_neighbness_type) << std::endl
+// 	<< "  image_constness_type = " << mlc_to_string(image_constness_type) << std::endl
+// 	<< "  image_rawness_type = " << mlc_to_string(image_rawness_type) << std::endl
 // --------------------------------------------------------------------
-	<< "\t image_dimension_type = " << mlc_to_string(image_dimension_type) << std::endl
+	<< "  image_dimension_type = " << mlc_to_string(image_dimension_type) << std::endl
 	<< "}" << std::endl;
     }
 
@@ -177,29 +171,29 @@ namespace oln {
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-//       mlc::is_ok_< grid_type >::ensure();
-//       mlc::is_ok_< concrete_type >::ensure();
-//       mlc::is_ok_< value_type >::ensure();
-//       mlc::is_ok_< point_type >::ensure();
-//       mlc::is_ok_< size_type >::ensure();
-//       mlc::is_ok_< piter_type >::ensure();
-//       mlc::is_ok_< fwd_piter_type >::ensure();
-//       mlc::is_ok_< bkd_piter_type >::ensure();
+//       mlc::assert_< mlc_is_ok(grid_type) >::check();
+//       mlc::assert_< mlc_is_ok(concrete_type) >::check();
+//       mlc::assert_< mlc_is_ok(value_type) >::check();
+//       mlc::assert_< mlc_is_ok(point_type) >::check();
+//       mlc::assert_< mlc_is_ok(size_type) >::check();
+//       mlc::assert_< mlc_is_ok(piter_type) >::check();
+//       mlc::assert_< mlc_is_ok(fwd_piter_type) >::check();
+//       mlc::assert_< mlc_is_ok(bkd_piter_type) >::check();
 
-//       mlc::is_ok_< value_storage_type >::ensure();
-//       mlc::is_ok_< storage_type >::ensure();x
+//       mlc::assert_< mlc_is_ok(value_storage_type) >::check();
+//       mlc::assert_< mlc_is_ok(storage_type) >::check();x
 // --------------------------------------------------------------------
-      mlc::is_ok_< delegated_type >::ensure();
+      mlc::assert_< mlc_is_ok(delegated_type) >::check();
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-//       mlc::is_ok_< neighb_type >::ensure();
+//       mlc::assert_< mlc_is_ok(neighb_type) >::check();
 
-//       mlc::is_ok_< image_neighbness_type >::ensure();
-//       mlc::is_ok_< image_constness_type >::ensure();
-//       mlc::is_ok_< image_rawness_type >::ensure();
+//       mlc::assert_< mlc_is_ok(image_neighbness_type) >::check();
+//       mlc::assert_< mlc_is_ok(image_constness_type) >::check();
+//       mlc::assert_< mlc_is_ok(image_rawness_type) >::check();
 // --------------------------------------------------------------------
-      mlc::is_ok_< image_dimension_type >::ensure();
+      mlc::assert_< mlc_is_ok(image_dimension_type) >::check();
     }
   };
 
@@ -416,6 +410,7 @@ namespace oln
 
       virtual ~image()
       {
+	packed_vtypes<category::image, E>::ensure();
 	// FIXME: static check fails because "pointer to member conversion via virtual base"...
 // 	mlc_check_method_impl(E, const size_type&, size,       ,                  const);
 // 	mlc_check_method_impl(E, unsigned long,    npoints,    ,                  const);

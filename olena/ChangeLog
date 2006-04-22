@@ -1,3 +1,14 @@
+2006-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix packed_vtypes<category::image, I>.
+
+	* oln/core/abstract/image.hh (packed_vtypes): Remove.
+	(packed_vtypes<category::image, I>): Use mlc::assert to test the
+	virtual types.
+	Aesthetic changes.
+	(image::~image): Check the vtypes thanks to
+	packed_vtypes<category::image, I>.
+
 2006-04-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Lay the foundation stone of abstract::image.
