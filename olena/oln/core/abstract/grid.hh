@@ -35,11 +35,11 @@
 # include <oln/core/typedefs.hh>
 
 
-# define oln_grd_type_of(GridType, Alias)				\
-stc_typeof_in_namespace(oln, oln::category::grid, GridType, Alias)
+# define oln_grd_type_of(GridType, Alias)		\
+stc_type_of(oln, oln::category::grid, GridType, Alias)
 
-# define oln_grd_type_of_(GridType, Alias)				\
-stc_typeof_in_namespace_(oln, oln::category::grid, GridType, Alias)
+# define oln_grd_type_of_(GridType, Alias)		\
+stc_type_of_(oln, oln::category::grid, GridType, Alias)
 
 
 namespace oln {

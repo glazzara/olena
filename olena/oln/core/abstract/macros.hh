@@ -28,19 +28,14 @@
 #ifndef OLENA_CORE_ABSTRACT_MACROS_HH
 # define OLENA_CORE_ABSTRACT_MACROS_HH
 
-// FIXME: Perhaps only ``external'' versions are really useful (since
-// they are more precise), and we could get rid of other versions.
-// Likewise, we could drop the stc_typeof without namespace
-// information.
-
 /// \def Shortcuts for virtual types associated to images (version to
 // be used inside a template).
-# define oln_type_of(ImageType, Alias) \
-stc_typeof_in_namespace(oln, oln::category::image, ImageType, Alias)
+# define oln_type_of(ImageType, Alias)			\
+stc_type_of(oln, oln::category::image, ImageType, Alias)
 
 /// \def Shortcuts for virtual types associated to images (version to
 // be used outside a template).
-# define oln_type_of_(ImageType, Alias) \
-stc_typeof_in_namespace_(oln, oln::category::image, ImageType, Alias)
+# define oln_type_of_(ImageType, Alias)				\
+stc_type_of_(oln, oln::category::image, ImageType, Alias)
 
 #endif // ! OLENA_CORE_ABSTRACT_MACROS_HH

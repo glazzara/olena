@@ -74,7 +74,8 @@ main()
   mlc::assert_< mlc_eq(my::image::grid_type, oln::grid1d) >::check();
   // Check its externally defined vtype.
   mlc::assert_< mlc_eq( my::image::image_dimension_type,
-		        stc::is_a<oln::abstract::image1d> ) >::check();
+		        stc::abstraction_as_type<oln::abstract::image1d> )
+              >::check();
   // Check its image dimension abstraction.
   mlc::assert_< mlc_is_a_(my::image, oln::abstract::image1d) >::check();
   // Ensure we can instantiate it.

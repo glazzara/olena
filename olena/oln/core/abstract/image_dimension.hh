@@ -107,7 +107,7 @@ namespace oln {
     public mlc::where_< mlc_eq(grid_type, oln::grid1d) >
   {
     // Super class if test succeeds.
-    typedef stc::is_a<abstract::image1d> ret;
+    typedef stc::abstraction_as_type<abstract::image1d> ret;
   };
 
   template <typename grid_type>
@@ -116,7 +116,7 @@ namespace oln {
     public mlc::where_< mlc_eq(grid_type, oln::grid2d) >
   {
     // Super class if test succeeds.
-    typedef stc::is_a<abstract::image2d> ret;
+    typedef stc::abstraction_as_type<abstract::image2d> ret;
   };
 
   template <typename grid_type>
@@ -125,7 +125,7 @@ namespace oln {
     public mlc::where_< mlc_eq(grid_type, oln::grid3d) >
   {
     // Super class if test succeeds.
-    typedef stc::is_a<abstract::image3d> ret;
+    typedef stc::abstraction_as_type<abstract::image3d> ret;
   };
 
   /// Abort when grid_type is not handled by the previous cases.

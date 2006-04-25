@@ -1,5 +1,19 @@
 2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Catch up with the latest name changes in Static.
+
+	* oln/core/abstract/image_dimension.hh
+	(case_<grid_dim_tag, grid_type, 1>)
+	(case_<grid_dim_tag, grid_type, 2>)
+	(case_<grid_dim_tag, grid_type, 3>):
+	s/stc::is_a/stc::abstraction_as_type/.
+	* oln/core/abstract/macros.hh (oln_type_of, oln_type_of_)
+	* oln/core/abstract/grid.hh (oln_grd_type_of, oln_grd_type_of_):
+	Catch up with the new names of Static macros.
+	* tests/image_entry.cc: Adjust test.
+
+2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Plug image_entry's inheritance to the right image dimension
 	abstraction according to the grid type of the exact image type.
 
