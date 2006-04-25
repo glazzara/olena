@@ -1,5 +1,33 @@
 2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Plug image_entry's inheritance to the right image dimension
+	abstraction according to the grid type of the exact image type.
+
+	* oln/core/abstract/image_entry.hh: Add switch/case equipment in
+	the oln namespace.
+	* oln/core/abstract/image_dimension.hh
+	(grid_dim_tag)
+	(case_<grid_dim_tag, grid_type, 1>)
+	(case_<grid_dim_tag, grid_type, 2>)
+	(case_<grid_dim_tag, grid_type, 3>)
+	(default_case_<grid_dim_tag, grid_type>): New Metalic switch/case
+	on grid type, returning the corresponding image dimension type.
+	(set_entry_node<I, oln::abstract::dimension_tag>): Use this Metalic
+	switch/case to choose the dimension abstraction in the inheritance
+	tree.
+	* oln/core/abstract/image.hh (vtypes): Don't define
+	image_dimension_type as an internal vtype, instead...
+	* oln/core/abstract/image_dimension.hh
+	(oln::ext_vtype<category::image, abstract::image<I>,
+	typedef_::image_dimension_type>): ...define it externally, using
+	the switch used inheritance-plugging mechanism based on the grid
+	type.
+	* tests/image_entry.cc (oln): Adjust.
+	Check my::image's virtual types.
+	Print my::image's vtypes on the standard output.
+
+2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add grids.
 
 	* oln/core/abstract/grid.hh,

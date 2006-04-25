@@ -28,8 +28,9 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
 
-# include <oln/core/abstract/image.hh>
+# include <mlc/case.hh>
 # include <stc/entry.hh>
+# include <oln/core/abstract/image.hh>
 
 namespace oln
 {
@@ -73,6 +74,10 @@ namespace oln
   }  // end of namespace oln::abstract
 
 } // end of namespace oln
+
+
+// Add switch/case equipment in the oln namespace.
+mlc_case_equipment_for_namespace(oln);
 
 
 #endif // ! OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH

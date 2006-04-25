@@ -82,8 +82,59 @@ namespace oln {
       image3d() {}
     };
  
- 
   } // end of namespace oln::abstract
+
+
+  /*-------------------.
+  | Dimension switch.  |
+  `-------------------*/
+
+  /// Forward declarations.
+  /// \{
+  class grid1d;
+  class grid2d;
+  class grid3d;
+  /// \}
+  
+  /// Case tag for the dimension.
+  struct grid_dim_tag;
+  
+  /// Switch on on the grid dimension.
+  /// \{
+  template <typename grid_type>
+  struct case_<grid_dim_tag, grid_type, 1> :
+    // Test.
+    public mlc::where_< mlc_eq(grid_type, oln::grid1d) >
+  {
+    // Super class if test succeeds.
+    typedef stc::is_a<abstract::image1d> ret;
+  };
+
+  template <typename grid_type>
+  struct case_<grid_dim_tag, grid_type, 2> :
+    // Test.
+    public mlc::where_< mlc_eq(grid_type, oln::grid2d) >
+  {
+    // Super class if test succeeds.
+    typedef stc::is_a<abstract::image2d> ret;
+  };
+
+  template <typename grid_type>
+  struct case_<grid_dim_tag, grid_type, 3> :
+    // Test.
+    public mlc::where_< mlc_eq(grid_type, oln::grid3d) >
+  {
+    // Super class if test succeeds.
+    typedef stc::is_a<abstract::image3d> ret;
+  };
+
+  /// Abort when grid_type is not handled by the previous cases.
+  template <typename grid_type>
+  struct default_case_<grid_dim_tag, grid_type>
+  {
+    typedef mlc::abort_<grid_dim_tag> ret;
+  };
+  /// \}
 
 } // end of namespace oln
 
@@ -91,15 +142,28 @@ namespace oln {
 // Register the dimension switch for oln::abstract::image_entry.
 namespace stc
 {
-  template <typename E>
-  struct set_entry_node<E, oln::abstract::dimension_tag> :
-    // FIXME: Don't use the abstraction as a property, but the
-    // corresponding grid instead.
-    public oln_type_of_(E, image_dimension)
-      ::template instantiated_with<E>::ret
+  template <typename I>
+  struct set_entry_node<I, oln::abstract::dimension_tag> :
+    public oln::switch_< oln::grid_dim_tag, oln_type_of(I, grid) >::ret
+      ::template instantiated_with<I>::ret
   {
   };
-}
+} // end of namespace stc
 
+namespace oln
+{
+  /// An external type associated to my::B.
+  template <typename I>
+  struct ext_vtype< category::image,
+		    abstract::image<I>,
+		    // FIXME: Get rid of this typedef_:: qualifier.
+		    typedef_::image_dimension_type >
+  {
+    // Use the same switch as the one use in the inheritance-plugging
+    // mechanism above.
+    typedef typename oln::switch_< oln::grid_dim_tag,
+				   oln_type_of(I, grid) >::ret ret;
+  };
+}
 
 #endif // ! OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HH

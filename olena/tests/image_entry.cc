@@ -46,12 +46,10 @@ namespace oln
   template<>
   struct vtypes<category::image, my::image>
   {
-    // FIXME: Don't use the abstraction as a property, but the
-    // corresponding grid instead.  The switch for image_dimension
-    // (above image_entry) should plug the inheritance relationship to
-    // the right image_dimension class using the sole grid information
-    // (the grid can be seen here as a ``tag'').
-    typedef stc::is_a<abstract::image1d> image_dimension_type;
+    // The switch for image_dimension (above image_entry) plugs the
+    // inheritance relation to the right abstract::image_dimension
+    // class using the sole grid information (the grid can be seen
+    // here as a ``tag'').
     typedef oln::grid1d grid_type;
   };
 }
@@ -62,6 +60,9 @@ namespace my
   class image : public oln::set_super_type<my::image>::ret
   {
     typedef image self_type;
+    // An internal vtype.
+    typedef oln_type_of_(self_type, grid) grid_type;
+    // An external vtype.
     typedef oln_type_of_(self_type, image_dimension) image_dimension_type;
   };
 }
@@ -69,7 +70,17 @@ namespace my
 int
 main()
 {
-  // Instantiate it, and check its dimension.
+  // Check its internally defined vtype.
+  mlc::assert_< mlc_eq(my::image::grid_type, oln::grid1d) >::check();
+  // Check its externally defined vtype.
+  mlc::assert_< mlc_eq( my::image::image_dimension_type,
+		        stc::is_a<oln::abstract::image1d> ) >::check();
+  // Check its image dimension abstraction.
+  mlc::assert_< mlc_is_a_(my::image, oln::abstract::image1d) >::check();
+  // Ensure we can instantiate it.
   my::image i;
-  mlc::assert_< mlc_is_a_(my::image::image, oln::abstract::image1d) >::check();
+
+  // Print my::image's vtypes.
+  // FIXME: To be removed in the final version.
+  oln::packed_vtypes<oln::category::image, my::image>::echo (std::cout);
 }

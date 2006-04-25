@@ -87,14 +87,14 @@ namespace oln {
 //     typedef is_a<abstract::readonly_image> image_constness_type;
 //     typedef mlc::undefined image_rawness_type;
 // --------------------------------------------------------------------
-    typedef mlc::undefined image_dimension_type;
   };
 
   /// Packing of the virtual types of any image class.
   template <typename I>
   struct packed_vtypes<category::image, I>
   {
-     typedef oln_type_of(I, grid) grid_type;
+    // Internally defined virtual types.
+    typedef oln_type_of(I, grid) grid_type;
 
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
@@ -122,10 +122,11 @@ namespace oln {
 //     typedef oln_type_of(I, image_constness) image_constness_type;
 //     typedef oln_type_of(I, image_rawness)   image_rawness_type;
 // --------------------------------------------------------------------
+
+    // Defined externally virtual types.
     typedef oln_type_of(I, image_dimension) image_dimension_type;
 
-    //...
-
+    /// Pretty-printing.
     static void echo(std::ostream& ostr)
     {
       ostr
