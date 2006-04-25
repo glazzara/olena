@@ -37,42 +37,34 @@
 # include <stc/vtypes.hh>
 
 
-# define oln_super_of_(Type)			\
-oln::internal::get_super_type<Type>::ret
-
-# define oln_super2_of_(Type,_2)		\
-oln::internal::get_super_type<Type,_2>::ret
-
-# define oln_super3_of_(Type,_2,_3)		\
-oln::internal::get_super_type<Type,_2,_3>::ret
-
-
-# define oln_super_of(Type)			\
-typename oln_super_of_(Type)
-
-
-
 namespace oln
 {
 
-  // Namespace equipment.  The virtual types facility is inserted here
-  // because it also triggers Metalic's typedef introspection
-  // equipment.
+  /*----------------------.
+  | Namespace equipment.  |
+  `----------------------*/
+
+  // The virtual types facility is inserted here because it also
+  // triggers Metalic's typedef introspection equipment.
   stc_equip_namespace_with_vtypes();
 
-  // Misc.
+  /*-------.
+  | Misc.  |
+  `-------*/
 
-// --------------------------------------------------------------------
-// FIXME: To be enabled later.
-// --------------------------------------------------------------------
-//   mlc_decl_typedef(exact_type);
-// --------------------------------------------------------------------
+  mlc_decl_typedef(exact_type);
+  
 
-  // General.
+  /*----------.
+  | General.  |
+  `----------*/
 
   mlc_decl_typedef(grid_type);
 
-  // Iterators.
+
+  /*------------.
+  | Iterators.  |
+  `------------*/
 
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
@@ -94,7 +86,10 @@ namespace oln
 //   mlc_decl_typedef(bkd_niter_type);
 // --------------------------------------------------------------------
 
-  // category::image.
+
+  /*------------------.
+  | category::image.  |
+  `------------------*/
 
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
@@ -133,7 +128,10 @@ namespace oln
 //   mlc_decl_typedef(image_rawness_type);
 // --------------------------------------------------------------------
 
-  // Extension in image_operators.
+  // ------------------------------ //
+  // Extension in image_operators.  //
+  // ------------------------------ //
+
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
@@ -144,14 +142,17 @@ namespace oln
 // --------------------------------------------------------------------
 
 
-
-  // category::grid.
+  /*-----------------.
+  | category::grid.  |
+  `-----------------*/
 
   mlc_decl_typedef(dimvalue_type);
   mlc_decl_typedef(coord_type);
 
 
-  // category::fun1 and category::fun2.
+  /*------------------------------------.
+  | category::fun1 and category::fun2.  |
+  `------------------------------------*/
 
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
@@ -161,7 +162,6 @@ namespace oln
 //   mlc_decl_typedef(left_type);
 //   mlc_decl_typedef(right_type);
 // --------------------------------------------------------------------
-
 
 } // end of namespace oln
 

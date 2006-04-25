@@ -62,6 +62,7 @@ namespace oln {
     typedef I exact_type;
 
     typedef mlc::undefined grid_type;
+
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
@@ -94,6 +95,8 @@ namespace oln {
   struct packed_vtypes<category::image, I>
   {
     // Internally defined virtual types.
+    typedef oln_type_of(I, exact) exact_type;
+
     typedef oln_type_of(I, grid) grid_type;
 
 // --------------------------------------------------------------------
@@ -133,6 +136,8 @@ namespace oln {
 	<< "vtypes_of(oln::category::image, " << mlc_to_string(I) << ") ="
 	<< std::endl
 	<< "{" << std::endl
+	<< "  exact_type = " << mlc_to_string(exact_type) << std::endl
+
  	<< "  grid_type = " << mlc_to_string(grid_type) << std::endl
 
 // --------------------------------------------------------------------
@@ -166,7 +171,10 @@ namespace oln {
 
     static void ensure()
     {
+      mlc::assert_< mlc_is_ok(exact_type) >::check();
+
       mlc::assert_< mlc_is_ok(grid_type) >::check();
+
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------

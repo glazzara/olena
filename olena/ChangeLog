@@ -1,5 +1,17 @@
 2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Re-enable exact_type vtype.
+
+	* oln/core/typedefs.hh (oln_super_of_, oln_super2_of_)
+	(oln_super3_of_, oln_super_of): Remove macros.
+	(exact_type): Enable this typedef.
+	* oln/core/abstract/image.hh (packed_vtypes::exact_type): New
+	typedef.
+	(packed_vtypes::echo): Print exact_type.
+	(packed_vtypes::ensure): Check exact_type.
+
+2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	* oln/core/typedefs.hh: s/properties/vtypes/.
 
 2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
