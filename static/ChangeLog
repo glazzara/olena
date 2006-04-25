@@ -1,5 +1,25 @@
 2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename stc/properties.hh as stc/vtypes.hh.
+
+	* stc/properties.hh: Rename as...
+	* stc/vtypes.hh: ...this.
+	(stc_equip_namespace_with_properties): Rename as...
+	(stc_equip_namespace_with_vtypes): ...this.
+	Adjust.
+	* stc/Makefile.am (nobase_stc_HEADERS): Rename properties.hh as
+	vtypes.hh.
+	* tests/properties.cc: Rename as...
+	* tests/vtypes.cc: ...this.
+	Adjust.
+	* tests/entry.cc: Adjust.
+	* tests/Makefile.am (check_PROGRAMS): Rename properties as vtypes.
+	(properties_SOURCES): Likewise.
+	Rename variable as...
+	(vtypes_SOURCES): ...this.
+
+2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename some Static entities.
 
 	* stc/properties.hh (typeof_): Rename class as...

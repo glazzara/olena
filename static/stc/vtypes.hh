@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-// \file stc/properties.hh
-// \brief Property mechanism.
-//
-// From Theo's presentation (olena-06-jan.pdf).
+/* \file stc/vtypes.hh
+   \brief Virtual types (also known as ``properties'') mechanism.
 
-#ifndef STATIC_PROPERTIES_HH
-# define STATIC_PROPERTIES_HH
+   Based on Theo's presentation from January 2006 (olena-06-jan.pdf).  */
+
+#ifndef STATIC_VTYPES_HH
+# define STATIC_VTYPES_HH
 
 # include <mlc/flags.hh>
 # include <mlc/typedef.hh>
@@ -100,7 +100,7 @@ namespace mlc
    typename TypedefName::template from_< Type >::ret
 
 // FIXME: Add support for hierarchies with several super classes.
-# define stc_equip_namespace_with_properties()				      \
+# define stc_equip_namespace_with_vtypes()				      \
 									      \
   /* ----------------------- */						      \
   /* Typedefs declarations.  */						      \
@@ -166,7 +166,7 @@ namespace mlc
   };									      \
 									      \
   /** Optional packing structure, to be specialized by the user.  */	      \
-  /** See tests/properties.hh for an example of use.              */	      \
+  /** See tests/vtypes.hh for an example of use.              */	      \
   template <typename category, typename from_type>			      \
   struct packed_vtypes							      \
   {									      \
@@ -474,25 +474,25 @@ namespace stc
 // could get rid of local versions (stc_local_type_of and
 // stc_local_type_of_).
 
-/// Get the property \a Typedef, declared in the current namespace,
+/// Get the vtype \a Typedef, declared in the current namespace,
 /// from \a FromType (version to be used inside a template).
 #define stc_local_type_of(Category, FromType, Typedef)	\
   typename stc_type_of_(Category, FromType, Typedef)
 
-/// Get the property \a Typedef, declared in the current namespace,
+/// Get the vtype \a Typedef, declared in the current namespace,
 /// from \a FromType (version to be used outside a template).
 #define stc_local_type_of_(Category, FromType, Typedef)		\
   type_of_<Category, FromType, typedef_:: Typedef##_type >::ret
 
-/// Get the property \a Typedef, declared in \a Namespace, from \a
+/// Get the vtype \a Typedef, declared in \a Namespace, from \a
 /// FromType (version to be used inside a template).
-#define stc_type_of(Namespace, Category, FromType, Typedef)		     \
+#define stc_type_of(Namespace, Category, FromType, Typedef)	\
   typename stc_type_of_(Namespace, Category, FromType, Typedef)
 
-/// Get the property \a Typedef, declared in \a Namespace, from \a
+/// Get the vtype \a Typedef, declared in \a Namespace, from \a
 /// FromType (version to be used outside a template).
 #define stc_type_of_(Namespace, Category, FromType, Typedef)		\
   Namespace::type_of_<Category, FromType,				\
                       Namespace::typedef_:: Typedef##_type >::ret
 
-#endif // ! STATIC_PROPERTIES_HH
+#endif // ! STATIC_VTYPES_HH

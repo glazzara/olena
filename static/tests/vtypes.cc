@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <stc/properties.hh>
+#include <stc/vtypes.hh>
 #include <mlc/cmp.hh>
 #include <mlc/assert.hh>
 #include <mlc/int.hh>
@@ -58,7 +58,7 @@ namespace my
   | Namespace equipment.  |
   `----------------------*/
 
-  stc_equip_namespace_with_properties();
+  stc_equip_namespace_with_vtypes();
 
 
   /*-----------.

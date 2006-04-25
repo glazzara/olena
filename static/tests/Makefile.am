@@ -10,10 +10,10 @@ AM_CPPFLAGS = -I$(top_srcdir)/static -I$(top_srcdir)/metalic
 check_PROGRAMS =				\
   any						\
   entry						\
-  properties
+  vtypes
 
-any_SOURCES       = any.cc
-properties_SOURCES = properties.cc
-entry_SOURCES = entry.cc
+any_SOURCES    = any.cc
+entry_SOURCES  = entry.cc
+vtypes_SOURCES = vtypes.cc
 
 TESTS = $(check_PROGRAMS)

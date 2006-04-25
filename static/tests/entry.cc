@@ -113,9 +113,8 @@
 
 namespace my_lib
 {
-  // Virtual types.
-  // We don't use all the equipment of stc/properties.hh for
-  // simplicity purpose.
+  // Virtual types.  We don't use all the equipment of stc/vtypes.hh
+  // for the sake of simplicity.
   template <typename T>
   struct vtypes
   {
