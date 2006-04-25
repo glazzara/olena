@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2005, 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,51 +25,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// Test oln::abstract::image_entry.
+#ifndef OLENA_CORE_2D_GRID2D_HH
+# define OLENA_CORE_2D_GRID2D_HH
 
-#include <oln/core/1d/grid1d.hh>
-#include <oln/core/abstract/image_entry.hh>
-#include <oln/core/abstract/image_dimension.hh>
+# include <mlc/int.hh>
+# include <oln/core/abstract/grid.hh>
 
-namespace my
-{
-  // Forward declaration.
-  class image;
-}
 
 namespace oln
 {
-  // Warning, this sugar might be removed in the future.
-  stc_set_super(my::image, abstract::image_entry<my::image>);
 
-  /// Virtual types associated to my::image.
-  template<>
-  struct vtypes<category::image, my::image>
+  // Forward declarations.
+  struct grid2d;
+  struct point2d;
+  struct dpoint2d;
+  struct size2d;
+  struct coord_t;
+
+  // Super type.
+  stc_set_super(grid2d, abstract::grid<grid2d>);
+
+  /// Virtual types associated to oln::grid2d.
+  template <>
+  struct vtypes<category::grid, grid2d>
   {
-    // FIXME: Don't use the abstraction as a property, but the
-    // corresponding grid instead.  The switch for image_dimension
-    // (above image_entry) should plug the inheritance relationship to
-    // the right image_dimension class using the sole grid information
-    // (the grid can be seen here as a ``tag'').
-    typedef stc::is_a<abstract::image1d> image_dimension_type;
-    typedef oln::grid1d grid_type;
+    typedef point2d       point_type;
+    typedef dpoint2d      dpoint_type;
+    typedef size2d        size_type;
+    typedef coord_t       coord_type;
+    typedef mlc::uint_<2> dimvalue_type;
   };
-}
 
-namespace my
-{
-  // A very simple 1D image.
-  class image : public oln::set_super_type<my::image>::ret
+  /// A 2-dimension rectangular grid.
+  struct grid2d : public stc_super_(grid2d)
   {
-    typedef image self_type;
-    typedef oln_type_of_(self_type, image_dimension) image_dimension_type;
+  protected:
+    grid2d() {}
   };
-}
 
-int
-main()
-{
-  // Instantiate it, and check its dimension.
-  my::image i;
-  mlc::assert_< mlc_is_a_(my::image::image, oln::abstract::image1d) >::check();
-}
+} // end of namespace oln
+
+
+#endif // ! OLENA_CORE_2D_GRID2D_HH

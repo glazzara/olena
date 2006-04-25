@@ -37,11 +37,11 @@
 
 namespace oln {
 
-  // fwd decl
+  // Forward declaration.
   template <typename I>
   class value_box;
 
-  // fwd decls
+  // Forward declarations.
   namespace abstract
   {
     template <typename I> class image;
@@ -55,19 +55,16 @@ namespace oln {
 // --------------------------------------------------------------------
   }
 
-  // Declare virtual types.
-  mlc_decl_typedef(grid_type);
-
   /// Virtual types associated to oln::abstract::image.
   template <typename I>
   struct vtypes< category::image, abstract::image<I> >
   {
     typedef I exact_type;
 
+    typedef mlc::undefined grid_type;
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-//     typedef mlc::undefined grid_type;
 //     typedef mlc::undefined concrete_type;
 //     typedef mlc::undefined value_type;
 //     typedef mlc::undefined point_type;
@@ -97,11 +94,11 @@ namespace oln {
   template <typename I>
   struct packed_vtypes<category::image, I>
   {
+     typedef oln_type_of(I, grid) grid_type;
+
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-//     typedef oln_type_of(I, grid) grid_type;
-
 //     typedef oln_type_of(I, concrete) concrete_type;
 //     typedef oln_type_of(I, value) value_type;
 //     typedef oln_type_of(I, point) point_type;
@@ -135,11 +132,11 @@ namespace oln {
 	<< "vtypes_of(oln::category::image, " << mlc_to_string(I) << ") ="
 	<< std::endl
 	<< "{" << std::endl
+ 	<< "  grid_type = " << mlc_to_string(grid_type) << std::endl
+
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-// 	<< "  grid_type = " << mlc_to_string(grid_type) << std::endl
-
 // 	<< "  concrete_type = " << mlc_to_string(concrete_type) << std::endl
 // 	<< "  value_type = " << mlc_to_string(value_type) << std::endl
 // 	<< "  point_type = " << mlc_to_string(point_type) << std::endl
@@ -168,10 +165,10 @@ namespace oln {
 
     static void ensure()
     {
+      mlc::assert_< mlc_is_ok(grid_type) >::check();
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-//       mlc::assert_< mlc_is_ok(grid_type) >::check();
 //       mlc::assert_< mlc_is_ok(concrete_type) >::check();
 //       mlc::assert_< mlc_is_ok(value_type) >::check();
 //       mlc::assert_< mlc_is_ok(point_type) >::check();
@@ -181,7 +178,7 @@ namespace oln {
 //       mlc::assert_< mlc_is_ok(bkd_piter_type) >::check();
 
 //       mlc::assert_< mlc_is_ok(value_storage_type) >::check();
-//       mlc::assert_< mlc_is_ok(storage_type) >::check();x
+//       mlc::assert_< mlc_is_ok(storage_type) >::check();
 // --------------------------------------------------------------------
       mlc::assert_< mlc_is_ok(delegated_type) >::check();
 // --------------------------------------------------------------------

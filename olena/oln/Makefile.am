@@ -4,7 +4,14 @@ olndir = $(includedir)/oln
 nobase_oln_HEADERS =				\
   core/typedefs.hh				\
 						\
+  core/1d/grid1d.hh				\
+						\
+  core/2d/grid2d.hh				\
+						\
+  core/3d/grid3d.hh				\
+						\
   core/abstract/any.hh				\
+  core/abstract/grid.hh				\
   core/abstract/image.hh			\
   core/abstract/image_entry.hh			\
   core/abstract/image_dimension.hh		\

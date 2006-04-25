@@ -68,11 +68,7 @@ namespace oln
 
   // General.
 
-// --------------------------------------------------------------------
-// FIXME: To be enabled later.
-// --------------------------------------------------------------------
-//   mlc_decl_typedef(grid_type);
-// --------------------------------------------------------------------
+  mlc_decl_typedef(grid_type);
 
   // Iterators.
 
@@ -106,17 +102,21 @@ namespace oln
 //   mlc_decl_typedef(neighb_type);
 //   mlc_decl_typedef(value_storage_type);
 //   mlc_decl_typedef(storage_type);
-//   mlc_decl_typedef(point_type);
-//   mlc_decl_typedef(dpoint_type);
+// --------------------------------------------------------------------
+  mlc_decl_typedef(point_type);
+  mlc_decl_typedef(dpoint_type);
+// --------------------------------------------------------------------
+// FIXME: To be enabled later.
+// --------------------------------------------------------------------
 //   mlc_decl_typedef(image_type);
 //   mlc_decl_typedef(concrete_type);
 // --------------------------------------------------------------------
 
   mlc_decl_typedef(delegated_type);
+  mlc_decl_typedef(size_type);
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-//   mlc_decl_typedef(size_type);
 //   mlc_decl_typedef(window_type);
 
 //   mlc_decl_typedef(image_neighbness_type);
@@ -145,12 +145,8 @@ namespace oln
 
   // category::grid.
 
-// --------------------------------------------------------------------
-// FIXME: To be enabled later.
-// --------------------------------------------------------------------
-//   mlc_decl_typedef(dimvalue_type);
-//   mlc_decl_typedef(coord_type);
-// --------------------------------------------------------------------
+  mlc_decl_typedef(dimvalue_type);
+  mlc_decl_typedef(coord_type);
 
 
   // category::fun1 and category::fun2.

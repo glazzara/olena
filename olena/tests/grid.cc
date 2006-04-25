@@ -25,51 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// Test oln::abstract::image_entry.
+/// Test grids.
 
+#include <cassert>
 #include <oln/core/1d/grid1d.hh>
-#include <oln/core/abstract/image_entry.hh>
-#include <oln/core/abstract/image_dimension.hh>
-
-namespace my
-{
-  // Forward declaration.
-  class image;
-}
-
-namespace oln
-{
-  // Warning, this sugar might be removed in the future.
-  stc_set_super(my::image, abstract::image_entry<my::image>);
-
-  /// Virtual types associated to my::image.
-  template<>
-  struct vtypes<category::image, my::image>
-  {
-    // FIXME: Don't use the abstraction as a property, but the
-    // corresponding grid instead.  The switch for image_dimension
-    // (above image_entry) should plug the inheritance relationship to
-    // the right image_dimension class using the sole grid information
-    // (the grid can be seen here as a ``tag'').
-    typedef stc::is_a<abstract::image1d> image_dimension_type;
-    typedef oln::grid1d grid_type;
-  };
-}
-
-namespace my
-{
-  // A very simple 1D image.
-  class image : public oln::set_super_type<my::image>::ret
-  {
-    typedef image self_type;
-    typedef oln_type_of_(self_type, image_dimension) image_dimension_type;
-  };
-}
+#include <oln/core/2d/grid2d.hh>
+#include <oln/core/3d/grid3d.hh>
 
 int
 main()
 {
-  // Instantiate it, and check its dimension.
-  my::image i;
-  mlc::assert_< mlc_is_a_(my::image::image, oln::abstract::image1d) >::check();
+  // The extra pairs of parenthesis around mlc_value are needed to
+  // prevent the assert macro from interpreting the arguments of
+  // mlc_value as its own.
+  assert((mlc_value(oln_grd_type_of_(oln::grid1d, dimvalue))) == 1);
+  assert((mlc_value(oln_grd_type_of_(oln::grid2d, dimvalue))) == 2);
+  assert((mlc_value(oln_grd_type_of_(oln::grid3d, dimvalue))) == 3);
 }

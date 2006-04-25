@@ -38,7 +38,7 @@
 namespace oln
 {
 
-  /// Image category.
+  /// Category image.
   namespace category
   {
     struct image;

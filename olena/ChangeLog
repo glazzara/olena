@@ -1,3 +1,26 @@
+2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add grids.
+
+	* oln/core/abstract/grid.hh,
+	* oln/core/1d/grid1d.hh,
+	* oln/core/2d/grid2d.hh,
+	* oln/core/3d/grid3d.hh: New files (imported from Olena proto-1.0,
+	and modified).
+	* oln/core/typedefs.hh (grid_type, point_type, dpoint_type)
+	(size_type, dimvalue_type, coord_type): Enable these types.
+	* oln/core/abstract/image.hh (grid_type): Don't mlc-declare this
+	typedef, since oln/core/typedefs.hh already takes care of it.
+	(vtypes< category::image, abstract::image<I> >): Enable	grid_type.
+	(packed_vtypes): Likewise.
+	* oln/core/abstract/internal/image_impl.hh: Improve comment.
+	* tests/grid.cc: New test.
+	* tests/image_entry.cc: Update this test.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add core/abstract/grid.hh,
+	core/1d/grid1d.hh, core/2d/grid2d.hh and core/3d/grid3d.hh.
+	* tests/Makefile.am (check_PROGRAMS): Add grid.
+	(grid_SOURCES): New.
+
 2006-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix packed_vtypes<category::image, I>.
