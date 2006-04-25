@@ -1,3 +1,15 @@
+2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Allow the use of Metalic values as virtual types.
+
+	* stc/properties.hh (mlc::eqv, mlc::neqv): New (workaround)
+	classes.
+	(mlc_eqv, mlc_neqv): New macros.
+	(rec_get_vtype, rec_get_ext_vtype): Use them, to allow the use of
+	Metalic values as virtual types.
+	* tests/properties.cc: Ensure Metalic values can be valid
+	virtual types.
+
 2006-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a facility for virtual types packing.

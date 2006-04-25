@@ -42,6 +42,55 @@
 # include <mlc/is_a.hh>
 
 
+/*----------------------.
+| Metalic workarounds.  |
+`----------------------*/
+
+/// Shortcuts.
+/// \{
+# define mlc_eqv( T1, T2) mlc::eqv_ <T1, T2>
+# define mlc_neqv(T1, T2) mlc::neqv_<T1, T2>
+/// \}
+
+namespace mlc
+{
+  /* FIXME: This really is a work around Metalic's limitations
+     regarding the operands of its logic operators than cannot be
+     subtypes of mlc::abstract::value.  This limitations breaks Static
+     when a virtual type *is* a Metalic value!  Hence the introduction
+     of this more laxist version of mlc_neq.  */
+
+  /// Equality test between a couple of types, also accepting Metalic
+  /// values (i.e., subtypes of mlc::abstract::value).
+  /// \{
+  template <typename T1, typename T2>
+  struct eqv_ : public bexpr_<false>
+  {
+  };
+
+  template <typename T>
+  struct eqv_ <T, T> : public bexpr_<true>
+  {
+  };
+  /// \}
+
+  /// Inequality test between a couple of types, also accepting Metalic
+  /// values (i.e., subtypes of mlc::abstract::value).
+  /// \{
+  template <typename T1, typename T2>
+  struct neqv_ : public bexpr_<true>
+  {
+  };
+
+  template <typename T>
+  struct neqv_ <T, T> : public bexpr_<false>
+  {
+  };
+  /// \}
+
+}
+
+
 /*------------.
 | Equipment.  |
 `------------*/
@@ -159,7 +208,7 @@
 									      \
       typedef typename							      \
       mlc::if_<								      \
-	mlc::neq_< type, mlc::not_found >,				      \
+	mlc::neqv_< type, mlc::not_found >,				      \
 	/* then	*/							      \
 	/*   return it					*/		      \
 	/*   (the typedef has been found in the vtypes	*/		      \
@@ -169,21 +218,21 @@
 	/*   check if the vtype of the `super' of FROM_TYPE */		      \
 	/*   has the typedef				    */		      \
 	typename							      \
-	mlc::if_< mlc::neq_< typename rec_get_vtype< category,		      \
+	mlc::if_< mlc::neqv_< typename rec_get_vtype<category,		      \
 						     super,		      \
-						     typedef_type >::ret,     \
+						     typedef_type>::ret,      \
 			     mlc::not_found >,				      \
 		  /* then */						      \
 		  /*   return it */					      \
-		  typename rec_get_vtype< category,			      \
-					  super,			      \
-					  typedef_type >::ret,		      \
+		  typename rec_get_vtype<category,			      \
+					 super,				      \
+					 typedef_type>::ret,		      \
 		  /* else */						      \
 		  /*   check if the FROM_TYPE has a decl_parent */	      \
 		  /*   and try to retrieve the typedef from it. */	      \
-		  typename rec_get_vtype< category,			      \
-					  pseudosuper,			      \
-					  typedef_type >::ret >::ret >::ret   \
+		  typename rec_get_vtype<category,			      \
+					 pseudosuper,			      \
+					 typedef_type >::ret >::ret >::ret    \
       ret;								      \
     };									      \
 									      \
@@ -227,7 +276,7 @@
 									      \
       typedef typename							      \
       mlc::if_<								      \
-	mlc::neq_< type, mlc::not_found >,				      \
+	mlc::neqv_< type, mlc::not_found >,				      \
 	/* then	*/							      \
 	/*   return it					*/		      \
 	/*   (the typedef has been found in the vtypes	*/		      \
@@ -237,21 +286,21 @@
 	/*   check if the vtype of the `super' of FROM_TYPE */		      \
 	/*   has the typedef				    */		      \
 	typename							      \
-	mlc::if_< mlc::neq_< typename rec_get_ext_vtype< category,	      \
+	mlc::if_< mlc::neqv_< typename rec_get_ext_vtype<category,	      \
 							 super,		      \
-							 typedef_type >::ret, \
+							 typedef_type>::ret,  \
 			     mlc::not_found >,				      \
 		  /* then */						      \
 		  /*   return it */					      \
-		  typename rec_get_ext_vtype< category,			      \
-					      super,			      \
-					      typedef_type >::ret,	      \
+		  typename rec_get_ext_vtype<category,			      \
+					     super,			      \
+					     typedef_type>::ret,	      \
 		  /* else */						      \
 		  /*   check if the FROM_TYPE has a decl_parent */	      \
 		  /*   and try to retrieve the typedef from it. */	      \
-		  typename rec_get_ext_vtype< category,			      \
-					      pseudosuper,		      \
-					      typedef_type >::ret>::ret>::ret \
+		  typename rec_get_ext_vtype<category,			      \
+					     pseudosuper,		      \
+					     typedef_type>::ret>::ret>::ret   \
       ret;								      \
     };									      \
 									      \
@@ -419,6 +468,8 @@ namespace stc
 /// template).
 # define stc_pseudosuper_(T)			\
    set_pseudosuper_type<T>::ret
+
+// FIXME: s/stc_typeof/stc_type_of/.
 
 /// Get the property \a Typedef from \a FromType (version to be used
 /// inside a template).

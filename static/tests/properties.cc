@@ -28,6 +28,7 @@
 #include <stc/properties.hh>
 #include <mlc/cmp.hh>
 #include <mlc/assert.hh>
+#include <mlc/int.hh>
 
 // This test focuses on the virtual types system, so the exact type of
 // classes is not propagated here (stc::any is not used).
@@ -82,8 +83,13 @@ namespace my
   template<>
   struct vtypes<category::my_cat, my::A>
   {
+    // A native type.
     typedef int            foo_type;
-    typedef float          bar_type;
+    // A Metalic value, used here is to ensure that
+    // mlc::abstract::values are accepted as virtual types, as well as
+    // any other type).
+    typedef mlc::int_<42>  bar_type;
+    // An undefined type.
     typedef mlc::undefined baz_type;
   };
 
@@ -212,10 +218,16 @@ main()
 {
   // Check types associated to A.
   mlc::assert_<mlc_eq(my::A::foo_type, int)>::check();
-  mlc::assert_<mlc_eq(my::A::bar_type, float)>::check();
+  /* FIXME: Note that we use mlc_eqv, not mlc_eq, since the latter
+     doesn't accept Metalic values.  Try to get rid of this
+     limitation.  */
+  mlc::assert_<mlc_eqv(my::A::bar_type, mlc::int_<42>)>::check();
 
   // Check types associated to B.
-  mlc::assert_<mlc_neq(my::B::bar_type, my::A::bar_type)>::check();
+  /* FIXME: Note that we use mlc_neqv, not mlc_neq, since the latter
+     doesn't accept Metalic values.  Try to get rid of this
+     limitation.  */
+  mlc::assert_<mlc_neqv(my::B::bar_type, my::A::bar_type)>::check();
   mlc::assert_<mlc_eq(my::B::baz_type, char)>::check();
   mlc::assert_<mlc_eq(my::B::quux_type, long)>::check();
   mlc::assert_<mlc_eq(my::B::yin_type, unsigned long)>::check();
