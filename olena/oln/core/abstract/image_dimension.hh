@@ -30,6 +30,38 @@
 
 # include <oln/core/abstract/image.hh>
 
+/* Image dimension hierarchy (summary).
+
+
+                                  /image<I>/
+                                      ^
+                                      |
+             ,------------------------+------------------------.
+             |                        |                        |
+        /image1d<I>/             /image2d<I>/             /image3d<I>/
+             ^                        ^                        ^
+             |                        |                        |    
+  ,---------------------.  ,---------------------.  ,---------------------.
+  | if type_of(I, grid) |  | if type_of(I, grid) |  | if type_of(I, grid) | 
+  |     == grid1d       |  |      == grid2d      |  |      == grid3d      |
+  `---------------------'  `---------------------'  `---------------------'
+             |                        |                        |    
+             o                        o                        o
+
+                                      o 
+                                      | 
+                     stc::set_entry_node<I, dimension_tag>
+                          (image dimension selector)
+                                      ^
+                                      |
+                               /image_entry<I>/
+                                      ^
+                                      |
+                                      I
+                              (a concrete image)
+
+*/
+
 /*! \namespace oln
 ** \brief oln namespace.
 */

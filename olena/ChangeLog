@@ -1,5 +1,10 @@
 2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	* oln/core/abstract/image_dimension.hh: Add some more
+	documentation.
+
+2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Re-enable exact_type vtype.
 
 	* oln/core/typedefs.hh (oln_super_of_, oln_super2_of_)
