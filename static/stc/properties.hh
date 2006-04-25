@@ -88,7 +88,7 @@ namespace mlc
   };
   /// \}
 
-}
+} // end of namespace mlc
 
 
 /*------------.
@@ -376,7 +376,7 @@ namespace mlc
   /* FIXME: Don't query from_type directly, but exact_type(from_type) */      \
   /* instead.  We need mlc::any for this.  */				      \
   template <typename category, typename from_type, typename typedef_type>     \
-  struct typeof_							      \
+  struct type_of_							      \
   {									      \
     /* Look for the typedef as an external type.  */			      \
     typedef typename							      \
@@ -410,7 +410,7 @@ namespace stc
   /// Allow the manipulation of an abstraction (i.e., a template type)
   /// as a plain type.
   template <template <typename> class abstraction>
-  struct is_a
+  struct abstraction_as_type
   {
     template <typename E>
     struct instantiated_with
@@ -418,7 +418,7 @@ namespace stc
       typedef abstraction<E> ret;
     };
   };
-}
+} // end of namespace stc
 
 
 /*---------.
@@ -469,27 +469,30 @@ namespace stc
 # define stc_pseudosuper_(T)			\
    set_pseudosuper_type<T>::ret
 
-// FIXME: s/stc_typeof/stc_type_of/.
+// FIXME: Perhaps only ``external'' (i.e., non local) versions of
+// stc_type_of are really useful (since they are more precise), and we
+// could get rid of local versions (stc_local_type_of and
+// stc_local_type_of_).
 
-/// Get the property \a Typedef from \a FromType (version to be used
-/// inside a template).
-#define stc_typeof(Category, FromType, Typedef)		\
-  typename stc_typeof_(Category, FromType, Typedef)
+/// Get the property \a Typedef, declared in the current namespace,
+/// from \a FromType (version to be used inside a template).
+#define stc_local_type_of(Category, FromType, Typedef)	\
+  typename stc_type_of_(Category, FromType, Typedef)
 
-/// Get the property \a Typedef from \a FromType (version to be used
-/// outside a template).
-#define stc_typeof_(Category, FromType, Typedef)		\
-  typeof_<Category, FromType, typedef_:: Typedef##_type >::ret
+/// Get the property \a Typedef, declared in the current namespace,
+/// from \a FromType (version to be used outside a template).
+#define stc_local_type_of_(Category, FromType, Typedef)		\
+  type_of_<Category, FromType, typedef_:: Typedef##_type >::ret
 
 /// Get the property \a Typedef, declared in \a Namespace, from \a
 /// FromType (version to be used inside a template).
-#define stc_typeof_in_namespace(Namespace, Category, FromType, Typedef)	    \
-  typename stc_typeof_in_namespace_(Namespace, Category, FromType, Typedef)
+#define stc_type_of(Namespace, Category, FromType, Typedef)		     \
+  typename stc_type_of_(Namespace, Category, FromType, Typedef)
 
 /// Get the property \a Typedef, declared in \a Namespace, from \a
 /// FromType (version to be used outside a template).
-#define stc_typeof_in_namespace_(Namespace, Category, FromType, Typedef) \
-  Namespace::typeof_<Category, FromType,				 \
-                     Namespace::typedef_:: Typedef##_type >::ret
+#define stc_type_of_(Namespace, Category, FromType, Typedef)		\
+  Namespace::type_of_<Category, FromType,				\
+                      Namespace::typedef_:: Typedef##_type >::ret
 
 #endif // ! STATIC_PROPERTIES_HH

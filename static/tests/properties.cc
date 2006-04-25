@@ -37,8 +37,8 @@
 #define my_type_of(FromType, Typedef)		\
   typename my_type_of_(FromType, Typedef)
 
-#define my_type_of_(FromType, Typedef)			\
-  stc_typeof_(my::category::my_cat, FromType, Typedef)
+#define my_type_of_(FromType, Typedef)				\
+  stc_local_type_of_(my::category::my_cat, FromType, Typedef)
 
 namespace my
 {
@@ -80,7 +80,7 @@ namespace my
   struct A;
 
   /// Types associated to my::A.
-  template<>
+  template <>
   struct vtypes<category::my_cat, my::A>
   {
     // A native type.
@@ -136,7 +136,7 @@ namespace my
   stc_set_super(B, A);
 
   /// Types associated to my::B.
-  template<>
+  template <>
   struct vtypes<category::my_cat, B>
   {
     // (foo is left untouched.)
@@ -150,7 +150,7 @@ namespace my
   };
 
   /// An external type associated to my::B.
-  template<>
+  template <>
   struct ext_vtype<category::my_cat, B, typedef_::yin_type>
   {
     typedef unsigned long ret;
@@ -189,7 +189,7 @@ namespace my
   stc_set_pseudosuper(C, B);
 
   /// Types associated to my::C.
-  template<>
+  template <>
   struct vtypes<category::my_cat, C>
   {
     // A type defined only here (and not in the super class).

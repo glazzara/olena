@@ -1,5 +1,20 @@
 2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename some Static entities.
+
+	* stc/properties.hh (typeof_): Rename class as...
+	(type_of_): ...this.
+	(stc::is_a): Rename class as...
+	(stc::abstraction_as_type): ...this.
+	(stc_typeof, stc_typeof_, stc_typeof_in_namespace)
+	(stc_typeof_in_namespace_): Rename macros as...
+	(stc_local_type_of, stc_local_type_of_, stc_type_of)
+	(stc_type_of_): ...these.
+	* tests/properties.cc: Adjust test.
+	* tests/entry.cc: Typos in comments.
+
+2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Allow the use of Metalic values as virtual types.
 
 	* stc/properties.hh (mlc::eqv, mlc::neqv): New (workaround)

@@ -158,7 +158,7 @@ namespace my_lib
     // Test.
     public mlc::where_< mlc_is_a(prop1_type, int) >
   {
-    // Super class if test succeed.
+    // Super class if test succeeds.
     typedef property1a ret;
   };
 
@@ -167,7 +167,7 @@ namespace my_lib
     // Test.
     public mlc::where_< mlc_is_a(prop1_type, long) >
   {
-    // Super class if test succeed.
+    // Super class if test succeeds.
     typedef property1b ret;
   };
 
@@ -208,7 +208,7 @@ namespace my_lib
     // Test.
     public mlc::where_< mlc_is_a(prop2_type, float) >
   {
-    // Super class if test succeed.
+    // Super class if test succeeds.
     typedef property2a ret;
   };
 
@@ -217,7 +217,7 @@ namespace my_lib
     // Test.
     public mlc::where_< mlc_is_a(prop2_type, double) >
   {
-    // Super class if test succeed.
+    // Super class if test succeeds.
     typedef property2b ret;
   };
 
