@@ -1,5 +1,9 @@
 2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	* oln/core/typedefs.hh: s/properties/vtypes/.
+
+2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with the latest name changes in Static.
 
 	* oln/core/abstract/image_dimension.hh

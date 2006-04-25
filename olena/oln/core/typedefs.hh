@@ -34,7 +34,7 @@
 # include <mlc/flags.hh>
 # include <mlc/cmp.hh>
 # include <mlc/typedef.hh>
-# include <stc/properties.hh>
+# include <stc/vtypes.hh>
 
 
 # define oln_super_of_(Type)			\
@@ -55,8 +55,10 @@ typename oln_super_of_(Type)
 namespace oln
 {
 
-  // Namespace equipment.
-  stc_equip_namespace_with_properties();
+  // Namespace equipment.  The virtual types facility is inserted here
+  // because it also triggers Metalic's typedef introspection
+  // equipment.
+  stc_equip_namespace_with_vtypes();
 
   // Misc.
 
