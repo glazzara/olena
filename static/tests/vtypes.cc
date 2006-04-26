@@ -218,16 +218,10 @@ main()
 {
   // Check types associated to A.
   mlc::assert_<mlc_eq(my::A::foo_type, int)>::check();
-  /* FIXME: Note that we use mlc_eqv, not mlc_eq, since the latter
-     doesn't accept Metalic values.  Try to get rid of this
-     limitation.  */
-  mlc::assert_<mlc_eqv(my::A::bar_type, mlc::int_<42>)>::check();
+  mlc::assert_<mlc_eq(my::A::bar_type, mlc::int_<42>)>::check();
 
   // Check types associated to B.
-  /* FIXME: Note that we use mlc_neqv, not mlc_neq, since the latter
-     doesn't accept Metalic values.  Try to get rid of this
-     limitation.  */
-  mlc::assert_<mlc_neqv(my::B::bar_type, my::A::bar_type)>::check();
+  mlc::assert_<mlc_neq(my::B::bar_type, my::A::bar_type)>::check();
   mlc::assert_<mlc_eq(my::B::baz_type, char)>::check();
   mlc::assert_<mlc_eq(my::B::quux_type, long)>::check();
   mlc::assert_<mlc_eq(my::B::yin_type, unsigned long)>::check();

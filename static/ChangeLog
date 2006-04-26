@@ -1,3 +1,14 @@
+2006-04-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove the mlc::eqv and mlc::neqv workarounds.
+
+	* stc/vtypes.hh (mlc::eqv, mlc::neqv): Remove these workarounds.
+	(mlc_eqv, mlc_neqv): Remove macros.
+	(rec_get_vtype, rec_get_ext_vtype): No longer use these
+	workarounds, and revert to mlc_eq and mlc_neq usage (since they
+	have been fixed in Metalic).
+	* tests/vtypes.cc (main): Adjust.
+
 2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename stc/properties.hh as stc/vtypes.hh.
