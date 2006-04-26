@@ -47,6 +47,9 @@
 /// \{
 /// Macros mlc_something(T) corresponding to mlc::something_<T>.
 
+# define mlc_is_bexpr(T)     mlc::is_bexpr_<T>
+# define mlc_is_not_bexpr(T) mlc::is_not_bexpr_<T>
+
 # define mlc_is_found(T)     mlc::is_found_<T>
 # define mlc_is_not_found(T) mlc::is_not_found_<T>
 
@@ -67,6 +70,10 @@
 namespace mlc
 {
 
+  /*----------------------------------------------------------------.
+  | Syntactic sugar for checking that a type is a value / a bexpr.  |
+  `-----------------------------------------------------------------*/
+
   /// Check whether \a T is a mlc::abstract::value.
   template <typename T>
   struct is_value : public mlc_is_a(T, mlc::abstract::value)::bexpr
@@ -80,45 +87,62 @@ namespace mlc
   };
 
 
+  /// Check whether \a T is a mlc::abstract::bexpr.
+  template <typename T>
+  struct is_bexpr : public mlc_is_a(T, mlc::abstract::bexpr)::bexpr
+  {
+  };
+
+  /// Check whether \a T is not a mlc::abstract::bexpr.
+  template <typename T>
+  struct is_not_bexpr : public not_<mlc_is_a(T, mlc::abstract::bexpr)>::bexpr
+  {
+  };
+
+
+
+  /*--------------------------.
+  | Comparison between types  |
+  `---------------------------*/
 
   /// Equality test between a couple of types.
   /// \{
   template <typename T1, typename T2>
-  struct eq_ : private multiple_assert_< is_not_value<T1>,
-					 is_not_value<T2> >,
+  struct eq_ : private multiple_assert_< is_not_bexpr<T1>,
+					 is_not_bexpr<T2> >,
 	       public bexpr_<false>
   {
   };
 
   template <typename T>
-  struct eq_ <T, T> : private assert_< is_not_value<T> >,
+  struct eq_ <T, T> : private assert_< is_not_bexpr<T> >,
 		      public bexpr_<true>
   {
   };
   /// \}
 
 
-
   /// Inequality test between a couple of types.
   /// \{
   template <typename T1, typename T2>
-  struct neq_ : private multiple_assert_< is_not_value<T1>,
-					  is_not_value<T2> >,
+  struct neq_ : private multiple_assert_< is_not_bexpr<T1>,
+					  is_not_bexpr<T2> >,
 		public bexpr_<true>
   {
   };
 
   template <typename T>
-  struct neq_ <T, T> : private assert_< is_not_value<T> >,
+  struct neq_ <T, T> : private assert_< is_not_bexpr<T> >,
 		       public bexpr_<false>
   {
   };
   /// \}
 
 
-  /*--------------------------------------.
-  | Syntactic sugar for flag comparison.  |
-  `--------------------------------------*/
+
+  /*--------------------------------------------------------------------------.
+  | Syntactic sugar for checking the relationship between a type and a flag.  |
+  `---------------------------------------------------------------------------*/
 
   /// Shortcuts for comparison with mlc::not_found.
   /// \{

@@ -34,6 +34,15 @@
 # include <mlc/cmp.hh>
 
 
+/*! \macro mlc_propagate_typedef_from(Typedef, Type)
+**
+** FIXME: doc and say "end with ';'"
+*/
+# define mlc_propagate_typedef_from(Typedef, Type) \
+   typedef  typename Type :: Typedef  Typedef
+
+
+
 /*! \macro mlc_decl_typedef(TypedefName)
 **
 ** This macro is for declaring the use of a typedef embedded in
