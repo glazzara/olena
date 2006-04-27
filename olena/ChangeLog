@@ -1,3 +1,33 @@
+2006-04-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add image ``typeness'' abstraction hierarchy.
+
+	* tests/image_entry.cc (my): Check image_typeness_type vtype and
+	inheritance.
+	* oln/core/typedefs.hh (value_type, image_typeness_type): Enable
+	typedef.
+	* oln/core/abstract/image.hh (vtypes::value_type): Enable typedef.
+	(packed_vtypes::value_type): New typedef.
+	(packed_vtypes::echo): Print value_type and image_typeness_type.
+	(packed_vtypes::ensure): Check value_type and image_typeness_type.
+	(image::value_type): Enable typedef.
+	* oln/core/abstract/image_entry.hh: Include images abstractions
+	headers.
+	Don't include mlc/case.hh nor oln/core/abstract/image.hh.
+	(mlc_case_equipment_for_namespace(oln))
+	(abstraction_tags): Move...
+	* oln/core/abstract/image_abstractions.hh: ...here (new file).
+	* oln/core/abstract/image_dimension.hh: Include it.
+	Include stc/entry.hh.
+	Aesthetic changes.
+	* oln/core/abstract/image_typeness.hh: New file (imported from
+	Olena proto-1.0, and modified).
+	* oln/core/abstract/image_typeness_integre.hh: New file
+	* oln/Makefile.am (nobase_oln_HEADERS): Add
+	core/abstract/image_abstractions.hh,
+	core/abstract/image_typeness.hh and
+	core/abstract/image_typeness_integre.hh.
+
 2006-04-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/core/abstract/image_dimension.hh: Add some more

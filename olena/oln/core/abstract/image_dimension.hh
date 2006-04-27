@@ -28,7 +28,10 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HH
 
+# include <stc/entry.hh>
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image_abstractions.hh>
+
 
 /* Image dimension hierarchy (summary).
 
@@ -62,55 +65,36 @@
 
 */
 
-/*! \namespace oln
-** \brief oln namespace.
-*/
-namespace oln {
+namespace oln
+{
+ 
+  namespace abstract
+  {
 
-  /*! \namespace oln::abstract
-  ** \brief oln::abstract namespace.
-  */
-  namespace abstract {
-
-    /*! \class abstract::image1d<E>
-    **
-    ** Class of 1d images.
-    */
+    /// Class of 1D images.
     template <typename E>
     struct image1d : public virtual image<E>
     {
     protected:
-
-      /*! \brief Constructor (protected, empty).
-      */
+      /// Constructor (protected, empty).
       image1d() {}
     };
 
-    /*! \class abstract::image2d<E>
-    **
-    ** Class of 2d images.
-    */
+    /// Class of 2D images.
     template <typename E>
     struct image2d : public virtual image<E>
     {
     protected:
-
-      /*! \brief Constructor (protected, empty).
-      */
+      /// Constructor (protected, empty).
       image2d() {}
     };
  
-    /*! \class abstract::image3d<E>
-    **
-    ** Class of 3d images.
-    */
+    /// Class of 3d images.
     template <typename E>
     struct image3d : public virtual image<E>
     {
     protected:
-
-      /*! \brief Constructor (protected, empty).
-      */
+      /// Constructor (protected, empty).
       image3d() {}
     };
  
@@ -121,12 +105,10 @@ namespace oln {
   | Dimension switch.  |
   `-------------------*/
 
-  /// Forward declarations.
-  /// \{
+  // Forward declarations.
   class grid1d;
   class grid2d;
   class grid3d;
-  /// \}
   
   /// Case tag for the dimension.
   struct grid_dim_tag;
@@ -182,9 +164,11 @@ namespace stc
   };
 } // end of namespace stc
 
+
+// FIXME: Is this external property really useful?
 namespace oln
 {
-  /// An external type associated to my::B.
+  /// Image dimension type as an external vtype of abstract::image.
   template <typename I>
   struct ext_vtype< category::image,
 		    abstract::image<I>,

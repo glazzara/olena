@@ -27,9 +27,13 @@
 
 /// Test oln::abstract::image_entry.
 
+// FIXME: Check also with a (possibly fake) ntg::int_u<1, B> type, to
+// stress image_typeness.hh.  This should be done in another test, of
+// course.
+
 #include <oln/core/1d/grid1d.hh>
 #include <oln/core/abstract/image_entry.hh>
-#include <oln/core/abstract/image_dimension.hh>
+
 
 namespace my
 {
@@ -51,6 +55,10 @@ namespace oln
     // class using the sole grid information (the grid can be seen
     // here as a ``tag'').
     typedef oln::grid1d grid_type;
+
+    // Likewise, for the switch of image_typeness using the type of
+    // the value of the image.
+    typedef char value_type;
   };
 }
 
@@ -60,24 +68,37 @@ namespace my
   class image : public oln::set_super_type<my::image>::ret
   {
     typedef image self_type;
-    // An internal vtype.
+    // Internal vtypes.
     typedef oln_type_of_(self_type, grid) grid_type;
-    // An external vtype.
+    typedef oln_type_of_(self_type, value) value_type;
+    // External vtypes.
     typedef oln_type_of_(self_type, image_dimension) image_dimension_type;
+    typedef oln_type_of_(self_type, image_typeness) image_typeness_type;
   };
 }
 
 int
 main()
 {
-  // Check its internally defined vtype.
+  // Check its internally defined vtypes.
   mlc::assert_< mlc_eq(my::image::grid_type, oln::grid1d) >::check();
-  // Check its externally defined vtype.
-  mlc::assert_< mlc_eq( my::image::image_dimension_type,
-		        stc::abstraction_as_type<oln::abstract::image1d> )
-              >::check();
+  mlc::assert_< mlc_eq(my::image::value_type, char) >::check();
+  // Check its externally defined vtypes.
+  mlc::assert_<
+    mlc_eq( my::image::image_dimension_type,
+	    stc::abstraction_as_type<oln::abstract::image1d> )
+    >::check();
+  mlc::assert_<
+    mlc_eq( my::image::image_typeness_type,
+	    stc::abstraction_as_type<oln::abstract::grey_level_image> )
+    >::check();
+
   // Check its image dimension abstraction.
   mlc::assert_< mlc_is_a_(my::image, oln::abstract::image1d) >::check();
+  // Check its image ``typeness'' abstraction.
+  mlc::assert_< mlc_is_a_(my::image,
+			  oln::abstract::grey_level_image) >::check();
+
   // Ensure we can instantiate it.
   my::image i;
 

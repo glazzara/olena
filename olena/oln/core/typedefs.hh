@@ -95,7 +95,11 @@ namespace oln
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
 //   mlc_decl_typedef(data_type);
-//   mlc_decl_typedef(value_type);
+// --------------------------------------------------------------------
+  mlc_decl_typedef(value_type);
+// --------------------------------------------------------------------
+// FIXME: To be enabled later.
+// --------------------------------------------------------------------
 //   mlc_decl_typedef(neighb_type);
 //   mlc_decl_typedef(value_storage_type);
 //   mlc_decl_typedef(storage_type);
@@ -120,10 +124,10 @@ namespace oln
 //   mlc_decl_typedef(image_constness_type);
 // --------------------------------------------------------------------
   mlc_decl_typedef(image_dimension_type);
+  mlc_decl_typedef(image_typeness_type);
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-//   mlc_decl_typedef(image_typeness_type);
 //   mlc_decl_typedef(image_valuedness_type);
 //   mlc_decl_typedef(image_rawness_type);
 // --------------------------------------------------------------------

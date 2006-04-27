@@ -67,7 +67,11 @@ namespace oln {
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
 //     typedef mlc::undefined concrete_type;
-//     typedef mlc::undefined value_type;
+// --------------------------------------------------------------------
+    typedef mlc::undefined value_type;
+// --------------------------------------------------------------------
+// FIXME: To be enabled later.
+// --------------------------------------------------------------------
 //     typedef mlc::undefined point_type;
 //     typedef mlc::undefined size_type;
 
@@ -103,7 +107,11 @@ namespace oln {
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
 //     typedef oln_type_of(I, concrete) concrete_type;
-//     typedef oln_type_of(I, value) value_type;
+// --------------------------------------------------------------------
+    typedef oln_type_of(I, value) value_type;
+// --------------------------------------------------------------------
+// FIXME: To be enabled later.
+// --------------------------------------------------------------------
 //     typedef oln_type_of(I, point) point_type;
 //     typedef oln_type_of(I, size) size_type;
 
@@ -128,6 +136,7 @@ namespace oln {
 
     // Defined externally virtual types.
     typedef oln_type_of(I, image_dimension) image_dimension_type;
+    typedef oln_type_of(I, image_typeness)  image_typeness_type;
 
     /// Pretty-printing.
     static void echo(std::ostream& ostr)
@@ -144,7 +153,11 @@ namespace oln {
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
 // 	<< "  concrete_type = " << mlc_to_string(concrete_type) << std::endl
-// 	<< "  value_type = " << mlc_to_string(value_type) << std::endl
+// --------------------------------------------------------------------
+  	<< "  value_type = " << mlc_to_string(value_type) << std::endl
+// --------------------------------------------------------------------
+// FIXME: To be enabled later.
+// --------------------------------------------------------------------
 // 	<< "  point_type = " << mlc_to_string(point_type) << std::endl
 // 	<< "  size_type = " << mlc_to_string(size_type) << std::endl
 
@@ -165,7 +178,10 @@ namespace oln {
 // 	<< "  image_constness_type = " << mlc_to_string(image_constness_type) << std::endl
 // 	<< "  image_rawness_type = " << mlc_to_string(image_rawness_type) << std::endl
 // --------------------------------------------------------------------
-	<< "  image_dimension_type = " << mlc_to_string(image_dimension_type) << std::endl
+	<< "  image_dimension_type = " << mlc_to_string(image_dimension_type)
+	<< std::endl
+	<< "  image_typeness_type = " << mlc_to_string(image_typeness_type)
+	<< std::endl
 	<< "}" << std::endl;
     }
 
@@ -179,7 +195,11 @@ namespace oln {
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
 //       mlc::assert_< mlc_is_ok(concrete_type) >::check();
-//       mlc::assert_< mlc_is_ok(value_type) >::check();
+// --------------------------------------------------------------------
+      mlc::assert_< mlc_is_ok(value_type) >::check();
+// --------------------------------------------------------------------
+// FIXME: To be enabled later.
+// --------------------------------------------------------------------
 //       mlc::assert_< mlc_is_ok(point_type) >::check();
 //       mlc::assert_< mlc_is_ok(size_type) >::check();
 //       mlc::assert_< mlc_is_ok(piter_type) >::check();
@@ -200,6 +220,7 @@ namespace oln {
 //       mlc::assert_< mlc_is_ok(image_rawness_type) >::check();
 // --------------------------------------------------------------------
       mlc::assert_< mlc_is_ok(image_dimension_type) >::check();
+      mlc::assert_< mlc_is_ok(image_typeness_type) >::check();
     }
   };
 
@@ -235,12 +256,16 @@ namespace oln
     template <typename E>
     struct image : public internal::get_image_impl < image<E>, E >
     {
+      /// Typedefs.
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-//       /// typedefs
 //       typedef oln_type_of(E, size)  size_type;
-//       typedef oln_type_of(E, value) value_type;
+// --------------------------------------------------------------------
+      typedef oln_type_of(E, value) value_type;
+// --------------------------------------------------------------------
+// FIXME: To be enabled later.
+// --------------------------------------------------------------------
 //       typedef oln_type_of(E, point) point_type;
 // --------------------------------------------------------------------
 

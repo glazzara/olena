@@ -1,4 +1,4 @@
-// Copyright (C) 2005, 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,50 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_ABSTRACTIONS_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_ABSTRACTIONS_HH
 
-# include <stc/entry.hh>
+# include <mlc/case.hh>
 
-# include <oln/core/abstract/image_abstractions.hh>
-// Abstraction hierachies.
-# include <oln/core/abstract/image_dimension.hh>
-# include <oln/core/abstract/image_typeness.hh>
+// Add switch/case equipment in the oln namespace.
+mlc_case_equipment_for_namespace(oln);
 
 
 namespace oln
 {
   namespace abstract
   {
-    // Forward declaration.
-    template <typename E> struct image_entry;
-  }
 
-  /// \brief Uplink.
-  ///
-  /// oln::abstract::image<E> is not the direct super type of
-  /// oln::abstract::image_entry<E>, however, it is declared as such
-  /// using set_super_type, to make the virtual type retrieval system
-  /// work.
-  template <typename E>
-  struct set_super_type< abstract::image_entry<E> >
-  {
-    typedef abstract::image<E> ret;
-  };
-
-  namespace abstract
-  {
-
-    template <typename E>
-    struct image_entry : public stc::entry<E>
-    {
-    protected:
-      image_entry() {}
-    };
+    /// \brief Tags for abstractions.
+    ///
+    /// Use them instead of hard-coded numbers.
+    enum abstraction_tags
+      {
+	// constness_tag,
+	dimension_tag = 1,
+	typeness_tag
+	// valuedness_tag,
+	// rawness_tag,
+	// neighbness_tag,
+	// ...
+      };
 
   } // end of namespace oln::abstract
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_ENTRY_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_ABSTRACTIONS_HH

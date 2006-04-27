@@ -13,8 +13,11 @@ nobase_oln_HEADERS =				\
   core/abstract/any.hh				\
   core/abstract/grid.hh				\
   core/abstract/image.hh			\
+  core/abstract/image_abstractions.hh		\
   core/abstract/image_entry.hh			\
   core/abstract/image_dimension.hh		\
+  core/abstract/image_typeness.hh		\
+  core/abstract/image_typeness_integre.hh	\
   core/abstract/macros.hh			\
 						\
   core/abstract/internal/image_impl.hh
