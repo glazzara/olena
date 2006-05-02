@@ -77,11 +77,12 @@ namespace ntg
 } // end of namespace ntg
 
 
+/*--------------------------.
+| Typeness switch (cont.).  |
+`--------------------------*/
+
 namespace oln {
 
-  /*--------------------.
-  | Value type switch.  |
-  `--------------------*/
   
   /// Switch on on the value type.
   /// \{

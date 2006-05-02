@@ -65,13 +65,17 @@
 
 */
 
+/*-------------------------.
+| Dimension abstractions.  |
+`-------------------------*/
+
 namespace oln
 {
  
   namespace abstract
   {
 
-    /// Class of 1D images.
+    /// Class of 1-D images.
     template <typename E>
     struct image1d : public virtual image<E>
     {
@@ -80,7 +84,7 @@ namespace oln
       image1d() {}
     };
 
-    /// Class of 2D images.
+    /// Class of 2-D images.
     template <typename E>
     struct image2d : public virtual image<E>
     {
@@ -89,7 +93,7 @@ namespace oln
       image2d() {}
     };
  
-    /// Class of 3d images.
+    /// Class of 3-D images.
     template <typename E>
     struct image3d : public virtual image<E>
     {
@@ -100,57 +104,18 @@ namespace oln
  
   } // end of namespace oln::abstract
 
-
-  /*-------------------.
-  | Dimension switch.  |
-  `-------------------*/
-
-  // Forward declarations.
-  class grid1d;
-  class grid2d;
-  class grid3d;
-  
-  /// Case tag for the dimension.
-  struct grid_dim_tag;
-  
-  /// Switch on on the grid dimension.
-  /// \{
-  template <typename grid_type>
-  struct case_<grid_dim_tag, grid_type, 1> :
-    // Test.
-    public mlc::where_< mlc_eq(grid_type, oln::grid1d) >
-  {
-    // Super class if test succeeds.
-    typedef stc::abstraction_as_type<abstract::image1d> ret;
-  };
-
-  template <typename grid_type>
-  struct case_<grid_dim_tag, grid_type, 2> :
-    // Test.
-    public mlc::where_< mlc_eq(grid_type, oln::grid2d) >
-  {
-    // Super class if test succeeds.
-    typedef stc::abstraction_as_type<abstract::image2d> ret;
-  };
-
-  template <typename grid_type>
-  struct case_<grid_dim_tag, grid_type, 3> :
-    // Test.
-    public mlc::where_< mlc_eq(grid_type, oln::grid3d) >
-  {
-    // Super class if test succeeds.
-    typedef stc::abstraction_as_type<abstract::image3d> ret;
-  };
-
-  /// Abort when grid_type is not handled by the previous cases.
-  template <typename grid_type>
-  struct default_case_<grid_dim_tag, grid_type>
-  {
-    typedef mlc::abort_<grid_dim_tag> ret;
-  };
-  /// \}
-
 } // end of namespace oln
+
+
+/*-------------------.
+| Dimension switch.  |
+`-------------------*/
+
+namespace oln
+{
+  /// Case tag for the dimension.
+  struct grid_dim_tag; 
+}
 
 
 // Register the dimension switch for oln::abstract::image_entry.
@@ -165,7 +130,64 @@ namespace stc
 } // end of namespace stc
 
 
-// FIXME: Is this external property really useful?
+namespace oln
+{
+
+  // Forward declarations.
+  class grid1d;
+  class grid2d;
+  class grid3d;
+
+  
+  /// Switch on on the grid dimension.
+  /// \{
+
+  /// 1-D case.
+  template <typename grid_type>
+  struct case_<grid_dim_tag, grid_type, 1> :
+    // Test.
+    public mlc::where_< mlc_eq(grid_type, oln::grid1d) >
+  {
+    // Super class if test succeeds.
+    typedef stc::abstraction_as_type<abstract::image1d> ret;
+  };
+
+  /// 2-D case.
+  template <typename grid_type>
+  struct case_<grid_dim_tag, grid_type, 2> :
+    // Test.
+    public mlc::where_< mlc_eq(grid_type, oln::grid2d) >
+  {
+    // Super class if test succeeds.
+    typedef stc::abstraction_as_type<abstract::image2d> ret;
+  };
+
+  /// 3-D case.
+  template <typename grid_type>
+  struct case_<grid_dim_tag, grid_type, 3> :
+    // Test.
+    public mlc::where_< mlc_eq(grid_type, oln::grid3d) >
+  {
+    // Super class if test succeeds.
+    typedef stc::abstraction_as_type<abstract::image3d> ret;
+  };
+
+  /// Default case: abort when grid_type is not handled by the previous cases.
+  template <typename grid_type>
+  struct default_case_<grid_dim_tag, grid_type>
+  {
+    typedef mlc::abort_<grid_dim_tag> ret;
+  };
+  /// \}
+
+} // end of namespace oln
+
+
+/*----------------------------------.
+| Dimension external virtual type.  |
+`----------------------------------*/
+
+// FIXME: Is this external vtype really useful?
 namespace oln
 {
   /// Image dimension type as an external vtype of abstract::image.

@@ -1,3 +1,18 @@
+2006-05-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix a duplicate where-clause and perform some aesthetic changes in
+	image abstractions.
+
+	* oln/core/abstract/image_dimension.hh: Move the static switch
+	statement before the cases.
+	Aesthetic changes.
+	* olena/oln/core/abstract/image_typeness.hh: Likewise.
+	(case_<value_type_tag, value_type, 2>): Fix a copy-and-paste bug:
+	remove a duplicate `unsigned char' type in the where-clause and
+	replace it with `signed char'.
+	* oln/core/abstract/image_typeness_integre.hh,
+	* tests/image_entry.cc: Aesthetic changes.
+
 2006-04-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add image ``typeness'' abstraction hierarchy.

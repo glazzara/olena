@@ -28,7 +28,7 @@
 /// Test oln::abstract::image_entry.
 
 // FIXME: Check also with a (possibly fake) ntg::int_u<1, B> type, to
-// stress image_typeness.hh.  This should be done in another test, of
+// stress image_typeness.hh.  This might be done in another test, of
 // course.
 
 #include <oln/core/1d/grid1d.hh>
@@ -64,7 +64,7 @@ namespace oln
 
 namespace my
 {
-  // A very simple 1D image.
+  // A very simple 1-D image.
   class image : public oln::set_super_type<my::image>::ret
   {
     typedef image self_type;

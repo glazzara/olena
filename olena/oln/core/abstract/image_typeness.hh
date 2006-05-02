@@ -68,7 +68,12 @@
 
 */
 
-namespace oln {
+/*------------------------.
+| Typeness abstractions.  |
+`------------------------*/
+
+namespace oln
+{
 
   namespace abstract
   {
@@ -142,9 +147,9 @@ namespace oln {
     };
 
 
-    /*---------------------.
-    | Conjunctions types.  |
-    `---------------------*/
+    // -------------------- //
+    // Conjunctions types.  //
+    // -------------------- //
 
     namespace internal
     {
@@ -204,14 +209,35 @@ namespace oln {
 
   } // end of namespace oln::abstract
 
+} // end of namespace oln
 
-  /*--------------------.
-  | Value type switch.  |
-  `--------------------*/
 
+/*------------------.
+| Typeness switch.  |
+`------------------*/
+
+namespace oln
+{
   /// Case tag for the dimension.
   struct value_type_tag;
-  
+}
+
+
+// Register the dimension switch/case for oln::abstract::image_entry.
+namespace stc
+{
+  template <typename I>
+  struct set_entry_node<I, oln::abstract::typeness_tag> :
+    public oln::case_< oln::value_type_tag, oln_type_of(I, value) >::ret
+      ::super_type::template instantiated_with<I>::ret
+  {
+  };
+} // end of namespace stc
+
+
+namespace oln
+{
+
   /// Switch on on the grid dimension.
   /// \{
 
@@ -235,8 +261,8 @@ namespace oln {
   template <typename value_type>
   struct case_<value_type_tag, value_type, 2> :
     public mlc::where_<
-             mlc::or_list_< mlc_eq(value_type, char),
-			    mlc_eq(value_type, unsigned char),
+             mlc::or_list_< mlc_eq(value_type,          char),
+			    mlc_eq(value_type,   signed char),
 			    mlc_eq(value_type, unsigned char) > >
   {
     // Definition of the super class corresponding to this case
@@ -273,19 +299,11 @@ namespace oln {
 } // end of namespace oln
 
 
-// Register the dimension switch/case for oln::abstract::image_entry.
-namespace stc
-{
-  template <typename I>
-  struct set_entry_node<I, oln::abstract::typeness_tag> :
-    public oln::case_< oln::value_type_tag, oln_type_of(I, value) >::ret
-      ::super_type::template instantiated_with<I>::ret
-  {
-  };
-} // end of namespace stc
+/*---------------------------------.
+| Typeness external virtual type.  |
+`---------------------------------*/
 
-
-// FIXME: Is this external property really useful?
+// FIXME: Is this external vtype really useful?
 namespace oln
 {
   /// Image ``typeness'' as an external vtype of abstract::image.
