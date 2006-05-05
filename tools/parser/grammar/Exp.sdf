@@ -1,0 +1,43 @@
+module Exp
+
+imports
+  Lexical Type ExpOrType Class
+
+exports
+  sorts Exp
+  context-free syntax
+
+	ExpOrType			-> Exp
+	Int				-> Exp		{cons("Int")}
+	String				-> Exp		{cons("String")}
+	Id "(" {Exp ","}* ")"		-> Exp		{cons("FunCall")}
+	Id "[" {Exp ","}* "]"
+	"(" {Exp ","}* ")"		-> Exp		{cons("BiFunCall")}
+	Exp "+" Exp			-> Exp		{cons("Sum")}
+	Exp "-" Exp			-> Exp		{cons("Sub")}
+	Exp "*" Exp			-> Exp		{cons("Mul")}
+	Exp "/" Exp			-> Exp		{cons("Div")}
+	Exp "=" Exp			-> Exp		{cons("Eq")}
+	Exp "!=" Exp			-> Exp		{cons("Neq")}
+	Exp "<" Exp			-> Exp		{cons("Inf")}
+	Exp ">" Exp			-> Exp		{cons("Sup")}
+	Exp ">=" Exp			-> Exp		{cons("SupEq")}
+	Exp "<=" Exp			-> Exp		{cons("InfEq")}
+	Exp ":=" Exp			-> Exp		{cons("Affect")}
+	Class				-> Exp
+	Exp "." Id			-> Exp		{cons("Field")}
+	Id "." Id "(" {Exp ","}* ")"	-> Exp		{cons("MethodCall")}
+
+  context-free priorities
+
+	{left:
+	  Exp "/" Exp -> Exp
+	  Exp "*" Exp -> Exp
+	}
+>	{left:
+	  Exp "+" Exp -> Exp
+	  Exp "-" Exp -> Exp
+	}
+>	{right:
+	  Exp ":=" Exp -> Exp
+	}

@@ -1,0 +1,18 @@
+module Class
+
+imports
+  Lexical Decl
+
+exports
+  sorts Class AccessBlock AccessModifier
+  context-free syntax
+	"{" AccessBlock* "}" -> Class			{cons("Class")}
+
+	AccessModifier "{" Decl* "}" -> AccessBlock	{cons("Accessblock")}
+
+	"public" -> AccessModifier			{cons("Public")}
+	"protected" -> AccessModifier			{cons("Protected")}
+	"private" -> AccessModifier			{cons("Private")}
+
+  lexical restrictions
+	AccessModifier -/- [A-Za-z]

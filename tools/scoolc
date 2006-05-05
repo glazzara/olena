@@ -1,0 +1,4 @@
+#!/bin/sh
+# -*- sh -*-
+
+parser/parse-scool $1 | transformer/scoolc

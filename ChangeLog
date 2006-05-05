@@ -1,3 +1,73 @@
+2006-05-05  Quentin Hocquet  <mefyl@lrde.epita.fr>
+
+	Scool parser.
+
+	* tools: New.
+	* tools/test.yml: New.
+	* tools/transformer: New.
+	* tools/transformer/scoolc.str: New.
+	* tools/transformer/Makefile: New.
+	* tools/tests: New.
+	* tools/tests/syntax error: New.
+	* tools/tests/syntax error/wrong.scl: New.
+	* tools/tests/parse-ref: New.
+	* tools/tests/parse-ref/vardec.ref: New.
+	* tools/tests/parse-ref/fundec.ref: New.
+	* tools/tests/parse-ref/funcall_no-args.ref: New.
+	* tools/tests/parse-ref/emtpy-class_dec.ref: New.
+	* tools/tests/parse-ref/empty-class_dec.ref: New.
+	* tools/tests/parse-ref/varinit.ref: New.
+	* tools/tests/parse-ref/no-args_funtype.ref: New.
+	* tools/tests/parse-ref/manydec.ref: New.
+	* tools/tests/parse-ref/class_dec.ref: New.
+	* tools/tests/parse-ref/wiki1.ref: New.
+	* tools/tests/parse-ref/funcall.ref: New.
+	* tools/tests/parse-ref/bi-exp.ref: New.
+	* tools/tests/parse-ref/function.ref: New.
+	* tools/tests/parse-ref/wiki2.ref: New.
+	* tools/tests/parse-ref/consinit.ref: New.
+	* tools/tests/parse-ref/wiki3.ref: New.
+	* tools/tests/parse-ref/funtype.ref: New.
+	* tools/tests/parse-ref/empty.ref: New.
+	* tools/tests/parse-ref/type_static-call.ref: New.
+	* tools/tests/parse-ref/guard.ref: New.
+	* tools/tests/good: New.
+	* tools/tests/good/type_static-call.scl: New.
+	* tools/tests/good/guard.scl: New.
+	* tools/tests/good/fundec.scl: New.
+	* tools/tests/good/vardec.scl: New.
+	* tools/tests/good/funcall_no-args.scl: New.
+	* tools/tests/good/varinit.scl: New.
+	* tools/tests/good/empty-class_dec.scl: New.
+	* tools/tests/good/manydec.scl: New.
+	* tools/tests/good/class_dec.scl: New.
+	* tools/tests/good/no-args_funtype.scl: New.
+	* tools/tests/good/bi-exp.scl: New.
+	* tools/tests/good/wiki1.scl: New.
+	* tools/tests/good/funcall.scl: New.
+	* tools/tests/good/wiki2.scl: New.
+	* tools/tests/good/function.scl: New.
+	* tools/tests/good/consinit.scl: New.
+	* tools/tests/good/wiki3.scl: New.
+	* tools/tests/good/funtype.scl: New.
+	* tools/tests/good/empty.scl: New.
+	* tools/scoolc: New.
+	* tools/gen.yml: New.
+	* tools/parser: New.
+	* tools/parser/grammar: New.
+	* tools/parser/grammar/Class.sdf: New.
+	* tools/parser/grammar/Decl.sdf: New.
+	* tools/parser/grammar/Exp.sdf: New.
+	* tools/parser/grammar/ExpOrType.sdf: New.
+	* tools/parser/grammar/Scool.sdf: New.
+	* tools/parser/grammar/Lexical.sdf: New.
+	* tools/parser/grammar/Type.sdf: New.
+	* tools/parser/grammar/Guard.sdf: New.
+	* tools/parser/grammar/Stm.sdf: New.
+	* tools/parser/parse-scool: New.
+	* tools/parser/Makefile: New.
+	* tools/Makefile: New.
+
 2006-04-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add COPYING and NEWS.

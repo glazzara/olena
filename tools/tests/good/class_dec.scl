@@ -1,0 +1,15 @@
+point : class =
+{
+  public
+  {
+    x : () -> int =
+    {
+      -> x;
+    }
+  }
+  private
+  {
+    var x :int;
+    var y :int;
+  }
+};

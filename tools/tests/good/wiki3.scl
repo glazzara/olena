@@ -1,0 +1,9 @@
+f : () -> void =
+{
+  var i : int;
+  var j : int;
+
+  i := 0;
+  j := i;
+  i := j + i;
+}

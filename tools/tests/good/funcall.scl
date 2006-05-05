@@ -1,0 +1,4 @@
+doit : () -> int =
+{
+  -> chiche("pelle", "branle");
+}

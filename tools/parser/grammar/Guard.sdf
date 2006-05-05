@@ -1,0 +1,10 @@
+module Guard
+
+imports
+  Exp
+
+exports
+  sorts Guard
+  context-free syntax
+
+	"where" Exp -> Guard		{cons("Guard")}

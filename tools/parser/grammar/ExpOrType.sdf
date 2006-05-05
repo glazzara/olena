@@ -1,0 +1,12 @@
+module ExpOrType
+
+imports
+  Lexical Exp
+
+exports
+
+  sorts ExpOrType
+  context-free syntax
+	Id "[" {Exp ","}* "]"		-> ExpOrType	{cons("StaticFunCall")}
+	Id				-> ExpOrType	{cons("Var")}
+	Id "::" Exp			-> ExpOrType	{cons("Scope")}

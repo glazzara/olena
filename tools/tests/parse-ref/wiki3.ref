@@ -1,0 +1,1 @@
+Program([FunDec("f",[],Var("void"),[VarDec("i",Var("int")),VarDec("j",Var("int")),ExpStm(Affect(Var("i"),Int("0"))),ExpStm(Affect(Var("j"),Var("i"))),ExpStm(Affect(Var("i"),Sum(Var("j"),Var("i"))))])])

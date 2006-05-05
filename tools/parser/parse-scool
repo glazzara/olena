@@ -1,0 +1,8 @@
+#!/bin/sh
+# -*- sh -*-
+
+if [ $# -eq 0 ]; then
+    echo "usage: parse-scool file.scl"
+else
+    sglri -p parser/Scool.tbl -i $1
+fi

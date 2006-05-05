@@ -1,0 +1,1 @@
+Program([FunDec("f",[],Var("void"),[VarDec("a",StaticFunCall("array",[Int("2"),Var("int16")])),VarDec("i",Var("int16"),MethodCall("a","at",[Int("0")]))])])

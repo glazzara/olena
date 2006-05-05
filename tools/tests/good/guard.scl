@@ -1,0 +1,1 @@
+f : [i : int where i > 0]() -> int = {}

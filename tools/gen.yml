@@ -1,0 +1,9 @@
+---
+Autogeneration of the Scool parser references: !S::Suite
+  contents:
+    - Generation: !S::Iterate
+        over: !pathlist <<pwd>>/tests/good/(*).scl
+        iter: [it_file, it_name]
+        test:
+          Generation <<it_name>>: !S::Cmd
+            command: parser/parse-scool "<<it_file>>" > "<<pwd>>/tests/good/<<it_name>>.ref"

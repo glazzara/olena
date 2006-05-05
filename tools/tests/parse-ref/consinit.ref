@@ -1,0 +1,1 @@
+Program([ConsDec("i",Var("int"),Int("3"))])

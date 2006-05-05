@@ -1,0 +1,4 @@
+answer : int = 42;
+
+var i : int;
+var j : int := i;
