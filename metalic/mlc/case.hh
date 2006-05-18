@@ -264,9 +264,15 @@ namespace NAMESPACE																	\
 																			\
     {																			\
       typedef NAMESPACE::default_case_<context, data> case_t;												\
+      typedef typename protected_in_<case_t>::the protected_case_t;											\
+																			\
+      typedef typename mlc::if_< mlc::is_found_<protected_case_t>,											\
+	                         protected_case_t,													\
+	                         case_t >::ret eff_case_t;												\
+												       							\
       typedef typename mlc::if_<mlc_is_a(case_t, mlc::undefined),											\
 	                        mlc::none,														\
-	                        case_t>::ret ret;													\
+	                        eff_case_t>::ret ret;													\
     };																			\
 																			\
 																			\
@@ -339,27 +345,7 @@ namespace NAMESPACE																	\
 						 mlc::where_),												\
 					mlc_is_a(mlc_comma_2(NAMESPACE::case_<context, data, i>),							\
 						 mlc::undefined) >,											\
-			      mlc::ERROR::A_case_STATEMENT_SHOULD_DERIVE_FROM_mlc_where_ >,								\
-																			\
-	private mlc::assert_< mlc::implies_< mlc::and_< mlc::eq_<use, mlc::internal::a_switch_case>,							\
-							mlc::is_defined_< NAMESPACE::case_<context, data, i> > >,					\
-					     mlc::or_< mlc::ret_found_in_< NAMESPACE::case_<context, data, i> >,					\
-						       typename protected_in_< NAMESPACE::case_<context, data, i> >::is_found > >,			\
-			      mlc::ERROR::A_case_STATEMENT_IN_A_switch_SHOULD_HAVE_EITHER_A_ret_OR_A_protected >,					\
-																			\
-	private mlc::assert_< mlc::implies_< mlc::and_list_< mlc::eq_<use, mlc::internal::a_switch_case>,						\
-							     mlc::is_defined_< NAMESPACE::case_<context, data, i> >,					\
-							     mlc::or_< mlc::ret_found_in_< NAMESPACE::case_<context, data, i> >,			\
-								       typename protected_in_< NAMESPACE::case_<context, data, i> >::is_found > >,	\
-					     mlc::xor_< mlc::ret_found_in_< NAMESPACE::case_<context, data, i> >,					\
-							typename protected_in_< NAMESPACE::case_<context, data, i> >::is_found > >,			\
-			      mlc::ERROR::A_case_STATEMENT_IN_A_switch_SHOULD_NOT_HAVE_BOTH_A_ret_AND_A_protected >,					\
-																			\
-	private mlc::assert_< mlc::implies_< mlc::and_list_< mlc::eq_<use, mlc::internal::a_switch_case>,						\
-							     mlc::is_defined_< NAMESPACE::case_<context, data, i> >,					\
-							     typename protected_in_< NAMESPACE::case_<context, data, i> >::is_found >,			\
-      					     typename protected_in_< NAMESPACE::case_<context, data, i> >::is_found_with_ret >,				\
-			      mlc::ERROR::THE_protected_PART_OF_A_case_STATEMENT_IN_A_switch_SHOULD_HAVE_A_ret >					\
+			      mlc::ERROR::A_case_STATEMENT_SHOULD_DERIVE_FROM_mlc_where_ >					       			\
     {																			\
       typedef mlc_is_a(mlc_comma_2(NAMESPACE::case_<context, data, i+1>),										\
 		       mlc::case_selected) next_case_is_selected;											\

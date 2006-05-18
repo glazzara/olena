@@ -67,6 +67,8 @@ namespace stc
   struct any <E,
               dispatch_policy::best_speed>
   {
+    typedef E exact_t;
+
     E& exact() {
       precondition(exact_ptr != 0);
       return *exact_ptr;
@@ -117,7 +119,7 @@ namespace stc
 
   /// "Best memory" version of 'any'
   /* FIXME:
-     We should test with autotools if the compiler allows us to write a 
+     We should test with autotools if the compiler allows us to write a
      static_cast or not (diamond inheritance problem). gcc-2.95 gives a
      different adress but not gcc-3.
      On Mac OS X, the compilation fails with a strange link error if you
@@ -129,15 +131,17 @@ namespace stc
   struct any <E,
 	      dispatch_policy::best_memory>
   {
+    typedef E exact_t;
+
     E& exact() {
-# if defined __GNUC__ && __GNUC__ >= 3    
+# if defined __GNUC__ && __GNUC__ >= 3
       return static_cast<E&>(*this);
 # else
       return *(E*)((char*)this - exact_offset);
 # endif
     }
     const E& exact() const {
-# if defined __GNUC__ && __GNUC__ >= 3    
+# if defined __GNUC__ && __GNUC__ >= 3
       return static_cast<const E&>(*this);
 # else
       return *(const E*)((const char*)this - exact_offset);
@@ -185,6 +189,8 @@ namespace stc
   struct any <E,
               dispatch_policy::simple>
   {
+    typedef E exact_t;
+
     E& exact() {
       return *(E*)(void*)this;
     }

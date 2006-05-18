@@ -1,3 +1,12 @@
+2006-05-18  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
+
+	Add stc::exact.
+
+	* static/tests/exact.cc: test suite of stc::exact (new file).
+	* static/stc/exact.hh: implementation of stc::exact (new file).
+	* static/stc/any.hh: adding a typedef exact_t in stc::any.
+	* metalic/mlc/case.hh: fixing a bug in the protected defaults cases.
+
 2006-05-06  Quentin Hocquet  <quentin.hocquet@lrde.epita.fr>
 
 	Fix previous patch.
