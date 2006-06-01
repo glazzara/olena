@@ -94,9 +94,9 @@ namespace stc
   {
     struct protected_
     {
-      typedef typename T::exact_t ret;
+      typedef typename T::exact_type ret;
 
-      static inline ret& impl(T& t)
+      static ret& impl(T& t)
       {
 	return t.exact();
       }
@@ -110,12 +110,11 @@ namespace stc
     {
       typedef T ret;
 
-      static inline ret& impl(T& t)
+      static ret& impl(T& t)
       {
 	return t;
       }
     };
-
   };
 
 
@@ -124,10 +123,10 @@ namespace stc
   {
     typedef typename switch_<tag::exact, T>::ret ret;
 
-    static inline ret& impl(const T& t)
+    static ret& impl(const T& t)
     {
-      typedef typename case_<tag::exact, T>::ret case_t;
-      return case_t::impl(const_cast<T&>(t));
+      typedef typename case_<tag::exact, T>::ret case_type;
+      return case_type::impl(const_cast<T&>(t));
     }
   };
 
@@ -137,7 +136,7 @@ namespace stc
   {
     typedef const typename to_exact_<T>::ret ret;
 
-    static inline ret& impl(const T& t)
+    static ret& impl(const T& t)
     {
       return to_exact_<T>::impl(const_cast<T&>(t));
     }
@@ -149,9 +148,9 @@ namespace stc
   {
     typedef typename to_exact_<T>::ret * ret;
 
-    static inline ret impl(T* t)
+    static ret impl(T* t)
     {
-      return & to_exact_<T>::impl(*t);
+      return &to_exact_<T>::impl(*t);
     }
   };
 

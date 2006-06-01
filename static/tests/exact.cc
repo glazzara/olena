@@ -118,7 +118,7 @@ int main()
   //-----------------------------------------
   {
     concrete t;
-    const concrete::exact_t& tmp = stc::exact(t);
+    const concrete::exact_type& tmp = stc::exact(t);
     std::cout << &t << " = "
 	      << &tmp << std::endl;
   }
@@ -132,7 +132,7 @@ int main()
   {
     concrete t;
     sub_abstraction<concrete>& st = t;
-    const sub_abstraction<concrete>::exact_t& tmp = stc::exact(st);
+    const sub_abstraction<concrete>::exact_type& tmp = stc::exact(st);
     std::cout << &t << " = "
 	      << &tmp << std::endl;
     tmp.foo();
@@ -147,7 +147,7 @@ int main()
   {
     concrete t;
     abstraction<concrete>& a = t;
-    const abstraction<concrete>::exact_t& tmp = stc::exact(a);
+    const abstraction<concrete>::exact_type& tmp = stc::exact(a);
     std::cout << &t << " = "
 	      << &tmp << std::endl;
   }

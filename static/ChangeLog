@@ -1,5 +1,14 @@
 2006-06-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Enforce coding style in stc::exact.
+
+	* stc/any.hh, tests/exact.cc: s/exact_t/exact_type/g.
+	* stc/exact.hh: Likewise.
+	s/case_t/case_type/.
+	Remove superfluous `inline' qualifiers.
+
+2006-06-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have tests/exact.cc be (actually) part of Static's test-suite.
 
 	* stc/exact.hh: Aesthetic change.

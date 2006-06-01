@@ -67,7 +67,7 @@ namespace stc
   struct any <E,
               dispatch_policy::best_speed>
   {
-    typedef E exact_t;
+    typedef E exact_type;
 
     E& exact() {
       precondition(exact_ptr != 0);
@@ -131,7 +131,7 @@ namespace stc
   struct any <E,
 	      dispatch_policy::best_memory>
   {
-    typedef E exact_t;
+    typedef E exact_type;
 
     E& exact() {
 # if defined __GNUC__ && __GNUC__ >= 3
@@ -189,7 +189,7 @@ namespace stc
   struct any <E,
               dispatch_policy::simple>
   {
-    typedef E exact_t;
+    typedef E exact_type;
 
     E& exact() {
       return *(E*)(void*)this;
