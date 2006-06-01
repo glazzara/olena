@@ -1,20 +1,9 @@
-2006-05-18  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
-
-	Add stc::exact.
-
-	* static/tests/exact.cc: test suite of stc::exact (new file).
-	* static/stc/exact.hh: implementation of stc::exact (new file).
-	* static/stc/any.hh: adding a typedef exact_t in stc::any.
-	* metalic/mlc/case.hh: fixing a bug in the protected defaults cases.
-
 2006-05-06  Quentin Hocquet  <quentin.hocquet@lrde.epita.fr>
 
 	Fix previous patch.
 
-	* Fix error in svn external link to transformers
-
-	* tools: .
-	* tools/tests/good/funcall_no-args.scl, tools/tests/good/funcall.scl: fix typo
+	* tools/tests/good/funcall_no-args.scl,
+	* tools/tests/good/funcall.scl: Fix typo.
 
 2006-05-05  Quentin Hocquet  <mefyl@lrde.epita.fr>
 

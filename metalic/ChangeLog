@@ -1,3 +1,7 @@
+2006-05-18  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
+
+	* mlc/case.hh: Fix a bug in the protected default cases.
+
 2006-04-26  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Add mlc_propagate_typedef_from; fix mlc::eq_ and _neq_.
