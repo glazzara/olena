@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006  EPITA Research and
-// Development Laboratory.
+// Copyright (C) 2006  EPITA Research and Development Laboratory.
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -27,7 +26,7 @@
 // Public License.
 
 #include <iostream>
-#include <exact.hh> // FIXME: was stc/exact.hh
+#include <stc/exact.hh>
 
 template <typename E>
 struct abstraction : public stc::any<E>

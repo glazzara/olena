@@ -28,8 +28,8 @@
 /// Test stc::any.
 
 #include <stc/any.hh>
-#include <mlc/cmp.hh>
 #include <mlc/assert.hh>
+#include <mlc/cmp.hh>
 #include <mlc/logic.hh>
 #include <mlc/is_a.hh>
 

@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006  EPITA Research and
-// Development Laboratory.
+// Copyright (C) 2006  EPITA Research and Development Laboratory.
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,8 +37,9 @@
 
 
 
-# define stc_internal_is_any(T) \
-mlc::bexpr_< sizeof(internal::any_select(internal::makePtr< T >())) == sizeof(internal::yes_) >
+# define stc_internal_is_any(T)						 \
+  mlc::bexpr_< sizeof(internal::any_select(internal::makePtr< T >())) == \
+    sizeof(internal::yes_) >
 
 
 

@@ -1,3 +1,15 @@
+2006-06-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have tests/exact.cc be (actually) part of Static's test-suite.
+
+	* stc/exact.hh: Aesthetic change.
+	Fix copyright headers.
+	* tests/exact.cc: Likewise.
+	Fix an inclusion of header.
+	* tests/Makefile.am (check_PROGRAMS): Add exact.
+	(exact_SOURCES): New.
+	* tests/any.cc: Aesthetic change.
+
 2006-04-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove the mlc::eqv and mlc::neqv workarounds.
