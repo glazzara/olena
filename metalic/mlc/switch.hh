@@ -36,10 +36,10 @@
 /// \{
 
 # define mlc_switch(Namespace, Context, Data) \
-  typename Namespace::switch_<Context, Data>::ret
+  typename Namespace::switch_< Context, Data >::ret
 
 # define mlc_switch_(Namespace, Context, Data) \
-  Namespace::switch_<Context, Data>::ret
+  Namespace::switch_< Context, Data >::ret
 
 /// \}
 

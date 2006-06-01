@@ -29,9 +29,9 @@
 # define METALIC_ELT_HH
 
 
-# define mlc_elt(Type, Index)  typename Type::template elt<Index>::ret
+# define mlc_elt(Type, Index)  typename Type::template elt< Index >::ret
 
-# define mlc_elt_(Type, Index) Type::template elt<Index>::ret
+# define mlc_elt_(Type, Index) Type::template elt< Index >::ret
 
 
 

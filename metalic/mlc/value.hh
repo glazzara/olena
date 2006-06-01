@@ -85,7 +85,7 @@ namespace mlc {
  ** Design notes: FIXME: doc
  */
 
-# define mlc_value(T) mlc::internal::value_of_<T>::ret
+# define mlc_value(T) mlc::internal::value_of_< T >::ret
 
 
 

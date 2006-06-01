@@ -43,9 +43,9 @@
  ** evaluated, whatever the result of \a Cond.
  **
  */
-# define mlc_if(Cond, Then, Else)  typename mlc::if_<Cond, Then, Else>::ret
+# define mlc_if(Cond, Then, Else)  typename mlc::if_< Cond, Then, Else >::ret
 /// Likewise, without the leading \c typename keyword.
-# define mlc_if_(Cond, Then, Else)          mlc::if_<Cond, Then, Else>::ret
+# define mlc_if_(Cond, Then, Else)          mlc::if_< Cond, Then, Else >::ret
 
 
 namespace mlc

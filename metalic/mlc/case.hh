@@ -43,10 +43,10 @@
 /// \{
 
 # define mlc_case(Namespace, Context, Data) \
-  typename Namespace::case_<Context, Data>::ret
+  typename Namespace::case_< Context, Data >::ret
 
 # define mlc_case_(Namespace, Context, Data) \
-  Namespace::case_<Context, Data>::ret
+  Namespace::case_< Context, Data >::ret
 
 /// \}
 

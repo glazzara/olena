@@ -41,7 +41,7 @@
 ** \see mlc::implies_<L, R>
 */
 
-# define mlc_implies(L, R)  mlc::implies_<L, R>
+# define mlc_implies(L, R)  mlc::implies_< L, R >
 
 
 namespace mlc

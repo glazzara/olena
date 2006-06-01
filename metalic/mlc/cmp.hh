@@ -37,8 +37,8 @@
 /// \{
 /// Macros mlc_eq(T1, T2) and mlc_neq(T1, T2).
 
-# define mlc_eq( T1, T2) mlc::eq_ <T1, T2>
-# define mlc_neq(T1, T2) mlc::neq_<T1, T2>
+# define mlc_eq( T1, T2) mlc::eq_ < T1, T2 >
+# define mlc_neq(T1, T2) mlc::neq_< T1, T2 >
 
 /// \}
 
@@ -47,21 +47,21 @@
 /// \{
 /// Macros mlc_something(T) corresponding to mlc::something_<T>.
 
-# define mlc_is_bexpr(T)     mlc::is_bexpr_<T>
-# define mlc_is_not_bexpr(T) mlc::is_not_bexpr_<T>
+# define mlc_is_bexpr(T)     mlc::is_bexpr_< T >
+# define mlc_is_not_bexpr(T) mlc::is_not_bexpr_< T >
 
-# define mlc_is_found(T)     mlc::is_found_<T>
-# define mlc_is_not_found(T) mlc::is_not_found_<T>
+# define mlc_is_found(T)     mlc::is_found_< T >
+# define mlc_is_not_found(T) mlc::is_not_found_< T >
 
 // FIXME: or (?) mlc_is_not_defined below
-# define mlc_is_undefined(T) mlc::is_undefined_<T>
-# define mlc_is_defined(T)   mlc::is_defined_<T>
+# define mlc_is_undefined(T) mlc::is_undefined_< T >
+# define mlc_is_defined(T)   mlc::is_defined_< T >
 
-# define mlc_is_ok(T)     mlc::is_ok_<T>
-# define mlc_is_not_ok(T) mlc::is_not_ok_<T>
+# define mlc_is_ok(T)     mlc::is_ok_< T >
+# define mlc_is_not_ok(T) mlc::is_not_ok_< T >
 
-# define mlc_is_builtin(T)     mlc::is_builtin_<T>
-# define mlc_is_not_builtin(T) mlc::is_not_builtin_<T>
+# define mlc_is_builtin(T)     mlc::is_builtin_< T >
+# define mlc_is_not_builtin(T) mlc::is_not_builtin_< T >
 
 /// \}
 

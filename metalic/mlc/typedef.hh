@@ -244,10 +244,10 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n			\
 */
 
 # define mlc_typedef(Type, TypedefName) \
-   typename typedef_::TypedefName::from_<Type>::ret
+   typename typedef_::TypedefName::from_< Type >::ret
 
 # define mlc_typedef_(Type, TypedefName) \
-   typedef_::TypedefName::from_<Type>::ret
+   typedef_::TypedefName::from_< Type >::ret
 
 
 
@@ -260,10 +260,10 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n			\
 */
 
 # define mlc_typedef_in(Namespace, Type, TypedefName) \
-   typename Namespace::typedef_::TypedefName::from_<Type>::ret
+   typename Namespace::typedef_::TypedefName::from_< Type >::ret
 
 # define mlc_typedef_in_(Namespace, Type, TypedefName) \
-   Namespace::typedef_::TypedefName::from_<Type>::ret
+   Namespace::typedef_::TypedefName::from_< Type >::ret
 
 
 /*! \macro mlc_typedef_onlyif(Type, TypedefName, Bexpr)
@@ -272,10 +272,10 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n			\
 */
 
 # define mlc_typedef_onlyif(Type, TypedefName, Bexpr) \
-   typename typedef_::TypedefName::from_onlyif_<Type, mlc_bool(Bexpr)>::ret
+   typename typedef_::TypedefName::from_onlyif_< Type, mlc_bool(Bexpr) >::ret
 
 # define mlc_typedef_onlyif_(Type, TypedefName, Bexpr) \
-   typedef_::TypedefName::from_onlyif_<Type, mlc_bool(Bexpr)>::ret
+   typedef_::TypedefName::from_onlyif_< Type, mlc_bool(Bexpr) >::ret
 
 
 #endif // ! METALIC_TYPEDEF_HH

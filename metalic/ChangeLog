@@ -1,3 +1,24 @@
+2006-06-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Please the Intel C++ Compiler w.r.t. the substitution of arguments
+	of macros as template parameters.
+
+	* mlc/case.hh (mlc_case, mlc_case_)
+	* mlc/cmp.hh (mlc_eq, mlc_neq, mlc_is_bexpr, mlc_is_not_bexpr)
+	(mlc_is_found, mlc_is_not_found, mlc_is_undefined)
+	(mlc_is_defined, mlc_is_ok, mlc_is_not_ok, mlc_is_builtin)
+	(mlc_is_not_builtin)
+	* mlc/elt.hh (mlc_elt, mlc_elt_)
+	* mlc/if.hh (mlc_if, mlc_if_)
+	* mlc/implies.hh (mlc_implies)
+	* mlc/switch.hh (mlc_switch, mlc_switch_)
+	* mlc/typedef.hh (mlc_typedef, mlc_typedef_, mlc_typedef_in) 
+	(mlc_typedef_in, mlc_typedef_onlyif, mlc_typedef_onlyif_)
+	* mlc/value.hh (mlc_value): Add space around the arguments of
+	these macro to please icpc, whose preprocessor doesn't add
+	extra space when expanding macros, leading sometimes to
+	syntax errors.
+
 2006-05-18  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
 
 	* mlc/case.hh: Fix a bug in the protected default cases.
