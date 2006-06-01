@@ -1,5 +1,17 @@
 2006-06-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor the recursive retrieval in internal and external vtypes.
+
+	* stc/vtypes.hh
+	(stc::ERROR::FIRST_PARAMETER_OF_rec_get_vtype_SHOULD_BE_A_TAG):
+	New.
+	(tag::method, tag::internal, tag::external): New.
+	(get_vtype): New.
+	(rec_get_vtype): Handle both internal and external vtypes.
+	(rec_ext_vtype): Remove.
+
+2006-06-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Enforce coding style in stc::exact.
 
 	* stc/any.hh, tests/exact.cc: s/exact_t/exact_type/g.

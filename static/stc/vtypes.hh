@@ -40,6 +40,22 @@
 # include <mlc/cmp.hh>
 # include <mlc/if.hh>
 # include <mlc/is_a.hh>
+# include <mlc/assert.hh>
+
+
+/*-----------------.
+| Error messages.  |
+`-----------------*/
+
+namespace stc
+{
+  /// Error messages raised by static assertions.
+  namespace ERROR
+  {
+    struct FIRST_PARAMETER_OF_rec_get_vtype_SHOULD_BE_A_TAG;
+  } // end of namespace stc::ERROR
+} // end of namespace stc
+
 
 
 /*------------.
@@ -137,20 +153,66 @@
     /* Recursive retrieval of an internal vtype.  */			      \
     /* ------------------------------------------ */			      \
 									      \
-    /* FIXME: Do a basic scheme of the algorithm in pseudo-code.  */	      \
+    /** Tags for retrieval methods.  */					      \
+    namespace tag							      \
+    {									      \
 									      \
-    /* FIXME: Check for mlc::undefined?  */				      \
+      /** Abstraction for method tags.  */				      \
+      struct method {};							      \
 									      \
-    /* FIXME: The presence of `vtypes' is the only thing that makes */	      \
-    /* this code different from the retrieval within an external    */	      \
-    /* vtype.  How can we factor this?                              */	      \
+      /** Tag for retrieval within internal vtypes.  */			      \
+      struct internal : public method {};				      \
+      /** Tag for retrieval within external vtypes.  */			      \
+      struct external : public method {};				      \
+									      \
+    } /** end of stc::internal::tag */					      \
+									      \
+									      \
+    /** Try to get \a typedef_type from \a from_type.  In case this */	      \
+    /** typedef is mlc::not_found, don't perform a recursive        */	      \
+    /** retrieval, simply return mlc::not_found.                    */	      \
+    template <typename method, typename category,			      \
+	      typename from_type, typename typedef_type>		      \
+    struct get_vtype							      \
+    {									      \
+      /* Nothing (no method selected).  */				      \
+    };									      \
+									      \
+    /** Specialization of get_vtypes for retrievals within */		      \
+    /** internal vtypes.                                   */		      \
     template <typename category, typename from_type, typename typedef_type>   \
-    struct rec_get_vtype						      \
+    struct get_vtype<tag::internal, category, from_type, typedef_type>	      \
     {									      \
       /** Set of vtypes associated with FROM_TYPE.  */			      \
       typedef vtypes<category, from_type> types;			      \
       /** Typedef in the current vtypes (may be mlc::not_found).  */	      \
-      typedef stc_internal_get_typedef(types, typedef_type) type;	      \
+      typedef stc_internal_get_typedef(types, typedef_type) ret;	      \
+    };									      \
+									      \
+    /** Specialization of get_vtypes for retrievals within */		      \
+    /** external vtypes.                                   */		      \
+    template <typename category, typename from_type, typename typedef_type>   \
+    struct get_vtype<tag::external, category, from_type, typedef_type>	      \
+    {									      \
+      /** Set of vtypes associated with FROM_TYPE.  */			      \
+      typedef ext_vtype<category, from_type, typedef_type> ext_type;	      \
+      /** Typedef in the current vtypes (may be mlc::not_found).  */	      \
+      typedef mlc_ret(ext_type) ret;					      \
+    };									      \
+									      \
+									      \
+    /* FIXME: Do a basic scheme of the algorithm in pseudo-code.  */	      \
+    /* FIXME: Check for mlc::undefined?  */				      \
+									      \
+    /** Recursive retrieval of a virtual type.  */			      \
+    template <typename method, typename category,			      \
+	      typename from_type, typename typedef_type>		      \
+    struct rec_get_vtype :						      \
+      private mlc::assert_< mlc_is_a(method, tag::method),		      \
+        stc::ERROR::FIRST_PARAMETER_OF_rec_get_vtype_SHOULD_BE_A_TAG >	      \
+    {									      \
+      typedef typename							      \
+      get_vtype<method, category, from_type, typedef_type>::ret type;	      \
 									      \
       /** Implicit parent (i.e. super), if any.  */			      \
       typedef stc_super(from_type) super;				      \
@@ -169,19 +231,22 @@
 	/*   check if the vtype of the `super' of FROM_TYPE */		      \
 	/*   has the typedef				    */		      \
 	typename							      \
-	mlc::if_< mlc::neq_< typename rec_get_vtype< category,		      \
+	mlc::if_< mlc::neq_< typename rec_get_vtype< method,		      \
+						     category,		      \
 						     super,		      \
 						     typedef_type >::ret,     \
 			     mlc::not_found >,				      \
 		  /* then */						      \
 		  /*   return it */					      \
-		  typename rec_get_vtype< category,			      \
+		  typename rec_get_vtype< method,			      \
+					  category,			      \
 					  super,			      \
 					  typedef_type >::ret,		      \
 		  /* else */						      \
 		  /*   check if the FROM_TYPE has a decl_parent */	      \
 		  /*   and try to retrieve the typedef from it. */	      \
-		  typename rec_get_vtype< category,			      \
+		  typename rec_get_vtype< method,			      \
+					  category,			      \
 					  pseudosuper,			      \
 					  typedef_type >::ret >::ret >::ret   \
       ret;								      \
@@ -192,87 +257,20 @@
     /** \{ */								      \
     /** Case where \a from_type = mlc::none (end of a recursive	*/	      \
     /** retrieval following `super' types).			*/	      \
-    template <typename category, typename typedef_type>			      \
-    struct rec_get_vtype<category, mlc::none, typedef_type>		      \
+    template <typename method, typename category, typename typedef_type>      \
+    struct rec_get_vtype<method, category, mlc::none, typedef_type>	      \
     {									      \
       typedef mlc::not_found ret;					      \
     };									      \
     /** Case where \a from_type = mlc::not_found (end of a recursive */	      \
     /** retrieval following `super' types).			     */	      \
-    template <typename category, typename typedef_type>			      \
-    struct rec_get_vtype<category, mlc::not_found, typedef_type>	      \
+    template <typename method, typename category, typename typedef_type>      \
+    struct rec_get_vtype<method, category, mlc::not_found, typedef_type>      \
     {									      \
       typedef mlc::not_found ret;					      \
     };									      \
     /** \} */								      \
 									      \
-    /* ------------------------------------------ */			      \
-    /* Recursive retrieval of an external vtype.  */			      \
-    /* ------------------------------------------ */			      \
-									      \
-    /* FIXME: Merge this with rec_get_vtype.  */			      \
-									      \
-    template <typename category, typename from_type, typename typedef_type>   \
-    struct rec_get_ext_vtype						      \
-    {									      \
-      /** Set of vtypes associated with FROM_TYPE.  */			      \
-      typedef ext_vtype<category, from_type, typedef_type> ext_type;	      \
-      /** Typedef in the current vtypes (may be mlc::not_found).  */	      \
-      typedef mlc_ret(ext_type) type;					      \
-									      \
-      /** Implicit parent (i.e. super), if any.  */			      \
-      typedef stc_super(from_type) super;				      \
-      /** Pseudosuper class, if any.  */				      \
-      typedef stc_pseudosuper(from_type) pseudosuper;			      \
-									      \
-      typedef typename							      \
-      mlc::if_<								      \
-	mlc::neq_< type, mlc::not_found >,				      \
-	/* then	*/							      \
-	/*   return it					*/		      \
-	/*   (the typedef has been found in the vtypes	*/		      \
-	/*   associated to FROM_TYPE)			*/		      \
-	type,								      \
-	/* else	*/							      \
-	/*   check if the vtype of the `super' of FROM_TYPE */		      \
-	/*   has the typedef				    */		      \
-	typename							      \
-	mlc::if_< mlc::neq_< typename rec_get_ext_vtype< category,	      \
-							 super,		      \
-							 typedef_type >::ret, \
-			     mlc::not_found >,				      \
-		  /* then */						      \
-		  /*   return it */					      \
-		  typename rec_get_ext_vtype< category,			      \
-					      super,			      \
-					      typedef_type >::ret,	      \
-		  /* else */						      \
-		  /*   check if the FROM_TYPE has a decl_parent */	      \
-		  /*   and try to retrieve the typedef from it. */	      \
-		  typename rec_get_ext_vtype< category,			      \
-					      pseudosuper,		      \
-					      typedef_type >::ret>::ret>::ret \
-      ret;								      \
-    };									      \
-									      \
-    /** Ends of the recursive retrieval (mlc::none is at the end of the */    \
-    /** transitive closure of every `super' relation).			*/    \
-    /** \{ */								      \
-    /** Case where \a from_type = mlc::none (end of a recursive	*/	      \
-    /** retrieval following `super' types).			*/	      \
-    template <typename category, typename typedef_type>			      \
-    struct rec_get_ext_vtype<category, mlc::none, typedef_type>		      \
-    {									      \
-      typedef mlc::not_found ret;					      \
-    };									      \
-    /** Case where \a from_type = mlc::not_found (end of a recursive */	      \
-    /** retrieval following `super' types).			     */	      \
-    template <typename category, typename typedef_type>			      \
-    struct rec_get_ext_vtype<category, mlc::not_found, typedef_type>	      \
-    {									      \
-      typedef mlc::not_found ret;					      \
-    };									      \
-    /** \} */								      \
 									      \
     /* ------------------------------------- */				      \
     /* External/internal typedef selection.  */				      \
@@ -329,20 +327,22 @@
   template <typename category, typename from_type, typename typedef_type>     \
   struct type_of_							      \
   {									      \
-    /* Look for the typedef as an external type.  */			      \
-    typedef typename							      \
-    internal::rec_get_ext_vtype<category, from_type, typedef_type>::ret	      \
-    external_typedef;							      \
     /* Look for the typedef in internal types.  */			      \
     typedef typename							      \
-    internal::rec_get_vtype<category, from_type, typedef_type>::ret	      \
+    internal::rec_get_vtype<internal::tag::internal, category,		      \
+                            from_type, typedef_type>::ret		      \
     internal_typedef;							      \
+    /* Look for the typedef as an external type.  */			      \
+    typedef typename							      \
+    internal::rec_get_vtype<internal::tag::external, category,		      \
+                            from_type, typedef_type>::ret		      \
+    external_typedef;							      \
 									      \
     /* Did we found the virtual type?  */				      \
-    static const bool found_external_p =				      \
-      mlc_bool(mlc::is_found_<external_typedef>);			      \
     static const bool found_internal_p =				      \
       mlc_bool(mlc::is_found_<internal_typedef>);			      \
+    static const bool found_external_p =				      \
+      mlc_bool(mlc::is_found_<external_typedef>);			      \
 									      \
     typedef typename							      \
     internal::select_typedef<found_external_p, found_internal_p,	      \
