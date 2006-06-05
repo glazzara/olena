@@ -98,6 +98,7 @@
 
 #include <mlc/if.hh>
 #include <mlc/is_a.hh>
+#include <mlc/flags.hh>
 #include <mlc/comma.hh>
 
 namespace stc
@@ -106,17 +107,15 @@ namespace stc
   {
     // End of the recurring inheritance.
     struct none {};
-    // No user class should derive from this class.
-    struct not_user_defined {};
   }
 
   /** \brief Entry point of a hierarchy.
       To be possibly specialized by the user.
 
-      This class is use as selector ``plugging'' itself (inheriting)
+      This class is used as selector ``plugging'' itself (inheriting)
       to (from) a bottom class in one of the multiple hierarchies.  */
   template <typename exact, unsigned num>
-  struct set_entry_node : public internal::not_user_defined
+  struct set_entry_node : public mlc::undefined
   {
     // Nothing.
   };  
@@ -129,7 +128,7 @@ namespace stc
     struct get_entry_node :
       public set_entry_node<exact, num>,
       public mlc::if_< mlc_is_a( mlc_comma_1( set_entry_node<exact, num + 1> ),
-				 internal::not_user_defined ),
+				 mlc::undefined ),
 		       internal::none,
 		       internal::get_entry_node<exact, num + 1> >::ret
     {

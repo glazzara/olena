@@ -1,3 +1,10 @@
+2006-06-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Replace stc::internal::not_user_defined with mlc::undefined.
+
+	* stc/entry.hh (internal::not_user_defined): Remove class.
+	s/internal::not_user_defined/mlc::undefined/g.
+
 2006-06-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Factor the recursive retrieval in internal and external vtypes.
