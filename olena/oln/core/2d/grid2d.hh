@@ -57,7 +57,7 @@ namespace oln
   };
 
   /// A 2-dimension rectangular grid.
-  struct grid2d : public stc_super_(grid2d)
+  struct grid2d : public stc_get_supers(grid2d)
   {
   protected:
     grid2d() {}

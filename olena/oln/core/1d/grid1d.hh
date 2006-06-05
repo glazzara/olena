@@ -57,7 +57,7 @@ namespace oln
   };
 
   /// A 1-dimension rectangular grid.
-  struct grid1d : public stc_super_(grid1d)
+  struct grid1d : public stc_get_supers(grid1d)
   {
   protected:
     grid1d() {}

@@ -1,3 +1,12 @@
+2006-06-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with Static's support for multiple inheritance.
+
+	* oln/core/1d/grid1d.hh, oln/core/2d/grid2d.hh,
+	* oln/core/3d/grid3d.hh: s/stc_super_/stc_get_supers/.
+	* tests/image_entry.cc: Add a missing `public' qualifier for
+	exported types.
+
 2006-05-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix a duplicate where-clause and perform some aesthetic changes in

@@ -67,6 +67,7 @@ namespace my
   // A very simple 1-D image.
   class image : public oln::set_super_type<my::image>::ret
   {
+  public:
     typedef image self_type;
     // Internal vtypes.
     typedef oln_type_of_(self_type, grid) grid_type;
