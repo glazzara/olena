@@ -36,11 +36,20 @@
 # include <mlc/flags.hh>
 # include <mlc/typedef.hh>
 # include <mlc/ret.hh>
+
+# include <mlc/assert.hh>
+# include <mlc/abort.hh>
+
 # include <mlc/bool.hh>
+# include <mlc/int.hh>
+
 # include <mlc/cmp.hh>
 # include <mlc/if.hh>
 # include <mlc/is_a.hh>
-# include <mlc/assert.hh>
+
+# include <mlc/comma.hh>
+# include <mlc/valist.hh>
+# include <stc/valist_aggregator.hh>
 
 
 /*-----------------.
@@ -52,8 +61,12 @@ namespace stc
   /// Error messages raised by static assertions.
   namespace ERROR
   {
+
     struct FIRST_PARAMETER_OF_rec_get_vtype_SHOULD_BE_A_TAG;
+    struct PARAMETER_OF_get_super_types_helper_IS_NOT_A_VALID_VALIST;
+
   } // end of namespace stc::ERROR
+
 } // end of namespace stc
 
 
@@ -66,7 +79,11 @@ namespace stc
 # define stc_internal_get_typedef(Type, TypedefName) \
    typename TypedefName::template from_< Type >::ret
 
-// FIXME: Add support for hierarchies with several super classes.
+
+// FIXME: Complete support for hierarchies with several super classes.
+
+// FIXME: Could we extract some classes from this gigantic macro?
+
 # define stc_equip_namespace_with_vtypes()				      \
 									      \
   /* ----------------------- */						      \
@@ -81,10 +98,95 @@ namespace stc
   /* Inheritance.  */							      \
   /* ------------- */							      \
 									      \
-  template <typename type>						      \
-  struct set_super_type							      \
+  /* Set super classes.  */						      \
+									      \
+  template<typename type, unsigned N = 1>				      \
+  struct set_super_type : public mlc::undefined				      \
   {									      \
     typedef mlc::none ret;						      \
+  };									      \
+									      \
+									      \
+  /* Get supers list.  */						      \
+									      \
+  namespace internal							      \
+  {									      \
+    template <typename type, unsigned N>				      \
+    struct maybe_super_type						      \
+    {									      \
+      typedef typename 							      \
+      mlc::if_< mlc_is_a( mlc_comma_1( set_super_type<type, N> ),	      \
+			  mlc::undefined ),				      \
+		mlc::internal::valist_none,				      \
+		mlc_ret(mlc_comma_1(set_super_type< type, N >)) >::ret	      \
+      ret;								      \
+    };									      \
+  } /* end of namespace internal */					      \
+									      \
+  template <typename type>						      \
+  struct get_supers_list						      \
+  {									      \
+    /* FIXME: Factor with a macro?  */					      \
+    typedef typename internal::maybe_super_type<type, 1>::ret s1;	      \
+    typedef typename internal::maybe_super_type<type, 2>::ret s2;	      \
+    typedef typename internal::maybe_super_type<type, 3>::ret s3;	      \
+    typedef typename internal::maybe_super_type<type, 4>::ret s4;	      \
+    typedef typename internal::maybe_super_type<type, 5>::ret s5;	      \
+    typedef typename internal::maybe_super_type<type, 6>::ret s6;	      \
+    typedef typename internal::maybe_super_type<type, 7>::ret s7;	      \
+    typedef typename internal::maybe_super_type<type, 8>::ret s8;	      \
+    typedef typename internal::maybe_super_type<type, 9>::ret s9;	      \
+									      \
+    typedef mlc::valist_<s1, s2, s3, s4, s5, s6, s7, s8, s9> ret;	      \
+  };									      \
+									      \
+									      \
+  /* Get supers classes.  */						      \
+									      \
+  namespace internal 							      \
+  {									      \
+									      \
+    /** Accessor helper.  */						      \
+    template<typename type>						      \
+    struct get_super_types_helper;					      \
+									      \
+    /** Accessor helper: specialization for the case of a single */	      \
+    /** super class.                                             */	      \
+    template<typename super>						      \
+    struct get_super_types_helper< mlc::valist_ <super> >		      \
+    {									      \
+      /** Return the super class directly.  */				      \
+      typedef super ret;						      \
+    };									      \
+									      \
+    /** Accessor helper: specializations for the case of two super */	      \
+    /** classes or more.                                           */	      \
+    template <typename super1, typename super2, typename super3>	      \
+    struct get_super_types_helper< mlc::valist_ <super1, super2, super3> >    \
+    {									      \
+      /** Return an aggregate of the super classes.  */			      \
+      typedef stc::valist_aggregator< mlc::valist_ <super1, super2, super3> > \
+      ret;								      \
+    };									      \
+									      \
+    /** Accessor helper: default case (abort).  */			      \
+    template<typename type>						      \
+    struct get_super_types_helper :					      \
+      public mlc::abort_<						      \
+        type,								      \
+        stc::ERROR::PARAMETER_OF_get_super_types_helper_IS_NOT_A_VALID_VALIST \
+      >									      \
+    {									      \
+    };									      \
+									      \
+  } /* end of namespace internal */					      \
+									      \
+									      \
+  template<typename type>						      \
+  struct get_super_types						      \
+  {									      \
+    typedef typename get_supers_list<type>::ret supers_list;		      \
+    typedef typename internal::get_super_types_helper<supers_list>::ret ret;  \
   };									      \
 									      \
 									      \
@@ -92,6 +194,7 @@ namespace stc
   /* ``Pseudo'' inheritance.  */					      \
   /* ------------------------ */					      \
 									      \
+  /* FIXME: Add a multiple pseudoinheritance mechanism? */		      \
   template <typename type>						      \
   struct set_pseudosuper_type						      \
   {									      \
@@ -215,9 +318,9 @@ namespace stc
       get_vtype<method, category, from_type, typedef_type>::ret type;	      \
 									      \
       /** Implicit parent (i.e. super), if any.  */			      \
-      typedef stc_super(from_type) super;				      \
+      typedef stc_get_super(from_type) super;				      \
       /** Pseudosuper class, if any.  */				      \
-      typedef stc_pseudosuper(from_type) pseudosuper;			      \
+      typedef stc_get_pseudosuper(from_type) pseudosuper;		      \
 									      \
       typedef typename							      \
       mlc::if_<								      \
@@ -376,17 +479,64 @@ namespace stc
 | Macros.  |
 `---------*/
 
-/* FIXME: I don't know whether this macro will be really usable; what
+// ------------- //
+// Inheritance.  //
+// ------------- //
+
+// Set.
+
+/* FIXME: I don't know whether these macros will be really usable; what
    if Type is a template class?  We would have to provide additional
-   versions of this macro, with support for one parameter, two
+   versions of these macros, with support for one parameter, two
    parameters, etc.  */
 /// \def Declare the immediate base class \a Super of \a Type.
-# define stc_set_super(Type, Super)		\
-   template <>					\
-   struct set_super_type<Type>			\
-   {						\
-     typedef Super ret;				\
-   }
+#define stc_set_nth_super(Type, N, Super)	\
+  template<>					\
+  struct set_super_type< Type, N >		\
+  {						\
+    typedef Super ret;				\
+  };
+
+// Shortcut.
+#define stc_set_super(Type, Super)		\
+  stc_set_nth_super(Type, 1, Super)
+
+
+// Get.
+
+/** \a stc_get_supers(Type) returns a class which inerits from all the
+    classes declared as super types of \a Type.
+  
+    However, there is an exception when Type as single super:
+    stc_get_supers returns this super class directly, not a class
+    ineriting from it, to avoid a useless indirection.  */
+#define stc_get_supers(Type)			\
+  get_super_types< Type >::ret
+
+/// \def Get the Nth immediate base class(es) of Type (version to be
+/// used inside a template).
+# define stc_get_nth_super(Type, Nth)		\
+   typename stc_get_nth_super_(Type, Nth)
+
+/// \def Get the Nth immediate base class(es) of Type (version to be
+/// used outside a template).
+# define stc_get_nth_super_(Type, Nth)		\
+   set_super_type< Type, Nth >::ret
+
+/// \def Get the fisrt immediate base class of Type (version to be
+/// used inside a template).
+# define stc_get_super(Type)			\
+   typename stc_get_super_(Type)
+
+/// \def Get the first immediate base class of Type (version to be
+/// used outside a template).
+# define stc_get_super_(Type)			\
+   stc_get_nth_super_(Type, 1)
+
+
+// -------------------- //
+// Pseudo inheritance.  //
+// -------------------- //
 
 /* FIXME: I don't know whether this macro will be really usable; what
    if Type is a template class?  We would have to provide additional
@@ -394,31 +544,26 @@ namespace stc
    parameters, etc.  */
 /// \def Declare the pseudosuper class \a PseudoSuper of \a Type.
 # define stc_set_pseudosuper(Type, PseudoSuper)	\
-   template <>					\
+   template<>					\
    struct set_pseudosuper_type<Type>		\
    {						\
      typedef PseudoSuper ret;			\
    }
 
-/// \def Get the immediate base class of T (version to be used inside
-/// a template).
-# define stc_super(T)				\
-   typename stc_super_(T)
-
-/// \def Get the immediate base class of T (version to be used outside
-/// a template).
-# define stc_super_(T)				\
-   set_super_type<T>::ret
-
-/// \def Get the pseudosuper class of T (version to be used inside a
+/// \def Get the pseudosuper class of Type (version to be used inside a
 /// template).
-# define stc_pseudosuper(T)			\
-   typename stc_pseudosuper_(T)
+# define stc_get_pseudosuper(Type)		\
+   typename stc_get_pseudosuper_(Type)
 
-/// \def Get the pseudosuper class of T (version to be used outside a
+/// \def Get the pseudosuper class of Type (version to be used outside a
 /// template).
-# define stc_pseudosuper_(T)			\
-   set_pseudosuper_type<T>::ret
+# define stc_get_pseudosuper_(Type)		\
+   set_pseudosuper_type< Type >::ret
+
+
+// ---------------------- //
+// Virtual types access.  //
+// ---------------------- //
 
 // FIXME: Perhaps only ``external'' (i.e., non local) versions of
 // stc_type_of are really useful (since they are more precise), and we

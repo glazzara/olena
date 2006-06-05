@@ -156,7 +156,7 @@ namespace my
     typedef unsigned long ret;
   };
 
-  struct B : public stc_super_(B)
+  struct B : public stc_get_supers(B)
   {
     // Aliases.
     typedef my_type_of_(B, foo) foo_type;
@@ -210,7 +210,7 @@ namespace my
     }
   };
 
-}
+} // end of namespace my
 
 
 int

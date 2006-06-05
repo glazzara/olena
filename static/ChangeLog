@@ -1,5 +1,33 @@
 2006-06-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Allow multiple super classes in SCOOP's static hierarchies.
+
+	* stc/valist_aggregator.hh: New.
+	* stc/vtypes.hh: Include it.
+	(ERROR::PARAMETER_OF_get_super_types_helper_IS_NOT_A_VALID_VALIST):
+	New struct.
+	(set_super_type): Inherit from mlc::undefined by default.
+	(internal::maybe_super_type, get_supers_list)
+	(internal::get_super_types_helper, get_super_types)
+	(rec_get_vtype): s/stc_super/stc_get_super/.
+	s/stc_pseudosuper/stc_get_pseudosuper/.
+	(stc_set_super): Remove previous definition of this macro, and
+	make it a shortcut for...
+	(stc_set_nth_super): ...this one (new).
+	(stc_get_supers, stc_get_nth_super_, stc_get_nth_super_)
+	(stc_get_super_, stc_get_super_): New macros.
+	(stc_super, stc_super_): Remove macros.
+	(stc_pseudosuper, stc_pseudosuper_): Rename macros as...
+	(stc_get_pseudosuper, stc_get_pseudosuper_): ...these.
+	* tests/super.cc, tests/multiple-supers.cc: New tests.
+	* tests/vtypes.cc: s/stc_get_supers_/stc_get_supers/g.
+	* stc/Makefile.am (nobase_stc_HEADERS): Add exact.hh
+	and valist_aggregator.hh.
+	* tests/Makefile.am (check_PROGRAMS): Add multiple-supers, super.
+	(multiple_supers_SOURCES, super_SOURCES): New.
+
+2006-06-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Replace stc::internal::not_user_defined with mlc::undefined.
 
 	* stc/entry.hh (internal::not_user_defined): Remove class.
