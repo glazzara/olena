@@ -1,5 +1,17 @@
 2006-06-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Perform additional tests on simple virtual types (no multiple
+	inheritance nor use of stc::any).
+
+	* tests/vtypes.cc: Aesthetic changes.
+	(C): Rename as...
+	(Z): ...this.
+	Adjust.
+	(Z::bar_type, Z::baz_type, Z::yin_type): New typedefs.
+	(main): Check more virtual types.
+
+2006-06-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Complete the support of multiple inheritance in SCOOP: adjust the
 	algorithm of virtual type retrieval to take multiple base classes
 	into account.

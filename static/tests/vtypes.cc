@@ -158,11 +158,11 @@ namespace my
   struct B : public stc_get_supers(B)
   {
     // Aliases.
-    typedef my_type_of_(B, foo) foo_type;
-    typedef my_type_of_(B, bar) bar_type;
-    typedef my_type_of_(B, baz) baz_type;
+    typedef my_type_of_(B, foo)  foo_type;
+    typedef my_type_of_(B, bar)  bar_type;
+    typedef my_type_of_(B, baz)  baz_type;
     typedef my_type_of_(B, quux) quux_type;
-    typedef my_type_of_(B, yin) yin_type;
+    typedef my_type_of_(B, yin)  yin_type;
 
     // Check B's vtypes.
     ~B()
@@ -173,39 +173,42 @@ namespace my
 
 
   /*---.
-  | C. |
+  | Z. |
   `---*/
 
   // Forward declaration.
-  struct C;
+  struct Z;
 
-  // C doesn't derive from B, but we want its vtypes to ``inherit''
+  // Z doesn't derive from B, but we want its vtypes to ``inherit''
   // from B's vtypes (see the specialization
-  // types<category::my_cat, C>).
+  // types<category::my_cat, Z>).
 
   // Warning, this sugar might be removed in the future.
   /// Link to B (``pseudo'' inheritance).
-  stc_set_pseudosuper(C, B);
+  stc_set_pseudosuper(Z, B);
 
-  /// Types associated to my::C.
+  /// Types associated to my::Z.
   template <>
-  struct vtypes<category::my_cat, C>
+  struct vtypes<category::my_cat, Z>
   {
     // A type defined only here (and not in the super class).
     typedef double zorg_type;
   };
 
-  struct C // no inheritance
+  struct Z // no inheritance
   {
     // Aliases.
-    typedef my_type_of_(C, foo) foo_type;
-    typedef my_type_of_(C, quux) quux_type;
-    typedef my_type_of_(C, zorg) zorg_type;
+    typedef my_type_of_(Z, foo)  foo_type;
+    typedef my_type_of_(Z, bar)  bar_type;
+    typedef my_type_of_(Z, baz)  baz_type;
+    typedef my_type_of_(Z, quux) quux_type;
+    typedef my_type_of_(Z, yin)  yin_type;
+    typedef my_type_of_(Z, zorg) zorg_type;
 
     // Check C's vtypes.
-    ~C()
+    ~Z()
     {
-      packed_vtypes<category::my_cat, C>::ensure();
+      packed_vtypes<category::my_cat, Z>::ensure();
     }
   };
 
@@ -216,17 +219,21 @@ int
 main()
 {
   // Check types associated to A.
-  mlc::assert_<mlc_eq(my::A::foo_type, int)>::check();
-  mlc::assert_<mlc_eq(my::A::bar_type, mlc::int_<42>)>::check();
+  mlc::assert_<mlc_eq(my::A::foo_type,  int)>::check();
+  mlc::assert_<mlc_eq(my::A::bar_type,  mlc::int_<42>)>::check();
 
   // Check types associated to B.
-  mlc::assert_<mlc_neq(my::B::bar_type, my::A::bar_type)>::check();
-  mlc::assert_<mlc_eq(my::B::baz_type, char)>::check();
+  mlc::assert_<mlc_eq(my::B::baz_type,  char)>::check();
   mlc::assert_<mlc_eq(my::B::quux_type, long)>::check();
-  mlc::assert_<mlc_eq(my::B::yin_type, unsigned long)>::check();
+  mlc::assert_<mlc_eq(my::B::yin_type,  unsigned long)>::check();
 
-  // Check types associated to C.
-  mlc::assert_<mlc_eq(my::C::foo_type, int)>::check();
-  mlc::assert_<mlc_eq(my::C::quux_type, long)>::check();
-  mlc::assert_<mlc_eq(my::C::zorg_type, double)>::check();
+  mlc::assert_<mlc_neq(my::B::bar_type, my::A::bar_type)>::check();
+
+  // Check types associated to Z.
+  mlc::assert_<mlc_eq(my::Z::foo_type,  int)>::check();
+  mlc::assert_<mlc_eq(my::Z::bar_type,  double)>::check();
+  mlc::assert_<mlc_eq(my::Z::baz_type,  char)>::check();
+  mlc::assert_<mlc_eq(my::Z::quux_type, long)>::check();
+  mlc::assert_<mlc_eq(my::Z::yin_type,  unsigned long)>::check();
+  mlc::assert_<mlc_eq(my::Z::zorg_type, double)>::check();
 }
