@@ -1,3 +1,39 @@
+2006-06-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Complete the support of multiple inheritance in SCOOP: adjust the
+	algorithm of virtual type retrieval to take multiple base classes
+	into account.
+
+	* stc/internal/extract_vtype_from_list.hh: New file.
+	* stc/vtypes.hh: Include it.
+	(ERROR::FIRST_PARAMETER_OF_rec_get_vtype_SHOULD_BE_A_TAG): Rename
+	as...
+	(ERROR::FIRST_PARAMETER_OF_rec_get_vtype_IS_NOT_A_TAG): ...this.
+	(ERROR::FIRST_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_TAG)
+	(ERROR::THIRD_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_LIST):
+	New structs (error messages).
+	(stc_internal_maybe_get_nth_super_type): New macro.
+	(get_supers_list): Use it.
+	(maybe_super_type): Rename as...
+	(maybe_get_super_type): ...this.
+	(get_vtype): Rename as...
+	(get_vtype_helper): ...this.
+	(stc_internal_rec_get_vtype): New macro.
+	(rec_get_vtype_from_list): New struct.
+	(rec_get_vtype): Use it to rewrite the retrieval algorithm to take
+	multiple base classes into account.
+	Complete static assertions on the nature of the first parameter
+	(retrieval method tag).
+	* stc/Makefile.am (nobase_stc_HEADERS): Add
+	internal/extract_vtype_from_list.hh.
+
+	* tests/vtypes-multiple-supers.cc: New test.
+	* tests/Makefile.am (check_PROGRAMS): Add vtypes-multiple-supers.
+	(vtypes_multiple_supers_SOURCES): New.
+
+	* tests/vtypes.cc (packed_vtypes <category::my_cat, T>): Move this
+	class just after the declaration of my::cat.
+
 2006-06-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Allow multiple super classes in SCOOP's static hierarchies.

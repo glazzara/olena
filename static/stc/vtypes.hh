@@ -51,6 +51,8 @@
 # include <mlc/valist.hh>
 # include <stc/valist_aggregator.hh>
 
+# include <stc/internal/extract_vtype_from_list.hh>
+
 
 /*-----------------.
 | Error messages.  |
@@ -62,8 +64,12 @@ namespace stc
   namespace ERROR
   {
 
-    struct FIRST_PARAMETER_OF_rec_get_vtype_SHOULD_BE_A_TAG;
     struct PARAMETER_OF_get_super_types_helper_IS_NOT_A_VALID_VALIST;
+
+    struct FIRST_PARAMETER_OF_rec_get_vtype_IS_NOT_A_TAG;
+
+    struct FIRST_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_TAG;
+    struct THIRD_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_LIST;
 
   } // end of namespace stc::ERROR
 
@@ -75,9 +81,20 @@ namespace stc
 | Equipment.  |
 `------------*/
 
+/// Internal macros, not to be used by the client.
+/// \{
+
 // Note: TypedefName *must* be of the form `typedef_::foo'.
 # define stc_internal_get_typedef(Type, TypedefName) \
    typename TypedefName::template from_< Type >::ret
+
+# define stc_internal_maybe_get_nth_super_type(Type, Nth)	\
+   typename internal::maybe_get_super_type< Type, Nth >::ret
+
+# define stc_internal_rec_get_vtype(Type)				\
+   typename rec_get_vtype< method, category, Type, typedef_type >::ret
+
+/// \}
 
 
 // FIXME: Complete support for hierarchies with several super classes.
@@ -112,9 +129,9 @@ namespace stc
   namespace internal							      \
   {									      \
     template <typename type, unsigned N>				      \
-    struct maybe_super_type						      \
+    struct maybe_get_super_type						      \
     {									      \
-      typedef typename 							      \
+      typedef typename							      \
       mlc::if_< mlc_is_a( mlc_comma_1( set_super_type<type, N> ),	      \
 			  mlc::undefined ),				      \
 		mlc::internal::valist_none,				      \
@@ -126,24 +143,24 @@ namespace stc
   template <typename type>						      \
   struct get_supers_list						      \
   {									      \
-    /* FIXME: Factor with a macro?  */					      \
-    typedef typename internal::maybe_super_type<type, 1>::ret s1;	      \
-    typedef typename internal::maybe_super_type<type, 2>::ret s2;	      \
-    typedef typename internal::maybe_super_type<type, 3>::ret s3;	      \
-    typedef typename internal::maybe_super_type<type, 4>::ret s4;	      \
-    typedef typename internal::maybe_super_type<type, 5>::ret s5;	      \
-    typedef typename internal::maybe_super_type<type, 6>::ret s6;	      \
-    typedef typename internal::maybe_super_type<type, 7>::ret s7;	      \
-    typedef typename internal::maybe_super_type<type, 8>::ret s8;	      \
-    typedef typename internal::maybe_super_type<type, 9>::ret s9;	      \
+    /* FIXME: Factor with a loop macro?  */				      \
+    typedef stc_internal_maybe_get_nth_super_type(type, 1) s1;		      \
+    typedef stc_internal_maybe_get_nth_super_type(type, 2) s2;		      \
+    typedef stc_internal_maybe_get_nth_super_type(type, 3) s3;		      \
+    typedef stc_internal_maybe_get_nth_super_type(type, 4) s4;		      \
+    typedef stc_internal_maybe_get_nth_super_type(type, 5) s5;		      \
+    typedef stc_internal_maybe_get_nth_super_type(type, 6) s6;		      \
+    typedef stc_internal_maybe_get_nth_super_type(type, 7) s7;		      \
+    typedef stc_internal_maybe_get_nth_super_type(type, 8) s8;		      \
+    typedef stc_internal_maybe_get_nth_super_type(type, 9) s9;		      \
 									      \
     typedef mlc::valist_<s1, s2, s3, s4, s5, s6, s7, s8, s9> ret;	      \
   };									      \
 									      \
 									      \
-  /* Get supers classes.  */						      \
+  /* Get super classes.  */						      \
 									      \
-  namespace internal 							      \
+  namespace internal							      \
   {									      \
 									      \
     /** Accessor helper.  */						      \
@@ -194,7 +211,6 @@ namespace stc
   /* ``Pseudo'' inheritance.  */					      \
   /* ------------------------ */					      \
 									      \
-  /* FIXME: Add a multiple pseudoinheritance mechanism? */		      \
   template <typename type>						      \
   struct set_pseudosuper_type						      \
   {									      \
@@ -270,21 +286,22 @@ namespace stc
 									      \
     } /** end of stc::internal::tag */					      \
 									      \
-									      \
     /** Try to get \a typedef_type from \a from_type.  In case this */	      \
     /** typedef is mlc::not_found, don't perform a recursive        */	      \
     /** retrieval, simply return mlc::not_found.                    */	      \
     template <typename method, typename category,			      \
 	      typename from_type, typename typedef_type>		      \
-    struct get_vtype							      \
+    struct get_vtype_helper						      \
     {									      \
       /* Nothing (no method selected).  */				      \
     };									      \
 									      \
     /** Specialization of get_vtypes for retrievals within */		      \
     /** internal vtypes.                                   */		      \
-    template <typename category, typename from_type, typename typedef_type>   \
-    struct get_vtype<tag::internal, category, from_type, typedef_type>	      \
+    template <typename category,					      \
+	      typename from_type, typename typedef_type>		      \
+    struct get_vtype_helper<tag::internal, category,			      \
+			    from_type, typedef_type>			      \
     {									      \
       /** Set of vtypes associated with FROM_TYPE.  */			      \
       typedef vtypes<category, from_type> types;			      \
@@ -294,8 +311,10 @@ namespace stc
 									      \
     /** Specialization of get_vtypes for retrievals within */		      \
     /** external vtypes.                                   */		      \
-    template <typename category, typename from_type, typename typedef_type>   \
-    struct get_vtype<tag::external, category, from_type, typedef_type>	      \
+    template <typename category,					      \
+	      typename from_type, typename typedef_type>		      \
+    struct get_vtype_helper<tag::external, category,			      \
+			    from_type, typedef_type>			      \
     {									      \
       /** Set of vtypes associated with FROM_TYPE.  */			      \
       typedef ext_vtype<category, from_type, typedef_type> ext_type;	      \
@@ -305,23 +324,46 @@ namespace stc
 									      \
 									      \
     /* FIXME: Do a basic scheme of the algorithm in pseudo-code.  */	      \
+									      \
     /* FIXME: Check for mlc::undefined?  */				      \
 									      \
-    /** Recursive retrieval of a virtual type.  */			      \
+    /* Forward declaration.  */						      \
+    template <typename method, typename category,			      \
+	      typename from_list, typename typedef_type>		      \
+    struct rec_get_vtype_from_list;					      \
+									      \
+    /** Recursive retrieval of the virtual type \a typedef_type inside */     \
+    /** the class \a from_type.                                        */     \
     template <typename method, typename category,			      \
 	      typename from_type, typename typedef_type>		      \
     struct rec_get_vtype :						      \
       private mlc::assert_< mlc_is_a(method, tag::method),		      \
-        stc::ERROR::FIRST_PARAMETER_OF_rec_get_vtype_SHOULD_BE_A_TAG >	      \
+        stc::ERROR::FIRST_PARAMETER_OF_rec_get_vtype_IS_NOT_A_TAG >	      \
     {									      \
+      /** Get potential vtype \a typedef_type from the current class */	      \
+      /** (\a from_type).                                            */	      \
       typedef typename							      \
-      get_vtype<method, category, from_type, typedef_type>::ret type;	      \
+	get_vtype_helper< method, category, from_type, typedef_type>::ret     \
+	type;								      \
 									      \
-      /** Implicit parent (i.e. super), if any.  */			      \
-      typedef stc_get_super(from_type) super;				      \
+      /** Implicit parents (i.e. supers), if any.  */			      \
+      typedef typename get_supers_list<from_type>::ret supers_list;	      \
+      /** Vtype deduced from the vtypes of the base class(es) of */	      \
+      /** \a from_type, if any.                                  */	      \
+      typedef typename 							      \
+	rec_get_vtype_from_list< method, category,			      \
+				 supers_list, typedef_type >::ret	      \
+	vtype_from_supers;						      \
+									      \
       /** Pseudosuper class, if any.  */				      \
       typedef stc_get_pseudosuper(from_type) pseudosuper;		      \
+      /** Vtype deduced from the vtype of the pseudo super class of */	      \
+      /** \a from_type, if any.                                     */	      \
+      typedef typename 							      \
+	rec_get_vtype< method, category, pseudosuper, typedef_type >::ret     \
+	vtype_from_pseudo_super;					      \
 									      \
+      /* Core of the search algorithm.  */				      \
       typedef typename							      \
       mlc::if_<								      \
 	mlc::neq_< type, mlc::not_found >,				      \
@@ -331,28 +373,18 @@ namespace stc
 	/*   associated to FROM_TYPE)			*/		      \
 	type,								      \
 	/* else	*/							      \
-	/*   check if the vtype of the `super' of FROM_TYPE */		      \
-	/*   has the typedef				    */		      \
+	/*   check if the vtypes of the `supers' of FROM_TYPE */	      \
+	/*   has the typedef				      */	      \
 	typename							      \
-	mlc::if_< mlc::neq_< typename rec_get_vtype< method,		      \
-						     category,		      \
-						     super,		      \
-						     typedef_type >::ret,     \
-			     mlc::not_found >,				      \
+	mlc::if_< mlc::neq_< vtype_from_supers, mlc::not_found >,	      \
 		  /* then */						      \
 		  /*   return it */					      \
-		  typename rec_get_vtype< method,			      \
-					  category,			      \
-					  super,			      \
-					  typedef_type >::ret,		      \
+		  vtype_from_supers,					      \
 		  /* else */						      \
-		  /*   check if the FROM_TYPE has a decl_parent */	      \
-		  /*   and try to retrieve the typedef from it. */	      \
-		  typename rec_get_vtype< method,			      \
-					  category,			      \
-					  pseudosuper,			      \
-					  typedef_type >::ret >::ret >::ret   \
-      ret;								      \
+		  /*   check if the FROM_TYPE has a pseudo super */	      \
+		  /*   and try to retrieve the typedef from it.  */	      \
+		  vtype_from_pseudo_super >::ret >::ret			      \
+	ret;								      \
     };									      \
 									      \
     /** Ends of the recursive retrieval (mlc::none is at the end of the */    \
@@ -361,18 +393,83 @@ namespace stc
     /** Case where \a from_type = mlc::none (end of a recursive	*/	      \
     /** retrieval following `super' types).			*/	      \
     template <typename method, typename category, typename typedef_type>      \
-    struct rec_get_vtype<method, category, mlc::none, typedef_type>	      \
+    struct rec_get_vtype<method, category, mlc::none, typedef_type> :	      \
+      private mlc::assert_< mlc_is_a(method, tag::method),		      \
+        stc::ERROR::FIRST_PARAMETER_OF_rec_get_vtype_IS_NOT_A_TAG >	      \
     {									      \
       typedef mlc::not_found ret;					      \
     };									      \
     /** Case where \a from_type = mlc::not_found (end of a recursive */	      \
     /** retrieval following `super' types).			     */	      \
     template <typename method, typename category, typename typedef_type>      \
-    struct rec_get_vtype<method, category, mlc::not_found, typedef_type>      \
+    struct rec_get_vtype<method, category, mlc::not_found, typedef_type> :    \
+      private mlc::assert_< mlc_is_a(method, tag::method),		      \
+        stc::ERROR::FIRST_PARAMETER_OF_rec_get_vtype_IS_NOT_A_TAG >	      \
     {									      \
       typedef mlc::not_found ret;					      \
     };									      \
     /** \} */								      \
+									      \
+									      \
+    /** Recursive retrieval of vtype \a typedef_type inside */		      \
+    /** \a from_list.                                       */		      \
+    /** \{ */								      \
+									      \
+    /* Default case: \a from_type is not a mlc::valist_, abort.  */	      \
+    template <typename method, typename category,			      \
+	      typename from_list, typename typedef_type>		      \
+    struct rec_get_vtype_from_list :					      \
+      private mlc::abort_< from_list,					      \
+       stc::ERROR::THIRD_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_LIST > \
+    {									      \
+    };									      \
+									      \
+    /** Case where the list is empty.  Suprisingly, the general    */	      \
+    /**	specialization for mlc::valist<e1, ..., e9> is not enough: */	      \
+    /**	this specialization is needed too.                         */	      \
+    template <typename method, typename category, typename typedef_type>      \
+    struct rec_get_vtype_from_list<					      \
+      method, category, mlc::valist_<>, typedef_type>			      \
+    {									      \
+      typedef mlc::not_found ret;					      \
+    };									      \
+									      \
+    /* Case where \a from_list is a genuine list.  */			      \
+    template <typename method, typename category,			      \
+	      typename e1, typename e2, typename e3,			      \
+	      typename e4, typename e5, typename e6,			      \
+	      typename e7, typename e8, typename e9,			      \
+	      typename typedef_type>					      \
+    struct rec_get_vtype_from_list<					      \
+      method, category,							      \
+      mlc::valist_<e1, e2, e3, e4, e5, e6, e7, e8, e9>, typedef_type	      \
+    > :									      \
+      private mlc::assert_< mlc_is_a(method, tag::method),		      \
+        stc::ERROR::FIRST_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_TAG > \
+    {									      \
+      /* For each item of the list \a from_list, perform a */		      \
+      /* rec_get_vtype search.                             */		      \
+      /* FIXME: Factor with a loop macro?  */				      \
+      typedef stc_internal_rec_get_vtype(e1) res1;			      \
+      typedef stc_internal_rec_get_vtype(e2) res2;			      \
+      typedef stc_internal_rec_get_vtype(e3) res3;			      \
+      typedef stc_internal_rec_get_vtype(e4) res4;			      \
+      typedef stc_internal_rec_get_vtype(e5) res5;			      \
+      typedef stc_internal_rec_get_vtype(e6) res6;			      \
+      typedef stc_internal_rec_get_vtype(e7) res7;			      \
+      typedef stc_internal_rec_get_vtype(e8) res8;			      \
+      typedef stc_internal_rec_get_vtype(e9) res9;			      \
+									      \
+      /* Then, create a list from the results.  */			      \
+      typedef								      \
+      mlc::valist_<res1, res2, res3, res4, res5, res6, res7, res8, res9>      \
+      res_list;								      \
+									      \
+      /* Finally, match this list against a set of valid patterns. */	      \
+      /* If the match fails, return mlc::not_found.             */	      \
+      typedef typename							      \
+	stc::internal::extract_vtype_from_list<res_list>::ret ret;	      \
+    };									      \
 									      \
 									      \
     /* ------------------------------------- */				      \
@@ -503,6 +600,10 @@ namespace stc
 
 
 // Get.
+
+// FIXME: The error message given by the compiler is not explicit
+// when trying to use stc_get_supers on a class which has no
+// (declared) super class.  Improve this.
 
 /** \a stc_get_supers(Type) returns a class which inerits from all the
     classes declared as super types of \a Type.

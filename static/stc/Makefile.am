@@ -6,4 +6,6 @@ nobase_stc_HEADERS =				\
   entry.hh					\
   exact.hh					\
   valist_aggregator.hh				\
-  vtypes.hh
+  vtypes.hh					\
+						\
+  internal/extract_vtype_from_list.hh
