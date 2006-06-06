@@ -51,6 +51,7 @@
 # include <mlc/valist.hh>
 # include <stc/valist_aggregator.hh>
 
+# include <stc/exact.hh>
 # include <stc/internal/extract_vtype_from_list.hh>
 
 
@@ -350,7 +351,7 @@ namespace stc
       typedef typename get_supers_list<from_type>::ret supers_list;	      \
       /** Vtype deduced from the vtypes of the base class(es) of */	      \
       /** \a from_type, if any.                                  */	      \
-      typedef typename 							      \
+      typedef typename							      \
 	rec_get_vtype_from_list< method, category,			      \
 				 supers_list, typedef_type >::ret	      \
 	vtype_from_supers;						      \
@@ -359,7 +360,7 @@ namespace stc
       typedef stc_get_pseudosuper(from_type) pseudosuper;		      \
       /** Vtype deduced from the vtype of the pseudo super class of */	      \
       /** \a from_type, if any.                                     */	      \
-      typedef typename 							      \
+      typedef typename							      \
 	rec_get_vtype< method, category, pseudosuper, typedef_type >::ret     \
 	vtype_from_pseudo_super;					      \
 									      \
@@ -522,20 +523,22 @@ namespace stc
   } /** End of namespace internal.  */					      \
 									      \
 									      \
-  /* FIXME: Don't query from_type directly, but exact_type(from_type) */      \
-  /* instead.  We need mlc::any for this.  */				      \
+  /** Entry point of the vtype retrieval algorithm.  */			      \
   template <typename category, typename from_type, typename typedef_type>     \
   struct type_of_							      \
   {									      \
+    /* Get the exact type of \a from_type.  */				      \
+    typedef typename stc::to_exact_<from_type>::ret from_exact_type;	      \
+									      \
     /* Look for the typedef in internal types.  */			      \
     typedef typename							      \
     internal::rec_get_vtype<internal::tag::internal, category,		      \
-                            from_type, typedef_type>::ret		      \
+                            from_exact_type, typedef_type>::ret		      \
     internal_typedef;							      \
     /* Look for the typedef as an external type.  */			      \
     typedef typename							      \
     internal::rec_get_vtype<internal::tag::external, category,		      \
-                            from_type, typedef_type>::ret		      \
+                            from_exact_type, typedef_type>::ret		      \
     external_typedef;							      \
 									      \
     /* Did we found the virtual type?  */				      \

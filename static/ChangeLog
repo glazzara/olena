@@ -1,5 +1,16 @@
 2006-06-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Perform virtual type retrieval using the exact type of a class.
+
+	* stc/vtypes.hh (type_of_): Get the exact type of the
+	``from_type'' class, and perform the retrieval on it (instead of
+	from_type directly).
+	* tests/vtypes-and-exact.cc: New test.
+	* tests/Makefile.am (check_PROGRAMS): Add vtypes-and-exact.cc.
+	(vtypes_and_exact_SOURCES): New.
+
+2006-06-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Perform additional tests on simple virtual types (no multiple
 	inheritance nor use of stc::any).
 
