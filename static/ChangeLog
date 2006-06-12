@@ -1,5 +1,9 @@
 2006-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	* tests/tour.cc: Start a Static tour.
+
+2006-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add stc_find_exact.
 
 	* stc/find_exact.hh: New.

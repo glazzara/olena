@@ -16,7 +16,9 @@ check_PROGRAMS =				\
   super						\
   vtypes					\
   vtypes-and-exact				\
-  vtypes-multiple-supers
+  vtypes-multiple-supers			\
+						\
+  tour
 
 any_SOURCES                    = any.cc
 entry_SOURCES                  = entry.cc
@@ -27,5 +29,7 @@ super_SOURCES                  = super.cc
 vtypes_SOURCES                 = vtypes.cc
 vtypes_and_exact_SOURCES       = vtypes-and-exact.cc
 vtypes_multiple_supers_SOURCES = vtypes-multiple-supers.cc
+
+tour_SOURCES = tour.cc
 
 TESTS = $(check_PROGRAMS)
