@@ -5,6 +5,7 @@ nobase_stc_HEADERS =				\
   any.hh					\
   entry.hh					\
   exact.hh					\
+  find_exact.hh					\
   valist_aggregator.hh				\
   vtypes.hh					\
 						\

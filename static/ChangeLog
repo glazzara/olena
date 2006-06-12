@@ -1,3 +1,13 @@
+2006-06-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add stc_find_exact.
+
+	* stc/find_exact.hh: New.
+	* tests/find_exact.cc (main): New test.
+	* stc/Makefile.am (nobase_stc_HEADERS): Add find_exact.hh.
+	* tests/Makefile.am (check_PROGRAMS): Add find_exact.
+	(find_exact_SOURCES): New.
+
 2006-06-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Perform virtual type retrieval using the exact type of a class.
