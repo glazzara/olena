@@ -1,3 +1,12 @@
+2006-06-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Document stc_find_exact and stc::itself in Static tour.
+
+	* tests/tour.cc (dynamic_hierarchy, simple_static_hierarchy):
+	(static_hierarchy_with_methods): Aesthetic changes.
+	(static_hierarchy_with_any): Rephrase comments.
+	(static_hierarchy_with_a_non_leaf_concrete_class): New section.
+
 2006-06-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/tour.cc: Start a Static tour.
