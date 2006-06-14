@@ -1,6 +1,19 @@
 2006-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
-	Add stc_to_exact and stc_to_exact macros.
+	More on the retrieval of and the conversion to the exact type in
+	Static tour.
+
+	* tests/tour.cc (static_hierarchy_with_any): More on the retrieval
+	of and the conversion to the exact type.
+	(main): Run dynamic tests.
+	(static_hierarchy_with_any::A) 
+	(static_hierarchy_with_a_non_leaf_concrete_class::A) 
+	(static_hierarchy_with_methods::A): Use stc::any instead of
+	stc::any__simple.
+
+2006-06-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add stc_to_exact and stc_to_exact_ macros.
 
 	* stc/exact.hh (stc_to_exact, stc_to_exact_): New macros.
 	* stc/vtypes.hh (type_of_): Use the stc_to_exact macro instead

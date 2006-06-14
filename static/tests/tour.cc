@@ -28,8 +28,15 @@
 /// \file tests/tour.cc
 /// \brief A tour of Static and SCOOP features.
 
-# include <stc/any.hh>
-# include <stc/find_exact.hh>
+#include <cassert>
+
+#include <mlc/assert.hh>
+#include <mlc/is_a.hh>
+#include <mlc/cmp.hh>
+
+#include <stc/any.hh>
+#include <stc/exact.hh>
+#include <stc/find_exact.hh>
 
 // FIXME: ``Fil rouge'': building a small (but complete) static
 // hierarchy, using all features from Static. Possibly, this
@@ -41,7 +48,7 @@
 // having introduced the vtypes.
 
 // FIXME: Things to show:
-// - exact
+// - exact (more)
 // - super
 // - virtual types (and macros for super)
 // - multiple super
@@ -167,8 +174,8 @@ namespace static_hierarchy_with_any
      to this type.  In fact, there is not a single `stc::any' class,
      but several, which have their advantages and drawbacks
      w.r.t. speed, memory print and support for diamond inheritance.
-     We'll only deal with `stc::any__simple' in this Static tour:
-     where you'll see `stc::any', simply read `stc::any__simple'.
+     We'll only deal with `stc::any' (an alias for `stc::any__simple')
+     in this Static tour.
 
      `stc::any' is used as the base class of any top class of a static
      hierarchy.  It is passed the `Exact' type, just like any non-leaf
@@ -176,7 +183,7 @@ namespace static_hierarchy_with_any
      derived, i.e., at the bottom of an inheritance tree).  */
 
   template <typename Exact>
-  struct A : public stc::any__simple<Exact>
+  struct A : public stc::any<Exact>
   {
   };
 
@@ -199,11 +206,47 @@ namespace static_hierarchy_with_any
 } // end of namespace static_hierarchy_with_any
 
 
-// ------------ //
-// stc::exact.  //
-// ------------ //
+// -------------------------------- //
+// Getting back to the exact type.  //
+// -------------------------------- //
 
-// FIXME: To do.
+namespace static_hierarchy_with_any
+{
+  void test()
+  {
+    // Metalic assertions.
+    mlc::assert_< mlc_is_a_(C, A) >::check();
+    mlc::assert_< mlc_is_a_(C, B) >::check();
+
+
+    // Getting the exact type.
+
+    // `stc::any' has an `exact_type' typedef.
+    typedef A<C>::exact_type exact_type_of_A_1;
+    // But you can also use stc_to_exact_ to get this type.
+    typedef stc_to_exact_(A<C>) exact_type_of_A_2;
+    // Check these types.
+    mlc::assert_< mlc_eq(exact_type_of_A_1, C) >::check();
+    mlc::assert_< mlc_eq(exact_type_of_A_2, C) >::check();
+
+
+    // Converting an object to its exact type.
+
+    // Create a C.
+    C c;
+    // See it through an abstraction.
+    A<C>& a = c;
+    // And get it back, with no runtime overhead (i.e., dynamic_cast).
+    C& c2 = a.exact();
+    // Ensure we got back the same object.
+    assert (&c2 == &c);
+
+    // stc::exact provides the same service.
+    C& c3 = stc::exact(a);
+    assert (&c3 == &c);
+  }
+
+} // end of namespace static_hierarchy_with_any
 
 
 // --------------------------- //
@@ -236,7 +279,7 @@ namespace static_hierarchy_with_a_non_leaf_concrete_class
   /* A is left unchanged (it is still an abstract class).  */
 
   template <typename Exact>
-  struct A : public stc::any__simple<Exact>
+  struct A : public stc::any<Exact>
   {
   };
 
@@ -303,7 +346,7 @@ namespace static_hierarchy_with_methods
 {
 
   template <typename Exact>
-  struct A : public stc::any__simple<Exact>
+  struct A : public stc::any<Exact>
   {
     /* Facade of a statically-dispatched method.  Notice there is no
        `virtual' keyword: the (static) dispatch is done manually
@@ -337,7 +380,12 @@ namespace static_hierarchy_with_methods
 
 // FIXME: Introduce static checks of methods (kind of concept checking).
 
-int main() {}
+
+// Run dynamic tests.
+int main()
+{
+  static_hierarchy_with_any::test();
+}
 
 /* References:
 
