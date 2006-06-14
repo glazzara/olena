@@ -56,6 +56,20 @@ typedef concrete_<> concrete;
 
 int main()
 {
+  // Ensure stc::is_any_ works properly.
+  mlc::assert_< stc::is_any_< abstraction<concrete> >     >::check();
+  mlc::assert_< stc::is_any_< sub_abstraction<concrete> > >::check();
+  mlc::assert_< stc::is_any_< concrete >                  >::check();
+
+  // Check stc_to_exact.
+  mlc::assert_<
+    mlc_eq(stc_to_exact_(abstraction<concrete>), concrete)
+  >::check();
+
+  mlc::assert_<
+    mlc_eq(stc_to_exact_(sub_abstraction<concrete>), concrete)
+  >::check();
+
   //-----------------------------------------
 
   {

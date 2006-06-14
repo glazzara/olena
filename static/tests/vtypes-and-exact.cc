@@ -113,7 +113,7 @@ namespace my
   };
 
   template <typename Exact>
-  struct A : public stc::any__simple<Exact>
+  struct A : public stc::any<Exact>
   {
     // Aliases.
     typedef my_type_of(A, foo) foo_type;
@@ -224,9 +224,13 @@ main()
   using my::B;
   using my::C;
 
+  // Check super classes.
+  mlc::assert_<mlc_is_a_(C, A)>::check();
+  mlc::assert_<mlc_is_a_(C, B)>::check();
+
   // Check exact types of A<C> and B<C>.
-  mlc::assert_<mlc_eq(stc::to_exact_< A<C> >::ret, C)>::check();
-  mlc::assert_<mlc_eq(stc::to_exact_< B<C> >::ret, C)>::check();
+  mlc::assert_<mlc_eq(stc_to_exact_(A<C>), C)>::check();
+  mlc::assert_<mlc_eq(stc_to_exact_(B<C>), C)>::check();
 
 
   // Check types associated to A<C>.

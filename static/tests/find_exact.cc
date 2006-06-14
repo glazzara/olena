@@ -65,7 +65,6 @@ main()
   mlc::assert_< mlc_is_a_(C, A) >::check();
   mlc::assert_< mlc_is_a_(C, B) >::check();
 
-  mlc::assert_< mlc_eq(stc::to_exact_< A< B<> > >::ret,
-		       B<stc::itself>) >::check();
-  mlc::assert_< mlc_eq(stc::to_exact_< A<C> >::ret, C) >::check();
+  mlc::assert_< mlc_eq( stc_to_exact_(A< B<> >), B<stc::itself> ) >::check();
+  mlc::assert_< mlc_eq( stc_to_exact_(A<C>),     C )              >::check();
 }

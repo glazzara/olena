@@ -35,13 +35,17 @@
 # include <mlc/bexpr.hh>
 
 
+/// \def Get the exact type of \a T.
+#define stc_to_exact(T)				\
+   typename stc_to_exact_(T)
+
+#define stc_to_exact_(T)			\
+   stc::to_exact_< T >::ret
 
 
-# define stc_internal_is_any(T)						 \
-  mlc::bexpr_< sizeof(internal::any_select(internal::makePtr< T >())) == \
-    sizeof(internal::yes_) >
-
-
+# define stc_internal_is_any(T)						  \
+   mlc::bexpr_< sizeof(internal::any_select(internal::makePtr< T >())) == \
+     sizeof(internal::yes_) >
 
 namespace stc
 {

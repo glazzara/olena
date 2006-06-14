@@ -528,7 +528,7 @@ namespace stc
   struct type_of_							      \
   {									      \
     /* Get the exact type of \a from_type.  */				      \
-    typedef typename stc::to_exact_<from_type>::ret from_exact_type;	      \
+    typedef stc_to_exact(from_type) from_exact_type;			      \
 									      \
     /* Look for the typedef in internal types.  */			      \
     typedef typename							      \
