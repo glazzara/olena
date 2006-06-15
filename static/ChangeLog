@@ -1,3 +1,21 @@
+2006-06-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	More on SCOOP methods in Static tour.
+
+	* tests/tour.cc (dynamic_hierarchy::A::foo)
+	(dynamic_hierarchy::A::bar, dynamic_hierarchy::B::foo)
+	(dynamic_hierarchy::B::bar, dynamic_hierarchy::C::foo): Return an
+	int value.
+	(static_hierarchy_with_methods::A::foo)
+	(static_hierarchy_with_methods::A::impl_foo)
+	(static_hierarchy_with_methods::A::bar)
+	(static_hierarchy_with_methods::B::impl_foo)
+	(static_hierarchy_with_methods::B::impl_bar)
+	(static_hierarchy_with_methods::C::impl_foo): Likewise.
+	(static_hierarchy_with_methods): Add comments.
+	(static_hierarchy_with_methods::test): New.
+	(main): Call it.
+
 2006-06-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	More on the retrieval of and the conversion to the exact type in

@@ -75,25 +75,25 @@ namespace dynamic_hierarchy
   struct A
   {
     // A virtual method.
-    virtual void foo() { /* ... */ }
+    virtual int foo() { return 1; }
     // A virtual pure method.
-    virtual void bar() = 0;
+    virtual int bar() = 0;
   };
 
   // `B' is a concrete class.
   struct B
   {
     // A redefined method.
-    virtual void foo() { /* ... */ }
+    virtual int foo() { return 2; }
     // `B::bar' is defined.
-    virtual void bar() { /* ... */ }
+    virtual int bar() { return 3; }
   };
 
   // `C' is a concrete class.
   struct C
   {
     // `B::foo' is redefined.
-    virtual void foo() { /* ... */ }
+    virtual int foo() { return 4; }
   };
 
 } // end of namespace dynamic_hierarchy
@@ -338,9 +338,22 @@ namespace static_hierarchy_with_a_non_leaf_concrete_class
 // Methods.  //
 // --------- //
 
-// Add the methods.
+/* We have laid down the foundations of our classes.  Now it's time to
+   add some methods.
 
-// FIXME: Comments.
+   Unlike classic C++, SCOOP doesn't use the `virtual' keyword to
+   define polymorphic methods.  As SCOOP performs a static resolution
+   of method calls, it can't rely on `virtual' (which is dynamic per
+   se).  Instead, a manual dispatch of method call is used: each
+   polymorphic method is turned into a facade, and there is one
+   implementation per class defining this method actually.  The facade
+   retrieves the exact type of the object, and calls the
+   implementation corresponding to this type.  A SCOOP abstract
+   polymorphic method (the equivalent of C++ ``virtual pure'' method)
+   has no implementation in the class where its facade is defined.
+
+   The convention is to name `impl_m' the implementation(s) of the
+   facade `m'.  */
 
 namespace static_hierarchy_with_methods
 {
@@ -351,12 +364,12 @@ namespace static_hierarchy_with_methods
     /* Facade of a statically-dispatched method.  Notice there is no
        `virtual' keyword: the (static) dispatch is done manually
        through the delegation to impl_foo.  */
-    void foo()      { this->exact().impl_foo(); }
+    int foo()      { return this->exact().impl_foo(); }
     // Implementation of the method.
-    void impl_foo() { /* ... */ }
+    int impl_foo() { return 1; }
 
     // A ``virtual'' pure (i.e., abstract) method.
-    void bar()      { this->exact().impl_bar(); }
+    int bar()      { return this->exact().impl_bar(); }
     // (No `impl_bar', since bar is abstract.)
   };
 
@@ -364,16 +377,37 @@ namespace static_hierarchy_with_methods
   struct B : public A< stc_find_exact(B, Exact) >
   {
     // A redefined method.
-    void impl_foo() { /* ... */ }
+    int impl_foo() { return 2; }
     // B::bar (implementation) is defined.
-    void impl_bar() { /* ... */ }
+    int impl_bar() { return 3; }
   };
 
   struct C : public B<C>
   {
     // Redefinition.
-    void impl_foo() { /* ... */ }
+    int impl_foo() { return 4; }
   };
+
+} // end of namespace static_hierarchy_with_methods
+
+
+namespace static_hierarchy_with_methods
+{
+
+  void test()
+  {
+    C c;
+    assert (c.foo() == 4);
+    assert (c.bar() == 3);
+
+    B<C>& b = c;
+    assert (b.foo() == 4);
+    assert (b.bar() == 3);
+
+    A<C>& a = c;
+    assert (a.foo() == 4);
+    assert (a.bar() == 3);
+  }
 
 } // end of namespace static_hierarchy_with_methods
 
@@ -385,6 +419,7 @@ namespace static_hierarchy_with_methods
 int main()
 {
   static_hierarchy_with_any::test();
+  static_hierarchy_with_methods::test();
 }
 
 /* References:
