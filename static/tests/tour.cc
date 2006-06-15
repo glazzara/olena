@@ -31,6 +31,7 @@
 #include <cassert>
 
 #include <mlc/assert.hh>
+#include <mlc/contract.hh>
 #include <mlc/is_a.hh>
 #include <mlc/cmp.hh>
 
@@ -394,7 +395,7 @@ namespace static_hierarchy_with_methods
 namespace static_hierarchy_with_methods
 {
 
-  void test()
+  void test1()
   {
     C c;
     assert (c.foo() == 4);
@@ -412,20 +413,133 @@ namespace static_hierarchy_with_methods
 } // end of namespace static_hierarchy_with_methods
 
 
-// FIXME: Introduce static checks of methods (kind of concept checking).
+// --------------------------- //
+// Enforcing method checking.  //
+// --------------------------- //
 
+/* For a given `Exact' type, consider the `A<Exact>::foo' method.
+   This method relies on the fact that `Exact' has an `impl_foo'
+   method.  However, the compiler let you instantiate an a class
+   `A<Exact>' with an `Exact' type not fulfilling this requirement,
+   and even worse, you can instantiate an object of this ill-formed
+   type!  The compiler will complain only when it tries to resolve the
+   call to the (missing) `impl_foo' method.  */
+
+namespace static_hierarchy_with_methods
+{
+
+  // For instance, let's introduce an ill-formed concrete subclass of A.
+  struct D : public A<D>
+  {
+    // No `impl_foo'.
+  };
+
+  /* `D' is not a valid exact type for A.  Despite this fact, we can
+     instantiate this template with `D', as well as an object of this
+     type!  */
+  void test2()
+  {
+    // Valid (!).
+    typedef A<D> A_D;
+    // Equally valid (!).
+    A_D a;
+    // This call would fail if it were not disabled.
+#if 0
+    a.foo();
+#endif
+  }
+
+} // end of namespace static_hierarchy_with_methods
+
+
+/* Metalic proposes a concept checking tool similar to the one used in
+   the Boost Concept Check Library (BCCL) [2],
+   `mlc_check_method_impl'.  We use it to check that SCOOP abstract
+   polymorphic methods defined in an abstract class have a valid
+   implementation in one of the subclasses (i.e., "between" this
+   abstraction and the exact type).  */
+
+namespace static_hierarchy_with_method_checks
+{
+
+  template <typename Exact>
+  struct A : public stc::any<Exact>
+  {
+    int foo()      { return this->exact().impl_foo(); }
+    int impl_foo() { return 1; }
+    int bar()      { return this->exact().impl_bar(); }
+
+    /* Method checks are placed in the destructor, since they must
+       reside within a function body.  */
+    ~A()
+    {
+      /* `foo' is abstract in `A'.  Ensure A's subclasses define an
+	 implementation for this method.  */
+      mlc_check_method_impl(Exact, int, bar, /* no arg */, /* no const */);
+    }
+  };
+
+  template <typename Exact>
+  struct B : public A< stc_find_exact(B, Exact) >
+  {
+    int impl_foo() { return 2; }
+    int impl_bar() { return 3; }
+  };
+
+  struct C : public B<C>
+  {
+    int impl_foo() { return 4; }
+  };
+
+  struct D : public A<D>
+  {
+    // No `impl_foo'.
+  };
+
+
+  void test()
+  {
+    /* Invalid template instantiation, because of `impl_foo' missing.
+       Upon this code, the compiler would emit an error message
+       similar to this one:
+
+         error: 'impl_bar' is not a member of
+	 'static_hierarchy_with_method_checks::D'
+
+    */
+#if 0
+    typedef A<D> A_D;
+    A_D a;
+#endif
+  }
+
+} // end of namespace static_hierarchy_with_method_checks
+
+
+
+/*-------.
+| Misc.  |
+`-------*/
 
 // Run dynamic tests.
 int main()
 {
   static_hierarchy_with_any::test();
-  static_hierarchy_with_methods::test();
+  static_hierarchy_with_methods::test1();
 }
 
-/* References:
 
-   [1] Coplien, James O. (1995, February). "Curiously Recurring
-   Template Patterns". C++ Report: 24-27.  */
+
+/*-------------.
+| References.  |
+`-------------*/
+
+/* [1] James O. Coplien.  ``Curiously Recurring Template
+   Patterns''. C++ Report: 24-27. 1995, February.
+
+   [2] Jeremy Siek, Andrew Lumsdaine.  ``Concept Checking: Binding
+   Parametric Polymorphism in C++''.  In Proceedings of the ``Workshop
+   on C++ Template Programming''.  2000.  */
 
 
 

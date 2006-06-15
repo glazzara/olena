@@ -1,5 +1,18 @@
 2006-06-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Document method checks in Static tour.
+
+	* tests/tour.cc (static_hierarchy_with_methods::test): Rename
+	as...
+	(static_hierarchy_with_methods::test1): ...this.
+	(main): Adjust.
+	(static_hierarchy_with_methods::D): New.
+	(static_hierarchy_with_methods::test2): New.
+	(static_hierarchy_with_method_checks): New section.
+	Add a reference (Concept Checking).
+
+2006-06-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	More on SCOOP methods in Static tour.
 
 	* tests/tour.cc (dynamic_hierarchy::A::foo)
