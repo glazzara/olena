@@ -1,3 +1,9 @@
+2006-06-26  Quentin Hocquet  <quentin.hocquet@lrde.epita.fr>
+
+	Remove external link to transformers.
+
+	* tools: Remove svn:external property.
+
 2006-05-06  Quentin Hocquet  <quentin.hocquet@lrde.epita.fr>
 
 	Fix previous patch.
