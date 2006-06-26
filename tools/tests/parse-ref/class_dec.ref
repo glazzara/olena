@@ -1,1 +1,0 @@
-Program([ConsDec("point",Class,Class([Accessblock(Public,[FunDec("x",[],Var("int"),[Return(Var("x"))])]),Accessblock(Private,[VarDec("x",Var("int")),VarDec("y",Var("int"))])]))])

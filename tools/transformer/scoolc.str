@@ -1,6 +1,0 @@
-module scoolc
-
-imports liblib Scool
-
-strategies
-	main = io-wrap(id)

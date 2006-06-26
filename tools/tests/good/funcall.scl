@@ -1,4 +1,0 @@
-doit : () -> int =
-{
-  -> foo("bar", "baz");
-}

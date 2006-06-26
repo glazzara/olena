@@ -1,1 +1,0 @@
-Program([VarDec("l",StaticFunCall("list",[Var("int")]))])

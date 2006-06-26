@@ -1,1 +1,0 @@
-Program([FunDec("f",[],Var("void"),[ConsDec("i",Var("int16"),Int("3")),ExpStm(Affect(Var("i"),Int("4"))),VarDec("j",Var("int16"),Int("3")),ExpStm(Affect(Var("j"),Int("4")))])])

@@ -1,1 +1,0 @@
-Program([ConsDec("i",Var("int"),BiFunCall("pow",[Int("4")],[Int("3")]))])

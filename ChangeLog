@@ -1,5 +1,77 @@
 2006-06-26  Quentin Hocquet  <quentin.hocquet@lrde.epita.fr>
 
+	Remove scool compiler.
+
+	Scool compiler has been moved into its own repository.
+
+	* tools: Remove.
+	* tools/test.yml: Remove.
+	* tools/tests: Remove.
+	* tools/tests/syntax error: Remove.
+	* tools/tests/syntax error/wrong.scl: Remove.
+	* tools/tests/parse-ref: Remove.
+	* tools/tests/parse-ref/vardec.ref: Remove.
+	* tools/tests/parse-ref/fundec.ref: Remove.
+	* tools/tests/parse-ref/funcall_no-args.ref: Remove.
+	* tools/tests/parse-ref/empty-class_dec.ref: Remove.
+	* tools/tests/parse-ref/varinit.ref: Remove.
+	* tools/tests/parse-ref/emtpy-class_dec.ref: Remove.
+	* tools/tests/parse-ref/no-args_funtype.ref: Remove.
+	* tools/tests/parse-ref/class_dec.ref: Remove.
+	* tools/tests/parse-ref/manydec.ref: Remove.
+	* tools/tests/parse-ref/wiki1.ref: Remove.
+	* tools/tests/parse-ref/bi-exp.ref: Remove.
+	* tools/tests/parse-ref/funcall.ref: Remove.
+	* tools/tests/parse-ref/wiki2.ref: Remove.
+	* tools/tests/parse-ref/function.ref: Remove.
+	* tools/tests/parse-ref/consinit.ref: Remove.
+	* tools/tests/parse-ref/wiki3.ref: Remove.
+	* tools/tests/parse-ref/funtype.ref: Remove.
+	* tools/tests/parse-ref/empty.ref: Remove.
+	* tools/tests/parse-ref/type_static-call.ref: Remove.
+	* tools/tests/parse-ref/guard.ref: Remove.
+	* tools/tests/good: Remove.
+	* tools/tests/good/type_static-call.scl: Remove.
+	* tools/tests/good/guard.scl: Remove.
+	* tools/tests/good/vardec.scl: Remove.
+	* tools/tests/good/fundec.scl: Remove.
+	* tools/tests/good/funcall_no-args.scl: Remove.
+	* tools/tests/good/varinit.scl: Remove.
+	* tools/tests/good/empty-class_dec.scl: Remove.
+	* tools/tests/good/manydec.scl: Remove.
+	* tools/tests/good/no-args_funtype.scl: Remove.
+	* tools/tests/good/class_dec.scl: Remove.
+	* tools/tests/good/wiki1.scl: Remove.
+	* tools/tests/good/funcall.scl: Remove.
+	* tools/tests/good/bi-exp.scl: Remove.
+	* tools/tests/good/function.scl: Remove.
+	* tools/tests/good/wiki2.scl: Remove.
+	* tools/tests/good/consinit.scl: Remove.
+	* tools/tests/good/wiki3.scl: Remove.
+	* tools/tests/good/funtype.scl: Remove.
+	* tools/tests/good/empty.scl: Remove.
+	* tools/transformer: Remove.
+	* tools/transformer/scoolc.str: Remove.
+	* tools/transformer/Makefile: Remove.
+	* tools/scoolc: Remove.
+	* tools/gen.yml: Remove.
+	* tools/parser: Remove.
+	* tools/parser/grammar: Remove.
+	* tools/parser/grammar/Class.sdf: Remove.
+	* tools/parser/grammar/Decl.sdf: Remove.
+	* tools/parser/grammar/Exp.sdf: Remove.
+	* tools/parser/grammar/Scool.sdf: Remove.
+	* tools/parser/grammar/ExpOrType.sdf: Remove.
+	* tools/parser/grammar/Type.sdf: Remove.
+	* tools/parser/grammar/Lexical.sdf: Remove.
+	* tools/parser/grammar/Guard.sdf: Remove.
+	* tools/parser/grammar/Stm.sdf: Remove.
+	* tools/parser/parse-scool: Remove.
+	* tools/parser/Makefile: Remove.
+	* tools/Makefile: Remove.
+
+2006-06-26  Quentin Hocquet  <quentin.hocquet@lrde.epita.fr>
+
 	Remove external link to transformers.
 
 	* tools: Remove svn:external property.

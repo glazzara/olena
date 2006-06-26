@@ -1,1 +1,0 @@
-Program([BiFunDec("f",[("i",Var("int"),Guard(Sup(Var("i"),Int("0"))))],[],Var("int"),[])])

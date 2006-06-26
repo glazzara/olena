@@ -1,1 +1,0 @@
-Program([ConsDec("answer",Var("int"),Int("42")),VarDec("i",Var("int")),VarDec("j",Var("int"),Var("i"))])

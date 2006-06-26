@@ -1,1 +1,0 @@
-Program([FunDec("answer",[],Var("int"),[Return(Int("42"))])])

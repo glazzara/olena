@@ -1,5 +1,0 @@
-f : () -> void =
-{
-  var a : array[2,int16];
-  var i : int16 := a.at(0);
-}
