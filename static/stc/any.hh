@@ -107,6 +107,8 @@ namespace stc
   template <typename E>
   struct any__best_speed : public any<E, dispatch_policy::best_speed>
   {
+    typedef E exact_type;
+
   protected:
     typedef any<E, dispatch_policy::best_speed> super;
     any__best_speed(E* exact_ptr = 0) : super(exact_ptr) {}
@@ -165,6 +167,8 @@ namespace stc
   template <typename E>
   struct any__best_memory : public any<E, dispatch_policy::best_memory>
   {
+    typedef E exact_type;
+
   protected:
     typedef any<E, dispatch_policy::best_memory> super;
     any__best_memory() : super() {}

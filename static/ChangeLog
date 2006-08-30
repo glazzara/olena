@@ -1,3 +1,13 @@
+2006-08-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Fix missing typedefs and handle types without category.
+	
+	* stc/any.hh (any__best_speed): Add typedef exact_type.
+	(any__best_memory): Likewise.
+	* stc/vtypes.hh (stc_equip_namespace_with_vtypes): Add 'vtypes_'
+	and the specialization 'vtypes<void, from_type>' for definitions
+	of associated types from types that do not have any category.
+	
 2006-06-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Document method checks in Static tour.

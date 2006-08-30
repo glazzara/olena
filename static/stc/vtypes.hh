@@ -231,6 +231,21 @@ namespace stc
   {									      \
   };									      \
 									      \
+  /** \brief Internal virtual types associated to \a from_type  */	      \
+  /** having no category.				        */	      \
+  /**								*/	      \
+  /** Specialize this class for the desired \a from_type.	*/	      \
+  template <typename from_type>		      				      \
+  struct vtypes_							      \
+  {									      \
+  };									      \
+									      \
+  /** Specialization of vtypes for types without category.  */	      	      \
+  template <typename from_type>		      				      \
+  struct vtypes<void, from_type> : public vtypes_<from_type>		      \
+  {									      \
+  };									      \
+									      \
   /** End of the recursive construction of any vtypes hierarchy.  */	      \
   template <typename category>						      \
   struct vtypes<category, mlc::none>					      \
