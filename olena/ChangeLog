@@ -1,3 +1,11 @@
+2006-08-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/typedefs.hh (oln_type_of): New macro.
+	(dim_type): New typedef decl.
+	* oln/core/abstract/point.hh: New.
+	* oln/core/abstract/point_nd.hh: New.
+	* oln/core/2d/point2d.hh: New.
+
 2006-06-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Catch up with Static's support for multiple inheritance.

@@ -37,6 +37,18 @@
 # include <stc/vtypes.hh>
 
 
+
+/*! \macro oln_type_of(OlnType, Alias)
+**
+** Macro to retrieve an associated type \Alias from an oln type
+** \OlnType whose category is not specified.
+*/
+
+# define oln_type_of(OlnType, Alias) \
+stc_type_of(oln, void, OlnType, Alias)
+
+
+
 namespace oln
 {
 
@@ -47,6 +59,7 @@ namespace oln
   // The virtual types facility is inserted here because it also
   // triggers Metalic's typedef introspection equipment.
   stc_equip_namespace_with_vtypes();
+
 
   /*-------.
   | Misc.  |
@@ -152,6 +165,13 @@ namespace oln
 
   mlc_decl_typedef(dimvalue_type);
   mlc_decl_typedef(coord_type);
+
+
+  /*-----------------.
+  | category::point. |
+  `-----------------*/
+
+  mlc_decl_typedef(dim_type);
 
 
   /*------------------------------------.
