@@ -1,3 +1,10 @@
+2006-08-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* xtd/optraits.hh (xtd_unop_trait, xtd_unop_trait_): New.
+	(xtd_binop_trait, xtd_binop_trait_): New.
+	Update.
+	* xtd/vec.hh: New.
+
 2006-04-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	* xtd/Makefile.am (nobase_xtd_HEADERS): Add missing files.

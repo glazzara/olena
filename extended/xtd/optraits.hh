@@ -198,39 +198,49 @@ namespace xtd
 
 
 
+// general
+
+# define xtd_unop_trait(Op, T)      typename xtd::internal::get_trait_<Op, T>::ret 
+# define xtd_unop_trait_(Op, T)              xtd::internal::get_trait_<Op, T>::ret 
+# define xtd_binop_trait(Op, L, R)  typename xtd::internal::get_trait_<Op, L, R>::ret 
+# define xtd_binop_trait_(Op, L, R)          xtd::internal::get_trait_<Op, L, R>::ret 
+
+
 // logic
 
-# define xtd_op_land_trait(L, R)  typename xtd::internal::get_trait_<xtd::op_land, L, R>::ret 
-# define xtd_op_lor_trait(L, R)   typename xtd::internal::get_trait_<xtd::op_lor, L, R>::ret 
-# define xtd_op_lxor_trait(L, R)  typename xtd::internal::get_trait_<xtd::op_lxor, L, R>::ret 
+# define xtd_op_land_trait(L, R)  xtd_binop_trait(xtd::op_land, L, R) 
+# define xtd_op_lor_trait(L, R)   xtd_binop_trait(xtd::op_lor, L, R) 
+# define xtd_op_lxor_trait(L, R)  xtd_binop_trait(xtd::op_lxor, L, R) 
 
-# define xtd_op_lnot_trait(T)     typename xtd::internal::get_trait_<xtd::op_lnot, T>::ret 
+# define xtd_op_lnot_trait(T)     xtd_unop_trait(xtd::op_lnot, T) 
 
 
 // cmp
 
-# define xtd_op_eq_trait(L, R)      typename xtd::internal::get_trait_<xtd::op_eq, L, R>::ret 
-# define xtd_op_neq_trait(L, R)     typename xtd::internal::get_trait_<xtd::op_neq, L, R>::ret 
-# define xtd_op_less_trait(L, R)    typename xtd::internal::get_trait_<xtd::op_less, L, R>::ret 
-# define xtd_op_leq_trait(L, R)     typename xtd::internal::get_trait_<xtd::op_leq, L, R>::ret 
-# define xtd_op_greater_trait(L, R) typename xtd::internal::get_trait_<xtd::op_greater, L, R>::ret 
-# define xtd_op_geq_trait(L, R)     typename xtd::internal::get_trait_<xtd::op_geq, L, R>::ret 
+# define xtd_op_eq_trait(L, R)      xtd_binop_trait(xtd::op_eq, L, R) 
+# define xtd_op_neq_trait(L, R)     xtd_binop_trait(xtd::op_neq, L, R) 
+# define xtd_op_less_trait(L, R)    xtd_binop_trait(xtd::op_less, L, R) 
+# define xtd_op_leq_trait(L, R)     xtd_binop_trait(xtd::op_leq, L, R) 
+# define xtd_op_greater_trait(L, R) xtd_binop_trait(xtd::op_greater, L, R) 
+# define xtd_op_geq_trait(L, R)     xtd_binop_trait(xtd::op_geq, L, R) 
 
 
 // arith
 
-# define xtd_op_plus_trait(L, R)  typename xtd::internal::get_trait_<xtd::op_plus, L, R>::ret 
-# define xtd_op_plus_trait_(L, R)          xtd::internal::get_trait_<xtd::op_plus, L, R>::ret 
-# define xtd_op_minus_trait(L, R) typename xtd::internal::get_trait_<xtd::op_minus, L, R>::ret 
-# define xtd_op_minus_trait_(L, R)         xtd::internal::get_trait_<xtd::op_minus, L, R>::ret 
-# define xtd_op_mult_trait(L, R)  typename xtd::internal::get_trait_<xtd::op_mult, L, R>::ret 
-# define xtd_op_mult_trait_(L, R)          xtd::internal::get_trait_<xtd::op_mult, L, R>::ret 
-# define xtd_op_div_trait(L, R)   typename xtd::internal::get_trait_<xtd::op_div, L, R>::ret 
-# define xtd_op_div_trait_(L, R)           xtd::internal::get_trait_<xtd::op_div, L, R>::ret 
-# define xtd_op_mod_trait(L, R)   typename xtd::internal::get_trait_<xtd::op_mod, L, R>::ret 
-# define xtd_op_mod_trait_(L, R)           xtd::internal::get_trait_<xtd::op_mod, L, R>::ret 
+# define xtd_op_plus_trait(L, R)   xtd_binop_trait(xtd::op_plus, L, R) 
+# define xtd_op_minus_trait(L, R)  xtd_binop_trait(xtd::op_minus, L, R) 
+# define xtd_op_mult_trait(L, R)   xtd_binop_trait(xtd::op_mult, L, R) 
+# define xtd_op_div_trait(L, R)    xtd_binop_trait(xtd::op_div, L, R) 
+# define xtd_op_mod_trait(L, R)    xtd_binop_trait(xtd::op_mod, L, R) 
+# define xtd_op_uminus_trait(T)    xtd_unop_trait(xtd::op_uminus, T)
 
-# define xtd_op_uminus_trait(T)   typename xtd::internal::get_trait_<xtd::op_uminus, T>::ret 
+# define xtd_op_plus_trait_(L, R)  xtd_binop_trait_(xtd::op_plus, L, R) 
+# define xtd_op_minus_trait_(L, R) xtd_binop_trait_(xtd::op_minus, L, R) 
+# define xtd_op_mult_trait_(L, R)  xtd_binop_trait_(xtd::op_mult, L, R) 
+# define xtd_op_div_trait_(L, R)   xtd_binop_trait_(xtd::op_div, L, R) 
+# define xtd_op_mod_trait_(L, R)   xtd_binop_trait_(xtd::op_mod, L, R) 
+# define xtd_op_uminus_trait_(T)   xtd_unop_trait_(xtd::op_uminus, T)
+
 
 
 
