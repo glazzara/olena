@@ -1,3 +1,10 @@
+2006-08-31  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/case.hh (mlc_case_equipment_for_namespace): Add where_ so
+	that the whole equipment is well-localized in the client
+	namespace.
+	* mlc/cmp.hh (assert_equal_, assert_defined_): New shortcuts.
+	
 2006-06-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Please the Intel C++ Compiler w.r.t. the substitution of arguments

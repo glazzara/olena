@@ -31,6 +31,7 @@
 # include <mlc/bexpr.hh>
 # include <mlc/is_a.hh>
 # include <mlc/logic.hh>
+# include <mlc/assert.hh>
 
 
 
@@ -119,6 +120,11 @@ namespace mlc
 		      public bexpr_<true>
   {
   };
+
+  template <typename T1, typename T2, typename err = no_error_message>
+  struct assert_equal_ : public assert_< eq_<T1, T2>, err >
+  {
+  };
   /// \}
 
 
@@ -167,6 +173,11 @@ namespace mlc
 
   template <typename T>
   struct is_defined_ : public mlc_is_not_a(T, mlc::undefined)::bexpr
+  {
+  };
+
+  template <typename T, typename err = no_error_message>
+  struct assert_defined_ : public assert_< is_defined_<T>, err >
   {
   };
   /// \}

@@ -151,6 +151,13 @@ namespace mlc
 namespace NAMESPACE																	\
 {																			\
 																			\
+																			\
+  template <typename bexpr>																\
+  struct where_ : public mlc::where_<bexpr>														\
+  {																			\
+  };																			\
+																			\
+																			\
   template <typename context,																\
 	    typename data,																\
 	    unsigned i = mlc::internal::unknown_case_id>												\
