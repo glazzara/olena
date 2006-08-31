@@ -30,12 +30,28 @@
 # define OLENA_CORE_ABSTRACT_POINT_ND_HH
 
 # include <mlc/value.hh>
+
 # include <xtd/vec.hh>
+# include <xtd/optraits.hh>
+
+# include <oln/core/traits_id.hh>
 # include <oln/core/abstract/point.hh>
+# include <oln/core/abstract/dpoint_nd.hh>
 
 
 namespace oln
 {
+
+
+
+  /// Function "point_ : (n, coord) -> point type".
+  template <unsigned n, typename C>
+  struct point_
+  {
+    typedef mlc::undefined ret;
+  };
+
+
 
   namespace abstract
   {
@@ -43,37 +59,133 @@ namespace oln
     template <typename E>
     class point_nd : public abstract::point<E>
     {
-      typedef point_nd<E> self;
+      typedef point_nd<E> self_t;
       typedef oln_type_of(E, dim) dim;
-      typedef oln_type_of(E, coord) coord;
+      typedef oln_type_of(E, coord) coord_t;
+      typedef oln_type_of(E, dpoint) dpoint_t;
 
     public:
 
       enum { n = mlc_value(dim) };
+      
+      coord_t operator[](unsigned i) const
+      {
+	assert(i < n);
+	return v_[i];
+      }
+      
+      coord_t& operator[](unsigned i)
+      {
+	assert(i < n);
+	return v_[i];
+      }
 
-      bool impl_eq(const self& rhs) const
+      bool impl_equal(const self_t& rhs) const
       {
-	return v_ == rhs.v_;
+	return v_ == rhs.vec();
       }
-      
-      const coord operator[](unsigned i) const
+
+      bool impl_less(const self_t& rhs) const
       {
-	assert(i < n);
-	return v_[i];
+	return xtd::lexi(v_, rhs.vec());
       }
-      
-      coord& operator[](unsigned i)
+
+      E& impl_plus_equal(const dpoint_t& rhs)
       {
-	assert(i < n);
-	return v_[i];
+	v_ += rhs.vec();
+	return this->exact();
+      }
+
+      E impl_plus(const dpoint_t& rhs) const
+      {
+	E tmp(v_ + rhs.vec());
+	return tmp;
+      }
+
+      E& impl_minus_equal(const dpoint_t& rhs)
+      {
+	v_ += rhs.vec();
+	return this->exact();
+      }
+
+      E impl_minus(const dpoint_t& rhs) const
+      {
+	E tmp(v_ - rhs.vec());
+	return tmp;
+      }
+
+      dpoint_t impl_minus(const self_t& rhs) const
+      {
+	dpoint_t tmp(v_ - rhs.vec());
+	return tmp;
+      }
+
+      const xtd::vec<n,coord_t>& vec() const
+      {
+	return v_;
       }
 
     protected:
 
-      xtd::vec<n,coord> v_;
+      /// Ctor.
+      point_nd()
+      {}
+
+      /// Ctor.
+      point_nd(const xtd::vec<n,coord_t>& v) :
+	v_(v)
+      {}
+
+      xtd::vec<n,coord_t> v_;
     };
 
   } // end of namespace oln::abstract
+
+
+
+  /// abstract::point_nd + abstract::dpoint_nd
+  template <typename P, typename D>
+  struct case_ < xtd::op_plus, mlc::pair_<P,D>,
+		 oln::id::op_plus_pointnd_dpointnd >
+    : where_< mlc::and_< mlc_is_a(P, abstract::point_nd),
+                         mlc_is_a(D, abstract::dpoint_nd) > >
+  {
+    typedef oln_type_of(P, coord) P_coord;
+    typedef oln_type_of(D, coord) D_coord;
+    typedef xtd_op_plus_trait(P_coord, D_coord) coord;
+    typedef oln_type_of(P, dim) dim;
+    typedef typename point_<mlc_value(dim), coord>::ret ret;
+  };
+
+
+  /// abstract::point_nd - abstract::dpoint_nd
+  template <typename P, typename D>
+  struct case_ < xtd::op_minus, mlc::pair_<P,D>,
+		 oln::id::op_minus_pointnd_dpointnd >
+    : where_< mlc::and_< mlc_is_a(P, abstract::point_nd),
+                         mlc_is_a(D, abstract::dpoint_nd) > >
+  {
+    typedef oln_type_of(P, coord) P_coord;
+    typedef oln_type_of(D, coord) D_coord;
+    typedef xtd_op_minus_trait(P_coord, D_coord) coord;
+    typedef oln_type_of(P, dim) dim;
+    typedef typename point_<mlc_value(dim), coord>::ret ret;
+  };
+
+
+  /// abstract::point_nd - abstract::point_nd
+  template <typename P1, typename P2>
+  struct case_ < xtd::op_minus, mlc::pair_<P1,P2>,
+		 oln::id::op_minus_pointnd_pointnd >
+    : where_< mlc::and_< mlc_is_a(P1, abstract::point_nd),
+                         mlc_is_a(P2, abstract::point_nd) > >
+  {
+    typedef oln_type_of(P1, coord) P1_coord;
+    typedef oln_type_of(P2, coord) P2_coord;
+    typedef xtd_op_minus_trait(P1_coord, P2_coord) coord;
+    typedef oln_type_of(P1, dim) dim;
+    typedef typename dpoint_<mlc_value(dim), coord>::ret ret;
+  };
 
 
 } // end of namespace oln

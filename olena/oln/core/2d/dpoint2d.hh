@@ -25,78 +25,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_2D_POINT2D_HH
-# define OLENA_CORE_2D_POINT2D_HH
-
-# include <string>
+#ifndef OLENA_CORE_2D_DPOINT2D_HH
+# define OLENA_CORE_2D_DPOINT2D_HH
 
 # include <mlc/int.hh>
-# include <oln/core/abstract/point_nd.hh>
+# include <oln/core/2d/point2d.hh>
+# include <oln/core/abstract/dpoint_nd.hh>
 
 
 namespace oln
 {
 
 
-  /// \{
-  /// Forward declarations.
-  template <typename C> class point2d_;
-  template <typename C> class dpoint2d_;
-  class grid2d;
-  /// \}
-
-
-  /// \{
-  /// Classical 2D point classes.
-  typedef  point2d_<int>   point2d;
-  typedef  point2d_<float> point2df;
-  /// \}
-
-
-  /// \{
-  /// Classical 2D point classes.
-  typedef dpoint2d_<int>   dpoint2d;
-  typedef dpoint2d_<float> dpoint2df;
-  /// \}
-
-
-  /// \{
-  /// Specializations of functions point and dpoint : (n,coord) -> type for n = 2.
-  template <typename C> struct  point_ <2, C> { typedef  point2d_<C> ret; };
-  template <typename C> struct dpoint_ <2, C> { typedef dpoint2d_<C> ret; };
-  /// \}
+//   /// Super type.
+//   template<typename C>
+//   struct set_super_type< dpoint2d_<C> >
+//   {
+//     typedef abstract::dpoint< dpoint2d_<C> > ret;
+//   };
 
 
   /// Virtual types associated to oln::abstract::image.
   template <typename C>
-  struct vtypes_< point2d_<C> >
+  struct vtypes_< dpoint2d_<C> >
   {
     typedef grid2d        grid_type;
-    typedef dpoint2d      dpoint_type;
+    typedef point2d       point_type;
     typedef C             coord_type;
     typedef mlc::uint_<2> dim_type;
   };
 
 
-  /// General 2D point class.
+  /// General 2D dpoint class.
   template <typename C>
-  class point2d_ : public abstract::point_nd< point2d_<C> > // FIXME: stc_get_super_(point2d_<C>)
+  class dpoint2d_ : public abstract::dpoint_nd< dpoint2d_<C> > // FIXME: stc_get_super_(dpoint2d_<C>)
   {
-    typedef point2d_<C> self_t;
-    typedef abstract::point_nd<self_t> super_t;
-    typedef oln_type_of(self_t, coord) coord_t;
+    typedef dpoint2d_<C>                self_t;
+    typedef abstract::dpoint_nd<self_t> super_t; // FIXME: stc_get_super(self)
+    typedef oln_type_of(self_t, coord)  coord_t;
 
     using super_t::v_;
 
   public:
 
     /// Ctor.
-    point2d_()
+    dpoint2d_()
     {
     }
 
     /// Ctor.
-    point2d_(const xtd::vec<2,coord_t>& v) :
+    dpoint2d_(const xtd::vec<2,coord_t>& v) :
       super_t(v)
     {
     }
@@ -109,9 +87,9 @@ namespace oln
   };
 
 
+
+
 } // end of namespace oln
 
-# include <oln/core/2d/dpoint2d.hh>
 
-
-#endif // ! OLENA_CORE_2D_POINT2D_HH
+#endif // ! OLENA_CORE_2D_DPOINT2D_HH
