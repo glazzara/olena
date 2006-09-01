@@ -260,6 +260,22 @@ namespace stc
   {									      \
   };									      \
 									      \
+  /** \brief An external virtual type associated to \a from_type. */	      \
+  /** Version for types without category.			  */	      \
+  /**								  */	      \
+  /** Specialize this class for the desired \a from_type.	  */	      \
+  template <typename from_type, typename typedef_type>			      \
+  struct ext_vtype_							      \
+  {									      \
+  };									      \
+									      \
+  /** Specialization of ext_vtype for types without category. */	      \
+  template <typename from_type, typename typedef_type>     		      \
+  struct ext_vtype<void, from_type, typedef_type>			      \
+    : public ext_vtype_<from_type, typedef_type>			      \
+  {									      \
+  };									      \
+									      \
   /** End of the recursive construction of any ext_vtype<> */		      \
   /** hierarchy.                                           */		      \
   template <typename category, typename typedef_type>			      \
@@ -271,6 +287,20 @@ namespace stc
   /** See tests/vtypes.hh for an example of use.              */	      \
   template <typename category, typename from_type>			      \
   struct packed_vtypes							      \
+  {									      \
+  };									      \
+									      \
+  /** Optional packing structure, to be specialized by the user.  */	      \
+  /** Version for types without category.  */				      \
+  /** See tests/vtypes.hh for an example of use.              */	      \
+  template <typename from_type>			  	  	  	      \
+  struct packed_vtypes_							      \
+  {									      \
+  };									      \
+									      \
+  /** Specialization of packed_vtypes for types without category. */	      \
+  template <typename from_type>						      \
+  struct packed_vtypes<void, from_type> : public packed_vtypes_<from_type>    \
   {									      \
   };									      \
 									      \

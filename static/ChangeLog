@@ -1,3 +1,12 @@
+2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add materials to handle types without category.
+	
+	* stc/vtypes.hh (stc_equip_namespace_with_vtypes): Add
+	ext_vtype_ and packed_vtypes_ for types without category.
+	(ext_vtype, packed_vtypes): Add specializations for
+	category being void.
+
 2006-08-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Fix missing typedefs and handle types without category.
