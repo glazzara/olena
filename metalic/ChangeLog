@@ -1,3 +1,7 @@
+2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/contract.hh (implies): New macro.
+
 2006-08-31  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/case.hh (mlc_case_equipment_for_namespace): Add where_ so

@@ -34,6 +34,8 @@
 // FIXME: a lot of code has been removed here for simplification
 // purpose only.
 
+# define implies(lexpr, rexpr) (not (rexpr) or (lexpr))
+
 # define assertion(expr)     assert(expr)
 # define invariant(expr)     assert(expr) 
 # define precondition(expr)  assert(expr) 
