@@ -224,6 +224,13 @@ namespace xtd
 # define xtd_op_greater_trait(L, R) xtd_binop_trait(xtd::op_greater, L, R) 
 # define xtd_op_geq_trait(L, R)     xtd_binop_trait(xtd::op_geq, L, R) 
 
+# define xtd_op_eq_trait_(L, R)      xtd_binop_trait_(xtd::op_eq, L, R) 
+# define xtd_op_neq_trait_(L, R)     xtd_binop_trait_(xtd::op_neq, L, R) 
+# define xtd_op_less_trait_(L, R)    xtd_binop_trait_(xtd::op_less, L, R) 
+# define xtd_op_leq_trait_(L, R)     xtd_binop_trait_(xtd::op_leq, L, R) 
+# define xtd_op_greater_trait_(L, R) xtd_binop_trait_(xtd::op_greater, L, R) 
+# define xtd_op_geq_trait_(L, R)     xtd_binop_trait_(xtd::op_geq, L, R) 
+
 
 // arith
 

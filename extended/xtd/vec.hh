@@ -29,7 +29,8 @@
 #ifndef EXTENDED_VEC_HH
 # define EXTENDED_VEC_HH
 
-# include <cassert>
+# include <iostream>
+# include <mlc/contract.hh>
 # include <xtd/optraits.hh>
 
 
@@ -125,13 +126,13 @@ namespace xtd
 
     const T operator[](unsigned i) const
     {
-      assert(i < n);
+      precondition(i < n);
       return data_[i];
     }
 
     T& operator[](unsigned i)
     {
-      assert(i < n);
+      precondition(i < n);
       return data_[i];
     }
 
@@ -241,7 +242,7 @@ namespace xtd
     template <typename S>
     vec& operator/=(const S& scalar)
     {
-      assert(scalar != 0);
+      precondition(scalar != 0);
       for (unsigned i = 0; i < n; ++i)
 	data_[i] /= scalar;
       return *this;
@@ -251,15 +252,47 @@ namespace xtd
     vec<n, xtd_op_div_trait(T, S)>
     operator/(const S& scalar) const
     {
-      assert(scalar != 0);
+      precondition(scalar != 0);
       vec<n, xtd_op_div_trait(T, S)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = data_[i] / scalar;
       return tmp;
     }
 
+    friend 
+    std::ostream& operator<<(std::ostream& ostr, const vec<n,T>& v)
+    {
+      ostr << '(';
+      for (unsigned i = 0; i < n; ++i)
+	ostr << v[i] << (i == n - 1 ? ")" : ", ");
+      return ostr;
+    }
+
   };
 
+
+
+  struct lexi_less_t
+  {
+    template <unsigned n, typename T>
+    bool operator()(const vec<n,T>& lhs, const vec<n,T>& rhs) const
+    {
+      for (unsigned i = 0; i < n; ++i)
+	if (lhs[i] < rhs[i])
+	  return true;
+	else if (lhs[i] > rhs[i])
+	  return false;
+      return false;
+    }
+  };
+
+
+  template <unsigned n, typename T>
+  bool lexi_less(const vec<n,T>& lhs, const vec<n,T>& rhs)
+  {
+    lexi_less_t cmp;
+    return cmp(lhs, rhs);
+  }
 
 
   template <typename uop,

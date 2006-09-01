@@ -1,3 +1,13 @@
+2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* xtd/optraits.hh
+	(xtd_op_eq_trait_, xtd_op_neq_trait_): New.
+	(xtd_op_less_trait_, xtd_op_leq_trait_): New. 
+	(xtd_op_greater_trait_, xtd_op_geq_trait_): New.
+	* xtd/vec.hh: Replace assert by contract macros. 
+	(operator<<): New.
+	(lexi_less_t, lexi_less): New.
+	
 2006-08-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* xtd/optraits.hh (xtd_unop_trait, xtd_unop_trait_): New.
