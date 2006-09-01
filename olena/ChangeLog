@@ -1,3 +1,28 @@
+2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add bboxes and iterators.
+	
+	* oln/core/abstract/piter.hh: New.
+	* oln/core/abstract/bbox.hh: New.
+	* oln/core/abstract/iter.hh: New.
+	* oln/core/abstract/pset.hh: New.
+	* oln/core/2d/aliases.hh: New.
+	* oln/core/gen/fwd_piter.hh: New.
+	* oln/core/gen/bkd_piter.hh: New.
+	* oln/core/gen/bbox.hh: New.
+	* oln/core/2d/point2d.hh (point2d_): New ctor.
+	(point2d, dpoint2d, point2df, dpoint2df): Move typedefs to...
+	* oln/basics2d.hh: ...this new file.
+	* oln/core/typedefs.hh (oln_type_of_): New macro.
+	(include): Update.
+	(fwd_piter_type, bkd_piter_type): New decls.
+	* oln/core/abstract/point.hh (include): Update.
+	(vtypes_): New specialization.
+	* oln/core/abstract/dpoint.hh: Likewise.
+	* oln/core/abstract/point_nd.hh (include): Update.
+	(set_super_type): New specialization.
+	* oln/core/abstract/dpoint_nd.hh: Likewise.
+
 2006-08-31  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add dpoint, oln traits, and operators on point/dpoint.

@@ -29,23 +29,15 @@
 #ifndef OLENA_CORE_ABSTRACT_POINT_HH
 # define OLENA_CORE_ABSTRACT_POINT_HH
 
-# include <mlc/assert.hh>
-# include <mlc/cmp.hh>
-
-# include <stc/any.hh>
-# include <stc/vtypes.hh>
-# include <stc/exact.hh>
-
-# include <oln/core/type.hh>
 # include <oln/core/typedefs.hh>
+# include <oln/core/traits_id.hh>
 # include <oln/core/abstract/dpoint.hh>
 
-# include <oln/core/traits_id.hh>
 
 
 
-
-namespace oln {
+namespace oln
+{
 
 
   namespace ERROR
@@ -56,8 +48,23 @@ namespace oln {
 
 
 
-  namespace abstract {
+  // Forward declaration.
+  namespace abstract { template <typename E> class point; }
 
+
+  /// Virtual types associated to abstract::point<E>.
+  template <typename E>
+  struct vtypes_< abstract::point<E> >
+  {
+    typedef mlc::undefined grid_type;
+    typedef mlc::undefined dpoint_type;
+    typedef mlc::undefined coord_type;
+    typedef mlc::undefined dim_type;
+  };
+
+
+  namespace abstract
+  {
 
     /// Abstract point class.
     template <typename E>
@@ -295,16 +302,18 @@ namespace oln {
       point()
       {}
 
-      ~point() {
+      ~point()
+      {
 	mlc::assert_defined_< oln_type_of(E, grid)   >::check();
 	mlc::assert_defined_< oln_type_of(E, dpoint) >::check();
 	mlc::assert_defined_< oln_type_of(E, coord)  >::check();
 	mlc::assert_defined_< oln_type_of(E, dim)    >::check();
       }
-    };
+
+    }; // end of class oln::abstract::point<E>
+
 
   } // end of namespace oln::abstract
-
 
 
 } // end of namespace oln

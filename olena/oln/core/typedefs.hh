@@ -32,10 +32,16 @@
 
 # include <mlc/contract.hh>
 # include <mlc/flags.hh>
+# include <mlc/is_a.hh>
 # include <mlc/cmp.hh>
 # include <mlc/typedef.hh>
+# include <mlc/value.hh>
+
+# include <stc/any.hh>
+# include <stc/exact.hh>
 # include <stc/vtypes.hh>
 
+# include <oln/core/type.hh>
 
 
 /*! \macro oln_type_of(OlnType, Alias)
@@ -46,6 +52,9 @@
 
 # define oln_type_of(OlnType, Alias) \
 stc_type_of(oln, void, OlnType, Alias)
+
+# define oln_type_of_(OlnType, Alias) \
+stc_type_of_(oln, void, OlnType, Alias)
 
 
 
@@ -87,8 +96,8 @@ namespace oln
 //   mlc_decl_typedef(bkd_iter_type);
 
 //   mlc_decl_typedef(piter_type);
-//   mlc_decl_typedef(fwd_piter_type);
-//   mlc_decl_typedef(bkd_piter_type);
+  mlc_decl_typedef(fwd_piter_type);
+  mlc_decl_typedef(bkd_piter_type);
 
 //   mlc_decl_typedef(qiter_type);
 //   mlc_decl_typedef(fwd_qiter_type);

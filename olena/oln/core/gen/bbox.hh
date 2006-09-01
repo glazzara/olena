@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,83 +26,67 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_DPOINT_ND_HH
-# define OLENA_CORE_ABSTRACT_DPOINT_ND_HH
+#ifndef OLENA_CORE_GEN_BBOX_HH
+# define OLENA_CORE_GEN_BBOX_HH
 
-# include <mlc/value.hh>
-# include <xtd/vec.hh>
-# include <oln/core/abstract/dpoint.hh>
+# include <oln/core/abstract/bbox.hh>
+# include <oln/core/abstract/point.hh>
 
 
 namespace oln
 {
 
-  // Forward declaration.
-  namespace abstract { template <typename E> class dpoint_nd; }
+  // Forward declarations.
+  template <typename point> class bbox_;
+  template <typename point> class fwd_piter_;
+  template <typename point> class bkd_piter_;
 
 
   // Super type declaration.
-  template <typename E>
-  struct set_super_type< abstract::dpoint_nd<E> >
+  template <typename point>
+  struct set_super_type< bbox_<point> >
   {
-    typedef abstract::dpoint<E> ret;
+    typedef bbox_<point> self_t;
+    typedef abstract::bbox<self_t> ret;
   };
 
 
-  namespace abstract
+  /// Virtual types associated to oln::bbox_<point>.
+  template <typename point>
+  struct vtypes_< bbox_<point> >
   {
+    typedef point point_type;
+    typedef fwd_piter_<point> fwd_piter_type;
+    typedef bkd_piter_<point> bkd_piter_type;
+    // BUG! typedef oln_type_of(point, grid) grid_type;
+    // BUG! typedef typename point::grid_t grid_type;
+  };
 
-    template <typename E>
-    class dpoint_nd : public abstract::dpoint<E>
+
+  /// Bounding box class based on a point class.
+  template <typename point>
+  class bbox_ : public abstract::bbox< bbox_<point> >,
+		private mlc::assert_< mlc_is_a(point, abstract::point) >
+  {
+    typedef point point_t;
+    typedef bbox_<point> self_t;
+    typedef abstract::bbox<self_t> super_t;
+
+  public:
+      
+    bbox_()
     {
-      typedef dpoint_nd<E> self_t;
-      typedef oln_type_of(E, dim) dim;
-      typedef oln_type_of(E, coord) coord_t;
+    }
 
-    public:
+    bbox_(const point_t& pmin, const point_t& pmax)
+      : super_t(pmin, pmax)
+    {
+    }
 
-      enum { n = mlc_value(dim) };
-
-      bool impl_equal(const self_t& rhs) const
-      {
-	return v_ == rhs.v_;
-      }
-      
-      coord_t operator[](unsigned i) const
-      {
-	assert(i < n);
-	return v_[i];
-      }
-      
-      coord_t& operator[](unsigned i)
-      {
-	assert(i < n);
-	return v_[i];
-      }
-
-      const xtd::vec<n,coord_t>& vec() const
-      {
-	return v_;
-      }
-
-    protected:
-
-      /// Ctor.
-      dpoint_nd()
-      {}
-
-      /// Ctor.
-      dpoint_nd(const xtd::vec<n,coord_t>& v) :
-	v_(v)
-      {}
-
-      xtd::vec<n,coord_t> v_;
-    };
-
-  } // end of namespace oln::abstract
+  }; // end of class oln::bbox_<point>
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_DPOINT_ND_HH
+#endif // ! OLENA_CORE_GEN_BBOX_HH

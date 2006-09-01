@@ -28,36 +28,12 @@
 #ifndef OLENA_CORE_2D_POINT2D_HH
 # define OLENA_CORE_2D_POINT2D_HH
 
-# include <string>
-
 # include <mlc/int.hh>
 # include <oln/core/abstract/point_nd.hh>
 
 
 namespace oln
 {
-
-
-  /// \{
-  /// Forward declarations.
-  template <typename C> class point2d_;
-  template <typename C> class dpoint2d_;
-  class grid2d;
-  /// \}
-
-
-  /// \{
-  /// Classical 2D point classes.
-  typedef  point2d_<int>   point2d;
-  typedef  point2d_<float> point2df;
-  /// \}
-
-
-  /// \{
-  /// Classical 2D point classes.
-  typedef dpoint2d_<int>   dpoint2d;
-  typedef dpoint2d_<float> dpoint2df;
-  /// \}
 
 
   /// \{
@@ -90,14 +66,23 @@ namespace oln
 
   public:
 
+    // Cf. BUG! typedef oln_type_of(self_t, grid)  grid_t;
+
     /// Ctor.
     point2d_()
     {
     }
 
     /// Ctor.
-    point2d_(const xtd::vec<2,coord_t>& v) :
-      super_t(v)
+    point2d_(coord_t row, coord_t col)
+    {
+      v_[0] = row;
+      v_[1] = col;
+    }
+
+    /// Ctor.
+    point2d_(const xtd::vec<2,coord_t>& v)
+      : super_t(v)
     {
     }
 

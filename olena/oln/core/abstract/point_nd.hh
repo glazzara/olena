@@ -29,19 +29,16 @@
 #ifndef OLENA_CORE_ABSTRACT_POINT_ND_HH
 # define OLENA_CORE_ABSTRACT_POINT_ND_HH
 
-# include <mlc/value.hh>
-
 # include <xtd/vec.hh>
 # include <xtd/optraits.hh>
-
 # include <oln/core/traits_id.hh>
+
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/dpoint_nd.hh>
 
 
 namespace oln
 {
-
 
 
   /// Function "point_ : (n, coord) -> point type".
@@ -51,6 +48,19 @@ namespace oln
     typedef mlc::undefined ret;
   };
 
+
+
+  // Forward declaration.
+  namespace abstract { template <typename E> class point_nd; }
+
+
+
+  // Super type declaration.
+  template <typename E>
+  struct set_super_type< abstract::point_nd<E> >
+  {
+    typedef abstract::point<E> ret;
+  };
 
 
   namespace abstract
@@ -136,7 +146,8 @@ namespace oln
 	v_(v)
       {}
 
-      xtd::vec<n,coord_t> v_;
+      typedef xtd::vec<n,coord_t> vec_t;
+      vec_t v_;
     };
 
   } // end of namespace oln::abstract

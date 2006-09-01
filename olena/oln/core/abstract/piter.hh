@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,78 +26,70 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_DPOINT_ND_HH
-# define OLENA_CORE_ABSTRACT_DPOINT_ND_HH
+#ifndef OLENA_CORE_ABSTRACT_PITER_HH
+# define OLENA_CORE_ABSTRACT_PITER_HH
 
-# include <mlc/value.hh>
-# include <xtd/vec.hh>
-# include <oln/core/abstract/dpoint.hh>
+# include <oln/core/abstract/iter.hh>
+# include <oln/core/abstract/point.hh>
 
 
 namespace oln
 {
 
+
   // Forward declaration.
-  namespace abstract { template <typename E> class dpoint_nd; }
+  namespace abstract { template <typename E> class piter; }
 
 
   // Super type declaration.
   template <typename E>
-  struct set_super_type< abstract::dpoint_nd<E> >
+  struct set_super_type< abstract::piter<E> >
   {
-    typedef abstract::dpoint<E> ret;
+    typedef abstract::iter<E> ret;
+  };
+
+
+  /// Virtual types associated to abstract::piter<E>.
+  template <typename E>
+  struct vtypes_< abstract::piter<E> >
+  {
+    typedef mlc::undefined point_type;
   };
 
 
   namespace abstract
   {
 
+    /// Abstract point iterator class.
     template <typename E>
-    class dpoint_nd : public abstract::dpoint<E>
+    class piter : public abstract::iter<E>
     {
-      typedef dpoint_nd<E> self_t;
-      typedef oln_type_of(E, dim) dim;
-      typedef oln_type_of(E, coord) coord_t;
+      typedef oln_type_of(E, point) point_t;
 
     public:
 
-      enum { n = mlc_value(dim) };
-
-      bool impl_equal(const self_t& rhs) const
+      operator point_t() const
       {
-	return v_ == rhs.v_;
-      }
-      
-      coord_t operator[](unsigned i) const
-      {
-	assert(i < n);
-	return v_[i];
-      }
-      
-      coord_t& operator[](unsigned i)
-      {
-	assert(i < n);
-	return v_[i];
-      }
-
-      const xtd::vec<n,coord_t>& vec() const
-      {
-	return v_;
+	precondition(this->is_valid());
+	return p_;
       }
 
     protected:
 
-      /// Ctor.
-      dpoint_nd()
-      {}
+      point_t p_;
 
-      /// Ctor.
-      dpoint_nd(const xtd::vec<n,coord_t>& v) :
-	v_(v)
-      {}
+      piter()
+      {
+      }
 
-      xtd::vec<n,coord_t> v_;
-    };
+      ~piter()
+      {
+	mlc::assert_defined_< point_t >::check();
+	mlc::assert_< mlc_is_a(point_t, abstract::point) >::check();
+      }
+
+    }; // end of class oln::abstract::piter<E>
+
 
   } // end of namespace oln::abstract
 
@@ -105,4 +97,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_DPOINT_ND_HH
+#endif // ! OLENA_CORE_ABSTRACT_PITER_HH

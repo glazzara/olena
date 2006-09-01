@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,78 +26,65 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_DPOINT_ND_HH
-# define OLENA_CORE_ABSTRACT_DPOINT_ND_HH
+#ifndef OLENA_CORE_ABSTRACT_PSET_HH
+# define OLENA_CORE_ABSTRACT_PSET_HH
 
-# include <mlc/value.hh>
-# include <xtd/vec.hh>
-# include <oln/core/abstract/dpoint.hh>
+# include <stc/any.hh>
+# include <oln/core/type.hh>
+# include <oln/core/typedefs.hh>
 
 
 namespace oln
 {
 
-  // Forward declaration.
-  namespace abstract { template <typename E> class dpoint_nd; }
+  /// Forward declaration.
+  namespace abstract { template <typename E> class pset; }
 
 
-  // Super type declaration.
+
+  /// Virtual types associated to oln::bbox_nd<point>.
   template <typename E>
-  struct set_super_type< abstract::dpoint_nd<E> >
+  struct vtypes_< abstract::pset<E> >
   {
-    typedef abstract::dpoint<E> ret;
+    typedef mlc::undefined point_type;
+    typedef mlc::undefined fwd_piter_type;
+    typedef mlc::undefined bkd_piter_type;
+    // FIXME: Add grid.
   };
 
 
   namespace abstract
   {
 
+    /// Abstract point class.
     template <typename E>
-    class dpoint_nd : public abstract::dpoint<E>
+    class pset : public stc::any__simple<E>,
+		 public oln::type
     {
-      typedef dpoint_nd<E> self_t;
-      typedef oln_type_of(E, dim) dim;
-      typedef oln_type_of(E, coord) coord_t;
-
-    public:
-
-      enum { n = mlc_value(dim) };
-
-      bool impl_equal(const self_t& rhs) const
-      {
-	return v_ == rhs.v_;
-      }
-      
-      coord_t operator[](unsigned i) const
-      {
-	assert(i < n);
-	return v_[i];
-      }
-      
-      coord_t& operator[](unsigned i)
-      {
-	assert(i < n);
-	return v_[i];
-      }
-
-      const xtd::vec<n,coord_t>& vec() const
-      {
-	return v_;
-      }
 
     protected:
 
-      /// Ctor.
-      dpoint_nd()
+      pset()
       {}
 
-      /// Ctor.
-      dpoint_nd(const xtd::vec<n,coord_t>& v) :
-	v_(v)
-      {}
+      ~pset()
+      {
+	mlc::assert_defined_< oln_type_of(E, point) >::check();
 
-      xtd::vec<n,coord_t> v_;
-    };
+	// FIXME: Trouble with circular dependencies.
+
+// 	mlc::assert_defined_< fwd_piter_t >::check();
+// 	mlc::assert_defined_< bkd_piter_t >::check();
+
+// 	mlc::assert_< mlc::eq_< oln_type_of(fwd_piter_t, grid),
+//                                 oln_type_of(point_t, grid) > >::check();
+
+// 	mlc::assert_< mlc::eq_< oln_type_of(bkd_piter_t, grid),
+//                                 oln_type_of(point_t, grid) > >::check();
+      }
+
+    }; // end of class oln::abstract::pset<E>
+
 
   } // end of namespace oln::abstract
 
@@ -105,4 +92,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_DPOINT_ND_HH
+#endif // ! OLENA_CORE_ABSTRACT_PSET_HH

@@ -29,13 +29,6 @@
 #ifndef OLENA_CORE_ABSTRACT_DPOINT_HH
 # define OLENA_CORE_ABSTRACT_DPOINT_HH
 
-# include <mlc/assert.hh>
-# include <mlc/cmp.hh>
-
-# include <stc/any.hh>
-# include <stc/vtypes.hh>
-
-# include <oln/core/type.hh>
 # include <oln/core/typedefs.hh>
 
 
@@ -51,6 +44,22 @@ namespace oln
   {
     typedef mlc::undefined ret;
   };
+
+
+  // Forward declaration.
+  namespace abstract { template <typename E> class dpoint; }
+
+
+  /// Virtual types associated to abstract::dpoint<E>.
+  template <typename E>
+  struct vtypes_< abstract::dpoint<E> >
+  {
+    typedef mlc::undefined grid_type;
+    typedef mlc::undefined point_type;
+    typedef mlc::undefined coord_type;
+    typedef mlc::undefined dim_type;
+  };
+
 
 
   namespace abstract

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,78 +26,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_DPOINT_ND_HH
-# define OLENA_CORE_ABSTRACT_DPOINT_ND_HH
+#ifndef OLENA_CORE_ABSTRACT_ITER_HH
+# define OLENA_CORE_ABSTRACT_ITER_HH
 
-# include <mlc/value.hh>
-# include <xtd/vec.hh>
-# include <oln/core/abstract/dpoint.hh>
+# include <oln/core/typedefs.hh>
 
 
 namespace oln
 {
 
-  // Forward declaration.
-  namespace abstract { template <typename E> class dpoint_nd; }
-
-
-  // Super type declaration.
-  template <typename E>
-  struct set_super_type< abstract::dpoint_nd<E> >
-  {
-    typedef abstract::dpoint<E> ret;
-  };
-
 
   namespace abstract
   {
 
+    /// Abstract iterator class.
     template <typename E>
-    class dpoint_nd : public abstract::dpoint<E>
+    class iter : public stc::any__simple<E>,
+		 public oln::type
     {
-      typedef dpoint_nd<E> self_t;
-      typedef oln_type_of(E, dim) dim;
-      typedef oln_type_of(E, coord) coord_t;
-
     public:
 
-      enum { n = mlc_value(dim) };
-
-      bool impl_equal(const self_t& rhs) const
+      void start()
       {
-	return v_ == rhs.v_;
-      }
-      
-      coord_t operator[](unsigned i) const
-      {
-	assert(i < n);
-	return v_[i];
-      }
-      
-      coord_t& operator[](unsigned i)
-      {
-	assert(i < n);
-	return v_[i];
+	this->exact().impl_start();
       }
 
-      const xtd::vec<n,coord_t>& vec() const
+      void next()
       {
-	return v_;
+	precondition(this->is_valid());
+	this->exact().impl_next();
+      }
+
+      void invalidate()
+      {
+	this->exact().impl_invalidate();
+      }
+
+      bool is_valid() const
+      {
+	return this->exact().impl_is_valid();
       }
 
     protected:
+      
+      iter()
+      {
+	this->invalidate();
+      }
 
-      /// Ctor.
-      dpoint_nd()
-      {}
+    }; // end of class oln::abstract::iter<E>
 
-      /// Ctor.
-      dpoint_nd(const xtd::vec<n,coord_t>& v) :
-	v_(v)
-      {}
-
-      xtd::vec<n,coord_t> v_;
-    };
 
   } // end of namespace oln::abstract
 
@@ -105,4 +83,7 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_DPOINT_ND_HH
+#define for_all(i)  for (i.start(); i.is_valid(); i.next())
+
+
+#endif // ! OLENA_CORE_ABSTRACT_ITER_HH
