@@ -60,13 +60,13 @@ namespace oln
   {
     typedef point2d_<C> self_t;
     typedef abstract::point_nd<self_t> super_t;
-    typedef oln_type_of(self_t, coord) coord_t;
 
     using super_t::v_;
 
   public:
 
     // Cf. BUG! typedef oln_type_of(self_t, grid)  grid_t;
+    typedef oln_type_of(self_t, coord) coord_t;
 
     /// Ctor.
     point2d_()

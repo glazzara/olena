@@ -41,7 +41,7 @@ namespace oln
 
     /// Abstract iterator class.
     template <typename E>
-    class iter : public stc::any__simple<E>,
+    class iter : public stc::any__best_memory<E>,
 		 public oln::type
     {
     public:
@@ -71,7 +71,6 @@ namespace oln
       
       iter()
       {
-	this->invalidate();
       }
 
     }; // end of class oln::abstract::iter<E>

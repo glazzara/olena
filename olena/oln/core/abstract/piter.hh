@@ -74,6 +74,12 @@ namespace oln
 	return p_;
       }
 
+      point_t to_point() const
+      {
+	precondition(this->is_valid());
+	return p_;
+      }
+
     protected:
 
       point_t p_;

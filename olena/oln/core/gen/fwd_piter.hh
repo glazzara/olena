@@ -78,52 +78,65 @@ namespace oln
     {
       nop_ = bb_.pmax();
       ++nop_[0];
-      
-      psup_ = bb_.pmax().vec();
-      for (unsigned i = 0; i < point::n; ++i)
-	++psup_[i];
     }
-    
+
+    const bbox_<point>& bbox() const
+    {
+      return bb_;
+    }
+
     void impl_start()
     {
       p_ = bb_.pmin();
-      invariant(p_ <= nop_);
+      invariant(implies(p_ != nop_, bb_.has(p_)));
     }
 
     void impl_next()
     {
-      invariant(p_ <= nop_);
-      ++p_[0];
-      unsigned i = 0;
-      while (i + 1 < point::n)
+      invariant(implies(p_ != nop_, bb_.has(p_)));
+      for (int i = point::n - 1; i >= 0; --i)
+	if (p_[i] == bb_.pmax(i))
+	  p_[i] = bb_.pmin(i);
+	else
 	{
-	  if (p_[i] == psup_[i])
-	    {
-	      p_[i] = bb_.pmin_[i];
-	      ++p_[i+1];
-	    }
-	  ++i;
+	  ++p_[i];
+	  break;
 	}
-      invariant(p_ <= nop_);
+      if (p_ == bb_.pmin())
+	p_ = nop_;
     }
 
     void impl_invalidate()
     {
-      invariant(p_ <= nop_);
+      invariant(implies(p_ != nop_, bb_.has(p_)));
       p_ = nop_;
     }
 
     bool impl_is_valid() const
     {
-      invariant(p_ <= nop_);
+      invariant(implies(p_ != nop_, bb_.has(p_)));
       return p_ != nop_;
+    }
+
+    void print(std::ostream& ostr) const
+    {
+      ostr << "{ bb=" << bb_
+	   << ", p=" << p_
+	   << ", nop=" << nop_
+	   << " }";
+    }
+
+    friend
+    std::ostream& operator<<(std::ostream& ostr, const fwd_piter_<point>& i)
+    {
+      i.print(ostr);
+      return ostr;
     }
 
   protected:
 
     bbox_<point> bb_;
     point nop_;
-    point psup_;
     
   }; // end of class oln::fwd_piter_<point>
   

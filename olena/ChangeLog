@@ -1,5 +1,27 @@
 2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* oln/core/abstract/piter.hh (to_point): New.
+	* oln/core/abstract/bbox.hh (pmin, pmax): New overloaded methods.
+	(is_valid, print, operator<<): New.
+	* oln/core/abstract/iter.hh (iter): Change inheritance from
+	any__simple to any__best_memory to fix trouble with multiple
+	inheritance.
+	(ctor): Remove dangerous call to invalidate.
+	* oln/core/abstract/point_nd.hh (operator<<): New.
+	(impl_less): Update.
+	* oln/core/abstract/pset.hh (coord_type): New.
+	* oln/core/2d/point2d.hh (coord_t): Move to public so that this
+	associated type is directly accessible from...
+	* oln/core/gen/bbox.hh (vtypes): ...this set of types.
+	* oln/core/gen/fwd_piter.hh (psup_): Remove.
+	(bbox): New accessor.
+	(impl_next): Rewrite.
+	(print, operator<<): New.
+	(invariant): Strengthen.
+	* oln/core/gen/bkd_piter.hh: Likewise.
+
+2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add bboxes and iterators.
 	
 	* oln/core/abstract/piter.hh: New.

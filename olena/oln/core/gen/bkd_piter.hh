@@ -75,65 +75,54 @@ namespace oln
     
     bkd_piter_(const bbox_<point>& bb)
       : bb_(bb)
-      {
-	nop_ = bb_.pmax();
-	++nop_[0];
+    {
+      nop_ = bb_.pmin();
+      --nop_[0];
+    }
 
-	psup_ = bb_.pmax().vec();
-	for (unsigned i = 0; i < point::n; ++i)
-	  ++psup_[i];
-      }
+    const bbox_<point>& bbox() const
+    {
+      return bb_;
+    }
 
     void impl_start()
-      {
-	p_ = bb_.pmin();
-      }
+    {
+      p_ = bb_.pmax();
+      invariant(implies(p_ != nop_, bb_.has(p_)));
+    }
 
     void impl_next()
-      {
-	assert(this->is_valid());
-	++p_[0];
-	unsigned i = 0;
-	while (i + 1 < point::n)
-	  {
-	    if (p_[i] == psup_[i])
-	      {
-		p_[i] = bb_.pmin_[i];
-		++p_[i+1];
-	      }
-	    ++i;
-	  }
-      }
-
-//   def next  =
-//   {
-//     precondition { is_valid }
-//   }
+    {
+      invariant(implies(p_ != nop_, bb_.has(p_)));
+      for (int i = point::n - 1; i >= 0; --i)
+	if (p_[i] == bb_.pmin(i))
+	  p_[i] = bb_.pmax(i);
+	else
+	{
+	  --p_[i];
+	  break;
+	}
+      if (p_ == bb_.pmax())
+	p_ = nop_;
+    }
 
     void impl_invalidate()
-      {
-	assert(this->is_valid());
-	p_ = nop_;
-      }
+    {
+      invariant(implies(p_ != nop_, bb_.has(p_)));
+      p_ = nop_;
+    }
 
     bool impl_is_valid() const
-      {
-	return p_ != nop_;
-      }
+    {
+      invariant(implies(p_ != nop_, bb_.has(p_)));
+      return p_ != nop_;
+    }
 
   protected:
 
     bbox_<point> bb_;
     point nop_;
-    point psup_;
 
-//   invariant
-//   {
-//     p <= nop
-//   }
-
-//   make : [D : type] (data : D) = { @bb = data.bbox }
-    
   }; // end of class oln::bkd_piter_<point>
   
 

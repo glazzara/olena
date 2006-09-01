@@ -58,6 +58,7 @@ namespace oln
     typedef point point_type;
     typedef fwd_piter_<point> fwd_piter_type;
     typedef bkd_piter_<point> bkd_piter_type;
+    typedef typename point::coord_t coord_type;
     // BUG! typedef oln_type_of(point, grid) grid_type;
     // BUG! typedef typename point::grid_t grid_type;
   };

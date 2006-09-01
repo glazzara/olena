@@ -97,7 +97,7 @@ namespace oln
 
       bool impl_less(const self_t& rhs) const
       {
-	return xtd::lexi(v_, rhs.vec());
+	return xtd::lexi_less(v_, rhs.vec());
       }
 
       E& impl_plus_equal(const dpoint_t& rhs)
@@ -151,6 +151,14 @@ namespace oln
     };
 
   } // end of namespace oln::abstract
+
+
+  template <typename E>
+  std::ostream& operator<<(std::ostream& ostr, const abstract::point_nd<E>& p)
+  {
+    ostr << p.vec();
+    return ostr;
+  }
 
 
 

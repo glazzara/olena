@@ -49,6 +49,7 @@ namespace oln
     typedef mlc::undefined point_type;
     typedef mlc::undefined fwd_piter_type;
     typedef mlc::undefined bkd_piter_type;
+    typedef mlc::undefined coord_type;
     // FIXME: Add grid.
   };
 

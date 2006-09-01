@@ -59,6 +59,7 @@ namespace oln
     {
       typedef E exact_t;
       typedef oln_type_of(E, point) point_t;
+      typedef oln_type_of(E, coord) coord_t;
 
       typedef oln_type_of(point_t, dim) dim;
       enum { n = mlc_value(dim) };
@@ -79,10 +80,22 @@ namespace oln
 	return pmin_;
       }
 
+      coord_t pmin(unsigned i) const
+      {
+	precondition(is_valid_ and i < n);
+	return pmin_[i];
+      }
+
       const point_t& pmax() const
       {
 	precondition(is_valid_);
 	return pmax_;
+      }
+
+      coord_t pmax(unsigned i) const
+      {
+	precondition(is_valid_ and i < n);
+	return pmax_[i];
       }
 
       unsigned size(unsigned i) const
@@ -146,6 +159,26 @@ namespace oln
 	  if (rhs.pmin()[i] < pmin_[i] or rhs.pmax()[i] > pmax_[i])
 	    return false;
 	return true;
+      }
+
+      bool is_valid() const
+      {
+	return is_valid_;
+      }
+
+      void print(std::ostream& ostr) const
+      {
+	ostr << "{ pmin=" << pmin_
+	     << ", pmax=" << pmax_
+	     << ", valid=" << is_valid_
+	     << " }";
+      }
+
+      friend
+      std::ostream& operator<<(std::ostream& ostr, const abstract::bbox<E>& bb)
+      {
+	bb.print(ostr);
+	return ostr;
       }
 
       // FIXME: Add the scool code below.
