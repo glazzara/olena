@@ -252,7 +252,7 @@ namespace oln
   {
     // Definition of the super class corresponding to this case.
     typedef stc::abstraction_as_type<abstract::binary_image> super_type;
-    // Definition of the external virtual type (same as the super
+    // Definition of the extended virtual type (same as the super
     // class in this case).
     typedef super_type image_typeness_type;
   };
@@ -270,7 +270,7 @@ namespace oln
     // abstract::grey_level_image and abstract::not_binary_image).
     typedef stc::abstraction_as_type<abstract::internal::grey_level_image_>
       super_type;
-    // Definition of the external virtual type.
+    // Definition of the extended virtual type.
     typedef stc::abstraction_as_type<abstract::grey_level_image>
       image_typeness_type;
   };
@@ -289,7 +289,7 @@ namespace oln
     // abstract::data_image and abstract::not_binary_image).
     typedef stc::abstraction_as_type<abstract::internal::data_image_>
       super_type;
-    // Definition of the external virtual type.
+    // Definition of the extended virtual type.
     typedef stc::abstraction_as_type<abstract::data_image>
       image_typeness_type;
   };
@@ -300,21 +300,21 @@ namespace oln
 
 
 /*---------------------------------.
-| Typeness external virtual type.  |
+| Typeness extended virtual type.  |
 `---------------------------------*/
 
-// FIXME: Is this external vtype really useful?
+// FIXME: Is this extended vtype really useful?
 namespace oln
 {
-  /// Image ``typeness'' as an external vtype of abstract::image.
+  /// Image ``typeness'' as an extended vtype of abstract::image.
   template <typename I>
-  struct ext_vtype< category::image,
-		    abstract::image<I>,
-		    // FIXME: Get rid of this typedef_:: qualifier.
-		    typedef_::image_typeness_type >
+  struct ext_vtype_in_category< category::image,
+				abstract::image<I>,
+				// FIXME: Get rid of this typedef_:: qualifier.
+				typedef_::image_typeness_type >
   {
     // Use the same case as the one use in the inheritance-plugging
-    // mechanism above, but retrieve the external vtype
+    // mechanism above, but retrieve the extended vtype
     // (image_typename_type), not the super type.
     typedef
       typename oln::case_< oln::value_type_tag,

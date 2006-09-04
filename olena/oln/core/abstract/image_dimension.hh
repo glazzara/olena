@@ -184,18 +184,18 @@ namespace oln
 
 
 /*----------------------------------.
-| Dimension external virtual type.  |
+| Dimension extended virtual type.  |
 `----------------------------------*/
 
-// FIXME: Is this external vtype really useful?
+// FIXME: Is this extended vtype really useful?
 namespace oln
 {
-  /// Image dimension type as an external vtype of abstract::image.
+  /// Image dimension type as an extended vtype of abstract::image.
   template <typename I>
-  struct ext_vtype< category::image,
-		    abstract::image<I>,
-		    // FIXME: Get rid of this typedef_:: qualifier.
-		    typedef_::image_dimension_type >
+  struct ext_vtype_in_category< category::image,
+		                abstract::image<I>,
+		                // FIXME: Get rid of this typedef_:: qualifier.
+		                typedef_::image_dimension_type >
   {
     // Use the same switch as the one use in the inheritance-plugging
     // mechanism above.

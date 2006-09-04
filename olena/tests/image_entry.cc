@@ -48,7 +48,7 @@ namespace oln
 
   /// Virtual types associated to my::image.
   template<>
-  struct vtypes<category::image, my::image>
+  struct vtypes_in_category<category::image, my::image>
   {
     // The switch for image_dimension (above image_entry) plugs the
     // inheritance relation to the right abstract::image_dimension
@@ -105,5 +105,6 @@ main()
 
   // Print my::image's vtypes.
   // FIXME: To be removed in the final version.
-  oln::packed_vtypes<oln::category::image, my::image>::echo (std::cout);
+  oln::packed_vtypes_in_category< oln::category::image,
+                                  my::image >::echo (std::cout);
 }

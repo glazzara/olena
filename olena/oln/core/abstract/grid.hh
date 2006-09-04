@@ -59,7 +59,7 @@ namespace oln {
 
   /// Virtual types associated to oln::abstract::image.
   template <typename G>
-  struct vtypes< category::grid, abstract::grid<G> >
+  struct vtypes_in_category< category::grid, abstract::grid<G> >
   {
     typedef mlc::undefined point_type;
     typedef mlc::none      dpoint_type;
@@ -70,7 +70,7 @@ namespace oln {
 
 
   template <typename G>
-  struct packed_vtypes<category::grid, G>
+  struct packed_vtypes_in_category<category::grid, G>
   {
     typedef oln_grd_type_of(G, point)    point_type;
     typedef oln_grd_type_of(G, dpoint)   dpoint_type;
@@ -81,7 +81,7 @@ namespace oln {
     static void echo(std::ostream& ostr)
     {
       ostr
-	<< "vtypes(oln::category::grid, " << mlc_to_string(G) << ") ="
+	<< "vtypes_in_category(oln::category::grid, " << mlc_to_string(G) << ") ="
 	<< std::endl
 	<< "{" << std::endl
 	<< "  point_type    = " << mlc_to_string(point_type)    << std::endl
@@ -114,7 +114,7 @@ namespace oln {
 
       ~grid()
       {
-	packed_vtypes<category::grid, E>::ensure();
+	packed_vtypes_in_category<category::grid, E>::ensure();
       }
     };
 

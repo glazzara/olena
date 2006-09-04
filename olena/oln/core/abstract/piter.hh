@@ -51,7 +51,7 @@ namespace oln
 
   /// Virtual types associated to abstract::piter<E>.
   template <typename E>
-  struct vtypes_< abstract::piter<E> >
+  struct vtypes< abstract::piter<E> >
   {
     typedef mlc::undefined point_type;
   };

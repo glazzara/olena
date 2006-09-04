@@ -54,7 +54,7 @@ namespace oln
 
   /// Virtual types associated to abstract::point<E>.
   template <typename E>
-  struct vtypes_< abstract::point<E> >
+  struct vtypes< abstract::point<E> >
   {
     typedef mlc::undefined grid_type;
     typedef mlc::undefined dpoint_type;

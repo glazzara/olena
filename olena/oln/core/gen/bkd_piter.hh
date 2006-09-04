@@ -53,7 +53,7 @@ namespace oln
 
   /// Virtual types associated to oln::bbox_<point>.
   template <typename point>
-  struct vtypes_< bkd_piter_<point> >
+  struct vtypes< bkd_piter_<point> >
   {
     typedef point point_type;
     typedef oln_type_of(point, grid) grid_type;

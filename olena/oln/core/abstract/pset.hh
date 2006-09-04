@@ -44,7 +44,7 @@ namespace oln
 
   /// Virtual types associated to oln::bbox_nd<point>.
   template <typename E>
-  struct vtypes_< abstract::pset<E> >
+  struct vtypes< abstract::pset<E> >
   {
     typedef mlc::undefined point_type;
 //     typedef mlc::undefined fwd_piter_type;
@@ -53,13 +53,13 @@ namespace oln
 
 
 //   template <typename E>
-//   struct vtype_< abstract::pset<E>,    typedef_::coord_type >
+//   struct single_vtype< abstract::pset<E>,    typedef_::coord_type >
 //     : type_of_< oln_type_of(E, point), typedef_::coord_type >
 //   {};
 
 
 //   template <typename E>
-//   struct extension_vtype_< abstract::pset<E>, typedef_::coord_type >
+//   struct ext_vtype< abstract::pset<E>, typedef_::coord_type >
 //   {
 //   private:
 //     typedef oln_type_of(E, point) P;
@@ -69,7 +69,7 @@ namespace oln
 
 
   template <typename E>
-  struct ext_vtype_< abstract::pset<E>, typedef_::grid_type >
+  struct ext_vtype< abstract::pset<E>, typedef_::grid_type >
   {
     typedef oln_type_of(E, point) P;
     typedef oln_type_of(P, grid) ret;

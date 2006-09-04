@@ -45,7 +45,7 @@ namespace oln
 
   /// Virtual types associated to oln::abstract::image.
   template <typename C>
-  struct vtypes_< point2d_<C> >
+  struct vtypes< point2d_<C> >
   {
     typedef grid2d        grid_type;
     typedef dpoint2d      dpoint_type;

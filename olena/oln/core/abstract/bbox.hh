@@ -54,7 +54,7 @@ namespace oln
 
 
   template <typename E>
-  struct ext_vtype_< abstract::bbox<E>, typedef_::fwd_piter_type >
+  struct ext_vtype< abstract::bbox<E>, typedef_::fwd_piter_type >
   {
   private:
     typedef oln_type_of(E, point) P;
@@ -63,7 +63,7 @@ namespace oln
   };
 
   template <typename E>
-  struct ext_vtype_< abstract::bbox<E>, typedef_::bkd_piter_type >
+  struct ext_vtype< abstract::bbox<E>, typedef_::bkd_piter_type >
   {
   private:
     typedef oln_type_of(E, point) P;

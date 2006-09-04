@@ -104,7 +104,7 @@ namespace oln {
   {
     // Definition of the super class corresponding to this case.
     typedef stc::abstraction_as_type<abstract::binary_image> super_type;
-    // Definition of the external virtual type (same as the super
+    // Definition of the extended virtual type (same as the super
     // class in this case).
     typedef super_type image_typeness_type;
   };
@@ -120,7 +120,7 @@ namespace oln {
     typedef
       stc::abstraction_as_type<abstract::internal::grey_level_image_>
       super_type;
-    // Definition of the external virtual type.
+    // Definition of the extended virtual type.
     typedef stc::abstraction_as_type<abstract::grey_level_image>
       image_typeness_type;
   };
@@ -135,7 +135,7 @@ namespace oln {
     // abstract::label_image and abstract::not_binary_image).
     typedef stc::abstraction_as_type<abstract::internal::label_image_>
       super_type;
-    // Definition of the external virtual type.
+    // Definition of the extended virtual type.
     typedef stc::abstraction_as_type<abstract::label_image>
       image_typeness_type;
   };
@@ -150,7 +150,7 @@ namespace oln {
     // abstract::color_image and abstract::not_binary_image).
     typedef stc::abstraction_as_type<abstract::internal::color_image_>
       super_type;
-    // Definition of the external virtual type.
+    // Definition of the extended virtual type.
     typedef stc::abstraction_as_type<abstract::color_image>
       image_typeness_type;
   };

@@ -85,10 +85,10 @@ namespace oln
 	 delegated type (i.e. D = mlc::none), get_image_impl inherits
 	 from oln::any_best_speed (trough get_image_impl_helper);
 	 otherwise, get_image_impl is plugged to set_image_impl, a
-	 class than can specialized by the user.
+	 class than can be specialized by the user.
 
-         (*) This relation is not mandatory (set_image_impl is to be
-         defined by the user), but it every specialization of
+         (*) This relation is not systematic (set_image_impl is to be
+         defined by the user), but every specialization of
          set_image_impl *should* inherit from oln::any_best_speed.  */
 
       template <typename A, typename D, typename E>

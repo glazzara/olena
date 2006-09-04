@@ -53,7 +53,7 @@ namespace oln
 
   /// Virtual types associated to oln::fwd_piter_<point>.
   template <typename point>
-  struct vtypes_< fwd_piter_<point> >
+  struct vtypes< fwd_piter_<point> >
   {
     typedef point point_type;
     typedef oln_type_of(point, grid) grid_type;

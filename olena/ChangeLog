@@ -1,3 +1,29 @@
+2006-09-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Adjust virtual types class names.
+
+	* oln/core/abstract/image.hh,
+	* oln/core/abstract/image_dimension.hh,
+	* oln/core/abstract/image_typeness.hh,
+	* oln/core/abstract/grid.hh, oln/core/1d/grid1d.hh,
+	* oln/core/2d/grid2d.hh, oln/core/3d/grid3d.hh,
+	* tests/image_entry.cc (vtypes): Rename as...
+	(vtypes_in_category): ...this.
+	* oln/core/abstract/image.hh, oln/core/abstract/grid.hh,
+	* tests/image_entry.cc (packed_vtypes): Rename as...
+	(packed_vtypes_in_category): ...this.
+
+	* oln/core/abstract/point.hh, oln/core/abstract/dpoint.hh,
+	* oln/core/abstract/piter.hh, oln/core/abstract/pset.hh,
+	* oln/core/gen/bbox.hh,
+	* oln/core/gen/bkd_piter.hh, oln/core/gen/fwd_piter.hh,
+	* oln/core/2d/point2d.hh, oln/core/2d/dpoint2d.hh (vtypes_):
+	Rename as...
+	(vtypes).
+	* oln/core/abstract/pset.hh, oln/core/abstract/bbox.hh
+	(ext_vtype_): Rename as...
+	(ext_vtype): ...this.
+
 2006-09-04  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Test how to define derived associated types in bbox hierarchy.

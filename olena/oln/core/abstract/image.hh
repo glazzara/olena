@@ -57,7 +57,7 @@ namespace oln {
 
   /// Virtual types associated to oln::abstract::image.
   template <typename I>
-  struct vtypes< category::image, abstract::image<I> >
+  struct vtypes_in_category< category::image, abstract::image<I> >
   {
     typedef I exact_type;
 
@@ -96,9 +96,10 @@ namespace oln {
 
   /// Packing of the virtual types of any image class.
   template <typename I>
-  struct packed_vtypes<category::image, I>
+  struct packed_vtypes_in_category<category::image, I>
   {
-    // Internally defined virtual types.
+    /// Virtual types defined internally.
+    /// \{
     typedef oln_type_of(I, exact) exact_type;
 
     typedef oln_type_of(I, grid) grid_type;
@@ -133,16 +134,20 @@ namespace oln {
 //     typedef oln_type_of(I, image_constness) image_constness_type;
 //     typedef oln_type_of(I, image_rawness)   image_rawness_type;
 // --------------------------------------------------------------------
+    /// \}
 
-    // Defined externally virtual types.
+    /// Virtual types defined as extensions.
+    /// \{
     typedef oln_type_of(I, image_dimension) image_dimension_type;
     typedef oln_type_of(I, image_typeness)  image_typeness_type;
+    /// \}
 
     /// Pretty-printing.
     static void echo(std::ostream& ostr)
     {
       ostr
-	<< "vtypes_of(oln::category::image, " << mlc_to_string(I) << ") ="
+	<< "vtypes_in_category(oln::category::image, "
+	<< mlc_to_string(I) << ") ="
 	<< std::endl
 	<< "{" << std::endl
 	<< "  exact_type = " << mlc_to_string(exact_type) << std::endl
@@ -441,7 +446,7 @@ namespace oln
 
       virtual ~image()
       {
-	packed_vtypes<category::image, E>::ensure();
+	packed_vtypes_in_category<category::image, E>::ensure();
 	// FIXME: static check fails because "pointer to member conversion via virtual base"...
 // 	mlc_check_method_impl(E, const size_type&, size,       ,                  const);
 // 	mlc_check_method_impl(E, unsigned long,    npoints,    ,                  const);
