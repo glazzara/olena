@@ -41,6 +41,7 @@
 # define precondition(expr)  assert(expr) 
 # define postcondition(expr) assert(expr) 
 
+// FIXME: Shouln't we move these macros into Static?
 
 # define mlc_check_method_impl(WHERE, RETURN, NAME, ARG, CONST)	\
 {								\

@@ -1,3 +1,9 @@
+2006-09-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a wrapper around mlc::assert_ returning a given type.
+
+	* mlc/assert.hh (assert_and_return_): New class.
+
 2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/contract.hh (implies): New macro.

@@ -226,6 +226,33 @@ namespace mlc
   };
 
 
+
+  /*! \class mlc::assert_and_return_<bexpr, ret_type, err>
+  **
+  ** Check a static property over \a bexpr, and return \a ret_type as \a ret
+  ** in case of success.  Otherwise, raise a compile-time error.
+  ** \a err can be used to report a meaningful error message to the
+  ** programmer.
+  **
+  ** This is a convenient class used to improve the readability of meta
+  ** programs.
+  */
+
+  template <typename bexpr, typename ret_type, typename err = no_error_message>
+  struct assert_and_return_ :
+    public virtual internal::check_<bexpr, typename bexpr::is_true>
+  {
+  public:
+    /// The return type of this assert_and_return_ statement.
+    typedef ret_type ret;
+
+    virtual ~assert_and_return_() {}
+
+  protected:
+    assert_and_return_() {}
+  };
+
+
 } // end of namespace mlc
 
 
