@@ -83,7 +83,7 @@ namespace my
 
   /// Packing of virtual types of any class belonging to the category my::cat.
   template <typename T>
-  struct packed_vtypes <category::my_cat, T>
+  struct packed_vtypes_in_category<category::my_cat, T>
   {
     typedef my_type_of(T, foo) foo_type;
 
@@ -103,7 +103,7 @@ namespace my
 
   /// Types associated to my::A.
   template <>
-  struct vtypes<category::my_cat, my::A>
+  struct vtypes_in_category<category::my_cat, my::A>
   {
     typedef int   foo_type;
     typedef alpha bar_type;
@@ -118,7 +118,7 @@ namespace my
     // Check A's vtypes.
     ~A()
     {
-      packed_vtypes<category::my_cat, A>::ensure();
+      packed_vtypes_in_category<category::my_cat, A>::ensure();
     }
   };
 
@@ -132,7 +132,7 @@ namespace my
 
   /// Types associated to my::B.
   template <>
-  struct vtypes<category::my_cat, B>
+  struct vtypes_in_category<category::my_cat, B>
   {
     typedef float foo_type;
     typedef beta  baz_type;
@@ -147,7 +147,7 @@ namespace my
     // Check B's vtypes.
     ~B()
     {
-      packed_vtypes<category::my_cat, B>::ensure();
+      packed_vtypes_in_category<category::my_cat, B>::ensure();
     }
   };
 
@@ -168,7 +168,7 @@ namespace my
 
   /// Types associated to my::C.
   template <>
-  struct vtypes<category::my_cat, C>
+  struct vtypes_in_category<category::my_cat, C>
   {
     // This typedef remove the ambiguity on the `foo' vtype: this vtype
     // is provided by both A and B.  Here, let `foo' take the value from
@@ -186,7 +186,7 @@ namespace my
     // Check C's vtypes.
     ~C()
     {
-      packed_vtypes<category::my_cat, C>::ensure();
+      packed_vtypes_in_category<category::my_cat, C>::ensure();
     }
   };
 

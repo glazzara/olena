@@ -75,7 +75,7 @@ namespace my
 
   /// Packing of virtual types of any class belonging to the category my::cat.
   template <typename T>
-  struct packed_vtypes <category::my_cat, T>
+  struct packed_vtypes_in_category<category::my_cat, T>
   {
     typedef my_type_of(T, foo) foo_type;
     typedef my_type_of(T, bar) bar_type;
@@ -100,7 +100,7 @@ namespace my
 
   /// Types associated to my::A.
   template <typename Exact>
-  struct vtypes< category::my_cat, A<Exact> >
+  struct vtypes_in_category< category::my_cat, A<Exact> >
   {
     // A native type.
     typedef int            foo_type;
@@ -121,8 +121,8 @@ namespace my
 
     ~A()
     {
-      // packed_vtypes< category::my, A<Exact> > is not checked here,
-      // since A's baz_type virtual type is undefined.
+      // packed_vtypes_in_category< category::my, A<Exact> > is not checked
+      // here, since A's baz_type virtual type is undefined.
     }
   };
 
@@ -144,7 +144,7 @@ namespace my
 
   /// Types associated to my::B.
   template <typename Exact>
-  struct vtypes< category::my_cat, B<Exact> >
+  struct vtypes_in_category< category::my_cat, B<Exact> >
   {
     // (foo is left untouched.)
 
@@ -158,7 +158,7 @@ namespace my
 
   /// An extended type associated to my::B.
   template <typename Exact>
-  struct ext_vtype<category::my_cat, B<Exact>, typedef_::yin_type>
+  struct ext_vtype_in_category<category::my_cat, B<Exact>, typedef_::yin_type>
   {
     typedef unsigned long ret;
   };
@@ -176,7 +176,7 @@ namespace my
     // Check B's vtypes.
     ~B()
     {
-      packed_vtypes< category::my_cat, B<Exact> >::ensure();
+      packed_vtypes_in_category< category::my_cat, B<Exact> >::ensure();
     }
   };
 
@@ -193,7 +193,7 @@ namespace my
 
   /// Types associated to my::C.
   template <>
-  struct vtypes<category::my_cat, C>
+  struct vtypes_in_category<category::my_cat, C>
   {
     // A type defined only here (and not in the super class).
     typedef double zorg_type;
@@ -209,7 +209,7 @@ namespace my
     // Check C's vtypes.
     ~C()
     {
-      packed_vtypes<category::my_cat, C>::ensure();
+      packed_vtypes_in_category<category::my_cat, C>::ensure();
     }
   };
 

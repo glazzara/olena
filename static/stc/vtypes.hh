@@ -265,7 +265,7 @@ namespace stc
   /**								*/	      \
   /** Specialize this class for the desired \a from_type.	*/	      \
   template <typename category, typename from_type>			      \
-  struct vtypes								      \
+  struct vtypes_in_category						      \
   {									      \
   };									      \
 									      \
@@ -274,19 +274,19 @@ namespace stc
   /**								*/	      \
   /** Specialize this class for the desired \a from_type.	*/	      \
   template <typename from_type>		      				      \
-  struct vtypes_							      \
+  struct vtypes								      \
   {									      \
   };									      \
 									      \
   /** Specialization of vtypes for types without category.  */	      	      \
   template <typename from_type>		      				      \
-  struct vtypes<void, from_type> : public vtypes_<from_type>		      \
+  struct vtypes_in_category<void, from_type> : public vtypes<from_type>       \
   {									      \
   };									      \
 									      \
   /** End of the recursive construction of any vtypes hierarchy.  */	      \
   template <typename category>						      \
-  struct vtypes<category, mlc::none>					      \
+  struct vtypes_in_category<category, mlc::none>			      \
   {									      \
   };									      \
 									      \
@@ -300,7 +300,7 @@ namespace stc
   /**								   */	      \
   /** Specialize this class for the desired \a from_type.	   */	      \
   template <typename category, typename from_type, typename typedef_type>     \
-  struct ext_vtype							      \
+  struct ext_vtype_in_category						      \
   {									      \
   };									      \
 									      \
@@ -309,21 +309,21 @@ namespace stc
   /**								   */	      \
   /** Specialize this class for the desired \a from_type.	   */	      \
   template <typename from_type, typename typedef_type>			      \
-  struct ext_vtype_							      \
+  struct ext_vtype							      \
   {									      \
   };									      \
 									      \
   /** Specialization of ext_vtype for types without category.  */	      \
   template <typename from_type, typename typedef_type>     		      \
-  struct ext_vtype<void, from_type, typedef_type>			      \
-    : public ext_vtype_<from_type, typedef_type>			      \
+  struct ext_vtype_in_category<void, from_type, typedef_type>		      \
+    : public ext_vtype<from_type, typedef_type>				      \
   {									      \
   };									      \
 									      \
   /** End of the recursive construction of any ext_vtype<> */		      \
   /** hierarchy.                                           */		      \
   template <typename category, typename typedef_type>			      \
-  struct ext_vtype<category, mlc::none, typedef_type>			      \
+  struct ext_vtype_in_category<category, mlc::none, typedef_type>	      \
   {									      \
   };									      \
 									      \
@@ -337,7 +337,7 @@ namespace stc
   /**							        */	      \
   /** Specialize this class for the desired \a from_type.       */	      \
   template <typename category, typename from_type, typename typedef_type>     \
-  struct single_vtype							      \
+  struct single_vtype_in_category					      \
   {									      \
   };									      \
 									      \
@@ -346,21 +346,21 @@ namespace stc
   /**							        */	      \
   /** Specialize this class for the desired \a from_type.       */	      \
   template <typename from_type, typename typedef_type>			      \
-  struct single_vtype_							      \
+  struct single_vtype							      \
   {									      \
   };									      \
 									      \
   /** Specialization of single_vtype for types without category.  */	      \
   template <typename from_type, typename typedef_type>     		      \
-  struct single_vtype<void, from_type, typedef_type>			      \
-    : public single_vtype_<from_type, typedef_type>			      \
+  struct single_vtype_in_category<void, from_type, typedef_type>	      \
+    : public single_vtype<from_type, typedef_type>			      \
   {									      \
   };									      \
 									      \
   /** End of the recursive construction of any single_vtype<> */	      \
   /** hierarchy.                                              */	      \
   template <typename category, typename typedef_type>			      \
-  struct single_vtype<category, mlc::none, typedef_type>		      \
+  struct single_vtype_in_category<category, mlc::none, typedef_type>	      \
   {									      \
   };									      \
 									      \
@@ -374,20 +374,21 @@ namespace stc
   /** Optional packing structure, to be specialized by the user.  */	      \
   /** See tests/vtypes.cc for an example of use.                  */	      \
   template <typename category, typename from_type>			      \
-  struct packed_vtypes							      \
+  struct packed_vtypes_in_category					      \
   {									      \
   };									      \
 									      \
   /** Optional packing structure, to be specialized by the user.  */	      \
   /** Version for types without category.                         */	      \
   template <typename from_type>			  	  	  	      \
-  struct packed_vtypes_							      \
+  struct packed_vtypes							      \
   {									      \
   };									      \
 									      \
   /** Specialization of packed_vtypes for types without category.  */	      \
   template <typename from_type>						      \
-  struct packed_vtypes<void, from_type> : public packed_vtypes_<from_type>    \
+  struct packed_vtypes_in_category<void, from_type> :			      \
+    public packed_vtypes<from_type>					      \
   {									      \
   };									      \
 									      \
@@ -439,7 +440,7 @@ namespace stc
 			    from_type, typedef_type>			      \
     {									      \
       /** Set of vtypes associated with FROM_TYPE.  */			      \
-      typedef vtypes<category, from_type> types;			      \
+      typedef vtypes_in_category<category, from_type> types;		      \
       /** Typedef in the current vtypes (may be mlc::not_found).  */	      \
       typedef stc_internal_get_typedef(types, typedef_type) ret;	      \
     };									      \
@@ -452,7 +453,8 @@ namespace stc
 			    from_type, typedef_type>			      \
     {									      \
       /** Set of vtypes associated with FROM_TYPE.  */			      \
-      typedef single_vtype<category, from_type, typedef_type> single_type;    \
+      typedef single_vtype_in_category<category, from_type, typedef_type>     \
+        single_type;							      \
       /** Typedef in the current single_vtype (may be mlc::not_found).  */    \
       typedef mlc_ret(single_type) ret;					      \
     };									      \
@@ -465,15 +467,14 @@ namespace stc
 			    from_type, typedef_type>			      \
     {									      \
       /** Set of vtypes associated with FROM_TYPE.  */			      \
-      typedef ext_vtype<category, from_type, typedef_type> ext_type;	      \
+      typedef ext_vtype_in_category<category, from_type, typedef_type>	      \
+        ext_type;							      \
       /** Typedef in the current ext_vtype (may be mlc::not_found).  */	      \
       typedef mlc_ret(ext_type) ret;					      \
     };									      \
 									      \
 									      \
     /* FIXME: Do a basic scheme of the algorithm in pseudo-code.  */	      \
-									      \
-    /* FIXME: Check for mlc::undefined?  */				      \
 									      \
     /* Forward declaration.  */						      \
     template <typename method, typename category,			      \

@@ -1,5 +1,21 @@
 2006-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename virtual types classes.
+
+	* stc/vtypes.hh (vtypes, single_vtype, ext_vtype): Rename as...
+	(vtypes_in_category, single_vtype_in_category, ext_vtype_in_category):
+	...this.	
+	(vtypes_, single_vtype_, ext_vtype_): Rename as...
+	(vtypes, single_vtype, ext_vtype): ...this.
+	(packed_vtypes): Rename as...
+	(packed_vtypes_in_category): ...this.
+	(packed_vtypes_): Rename as...
+	(packed_vtypes): ...this
+	* tests/vtypes.cc, tests/vtypes-and-exact.cc,
+	* tests/vtypes-multiple-supers.cc: Adjust.
+
+2006-09-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a third kind of structure for virtual types to avoid endless
 	recursions when their definitions involve the knowledge of the
 	exact type of the class these virtual types belong to.
