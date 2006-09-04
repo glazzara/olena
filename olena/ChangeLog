@@ -1,3 +1,16 @@
+2006-09-04  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Test how to define derived associated types in bbox hierarchy.
+
+	* oln/core/abstract/bbox.hh (ext_vtype_): New definitions of
+	fwd_piter_type and bkd_piter_type.
+	(~bbox): Comment possible recursive code.
+	* oln/core/gen/bbox.hh (vtypes_): Comment former definitions of
+	fwd_piter_type and bkd_piter_type.
+	* oln/core/abstract/pset.hh (ext_vtype_): New definition for grid.
+	(fwd_piter_type, bkd_piter_type): Comment because they are now
+	externally defined.
+
 2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/abstract/piter.hh (to_point): New.

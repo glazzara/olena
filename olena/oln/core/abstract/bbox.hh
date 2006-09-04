@@ -40,6 +40,8 @@ namespace oln
 
   // Forward declaration.
   namespace abstract { template <typename E> class bbox; }
+  template <typename point> class fwd_piter_;
+  template <typename point> class bkd_piter_;
 
 
   // Super type declaration.
@@ -47,6 +49,26 @@ namespace oln
   struct set_super_type< abstract::bbox<E> >
   {
     typedef abstract::pset<E> ret;
+  };
+
+
+
+  template <typename E>
+  struct ext_vtype_< abstract::bbox<E>, typedef_::fwd_piter_type >
+  {
+  private:
+    typedef oln_type_of(E, point) P;
+  public:
+    typedef fwd_piter_<P> ret;
+  };
+
+  template <typename E>
+  struct ext_vtype_< abstract::bbox<E>, typedef_::bkd_piter_type >
+  {
+  private:
+    typedef oln_type_of(E, point) P;
+  public:
+    typedef bkd_piter_<P> ret;
   };
 
 
@@ -234,17 +256,17 @@ namespace oln
 
 	mlc::assert_defined_< point_t >::check();
 
-	typedef oln_type_of(E, fwd_piter) fwd_piter_t;
-	typedef oln_type_of(E, bkd_piter) bkd_piter_t;
+// 	typedef oln_type_of(E, fwd_piter) fwd_piter_t;
+// 	typedef oln_type_of(E, bkd_piter) bkd_piter_t;
 
-	mlc::assert_defined_< fwd_piter_t >::check();
-	mlc::assert_defined_< bkd_piter_t >::check();
+// 	mlc::assert_defined_< fwd_piter_t >::check();
+// 	mlc::assert_defined_< bkd_piter_t >::check();
 
-	mlc::assert_< mlc::eq_< oln_type_of(fwd_piter_t, grid),
-                                oln_type_of(point_t, grid) > >::check();
+// 	mlc::assert_< mlc::eq_< oln_type_of(fwd_piter_t, grid),
+//                                 oln_type_of(point_t, grid) > >::check();
 
-	mlc::assert_< mlc::eq_< oln_type_of(bkd_piter_t, grid),
-                                oln_type_of(point_t, grid) > >::check();
+// 	mlc::assert_< mlc::eq_< oln_type_of(bkd_piter_t, grid),
+//                                 oln_type_of(point_t, grid) > >::check();
 
       }
 

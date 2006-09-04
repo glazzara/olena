@@ -47,10 +47,32 @@ namespace oln
   struct vtypes_< abstract::pset<E> >
   {
     typedef mlc::undefined point_type;
-    typedef mlc::undefined fwd_piter_type;
-    typedef mlc::undefined bkd_piter_type;
-    typedef mlc::undefined coord_type;
-    // FIXME: Add grid.
+//     typedef mlc::undefined fwd_piter_type;
+//     typedef mlc::undefined bkd_piter_type;
+  };
+
+
+//   template <typename E>
+//   struct vtype_< abstract::pset<E>,    typedef_::coord_type >
+//     : type_of_< oln_type_of(E, point), typedef_::coord_type >
+//   {};
+
+
+//   template <typename E>
+//   struct extension_vtype_< abstract::pset<E>, typedef_::coord_type >
+//   {
+//   private:
+//     typedef oln_type_of(E, point) P;
+//   public:
+//     typedef oln_type_of(P, coord) ret;
+//   };
+
+
+  template <typename E>
+  struct ext_vtype_< abstract::pset<E>, typedef_::grid_type >
+  {
+    typedef oln_type_of(E, point) P;
+    typedef oln_type_of(P, grid) ret;
   };
 
 
@@ -71,8 +93,9 @@ namespace oln
       ~pset()
       {
 	mlc::assert_defined_< oln_type_of(E, point) >::check();
+	mlc::assert_defined_< oln_type_of(E, coord) >::check();
 
-	// FIXME: Trouble with circular dependencies.
+	// FIXME: BUG! Trouble with circular dependencies.
 
 // 	mlc::assert_defined_< fwd_piter_t >::check();
 // 	mlc::assert_defined_< bkd_piter_t >::check();
