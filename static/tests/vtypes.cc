@@ -148,7 +148,7 @@ namespace my
     typedef long quux_type;
   };
 
-  /// An external type associated to my::B.
+  /// An extended type associated to my::B.
   template <>
   struct ext_vtype<category::my_cat, B, typedef_::yin_type>
   {

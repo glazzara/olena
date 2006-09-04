@@ -33,7 +33,7 @@
 // This test focuses on the support of virtual types in hierachies
 // with multiple inheritance.
 
-// FIXME: To do: Check external vtypes, too.
+// FIXME: To do: Check extended vtypes, too.
 
 /// Helper macros.
 /// \{

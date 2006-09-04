@@ -100,13 +100,12 @@ namespace my
 
   /// Types associated to my::A.
   template <typename Exact>
-  struct vtypes< category::my_cat, my::A<Exact> >
+  struct vtypes< category::my_cat, A<Exact> >
   {
     // A native type.
     typedef int            foo_type;
-    // A Metalic value, used here is to ensure that
-    // mlc::abstract::values are accepted as virtual types, as well as
-    // any other type).
+    // A Metalic value, used here to ensure that mlc::abstract::values
+    // are accepted as virtual types, as well as any other type).
     typedef mlc::int_<42>  bar_type;
     // An undefined type.
     typedef mlc::undefined baz_type;
@@ -157,7 +156,7 @@ namespace my
     typedef long quux_type;
   };
 
-  /// An external type associated to my::B.
+  /// An extended type associated to my::B.
   template <typename Exact>
   struct ext_vtype<category::my_cat, B<Exact>, typedef_::yin_type>
   {
@@ -227,6 +226,11 @@ main()
   // Check super classes.
   mlc::assert_<mlc_is_a_(C, A)>::check();
   mlc::assert_<mlc_is_a_(C, B)>::check();
+
+  // Ensure stc::is_any_ works properly.
+  mlc::assert_< stc::is_any_< A<C> > >::check();
+  mlc::assert_< stc::is_any_< B<C> > >::check();
+  mlc::assert_< stc::is_any_< C >    >::check();    
 
   // Check exact types of A<C> and B<C>.
   mlc::assert_<mlc_eq(stc_to_exact_(A<C>), C)>::check();

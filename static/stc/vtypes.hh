@@ -72,6 +72,8 @@ namespace stc
     struct FIRST_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_TAG;
     struct THIRD_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_LIST;
 
+    struct NO_VALID_RETURN_TYPE_FOR_type_of_;
+
   } // end of namespace stc::ERROR
 
 } // end of namespace stc
@@ -223,6 +225,42 @@ namespace stc
   /* Virtual types.  */							      \
   /* --------------- */							      \
 									      \
+  /** \brief Definition of virtual types.                                */   \
+  /**                                                                    */   \
+  /** There a three kinds of structures for virtual types:               */   \
+  /** - internal vtypes (\a vtypes);                                     */   \
+  /** - single vtypes (\a single_vtype);                                 */   \
+  /** - extended vtypes (\a ext_vtype);                                  */   \
+  /**                                                                    */   \
+  /** A \a vtype structure can store one or several internal vtypes,     */   \
+  /** whereas a \a single_vtype or an \a ext_vtype structure can hold    */   \
+  /** one and only one vtype.                                            */   \
+  /**                                                                    */   \
+  /** See tests/tour.cc and tests/vtypes.cc for examples of use.         */   \
+  /**                                                                    */   \
+  /** A virtual type definition within a \a vtype structure cannot use   */   \
+  /** the form `stc_type_of(Exact, ...)', which would cause endless      */   \
+  /** recursions in the class hierarchy.  Instead, such definitions      */   \
+  /** should be placed in  \a single_vtype or \a ext_vtype structure.    */   \
+  /**                                                                    */   \
+  /** Definitions of single vtypes can be ``announced'' in the           */   \
+  /** corresponding internal vtypes structure, using the \a              */   \
+  /** mlc::undefined tag (i.e., a vtype defined as \a mlc::undefined in  */   \
+  /** \a vtypes can be re-defined in a \a single_vtype).                 */   \
+  /**                                                                    */   \
+  /** Apart from this exception, a vtype shall be defined at most by     */   \
+  /** one of the three structures explained above.                       */   \
+  /**                                                                    */   \
+  /** To put in a nushell, internal vtypes are the default way to define */   \
+  /** the vtypes of a class (except those of the form                    */   \
+  /** `stc_type_of(Exact, ...)'); single vtypes are used to transcend    */   \
+  /** this limitation; and extended vtypes are used to add new vtypes to */   \
+  /** a class besides its initial vtypes.                                */   \
+									      \
+									      \
+  /* Internal vtypes.  */						      \
+  /* \{ */								      \
+									      \
   /** \brief Internal virtual types associated to \a from_type. */	      \
   /**								*/	      \
   /** Specialize this class for the desired \a from_type.	*/	      \
@@ -252,24 +290,30 @@ namespace stc
   {									      \
   };									      \
 									      \
-  /** \brief An external virtual type associated to \a from_type. */	      \
-  /**								  */	      \
-  /** Specialize this class for the desired \a from_type.	  */	      \
+  /* \} */								      \
+									      \
+									      \
+  /* Extended vtype.  */						      \
+  /* \{ */								      \
+									      \
+  /** \brief An extended virtual type associated to \a from_type.  */	      \
+  /**								   */	      \
+  /** Specialize this class for the desired \a from_type.	   */	      \
   template <typename category, typename from_type, typename typedef_type>     \
   struct ext_vtype							      \
   {									      \
   };									      \
 									      \
-  /** \brief An external virtual type associated to \a from_type. */	      \
-  /** Version for types without category.			  */	      \
-  /**								  */	      \
-  /** Specialize this class for the desired \a from_type.	  */	      \
+  /** \brief An extended virtual type associated to \a from_type.  */	      \
+  /** Version for types without category.			   */	      \
+  /**								   */	      \
+  /** Specialize this class for the desired \a from_type.	   */	      \
   template <typename from_type, typename typedef_type>			      \
   struct ext_vtype_							      \
   {									      \
   };									      \
 									      \
-  /** Specialization of ext_vtype for types without category. */	      \
+  /** Specialization of ext_vtype for types without category.  */	      \
   template <typename from_type, typename typedef_type>     		      \
   struct ext_vtype<void, from_type, typedef_type>			      \
     : public ext_vtype_<from_type, typedef_type>			      \
@@ -283,22 +327,65 @@ namespace stc
   {									      \
   };									      \
 									      \
+  /* \} */								      \
+									      \
+									      \
+  /* Single vtype.  */							      \
+  /* \{ */								      \
+									      \
+  /** \brief A single virtual type associated to \a from_type.  */	      \
+  /**							        */	      \
+  /** Specialize this class for the desired \a from_type.       */	      \
+  template <typename category, typename from_type, typename typedef_type>     \
+  struct single_vtype							      \
+  {									      \
+  };									      \
+									      \
+  /** \brief A single virtual type associated to \a from_type.  */	      \
+  /** Version for types without category.		        */	      \
+  /**							        */	      \
+  /** Specialize this class for the desired \a from_type.       */	      \
+  template <typename from_type, typename typedef_type>			      \
+  struct single_vtype_							      \
+  {									      \
+  };									      \
+									      \
+  /** Specialization of single_vtype for types without category.  */	      \
+  template <typename from_type, typename typedef_type>     		      \
+  struct single_vtype<void, from_type, typedef_type>			      \
+    : public single_vtype_<from_type, typedef_type>			      \
+  {									      \
+  };									      \
+									      \
+  /** End of the recursive construction of any single_vtype<> */	      \
+  /** hierarchy.                                              */	      \
+  template <typename category, typename typedef_type>			      \
+  struct single_vtype<category, mlc::none, typedef_type>		      \
+  {									      \
+  };									      \
+									      \
+  /* \} */								      \
+									      \
+									      \
+  /* -------------------------- */					      \
+  /* Packing of virtual types.  */					      \
+  /* -------------------------- */					      \
+									      \
   /** Optional packing structure, to be specialized by the user.  */	      \
-  /** See tests/vtypes.hh for an example of use.              */	      \
+  /** See tests/vtypes.cc for an example of use.                  */	      \
   template <typename category, typename from_type>			      \
   struct packed_vtypes							      \
   {									      \
   };									      \
 									      \
   /** Optional packing structure, to be specialized by the user.  */	      \
-  /** Version for types without category.  */				      \
-  /** See tests/vtypes.hh for an example of use.              */	      \
+  /** Version for types without category.                         */	      \
   template <typename from_type>			  	  	  	      \
   struct packed_vtypes_							      \
   {									      \
   };									      \
 									      \
-  /** Specialization of packed_vtypes for types without category. */	      \
+  /** Specialization of packed_vtypes for types without category.  */	      \
   template <typename from_type>						      \
   struct packed_vtypes<void, from_type> : public packed_vtypes_<from_type>    \
   {									      \
@@ -327,8 +414,10 @@ namespace stc
 									      \
       /** Tag for retrieval within internal vtypes.  */			      \
       struct internal : public method {};				      \
-      /** Tag for retrieval within external vtypes.  */			      \
-      struct external : public method {};				      \
+      /** Tag for retrieval within single vtypes.  */			      \
+      struct single : public method {};					      \
+      /** Tag for retrieval within extended vtypes.  */			      \
+      struct extended : public method {};				      \
 									      \
     } /** end of stc::internal::tag */					      \
 									      \
@@ -356,15 +445,28 @@ namespace stc
     };									      \
 									      \
     /** Specialization of get_vtypes for retrievals within */		      \
-    /** external vtypes.                                   */		      \
+    /** single vtypes.                                     */		      \
     template <typename category,					      \
 	      typename from_type, typename typedef_type>		      \
-    struct get_vtype_helper<tag::external, category,			      \
+    struct get_vtype_helper<tag::single, category,			      \
+			    from_type, typedef_type>			      \
+    {									      \
+      /** Set of vtypes associated with FROM_TYPE.  */			      \
+      typedef single_vtype<category, from_type, typedef_type> single_type;    \
+      /** Typedef in the current single_vtype (may be mlc::not_found).  */    \
+      typedef mlc_ret(single_type) ret;					      \
+    };									      \
+									      \
+    /** Specialization of get_vtypes for retrievals within */		      \
+    /** extended vtypes.                                   */		      \
+    template <typename category,					      \
+	      typename from_type, typename typedef_type>		      \
+    struct get_vtype_helper<tag::extended, category,			      \
 			    from_type, typedef_type>			      \
     {									      \
       /** Set of vtypes associated with FROM_TYPE.  */			      \
       typedef ext_vtype<category, from_type, typedef_type> ext_type;	      \
-      /** Typedef in the current vtypes (may be mlc::not_found).  */	      \
+      /** Typedef in the current ext_vtype (may be mlc::not_found).  */	      \
       typedef mlc_ret(ext_type) ret;					      \
     };									      \
 									      \
@@ -518,50 +620,78 @@ namespace stc
     };									      \
 									      \
 									      \
-    /* ------------------------------------- */				      \
-    /* External/internal typedef selection.  */				      \
-    /* ------------------------------------- */				      \
+    /* -------------------------------------------- */			      \
+    /* Internal/single/extended typedef selection.  */			      \
+    /* -------------------------------------------- */			      \
 									      \
     /** \brief Typedef selector.                                        */    \
     /**                                                                 */    \
     /** A virtual type is considered valid if and only if it has been   */    \
-    /** found as an internal vtype or (exclusive) as an external vtype. */    \
+    /** found as an internal vtype or (exclusive) as an extended vtype. */    \
     /** Other cases (no definition or a double definition) are invalid. */    \
     /**                                                                 */    \
     /** \{                                                              */    \
     /** Fwd decl.  */							      \
-    template <bool external_typedef_p, bool internal_typedef_p,		      \
-	      typename external_typedef, typename internal_typedef>	      \
+    template								      \
+      < typename internal_vtype_candidate, bool found_as_internal_vtype,      \
+        typename single_vtype_candidate,   bool found_as_single_vtype,	      \
+        typename extended_vtype_candidate, bool found_as_extended_vtype >     \
     struct select_typedef;						      \
 									      \
-    /** The typedef is found in both an external and an internal */	      \
-    /** type definitions: error.                                 */	      \
-    template <typename external_typedef, typename internal_typedef>	      \
-    struct select_typedef<true, true, external_typedef, internal_typedef>     \
+    /** The typedef is defined as an internal vtype only: good.  */	      \
+    template <typename internal_vtype_candidate,			      \
+              typename single_vtype_candidate,				      \
+              typename extended_vtype_candidate>			      \
+    struct select_typedef<internal_vtype_candidate, true,		      \
+                          single_vtype_candidate,   false,		      \
+                          extended_vtype_candidate, false>		      \
     {									      \
-      /* No ret member.  */						      \
+      typedef internal_vtype_candidate ret;				      \
     };									      \
 									      \
-    /** The typedef is found neither in an external nor in an */	      \
-    /** internal type definition: error.                      */	      \
-    template <typename external_typedef, typename internal_typedef>	      \
-    struct select_typedef<false, false, external_typedef, internal_typedef>   \
+    /** The typedef is defined as a single vtype only: good.  */	      \
+    template <typename internal_vtype_candidate,			      \
+              typename single_vtype_candidate,				      \
+              typename extended_vtype_candidate>			      \
+    struct select_typedef<internal_vtype_candidate, false,		      \
+                          single_vtype_candidate,   true,		      \
+                          extended_vtype_candidate, false>		      \
     {									      \
-      /* No ret member.  */						      \
+      typedef single_vtype_candidate ret;				      \
     };									      \
 									      \
-    /** The typedef is found in an extternal definition only: good.  */	      \
-    template <typename external_typedef, typename internal_typedef>	      \
-    struct select_typedef<true, false, external_typedef, internal_typedef>    \
+    /** The typedef is defined as an extended vtype only: good.  */	      \
+    template <typename internal_vtype_candidate,			      \
+              typename single_vtype_candidate,				      \
+              typename extended_vtype_candidate>			      \
+    struct select_typedef<internal_vtype_candidate, false,		      \
+                          single_vtype_candidate,   false,		      \
+                          extended_vtype_candidate, true>		      \
     {									      \
-      typedef external_typedef ret;					      \
+      typedef extended_vtype_candidate ret;				      \
     };									      \
 									      \
-    /** The typedef is found in an internal definition only: good.  */	      \
-    template <typename external_typedef, typename internal_typedef>	      \
-    struct select_typedef<false, true, external_typedef, internal_typedef>    \
+    /** Special case.  The typedef is <b>declared</b> as mlc::undefined  */   \
+    /** in internal vtypes, and <b>defined</b> as a single vtype: good.  */   \
+    template <typename single_vtype_candidate,				      \
+              typename extended_vtype_candidate>			      \
+    struct select_typedef<mlc::undefined,           true,		      \
+                          single_vtype_candidate,   true,		      \
+                          extended_vtype_candidate, false>		      \
     {									      \
-      typedef internal_typedef ret;					      \
+      typedef single_vtype_candidate ret;				      \
+    };									      \
+									      \
+    /** Other cases: error (the typedef is not defined or defined more */     \
+    /** than once, hence \a mlc::not_found is returned).               */     \
+    template								      \
+      < typename internal_vtype_candidate, bool found_as_internal_vtype,      \
+        typename single_vtype_candidate,   bool found_as_single_vtype,	      \
+        typename extended_vtype_candidate, bool found_as_extended_vtype >     \
+    struct select_typedef						      \
+    {									      \
+      /* Error, not valid typedef found.  */				      \
+      typedef mlc::not_found ret;					      \
     };									      \
     /** \} */								      \
 									      \
@@ -575,29 +705,47 @@ namespace stc
     /* Get the exact type of \a from_type.  */				      \
     typedef stc_to_exact(from_type) from_exact_type;			      \
 									      \
-    /* Look for the typedef in internal types.  */			      \
+    /* Look for the typedef in internal vtypes.  */			      \
     typedef typename							      \
     internal::rec_get_vtype<internal::tag::internal, category,		      \
                             from_exact_type, typedef_type>::ret		      \
-    internal_typedef;							      \
-    /* Look for the typedef as an external type.  */			      \
+    internal_vtype_candidate;						      \
+    /* Look for the typedef as a single vtype definition.  */		      \
     typedef typename							      \
-    internal::rec_get_vtype<internal::tag::external, category,		      \
+    internal::rec_get_vtype<internal::tag::single, category,		      \
                             from_exact_type, typedef_type>::ret		      \
-    external_typedef;							      \
+    single_vtype_candidate;						      \
+    /* Look for the typedef as an extended vtype.  */			      \
+    typedef typename							      \
+    internal::rec_get_vtype<internal::tag::extended, category,		      \
+                            from_exact_type, typedef_type>::ret		      \
+    extended_vtype_candidate;						      \
 									      \
-    /* Did we found the virtual type?  */				      \
-    static const bool found_internal_p =				      \
-      mlc_bool(mlc::is_found_<internal_typedef>);			      \
-    static const bool found_external_p =				      \
-      mlc_bool(mlc::is_found_<external_typedef>);			      \
+    /* Did we found the virtual type in any of the vtypes structures?  */     \
+    static const bool found_as_internal_vtype =				      \
+      mlc_bool(mlc::is_found_<internal_vtype_candidate>);		      \
+    static const bool found_as_single_vtype =				      \
+      mlc_bool(mlc::is_found_<single_vtype_candidate>);			      \
+    static const bool found_as_extended_vtype =				      \
+      mlc_bool(mlc::is_found_<extended_vtype_candidate>);		      \
+									      \
+    /* Find an eligible typedef.  */					      \
+    typedef typename							      \
+    internal::select_typedef<						      \
+        internal_vtype_candidate, found_as_internal_vtype,		      \
+        single_vtype_candidate,   found_as_single_vtype,		      \
+        extended_vtype_candidate, found_as_extended_vtype		      \
+      >::ret candidate;							      \
 									      \
     typedef typename							      \
-    internal::select_typedef<found_external_p, found_internal_p,	      \
-			     external_typedef, internal_typedef>::ret ret;    \
-    };									      \
+    mlc::assert_and_return_<						      \
+        mlc_neq(candidate, mlc::not_found),				      \
+        candidate,							      \
+        stc::ERROR::NO_VALID_RETURN_TYPE_FOR_type_of_			      \
+    >::ret ret;								      \
+  };									      \
 									      \
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+  struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
 
 
 /*---------------------.

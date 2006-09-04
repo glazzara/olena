@@ -71,28 +71,30 @@ namespace stc
   /// Version for 2 super classes.
   template <typename E1, typename E2>
   struct valist_aggregator< mlc::valist_ <E1,E2> > :
-    public E1, public E2
+    virtual public E1, virtual public E2
   {
   };
 
   /// Version for 3 super classes.
   template <typename E1, typename E2, typename E3>
   struct valist_aggregator< mlc::valist_ <E1,E2,E3 > > :
-    public E1, public E2, public E3
+    virtual public E1, virtual public E2, virtual public E3
   {
   };
 
   /// Version for 4 super classes.
   template <typename E1, typename E2, typename E3, typename E4>
   struct valist_aggregator< mlc::valist_ <E1,E2,E3,E4> > :
-    public E1, public E2, public E3, public E4
+    virtual public E1, virtual public E2, virtual public E3,
+    virtual public E4
   {
   };
 
   /// Version for 5 super classes.
   template <typename E1, typename E2, typename E3, typename E4, typename E5>
   struct valist_aggregator< mlc::valist_ <E1,E2,E3,E4,E5> > :
-    public E1, public E2, public E3, public E4, public E5
+    virtual public E1, virtual public E2, virtual public E3,
+    virtual public E4, virtual public E5
   {
   };
 
@@ -100,8 +102,8 @@ namespace stc
   template <typename E1, typename E2, typename E3, typename E4, typename E5,
 	    typename E6>
   struct valist_aggregator< mlc::valist_ <E1,E2,E3,E4,E5,E6> > :
-    public E1, public E2, public E3, public E4, public E5,
-    public E6
+    virtual public E1, virtual public E2, virtual public E3,
+    virtual public E4, virtual public E5, virtual public E6
   {
   };
 
@@ -109,8 +111,9 @@ namespace stc
   template <typename E1, typename E2, typename E3, typename E4, typename E5,
 	    typename E6, typename E7>
   struct valist_aggregator< mlc::valist_ <E1,E2,E3,E4,E5,E6,E7> > :
-    public E1, public E2, public E3, public E4, public E5,
-    public E6, public E7
+    virtual public E1, virtual public E2, virtual public E3,
+    virtual public E4, virtual public E5, virtual public E6,
+    virtual public E7
   {
   };
 
@@ -118,8 +121,9 @@ namespace stc
   template <typename E1, typename E2, typename E3, typename E4, typename E5,
 	    typename E6, typename E7, typename E8>
   struct valist_aggregator< mlc::valist_ <E1,E2,E3,E4,E5,E6,E7,E8> > :
-    public E1, public E2, public E3, public E4, public E5,
-    public E6, public E7, public E8
+    virtual public E1, virtual public E2, virtual public E3,
+    virtual public E4, virtual public E5, virtual public E6,
+    virtual public E7, virtual public E8
   {
   };
 
@@ -127,8 +131,9 @@ namespace stc
   template <typename E1, typename E2, typename E3, typename E4, typename E5,
 	    typename E6, typename E7, typename E8, typename E9>
   struct valist_aggregator< mlc::valist_ <E1,E2,E3,E4,E5,E6,E7,E8,E9> > :
-    public E1, public E2, public E3, public E4, public E5,
-    public E6, public E7, public E8, public E9
+    virtual public E1, virtual public E2, virtual public E3,
+    virtual public E4, virtual public E5, virtual public E6,
+    virtual public E7, virtual public E8, virtual public E9
   {
   };
   /// \}

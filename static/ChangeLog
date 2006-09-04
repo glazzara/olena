@@ -1,3 +1,28 @@
+2006-09-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a third kind of structure for virtual types to avoid endless
+	recursions when their definitions involve the knowledge of the
+	exact type of the class these virtual types belong to.
+
+	* static/stc/vtypes.hh (single_vtype, single_vtype_): New template
+	class.
+	(internal::tag::single): New.
+	(internal::tag::external): Rename as...
+	(internal::tag::extended): ...this.
+	(get_vtype_helper): Adjust and extended for internal::tag::single.
+	(select_typedef): Extended retrieval algorithm.
+	(type_of_): Likewise.
+	Check the return type of the algorithm.
+	More documentation.
+	s/external/extended/.
+	* static/tests/vtypes.cc: Conform to the new terminology.
+	* static/tests/vtypes-multiple-supers.cc: Adjust.
+	* tests/vtypes-and-exact.cc: Likewise.
+	Aesthetic changes.
+	(main): Exercize stc::is_any_.
+	* static/stc/valist_aggregator.hh (valist_aggregator): Use virtual
+	inheritance.
+
 2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add materials to handle types without category.
