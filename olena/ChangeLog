@@ -1,3 +1,35 @@
+2006-09-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Test on abstract::pset alternative code for static inheritance. 
+	
+	* oln/core/abstract/entry.hh: New proposition for entry class in
+	static hierarchies.  This is a test file that should be removed
+	after stc update.
+	* oln/core/typedefs.hh (fixed_type, ra_type, bbox_type): New
+	typedef declarations.
+	* oln/core/abstract/bbox.hh (fwd_piter_, bkd_piter_): Remove
+	these forward declarations.
+	(ext_vtype): Remove.
+	(vtypes): New.
+	(ra_type, fixed_type, bbox_type): New associated types.
+	(bbox): Change inheritance from abstract::pset to an entry class.
+	(bbox): Remove all methods except print from this class; the
+	methods are dispatched into abstract::bboxed_pset and
+	gen::bbox_<P>.
+	(bbox): Likewise for attributes.
+	(print): Reject code to subclasses.
+	(impl_bbox): New method.
+	* oln/core/abstract/pset.hh: Include entry.hh.
+	(fwd_piter_type, bkd_piter_type): New associated types.
+	(bbox_type, ra_type, fixed_type): Likewise
+	(pset): Add virtual to inheritance.
+	(~pset): Extend check code.
+	(fixed_pset, ra_pset, bboxed_pset): New sub-abstractions.
+	(pset_fixed_hierarchy, pset_ra_hierarchy, pset_bboxed_hierarchy):
+	New hierarchy tags.
+	* oln/core/gen/bbox.hh: Update.
+	(operator=): New.
+	
 2006-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Adjust virtual types class names.

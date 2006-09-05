@@ -40,8 +40,6 @@ namespace oln
 
   // Forward declaration.
   namespace abstract { template <typename E> class bbox; }
-  template <typename point> class fwd_piter_;
-  template <typename point> class bkd_piter_;
 
 
   // Super type declaration.
@@ -52,23 +50,13 @@ namespace oln
   };
 
 
-
+  /// Virtual types associated to oln::abstract::bbox<E>.
   template <typename E>
-  struct ext_vtype< abstract::bbox<E>, typedef_::fwd_piter_type >
+  struct vtypes< abstract::bbox<E> >
   {
-  private:
-    typedef oln_type_of(E, point) P;
-  public:
-    typedef fwd_piter_<P> ret;
-  };
-
-  template <typename E>
-  struct ext_vtype< abstract::bbox<E>, typedef_::bkd_piter_type >
-  {
-  private:
-    typedef oln_type_of(E, point) P;
-  public:
-    typedef bkd_piter_<P> ret;
+    typedef mlc::true_ ra_type;
+    typedef mlc::true_ fixed_type;
+    typedef E bbox_type;
   };
 
 
@@ -77,125 +65,17 @@ namespace oln
 
     /// Abstract bbox (bounding box) class.
     template <typename E>
-    class bbox : public abstract::pset<E>
+    class bbox : public entry< abstract::pset, E> // NEW!  former was: abstract::pset<E>
     {
-      typedef E exact_t;
       typedef oln_type_of(E, point) point_t;
-      typedef oln_type_of(E, coord) coord_t;
-
-      typedef oln_type_of(point_t, dim) dim;
-      enum { n = mlc_value(dim) };
 
     public:
-      
-      unsigned npoints() const
-      {
-	unsigned count = 1;
-	for (unsigned i = 0; i < n; ++i)
-	  count *= size(i);
-	return count;
-      }
-
-      const point_t& pmin() const
-      {
-	precondition(is_valid_);
-	return pmin_;
-      }
-
-      coord_t pmin(unsigned i) const
-      {
-	precondition(is_valid_ and i < n);
-	return pmin_[i];
-      }
-
-      const point_t& pmax() const
-      {
-	precondition(is_valid_);
-	return pmax_;
-      }
-
-      coord_t pmax(unsigned i) const
-      {
-	precondition(is_valid_ and i < n);
-	return pmax_[i];
-      }
-
-      unsigned size(unsigned i) const
-      {
-	precondition(is_valid_ and i < n);
-	return pmax_[i] - pmin_[i] + 1;
-      }
-
-      void flush()
-      {
-	is_valid_ = false;
-      }
-
-      void init_with(const point_t& p)
-      {
-	precondition(not is_valid_);
-	pmin_ = p;
-	pmax_ = p;
-	is_valid_ = true;
-      }
-
-      void update_with(const point_t& p)
-      {
-	precondition(is_valid_);
-	for (unsigned i = 0; i < n; ++i)
-	  if (p[i] < pmin_[i])
-	    pmin_[i] = p[i];
-	  else if (p[i] > pmax_[i])
-	    pmax_[i] = p[i];
-      }
-
-      void take(const point_t& p)
-      {
-	if (not is_valid_)
-	  {
-	    init_with(p);
-	    return;
-	  }
-	for (unsigned i = 0; i < n; ++i)
-	  if (p[i] < pmin_[i])
-	    pmin_[i] = p[i];
-	  else if (p[i] > pmax_[i])
-	    pmax_[i] = p[i];
-      }
-
-      // FIXME: Add "update : (rhs : exact)"
-
-      bool has(const point_t& p) const
-      {
-	precondition(is_valid_);
-	for (unsigned i = 0; i < n; ++i)
-	  if (p[i] < pmin_[i] or p[i] > pmax_[i])
-	    return false;
-	return true;
-      }
-
-      bool includes(const exact_t& rhs) const
-      {
-	precondition(is_valid_ and rhs.is_valid());
-	for (unsigned i = 0; i < n; ++i)
-	  if (rhs.pmin()[i] < pmin_[i] or rhs.pmax()[i] > pmax_[i])
-	    return false;
-	return true;
-      }
-
-      bool is_valid() const
-      {
-	return is_valid_;
-      }
 
       void print(std::ostream& ostr) const
       {
-	ostr << "{ pmin=" << pmin_
-	     << ", pmax=" << pmax_
-	     << ", valid=" << is_valid_
-	     << " }";
+	this->exact().impl_print(ostr);
       }
-
+      
       friend
       std::ostream& operator<<(std::ostream& ostr, const abstract::bbox<E>& bb)
       {
@@ -203,57 +83,19 @@ namespace oln
 	return ostr;
       }
 
-      // FIXME: Add the scool code below.
-
-//   invariant {
-//     n > 1
-//     is_valid => (pmax >= pmin) // FIXME: More.
-//   }
-
-//   (=) const : (rhs : exact) -> bool =
-//   {
-//     precondition(@is_valid and rhs.is_valid)
-//     return @pmin = rhs.pmin and @pmax = rhs.pmax
-//   }
-
-//   (+=) : (dp : dpoint const ref) -> exact =
-//   {
-//     precondition(is_valid)
-//     pmin += dp
-//     pmax += dp
-//   }
-
-//   (-=) : (dp : dpoint const ref) -> exact =
-//   {
-//     precondition(is_valid)
-//     pmin -= dp
-//     pmax -= dp
-//   }
-
+      const E& impl_bbox() const
+      {
+	return this->exact();
+      }
+      
     protected:
 
-      point_t pmin_;
-      point_t pmax_;
-      bool is_valid_;
-      
       bbox()
       {
-	flush();
-      }
-
-      bbox(const point_t& pmin, const point_t& pmax)
-	: pmin_(pmin),
-	  pmax_(pmax)
-      {
-	for (unsigned i = 0; i < n; ++i)
-	  precondition(pmax[i] >= pmin[i]);
-	is_valid_ = true;
       }
 
       ~bbox()
       {
-	flush();
-
 	mlc::assert_defined_< point_t >::check();
 
 // 	typedef oln_type_of(E, fwd_piter) fwd_piter_t;
@@ -267,7 +109,6 @@ namespace oln
 
 // 	mlc::assert_< mlc::eq_< oln_type_of(bkd_piter_t, grid),
 //                                 oln_type_of(point_t, grid) > >::check();
-
       }
 
     }; // end of class oln::abstract::bbox<E>

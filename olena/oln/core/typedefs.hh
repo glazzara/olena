@@ -109,6 +109,14 @@ namespace oln
 // --------------------------------------------------------------------
 
 
+  /*-----------------.
+  | category::pset.  |
+  `------------------*/
+
+  mlc_decl_typedef(fixed_type);
+  mlc_decl_typedef(ra_type);
+
+
   /*------------------.
   | category::image.  |
   `------------------*/
@@ -137,6 +145,7 @@ namespace oln
 
   mlc_decl_typedef(delegated_type);
   mlc_decl_typedef(size_type);
+  mlc_decl_typedef(bbox_type);
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------

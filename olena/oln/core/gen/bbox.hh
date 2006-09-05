@@ -56,11 +56,8 @@ namespace oln
   struct vtypes< bbox_<point> >
   {
     typedef point point_type;
-//     typedef fwd_piter_<point> fwd_piter_type;
-//     typedef bkd_piter_<point> bkd_piter_type;
-    typedef typename point::coord_t coord_type;
-    // FIXME: BUG! typedef oln_type_of(point, grid) grid_type;
-    // FIXME: BUG! typedef typename point::grid_t grid_type;
+    typedef fwd_piter_<point> fwd_piter_type;
+    typedef bkd_piter_<point> bkd_piter_type;
   };
 
 
@@ -73,16 +70,141 @@ namespace oln
     typedef bbox_<point> self_t;
     typedef abstract::bbox<self_t> super_t;
 
+    typedef oln_type_of(point, coord) coord_t;
+
+    typedef oln_type_of(point_t, dim) dim;
+    enum { n = mlc_value(dim) };
+
   public:
       
     bbox_()
-    {
-    }
+      {
+	flush();
+      }
 
     bbox_(const point_t& pmin, const point_t& pmax)
-      : super_t(pmin, pmax)
-    {
-    }
+      {
+	this->pmin_ = pmin;
+	this->pmax_ = pmax;
+	is_valid_ = true;
+
+	for (unsigned i = 0; i < n; ++i)
+	  precondition(pmax[i] >= pmin[i]);
+      }
+
+    bbox_(const self_t& rhs)
+      {
+	// FIXME: Remove these 3 lines?
+	precondition(rhs.is_valid());
+	for (unsigned i = 0; i < n; ++i)
+	  precondition(rhs.pmax_[i] >= rhs.pmin_[i]);
+
+	this->pmin_ = rhs.pmin_;
+	this->pmax_ = rhs.pmax_;
+        is_valid_ = rhs.is_valid_;
+
+	for (unsigned i = 0; i < n; ++i)
+	  postcondition(this->pmax_[i] >= this->pmin_[i]);
+      }
+
+    self_t& operator=(const self_t& rhs)
+      {
+	// FIXME: Remove these 3 lines?
+	precondition(rhs.is_valid());
+	for (unsigned i = 0; i < n; ++i)
+	  precondition(rhs.pmax_[i] >= rhs.pmin_[i]);
+
+	this->pmin_ = rhs.pmin_;
+	this->pmax_ = rhs.pmax_;
+        is_valid_ = rhs.is_valid_;
+
+	for (unsigned i = 0; i < n; ++i)
+	  postcondition(this->pmax_[i] >= this->pmin_[i]);
+
+	return *this;
+      }
+      
+    unsigned impl_npoints() const
+      {
+	unsigned count = 1;
+	for (unsigned i = 0; i < n; ++i)
+	  count *= this->len(i);
+	return count;
+      }
+
+    bool impl_has(const point_t& p) const
+      {
+	precondition(is_valid_);
+	for (unsigned i = 0; i < n; ++i)
+	  if (p[i] < this->pmin_[i] or p[i] > this->pmax_[i])
+	    return false;
+	return true;
+      }
+
+    void flush()
+      {
+	is_valid_ = false;
+      }
+
+    void init_with(const point_t& p)
+      {
+	precondition(not is_valid_);
+	this->pmin_ = p;
+	this->pmax_ = p;
+	is_valid_ = true;
+      }
+
+    void update_with(const point_t& p)
+      {
+	precondition(is_valid_);
+	for (unsigned i = 0; i < n; ++i)
+	  if (p[i] < this->pmin_[i])
+	    this->pmin_[i] = p[i];
+	  else if (p[i] > this->pmax_[i])
+	    this->pmax_[i] = p[i];
+      }
+
+    void take(const point_t& p)
+      {
+	if (not is_valid_)
+	  {
+	    init_with(p);
+	    return;
+	  }
+	for (unsigned i = 0; i < n; ++i)
+	  if (p[i] < this->pmin_[i])
+	    this->pmin_[i] = p[i];
+	  else if (p[i] > this->pmax_[i])
+	    this->pmax_[i] = p[i];
+      }
+
+    // FIXME: Add "update : (rhs : exact)"
+
+    bool includes(const self_t& rhs) const
+      {
+	precondition(is_valid_ and rhs.is_valid());
+	for (unsigned i = 0; i < n; ++i)
+	  if (rhs.pmin()[i] < this->pmin_[i] or rhs.pmax()[i] > this->pmax_[i])
+	    return false;
+	return true;
+      }
+
+    bool impl_is_valid() const
+      {
+	return is_valid_;
+      }
+
+    void impl_print(std::ostream& ostr) const
+      {
+	ostr << "{ pmin=" << this->pmin_
+	     << ", pmax=" << this->pmax_
+	     << ", valid=" << is_valid_
+	     << " }";
+      }
+
+  protected:
+
+    bool is_valid_;
 
   }; // end of class oln::bbox_<point>
 

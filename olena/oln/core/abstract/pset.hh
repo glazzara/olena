@@ -33,6 +33,8 @@
 # include <oln/core/type.hh>
 # include <oln/core/typedefs.hh>
 
+# include <oln/core/abstract/entry.hh> // NEW!
+
 
 namespace oln
 {
@@ -47,26 +49,21 @@ namespace oln
   struct vtypes< abstract::pset<E> >
   {
     typedef mlc::undefined point_type;
-//     typedef mlc::undefined fwd_piter_type;
-//     typedef mlc::undefined bkd_piter_type;
+    typedef mlc::undefined fwd_piter_type;
+    typedef mlc::undefined bkd_piter_type;
+
+    typedef mlc::none      bbox_type;
+    typedef mlc::undefined ra_type;
+    typedef mlc::undefined fixed_type;
   };
 
 
-//   template <typename E>
-//   struct single_vtype< abstract::pset<E>,    typedef_::coord_type >
-//     : type_of_< oln_type_of(E, point), typedef_::coord_type >
-//   {};
-
-
-//   template <typename E>
-//   struct ext_vtype< abstract::pset<E>, typedef_::coord_type >
-//   {
-//   private:
-//     typedef oln_type_of(E, point) P;
-//   public:
-//     typedef oln_type_of(P, coord) ret;
-//   };
-
+  template <typename E>
+  struct ext_vtype< abstract::pset<E>, typedef_::coord_type >
+  {
+    typedef oln_type_of(E, point) P;
+    typedef oln_type_of(P, coord) ret;
+  };
 
   template <typename E>
   struct ext_vtype< abstract::pset<E>, typedef_::grid_type >
@@ -81,9 +78,12 @@ namespace oln
 
     /// Abstract point class.
     template <typename E>
-    class pset : public stc::any__simple<E>,
-		 public oln::type
+    class pset : public virtual stc::any__simple<E>,
+		 public virtual oln::type
     {
+    public:
+
+      // ...
 
     protected:
 
@@ -93,12 +93,11 @@ namespace oln
       ~pset()
       {
 	mlc::assert_defined_< oln_type_of(E, point) >::check();
+	mlc::assert_defined_< oln_type_of(E, fwd_piter) >::check();
+	mlc::assert_defined_< oln_type_of(E, bkd_piter) >::check();
+
 	mlc::assert_defined_< oln_type_of(E, coord) >::check();
-
-	// FIXME: BUG! Trouble with circular dependencies.
-
-// 	mlc::assert_defined_< fwd_piter_t >::check();
-// 	mlc::assert_defined_< bkd_piter_t >::check();
+	mlc::assert_defined_< oln_type_of(E, grid) >::check();
 
 // 	mlc::assert_< mlc::eq_< oln_type_of(fwd_piter_t, grid),
 //                                 oln_type_of(point_t, grid) > >::check();
@@ -110,7 +109,136 @@ namespace oln
     }; // end of class oln::abstract::pset<E>
 
 
+
+    template <typename E>
+    class fixed_pset : public virtual pset<E>
+    {
+    public:
+
+      unsigned npoints() const
+      {
+	return this->exact().impl_npoints();
+      }
+
+    protected:
+      fixed_pset()
+      {}
+    };
+
+
+
+    template <typename E>
+    class ra_pset : public virtual pset<E>
+    {
+      typedef oln_type_of(E, point) point_t;
+
+    public:
+
+      bool has(const point_t& p) const
+      {
+	return this->exact().impl_has(p);
+      }
+
+    protected:
+      ra_pset()
+      {}
+    };
+
+
+
+    template <typename E>
+    class bboxed_pset : public virtual pset<E>
+    {
+      typedef oln_type_of(E, point) point_t;
+      typedef oln_type_of(E, bbox)  bbox_t;
+
+      typedef oln_type_of(point_t, coord) coord_t;
+      typedef oln_type_of(point_t, dim) dim_t;
+      enum { n = mlc_value(dim_t) };
+      
+    public:
+
+      const bbox_t& bbox() const
+      {
+	return this->exact().impl_box();
+      }
+
+      bool is_valid() const
+      {
+	return this->exact().impl_is_valid();
+      }
+
+      const point_t& pmin() const
+      {
+	precondition(this->is_valid());
+	return pmin_;
+      }
+
+      coord_t pmin(unsigned i) const
+      {
+	precondition(this->is_valid() and i < n);
+	return pmin_[i];
+      }
+
+      const point_t& pmax() const
+      {
+	precondition(this->is_valid());
+	return pmax_;
+      }
+
+      coord_t pmax(unsigned i) const
+      {
+	precondition(this->is_valid() and i < n);
+	return pmax_[i];
+      }
+
+      unsigned len(unsigned i) const
+      {
+	precondition(this->is_valid() and i < n);
+	return pmax_[i] - pmin_[i] + 1;
+      }
+
+    protected:
+
+      bboxed_pset()
+      {}
+
+      point_t pmin_, pmax_;
+    };
+
+
   } // end of namespace oln::abstract
+
+
+
+  typedef hierarchy<abstract::pset, 1> pset_fixed_hierarchy;
+  typedef hierarchy<abstract::pset, 2> pset_ra_hierarchy;
+  typedef hierarchy<abstract::pset, 3> pset_bboxed_hierarchy;
+
+
+  template <typename E>
+  struct case_ < pset_fixed_hierarchy, E, 1 >
+    : where_< mlc::eq_< oln_type_of(E, fixed), mlc::true_ > >
+  {
+    typedef abstract::fixed_pset<E> ret;
+  };
+
+
+  template <typename E>
+  struct case_ < pset_ra_hierarchy, E, 1 >
+    : where_< mlc::eq_< oln_type_of(E, ra), mlc::true_ > >
+  {
+    typedef abstract::ra_pset<E> ret;
+  };
+
+
+  template <typename E>
+  struct case_ < pset_bboxed_hierarchy, E, 1 >
+    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+  {
+    typedef abstract::bboxed_pset<E> ret;
+  };
+
 
 
 } // end of namespace oln
