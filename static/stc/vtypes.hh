@@ -889,4 +889,11 @@ namespace stc
   Namespace::type_of_<Category, FromType,				\
                       Namespace::typedef_:: Typedef##_type >::ret
 
+/// Declare the vtype \a Typedef in an abstract class (see sample code
+/// for details).  Warning: this macro assumes that the exact type
+/// parameter is named 'E'.
+#define stc_virtual_typedef(Typedef) \
+  typedef oln_type_of(E, Typedef) Typedef
+
+
 #endif // ! STATIC_VTYPES_HH

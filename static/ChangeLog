@@ -1,3 +1,9 @@
+2006-09-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	New macro to declare virtual types in abstract classes.
+	
+	* stc/vtypes.hh (stc_virtual_typedef): New.
+
 2006-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename virtual types classes.
