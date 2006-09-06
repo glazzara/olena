@@ -25,70 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_PSET_HH
-# define OLENA_CORE_ABSTRACT_PSET_HH
+#ifndef OLENA_CORE_PSET_ENTRY_HH
+# define OLENA_CORE_PSET_ENTRY_HH
 
-# include <oln/core/typedefs.hh>
+# include <oln/core/abstract/entry.hh>
+# include <oln/core/abstract/pset.hh>
+
 
 
 namespace oln
 {
 
-  namespace abstract
+
+  /// Entry class for point sets: pset_entry<E> is an alias for
+  /// entry< abstract::pset, E>.
+
+  template <typename E>
+  struct pset_entry : public entry< abstract::pset, E>
   {
+  protected:
+    pset_entry() {}
+  };
 
 
-    /// Abstract point class.
-    template <typename E>
-    class pset : public virtual stc::any__simple<E>,
-		 public virtual oln::type
-    {
-    public:
+  /// Virtual types associated to pset_entry<E>.
 
-      // ...
+  template <typename E>
+  struct vtypes< pset_entry<E> >
+  {
+    typedef mlc::undefined point_type;
+    typedef mlc::undefined fwd_piter_type;
+    typedef mlc::undefined bkd_piter_type;
 
-      struct decl
-      {
-	stc_virtual_typedef(point);
-	stc_virtual_typedef(fwd_piter);
-	stc_virtual_typedef(bkd_piter);
-
-	stc_virtual_typedef(bbox);
-	stc_virtual_typedef(ra);
-	stc_virtual_typedef(fixed);
-
-	// derived from point:
-	stc_virtual_typedef(coord);
-	stc_virtual_typedef(grid);
-
-	decl() {
-	  // coherence check:
-	  mlc::assert_equal_< oln_type_of(fwd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	  mlc::assert_equal_< oln_type_of(bkd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	}
-      };
-
-    protected:
-
-      pset()
-      {}
-
-      ~pset() { decl(); }
-
-    }; // end of class oln::abstract::pset<E>
+    typedef mlc::none      bbox_type;
+    typedef mlc::undefined ra_type;
+    typedef mlc::undefined fixed_type;
+  };
 
 
+  template <typename E>
+  struct single_vtype< pset_entry<E>, typedef_::coord_type >
+  {
+    typedef oln_type_of(E, point) P;
+    typedef oln_type_of(P, coord) ret;
+  };
 
-  } // end of namespace oln::abstract
+
+  template <typename E>
+  struct single_vtype< pset_entry<E>, typedef_::grid_type >
+  {
+    typedef oln_type_of(E, point) P;
+    typedef oln_type_of(P, grid) ret;
+  };
+
 
 } // end of namespace oln
 
 
-
-# include <oln/core/abstract/pset_hierarchies.hh>
-
-
-
-#endif // ! OLENA_CORE_ABSTRACT_PSET_HH
+#endif // ! OLENA_CORE_PSET_ENTRY_HH

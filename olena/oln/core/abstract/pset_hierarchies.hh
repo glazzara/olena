@@ -25,70 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_PSET_HH
-# define OLENA_CORE_ABSTRACT_PSET_HH
+#ifndef OLENA_CORE_ABSTRACT_PSET_HIERARCHIES_HH
+# define OLENA_CORE_ABSTRACT_PSET_HIERARCHIES_HH
 
-# include <oln/core/typedefs.hh>
+# include <oln/core/abstract/pset.hh>
 
 
 namespace oln
 {
 
-  namespace abstract
-  {
-
-
-    /// Abstract point class.
-    template <typename E>
-    class pset : public virtual stc::any__simple<E>,
-		 public virtual oln::type
-    {
-    public:
-
-      // ...
-
-      struct decl
-      {
-	stc_virtual_typedef(point);
-	stc_virtual_typedef(fwd_piter);
-	stc_virtual_typedef(bkd_piter);
-
-	stc_virtual_typedef(bbox);
-	stc_virtual_typedef(ra);
-	stc_virtual_typedef(fixed);
-
-	// derived from point:
-	stc_virtual_typedef(coord);
-	stc_virtual_typedef(grid);
-
-	decl() {
-	  // coherence check:
-	  mlc::assert_equal_< oln_type_of(fwd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	  mlc::assert_equal_< oln_type_of(bkd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	}
-      };
-
-    protected:
-
-      pset()
-      {}
-
-      ~pset() { decl(); }
-
-    }; // end of class oln::abstract::pset<E>
-
-
-
-  } // end of namespace oln::abstract
+  typedef  hierarchy< abstract::pset, 1 >  pset_fixed_hierarchy;
+  typedef  hierarchy< abstract::pset, 2 >  pset_ra_hierarchy;
+  typedef  hierarchy< abstract::pset, 3 >  pset_bboxed_hierarchy;
 
 } // end of namespace oln
 
 
+# include <oln/core/abstract/pset_fixed.hh>
+# include <oln/core/abstract/pset_ra.hh>
+# include <oln/core/abstract/pset_bboxed.hh>
 
-# include <oln/core/abstract/pset_hierarchies.hh>
 
 
+#endif // ! OLENA_CORE_ABSTRACT_PSET_HIERARCHIES_HH
 
-#endif // ! OLENA_CORE_ABSTRACT_PSET_HH

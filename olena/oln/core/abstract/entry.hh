@@ -112,6 +112,15 @@ namespace oln
   };
 
 
+  // Super type declaration.
+  template < template <class> class abstraction,
+	     typename E >
+  struct set_super_type< entry<abstraction, E> >
+  {
+    typedef abstraction<E> ret;
+  };
+
+
 } // end of namespace oln
 
 

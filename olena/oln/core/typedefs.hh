@@ -208,4 +208,7 @@ namespace oln
 } // end of namespace oln
 
 
+# include <oln/core/abstract/entry.hh>
+
+
 #endif // ! OLENA_CORE_TYPEDEFS_HH

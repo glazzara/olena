@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_PSET_HH
-# define OLENA_CORE_ABSTRACT_PSET_HH
+#ifndef OLENA_CORE_ABSTRACT_PSET_BBOXED_HH
+# define OLENA_CORE_ABSTRACT_PSET_BBOXED_HH
 
-# include <oln/core/typedefs.hh>
+# include <oln/core/abstract/pset.hh>
 
 
 namespace oln
@@ -38,57 +38,81 @@ namespace oln
   {
 
 
-    /// Abstract point class.
     template <typename E>
-    class pset : public virtual stc::any__simple<E>,
-		 public virtual oln::type
+    class bboxed_pset : public virtual pset<E>
     {
+      typedef oln_type_of(E, point) point_t;
+      typedef oln_type_of(E, bbox)  bbox_t;
+
+      typedef oln_type_of(point_t, coord) coord_t;
+      typedef oln_type_of(point_t, dim) dim_t;
+      enum { n = mlc_value(dim_t) };
+      
     public:
 
-      // ...
-
-      struct decl
+      const bbox_t& bbox() const
       {
-	stc_virtual_typedef(point);
-	stc_virtual_typedef(fwd_piter);
-	stc_virtual_typedef(bkd_piter);
+	return this->exact().impl_box();
+      }
 
-	stc_virtual_typedef(bbox);
-	stc_virtual_typedef(ra);
-	stc_virtual_typedef(fixed);
+      bool is_valid() const
+      {
+	return this->exact().impl_is_valid();
+      }
 
-	// derived from point:
-	stc_virtual_typedef(coord);
-	stc_virtual_typedef(grid);
+      const point_t& pmin() const
+      {
+	precondition(this->is_valid());
+	return pmin_;
+      }
 
-	decl() {
-	  // coherence check:
-	  mlc::assert_equal_< oln_type_of(fwd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	  mlc::assert_equal_< oln_type_of(bkd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	}
-      };
+      coord_t pmin(unsigned i) const
+      {
+	precondition(this->is_valid() and i < n);
+	return pmin_[i];
+      }
+
+      const point_t& pmax() const
+      {
+	precondition(this->is_valid());
+	return pmax_;
+      }
+
+      coord_t pmax(unsigned i) const
+      {
+	precondition(this->is_valid() and i < n);
+	return pmax_[i];
+      }
+
+      unsigned len(unsigned i) const
+      {
+	precondition(this->is_valid() and i < n);
+	return pmax_[i] - pmin_[i] + 1;
+      }
 
     protected:
 
-      pset()
+      bboxed_pset()
       {}
 
-      ~pset() { decl(); }
-
-    }; // end of class oln::abstract::pset<E>
-
+      point_t pmin_, pmax_;
+    };
 
 
   } // end of namespace oln::abstract
 
+
+
+  template <typename E>
+  struct case_ < pset_bboxed_hierarchy, E, 1 >
+    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+  {
+    typedef abstract::bboxed_pset<E> ret;
+  };
+
+
 } // end of namespace oln
 
 
+#endif // ! OLENA_CORE_ABSTRACT_PSET_BBOXED_HH
 
-# include <oln/core/abstract/pset_hierarchies.hh>
-
-
-
-#endif // ! OLENA_CORE_ABSTRACT_PSET_HH

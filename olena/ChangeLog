@@ -1,3 +1,24 @@
+2006-09-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Update abstract::pset hierarchy to final SCOOP-2 design.
+	
+	* oln/core/pset_entry.hh: New.
+	* oln/core/typedefs.hh: Include oln/core/abstract/entry.hh.
+	* oln/core/abstract/bbox.hh: Clean includes.
+	(set_super_type): Change from abstract::pset<E> to pset_entry<E>.
+	(bbox): Update.
+	* oln/core/abstract/entry.hh (set_super_type): New specialization.
+	* oln/core/abstract/pset.hh (Copyright): Fix years.
+	(vtypes, ext_vtype): Remove.
+	(fixed_pset, ra_pset, bboxed_pset): Move and dispatch to...
+	* oln/core/abstract/pset_fixed.hh: ...this new file.
+	* oln/core/abstract/pset_ra.hh: ...this new file.
+	* oln/core/abstract/pset_bboxed.hh: ...this new file.
+	* oln/core/abstract/pset.hh
+	(pset_fixed_hierarchy, pset_ra_hierarchy, pset_bboxed_hierarchy)
+	(case_): Move to...
+	* oln/core/abstract/pset_hierarchies.hh: ...this new file.
+	
 2006-09-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Test on abstract::pset alternative code for static inheritance. 

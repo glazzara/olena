@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_PSET_HH
-# define OLENA_CORE_ABSTRACT_PSET_HH
+#ifndef OLENA_CORE_ABSTRACT_PSET_FIXED_HH
+# define OLENA_CORE_ABSTRACT_PSET_FIXED_HH
 
-# include <oln/core/typedefs.hh>
+# include <oln/core/abstract/pset.hh>
+
 
 
 namespace oln
@@ -38,57 +39,35 @@ namespace oln
   {
 
 
-    /// Abstract point class.
     template <typename E>
-    class pset : public virtual stc::any__simple<E>,
-		 public virtual oln::type
+    class fixed_pset : public virtual pset<E>
     {
     public:
 
-      // ...
-
-      struct decl
+      unsigned npoints() const
       {
-	stc_virtual_typedef(point);
-	stc_virtual_typedef(fwd_piter);
-	stc_virtual_typedef(bkd_piter);
-
-	stc_virtual_typedef(bbox);
-	stc_virtual_typedef(ra);
-	stc_virtual_typedef(fixed);
-
-	// derived from point:
-	stc_virtual_typedef(coord);
-	stc_virtual_typedef(grid);
-
-	decl() {
-	  // coherence check:
-	  mlc::assert_equal_< oln_type_of(fwd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	  mlc::assert_equal_< oln_type_of(bkd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	}
-      };
+	return this->exact().impl_npoints();
+      }
 
     protected:
-
-      pset()
+      fixed_pset()
       {}
-
-      ~pset() { decl(); }
-
-    }; // end of class oln::abstract::pset<E>
-
+    };
 
 
   } // end of namespace oln::abstract
 
+
+  template <typename E>
+  struct case_ < pset_fixed_hierarchy, E, 1 >
+    : where_< mlc::eq_< oln_type_of(E, fixed), mlc::true_ > >
+  {
+    typedef abstract::fixed_pset<E> ret;
+  };
+
+
 } // end of namespace oln
 
 
+#endif // ! OLENA_CORE_ABSTRACT_PSET_FIXED_HH
 
-# include <oln/core/abstract/pset_hierarchies.hh>
-
-
-
-#endif // ! OLENA_CORE_ABSTRACT_PSET_HH
