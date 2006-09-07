@@ -30,12 +30,14 @@
 
 # include <iostream>
 
+# include <mlc/assert.hh>
 # include <mlc/contract.hh>
 # include <mlc/flags.hh>
 # include <mlc/is_a.hh>
 # include <mlc/cmp.hh>
 # include <mlc/typedef.hh>
 # include <mlc/value.hh>
+# include <mlc/to_string.hh>
 
 # include <stc/any.hh>
 # include <stc/exact.hh>
@@ -95,7 +97,7 @@ namespace oln
 //   mlc_decl_typedef(fwd_iter_type);
 //   mlc_decl_typedef(bkd_iter_type);
 
-//   mlc_decl_typedef(piter_type);
+  mlc_decl_typedef(piter_type);
   mlc_decl_typedef(fwd_piter_type);
   mlc_decl_typedef(bkd_piter_type);
 
@@ -128,6 +130,7 @@ namespace oln
 //   mlc_decl_typedef(data_type);
 // --------------------------------------------------------------------
   mlc_decl_typedef(value_type);
+  mlc_decl_typedef(rvalue_type);
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
@@ -135,17 +138,19 @@ namespace oln
 //   mlc_decl_typedef(value_storage_type);
 //   mlc_decl_typedef(storage_type);
 // --------------------------------------------------------------------
+  mlc_decl_typedef(psite_type);
   mlc_decl_typedef(point_type);
   mlc_decl_typedef(dpoint_type);
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
 //   mlc_decl_typedef(image_type);
-//   mlc_decl_typedef(concrete_type);
 // --------------------------------------------------------------------
+  mlc_decl_typedef(concrete_type);
 
   mlc_decl_typedef(delegated_type);
-  mlc_decl_typedef(size_type);
+  mlc_decl_typedef(size_type); // FIXME: To be removed.
+  mlc_decl_typedef(topo_type);
   mlc_decl_typedef(bbox_type);
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.

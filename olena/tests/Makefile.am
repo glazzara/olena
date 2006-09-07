@@ -11,9 +11,11 @@ AM_CPPFLAGS =					\
 
 check_PROGRAMS =				\
   grid						\
-  image_entry
+  image_entry					\
+  npoints
 
-image_entry_SOURCES = image_entry.cc
 grid_SOURCES = grid.cc
+image_entry_SOURCES = image_entry.cc
+npoints_SOURCES = npoints.cc
 
 TESTS = $(check_PROGRAMS)

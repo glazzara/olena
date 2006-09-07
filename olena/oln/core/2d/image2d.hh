@@ -25,32 +25,83 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_BASICS2D_HH
-# define OLENA_BASICS2D_HH
+#ifndef OLENA_CORE_2D_IMAGE2D_HH
+# define OLENA_CORE_2D_IMAGE2D_HH
+
+# include <oln/core/image_entry.hh>
 
 
-# include <oln/core/2d/aliases.hh>
+namespace oln
+{
 
-# include <oln/core/2d/point2d.hh>
-namespace oln { template class point2d_<int>; }
-
-# include <oln/core/2d/dpoint2d.hh>
-namespace oln { template class dpoint2d_<int>; }
-
-# include <oln/core/gen/bbox.hh>
-namespace oln { template class bbox_<point2d>; }
-
-# include <oln/core/gen/fwd_piter.hh>
-namespace oln { template class fwd_piter_<point2d>; }
-
-# include <oln/core/gen/bkd_piter.hh>
-namespace oln { template class bkd_piter_<point2d>; }
-
-# include <oln/core/gen/bbox_topo.hh>
-namespace oln { template class bbox_topo_<point2d>; }
+  // Forward declaration.
+  template <typename T> class image2d;
 
 
-# include <oln/core/2d/image2d.hh>
+  /// Virtual types associated to oln::image2d<T>.
+  template <typename T>
+  struct vtypes< image2d<T> >
+  {
+    typedef topo2d topo_type;
+    typedef grid2d grid_type;
+
+    typedef point2d point_type;
+    
+    typedef fwd_piter2d fwd_piter_type;
+    typedef bkd_piter2d bkd_piter_type;
+    
+    typedef T value_type;
+    
+    typedef image2d<T> real_type;
+  };
 
 
-#endif // ! OLENA_BASICS2D_HH
+  /// Super type declaration.
+  template <typename T>
+  struct set_super_type< image2d<T> >
+  {
+    typedef image2d<T> self_t;
+    typedef image_entry<self_t> ret;
+  };
+
+
+  /// General 2D image class.
+  template <typename T>
+  class image2d : public image_entry< image2d<T> >
+  {
+    typedef image2d<T> self_t;
+
+  public:
+
+    /// Ctor.
+    image2d(unsigned nrows, unsigned ncols)
+      : topo_( bbox2d( point2d(0,0), point2d(nrows-1, ncols-1) ) )
+    {
+    }
+
+    const topo2d& impl_topo() const
+    {
+      return topo_;
+    }
+
+    T impl_op_read(const point2d& p) const
+    {
+      static T val_;
+      return ++val_;
+    }
+
+    bool impl_has(const point2d& p) const
+    {
+      return true;
+    }
+
+  private:
+
+    topo2d topo_;
+  };
+
+
+} // end of namespace oln
+
+
+#endif // ! OLENA_CORE_2D_IMAGE2D_HH

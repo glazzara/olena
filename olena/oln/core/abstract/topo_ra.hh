@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_PSET_RA_HH
-# define OLENA_CORE_ABSTRACT_PSET_RA_HH
+#ifndef OLENA_CORE_ABSTRACT_TOPO_RA_HH
+# define OLENA_CORE_ABSTRACT_TOPO_RA_HH
 
-# include <oln/core/abstract/pset.hh>
+# include <oln/core/abstract/topo.hh>
 
 
 
@@ -40,7 +40,7 @@ namespace oln
 
 
     template <typename E>
-    class ra_pset : public virtual pset<E>
+    class ra_topo : public virtual topo<E>
     {
       typedef oln_type_of(E, point) point_t;
 
@@ -52,7 +52,7 @@ namespace oln
       }
 
     protected:
-      ra_pset()
+      ra_topo()
       {}
     };
 
@@ -61,14 +61,14 @@ namespace oln
 
 
   template <typename E>
-  struct case_ < pset_ra_hierarchy, E, 1 >
+  struct case_ < topo_ra_hierarchy, E, 1 >
     : where_< mlc::eq_< oln_type_of(E, ra), mlc::true_ > >
   {
-    typedef abstract::ra_pset<E> ret;
+    typedef abstract::ra_topo<E> ret;
   };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_PSET_RA_HH
+#endif // ! OLENA_CORE_ABSTRACT_TOPO_RA_HH

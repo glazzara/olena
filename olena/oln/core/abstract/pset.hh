@@ -53,6 +53,8 @@ namespace oln
       struct decl
       {
 	stc_virtual_typedef(point);
+
+	stc_virtual_typedef(piter);
 	stc_virtual_typedef(fwd_piter);
 	stc_virtual_typedef(bkd_piter);
 

@@ -1,5 +1,37 @@
 2006-09-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Add image2d and fix topo-related classes.
+	
+	* olena/tests/npoints.cc: New.
+	* olena/tests/Makefile.am: Update.
+	* olena/oln/core/image_entry.hh: New.
+	* olena/oln/core/2d/image2d.hh: New.
+	* olena/oln/basics2d.hh: Force instantiation and include
+	oln/core/2d/image2d.hh.
+	* olena/oln/core/typedefs.hh: Include mlc/assert.hh and
+	mlc/to_string.hh.
+	(piter_type): Uncomment.
+	(rvalue_type): New.
+	(psite_type): New.
+	(concrete_type): Uncomment.
+	(size_type): Add comment.
+	(topo_type): New.
+	* olena/oln/core/abstract/topo.hh (bbox): Remove this method which
+	is redundant with the one of topo_with_bbox.
+	* olena/oln/core/abstract/topo_with_bbox.hh (bbox): Fix typo.
+	* olena/oln/core/abstract/entry.hh (next_entry_node): New
+	specialization to handle the specific and rare case of having no
+	sub-hierarchy.
+	* olena/oln/core/abstract/topo_ra.hh: Fix cut n paste errors.
+	* olena/oln/core/abstract/pset.hh (piter): New vtype decl.
+	* olena/oln/core/gen/fwd_piter.hh (fwd_piter_): Add commented
+	forthcoming ctors.
+	* olena/oln/core/gen/bbox_topo.hh: Cosmetics.
+	* olena/oln/core/pset_entry.hh (piter_type): New.
+	* olena/oln/core/abstract/image.hh: Update.
+
+2006-09-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Start the topology hierarchy.
 	
 	* oln/core/topo_entry.hh: New.
@@ -10,14 +42,17 @@
 	* oln/core/gen/bbox_topo.hh: New.
 	* oln/core/2d/aliases.hh (topo2d): New.
 
+	Add a new sub-hierarchy to abstract::pset.
+	
 	* oln/core/abstract/pset_cnx.hh: New.
 	* oln/core/typedefs.hh (cnx_type): New.
 	* oln/core/abstract/pset_hierarchies.hh (pset_cnx_hierarchy): New.
 	* oln/core/abstract/bbox.hh (cnx_type): New.
 	* oln/core/abstract/pset_bboxed.hh (is_valid): Move this method into...
 	* oln/core/abstract/pset.hh (pset): ...this class.
-	* oln/core/pset_entry.hh
-	* oln/basics2d.hh
+	(dim): New vtype.
+	* oln/core/pset_entry.hh (single_vtype): Add vtype dim.
+	* oln/basics2d.hh: Include oln/core/gen/bbox_topo.hh.
 
 2006-09-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 

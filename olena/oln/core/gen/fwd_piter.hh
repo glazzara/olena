@@ -80,6 +80,23 @@ namespace oln
       ++nop_[0];
     }
 
+//     template <typename T>
+//     fwd_piter_(const abstract::topo<T>& t)
+//     {
+//       mlc::assert_< mlc_is_a(T, abstract::topo_with_bbox) >::check();
+//       bb_ = t.exact().bbox();
+//       nop_ = bb_.pmax();
+//       ++nop_[0];
+//     }
+
+//     template <typename Data>
+//     fwd_piter_(const Data& data)
+//       : bb_(data.bbox())
+//     {
+//       nop_ = bb_.pmax();
+//       ++nop_[0];
+//     }
+
     const bbox_<point>& bbox() const
     {
       return bb_;

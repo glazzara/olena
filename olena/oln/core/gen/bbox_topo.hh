@@ -28,8 +28,8 @@
 #ifndef OLENA_CORE_GEN_BBOX_TOPO_HH
 # define OLENA_CORE_GEN_BBOX_TOPO_HH
 
-# include <oln/core/topo_entry.hh>
 # include <oln/core/gen/bbox.hh>
+# include <oln/core/topo_entry.hh>
 
 
 

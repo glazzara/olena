@@ -48,7 +48,7 @@ namespace oln
       // abstract
       const bbox_t& bbox() const
       {
-	return this->exact().impl_box();
+	return this->exact().impl_bbox();
       }
 
       // concrete

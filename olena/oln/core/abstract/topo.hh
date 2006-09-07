@@ -54,15 +54,10 @@ namespace oln
 
 	decl() {
 	  // constraint:
-	  mlc::assert_< mlc::implies_< mlc::neq_< bbox, mlc::none >,
-	                               mlc_is_a(bbox, abstract::bbox) > >::check();
+// 	  mlc::assert_< mlc::implies_< mlc::neq_< bbox, mlc::none >,
+// 	                               mlc_is_a(bbox, abstract::bbox) > >::check();
 	}
       };
-
-      const oln_type_of(E, bbox)& bbox() const
-      {
-	return this->exact().impl_bbox();
-      }
 
     protected:
 

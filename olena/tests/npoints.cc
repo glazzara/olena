@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,32 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_BASICS2D_HH
-# define OLENA_BASICS2D_HH
+/// Test image2d.
+
+#include <cassert>
+#include <oln/basics2d.hh>
 
 
-# include <oln/core/2d/aliases.hh>
-
-# include <oln/core/2d/point2d.hh>
-namespace oln { template class point2d_<int>; }
-
-# include <oln/core/2d/dpoint2d.hh>
-namespace oln { template class dpoint2d_<int>; }
-
-# include <oln/core/gen/bbox.hh>
-namespace oln { template class bbox_<point2d>; }
-
-# include <oln/core/gen/fwd_piter.hh>
-namespace oln { template class fwd_piter_<point2d>; }
-
-# include <oln/core/gen/bkd_piter.hh>
-namespace oln { template class bkd_piter_<point2d>; }
-
-# include <oln/core/gen/bbox_topo.hh>
-namespace oln { template class bbox_topo_<point2d>; }
+template <typename I>
+unsigned npoints(const oln::abstract::image<I>& input)
+{
+  oln_type_of(I, piter) p(input.topo());
+  unsigned count = 0;
+  for_all(p)
+    ++count;
+  return count;
+}
 
 
-# include <oln/core/2d/image2d.hh>
-
-
-#endif // ! OLENA_BASICS2D_HH
+int
+main()
+{
+  oln::image2d<int> ima(3, 17);
+  assert(npoints(ima) == 51);
+}

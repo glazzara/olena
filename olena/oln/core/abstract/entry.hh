@@ -57,6 +57,15 @@ namespace oln
       // here: no other hierarchy
     };
 
+
+    template < template <class> class abstraction,
+	       typename E >
+    struct next_entry_node < abstraction, E, 1, mlc::false_ > 
+      : public abstraction<E>
+    {
+    };
+
+
     template < template <class> class abstraction,
 	       typename E,
 	       unsigned num >
