@@ -53,6 +53,7 @@ namespace oln
   {
     typedef mlc::true_ ra_type;
     typedef mlc::true_ fixed_type;
+    typedef mlc::true_ cnx_type;
     typedef E bbox_type;
   };
 

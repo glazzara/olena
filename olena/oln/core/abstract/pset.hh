@@ -45,7 +45,10 @@ namespace oln
     {
     public:
 
-      // ...
+      bool is_valid() const
+      {
+	return this->exact().impl_is_valid();
+      }
 
       struct decl
       {
@@ -53,13 +56,15 @@ namespace oln
 	stc_virtual_typedef(fwd_piter);
 	stc_virtual_typedef(bkd_piter);
 
-	stc_virtual_typedef(bbox);
-	stc_virtual_typedef(ra);
-	stc_virtual_typedef(fixed);
+	stc_virtual_typedef(bbox);  // for being bboxed;  provides .bbox()
+	stc_virtual_typedef(ra);    // for random access; provides .has(p)
+	stc_virtual_typedef(fixed); // for fixed size;    provides .npoints()
+	stc_virtual_typedef(cnx);   // for connected;     provides, e.g., .nrows()
 
 	// derived from point:
 	stc_virtual_typedef(coord);
 	stc_virtual_typedef(grid);
+	stc_virtual_typedef(dim);
 
 	decl() {
 	  // coherence check:

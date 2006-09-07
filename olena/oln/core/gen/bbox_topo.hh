@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,41 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_2D_ALIASES_HH
-# define OLENA_CORE_2D_ALIASES_HH
+#ifndef OLENA_CORE_GEN_BBOX_TOPO_HH
+# define OLENA_CORE_GEN_BBOX_TOPO_HH
+
+# include <oln/core/topo_entry.hh>
+# include <oln/core/gen/bbox.hh>
+
 
 
 namespace oln
 {
 
-  /// \{
-  /// Forward declarations.
-  template <typename C> class point2d_;
-  template <typename C> class dpoint2d_;
-  template <typename P> class bbox_;
-  template <typename P> class bbox_topo_;
-  template <typename P> class fwd_piter_;
-  template <typename P> class bkd_piter_;
-  class grid2d;
-  /// \}
+
+  // Forward declarations.
+  template <typename point> class bbox_topo_;
 
 
-  /// \{
-  /// Alliases.
-  typedef  point2d_<int>  point2d;
-  typedef dpoint2d_<int> dpoint2d;
+  // Super type declaration.
+  template <typename point>
+  struct set_super_type< bbox_topo_<point> >
+  {
+    typedef bbox_topo_<point> self_t;
+    typedef topo_entry<self_t> ret;
+  };
 
-  typedef bbox_<point2d> bbox2d;
-  typedef fwd_piter_<point2d> fwd_piter2d;
-  typedef bkd_piter_<point2d> bkd_piter2d;
-  typedef bbox_topo_<point2d> topo2d;
 
-  typedef  point2d_<float>  point2df;
-  typedef dpoint2d_<float> dpoint2df;
-  /// \}
+  /// Virtual types associated to oln::bbox_<point>.
+  template <typename point>
+  struct vtypes< bbox_topo_<point> >
+  {
+    typedef bbox_<point> bbox_type;
+    typedef point        point_type;
+    typedef mlc::true_   ra_type;
+  };
+
+
+  /// Bounding box topology based on a point class.
+  template <typename point>
+  class bbox_topo_ : public topo_entry< bbox_topo_<point> >
+  {
+    typedef bbox_<point> bbox_t;
+
+  public:
+
+    bbox_topo_()
+    {
+    }
+
+    bbox_topo_(const bbox_t& bb)
+      : bb_(bb)
+    {
+    }
+
+    const bbox_t& impl_bbox() const
+    {
+      return bb_;
+    }
+
+  protected:
+
+    bbox_<point> bb_;
+
+  };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_2D_ALIASES_HH
+#endif // ! OLENA_CORE_GEN_BBOX_TOPO_HH

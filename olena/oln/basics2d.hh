@@ -38,5 +38,7 @@
 # include <oln/core/gen/fwd_piter.hh>
 # include <oln/core/gen/bkd_piter.hh>
 
+# include <oln/core/gen/bbox_topo.hh>
+
 
 #endif // ! OLENA_BASICS2D_HH

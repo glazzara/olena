@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,41 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_2D_ALIASES_HH
-# define OLENA_CORE_2D_ALIASES_HH
+#ifndef OLENA_CORE_TOPO_ENTRY_HH
+# define OLENA_CORE_TOPO_ENTRY_HH
+
+# include <oln/core/abstract/entry.hh>
+# include <oln/core/abstract/topo.hh>
+
 
 
 namespace oln
 {
 
-  /// \{
-  /// Forward declarations.
-  template <typename C> class point2d_;
-  template <typename C> class dpoint2d_;
-  template <typename P> class bbox_;
-  template <typename P> class bbox_topo_;
-  template <typename P> class fwd_piter_;
-  template <typename P> class bkd_piter_;
-  class grid2d;
-  /// \}
+
+  /// Entry class for point sets: topo_entry<E> is an alias for
+  /// entry< abstract::topo, E>.
+
+  template <typename E>
+  struct topo_entry : public entry< abstract::topo, E>
+  {
+  protected:
+    topo_entry() {}
+  };
 
 
-  /// \{
-  /// Alliases.
-  typedef  point2d_<int>  point2d;
-  typedef dpoint2d_<int> dpoint2d;
+  /// Virtual types associated to topo_entry<E>.
 
-  typedef bbox_<point2d> bbox2d;
-  typedef fwd_piter_<point2d> fwd_piter2d;
-  typedef bkd_piter_<point2d> bkd_piter2d;
-  typedef bbox_topo_<point2d> topo2d;
+  template <typename E>
+  struct vtypes< topo_entry<E> >
+  {
+    typedef mlc::undefined bbox_type;
+    typedef mlc::undefined ra_type;
 
-  typedef  point2d_<float>  point2df;
-  typedef dpoint2d_<float> dpoint2df;
-  /// \}
+    typedef mlc::undefined point_type;
+  };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_2D_ALIASES_HH
+#endif // ! OLENA_CORE_TOPO_ENTRY_HH

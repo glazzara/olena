@@ -37,6 +37,7 @@ namespace oln
   typedef  hierarchy< abstract::pset, 1 >  pset_fixed_hierarchy;
   typedef  hierarchy< abstract::pset, 2 >  pset_ra_hierarchy;
   typedef  hierarchy< abstract::pset, 3 >  pset_bboxed_hierarchy;
+  typedef  hierarchy< abstract::pset, 4 >  pset_cnx_hierarchy;
 
 } // end of namespace oln
 
@@ -44,6 +45,7 @@ namespace oln
 # include <oln/core/abstract/pset_fixed.hh>
 # include <oln/core/abstract/pset_ra.hh>
 # include <oln/core/abstract/pset_bboxed.hh>
+# include <oln/core/abstract/pset_cnx.hh>
 
 
 

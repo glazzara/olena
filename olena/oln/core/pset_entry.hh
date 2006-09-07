@@ -79,6 +79,14 @@ namespace oln
   };
 
 
+  template <typename E>
+  struct single_vtype< pset_entry<E>, typedef_::dim_type >
+  {
+    typedef oln_type_of(E, point) P;
+    typedef oln_type_of(P, dim) ret;
+  };
+
+
 } // end of namespace oln
 
 

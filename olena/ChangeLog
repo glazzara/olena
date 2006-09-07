@@ -1,3 +1,24 @@
+2006-09-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Start the topology hierarchy.
+	
+	* oln/core/topo_entry.hh: New.
+	* oln/core/abstract/topo.hh: New.
+	* oln/core/abstract/topo_hierarchies.hh: New.
+	* oln/core/abstract/topo_with_bbox.hh: New.
+	* oln/core/abstract/topo_ra.hh: New.
+	* oln/core/gen/bbox_topo.hh: New.
+	* oln/core/2d/aliases.hh (topo2d): New.
+
+	* oln/core/abstract/pset_cnx.hh: New.
+	* oln/core/typedefs.hh (cnx_type): New.
+	* oln/core/abstract/pset_hierarchies.hh (pset_cnx_hierarchy): New.
+	* oln/core/abstract/bbox.hh (cnx_type): New.
+	* oln/core/abstract/pset_bboxed.hh (is_valid): Move this method into...
+	* oln/core/abstract/pset.hh (pset): ...this class.
+	* oln/core/pset_entry.hh
+	* oln/basics2d.hh
+
 2006-09-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Update abstract::pset hierarchy to final SCOOP-2 design.

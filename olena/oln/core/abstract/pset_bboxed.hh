@@ -55,11 +55,6 @@ namespace oln
 	return this->exact().impl_box();
       }
 
-      bool is_valid() const
-      {
-	return this->exact().impl_is_valid();
-      }
-
       const point_t& pmin() const
       {
 	precondition(this->is_valid());
@@ -102,7 +97,6 @@ namespace oln
   } // end of namespace oln::abstract
 
 
-
   template <typename E>
   struct case_ < pset_bboxed_hierarchy, E, 1 >
     : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
@@ -115,4 +109,3 @@ namespace oln
 
 
 #endif // ! OLENA_CORE_ABSTRACT_PSET_BBOXED_HH
-

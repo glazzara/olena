@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,41 +25,57 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_2D_ALIASES_HH
-# define OLENA_CORE_2D_ALIASES_HH
+#ifndef OLENA_CORE_ABSTRACT_TOPO_WITH_BBOX_HH
+# define OLENA_CORE_ABSTRACT_TOPO_WITH_BBOX_HH
+
+# include <oln/core/abstract/topo.hh>
 
 
 namespace oln
 {
 
-  /// \{
-  /// Forward declarations.
-  template <typename C> class point2d_;
-  template <typename C> class dpoint2d_;
-  template <typename P> class bbox_;
-  template <typename P> class bbox_topo_;
-  template <typename P> class fwd_piter_;
-  template <typename P> class bkd_piter_;
-  class grid2d;
-  /// \}
+  namespace abstract
+  {
 
 
-  /// \{
-  /// Alliases.
-  typedef  point2d_<int>  point2d;
-  typedef dpoint2d_<int> dpoint2d;
+    template <typename E>
+    class topo_with_bbox : public virtual topo<E>
+    {
+      typedef oln_type_of(E, bbox)  bbox_t;
+      
+    public:
 
-  typedef bbox_<point2d> bbox2d;
-  typedef fwd_piter_<point2d> fwd_piter2d;
-  typedef bkd_piter_<point2d> bkd_piter2d;
-  typedef bbox_topo_<point2d> topo2d;
+      // abstract
+      const bbox_t& bbox() const
+      {
+	return this->exact().impl_box();
+      }
 
-  typedef  point2d_<float>  point2df;
-  typedef dpoint2d_<float> dpoint2df;
-  /// \}
+      // concrete
+      operator bbox_t() const
+      {
+	return this->bbox();
+      }
+
+    protected:
+
+      topo_with_bbox()
+      {}
+    };
+
+
+  } // end of namespace oln::abstract
+
+
+  template <typename E>
+  struct case_ < topo_with_bbox_hierarchy, E, 1 >
+    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+  {
+    typedef abstract::topo_with_bbox<E> ret;
+  };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_2D_ALIASES_HH
+#endif // ! OLENA_CORE_ABSTRACT_TOPO_WITH_BBOX_HH
