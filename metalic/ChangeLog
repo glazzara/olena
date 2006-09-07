@@ -1,3 +1,7 @@
+2006-09-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/cmp.hh (assert_ok_): New shortcut.
+
 2006-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a wrapper around mlc::assert_ returning a given type.

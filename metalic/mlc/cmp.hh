@@ -198,6 +198,11 @@ namespace mlc
 				    mlc_is_not_a(T, mlc::not_ok) >::bexpr
   {
   };
+
+  template <typename T, typename err = no_error_message>
+  struct assert_ok_ : public assert_< is_ok_<T>, err >
+  {
+  };
   /// \}
 
 
