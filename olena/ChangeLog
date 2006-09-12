@@ -2,13 +2,13 @@
 
 	Add image2d and fix topo-related classes.
 	
-	* olena/tests/npoints.cc: New.
-	* olena/tests/Makefile.am: Update.
-	* olena/oln/core/image_entry.hh: New.
-	* olena/oln/core/2d/image2d.hh: New.
-	* olena/oln/basics2d.hh: Force instantiation and include
+	* tests/npoints.cc: New.
+	* tests/Makefile.am: Update.
+	* oln/core/image_entry.hh: New.
+	* oln/core/2d/image2d.hh: New.
+	* oln/basics2d.hh: Force instantiation and include
 	oln/core/2d/image2d.hh.
-	* olena/oln/core/typedefs.hh: Include mlc/assert.hh and
+	* oln/core/typedefs.hh: Include mlc/assert.hh and
 	mlc/to_string.hh.
 	(piter_type): Uncomment.
 	(rvalue_type): New.
@@ -16,19 +16,19 @@
 	(concrete_type): Uncomment.
 	(size_type): Add comment.
 	(topo_type): New.
-	* olena/oln/core/abstract/topo.hh (bbox): Remove this method which
+	* oln/core/abstract/topo.hh (bbox): Remove this method which
 	is redundant with the one of topo_with_bbox.
-	* olena/oln/core/abstract/topo_with_bbox.hh (bbox): Fix typo.
-	* olena/oln/core/abstract/entry.hh (next_entry_node): New
+	* oln/core/abstract/topo_with_bbox.hh (bbox): Fix typo.
+	* oln/core/abstract/entry.hh (next_entry_node): New
 	specialization to handle the specific and rare case of having no
 	sub-hierarchy.
-	* olena/oln/core/abstract/topo_ra.hh: Fix cut n paste errors.
-	* olena/oln/core/abstract/pset.hh (piter): New vtype decl.
-	* olena/oln/core/gen/fwd_piter.hh (fwd_piter_): Add commented
+	* oln/core/abstract/topo_ra.hh: Fix cut n paste errors.
+	* oln/core/abstract/pset.hh (piter): New vtype decl.
+	* oln/core/gen/fwd_piter.hh (fwd_piter_): Add commented
 	forthcoming ctors.
-	* olena/oln/core/gen/bbox_topo.hh: Cosmetics.
-	* olena/oln/core/pset_entry.hh (piter_type): New.
-	* olena/oln/core/abstract/image.hh: Update.
+	* oln/core/gen/bbox_topo.hh: Cosmetics.
+	* oln/core/pset_entry.hh (piter_type): New.
+	* oln/core/abstract/image.hh: Update.
 
 2006-09-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
@@ -250,7 +250,7 @@
 	* oln/core/abstract/image_dimension.hh: Move the static switch
 	statement before the cases.
 	Aesthetic changes.
-	* olena/oln/core/abstract/image_typeness.hh: Likewise.
+	* oln/core/abstract/image_typeness.hh: Likewise.
 	(case_<value_type_tag, value_type, 2>): Fix a copy-and-paste bug:
 	remove a duplicate `unsigned char' type in the where-clause and
 	replace it with `signed char'.
