@@ -25,17 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_MACROS_HH
-# define OLENA_CORE_ABSTRACT_MACROS_HH
+/** \file oln/core/case.hh
+    \brief Switch/case equipment for the oln namespace.
 
-/// \def Shortcuts for virtual types associated to images (version to
-// be used inside a template).
-# define oln_type_of(ImageType, Alias)			\
-stc_type_of(oln, oln::category::image, ImageType, Alias)
+    Use this file to avoid unnecessary (duplicated) expansions of case_.  */
 
-/// \def Shortcuts for virtual types associated to images (version to
-// be used outside a template).
-# define oln_type_of_(ImageType, Alias)				\
-stc_type_of_(oln, oln::category::image, ImageType, Alias)
+#ifndef OLENA_CORE_CASE_HH
+# define OLENA_CORE_CASE_HH
 
-#endif // ! OLENA_CORE_ABSTRACT_MACROS_HH
+# include <mlc/case.hh>
+
+mlc_case_equipment_for_namespace(oln);
+
+#endif // ! OLENA_CORE_CASE_HH

@@ -2,8 +2,6 @@
 
 olndir = $(includedir)/oln
 nobase_oln_HEADERS =				\
-  core/typedefs.hh				\
-						\
   core/1d/grid1d.hh				\
 						\
   core/2d/grid2d.hh				\
@@ -18,6 +16,9 @@ nobase_oln_HEADERS =				\
   core/abstract/image_dimension.hh		\
   core/abstract/image_typeness.hh		\
   core/abstract/image_typeness_integre.hh	\
-  core/abstract/macros.hh			\
 						\
-  core/abstract/internal/image_impl.hh
+  core/abstract/internal/image_impl.hh		\
+						\
+  core/case.hh					\
+  core/macros.hh				\
+  core/typedefs.hh

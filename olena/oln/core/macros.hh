@@ -25,34 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_ABSTRACTIONS_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_ABSTRACTIONS_HH
+#ifndef OLENA_CORE_MACROS_HH
+# define OLENA_CORE_MACROS_HH
 
-# include <oln/core/case.hh>
+/// \def oln_type_of(OlnType, Alias)
+///
+/// Macro to retrieve an associated type \a Alias from an oln type
+/// \a OlnType whose category is not specified (version to be used inside
+/// a template).
+# define oln_type_of(OlnType, Alias)		\
+stc_type_of(oln, void, OlnType, Alias)
 
+/// \def oln_type_of(OlnType, Alias)
+///
+/// Macro to retrieve an associated type \a Alias from an oln type
+/// \a OlnType whose category is not specified (version to be used
+/// outside a template).
+# define oln_type_of_(OlnType, Alias)		\
+stc_type_of_(oln, void, OlnType, Alias)
 
-namespace oln
-{
-  namespace abstract
-  {
-
-    /// \brief Tags for abstractions.
-    ///
-    /// Use them instead of hard-coded numbers.
-    enum abstraction_tags
-      {
-	// constness_tag,
-	dimension_tag = 1,
-	typeness_tag
-	// valuedness_tag,
-	// rawness_tag,
-	// neighbness_tag,
-	// ...
-      };
-
-  } // end of namespace oln::abstract
-
-} // end of namespace oln
-
-
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_ABSTRACTIONS_HH
+#endif // ! OLENA_CORE_MACROS_HH

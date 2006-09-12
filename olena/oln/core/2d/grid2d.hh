@@ -47,7 +47,7 @@ namespace oln
 
   /// Virtual types associated to oln::grid2d.
   template <>
-  struct vtypes_in_category<category::grid, grid2d>
+  struct vtypes<grid2d>
   {
     typedef point2d       point_type;
     typedef dpoint2d      dpoint_type;

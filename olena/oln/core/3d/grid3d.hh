@@ -47,7 +47,7 @@ namespace oln
 
   /// Virtual types associated to oln::grid3d.
   template <>
-  struct vtypes_in_category<category::grid, grid3d>
+  struct vtypes<grid3d>
   {
     typedef point3d       point_type;
     typedef dpoint3d      dpoint_type;

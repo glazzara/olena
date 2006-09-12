@@ -34,11 +34,13 @@
 #include <oln/core/1d/grid1d.hh>
 #include <oln/core/abstract/image_entry.hh>
 
-
 namespace my
 {
   // Forward declaration.
-  class image;
+  struct image;
+
+  // Dummy type.
+  struct dummy;
 }
 
 namespace oln
@@ -48,7 +50,7 @@ namespace oln
 
   /// Virtual types associated to my::image.
   template<>
-  struct vtypes_in_category<category::image, my::image>
+  struct vtypes<my::image>
   {
     // The switch for image_dimension (above image_entry) plugs the
     // inheritance relation to the right abstract::image_dimension
@@ -59,13 +61,23 @@ namespace oln
     // Likewise, for the switch of image_typeness using the type of
     // the value of the image.
     typedef char value_type;
+
+    // FIXME: Dummy values.
+    typedef my::dummy topo_type;
+    typedef my::dummy psite_type;
+    typedef my::dummy rvalue_type;
+    typedef my::dummy point_type;
+    typedef my::dummy piter_type;
+    typedef my::dummy fwd_piter_type;
+    typedef my::dummy bkd_piter_type;
+    typedef my::dummy concrete_type;
   };
 }
 
 namespace my
 {
   // A very simple 1-D image.
-  class image : public oln::set_super_type<my::image>::ret
+  class image : public oln::get_super_types<my::image>::ret
   {
   public:
     typedef image self_type;
@@ -77,6 +89,7 @@ namespace my
     typedef oln_type_of_(self_type, image_typeness) image_typeness_type;
   };
 }
+
 
 int
 main()
@@ -102,9 +115,4 @@ main()
 
   // Ensure we can instantiate it.
   my::image i;
-
-  // Print my::image's vtypes.
-  // FIXME: To be removed in the final version.
-  oln::packed_vtypes_in_category< oln::category::image,
-                                  my::image >::echo (std::cout);
 }

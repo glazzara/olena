@@ -1,3 +1,60 @@
+2006-09-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the current implementation of image_entry, as well as some
+	tests.
+
+	* oln/core/abstract/internal/image_impl.hh (oln::category::image):
+	Move this declaration...
+	* oln/core/abstract/image.hh: ...here.
+	* oln/core/case.hh: New file.
+	* oln/core/abstract/image_abstractions.hh,
+	* olena/oln/core/abstract/entry.hh,
+	* oln/core/traits.hh: Use it.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add core/case.hh.
+
+	* oln/core/abstract/image_dimension.hh
+	(oln::ERROR::UNKNOWN_GRID_TYPE): New.
+	(oln::default_case_<grid_dim_tag, grid_type): Use it.
+	(ext_vtype_in_category): Turn into...
+	(ext_vtype): ...this.
+	* oln/core/abstract/image_typeness.hh (ext_vtype_in_category):
+	Turn into...
+	(ext_vtype): ...this.
+
+	* oln/core/typedefs.hh (oln_type_of, oln_type_of_): Move
+	these macros...
+	* oln/core/abstract/macros.hh: ...here, and replace the previous
+	ones.
+	Rename file as...
+	* oln/core/macros.hh: ...this.
+	Adjust header guards.
+	* oln/core/abstract/internal/image_impl.hh: Adjust users.
+	* oln/Makefile.am (nobase_oln_HEADERS): Remove
+	core/abstract/macros.hh.
+	Add core/macros.hh
+
+	* oln/core/abstract/grid.hh (oln_grd_type_of, oln_grd_type_of_):
+	Remove macros.
+	(vtypes_in_category< category::grid, abstract::grid<G> >): Turn
+	into...
+	(vtypes< abstract::grid<G> >): ...this.
+	(packed_vtypes_in_category<category::grid, G>):
+	s/oln_grd_type_of/oln_type_of/g.
+	* oln/core/1d/grid1d.hh, oln/core/2d/grid2d.hh,
+	* oln/core/3d/grid3d.hh (vtypes_in_category): Turn into...
+	(vtypes): ...this.
+
+	* tests/grid.cc: s/oln_grd_type_of_/oln_type_of_/g
+	* tests/image_entry.cc (my::dummy): New declaration.
+	(vtypes_in_category<category::image, my::image>): Turn into...
+	(vtypes<my::image>): ...this.
+	Add missing virtual types.
+	(my::image): Fix base class.
+	(main): Remove any references to
+	packed_vtypes_in_category<oln::category::image, my::image>, since
+	it no longer exists.
+	* tests/Makefile.am (AM_CPPFLAGS): Add -I$(top_srcdir)/extended.
+
 2006-09-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add image2d and fix topo-related classes.

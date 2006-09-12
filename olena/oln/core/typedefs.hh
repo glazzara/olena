@@ -44,20 +44,8 @@
 # include <stc/vtypes.hh>
 
 # include <oln/core/type.hh>
-
-
-/*! \macro oln_type_of(OlnType, Alias)
-**
-** Macro to retrieve an associated type \Alias from an oln type
-** \OlnType whose category is not specified.
-*/
-
-# define oln_type_of(OlnType, Alias) \
-stc_type_of(oln, void, OlnType, Alias)
-
-# define oln_type_of_(OlnType, Alias) \
-stc_type_of_(oln, void, OlnType, Alias)
-
+// FIXME: Move to oln/core.
+# include <oln/core/macros.hh>
 
 
 namespace oln

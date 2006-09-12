@@ -107,6 +107,24 @@ namespace oln
 } // end of namespace oln
 
 
+/*-----------------.
+| Error messages.  |
+`-----------------*/
+
+namespace oln
+{
+  /// Error messages raised by static assertions.
+  namespace ERROR
+  {
+
+    template <typename Grid>
+    struct UNKNOWN_GRID_TYPE;
+
+  } // end of namespace oln::ERROR
+
+} // end of namespace oln
+
+
 /*-------------------.
 | Dimension switch.  |
 `-------------------*/
@@ -176,7 +194,7 @@ namespace oln
   template <typename grid_type>
   struct default_case_<grid_dim_tag, grid_type>
   {
-    typedef mlc::abort_<grid_dim_tag> ret;
+    typedef mlc::abort_< grid_dim_tag, ERROR::UNKNOWN_GRID_TYPE<grid_type> > ret;
   };
   /// \}
 
@@ -192,10 +210,9 @@ namespace oln
 {
   /// Image dimension type as an extended vtype of abstract::image.
   template <typename I>
-  struct ext_vtype_in_category< category::image,
-		                abstract::image<I>,
-		                // FIXME: Get rid of this typedef_:: qualifier.
-		                typedef_::image_dimension_type >
+  struct ext_vtype< abstract::image<I>,
+		    // FIXME: Get rid of this typedef_:: qualifier.
+		    typedef_::image_dimension_type >
   {
     // Use the same switch as the one use in the inheritance-plugging
     // mechanism above.

@@ -29,7 +29,7 @@
 # define OLENA_CORE_ABSTRACT_ENTRY_HH
 
 # include <oln/core/typedefs.hh>
-
+# include <oln/core/case.hh>
 
 namespace oln
 {

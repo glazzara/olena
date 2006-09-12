@@ -308,10 +308,9 @@ namespace oln
 {
   /// Image ``typeness'' as an extended vtype of abstract::image.
   template <typename I>
-  struct ext_vtype_in_category< category::image,
-				abstract::image<I>,
-				// FIXME: Get rid of this typedef_:: qualifier.
-				typedef_::image_typeness_type >
+  struct ext_vtype< abstract::image<I>,
+		    // FIXME: Get rid of this typedef_:: qualifier.
+		    typedef_::image_typeness_type >
   {
     // Use the same case as the one use in the inheritance-plugging
     // mechanism above, but retrieve the extended vtype

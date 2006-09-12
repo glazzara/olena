@@ -31,18 +31,12 @@
 # include <mlc/flags.hh>
 # include <oln/core/typedefs.hh>
 # include <oln/core/abstract/any.hh>
-# include <oln/core/abstract/macros.hh>
+# include <oln/core/macros.hh>
 
 // FIXME: To be rewtitten using Metalic's switch/case?
 
 namespace oln
 {
-
-  /// Category image.
-  namespace category
-  {
-    struct image;
-  }
 
   namespace abstract
   {

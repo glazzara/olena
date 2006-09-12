@@ -30,16 +30,12 @@
 
 
 # include <mlc/assert.hh>
-# include <mlc/case.hh>
 # include <mlc/abort.hh>
 # include <xtd/optraits.hh>
 # include <stc/exact.hh>
 
 # include <oln/core/type.hh>
-
-
-mlc_case_equipment_for_namespace(oln);
-
+# include <oln/core/case.hh>
 
 
 namespace oln

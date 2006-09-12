@@ -38,7 +38,7 @@ main()
   // The extra pairs of parenthesis around mlc_value are needed to
   // prevent the assert macro from interpreting the arguments of
   // mlc_value as its own.
-  assert((mlc_value(oln_grd_type_of_(oln::grid1d, dimvalue))) == 1);
-  assert((mlc_value(oln_grd_type_of_(oln::grid2d, dimvalue))) == 2);
-  assert((mlc_value(oln_grd_type_of_(oln::grid3d, dimvalue))) == 3);
+  assert((mlc_value(oln_type_of_(oln::grid1d, dimvalue))) == 1);
+  assert((mlc_value(oln_type_of_(oln::grid2d, dimvalue))) == 2);
+  assert((mlc_value(oln_type_of_(oln::grid3d, dimvalue))) == 3);
 }
