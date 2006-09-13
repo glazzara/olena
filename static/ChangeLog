@@ -1,5 +1,17 @@
 2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the static error messages of the virtual type retrieval mechanism.
+
+	* stc/vtypes.hh
+	(VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE)
+	(VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_EXTERNAL)
+	(VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_SINGLE_AND_EXTERNAL)
+	(VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE_AND_EXTERNAL)
+	(NO_VALID_VIRTUAL_TYPE_FOUND): New error messages.
+	(select_typedef): Add specializations for erroneous cases.
+
+2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove packed_vtypes.
 
 	* stc/vtypes.hh (packed_vtypes_in_category, packed_vtypes):

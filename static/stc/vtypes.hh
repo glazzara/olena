@@ -72,6 +72,12 @@ namespace stc
     struct FIRST_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_TAG;
     struct THIRD_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_LIST;
 
+    struct VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE;
+    struct VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_EXTERNAL;
+    struct VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_SINGLE_AND_EXTERNAL;
+    struct VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE_AND_EXTERNAL;
+    struct NO_VALID_VIRTUAL_TYPE_FOUND;
+
     struct NO_VALID_RETURN_TYPE_FOR_type_of_;
 
   } // end of namespace stc::ERROR
@@ -646,7 +652,7 @@ namespace stc
       typedef extended_vtype_candidate ret;				      \
     };									      \
 									      \
-    /** Special case.  The typedef is <b>declared</b> as mlc::undefined  */   \
+    /** Special case: The typedef is <b>declared</b> as mlc::undefined   */   \
     /** in internal vtypes, and <b>defined</b> as a single vtype: good.  */   \
     template <typename single_vtype_candidate,				      \
               typename extended_vtype_candidate>			      \
@@ -657,16 +663,97 @@ namespace stc
       typedef single_vtype_candidate ret;				      \
     };									      \
 									      \
+									      \
+    /* Erroneous cases.  */                                                   \
+    /* ----------------  */                                                   \
+									      \
+    /* In the following cases, mlc::abort_ ``statements'' take a dummy   */   \
+    /* typedef as first parameter, to prevent an immediate evaluation.   */   \
+    /* of mlc_abort_<>.                                                  */   \
+    /* The choice was made to choose the first unbound parameter, but it */   \
+    /* <i>it has no meaning in itself!</i>.  This is just a part of the  */   \
+    /* static abortion mechanism.                                        */   \
+									      \
+    /** The typedef is <b>defined</b> both as internal and single (and */     \
+    /** the internal flavour is <b>not</b> mlc::undefined): bad.       */     \
+    template <typename internal_vtype_candidate,                              \
+              typename single_vtype_candidate,				      \
+              typename extended_vtype_candidate>			      \
+    struct select_typedef<internal_vtype_candidate, true,		      \
+                          single_vtype_candidate,   true,		      \
+                          extended_vtype_candidate, false> :		      \
+      mlc::abort_ <                                                           \
+        internal_vtype_candidate /* dummy */ ,                                \
+        stc::ERROR::VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE      \
+      >                                                                       \
+    {									      \
+      /* Error, not valid typedef found.  */				      \
+      typedef mlc::not_found ret;                                             \
+    };									      \
+									      \
+    /** The typedef is <b>defined</b> both as internal and external: bad.  */ \
+    template <typename internal_vtype_candidate,                              \
+              typename single_vtype_candidate,				      \
+              typename extended_vtype_candidate>			      \
+    struct select_typedef<internal_vtype_candidate, true,		      \
+                          single_vtype_candidate,   false,		      \
+                          extended_vtype_candidate, true> :		      \
+      mlc::abort_ <                                                           \
+        internal_vtype_candidate /* dummy */ ,                                \
+        stc::ERROR::VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_EXTERNAL    \
+      >                                                                       \
+    {									      \
+      /* Error, not valid typedef found.  */				      \
+      typedef mlc::not_found ret;                                             \
+    };									      \
+									      \
+    /** The typedef is <b>defined</b> both as single and external: bad.  */   \
+    template <typename internal_vtype_candidate,                              \
+              typename single_vtype_candidate,				      \
+              typename extended_vtype_candidate>			      \
+    struct select_typedef<internal_vtype_candidate, false,		      \
+                          single_vtype_candidate,   true,		      \
+                          extended_vtype_candidate, true> :                   \
+      mlc::abort_ <                                                           \
+        internal_vtype_candidate /* dummy */ ,                                \
+        stc::ERROR::VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_SINGLE_AND_EXTERNAL      \
+      >                                                                       \
+    {									      \
+      /* Error, not valid typedef found.  */				      \
+      typedef mlc::not_found ret;                                             \
+    };									      \
+									      \
+    /** The typedef is <b>defined</b> as internal, single, and  */            \
+    /** external: bad.                                          */            \
+    template <typename internal_vtype_candidate,                              \
+              typename single_vtype_candidate,				      \
+              typename extended_vtype_candidate>			      \
+    struct select_typedef<internal_vtype_candidate, true,		      \
+                          single_vtype_candidate,   true,		      \
+                          extended_vtype_candidate, true> :		      \
+      mlc::abort_ <                                                           \
+        internal_vtype_candidate /* dummy */ ,                                \
+        stc::ERROR::                                                          \
+          VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE_AND_EXTERNAL   \
+      >                                                                       \
+    {									      \
+      /* Error, not valid typedef found.  */				      \
+      typedef mlc::not_found ret;                                             \
+    };									      \
+									      \
     /** Other cases: error (the typedef is not defined or defined more */     \
     /** than once, hence \a mlc::not_found is returned).               */     \
     template								      \
       < typename internal_vtype_candidate, bool found_as_internal_vtype,      \
         typename single_vtype_candidate,   bool found_as_single_vtype,	      \
         typename extended_vtype_candidate, bool found_as_extended_vtype >     \
-    struct select_typedef						      \
+    struct select_typedef :                                                   \
+      mlc::abort_ <                                                           \
+        internal_vtype_candidate /* dummy */ ,                                \
+        stc::ERROR::NO_VALID_VIRTUAL_TYPE_FOUND >                             \
     {									      \
       /* Error, not valid typedef found.  */				      \
-      typedef mlc::not_found ret;					      \
+      typedef mlc::not_found ret;                                             \
     };									      \
     /** \} */								      \
 									      \
