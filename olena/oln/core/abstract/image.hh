@@ -36,13 +36,6 @@
 namespace oln
 {
 
-  /// Category image.
-  namespace category
-  {
-    struct image;
-  }
-
-
   /*! \namespace oln::abstract
   ** \brief oln::abstract namespace.
   */

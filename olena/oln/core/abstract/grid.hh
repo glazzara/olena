@@ -37,13 +37,6 @@
 
 namespace oln {
 
-
-  /// Category grid.
-  namespace category
-  {
-    struct grid;
-  }
-
   // Forward declaration.
   namespace abstract
   {
@@ -61,41 +54,6 @@ namespace oln {
     typedef mlc::undefined dimvalue_type;
   };
 
-
-  template <typename G>
-  struct packed_vtypes_in_category<category::grid, G>
-  {
-    typedef oln_type_of(G, point)    point_type;
-    typedef oln_type_of(G, dpoint)   dpoint_type;
-    typedef oln_type_of(G, coord)    coord_type;
-    typedef oln_type_of(G, size)     size_type;
-    typedef oln_type_of(G, dimvalue) dimvalue_type;
-
-    static void echo(std::ostream& ostr)
-    {
-      ostr
-	<< "vtypes_in_category(oln::category::grid, " << mlc_to_string(G) << ") ="
-	<< std::endl
-	<< "{" << std::endl
-	<< "  point_type    = " << mlc_to_string(point_type)    << std::endl
-	<< "  dpoint_type   = " << mlc_to_string(dpoint_type)   << std::endl
-	<< "  coord_type    = " << mlc_to_string(coord_type)    << std::endl
-	<< "  size_type     = " << mlc_to_string(size_type)     << std::endl
-	<< "  dimvalue_type = " << mlc_to_string(dimvalue_type) << std::endl
-	<< "}" << std::endl;
-    }
-
-    static void ensure()
-    {
-      mlc::assert_< mlc_is_ok(point_type) >::check();
-      mlc::assert_< mlc_is_ok(dpoint_type) >::check();
-      mlc::assert_< mlc_is_ok(coord_type) >::check();
-      mlc::assert_< mlc_is_ok(size_type) >::check();
-      mlc::assert_< mlc_is_ok(dimvalue_type) >::check();
-    }
-  };
-
-
   namespace abstract {
 
     template <typename E>
@@ -104,11 +62,6 @@ namespace oln {
     protected:
       grid()
       {}
-
-      ~grid()
-      {
-	packed_vtypes_in_category<category::grid, E>::ensure();
-      }
     };
 
   } // end of namespace oln::abstract

@@ -1,3 +1,14 @@
+2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	No longer categories nor packed_vtypes.
+
+	* oln/core/abstract/image.hh (oln::category::grid): Remove
+	declaration.
+	* oln/core/abstract/grid.hh
+	(oln::packed_vtypes_in_category<category::grid, G>): 
+	(oln::grid::~grid): Remove dtor.
+	(oln::category::grid): Remove declaration.
+
 2006-09-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the current implementation of image_entry, as well as some
