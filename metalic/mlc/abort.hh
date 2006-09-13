@@ -93,8 +93,19 @@ namespace mlc
 //     private assert_< not_<mlc_is_a(T, abstract::bexpr)>,
 // 		     mlc::ERROR::FIRST_PARAMETER_OF_mlc_abort_SHOULD_NOT_BE_an_abstract_bexpr >,
 
-    public internal::always_false_<T>
+    /// Basically, an mlc::abort_ is nothing much than a failed mlc::assert_;
+    /// hence mlc::abort_ borrows this base class from mlc::assert_.
+    ///
+    /// \see mlc/assert.hh
+    public virtual internal::check_<
+      internal::always_false_<T>,
+      typename internal::always_false_<T>::is_true
+    >
   {
+  public:
+    /// This method is used to trigger a static abortion within
+    /// a function body.
+    static void check() {}
   protected:
     abort_() {}
   };

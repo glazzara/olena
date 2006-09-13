@@ -1,3 +1,12 @@
+2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix mlc::abort.
+
+	* mlc/abort.hh (mlc::abort_): Inherit from internal::check_
+	(from mlc/assert.hh's) to obtain the right behavior from
+	mlc::abort_. 
+	(mlc::abort_::check): New class method.
+
 2006-09-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/cmp.hh (assert_ok_): New shortcut.
