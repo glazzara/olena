@@ -71,22 +71,6 @@ namespace my
     struct my_cat;
   }
 
-  /// Packing of virtual types of any class belonging to the category my::cat.
-  template <typename T>
-  struct packed_vtypes_in_category<category::my_cat, T>
-  {
-    typedef my_type_of(T, foo) foo_type;
-    typedef my_type_of(T, bar) bar_type;
-    typedef my_type_of(T, baz) baz_type;
-
-    static void ensure()
-    {
-      mlc::assert_< mlc_is_ok(foo_type) >::check();
-      mlc::assert_< mlc_is_ok(bar_type) >::check();
-      mlc::assert_< mlc_is_ok(baz_type) >::check();
-    }
-  };
-
 
   /*----.
   | A.  |
@@ -115,12 +99,6 @@ namespace my
     typedef my_type_of_(A, foo) foo_type;
     typedef my_type_of_(A, bar) bar_type;
     typedef my_type_of_(A, baz) baz_type;
-
-    ~A()
-    {
-      // packed_vtypes_in_category<category::my, A> is not checked here,
-      // since A's baz_type virtual type is undefined.
-    }
   };
 
 
@@ -163,12 +141,6 @@ namespace my
     typedef my_type_of_(B, baz)  baz_type;
     typedef my_type_of_(B, quux) quux_type;
     typedef my_type_of_(B, yin)  yin_type;
-
-    // Check B's vtype.
-    ~B()
-    {
-      packed_vtypes_in_category<category::my_cat, B>::ensure();
-    }
   };
 
 
@@ -204,12 +176,6 @@ namespace my
     typedef my_type_of_(Z, quux) quux_type;
     typedef my_type_of_(Z, yin)  yin_type;
     typedef my_type_of_(Z, zorg) zorg_type;
-
-    // Check C's vtypes.
-    ~Z()
-    {
-      packed_vtypes_in_category<category::my_cat, Z>::ensure();
-    }
   };
 
 } // end of namespace my

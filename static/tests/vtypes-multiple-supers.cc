@@ -81,18 +81,6 @@ namespace my
     struct my_cat;
   }
 
-  /// Packing of virtual types of any class belonging to the category my::cat.
-  template <typename T>
-  struct packed_vtypes_in_category<category::my_cat, T>
-  {
-    typedef my_type_of(T, foo) foo_type;
-
-    static void ensure()
-    {
-      mlc::assert_< mlc_is_ok(foo_type) >::check();
-    }
-  };
-
 
   /*----.
   | A.  |
@@ -114,12 +102,6 @@ namespace my
     // Aliases.
     typedef my_type_of_(A, foo) foo_type;
     typedef my_type_of_(A, bar) bar_type;
-
-    // Check A's vtypes.
-    ~A()
-    {
-      packed_vtypes_in_category<category::my_cat, A>::ensure();
-    }
   };
 
 
@@ -143,12 +125,6 @@ namespace my
     // Aliases.
     typedef my_type_of_(B, foo) foo_type;
     typedef my_type_of_(B, baz) baz_type;
-
-    // Check B's vtypes.
-    ~B()
-    {
-      packed_vtypes_in_category<category::my_cat, B>::ensure();
-    }
   };
 
 
@@ -182,12 +158,6 @@ namespace my
     typedef my_type_of_(C, foo) foo_type;
     typedef my_type_of_(C, bar) bar_type;
     typedef my_type_of_(C, baz) baz_type;
-
-    // Check C's vtypes.
-    ~C()
-    {
-      packed_vtypes_in_category<category::my_cat, C>::ensure();
-    }
   };
 
 } // end of namespace my

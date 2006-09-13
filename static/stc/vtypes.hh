@@ -367,32 +367,6 @@ namespace stc
   /* \} */								      \
 									      \
 									      \
-  /* -------------------------- */					      \
-  /* Packing of virtual types.  */					      \
-  /* -------------------------- */					      \
-									      \
-  /** Optional packing structure, to be specialized by the user.  */	      \
-  /** See tests/vtypes.cc for an example of use.                  */	      \
-  template <typename category, typename from_type>			      \
-  struct packed_vtypes_in_category					      \
-  {									      \
-  };									      \
-									      \
-  /** Optional packing structure, to be specialized by the user.  */	      \
-  /** Version for types without category.                         */	      \
-  template <typename from_type>			  	  	  	      \
-  struct packed_vtypes							      \
-  {									      \
-  };									      \
-									      \
-  /** Specialization of packed_vtypes for types without category.  */	      \
-  template <typename from_type>						      \
-  struct packed_vtypes_in_category<void, from_type> :			      \
-    public packed_vtypes<from_type>					      \
-  {									      \
-  };									      \
-									      \
-									      \
   /* -------------------- */						      \
   /* Internal machinery.  */						      \
   /* -------------------- */						      \

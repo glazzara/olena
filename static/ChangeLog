@@ -1,3 +1,19 @@
+2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove packed_vtypes.
+
+	* stc/vtypes.hh (packed_vtypes_in_category, packed_vtypes):
+	Remove.
+	* tests/vtypes.cc
+	(my::packed_vtypes_in_category<category::my_cat, T>): Remove
+	(my::A::~A, , my::B::~B, my::C::~C): Remove dtors.
+	* tests/vtypes-and-exact.cc
+	(my::packed_vtypes_in_category<category::my_cat, T>): Remove.
+	(my::A::~A, , my::B::~B, my::C::~C): Remove dtors.
+	* tests/vtypes-multiple-supers.cc
+	(my::packed_vtypes_in_category<category::my_cat, T>): Remove.
+	(my::A::~A, , my::B::~B, my::C::~C): Remove dtors.
+
 2006-09-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	New macro to declare virtual types in abstract classes.
