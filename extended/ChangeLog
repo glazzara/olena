@@ -1,3 +1,10 @@
+2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix xtd::constraints_ and xtd::constraints_2_.
+
+	* xtd/math/constraints.hh (xtd::constraints_)
+	(xtd::constraints_2_): Add missing first parameter of mlc::abort_.
+
 2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* xtd/optraits.hh

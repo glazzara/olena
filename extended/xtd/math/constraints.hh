@@ -43,7 +43,7 @@ namespace xtd
 
   template < template<typename> class pfun,
 	     typename T >
-  struct constraints_ : private mlc::abort_< ERROR::FIXME >
+  struct constraints_ : private mlc::abort_< T, ERROR::FIXME >
   {
   };
 
@@ -51,7 +51,7 @@ namespace xtd
   template < template<typename, typename> class pfun,
 	     typename T1,
 	     typename T2 >
-  struct constraints_2_ : private mlc::abort_< ERROR::FIXME >
+  struct constraints_2_ : private mlc::abort_< T1, ERROR::FIXME >
   {
   };
 
