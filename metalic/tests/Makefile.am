@@ -9,6 +9,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/metalic
 
 check_PROGRAMS =				\
   case						\
+  gcase						\
   if						\
   is_a						\
   or						\
@@ -18,6 +19,7 @@ check_PROGRAMS =				\
   typedef
 
 case_SOURCES      = case.cc
+gcase_SOURCES     = gcase.cc
 if_SOURCES        = if.cc
 is_a_SOURCES      = is_a.cc
 or_SOURCES        = or.cc

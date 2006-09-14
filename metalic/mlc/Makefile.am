@@ -1,6 +1,7 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
 mlcdir = $(includedir)/mlc
+
 nobase_mlc_HEADERS =				\
   abort.hh 					\
   assert.hh					\
