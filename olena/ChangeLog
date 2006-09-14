@@ -1,3 +1,29 @@
+2006-09-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing files to Olena's distribution.
+
+	* oln/Makefile.am (nobase_oln_HEADERS): Add core/2d/aliases.hh,
+	core/2d/dpointd2.hh, core/2d/grid2d.hh, core/2d/image2d.hh,
+	core/2d/point2d.hh, core/abstract/bbox.hh,
+	core/abstract/dpoint.hh, core/abstract/dpoint_nd.hh,
+	core/abstract/entry.hh, core/abstract/image_hierarchies.hh,
+	core/abstract/image_type.hh, core/abstract/image_type_integre.hh,
+	core/abstract/iter.hh, core/abstract/point.hh,
+	core/abstract/point_nd.hh, core/abstract/pset_bboxed.hh,
+	core/abstract/pset_cnx.hh, core/abstract/pset_fixed.hh,
+	core/abstract/pset.hh, core/abstract/pset_hierarchies.hh,
+	core/abstract/pset_ra.hh, core/abstract/topo.hh,
+	core/abstract/topo_hierarchies.hh, core/abstract/topo_ra.hh,
+	core/abstract/topo_with_bbox.hh, core/gen/bbox.hh,
+	core/gen/bbox_topo.hh, core/gen/bkd_piter.hh,
+	core/gen/fwd_piter.hh, core/image_entry.hh, core/pset_entry.hh,
+	core/traits.hh, core/traits_id.hh, core/topo_entry.hh,
+	core/type.hh and basics2d.hh
+	Remove core/abstract/image_abstractions.hh,
+	core/abstract/image_entry.hh, core/abstract/image_typeness.hh, and
+	core/abstract/image_typeness_integre.hh.
+	* oln/basics2d.hh: Fix copyright header.
+
 2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	No longer categories nor packed_vtypes.
