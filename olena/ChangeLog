@@ -1,5 +1,9 @@
 2006-09-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	* oln/Makefile.am (nobase_oln_HEADERS): Typo.
+
+2006-09-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use the new entry/hierarchy system for images.
 
 	* oln/core/abstract/image_entry.hh: Remove.
