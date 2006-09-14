@@ -2,21 +2,7 @@
 
 xtddir = $(includedir)/xtd
 
-# FIXME: To be filled.
-nobase_xtd_HEADERS = 				\
-  arg.hh					\
-  args.hh					\
-  bind.hh					\
-  cast.hh					\
-  cfun.hh					\
-  literal.hh					\
-  math.hh					\
-  mexpr.hh					\
-  mfun.hh					\
-  optraits.hh					\
-  res.hh					\
-  traits.hh					\
-						\
+nobase_xtd_HEADERS =				\
   abstract/fun.hh				\
   abstract/fun_expr.hh				\
   abstract/fun_nary_expr.hh			\
@@ -37,8 +23,8 @@ nobase_xtd_HEADERS = 				\
   math/acos.hh					\
   math/arith.hh					\
   math/asin.hh					\
-  math/atan.hh					\
   math/atan2.hh					\
+  math/atan.hh					\
   math/ceil.hh					\
   math/cmp.hh					\
   math/constraints.hh				\
@@ -56,4 +42,18 @@ nobase_xtd_HEADERS = 				\
   math/sinh.hh					\
   math/sqrt.hh					\
   math/tan.hh					\
-  math/tanh.hh
+  math/tanh.hh					\
+						\
+  arg.hh					\
+  args.hh					\
+  bind.hh					\
+  cast.hh					\
+  cfun.hh					\
+  literal.hh					\
+  math.hh					\
+  mexpr.hh					\
+  mfun.hh					\
+  optraits.hh					\
+  res.hh					\
+  traits.hh					\
+  vec.hh

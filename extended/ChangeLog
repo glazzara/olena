@@ -1,3 +1,11 @@
+2006-09-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add missing files to Extended's distribution.
+
+	* xtd/Makefile.am (nobase_xtd_HEADERS): Add vec.hh.
+	* xtd/TODO: Rename as...
+	* TODO: ...this.
+
 2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix xtd::constraints_ and xtd::constraints_2_.
