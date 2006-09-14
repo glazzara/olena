@@ -1,5 +1,75 @@
 2006-09-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use the new entry/hierarchy system for images.
+
+	* oln/core/abstract/image_entry.hh: Remove.
+	* oln/core/abstract/image_hierarchies.hh: New.
+	* oln/core/abstract/image.hh
+	(oln/core/abstract/image_hierarchies.hh): Include it.
+	* oln/core/image_entry.hh: Aesthetic change.
+
+	* oln/core/abstract/image_dimension.hh:
+	Update the documentation.
+	(oln::ERROR::UNKNOWN_GRID_TYPE): Remove error message.
+	(oln::grid_dim_tag): Remove tag.
+	(stc::set_entry_node<I, oln::abstract::dimension_tag>): Remove
+	switch.
+	(case_<grid_dim_tag, grid_type, 1>)
+	(case_<grid_dim_tag, grid_type, 2>)
+	(case_<grid_dim_tag, grid_type, 3>): Update and rename as...
+	(case_<image_dimension_hierarchy, E, 1>)
+	(case_<image_dimension_hierarchy, E, 2>)
+	(case_<image_dimension_hierarchy, E, 3>): ...this.
+	(default_case_<grid_dim_tag, grid_type>): Remove.
+	(oln::ext_vtype<abstract::image<I>, typedef_::image_dimension_type>):
+	Remove external vtype.
+
+	* oln/core/abstract/image_typeness.hh: Rename as...
+	* oln/core/abstract/image_type.hh: ...this.
+	Adjust header guards.
+	Update the documentation.
+	(oln::value_type_tag): Remove tag.
+	(stc::set_entry_node<I, oln::abstract::typeness_tag>): Remove
+	switch.
+	(case_<value_type_tag, value_type, 1>)
+	(case_<value_type_tag, value_type, 2>)
+	(default_case_<value_type_tag, value_type>): Update and rename
+	as...
+	(case_<image_type_hierarchy, E, 1>)
+	(case_<image_type_hierarchy, E, 2>)
+	(default_case_<image_type_hierarchy, E>): ...this.
+	No longer provide an `image_typeness_type' typedef.
+	(oln::ext_vtype<abstract::image<I>, typedef_::image_typeness_type>):
+	Remove external vtype.
+
+	* oln/core/abstract/image_typeness_integre.hh: Rename as...
+	* oln/core/abstract/image_type_integre.hh: ...this.
+	Adjust header guards.
+	(case_<value_type_tag, value_type, 3>)
+	(case_<value_type_tag, value_type, 4>)
+	(case_<value_type_tag, value_type, 5>)
+	(case_<value_type_tag, value_type, 6>): Update and rename as...
+	(case_<image_type_hierarchy, E, 3>)
+	(case_<image_type_hierarchy, E, 4>)
+	(case_<image_type_hierarchy, E, 5>)
+	(case_<image_type_hierarchy, E, 6>): ...this.
+	No longer provide an `image_typeness_type' typedef.
+
+	* tests/image_entry.cc (my::image): Set
+	oln::image_entry<my::image> as super type.
+	(oln::vtypes<my::image>::psite_type)
+	(oln::vtypes<my::image>::rvalue_type)
+	(oln::vtypes<my::image>::piter_type): Remove these typedefs, as
+	they are already defined as single typedefs in
+	oln/core/image_entry.hh.
+	(my::image::grid_type, my::image::value_type): Rename as...
+	(my::image::grid_t, my::image::value_t): ...this.
+	(my::image::image_dimension_type, my::image::image_typeness_type):
+	Remove.
+	(main): Adjust, and remove irrelevant assertions.
+
+2006-09-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add missing files to Olena's distribution.
 
 	* oln/Makefile.am (nobase_oln_HEADERS): Add core/2d/aliases.hh,

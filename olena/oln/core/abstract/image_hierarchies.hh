@@ -25,34 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_ABSTRACTIONS_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_ABSTRACTIONS_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH
 
-# include <oln/core/case.hh>
+# include <oln/core/abstract/image.hh>
 
 
 namespace oln
 {
-  namespace abstract
-  {
 
-    /// \brief Tags for abstractions.
-    ///
-    /// Use them instead of hard-coded numbers.
-    enum abstraction_tags
-      {
-	// constness_tag,
-	dimension_tag = 1,
-	typeness_tag
-	// valuedness_tag,
-	// rawness_tag,
-	// neighbness_tag,
-	// ...
-      };
+  typedef hierarchy<abstract::image, 1> image_dimension_hierarchy;
+  typedef hierarchy<abstract::image, 2> image_type_hierarchy;
 
-  } // end of namespace oln::abstract
+  // FIXME: To be continued.
+#if 0
+  typedef hierarchy<abstract::image, 3> image_value_hierarchy;
+  // FIXME: Rename (``rawness'' means ``crudité'' in French...).
+  typedef hierarchy<abstract::image, 4> image_rawness_hierarchy;
+  typedef hierarchy<abstract::image, 5> image_neighborhood_hierarchy;
+  // ...
+#endif
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_ABSTRACTIONS_HH
+# include <oln/core/abstract/image_dimension.hh>
+# include <oln/core/abstract/image_type.hh>
+
+
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH
+

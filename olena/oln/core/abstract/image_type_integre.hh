@@ -29,10 +29,10 @@
 // FIXME: Move this file into Integre? Or in a another project,
 // serving as a glue between Integre and Olena?
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_TYPENESS_INTEGRE_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_TYPENESS_INTEGRE_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_TYPE_INTEGRE_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_TYPE_INTEGRE_HH
 
-# include <oln/core/abstract/image_typeness.hh>
+# include <oln/core/abstract/image_type.hh>
 
 
 // Forward declarations.
@@ -77,9 +77,9 @@ namespace ntg
 } // end of namespace ntg
 
 
-/*--------------------------.
-| Typeness switch (cont.).  |
-`--------------------------*/
+/*----------------------.
+| Type switch (cont.).  |
+`----------------------*/
 
 namespace oln {
 
@@ -91,72 +91,55 @@ namespace oln {
   // Cases where the value type is an Integre type.  //
   // ----------------------------------------------- //
 
-  // (The first cases are located in oln/core/abstract/image_typeness.hh).
+  // (The first cases are located in oln/core/abstract/image_type.hh).
 
 
   /// Binary case.
-  template <typename value_type>
-  struct case_<value_type_tag, value_type, 3> :
-    public mlc::where_<
-             mlc::or_list_< mlc_eq(value_type, ntg::bin),
-			    ntg::eq_<ntg::int_u, 1, value_type>,
-			    ntg::eq_<ntg::int_s, 1, value_type> > >
+  template <typename E>
+  struct case_< image_type_hierarchy, E, 3 > :
+    where_< mlc::or_list_< mlc::eq_<oln_type_of(E, value), ntg::bin>,
+			   ntg::eq_<ntg::int_u, 1, oln_type_of(E, value)>,
+			   ntg::eq_<ntg::int_s, 1, oln_type_of(E, value)> > >
   {
     // Definition of the super class corresponding to this case.
-    typedef stc::abstraction_as_type<abstract::binary_image> super_type;
-    // Definition of the extended virtual type (same as the super
-    // class in this case).
-    typedef super_type image_typeness_type;
+    typedef abstract::binary_image<E> ret;
   };
 
   /// Grey-level case.
-  template <typename value_type>
-  struct case_<value_type_tag, value_type, 4> :
-    public mlc::where_< mlc_is_a(value_type, ntg::real_value) >
+  template <typename E>
+  struct case_< image_type_hierarchy, E, 4 > :
+    where_< mlc_is_a( mlc_comma_1(oln_type_of(E, value)), ntg::real_value ) >
   {
     // Definition of the super class corresponding to this case
     // (abstract::grey_level_image_ is the conjunction of
     // abstract::grey_level_image and abstract::not_binary_image).
-    typedef
-      stc::abstraction_as_type<abstract::internal::grey_level_image_>
-      super_type;
-    // Definition of the extended virtual type.
-    typedef stc::abstraction_as_type<abstract::grey_level_image>
-      image_typeness_type;
+    typedef abstract::internal::grey_level_image_<E> ret;
   };
 
   /// Label case.
-  template <typename value_type>
-  struct case_<value_type_tag, value_type, 5> :
-    public mlc::where_< mlc_is_a(value_type, ntg::enum_value) >
+  template <typename E>
+  struct case_< image_type_hierarchy, E, 5 > :
+    where_< mlc_is_a( mlc_comma_1(oln_type_of(E, value)), ntg::enum_value ) >
   {
     // Definition of the super class corresponding to this case
     // (abstract::label_image_ is the conjunction of
     // abstract::label_image and abstract::not_binary_image).
-    typedef stc::abstraction_as_type<abstract::internal::label_image_>
-      super_type;
-    // Definition of the extended virtual type.
-    typedef stc::abstraction_as_type<abstract::label_image>
-      image_typeness_type;
+    typedef abstract::internal::label_image_<E> ret;
   };
 
   /// Color case.
-  template <typename value_type>
-  struct case_<value_type_tag, value_type, 6> :
-    public mlc::where_< mlc_is_a(value_type, ntg::color_value) >
+  template <typename E>
+  struct case_< image_type_hierarchy, E, 6 > :
+    where_< mlc_is_a( mlc_comma_1(oln_type_of(E, value)), ntg::color_value ) >
   {
     // Definition of the super class corresponding to this case
     // (abstract::color_image_ is the conjunction of
     // abstract::color_image and abstract::not_binary_image).
-    typedef stc::abstraction_as_type<abstract::internal::color_image_>
-      super_type;
-    // Definition of the extended virtual type.
-    typedef stc::abstraction_as_type<abstract::color_image>
-      image_typeness_type;
+    typedef abstract::internal::color_image_<E> ret;
   };
 
   /// \}
 
 } // end of namespace oln
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_TYPENESS_INTEGRE_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_TYPE_INTEGRE_HH

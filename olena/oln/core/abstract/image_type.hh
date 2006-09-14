@@ -25,15 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_TYPENESS_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_TYPENESS_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_TYPE_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_TYPE_HH
 
-# include <stc/entry.hh>
 # include <oln/core/abstract/image.hh>
-# include <oln/core/abstract/image_abstractions.hh>
 
 
-/* Image ``typeness'' hierarchy (summary).
+/* Image ``type'' hierarchy (summary).
 
 
                                     /image<I>/
@@ -48,29 +46,35 @@
            |              |         |       ^         |        |         |
            |              |         |       |         |        |         |
        ,---------------------------------------------------------------------.
-       | The selection of the super classe(s) is made according to the value |
+       | The selection of the super class(es) is made according to the value |
        |                      of type_of(I, value).                          |
        `---------------------------------------------------------------------'
            |              |         |       |         |        |         |
            o              o         o       o         o        o         o
 
-                                        o
+                                        o 
                                         | 
-                       stc::set_entry_node<I, typeness_tag>
-                            (image typeness selector)
+                      /switch_<image_dimension_type, I>::ret/
+                              (image type selector)
                                         ^
                                         |
-                                 /image_entry<I>/
+                           /entry<abstract::image, I>/
+                                        ^
+                                        |
+                                 image_entry<I>
                                         ^
                                         |
                                         I
                                 (a concrete image)
 
-*/
 
-/*------------------------.
-| Typeness abstractions.  |
-`------------------------*/
+  Default case: If no known value type is returned by `oln_type_of(I, value)',
+  the entry is plugged to abstract::data_image<I>.  */
+
+
+/*--------------------.
+| Type abstractions.  |
+`--------------------*/
 
 namespace oln
 {
@@ -212,28 +216,9 @@ namespace oln
 } // end of namespace oln
 
 
-/*------------------.
-| Typeness switch.  |
-`------------------*/
-
-namespace oln
-{
-  /// Case tag for the dimension.
-  struct value_type_tag;
-}
-
-
-// Register the dimension switch/case for oln::abstract::image_entry.
-namespace stc
-{
-  template <typename I>
-  struct set_entry_node<I, oln::abstract::typeness_tag> :
-    public oln::case_< oln::value_type_tag, oln_type_of(I, value) >::ret
-      ::super_type::template instantiated_with<I>::ret
-  {
-  };
-} // end of namespace stc
-
+/*--------------.
+| Type switch.  |
+`--------------*/
 
 namespace oln
 {
@@ -246,33 +231,25 @@ namespace oln
   // ----------------------------------------------- //
 
   /// Binary case.
-  template <typename value_type>
-  struct case_<value_type_tag, value_type, 1> :
-    public mlc::where_< mlc_eq(value_type, bool) >
+  template <typename E>
+  struct case_< image_type_hierarchy, E, 1 > :
+    where_< mlc::eq_< oln_type_of(E, value), bool > >
   {
     // Definition of the super class corresponding to this case.
-    typedef stc::abstraction_as_type<abstract::binary_image> super_type;
-    // Definition of the extended virtual type (same as the super
-    // class in this case).
-    typedef super_type image_typeness_type;
+    typedef abstract::binary_image<E> ret;
   };
 
   /// Grey-level case.
-  template <typename value_type>
-  struct case_<value_type_tag, value_type, 2> :
-    public mlc::where_<
-             mlc::or_list_< mlc_eq(value_type,          char),
-			    mlc_eq(value_type,   signed char),
-			    mlc_eq(value_type, unsigned char) > >
+  template <typename E>
+  struct case_< image_type_hierarchy, E, 2 > :
+    where_< mlc::or_list_< mlc::eq_<oln_type_of(E, value),          char>,
+			   mlc::eq_<oln_type_of(E, value),   signed char>,
+			   mlc::eq_<oln_type_of(E, value), unsigned char> > >
   {
     // Definition of the super class corresponding to this case
     // (abstract::grey_level_image_ is the conjunction of
     // abstract::grey_level_image and abstract::not_binary_image).
-    typedef stc::abstraction_as_type<abstract::internal::grey_level_image_>
-      super_type;
-    // Definition of the extended virtual type.
-    typedef stc::abstraction_as_type<abstract::grey_level_image>
-      image_typeness_type;
+    typedef abstract::internal::grey_level_image_<E> ret;
   };
 
 
@@ -281,17 +258,13 @@ namespace oln
   // -------------- //
 
   /// Default case: image of ``data''.
-  template <typename value_type>
-  struct default_case_<value_type_tag, value_type>
+  template <typename E>
+  struct default_case_< image_type_hierarchy, E >
   {
     // Definition of the super class corresponding to this case
     // (abstract::data_image_ is the conjunction of
     // abstract::data_image and abstract::not_binary_image).
-    typedef stc::abstraction_as_type<abstract::internal::data_image_>
-      super_type;
-    // Definition of the extended virtual type.
-    typedef stc::abstraction_as_type<abstract::data_image>
-      image_typeness_type;
+    typedef abstract::internal::data_image_<E> ret;
   };
 
   /// \}
@@ -299,27 +272,4 @@ namespace oln
 } // end of namespace oln
 
 
-/*---------------------------------.
-| Typeness extended virtual type.  |
-`---------------------------------*/
-
-// FIXME: Is this extended vtype really useful?
-namespace oln
-{
-  /// Image ``typeness'' as an extended vtype of abstract::image.
-  template <typename I>
-  struct ext_vtype< abstract::image<I>,
-		    // FIXME: Get rid of this typedef_:: qualifier.
-		    typedef_::image_typeness_type >
-  {
-    // Use the same case as the one use in the inheritance-plugging
-    // mechanism above, but retrieve the extended vtype
-    // (image_typename_type), not the super type.
-    typedef
-      typename oln::case_< oln::value_type_tag,
-			   oln_type_of(I, value) >::ret::image_typeness_type
-      ret;
-  };
-}
-
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_TYPENESS_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_TYPE_HH

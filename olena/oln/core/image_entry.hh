@@ -41,7 +41,7 @@ namespace oln
   /// entry< abstract::image, E>.
 
   template <typename E>
-  struct image_entry : public entry< abstract::image, E>
+  struct image_entry : public entry<abstract::image, E>
   {
   protected:
     image_entry() {}
