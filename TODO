@@ -1,4 +1,4 @@
-See also the TODO in oln-proto-1.0 and oln-proto-stl-style
+See also the TODO in oln-proto-1.0 and oln-proto-stl-style.
 
 
 * Release process
@@ -9,6 +9,7 @@ of one or some of its components.
 The tests should print nothing on the stantard output, nor on the
 standard error.
 
+** Add the UPGRADING file from oln-0.10 and complete it
 
 
 Local Variables:

@@ -65,6 +65,7 @@ AC_CONFIG_FILES([
       static/stc/Makefile
     olena/Makefile
       olena/oln/Makefile
+    dynamic/Makefile
 ])
 
 # Checks for library functions.
