@@ -28,6 +28,7 @@ nobase_oln_HEADERS =				\
   core/abstract/image_type.hh			\
   core/abstract/image_type_integre.hh		\
   core/abstract/iter.hh				\
+  core/abstract/piter.hh			\
   core/abstract/point.hh			\
   core/abstract/point_nd.hh			\
   core/abstract/pset_bboxed.hh			\
