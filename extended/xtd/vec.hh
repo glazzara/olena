@@ -203,7 +203,7 @@ namespace xtd
     }
 
     vec<n, xtd_op_uminus_trait(T)>
-    operator-()
+    operator-() const
     {
       vec<n, xtd_op_uminus_trait(T)> tmp;
       for (unsigned i = 0; i < n; ++i)
@@ -309,6 +309,37 @@ namespace xtd
   {
     typedef vec<n, xtd_binop_trait(bop, L, R)> ret;
   };
+
+
+
+  /// mk_vec.
+
+  template <typename T>
+  vec<1, T> mk_vec(const T& v_0)
+  {
+    vec<1, T> tmp;
+    tmp[0] = v_0;
+    return tmp;
+  }
+
+  template <typename T>
+  vec<2, T> mk_vec(const T& v_0, const T& v_1)
+  {
+    vec<2, T> tmp;
+    tmp[0] = v_0;
+    tmp[1] = v_1;
+    return tmp;
+  }
+
+  template <typename T>
+  vec<3, T> mk_vec(const T& v_0, const T& v_1, const T& v_2)
+  {
+    vec<3, T> tmp;
+    tmp[0] = v_0;
+    tmp[1] = v_1;
+    tmp[2] = v_2;
+    return tmp;
+  }
 
 
 } // end of namespace xtd

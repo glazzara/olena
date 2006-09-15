@@ -1,3 +1,8 @@
+2006-09-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* xtd/vec.hh (operator-): Fix missing const.
+	(mk_vec): New.
+
 2006-09-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add missing files to Extended's distribution.
