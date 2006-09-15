@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPO_HH
-# define OLENA_CORE_ABSTRACT_TOPO_HH
+#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HH
+# define OLENA_CORE_ABSTRACT_TOPOLOGY_HH
 
 # include <oln/core/typedefs.hh>
 
@@ -34,21 +34,25 @@
 namespace oln
 {
 
+
   namespace abstract
   {
 
 
-    /// Abstract point class.
+    /// Abstract topology class.
     template <typename E>
-    class topo : public virtual stc::any__simple<E>,
-		 public virtual oln::type
+    class topology : public virtual stc::any__simple<E>,
+		     public virtual oln::type
     {
     public:
 
       struct decl
       {
-	stc_virtual_typedef(bbox);  // for being bboxed;  provides .bbox()
-	stc_virtual_typedef(ra);    // for random access; provides .has(p)
+	stc_virtual_typedef(bbox);
+	// for being bboxed; provides .bbox()
+
+	stc_virtual_typedef(is_random_accessible);
+	// provides .has(p) and .has_large(p)
 
 	stc_virtual_typedef(point);
 
@@ -61,12 +65,12 @@ namespace oln
 
     protected:
 
-      topo()
+      topology()
       {}
 
-      ~topo() { decl(); }
+      ~topology() { decl(); }
 
-    }; // end of class oln::abstract::topo<E>
+    }; // end of class oln::abstract::topology<E>
 
 
 
@@ -76,8 +80,8 @@ namespace oln
 
 
 
-# include <oln/core/abstract/topo_hierarchies.hh>
+# include <oln/core/abstract/topology_hierarchies.hh>
 
 
 
-#endif // ! OLENA_CORE_ABSTRACT_TOPO_HH
+#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HH

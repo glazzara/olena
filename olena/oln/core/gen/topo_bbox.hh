@@ -25,25 +25,76 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPO_HIERARCHIES_HH
-# define OLENA_CORE_ABSTRACT_TOPO_HIERARCHIES_HH
+#ifndef OLENA_CORE_GEN_TOPO_BBOX_HH
+# define OLENA_CORE_GEN_TOPO_BBOX_HH
 
-# include <oln/core/abstract/topo.hh>
+# include <oln/core/gen/bbox.hh>
+# include <oln/core/topology_entry.hh>
+
 
 
 namespace oln
 {
 
-  typedef  hierarchy< abstract::topo, 1 >  topo_ra_hierarchy;
-  typedef  hierarchy< abstract::topo, 2 >  topo_with_bbox_hierarchy;
+
+  // Forward declarations.
+  template <typename point> class topo_bbox_;
+
+
+  // Super type declaration.
+  template <typename point>
+  struct set_super_type< topo_bbox_<point> >
+  {
+    typedef topo_bbox_<point> self_t;
+    typedef topology_entry<self_t> ret;
+  };
+
+
+  /// Virtual types associated to oln::bbox_<point>.
+  template <typename point>
+  struct vtypes< topo_bbox_<point> >
+  {
+    typedef bbox_<point> bbox_type;
+    typedef point        point_type;
+    typedef mlc::true_   is_random_accessible_type;
+  };
+
+
+  /// Bounding box topology based on a point class.
+  template <typename point>
+  class topo_bbox_ : public topology_entry< topo_bbox_<point> >
+  {
+    typedef bbox_<point> bbox_t;
+
+  public:
+
+    topo_bbox_()
+    {
+    }
+
+    topo_bbox_(const bbox_t& bb)
+      : bb_(bb)
+    {
+    }
+
+    const bbox_t& impl_bbox() const
+    {
+      return bb_;
+    }
+
+    bool impl_has(const point& p) const
+    {
+      return bb_.has(p);
+    }
+
+  protected:
+
+    bbox_<point> bb_;
+
+  };
+
 
 } // end of namespace oln
 
 
-# include <oln/core/abstract/topo_ra.hh>
-# include <oln/core/abstract/topo_with_bbox.hh>
-
-
-
-#endif // ! OLENA_CORE_ABSTRACT_TOPO_HIERARCHIES_HH
-
+#endif // ! OLENA_CORE_GEN_TOPO_BBOX_HH

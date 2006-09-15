@@ -105,6 +105,7 @@ namespace oln
 
   mlc_decl_typedef(fixed_type);
   mlc_decl_typedef(ra_type);
+  mlc_decl_typedef(is_random_accessible_type);
   mlc_decl_typedef(cnx_type);
 
 

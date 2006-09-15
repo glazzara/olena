@@ -1,5 +1,26 @@
 2006-09-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Adapt topology hierarchy to new naming convention.
+	
+	* oln/core/topo_entry.hh: Rename into...
+	* oln/core/topology_entry.hh: ...this.
+	* oln/core/abstract/topo.hh: Rename into...
+	* oln/core/abstract/topology.hh: ...this.
+	* oln/core/abstract/topo_with_bbox.hh: Rename into...
+	* oln/core/abstract/topology_having_bbox.hh: ...this.
+	* oln/core/abstract/topo_hierarchies.hh: Rename into...
+	* oln/core/abstract/topology_hierarchies.hh: ...this.
+	* oln/core/abstract/topo_ra.hh: Rename into...
+	* oln/core/abstract/topology_being_random_accessible.hh: ...this.
+	* oln/core/gen/bbox_topo.hh: Rename into...
+	* oln/core/gen/topo_bbox.hh: ...this.
+	* oln/core/typedefs.hh (is_random_accessible_type): New.
+	* oln/core/2d/aliases.hh: Update.
+	* oln/basics2d.hh: Update.
+	* oln/Makefile.am: Update.
+
+2006-09-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add operator- to n-dimensional dpoint types.
 	
 	* oln/core/traits_id.hh (op_uminus_dpointnd): New.

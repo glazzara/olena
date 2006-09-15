@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPO_RA_HH
-# define OLENA_CORE_ABSTRACT_TOPO_RA_HH
+#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+# define OLENA_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
 
-# include <oln/core/abstract/topo.hh>
+# include <oln/core/abstract/topology.hh>
 
 
 
@@ -40,7 +40,7 @@ namespace oln
 
 
     template <typename E>
-    class ra_topo : public virtual topo<E>
+    class topology_being_random_accessible : public virtual topology<E>
     {
       typedef oln_type_of(E, point) point_t;
 
@@ -52,7 +52,8 @@ namespace oln
       }
 
     protected:
-      ra_topo()
+
+      topology_being_random_accessible()
       {}
     };
 
@@ -61,14 +62,14 @@ namespace oln
 
 
   template <typename E>
-  struct case_ < topo_ra_hierarchy, E, 1 >
-    : where_< mlc::eq_< oln_type_of(E, ra), mlc::true_ > >
+  struct case_ < topology_hierarchy_wrt_accessibility, E, 1 >
+    : where_< mlc::eq_< oln_type_of(E, is_random_accessible), mlc::true_ > >
   {
-    typedef abstract::ra_topo<E> ret;
+    typedef abstract::topology_being_random_accessible<E> ret;
   };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_TOPO_RA_HH
+#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH

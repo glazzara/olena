@@ -25,42 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_TOPO_ENTRY_HH
-# define OLENA_CORE_TOPO_ENTRY_HH
+#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
+# define OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
 
-# include <oln/core/abstract/entry.hh>
-# include <oln/core/abstract/topo.hh>
-
+# include <oln/core/abstract/topology.hh>
 
 
 namespace oln
 {
 
-
-  /// Entry class for point sets: topo_entry<E> is an alias for
-  /// entry< abstract::topo, E>.
-
-  template <typename E>
-  struct topo_entry : public entry< abstract::topo, E>
-  {
-  protected:
-    topo_entry() {}
-  };
-
-
-  /// Virtual types associated to topo_entry<E>.
-
-  template <typename E>
-  struct vtypes< topo_entry<E> >
-  {
-    typedef mlc::undefined bbox_type;
-    typedef mlc::undefined ra_type;
-
-    typedef mlc::undefined point_type;
-  };
-
+  typedef  hierarchy< abstract::topology, 1 >  topology_hierarchy_wrt_accessibility;
+  typedef  hierarchy< abstract::topology, 2 >  topology_hierarchy_wrt_bbox;
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_TOPO_ENTRY_HH
+// hierarchy 1: topology wrt accessibility
+# include <oln/core/abstract/topology_being_random_accessible.hh>
+
+// hierarchy 2: topology wrt bbox
+# include <oln/core/abstract/topology_having_bbox.hh>
+
+
+
+#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
+

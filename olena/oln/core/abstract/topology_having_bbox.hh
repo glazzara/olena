@@ -25,71 +25,57 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_GEN_BBOX_TOPO_HH
-# define OLENA_CORE_GEN_BBOX_TOPO_HH
+#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH
+# define OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH
 
-# include <oln/core/gen/bbox.hh>
-# include <oln/core/topo_entry.hh>
-
+# include <oln/core/abstract/topology.hh>
 
 
 namespace oln
 {
 
-
-  // Forward declarations.
-  template <typename point> class bbox_topo_;
-
-
-  // Super type declaration.
-  template <typename point>
-  struct set_super_type< bbox_topo_<point> >
+  namespace abstract
   {
-    typedef bbox_topo_<point> self_t;
-    typedef topo_entry<self_t> ret;
-  };
 
 
-  /// Virtual types associated to oln::bbox_<point>.
-  template <typename point>
-  struct vtypes< bbox_topo_<point> >
+    template <typename E>
+    class topology_having_bbox : public virtual topology<E>
+    {
+      typedef oln_type_of(E, bbox)  bbox_t;
+      
+    public:
+
+      // abstract
+      const bbox_t& bbox() const
+      {
+	return this->exact().impl_bbox();
+      }
+
+      // concrete
+      operator bbox_t() const
+      {
+	return this->bbox();
+      }
+
+    protected:
+
+      topology_having_bbox()
+      {}
+    };
+
+
+  } // end of namespace oln::abstract
+
+
+  template <typename E>
+  struct case_ < topology_hierarchy_wrt_bbox, E, 1 >
+    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
   {
-    typedef bbox_<point> bbox_type;
-    typedef point        point_type;
-    typedef mlc::true_   ra_type;
-  };
-
-
-  /// Bounding box topology based on a point class.
-  template <typename point>
-  class bbox_topo_ : public topo_entry< bbox_topo_<point> >
-  {
-    typedef bbox_<point> bbox_t;
-
-  public:
-
-    bbox_topo_()
-    {
-    }
-
-    bbox_topo_(const bbox_t& bb)
-      : bb_(bb)
-    {
-    }
-
-    const bbox_t& impl_bbox() const
-    {
-      return bb_;
-    }
-
-  protected:
-
-    bbox_<point> bb_;
-
+    typedef abstract::topology_having_bbox<E> ret;
   };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_GEN_BBOX_TOPO_HH
+#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH

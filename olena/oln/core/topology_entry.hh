@@ -25,57 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPO_WITH_BBOX_HH
-# define OLENA_CORE_ABSTRACT_TOPO_WITH_BBOX_HH
+#ifndef OLENA_CORE_TOPOLOGY_ENTRY_HH
+# define OLENA_CORE_TOPOLOGY_ENTRY_HH
 
-# include <oln/core/abstract/topo.hh>
+# include <oln/core/abstract/entry.hh>
+# include <oln/core/abstract/topology.hh>
+
 
 
 namespace oln
 {
 
-  namespace abstract
-  {
 
-
-    template <typename E>
-    class topo_with_bbox : public virtual topo<E>
-    {
-      typedef oln_type_of(E, bbox)  bbox_t;
-      
-    public:
-
-      // abstract
-      const bbox_t& bbox() const
-      {
-	return this->exact().impl_bbox();
-      }
-
-      // concrete
-      operator bbox_t() const
-      {
-	return this->bbox();
-      }
-
-    protected:
-
-      topo_with_bbox()
-      {}
-    };
-
-
-  } // end of namespace oln::abstract
-
+  /// Entry class for point sets: topology_entry<E> is an alias for
+  /// entry< abstract::topology, E>.
 
   template <typename E>
-  struct case_ < topo_with_bbox_hierarchy, E, 1 >
-    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+  struct topology_entry : public entry< abstract::topology, E>
   {
-    typedef abstract::topo_with_bbox<E> ret;
+  protected:
+    topology_entry() {}
+  };
+
+
+  /// Virtual types associated to topology_entry<E>.
+
+  template <typename E>
+  struct vtypes< topology_entry<E> >
+  {
+    typedef mlc::undefined point_type;
+    typedef mlc::undefined bbox_type;
+
+    typedef mlc::undefined is_random_accessible_type;
   };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_TOPO_WITH_BBOX_HH
+#endif // ! OLENA_CORE_TOPOLOGY_ENTRY_HH

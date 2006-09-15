@@ -47,8 +47,8 @@ namespace oln { template class fwd_piter_<point2d>; }
 # include <oln/core/gen/bkd_piter.hh>
 namespace oln { template class bkd_piter_<point2d>; }
 
-# include <oln/core/gen/bbox_topo.hh>
-namespace oln { template class bbox_topo_<point2d>; }
+# include <oln/core/gen/topo_bbox.hh>
+namespace oln { template class topo_bbox_<point2d>; }
 
 
 # include <oln/core/2d/image2d.hh>
