@@ -227,6 +227,21 @@ namespace stc
   };									      \
 									      \
 									      \
+  /* ----------------------------------------- */			      \
+  /* Automatically retrieved implementations.  */			      \
+  /* ----------------------------------------- */			      \
+									      \
+  /** Default (empty) automatic implementation.  */			      \
+  namespace automatic {							      \
+									      \
+    template <typename abstraction, typename tag, typename E>		      \
+    class impl								      \
+    {									      \
+    };									      \
+									      \
+  } /* end of namespace automatic */					      \
+									      \
+									      \
   /* --------------- */							      \
   /* Virtual types.  */							      \
   /* --------------- */							      \

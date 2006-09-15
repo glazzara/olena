@@ -1,6 +1,14 @@
+2006-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a default (empty) class for automatically retrieved
+	implementations.
+
+	* stc/vtypes.hh (automatic::impl): New.
+
 2006-09-13  Roland Levillain  <roland@lrde.epita.fr>
 
-	Improve the static error messages of the virtual type retrieval mechanism.
+	Improve the static error messages of the virtual type retrieval
+	mechanism.
 
 	* stc/vtypes.hh
 	(VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE)
