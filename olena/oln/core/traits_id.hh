@@ -39,7 +39,7 @@ namespace oln
 
 
     /// \{
-    /// Identifiers for oln operators +.
+    /// Identifiers for oln binary operators +.
 
     enum {
       op_plus_pointnd_dpointnd = 1
@@ -50,11 +50,22 @@ namespace oln
 
 
     /// \{
-    /// Identifiers for oln operators -.
+    /// Identifiers for oln binary operators -.
 
     enum {
       op_minus_pointnd_pointnd  = 1,
       op_minus_pointnd_dpointnd = 2
+    };
+
+    /// \}
+
+
+
+    /// \{
+    /// Identifiers for oln unary operators -.
+
+    enum {
+      op_uminus_dpointnd = 1
     };
 
     /// \}

@@ -1,3 +1,13 @@
+2006-09-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add operator- to n-dimensional dpoint types.
+	
+	* oln/core/traits_id.hh (op_uminus_dpointnd): New.
+	* oln/core/abstract/dpoint_nd.hh (operator-): New.
+	(impl_less): New.
+	(case_): New case for operator-.
+	* oln/core/2d/dpoint2d.hh (dpoint2d_): New ctor.
+
 2006-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a missing file to the distribution.

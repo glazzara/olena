@@ -79,6 +79,12 @@ namespace oln
     {
     }
 
+    /// Ctor.
+    dpoint2d_(coord_t row, coord_t col)
+      : super_t(xtd::mk_vec(row, col))
+    {
+    }
+
     coord_t  row() const { return v_[0]; }
     coord_t& row()       { return v_[0]; }
 

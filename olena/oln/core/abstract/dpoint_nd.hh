@@ -31,6 +31,7 @@
 
 # include <mlc/value.hh>
 # include <xtd/vec.hh>
+# include <stc/exact.hh>
 # include <oln/core/abstract/dpoint.hh>
 
 
@@ -55,6 +56,7 @@ namespace oln
     template <typename E>
     class dpoint_nd : public abstract::dpoint<E>
     {
+      typedef E exact_t;
       typedef dpoint_nd<E> self_t;
       typedef oln_type_of(E, dim) dim;
       typedef oln_type_of(E, coord) coord_t;
@@ -85,6 +87,17 @@ namespace oln
 	return v_;
       }
 
+      exact_t operator-() const
+      {
+	exact_t tmp(-v_);
+	return tmp;
+      }
+
+      bool impl_less(const self_t& rhs) const
+      {
+	return xtd::lexi_less(v_, rhs.vec());
+      }
+
     protected:
 
       /// Ctor.
@@ -100,6 +113,18 @@ namespace oln
     };
 
   } // end of namespace oln::abstract
+
+
+
+  /// - abstract::dpoint_nd
+  template <typename D>
+  struct case_ < xtd::op_uminus, D,
+		 oln::id::op_uminus_dpointnd >
+    : where_< mlc_is_a(D, abstract::dpoint_nd) >
+  {
+    typedef stc_to_exact(D) ret;
+  };
+
 
 
 } // end of namespace oln
