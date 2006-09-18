@@ -232,7 +232,7 @@ namespace oln
 
   /// Binary case.
   template <typename E>
-  struct case_< image_type_hierarchy, E, 1 > :
+  struct case_< image_hierarchy_wrt_type, E, 1 > :
     where_< mlc::eq_< oln_type_of(E, value), bool > >
   {
     // Definition of the super class corresponding to this case.
@@ -241,7 +241,7 @@ namespace oln
 
   /// Grey-level case.
   template <typename E>
-  struct case_< image_type_hierarchy, E, 2 > :
+  struct case_< image_hierarchy_wrt_type, E, 2 > :
     where_< mlc::or_list_< mlc::eq_<oln_type_of(E, value),          char>,
 			   mlc::eq_<oln_type_of(E, value),   signed char>,
 			   mlc::eq_<oln_type_of(E, value), unsigned char> > >
@@ -259,7 +259,7 @@ namespace oln
 
   /// Default case: image of ``data''.
   template <typename E>
-  struct default_case_< image_type_hierarchy, E >
+  struct default_case_< image_hierarchy_wrt_type, E >
   {
     // Definition of the super class corresponding to this case
     // (abstract::data_image_ is the conjunction of

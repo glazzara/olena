@@ -1,3 +1,60 @@
+2006-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add the first two morphers: identity and neighborhood addition.
+
+	* oln/core/typedefs.hh (morpher_type, neighborhood_type): New
+	typedef declarations.
+	(neighb_type, image_neighbness_type, image_constness_type)
+	(image_dimension_type, image_typeness_type)
+	(image_valuedness_type, image_rawness_type): Remove typedef
+	declarations.
+	* oln/core/image_entry.hh
+	(single_vtype<image_entry<E>, typedef_::morpher_type>): New
+	virtual type.
+	* oln/core/abstract/image.hh: Check it.
+
+	* oln/core/abstract/image_hierarchies.hh
+	(image_dimension_hierarchy, image_type_hierarchy): Rename as...
+	(image_hierarchy_wrt_dimension, image_hierarchy_wrt_type):
+	...this.
+	(image_neighborhood_hierarchy): Make it the third image hierarchy.
+	Rename as...
+	(image_hierarchy_wrt_neighborhood).
+	(image_value_hierarchy, image_rawness_hierarchy): Adjust and
+	rename as...
+	(image_hierarchy_wrt_value, image_hierarchy_wrt_data_retrieval):
+	...this.	
+	(oln/core/abstract/image_having_neighborhood.hh): Include it.
+	* oln/core/abstract/image_dimension.hh:
+	s/image_dimension_hierarchy/image_hierarchy_wrt_dimension/.
+	(oln::abstract::image1d, oln::abstract::image2d)
+	(oln::abstract::image3d): Inherit from automatic::impl.
+	* oln/core/abstract/image_type.hh,
+	* oln/core/abstract/image_type_integre.hh:
+	s/image_type_hierarchy/image_hierarchy_wrt_type/.
+	* oln/core/abstract/image_having_neighborhood.hh: New
+	abstraction.
+	* oln/automatic/image_having_neighborhood.hh: New automatic
+	implementation.
+
+	* oln/morpher/internal/image_extension.hh: New abstract
+	class.
+	* oln/morpher/identity.hh,
+	* oln/morpher/add_neighborhood.hh: New morphers.
+	* tests/morphers.cc, tests/identity_morpher.cc: New tests.
+
+	* oln/Makefile.am (nobase_oln_HEADERS): Catch up with renamings
+	from the previous patches.
+	Add automatic/image_having_neighborhood.hh,
+	core/abstract/image_having_neighborhood.hh,
+	morpher/internal/image_extension.hh,
+	morpher/add_neighborhood.hh and
+	morpher/identity.hh.
+	* tests/Makefile.am (check_PROGRAMS): Add identity_morpher and
+	morphers.
+	(identity_morpher_SOURCES, morphers_SOURCES): New.
+	* oln/core/abstract/topology_hierarchies.hh: Aesthetic changes.
+
 2006-09-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Rename bbox point iterators.
@@ -231,7 +288,7 @@
 	* oln/core/abstract/image.hh: ...here.
 	* oln/core/case.hh: New file.
 	* oln/core/abstract/image_abstractions.hh,
-	* olena/oln/core/abstract/entry.hh,
+	* oln/core/abstract/entry.hh,
 	* oln/core/traits.hh: Use it.
 	* oln/Makefile.am (nobase_oln_HEADERS): Add core/case.hh.
 

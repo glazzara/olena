@@ -51,7 +51,7 @@
 
                                       o 
                                       | 
-                 /switch_<image_dimension_hierarchy, I>::ret/
+               /switch_<image_hierarchy_wrt_dimension, I>::ret/
                           (image dimension selector)
                                       ^
                                       |
@@ -81,7 +81,9 @@ namespace oln
 
     /// Class of 1-D images.
     template <typename E>
-    struct image1d : public virtual image<E>
+    struct image1d :
+      public virtual image<E>,
+      public automatic::impl< image1d, oln_type_of(E, morpher), E>
     {
     protected:
       /// Constructor (protected, empty).
@@ -90,7 +92,9 @@ namespace oln
 
     /// Class of 2-D images.
     template <typename E>
-    struct image2d : public virtual image<E>
+    struct image2d :
+      public virtual image<E>,
+      public automatic::impl< image2d, oln_type_of(E, morpher), E>
     {
     protected:
       /// Constructor (protected, empty).
@@ -99,7 +103,9 @@ namespace oln
  
     /// Class of 3-D images.
     template <typename E>
-    struct image3d : public virtual image<E>
+    struct image3d :
+      public virtual image<E>,
+      public automatic::impl< image3d, oln_type_of(E, morpher), E>
     {
     protected:
       /// Constructor (protected, empty).
@@ -125,7 +131,7 @@ namespace oln
 
   /// 1-D case.
   template <typename E>
-  struct case_< image_dimension_hierarchy, E, 1 > :
+  struct case_< image_hierarchy_wrt_dimension, E, 1 > :
     where_< mlc::eq_< oln_type_of(E, grid), oln::grid1d > >
   {
     typedef abstract::image1d<E> ret;
@@ -133,7 +139,7 @@ namespace oln
 
   /// 2-D case.
   template <typename E>
-  struct case_< image_dimension_hierarchy, E, 2 > :
+  struct case_< image_hierarchy_wrt_dimension, E, 2 > :
     where_< mlc::eq_< oln_type_of(E, grid), oln::grid2d > >
   {
     typedef abstract::image2d<E> ret;
@@ -141,7 +147,7 @@ namespace oln
 
   /// 3-D case.
   template <typename E>
-  struct case_< image_dimension_hierarchy, E, 3 > :
+  struct case_< image_hierarchy_wrt_dimension, E, 3 > :
     where_< mlc::eq_< oln_type_of(E, grid), oln::grid3d > >
   {
     typedef abstract::image3d<E> ret;

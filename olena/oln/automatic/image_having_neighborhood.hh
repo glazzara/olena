@@ -25,28 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
-# define OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
+#ifndef OLENA_AUTOMATIC_IMAGE_HAVING_NEIGHBORDHOOD_HH
+# define OLENA_AUTOMATIC_IMAGE_HAVING_NEIGHBORDHOOD_HH
 
-# include <oln/core/abstract/topology.hh>
-
+# include <oln/core/typedefs.hh>
+# include <oln/morphers/identity.hh>
+# include <oln/core/abstract/image_dimension.hh>
 
 namespace oln
 {
+  namespace automatic
+  {
 
-  typedef  hierarchy< abstract::topology, 1 >  topology_hierarchy_wrt_accessibility;
-  typedef  hierarchy< abstract::topology, 2 >  topology_hierarchy_wrt_bbox;
+    /// Implementation corresponding to the interface
+    /// oln::abstract::image1d for an identity morpher.
+    template <abstract::image_having_neighborhood, morpher::tag::identity,
+	      typename E>
+    class impl
+    {
+    private:
+      typedef oln_type_of(E, neighborhood) neighborhood_t;
 
+    public:
+      /// Accessor delegation.
+      neighborhood_t impl_neighborhood()
+      {
+	return delegate().impl_neighborhood()
+
+      }
+    };
+
+  } // end of namespace automatic
+  
 } // end of namespace oln
 
-
-// Hierarchy 1: topology w.r.t. accessibility.
-# include <oln/core/abstract/topology_being_random_accessible.hh>
-
-// Hierarchy 2: topology w.r.t. bbox.
-# include <oln/core/abstract/topology_having_bbox.hh>
-
-
-
-#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
-
+#endif // ! OLENA_AUTOMATIC_IMAGE_HAVING_NEIGHBORDHOOD_HH

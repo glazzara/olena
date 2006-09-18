@@ -25,28 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
-# define OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
+/// Test the identity morpher.
 
-# include <oln/core/abstract/topology.hh>
+// FIXME: We should not include oln/basics2d.hh, but oln/core/2d/image2d.hh.
+#include <oln/basics2d.hh>
+#include <oln/morpher/identity.hh>
+#include <oln/morpher/add_neighborhood.hh>
 
-
+// FIXME: Fake!
+// To be removed as soon as neighborhood2d is written.
 namespace oln
 {
+  struct neighborhood2d {};
+}
 
-  typedef  hierarchy< abstract::topology, 1 >  topology_hierarchy_wrt_accessibility;
-  typedef  hierarchy< abstract::topology, 2 >  topology_hierarchy_wrt_bbox;
+int
+main()
+{
+  typedef oln::image2d<int> image_t;
+  image_t ima (42, 51);
 
-} // end of namespace oln
+  typedef oln::morpher::add_neighborhood<image_t> image_with_nbh_t;
+  // FIXME: Using `oln_type_of_(image_t, neighborhood)' seems
+  // mandatory here.  In fact, we cannot use oln::neighborhood2d
+  // directly like this
+  //
+  //   oln::neighborhood2d nbh;
+  //
+  // since it confuses the compiler (g++ 4.0)!
+  typedef oln_type_of_(image_t, neighborhood) neighborhood_t;
+  neighborhood_t nbh;
+  image_with_nbh_t ima_with_nbh(ima, nbh);
 
-
-// Hierarchy 1: topology w.r.t. accessibility.
-# include <oln/core/abstract/topology_being_random_accessible.hh>
-
-// Hierarchy 2: topology w.r.t. bbox.
-# include <oln/core/abstract/topology_having_bbox.hh>
-
-
-
-#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
-
+  typedef oln::morpher::identity<image_with_nbh_t> image_with_nbh_id_t;
+  image_with_nbh_id_t ima_with_nbh_id(ima_with_nbh);
+}

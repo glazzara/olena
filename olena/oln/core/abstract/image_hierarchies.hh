@@ -34,23 +34,28 @@
 namespace oln
 {
 
-  typedef hierarchy<abstract::image, 1> image_dimension_hierarchy;
-  typedef hierarchy<abstract::image, 2> image_type_hierarchy;
+  typedef hierarchy<abstract::image, 1> image_hierarchy_wrt_dimension;
+  typedef hierarchy<abstract::image, 2> image_hierarchy_wrt_type;
+  typedef hierarchy<abstract::image, 3> image_hierarchy_wrt_neighborhood;
 
   // FIXME: To be continued.
 #if 0
-  typedef hierarchy<abstract::image, 3> image_value_hierarchy;
-  // FIXME: Rename (``rawness'' means ``crudité'' in French...).
-  typedef hierarchy<abstract::image, 4> image_rawness_hierarchy;
-  typedef hierarchy<abstract::image, 5> image_neighborhood_hierarchy;
+  typedef hierarchy<abstract::image, 4> image_hierarchy_wrt_value;
+  typedef hierarchy<abstract::image, 5> image_hierarchy_wrt_data_retrieval;
   // ...
 #endif
 
 } // end of namespace oln
 
 
+// Hierarchy 1: topology w.r.t. dimension.
 # include <oln/core/abstract/image_dimension.hh>
+
+// Hierarchy 2: topology w.r.t. type of data.
 # include <oln/core/abstract/image_type.hh>
+
+// Hierarchy 3: topology w.r.t. neighborhood.
+# include <oln/core/abstract/image_having_neighborhood.hh>
 
 
 #endif // ! OLENA_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH

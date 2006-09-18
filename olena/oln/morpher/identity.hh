@@ -25,28 +25,73 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
-# define OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
+#ifndef OLENA_MORPHER_IDENTITY
+# define OLENA_MORPHER_IDENTITY
 
-# include <oln/core/abstract/topology.hh>
+# include <oln/morpher/internal/image_extension.hh>
 
 
 namespace oln
 {
 
-  typedef  hierarchy< abstract::topology, 1 >  topology_hierarchy_wrt_accessibility;
-  typedef  hierarchy< abstract::topology, 2 >  topology_hierarchy_wrt_bbox;
+  namespace morpher
+  {
+    // Forward declaration.
+    template <typename Image>
+    struct identity;
+
+
+    namespace tag
+    {
+      /// Tag associated to oln::morpher::identity.
+      struct identity;
+    
+    } // end of namespace oln::morpher::tag
+
+  } // end of namespace oln::morpher
+
+
+  /// Super type.
+  template <typename Image>
+  struct set_super_type< morpher::identity<Image> >
+  {
+    typedef morpher::identity<Image> self_t;
+    typedef morpher::internal::image_extension<Image, self_t> ret;
+  };
+
+
+  /// New virtual types associated with oln::morpher::identity.
+  /// \{
+  template <typename Image>
+  struct single_vtype < morpher::identity<Image>, typedef_::morpher_type >
+  {
+    typedef oln::morpher::tag::identity ret;
+  };
+  /// \}
+
+
+  namespace morpher
+  {
+    /// Identity morpher.
+    template <typename Image>
+    // FIXME: 
+    class identity : public stc_get_supers(identity<Image>)
+    {
+    private:
+      typedef identity<Image> self_t;
+      typedef stc_get_nth_super(self_t, 1) super_t;
+
+    public:
+      // FIXME: Handle the constness.
+      identity(const Image& image) :
+	super_t(image)
+      {
+      }
+
+    };
+
+  } // end of namespace oln::morpher
 
 } // end of namespace oln
 
-
-// Hierarchy 1: topology w.r.t. accessibility.
-# include <oln/core/abstract/topology_being_random_accessible.hh>
-
-// Hierarchy 2: topology w.r.t. bbox.
-# include <oln/core/abstract/topology_having_bbox.hh>
-
-
-
-#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
-
+#endif // ! OLENA_MORPHER_IDENTITY

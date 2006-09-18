@@ -77,6 +77,8 @@ namespace oln
 
 	stc_virtual_typedef(concrete);
 
+	stc_virtual_typedef(morpher);
+
 	decl() {
 	  // FIXME: ...
 	}

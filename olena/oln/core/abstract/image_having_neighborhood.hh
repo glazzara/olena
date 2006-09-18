@@ -25,84 +25,77 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_IMAGE_ENTRY_HH
-# define OLENA_CORE_IMAGE_ENTRY_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_HAVING_NEIGHBORHOOD_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_HAVING_NEIGHBORHOOD_HH
 
-# include <oln/core/abstract/entry.hh>
 # include <oln/core/abstract/image.hh>
 
+
+/* Image having neighborhood hierarchy (summary).
+
+
+FIXME: TODO!
+
+
+  Default case: If the neighborhood type returned by
+  `oln_type_of(I, neighborhood)', the entry is directly plugged to
+  abstract::image<I>.  */
 
 
 namespace oln
 {
+ 
+  /*-------------------------.
+  | Dimension abstractions.  |
+  `-------------------------*/
 
-
-  /// Entry class for point sets: image_entry<E> is an alias for
-  /// entry< abstract::image, E>.
-
-  template <typename E>
-  struct image_entry : public entry<abstract::image, E>
+  namespace abstract
   {
-  protected:
-    image_entry() {}
+
+    /// Class of 1-D images.
+    template <typename E>
+    struct image_having_neighborhood :
+      public virtual image<E>,
+      public automatic::impl< image_having_neighborhood,
+			      oln_type_of(E, morpher),
+			      E >
+    {
+    protected:
+      /// Constructor (protected, empty).
+      image_having_neighborhood() {}
+    };
+ 
+  } // end of namespace oln::abstract
+
+
+  /*-------------------.
+  | Dimension switch.  |
+  `-------------------*/
+
+  /// With neig
+  template <typename E>
+  struct case_< image_hierarchy_wrt_neighborhood, E, 1 > :
+    where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::none > >
+  {
+    typedef abstract::image_having_neighborhood<E> ret;
   };
 
 
-  /// Virtual types associated to image_entry<E>.
+  /*-----------------.
+  | External vtype.  |
+  `-----------------*/
 
+  // Forward declaration.
+  template <typename E> struct image_entry;
+
+  /// Neighborhood type, as extended virtual type.
   template <typename E>
-  struct vtypes< image_entry<E> >
-  {
-    typedef mlc::undefined topo_type;
-    typedef mlc::undefined grid_type;
-
-    // psite_type: see below.
-    typedef mlc::undefined point_type;
-    
-    // piter_type: see below.
-    typedef mlc::undefined fwd_piter_type;
-    typedef mlc::undefined bkd_piter_type;
-    
-    typedef mlc::undefined value_type;
-    // rvalue_type: see below.
-    
-    typedef mlc::undefined concrete_type;
-
-    // morpher_type: see below.
-  };
-
-
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::psite_type >
-  {
-    typedef oln_type_of(E, point) ret;
-  };
-
-
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::piter_type >
-  {
-    typedef oln_type_of(E, fwd_piter) ret;
-  };
-
-
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::rvalue_type >
-  {
-    typedef oln_type_of(E, value) ret;
-  };
-
-  /// \brief Morpher type.
-  ///
-  /// Optionally contains a tag indicating a kind of morpher.
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::morpher_type >
+  struct ext_vtype < image_entry<E>, typedef_::neighborhood_type >
   {
     typedef mlc::none ret;
   };
 
-
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_IMAGE_ENTRY_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_HAVING_NEIGHBORHOOD_HH

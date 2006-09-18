@@ -65,6 +65,7 @@ namespace oln
   `-------*/
 
   mlc_decl_typedef(exact_type);
+  mlc_decl_typedef(morpher_type);
   
 
   /*----------.
@@ -119,16 +120,19 @@ namespace oln
 // --------------------------------------------------------------------
   mlc_decl_typedef(value_type);
   mlc_decl_typedef(rvalue_type);
+
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
-//   mlc_decl_typedef(neighb_type);
 //   mlc_decl_typedef(value_storage_type);
 //   mlc_decl_typedef(storage_type);
 // --------------------------------------------------------------------
   mlc_decl_typedef(psite_type);
   mlc_decl_typedef(point_type);
   mlc_decl_typedef(dpoint_type);
+
+  mlc_decl_typedef(neighborhood_type);
+
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
@@ -144,17 +148,6 @@ namespace oln
 // FIXME: To be enabled later.
 // --------------------------------------------------------------------
 //   mlc_decl_typedef(window_type);
-
-//   mlc_decl_typedef(image_neighbness_type);
-//   mlc_decl_typedef(image_constness_type);
-// --------------------------------------------------------------------
-  mlc_decl_typedef(image_dimension_type);
-  mlc_decl_typedef(image_typeness_type);
-// --------------------------------------------------------------------
-// FIXME: To be enabled later.
-// --------------------------------------------------------------------
-//   mlc_decl_typedef(image_valuedness_type);
-//   mlc_decl_typedef(image_rawness_type);
 // --------------------------------------------------------------------
 
   // ------------------------------ //

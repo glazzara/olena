@@ -25,28 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
-# define OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
+/// Test the identity morpher.
 
-# include <oln/core/abstract/topology.hh>
+// FIXME: We should not include oln/basics2d.hh, but oln/core/2d/image2d.hh.
+#include <oln/basics2d.hh>
+#include <oln/morpher/identity.hh>
 
-
-namespace oln
+int
+main()
 {
+  typedef oln::image2d<int> image_t;
+  image_t ima (42, 51);
 
-  typedef  hierarchy< abstract::topology, 1 >  topology_hierarchy_wrt_accessibility;
-  typedef  hierarchy< abstract::topology, 2 >  topology_hierarchy_wrt_bbox;
-
-} // end of namespace oln
-
-
-// Hierarchy 1: topology w.r.t. accessibility.
-# include <oln/core/abstract/topology_being_random_accessible.hh>
-
-// Hierarchy 2: topology w.r.t. bbox.
-# include <oln/core/abstract/topology_having_bbox.hh>
-
-
-
-#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
-
+  typedef oln::morpher::identity<image_t> image_id_t;
+  image_id_t ima_id(ima);
+}
