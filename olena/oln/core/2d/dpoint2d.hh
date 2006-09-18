@@ -30,7 +30,7 @@
 
 # include <mlc/int.hh>
 # include <oln/core/2d/point2d.hh>
-# include <oln/core/abstract/dpoint_nd.hh>
+# include <oln/core/internal/dpoint_nd.hh>
 
 
 namespace oln
@@ -45,7 +45,7 @@ namespace oln
 //   };
 
 
-  /// Virtual types associated to oln::abstract::image.
+  /// Virtual types associated to oln::dpoint2d_<C>.
   template <typename C>
   struct vtypes< dpoint2d_<C> >
   {
@@ -58,10 +58,10 @@ namespace oln
 
   /// General 2D dpoint class.
   template <typename C>
-  class dpoint2d_ : public abstract::dpoint_nd< dpoint2d_<C> > // FIXME: stc_get_super_(dpoint2d_<C>)
+  class dpoint2d_ : public internal::dpoint_nd< dpoint2d_<C> > // FIXME: stc_get_super_(dpoint2d_<C>)
   {
     typedef dpoint2d_<C>                self_t;
-    typedef abstract::dpoint_nd<self_t> super_t; // FIXME: stc_get_super(self)
+    typedef internal::dpoint_nd<self_t> super_t; // FIXME: stc_get_super(self_t)
     typedef oln_type_of(self_t, coord)  coord_t;
 
     using super_t::v_;

@@ -29,7 +29,7 @@
 #ifndef OLENA_CORE_GEN_BBOX_HH
 # define OLENA_CORE_GEN_BBOX_HH
 
-# include <oln/core/abstract/bbox.hh>
+# include <oln/core/point_set_entry.hh>
 # include <oln/core/abstract/point.hh>
 
 
@@ -47,7 +47,7 @@ namespace oln
   struct set_super_type< bbox_<point> >
   {
     typedef bbox_<point> self_t;
-    typedef abstract::bbox<self_t> ret;
+    typedef point_set_entry<self_t> ret;
   };
 
 
@@ -58,17 +58,23 @@ namespace oln
     typedef point point_type;
     typedef fwd_piter_<point> fwd_piter_type;
     typedef bkd_piter_<point> bkd_piter_type;
+
+    typedef bbox_<point> bbox_type;
+
+    typedef mlc::true_ is_random_accessible_type;
+    typedef mlc::true_ has_know_size_type;
+    typedef mlc::true_ is_connected_type;
   };
 
 
   /// Bounding box class based on a point class.
   template <typename point>
-  class bbox_ : public abstract::bbox< bbox_<point> >,
+  class bbox_ : public point_set_entry< bbox_<point> >,
 		private mlc::assert_< mlc_is_a(point, abstract::point) >
   {
     typedef point point_t;
     typedef bbox_<point> self_t;
-    typedef abstract::bbox<self_t> super_t;
+    typedef point_set_entry<self_t> super_t;
 
     typedef oln_type_of(point, coord) coord_t;
 

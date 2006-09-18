@@ -29,33 +29,11 @@
 #ifndef OLENA_CORE_ABSTRACT_BBOX_HH
 # define OLENA_CORE_ABSTRACT_BBOX_HH
 
-# include <oln/core/point_set_entry.hh>
+# include <oln/core/abstract/point_set_having_bbox.hh>
 
 
 namespace oln
 {
-
-  // Forward declaration.
-  namespace abstract { template <typename E> class bbox; }
-
-
-  // Super type declaration.
-  template <typename E>
-  struct set_super_type< abstract::bbox<E> >
-  {
-    typedef point_set_entry<E> ret;
-  };
-
-
-  /// Virtual types associated to oln::abstract::bbox<E>.
-  template <typename E>
-  struct vtypes< abstract::bbox<E> >
-  {
-    typedef mlc::true_ is_random_accessible_type;
-    typedef mlc::true_ has_know_size_type;
-    typedef mlc::true_ is_connected_type;
-    typedef E bbox_type;
-  };
 
 
   namespace abstract
@@ -63,10 +41,8 @@ namespace oln
 
     /// Abstract bbox (bounding box) class.
     template <typename E>
-    class bbox : public point_set_entry<E>
+    class bbox : public point_set_having_bbox<E>
     {
-      typedef oln_type_of(E, point) point_t;
-
     public:
 
       void print(std::ostream& ostr) const
@@ -92,27 +68,27 @@ namespace oln
       {
       }
 
-      ~bbox()
-      {
-	mlc::assert_defined_< point_t >::check();
-
-// 	typedef oln_type_of(E, fwd_piter) fwd_piter_t;
-// 	typedef oln_type_of(E, bkd_piter) bkd_piter_t;
-
-// 	mlc::assert_defined_< fwd_piter_t >::check();
-// 	mlc::assert_defined_< bkd_piter_t >::check();
-
-// 	mlc::assert_< mlc::eq_< oln_type_of(fwd_piter_t, grid),
-//                                 oln_type_of(point_t, grid) > >::check();
-
-// 	mlc::assert_< mlc::eq_< oln_type_of(bkd_piter_t, grid),
-//                                 oln_type_of(point_t, grid) > >::check();
-      }
-
     }; // end of class oln::abstract::bbox<E>
 
 
   } // end of namespace oln::abstract
+
+
+
+  template <typename E>
+  struct case_ < point_set_hierarchy_wrt_bbox, E, 1 >
+    : where_< mlc::eq_< oln_type_of(E, bbox), E > >
+  {
+    typedef abstract::bbox<E> ret;
+  };
+
+
+  template <typename E>
+  struct case_ < point_set_hierarchy_wrt_bbox, E, 2 >
+    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+  {
+    typedef abstract::point_set_having_bbox<E> ret;
+  };
 
 
 } // end of namespace oln

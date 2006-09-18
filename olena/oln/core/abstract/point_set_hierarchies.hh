@@ -45,6 +45,7 @@ namespace oln
 # include <oln/core/abstract/point_set_having_known_size.hh>
 # include <oln/core/abstract/point_set_being_random_accessible.hh>
 # include <oln/core/abstract/point_set_having_bbox.hh>
+# include <oln/core/abstract/bbox.hh>
 # include <oln/core/abstract/point_set_being_connected.hh>
 
 

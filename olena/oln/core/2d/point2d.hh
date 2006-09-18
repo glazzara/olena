@@ -29,7 +29,7 @@
 # define OLENA_CORE_2D_POINT2D_HH
 
 # include <mlc/int.hh>
-# include <oln/core/abstract/point_nd.hh>
+# include <oln/core/internal/point_nd.hh>
 
 
 namespace oln
@@ -43,7 +43,7 @@ namespace oln
   /// \}
 
 
-  /// Virtual types associated to oln::abstract::image.
+  /// Virtual types associated to oln::point2d_<C>.
   template <typename C>
   struct vtypes< point2d_<C> >
   {
@@ -56,10 +56,10 @@ namespace oln
 
   /// General 2D point class.
   template <typename C>
-  class point2d_ : public abstract::point_nd< point2d_<C> > // FIXME: stc_get_super_(point2d_<C>)
+  class point2d_ : public internal::point_nd< point2d_<C> > // FIXME: stc_get_super_(point2d_<C>)
   {
     typedef point2d_<C> self_t;
-    typedef abstract::point_nd<self_t> super_t;
+    typedef internal::point_nd<self_t> super_t;
 
     using super_t::v_;
 

@@ -62,6 +62,7 @@ namespace oln
     typedef mlc::none      bbox_type;
     typedef mlc::undefined is_random_accessible_type;
     typedef mlc::undefined has_known_size_type;
+    typedef mlc::undefined is_connected_type;
   };
 
 

@@ -1,5 +1,26 @@
 2006-09-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Move some abstract classes below entries into internal.
+	
+	* oln/core/abstract/point_nd.hh: Update and rename as...
+	* oln/core/internal/point_nd.hh: ...this.
+	* oln/core/abstract/dpoint_nd.hh: Update and rename as...
+	* oln/core/internal/dpoint_nd.hh: ...this.
+	* oln/core/point_set_entry.hh (is_connected_type): Add in vtypes.
+	* oln/core/abstract/bbox.hh: Change super class from point_set_entry
+	to point_set_having_bbox.
+	(vtypes): Remove.
+	(set_super_type): Remove.
+	* oln/core/abstract/point_set_hierarchies.hh (include): Update.
+	* oln/core/abstract/point_set_having_bbox.hh (case_): Move to...
+	* oln/core/abstract/bbox.hh: ...this file.
+	(case_): Refine for abstract::bbox.
+	* oln/core/2d/dpoint2d.hh: Update.
+	* oln/core/2d/point2d.hh: Update.
+	* oln/core/gen/bbox.hh: Update.
+	
+2006-09-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Rename point set related classes.
 	
 	* oln/core/pset_entry.hh: Update and rename as...

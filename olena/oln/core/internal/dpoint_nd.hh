@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_DPOINT_ND_HH
-# define OLENA_CORE_ABSTRACT_DPOINT_ND_HH
+#ifndef OLENA_CORE_INTERNAL_DPOINT_ND_HH
+# define OLENA_CORE_INTERNAL_DPOINT_ND_HH
 
 # include <mlc/value.hh>
 # include <xtd/vec.hh>
@@ -39,18 +39,18 @@ namespace oln
 {
 
   // Forward declaration.
-  namespace abstract { template <typename E> class dpoint_nd; }
+  namespace internal { template <typename E> class dpoint_nd; }
 
 
   // Super type declaration.
   template <typename E>
-  struct set_super_type< abstract::dpoint_nd<E> >
+  struct set_super_type< internal::dpoint_nd<E> >
   {
     typedef abstract::dpoint<E> ret;
   };
 
 
-  namespace abstract
+  namespace internal
   {
 
     template <typename E>
@@ -117,15 +117,15 @@ namespace oln
       xtd::vec<n,coord_t> v_;
     };
 
-  } // end of namespace oln::abstract
+  } // end of namespace oln::internal
 
 
 
-  /// - abstract::dpoint_nd
+  /// - internal::dpoint_nd
   template <typename D>
   struct case_ < xtd::op_uminus, D,
 		 oln::id::op_uminus_dpointnd >
-    : where_< mlc_is_a(D, abstract::dpoint_nd) >
+    : where_< mlc_is_a(D, internal::dpoint_nd) >
   {
     typedef stc_to_exact(D) ret;
   };
@@ -135,4 +135,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_DPOINT_ND_HH
+#endif // ! OLENA_CORE_INTERNAL_DPOINT_ND_HH

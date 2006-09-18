@@ -26,15 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_POINT_ND_HH
-# define OLENA_CORE_ABSTRACT_POINT_ND_HH
+#ifndef OLENA_CORE_INTERNAL_POINT_ND_HH
+# define OLENA_CORE_INTERNAL_POINT_ND_HH
 
 # include <xtd/vec.hh>
 # include <xtd/optraits.hh>
 # include <oln/core/traits_id.hh>
 
 # include <oln/core/abstract/point.hh>
-# include <oln/core/abstract/dpoint_nd.hh>
+# include <oln/core/internal/dpoint_nd.hh>
 
 
 namespace oln
@@ -51,19 +51,19 @@ namespace oln
 
 
   // Forward declaration.
-  namespace abstract { template <typename E> class point_nd; }
+  namespace internal { template <typename E> class point_nd; }
 
 
 
   // Super type declaration.
   template <typename E>
-  struct set_super_type< abstract::point_nd<E> >
+  struct set_super_type< internal::point_nd<E> >
   {
     typedef abstract::point<E> ret;
   };
 
 
-  namespace abstract
+  namespace internal
   {
 
     template <typename E>
@@ -150,11 +150,11 @@ namespace oln
       vec_t v_;
     };
 
-  } // end of namespace oln::abstract
+  } // end of namespace oln::internal
 
 
   template <typename E>
-  std::ostream& operator<<(std::ostream& ostr, const abstract::point_nd<E>& p)
+  std::ostream& operator<<(std::ostream& ostr, const internal::point_nd<E>& p)
   {
     ostr << p.vec();
     return ostr;
@@ -162,12 +162,12 @@ namespace oln
 
 
 
-  /// abstract::point_nd + abstract::dpoint_nd
+  /// internal::point_nd + internal::dpoint_nd
   template <typename P, typename D>
   struct case_ < xtd::op_plus, mlc::pair_<P,D>,
 		 oln::id::op_plus_pointnd_dpointnd >
-    : where_< mlc::and_< mlc_is_a(P, abstract::point_nd),
-                         mlc_is_a(D, abstract::dpoint_nd) > >
+    : where_< mlc::and_< mlc_is_a(P, internal::point_nd),
+                         mlc_is_a(D, internal::dpoint_nd) > >
   {
     typedef oln_type_of(P, coord) P_coord;
     typedef oln_type_of(D, coord) D_coord;
@@ -177,12 +177,12 @@ namespace oln
   };
 
 
-  /// abstract::point_nd - abstract::dpoint_nd
+  /// internal::point_nd - internal::dpoint_nd
   template <typename P, typename D>
   struct case_ < xtd::op_minus, mlc::pair_<P,D>,
 		 oln::id::op_minus_pointnd_dpointnd >
-    : where_< mlc::and_< mlc_is_a(P, abstract::point_nd),
-                         mlc_is_a(D, abstract::dpoint_nd) > >
+    : where_< mlc::and_< mlc_is_a(P, internal::point_nd),
+                         mlc_is_a(D, internal::dpoint_nd) > >
   {
     typedef oln_type_of(P, coord) P_coord;
     typedef oln_type_of(D, coord) D_coord;
@@ -192,12 +192,12 @@ namespace oln
   };
 
 
-  /// abstract::point_nd - abstract::point_nd
+  /// internal::point_nd - internal::point_nd
   template <typename P1, typename P2>
   struct case_ < xtd::op_minus, mlc::pair_<P1,P2>,
 		 oln::id::op_minus_pointnd_pointnd >
-    : where_< mlc::and_< mlc_is_a(P1, abstract::point_nd),
-                         mlc_is_a(P2, abstract::point_nd) > >
+    : where_< mlc::and_< mlc_is_a(P1, internal::point_nd),
+                         mlc_is_a(P2, internal::point_nd) > >
   {
     typedef oln_type_of(P1, coord) P1_coord;
     typedef oln_type_of(P2, coord) P2_coord;
@@ -210,4 +210,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_POINT_ND_HH
+#endif // ! OLENA_CORE_INTERNAL_POINT_ND_HH

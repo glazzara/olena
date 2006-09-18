@@ -55,6 +55,8 @@ namespace oln
 	return this->exact().impl_box();
       }
 
+      // FIXME: attributes should be removed from this abstract class.
+
       const point_t& pmin() const
       {
 	precondition(this->is_valid());
@@ -97,12 +99,8 @@ namespace oln
   } // end of namespace oln::abstract
 
 
-  template <typename E>
-  struct case_ < point_set_hierarchy_wrt_bbox, E, 1 >
-    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
-  {
-    typedef abstract::point_set_having_bbox<E> ret;
-  };
+  // an abstract sub-class of point_set_having_bbox<E> is abstract::bbox<E>;
+  // the switch-case mechanism is in oln/core/abstract/bbox.hh
 
 
 } // end of namespace oln
