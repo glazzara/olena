@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_PSET_BBOXED_HH
-# define OLENA_CORE_ABSTRACT_PSET_BBOXED_HH
+#ifndef OLENA_CORE_ABSTRACT_POINT_SET_BEING_CONNECTED_HH
+# define OLENA_CORE_ABSTRACT_POINT_SET_BEING_CONNECTED_HH
 
-# include <oln/core/abstract/pset.hh>
+# include <oln/core/abstract/point_set.hh>
 
 
 namespace oln
@@ -39,73 +39,44 @@ namespace oln
 
 
     template <typename E>
-    class bboxed_pset : public virtual pset<E>
+    class point_set_being_2d_connected : public virtual abstract::point_set<E>
     {
-      typedef oln_type_of(E, point) point_t;
-      typedef oln_type_of(E, bbox)  bbox_t;
-
-      typedef oln_type_of(point_t, coord) coord_t;
-      typedef oln_type_of(point_t, dim) dim_t;
-      enum { n = mlc_value(dim_t) };
-      
     public:
 
-      const bbox_t& bbox() const
-      {
-	return this->exact().impl_box();
-      }
-
-      const point_t& pmin() const
+      unsigned nrows() const
       {
 	precondition(this->is_valid());
-	return pmin_;
+	return this->exact().len(0);
       }
 
-      coord_t pmin(unsigned i) const
-      {
-	precondition(this->is_valid() and i < n);
-	return pmin_[i];
-      }
-
-      const point_t& pmax() const
+      unsigned ncols() const
       {
 	precondition(this->is_valid());
-	return pmax_;
-      }
-
-      coord_t pmax(unsigned i) const
-      {
-	precondition(this->is_valid() and i < n);
-	return pmax_[i];
-      }
-
-      unsigned len(unsigned i) const
-      {
-	precondition(this->is_valid() and i < n);
-	return pmax_[i] - pmin_[i] + 1;
+	return this->exact().len(1);
       }
 
     protected:
 
-      bboxed_pset()
+      point_set_being_2d_connected()
       {}
-
-      point_t pmin_, pmax_;
     };
 
 
   } // end of namespace oln::abstract
 
 
+
   template <typename E>
-  struct case_ < pset_bboxed_hierarchy, E, 1 >
-    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+  struct case_ < point_set_hierarchy_wrt_connectivity, E, 1 >
+    : where_< mlc::and_list_< mlc::neq_< oln_type_of(E, bbox), mlc::none >,
+			      mlc::eq_< oln_type_of(E, is_connected), mlc::true_ >,
+			      mlc::eq_< oln_type_of(E, grid), grid2d > > >
   {
-    typedef abstract::bboxed_pset<E> ret;
+    typedef abstract::point_set_being_2d_connected<E> ret;
   };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_PSET_BBOXED_HH
+#endif // ! OLENA_CORE_ABSTRACT_POINT_SET_BEING_CONNECTED_HH

@@ -99,14 +99,13 @@ namespace oln
 // --------------------------------------------------------------------
 
 
-  /*-----------------.
-  | category::pset.  |
-  `------------------*/
+  /*----------------------.
+  | category::point_set.  |
+  `-----------------------*/
 
-  mlc_decl_typedef(fixed_type);
-  mlc_decl_typedef(ra_type);
+  mlc_decl_typedef(has_known_size_type);
   mlc_decl_typedef(is_random_accessible_type);
-  mlc_decl_typedef(cnx_type);
+  mlc_decl_typedef(is_connected_type);
 
 
   /*------------------.

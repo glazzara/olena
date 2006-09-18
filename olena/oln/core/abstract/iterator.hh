@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_ITER_HH
-# define OLENA_CORE_ABSTRACT_ITER_HH
+#ifndef OLENA_CORE_ABSTRACT_ITERATOR_HH
+# define OLENA_CORE_ABSTRACT_ITERATOR_HH
 
 # include <oln/core/typedefs.hh>
 
@@ -41,8 +41,8 @@ namespace oln
 
     /// Abstract iterator class.
     template <typename E>
-    class iter : public stc::any__best_memory<E>,
-		 public oln::type
+    class iterator : public stc::any__best_memory<E>,
+		     public oln::type
     {
     public:
 
@@ -69,11 +69,11 @@ namespace oln
 
     protected:
       
-      iter()
+      iterator()
       {
       }
 
-    }; // end of class oln::abstract::iter<E>
+    }; // end of class oln::abstract::iterator<E>
 
 
   } // end of namespace oln::abstract
@@ -85,4 +85,4 @@ namespace oln
 #define for_all(i)  for (i.start(); i.is_valid(); i.next())
 
 
-#endif // ! OLENA_CORE_ABSTRACT_ITER_HH
+#endif // ! OLENA_CORE_ABSTRACT_ITERATOR_HH

@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_PSET_HH
-# define OLENA_CORE_ABSTRACT_PSET_HH
+#ifndef OLENA_CORE_ABSTRACT_POINT_SET_HAVING_KNOWN_SIZE_HH
+# define OLENA_CORE_ABSTRACT_POINT_SET_HAVING_KNOWN_SIZE_HH
 
-# include <oln/core/typedefs.hh>
+# include <oln/core/abstract/point_set.hh>
+
 
 
 namespace oln
@@ -38,64 +39,35 @@ namespace oln
   {
 
 
-    /// Abstract point class.
     template <typename E>
-    class pset : public virtual stc::any__simple<E>,
-		 public virtual oln::type
+    class point_set_having_known_size : public virtual point_set<E>
     {
     public:
 
-      bool is_valid() const
+      unsigned npoints() const
       {
-	return this->exact().impl_is_valid();
+	return this->exact().impl_npoints();
       }
 
-      struct decl
-      {
-	stc_virtual_typedef(point);
-
-	stc_virtual_typedef(piter);
-	stc_virtual_typedef(fwd_piter);
-	stc_virtual_typedef(bkd_piter);
-
-	stc_virtual_typedef(bbox);  // for being bboxed;  provides .bbox()
-	stc_virtual_typedef(ra);    // for random access; provides .has(p)
-	stc_virtual_typedef(fixed); // for fixed size;    provides .npoints()
-	stc_virtual_typedef(cnx);   // for connected;     provides, e.g., .nrows()
-
-	// derived from point:
-	stc_virtual_typedef(coord);
-	stc_virtual_typedef(grid);
-	stc_virtual_typedef(dim);
-
-	decl() {
-	  // coherence check:
-	  mlc::assert_equal_< oln_type_of(fwd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	  mlc::assert_equal_< oln_type_of(bkd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	}
-      };
-
     protected:
-
-      pset()
+      point_set_having_known_size()
       {}
-
-      ~pset() { decl(); }
-
-    }; // end of class oln::abstract::pset<E>
-
+    };
 
 
   } // end of namespace oln::abstract
 
+
+  template <typename E>
+  struct case_ < point_set_hierarchy_wrt_known_size, E, 1 >
+    : where_< mlc::eq_< oln_type_of(E, has_known_size), mlc::true_ > >
+  {
+    typedef abstract::point_set_having_known_size<E> ret;
+  };
+
+
 } // end of namespace oln
 
 
+#endif // ! OLENA_CORE_ABSTRACT_POINT_SET_HAVING_KNOWN_SIZE_HH
 
-# include <oln/core/abstract/pset_hierarchies.hh>
-
-
-
-#endif // ! OLENA_CORE_ABSTRACT_PSET_HH

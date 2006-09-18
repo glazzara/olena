@@ -25,29 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_PSET_HIERARCHIES_HH
-# define OLENA_CORE_ABSTRACT_PSET_HIERARCHIES_HH
+#ifndef OLENA_CORE_ABSTRACT_POINT_SET_BEING_RANDOM_ACCESSIBLE_HH
+# define OLENA_CORE_ABSTRACT_POINT_SET_BEING_RANDOM_ACCESSIBLE_HH
 
-# include <oln/core/abstract/pset.hh>
+# include <oln/core/abstract/point_set.hh>
+
 
 
 namespace oln
 {
 
-  typedef  hierarchy< abstract::pset, 1 >  pset_fixed_hierarchy;
-  typedef  hierarchy< abstract::pset, 2 >  pset_ra_hierarchy;
-  typedef  hierarchy< abstract::pset, 3 >  pset_bboxed_hierarchy;
-  typedef  hierarchy< abstract::pset, 4 >  pset_cnx_hierarchy;
+  namespace abstract
+  {
+
+
+    template <typename E>
+    class point_set_being_random_accessible : public virtual point_set<E>
+    {
+      typedef oln_type_of(E, point) point_t;
+
+    public:
+
+      bool has(const point_t& p) const
+      {
+	return this->exact().impl_has(p);
+      }
+
+    protected:
+      point_set_being_random_accessible()
+      {}
+    };
+
+
+  } // end of namespace oln::abstract
+
+
+  template <typename E>
+  struct case_ < point_set_hierarchy_wrt_accessibility, E, 1 >
+    : where_< mlc::eq_< oln_type_of(E, is_random_accessible), mlc::true_ > >
+  {
+    typedef abstract::point_set_being_random_accessible<E> ret;
+  };
+
 
 } // end of namespace oln
 
 
-# include <oln/core/abstract/pset_fixed.hh>
-# include <oln/core/abstract/pset_ra.hh>
-# include <oln/core/abstract/pset_bboxed.hh>
-# include <oln/core/abstract/pset_cnx.hh>
-
-
-
-#endif // ! OLENA_CORE_ABSTRACT_PSET_HIERARCHIES_HH
-
+#endif // ! OLENA_CORE_ABSTRACT_POINT_SET_BEING_RANDOM_ACCESSIBLE_HH

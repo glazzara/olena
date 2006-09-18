@@ -29,7 +29,7 @@
 #ifndef OLENA_CORE_ABSTRACT_BBOX_HH
 # define OLENA_CORE_ABSTRACT_BBOX_HH
 
-# include <oln/core/pset_entry.hh>
+# include <oln/core/point_set_entry.hh>
 
 
 namespace oln
@@ -43,7 +43,7 @@ namespace oln
   template <typename E>
   struct set_super_type< abstract::bbox<E> >
   {
-    typedef pset_entry<E> ret;
+    typedef point_set_entry<E> ret;
   };
 
 
@@ -51,9 +51,9 @@ namespace oln
   template <typename E>
   struct vtypes< abstract::bbox<E> >
   {
-    typedef mlc::true_ ra_type;
-    typedef mlc::true_ fixed_type;
-    typedef mlc::true_ cnx_type;
+    typedef mlc::true_ is_random_accessible_type;
+    typedef mlc::true_ has_know_size_type;
+    typedef mlc::true_ is_connected_type;
     typedef E bbox_type;
   };
 
@@ -63,7 +63,7 @@ namespace oln
 
     /// Abstract bbox (bounding box) class.
     template <typename E>
-    class bbox : public pset_entry<E>
+    class bbox : public point_set_entry<E>
     {
       typedef oln_type_of(E, point) point_t;
 

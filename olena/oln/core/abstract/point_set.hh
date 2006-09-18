@@ -25,11 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_PSET_RA_HH
-# define OLENA_CORE_ABSTRACT_PSET_RA_HH
+#ifndef OLENA_CORE_ABSTRACT_POINT_SET_HH
+# define OLENA_CORE_ABSTRACT_POINT_SET_HH
 
-# include <oln/core/abstract/pset.hh>
-
+# include <oln/core/typedefs.hh>
 
 
 namespace oln
@@ -39,36 +38,64 @@ namespace oln
   {
 
 
+    /// Abstract point class.
     template <typename E>
-    class ra_pset : public virtual pset<E>
+    class point_set : public virtual stc::any__simple<E>,
+		      public virtual oln::type
     {
-      typedef oln_type_of(E, point) point_t;
-
     public:
 
-      bool has(const point_t& p) const
+      bool is_valid() const
       {
-	return this->exact().impl_has(p);
+	return this->exact().impl_is_valid();
       }
 
+      struct decl
+      {
+	stc_virtual_typedef(point);
+
+	stc_virtual_typedef(piter);
+	stc_virtual_typedef(fwd_piter);
+	stc_virtual_typedef(bkd_piter);
+
+	stc_virtual_typedef(bbox);                 // provides .bbox()
+	stc_virtual_typedef(is_random_accessible); // provides .has(p)
+	stc_virtual_typedef(has_known_size);       // provides .npoints()
+	stc_virtual_typedef(is_connected);         // provides, e.g., .nrows()
+
+	// derived from point:
+	stc_virtual_typedef(coord);
+	stc_virtual_typedef(grid);
+	stc_virtual_typedef(dim);
+
+	decl() {
+	  // coherence check:
+	  mlc::assert_equal_< oln_type_of(fwd_piter, grid),
+	                      oln_type_of(point,     grid) >::check();
+	  mlc::assert_equal_< oln_type_of(bkd_piter, grid),
+	                      oln_type_of(point,     grid) >::check();
+	}
+      };
+
     protected:
-      ra_pset()
+
+      point_set()
       {}
-    };
+
+      ~point_set() { decl(); }
+
+    }; // end of class oln::abstract::point_set<E>
+
 
 
   } // end of namespace oln::abstract
 
-
-  template <typename E>
-  struct case_ < pset_ra_hierarchy, E, 1 >
-    : where_< mlc::eq_< oln_type_of(E, ra), mlc::true_ > >
-  {
-    typedef abstract::ra_pset<E> ret;
-  };
-
-
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_PSET_RA_HH
+
+# include <oln/core/abstract/point_set_hierarchies.hh>
+
+
+
+#endif // ! OLENA_CORE_ABSTRACT_POINT_SET_HH

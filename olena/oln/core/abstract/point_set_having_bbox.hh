@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,81 +25,87 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_PITER_HH
-# define OLENA_CORE_ABSTRACT_PITER_HH
+#ifndef OLENA_CORE_ABSTRACT_POINT_SET_HAVING_BBOX_HH
+# define OLENA_CORE_ABSTRACT_POINT_SET_HAVING_BBOX_HH
 
-# include <oln/core/abstract/iter.hh>
-# include <oln/core/abstract/point.hh>
+# include <oln/core/abstract/point_set.hh>
 
 
 namespace oln
 {
 
-
-  // Forward declaration.
-  namespace abstract { template <typename E> class piter; }
-
-
-  // Super type declaration.
-  template <typename E>
-  struct set_super_type< abstract::piter<E> >
-  {
-    typedef abstract::iter<E> ret;
-  };
-
-
-  /// Virtual types associated to abstract::piter<E>.
-  template <typename E>
-  struct vtypes< abstract::piter<E> >
-  {
-    typedef mlc::undefined point_type;
-  };
-
-
   namespace abstract
   {
 
-    /// Abstract point iterator class.
+
     template <typename E>
-    class piter : public abstract::iter<E>
+    class point_set_having_bbox : public virtual point_set<E>
     {
       typedef oln_type_of(E, point) point_t;
+      typedef oln_type_of(E, bbox)  bbox_t;
 
+      typedef oln_type_of(point_t, coord) coord_t;
+      typedef oln_type_of(point_t, dim) dim_t;
+      enum { n = mlc_value(dim_t) };
+      
     public:
 
-      operator point_t() const
+      const bbox_t& bbox() const
       {
-	precondition(this->is_valid());
-	return p_;
+	return this->exact().impl_box();
       }
 
-      point_t to_point() const
+      const point_t& pmin() const
       {
 	precondition(this->is_valid());
-	return p_;
+	return pmin_;
+      }
+
+      coord_t pmin(unsigned i) const
+      {
+	precondition(this->is_valid() and i < n);
+	return pmin_[i];
+      }
+
+      const point_t& pmax() const
+      {
+	precondition(this->is_valid());
+	return pmax_;
+      }
+
+      coord_t pmax(unsigned i) const
+      {
+	precondition(this->is_valid() and i < n);
+	return pmax_[i];
+      }
+
+      unsigned len(unsigned i) const
+      {
+	precondition(this->is_valid() and i < n);
+	return pmax_[i] - pmin_[i] + 1;
       }
 
     protected:
 
-      point_t p_;
+      point_set_having_bbox()
+      {}
 
-      piter()
-      {
-      }
-
-      ~piter()
-      {
-	mlc::assert_defined_< point_t >::check();
-	mlc::assert_< mlc_is_a(point_t, abstract::point) >::check();
-      }
-
-    }; // end of class oln::abstract::piter<E>
+      point_t pmin_, pmax_;
+    };
 
 
   } // end of namespace oln::abstract
 
 
+  template <typename E>
+  struct case_ < point_set_hierarchy_wrt_bbox, E, 1 >
+    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+  {
+    typedef abstract::point_set_having_bbox<E> ret;
+  };
+
+
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_PITER_HH
+#endif // ! OLENA_CORE_ABSTRACT_POINT_SET_HAVING_BBOX_HH

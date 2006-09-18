@@ -1,4 +1,5 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
+// Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,78 +26,81 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_PSET_ENTRY_HH
-# define OLENA_CORE_PSET_ENTRY_HH
+#ifndef OLENA_CORE_ABSTRACT_ITERATOR_ON_POINTS_HH
+# define OLENA_CORE_ABSTRACT_ITERATOR_ON_POINTS_HH
 
-# include <oln/core/abstract/entry.hh>
-# include <oln/core/abstract/pset.hh>
-
+# include <oln/core/abstract/iterator.hh>
+# include <oln/core/abstract/point.hh>
 
 
 namespace oln
 {
 
 
-  /// Entry class for point sets: pset_entry<E> is an alias for
-  /// entry< abstract::pset, E>.
+  // Forward declaration.
+  namespace abstract { template <typename E> class iterator_on_points; }
 
+
+  // Super type declaration.
   template <typename E>
-  struct pset_entry : public entry< abstract::pset, E>
+  struct set_super_type< abstract::iterator_on_points<E> >
   {
-  protected:
-    pset_entry() {}
+    typedef abstract::iterator<E> ret;
   };
 
 
-  /// Virtual types associated to pset_entry<E>.
-
+  /// Virtual types associated to abstract::iterator_on_points<E>.
   template <typename E>
-  struct vtypes< pset_entry<E> >
+  struct vtypes< abstract::iterator_on_points<E> >
   {
     typedef mlc::undefined point_type;
-
-    typedef mlc::undefined piter_type;
-    typedef mlc::undefined fwd_piter_type;
-    typedef mlc::undefined bkd_piter_type;
-
-    typedef mlc::none      bbox_type;
-    typedef mlc::undefined ra_type;
-    typedef mlc::undefined fixed_type;
   };
 
 
-  template <typename E>
-  struct single_vtype< pset_entry<E>, typedef_::coord_type >
+  namespace abstract
   {
-    typedef oln_type_of(E, point) P;
-    typedef oln_type_of(P, coord) ret;
-  };
+
+    /// Abstract point iterator class.
+    template <typename E>
+    class iterator_on_points : public abstract::iterator<E>
+    {
+      typedef oln_type_of(E, point) point_t;
+
+    public:
+
+      operator point_t() const
+      {
+	precondition(this->is_valid());
+	return p_;
+      }
+
+      point_t to_point() const
+      {
+	precondition(this->is_valid());
+	return p_;
+      }
+
+    protected:
+
+      point_t p_;
+
+      iterator_on_points()
+      {
+      }
+
+      ~iterator_on_points()
+      {
+	mlc::assert_defined_< point_t >::check();
+	mlc::assert_< mlc_is_a(point_t, abstract::point) >::check();
+      }
+
+    }; // end of class oln::abstract::iterator_on_points<E>
 
 
-  template <typename E>
-  struct single_vtype< pset_entry<E>, typedef_::grid_type >
-  {
-    typedef oln_type_of(E, point) P;
-    typedef oln_type_of(P, grid) ret;
-  };
-
-
-  template <typename E>
-  struct single_vtype< pset_entry<E>, typedef_::dim_type >
-  {
-    typedef oln_type_of(E, point) P;
-    typedef oln_type_of(P, dim) ret;
-  };
-
-
-  template <typename E>
-  struct single_vtype< pset_entry<E>, typedef_::piter_type >
-  {
-    typedef oln_type_of(E, fwd_piter) ret;
-  };
+  } // end of namespace oln::abstract
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_PSET_ENTRY_HH
+#endif // ! OLENA_CORE_ABSTRACT_ITERATOR_ON_POINTS_HH

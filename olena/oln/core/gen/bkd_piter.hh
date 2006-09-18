@@ -29,7 +29,7 @@
 #ifndef OLENA_CORE_GEN_BKD_PITER_HH
 # define OLENA_CORE_GEN_BKD_PITER_HH
 
-# include <oln/core/abstract/piter.hh>
+# include <oln/core/abstract/iterator_on_points.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/gen/bbox.hh>
 
@@ -47,7 +47,7 @@ namespace oln
   struct set_super_type< bkd_piter_<point> >
   {
     typedef bkd_piter_<point> self_t;
-    typedef abstract::piter<self_t> ret;
+    typedef abstract::iterator_on_points<self_t> ret;
   };
 
 
@@ -63,11 +63,11 @@ namespace oln
 
   /// Abstract forward point iterator class.
   template <typename point>
-  class bkd_piter_ : public abstract::piter< bkd_piter_<point> >,
+  class bkd_piter_ : public abstract::iterator_on_points< bkd_piter_<point> >,
 		     private mlc::assert_< mlc_is_a(point, abstract::point) >
   {
     typedef bkd_piter_<point> self_t;
-    typedef abstract::piter<self_t> super_t;
+    typedef abstract::iterator_on_points<self_t> super_t;
 
     using super_t::p_;
 

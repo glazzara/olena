@@ -25,59 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_PSET_CNX_HH
-# define OLENA_CORE_ABSTRACT_PSET_CNX_HH
+#ifndef OLENA_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
+# define OLENA_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
 
-# include <oln/core/abstract/pset.hh>
+# include <oln/core/abstract/point_set.hh>
 
 
 namespace oln
 {
 
-  namespace abstract
-  {
-
-
-    template <typename E>
-    class cnx2d_pset : public virtual abstract::pset<E>
-    {
-    public:
-
-      unsigned nrows() const
-      {
-	precondition(this->is_valid());
-	return this->exact().len(0);
-      }
-
-      unsigned ncols() const
-      {
-	precondition(this->is_valid());
-	return this->exact().len(1);
-      }
-
-    protected:
-
-      cnx2d_pset()
-      {}
-    };
-
-
-  } // end of namespace oln::abstract
-
-
-
-  template <typename E>
-  struct case_ < pset_cnx_hierarchy, E, 1 >
-    : where_< mlc::and_list_< mlc::neq_< oln_type_of(E, bbox), mlc::none >,
-			      mlc::eq_< oln_type_of(E, cnx), mlc::true_ >,
-			      mlc::eq_< oln_type_of(E, grid), grid2d > > >
-  {
-    typedef abstract::cnx2d_pset<E> ret;
-  };
-
+  typedef  hierarchy< abstract::point_set, 1 >  point_set_hierarchy_wrt_known_size;
+  typedef  hierarchy< abstract::point_set, 2 >  point_set_hierarchy_wrt_accessibility;
+  typedef  hierarchy< abstract::point_set, 3 >  point_set_hierarchy_wrt_bbox;
+  typedef  hierarchy< abstract::point_set, 4 >  point_set_hierarchy_wrt_connectivity;
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_PSET_CNX_HH
+# include <oln/core/abstract/point_set_having_known_size.hh>
+# include <oln/core/abstract/point_set_being_random_accessible.hh>
+# include <oln/core/abstract/point_set_having_bbox.hh>
+# include <oln/core/abstract/point_set_being_connected.hh>
+
+
+
+#endif // ! OLENA_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
 
