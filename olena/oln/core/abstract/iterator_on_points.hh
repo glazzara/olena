@@ -68,21 +68,25 @@ namespace oln
 
     public:
 
-      operator point_t() const
-      {
-	precondition(this->is_valid());
-	return p_;
-      }
-
       point_t to_point() const
       {
 	precondition(this->is_valid());
-	return p_;
+	return this->exact().impl_to_point();
+      }
+
+      const point_t* point_adr() const
+      {
+	return this->exact().impl_point_adr();
+      }
+
+      // Concrete method.
+      operator point_t() const
+      {
+	precondition(this->is_valid());
+	return this->to_point();
       }
 
     protected:
-
-      point_t p_;
 
       iterator_on_points()
       {

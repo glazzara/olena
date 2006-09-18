@@ -1,5 +1,21 @@
 2006-09-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Rename bbox point iterators.
+	
+	* oln/core/abstract/iterator_on_points.hh
+	(p_): Remove.  Abstract classes should not have attributes.
+	(to_point): Turn abstract.
+	(point_adr): New.
+	* oln/core/gen/fwd_piter.hh: Update and rename as...
+	* oln/core/gen/bbox_fwd_piter.hh: ...this.
+	* oln/core/gen/bkd_piter.hh: Update and rename as...
+	* oln/core/gen/bbox_bkd_piter.hh: ...this.
+	* oln/core/2d/aliases.hh: Update.
+	* oln/core/gen/bbox.hh: Update.
+	* oln/basics2d.hh: Update.
+
+2006-09-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Move some abstract classes below entries into internal.
 	
 	* oln/core/abstract/point_nd.hh: Update and rename as...

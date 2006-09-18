@@ -39,8 +39,8 @@ namespace oln
   template <typename C> class dpoint2d_;
   template <typename P> class bbox_;
   template <typename P> class topo_bbox_;
-  template <typename P> class fwd_piter_;
-  template <typename P> class bkd_piter_;
+  template <typename P> class bbox_fwd_piter_;
+  template <typename P> class bbox_bkd_piter_;
   class grid2d;
   /// \}
 
@@ -51,8 +51,8 @@ namespace oln
   typedef dpoint2d_<int> dpoint2d;
 
   typedef bbox_<point2d> bbox2d;
-  typedef fwd_piter_<point2d> fwd_piter2d;
-  typedef bkd_piter_<point2d> bkd_piter2d;
+  typedef bbox_fwd_piter_<point2d> fwd_piter2d;
+  typedef bbox_bkd_piter_<point2d> bkd_piter2d;
   typedef topo_bbox_<point2d> topo2d;
 
   typedef  point2d_<float>  point2df;

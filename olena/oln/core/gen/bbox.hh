@@ -38,8 +38,8 @@ namespace oln
 
   // Forward declarations.
   template <typename point> class bbox_;
-  template <typename point> class fwd_piter_;
-  template <typename point> class bkd_piter_;
+  template <typename point> class bbox_fwd_piter_;
+  template <typename point> class bbox_bkd_piter_;
 
 
   // Super type declaration.
@@ -56,8 +56,8 @@ namespace oln
   struct vtypes< bbox_<point> >
   {
     typedef point point_type;
-    typedef fwd_piter_<point> fwd_piter_type;
-    typedef bkd_piter_<point> bkd_piter_type;
+    typedef bbox_fwd_piter_<point> fwd_piter_type;
+    typedef bbox_bkd_piter_<point> bkd_piter_type;
 
     typedef bbox_<point> bbox_type;
 

@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_GEN_BKD_PITER_HH
-# define OLENA_CORE_GEN_BKD_PITER_HH
+#ifndef OLENA_CORE_GEN_BBOX_FWD_PITER_HH
+# define OLENA_CORE_GEN_BBOX_FWD_PITER_HH
 
 # include <oln/core/abstract/iterator_on_points.hh>
 # include <oln/core/abstract/point.hh>
@@ -39,21 +39,21 @@ namespace oln
 
 
   // Forward declaration.
-  template <typename point> class bkd_piter_;
+  template <typename point> class bbox_fwd_piter_;
 
 
   // Super type declaration.
   template <typename point>
-  struct set_super_type< bkd_piter_<point> >
+  struct set_super_type< bbox_fwd_piter_<point> >
   {
-    typedef bkd_piter_<point> self_t;
+    typedef bbox_fwd_piter_<point> self_t;
     typedef abstract::iterator_on_points<self_t> ret;
   };
 
 
-  /// Virtual types associated to oln::bbox_<point>.
+  /// Virtual types associated to oln::bbox_fwd_piter_<point>.
   template <typename point>
-  struct vtypes< bkd_piter_<point> >
+  struct vtypes< bbox_fwd_piter_<point> >
   {
     typedef point point_type;
     typedef oln_type_of(point, grid) grid_type;
@@ -63,22 +63,38 @@ namespace oln
 
   /// Abstract forward point iterator class.
   template <typename point>
-  class bkd_piter_ : public abstract::iterator_on_points< bkd_piter_<point> >,
-		     private mlc::assert_< mlc_is_a(point, abstract::point) >
+  class bbox_fwd_piter_ : public abstract::iterator_on_points< bbox_fwd_piter_<point> >,
+			  private mlc::assert_< mlc_is_a(point, abstract::point) >
   {
-    typedef bkd_piter_<point> self_t;
+    typedef bbox_fwd_piter_<point> self_t;
     typedef abstract::iterator_on_points<self_t> super_t;
-
-    using super_t::p_;
 
   public:
     
-    bkd_piter_(const bbox_<point>& bb)
-      : bb_(bb)
+    bbox_fwd_piter_(const bbox_<point>& bb)
+      : p_(),
+        bb_(bb)
     {
-      nop_ = bb_.pmin();
-      --nop_[0];
+      nop_ = bb_.pmax();
+      ++nop_[0];
     }
+
+//     template <typename T>
+//     bbox_fwd_piter_(const abstract::topo<T>& t)
+//     {
+//       mlc::assert_< mlc_is_a(T, abstract::topo_with_bbox) >::check();
+//       bb_ = t.exact().bbox();
+//       nop_ = bb_.pmax();
+//       ++nop_[0];
+//     }
+
+//     template <typename Data>
+//     bbox_fwd_piter_(const Data& data)
+//       : bb_(data.bbox())
+//     {
+//       nop_ = bb_.pmax();
+//       ++nop_[0];
+//     }
 
     const bbox_<point>& bbox() const
     {
@@ -87,7 +103,7 @@ namespace oln
 
     void impl_start()
     {
-      p_ = bb_.pmax();
+      p_ = bb_.pmin();
       invariant(implies(p_ != nop_, bb_.has(p_)));
     }
 
@@ -95,14 +111,14 @@ namespace oln
     {
       invariant(implies(p_ != nop_, bb_.has(p_)));
       for (int i = point::n - 1; i >= 0; --i)
-	if (p_[i] == bb_.pmin(i))
-	  p_[i] = bb_.pmax(i);
+	if (p_[i] == bb_.pmax(i))
+	  p_[i] = bb_.pmin(i);
 	else
 	{
-	  --p_[i];
+	  ++p_[i];
 	  break;
 	}
-      if (p_ == bb_.pmax())
+      if (p_ == bb_.pmin())
 	p_ = nop_;
     }
 
@@ -118,15 +134,41 @@ namespace oln
       return p_ != nop_;
     }
 
+    point impl_to_point() const
+    {
+      return p_;
+    }
+
+    const point* impl_point_adr() const
+    {
+      return &p_;
+    }
+
+    void print(std::ostream& ostr) const
+    {
+      ostr << "{ bb=" << bb_
+	   << ", p=" << p_
+	   << ", nop=" << nop_
+	   << " }";
+    }
+
+    friend
+    std::ostream& operator<<(std::ostream& ostr, const bbox_fwd_piter_<point>& i)
+    {
+      i.print(ostr);
+      return ostr;
+    }
+
   protected:
 
+    point p_;
     bbox_<point> bb_;
     point nop_;
-
-  }; // end of class oln::bkd_piter_<point>
+    
+  }; // end of class oln::bbox_fwd_piter_<point>
   
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_GEN_BKD_PITER_HH
+#endif // ! OLENA_CORE_GEN_BBOX_FWD_PITER_HH
