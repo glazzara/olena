@@ -1,3 +1,15 @@
+2006-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make virtual type retrieval more flexible and fix automatic::impl.
+
+	* stc/vtypes.hh (automatic::impl): Turn the first parameter into a
+	`template <class> class'.
+	(select_typedef): Typo in comment.
+	Don't abort on default case; not finding a virtual type is no
+	lomger a static error, but instead just gives mlc::not_found.
+	(type_of_): Likewise, don't abort on mlc::not_found, just return
+	it.
+
 2006-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a default (empty) class for automatically retrieved

@@ -234,7 +234,7 @@ namespace stc
   /** Default (empty) automatic implementation.  */			      \
   namespace automatic {							      \
 									      \
-    template <typename abstraction, typename tag, typename E>		      \
+    template <template <class> class abstraction, typename E, typename tag>   \
     class impl								      \
     {									      \
     };									      \
@@ -702,7 +702,7 @@ namespace stc
         stc::ERROR::VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE      \
       >                                                                       \
     {									      \
-      /* Error, not valid typedef found.  */				      \
+      /* Error, no valid typedef found.  */				      \
       typedef mlc::not_found ret;                                             \
     };									      \
 									      \
@@ -718,7 +718,7 @@ namespace stc
         stc::ERROR::VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_EXTERNAL    \
       >                                                                       \
     {									      \
-      /* Error, not valid typedef found.  */				      \
+      /* Error, no valid typedef found.  */				      \
       typedef mlc::not_found ret;                                             \
     };									      \
 									      \
@@ -734,7 +734,7 @@ namespace stc
         stc::ERROR::VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_SINGLE_AND_EXTERNAL      \
       >                                                                       \
     {									      \
-      /* Error, not valid typedef found.  */				      \
+      /* Error, no valid typedef found.  */				      \
       typedef mlc::not_found ret;                                             \
     };									      \
 									      \
@@ -752,22 +752,18 @@ namespace stc
           VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE_AND_EXTERNAL   \
       >                                                                       \
     {									      \
-      /* Error, not valid typedef found.  */				      \
+      /* Error, no valid typedef found.  */				      \
       typedef mlc::not_found ret;                                             \
     };									      \
 									      \
-    /** Other cases: error (the typedef is not defined or defined more */     \
-    /** than once, hence \a mlc::not_found is returned).               */     \
+    /** All other cases: \a mlc::not_found is returned, but no static.  */    \
+    /** error is raised.  */						      \
     template								      \
       < typename internal_vtype_candidate, bool found_as_internal_vtype,      \
         typename single_vtype_candidate,   bool found_as_single_vtype,	      \
         typename extended_vtype_candidate, bool found_as_extended_vtype >     \
-    struct select_typedef :                                                   \
-      mlc::abort_ <                                                           \
-        internal_vtype_candidate /* dummy */ ,                                \
-        stc::ERROR::NO_VALID_VIRTUAL_TYPE_FOUND >                             \
+    struct select_typedef						      \
     {									      \
-      /* Error, not valid typedef found.  */				      \
       typedef mlc::not_found ret;                                             \
     };									      \
     /** \} */								      \
@@ -812,14 +808,7 @@ namespace stc
         internal_vtype_candidate, found_as_internal_vtype,		      \
         single_vtype_candidate,   found_as_single_vtype,		      \
         extended_vtype_candidate, found_as_extended_vtype		      \
-      >::ret candidate;							      \
-									      \
-    typedef typename							      \
-    mlc::assert_and_return_<						      \
-        mlc_neq(candidate, mlc::not_found),				      \
-        candidate,							      \
-        stc::ERROR::NO_VALID_RETURN_TYPE_FOR_type_of_			      \
-    >::ret ret;								      \
+      >::ret ret;							      \
   };									      \
 									      \
   struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
