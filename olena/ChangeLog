@@ -1,3 +1,11 @@
+2006-09-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add oln topology class for enlarged bbox.
+	
+	* oln/core/gen/topo_lbbox.hh: New.
+	* oln/core/abstract/dpoint_nd.hh (set_all): New.
+	* oln/core/gen/topo_bbox.hh (impl_has_large): New.
+
 2006-09-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Adapt topology hierarchy to new naming convention.

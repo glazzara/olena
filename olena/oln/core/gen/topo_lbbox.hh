@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_GEN_TOPO_BBOX_HH
-# define OLENA_CORE_GEN_TOPO_BBOX_HH
+#ifndef OLENA_CORE_GEN_TOPO_LBBOX_HH
+# define OLENA_CORE_GEN_TOPO_LBBOX_HH
 
 # include <oln/core/gen/bbox.hh>
 # include <oln/core/topology_entry.hh>
@@ -38,21 +38,21 @@ namespace oln
 
 
   // Forward declarations.
-  template <typename point> class topo_bbox_;
+  template <typename point> class topo_lbbox_;
 
 
   // Super type declaration.
   template <typename point>
-  struct set_super_type< topo_bbox_<point> >
+  struct set_super_type< topo_lbbox_<point> >
   {
-    typedef topo_bbox_<point> self_t;
+    typedef topo_lbbox_<point> self_t;
     typedef topology_entry<self_t> ret;
   };
 
 
   /// Virtual types associated to oln::bbox_<point>.
   template <typename point>
-  struct vtypes< topo_bbox_<point> >
+  struct vtypes< topo_lbbox_<point> >
   {
     typedef bbox_<point> bbox_type;
     typedef point        point_type;
@@ -62,19 +62,23 @@ namespace oln
 
   /// Bounding box topology based on a point class.
   template <typename point>
-  class topo_bbox_ : public topology_entry< topo_bbox_<point> >
+  class topo_lbbox_ : public topology_entry< topo_lbbox_<point> >
   {
     typedef bbox_<point> bbox_t;
 
   public:
 
-    topo_bbox_()
+    topo_lbbox_()
     {
     }
 
-    topo_bbox_(const bbox_t& bb)
-      : bb_(bb)
+    topo_lbbox_(const bbox_t& bb, unsigned border)
+      : bb_(bb), border_(border)
     {
+      typedef oln_type_of(point, dpoint) dpoint_t;
+      dpoint_t dp;
+      dp.set_all(border);
+      lbb_ = bbox_<point>(bb_.pmin() - dp, bb_.pmax() + dp);
     }
 
     const bbox_t& impl_bbox() const
@@ -89,12 +93,19 @@ namespace oln
 
     bool impl_has_large(const point& p) const
     {
-      return bb_.has(p);
+      return lbb_.has(p);
+    }
+
+    const bbox_t& lbbox() const
+    {
+      return lbb_;
     }
 
   protected:
 
     bbox_<point> bb_;
+    unsigned border_;
+    bbox_<point> lbb_; // FIXME: HERE
 
   };
 
@@ -102,4 +113,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_GEN_TOPO_BBOX_HH
+#endif // ! OLENA_CORE_GEN_TOPO_LBBOX_HH

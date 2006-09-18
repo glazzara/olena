@@ -82,6 +82,11 @@ namespace oln
 	return v_[i];
       }
 
+      void set_all(const coord_t& c)
+      {
+	v_.set_all(c);
+      }
+
       const xtd::vec<n,coord_t>& vec() const
       {
 	return v_;
