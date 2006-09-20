@@ -1,14 +1,68 @@
+2006-09-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the identity and neighborhood addition morphers.
+
+	* oln/automatic/image_having_neighborhood.hh: Add a forward
+	declaration of oln::abstract::image_having_neighborhood.
+	(impl<abstract::image_having_neighborhood, morpher::tag::identity, E>):
+	Inherit from abstract::image<E>.
+	(impl_neighborhood): Make it const.
+	Get the exact type before calling delegate().
+	* oln/core/abstract/image_having_neighborhood.hh
+	(oln/automatic/image_having_neighborhood.hh): Include it.
+	(oln::abstract::image_having_neighborhood::neighborhood): New.
+	(case_<image_hierarchy_wrt_neighborhood, E, 1>): Only inherit from
+	oln::abstract::image_having_neighborhood if neighborhood is
+	different from mlc::not_found.
+	(oln::ext_vtype<image_entry<E>, typedef_::neighborhood_type>):
+	Remove.
+	* oln/core/image_entry.hh
+	(single_vtype<image_entry<E>, typedef_::morpher_type>): Remove.
+	Instead, defined the `morpher' virtual type...
+	(vtypes< image_entry<E> >): ...here.
+
+	* oln/morpher/internal/image_extension.hh (image_extension):
+	Fix the inheritance: derive from `oln::image_entry<Exact>' instead
+	of `oln::image_entry< image_extension<Image, Exact> >'.
+	* oln/morpher/identity.hh (oln/morpher/tags.hh): Include it.
+	(oln::single_vtype<morpher::identity<Image>, typedef_::morpher_type>):
+	Remove.
+	Instead, defined the `morpher' virtual type...
+	(oln::vtypes< morpher::identity<Image> >): ...here
+	(oln::morpher::tag::identity): Move...
+	* oln/morpher/tags.hh: ...here (new file).
+	* oln/morpher/add_neighborhood.hh (oln/morpher/tags.hh)
+	(oln/core/2d/aliases.hh): Include them.
+	(oln::single_vtype<morpher::add_neighborhood<Image>,
+	 typedef_::morpher_type>): Remove.
+	Instead, defined the `morpher' virtual type...
+	(oln::vtypes< morpher::add_neighborhood<Image> >): ...here
+	(oln::morpher::add_neighborhood::neighborhood_t): Fix the virtual
+	type retrieval: get it from `self_t', not from `Image'.
+	(ext_vtype<morpher::add_neighborhood< oln::image2d<T> >,
+	 typedef_::neighborhood_type>): Remove.
+	Remove corresponding forward declarations as well.
+	(oln::morpher::tag::add_neighborhood): Move...
+	* oln/morpher/tags.hh: ...here.
+	* tests/identity_morpher.cc, tests/morphers.cc: Fix the test.
+	Add more static assertions.
+
+	* oln/Makefile.am (nobase_oln_HEADERS): Add core/2d/neighb2d.hh,
+	core/abstract/neighborhood.hh, core/gen/neighb.hh and
+	core/neighborhood_entry.hh.
+	* oln/core/2d/image2d.hh: Fix copyright header.
+
 2006-09-20  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add classes for classical 2d neighborhood.
-	
+
 	* oln/core/neighborhood_entry.hh: New.
 	* oln/core/abstract/neighborhood.hh: New.
 	* oln/core/2d/neighb2d.hh: New.
 	* oln/core/gen/neighb.hh: New.
 	* oln/core/2d/aliases.hh (neighb2d): New.
 	* oln/basics2d.hh: Update.
-	
+
 2006-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add the first two morphers: identity and neighborhood addition.

@@ -29,6 +29,8 @@
 # define OLENA_MORPHER_ADD_NEIGHBORHOOD
 
 # include <oln/morpher/internal/image_extension.hh>
+# include <oln/morpher/tags.hh>
+# include <oln/core/2d/aliases.hh>
 
 
 namespace oln
@@ -37,15 +39,7 @@ namespace oln
   namespace morpher
   {
     // Forward declaration.
-    template <typename Image>
-    struct add_neighborhood;
-
-    namespace tag
-    {
-      /// Tag associated to oln::morpher::add_neighborhood.
-      struct add_neighborhood;
-    
-    } // end of namespace oln::morpher::tag
+    template <typename Image> struct add_neighborhood;
 
   } // end of namespace oln::morpher
 
@@ -58,16 +52,17 @@ namespace oln
     typedef morpher::internal::image_extension<Image, self_t> ret;
   };
 
-
-  /// New virtual types associated with oln::morpher::add_neighborhood.
-  /// \{
   template <typename Image>
-  struct single_vtype < morpher::add_neighborhood<Image>,
-			typedef_::morpher_type >
+  struct vtypes< morpher::add_neighborhood<Image> >
   {
-    typedef oln::morpher::tag::add_neighborhood ret;
+    // Morpher type.
+    typedef oln::morpher::tag::add_neighborhood morpher_type;
+
+    // Neighborhood type.
+    typedef
+      mlc_if( mlc_is_a_(Image, abstract::image2d), neighb2d, mlc::none )
+      neighborhood_type;
   };
-  /// \}
 
 
   namespace morpher
@@ -79,7 +74,10 @@ namespace oln
     private:
       typedef add_neighborhood<Image> self_t;
       typedef stc_get_nth_super(self_t, 1) super_t;
-      typedef oln_type_of(Image, neighborhood) neighborhood_t;
+      // FIXME: This should be replaced by a call to a new version of
+      // `oln_type_of', (named, for instance, `oln_check_type_of' or
+      // `oln_type_of_defined_').  Do the necessary changes in Static.
+      typedef oln_type_of(self_t, neighborhood) neighborhood_t;
 
     public:
       // FIXME: Handle the constness.
@@ -100,31 +98,6 @@ namespace oln
   } // end of namespace oln::morpher
 
 } // end of namespace oln
-
-
-// FIXME: This is probably not the right place for this.
-// Where should we move this?
-#include <oln/core/abstract/image.hh>
-namespace oln
-{
-  /// Neighborhood-related definitions.
-  /// \{
-  // Forward declarations.
-  template <typename T> struct image2d;
-  struct neighborhood2d;
-  namespace morpher {
-    template <typename Image> struct add_neighborhood;
-  }
-
-  // External vtype.
-  template <typename T>
-  struct ext_vtype < morpher::add_neighborhood< oln::image2d<T> >,
-		     typedef_::neighborhood_type >
-  {
-    typedef neighborhood2d ret;
-  };
-  /// \}
-}
 
 
 #endif // ! OLENA_MORPHER_ADD_NEIGHBORHOOD

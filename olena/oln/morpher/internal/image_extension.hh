@@ -40,7 +40,7 @@ namespace oln
 
       // Forward declaration.
       template <typename Image, typename Exact>
-      struct image_extension;
+      class image_extension;
 
     } // end of namespace oln::morpher::internal
     
@@ -52,8 +52,8 @@ namespace oln
   /// oln::morpher::internal::image_extension to the morphed \a Image,
   /// so as to get all its virtual types.
   template <typename Image, typename Exact>
-  struct set_pseudosuper_type< morpher::internal::image_extension<Image,
-								  Exact> >
+  struct
+  set_pseudosuper_type< morpher::internal::image_extension<Image, Exact> >
   {
     typedef Image ret;
   };
@@ -66,8 +66,7 @@ namespace oln
 
       /// Image_Extension morpher.
       template <typename Image, typename Exact>
-      class image_extension :
-	public oln::image_entry< image_extension<Image, Exact> >
+      class image_extension : public oln::image_entry<Exact>
       {
       private:
 	typedef image_extension<Image, Exact> self_t;

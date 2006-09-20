@@ -30,6 +30,9 @@
 
 # include <oln/core/abstract/image.hh>
 
+// Automatically-inherited implementations.
+# include <oln/automatic/image_having_neighborhood.hh>
+
 
 /* Image having neighborhood hierarchy (summary).
 
@@ -52,7 +55,7 @@ namespace oln
   namespace abstract
   {
 
-    /// Class of 1-D images.
+    /// Image having a neighborhood.
     template <typename E>
     struct image_having_neighborhood :
       public virtual image<E>,
@@ -60,6 +63,15 @@ namespace oln
 			      oln_type_of(E, morpher),
 			      E >
     {
+    private:
+      typedef oln_type_of(E, neighborhood) neighborhood_t;
+
+    public:
+      neighborhood_t neighborhood() const
+      {
+	return this->exact().impl_neighborhood();
+      }
+
     protected:
       /// Constructor (protected, empty).
       image_having_neighborhood() {}
@@ -72,27 +84,12 @@ namespace oln
   | Dimension switch.  |
   `-------------------*/
 
-  /// With neig
+  /// With neighborhood.
   template <typename E>
   struct case_< image_hierarchy_wrt_neighborhood, E, 1 > :
-    where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::none > >
+    where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::not_found > >
   {
     typedef abstract::image_having_neighborhood<E> ret;
-  };
-
-
-  /*-----------------.
-  | External vtype.  |
-  `-----------------*/
-
-  // Forward declaration.
-  template <typename E> struct image_entry;
-
-  /// Neighborhood type, as extended virtual type.
-  template <typename E>
-  struct ext_vtype < image_entry<E>, typedef_::neighborhood_type >
-  {
-    typedef mlc::none ret;
   };
 
 } // end of namespace oln

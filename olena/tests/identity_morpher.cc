@@ -27,6 +27,9 @@
 
 /// Test the identity morpher.
 
+#include <mlc/assert.hh>
+#include <mlc/is_a.hh>
+
 // FIXME: We should not include oln/basics2d.hh, but oln/core/2d/image2d.hh.
 #include <oln/basics2d.hh>
 #include <oln/morpher/identity.hh>
@@ -34,9 +37,24 @@
 int
 main()
 {
-  typedef oln::image2d<int> image_t;
-  image_t ima (42, 51);
+  
+
+  typedef oln::image2d<char> image_t;
+  // Sanity check: abstractions realized by oln::image2d.
+  mlc::assert_< mlc_is_a_(image_t, oln::abstract::image2d) >::check();
+  mlc::assert_< mlc_is_a_(image_t,
+			  oln::abstract::grey_level_image) >::check();
+  mlc::assert_< mlc_is_a_(image_t,
+			  oln::abstract::not_binary_image) >::check();
+  image_t ima(42, 51);
 
   typedef oln::morpher::identity<image_t> image_id_t;
   image_id_t ima_id(ima);
+  // Check that the instantiated identity morpher realizes the same
+  // abstraction as the underlying morphed image.
+  mlc::assert_< mlc_is_a_(image_id_t, oln::abstract::image2d) >::check();
+  mlc::assert_< mlc_is_a_(image_id_t,
+			  oln::abstract::grey_level_image) >::check();
+  mlc::assert_< mlc_is_a_(image_id_t,
+			  oln::abstract::not_binary_image) >::check();
 }

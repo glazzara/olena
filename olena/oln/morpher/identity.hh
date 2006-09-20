@@ -29,6 +29,7 @@
 # define OLENA_MORPHER_IDENTITY
 
 # include <oln/morpher/internal/image_extension.hh>
+# include <oln/morpher/tags.hh>
 
 
 namespace oln
@@ -37,16 +38,7 @@ namespace oln
   namespace morpher
   {
     // Forward declaration.
-    template <typename Image>
-    struct identity;
-
-
-    namespace tag
-    {
-      /// Tag associated to oln::morpher::identity.
-      struct identity;
-    
-    } // end of namespace oln::morpher::tag
+    template <typename Image> struct identity;
 
   } // end of namespace oln::morpher
 
@@ -63,9 +55,9 @@ namespace oln
   /// New virtual types associated with oln::morpher::identity.
   /// \{
   template <typename Image>
-  struct single_vtype < morpher::identity<Image>, typedef_::morpher_type >
+  struct vtypes< morpher::identity<Image> >
   {
-    typedef oln::morpher::tag::identity ret;
+    typedef oln::morpher::tag::identity morpher_type;
   };
   /// \}
 

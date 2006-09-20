@@ -12,6 +12,7 @@ nobase_oln_HEADERS =					\
   core/2d/dpoint2d.hh					\
   core/2d/grid2d.hh					\
   core/2d/image2d.hh					\
+  core/2d/neighb2d.hh					\
   core/2d/point2d.hh					\
 							\
   core/3d/grid3d.hh					\
@@ -31,6 +32,7 @@ nobase_oln_HEADERS =					\
   core/abstract/image_type_integre.hh			\
   core/abstract/iterator.hh				\
   core/abstract/iterator_on_points.hh			\
+  core/abstract/neighborhood.hh				\
   core/abstract/point.hh				\
   core/abstract/point_set.hh				\
   core/abstract/point_set_being_connected.hh		\
@@ -46,6 +48,7 @@ nobase_oln_HEADERS =					\
   core/gen/bbox.hh					\
   core/gen/bbox_bkd_piter.hh				\
   core/gen/bbox_fwd_piter.hh				\
+  core/gen/neighb.hh					\
   core/gen/topo_bbox.hh					\
 							\
   core/internal/dpoint_nd.hh				\
@@ -54,6 +57,7 @@ nobase_oln_HEADERS =					\
   core/case.hh						\
   core/image_entry.hh					\
   core/macros.hh					\
+  core/neighborhood_entry.hh				\
   core/point_set_entry.hh				\
   core/traits.hh					\
   core/traits_id.hh					\

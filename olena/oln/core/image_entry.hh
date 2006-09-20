@@ -68,7 +68,10 @@ namespace oln
     
     typedef mlc::undefined concrete_type;
 
-    // morpher_type: see below.
+    /// \brief Morpher type.
+    ///
+    /// Optionally contains a tag indicating a kind of morpher.
+    typedef mlc::none morpher_type;
   };
 
 
@@ -90,15 +93,6 @@ namespace oln
   struct single_vtype< image_entry<E>, typedef_::rvalue_type >
   {
     typedef oln_type_of(E, value) ret;
-  };
-
-  /// \brief Morpher type.
-  ///
-  /// Optionally contains a tag indicating a kind of morpher.
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::morpher_type >
-  {
-    typedef mlc::none ret;
   };
 
 

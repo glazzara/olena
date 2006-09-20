@@ -25,46 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_AUTOMATIC_IMAGE_HAVING_NEIGHBORDHOOD_HH
-# define OLENA_AUTOMATIC_IMAGE_HAVING_NEIGHBORDHOOD_HH
-
-# include <oln/core/typedefs.hh>
-# include <oln/morpher/tags.hh>
+#ifndef OLENA_MORPHER_TAGS
+# define OLENA_MORPHER_TAGS
 
 
 namespace oln
 {
-  // Forward declaration.
-  namespace abstract
+  namespace morpher
   {
-    template <typename E> class image_having_neighborhood;
-
-  } // end of namespace oln::abstract
-
-
-  namespace automatic
-  {
-    /// Implementation corresponding to the interface
-    /// oln::abstract::image1d for an identity morpher.
-    template <typename E>
-    class impl< abstract::image_having_neighborhood,
-		morpher::tag::identity,
-		E> :
-      public virtual abstract::image<E>
+    namespace tag
     {
-    private:
-      typedef oln_type_of(E, neighborhood) neighborhood_t;
+      /// Tag associated to oln::morpher::identity.
+      struct identity;
+      /// Tag associated to oln::morpher::add_neighborhood.
+      struct add_neighborhood;
+    
+    } // end of namespace oln::morpher::tag
 
-    public:
-      /// Accessor delegation.
-      neighborhood_t impl_neighborhood() const
-      {
-	return this->exact().delegate().impl_neighborhood();
-      }
-    };
+  } // end of namespace oln::morpher
 
-  } // end of namespace oln::automatic
-  
 } // end of namespace oln
 
-#endif // ! OLENA_AUTOMATIC_IMAGE_HAVING_NEIGHBORDHOOD_HH
+#endif // ! OLENA_MORPHER_TAGS
