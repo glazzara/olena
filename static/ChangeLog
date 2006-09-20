@@ -1,3 +1,9 @@
+2006-09-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	* stc/vtypes.hh (stc_equip_namespace_with_vtypes): Swap the
+	definitions of single_vtype and ext_vtype (for aesthetic purpose
+	only).
+
 2006-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Make virtual type retrieval more flexible and fix automatic::impl.

@@ -314,43 +314,6 @@ namespace stc
   /* \} */								      \
 									      \
 									      \
-  /* Extended vtype.  */						      \
-  /* \{ */								      \
-									      \
-  /** \brief An extended virtual type associated to \a from_type.  */	      \
-  /**								   */	      \
-  /** Specialize this class for the desired \a from_type.	   */	      \
-  template <typename category, typename from_type, typename typedef_type>     \
-  struct ext_vtype_in_category						      \
-  {									      \
-  };									      \
-									      \
-  /** \brief An extended virtual type associated to \a from_type.  */	      \
-  /** Version for types without category.			   */	      \
-  /**								   */	      \
-  /** Specialize this class for the desired \a from_type.	   */	      \
-  template <typename from_type, typename typedef_type>			      \
-  struct ext_vtype							      \
-  {									      \
-  };									      \
-									      \
-  /** Specialization of ext_vtype for types without category.  */	      \
-  template <typename from_type, typename typedef_type>     		      \
-  struct ext_vtype_in_category<void, from_type, typedef_type>		      \
-    : public ext_vtype<from_type, typedef_type>				      \
-  {									      \
-  };									      \
-									      \
-  /** End of the recursive construction of any ext_vtype<> */		      \
-  /** hierarchy.                                           */		      \
-  template <typename category, typename typedef_type>			      \
-  struct ext_vtype_in_category<category, mlc::none, typedef_type>	      \
-  {									      \
-  };									      \
-									      \
-  /* \} */								      \
-									      \
-									      \
   /* Single vtype.  */							      \
   /* \{ */								      \
 									      \
@@ -382,6 +345,43 @@ namespace stc
   /** hierarchy.                                              */	      \
   template <typename category, typename typedef_type>			      \
   struct single_vtype_in_category<category, mlc::none, typedef_type>	      \
+  {									      \
+  };									      \
+									      \
+  /* \} */								      \
+									      \
+									      \
+  /* Extended vtype.  */						      \
+  /* \{ */								      \
+									      \
+  /** \brief An extended virtual type associated to \a from_type.  */	      \
+  /**								   */	      \
+  /** Specialize this class for the desired \a from_type.	   */	      \
+  template <typename category, typename from_type, typename typedef_type>     \
+  struct ext_vtype_in_category						      \
+  {									      \
+  };									      \
+									      \
+  /** \brief An extended virtual type associated to \a from_type.  */	      \
+  /** Version for types without category.			   */	      \
+  /**								   */	      \
+  /** Specialize this class for the desired \a from_type.	   */	      \
+  template <typename from_type, typename typedef_type>			      \
+  struct ext_vtype							      \
+  {									      \
+  };									      \
+									      \
+  /** Specialization of ext_vtype for types without category.  */	      \
+  template <typename from_type, typename typedef_type>     		      \
+  struct ext_vtype_in_category<void, from_type, typedef_type>		      \
+    : public ext_vtype<from_type, typedef_type>				      \
+  {									      \
+  };									      \
+									      \
+  /** End of the recursive construction of any ext_vtype<> */		      \
+  /** hierarchy.                                           */		      \
+  template <typename category, typename typedef_type>			      \
+  struct ext_vtype_in_category<category, mlc::none, typedef_type>	      \
   {									      \
   };									      \
 									      \
