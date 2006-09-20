@@ -37,6 +37,7 @@ namespace oln
   /// Forward declarations.
   template <typename C> class point2d_;
   template <typename C> class dpoint2d_;
+  template <typename D> class neighb_;
   template <typename P> class bbox_;
   template <typename P> class topo_bbox_;
   template <typename P> class bbox_fwd_piter_;
@@ -49,6 +50,8 @@ namespace oln
   /// Alliases.
   typedef  point2d_<int>  point2d;
   typedef dpoint2d_<int> dpoint2d;
+
+  typedef neighb_<dpoint2d> neighb2d;
 
   typedef bbox_<point2d> bbox2d;
   typedef bbox_fwd_piter_<point2d> fwd_piter2d;

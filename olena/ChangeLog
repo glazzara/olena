@@ -1,3 +1,14 @@
+2006-09-20  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add classes for classical 2d neighborhood.
+	
+	* oln/core/neighborhood_entry.hh: New.
+	* oln/core/abstract/neighborhood.hh: New.
+	* oln/core/2d/neighb2d.hh: New.
+	* oln/core/gen/neighb.hh: New.
+	* oln/core/2d/aliases.hh (neighb2d): New.
+	* oln/basics2d.hh: Update.
+	
 2006-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add the first two morphers: identity and neighborhood addition.

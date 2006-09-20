@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,36 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_BASICS2D_HH
-# define OLENA_BASICS2D_HH
+#ifndef OLENA_CORE_ABSTRACT_NEIGHBORHOOD_HH
+# define OLENA_CORE_ABSTRACT_NEIGHBORHOOD_HH
+
+# include <oln/core/typedefs.hh>
 
 
-# include <oln/core/2d/aliases.hh>
+namespace oln
+{
 
-# include <oln/core/2d/point2d.hh>
-namespace oln { template class point2d_<int>; }
-
-# include <oln/core/2d/dpoint2d.hh>
-namespace oln { template class dpoint2d_<int>; }
-
-# include <oln/core/gen/bbox.hh>
-namespace oln { template class bbox_<point2d>; }
-
-# include <oln/core/gen/bbox_fwd_piter.hh>
-namespace oln { template class bbox_fwd_piter_<point2d>; }
-
-# include <oln/core/gen/bbox_bkd_piter.hh>
-namespace oln { template class bbox_bkd_piter_<point2d>; }
-
-# include <oln/core/gen/topo_bbox.hh>
-namespace oln { template class topo_bbox_<point2d>; }
-
-# include <oln/core/gen/neighb.hh>
-namespace oln { template class neighb_<dpoint2d>; }
-# include <oln/core/2d/neighb2d.hh>
+  namespace abstract
+  {
 
 
-# include <oln/core/2d/image2d.hh>
+    /// Abstract neighborhood class.
+    template <typename E>
+    class neighborhood : public virtual stc::any__simple<E>,
+			 public virtual oln::type
+    {
+    public:
+
+      bool is_valid() const
+      {
+	return this->exact().impl_is_valid();
+      }
+
+      struct decl
+      {
+	stc_virtual_typedef(grid);
+
+	decl() {
+	}
+      };
+
+    protected:
+
+      neighborhood()
+      {}
+
+      ~neighborhood() { decl(); }
+
+    }; // end of class oln::abstract::neighborhood<E>
 
 
-#endif // ! OLENA_BASICS2D_HH
+
+  } // end of namespace oln::abstract
+
+} // end of namespace oln
+
+
+
+// # include <oln/core/abstract/neighborhood_hierarchies.hh>
+
+
+
+#endif // ! OLENA_CORE_ABSTRACT_NEIGHBORHOOD_HH

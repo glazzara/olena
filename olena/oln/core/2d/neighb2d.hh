@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,36 +25,80 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_BASICS2D_HH
-# define OLENA_BASICS2D_HH
-
-
-# include <oln/core/2d/aliases.hh>
-
-# include <oln/core/2d/point2d.hh>
-namespace oln { template class point2d_<int>; }
-
-# include <oln/core/2d/dpoint2d.hh>
-namespace oln { template class dpoint2d_<int>; }
-
-# include <oln/core/gen/bbox.hh>
-namespace oln { template class bbox_<point2d>; }
-
-# include <oln/core/gen/bbox_fwd_piter.hh>
-namespace oln { template class bbox_fwd_piter_<point2d>; }
-
-# include <oln/core/gen/bbox_bkd_piter.hh>
-namespace oln { template class bbox_bkd_piter_<point2d>; }
-
-# include <oln/core/gen/topo_bbox.hh>
-namespace oln { template class topo_bbox_<point2d>; }
+#ifndef OLENA_CORE_2D_NEIGHB2D_HH
+# define OLENA_CORE_2D_NEIGHB2D_HH
 
 # include <oln/core/gen/neighb.hh>
-namespace oln { template class neighb_<dpoint2d>; }
-# include <oln/core/2d/neighb2d.hh>
+# include <oln/core/2d/aliases.hh>
 
 
-# include <oln/core/2d/image2d.hh>
+namespace oln
+{
 
 
-#endif // ! OLENA_BASICS2D_HH
+  neighb2d c4()
+  {
+    static bool flower = true;
+    static neighb2d the_;
+    if (flower)
+      {
+	the_
+	  .add(dpoint2d(0, 1))
+	  .add(dpoint2d(1, 0));
+	flower = false;
+      }
+    return the_;
+  }
+  
+
+  neighb2d c8()
+  {
+    static bool flower = true;
+    static neighb2d the_;
+    if (flower)
+      {
+	the_
+	  .add(dpoint2d(0, 1))
+	  .add(dpoint2d(1,-1))
+	  .add(dpoint2d(1, 0))
+	  .add(dpoint2d(1, 1));
+	flower = false;
+      }
+    return the_;
+  }
+  
+
+  neighb2d c2_row()
+  {
+    static bool flower = true;
+    static neighb2d the_;
+    if (flower)
+      {
+	the_
+	  .add(dpoint2d(0, 1));
+	flower = false;
+      }
+    return the_;
+  }
+  
+
+  neighb2d c2_col()
+  {
+    static bool flower = true;
+    static neighb2d the_;
+    if (flower)
+      {
+	the_
+	  .add(dpoint2d(1, 0));
+	flower = false;
+      }
+    return the_;
+  }
+
+
+} // end of namespace oln
+
+
+
+#endif // ! OLENA_CORE_2D_NEIGHB2D_HH
+
