@@ -26,9 +26,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_GEN_BBOX_FWD_PITER_HH
-# define OLENA_CORE_GEN_BBOX_FWD_PITER_HH
+#ifndef OLENA_CORE_GEN_FWD_PITER_BBOX_HH
+# define OLENA_CORE_GEN_FWD_PITER_BBOX_HH
 
+# include <oln/core/abstract/topology.hh>
 # include <oln/core/internal/bbox_fwd_piter.hh>
 
 
@@ -37,47 +38,71 @@ namespace oln
 
 
   // Forward declaration.
-  template <typename point> class bbox_fwd_piter_;
+  template <typename topo> class fwd_piter_bbox_;
 
 
   // Super type declaration.
-  template <typename point>
-  struct set_super_type< bbox_fwd_piter_<point> >
+  template <typename topo>
+  struct set_super_type< fwd_piter_bbox_<topo> >
   {
-    typedef bbox_fwd_piter_<point> self_t;
+    typedef fwd_piter_bbox_<topo> self_t;
     typedef internal::bbox_fwd_piter<self_t> ret;
   };
 
 
-  /// Virtual types associated to oln::bbox_fwd_piter_<point>.
-  template <typename point>
-  struct vtypes< bbox_fwd_piter_<point> >
+  /// Virtual types associated to oln::fwd_piter_bbox_<topo>.
+  template <typename topo>
+  struct vtypes< fwd_piter_bbox_<topo> >
   {
-    typedef point point_type;
-    typedef oln_type_of(point, grid) grid_type;
+    typedef oln_type_of(topo, point) point_type;
+    typedef oln_type_of(topo, grid) grid_type;
   };
 
 
 
   /// Abstract forward point iterator class.
-  template <typename point>
-  class bbox_fwd_piter_ : public internal::bbox_fwd_piter< bbox_fwd_piter_<point> >,
-			  private mlc::assert_< mlc_is_a(point, abstract::point) >
+  template <typename topo_t>
+  class fwd_piter_bbox_ : public internal::bbox_fwd_piter< fwd_piter_bbox_<topo_t> >,
+			  private mlc::assert_< mlc_is_a(topo_t, abstract::topology) >
   {
-    typedef bbox_fwd_piter_<point> self_t;
+    typedef fwd_piter_bbox_<topo_t> self_t;
     typedef internal::bbox_fwd_piter<self_t> super_t;
 
   public:
     
-    bbox_fwd_piter_(const bbox_<point>& bb)
-      : super_t(bb)
+    template <typename T>
+    fwd_piter_bbox_(const abstract::topology<T>& topo)
+      : super_t(topo.exact().bbox()),
+        topo_(topo.exact())
     {
     }
     
-  }; // end of class oln::bbox_fwd_piter_<point>
+    const topo_t& topo() const
+    {
+      return topo_;
+    }
+
+    void print(std::ostream& ostr) const
+    {
+      ostr << "{ p=" << super_t::p_
+	   << " }";
+    }
+
+    friend
+    std::ostream& operator<<(std::ostream& ostr, const fwd_piter_bbox_<topo_t>& t)
+    {
+      t.print(ostr);
+      return ostr;
+    }
+
+  protected:
+
+    const topo_t& topo_;
+
+  }; // end of class oln::fwd_piter_bbox_<point>
   
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_GEN_BBOX_FWD_PITER_HH
+#endif // ! OLENA_CORE_GEN_FWD_PITER_BBOX_HH

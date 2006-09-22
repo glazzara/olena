@@ -29,9 +29,7 @@
 #ifndef OLENA_CORE_GEN_BBOX_BKD_PITER_HH
 # define OLENA_CORE_GEN_BBOX_BKD_PITER_HH
 
-# include <oln/core/abstract/iterator_on_points.hh>
-# include <oln/core/abstract/point.hh>
-# include <oln/core/gen/bbox.hh>
+# include <oln/core/internal/bbox_bkd_piter.hh>
 
 
 namespace oln
@@ -47,11 +45,11 @@ namespace oln
   struct set_super_type< bbox_bkd_piter_<point> >
   {
     typedef bbox_bkd_piter_<point> self_t;
-    typedef abstract::iterator_on_points<self_t> ret;
+    typedef internal::bbox_bkd_piter<self_t> ret;
   };
 
 
-  /// Virtual types associated to oln::bbox_<point>.
+  /// Virtual types associated to oln::bbox_bkd_piter_<point>.
   template <typename point>
   struct vtypes< bbox_bkd_piter_<point> >
   {
@@ -63,76 +61,19 @@ namespace oln
 
   /// Abstract forward point iterator class.
   template <typename point>
-  class bbox_bkd_piter_ : public abstract::iterator_on_points< bbox_bkd_piter_<point> >,
+  class bbox_bkd_piter_ : public internal::bbox_bkd_piter< bbox_bkd_piter_<point> >,
 			  private mlc::assert_< mlc_is_a(point, abstract::point) >
   {
     typedef bbox_bkd_piter_<point> self_t;
-    typedef abstract::iterator_on_points<self_t> super_t;
+    typedef internal::bbox_bkd_piter<self_t> super_t;
 
   public:
     
     bbox_bkd_piter_(const bbox_<point>& bb)
-      : p_(),
-        bb_(bb)
+      : super_t(bb)
     {
-      nop_ = bb_.pmin();
-      --nop_[0];
     }
-
-    const bbox_<point>& bbox() const
-    {
-      return bb_;
-    }
-
-    void impl_start()
-    {
-      p_ = bb_.pmax();
-      invariant(implies(p_ != nop_, bb_.has(p_)));
-    }
-
-    void impl_next()
-    {
-      invariant(implies(p_ != nop_, bb_.has(p_)));
-      for (int i = point::n - 1; i >= 0; --i)
-	if (p_[i] == bb_.pmin(i))
-	  p_[i] = bb_.pmax(i);
-	else
-	{
-	  --p_[i];
-	  break;
-	}
-      if (p_ == bb_.pmax())
-	p_ = nop_;
-    }
-
-    void impl_invalidate()
-    {
-      invariant(implies(p_ != nop_, bb_.has(p_)));
-      p_ = nop_;
-    }
-
-    bool impl_is_valid() const
-    {
-      invariant(implies(p_ != nop_, bb_.has(p_)));
-      return p_ != nop_;
-    }
-
-    point impl_to_point() const
-    {
-      return p_;
-    }
-
-    const point* impl_point_adr() const
-    {
-      return &p_;
-    }
-
-  protected:
-
-    point p_;
-    bbox_<point> bb_;
-    point nop_;
-
+    
   }; // end of class oln::bbox_bkd_piter_<point>
   
 

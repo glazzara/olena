@@ -1,3 +1,17 @@
+2006-09-22  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add image point iterators parameterized by the image topology;
+	factor code into an internal class.
+	
+	* oln/core/gen/bbox_fwd_piter.hh: Change inheritance and move
+	methods into...
+	* oln/core/internal/bbox_fwd_piter.hh: ...this new class.
+	* oln/core/gen/bbox_bkd_piter.hh: Change inheritance and move
+	methods into...
+	* oln/core/internal/bbox_bkd_piter.hh: ...this new class.
+	* oln/core/gen/fwd_piter_bbox.hh: New.
+	* oln/core/gen/bkd_piter_bbox.hh: New.
+	
 2006-09-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the identity and neighborhood addition morphers.
