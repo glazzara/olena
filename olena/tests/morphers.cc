@@ -25,12 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// Test some morphers.
+/// Test some morphers and morpher composition.
 
 #include <mlc/assert.hh>
 #include <mlc/is_a.hh>
 
-// FIXME: We should not include oln/basics2d.hh, but oln/core/2d/image2d.hh.
+// FIXME: We should not include oln/basics2d.hh, but
+// oln/core/2d/image2d.hh (and oln/core/2d/neigh2d.hh ?).
 #include <oln/basics2d.hh>
 #include <oln/morpher/identity.hh>
 #include <oln/morpher/add_neighborhood.hh>
@@ -44,12 +45,14 @@ main()
   `----------------*/
 
   typedef oln::image2d<char> image_t;
+
   // Sanity check: abstractions realized by oln::image2d.
   mlc::assert_< mlc_is_a_(image_t, oln::abstract::image2d) >::check();
   mlc::assert_< mlc_is_a_(image_t,
 			  oln::abstract::grey_level_image) >::check();
   mlc::assert_< mlc_is_a_(image_t,
 			  oln::abstract::not_binary_image) >::check();
+
   image_t ima(42, 51);
 
 
@@ -58,16 +61,21 @@ main()
   `------------------------------------*/
 
   typedef oln::morpher::add_neighborhood<image_t> image_with_nbh_t;
+
   // Check that the instantiated neighborhood addition morpher
   // realizes the same abstraction as the underlying morphed image.
   mlc::assert_< mlc_is_a_(image_with_nbh_t, oln::abstract::image2d) >::check();
   mlc::assert_< mlc_is_a_(image_with_nbh_t,
 			  oln::abstract::image_having_neighborhood) >::check();
+  mlc::assert_< mlc_is_a_(image_with_nbh_t,
+			  oln::abstract::not_binary_image) >::check();
   // Check the type of neighborhood.
   mlc::assert_< mlc_eq(oln_type_of_(image_with_nbh_t, neighborhood),
 		       oln::neighb2d) >::check();
 
-  oln::neighb2d nbh;
+  // Instantiate a neighborhood for this image type.
+  oln_type_of_(image_with_nbh_t, neighborhood) nbh;
+  // Instantiate an object, and check its methods.
   image_with_nbh_t ima_with_nbh(ima, nbh);
   oln::neighb2d nbh2 = ima_with_nbh.neighborhood();
 
@@ -77,15 +85,20 @@ main()
   `------------------------------------------------*/
 
   typedef oln::morpher::identity<image_with_nbh_t> image_with_nbh_id_t;
+
   // Check that the instantiated identity morpher realizes the same
   // abstraction as the underlying morphed image.
   mlc::assert_< mlc_is_a_(image_with_nbh_id_t,
 			  oln::abstract::image2d) >::check();
   mlc::assert_< mlc_is_a_(image_with_nbh_id_t,
 			  oln::abstract::image_having_neighborhood) >::check();
+  mlc::assert_< mlc_is_a_(image_with_nbh_id_t,
+			  oln::abstract::not_binary_image) >::check();
   // Check the type of neighborhood.
   mlc::assert_< mlc_eq(oln_type_of_(image_with_nbh_id_t, neighborhood),
 		       oln::neighb2d) >::check();
+
+  // Instantiate an object, and check its methods.
   image_with_nbh_id_t ima_with_nbh_id(ima_with_nbh);
   oln::neighb2d nbh3 = ima_with_nbh_id.neighborhood();
 }

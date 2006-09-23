@@ -30,18 +30,36 @@
 
 /// \def oln_type_of(OlnType, Alias)
 ///
-/// Macro to retrieve an associated type \a Alias from an oln type
-/// \a OlnType whose category is not specified (version to be used inside
-/// a template).
+/// Macro to retrieve an associated type \a Alias from the exact type of
+/// an oln type \a OlnType whose category is not specified (version to be
+/// used inside a template).
 # define oln_type_of(OlnType, Alias)		\
-stc_type_of(oln, void, OlnType, Alias)
+   stc_type_of(oln, void, OlnType, Alias)
 
 /// \def oln_type_of(OlnType, Alias)
 ///
-/// Macro to retrieve an associated type \a Alias from an oln type
-/// \a OlnType whose category is not specified (version to be used
-/// outside a template).
+/// Macro to retrieve an associated type \a Alias from the exact type of
+/// an oln type \a OlnType whose category is not specified (version to be
+/// used outside a template).
 # define oln_type_of_(OlnType, Alias)		\
-stc_type_of_(oln, void, OlnType, Alias)
+   stc_type_of_(oln, void, OlnType, Alias)
+
+
+/// \def oln_direct_type_of(OlnType, Alias)
+///
+/// Macro to retrieve an associated type \a Alias from an oln type \a
+/// OlnType directly, and whose category is not specified (version to
+/// be used inside a template).
+# define oln_direct_type_of(OlnType, Alias)		\
+   stc_direct_type_of(oln, void, OlnType, Alias)
+
+/// \def oln_direct_type_of_(OlnType, Alias)
+///
+/// Macro to retrieve an associated type \a Alias from an oln type \a
+/// OlnType directly, and whose category is not specified (version to
+/// be used inside a template).
+# define oln_direct_type_of_(OlnType, Alias)		\
+   stc_direct_type_of_(oln, void, OlnType, Alias)
+
 
 #endif // ! OLENA_CORE_MACROS_HH

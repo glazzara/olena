@@ -1,3 +1,19 @@
+2006-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Restore the compatibility of morphers with G++ 4.0.
+
+	* oln/core/macros.hh (oln_direct_type_of, oln_direct_type_of_):
+	New macros.
+	* oln/morpher/internal/image_extension.hh (oln): Use
+	`oln_direct_type_of(Exact, ...)' instead of
+	`oln_type_of(self_t, ...)'.
+	* tests/morphers.cc (main): Add more static assertions.
+	* tests/identity_morpher.cc: More documentation.
+	* tests/add_neighborhood_morpher.cc: New test.
+	* tests/Makefile.am (check_PROGRAMS): Add
+	add_neighborhood_morpher.
+	(add_neighborhood_morpher_SOURCES): New.
+
 2006-09-22  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add image point iterators parameterized by the image topology;

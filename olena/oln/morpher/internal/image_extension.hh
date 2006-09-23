@@ -58,7 +58,6 @@ namespace oln
     typedef Image ret;
   };
 
-
   namespace morpher
   {
     namespace internal
@@ -74,9 +73,9 @@ namespace oln
 	/// Type of morphed image.
 	typedef Image image_t;
 
-	typedef oln_type_of(self_t, topo) topo_t;
-	typedef oln_type_of(self_t, value) value_t;
-	typedef oln_type_of(self_t, point) point_t;
+	typedef oln_direct_type_of(Exact, topo) topo_t;
+	typedef oln_direct_type_of(Exact, value) value_t;
+	typedef oln_direct_type_of(Exact, point) point_t;
 
       public:
 	// FIXME: Handle the constness.

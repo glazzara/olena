@@ -11,15 +11,19 @@ AM_CPPFLAGS =						\
 
 check_PROGRAMS =				\
   grid						\
-  identity_morpher				\
   image_entry					\
-  morphers					\
-  npoints
+  npoints					\
+						\
+  identity_morpher				\
+  add_neighborhood_morpher			\
+  morphers
 
 grid_SOURCES = grid.cc
-identity_morpher_SOURCES = identity_morpher.cc
 image_entry_SOURCES = image_entry.cc
 npoints_SOURCES = npoints.cc
+# Morphers.
+identity_morpher_SOURCES = identity_morpher.cc
+add_neighborhood_morpher_SOURCES = add_neighborhood_morpher.cc
 morphers_SOURCES = morphers.cc
 
 TESTS = $(check_PROGRAMS)
