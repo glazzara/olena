@@ -40,7 +40,7 @@
   typename my_type_of_(FromType, Typedef)
 
 #define my_type_of_(FromType, Typedef)				\
-  stc_local_type_of_(my::category::my_cat, FromType, Typedef)
+  stc_type_of_(my, my::category::my_cat, FromType, Typedef)
 
 namespace my
 {

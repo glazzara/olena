@@ -1,3 +1,23 @@
+2006-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Provide two versions of type_of_: one working on `from_type'
+	directly (new behavior), the other working on its exact type (old
+	behavior).
+
+	* stc/vtypes.hh (type_of_): Don't perform the virtual type
+	retrieval on the exact type of `from_type', use it directly.
+	(exact_type_of_): New.
+	Perform a virtual type retrieval using the exact type of
+	`from_type' (i.e., implement the previous behavior of type_of_).
+	(stc_type_of): Adjust macro.
+	(stc_direct_type_of, stc_direct_type_of_): New macros.
+	(stc_local_type_of, stc_local_type_of_): Remove these macros, as
+	they are used nowhere (but in tests), and are just (useless) sugar
+	for `stc_type_of' and `stc_type_of_'.
+	* tests/vtypes.cc (my_type_of_)
+	* tests/vtypes-and-exact.cc (my_type_of_)
+	* tests/vtypes-multiple-supers.cc (my_type_of_): Adjust.
+
 2006-09-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	* stc/vtypes.hh (stc_equip_namespace_with_vtypes): Swap the

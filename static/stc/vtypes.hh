@@ -775,23 +775,20 @@ namespace stc
   template <typename category, typename from_type, typename typedef_type>     \
   struct type_of_							      \
   {									      \
-    /* Get the exact type of \a from_type.  */				      \
-    typedef stc_to_exact(from_type) from_exact_type;			      \
-									      \
     /* Look for the typedef in internal vtypes.  */			      \
     typedef typename							      \
     internal::rec_get_vtype<internal::tag::internal, category,		      \
-                            from_exact_type, typedef_type>::ret		      \
+                            from_type, typedef_type>::ret		      \
     internal_vtype_candidate;						      \
     /* Look for the typedef as a single vtype definition.  */		      \
     typedef typename							      \
     internal::rec_get_vtype<internal::tag::single, category,		      \
-                            from_exact_type, typedef_type>::ret		      \
+                            from_type, typedef_type>::ret		      \
     single_vtype_candidate;						      \
     /* Look for the typedef as an extended vtype.  */			      \
     typedef typename							      \
     internal::rec_get_vtype<internal::tag::extended, category,		      \
-                            from_exact_type, typedef_type>::ret		      \
+                            from_type, typedef_type>::ret		      \
     extended_vtype_candidate;						      \
 									      \
     /* Did we found the virtual type in any of the vtypes structures?  */     \
@@ -809,6 +806,18 @@ namespace stc
         single_vtype_candidate,   found_as_single_vtype,		      \
         extended_vtype_candidate, found_as_extended_vtype		      \
       >::ret ret;							      \
+  };									      \
+									      \
+  /** Entry point of the vtype retrieval algorithm (working on the */	      \
+  /** exact version of \a from_type).                              */	      \
+  template <typename category, typename from_type, typename typedef_type>     \
+  struct exact_type_of_							      \
+  {									      \
+    /* Get the exact type of \a from_type.  */				      \
+    typedef stc_to_exact(from_type) from_exact_type;			      \
+    /* ``Run'' type_of_.  */						      \
+    typedef typename							      \
+    type_of_<category, from_exact_type, typedef_type>::ret ret;		      \
   };									      \
 									      \
   struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
@@ -928,31 +937,30 @@ namespace stc
 // Virtual types access.  //
 // ---------------------- //
 
-// FIXME: Perhaps only ``external'' (i.e., non local) versions of
-// stc_type_of are really useful (since they are more precise), and we
-// could get rid of local versions (stc_local_type_of and
-// stc_local_type_of_).
-
-/// Get the vtype \a Typedef, declared in the current namespace,
-/// from \a FromType (version to be used inside a template).
-#define stc_local_type_of(Category, FromType, Typedef)	\
-  typename stc_type_of_(Category, FromType, Typedef)
-
-/// Get the vtype \a Typedef, declared in the current namespace,
-/// from \a FromType (version to be used outside a template).
-#define stc_local_type_of_(Category, FromType, Typedef)		\
-  type_of_<Category, FromType, typedef_:: Typedef##_type >::ret
-
-/// Get the vtype \a Typedef, declared in \a Namespace, from \a
-/// FromType (version to be used inside a template).
+/// Get the vtype \a Typedef, declared in \a Namespace, from the
+/// exact type of \a FromType (version to be used inside a template).
 #define stc_type_of(Namespace, Category, FromType, Typedef)	\
   typename stc_type_of_(Namespace, Category, FromType, Typedef)
 
+/// Get the vtype \a Typedef, declared in \a Namespace, from the
+/// exact type of \a FromType (version to be used outside a template).
+#define stc_type_of_(Namespace, Category, FromType, Typedef)		 \
+  Namespace::exact_type_of_< Category, FromType,			 \
+                             Namespace::typedef_:: Typedef##_type >::ret
+
+
 /// Get the vtype \a Typedef, declared in \a Namespace, from \a
-/// FromType (version to be used outside a template).
-#define stc_type_of_(Namespace, Category, FromType, Typedef)		\
-  Namespace::type_of_<Category, FromType,				\
-                      Namespace::typedef_:: Typedef##_type >::ret
+/// FromType directly. (version to be used inside a template).
+#define stc_direct_type_of(Namespace, Category, FromType, Typedef)	\
+  typename stc_direct_type_of_(Namespace, Category, FromType, Typedef)
+
+/// Get the vtype \a Typedef, declared in \a Namespace, from \a
+/// FromType directly (version to be used outside a template).
+#define stc_direct_type_of_(Namespace, Category, FromType, Typedef)	 \
+  Namespace::type_of_< Category, FromType,				 \
+                       Namespace::typedef_:: Typedef##_type >::ret
+
+
 
 /// Declare the vtype \a Typedef in an abstract class (see sample code
 /// for details).  Warning: this macro assumes that the exact type
