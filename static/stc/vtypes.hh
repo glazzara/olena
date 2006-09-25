@@ -65,20 +65,31 @@ namespace stc
   namespace ERROR
   {
 
+    /// Errors from internal::get_super_types_helper.
+    /// \{
     struct PARAMETER_OF_get_super_types_helper_IS_NOT_A_VALID_VALIST;
+    /// \}
 
+    /// Errors from internal rec_get_vtype.
+    /// \{
     struct FIRST_PARAMETER_OF_rec_get_vtype_IS_NOT_A_TAG;
 
     struct FIRST_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_TAG;
     struct THIRD_PARAMETER_OF_rec_get_vtype_from_list_IS_NOT_A_LIST;
+    /// \}
 
+    /// Errors from internal::select_typedef.
+    /// \{
     struct VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE;
     struct VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_EXTERNAL;
     struct VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_SINGLE_AND_EXTERNAL;
     struct VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE_AND_EXTERNAL;
-    struct NO_VALID_VIRTUAL_TYPE_FOUND;
+    /// \}
 
-    struct NO_VALID_RETURN_TYPE_FOR_type_of_;
+    /// Errors from check_type_of_ and check_exact_type_of_.
+    /// \{
+    struct VIRTUAL_TYPE_NOT_FOUND;
+    /// \}
 
   } // end of namespace stc::ERROR
 
@@ -294,14 +305,14 @@ namespace stc
   /** having no category.				        */	      \
   /**								*/	      \
   /** Specialize this class for the desired \a from_type.	*/	      \
-  template <typename from_type>		      				      \
+  template <typename from_type>						      \
   struct vtypes								      \
   {									      \
   };									      \
 									      \
-  /** Specialization of vtypes for types without category.  */	      	      \
-  template <typename from_type>		      				      \
-  struct vtypes_in_category<void, from_type> : public vtypes<from_type>       \
+  /** Specialization of vtypes for types without category.  */		      \
+  template <typename from_type>						      \
+  struct vtypes_in_category<void, from_type> : public vtypes<from_type>	      \
   {									      \
   };									      \
 									      \
@@ -335,7 +346,7 @@ namespace stc
   };									      \
 									      \
   /** Specialization of single_vtype for types without category.  */	      \
-  template <typename from_type, typename typedef_type>     		      \
+  template <typename from_type, typename typedef_type>			      \
   struct single_vtype_in_category<void, from_type, typedef_type>	      \
     : public single_vtype<from_type, typedef_type>			      \
   {									      \
@@ -372,7 +383,7 @@ namespace stc
   };									      \
 									      \
   /** Specialization of ext_vtype for types without category.  */	      \
-  template <typename from_type, typename typedef_type>     		      \
+  template <typename from_type, typename typedef_type>			      \
   struct ext_vtype_in_category<void, from_type, typedef_type>		      \
     : public ext_vtype<from_type, typedef_type>				      \
   {									      \
@@ -679,8 +690,8 @@ namespace stc
     };									      \
 									      \
 									      \
-    /* Erroneous cases.  */                                                   \
-    /* ----------------  */                                                   \
+    /* Erroneous cases.  */						      \
+    /* ----------------  */						      \
 									      \
     /* In the following cases, mlc::abort_ ``statements'' take a dummy   */   \
     /* typedef as first parameter, to prevent an immediate evaluation.   */   \
@@ -691,69 +702,69 @@ namespace stc
 									      \
     /** The typedef is <b>defined</b> both as internal and single (and */     \
     /** the internal flavour is <b>not</b> mlc::undefined): bad.       */     \
-    template <typename internal_vtype_candidate,                              \
+    template <typename internal_vtype_candidate,			      \
               typename single_vtype_candidate,				      \
               typename extended_vtype_candidate>			      \
     struct select_typedef<internal_vtype_candidate, true,		      \
                           single_vtype_candidate,   true,		      \
                           extended_vtype_candidate, false> :		      \
-      mlc::abort_ <                                                           \
-        internal_vtype_candidate /* dummy */ ,                                \
+      mlc::abort_ <							      \
+        internal_vtype_candidate /* dummy */ ,				      \
         stc::ERROR::VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE      \
-      >                                                                       \
+      >									      \
     {									      \
       /* Error, no valid typedef found.  */				      \
-      typedef mlc::not_found ret;                                             \
+      typedef mlc::not_found ret;					      \
     };									      \
 									      \
     /** The typedef is <b>defined</b> both as internal and external: bad.  */ \
-    template <typename internal_vtype_candidate,                              \
+    template <typename internal_vtype_candidate,			      \
               typename single_vtype_candidate,				      \
               typename extended_vtype_candidate>			      \
     struct select_typedef<internal_vtype_candidate, true,		      \
                           single_vtype_candidate,   false,		      \
                           extended_vtype_candidate, true> :		      \
-      mlc::abort_ <                                                           \
-        internal_vtype_candidate /* dummy */ ,                                \
+      mlc::abort_ <							      \
+        internal_vtype_candidate /* dummy */ ,				      \
         stc::ERROR::VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_EXTERNAL    \
-      >                                                                       \
+      >									      \
     {									      \
       /* Error, no valid typedef found.  */				      \
-      typedef mlc::not_found ret;                                             \
+      typedef mlc::not_found ret;					      \
     };									      \
 									      \
     /** The typedef is <b>defined</b> both as single and external: bad.  */   \
-    template <typename internal_vtype_candidate,                              \
+    template <typename internal_vtype_candidate,			      \
               typename single_vtype_candidate,				      \
               typename extended_vtype_candidate>			      \
     struct select_typedef<internal_vtype_candidate, false,		      \
                           single_vtype_candidate,   true,		      \
-                          extended_vtype_candidate, true> :                   \
-      mlc::abort_ <                                                           \
-        internal_vtype_candidate /* dummy */ ,                                \
+                          extended_vtype_candidate, true> :		      \
+      mlc::abort_ <							      \
+        internal_vtype_candidate /* dummy */ ,				      \
         stc::ERROR::VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_SINGLE_AND_EXTERNAL      \
-      >                                                                       \
+      >									      \
     {									      \
       /* Error, no valid typedef found.  */				      \
-      typedef mlc::not_found ret;                                             \
+      typedef mlc::not_found ret;					      \
     };									      \
 									      \
-    /** The typedef is <b>defined</b> as internal, single, and  */            \
-    /** external: bad.                                          */            \
-    template <typename internal_vtype_candidate,                              \
+    /** The typedef is <b>defined</b> as internal, single, and  */	      \
+    /** external: bad.                                          */	      \
+    template <typename internal_vtype_candidate,			      \
               typename single_vtype_candidate,				      \
               typename extended_vtype_candidate>			      \
     struct select_typedef<internal_vtype_candidate, true,		      \
                           single_vtype_candidate,   true,		      \
                           extended_vtype_candidate, true> :		      \
-      mlc::abort_ <                                                           \
-        internal_vtype_candidate /* dummy */ ,                                \
-        stc::ERROR::                                                          \
+      mlc::abort_ <							      \
+        internal_vtype_candidate /* dummy */ ,				      \
+        stc::ERROR::							      \
           VIRTUAL_TYPE_MULTIPLY_DEFINED_AS_INTERNAL_AND_SINGLE_AND_EXTERNAL   \
-      >                                                                       \
+      >									      \
     {									      \
       /* Error, no valid typedef found.  */				      \
-      typedef mlc::not_found ret;                                             \
+      typedef mlc::not_found ret;					      \
     };									      \
 									      \
     /** All other cases: \a mlc::not_found is returned, but no static.  */    \
@@ -764,12 +775,15 @@ namespace stc
         typename extended_vtype_candidate, bool found_as_extended_vtype >     \
     struct select_typedef						      \
     {									      \
-      typedef mlc::not_found ret;                                             \
+      typedef mlc::not_found ret;					      \
     };									      \
     /** \} */								      \
 									      \
   } /** End of namespace internal.  */					      \
 									      \
+									      \
+  /* Entry points.  */							      \
+  /* -------------  */							      \
 									      \
   /** Entry point of the vtype retrieval algorithm.  */			      \
   template <typename category, typename from_type, typename typedef_type>     \
@@ -818,6 +832,41 @@ namespace stc
     /* ``Run'' type_of_.  */						      \
     typedef typename							      \
     direct_type_of_<category, from_exact_type, typedef_type>::ret ret;	      \
+  };									      \
+									      \
+									      \
+  /** Like direct_type_of_, but ensure that the result is different */	      \
+  /** from mlc::not_found.                                          */	      \
+  template <typename category, typename from_type, typename typedef_type>     \
+  struct check_direct_type_of_						      \
+  {									      \
+    /* Candidate type.  */						      \
+    typedef typename							      \
+    direct_type_of_<category, from_type, typedef_type>::ret candidate;	      \
+    /* Check that CANDIDATE is found.  */				      \
+    typedef typename							      \
+    mlc::assert_and_return_<						      \
+      mlc_neq(candidate, mlc::not_found),				      \
+      candidate,							      \
+      stc::ERROR::VIRTUAL_TYPE_NOT_FOUND				      \
+    >::ret ret;								      \
+  };									      \
+									      \
+  /** Like type_of_, but ensure that the result is different from */	      \
+  /** mlc::not_found.                                             */	      \
+  template <typename category, typename from_type, typename typedef_type>     \
+  struct check_type_of_							      \
+  {									      \
+    /* Candidate type.  */						      \
+    typedef typename							      \
+    type_of_<category, from_type, typedef_type>::ret candidate;		      \
+    /* Check that CANDIDATE is found.  */				      \
+    typedef typename							      \
+    mlc::assert_and_return_<						      \
+      mlc_neq(candidate, mlc::not_found),				      \
+      candidate,							      \
+      stc::ERROR::VIRTUAL_TYPE_NOT_FOUND				      \
+    >::ret ret;								      \
   };									      \
 									      \
   struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
@@ -933,9 +982,9 @@ namespace stc
    set_pseudosuper_type< Type >::ret
 
 
-// ---------------------- //
-// Virtual types access.  //
-// ---------------------- //
+// --------------------- //
+// Virtual type access.  //
+// --------------------- //
 
 /// Get the vtype \a Typedef, declared in \a Namespace, from the
 /// exact type of \a FromType (version to be used inside a template).
@@ -959,6 +1008,45 @@ namespace stc
 #define stc_direct_type_of_(Namespace, Category, FromType, Typedef)	   \
   Namespace::direct_type_of_< Category, FromType,			   \
                                Namespace::typedef_:: Typedef##_type >::ret
+
+
+// ------------------------------- //
+// Virtual type check and access.  //
+// ------------------------------- //
+
+/* These macros are the same as the previous ones, but they use
+   check_type_of_ (resp. check_direct_type_of_) instead of type_of_
+   (resp. direct_type_of_).  */
+
+/// Get the vtype \a Typedef, declared in \a Namespace, from the
+/// exact type of \a FromType (version to be used inside a template).
+/// If the virtual type is not found, raise a static error.
+#define stc_check_type_of(Namespace, Category, FromType, Typedef)	\
+  typename stc_check_type_of_(Namespace, Category, FromType, Typedef)
+
+/// Get the vtype \a Typedef, declared in \a Namespace, from the
+/// exact type of \a FromType (version to be used outside a template).
+/// If the virtual type is not found, raise a static error.
+#define stc_check_type_of_(Namespace, Category, FromType, Typedef)	 \
+  Namespace::check_type_of_< Category, FromType,			 \
+                             Namespace::typedef_:: Typedef##_type >::ret
+
+
+/// Get the vtype \a Typedef, declared in \a Namespace, from \a
+/// FromType directly. (version to be used inside a template).
+/// If the virtual type is not found, raise a static error.
+#define stc_check_direct_type_of(Namespace, Category, FromType, Typedef)     \
+  typename stc_check_direct_type_of_(Namespace, Category, FromType, Typedef)
+
+/// Get the vtype \a Typedef, declared in \a Namespace, from \a
+/// FromType directly (version to be used outside a template).
+/// If the virtual type is not found, raise a static error.
+#define stc_check_direct_type_of_(Namespace, Category, FromType, Typedef) \
+  Namespace::check_direct_type_of_<					  \
+    Category,								  \
+    FromType,								  \
+    Namespace::typedef_:: Typedef##_type				  \
+  >::ret
 
 
 

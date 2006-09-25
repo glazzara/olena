@@ -1,5 +1,16 @@
 2006-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a version of type_of_ checking that the vtype is actually found.
+
+	* stc/vtypes.hh (stc::ERROR::NO_VALID_VIRTUAL_TYPE_FOUND),
+	(stc::ERROR::NO_VALID_RETURN_TYPE_FOR_type_of_): Remove.
+	(stc::ERROR::VIRTUAL_TYPE_NOT_FOUND): New.
+	(check_direct_type_of_, check_type_of_): New.
+	(stc_check_type_of, stc_check_type_of_)
+	(stc_check_direct_type_of, stc_check_direct_type_of_): New macros.
+
+2006-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Keep type_of_ its original semantics, and be consistent with macro
 	names.
 
