@@ -3,7 +3,12 @@
 olndir = $(includedir)/oln
 
 nobase_oln_HEADERS =					\
+							\
+  automatic/image.hh					\
   automatic/image_having_neighborhood.hh		\
+  automatic/topology_being_random_accessible.hh		\
+  automatic/topology_having_bbox.hh			\
+  automatic/topology_having_neighborhood.hh		\
 							\
   core/1d/grid1d.hh					\
 							\
@@ -43,18 +48,21 @@ nobase_oln_HEADERS =					\
   core/abstract/topology.hh				\
   core/abstract/topology_being_random_accessible.hh	\
   core/abstract/topology_having_bbox.hh			\
+  core/abstract/topology_having_neighborhood.hh		\
   core/abstract/topology_hierarchies.hh			\
 							\
   core/gen/bbox.hh					\
   core/gen/bbox_bkd_piter.hh				\
   core/gen/bbox_fwd_piter.hh				\
   core/gen/neighb.hh					\
+  core/gen/topo_add_nbh.hh				\
   core/gen/topo_bbox.hh					\
 							\
   core/internal/bbox_bkd_piter.hh			\
   core/internal/bbox_fwd_piter.hh			\
   core/internal/dpoint_nd.hh				\
   core/internal/point_nd.hh				\
+  core/internal/topology_morpher.hh			\
 							\
   core/case.hh						\
   core/image_entry.hh					\
