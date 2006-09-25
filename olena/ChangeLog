@@ -1,5 +1,14 @@
 2006-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add convenience shortcuts for stc_{direct_,}check_type_of{_,}.
+
+	* oln/core/macros.hh (oln_check_type_of, oln_check_type_of_) 
+	(oln_check_direct_type_of, oln_check_direct_type_of_): New macros.
+	* oln/morpher/internal/image_extension.hh, oln/morpher/identity.hh
+	* oln/morpher/add_neighborhood.hh: Remove FIXMEs.
+
+2006-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the distribution.
 
 	* oln/Makefile.am (nobase_oln_HEADERS): Add morpher/tags.hh.

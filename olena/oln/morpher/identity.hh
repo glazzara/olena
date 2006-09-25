@@ -66,7 +66,6 @@ namespace oln
   {
     /// Identity morpher.
     template <typename Image>
-    // FIXME: 
     class identity : public stc_get_supers(identity<Image>)
     {
     private:

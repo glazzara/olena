@@ -74,10 +74,7 @@ namespace oln
     private:
       typedef add_neighborhood<Image> self_t;
       typedef stc_get_nth_super(self_t, 1) super_t;
-      // FIXME: This should be replaced by a call to a new version of
-      // `oln_type_of', (named, for instance, `oln_check_type_of' or
-      // `oln_type_of_defined_').  Do the necessary changes in Static.
-      typedef oln_type_of(self_t, neighborhood) neighborhood_t;
+      typedef oln_check_type_of(self_t, neighborhood) neighborhood_t;
 
     public:
       // FIXME: Handle the constness.

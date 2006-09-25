@@ -28,6 +28,10 @@
 #ifndef OLENA_CORE_MACROS_HH
 # define OLENA_CORE_MACROS_HH
 
+// --------------------- //
+// Virtual type access.  //
+// --------------------- //
+
 /// \def oln_type_of(OlnType, Alias)
 ///
 /// Macro to retrieve an associated type \a Alias from the exact type of
@@ -60,6 +64,56 @@
 /// be used inside a template).
 # define oln_direct_type_of_(OlnType, Alias)		\
    stc_direct_type_of_(oln, void, OlnType, Alias)
+
+
+// ------------------------------- //
+// Virtual type check and access.  //
+// ------------------------------- //
+
+/* These macros are the same as the previous ones, but they use
+   stc_check_type_of{_,} (resp. stc_check_direct_type_of{_,}) instead of
+   stc_type_of{_,} (resp. stc_direct_type_of{_,}).  */
+
+/// \def oln_check_type_of(OlnType, Alias)
+///
+/// Macro to retrieve an associated type \a Alias from the exact type of
+/// an oln type \a OlnType whose category is not specified (version to be
+/// used inside a template).
+///
+/// If the virtual type is not found, raise a static error.
+# define oln_check_type_of(OlnType, Alias)	\
+   stc_check_type_of(oln, void, OlnType, Alias)
+
+/// \def oln_check_type_of(OlnType, Alias)
+///
+/// Macro to retrieve an associated type \a Alias from the exact type of
+/// an oln type \a OlnType whose category is not specified (version to be
+/// used outside a template).
+///
+/// If the virtual type is not found, raise a static error.
+# define oln_check_type_of_(OlnType, Alias)		\
+   stc_check_type_of_(oln, void, OlnType, Alias)
+
+
+/// \def oln_check_direct_type_of(OlnType, Alias)
+///
+/// Macro to retrieve an associated type \a Alias from an oln type \a
+/// OlnType directly, and whose category is not specified (version to
+/// be used inside a template).
+///
+/// If the virtual type is not found, raise a static error.
+# define oln_check_direct_type_of(OlnType, Alias)	\
+   stc_check_direct_type_of(oln, void, OlnType, Alias)
+
+/// \def oln_check_direct_type_of_(OlnType, Alias)
+///
+/// Macro to retrieve an associated type \a Alias from an oln type \a
+/// OlnType directly, and whose category is not specified (version to
+/// be used inside a template).
+///
+/// If the virtual type is not found, raise a static error.
+# define oln_check_direct_type_of_(OlnType, Alias)	\
+   stc_check_direct_type_of_(oln, void, OlnType, Alias)
 
 
 #endif // ! OLENA_CORE_MACROS_HH

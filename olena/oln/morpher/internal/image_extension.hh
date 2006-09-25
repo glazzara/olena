@@ -47,7 +47,6 @@ namespace oln
   } // end of namespace oln::morpher
 
 
-  // FIXME: Use set_super_type instead?
   /// Create an ``uplink'' from
   /// oln::morpher::internal::image_extension to the morphed \a Image,
   /// so as to get all its virtual types.
