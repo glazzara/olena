@@ -1,3 +1,26 @@
+2006-09-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add morpher capabilities to topology classes.
+	
+	* oln/automatic/topology_having_bbox.hh: New.
+	* oln/automatic/topology_being_random_accessible.hh: New.
+	* oln/automatic/topology_having_neighborhood.hh: New.
+	* oln/core/abstract/topology_having_neighborhood.hh: New.
+	* oln/core/gen/topo_add_nbh.hh: New.
+	* oln/core/internal/topology_morpher.hh: New.
+	* oln/automatic/image_having_neighborhood.hh: Fix typo in guards.
+	Fix comment.
+	Fix delegation code.
+	* oln/core/topology_entry.hh (neighborhood_type, morpher_type):
+	New.
+	* oln/core/abstract/topology_hierarchies.hh
+	(topology_hierarchy_wrt_neighborhood): New.
+	Update include.
+	* oln/core/abstract/topology_having_bbox.hh: Inherit from
+	automatic::impl.
+	* oln/core/abstract/topology_being_random_accessible.hh: Likewise.
+	* oln/core/abstract/topology.hh (neighborhood): New vtype.
+
 2006-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the distribution (again).

@@ -29,6 +29,7 @@
 # define OLENA_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
 
 # include <oln/core/abstract/topology.hh>
+# include <oln/automatic/topology_being_random_accessible.hh>
 
 
 
@@ -40,7 +41,11 @@ namespace oln
 
 
     template <typename E>
-    class topology_being_random_accessible : public virtual topology<E>
+    class topology_being_random_accessible
+      : public virtual topology<E>,
+	public automatic::impl< topology_being_random_accessible,
+				oln_type_of(E, morpher),
+				E >
     {
       typedef oln_type_of(E, point) point_t;
 
@@ -49,6 +54,11 @@ namespace oln
       bool has(const point_t& p) const
       {
 	return this->exact().impl_has(p);
+      }
+
+      bool has_large(const point_t& p) const
+      {
+	return this->exact().impl_has_large(p);
       }
 
     protected:

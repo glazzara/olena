@@ -55,8 +55,14 @@ namespace oln
   {
     typedef mlc::undefined point_type;
     typedef mlc::undefined bbox_type;
-
+    typedef mlc::none      neighborhood_type;
     typedef mlc::undefined is_random_accessible_type;
+  };
+
+  template <typename E>
+  struct single_vtype< topology_entry<E>, typedef_::morpher_type >
+  {
+    typedef mlc::none ret;
   };
 
 

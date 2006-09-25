@@ -25,62 +25,78 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH
-# define OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH
+#ifndef OLENA_CORE_GEN_TOPO_ADD_NBH_HH
+# define OLENA_CORE_GEN_TOPO_ADD_NBH_HH
 
-# include <oln/core/abstract/topology.hh>
-# include <oln/automatic/topology_having_bbox.hh>
+# include <oln/core/internal/topology_morpher.hh>
+
 
 
 namespace oln
 {
 
-  namespace abstract
+
+  // Forward declarations.
+  template <typename topo, typename nbh> class topo_add_nbh;
+
+
+  // Super type declaration.
+  template <typename topo, typename nbh>
+  struct set_super_type< topo_add_nbh<topo, nbh> >
   {
+    typedef topo_add_nbh<topo, nbh> self_t;
+    typedef internal::topology_morpher<topo, self_t> ret;
+  };
 
 
-    template <typename E>
-    class topology_having_bbox
-      : public virtual topology<E>,
-	public automatic::impl< topology_having_bbox,
-				oln_type_of(E, morpher),
-				E >
+  /// Virtual types associated to oln::bbox_<point>.
+  template <typename topo, typename nbh>
+  struct vtypes< topo_add_nbh<topo, nbh> >
+  {
+    typedef nbh neighborhood_type;
+  };
+
+  template <typename topo, typename nbh>
+  struct single_vtype< topo_add_nbh<topo, nbh>, typedef_::delegated_type >
+  {
+    typedef topo ret;
+  };
+
+
+  /// Bounding box topology based on a point class.
+  template <typename topo_t, typename nbh_t>
+  class topo_add_nbh : public internal::topology_morpher<topo_t, topo_add_nbh<topo_t, nbh_t> >
+  {
+  public:
+
+    topo_add_nbh()
     {
-      typedef oln_type_of(E, bbox)  bbox_t;
-      
-    public:
+    }
 
-      // abstract
-      const bbox_t& bbox() const
-      {
-	return this->exact().impl_bbox();
-      }
+    topo_add_nbh(const topo_t& topo, const nbh_t& nbh)
+      : topo_(topo),
+	nbh_(nbh)
+    {
+    }
 
-      // concrete
-      operator bbox_t() const
-      {
-	return this->bbox();
-      }
+    const nbh_t& impl_neighborhood() const
+    {
+      return nbh_;
+    }
 
-    protected:
+    const topo_t& delegate() const
+    {
+      return topo_;
+    }
 
-      topology_having_bbox()
-      {}
-    };
+  protected:
 
-
-  } // end of namespace oln::abstract
-
-
-  template <typename E>
-  struct case_ < topology_hierarchy_wrt_bbox, E, 1 >
-    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
-  {
-    typedef abstract::topology_having_bbox<E> ret;
+    topo_t topo_;
+    nbh_t nbh_;
   };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH
+#endif // ! OLENA_CORE_GEN_TOPO_ADD_NBH_HH

@@ -55,6 +55,9 @@ namespace oln
 	// provides .has(p) and .has_large(p)
 
 	stc_virtual_typedef(point);
+	stc_virtual_typedef(neighborhood);
+
+	stc_virtual_typedef(morpher);
 
 	decl() {
 	  // constraint:

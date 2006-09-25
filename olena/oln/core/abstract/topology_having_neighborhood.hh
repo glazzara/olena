@@ -25,11 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH
-# define OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH
+#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
+# define OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
 
 # include <oln/core/abstract/topology.hh>
-# include <oln/automatic/topology_having_bbox.hh>
+# include <oln/automatic/topology_having_neighborhood.hh>
 
 
 namespace oln
@@ -40,31 +40,31 @@ namespace oln
 
 
     template <typename E>
-    class topology_having_bbox
+    class topology_having_neighborhood
       : public virtual topology<E>,
-	public automatic::impl< topology_having_bbox,
+	public automatic::impl< topology_having_neighborhood,
 				oln_type_of(E, morpher),
 				E >
     {
-      typedef oln_type_of(E, bbox)  bbox_t;
+      typedef oln_type_of(E, neighborhood) neighborhood_t;
       
     public:
 
       // abstract
-      const bbox_t& bbox() const
+      const neighborhood_t& neighborhood() const
       {
-	return this->exact().impl_bbox();
+	return this->exact().impl_neighborhood();
       }
 
       // concrete
-      operator bbox_t() const
+      operator neighborhood_t() const
       {
-	return this->bbox();
+	return this->neighborhood();
       }
 
     protected:
 
-      topology_having_bbox()
+      topology_having_neighborhood()
       {}
     };
 
@@ -73,14 +73,14 @@ namespace oln
 
 
   template <typename E>
-  struct case_ < topology_hierarchy_wrt_bbox, E, 1 >
-    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+  struct case_ < topology_hierarchy_wrt_neighborhood, E, 1 >
+    : where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::none > >
   {
-    typedef abstract::topology_having_bbox<E> ret;
+    typedef abstract::topology_having_neighborhood<E> ret;
   };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH
+#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH

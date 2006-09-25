@@ -36,6 +36,7 @@ namespace oln
 
   typedef  hierarchy< abstract::topology, 1 >  topology_hierarchy_wrt_accessibility;
   typedef  hierarchy< abstract::topology, 2 >  topology_hierarchy_wrt_bbox;
+  typedef  hierarchy< abstract::topology, 3 >  topology_hierarchy_wrt_neighborhood;
 
 } // end of namespace oln
 
@@ -43,8 +44,11 @@ namespace oln
 // Hierarchy 1: topology w.r.t. accessibility.
 # include <oln/core/abstract/topology_being_random_accessible.hh>
 
-// Hierarchy 2: topology w.r.t. bbox.
+// Hierarchy 2: topology w.r.t. bounding box.
 # include <oln/core/abstract/topology_having_bbox.hh>
+
+// Hierarchy 2: topology w.r.t. neighborhood.
+# include <oln/core/abstract/topology_having_neighborhood.hh>
 
 
 
