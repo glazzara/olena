@@ -95,6 +95,12 @@ namespace oln
       return ostr;
     }
 
+    template <typename new_topo_t>
+    struct change_topology_
+    {
+      typedef fwd_piter_bbox_<new_topo_t> ret;
+    };
+
   protected:
 
     const topo_t& topo_;

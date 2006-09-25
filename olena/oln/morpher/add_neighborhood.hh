@@ -55,11 +55,17 @@ namespace oln
   template <typename Image, typename Neighb>
   struct vtypes< morpher::add_neighborhood<Image, Neighb> >
   {
+  private:
+
+    typedef oln_type_of(Image, fwd_piter) basic_fwd_piter_type;
+    typedef oln_type_of(Image, bkd_piter) basic_bkd_piter_type;
+
+  public:
     // Topology type.
     typedef topo_add_nbh< oln_type_of(Image, topo), Neighb > topo_type;
 
-    // Morpher type.
-    typedef oln::morpher::tag::identity morpher_type;
+    typedef typename basic_fwd_piter_type::template change_topology_<topo_type>::ret fwd_piter_type;
+    typedef typename basic_bkd_piter_type::template change_topology_<topo_type>::ret bkd_piter_type;
 
     // Neighborhood type.
     typedef Neighb neighborhood_type;

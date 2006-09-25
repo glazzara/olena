@@ -1,5 +1,17 @@
 2006-09-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Properly define fwd_piter_type and bkd_piter_type for the
+	add_neighborhood image morpher.
+	
+	* oln/core/abstract/image_hierarchies.hh: Remove end blank line.
+	* oln/core/gen/fwd_piter_bbox.hh (change_topology_): New.
+	* oln/core/gen/bkd_piter_bbox.hh (change_topology_): New.
+	* oln/morpher/add_neighborhood.hh (morpher_type): Remove; obsolete
+	cause defined in super class.
+	(fwd_piter_type, bkd_piter_type): New definitions.
+	
+2006-09-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Update image_extension, add_neighborhood, and some related
 	classes.
 	

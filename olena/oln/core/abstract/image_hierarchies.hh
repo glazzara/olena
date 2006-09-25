@@ -59,4 +59,3 @@ namespace oln
 
 
 #endif // ! OLENA_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH
-
