@@ -1,3 +1,9 @@
+2006-09-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution.
+
+	* oln/Makefile.am (nobase_oln_HEADERS): Add morpher/tags.hh.
+
 2006-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Restore the compatibility of morphers with G++ 4.0.

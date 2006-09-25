@@ -69,5 +69,6 @@ nobase_oln_HEADERS =					\
 							\
   morpher/add_neighborhood.hh				\
   morpher/identity.hh					\
+  morpher/tags.hh					\
 							\
   basics2d.hh
