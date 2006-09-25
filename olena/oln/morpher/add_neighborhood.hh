@@ -30,7 +30,7 @@
 
 # include <oln/morpher/internal/image_extension.hh>
 # include <oln/morpher/tags.hh>
-# include <oln/core/2d/aliases.hh>
+# include <oln/core/gen/topo_add_nbh.hh>
 
 
 namespace oln
@@ -39,60 +39,80 @@ namespace oln
   namespace morpher
   {
     // Forward declaration.
-    template <typename Image> struct add_neighborhood;
+    template <typename Image, typename Neighb> struct add_neighborhood;
 
   } // end of namespace oln::morpher
 
 
   /// Super type.
-  template <typename Image>
-  struct set_super_type< morpher::add_neighborhood<Image> >
+  template <typename Image, typename Neighb>
+  struct set_super_type< morpher::add_neighborhood<Image, Neighb> >
   {
-    typedef morpher::add_neighborhood<Image> self_t;
+    typedef morpher::add_neighborhood<Image, Neighb> self_t;
     typedef morpher::internal::image_extension<Image, self_t> ret;
   };
 
-  template <typename Image>
-  struct vtypes< morpher::add_neighborhood<Image> >
+  template <typename Image, typename Neighb>
+  struct vtypes< morpher::add_neighborhood<Image, Neighb> >
   {
+    // Topology type.
+    typedef topo_add_nbh< oln_type_of(Image, topo), Neighb > topo_type;
+
     // Morpher type.
-    typedef oln::morpher::tag::add_neighborhood morpher_type;
+    typedef oln::morpher::tag::identity morpher_type;
 
     // Neighborhood type.
-    typedef
-      mlc_if( mlc_is_a_(Image, abstract::image2d), neighb2d, mlc::none )
-      neighborhood_type;
+    typedef Neighb neighborhood_type;
   };
 
 
   namespace morpher
   {
     /// Neighborhood addition morpher.
-    template <typename Image>
-    class add_neighborhood : public stc_get_supers(add_neighborhood<Image>)
+    template <typename Image, typename Neighb>
+    class add_neighborhood : public stc_get_supers(mlc_comma_1(add_neighborhood<Image, Neighb>))
     {
     private:
-      typedef add_neighborhood<Image> self_t;
+
+      typedef add_neighborhood<Image, Neighb> self_t;
       typedef stc_get_nth_super(self_t, 1) super_t;
-      typedef oln_check_type_of(self_t, neighborhood) neighborhood_t;
+      typedef oln_type_of(self_t, topo) topo_t;
 
     public:
+
       // FIXME: Handle the constness.
-      add_neighborhood(const Image& image, const neighborhood_t& nbh) :
-	super_t(image), nbh_(nbh)
+
+      add_neighborhood(const Image& image, const Neighb& nbh) :
+	super_t(image),
+	topo_(image.topo(), nbh)
       {
+	mlc::assert_equal_<oln_type_of(Image, grid), oln_type_of(Neighb, grid)>::check();
+	// FIXME: check that Image is without a nbh
       }
 
-      neighborhood_t impl_neighborhood() const
+      const topo_t& impl_topo() const
       {
-	return nbh_;
+	return topo_;
       }
 
     protected:
-      neighborhood_t nbh_;
+      topo_t topo_;
     };
 
   } // end of namespace oln::morpher
+
+
+  template <typename I, typename N>
+  morpher::add_neighborhood<I, N>
+  operator + (const abstract::image<I>& image,
+	      const abstract::neighborhood<N>& nbh)
+  {
+    mlc::assert_equal_<oln_type_of(I, grid), oln_type_of(N, grid)>::check();
+    // FIXME: check that Image is without a nbh
+    morpher::add_neighborhood<I, N> tmp(image.exact(), nbh.exact());
+    return tmp;
+  }
+
 
 } // end of namespace oln
 

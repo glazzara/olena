@@ -1,5 +1,44 @@
 2006-09-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Update image_extension, add_neighborhood, and some related
+	classes.
+	
+	* oln/automatic/image.hh: New.
+	* oln/core/abstract/image.hh: Include oln/automatic/image.hh.
+	Inherit from automatic::impl.
+	(has): Add FIXME.
+	* oln/core/abstract/image_having_neighborhood.hh (neighborhood):
+	Change so that it relies on topo().  impl_neighborhood() is now
+	obsolete in image classes.
+	* oln/core/2d/aliases.hh (topo2d, fwd_piter2d, bkd_piter2d):
+	Update aliases.
+	* oln/basics2d.hh: Update.
+	* oln/core/2d/image2d.hh (topo2d, fwd_piter2d, bkd_piter2d):
+	Update and make them explicit.
+	(ctor): Add border argument with default.
+	(impl_op_read): Change fake code.
+	* oln/core/2d/neighb2d.hh: Cosmetics.
+	* oln/core/gen/bbox.hh: Include files for piter types.
+	* oln/morpher/internal/image_extension.hh (morpher_type): New.
+	This class thus factors this definition.
+	(impl_topo, impl_op_read, impl_has): Remove.  These methods
+	are expected to be automatically fetch from top implementation
+	classes.
+	(self_t, image_t, topo_t, value_t, point_t): Remove cause obsolete.
+	* oln/morpher/add_neighborhood.hh (add_neighborhood): Add second
+	parameter Neighb.
+	(include, set_super_type): Update.
+	(neighborhood_type): Change.
+	(ctor): Update.
+	(impl_neighborhood): Remove.
+	(impl_topo): New.
+	(nbh_): Remove.
+	(topo_): New.
+	* tests/add_neighborhood_morpher.cc: Update.
+	* tests/morphers.cc: Update.
+
+2006-09-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add morpher capabilities to topology classes.
 	
 	* oln/automatic/topology_having_bbox.hh: New.

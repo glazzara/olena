@@ -30,7 +30,7 @@
 # define OLENA_CORE_ABSTRACT_IMAGE_HH
 
 # include <oln/core/typedefs.hh>
-// # include <oln/core/abstract/internal/image_impl.hh>
+# include <oln/automatic/image.hh>
 
 
 namespace oln
@@ -54,8 +54,10 @@ namespace oln
 
     template <typename E>
     struct image : public virtual stc::any__simple<E>,
-		   public virtual oln::type
-      // , public internal::get_image_impl < image<E>, E >
+		   public virtual oln::type,
+		   public automatic::impl< image,
+					   oln_type_of(E, morpher),
+					   E >
     {
 
     public:
@@ -137,6 +139,8 @@ namespace oln
       {
 	return this->exact().impl_has(p);
       }
+
+      // FIXME: has should *not* be defined for all image classes.
 
     protected:
 

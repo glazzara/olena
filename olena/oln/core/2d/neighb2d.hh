@@ -101,4 +101,3 @@ namespace oln
 
 
 #endif // ! OLENA_CORE_2D_NEIGHB2D_HH
-

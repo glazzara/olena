@@ -43,13 +43,13 @@ namespace oln
   template <typename T>
   struct vtypes< image2d<T> >
   {
-    typedef topo2d topo_type;
+    typedef topo_lbbox_<point2d> topo_type;
     typedef grid2d grid_type;
 
     typedef point2d point_type;
     
-    typedef fwd_piter2d fwd_piter_type;
-    typedef bkd_piter2d bkd_piter_type;
+    typedef fwd_piter_bbox_<topo_type> fwd_piter_type;
+    typedef bkd_piter_bbox_<topo_type> bkd_piter_type;
     
     typedef T value_type;
     
@@ -75,8 +75,8 @@ namespace oln
   public:
 
     /// Ctor.
-    image2d(unsigned nrows, unsigned ncols)
-      : topo_( bbox2d( point2d(0,0), point2d(nrows-1, ncols-1) ) )
+    image2d(unsigned nrows, unsigned ncols, unsigned border = 2)
+      : topo_( bbox2d( point2d(0,0), point2d(nrows-1, ncols-1)), border )
     {
     }
 
@@ -87,8 +87,9 @@ namespace oln
 
     T impl_op_read(const point2d& p) const
     {
-      static T val_;
-      return ++val_;
+      return (T)(void*)this;
+//       static T val_;
+//       return ++val_;
     }
 
     bool impl_has(const point2d& p) const

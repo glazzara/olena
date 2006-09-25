@@ -41,14 +41,14 @@ namespace oln { template class dpoint2d_<int>; }
 # include <oln/core/gen/bbox.hh>
 namespace oln { template class bbox_<point2d>; }
 
-# include <oln/core/gen/bbox_fwd_piter.hh>
-namespace oln { template class bbox_fwd_piter_<point2d>; }
+# include <oln/core/gen/topo_lbbox.hh>
+namespace oln { template class topo_lbbox_<point2d>; }
 
-# include <oln/core/gen/bbox_bkd_piter.hh>
-namespace oln { template class bbox_bkd_piter_<point2d>; }
+# include <oln/core/gen/fwd_piter_bbox.hh>
+namespace oln { template class fwd_piter_bbox_<topo2d>; }
 
-# include <oln/core/gen/topo_bbox.hh>
-namespace oln { template class topo_bbox_<point2d>; }
+# include <oln/core/gen/bkd_piter_bbox.hh>
+namespace oln { template class bkd_piter_bbox_<topo2d>; }
 
 # include <oln/core/gen/neighb.hh>
 namespace oln { template class neighb_<dpoint2d>; }

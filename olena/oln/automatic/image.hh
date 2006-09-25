@@ -25,74 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_HAVING_NEIGHBORHOOD_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_HAVING_NEIGHBORHOOD_HH
+#ifndef OLENA_AUTOMATIC_IMAGE_HH
+# define OLENA_AUTOMATIC_IMAGE_HH
 
-# include <oln/core/abstract/image.hh>
-
-// Automatically-inherited implementations.
-# include <oln/automatic/image_having_neighborhood.hh>
-
-
-/* Image having neighborhood hierarchy (summary).
-
-
-FIXME: TODO!
-
-
-  Default case: If the neighborhood type returned by
-  `oln_type_of(I, neighborhood)', the entry is directly plugged to
-  abstract::image<I>.  */
+# include <oln/core/typedefs.hh>
+# include <oln/morpher/tags.hh>
 
 
 namespace oln
 {
- 
-  /*-------------------------.
-  | Dimension abstractions.  |
-  `-------------------------*/
-
+  // Forward declaration.
   namespace abstract
   {
+    template <typename E> class image;
 
-    /// Image having a neighborhood.
-    template <typename E>
-    struct image_having_neighborhood :
-      public virtual image<E>,
-      public automatic::impl< image_having_neighborhood,
-			      oln_type_of(E, morpher),
-			      E >
-    {
-    private:
-      typedef oln_type_of(E, neighborhood) neighborhood_t;
-
-    public:
-      neighborhood_t neighborhood() const
-      {
-	return this->topo().neighborhood();
-      }
-
-    protected:
-      /// Constructor (protected, empty).
-      image_having_neighborhood() {}
-    };
- 
   } // end of namespace oln::abstract
 
 
-  /*-------------------.
-  | Dimension switch.  |
-  `-------------------*/
-
-  /// With neighborhood.
-  template <typename E>
-  struct case_< image_hierarchy_wrt_neighborhood, E, 1 > :
-    where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::not_found > >
+  namespace automatic
   {
-    typedef abstract::image_having_neighborhood<E> ret;
-  };
 
+    /// Implementation corresponding to the interface
+    /// oln::abstract::image for an identity morpher.
+    template <typename E>
+    class impl< abstract::image,
+		morpher::tag::identity,
+		E> :
+      public virtual stc::any__simple<E>
+    {
+    private:
+
+      typedef oln_type_of(E, topo)   topo_t;
+      typedef oln_type_of(E, rvalue) rvalue_t;
+      typedef oln_type_of(E, psite)  psite_t;
+
+    public:
+
+      /// Delegation.
+
+      const topo_t& impl_topo() const
+      {
+	return this->exact().delegate().topo();
+      }
+
+      rvalue_t impl_op_read(const psite_t& p) const
+      {
+	return this->exact().delegate().operator()(p);
+      }
+
+    };
+
+  } // end of namespace oln::automatic
+  
 } // end of namespace oln
 
-
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_HAVING_NEIGHBORHOOD_HH
+#endif // ! OLENA_AUTOMATIC_IMAGE_HH

@@ -40,6 +40,8 @@
 int
 main()
 {
+  typedef oln::neighb2d neighb_t;
+
   /*----------------.
   | image2d<char>.  |
   `----------------*/
@@ -60,7 +62,7 @@ main()
   | add_neighborhood< image2d<char> >.  |
   `------------------------------------*/
 
-  typedef oln::morpher::add_neighborhood<image_t> image_with_nbh_t;
+  typedef oln::morpher::add_neighborhood<image_t, neighb_t> image_with_nbh_t;
 
   // Check that the instantiated neighborhood addition morpher
   // realizes the same abstraction as the underlying morphed image.
@@ -80,9 +82,9 @@ main()
   oln::neighb2d nbh2 = ima_with_nbh.neighborhood();
 
 
-  /*------------------------------------------------.
-  | identity< add_neighborhood< image2d<char> > >.  |
-  `------------------------------------------------*/
+  /*----------------------------------------------------------.
+  | identity< add_neighborhood< image2d<char>, neighb_t > >.  |
+  `----------------------------------------------------------*/
 
   typedef oln::morpher::identity<image_with_nbh_t> image_with_nbh_id_t;
 

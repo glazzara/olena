@@ -58,7 +58,7 @@ main()
   | add_neighborhood< image2d<char> >.  |
   `------------------------------------*/
 
-  typedef oln::morpher::add_neighborhood<image_t> image_with_nbh_t;
+  typedef oln::morpher::add_neighborhood<image_t, oln::neighb2d> image_with_nbh_t;
 
   // Check that the instantiated add_neighborhood morpher realizes the
   // same interfaces as the underlying morphed image.

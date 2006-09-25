@@ -57,6 +57,15 @@ namespace oln
     typedef Image ret;
   };
 
+
+  template <typename Image, typename Exact>
+  struct vtypes< morpher::internal::image_extension<Image, Exact> >
+  {
+    // Morpher type.
+    typedef oln::morpher::tag::identity morpher_type;
+  };
+
+
   namespace morpher
   {
     namespace internal
@@ -66,45 +75,18 @@ namespace oln
       template <typename Image, typename Exact>
       class image_extension : public oln::image_entry<Exact>
       {
-      private:
-	typedef image_extension<Image, Exact> self_t;
-
-	/// Type of morphed image.
-	typedef Image image_t;
-
-	typedef oln_direct_type_of(Exact, topo) topo_t;
-	typedef oln_direct_type_of(Exact, value) value_t;
-	typedef oln_direct_type_of(Exact, point) point_t;
-
       public:
+
 	// FIXME: Handle the constness.
 	image_extension(const Image& image) :
 	  image_(image)
-	  {
-	  }
+	{
+	}
 
 	const Image& delegate() const
 	{
 	  return image_;
 	}
-
-	/// Delegations.
-	/// \{
-	const topo_t& impl_topo() const
-	{
-	  return delegate()->impl_topo();
-	}
-
-	value_t impl_op_read(const point_t& p) const
-	{
-	  return delegate()->impl_op_read(p);
-	}
-
-	bool impl_has(const point_t& p) const
-	{
-	  return delegate()->impl_has(p);
-	}
-	/// \}
 
       protected:
 	const Image& image_;
