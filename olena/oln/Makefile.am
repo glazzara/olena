@@ -51,6 +51,8 @@ nobase_oln_HEADERS =					\
   core/gen/neighb.hh					\
   core/gen/topo_bbox.hh					\
 							\
+  core/internal/bbox_bkd_piter.hh			\
+  core/internal/bbox_fwd_piter.hh			\
   core/internal/dpoint_nd.hh				\
   core/internal/point_nd.hh				\
 							\
