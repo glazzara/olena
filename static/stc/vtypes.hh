@@ -773,7 +773,7 @@ namespace stc
 									      \
   /** Entry point of the vtype retrieval algorithm.  */			      \
   template <typename category, typename from_type, typename typedef_type>     \
-  struct type_of_							      \
+  struct direct_type_of_						      \
   {									      \
     /* Look for the typedef in internal vtypes.  */			      \
     typedef typename							      \
@@ -811,13 +811,13 @@ namespace stc
   /** Entry point of the vtype retrieval algorithm (working on the */	      \
   /** exact version of \a from_type).                              */	      \
   template <typename category, typename from_type, typename typedef_type>     \
-  struct exact_type_of_							      \
+  struct type_of_							      \
   {									      \
     /* Get the exact type of \a from_type.  */				      \
     typedef stc_to_exact(from_type) from_exact_type;			      \
     /* ``Run'' type_of_.  */						      \
     typedef typename							      \
-    type_of_<category, from_exact_type, typedef_type>::ret ret;		      \
+    direct_type_of_<category, from_exact_type, typedef_type>::ret ret;	      \
   };									      \
 									      \
   struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
@@ -944,9 +944,9 @@ namespace stc
 
 /// Get the vtype \a Typedef, declared in \a Namespace, from the
 /// exact type of \a FromType (version to be used outside a template).
-#define stc_type_of_(Namespace, Category, FromType, Typedef)		 \
-  Namespace::exact_type_of_< Category, FromType,			 \
-                             Namespace::typedef_:: Typedef##_type >::ret
+#define stc_type_of_(Namespace, Category, FromType, Typedef)		\
+  Namespace::type_of_< Category, FromType,				\
+                       Namespace::typedef_:: Typedef##_type >::ret
 
 
 /// Get the vtype \a Typedef, declared in \a Namespace, from \a
@@ -956,9 +956,9 @@ namespace stc
 
 /// Get the vtype \a Typedef, declared in \a Namespace, from \a
 /// FromType directly (version to be used outside a template).
-#define stc_direct_type_of_(Namespace, Category, FromType, Typedef)	 \
-  Namespace::type_of_< Category, FromType,				 \
-                       Namespace::typedef_:: Typedef##_type >::ret
+#define stc_direct_type_of_(Namespace, Category, FromType, Typedef)	   \
+  Namespace::direct_type_of_< Category, FromType,			   \
+                               Namespace::typedef_:: Typedef##_type >::ret
 
 
 
