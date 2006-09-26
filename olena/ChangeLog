@@ -1,5 +1,10 @@
 2006-09-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	* oln/core/typedefs.hh: Catch up with changes in Static's
+	stc/scoop.hh.
+
+2006-09-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with changes in the image abstractions hierachies.
 
 	* tests/identity_morpher.cc, tests/add_neighborhood_morpher.cc,

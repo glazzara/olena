@@ -41,24 +41,24 @@
 
 # include <stc/any.hh>
 # include <stc/exact.hh>
-# include <stc/vtypes.hh>
+# include <stc/scoop.hh>
 
 # include <oln/core/type.hh>
 // FIXME: Move to oln/core.
 # include <oln/core/macros.hh>
 
 
+/*----------------------.
+| Namespace equipment.  |
+`----------------------*/
+
+// The virtual types facility is inserted here because it also
+// triggers Metalic's typedef introspection equipment.
+stc_scoop_equipment_for_namespace(oln);
+
+
 namespace oln
 {
-
-  /*----------------------.
-  | Namespace equipment.  |
-  `----------------------*/
-
-  // The virtual types facility is inserted here because it also
-  // triggers Metalic's typedef introspection equipment.
-  stc_equip_namespace_with_vtypes();
-
 
   /*-------.
   | Misc.  |
