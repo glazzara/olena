@@ -123,23 +123,6 @@ namespace oln
 	return this->exact().impl_op_read(p);
       }
 
-
-      /*! \brief Test if the point \a p belongs to the current image.
-      ** Please note that a point of the outer boundary of an image
-      ** does NOT belong to the image.
-      **
-      ** \return True if p belongs to the current image, false otherwise.
-      **
-      ** \see hold_large
-      */
-
-      bool has(const psite_t& p) const
-      {
-	return this->exact().impl_has(p);
-      }
-
-      // FIXME: has should *not* be defined for all image classes.
-
     protected:
 
       /*! \brief Constructor (protected, empty).

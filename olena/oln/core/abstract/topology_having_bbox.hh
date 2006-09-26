@@ -56,6 +56,12 @@ namespace oln
 	return this->exact().impl_bbox();
       }
 
+      // abstract
+      bbox_t& bbox()
+      {
+	return this->exact().impl_bbox();
+      }
+
       // concrete
       operator bbox_t() const
       {

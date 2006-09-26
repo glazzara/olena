@@ -64,6 +64,8 @@ namespace oln
   template <typename point>
   class topo_bbox_ : public topology_entry< topo_bbox_<point> >
   {
+    typedef topo_bbox_<point> self_t;
+    typedef topology_entry<self_t> super_t;
     typedef bbox_<point> bbox_t;
 
   public:
@@ -78,6 +80,11 @@ namespace oln
     }
 
     const bbox_t& impl_bbox() const
+    {
+      return bb_;
+    }
+
+    bbox_t& impl_bbox()
     {
       return bb_;
     }

@@ -25,68 +25,80 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_ACCESSIBILITY_HIERARCHY_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_ACCESSIBILITY_HIERARCHY_HH
+#ifndef OLENA_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
+# define OLENA_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
 
-# include <oln/core/abstract/image.hh>
-# include <oln/automatic/image_being_random_accessible.hh>
-
+# include <oln/core/typedefs.hh>
+# include <oln/morpher/tags.hh>
 
 
 namespace oln
 {
- 
-  /*-------------------------.
-  | Dimension abstractions.  |
-  `-------------------------*/
 
+  // Forward declaration.
   namespace abstract
   {
+    template <typename E> class image_being_random_accessible;
 
-    /// Image having a accessibility.
-    template <typename E>
-    struct image_being_random_accessible :
-      public virtual image<E>,
-      public automatic::impl< image_being_random_accessible, oln_type_of(E, morpher), E >
+  } // end of namespace oln::abstract
+
+
+  namespace automatic
+  {
+
+    /// Default implementation corresponding to the interface
+    /// oln::abstract::image_being_random_accessible.
+
+    template <typename E, typename M>
+    class impl< abstract::image_being_random_accessible, M, E> :
+      public virtual stc::any__simple<E>
     {
+    private:
+
       typedef oln_type_of(E, point) point_t;
 
     public:
 
-      // Abstract method.
-      bool has(const point_t& p) const
+      bool impl_has(const point_t& p) const
       {
-	return this->exact().impl_has(p);
+	return this->exact().topo().has(p);
       }
 
-      // Abstract method.
-      bool has_large(const point_t& p) const
+      bool impl_has_large(const point_t& p) const
       {
-	return this->exact().impl_has_large(p);
+	return this->exact().has(p);
       }
 
-    protected:
-
-      /// Constructor (protected, empty).
-      image_being_random_accessible() {}
     };
- 
-  } // end of namespace oln::abstract
 
 
-  /*-------------------.
-  | Dimension switch.  |
-  `-------------------*/
+    /// Implementation corresponding to the interface
+    /// oln::abstract::image_being_random_accessible for an identity morpher.
 
-  /// With accessibility.
-  template <typename E>
-  struct case_< image_hierarchy_wrt_accessibility, E, 1 > :
-    where_< mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ > >
-  {
-    typedef abstract::image_being_random_accessible<E> ret;
-  };
+    template <typename E>
+    class impl< abstract::image_being_random_accessible, morpher::tag::identity, E> :
+      public virtual stc::any__simple<E>
+    {
+    private:
 
+      typedef oln_type_of(E, point) point_t;
+
+    public:
+
+      bool impl_has(const point_t& p) const
+      {
+	return this->exact().delegate().has(p);
+      }
+
+      bool impl_has_large(const point_t& p) const
+      {
+	return this->exact().delegate().has_large(p);
+      }
+
+    };
+
+  } // end of namespace oln::automatic
+  
 } // end of namespace oln
 
-
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_ACCESSIBILITY_HIERARCHY_HH
+#endif // ! OLENA_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH

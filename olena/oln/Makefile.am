@@ -5,6 +5,9 @@ olndir = $(includedir)/oln
 nobase_oln_HEADERS =					\
 							\
   automatic/image.hh					\
+  automatic/image_being_mutable.hh			\
+  automatic/image_being_random_accessible.hh		\
+  automatic/image_having_neighborhood.hh		\
   automatic/image_having_neighborhood.hh		\
   automatic/topology_being_random_accessible.hh		\
   automatic/topology_having_bbox.hh			\
@@ -30,11 +33,14 @@ nobase_oln_HEADERS =					\
   core/abstract/entry.hh				\
   core/abstract/grid.hh					\
   core/abstract/image.hh				\
+  core/abstract/image/accessibility/hierarchy.hh	\
+  core/abstract/image/bbox/hierarchy.hh			\
   core/abstract/image/dimension/1d.hh			\
   core/abstract/image/dimension/2d.hh			\
   core/abstract/image/dimension/3d.hh			\
   core/abstract/image/dimension/hierarchy.hh		\
   core/abstract/image/hierarchies.hh			\
+  core/abstract/image/mutability/hierarchy.hh		\
   core/abstract/image/neighborhood/hierarchy.hh		\
   core/abstract/image/type/binary.hh			\
   core/abstract/image/type/color.hh			\
@@ -62,9 +68,13 @@ nobase_oln_HEADERS =					\
   core/gen/bbox.hh					\
   core/gen/bbox_bkd_piter.hh				\
   core/gen/bbox_fwd_piter.hh				\
+  core/gen/bkd_piter_bbox.hh				\
+  core/gen/fwd_piter_bbox.hh				\
+  core/gen/mapimage.hh					\
   core/gen/neighb.hh					\
   core/gen/topo_add_nbh.hh				\
   core/gen/topo_bbox.hh					\
+  core/gen/topo_lbbox.hh				\
 							\
   core/internal/bbox_bkd_piter.hh			\
   core/internal/bbox_fwd_piter.hh			\

@@ -48,7 +48,9 @@ namespace oln
       public automatic::impl< image_having_bbox, oln_type_of(E, morpher), E >
     {
     private:
-      typedef oln_type_of(E, bbox) bbox_t;
+
+      typedef oln_check_type_of(E, bbox)  bbox_t;
+      typedef oln_check_type_of(E, point) point_t;
 
     public:
 
@@ -57,9 +59,21 @@ namespace oln
       };
 
       // Concrete method.
-      bbox_t bbox() const
+      const bbox_t& bbox() const
       {
 	return this->topo().bbox();
+      }
+
+      // Concrete method.
+      const point_t& pmin() const
+      {
+	return this->topo().bbox().pmin();
+      }
+
+      // Concrete method.
+      const point_t& pmax() const
+      {
+	return this->topo().bbox().pmax();
       }
 
     protected:

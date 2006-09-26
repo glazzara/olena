@@ -1,5 +1,30 @@
 2006-09-26  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Add mapimage type and update.
+	
+	* oln/core/gen/mapimage.hh: New.
+	* oln/automatic/image_being_random_accessible.hh: New.
+	* oln/core/abstract/topology_having_bbox.hh
+	(bbox): New; mutable version.
+	* oln/core/abstract/image.hh (has): Remove; this method
+	is now specific to a sub-abstraction.
+	* oln/core/abstract/image/mutability/hierarchy.hh
+	(lvalue_t, psite_t): Update.
+	(~image_being_mutable): Fix typo.
+	(using): New; it allows disambiguation of overloading
+	thru inheritance.
+	* oln/core/abstract/image/accessibility/hierarchy.hh
+	(has, has_large): Update.
+	(include): Update.
+	* oln/core/abstract/image/bbox/hierarchy.hh
+	(bbox_t, point_t): Update.
+	(bbox): Change return signature.
+	(pmin, pmax): New.
+	* oln/core/gen/topo_bbox.hh (impl_bbox): New.
+	* oln/Makefile.am (nobase_oln_HEADERS): Update.
+	
+2006-09-26  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add some abstract image sub-hierarchies.
 	
 	* oln/automatic/image_being_mutable.hh: New.

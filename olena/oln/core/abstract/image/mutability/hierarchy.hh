@@ -53,8 +53,8 @@ namespace oln
     {
     private:
 
-      typedef oln_type_of(E, lvalue) lvalue_t;
-      typedef oln_type_of(E, psite)  psite_t;
+      typedef oln_check_type_of(E, lvalue) lvalue_t;
+      typedef oln_check_type_of(E, psite)  psite_t;
 
     public:
 
@@ -66,7 +66,9 @@ namespace oln
       ** the current image.
       */
 
-      lvalue_t& operator()(const psite_t& p) const
+      using image<E>::operator();
+
+      lvalue_t& operator()(const psite_t& p)
       {
 	return this->exact().impl_op_readwrite(p);
       }
@@ -77,7 +79,7 @@ namespace oln
       image_being_mutable() {}
 
       /// Destructor (protected).
-      image_being_mutable() { decl(); }
+      ~image_being_mutable() { decl(); }
 
     };
  
