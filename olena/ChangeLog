@@ -1,3 +1,22 @@
+2006-09-26  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add some abstract image sub-hierarchies.
+	
+	* oln/automatic/image_being_mutable.hh: New.
+	* oln/core/abstract/image/mutability/hierarchy.hh: New.
+	* oln/core/abstract/image/accessibility/hierarchy.hh: New.
+	* oln/core/abstract/image/bbox/hierarchy.hh: New.
+	* oln/core/typedefs.hh (lvalue_type, is_mutable_type): New.
+	* oln/core/macros.hh (oln_deduce_type_of): New.
+	* oln/core/abstract/image.hh: Cosmetics.
+	* oln/core/abstract/image/hierarchies.hh
+	(image_hierarchy_wrt_bbox): New.
+	(image_hierarchy_wrt_accessibility): New.
+	(image_hierarchy_wrt_mutability): New.
+	(include): Update.	
+	* oln/core/abstract/image/neighborhood/hierarchy.hh (decl): New.
+	(~image_having_neighborhood): New.
+
 2006-09-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	* oln/core/typedefs.hh: Catch up with changes in Static's

@@ -25,24 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_NEIGHBORHOOD_HIERARCHY_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_NEIGHBORHOOD_HIERARCHY_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_BBOX_HIERARCHY_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_BBOX_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
-
-// Automatically-inherited implementations.
-# include <oln/automatic/image_having_neighborhood.hh>
-
-
-/* Image having neighborhood hierarchy (summary).
-
-
-FIXME: TODO!
-
-
-  Default case: If the neighborhood type returned by
-  `oln_type_of(I, neighborhood)', the entry is directly plugged to
-  abstract::image<I>.  */
 
 
 namespace oln
@@ -55,38 +41,34 @@ namespace oln
   namespace abstract
   {
 
-    /// Image having a neighborhood.
+    /// Image having a bbox.
     template <typename E>
-    struct image_having_neighborhood :
+    struct image_having_bbox :
       public virtual image<E>,
-      public automatic::impl< image_having_neighborhood,
-			      oln_type_of(E, morpher),
-			      E >
+      public automatic::impl< image_having_bbox, oln_type_of(E, morpher), E >
     {
     private:
-      typedef oln_type_of(E, neighborhood) neighborhood_t;
+      typedef oln_type_of(E, bbox) bbox_t;
 
     public:
 
       struct decl {
-	// FIXME: Uncomment.
-	// stc_virtual_typedef(fwd_niter);
-	// stc_virtual_typedef(bkd_niter);
+	stc_virtual_typedef(bbox);
       };
 
-      neighborhood_t neighborhood() const
+      // Concrete method.
+      bbox_t bbox() const
       {
-	return this->topo().neighborhood();
+	return this->topo().bbox();
       }
 
     protected:
 
       /// Constructor (protected, empty).
-      image_having_neighborhood() {}
 
-      /// Destructor (protected).
-      ~image_having_neighborhood() { decl(); }
-
+      image_having_bbox() {}
+      /// Destructor.
+      virtual ~image_having_bbox() { decl(); }
     };
  
   } // end of namespace oln::abstract
@@ -96,15 +78,28 @@ namespace oln
   | Dimension switch.  |
   `-------------------*/
 
-  /// With neighborhood.
+  /// With bbox.
   template <typename E>
-  struct case_< image_hierarchy_wrt_neighborhood, E, 1 > :
-    where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::not_found > >
+  struct case_< image_hierarchy_wrt_bbox, E, 1 > :
+    where_< mlc::neq_< oln_deduce_type_of(E, topo, bbox), mlc::not_found > >
   {
-    typedef abstract::image_having_neighborhood<E> ret;
+    typedef abstract::image_having_bbox<E> ret;
+  };
+
+
+  template <typename E> struct image_entry;
+
+
+  template <typename E>
+  struct single_vtype< image_entry<E>, typedef_::bbox_type >
+  {
+  private:
+    typedef oln_type_of(E, topo) topo_t;
+  public:
+    typedef oln_type_of(topo_t, bbox) ret;
   };
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_NEIGHBORHOOD_HIERARCHY_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_BBOX_HIERARCHY_HH

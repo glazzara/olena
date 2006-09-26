@@ -40,6 +40,14 @@
 # define oln_type_of(OlnType, Alias)		\
    stc_type_of(oln, void, OlnType, Alias)
 
+
+/// FIXME: Temporary macro to be able to perform "oln_type_of(oln_type_of(A, B), C)".
+# define oln_deduce_type_of(OlnType, Alias1, Alias2)							\
+typename oln::type_of_<void,										\
+                       typename oln::type_of_<void, OlnType, oln::typedef_::Alias1##_type >::ret,	\
+                       oln::typedef_::Alias2##_type >::ret
+
+
 /// \def oln_type_of(OlnType, Alias)
 ///
 /// Macro to retrieve an associated type \a Alias from the exact type of

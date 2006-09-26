@@ -25,24 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_NEIGHBORHOOD_HIERARCHY_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_NEIGHBORHOOD_HIERARCHY_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_MUTABILITY_HIERARCHY_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_MUTABILITY_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
 
 // Automatically-inherited implementations.
-# include <oln/automatic/image_having_neighborhood.hh>
+# include <oln/automatic/image_being_mutable.hh>
 
-
-/* Image having neighborhood hierarchy (summary).
-
-
-FIXME: TODO!
-
-
-  Default case: If the neighborhood type returned by
-  `oln_type_of(I, neighborhood)', the entry is directly plugged to
-  abstract::image<I>.  */
 
 
 namespace oln
@@ -55,37 +45,39 @@ namespace oln
   namespace abstract
   {
 
-    /// Image having a neighborhood.
+    /// Image being mutable.
     template <typename E>
-    struct image_having_neighborhood :
+    struct image_being_mutable :
       public virtual image<E>,
-      public automatic::impl< image_having_neighborhood,
-			      oln_type_of(E, morpher),
-			      E >
+      public automatic::impl< image_being_mutable, oln_type_of(E, morpher), E >
     {
     private:
-      typedef oln_type_of(E, neighborhood) neighborhood_t;
+
+      typedef oln_type_of(E, lvalue) lvalue_t;
+      typedef oln_type_of(E, psite)  psite_t;
 
     public:
 
       struct decl {
-	// FIXME: Uncomment.
-	// stc_virtual_typedef(fwd_niter);
-	// stc_virtual_typedef(bkd_niter);
+	stc_virtual_typedef(lvalue);
       };
 
-      neighborhood_t neighborhood() const
+      /*! \brief Gives writable access to the value stored at \a p in
+      ** the current image.
+      */
+
+      lvalue_t& operator()(const psite_t& p) const
       {
-	return this->topo().neighborhood();
+	return this->exact().impl_op_readwrite(p);
       }
 
     protected:
 
       /// Constructor (protected, empty).
-      image_having_neighborhood() {}
+      image_being_mutable() {}
 
       /// Destructor (protected).
-      ~image_having_neighborhood() { decl(); }
+      image_being_mutable() { decl(); }
 
     };
  
@@ -96,15 +88,15 @@ namespace oln
   | Dimension switch.  |
   `-------------------*/
 
-  /// With neighborhood.
+  /// With mutability.
   template <typename E>
-  struct case_< image_hierarchy_wrt_neighborhood, E, 1 > :
-    where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::not_found > >
+  struct case_< image_hierarchy_wrt_mutability, E, 1 > :
+    where_< mlc::eq_< oln_type_of(E, is_mutable), mlc::true_ > >
   {
-    typedef abstract::image_having_neighborhood<E> ret;
+    typedef abstract::image_being_mutable<E> ret;
   };
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_NEIGHBORHOOD_HIERARCHY_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_MUTABILITY_HIERARCHY_HH

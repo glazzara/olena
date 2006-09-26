@@ -120,6 +120,8 @@ namespace oln
 // --------------------------------------------------------------------
   mlc_decl_typedef(value_type);
   mlc_decl_typedef(rvalue_type);
+  mlc_decl_typedef(lvalue_type);
+  mlc_decl_typedef(is_mutable_type);
 
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.

@@ -25,49 +25,67 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_ACCESSIBILITY_HIERARCHY_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_ACCESSIBILITY_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
 
 
+
 namespace oln
 {
+ 
+  /*-------------------------.
+  | Dimension abstractions.  |
+  `-------------------------*/
 
-  typedef hierarchy<abstract::image, 1> image_hierarchy_wrt_dimension;
-  typedef hierarchy<abstract::image, 2> image_hierarchy_wrt_type;
-  typedef hierarchy<abstract::image, 3> image_hierarchy_wrt_neighborhood;
-  typedef hierarchy<abstract::image, 4> image_hierarchy_wrt_bbox;
-  typedef hierarchy<abstract::image, 5> image_hierarchy_wrt_accessibility;
-  typedef hierarchy<abstract::image, 6> image_hierarchy_wrt_mutability;
+  namespace abstract
+  {
 
-  // FIXME: To be continued.
-#if 0
-  typedef hierarchy<abstract::image, 7> image_hierarchy_wrt_value;
-  typedef hierarchy<abstract::image, 8> image_hierarchy_wrt_data_retrieval;
-  // ...
-#endif
+    /// Image having a accessibility.
+    template <typename E>
+    struct image_being_random_accessible :
+      public virtual image<E>,
+      public automatic::impl< image_being_random_accessible, oln_type_of(E, morpher), E >
+    {
+      typedef oln_type_of(E, point) point_t;
+
+    public:
+
+      // Concrete method.
+      bool has(const point_t& p) const
+      {
+	return this->topo().has(p);
+      }
+
+      // Concrete method.
+      bool has_large(const point_t& p) const
+      {
+	return this->topo().has_large(p);
+      }
+
+    protected:
+
+      /// Constructor (protected, empty).
+      image_being_random_accessible() {}
+    };
+ 
+  } // end of namespace oln::abstract
+
+
+  /*-------------------.
+  | Dimension switch.  |
+  `-------------------*/
+
+  /// With accessibility.
+  template <typename E>
+  struct case_< image_hierarchy_wrt_accessibility, E, 1 > :
+    where_< mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ > >
+  {
+    typedef abstract::image_being_random_accessible<E> ret;
+  };
 
 } // end of namespace oln
 
 
-// Hierarchy 1: topology w.r.t. dimension.
-# include <oln/core/abstract/image/dimension/hierarchy.hh>
-
-// Hierarchy 2: topology w.r.t. type of data.
-# include <oln/core/abstract/image/type/hierarchy.hh>
-
-// Hierarchy 3: topology w.r.t. neighborhood.
-# include <oln/core/abstract/image/neighborhood/hierarchy.hh>
-
-// Hierarchy 4: topology w.r.t. bounding box.
-# include <oln/core/abstract/image/bbox/hierarchy.hh>
-
-// Hierarchy 5: topology w.r.t. accessibility.
-# include <oln/core/abstract/image/accessibility/hierarchy.hh>
-
-// // // Hierarchy 6: topology w.r.t. data mutability.
-# include <oln/core/abstract/image/mutability/hierarchy.hh>
-
-
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_ACCESSIBILITY_HIERARCHY_HH

@@ -55,9 +55,7 @@ namespace oln
     template <typename E>
     struct image : public virtual stc::any__simple<E>,
 		   public virtual oln::type,
-		   public automatic::impl< image,
-					   oln_type_of(E, morpher),
-					   E >
+		   public automatic::impl< image, oln_type_of(E, morpher), E >
     {
 
     public:
