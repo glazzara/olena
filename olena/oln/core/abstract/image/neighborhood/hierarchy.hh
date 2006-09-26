@@ -74,7 +74,7 @@ namespace oln
 	// stc_virtual_typedef(bkd_niter);
       };
 
-      neighborhood_t neighborhood() const
+      const neighborhood_t& neighborhood() const
       {
 	return this->topo().neighborhood();
       }

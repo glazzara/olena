@@ -57,7 +57,7 @@ namespace oln
 
     public:
       /// Accessor delegation.
-      neighborhood_t impl_neighborhood() const
+      const neighborhood_t& impl_neighborhood() const
       {
 	return this->exact().delegate().neighborhood();
       }

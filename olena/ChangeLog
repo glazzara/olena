@@ -1,3 +1,12 @@
+2006-09-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Let neighborhood() return a const reference instead of a copy.
+
+	* oln/automatic/image_having_neighborhood.hh (impl_neighborhood)
+	* oln/core/abstract/image/neighborhood/hierarchy.hh
+	(image_having_neighborhood::neighborhood): Return a const
+	reference instead of a copy.
+
 2006-09-26  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add mapimage type and update.
