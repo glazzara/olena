@@ -1,3 +1,24 @@
+2006-09-26  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Dispatch image abstract classes into subdirs and files.
+	
+	* oln/core/abstract/image/type: New directory.
+	* oln/core/abstract/image/dimension: New directory.
+	* oln/core/abstract/image/neighborhood: New directory.
+	* oln/core/abstract/image_type.hh (internal): Remove.
+	Rename into...
+	* oln/core/abstract/image/type/hierarchy.hh: ...this file.
+	* oln/core/abstract/image_dimension.hh: Rename into...
+	* oln/core/abstract/image/dimension/hierarchy.hh: ...this file.
+	* oln/core/abstract/image_hierarchies.hh: Rename into...
+	* oln/core/abstract/image/hierarchies.hh: ...this file.
+	* oln/core/abstract/image_type_integre.hh: Rename into...
+	* oln/core/abstract/image/type/integre.hh: ...this file.
+	* oln/core/abstract/image_having_neighborhood.hh: Rename into...
+	* oln/core/abstract/image/neighborhood/hierarchy.hh: ...this file.
+	* oln/core/abstract/image.hh (include): Update.
+	* Makefile.am: Update.
+
 2006-09-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have all classes of oln::automatic inherit from stc::any__simple.

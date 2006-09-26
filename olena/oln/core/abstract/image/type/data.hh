@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2005, 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,37 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_TYPE_DATA_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_TYPE_DATA_HH
 
 # include <oln/core/abstract/image.hh>
-
 
 namespace oln
 {
 
-  typedef hierarchy<abstract::image, 1> image_hierarchy_wrt_dimension;
-  typedef hierarchy<abstract::image, 2> image_hierarchy_wrt_type;
-  typedef hierarchy<abstract::image, 3> image_hierarchy_wrt_neighborhood;
+  namespace abstract
+  {
 
-  // FIXME: To be continued.
-#if 0
-  typedef hierarchy<abstract::image, 4> image_hierarchy_wrt_value;
-  typedef hierarchy<abstract::image, 5> image_hierarchy_wrt_data_retrieval;
-  // ...
-#endif
+    /// \brief Class of images whose data cannot be qualified of
+    /// grey-levels, colors, or labels.
+    template <typename E>
+    struct data_image : public virtual image<E>
+    {
+    protected:
+      /// Constructor (protected, empty).
+      data_image() {}
+    };
+
+  } // end of namespace oln::abstract
 
 } // end of namespace oln
 
 
-// Hierarchy 1: topology w.r.t. dimension.
-# include <oln/core/abstract/image_dimension.hh>
-
-// Hierarchy 2: topology w.r.t. type of data.
-# include <oln/core/abstract/image_type.hh>
-
-// Hierarchy 3: topology w.r.t. neighborhood.
-# include <oln/core/abstract/image_having_neighborhood.hh>
-
-
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_TYPE_DATA_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HIERARCHY_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
 
@@ -73,48 +73,9 @@
 | Dimension abstractions.  |
 `-------------------------*/
 
-namespace oln
-{
- 
-  namespace abstract
-  {
-
-    /// Class of 1-D images.
-    template <typename E>
-    struct image1d :
-      public virtual image<E>,
-      public automatic::impl< image1d, oln_type_of(E, morpher), E>
-    {
-    protected:
-      /// Constructor (protected, empty).
-      image1d() {}
-    };
-
-    /// Class of 2-D images.
-    template <typename E>
-    struct image2d :
-      public virtual image<E>,
-      public automatic::impl< image2d, oln_type_of(E, morpher), E>
-    {
-    protected:
-      /// Constructor (protected, empty).
-      image2d() {}
-    };
- 
-    /// Class of 3-D images.
-    template <typename E>
-    struct image3d :
-      public virtual image<E>,
-      public automatic::impl< image3d, oln_type_of(E, morpher), E>
-    {
-    protected:
-      /// Constructor (protected, empty).
-      image3d() {}
-    };
- 
-  } // end of namespace oln::abstract
-
-} // end of namespace oln
+# include <oln/core/abstract/image/dimension/1d.hh>
+# include <oln/core/abstract/image/dimension/2d.hh>
+# include <oln/core/abstract/image/dimension/3d.hh>
 
 
 /*-------------------.
@@ -156,4 +117,4 @@ namespace oln
 }
 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HH
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_DIMENSION_HIERARCHY_HH

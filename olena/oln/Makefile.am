@@ -30,11 +30,19 @@ nobase_oln_HEADERS =					\
   core/abstract/entry.hh				\
   core/abstract/grid.hh					\
   core/abstract/image.hh				\
-  core/abstract/image_dimension.hh			\
-  core/abstract/image_having_neighborhood.hh		\
-  core/abstract/image_hierarchies.hh			\
-  core/abstract/image_type.hh				\
-  core/abstract/image_type_integre.hh			\
+  core/abstract/image/dimension/1d.hh			\
+  core/abstract/image/dimension/2d.hh			\
+  core/abstract/image/dimension/3d.hh			\
+  core/abstract/image/dimension/hierarchy.hh		\
+  core/abstract/image/hierarchies.hh			\
+  core/abstract/image/neighborhood/hierarchy.hh		\
+  core/abstract/image/type/binary.hh			\
+  core/abstract/image/type/color.hh			\
+  core/abstract/image/type/data.hh			\
+  core/abstract/image/type/grey_level.hh		\
+  core/abstract/image/type/hierarchy.hh			\
+  core/abstract/image/type/integre.hh			\
+  core/abstract/image/type/label.hh			\
   core/abstract/iterator.hh				\
   core/abstract/iterator_on_points.hh			\
   core/abstract/neighborhood.hh				\

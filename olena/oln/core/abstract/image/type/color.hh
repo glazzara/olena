@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2005, 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,74 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_HAVING_NEIGHBORHOOD_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_HAVING_NEIGHBORHOOD_HH
+#ifndef OLENA_CORE_ABSTRACT_IMAGE_TYPE_COLOR_HH
+# define OLENA_CORE_ABSTRACT_IMAGE_TYPE_COLOR_HH
 
 # include <oln/core/abstract/image.hh>
-
-// Automatically-inherited implementations.
-# include <oln/automatic/image_having_neighborhood.hh>
-
-
-/* Image having neighborhood hierarchy (summary).
-
-
-FIXME: TODO!
-
-
-  Default case: If the neighborhood type returned by
-  `oln_type_of(I, neighborhood)', the entry is directly plugged to
-  abstract::image<I>.  */
 
 
 namespace oln
 {
- 
-  /*-------------------------.
-  | Dimension abstractions.  |
-  `-------------------------*/
 
   namespace abstract
   {
 
-    /// Image having a neighborhood.
+    /// Class of color images.
     template <typename E>
-    struct image_having_neighborhood :
-      public virtual image<E>,
-      public automatic::impl< image_having_neighborhood,
-			      oln_type_of(E, morpher),
-			      E >
+    struct color_image : public virtual image<E>
     {
-    private:
-      typedef oln_type_of(E, neighborhood) neighborhood_t;
-
-    public:
-      neighborhood_t neighborhood() const
-      {
-	return this->topo().neighborhood();
-      }
-
     protected:
       /// Constructor (protected, empty).
-      image_having_neighborhood() {}
+      color_image() {}
     };
- 
+
   } // end of namespace oln::abstract
-
-
-  /*-------------------.
-  | Dimension switch.  |
-  `-------------------*/
-
-  /// With neighborhood.
-  template <typename E>
-  struct case_< image_hierarchy_wrt_neighborhood, E, 1 > :
-    where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::not_found > >
-  {
-    typedef abstract::image_having_neighborhood<E> ret;
-  };
 
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_HAVING_NEIGHBORHOOD_HH
+
+#endif // ! OLENA_CORE_ABSTRACT_IMAGE_TYPE_COLOR_HH

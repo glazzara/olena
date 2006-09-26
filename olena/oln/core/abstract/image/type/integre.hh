@@ -32,7 +32,7 @@
 #ifndef OLENA_CORE_ABSTRACT_IMAGE_TYPE_INTEGRE_HH
 # define OLENA_CORE_ABSTRACT_IMAGE_TYPE_INTEGRE_HH
 
-# include <oln/core/abstract/image_type.hh>
+# include <oln/core/abstract/image/type/hierarchy.hh>
 
 
 // Forward declarations.
