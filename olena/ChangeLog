@@ -1,6 +1,7 @@
 2006-09-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have all classes of oln::automatic inherit from stc::any__simple.
+
 	* oln/automatic/image_having_neighborhood.hh
 	(impl<abstract::image_having_neighborhood, morpher::tag::identity, E>):
 	Inherit from stc::any__simple<E> instead of abstract::image<E>.
@@ -9,19 +10,19 @@
 
 	Properly define fwd_piter_type and bkd_piter_type for the
 	add_neighborhood image morpher.
-	
+
 	* oln/core/abstract/image_hierarchies.hh: Remove end blank line.
 	* oln/core/gen/fwd_piter_bbox.hh (change_topology_): New.
 	* oln/core/gen/bkd_piter_bbox.hh (change_topology_): New.
 	* oln/morpher/add_neighborhood.hh (morpher_type): Remove; obsolete
 	cause defined in super class.
 	(fwd_piter_type, bkd_piter_type): New definitions.
-	
+
 2006-09-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Update image_extension, add_neighborhood, and some related
 	classes.
-	
+
 	* oln/automatic/image.hh: New.
 	* oln/core/abstract/image.hh: Include oln/automatic/image.hh.
 	Inherit from automatic::impl.
@@ -59,7 +60,7 @@
 2006-09-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add morpher capabilities to topology classes.
-	
+
 	* oln/automatic/topology_having_bbox.hh: New.
 	* oln/automatic/topology_being_random_accessible.hh: New.
 	* oln/automatic/topology_having_neighborhood.hh: New.
@@ -91,7 +92,7 @@
 
 	Add convenience shortcuts for stc_{direct_,}check_type_of{_,}.
 
-	* oln/core/macros.hh (oln_check_type_of, oln_check_type_of_) 
+	* oln/core/macros.hh (oln_check_type_of, oln_check_type_of_)
 	(oln_check_direct_type_of, oln_check_direct_type_of_): New macros.
 	* oln/morpher/internal/image_extension.hh, oln/morpher/identity.hh
 	* oln/morpher/add_neighborhood.hh: Remove FIXMEs.
@@ -122,7 +123,7 @@
 
 	Add image point iterators parameterized by the image topology;
 	factor code into an internal class.
-	
+
 	* oln/core/gen/bbox_fwd_piter.hh: Change inheritance and move
 	methods into...
 	* oln/core/internal/bbox_fwd_piter.hh: ...this new class.
@@ -131,7 +132,7 @@
 	* oln/core/internal/bbox_bkd_piter.hh: ...this new class.
 	* oln/core/gen/fwd_piter_bbox.hh: New.
 	* oln/core/gen/bkd_piter_bbox.hh: New.
-	
+
 2006-09-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the identity and neighborhood addition morphers.
@@ -222,7 +223,7 @@
 	(image_value_hierarchy, image_rawness_hierarchy): Adjust and
 	rename as...
 	(image_hierarchy_wrt_value, image_hierarchy_wrt_data_retrieval):
-	...this.	
+	...this.
 	(oln/core/abstract/image_having_neighborhood.hh): Include it.
 	* oln/core/abstract/image_dimension.hh:
 	s/image_dimension_hierarchy/image_hierarchy_wrt_dimension/.
@@ -257,7 +258,7 @@
 2006-09-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Rename bbox point iterators.
-	
+
 	* oln/core/abstract/iterator_on_points.hh
 	(p_): Remove.  Abstract classes should not have attributes.
 	(to_point): Turn abstract.
@@ -273,7 +274,7 @@
 2006-09-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Move some abstract classes below entries into internal.
-	
+
 	* oln/core/abstract/point_nd.hh: Update and rename as...
 	* oln/core/internal/point_nd.hh: ...this.
 	* oln/core/abstract/dpoint_nd.hh: Update and rename as...
@@ -290,11 +291,11 @@
 	* oln/core/2d/dpoint2d.hh: Update.
 	* oln/core/2d/point2d.hh: Update.
 	* oln/core/gen/bbox.hh: Update.
-	
+
 2006-09-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Rename point set related classes.
-	
+
 	* oln/core/pset_entry.hh: Update and rename as...
 	* oln/core/point_set_entry.hh: ...this.
 	* oln/core/abstract/pset_fixed.hh: Update and rename as...
@@ -324,7 +325,7 @@
 2006-09-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add oln topology class for enlarged bbox.
-	
+
 	* oln/core/gen/topo_lbbox.hh: New.
 	* oln/core/abstract/dpoint_nd.hh (set_all): New.
 	* oln/core/gen/topo_bbox.hh (impl_has_large): New.
@@ -332,7 +333,7 @@
 2006-09-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Adapt topology hierarchy to new naming convention.
-	
+
 	* oln/core/topo_entry.hh: Rename into...
 	* oln/core/topology_entry.hh: ...this.
 	* oln/core/abstract/topo.hh: Rename into...
@@ -353,7 +354,7 @@
 2006-09-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add operator- to n-dimensional dpoint types.
-	
+
 	* oln/core/traits_id.hh (op_uminus_dpointnd): New.
 	* oln/core/abstract/dpoint_nd.hh (operator-): New.
 	(impl_less): New.
@@ -473,7 +474,7 @@
 	* oln/core/abstract/image.hh (oln::category::grid): Remove
 	declaration.
 	* oln/core/abstract/grid.hh
-	(oln::packed_vtypes_in_category<category::grid, G>): 
+	(oln::packed_vtypes_in_category<category::grid, G>):
 	(oln::grid::~grid): Remove dtor.
 	(oln::category::grid): Remove declaration.
 
@@ -537,7 +538,7 @@
 2006-09-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add image2d and fix topo-related classes.
-	
+
 	* tests/npoints.cc: New.
 	* tests/Makefile.am: Update.
 	* oln/core/image_entry.hh: New.
@@ -569,7 +570,7 @@
 2006-09-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Start the topology hierarchy.
-	
+
 	* oln/core/topo_entry.hh: New.
 	* oln/core/abstract/topo.hh: New.
 	* oln/core/abstract/topo_hierarchies.hh: New.
@@ -579,7 +580,7 @@
 	* oln/core/2d/aliases.hh (topo2d): New.
 
 	Add a new sub-hierarchy to abstract::pset.
-	
+
 	* oln/core/abstract/pset_cnx.hh: New.
 	* oln/core/typedefs.hh (cnx_type): New.
 	* oln/core/abstract/pset_hierarchies.hh (pset_cnx_hierarchy): New.
@@ -593,7 +594,7 @@
 2006-09-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Update abstract::pset hierarchy to final SCOOP-2 design.
-	
+
 	* oln/core/pset_entry.hh: New.
 	* oln/core/typedefs.hh: Include oln/core/abstract/entry.hh.
 	* oln/core/abstract/bbox.hh: Clean includes.
@@ -610,11 +611,11 @@
 	(pset_fixed_hierarchy, pset_ra_hierarchy, pset_bboxed_hierarchy)
 	(case_): Move to...
 	* oln/core/abstract/pset_hierarchies.hh: ...this new file.
-	
+
 2006-09-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
-	Test on abstract::pset alternative code for static inheritance. 
-	
+	Test on abstract::pset alternative code for static inheritance.
+
 	* oln/core/abstract/entry.hh: New proposition for entry class in
 	static hierarchies.  This is a test file that should be removed
 	after stc update.
@@ -642,7 +643,7 @@
 	New hierarchy tags.
 	* oln/core/gen/bbox.hh: Update.
 	(operator=): New.
-	
+
 2006-09-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Adjust virtual types class names.
@@ -707,7 +708,7 @@
 2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add bboxes and iterators.
-	
+
 	* oln/core/abstract/piter.hh: New.
 	* oln/core/abstract/bbox.hh: New.
 	* oln/core/abstract/iter.hh: New.
@@ -732,7 +733,7 @@
 2006-08-31  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add dpoint, oln traits, and operators on point/dpoint.
-	
+
 	* oln/core/type.hh: New.
 	* oln/core/traits_id.hh: New.
 	* oln/core/abstract/dpoint.hh: New.
@@ -758,11 +759,11 @@
 	(point2d): New ctor.
 	(coord): Rename as...
 	(coord_t): ...this.
-	
+
 2006-08-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Start point hierarchy.
-	
+
 	* oln/core/typedefs.hh (oln_type_of): New macro.
 	(dim_type): New typedef decl.
 	* oln/core/abstract/point.hh: New.
@@ -933,4 +934,3 @@
 	* oln/core/abstract/macros.hh: New file.
 	* tests/image_entry.cc: New test.
 	* Makefile.am, oln/Makefile.am, tests/Makefile.am: New files.
-
