@@ -50,7 +50,7 @@ namespace oln
     class impl< abstract::image_having_neighborhood,
 		morpher::tag::identity,
 		E> :
-      public virtual abstract::image<E>
+      public virtual stc::any__simple<E>
     {
     private:
       typedef oln_type_of(E, neighborhood) neighborhood_t;

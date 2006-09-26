@@ -1,3 +1,10 @@
+2006-09-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have all classes of oln::automatic inherit from stc::any__simple.
+	* oln/automatic/image_having_neighborhood.hh
+	(impl<abstract::image_having_neighborhood, morpher::tag::identity, E>):
+	Inherit from stc::any__simple<E> instead of abstract::image<E>.
+
 2006-09-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Properly define fwd_piter_type and bkd_piter_type for the
