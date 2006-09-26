@@ -40,8 +40,6 @@
 int
 main()
 {
-  typedef oln::neighb2d neighb_t;
-
   /*----------------.
   | image2d<char>.  |
   `----------------*/
@@ -52,8 +50,6 @@ main()
   mlc::assert_< mlc_is_a_(image_t, oln::abstract::image2d) >::check();
   mlc::assert_< mlc_is_a_(image_t,
 			  oln::abstract::grey_level_image) >::check();
-  mlc::assert_< mlc_is_a_(image_t,
-			  oln::abstract::not_binary_image) >::check();
 
   image_t ima(42, 51);
 
@@ -62,6 +58,7 @@ main()
   | add_neighborhood< image2d<char> >.  |
   `------------------------------------*/
 
+  typedef oln::neighb2d neighb_t;
   typedef oln::morpher::add_neighborhood<image_t, neighb_t> image_with_nbh_t;
 
   // Check that the instantiated neighborhood addition morpher
@@ -69,8 +66,6 @@ main()
   mlc::assert_< mlc_is_a_(image_with_nbh_t, oln::abstract::image2d) >::check();
   mlc::assert_< mlc_is_a_(image_with_nbh_t,
 			  oln::abstract::image_having_neighborhood) >::check();
-  mlc::assert_< mlc_is_a_(image_with_nbh_t,
-			  oln::abstract::not_binary_image) >::check();
   // Check the type of neighborhood.
   mlc::assert_< mlc_eq(oln_type_of_(image_with_nbh_t, neighborhood),
 		       oln::neighb2d) >::check();
@@ -94,8 +89,6 @@ main()
 			  oln::abstract::image2d) >::check();
   mlc::assert_< mlc_is_a_(image_with_nbh_id_t,
 			  oln::abstract::image_having_neighborhood) >::check();
-  mlc::assert_< mlc_is_a_(image_with_nbh_id_t,
-			  oln::abstract::not_binary_image) >::check();
   // Check the type of neighborhood.
   mlc::assert_< mlc_eq(oln_type_of_(image_with_nbh_id_t, neighborhood),
 		       oln::neighb2d) >::check();

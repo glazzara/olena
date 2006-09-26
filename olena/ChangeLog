@@ -1,3 +1,11 @@
+2006-09-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with changes in the image abstractions hierachies.
+
+	* tests/identity_morpher.cc, tests/add_neighborhood_morpher.cc,
+	* tests/morphers.cc: Catch up with changes in the image
+	abstractions hierachies.
+
 2006-09-26  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Dispatch image abstract classes into subdirs and files.

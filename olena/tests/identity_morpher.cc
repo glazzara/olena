@@ -48,8 +48,6 @@ main()
   mlc::assert_< mlc_is_a_(image_t, oln::abstract::image2d) >::check();
   mlc::assert_< mlc_is_a_(image_t,
 			  oln::abstract::grey_level_image) >::check();
-  mlc::assert_< mlc_is_a_(image_t,
-			  oln::abstract::not_binary_image) >::check();
 
   image_t ima(42, 51);
 
@@ -65,8 +63,6 @@ main()
   mlc::assert_< mlc_is_a_(image_id_t, oln::abstract::image2d) >::check();
   mlc::assert_< mlc_is_a_(image_id_t,
 			  oln::abstract::grey_level_image) >::check();
-  mlc::assert_< mlc_is_a_(image_id_t,
-			  oln::abstract::not_binary_image) >::check();
 
   image_id_t ima_id(ima);
 }
