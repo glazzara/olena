@@ -27,20 +27,18 @@
 
 // Check Static's multiple super relationship.
 
-#include <stc/vtypes.hh>
 #include <mlc/is_a.hh>
 #include <mlc/assert.hh>
+
+#include <stc/scoop.hh>
+
+
+// Namespace equipment.
+stc_scoop_equipment_for_namespace(my);
 
 
 namespace my
 {
-
-  /*----------------------.
-  | Namespace equipment.  |
-  `----------------------*/
-
-  stc_equip_namespace_with_vtypes();
-
 
   /*--.
   | A |

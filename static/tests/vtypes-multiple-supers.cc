@@ -25,15 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <stc/vtypes.hh>
+/// This test focuses on the support of virtual types in hierachies
+/// with multiple inheritance.
+
+// FIXME: To do: Check extended vtypes, too.
+
 #include <mlc/cmp.hh>
 #include <mlc/assert.hh>
 #include <mlc/int.hh>
 
-// This test focuses on the support of virtual types in hierachies
-// with multiple inheritance.
+#include <stc/scoop.hh>
 
-// FIXME: To do: Check extended vtypes, too.
 
 /// Helper macros.
 /// \{
@@ -45,6 +47,10 @@
 /// \}
 
 
+// Namespace equipment.
+stc_scoop_equipment_for_namespace(my);
+
+
 namespace my
 {
   /*-----------.
@@ -54,13 +60,6 @@ namespace my
   mlc_decl_typedef(foo_type);
   mlc_decl_typedef(bar_type);
   mlc_decl_typedef(baz_type);
-
-
-  /*----------------------.
-  | Namespace equipment.  |
-  `----------------------*/
-
-  stc_equip_namespace_with_vtypes();
 
 
   /*----------------.

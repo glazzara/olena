@@ -1,3 +1,20 @@
+2006-09-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename stc/vtypes.hh as stc/scoop.hh.
+
+	* stc/vtypes.hh: Rename as...
+	* stc/scoop.hh: ..this.
+	Adjust headers guards.
+	(stc_equip_namespace_with_vtypes): Pass the enclosing namespace as
+	an argument of this macro.
+	Rename as...
+	(stc_scoop_equipment_for_namespace): ...this.
+	Adjust.
+	(stc::abstraction_as_type): Remove.
+	* tests/super.cc, tests/multiple-supers.cc,
+	* tests/vtypes.cc, tests/vtypes-and-exact.cc,
+	* tests/vtypes-multiple-supers.cc: Adjust.
+
 2006-09-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a version of type_of_ checking that the vtype is actually found.

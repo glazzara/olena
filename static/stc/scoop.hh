@@ -26,12 +26,14 @@
 // Public License.
 
 /* \file stc/vtypes.hh
-   \brief Virtual types (also known as ``properties'') mechanism.
+
+   \brief Equipment for SCOOP: notably, Virtual types (also known as
+   ``properties'') mechanism.
 
    Based on Theo's presentation from January 2006 (olena-06-jan.pdf).  */
 
-#ifndef STATIC_VTYPES_HH
-# define STATIC_VTYPES_HH
+#ifndef STATIC_SCOOP_HH
+# define STATIC_SCOOP_HH
 
 # include <mlc/flags.hh>
 # include <mlc/typedef.hh>
@@ -121,7 +123,10 @@ namespace stc
 
 // FIXME: Could we extract some classes from this gigantic macro?
 
-# define stc_equip_namespace_with_vtypes()				      \
+# define stc_scoop_equipment_for_namespace(SCOOPED_NAMESPACE)		      \
+									      \
+namespace SCOOPED_NAMESPACE						      \
+{									      \
 									      \
   /* ----------------------- */						      \
   /* Typedefs declarations.  */						      \
@@ -158,7 +163,7 @@ namespace stc
 		mlc_ret(mlc_comma_1(set_super_type< type, N >)) >::ret	      \
       ret;								      \
     };									      \
-  } /* end of namespace internal */					      \
+  } /* end of namespace SCOOPED_NAMESPACE ::internal */			      \
 									      \
   template <typename type>						      \
   struct get_supers_list						      \
@@ -216,7 +221,7 @@ namespace stc
     {									      \
     };									      \
 									      \
-  } /* end of namespace internal */					      \
+  } /* end of namespace SCOOPED_NAMESPACE ::internal */			      \
 									      \
 									      \
   template<typename type>						      \
@@ -250,7 +255,7 @@ namespace stc
     {									      \
     };									      \
 									      \
-  } /* end of namespace automatic */					      \
+  } /* end of namespace SCOOPED_NAMESPACE ::automatic */		      \
 									      \
 									      \
   /* --------------- */							      \
@@ -426,7 +431,7 @@ namespace stc
       /** Tag for retrieval within extended vtypes.  */			      \
       struct extended : public method {};				      \
 									      \
-    } /** end of stc::internal::tag */					      \
+    } /* end of namespace SCOOPED_NAMESPACE ::internal::tag */		      \
 									      \
     /** Try to get \a typedef_type from \a from_type.  In case this */	      \
     /** typedef is mlc::not_found, don't perform a recursive        */	      \
@@ -779,7 +784,7 @@ namespace stc
     };									      \
     /** \} */								      \
 									      \
-  } /** End of namespace internal.  */					      \
+  } /* End of namespace SCOOPED_NAMESPACE ::internal */			      \
 									      \
 									      \
   /* Entry points.  */							      \
@@ -869,27 +874,10 @@ namespace stc
     >::ret ret;								      \
   };									      \
 									      \
-  struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
+} /* end of namespace SCOOPED_NAMESPACE */				      \
+									      \
+struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
 
-
-/*---------------------.
-| Abstraction helper.  |
-`---------------------*/
-
-namespace stc
-{
-  /// Allow the manipulation of an abstraction (i.e., a template type)
-  /// as a plain type.
-  template <template <typename> class abstraction>
-  struct abstraction_as_type
-  {
-    template <typename E>
-    struct instantiated_with
-    {
-      typedef abstraction<E> ret;
-    };
-  };
-} // end of namespace stc
 
 
 /*---------.
@@ -1057,4 +1045,4 @@ namespace stc
   typedef oln_type_of(E, Typedef) Typedef
 
 
-#endif // ! STATIC_VTYPES_HH
+#endif // ! STATIC_SCOOP_HH

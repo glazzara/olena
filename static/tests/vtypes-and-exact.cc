@@ -25,15 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <stc/any.hh>
-#include <stc/vtypes.hh>
+/// Check the virtual types system on a SCOOP hierarchy propagating the
+/// exact (static) type throughout the inheritance tree (using
+/// stc::any).
+
 #include <mlc/cmp.hh>
 #include <mlc/assert.hh>
 #include <mlc/int.hh>
 
-// Check the virtual types system on a SCOOP hierarchy propagating the
-// exact (static) type throughout the inheritance tree (using
-// stc::any).
+#include <stc/any.hh>
+#include <stc/scoop.hh>
+
 
 // Helper macros.
 #define my_type_of(FromType, Typedef)		\
@@ -41,6 +43,11 @@
 
 #define my_type_of_(FromType, Typedef)				\
   stc_type_of_(my, my::category::my_cat, FromType, Typedef)
+
+
+// Namespace equipment.
+stc_scoop_equipment_for_namespace(my);
+
 
 namespace my
 {
@@ -54,13 +61,6 @@ namespace my
   mlc_decl_typedef(quux_type);
   mlc_decl_typedef(yin_type);
   mlc_decl_typedef(zorg_type);
-
-
-  /*----------------------.
-  | Namespace equipment.  |
-  `----------------------*/
-
-  stc_equip_namespace_with_vtypes();
 
 
   /*-----------.
