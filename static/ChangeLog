@@ -1,3 +1,12 @@
+2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Enforce safety in some SCOOP tools.
+	
+	* stc/scoop.hh (stc_set_nth_super, stc_set_super): Add
+	"end of semicolon" safety.
+	(stc_virtual_typedef): Use oln_check_type_of instead of
+	oln_type_of.
+
 2006-09-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/Makefile.am (AM_CXXFLAGS): Set to -O0 -ggdb.

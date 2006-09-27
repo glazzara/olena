@@ -900,7 +900,8 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
   struct set_super_type< Type, N >		\
   {						\
     typedef Super ret;				\
-  };
+  };						\
+  struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
 
 // Shortcut.
 #define stc_set_super(Type, Super)		\
@@ -957,7 +958,9 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
    struct set_pseudosuper_type<Type>		\
    {						\
      typedef PseudoSuper ret;			\
-   }
+   };						\
+   struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
+
 
 /// \def Get the pseudosuper class of Type (version to be used inside a
 /// template).
@@ -1042,7 +1045,7 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
 /// for details).  Warning: this macro assumes that the exact type
 /// parameter is named 'E'.
 #define stc_virtual_typedef(Typedef) \
-  typedef oln_type_of(E, Typedef) Typedef
+  typedef oln_check_type_of(E, Typedef) Typedef
 
 
 #endif // ! STATIC_SCOOP_HH
