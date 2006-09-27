@@ -30,6 +30,7 @@
 # define OLENA_CORE_2D_IMAGE2D_HH
 
 # include <oln/core/image_entry.hh>
+# include <oln/core/2d/array2d.hh>
 
 
 namespace oln
@@ -52,6 +53,8 @@ namespace oln
     typedef bkd_piter_bbox_<topo_type> bkd_piter_type;
     
     typedef T value_type;
+    typedef T lvalue_type;
+    typedef mlc::true_ is_mutable_type;
     
     typedef image2d<T> real_type;
   };
@@ -71,12 +74,16 @@ namespace oln
   class image2d : public image_entry< image2d<T> >
   {
     typedef image2d<T> self_t;
+    typedef array2d<T> array_t;
 
   public:
 
     /// Ctor.
     image2d(unsigned nrows, unsigned ncols, unsigned border = 2)
-      : topo_( bbox2d( point2d(0,0), point2d(nrows-1, ncols-1)), border )
+      : topo_(bbox2d(point2d(0, 0),
+		     point2d(nrows-1, ncols-1)),
+	      border),
+	data_(new array_t(0, 0, nrows-1, ncols-1))
     {
     }
 
@@ -87,19 +94,22 @@ namespace oln
 
     T impl_op_read(const point2d& p) const
     {
-      return (T)(void*)this;
-//       static T val_;
-//       return ++val_;
+      precondition(data_ != 0);
+      precondition(topo_.has_large(p));
+      return data_->operator()(p.row(), p.col());
     }
 
-    bool impl_has(const point2d& p) const
+    T& impl_op_readwrite(const point2d& p)
     {
-      return true;
+      precondition(data_ != 0);
+      precondition(topo_.has_large(p));
+      return data_->operator()(p.row(), p.col());
     }
 
   private:
 
     topo2d topo_;
+    tracked_ptr<array_t> data_;
   };
 
 

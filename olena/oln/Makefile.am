@@ -15,8 +15,8 @@ nobase_oln_HEADERS =					\
 							\
   core/1d/grid1d.hh					\
 							\
-  core/2d/grid2d.hh					\
   core/2d/aliases.hh					\
+  core/2d/array2d.hh					\
   core/2d/dpoint2d.hh					\
   core/2d/grid2d.hh					\
   core/2d/image2d.hh					\
