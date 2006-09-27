@@ -1,5 +1,16 @@
 2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Add oln debug print and a "classical" image abstraction.
+	
+	* oln/debug/print.hh: New.
+	* oln/core/abstract/image/hybrid/classical.hh: New.
+	* oln/core/abstract/image/hierarchies.hh
+	(image_hybrid_hierarchy_wrt_classical): New.
+	(include): Update.
+	* oln/Makefile.am (nobase_oln_HEADERS): Update.
+	
+2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Update grid classes and add static checks for image vtypes.
 	
 	* oln/core/abstract/fwd_decls.hh: New.

@@ -41,33 +41,38 @@ namespace oln
   typedef hierarchy<abstract::image, 5> image_hierarchy_wrt_accessibility;
   typedef hierarchy<abstract::image, 6> image_hierarchy_wrt_mutability;
 
+  typedef hierarchy<abstract::image, 7> image_hybrid_hierarchy_wrt_classical;
+
   // FIXME: To be continued.
 #if 0
-  typedef hierarchy<abstract::image, 7> image_hierarchy_wrt_value;
-  typedef hierarchy<abstract::image, 8> image_hierarchy_wrt_data_retrieval;
+  typedef hierarchy<abstract::image, 8> image_hierarchy_wrt_value;
+  typedef hierarchy<abstract::image, 9> image_hierarchy_wrt_data_retrieval;
   // ...
 #endif
 
 } // end of namespace oln
 
 
-// Hierarchy 1: topology w.r.t. dimension.
+// Hierarchy 1: image w.r.t. dimension.
 # include <oln/core/abstract/image/dimension/hierarchy.hh>
 
-// Hierarchy 2: topology w.r.t. type of data.
+// Hierarchy 2: image w.r.t. type of data.
 # include <oln/core/abstract/image/type/hierarchy.hh>
 
-// Hierarchy 3: topology w.r.t. neighborhood.
+// Hierarchy 3: image w.r.t. neighborhood.
 # include <oln/core/abstract/image/neighborhood/hierarchy.hh>
 
-// Hierarchy 4: topology w.r.t. bounding box.
+// Hierarchy 4: image w.r.t. bounding box.
 # include <oln/core/abstract/image/bbox/hierarchy.hh>
 
-// Hierarchy 5: topology w.r.t. accessibility.
+// Hierarchy 5: image w.r.t. accessibility.
 # include <oln/core/abstract/image/accessibility/hierarchy.hh>
 
-// // // Hierarchy 6: topology w.r.t. data mutability.
+// Hierarchy 6: image w.r.t. data mutability.
 # include <oln/core/abstract/image/mutability/hierarchy.hh>
+
+// Hybrid hierarchy 7: image w.r.t. classical features.
+# include <oln/core/abstract/image/hybrid/classical.hh>
 
 
 #endif // ! OLN_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH

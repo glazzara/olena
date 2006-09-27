@@ -41,6 +41,7 @@ nobase_oln_HEADERS =					\
   core/abstract/image/dimension/3d.hh			\
   core/abstract/image/dimension/hierarchy.hh		\
   core/abstract/image/hierarchies.hh			\
+  core/abstract/image/hybrid/classical.hh		\
   core/abstract/image/mutability/hierarchy.hh		\
   core/abstract/image/neighborhood/hierarchy.hh		\
   core/abstract/image/type/binary.hh			\
@@ -93,6 +94,8 @@ nobase_oln_HEADERS =					\
   core/topology_entry.hh				\
   core/typedefs.hh					\
   core/type.hh						\
+							\
+  debug/print.hh					\
 							\
   morpher/internal/image_extension.hh			\
 							\
