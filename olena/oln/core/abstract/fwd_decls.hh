@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2005, 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,37 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_BASICS2D_HH
-# define OLN_BASICS2D_HH
+#ifndef OLN_CORE_ABSTRACT_FWD_DECLS_HH
+# define OLN_CORE_ABSTRACT_FWD_DECLS_HH
+
+namespace oln
+{
+
+  namespace abstract
+  {
+
+    template <typename E> class bbox;
+    template <typename E> class dpoint;
+    template <typename E> class grid;
+    template <typename E> class image;
+    template <typename E> class iterator;
+    template <typename E> class iterator_on_points;
+    template <typename E> class neighborhood;
+    template <typename E> class point;
+    template <typename E> class point_set;
+    template <typename E> class topology;
+
+  } // end of namespace oln::abstract
+
+} // end of namespace oln
 
 
-# include <oln/core/2d/aliases.hh>
-
-# include <oln/core/2d/grid2d.hh>
-
-# include <oln/core/2d/point2d.hh>
-namespace oln { template class point2d_<int>; }
-
-# include <oln/core/2d/dpoint2d.hh>
-namespace oln { template class dpoint2d_<int>; }
-
-# include <oln/core/gen/bbox.hh>
-namespace oln { template class bbox_<point2d>; }
-
-# include <oln/core/gen/topo_lbbox.hh>
-namespace oln { template class topo_lbbox_<point2d>; }
-
-# include <oln/core/gen/fwd_piter_bbox.hh>
-namespace oln { template class fwd_piter_bbox_<topo2d>; }
-
-# include <oln/core/gen/bkd_piter_bbox.hh>
-namespace oln { template class bkd_piter_bbox_<topo2d>; }
-
-# include <oln/core/gen/neighb.hh>
-namespace oln { template class neighb_<dpoint2d>; }
-# include <oln/core/2d/neighb2d.hh>
-
-# include <oln/core/2d/image2d.hh>
-
-
-#endif // ! OLN_BASICS2D_HH
+#endif // ! OLN_CORE_ABSTRACT_FWD_DECLS_HH

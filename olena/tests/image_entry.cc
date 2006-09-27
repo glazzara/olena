@@ -31,7 +31,7 @@
 // stress image_typeness.hh.  This might be done in another test, of
 // course.
 
-#include <oln/core/1d/grid1d.hh>
+#include <oln/basics2d.hh>
 #include <oln/core/image_entry.hh>
 
 namespace my
@@ -56,18 +56,19 @@ namespace oln
     // inheritance relation to the right abstract::image_dimension
     // class using the sole grid information (the grid can be seen
     // here as a ``tag'').
-    typedef oln::grid1d grid_type;
+    typedef oln::grid2d grid_type;
 
     // Likewise, for the switch of image_typeness using the type of
     // the value of the image.
     typedef char value_type;
 
     // FIXME: Dummy values.
-    typedef my::dummy topo_type;
-    typedef my::dummy point_type;
-    typedef my::dummy fwd_piter_type;
-    typedef my::dummy bkd_piter_type;
-    typedef my::dummy concrete_type;
+    typedef topo2d topo_type;
+    typedef point2d point_type;
+    typedef fwd_piter2d fwd_piter_type;
+    typedef bkd_piter2d bkd_piter_type;
+    typedef my::image concrete_type;
+    typedef my::dummy morpher_type;
   };
 }
 
@@ -90,11 +91,11 @@ int
 main()
 {
   // Check its internally defined vtypes.
-  mlc::assert_< mlc_eq(my::image::grid_t, oln::grid1d) >::check();
+  mlc::assert_< mlc_eq(my::image::grid_t, oln::grid2d) >::check();
   mlc::assert_< mlc_eq(my::image::value_t, char) >::check();
 
   // Check its image dimension abstraction.
-  mlc::assert_< mlc_is_a_(my::image, oln::abstract::image1d) >::check();
+  mlc::assert_< mlc_is_a_(my::image, oln::abstract::image2d) >::check();
   // Check its image type abstraction.
   mlc::assert_< mlc_is_a_(my::image,
 			  oln::abstract::grey_level_image) >::check();

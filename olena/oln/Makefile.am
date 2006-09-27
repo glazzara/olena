@@ -31,6 +31,7 @@ nobase_oln_HEADERS =					\
   core/abstract/bbox.hh					\
   core/abstract/dpoint.hh				\
   core/abstract/entry.hh				\
+  core/abstract/fwd_decls.hh				\
   core/abstract/grid.hh					\
   core/abstract/image.hh				\
   core/abstract/image/accessibility/hierarchy.hh	\

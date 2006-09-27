@@ -1,5 +1,29 @@
 2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Update grid classes and add static checks for image vtypes.
+	
+	* oln/core/abstract/fwd_decls.hh: New.
+	* tests/image_entry.cc: Update.
+	* oln/core/abstract/image.hh (include): Add fwd_decls.
+	(decl): Add static checks.
+	* oln/core/abstract/image/mutability/hierarchy.hh
+	(lvalue_t, psite_t): Update.  oln_check_type_of is now useless
+	cause vtypes are now automatically checked in the decl structure.
+	* oln/core/abstract/image/bbox/hierarchy.hh
+	(bbox_t, point_t): Likewise.
+	(decl): Add static checks.
+	* oln/core/abstract/grid.hh (include): Update.
+	(point_type, dpoint_type, size_type, coord_type): Remove.
+	We have point->grid, not the contrary.
+	(grid): Change inheritance to stc::any__simple.
+	* oln/core/1d/grid1d.hh: Update.
+	* oln/core/2d/grid2d.hh: Update.
+	* oln/core/3d/grid3d.hh: Update.
+	* oln/basics2d.hh (include): Add grid2d.
+	* oln/Makefile.am (nobase_oln_HEADERS): Update.
+
+2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Adjust guards to directory names.
 	
 	* oln/automatic/topology_having_bbox.hh: Adjust guard to directory name.

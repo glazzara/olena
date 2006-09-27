@@ -35,12 +35,8 @@
 namespace oln
 {
 
-  // Forward declarations.
-  class grid1d;
-  class point1d;
-  class dpoint1d;
-  class size1d;
-  class coord_t;
+  // Fwd decl.
+  struct grid1d;
 
   // Super type.
   stc_set_super(grid1d, abstract::grid<grid1d>);
@@ -49,14 +45,10 @@ namespace oln
   template <>
   struct vtypes<grid1d>
   {
-    typedef point1d       point_type;
-    typedef dpoint1d      dpoint_type;
-    typedef coord_t       coord_type;
-    typedef size1d        size_type;
     typedef mlc::uint_<1> dimvalue_type;
   };
 
-  /// A 1-dimension rectangular grid.
+  /// A 1-dimension grid.
   struct grid1d : public stc_get_supers(grid1d)
   {
   protected:

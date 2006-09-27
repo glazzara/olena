@@ -30,6 +30,7 @@
 # define OLN_CORE_ABSTRACT_IMAGE_HH
 
 # include <oln/core/typedefs.hh>
+# include <oln/core/abstract/fwd_decls.hh>
 # include <oln/automatic/image.hh>
 
 
@@ -60,8 +61,8 @@ namespace oln
 
     public:
 
-      struct decl {
-
+      struct decl
+      {
 	stc_virtual_typedef(topo);
 	stc_virtual_typedef(grid);
 
@@ -79,8 +80,15 @@ namespace oln
 
 	stc_virtual_typedef(morpher);
 
-	decl() {
-	  // FIXME: ...
+	decl()
+	{
+	  mlc::assert_< mlc_is_a(topo,      abstract::topology)           >::check();
+	  mlc::assert_< mlc_is_a(grid,      abstract::grid)               >::check();
+	  mlc::assert_< mlc_is_a(piter,     abstract::iterator_on_points) >::check();
+	  mlc::assert_< mlc_is_a(fwd_piter, abstract::iterator_on_points) >::check();
+	  mlc::assert_< mlc_is_a(bkd_piter, abstract::iterator_on_points) >::check();
+	  // FIXME: Rec.
+	  // mlc::assert_< mlc_is_a(concrete,  abstract::image)              >::check();
 	}
       };
 

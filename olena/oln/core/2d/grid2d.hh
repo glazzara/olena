@@ -35,12 +35,8 @@
 namespace oln
 {
 
-  // Forward declarations.
+  // Fwd decl.
   struct grid2d;
-  struct point2d;
-  struct dpoint2d;
-  struct size2d;
-  struct coord_t;
 
   // Super type.
   stc_set_super(grid2d, abstract::grid<grid2d>);
@@ -49,10 +45,6 @@ namespace oln
   template <>
   struct vtypes<grid2d>
   {
-    typedef point2d       point_type;
-    typedef dpoint2d      dpoint_type;
-    typedef size2d        size_type;
-    typedef coord_t       coord_type;
     typedef mlc::uint_<2> dimvalue_type;
   };
 

@@ -29,6 +29,8 @@
 # define OLN_CORE_ABSTRACT_IMAGE_BBOX_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/bbox.hh>
+
 
 
 namespace oln
@@ -49,13 +51,19 @@ namespace oln
     {
     private:
 
-      typedef oln_check_type_of(E, bbox)  bbox_t;
-      typedef oln_check_type_of(E, point) point_t;
+      typedef oln_type_of(E, bbox)  bbox_t;
+      typedef oln_type_of(E, point) point_t;
 
     public:
 
-      struct decl {
+      struct decl
+      {
 	stc_virtual_typedef(bbox);
+
+	decl()
+	{
+	  mlc::assert_< mlc_is_a(bbox, abstract::bbox) >::check();
+	}
       };
 
       // Concrete method.

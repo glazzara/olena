@@ -28,10 +28,6 @@
 #ifndef OLN_CORE_ABSTRACT_GRID_HH
 # define OLN_CORE_ABSTRACT_GRID_HH
 
-# include <mlc/assert.hh>
-# include <mlc/cmp.hh>
-# include <mlc/to_string.hh>
-# include <oln/core/abstract/any.hh>
 # include <oln/core/typedefs.hh>
 
 
@@ -40,24 +36,20 @@ namespace oln {
   // Forward declaration.
   namespace abstract
   {
-    template <typename G> class grid;
+    template <typename E> class grid;
   }
 
-  /// Virtual types associated to oln::abstract::image.
-  template <typename G>
-  struct vtypes< abstract::grid<G> >
+  /// Virtual types associated to oln::abstract::grid.
+  template <typename E>
+  struct vtypes< abstract::grid<E> >
   {
-    typedef mlc::undefined point_type;
-    typedef mlc::none      dpoint_type;
-    typedef mlc::undefined size_type;
-    typedef mlc::undefined coord_type;
     typedef mlc::undefined dimvalue_type;
   };
 
   namespace abstract {
 
     template <typename E>
-    struct grid : public oln::abstract::any<E>
+    struct grid : public virtual stc::any__simple<E>
     {
     protected:
       grid()

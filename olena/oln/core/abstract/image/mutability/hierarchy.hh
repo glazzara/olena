@@ -53,12 +53,13 @@ namespace oln
     {
     private:
 
-      typedef oln_check_type_of(E, lvalue) lvalue_t;
-      typedef oln_check_type_of(E, psite)  psite_t;
+      typedef oln_type_of(E, lvalue) lvalue_t;
+      typedef oln_type_of(E, psite)  psite_t;
 
     public:
 
-      struct decl {
+      struct decl
+      {
 	stc_virtual_typedef(lvalue);
       };
 
