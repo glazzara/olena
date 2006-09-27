@@ -29,8 +29,8 @@
 // FIXME: Move this file into Integre? Or in a another project,
 // serving as a glue between Integre and Olena?
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_TYPE_INTEGRE_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_TYPE_INTEGRE_HH
+#ifndef OLN_CORE_ABSTRACT_IMAGE_TYPE_INTEGRE_HH
+# define OLN_CORE_ABSTRACT_IMAGE_TYPE_INTEGRE_HH
 
 # include <oln/core/abstract/image/type/hierarchy.hh>
 
@@ -142,4 +142,4 @@ namespace oln {
 
 } // end of namespace oln
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_TYPE_INTEGRE_HH
+#endif // ! OLN_CORE_ABSTRACT_IMAGE_TYPE_INTEGRE_HH

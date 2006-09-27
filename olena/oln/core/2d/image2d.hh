@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_2D_IMAGE2D_HH
-# define OLENA_CORE_2D_IMAGE2D_HH
+#ifndef OLN_CORE_2D_IMAGE2D_HH
+# define OLN_CORE_2D_IMAGE2D_HH
 
 # include <oln/core/image_entry.hh>
 # include <oln/core/2d/array2d.hh>
@@ -116,4 +116,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_2D_IMAGE2D_HH
+#endif // ! OLN_CORE_2D_IMAGE2D_HH

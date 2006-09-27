@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_INTERNAL_TOPOLOGY_MORPHER_HH
-# define OLENA_CORE_INTERNAL_TOPOLOGY_MORPHER_HH
+#ifndef OLN_CORE_INTERNAL_TOPOLOGY_MORPHER_HH
+# define OLN_CORE_INTERNAL_TOPOLOGY_MORPHER_HH
 
 # include <oln/core/topology_entry.hh>
 
@@ -74,4 +74,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_INTERNAL_TOPOLOGY_MORPHER_HH
+#endif // ! OLN_CORE_INTERNAL_TOPOLOGY_MORPHER_HH

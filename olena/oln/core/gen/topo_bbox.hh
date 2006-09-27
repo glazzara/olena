@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_GEN_TOPO_BBOX_HH
-# define OLENA_CORE_GEN_TOPO_BBOX_HH
+#ifndef OLN_CORE_GEN_TOPO_BBOX_HH
+# define OLN_CORE_GEN_TOPO_BBOX_HH
 
 # include <oln/core/gen/bbox.hh>
 # include <oln/core/topology_entry.hh>
@@ -109,4 +109,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_GEN_TOPO_BBOX_HH
+#endif // ! OLN_CORE_GEN_TOPO_BBOX_HH

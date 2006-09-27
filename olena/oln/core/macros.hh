@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_MACROS_HH
-# define OLENA_CORE_MACROS_HH
+#ifndef OLN_CORE_MACROS_HH
+# define OLN_CORE_MACROS_HH
 
 // --------------------- //
 // Virtual type access.  //
@@ -124,4 +124,4 @@ typename oln::type_of_<void,										\
    stc_check_direct_type_of_(oln, void, OlnType, Alias)
 
 
-#endif // ! OLENA_CORE_MACROS_HH
+#endif // ! OLN_CORE_MACROS_HH

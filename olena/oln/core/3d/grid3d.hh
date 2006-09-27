@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_3D_GRID3D_HH
-# define OLENA_CORE_3D_GRID3D_HH
+#ifndef OLN_CORE_3D_GRID3D_HH
+# define OLN_CORE_3D_GRID3D_HH
 
 # include <mlc/int.hh>
 # include <oln/core/abstract/grid.hh>
@@ -67,4 +67,4 @@ namespace oln
 
 
 
-#endif // ! OLENA_CORE_3D_GRID3D_HH
+#endif // ! OLN_CORE_3D_GRID3D_HH

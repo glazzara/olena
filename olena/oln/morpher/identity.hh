@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MORPHER_IDENTITY
-# define OLENA_MORPHER_IDENTITY
+#ifndef OLN_MORPHER_IDENTITY
+# define OLN_MORPHER_IDENTITY
 
 # include <oln/morpher/internal/image_extension.hh>
 # include <oln/morpher/tags.hh>
@@ -85,4 +85,4 @@ namespace oln
 
 } // end of namespace oln
 
-#endif // ! OLENA_MORPHER_IDENTITY
+#endif // ! OLN_MORPHER_IDENTITY

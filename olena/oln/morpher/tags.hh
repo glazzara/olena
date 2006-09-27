@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MORPHER_TAGS
-# define OLENA_MORPHER_TAGS
+#ifndef OLN_MORPHER_TAGS
+# define OLN_MORPHER_TAGS
 
 
 namespace oln
@@ -46,4 +46,4 @@ namespace oln
 
 } // end of namespace oln
 
-#endif // ! OLENA_MORPHER_TAGS
+#endif // ! OLN_MORPHER_TAGS

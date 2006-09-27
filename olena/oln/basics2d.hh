@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_BASICS2D_HH
-# define OLENA_BASICS2D_HH
+#ifndef OLN_BASICS2D_HH
+# define OLN_BASICS2D_HH
 
 
 # include <oln/core/2d/aliases.hh>
@@ -58,4 +58,4 @@ namespace oln { template class neighb_<dpoint2d>; }
 # include <oln/core/2d/image2d.hh>
 
 
-#endif // ! OLENA_BASICS2D_HH
+#endif // ! OLN_BASICS2D_HH

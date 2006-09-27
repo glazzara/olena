@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_IMAGE_TYPE_COLOR_HH
-# define OLENA_CORE_ABSTRACT_IMAGE_TYPE_COLOR_HH
+#ifndef OLN_CORE_ABSTRACT_IMAGE_TYPE_COLOR_HH
+# define OLN_CORE_ABSTRACT_IMAGE_TYPE_COLOR_HH
 
 # include <oln/core/abstract/image.hh>
 
@@ -52,4 +52,4 @@ namespace oln
 
 
 
-#endif // ! OLENA_CORE_ABSTRACT_IMAGE_TYPE_COLOR_HH
+#endif // ! OLN_CORE_ABSTRACT_IMAGE_TYPE_COLOR_HH

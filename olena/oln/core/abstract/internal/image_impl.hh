@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
-# define OLENA_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
+#ifndef OLN_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
+# define OLN_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
 
 # include <mlc/flags.hh>
 # include <oln/core/typedefs.hh>
@@ -132,4 +132,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
+#endif // ! OLN_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH

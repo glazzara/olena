@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_INTERNAL_BBOX_BKD_PITER_HH
-# define OLENA_CORE_INTERNAL_BBOX_BKD_PITER_HH
+#ifndef OLN_CORE_INTERNAL_BBOX_BKD_PITER_HH
+# define OLN_CORE_INTERNAL_BBOX_BKD_PITER_HH
 
 # include <oln/core/abstract/iterator_on_points.hh>
 # include <oln/core/abstract/point.hh>
@@ -134,4 +134,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_INTERNAL_BBOX_BKD_PITER_HH
+#endif // ! OLN_CORE_INTERNAL_BBOX_BKD_PITER_HH

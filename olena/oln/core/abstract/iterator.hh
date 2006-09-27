@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_ITERATOR_HH
-# define OLENA_CORE_ABSTRACT_ITERATOR_HH
+#ifndef OLN_CORE_ABSTRACT_ITERATOR_HH
+# define OLN_CORE_ABSTRACT_ITERATOR_HH
 
 # include <oln/core/typedefs.hh>
 
@@ -85,4 +85,4 @@ namespace oln
 #define for_all(i)  for (i.start(); i.is_valid(); i.next())
 
 
-#endif // ! OLENA_CORE_ABSTRACT_ITERATOR_HH
+#endif // ! OLN_CORE_ABSTRACT_ITERATOR_HH

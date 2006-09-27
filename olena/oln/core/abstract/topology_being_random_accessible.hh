@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
-# define OLENA_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+# define OLN_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
 
 # include <oln/core/abstract/topology.hh>
 # include <oln/automatic/topology_being_random_accessible.hh>
@@ -82,4 +82,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH

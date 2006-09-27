@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_ANY_HH
-# define OLENA_CORE_ABSTRACT_ANY_HH
+#ifndef OLN_CORE_ABSTRACT_ANY_HH
+# define OLN_CORE_ABSTRACT_ANY_HH
 
 # include <stc/any.hh>
 # include <mlc/bool.hh>
@@ -69,4 +69,4 @@ namespace oln {
 	    mlc_is_a(Type, oln::abstract::any_best_speed) >
 
 
-#endif // ! OLENA_CORE_ABSTRACT_ANY_HH
+#endif // ! OLN_CORE_ABSTRACT_ANY_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MORPHER_INTERNAL_IMAGE_EXTENSION
-# define OLENA_MORPHER_INTERNAL_IMAGE_EXTENSION
+#ifndef OLN_MORPHER_INTERNAL_IMAGE_EXTENSION
+# define OLN_MORPHER_INTERNAL_IMAGE_EXTENSION
 
 # include <oln/core/image_entry.hh>
 
@@ -98,4 +98,4 @@ namespace oln
 
 } // end of namespace oln
 
-#endif // ! OLENA_MORPHER_INTERNAL_IMAGE_EXTENSION
+#endif // ! OLN_MORPHER_INTERNAL_IMAGE_EXTENSION

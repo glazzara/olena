@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
-# define OLENA_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#ifndef OLN_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+# define OLN_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
 
 # include <oln/core/typedefs.hh>
 # include <oln/morpher/tags.hh>
@@ -76,4 +76,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLENA_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#endif // ! OLN_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH

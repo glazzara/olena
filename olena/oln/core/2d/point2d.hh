@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_2D_POINT2D_HH
-# define OLENA_CORE_2D_POINT2D_HH
+#ifndef OLN_CORE_2D_POINT2D_HH
+# define OLN_CORE_2D_POINT2D_HH
 
 # include <mlc/int.hh>
 # include <oln/core/internal/point_nd.hh>
@@ -99,4 +99,4 @@ namespace oln
 # include <oln/core/2d/dpoint2d.hh>
 
 
-#endif // ! OLENA_CORE_2D_POINT2D_HH
+#endif // ! OLN_CORE_2D_POINT2D_HH

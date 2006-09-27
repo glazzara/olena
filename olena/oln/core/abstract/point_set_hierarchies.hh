@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
-# define OLENA_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
+#ifndef OLN_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
+# define OLN_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
 
 # include <oln/core/abstract/point_set.hh>
 
@@ -50,5 +50,5 @@ namespace oln
 
 
 
-#endif // ! OLENA_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
+#endif // ! OLN_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
 

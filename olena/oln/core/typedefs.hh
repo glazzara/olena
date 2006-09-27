@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_TYPEDEFS_HH
-# define OLENA_CORE_TYPEDEFS_HH
+#ifndef OLN_CORE_TYPEDEFS_HH
+# define OLN_CORE_TYPEDEFS_HH
 
 # include <iostream>
 
@@ -200,4 +200,4 @@ namespace oln
 # include <oln/core/abstract/entry.hh>
 
 
-#endif // ! OLENA_CORE_TYPEDEFS_HH
+#endif // ! OLN_CORE_TYPEDEFS_HH

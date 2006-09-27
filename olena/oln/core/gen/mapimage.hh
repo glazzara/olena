@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_GEN_MAPIMAGE_HH
-# define OLENA_CORE_GEN_MAPIMAGE_HH
+#ifndef OLN_CORE_GEN_MAPIMAGE_HH
+# define OLN_CORE_GEN_MAPIMAGE_HH
 
 # include <oln/core/image_entry.hh>
 # include <oln/core/gen/topo_bbox.hh>
@@ -120,4 +120,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_GEN_MAPIMAGE_HH
+#endif // ! OLN_CORE_GEN_MAPIMAGE_HH

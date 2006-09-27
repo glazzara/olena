@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_POINT_SET_ENTRY_HH
-# define OLENA_CORE_POINT_SET_ENTRY_HH
+#ifndef OLN_CORE_POINT_SET_ENTRY_HH
+# define OLN_CORE_POINT_SET_ENTRY_HH
 
 # include <oln/core/abstract/entry.hh>
 # include <oln/core/abstract/point_set.hh>
@@ -100,4 +100,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_POINT_SET_ENTRY_HH
+#endif // ! OLN_CORE_POINT_SET_ENTRY_HH

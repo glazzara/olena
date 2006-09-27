@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HH
-# define OLENA_CORE_ABSTRACT_TOPOLOGY_HH
+#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_HH
+# define OLN_CORE_ABSTRACT_TOPOLOGY_HH
 
 # include <oln/core/typedefs.hh>
 
@@ -87,4 +87,4 @@ namespace oln
 
 
 
-#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HH
+#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_HH

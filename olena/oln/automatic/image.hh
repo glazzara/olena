@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_AUTOMATIC_IMAGE_HH
-# define OLENA_AUTOMATIC_IMAGE_HH
+#ifndef OLN_AUTOMATIC_IMAGE_HH
+# define OLN_AUTOMATIC_IMAGE_HH
 
 # include <oln/core/typedefs.hh>
 # include <oln/morpher/tags.hh>
@@ -79,4 +79,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLENA_AUTOMATIC_IMAGE_HH
+#endif // ! OLN_AUTOMATIC_IMAGE_HH

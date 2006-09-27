@@ -30,11 +30,11 @@
 
     Use this file to avoid unnecessary (duplicated) expansions of case_.  */
 
-#ifndef OLENA_CORE_CASE_HH
-# define OLENA_CORE_CASE_HH
+#ifndef OLN_CORE_CASE_HH
+# define OLN_CORE_CASE_HH
 
 # include <mlc/case.hh>
 
 mlc_case_equipment_for_namespace(oln);
 
-#endif // ! OLENA_CORE_CASE_HH
+#endif // ! OLN_CORE_CASE_HH

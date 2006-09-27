@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_GEN_BBOX_HH
-# define OLENA_CORE_GEN_BBOX_HH
+#ifndef OLN_CORE_GEN_BBOX_HH
+# define OLN_CORE_GEN_BBOX_HH
 
 # include <oln/core/point_set_entry.hh>
 # include <oln/core/abstract/point.hh>
@@ -222,4 +222,4 @@ namespace oln
 # include <oln/core/gen/bbox_bkd_piter.hh>
 
 
-#endif // ! OLENA_CORE_GEN_BBOX_HH
+#endif // ! OLN_CORE_GEN_BBOX_HH

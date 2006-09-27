@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_MORPHER_ADD_NEIGHBORHOOD
-# define OLENA_MORPHER_ADD_NEIGHBORHOOD
+#ifndef OLN_MORPHER_ADD_NEIGHBORHOOD
+# define OLN_MORPHER_ADD_NEIGHBORHOOD
 
 # include <oln/morpher/internal/image_extension.hh>
 # include <oln/morpher/tags.hh>
@@ -123,4 +123,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_MORPHER_ADD_NEIGHBORHOOD
+#endif // ! OLN_MORPHER_ADD_NEIGHBORHOOD

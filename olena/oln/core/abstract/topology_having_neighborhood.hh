@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
-# define OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
+#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
+# define OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
 
 # include <oln/core/abstract/topology.hh>
 # include <oln/automatic/topology_having_neighborhood.hh>
@@ -83,4 +83,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
+#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH

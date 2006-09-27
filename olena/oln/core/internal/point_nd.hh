@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLENA_CORE_INTERNAL_POINT_ND_HH
-# define OLENA_CORE_INTERNAL_POINT_ND_HH
+#ifndef OLN_CORE_INTERNAL_POINT_ND_HH
+# define OLN_CORE_INTERNAL_POINT_ND_HH
 
 # include <xtd/vec.hh>
 # include <xtd/optraits.hh>
@@ -210,4 +210,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLENA_CORE_INTERNAL_POINT_ND_HH
+#endif // ! OLN_CORE_INTERNAL_POINT_ND_HH
