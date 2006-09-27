@@ -1,3 +1,7 @@
+2006-09-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	* tests/Makefile.am (AM_CXXFLAGS): Set to -O0 -ggdb.
+
 2006-09-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* xtd/vec.hh (operator-): Fix missing const.

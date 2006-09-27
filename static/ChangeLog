@@ -1,3 +1,7 @@
+2006-09-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	* tests/Makefile.am (AM_CXXFLAGS): Set to -O0 -ggdb.
+
 2006-09-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename stc/vtypes.hh as stc/scoop.hh.

@@ -3,9 +3,11 @@
 AM_CPPFLAGS = -I$(top_srcdir)/static -I$(top_srcdir)/metalic
 # FIXME: Add
 #
-#   AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_OPTIMIZE) -ggdb
+#   AM_CXXFLAGS = $(CXXFLAGS_STRICT) -ggdb
 #
 # when oln.m4 is available in the distribution.
+AM_CXXFLAGS = -O0 -ggdb
+
 
 check_PROGRAMS =				\
   any						\
