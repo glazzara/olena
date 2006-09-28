@@ -1,3 +1,25 @@
+2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	* xtd/abstract/fun.hh, xtd/abstract/fun_expr.hh,
+	* xtd/abstract/fun_nary_expr.hh, xtd/abstract/meta_fun.hh,
+	* xtd/abstract/meta_nary_fun.hh, xtd/abstract/nary_fun.hh,
+	* xtd/abstract/open_fun.hh, xtd/abstract/open_nary_fun.hh,
+	* xtd/abstract/plain_fun.hh, xtd/abstract/plain_nary_fun.hh,
+	* xtd/builtin/traits.hh, xtd/internal/mlc.hh,
+	* xtd/internal/opmacros.hh, xtd/math/abs.hh, xtd/math/acos.hh,
+	* xtd/math/arith.hh, xtd/math/asin.hh, xtd/math/atan.hh,
+	* xtd/math/atan2.hh, xtd/math/ceil.hh, xtd/math/cmp.hh,
+	* xtd/math/constraints.hh, xtd/math/cos.hh, xtd/math/cosh.hh,
+	* xtd/math/exp.hh, xtd/math/floor.hh, xtd/math/id.hh,
+	* xtd/math/includes.hh, xtd/math/log.hh, xtd/math/log10.hh,
+	* xtd/math/logic.hh, xtd/math/pow.hh, xtd/math/sin.hh,
+	* xtd/math/sinh.hh, xtd/math/sqrt.hh, xtd/math/tan.hh,
+	* xtd/math/tanh.hh, xtd/arg.hh,* xtd/args.hh, xtd/bind.hh,
+	* xtd/cast.hh, xtd/cfun.hh, xtd/literal.hh, xtd/math.hh,
+	* xtd/mexpr.hh, xtd/mfun.hh, xtd/optraits.hh, xtd/res.hh,
+	* xtd/traits.hh, xtd/vec.hh: Adjust header guards to match the
+	file name.
+
 2006-09-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/Makefile.am (AM_CXXFLAGS): Set to -O0 -ggdb.

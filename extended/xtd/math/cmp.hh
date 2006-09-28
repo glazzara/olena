@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_CMP_HH
-# define EXTENDED_MATH_CMP_HH
+#ifndef XTD_MATH_CMP_HH
+# define XTD_MATH_CMP_HH
 
 # include <xtd/internal/opmacros.hh>
 
@@ -46,4 +46,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_CMP_HH
+#endif // ! XTD_MATH_CMP_HH

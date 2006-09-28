@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_RES_HH
-# define EXTENDED_RES_HH
+#ifndef XTD_RES_HH
+# define XTD_RES_HH
 
 # include <xtd/internal/mlc.hh>
 
@@ -302,4 +302,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_RES_HH
+#endif // ! XTD_RES_HH

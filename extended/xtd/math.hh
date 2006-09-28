@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_HH
-# define EXTENDED_MATH_HH
+#ifndef XTD_MATH_HH
+# define XTD_MATH_HH
 
 
 
@@ -86,4 +86,4 @@
 
 
 
-#endif // ! EXTENDED_MATH_HH
+#endif // ! XTD_MATH_HH

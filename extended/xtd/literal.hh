@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_LITERAL_HH
-# define EXTENDED_LITERAL_HH
+#ifndef XTD_LITERAL_HH
+# define XTD_LITERAL_HH
 
 # include <xtd/abstract/plain_nary_fun.hh>
 # include <xtd/abstract/meta_nary_fun.hh>
@@ -176,4 +176,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_LITERAL_HH
+#endif // ! XTD_LITERAL_HH

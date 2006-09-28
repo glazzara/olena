@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_INTERNAL_OPMACROS_HH
-# define EXTENDED_INTERNAL_OPMACROS_HH
+#ifndef XTD_INTERNAL_OPMACROS_HH
+# define XTD_INTERNAL_OPMACROS_HH
 
 # include <mlc/if.hh>
 # include <xtd/math/includes.hh>
@@ -199,4 +199,4 @@
 
 
 
-#endif // ! EXTENDED_INTERNAL_OPMACROS_HH
+#endif // ! XTD_INTERNAL_OPMACROS_HH

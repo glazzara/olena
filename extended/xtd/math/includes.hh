@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_INCLUDES_HH
-# define EXTENDED_MATH_INCLUDES_HH
+#ifndef XTD_MATH_INCLUDES_HH
+# define XTD_MATH_INCLUDES_HH
 
 
 # include <cmath>
@@ -37,4 +37,4 @@
 # include <xtd/math/constraints.hh>
 
 
-#endif // ! EXTENDED_MATH_INCLUDES_HH
+#endif // ! XTD_MATH_INCLUDES_HH

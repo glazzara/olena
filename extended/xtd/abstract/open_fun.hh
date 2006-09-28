@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_ABSTRACT_OPEN_FUN_HH
-# define EXTENDED_ABSTRACT_OPEN_FUN_HH
+#ifndef XTD_ABSTRACT_OPEN_FUN_HH
+# define XTD_ABSTRACT_OPEN_FUN_HH
 
 # include <xtd/internal/mlc.hh>
 
@@ -68,4 +68,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_ABSTRACT_OPEN_FUN_HH
+#endif // ! XTD_ABSTRACT_OPEN_FUN_HH

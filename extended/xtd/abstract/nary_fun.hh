@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_ABSTRACT_NARY_FUN_HH
-# define EXTENDED_ABSTRACT_NARY_FUN_HH
+#ifndef XTD_ABSTRACT_NARY_FUN_HH
+# define XTD_ABSTRACT_NARY_FUN_HH
 
 
 namespace xtd
@@ -56,4 +56,4 @@ namespace xtd
 } // end of namespace xtd
 
 
-#endif // ! EXTENDED_ABSTRACT_NARY_FUN_HH
+#endif // ! XTD_ABSTRACT_NARY_FUN_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ATAN2_HH
-# define EXTENDED_MATH_ATAN2_HH
+#ifndef XTD_MATH_ATAN2_HH
+# define XTD_MATH_ATAN2_HH
 
 # include <xtd/math/includes.hh>
 
@@ -91,4 +91,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ATAN2_HH
+#endif // ! XTD_MATH_ATAN2_HH

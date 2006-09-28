@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_ARGS_HH
-# define EXTENDED_ARGS_HH
+#ifndef XTD_ARGS_HH
+# define XTD_ARGS_HH
 
 # include <xtd/internal/mlc.hh>
 
@@ -212,4 +212,4 @@ namespace xtd
 } // end of namespace xtd
 
 
-#endif // ! EXTENDED_ARGS_HH
+#endif // ! XTD_ARGS_HH

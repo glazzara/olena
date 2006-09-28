@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MEXPR_HH
-# define EXTENDED_MEXPR_HH
+#ifndef XTD_MEXPR_HH
+# define XTD_MEXPR_HH
 
 # include <xtd/abstract/meta_nary_fun.hh>
 # include <xtd/abstract/fun_nary_expr.hh>
@@ -484,4 +484,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_MEXPR_HH
+#endif // ! XTD_MEXPR_HH

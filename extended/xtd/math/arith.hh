@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_ARITH_HH
-# define EXTENDED_MATH_ARITH_HH
+#ifndef XTD_MATH_ARITH_HH
+# define XTD_MATH_ARITH_HH
 
 # include <xtd/internal/opmacros.hh>
 
@@ -48,4 +48,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_ARITH_HH
+#endif // ! XTD_MATH_ARITH_HH

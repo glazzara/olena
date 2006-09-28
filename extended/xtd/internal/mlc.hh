@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_INTERNAL_MLC_HH
-# define EXTENDED_INTERNAL_MLC_HH
+#ifndef XTD_INTERNAL_MLC_HH
+# define XTD_INTERNAL_MLC_HH
 
 # include <mlc/flags.hh>
 # include <mlc/comma.hh>
@@ -52,4 +52,4 @@
 mlc_case_equipment_for_namespace(xtd);
 
 
-#endif // ! EXTENDED_INTERNAL_MLC_HH
+#endif // ! XTD_INTERNAL_MLC_HH

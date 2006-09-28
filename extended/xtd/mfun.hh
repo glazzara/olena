@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MFUN_HH
-# define EXTENDED_MFUN_HH
+#ifndef XTD_MFUN_HH
+# define XTD_MFUN_HH
 
 # include <xtd/abstract/plain_fun.hh>
 # include <xtd/abstract/meta_nary_fun.hh>
@@ -188,4 +188,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_MFUN_HH
+#endif // ! XTD_MFUN_HH

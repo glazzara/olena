@@ -26,8 +26,8 @@
 // Public License.
 
 
-#ifndef EXTENDED_VEC_HH
-# define EXTENDED_VEC_HH
+#ifndef XTD_VEC_HH
+# define XTD_VEC_HH
 
 # include <iostream>
 # include <mlc/contract.hh>
@@ -345,4 +345,4 @@ namespace xtd
 } // end of namespace xtd
 
 
-#endif // ! EXTENDED_VEC_HH
+#endif // ! XTD_VEC_HH

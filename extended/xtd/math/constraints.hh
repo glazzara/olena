@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_CONSTRAINTS_HH
-# define EXTENDED_MATH_CONSTRAINTS_HH
+#ifndef XTD_MATH_CONSTRAINTS_HH
+# define XTD_MATH_CONSTRAINTS_HH
 
 # include <mlc/abort.hh>
 
@@ -60,4 +60,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_CONSTRAINTS_HH
+#endif // ! XTD_MATH_CONSTRAINTS_HH

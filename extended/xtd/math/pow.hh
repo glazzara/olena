@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_MATH_POW_HH
-# define EXTENDED_MATH_POW_HH
+#ifndef XTD_MATH_POW_HH
+# define XTD_MATH_POW_HH
 
 # include <xtd/math/includes.hh>
 
@@ -107,4 +107,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_MATH_POW_HH
+#endif // ! XTD_MATH_POW_HH

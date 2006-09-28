@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_ARG_HH
-# define EXTENDED_ARG_HH
+#ifndef XTD_ARG_HH
+# define XTD_ARG_HH
 
 # include <xtd/abstract/fun_nary_expr.hh>
 
@@ -138,4 +138,4 @@ namespace xtd
 } // end of namespace xtd
 
 
-#endif // ! EXTENDED_ARG_HH
+#endif // ! XTD_ARG_HH

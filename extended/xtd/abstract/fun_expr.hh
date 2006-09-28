@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_ABSTRACT_FUN_EXPR_HH
-# define EXTENDED_ABSTRACT_FUN_EXPR_HH
+#ifndef XTD_ABSTRACT_FUN_EXPR_HH
+# define XTD_ABSTRACT_FUN_EXPR_HH
 
 # include <xtd/abstract/fun.hh>
 # include <xtd/res.hh>
@@ -86,4 +86,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_ABSTRACT_FUN_EXPR_HH
+#endif // ! XTD_ABSTRACT_FUN_EXPR_HH

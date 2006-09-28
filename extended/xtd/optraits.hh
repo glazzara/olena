@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_OPTRAITS_HH
-# define EXTENDED_OPTRAITS_HH
+#ifndef XTD_OPTRAITS_HH
+# define XTD_OPTRAITS_HH
 
 # include <xtd/traits.hh>
 # include <xtd/builtin/traits.hh>
@@ -251,4 +251,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_OPTRAITS_HH
+#endif // ! XTD_OPTRAITS_HH

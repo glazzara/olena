@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_TRAITS_HH
-# define EXTENDED_TRAITS_HH
+#ifndef XTD_TRAITS_HH
+# define XTD_TRAITS_HH
 
 # include <xtd/internal/mlc.hh>
 
@@ -71,4 +71,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_TRAITS_HH
+#endif // ! XTD_TRAITS_HH

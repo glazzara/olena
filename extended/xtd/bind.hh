@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef EXTENDED_BIND_HH
-# define EXTENDED_BIND_HH
+#ifndef XTD_BIND_HH
+# define XTD_BIND_HH
 
 # include <xtd/abstract/fun_nary_expr.hh>
 # include <xtd/literal.hh>
@@ -102,4 +102,4 @@ namespace xtd
 
 
 
-#endif // ! EXTENDED_BIND_HH
+#endif // ! XTD_BIND_HH
