@@ -1,5 +1,17 @@
 2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add oln::level::fill().
+
+	* oln/level/fill.hh: New.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add level/fill.hh.
+	* tests/fill.cc: New test.
+	* tests/Makefile.am (AM_CXXFLAGS): Rename as...
+	(CXXFLAGS): ...this.
+	(check_PROGRAMS): Add fill.
+	(fill_SOURCES): New.
+
+2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with Static's changes on automatically retrieved
 	implementations.
 

@@ -112,6 +112,8 @@ nobase_oln_HEADERS =					\
 							\
   debug/print.hh					\
 							\
+  level/fill.hh						\
+							\
   morpher/internal/image_extension.hh			\
 							\
   morpher/add_neighborhood.hh				\
