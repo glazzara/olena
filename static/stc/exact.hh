@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef STATIC_EXACT_HH
-# define STATIC_EXACT_HH
+#ifndef STC_EXACT_HH
+# define STC_EXACT_HH
 
 # include <stc/any.hh>
 
@@ -198,4 +198,4 @@ namespace stc
 
 } // end of namespace stc
 
-#endif // ! STATIC_EXACT_HH
+#endif // ! STC_EXACT_HH

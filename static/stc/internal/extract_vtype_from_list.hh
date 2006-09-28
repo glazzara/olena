@@ -33,8 +33,8 @@
     This file is part of the rec_get_vtype_from_list from
     stc/vtypes.hh.  */
 
-#ifndef STATIC_INTERNAL_EXTRACT_VTYPE_FROM_LIST
-# define STATIC_INTERNAL_EXTRACT_VTYPE_FROM_LIST
+#ifndef STC_INTERNAL_EXTRACT_VTYPE_FROM_LIST_HH
+# define STC_INTERNAL_EXTRACT_VTYPE_FROM_LIST_HH
 
 # include <mlc/flags.hh>
 # include <mlc/valist.hh>
@@ -155,4 +155,4 @@ namespace stc
 
 } // end of namespace stc
 
-#endif // ! STATIC_INTERNAL_EXTRACT_VTYPE_FROM_LIST
+#endif // ! STC_INTERNAL_EXTRACT_VTYPE_FROM_LIST_HH

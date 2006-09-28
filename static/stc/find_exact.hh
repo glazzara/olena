@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef STATIC_FIND_EXACT_HH
-# define STATIC_FIND_EXACT_HH
+#ifndef STC_FIND_EXACT_HH
+# define STC_FIND_EXACT_HH
 
 # define stc_find_exact(Abstraction, ExactType)			\
    typename stc::find_exact< Abstraction, ExactType >::ret
@@ -56,4 +56,4 @@ namespace stc
 } // end of namespace stc
 
 
-#endif // ! STATIC_FIND_EXACT_HH
+#endif // ! STC_FIND_EXACT_HH

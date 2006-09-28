@@ -27,8 +27,8 @@
 // Public License.
 
 
-#ifndef STATIC_ANY_HH
-# define STATIC_ANY_HH
+#ifndef STC_ANY_HH
+# define STC_ANY_HH
 
 /// \file stc/any.hh
 /// \brief Implementation of stc::any classes (top of static hierachies).
@@ -218,4 +218,4 @@ namespace stc
 } // end of namespace stc
 
 
-#endif // ! STATIC_ANY_HH
+#endif // ! STC_ANY_HH

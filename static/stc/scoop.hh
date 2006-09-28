@@ -32,8 +32,8 @@
 
    Based on Theo's presentation from January 2006 (olena-06-jan.pdf).  */
 
-#ifndef STATIC_SCOOP_HH
-# define STATIC_SCOOP_HH
+#ifndef STC_SCOOP_HH
+# define STC_SCOOP_HH
 
 # include <mlc/flags.hh>
 # include <mlc/typedef.hh>
@@ -1035,4 +1035,4 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
   typedef oln_check_type_of(E, Typedef) Typedef
 
 
-#endif // ! STATIC_SCOOP_HH
+#endif // ! STC_SCOOP_HH

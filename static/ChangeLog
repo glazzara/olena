@@ -1,5 +1,12 @@
 2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
 
+	* stc/any.hh, stc/entry.hh, stc/exact.hh, stc/find_exact.hh,
+	* stc/scoop.hh, stc/valist_aggregator.hh,
+	* stc/internal/extract_vtype_from_list.hh: Adjust header guards to
+	match the file name.
+
+2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
+
 	Get rid of the handling of automatically retrieved implementations.
 
 	* stc/scoop.hh (automatic::impl): Remove.

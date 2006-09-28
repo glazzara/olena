@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef STATIC_ENTRY_HH
-# define STATIC_ENTRY_HH
+#ifndef STC_ENTRY_HH
+# define STC_ENTRY_HH
 
 /** \file stc/entry.hh
     \brief Extensible entry points in a class hierarchy.
@@ -147,4 +147,4 @@ namespace stc
 
 } // end of namespace stc
 
-#endif // ! STATIC_ENTRY_HH
+#endif // ! STC_ENTRY_HH

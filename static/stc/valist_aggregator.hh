@@ -31,8 +31,8 @@
 /// Converts a mlc::valist_ into a class inheriting from all the
 /// elements of the list.
 
-#ifndef STATIC_VALIST_AGGREGATOR_HH
-# define STATIC_VALIST_AGGREGATOR_HH
+#ifndef STC_VALIST_AGGREGATOR_HH
+# define STC_VALIST_AGGREGATOR_HH
 
 // FIXME: To be moved in Metalic?
 
@@ -140,4 +140,4 @@ namespace stc
 
 } // end of namespace stc
 
-#endif // ! STATIC_VALIST_AGGREGATOR_HH
+#endif // ! STC_VALIST_AGGREGATOR_HH
