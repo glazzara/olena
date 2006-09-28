@@ -1,3 +1,11 @@
+2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Get rid of the handling of automatically retrieved implementations.
+
+	* stc/scoop.hh (automatic::impl): Remove.
+	The handling of automatically retrieved implementations is
+	now the responsibility of the ``client'' (here, Olena).
+
 2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Enforce safety in some SCOOP tools.

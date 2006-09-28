@@ -243,21 +243,6 @@ namespace SCOOPED_NAMESPACE						      \
   };									      \
 									      \
 									      \
-  /* ----------------------------------------- */			      \
-  /* Automatically retrieved implementations.  */			      \
-  /* ----------------------------------------- */			      \
-									      \
-  /** Default (empty) automatic implementation.  */			      \
-  namespace automatic {							      \
-									      \
-    template <template <class> class abstraction, typename E, typename tag>   \
-    class impl								      \
-    {									      \
-    };									      \
-									      \
-  } /* end of namespace SCOOPED_NAMESPACE ::automatic */		      \
-									      \
-									      \
   /* --------------- */							      \
   /* Virtual types.  */							      \
   /* --------------- */							      \
@@ -901,6 +886,7 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
   {						\
     typedef Super ret;				\
   };						\
+						\
   struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
 
 // Shortcut.
@@ -959,6 +945,7 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
    {						\
      typedef PseudoSuper ret;			\
    };						\
+						\
    struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
 
 
