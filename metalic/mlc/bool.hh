@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_BOOL_HH
-# define METALIC_BOOL_HH
+#ifndef MLC_BOOL_HH
+# define MLC_BOOL_HH
 
 # include <mlc/value.hh>
 # include <mlc/bexpr.hh>
@@ -100,4 +100,4 @@ namespace mlc
 } // end of namespace mlc
 
 
-#endif // ! METALIC_BOOL_HH
+#endif // ! MLC_BOOL_HH

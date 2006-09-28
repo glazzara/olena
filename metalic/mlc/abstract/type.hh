@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_ABSTRACT_TYPE_HH
-# define METALIC_ABSTRACT_TYPE_HH
+#ifndef MLC_ABSTRACT_TYPE_HH
+# define MLC_ABSTRACT_TYPE_HH
 
 
 namespace mlc {
@@ -58,4 +58,4 @@ namespace mlc {
 } // end of namespace mlc
 
 
-#endif // ! METALIC_ABSTRACT_TYPE_HH
+#endif // ! MLC_ABSTRACT_TYPE_HH

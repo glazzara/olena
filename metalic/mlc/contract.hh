@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_CONTRACT_HH
-# define METALIC_CONTRACT_HH
+#ifndef MLC_CONTRACT_HH
+# define MLC_CONTRACT_HH
 
 # include <cassert>
 
@@ -60,4 +60,4 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 }									 \
 struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
-#endif // ! METALIC_CONTRACT_HH
+#endif // ! MLC_CONTRACT_HH

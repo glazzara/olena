@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_TYPEDEF_HH
-# define METALIC_TYPEDEF_HH
+#ifndef MLC_TYPEDEF_HH
+# define MLC_TYPEDEF_HH
 
 # include <mlc/flags.hh>
 # include <mlc/bool.hh>
@@ -278,4 +278,4 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n			\
    typedef_::TypedefName::from_onlyif_< Type, mlc_bool(Bexpr) >::ret
 
 
-#endif // ! METALIC_TYPEDEF_HH
+#endif // ! MLC_TYPEDEF_HH

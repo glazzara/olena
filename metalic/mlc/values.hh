@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_VALUES_HH
-# define METALIC_VALUES_HH
+#ifndef MLC_VALUES_HH
+# define MLC_VALUES_HH
 
 
 
@@ -46,4 +46,4 @@
 
 
 
-#endif // ! METALIC_VALUES_HH
+#endif // ! MLC_VALUES_HH

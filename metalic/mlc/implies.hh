@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_IMPLIES_HH
-# define METALIC_IMPLIES_HH
+#ifndef MLC_IMPLIES_HH
+# define MLC_IMPLIES_HH
 
 # include <mlc/bexpr.hh>
 # include <mlc/assert.hh>
@@ -81,4 +81,4 @@ namespace mlc
 
 
 
-#endif // ! METALIC_IMPLIES_HH
+#endif // ! MLC_IMPLIES_HH

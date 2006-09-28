@@ -1,3 +1,15 @@
+2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mlc/abstract/type.hh, mlc/abstract/bexpr.hh,
+	* mlc/abort.hh, mlc/assert.hh, mlc/bexpr.hh, mlc/bool.hh,
+	* mlc/case.hh, mlc/char.hh, mlc/cmp.hh, mlc/comma.hh,
+	* mlc/contract.hh, mlc/elt.hh, mlc/flags.hh, mlc/if.hh,
+	* mlc/implies.hh, mlc/int.hh, mlc/is_a.hh, mlc/logic.hh,
+	* mlc/pair.hh, mlc/ret.hh, mlc/switch.hh, mlc/to_string.hh,
+	* mlc/typedef.hh, mlc/uint.hh, mlc/valist.hh, mlc/value.hh,
+	* mlc/values.hh, mlc/wrap.hh: Adjust header guards to match
+	the file name.
+
 2006-09-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/Makefile.am (AM_CXXFLAGS): Set to -O0 -ggdb.

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_ABORT_HH
-# define METALIC_ABORT_HH
+#ifndef MLC_ABORT_HH
+# define MLC_ABORT_HH
 
 # include <mlc/bexpr.hh>
 # include <mlc/assert.hh>
@@ -117,4 +117,4 @@ namespace mlc
 } // end of namespace mlc
 
 
-#endif // ! METALIC_ABORT_HH
+#endif // ! MLC_ABORT_HH

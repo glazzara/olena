@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_RET_HH
-# define METALIC_RET_HH
+#ifndef MLC_RET_HH
+# define MLC_RET_HH
 
 # include <mlc/typedef.hh>
 # include <mlc/cmp.hh>
@@ -79,4 +79,4 @@ namespace mlc
 
 
 
-#endif // ! METALIC_RET_HH
+#endif // ! MLC_RET_HH

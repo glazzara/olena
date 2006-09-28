@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_SWITCH_HH
-# define METALIC_SWITCH_HH
+#ifndef MLC_SWITCH_HH
+# define MLC_SWITCH_HH
 
 
 # include <mlc/case.hh>
@@ -44,4 +44,4 @@
 /// \}
 
 
-#endif // ! METALIC_SWITCH_HH
+#endif // ! MLC_SWITCH_HH

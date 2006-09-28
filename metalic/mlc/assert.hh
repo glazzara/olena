@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_ASSERT_HH
-# define METALIC_ASSERT_HH
+#ifndef MLC_ASSERT_HH
+# define MLC_ASSERT_HH
 
 # include <mlc/flags.hh>
 
@@ -256,4 +256,4 @@ namespace mlc
 } // end of namespace mlc
 
 
-#endif // ! METALIC_ASSERT_HH
+#endif // ! MLC_ASSERT_HH

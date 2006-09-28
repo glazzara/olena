@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_CASE_HH
-# define METALIC_CASE_HH
+#ifndef MLC_CASE_HH
+# define MLC_CASE_HH
 
 # include <mlc/bexpr.hh>
 # include <mlc/assert.hh>
@@ -430,4 +430,4 @@ struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
 
-#endif // ! METALIC_CASE_HH
+#endif // ! MLC_CASE_HH

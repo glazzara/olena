@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_FLAGS_HH
-# define METALIC_FLAGS_HH
+#ifndef MLC_FLAGS_HH
+# define MLC_FLAGS_HH
 
 # include <mlc/abstract/type.hh>
 
@@ -213,4 +213,4 @@ namespace mlc {
 } // end of namespace mlc
 
 
-#endif // ! METALIC_FLAGS_HH
+#endif // ! MLC_FLAGS_HH

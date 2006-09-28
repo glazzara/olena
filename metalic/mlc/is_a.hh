@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_IS_A_HH
-# define METALIC_IS_A_HH
+#ifndef MLC_IS_A_HH
+# define MLC_IS_A_HH
 
 # include <mlc/bool.hh>
 # include <mlc/bexpr.hh>
@@ -264,4 +264,4 @@ mlc::not_<								 \
 mlc::not_< mlc::is_a_< sizeof(mlc::form::of<U >())>::ret< T, U > >
 
 
-#endif // ! METALIC_IS_A_HH
+#endif // ! MLC_IS_A_HH

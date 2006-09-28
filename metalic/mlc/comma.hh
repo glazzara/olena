@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_COMMA_HH
-# define METALIC_COMMA_HH
+#ifndef MLC_COMMA_HH
+# define MLC_COMMA_HH
 
 
 // FIXME: doc
@@ -37,4 +37,4 @@
 # define mlc_comma_4(a, b, c, d, e)  a, b, c, d, e
 
 
-#endif // ! METALIC_COMMA_HH
+#endif // ! MLC_COMMA_HH

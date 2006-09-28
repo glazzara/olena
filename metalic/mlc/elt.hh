@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_ELT_HH
-# define METALIC_ELT_HH
+#ifndef MLC_ELT_HH
+# define MLC_ELT_HH
 
 
 # define mlc_elt(Type, Index)  typename Type::template elt< Index >::ret
@@ -35,4 +35,4 @@
 
 
 
-#endif // ! METALIC_ELT_HH
+#endif // ! MLC_ELT_HH

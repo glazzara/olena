@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_VALIST_HH
-# define METALIC_VALIST_HH
+#ifndef MLC_VALIST_HH
+# define MLC_VALIST_HH
 
 # include <mlc/assert.hh>
 # include <mlc/cmp.hh>
@@ -181,4 +181,4 @@ namespace mlc
 
 
 
-#endif // ! METALIC_VALIST_HH
+#endif // ! MLC_VALIST_HH

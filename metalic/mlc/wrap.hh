@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_WRAP_HH
-# define METALIC_WRAP_HH
+#ifndef MLC_WRAP_HH
+# define MLC_WRAP_HH
 
 
 namespace mlc
@@ -123,4 +123,4 @@ int main()
 */
 
 
-#endif // ! METALIC_WRAP_HH
+#endif // ! MLC_WRAP_HH

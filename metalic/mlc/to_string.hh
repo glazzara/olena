@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_TO_STRING_HH
-# define METALIC_TO_STRING_HH
+#ifndef MLC_TO_STRING_HH
+# define MLC_TO_STRING_HH
 
 # include <iostream>
 # include <string>
@@ -66,4 +66,4 @@ namespace mlc
 
 
 
-#endif // ! METALIC_TO_STRING_HH
+#endif // ! MLC_TO_STRING_HH

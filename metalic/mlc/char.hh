@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_CHAR_HH
-# define METALIC_CHAR_HH
+#ifndef MLC_CHAR_HH
+# define MLC_CHAR_HH
 
 # include <mlc/value.hh>
 
@@ -48,4 +48,4 @@ namespace mlc
 } // end of namespace mlc
 
 
-#endif // ! METALIC_CHAR_HH
+#endif // ! MLC_CHAR_HH

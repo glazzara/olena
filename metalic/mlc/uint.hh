@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_UINT_HH
-# define METALIC_UINT_HH
+#ifndef MLC_UINT_HH
+# define MLC_UINT_HH
 
 # include <mlc/bool.hh>
 
@@ -65,4 +65,4 @@ namespace mlc
 
 
 
-#endif // ! METALIC_UINT_HH
+#endif // ! MLC_UINT_HH

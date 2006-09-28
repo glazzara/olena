@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef METALIC_BEXPR_HH
-# define METALIC_BEXPR_HH
+#ifndef MLC_BEXPR_HH
+# define MLC_BEXPR_HH
 
 # include <mlc/abstract/bexpr.hh>
 # include <mlc/flags.hh>
@@ -157,4 +157,4 @@ namespace mlc
 
 
 
-#endif // ! METALIC_BEXPR_HH
+#endif // ! MLC_BEXPR_HH
