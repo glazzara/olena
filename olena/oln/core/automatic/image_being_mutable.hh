@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_AUTOMATIC_IMAGE_BEING_MUTABLE_HH
-# define OLN_AUTOMATIC_IMAGE_BEING_MUTABLE_HH
+#ifndef OLN_CORE_AUTOMATIC_IMAGE_BEING_MUTABLE_HH
+# define OLN_CORE_AUTOMATIC_IMAGE_BEING_MUTABLE_HH
 
-# include <oln/core/typedefs.hh>
+# include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
 
 
@@ -47,7 +47,7 @@ namespace oln
     /// Implementation corresponding to the interface
     /// oln::abstract::image_being_mutable for an identity morpher.
     template <typename E>
-    class impl< abstract::image_being_mutable, morpher::tag::identity, E> :
+    class set_impl<abstract::image_being_mutable, morpher::tag::identity, E> :
       public virtual stc::any__simple<E>
     {
     private:
@@ -66,4 +66,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLN_AUTOMATIC_IMAGE_BEING_MUTABLE_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMAGE_BEING_MUTABLE_HH

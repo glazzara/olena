@@ -41,7 +41,7 @@ namespace oln
     template <typename E>
     struct image3d :
       public virtual image<E>,
-      public automatic::impl< image3d, oln_type_of(E, morpher), E>
+      public automatic::get_impl<image3d, E>
     {
     protected:
       /// Constructor (protected, empty).

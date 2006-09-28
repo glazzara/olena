@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_AUTOMATIC_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
-# define OLN_AUTOMATIC_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
+#ifndef OLN_CORE_AUTOMATIC_TOPOLOGY_HAVING_BBOX_HH
+# define OLN_CORE_AUTOMATIC_TOPOLOGY_HAVING_BBOX_HH
 
-# include <oln/core/typedefs.hh>
+# include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
 
 
@@ -38,7 +38,7 @@ namespace oln
   // Forward declaration.
   namespace abstract
   {
-    template <typename E> class topology_having_neighborhood;
+    template <typename E> class topology_having_bbox;
 
   } // end of namespace oln::abstract
 
@@ -47,22 +47,22 @@ namespace oln
   {
 
     /// Implementation corresponding to the interface
-    /// oln::abstract::topology_having_neighborhood for an identity morpher.
+    /// oln::abstract::topology_having_bbox for an identity morpher.
 
     template <typename E>
-    class impl< abstract::topology_having_neighborhood,
-		morpher::tag::identity,
-		E> :
+    class set_impl< abstract::topology_having_bbox,
+		    morpher::tag::identity,
+		    E > :
       public virtual stc::any__simple<E>
     {
     private:
-      typedef oln_type_of(E, neighborhood) neighborhood_t;
+      typedef oln_type_of(E, bbox) bbox_t;
 
     public:
 
-      const neighborhood_t& impl_neighborhood() const
+      const bbox_t& impl_bbox() const
       {
-	return this->exact().delegate().neighborhood();
+	return this->exact().delegate().bbox();
       }
 
     };
@@ -71,4 +71,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLN_AUTOMATIC_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
+#endif // ! OLN_CORE_AUTOMATIC_TOPOLOGY_HAVING_BBOX_HH

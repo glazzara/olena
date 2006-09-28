@@ -32,7 +32,6 @@
 # include <oln/core/abstract/bbox.hh>
 
 
-
 namespace oln
 {
  
@@ -47,7 +46,7 @@ namespace oln
     template <typename E>
     struct image_having_bbox :
       public virtual image<E>,
-      public automatic::impl< image_having_bbox, oln_type_of(E, morpher), E >
+      public automatic::get_impl<image_having_bbox, E>
     {
     private:
 

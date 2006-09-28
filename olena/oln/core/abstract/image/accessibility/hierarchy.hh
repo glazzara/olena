@@ -29,8 +29,7 @@
 # define OLN_CORE_ABSTRACT_IMAGE_ACCESSIBILITY_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
-# include <oln/automatic/image_being_random_accessible.hh>
-
+# include <oln/core/automatic/image_being_random_accessible.hh>
 
 
 namespace oln
@@ -47,7 +46,7 @@ namespace oln
     template <typename E>
     struct image_being_random_accessible :
       public virtual image<E>,
-      public automatic::impl< image_being_random_accessible, oln_type_of(E, morpher), E >
+      public automatic::get_impl< image_being_random_accessible, E >
     {
       typedef oln_type_of(E, point) point_t;
 

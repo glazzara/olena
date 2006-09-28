@@ -25,57 +25,82 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
-# define OLN_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#ifndef OLN_CORE_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
+# define OLN_CORE_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
 
-# include <oln/core/abstract/topology.hh>
-# include <oln/core/automatic/topology_being_random_accessible.hh>
+# include <oln/core/automatic/impl.hh>
+# include <oln/morpher/tags.hh>
 
 
 namespace oln
 {
 
+  // Forward declaration.
   namespace abstract
   {
-
-    template <typename E>
-    class topology_being_random_accessible
-      : public virtual topology<E>,
-	public automatic::get_impl<topology_being_random_accessible, E>
-    {
-      typedef oln_type_of(E, point) point_t;
-
-    public:
-
-      bool has(const point_t& p) const
-      {
-	return this->exact().impl_has(p);
-      }
-
-      bool has_large(const point_t& p) const
-      {
-	return this->exact().impl_has_large(p);
-      }
-
-    protected:
-
-      topology_being_random_accessible()
-      {}
-    };
-
+    template <typename E> class image_being_random_accessible;
 
   } // end of namespace oln::abstract
 
 
-  template <typename E>
-  struct case_ < topology_hierarchy_wrt_accessibility, E, 1 >
-    : where_< mlc::eq_< oln_type_of(E, is_random_accessible), mlc::true_ > >
+  namespace automatic
   {
-    typedef abstract::topology_being_random_accessible<E> ret;
-  };
+
+    /// Default implementation corresponding to the interface
+    /// oln::abstract::image_being_random_accessible.
+
+    template <typename E, typename M>
+    class set_impl<abstract::image_being_random_accessible, M, E> :
+      public virtual stc::any__simple<E>
+    {
+    private:
+
+      typedef oln_type_of(E, point) point_t;
+
+    public:
+
+      bool impl_has(const point_t& p) const
+      {
+	return this->exact().topo().has(p);
+      }
+
+      bool impl_has_large(const point_t& p) const
+      {
+	return this->exact().has(p);
+      }
+
+    };
 
 
+    /// Implementation corresponding to the interface
+    /// oln::abstract::image_being_random_accessible for an identity morpher.
+
+    template <typename E>
+    class set_impl< abstract::image_being_random_accessible,
+		    morpher::tag::identity,
+		    E > :
+      public virtual stc::any__simple<E>
+    {
+    private:
+
+      typedef oln_type_of(E, point) point_t;
+
+    public:
+
+      bool impl_has(const point_t& p) const
+      {
+	return this->exact().delegate().has(p);
+      }
+
+      bool impl_has_large(const point_t& p) const
+      {
+	return this->exact().delegate().has_large(p);
+      }
+
+    };
+
+  } // end of namespace oln::automatic
+  
 } // end of namespace oln
 
-
-#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH

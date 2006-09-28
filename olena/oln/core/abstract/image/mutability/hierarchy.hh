@@ -29,9 +29,7 @@
 # define OLN_CORE_ABSTRACT_IMAGE_MUTABILITY_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
-
-// Automatically-inherited implementations.
-# include <oln/automatic/image_being_mutable.hh>
+# include <oln/core/automatic/image_being_mutable.hh>
 
 
 
@@ -49,7 +47,7 @@ namespace oln
     template <typename E>
     struct image_being_mutable :
       public virtual image<E>,
-      public automatic::impl< image_being_mutable, oln_type_of(E, morpher), E >
+      public automatic::get_impl<image_being_mutable, E>
     {
     private:
 

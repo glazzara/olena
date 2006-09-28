@@ -1,3 +1,61 @@
+2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with Static's changes on automatically retrieved
+	implementations.
+
+	* oln/core/automatic/impl.hh: New.
+	* oln/automatic/image.hh: Move...
+	* oln/core/automatic/image.hh: ...here.
+	(impl): Rename as...
+	(set_impl): ...this.
+	* oln/automatic/image_being_mutable.hh: Move...
+	* oln/core/automatic/image_being_mutable.hh: ...here.
+	(impl): Rename as...
+	(set_impl): ...this.
+	* oln/automatic/image_being_random_accessible.hh: Move...
+	* oln/core/automatic/image_being_random_accessible.hh: ...here.
+	(impl): Rename as...
+	(set_impl): ...this.
+	* oln/automatic/image_having_neighborhood.hh: Move...
+	* oln/core/automatic/image_having_neighborhood.hh: ...here.
+	(impl): Rename as...
+	(set_impl): ...this.
+	* oln/automatic/topology_being_random_accessible.hh: Move...
+	* oln/core/automatic/topology_being_random_accessible.hh: ...here.
+	(impl): Rename as...
+	(set_impl): ...this.
+	* oln/automatic/topology_having_bbox.hh: Move...
+	* oln/core/automatic/topology_having_bbox.hh: ...here.
+	(impl): Rename as...
+	(set_impl): ...this.
+	* oln/automatic/topology_having_neighborhood.hh: Move...
+	* oln/core/automatic/topology_having_neighborhood.hh: ...here.
+	(impl): Rename as...
+	(set_impl): ...this.
+	Adjust.
+	* oln/core/abstract/image.hh (oln::abstract::image)
+	* oln/core/abstract/image/accessibility/hierarchy.hh
+	(oln::abstract::image_being_random_accessible)
+	* oln/core/abstract/image/bbox/hierarchy.hh
+	(oln::abstract::image_having_bbox)
+	* oln/core/abstract/image/dimension/1d.hh
+	(oln::abstract::image1d)
+	* oln/core/abstract/image/dimension/2d.hh
+	(oln::abstract::image2d)
+	* oln/core/abstract/image/dimension/3d.hh
+	(oln::abstract::image3d)
+	* oln/core/abstract/image/mutability/hierarchy.hh
+	(oln::abstract::image_being_mutable)
+	* oln/core/abstract/image/neighborhood/hierarchy.hh
+	(oln::abstract::image_having_neighborhood)
+	* oln/core/abstract/topology_being_random_accessible.hh
+	(oln::abstract::topology_being_random_accessible)
+	* oln/core/abstract/topology_having_bbox.hh
+	(oln::abstract::topology_having_bbox)
+	* oln/core/abstract/topology_having_neighborhood.hh
+	(oln::abstract::topology_having_neighborhood): Adjust.
+	* oln/Makefile.am (nobase_oln_HEADERS): Adjust.
+
 2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add oln debug print and a "classical" image abstraction.

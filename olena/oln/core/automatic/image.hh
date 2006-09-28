@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_AUTOMATIC_IMAGE_HAVING_NEIGHBORHOOD_HH
-# define OLN_AUTOMATIC_IMAGE_HAVING_NEIGHBORHOOD_HH
+#ifndef OLN_CORE_AUTOMATIC_IMAGE_HH
+# define OLN_CORE_AUTOMATIC_IMAGE_HH
 
-# include <oln/core/typedefs.hh>
+# include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
 
 
@@ -37,34 +37,44 @@ namespace oln
   // Forward declaration.
   namespace abstract
   {
-    template <typename E> class image_having_neighborhood;
+    template <typename E> class image;
 
   } // end of namespace oln::abstract
 
 
   namespace automatic
   {
+
     /// Implementation corresponding to the interface
-    /// oln::abstract::image_having_neighborhood for an identity morpher.
+    /// oln::abstract::image for an identity morpher.
     template <typename E>
-    class impl< abstract::image_having_neighborhood,
-		morpher::tag::identity,
-		E> :
+    class set_impl<abstract::image, morpher::tag::identity, E> :
       public virtual stc::any__simple<E>
     {
     private:
-      typedef oln_type_of(E, neighborhood) neighborhood_t;
+
+      typedef oln_type_of(E, topo)   topo_t;
+      typedef oln_type_of(E, rvalue) rvalue_t;
+      typedef oln_type_of(E, psite)  psite_t;
 
     public:
-      /// Accessor delegation.
-      const neighborhood_t& impl_neighborhood() const
+
+      /// Delegation.
+
+      const topo_t& impl_topo() const
       {
-	return this->exact().delegate().neighborhood();
+	return this->exact().delegate().topo();
       }
+
+      rvalue_t impl_op_read(const psite_t& p) const
+      {
+	return this->exact().delegate().operator()(p);
+      }
+
     };
 
   } // end of namespace oln::automatic
   
 } // end of namespace oln
 
-#endif // ! OLN_AUTOMATIC_IMAGE_HAVING_NEIGHBORHOOD_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMAGE_HH

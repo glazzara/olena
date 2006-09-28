@@ -29,9 +29,7 @@
 # define OLN_CORE_ABSTRACT_IMAGE_NEIGHBORHOOD_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
-
-// Automatically-inherited implementations.
-# include <oln/automatic/image_having_neighborhood.hh>
+# include <oln/core/automatic/image_having_neighborhood.hh>
 
 
 /* Image having neighborhood hierarchy (summary).
@@ -59,9 +57,7 @@ namespace oln
     template <typename E>
     struct image_having_neighborhood :
       public virtual image<E>,
-      public automatic::impl< image_having_neighborhood,
-			      oln_type_of(E, morpher),
-			      E >
+      public automatic::get_impl<image_having_neighborhood, E>
     {
     private:
       typedef oln_type_of(E, neighborhood) neighborhood_t;

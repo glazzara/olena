@@ -29,7 +29,7 @@
 # define OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
 
 # include <oln/core/abstract/topology.hh>
-# include <oln/automatic/topology_having_neighborhood.hh>
+# include <oln/core/automatic/topology_having_neighborhood.hh>
 
 
 namespace oln
@@ -38,13 +38,10 @@ namespace oln
   namespace abstract
   {
 
-
     template <typename E>
     class topology_having_neighborhood
       : public virtual topology<E>,
-	public automatic::impl< topology_having_neighborhood,
-				oln_type_of(E, morpher),
-				E >
+	public automatic::get_impl<topology_having_neighborhood, E>
     {
       typedef oln_type_of(E, neighborhood) neighborhood_t;
       

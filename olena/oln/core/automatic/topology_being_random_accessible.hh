@@ -25,19 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_AUTOMATIC_IMAGE_HH
-# define OLN_AUTOMATIC_IMAGE_HH
+#ifndef OLN_CORE_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+# define OLN_CORE_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
 
-# include <oln/core/typedefs.hh>
+# include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
 
 
 namespace oln
 {
+
   // Forward declaration.
   namespace abstract
   {
-    template <typename E> class image;
+    template <typename E> class topology_being_random_accessible;
 
   } // end of namespace oln::abstract
 
@@ -46,31 +47,28 @@ namespace oln
   {
 
     /// Implementation corresponding to the interface
-    /// oln::abstract::image for an identity morpher.
+    /// oln::abstract::topology_being_random_accessible for an identity
+    /// morpher.
+
     template <typename E>
-    class impl< abstract::image,
-		morpher::tag::identity,
-		E> :
+    class set_impl< abstract::topology_being_random_accessible,
+		    morpher::tag::identity,
+		    E > :
       public virtual stc::any__simple<E>
     {
     private:
-
-      typedef oln_type_of(E, topo)   topo_t;
-      typedef oln_type_of(E, rvalue) rvalue_t;
-      typedef oln_type_of(E, psite)  psite_t;
+      typedef oln_type_of(E, point) point_t;
 
     public:
 
-      /// Delegation.
-
-      const topo_t& impl_topo() const
+      bool impl_has(const point_t& p) const
       {
-	return this->exact().delegate().topo();
+	return this->exact().delegate().has(p);
       }
 
-      rvalue_t impl_op_read(const psite_t& p) const
+      bool impl_has_large(const point_t& p) const
       {
-	return this->exact().delegate().operator()(p);
+	return this->exact().delegate().has_large(p);
       }
 
     };
@@ -79,4 +77,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLN_AUTOMATIC_IMAGE_HH
+#endif // ! OLN_CORE_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH

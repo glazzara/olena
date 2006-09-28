@@ -25,55 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
-# define OLN_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#ifndef OLN_CORE_AUTOMATIC_IMPL_HH
+# define OLN_CORE_AUTOMATIC_IMPL_HH
 
 # include <oln/core/typedefs.hh>
-# include <oln/morpher/tags.hh>
 
 
 namespace oln
 {
-
-  // Forward declaration.
-  namespace abstract
-  {
-    template <typename E> class topology_being_random_accessible;
-
-  } // end of namespace oln::abstract
-
-
   namespace automatic
   {
-
-    /// Implementation corresponding to the interface
-    /// oln::abstract::topology_being_random_accessible for an identity morpher.
-
-    template <typename E>
-    class impl< abstract::topology_being_random_accessible,
-		morpher::tag::identity,
-		E> :
-      public virtual stc::any__simple<E>
+    /* Specialize to set an automatic implementation.  */
+    template <template <class> class abstraction, typename tag, typename E>
+    class set_impl
     {
-    private:
-      typedef oln_type_of(E, point) point_t;
+    };
 
-    public:
-
-      bool impl_has(const point_t& p) const
-      {
-	return this->exact().delegate().has(p);
-      }
-
-      bool impl_has_large(const point_t& p) const
-      {
-	return this->exact().delegate().has_large(p);
-      }
-
+    /// Specialization of oln::automatic::get_impl saving the user
+    /// the need to specify the morpher type as tag.
+    template < template <class> class abstraction, typename E >
+    class get_impl : public set_impl< abstraction, oln_type_of(E, morpher), E >
+    {
     };
 
   } // end of namespace oln::automatic
   
 } // end of namespace oln
 
-#endif // ! OLN_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMPL_HH

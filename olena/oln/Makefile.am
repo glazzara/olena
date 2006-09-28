@@ -1,17 +1,7 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
 olndir = $(includedir)/oln
-
 nobase_oln_HEADERS =					\
-							\
-  automatic/image.hh					\
-  automatic/image_being_mutable.hh			\
-  automatic/image_being_random_accessible.hh		\
-  automatic/image_having_neighborhood.hh		\
-  automatic/image_having_neighborhood.hh		\
-  automatic/topology_being_random_accessible.hh		\
-  automatic/topology_having_bbox.hh			\
-  automatic/topology_having_neighborhood.hh		\
 							\
   core/1d/grid1d.hh					\
 							\
@@ -25,7 +15,7 @@ nobase_oln_HEADERS =					\
 							\
   core/3d/grid3d.hh					\
 							\
-  core/abstract/internal/image_impl.hh			\
+  core/abstract/image/accessibility/hierarchy.hh	\
 							\
   core/abstract/any.hh					\
   core/abstract/bbox.hh					\
@@ -35,15 +25,19 @@ nobase_oln_HEADERS =					\
   core/abstract/grid.hh					\
   core/abstract/image.hh				\
   core/abstract/image/accessibility/hierarchy.hh	\
+							\
   core/abstract/image/bbox/hierarchy.hh			\
+							\
   core/abstract/image/dimension/1d.hh			\
   core/abstract/image/dimension/2d.hh			\
   core/abstract/image/dimension/3d.hh			\
   core/abstract/image/dimension/hierarchy.hh		\
-  core/abstract/image/hierarchies.hh			\
+							\
   core/abstract/image/hybrid/classical.hh		\
   core/abstract/image/mutability/hierarchy.hh		\
+							\
   core/abstract/image/neighborhood/hierarchy.hh		\
+							\
   core/abstract/image/type/binary.hh			\
   core/abstract/image/type/color.hh			\
   core/abstract/image/type/data.hh			\
@@ -51,6 +45,17 @@ nobase_oln_HEADERS =					\
   core/abstract/image/type/hierarchy.hh			\
   core/abstract/image/type/integre.hh			\
   core/abstract/image/type/label.hh			\
+							\
+  core/abstract/image/hierarchies.hh			\
+							\
+  core/abstract/internal/image_impl.hh			\
+							\
+  core/abstract/any.hh					\
+  core/abstract/bbox.hh					\
+  core/abstract/dpoint.hh				\
+  core/abstract/entry.hh				\
+  core/abstract/grid.hh					\
+  core/abstract/image.hh				\
   core/abstract/iterator.hh				\
   core/abstract/iterator_on_points.hh			\
   core/abstract/neighborhood.hh				\
@@ -66,6 +71,16 @@ nobase_oln_HEADERS =					\
   core/abstract/topology_having_bbox.hh			\
   core/abstract/topology_having_neighborhood.hh		\
   core/abstract/topology_hierarchies.hh			\
+							\
+  core/automatic/image.hh				\
+  core/automatic/image_being_mutable.hh			\
+  core/automatic/image_being_random_accessible.hh	\
+  core/automatic/image_having_neighborhood.hh		\
+  core/automatic/image_having_neighborhood.hh		\
+  core/automatic/impl.hh				\
+  core/automatic/topology_being_random_accessible.hh	\
+  core/automatic/topology_having_bbox.hh		\
+  core/automatic/topology_having_neighborhood.hh	\
 							\
   core/gen/bbox.hh					\
   core/gen/bbox_bkd_piter.hh				\

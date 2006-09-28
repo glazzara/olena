@@ -31,7 +31,7 @@
 
 # include <oln/core/typedefs.hh>
 # include <oln/core/abstract/fwd_decls.hh>
-# include <oln/automatic/image.hh>
+# include <oln/core/automatic/image.hh>
 
 
 namespace oln
@@ -56,7 +56,7 @@ namespace oln
     template <typename E>
     struct image : public virtual stc::any__simple<E>,
 		   public virtual oln::type,
-		   public automatic::impl< image, oln_type_of(E, morpher), E >
+		   public automatic::get_impl<image, E>
     {
 
     public:

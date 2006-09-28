@@ -25,80 +25,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
-# define OLN_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
+#ifndef OLN_CORE_AUTOMATIC_IMAGE_HAVING_NEIGHBORHOOD_HH
+# define OLN_CORE_AUTOMATIC_IMAGE_HAVING_NEIGHBORHOOD_HH
 
-# include <oln/core/typedefs.hh>
+# include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
 
 
 namespace oln
 {
-
   // Forward declaration.
   namespace abstract
   {
-    template <typename E> class image_being_random_accessible;
+    template <typename E> class image_having_neighborhood;
 
   } // end of namespace oln::abstract
 
 
   namespace automatic
   {
-
-    /// Default implementation corresponding to the interface
-    /// oln::abstract::image_being_random_accessible.
-
-    template <typename E, typename M>
-    class impl< abstract::image_being_random_accessible, M, E> :
-      public virtual stc::any__simple<E>
-    {
-    private:
-
-      typedef oln_type_of(E, point) point_t;
-
-    public:
-
-      bool impl_has(const point_t& p) const
-      {
-	return this->exact().topo().has(p);
-      }
-
-      bool impl_has_large(const point_t& p) const
-      {
-	return this->exact().has(p);
-      }
-
-    };
-
-
     /// Implementation corresponding to the interface
-    /// oln::abstract::image_being_random_accessible for an identity morpher.
-
+    /// oln::abstract::image_having_neighborhood for an identity morpher.
     template <typename E>
-    class impl< abstract::image_being_random_accessible, morpher::tag::identity, E> :
+    class set_impl< abstract::image_having_neighborhood,
+		    morpher::tag::identity,
+		    E > :
       public virtual stc::any__simple<E>
     {
     private:
-
-      typedef oln_type_of(E, point) point_t;
+      typedef oln_type_of(E, neighborhood) neighborhood_t;
 
     public:
-
-      bool impl_has(const point_t& p) const
+      /// Accessor delegation.
+      const neighborhood_t& impl_neighborhood() const
       {
-	return this->exact().delegate().has(p);
+	return this->exact().delegate().neighborhood();
       }
-
-      bool impl_has_large(const point_t& p) const
-      {
-	return this->exact().delegate().has_large(p);
-      }
-
     };
 
   } // end of namespace oln::automatic
   
 } // end of namespace oln
 
-#endif // ! OLN_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMAGE_HAVING_NEIGHBORHOOD_HH

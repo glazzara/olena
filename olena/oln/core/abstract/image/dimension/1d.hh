@@ -30,6 +30,7 @@
 
 # include <oln/core/abstract/image.hh>
 
+
 namespace oln
 {
  
@@ -40,7 +41,7 @@ namespace oln
     template <typename E>
     struct image1d :
       public virtual image<E>,
-      public automatic::impl< image1d, oln_type_of(E, morpher), E>
+      public automatic::get_impl<image1d, E>
     {
     protected:
       /// Constructor (protected, empty).
