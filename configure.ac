@@ -32,6 +32,13 @@ if test "$GXX" = yes; then
   CXXFLAGS="$CXXFLAGS -pipe"
 fi
 
+# C++ compiler flags for tests.
+AC_ARG_VAR([TESTS_CXXFLAGS])
+# We want no optimization for the tests (too slow), and a lot of debugging.
+if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS"; then
+  TESTS_CXXFLAGS="-O0 -ggdb -Wall -pipe"
+fi
+
 
 ## ------- ##
 ## Tests.  ##
