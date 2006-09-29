@@ -1,5 +1,9 @@
 2006-09-29  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* xtd/valtraits.hh: Use bexpr_.
+
+2006-09-29  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add a temporary simple version of xtd_is_binary for use in oln.
 	
 	* xtd/valtraits.hh: New.

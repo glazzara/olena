@@ -28,6 +28,7 @@
 #ifndef XTD_VALTRAITS_HH
 # define XTD_VALTRAITS_HH
 
+# include <mlc/bexpr.hh>
 // # include <xtd/traits.hh>
 // # include <xtd/builtin/traits.hh>
 
@@ -37,16 +38,14 @@ namespace xtd
 {
 
   template <typename T>
-  struct is_binary
+  struct is_binary : public mlc::bexpr_<false>
   {
-    typedef mlc::false_ ret;
   };
 
 
   template <>
-  struct is_binary <bool>
+  struct is_binary <bool> : public mlc::bexpr_<true>
   {
-    typedef mlc::true_ ret;
   };
 
 
@@ -54,7 +53,7 @@ namespace xtd
 
 
 
-# define xtd_is_binary(T) typename xtd::is_binary<T>::ret
+# define xtd_is_binary(T) xtd::is_binary<T>
 
 
 
