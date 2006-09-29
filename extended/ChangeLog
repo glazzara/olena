@@ -1,3 +1,10 @@
+2006-09-29  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add a temporary simple version of xtd_is_binary for use in oln.
+	
+	* xtd/valtraits.hh: New.
+	* xtd/Makefile.am (nobase_xtd_HEADERS): Update.
+	
 2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	* xtd/abstract/fun.hh, xtd/abstract/fun_expr.hh,

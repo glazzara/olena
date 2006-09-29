@@ -56,4 +56,5 @@ nobase_xtd_HEADERS =				\
   optraits.hh					\
   res.hh					\
   traits.hh					\
+  valtraits.hh					\
   vec.hh
