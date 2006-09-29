@@ -1,3 +1,13 @@
+2006-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use TESTS_CXXFLAGS in Extended.
+
+	* tests/Makefile.am (TESTS_CXXFLAGS): New.
+	Append it to...
+	(CXXFLAGS): ...this variable.
+	* tests/optraits.cc (main): Make dummy use of all variables to
+	avoid compiler warnings.
+
 2006-09-29  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* xtd/valtraits.hh: Use bexpr_.

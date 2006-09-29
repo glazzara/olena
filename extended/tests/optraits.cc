@@ -55,6 +55,8 @@ int main()
 
   typeof(1+2u) tmp;
 //   2 * cos(_1);
+  // Dummy usage.
+  tmp = tmp;
 
   test_plus(2 * cos(_1), sin(_1));
 }
