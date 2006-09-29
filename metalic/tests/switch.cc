@@ -157,6 +157,8 @@ template <class T>
 void print()
 {
   int tmp;
+  // Dummy usage.
+  tmp = tmp;
 }
 
 

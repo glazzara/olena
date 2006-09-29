@@ -1,3 +1,14 @@
+2006-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use TESTS_CXXFLAGS in Metalic.
+
+	* tests/gcase.cc (print), tests/protected.cc (reveal),
+	* tests/switch.cc (print): Make dummy use of all variables to void
+	compiler warnings.
+	* tests/Makefile.am (TESTS_CXXFLAGS): New.
+	Append it to...
+	(CXXFLAGS): ...this variable.
+
 2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mlc/abstract/type.hh, mlc/abstract/bexpr.hh,

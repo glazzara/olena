@@ -39,6 +39,8 @@ template <typename T>
 void reveal()
 {
   T tmp;
+  // Dummy usage.
+  tmp = tmp;
 }
 
 
