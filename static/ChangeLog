@@ -1,5 +1,15 @@
 2006-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use TESTS_CXXFLAGS in Static.
+
+	* tests/Makefile.am (TESTS_CXXFLAGS): New.
+	Append it to...
+	(CXXFLAGS): ...this variable.
+	* tests/tour.cc (dynamic_hierarchy::A, dynamic_hierarchy::B)
+	(dynamic_hierarchy::C): Add missing virtual destructors.
+
+2006-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Work around a bug in g++ 4.1 and 4.2 in tests/vtypes-and-exact.cc.
 
 	* tests/vtypes-and-exact.cc (my_direct_type_of),

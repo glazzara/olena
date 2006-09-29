@@ -79,6 +79,8 @@ namespace dynamic_hierarchy
     virtual int foo() { return 1; }
     // A virtual pure method.
     virtual int bar() = 0;
+
+    virtual ~A() {}
   };
 
   // `B' is a concrete class.
@@ -88,6 +90,8 @@ namespace dynamic_hierarchy
     virtual int foo() { return 2; }
     // `B::bar' is defined.
     virtual int bar() { return 3; }
+
+    virtual ~B() {}
   };
 
   // `C' is a concrete class.
@@ -95,6 +99,8 @@ namespace dynamic_hierarchy
   {
     // `B::foo' is redefined.
     virtual int foo() { return 4; }
+
+    virtual ~C() {}
   };
 
 } // end of namespace dynamic_hierarchy
