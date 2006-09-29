@@ -1,3 +1,12 @@
+2006-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Use TESTS_CXXFLAGS in Olena.
+
+	* tests/Makefile.am (TESTS_CXXFLAGS): New.
+	Append it to...
+	(CXXFLAGS): ...this variable.
+	* tests/fill.cc: Typo in comment.
+
 2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add oln::level::fill().
@@ -107,7 +116,8 @@
 
 	Adjust guards to directory names.
 	
-	* oln/automatic/topology_having_bbox.hh: Adjust guard to directory name.
+	* oln/automatic/topology_having_bbox.hh: Adjust guard to directory
+	name.
 	* oln/automatic/image.hh: Likewise.
 	* oln/automatic/image_being_random_accessible.hh: Likewise.
 	* oln/automatic/image_having_neighborhood.hh: Likewise.

@@ -29,7 +29,7 @@
 
 #include <cassert>
 // FIXME: We should not include oln/basics2d.hh, but
-// oln/core/2d/image2d.hh (and oln/core/2d/neigh2d.hh ?).
+// just oln/core/2d/image2d.hh.
 #include <oln/basics2d.hh>
 #include <oln/level/fill.hh>
 

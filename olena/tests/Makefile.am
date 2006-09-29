@@ -9,8 +9,10 @@ AM_CPPFLAGS =						\
 #   AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_DEBUG)
 #
 # when oln.m4 is available in the distribution.
-# Meanwhile, alter CXXFLAGS to turn off any optimization.
-CXXFLAGS = -O0 -ggdb
+# Meanwhile, alter CXXFLAGS to turn off any optimization (Automake will
+# warn against this, but that's OK).
+TESTS_CXXFLAGS = @TESTS_CXXFLAGS@
+CXXFLAGS += $(TESTS_CXXFLAGS)
 
 
 check_PROGRAMS =				\
