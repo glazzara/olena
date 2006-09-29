@@ -1,3 +1,25 @@
+2006-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Work around a bug in g++ 4.1 and 4.2 in tests/vtypes-and-exact.cc.
+
+	* tests/vtypes-and-exact.cc (my_direct_type_of),
+	(my_direct_type_of_): New macros.
+	(my::A::foo_type, my::A::bar_type, my::A::baz_type)
+	(my::B::foo_type, my::B::bar_type, my::B::baz_type)
+	(my::B::quux_type, my::B::yin_type)
+	(my::C::foo_type, my::C::quux_type, my::C::zorg_type): Rename
+	typedefs as...
+	(my::A::foo_t, my::A::bar_t, my::A::baz_t)
+	(my::B::foo_t, my::B::bar_t, my::B::baz_t)
+	(my::B::quux_t, my::B::yin_t)
+	(my::C::foo_t, my::C::quux_t, my::C::zorg_t): ...this.
+	Use my_direct_type_of and my_direct_type_of_ (on the exact type)
+	instead of my_type_of and my_type_of_ (on the ``self'', current
+	type) to work around a bug in g++ 4.1 and 4.2.
+	(main): Adjust.
+	* tests/Makefile.am (AM_CXXFLAGS): Rename as...
+	(CXXFLAGS): ...this.
+
 2006-09-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	* stc/any.hh, stc/entry.hh, stc/exact.hh, stc/find_exact.hh,

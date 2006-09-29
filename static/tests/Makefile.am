@@ -1,12 +1,15 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
 AM_CPPFLAGS = -I$(top_srcdir)/static -I$(top_srcdir)/metalic
+
 # FIXME: Add
 #
-#   AM_CXXFLAGS = $(CXXFLAGS_STRICT) -ggdb
+#   AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_DEBUG)
 #
 # when oln.m4 is available in the distribution.
-AM_CXXFLAGS = -O0 -ggdb
+# Meanwhile, alter CXXFLAGS to turn off any optimization (Automake will
+# warn against this, but that's OK).
+CXXFLAGS = -O0 -ggdb
 
 
 check_PROGRAMS =				\

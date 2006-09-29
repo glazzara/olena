@@ -44,6 +44,12 @@
 #define my_type_of_(FromType, Typedef)				\
   stc_type_of_(my, my::category::my_cat, FromType, Typedef)
 
+#define my_direct_type_of(FromExactType, Typedef)	\
+  typename my_direct_type_of_(FromExactType, Typedef)
+
+#define my_direct_type_of_(FromExactType, Typedef)			\
+  stc_direct_type_of_(my, my::category::my_cat, FromExactType, Typedef)
+
 
 // Namespace equipment.
 stc_scoop_equipment_for_namespace(my);
@@ -98,10 +104,33 @@ namespace my
   template <typename Exact>
   struct A : public stc::any<Exact>
   {
+    typedef A<Exact> self_t;
+    typedef Exact exact_t;
+
     // Aliases.
-    typedef my_type_of(A, foo) foo_type;
-    typedef my_type_of(A, bar) bar_type;
-    typedef my_type_of(A, baz) baz_type;
+
+    /* FIXME: Work around a bug that affects both g++ 4.1 and
+       gcc-snapshot (4.2) from Debian.  The versions of the compiler
+       used at the moment this text was written were:
+
+       g++ 4.1      : g++ (GCC) 4.1.2 20060920 (prerelease) (Debian 4.1.1-14)
+       gcc-snapshot : g++ (GCC) 4.2.0 20060922 (experimental)
+
+
+       Problem description:
+
+       Using my_type_of (i.e., using stc_to_exact) breaks the
+       assertions ``Ensure stc::is_any_ works properly.'' below (in
+       main).  Using my_direct_type_of (on the exact type) solves
+       this!  */
+#if 0
+    typedef my_type_of(self_t, foo) foo_t;
+    typedef my_type_of(self_t, bar) bar_t;
+    typedef my_type_of(self_t, baz) baz_t;
+#endif
+    typedef my_direct_type_of(exact_t, foo) foo_t;
+    typedef my_direct_type_of(exact_t, bar) bar_t;
+    typedef my_direct_type_of(exact_t, baz) baz_t;
   };
 
 
@@ -144,12 +173,27 @@ namespace my
   template <typename Exact>
   struct B : public stc_get_supers(B<Exact>)
   {
+    typedef B<Exact> self_t;
+    typedef Exact exact_t;
+
     // Aliases.
-    typedef my_type_of(B, foo) foo_type;
-    typedef my_type_of(B, bar) bar_type;
-    typedef my_type_of(B, baz) baz_type;
-    typedef my_type_of(B, quux) quux_type;
-    typedef my_type_of(B, yin) yin_type;
+
+    /* FIXME: Same as above; using my_type_of (i.e., using
+       stc_to_exact) breaks the assertions ``Ensure stc::is_any_ works
+       properly.'' below (in main).  Using my_direct_type_of (on the
+       exact type) solves this!  */
+#if 0
+    typedef my_type_of(self_t, foo) foo_t;
+    typedef my_type_of(self_t, bar) bar_t;
+    typedef my_type_of(self_t, baz) baz_t;
+    typedef my_type_of(self_t, quux) quux_t;
+    typedef my_type_of(self_t, yin) yin_t;
+#endif
+    typedef my_direct_type_of(exact_t, foo) foo_t;
+    typedef my_direct_type_of(exact_t, bar) bar_t;
+    typedef my_direct_type_of(exact_t, baz) baz_t;
+    typedef my_direct_type_of(exact_t, quux) quux_t;
+    typedef my_direct_type_of(exact_t, yin) yin_t;
   };
 
 
@@ -173,10 +217,23 @@ namespace my
 
   struct C : public stc_get_supers(C)
   {
+    typedef C self_t;
+    typedef self_t exact_t;
+
     // Aliases.
-    typedef my_type_of_(C, foo) foo_type;
-    typedef my_type_of_(C, quux) quux_type;
-    typedef my_type_of_(C, zorg) zorg_type;
+
+    /* FIXME: Same as above; using my_type_of_ (i.e., using
+       stc_to_exact) breaks the assertions ``Ensure stc::is_any_ works
+       properly.'' below (in main).  Using my_direct_type_of_ (on the
+       exact type) solves this!  */
+#if 0
+    typedef my_type_of_(self_t, foo) foo_t;
+    typedef my_type_of_(self_t, quux) quux_t;
+    typedef my_type_of_(self_t, zorg) zorg_t;
+#endif
+    typedef my_direct_type_of_(exact_t, foo) foo_t;
+    typedef my_direct_type_of_(exact_t, quux) quux_t;
+    typedef my_direct_type_of_(exact_t, zorg) zorg_t;
   };
 
 } // end of namespace my
@@ -204,21 +261,21 @@ main()
 
 
   // Check types associated to A<C>.
-  mlc::assert_<mlc_eq(A<C>::foo_type,  int)>::check();
-  mlc::assert_<mlc_eq(A<C>::bar_type,  double)>::check();
+  mlc::assert_<mlc_eq(A<C>::foo_t,  int)>::check();
+  mlc::assert_<mlc_eq(A<C>::bar_t,  double)>::check();
 
   // Check types associated to B<C>.
-  mlc::assert_<mlc_eq(B<C>::baz_type,  char)>::check();
-  mlc::assert_<mlc_eq(B<C>::quux_type, long)>::check();
-  mlc::assert_<mlc_eq(B<C>::yin_type,  unsigned long)>::check();
+  mlc::assert_<mlc_eq(B<C>::baz_t,  char)>::check();
+  mlc::assert_<mlc_eq(B<C>::quux_t, long)>::check();
+  mlc::assert_<mlc_eq(B<C>::yin_t,  unsigned long)>::check();
 
-  mlc::assert_<mlc_eq(B<C>::bar_type,  A<C>::bar_type)>::check();
+  mlc::assert_<mlc_eq(B<C>::bar_t,  A<C>::bar_t)>::check();
 
   // Check types associated to C.
-  mlc::assert_<mlc_eq(C::foo_type,     int)>::check();
-  mlc::assert_<mlc_eq(C::bar_type,     double)>::check();
-  mlc::assert_<mlc_eq(C::baz_type,     char)>::check();
-  mlc::assert_<mlc_eq(C::quux_type,    long)>::check();
-  mlc::assert_<mlc_eq(C::yin_type,     unsigned long)>::check();
-  mlc::assert_<mlc_eq(C::zorg_type,    double)>::check();
+  mlc::assert_<mlc_eq(C::foo_t,     int)>::check();
+  mlc::assert_<mlc_eq(C::bar_t,     double)>::check();
+  mlc::assert_<mlc_eq(C::baz_t,     char)>::check();
+  mlc::assert_<mlc_eq(C::quux_t,    long)>::check();
+  mlc::assert_<mlc_eq(C::yin_t,     unsigned long)>::check();
+  mlc::assert_<mlc_eq(C::zorg_t,    double)>::check();
 }
