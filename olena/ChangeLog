@@ -1,3 +1,23 @@
+2006-10-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the inheritance of oln::point2d_ and oln::dpoint2d_.
+
+	* oln/core/2d/point2d.hh (oln::set_super_type< point2d_<C> >):
+	New.
+	(oln::point2d_): Use stc_get_supers to set the base class.
+	(oln::point2d_::super_t): Use stc_get_super to define it.
+	(oln::point2d_::point2d_(coord_t, coord_t)): Use xtd::mk_vec
+	to initialize the base class.
+	* oln/core/2d/dpoint2d.hh (oln::set_super_type< dpoint2d_<C> >):
+	Re-enable it.
+	(oln::dpoint2d_): Use stc_get_supers to set the base class.
+	(oln::dpoint2d_::super_t): Use stc_get_super to define it.
+
+2006-10-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	* oln/core/2d/array2d.hh (oln::tracked_ptr): Move...
+	* oln/core/internal/tracked_ptr.hh: ...here (new file).
+
 2006-10-02  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add isubset image morpher and subsequent tools.

@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,12 +38,12 @@ namespace oln
 {
 
 
-//   /// Super type.
-//   template<typename C>
-//   struct set_super_type< dpoint2d_<C> >
-//   {
-//     typedef abstract::dpoint< dpoint2d_<C> > ret;
-//   };
+  /// Super type.
+  template<typename C>
+  struct set_super_type< dpoint2d_<C> >
+  {
+    typedef internal::dpoint_nd< dpoint2d_<C> > ret;
+  };
 
 
   /// Virtual types associated to oln::dpoint2d_<C>.
@@ -58,10 +59,11 @@ namespace oln
 
   /// General 2D dpoint class.
   template <typename C>
-  class dpoint2d_ : public internal::dpoint_nd< dpoint2d_<C> > // FIXME: stc_get_super_(dpoint2d_<C>)
+  class dpoint2d_
+    : public stc_get_supers(dpoint2d_<C>)
   {
     typedef dpoint2d_<C>                self_t;
-    typedef internal::dpoint_nd<self_t> super_t; // FIXME: stc_get_super(self_t)
+    typedef stc_get_super(dpoint2d_<C>) super_t;
     typedef oln_type_of(self_t, coord)  coord_t;
 
     using super_t::v_;
@@ -74,8 +76,8 @@ namespace oln
     }
 
     /// Ctor.
-    dpoint2d_(const xtd::vec<2,coord_t>& v) :
-      super_t(v)
+    dpoint2d_(const xtd::vec<2,coord_t>& v)
+      : super_t(v)
     {
     }
 

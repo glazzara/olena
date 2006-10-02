@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,11 +37,20 @@ namespace oln
 {
 
 
+  /// Specializations of functions point and dpoint :
+  /// \f$(n, coord) \rightarrow type\f$ for \f$n = 2\f$.
   /// \{
-  /// Specializations of functions point and dpoint : (n,coord) -> type for n = 2.
   template <typename C> struct  point_ <2, C> { typedef  point2d_<C> ret; };
   template <typename C> struct dpoint_ <2, C> { typedef dpoint2d_<C> ret; };
   /// \}
+
+
+  /// Super type.
+  template<typename C>
+  struct set_super_type< point2d_<C> >
+  {
+    typedef internal::point_nd< point2d_<C> > ret;
+  };
 
 
   /// Virtual types associated to oln::point2d_<C>.
@@ -56,17 +66,15 @@ namespace oln
 
   /// General 2D point class.
   template <typename C>
-  class point2d_ : public internal::point_nd< point2d_<C> > // FIXME: stc_get_super_(point2d_<C>)
+  class point2d_ : public stc_get_supers(point2d_<C>)
   {
     typedef point2d_<C> self_t;
-    typedef internal::point_nd<self_t> super_t;
+    typedef stc_get_super(point2d_<C>) super_t;
+    typedef oln_type_of(self_t, coord) coord_t;
 
     using super_t::v_;
 
   public:
-
-    // Cf. BUG! typedef oln_type_of(self_t, grid)  grid_t;
-    typedef oln_type_of(self_t, coord) coord_t;
 
     /// Ctor.
     point2d_()
@@ -75,9 +83,8 @@ namespace oln
 
     /// Ctor.
     point2d_(coord_t row, coord_t col)
+      : super_t (xtd::mk_vec(row, col))
     {
-      v_[0] = row;
-      v_[1] = col;
     }
 
     /// Ctor.
