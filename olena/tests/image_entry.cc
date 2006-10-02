@@ -25,14 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// Test oln::abstract::image_entry.
+/// Test oln::image_entry.
 
-// FIXME: Check also with a (possibly fake) ntg::int_u<1, B> type, to
-// stress image_typeness.hh.  This might be done in another test, of
-// course.
 
 #include <oln/basics2d.hh>
 #include <oln/core/image_entry.hh>
+
 
 namespace my
 {

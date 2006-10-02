@@ -1,5 +1,14 @@
 2006-10-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add simple tests for point2d and dpoint2d.
+
+	* tests/dpoint2d.cc, tests/point2d.cc: New tests.
+	* tests/image_entry.cc: Fix comments.
+	* tests/Makefile.am (check_PROGRAMS): Add dpoint2d and point2d.
+	(dpoint2d_SOURCES, point2d_SOURCES): New.
+
+2006-10-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Separate tracked_ptr from array2d.
 
 	* oln/core/2d/array2d.hh (oln::tracked_ptr): Move...
