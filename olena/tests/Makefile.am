@@ -18,6 +18,7 @@ CXXFLAGS += $(TESTS_CXXFLAGS)
 check_PROGRAMS =				\
   grid						\
   image_entry					\
+  image2d					\
   npoints					\
 						\
   identity_morpher				\
@@ -29,6 +30,7 @@ check_PROGRAMS =				\
 # Images and auxiliary structures.
 grid_SOURCES = grid.cc
 image_entry_SOURCES = image_entry.cc
+image2d_SOURCES = image2d.cc
 npoints_SOURCES = npoints.cc
 
 # Morphers.

@@ -1,5 +1,17 @@
 2006-10-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Separate tracked_ptr from array2d.
+
+	* oln/core/2d/array2d.hh (oln::tracked_ptr): Move...
+	* oln/core/internal/tracked_ptr.hh: ...here (new file).
+	* oln/core/2d/image2d.hh (oln::image2d::data_): Adjust type.
+	(oln::image2d(const topo2d&)): New ctor.
+	* tests/image2d.cc: New test.
+	* tests/Makefile.am (check_PROGRAMS): Add image2d.
+	(image2d_SOURCES): New.
+
+2006-10-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the inheritance of oln::point2d_ and oln::dpoint2d_.
 
 	* oln/core/2d/point2d.hh (oln::set_super_type< point2d_<C> >):

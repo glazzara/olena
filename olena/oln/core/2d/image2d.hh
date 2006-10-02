@@ -31,6 +31,7 @@
 
 # include <oln/core/image_entry.hh>
 # include <oln/core/2d/array2d.hh>
+# include <oln/core/internal/tracked_ptr.hh>
 
 
 namespace oln
@@ -44,6 +45,7 @@ namespace oln
   template <typename T>
   struct vtypes< image2d<T> >
   {
+    // FIXME: or `typedef topo2d topo_type;' ?
     typedef topo_lbbox_<point2d> topo_type;
     typedef grid2d grid_type;
 
@@ -78,12 +80,22 @@ namespace oln
 
   public:
 
-    /// Ctor.
+    /// Ctor using sizes.
     image2d(unsigned nrows, unsigned ncols, unsigned border = 2)
       : topo_(bbox2d(point2d(0, 0),
 		     point2d(nrows-1, ncols-1)),
 	      border),
 	data_(new array_t(0, 0, nrows-1, ncols-1))
+    {
+    }
+
+    /// Ctor using an existing topology.
+    image2d(const topo2d& topo)
+      : topo_(topo),
+	data_(new array_t(topo.bbox().pmin().row(),
+			  topo.bbox().pmin().col(),
+			  topo.bbox().pmax().row(),
+			  topo.bbox().pmax().col()))
     {
     }
 
@@ -109,7 +121,7 @@ namespace oln
   private:
 
     topo2d topo_;
-    tracked_ptr<array_t> data_;
+    internal::tracked_ptr<array_t> data_;
   };
 
 
