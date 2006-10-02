@@ -13,11 +13,6 @@
 	(oln::dpoint2d_): Use stc_get_supers to set the base class.
 	(oln::dpoint2d_::super_t): Use stc_get_super to define it.
 
-2006-10-02  Roland Levillain  <roland@lrde.epita.fr>
-
-	* oln/core/2d/array2d.hh (oln::tracked_ptr): Move...
-	* oln/core/internal/tracked_ptr.hh: ...here (new file).
-
 2006-10-02  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add isubset image morpher and subsequent tools.
