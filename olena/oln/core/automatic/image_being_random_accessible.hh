@@ -72,33 +72,6 @@ namespace oln
     };
 
 
-    /// Implementation corresponding to the interface
-    /// oln::abstract::image_being_random_accessible for an identity morpher.
-
-    template <typename E>
-    class set_impl< abstract::image_being_random_accessible,
-		    morpher::tag::identity,
-		    E > :
-      public virtual stc::any__simple<E>
-    {
-    private:
-
-      typedef oln_type_of(E, point) point_t;
-
-    public:
-
-      bool impl_has(const point_t& p) const
-      {
-	return this->exact().delegate().has(p);
-      }
-
-      bool impl_has_large(const point_t& p) const
-      {
-	return this->exact().delegate().has_large(p);
-      }
-
-    };
-
   } // end of namespace oln::automatic
   
 } // end of namespace oln

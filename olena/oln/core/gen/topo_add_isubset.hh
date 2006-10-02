@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_GEN_TOPO_ADD_NBH_HH
-# define OLN_CORE_GEN_TOPO_ADD_NBH_HH
+#ifndef OLN_CORE_GEN_TOPO_ADD_ISUBSET_HH
+# define OLN_CORE_GEN_TOPO_ADD_ISUBSET_HH
 
 # include <oln/core/internal/topology_morpher.hh>
 
@@ -37,56 +37,64 @@ namespace oln
 
 
   // Forward declarations.
-  template <typename topo, typename nbh> class topo_add_nbh;
+  template <typename topo, typename isubset> class topo_add_isubset;
 
 
   // Super type declaration.
-  template <typename topo, typename nbh>
-  struct set_super_type< topo_add_nbh<topo, nbh> >
+  template <typename topo, typename isubset>
+  struct set_super_type< topo_add_isubset<topo, isubset> >
   {
-    typedef topo_add_nbh<topo, nbh> self_t;
+    typedef topo_add_isubset<topo, isubset> self_t;
     typedef internal::topology_morpher<topo, self_t> ret;
   };
 
 
   /// Virtual types associated to oln::bbox_<point>.
-  template <typename topo, typename nbh>
-  struct vtypes< topo_add_nbh<topo, nbh> >
+  template <typename topo, typename isubset>
+  struct vtypes< topo_add_isubset<topo, isubset> >
   {
-    typedef nbh neighborhood_type;
-  };
-
-  template <typename topo, typename nbh>
-  struct single_vtype< topo_add_nbh<topo, nbh>, typedef_::delegated_type >
-  {
-    typedef topo ret;
+    typedef isubset isubset_type;
   };
 
 
   /// Bounding box topology based on a point class.
-  template <typename topo_t, typename nbh_t>
-  class topo_add_nbh : public internal::topology_morpher<topo_t, topo_add_nbh<topo_t, nbh_t> >
+  template <typename topo_t, typename isubset_t>
+  class topo_add_isubset
+    : public internal::topology_morpher<topo_t, topo_add_isubset<topo_t, isubset_t> >
   {
+    typedef topo_add_isubset<topo_t, isubset_t> self_t;
+    typedef oln_type_of(self_t, point) point_t;
+
   public:
 
-    topo_add_nbh()
+    topo_add_isubset()
     {
     }
 
-    topo_add_nbh(const topo_t& topo, const nbh_t& nbh)
+    topo_add_isubset(const topo_t& topo, const isubset_t& isubset)
       : topo_(topo),
-	nbh_(nbh)
+	isubset_(isubset)
     {
     }
 
-    const nbh_t& impl_neighborhood() const
+    bool impl_has(const point_t& p) const
     {
-      return nbh_;
+      return topo_.has(p) and isubset_(p) == true;
+    }
+    
+    bool impl_has_large(const point_t& p) const
+    {
+      return topo_.has(p) and isubset_(p) == true;
     }
 
     const topo_t& delegate() const
     {
       return topo_;
+    }
+
+    const isubset_t& isubset() const
+    {
+      return isubset_;
     }
 
     operator topo_t() const
@@ -97,11 +105,11 @@ namespace oln
   protected:
 
     topo_t topo_;
-    nbh_t nbh_;
+    isubset_t isubset_;
   };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_GEN_TOPO_ADD_NBH_HH
+#endif // ! OLN_CORE_GEN_TOPO_ADD_ISUBSET_HH

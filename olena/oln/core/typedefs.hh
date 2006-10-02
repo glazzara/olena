@@ -134,6 +134,7 @@ namespace oln
   mlc_decl_typedef(dpoint_type);
 
   mlc_decl_typedef(neighborhood_type);
+  mlc_decl_typedef(isubset);
 
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.
@@ -151,6 +152,7 @@ namespace oln
 // --------------------------------------------------------------------
 //   mlc_decl_typedef(window_type);
 // --------------------------------------------------------------------
+
 
   // ------------------------------ //
   // Extension in image_operators.  //

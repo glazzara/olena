@@ -1,3 +1,25 @@
+2006-10-02  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add isubset image morpher and subsequent tools.
+	
+	* oln/core/gen/piter_isubset.hh: New.
+	* oln/core/gen/topo_add_isubset.hh: New.
+	* oln/morpher/add_isubset.hh: New.
+	* oln/debug/print.hh (println): New.
+	* oln/core/typedefs.hh (isubset): New.
+	* oln/core/automatic/image_being_random_accessible.hh
+	(set_impl): Remove; cause error-prone.
+	* oln/core/abstract/image/type/hierarchy.hh
+	(where_): Rely on xtd_is_binary instead of an hard-coded test. 
+	(include): Update.
+	* oln/core/gen/fwd_piter_bbox.hh (topo_type): new.
+	(topo_): Change ref into plain type so it is more secure.
+	* oln/core/gen/bkd_piter_bbox.hh (topo_type): new.
+	(topo_): Change ref into plain type so it is more secure.
+	* oln/core/gen/topo_add_nbh.hh (operator topo_t): New.
+	* oln/core/internal/topology_morpher.hh
+	(delegated_type): New.
+
 2006-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use TESTS_CXXFLAGS in Olena.

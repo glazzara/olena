@@ -56,6 +56,7 @@ namespace oln
   {
     typedef oln_type_of(topo, point) point_type;
     typedef oln_type_of(topo, grid) grid_type;
+    typedef topo topo_type;
   };
 
 
@@ -103,7 +104,7 @@ namespace oln
 
   protected:
 
-    const topo_t& topo_;
+    const topo_t topo_;
 
   }; // end of class oln::fwd_piter_bbox_<point>
   

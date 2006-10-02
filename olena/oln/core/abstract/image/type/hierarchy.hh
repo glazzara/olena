@@ -28,6 +28,7 @@
 #ifndef OLN_CORE_ABSTRACT_IMAGE_TYPE_HIERARCHY_HH
 # define OLN_CORE_ABSTRACT_IMAGE_TYPE_HIERARCHY_HH
 
+# include <xtd/valtraits.hh>
 # include <oln/core/abstract/image.hh>
 
 
@@ -105,7 +106,7 @@ namespace oln
   /// Binary case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 1 > :
-    where_< mlc::eq_< oln_type_of(E, value), bool > >
+    where_< xtd_is_binary(oln_type_of(E, value)) >
   {
     // Definition of the super class corresponding to this case.
     typedef abstract::binary_image<E> ret;
