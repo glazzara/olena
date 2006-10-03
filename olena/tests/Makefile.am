@@ -20,6 +20,7 @@ check_PROGRAMS =				\
   point2d					\
   grid						\
   image_entry					\
+  image1d					\
   image2d					\
   npoints					\
 						\
@@ -34,6 +35,7 @@ dpoint2d_SOURCES = dpoint2d.cc
 point2d_SOURCES = point2d.cc
 grid_SOURCES = grid.cc
 image_entry_SOURCES = image_entry.cc
+image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
 npoints_SOURCES = npoints.cc
 

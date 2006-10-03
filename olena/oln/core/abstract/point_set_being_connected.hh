@@ -39,6 +39,24 @@ namespace oln
 
 
     template <typename E>
+    class point_set_being_1d_connected : public virtual abstract::point_set<E>
+    {
+    public:
+
+      unsigned nindices() const
+      {
+	precondition(this->is_valid());
+	return this->exact().len(0);
+      }
+
+    protected:
+
+      point_set_being_1d_connected()
+      {}
+    };
+
+
+    template <typename E>
     class point_set_being_2d_connected : public virtual abstract::point_set<E>
     {
     public:
@@ -65,12 +83,29 @@ namespace oln
   } // end of namespace oln::abstract
 
 
+  // Forward declarations.
+  class grid1d;
+  class grid2d;
+
 
   template <typename E>
   struct case_ < point_set_hierarchy_wrt_connectivity, E, 1 >
-    : where_< mlc::and_list_< mlc::neq_< oln_type_of(E, bbox), mlc::none >,
-			      mlc::eq_< oln_type_of(E, is_connected), mlc::true_ >,
-			      mlc::eq_< oln_type_of(E, grid), grid2d > > >
+    : where_< mlc::and_list_<
+        mlc::neq_< oln_type_of(E, bbox), mlc::none >,
+        mlc::eq_< oln_type_of(E, is_connected), mlc::true_ >,
+        mlc::eq_< oln_type_of(E, grid), grid1d >
+      > >
+  {
+    typedef abstract::point_set_being_1d_connected<E> ret;
+  };
+
+  template <typename E>
+  struct case_ < point_set_hierarchy_wrt_connectivity, E, 2 >
+    : where_< mlc::and_list_<
+        mlc::neq_< oln_type_of(E, bbox), mlc::none >,
+        mlc::eq_< oln_type_of(E, is_connected), mlc::true_ >,
+        mlc::eq_< oln_type_of(E, grid), grid2d >
+      > >
   {
     typedef abstract::point_set_being_2d_connected<E> ret;
   };

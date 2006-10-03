@@ -1,5 +1,23 @@
 2006-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add oln::image1d and associated types.
+
+	* oln/core/1d/image1d.hh, oln/core/1d/array1d.hh,
+	* oln/core/1d/point1d.hh, oln/core/1d/dpoint1d.hh,
+	* oln/core/1d/neighb1d.hh, oln/core/1d/aliases.hh,
+	* oln/basics1d.hh: New.
+	* oln/core/abstract/point_set_being_connected.hh
+	(oln::abstract::point_set_being_1d_connected): New class.
+	(oln::case_<point_set_hierarchy_wrt_connectivity, E, 1>): Handle
+	the 1-dimension case, and move the 2-dimension case...
+	(oln::case_<point_set_hierarchy_wrt_connectivity, E, 2>): ...here
+	(new).
+	* tests/image1d.cc: New test.
+	* tests/Makefile.am (check_PROGRAMS): Add image1d.
+	(image1d_SOURCES): New.
+
+2006-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Clean up morphers.
 
 	* oln/morpher/identity.hh
