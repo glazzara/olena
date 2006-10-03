@@ -22,6 +22,7 @@ check_PROGRAMS =				\
   image_entry					\
   image1d					\
   image2d					\
+  image3d					\
   npoints					\
 						\
   identity_morpher				\
@@ -37,6 +38,7 @@ grid_SOURCES = grid.cc
 image_entry_SOURCES = image_entry.cc
 image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
+image3d_SOURCES = image3d.cc
 npoints_SOURCES = npoints.cc
 
 # Morphers.

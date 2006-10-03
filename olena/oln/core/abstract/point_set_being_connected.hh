@@ -79,6 +79,35 @@ namespace oln
       {}
     };
 
+    template <typename E>
+    class point_set_being_3d_connected : public virtual abstract::point_set<E>
+    {
+    public:
+
+      unsigned nslices() const
+      {
+	precondition(this->is_valid());
+	return this->exact().len(0);
+      }
+
+      unsigned nrows() const
+      {
+	precondition(this->is_valid());
+	return this->exact().len(1);
+      }
+
+      unsigned ncols() const
+      {
+	precondition(this->is_valid());
+	return this->exact().len(2);
+      }
+
+    protected:
+
+      point_set_being_3d_connected()
+      {}
+    };
+
 
   } // end of namespace oln::abstract
 
@@ -86,6 +115,7 @@ namespace oln
   // Forward declarations.
   class grid1d;
   class grid2d;
+  class grid3d;
 
 
   template <typename E>
@@ -108,6 +138,17 @@ namespace oln
       > >
   {
     typedef abstract::point_set_being_2d_connected<E> ret;
+  };
+
+  template <typename E>
+  struct case_ < point_set_hierarchy_wrt_connectivity, E, 3 >
+    : where_< mlc::and_list_<
+        mlc::neq_< oln_type_of(E, bbox), mlc::none >,
+        mlc::eq_< oln_type_of(E, is_connected), mlc::true_ >,
+        mlc::eq_< oln_type_of(E, grid), grid3d >
+      > >
+  {
+    typedef abstract::point_set_being_3d_connected<E> ret;
   };
 
 

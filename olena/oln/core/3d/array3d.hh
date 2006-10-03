@@ -1,0 +1,157 @@
+// Copyright (C) 2001, 2003, 2004, 2006 EPITA Research and Development
+// Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+// Boston, MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
+
+#ifndef OLN_CORE_3D_ARRAY3D_HH
+# define OLN_CORE_3D_ARRAY3D_HH
+
+# include <cstdlib>
+# include <mlc/contract.hh>
+
+
+namespace oln
+{
+
+  /// General 3D array class.
+  template <typename value_t, typename coord_t = int>
+  class array3d
+  {
+  public:
+
+    /// Ctor.
+    array3d(coord_t imin, coord_t jmin, coord_t kmin,
+	    coord_t imax, coord_t jmax, coord_t kmax) :
+      imin_(imin), jmin_(jmin), kmin_(kmin),
+      imax_(imax), jmax_(jmax), kmax_(kmax)
+    {
+      precondition(imax >= imin and jmax >= jmin and kmax >= kmin);
+      ilen_ = imax - imin + 1;
+      jlen_ = jmax - jmin + 1;
+      klen_ = kmax - kmin + 1;
+      allocate_();
+    }
+
+    /// Ctor.
+    array3d(coord_t ilen, coord_t jlen, coord_t klen) :
+      imin_(0),    jmin_(0),    kmin_(0),
+      ilen_(ilen), jlen_(jlen), klen_(klen)
+    {
+      precondition(ilen > 0 and jlen > 0 and klen > 0);
+      imax_ = imin_ + ilen_;
+      jmax_ = jmin_ + ilen_;
+      kmax_ = kmin_ + klen_;
+      allocate_();
+    }
+
+    /// Dtor.
+    ~array3d()
+    {
+      deallocate_();
+    }
+
+    value_t operator()(coord_t i, coord_t j, coord_t k) const
+    {
+      precondition(has(i, j, k));
+      return array_1st_dim_[i][j][k];
+    }
+
+    value_t& operator()(coord_t i, coord_t j, coord_t k)
+    {
+      precondition(has(i, j, k));
+      return array_1st_dim_[i][j][k];
+    }
+
+    bool has(coord_t i, coord_t j, coord_t k) const
+    {
+      return
+	i >= imin_ and i <= imax_ and
+	j >= jmin_ and j <= jmax_ and
+	k >= kmin_ and k <= kmax_;
+    }
+
+    size_t memsize() const
+    {
+      return
+	// buffer_
+	size_t(ilen_) * size_t(jlen_) * size_t(klen_) * sizeof(value_t)
+	+
+	// array_2nd_dim_
+	size_t(ilen_) * size_t(jlen_) * sizeof(value_t*)
+	+
+	// array_1st_dim_
+	size_t(ilen_) * sizeof(value_t*);
+    }
+
+  protected:
+
+    coord_t    imin_, jmin_, kmin_, imax_, jmax_, kmax_;
+    coord_t    ilen_, jlen_, klen_;
+    value_t*   buffer_;
+    value_t**  array_2nd_dim_;
+    value_t*** array_1st_dim_;
+
+  private:
+
+    void allocate_()
+    {
+      buffer_ = new value_t[size_t(ilen_) * size_t(jlen_) * size_t(klen_)];
+      array_2nd_dim_ = new value_t*[size_t(ilen_) * size_t(jlen_)];
+      array_1st_dim_ = new value_t**[size_t(ilen_)];
+      value_t* buf = buffer_ - kmin_;
+      for (coord_t i = 0; i < ilen_; ++i)
+	{
+	  value_t** nth_array_2nd_dim = array_2nd_dim_ + i * jlen_;
+	  array_1st_dim_[i] = nth_array_2nd_dim - jmin_;
+	  for (coord_t j = 0; j < jlen_; ++j)
+	    {
+	      nth_array_2nd_dim[j] = buf;
+	      buf += klen_;
+	    }
+	}
+      array_1st_dim_ -= imin_;
+    }
+
+    void deallocate_()
+    {
+      precondition(buffer_        != 0 and
+		   array_2nd_dim_ != 0 and
+		   array_1st_dim_ != 0);
+      delete[] buffer_;
+      buffer_ = 0; // safety
+      delete[] array_2nd_dim_;
+      array_2nd_dim_ = 0; // safety
+      array_1st_dim_ += imin_;
+      delete[] array_1st_dim_;
+      array_1st_dim_ = 0;  // safety
+    }
+  };
+
+
+} // end of namespace oln
+
+
+#endif // ! OLN_CORE_3D_ARRAY3D_HH

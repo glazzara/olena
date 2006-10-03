@@ -1,5 +1,21 @@
 2006-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add oln::image3d and associated types.
+
+	* oln/core/3d/image3d.hh, oln/core/3d/array3d.hh,
+	* oln/core/3d/point3d.hh, oln/core/3d/dpoint3d.hh,
+	* oln/core/3d/neighb3d.hh, oln/core/3d/aliases.hh,
+	* oln/basics3d.hh: New.
+	* oln/core/abstract/point_set_being_connected.hh
+	(oln::abstract::point_set_being_3d_connected): New class.
+	(oln::case_<point_set_hierarchy_wrt_connectivity, E, 3>): New
+	case.
+	* tests/image3d.cc: New test.
+	* tests/Makefile.am (check_PROGRAMS): Add image3d.
+	(image3d_SOURCES): New.
+
+2006-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add oln::image1d and associated types.
 
 	* oln/core/1d/image1d.hh, oln/core/1d/array1d.hh,
