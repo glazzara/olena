@@ -3,7 +3,13 @@
 olndir = $(includedir)/oln
 nobase_oln_HEADERS =					\
 							\
+  core/1d/aliases.hh					\
+  core/1d/array1d.hh					\
+  core/1d/dpoint1d.hh					\
   core/1d/grid1d.hh					\
+  core/1d/image1d.hh					\
+  core/1d/neighb1d.hh					\
+  core/1d/point1d.hh					\
 							\
   core/2d/aliases.hh					\
   core/2d/array2d.hh					\
@@ -13,7 +19,13 @@ nobase_oln_HEADERS =					\
   core/2d/neighb2d.hh					\
   core/2d/point2d.hh					\
 							\
+  core/3d/aliases.hh					\
+  core/3d/array3d.hh					\
+  core/3d/dpoint3d.hh					\
   core/3d/grid3d.hh					\
+  core/3d/image3d.hh					\
+  core/3d/neighb3d.hh					\
+  core/3d/point3d.hh					\
 							\
   core/abstract/image/accessibility/hierarchy.hh	\
 							\
@@ -98,6 +110,7 @@ nobase_oln_HEADERS =					\
   core/internal/dpoint_nd.hh				\
   core/internal/point_nd.hh				\
   core/internal/topology_morpher.hh			\
+  core/internal/tracked_ptr.hh				\
 							\
   core/case.hh						\
   core/image_entry.hh					\
@@ -120,4 +133,6 @@ nobase_oln_HEADERS =					\
   morpher/identity.hh					\
   morpher/tags.hh					\
 							\
-  basics2d.hh
+  basics1d.hh						\
+  basics2d.hh						\
+  basics3d.hh

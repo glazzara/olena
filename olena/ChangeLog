@@ -1,5 +1,16 @@
 2006-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the distribution.
+
+	* oln/Makefile.am (nobase_oln_HEADERS): Add core/1d/aliases.hh,
+	core/1d/array1d.hh, core/1d/dpoint1d.hh, core/1d/image1d.hh,
+	core/1d/neighb1d.hh, core/1d/point1d.hh, core/3d/aliases.hh,
+	core/3d/array3d.hh, core/3d/dpoint3d.hh, core/3d/image3d.hh,
+	core/3d/neighb3d.hh, core/3d/point3d.hh,
+	core/internal/tracked_ptr.hh, basics1d.hh, basics3d.hh.
+
+2006-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add oln::image3d and associated types.
 
 	* oln/core/3d/image3d.hh, oln/core/3d/array3d.hh,
