@@ -29,7 +29,6 @@
 # define OLN_MORPHER_ADD_NEIGHBORHOOD
 
 # include <oln/morpher/internal/image_extension.hh>
-# include <oln/morpher/tags.hh>
 # include <oln/core/gen/topo_add_nbh.hh>
 
 

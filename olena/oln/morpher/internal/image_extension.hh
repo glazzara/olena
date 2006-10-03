@@ -29,6 +29,7 @@
 # define OLN_MORPHER_INTERNAL_IMAGE_EXTENSION
 
 # include <oln/core/image_entry.hh>
+# include <oln/morpher/tags.hh>
 
 
 namespace oln

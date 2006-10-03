@@ -1,5 +1,19 @@
 2006-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Clean up morphers.
+
+	* oln/morpher/identity.hh
+	(oln::vtypes< morpher::identity<Image> >): Remove (was useless).
+	(oln/morpher/tags.hh): Move header inclusion...
+	* oln/morpher/internal/image_extension.hh: ...here
+	* oln/morpher/add_neighborhood.hh, oln/morpher/add_isubset.hh
+	(oln/morpher/tags.hh): No longer include it.
+	* oln/morpher/tags.hh (oln::morpher::tag::add_neighborhood):
+	Remove (was useless).
+	(oln::morpher::tag::identity): Adjust documentation.
+
+2006-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Take borders into account in data allocation of image2d.
 
 	* oln/core/2d/image2d.hh (image2d(unsigned, unsigned, unsigned)):

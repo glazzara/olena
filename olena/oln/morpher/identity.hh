@@ -29,7 +29,6 @@
 # define OLN_MORPHER_IDENTITY
 
 # include <oln/morpher/internal/image_extension.hh>
-# include <oln/morpher/tags.hh>
 
 
 namespace oln
@@ -50,16 +49,6 @@ namespace oln
     typedef morpher::identity<Image> self_t;
     typedef morpher::internal::image_extension<Image, self_t> ret;
   };
-
-
-  /// New virtual types associated with oln::morpher::identity.
-  /// \{
-  template <typename Image>
-  struct vtypes< morpher::identity<Image> >
-  {
-    typedef oln::morpher::tag::identity morpher_type;
-  };
-  /// \}
 
 
   namespace morpher

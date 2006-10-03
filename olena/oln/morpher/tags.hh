@@ -35,10 +35,8 @@ namespace oln
   {
     namespace tag
     {
-      /// Tag associated to oln::morpher::identity.
+      /// Tag associated to oln::morpher::image_extension.
       struct identity;
-      /// Tag associated to oln::morpher::add_neighborhood.
-      struct add_neighborhood;
     
     } // end of namespace oln::morpher::tag
 
