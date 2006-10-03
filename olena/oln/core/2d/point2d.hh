@@ -36,7 +36,9 @@
 namespace oln
 {
 
-
+  /* FIXME: Is this the right place for these functions (on types)?
+     In particular, the function on dpoint2d should be near the
+     definition of dpoint2d, not point2d's.  */
   /// Specializations of functions point and dpoint :
   /// \f$(n, coord) \rightarrow type\f$ for \f$n = 2\f$.
   /// \{

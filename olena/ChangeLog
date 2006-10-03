@@ -1,3 +1,13 @@
+2006-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Take borders into account in data allocation of image2d.
+
+	* oln/core/2d/image2d.hh (image2d(unsigned, unsigned, unsigned)):
+	Allocate space for the border in the array.
+	* oln/core/2d/point2d.hh, oln/core/typedefs.hh: Add FIXMEs.
+	* oln/core/2d/neighb2d.hh, oln/core/2d/dpoint2d.hh,
+	* oln/core/internal/point_nd.hh: Aesthetic changes.
+
 2006-10-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add simple tests for point2d and dpoint2d.

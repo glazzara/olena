@@ -172,6 +172,7 @@ namespace oln
   | category::grid.  |
   `-----------------*/
 
+  // FIXME: Merge with dim_type?
   mlc_decl_typedef(dimvalue_type);
   mlc_decl_typedef(coord_type);
 

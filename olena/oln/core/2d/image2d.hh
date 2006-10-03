@@ -82,10 +82,11 @@ namespace oln
 
     /// Ctor using sizes.
     image2d(unsigned nrows, unsigned ncols, unsigned border = 2)
-      : topo_(bbox2d(point2d(0, 0),
-		     point2d(nrows-1, ncols-1)),
+      : topo_(bbox2d(point2d(0,         0        ),
+		     point2d(nrows - 1, ncols - 1)),
 	      border),
-	data_(new array_t(0, 0, nrows-1, ncols-1))
+	data_(new array_t(0         - border, 0         - border,
+			  nrows - 1 + border, ncols - 1 + border))
     {
     }
 

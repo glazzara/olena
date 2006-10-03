@@ -41,7 +41,8 @@ namespace oln
 {
 
 
-  /// Function "point_ : (n, coord) -> point type".
+  /// Function \f$point : (n, coord) \rightarrow point type\f$.
+
   template <unsigned n, typename C>
   struct point_
   {
