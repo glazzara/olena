@@ -57,6 +57,7 @@ namespace oln
     typedef mlc::undefined bbox_type;
     typedef mlc::none      neighborhood_type;
     typedef mlc::undefined is_random_accessible_type;
+    typedef mlc::none      subset_type;
   };
 
   template <typename E>

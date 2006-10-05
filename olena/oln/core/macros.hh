@@ -38,13 +38,21 @@
 /// an oln type \a OlnType whose category is not specified (version to be
 /// used inside a template).
 # define oln_type_of(OlnType, Alias)		\
-   stc_type_of(oln, void, OlnType, Alias)
+   stc_direct_type_of(oln, void, OlnType, Alias)
+// FIXME: Remove direct_ above.
 
 
 /// FIXME: Temporary macro to be able to perform "oln_type_of(oln_type_of(A, B), C)".
 # define oln_deduce_type_of(OlnType, Alias1, Alias2)							\
-typename oln::type_of_<void,										\
-                       typename oln::type_of_<void, OlnType, oln::typedef_::Alias1##_type >::ret,	\
+typename oln::direct_type_of_<void,										\
+                       typename oln::direct_type_of_<void, OlnType, oln::typedef_::Alias1##_type >::ret,	\
+                       oln::typedef_::Alias2##_type >::ret
+// FIXME: Remove direct_ *twice* above.
+
+
+# define oln_deduce_direct_type_of(OlnType, Alias1, Alias2)							\
+typename oln::direct_type_of_<void,										\
+                       typename oln::direct_type_of_<void, OlnType, oln::typedef_::Alias1##_type >::ret,	\
                        oln::typedef_::Alias2##_type >::ret
 
 
@@ -54,7 +62,8 @@ typename oln::type_of_<void,										\
 /// an oln type \a OlnType whose category is not specified (version to be
 /// used outside a template).
 # define oln_type_of_(OlnType, Alias)		\
-   stc_type_of_(oln, void, OlnType, Alias)
+   stc_direct_type_of_(oln, void, OlnType, Alias)
+// FIXME: Remove direct_ above.
 
 
 /// \def oln_direct_type_of(OlnType, Alias)
@@ -90,7 +99,8 @@ typename oln::type_of_<void,										\
 ///
 /// If the virtual type is not found, raise a static error.
 # define oln_check_type_of(OlnType, Alias)	\
-   stc_check_type_of(oln, void, OlnType, Alias)
+   stc_check_direct_type_of(oln, void, OlnType, Alias)
+// FIXME: Remove direct_ above.
 
 /// \def oln_check_type_of(OlnType, Alias)
 ///
@@ -100,7 +110,8 @@ typename oln::type_of_<void,										\
 ///
 /// If the virtual type is not found, raise a static error.
 # define oln_check_type_of_(OlnType, Alias)		\
-   stc_check_type_of_(oln, void, OlnType, Alias)
+   stc_check_direct_type_of_(oln, void, OlnType, Alias)
+// FIXME: Remove direct_ above.
 
 
 /// \def oln_check_direct_type_of(OlnType, Alias)

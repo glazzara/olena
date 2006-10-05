@@ -53,7 +53,7 @@ namespace oln
   template <typename topo, typename isubset>
   struct vtypes< topo_add_isubset<topo, isubset> >
   {
-    typedef isubset isubset_type;
+    typedef isubset subset_type;
   };
 
 
@@ -92,7 +92,7 @@ namespace oln
       return topo_;
     }
 
-    const isubset_t& isubset() const
+    const isubset_t& impl_subset() const
     {
       return isubset_;
     }

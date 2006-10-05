@@ -30,6 +30,7 @@
 
 # include <oln/morpher/internal/image_extension.hh>
 # include <oln/core/gen/topo_add_nbh.hh>
+# include <oln/core/gen/fwd_niter_neighb.hh>
 
 
 namespace oln
@@ -54,17 +55,8 @@ namespace oln
   template <typename Image, typename Neighb>
   struct vtypes< morpher::add_neighborhood<Image, Neighb> >
   {
-  private:
-
-    typedef oln_type_of(Image, fwd_piter) basic_fwd_piter_type;
-    typedef oln_type_of(Image, bkd_piter) basic_bkd_piter_type;
-
-  public:
     // Topology type.
     typedef topo_add_nbh< oln_type_of(Image, topo), Neighb > topo_type;
-
-    typedef typename basic_fwd_piter_type::template change_topology_<topo_type>::ret fwd_piter_type;
-    typedef typename basic_bkd_piter_type::template change_topology_<topo_type>::ret bkd_piter_type;
 
     // Neighborhood type.
     typedef Neighb neighborhood_type;
@@ -75,7 +67,9 @@ namespace oln
   {
     /// Neighborhood addition morpher.
     template <typename Image, typename Neighb>
-    class add_neighborhood : public stc_get_supers(mlc_comma_1(add_neighborhood<Image, Neighb>))
+    class add_neighborhood : public morpher::internal::image_extension< Image,
+								        add_neighborhood<Image, Neighb> >
+    // FIXME: Uncomment. stc_get_supers(mlc_comma_1(add_neighborhood<Image, Neighb>))
     {
     private:
 
@@ -86,6 +80,12 @@ namespace oln
     public:
 
       // FIXME: Handle the constness.
+
+//       template <typename I, typename N>
+//       add_neighborhood(const abstract::image<I>& image, const N& nbh)
+// 	: super_t(image)
+//       {
+//       }
 
       add_neighborhood(const Image& image, const Neighb& nbh) :
 	super_t(image),

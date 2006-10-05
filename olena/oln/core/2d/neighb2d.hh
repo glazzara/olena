@@ -37,64 +37,72 @@ namespace oln
 {
 
 
-  neighb2d c4()
+  namespace internal
   {
-    static bool flower = true;
-    static neighb2d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint2d(0, 1))
-	  .add(dpoint2d(1, 0));
-	flower = false;
-      }
-    return the_;
-  }
-  
 
-  neighb2d c8()
-  {
-    static bool flower = true;
-    static neighb2d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint2d(0, 1))
-	  .add(dpoint2d(1,-1))
-	  .add(dpoint2d(1, 0))
-	  .add(dpoint2d(1, 1));
-	flower = false;
-      }
-    return the_;
-  }
-  
+    neighb2d mk_c4()
+    {
+      static bool flower = true;
+      static neighb2d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint2d(0, 1))
+	    .add(dpoint2d(1, 0));
+	  flower = false;
+	}
+      return the_;
+    }
 
-  neighb2d c2_row()
-  {
-    static bool flower = true;
-    static neighb2d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint2d(0, 1));
-	flower = false;
-      }
-    return the_;
-  }
-  
+    neighb2d mk_c8()
+    {
+      static bool flower = true;
+      static neighb2d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint2d(0, 1))
+	    .add(dpoint2d(1,-1))
+	    .add(dpoint2d(1, 0))
+	    .add(dpoint2d(1, 1));
+	  flower = false;
+	}
+      return the_;
+    }
 
-  neighb2d c2_col()
-  {
-    static bool flower = true;
-    static neighb2d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint2d(1, 0));
-	flower = false;
-      }
-    return the_;
-  }
+    neighb2d mk_c2_row()
+    {
+      static bool flower = true;
+      static neighb2d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint2d(0, 1));
+	  flower = false;
+	}
+      return the_;
+    }
+
+    neighb2d mk_c2_col()
+    {
+      static bool flower = true;
+      static neighb2d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint2d(1, 0));
+	  flower = false;
+	}
+      return the_;
+    }
+
+  } // end of namespace oln::internal
+
+
+  static const neighb2d c4  = internal::mk_c4();
+  static const neighb2d c8  = internal::mk_c8();
+  static const neighb2d c2r = internal::mk_c2_row();
+  static const neighb2d c2c = internal::mk_c2_col();
 
 
 } // end of namespace oln

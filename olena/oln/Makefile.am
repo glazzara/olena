@@ -82,6 +82,7 @@ nobase_oln_HEADERS =					\
   core/abstract/topology_being_random_accessible.hh	\
   core/abstract/topology_having_bbox.hh			\
   core/abstract/topology_having_neighborhood.hh		\
+  core/abstract/topology_having_subset.hh		\
   core/abstract/topology_hierarchies.hh			\
 							\
   core/automatic/image.hh				\
@@ -93,17 +94,23 @@ nobase_oln_HEADERS =					\
   core/automatic/topology_being_random_accessible.hh	\
   core/automatic/topology_having_bbox.hh		\
   core/automatic/topology_having_neighborhood.hh	\
+  core/automatic/topology_having_subset.hh		\
+							\
+  core/fwd_piter.hh					\
 							\
   core/gen/bbox.hh					\
   core/gen/bbox_bkd_piter.hh				\
   core/gen/bbox_fwd_piter.hh				\
   core/gen/bkd_piter_bbox.hh				\
+  core/gen/fwd_niter_neighb.hh				\
   core/gen/fwd_piter_bbox.hh				\
+  core/gen/fwd_qiter_win.hh				\
   core/gen/mapimage.hh					\
   core/gen/neighb.hh					\
   core/gen/topo_add_nbh.hh				\
   core/gen/topo_bbox.hh					\
   core/gen/topo_lbbox.hh				\
+  core/gen/window.hh					\
 							\
   core/internal/bbox_bkd_piter.hh			\
   core/internal/bbox_fwd_piter.hh			\

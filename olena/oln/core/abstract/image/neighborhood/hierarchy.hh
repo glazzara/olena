@@ -65,9 +65,9 @@ namespace oln
     public:
 
       struct decl {
-	// FIXME: Uncomment.
-	// stc_virtual_typedef(fwd_niter);
-	// stc_virtual_typedef(bkd_niter);
+	// stc_virtual_typedef(niter);
+	stc_virtual_typedef(fwd_niter);
+	stc_virtual_typedef(bkd_niter);
       };
 
       const neighborhood_t& neighborhood() const

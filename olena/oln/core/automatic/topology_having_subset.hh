@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,37 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_BASICS2D_HH
-# define OLN_BASICS2D_HH
+#ifndef OLN_CORE_AUTOMATIC_TOPOLOGY_HAVING_SUBSET_HH
+# define OLN_CORE_AUTOMATIC_TOPOLOGY_HAVING_SUBSET_HH
+
+# include <oln/core/automatic/impl.hh>
+# include <oln/morpher/tags.hh>
 
 
-# include <oln/core/2d/aliases.hh>
+namespace oln
+{
 
-# include <oln/core/2d/grid2d.hh>
+  // Forward declaration.
+  namespace abstract
+  {
+    template <typename E> class topology_having_subset;
 
-# include <oln/core/2d/point2d.hh>
-namespace oln { template class point2d_<int>; }
-
-# include <oln/core/2d/dpoint2d.hh>
-namespace oln { template class dpoint2d_<int>; }
-
-# include <oln/core/gen/bbox.hh>
-namespace oln { template class bbox_<point2d>; }
-
-# include <oln/core/gen/topo_lbbox.hh>
-namespace oln { template class topo_lbbox_<point2d>; }
-
-# include <oln/core/gen/fwd_piter_bbox.hh>
-namespace oln { template class fwd_piter_bbox_<point2d>; }
-
-# include <oln/core/gen/bkd_piter_bbox.hh>
-namespace oln { template class bkd_piter_bbox_<point2d>; }
-
-# include <oln/core/gen/neighb.hh>
-namespace oln { template class neighb_<dpoint2d>; }
-# include <oln/core/2d/neighb2d.hh>
-
-# include <oln/core/2d/image2d.hh>
+  } // end of namespace oln::abstract
 
 
-#endif // ! OLN_BASICS2D_HH
+  namespace automatic
+  {
+
+    /// Implementation corresponding to the interface
+    /// oln::abstract::topology_having_subset for an identity morpher.
+
+    template <typename E>
+    class set_impl< abstract::topology_having_subset,
+		    morpher::tag::identity,
+		    E > :
+      public virtual stc::any__simple<E>
+    {
+    private:
+      typedef oln_type_of(E, subset) subset_t;
+
+    public:
+
+      const subset_t& impl_subset() const
+      {
+	return this->exact().delegate().subset();
+      }
+
+    };
+
+  } // end of namespace oln::automatic
+  
+} // end of namespace oln
+
+#endif // ! OLN_CORE_AUTOMATIC_TOPOLOGY_HAVING_SUBSET_HH

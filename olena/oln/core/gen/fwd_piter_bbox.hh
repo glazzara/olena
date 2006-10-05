@@ -30,6 +30,7 @@
 # define OLN_CORE_GEN_FWD_PITER_BBOX_HH
 
 # include <oln/core/abstract/topology.hh>
+# include <oln/core/abstract/point.hh>
 # include <oln/core/internal/bbox_fwd_piter.hh>
 
 
@@ -38,73 +39,56 @@ namespace oln
 
 
   // Forward declaration.
-  template <typename topo> class fwd_piter_bbox_;
+  template <typename point_t> class fwd_piter_bbox_;
 
 
   // Super type declaration.
-  template <typename topo>
-  struct set_super_type< fwd_piter_bbox_<topo> >
+  template <typename point_t>
+  struct set_super_type< fwd_piter_bbox_<point_t> >
   {
-    typedef fwd_piter_bbox_<topo> self_t;
+    typedef fwd_piter_bbox_<point_t> self_t;
     typedef internal::bbox_fwd_piter<self_t> ret;
   };
 
 
-  /// Virtual types associated to oln::fwd_piter_bbox_<topo>.
-  template <typename topo>
-  struct vtypes< fwd_piter_bbox_<topo> >
+  /// Virtual types associated to oln::fwd_piter_bbox_<point_t>.
+  template <typename point_t>
+  struct vtypes< fwd_piter_bbox_<point_t> >
   {
-    typedef oln_type_of(topo, point) point_type;
-    typedef oln_type_of(topo, grid) grid_type;
-    typedef topo topo_type;
+    typedef point_t point_type;
+    typedef oln_type_of(point_t, grid) grid_type;
   };
 
 
 
   /// Abstract forward point iterator class.
-  template <typename topo_t>
-  class fwd_piter_bbox_ : public internal::bbox_fwd_piter< fwd_piter_bbox_<topo_t> >,
-			  private mlc::assert_< mlc_is_a(topo_t, abstract::topology) >
+  template <typename point_t>
+  class fwd_piter_bbox_ : public internal::bbox_fwd_piter< fwd_piter_bbox_<point_t> >,
+			  private mlc::assert_< mlc_is_a(point_t, abstract::point) >
   {
-    typedef fwd_piter_bbox_<topo_t> self_t;
+    typedef fwd_piter_bbox_<point_t> self_t;
     typedef internal::bbox_fwd_piter<self_t> super_t;
 
   public:
     
     template <typename T>
     fwd_piter_bbox_(const abstract::topology<T>& topo)
-      : super_t(topo.exact().bbox()),
-        topo_(topo.exact())
+      : super_t(topo.exact().bbox())
     {
-    }
-    
-    const topo_t& topo() const
-    {
-      return topo_;
     }
 
     void print(std::ostream& ostr) const
     {
-      ostr << "{ p=" << super_t::p_
+      ostr << "{ p=" << this->p_
 	   << " }";
     }
 
     friend
-    std::ostream& operator<<(std::ostream& ostr, const fwd_piter_bbox_<topo_t>& t)
+    std::ostream& operator<<(std::ostream& ostr, const fwd_piter_bbox_<point_t>& t)
     {
       t.print(ostr);
       return ostr;
     }
-
-    template <typename new_topo_t>
-    struct change_topology_
-    {
-      typedef fwd_piter_bbox_<new_topo_t> ret;
-    };
-
-  protected:
-
-    const topo_t topo_;
 
   }; // end of class oln::fwd_piter_bbox_<point>
   

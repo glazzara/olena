@@ -40,8 +40,8 @@ namespace oln
   template <typename D> class neighb_;
   template <typename P> class bbox_;
   template <typename P> class topo_lbbox_;
-  template <typename T> class fwd_piter_bbox_;
-  template <typename T> class bkd_piter_bbox_;
+  template <typename P> class fwd_piter_bbox_;
+  template <typename P> class bkd_piter_bbox_;
   class grid2d;
   /// \}
 
@@ -55,8 +55,8 @@ namespace oln
 
   typedef bbox_<point2d> bbox2d;
   typedef topo_lbbox_<point2d> topo2d;
-  typedef fwd_piter_bbox_<topo2d> fwd_piter2d;
-  typedef bkd_piter_bbox_<topo2d> bkd_piter2d;
+  typedef fwd_piter_bbox_<point2d> fwd_piter2d;
+  typedef bkd_piter_bbox_<point2d> bkd_piter2d;
 
   typedef  point2d_<float>  point2df;
   typedef dpoint2d_<float> dpoint2df;

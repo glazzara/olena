@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
+// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,37 +26,68 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_BASICS2D_HH
-# define OLN_BASICS2D_HH
+#ifndef OLN_CORE_GEN_WINDOW_HH
+# define OLN_CORE_GEN_WINDOW_HH
+
+# include <set>
+# include <vector>
 
 
-# include <oln/core/2d/aliases.hh>
+namespace oln
+{
 
-# include <oln/core/2d/grid2d.hh>
+  /// Abstract forward dpoint iterator class.
+  template <typename dpoint>
+  class window_ : private mlc::assert_< mlc_is_a(dpoint, abstract::dpoint) >
+  {
+    typedef window_<dpoint> self_t;
 
-# include <oln/core/2d/point2d.hh>
-namespace oln { template class point2d_<int>; }
+  public:
+    
+    window_()
+    {
+    }
 
-# include <oln/core/2d/dpoint2d.hh>
-namespace oln { template class dpoint2d_<int>; }
+    self_t& add(const dpoint& dp)
+    {
+      s_.insert(dp);
+      update_();
+      return *this;
+    }
 
-# include <oln/core/gen/bbox.hh>
-namespace oln { template class bbox_<point2d>; }
+    template <typename D>
+    self_t& add(const abstract::dpoint<D>& dp)
+    {
+      return this->add(dp.exact());
+    }
 
-# include <oln/core/gen/topo_lbbox.hh>
-namespace oln { template class topo_lbbox_<point2d>; }
+    unsigned card() const
+    {
+      return v_.size();
+    }
 
-# include <oln/core/gen/fwd_piter_bbox.hh>
-namespace oln { template class fwd_piter_bbox_<point2d>; }
+    dpoint dp(unsigned i) const
+    {
+      precondition(i < v_.size());
+      return v_[i];
+    }
 
-# include <oln/core/gen/bkd_piter_bbox.hh>
-namespace oln { template class bkd_piter_bbox_<point2d>; }
+  protected:
 
-# include <oln/core/gen/neighb.hh>
-namespace oln { template class neighb_<dpoint2d>; }
-# include <oln/core/2d/neighb2d.hh>
+    std::set<dpoint>    s_;
+    std::vector<dpoint> v_;
 
-# include <oln/core/2d/image2d.hh>
+    void update_()
+    {
+      v_.clear();
+      std::copy(s_.begin(), s_.end(),
+		std::back_inserter(v_));
+    }
+
+  }; // end of class oln::window_<dpoint>
+  
+
+} // end of namespace oln
 
 
-#endif // ! OLN_BASICS2D_HH
+#endif // ! OLN_CORE_GEN_WINDOW_HH

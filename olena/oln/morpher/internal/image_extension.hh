@@ -78,6 +78,12 @@ namespace oln
       {
       public:
 
+// 	template <typename I>
+// 	image_extension(const abstract::image<I>& image)
+// 	{
+// 	  mlc::abort_<I>::check();
+// 	}
+
 	// FIXME: Handle the constness.
 	image_extension(const Image& image) :
 	  image_(image)
@@ -90,7 +96,7 @@ namespace oln
 	}
 
       protected:
-	const Image& image_;
+	Image image_;
       };
 
     } // end of namespace oln::morpher::internal

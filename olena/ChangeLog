@@ -1,3 +1,62 @@
+2006-10-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Decouple iterators from image topology; update neighborhood tools
+	and start to add window tools.
+	
+	* oln/core/automatic/topology_having_subset.hh: New.
+	* oln/core/abstract/topology_having_subset.hh: New.
+	* oln/core/gen/fwd_niter_neighb.hh: New.
+	* oln/core/gen/fwd_qiter_win.hh: New.
+	* oln/core/gen/window.hh: New.
+	* oln/core/typedefs.hh
+	(qiter_type, fwd_qiter_type, bkd_qiter_type): Uncomment.
+	(niter_type, fwd_niter_type, bkd_niter_type): Uncomment.
+	(isubset): Rename into...
+	(subset_type): ...this.
+	* oln/core/macros.hh
+	(oln_type_of, oln_deduce_type_of, oln_type_of_): Rely on direct access.
+	(oln_check_type_of, oln_check_type_of_): Rely on direct access.
+	(oln_deduce_direct_type_of): New.
+	* oln/core/topology_entry.hh (subset_type): New.
+	* oln/core/image_entry.hh (fwd_piter_type, bkd_piter_type): Move
+	from vtypes to single_vtype.
+	(fwd_qiter_type): New.
+	* oln/core/abstract/topology_hierarchies.hh
+	(topology_hierarchy_wrt_subset): New.
+	(include): Add topology_having_subset.hh.
+	* oln/core/abstract/image/neighborhood/hierarchy.hh
+	(niter, fwd_niter, bkd_niter): New in decl.
+	* oln/core/2d/aliases.hh
+	(fwd_piter_bbox_, bkd_piter_bbox_): Change param letter.
+	(fwd_piter2d, bkd_piter2d): Update.
+	* oln/core/2d/neighb2d.hh (c4, c8, c2_row, c2_col): Rename into...
+	(mk_c4, mk_c8, mk_c2_row, mk_c2_col): ...these in namespace internal.
+	(c4, c8, c2r, c2c): New objects.
+	* oln/core/gen/piter_isubset.hh (piter_isubset_): New ctor for
+	iterators around a point.
+	(topo): Return a copy.
+	(change_topology_): Remove; obsolete.
+	* oln/core/gen/topo_add_isubset.hh (isubset_type): Rename into...
+	(subset_type): ...this.
+	(isubset): Rename into...
+	(impl_subset): ...this.
+	* oln/core/gen/topo_bbox.hh (impl_lbbox): New; experimental!
+	* oln/core/gen/fwd_piter_bbox.hh (fwd_piter_bbox_): Change parameter
+	from topo to point; update.
+	(topo): Remove this method; obsolete.
+	(change_topology_): Remove; obsolete.
+	(topo_): Remove this attribute; obsolete.
+	* oln/core/gen/bkd_piter_bbox.hh: Likewise.
+	* oln/basics2d.hh: Update.
+	* oln/Makefile.am (nobase_oln_HEADERS): Update.
+	* oln/core/2d/image2d.hh
+	(fwd_piter_type, bkd_piter_type): Move these definitions into...
+	* oln/core/fwd_piter.hh: ... this new file.
+	* oln/morpher/add_isubset.hh: Likewise.
+	* oln/morpher/add_neighborhood.hh: Likewise.
+	* oln/morpher/internal/image_extension.hh (image_): Change from
+	const& to plain type.
+
 2006-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the distribution.

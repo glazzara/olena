@@ -25,11 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_GEN_PITER_ISUBSET_HH
-# define OLN_CORE_GEN_PITER_ISUBSET_HH
+#ifndef OLN_CORE_GEN_FWD_QITER_WIN_HH
+# define OLN_CORE_GEN_FWD_QITER_WIN_HH
 
 # include <oln/core/abstract/topology.hh>
 # include <oln/core/abstract/iterator_on_points.hh>
+# include <oln/core/gen/win.hh>
 
 
 namespace oln
@@ -37,105 +38,108 @@ namespace oln
 
 
   // Forward declaration.
-  template <typename piter_t, typename isubset_t> class piter_isubset_;
+  template <typename point_t> class fwd_qiter_win_;
 
 
   // Super type declaration.
-  template <typename piter_t, typename isubset_t>
-  struct set_super_type< piter_isubset_<piter_t, isubset_t> >
+  template <typename point_t>
+  struct set_super_type< fwd_qiter_win_<point_t> >
   {
-    typedef piter_isubset_<piter_t, isubset_t> self_t;
+    typedef fwd_qiter_win_<point_t> self_t;
     typedef abstract::iterator_on_points<self_t> ret;
   };
 
 
-  /// Virtual types associated to oln::piter_isubset_<piter_t, isubset_t>.
-  template <typename piter_t, typename isubset_t>
-  struct vtypes< piter_isubset_<piter_t, isubset_t> >
+  /// Virtual types associated to oln::fwd_qiter_win_<point_t>.
+  template <typename point_t>
+  struct vtypes< fwd_qiter_win_<point_t> >
   {
-    typedef oln_type_of(piter_t, point) point_type;
-    typedef oln_type_of(piter_t, grid)  grid_type;
-
-    typedef topo_add_isubset<oln_type_of(piter_t, topo), isubset_t> topo_type;
+    typedef point_t point_type;
+    typedef oln_type_of(point_t, grid) grid_type;
   };
 
 
 
   /// Abstract forward point iterator class.
-  template <typename piter_t, typename isubset_t>
-  class piter_isubset_ : public abstract::iterator_on_points< piter_isubset_<piter_t, isubset_t> >
+  template <typename point_t>
+  class fwd_qiter_win_ : public abstract::iterator_on_points< fwd_qiter_win_<point_t> >
   {
-    typedef piter_isubset_<piter_t, isubset_t> self_t;
+    typedef fwd_qiter_win_<point_t> self_t;
     typedef abstract::iterator_on_points<self_t> super_t;
 
-    typedef oln_type_of(self_t, topo)  topo_t;
-    typedef oln_type_of(self_t, point) point_t;
+    typedef oln_type_of(point_t, dpoint) dpoint_t;
 
   public:
     
-    template <typename T>
-    piter_isubset_(const abstract::topology<T>& topo)
-      : p_(topo),
-	isubset_(topo.exact().subset())
+    template <typename P, typename D>
+    fwd_qiter_win_(const abstract::iterator_on_points<P>& it,
+		   const window_<D>& win)
+      : p_ref_(it.point_adr()),
+	win_(win)
     {
+      precondition(win_.card() > 0);
+      i_ = -1;
     }
     
-    template <typename P, typename T>
-    piter_isubset_(const P& p, const abstract::topology<T>& topo)
-      : p_(p, topo),
-	isubset_(topo.exact().subset())
+    template <typename P, typename D>
+    fwd_qiter_win_(const abstract::point<P>& p,
+		   const window_<D>& win)
+      : p_ref_(&(p.exact())),
+	win_(win)
     {
+      precondition(win_.card() > 0);
+      i_ = -1;
     }
 
     void impl_start()
     {
-      p_.start();
-      while (p_.is_valid() and isubset_(p_) == false)
-	p_.next();
+      i_ = 0;
+      p_ = *p_ref_+ win_.dp(i_);
     }
 
     void impl_next()
     {
-      do
-	p_.next();
-      while (p_.is_valid() and isubset_(p_) == false);
+      ++i_;
+      if (i_ == int(win_.card()))
+	{
+	  i_ = -1;
+	  return;
+	}
+      p_ = *p_ref_ + win_.dp(i_);
     }
 
     void impl_invalidate()
     {
-      p_.invalidate();
-    }
-    
-    bool impl_is_valid() const
-    {
-      return p_.is_valid();
-    }
-    
-    point_t impl_to_point() const
-    {
-      return p_.to_point();
-    }
-    
-    const point_t* impl_point_adr() const
-    {
-      return p_.point_adr();
+      i_ = -1;
     }
 
-    const topo_t topo() const
+    bool impl_is_valid() const
     {
-      topo_t tmp(p_.topo(), isubset_);
-      return tmp;
+      return i_ != -1;
+    }
+
+    point_t impl_to_point() const
+    {
+      return p_;
+    }
+
+    const point_t* impl_point_adr() const
+    {
+      return &p_;
     }
 
   protected:
 
-    piter_t p_;
-    const isubset_t& isubset_;
+    const point_t* p_ref_;
+    window_<dpoint_t> win_;
+    int i_;
+    point_t p_;
 
-  }; // end of class oln::piter_isubset_<point>
+  }; // end of class oln::fwd_qiter_win_<point_t>
   
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_GEN_PITER_ISUBSET_HH
+#endif // ! OLN_CORE_GEN_FWD_QITER_WIN_HH
+

@@ -50,10 +50,7 @@ namespace oln
     typedef grid2d grid_type;
 
     typedef point2d point_type;
-    
-    typedef fwd_piter_bbox_<topo_type> fwd_piter_type;
-    typedef bkd_piter_bbox_<topo_type> bkd_piter_type;
-    
+
     typedef T value_type;
     typedef T lvalue_type;
     typedef mlc::true_ is_mutable_type;

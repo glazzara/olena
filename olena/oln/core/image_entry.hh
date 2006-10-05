@@ -59,10 +59,6 @@ namespace oln
     // psite_type: see below.
     typedef mlc::undefined point_type;
     
-    // piter_type: see below.
-    typedef mlc::undefined fwd_piter_type;
-    typedef mlc::undefined bkd_piter_type;
-    
     typedef mlc::undefined value_type;
     // rvalue_type: see below.
     
@@ -93,6 +89,28 @@ namespace oln
   struct single_vtype< image_entry<E>, typedef_::rvalue_type >
   {
     typedef oln_type_of(E, value) ret;
+  };
+
+
+  // Fwd piter.
+  template <typename E>
+  struct single_vtype< image_entry<E>, typedef_::fwd_piter_type >
+  {
+    typedef mlc::undefined ret;
+  };
+
+  // Bkd piter.
+  template <typename E>
+  struct single_vtype< image_entry<E>, typedef_::bkd_piter_type >
+  {
+    typedef mlc::undefined ret;
+  };
+
+  // Fwd qiter.
+  template <typename E>
+  struct single_vtype< image_entry<E>, typedef_::fwd_qiter_type >
+  {
+    typedef mlc::undefined ret;
   };
 
 

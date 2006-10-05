@@ -89,6 +89,11 @@ namespace oln
       return bb_;
     }
 
+    bbox_t& impl_lbbox()
+    {
+      return bb_;
+    }
+
     bool impl_has(const point& p) const
     {
       return bb_.has(p);

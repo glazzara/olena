@@ -90,13 +90,13 @@ namespace oln
   mlc_decl_typedef(fwd_piter_type);
   mlc_decl_typedef(bkd_piter_type);
 
-//   mlc_decl_typedef(qiter_type);
-//   mlc_decl_typedef(fwd_qiter_type);
-//   mlc_decl_typedef(bkd_qiter_type);
+  mlc_decl_typedef(qiter_type);
+  mlc_decl_typedef(fwd_qiter_type);
+  mlc_decl_typedef(bkd_qiter_type);
 
-//   mlc_decl_typedef(niter_type);
-//   mlc_decl_typedef(fwd_niter_type);
-//   mlc_decl_typedef(bkd_niter_type);
+  mlc_decl_typedef(niter_type);
+  mlc_decl_typedef(fwd_niter_type);
+  mlc_decl_typedef(bkd_niter_type);
 // --------------------------------------------------------------------
 
 
@@ -134,7 +134,7 @@ namespace oln
   mlc_decl_typedef(dpoint_type);
 
   mlc_decl_typedef(neighborhood_type);
-  mlc_decl_typedef(isubset);
+  mlc_decl_typedef(subset_type);
 
 // --------------------------------------------------------------------
 // FIXME: To be enabled later.

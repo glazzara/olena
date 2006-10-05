@@ -58,26 +58,49 @@ namespace oln
     // Topology type.
     typedef topo_add_isubset< oln_type_of(Image, topo), Isubset > topo_type;
 
-    // Piter types.
-    typedef piter_isubset_<oln_type_of(Image, fwd_piter), Isubset> fwd_piter_type;
-    typedef piter_isubset_<oln_type_of(Image, bkd_piter), Isubset> bkd_piter_type;
-
     // Isubset type.
     typedef Isubset subset_type;
   };
+
+
+//   template <typename Image, typename Isubset>
+//   struct single_vtype< morpher::add_isubset<Image, Isubset>, typedef_::fwd_niter_type >
+//   {
+//   private:
+//     typedef oln_type_of(Image, fwd_niter) basic_fwd_niter_type;
+//     typedef topo_add_isubset< oln_type_of(Image, topo), Isubset > new_topo_type;
+//     typedef typename basic_fwd_niter_type::template change_topology_<new_topo_type>::ret intra_fwd_niter_type;
+//   public:
+//     typedef piter_isubset_<intra_fwd_niter_type, Isubset> ret;
+//   };
+
+
+//   template <typename Image, typename Isubset>
+//   struct single_vtype< morpher::add_isubset<Image, Isubset>, typedef_::bkd_niter_type >
+//   {
+//   private:
+//     typedef oln_type_of(Image, bkd_niter) basic_bkd_niter_type;
+//     typedef topo_add_isubset< oln_type_of(Image, topo), Isubset > new_topo_type;
+//     typedef typename basic_bkd_niter_type::template change_topology_<new_topo_type>::ret intra_bkd_niter_type;
+//   public:
+//     typedef piter_isubset_<intra_bkd_niter_type, Isubset> ret;
+//   };
 
 
   namespace morpher
   {
     /// Isubset addition morpher.
     template <typename Image, typename Isubset>
-    class add_isubset : public stc_get_supers(mlc_comma_1(add_isubset<Image, Isubset>))
+    class add_isubset : public morpher::internal::image_extension< Image, 
+								   add_isubset<Image, Isubset> >
+    // FIXME: Uncomment. stc_get_supers(mlc_comma_1(add_isubset<Image, Isubset>))
     {
     private:
 
       typedef add_isubset<Image, Isubset> self_t;
       typedef stc_get_nth_super(self_t, 1) super_t;
-      typedef oln_type_of(self_t, topo) topo_t;
+      typedef oln_direct_type_of(self_t, topo) topo_t;
+      // FIXME: use of oln_direct_type_of here!!! otherwise we get some compilation trouble...
 
     public:
 
