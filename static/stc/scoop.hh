@@ -1032,7 +1032,7 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
 /// for details).  Warning: this macro assumes that the exact type
 /// parameter is named 'E'.
 #define stc_virtual_typedef(Typedef) \
-  typedef oln_check_type_of(E, Typedef) Typedef
+  typedef stc_check_direct_type_of(E, Typedef) Typedef
 
 
 #endif // ! STC_SCOOP_HH
