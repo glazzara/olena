@@ -1,3 +1,9 @@
+2006-10-09  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* oln/core/internal/tracked_ptr.hh (operator bool):
+	Fix signature.
+	(operator bool): Add line to remove warning.
+
 2006-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add sanity check to Olena.

@@ -94,7 +94,6 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename T>
-    tracked_ptr<T>::
     tracked_ptr<T>::operator bool() const
     {
       invariant_();
@@ -227,6 +226,7 @@ namespace oln
       invariant(holders_->size() > 0);
       tracked_ptr<T>* this_ = const_cast<tracked_ptr<T>*>(this);
       invariant(holders_->find(this_) != holders_->end());
+      this_ = 0;
       typename holders_t::const_iterator i;
       for (i = holders_->begin(); i != holders_->end(); ++i)
 	invariant((*i)->ptr_ == ptr_);
