@@ -65,9 +65,9 @@ namespace oln
     public:
 
       struct decl {
-	// stc_virtual_typedef(niter);
-	stc_virtual_typedef(fwd_niter);
-	stc_virtual_typedef(bkd_niter);
+	// oln_virtual_typedef(niter);
+	oln_virtual_typedef(fwd_niter);
+	oln_virtual_typedef(bkd_niter);
       };
 
       const neighborhood_t& neighborhood() const;

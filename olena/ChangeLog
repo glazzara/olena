@@ -1,5 +1,19 @@
 2006-10-09  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Change stc_virtual_typedef into oln_virtual_typedef.
+	
+	* oln/core/macros.hh (oln_virtual_typedef): New macro.
+	It replaces stc_virtual_typedef.
+	* oln/core/abstract/image.hh: Update.
+	* oln/core/abstract/image/mutability/hierarchy.hh: Update.
+	* oln/core/abstract/image/neighborhood/hierarchy.hh: Update.
+	* oln/core/abstract/image/bbox/hierarchy.hh: Update.
+	* oln/core/abstract/point_set.hh: Update.
+	* oln/core/abstract/neighborhood.hh: Update.
+	* oln/core/abstract/topology.hh: Update.
+
+2006-10-09  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* oln/debug/print.hh: Separate definition from declaration.
 	* oln/core/automatic/topology_being_random_accessible.hh
 	(impl_has_large): Fix signature.

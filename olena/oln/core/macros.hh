@@ -135,4 +135,12 @@ typename oln::direct_type_of_<void,										\
    stc_check_direct_type_of_(oln, void, OlnType, Alias)
 
 
+
+/// Declare the vtype \a Typedef in an abstract class (see sample code
+/// for details).  Warning: this macro assumes that the exact type
+/// parameter is named 'E'.
+#define oln_virtual_typedef(Typedef) \
+  typedef stc_check_direct_type_of(oln, void, E, Typedef) Typedef
+
+
 #endif // ! OLN_CORE_MACROS_HH

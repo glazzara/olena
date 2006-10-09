@@ -48,16 +48,16 @@ namespace oln
 
       struct decl
       {
-	stc_virtual_typedef(bbox);
+	oln_virtual_typedef(bbox);
 	// for being bboxed; provides .bbox()
 
-	stc_virtual_typedef(is_random_accessible);
+	oln_virtual_typedef(is_random_accessible);
 	// provides .has(p) and .has_large(p)
 
-	stc_virtual_typedef(point);
-	stc_virtual_typedef(neighborhood);
+	oln_virtual_typedef(point);
+	oln_virtual_typedef(neighborhood);
 
-	stc_virtual_typedef(morpher);
+	oln_virtual_typedef(morpher);
 
 	decl();
       };

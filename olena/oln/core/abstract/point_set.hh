@@ -49,21 +49,21 @@ namespace oln
 
       struct decl
       {
-	stc_virtual_typedef(point);
+	oln_virtual_typedef(point);
 
-	stc_virtual_typedef(piter);
-	stc_virtual_typedef(fwd_piter);
-	stc_virtual_typedef(bkd_piter);
+	oln_virtual_typedef(piter);
+	oln_virtual_typedef(fwd_piter);
+	oln_virtual_typedef(bkd_piter);
 
-	stc_virtual_typedef(bbox);                 // provides .bbox()
-	stc_virtual_typedef(is_random_accessible); // provides .has(p)
-	stc_virtual_typedef(has_known_size);       // provides .npoints()
-	stc_virtual_typedef(is_connected);         // provides, e.g., .nrows()
+	oln_virtual_typedef(bbox);                 // provides .bbox()
+	oln_virtual_typedef(is_random_accessible); // provides .has(p)
+	oln_virtual_typedef(has_known_size);       // provides .npoints()
+	oln_virtual_typedef(is_connected);         // provides, e.g., .nrows()
 
 	// derived from point:
-	stc_virtual_typedef(coord);
-	stc_virtual_typedef(grid);
-	stc_virtual_typedef(dim);
+	oln_virtual_typedef(coord);
+	oln_virtual_typedef(grid);
+	oln_virtual_typedef(dim);
 
 	decl();
       };

@@ -49,7 +49,7 @@ namespace oln
 
       struct decl
       {
-	stc_virtual_typedef(grid);
+	oln_virtual_typedef(grid);
 
 	decl();
       };

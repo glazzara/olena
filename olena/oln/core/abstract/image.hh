@@ -63,22 +63,22 @@ namespace oln
 
       struct decl
       {
-// 	stc_virtual_typedef(topo);
-// 	stc_virtual_typedef(grid);
+// 	oln_virtual_typedef(topo);
+// 	oln_virtual_typedef(grid);
 
-// 	stc_virtual_typedef(psite);
-// 	stc_virtual_typedef(point);
+// 	oln_virtual_typedef(psite);
+// 	oln_virtual_typedef(point);
 
-// // 	stc_virtual_typedef(piter);
-// // 	stc_virtual_typedef(fwd_piter);
-// // 	stc_virtual_typedef(bkd_piter);
+// // 	oln_virtual_typedef(piter);
+// // 	oln_virtual_typedef(fwd_piter);
+// // 	oln_virtual_typedef(bkd_piter);
 
-// 	stc_virtual_typedef(value);
-// 	stc_virtual_typedef(rvalue);
+// 	oln_virtual_typedef(value);
+// 	oln_virtual_typedef(rvalue);
 
-// 	stc_virtual_typedef(concrete);
+// 	oln_virtual_typedef(concrete);
 
-// 	stc_virtual_typedef(morpher);
+// 	oln_virtual_typedef(morpher);
 
 	decl();
       };

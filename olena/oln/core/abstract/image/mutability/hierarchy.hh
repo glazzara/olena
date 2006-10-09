@@ -58,7 +58,7 @@ namespace oln
 
       struct decl
       {
-	stc_virtual_typedef(lvalue);
+	oln_virtual_typedef(lvalue);
       };
 
       /*! \brief Gives writable access to the value stored at \a p in

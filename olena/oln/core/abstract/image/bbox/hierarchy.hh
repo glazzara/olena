@@ -57,7 +57,7 @@ namespace oln
 
       struct decl
       {
-	stc_virtual_typedef(bbox);
+	oln_virtual_typedef(bbox);
 
 	decl();
       };
