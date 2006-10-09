@@ -76,6 +76,7 @@ namespace oln
       return this->exact().delegate().has(p);
     }
 
+    template <typename E>
     bool
     set_impl< abstract::topology_being_random_accessible, morpher::tag::identity, E>::impl_has_large(const typename set_impl< abstract::topology_being_random_accessible, morpher::tag::identity, E>::point_t& p) const
     {

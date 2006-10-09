@@ -43,6 +43,11 @@ namespace oln
     template <typename I>
     void print(const abstract::image<I>& input, std::ostream& ostr);
 
+    /// Fwd decl.
+    template <typename I>
+    void println(const abstract::image<I>& input, std::ostream& ostr);
+
+# ifndef OLN_INCLUDE_ONLY
 
     namespace impl
     {
@@ -97,6 +102,7 @@ namespace oln
       ostr << std::endl;
     }
 
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::debug
 

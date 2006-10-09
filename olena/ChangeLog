@@ -1,5 +1,11 @@
 2006-10-09  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* oln/debug/print.hh: Separate definition from declaration.
+	* oln/core/automatic/topology_being_random_accessible.hh
+	(impl_has_large): Fix signature.
+
+2006-10-09  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Separate definition code from declaration code in olena.
 
 	* oln/core/type.hh: Split code.
