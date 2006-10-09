@@ -73,60 +73,22 @@ namespace oln
     
     template <typename P, typename D>
     fwd_qiter_win_(const abstract::iterator_on_points<P>& it,
-		   const window_<D>& win)
-      : p_ref_(it.point_adr()),
-	win_(win)
-    {
-      precondition(win_.card() > 0);
-      i_ = -1;
-    }
-    
+		   const window_<D>& win);
     template <typename P, typename D>
     fwd_qiter_win_(const abstract::point<P>& p,
-		   const window_<D>& win)
-      : p_ref_(&(p.exact())),
-	win_(win)
-    {
-      precondition(win_.card() > 0);
-      i_ = -1;
-    }
+		   const window_<D>& win);
 
-    void impl_start()
-    {
-      i_ = 0;
-      p_ = *p_ref_+ win_.dp(i_);
-    }
+    void impl_start();
 
-    void impl_next()
-    {
-      ++i_;
-      if (i_ == int(win_.card()))
-	{
-	  i_ = -1;
-	  return;
-	}
-      p_ = *p_ref_ + win_.dp(i_);
-    }
+    void impl_next();
 
-    void impl_invalidate()
-    {
-      i_ = -1;
-    }
+    void impl_invalidate();
 
-    bool impl_is_valid() const
-    {
-      return i_ != -1;
-    }
+    bool impl_is_valid() const;
 
-    point_t impl_to_point() const
-    {
-      return p_;
-    }
+    point_t impl_to_point() const;
 
-    const point_t* impl_point_adr() const
-    {
-      return &p_;
-    }
+    const point_t* impl_point_adr() const;
 
   protected:
 
@@ -136,7 +98,83 @@ namespace oln
     point_t p_;
 
   }; // end of class oln::fwd_qiter_win_<point_t>
+
   
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename point_t>
+  template <typename P, typename D>
+  fwd_qiter_win_<point_t>::fwd_qiter_win_(const abstract::iterator_on_points<P>& it,
+					  const window_<D>& win)
+    : p_ref_(it.point_adr()),
+      win_(win)
+  {
+    precondition(win_.card() > 0);
+    i_ = -1;
+  }
+    
+  template <typename point_t>
+  template <typename P, typename D>
+  fwd_qiter_win_<point_t>::fwd_qiter_win_(const abstract::point<P>& p,
+					  const window_<D>& win)
+    : p_ref_(&(p.exact())),
+      win_(win)
+  {
+    precondition(win_.card() > 0);
+    i_ = -1;
+  }
+
+  template <typename point_t>
+  void
+  fwd_qiter_win_<point_t>::impl_start()
+  {
+    i_ = 0;
+    p_ = *p_ref_+ win_.dp(i_);
+  }
+
+  template <typename point_t>
+  void
+  fwd_qiter_win_<point_t>::impl_next()
+  {
+    ++i_;
+    if (i_ == int(win_.card()))
+      {
+	i_ = -1;
+	return;
+      }
+    p_ = *p_ref_ + win_.dp(i_);
+  }
+
+  template <typename point_t>
+  void
+  fwd_qiter_win_<point_t>::impl_invalidate()
+  {
+    i_ = -1;
+  }
+
+  template <typename point_t>
+  bool
+  fwd_qiter_win_<point_t>::impl_is_valid() const
+  {
+    return i_ != -1;
+  }
+
+  template <typename point_t>
+  point_t
+  fwd_qiter_win_<point_t>::impl_to_point() const
+  {
+    return p_;
+  }
+
+  template <typename point_t>
+  const point_t*
+  fwd_qiter_win_<point_t>::impl_point_adr() const
+  {
+    return &p_;
+  }
+
+# endif
 
 } // end of namespace oln
 

@@ -53,22 +53,39 @@ namespace oln
     public:
 
       // Abstract method.
-      bool has(const point_t& p) const
-      {
-	return this->exact().impl_has(p);
-      }
+      bool has(const point_t& p) const;
 
       // Abstract method.
-      bool has_large(const point_t& p) const
-      {
-	return this->exact().impl_has_large(p);
-      }
+      bool has_large(const point_t& p) const;
 
     protected:
 
       /// Constructor (protected, empty).
-      image_being_random_accessible() {}
+      image_being_random_accessible();
     };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    bool image_being_random_accessible<E>::has(const typename image_being_random_accessible<E>::point_t& p) const
+    {
+      return this->exact().impl_has(p);
+    }
+
+    template <typename E>
+    bool image_being_random_accessible<E>::has_large(const typename image_being_random_accessible<E>::point_t& p) const
+    {
+      return this->exact().impl_has_large(p);
+    }
+
+    template <typename E>
+    image_being_random_accessible<E>::image_being_random_accessible()
+    {
+    }
+
+# endif
  
   } // end of namespace oln::abstract
 

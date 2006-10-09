@@ -45,8 +45,18 @@ namespace oln
     {
     protected:
       /// Constructor (protected, empty).
-      image2d() {}
+      image2d();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    image2d<E>::image2d()
+    {
+    }
+
+# endif
  
   } // end of namespace oln::abstract
 

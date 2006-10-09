@@ -43,8 +43,17 @@ namespace oln
     {
     protected:
       /// Constructor (protected, empty).
-      data_image() {}
+      data_image();
     };
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    data_image<E>::data_image()
+    {
+    }
+
+# endif
 
   } // end of namespace oln::abstract
 

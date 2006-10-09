@@ -61,17 +61,28 @@ namespace oln
 
     public:
 
-      bool impl_has(const point_t& p) const
-      {
-	return this->exact().delegate().has(p);
-      }
-
-      bool impl_has_large(const point_t& p) const
-      {
-	return this->exact().delegate().has_large(p);
-      }
+      bool impl_has(const point_t& p) const;
+      bool impl_has_large(const point_t& p) const;
 
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    bool
+    set_impl< abstract::topology_being_random_accessible, morpher::tag::identity, E>::impl_has(const typename set_impl< abstract::topology_being_random_accessible, morpher::tag::identity, E>::point_t& p) const
+    {
+      return this->exact().delegate().has(p);
+    }
+
+    bool
+    set_impl< abstract::topology_being_random_accessible, morpher::tag::identity, E>::impl_has_large(const typename set_impl< abstract::topology_being_random_accessible, morpher::tag::identity, E>::point_t& p) const
+    {
+      return this->exact().delegate().has_large(p);
+    }
+
+# endif
 
   } // end of namespace oln::automatic
   

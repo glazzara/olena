@@ -43,8 +43,17 @@ namespace oln
     {
     protected:
       /// Constructor (protected, empty).
-      color_image() {}
+      color_image();
     };
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    color_image<E>::color_image()
+    {
+    }
+
+# endif
 
   } // end of namespace oln::abstract
 

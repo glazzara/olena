@@ -44,8 +44,19 @@ namespace oln
   struct point_set_entry : public entry< abstract::point_set, E>
   {
   protected:
-    point_set_entry() {}
+    point_set_entry();
   };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename E>
+  point_set_entry<E>::point_set_entry()
+  {
+  }
+
+# endif
 
 
   /// Virtual types associated to point_set_entry<E>.

@@ -45,10 +45,7 @@ namespace oln
     {
     public:
 
-      bool is_valid() const
-      {
-	return this->exact().impl_is_valid();
-      }
+      bool is_valid() const;
 
       struct decl
       {
@@ -68,24 +65,50 @@ namespace oln
 	stc_virtual_typedef(grid);
 	stc_virtual_typedef(dim);
 
-	decl() {
-	  // coherence check:
-	  mlc::assert_equal_< oln_type_of(fwd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	  mlc::assert_equal_< oln_type_of(bkd_piter, grid),
-	                      oln_type_of(point,     grid) >::check();
-	}
+	decl();
       };
+
+      ~point_set()
+      {
+      }
 
     protected:
 
-      point_set()
-      {}
-
-      ~point_set() { decl(); }
+      point_set();
 
     }; // end of class oln::abstract::point_set<E>
 
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    bool point_set<E>::is_valid() const
+    {
+      return this->exact().impl_is_valid();
+    }
+
+    template <typename E>
+    point_set<E>::decl::decl()
+    {
+      // coherence check:
+      mlc::assert_equal_< oln_type_of(fwd_piter, grid),
+	                  oln_type_of(point,     grid) >::check();
+      mlc::assert_equal_< oln_type_of(bkd_piter, grid),
+	                  oln_type_of(point,     grid) >::check();
+    }
+
+    template <typename E>
+    point_set<E>::point_set()
+    {
+    }
+
+//     template <typename E>
+//     point_set<E>::~point_set()
+//     {
+//       decl();
+//     }
+
+# endif
 
 
   } // end of namespace oln::abstract

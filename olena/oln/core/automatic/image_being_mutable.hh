@@ -56,11 +56,19 @@ namespace oln
 
     public:
       /// Accessor delegation.
-      lvalue_t& impl_op_readwrite(const psite_t& p) const
-      {
-	return this->exact().delegate().operator()(p);
-      }
+      lvalue_t& impl_op_readwrite(const psite_t& p) const;
     };
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    typename set_impl<abstract::image_being_mutable, morpher::tag::identity, E>::lvalue_t&
+    set_impl<abstract::image_being_mutable, morpher::tag::identity, E>::impl_op_readwrite(const typename set_impl<abstract::image_being_mutable, morpher::tag::identity, E>::psite_t& p) const
+    {
+      return this->exact().delegate().operator()(p);
+    }
+
+# endif
 
   } // end of namespace oln::automatic
   

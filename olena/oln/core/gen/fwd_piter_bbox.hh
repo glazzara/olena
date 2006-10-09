@@ -72,26 +72,43 @@ namespace oln
   public:
     
     template <typename T>
-    fwd_piter_bbox_(const abstract::topology<T>& topo)
-      : super_t(topo.exact().bbox())
-    {
-    }
+      fwd_piter_bbox_(const abstract::topology<T>& topo);
 
-    void print(std::ostream& ostr) const
-    {
-      ostr << "{ p=" << this->p_
-	   << " }";
-    }
-
-    friend
-    std::ostream& operator<<(std::ostream& ostr, const fwd_piter_bbox_<point_t>& t)
-    {
-      t.print(ostr);
-      return ostr;
-    }
+    void print(std::ostream& ostr) const;
 
   }; // end of class oln::fwd_piter_bbox_<point>
-  
+
+
+  template <typename point_t>
+  std::ostream& operator<<(std::ostream& ostr, const fwd_piter_bbox_<point_t>& t);
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename point_t>
+  template <typename T>
+  fwd_piter_bbox_<point_t>::fwd_piter_bbox_(const abstract::topology<T>& topo)
+    : super_t(topo.exact().bbox())
+  {
+  }
+
+  template <typename point_t>
+  void fwd_piter_bbox_<point_t>::print(std::ostream& ostr) const
+  {
+    ostr << "{ p=" << this->p_
+	 << " }";
+  }
+
+  template <typename point_t>
+  std::ostream& operator<<(std::ostream& ostr, const fwd_piter_bbox_<point_t>& t)
+  {
+    t.print(ostr);
+    return ostr;
+  }
+
+
+# endif  
 
 } // end of namespace oln
 

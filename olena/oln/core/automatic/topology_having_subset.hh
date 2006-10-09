@@ -60,12 +60,21 @@ namespace oln
 
     public:
 
-      const subset_t& impl_subset() const
-      {
-	return this->exact().delegate().subset();
-      }
+      const subset_t& impl_subset() const;
 
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    const typename set_impl< abstract::topology_having_subset, morpher::tag::identity, E >::subset_t&
+    set_impl< abstract::topology_having_subset, morpher::tag::identity, E >::impl_subset() const
+    {
+      return this->exact().delegate().subset();
+    }
+
+# endif
 
   } // end of namespace oln::automatic
   

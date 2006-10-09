@@ -78,43 +78,16 @@ namespace oln
   public:
 
     /// Ctor using sizes.
-    image2d(unsigned nrows, unsigned ncols, unsigned border = 2)
-      : topo_(bbox2d(point2d(0,         0        ),
-		     point2d(nrows - 1, ncols - 1)),
-	      border),
-	data_(new array_t(0         - border, 0         - border,
-			  nrows - 1 + border, ncols - 1 + border))
-    {
-    }
+    image2d(unsigned nrows, unsigned ncols, unsigned border = 2);
 
     /// Ctor using an existing topology.
-    image2d(const topo2d& topo)
-      : topo_(topo),
-	data_(new array_t(topo.bbox().pmin().row(),
-			  topo.bbox().pmin().col(),
-			  topo.bbox().pmax().row(),
-			  topo.bbox().pmax().col()))
-    {
-    }
+    image2d(const topo2d& topo);
 
-    const topo2d& impl_topo() const
-    {
-      return topo_;
-    }
+    const topo2d& impl_topo() const;
 
-    T impl_op_read(const point2d& p) const
-    {
-      precondition(data_ != 0);
-      precondition(topo_.has_large(p));
-      return data_->operator()(p.row(), p.col());
-    }
+    T impl_op_read(const point2d& p) const;
 
-    T& impl_op_readwrite(const point2d& p)
-    {
-      precondition(data_ != 0);
-      precondition(topo_.has_large(p));
-      return data_->operator()(p.row(), p.col());
-    }
+    T& impl_op_readwrite(const point2d& p);
 
   private:
 
@@ -122,6 +95,55 @@ namespace oln
     internal::tracked_ptr<array_t> data_;
   };
 
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename T>
+  image2d<T>::image2d(unsigned nrows, unsigned ncols, unsigned border)
+    : topo_(bbox2d(point2d(0,         0        ),
+		   point2d(nrows - 1, ncols - 1)),
+	    border),
+      data_(new array_t(0         - border, 0         - border,
+			nrows - 1 + border, ncols - 1 + border))
+  {
+  }
+
+  /// Ctor using an existing topology.
+  template <typename T>
+  image2d<T>::image2d(const topo2d& topo)
+    : topo_(topo),
+      data_(new array_t(topo.bbox().pmin().row(),
+			topo.bbox().pmin().col(),
+			topo.bbox().pmax().row(),
+			topo.bbox().pmax().col()))
+  {
+  }
+
+  template <typename T>
+  const topo2d& image2d<T>::impl_topo() const
+  {
+    return topo_;
+  }
+
+  template <typename T>
+  T image2d<T>::impl_op_read(const point2d& p) const
+  {
+    precondition(data_ != 0);
+    precondition(topo_.has_large(p));
+    return data_->operator()(p.row(), p.col());
+  }
+
+  template <typename T>
+  T& image2d<T>::impl_op_readwrite(const point2d& p)
+  {
+    precondition(data_ != 0);
+    precondition(topo_.has_large(p));
+    return data_->operator()(p.row(), p.col());
+  }
+
+# endif
 
 } // end of namespace oln
 

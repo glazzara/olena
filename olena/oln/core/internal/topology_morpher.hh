@@ -70,8 +70,17 @@ namespace oln
     struct topology_morpher : public topology_entry<E>
     {
     protected:
-      topology_morpher() {}
+      topology_morpher();
     };
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename Topo, typename E>
+    topology_morpher<Topo, E>::topology_morpher()
+    {
+    }
+
+# endif
 
   } // end of namespace oln::internal
 

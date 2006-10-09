@@ -59,18 +59,29 @@ namespace oln
 
     public:
 
-      bool impl_has(const point_t& p) const
-      {
-	return this->exact().topo().has(p);
-      }
-
-      bool impl_has_large(const point_t& p) const
-      {
-	return this->exact().has(p);
-      }
+      bool impl_has(const point_t& p) const;
+      bool impl_has_large(const point_t& p) const;
 
     };
 
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E, typename M>
+    bool
+    set_impl<abstract::image_being_random_accessible, M, E>::impl_has(const typename set_impl<abstract::image_being_random_accessible, M, E>::point_t& p) const
+    {
+      return this->exact().topo().has(p);
+    }
+
+    template <typename E, typename M>
+    bool
+    set_impl<abstract::image_being_random_accessible, M, E>::impl_has_large(const typename set_impl<abstract::image_being_random_accessible, M, E>::point_t& p) const
+    {
+      return this->exact().has(p);
+    }
+
+# endif
 
   } // end of namespace oln::automatic
   

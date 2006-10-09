@@ -37,29 +37,29 @@ namespace oln
 {
 
   // Forward declarations.
-  template <typename point> class bbox_;
-  template <typename point> class bbox_fwd_piter_;
-  template <typename point> class bbox_bkd_piter_;
+  template <typename point_t> class bbox_;
+  template <typename point_t> class bbox_fwd_piter_;
+  template <typename point_t> class bbox_bkd_piter_;
 
 
   // Super type declaration.
-  template <typename point>
-  struct set_super_type< bbox_<point> >
+  template <typename point_t>
+  struct set_super_type< bbox_<point_t> >
   {
-    typedef bbox_<point> self_t;
+    typedef bbox_<point_t> self_t;
     typedef point_set_entry<self_t> ret;
   };
 
 
-  /// Virtual types associated to oln::bbox_<point>.
-  template <typename point>
-  struct vtypes< bbox_<point> >
+  /// Virtual types associated to oln::bbox_<point_t>.
+  template <typename point_t>
+  struct vtypes< bbox_<point_t> >
   {
-    typedef point point_type;
-    typedef bbox_fwd_piter_<point> fwd_piter_type;
-    typedef bbox_bkd_piter_<point> bkd_piter_type;
+    typedef point_t point_type;
+    typedef bbox_fwd_piter_<point_t> fwd_piter_type;
+    typedef bbox_bkd_piter_<point_t> bkd_piter_type;
 
-    typedef bbox_<point> bbox_type;
+    typedef bbox_<point_t> bbox_type;
 
     typedef mlc::true_ is_random_accessible_type;
     typedef mlc::true_ has_know_size_type;
@@ -68,151 +68,195 @@ namespace oln
 
 
   /// Bounding box class based on a point class.
-  template <typename point>
-  class bbox_ : public point_set_entry< bbox_<point> >,
-		private mlc::assert_< mlc_is_a(point, abstract::point) >
+  template <typename point_t>
+  class bbox_ : public point_set_entry< bbox_<point_t> >,
+		private mlc::assert_< mlc_is_a(point_t, abstract::point) >
   {
-    typedef point point_t;
-    typedef bbox_<point> self_t;
+    typedef bbox_<point_t> self_t;
     typedef point_set_entry<self_t> super_t;
 
-    typedef oln_type_of(point, coord) coord_t;
+    typedef oln_type_of(point_t, coord) coord_t;
 
     typedef oln_type_of(point_t, dim) dim;
     enum { n = mlc_value(dim) };
 
   public:
       
-    bbox_()
-      {
-	flush();
-      }
+    bbox_();
 
-    bbox_(const point_t& pmin, const point_t& pmax)
-      {
-	this->pmin_ = pmin;
-	this->pmax_ = pmax;
-	is_valid_ = true;
+    bbox_(const point_t& pmin, const point_t& pmax);
 
-	for (unsigned i = 0; i < n; ++i)
-	  precondition(pmax[i] >= pmin[i]);
-      }
+    bbox_(const bbox_<point_t>& rhs);
 
-    bbox_(const self_t& rhs)
-      {
-	// FIXME: Remove these 3 lines?
-	precondition(rhs.is_valid());
-	for (unsigned i = 0; i < n; ++i)
-	  precondition(rhs.pmax_[i] >= rhs.pmin_[i]);
+    bbox_<point_t>& operator=(const bbox_<point_t>& rhs);
 
-	this->pmin_ = rhs.pmin_;
-	this->pmax_ = rhs.pmax_;
-        is_valid_ = rhs.is_valid_;
+    unsigned impl_npoints() const;
 
-	for (unsigned i = 0; i < n; ++i)
-	  postcondition(this->pmax_[i] >= this->pmin_[i]);
-      }
+    bool impl_has(const point_t& p) const;
 
-    self_t& operator=(const self_t& rhs)
-      {
-	// FIXME: Remove these 3 lines?
-	precondition(rhs.is_valid());
-	for (unsigned i = 0; i < n; ++i)
-	  precondition(rhs.pmax_[i] >= rhs.pmin_[i]);
+    void flush();
 
-	this->pmin_ = rhs.pmin_;
-	this->pmax_ = rhs.pmax_;
-        is_valid_ = rhs.is_valid_;
+    void init_with(const point_t& p);
 
-	for (unsigned i = 0; i < n; ++i)
-	  postcondition(this->pmax_[i] >= this->pmin_[i]);
+    void update_with(const point_t& p);
 
-	return *this;
-      }
-      
-    unsigned impl_npoints() const
-      {
-	unsigned count = 1;
-	for (unsigned i = 0; i < n; ++i)
-	  count *= this->len(i);
-	return count;
-      }
-
-    bool impl_has(const point_t& p) const
-      {
-	precondition(is_valid_);
-	for (unsigned i = 0; i < n; ++i)
-	  if (p[i] < this->pmin_[i] or p[i] > this->pmax_[i])
-	    return false;
-	return true;
-      }
-
-    void flush()
-      {
-	is_valid_ = false;
-      }
-
-    void init_with(const point_t& p)
-      {
-	precondition(not is_valid_);
-	this->pmin_ = p;
-	this->pmax_ = p;
-	is_valid_ = true;
-      }
-
-    void update_with(const point_t& p)
-      {
-	precondition(is_valid_);
-	for (unsigned i = 0; i < n; ++i)
-	  if (p[i] < this->pmin_[i])
-	    this->pmin_[i] = p[i];
-	  else if (p[i] > this->pmax_[i])
-	    this->pmax_[i] = p[i];
-      }
-
-    void take(const point_t& p)
-      {
-	if (not is_valid_)
-	  {
-	    init_with(p);
-	    return;
-	  }
-	for (unsigned i = 0; i < n; ++i)
-	  if (p[i] < this->pmin_[i])
-	    this->pmin_[i] = p[i];
-	  else if (p[i] > this->pmax_[i])
-	    this->pmax_[i] = p[i];
-      }
+    void take(const point_t& p);
 
     // FIXME: Add "update : (rhs : exact)"
 
-    bool includes(const self_t& rhs) const
-      {
-	precondition(is_valid_ and rhs.is_valid());
-	for (unsigned i = 0; i < n; ++i)
-	  if (rhs.pmin()[i] < this->pmin_[i] or rhs.pmax()[i] > this->pmax_[i])
-	    return false;
-	return true;
-      }
+    bool includes(const bbox_<point_t>& rhs) const;
 
-    bool impl_is_valid() const
-      {
-	return is_valid_;
-      }
+    bool impl_is_valid() const;
 
-    void impl_print(std::ostream& ostr) const
-      {
-	ostr << "{ pmin=" << this->pmin_
-	     << ", pmax=" << this->pmax_
-	     << ", valid=" << is_valid_
-	     << " }";
-      }
+    void impl_print(std::ostream& ostr) const;
 
   protected:
 
     bool is_valid_;
 
-  }; // end of class oln::bbox_<point>
+  }; // end of class oln::bbox_<point_t>
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename point_t>
+  bbox_<point_t>::bbox_()
+  {
+    flush();
+  }
+
+  template <typename point_t>
+  bbox_<point_t>::bbox_(const point_t& pmin, const point_t& pmax)
+  {
+    this->pmin_ = pmin;
+    this->pmax_ = pmax;
+    is_valid_ = true;
+
+    for (unsigned i = 0; i < n; ++i)
+      precondition(pmax[i] >= pmin[i]);
+  }
+
+  template <typename point_t>
+  bbox_<point_t>::bbox_(const bbox_<point_t>& rhs)
+  {
+    // FIXME: Remove these 3 lines?
+    precondition(rhs.is_valid());
+    for (unsigned i = 0; i < n; ++i)
+      precondition(rhs.pmax_[i] >= rhs.pmin_[i]);
+
+    this->pmin_ = rhs.pmin_;
+    this->pmax_ = rhs.pmax_;
+    is_valid_ = rhs.is_valid_;
+
+    for (unsigned i = 0; i < n; ++i)
+      postcondition(this->pmax_[i] >= this->pmin_[i]);
+  }
+
+  template <typename point_t>
+  bbox_<point_t>& bbox_<point_t>::operator=(const bbox_<point_t>& rhs)
+  {
+    // FIXME: Remove these 3 lines?
+    precondition(rhs.is_valid());
+    for (unsigned i = 0; i < n; ++i)
+      precondition(rhs.pmax_[i] >= rhs.pmin_[i]);
+
+    this->pmin_ = rhs.pmin_;
+    this->pmax_ = rhs.pmax_;
+    is_valid_ = rhs.is_valid_;
+
+    for (unsigned i = 0; i < n; ++i)
+      postcondition(this->pmax_[i] >= this->pmin_[i]);
+
+    return *this;
+  }
+      
+  template <typename point_t>
+  unsigned bbox_<point_t>::impl_npoints() const
+  {
+    unsigned count = 1;
+    for (unsigned i = 0; i < n; ++i)
+      count *= this->len(i);
+    return count;
+  }
+
+  template <typename point_t>
+  bool bbox_<point_t>::impl_has(const point_t& p) const
+  {
+    precondition(is_valid_);
+    for (unsigned i = 0; i < n; ++i)
+      if (p[i] < this->pmin_[i] or p[i] > this->pmax_[i])
+	return false;
+    return true;
+  }
+
+  template <typename point_t>
+  void bbox_<point_t>::flush()
+  {
+    is_valid_ = false;
+  }
+
+  template <typename point_t>
+  void bbox_<point_t>::init_with(const point_t& p)
+  {
+    precondition(not is_valid_);
+    this->pmin_ = p;
+    this->pmax_ = p;
+    is_valid_ = true;
+  }
+
+  template <typename point_t>
+  void bbox_<point_t>::update_with(const point_t& p)
+  {
+    precondition(is_valid_);
+    for (unsigned i = 0; i < n; ++i)
+      if (p[i] < this->pmin_[i])
+	this->pmin_[i] = p[i];
+      else if (p[i] > this->pmax_[i])
+	this->pmax_[i] = p[i];
+  }
+
+  template <typename point_t>
+  void bbox_<point_t>::take(const point_t& p)
+  {
+    if (not is_valid_)
+      {
+	init_with(p);
+	return;
+      }
+    for (unsigned i = 0; i < n; ++i)
+      if (p[i] < this->pmin_[i])
+	this->pmin_[i] = p[i];
+      else if (p[i] > this->pmax_[i])
+	this->pmax_[i] = p[i];
+  }
+
+  template <typename point_t>
+  bool bbox_<point_t>::includes(const bbox_<point_t>& rhs) const
+  {
+    precondition(is_valid_ and rhs.is_valid());
+    for (unsigned i = 0; i < n; ++i)
+      if (rhs.pmin()[i] < this->pmin_[i] or rhs.pmax()[i] > this->pmax_[i])
+	return false;
+    return true;
+  }
+
+  template <typename point_t>
+  bool bbox_<point_t>::impl_is_valid() const
+  {
+    return is_valid_;
+  }
+
+  template <typename point_t>
+  void bbox_<point_t>::impl_print(std::ostream& ostr) const
+  {
+    ostr << "{ pmin=" << this->pmin_
+	 << ", pmax=" << this->pmax_
+	 << ", valid=" << is_valid_
+	 << " }";
+  }
+
+# endif
 
 
 } // end of namespace oln

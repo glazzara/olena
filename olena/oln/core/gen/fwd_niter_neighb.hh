@@ -73,80 +73,49 @@ namespace oln
     
     template <typename P, typename T>
     fwd_niter_neighb_(const abstract::iterator_on_points<P>& it,
-		      const abstract::topology<T>& topo)
-      : p_ref_(it.point_adr()),
-	nbh_(topo.exact().neighborhood())
-    {
-      precondition(nbh_.card() > 0);
-      i_ = -1;
-    }
+		      const abstract::topology<T>& topo);
 
-//     template <typename P, typename N>
-//     fwd_niter_neighb_(const abstract::iterator_on_points<P>& it,
-// 		      const abstract::neighborhood<N>& nbh)
-//       : p_ref_(it.point_adr()),
-// 	nbh_(nbh.exact())
-//     {
-//       precondition(nbh_.card() > 0);
-//       i_ = -1;
-//     }
+    //     template <typename P, typename N>
+    //     fwd_niter_neighb_(const abstract::iterator_on_points<P>& it,
+    // 		      const abstract::neighborhood<N>& nbh)
+    //       : p_ref_(it.point_adr()),
+    // 	nbh_(nbh.exact())
+    //     {
+    //       precondition(nbh_.card() > 0);
+    //       i_ = -1;
+    //     }
 
-//     template <typename P, typename T>
-//     fwd_niter_neighb_(const abstract::point<P>& p,
-// 		      const abstract::topology<T>& topo)
-//       : p_ref_(&(p.exact())),
-// 	nbh_(topo.exact().neighborhood())
-//     {
-//       precondition(nbh_.card() > 0);
-//       i_ = -1;
-//     }
+    //     template <typename P, typename T>
+    //     fwd_niter_neighb_(const abstract::point<P>& p,
+    // 		      const abstract::topology<T>& topo)
+    //       : p_ref_(&(p.exact())),
+    // 	nbh_(topo.exact().neighborhood())
+    //     {
+    //       precondition(nbh_.card() > 0);
+    //       i_ = -1;
+    //     }
 
-//     template <typename P, typename N>
-//     fwd_niter_neighb_(const abstract::point<P>& p,
-// 		      const abstract::neighborhood<N>& nbh)
-//       : p_ref_(&(p.exact())),
-// 	nbh_(nbh.exact())
-//     {
-//       precondition(nbh_.card() > 0);
-//       i_ = -1;
-//     }
+    //     template <typename P, typename N>
+    //     fwd_niter_neighb_(const abstract::point<P>& p,
+    // 		      const abstract::neighborhood<N>& nbh)
+    //       : p_ref_(&(p.exact())),
+    // 	nbh_(nbh.exact())
+    //     {
+    //       precondition(nbh_.card() > 0);
+    //       i_ = -1;
+    //     }
 
-    void impl_start()
-    {
-      i_ = 0;
-      p_ = *p_ref_+ nbh_.dp(i_);
-    }
+    void impl_start();
 
-    void impl_next()
-    {
-      ++i_;
-      if (i_ == int(nbh_.card()))
-	{
-	  i_ = -1;
-	  return;
-	}
-      p_ = *p_ref_ + nbh_.dp(i_);
-    }
+    void impl_next();
 
-    void impl_invalidate()
-    {
-      i_ = -1;
-    }
+    void impl_invalidate();
 
-    bool impl_is_valid() const
-    {
-      return i_ != -1;
-    }
+    bool impl_is_valid() const;
 
-    point_t impl_to_point() const
-    {
-      return p_;
-    }
+    point_t impl_to_point() const;
 
-    const point_t* impl_point_adr() const
-    {
-      return &p_;
-    }
+    const point_t* impl_point_adr() const;
 
   protected:
 
@@ -157,6 +126,73 @@ namespace oln
 
   }; // end of class oln::fwd_niter_neighb_<point_t>
   
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename point_t>
+  template <typename P, typename T>
+  fwd_niter_neighb_<point_t>::fwd_niter_neighb_(const abstract::iterator_on_points<P>& it,
+						const abstract::topology<T>& topo)
+    : p_ref_(it.point_adr()),
+      nbh_(topo.exact().neighborhood())
+  {
+    precondition(nbh_.card() > 0);
+    i_ = -1;
+  }
+
+  template <typename point_t>
+  void
+  fwd_niter_neighb_<point_t>::impl_start()
+  {
+    i_ = 0;
+    p_ = *p_ref_+ nbh_.dp(i_);
+  }
+
+  template <typename point_t>
+  void
+  fwd_niter_neighb_<point_t>::impl_next()
+  {
+    ++i_;
+    if (i_ == int(nbh_.card()))
+      {
+	i_ = -1;
+	return;
+      }
+    p_ = *p_ref_ + nbh_.dp(i_);
+  }
+
+  template <typename point_t>
+  void
+  fwd_niter_neighb_<point_t>::impl_invalidate()
+  {
+    i_ = -1;
+  }
+
+  template <typename point_t>
+  bool
+  fwd_niter_neighb_<point_t>::impl_is_valid() const
+  {
+    return i_ != -1;
+  }
+
+  template <typename point_t>
+  point_t
+  fwd_niter_neighb_<point_t>::impl_to_point() const
+  {
+    return p_;
+  }
+
+  template <typename point_t>
+  const point_t*
+  fwd_niter_neighb_<point_t>::impl_point_adr() const
+  {
+    return &p_;
+  }
+
+# endif
+
 
 } // end of namespace oln
 

@@ -46,15 +46,27 @@ namespace oln
 
     public:
 
-      bool has(const point_t& p) const
-      {
-	return this->exact().impl_has(p);
-      }
+      bool has(const point_t& p) const;
 
     protected:
-      point_set_being_random_accessible()
-      {}
+      point_set_being_random_accessible();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    bool point_set_being_random_accessible<E>::has(const point_t& p) const
+    {
+      return this->exact().impl_has(p);
+    }
+    
+    template <typename E>
+    point_set_being_random_accessible<E>::point_set_being_random_accessible()
+    {
+    }
+
+# endif
 
 
   } // end of namespace oln::abstract

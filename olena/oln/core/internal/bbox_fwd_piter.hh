@@ -64,61 +64,21 @@ namespace oln
 
     public:
     
-      bbox_fwd_piter(const bbox_<point_t>& bb)
-	: p_(),
-	  bb_(bb)
-      {
-	nop_ = bb_.pmax();
-	++nop_[0];
-      }
+      bbox_fwd_piter(const bbox_<point_t>& bb);
 
-      const bbox_<point_t>& bbox() const
-      {
-	return bb_;
-      }
+      const bbox_<point_t>& bbox() const;
 
-      void impl_start()
-      {
-	p_ = bb_.pmin();
-	invariant(implies(p_ != nop_, bb_.has(p_)));
-      }
+      void impl_start();
 
-      void impl_next()
-      {
-	invariant(implies(p_ != nop_, bb_.has(p_)));
-	for (int i = point_t::n - 1; i >= 0; --i)
-	  if (p_[i] == bb_.pmax(i))
-	    p_[i] = bb_.pmin(i);
-	  else
-	    {
-	      ++p_[i];
-	      break;
-	    }
-	if (p_ == bb_.pmin())
-	  p_ = nop_;
-      }
+      void impl_next();
 
-      void impl_invalidate()
-      {
-	invariant(implies(p_ != nop_, bb_.has(p_)));
-	p_ = nop_;
-      }
+      void impl_invalidate();
 
-      bool impl_is_valid() const
-      {
-	invariant(implies(p_ != nop_, bb_.has(p_)));
-	return p_ != nop_;
-      }
+      bool impl_is_valid() const;
 
-      point_t impl_to_point() const
-      {
-	return p_;
-      }
+      point_t impl_to_point() const;
 
-      const point_t* impl_point_adr() const
-      {
-	return &p_;
-      }
+      const point_t* impl_point_adr() const;
 
     protected:
 
@@ -127,6 +87,85 @@ namespace oln
       point_t nop_;
     
     }; // end of class oln::internal::bbox_fwd_piter<E>
+
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    bbox_fwd_piter<E>::bbox_fwd_piter(const bbox_<typename bbox_fwd_piter<E>::point_t>& bb)
+      : p_(),
+	bb_(bb)
+    {
+      nop_ = bb_.pmax();
+      ++nop_[0];
+    }
+
+    template <typename E>
+    const bbox_<typename bbox_fwd_piter<E>::point_t>&
+    bbox_fwd_piter<E>::bbox() const
+    {
+      return bb_;
+    }
+
+    template <typename E>
+    void
+    bbox_fwd_piter<E>::impl_start()
+    {
+      p_ = bb_.pmin();
+      invariant(implies(p_ != nop_, bb_.has(p_)));
+    }
+
+    template <typename E>
+    void
+    bbox_fwd_piter<E>::impl_next()
+    {
+      invariant(implies(p_ != nop_, bb_.has(p_)));
+      typedef typename bbox_fwd_piter<E>::point_t point_t;
+      for (int i = point_t::n - 1; i >= 0; --i)
+	if (p_[i] == bb_.pmax(i))
+	  p_[i] = bb_.pmin(i);
+	else
+	  {
+	    ++p_[i];
+	    break;
+	  }
+      if (p_ == bb_.pmin())
+	p_ = nop_;
+    }
+
+    template <typename E>
+    void
+    bbox_fwd_piter<E>::impl_invalidate()
+    {
+      invariant(implies(p_ != nop_, bb_.has(p_)));
+      p_ = nop_;
+    }
+
+    template <typename E>
+    bool
+    bbox_fwd_piter<E>::impl_is_valid() const
+    {
+      invariant(implies(p_ != nop_, bb_.has(p_)));
+      return p_ != nop_;
+    }
+
+    template <typename E>
+    typename bbox_fwd_piter<E>::point_t
+    bbox_fwd_piter<E>::impl_to_point() const
+    {
+      return p_;
+    }
+
+    template <typename E>
+    const typename bbox_fwd_piter<E>::point_t*
+    bbox_fwd_piter<E>::impl_point_adr() const
+    {
+      return &p_;
+    }
+
+# endif
 
 
   }  // end of namespace oln::internal

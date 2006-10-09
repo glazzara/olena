@@ -44,15 +44,28 @@ namespace oln
     {
     public:
 
-      unsigned npoints() const
-      {
-	return this->exact().impl_npoints();
-      }
+      unsigned npoints() const;
 
     protected:
-      point_set_having_known_size()
-      {}
+      point_set_having_known_size();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    unsigned 
+    point_set_having_known_size<E>::npoints() const
+    {
+      return this->exact().impl_npoints();
+    }
+    
+    template <typename E>
+    point_set_having_known_size<E>::point_set_having_known_size()
+    {
+    }
+
+# endif
 
 
   } // end of namespace oln::abstract

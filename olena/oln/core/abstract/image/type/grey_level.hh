@@ -49,8 +49,17 @@ namespace oln
     {
     protected:
       /// Constructor (protected, empty).
-      grey_level_image() {}
+      grey_level_image();
     };
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    grey_level_image<E>::grey_level_image()
+    {
+    }
+
+# endif
 
   } // end of namespace oln::abstract
 

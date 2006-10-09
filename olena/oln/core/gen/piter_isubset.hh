@@ -74,58 +74,24 @@ namespace oln
   public:
     
     template <typename T>
-    piter_isubset_(const abstract::topology<T>& topo)
-      : p_(topo),
-	isubset_(topo.exact().subset())
-    {
-    }
-    
+    piter_isubset_(const abstract::topology<T>& topo);
+
     template <typename P, typename T>
-    piter_isubset_(const P& p, const abstract::topology<T>& topo)
-      : p_(p, topo),
-	isubset_(topo.exact().subset())
-    {
-    }
+    piter_isubset_(const P& p, const abstract::topology<T>& topo);
 
-    void impl_start()
-    {
-      p_.start();
-      while (p_.is_valid() and isubset_(p_) == false)
-	p_.next();
-    }
+    void impl_start();
 
-    void impl_next()
-    {
-      do
-	p_.next();
-      while (p_.is_valid() and isubset_(p_) == false);
-    }
+    void impl_next();
 
-    void impl_invalidate()
-    {
-      p_.invalidate();
-    }
+    void impl_invalidate();
     
-    bool impl_is_valid() const
-    {
-      return p_.is_valid();
-    }
+    bool impl_is_valid() const;
     
-    point_t impl_to_point() const
-    {
-      return p_.to_point();
-    }
-    
-    const point_t* impl_point_adr() const
-    {
-      return p_.point_adr();
-    }
+    point_t impl_to_point() const;
 
-    const topo_t topo() const
-    {
-      topo_t tmp(p_.topo(), isubset_);
-      return tmp;
-    }
+    const point_t* impl_point_adr() const;
+
+    const topo_t topo() const;
 
   protected:
 
@@ -133,7 +99,82 @@ namespace oln
     const isubset_t& isubset_;
 
   }; // end of class oln::piter_isubset_<point>
-  
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename piter_t, typename isubset_t>
+  template <typename T>
+  piter_isubset_<piter_t, isubset_t>::piter_isubset_(const abstract::topology<T>& topo)
+    : p_(topo),
+      isubset_(topo.exact().subset())
+  {
+  }
+    
+  template <typename piter_t, typename isubset_t>
+  template <typename P, typename T>
+  piter_isubset_<piter_t, isubset_t>::piter_isubset_(const P& p, const abstract::topology<T>& topo)
+    : p_(p, topo),
+      isubset_(topo.exact().subset())
+  {
+  }
+
+  template <typename piter_t, typename isubset_t>
+  void
+  piter_isubset_<piter_t, isubset_t>::impl_start()
+  {
+    p_.start();
+    while (p_.is_valid() and isubset_(p_) == false)
+      p_.next();
+  }
+
+  template <typename piter_t, typename isubset_t>
+  void
+  piter_isubset_<piter_t, isubset_t>::impl_next()
+  {
+    do
+      p_.next();
+    while (p_.is_valid() and isubset_(p_) == false);
+  }
+
+  template <typename piter_t, typename isubset_t>
+  void
+  piter_isubset_<piter_t, isubset_t>::impl_invalidate()
+  {
+    p_.invalidate();
+  }
+    
+  template <typename piter_t, typename isubset_t>
+  bool
+  piter_isubset_<piter_t, isubset_t>::impl_is_valid() const
+  {
+    return p_.is_valid();
+  }
+    
+  template <typename piter_t, typename isubset_t>
+  typename piter_isubset_<piter_t, isubset_t>::point_t
+  piter_isubset_<piter_t, isubset_t>::impl_to_point() const
+  {
+    return p_.to_point();
+  }
+    
+  template <typename piter_t, typename isubset_t>
+  const typename piter_isubset_<piter_t, isubset_t>::point_t*
+  piter_isubset_<piter_t, isubset_t>::impl_point_adr() const
+  {
+    return p_.point_adr();
+  }
+
+  template <typename piter_t, typename isubset_t>
+  const typename piter_isubset_<piter_t, isubset_t>::topo_t
+  piter_isubset_<piter_t, isubset_t>::topo() const
+  {
+    topo_t tmp(p_.topo(), isubset_);
+    return tmp;
+  }
+
+# endif
 
 } // end of namespace oln
 

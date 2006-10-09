@@ -71,7 +71,6 @@ namespace oln
     class point : public stc::any__simple<E>,
 		  public oln::type
     {
-      typedef E exact_t;
       typedef oln_type_of(E, dpoint) dpoint_t;
 
     public:
@@ -80,19 +79,10 @@ namespace oln
       /// \{
       /// Operator ==.
 
-      bool operator==(const exact_t& rhs) const
-      {
-	return this->exact().impl_equal(rhs);
-      }
+      bool operator==(const E& rhs) const;
 
       template <typename P>
-      bool operator==(const abstract::point<P>& rhs) const
-      {
-	mlc::assert_equal_< oln_type_of(E, grid),
-                            oln_type_of(P, grid),
-	                    oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
-	return this->exact().impl_equal(rhs.exact());
-      }
+      bool operator==(const abstract::point<P>& rhs) const;
 
       /// \}
       
@@ -100,19 +90,10 @@ namespace oln
       /// \{
       /// Operator !=.
 
-      bool operator!=(const exact_t& rhs) const
-      {
-	return not (*this == rhs);
-      }
+      bool operator!=(const E& rhs) const;
 
       template <typename P>
-      bool operator!=(const abstract::point<P>& rhs) const
-      {
-	mlc::assert_equal_< oln_type_of(E, grid),
-                            oln_type_of(P, grid),
-	                    oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
-	return not (*this == rhs);
-      }
+      bool operator!=(const abstract::point<P>& rhs) const;
 
       /// \}
 
@@ -120,19 +101,10 @@ namespace oln
       /// \{
       /// Operator <.
 
-      bool operator<(const exact_t& rhs) const
-      {
-	return this->exact().impl_less(rhs);
-      }
+      bool operator<(const E& rhs) const;
 
       template <typename P>
-      bool operator<(const abstract::point<P>& rhs) const
-      {
-	mlc::assert_equal_< oln_type_of(E, grid),
-                            oln_type_of(P, grid),
-	                    oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
-	return this->exact().impl_less(rhs.exact());
-      }
+      bool operator<(const abstract::point<P>& rhs) const;
 
       /// \}
 
@@ -140,19 +112,10 @@ namespace oln
       /// \{
       /// Operator >.
 
-      bool operator>(const exact_t& rhs) const
-      {
-	return rhs < *this;
-      }
+      bool operator>(const E& rhs) const;
 
       template <typename P>
-      bool operator>(const abstract::point<P>& rhs) const
-      {
-	mlc::assert_equal_< oln_type_of(E, grid),
-                            oln_type_of(P, grid),
-	                    oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
-	return rhs < *this;
-      }
+      bool operator>(const abstract::point<P>& rhs) const;
 
       /// \}
 
@@ -160,19 +123,10 @@ namespace oln
       /// \{
       /// Operator >=.
 
-      bool operator>=(const exact_t& rhs) const
-      {
-	return not (*this < rhs);
-      }
+      bool operator>=(const E& rhs) const;
 
       template <typename P>
-      bool operator>=(const abstract::point<P>& rhs) const
-      {
-	mlc::assert_equal_< oln_type_of(E, grid),
-                            oln_type_of(P, grid),
-	                    oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
-	return not (*this < rhs);
-      }
+      bool operator>=(const abstract::point<P>& rhs) const;
 
       /// \}
 
@@ -180,19 +134,10 @@ namespace oln
       /// \{
       /// Operator <=.
 
-      bool operator<=(const exact_t& rhs) const
-      {
-	return not (rhs < *this);
-      }
+      bool operator<=(const E& rhs) const;
 
       template <typename P>
-      bool operator<=(const abstract::point<P>& rhs) const
-      {
-	mlc::assert_equal_< oln_type_of(E, grid),
-                            oln_type_of(P, grid),
-	                    oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
-	return not (rhs < *this);
-      }
+      bool operator<=(const abstract::point<P>& rhs) const;
 
       /// \}
 
@@ -200,19 +145,10 @@ namespace oln
       /// \{
       /// Operator +=.
 
-      exact_t& operator+=(const dpoint_t& rhs)
-      {
-	return this->exact().impl_plus_equal(rhs);
-      }
+      E& operator+=(const dpoint_t& rhs);
 
       template <typename D>
-      exact_t& operator+=(const abstract::dpoint<D>& rhs)
-      {
-	mlc::assert_equal_< oln_type_of(E, grid),
-                            oln_type_of(D, grid),
-	                    oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
-	return this->exact().impl_plus_equal(rhs.exact());
-      }
+      E& operator+=(const abstract::dpoint<D>& rhs);
 
       /// \}
 
@@ -220,19 +156,10 @@ namespace oln
       /// \{
       /// Operator +.
 
-      exact_t operator+(const dpoint_t& rhs) const
-      {
-	return this->exact().impl_plus(rhs);
-      }
+      E operator+(const dpoint_t& rhs) const;
 
       template <typename D>
-      xtd_op_plus_trait(E,D) operator+(const abstract::dpoint<D>& rhs)
-      {
-	mlc::assert_equal_< oln_type_of(E, grid),
-	                    oln_type_of(D, grid),
-	                    oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
-	return this->exact().impl_plus(rhs.exact());
-      }
+      xtd_op_plus_trait(E,D) operator+(const abstract::dpoint<D>& rhs) const;
 
       /// \}
 
@@ -240,19 +167,10 @@ namespace oln
       /// \{
       /// Operator -=.
 
-      exact_t& operator-=(const dpoint_t& rhs)
-      {
-	return this->exact().impl_minus_equal(rhs);
-      }
+      E& operator-=(const dpoint_t& rhs);
 
       template <typename D>
-      exact_t& operator-=(const abstract::dpoint<D>& rhs) const
-      {
-	mlc::assert_equal_< oln_type_of(E, grid),
-                            oln_type_of(D, grid),
-	                    oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
-	return this->exact().impl_minus_equal(rhs.exact());
-      }
+      E& operator-=(const abstract::dpoint<D>& rhs) const;
 
       /// \}
 
@@ -260,19 +178,10 @@ namespace oln
       /// \{
       /// Operator -.
 
-      exact_t operator-(const dpoint_t& rhs) const
-      {
-	return this->exact().impl_minus(rhs);
-      }
+      E operator-(const dpoint_t& rhs) const;
 
       template <typename D>
-      xtd_op_minus_trait(E, D) operator-(const abstract::dpoint<D>& rhs) const
-      {
-	mlc::assert_equal_< oln_type_of(E, grid),
-                            oln_type_of(D, grid),
-	                    oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
-	return this->exact().impl_minus(rhs.exact());
-      }
+      xtd_op_minus_trait(E, D) operator-(const abstract::dpoint<D>& rhs) const;
 
       /// \}
 
@@ -280,37 +189,218 @@ namespace oln
       /// \{
       /// Operator -.
 
-      dpoint_t operator-(const exact_t& rhs) const
-      {
-	return this->exact().impl_minus(rhs);
-      }
+      dpoint_t operator-(const E& rhs) const;
 
       template <typename P>
-      xtd_op_minus_trait(E, P) operator-(const abstract::point<P>& rhs) const
-      {
-	mlc::assert_equal_< oln_type_of(E, grid),
-                            oln_type_of(P, grid),
-	                    oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
-	return this->exact().impl_minus(rhs.exact());
-      }
+      xtd_op_minus_trait(E, P) operator-(const abstract::point<P>& rhs) const;
 
       /// \}
 
-
-    protected:
-
-      point()
-      {}
 
       ~point()
       {
-	mlc::assert_defined_< oln_type_of(E, grid)   >::check();
-	mlc::assert_defined_< oln_type_of(E, dpoint) >::check();
-	mlc::assert_defined_< oln_type_of(E, coord)  >::check();
-	mlc::assert_defined_< oln_type_of(E, dim)    >::check();
+	// FIXME: See code below.
       }
 
+    protected:
+
+      point();
+
     }; // end of class oln::abstract::point<E>
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    bool point<E>::operator==(const E& rhs) const
+    {
+      return this->exact().impl_equal(rhs);
+    }
+
+    template <typename E>
+    template <typename P>
+    bool point<E>::operator==(const abstract::point<P>& rhs) const
+    {
+      mlc::assert_equal_< oln_type_of(E, grid),
+	oln_type_of(P, grid),
+	oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
+      return this->exact().impl_equal(rhs.exact());
+    }
+
+    template <typename E>
+    bool point<E>::operator!=(const E& rhs) const
+    {
+      return not (*this == rhs);
+    }
+
+    template <typename E>
+    template <typename P>
+    bool point<E>::operator!=(const abstract::point<P>& rhs) const
+    {
+      mlc::assert_equal_< oln_type_of(E, grid),
+	oln_type_of(P, grid),
+	oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
+      return not (*this == rhs);
+    }
+
+    template <typename E>
+    bool point<E>::operator<(const E& rhs) const
+    {
+      return this->exact().impl_less(rhs);
+    }
+
+    template <typename E>
+    template <typename P>
+    bool point<E>::operator<(const abstract::point<P>& rhs) const
+    {
+      mlc::assert_equal_< oln_type_of(E, grid),
+	oln_type_of(P, grid),
+	oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
+      return this->exact().impl_less(rhs.exact());
+    }
+
+    template <typename E>
+    bool point<E>::operator>(const E& rhs) const
+    {
+      return rhs < *this;
+    }
+
+    template <typename E>
+    template <typename P>
+    bool point<E>::operator>(const abstract::point<P>& rhs) const
+    {
+      mlc::assert_equal_< oln_type_of(E, grid),
+	oln_type_of(P, grid),
+	oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
+      return rhs < *this;
+    }
+
+    template <typename E>
+    bool point<E>::operator>=(const E& rhs) const
+    {
+      return not (*this < rhs);
+    }
+
+    template <typename E>
+    template <typename P>
+    bool point<E>::operator>=(const abstract::point<P>& rhs) const
+    {
+      mlc::assert_equal_< oln_type_of(E, grid),
+	oln_type_of(P, grid),
+	oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
+      return not (*this < rhs);
+    }
+
+    template <typename E>
+    bool point<E>::operator<=(const E& rhs) const
+    {
+      return not (rhs < *this);
+    }
+
+    template <typename E>
+    template <typename P>
+    bool point<E>::operator<=(const abstract::point<P>& rhs) const
+    {
+      mlc::assert_equal_< oln_type_of(E, grid),
+	oln_type_of(P, grid),
+	oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
+      return not (rhs < *this);
+    }
+
+    template <typename E>
+    E& point<E>::operator+=(const typename point<E>::dpoint_t& rhs)
+    {
+      return this->exact().impl_plus_equal(rhs);
+    }
+
+    template <typename E>
+    template <typename D>
+    E& point<E>::operator+=(const abstract::dpoint<D>& rhs)
+    {
+      mlc::assert_equal_< oln_type_of(E, grid),
+	oln_type_of(D, grid),
+	oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
+      return this->exact().impl_plus_equal(rhs.exact());
+    }
+
+    template <typename E>
+    E point<E>::operator+(const typename point<E>::dpoint_t& rhs) const
+    {
+      return this->exact().impl_plus(rhs);
+    }
+
+    template <typename E>
+    template <typename D>
+    xtd_op_plus_trait(E,D) point<E>::operator+(const abstract::dpoint<D>& rhs) const
+    {
+      mlc::assert_equal_< oln_type_of(E, grid),
+	oln_type_of(D, grid),
+	oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
+      return this->exact().impl_plus(rhs.exact());
+    }
+
+    template <typename E>
+    E& point<E>::operator-=(const typename point<E>::dpoint_t& rhs)
+    {
+      return this->exact().impl_minus_equal(rhs);
+    }
+
+    template <typename E>
+    template <typename D>
+    E& point<E>::operator-=(const abstract::dpoint<D>& rhs) const
+    {
+      mlc::assert_equal_< oln_type_of(E, grid),
+	oln_type_of(D, grid),
+	oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
+      return this->exact().impl_minus_equal(rhs.exact());
+    }
+
+    template <typename E>
+    E point<E>::operator-(const typename point<E>::dpoint_t& rhs) const
+    {
+      return this->exact().impl_minus(rhs);
+    }
+
+    template <typename E>
+    template <typename D>
+    xtd_op_minus_trait(E, D) point<E>::operator-(const abstract::dpoint<D>& rhs) const
+    {
+      mlc::assert_equal_< oln_type_of(E, grid),
+	oln_type_of(D, grid),
+	oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
+      return this->exact().impl_minus(rhs.exact());
+    }
+
+    template <typename E>
+    typename point<E>::dpoint_t point<E>::operator-(const E& rhs) const
+    {
+      return this->exact().impl_minus(rhs);
+    }
+
+    template <typename E>
+    template <typename P>
+    xtd_op_minus_trait(E, P) point<E>::operator-(const abstract::point<P>& rhs) const
+    {
+      mlc::assert_equal_< oln_type_of(E, grid),
+	oln_type_of(P, grid),
+	oln::ERROR::OPERANDS_ARE_NOT_COMPATIBLE >::check();
+      return this->exact().impl_minus(rhs.exact());
+    }
+
+    template <typename E>
+    point<E>::point()
+    {}
+
+//     template <typename E>
+//     point<E>::~point()
+//     {
+//       mlc::assert_defined_< oln_type_of(E, grid)   >::check();
+//       mlc::assert_defined_< oln_type_of(E, dpoint) >::check();
+//       mlc::assert_defined_< oln_type_of(E, coord)  >::check();
+//       mlc::assert_defined_< oln_type_of(E, dim)    >::check();
+//     }
+
+# endif
 
 
   } // end of namespace oln::abstract

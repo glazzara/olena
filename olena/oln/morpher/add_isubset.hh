@@ -106,25 +106,50 @@ namespace oln
 
       // FIXME: Handle the constness.
 
-      add_isubset(const Image& image, const Isubset& isubset) :
-	super_t(image),
-	topo_(image.topo(), isubset)
-      {
-	mlc::assert_equal_<oln_type_of(Image, grid), oln_type_of(Isubset, grid)>::check();
-	// FIXME: check that Image is without a isubset
-      }
-
-      const topo_t& impl_topo() const
-      {
-	return topo_;
-      }
+      add_isubset(const Image& image, const Isubset& isubset);
+      const topo_t& impl_topo() const;
 
     protected:
       topo_t topo_;
     };
 
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename Image, typename Isubset>
+    add_isubset<Image, Isubset>::add_isubset(const Image& image, const Isubset& isubset) :
+      super_t(image),
+      topo_(image.topo(), isubset)
+    {
+      mlc::assert_equal_<oln_type_of(Image, grid), oln_type_of(Isubset, grid)>::check();
+      // FIXME: check that Image is without a isubset
+    }
+
+    template <typename Image, typename Isubset>
+    const typename add_isubset<Image, Isubset>::topo_t&
+    add_isubset<Image, Isubset>::impl_topo() const
+    {
+      return topo_;
+    }
+
+# endif
+
+
   } // end of namespace oln::morpher
 
+
+
+  template <typename I, typename S>
+  morpher::add_isubset<I, S>
+  operator | (const abstract::image<I>& image,
+	      const abstract::binary_image<S>& isubset);
+
+  // FIXME: Register this operator.
+  // FIXME: Add mutable version.
+
+
+# ifndef OLN_INCLUDE_ONLY
 
   template <typename I, typename S>
   morpher::add_isubset<I, S>
@@ -137,9 +162,7 @@ namespace oln
     return tmp;
   }
 
-  // FIXME: Register this operator.
-  // FIXME: Add mutable version.
-
+# endif
 
 } // end of namespace oln
 

@@ -68,38 +68,17 @@ namespace oln
 
   public:
 
-    topo_lbbox_()
-    {
-    }
+    topo_lbbox_();
 
-    topo_lbbox_(const bbox_t& bb, unsigned border)
-      : bb_(bb), border_(border)
-    {
-      typedef oln_type_of(point, dpoint) dpoint_t;
-      dpoint_t dp;
-      dp.set_all(border);
-      lbb_ = bbox_<point>(bb_.pmin() - dp, bb_.pmax() + dp);
-    }
+    topo_lbbox_(const bbox_t& bb, unsigned border);
 
-    const bbox_t& impl_bbox() const
-    {
-      return bb_;
-    }
+    const bbox_t& impl_bbox() const;
 
-    bool impl_has(const point& p) const
-    {
-      return bb_.has(p);
-    }
+    bool impl_has(const point& p) const;
 
-    bool impl_has_large(const point& p) const
-    {
-      return lbb_.has(p);
-    }
+    bool impl_has_large(const point& p) const;
 
-    const bbox_t& lbbox() const
-    {
-      return lbb_;
-    }
+    const bbox_t& lbbox() const;
 
   protected:
 
@@ -109,6 +88,54 @@ namespace oln
 
   };
 
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename point>
+  topo_lbbox_<point>::topo_lbbox_()
+  {
+  }
+
+  template <typename point>
+  topo_lbbox_<point>::topo_lbbox_(const typename topo_lbbox_<point>::bbox_t& bb,
+				  unsigned border)
+    : bb_(bb), border_(border)
+  {
+    typedef oln_type_of(point, dpoint) dpoint_t;
+    dpoint_t dp;
+    dp.set_all(border);
+    lbb_ = bbox_<point>(bb_.pmin() - dp, bb_.pmax() + dp);
+  }
+
+  template <typename point>
+  const typename topo_lbbox_<point>::bbox_t&
+  topo_lbbox_<point>::impl_bbox() const
+  {
+    return bb_;
+  }
+
+  template <typename point>
+  bool
+  topo_lbbox_<point>::impl_has(const point& p) const
+  {
+    return bb_.has(p);
+  }
+
+  template <typename point>
+  bool
+  topo_lbbox_<point>::impl_has_large(const point& p) const
+  {
+    return lbb_.has(p);
+  }
+
+  template <typename point>
+  const typename topo_lbbox_<point>::bbox_t&
+  topo_lbbox_<point>::lbbox() const
+  {
+    return lbb_;
+  }
+
+# endif
 
 } // end of namespace oln
 

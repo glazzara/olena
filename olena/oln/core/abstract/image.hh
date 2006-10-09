@@ -63,33 +63,24 @@ namespace oln
 
       struct decl
       {
-	stc_virtual_typedef(topo);
-	stc_virtual_typedef(grid);
+// 	stc_virtual_typedef(topo);
+// 	stc_virtual_typedef(grid);
 
-	stc_virtual_typedef(psite);
-	stc_virtual_typedef(point);
+// 	stc_virtual_typedef(psite);
+// 	stc_virtual_typedef(point);
 
-	stc_virtual_typedef(piter);
-	stc_virtual_typedef(fwd_piter);
-	stc_virtual_typedef(bkd_piter);
+// // 	stc_virtual_typedef(piter);
+// // 	stc_virtual_typedef(fwd_piter);
+// // 	stc_virtual_typedef(bkd_piter);
 
-	stc_virtual_typedef(value);
-	stc_virtual_typedef(rvalue);
+// 	stc_virtual_typedef(value);
+// 	stc_virtual_typedef(rvalue);
 
-	stc_virtual_typedef(concrete);
+// 	stc_virtual_typedef(concrete);
 
-	stc_virtual_typedef(morpher);
+// 	stc_virtual_typedef(morpher);
 
-	decl()
-	{
-	  mlc::assert_< mlc_is_a(topo,      abstract::topology)           >::check();
-	  mlc::assert_< mlc_is_a(grid,      abstract::grid)               >::check();
-	  mlc::assert_< mlc_is_a(piter,     abstract::iterator_on_points) >::check();
-	  mlc::assert_< mlc_is_a(fwd_piter, abstract::iterator_on_points) >::check();
-	  mlc::assert_< mlc_is_a(bkd_piter, abstract::iterator_on_points) >::check();
-	  // FIXME: Rec.
-	  // mlc::assert_< mlc_is_a(concrete,  abstract::image)              >::check();
-	}
+	decl();
       };
 
 
@@ -116,32 +107,69 @@ namespace oln
       ** topo2d.
       */
 
-      const topo_t& topo() const
-      {
-	return this->exact().impl_topo();
-      }
+      const topo_t& topo() const;
 
 
       /*! \brief Gives access to the value stored at \a p in the
       ** current image.
       */
 
-      rvalue_t operator()(const psite_t& p) const
-      {
-	return this->exact().impl_op_read(p);
-      }
+      rvalue_t operator()(const psite_t& p) const;
 
     protected:
 
       /*! \brief Constructor (protected, empty).
       */
-      image() {}
+      image();
 
       /*! \brief Destructor.
       */
-      virtual ~image() { decl(); }
+      virtual ~image();
 
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    image<E>::decl::decl()
+    {
+// 	  mlc::assert_< mlc_is_a(topo,      abstract::topology)           >::check();
+// 	  mlc::assert_< mlc_is_a(grid,      abstract::grid)               >::check();
+// 	  mlc::assert_< mlc_is_a(piter,     abstract::iterator_on_points) >::check();
+// 	  mlc::assert_< mlc_is_a(fwd_piter, abstract::iterator_on_points) >::check();
+// 	  mlc::assert_< mlc_is_a(bkd_piter, abstract::iterator_on_points) >::check();
+	  // FIXME: Rec.
+	  // mlc::assert_< mlc_is_a(concrete,  abstract::image)              >::check();
+    }
+
+    template <typename E>
+    image<E>::image()
+    {
+    }
+
+    template <typename E>
+    image<E>::~image()
+    {
+      decl();
+    }
+
+    template <typename E>
+    const typename image<E>::topo_t&
+    image<E>::topo() const
+    {
+      return this->exact().impl_topo();
+    }
+
+    template <typename E>
+    typename image<E>::rvalue_t
+    image<E>::operator()(const typename image<E>::psite_t& p) const
+    {
+      return this->exact().impl_op_read(p);
+    }
+
+# endif
+
 
 
   } // end of namespace oln::abstract

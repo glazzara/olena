@@ -48,28 +48,48 @@ namespace oln
     public:
 
       // abstract
-      const bbox_t& bbox() const
-      {
-	return this->exact().impl_bbox();
-      }
+      const bbox_t& bbox() const;
 
       // abstract
-      bbox_t& bbox()
-      {
-	return this->exact().impl_bbox();
-      }
+      bbox_t& bbox();
 
       // concrete
-      operator bbox_t() const
-      {
-	return this->bbox();
-      }
+      operator bbox_t() const;
 
     protected:
 
-      topology_having_bbox()
-      {}
+      topology_having_bbox();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    const oln_type_of(E, bbox)&
+    topology_having_bbox<E>::bbox() const
+    {
+      return this->exact().impl_bbox();
+    }
+
+    template <typename E>
+    oln_type_of(E, bbox)&
+    topology_having_bbox<E>::bbox()
+    {
+      return this->exact().impl_bbox();
+    }
+
+    template <typename E>
+    topology_having_bbox<E>::operator oln_type_of(E, bbox)() const
+    {
+      return this->bbox();
+    }
+
+    template <typename E>
+    topology_having_bbox<E>::topology_having_bbox()
+    {
+    }
+
+# endif
 
 
   } // end of namespace oln::abstract

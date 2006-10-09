@@ -44,65 +44,21 @@ namespace oln
 
     /// Ctor.
     array2d(coord_t imin, coord_t jmin,
-	    coord_t imax, coord_t jmax) :
-      imin_(imin),
-      jmin_(jmin),
-      imax_(imax),
-      jmax_(jmax)
-    {
-      precondition(imax >= imin and jmax >= jmin);
-      ilen_ = imax - imin + 1;
-      jlen_ = jmax - jmin + 1;
-      allocate_();
-    }
+	    coord_t imax, coord_t jmax);
 
     /// Ctor.
-    array2d(coord_t ilen, coord_t jlen) :
-      imin_(0),
-      jmin_(0),
-      ilen_(ilen),
-      jlen_(jlen)
-    {
-      precondition(ilen > 0 and jlen > 0);
-      imax_ = imin_ + ilen_;
-      jmax_ = jmin_ + ilen_;
-      allocate_();
-    }
+    array2d(coord_t ilen, coord_t jlen);
 
     /// Dtor.
-    ~array2d()
-    {
-      deallocate_();
-    }
+    ~array2d();
 
-    value_t operator()(coord_t i, coord_t j) const
-    {
-      precondition(has(i, j));
-      return array_[i][j];
-    }
+    value_t operator()(coord_t i, coord_t j) const;
 
-    value_t& operator()(coord_t i, coord_t j)
-    {
-      precondition(has(i, j));
-      return array_[i][j];
-    }
+    value_t& operator()(coord_t i, coord_t j);
 
-    bool has(coord_t i, coord_t j) const
-    {
-      return
-	i >= imin_ and i <= imax_ and
-	j >= jmin_ and j <= jmax_;
-    }
+    bool has(coord_t i, coord_t j) const;
 
-    size_t memsize() const
-    {
-      return
-	// buffer_
-	size_t(ilen_) * size_t(jlen_) * sizeof(value_t)
-	+
-	// array_
-	size_t(ilen_) * sizeof(value_t*);
-    }
+    size_t memsize() const;
 
   protected:
 
@@ -113,29 +69,110 @@ namespace oln
 
   private:
 
-    void allocate_()
-    {
-      buffer_ = new value_t[size_t(ilen_) * size_t(jlen_)];
-      array_ = new value_t*[size_t(ilen_)];
-      value_t* buf = buffer_ - jmin_;
-      for (coord_t i = 0; i < ilen_; ++i)
-	{
-	  array_[i] = buf;
-	  buf += jlen_;
-	}
-      array_ -= imin_;
-    }
+    void allocate_();
 
-    void deallocate_()
-    {
-      precondition(buffer_ != 0 and array_ != 0);
-      delete[] buffer_;
-      buffer_ = 0; // safety
-      array_ += imin_;
-      delete[] array_;
-      array_ = 0;  // safety
-    }
+    void deallocate_();
   };
+
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename value_t, typename coord_t>
+  array2d<value_t, coord_t>::array2d(coord_t imin, coord_t jmin,
+	  coord_t imax, coord_t jmax) :
+    imin_(imin),
+    jmin_(jmin),
+    imax_(imax),
+    jmax_(jmax)
+  {
+    precondition(imax >= imin and jmax >= jmin);
+    ilen_ = imax - imin + 1;
+    jlen_ = jmax - jmin + 1;
+    allocate_();
+  }
+
+  template <typename value_t, typename coord_t>
+  /// Ctor.
+  array2d<value_t, coord_t>::array2d(coord_t ilen, coord_t jlen) :
+    imin_(0),
+    jmin_(0),
+    ilen_(ilen),
+    jlen_(jlen)
+  {
+    precondition(ilen > 0 and jlen > 0);
+    imax_ = imin_ + ilen_;
+    jmax_ = jmin_ + ilen_;
+    allocate_();
+  }
+
+  template <typename value_t, typename coord_t>
+  /// Dtor.
+  array2d<value_t, coord_t>::~array2d()
+  {
+    deallocate_();
+  }
+
+  template <typename value_t, typename coord_t>
+  value_t array2d<value_t, coord_t>::operator()(coord_t i, coord_t j) const
+  {
+    precondition(has(i, j));
+    return array_[i][j];
+  }
+
+  template <typename value_t, typename coord_t>
+  value_t& array2d<value_t, coord_t>::operator()(coord_t i, coord_t j)
+  {
+    precondition(has(i, j));
+    return array_[i][j];
+  }
+
+  template <typename value_t, typename coord_t>
+  bool array2d<value_t, coord_t>::has(coord_t i, coord_t j) const
+  {
+    return
+      i >= imin_ and i <= imax_ and
+      j >= jmin_ and j <= jmax_;
+  }
+
+  template <typename value_t, typename coord_t>
+  size_t array2d<value_t, coord_t>::memsize() const
+  {
+    return
+      // buffer_
+      size_t(ilen_) * size_t(jlen_) * sizeof(value_t)
+      +
+      // array_
+      size_t(ilen_) * sizeof(value_t*);
+  }
+
+  template <typename value_t, typename coord_t>
+  void array2d<value_t, coord_t>::allocate_()
+  {
+    buffer_ = new value_t[size_t(ilen_) * size_t(jlen_)];
+    array_ = new value_t*[size_t(ilen_)];
+    value_t* buf = buffer_ - jmin_;
+    for (coord_t i = 0; i < ilen_; ++i)
+      {
+	array_[i] = buf;
+	buf += jlen_;
+      }
+    array_ -= imin_;
+  }
+
+  template <typename value_t, typename coord_t>
+  void array2d<value_t, coord_t>::deallocate_()
+  {
+    precondition(buffer_ != 0 and array_ != 0);
+    delete[] buffer_;
+    buffer_ = 0; // safety
+    array_ += imin_;
+    delete[] array_;
+    array_ = 0;  // safety
+  }
+
+# endif
 
 
 } // end of namespace oln

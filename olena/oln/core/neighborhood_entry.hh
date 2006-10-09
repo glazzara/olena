@@ -44,8 +44,18 @@ namespace oln
   struct neighborhood_entry : public entry< abstract::neighborhood, E>
   {
   protected:
-    neighborhood_entry() {}
+    neighborhood_entry();
   };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename E>
+  neighborhood_entry<E>::neighborhood_entry()
+  {
+  }
+
+# endif
 
 
   /// Virtual types associated to neighborhood_entry<E>.

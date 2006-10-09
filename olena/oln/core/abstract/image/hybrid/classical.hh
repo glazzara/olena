@@ -47,8 +47,7 @@ namespace oln
 	public virtual abstract::image_being_random_accessible<E>
     {
     protected:
-      classical_image()
-      {}
+      classical_image();
     };
 
     template <typename E>
@@ -57,9 +56,23 @@ namespace oln
 	public virtual abstract::image2d<E>
     {
     protected:
-      classical_2d_image()
-      {}
+      classical_2d_image();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    classical_image<E>::classical_image()
+    {
+    }
+
+    template <typename E>
+    classical_2d_image<E>::classical_2d_image()
+    {
+    }
+
+# endif
 
   } // end of namespace oln::abstract
 

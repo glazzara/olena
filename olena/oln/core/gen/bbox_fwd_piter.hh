@@ -69,13 +69,20 @@ namespace oln
 
   public:
     
-    bbox_fwd_piter_(const bbox_<point>& bb)
-      : super_t(bb)
-    {
-    }
-    
+    bbox_fwd_piter_(const bbox_<point>& bb);
+
   }; // end of class oln::bbox_fwd_piter_<point>
-  
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename point>
+  bbox_fwd_piter_<point>::bbox_fwd_piter_(const bbox_<point>& bb)
+    : super_t(bb)
+  {
+  }
+
+# endif
 
 } // end of namespace oln
 

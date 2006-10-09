@@ -67,40 +67,19 @@ namespace oln
 
   public:
 
-    topo_add_isubset()
-    {
-    }
+    topo_add_isubset();
 
-    topo_add_isubset(const topo_t& topo, const isubset_t& isubset)
-      : topo_(topo),
-	isubset_(isubset)
-    {
-    }
+    topo_add_isubset(const topo_t& topo, const isubset_t& isubset);
 
-    bool impl_has(const point_t& p) const
-    {
-      return topo_.has(p) and isubset_(p) == true;
-    }
-    
-    bool impl_has_large(const point_t& p) const
-    {
-      return topo_.has(p) and isubset_(p) == true;
-    }
+    bool impl_has(const point_t& p) const;
 
-    const topo_t& delegate() const
-    {
-      return topo_;
-    }
+    bool impl_has_large(const point_t& p) const;
 
-    const isubset_t& impl_subset() const
-    {
-      return isubset_;
-    }
+    const topo_t& delegate() const;
 
-    operator topo_t() const
-    {
-      return topo_;
-    }
+    const isubset_t& impl_subset() const;
+
+    operator topo_t() const;
 
   protected:
 
@@ -108,6 +87,57 @@ namespace oln
     isubset_t isubset_;
   };
 
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename topo_t, typename isubset_t>
+  topo_add_isubset<topo_t, isubset_t>::topo_add_isubset()
+  {
+  }
+
+  template <typename topo_t, typename isubset_t>
+  topo_add_isubset<topo_t, isubset_t>::topo_add_isubset(const topo_t& topo, const isubset_t& isubset)
+    : topo_(topo),
+      isubset_(isubset)
+  {
+  }
+
+  template <typename topo_t, typename isubset_t>
+  bool
+  topo_add_isubset<topo_t, isubset_t>::impl_has(const point_t& p) const
+  {
+    return topo_.has(p) and isubset_(p) == true;
+  }
+    
+  template <typename topo_t, typename isubset_t>
+  bool
+  topo_add_isubset<topo_t, isubset_t>::impl_has_large(const point_t& p) const
+  {
+    return topo_.has(p) and isubset_(p) == true;
+  }
+
+  template <typename topo_t, typename isubset_t>
+  const topo_t&
+  topo_add_isubset<topo_t, isubset_t>::delegate() const
+  {
+    return topo_;
+  }
+
+  template <typename topo_t, typename isubset_t>
+  const isubset_t&
+  topo_add_isubset<topo_t, isubset_t>::impl_subset() const
+  {
+    return isubset_;
+  }
+
+  template <typename topo_t, typename isubset_t>
+  topo_add_isubset<topo_t, isubset_t>::operator topo_t() const
+  {
+    return topo_;
+  }
+
+# endif
 
 } // end of namespace oln
 

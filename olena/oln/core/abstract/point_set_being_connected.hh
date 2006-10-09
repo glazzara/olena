@@ -43,16 +43,11 @@ namespace oln
     {
     public:
 
-      unsigned nindices() const
-      {
-	precondition(this->is_valid());
-	return this->exact().len(0);
-      }
+      unsigned nindices() const;
 
     protected:
 
-      point_set_being_1d_connected()
-      {}
+      point_set_being_1d_connected();
     };
 
 
@@ -61,52 +56,100 @@ namespace oln
     {
     public:
 
-      unsigned nrows() const
-      {
-	precondition(this->is_valid());
-	return this->exact().len(0);
-      }
+      unsigned nrows() const;
 
-      unsigned ncols() const
-      {
-	precondition(this->is_valid());
-	return this->exact().len(1);
-      }
+      unsigned ncols() const;
 
     protected:
 
-      point_set_being_2d_connected()
-      {}
+      point_set_being_2d_connected();
+
     };
+
 
     template <typename E>
     class point_set_being_3d_connected : public virtual abstract::point_set<E>
     {
     public:
 
-      unsigned nslices() const
-      {
-	precondition(this->is_valid());
-	return this->exact().len(0);
-      }
+      unsigned nslices() const;
 
-      unsigned nrows() const
-      {
-	precondition(this->is_valid());
-	return this->exact().len(1);
-      }
+      unsigned nrows() const;
 
-      unsigned ncols() const
-      {
-	precondition(this->is_valid());
-	return this->exact().len(2);
-      }
+      unsigned ncols() const;
 
     protected:
 
-      point_set_being_3d_connected()
-      {}
+      point_set_being_3d_connected();
+
     };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    
+    template <typename E>
+    unsigned point_set_being_1d_connected<E>::nindices() const
+    {
+      precondition(this->is_valid());
+      return this->exact().len(0);
+    }
+    
+    template <typename E>
+    point_set_being_1d_connected<E>::point_set_being_1d_connected()
+    {
+    }
+    
+
+    template <typename E>
+    unsigned point_set_being_2d_connected<E>::nrows() const
+    {
+      precondition(this->is_valid());
+      return this->exact().len(0);
+    }
+    
+    template <typename E>
+    unsigned point_set_being_2d_connected<E>::ncols() const
+    {
+      precondition(this->is_valid());
+      return this->exact().len(1);
+    }
+    
+    template <typename E>
+    point_set_being_2d_connected<E>::point_set_being_2d_connected()
+    {
+    }
+
+
+    template <typename E>
+    unsigned point_set_being_3d_connected<E>::nslices() const
+    {
+      precondition(this->is_valid());
+      return this->exact().len(0);
+    }
+    
+    template <typename E>
+    unsigned point_set_being_3d_connected<E>::nrows() const
+    {
+      precondition(this->is_valid());
+      return this->exact().len(1);
+    }
+    
+    template <typename E>
+    unsigned point_set_being_3d_connected<E>::ncols() const
+    {
+      precondition(this->is_valid());
+      return this->exact().len(2);
+    }
+    
+    template <typename E>
+    point_set_being_3d_connected<E>::point_set_being_3d_connected()
+    {
+    }
+
+
+# endif
 
 
   } // end of namespace oln::abstract

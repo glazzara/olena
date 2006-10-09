@@ -35,8 +35,17 @@ namespace oln
   struct type
   {
   protected:
-    type() {}
+    type();
   };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  type::type()
+  {
+  }
+
+# endif
 
 } // end of namespace oln
 

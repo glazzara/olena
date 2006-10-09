@@ -60,12 +60,21 @@ namespace oln
 
     public:
 
-      const neighborhood_t& impl_neighborhood() const
-      {
-	return this->exact().delegate().neighborhood();
-      }
+      const neighborhood_t& impl_neighborhood() const;
 
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    const typename set_impl< abstract::topology_having_neighborhood, morpher::tag::identity, E >::neighborhood_t&
+    set_impl< abstract::topology_having_neighborhood, morpher::tag::identity, E >::impl_neighborhood() const
+    {
+      return this->exact().delegate().neighborhood();
+    }
+
+# endif
 
   } // end of namespace oln::automatic
   

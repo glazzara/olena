@@ -85,19 +85,31 @@ namespace oln
 // 	}
 
 	// FIXME: Handle the constness.
-	image_extension(const Image& image) :
-	  image_(image)
-	{
-	}
-
-	const Image& delegate() const
-	{
-	  return image_;
-	}
+	image_extension(const Image& image);
+	const Image& delegate() const;
 
       protected:
 	Image image_;
       };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+      template <typename Image, typename Exact>
+      image_extension<Image, Exact>::image_extension(const Image& image) :
+	image_(image)
+      {
+      }
+
+      template <typename Image, typename Exact>
+      const Image&
+      image_extension<Image, Exact>::delegate() const
+      {
+	return image_;
+      }
+
+# endif
 
     } // end of namespace oln::morpher::internal
     

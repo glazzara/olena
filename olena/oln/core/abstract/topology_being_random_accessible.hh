@@ -47,21 +47,37 @@ namespace oln
 
     public:
 
-      bool has(const point_t& p) const
-      {
-	return this->exact().impl_has(p);
-      }
+      bool has(const point_t& p) const;
 
-      bool has_large(const point_t& p) const
-      {
-	return this->exact().impl_has_large(p);
-      }
+      bool has_large(const point_t& p) const;
 
     protected:
 
-      topology_being_random_accessible()
-      {}
+      topology_being_random_accessible();
     };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    bool topology_being_random_accessible<E>::has(const oln_type_of(E, point)& p) const
+    {
+      return this->exact().impl_has(p);
+    }
+
+    template <typename E>
+    bool topology_being_random_accessible<E>::has_large(const oln_type_of(E, point)& p) const
+    {
+      return this->exact().impl_has_large(p);
+    }
+
+    template <typename E>
+    topology_being_random_accessible<E>::topology_being_random_accessible()
+    {
+    }
+
+# endif
 
 
   } // end of namespace oln::abstract

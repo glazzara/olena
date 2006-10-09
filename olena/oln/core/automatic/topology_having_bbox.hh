@@ -60,12 +60,21 @@ namespace oln
 
     public:
 
-      const bbox_t& impl_bbox() const
-      {
-	return this->exact().delegate().bbox();
-      }
+      const bbox_t& impl_bbox() const;
 
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    const typename set_impl< abstract::topology_having_bbox, morpher::tag::identity, E >::bbox_t& 
+    set_impl< abstract::topology_having_bbox, morpher::tag::identity, E >::impl_bbox() const
+    {
+      return this->exact().delegate().bbox();
+    }
+
+# endif
 
   } // end of namespace oln::automatic
   

@@ -81,33 +81,15 @@ namespace oln
   public:
 
     /// Ctor.
-    mapimage(const value_t& val)
-      : val_(val)
-    {
-    }
+    mapimage(const value_t& val);
 
-    const topo_t& impl_topo() const
-    {
-      return topo_;
-    }
+    const topo_t& impl_topo() const;
 
-    value_t impl_op_read(const point_t& p) const
-    {
-      if (not has(p))
-	return val_;
-      return data_[p];
-    }
+    value_t impl_op_read(const point_t& p) const;
 
-    value_t& impl_op_readwrite(const point_t& p)
-    {
-      topo_.bbox().take(p);
-      return data_[p];
-    }
+    value_t& impl_op_readwrite(const point_t& p);
 
-    bool impl_has(const point_t& p) const
-    {
-      return data_.find(p) != data_.end();
-    }
+    bool impl_has(const point_t& p) const;
 
   private:
     
@@ -116,6 +98,47 @@ namespace oln
     mutable std::map<point_t, value_t> data_;
   };
 
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename point_t, typename value_t>
+  mapimage<point_t, value_t>::mapimage(const value_t& val)
+    : val_(val)
+  {
+  }
+
+  template <typename point_t, typename value_t>
+  const typename mapimage<point_t, value_t>::topo_t&
+  mapimage<point_t, value_t>::impl_topo() const
+  {
+    return topo_;
+  }
+
+  template <typename point_t, typename value_t>
+  value_t
+  mapimage<point_t, value_t>::impl_op_read(const point_t& p) const
+  {
+    if (not has(p))
+      return val_;
+    return data_[p];
+  }
+
+  template <typename point_t, typename value_t>
+  value_t&
+  mapimage<point_t, value_t>::impl_op_readwrite(const point_t& p)
+  {
+    topo_.bbox().take(p);
+    return data_[p];
+  }
+
+  template <typename point_t, typename value_t>
+  bool
+  mapimage<point_t, value_t>::impl_has(const point_t& p) const
+  {
+    return data_.find(p) != data_.end();
+  }
+
+# endif
 
 } // end of namespace oln
 

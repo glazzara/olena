@@ -64,58 +64,100 @@ namespace oln
     public:
 
       enum { n = mlc_value(dim) };
+      typedef xtd::vec<n,coord_t> vec_t;
 
-      bool impl_equal(const self_t& rhs) const
-      {
-	return v_ == rhs.v_;
-      }
+      bool impl_equal(const dpoint_nd<E>& rhs) const;
       
-      coord_t operator[](unsigned i) const
-      {
-	assert(i < n);
-	return v_[i];
-      }
+      coord_t operator[](unsigned i) const;
       
-      coord_t& operator[](unsigned i)
-      {
-	assert(i < n);
-	return v_[i];
-      }
+      coord_t& operator[](unsigned i);
 
-      void set_all(const coord_t& c)
-      {
-	v_.set_all(c);
-      }
+      void set_all(const coord_t& c);
 
-      const xtd::vec<n,coord_t>& vec() const
-      {
-	return v_;
-      }
+      const vec_t& vec() const;
 
-      exact_t operator-() const
-      {
-	exact_t tmp(-v_);
-	return tmp;
-      }
+      E operator-() const;
 
-      bool impl_less(const self_t& rhs) const
-      {
-	return xtd::lexi_less(v_, rhs.vec());
-      }
+      bool impl_less(const dpoint_nd<E>& rhs) const;
 
     protected:
 
       /// Ctor.
-      dpoint_nd()
-      {}
+      dpoint_nd();
 
       /// Ctor.
-      dpoint_nd(const xtd::vec<n,coord_t>& v) :
-	v_(v)
-      {}
+      dpoint_nd(const vec_t& v);
 
-      xtd::vec<n,coord_t> v_;
+      vec_t v_;
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    bool
+    dpoint_nd<E>::impl_equal(const dpoint_nd<E>& rhs) const
+    {
+      return v_ == rhs.v_;
+    }
+      
+    template <typename E>
+    typename dpoint_nd<E>::coord_t
+    dpoint_nd<E>::operator[](unsigned i) const
+    {
+      assert(i < n);
+      return v_[i];
+    }
+      
+    template <typename E>
+    typename dpoint_nd<E>::coord_t&
+    dpoint_nd<E>::operator[](unsigned i)
+    {
+      assert(i < n);
+      return v_[i];
+    }
+
+    template <typename E>
+    void
+    dpoint_nd<E>::set_all(const typename dpoint_nd<E>::coord_t& c)
+    {
+      v_.set_all(c);
+    }
+
+    template <typename E>
+    const typename dpoint_nd<E>::vec_t&
+    dpoint_nd<E>::vec() const
+    {
+      return v_;
+    }
+
+    template <typename E>
+    E
+    dpoint_nd<E>::operator-() const
+    {
+      E tmp(-v_);
+      return tmp;
+    }
+
+    template <typename E>
+    bool
+    dpoint_nd<E>::impl_less(const dpoint_nd<E>& rhs) const
+    {
+      return xtd::lexi_less(v_, rhs.vec());
+    }
+
+    template <typename E>
+    dpoint_nd<E>::dpoint_nd()
+    {}
+
+    template <typename E>
+    dpoint_nd<E>::dpoint_nd(const typename dpoint_nd<E>::vec_t& v) :
+      v_(v)
+    {}
+
+
+# endif
+
 
   } // end of namespace oln::internal
 
@@ -125,7 +167,7 @@ namespace oln
   template <typename D>
   struct case_ < xtd::op_uminus, D,
 		 oln::id::op_uminus_dpointnd >
-    : where_< mlc_is_a(D, internal::dpoint_nd) >
+  : where_< mlc_is_a(D, internal::dpoint_nd) >
   {
     typedef stc_to_exact(D) ret;
   };

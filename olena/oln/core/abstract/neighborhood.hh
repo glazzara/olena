@@ -45,28 +45,49 @@ namespace oln
     {
     public:
 
-      bool is_valid() const
-      {
-	return this->exact().impl_is_valid();
-      }
+      bool is_valid() const;
 
       struct decl
       {
 	stc_virtual_typedef(grid);
 
-	decl() {
-	}
+	decl();
       };
 
     protected:
 
-      neighborhood()
-      {}
-
-      ~neighborhood() { decl(); }
+      neighborhood();
+      ~neighborhood();
 
     }; // end of class oln::abstract::neighborhood<E>
 
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    bool neighborhood<E>::is_valid() const
+    {
+      return this->exact().impl_is_valid();
+    }
+
+    template <typename E>
+    neighborhood<E>::neighborhood()
+    {
+    }
+
+    template <typename E>
+    neighborhood<E>::~neighborhood()
+    {
+      decl();
+    }
+
+    template <typename E>
+    neighborhood<E>::decl::decl()
+    {
+    }
+
+# endif
 
 
   } // end of namespace oln::abstract

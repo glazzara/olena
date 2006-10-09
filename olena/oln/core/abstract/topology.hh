@@ -59,22 +59,41 @@ namespace oln
 
 	stc_virtual_typedef(morpher);
 
-	decl() {
-	  // constraint:
-// 	  mlc::assert_< mlc::implies_< mlc::neq_< bbox, mlc::none >,
-// 	                               mlc_is_a(bbox, abstract::bbox) > >::check();
-	}
+	decl();
       };
 
     protected:
 
-      topology()
-      {}
+      topology();
 
-      ~topology() { decl(); }
+      ~topology();
 
     }; // end of class oln::abstract::topology<E>
 
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    topology<E>::decl::decl()
+    {
+      // constraint:
+// 	  mlc::assert_< mlc::implies_< mlc::neq_< bbox, mlc::none >,
+// 	                               mlc_is_a(bbox, abstract::bbox) > >::check();
+    }
+
+    template <typename E>
+    topology<E>::topology()
+    {
+    }
+
+    template <typename E>
+    topology<E>::~topology()
+    {
+      decl();
+    }
+
+# endif
 
 
   } // end of namespace oln::abstract

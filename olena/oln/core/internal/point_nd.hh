@@ -75,84 +75,146 @@ namespace oln
       typedef oln_type_of(E, coord) coord_t;
       typedef oln_type_of(E, dpoint) dpoint_t;
 
+
     public:
 
       enum { n = mlc_value(dim) };
+      typedef xtd::vec<n,coord_t> vec_t;
       
-      coord_t operator[](unsigned i) const
-      {
-	assert(i < n);
-	return v_[i];
-      }
-      
-      coord_t& operator[](unsigned i)
-      {
-	assert(i < n);
-	return v_[i];
-      }
+      coord_t operator[](unsigned i) const;
+      coord_t& operator[](unsigned i);
 
-      bool impl_equal(const self_t& rhs) const
-      {
-	return v_ == rhs.vec();
-      }
+      bool impl_equal(const self_t& rhs) const;
 
-      bool impl_less(const self_t& rhs) const
-      {
-	return xtd::lexi_less(v_, rhs.vec());
-      }
+      bool impl_less(const self_t& rhs) const;
 
-      E& impl_plus_equal(const dpoint_t& rhs)
-      {
-	v_ += rhs.vec();
-	return this->exact();
-      }
+      E& impl_plus_equal(const dpoint_t& rhs);
 
-      E impl_plus(const dpoint_t& rhs) const
-      {
-	E tmp(v_ + rhs.vec());
-	return tmp;
-      }
+      E impl_plus(const dpoint_t& rhs) const;
 
-      E& impl_minus_equal(const dpoint_t& rhs)
-      {
-	v_ += rhs.vec();
-	return this->exact();
-      }
+      E& impl_minus_equal(const dpoint_t& rhs);
 
-      E impl_minus(const dpoint_t& rhs) const
-      {
-	E tmp(v_ - rhs.vec());
-	return tmp;
-      }
+      E impl_minus(const dpoint_t& rhs) const;
 
-      dpoint_t impl_minus(const self_t& rhs) const
-      {
-	dpoint_t tmp(v_ - rhs.vec());
-	return tmp;
-      }
+      dpoint_t impl_minus(const self_t& rhs) const;
 
-      const xtd::vec<n,coord_t>& vec() const
-      {
-	return v_;
-      }
+      const vec_t& vec() const;
 
     protected:
 
       /// Ctor.
-      point_nd()
-      {}
+      point_nd();
 
       /// Ctor.
-      point_nd(const xtd::vec<n,coord_t>& v) :
-	v_(v)
-      {}
+      point_nd(const vec_t& v);
 
-      typedef xtd::vec<n,coord_t> vec_t;
+      /// Dtor.
+      ~point_nd()
+      {
+      }
+
       vec_t v_;
     };
 
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    typename point_nd<E>::coord_t
+    point_nd<E>::operator[](unsigned i) const
+    {
+      assert(i < n);
+      return v_[i];
+    }
+    
+    template <typename E>
+    typename point_nd<E>::coord_t&
+    point_nd<E>::operator[](unsigned i)
+    {
+      assert(i < n);
+      return v_[i];
+    }
+
+    template <typename E>
+    bool point_nd<E>::impl_equal(const self_t& rhs) const
+    {
+      return v_ == rhs.vec();
+    }
+
+    template <typename E>
+    bool point_nd<E>::impl_less(const self_t& rhs) const
+    {
+      return xtd::lexi_less(v_, rhs.vec());
+    }
+
+    template <typename E>
+    E& point_nd<E>::impl_plus_equal(const dpoint_t& rhs)
+    {
+      v_ += rhs.vec();
+      return this->exact();
+    }
+
+    template <typename E>
+    E point_nd<E>::impl_plus(const dpoint_t& rhs) const
+    {
+      E tmp(v_ + rhs.vec());
+      return tmp;
+    }
+
+    template <typename E>
+    E& point_nd<E>::impl_minus_equal(const typename point_nd<E>::dpoint_t& rhs)
+    {
+      v_ += rhs.vec();
+      return this->exact();
+    }
+
+    template <typename E>
+    E point_nd<E>::impl_minus(const typename point_nd<E>::dpoint_t& rhs) const
+    {
+      E tmp(v_ - rhs.vec());
+      return tmp;
+    }
+
+    template <typename E>
+    typename point_nd<E>::dpoint_t
+    point_nd<E>::impl_minus(const self_t& rhs) const
+    {
+      typename point_nd<E>::dpoint_t tmp(v_ - rhs.vec());
+      return tmp;
+    }
+
+    template <typename E>
+    const typename point_nd<E>::vec_t&
+    point_nd<E>::vec() const
+    {
+      return v_;
+    }
+
+    template <typename E>
+    point_nd<E>::point_nd()
+    {}
+
+    template <typename E>
+    point_nd<E>::point_nd(const typename point_nd<E>::vec_t& v) :
+      v_(v)
+    {}
+
+//     template <typename E>
+//     point_nd<E>::~point_nd()
+//     {}
+
+# endif
+
+
+
   } // end of namespace oln::internal
 
+
+
+  template <typename E>
+  std::ostream& operator<<(std::ostream& ostr, const internal::point_nd<E>& p);
+
+# ifndef OLN_INCLUDE_ONLY
 
   template <typename E>
   std::ostream& operator<<(std::ostream& ostr, const internal::point_nd<E>& p)
@@ -161,14 +223,16 @@ namespace oln
     return ostr;
   }
 
+# endif
+
 
 
   /// internal::point_nd + internal::dpoint_nd
   template <typename P, typename D>
   struct case_ < xtd::op_plus, mlc::pair_<P,D>,
 		 oln::id::op_plus_pointnd_dpointnd >
-    : where_< mlc::and_< mlc_is_a(P, internal::point_nd),
-                         mlc_is_a(D, internal::dpoint_nd) > >
+  : where_< mlc::and_< mlc_is_a(P, internal::point_nd),
+		       mlc_is_a(D, internal::dpoint_nd) > >
   {
     typedef oln_type_of(P, coord) P_coord;
     typedef oln_type_of(D, coord) D_coord;
@@ -182,8 +246,8 @@ namespace oln
   template <typename P, typename D>
   struct case_ < xtd::op_minus, mlc::pair_<P,D>,
 		 oln::id::op_minus_pointnd_dpointnd >
-    : where_< mlc::and_< mlc_is_a(P, internal::point_nd),
-                         mlc_is_a(D, internal::dpoint_nd) > >
+  : where_< mlc::and_< mlc_is_a(P, internal::point_nd),
+		       mlc_is_a(D, internal::dpoint_nd) > >
   {
     typedef oln_type_of(P, coord) P_coord;
     typedef oln_type_of(D, coord) D_coord;
@@ -197,8 +261,8 @@ namespace oln
   template <typename P1, typename P2>
   struct case_ < xtd::op_minus, mlc::pair_<P1,P2>,
 		 oln::id::op_minus_pointnd_pointnd >
-    : where_< mlc::and_< mlc_is_a(P1, internal::point_nd),
-                         mlc_is_a(P2, internal::point_nd) > >
+  : where_< mlc::and_< mlc_is_a(P1, internal::point_nd),
+		       mlc_is_a(P2, internal::point_nd) > >
   {
     typedef oln_type_of(P1, coord) P1_coord;
     typedef oln_type_of(P2, coord) P2_coord;

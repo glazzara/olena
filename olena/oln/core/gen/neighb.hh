@@ -70,34 +70,16 @@ namespace oln
 
   public:
     
-    neighb_()
-    {
-    }
+    neighb_();
 
-    self_t& add(const dpoint& dp)
-    {
-      s_.insert(dp);
-      s_.insert(-dp);
-      update_();
-      return *this;
-    }
+    neighb_<dpoint>& add(const dpoint& dp);
 
     template <typename D>
-    self_t& add(const abstract::dpoint<D>& dp)
-    {
-      return this->add(dp.exact());
-    }
+      neighb_<dpoint>& add(const abstract::dpoint<D>& dp);
 
-    unsigned card() const
-    {
-      return v_.size();
-    }
+    unsigned card() const;
 
-    dpoint dp(unsigned i) const
-    {
-      precondition(i < v_.size());
-      return v_[i];
-    }
+    dpoint dp(unsigned i) const;
 
     // void print(std::ostream& ostr) const;
     // friend std::ostream& operator<<(std::ostream& ostr, const neighb_<dpoint>& nbh);
@@ -107,14 +89,58 @@ namespace oln
     std::set<dpoint>    s_;
     std::vector<dpoint> v_;
 
-    void update_()
-    {
-      v_.clear();
-      std::copy(s_.begin(), s_.end(),
-		std::back_inserter(v_));
-    }
+    void update_();
 
   }; // end of class oln::neighb_<dpoint>
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+
+  template <typename dpoint>
+  neighb_<dpoint>::neighb_()
+  {
+  }
+
+  template <typename dpoint>
+  neighb_<dpoint>& neighb_<dpoint>::add(const dpoint& dp)
+  {
+    s_.insert(dp);
+    s_.insert(-dp);
+    update_();
+    return *this;
+  }
+
+  template <typename dpoint>
+  template <typename D>
+  neighb_<dpoint>& neighb_<dpoint>::add(const abstract::dpoint<D>& dp)
+  {
+    return this->add(dp.exact());
+  }
+
+  template <typename dpoint>
+  unsigned neighb_<dpoint>::card() const
+  {
+    return v_.size();
+  }
+
+  template <typename dpoint>
+  dpoint neighb_<dpoint>::dp(unsigned i) const
+  {
+    precondition(i < v_.size());
+    return v_[i];
+  }
+
+  template <typename dpoint>
+  void neighb_<dpoint>::update_()
+  {
+    v_.clear();
+    std::copy(s_.begin(), s_.end(),
+	      std::back_inserter(v_));
+  }
+
+# endif
   
 
 } // end of namespace oln

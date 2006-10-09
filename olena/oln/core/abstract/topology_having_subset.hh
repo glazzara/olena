@@ -48,16 +48,28 @@ namespace oln
     public:
 
       // abstract
-      const subset_t& subset() const
-      {
-	return this->exact().impl_subset();
-      }
+      const subset_t& subset() const;
 
     protected:
 
-      topology_having_subset()
-      {}
+      topology_having_subset();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    const oln_type_of(E, subset)&
+    topology_having_subset<E>::subset() const
+    {
+      return this->exact().impl_subset();
+    }
+
+    template <typename E>
+    topology_having_subset<E>::topology_having_subset()
+    {}
+
+# endif
 
 
   } // end of namespace oln::abstract

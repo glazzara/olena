@@ -70,20 +70,41 @@ namespace oln
 	stc_virtual_typedef(bkd_niter);
       };
 
-      const neighborhood_t& neighborhood() const
-      {
-	return this->topo().neighborhood();
-      }
+      const neighborhood_t& neighborhood() const;
 
     protected:
 
       /// Constructor (protected, empty).
-      image_having_neighborhood() {}
+      image_having_neighborhood();
 
       /// Destructor (protected).
-      ~image_having_neighborhood() { decl(); }
+      ~image_having_neighborhood();
 
     };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    const typename image_having_neighborhood<E>::neighborhood_t&
+    image_having_neighborhood<E>::neighborhood() const
+    {
+      return this->topo().neighborhood();
+    }
+
+    template <typename E>
+    image_having_neighborhood<E>::image_having_neighborhood()
+    {
+    }
+    
+    template <typename E>
+    image_having_neighborhood<E>::~image_having_neighborhood()
+    {
+      decl();
+    }
+
+# endif
  
   } // end of namespace oln::abstract
 

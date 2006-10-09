@@ -44,8 +44,19 @@ namespace oln
   struct image_entry : public entry<abstract::image, E>
   {
   protected:
-    image_entry() {}
+    image_entry();
   };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename E>
+  image_entry<E>::image_entry()
+  {
+  }
+
+# endif
+
 
 
   /// Virtual types associated to image_entry<E>.

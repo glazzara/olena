@@ -50,51 +50,81 @@ namespace oln
       
     public:
 
-      const bbox_t& bbox() const
-      {
-	return this->exact().impl_box();
-      }
+      const bbox_t& bbox() const;
 
-      // FIXME: attributes should be removed from this abstract class.
+      const point_t& pmin() const;
 
-      const point_t& pmin() const
-      {
-	precondition(this->is_valid());
-	return pmin_;
-      }
+      coord_t pmin(unsigned i) const;
 
-      coord_t pmin(unsigned i) const
-      {
-	precondition(this->is_valid() and i < n);
-	return pmin_[i];
-      }
+      const point_t& pmax() const;
 
-      const point_t& pmax() const
-      {
-	precondition(this->is_valid());
-	return pmax_;
-      }
+      coord_t pmax(unsigned i) const;
 
-      coord_t pmax(unsigned i) const
-      {
-	precondition(this->is_valid() and i < n);
-	return pmax_[i];
-      }
-
-      unsigned len(unsigned i) const
-      {
-	precondition(this->is_valid() and i < n);
-	return pmax_[i] - pmin_[i] + 1;
-      }
+      unsigned len(unsigned i) const;
 
     protected:
 
-      point_set_having_bbox()
-      {}
+      point_set_having_bbox();
 
       point_t pmin_, pmax_;
     };
 
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    const typename point_set_having_bbox<E>::bbox_t&
+    point_set_having_bbox<E>::bbox() const
+    {
+      return this->exact().impl_box();
+    }
+
+    template <typename E>
+    const typename point_set_having_bbox<E>::point_t&
+    point_set_having_bbox<E>::pmin() const
+    {
+      precondition(this->is_valid());
+      return pmin_;
+    }
+
+    template <typename E>
+    typename point_set_having_bbox<E>::coord_t
+    point_set_having_bbox<E>::pmin(unsigned i) const
+    {
+      precondition(this->is_valid() and i < n);
+      return pmin_[i];
+    }
+
+    template <typename E>
+    const typename point_set_having_bbox<E>::point_t&
+    point_set_having_bbox<E>::pmax() const
+    {
+      precondition(this->is_valid());
+      return pmax_;
+    }
+
+    template <typename E>
+    typename point_set_having_bbox<E>::coord_t
+    point_set_having_bbox<E>::pmax(unsigned i) const
+    {
+      precondition(this->is_valid() and i < n);
+      return pmax_[i];
+    }
+
+    template <typename E>
+    unsigned
+    point_set_having_bbox<E>::len(unsigned i) const
+    {
+      precondition(this->is_valid() and i < n);
+      return pmax_[i] - pmin_[i] + 1;
+    }
+
+    template <typename E>
+    point_set_having_bbox<E>::point_set_having_bbox()
+    {}
+
+# endif
 
   } // end of namespace oln::abstract
 

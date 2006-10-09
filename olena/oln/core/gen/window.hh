@@ -44,48 +44,76 @@ namespace oln
 
   public:
     
-    window_()
-    {
-    }
+    window_();
 
-    self_t& add(const dpoint& dp)
-    {
-      s_.insert(dp);
-      update_();
-      return *this;
-    }
+    window_<dpoint>& add(const dpoint& dp);
 
     template <typename D>
-    self_t& add(const abstract::dpoint<D>& dp)
-    {
-      return this->add(dp.exact());
-    }
+      window_<dpoint>& add(const abstract::dpoint<D>& dp);
 
-    unsigned card() const
-    {
-      return v_.size();
-    }
+    unsigned card() const;
 
-    dpoint dp(unsigned i) const
-    {
-      precondition(i < v_.size());
-      return v_[i];
-    }
+    dpoint dp(unsigned i) const;
 
   protected:
 
     std::set<dpoint>    s_;
     std::vector<dpoint> v_;
 
-    void update_()
-    {
-      v_.clear();
-      std::copy(s_.begin(), s_.end(),
-		std::back_inserter(v_));
-    }
+    void update_();
 
   }; // end of class oln::window_<dpoint>
-  
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename dpoint>
+  window_<dpoint>::window_()
+  {
+  }
+
+  template <typename dpoint>
+  window_<dpoint>&
+  window_<dpoint>::add(const dpoint& dp)
+  {
+    s_.insert(dp);
+    update_();
+    return *this;
+  }
+
+  template <typename dpoint>
+  template <typename D>
+  window_<dpoint>&
+  window_<dpoint>::add(const abstract::dpoint<D>& dp)
+  {
+    return this->add(dp.exact());
+  }
+
+  template <typename dpoint>
+  unsigned
+  window_<dpoint>::card() const
+  {
+    return v_.size();
+  }
+
+  template <typename dpoint>
+  dpoint
+  window_<dpoint>::dp(unsigned i) const
+  {
+    precondition(i < v_.size());
+    return v_[i];
+  }
+
+  template <typename dpoint>
+  void
+  window_<dpoint>::update_()
+  {
+    v_.clear();
+    std::copy(s_.begin(), s_.end(),
+	      std::back_inserter(v_));
+  }
+
+# endif
 
 } // end of namespace oln
 

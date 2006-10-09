@@ -93,7 +93,20 @@ namespace oln
 				typename mlc::is_defined_< oln::case_< oln::hierarchy<abstraction, num>,
 								       E, 1 > >::eval >
     {
+      ~entry_node();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template < template <class> class abstraction,
+	       typename E,
+	       unsigned num >
+    entry_node<abstraction, E, num>::~entry_node()
+    {
+    }
+
+# endif
 
   } // end of namespace oln::internal
 
@@ -114,11 +127,27 @@ namespace oln
 	     typename E >
   struct entry : public internal::entry_node<abstraction, E, 1>
   {
+    ~entry();
   protected:
-    entry()
-    {
-    }
+    entry();
   };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template < template <class> class abstraction,
+	     typename E >
+  entry<abstraction, E>::entry()
+  {
+  }
+
+  template < template <class> class abstraction,
+	     typename E >
+  entry<abstraction, E>::~entry()
+  {
+  }
+
+# endif
 
 
   // Super type declaration.

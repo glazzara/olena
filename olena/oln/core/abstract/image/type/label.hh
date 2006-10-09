@@ -45,8 +45,17 @@ namespace oln
     {
     protected:
       /// Constructor (protected, empty).
-      label_image() {}
+      label_image();
     };
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    label_image<E>::label_image()
+    {
+    }
+
+# endif
 
   } // end of namespace oln::abstract
 

@@ -44,8 +44,18 @@ namespace oln
   struct topology_entry : public entry< abstract::topology, E>
   {
   protected:
-    topology_entry() {}
+    topology_entry();
   };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename E>
+  topology_entry<E>::topology_entry()
+  {
+  }
+
+# endif
 
 
   /// Virtual types associated to topology_entry<E>.

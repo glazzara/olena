@@ -69,30 +69,14 @@ namespace oln
   {
   public:
 
-    topo_add_nbh()
-    {
-    }
+    topo_add_nbh();
 
-    topo_add_nbh(const topo_t& topo, const nbh_t& nbh)
-      : topo_(topo),
-	nbh_(nbh)
-    {
-    }
+    topo_add_nbh(const topo_t& topo, const nbh_t& nbh);
+    const nbh_t& impl_neighborhood() const;
 
-    const nbh_t& impl_neighborhood() const
-    {
-      return nbh_;
-    }
+    const topo_t& delegate() const;
 
-    const topo_t& delegate() const
-    {
-      return topo_;
-    }
-
-    operator topo_t() const
-    {
-      return topo_;
-    }
+    operator topo_t() const;
 
   protected:
 
@@ -100,6 +84,40 @@ namespace oln
     nbh_t nbh_;
   };
 
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename topo_t, typename nbh_t>
+  topo_add_nbh<topo_t, nbh_t>::topo_add_nbh()
+  {
+  }
+
+  template <typename topo_t, typename nbh_t>
+  topo_add_nbh<topo_t, nbh_t>::topo_add_nbh(const topo_t& topo, const nbh_t& nbh)
+    : topo_(topo),
+      nbh_(nbh)
+  {
+  }
+
+  template <typename topo_t, typename nbh_t>
+  const nbh_t& topo_add_nbh<topo_t, nbh_t>::impl_neighborhood() const
+  {
+    return nbh_;
+  }
+
+  template <typename topo_t, typename nbh_t>
+  const topo_t& topo_add_nbh<topo_t, nbh_t>::delegate() const
+  {
+    return topo_;
+  }
+
+  template <typename topo_t, typename nbh_t>
+  topo_add_nbh<topo_t, nbh_t>::operator topo_t() const
+  {
+    return topo_;
+  }
+
+# endif
 
 } // end of namespace oln
 

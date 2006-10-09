@@ -36,8 +36,8 @@ namespace oln
 {
  
   /*-------------------------.
-  | Dimension abstractions.  |
-  `-------------------------*/
+    | Dimension abstractions.  |
+    `-------------------------*/
 
   namespace abstract
   {
@@ -59,45 +59,76 @@ namespace oln
       {
 	stc_virtual_typedef(bbox);
 
-	decl()
-	{
-	  mlc::assert_< mlc_is_a(bbox, abstract::bbox) >::check();
-	}
+	decl();
       };
 
       // Concrete method.
-      const bbox_t& bbox() const
-      {
-	return this->topo().bbox();
-      }
+      const bbox_t& bbox() const;
 
       // Concrete method.
-      const point_t& pmin() const
-      {
-	return this->topo().bbox().pmin();
-      }
+      const point_t& pmin() const;
 
       // Concrete method.
-      const point_t& pmax() const
-      {
-	return this->topo().bbox().pmax();
-      }
+      const point_t& pmax() const;
 
     protected:
 
       /// Constructor (protected, empty).
+      image_having_bbox();
 
-      image_having_bbox() {}
       /// Destructor.
-      virtual ~image_having_bbox() { decl(); }
+      virtual ~image_having_bbox();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    image_having_bbox<E>::decl::decl()
+    {
+      mlc::assert_< mlc_is_a(bbox, abstract::bbox) >::check();
+    }
+
+    template <typename E>
+    const typename image_having_bbox<E>::bbox_t&
+    image_having_bbox<E>::bbox() const
+    {
+      return this->topo().bbox();
+    }
+
+    template <typename E>
+    const typename image_having_bbox<E>::point_t&
+    image_having_bbox<E>::pmin() const
+    {
+      return this->topo().bbox().pmin();
+    }
+
+    template <typename E>
+    const typename image_having_bbox<E>::point_t&
+    image_having_bbox<E>::pmax() const
+    {
+      return this->topo().bbox().pmax();
+    }
+
+    template <typename E>
+    image_having_bbox<E>::image_having_bbox()
+    {
+    }
+
+    template <typename E>
+    image_having_bbox<E>::~image_having_bbox()
+    {
+      decl();
+    }
+
+# endif
  
   } // end of namespace oln::abstract
 
 
   /*-------------------.
-  | Dimension switch.  |
-  `-------------------*/
+    | Dimension switch.  |
+    `-------------------*/
 
   /// With bbox.
   template <typename E>

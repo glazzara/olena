@@ -72,36 +72,71 @@ namespace oln
   {
     typedef point2d_<C> self_t;
     typedef stc_get_super(point2d_<C>) super_t;
-    typedef oln_type_of(self_t, coord) coord_t;
 
     using super_t::v_;
 
   public:
 
     /// Ctor.
-    point2d_()
-    {
-    }
+    point2d_();
 
     /// Ctor.
-    point2d_(coord_t row, coord_t col)
-      : super_t (xtd::mk_vec(row, col))
-    {
-    }
+    point2d_(C row, C col);
 
     /// Ctor.
-    point2d_(const xtd::vec<2,coord_t>& v)
-      : super_t(v)
+    point2d_(const xtd::vec<2,C>& v);
+
+    ///Dtor.
+    ~point2d_()
     {
     }
 
-    coord_t  row() const { return v_[0]; }
-    coord_t& row()       { return v_[0]; }
+    C  row() const;
+    C& row();
 
-    coord_t  col() const { return v_[1]; }
-    coord_t& col()       { return v_[1]; }
+    C  col() const;
+    C& col();      
   };
 
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename C>
+  point2d_<C>::point2d_()
+  {
+  }
+
+  template <typename C>
+  point2d_<C>::point2d_(C row, C col)
+    : super_t (xtd::mk_vec(row, col))
+  {
+  }
+
+  template <typename C>
+  point2d_<C>::point2d_(const xtd::vec<2,C>& v)
+    : super_t(v)
+  {
+  }
+
+//   template <typename C>
+//   point2d_<C>::~point2d_()
+//   {
+//   }
+
+  template <typename C>
+  C point2d_<C>::row() const { return v_[0]; }
+
+  template <typename C>
+  C& point2d_<C>::row()       { return v_[0]; }
+
+  template <typename C>
+  C point2d_<C>::col() const { return v_[1]; }
+
+  template <typename C>
+  C& point2d_<C>::col()       { return v_[1]; }
+
+# endif
 
 } // end of namespace oln
 

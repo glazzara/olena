@@ -72,33 +72,64 @@ namespace oln
     {
     public:
 
-      bool operator==(const abstract::dpoint<E>& rhs) const
+      bool operator==(const abstract::dpoint<E>& rhs) const;
+      bool operator!=(const abstract::dpoint<E>& rhs) const;
+
+      bool operator< (const abstract::dpoint<E>& rhs) const;
+      bool operator> (const abstract::dpoint<E>& rhs) const;
+      bool operator>=(const abstract::dpoint<E>& rhs) const;
+      bool operator<=(const abstract::dpoint<E>& rhs) const;
+
+      ~dpoint()
       {
-	return this->exact().impl_eq(rhs.exact());
+	// FIXME: Code is below.
       }
-
-      bool operator!=(const abstract::dpoint<E>& rhs) const { return not (*this == rhs); }
-
-      bool operator<(const abstract::dpoint<E>& rhs) const
-      {
-	return this->exact().impl_less(rhs.exact());
-      }
-
-      bool operator> (const abstract::dpoint<E>& rhs) const { return rhs < *this; }
-      bool operator>=(const abstract::dpoint<E>& rhs) const { return not (*this < rhs); }
-      bool operator<=(const abstract::dpoint<E>& rhs) const { return not (rhs < *this); }
 
     protected:
-      dpoint()
-      {}
 
-      ~dpoint() {
-	mlc::assert_defined_< oln_type_of(E, grid)  >::check();
-	mlc::assert_defined_< oln_type_of(E, point) >::check();
-	mlc::assert_defined_< oln_type_of(E, coord) >::check();
-	mlc::assert_defined_< oln_type_of(E, dim)   >::check();
-      }
+      dpoint();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    bool dpoint<E>::operator==(const abstract::dpoint<E>& rhs) const
+    {
+      return this->exact().impl_eq(rhs.exact());
+    }
+
+    template <typename E>
+    bool dpoint<E>::operator!=(const abstract::dpoint<E>& rhs) const { return not (*this == rhs); }
+
+    template <typename E>
+    bool dpoint<E>::operator<(const abstract::dpoint<E>& rhs) const
+    {
+      return this->exact().impl_less(rhs.exact());
+    }
+
+    template <typename E>
+    bool dpoint<E>::operator> (const abstract::dpoint<E>& rhs) const { return rhs < *this; }
+
+    template <typename E>
+    bool dpoint<E>::operator>=(const abstract::dpoint<E>& rhs) const { return not (*this < rhs); }
+
+    template <typename E>
+    bool dpoint<E>::operator<=(const abstract::dpoint<E>& rhs) const { return not (rhs < *this); }
+
+    template <typename E>
+    dpoint<E>::dpoint()
+    {}
+
+//     template <typename E>
+//     dpoint<E>::~dpoint() {
+//       mlc::assert_defined_< oln_type_of(E, grid)  >::check();
+//       mlc::assert_defined_< oln_type_of(E, point) >::check();
+//       mlc::assert_defined_< oln_type_of(E, coord) >::check();
+//       mlc::assert_defined_< oln_type_of(E, dim)   >::check();
+//     }
+
+# endif
 
 
   } // end of namespace oln::abstract

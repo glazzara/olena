@@ -61,17 +61,29 @@ namespace oln
 
       /// Delegation.
 
-      const topo_t& impl_topo() const
-      {
-	return this->exact().delegate().topo();
-      }
-
-      rvalue_t impl_op_read(const psite_t& p) const
-      {
-	return this->exact().delegate().operator()(p);
-      }
+      const topo_t& impl_topo() const;
+      rvalue_t impl_op_read(const psite_t& p) const;
 
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    const typename set_impl<abstract::image, morpher::tag::identity, E>::topo_t&
+    set_impl<abstract::image, morpher::tag::identity, E>::impl_topo() const
+    {
+      return this->exact().delegate().topo();
+    }
+
+    template <typename E>
+    typename set_impl<abstract::image, morpher::tag::identity, E>::rvalue_t
+    set_impl<abstract::image, morpher::tag::identity, E>::impl_op_read(const typename set_impl<abstract::image, morpher::tag::identity, E>::psite_t& p) const
+    {
+      return this->exact().delegate().operator()(p);
+    }
+
+# endif
 
   } // end of namespace oln::automatic
   

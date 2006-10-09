@@ -52,9 +52,18 @@ namespace oln {
     struct grid : public virtual stc::any__simple<E>
     {
     protected:
-      grid()
-      {}
+      grid();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    grid<E>::grid()
+    {
+    }
+
+# endif
 
   } // end of namespace oln::abstract
 

@@ -45,30 +45,54 @@ namespace oln
     {
     public:
 
-      void print(std::ostream& ostr) const
-      {
-	this->exact().impl_print(ostr);
-      }
-      
-      friend
-      std::ostream& operator<<(std::ostream& ostr, const abstract::bbox<E>& bb)
-      {
-	bb.print(ostr);
-	return ostr;
-      }
+      void print(std::ostream& ostr) const;
 
-      const E& impl_bbox() const
+      const E& impl_bbox() const;
+
+      ~bbox()
       {
-	return this->exact();
       }
       
     protected:
 
-      bbox()
-      {
-      }
+      bbox();
 
     }; // end of class oln::abstract::bbox<E>
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+
+    template <typename E>
+    void bbox<E>::print(std::ostream& ostr) const
+    {
+      this->exact().impl_print(ostr);
+    }
+      
+    template <typename E>
+    std::ostream& operator<<(std::ostream& ostr, const abstract::bbox<E>& bb)
+    {
+      bb.print(ostr);
+      return ostr;
+    }
+
+    template <typename E>
+    const E& bbox<E>::impl_bbox() const
+    {
+      return this->exact();
+    }
+
+    template <typename E>
+    bbox<E>::bbox()
+    {
+    }
+    
+//     template <typename E>
+//     bbox<E>::~bbox()
+//     {
+//     }
+
+# endif
 
 
   } // end of namespace oln::abstract

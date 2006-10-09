@@ -48,22 +48,39 @@ namespace oln
     public:
 
       // abstract
-      const neighborhood_t& neighborhood() const
-      {
-	return this->exact().impl_neighborhood();
-      }
+      const neighborhood_t& neighborhood() const;
 
       // concrete
-      operator neighborhood_t() const
-      {
-	return this->neighborhood();
-      }
+      operator neighborhood_t() const;
 
     protected:
 
-      topology_having_neighborhood()
-      {}
+      topology_having_neighborhood();
     };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    const oln_type_of(E, neighborhood)&
+    topology_having_neighborhood<E>::neighborhood() const
+    {
+      return this->exact().impl_neighborhood();
+    }
+
+    template <typename E>
+    topology_having_neighborhood<E>::operator oln_type_of(E, neighborhood)() const
+    {
+      return this->neighborhood();
+    }
+
+    template <typename E>
+    topology_having_neighborhood<E>::topology_having_neighborhood()
+    {
+    }
+
+# endif
 
 
   } // end of namespace oln::abstract

@@ -81,31 +81,50 @@ namespace oln
 
       // FIXME: Handle the constness.
 
-//       template <typename I, typename N>
-//       add_neighborhood(const abstract::image<I>& image, const N& nbh)
-// 	: super_t(image)
-//       {
-//       }
+      //       template <typename I, typename N>
+      //       add_neighborhood(const abstract::image<I>& image, const N& nbh)
+      // 	: super_t(image)
+      //       {
+      //       }
 
-      add_neighborhood(const Image& image, const Neighb& nbh) :
-	super_t(image),
-	topo_(image.topo(), nbh)
-      {
-	mlc::assert_equal_<oln_type_of(Image, grid), oln_type_of(Neighb, grid)>::check();
-	// FIXME: check that Image is without a nbh
-      }
-
-      const topo_t& impl_topo() const
-      {
-	return topo_;
-      }
+      add_neighborhood(const Image& image, const Neighb& nbh);
+      const topo_t& impl_topo() const;
 
     protected:
       topo_t topo_;
     };
 
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename Image, typename Neighb>
+    add_neighborhood<Image, Neighb>::add_neighborhood(const Image& image, const Neighb& nbh) :
+      super_t(image),
+      topo_(image.topo(), nbh)
+    {
+      mlc::assert_equal_<oln_type_of(Image, grid), oln_type_of(Neighb, grid)>::check();
+      // FIXME: check that Image is without a nbh
+    }
+
+    template <typename Image, typename Neighb>
+    const typename add_neighborhood<Image, Neighb>::topo_t&
+    add_neighborhood<Image, Neighb>::impl_topo() const
+    {
+      return topo_;
+    }
+
+# endif
+
   } // end of namespace oln::morpher
 
+
+
+  template <typename I, typename N>
+  morpher::add_neighborhood<I, N>
+  operator + (const abstract::image<I>& image, const abstract::neighborhood<N>& nbh);
+
+
+# ifndef OLN_INCLUDE_ONLY
 
   template <typename I, typename N>
   morpher::add_neighborhood<I, N>
@@ -118,6 +137,7 @@ namespace oln
     return tmp;
   }
 
+# endif
 
 } // end of namespace oln
 

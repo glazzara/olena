@@ -64,36 +64,62 @@ namespace oln
   {
     typedef dpoint2d_<C>                self_t;
     typedef stc_get_super(dpoint2d_<C>) super_t;
-    typedef oln_type_of(self_t, coord)  coord_t;
 
     using super_t::v_;
 
   public:
 
     /// Ctor.
-    dpoint2d_()
-    {
-    }
+    dpoint2d_();
 
     /// Ctor.
-    dpoint2d_(const xtd::vec<2,coord_t>& v)
-      : super_t(v)
-    {
-    }
+    dpoint2d_(const xtd::vec<2,C>& v);
 
     /// Ctor.
-    dpoint2d_(coord_t row, coord_t col)
-      : super_t(xtd::mk_vec(row, col))
-    {
-    }
+    dpoint2d_(C row, C col);
 
-    coord_t  row() const { return v_[0]; }
-    coord_t& row()       { return v_[0]; }
+    C  row() const;
+    C& row();
 
-    coord_t  col() const { return v_[1]; }
-    coord_t& col()       { return v_[1]; }
+    C  col() const;
+    C& col();
   };
 
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename C>
+  dpoint2d_<C>::dpoint2d_()
+  {
+  }
+
+  /// Ctor.
+  template <typename C>
+  dpoint2d_<C>::dpoint2d_(const xtd::vec<2,C>& v)
+    : super_t(v)
+  {
+  }
+
+  /// Ctor.
+  template <typename C>
+  dpoint2d_<C>::dpoint2d_(C row, C col)
+    : super_t(xtd::mk_vec(row, col))
+  {
+  }
+
+  template <typename C>
+  C  dpoint2d_<C>::row() const { return v_[0]; }
+
+  template <typename C>
+  C& dpoint2d_<C>::row()       { return v_[0]; }
+
+  template <typename C>
+  C  dpoint2d_<C>::col() const { return v_[1]; }
+
+  template <typename C>
+  C& dpoint2d_<C>::col()       { return v_[1]; }
+
+# endif
 
 } // end of namespace oln
 

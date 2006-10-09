@@ -46,35 +46,55 @@ namespace oln
     {
     public:
 
-      void start()
-      {
-	this->exact().impl_start();
-      }
+      void start();
 
-      void next()
-      {
-	precondition(this->is_valid());
-	this->exact().impl_next();
-      }
+      void next();
 
-      void invalidate()
-      {
-	this->exact().impl_invalidate();
-      }
+      void invalidate();
 
-      bool is_valid() const
-      {
-	return this->exact().impl_is_valid();
-      }
+      bool is_valid() const;
 
     protected:
       
-      iterator()
-      {
-      }
+      iterator();
 
     }; // end of class oln::abstract::iterator<E>
 
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    void iterator<E>::start()
+    {
+      this->exact().impl_start();
+    }
+
+    template <typename E>
+    void iterator<E>::next()
+    {
+      precondition(this->is_valid());
+      this->exact().impl_next();
+    }
+
+    template <typename E>
+    void iterator<E>::invalidate()
+    {
+      this->exact().impl_invalidate();
+    }
+
+    template <typename E>
+    bool iterator<E>::is_valid() const
+    {
+      return this->exact().impl_is_valid();
+    }
+
+    template <typename E>
+    iterator<E>::iterator()
+    {
+    }
+
+# endif
 
   } // end of namespace oln::abstract
 

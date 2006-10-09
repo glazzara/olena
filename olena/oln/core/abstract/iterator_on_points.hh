@@ -68,38 +68,62 @@ namespace oln
 
     public:
 
-      point_t to_point() const
-      {
-	precondition(this->is_valid());
-	return this->exact().impl_to_point();
-      }
+      point_t to_point() const;
 
-      const point_t* point_adr() const
-      {
-	return this->exact().impl_point_adr();
-      }
+      const point_t* point_adr() const;
 
       // Concrete method.
-      operator point_t() const
-      {
-	precondition(this->is_valid());
-	return this->to_point();
-      }
+      operator point_t() const;
 
     protected:
 
-      iterator_on_points()
-      {
-      }
+      iterator_on_points();
 
-      ~iterator_on_points()
-      {
-	mlc::assert_defined_< point_t >::check();
-	mlc::assert_< mlc_is_a(point_t, abstract::point) >::check();
-      }
+      ~iterator_on_points();
 
     }; // end of class oln::abstract::iterator_on_points<E>
 
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    typename iterator_on_points<E>::point_t
+    iterator_on_points<E>::to_point() const
+    {
+      precondition(this->is_valid());
+      return this->exact().impl_to_point();
+    }
+
+    template <typename E>
+    const typename iterator_on_points<E>::point_t*
+    iterator_on_points<E>::point_adr() const
+    {
+      return this->exact().impl_point_adr();
+    }
+
+    template <typename E>
+    // Concrete method.
+    iterator_on_points<E>::operator typename iterator_on_points<E>::point_t() const
+    {
+      precondition(this->is_valid());
+      return this->to_point();
+    }
+
+    template <typename E>
+    iterator_on_points<E>::iterator_on_points()
+    {
+    }
+
+    template <typename E>
+    iterator_on_points<E>::~iterator_on_points()
+    {
+      mlc::assert_defined_< typename iterator_on_points<E>::point_t >::check();
+      mlc::assert_< mlc_is_a(typename iterator_on_points<E>::point_t, abstract::point) >::check();
+    }
+
+
+# endif
 
   } // end of namespace oln::abstract
 

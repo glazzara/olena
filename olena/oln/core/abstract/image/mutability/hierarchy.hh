@@ -37,8 +37,8 @@ namespace oln
 {
  
   /*-------------------------.
-  | Dimension abstractions.  |
-  `-------------------------*/
+    | Dimension abstractions.  |
+    `-------------------------*/
 
   namespace abstract
   {
@@ -67,27 +67,47 @@ namespace oln
 
       using image<E>::operator();
 
-      lvalue_t& operator()(const psite_t& p)
-      {
-	return this->exact().impl_op_readwrite(p);
-      }
+      lvalue_t& operator()(const psite_t& p);
 
     protected:
 
       /// Constructor (protected, empty).
-      image_being_mutable() {}
+      image_being_mutable();
 
       /// Destructor (protected).
-      ~image_being_mutable() { decl(); }
+      ~image_being_mutable();
 
     };
- 
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    typename image_being_mutable<E>::lvalue_t&
+    image_being_mutable<E>::operator()(const typename image_being_mutable<E>::psite_t& p)
+    {
+      return this->exact().impl_op_readwrite(p);
+    }
+
+    template <typename E>
+    image_being_mutable<E>::image_being_mutable()
+    {
+    }
+
+    template <typename E>
+    image_being_mutable<E>::~image_being_mutable()
+    {
+      decl();
+    }
+
+# endif
+
   } // end of namespace oln::abstract
 
 
   /*-------------------.
-  | Dimension switch.  |
-  `-------------------*/
+    | Dimension switch.  |
+    `-------------------*/
 
   /// With mutability.
   template <typename E>

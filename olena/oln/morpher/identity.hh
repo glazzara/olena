@@ -63,12 +63,20 @@ namespace oln
 
     public:
       // FIXME: Handle the constness.
-      identity(const Image& image) :
-	super_t(image)
-      {
-      }
+      identity(const Image& image);
 
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename Image>
+    identity<Image>::identity(const Image& image) :
+      super_t(image)
+    {
+    }
+
+# endif
 
   } // end of namespace oln::morpher
 
