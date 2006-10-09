@@ -1,5 +1,10 @@
 2006-10-09  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* stc/scoop.hh (stc_virtual_typedef): Remove this macro which
+	cannot be consistent wrt to client namespaces.
+
+2006-10-09  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* stc/scoop.hh (stc_virtual_typedef): Fix macro.
 
 2006-09-29  Roland Levillain  <roland@lrde.epita.fr>
