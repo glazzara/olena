@@ -1,3 +1,12 @@
+2006-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add sanity check to Olena.
+
+	* tests/sanity/check.in, tests/sanity/Makefile.am,
+	* tests/check/defs.in, tests/check/Makefile.flags,
+	* tests/check/Makefile.am: New.
+	* tests/Makefile.am (SUBDIRS): New.
+
 2006-10-09  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Change stc_virtual_typedef into oln_virtual_typedef.

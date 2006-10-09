@@ -1,5 +1,7 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
+SUBDIRS = check sanity
+
 AM_CPPFLAGS =						\
   -I$(top_srcdir)/olena -I$(top_srcdir)/extended	\
   -I$(top_srcdir)/static -I$(top_srcdir)/metalic

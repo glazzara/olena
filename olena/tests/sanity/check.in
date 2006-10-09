@@ -1,0 +1,31 @@
+#! /bin/sh
+
+# Check that a header is self-contained and generates no warning.
+# This script is meant to be used ``by-hand'' to check a single file.
+
+: ${VERBOSE=1}
+
+. "@abs_builddir@/../check/defs" || exit 1
+
+set -e
+
+if test $# = 0; then
+  echo "usage: $0 oln/path/to/file.hh"
+  echo "(File path is relative to the Olena source directory.)"
+  exit 1
+else
+  top_srcdir=@abs_top_srcdir@
+  top_builddir=@abs_top_builddir@
+  file=$1
+  CPPFLAGS="$CPPFLAGS \
+    -I$top_srcdir/olena    -I$top_builddir/olena    \
+    -I$top_srcdir/extended -I$top_builddir/extended \
+    -I$top_srcdir/static   -I$top_builddir/static   \
+    -I$top_srcdir/metalic  -I$top_builddir/metalic"
+  echo "#include <$file>" > incltest.cc
+  if $CXX $CPPFLAGS $CXXFLAGS -c incltest.cc; then
+    echo "  PASS: $file"
+  else
+    echo "  FAIL: $file"
+  fi
+fi

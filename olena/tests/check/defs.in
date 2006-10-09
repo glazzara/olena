@@ -1,0 +1,17 @@
+# -*- shell-script -*-
+
+# User can set VERBOSE to see all output.
+if test "x$VERBOSE" = x; then
+   exec > /dev/null 2>&1
+fi
+
+SHELL="@SHELL@"
+EXEEXT="@EXEEXT@"
+CXX="@CXX@"
+
+# Turn on shell traces when VERBOSE=x.
+if test "x$VERBOSE" = xx; then
+  set -x
+else
+  :
+fi

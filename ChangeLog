@@ -1,3 +1,11 @@
+2006-10-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add sanity check to Olena.
+
+	* configure.ac: Configure olena/tests/check/Makefile,
+	olena/tests/check/defs, olena/tests/sanity/Makefile and
+	olena/tests/sanity/check.
+
 2006-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Create a configure variable for C++ compiler flags used for the

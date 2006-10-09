@@ -74,6 +74,13 @@ AC_CONFIG_FILES([
       olena/oln/Makefile
     dynamic/Makefile
 ])
+# FIXME: Should be performed through oln.m4 macros.
+AC_CONFIG_FILES([
+  olena/tests/check/Makefile
+  olena/tests/check/defs
+  olena/tests/sanity/Makefile
+])
+AC_CONFIG_FILES([olena/tests/sanity/check],
+		[chmod +x olena/tests/sanity/check])
 
-# Checks for library functions.
 AC_OUTPUT
