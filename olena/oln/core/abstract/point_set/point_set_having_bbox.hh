@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_POINT_SET_HAVING_BBOX_HH
-# define OLN_CORE_ABSTRACT_POINT_SET_HAVING_BBOX_HH
+#ifndef OLN_CORE_ABSTRACT_POINT_SET_POINT_SET_HAVING_BBOX_HH
+# define OLN_CORE_ABSTRACT_POINT_SET_POINT_SET_HAVING_BBOX_HH
 
 # include <oln/core/abstract/point_set.hh>
+# include <oln/core/abstract/point_set/hierarchies.hh>
 
 
 namespace oln
@@ -37,15 +38,14 @@ namespace oln
   namespace abstract
   {
 
-
     template <typename E>
     class point_set_having_bbox : public virtual point_set<E>
     {
-      typedef oln_type_of(E, point) point_t;
-      typedef oln_type_of(E, bbox)  bbox_t;
+      typedef oln_check_type_of(E, point) point_t;
+      typedef oln_check_type_of(E, bbox)  bbox_t;
 
-      typedef oln_type_of(point_t, coord) coord_t;
-      typedef oln_type_of(point_t, dim) dim_t;
+      typedef oln_check_type_of(point_t, coord) coord_t;
+      typedef oln_check_type_of(point_t, dim) dim_t;
       enum { n = mlc_value(dim_t) };
       
     public:
@@ -129,11 +129,30 @@ namespace oln
   } // end of namespace oln::abstract
 
 
-  // an abstract sub-class of point_set_having_bbox<E> is abstract::bbox<E>;
-  // the switch-case mechanism is in oln/core/abstract/bbox.hh
+  // Fwd. decl.
+  namespace abstract
+  {
+    template <typename E> class bbox;
+  }
+
+
+  template <typename E>
+  struct case_ < point_set_hierarchy_wrt_bbox, E, 1 >
+    : where_< mlc::eq_< oln_type_of(E, bbox), E > >
+  {
+    typedef abstract::bbox<E> ret;
+  };
+
+
+  template <typename E>
+  struct case_ < point_set_hierarchy_wrt_bbox, E, 2 >
+    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+  {
+    typedef abstract::point_set_having_bbox<E> ret;
+  };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_POINT_SET_HAVING_BBOX_HH
+#endif // ! OLN_CORE_ABSTRACT_POINT_SET_POINT_SET_HAVING_BBOX_HH

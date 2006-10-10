@@ -31,6 +31,8 @@
 
 # include <mlc/int.hh>
 # include <oln/core/internal/point_nd.hh>
+// For oln::point3d and oln::point3df.
+# include <oln/core/3d/aliases.hh>
 
 
 namespace oln
@@ -107,8 +109,6 @@ namespace oln
 
 
 } // end of namespace oln
-
-# include <oln/core/3d/dpoint3d.hh>
 
 
 #endif // ! OLN_CORE_3D_POINT3D_HH

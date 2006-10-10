@@ -29,6 +29,7 @@
 # define OLN_CORE_ABSTRACT_IMAGE_DIMENSION_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/hierarchies.hh>
 
 
 /* Image dimension hierarchy (summary).

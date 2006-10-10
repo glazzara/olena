@@ -32,6 +32,8 @@
 # include <mlc/int.hh>
 # include <oln/core/2d/point2d.hh>
 # include <oln/core/internal/dpoint_nd.hh>
+// For oln::dpoint2d and oln::dpoint2df.
+# include <oln/core/2d/aliases.hh>
 
 
 namespace oln
@@ -120,6 +122,7 @@ namespace oln
   C& dpoint2d_<C>::col()       { return v_[1]; }
 
 # endif
+
 
 } // end of namespace oln
 

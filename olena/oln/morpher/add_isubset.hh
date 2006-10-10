@@ -28,6 +28,8 @@
 #ifndef OLN_MORPHER_ADD_ISUBSET
 # define OLN_MORPHER_ADD_ISUBSET
 
+# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/type/binary.hh>
 # include <oln/morpher/internal/image_extension.hh>
 # include <oln/core/gen/topo_add_isubset.hh>
 # include <oln/core/gen/piter_isubset.hh>

@@ -25,65 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_SUBSET_HH
-# define OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_SUBSET_HH
+#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
+# define OLN_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
 
+# include <oln/core/abstract/entry.hh>
 # include <oln/core/abstract/topology.hh>
-# include <oln/core/automatic/topology_having_subset.hh>
 
 
 namespace oln
 {
 
-  namespace abstract
-  {
-
-    template <typename E>
-    class topology_having_subset
-      : public virtual topology<E>,
-	public automatic::get_impl<topology_having_subset, E>
-    {
-      typedef oln_type_of(E, subset) subset_t;
-      
-    public:
-
-      // abstract
-      const subset_t& subset() const;
-
-    protected:
-
-      topology_having_subset();
-    };
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename E>
-    const oln_type_of(E, subset)&
-    topology_having_subset<E>::subset() const
-    {
-      return this->exact().impl_subset();
-    }
-
-    template <typename E>
-    topology_having_subset<E>::topology_having_subset()
-    {}
-
-# endif
-
-
-  } // end of namespace oln::abstract
-
-
-  template <typename E>
-  struct case_ < topology_hierarchy_wrt_subset, E, 1 >
-    : where_< mlc::neq_< oln_type_of(E, subset), mlc::none > >
-  {
-    typedef abstract::topology_having_subset<E> ret;
-  };
-
+  typedef  hierarchy< abstract::topology, 1 >  topology_hierarchy_wrt_accessibility;
+  typedef  hierarchy< abstract::topology, 2 >  topology_hierarchy_wrt_bbox;
+  typedef  hierarchy< abstract::topology, 3 >  topology_hierarchy_wrt_neighborhood;
+  typedef  hierarchy< abstract::topology, 4 >  topology_hierarchy_wrt_subset;
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_SUBSET_HH
+#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
+

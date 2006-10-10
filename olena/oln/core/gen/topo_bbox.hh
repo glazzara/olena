@@ -32,10 +32,8 @@
 # include <oln/core/topology_entry.hh>
 
 
-
 namespace oln
 {
-
 
   // Forward declarations.
   template <typename point> class topo_bbox_;
@@ -137,7 +135,7 @@ namespace oln
   bool
   topo_bbox_<point>::impl_has_large(const point& p) const
   {
-    return lbb_.has(p);
+    return bb_.has(p);
   }
 
 # endif

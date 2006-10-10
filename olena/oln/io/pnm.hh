@@ -33,6 +33,12 @@
 # include <fstream>
 # include <string>
 
+# include <oln/core/abstract/iterator.hh>
+# include <oln/core/gen/fwd_piter_bbox.hh>
+# include <oln/core/gen/bkd_piter_bbox.hh>
+# include <oln/core/fwd_piter.hh>
+# include <oln/core/2d/aliases.hh>
+# include <oln/core/2d/dpoint2d.hh>
 # include <oln/core/2d/image2d.hh>
 
 

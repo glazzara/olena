@@ -52,27 +52,4 @@ namespace oln
 
 } // end of namespace oln
 
-
-// Hierarchy 1: image w.r.t. dimension.
-# include <oln/core/abstract/image/dimension/hierarchy.hh>
-
-// Hierarchy 2: image w.r.t. type of data.
-# include <oln/core/abstract/image/type/hierarchy.hh>
-
-// Hierarchy 3: image w.r.t. neighborhood.
-# include <oln/core/abstract/image/neighborhood/hierarchy.hh>
-
-// Hierarchy 4: image w.r.t. bounding box.
-# include <oln/core/abstract/image/bbox/hierarchy.hh>
-
-// Hierarchy 5: image w.r.t. accessibility.
-# include <oln/core/abstract/image/accessibility/hierarchy.hh>
-
-// Hierarchy 6: image w.r.t. data mutability.
-# include <oln/core/abstract/image/mutability/hierarchy.hh>
-
-// Hybrid hierarchy 7: image w.r.t. classical features.
-# include <oln/core/abstract/image/hybrid/classical.hh>
-
-
 #endif // ! OLN_CORE_ABSTRACT_IMAGE_HIERARCHIES_HH

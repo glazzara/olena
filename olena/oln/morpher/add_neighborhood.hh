@@ -30,6 +30,7 @@
 
 # include <oln/morpher/internal/image_extension.hh>
 # include <oln/core/gen/topo_add_nbh.hh>
+# include <oln/core/fwd_piter.hh>
 # include <oln/core/gen/fwd_niter_neighb.hh>
 
 

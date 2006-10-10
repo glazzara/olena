@@ -1,3 +1,100 @@
+2006-10-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix sanity checks.
+
+	* oln/core/abstract/image/hybrid/classical.hh,
+	* oln/core/gen/neighb.hh, oln/core/gen/window.hh,
+	* oln/core/gen/fwd_qiter_win.hh, oln/core/gen/piter_isubset.hh,
+	* oln/core/gen/mapimage.hh,
+	* oln/core/internal/bbox_fwd_piter.hh,
+	* oln/core/internal/bbox_bkd_piter.hh,
+	* oln/core/fwd_piter.hh, oln/core/1d/point1d.hh,
+	* oln/core/1d/dpoint1d.hh, oln/core/2d/point2d.hh,
+	* oln/core/2d/dpoint2d.hh, oln/core/2d/neighb2d.hh,
+	* oln/core/3d/point3d.hh, oln/core/3d/dpoint3d.hh,
+	* oln/core/3d/neighb3d.hh,
+	* oln/morpher/add_isubset.hh, oln/morpher/add_neighborhood.hh,
+	* oln/debug/print.hh, oln/io/pnm.hh, oln/level/fill.hh:
+	Include needed (missing) headers.
+	* oln/core/1d/image1d.hh, oln/core/2d/image2d.hh,
+	* oln/core/3d/image3d.hh: Likewise.
+	Instantiate oln::bbox_ explicitly.
+	* oln/core/gen/bbox.hh
+	(oln/core/gen/bbox_fwd_piter.hh, oln/core/gen/bbox_bkd_piter.hh):
+	Don't include them.
+	* oln/core/gen/topo_bbox.hh (impl_has_large): Typo.
+
+
+	Reorganize the abstract::image hierarchy.
+
+	* oln/core/abstract/image/hierarchies.hh: Move inclusions of point
+	set abstractions...
+	* oln/core/abstract/image/all.hh: ...here (new file).
+	* oln/core/image_entry.hh: Adjust.
+	* oln/Makefile.am (nobase_oln_HEADERS): Adjust.
+	* oln/basics1d.hh, oln/basics2d.hh, oln/basics3d.hh: Remove
+	explicit template instantiations.
+	* oln/core/abstract/image.hh
+	(oln/core/abstract/image/hierarchies.hh): Don't include it.
+	* oln/core/abstract/image/dimension/hierarchy.hh
+	* oln/core/abstract/image/type/hierarchy.hh,
+	* oln/core/abstract/image/neighborhood/hierarchy.hh
+	* oln/core/abstract/image/bbox/hierarchy.hh
+	* oln/core/abstract/image/accessibility/hierarchy.hh
+	* oln/core/abstract/image/mutability/hierarchy.hh
+	* oln/core/abstract/image/hybrid/classical.hh
+	(oln/core/abstract/image/hierarchies.hh): Include it.
+	* oln/core/abstract/image/type/integre.hh
+	(oln::abstract::case_<image_hierarchy_wrt_type, E, 4>)
+	(oln::abstract::case_<image_hierarchy_wrt_type, E, 5>)
+	(oln::abstract::case_<image_hierarchy_wrt_type, E, 6>): Catch up
+	with image type hierarchy.
+
+
+	Reorganize the abstract::point_set hierarchy.
+
+	* oln/core/abstract/point_set_hierarchies.hh: Rename as...
+	* oln/core/abstract/point_set/hierarchies.hh: ...this.
+	Move inclusions of point set abstractions...
+	* oln/core/abstract/point_set/all.hh: ...here (new file).
+	* oln/core/point_set_entry.hh: Adjust.
+	* oln/core/abstract/point_set_being_connected.hh,
+	* oln/core/abstract/point_set_being_random_accessible.hh,
+	* oln/core/abstract/point_set_having_bbox.hh,
+	* oln/core/abstract/point_set_having_known_size.hh: Rename as...
+	* oln/core/abstract/point_set/point_set_being_connected.hh,
+	* oln/core/abstract/point_set/point_set_being_random_accessible.hh,
+	* oln/core/abstract/point_set/point_set_having_bbox.hh,
+	* oln/core/abstract/point_set/point_set_having_known_size.hh:
+	...these.
+	Adjust header guards and inclusions.
+	* oln/Makefile.am (nobase_oln_HEADERS): Adjust.
+	* oln/core/abstract/bbox.hh
+	(oln::case_<point_set_hierarchy_wrt_bbox, E, 1>)
+	(oln::case_<point_set_hierarchy_wrt_bbox, E, 2>): Move...
+	* oln/core/abstract/point_set/point_set_having_bbox.hh: ...here.
+	(oln::abstract::point_set_having_bbox):
+	s/oln_type_of/oln_check_type_of/g.
+
+
+	Reorganize the abstract::topology hierarchy.
+
+	* oln/core/abstract/topology_hierarchies.hh: Rename as...
+	* oln/core/abstract/topology/hierarchies.hh: ...this.
+	Move inclusions of topology abstractions...
+	* oln/core/abstract/topology/all.hh: ...here (new file).
+	* oln/core/topology_entry.hh: Adjust
+	* oln/core/abstract/topology_being_random_accessible.hh,
+	* oln/core/abstract/topology_having_bbox.hh,
+	* oln/core/abstract/topology_having_neighborhood.hh,
+	* oln/core/abstract/topology_having_subset.hh: Rename as...
+	* oln/core/abstract/topology/topology_being_random_accessible.hh,
+	* oln/core/abstract/topology/topology_having_bbox.hh,
+	* oln/core/abstract/topology/topology_having_neighborhood.hh,
+	* oln/core/abstract/topology/topology_having_subset.hh: ...these.
+	Adjust header guards and inclusions.
+	* oln/Makefile.am (nobase_oln_HEADERS): Adjust.
+
 2006-10-10  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add i/o read for pbm and pgm formats.

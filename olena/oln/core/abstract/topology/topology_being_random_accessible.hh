@@ -25,11 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
-# define OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
+#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+# define OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
 
 # include <oln/core/abstract/topology.hh>
-# include <oln/core/automatic/topology_having_neighborhood.hh>
+# include <oln/core/abstract/topology/hierarchies.hh>
+# include <oln/core/automatic/topology_being_random_accessible.hh>
 
 
 namespace oln
@@ -39,23 +40,21 @@ namespace oln
   {
 
     template <typename E>
-    class topology_having_neighborhood
+    class topology_being_random_accessible
       : public virtual topology<E>,
-	public automatic::get_impl<topology_having_neighborhood, E>
+	public automatic::get_impl<topology_being_random_accessible, E>
     {
-      typedef oln_type_of(E, neighborhood) neighborhood_t;
-      
+      typedef oln_type_of(E, point) point_t;
+
     public:
 
-      // abstract
-      const neighborhood_t& neighborhood() const;
+      bool has(const point_t& p) const;
 
-      // concrete
-      operator neighborhood_t() const;
+      bool has_large(const point_t& p) const;
 
     protected:
 
-      topology_having_neighborhood();
+      topology_being_random_accessible();
     };
 
 
@@ -63,20 +62,19 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    const oln_type_of(E, neighborhood)&
-    topology_having_neighborhood<E>::neighborhood() const
+    bool topology_being_random_accessible<E>::has(const oln_type_of(E, point)& p) const
     {
-      return this->exact().impl_neighborhood();
+      return this->exact().impl_has(p);
     }
 
     template <typename E>
-    topology_having_neighborhood<E>::operator oln_type_of(E, neighborhood)() const
+    bool topology_being_random_accessible<E>::has_large(const oln_type_of(E, point)& p) const
     {
-      return this->neighborhood();
+      return this->exact().impl_has_large(p);
     }
 
     template <typename E>
-    topology_having_neighborhood<E>::topology_having_neighborhood()
+    topology_being_random_accessible<E>::topology_being_random_accessible()
     {
     }
 
@@ -87,14 +85,14 @@ namespace oln
 
 
   template <typename E>
-  struct case_ < topology_hierarchy_wrt_neighborhood, E, 1 >
-    : where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::none > >
+  struct case_ < topology_hierarchy_wrt_accessibility, E, 1 >
+    : where_< mlc::eq_< oln_type_of(E, is_random_accessible), mlc::true_ > >
   {
-    typedef abstract::topology_having_neighborhood<E> ret;
+    typedef abstract::topology_being_random_accessible<E> ret;
   };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
+#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH

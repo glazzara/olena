@@ -28,6 +28,7 @@
 #ifndef OLN_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
 # define OLN_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
 
+# include <oln/core/abstract/entry.hh>
 # include <oln/core/abstract/point_set.hh>
 
 
@@ -40,14 +41,6 @@ namespace oln
   typedef  hierarchy< abstract::point_set, 4 >  point_set_hierarchy_wrt_connectivity;
 
 } // end of namespace oln
-
-
-# include <oln/core/abstract/point_set_having_known_size.hh>
-# include <oln/core/abstract/point_set_being_random_accessible.hh>
-# include <oln/core/abstract/point_set_having_bbox.hh>
-# include <oln/core/abstract/bbox.hh>
-# include <oln/core/abstract/point_set_being_connected.hh>
-
 
 
 #endif // ! OLN_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH

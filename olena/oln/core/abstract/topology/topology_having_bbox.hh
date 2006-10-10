@@ -25,11 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
-# define OLN_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_HAVING_BBOX_HH
+# define OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_HAVING_BBOX_HH
 
 # include <oln/core/abstract/topology.hh>
-# include <oln/core/automatic/topology_being_random_accessible.hh>
+# include <oln/core/abstract/topology/hierarchies.hh>
+# include <oln/core/automatic/topology_having_bbox.hh>
 
 
 namespace oln
@@ -39,41 +40,53 @@ namespace oln
   {
 
     template <typename E>
-    class topology_being_random_accessible
+    class topology_having_bbox
       : public virtual topology<E>,
-	public automatic::get_impl<topology_being_random_accessible, E>
+	public automatic::get_impl<topology_having_bbox, E>
     {
-      typedef oln_type_of(E, point) point_t;
-
+      typedef oln_type_of(E, bbox)  bbox_t;
+      
     public:
 
-      bool has(const point_t& p) const;
+      // abstract
+      const bbox_t& bbox() const;
 
-      bool has_large(const point_t& p) const;
+      // abstract
+      bbox_t& bbox();
+
+      // concrete
+      operator bbox_t() const;
 
     protected:
 
-      topology_being_random_accessible();
+      topology_having_bbox();
     };
-
 
 
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    bool topology_being_random_accessible<E>::has(const oln_type_of(E, point)& p) const
+    const oln_type_of(E, bbox)&
+    topology_having_bbox<E>::bbox() const
     {
-      return this->exact().impl_has(p);
+      return this->exact().impl_bbox();
     }
 
     template <typename E>
-    bool topology_being_random_accessible<E>::has_large(const oln_type_of(E, point)& p) const
+    oln_type_of(E, bbox)&
+    topology_having_bbox<E>::bbox()
     {
-      return this->exact().impl_has_large(p);
+      return this->exact().impl_bbox();
     }
 
     template <typename E>
-    topology_being_random_accessible<E>::topology_being_random_accessible()
+    topology_having_bbox<E>::operator oln_type_of(E, bbox)() const
+    {
+      return this->bbox();
+    }
+
+    template <typename E>
+    topology_having_bbox<E>::topology_having_bbox()
     {
     }
 
@@ -84,14 +97,14 @@ namespace oln
 
 
   template <typename E>
-  struct case_ < topology_hierarchy_wrt_accessibility, E, 1 >
-    : where_< mlc::eq_< oln_type_of(E, is_random_accessible), mlc::true_ > >
+  struct case_ < topology_hierarchy_wrt_bbox, E, 1 >
+    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
   {
-    typedef abstract::topology_being_random_accessible<E> ret;
+    typedef abstract::topology_having_bbox<E> ret;
   };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_HAVING_BBOX_HH

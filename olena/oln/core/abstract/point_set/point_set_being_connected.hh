@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_POINT_SET_BEING_CONNECTED_HH
-# define OLN_CORE_ABSTRACT_POINT_SET_BEING_CONNECTED_HH
+#ifndef OLN_CORE_ABSTRACT_POINT_SET_POINT_SET_BEING_CONNECTED_HH
+# define OLN_CORE_ABSTRACT_POINT_SET_POINT_SET_BEING_CONNECTED_HH
 
 # include <oln/core/abstract/point_set.hh>
+# include <oln/core/abstract/point_set/hierarchies.hh>
 
 
 namespace oln
@@ -198,4 +199,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_POINT_SET_BEING_CONNECTED_HH
+#endif // ! OLN_CORE_ABSTRACT_POINT_SET_POINT_SET_BEING_CONNECTED_HH

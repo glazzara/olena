@@ -29,26 +29,27 @@
 # define OLN_CORE_ABSTRACT_IMAGE_NEIGHBORHOOD_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/hierarchies.hh>
 # include <oln/core/automatic/image_having_neighborhood.hh>
 
 
 /* Image having neighborhood hierarchy (summary).
 
 
-FIXME: TODO!
+   FIXME: TODO (diagram)!
 
 
-  Default case: If the neighborhood type returned by
-  `oln_type_of(I, neighborhood)', the entry is directly plugged to
-  abstract::image<I>.  */
+   Default case: If the neighborhood type returned by
+   `oln_type_of(I, neighborhood)', the entry is directly plugged to
+   abstract::image<I>.  */
 
 
 namespace oln
 {
  
-  /*-------------------------.
-  | Dimension abstractions.  |
-  `-------------------------*/
+  /*---------------------------.
+  | Neighborhood abstraction.  |
+  `---------------------------*/
 
   namespace abstract
   {
@@ -109,9 +110,9 @@ namespace oln
   } // end of namespace oln::abstract
 
 
-  /*-------------------.
-  | Dimension switch.  |
-  `-------------------*/
+  /*----------------------.
+  | Neighborhood switch.  |
+  `----------------------*/
 
   /// With neighborhood.
   template <typename E>

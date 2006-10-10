@@ -29,7 +29,7 @@
 # define OLN_CORE_IMAGE_ENTRY_HH
 
 # include <oln/core/abstract/entry.hh>
-# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/all.hh>
 
 
 

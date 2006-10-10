@@ -30,7 +30,7 @@
 # define OLN_CORE_2D_NEIGHB2D_HH
 
 # include <oln/core/gen/neighb.hh>
-# include <oln/core/2d/aliases.hh>
+# include <oln/core/2d/dpoint2d.hh>
 
 
 namespace oln

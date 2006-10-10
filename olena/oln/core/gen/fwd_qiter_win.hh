@@ -28,9 +28,8 @@
 #ifndef OLN_CORE_GEN_FWD_QITER_WIN_HH
 # define OLN_CORE_GEN_FWD_QITER_WIN_HH
 
-# include <oln/core/abstract/topology.hh>
 # include <oln/core/abstract/iterator_on_points.hh>
-# include <oln/core/gen/win.hh>
+# include <oln/core/gen/window.hh>
 
 
 namespace oln

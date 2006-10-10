@@ -35,25 +35,18 @@
 # include <oln/core/3d/grid3d.hh>
 
 # include <oln/core/3d/point3d.hh>
-namespace oln { template class point3d_<int>; }
 
 # include <oln/core/3d/dpoint3d.hh>
-namespace oln { template class dpoint3d_<int>; }
 
 # include <oln/core/gen/bbox.hh>
-namespace oln { template class bbox_<point3d>; }
 
 # include <oln/core/gen/topo_lbbox.hh>
-namespace oln { template class topo_lbbox_<point3d>; }
 
 # include <oln/core/gen/fwd_piter_bbox.hh>
-namespace oln { template class fwd_piter_bbox_<topo3d>; }
 
 # include <oln/core/gen/bkd_piter_bbox.hh>
-namespace oln { template class bkd_piter_bbox_<topo3d>; }
 
 # include <oln/core/gen/neighb.hh>
-namespace oln { template class neighb_<dpoint3d>; }
 # include <oln/core/3d/neighb3d.hh>
 
 # include <oln/core/3d/image3d.hh>

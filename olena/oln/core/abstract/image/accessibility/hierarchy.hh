@@ -29,6 +29,7 @@
 # define OLN_CORE_ABSTRACT_IMAGE_ACCESSIBILITY_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/hierarchies.hh>
 # include <oln/core/automatic/image_being_random_accessible.hh>
 
 

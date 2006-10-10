@@ -29,15 +29,16 @@
 # define OLN_CORE_ABSTRACT_IMAGE_BBOX_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/hierarchies.hh>
 # include <oln/core/abstract/bbox.hh>
 
 
 namespace oln
 {
  
-  /*-------------------------.
-    | Dimension abstractions.  |
-    `-------------------------*/
+  /*---------------------------.
+  | Bounding box abstraction.  |
+  `---------------------------*/
 
   namespace abstract
   {
@@ -126,9 +127,9 @@ namespace oln
   } // end of namespace oln::abstract
 
 
-  /*-------------------.
-    | Dimension switch.  |
-    `-------------------*/
+  /*----------------------.
+  | Bounding box switch.  |
+  `----------------------*/
 
   /// With bbox.
   template <typename E>

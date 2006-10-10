@@ -30,6 +30,9 @@
 
 # include <oln/core/abstract/entry.hh>
 # include <oln/core/abstract/image.hh>
+# include <oln/core/1d/aliases.hh>
+# include <oln/core/2d/aliases.hh>
+# include <oln/core/3d/aliases.hh>
 
 
 namespace oln

@@ -28,8 +28,9 @@
 #ifndef OLN_CORE_ABSTRACT_IMAGE_TYPE_HIERARCHY_HH
 # define OLN_CORE_ABSTRACT_IMAGE_TYPE_HIERARCHY_HH
 
-# include <xtd/valtraits.hh>
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/hierarchies.hh>
+# include <xtd/valtraits.hh>
 
 
 /* Image ``type'' hierarchy (summary).
@@ -38,7 +39,7 @@
                                     /image<I>/
                                         ^
                                         |
-           ,--------------+-------------+-------------+--------+
+           ,--------------+-------------+-------------+--------.
            |              |             |             |        |
  /grey_level_image/ /color_image/ /label_image/ /data_image/  ...
            ^              ^         ^       ^         ^        ^
@@ -46,10 +47,10 @@
            |              |         |  /binary_image/ |        |
            |              |         |       ^         |        |
            |              |         |       |         |        |
-       ,----------------------------------------------------------.
-       |  The selection of the super class(es) is made according  |
-       |            to the value of type_of(I, value).            |
-       `----------------------------------------------------------'
+       ,-------------------------------------------------------------.
+       |  The selection of the super class(es) is made according to  |
+       |              the value of type_of(I, value).                |
+       `-------------------------------------------------------------'
            |              |         |       |         |        |
            o              o         o       o         o        o
 

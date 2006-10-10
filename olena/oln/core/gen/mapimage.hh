@@ -29,9 +29,11 @@
 #ifndef OLN_CORE_GEN_MAPIMAGE_HH
 # define OLN_CORE_GEN_MAPIMAGE_HH
 
+# include <map>
 # include <oln/core/image_entry.hh>
 # include <oln/core/gen/topo_bbox.hh>
-# include <map>
+# include <oln/core/gen/fwd_piter_bbox.hh>
+# include <oln/core/gen/bkd_piter_bbox.hh>
 
 
 namespace oln

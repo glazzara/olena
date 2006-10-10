@@ -31,6 +31,8 @@
 
 # include <set>
 # include <vector>
+# include <mlc/assert.hh>
+# include <oln/core/abstract/dpoint.hh>
 
 
 namespace oln

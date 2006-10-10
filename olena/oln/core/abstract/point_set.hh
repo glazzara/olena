@@ -116,9 +116,4 @@ namespace oln
 } // end of namespace oln
 
 
-
-# include <oln/core/abstract/point_set_hierarchies.hh>
-
-
-
 #endif // ! OLN_CORE_ABSTRACT_POINT_SET_HH

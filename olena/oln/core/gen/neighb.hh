@@ -32,6 +32,7 @@
 # include <set>
 # include <vector>
 # include <oln/core/neighborhood_entry.hh>
+# include <oln/core/abstract/dpoint.hh>
 
 
 namespace oln

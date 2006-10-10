@@ -30,6 +30,9 @@
 
 # include <iostream>
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/hybrid/classical.hh>
+# include <oln/core/abstract/iterator.hh>
+# include <oln/core/2d/point2d.hh>
 
 
 namespace oln

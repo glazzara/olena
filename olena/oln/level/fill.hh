@@ -33,6 +33,7 @@
 # include <mlc/is_a.hh>
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/iterator.hh>
 # include <oln/core/automatic/image_being_mutable.hh>
 
 

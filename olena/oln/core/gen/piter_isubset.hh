@@ -28,8 +28,9 @@
 #ifndef OLN_CORE_GEN_PITER_ISUBSET_HH
 # define OLN_CORE_GEN_PITER_ISUBSET_HH
 
-# include <oln/core/abstract/topology.hh>
 # include <oln/core/abstract/iterator_on_points.hh>
+# include <oln/core/abstract/topology.hh>
+# include <oln/core/gen/topo_add_isubset.hh>
 
 
 namespace oln

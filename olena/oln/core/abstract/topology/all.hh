@@ -25,36 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
-# define OLN_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
+#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_ALL_HH
+# define OLN_CORE_ABSTRACT_TOPOLOGY_ALL_HH
 
 # include <oln/core/abstract/topology.hh>
 
-
-namespace oln
-{
-
-  typedef  hierarchy< abstract::topology, 1 >  topology_hierarchy_wrt_accessibility;
-  typedef  hierarchy< abstract::topology, 2 >  topology_hierarchy_wrt_bbox;
-  typedef  hierarchy< abstract::topology, 3 >  topology_hierarchy_wrt_neighborhood;
-  typedef  hierarchy< abstract::topology, 4 >  topology_hierarchy_wrt_subset;
-
-} // end of namespace oln
-
+# include <oln/core/abstract/topology/hierarchies.hh>
 
 // Hierarchy 1: topology w.r.t. accessibility.
-# include <oln/core/abstract/topology_being_random_accessible.hh>
-
+# include <oln/core/abstract/topology/topology_being_random_accessible.hh>
 // Hierarchy 2: topology w.r.t. bounding box.
-# include <oln/core/abstract/topology_having_bbox.hh>
-
+# include <oln/core/abstract/topology/topology_having_bbox.hh>
 // Hierarchy 3: topology w.r.t. neighborhood.
-# include <oln/core/abstract/topology_having_neighborhood.hh>
+# include <oln/core/abstract/topology/topology_having_neighborhood.hh>
+// Hierarchy 4: topology w.r.t. subset.
+# include <oln/core/abstract/topology/topology_having_subset.hh>
 
-// Hierarchy 4: topology w.r.t. neighborhood.
-# include <oln/core/abstract/topology_having_subset.hh>
-
-
-
-#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_HIERARCHIES_HH
+#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_ALL_HH
 

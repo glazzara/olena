@@ -29,6 +29,7 @@
 # define OLN_CORE_ABSTRACT_IMAGE_HYBRID_CLASSICAL_HH
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/hierarchies.hh>
 
 # include <oln/core/abstract/image/dimension/2d.hh>
 # include <oln/core/abstract/image/bbox/hierarchy.hh>
@@ -75,6 +76,10 @@ namespace oln
 # endif
 
   } // end of namespace oln::abstract
+
+
+  // Fwd. decl.
+  class grid2d;
 
 
   /// 2-D case.

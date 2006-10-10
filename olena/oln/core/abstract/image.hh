@@ -179,7 +179,4 @@ namespace oln
 } // end of namespace oln
 
 
-# include <oln/core/abstract/image/hierarchies.hh>
-
-
 #endif // ! OLN_CORE_ABSTRACT_IMAGE_HH

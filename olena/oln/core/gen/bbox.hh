@@ -262,8 +262,4 @@ namespace oln
 } // end of namespace oln
 
 
-# include <oln/core/gen/bbox_fwd_piter.hh>
-# include <oln/core/gen/bbox_bkd_piter.hh>
-
-
 #endif // ! OLN_CORE_GEN_BBOX_HH

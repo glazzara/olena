@@ -38,7 +38,6 @@
 # include <oln/core/2d/dpoint2d.hh>
 
 # include <oln/core/gen/bbox.hh>
-namespace oln { template class bbox_<point2d>; }
 
 # include <oln/core/gen/topo_lbbox.hh>
 

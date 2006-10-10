@@ -25,11 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH
-# define OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH
+#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
+# define OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
 
 # include <oln/core/abstract/topology.hh>
-# include <oln/core/automatic/topology_having_bbox.hh>
+# include <oln/core/abstract/topology/hierarchies.hh>
+# include <oln/core/automatic/topology_having_neighborhood.hh>
 
 
 namespace oln
@@ -39,53 +40,44 @@ namespace oln
   {
 
     template <typename E>
-    class topology_having_bbox
+    class topology_having_neighborhood
       : public virtual topology<E>,
-	public automatic::get_impl<topology_having_bbox, E>
+	public automatic::get_impl<topology_having_neighborhood, E>
     {
-      typedef oln_type_of(E, bbox)  bbox_t;
+      typedef oln_type_of(E, neighborhood) neighborhood_t;
       
     public:
 
       // abstract
-      const bbox_t& bbox() const;
-
-      // abstract
-      bbox_t& bbox();
+      const neighborhood_t& neighborhood() const;
 
       // concrete
-      operator bbox_t() const;
+      operator neighborhood_t() const;
 
     protected:
 
-      topology_having_bbox();
+      topology_having_neighborhood();
     };
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    const oln_type_of(E, bbox)&
-    topology_having_bbox<E>::bbox() const
+    const oln_type_of(E, neighborhood)&
+    topology_having_neighborhood<E>::neighborhood() const
     {
-      return this->exact().impl_bbox();
+      return this->exact().impl_neighborhood();
     }
 
     template <typename E>
-    oln_type_of(E, bbox)&
-    topology_having_bbox<E>::bbox()
+    topology_having_neighborhood<E>::operator oln_type_of(E, neighborhood)() const
     {
-      return this->exact().impl_bbox();
+      return this->neighborhood();
     }
 
     template <typename E>
-    topology_having_bbox<E>::operator oln_type_of(E, bbox)() const
-    {
-      return this->bbox();
-    }
-
-    template <typename E>
-    topology_having_bbox<E>::topology_having_bbox()
+    topology_having_neighborhood<E>::topology_having_neighborhood()
     {
     }
 
@@ -96,14 +88,14 @@ namespace oln
 
 
   template <typename E>
-  struct case_ < topology_hierarchy_wrt_bbox, E, 1 >
-    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+  struct case_ < topology_hierarchy_wrt_neighborhood, E, 1 >
+    : where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::none > >
   {
-    typedef abstract::topology_having_bbox<E> ret;
+    typedef abstract::topology_having_neighborhood<E> ret;
   };
 
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_HAVING_BBOX_HH
+#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_HAVING_NEIGHBORHOOD_HH

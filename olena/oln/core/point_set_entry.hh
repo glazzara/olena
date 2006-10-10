@@ -29,8 +29,7 @@
 # define OLN_CORE_POINT_SET_ENTRY_HH
 
 # include <oln/core/abstract/entry.hh>
-# include <oln/core/abstract/point_set.hh>
-
+# include <oln/core/abstract/point_set/all.hh>
 
 
 namespace oln

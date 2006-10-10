@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,79 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_BBOX_HH
-# define OLN_CORE_ABSTRACT_BBOX_HH
+#ifndef OLN_CORE_ABSTRACT_POINT_SET_ALL_HH
+# define OLN_CORE_ABSTRACT_POINT_SET_ALL_HH
 
+# include <oln/core/abstract/point_set.hh>
+
+# include <oln/core/abstract/point_set/hierarchies.hh>
+
+// Hierarchy 1: point set w.r.t. size.
+# include <oln/core/abstract/point_set/point_set_having_known_size.hh>
+// Hierarchy 2: point set w.r.t. accessibility.
+# include <oln/core/abstract/point_set/point_set_being_random_accessible.hh>
+// Hierarchy 3: point set w.r.t. bbox.
 # include <oln/core/abstract/point_set/point_set_having_bbox.hh>
+# include <oln/core/abstract/bbox.hh>
+// Hierarchy 4: point set w.r.t. connexity.
+# include <oln/core/abstract/point_set/point_set_being_connected.hh>
 
-
-namespace oln
-{
-
-
-  namespace abstract
-  {
-
-    /// Abstract bbox (bounding box) class.
-    template <typename E>
-    class bbox : public point_set_having_bbox<E>
-    {
-    public:
-
-      void print(std::ostream& ostr) const;
-
-      const E& impl_bbox() const;
-
-      ~bbox()
-      {
-      }
-      
-    protected:
-
-      bbox();
-
-    }; // end of class oln::abstract::bbox<E>
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-
-    template <typename E>
-    void bbox<E>::print(std::ostream& ostr) const
-    {
-      this->exact().impl_print(ostr);
-    }
-      
-    template <typename E>
-    std::ostream& operator<<(std::ostream& ostr, const abstract::bbox<E>& bb)
-    {
-      bb.print(ostr);
-      return ostr;
-    }
-
-    template <typename E>
-    const E& bbox<E>::impl_bbox() const
-    {
-      return this->exact();
-    }
-
-    template <typename E>
-    bbox<E>::bbox()
-    {
-    }
-    
-//     template <typename E>
-//     bbox<E>::~bbox()
-//     {
-//     }
-
-# endif
-
-
-  } // end of namespace oln::abstract
-
-
-} // end of namespace oln
-
-
-#endif // ! OLN_CORE_ABSTRACT_BBOX_HH
+#endif // ! OLN_CORE_ABSTRACT_POINT_SET_ALL_HH

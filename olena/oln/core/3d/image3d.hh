@@ -31,11 +31,20 @@
 
 # include <oln/core/image_entry.hh>
 # include <oln/core/3d/array3d.hh>
+# include <oln/core/3d/point3d.hh>
+# include <oln/core/gen/topo_lbbox.hh>
 # include <oln/core/internal/tracked_ptr.hh>
+// For topo3d.
+# include <oln/core/3d/aliases.hh>
 
 
 namespace oln
 {
+
+  // FIXME: Inexplicably, this explicit instantiation is required to
+  // have topo_lbbox_<point3d> work.  See if we can get rid of it.
+  template class bbox_<point3d>;
+
 
   // Forward declaration.
   template <typename T> class image3d;

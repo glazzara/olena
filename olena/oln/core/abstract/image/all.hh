@@ -25,58 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_TOPOLOGY_ENTRY_HH
-# define OLN_CORE_TOPOLOGY_ENTRY_HH
+#ifndef OLN_CORE_ABSTRACT_IMAGE_ALL_HH
+# define OLN_CORE_ABSTRACT_IMAGE_ALL_HH
 
-# include <oln/core/abstract/entry.hh>
-# include <oln/core/abstract/topology/all.hh>
+# include <oln/core/abstract/image.hh>
 
+# include <oln/core/abstract/image/hierarchies.hh>
 
-namespace oln
-{
+// Hierarchy 1: image w.r.t. dimension.
+# include <oln/core/abstract/image/dimension/hierarchy.hh>
+// Hierarchy 2: image w.r.t. type of data.
+# include <oln/core/abstract/image/type/hierarchy.hh>
+// Hierarchy 3: image w.r.t. neighborhood.
+# include <oln/core/abstract/image/neighborhood/hierarchy.hh>
+// Hierarchy 4: image w.r.t. bounding box.
+# include <oln/core/abstract/image/bbox/hierarchy.hh>
+// Hierarchy 5: image w.r.t. accessibility.
+# include <oln/core/abstract/image/accessibility/hierarchy.hh>
+// Hierarchy 6: image w.r.t. data mutability.
+# include <oln/core/abstract/image/mutability/hierarchy.hh>
+// Hybrid hierarchy 7: image w.r.t. classical features.
+# include <oln/core/abstract/image/hybrid/classical.hh>
 
-
-  /// Entry class for point sets: topology_entry<E> is an alias for
-  /// entry< abstract::topology, E>.
-
-  template <typename E>
-  struct topology_entry : public entry< abstract::topology, E>
-  {
-  protected:
-    topology_entry();
-  };
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename E>
-  topology_entry<E>::topology_entry()
-  {
-  }
-
-# endif
-
-
-  /// Virtual types associated to topology_entry<E>.
-
-  template <typename E>
-  struct vtypes< topology_entry<E> >
-  {
-    typedef mlc::undefined point_type;
-    typedef mlc::undefined bbox_type;
-    typedef mlc::none      neighborhood_type;
-    typedef mlc::undefined is_random_accessible_type;
-    typedef mlc::none      subset_type;
-  };
-
-  template <typename E>
-  struct single_vtype< topology_entry<E>, typedef_::morpher_type >
-  {
-    typedef mlc::none ret;
-  };
-
-
-} // end of namespace oln
-
-
-#endif // ! OLN_CORE_TOPOLOGY_ENTRY_HH
+#endif // ! OLN_CORE_ABSTRACT_IMAGE_ALL_HH

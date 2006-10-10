@@ -108,34 +108,34 @@ namespace oln {
   /// Grey-level case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 4 > :
-    where_< mlc_is_a( mlc_comma_1(oln_type_of(E, value)), ntg::real_value ) >
+    where_< mlc_is_a( oln_type_of(E, value), ntg::real_value ) >
   {
     // Definition of the super class corresponding to this case
     // (abstract::grey_level_image_ is the conjunction of
     // abstract::grey_level_image and abstract::not_binary_image).
-    typedef abstract::internal::grey_level_image_<E> ret;
+    typedef abstract::grey_level_image<E> ret;
   };
 
   /// Label case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 5 > :
-    where_< mlc_is_a( mlc_comma_1(oln_type_of(E, value)), ntg::enum_value ) >
+    where_< mlc_is_a( oln_type_of(E, value), ntg::enum_value ) >
   {
     // Definition of the super class corresponding to this case
     // (abstract::label_image_ is the conjunction of
     // abstract::label_image and abstract::not_binary_image).
-    typedef abstract::internal::label_image_<E> ret;
+    typedef abstract::label_image<E> ret;
   };
 
   /// Color case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 6 > :
-    where_< mlc_is_a( mlc_comma_1(oln_type_of(E, value)), ntg::color_value ) >
+    where_< mlc_is_a( oln_type_of(E, value), ntg::color_value ) >
   {
     // Definition of the super class corresponding to this case
     // (abstract::color_image_ is the conjunction of
     // abstract::color_image and abstract::not_binary_image).
-    typedef abstract::internal::color_image_<E> ret;
+    typedef abstract::color_image<E> ret;
   };
 
   /// \}
