@@ -1,3 +1,13 @@
+2006-10-10  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add xtd accessors (pure functions based on accessor methods).
+	
+	* xtd/accessor.hh: New.
+	* xtd/vec.hh (operator<<): Move outside of class.
+	(operator<<): New specializations for 'unsigned char' and
+	'signed char' so that data is considered as number and
+	not as 'char'.
+
 2006-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use TESTS_CXXFLAGS in Extended.

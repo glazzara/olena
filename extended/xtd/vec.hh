@@ -259,17 +259,35 @@ namespace xtd
       return tmp;
     }
 
-    friend 
-    std::ostream& operator<<(std::ostream& ostr, const vec<n,T>& v)
-    {
-      ostr << '(';
-      for (unsigned i = 0; i < n; ++i)
-	ostr << v[i] << (i == n - 1 ? ")" : ", ");
-      return ostr;
-    }
-
   };
 
+
+  template <unsigned n, typename T>
+  std::ostream& operator<<(std::ostream& ostr, const vec<n,T>& v)
+  {
+    ostr << '(';
+    for (unsigned i = 0; i < n; ++i)
+      ostr << v[i] << (i == n - 1 ? ")" : ", ");
+    return ostr;
+  }
+
+  template <unsigned n>
+  std::ostream& operator<<(std::ostream& ostr, const vec<n,unsigned char>& v)
+  {
+    ostr << '(';
+    for (unsigned i = 0; i < n; ++i)
+      ostr << (unsigned int)(v[i]) << (i == n - 1 ? ")" : ", ");
+    return ostr;
+  }
+
+  template <unsigned n>
+  std::ostream& operator<<(std::ostream& ostr, const vec<n,signed char>& v)
+  {
+    ostr << '(';
+    for (unsigned i = 0; i < n; ++i)
+      ostr << (signed int)(v[i]) << (i == n - 1 ? ")" : ", ");
+    return ostr;
+  }
 
 
   struct lexi_less_t
