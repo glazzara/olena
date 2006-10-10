@@ -25,6 +25,7 @@ check_PROGRAMS =				\
   image1d					\
   image2d					\
   image3d					\
+  io_pnm					\
   npoints					\
 						\
   identity_morpher				\

@@ -1,3 +1,20 @@
+2006-10-10  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add i/o read for pbm and pgm formats.
+	
+	* tests/io_pnm.cc: New.
+	* tests/Makefile.am (check_PROGRAMS): Update.
+	* oln/io: New directory.
+	* oln/io/pnm.hh: New.
+	* oln/core/image_entry.hh (coord_type): New single_vtype.
+	* oln/core/abstract/image.hh (decl): New comment.
+	* oln/core/2d/image2d.hh (adr_at): New.
+	* oln/basics2d.hh (include): Add fwd_piter.hh.
+	* oln/Makefile.am (nobase_oln_HEADERS): Update.
+	* img: New directory.
+	* img/chien.pbm: New.
+	* img/lena32.pgm: New.
+
 2006-10-09  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* oln/core/internal/tracked_ptr.hh (operator bool):

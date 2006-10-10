@@ -67,6 +67,8 @@ namespace oln
     typedef mlc::undefined topo_type;
     typedef mlc::undefined grid_type;
 
+    // coord_type: see below.
+
     // psite_type: see below.
     typedef mlc::undefined point_type;
     
@@ -82,6 +84,15 @@ namespace oln
   };
 
 
+  // Coord.
+  template <typename E>
+  struct single_vtype< image_entry<E>, typedef_::coord_type >
+  {
+    typedef oln_deduce_type_of(E, point, coord) ret;
+  };
+
+
+  // Psite.
   template <typename E>
   struct single_vtype< image_entry<E>, typedef_::psite_type >
   {
@@ -89,6 +100,7 @@ namespace oln
   };
 
 
+  // Piter.
   template <typename E>
   struct single_vtype< image_entry<E>, typedef_::piter_type >
   {
@@ -96,6 +108,7 @@ namespace oln
   };
 
 
+  // Rvalue.
   template <typename E>
   struct single_vtype< image_entry<E>, typedef_::rvalue_type >
   {

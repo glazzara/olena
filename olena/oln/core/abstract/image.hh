@@ -66,6 +66,8 @@ namespace oln
 // 	oln_virtual_typedef(topo);
 // 	oln_virtual_typedef(grid);
 
+// 	oln_virtual_typedef(coord);
+
 // 	oln_virtual_typedef(psite);
 // 	oln_virtual_typedef(point);
 

@@ -89,6 +89,9 @@ namespace oln
 
     T& impl_op_readwrite(const point2d& p);
 
+    T* adr_at(int row, int col);
+    const T* adr_at(int row, int col) const;
+
   private:
 
     topo2d topo_;
@@ -141,6 +144,22 @@ namespace oln
     precondition(data_ != 0);
     precondition(topo_.has_large(p));
     return data_->operator()(p.row(), p.col());
+  }
+
+  template <typename T>
+  T* image2d<T>::adr_at(int row, int col)
+  {
+    precondition(data_ != 0);
+    precondition(data_->has(row, col));
+    return &(data_->operator()(row, col));
+  }
+
+  template <typename T>
+  const T* image2d<T>::adr_at(int row, int col) const
+  {
+    precondition(data_ != 0);
+    precondition(data_->has(row, col));
+    return &(data_->operator()(row, col));
   }
 
 # endif

@@ -132,6 +132,8 @@ nobase_oln_HEADERS =					\
 							\
   debug/print.hh					\
 							\
+  io/pnm.hh						\
+							\
   level/fill.hh						\
 							\
   morpher/internal/image_extension.hh			\

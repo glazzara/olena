@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,31 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_BASICS2D_HH
-# define OLN_BASICS2D_HH
+/// Test oln::io_pnm.cc.
 
+#include <cassert>
+#include <oln/basics2d.hh>
+#include <oln/io/pnm.hh>
 
-# include <oln/core/2d/aliases.hh>
-
-# include <oln/core/2d/grid2d.hh>
-
-# include <oln/core/2d/point2d.hh>
-# include <oln/core/2d/dpoint2d.hh>
-
-# include <oln/core/gen/bbox.hh>
-namespace oln { template class bbox_<point2d>; }
-
-# include <oln/core/gen/topo_lbbox.hh>
-
-# include <oln/core/gen/fwd_piter_bbox.hh>
-# include <oln/core/gen/bkd_piter_bbox.hh>
-
-# include <oln/core/gen/neighb.hh>
-# include <oln/core/2d/neighb2d.hh>
-
-# include <oln/core/2d/image2d.hh>
-
-# include <oln/core/fwd_piter.hh>
-
-
-#endif // ! OLN_BASICS2D_HH
+int
+main()
+{
+  // Fill a 2-d image using its iterator.
+  oln::image2d<bool>          ima  = oln::io::load_pbm("../img/chien.pbm");
+  oln::image2d<unsigned char> ima2 = oln::io::load_pgm("../img/lena32.pgm");
+}
