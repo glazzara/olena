@@ -25,14 +25,14 @@ check_PROGRAMS =				\
   image1d					\
   image2d					\
   image3d					\
-  io_pnm					\
   npoints					\
 						\
   identity_morpher				\
   add_neighborhood_morpher			\
   morphers					\
 						\
-  fill
+  fill						\
+  io_pnm
 
 # Images and auxiliary structures.
 dpoint2d_SOURCES = dpoint2d.cc
@@ -51,6 +51,7 @@ morphers_SOURCES = morphers.cc
 
 # Algorithms.
 fill_SOURCES = fill.cc
+io_pnm_SOURCES = io_pnm.cc
 
 
 TESTS = $(check_PROGRAMS)

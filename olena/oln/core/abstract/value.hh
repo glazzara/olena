@@ -25,43 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_GRID_HH
-# define OLN_CORE_ABSTRACT_GRID_HH
+#ifndef OLN_CORE_ABSTRACT_VALUE_HH
+# define OLN_CORE_ABSTRACT_VALUE_HH
 
 # include <oln/core/type.hh>
-# include <oln/core/typedefs.hh>
 
 
 namespace oln {
 
-  // Forward declaration.
-  namespace abstract
-  {
-    template <typename E> class grid;
-  }
-
-  /// Virtual types associated to oln::abstract::grid.
-  template <typename E>
-  struct vtypes< abstract::grid<E> >
-  {
-    typedef mlc::undefined dimvalue_type;
-  };
-
   namespace abstract {
 
-    template <typename E>
-    struct grid : public virtual stc::any__simple<E>,
-		  public oln::type
+    struct value : public oln::type
     {
     protected:
-      grid();
+      value();
     };
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename E>
-    grid<E>::grid()
+    value::value()
     {
     }
 
@@ -72,4 +55,4 @@ namespace oln {
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_GRID_HH
+#endif // ! OLN_CORE_ABSTRACT_VALUE_HH

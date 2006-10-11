@@ -1,3 +1,17 @@
+2006-10-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add some tools related to morphers over image value.
+	
+	* oln/core/abstract/value.hh: New.
+	* oln/morpher/thru_fun.hh: New.
+	* oln/morpher/internal/image_value_morpher.hh: New.
+	* oln/color: New.
+	* oln/color/rgb.hh: New.
+	* tests/Makefile.am (check_PROGRAMS): Reorganize.
+	(io_pnm_SOURCES): New.
+	* oln/core/abstract/grid.hh (grid): Add inheritance from oln::type.
+	* oln/Makefile.am (nobase_oln_HEADERS): Update.
+
 2006-10-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix sanity checks.

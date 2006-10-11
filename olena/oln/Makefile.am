@@ -3,6 +3,8 @@
 olndir = $(includedir)/oln
 nobase_oln_HEADERS =						\
 								\
+  color/rgb.hh							\
+								\
   core/1d/aliases.hh						\
   core/1d/array1d.hh						\
   core/1d/dpoint1d.hh						\
@@ -82,6 +84,7 @@ nobase_oln_HEADERS =						\
   core/abstract/point.hh					\
   core/abstract/point_set.hh					\
   core/abstract/topology.hh					\
+  core/abstract/value.hh					\
 								\
   core/automatic/image.hh					\
   core/automatic/image_being_mutable.hh				\
@@ -135,10 +138,12 @@ nobase_oln_HEADERS =						\
   level/fill.hh							\
 								\
   morpher/internal/image_extension.hh				\
+  morpher/internal/image_value_morpher.hh			\
 								\
   morpher/add_neighborhood.hh					\
   morpher/identity.hh						\
   morpher/tags.hh						\
+  morpher/thru_fun.hh						\
 								\
   basics1d.hh							\
   basics2d.hh							\
