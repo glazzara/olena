@@ -1,5 +1,35 @@
 2006-10-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Add new facilities to access to components such as row, col, etc.
+	
+	* oln/core/spe/row.hh: New.
+	* oln/core/spe/col.hh: New.
+	* oln/core/spe/slice.hh: New.
+	* oln/debug/print.hh (print): Use min_row, etc.
+	(include): Update.
+	* oln/core/typedefs.hh (index_comp_type): New.
+	(row_comp_type, col_comp_type, slice_comp_type): New.
+	(vec_type): New.
+	* oln/core/abstract/iterator_on_points.hh (coord_type): New.
+	* oln/core/abstract/point.hh (vec_type): New.
+	(vec): New.
+	* oln/core/1d/dpoint1d.hh (index_comp_type): New.
+	* oln/core/1d/point1d.hh (index_comp_type): New.
+	* oln/core/2d/dpoint2d.hh (row_comp_type, col_comp_type): New.
+	* oln/core/2d/point2d.hh (row_comp_type, col_comp_type): New.
+	* oln/core/3d/dpoint3d.hh
+	(slice_comp_type, row_comp_type, col_comp_type): New.
+	* oln/core/3d/point3d.hh
+	(slice_comp_type, row_comp_type, col_comp_type): New.
+	* oln/core/internal/point_nd.hh (vec_t): New.
+	(vec): Rename as...
+	(impl_vec): this.
+	* oln/basics2d.hh (include): Update.
+	* oln/basics3d.hh (include): Update.
+	* oln/Makefile.am (nobase_oln_HEADERS): Update.
+
+2006-10-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	New facilities related to windows and q-iterators.
 	
 	* tests/window2d.cc: New.

@@ -60,6 +60,15 @@ namespace oln
     typedef mlc::undefined dpoint_type;
     typedef mlc::undefined coord_type;
     typedef mlc::undefined dim_type;
+    typedef mlc::undefined vec_type;
+  };
+
+  template <typename E>
+  struct single_vtype< abstract::point<E>, typedef_::vec_type >
+  {
+    typedef oln_type_of(E, coord) coord_t;
+    typedef oln_type_of(E, dim) dim_t;
+    typedef xtd::vec<mlc_value(dim_t), coord_t> ret;
   };
 
 
@@ -72,6 +81,7 @@ namespace oln
 		  public oln::type
     {
       typedef oln_type_of(E, dpoint) dpoint_t;
+      typedef oln_type_of(E, vec)    vec_t;
 
     public:
 
@@ -195,6 +205,10 @@ namespace oln
       xtd_op_minus_trait(E, P) operator-(const abstract::point<P>& rhs) const;
 
       /// \}
+
+
+      const vec_t& vec() const;
+      vec_t& vec();
 
 
       ~point()
@@ -388,8 +402,23 @@ namespace oln
     }
 
     template <typename E>
+    const typename point<E>::vec_t&
+    point<E>::vec() const
+    {
+      return this->exact().impl_vec();
+    }
+
+    template <typename E>
+    typename point<E>::vec_t&
+    point<E>::vec()
+    {
+      return this->exact().impl_vec();
+    }
+
+    template <typename E>
     point<E>::point()
-    {}
+    {
+    }
 
 //     template <typename E>
 //     point<E>::~point()

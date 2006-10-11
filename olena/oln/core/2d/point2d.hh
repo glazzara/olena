@@ -65,6 +65,9 @@ namespace oln
     typedef dpoint2d      dpoint_type;
     typedef C             coord_type;
     typedef mlc::uint_<2> dim_type;
+
+    typedef mlc::uint_<0> row_comp_type;
+    typedef mlc::uint_<1> col_comp_type;
   };
 
 

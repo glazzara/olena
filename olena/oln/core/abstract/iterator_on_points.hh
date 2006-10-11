@@ -56,6 +56,13 @@ namespace oln
     typedef mlc::undefined point_type;
   };
 
+  template <typename E>
+  struct single_vtype< abstract::iterator_on_points<E>, typedef_::coord_type >
+  {
+    typedef oln_type_of(E, point) point_t;
+    typedef oln_type_of(point_t, coord) ret;
+  };
+
 
   namespace abstract
   {

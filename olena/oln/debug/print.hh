@@ -32,6 +32,8 @@
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/image/hybrid/classical.hh>
 # include <oln/core/abstract/iterator.hh>
+# include <oln/core/spe/row.hh>
+# include <oln/core/spe/col.hh>
 # include <oln/core/2d/point2d.hh>
 
 
@@ -49,6 +51,7 @@ namespace oln
     /// Fwd decl.
     template <typename I>
     void println(const abstract::image<I>& input, std::ostream& ostr = std::cout);
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -82,9 +85,9 @@ namespace oln
       void print(const abstract::classical_2d_image<I>& input,
 		 std::ostream& ostr)
       {
-	for (int row = input.pmin().row(); row <= input.pmax().row(); ++row)
+	for (int row = min_row(input); row <= max_row(input); ++row)
 	  {
-	    for (int col = input.pmin().col(); col <= input.pmax().col(); ++col)
+	    for (int col = min_col(input); col <= max_col(input); ++col)
 	      {
 		point2d p(row, col);
 		if (input.has(p))

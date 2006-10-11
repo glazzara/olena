@@ -56,6 +56,8 @@ namespace oln
     typedef point1d       point_type;
     typedef C             coord_type;
     typedef mlc::uint_<1> dim_type;
+
+    typedef mlc::uint_<0> index_comp_type;
   };
 
 

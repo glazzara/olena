@@ -51,5 +51,9 @@
 
 # include <oln/core/3d/image3d.hh>
 
+# include <oln/core/spe/slice.hh>
+# include <oln/core/spe/row.hh>
+# include <oln/core/spe/col.hh>
+
 
 #endif // ! OLN_BASICS3D_HH

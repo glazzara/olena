@@ -114,6 +114,10 @@ nobase_oln_HEADERS =						\
   core/gen/topo_lbbox.hh					\
   core/gen/window.hh						\
 								\
+  core/spe/col.hh						\
+  core/spe/row.hh						\
+  core/spe/slice.hh						\
+								\
   core/internal/bbox_bkd_piter.hh				\
   core/internal/bbox_fwd_piter.hh				\
   core/internal/dpoint_nd.hh					\

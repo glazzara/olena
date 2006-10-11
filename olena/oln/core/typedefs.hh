@@ -74,6 +74,11 @@ namespace oln
 
   mlc_decl_typedef(grid_type);
 
+  mlc_decl_typedef(index_comp_type);
+  mlc_decl_typedef(row_comp_type);
+  mlc_decl_typedef(col_comp_type);
+  mlc_decl_typedef(slice_comp_type);
+
 
   /*------------.
   | Iterators.  |
@@ -182,6 +187,7 @@ namespace oln
   `-----------------*/
 
   mlc_decl_typedef(dim_type);
+  mlc_decl_typedef(vec_type);
 
 
   /*------------------------------------.

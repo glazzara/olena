@@ -74,12 +74,11 @@ namespace oln
       typedef oln_type_of(E, dim) dim;
       typedef oln_type_of(E, coord) coord_t;
       typedef oln_type_of(E, dpoint) dpoint_t;
-
+      typedef oln_type_of(E, vec) vec_t;
 
     public:
 
       enum { n = mlc_value(dim) };
-      typedef xtd::vec<n,coord_t> vec_t;
       
       coord_t operator[](unsigned i) const;
       coord_t& operator[](unsigned i);
@@ -98,7 +97,8 @@ namespace oln
 
       dpoint_t impl_minus(const self_t& rhs) const;
 
-      const vec_t& vec() const;
+      const vec_t& impl_vec() const;
+      vec_t& impl_vec();
 
     protected:
 
@@ -185,7 +185,14 @@ namespace oln
 
     template <typename E>
     const typename point_nd<E>::vec_t&
-    point_nd<E>::vec() const
+    point_nd<E>::impl_vec() const
+    {
+      return v_;
+    }
+
+    template <typename E>
+    typename point_nd<E>::vec_t&
+    point_nd<E>::impl_vec()
     {
       return v_;
     }

@@ -54,5 +54,8 @@
 
 # include <oln/core/fwd_piter.hh>
 
+# include <oln/core/spe/row.hh>
+# include <oln/core/spe/col.hh>
+
 
 #endif // ! OLN_BASICS2D_HH
