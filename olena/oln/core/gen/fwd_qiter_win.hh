@@ -29,6 +29,7 @@
 # define OLN_CORE_GEN_FWD_QITER_WIN_HH
 
 # include <oln/core/abstract/iterator_on_points.hh>
+# include <oln/core/abstract/window.hh>
 # include <oln/core/gen/window.hh>
 
 
@@ -70,12 +71,13 @@ namespace oln
 
   public:
     
-    template <typename P, typename D>
+    template <typename P, typename W>
     fwd_qiter_win_(const abstract::iterator_on_points<P>& it,
-		   const window_<D>& win);
-    template <typename P, typename D>
+		   const abstract::window<W>& win);
+
+    template <typename P, typename W>
     fwd_qiter_win_(const abstract::point<P>& p,
-		   const window_<D>& win);
+		   const abstract::window<W>& win);
 
     void impl_start();
 
@@ -103,22 +105,22 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename point_t>
-  template <typename P, typename D>
+  template <typename P, typename W>
   fwd_qiter_win_<point_t>::fwd_qiter_win_(const abstract::iterator_on_points<P>& it,
-					  const window_<D>& win)
+					  const abstract::window<W>& win)
     : p_ref_(it.point_adr()),
-      win_(win)
+      win_(win.exact())
   {
     precondition(win_.card() > 0);
     i_ = -1;
   }
     
   template <typename point_t>
-  template <typename P, typename D>
+  template <typename P, typename W>
   fwd_qiter_win_<point_t>::fwd_qiter_win_(const abstract::point<P>& p,
-					  const window_<D>& win)
+					  const abstract::window<W>& win)
     : p_ref_(&(p.exact())),
-      win_(win)
+      win_(win.exact())
   {
     precondition(win_.card() > 0);
     i_ = -1;

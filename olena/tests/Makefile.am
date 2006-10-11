@@ -26,6 +26,7 @@ check_PROGRAMS =				\
   image2d					\
   image3d					\
   npoints					\
+  window2d					\
 						\
   identity_morpher				\
   add_neighborhood_morpher			\
@@ -43,6 +44,7 @@ image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
 image3d_SOURCES = image3d.cc
 npoints_SOURCES = npoints.cc
+window2d_SOURCES = window2d.cc
 
 # Morphers.
 identity_morpher_SOURCES = identity_morpher.cc

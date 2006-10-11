@@ -1,5 +1,29 @@
 2006-10-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	New facilities related to windows and q-iterators.
+	
+	* tests/window2d.cc: New.
+	* tests/Makefile.am (window2d_SOURCES): New.
+	* oln/debug/print.hh (format): New.
+	(print): Update; use format to correctly print 'unsigned char'.
+	* oln/level/fill.hh: Separate header and implementation.
+	(fill): Use shortcut.
+	* oln/core/typedefs.hh: New shortcuts oln_something(T) for
+	oln_type_of(T, something).
+	* oln/core/fwd_piter.hh (fwd_qiter_type): New.
+	* oln/core/abstract/window.hh: New.
+	* oln/core/2d/aliases.hh (window2d, fwd_qiter2d): New.
+	* oln/core/gen/fwd_qiter_win.hh (include): Add abstract::window.hh.
+	(fwd_qiter_win_): Update ctor signature.
+	* oln/core/gen/window.hh (grid_type): New.
+	(window_): Add inheritance from abstract::window.
+	(impl_is_valid): New.
+	(include): Update.
+	* oln/basics2d.hh (include): Add window.hh and fwd_qiter_win.hh.
+	* oln/Makefile.am (nobase_oln_HEADERS): Update.
+	
+2006-10-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add some tools related to morphers over image value.
 	
 	* oln/core/abstract/value.hh: New.

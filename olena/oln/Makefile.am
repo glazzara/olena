@@ -85,6 +85,7 @@ nobase_oln_HEADERS =						\
   core/abstract/point_set.hh					\
   core/abstract/topology.hh					\
   core/abstract/value.hh					\
+  core/abstract/window.hh					\
 								\
   core/automatic/image.hh					\
   core/automatic/image_being_mutable.hh				\

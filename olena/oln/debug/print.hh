@@ -44,16 +44,28 @@ namespace oln
 
     /// Fwd decl.
     template <typename I>
-    void print(const abstract::image<I>& input, std::ostream& ostr);
+    void print(const abstract::image<I>& input, std::ostream& ostr = std::cout);
 
     /// Fwd decl.
     template <typename I>
-    void println(const abstract::image<I>& input, std::ostream& ostr);
+    void println(const abstract::image<I>& input, std::ostream& ostr = std::cout);
 
 # ifndef OLN_INCLUDE_ONLY
 
     namespace impl
     {
+
+      template <typename T>
+      const T& format(const T& value)
+      {
+	return value;
+      }
+
+      unsigned format(const unsigned char& value)
+      {
+	return value;
+      }
+
 
       /// Generic version.
       template <typename I>
@@ -61,7 +73,7 @@ namespace oln
       {
 	oln_type_of(I, fwd_piter) p(input.topo());
 	for_all(p)
-	  ostr << p.to_point() << ':' << ima(p) << ' ';
+	  ostr << p.to_point() << ':' << format(input(p)) << ' ';
       }
 
 
@@ -76,7 +88,7 @@ namespace oln
 	      {
 		point2d p(row, col);
 		if (input.has(p))
-		  ostr << input(p);
+		  ostr << format(input(p));
 		else
 		  ostr << '-';
 		ostr << ' ';

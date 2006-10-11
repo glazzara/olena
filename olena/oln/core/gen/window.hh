@@ -33,14 +33,27 @@
 # include <vector>
 # include <mlc/assert.hh>
 # include <oln/core/abstract/dpoint.hh>
+# include <oln/core/abstract/window.hh>
 
 
 namespace oln
 {
 
+  // Fwd decl.
+  template <typename dpoint> class window_;
+
+
+  template <typename dpoint>
+  struct vtypes< window_<dpoint> >
+  {
+    typedef oln_type_of(dpoint, grid) grid_type;
+  };
+
+
   /// Abstract forward dpoint iterator class.
   template <typename dpoint>
-  class window_ : private mlc::assert_< mlc_is_a(dpoint, abstract::dpoint) >
+  class window_ : public abstract::window< window_<dpoint> >,
+		  private mlc::assert_< mlc_is_a(dpoint, abstract::dpoint) >
   {
     typedef window_<dpoint> self_t;
 
@@ -51,11 +64,13 @@ namespace oln
     window_<dpoint>& add(const dpoint& dp);
 
     template <typename D>
-      window_<dpoint>& add(const abstract::dpoint<D>& dp);
+    window_<dpoint>& add(const abstract::dpoint<D>& dp);
+
+    dpoint dp(unsigned i) const;
 
     unsigned card() const;
 
-    dpoint dp(unsigned i) const;
+    bool impl_is_valid() const;
 
   protected:
 
@@ -104,6 +119,13 @@ namespace oln
   {
     precondition(i < v_.size());
     return v_[i];
+  }
+
+  template <typename dpoint>
+  bool
+  window_<dpoint>::impl_is_valid() const
+  {
+    return v_.size() != 0;
   }
 
   template <typename dpoint>

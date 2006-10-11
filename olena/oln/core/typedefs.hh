@@ -200,6 +200,63 @@ namespace oln
 } // end of namespace oln
 
 
+
+/// \{
+/// Shortcuts formed such as "oln_something(T) means oln_type_of(T, something)".
+
+# define oln_coord(T)   oln_type_of(T,  coord)
+# define oln_coord_(T)  oln_type_of_(T, coord)
+
+# define oln_grid(T)    oln_type_of(T,  grid)
+# define oln_grid_(T)   oln_type_of_(T, grid)
+
+# define oln_point(T)   oln_type_of(T,  point)
+# define oln_point_(T)  oln_type_of_(T, point)
+
+# define oln_dpoint(T)  oln_type_of(T,  dpoint)
+# define oln_dpoint_(T) oln_type_of_(T, dpoint)
+
+# define oln_value(T)   oln_type_of(T,  value)
+# define oln_value_(T)  oln_type_of_(T, value)
+
+# define oln_rvalue(T)   oln_type_of(T,  rvalue)
+# define oln_rvalue_(T)  oln_type_of_(T, rvalue)
+
+# define oln_lvalue(T)   oln_type_of(T,  lvalue)
+# define oln_lvalue_(T)  oln_type_of_(T, lvalue)
+
+# define oln_fwd_piter(T)  oln_type_of(T,  fwd_piter)
+# define oln_fwd_piter_(T) oln_type_of_(T, fwd_piter)
+
+# define oln_bkd_piter(T)  oln_type_of(T,  bkd_piter)
+# define oln_bkd_piter_(T) oln_type_of_(T, bkd_piter)
+
+# define oln_fwd_qiter(T)  oln_type_of(T,  fwd_qiter)
+# define oln_fwd_qiter_(T) oln_type_of_(T, fwd_qiter)
+
+# define oln_bkd_qiter(T)  oln_type_of(T,  bkd_qiter)
+# define oln_bkd_qiter_(T) oln_type_of_(T, bkd_qiter)
+
+# define oln_fwd_niter(T)  oln_type_of(T,  fwd_niter)
+# define oln_fwd_niter_(T) oln_type_of_(T, fwd_niter)
+
+# define oln_bkd_niter(T)  oln_type_of(T,  bkd_niter)
+# define oln_bkd_niter_(T) oln_type_of_(T, bkd_niter)
+
+# define oln_piter(T)  oln_type_of(T,  fwd_piter)
+# define oln_piter_(T) oln_type_of_(T, fwd_piter)
+
+# define oln_qiter(T)  oln_type_of(T,  fwd_qiter)
+# define oln_qiter_(T) oln_type_of_(T, fwd_qiter)
+
+# define oln_niter(T)  oln_type_of(T,  fwd_niter)
+# define oln_niter_(T) oln_type_of_(T, fwd_niter)
+
+/// \}
+
+
+
+
 # include <oln/core/abstract/entry.hh>
 
 

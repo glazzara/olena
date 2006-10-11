@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,69 +25,74 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_LEVEL_FILL_HH
-# define OLN_LEVEL_FILL_HH
+#ifndef OLN_CORE_ABSTRACT_WINDOW_HH
+# define OLN_CORE_ABSTRACT_WINDOW_HH
 
-# include <mlc/assert.hh>
-# include <mlc/is_a.hh>
-
-# include <oln/core/abstract/image.hh>
-# include <oln/core/abstract/iterator.hh>
-# include <oln/core/automatic/image_being_mutable.hh>
+# include <oln/core/typedefs.hh>
 
 
 namespace oln
 {
 
-  namespace ERROR
-  {
-    struct FIRST_ARGUMENT_OF_oln_level_fill_IS_NOT_MUTABLE;
-  }
-
-  namespace level
+  namespace abstract
   {
 
-    /// Fwd decl.
-    template <typename I>
-    void fill(abstract::image<I>& input, const oln_type_of(I, value)& val);
+
+    /// Abstract window class.
+    template <typename E>
+    class window : public virtual stc::any__simple<E>,
+		   public virtual oln::type
+    {
+    public:
+
+      bool is_valid() const;
+
+      struct decl
+      {
+	oln_virtual_typedef(grid);
+
+	decl();
+      };
+
+    protected:
+
+      window();
+      ~window();
+
+    }; // end of class oln::abstract::window<E>
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
+    template <typename E>
+    bool window<E>::is_valid() const
     {
+      return this->exact().impl_is_valid();
+    }
 
-      /// Generic version.
-      template <typename I>
-      void fill(abstract::image_being_mutable<I>& input,
-		const oln_type_of(I, value)& val)
-      {
-	oln_type_of(I, piter) p(input.topo());
-	for_all(p)
-	  input(p) = val;
-      }
-
-    } // end of namespace oln::level::fill
-
-
-    /// Facade.
-    template <typename I>
-    void fill(abstract::image<I>& input, const oln_value(I)& val)
+    template <typename E>
+    window<E>::window()
     {
-      // Precondition.
-      mlc::assert_<
-	mlc_is_a(I, abstract::image_being_mutable),
-	ERROR::FIRST_ARGUMENT_OF_oln_level_fill_IS_NOT_MUTABLE
-      >::check();
+    }
 
-      impl::fill(input.exact(), val);
+    template <typename E>
+    window<E>::~window()
+    {
+      decl();
+    }
+
+    template <typename E>
+    window<E>::decl::decl()
+    {
     }
 
 # endif
 
-  } // end of namespace oln::level
+
+  } // end of namespace oln::abstract
 
 } // end of namespace oln
 
 
-#endif // ! OLN_LEVEL_FILL_HH
+#endif // ! OLN_CORE_ABSTRACT_WINDOW_HH

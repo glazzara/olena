@@ -127,6 +127,12 @@ namespace oln
     typedef bkd_piter2d ret;
   };
 
+  template <typename T>
+  struct single_vtype< image2d<T>, typedef_::fwd_qiter_type >
+  {
+    typedef fwd_qiter2d ret;
+  };
+
 
 } // end of namespace oln
 
