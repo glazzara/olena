@@ -36,15 +36,13 @@
 # include <oln/core/internal/tracked_ptr.hh>
 // For topo2d.
 # include <oln/core/2d/aliases.hh>
+// For fwd_piter and bkd_piter virtual types.
+// FIXME: Really necessary?
+# include <oln/core/fwd_piter.hh>
 
 
 namespace oln
 {
-
-  // FIXME: Inexplicably, this explicit instantiation is required to
-  // have topo_lbbox_<point2d> work.  See if we can get rid of it.
-  template class bbox_<point2d>;
-
 
   // Forward declaration.
   template <typename T> class image2d;
@@ -54,8 +52,7 @@ namespace oln
   template <typename T>
   struct vtypes< image2d<T> >
   {
-    // FIXME: or `typedef topo2d topo_type;' ?
-    typedef topo_lbbox_<point2d> topo_type;
+    typedef topo2d topo_type;
     typedef grid2d grid_type;
 
     typedef point2d point_type;
@@ -95,7 +92,6 @@ namespace oln
     const topo2d& impl_topo() const;
 
     T impl_op_read(const point2d& p) const;
-
     T& impl_op_readwrite(const point2d& p);
 
     T* adr_at(int row, int col);
@@ -106,7 +102,6 @@ namespace oln
     topo2d topo_;
     internal::tracked_ptr<array_t> data_;
   };
-
 
 
 
@@ -122,7 +117,6 @@ namespace oln
   {
   }
 
-  /// Ctor using an existing topology.
   template <typename T>
   image2d<T>::image2d(const topo2d& topo)
     : topo_(topo),
@@ -172,6 +166,7 @@ namespace oln
   }
 
 # endif
+
 
 } // end of namespace oln
 

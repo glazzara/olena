@@ -1,5 +1,15 @@
 2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move explicit instantiation of bbox_<point2d> to basics2d.hh.
+
+	* oln/core/2d/image2d.hh (oln::vtypes< image2d<T> >): Set
+	topo_type to topo2d.
+	* oln/core/2d/image2d.hh (bbox_<point2d>): Move explicit
+	instantiation...
+	* oln/basics2d.hh: ...here
+
+2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Reorganize and fix oln/core/1d/.
 
 	* oln/core/1d/aliases.hh (oln::fwd_piter1d, oln::bkd_piter1d): Fix
