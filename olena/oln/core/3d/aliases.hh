@@ -55,8 +55,8 @@ namespace oln
 
   typedef bbox_<point3d> bbox3d;
   typedef topo_lbbox_<point3d> topo3d;
-  typedef fwd_piter_bbox_<topo3d> fwd_piter3d;
-  typedef bkd_piter_bbox_<topo3d> bkd_piter3d;
+  typedef fwd_piter_bbox_<point3d> fwd_piter3d;
+  typedef bkd_piter_bbox_<point3d> bkd_piter3d;
 
   typedef  point3d_<float>  point3df;
   typedef dpoint3d_<float> dpoint3df;

@@ -78,39 +78,67 @@ namespace oln
   {
     typedef point3d_<C> self_t;
     typedef stc_get_super(point3d_<C>) super_t;
-    typedef oln_type_of(self_t, coord) coord_t;
 
     using super_t::v_;
 
   public:
 
     /// Ctor.
-    point3d_()
-    {
-    }
+    point3d_();
 
     /// Ctor.
-    point3d_(coord_t slice, coord_t row, coord_t col)
-      : super_t (xtd::mk_vec(slice, row, col))
-    {
-    }
+    point3d_(C slice, C row, C col);
 
     /// Ctor.
-    point3d_(const xtd::vec<3,coord_t>& v)
-      : super_t(v)
-    {
-    }
+    point3d_(const xtd::vec<3,C>& v);
 
-    coord_t  slice() const { return v_[0]; }
-    coord_t& slice()       { return v_[0]; }
+    C  slice() const;
+    C& slice();
 
-    coord_t  row()   const { return v_[1]; }
-    coord_t& row()         { return v_[1]; }
+    C  row()   const;
+    C& row();
 
-    coord_t  col()   const { return v_[2]; }
-    coord_t& col()         { return v_[2]; }
+    C  col()   const;
+    C& col();
   };
 
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename C>
+  point3d_<C>::point3d_()
+  {
+  }
+
+  template <typename C>
+  point3d_<C>::point3d_(C slice, C row, C col)
+    : super_t (xtd::mk_vec(slice, row, col))
+  {
+  }
+
+  template <typename C>
+  point3d_<C>::point3d_(const xtd::vec<3,C>& v)
+    : super_t(v)
+  {
+  }
+
+  template <typename C>
+  C  point3d_<C>::slice() const { return v_[0]; }
+  template <typename C>
+  C& point3d_<C>::slice()       { return v_[0]; }
+
+  template <typename C>
+  C  point3d_<C>::row()   const { return v_[1]; }
+  template <typename C>
+  C& point3d_<C>::row()         { return v_[1]; }
+
+  template <typename C>
+  C  point3d_<C>::col()   const { return v_[2]; }
+  template <typename C>
+  C& point3d_<C>::col()         { return v_[2]; }
+
+# endif
 
 } // end of namespace oln
 

@@ -1,5 +1,37 @@
 2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Reorganize and fix oln/core/3d/.
+
+	* oln/core/3d/aliases.hh (oln::fwd_piter3d, oln::bkd_piter3d): Fix
+	their definitions.
+	* oln/core/3d/neighb3d.hh (c6, c18, c26)
+	(c4_slice, c8_slice, c4_row, c8_row, c4_col, c8_col): Rename as...
+	(mk_c6, mk_c18, mk_c26, mk_c4_slice, mk_c8_slice)
+	(mk_c4_row, mk_c8_row, mk_c4_col, mk_c8_col): ...these.
+	(c6, c18, c26, c4_slice, c8_slice, c4_row, c8_row)
+	(c4_col, c8_col): New objects.
+	* oln/core/3d/array3d.hh, oln/core/3d/dpoint3d.hh,
+	* oln/core/3d/image3d.hh, oln/core/3d/neighb3d.hh,
+	* oln/core/3d/point3d.hh: Separate the interface of the methods
+	and functions from their implementation.
+	* oln/core/3d/image3d.hh (oln::vtypes< image3d<T> >): Set
+	topo_type to topo3d.
+	(bbox_<point3d>): Move explicit	instantiation...
+	* oln/basics3d.hh: ...here
+	(oln/core/fwd_piter.hh): Include it.
+	* oln/core/3d/image3d.hh: Move the definition of the virtual types
+	fwd_piter and bkd_piter of oln::image3d...
+	* oln/core/fwd_piter.hh: ...here.
+	* oln/core/abstract/image/hybrid/classical.hh
+	(oln::abstract:classical_3d_image): New.
+	(oln::case_<image_hybrid_hierarchy_wrt_classical, E, 3>): Rename
+	as...
+	(oln::case_<image_hybrid_hierarchy_wrt_classical, E, 4>): ...this.
+	(oln::case_<image_hybrid_hierarchy_wrt_classical, E, 3>): New.
+	Handle 3D case.
+
+2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix explicit instantiations of oln::bbox_.
 
 	* oln/basics1d.hh (bbox_<point1d>): Move explicit

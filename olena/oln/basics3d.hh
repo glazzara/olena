@@ -35,7 +35,6 @@
 # include <oln/core/3d/grid3d.hh>
 
 # include <oln/core/3d/point3d.hh>
-
 # include <oln/core/3d/dpoint3d.hh>
 
 # include <oln/core/gen/bbox.hh>
@@ -43,13 +42,14 @@
 # include <oln/core/3d/bbox3d.hh>
 
 # include <oln/core/gen/fwd_piter_bbox.hh>
-
 # include <oln/core/gen/bkd_piter_bbox.hh>
 
 # include <oln/core/gen/neighb.hh>
 # include <oln/core/3d/neighb3d.hh>
 
 # include <oln/core/3d/image3d.hh>
+
+# include <oln/core/fwd_piter.hh>
 
 # include <oln/core/spe/slice.hh>
 # include <oln/core/spe/row.hh>

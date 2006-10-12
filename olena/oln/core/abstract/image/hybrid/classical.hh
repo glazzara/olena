@@ -33,6 +33,7 @@
 
 # include <oln/core/abstract/image/dimension/1d.hh>
 # include <oln/core/abstract/image/dimension/2d.hh>
+# include <oln/core/abstract/image/dimension/3d.hh>
 # include <oln/core/abstract/image/bbox/hierarchy.hh>
 # include <oln/core/abstract/image/accessibility/hierarchy.hh>
 
@@ -70,6 +71,15 @@ namespace oln
       classical_2d_image();
     };
 
+    template <typename E>
+    struct classical_3d_image
+      : public virtual abstract::classical_image<E>,
+	public virtual abstract::image3d<E>
+    {
+    protected:
+      classical_3d_image();
+    };
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -88,6 +98,11 @@ namespace oln
     {
     }
 
+    template <typename E>
+    classical_3d_image<E>::classical_3d_image()
+    {
+    }
+
 # endif
 
   } // end of namespace oln::abstract
@@ -96,6 +111,7 @@ namespace oln
   // Fwd. decl.
   class grid1d;
   class grid2d;
+  class grid3d;
 
 
   /// 1D case.
@@ -124,9 +140,22 @@ namespace oln
   };
 
 
-  /// General case.
+  /// 3D case.
   template <typename E>
   struct case_< image_hybrid_hierarchy_wrt_classical, E, 3 > :
+    where_< mlc::and_list_< mlc::eq_< oln_type_of(E, grid), oln::grid3d >,
+			    mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ >,
+			    mlc::neq_< oln_deduce_type_of(E, topo, bbox), mlc::not_found >
+                           >
+           >
+  {
+    typedef abstract::classical_3d_image<E> ret;
+  };
+
+
+  /// General case.
+  template <typename E>
+  struct case_< image_hybrid_hierarchy_wrt_classical, E, 4 > :
     where_< mlc::and_< mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ >,
 		       mlc::neq_< oln_deduce_type_of(E, topo, bbox), mlc::not_found >
                       >

@@ -144,10 +144,21 @@ namespace oln
     typedef bkd_piter2d ret;
   };
 
+
+  // image3d<T>
+
+  template <typename T> class image3d;
+
   template <typename T>
-  struct single_vtype< image2d<T>, typedef_::fwd_qiter_type >
+  struct single_vtype< image3d<T>, typedef_::fwd_piter_type >
   {
-    typedef fwd_qiter2d ret;
+    typedef fwd_piter3d ret;
+  };
+
+  template <typename T>
+  struct single_vtype< image3d<T>, typedef_::bkd_piter_type >
+  {
+    typedef bkd_piter3d ret;
   };
 
 

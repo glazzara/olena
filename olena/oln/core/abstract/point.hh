@@ -33,6 +33,7 @@
 # include <oln/core/traits_id.hh>
 # include <oln/core/abstract/dpoint.hh>
 
+# include <xtd/vec.hh>
 
 
 

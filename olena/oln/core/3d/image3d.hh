@@ -53,19 +53,15 @@ namespace oln
   template <typename T>
   struct vtypes< image3d<T> >
   {
-    // FIXME: or `typedef topo3d topo_type;' ?
-    typedef topo_lbbox_<point3d> topo_type;
+    typedef topo3d topo_type;
     typedef grid3d grid_type;
 
     typedef point3d point_type;
-    
-    typedef fwd_piter_bbox_<topo_type> fwd_piter_type;
-    typedef bkd_piter_bbox_<topo_type> bkd_piter_type;
-    
+
     typedef T value_type;
     typedef T lvalue_type;
     typedef mlc::true_ is_mutable_type;
-    
+
     typedef image3d<T> real_type;
   };
 
@@ -90,55 +86,95 @@ namespace oln
 
     /// Ctor using sizes.
     image3d(unsigned nslices, unsigned nrows, unsigned ncols,
-	    unsigned border = 2)
-      : topo_(bbox3d(point3d(0,           0,         0        ),
-		     point3d(nslices - 1, nrows - 1, ncols - 1)),
-	      border),
-	data_(new array_t(0           - border,
-			  0           - border,
-			  0           - border,
-			  nslices - 1 + border,
-			  nrows   - 1 + border,
-			  ncols   - 1 + border))
-    {
-    }
+	    unsigned border = 2);
 
     /// Ctor using an existing topology.
-    image3d(const topo3d& topo)
-      : topo_(topo),
-	data_(new array_t(topo.bbox().pmin().slice(),
-			  topo.bbox().pmin().row(),
-			  topo.bbox().pmin().col(),
-			  topo.bbox().pmax().slice(),
-			  topo.bbox().pmax().row(),
-			  topo.bbox().pmax().col()))
-    {
-    }
+    image3d(const topo3d& topo);
 
-    const topo3d& impl_topo() const
-    {
-      return topo_;
-    }
+    const topo3d& impl_topo() const;
 
-    T impl_op_read(const point3d& p) const
-    {
-      precondition(data_ != 0);
-      precondition(topo_.has_large(p));
-      return data_->operator()(p.slice(), p.row(), p.col());
-    }
+    T impl_op_read(const point3d& p) const;
+    T& impl_op_readwrite(const point3d& p);
 
-    T& impl_op_readwrite(const point3d& p)
-    {
-      precondition(data_ != 0);
-      precondition(topo_.has_large(p));
-      return data_->operator()(p.slice(), p.row(), p.col());
-    }
+    T* adr_at(int slice, int row, int col);
+    const T* adr_at(int slice, int row, int col) const;
 
   private:
 
     topo3d topo_;
     internal::tracked_ptr<array_t> data_;
   };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename T>
+  image3d<T>::image3d(unsigned nslices, unsigned nrows, unsigned ncols,
+		      unsigned border)
+    : topo_(bbox3d(point3d(0,           0,         0        ),
+		   point3d(nslices - 1, nrows - 1, ncols - 1)),
+	    border),
+      data_(new array_t(0           - border,
+			0           - border,
+			0           - border,
+			nslices - 1 + border,
+			nrows   - 1 + border,
+			ncols   - 1 + border))
+  {
+  }
+
+  template <typename T>
+  image3d<T>::image3d(const topo3d& topo)
+    : topo_(topo),
+      data_(new array_t(topo.bbox().pmin().slice(),
+			topo.bbox().pmin().row(),
+			topo.bbox().pmin().col(),
+			topo.bbox().pmax().slice(),
+			topo.bbox().pmax().row(),
+			topo.bbox().pmax().col()))
+  {
+  }
+
+  template <typename T>
+  const topo3d& image3d<T>::impl_topo() const
+  {
+    return topo_;
+  }
+
+  template <typename T>
+  T image3d<T>::impl_op_read(const point3d& p) const
+  {
+    precondition(data_ != 0);
+    precondition(topo_.has_large(p));
+    return data_->operator()(p.slice(), p.row(), p.col());
+  }
+
+  template <typename T>
+  T& image3d<T>::impl_op_readwrite(const point3d& p)
+  {
+    precondition(data_ != 0);
+    precondition(topo_.has_large(p));
+    return data_->operator()(p.slice(), p.row(), p.col());
+  }
+
+  template <typename T>
+  T* image3d<T>::adr_at(int slice, int row, int col)
+  {
+    precondition(data_ != 0);
+    precondition(data_->has(slice, row, col));
+    return &(data_->operator()(slice, row, col));
+  }
+
+  template <typename T>
+  const T* image3d<T>::adr_at(int slice, int row, int col) const
+  {
+    precondition(data_ != 0);
+    precondition(data_->has(slice, row, col));
+    return &(data_->operator()(slice, row, col));
+  }
+
+# endif
 
 
 } // end of namespace oln

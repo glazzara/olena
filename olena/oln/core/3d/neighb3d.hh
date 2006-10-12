@@ -36,169 +36,214 @@
 namespace oln
 {
 
-
-  neighb3d c6()
+  namespace internal
   {
-    static bool flower = true;
-    static neighb3d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint3d(0, 0, 1))
-	  .add(dpoint3d(0, 1, 0))
-	  .add(dpoint3d(1, 0, 0));
-	flower = false;
-      }
-    return the_;
-  }
-  
 
-  neighb3d c18()
-  {
-    static bool flower = true;
-    static neighb3d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint3d(0,  0,  1))
-	  .add(dpoint3d(0,  1, -1))
-	  .add(dpoint3d(0,  1,  0))
-	  .add(dpoint3d(0,  1,  1))
-	  .add(dpoint3d(1, -1,  0))
-	  .add(dpoint3d(1,  0, -1))
-	  .add(dpoint3d(1,  0,  0))
-	  .add(dpoint3d(1,  0,  1))
-	  .add(dpoint3d(1,  1,  0));
-	flower = false;
-      }
-    return the_;
-  }
+    neighb3d mk_c6();
+    neighb3d mk_c18();
+    neighb3d mk_c26();
+    neighb3d mk_c4_slice();
+    neighb3d mk_c8_slice();
+    neighb3d mk_c4_row();
+    neighb3d mk_c8_row();
+    neighb3d mk_c4_col();
+    neighb3d mk_c8_col();
 
 
-  neighb3d c26()
-  {
-    static bool flower = true;
-    static neighb3d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint3d(0,  0,  1))
-	  .add(dpoint3d(0,  1, -1))
-	  .add(dpoint3d(0,  1,  0))
-	  .add(dpoint3d(0,  1,  1))
-	  .add(dpoint3d(1, -1, -1))
-	  .add(dpoint3d(1, -1,  0))
-	  .add(dpoint3d(1, -1,  1))
-	  .add(dpoint3d(1,  0, -1))
-	  .add(dpoint3d(1,  0,  0))
-	  .add(dpoint3d(1,  0,  1))
-	  .add(dpoint3d(1,  1, -1))
-	  .add(dpoint3d(1,  1,  0))
-	  .add(dpoint3d(1,  1,  1));
-	flower = false;
-      }
-    return the_;
-  }
-  
+# ifndef OLN_INCLUDE_ONLY
 
-  neighb3d c4_slice()
-  {
-    static bool flower = true;
-    static neighb3d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint3d(0, 0, 1))
-	  .add(dpoint3d(0, 1, 0));
-	flower = false;
-      }
-    return the_;
-  }
-  
-
-  neighb3d c8_slice()
-  {
-    static bool flower = true;
-    static neighb3d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint3d(0,  0,  1))
-	  .add(dpoint3d(0,  1, -1))
-	  .add(dpoint3d(0,  1,  0))
-	  .add(dpoint3d(0,  1,  1));
-	flower = false;
-      }
-    return the_;
-  }
-  
-
-  neighb3d c4_row()
-  {
-    static bool flower = true;
-    static neighb3d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint3d(0, 0, 1))
-	  .add(dpoint3d(1, 0, 0));
-	flower = false;
-      }
-    return the_;
-  }
-  
-
-  neighb3d c8_row()
-  {
-    static bool flower = true;
-    static neighb3d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint3d(0,  0,  1))
-	  .add(dpoint3d(1,  0, -1))
-	  .add(dpoint3d(1,  0,  0))
-	  .add(dpoint3d(1,  0,  1));
-	flower = false;
-      }
-    return the_;
-  }
-  
-
-  neighb3d c4_col()
-  {
-    static bool flower = true;
-    static neighb3d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint3d(0, 1, 0))
-	  .add(dpoint3d(1, 0, 0));
-	flower = false;
-      }
-    return the_;
-  }
+    neighb3d mk_c6()
+    {
+      static bool flower = true;
+      static neighb3d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint3d(0, 0, 1))
+	    .add(dpoint3d(0, 1, 0))
+	    .add(dpoint3d(1, 0, 0));
+	  flower = false;
+	}
+      return the_;
+    }
 
 
-  neighb3d c8_col()
-  {
-    static bool flower = true;
-    static neighb3d the_;
-    if (flower)
-      {
-	the_
-	  .add(dpoint3d(0,  1,  0))
-	  .add(dpoint3d(1, -1,  0))
-	  .add(dpoint3d(1,  0,  0))
-	  .add(dpoint3d(1,  1,  0));
-	flower = false;
-      }
-    return the_;
-  }
-  
+    neighb3d mk_c18()
+    {
+      static bool flower = true;
+      static neighb3d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint3d(0,  0,  1))
+	    .add(dpoint3d(0,  1, -1))
+	    .add(dpoint3d(0,  1,  0))
+	    .add(dpoint3d(0,  1,  1))
+	    .add(dpoint3d(1, -1,  0))
+	    .add(dpoint3d(1,  0, -1))
+	    .add(dpoint3d(1,  0,  0))
+	    .add(dpoint3d(1,  0,  1))
+	    .add(dpoint3d(1,  1,  0));
+	  flower = false;
+	}
+      return the_;
+    }
+
+
+    neighb3d mk_c26()
+    {
+      static bool flower = true;
+      static neighb3d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint3d(0,  0,  1))
+	    .add(dpoint3d(0,  1, -1))
+	    .add(dpoint3d(0,  1,  0))
+	    .add(dpoint3d(0,  1,  1))
+	    .add(dpoint3d(1, -1, -1))
+	    .add(dpoint3d(1, -1,  0))
+	    .add(dpoint3d(1, -1,  1))
+	    .add(dpoint3d(1,  0, -1))
+	    .add(dpoint3d(1,  0,  0))
+	    .add(dpoint3d(1,  0,  1))
+	    .add(dpoint3d(1,  1, -1))
+	    .add(dpoint3d(1,  1,  0))
+	    .add(dpoint3d(1,  1,  1));
+	  flower = false;
+	}
+      return the_;
+    }
+
+
+    neighb3d mk_c4_slice()
+    {
+      static bool flower = true;
+      static neighb3d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint3d(0, 0, 1))
+	    .add(dpoint3d(0, 1, 0));
+	  flower = false;
+	}
+      return the_;
+    }
+
+
+    neighb3d mk_c8_slice()
+    {
+      static bool flower = true;
+      static neighb3d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint3d(0,  0,  1))
+	    .add(dpoint3d(0,  1, -1))
+	    .add(dpoint3d(0,  1,  0))
+	    .add(dpoint3d(0,  1,  1));
+	  flower = false;
+	}
+      return the_;
+    }
+
+
+    neighb3d mk_c4_row()
+    {
+      static bool flower = true;
+      static neighb3d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint3d(0, 0, 1))
+	    .add(dpoint3d(1, 0, 0));
+	  flower = false;
+	}
+      return the_;
+    }
+
+
+    neighb3d mk_c8_row()
+    {
+      static bool flower = true;
+      static neighb3d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint3d(0,  0,  1))
+	    .add(dpoint3d(1,  0, -1))
+	    .add(dpoint3d(1,  0,  0))
+	    .add(dpoint3d(1,  0,  1));
+	  flower = false;
+	}
+      return the_;
+    }
+
+
+    neighb3d mk_c4_col()
+    {
+      static bool flower = true;
+      static neighb3d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint3d(0, 1, 0))
+	    .add(dpoint3d(1, 0, 0));
+	  flower = false;
+	}
+      return the_;
+    }
+
+
+    neighb3d mk_c8_col()
+    {
+      static bool flower = true;
+      static neighb3d the_;
+      if (flower)
+	{
+	  the_
+	    .add(dpoint3d(0,  1,  0))
+	    .add(dpoint3d(1, -1,  0))
+	    .add(dpoint3d(1,  0,  0))
+	    .add(dpoint3d(1,  1,  0));
+	  flower = false;
+	}
+      return the_;
+    }
+
+# endif
+
+  } // end of namespace oln::internal
+
+
+  extern const neighb3d c6;
+  extern const neighb3d c18;
+  extern const neighb3d c26;
+
+  extern const neighb3d c4_slice;
+  extern const neighb3d c8_slice;
+  extern const neighb3d c4_row;
+  extern const neighb3d c8_row;
+  extern const neighb3d c4_col;
+  extern const neighb3d c8_col;
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  const neighb3d c6       = internal::mk_c6();
+  const neighb3d c18      = internal::mk_c18();
+  const neighb3d c26      = internal::mk_c26();
+
+  const neighb3d c4_slice = internal::mk_c4_slice();
+  const neighb3d c8_slice = internal::mk_c8_slice();
+  const neighb3d c4_row   = internal::mk_c4_row();
+  const neighb3d c8_row   = internal::mk_c8_row();
+  const neighb3d c4_col   = internal::mk_c4_col();
+  const neighb3d c8_col   = internal::mk_c8_col();
+
+# endif
 
 } // end of namespace oln
-
 
 
 #endif // ! OLN_CORE_3D_NEIGHB3D_HH
