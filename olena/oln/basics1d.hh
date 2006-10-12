@@ -35,21 +35,26 @@
 # include <oln/core/1d/grid1d.hh>
 
 # include <oln/core/1d/point1d.hh>
-
 # include <oln/core/1d/dpoint1d.hh>
 
 # include <oln/core/gen/bbox.hh>
+// FIXME: Inexplicably, this explicit instantiation is required to
+// have topo_lbbox_<point1d> work.  See if we can get rid of it.
+namespace oln {
+  template class bbox_<point1d>;
+}
 
 # include <oln/core/gen/topo_lbbox.hh>
 
 # include <oln/core/gen/fwd_piter_bbox.hh>
-
 # include <oln/core/gen/bkd_piter_bbox.hh>
 
 # include <oln/core/gen/neighb.hh>
 # include <oln/core/1d/neighb1d.hh>
 
 # include <oln/core/1d/image1d.hh>
+
+# include <oln/core/fwd_piter.hh>
 
 
 #endif // ! OLN_BASICS1D_HH

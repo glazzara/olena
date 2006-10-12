@@ -36,17 +36,41 @@
 namespace oln
 {
 
-  neighb1d c2()
+  namespace internal
   {
-    static bool flower = true;
-    static neighb1d the_;
-    if (flower)
-      {
-	the_.add(dpoint1d(1));
-	flower = false;
-      }
-    return the_;
-  }
+
+    neighb1d mk_c2();
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    neighb1d mk_c2()
+    {
+      static bool flower = true;
+      static neighb1d the_;
+      if (flower)
+	{
+	  the_.add(dpoint1d(1));
+	  flower = false;
+	}
+      return the_;
+    }
+
+# endif
+
+
+  } // end of namespace oln::internal
+
+
+  extern const neighb1d c2;
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  const neighb1d c2  = internal::mk_c2();
+
+# endif
+
 
 } // end of namespace oln
 

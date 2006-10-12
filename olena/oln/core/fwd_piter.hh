@@ -111,6 +111,23 @@ namespace oln
   };
 
 
+  // image1d<T>
+
+  template <typename T> class image1d;
+
+  template <typename T>
+  struct single_vtype< image1d<T>, typedef_::fwd_piter_type >
+  {
+    typedef fwd_piter1d ret;
+  };
+
+  template <typename T>
+  struct single_vtype< image1d<T>, typedef_::bkd_piter_type >
+  {
+    typedef bkd_piter1d ret;
+  };
+
+
   // image2d<T>
 
   template <typename T> class image2d;

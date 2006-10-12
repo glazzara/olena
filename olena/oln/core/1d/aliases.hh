@@ -55,13 +55,12 @@ namespace oln
 
   typedef bbox_<point1d> bbox1d;
   typedef topo_lbbox_<point1d> topo1d;
-  typedef fwd_piter_bbox_<topo1d> fwd_piter1d;
-  typedef bkd_piter_bbox_<topo1d> bkd_piter1d;
+  typedef fwd_piter_bbox_<point1d> fwd_piter1d;
+  typedef bkd_piter_bbox_<point1d> bkd_piter1d;
 
   typedef  point1d_<float>  point1df;
   typedef dpoint1d_<float> dpoint1df;
   /// \}
-
 
 } // end of namespace oln
 

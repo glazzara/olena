@@ -1,5 +1,38 @@
 2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Reorganize and fix oln/core/1d/.
+
+	* oln/core/1d/aliases.hh (oln::fwd_piter1d, oln::bkd_piter1d): Fix
+	their definitions.
+	* oln/core/1d/neighb1d.hh (oln::c2): Rename as...
+	(oln::mk_c2): ...this.
+	(c2): New object.
+	* oln/core/1d/array1d.hh, oln/core/1d/dpoint1d.hh,
+	* oln/core/1d/image1d.hh, oln/core/1d/neighb1d.hh,
+	* oln/core/1d/point1d.hh: Separate the interface of the methods
+	and functions from their implementation.
+	* oln/core/1d/image1d.hh (oln::vtypes< image1d<T> >): Set
+	topo_type to topo1d.
+	(bbox_<point1d>): Move explicit	instantiation...
+	* oln/basics1d.hh: ...here
+	(oln/core/fwd_piter.hh): Include it.
+	* oln/core/1d/image1d.hh:
+	Move the definition of the virtual types fwd_piter and bkd_piter
+	of oln::image1d...
+	* oln/core/fwd_piter.hh: ...here.
+	* oln/core/abstract/image/hybrid/classical.hh
+	(oln::abstract:classical_1d_image)
+	(oln::case_<image_hybrid_hierarchy_wrt_classical, E, 1>)
+	(oln::case_<image_hybrid_hierarchy_wrt_classical, E, 2>): Rename
+	as...
+	(oln::case_<image_hybrid_hierarchy_wrt_classical, E, 2>)
+	(oln::case_<image_hybrid_hierarchy_wrt_classical, E, 3>):
+	...these.
+	(oln::case_<image_hybrid_hierarchy_wrt_classical, E, 1>): New.
+	Handle 1D case.
+
+2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	* oln/core/abstract/image/dimension/1d.hh
 	* oln/core/abstract/image/dimension/2d.hh
 	* oln/core/abstract/image/dimension/3d.hh

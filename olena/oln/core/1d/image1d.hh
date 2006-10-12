@@ -36,15 +36,13 @@
 # include <oln/core/internal/tracked_ptr.hh>
 // For topo1d.
 # include <oln/core/1d/aliases.hh>
+// For fwd_piter and bkd_piter virtual types.
+// FIXME: Really necessary?
+# include <oln/core/fwd_piter.hh>
 
 
 namespace oln
 {
-
-  // FIXME: Inexplicably, this explicit instantiation is required to
-  // have topo_lbbox_<point1d> work.  See if we can get rid of it.
-  template class bbox_<point1d>;
-
 
   // Forward declaration.
   template <typename T> class image1d;
@@ -54,13 +52,10 @@ namespace oln
   template <typename T>
   struct vtypes< image1d<T> >
   {
-    typedef topo_lbbox_<point1d> topo_type;
+    typedef topo1d topo_type;
     typedef grid1d grid_type;
 
     typedef point1d point_type;
-
-    typedef fwd_piter_bbox_<topo_type> fwd_piter_type;
-    typedef bkd_piter_bbox_<topo_type> bkd_piter_type;
 
     typedef T value_type;
     typedef T lvalue_type;
@@ -89,45 +84,84 @@ namespace oln
   public:
 
     /// Ctor using sizes.
-    image1d(unsigned nindices, unsigned border = 2)
-      : topo_(bbox1d(point1d(0), point1d(nindices - 1)), border),
-	data_(new array_t(0            - border,
-			  nindices - 1 + border))
-    {
-    }
+    image1d(unsigned nindices, unsigned border = 2);
 
     /// Ctor using an existing topology.
-    image1d(const topo1d& topo)
-      : topo_(topo),
-	data_(new array_t(topo.bbox().pmin().index(),
-			  topo.bbox().pmax().index()))
-    {
-    }
+    image1d(const topo1d& topo);
 
-    const topo1d& impl_topo() const
-    {
-      return topo_;
-    }
+    const topo1d& impl_topo() const;
 
-    T impl_op_read(const point1d& p) const
-    {
-      precondition(data_ != 0);
-      precondition(topo_.has_large(p));
-      return data_->operator()(p.index());
-    }
+    T impl_op_read(const point1d& p) const;
+    T& impl_op_readwrite(const point1d& p);
 
-    T& impl_op_readwrite(const point1d& p)
-    {
-      precondition(data_ != 0);
-      precondition(topo_.has_large(p));
-      return data_->operator()(p.index());
-    }
+    T* adr_at(int index);
+    const T* adr_at(int index) const;
 
   private:
 
     topo1d topo_;
     internal::tracked_ptr<array_t> data_;
   };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename T>
+  image1d<T>::image1d(unsigned nindices, unsigned border)
+    : topo_(bbox1d(point1d(0), point1d(nindices - 1)), border),
+      data_(new array_t(0            - border,
+			nindices - 1 + border))
+  {
+  }
+
+  template <typename T>
+  image1d<T>::image1d(const topo1d& topo)
+    : topo_(topo),
+      data_(new array_t(topo.bbox().pmin().index(),
+			topo.bbox().pmax().index()))
+  {
+  }
+
+  template <typename T>
+  const topo1d& image1d<T>::impl_topo() const
+  {
+    return topo_;
+  }
+
+  template <typename T>
+  T image1d<T>::impl_op_read(const point1d& p) const
+  {
+    precondition(data_ != 0);
+    precondition(topo_.has_large(p));
+    return data_->operator()(p.index());
+  }
+
+  template <typename T>
+  T& image1d<T>::impl_op_readwrite(const point1d& p)
+  {
+    precondition(data_ != 0);
+    precondition(topo_.has_large(p));
+    return data_->operator()(p.index());
+  }
+
+  template <typename T>
+  T* image1d<T>::adr_at(int index)
+  {
+    precondition(data_ != 0);
+    precondition(data_->has(index));
+    return &(data_->operator()(index));
+  }
+
+  template <typename T>
+  const T* image1d<T>::adr_at(int index) const
+  {
+    precondition(data_ != 0);
+    precondition(data_->has(index));
+    return &(data_->operator()(index));
+  }
+
+# endif
 
 
 } // end of namespace oln

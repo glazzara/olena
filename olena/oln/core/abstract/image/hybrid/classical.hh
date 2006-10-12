@@ -31,6 +31,7 @@
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/image/hierarchies.hh>
 
+# include <oln/core/abstract/image/dimension/1d.hh>
 # include <oln/core/abstract/image/dimension/2d.hh>
 # include <oln/core/abstract/image/bbox/hierarchy.hh>
 # include <oln/core/abstract/image/accessibility/hierarchy.hh>
@@ -52,6 +53,15 @@ namespace oln
     };
 
     template <typename E>
+    struct classical_1d_image
+      : public virtual abstract::classical_image<E>,
+	public virtual abstract::image1d<E>
+    {
+    protected:
+      classical_1d_image();
+    };
+
+    template <typename E>
     struct classical_2d_image
       : public virtual abstract::classical_image<E>,
 	public virtual abstract::image2d<E>
@@ -69,6 +79,11 @@ namespace oln
     }
 
     template <typename E>
+    classical_1d_image<E>::classical_1d_image()
+    {
+    }
+
+    template <typename E>
     classical_2d_image<E>::classical_2d_image()
     {
     }
@@ -79,12 +94,26 @@ namespace oln
 
 
   // Fwd. decl.
+  class grid1d;
   class grid2d;
 
 
-  /// 2-D case.
+  /// 1D case.
   template <typename E>
   struct case_< image_hybrid_hierarchy_wrt_classical, E, 1 > :
+    where_< mlc::and_list_< mlc::eq_< oln_type_of(E, grid), oln::grid1d >,
+			    mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ >,
+			    mlc::neq_< oln_deduce_type_of(E, topo, bbox), mlc::not_found >
+                           >
+           >
+  {
+    typedef abstract::classical_1d_image<E> ret;
+  };
+
+
+  /// 2D case.
+  template <typename E>
+  struct case_< image_hybrid_hierarchy_wrt_classical, E, 2 > :
     where_< mlc::and_list_< mlc::eq_< oln_type_of(E, grid), oln::grid2d >,
 			    mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ >,
 			    mlc::neq_< oln_deduce_type_of(E, topo, bbox), mlc::not_found >
@@ -97,7 +126,7 @@ namespace oln
 
   /// General case.
   template <typename E>
-  struct case_< image_hybrid_hierarchy_wrt_classical, E, 2 > :
+  struct case_< image_hybrid_hierarchy_wrt_classical, E, 3 > :
     where_< mlc::and_< mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ >,
 		       mlc::neq_< oln_deduce_type_of(E, topo, bbox), mlc::not_found >
                       >

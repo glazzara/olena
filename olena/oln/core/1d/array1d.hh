@@ -43,51 +43,19 @@ namespace oln
   public:
 
     /// Ctor.
-    array1d(coord_t min, coord_t max) :
-      min_(min), max_(max)
-    {
-      precondition(max >= min);
-      len_ = max - min + 1;
-      allocate_();
-    }
-
+    array1d(coord_t min, coord_t max);
     /// Ctor.
-    array1d(coord_t len) :
-      min_(0), len_(len)
-    {
-      precondition(len > 0);
-      max_ = min_ + len_;
-      allocate_();
-    }
+    array1d(coord_t len);
 
     /// Dtor.
-    ~array1d()
-    {
-      deallocate_();
-    }
+    ~array1d();
 
-    value_t operator()(coord_t i) const
-    {
-      precondition(has(i));
-      return buffer_[i - min_];
-    }
+    value_t  operator()(coord_t i) const;
+    value_t& operator()(coord_t i);
 
-    value_t& operator()(coord_t i)
-    {
-      precondition(has(i));
-      return buffer_[i - min_];
-    }
+    bool has(coord_t i) const;
 
-    bool has(coord_t i) const
-    {
-      return
-	i >= min_ and i <= max_;
-    }
-
-    size_t memsize() const
-    {
-      return size_t(len_) * sizeof(value_t);
-    }
+    size_t memsize() const;
 
   protected:
 
@@ -97,18 +65,80 @@ namespace oln
 
   private:
 
-    void allocate_()
-    {
-      buffer_ = new value_t[size_t(len_)];
-    }
-
-    void deallocate_()
-    {
-      precondition(buffer_ != 0);
-      delete[] buffer_;
-      buffer_ = 0; // safety
-    }
+    void allocate_();
+    void deallocate_();
   };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename value_t, typename coord_t>
+  array1d<value_t, coord_t>::array1d(coord_t min, coord_t max) :
+    min_(min), max_(max)
+  {
+    precondition(max >= min);
+    len_ = max - min + 1;
+    allocate_();
+  }
+
+  template <typename value_t, typename coord_t>
+  array1d<value_t, coord_t>::array1d(coord_t len) :
+    min_(0), len_(len)
+  {
+    precondition(len > 0);
+    max_ = min_ + len_;
+    allocate_();
+  }
+
+  template <typename value_t, typename coord_t>
+  array1d<value_t, coord_t>::~array1d()
+  {
+    deallocate_();
+  }
+
+  template <typename value_t, typename coord_t>
+  value_t array1d<value_t, coord_t>::operator()(coord_t i) const
+  {
+    precondition(has(i));
+    return buffer_[i - min_];
+  }
+
+  template <typename value_t, typename coord_t>
+  value_t& array1d<value_t, coord_t>::operator()(coord_t i)
+  {
+    precondition(has(i));
+    return buffer_[i - min_];
+  }
+
+  template <typename value_t, typename coord_t>
+  bool array1d<value_t, coord_t>::has(coord_t i) const
+  {
+    return
+      i >= min_ and i <= max_;
+  }
+
+  template <typename value_t, typename coord_t>
+  size_t array1d<value_t, coord_t>::memsize() const
+  {
+    return size_t(len_) * sizeof(value_t);
+  }
+
+  template <typename value_t, typename coord_t>
+  void array1d<value_t, coord_t>::allocate_()
+  {
+    buffer_ = new value_t[size_t(len_)];
+  }
+
+  template <typename value_t, typename coord_t>
+  void array1d<value_t, coord_t>::deallocate_()
+  {
+    precondition(buffer_ != 0);
+    delete[] buffer_;
+    buffer_ = 0; // safety
+  }
+
+# endif
 
 
 } // end of namespace oln

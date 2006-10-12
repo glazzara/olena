@@ -76,32 +76,58 @@ namespace oln
   {
     typedef point1d_<C> self_t;
     typedef stc_get_super(point1d_<C>) super_t;
-    typedef oln_type_of(self_t, coord) coord_t;
 
     using super_t::v_;
 
   public:
 
     /// Ctor.
-    point1d_()
-    {
-    }
+    point1d_();
 
     /// Ctor.
-    point1d_(coord_t index)
-      : super_t (xtd::mk_vec(index))
-    {
-    }
+    point1d_(C index);
 
     /// Ctor.
-    point1d_(const xtd::vec<1,coord_t>& v)
-      : super_t(v)
+    point1d_(const xtd::vec<1,C>& v);
+
+    /// Dtor.
+    ~point1d_()
     {
     }
 
-    coord_t  index() const { return v_[0]; }
-    coord_t& index()       { return v_[0]; }
+    C  index() const;
+    C& index();
   };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+
+  template <typename C>
+  point1d_<C>::point1d_()
+  {
+  }
+
+  template <typename C>
+  point1d_<C>::point1d_(C index)
+    : super_t (xtd::mk_vec(index))
+  {
+  }
+
+  template <typename C>
+  point1d_<C>::point1d_(const xtd::vec<1,C>& v)
+    : super_t(v)
+  {
+  }
+
+  template <typename C>
+  C point1d_<C>::index() const { return v_[0]; }
+
+  template <typename C>
+  C& point1d_<C>::index()      { return v_[0]; }
+
+# endif
 
 
 } // end of namespace oln
