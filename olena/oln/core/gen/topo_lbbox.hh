@@ -62,7 +62,9 @@ namespace oln
 
   /// Bounding box topology based on a point class.
   template <typename point>
-  class topo_lbbox_ : public topology_entry< topo_lbbox_<point> >
+  class topo_lbbox_ :
+    public topology_entry< topo_lbbox_<point> >,
+    private mlc::assert_< mlc_is_a(point, abstract::point) >
   {
     typedef bbox_<point> bbox_t;
 

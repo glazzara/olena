@@ -1,3 +1,11 @@
+2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add static assertions to oln::topo_bbox_ and oln::topo_lbbox_.
+
+	* oln/core/gen/topo_bbox.hh (oln::topo_bbox_<point>)
+	* oln/core/gen/topo_lbbox.hh (oln::topo_lbbox_<point>): Ensure
+	parameter point is an oln::abstract::point.
+
 2006-10-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add new facilities to access to components such as row, col, etc.
