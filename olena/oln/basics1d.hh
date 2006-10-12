@@ -49,7 +49,7 @@
 
 # include <oln/core/1d/image1d.hh>
 
-# include <oln/core/fwd_piter.hh>
+# include <oln/core/iterator_vtypes.hh>
 
 
 #endif // ! OLN_BASICS1D_HH

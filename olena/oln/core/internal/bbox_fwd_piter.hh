@@ -32,7 +32,7 @@
 # include <oln/core/abstract/iterator_on_points.hh>
 # include <oln/core/abstract/point.hh>
 # include <oln/core/gen/bbox.hh>
-# include <oln/core/fwd_piter.hh>
+# include <oln/core/iterator_vtypes.hh>
 
 
 namespace oln

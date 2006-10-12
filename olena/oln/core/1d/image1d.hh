@@ -39,7 +39,7 @@
 # include <oln/core/1d/aliases.hh>
 // For fwd_piter and bkd_piter virtual types.
 // FIXME: Really necessary?
-# include <oln/core/fwd_piter.hh>
+# include <oln/core/iterator_vtypes.hh>
 
 
 namespace oln

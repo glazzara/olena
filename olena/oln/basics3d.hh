@@ -49,7 +49,7 @@
 
 # include <oln/core/3d/image3d.hh>
 
-# include <oln/core/fwd_piter.hh>
+# include <oln/core/iterator_vtypes.hh>
 
 # include <oln/core/spe/slice.hh>
 # include <oln/core/spe/row.hh>

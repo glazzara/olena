@@ -52,7 +52,7 @@
 
 # include <oln/core/2d/image2d.hh>
 
-# include <oln/core/fwd_piter.hh>
+# include <oln/core/iterator_vtypes.hh>
 
 # include <oln/core/spe/row.hh>
 # include <oln/core/spe/col.hh>

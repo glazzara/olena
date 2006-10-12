@@ -1,5 +1,16 @@
 2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	* oln/core/fwd_piter.hh: Rename as....
+	* oln/core/iterator_vtypes.hh: ...this.
+	Adjust header guards.
+	* oln/basics1d.hh, oln/basics2d.hh, oln/basics3d.hh,
+	* oln/core/1d/image1d.hh, oln/core/2d/image2d.hh,
+	* oln/core/3d/image3d.hh, oln/core/internal/bbox_bkd_piter.hh,
+	* oln/core/internal/bbox_fwd_piter.hh, oln/io/pnm.hh,
+	* oln/morpher/add_neighborhood.hh: Adjust.
+
+2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Reorganize and fix oln/core/3d/.
 
 	* oln/core/3d/aliases.hh (oln::fwd_piter3d, oln::bkd_piter3d): Fix
