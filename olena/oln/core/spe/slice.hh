@@ -32,7 +32,9 @@
 # include <oln/core/abstract/point.hh>
 # include <oln/core/abstract/dpoint.hh>
 # include <oln/core/abstract/point_set.hh>
+# include <oln/core/abstract/point_set/point_set_having_bbox.hh>
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/bbox/hierarchy.hh>
 # include <oln/core/abstract/iterator_on_points.hh>
 
 

@@ -1,5 +1,13 @@
 2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix sanity tests.
+
+	* oln/core/spe/row.hh, oln/core/spe/col.hh, oln/core/spe/slice.hh
+	(oln/core/abstract/point_set/point_set_having_bbox.hh)
+	(oln/core/abstract/image/bbox/hierarchy.hh): Include them.
+
+2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	* oln/core/fwd_piter.hh: Rename as....
 	* oln/core/iterator_vtypes.hh: ...this.
 	Adjust header guards.
