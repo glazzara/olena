@@ -28,12 +28,15 @@
 /// Test oln::io_pnm.cc.
 
 #include <cassert>
+
 #include <oln/basics2d.hh>
 #include <oln/io/pnm.hh>
+
+#include "data.hh"
 
 int
 main()
 {
-  oln::image2d<bool>          ima  = oln::io::load_pbm("../img/chien.pbm");
-  oln::image2d<unsigned char> ima2 = oln::io::load_pgm("../img/lena32.pgm");
+  oln::image2d<bool>          ima  = oln::io::load_pbm(rdata("chien.pbm"));
+  oln::image2d<unsigned char> ima2 = oln::io::load_pgm(rdata("lena32.pgm"));
 }

@@ -1,10 +1,11 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-# FIXME: To be enabled when the test suite mechanism is available.
+## FIXME: To be (fully) enabled when the test suite mechanism is available.
 
 # include Makefile.flags
 
-# AM_CPPFLAGS += -DCXX=\""$(CXX)"\" \
+# AM_CPPFLAGS +=
+#    -DCXX=\""$(CXX)"\" \
 #    -DCPPFLAGS=\""$(CPPFLAGS)"\" \
 #    -DCXXFLAGS=\""$(CXXFLAGS)"\" \
 #    -DOLN_EXTRA_CPPFLAGS=\""$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS)"\" \
@@ -30,5 +31,4 @@
 #   data.cc					\
 #   $(COMMON_CHECK_SOURCES)
 
-
-# EXTRA_DIST = Makefile.flags Makefile.check Makefile.runtests
+EXTRA_DIST = Makefile.flags # Makefile.check Makefile.runtests

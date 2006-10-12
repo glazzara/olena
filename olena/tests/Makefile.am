@@ -2,9 +2,13 @@
 
 SUBDIRS = check sanity
 
+# FIXME: Revamp (see Olena 0.10's test suite).
+
 AM_CPPFLAGS =						\
+  -I$(srcdir)/check					\
   -I$(top_srcdir)/olena -I$(top_srcdir)/extended	\
-  -I$(top_srcdir)/static -I$(top_srcdir)/metalic
+  -I$(top_srcdir)/static -I$(top_srcdir)/metalic	\
+  -DOLN_IMG_DIR=\"$(top_srcdir)/olena/img\"
 
 # FIXME: Add
 #
@@ -16,6 +20,7 @@ AM_CPPFLAGS =						\
 TESTS_CXXFLAGS = @TESTS_CXXFLAGS@
 CXXFLAGS += $(TESTS_CXXFLAGS)
 
+noinst_HEADERS = data.hh
 
 check_PROGRAMS =				\
   dpoint2d					\

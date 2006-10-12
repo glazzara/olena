@@ -1,3 +1,18 @@
+2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix access to images in tests.
+
+	* tests/data.hh: New file.
+	* tests/io_pnm: Include it.
+	(main): Use rdata to compute the path to loaded images.
+	* tests/window2d.cc: Likewise.
+	Add copyright header.
+	* tests/Makefile.am (AM_CPPFLAGS): Add -I$(srcdir)/check and
+	-DOLN_IMG_DIR=\"$(top_srcdir)/olena/img\".
+	(noinst_HEADERS): New.
+	Add data.hh
+	* tests/check/Makefile.am (EXTRA_DIST): Add Makefile.flags.
+
 2006-10-12  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add image accessors with indices.
