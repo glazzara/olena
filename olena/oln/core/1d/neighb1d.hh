@@ -46,13 +46,9 @@ namespace oln
 
     neighb1d mk_c2()
     {
-      static bool flower = true;
-      static neighb1d the_;
-      if (flower)
-	{
-	  the_.add(dpoint1d(1));
-	  flower = false;
-	}
+      neighb1d the_;
+      the_
+	.add(dpoint1d(1));
       return the_;
     }
 
@@ -67,7 +63,7 @@ namespace oln
 
 # ifndef OLN_INCLUDE_ONLY
 
-  const neighb1d c2  = internal::mk_c2();
+  const neighb1d c2 = internal::mk_c2();
 
 # endif
 

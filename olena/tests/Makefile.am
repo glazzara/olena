@@ -28,12 +28,15 @@ check_PROGRAMS =				\
   npoints					\
   window2d					\
 						\
+  at						\
+						\
+  io_pnm					\
+						\
   identity_morpher				\
   add_neighborhood_morpher			\
   morphers					\
 						\
-  fill						\
-  io_pnm
+  fill
 
 # Images and auxiliary structures.
 dpoint2d_SOURCES = dpoint2d.cc
@@ -45,6 +48,9 @@ image2d_SOURCES = image2d.cc
 image3d_SOURCES = image3d.cc
 npoints_SOURCES = npoints.cc
 window2d_SOURCES = window2d.cc
+
+# Methods.
+at_SOURCES = at.cc
 
 # I/O.
 io_pnm_SOURCES = io_pnm.cc

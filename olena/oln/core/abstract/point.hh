@@ -29,6 +29,8 @@
 #ifndef OLN_CORE_ABSTRACT_POINT_HH
 # define OLN_CORE_ABSTRACT_POINT_HH
 
+# include <xtd/vec.hh>
+
 # include <oln/core/typedefs.hh>
 # include <oln/core/traits_id.hh>
 # include <oln/core/abstract/dpoint.hh>

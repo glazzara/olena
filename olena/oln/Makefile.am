@@ -91,6 +91,9 @@ nobase_oln_HEADERS =						\
   core/abstract/window.hh					\
 								\
   core/automatic/image.hh					\
+  core/automatic/image1d.hh					\
+  core/automatic/image2d.hh					\
+  core/automatic/image3d.hh					\
   core/automatic/image_being_mutable.hh				\
   core/automatic/image_being_random_accessible.hh		\
   core/automatic/image_having_neighborhood.hh			\

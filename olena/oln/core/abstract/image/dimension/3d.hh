@@ -29,6 +29,7 @@
 # define OLN_CORE_ABSTRACT_IMAGE_DIMENSION_3D_HH
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/automatic/image3d.hh>
 
 
 namespace oln
@@ -43,10 +44,61 @@ namespace oln
       public virtual image<E>,
       public automatic::get_impl<image3d, E>
     {
+    public:
+
+      oln_rvalue(E) at(const oln_coord(E)& slice,
+		       const oln_coord(E)& row,
+		       const oln_coord(E)& col) const;
+
+      // FIXME: Hack (should be elsewhere)!
+      oln_lvalue(E)& at(const oln_coord(E)& slice,
+			const oln_coord(E)& row,
+			const oln_coord(E)& col);
+      bool has_at(const oln_coord(E)& slice,
+		  const oln_coord(E)& row,
+		  const oln_coord(E)& col) const;
+
     protected:
       /// Constructor (protected, empty).
-      image3d() {}
+      image3d();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    image3d<E>::image3d()
+    {
+    }
+
+    template <typename E>
+    oln_rvalue(E)
+    image3d<E>::at(const oln_coord(E)& slice,
+		   const oln_coord(E)& row,
+		   const oln_coord(E)& col) const
+    {
+      return this->exact().impl_at(slice, row, col);
+    }
+
+    template <typename E>
+    oln_lvalue(E)&
+    image3d<E>::at(const oln_coord(E)& slice,
+		   const oln_coord(E)& row,
+		   const oln_coord(E)& col)
+    {
+      return this->exact().impl_at(slice, row, col);
+    }
+
+    template <typename E>
+    bool
+    image3d<E>::has_at(const oln_coord(E)& slice,
+		       const oln_coord(E)& row,
+		       const oln_coord(E)& col) const
+    {
+      return this->exact().impl_has_at(slice, row, col);
+    }
+
+# endif
  
   } // end of namespace oln::abstract
 

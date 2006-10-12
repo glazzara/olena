@@ -25,50 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_AUTOMATIC_IMAGE_BEING_MUTABLE_HH
-# define OLN_CORE_AUTOMATIC_IMAGE_BEING_MUTABLE_HH
+#include <cassert>
+// FIXME: Don't include oln/basics2d.hh, which is too big.
+// (Fix.)
+#include <oln/basics1d.hh>
+#include <oln/basics2d.hh>
+#include <oln/morpher/add_neighborhood.hh>
 
-# include <oln/core/automatic/impl.hh>
-# include <oln/morpher/tags.hh>
 
-
-namespace oln
+int
+main()
 {
-  // Forward declaration.
-  namespace abstract
-  {
-    template <typename E> class image_being_mutable;
+  using namespace oln;
 
-  } // end of namespace oln::abstract
+  image2d<int> ima(1, 1);
+  point2d p(0, 0);
 
+  (ima + c4).at(0, 0) = 51;
+  assert(ima(p) == 51);
 
-  namespace automatic
-  {
-    /// Implementation corresponding to the interface
-    /// oln::abstract::image_being_mutable for an identity morpher.
-    template <typename E>
-    class set_impl<abstract::image_being_mutable, morpher::tag::identity, E> :
-      public virtual stc::any__simple<E>
-    {
-    public:
-      /// Accessor delegation.
-      oln_lvalue(E)& impl_op_readwrite(const oln_psite(E)& p);
-    };
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename E>
-    oln_lvalue(E)&
-    set_impl<abstract::image_being_mutable, morpher::tag::identity, E>
-    ::impl_op_readwrite(const oln_psite(E)& p)
-    {
-      return this->exact().delegate().operator()(p);
-    }
-
-# endif
-
-  } // end of namespace oln::automatic
-  
-} // end of namespace oln
-
-#endif // ! OLN_CORE_AUTOMATIC_IMAGE_BEING_MUTABLE_HH
+  image1d<int> sig(1);
+  point1d i(0);
+  (sig + c2).at(0) = 51;
+  assert(sig(i) == 51);
+}

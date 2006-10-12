@@ -219,6 +219,9 @@ namespace oln
 # define oln_point(T)   oln_type_of(T,  point)
 # define oln_point_(T)  oln_type_of_(T, point)
 
+# define oln_psite(T)   oln_type_of(T,  psite)
+# define oln_psite_(T)  oln_type_of_(T, psite)
+
 # define oln_dpoint(T)  oln_type_of(T,  dpoint)
 # define oln_dpoint_(T) oln_type_of_(T, dpoint)
 

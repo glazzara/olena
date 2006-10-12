@@ -93,7 +93,10 @@ namespace oln
     const topo2d& impl_topo() const;
 
     T impl_op_read(const point2d& p) const;
+    T impl_at(int row, int col) const;
+
     T& impl_op_readwrite(const point2d& p);
+    T& impl_at(int row, int col);
 
     T* adr_at(int row, int col);
     const T* adr_at(int row, int col) const;
@@ -128,11 +131,13 @@ namespace oln
   {
   }
 
+
   template <typename T>
   const topo2d& image2d<T>::impl_topo() const
   {
     return topo_;
   }
+
 
   template <typename T>
   T image2d<T>::impl_op_read(const point2d& p) const
@@ -143,12 +148,28 @@ namespace oln
   }
 
   template <typename T>
+  T image2d<T>::impl_at(int row, int col) const
+  {
+    precondition(data_->has(row, col));
+    return data_->operator()(row, col);
+  }
+
+
+  template <typename T>
   T& image2d<T>::impl_op_readwrite(const point2d& p)
   {
     precondition(data_ != 0);
     precondition(topo_.has_large(p));
     return data_->operator()(p.row(), p.col());
   }
+
+  template <typename T>
+  T& image2d<T>::impl_at(int row, int col)
+  {
+    precondition(data_->has(row, col));
+    return data_->operator()(row, col);
+  }
+
 
   template <typename T>
   T* image2d<T>::adr_at(int row, int col)

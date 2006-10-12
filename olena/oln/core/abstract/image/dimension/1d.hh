@@ -29,6 +29,7 @@
 # define OLN_CORE_ABSTRACT_IMAGE_DIMENSION_1D_HH
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/automatic/image1d.hh>
 
 
 namespace oln
@@ -43,10 +44,49 @@ namespace oln
       public virtual image<E>,
       public automatic::get_impl<image1d, E>
     {
+    public:
+
+      oln_rvalue(E) at(const oln_coord(E)& index) const;
+
+      // FIXME: Hack (should be elsewhere)!
+      oln_lvalue(E)& at(const oln_coord(E)& index);
+      bool has_at(const oln_coord(E)& index) const;
+
     protected:
       /// Constructor (protected, empty).
-      image1d() {}
+      image1d();
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    image1d<E>::image1d()
+    {
+    }
+
+    template <typename E>
+    oln_rvalue(E)
+    image1d<E>::at(const oln_coord(E)& index) const
+    {
+      return this->exact().impl_at(index);
+    }
+
+    template <typename E>
+    oln_lvalue(E)&
+    image1d<E>::at(const oln_coord(E)& index)
+    {
+      return this->exact().impl_at(index);
+    }
+
+    template <typename E>
+    bool
+    image1d<E>::has_at(const oln_coord(E)& index) const
+    {
+      return this->exact().impl_has_at(index);
+    }
+
+# endif
 
   } // end of namespace oln::abstract
 

@@ -1,3 +1,35 @@
+2006-10-12  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add image accessors with indices.
+	
+	* tests/at.cc: New.
+	* oln/core/automatic/image1d.hh: New.
+	* oln/core/automatic/image2d.hh: New.
+	* oln/core/automatic/image3d.hh: New.
+	* tests/Makefile.am (check_PROGRAMS): Add 'at'.
+	Move io_pnm to get consistent with SOURCES list.
+	(at_SOURCES): New.
+	* oln/core/typedefs.hh (oln_psite, oln_psite_): New.	
+	* oln/core/automatic/image_being_mutable.hh
+	(lvalue_t, psite_t): Remove; use oln_lvalue and oln_psite instead.
+	(impl_op_readwrite): Update sig.
+	* oln/core/abstract/image/dimension/1d.hh (at): New const method.
+	(at, has_at): New methods that should be elsewhere; this is a hack.
+	(image1d): Move ctor impl inside guards.
+	* oln/core/abstract/image/dimension/2d.hh (at): New const method.
+	(at, has_at): New methods that should be elsewhere; this is a hack.
+	(image2d): Move ctor impl inside guards.
+	* oln/core/abstract/image/dimension/3d.hh (at): New const method.
+	(at, has_at): New methods that should be elsewhere; this is a hack.
+	(image3d): Move ctor impl inside guards.
+	* oln/core/abstract/point.hh (include): Add xtd/vec.hh.
+	* oln/core/1d/neighb1d.hh (mk_c2): Update to mimic neighb2d.
+	* oln/core/2d/image2d.hh (impl_at): New.
+	* oln/core/3d/image3d.hh (impl_at): New.
+	* oln/Makefile.am (nobase_oln_HEADERS): Update.
+	* oln/morpher/internal/image_extension.hh (delegate): New mutable
+	version.
+
 2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix sanity tests.
@@ -131,6 +163,25 @@
 	* oln/core/gen/topo_bbox.hh (oln::topo_bbox_<point>)
 	* oln/core/gen/topo_lbbox.hh (oln::topo_lbbox_<point>): Ensure
 	parameter point is an oln::abstract::point.
+
+2006-10-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* tests/at.cc: New.
+	* oln/core/automatic/image1d.hh: New.
+	* oln/core/automatic/image2d.hh: New.
+	* oln/core/automatic/image3d.hh: New.
+	* tests/Makefile.am
+	* oln/core/typedefs.hh
+	* oln/core/automatic/image_being_mutable.hh
+	* oln/core/abstract/image/dimension/1d.hh
+	* oln/core/abstract/image/dimension/2d.hh
+	* oln/core/abstract/image/dimension/3d.hh
+	* oln/core/abstract/point.hh
+	* oln/core/1d/neighb1d.hh
+	* oln/core/2d/image2d.hh
+	* oln/core/3d/image3d.hh
+	* oln/Makefile.am
+	* oln/morpher/internal/image_extension.hh
 
 2006-10-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 

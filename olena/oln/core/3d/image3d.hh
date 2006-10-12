@@ -94,7 +94,10 @@ namespace oln
     const topo3d& impl_topo() const;
 
     T impl_op_read(const point3d& p) const;
+    T impl_at(int slice, int row, int col) const;
+
     T& impl_op_readwrite(const point3d& p);
+    T& impl_at(int slice, int row, int col);
 
     T* adr_at(int slice, int row, int col);
     const T* adr_at(int slice, int row, int col) const;
@@ -104,7 +107,6 @@ namespace oln
     topo3d topo_;
     internal::tracked_ptr<array_t> data_;
   };
-
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -137,13 +139,16 @@ namespace oln
   }
 
   template <typename T>
-  const topo3d& image3d<T>::impl_topo() const
+  const topo3d&
+  image3d<T>::impl_topo() const
   {
     return topo_;
   }
 
+
   template <typename T>
-  T image3d<T>::impl_op_read(const point3d& p) const
+  T
+  image3d<T>::impl_op_read(const point3d& p) const
   {
     precondition(data_ != 0);
     precondition(topo_.has_large(p));
@@ -151,12 +156,31 @@ namespace oln
   }
 
   template <typename T>
-  T& image3d<T>::impl_op_readwrite(const point3d& p)
+  T
+  image3d<T>::impl_at(int slice, int row, int col) const
+  {
+    precondition(data_->has(slice, row, col));
+    return data_->operator()(slice, row, col);
+  }
+
+
+  template <typename T>
+  T&
+  image3d<T>::impl_op_readwrite(const point3d& p)
   {
     precondition(data_ != 0);
     precondition(topo_.has_large(p));
     return data_->operator()(p.slice(), p.row(), p.col());
   }
+
+  template <typename T>
+  T&
+  image3d<T>::impl_at(int slice, int row, int col)
+  {
+    precondition(data_->has(slice, row, col));
+    return data_->operator()(slice, row, col);
+  }
+
 
   template <typename T>
   T* image3d<T>::adr_at(int slice, int row, int col)

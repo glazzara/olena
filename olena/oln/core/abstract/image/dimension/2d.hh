@@ -29,6 +29,7 @@
 # define OLN_CORE_ABSTRACT_IMAGE_DIMENSION_2D_HH
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/automatic/image2d.hh>
 
 
 namespace oln
@@ -43,6 +44,14 @@ namespace oln
       public virtual image<E>,
       public automatic::get_impl<image2d, E>
     {
+    public:
+
+      oln_rvalue(E) at(const oln_coord(E)& row, const oln_coord(E)& col) const;
+
+      // FIXME: Hack (should be elsewhere)!
+      oln_lvalue(E)& at(const oln_coord(E)& row, const oln_coord(E)& col);
+      bool has_at(const oln_coord(E)& row, const oln_coord(E)& col) const;
+
     protected:
       /// Constructor (protected, empty).
       image2d();
@@ -54,6 +63,27 @@ namespace oln
     template <typename E>
     image2d<E>::image2d()
     {
+    }
+
+    template <typename E>
+    oln_rvalue(E)
+    image2d<E>::at(const oln_coord(E)& row, const oln_coord(E)& col) const
+    {
+      return this->exact().impl_at(row, col);
+    }
+
+    template <typename E>
+    oln_lvalue(E)&
+    image2d<E>::at(const oln_coord(E)& row, const oln_coord(E)& col)
+    {
+      return this->exact().impl_at(row, col);
+    }
+
+    template <typename E>
+    bool
+    image2d<E>::has_at(const oln_coord(E)& row, const oln_coord(E)& col) const
+    {
+      return this->exact().impl_has_at(row, col);
     }
 
 # endif
