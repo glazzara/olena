@@ -1,5 +1,24 @@
 2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix explicit instantiations of oln::bbox_.
+
+	* oln/basics1d.hh (bbox_<point1d>): Move explicit
+	instantiation...
+	* oln/core/1d/bbox1d.hh: ...here (new file).
+	* oln/core/1d/image1d.hh: Include it.
+	* oln/basics2d.hh (bbox_<point2d>): Move explicit
+	instantiation...
+	* oln/core/2d/bbox2d.hh: ...here (new file).
+	* oln/core/2d/image2d.hh: Include it.
+	* oln/core/3d/bbox3d.hh: New file.
+	* oln/basics3d.hh, oln/core/3d/image3d.hh: Include it.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add core/1d/bbox1d.hh,
+	core/2d/bbox2d.hh and core/3d/bbox3d.hh.
+
+	* oln/core/2d/array2d.hh: Aesthetic changes.
+
+2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Move explicit instantiation of bbox_<point2d> to basics2d.hh.
 
 	* oln/core/2d/image2d.hh (oln::vtypes< image2d<T> >): Set

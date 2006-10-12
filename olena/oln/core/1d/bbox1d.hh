@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,30 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_BASICS1D_HH
-# define OLN_BASICS1D_HH
-
+#ifndef OLN_CORE_1D_BBOX1D_HH
+# define OLN_CORE_1D_BBOX1D_HH
 
 # include <oln/core/1d/aliases.hh>
-
-# include <oln/core/1d/grid1d.hh>
-
 # include <oln/core/1d/point1d.hh>
-# include <oln/core/1d/dpoint1d.hh>
-
 # include <oln/core/gen/bbox.hh>
-# include <oln/core/gen/topo_lbbox.hh>
-# include <oln/core/1d/bbox1d.hh>
 
-# include <oln/core/gen/fwd_piter_bbox.hh>
-# include <oln/core/gen/bkd_piter_bbox.hh>
+namespace oln
+{
 
-# include <oln/core/gen/neighb.hh>
-# include <oln/core/1d/neighb1d.hh>
+  // FIXME: Inexplicably, this explicit instantiation is required to
+  // have topo_lbbox_<point1d> work.  See if we can get rid of it.
+  template class bbox_<point1d>;
 
-# include <oln/core/1d/image1d.hh>
-
-# include <oln/core/fwd_piter.hh>
+} // end of namespace oln
 
 
-#endif // ! OLN_BASICS1D_HH
+#endif // ! OLN_CORE_1D_BBOX1D_HH

@@ -50,7 +50,7 @@ namespace oln
     /// Dtor.
     ~array2d();
 
-    value_t operator()(coord_t i, coord_t j) const;
+    value_t  operator()(coord_t i, coord_t j) const;
     value_t& operator()(coord_t i, coord_t j);
 
     bool has(coord_t i, coord_t j) const;
@@ -76,7 +76,7 @@ namespace oln
 
   template <typename value_t, typename coord_t>
   array2d<value_t, coord_t>::array2d(coord_t imin, coord_t jmin,
-	  coord_t imax, coord_t jmax) :
+				     coord_t imax, coord_t jmax) :
     imin_(imin),
     jmin_(jmin),
     imax_(imax),

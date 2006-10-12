@@ -30,10 +30,11 @@
 # define OLN_CORE_1D_IMAGE1D_HH
 
 # include <oln/core/image_entry.hh>
-# include <oln/core/1d/array1d.hh>
-# include <oln/core/1d/point1d.hh>
 # include <oln/core/gen/topo_lbbox.hh>
 # include <oln/core/internal/tracked_ptr.hh>
+# include <oln/core/1d/array1d.hh>
+# include <oln/core/1d/point1d.hh>
+# include <oln/core/1d/bbox1d.hh>
 // For topo1d.
 # include <oln/core/1d/aliases.hh>
 // For fwd_piter and bkd_piter virtual types.

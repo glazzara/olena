@@ -38,13 +38,8 @@
 # include <oln/core/2d/dpoint2d.hh>
 
 # include <oln/core/gen/bbox.hh>
-// FIXME: Inexplicably, this explicit instantiation is required to
-// have topo_lbbox_<point2d> work.  See if we can get rid of it.
-namespace oln {
-  template class bbox_<point2d>;
-}
-
 # include <oln/core/gen/topo_lbbox.hh>
+# include <oln/core/2d/bbox2d.hh>
 
 # include <oln/core/gen/fwd_piter_bbox.hh>
 # include <oln/core/gen/bkd_piter_bbox.hh>
