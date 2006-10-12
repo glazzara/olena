@@ -31,7 +31,7 @@
 	of oln::image1d...
 	* oln/core/fwd_piter.hh: ...here.
 	* oln/core/abstract/image/hybrid/classical.hh
-	(oln::abstract:classical_1d_image)
+	(oln::abstract:classical_1d_image): New.
 	(oln::case_<image_hybrid_hierarchy_wrt_classical, E, 1>)
 	(oln::case_<image_hybrid_hierarchy_wrt_classical, E, 2>): Rename
 	as...
@@ -65,7 +65,7 @@
 2006-10-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add new facilities to access to components such as row, col, etc.
-	
+
 	* oln/core/spe/row.hh: New.
 	* oln/core/spe/col.hh: New.
 	* oln/core/spe/slice.hh: New.
@@ -95,7 +95,7 @@
 2006-10-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	New facilities related to windows and q-iterators.
-	
+
 	* tests/window2d.cc: New.
 	* tests/Makefile.am (window2d_SOURCES): New.
 	* oln/debug/print.hh (format): New.
@@ -115,11 +115,11 @@
 	(include): Update.
 	* oln/basics2d.hh (include): Add window.hh and fwd_qiter_win.hh.
 	* oln/Makefile.am (nobase_oln_HEADERS): Update.
-	
+
 2006-10-11  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add some tools related to morphers over image value.
-	
+
 	* oln/core/abstract/value.hh: New.
 	* oln/morpher/thru_fun.hh: New.
 	* oln/morpher/internal/image_value_morpher.hh: New.
@@ -230,7 +230,7 @@
 2006-10-10  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add i/o read for pbm and pgm formats.
-	
+
 	* tests/io_pnm.cc: New.
 	* tests/Makefile.am (check_PROGRAMS): Update.
 	* oln/io: New directory.
@@ -262,7 +262,7 @@
 2006-10-09  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Change stc_virtual_typedef into oln_virtual_typedef.
-	
+
 	* oln/core/macros.hh (oln_virtual_typedef): New macro.
 	It replaces stc_virtual_typedef.
 	* oln/core/abstract/image.hh: Update.
@@ -362,7 +362,7 @@
 
 	Decouple iterators from image topology; update neighborhood tools
 	and start to add window tools.
-	
+
 	* oln/core/automatic/topology_having_subset.hh: New.
 	* oln/core/abstract/topology_having_subset.hh: New.
 	* oln/core/gen/fwd_niter_neighb.hh: New.
@@ -525,7 +525,7 @@
 2006-10-02  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add isubset image morpher and subsequent tools.
-	
+
 	* oln/core/gen/piter_isubset.hh: New.
 	* oln/core/gen/topo_add_isubset.hh: New.
 	* oln/morpher/add_isubset.hh: New.
@@ -534,7 +534,7 @@
 	* oln/core/automatic/image_being_random_accessible.hh
 	(set_impl): Remove; cause error-prone.
 	* oln/core/abstract/image/type/hierarchy.hh
-	(where_): Rely on xtd_is_binary instead of an hard-coded test. 
+	(where_): Rely on xtd_is_binary instead of an hard-coded test.
 	(include): Update.
 	* oln/core/gen/fwd_piter_bbox.hh (topo_type): new.
 	(topo_): Change ref into plain type so it is more secure.
@@ -626,18 +626,18 @@
 2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add oln debug print and a "classical" image abstraction.
-	
+
 	* oln/debug/print.hh: New.
 	* oln/core/abstract/image/hybrid/classical.hh: New.
 	* oln/core/abstract/image/hierarchies.hh
 	(image_hybrid_hierarchy_wrt_classical): New.
 	(include): Update.
 	* oln/Makefile.am (nobase_oln_HEADERS): Update.
-	
+
 2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Update grid classes and add static checks for image vtypes.
-	
+
 	* oln/core/abstract/fwd_decls.hh: New.
 	* tests/image_entry.cc: Update.
 	* oln/core/abstract/image.hh (include): Add fwd_decls.
@@ -661,7 +661,7 @@
 2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Adjust guards to directory names.
-	
+
 	* oln/automatic/topology_having_bbox.hh: Adjust guard to directory
 	name.
 	* oln/automatic/image.hh: Likewise.
@@ -751,7 +751,7 @@
 2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add array2d and tracked_ptr.
-	
+
 	* oln/core/2d/array2d.hh: New.
 	This file also provides the tracked_ptr class which should be
 	moved later in a more appropriate file.
@@ -779,7 +779,7 @@
 2006-09-26  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add mapimage type and update.
-	
+
 	* oln/core/gen/mapimage.hh: New.
 	* oln/automatic/image_being_random_accessible.hh: New.
 	* oln/core/abstract/topology_having_bbox.hh
@@ -800,11 +800,11 @@
 	(pmin, pmax): New.
 	* oln/core/gen/topo_bbox.hh (impl_bbox): New.
 	* oln/Makefile.am (nobase_oln_HEADERS): Update.
-	
+
 2006-09-26  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add some abstract image sub-hierarchies.
-	
+
 	* oln/automatic/image_being_mutable.hh: New.
 	* oln/core/abstract/image/mutability/hierarchy.hh: New.
 	* oln/core/abstract/image/accessibility/hierarchy.hh: New.
@@ -816,7 +816,7 @@
 	(image_hierarchy_wrt_bbox): New.
 	(image_hierarchy_wrt_accessibility): New.
 	(image_hierarchy_wrt_mutability): New.
-	(include): Update.	
+	(include): Update.
 	* oln/core/abstract/image/neighborhood/hierarchy.hh (decl): New.
 	(~image_having_neighborhood): New.
 
@@ -836,7 +836,7 @@
 2006-09-26  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Dispatch image abstract classes into subdirs and files.
-	
+
 	* oln/core/abstract/image/type: New directory.
 	* oln/core/abstract/image/dimension: New directory.
 	* oln/core/abstract/image/neighborhood: New directory.
