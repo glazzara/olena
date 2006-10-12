@@ -38,10 +38,14 @@ namespace oln
   template <typename C> class point1d_;
   template <typename C> class dpoint1d_;
   template <typename D> class neighb_;
+  template <typename D> class window_;
   template <typename P> class bbox_;
   template <typename P> class topo_lbbox_;
   template <typename T> class fwd_piter_bbox_;
   template <typename T> class bkd_piter_bbox_;
+  template <typename P> class fwd_qiter_win_;
+// FIXME: Not yet available.
+// template <typename P> class bkd_qiter_win_;
   class grid1d;
   /// \}
 
@@ -52,11 +56,17 @@ namespace oln
   typedef dpoint1d_<int> dpoint1d;
 
   typedef neighb_<dpoint1d> neighb1d;
+  typedef window_<dpoint1d> window1d;
 
   typedef bbox_<point1d> bbox1d;
   typedef topo_lbbox_<point1d> topo1d;
+
   typedef fwd_piter_bbox_<point1d> fwd_piter1d;
   typedef bkd_piter_bbox_<point1d> bkd_piter1d;
+
+  typedef fwd_qiter_win_<point1d> fwd_qiter1d;
+// FIXME: Not yet available.
+// typedef bkd_qiter_win_<point1d> fwd_qiter1d;
 
   typedef  point1d_<float>  point1df;
   typedef dpoint1d_<float> dpoint1df;

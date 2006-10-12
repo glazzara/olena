@@ -74,6 +74,13 @@ namespace oln
     
     typedef mlc::undefined value_type;
     // rvalue_type: see below.
+
+    // piter_type: see below.
+    // fwd_piter_type: see below.
+    // bkd_piter_type: see below.
+
+    // fwd_qiter_type: see below.
+    // bkd_qiter_type: see below.
     
     typedef mlc::undefined concrete_type;
 
@@ -100,14 +107,6 @@ namespace oln
   };
 
 
-  // Piter.
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::piter_type >
-  {
-    typedef oln_type_of(E, fwd_piter) ret;
-  };
-
-
   // Rvalue.
   template <typename E>
   struct single_vtype< image_entry<E>, typedef_::rvalue_type >
@@ -115,6 +114,16 @@ namespace oln
     typedef oln_type_of(E, value) ret;
   };
 
+
+  /* FIXME: Should we keep the `piter' vtype, knowing that the macro
+     `oln_piter' gives the `fwd_piter' vtype (and not the `piter'
+     vtype)?  */
+  // Piter.
+  template <typename E>
+  struct single_vtype< image_entry<E>, typedef_::piter_type >
+  {
+    typedef oln_type_of(E, fwd_piter) ret;
+  };
 
   // Fwd piter.
   template <typename E>
@@ -130,9 +139,17 @@ namespace oln
     typedef mlc::undefined ret;
   };
 
+
   // Fwd qiter.
   template <typename E>
   struct single_vtype< image_entry<E>, typedef_::fwd_qiter_type >
+  {
+    typedef mlc::undefined ret;
+  };
+
+  // Bkd qiter.
+  template <typename E>
+  struct single_vtype< image_entry<E>, typedef_::bkd_qiter_type >
   {
     typedef mlc::undefined ret;
   };

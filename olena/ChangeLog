@@ -1,5 +1,26 @@
 2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix tests/window2d.
+
+	* oln/core/image_entry.hh
+	(oln::single_vtype<image_entry<E>, typedef_::bkd_qiter_type>):
+	New.
+	* oln/core/iterator_vtypes.hh
+	(oln::single_vtype<image1d<T>, typedef_::fwd_qiter_type>)
+	(oln::single_vtype<image2d<T>, typedef_::fwd_qiter_type>)
+	(oln::single_vtype<image3d<T>, typedef_::fwd_qiter_type>): New.
+	Aesthetic changes.
+	* oln/core/1d/aliases.hh (oln::window_)
+	(oln::fwd_qiter_win_, oln::bkd_qiter_win_): New forward
+	declarations.
+	(oln::window1d, oln::fwd_qiter1d): New typedefs.
+	* oln/core/3d/aliases.hh (oln::window_)
+	(oln::fwd_qiter_win_, oln::bkd_qiter_win_): New forward
+	declarations.
+	(oln::window3d, oln::fwd_qiter3d): New typedefs.
+
+2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix access to images in tests.
 
 	* tests/data.hh: New file.

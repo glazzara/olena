@@ -38,7 +38,123 @@
 namespace oln
 {
 
-  // morpher::add_isubset<Image, Isubset>
+  /*------------------.
+  | oln::image1d<T>.  |
+  `------------------*/
+
+  template <typename T> class image1d;
+
+  /// fwd_piter vtype of image1d.
+  template <typename T>
+  struct single_vtype< image1d<T>, typedef_::fwd_piter_type >
+  {
+    typedef fwd_piter1d ret;
+  };
+
+  /// bkd_piter vtype of image1d.
+  template <typename T>
+  struct single_vtype< image1d<T>, typedef_::bkd_piter_type >
+  {
+    typedef bkd_piter1d ret;
+  };
+
+
+  /// fwd_qiter vtype of image1d.
+  template <typename T>
+  struct single_vtype< image1d<T>, typedef_::fwd_qiter_type >
+  {
+    typedef fwd_qiter1d ret;
+  };
+
+  // FIXME : Not yet available.
+
+//   /// bkd_qiter vtype of image1d.
+//   template <typename T>
+//   struct single_vtype< image1d<T>, typedef_::bkd_qiter_type >
+//   {
+//     typedef bkd_qiter1d ret;
+//   };
+
+
+  /*------------------.
+  | oln::image2d<T>.  |
+  `------------------*/
+
+  template <typename T> class image2d;
+
+  /// fwd_piter vtype of image2d.
+  template <typename T>
+  struct single_vtype< image2d<T>, typedef_::fwd_piter_type >
+  {
+    typedef fwd_piter2d ret;
+  };
+
+  /// bkd_piter vtype of image2d.
+  template <typename T>
+  struct single_vtype< image2d<T>, typedef_::bkd_piter_type >
+  {
+    typedef bkd_piter2d ret;
+  };
+
+
+  /// fwd_qiter vtype of image2d.
+  template <typename T>
+  struct single_vtype< image2d<T>, typedef_::fwd_qiter_type >
+  {
+    typedef fwd_qiter2d ret;
+  };
+
+  // FIXME : Not yet available.
+
+//   /// bkd_qiter vtype of image2d.
+//   template <typename T>
+//   struct single_vtype< image2d<T>, typedef_::bkd_qiter_type >
+//   {
+//     typedef bkd_qiter2d ret;
+//   };
+
+
+  /*------------------.
+  | oln::image3d<T>.  |
+  `------------------*/
+
+  template <typename T> class image3d;
+
+  /// fwd_piter vtype of image3d.
+  template <typename T>
+  struct single_vtype< image3d<T>, typedef_::fwd_piter_type >
+  {
+    typedef fwd_piter3d ret;
+  };
+
+  /// bkd_piter vtype of image3d.
+  template <typename T>
+  struct single_vtype< image3d<T>, typedef_::bkd_piter_type >
+  {
+    typedef bkd_piter3d ret;
+  };
+
+
+  /// fwd_qiter vtype of image3d.
+  template <typename T>
+  struct single_vtype< image3d<T>, typedef_::fwd_qiter_type >
+  {
+    typedef fwd_qiter3d ret;
+  };
+
+  // FIXME : Not yet available.
+
+//   /// bkd_qiter vtype of image3d.
+//   template <typename T>
+//   struct single_vtype< image3d<T>, typedef_::bkd_qiter_type >
+//   {
+//     typedef bkd_qiter3d ret;
+//   };
+
+
+  /*--------------------------------------------.
+  | oln::morpher::add_isubset<Image, Isubset>.  |
+  `--------------------------------------------*/
 
   namespace morpher {
     template <typename Image, typename Isubset> struct add_isubset;
@@ -85,7 +201,9 @@ namespace oln
   };
 
 
-  // morpher::add_neighborhood<Image, Isubset>
+  /*-------------------------------------------------.
+  | oln::morpher::add_neighborhood<Image, Isubset>.  |
+  `-------------------------------------------------*/
 
   namespace morpher {
     template <typename Image, typename Neighb> struct add_neighborhood;
@@ -108,57 +226,6 @@ namespace oln
     typedef oln_type_of(Image, point) point_t;
   public:
     typedef fwd_niter_neighb_<point_t> ret;  // FIXME: should be bkd but not yet impled!
-  };
-
-
-  // image1d<T>
-
-  template <typename T> class image1d;
-
-  template <typename T>
-  struct single_vtype< image1d<T>, typedef_::fwd_piter_type >
-  {
-    typedef fwd_piter1d ret;
-  };
-
-  template <typename T>
-  struct single_vtype< image1d<T>, typedef_::bkd_piter_type >
-  {
-    typedef bkd_piter1d ret;
-  };
-
-
-  // image2d<T>
-
-  template <typename T> class image2d;
-
-  template <typename T>
-  struct single_vtype< image2d<T>, typedef_::fwd_piter_type >
-  {
-    typedef fwd_piter2d ret;
-  };
-
-  template <typename T>
-  struct single_vtype< image2d<T>, typedef_::bkd_piter_type >
-  {
-    typedef bkd_piter2d ret;
-  };
-
-
-  // image3d<T>
-
-  template <typename T> class image3d;
-
-  template <typename T>
-  struct single_vtype< image3d<T>, typedef_::fwd_piter_type >
-  {
-    typedef fwd_piter3d ret;
-  };
-
-  template <typename T>
-  struct single_vtype< image3d<T>, typedef_::bkd_piter_type >
-  {
-    typedef bkd_piter3d ret;
   };
 
 
