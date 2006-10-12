@@ -91,7 +91,7 @@ namespace oln
   class grid2d;
   class grid3d;
 
-  /// 1-D case.
+  /// 1D case.
   template <typename E>
   struct case_< image_hierarchy_wrt_dimension, E, 1 > :
     where_< mlc::eq_< oln_type_of(E, grid), oln::grid1d > >
@@ -99,7 +99,7 @@ namespace oln
     typedef abstract::image1d<E> ret;
   };
 
-  /// 2-D case.
+  /// 2D case.
   template <typename E>
   struct case_< image_hierarchy_wrt_dimension, E, 2 > :
     where_< mlc::eq_< oln_type_of(E, grid), oln::grid2d > >
@@ -107,7 +107,7 @@ namespace oln
     typedef abstract::image2d<E> ret;
   };
 
-  /// 3-D case.
+  /// 3D case.
   template <typename E>
   struct case_< image_hierarchy_wrt_dimension, E, 3 > :
     where_< mlc::eq_< oln_type_of(E, grid), oln::grid3d > >

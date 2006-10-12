@@ -36,19 +36,19 @@
 int
 main()
 {
-  // Fill a 2-d image using its iterator.
+  // Fill a 2D image using its iterator.
   oln::image2d<char> ima1(3, 3);
   oln_type_of_(oln::image2d<char>, piter) p1(ima1.topo());
   for_all(p1)
     ima1(p1) = 1;
 
-  // Fill a 2-d image using a classic loop.
+  // Fill a 2D image using a classic loop.
   oln::image2d<int> ima2(ima1.topo());
   for (unsigned i = 0; i < 3; ++i)
     for (unsigned j = 0; j < 3; ++j)
       ima2(oln::point2d(i, j)) = 2;
 
-  // Fill a 2-d image using the routine oln::level::fill.
+  // Fill a 2D image using the routine oln::level::fill.
   oln::image2d<long> ima3(ima1.topo());
   oln::level::fill(ima3, 3);
 

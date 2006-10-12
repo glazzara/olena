@@ -72,7 +72,7 @@ namespace oln
 
 namespace my
 {
-  // A very simple 1-D image.
+  // A very simple 1D image.
   class image : public oln::get_super_types<my::image>::ret
   {
   public:

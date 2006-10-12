@@ -48,7 +48,7 @@ namespace oln
     typedef mlc::uint_<1> dimvalue_type;
   };
 
-  /// A 1-dimension grid.
+  /// A 1D grid.
   struct grid1d : public stc_get_supers(grid1d)
   {
   protected:

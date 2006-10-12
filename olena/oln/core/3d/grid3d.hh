@@ -47,7 +47,7 @@ namespace oln
     typedef mlc::uint_<3> dimvalue_type;
   };
 
-  /// A 3-dimension cubic grid.
+  /// A 3D cubic grid.
   struct grid3d : public stc_get_supers(grid3d)
   {
   protected:

@@ -36,20 +36,20 @@
 int
 main()
 {
-  // Fill a 3-d image using its iterator.
+  // Fill a 3D image using its iterator.
   oln::image3d<char> ima1(3, 3, 3);
   oln_type_of_(oln::image3d<char>, piter) p1(ima1.topo());
   for_all(p1)
     ima1(p1) = 1;
 
-  // Fill a 3-d image using a classic loop.
+  // Fill a 3D image using a classic loop.
   oln::image3d<int> ima2(ima1.topo());
   for (unsigned i = 0; i < 3; ++i)
     for (unsigned j = 0; j < 3; ++j)
       for (unsigned k = 0; k < 3; ++k)
 	ima2(oln::point3d(i, j, k)) = 2;
 
-  // Fill a 3-d image using the routine oln::level::fill.
+  // Fill a 3D image using the routine oln::level::fill.
   oln::image3d<long> ima3(ima1.topo());
   oln::level::fill(ima3, 3);
 

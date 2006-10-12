@@ -48,7 +48,7 @@ namespace oln
     typedef mlc::uint_<2> dimvalue_type;
   };
 
-  /// A 2-dimension rectangular grid.
+  /// A 2D rectangular grid.
   struct grid2d : public stc_get_supers(grid2d)
   {
   protected:

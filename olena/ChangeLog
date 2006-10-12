@@ -1,5 +1,18 @@
 2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	* oln/core/abstract/image/dimension/1d.hh
+	* oln/core/abstract/image/dimension/2d.hh
+	* oln/core/abstract/image/dimension/3d.hh
+	* oln/core/abstract/image/dimension/hierarchy.hh
+	* oln/core/1d/grid1d.hh, oln/core/2d/grid2d.hh,
+	* oln/core/3d/grid3d.hh, oln/core/2d/array2d.hh,
+	* oln/core/2d/dpoint2d.hh, oln/core/2d/point2d.hh,
+	* tests/image1d.cc, tests/image2d.cc, tests/image3d.cc,
+	* tests/image_entry.cc, tests/io_pnm.cc, tests/Makefile.am:
+	Aesthetic changes.
+
+2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add static assertions to oln::topo_bbox_ and oln::topo_lbbox_.
 
 	* oln/core/gen/topo_bbox.hh (oln::topo_bbox_<point>)

@@ -34,7 +34,6 @@
 int
 main()
 {
-  // Fill a 2-d image using its iterator.
   oln::image2d<bool>          ima  = oln::io::load_pbm("../img/chien.pbm");
   oln::image2d<unsigned char> ima2 = oln::io::load_pgm("../img/lena32.pgm");
 }

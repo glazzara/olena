@@ -91,7 +91,7 @@ namespace oln
     /// Ctor.
     point2d_(const xtd::vec<2,C>& v);
 
-    ///Dtor.
+    /// Dtor.
     ~point2d_()
     {
     }
@@ -124,22 +124,17 @@ namespace oln
   {
   }
 
-//   template <typename C>
-//   point2d_<C>::~point2d_()
-//   {
-//   }
-
   template <typename C>
   C point2d_<C>::row() const { return v_[0]; }
 
   template <typename C>
-  C& point2d_<C>::row()       { return v_[0]; }
+  C& point2d_<C>::row()      { return v_[0]; }
 
   template <typename C>
   C point2d_<C>::col() const { return v_[1]; }
 
   template <typename C>
-  C& point2d_<C>::col()       { return v_[1]; }
+  C& point2d_<C>::col()      { return v_[1]; }
 
 # endif
 

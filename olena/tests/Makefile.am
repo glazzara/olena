@@ -46,6 +46,9 @@ image3d_SOURCES = image3d.cc
 npoints_SOURCES = npoints.cc
 window2d_SOURCES = window2d.cc
 
+# I/O.
+io_pnm_SOURCES = io_pnm.cc
+
 # Morphers.
 identity_morpher_SOURCES = identity_morpher.cc
 add_neighborhood_morpher_SOURCES = add_neighborhood_morpher.cc
@@ -53,7 +56,6 @@ morphers_SOURCES = morphers.cc
 
 # Algorithms.
 fill_SOURCES = fill.cc
-io_pnm_SOURCES = io_pnm.cc
 
 
 TESTS = $(check_PROGRAMS)

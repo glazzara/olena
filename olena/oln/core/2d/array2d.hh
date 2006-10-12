@@ -43,9 +43,7 @@ namespace oln
   public:
 
     /// Ctor.
-    array2d(coord_t imin, coord_t jmin,
-	    coord_t imax, coord_t jmax);
-
+    array2d(coord_t imin, coord_t jmin, coord_t imax, coord_t jmax);
     /// Ctor.
     array2d(coord_t ilen, coord_t jlen);
 
@@ -53,7 +51,6 @@ namespace oln
     ~array2d();
 
     value_t operator()(coord_t i, coord_t j) const;
-
     value_t& operator()(coord_t i, coord_t j);
 
     bool has(coord_t i, coord_t j) const;
@@ -70,10 +67,8 @@ namespace oln
   private:
 
     void allocate_();
-
     void deallocate_();
   };
-
 
 
 
@@ -94,7 +89,6 @@ namespace oln
   }
 
   template <typename value_t, typename coord_t>
-  /// Ctor.
   array2d<value_t, coord_t>::array2d(coord_t ilen, coord_t jlen) :
     imin_(0),
     jmin_(0),
@@ -108,7 +102,6 @@ namespace oln
   }
 
   template <typename value_t, typename coord_t>
-  /// Dtor.
   array2d<value_t, coord_t>::~array2d()
   {
     deallocate_();

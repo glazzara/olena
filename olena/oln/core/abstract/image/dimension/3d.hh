@@ -37,7 +37,7 @@ namespace oln
   namespace abstract
   {
  
-    /// Class of 3-D images.
+    /// Class of 3D images.
     template <typename E>
     struct image3d :
       public virtual image<E>,
