@@ -1,5 +1,15 @@
 2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add some documentation to image abstractions.
+
+	* oln/core/abstract/image/hybrid/classical.hh: Add documentation.
+	* oln/core/abstract/image/dimension/hierarchy.hh,
+	* oln/core/abstract/image/type/hierarchy.hh: Update documentation.
+	* oln/core/abstract/image/neighborhood/hierarchy.hh: Remove dead
+	comments.
+
+2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor oln::grid1d, oln::grid2d and oln::grid3d into oln::grid_<>.
 
 	* oln/core/1d/grid1d.hh, oln/core/2d/grid2d.hh,

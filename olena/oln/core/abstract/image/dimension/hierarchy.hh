@@ -52,11 +52,7 @@
 
                                       o 
                                       | 
-               /switch_<image_hierarchy_wrt_dimension, I>::ret/
-                          (image dimension selector)
-                                      ^
-                                      |
-                          /entry<abstract::image, I>/
+                         (image `dimension' selector)
                                       ^
                                       |
                                 image_entry<I>

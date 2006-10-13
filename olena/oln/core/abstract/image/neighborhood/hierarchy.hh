@@ -33,17 +33,6 @@
 # include <oln/core/automatic/image/image_having_neighborhood.hh>
 
 
-/* Image having neighborhood hierarchy (summary).
-
-
-   FIXME: TODO (diagram)!
-
-
-   Default case: If the neighborhood type returned by
-   `oln_type_of(I, neighborhood)', the entry is directly plugged to
-   abstract::image<I>.  */
-
-
 namespace oln
 {
  

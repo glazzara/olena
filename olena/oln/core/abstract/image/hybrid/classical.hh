@@ -38,11 +38,63 @@
 # include <oln/core/abstract/image/accessibility/hierarchy.hh>
 
 
+/* Image dimension hierarchy (summary).
+
+
+                                  /image<I>/
+                                      ^
+                                      |
+             ,----------------+-------+--------+----------------.
+             |                |                |                |
+  /classical_1d_image1d<I>/   |     /classical_3d_image<I>/     |
+             ^                |                ^                |
+             |     /classical_2d_image1d<I>/   |       /classical_image<I>/
+             |                ^                |                ^
+             |                |                |                |
+             |                |                |                |
+  ,---------------------.     |      ,---------------------.    |
+  | if type_of(I, grid) |     |      | if type_of(I, grid) |    |
+  |     == grid1d       |     |      |      == grid3d      |    |
+  `---------------------'     |      `---------------------'    |
+             |                |                |                |
+             |      ,---------------------.    |                |
+             |      | if type_of(I, grid) |    |                |
+             |      |      == grid2d      |    |                |
+             |      `---------------------'    |                |
+             |                |                |                |
+             |                |                |                |
+       ,-------------------------------------------------------------.
+       | if  (deduce_type_of(I, topo, is_random_accessible) == true) |
+       | and (deduce_type_of(I, topo, bbox) != not_found)            |
+       `-------------------------------------------------------------'
+             |                |                |                |
+             o                o                o                o
+
+                                      o 
+                                      | 
+                           (image `hybrid' selector)
+                                      ^
+                                      |
+                                image_entry<I>
+                                      ^
+                                      |
+                                      I
+                              (a concrete image)
+
+
+  Default case: If the image I does not meet any of these conditions, the
+  entry is directly plugged to abstract::image<I>.  */
+
+
 namespace oln
 {
 
   namespace abstract
   {
+
+    /*----------------------.
+    | Hybrid abstractions.  |
+    `----------------------*/
 
     template <typename E>
     struct classical_image
@@ -107,6 +159,10 @@ namespace oln
 
   } // end of namespace oln::abstract
 
+
+  /*----------------.
+  | Hybrid switch.  |
+  `----------------*/
 
   // Forward declarations.
   template <unsigned D> struct grid_;

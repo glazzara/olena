@@ -56,11 +56,7 @@
 
                                         o 
                                         | 
-                      /switch_<image_dimension_type, I>::ret/
-                              (image type selector)
-                                        ^
-                                        |
-                           /entry<abstract::image, I>/
+                             (image `type' selector)
                                         ^
                                         |
                                  image_entry<I>
