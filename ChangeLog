@@ -1,3 +1,7 @@
+2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac (olena/img/Makefile): Configure it.
+
 2006-10-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add sanity check to Olena.

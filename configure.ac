@@ -72,6 +72,7 @@ AC_CONFIG_FILES([
       static/stc/Makefile
     olena/Makefile
       olena/oln/Makefile
+      olena/img/Makefile
     dynamic/Makefile
 ])
 # FIXME: Should be performed through oln.m4 macros.
