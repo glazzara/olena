@@ -104,8 +104,6 @@ nobase_oln_HEADERS =						\
   core/automatic/topology_having_neighborhood.hh		\
   core/automatic/topology_having_subset.hh			\
 								\
-  core/fwd_piter.hh						\
-								\
   core/gen/bbox.hh						\
   core/gen/bbox_bkd_piter.hh					\
   core/gen/bbox_fwd_piter.hh					\
@@ -133,6 +131,7 @@ nobase_oln_HEADERS =						\
 								\
   core/case.hh							\
   core/image_entry.hh						\
+  core/iterator_vtypes.hh					\
   core/macros.hh						\
   core/neighborhood_entry.hh					\
   core/point_set_entry.hh					\

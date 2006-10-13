@@ -1,3 +1,10 @@
+2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution.
+
+	* oln/Makefile.am (nobase_oln_HEADERS): Remove core/fwd_piter.hh.
+	Add core/iterator_vtypes.hh.
+
 2006-10-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix tests/window2d.
