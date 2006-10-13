@@ -30,7 +30,7 @@
 
 # include <oln/core/abstract/topology.hh>
 # include <oln/core/abstract/topology/hierarchies.hh>
-# include <oln/core/automatic/topology_having_subset.hh>
+# include <oln/core/automatic/topology/topology_having_subset.hh>
 
 
 namespace oln

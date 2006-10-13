@@ -30,7 +30,7 @@
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/image/hierarchies.hh>
-# include <oln/core/automatic/image_being_mutable.hh>
+# include <oln/core/automatic/image/image_being_mutable.hh>
 
 
 

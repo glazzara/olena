@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
-# define OLN_CORE_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#ifndef OLN_CORE_AUTOMATIC_IMAGE_IMAGE_HH
+# define OLN_CORE_AUTOMATIC_IMAGE_IMAGE_HH
 
 # include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
@@ -34,11 +34,10 @@
 
 namespace oln
 {
-
   // Forward declaration.
   namespace abstract
   {
-    template <typename E> class topology_being_random_accessible;
+    template <typename E> class image;
 
   } // end of namespace oln::abstract
 
@@ -47,22 +46,23 @@ namespace oln
   {
 
     /// Implementation corresponding to the interface
-    /// oln::abstract::topology_being_random_accessible for an identity
-    /// morpher.
-
+    /// oln::abstract::image for an identity morpher.
     template <typename E>
-    class set_impl< abstract::topology_being_random_accessible,
-		    morpher::tag::identity,
-		    E > :
+    class set_impl<abstract::image, morpher::tag::identity, E> :
       public virtual stc::any__simple<E>
     {
     private:
-      typedef oln_type_of(E, point) point_t;
+
+      typedef oln_type_of(E, topo)   topo_t;
+      typedef oln_type_of(E, rvalue) rvalue_t;
+      typedef oln_type_of(E, psite)  psite_t;
 
     public:
 
-      bool impl_has(const point_t& p) const;
-      bool impl_has_large(const point_t& p) const;
+      /// Delegation.
+
+      const topo_t& impl_topo() const;
+      rvalue_t impl_op_read(const psite_t& p) const;
 
     };
 
@@ -70,17 +70,17 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    bool
-    set_impl< abstract::topology_being_random_accessible, morpher::tag::identity, E>::impl_has(const typename set_impl< abstract::topology_being_random_accessible, morpher::tag::identity, E>::point_t& p) const
+    const typename set_impl<abstract::image, morpher::tag::identity, E>::topo_t&
+    set_impl<abstract::image, morpher::tag::identity, E>::impl_topo() const
     {
-      return this->exact().delegate().has(p);
+      return this->exact().delegate().topo();
     }
 
     template <typename E>
-    bool
-    set_impl< abstract::topology_being_random_accessible, morpher::tag::identity, E>::impl_has_large(const typename set_impl< abstract::topology_being_random_accessible, morpher::tag::identity, E>::point_t& p) const
+    typename set_impl<abstract::image, morpher::tag::identity, E>::rvalue_t
+    set_impl<abstract::image, morpher::tag::identity, E>::impl_op_read(const typename set_impl<abstract::image, morpher::tag::identity, E>::psite_t& p) const
     {
-      return this->exact().delegate().has_large(p);
+      return this->exact().delegate().operator()(p);
     }
 
 # endif
@@ -89,4 +89,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLN_CORE_AUTOMATIC_TOPOLOGY_BEING_RANDOM_ACCESSIBLE_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMAGE_IMAGE_HH

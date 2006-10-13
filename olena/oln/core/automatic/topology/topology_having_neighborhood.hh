@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
-# define OLN_CORE_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
+#ifndef OLN_CORE_AUTOMATIC_TOPOLOGY_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
+# define OLN_CORE_AUTOMATIC_TOPOLOGY_TOPOLOGY_HAVING_NEIGHBORHOOD_HH
 
 # include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
@@ -38,7 +38,7 @@ namespace oln
   // Forward declaration.
   namespace abstract
   {
-    template <typename E> class image_being_random_accessible;
+    template <typename E> class topology_having_neighborhood;
 
   } // end of namespace oln::abstract
 
@@ -46,39 +46,32 @@ namespace oln
   namespace automatic
   {
 
-    /// Default implementation corresponding to the interface
-    /// oln::abstract::image_being_random_accessible.
+    /// Implementation corresponding to the interface
+    /// oln::abstract::topology_having_neighborhood for an identity morpher.
 
-    template <typename E, typename M>
-    class set_impl<abstract::image_being_random_accessible, M, E> :
+    template <typename E>
+    class set_impl< abstract::topology_having_neighborhood,
+		    morpher::tag::identity,
+		    E > :
       public virtual stc::any__simple<E>
     {
     private:
-
-      typedef oln_type_of(E, point) point_t;
+      typedef oln_type_of(E, neighborhood) neighborhood_t;
 
     public:
 
-      bool impl_has(const point_t& p) const;
-      bool impl_has_large(const point_t& p) const;
+      const neighborhood_t& impl_neighborhood() const;
 
     };
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename E, typename M>
-    bool
-    set_impl<abstract::image_being_random_accessible, M, E>::impl_has(const typename set_impl<abstract::image_being_random_accessible, M, E>::point_t& p) const
+    template <typename E>
+    const typename set_impl< abstract::topology_having_neighborhood, morpher::tag::identity, E >::neighborhood_t&
+    set_impl< abstract::topology_having_neighborhood, morpher::tag::identity, E >::impl_neighborhood() const
     {
-      return this->exact().topo().has(p);
-    }
-
-    template <typename E, typename M>
-    bool
-    set_impl<abstract::image_being_random_accessible, M, E>::impl_has_large(const typename set_impl<abstract::image_being_random_accessible, M, E>::point_t& p) const
-    {
-      return this->exact().has(p);
+      return this->exact().delegate().neighborhood();
     }
 
 # endif
@@ -87,4 +80,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLN_CORE_AUTOMATIC_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
+#endif // ! OLN_CORE_AUTOMATIC_TOPOLOGY_TOPOLOGY_HAVING_NEIGHBORHOOD_HH

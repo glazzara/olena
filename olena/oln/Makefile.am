@@ -90,19 +90,19 @@ nobase_oln_HEADERS =						\
   core/abstract/value.hh					\
   core/abstract/window.hh					\
 								\
-  core/automatic/image.hh					\
-  core/automatic/image1d.hh					\
-  core/automatic/image2d.hh					\
-  core/automatic/image3d.hh					\
-  core/automatic/image_being_mutable.hh				\
-  core/automatic/image_being_random_accessible.hh		\
-  core/automatic/image_having_neighborhood.hh			\
+  core/automatic/image/image.hh					\
+  core/automatic/image/image1d.hh				\
+  core/automatic/image/image2d.hh				\
+  core/automatic/image/image3d.hh				\
+  core/automatic/image/image_being_mutable.hh			\
+  core/automatic/image/image_being_random_accessible.hh		\
+  core/automatic/image/image_having_neighborhood.hh		\
   core/automatic/image_having_neighborhood.hh			\
   core/automatic/impl.hh					\
-  core/automatic/topology_being_random_accessible.hh		\
-  core/automatic/topology_having_bbox.hh			\
-  core/automatic/topology_having_neighborhood.hh		\
-  core/automatic/topology_having_subset.hh			\
+  core/automatic/topology/topology_being_random_accessible.hh	\
+  core/automatic/topology/topology_having_bbox.hh		\
+  core/automatic/topology/topology_having_neighborhood.hh	\
+  core/automatic/topology/topology_having_subset.hh		\
 								\
   core/gen/bbox.hh						\
   core/gen/bbox_bkd_piter.hh					\

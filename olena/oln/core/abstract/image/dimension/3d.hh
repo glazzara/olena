@@ -29,7 +29,7 @@
 # define OLN_CORE_ABSTRACT_IMAGE_DIMENSION_3D_HH
 
 # include <oln/core/abstract/image.hh>
-# include <oln/core/automatic/image3d.hh>
+# include <oln/core/automatic/image/image3d.hh>
 
 
 namespace oln

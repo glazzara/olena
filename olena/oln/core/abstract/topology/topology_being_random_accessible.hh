@@ -30,7 +30,7 @@
 
 # include <oln/core/abstract/topology.hh>
 # include <oln/core/abstract/topology/hierarchies.hh>
-# include <oln/core/automatic/topology_being_random_accessible.hh>
+# include <oln/core/automatic/topology/topology_being_random_accessible.hh>
 
 
 namespace oln

@@ -1,5 +1,44 @@
 2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Reorganize oln/core/automatic like oln/core/abstract.
+
+	* oln/core/automatic/image.hh,
+	* oln/core/automatic/image1d.hh,
+	* oln/core/automatic/image2d.hh,
+	* oln/core/automatic/image3d.hh,
+	* oln/core/automatic/image_being_mutable.hh,
+	* oln/core/automatic/image_being_random_accessible.hh,
+	* oln/core/automatic/image_having_neighborhood.hh,
+	* oln/core/automatic/topology_being_random_accessible.hh,
+	* oln/core/automatic/topology_having_bbox.hh,
+	* oln/core/automatic/topology_having_neighborhood.hh,
+	* oln/core/automatic/topology_having_subset.hh: Move...
+	* oln/core/automatic/image/image.hh,
+	* oln/core/automatic/image/image1d.hh,
+	* oln/core/automatic/image/image2d.hh,
+	* oln/core/automatic/image/image3d.hh,
+	* oln/core/automatic/image/image_being_mutable.hh,
+	* oln/core/automatic/image/image_being_random_accessible.hh,
+	* oln/core/automatic/image/image_having_neighborhood.hh,
+	* oln/core/automatic/topology/topology_being_random_accessible.hh,
+	* oln/core/automatic/topology/topology_having_bbox.hh,
+	* oln/core/automatic/topology/topology_having_neighborhood.hh
+	* oln/core/automatic/topology/topology_having_subset.hh: ...here.
+	* oln/core/abstract/image.hh,
+	* oln/core/abstract/image/accessibility/hierarchy.hh,
+	* oln/core/abstract/image/dimension/1d.hh,
+	* oln/core/abstract/image/dimension/2d.hh,
+	* oln/core/abstract/image/dimension/3d.hh,
+	* oln/core/abstract/image/mutability/hierarchy.hh,
+	* oln/core/abstract/image/neighborhood/hierarchy.hh,
+	* oln/core/abstract/topology/topology_being_random_accessible.hh,
+	* oln/core/abstract/topology/topology_having_bbox.hh,
+	* oln/core/abstract/topology/topology_having_neighborhood.hh,
+	* oln/core/abstract/topology/topology_having_subset.hh,
+	* oln/level/fill.hh, oln/Makefile.am: Adjust paths.
+
+2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the distribution.
 
 	* oln/Makefile.am (nobase_oln_HEADERS): Remove core/fwd_piter.hh.

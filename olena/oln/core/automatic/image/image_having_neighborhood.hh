@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_AUTOMATIC_IMAGE_HH
-# define OLN_CORE_AUTOMATIC_IMAGE_HH
+#ifndef OLN_CORE_AUTOMATIC_IMAGE_IMAGE_HAVING_NEIGHBORHOOD_HH
+# define OLN_CORE_AUTOMATIC_IMAGE_IMAGE_HAVING_NEIGHBORHOOD_HH
 
 # include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
@@ -37,56 +37,43 @@ namespace oln
   // Forward declaration.
   namespace abstract
   {
-    template <typename E> class image;
+    template <typename E> class image_having_neighborhood;
 
   } // end of namespace oln::abstract
 
 
   namespace automatic
   {
-
     /// Implementation corresponding to the interface
-    /// oln::abstract::image for an identity morpher.
+    /// oln::abstract::image_having_neighborhood for an identity morpher.
     template <typename E>
-    class set_impl<abstract::image, morpher::tag::identity, E> :
+    class set_impl< abstract::image_having_neighborhood,
+		    morpher::tag::identity,
+		    E > :
       public virtual stc::any__simple<E>
     {
     private:
-
-      typedef oln_type_of(E, topo)   topo_t;
-      typedef oln_type_of(E, rvalue) rvalue_t;
-      typedef oln_type_of(E, psite)  psite_t;
+      typedef oln_type_of(E, neighborhood) neighborhood_t;
 
     public:
-
-      /// Delegation.
-
-      const topo_t& impl_topo() const;
-      rvalue_t impl_op_read(const psite_t& p) const;
-
+      /// Accessor delegation.
+      const neighborhood_t& impl_neighborhood() const;
     };
 
 
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    const typename set_impl<abstract::image, morpher::tag::identity, E>::topo_t&
-    set_impl<abstract::image, morpher::tag::identity, E>::impl_topo() const
+    const typename set_impl< abstract::image_having_neighborhood, morpher::tag::identity, E>::neighborhood_t& 
+    set_impl< abstract::image_having_neighborhood, morpher::tag::identity, E>::impl_neighborhood() const
     {
-      return this->exact().delegate().topo();
+      return this->exact().delegate().neighborhood();
     }
-
-    template <typename E>
-    typename set_impl<abstract::image, morpher::tag::identity, E>::rvalue_t
-    set_impl<abstract::image, morpher::tag::identity, E>::impl_op_read(const typename set_impl<abstract::image, morpher::tag::identity, E>::psite_t& p) const
-    {
-      return this->exact().delegate().operator()(p);
-    }
-
+    
 # endif
 
   } // end of namespace oln::automatic
   
 } // end of namespace oln
 
-#endif // ! OLN_CORE_AUTOMATIC_IMAGE_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMAGE_IMAGE_HAVING_NEIGHBORHOOD_HH

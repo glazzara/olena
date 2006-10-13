@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_AUTOMATIC_TOPOLOGY_HAVING_BBOX_HH
-# define OLN_CORE_AUTOMATIC_TOPOLOGY_HAVING_BBOX_HH
+#ifndef OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_MUTABLE_HH
+# define OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_MUTABLE_HH
 
 # include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
@@ -34,44 +34,35 @@
 
 namespace oln
 {
-
   // Forward declaration.
   namespace abstract
   {
-    template <typename E> class topology_having_bbox;
+    template <typename E> class image_being_mutable;
 
   } // end of namespace oln::abstract
 
 
   namespace automatic
   {
-
     /// Implementation corresponding to the interface
-    /// oln::abstract::topology_having_bbox for an identity morpher.
-
+    /// oln::abstract::image_being_mutable for an identity morpher.
     template <typename E>
-    class set_impl< abstract::topology_having_bbox,
-		    morpher::tag::identity,
-		    E > :
+    class set_impl<abstract::image_being_mutable, morpher::tag::identity, E> :
       public virtual stc::any__simple<E>
     {
-    private:
-      typedef oln_type_of(E, bbox) bbox_t;
-
     public:
-
-      const bbox_t& impl_bbox() const;
-
+      /// Accessor delegation.
+      oln_lvalue(E)& impl_op_readwrite(const oln_psite(E)& p);
     };
-
 
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    const typename set_impl< abstract::topology_having_bbox, morpher::tag::identity, E >::bbox_t& 
-    set_impl< abstract::topology_having_bbox, morpher::tag::identity, E >::impl_bbox() const
+    oln_lvalue(E)&
+    set_impl<abstract::image_being_mutable, morpher::tag::identity, E>
+    ::impl_op_readwrite(const oln_psite(E)& p)
     {
-      return this->exact().delegate().bbox();
+      return this->exact().delegate().operator()(p);
     }
 
 # endif
@@ -80,4 +71,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLN_CORE_AUTOMATIC_TOPOLOGY_HAVING_BBOX_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_MUTABLE_HH

@@ -31,7 +31,7 @@
 
 # include <oln/core/typedefs.hh>
 # include <oln/core/abstract/fwd_decls.hh>
-# include <oln/core/automatic/image.hh>
+# include <oln/core/automatic/image/image.hh>
 
 
 namespace oln

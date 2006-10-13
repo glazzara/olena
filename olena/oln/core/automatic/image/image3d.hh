@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_AUTOMATIC_IMAGE3D_HH
-# define OLN_CORE_AUTOMATIC_IMAGE3D_HH
+#ifndef OLN_CORE_AUTOMATIC_IMAGE_IMAGE3D_HH
+# define OLN_CORE_AUTOMATIC_IMAGE_IMAGE3D_HH
 
 # include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
@@ -172,4 +172,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLN_CORE_AUTOMATIC_IMAGE3D_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMAGE_IMAGE3D_HH
