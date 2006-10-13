@@ -97,7 +97,7 @@ nobase_oln_HEADERS =						\
   core/automatic/image/image_being_mutable.hh			\
   core/automatic/image/image_being_random_accessible.hh		\
   core/automatic/image/image_having_neighborhood.hh		\
-  core/automatic/image_having_neighborhood.hh			\
+  core/automatic/image/image_having_neighborhood.hh		\
   core/automatic/impl.hh					\
   core/automatic/topology/topology_being_random_accessible.hh	\
   core/automatic/topology/topology_having_bbox.hh		\

@@ -1,5 +1,15 @@
 2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a Makefile to img/ and fix the previous patch.
+
+	* img/Makefile.am: New.
+	* Makefile.am (SUBDIRS): Add img.
+	* oln/Makefile.am (nobase_oln_HEADERS):
+	Remove core/automatic/image_having_neighborhood.hh.
+	Add core/automatic/image/image_having_neighborhood.hh.
+
+2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Reorganize oln/core/automatic like oln/core/abstract.
 
 	* oln/core/automatic/image.hh,
