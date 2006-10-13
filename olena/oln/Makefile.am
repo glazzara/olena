@@ -104,7 +104,9 @@ nobase_oln_HEADERS =						\
   core/gen/bbox.hh						\
   core/gen/bbox_bkd_piter.hh					\
   core/gen/bbox_fwd_piter.hh					\
+  core/gen/bkd_niter_neighb.hh					\
   core/gen/bkd_piter_bbox.hh					\
+  core/gen/bkd_qiter_win.hh					\
   core/gen/fwd_niter_neighb.hh					\
   core/gen/fwd_piter_bbox.hh					\
   core/gen/fwd_qiter_win.hh					\

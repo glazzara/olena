@@ -45,8 +45,7 @@ namespace oln
   template <typename P> class fwd_piter_bbox_;
   template <typename P> class bkd_piter_bbox_;
   template <typename P> class fwd_qiter_win_;
-// FIXME: Not yet available.
-// template <typename P> class bkd_qiter_win_;
+  template <typename P> class bkd_qiter_win_;
   /// \}
 
 
@@ -67,8 +66,7 @@ namespace oln
   typedef bkd_piter_bbox_<point2d> bkd_piter2d;
 
   typedef fwd_qiter_win_<point2d> fwd_qiter2d;
-// FIXME: Not yet available.
-// typedef bkd_qiter_win_<point2d> fwd_qiter2d;
+  typedef bkd_qiter_win_<point2d> bkd_qiter2d;
 
   typedef  point2d_<float>  point2df;
   typedef dpoint2d_<float> dpoint2df;

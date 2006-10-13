@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_GEN_FWD_NITER_NEIGHB_HH
-# define OLN_CORE_GEN_FWD_NITER_NEIGHB_HH
+#ifndef OLN_CORE_GEN_BKD_NITER_NEIGHB_HH
+# define OLN_CORE_GEN_BKD_NITER_NEIGHB_HH
 
 # include <oln/core/abstract/topology.hh>
 # include <oln/core/abstract/iterator_on_points.hh>
@@ -37,22 +37,22 @@ namespace oln
 {
 
 
-  // Forward declaration.
-  template <typename point_t> class fwd_niter_neighb_;
+  // Backward declaration.
+  template <typename point_t> class bkd_niter_neighb_;
 
 
   // Super type declaration.
   template <typename point_t>
-  struct set_super_type< fwd_niter_neighb_<point_t> >
+  struct set_super_type< bkd_niter_neighb_<point_t> >
   {
-    typedef fwd_niter_neighb_<point_t> self_t;
+    typedef bkd_niter_neighb_<point_t> self_t;
     typedef abstract::iterator_on_points<self_t> ret;
   };
 
 
-  /// Virtual types associated to oln::fwd_niter_neighb_<point_t>.
+  /// Virtual types associated to oln::bkd_niter_neighb_<point_t>.
   template <typename point_t>
-  struct vtypes< fwd_niter_neighb_<point_t> >
+  struct vtypes< bkd_niter_neighb_<point_t> >
   {
     typedef point_t point_type;
     typedef oln_type_of(point_t, grid)  grid_type;
@@ -60,11 +60,11 @@ namespace oln
 
 
 
-  /// Abstract forward point iterator class.
+  /// Abstract backward point iterator class.
   template <typename point_t>
-  class fwd_niter_neighb_ : public abstract::iterator_on_points< fwd_niter_neighb_<point_t> >
+  class bkd_niter_neighb_ : public abstract::iterator_on_points< bkd_niter_neighb_<point_t> >
   {
-    typedef fwd_niter_neighb_<point_t> self_t;
+    typedef bkd_niter_neighb_<point_t> self_t;
     typedef abstract::iterator_on_points<self_t> super_t;
 
     typedef oln_type_of(point_t, dpoint) dpoint_t;
@@ -72,13 +72,13 @@ namespace oln
   public:
     
     template <typename P, typename T>
-    fwd_niter_neighb_(const abstract::iterator_on_points<P>& it,
+    bkd_niter_neighb_(const abstract::iterator_on_points<P>& it,
 		      const abstract::topology<T>& topo);
 
     // FIXME: To be possibly enabled later (still unsure about it).
 
     //     template <typename P, typename N>
-    //     fwd_niter_neighb_(const abstract::iterator_on_points<P>& it,
+    //     bkd_niter_neighb_(const abstract::iterator_on_points<P>& it,
     // 		      const abstract::neighborhood<N>& nbh)
     //       : p_ref_(it.point_adr()),
     // 	nbh_(nbh.exact())
@@ -88,7 +88,7 @@ namespace oln
     //     }
 
     //     template <typename P, typename T>
-    //     fwd_niter_neighb_(const abstract::point<P>& p,
+    //     bkd_niter_neighb_(const abstract::point<P>& p,
     // 		      const abstract::topology<T>& topo)
     //       : p_ref_(&(p.exact())),
     // 	nbh_(topo.exact().neighborhood())
@@ -98,7 +98,7 @@ namespace oln
     //     }
 
     //     template <typename P, typename N>
-    //     fwd_niter_neighb_(const abstract::point<P>& p,
+    //     bkd_niter_neighb_(const abstract::point<P>& p,
     // 		      const abstract::neighborhood<N>& nbh)
     //       : p_ref_(&(p.exact())),
     // 	nbh_(nbh.exact())
@@ -126,7 +126,7 @@ namespace oln
     int i_;
     point_t p_;
 
-  }; // end of class oln::fwd_niter_neighb_<point_t>
+  }; // end of class oln::bkd_niter_neighb_<point_t>
   
 
 
@@ -135,7 +135,7 @@ namespace oln
 
   template <typename point_t>
   template <typename P, typename T>
-  fwd_niter_neighb_<point_t>::fwd_niter_neighb_(const abstract::iterator_on_points<P>& it,
+  bkd_niter_neighb_<point_t>::bkd_niter_neighb_(const abstract::iterator_on_points<P>& it,
 						const abstract::topology<T>& topo)
     : p_ref_(it.point_adr()),
       nbh_(topo.exact().neighborhood())
@@ -146,49 +146,46 @@ namespace oln
 
   template <typename point_t>
   void
-  fwd_niter_neighb_<point_t>::impl_start()
+  bkd_niter_neighb_<point_t>::impl_start()
   {
-    i_ = 0;
+    i_ = int(nbh_.card()) - 1;
     p_ = *p_ref_+ nbh_.dp(i_);
   }
 
   template <typename point_t>
   void
-  fwd_niter_neighb_<point_t>::impl_next()
+  bkd_niter_neighb_<point_t>::impl_next()
   {
-    ++i_;
-    if (i_ == int(nbh_.card()))
-      {
-	this->invalidate();
-	return;
-      }
+    --i_;
+    if (i_ == -1)
+      return;
     p_ = *p_ref_ + nbh_.dp(i_);
   }
 
   template <typename point_t>
   void
-  fwd_niter_neighb_<point_t>::impl_invalidate()
+  bkd_niter_neighb_<point_t>::impl_invalidate()
   {
     i_ = -1;
   }
 
   template <typename point_t>
   bool
-  fwd_niter_neighb_<point_t>::impl_is_valid() const
+  bkd_niter_neighb_<point_t>::impl_is_valid() const
   {
     return i_ != -1;
   }
 
   template <typename point_t>
   point_t
-  fwd_niter_neighb_<point_t>::impl_to_point() const
+  bkd_niter_neighb_<point_t>::impl_to_point() const
   {
     return p_;
   }
 
   template <typename point_t>
   const point_t*
-  fwd_niter_neighb_<point_t>::impl_point_adr() const
+  bkd_niter_neighb_<point_t>::impl_point_adr() const
   {
     return &p_;
   }
@@ -199,5 +196,5 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_GEN_FWD_NITER_NEIGHB_HH
+#endif // ! OLN_CORE_GEN_BKD_NITER_NEIGHB_HH
 

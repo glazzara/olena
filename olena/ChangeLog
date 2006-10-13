@@ -1,5 +1,41 @@
 2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add backward iterators on neighborhoods and windows.
+
+	* oln/core/gen/bkd_niter_neighb.hh,
+	* oln/core/gen/bkd_qiter_win.hh: New.
+	* oln/core/gen/fwd_niter_neighb.hh
+	(oln::fwd_niter_neighb_<point_t>::fwd_niter_neighb_)
+	(oln::fwd_niter_neighb_<point_t>::impl_next)
+	* oln/core/gen/fwd_qiter_win.hh
+	(oln::fwd_qiter_win_<point_t>::fwd_qiter_win_)
+	(oln::fwd_qiter_win_<point_t>::impl_next): Initialize i_
+	using this->invalidate().
+	* oln/core/1d/aliases.hh (oln::bkd_qiter_win_): New forward
+	declaration.
+	(oln::bkd_qiter1d): New typedef.
+	* oln/core/2d/aliases.hh (oln::bkd_qiter_win_): New forward
+	declaration.
+	(oln::bkd_qiter2d): New typedef.
+	* oln/core/3d/aliases.hh (oln::bkd_qiter_win_): New forward
+	declaration.
+	(oln::bkd_qiter3d): New typedef.
+	* oln/core/iterator_vtypes.hh
+	(oln::single_vtype<image1d<T>, typedef_::bkd_qiter_type>)
+	(oln::single_vtype<image2d<T>, typedef_::bkd_qiter_type>)
+	(oln::single_vtype<image3d<T>, typedef_::bkd_qiter_type>): New
+	vtypes.
+	* oln/basics1d.hh (oln/core/gen/window.hh)
+	(oln/core/gen/fwd_qiter_win.hh, oln/core/gen/bkd_qiter_win.hh):
+	* oln/basics2d.hh (oln/core/gen/bkd_qiter_win.hh)
+	* oln/basics3d.hh (oln/core/gen/window.hh)
+	(oln/core/gen/fwd_qiter_win.hh, oln/core/gen/bkd_qiter_win.hh):
+	Include them.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add
+	core/gen/bkd_niter_neighb.hh and core/gen/bkd_qiter_win.hh.
+
+2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add some documentation to image abstractions.
 
 	* oln/core/abstract/image/hybrid/classical.hh: Add documentation.

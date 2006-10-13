@@ -44,6 +44,10 @@
 # include <oln/core/gen/fwd_piter_bbox.hh>
 # include <oln/core/gen/bkd_piter_bbox.hh>
 
+# include <oln/core/gen/window.hh>
+# include <oln/core/gen/fwd_qiter_win.hh>
+# include <oln/core/gen/bkd_qiter_win.hh>
+
 # include <oln/core/gen/neighb.hh>
 # include <oln/core/3d/neighb3d.hh>
 

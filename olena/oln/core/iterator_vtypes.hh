@@ -66,14 +66,12 @@ namespace oln
     typedef fwd_qiter1d ret;
   };
 
-  // FIXME : Not yet available.
-
-//   /// bkd_qiter vtype of image1d.
-//   template <typename T>
-//   struct single_vtype< image1d<T>, typedef_::bkd_qiter_type >
-//   {
-//     typedef bkd_qiter1d ret;
-//   };
+  /// bkd_qiter vtype of image1d.
+  template <typename T>
+  struct single_vtype< image1d<T>, typedef_::bkd_qiter_type >
+  {
+    typedef bkd_qiter1d ret;
+  };
 
 
   /*------------------.
@@ -104,14 +102,12 @@ namespace oln
     typedef fwd_qiter2d ret;
   };
 
-  // FIXME : Not yet available.
-
-//   /// bkd_qiter vtype of image2d.
-//   template <typename T>
-//   struct single_vtype< image2d<T>, typedef_::bkd_qiter_type >
-//   {
-//     typedef bkd_qiter2d ret;
-//   };
+  /// bkd_qiter vtype of image2d.
+  template <typename T>
+  struct single_vtype< image2d<T>, typedef_::bkd_qiter_type >
+  {
+    typedef bkd_qiter2d ret;
+  };
 
 
   /*------------------.
@@ -142,14 +138,12 @@ namespace oln
     typedef fwd_qiter3d ret;
   };
 
-  // FIXME : Not yet available.
-
-//   /// bkd_qiter vtype of image3d.
-//   template <typename T>
-//   struct single_vtype< image3d<T>, typedef_::bkd_qiter_type >
-//   {
-//     typedef bkd_qiter3d ret;
-//   };
+  /// bkd_qiter vtype of image3d.
+  template <typename T>
+  struct single_vtype< image3d<T>, typedef_::bkd_qiter_type >
+  {
+    typedef bkd_qiter3d ret;
+  };
 
 
   /*--------------------------------------------.

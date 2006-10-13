@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_GEN_FWD_QITER_WIN_HH
-# define OLN_CORE_GEN_FWD_QITER_WIN_HH
+#ifndef OLN_CORE_GEN_BKD_QITER_WIN_HH
+# define OLN_CORE_GEN_BKD_QITER_WIN_HH
 
 # include <oln/core/abstract/iterator_on_points.hh>
 # include <oln/core/abstract/window.hh>
@@ -37,22 +37,22 @@ namespace oln
 {
 
 
-  // Forward declaration.
-  template <typename point_t> class fwd_qiter_win_;
+  // Backward declaration.
+  template <typename point_t> class bkd_qiter_win_;
 
 
   // Super type declaration.
   template <typename point_t>
-  struct set_super_type< fwd_qiter_win_<point_t> >
+  struct set_super_type< bkd_qiter_win_<point_t> >
   {
-    typedef fwd_qiter_win_<point_t> self_t;
+    typedef bkd_qiter_win_<point_t> self_t;
     typedef abstract::iterator_on_points<self_t> ret;
   };
 
 
-  /// Virtual types associated to oln::fwd_qiter_win_<point_t>.
+  /// Virtual types associated to oln::bkd_qiter_win_<point_t>.
   template <typename point_t>
-  struct vtypes< fwd_qiter_win_<point_t> >
+  struct vtypes< bkd_qiter_win_<point_t> >
   {
     typedef point_t point_type;
     typedef oln_type_of(point_t, grid) grid_type;
@@ -60,11 +60,11 @@ namespace oln
 
 
 
-  /// Abstract forward point iterator class.
+  /// Abstract backward point iterator class.
   template <typename point_t>
-  class fwd_qiter_win_ : public abstract::iterator_on_points< fwd_qiter_win_<point_t> >
+  class bkd_qiter_win_ : public abstract::iterator_on_points< bkd_qiter_win_<point_t> >
   {
-    typedef fwd_qiter_win_<point_t> self_t;
+    typedef bkd_qiter_win_<point_t> self_t;
     typedef abstract::iterator_on_points<self_t> super_t;
 
     typedef oln_type_of(point_t, dpoint) dpoint_t;
@@ -72,11 +72,11 @@ namespace oln
   public:
     
     template <typename P, typename W>
-    fwd_qiter_win_(const abstract::iterator_on_points<P>& it,
+    bkd_qiter_win_(const abstract::iterator_on_points<P>& it,
 		   const abstract::window<W>& win);
 
     template <typename P, typename W>
-    fwd_qiter_win_(const abstract::point<P>& p,
+    bkd_qiter_win_(const abstract::point<P>& p,
 		   const abstract::window<W>& win);
 
     void impl_start();
@@ -98,7 +98,7 @@ namespace oln
     int i_;
     point_t p_;
 
-  }; // end of class oln::fwd_qiter_win_<point_t>
+  }; // end of class oln::bkd_qiter_win_<point_t>
 
   
 
@@ -106,7 +106,7 @@ namespace oln
 
   template <typename point_t>
   template <typename P, typename W>
-  fwd_qiter_win_<point_t>::fwd_qiter_win_(const abstract::iterator_on_points<P>& it,
+  bkd_qiter_win_<point_t>::bkd_qiter_win_(const abstract::iterator_on_points<P>& it,
 					  const abstract::window<W>& win)
     : p_ref_(it.point_adr()),
       win_(win.exact())
@@ -117,7 +117,7 @@ namespace oln
     
   template <typename point_t>
   template <typename P, typename W>
-  fwd_qiter_win_<point_t>::fwd_qiter_win_(const abstract::point<P>& p,
+  bkd_qiter_win_<point_t>::bkd_qiter_win_(const abstract::point<P>& p,
 					  const abstract::window<W>& win)
     : p_ref_(&(p.exact())),
       win_(win.exact())
@@ -128,49 +128,46 @@ namespace oln
 
   template <typename point_t>
   void
-  fwd_qiter_win_<point_t>::impl_start()
+  bkd_qiter_win_<point_t>::impl_start()
   {
-    i_ = 0;
+    i_ = int(win_.card()) - 1;
     p_ = *p_ref_+ win_.dp(i_);
   }
 
   template <typename point_t>
   void
-  fwd_qiter_win_<point_t>::impl_next()
+  bkd_qiter_win_<point_t>::impl_next()
   {
-    ++i_;
-    if (i_ == int(win_.card()))
-      {
-	this->invalidate();
-	return;
-      }
+    --i_;
+    if (i_ == -1)
+      return;
     p_ = *p_ref_ + win_.dp(i_);
   }
 
   template <typename point_t>
   void
-  fwd_qiter_win_<point_t>::impl_invalidate()
+  bkd_qiter_win_<point_t>::impl_invalidate()
   {
     i_ = -1;
   }
 
   template <typename point_t>
   bool
-  fwd_qiter_win_<point_t>::impl_is_valid() const
+  bkd_qiter_win_<point_t>::impl_is_valid() const
   {
     return i_ != -1;
   }
 
   template <typename point_t>
   point_t
-  fwd_qiter_win_<point_t>::impl_to_point() const
+  bkd_qiter_win_<point_t>::impl_to_point() const
   {
     return p_;
   }
 
   template <typename point_t>
   const point_t*
-  fwd_qiter_win_<point_t>::impl_point_adr() const
+  bkd_qiter_win_<point_t>::impl_point_adr() const
   {
     return &p_;
   }
@@ -180,5 +177,5 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_GEN_FWD_QITER_WIN_HH
+#endif // ! OLN_CORE_GEN_BKD_QITER_WIN_HH
 
