@@ -30,6 +30,7 @@
 # define OLN_CORE_2D_IMAGE2D_HH
 
 # include <oln/core/image_entry.hh>
+# include <oln/core/gen/grid.hh>
 # include <oln/core/gen/topo_lbbox.hh>
 # include <oln/core/internal/tracked_ptr.hh>
 # include <oln/core/2d/array2d.hh>

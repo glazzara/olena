@@ -1,5 +1,27 @@
 2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor oln::grid1d, oln::grid2d and oln::grid3d into oln::grid_<>.
+
+	* oln/core/1d/grid1d.hh, oln/core/2d/grid2d.hh,
+	* oln/core/3d/grid3d.hh: Remove.
+	* oln/core/gen/grid.hh: New file.
+	* oln/core/1d/image1d.hh, oln/core/2d/image2d.hh,
+	* oln/core/3d/image3d.hh: Include it.
+	* oln/core/1d/aliases.hh (oln::grid_): Declare it.
+	(oln::grid1d): Adjust definition.
+	* oln/core/2d/aliases.hh (oln::grid_): Declare it.
+	(oln::grid2d): Adjust definition.
+	* oln/core/3d/aliases.hh (oln::grid_): Declare it.
+	(oln::grid3d): Adjust definition.
+	* oln/basics1d.hh, oln/basics2d.hh, oln/basics3d.hh,
+	* oln/core/abstract/image/dimension/hierarchy.hh,
+	* oln/core/abstract/image/hybrid/classical.hh,
+	* oln/core/abstract/point_set/point_set_being_connected.hh,
+	* oln/Makefile.am,
+	* tests/grid.cc: Adjust.
+
+2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a Makefile to img/ and fix the previous patch.
 
 	* img/Makefile.am: New.

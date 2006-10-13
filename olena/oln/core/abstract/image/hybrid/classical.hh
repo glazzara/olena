@@ -108,10 +108,11 @@ namespace oln
   } // end of namespace oln::abstract
 
 
-  // Fwd. decl.
-  class grid1d;
-  class grid2d;
-  class grid3d;
+  // Forward declarations.
+  template <unsigned D> struct grid_;
+  typedef grid_<1> grid1d;
+  typedef grid_<2> grid2d;
+  typedef grid_<3> grid3d;
 
 
   /// 1D case.

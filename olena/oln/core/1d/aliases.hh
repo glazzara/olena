@@ -33,8 +33,9 @@
 namespace oln
 {
 
-  /// \{
   /// Forward declarations.
+  /// \{
+  template <unsigned D> struct grid_;
   template <typename C> class point1d_;
   template <typename C> class dpoint1d_;
   template <typename D> class neighb_;
@@ -46,12 +47,13 @@ namespace oln
   template <typename P> class fwd_qiter_win_;
 // FIXME: Not yet available.
 // template <typename P> class bkd_qiter_win_;
-  class grid1d;
   /// \}
 
 
+  /// Aliases.
   /// \{
-  /// Alliases.
+  typedef grid_<1> grid1d;
+
   typedef  point1d_<int>  point1d;
   typedef dpoint1d_<int> dpoint1d;
 

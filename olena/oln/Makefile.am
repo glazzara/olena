@@ -9,7 +9,6 @@ nobase_oln_HEADERS =						\
   core/1d/array1d.hh						\
   core/1d/bbox1d.hh						\
   core/1d/dpoint1d.hh						\
-  core/1d/grid1d.hh						\
   core/1d/image1d.hh						\
   core/1d/neighb1d.hh						\
   core/1d/point1d.hh						\
@@ -18,7 +17,6 @@ nobase_oln_HEADERS =						\
   core/2d/array2d.hh						\
   core/2d/bbox2d.hh						\
   core/2d/dpoint2d.hh						\
-  core/2d/grid2d.hh						\
   core/2d/image2d.hh						\
   core/2d/neighb2d.hh						\
   core/2d/point2d.hh						\
@@ -27,7 +25,6 @@ nobase_oln_HEADERS =						\
   core/3d/array3d.hh						\
   core/3d/bbox3d.hh						\
   core/3d/dpoint3d.hh						\
-  core/3d/grid3d.hh						\
   core/3d/image3d.hh						\
   core/3d/neighb3d.hh						\
   core/3d/point3d.hh						\
@@ -111,6 +108,7 @@ nobase_oln_HEADERS =						\
   core/gen/fwd_niter_neighb.hh					\
   core/gen/fwd_piter_bbox.hh					\
   core/gen/fwd_qiter_win.hh					\
+  core/gen/grid.hh						\
   core/gen/mapimage.hh						\
   core/gen/neighb.hh						\
   core/gen/topo_add_nbh.hh					\

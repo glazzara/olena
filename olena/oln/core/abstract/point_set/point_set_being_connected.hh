@@ -157,9 +157,10 @@ namespace oln
 
 
   // Forward declarations.
-  class grid1d;
-  class grid2d;
-  class grid3d;
+  template <unsigned D> struct grid_;
+  typedef grid_<1> grid1d;
+  typedef grid_<2> grid2d;
+  typedef grid_<3> grid3d;
 
 
   template <typename E>

@@ -11,7 +11,7 @@
 // General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with this library; see the file COPYING.  If not, write to
+// along with this library; see the file COPYING.  If not, write tog
 // the Free Software Foundation, 51 Franklin Street, Fifth Floor,
 // Boston, MA 02111-1307, USA.
 //
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_3D_GRID3D_HH
-# define OLN_CORE_3D_GRID3D_HH
+#ifndef OLN_CORE_GEN_GRID_HH
+# define OLN_CORE_GEN_GRID_HH
 
 # include <mlc/int.hh>
 # include <oln/core/abstract/grid.hh>
@@ -34,28 +34,35 @@
 
 namespace oln
 {
-  // Fwd decl.
-  struct grid3d;
 
-  // Super type.
-  stc_set_super(grid3d, abstract::grid<grid3d>);
+  // Forward declaration.
+  template <unsigned D> struct grid_;
 
-  /// Virtual types associated to oln::grid3d.
-  template <>
-  struct vtypes<grid3d>
+
+  /// Super type declaration.
+  template <unsigned D>
+  struct set_super_type< grid_<D> >
   {
-    typedef mlc::uint_<3> dimvalue_type;
+    typedef abstract::grid< grid_<D> > ret;
   };
 
-  /// A 3D cubic grid.
-  struct grid3d : public stc_get_supers(grid3d)
+
+  /// Virtual types associated to oln::grid1d.
+  template <unsigned D>
+  struct vtypes< grid_<D> >
+  {
+    typedef mlc::uint_<D> dimvalue_type;
+  };
+
+  /// A 1D grid.
+  template <unsigned D>
+  struct grid_ : public stc_get_supers(grid_<D>)
   {
   protected:
-    grid3d() {}
+    grid_() {}
   };
 
 } // end of namespace oln
 
 
-
-#endif // ! OLN_CORE_3D_GRID3D_HH
+#endif // ! OLN_CORE_GEN_GRID_HH

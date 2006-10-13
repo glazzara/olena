@@ -32,7 +32,7 @@
 
 # include <oln/core/1d/aliases.hh>
 
-# include <oln/core/1d/grid1d.hh>
+# include <oln/core/gen/grid.hh>
 
 # include <oln/core/1d/point1d.hh>
 # include <oln/core/1d/dpoint1d.hh>

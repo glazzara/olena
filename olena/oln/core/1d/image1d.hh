@@ -30,6 +30,7 @@
 # define OLN_CORE_1D_IMAGE1D_HH
 
 # include <oln/core/image_entry.hh>
+# include <oln/core/gen/grid.hh>
 # include <oln/core/gen/topo_lbbox.hh>
 # include <oln/core/internal/tracked_ptr.hh>
 # include <oln/core/1d/array1d.hh>
