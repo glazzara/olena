@@ -42,7 +42,11 @@ namespace oln
   | oln::image1d<T>.  |
   `------------------*/
 
+  // Forward declaration.
   template <typename T> class image1d;
+
+
+  /// piters.
 
   /// fwd_piter vtype of image1d.
   template <typename T>
@@ -58,6 +62,8 @@ namespace oln
     typedef bkd_piter1d ret;
   };
 
+
+  /// qiters.
 
   /// fwd_qiter vtype of image1d.
   template <typename T>
@@ -78,7 +84,11 @@ namespace oln
   | oln::image2d<T>.  |
   `------------------*/
 
+  // Forward declaration.
   template <typename T> class image2d;
+
+
+  // piters.
 
   /// fwd_piter vtype of image2d.
   template <typename T>
@@ -94,6 +104,8 @@ namespace oln
     typedef bkd_piter2d ret;
   };
 
+
+  // qiters.
 
   /// fwd_qiter vtype of image2d.
   template <typename T>
@@ -114,7 +126,11 @@ namespace oln
   | oln::image3d<T>.  |
   `------------------*/
 
+  // Forward declaration.
   template <typename T> class image3d;
+
+
+  // piters.
 
   /// fwd_piter vtype of image3d.
   template <typename T>
@@ -130,6 +146,8 @@ namespace oln
     typedef bkd_piter3d ret;
   };
 
+
+  // qiters.
 
   /// fwd_qiter vtype of image3d.
   template <typename T>
@@ -150,46 +168,65 @@ namespace oln
   | oln::morpher::add_isubset<Image, Isubset>.  |
   `--------------------------------------------*/
 
+  // Forward declarations.
   namespace morpher {
     template <typename Image, typename Isubset> struct add_isubset;
   }
   template <typename piter_t, typename isubset_t> class piter_isubset_;
 
 
+  // piters.
+
+  /// fwd_piter vtype on morpher::add_isubset.
   template <typename Image, typename Isubset>
-  struct single_vtype< morpher::add_isubset<Image, Isubset>, typedef_::fwd_piter_type >
+  struct single_vtype< morpher::add_isubset<Image, Isubset>,
+		       typedef_::fwd_piter_type >
   {
     typedef piter_isubset_<oln_type_of(Image, fwd_piter), Isubset> ret;
   };
   
+  /// bkd_piter vtype on morpher::add_isubset.
   template <typename Image, typename Isubset>
-  struct single_vtype< morpher::add_isubset<Image, Isubset>, typedef_::bkd_piter_type >
+  struct single_vtype< morpher::add_isubset<Image, Isubset>,
+		       typedef_::bkd_piter_type >
   {
     typedef piter_isubset_<oln_type_of(Image, bkd_piter), Isubset> ret;
   };
 
 
+  // qiters.
+
+  /// fwd_qiter vtype on morpher::add_isubset.
   template <typename Image, typename Isubset>
-  struct single_vtype< morpher::add_isubset<Image, Isubset>, typedef_::fwd_qiter_type >
+  struct single_vtype< morpher::add_isubset<Image, Isubset>,
+		       typedef_::fwd_qiter_type >
   {
     typedef piter_isubset_<oln_type_of(Image, fwd_qiter), Isubset> ret;
   };
   
+  /// bkd_qiter vtype on morpher::add_isubset.
   template <typename Image, typename Isubset>
-  struct single_vtype< morpher::add_isubset<Image, Isubset>, typedef_::bkd_qiter_type >
+  struct single_vtype< morpher::add_isubset<Image, Isubset>,
+		       typedef_::bkd_qiter_type >
   {
     typedef piter_isubset_<oln_type_of(Image, bkd_qiter), Isubset> ret;
   };
 
 
+  // niters.
+
+  /// fwd_niter vtype on morpher::add_isubset.
   template <typename Image, typename Isubset>
-  struct single_vtype< morpher::add_isubset<Image, Isubset>, typedef_::fwd_niter_type >
+  struct single_vtype< morpher::add_isubset<Image, Isubset>,
+		       typedef_::fwd_niter_type >
   {
     typedef piter_isubset_<oln_type_of(Image, fwd_niter), Isubset> ret;
   };
   
+  /// bkd_niter vtype on morpher::add_isubset.
   template <typename Image, typename Isubset>
-  struct single_vtype< morpher::add_isubset<Image, Isubset>, typedef_::bkd_niter_type >
+  struct single_vtype< morpher::add_isubset<Image, Isubset>,
+		       typedef_::bkd_niter_type >
   {
     typedef piter_isubset_<oln_type_of(Image, bkd_niter), Isubset> ret;
   };
@@ -199,13 +236,20 @@ namespace oln
   | oln::morpher::add_neighborhood<Image, Isubset>.  |
   `-------------------------------------------------*/
 
+  // Forward declarations.
   namespace morpher {
     template <typename Image, typename Neighb> struct add_neighborhood;
   }
   template <typename point_t> class fwd_niter_neighb_;
+  template <typename point_t> class bkd_niter_neighb_;
   
+
+  // qiters.
+
+  /// fwd_niter vtype of morpher::add_neighborhood.
   template <typename Image, typename Neighb>
-  struct single_vtype< morpher::add_neighborhood<Image, Neighb>, typedef_::fwd_niter_type >
+  struct single_vtype< morpher::add_neighborhood<Image, Neighb>,
+		       typedef_::fwd_niter_type >
   {
   private:
     typedef oln_type_of(Image, point) point_t;
@@ -213,13 +257,15 @@ namespace oln
     typedef fwd_niter_neighb_<point_t> ret;
   };
 
+  /// bkd_niter vtype of morpher::add_neighborhood.
   template <typename Image, typename Neighb>
-  struct single_vtype< morpher::add_neighborhood<Image, Neighb>, typedef_::bkd_niter_type >
+  struct single_vtype< morpher::add_neighborhood<Image, Neighb>,
+		       typedef_::bkd_niter_type >
   {
   private:
     typedef oln_type_of(Image, point) point_t;
   public:
-    typedef fwd_niter_neighb_<point_t> ret;  // FIXME: should be bkd but not yet impled!
+    typedef bkd_niter_neighb_<point_t> ret;
   };
 
 

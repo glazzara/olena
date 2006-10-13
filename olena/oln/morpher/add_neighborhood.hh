@@ -32,6 +32,7 @@
 # include <oln/core/gen/topo_add_nbh.hh>
 # include <oln/core/iterator_vtypes.hh>
 # include <oln/core/gen/fwd_niter_neighb.hh>
+# include <oln/core/gen/bkd_niter_neighb.hh>
 
 
 namespace oln

@@ -1,5 +1,18 @@
 2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix oln/core/iterator_vtypes.hh w.r.t. backward niters.
+
+	* oln/core/iterator_vtypes.hh (oln::bkd_niter_neighb_): New
+	forward declaration.
+	(single_vtype<morpher::add_neighborhood<Image, Neighb>,
+	 typedef_::bkd_niter_type >): Fix ret.
+	Add comments.
+	Aesthetic changes.
+	* oln/morpher/add_neighborhood.hh
+	(oln/core/gen/bkd_niter_neighb.hh): Include it.
+
+2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add backward iterators on neighborhoods and windows.
 
 	* oln/core/gen/bkd_niter_neighb.hh,
