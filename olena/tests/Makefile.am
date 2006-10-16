@@ -35,6 +35,7 @@ check_PROGRAMS =				\
 						\
   at						\
 						\
+  grey						\
   io_pnm					\
 						\
   identity_morpher				\
@@ -59,6 +60,9 @@ at_SOURCES = at.cc
 
 # I/O.
 io_pnm_SOURCES = io_pnm.cc
+
+# Value.
+grey_SOURCES = grey.cc
 
 # Morphers.
 identity_morpher_SOURCES = identity_morpher.cc

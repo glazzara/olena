@@ -1,4 +1,4 @@
-// Copyright (C) 2005, 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,36 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_VALUE_HH
-# define OLN_CORE_ABSTRACT_VALUE_HH
-
-# include <oln/core/type.hh>
-
-
-namespace oln {
-
-  namespace abstract {
-
-    // A value is not an oln::type.  As a consequence,
-    // traits are basically defined.
-    struct value
-    {
-    protected:
-      value();
-    };
+/// Test oln::grey.
+#include <oln/value/greylevel.hh>
+#include <oln/value/default.hh>
 
 
-# ifndef OLN_INCLUDE_ONLY
+int main()
+{
+  using namespace oln::value;
 
-    value::value()
-    {
-    }
-
-# endif
-
-  } // end of namespace oln::abstract
-
-} // end of namespace oln
-
-
-#endif // ! OLN_CORE_ABSTRACT_VALUE_HH
+  gl8 a = white;
+  gl16 b = white;
+  assert((a == b) == true);
+  gl8 c = (a + b) / 2;
+  assert(c == white);
+}

@@ -1,3 +1,15 @@
+2006-10-16  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add grey-level types.
+	
+	* tests/grey.cc: New.
+	* tests/Makefile.am: Update.
+	* oln/value/default.hh: New.
+	* oln/value/greylevel.hh: New.
+	* oln/Makefile.am: Update.
+	* oln/core/abstract/value.hh (value): Remove inheritance
+	so that a value type is not a regular oln type.
+
 2006-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the distribution.
