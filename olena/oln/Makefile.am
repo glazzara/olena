@@ -151,6 +151,7 @@ nobase_oln_HEADERS =						\
   morpher/identity.hh						\
   morpher/tags.hh						\
   morpher/thru_fun.hh						\
+  morpher/value_cast.hh						\
 								\
   value/all.hh							\
   value/default.hh						\

@@ -64,20 +64,13 @@ namespace oln
   {
     // Morpher type.
     typedef oln::morpher::tag::identity morpher_type; // FIXME: Wrong!
-
+    typedef mlc::undefined lvalue_type;
     typedef mlc::undefined value_type;
   };
 
   template <typename Image, typename Exact>
   struct single_vtype< morpher::internal::image_value_morpher<Image, Exact>,
 		       typedef_::rvalue_type >
-  {
-    typedef mlc::undefined ret;
-  };
-
-  template <typename Image, typename Exact>
-  struct single_vtype< morpher::internal::image_value_morpher<Image, Exact>,
-		       typedef_::lvalue_type >
   {
     typedef mlc::undefined ret;
   };

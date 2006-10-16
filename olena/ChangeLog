@@ -1,5 +1,16 @@
 2006-10-16  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Add value cast image morpher.
+	
+	* tests/value_cast.cc: New.
+	* tests/Makefile.am: Update.
+	* oln/morpher/value_cast.hh: New.
+	* oln/Makefile.am: Update.
+	* oln/morpher/internal/image_value_morpher.hh (lvalue): Change
+	definition mode from single_vtype to vtypes.
+
+2006-10-16  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add binary value type plus update image hierarchy plugs.
 	
 	* oln/value/tags.hh: New.

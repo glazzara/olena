@@ -40,6 +40,7 @@ check_PROGRAMS =				\
 						\
   identity_morpher				\
   add_neighborhood_morpher			\
+  value_cast					\
   morphers					\
 						\
   fill
@@ -67,6 +68,7 @@ grey_SOURCES = grey.cc
 # Morphers.
 identity_morpher_SOURCES = identity_morpher.cc
 add_neighborhood_morpher_SOURCES = add_neighborhood_morpher.cc
+value_cast_SOURCES = value_cast.cc
 morphers_SOURCES = morphers.cc
 
 # Algorithms.
