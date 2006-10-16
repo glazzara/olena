@@ -63,7 +63,6 @@ namespace xtd
   };
 
 
-
   // logic
 
   struct land    : public abstract::op_tag {};
@@ -111,6 +110,25 @@ namespace xtd
   /// \}
 
 
+
+  namespace internal
+  {
+
+    // Unary operators (op_lnot and op_uminus) can be fetched from type traits.
+
+    template < typename T >
+    struct from_set_traits_< op_lnot, T >
+    {
+      typedef typename xtd::set_traits_<T>::op_lnot_ret ret;
+    };
+
+    template < typename T >
+    struct from_set_traits_< op_uminus, T >
+    {
+      typedef typename xtd::set_traits_<T>::op_uminus_ret ret;
+    };
+
+  } // end of namespace xtd::internal
 
 
 

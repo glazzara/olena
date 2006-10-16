@@ -42,11 +42,65 @@ namespace xtd
 
 
 
+  // This class aims at being specialized by the client.
+  template < typename T >
+  struct set_traits_ : public mlc::undefined
+  {
+    // Unary operators.
+    typedef mlc::undefined op_lnot_ret;
+    typedef mlc::undefined op_uminus_ret;
+
+    // Values.
+    typedef mlc::undefined min_ret;
+    typedef mlc::undefined max_ret;
+    typedef mlc::undefined zero_ret;
+    typedef mlc::undefined one_ret;
+
+    // Quantization.
+    typedef mlc::undefined nbits;
+
+    // Features.
+    typedef mlc::undefined is_scalar;
+    typedef mlc::undefined is_signed;
+
+    // FIXME: ...
+  };
+
+
+
+  namespace internal
+  {
+
+    // This class should be specialized for each 'subject' so
+    // that set_trait_ gets related to set_traits_.
+    template < typename subject,
+	       typename T >
+    struct from_set_traits_ : public mlc::undefined
+    {
+      // FIXME: Add a static check to make sure that this class has
+      // been specialized.
+    };
+
+  } // end of namespace xtd::internal
+
+
+
+  // This class aims at being specialized by the client.
   template < typename subject,
 	     typename T1,
 	     typename T2 = mlc::none >
   struct set_trait_ : public mlc::undefined
   {
+    // A definition, e.g.,
+    // typedef int ret;
+  };
+
+  template < typename subject,
+	     typename T >
+  struct set_trait_< subject, T, mlc::none > : public internal::from_set_traits_<subject, T>
+  {
+    // A definition, e.g.,
+    // typedef int ret;
   };
 
 
