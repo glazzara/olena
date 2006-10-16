@@ -187,7 +187,7 @@ namespace xtd
       typedef typename get_case_< op_<name>, mlc::pair_<L, R> >::ret case_t;
       typedef mlc_ret(case_t) case_ret;
 
-      typedef typename mlc::if_< mlc_is_found(user_ret), user_ret, case_ret >::ret ret;
+      typedef typename mlc::if_< mlc::is_ok_<user_ret>, user_ret, case_ret >::ret ret;
     };
 
 
@@ -205,7 +205,7 @@ namespace xtd
       typedef typename get_case_< op_<name>, T >::ret case_t;
       typedef mlc_ret(case_t) case_ret;
 
-      typedef typename mlc::if_< mlc_is_found(user_ret), user_ret, case_ret >::ret ret;
+      typedef typename mlc::if_< mlc::is_ok_<user_ret>, user_ret, case_ret >::ret ret;
     };
 
   } // end of namespace xtd::internal
