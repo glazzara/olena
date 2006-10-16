@@ -1,3 +1,19 @@
+2006-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Polish the accesses to bbox_<point> as a virtual type.
+
+	* oln/core/gen/bbox.hh (oln::bbox_::self_t): Rename as...
+	(oln::bbox_::self_type): ...this.
+	Make it public.
+	(oln::bbox_::super_t): Adjust.
+	* oln/core/gen/topo_lbbox.hh
+	(vtypes< topo_lbbox_<point> >::bbox_type): Adjust.
+	* oln/core/gen/topo_bbox.hh (oln::vtypes< topo_lbbox_<point> >):
+	Define this virtul type using `bbox_<point>::self_t' instead of
+	just `bbox_<point>' to force the instiantiation of
+	oln::bbox_<point> at this point.
+	(oln::topo_bbox_<point>::bbox_t): Use oln_type_of to define it.
+
 2006-10-16  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add value cast image morpher.

@@ -106,9 +106,9 @@ namespace oln
        themselves, we use this typename to both trigger the
        instantiation of bbox_<point>, and to define
        `vtypes< topo_lbbox_<point> >::bbox_type'.  */
-    typedef typename bbox_<point>::self_t bbox_type;
-    typedef point        point_type;
-    typedef mlc::true_   is_random_accessible_type;
+    typedef typename bbox_<point>::self_type bbox_type;
+    typedef point                            point_type;
+    typedef mlc::true_                       is_random_accessible_type;
   };
 
 

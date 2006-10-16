@@ -72,8 +72,13 @@ namespace oln
   class bbox_ : public point_set_entry< bbox_<point_t> >,
 		private mlc::assert_< mlc_is_a(point_t, abstract::point) >
   {
-    typedef bbox_<point_t> self_t;
-    typedef point_set_entry<self_t> super_t;
+    // Make self_type public so that is can be used to define a
+    // virtual type of oln::topo_bbox_ and oln::topo_lbbox_.
+  public:
+    typedef bbox_<point_t> self_type;
+
+  private:
+    typedef point_set_entry<self_type> super_t;
 
     typedef oln_type_of(point_t, coord) coord_t;
 
