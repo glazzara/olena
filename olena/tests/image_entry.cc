@@ -94,9 +94,6 @@ main()
 
   // Check its image dimension abstraction.
   mlc::assert_< mlc_is_a_(my::image, oln::abstract::image2d) >::check();
-  // Check its image type abstraction.
-  mlc::assert_< mlc_is_a_(my::image,
-			  oln::abstract::grey_level_image) >::check();
 
   // Ensure we can instantiate it.
   my::image i;

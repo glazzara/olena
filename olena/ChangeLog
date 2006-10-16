@@ -1,5 +1,15 @@
 2006-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust tests.
+
+	* tests/window2d.cc: Disable display.
+	* tests/image_entry.cc, tests/identity_morpher.cc,
+	* tests/add_neighborhood_morpher.cc, tests/morphers.cc:
+	Remove mlc_is_a tests w.r.t to oln::abstract::grey_level_image,
+	since its definition has changed.
+
+2006-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Polish the accesses to bbox_<point> as a virtual type.
 
 	* oln/core/gen/bbox.hh (oln::bbox_::self_t): Rename as...

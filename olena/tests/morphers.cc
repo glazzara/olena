@@ -48,8 +48,6 @@ main()
 
   // Sanity check: abstractions realized by oln::image2d.
   mlc::assert_< mlc_is_a_(image_t, oln::abstract::image2d) >::check();
-  mlc::assert_< mlc_is_a_(image_t,
-			  oln::abstract::grey_level_image) >::check();
 
   image_t ima(42, 51);
 

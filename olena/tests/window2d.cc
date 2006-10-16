@@ -45,10 +45,21 @@ namespace test
     oln_qiter(I) q(p, win);
     for_all(p)
       {
-	std::cout << unsigned(ima(p)) << ": ";
+#if 0
+	// Disable the display to speed up the test.
+ 	std::cout << unsigned(ima(p)) << ": ";
+#endif
 	for_all(q)
-	  std::cout << unsigned(ima(q)) << " ";
-	std::cout << std::endl;
+	  {
+#if 0
+	    // Likewise.
+	    std::cout << unsigned(ima(q)) << " ";
+#endif
+	  }
+#if 0
+	// Likewise.
+ 	std::cout << std::endl;
+#endif
       }
   }
 
@@ -60,7 +71,10 @@ int main()
   using namespace oln;
 
   image2d<unsigned char> ima = io::load_pgm(rdata("lena32.pgm"));
+#if 0
+  // Disable the display to speed up the test.
   debug::println(ima);
+#endif
 
   window2d win;
   win

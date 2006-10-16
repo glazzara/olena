@@ -46,8 +46,6 @@ main()
  
   // Sanity check: interfaces realized by oln::image2d.
   mlc::assert_< mlc_is_a_(image_t, oln::abstract::image2d) >::check();
-  mlc::assert_< mlc_is_a_(image_t,
-			  oln::abstract::grey_level_image) >::check();
 
   image_t ima(42, 51);
 
@@ -61,8 +59,6 @@ main()
   // Check that the instantiated identity morpher realizes the same
   // interfaces as the underlying morphed image.
   mlc::assert_< mlc_is_a_(image_id_t, oln::abstract::image2d) >::check();
-  mlc::assert_< mlc_is_a_(image_id_t,
-			  oln::abstract::grey_level_image) >::check();
 
   image_id_t ima_id(ima);
 }

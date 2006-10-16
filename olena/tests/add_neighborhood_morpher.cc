@@ -46,8 +46,6 @@ main()
 
   // Sanity check: interfaces realized by oln::image2d.
   mlc::assert_< mlc_is_a_(image_t, oln::abstract::image2d) >::check();
-  mlc::assert_< mlc_is_a_(image_t,
-			  oln::abstract::grey_level_image) >::check();
 
   image_t ima(42, 51);
 
@@ -62,8 +60,6 @@ main()
   // Check that the instantiated add_neighborhood morpher realizes the
   // same interfaces as the underlying morphed image.
   mlc::assert_< mlc_is_a_(image_with_nbh_t, oln::abstract::image2d) >::check();
-  mlc::assert_< mlc_is_a_(image_with_nbh_t,
-			  oln::abstract::grey_level_image) >::check();
   // Check the type of neighborhood.
   mlc::assert_< mlc_eq(oln_type_of_(image_with_nbh_t, neighborhood),
 		       oln::neighb2d) >::check();
