@@ -152,8 +152,10 @@ nobase_oln_HEADERS =						\
   morpher/tags.hh						\
   morpher/thru_fun.hh						\
 								\
+  value/all.hh							\
   value/default.hh						\
   value/greylevel.hh						\
+  value/tags.hh							\
 								\
   basics1d.hh							\
   basics2d.hh							\

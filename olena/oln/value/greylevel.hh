@@ -30,8 +30,10 @@
 
 # include <iostream>
 # include <mlc/contract.hh>
+# include <mlc/bexpr.hh>
 # include <xtd/optraits.hh>
 # include <oln/core/abstract/value.hh>
+
 
 
 namespace oln
@@ -71,10 +73,13 @@ namespace oln
       greylevel_();
       
       /// Ctor.
-      explicit greylevel_(typename internal::encoding<nbits>::ret val);
+      explicit greylevel_(const typename internal::encoding<nbits>::ret& val);
 
       /// Access to std type.
       typename internal::encoding<nbits>::ret value() const;
+
+      /// Op encoding_t.
+      operator typename internal::encoding<nbits>::ret() const;
 
       /// Op greylevel.
       operator greylevel() const;
@@ -96,7 +101,6 @@ namespace oln
 
 
     /// Aliases.
-    typedef greylevel_<1>  gl1;
     typedef greylevel_<8>  gl8;
     typedef greylevel_<16> gl16;
     typedef greylevel_<32> gl32;
@@ -183,7 +187,7 @@ namespace oln
     }
 
     template <unsigned nbits>
-    greylevel_<nbits>::greylevel_(typename internal::encoding<nbits>::ret val)
+    greylevel_<nbits>::greylevel_(const typename internal::encoding<nbits>::ret& val)
       : val_(val)
     {
     }
@@ -200,6 +204,12 @@ namespace oln
     {
       greylevel tmp(nbits, val_);
       return tmp;
+    }
+
+    template <unsigned nbits>
+    greylevel_<nbits>::operator typename internal::encoding<nbits>::ret() const
+    {
+      return val_;
     }
 
     template <unsigned nbits>

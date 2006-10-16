@@ -1,5 +1,20 @@
 2006-10-16  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Add binary value type plus update image hierarchy plugs.
+	
+	* oln/value/tags.hh: New.
+	* oln/value/bin.hh: New.
+	* oln/value/all.hh: New.
+	* oln/core/abstract/image/type/hierarchy.hh (case_): Rely on value
+	tags.
+	(case_): Overload to handle other value types.
+	(include): Update.
+	* oln/value/greylevel.hh (greylevel_): New conversion operator.
+	(gl1): Remove; now replaced by value::bin.
+	* oln/Makefile.am: Update.
+	
+2006-10-16  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add grey-level types.
 	
 	* tests/grey.cc: New.

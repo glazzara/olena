@@ -30,7 +30,7 @@
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/image/hierarchies.hh>
-# include <xtd/valtraits.hh>
+# include <oln/value/tags.hh>
 
 
 /* Image ``type'' hierarchy (summary).
@@ -93,31 +93,47 @@
 namespace oln
 {
 
-  /// Switch on on the grid dimension.
+  /// Switch on the value type.
   /// \{
 
-  // ----------------------------------------------- //
-  // Cases where the value type is an builtin type.  //
-  // ----------------------------------------------- //
+  // ------------------------------------- //
+  // Cases where the value type is known.  //
+  // ------------------------------------- //
 
   /// Binary case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 1 > :
-    where_< xtd_is_binary(oln_type_of(E, value)) >
+    where_< value::is_binary<oln_type_of(E, value)> >
   {
     // Definition of the super class corresponding to this case.
     typedef abstract::binary_image<E> ret;
   };
 
-  /// Grey-level case.
+  /// Color case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 2 > :
-    where_< mlc::or_list_< mlc::eq_<oln_type_of(E, value),          char>,
-			   mlc::eq_<oln_type_of(E, value),   signed char>,
-			   mlc::eq_<oln_type_of(E, value), unsigned char> > >
+    where_< value::is_color<oln_type_of(E, value)> >
+  {
+    // Definition of the super class corresponding to this case.
+    typedef abstract::color_image<E> ret;
+  };
+
+  /// Grey-level case.
+  template <typename E>
+  struct case_< image_hierarchy_wrt_type, E, 3 > :
+    where_< value::is_grey_level<oln_type_of(E, value)> >
   {
     // Definition of the super class corresponding to this case.
     typedef abstract::grey_level_image<E> ret;
+  };
+
+  /// Label case.
+  template <typename E>
+  struct case_< image_hierarchy_wrt_type, E, 4 > :
+    where_< value::is_label<oln_type_of(E, value)> >
+  {
+    // Definition of the super class corresponding to this case.
+    typedef abstract::label_image<E> ret;
   };
 
 
