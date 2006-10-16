@@ -1,5 +1,12 @@
 2006-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the distribution.
+
+	* oln/Makefile.am (nobase_oln_HEADERS): Remove core/1d/bbox1d.hh,
+	core/2d/bbox2d.hh and core/3d/bbox3d.hh.
+
+2006-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Get rid of the explicit instantiations of oln::bbox<>.
 
 	* oln/core/gen/topo_lbbox.hh (oln::vtypes< topo_lbbox_<point> >):

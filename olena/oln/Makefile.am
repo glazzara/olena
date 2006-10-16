@@ -7,7 +7,6 @@ nobase_oln_HEADERS =						\
 								\
   core/1d/aliases.hh						\
   core/1d/array1d.hh						\
-  core/1d/bbox1d.hh						\
   core/1d/dpoint1d.hh						\
   core/1d/image1d.hh						\
   core/1d/neighb1d.hh						\
@@ -15,7 +14,6 @@ nobase_oln_HEADERS =						\
 								\
   core/2d/aliases.hh						\
   core/2d/array2d.hh						\
-  core/2d/bbox2d.hh						\
   core/2d/dpoint2d.hh						\
   core/2d/image2d.hh						\
   core/2d/neighb2d.hh						\
@@ -23,7 +21,6 @@ nobase_oln_HEADERS =						\
 								\
   core/3d/aliases.hh						\
   core/3d/array3d.hh						\
-  core/3d/bbox3d.hh						\
   core/3d/dpoint3d.hh						\
   core/3d/image3d.hh						\
   core/3d/neighb3d.hh						\
