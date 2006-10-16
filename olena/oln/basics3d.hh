@@ -39,7 +39,6 @@
 
 # include <oln/core/gen/bbox.hh>
 # include <oln/core/gen/topo_lbbox.hh>
-# include <oln/core/3d/bbox3d.hh>
 
 # include <oln/core/gen/fwd_piter_bbox.hh>
 # include <oln/core/gen/bkd_piter_bbox.hh>

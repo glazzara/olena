@@ -35,7 +35,6 @@
 # include <oln/core/internal/tracked_ptr.hh>
 # include <oln/core/1d/array1d.hh>
 # include <oln/core/1d/point1d.hh>
-# include <oln/core/1d/bbox1d.hh>
 // For topo1d.
 # include <oln/core/1d/aliases.hh>
 // For fwd_piter and bkd_piter virtual types.

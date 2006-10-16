@@ -1,3 +1,19 @@
+2006-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Get rid of the explicit instantiations of oln::bbox<>.
+
+	* oln/core/gen/topo_lbbox.hh (oln::vtypes< topo_lbbox_<point> >):
+	Define this virtul type using `bbox_<point>::self_t' instead of
+	just `bbox_<point>' to force the instiantiation of
+	oln::bbox_<point> at this point.
+	(oln::topo_lbbox_<point>::bbox_t): Use oln_type_of to define it
+	(more of an aesthetic change than a functional change).
+	* oln/core/1d/bbox1d.hh, oln/core/2d/bbox2d.hh,
+	* oln/core/3d/bbox3d.hh: Remove.
+	* oln/basics1d.hh, oln/basics2d.hh, oln/basics3d.hh,
+	* oln/core/1d/image1d.hh, oln/core/2d/image2d.hh,
+	* oln/core/3d/image3d.hh: Remove their inclusions.
+
 2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix oln/core/iterator_vtypes.hh w.r.t. backward niters.
