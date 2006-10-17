@@ -49,7 +49,7 @@ namespace oln
       oln_rvalue(E) at(const oln_coord(E)& index) const;
 
       // FIXME: Hack (should be elsewhere)!
-      oln_lvalue(E)& at(const oln_coord(E)& index);
+      oln_lvalue(E) at(const oln_coord(E)& index);
       bool has_at(const oln_coord(E)& index) const;
 
     protected:
@@ -73,7 +73,7 @@ namespace oln
     }
 
     template <typename E>
-    oln_lvalue(E)&
+    oln_lvalue(E)
     image1d<E>::at(const oln_coord(E)& index)
     {
       return this->exact().impl_at(index);

@@ -51,9 +51,9 @@ namespace oln
 		       const oln_coord(E)& col) const;
 
       // FIXME: Hack (should be elsewhere)!
-      oln_lvalue(E)& at(const oln_coord(E)& slice,
-			const oln_coord(E)& row,
-			const oln_coord(E)& col);
+      oln_lvalue(E) at(const oln_coord(E)& slice,
+		       const oln_coord(E)& row,
+		       const oln_coord(E)& col);
       bool has_at(const oln_coord(E)& slice,
 		  const oln_coord(E)& row,
 		  const oln_coord(E)& col) const;
@@ -81,7 +81,7 @@ namespace oln
     }
 
     template <typename E>
-    oln_lvalue(E)&
+    oln_lvalue(E)
     image3d<E>::at(const oln_coord(E)& slice,
 		   const oln_coord(E)& row,
 		   const oln_coord(E)& col)

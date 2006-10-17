@@ -1,3 +1,22 @@
+2006-10-17  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Adjust lvalue so that it handles a '&' when needed.
+	
+	* oln/core/automatic/image/image1d.hh (impl_at): Adjust.
+	* oln/core/automatic/image/image2d.hh: Likewise.
+	* oln/core/automatic/image/image3d.hh: Likewise.
+	* oln/core/automatic/image/image_being_mutable.hh: Likewise.
+	* oln/core/abstract/image/mutability/hierarchy.hh: Likewise.
+	* oln/core/abstract/image/dimension/1d.hh: Likewise.
+	* oln/core/abstract/image/dimension/2d.hh: Likewise.
+	* oln/core/abstract/image/dimension/3d.hh: Likewise.
+	* oln/core/1d/image1d.hh: Likewise.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	* oln/core/gen/mapimage.hh: Likewise.
+	* oln/core/abstract/image/type/integre.hh: Fix case number wrt
+	those defined in hierarchy.hh.
+
 2006-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Adjust tests.

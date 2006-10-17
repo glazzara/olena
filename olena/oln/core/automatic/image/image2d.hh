@@ -58,7 +58,7 @@ namespace oln
       oln_rvalue(E) impl_at(const oln_coord(E)& row, const oln_coord(E)& col) const;
 
       // FIXME: Hack.
-      oln_lvalue(E)& impl_at(const oln_coord(E)& row, const oln_coord(E)& col);
+      oln_lvalue(E) impl_at(const oln_coord(E)& row, const oln_coord(E)& col);
       bool impl_has_at(const oln_coord(E)& row, const oln_coord(E)& col) const;
 
     };
@@ -76,7 +76,7 @@ namespace oln
       oln_rvalue(E) impl_at(const oln_coord(E)& row, const oln_coord(E)& col) const;
 
       // FIXME: Hack.
-      oln_lvalue(E)& impl_at(const oln_coord(E)& row, const oln_coord(E)& col);
+      oln_lvalue(E) impl_at(const oln_coord(E)& row, const oln_coord(E)& col);
       bool impl_has_at(const oln_coord(E)& row, const oln_coord(E)& col) const;
 
     };
@@ -98,7 +98,7 @@ namespace oln
     }
 
     template <typename E, typename tag>
-    oln_lvalue(E)&
+    oln_lvalue(E)
     set_impl<abstract::image2d, tag, E>
     ::impl_at(const oln_coord(E)& row, const oln_coord(E)& col)
     {
@@ -127,7 +127,7 @@ namespace oln
     }
 
     template <typename E>
-    oln_lvalue(E)&
+    oln_lvalue(E)
     set_impl<abstract::image2d, morpher::tag::identity, E>
     ::impl_at(const oln_coord(E)& row, const oln_coord(E)& col)
     {

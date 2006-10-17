@@ -59,7 +59,7 @@ namespace oln
     typedef point3d point_type;
 
     typedef T value_type;
-    typedef T lvalue_type;
+    typedef T& lvalue_type;
     typedef mlc::true_ is_mutable_type;
 
     typedef image3d<T> real_type;

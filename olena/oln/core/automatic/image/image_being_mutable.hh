@@ -52,13 +52,13 @@ namespace oln
     {
     public:
       /// Accessor delegation.
-      oln_lvalue(E)& impl_op_readwrite(const oln_psite(E)& p);
+      oln_lvalue(E) impl_op_readwrite(const oln_psite(E)& p);
     };
 
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    oln_lvalue(E)&
+    oln_lvalue(E)
     set_impl<abstract::image_being_mutable, morpher::tag::identity, E>
     ::impl_op_readwrite(const oln_psite(E)& p)
     {

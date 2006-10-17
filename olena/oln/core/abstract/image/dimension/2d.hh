@@ -49,7 +49,7 @@ namespace oln
       oln_rvalue(E) at(const oln_coord(E)& row, const oln_coord(E)& col) const;
 
       // FIXME: Hack (should be elsewhere)!
-      oln_lvalue(E)& at(const oln_coord(E)& row, const oln_coord(E)& col);
+      oln_lvalue(E) at(const oln_coord(E)& row, const oln_coord(E)& col);
       bool has_at(const oln_coord(E)& row, const oln_coord(E)& col) const;
 
     protected:
@@ -73,7 +73,7 @@ namespace oln
     }
 
     template <typename E>
-    oln_lvalue(E)&
+    oln_lvalue(E)
     image2d<E>::at(const oln_coord(E)& row, const oln_coord(E)& col)
     {
       return this->exact().impl_at(row, col);
