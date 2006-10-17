@@ -1,3 +1,13 @@
+2006-10-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Configure new Makefiles of olena/tests.  Add a bootstrap script.
+
+	* configure.ac (olena/tests/algorithms/Makefile)
+	(olena/tests/core/Makefile, olena/tests/io/Makefile)
+	(olena/tests/morphers/Makefile, olena/tests/value/Makefile):
+	Configure them.
+	* bootstrap: New.  Stolen from the LRDE Tiger Compiler.
+
 2006-10-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac (olena/img/Makefile): Configure it.

@@ -77,9 +77,14 @@ AC_CONFIG_FILES([
 ])
 # FIXME: Should be performed through oln.m4 macros.
 AC_CONFIG_FILES([
+  olena/tests/algorithms/Makefile
   olena/tests/check/Makefile
   olena/tests/check/defs
+  olena/tests/core/Makefile
+  olena/tests/io/Makefile
+  olena/tests/morphers/Makefile
   olena/tests/sanity/Makefile
+  olena/tests/value/Makefile
 ])
 AC_CONFIG_FILES([olena/tests/sanity/check],
 		[chmod +x olena/tests/sanity/check])
