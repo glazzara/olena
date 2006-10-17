@@ -61,7 +61,6 @@ namespace oln
     typedef mlc::false_ is_computed_type;
     typedef T value_type;
     typedef T& lvalue_type;
-    typedef mlc::true_ is_mutable_type;
 
     typedef image3d<T> real_type;
   };

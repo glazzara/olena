@@ -59,7 +59,6 @@ namespace oln
   {
     typedef mlc::true_ is_computed_type;
     typedef Value       value_type;
-    typedef mlc::false_ is_mutable_type;
   };
 
   template <typename Image, typename Value>

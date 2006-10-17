@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_MUTABLE_HH
-# define OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_MUTABLE_HH
+#ifndef OLN_CORE_AUTOMATIC_IMAGE_MUTABLE_IMAGE_HH
+# define OLN_CORE_AUTOMATIC_IMAGE_MUTABLE_IMAGE_HH
 
 # include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
@@ -37,7 +37,7 @@ namespace oln
   // Forward declaration.
   namespace abstract
   {
-    template <typename E> class image_being_mutable;
+    template <typename E> class mutable_image;
 
   } // end of namespace oln::abstract
 
@@ -45,9 +45,9 @@ namespace oln
   namespace automatic
   {
     /// Implementation corresponding to the interface
-    /// oln::abstract::image_being_mutable for an identity morpher.
+    /// oln::abstract::mutable_image for an identity morpher.
     template <typename E>
-    class set_impl<abstract::image_being_mutable, morpher::tag::identity, E> :
+    class set_impl<abstract::mutable_image, morpher::tag::identity, E> :
       public virtual stc::any__simple<E>
     {
     public:
@@ -59,7 +59,7 @@ namespace oln
 
     template <typename E>
     oln_lvalue(E)
-    set_impl<abstract::image_being_mutable, morpher::tag::identity, E>
+    set_impl<abstract::mutable_image, morpher::tag::identity, E>
     ::impl_op_readwrite(const oln_psite(E)& p)
     {
       return this->exact().delegate().operator()(p);
@@ -71,4 +71,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_MUTABLE_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMAGE_MUTABLE_IMAGE_HH

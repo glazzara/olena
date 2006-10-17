@@ -30,7 +30,7 @@
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/image/hierarchies.hh>
-# include <oln/core/automatic/image/image_being_mutable.hh>
+# include <oln/core/automatic/image/mutable_image.hh>
 
 
 
@@ -46,15 +46,10 @@ namespace oln
 
     /// Image being mutable.
     template <typename E>
-    struct image_being_mutable :
+    struct mutable_image :
       public virtual image<E>,
-      public automatic::get_impl<image_being_mutable, E>
+      public automatic::get_impl<mutable_image, E>
     {
-    private:
-
-      typedef oln_type_of(E, lvalue) lvalue_t;
-      typedef oln_type_of(E, psite)  psite_t;
-
     public:
 
       struct decl
@@ -68,15 +63,15 @@ namespace oln
 
       using image<E>::operator();
 
-      lvalue_t operator()(const psite_t& p);
+      oln_lvalue(E) operator()(const oln_psite(E)& p);
 
     protected:
 
       /// Constructor (protected, empty).
-      image_being_mutable();
+      mutable_image();
 
       /// Destructor (protected).
-      ~image_being_mutable();
+      ~mutable_image();
 
     };
 
@@ -84,19 +79,19 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    typename image_being_mutable<E>::lvalue_t
-    image_being_mutable<E>::operator()(const typename image_being_mutable<E>::psite_t& p)
+    oln_lvalue(E)
+    mutable_image<E>::operator()(const oln_psite(E)& p)
     {
       return this->exact().impl_op_readwrite(p);
     }
 
     template <typename E>
-    image_being_mutable<E>::image_being_mutable()
+    mutable_image<E>::mutable_image()
     {
     }
 
     template <typename E>
-    image_being_mutable<E>::~image_being_mutable()
+    mutable_image<E>::~mutable_image()
     {
       decl();
     }
@@ -113,9 +108,9 @@ namespace oln
   /// With mutability.
   template <typename E>
   struct case_< image_hierarchy_wrt_mutability, E, 1 > :
-    where_< mlc::eq_< oln_type_of(E, is_mutable), mlc::true_ > >
+    where_< mlc_is_ok(oln_lvalue(E)) >
   {
-    typedef abstract::image_being_mutable<E> ret;
+    typedef abstract::mutable_image<E> ret;
   };
 
 } // end of namespace oln

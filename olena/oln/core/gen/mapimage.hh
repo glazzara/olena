@@ -57,8 +57,6 @@ namespace oln
     
     typedef mlc::false_ is_computed_type;
     typedef value_t value_type;
-
-    typedef mlc::true_ is_mutable_type;
     typedef value_t& lvalue_type;
     
     typedef void real_type; // FIXME

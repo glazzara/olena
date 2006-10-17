@@ -1,5 +1,28 @@
 2006-10-17  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Replace the 'is_mutable' property by checking the 'lvalue' type.
+	
+	* oln/core/automatic/image/image_being_mutable.hh: Rename as...
+	* oln/core/automatic/image/mutable_image.hh: ...this.
+	(image_being_mutable): Rename as...
+	(mutable_image): ...this.
+	* oln/level/fill.hh: Update.
+	* oln/core/typedefs.hh (is_mutable_type): Remove; obsolete.
+	* oln/core/abstract/image/mutability/hierarchy.hh
+	(include) : Update.
+	(image_being_mutable): Rename as...
+	(mutable_image): ...this.
+	(case_): Rely now on mlc_is_ok(oln_lvalue(E)).
+	* oln/core/1d/image1d.hh: Update.
+	* oln/core/2d/image2d.hh: Update.
+	* oln/core/3d/image3d.hh: Update.
+	* oln/core/gen/mapimage.hh: Update.
+	* oln/morpher/value_cast.hh: Update.
+	* oln/morpher/thru_fun.hh: Update.
+	* oln/morpher/internal/image_value_morpher.hh: Update.
+
+2006-10-17  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add computability image hierarchy.
 	
 	* oln/core/abstract/image/computability: New.

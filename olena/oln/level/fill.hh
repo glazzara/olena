@@ -34,7 +34,7 @@
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/iterator.hh>
-# include <oln/core/automatic/image/image_being_mutable.hh>
+# include <oln/core/automatic/image/mutable_image.hh>
 
 
 namespace oln
@@ -50,7 +50,7 @@ namespace oln
 
     /// Fwd decl.
     template <typename I>
-    void fill(abstract::image<I>& input, const oln_type_of(I, value)& val);
+    void fill(abstract::mutable_image<I>& input, const oln_value(I)& val);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -60,10 +60,9 @@ namespace oln
 
       /// Generic version.
       template <typename I>
-      void fill(abstract::image_being_mutable<I>& input,
-		const oln_type_of(I, value)& val)
+      void fill(abstract::mutable_image<I>& input, const oln_value(I)& val)
       {
-	oln_type_of(I, piter) p(input.topo());
+	oln_piter(I) p(input.topo());
 	for_all(p)
 	  input(p) = val;
       }
@@ -73,14 +72,8 @@ namespace oln
 
     /// Facade.
     template <typename I>
-    void fill(abstract::image<I>& input, const oln_value(I)& val)
+    void fill(abstract::mutable_image<I>& input, const oln_value(I)& val)
     {
-      // Precondition.
-      mlc::assert_<
-	mlc_is_a(I, abstract::image_being_mutable),
-	ERROR::FIRST_ARGUMENT_OF_oln_level_fill_IS_NOT_MUTABLE
-      >::check();
-
       impl::fill(input.exact(), val);
     }
 
