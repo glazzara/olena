@@ -31,6 +31,8 @@
 # include <oln/core/abstract/entry.hh>
 # include <oln/core/abstract/image/all.hh>
 
+# include <oln/core/type_fun/plain.hh>
+
 
 
 namespace oln
@@ -83,8 +85,6 @@ namespace oln
 
     // fwd_qiter_type: see below.
     // bkd_qiter_type: see below.
-    
-    typedef mlc::undefined concrete_type;
 
     /// \brief Morpher type.
     ///

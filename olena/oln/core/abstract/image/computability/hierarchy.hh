@@ -50,6 +50,10 @@ namespace oln
     struct computed_image :
       public virtual image<E> //, public automatic::get_impl< computed_image, E>
     {
+    public:
+
+      oln_plain(E) plain() const;
+
     protected:
 
       /// Constructor (protected, empty).
@@ -74,6 +78,14 @@ namespace oln
     template <typename E>
     computed_image<E>::computed_image()
     {
+    }
+
+    template <typename E>
+    oln_plain(E)
+    computed_image<E>::plain() const
+    {
+      oln_plain(E) tmp(this->topo());
+      return tmp;
     }
 
     template <typename E>

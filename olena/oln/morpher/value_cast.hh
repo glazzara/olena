@@ -74,8 +74,8 @@ namespace oln
 
     /// 'Image thru Valuection' morpher.
     template <typename Image, typename Value>
-    class value_cast : public internal::image_value_morpher< Image,
-							     value_cast<Image, Value> >
+    struct value_cast : public internal::image_value_morpher< Image,
+							      value_cast<Image, Value> >
     {
     private:
 

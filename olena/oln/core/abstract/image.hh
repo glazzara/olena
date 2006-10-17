@@ -63,38 +63,23 @@ namespace oln
 
       struct decl
       {
-// 	oln_virtual_typedef(topo);
-// 	oln_virtual_typedef(grid);
+	oln_virtual_typedef(topo);
+	oln_virtual_typedef(grid);
+	oln_virtual_typedef(coord);
+	oln_virtual_typedef(psite);
+	oln_virtual_typedef(point);
 
-// 	oln_virtual_typedef(coord);
-
-// 	oln_virtual_typedef(psite);
-// 	oln_virtual_typedef(point);
-
-// // 	oln_virtual_typedef(piter);
-// // 	oln_virtual_typedef(fwd_piter);
-// // 	oln_virtual_typedef(bkd_piter);
+	oln_virtual_typedef(fwd_piter);
+	oln_virtual_typedef(bkd_piter);
 
  	oln_virtual_typedef(is_computed);
+	oln_virtual_typedef(value);
+	oln_virtual_typedef(rvalue);
 
-// 	oln_virtual_typedef(value);
-// 	oln_virtual_typedef(rvalue);
-
-// 	oln_virtual_typedef(concrete);
-
-// 	oln_virtual_typedef(morpher);
+	oln_virtual_typedef(morpher);
 
 	decl();
       };
-
-
-    private:
-
-      /// Typedefs.
-      typedef oln_type_of(E, topo)   topo_t;
-      typedef oln_type_of(E, psite)  psite_t;
-      typedef oln_type_of(E, rvalue) rvalue_t;
-
 
     public:
 
@@ -111,14 +96,14 @@ namespace oln
       ** topo2d.
       */
 
-      const topo_t& topo() const;
+      const oln_topo(E)& topo() const;
 
 
       /*! \brief Gives access to the value stored at \a p in the
       ** current image.
       */
 
-      rvalue_t operator()(const psite_t& p) const;
+      oln_rvalue(E) operator()(const oln_psite(E)& p) const;
 
     protected:
 
@@ -138,13 +123,14 @@ namespace oln
     template <typename E>
     image<E>::decl::decl()
     {
-// 	  mlc::assert_< mlc_is_a(topo,      abstract::topology)           >::check();
-// 	  mlc::assert_< mlc_is_a(grid,      abstract::grid)               >::check();
-// 	  mlc::assert_< mlc_is_a(piter,     abstract::iterator_on_points) >::check();
-// 	  mlc::assert_< mlc_is_a(fwd_piter, abstract::iterator_on_points) >::check();
-// 	  mlc::assert_< mlc_is_a(bkd_piter, abstract::iterator_on_points) >::check();
-	  // FIXME: Rec.
-	  // mlc::assert_< mlc_is_a(concrete,  abstract::image)              >::check();
+      mlc::assert_< mlc_is_a(topo,      abstract::topology)           >::check();
+      mlc::assert_< mlc_is_a(grid,      abstract::grid)               >::check();
+      mlc::assert_< mlc_is_a(point,     abstract::point)              >::check();
+      mlc::assert_< mlc_is_a(fwd_piter, abstract::iterator_on_points) >::check();
+      mlc::assert_< mlc_is_a(bkd_piter, abstract::iterator_on_points) >::check();
+
+      // FIXME: Rec.
+      // mlc::assert_< mlc_is_a(plain,  abstract::image)              >::check();
     }
 
     template <typename E>
@@ -159,15 +145,15 @@ namespace oln
     }
 
     template <typename E>
-    const typename image<E>::topo_t&
+    const oln_topo(E)&
     image<E>::topo() const
     {
       return this->exact().impl_topo();
     }
 
     template <typename E>
-    typename image<E>::rvalue_t
-    image<E>::operator()(const typename image<E>::psite_t& p) const
+    oln_rvalue(E)
+    image<E>::operator()(const oln_psite(E)& p) const
     {
       return this->exact().impl_op_read(p);
     }

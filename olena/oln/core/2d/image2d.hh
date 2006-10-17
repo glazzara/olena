@@ -61,8 +61,6 @@ namespace oln
     typedef mlc::false_ is_computed_type;
     typedef T value_type;
     typedef T& lvalue_type;
-    
-    typedef image2d<T> real_type;
   };
 
 

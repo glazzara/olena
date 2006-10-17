@@ -1,3 +1,35 @@
+2006-10-17  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add forward declaration files.
+	
+	* oln/core/aliases.hh: New.
+	* oln/core/fwd_decls.hh: New.
+	* oln/core/1d/fwd_decls.hh: New.
+	* oln/core/2d/fwd_decls.hh: New.
+	* oln/core/3d/fwd_decls.hh: New.
+	* oln/core/gen/fwd_decls.hh: New.
+	* oln/morpher/fwd_decls.hh: New.
+	* oln/debug/typename.hh: New.
+	* oln/Makefile.am: Update.
+	
+	Sketch the mechanism for 'plain' and 'ch_value'.
+
+	* oln/core/type_fun/plain.hh: New.
+	* oln/core/type_fun/ch_value.hh: New.
+	* oln/core/typedefs.hh (oln_plain, oln_plain_): New.
+	* oln/core/image_entry.hh (concrete_type): Remove; obsolete.
+	* oln/core/abstract/image.hh
+	(topo, operator): Change sigs.
+	(topo_t, psite_t, rvalue_t): Remove; now unused.
+	(decl): Uncomment static checks.
+	* oln/core/abstract/image/computability/hierarchy.hh
+	(plain): New.
+	* oln/core/1d/image1d.hh (real_type): Remove; obsolete.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	* oln/morpher/value_cast.hh (class): Change into struct
+	for homogeneity for other morphers.
+
 2006-10-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	Organize the tests into a hierarchy.

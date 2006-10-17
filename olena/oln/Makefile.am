@@ -8,6 +8,7 @@ nobase_oln_HEADERS =						\
   core/1d/aliases.hh						\
   core/1d/array1d.hh						\
   core/1d/dpoint1d.hh						\
+  core/1d/fwd_decls.hh						\
   core/1d/image1d.hh						\
   core/1d/neighb1d.hh						\
   core/1d/point1d.hh						\
@@ -15,6 +16,7 @@ nobase_oln_HEADERS =						\
   core/2d/aliases.hh						\
   core/2d/array2d.hh						\
   core/2d/dpoint2d.hh						\
+  core/2d/fwd_decls.hh						\
   core/2d/image2d.hh						\
   core/2d/neighb2d.hh						\
   core/2d/point2d.hh						\
@@ -22,6 +24,7 @@ nobase_oln_HEADERS =						\
   core/3d/aliases.hh						\
   core/3d/array3d.hh						\
   core/3d/dpoint3d.hh						\
+  core/3d/fwd_decls.hh						\
   core/3d/image3d.hh						\
   core/3d/neighb3d.hh						\
   core/3d/point3d.hh						\
@@ -104,6 +107,7 @@ nobase_oln_HEADERS =						\
   core/gen/bkd_niter_neighb.hh					\
   core/gen/bkd_piter_bbox.hh					\
   core/gen/bkd_qiter_win.hh					\
+  core/gen/fwd_decls.hh						\
   core/gen/fwd_niter_neighb.hh					\
   core/gen/fwd_piter_bbox.hh					\
   core/gen/fwd_qiter_win.hh					\
@@ -119,6 +123,9 @@ nobase_oln_HEADERS =						\
   core/spe/row.hh						\
   core/spe/slice.hh						\
 								\
+  core/type_fun/ch_value.hh					\
+  core/type_fun/plain.hh					\
+								\
   core/internal/bbox_bkd_piter.hh				\
   core/internal/bbox_fwd_piter.hh				\
   core/internal/dpoint_nd.hh					\
@@ -126,7 +133,9 @@ nobase_oln_HEADERS =						\
   core/internal/topology_morpher.hh				\
   core/internal/tracked_ptr.hh					\
 								\
+  core/aliases.hh						\
   core/case.hh							\
+  core/fwd_decls.hh						\
   core/image_entry.hh						\
   core/iterator_vtypes.hh					\
   core/macros.hh						\
@@ -139,6 +148,7 @@ nobase_oln_HEADERS =						\
   core/type.hh							\
 								\
   debug/print.hh						\
+  debug/typename.hh						\
 								\
   io/pnm.hh							\
 								\
@@ -148,6 +158,7 @@ nobase_oln_HEADERS =						\
   morpher/internal/image_value_morpher.hh			\
 								\
   morpher/add_neighborhood.hh					\
+  morpher/fwd_decls.hh						\
   morpher/identity.hh						\
   morpher/tags.hh						\
   morpher/thru_fun.hh						\

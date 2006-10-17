@@ -146,7 +146,6 @@ namespace oln
 // --------------------------------------------------------------------
 //   mlc_decl_typedef(image_type);
 // --------------------------------------------------------------------
-  mlc_decl_typedef(concrete_type);
 
   mlc_decl_typedef(delegated_type);
   mlc_decl_typedef(size_type); // FIXME: To be removed.
@@ -216,6 +215,9 @@ namespace oln
 # define oln_grid(T)    oln_type_of(T,  grid)
 # define oln_grid_(T)   oln_type_of_(T, grid)
 
+# define oln_topo(T)    oln_type_of(T,  topo)
+# define oln_topo_(T)   oln_type_of_(T, topo)
+
 # define oln_point(T)   oln_type_of(T,  point)
 # define oln_point_(T)  oln_type_of_(T, point)
 
@@ -260,6 +262,19 @@ namespace oln
 
 # define oln_niter(T)  oln_type_of(T,  fwd_niter)
 # define oln_niter_(T) oln_type_of_(T, fwd_niter)
+
+/// \}
+
+
+
+# include <oln/core/type_fun/plain.hh>
+
+
+/// \{
+/// Shortcuts for functions.
+
+# define oln_plain(T)   typename oln::type_fun::plain<T>::ret
+# define oln_plain_(T)           oln::type_fun::plain<T>::ret
 
 /// \}
 
