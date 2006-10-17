@@ -10,8 +10,9 @@ OLN_LOCAL_CPPFLAGS = -I$(top_srcdir)/olena    -I$(top_builddir)/olena
 XTD_LOCAL_CPPFLAGS = -I$(top_srcdir)/extended -I$(top_builddir)/extended
 STC_LOCAL_CPPFLAGS = -I$(top_srcdir)/static   -I$(top_builddir)/static
 MLC_LOCAL_CPPFLAGS = -I$(top_srcdir)/metalic  -I$(top_builddir)/metalic
-CPPFLAGS = \
-  $(OLN_LOCAL_CPPFLAGS) $(XTD_LOCAL_CPPFLAGS) \
+CPPFLAGS =					\
+  -I$(srcdir)/..				\
+  $(OLN_LOCAL_CPPFLAGS) $(XTD_LOCAL_CPPFLAGS)	\
   $(STC_LOCAL_CPPFLAGS) $(MLC_LOCAL_CPPFLAGS)
 
 check:

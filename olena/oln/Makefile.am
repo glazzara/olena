@@ -88,7 +88,7 @@ nobase_oln_HEADERS =						\
   core/automatic/image/image1d.hh				\
   core/automatic/image/image2d.hh				\
   core/automatic/image/image3d.hh				\
-  core/automatic/image/image_being_mutable.hh			\
+  core/automatic/image/mutable_image.hh				\
   core/automatic/image/image_being_random_accessible.hh		\
   core/automatic/image/image_having_neighborhood.hh		\
   core/automatic/image/image_having_neighborhood.hh		\

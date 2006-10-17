@@ -1,3 +1,37 @@
+2006-10-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Organize the tests into a hierarchy.
+
+	* tests/fill.cc: Move file...
+	* tests/algorithms/fill.cc: ...here.
+	* tests/at.cc, tests/dpoint2d.cc, tests/grid.cc, tests/image1d.cc,
+	* tests/image2d.cc, tests/image3d.cc, tests/image_entry.cc,
+	* tests/npoints.cc, tests/point2d.cc, tests/window2d.cc: Move
+	files...
+	* tests/core/at.cc, tests/core/dpoint2d.cc, tests/core/grid.cc,
+	* tests/core/image1d.cc, tests/core/image2d.cc,
+	* tests/core/image3d.cc, tests/core/image_entry.cc,
+	* tests/core/npoints.cc, tests/core/point2d.cc,
+	* tests/core/window2d.cc: ...here.
+	* tests/io_pnm.cc: Move file...
+	* tests/io/io_pnm.cc: ...here.
+	* tests/add_neighborhood_morpher.cc, tests/identity_morpher.cc,
+	* tests/morphers.cc, tests/value_cast.cc: Move files...
+	* tests/morphers/add_neighborhood_morpher.cc,
+	* tests/morphers/identity_morpher.cc, tests/morphers/morphers.cc,
+	* tests/morphers/value_cast.cc:: ...here.
+	* tests/grey.cc: Move file...
+	* tests/value/grey.cc: ...here.
+	* tests/algorithms/Makefile.am, tests/core/Makefile.am,
+	* tests/io/Makefile.am, tests/morphers/Makefile.am,
+	* tests/value/Makefile.am: New.
+	* tests/Makefile.am: Adjust.
+	* tests/sanity/Makefile.am (CPPFLAGS): Add `-I$(srcdir)/..'.
+
+	* oln/Makefile.am: Remove
+	core/automatic/image/image_being_mutable.hh.
+	Add core/automatic/image/mutable_image.hh.
+
 2006-10-17  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Replace the 'is_mutable' property by checking the 'lvalue' type.
