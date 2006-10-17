@@ -1,3 +1,12 @@
+2006-10-17  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add basic function to remove '*', '&', "const", and "[]" from
+	types.
+	
+	* mlc/basic.hh: New.
+	* mlc/is_a.hh (mlc_is_a, mlc_is_a_): Use basic_ for T.
+	(mlc_is_not_a, mlc_is_not_a_): Likewise.
+	
 2006-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use TESTS_CXXFLAGS in Metalic.
