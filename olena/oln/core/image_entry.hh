@@ -71,6 +71,8 @@ namespace oln
 
     // psite_type: see below.
     typedef mlc::undefined point_type;
+
+    typedef mlc::undefined is_computed_type;
     
     typedef mlc::undefined value_type;
     // rvalue_type: see below.

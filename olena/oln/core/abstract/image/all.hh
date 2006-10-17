@@ -44,7 +44,10 @@
 # include <oln/core/abstract/image/accessibility/hierarchy.hh>
 // Hierarchy 6: image w.r.t. data mutability.
 # include <oln/core/abstract/image/mutability/hierarchy.hh>
-// Hybrid hierarchy 7: image w.r.t. classical features.
+// Hierarchy 7: image w.r.t. computability.
+# include <oln/core/abstract/image/computability/hierarchy.hh>
+
+// Hybrid hierarchy 8: image w.r.t. classical features.
 # include <oln/core/abstract/image/hybrid/classical.hh>
 
 #endif // ! OLN_CORE_ABSTRACT_IMAGE_ALL_HH

@@ -1,5 +1,27 @@
 2006-10-17  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Add computability image hierarchy.
+	
+	* oln/core/abstract/image/computability: New.
+	* oln/core/abstract/image/computability/hierarchy.hh: New.
+	* oln/core/typedefs.hh (is_computed_type): New.
+	* oln/core/image_entry.hh (is_computed_type): New in vtypes.
+	* oln/core/abstract/image.hh (decl): Update.
+	* oln/core/abstract/image/hierarchies.hh
+	(image_hierarchy_wrt_computability): New.
+	(hierarchy): Update ids.
+	* oln/core/abstract/image/all.hh
+	(include): Add computability/hierarchy.hh.
+	* oln/core/1d/image1d.hh: Update.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	* oln/core/gen/mapimage.hh: Likewise.
+	* oln/morpher/value_cast.hh: Likewise.
+	* oln/morpher/thru_fun.hh: Likewise.
+	* oln/morpher/internal/image_value_morpher.hh: Likewise.
+
+2006-10-17  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Adjust lvalue so that it handles a '&' when needed.
 	
 	* oln/core/automatic/image/image1d.hh (impl_at): Adjust.

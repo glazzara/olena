@@ -123,6 +123,7 @@ namespace oln
 // --------------------------------------------------------------------
 //   mlc_decl_typedef(data_type);
 // --------------------------------------------------------------------
+  mlc_decl_typedef(is_computed_type);
   mlc_decl_typedef(value_type);
   mlc_decl_typedef(rvalue_type);
   mlc_decl_typedef(lvalue_type);

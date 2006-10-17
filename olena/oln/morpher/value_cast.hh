@@ -57,6 +57,7 @@ namespace oln
   template <typename Image, typename Value>
   struct vtypes< morpher::value_cast<Image, Value> >
   {
+    typedef mlc::true_ is_computed_type;
     typedef Value       value_type;
     typedef mlc::false_ is_mutable_type;
   };

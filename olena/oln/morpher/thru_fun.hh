@@ -59,7 +59,8 @@ namespace oln
   {
   private:
     typedef oln_type_of(Image, rvalue)     old_value_type;
-  public: 
+  public:
+    typedef mlc::true_ is_computed_type;
     typedef xtd_res_1(Fun, old_value_type) value_type;
     typedef mlc::false_ is_mutable_type;
   };

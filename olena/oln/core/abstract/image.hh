@@ -75,6 +75,8 @@ namespace oln
 // // 	oln_virtual_typedef(fwd_piter);
 // // 	oln_virtual_typedef(bkd_piter);
 
+ 	oln_virtual_typedef(is_computed);
+
 // 	oln_virtual_typedef(value);
 // 	oln_virtual_typedef(rvalue);
 
