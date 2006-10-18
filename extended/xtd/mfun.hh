@@ -89,6 +89,18 @@ namespace xtd
       static const F_ f_;
       return f_(a);
     }
+    template <typename A>
+    xtd_res(F<A>)& impl_calc(A& a) const
+      //           ---------
+    {
+      typedef F<A> F_;
+      mlc::assert_< mlc::and_< mlc_is_a(F_, abstract::plain_fun_),
+			       mlc_is_a(F_, abstract::nary_fun_<1>) >,
+	            xtd::ERROR::AN_xtd_m1fun_SHOULD_TAKE_AS_PARAMETER_AN_xtd_plain_nary_fun_WITH_n_BEING_1
+	>::check();
+      static const F_ f_;
+      return f_(a);
+    }
   };
 
 

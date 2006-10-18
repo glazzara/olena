@@ -144,6 +144,12 @@ namespace xtd
 	return this->exact().impl_op(arg);
       }
 
+      // The "mutable arg" version below is dedicated to mutators.
+      xtd_res(E)& operator()(xtd_arg(E)& arg) const
+      {
+	return this->exact().impl_op(arg);
+      }
+
       template <typename A>
       xtd_res(E) operator()(const A& arg) const
       {

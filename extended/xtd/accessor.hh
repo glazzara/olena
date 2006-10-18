@@ -60,6 +60,10 @@ namespace xtd								\
       {									\
 	return arg.MethodName();					\
       }									\
+      xtd_res(MethodName##_<T>)& impl_op(T& arg) const			\
+      {									\
+	return arg.MethodName();					\
+      }									\
     };									\
 									\
     typedef xtd::m1fun_<MethodName##_> MethodName##_type;		\

@@ -1,5 +1,17 @@
 2006-10-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Make xtd unary functions support argument mutation.
+	
+	* xtd/accessor.hh (xtd_decl_accessor): Add impl_op mutable version
+	to the accessor class.
+	* xtd/mfun.hh (impl_calc): Add mutable version to m1fun_<F>.
+	* xtd/abstract/open_nary_fun.hh (impl, operator): Add mutable versions
+	to open_nary_fun_<1, E>.
+	* xtd/abstract/plain_nary_fun.hh (operator): Add mutable version
+	to plain_nary_fun_<1, E>.
+
+2006-10-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	* xtd/accessor.hh (xtd_decl_accessor): Fix typo in method access.
 
 2006-10-16  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>

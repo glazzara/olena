@@ -82,6 +82,13 @@ namespace xtd
     {
       return target.impl_calc(a);
     }
+
+    // The "mutable a" version below is dedicated to mutators.
+    static res& impl(const E& target,
+		     A& a)
+    {
+      return target.impl_calc(a);
+    }
   };
 
 
@@ -221,6 +228,14 @@ namespace xtd
       template <typename A>
       typename case_<A>::res
       operator()(const A& a) const
+      {
+	return case_<A>::impl(this->exact_(), a);
+      }
+
+      // The "mutable a" version below is dedicated to mutators.
+      template <typename A>
+      typename case_<A>::res &
+      operator()(A& a) const
       {
 	return case_<A>::impl(this->exact_(), a);
       }
