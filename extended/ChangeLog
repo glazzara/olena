@@ -1,3 +1,7 @@
+2006-10-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* xtd/accessor.hh (xtd_decl_accessor): Fix typo in method access.
+
 2006-10-16  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* xtd/optraits.hh (get_trait_): Change mlc_is_found into mlc::is_ok_

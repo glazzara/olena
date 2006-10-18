@@ -58,7 +58,7 @@ namespace xtd								\
     {									\
       xtd_res(MethodName##_<T>) impl_op(const T& arg) const		\
       {									\
-	return arg.red();						\
+	return arg.MethodName();					\
       }									\
     };									\
 									\
