@@ -1,5 +1,15 @@
 2006-10-19  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix virtual types definitions in tests/core/image_entry.
+
+	* tests/core/image_entry.cc
+	(oln::vtypes<my::image>::fwd_piter_type)
+	(oln::vtypes<my::image>::bkd_piter_type): Remove typedefs.
+	(oln::single_vtype<my::image, typedef_::fwd_piter_type>)
+	(oln::single_vtype<my::image, typedef_::bkd_piter_type>): New
+
+2006-10-19  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a slice morpher.
 
 	* oln/morpher/tags.hh (oln::morpher::tag::slice): New tag.

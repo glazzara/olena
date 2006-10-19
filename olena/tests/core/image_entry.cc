@@ -41,12 +41,14 @@ namespace my
   struct dummy;
 }
 
+
 namespace oln
 {
   // Warning, this sugar might be removed in the future.
   stc_set_super(my::image, oln::image_entry<my::image>);
 
   /// Virtual types associated to my::image.
+  /// \{
   template<>
   struct vtypes<my::image>
   {
@@ -63,16 +65,29 @@ namespace oln
     // FIXME: Dummy values.
     typedef topo2d topo_type;
     typedef point2d point_type;
-    typedef fwd_piter2d fwd_piter_type;
-    typedef bkd_piter2d bkd_piter_type;
     typedef my::image concrete_type;
     typedef my::dummy morpher_type;
   };
-}
+
+  template<>
+  struct single_vtype<my::image, typedef_::fwd_piter_type>
+  {
+    typedef fwd_piter2d ret;
+  };
+
+  template<>
+  struct single_vtype<my::image, typedef_::bkd_piter_type>
+  {
+    typedef bkd_piter2d ret;
+  };
+  ///\}
+
+} // end of namespace oln
+
 
 namespace my
 {
-  // A very simple 1D image.
+  // A very simple 2D image.
   class image : public oln::get_super_types<my::image>::ret
   {
   public:
@@ -82,7 +97,7 @@ namespace my
     typedef oln_type_of_(self_type, value) value_t;
     // FIXME: Add missing typedefs.
   };
-}
+} // end of namespace my
 
 
 int
