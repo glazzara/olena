@@ -123,17 +123,15 @@ namespace oln
   public:
 
     topo_bbox_();
-
     topo_bbox_(const bbox_t& bb);
+    topo_bbox_(const point& pmin, const point& pmax);
 
     const bbox_t& impl_bbox() const;
-
     bbox_t& impl_bbox();
 
     bbox_t& impl_lbbox();
-
+    
     bool impl_has(const point& p) const;
-
     bool impl_has_large(const point& p) const;
 
   protected:
@@ -154,6 +152,12 @@ namespace oln
   template <typename point>
   topo_bbox_<point>::topo_bbox_(const typename topo_bbox_<point>::bbox_t& bb)
     : bb_(bb)
+  {
+  }
+
+  template <typename point>
+  topo_bbox_<point>::topo_bbox_(const point& pmin, const point& pmax)
+    : bb_(pmin, pmax)
   {
   }
 

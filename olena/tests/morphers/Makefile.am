@@ -21,13 +21,17 @@ CXXFLAGS += $(TESTS_CXXFLAGS)
 check_PROGRAMS =				\
   identity_morpher				\
   add_neighborhood_morpher			\
+  slice_morpher					\
   value_cast					\
+						\
   morphers
 
 # Morphers.
 identity_morpher_SOURCES = identity_morpher.cc
 add_neighborhood_morpher_SOURCES = add_neighborhood_morpher.cc
+slice_morpher_SOURCES = slice_morpher.cc
 value_cast_SOURCES = value_cast.cc
+
 morphers_SOURCES = morphers.cc
 
 

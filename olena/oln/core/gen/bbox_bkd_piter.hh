@@ -59,7 +59,7 @@ namespace oln
 
 
 
-  /// Abstract forward point iterator class.
+  /// Generic backward point iterator class.
   template <typename point>
   class bbox_bkd_piter_ : public internal::bbox_bkd_piter< bbox_bkd_piter_<point> >,
 			  private mlc::assert_< mlc_is_a(point, abstract::point) >

@@ -33,6 +33,7 @@
 # include <oln/core/1d/aliases.hh>
 # include <oln/core/2d/aliases.hh>
 # include <oln/core/3d/aliases.hh>
+# include <oln/core/type_fun/slice.hh>
 
 
 namespace oln
@@ -169,7 +170,8 @@ namespace oln
   `--------------------------------------------*/
 
   // Forward declarations.
-  namespace morpher {
+  namespace morpher
+  {
     template <typename Image, typename Isubset> struct add_isubset;
   }
   template <typename piter_t, typename isubset_t> class piter_isubset_;
@@ -237,7 +239,8 @@ namespace oln
   `-------------------------------------------------*/
 
   // Forward declarations.
-  namespace morpher {
+  namespace morpher
+  {
     template <typename Image, typename Neighb> struct add_neighborhood;
   }
   template <typename point_t> class fwd_niter_neighb_;
@@ -267,6 +270,42 @@ namespace oln
   public:
     typedef bkd_niter_neighb_<point_t> ret;
   };
+
+
+  /*-----------------------------.
+  | oln::morpher::slice<Image>.  |
+  `-----------------------------*/
+
+  // Forward declarations.
+  namespace morpher
+  {
+    template <typename Image> struct slice;
+  }
+  template <typename Piter, typename Topo> class piter_slice_;
+
+
+  /// fwd_piter vtype of morpher::slice.
+  template <typename Image>
+  struct single_vtype< morpher::slice<Image>, typedef_::fwd_piter_type >
+  {
+  private:
+    typedef oln_type_of(Image, fwd_piter) orig_fwd_piter;
+  public:
+    typedef typename type_fun::slice_piter<orig_fwd_piter>::ret ret;
+  };
+
+  /// bkd_piter vtype of morpher::slice.
+  template <typename Image>
+  struct single_vtype< morpher::slice<Image>, typedef_::bkd_piter_type >
+  {
+  private:
+    typedef oln_type_of(Image, bkd_piter) orig_bkd_piter;
+  public:
+    typedef typename type_fun::slice_piter<orig_bkd_piter>::ret ret;
+  };
+
+
+  // FIXME: What about niters and qiter?
 
 
 } // end of namespace oln

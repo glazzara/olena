@@ -12,6 +12,7 @@ nobase_oln_HEADERS =						\
   core/1d/image1d.hh						\
   core/1d/neighb1d.hh						\
   core/1d/point1d.hh						\
+  core/1d/topo1d.hh						\
 								\
   core/2d/aliases.hh						\
   core/2d/array2d.hh						\
@@ -20,6 +21,7 @@ nobase_oln_HEADERS =						\
   core/2d/image2d.hh						\
   core/2d/neighb2d.hh						\
   core/2d/point2d.hh						\
+  core/2d/topo2d.hh						\
 								\
   core/3d/aliases.hh						\
   core/3d/array3d.hh						\
@@ -28,6 +30,7 @@ nobase_oln_HEADERS =						\
   core/3d/image3d.hh						\
   core/3d/neighb3d.hh						\
   core/3d/point3d.hh						\
+  core/3d/topo3d.hh						\
 								\
   core/abstract/image/accessibility/hierarchy.hh		\
 								\
@@ -111,12 +114,14 @@ nobase_oln_HEADERS =						\
   core/gen/fwd_niter_neighb.hh					\
   core/gen/fwd_piter_bbox.hh					\
   core/gen/fwd_qiter_win.hh					\
+  core/gen/piter_isubset.hh					\
   core/gen/grid.hh						\
   core/gen/mapimage.hh						\
   core/gen/neighb.hh						\
   core/gen/topo_add_nbh.hh					\
   core/gen/topo_bbox.hh						\
   core/gen/topo_lbbox.hh					\
+  core/gen/topo_slice.hh					\
   core/gen/window.hh						\
 								\
   core/spe/col.hh						\
@@ -125,6 +130,7 @@ nobase_oln_HEADERS =						\
 								\
   core/type_fun/ch_value.hh					\
   core/type_fun/plain.hh					\
+  core/type_fun/slice_piter.hh					\
 								\
   core/internal/bbox_bkd_piter.hh				\
   core/internal/bbox_fwd_piter.hh				\
@@ -161,6 +167,7 @@ nobase_oln_HEADERS =						\
   morpher/fwd_decls.hh						\
   morpher/identity.hh						\
   morpher/tags.hh						\
+  morpher/slice.hh						\
   morpher/thru_fun.hh						\
   morpher/value_cast.hh						\
 								\

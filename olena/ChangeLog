@@ -1,5 +1,36 @@
 2006-10-19  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a slice morpher.
+
+	* oln/morpher/tags.hh (oln::morpher::tag::slice): New tag.
+	* oln/morpher/slice.hh: New file (new morpher).
+	* oln/core/type_fun/slice.hh: New.
+	* oln/core/iterator_vtypes.hh: Include it.
+	(oln::single_vtype<morpher::slice<Image>, typedef_::fwd_piter_type>)
+	(oln::single_vtype<morpher::slice<Image>, typedef_::bkd_piter_type>):
+	New.
+	* oln/core/1d/topo1d.hh, oln/core/2d/topo2d.hh,
+	* oln/core/3d/topo3d.hh: New (shortcuts).
+	* oln/core/gen/topo_lbbox.hh (oln::vtypes< topo_lbbox_<point> >:
+	Reduce the explanation to a reference to the virtual types of
+	oln::topo_bbox_.
+	(topo_lbbox::topo_lbbox_(const point&, const point&, unsigned)):
+	New ctor.
+	(topo_lbbox::border): New method.
+	* oln/core/gen/topo_bbox.hh
+	(topo_bbox::topo_bbox_(const point&, const point&)): New ctor.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add
+	core/1d/topo1d.hh, core/2d/topo2d.hh, core/3d/topo3d.hh,
+	core/gen/piter_isubset.hh, core/type_fun/slice_piter.hh and
+	morpher/slice.hh.	
+	* tests/morphers/slice_morpher.cc: New test.
+	* tests/morphers/Makefile.am (check_PROGRAMS): Add slice_morpher.
+	(slice_morpher_SOURCES): New.
+	* oln/core/gen/bbox_fwd_piter.hh, oln/core/gen/bbox_bkd_piter.hh,
+	* tests/morphers/add_neighborhood_morpher.cc: Fix a comment.
+
+2006-10-19  Roland Levillain  <roland@lrde.epita.fr>
+
 	More sanity checks.
 
 	* tests/sanity/includes.test: Also check headers whose path

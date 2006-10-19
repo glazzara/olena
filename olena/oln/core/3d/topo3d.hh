@@ -25,25 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_TAGS
-# define OLN_MORPHER_TAGS
+#ifndef OLN_CORE_3D_TOPO3D_HH
+# define OLN_CORE_3D_TOPO3D_HH
 
+// Headers required for the complete definition of oln::topo3d
+// (i.e., oln::topo_lbbox_<point3d>).
+# include <oln/core/3d/aliases.hh>
+# include <oln/core/3d/point3d.hh>
+# include <oln/core/3d/dpoint3d.hh>
+# include <oln/core/gen/topo_lbbox.hh>
 
-namespace oln
-{
-  namespace morpher
-  {
-    namespace tag
-    {
-      /// Tag associated to oln::morpher::image_extension.
-      struct identity;
-      /// Tag associated to oln::morpher::slice.
-      struct slice;
-    
-    } // end of namespace oln::morpher::tag
-
-  } // end of namespace oln::morpher
-
-} // end of namespace oln
-
-#endif // ! OLN_MORPHER_TAGS
+#endif // ! OLN_CORE_3D_TOPO3D_HH

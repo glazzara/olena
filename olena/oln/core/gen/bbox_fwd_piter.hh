@@ -59,7 +59,7 @@ namespace oln
 
 
 
-  /// Abstract forward point iterator class.
+  /// Generic forward point iterator class.
   template <typename point>
   class bbox_fwd_piter_ : public internal::bbox_fwd_piter< bbox_fwd_piter_<point> >,
 			  private mlc::assert_< mlc_is_a(point, abstract::point) >

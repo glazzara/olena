@@ -50,9 +50,9 @@ main()
   image_t ima(42, 51);
 
 
-  /*------------------------------------.
-  | add_neighborhood< image2d<char> >.  |
-  `------------------------------------*/
+  /*---------------------------------------------------.
+  | add_neighborhood< image2d<char>, oln::neighb2d >.  |
+  `---------------------------------------------------*/
 
   typedef oln::neighb2d neighb_t;
   typedef oln::morpher::add_neighborhood<image_t, neighb_t> image_with_nbh_t;
