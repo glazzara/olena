@@ -1,3 +1,13 @@
+2006-10-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	More sanity checks.
+
+	* tests/sanity/includes.test: Also check headers whose path
+	contains a directory named ``obsolete'' or ``internal''.
+	* oln/core/internal/dpoint_nd.hh (oln/core/traits_id.hh): Include
+	it.
+	* oln/core/internal/tracked_ptr.hh (ostream): Likewise.
+
 2006-10-17  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add forward declaration files.

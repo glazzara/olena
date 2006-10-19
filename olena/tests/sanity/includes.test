@@ -11,9 +11,7 @@ set -e
 rm -f failures
 
 if test $# = 0; then
-  find "$PATH_TO_OLN_SRCDIR/oln" -name "${1-*}.hh" \
-    -a ! -path '*/obsolete/*' -type f \
-    -a ! -path '*/internal/*' -type f -print |
+  find "$PATH_TO_OLN_SRCDIR/oln" -name "${1-*}.hh" -print | \
     sed "s,$PATH_TO_OLN_SRCDIR/,,g"
 else
   echo "$@"

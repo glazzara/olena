@@ -33,6 +33,7 @@
 # include <xtd/vec.hh>
 # include <stc/exact.hh>
 # include <oln/core/abstract/dpoint.hh>
+# include <oln/core/traits_id.hh>
 
 
 namespace oln

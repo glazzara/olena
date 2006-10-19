@@ -29,6 +29,7 @@
 # define OLN_CORE_INTERNAL_TRACKED_PTR_HH
 
 # include <set>
+# include <ostream>
 
 
 namespace oln
