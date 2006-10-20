@@ -1,3 +1,11 @@
+2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution.
+
+	* oln/Makefile.am (nobase_oln_HEADERS): Remove
+	core/gen/topo_slice.hh.
+	s|core/type_fun/slice_piter\.hh|core/type_fun/slice\.hh|.
+
 2006-10-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix virtual types definitions in tests/core/image_entry.

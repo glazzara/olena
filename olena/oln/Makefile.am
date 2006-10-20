@@ -121,7 +121,6 @@ nobase_oln_HEADERS =						\
   core/gen/topo_add_nbh.hh					\
   core/gen/topo_bbox.hh						\
   core/gen/topo_lbbox.hh					\
-  core/gen/topo_slice.hh					\
   core/gen/window.hh						\
 								\
   core/spe/col.hh						\
@@ -130,7 +129,7 @@ nobase_oln_HEADERS =						\
 								\
   core/type_fun/ch_value.hh					\
   core/type_fun/plain.hh					\
-  core/type_fun/slice_piter.hh					\
+  core/type_fun/slice.hh					\
 								\
   core/internal/bbox_bkd_piter.hh				\
   core/internal/bbox_fwd_piter.hh				\
