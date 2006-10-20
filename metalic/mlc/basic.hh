@@ -72,6 +72,20 @@ namespace mlc
     typedef typename basic_<T>::ret ret;
   };
 
+
+
+  template <typename T>
+  struct unref_
+  {
+    typedef T ret;
+  };
+  
+  template <typename T>
+  struct unref_< T& >
+  {
+    typedef T ret;
+  };
+
 } // end of namespace mlc
 
 

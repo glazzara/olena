@@ -1,3 +1,7 @@
+2006-10-20  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/basic.hh (unref_): New.
+
 2006-10-17  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add basic function to remove '*', '&', "const", and "[]" from
