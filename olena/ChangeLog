@@ -1,3 +1,17 @@
+2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplfy header inclusions of oln::image[123]d.
+
+	* oln/core/1d/image1d.hh (oln/core/1d/topo1d.hh): Include it.
+	(oln/core/gen/topo_lbbox.hh, oln/core/1d/aliases.hh): No longer
+	include them.
+	* oln/core/2d/image2d.hh (oln/core/2d/topo2d.hh): Include it.
+	(oln/core/gen/topo_lbbox.hh, oln/core/2d/aliases.hh): No longer
+	include them.
+	* oln/core/3d/image3d.hh (oln/core/3d/topo3d.hh): Include it.
+	(oln/core/gen/topo_lbbox.hh, oln/core/3d/aliases.hh): No longer
+	include them.
+
 2006-10-20  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add morpher based on mutators.

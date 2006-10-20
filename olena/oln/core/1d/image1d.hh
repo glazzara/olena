@@ -31,14 +31,11 @@
 
 # include <oln/core/image_entry.hh>
 # include <oln/core/gen/grid.hh>
-# include <oln/core/gen/topo_lbbox.hh>
 # include <oln/core/internal/tracked_ptr.hh>
 # include <oln/core/1d/array1d.hh>
 # include <oln/core/1d/point1d.hh>
-// For topo1d.
-# include <oln/core/1d/aliases.hh>
+# include <oln/core/1d/topo1d.hh>
 // For fwd_piter and bkd_piter virtual types.
-// FIXME: Really necessary?
 # include <oln/core/iterator_vtypes.hh>
 
 
