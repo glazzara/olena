@@ -15,6 +15,7 @@ CXXFLAGS += $(TESTS_CXXFLAGS)
 
 check_PROGRAMS =				\
   abs						\
+  accessor					\
   bind						\
   cast						\
   cfun						\
@@ -25,6 +26,7 @@ check_PROGRAMS =				\
   optraits
 
 abs_SOURCES = abs.cc
+accessor_SOURCES = accessor.cc
 bind_SOURCES = bind.cc
 cast_SOURCES = cast.cc
 cfun_SOURCES = cfun.cc

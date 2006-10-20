@@ -1,3 +1,23 @@
+2006-10-20  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add mutators and disable mutable facilities of other functions.
+	
+	* xtd/mutator.hh: New.
+	* xtd/abstract/mutable_fun.hh: New.
+	* tests/accessor.cc: New.
+	* xtd/res.hh: Add comment.
+	* xtd/accessor.hh (xtd_decl_accessor): Disable mutable impl_op.
+	(xtd_decl_accessor): Add static check.
+	* xtd/abstract/open_nary_fun.hh (fun_operator_1): Disable mutable
+	impl of default_case_ and add commented mutable_res.
+	(open_nary_fun_<1,E>): Disable mutable version of operator().
+	* xtd/abstract/plain_nary_fun.hh
+	(plain_nary_fun_<1,E>): Disable mutable version of operator().
+	* xtd/abstract/plain_fun.hh: Add commented code for xtd_mutable_res.
+	* xtd/mfun.hh (m1fun_): Disable mutable version of impl_calc.
+	* xtd/Makefile.am: Update.
+	* tests/Makefile.am: Update.
+
 2006-10-18  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Make xtd unary functions support argument mutation.

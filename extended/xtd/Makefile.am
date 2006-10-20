@@ -8,6 +8,7 @@ nobase_xtd_HEADERS =				\
   abstract/fun_nary_expr.hh			\
   abstract/meta_fun.hh				\
   abstract/meta_nary_fun.hh			\
+  abstract/mutable_fun.hh			\
   abstract/nary_fun.hh				\
   abstract/open_fun.hh				\
   abstract/open_nary_fun.hh			\
@@ -44,6 +45,7 @@ nobase_xtd_HEADERS =				\
   math/tan.hh					\
   math/tanh.hh					\
 						\
+  accessor.hh					\
   arg.hh					\
   args.hh					\
   bind.hh					\
@@ -53,6 +55,7 @@ nobase_xtd_HEADERS =				\
   math.hh					\
   mexpr.hh					\
   mfun.hh					\
+  mutator.hh					\
   optraits.hh					\
   res.hh					\
   traits.hh					\

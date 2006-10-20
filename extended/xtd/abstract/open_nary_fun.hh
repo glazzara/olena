@@ -76,6 +76,7 @@ namespace xtd
 			 mlc::pair_<E, A> >
   {
     typedef xtd_res_1(E, A) res;
+//     typedef xtd_mutable_res_1(E, A) mutable_res;
 
     static res impl(const E& target,
 		    const A& a)
@@ -83,12 +84,13 @@ namespace xtd
       return target.impl_calc(a);
     }
 
-    // The "mutable a" version below is dedicated to mutators.
-    static res& impl(const E& target,
-		     A& a)
-    {
-      return target.impl_calc(a);
-    }
+      // FIXME: Uncomment below.
+//     // The "mutable a" version below is dedicated to mutators.
+//     static mutable_res impl(const E& target,
+// 			    A& a)
+//     {
+//       return target.impl_calc(a);
+//     }
   };
 
 
@@ -232,13 +234,14 @@ namespace xtd
 	return case_<A>::impl(this->exact_(), a);
       }
 
-      // The "mutable a" version below is dedicated to mutators.
-      template <typename A>
-      typename case_<A>::res &
-      operator()(A& a) const
-      {
-	return case_<A>::impl(this->exact_(), a);
-      }
+      // FIXME: Uncomment below.
+//       // The "mutable a" version below is dedicated to mutators.
+//       template <typename A>
+//       typename case_<A>::res &
+//       operator()(A& a) const
+//       {
+// 	return case_<A>::impl(this->exact_(), a);
+//       }
 
     protected:
       open_nary_fun_() {}

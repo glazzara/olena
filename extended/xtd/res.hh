@@ -84,6 +84,8 @@ namespace xtd
 # define xtd_expr_res(F, Args)        typename xtd::internal::get_expr_res_< F, Args >::ret
 # define xtd_expr_res_(F, Args)                xtd::internal::get_expr_res_< F, Args >::ret
 
+// FIXME: Uncomment below.
+// # define xtd_mutable_res_1(F, A1)     typename xtd::internal::get_res_< F, A1 >::ret
 
 
 // internal so do not use it; prefer xtd_res_0(F)

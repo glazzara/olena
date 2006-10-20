@@ -36,6 +36,8 @@
  */
 # define xtd_res(F)  typename xtd::typedef_::res_type::from_< xtd::fun_traits_< F > >::ret
 
+// FIXME: Uncomment below.
+// # define xtd_mutable_res(F)  typename xtd::typedef_::mutable_res_type::from_< xtd::fun_traits_< F > >::ret
 
 
 
@@ -66,6 +68,8 @@ namespace xtd
 
   mlc_decl_typedef(res_type);
 
+  // FIXME: Uncomment below.
+//   mlc_decl_typedef(mutable_res_type);
 
   namespace abstract
   {

@@ -25,24 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef XTD_ACCESSOR_HH
-# define XTD_ACCESSOR_HH
+#ifndef XTD_MUTATOR_HH
+# define XTD_MUTATOR_HH
 
 # include <mlc/typedef.hh>
 # include <mlc/cmp.hh>
 
 # include <xtd/abstract/plain_nary_fun.hh>
-# include <xtd/mfun.hh>
+# include <xtd/abstract/mutable_fun.hh>
 
 
-# define xtd_decl_accessor(MethodName)										\
+# define xtd_decl_mutator(MethodName)										\
 														\
 namespace xtd													\
 {														\
 														\
-  namespace accessor												\
+  namespace mutator												\
   {														\
-    template <typename T> struct MethodName##_;									\
+    struct MethodName##_type;											\
 														\
     mlc_decl_typedef(MethodName##_type);									\
 														\
@@ -50,33 +50,39 @@ namespace xtd													\
     struct ERROR__DECLARATION_typedef_OF_##MethodName##_type_NOT_FOUND_IN_;					\
   }														\
 														\
-  template <typename T>												\
-  struct fun_traits_< accessor::MethodName##_<T> >								\
-    : private mlc::assert_< mlc::neq_< mlc_typedef_in(accessor, T, MethodName##_type),				\
+														\
+  template <typename A>												\
+  struct res_< mutator::MethodName##_type, A >									\
+														\
+    : private mlc::assert_< mlc::neq_< mlc_typedef_in(mutator, A, MethodName##_type),				\
 				       mlc::not_found >,							\
-			    accessor::ERROR__DECLARATION_typedef_OF_##MethodName##_type_NOT_FOUND_IN_<T> >	\
+			    mutator::ERROR__DECLARATION_typedef_OF_##MethodName##_type_NOT_FOUND_IN_<A> >	\
+														\
   {														\
-    typedef T arg_type;												\
-    typedef mlc_typedef_in(accessor, T, MethodName##_type) res_type;						\
+    typedef mlc_typedef_in(mutator, A, MethodName##_type) ret;							\
   };														\
 														\
-  namespace accessor												\
+  namespace mutator												\
   {														\
 														\
-    template <typename T>											\
-    struct MethodName##_											\
-      : public xtd::abstract::plain_nary_fun_< 1, MethodName##_<T> >,						\
-        private mlc::assert_< mlc::neq_< mlc_typedef(T, MethodName##_type),					\
-					 mlc::not_found >,							\
-			      ERROR__DECLARATION_typedef_OF_##MethodName##_type_NOT_FOUND_IN_<T> >		\
+    struct MethodName##_type											\
+														\
+      : public abstract::mutable_fun_< MethodName##_type >							\
     {														\
-      xtd_res(MethodName##_<T>) impl_op(const T& arg) const							\
+      template <typename A>											\
+      typename res_<MethodName##_type, A>::ret									\
+      impl_op(const A& arg) const										\
+      {														\
+	return arg.MethodName();										\
+      }														\
+														\
+      template <typename A>											\
+      typename res_<MethodName##_type, A>::ret &								\
+      impl_op(A& arg) const											\
       {														\
 	return arg.MethodName();										\
       }														\
     };														\
-														\
-    typedef xtd::m1fun_<MethodName##_> MethodName##_type;							\
 														\
     static const MethodName##_type MethodName;									\
 														\
@@ -87,16 +93,5 @@ namespace xtd													\
 struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
-// FIXME: To be inserted above.
 
-// In traits:
-//     typedef res_type & mutable_res_type;
-
-// In struct:
-//       xtd_mutable_res(MethodName##_<T>) impl_op(T& arg) const
-//       {
-// 	return arg.MethodName();
-//       }
-
-
-#endif // ! XTD_ACCESSOR_HH
+#endif // ! XTD_MUTATOR_HH
