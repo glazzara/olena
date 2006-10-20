@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_THRU_FUN
-# define OLN_MORPHER_THRU_FUN
+#ifndef OLN_MORPHER_THRU_MFUN
+# define OLN_MORPHER_THRU_MFUN
 
-# include <xtd/abstract/open_nary_fun.hh>
 # include <xtd/res.hh>
+# include <xtd/abstract/open_nary_fun.hh>
+# include <xtd/mexpr.hh>
 # include <oln/morpher/internal/image_value_morpher.hh>
-
 
 
 namespace oln
@@ -40,35 +40,35 @@ namespace oln
   namespace morpher
   {
     // Forward declaration.
-    template <typename Image, typename Fun> struct thru_fun;
+    template <typename Image, typename Fun> struct thru_mfun;
 
   } // end of namespace oln::morpher
 
 
   /// Super type.
   template <typename Image, typename Fun>
-  struct set_super_type< morpher::thru_fun<Image, Fun> >
+  struct set_super_type< morpher::thru_mfun<Image, Fun> >
   {
-    typedef morpher::thru_fun<Image, Fun> self_t;
+    typedef morpher::thru_mfun<Image, Fun> self_t;
     typedef morpher::internal::image_value_morpher<Image, self_t> ret;
   };
 
 
   template <typename Image, typename Fun>
-  struct vtypes< morpher::thru_fun<Image, Fun> >
+  struct vtypes< morpher::thru_mfun<Image, Fun> >
   {
   private:
-    typedef oln_type_of(Image, rvalue)     old_value_type;
+    typedef oln_type_of(Image, rvalue)  old_value_type;
   public:
-    typedef mlc::true_ is_computed_type;
-    typedef xtd_res_1(Fun, old_value_type) value_type;
+    typedef mlc::false_ is_computed_type;
+    typedef typename xtd::res_<Fun, old_value_type>::ret value_type;
+    typedef value_type& lvalue_type;
   };
 
-
   template <typename Image, typename Fun>
-  struct single_vtype< morpher::thru_fun<Image, Fun>, typedef_::rvalue_type >
+  struct single_vtype< morpher::thru_mfun<Image, Fun>, typedef_::rvalue_type >
   {
-    typedef morpher::thru_fun<Image, Fun> self_t;
+    typedef morpher::thru_mfun<Image, Fun> self_t;
     typedef oln_value(self_t) ret;
   };
   
@@ -79,22 +79,24 @@ namespace oln
 
     /// 'Image thru Function' morpher.
     template <typename Image, typename Fun>
-    class thru_fun : public internal::image_value_morpher< Image,
-							   thru_fun<Image, Fun> >
+    class thru_mfun : public internal::image_value_morpher< Image,
+							    morpher::thru_mfun<Image, Fun> >
     {
     private:
 
-      typedef thru_fun<Image, Fun> self_t;
+      typedef thru_mfun<Image, Fun> self_t;
       typedef internal::image_value_morpher<Image, self_t> super_t;
 
-      typedef oln_psite(self_t) psite_t;
+      typedef oln_psite(self_t)  psite_t;
       typedef oln_rvalue(self_t) rvalue_t;
+      typedef oln_lvalue(self_t) lvalue_t;
 
     public:
 
-      thru_fun(const Image& image, const Fun& fun);
+      thru_mfun(const Image& image, const Fun& fun);
 
       rvalue_t impl_op_read(const psite_t& p) const;
+      lvalue_t impl_op_readwrite(const psite_t& p);
 
     protected:
 
@@ -102,18 +104,33 @@ namespace oln
     };
 
 
+    namespace ERROR
+    {
+
+      struct AN_xtd_mutator_ONLY_WORKS_ON_AN_oln_abstract_mutable_image;
+
+    } // end of namespace oln::morpher::ERROR
+
+
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename Image, typename Fun>
-    thru_fun<Image, Fun>::thru_fun(const Image& image, const Fun& fun) :
+    thru_mfun<Image, Fun>::thru_mfun(const Image& image, const Fun& fun) :
       super_t(image),
       fun_(fun)
     {
     }
     
     template <typename Image, typename Fun>
-    typename thru_fun<Image, Fun>::rvalue_t
-    thru_fun<Image, Fun>::impl_op_read(const typename thru_fun<Image, Fun>::psite_t& p) const
+    typename thru_mfun<Image, Fun>::rvalue_t
+    thru_mfun<Image, Fun>::impl_op_read(const typename thru_mfun<Image, Fun>::psite_t& p) const
+    {
+      return fun_(this->image_(p));
+    }
+    
+    template <typename Image, typename Fun>
+    typename thru_mfun<Image, Fun>::lvalue_t
+    thru_mfun<Image, Fun>::impl_op_readwrite(const typename thru_mfun<Image, Fun>::psite_t& p)
     {
       return fun_(this->image_(p));
     }
@@ -127,23 +144,35 @@ namespace oln
 
 
 
-
 namespace xtd
 {
 
-  // open_nary_fun_<1, Fun>::operator()(const A& a) const
-  // where A is an oln::abstract::image<I>
+  // open_nary_fun_<1, Fun>::operator()(A& a) const
+  // where A is an oln::abstract::mutable_image<I>
 
   template <typename Fun, typename A>
-  struct case_ < tag::fun_operator_1, mlc::pair_<Fun, A>, 1 >
+  struct case_ < tag::mutable_fun_operator, mlc::pair_<Fun, A>, 1 >
     : where_< mlc_is_a(A, oln::abstract::image) >
   {
     typedef stc_to_exact(A) I;
-    typedef oln::morpher::thru_fun<I, Fun> res;
+    typedef oln::morpher::thru_mfun<I, Fun> res;
+    typedef oln::morpher::thru_mfun<I, Fun> mutable_res;
 
     static res impl(const Fun& fun, // target
 		    const oln::abstract::image<I>& ima)
     {
+      mlc::assert_< mlc_is_a(A, oln::abstract::mutable_image),
+	            oln::morpher::ERROR::AN_xtd_mutator_ONLY_WORKS_ON_AN_oln_abstract_mutable_image >::check();
+      // FIXME: ima is const... so there may be a problem!
+      res tmp(ima.exact(), fun);
+      return tmp;
+    }
+
+    static res impl(const Fun& fun, // target
+		    oln::abstract::image<I>& ima)
+    {
+      mlc::assert_< mlc_is_a(A, oln::abstract::mutable_image),
+	            oln::morpher::ERROR::AN_xtd_mutator_ONLY_WORKS_ON_AN_oln_abstract_mutable_image >::check();
       res tmp(ima.exact(), fun);
       return tmp;
     }
@@ -153,5 +182,4 @@ namespace xtd
 
 
 
-
-#endif // ! OLN_MORPHER_THRU_FUN
+#endif // ! OLN_MORPHER_THRU_MFUN

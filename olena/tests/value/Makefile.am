@@ -19,9 +19,11 @@ TESTS_CXXFLAGS = @TESTS_CXXFLAGS@
 CXXFLAGS += $(TESTS_CXXFLAGS)
 
 check_PROGRAMS =				\
+  accessor					\
   grey
 
 # Value.
+accessor_SOURCES = accessor.cc
 grey_SOURCES = grey.cc
 
 

@@ -1,3 +1,14 @@
+2006-10-20  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add morpher based on mutators.
+	
+	* tests/value/accessor.cc: New.
+	* tests/value/Makefile.am: Update.
+	* oln/morpher/thru_mfun.hh: New.
+	* oln/value/accessor.hh: New.
+	* oln/Makefile.am: Update.
+	* oln/morpher/thru_fun.hh: Use shortcuts.
+
 2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the distribution.

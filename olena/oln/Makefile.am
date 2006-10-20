@@ -168,8 +168,10 @@ nobase_oln_HEADERS =						\
   morpher/tags.hh						\
   morpher/slice.hh						\
   morpher/thru_fun.hh						\
+  morpher/thru_mfun.hh						\
   morpher/value_cast.hh						\
 								\
+  value/accessor.hh						\
   value/all.hh							\
   value/default.hh						\
   value/greylevel.hh						\
