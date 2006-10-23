@@ -33,7 +33,8 @@
 #include <mlc/is_a.hh>
 
 // FIXME: We should not include oln/basics2d.hh and oln/basics3d.hh,
-// but only oln/core/2d/image2d.hh and oln/core/3d/image3d.hh.
+// but only oln/core/3d/image3d.hh and oln/core/2d/image2d.hh,
+// oln/core/2d/window2d.
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
 #include <oln/morpher/slice.hh>
@@ -45,7 +46,7 @@ int
 main()
 {
   /*---------------.
-  | image2d<int>.  |
+  | image3d<int>.  |
   `---------------*/
 
   typedef oln::image3d<int> image_t;
@@ -58,27 +59,27 @@ main()
 
 
   /*----------------------------.
-  | add_slice< image2d<int> >.  |
+  | add_slice< image3d<int> >.  |
   `----------------------------*/
 
   typedef oln::morpher::slice<image_t> slice_t;
 
   // Check that the instantiated slice morpher realizes the suited
   // interfaces.
-  mlc::assert_< mlc::eq_<oln_type_of_(slice_t, grid), oln::grid2d> >::check();
+  mlc::assert_< mlc::eq_<oln_grid_(slice_t), oln::grid2d> >::check();
   mlc::assert_< mlc_is_a_(slice_t, oln::abstract::image2d) >::check();
   mlc::assert_< mlc_is_a_(slice_t, oln::abstract::mutable_image) >::check();
 
   // Create a slice of \a ima along the 2nd axis (which the ``row''
   // axis, numbered 1), and check its peoperties.
   int slice_row = 2;
-  slice_t ima_with_nbh(ima, 1, slice_row);
-  assert(ima_with_nbh.bbox().nrows() == 3);
-  assert(ima_with_nbh.bbox().ncols() == 5);
-  // Fill a slice of \a ima by filling \a ima_with_nbh.
-  oln::level::fill (ima_with_nbh, 51);
+  slice_t slice(ima, 1, slice_row);
+  assert(slice.bbox().nrows() == 3);
+  assert(slice.bbox().ncols() == 5);
+  // Fill a slice of \a ima by filling \a slice.
+  oln::level::fill (slice, 51);
 
-  // Check that \a ima has been altered, by comapring it to a similar
+  // Check that \a ima has been altered, by comparing it to a similar
   // 3D image.
   image_t ref(3, 4, 5);
   oln::level::fill (ref, 42);
@@ -86,7 +87,22 @@ main()
     for (unsigned c = 0; c < ima.bbox().ncols(); ++c)
       ref.at(s, slice_row, c) = 51;
   // FIXME: Implement equality on images.
-  oln_type_of_(image_t, piter) p (ima.topo());
-  for_all (p)
-    assert(ima(p) == ref(p));
+  oln_piter_(image_t) pi (ima.topo());
+  for_all (pi)
+    assert(ima(pi) == ref(pi));
+
+  // Test foward q-iterator.
+  typedef oln::window2d slice_win_t;
+  slice_win_t win_c4p;
+  win_c4p.
+    add(oln::dpoint2d(-1,  0)).
+    add(oln::dpoint2d(+1,  0)).
+    add(oln::dpoint2d( 0, -1)).
+    add(oln::dpoint2d( 0, +1));
+  oln_piter_(slice_t) ps (slice.topo());
+  oln_qiter_(slice_t) q (ps, win_c4p);
+  for_all (ps)
+    for_all (q)
+      if (slice.has(q))
+	assert(slice(q) == 51);
 }

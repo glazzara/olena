@@ -90,8 +90,8 @@ namespace oln
     // fwd_piter_type: see oln/core/iterator_vtypes.hh.
     // bkd_piter_type: see oln/core/iterator_vtypes.hh.
 
-    // FIXME: fwd_qiter_type?
-    // FIXME: bkd_qiter_type?
+    // fwd_qiter_type: see oln/core/iterator_vtypes.hh.
+    // bkd_qiter_type: see oln/core/iterator_vtypes.hh.
 
     typedef oln::morpher::tag::slice morpher_type;
 

@@ -284,6 +284,8 @@ namespace oln
   template <typename Piter, typename Topo> class piter_slice_;
 
 
+  // piters.
+
   /// fwd_piter vtype of morpher::slice.
   template <typename Image>
   struct single_vtype< morpher::slice<Image>, typedef_::fwd_piter_type >
@@ -291,7 +293,7 @@ namespace oln
   private:
     typedef oln_type_of(Image, fwd_piter) orig_fwd_piter;
   public:
-    typedef typename type_fun::slice_piter<orig_fwd_piter>::ret ret;
+    typedef typename type_fun::slice_iterator<orig_fwd_piter>::ret ret;
   };
 
   /// bkd_piter vtype of morpher::slice.
@@ -301,11 +303,34 @@ namespace oln
   private:
     typedef oln_type_of(Image, bkd_piter) orig_bkd_piter;
   public:
-    typedef typename type_fun::slice_piter<orig_bkd_piter>::ret ret;
+    typedef typename type_fun::slice_iterator<orig_bkd_piter>::ret ret;
   };
 
 
-  // FIXME: What about niters and qiter?
+  // qiters.
+
+  /// fwd_qiter vtype of morpher::slice.
+  template <typename Image>
+  struct single_vtype< morpher::slice<Image>, typedef_::fwd_qiter_type >
+  {
+  private:
+    typedef oln_type_of(Image, fwd_qiter) orig_fwd_qiter;
+  public:
+    typedef typename type_fun::slice_iterator<orig_fwd_qiter>::ret ret;
+  };
+
+  /// bkd_qiter vtype of morpher::slice.
+  template <typename Image>
+  struct single_vtype< morpher::slice<Image>, typedef_::bkd_qiter_type >
+  {
+  private:
+    typedef oln_type_of(Image, bkd_qiter) orig_bkd_qiter;
+  public:
+    typedef typename type_fun::slice_iterator<orig_bkd_qiter>::ret ret;
+  };
+
+
+  // FIXME: What about niters?
 
 
 } // end of namespace oln

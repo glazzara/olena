@@ -145,7 +145,7 @@ namespace oln
   /// Error messages raised by static assertions/abortions.
   namespace ERROR
   {
-    struct TYPE_FUNCTION_slice_piter_NOT_DEFINED_FOR_THIS_PARAMETER;
+    struct TYPE_FUNCTION_slice_iterator_NOT_DEFINED_FOR_THIS_PARAMETER;
     struct TYPE_FUNCTION_slice_topo_NOT_DEFINED_FOR_THIS_PARAMETER;
   }
 
@@ -153,9 +153,9 @@ namespace oln
   namespace type_fun
   {
 
-    /*------------------------.
-    | type_fun::slice_piter.  |
-    `------------------------*/
+    /*---------------------------.
+    | type_fun::slice_iterator.  |
+    `---------------------------*/
 
     /// Type function returning the ``sliced'' piter corresponding to
     /// \a Piter
@@ -163,10 +163,10 @@ namespace oln
 
     /// Default version, undefined.
     template <typename Piter>
-    struct slice_piter :
+    struct slice_iterator :
       public mlc::abort_<
         Piter, 
-        oln::ERROR::TYPE_FUNCTION_slice_piter_NOT_DEFINED_FOR_THIS_PARAMETER
+        oln::ERROR::TYPE_FUNCTION_slice_iterator_NOT_DEFINED_FOR_THIS_PARAMETER
       >
     {
       typedef mlc::undefined ret;
@@ -178,15 +178,27 @@ namespace oln
     // --------- //
 
     template <>
-    struct slice_piter<fwd_piter2d>
+    struct slice_iterator<fwd_piter2d>
     {
       typedef fwd_piter1d ret;
     };
 
     template <>
-    struct slice_piter<bkd_piter2d>
+    struct slice_iterator<bkd_piter2d>
     {
       typedef bkd_piter1d ret;
+    };
+
+    template <>
+    struct slice_iterator<fwd_qiter2d>
+    {
+      typedef fwd_qiter1d ret;
+    };
+
+    template <>
+    struct slice_iterator<bkd_qiter2d>
+    {
+      typedef bkd_qiter1d ret;
     };
 
 
@@ -195,15 +207,27 @@ namespace oln
     // --------- //
 
     template <>
-    struct slice_piter<fwd_piter3d>
+    struct slice_iterator<fwd_piter3d>
     {
       typedef fwd_piter2d ret;
     };
 
     template <>
-    struct slice_piter<bkd_piter3d>
+    struct slice_iterator<bkd_piter3d>
     {
       typedef bkd_piter2d ret;
+    };
+
+    template <>
+    struct slice_iterator<fwd_qiter3d>
+    {
+      typedef fwd_qiter2d ret;
+    };
+
+    template <>
+    struct slice_iterator<bkd_qiter3d>
+    {
+      typedef bkd_qiter2d ret;
     };
 
     /// \}

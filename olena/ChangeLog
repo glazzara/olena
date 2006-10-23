@@ -1,3 +1,26 @@
+2006-10-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add qiters for oln::morpher::slice.
+
+	* oln/core/type_fun/slice.hh
+	(TYPE_FUNCTION_slice_piter_NOT_DEFINED_FOR_THIS_PARAMETER): Rename
+	as...
+	(TYPE_FUNCTION_slice_iterator_NOT_DEFINED_FOR_THIS_PARAMETER):
+	...this.
+	Adjust.
+	(oln::type_fun::slice_piter): Rename as...
+	(oln::type_fun::slice_iterator): ...this.
+	(oln::type_fun::slice_iterator<fwd_qiter2d>)
+	(oln::type_fun::slice_iterator<bkd_qiter2d>)
+	(oln::type_fun::slice_iterator<fwd_qiter3d>)
+	(oln::type_fun::slice_iterator<bkd_qiter3d>)
+	* oln/core/iterator_vtypes.hh: s/slice_piter/slice_iterator/g.
+	(oln::single_vtype<morpher::slice<Image>, typedef_::fwd_qiter_type>)
+	(oln::single_vtype<morpher::slice<Image>, typedef_::bkd_qiter_type>)
+	* oln/morpher/slice.hh: Adjust comments.
+	* tests/morphers/slice_morpher.cc: s/ima_with_nbh/slice/g
+	Test fwd_qiter on oln::morpher::slice.
+
 2006-10-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Simplfy header inclusions of oln::image[123]d.
