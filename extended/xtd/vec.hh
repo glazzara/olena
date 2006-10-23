@@ -25,7 +25,6 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-
 #ifndef XTD_VEC_HH
 # define XTD_VEC_HH
 
@@ -89,6 +88,21 @@ namespace xtd
       T data_[3];
     };
 
+    template <typename T>
+    class vec_base_ <4, T>
+    {
+    public:
+      void set(const T& val0, const T& val1, const T& val2, const T& val3)
+      {
+	data_[0] = val0;
+	data_[1] = val1;
+	data_[2] = val2;
+	data_[3] = val3;
+      } 
+    protected:
+      T data_[4];
+    };
+
 
   } // end of namespace xtd::internal
 
@@ -124,7 +138,7 @@ namespace xtd
       return *this;
     }
 
-    const T operator[](unsigned i) const
+    const T& operator[](unsigned i) const
     {
       precondition(i < n);
       return data_[i];
@@ -147,123 +161,134 @@ namespace xtd
       return n;
     }
 
-    // eq
-
-    bool operator==(const vec& rhs) const
-    {
-      for (unsigned i = 0; i < n; ++i)
-	if (data_[i] != rhs[i])
-	  return false;
-      return true;
-    }
-
-    bool operator!=(const vec& rhs) const
-    {
-      return not (*this == rhs);
-    }
-
-    // +
-
-    template <typename U>
-    vec& operator+=(const vec<n,U>& rhs)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	data_[i] += rhs[i];
-      return *this;
-    }
-
-    template <typename U>
-    vec<n, xtd_op_plus_trait(T, U)>
-    operator+(const vec<n,U>& rhs) const
-    {
-      vec<n, xtd_op_plus_trait(T, U)> tmp;
-      for (unsigned i = 0; i < n; ++i)
-	tmp[i] = data_[i] + rhs[i];
-      return tmp;
-    }
-
-    // -
-
-    template <typename U>
-    vec& operator-=(const vec<n,U>& rhs)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	data_[i] -= rhs[i];
-      return *this;
-    }
-
-    template <typename U>
-    vec<n, xtd_op_minus_trait(T, U)>
-    operator-(const vec<n,U>& rhs) const
-    {
-      vec<n, xtd_op_plus_trait(T, U)> tmp;
-      for (unsigned i = 0; i < n; ++i)
-	tmp[i] = data_[i] - rhs[i];
-      return tmp;
-    }
-
-    vec<n, xtd_op_uminus_trait(T)>
-    operator-() const
-    {
-      vec<n, xtd_op_uminus_trait(T)> tmp;
-      for (unsigned i = 0; i < n; ++i)
-	tmp[i] = - data_[i];
-      return tmp;
-    }
-
-    // *
-
-    template <typename U> void operator*=(const vec<n,U>& rhs);
-    template <typename U> void operator*(const vec<n,U>& rhs) const;
-
-    template <typename S>
-    vec& operator*=(const S& scalar)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	data_[i] *= scalar;
-      return *this;
-    }
-
-    template <typename S>
-    vec<n, xtd_op_mult_trait(T, S)>
-    operator*(const S& scalar) const
-    {
-      vec<n, xtd_op_mult_trait(T, S)> tmp;
-      for (unsigned i = 0; i < n; ++i)
-	tmp[i] = data_[i] * scalar;
-      return tmp;
-    }
-
-    // /
-    
-    template <typename U> void operator/=(const vec<n,U>& rhs);
-    template <typename U> void operator/(const vec<n,U>& rhs) const;
-
-    template <typename S>
-    vec& operator/=(const S& scalar)
-    {
-      precondition(scalar != 0);
-      for (unsigned i = 0; i < n; ++i)
-	data_[i] /= scalar;
-      return *this;
-    }
-
-    template <typename S>
-    vec<n, xtd_op_div_trait(T, S)>
-    operator/(const S& scalar) const
-    {
-      precondition(scalar != 0);
-      vec<n, xtd_op_div_trait(T, S)> tmp;
-      for (unsigned i = 0; i < n; ++i)
-	tmp[i] = data_[i] / scalar;
-      return tmp;
-    }
-
   };
 
 
+
+
+  // eq
+
+  template <unsigned n, typename T, typename U>
+  bool operator==(const vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    for (unsigned i = 0; i < n; ++i)
+      if (lhs[i] != rhs[i])
+	return false;
+    return true;
+  }
+
+  template <unsigned n, typename T, typename U>
+  bool operator!=(const vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    return not (lhs == rhs);
+  }
+
+
+  // +
+
+  template <unsigned n, typename T, typename U>
+  vec<n,T>&
+  operator+=(vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    for (unsigned i = 0; i < n; ++i)
+      lhs[i] += rhs[i];
+    return lhs;
+  }
+
+  template <unsigned n, typename T, typename U>
+  vec<n, xtd_op_plus_trait(T, U)>
+  operator+(const vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    vec<n, xtd_op_plus_trait(T, U)> tmp;
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] = lhs[i] + rhs[i];
+    return tmp;
+  }
+
+
+  // -
+
+  template <unsigned n, typename T, typename U>
+  vec<n,T>&
+  operator-=(vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    for (unsigned i = 0; i < n; ++i)
+      lhs[i] -= rhs[i];
+    return lhs;
+  }
+
+  template <unsigned n, typename T, typename U>
+  vec<n, xtd_op_minus_trait(T, U)>
+  operator-(const vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    vec<n, xtd_op_plus_trait(T, U)> tmp;
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] = lhs[i] - rhs[i];
+    return tmp;
+  }
+
   template <unsigned n, typename T>
-  std::ostream& operator<<(std::ostream& ostr, const vec<n,T>& v)
+  vec<n, xtd_op_uminus_trait(T)>
+  operator-(const vec<n,T>& lhs)
+  {
+    vec<n, xtd_op_uminus_trait(T)> tmp;
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] = - lhs[i];
+    return tmp;
+  }
+
+
+  // *
+
+  template <unsigned n, typename T, typename S>
+  vec<n,T>&
+  operator*=(vec<n,T>& lhs, const S& scalar)
+  {
+    for (unsigned i = 0; i < n; ++i)
+      lhs[i] *= scalar;
+    return lhs;
+  }
+
+  template <unsigned n, typename T, typename S>
+  vec<n, xtd_op_mult_trait(T, S)>
+  operator*(const vec<n,T>& lhs, const S& scalar)
+  {
+    vec<n, xtd_op_mult_trait(T, S)> tmp;
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] = lhs[i] * scalar;
+    return tmp;
+  }
+
+
+  // /
+
+  template <unsigned n, typename T, typename S>
+  vec<n,T>&
+  operator/=(vec<n,T>& lhs, const S& scalar)
+  {
+    precondition(scalar != 0);
+    for (unsigned i = 0; i < n; ++i)
+      lhs[i] /= scalar;
+    return lhs;
+  }
+
+  template <unsigned n, typename T, typename S>
+  vec<n, xtd_op_div_trait(T, S)>
+  operator/(const vec<n,T>& lhs, const S& scalar)
+  {
+    precondition(scalar != 0);
+    vec<n, xtd_op_div_trait(T, S)> tmp;
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] = lhs[i] / scalar;
+    return tmp;
+  }
+
+
+  // <<
+
+  template <unsigned n, typename T>
+  std::ostream&
+  operator<<(std::ostream& ostr, const vec<n,T>& v)
   {
     ostr << '(';
     for (unsigned i = 0; i < n; ++i)
@@ -272,7 +297,8 @@ namespace xtd
   }
 
   template <unsigned n>
-  std::ostream& operator<<(std::ostream& ostr, const vec<n,unsigned char>& v)
+  std::ostream&
+  operator<<(std::ostream& ostr, const vec<n,unsigned char>& v)
   {
     ostr << '(';
     for (unsigned i = 0; i < n; ++i)
@@ -281,7 +307,8 @@ namespace xtd
   }
 
   template <unsigned n>
-  std::ostream& operator<<(std::ostream& ostr, const vec<n,signed char>& v)
+  std::ostream&
+  operator<<(std::ostream& ostr, const vec<n,signed char>& v)
   {
     ostr << '(';
     for (unsigned i = 0; i < n; ++i)
@@ -356,6 +383,17 @@ namespace xtd
     tmp[0] = v_0;
     tmp[1] = v_1;
     tmp[2] = v_2;
+    return tmp;
+  }
+
+  template <typename T>
+  vec<4, T> mk_vec(const T& v_0, const T& v_1, const T& v_2, const T& v_3)
+  {
+    vec<4, T> tmp;
+    tmp[0] = v_0;
+    tmp[1] = v_1;
+    tmp[2] = v_2;
+    tmp[3] = v_3;
     return tmp;
   }
 

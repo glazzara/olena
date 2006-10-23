@@ -1,3 +1,9 @@
+2006-10-23  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* xtd/vec.hh (ops): Move outside of class.
+	(vec_base_): New specialization for <4, T>.
+	(mk_vec): New overloading for 4 args.
+
 2006-10-20  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add mutators and disable mutable facilities of other functions.
