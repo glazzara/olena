@@ -25,71 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_AUTOMATIC_IMAGE_IMAGE1D_HH
-# define OLN_CORE_AUTOMATIC_IMAGE_IMAGE1D_HH
+#ifndef OLN_DEBUG_TRACK_HH
+# define OLN_DEBUG_TRACK_HH
 
-# include <oln/core/automatic/impl.hh>
-# include <oln/morpher/tags.hh>
-# include <oln/core/1d/point1d.hh>
+# include <oln/core/abstract/image.hh>
 
 
 namespace oln
 {
-  // Forward declaration.
-  namespace abstract
-  {
-    template <typename E> class image1d;
 
-  } // end of namespace oln::abstract
-
-
-  namespace automatic
+  namespace debug
   {
 
+    static unsigned n_images = 0;
 
-    /// Default implementation corresponding to the interface
-    /// oln::abstract::image1d.
-    template <typename E, typename tag>
-    class set_impl<abstract::image1d, tag, E> :
-      public virtual stc::any__simple<E>
-    {
-    public:
+  } // end of namespace oln::debug
 
-      oln_rvalue(E) impl_at(const oln_coord(E)& index) const;
-
-      // FIXME: Hack.
-      bool impl_has_at(const oln_coord(E)& index) const;
-
-    };
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-
-    // 1. convert (index) -> p then 2. call operator()(p).
-
-    template <typename E, typename tag>
-    oln_rvalue(E)
-    set_impl<abstract::image1d, tag, E>
-    ::impl_at(const oln_coord(E)& index) const
-    {
-      point1d tmp(index);
-      return this->exact().operator()(tmp);
-    }
-
-    template <typename E, typename tag>
-    bool
-    set_impl<abstract::image1d, tag, E>
-    ::impl_has_at(const oln_coord(E)& index) const
-    {
-      point1d tmp(index);
-      return this->exact().has(tmp);
-    }
-
-# endif
-
-  } // end of namespace oln::automatic
-  
 } // end of namespace oln
 
-#endif // ! OLN_CORE_AUTOMATIC_IMAGE_IMAGE1D_HH
+
+#endif // ! OLN_DEBUG_TRACK_HH

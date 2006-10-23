@@ -65,6 +65,9 @@
   Default case: If no known grid type is returned by `oln_type_of(I, grid)',
   the entry is directly plugged to abstract::image<I>.  */
 
+// FIXME: Figure above is obsolete because of the introduction of
+// sub-abstractions related to mutability.
+
 
 /*-------------------------.
 | Dimension abstractions.  |
@@ -90,25 +93,52 @@ namespace oln
 
 
   /// 1D case.
+
   template <typename E>
   struct case_< image_hierarchy_wrt_dimension, E, 1 > :
-    where_< mlc::eq_< oln_type_of(E, grid), oln::grid1d > >
+    where_< mlc::and_< mlc::eq_< oln_grid(E), oln::grid1d >,
+		       mlc_is_ok(oln_lvalue(E)) > >
+  {
+    typedef abstract::mutable_image1d<E> ret;
+  };
+
+  template <typename E>
+  struct case_< image_hierarchy_wrt_dimension, E, 2 > :
+    where_< mlc::eq_< oln_grid(E), oln::grid1d > >
   {
     typedef abstract::image1d<E> ret;
   };
 
   /// 2D case.
+
   template <typename E>
-  struct case_< image_hierarchy_wrt_dimension, E, 2 > :
-    where_< mlc::eq_< oln_type_of(E, grid), oln::grid2d > >
+  struct case_< image_hierarchy_wrt_dimension, E, 3 > :
+    where_< mlc::and_< mlc::eq_< oln_grid(E), oln::grid2d >,
+		       mlc_is_ok(oln_lvalue(E)) > >
+  {
+    typedef abstract::mutable_image2d<E> ret;
+  };
+
+  template <typename E>
+  struct case_< image_hierarchy_wrt_dimension, E, 4 > :
+    where_< mlc::eq_< oln_grid(E), oln::grid2d > >
   {
     typedef abstract::image2d<E> ret;
   };
 
   /// 3D case.
+
   template <typename E>
-  struct case_< image_hierarchy_wrt_dimension, E, 3 > :
-    where_< mlc::eq_< oln_type_of(E, grid), oln::grid3d > >
+  struct case_< image_hierarchy_wrt_dimension, E, 5 > :
+    where_< mlc::and_< mlc::eq_< oln_grid(E), oln::grid3d >,
+		       mlc_is_ok(oln_lvalue(E)) > >
+  {
+    typedef abstract::mutable_image3d<E> ret;
+  };
+
+  template <typename E>
+  struct case_< image_hierarchy_wrt_dimension, E, 6 > :
+    where_< mlc::eq_< oln_grid(E), oln::grid3d > >
   {
     typedef abstract::image3d<E> ret;
   };

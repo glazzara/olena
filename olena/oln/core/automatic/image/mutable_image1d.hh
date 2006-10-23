@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_AUTOMATIC_IMAGE_IMAGE3D_HH
-# define OLN_CORE_AUTOMATIC_IMAGE_IMAGE3D_HH
+#ifndef OLN_CORE_AUTOMATIC_IMAGE_IMAGE1D_HH
+# define OLN_CORE_AUTOMATIC_IMAGE_IMAGE1D_HH
 
 # include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
-# include <oln/core/3d/point3d.hh>
+# include <oln/core/1d/point1d.hh>
 
 
 namespace oln
@@ -38,7 +38,7 @@ namespace oln
   // Forward declaration.
   namespace abstract
   {
-    template <typename E> class image3d;
+    template <typename E> class image1d;
 
   } // end of namespace oln::abstract
 
@@ -48,22 +48,13 @@ namespace oln
 
 
     /// Default implementation corresponding to the interface
-    /// oln::abstract::image3d.
+    /// oln::abstract::image1d.
     template <typename E, typename tag>
-    class set_impl<abstract::image3d, tag, E> :
+    class set_impl<abstract::image1d, tag, E> :
       public virtual stc::any__simple<E>
     {
     public:
-
-      oln_rvalue(E) impl_at(const oln_coord(E)& slice,
-			    const oln_coord(E)& row,
-			    const oln_coord(E)& col) const;
-
-      // FIXME: Hack.
-      bool impl_has_at(const oln_coord(E)& slice,
-		       const oln_coord(E)& row,
-		       const oln_coord(E)& col) const;
-
+      oln_lvalue(E) impl_at(const oln_coord(E)& index);
     };
 
 
@@ -71,28 +62,15 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
 
-    // 1. convert (slice, row, col) -> p then 2. call operator()(p).
+    // 1. convert (index) -> p then 2. call operator()(p).
 
     template <typename E, typename tag>
-    oln_rvalue(E)
-    set_impl<abstract::image3d, tag, E>
-    ::impl_at(const oln_coord(E)& slice,
-	      const oln_coord(E)& row,
-	      const oln_coord(E)& col) const
+    oln_lvalue(E)
+    set_impl<abstract::image1d, tag, E>
+    ::impl_at(const oln_coord(E)& index)
     {
-      point3d tmp(slice, row, col);
+      point1d tmp(index);
       return this->exact().operator()(tmp);
-    }
-
-    template <typename E, typename tag>
-    bool
-    set_impl<abstract::image3d, tag, E>
-    ::impl_has_at(const oln_coord(E)& slice,
-		  const oln_coord(E)& row,
-		  const oln_coord(E)& col) const
-    {
-      point3d tmp(slice, row, col);
-      return this->exact().has(tmp);
     }
 
 # endif
@@ -101,4 +79,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLN_CORE_AUTOMATIC_IMAGE_IMAGE3D_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMAGE_IMAGE1D_HH

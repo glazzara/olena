@@ -79,6 +79,9 @@ namespace oln
 
   public:
 
+    /// Ctor without info.
+    image2d();
+
     /// Ctor using sizes.
     image2d(unsigned nrows, unsigned ncols, unsigned border = 2);
 
@@ -105,6 +108,13 @@ namespace oln
 
 
 # ifndef OLN_INCLUDE_ONLY
+
+  template <typename T>
+  image2d<T>::image2d()
+    : topo_(),
+      data_()
+  {
+  }
 
   template <typename T>
   image2d<T>::image2d(unsigned nrows, unsigned ncols, unsigned border)
@@ -145,6 +155,7 @@ namespace oln
   template <typename T>
   T image2d<T>::impl_at(int row, int col) const
   {
+    precondition(data_ != 0);
     precondition(data_->has(row, col));
     return data_->operator()(row, col);
   }

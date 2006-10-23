@@ -30,6 +30,7 @@
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/automatic/image/image2d.hh>
+# include <oln/core/automatic/image/mutable_image2d.hh>
 
 
 namespace oln
@@ -49,7 +50,6 @@ namespace oln
       oln_rvalue(E) at(const oln_coord(E)& row, const oln_coord(E)& col) const;
 
       // FIXME: Hack (should be elsewhere)!
-      oln_lvalue(E) at(const oln_coord(E)& row, const oln_coord(E)& col);
       bool has_at(const oln_coord(E)& row, const oln_coord(E)& col) const;
 
     protected:
@@ -58,7 +58,26 @@ namespace oln
     };
 
 
+    /// Class of 2D mutable images.
+    template <typename E>
+    struct mutable_image2d :
+      public image2d<E>,
+      public automatic::get_impl<mutable_image2d, E>
+    {
+    public:
+
+      oln_lvalue(E) at(const oln_coord(E)& row, const oln_coord(E)& col);
+
+    protected:
+      /// Constructor (protected, empty).
+      mutable_image2d();
+    };
+
+
+
 # ifndef OLN_INCLUDE_ONLY
+
+    // image2d
 
     template <typename E>
     image2d<E>::image2d()
@@ -73,17 +92,24 @@ namespace oln
     }
 
     template <typename E>
-    oln_lvalue(E)
-    image2d<E>::at(const oln_coord(E)& row, const oln_coord(E)& col)
-    {
-      return this->exact().impl_at(row, col);
-    }
-
-    template <typename E>
     bool
     image2d<E>::has_at(const oln_coord(E)& row, const oln_coord(E)& col) const
     {
       return this->exact().impl_has_at(row, col);
+    }
+
+    // mutable_image2d
+
+    template <typename E>
+    mutable_image2d<E>::mutable_image2d()
+    {
+    }
+
+    template <typename E>
+    oln_lvalue(E)
+    mutable_image2d<E>::at(const oln_coord(E)& row, const oln_coord(E)& col)
+    {
+      return this->exact().impl_at(row, col);
     }
 
 # endif

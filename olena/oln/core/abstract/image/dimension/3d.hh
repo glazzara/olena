@@ -30,6 +30,7 @@
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/automatic/image/image3d.hh>
+# include <oln/core/automatic/image/mutable_image3d.hh>
 
 
 namespace oln
@@ -51,9 +52,6 @@ namespace oln
 		       const oln_coord(E)& col) const;
 
       // FIXME: Hack (should be elsewhere)!
-      oln_lvalue(E) at(const oln_coord(E)& slice,
-		       const oln_coord(E)& row,
-		       const oln_coord(E)& col);
       bool has_at(const oln_coord(E)& slice,
 		  const oln_coord(E)& row,
 		  const oln_coord(E)& col) const;
@@ -64,7 +62,28 @@ namespace oln
     };
 
 
+ 
+    /// Class of 3D mutable images.
+    template <typename E>
+    struct mutable_image3d :
+      public image3d<E>,
+      public automatic::get_impl<mutable_image3d, E>
+    {
+    public:
+
+      oln_lvalue(E) at(const oln_coord(E)& slice,
+		       const oln_coord(E)& row,
+		       const oln_coord(E)& col);
+
+    protected:
+      /// Constructor (protected, empty).
+      mutable_image3d();
+    };
+
+
 # ifndef OLN_INCLUDE_ONLY
+
+    // image3d
 
     template <typename E>
     image3d<E>::image3d()
@@ -81,21 +100,28 @@ namespace oln
     }
 
     template <typename E>
-    oln_lvalue(E)
-    image3d<E>::at(const oln_coord(E)& slice,
-		   const oln_coord(E)& row,
-		   const oln_coord(E)& col)
-    {
-      return this->exact().impl_at(slice, row, col);
-    }
-
-    template <typename E>
     bool
     image3d<E>::has_at(const oln_coord(E)& slice,
 		       const oln_coord(E)& row,
 		       const oln_coord(E)& col) const
     {
       return this->exact().impl_has_at(slice, row, col);
+    }
+
+    // mutable_image3d
+
+    template <typename E>
+    mutable_image3d<E>::mutable_image3d()
+    {
+    }
+
+    template <typename E>
+    oln_lvalue(E)
+    mutable_image3d<E>::at(const oln_coord(E)& slice,
+			   const oln_coord(E)& row,
+			   const oln_coord(E)& col)
+    {
+      return this->exact().impl_at(slice, row, col);
     }
 
 # endif

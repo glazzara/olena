@@ -48,10 +48,6 @@ namespace oln
     template <typename I>
     void print(const abstract::image<I>& input, std::ostream& ostr = std::cout);
 
-    /// Fwd decl.
-    template <typename I>
-    void println(const abstract::image<I>& input, std::ostream& ostr = std::cout);
-
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -109,15 +105,6 @@ namespace oln
     void print(const abstract::image<I>& input, std::ostream& ostr)
     {
       impl::print(input.exact(), ostr);
-    }
-
-
-    /// Facade.
-    template <typename I>
-    void println(const abstract::image<I>& input, std::ostream& ostr)
-    {
-      print(input, ostr);
-      ostr << std::endl;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

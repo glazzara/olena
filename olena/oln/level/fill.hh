@@ -29,6 +29,8 @@
 #ifndef OLN_LEVEL_FILL_HH
 # define OLN_LEVEL_FILL_HH
 
+# include <iostream>
+
 # include <mlc/assert.hh>
 # include <mlc/is_a.hh>
 
@@ -45,12 +47,26 @@ namespace oln
     struct FIRST_ARGUMENT_OF_oln_level_fill_IS_NOT_MUTABLE;
   }
 
+
+  /// Fwd decl.
+  template <typename I, typename V>
+  I& operator<<(abstract::mutable_image<I>& input, const V values[]);
+
+  /// Fwd decl.
+  template <typename I>
+  I& operator<<(abstract::mutable_image<I>& input, const oln_value(I)& value);
+
+
   namespace level
   {
 
     /// Fwd decl.
     template <typename I>
-    void fill(abstract::mutable_image<I>& input, const oln_value(I)& val);
+    void fill(abstract::mutable_image<I>& input, const oln_value(I)& value);
+
+    /// Fwd decl.
+    template <typename I, typename V>
+    void fill(abstract::mutable_image<I>& input, const V values[]);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -60,11 +76,21 @@ namespace oln
 
       /// Generic version.
       template <typename I>
-      void fill(abstract::mutable_image<I>& input, const oln_value(I)& val)
+      void fill(abstract::mutable_image<I>& input, const oln_value(I)& value)
       {
 	oln_piter(I) p(input.topo());
 	for_all(p)
-	  input(p) = val;
+	  input(p) = value;
+      }
+
+      /// Generic version.
+      template <typename I, typename V>
+      void fill(abstract::mutable_image<I>& input, const V values[])
+      {
+	oln_piter(I) p(input.topo());
+	unsigned i = 0;
+	for_all(p)
+	  input(p) = values[i++];
       }
 
     } // end of namespace oln::level::fill
@@ -72,14 +98,43 @@ namespace oln
 
     /// Facade.
     template <typename I>
-    void fill(abstract::mutable_image<I>& input, const oln_value(I)& val)
+    void fill(abstract::mutable_image<I>& input, const oln_value(I)& value)
     {
-      impl::fill(input.exact(), val);
+      impl::fill(input.exact(), value);
     }
+
+    /// Facade.
+    template <typename I, typename V>
+    void fill(abstract::mutable_image<I>& input, const V values[])
+    {
+      return impl::fill(input.exact(), values);
+    }
+
 
 # endif
 
   } // end of namespace oln::level
+
+
+# ifndef OLN_INCLUDE_ONLY
+    
+  /// Fwd decl.
+  template <typename I, typename V>
+  I& operator<<(abstract::mutable_image<I>& input, const V values[])
+  {
+    level::fill(input, values);
+    return input.exact();
+  }
+ 
+  /// Fwd decl.
+  template <typename I>
+  I& operator<<(abstract::mutable_image<I>& input, const oln_value(I)& value)
+  {
+    level::fill(input, value);
+    return input.exact();
+  }
+
+# endif
 
 } // end of namespace oln
 

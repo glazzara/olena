@@ -30,6 +30,7 @@
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/automatic/image/image1d.hh>
+# include <oln/core/automatic/image/mutable_image1d.hh>
 
 
 namespace oln
@@ -49,7 +50,6 @@ namespace oln
       oln_rvalue(E) at(const oln_coord(E)& index) const;
 
       // FIXME: Hack (should be elsewhere)!
-      oln_lvalue(E) at(const oln_coord(E)& index);
       bool has_at(const oln_coord(E)& index) const;
 
     protected:
@@ -58,7 +58,25 @@ namespace oln
     };
 
 
+    /// Class of 1D mutable images.
+    template <typename E>
+    struct mutable_image1d :
+      public image1d<E>,
+      public automatic::get_impl<mutable_image1d, E>
+    {
+    public:
+
+      oln_lvalue(E) at(const oln_coord(E)& index);
+
+    protected:
+      /// Constructor (protected, empty).
+      mutable_image1d();
+    };
+
+
 # ifndef OLN_INCLUDE_ONLY
+
+    // image1d
 
     template <typename E>
     image1d<E>::image1d()
@@ -73,17 +91,24 @@ namespace oln
     }
 
     template <typename E>
-    oln_lvalue(E)
-    image1d<E>::at(const oln_coord(E)& index)
-    {
-      return this->exact().impl_at(index);
-    }
-
-    template <typename E>
     bool
     image1d<E>::has_at(const oln_coord(E)& index) const
     {
       return this->exact().impl_has_at(index);
+    }
+
+    // mutable_image1d
+
+    template <typename E>
+    mutable_image1d<E>::mutable_image1d()
+    {
+    }
+
+    template <typename E>
+    oln_lvalue(E)
+    mutable_image1d<E>::at(const oln_coord(E)& index)
+    {
+      return this->exact().impl_at(index);
     }
 
 # endif

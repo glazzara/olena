@@ -98,6 +98,9 @@ nobase_oln_HEADERS =						\
   core/automatic/image/image2d.hh				\
   core/automatic/image/image3d.hh				\
   core/automatic/image/mutable_image.hh				\
+  core/automatic/image/mutable_image1d.hh			\
+  core/automatic/image/mutable_image2d.hh			\
+  core/automatic/image/mutable_image3d.hh			\
   core/automatic/image/image_being_random_accessible.hh		\
   core/automatic/image/image_having_neighborhood.hh		\
   core/automatic/image/image_having_neighborhood.hh		\
@@ -156,6 +159,7 @@ nobase_oln_HEADERS =						\
   core/type.hh							\
 								\
   debug/print.hh						\
+  debug/track.hh						\
   debug/typename.hh						\
 								\
   io/pnm.hh							\
@@ -170,6 +174,7 @@ nobase_oln_HEADERS =						\
   morpher/identity.hh						\
   morpher/tags.hh						\
   morpher/slice.hh						\
+  morpher/stack.hh						\
   morpher/thru_fun.hh						\
   morpher/thru_mfun.hh						\
   morpher/value_cast.hh						\

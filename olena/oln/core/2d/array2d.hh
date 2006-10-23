@@ -29,7 +29,7 @@
 #ifndef OLN_CORE_2D_ARRAY2D_HH
 # define OLN_CORE_2D_ARRAY2D_HH
 
-# include <cstdlib>
+# include <cstddef>
 # include <mlc/contract.hh>
 
 
@@ -55,7 +55,7 @@ namespace oln
 
     bool has(coord_t i, coord_t j) const;
 
-    size_t memsize() const;
+    std::size_t memsize() const;
 
   protected:
 

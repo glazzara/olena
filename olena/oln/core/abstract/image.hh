@@ -29,9 +29,12 @@
 #ifndef OLN_CORE_ABSTRACT_IMAGE_HH
 # define OLN_CORE_ABSTRACT_IMAGE_HH
 
+# include <cstddef>
+
 # include <oln/core/typedefs.hh>
 # include <oln/core/abstract/fwd_decls.hh>
 # include <oln/core/automatic/image/image.hh>
+# include <oln/debug/track.hh>
 
 
 namespace oln
@@ -136,12 +139,14 @@ namespace oln
     template <typename E>
     image<E>::image()
     {
+      ++debug::n_images;
     }
 
     template <typename E>
     image<E>::~image()
     {
       decl();
+      --debug::n_images;
     }
 
     template <typename E>

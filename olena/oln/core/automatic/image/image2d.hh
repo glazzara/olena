@@ -57,26 +57,7 @@ namespace oln
 
       oln_rvalue(E) impl_at(const oln_coord(E)& row, const oln_coord(E)& col) const;
 
-      // FIXME: Hack.
-      oln_lvalue(E) impl_at(const oln_coord(E)& row, const oln_coord(E)& col);
-      bool impl_has_at(const oln_coord(E)& row, const oln_coord(E)& col) const;
-
-    };
-
-
-
-    /// Implementation corresponding to the interface
-    /// oln::abstract::image2d for an identity morpher.
-    template <typename E>
-    class set_impl<abstract::image2d, morpher::tag::identity, E> :
-      public virtual stc::any__simple<E>
-    {
-    public:
-
-      oln_rvalue(E) impl_at(const oln_coord(E)& row, const oln_coord(E)& col) const;
-
-      // FIXME: Hack.
-      oln_lvalue(E) impl_at(const oln_coord(E)& row, const oln_coord(E)& col);
+      // FIXME: Hack; should be elsewhere...
       bool impl_has_at(const oln_coord(E)& row, const oln_coord(E)& col) const;
 
     };
@@ -86,21 +67,12 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
 
-    // Default is: 1. convert (row, col) -> p then 2. call operator()(p).
+    // 1. convert (row, col) -> p then 2. call operator()(p).
 
     template <typename E, typename tag>
     oln_rvalue(E)
     set_impl<abstract::image2d, tag, E>
     ::impl_at(const oln_coord(E)& row, const oln_coord(E)& col) const
-    {
-      point2d tmp(row, col);
-      return this->exact().operator()(tmp);
-    }
-
-    template <typename E, typename tag>
-    oln_lvalue(E)
-    set_impl<abstract::image2d, tag, E>
-    ::impl_at(const oln_coord(E)& row, const oln_coord(E)& col)
     {
       point2d tmp(row, col);
       return this->exact().operator()(tmp);
@@ -113,33 +85,6 @@ namespace oln
     {
       point2d tmp(row, col);
       return this->exact().has(tmp);
-    }
-
-
-    // For morphers: delegate.
-
-    template <typename E>
-    oln_rvalue(E)
-    set_impl<abstract::image2d, morpher::tag::identity, E>
-    ::impl_at(const oln_coord(E)& row, const oln_coord(E)& col) const
-    {
-      return this->exact().delegate().at(row, col);
-    }
-
-    template <typename E>
-    oln_lvalue(E)
-    set_impl<abstract::image2d, morpher::tag::identity, E>
-    ::impl_at(const oln_coord(E)& row, const oln_coord(E)& col)
-    {
-      return this->exact().delegate().at(row, col);
-    }
-
-    template <typename E>
-    bool
-    set_impl<abstract::image2d, morpher::tag::identity, E>
-    ::impl_has_at(const oln_coord(E)& row, const oln_coord(E)& col) const
-    {
-      return this->exact().delegate().has_at(row, col);
     }
 
 # endif

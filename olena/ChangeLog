@@ -1,3 +1,36 @@
+2006-10-23  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add stack morpher and remove the hack related to indexed mutable
+	access.
+	
+	* tests/morphers/stack_morpher.cc: New.
+	* tests/morphers/Makefile.am: Update.
+	* oln/debug/track.hh: New.
+	* oln/core/automatic/image/mutable_image2d.hh: New.
+	* oln/core/automatic/image/mutable_image3d.hh: New.
+	* oln/core/automatic/image/mutable_image1d.hh: New.
+	* oln/morpher/stack.hh: New.
+	* oln/Makefile.am: Update.
+	* oln/debug/print.hh (println): Remove; too dummy.
+	(operator): New.
+	* oln/level/fill.hh (fill): New specialization for C arrays.
+	* oln/core/automatic/image/image1d.hh: Remove hack of 'at'.
+	* oln/core/automatic/image/image2d.hh: Likewise.
+	* oln/core/automatic/image/image3d.hh: Likewise.
+	* oln/core/abstract/image.hh (image, ~image): Add counting.
+	(include): Update.
+	* oln/core/abstract/image/dimension/1d.hh
+	(image1d): Split partially into...
+	(mutable_image1d): ...this new class.
+	(include): Update.
+	* oln/core/abstract/image/dimension/2d.hh: Likewise.
+	* oln/core/abstract/image/dimension/3d.hh: Likewise.
+	* oln/core/abstract/image/dimension/hierarchy.hh
+	(case_): Update.
+	* oln/core/2d/array2d.hh (memsize): Better sig.
+	(include): Update.
+	* oln/core/2d/image2d.hh (image2d): New overloading for no arg.
+
 2006-10-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add files for oln::window[123]d.
