@@ -66,11 +66,12 @@ namespace oln
     /// Class of 3D mutable images.
     template <typename E>
     struct mutable_image3d :
-      public image3d<E>,
+      public virtual image3d<E>,
       public automatic::get_impl<mutable_image3d, E>
     {
     public:
 
+      using image3d<E>::at;
       oln_lvalue(E) at(const oln_coord(E)& slice,
 		       const oln_coord(E)& row,
 		       const oln_coord(E)& col);

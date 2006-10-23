@@ -113,6 +113,7 @@ namespace oln
       /*! \brief Constructor (protected, empty).
       */
       image();
+      image(const image&);
 
       /*! \brief Destructor.
       */
@@ -138,6 +139,12 @@ namespace oln
 
     template <typename E>
     image<E>::image()
+    {
+      ++debug::n_images;
+    }
+
+    template <typename E>
+    image<E>::image(const image&)
     {
       ++debug::n_images;
     }

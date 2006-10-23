@@ -61,11 +61,12 @@ namespace oln
     /// Class of 2D mutable images.
     template <typename E>
     struct mutable_image2d :
-      public image2d<E>,
+      public virtual image2d<E>,
       public automatic::get_impl<mutable_image2d, E>
     {
     public:
 
+      using image2d<E>::at;
       oln_lvalue(E) at(const oln_coord(E)& row, const oln_coord(E)& col);
 
     protected:

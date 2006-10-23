@@ -61,11 +61,12 @@ namespace oln
     /// Class of 1D mutable images.
     template <typename E>
     struct mutable_image1d :
-      public image1d<E>,
+      public virtual image1d<E>,
       public automatic::get_impl<mutable_image1d, E>
     {
     public:
 
+      using image1d<E>::at;
       oln_lvalue(E) at(const oln_coord(E)& index);
 
     protected:

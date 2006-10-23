@@ -1,5 +1,24 @@
 2006-10-23  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Fix debug track and disambiguate the 'at' method overloading
+	in const and mutable nD images.
+	
+	* oln/core/abstract/array.hh: New.
+	* oln/debug/track.hh (n_arrays): New.
+	(include): Fix.
+	* oln/core/abstract/image.hh (image): New cpy ctor so fix
+	n_images tracking.
+	* oln/core/abstract/image/dimension/1d.hh: Disambiguate by
+	changing inheritance to virtual + inserting a using directive. 
+	* oln/core/abstract/image/dimension/2d.hh: Likewise.
+	* oln/core/abstract/image/dimension/3d.hh: Likewise.
+	* oln/core/1d/array1d.hh (array1d): Add inheritance.
+	* oln/core/2d/array2d.hh: Likewise.
+	* oln/core/3d/array3d.hh: Likewise.
+	* oln/Makefile.am: Update.
+
+2006-10-23  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add stack morpher and remove the hack related to indexed mutable
 	access.
 	

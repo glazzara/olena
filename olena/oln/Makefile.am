@@ -78,6 +78,7 @@ nobase_oln_HEADERS =						\
   core/abstract/topology/topology_having_subset.hh		\
 								\
   core/abstract/any.hh						\
+  core/abstract/array.hh					\
   core/abstract/bbox.hh						\
   core/abstract/dpoint.hh					\
   core/abstract/entry.hh					\

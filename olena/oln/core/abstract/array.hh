@@ -25,22 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_DEBUG_TRACK_HH
-# define OLN_DEBUG_TRACK_HH
+#ifndef OLN_CORE_ABSTRACT_ARRAY_HH
+# define OLN_CORE_ABSTRACT_ARRAY_HH
+
+# include <oln/debug/track.hh>
 
 
 namespace oln
 {
 
-  namespace debug
+  namespace abstract
   {
 
-    static unsigned n_images = 0;
-    static unsigned n_arrays = 0;
+    struct array : public oln::type
+    {
+    protected:
+      array();
+      ~array();
+    };
 
-  } // end of namespace oln::debug
+
+# ifndef OLN_INCLUDE_ONLY
+
+    array::array()
+    {
+      ++debug::n_arrays;
+    }
+
+    array::~array()
+    {
+      if (debug::n_arrays > 0)
+	--debug::n_arrays;
+    }
+
+# endif
+
+  } // end of namespace oln::abstract
 
 } // end of namespace oln
 
 
-#endif // ! OLN_DEBUG_TRACK_HH
+#endif // ! OLN_CORE_ABSTRACT_ARRAY_HH

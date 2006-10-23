@@ -31,6 +31,7 @@
 
 # include <cstddef>
 # include <mlc/contract.hh>
+# include <oln/core/abstract/array.hh>
 
 
 namespace oln
@@ -38,7 +39,7 @@ namespace oln
 
   /// General 2D array class.
   template <typename value_t, typename coord_t = int>
-  class array2d
+  class array2d : public abstract::array
   {
   public:
 
