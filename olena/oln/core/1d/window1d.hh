@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,35 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_BASICS2D_HH
-# define OLN_BASICS2D_HH
+#ifndef OLN_CORE_1D_WINDOW1D_HH
+# define OLN_CORE_1D_WINDOW1D_HH
 
+// Headers required for the complete definition of oln::window1d
+// (i.e., oln::window_<dpoint1d>).
+# include <oln/core/1d/aliases.hh>
+# include <oln/core/1d/dpoint1d.hh>
+# include <oln/core/gen/window.hh>
 
-# include <oln/core/2d/aliases.hh>
-
-# include <oln/core/gen/grid.hh>
-
-# include <oln/core/2d/point2d.hh>
-# include <oln/core/2d/dpoint2d.hh>
-
-# include <oln/core/2d/topo2d.hh>
-
-# include <oln/core/gen/fwd_piter_bbox.hh>
-# include <oln/core/gen/bkd_piter_bbox.hh>
-
-# include <oln/core/2d/window2d.hh>
-# include <oln/core/gen/fwd_qiter_win.hh>
-# include <oln/core/gen/bkd_qiter_win.hh>
-
-# include <oln/core/gen/neighb.hh>
-# include <oln/core/2d/neighb2d.hh>
-
-# include <oln/core/2d/image2d.hh>
-
-# include <oln/core/iterator_vtypes.hh>
-
-# include <oln/core/spe/row.hh>
-# include <oln/core/spe/col.hh>
-
-
-#endif // ! OLN_BASICS2D_HH
+#endif // ! OLN_CORE_1D_WINDOW1D_HH

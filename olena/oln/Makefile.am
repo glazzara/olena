@@ -13,6 +13,7 @@ nobase_oln_HEADERS =						\
   core/1d/neighb1d.hh						\
   core/1d/point1d.hh						\
   core/1d/topo1d.hh						\
+  core/1d/window1d.hh						\
 								\
   core/2d/aliases.hh						\
   core/2d/array2d.hh						\
@@ -22,6 +23,7 @@ nobase_oln_HEADERS =						\
   core/2d/neighb2d.hh						\
   core/2d/point2d.hh						\
   core/2d/topo2d.hh						\
+  core/2d/window2d.hh						\
 								\
   core/3d/aliases.hh						\
   core/3d/array3d.hh						\
@@ -31,6 +33,7 @@ nobase_oln_HEADERS =						\
   core/3d/neighb3d.hh						\
   core/3d/point3d.hh						\
   core/3d/topo3d.hh						\
+  core/3d/window3d.hh						\
 								\
   core/abstract/image/accessibility/hierarchy.hh		\
 								\

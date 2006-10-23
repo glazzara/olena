@@ -37,13 +37,12 @@
 # include <oln/core/3d/point3d.hh>
 # include <oln/core/3d/dpoint3d.hh>
 
-# include <oln/core/gen/bbox.hh>
-# include <oln/core/gen/topo_lbbox.hh>
+# include <oln/core/3d/topo3d.hh>
 
 # include <oln/core/gen/fwd_piter_bbox.hh>
 # include <oln/core/gen/bkd_piter_bbox.hh>
 
-# include <oln/core/gen/window.hh>
+# include <oln/core/3d/window3d.hh>
 # include <oln/core/gen/fwd_qiter_win.hh>
 # include <oln/core/gen/bkd_qiter_win.hh>
 

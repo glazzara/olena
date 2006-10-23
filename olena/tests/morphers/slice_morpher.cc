@@ -32,9 +32,6 @@
 #include <mlc/assert.hh>
 #include <mlc/is_a.hh>
 
-// FIXME: We should not include oln/basics2d.hh and oln/basics3d.hh,
-// but only oln/core/3d/image3d.hh and oln/core/2d/image2d.hh,
-// oln/core/2d/window2d.
 #include <oln/basics2d.hh>
 #include <oln/basics3d.hh>
 #include <oln/morpher/slice.hh>

@@ -1,5 +1,19 @@
 2006-10-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add files for oln::window[123]d.
+
+	* oln/core/1d/window1d.hh: New file.
+	* oln/basics1d.hh: Include it.
+	* oln/core/2d/window2d.hh: New file.
+	* oln/basics2d.hh: Include it.
+	* oln/core/3d/window3d.hh: New file.
+	* oln/basics3d.hh: Include it.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add core/1d/window1d.hh,
+	core/2d/window2d.hh and core/3d/window3d.hh
+	* tests/morphers/slice_morpher.cc: Remove FIXME.
+
+2006-10-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add qiters for oln::morpher::slice.
 
 	* oln/core/type_fun/slice.hh
