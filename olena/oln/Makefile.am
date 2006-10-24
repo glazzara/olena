@@ -170,6 +170,7 @@ nobase_oln_HEADERS =						\
   morpher/internal/image_value_morpher.hh			\
 								\
   morpher/add_neighborhood.hh					\
+  morpher/count_rw.hh						\
   morpher/fwd_decls.hh						\
   morpher/identity.hh						\
   morpher/tags.hh						\
@@ -186,6 +187,8 @@ nobase_oln_HEADERS =						\
   value/all.hh							\
   value/default.hh						\
   value/greylevel.hh						\
+  value/proxy.hh						\
+  value/rw_counter.hh						\
   value/tags.hh							\
 								\
   basics1d.hh							\

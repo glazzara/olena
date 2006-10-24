@@ -227,6 +227,9 @@ namespace oln
 # define oln_dpoint(T)  oln_type_of(T,  dpoint)
 # define oln_dpoint_(T) oln_type_of_(T, dpoint)
 
+# define oln_is_computed(T)   oln_type_of(T,  is_computed)
+# define oln_is_computed_(T)  oln_type_of_(T, is_computed)
+
 # define oln_value(T)   oln_type_of(T,  value)
 # define oln_value_(T)  oln_type_of_(T, value)
 

@@ -88,13 +88,15 @@ namespace oln
       {
       public:
 
-	// FIXME: Handle the constness.
+	// FIXME: Hack here; constness should be properly handled.
 	image_value_morpher(const Image& image);
+	image_value_morpher(Image& image);
+
 	const Image& delegate() const;
 	Image& delegate();
 
       protected:
-	Image image_;
+	Image& image_;
       };
 
 
@@ -103,6 +105,12 @@ namespace oln
 
       template <typename Image, typename Exact>
       image_value_morpher<Image, Exact>::image_value_morpher(const Image& image) :
+	image_(const_cast<Image&>(image))
+      {
+      }
+
+      template <typename Image, typename Exact>
+      image_value_morpher<Image, Exact>::image_value_morpher(Image& image) :
 	image_(image)
       {
       }

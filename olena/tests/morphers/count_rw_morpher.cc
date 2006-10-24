@@ -25,66 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_TRAITS_ID_HH
-# define OLN_CORE_TRAITS_ID_HH
+/// Test the count_rw morpher.
 
-# include <oln/core/traits.hh>
+#include <cassert>
+#include <oln/basics2d.hh>
+#include <oln/morpher/count_rw.hh>
 
 
-namespace oln
+int main()
 {
+  using namespace oln;
 
-  namespace id
-  {
+  typedef image2d<int> image_t;
+  image_t ima(3,3);
+  morpher::count_rw<image_t> ima2(ima);
+  point2d p(0,0);
 
-    /// \{
-    /// Generic identifiers for operators.
+  ima2(p);
+  ima2(p) = 51;
+  int i = ima2(p);
+  i = 0; // suppress "unused i" warning
 
-    enum {
-      unop_vproxy  = 1,
-      binop_vproxy = 1
-    };
-
-    /// \}
-
-
-    /// \{
-    /// Identifiers for oln binary operators +.
-
-    enum {
-      op_plus_pointnd_dpointnd = 2
-    };
-
-    /// \}
-
-
-
-    /// \{
-    /// Identifiers for oln binary operators -.
-
-    enum {
-      op_minus_pointnd_pointnd  = 2,
-      op_minus_pointnd_dpointnd = 3
-    };
-
-    /// \}
-
-
-
-    /// \{
-    /// Identifiers for oln unary operators -.
-
-    enum {
-      op_uminus_dpointnd = 2
-    };
-
-    /// \}
-
-
-  } // end of namespace oln::id
-
-} // end of namespace oln
-
-
-
-#endif // ! OLN_CORE_TRAITS_ID_HH
+  assert(value::counter::n_readwrite_calls(ima) == 3);
+  assert(value::counter::n_readonly_calls(ima)  == 0);
+  assert(value::counter::n_reads(ima)           == 1);
+  assert(value::counter::n_writes(ima)          == 1);
+}

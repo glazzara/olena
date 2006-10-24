@@ -1,3 +1,21 @@
+2006-10-24  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add a morpher to count read-write ops.
+	
+	* tests/morphers/count_rw_morpher.cc: New.
+	* tests/morphers/Makefile.am: Update.
+	* oln/morpher/count_rw.hh: New.
+	* oln/value/proxy.hh: New.
+	* oln/value/rw_counter.hh: New.
+	* oln/Makefile.am: Update.
+	* oln/core/traits_id.hh (unop_vproxy, binop_vproxy): New.
+	(others): Update.
+	* oln/core/typedefs.hh
+	(oln_is_computed, oln_is_computed_): New.
+	* oln/morpher/internal/image_value_morpher.hh
+	(image_value_morpher): New overloading for ctor.
+	(image_): Add & to its type.
+	
 2006-10-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a morpher adding a look-up table to an image.
