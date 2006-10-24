@@ -27,6 +27,7 @@ check_PROGRAMS =				\
   image2d					\
   image3d					\
   npoints					\
+  pw_value					\
   window2d					\
 						\
   at
@@ -40,6 +41,7 @@ image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
 image3d_SOURCES = image3d.cc
 npoints_SOURCES = npoints.cc
+pw_value_SOURCES = pw_value.cc
 window2d_SOURCES = window2d.cc
 
 # Methods.

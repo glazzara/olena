@@ -123,6 +123,7 @@ nobase_oln_HEADERS =						\
   core/gen/grid.hh						\
   core/gen/mapimage.hh						\
   core/gen/neighb.hh						\
+  core/gen/pw_value.hh						\
   core/gen/topo_add_nbh.hh					\
   core/gen/topo_bbox.hh						\
   core/gen/topo_lbbox.hh					\

@@ -1,5 +1,14 @@
 2006-10-24  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Add point-wise values.
+	
+	* tests/core/pw_value.cc: New.
+	* tests/core/Makefile.am: Update.
+	* oln/core/gen/pw_value.hh: New.
+	* oln/Makefile.am: Update.
+
+2006-10-24  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add a morpher to count read-write ops.
 	
 	* tests/morphers/count_rw_morpher.cc: New.
