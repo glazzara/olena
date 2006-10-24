@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_ADD_NEIGHBORHOOD
-# define OLN_MORPHER_ADD_NEIGHBORHOOD
+#ifndef OLN_MORPHER_ADD_NEIGHBORHOOD_HH
+# define OLN_MORPHER_ADD_NEIGHBORHOOD_HH
 
 # include <oln/morpher/internal/image_extension.hh>
 # include <oln/core/gen/topo_add_nbh.hh>
@@ -69,14 +69,13 @@ namespace oln
   {
     /// Neighborhood addition morpher.
     template <typename Image, typename Neighb>
-    class add_neighborhood : public morpher::internal::image_extension< Image,
-								        add_neighborhood<Image, Neighb> >
-    // FIXME: Uncomment. stc_get_supers(mlc_comma_1(add_neighborhood<Image, Neighb>))
+    class add_neighborhood :
+      public stc_get_supers(mlc_comma_1(add_neighborhood<Image, Neighb>))
     {
     private:
 
       typedef add_neighborhood<Image, Neighb> self_t;
-      typedef stc_get_nth_super(self_t, 1) super_t;
+      typedef stc_get_super(self_t) super_t;
       typedef oln_type_of(self_t, topo) topo_t;
 
     public:
@@ -144,4 +143,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHER_ADD_NEIGHBORHOOD
+#endif // ! OLN_MORPHER_ADD_NEIGHBORHOOD_HH

@@ -1,5 +1,15 @@
 2006-10-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Partial clean up of oln::morpher::add_neighborhood.
+
+	* oln/morpher/add_neighborhood.hh: Fix header guards.
+	(oln::morpher::add_neighborhood): Use the macro stc_get_supers to
+	set the super class.
+	(oln::morpher::add_neighborhood::super_t): Use the macro
+	stc_get_super to define it.
+
+2006-10-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Move oln::color to oln::value::color.
 
 	* oln/color/rgb.hh: Move...
