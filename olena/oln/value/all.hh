@@ -35,7 +35,7 @@
 # include <oln/value/bin.hh>
 # include <oln/value/default.hh>
 
-# include <oln/color/rgb.hh>
+# include <oln/value/color/rgb.hh>
 
 
 #endif // ! OLN_VALUE_ALL_HH

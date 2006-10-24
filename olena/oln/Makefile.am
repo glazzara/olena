@@ -3,8 +3,6 @@
 olndir = $(includedir)/oln
 nobase_oln_HEADERS =						\
 								\
-  color/rgb.hh							\
-								\
   core/1d/aliases.hh						\
   core/1d/array1d.hh						\
   core/1d/dpoint1d.hh						\
@@ -179,6 +177,8 @@ nobase_oln_HEADERS =						\
   morpher/thru_fun.hh						\
   morpher/thru_mfun.hh						\
   morpher/value_cast.hh						\
+								\
+  value/color/rgb.hh						\
 								\
   value/accessor.hh						\
   value/all.hh							\

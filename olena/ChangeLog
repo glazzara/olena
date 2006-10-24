@@ -1,3 +1,15 @@
+2006-10-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Move oln::color to oln::value::color.
+
+	* oln/color/rgb.hh: Move...
+	* oln/value/color/rgb.hh: ...here.
+	(oln::color): Move the contents of this namespace...
+	(oln::value::color): ...into this one.
+	* oln/value/all.hh: Adjust.
+	* oln/Makefile.am (nobase_oln_HEADERS):
+	s|color/rgb.hh|value/color/rgb.hh|.
+
 2006-10-23  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Fix debug track and disambiguate the 'at' method overloading
