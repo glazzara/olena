@@ -1,5 +1,17 @@
 2006-10-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a morpher adding a look-up table to an image.
+
+	* oln/core/lookup_table.hh: New.
+	* oln/morpher/with_lut.hh: New morpher.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add core/lookup_table.hh
+	and morpher/with_lut.hh.
+	* tests/morphers/with_lut.cc: New test.
+	* tests/morphers/Makefile.am (check_PROGRAMS): Add with_lut.
+	(with_lut_SOURCES): New.
+
+2006-10-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Partial clean up of oln::morpher::add_neighborhood.
 
 	* oln/morpher/add_neighborhood.hh: Fix header guards.

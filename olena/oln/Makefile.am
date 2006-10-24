@@ -148,6 +148,7 @@ nobase_oln_HEADERS =						\
   core/fwd_decls.hh						\
   core/image_entry.hh						\
   core/iterator_vtypes.hh					\
+  core/lookup_table.hh						\
   core/macros.hh						\
   core/neighborhood_entry.hh					\
   core/point_set_entry.hh					\
@@ -177,6 +178,7 @@ nobase_oln_HEADERS =						\
   morpher/thru_fun.hh						\
   morpher/thru_mfun.hh						\
   morpher/value_cast.hh						\
+  morpher/with_lut.hh						\
 								\
   value/color/rgb.hh						\
 								\
