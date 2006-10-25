@@ -79,10 +79,6 @@ namespace oln
   }; // end of class oln::fwd_piter_bbox_<point>
 
 
-  template <typename point_t>
-  std::ostream& operator<<(std::ostream& ostr, const fwd_piter_bbox_<point_t>& t);
-
-
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -99,14 +95,6 @@ namespace oln
     ostr << "{ p=" << this->p_
 	 << " }";
   }
-
-  template <typename point_t>
-  std::ostream& operator<<(std::ostream& ostr, const fwd_piter_bbox_<point_t>& t)
-  {
-    t.print(ostr);
-    return ostr;
-  }
-
 
 # endif  
 

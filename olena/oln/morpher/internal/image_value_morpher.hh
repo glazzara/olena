@@ -96,7 +96,7 @@ namespace oln
 	Image& delegate();
 
       protected:
-	Image& image_;
+	Image image_;
       };
 
 

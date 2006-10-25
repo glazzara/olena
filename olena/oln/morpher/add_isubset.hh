@@ -34,6 +34,9 @@
 # include <oln/core/gen/topo_add_isubset.hh>
 # include <oln/core/gen/piter_isubset.hh>
 
+# include <xtd/abstract/fun_nary_expr.hh>
+# include <oln/core/gen/pw_value.hh>
+
 
 namespace oln
 {
@@ -124,7 +127,7 @@ namespace oln
       super_t(image),
       topo_(image.topo(), isubset)
     {
-      mlc::assert_equal_<oln_type_of(Image, grid), oln_type_of(Isubset, grid)>::check();
+      // mlc::assert_equal_<oln_type_of(Image, grid), oln_type_of(Isubset, grid)>::check();
       // FIXME: check that Image is without a isubset
     }
 
@@ -151,6 +154,13 @@ namespace oln
   // FIXME: Add mutable version.
 
 
+  template <typename I, typename S>
+  morpher::add_isubset<I, S>
+  operator | (const abstract::image<I>& image,
+	      const xtd::abstract::fun_nary_expr_<1,S>& fsubset);
+
+
+
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename I, typename S>
@@ -161,6 +171,15 @@ namespace oln
     mlc::assert_equal_<oln_type_of(I, grid), oln_type_of(S, grid)>::check();
     // FIXME: check that Image does not have yet a subset
     morpher::add_isubset<I, S> tmp(image.exact(), isubset.exact());
+    return tmp;
+  }
+
+  template <typename I, typename S>
+  morpher::add_isubset<I, S>
+  operator | (const abstract::image<I>& image,
+	      const xtd::abstract::fun_nary_expr_<1,S>& fsubset)
+  {
+    morpher::add_isubset<I, S> tmp(image.exact(), fsubset.exact_());
     return tmp;
   }
 

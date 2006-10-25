@@ -91,6 +91,9 @@ namespace oln
     }; // end of class oln::abstract::iterator_on_points<E>
 
 
+    template <typename E>
+    std::ostream& operator<<(std::ostream& ostr, const iterator_on_points<E>& pit);
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -127,6 +130,13 @@ namespace oln
     {
       mlc::assert_defined_< typename iterator_on_points<E>::point_t >::check();
       mlc::assert_< mlc_is_a(typename iterator_on_points<E>::point_t, abstract::point) >::check();
+    }
+
+
+    template <typename E>
+    std::ostream& operator<<(std::ostream& ostr, const iterator_on_points<E>& pit)
+    {
+      return ostr << pit.to_point();
     }
 
 

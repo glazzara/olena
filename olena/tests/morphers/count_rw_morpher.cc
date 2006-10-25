@@ -38,7 +38,7 @@ int main()
 
   typedef image2d<int> image_t;
   image_t ima(3,3);
-  morpher::count_rw<image_t> ima2(ima);
+  morpher::count_rw_<image_t> ima2(ima);
   point2d p(0,0);
 
   ima2(p);
@@ -46,8 +46,84 @@ int main()
   int i = ima2(p);
   i = 0; // suppress "unused i" warning
 
-  assert(value::counter::n_readwrite_calls(ima) == 3);
-  assert(value::counter::n_readonly_calls(ima)  == 0);
-  assert(value::counter::n_reads(ima)           == 1);
-  assert(value::counter::n_writes(ima)          == 1);
+  assert(value::counter_rw::n_readwrite_calls(ima) == 3);
+  assert(value::counter_rw::n_readonly_calls(ima)  == 0);
+  assert(value::counter_rw::n_reads(ima)           == 1);
+  assert(value::counter_rw::n_writes(ima)          == 1);
 }
+
+
+/*
+
+// another piece of nice code:
+
+
+#include <cassert>
+
+#include <oln/basics2d.hh>
+#include <oln/core/gen/pw_value.hh>
+
+#include <oln/morpher/add_isubset.hh>
+#include <oln/morpher/add_neighborhood.hh>
+#include <oln/morpher/count_rw.hh>
+
+#include <oln/debug/print.hh>
+#include <oln/level/fill.hh>
+
+
+template <typename I>
+void test(const oln::abstract::image<I>& input)
+{
+  oln_value(I) dev_null;
+  oln_piter(I) p(input.topo());
+  oln_niter(I) n(p, input.topo());
+  for_all(p)
+  {
+    std::cout << p << ": ";
+    for_all(n)
+    {
+      std::cout << n << ' ';
+      dev_null = input(n); // read
+    }
+    std::cout << std::endl;
+  }
+}
+
+int main()
+{
+  using namespace oln;
+  typedef image2d<int> image_t;
+
+  image_t ima(5, 5);
+  int values[] =
+    { 3, 7, 1, 1, 7,
+      9, 3, 2, 1, 1,
+      1, 6, 5, 4, 3,
+      7, 9, 8, 1, 3,
+      3, 3, 9, 7, 1 };
+  ima << values;
+
+# define pred (pw_value(ima) % 2 == 0 or pw_value(ima) == 5)
+
+  debug::print(ima | pred);
+  test(count_rw((ima + c4) | pred));
+    
+  value::counter_rw::print();
+
+// gives:
+// - - - - - 
+// - - 2 - - 
+// - 6 5 4 - 
+// - - 8 - - 
+// - - - - - 
+// (1, 2): (2, 2) 
+// (2, 1): (2, 2) 
+// (2, 2): (1, 2) (2, 1) (2, 3) (3, 2) 
+// (2, 3): (2, 2) 
+// (3, 2): (2, 2) 
+// n_readwrite_calls = 0
+// n_readonly_calls  = 8
+// n_reads           = 8
+// n_writes          = 0
+
+*/

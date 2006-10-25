@@ -30,6 +30,7 @@
 
 # include <iostream>
 # include <map>
+# include <set>
 # include <oln/value/proxy.hh>
 # include <oln/core/abstract/image/all.hh>
 
@@ -42,43 +43,78 @@ namespace oln
   {
 
 
-    struct counter
+    struct counter_rw
     {
-      typedef std::map<void*, unsigned> map_t;
+      typedef std::map<unsigned, unsigned> map_t;
+      typedef std::set<unsigned> set_t;
+      static map_t n_rwc_;
+      static map_t n_roc_;
+      static map_t n_r_;
+      static map_t n_w_;
+      static set_t ids_;
 
       // read-write call
-      static unsigned& n_readwrite_calls(const oln::type& ima)
+      template <typename I>
+      static unsigned& n_readwrite_calls(const oln::abstract::image<I>& ima)
       {
-	static map_t n;
-	return n[(void*)(&ima)];
+	ids_.insert(ima.id());
+	return n_rwc_[ima.id()];
       }
       // read-only call
-      static unsigned& n_readonly_calls(const oln::type& ima)
+      template <typename I>
+      static unsigned& n_readonly_calls(const oln::abstract::image<I>& ima)
       {
-	static map_t n;
-	return n[(void*)(&ima)];
+	ids_.insert(ima.id());
+	return n_roc_[ima.id()];
       }
       // read (effective)
-      static unsigned& n_reads(const oln::type& ima)
+      template <typename I>
+      static unsigned& n_reads(const oln::abstract::image<I>& ima)
       {
-	static map_t n;
-	return n[(void*)(&ima)];
+	ids_.insert(ima.id());
+	return n_r_[ima.id()];
       }
       // write (effective)
-      static unsigned& n_writes(const oln::type& ima)
+      template <typename I>
+      static unsigned& n_writes(const oln::abstract::image<I>& ima)
       {
-	static map_t n;
-	return n[(void*)(&ima)];
+	ids_.insert(ima.id());
+	return n_w_[ima.id()];
       }
 
-      static void print(const oln::type& ima)
+      static void print(unsigned id)
       {
-	std::cout << "n_readwrite_calls = " << n_readwrite_calls(ima) << std::endl
-		  << "n_readonly_calls  = " << n_readonly_calls(ima)  << std::endl
-		  << "n_reads           = " << n_reads(ima)           << std::endl
-		  << "n_writes          = " << n_writes(ima)          << std::endl;
+	ids_.insert(id);
+	std::cout << "n_readwrite_calls = " << n_rwc_[id] << std::endl
+		  << "n_readonly_calls  = " << n_roc_[id] << std::endl
+		  << "n_reads           = " << n_r_[id]   << std::endl
+		  << "n_writes          = " << n_w_[id]   << std::endl;
+      }
+
+      template <typename I>
+      static void print(const oln::abstract::image<I>& ima)
+      {
+	print(ima.id());
+      }
+
+      static void print()
+      {
+	set_t::const_iterator it;
+	for (it = ids_.begin(); it != ids_.end(); ++it)
+	  print(*it);
       }
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    counter_rw::map_t counter_rw::n_rwc_;
+    counter_rw::map_t counter_rw::n_roc_;
+    counter_rw::map_t counter_rw::n_r_;
+    counter_rw::map_t counter_rw::n_w_;
+    counter_rw::set_t counter_rw::ids_;
+
+# endif
 
 
     template <typename I>
@@ -104,7 +140,7 @@ namespace oln
       rw_counter<I>& operator=(const V& value);
 
     protected:
-      I& ima_;
+      I ima_;
       const oln_psite(I)& p_;
     };
 
@@ -132,7 +168,7 @@ namespace oln
       oln_rvalue(I) value() const;
 
     protected:
-      const I& ima_;
+      const I ima_;
       const oln_psite(I)& p_;
     };
 
@@ -151,7 +187,7 @@ namespace oln
       : ima_(ima.exact()),
 	p_(p)
     {
-      ++counter::n_readwrite_calls(ima_);
+      ++counter_rw::n_readwrite_calls(ima_);
     }
 
     // Read.
@@ -159,7 +195,7 @@ namespace oln
     template <typename V>
     rw_counter<I>::operator V() const
     {
-      ++counter::n_reads(ima_);
+      ++counter_rw::n_reads(ima_);
       V tmp = ima_(p_);
       return tmp;
     }
@@ -169,7 +205,7 @@ namespace oln
     oln_rvalue(I)
     rw_counter<I>::value() const
     {
-      ++counter::n_reads(ima_);
+      ++counter_rw::n_reads(ima_);
       return ima_(p_);
     }
     
@@ -181,7 +217,7 @@ namespace oln
     rw_counter<I>::operator=(const V& value)
     {
       ima_(p_) = value;
-      ++counter::n_writes(ima_);
+      ++counter_rw::n_writes(ima_);
       return *this;
     }
 
@@ -201,7 +237,7 @@ namespace oln
       : ima_(ima.exact()),
 	p_(p)
     {
-      ++counter::n_readonly_calls(ima_);
+      ++counter_rw::n_readonly_calls(ima_);
     }
 
     // Read.
@@ -209,7 +245,7 @@ namespace oln
     template <typename V>
     ro_counter<I>::operator V() const
     {
-      ++counter::n_reads(ima_);
+      ++counter_rw::n_reads(ima_);
       V tmp = ima_(p_);
       return tmp;
     }
@@ -219,7 +255,7 @@ namespace oln
     oln_rvalue(I)
     ro_counter<I>::value() const
     {
-      ++counter::n_reads(ima_);
+      ++counter_rw::n_reads(ima_);
       return ima_(p_);
     }
 

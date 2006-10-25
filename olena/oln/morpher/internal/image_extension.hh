@@ -86,6 +86,7 @@ namespace oln
 
 	// FIXME: Handle the constness.
 	image_extension(const Image& image);
+	image_extension(Image& image);
 
 	const Image& delegate() const;
 	Image& delegate();
@@ -100,6 +101,12 @@ namespace oln
 
       template <typename Image, typename Exact>
       image_extension<Image, Exact>::image_extension(const Image& image) :
+	image_(const_cast<Image&>(image))
+      {
+      }
+
+      template <typename Image, typename Exact>
+      image_extension<Image, Exact>::image_extension(Image& image) :
 	image_(image)
       {
       }

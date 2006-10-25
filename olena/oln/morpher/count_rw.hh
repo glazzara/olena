@@ -39,22 +39,22 @@ namespace oln
   namespace morpher
   {
     // Forward declaration.
-    template <typename Image> struct count_rw;
+    template <typename Image> struct count_rw_;
 
   } // end of namespace oln::morpher
 
 
   /// Super type.
   template <typename Image>
-  struct set_super_type< morpher::count_rw<Image> >
+  struct set_super_type< morpher::count_rw_<Image> >
   {
-    typedef morpher::count_rw<Image> self_t;
+    typedef morpher::count_rw_<Image> self_t;
     typedef morpher::internal::image_value_morpher<Image, self_t> ret;
   };
 
 
   template <typename Image>
-  struct vtypes< morpher::count_rw<Image> >
+  struct vtypes< morpher::count_rw_<Image> >
   {
   public:
     typedef mlc::true_ is_computed_type;
@@ -64,7 +64,7 @@ namespace oln
   };
 
   template <typename Image>
-  struct single_vtype< morpher::count_rw<Image>, typedef_::rvalue_type >
+  struct single_vtype< morpher::count_rw_<Image>, typedef_::rvalue_type >
   {
     typedef value::ro_counter<Image> ret;
   };
@@ -76,20 +76,20 @@ namespace oln
 
     /// 'Image thru Function' morpher.
     template <typename Image>
-    class count_rw : public internal::image_value_morpher< Image,
-							   morpher::count_rw<Image> >
+    class count_rw_ : public internal::image_value_morpher< Image,
+							   morpher::count_rw_<Image> >
     {
     private:
 
-      typedef count_rw<Image> self_t;
+      typedef count_rw_<Image> self_t;
       typedef internal::image_value_morpher<Image, self_t> super_t;
 
       using super_t::image_;
 
     public:
 
-      count_rw(Image& image);
-      count_rw(oln::abstract::mutable_image<Image>& image);
+      count_rw_(Image& image);
+      count_rw_(oln::abstract::mutable_image<Image>& image);
 
       oln_rvalue(self_t) impl_op_read(const oln_psite(self_t)& p) const;
       oln_lvalue(self_t) impl_op_readwrite(const oln_psite(self_t)& p);
@@ -109,28 +109,28 @@ namespace oln
     // public
 
     template <typename Image>
-    count_rw<Image>::count_rw(Image& image) :
+    count_rw_<Image>::count_rw_(Image& image) :
       super_t(image)
     {
     }
 
     template <typename Image>
-    count_rw<Image>::count_rw(oln::abstract::mutable_image<Image>& image) :
+    count_rw_<Image>::count_rw_(oln::abstract::mutable_image<Image>& image) :
       super_t(image.exact())
     {
     }
     
     template <typename Image>
-    oln_rvalue(count_rw<Image>)
-    count_rw<Image>::impl_op_read(const oln_psite(count_rw<Image>)& p) const
+    oln_rvalue(count_rw_<Image>)
+    count_rw_<Image>::impl_op_read(const oln_psite(count_rw_<Image>)& p) const
     {
       value::ro_counter<Image> tmp(image_, p);
       return tmp;
     }
     
     template <typename Image>
-    oln_lvalue(count_rw<Image>)
-    count_rw<Image>::impl_op_readwrite(const oln_psite(count_rw<Image>)& p)
+    oln_lvalue(count_rw_<Image>)
+    count_rw_<Image>::impl_op_readwrite(const oln_psite(count_rw_<Image>)& p)
     {
       value::rw_counter<Image> tmp(image_, p);
       return tmp;
@@ -142,10 +142,20 @@ namespace oln
 
 
   template <typename I>
-  morpher::count_rw<I>
+  morpher::count_rw_<I>
   count_rw(oln::abstract::mutable_image<I>& input)
   {
-    morpher::count_rw<I> tmp(input.exact());
+    morpher::count_rw_<I> tmp(input.exact());
+    return tmp;
+  }
+
+  template <typename I>
+  morpher::count_rw_<I>
+  count_rw(const oln::abstract::mutable_image<I>& input)
+  {
+    // FIXME: Hack.
+    I& input_ = const_cast<I&>(input.exact());
+    morpher::count_rw_<I> tmp(input_);
     return tmp;
   }
 

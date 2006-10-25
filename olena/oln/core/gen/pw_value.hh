@@ -61,7 +61,7 @@ namespace xtd
 
   protected:
 
-    const I& ima_;
+    const I ima_;
   };
 
 
@@ -72,7 +72,8 @@ namespace xtd
   oln_rvalue(I)
   pw_value_type<I>::impl_calc(const A& a) const
   {
-    mlc::assert_< mlc_is_a(A, oln::abstract::point) >::check();
+    mlc::assert_< mlc::or_< mlc_is_a(A, oln::abstract::point),
+                            mlc_is_a(A, oln::abstract::iterator_on_points) > >::check();
     return ima_(a);
   }
 

@@ -97,7 +97,7 @@ namespace oln
   protected:
 
     piter_t p_;
-    const isubset_t& isubset_;
+    isubset_t isubset_; // Cpy.
 
   }; // end of class oln::piter_isubset_<point>
 

@@ -84,7 +84,7 @@ namespace oln
   protected:
 
     topo_t topo_;
-    isubset_t isubset_;
+    isubset_t isubset_; // Cpy.
   };
 
 

@@ -40,6 +40,12 @@
 namespace oln
 {
 
+
+  // Fwd decl.
+  static unsigned& current_image_id();
+
+
+
   /*! \namespace oln::abstract
   ** \brief oln::abstract namespace.
   */
@@ -108,17 +114,26 @@ namespace oln
 
       oln_rvalue(E) operator()(const oln_psite(E)& p) const;
 
+      unsigned id() const;
+
     protected:
 
-      /*! \brief Constructor (protected, empty).
+      /*! \brief Constructors (protected).
       */
       image();
-      image(const image&);
+      image(const image& rhs);
+
+      /*! \brief Assignment (protected).
+      */
+      E& operator=(const image& rhs);
 
       /*! \brief Destructor.
       */
       virtual ~image();
 
+    private:
+
+      const unsigned id_;
     };
 
 
@@ -139,14 +154,23 @@ namespace oln
 
     template <typename E>
     image<E>::image()
+      : id_(++current_image_id())
     {
       ++debug::n_images;
     }
 
     template <typename E>
-    image<E>::image(const image&)
+    image<E>::image(const image& rhs)
+      : id_(rhs.id_)
     {
       ++debug::n_images;
+    }
+
+    template <typename E>
+    E& image<E>::operator=(const image<E>& rhs)
+    {
+      this->id_ = rhs.id_;
+      return this->exact();
     }
 
     template <typename E>
@@ -154,6 +178,13 @@ namespace oln
     {
       decl();
       --debug::n_images;
+    }
+
+    template <typename E>
+    unsigned
+    image<E>::id() const
+    {
+      return id_;
     }
 
     template <typename E>
@@ -175,6 +206,19 @@ namespace oln
 
 
   } // end of namespace oln::abstract
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  static unsigned& current_image_id()
+  {
+    static unsigned id_ = 0;
+    return id_;
+  }
+
+# endif
+
 
 } // end of namespace oln
 

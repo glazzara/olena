@@ -1,3 +1,29 @@
+2006-10-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Introduce ids for images and better oln::morpher::count_rw_.
+	
+	* tests/morphers/count_rw_morpher.cc: Add sample code in comments.
+	* oln/core/abstract/iterator_on_points.hh (operator<<): New.
+	* oln/core/abstract/image.hh (image, operator=): New.
+	(id_, id): New.
+	* oln/core/gen/piter_isubset.hh (isubset_): Remove &.
+	* oln/core/gen/pw_value.hh (ima_): Remove &.
+	(impl_calc): Fix static check.
+	* oln/core/gen/topo_add_isubset.hh (isubset_): Add comment.
+	* oln/core/gen/fwd_piter_bbox.hh (operator<<): Remove; obsolete.
+	* oln/core/gen/bkd_piter_bbox.hh: Likewise.
+	* oln/morpher/add_isubset.hh (operator|): New overloading.
+	(add_isubset): Relax static check.
+	* oln/morpher/internal/image_value_morpher.hh (image_): Remove &.
+	* oln/morpher/internal/image_extension.hh (image_): Remove &.
+	(image_extension): New cpy ctor.
+	* oln/morpher/count_rw.hh (count_rw): Rename the class as...
+	(count_rw_): ...this.
+	(count_rw): New overloading.
+	* oln/value/rw_counter.hh (counter_rw): Rewrite.
+	(rw_counter): Remove & from ima_ type.
+	(ro_counter): Likewise.
+
 2006-10-24  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add point-wise values.
