@@ -133,7 +133,7 @@ namespace oln
 
     private:
 
-      const unsigned id_;
+      unsigned id_;
     };
 
 

@@ -30,10 +30,18 @@
 
 # include <stc/any.hh>
 # include <oln/core/type.hh>
+# include <oln/core/abstract/image.hh>
 
 
 namespace oln
 {
+
+
+  // Fwd decl.
+  namespace morpher {
+    template <typename I, typename F> class two_way;
+  }
+
 
   namespace abstract
   {
@@ -60,6 +68,21 @@ namespace oln
     };
 
 
+    // Value1 -> Value2  *and*  Value2 -> Value1.
+
+    template <typename E>
+    struct fun_v2w2v : public virtual stc::any__simple<E>,
+		       public oln::type
+    {
+    public:
+      template <typename I>
+      oln::morpher::two_way<I, E>
+      operator()(oln::abstract::mutable_image<I>& input) const;
+    protected:
+      fun_v2w2v();
+    };
+
+
     // Point -> Point.
 
     template <typename E>
@@ -80,6 +103,11 @@ namespace oln
 
     template <typename E>
     fun_v2v<E>::fun_v2v()
+    {
+    }
+
+    template <typename E>
+    fun_v2w2v<E>::fun_v2w2v()
     {
     }
 

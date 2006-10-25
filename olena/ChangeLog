@@ -1,5 +1,18 @@
 2006-10-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Add two-way morpher.
+	
+	* tests/morphers/two_way_morpher.cc: New.
+	* tests/morphers/Makefile.am: Update.
+	* oln/morpher/two_way.hh: New.
+	* oln/Makefile.am: Update.
+	* oln/core/abstract/image.hh (id_): Unconst.
+	* oln/core/abstract/functions.hh (fun_v2w2v): New.
+	* oln/core/traits.hh (oln_xtd_case_op_id): Fix number.
+	(include): Add commentary.
+
+2006-10-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add oln::level::apply_inplace.
 	
 	* tests/level/apply_inplace.cc: New.

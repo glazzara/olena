@@ -183,6 +183,7 @@ nobase_oln_HEADERS =						\
   morpher/stack.hh						\
   morpher/thru_fun.hh						\
   morpher/thru_mfun.hh						\
+  morpher/two_way.hh						\
   morpher/value_cast.hh						\
   morpher/with_lut.hh						\
 								\

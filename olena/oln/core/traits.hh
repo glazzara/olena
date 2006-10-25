@@ -28,11 +28,12 @@
 #ifndef OLN_CORE_TRAITS_HH
 # define OLN_CORE_TRAITS_HH
 
-
 # include <mlc/assert.hh>
 # include <mlc/abort.hh>
-# include <xtd/optraits.hh>
-# include <xtd/math/ops.hh>
+
+# include <xtd/optraits.hh> // case #1 for C++ builtins
+# include <xtd/math/ops.hh> // case #2 for xtd::fun_expr_
+
 # include <stc/exact.hh>
 
 # include <oln/core/type.hh>
@@ -56,7 +57,7 @@ namespace oln
 namespace xtd
 {
 
-  static const unsigned oln_xtd_case_op_id = 2;
+  static const unsigned oln_xtd_case_op_id = 3; // case #3
 
 
   template <typename name,
