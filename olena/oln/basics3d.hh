@@ -32,6 +32,10 @@
 
 # define OLN_ENV_3D
 
+# include <oln/core/typedefs.hh>
+# include <oln/core/case.hh>
+# include <oln/core/traits.hh>
+# include <oln/value/proxy.hh>
 
 # include <oln/core/3d/aliases.hh>
 
