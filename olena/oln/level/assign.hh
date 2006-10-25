@@ -26,39 +26,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_BASICS3D_HH
-# define OLN_BASICS3D_HH
+#ifndef OLN_LEVEL_ASSIGN_HH
+# define OLN_LEVEL_ASSIGN_HH
+
+# include <iostream>
+
+# include <mlc/assert.hh>
+# include <mlc/is_a.hh>
+
+# include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/iterator.hh>
+# include <oln/core/automatic/image/mutable_image.hh>
 
 
-# define OLN_ENV_3D
+namespace oln
+{
+
+  namespace level
+  {
+
+    /// Fwd decls.
+
+    template <typename Idest, typename Isrc>
+    void assign(abstract::mutable_image<Idest>& dest, const abstract::image<Isrc>& src);
 
 
-# include <oln/core/3d/aliases.hh>
+# ifndef OLN_INCLUDE_ONLY
 
-# include <oln/core/gen/grid.hh>
+    namespace impl
+    {
 
-# include <oln/core/3d/point3d.hh>
-# include <oln/core/3d/dpoint3d.hh>
+      /// Generic version.
+      template <typename Idest, typename Isrc>
+      void assign(abstract::mutable_image<Idest>& dest, const abstract::image<Isrc>& src)
+      {
+	oln_piter(Isrc) p(src.topo());
+	for_all(p)
+	  dest(p) = src(p);
+      }
 
-# include <oln/core/3d/topo3d.hh>
-
-# include <oln/core/gen/fwd_piter_bbox.hh>
-# include <oln/core/gen/bkd_piter_bbox.hh>
-
-# include <oln/core/3d/window3d.hh>
-# include <oln/core/gen/fwd_qiter_win.hh>
-# include <oln/core/gen/bkd_qiter_win.hh>
-
-# include <oln/core/gen/neighb.hh>
-# include <oln/core/3d/neighb3d.hh>
-
-# include <oln/core/3d/image3d.hh>
-
-# include <oln/core/iterator_vtypes.hh>
-
-# include <oln/core/spe/slice.hh>
-# include <oln/core/spe/row.hh>
-# include <oln/core/spe/col.hh>
+    } // end of namespace oln::level::impl
 
 
-#endif // ! OLN_BASICS3D_HH
+    /// Facade.
+    template <typename Idest, typename Isrc>
+    void assign(abstract::mutable_image<Idest>& dest, const abstract::image<Isrc>& src)
+    {
+      impl::assign(dest.exact(), src.exact());
+    }
+
+# endif
+
+  } // end of namespace oln::level
+
+} // end of namespace oln
+
+
+#endif // ! OLN_LEVEL_ASSIGN_HH

@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,39 +25,74 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_BASICS3D_HH
-# define OLN_BASICS3D_HH
+#ifndef OLN_CORE_ABSTRACT_FUNCTIONS_HH
+# define OLN_CORE_ABSTRACT_FUNCTIONS_HH
+
+# include <stc/any.hh>
+# include <oln/core/type.hh>
 
 
-# define OLN_ENV_3D
+namespace oln
+{
+
+  namespace abstract
+  {
+
+    // Point -> Value.
+
+    template <typename E>
+    struct fun_p2v : public virtual stc::any__simple<E>,
+		     public oln::type
+    {
+    protected:
+      fun_p2v();
+    };
 
 
-# include <oln/core/3d/aliases.hh>
+    // Value -> Value.
 
-# include <oln/core/gen/grid.hh>
-
-# include <oln/core/3d/point3d.hh>
-# include <oln/core/3d/dpoint3d.hh>
-
-# include <oln/core/3d/topo3d.hh>
-
-# include <oln/core/gen/fwd_piter_bbox.hh>
-# include <oln/core/gen/bkd_piter_bbox.hh>
-
-# include <oln/core/3d/window3d.hh>
-# include <oln/core/gen/fwd_qiter_win.hh>
-# include <oln/core/gen/bkd_qiter_win.hh>
-
-# include <oln/core/gen/neighb.hh>
-# include <oln/core/3d/neighb3d.hh>
-
-# include <oln/core/3d/image3d.hh>
-
-# include <oln/core/iterator_vtypes.hh>
-
-# include <oln/core/spe/slice.hh>
-# include <oln/core/spe/row.hh>
-# include <oln/core/spe/col.hh>
+    template <typename E>
+    struct fun_v2v : public virtual stc::any__simple<E>,
+		     public oln::type
+    {
+    protected:
+      fun_v2v();
+    };
 
 
-#endif // ! OLN_BASICS3D_HH
+    // Point -> Point.
+
+    template <typename E>
+    struct fun_p2p : public virtual stc::any__simple<E>,
+		     public oln::type
+    {
+    protected:
+      fun_p2p();
+    };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename E>
+    fun_p2v<E>::fun_p2v()
+    {
+    }
+
+    template <typename E>
+    fun_v2v<E>::fun_v2v()
+    {
+    }
+
+    template <typename E>
+    fun_p2p<E>::fun_p2p()
+    {
+    }
+
+# endif
+
+  } // end of namespace oln::abstract
+
+} // end of namespace oln
+
+
+#endif // ! OLN_CORE_ABSTRACT_FUNCTIONS_HH

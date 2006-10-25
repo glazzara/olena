@@ -38,6 +38,16 @@ namespace oln
     static unsigned n_images = 0;
     static unsigned n_arrays = 0;
 
+
+# ifndef OLN_INCLUDE_ONLY
+    namespace dummy {
+      // FIXME: Quick hack to suppress the warning
+      // "'oln::debug::n_arrays' defined but not used"
+      void foo() { n_arrays = n_arrays; }
+    }
+# endif
+
+
   } // end of namespace oln::debug
 
 } // end of namespace oln

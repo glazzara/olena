@@ -279,6 +279,9 @@ namespace oln
 # define oln_plain(T)   typename oln::type_fun::plain<T>::ret
 # define oln_plain_(T)           oln::type_fun::plain<T>::ret
 
+# define oln_plain_value(I, V)  typename oln::type_fun::ch_value< oln_plain(I), V >::ret
+# define oln_plain_value_(I, V)          oln::type_fun::ch_value< oln_plain(I), V >::ret
+
 /// \}
 
 

@@ -34,7 +34,10 @@
 # include <oln/core/abstract/iterator.hh>
 # include <oln/core/spe/row.hh>
 # include <oln/core/spe/col.hh>
-# include <oln/core/2d/point2d.hh>
+
+# ifdef OLN_ENV_2D
+#  include <oln/core/2d/point2d.hh>
+# endif
 
 
 namespace oln
@@ -76,6 +79,8 @@ namespace oln
       }
 
 
+#  ifdef OLN_ENV_2D
+
       /// Version for classical 2D images.
       template <typename I>
       void print(const abstract::classical_2d_image<I>& input,
@@ -96,8 +101,10 @@ namespace oln
 	  }
       }
 
-    } // end of namespace oln::debug::impl
+#  endif
 
+
+    } // end of namespace oln::debug::impl
 
 
     /// Facade.

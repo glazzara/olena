@@ -36,6 +36,7 @@
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/iterator.hh>
+# include <oln/core/abstract/functions.hh>
 # include <oln/core/automatic/image/mutable_image.hh>
 
 
@@ -68,6 +69,15 @@ namespace oln
     template <typename I, typename V>
     void fill(abstract::mutable_image<I>& input, const V values[]);
 
+    /// Fwd decl.
+    template <typename I, typename V, typename P>
+    void fill(abstract::mutable_image<I>& input, V (*fun)(const P&));
+
+    /// Fwd decl.
+    template <typename I, typename F>
+    void fill(abstract::mutable_image<I>& input,
+	      const abstract::fun_p2v<F>& fun);
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -93,7 +103,28 @@ namespace oln
 	  input(p) = values[i++];
       }
 
-    } // end of namespace oln::level::fill
+      /// Generic version.
+      template <typename I, typename V, typename P>
+      void fill(abstract::mutable_image<I>& input, V (*fun)(const P&))
+      {
+	oln_piter(I) p(input.topo());
+	unsigned i = 0;
+	for_all(p)
+	  input(p) = fun(p);
+      }
+
+      /// Generic version.
+      template <typename I, typename F>
+      void fill(abstract::mutable_image<I>& input,
+		const abstract::fun_p2v<F>& fun)
+      {
+	oln_piter(I) p(input.topo());
+	unsigned i = 0;
+	for_all(p)
+	  input(p) = fun.exact()(p);
+      }
+
+    } // end of namespace oln::level::impl
 
 
     /// Facade.
@@ -110,6 +141,20 @@ namespace oln
       return impl::fill(input.exact(), values);
     }
 
+    /// Facade.
+    template <typename I, typename V, typename P>
+    void fill(abstract::mutable_image<I>& input, V (*fun)(const P&))
+    {
+      return impl::fill(input.exact(), fun);
+    }
+
+    /// Facade.
+    template <typename I, typename F>
+    void fill(abstract::mutable_image<I>& input,
+	      const abstract::fun_p2v<F>& fun)
+    {
+      return impl::fill(input.exact(), fun);
+    }
 
 # endif
 

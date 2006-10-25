@@ -30,6 +30,9 @@
 # define OLN_BASICS2D_HH
 
 
+# define OLN_ENV_2D
+
+
 # include <oln/core/2d/aliases.hh>
 
 # include <oln/core/gen/grid.hh>

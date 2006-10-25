@@ -80,6 +80,7 @@ nobase_oln_HEADERS =						\
   core/abstract/bbox.hh						\
   core/abstract/dpoint.hh					\
   core/abstract/entry.hh					\
+  core/abstract/functions.hh					\
   core/abstract/fwd_decls.hh					\
   core/abstract/grid.hh						\
   core/abstract/image.hh					\
@@ -165,6 +166,9 @@ nobase_oln_HEADERS =						\
 								\
   io/pnm.hh							\
 								\
+  level/apply.hh						\
+  level/assign.hh						\
+  level/clone.hh						\
   level/fill.hh							\
 								\
   morpher/internal/image_extension.hh				\
