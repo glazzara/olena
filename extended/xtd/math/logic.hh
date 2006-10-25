@@ -34,9 +34,9 @@
 namespace xtd
 {
 
-  xtd_internal_decl_binary_operator( land, and );
-  xtd_internal_decl_binary_operator( lor,  or );
-  xtd_internal_decl_binary_operator( lxor, xor );
+  xtd_internal_decl_binary_logical_operator( land, and );
+  xtd_internal_decl_binary_logical_operator( lor,  or );
+  xtd_internal_decl_binary_logical_operator( lxor, xor );
 
   xtd_internal_decl_unary_operator( lnot, not );
 

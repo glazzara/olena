@@ -1,3 +1,12 @@
+2006-10-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Update xtd bool op traits.
+	
+	* xtd/builtin/traits.hh (bool): Fix partially.
+	* xtd/internal/opmacros.hh
+	(xtd_internal_decl_binary_logical_operator): New macro.
+	* xtd/math/logic.hh: Update.
+
 2006-10-23  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* xtd/vec.hh (ops): Move outside of class.

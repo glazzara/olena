@@ -199,4 +199,73 @@
 
 
 
+# define xtd_internal_decl_binary_logical_operator(OperatorName, OperatorSymbol)		\
+												\
+												\
+  template <typename T1, typename T2>								\
+  struct plain_##OperatorName##_;								\
+												\
+  template <typename T1, typename T2>								\
+  struct fun_traits_< plain_##OperatorName##_<T1, T2> >						\
+  {												\
+    typedef T1 arg1_type;									\
+    typedef T2 arg2_type;									\
+    typedef xtd_op_##OperatorName##_trait(T1, T2) res_type;					\
+  };												\
+												\
+												\
+  template <typename T1, typename T2>								\
+  struct plain_##OperatorName##_								\
+												\
+    : public abstract::plain_nary_fun_< 2, plain_##OperatorName##_<T1, T2> >			\
+  {												\
+    typedef plain_##OperatorName##_<T1, T2> self;						\
+    xtd_res(self) impl_op(const T1& arg1, const T2& arg2) const					\
+    {												\
+      return arg1 OperatorSymbol arg2;								\
+    }												\
+  };												\
+												\
+												\
+  typedef m2fun_<plain_##OperatorName##_> OperatorName##_type;					\
+  const OperatorName##_type OperatorName;							\
+												\
+												\
+  template <typename L, typename R>								\
+  struct case_ < op_##OperatorName, mlc::pair_<L, R>,						\
+		 2 > : public mlc::where_< mlc::or_< mlc_is_a(L, xtd::abstract::fun_expr_),	\
+						     mlc_is_a(R, xtd::abstract::fun_expr_) > >	\
+  {												\
+    struct protected_ {										\
+      typedef typename mlc::if_< mlc_is_a(L, xtd::abstract::fun_expr_),				\
+				 L,								\
+				 xtd::literal_expr_<L> >::ret Lexpr;				\
+												\
+      typedef typename mlc::if_< mlc_is_a(R, xtd::abstract::fun_expr_),				\
+				 R,								\
+				 xtd::literal_expr_<R> >::ret Rexpr;				\
+												\
+      typedef xtd::m2expr_<xtd::OperatorName##_type, Lexpr, Rexpr> ret;				\
+    };												\
+  };												\
+												\
+												\
+  template <typename Lexpr, typename Rexpr>							\
+  xtd::m2expr_<xtd::OperatorName##_type, Lexpr, Rexpr>						\
+  operator OperatorSymbol (const xtd::abstract::fun_expr_<Lexpr>& lexpr,			\
+			   const xtd::abstract::fun_expr_<Rexpr>& rexpr)			\
+  {												\
+    xtd::m2expr_<xtd::OperatorName##_type, Lexpr, Rexpr> tmp(lexpr, rexpr);			\
+    return tmp;											\
+  }												\
+												\
+												\
+  xtd_internal_decl_binop_w_lit(OperatorName, OperatorSymbol, bool);				\
+												\
+												\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
+
+
+
+
 #endif // ! XTD_INTERNAL_OPMACROS_HH

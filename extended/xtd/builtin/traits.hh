@@ -76,7 +76,8 @@ namespace xtd
     : public mlc::where_< mlc::or_< mlc::eq_<L, bool>,
 				    mlc::eq_<R, bool> > >
   {
-    typedef mlc::undefined ret;
+    // FIXME: check that both L and R are bool and that it is not an arithmetical trait
+    typedef bool ret;
   };
 
   // 2) If either operand is of type long double, the other shall be
