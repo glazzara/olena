@@ -1,5 +1,11 @@
 2006-10-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Oops.
+	
+	* oln/value/two_way.hh: New.
+
+2006-10-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Tiny fix just before pastis.
 	
 	* oln/basics1d.hh (include): Add missing headers.
