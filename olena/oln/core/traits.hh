@@ -32,6 +32,7 @@
 # include <mlc/assert.hh>
 # include <mlc/abort.hh>
 # include <xtd/optraits.hh>
+# include <xtd/math/ops.hh>
 # include <stc/exact.hh>
 
 # include <oln/core/type.hh>

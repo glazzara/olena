@@ -45,8 +45,7 @@ namespace oln
   namespace level
   {
 
-    /// Fwd decls.
-
+    /// Fwd decl.
     template <typename Idest, typename Isrc>
     void assign(abstract::mutable_image<Idest>& dest, const abstract::image<Isrc>& src);
 

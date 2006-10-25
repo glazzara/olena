@@ -50,6 +50,14 @@ namespace oln
     oln_plain_value(I, typename F::result_value)
     apply(const abstract::image<I>& input, const abstract::fun_v2v<F>& fun);
 
+    /// Fwd decl.
+    template <typename I, typename V>
+    void apply_inplace(abstract::mutable_image<I>& input, V (*fun)(const oln_value(I)&));
+
+    /// Fwd decl.
+    template <typename I, typename F>
+    void apply_inplace(abstract::mutable_image<I>& input, const abstract::fun_v2v<F>& fun);
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -80,6 +88,27 @@ namespace oln
 	return output;
       }
 
+
+      /// Generic version.
+      template <typename I, typename V>
+      void
+      apply_inplace(abstract::mutable_image<I>& input, V (*fun)(const oln_value(I)&))
+      {
+	oln_piter(I) p(input.topo());
+	for_all(p)
+	  input(p) = fun(input(p));
+      }
+
+      /// Generic version.
+      template <typename I, typename F>
+      void
+      apply_inplace(abstract::mutable_image<I>& input, const abstract::fun_v2v<F>& fun)
+      {
+	oln_piter(I) p(input.topo());
+	for_all(p)
+	  input(p) = fun.exact()(input(p));
+      }
+
     } // end of namespace oln::level::impl
 
 
@@ -97,6 +126,23 @@ namespace oln
     apply(const abstract::image<I>& input, const abstract::fun_v2v<F>& fun)
     {
       return impl::apply(input, fun);
+    }
+
+
+    /// Facade.
+    template <typename I, typename V>
+    void
+    apply_inplace(abstract::mutable_image<I>& input, V (*fun)(const oln_value(I)&))
+    {
+      return impl::apply_inplace(input, fun);
+    }
+
+    /// Facade.
+    template <typename I, typename F>
+    void
+    apply_inplace(abstract::mutable_image<I>& input, const abstract::fun_v2v<F>& fun)
+    {
+      return impl::apply_inplace(input, fun);
     }
 
 # endif

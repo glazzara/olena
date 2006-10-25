@@ -31,13 +31,9 @@
 
 # include <iostream>
 
-# include <mlc/assert.hh>
-# include <mlc/is_a.hh>
-
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/iterator.hh>
 # include <oln/core/abstract/functions.hh>
-# include <oln/core/automatic/image/mutable_image.hh>
 
 
 namespace oln
@@ -75,8 +71,7 @@ namespace oln
 
     /// Fwd decl.
     template <typename I, typename F>
-    void fill(abstract::mutable_image<I>& input,
-	      const abstract::fun_p2v<F>& fun);
+    void fill(abstract::mutable_image<I>& input, const abstract::fun_p2v<F>& fun);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -115,11 +110,9 @@ namespace oln
 
       /// Generic version.
       template <typename I, typename F>
-      void fill(abstract::mutable_image<I>& input,
-		const abstract::fun_p2v<F>& fun)
+      void fill(abstract::mutable_image<I>& input, const abstract::fun_p2v<F>& fun)
       {
 	oln_piter(I) p(input.topo());
-	unsigned i = 0;
 	for_all(p)
 	  input(p) = fun.exact()(p);
       }
@@ -150,8 +143,7 @@ namespace oln
 
     /// Facade.
     template <typename I, typename F>
-    void fill(abstract::mutable_image<I>& input,
-	      const abstract::fun_p2v<F>& fun)
+    void fill(abstract::mutable_image<I>& input, const abstract::fun_p2v<F>& fun)
     {
       return impl::fill(input.exact(), fun);
     }
