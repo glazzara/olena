@@ -1,5 +1,10 @@
 2006-10-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	* xtd/math.hh (include): Move ops inclusion into...
+	* xtd/math/ops.hh: ... this new file.
+
+2006-10-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Update xtd bool op traits.
 	
 	* xtd/builtin/traits.hh (bool): Fix partially.
