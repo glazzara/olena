@@ -33,7 +33,6 @@
 # include <oln/core/1d/aliases.hh>
 # include <oln/core/2d/aliases.hh>
 # include <oln/core/3d/aliases.hh>
-// # include <oln/core/type_fun/slice.hh>
 
 
 namespace oln
@@ -270,7 +269,6 @@ namespace oln
   public:
     typedef bkd_niter_neighb_<point_t> ret;
   };
-
 
 
 } // end of namespace oln

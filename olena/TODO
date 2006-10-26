@@ -1,0 +1,23 @@
+* Renaming
+
+** point_accessibility
+
+Rename oln/core/abstract/image/accessibility
+into   oln/core/abstract/image/point_wise_accessibility;
+rename structures as well, and adjust clients.
+
+** lvalue vs wvalue
+
+Rename lvalue (``left value'') as wvalue (``writable value'')?
+(Recall that rvalue can stand for either ``right-value'' or ``readable
+value'', even if the latter makes more sense).
+
+Or even, rename rvalue and lvalue as ro_value (read-only) and rw_value
+(read-write).
+
+
+
+Local Variables:
+mode: outline
+ispell-local-dictionary: "american"
+End:

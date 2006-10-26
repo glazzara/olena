@@ -41,13 +41,14 @@ namespace oln
   typedef hierarchy<abstract::image, 5> image_hierarchy_wrt_accessibility;
   typedef hierarchy<abstract::image, 6> image_hierarchy_wrt_mutability;
   typedef hierarchy<abstract::image, 7> image_hierarchy_wrt_computability;
+  typedef hierarchy<abstract::image, 8> image_hierarchy_wrt_value_wise_accessibility;
 
-  typedef hierarchy<abstract::image, 8> image_hybrid_hierarchy_wrt_classical;
+  typedef hierarchy<abstract::image, 9> image_hybrid_hierarchy_wrt_classical;
 
   // FIXME: To be continued.
 #if 0
-  typedef hierarchy<abstract::image, 9> image_hierarchy_wrt_value;
-  typedef hierarchy<abstract::image, 10> image_hierarchy_wrt_data_retrieval;
+  typedef hierarchy<abstract::image, 10> image_hierarchy_wrt_value;
+  typedef hierarchy<abstract::image, 11> image_hierarchy_wrt_data_retrieval;
   // ...
 #endif
 

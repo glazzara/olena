@@ -34,17 +34,65 @@
 #include <oln/debug/print.hh>
 
 
-// FIXME: Remove.
-using namespace oln;
-
+// A simple (fake) routine.
 template <typename I>
 void image_test(const oln::abstract::image<I>&)
 {
   // Do nothing.
 }
 
+
+/*--------------------------------------------------------------.
+| Equipment of the new value type of the look-up table (rgb8).  |
+`--------------------------------------------------------------*/
+
 oln::value::color::rgb8 white(255, 255, 255);
 oln::value::color::rgb8 blue (  0,   0, 255);
+oln::value::color::rgb8 red  (255,   0,   0);
+
+// We don't want to equip rgb8 with an operator<, nor to specialize
+// std::less, so we pass the functor rgb8_less_t as fourth parameter
+// of the look-up table.
+xtd::lexi_less_t lexi_less;
+struct rgb8_less_t
+{
+  bool operator()(const oln::value::color::rgb8& lhs,
+		  const oln::value::color::rgb8& rhs) const
+  {
+    return lexi_less(lhs.to_vec(), rhs.to_vec());
+  }
+};
+
+// FIXME: Move this elsewhere?
+namespace oln
+{
+  std::ostream&
+  operator<< (std::ostream& ostr, value::color::rgb8 val)
+  {
+    // The static_cast are needed because components of rgb8 are
+    // unsigned chars, printed as a classic chars.
+    ostr << "("
+	 << static_cast<int>(val.red()) << ", "
+	 << static_cast<int>(val.green()) << ", "
+	 << static_cast<int>(val.blue())
+	 << ")";
+    return ostr;
+  }
+
+} // end of namespace oln
+
+
+/*---------------------.
+| Look-up table type.  |
+`---------------------*/
+
+typedef oln::lookup_table< unsigned, oln::value::color::rgb8,
+			   std::less<unsigned>, rgb8_less_t > lut_t;
+
+
+/*-------.
+| Test.  |
+`-------*/
 
 int main()
 {
@@ -52,45 +100,53 @@ int main()
 
   unsigned data[] = { 0, 1, 2, 0, 1, 2, 0, 1, 2};
 
-  typedef image2d<unsigned> image_t;
+  typedef oln::image2d<unsigned> image_t;
   image_t ima(3, 3);
-  level::fill(ima, data);
-  debug::print(ima);
+  oln::level::fill(ima, data);
+  oln::debug::print(ima);
 
-  typedef lookup_table<unsigned, rgb8> lut_t;
   lut_t lut;
   rgb8 c(16, 6, 4);
   lut.
     add(0, blue).
     add(1, white).
     add(2, c);
-  std::cout << lut << std::endl;
 
-  typedef morpher::with_lut<image_t, lut_t> lutimage_t;
-  lutimage_t ima2 = ima + lut;
+  typedef oln::morpher::with_lut<image_t, lut_t> image_with_lut_t;
+  // FIXME: ``ima + lut'' doesn't work.  Maybe a `using' statement is
+  // required.
+  image_with_lut_t ima_with_lut(ima, lut);
 
-  // ima2 is an image, and can be as argument to to image routines.
-  image_test(ima2);
-
-  // FIXME: To be enabled later.
 #if 0
-  // it is value-wise accessible:
-  ima2.value(c) = red;
+  // Disable the display to speed up the test.
+  std::cout << "lut = "  << std::endl << ima_with_lut.lut() << std::endl;
+  oln::debug::print(ima_with_lut);
+  std::cout << std::endl;
 #endif
 
-  // let's look at it
-  debug::print(ima2);
-  std::cout << std::endl;
+  image_test(ima_with_lut);
 
-  // it is a 2D image so we have:
-  point2d p(1, 1);
-  std::cout << "ima2(p) =" << ima2(p) << std::endl;
-  // or (likewise):
-  std::cout << "ima2.at(1, 1) =" << ima2.at(1, 1) << std::endl;
-
-  // FIXME: To be enabled later.
 #if 0
-  // FIXME...
-  level::apply(ima2, fun); // 3 ops only !!!
+  std::cout << ima_with_lut.value(c) << std::endl;
+#endif
+
+  // Change a value in the LUT.
+  ima_with_lut.value(c) = red;
+
+#if 0
+  // Disable the display to speed up the test.
+  std::cout << "lut = "  << std::endl << ima_with_lut.lut() << std::endl;
+  oln::debug::print(ima_with_lut);
+  std::cout << std::endl;
+#endif
+
+  oln::point2d p(1, 2);
+  assert(ima_with_lut(p) == red);
+  assert(ima_with_lut.at(1, 2) == red);
+
+  // FIXME: To be enabled later, when oln::level::fill is specialized
+  // for abstract::mutable_image_being_value_wise_random_accessible.
+#if 0
+  oln::level::apply(ima_with_lut, fun); // 3 ops only !!!
 #endif
 }

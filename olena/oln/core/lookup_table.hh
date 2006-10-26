@@ -34,83 +34,196 @@
 namespace oln
 {
 
-  template <typename Key, typename Data>
+  // FIXME: Document!
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare = std::less<Orig_Value>,
+	    typename New_Value_Compare = std::less<New_Value> >
   class lookup_table
   { 
-    typedef lookup_table<Key, Data> self_t;
+    typedef lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare> self_t;
 
   public:
-    typedef Key key_type;
-    typedef Data data_type;
-    typedef std::map<Key, Data> map_type;
+    typedef Orig_Value orig_value_type;
+    typedef New_Value new_value_type;
+    typedef std::map<Orig_Value, New_Value, Orig_Value_Compare> orig_to_new_map_type;
+    typedef std::multimap<New_Value, Orig_Value, New_Value_Compare> new_to_orig_map_type;
+
+    typedef typename new_to_orig_map_type::const_iterator const_iterator;
+    typedef typename new_to_orig_map_type::iterator iterator;
 
   public:
     lookup_table();
 
-    self_t& add (const key_type& k, const data_type& d);
+    self_t& add (const orig_value_type& orig_value, const new_value_type& new_value);
 
-    const data_type operator () (const key_type& key) const;
+    const new_value_type operator() (const orig_value_type& orig_value) const;
 
-    const map_type& map() const;
+    /// (Internal) iterators.
+    /// \{
+    const_iterator begin() const;
+    iterator begin();
+
+    const_iterator end() const;
+    iterator end();
+    /// \}
+
+    const_iterator find(const new_value_type& val) const;
+    iterator find(const new_value_type& val);
+
+    /// Accessors.
+    /// \{
+    const orig_to_new_map_type& orig_to_new_map() const;
+    orig_to_new_map_type& orig_to_new_map();
+    const new_to_orig_map_type& new_to_orig_map() const;
+    new_to_orig_map_type& new_to_orig_map();
+    /// \}
 
   private:
-    std::map<Key, Data> map_;
+    orig_to_new_map_type orig_to_new_map_;
+    new_to_orig_map_type new_to_orig_map_;
   };
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename Key, typename Data>
-  lookup_table<Key, Data>::lookup_table() :
-    map_()
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  lookup_table<Orig_Value, New_Value,
+	       Orig_Value_Compare, New_Value_Compare>::lookup_table() :
+    orig_to_new_map_()
   {
   }
 
-  template <typename Key, typename Data>
-  lookup_table<Key, Data>& 
-  lookup_table<Key, Data>::add (const Key& k, const Data& d)
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>& 
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::add (const Orig_Value& orig_value,
+										   const New_Value& new_value)
   {
-    map_.insert(std::make_pair(k, d));
+    orig_to_new_map_.insert(std::make_pair(orig_value, new_value));
+    new_to_orig_map_.insert(std::make_pair(new_value, orig_value));
     return *this;
   }
 
-  template <typename Key, typename Data>
-  const Data
-  lookup_table<Key, Data>::operator () (const Key& key) const
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  const New_Value
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::operator () (const Orig_Value& orig_value) const
   {
-    typedef typename lookup_table<Key, Data>::map_type map_t;
-    typename map_t::const_iterator i = map_.find(key);
-    // FIXME: Is this the expected behavior when the LUT has no data
-    // for \a key.
-    assert(i != map_.end());
+    typedef typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::orig_to_new_map_type orig_to_new_map_t;
+    typename orig_to_new_map_t::const_iterator i = orig_to_new_map_.find(orig_value);
+    // FIXME: Is this the expected behavior when the LUT has no new_value
+    // for \a orig_value?
+    assert(i != orig_to_new_map_.end());
     return i->second;
   }
 
-  template <typename Key, typename Data>
-  const typename lookup_table<Key, Data>::map_type&
-  lookup_table<Key, Data>::map() const
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::const_iterator
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::begin() const
   {
-    return map_;
+    return new_to_orig_map_.begin();
+  }
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::iterator
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::begin()
+  {
+    return new_to_orig_map_.begin();
+  }
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::const_iterator
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::end() const
+  {
+    return new_to_orig_map_.end();
+  }
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::iterator
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::end()
+  {
+    return new_to_orig_map_.end();
+  }
+
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::const_iterator
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::find(const New_Value& val) const
+  {
+    return new_to_orig_map_.find(val);
+  }
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::iterator
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::find(const New_Value& val)
+  {
+    return new_to_orig_map_.find(val);
+  }
+
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  const typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::orig_to_new_map_type&
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::orig_to_new_map() const
+  {
+    return orig_to_new_map_;
+  }
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::orig_to_new_map_type&
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::orig_to_new_map()
+  {
+    return orig_to_new_map_;
+  }
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  const typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::new_to_orig_map_type&
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::new_to_orig_map() const
+  {
+    return new_to_orig_map_;
+  }
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::new_to_orig_map_type&
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::new_to_orig_map()
+  {
+    return new_to_orig_map_;
   }
 
 # endif
 
 
   /// Print a look-up table.
-  template <typename Key, typename Data>
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
   std::ostream&
-  operator<< (std::ostream& ostr, const lookup_table<Key, Data>& lut);
+  operator<< (std::ostream& ostr,
+	      const lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>& lut);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename Key, typename Data>
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
   std::ostream&
-  operator<< (std::ostream& ostr, const lookup_table<Key, Data>& lut)
+  operator<< (std::ostream& ostr,
+	      const lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>& lut)
   {
-    typedef lookup_table<Key, Data> lut_t;
-    const typename lut_t::map_type& map = lut.map();
-    for (typename lut_t::map_type::const_iterator i = map.begin ();
+    typedef lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare> lut_t;
+    const typename lut_t::orig_to_new_map_type& map = lut.orig_to_new_map();
+    for (typename lut_t::orig_to_new_map_type::const_iterator i = map.begin ();
 	 i != map.end(); ++i)
       ostr << "  " << i->first << " -> " << i->second << std::endl;
     return ostr;

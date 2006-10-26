@@ -40,14 +40,16 @@
 # include <oln/core/abstract/image/neighborhood/hierarchy.hh>
 // Hierarchy 4: image w.r.t. bounding box.
 # include <oln/core/abstract/image/bbox/hierarchy.hh>
-// Hierarchy 5: image w.r.t. accessibility.
+// Hierarchy 5: image w.r.t. point accessibility.
 # include <oln/core/abstract/image/accessibility/hierarchy.hh>
 // Hierarchy 6: image w.r.t. data mutability.
 # include <oln/core/abstract/image/mutability/hierarchy.hh>
 // Hierarchy 7: image w.r.t. computability.
 # include <oln/core/abstract/image/computability/hierarchy.hh>
+// Hierarchy 8: image w.r.t. value-wise accessibility.
+# include <oln/core/abstract/image/value_wise_accessibility/hierarchy.hh>
 
-// Hybrid hierarchy 8: image w.r.t. classical features.
+// (Hybrid) hierarchy 9: image w.r.t. classical features.
 # include <oln/core/abstract/image/hybrid/classical.hh>
 
 #endif // ! OLN_CORE_ABSTRACT_IMAGE_ALL_HH

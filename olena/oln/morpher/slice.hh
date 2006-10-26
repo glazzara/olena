@@ -86,6 +86,7 @@ namespace oln
 
     typedef oln_type_of(Image, value) value_type;
     // rvalue_type: see below.
+    // lvalue_type: see below.
 
     // fwd_piter_type: see oln/core/iterator_vtypes.hh.
     // bkd_piter_type: see oln/core/iterator_vtypes.hh.
@@ -140,9 +141,6 @@ namespace oln
   /// \}
 
 
-
-
-
   // piters.
 
   /// fwd_piter vtype of morpher::slice.
@@ -189,6 +187,7 @@ namespace oln
   };
 
 
+  // FIXME: What about niters on morpher::slice?
 
 
 

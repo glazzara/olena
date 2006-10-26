@@ -90,6 +90,7 @@ namespace oln
 //   mlc_decl_typedef(iter_type);
 //   mlc_decl_typedef(fwd_iter_type);
 //   mlc_decl_typedef(bkd_iter_type);
+// --------------------------------------------------------------------
 
   mlc_decl_typedef(piter_type);
   mlc_decl_typedef(fwd_piter_type);
@@ -102,7 +103,11 @@ namespace oln
   mlc_decl_typedef(niter_type);
   mlc_decl_typedef(fwd_niter_type);
   mlc_decl_typedef(bkd_niter_type);
-// --------------------------------------------------------------------
+
+  mlc_decl_typedef(fwd_viter_type);
+  mlc_decl_typedef(mutable_fwd_viter_type);
+  // FIXME: bkd_viter_type.
+  // FIXME: mutable_bkd_viter_type.
 
 
   /*----------------------.
@@ -187,6 +192,14 @@ namespace oln
 
   mlc_decl_typedef(dim_type);
   mlc_decl_typedef(vec_type);
+
+
+  /*-------------------------.
+  | category::lookup_table.  |
+  `-------------------------*/
+
+  mlc_decl_typedef(lut_type);
+  mlc_decl_typedef(lut_iter_type);
 
 
   /*------------------------------------.

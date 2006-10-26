@@ -1,3 +1,69 @@
+2006-10-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Extend morpher adding a look-up table (oln::morpher::with_lut).
+
+	* oln/core/abstract/image/hierarchies.hh
+	(image_hierarchy_wrt_value_wise_accessibility): New hierarchy.
+	(image_hybrid_hierarchy_wrt_classical)
+	(image_hierarchy_wrt_value, image_hierarchy_wrt_data_retrieval):
+	Adjust numbers.
+	* oln/core/abstract/image/all.hh
+	(oln/core/abstract/image/value_wise_accessibility/hierarchy.hh):
+	Include it.
+	Adjust.
+	* oln/core/abstract/image/value_wise_accessibility/hierarchy.hh: New.
+	* oln/core/automatic/image/image_being_value_wise_random_accessible.hh:
+	New.
+	* oln/core/internal/fwd_viter_lut.hh,
+	* oln/core/gen/fwd_viter_lut.hh: New.
+	* oln/core/typedefs.hh (fwd_viter_type, mutable_fwd_viter_type)
+	(lut_type, lut_iter_type): New virtual types declarations.
+	* oln/core/lookup_table.hh (lookup_table): Rename the first two
+	parameters to Orig_Value and New_Value.
+	Add two parameters Orig_Value_Compare and New_Value_Compare,
+	defaulting to std::less<Orig_Value> and std::less<New_Value>
+	respectively.
+	(lookup_table::key_type, lookup_table::data_type): Rename typedefs
+	as...
+	(lookup_table::orig_value_type, lookup_table::new_value_type):
+	...these.
+	(lookup_table::map_type): Remove typedef.
+	(lookup_table::orig_value_type, lookup_table::new_value_type)
+	(lookup_table::const_iterator, lookup_table::iterator): New
+	typedefs.
+	Adjust signatures of methods.
+	(lookup_table::map): Remove method.
+	(lookup_table::begin, lookup_table::end, lookup_table::find)
+	(lookup_table::orig_to_new_map, lookup_table::new_to_orig_map):
+	New methods.
+	(lookup_table::map_): Remove attributes.
+	(lookup_table::orig_to_new_map_, lookup_table::new_to_orig_map_):
+	New attributes.
+	(lookup_table::add): Adjust method.
+	* oln/morpher/with_lut.hh: Adjust.
+	(single_vtype<morpher::with_lut<Image, Lut>, typedef_::fwd_viter_type>)
+	(single_vtype<morpher::with_lut<Image ,Lut>,
+	 typedef_::mutable_fwd_viter_type>):
+	New.
+	(with_lut::lut_t, with_lut::value_t, with_lut::rvalue_t)
+	(with_lut::psite_t): Rename typedefs as...
+	(with_lut::lut_type, with_lut::value_type, with_lut::rvalue_type)
+	(with_lut::psite_type):	...these.
+	Adjust.
+	(with_lut::fwd_viter_type, with_lut::mutable_fwd_viter_type):
+	New typedefs.
+	(with_lut::impl_value): New methods.
+	(operator+ (const abstract::image<I>&, const lookup_table<K, D>&)):
+	Turn into...
+	(operator+ (const abstract::image<I>&, lookup_table<K, D>&)):
+	...this.
+	Adjust.
+	* tests/morphers/with_lut.cc: Augment this test.
+
+	* oln/value/color/rgb.hh
+	(rgb_<T>::operator==(const rgb_<U>&)): New operator.
+	* TODO: New.
+
 2006-10-25  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Oops.
