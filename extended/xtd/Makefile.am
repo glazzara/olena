@@ -38,6 +38,7 @@ nobase_xtd_HEADERS =				\
   math/log.hh					\
   math/log10.hh					\
   math/logic.hh					\
+  math/ops.hh					\
   math/pow.hh					\
   math/sin.hh					\
   math/sinh.hh					\
