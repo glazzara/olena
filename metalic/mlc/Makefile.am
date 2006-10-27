@@ -5,6 +5,7 @@ mlcdir = $(includedir)/mlc
 nobase_mlc_HEADERS =				\
   abort.hh 					\
   assert.hh					\
+  basic.hh					\
   bexpr.hh					\
   bool.hh					\
   case.hh					\

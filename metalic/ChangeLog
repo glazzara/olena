@@ -1,3 +1,10 @@
+2006-10-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the distribution.
+
+	* mlc/basic.hh: Fix dates in copyright notice.
+	* mlc/Makefile.am (nobase_mlc_HEADERS): Add basic.hh.
+
 2006-10-20  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/basic.hh (unref_): New.
@@ -16,8 +23,8 @@
 	Use TESTS_CXXFLAGS in Metalic.
 
 	* tests/gcase.cc (print), tests/protected.cc (reveal),
-	* tests/switch.cc (print): Make dummy use of all variables to void
-	compiler warnings.
+	* tests/switch.cc (print): Make dummy use of all variables to
+	avoid compiler warnings.
 	* tests/Makefile.am (TESTS_CXXFLAGS): New.
 	Append it to...
 	(CXXFLAGS): ...this variable.
