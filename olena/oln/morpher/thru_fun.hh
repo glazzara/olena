@@ -28,10 +28,11 @@
 #ifndef OLN_MORPHER_THRU_FUN
 # define OLN_MORPHER_THRU_FUN
 
-# include <xtd/abstract/open_nary_fun.hh>
 # include <xtd/res.hh>
+// For xtd::case_<xtd::tag::fun_operator_1, mlc::pair_<F, Expr>, 1>
+# include <xtd/mexpr.hh>
+# include <xtd/abstract/open_nary_fun.hh>
 # include <oln/morpher/internal/image_value_morpher.hh>
-
 
 
 namespace oln
@@ -135,7 +136,7 @@ namespace xtd
   // where A is an oln::abstract::image<I>
 
   template <typename Fun, typename A>
-  struct case_ < tag::fun_operator_1, mlc::pair_<Fun, A>, 1 >
+  struct case_ < tag::fun_operator_1, mlc::pair_<Fun, A>, 2 >
     : where_< mlc_is_a(A, oln::abstract::image) >
   {
     typedef stc_to_exact(A) I;

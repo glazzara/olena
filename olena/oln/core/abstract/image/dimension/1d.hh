@@ -65,8 +65,13 @@ namespace oln
       public automatic::get_impl<mutable_image1d, E>
     {
     public:
+      // Resolve an ambiguity w.r.t. impl_at().
+      // FIXME: Too hacky!
+      using automatic::set_impl<abstract::image1d, oln_type_of(E, morpher), E>::impl_at;
+      using automatic::set_impl<abstract::mutable_image1d, oln_type_of(E, morpher), E>::impl_at;
 
       using image1d<E>::at;
+
       oln_lvalue(E) at(const oln_coord(E)& index);
 
     protected:

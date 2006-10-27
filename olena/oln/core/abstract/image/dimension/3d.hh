@@ -70,8 +70,13 @@ namespace oln
       public automatic::get_impl<mutable_image3d, E>
     {
     public:
+      // Resolve an ambiguity w.r.t. impl_at().
+      // FIXME: Too hacky!
+      using automatic::set_impl<abstract::image3d, oln_type_of(E, morpher), E>::impl_at;
+      using automatic::set_impl<abstract::mutable_image3d, oln_type_of(E, morpher), E>::impl_at;
 
       using image3d<E>::at;
+
       oln_lvalue(E) at(const oln_coord(E)& slice,
 		       const oln_coord(E)& row,
 		       const oln_coord(E)& col);

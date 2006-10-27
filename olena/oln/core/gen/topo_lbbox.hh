@@ -31,11 +31,8 @@
 # include <oln/core/gen/bbox.hh>
 # include <oln/core/topology_entry.hh>
 
-
-
 namespace oln
 {
-
 
   // Forward declarations.
   template <typename point> class topo_lbbox_;

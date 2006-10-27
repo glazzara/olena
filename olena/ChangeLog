@@ -1,3 +1,33 @@
+2006-10-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Various fixes.
+
+	* oln/core/automatic/image/mutable_image1d.hh: Fix header guards,
+	(were the same as oln/core/automatic/image/image1d.hh's).
+	(oln::abstract::mutable_image1d): Forward-declare it.
+	s/abstract::image1d/abstract::mutable_image1d/g.
+	* oln/core/abstract/image/dimension/1d.hh (mutable_image1d)
+	* oln/core/abstract/image/dimension/2d.hh (mutable_image2d)
+	* oln/core/abstract/image/dimension/3d.hh (mutable_image3d): Fix
+	the lookup of impl_at().
+	* oln/core/type_fun/slice.hh: Remove unnecessary headers.
+	* oln/core/abstract/array.hh, oln/core/abstract/functions.hh,
+	* oln/core/internal/point_nd.hh, oln/morpher/thru_mfun.hh: Add
+	missing headers.
+	* oln/morpher/thru_fun.hh (xtd/mexpr.hh): Include it.
+	(struct case_<tag::fun_operator_1, mlc::pair_<Fun, A>, 1>): Turn
+	into...
+	(struct case_<tag::fun_operator_1, mlc::pair_<Fun, A>, 2>):
+	...this.
+	* oln/value/proxy.hh: Fix header guards.
+	(oln/core/typedefs.hh): Include it.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add 
+	core/abstract/image/computability/hierarchy.hh,
+	core/abstract/image/value_wise_accessibility/hierarchy.hh,
+	core/automatic/image/image_being_value_wise_random_accessible.hh,
+	core/gen/topo_add_isubset.hh, core/gen/fwd_viter_lut.hh,
+	core/internal/fwd_viter_lut.hh and value/two_way.hh.
+
 2006-10-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Extend morpher adding a look-up table (oln::morpher::with_lut).

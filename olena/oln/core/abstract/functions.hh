@@ -31,6 +31,7 @@
 # include <stc/any.hh>
 # include <oln/core/type.hh>
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/mutability/hierarchy.hh>
 
 
 namespace oln

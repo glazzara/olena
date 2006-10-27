@@ -30,13 +30,8 @@
 
 # include <mlc/flags.hh>
 
-# include <oln/core/1d/point1d.hh>
 # include <oln/core/1d/topo1d.hh>
-
-# include <oln/core/2d/point2d.hh>
 # include <oln/core/2d/topo2d.hh>
-
-# include <oln/core/3d/point3d.hh>
 # include <oln/core/3d/topo3d.hh>
 
 
@@ -266,7 +261,7 @@ namespace oln
       {
 	return topo1d(slice_point(topo.bbox().pmin(), slice_dim),
 		      slice_point(topo.bbox().pmax(), slice_dim),
-		      topo.border());	
+		      topo.border());
       }
     };
 

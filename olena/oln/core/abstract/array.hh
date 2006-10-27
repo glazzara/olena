@@ -28,6 +28,7 @@
 #ifndef OLN_CORE_ABSTRACT_ARRAY_HH
 # define OLN_CORE_ABSTRACT_ARRAY_HH
 
+# include <oln/core/type.hh>
 # include <oln/debug/track.hh>
 
 

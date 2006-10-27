@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_VALUE_PROXY_HH
-# define OLN_CORE_VALUE_PROXY_HH
+#ifndef OLN_VALUE_PROXY_HH
+# define OLN_VALUE_PROXY_HH
 
 # include <xtd/optraits.hh>
+# include <oln/core/typedefs.hh>
 # include <oln/core/type.hh>
 # include <oln/core/traits_id.hh>
 
@@ -469,4 +470,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_VALUE_PROXY_HH
+#endif // ! OLN_VALUE_PROXY_HH

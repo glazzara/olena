@@ -28,7 +28,7 @@
 /// Test oln::value::a_*.
 #include <iostream>
 
-#include <oln/color/rgb.hh>
+#include <oln/value/color/rgb.hh>
 
 #include <oln/basics2d.hh>
 #include <oln/value/accessor.hh>
@@ -39,7 +39,7 @@ int main()
 {
   using namespace oln;
 
-  typedef color::rgb_<int> rgb_t;
+  typedef value::color::rgb_<int> rgb_t;
   rgb_t c;
 
   image2d<rgb_t> ima(3,3);

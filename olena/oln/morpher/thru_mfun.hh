@@ -30,6 +30,7 @@
 
 # include <xtd/res.hh>
 # include <xtd/abstract/open_nary_fun.hh>
+# include <xtd/abstract/mutable_fun.hh>
 # include <xtd/mexpr.hh>
 # include <oln/morpher/internal/image_value_morpher.hh>
 

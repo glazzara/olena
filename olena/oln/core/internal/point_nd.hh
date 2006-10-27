@@ -31,7 +31,11 @@
 
 # include <xtd/vec.hh>
 # include <xtd/optraits.hh>
+// FIXME: There should be a header grouping the files required to make
+// the extensible traits mechanism work.
 # include <oln/core/traits_id.hh>
+# include <oln/value/proxy.hh>
+# include <oln/core/traits.hh>
 
 # include <oln/core/abstract/point.hh>
 # include <oln/core/internal/dpoint_nd.hh>
