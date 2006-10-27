@@ -1,6 +1,68 @@
 See also the TODO in oln-proto-1.0 and oln-proto-stl-style.
 
 
+* Clean up
+
+** Separate interface from implementation
+Move the contents of each block surrounded by OLN_INCLUDE_ONLY into a
+.hxx file.  Don't forget to keep the #ifndef/#endif directives, and to
+comment the closing #endif. Hence, this:
+
+  // ------------------------------------------------------------
+  // foo.hh
+  #ifndef FOO_HH
+  # define FOO_HH
+
+  // (Interface.)
+
+  # ifndef OLN_INCLUDE_ONLY
+
+  // (Implementation.)
+
+  # endif
+
+  #endif // ! FOO_HH
+  // ------------------------------------------------------------
+
+should be turned into these:
+
+  // ------------------------------------------------------------
+  // foo.hh
+  #ifndef FOO_HH
+  # define FOO_HH
+
+  // (Interface.)
+
+  # ifndef OLN_INCLUDE_ONLY
+  #  include <foo.hxx>
+  # endif
+
+  #endif // ! FOO_HH
+  // ------------------------------------------------------------
+
+  // ------------------------------------------------------------
+  // foo.hxx
+  #ifndef FOO_HXX
+  # define FOO_HXX
+
+  // (Implementation.)
+
+  #endif // ! FOO_HXX
+  // ------------------------------------------------------------
+
+
+(BTW, I (Roland) think that OLN_INTERFACE_ONLY would be more
+appropriate than OLN_INCLUDE_ONLY.)
+
+
+** Update the address of the FSF in Copyright notices (write a script)
+
+** Check dates for every copyright header
+Use the repository of Olena 0.10 (and previous) and Olena proto-1.0 to
+find when files have been created and modified.  This task could be a
+part of the code review process.
+
+
 * Release process
 This is to be done later, before the release of the whole project or
 of one or some of its components.
