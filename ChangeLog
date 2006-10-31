@@ -1,3 +1,9 @@
+2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix CXXFLAGS usage.
+
+	* configure.ac: Erase CXXFLAGS if the user doesn't set it.
+
 2006-10-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	* TODO: Update.

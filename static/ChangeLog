@@ -1,3 +1,8 @@
+2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	* tests/Makefile.am: Alter AM_CXXFLAGS instead of CXXFLAGS.
+	* stc/scoop.hh: Fix comment.
+
 2006-10-09  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* stc/scoop.hh (stc_virtual_typedef): Remove this macro which

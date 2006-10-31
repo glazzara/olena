@@ -23,6 +23,12 @@ AM_INIT_AUTOMAKE([1.9.4 foreign check-news dist-bzip2 -Wall])
 ## C++ compiler set up.  ##
 ## --------------------- ##
 
+# If the user doesn't provide any CXXFLAGS, prevent Autoconf from
+# settings its own default ones (e.g., `-g -O2' for g++).
+if test ! ${CXXFLAGS+set}; then
+   CXXFLAGS=""
+fi
+
 # Look for a C++ compiler.
 AC_LANG([C++])
 AC_PROG_CXX

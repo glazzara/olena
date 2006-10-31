@@ -63,7 +63,7 @@
 
 namespace stc
 {
-  /// Error messages raised by static assertions.
+  /// Error messages raised by static assertions/abortions.
   namespace ERROR
   {
 
@@ -203,6 +203,7 @@ namespace SCOOPED_NAMESPACE						      \
 									      \
     /** Accessor helper: specializations for the case of two super */	      \
     /** classes or more.                                           */	      \
+    /* FIXME: Currently works only for 2 and 3 super types.  */		      \
     template <typename super1, typename super2, typename super3>	      \
     struct get_super_types_helper< mlc::valist_ <super1, super2, super3> >    \
     {									      \
