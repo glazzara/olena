@@ -84,14 +84,6 @@ namespace oln
   | Iterators.  |
   `------------*/
 
-// --------------------------------------------------------------------
-// FIXME: To be enabled later.
-// --------------------------------------------------------------------
-//   mlc_decl_typedef(iter_type);
-//   mlc_decl_typedef(fwd_iter_type);
-//   mlc_decl_typedef(bkd_iter_type);
-// --------------------------------------------------------------------
-
   mlc_decl_typedef(piter_type);
   mlc_decl_typedef(fwd_piter_type);
   mlc_decl_typedef(bkd_piter_type);
@@ -123,22 +115,11 @@ namespace oln
   | category::image.  |
   `------------------*/
 
-// --------------------------------------------------------------------
-// FIXME: To be enabled later.
-// --------------------------------------------------------------------
-//   mlc_decl_typedef(data_type);
-// --------------------------------------------------------------------
   mlc_decl_typedef(is_computed_type);
   mlc_decl_typedef(value_type);
   mlc_decl_typedef(rvalue_type);
   mlc_decl_typedef(lvalue_type);
 
-// --------------------------------------------------------------------
-// FIXME: To be enabled later.
-// --------------------------------------------------------------------
-//   mlc_decl_typedef(value_storage_type);
-//   mlc_decl_typedef(storage_type);
-// --------------------------------------------------------------------
   mlc_decl_typedef(psite_type);
   mlc_decl_typedef(point_type);
   mlc_decl_typedef(dpoint_type);
@@ -146,37 +127,11 @@ namespace oln
   mlc_decl_typedef(neighborhood_type);
   mlc_decl_typedef(subset_type);
 
-// --------------------------------------------------------------------
-// FIXME: To be enabled later.
-// --------------------------------------------------------------------
-//   mlc_decl_typedef(image_type);
-// --------------------------------------------------------------------
-
   mlc_decl_typedef(delegated_type);
-  mlc_decl_typedef(size_type); // FIXME: To be removed.
   mlc_decl_typedef(topo_type);
   mlc_decl_typedef(bbox_type);
 
   mlc_decl_typedef(is_value_wise_mutable_type);
-// --------------------------------------------------------------------
-// FIXME: To be enabled later.
-// --------------------------------------------------------------------
-//   mlc_decl_typedef(window_type);
-// --------------------------------------------------------------------
-
-
-  // ------------------------------ //
-  // Extension in image_operators.  //
-  // ------------------------------ //
-
-// --------------------------------------------------------------------
-// FIXME: To be enabled later.
-// --------------------------------------------------------------------
-//   mlc_decl_typedef(output_type);
-//   mlc_decl_typedef(input_type);
-//   mlc_decl_typedef(input1_type);
-//   mlc_decl_typedef(input2_type);
-// --------------------------------------------------------------------
 
 
   /*-----------------.
@@ -203,19 +158,6 @@ namespace oln
   mlc_decl_typedef(lut_type);
   mlc_decl_typedef(lut_iter_type);
 
-
-  /*------------------------------------.
-  | category::fun1 and category::fun2.  |
-  `------------------------------------*/
-
-// --------------------------------------------------------------------
-// FIXME: To be enabled later.
-// --------------------------------------------------------------------
-//   mlc_decl_typedef(res_type);
-//   mlc_decl_typedef(arg_type);
-//   mlc_decl_typedef(left_type);
-//   mlc_decl_typedef(right_type);
-// --------------------------------------------------------------------
 
 } // end of namespace oln
 
