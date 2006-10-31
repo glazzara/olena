@@ -1,5 +1,22 @@
 2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the mutability of value-wise random accessible images.
+
+	* oln/core/typedefs.hh (is_value_wise_mutable_type): New virtual
+	type declaration.
+	* oln/core/abstract/image/value_wise_accessibility/hierarchy.hh
+	(struct case_<image_hierarchy_wrt_value_wise_accessibility, E, 2>):
+	Re-enable.
+	Swap with...
+	(struct case_<image_hierarchy_wrt_value_wise_accessibility, E, 1>):
+	...this case.
+	* oln/morpher/with_lut.hh
+	(vtypes< morpher::with_lut<Image, Lut> >::is_value_wise_mutable_type):
+	New virtual type.
+	Set to mlc::true_.
+
+2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	* tests/algorithms/Makefile.am, tests/core/Makefile.am,
 	* tests/io/Makefile.am, tests/morphers/Makefile.am,
 	* tests/value/Makefile.am, tests/value/Makefile.am:

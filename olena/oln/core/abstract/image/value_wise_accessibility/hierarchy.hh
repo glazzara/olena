@@ -122,31 +122,32 @@ namespace oln
   } // end of namespace oln::abstract
 
 
-  /*-------------------.
-  | Dimension switch.  |
-  `-------------------*/
+  /*----------------------------------.
+  | Value-wise accessibility switch.  |
+  `----------------------------------*/
 
   /* FIXME: Handle mutability.  This is not easy, as, for instance an
      image with LUT has no lvalue type, but can be perfectly const or
      mutable.  How can we deal with this?  By adding a specific
      vtype?  */
 
-  /// With value-wise random accessibility (
+  /// With mutable value-wise random accessibility.
   template <typename E>
   struct case_< image_hierarchy_wrt_value_wise_accessibility, E, 1 > :
-    where_< mlc_is_ok(oln_type_of(E, fwd_viter)) >
+    where_< mlc_and( mlc_is_ok(oln_type_of(E, fwd_viter)),
+		     mlc_eq( oln_type_of(E, is_value_wise_mutable),
+			     mlc::true_) ) >
   {
     typedef abstract::mutable_image_being_value_wise_random_accessible<E> ret;
   };
 
-//   /// With accessibility.
-//   template <typename E>
-//   struct case_< image_hierarchy_wrt_value_wise_accessibility, E, 2 > :
-//     where_< mlc_and( mlc_is_ok(oln_type_of(E, fwd_viter)),
-// 		     mlc_is_ok(oln_type_of(E, lvalue)) ) >
-//   {
-//     typedef abstract::mutable_image_being_value_wise_random_accessible<E> ret;
-//   };
+  /// With (constant) value-wise random accessibility.
+  template <typename E>
+  struct case_< image_hierarchy_wrt_value_wise_accessibility, E, 2 > :
+    where_< mlc_is_ok(oln_type_of(E, fwd_viter)) >
+  {
+    typedef abstract::image_being_value_wise_random_accessible<E> ret;
+  };
 
 } // end of namespace oln
 

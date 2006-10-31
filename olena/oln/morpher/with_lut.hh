@@ -67,8 +67,14 @@ namespace oln
     typedef Lut lut_type;
 
     // rvalue_type: see below.
-    // lvalue_type: undefined (see
-    //              oln/morpher/internal/image_value_morpher.hh).
+    /* lvalue_type: undefined
+       (see oln/morpher/internal/image_value_morpher.hh).  */
+
+    /* Mutability.
+       As the virtual type `lvalue' is undefined in with_lut<>, it is
+       not point-wise mutable.  However, it is value-wise mutable,
+       i.e., the values of the look-up table can be modified.  */
+    typedef mlc::true_ is_value_wise_mutable_type;
 
     // fwd_viter_type: see below.
     // mutable_fwd_viter_type: see below.
