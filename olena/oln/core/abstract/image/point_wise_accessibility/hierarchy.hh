@@ -25,29 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_IMAGE_ACCESSIBILITY_HIERARCHY_HH
-# define OLN_CORE_ABSTRACT_IMAGE_ACCESSIBILITY_HIERARCHY_HH
+#ifndef OLN_CORE_ABSTRACT_IMAGE_POINT_WISE_ACCESSIBILITY_HIERARCHY_HH
+# define OLN_CORE_ABSTRACT_IMAGE_POINT_WISE_ACCESSIBILITY_HIERARCHY_HH
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/image/hierarchies.hh>
-# include <oln/core/automatic/image/image_being_random_accessible.hh>
+# include <oln/core/automatic/image/image_being_point_wise_random_accessible.hh>
 
 
 namespace oln
 {
  
-  /*-------------------------.
-  | Dimension abstractions.  |
-  `-------------------------*/
+  /*----------------------------------------.
+  | Point-wise accessibility abstractions.  |
+  `----------------------------------------*/
 
   namespace abstract
   {
 
-    /// Image having a accessibility.
+    /// Image having a point-wise random accessibility.
     template <typename E>
-    struct image_being_random_accessible :
+    struct image_being_point_wise_random_accessible :
       public virtual image<E>,
-      public automatic::get_impl< image_being_random_accessible, E >
+      public automatic::get_impl< image_being_point_wise_random_accessible, E >
     {
       typedef oln_type_of(E, point) point_t;
 
@@ -62,7 +62,7 @@ namespace oln
     protected:
 
       /// Constructor (protected, empty).
-      image_being_random_accessible();
+      image_being_point_wise_random_accessible();
     };
 
 
@@ -70,19 +70,19 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    bool image_being_random_accessible<E>::has(const typename image_being_random_accessible<E>::point_t& p) const
+    bool image_being_point_wise_random_accessible<E>::has(const typename image_being_point_wise_random_accessible<E>::point_t& p) const
     {
       return this->exact().impl_has(p);
     }
 
     template <typename E>
-    bool image_being_random_accessible<E>::has_large(const typename image_being_random_accessible<E>::point_t& p) const
+    bool image_being_point_wise_random_accessible<E>::has_large(const typename image_being_point_wise_random_accessible<E>::point_t& p) const
     {
       return this->exact().impl_has_large(p);
     }
 
     template <typename E>
-    image_being_random_accessible<E>::image_being_random_accessible()
+    image_being_point_wise_random_accessible<E>::image_being_point_wise_random_accessible()
     {
     }
 
@@ -91,19 +91,19 @@ namespace oln
   } // end of namespace oln::abstract
 
 
-  /*-------------------.
-  | Dimension switch.  |
-  `-------------------*/
+  /*----------------------------------.
+  | Point-wise accessibility switch.  |
+  `----------------------------------*/
 
-  /// With accessibility.
+  /// With point-wise accessibility.
   template <typename E>
-  struct case_< image_hierarchy_wrt_accessibility, E, 1 > :
+  struct case_< image_hierarchy_wrt_point_wise_accessibility, E, 1 > :
     where_< mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ > >
   {
-    typedef abstract::image_being_random_accessible<E> ret;
+    typedef abstract::image_being_point_wise_random_accessible<E> ret;
   };
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_IMAGE_ACCESSIBILITY_HIERARCHY_HH
+#endif // ! OLN_CORE_ABSTRACT_IMAGE_POINT_WISE_ACCESSIBILITY_HIERARCHY_HH

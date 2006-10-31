@@ -38,7 +38,7 @@ namespace oln
   typedef hierarchy<abstract::image, 2> image_hierarchy_wrt_type;
   typedef hierarchy<abstract::image, 3> image_hierarchy_wrt_neighborhood;
   typedef hierarchy<abstract::image, 4> image_hierarchy_wrt_bbox;
-  typedef hierarchy<abstract::image, 5> image_hierarchy_wrt_accessibility;
+  typedef hierarchy<abstract::image, 5> image_hierarchy_wrt_point_wise_accessibility;
   typedef hierarchy<abstract::image, 6> image_hierarchy_wrt_mutability;
   typedef hierarchy<abstract::image, 7> image_hierarchy_wrt_computability;
   typedef hierarchy<abstract::image, 8> image_hierarchy_wrt_value_wise_accessibility;

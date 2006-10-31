@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
-# define OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
+#ifndef OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_POINT_WISE_RANDOM_ACCESSIBLE_HH
+# define OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_POINT_WISE_RANDOM_ACCESSIBLE_HH
 
 # include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
@@ -38,7 +38,7 @@ namespace oln
   // Forward declaration.
   namespace abstract
   {
-    template <typename E> class image_being_random_accessible;
+    template <typename E> class image_being_point_wise_random_accessible;
 
   } // end of namespace oln::abstract
 
@@ -47,10 +47,10 @@ namespace oln
   {
 
     /// Default implementation corresponding to the interface
-    /// oln::abstract::image_being_random_accessible.
+    /// oln::abstract::image_being_point_wise_random_accessible.
 
     template <typename E, typename M>
-    class set_impl<abstract::image_being_random_accessible, M, E> :
+    class set_impl<abstract::image_being_point_wise_random_accessible, M, E> :
       public virtual stc::any__simple<E>
     {
     private:
@@ -69,14 +69,14 @@ namespace oln
 
     template <typename E, typename M>
     bool
-    set_impl<abstract::image_being_random_accessible, M, E>::impl_has(const typename set_impl<abstract::image_being_random_accessible, M, E>::point_t& p) const
+    set_impl<abstract::image_being_point_wise_random_accessible, M, E>::impl_has(const typename set_impl<abstract::image_being_point_wise_random_accessible, M, E>::point_t& p) const
     {
       return this->exact().topo().has(p);
     }
 
     template <typename E, typename M>
     bool
-    set_impl<abstract::image_being_random_accessible, M, E>::impl_has_large(const typename set_impl<abstract::image_being_random_accessible, M, E>::point_t& p) const
+    set_impl<abstract::image_being_point_wise_random_accessible, M, E>::impl_has_large(const typename set_impl<abstract::image_being_point_wise_random_accessible, M, E>::point_t& p) const
     {
       return this->exact().has(p);
     }
@@ -87,4 +87,4 @@ namespace oln
   
 } // end of namespace oln
 
-#endif // ! OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_RANDOM_ACCESSIBLE_HH
+#endif // ! OLN_CORE_AUTOMATIC_IMAGE_IMAGE_BEING_POINT_WISE_RANDOM_ACCESSIBLE_HH

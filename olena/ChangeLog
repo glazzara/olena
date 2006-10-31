@@ -1,5 +1,37 @@
 2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename the ``accessibility'' hierarchy as ``point_wise_accessibility''.
+
+	* oln/core/abstract/image/accessibility/hierarchy.hh:
+	Rename as...
+	* oln/core/abstract/image/point_wise_accessibility/hierarchy.hh:
+	...this.
+	Adjust header guards.
+	(oln::abstract::image_being_random_accessible): Rename as...
+	(oln::abstract::image_being_point_wise_random_accessible): ...this.
+	Adjust.
+	(oln::case_<image_hierarchy_wrt_accessibility, E, 1>): Rename as...
+	(oln::case_<image_hierarchy_wrt_point_wise_accessibility, E, 1>):
+	...this.
+	Adjust.
+	* oln/core/abstract/image/hierarchies.hh,
+	* oln/core/abstract/image/all.hh,
+	* oln/core/abstract/image/hybrid/classical.hh: Adjust.
+	* oln/core/automatic/image/image_being_random_accessible.hh:
+	Adjust.
+	Rename as...
+	* oln/core/automatic/image/image_being_point_wise_random_accessible.hh:
+	...this.
+	Adjust header guards.
+	* oln/Makefile.am (nobase_oln_HEADERS): Remove
+	core/abstract/image/accessibility/hierarchy.hh and
+	core/automatic/image/image_being_random_accessible.hh.
+	Add core/abstract/image/point_wise_accessibility/hierarchy.hh
+	and core/automatic/image/image_being_point_wise_random_accessible.hh.
+	Remove duplicate core/automatic/image/image_having_neighborhood.hh
+
+2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the mutability of value-wise random accessible images.
 
 	* oln/core/typedefs.hh (is_value_wise_mutable_type): New virtual

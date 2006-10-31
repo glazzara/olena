@@ -35,7 +35,7 @@
 # include <oln/core/abstract/image/dimension/2d.hh>
 # include <oln/core/abstract/image/dimension/3d.hh>
 # include <oln/core/abstract/image/bbox/hierarchy.hh>
-# include <oln/core/abstract/image/accessibility/hierarchy.hh>
+# include <oln/core/abstract/image/point_wise_accessibility/hierarchy.hh>
 
 
 /* Image dimension hierarchy (summary).
@@ -63,10 +63,10 @@
              |      `---------------------'    |                |
              |                |                |                |
              |                |                |                |
-       ,-------------------------------------------------------------.
-       | if  (deduce_type_of(I, topo, is_random_accessible) == true) |
-       | and (deduce_type_of(I, topo, bbox) != not_found)            |
-       `-------------------------------------------------------------'
+ ,------------------------------------------------------------------------.
+ | if  (deduce_type_of(I, topo, is_point_wise_random_accessible) == true) |
+ | and (deduce_type_of(I, topo, bbox) != not_found)                       |
+ `------------------------------------------------------------------------'
              |                |                |                |
              o                o                o                o
 
@@ -99,7 +99,7 @@ namespace oln
     template <typename E>
     struct classical_image
       : public virtual abstract::image_having_bbox<E>,
-	public virtual abstract::image_being_random_accessible<E>
+	public virtual abstract::image_being_point_wise_random_accessible<E>
     {
     protected:
       classical_image();

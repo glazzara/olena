@@ -33,8 +33,6 @@ nobase_oln_HEADERS =							\
   core/3d/topo3d.hh							\
   core/3d/window3d.hh							\
 									\
-  core/abstract/image/accessibility/hierarchy.hh			\
-									\
   core/abstract/image/bbox/hierarchy.hh					\
 									\
   core/abstract/image/computability/hierarchy.hh			\
@@ -49,6 +47,8 @@ nobase_oln_HEADERS =							\
   core/abstract/image/mutability/hierarchy.hh				\
 									\
   core/abstract/image/neighborhood/hierarchy.hh				\
+									\
+  core/abstract/image/point_wise_accessibility/hierarchy.hh		\
 									\
   core/abstract/image/type/binary.hh					\
   core/abstract/image/type/color.hh					\
@@ -105,10 +105,9 @@ nobase_oln_HEADERS =							\
   core/automatic/image/mutable_image1d.hh				\
   core/automatic/image/mutable_image2d.hh				\
   core/automatic/image/mutable_image3d.hh				\
-  core/automatic/image/image_being_random_accessible.hh			\
-  core/automatic/image/image_having_neighborhood.hh			\
-  core/automatic/image/image_having_neighborhood.hh			\
+  core/automatic/image/image_being_point_wise_random_accessible.hh	\
   core/automatic/image/image_being_value_wise_random_accessible.hh	\
+  core/automatic/image/image_having_neighborhood.hh			\
 									\
   core/automatic/topology/topology_being_random_accessible.hh		\
   core/automatic/topology/topology_having_bbox.hh			\
