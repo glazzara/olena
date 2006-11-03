@@ -215,8 +215,8 @@ namespace NAMESPACE																	\
     struct handle_default_case_ < mlc::internal::a_get_case, context, data >										\
 																			\
       : private mlc::assert_< mlc::implies_< mlc::is_defined_< NAMESPACE::default_case_<context, data> >,						\
-					     mlc_is_not_a(mlc_comma_1(NAMESPACE::default_case_<context, data>),						\
-							  mlc::where_) >,										\
+					     mlc_is_not_a( mlc_comma_1( NAMESPACE::default_case_<context, data> ),					\
+							   mlc::where_ ) >,										\
 			      mlc::ERROR::A_default_case_STATEMENT_SHOULD_NOT_DERIVE_FROM_mlc_where_ >							\
     {																			\
       typedef NAMESPACE::default_case_<context, data> case_t;												\
@@ -232,8 +232,8 @@ namespace NAMESPACE																	\
     struct handle_default_case_ < mlc::internal::a_simple_case, context, data >										\
 																			\
       : private mlc::assert_< mlc::implies_< mlc::is_defined_< NAMESPACE::default_case_<context, data> >,						\
-					     mlc_is_not_a(mlc_comma_1(NAMESPACE::default_case_<context, data>),						\
-							  mlc::where_) >,										\
+					     mlc_is_not_a( mlc_comma_1( NAMESPACE::default_case_<context, data> ),					\
+							   mlc::where_ ) >,										\
 			      mlc::ERROR::A_default_case_STATEMENT_SHOULD_NOT_DERIVE_FROM_mlc_where_ >							\
     {																			\
       typedef NAMESPACE::default_case_<context, data> case_t;												\
@@ -249,8 +249,8 @@ namespace NAMESPACE																	\
     struct handle_default_case_ < mlc::internal::a_switch_case, context, data >										\
 																			\
       : private mlc::assert_< mlc::implies_< mlc::is_defined_< NAMESPACE::default_case_<context, data> >,						\
-					     mlc_is_not_a(mlc_comma_1(NAMESPACE::default_case_<context, data>),						\
-							  mlc::where_) >,										\
+					     mlc_is_not_a( mlc_comma_1( NAMESPACE::default_case_<context, data> ),					\
+							   mlc::where_ ) >,										\
 			      mlc::ERROR::A_default_case_STATEMENT_SHOULD_NOT_DERIVE_FROM_mlc_where_ >,							\
 																			\
 	private mlc::assert_< mlc::implies_< mlc::is_defined_< NAMESPACE::default_case_<context, data> >,						\
@@ -287,8 +287,8 @@ namespace NAMESPACE																	\
     struct handle_case_ <use, context, data, i, 0, 0>													\
 																			\
       : private mlc::assert_< mlc::implies_< mlc::is_defined_< NAMESPACE::case_<context, data, i> >,							\
-					     mlc_is_a(mlc_comma_2(NAMESPACE::case_<context, data, i>),							\
-						      mlc::where_) >,											\
+					     mlc_is_a( mlc_comma_2( NAMESPACE::case_<context, data, i> ),						\
+						       mlc::where_ ) >,											\
 			      mlc::ERROR::A_case_STATEMENT_SHOULD_DERIVE_FROM_mlc_where_ >,								\
 																			\
 	private mlc::assert_< mlc::implies_< mlc::neq_< use, mlc::internal::a_get_case >,								\
@@ -308,10 +308,10 @@ namespace NAMESPACE																	\
 	      typename context, typename data, unsigned i>												\
     struct handle_case_ <use, context, data, i, 1, 0>													\
 																			\
-      : private mlc::assert_< mlc::or_< mlc_is_a(mlc_comma_2(NAMESPACE::case_<context, data, i>),							\
-						 mlc::where_),												\
-					mlc_is_a(mlc_comma_2(NAMESPACE::case_<context, data, i>),							\
-						 mlc::undefined) >,											\
+      : private mlc::assert_< mlc::or_< mlc_is_a( mlc_comma_2( NAMESPACE::case_<context, data, i> ),							\
+						  mlc::where_ ),											\
+					mlc_is_a( mlc_comma_2( NAMESPACE::case_<context, data, i> ),							\
+						  mlc::undefined ) >,											\
 			      mlc::ERROR::A_case_STATEMENT_SHOULD_DERIVE_FROM_mlc_where_ >,								\
 																			\
 	private mlc::assert_< mlc::implies_< mlc::and_< mlc::eq_<use, mlc::internal::a_switch_case>,							\
@@ -348,16 +348,16 @@ namespace NAMESPACE																	\
 	      typename context, typename data, unsigned i>												\
     struct handle_case_ <use, context, data, i, 0, 1>													\
 																			\
-      : private mlc::assert_< mlc::or_< mlc_is_a(mlc_comma_2(NAMESPACE::case_<context, data, i>),							\
-						 mlc::where_),												\
-					mlc_is_a(mlc_comma_2(NAMESPACE::case_<context, data, i>),							\
-						 mlc::undefined) >,											\
+      : private mlc::assert_< mlc::or_< mlc_is_a( mlc_comma_2( NAMESPACE::case_<context, data, i> ),							\
+						  mlc::where_ ),											\
+					mlc_is_a( mlc_comma_2( NAMESPACE::case_<context, data, i> ),							\
+						  mlc::undefined ) >,											\
 			      mlc::ERROR::A_case_STATEMENT_SHOULD_DERIVE_FROM_mlc_where_ >					       			\
     {																			\
-      typedef mlc_is_a(mlc_comma_2(NAMESPACE::case_<context, data, i+1>),										\
-		       mlc::case_selected) next_case_is_selected;											\
-      typedef mlc_is_a(mlc_comma_2(NAMESPACE::case_<context, data, i+1>),										\
-		       mlc::case_not_selected) next_case_is_not_selected;										\
+      typedef mlc_is_a( mlc_comma_2( NAMESPACE::case_<context, data, i+1> ) ,										\
+		        mlc::case_selected ) next_case_is_selected;											\
+      typedef mlc_is_a( mlc_comma_2( NAMESPACE::case_<context, data, i+1> ) ,										\
+		        mlc::case_not_selected ) next_case_is_not_selected;										\
 																			\
       typedef handle_case_ < use,															\
 	                     context, data, i+1,													\
@@ -371,14 +371,14 @@ namespace NAMESPACE																	\
     template <typename use, typename context, typename data>												\
     struct select_case_																	\
 																			\
-      : private mlc::assert_< mlc::eq_< mlc_ret(mlc_comma_2(NAMESPACE::case_<context, data, 0>)),							\
+      : private mlc::assert_< mlc::eq_< mlc_ret( mlc_comma_2( NAMESPACE::case_<context, data, 0> ) ),							\
 					mlc::locked >,													\
 			      mlc::ERROR::A_case_STATEMENT_SHOULD_NOT_START_AT_INDEX_0_BUT_1 >								\
     {																			\
-      typedef mlc_is_a(mlc_comma_2(NAMESPACE::case_<context, data, 1>),											\
-		       mlc::case_selected) first_case_is_selected;											\
-      typedef mlc_is_a(mlc_comma_2(NAMESPACE::case_<context, data, 1>),											\
-		       mlc::case_not_selected) first_case_is_not_selected;										\
+      typedef mlc_is_a( mlc_comma_2( NAMESPACE::case_<context, data, 1> ),										\
+		        mlc::case_selected ) first_case_is_selected;											\
+      typedef mlc_is_a( mlc_comma_2( NAMESPACE::case_<context, data, 1> ),										\
+		        mlc::case_not_selected ) first_case_is_not_selected;										\
       typedef handle_case_ < use,															\
 	                     context, data, 1,														\
 	                     mlc_bool(first_case_is_selected), mlc_bool(first_case_is_not_selected)							\

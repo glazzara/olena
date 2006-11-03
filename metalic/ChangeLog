@@ -1,3 +1,8 @@
+2006-11-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add spaces in macros to please icpc.
+	* mlc/is_a.hh, mlc/case.hh: Add spaces in macros to please icpc.
+
 2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/Makefile.am: Alter AM_CXXFLAGS instead of CXXFLAGS.

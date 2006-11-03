@@ -240,11 +240,11 @@ namespace mlc
 
 # define mlc_is_a(T, U)												\
 mlc::wrap_<													\
-  typename mlc::is_a_< sizeof(mlc::form::of< U >()) >::template ret< typename mlc::basic_<T>::ret, U >	\
+  typename mlc::is_a_< sizeof(mlc::form::of< U >()) >::template ret< typename mlc::basic_< T >::ret, U >	\
 >
 
 # define mlc_is_a_(T, U) \
-mlc::is_a_< sizeof(mlc::form::of< U >()) >::ret< mlc::basic_<T>::ret, U >
+mlc::is_a_< sizeof(mlc::form::of< U >()) >::ret< mlc::basic_< T >::ret, U >
 
 
 /*! \def mlc_is_not_a(T, U)
@@ -257,11 +257,11 @@ mlc::is_a_< sizeof(mlc::form::of< U >()) >::ret< mlc::basic_<T>::ret, U >
 
 # define mlc_is_not_a(T, U)											\
 mlc::not_<													\
-  typename mlc::is_a_<sizeof(mlc::form::of<U >())>::template ret< typename mlc::basic_<T>::ret, U >	\
+  typename mlc::is_a_<sizeof(mlc::form::of< U >())>::template ret< typename mlc::basic_< T >::ret, U >	\
 >
 
 # define mlc_is_not_a_(T, U) \
-mlc::not_< mlc::is_a_< sizeof(mlc::form::of<U >())>::ret< mlc::basic_<T>::ret, U > >
+mlc::not_< mlc::is_a_< sizeof(mlc::form::of< U >())>::ret< mlc::basic_< T >::ret, U > >
 
 
 #endif // ! MLC_IS_A_HH
