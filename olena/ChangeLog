@@ -1,20 +1,35 @@
 2006-11-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
+	Add oln::morpher::two_way_rw.
+
+	* ChangeLog: Fix file dir in previous entry.
+	* tests/morphers/two_way_rw_morpher.cc: New.
+	* tests/morphers/Makefile.am: Update.
+	* oln/morpher/two_way_rw.hh: New.
+	* oln/Makefile.am: Update.
+	* oln/morpher/two_way.hh (value::two_way): Move impl into...
+	* oln/value/two_way.hxx: ...this new file.
+	* oln/core/abstract/functions.hh (fun_rw): Update.
+	* oln/morpher/count_rw.hh (count_rw): Move impl into guards.
+	* oln/morpher/stack_rw.hh (include): Update.
+	
+2006-11-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
 	Add morpher::stack_rw.
 	
-	* olena/tests/morphers/stack_rw_morpher.cc: New.
-	* olena/tests/morphers/Makefile.am: Update.
-	* olena/oln/morpher/stack_rw.hh: New.
-	* olena/oln/Makefile.am: Update.
-	* olena/oln/debug/print.hh (print): Store loop 2D bounds.
-	* olena/oln/core/abstract/functions.hh (fun_rw): New.
-	* olena/oln/morpher/two_way.hh (ima_): Change type to pointer.
+	* tests/morphers/stack_rw_morpher.cc: New.
+	* tests/morphers/Makefile.am: Update.
+	* oln/morpher/stack_rw.hh: New.
+	* oln/Makefile.am: Update.
+	* oln/debug/print.hh (print): Store loop 2D bounds.
+	* oln/core/abstract/functions.hh (fun_rw): New.
+	* oln/morpher/two_way.hh (ima_): Change type to pointer.
 	(two_way): New ctor for class value::two_way.
 	(read_, write_): New methods.
 	(operator, value): Call read_.
 	(operator=): Call write_.
-	* olena/oln/morpher/stack.hh (N): New.
-	* olena/oln/value/two_way.hh (two_way): New ctor decl.
+	* oln/morpher/stack.hh (N): New.
+	* oln/value/two_way.hh (two_way): New ctor decl.
 	(ima_): Change type to pointer.
 	(read_, write_): New method decls.
 

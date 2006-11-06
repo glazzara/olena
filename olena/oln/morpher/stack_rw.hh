@@ -30,7 +30,6 @@
 
 # include <xtd/vec.hh>
 # include <oln/value/two_way.hh>
-# include <oln/morpher/two_way.hh>
 # include <oln/morpher/internal/image_value_morpher.hh>
 
 
@@ -243,6 +242,9 @@ namespace oln
 # endif
 
 } // end of namespace oln
+
+
+# include <oln/value/two_way.hxx>
 
 
 #endif // ! OLN_MORPHER_STACK_RW_HH

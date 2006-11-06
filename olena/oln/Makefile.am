@@ -194,6 +194,7 @@ nobase_oln_HEADERS =							\
   morpher/thru_fun.hh							\
   morpher/thru_mfun.hh							\
   morpher/two_way.hh							\
+  morpher/two_way_rw.hh							\
   morpher/value_cast.hh							\
   morpher/with_lut.hh							\
 									\
@@ -208,6 +209,7 @@ nobase_oln_HEADERS =							\
   value/rw_counter.hh							\
   value/tags.hh								\
   value/two_way.hh							\
+  value/two_way.hxx							\
 									\
   basics1d.hh								\
   basics2d.hh								\

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_TWO_WAY_HH
-# define OLN_MORPHER_TWO_WAY_HH
+#ifndef OLN_MORPHER_TWO_WAY_RW_HH
+# define OLN_MORPHER_TWO_WAY_RW_HH
 
 # include <oln/value/two_way.hh>
 # include <oln/morpher/internal/image_value_morpher.hh>
@@ -38,24 +38,24 @@ namespace oln
   namespace morpher
   {
     // Forward declaration.
-    template <typename Image, typename Fun> struct two_way;
+    template <typename Image, typename Fun> struct two_way_rw;
 
   } // end of namespace oln::morpher
 
 
   /// Super type.
   template <typename Image, typename Fun>
-  struct set_super_type< morpher::two_way<Image, Fun> >
+  struct set_super_type< morpher::two_way_rw<Image, Fun> >
   {
-    typedef morpher::two_way<Image, Fun> self_t;
+    typedef morpher::two_way_rw<Image, Fun> self_t;
     typedef morpher::internal::image_value_morpher<Image, self_t> ret;
   };
 
 
   template <typename Image, typename Fun>
-  struct vtypes< morpher::two_way<Image, Fun> >
+  struct vtypes< morpher::two_way_rw<Image, Fun> >
   {
-    typedef morpher::two_way<Image, Fun> self_t;
+    typedef morpher::two_way_rw<Image, Fun> self_t;
   public:
     typedef mlc::true_ is_computed_type;
 
@@ -64,7 +64,7 @@ namespace oln
   };
 
   template <typename Image, typename Fun>
-  struct single_vtype< morpher::two_way<Image, Fun>, typedef_::rvalue_type >
+  struct single_vtype< morpher::two_way_rw<Image, Fun>, typedef_::rvalue_type >
   {
     typedef typename Fun::result_type ret;
   };
@@ -75,12 +75,12 @@ namespace oln
 
     /// 'Image thru Function' morpher.
     template <typename Image, typename Fun>
-    class two_way : public internal::image_value_morpher< Image,
-							   morpher::two_way<Image, Fun> >
+    class two_way_rw : public internal::image_value_morpher< Image,
+							     morpher::two_way_rw<Image, Fun> >
     {
     private:
 
-      typedef two_way<Image, Fun> self_t;
+      typedef two_way_rw<Image, Fun> self_t;
 
       typedef internal::image_value_morpher<Image, self_t> super_t;
       using super_t::image_;
@@ -91,11 +91,10 @@ namespace oln
 
     public:
 
-      two_way(Image& image, Fun fun);
-      two_way(Image& image);
+      two_way_rw(oln::abstract::mutable_image<Image>& image);
 
-      two_way(oln::abstract::mutable_image<Image>& image,
-	      const oln::abstract::fun_v2w2v<Fun>& fun);
+      two_way_rw(oln::abstract::mutable_image<Image>& image,
+		 const oln::abstract::fun_rw<Fun>& fun);
 
       rvalue_t impl_op_read(const psite_t& p) const;
       lvalue_t impl_op_readwrite(const psite_t& p);
@@ -119,39 +118,32 @@ namespace oln
     // public
 
     template <typename Image, typename Fun>
-    two_way<Image, Fun>::two_way(Image& image) :
-      super_t(image),
+    two_way_rw<Image, Fun>::two_way_rw(oln::abstract::mutable_image<Image>& image) :
+      super_t(image.exact()),
       fun_()
     {
     }
 
     template <typename Image, typename Fun>
-    two_way<Image, Fun>::two_way(Image& image, Fun fun) :
-      super_t(image),
-      fun_(fun)
-    {
-    }
-
-    template <typename Image, typename Fun>
-    two_way<Image, Fun>::two_way(oln::abstract::mutable_image<Image>& image,
-				 const oln::abstract::fun_v2w2v<Fun>& fun) :
+    two_way_rw<Image, Fun>::two_way_rw(oln::abstract::mutable_image<Image>& image,
+				       const oln::abstract::fun_rw<Fun>& fun) :
       super_t(image.exact()),
       fun_(fun.exact())
     {
     }
     
     template <typename Image, typename Fun>
-    typename two_way<Image, Fun>::rvalue_t
-    two_way<Image, Fun>::impl_op_read(const typename two_way<Image, Fun>::psite_t& p) const
+    typename two_way_rw<Image, Fun>::rvalue_t
+    two_way_rw<Image, Fun>::impl_op_read(const typename two_way_rw<Image, Fun>::psite_t& p) const
     {
-      return fun_.direct(image_(p));
+      return fun_.read(this->delegate(), p);
     }
     
     template <typename Image, typename Fun>
-    typename two_way<Image, Fun>::lvalue_t
-    two_way<Image, Fun>::impl_op_readwrite(const typename two_way<Image, Fun>::psite_t& p)
+    typename two_way_rw<Image, Fun>::lvalue_t
+    two_way_rw<Image, Fun>::impl_op_readwrite(const typename two_way_rw<Image, Fun>::psite_t& p)
     {
-      value::two_way<Image, Fun> tmp(image_, fun_, p);
+      typename two_way_rw<Image, Fun>::lvalue_t tmp(this->delegate(), p);
       return tmp;
     }
 
@@ -165,4 +157,4 @@ namespace oln
 # include <oln/value/two_way.hxx>
 
 
-#endif // ! OLN_MORPHER_TWO_WAY_HH
+#endif // ! OLN_MORPHER_TWO_WAY_RW_HH

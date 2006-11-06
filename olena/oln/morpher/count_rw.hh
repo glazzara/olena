@@ -143,6 +143,17 @@ namespace oln
 
   template <typename I>
   morpher::count_rw_<I>
+  count_rw(oln::abstract::mutable_image<I>& input);
+
+  template <typename I>
+  morpher::count_rw_<I>
+  count_rw(const oln::abstract::mutable_image<I>& input);
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename I>
+  morpher::count_rw_<I>
   count_rw(oln::abstract::mutable_image<I>& input)
   {
     morpher::count_rw_<I> tmp(input.exact());
@@ -158,6 +169,8 @@ namespace oln
     morpher::count_rw_<I> tmp(input_);
     return tmp;
   }
+
+# endif
 
 
 } // end of namespace oln

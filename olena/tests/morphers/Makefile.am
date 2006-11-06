@@ -26,6 +26,7 @@ check_PROGRAMS =				\
   stack_morpher					\
   stack_rw_morpher				\
   two_way_morpher				\
+  two_way_rw_morpher				\
   value_cast					\
   with_lut					\
 						\
@@ -39,6 +40,7 @@ slice_morpher_SOURCES = slice_morpher.cc
 stack_morpher_SOURCES = stack_morpher.cc
 stack_rw_morpher_SOURCES = stack_rw_morpher.cc
 two_way_morpher_SOURCES = two_way_morpher.cc
+two_way_rw_morpher_SOURCES = two_way_rw_morpher.cc
 value_cast_SOURCES = value_cast.cc
 with_lut_SOURCES = with_lut.cc
 
