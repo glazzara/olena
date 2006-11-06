@@ -190,6 +190,7 @@ nobase_oln_HEADERS =							\
   morpher/tags.hh							\
   morpher/slice.hh							\
   morpher/stack.hh							\
+  morpher/stack_rw.hh							\
   morpher/thru_fun.hh							\
   morpher/thru_mfun.hh							\
   morpher/two_way.hh							\

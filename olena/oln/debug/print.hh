@@ -86,9 +86,15 @@ namespace oln
       void print(const abstract::classical_2d_image<I>& input,
 		 std::ostream& ostr)
       {
-	for (int row = min_row(input); row <= max_row(input); ++row)
+	const oln_coord(I)
+	  min_row = oln::min_row(input),
+	  max_row = oln::max_row(input);
+	for (oln_coord(I) row = min_row; row <= max_row; ++row)
 	  {
-	    for (int col = min_col(input); col <= max_col(input); ++col)
+	    const oln_coord(I)
+	      min_col = oln::min_col(input),
+	      max_col = oln::max_col(input);
+	    for (oln_coord(I) col = min_col; col <= max_col; ++col)
 	      {
 		point2d p(row, col);
 		if (input.has(p))

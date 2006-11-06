@@ -1,3 +1,23 @@
+2006-11-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add morpher::stack_rw.
+	
+	* olena/tests/morphers/stack_rw_morpher.cc: New.
+	* olena/tests/morphers/Makefile.am: Update.
+	* olena/oln/morpher/stack_rw.hh: New.
+	* olena/oln/Makefile.am: Update.
+	* olena/oln/debug/print.hh (print): Store loop 2D bounds.
+	* olena/oln/core/abstract/functions.hh (fun_rw): New.
+	* olena/oln/morpher/two_way.hh (ima_): Change type to pointer.
+	(two_way): New ctor for class value::two_way.
+	(read_, write_): New methods.
+	(operator, value): Call read_.
+	(operator=): Call write_.
+	* olena/oln/morpher/stack.hh (N): New.
+	* olena/oln/value/two_way.hh (two_way): New ctor decl.
+	(ima_): Change type to pointer.
+	(read_, write_): New method decls.
+
 2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	Clean up virtual types declarations.

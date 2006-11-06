@@ -82,6 +82,8 @@ namespace oln
 
     public:
 
+      enum { N = n }; // FIXME: Hum...
+
       stack(const xtd::vec<n, I>& images);
 
       xtd::vec<n, oln_value(I)> impl_op_read(const psite_t& p) const;

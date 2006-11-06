@@ -24,6 +24,7 @@ check_PROGRAMS =				\
   count_rw_morpher				\
   slice_morpher					\
   stack_morpher					\
+  stack_rw_morpher				\
   two_way_morpher				\
   value_cast					\
   with_lut					\
@@ -36,6 +37,7 @@ add_neighborhood_morpher_SOURCES = add_neighborhood_morpher.cc
 count_rw_morpher_SOURCES = count_rw_morpher.cc
 slice_morpher_SOURCES = slice_morpher.cc
 stack_morpher_SOURCES = stack_morpher.cc
+stack_rw_morpher_SOURCES = stack_rw_morpher.cc
 two_way_morpher_SOURCES = two_way_morpher.cc
 value_cast_SOURCES = value_cast.cc
 with_lut_SOURCES = with_lut.cc

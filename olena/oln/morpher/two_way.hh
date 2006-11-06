@@ -170,8 +170,18 @@ namespace oln
     two_way<I,F>::two_way(I& ima,
 			  F fun,
 			  const oln_psite(I)& p)
-      : ima_(ima),
+      : ima_(&ima),
 	fun_(fun),
+	p_(p)
+    {
+    }
+
+    // Ctor.
+    template <typename I, typename F>
+    two_way<I,F>::two_way(I& ima,
+			  const oln_psite(I)& p)
+      : ima_(&ima),
+	fun_(),
 	p_(p)
     {
     }
@@ -181,7 +191,7 @@ namespace oln
     template <typename V>
     two_way<I,F>::operator V() const
     {
-      return fun_.direct(ima_(p_));
+      return read_(fun_);
     }
 
     // Explicit read.
@@ -189,7 +199,7 @@ namespace oln
     typename F::result_type
     two_way<I,F>::value() const
     {
-      return fun_.direct(ima_(p_));
+      return read_(fun_);
     }
     
     // Write.
@@ -199,9 +209,46 @@ namespace oln
     two_way<I,F>&
     two_way<I,F>::operator=(const V& value)
     {
-      ima_(p_) = fun_.reverse(value);
+      write_(fun_, value);
       return *this;
     }
+
+    // fun_v2w2v
+
+    template <typename I, typename F>
+    template <typename E, typename V>
+    void
+    two_way<I,F>::write_(const oln::abstract::fun_v2w2v<E>& f, const V& value)
+    {
+      (*ima_)(p_) = f.exact().reverse(value);
+    }
+
+    template <typename I, typename F>
+    template <typename E>
+    typename E::result_type
+    two_way<I,F>::read_(const oln::abstract::fun_v2w2v<E>& f) const
+    {
+      return f.exact().direct((*ima_)(p_));
+    }
+
+    // fun_rw
+
+    template <typename I, typename F>
+    template <typename E, typename V>
+    void
+    two_way<I,F>::write_(const oln::abstract::fun_rw<E>& f, const V& value)
+    {
+      f.exact().write(*ima_, p_, value);
+    }
+
+    template <typename I, typename F>
+    template <typename E>
+    typename E::result_type
+    two_way<I,F>::read_(const oln::abstract::fun_rw<E>& f) const
+    {
+      return f.exact().read(*ima_, p_);
+    }
+
 
     // Op <<.
     template <typename I, typename F>

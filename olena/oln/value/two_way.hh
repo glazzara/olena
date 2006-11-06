@@ -50,6 +50,10 @@ namespace oln
       two_way(I& ima,
 	      F fun,
 	      const oln_psite(I)& p);
+
+      // Ctor.
+      two_way(I& ima,
+	      const oln_psite(I)& p);
       
       // Read.
       template <typename V>
@@ -63,9 +67,32 @@ namespace oln
       two_way<I,F>& operator=(const V& value);
 
     protected:
-      I ima_;
+
+      I* ima_;
       F fun_;
       const oln_psite(I)& p_;
+
+    private:
+
+      // oln::abstract::fun_v2w2v
+      // Two-way function defined by "direct : v -> w" and "reverse : w -> v".
+
+      template <typename E, typename V>
+      void write_(const oln::abstract::fun_v2w2v<E>& f, const V& value);
+
+      template <typename E>
+      typename E::result_type
+      read_(const oln::abstract::fun_v2w2v<E>& f) const;
+
+      // oln::abstract::fun_rw<E>
+      // Two-way function defined by "read(ima, p)" and "write(ima, p, v)"
+
+      template <typename E, typename V>
+      void write_(const oln::abstract::fun_rw<E>& f, const V& value);
+
+      template <typename E>
+      typename E::result_type
+      read_(const oln::abstract::fun_rw<E>& f) const;
     };
 
 

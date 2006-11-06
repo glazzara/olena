@@ -39,9 +39,8 @@ namespace oln
 
 
   // Fwd decl.
-  namespace morpher {
-    template <typename I, typename F> class two_way;
-  }
+  namespace morpher { template <typename I, typename F> class two_way; }
+  namespace value   { template <typename I, typename F> class two_way; }
 
 
   namespace abstract
@@ -76,11 +75,30 @@ namespace oln
 		       public oln::type
     {
     public:
+
       template <typename I>
       oln::morpher::two_way<I, E>
       operator()(oln::abstract::mutable_image<I>& input) const;
+
     protected:
       fun_v2w2v();
+    };
+
+
+    // FIXME: Value1 -> Value2  *and*  Value2 -> Value1.
+
+    template <typename E>
+    struct fun_rw : public virtual stc::any__simple<E>,
+		    public oln::type
+    {
+    public:
+
+      template <typename I>
+      oln::morpher::two_way<I, E>
+      operator()(oln::abstract::mutable_image<I>& input) const;
+
+    protected:
+      fun_rw();
     };
 
 
@@ -109,6 +127,11 @@ namespace oln
 
     template <typename E>
     fun_v2w2v<E>::fun_v2w2v()
+    {
+    }
+
+    template <typename E>
+    fun_rw<E>::fun_rw()
     {
     }
 
