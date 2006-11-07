@@ -29,6 +29,8 @@
 # define XTD_VEC_HH
 
 # include <iostream>
+# include <cmath>
+
 # include <mlc/contract.hh>
 # include <xtd/optraits.hh>
 
@@ -317,6 +319,8 @@ namespace xtd
   }
 
 
+  // lexi_less.
+
   struct lexi_less_t
   {
     template <unsigned n, typename T>
@@ -331,13 +335,25 @@ namespace xtd
     }
   };
 
-
   template <unsigned n, typename T>
   bool lexi_less(const vec<n,T>& lhs, const vec<n,T>& rhs)
   {
     lexi_less_t cmp;
     return cmp(lhs, rhs);
   }
+
+
+  // L2_norm.
+
+  template <unsigned n, typename T>
+  float L2_norm(const vec<n,T>& v)
+  {
+    float val = 0.f;
+    for (unsigned i = 0; i < n; ++i)
+      val += float(v[i]) * float(v[i]);
+    return std::sqrt(val);
+  }
+
 
 
   template <typename uop,

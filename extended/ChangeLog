@@ -1,3 +1,8 @@
+2006-11-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* xtd/vec.hh (L2_norm): New.
+	(include): Add cmath header.
+
 2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/Makefile.am: Alter AM_CXXFLAGS instead of CXXFLAGS.
