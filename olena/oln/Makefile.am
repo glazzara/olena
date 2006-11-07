@@ -128,9 +128,14 @@ nobase_oln_HEADERS =							\
   core/gen/fwd_qiter_win.hh						\
   core/gen/fwd_viter_lut.hh						\
   core/gen/piter_isubset.hh						\
+  core/gen/piter_isubset.hh						\
+  core/gen/pset_.hh							\
+  core/gen/pset_list.hh							\
+  core/gen/pset_vec.hh							\
   core/gen/grid.hh							\
   core/gen/mapimage.hh							\
   core/gen/neighb.hh							\
+  core/gen/piter_on_std_based_pset.hh					\
   core/gen/pw_value.hh							\
   core/gen/topo_add_isubset.hh						\
   core/gen/topo_add_nbh.hh						\
