@@ -17,6 +17,237 @@ Or even, rename rvalue and lvalue as ro_value (read-only) and rw_value
 
 
 
+* Primary image types
+
+
+** contents
+
+type				Q
+
+image2d<T>			0
+slow::image_bbmap<P, T>		0
+
+rle_image<P, T>			1
+sparse_image<P, T>		1
+image_vec<P, T>			1
+image_map<P, T>			1
+
+one_value_image<S, T>		2
+image_p2v<S, F>			2
+
+igraph<T>			3
+image_2dhex<T>			3
+
+image2d_without_border<T>	1
+
+
+** image2d<T>
+
+*** parameter
+
+T: value type
+
+*** main features
+
+has a virtual border (same thickness for every axis)
+point-wise accessible and mutable
+not value-wise accessible
+
+*** data storage
+
+relies on array2d<T>
+
+*** to-do
+
+should rely on array2d< T::storage >
+
+*** related types
+
+image1d<T> and image3d<T> are similarly constructed
+
+
+** image_2dhex<T>
+
+on a 2D triangular grid (hexagonal pixels)
+FIXME: ...
+
+
+** igraph<T>
+
+FIXME: ...
+
+
+** image2d_without_border<T>
+
+*** status
+
+to-do
+
+*** main features
+
+same as image2d<T> but without virtual border
+
+*** data storage
+
+relies on array2d<T>
+
+
+** one_value_image<S, T>
+
+*** parameters
+
+S: point set type
+T: type of the value
+
+*** main features
+
+point-wise accessible but not mutable
+value-wise accessible and mutable
+
+*** data storage
+
+a single attribute: the unique value
+
+
+** image_p2v<S, F>
+
+*** parameters
+
+S: point set type
+F: function point-site -> value
+
+*** main features
+
+point-wise accessible but not mutable
+not value-wise accessible
+
+*** data storage
+
+combines the point set and the function to produce values
+on the fly
+
+
+** rle_image<P, T>
+
+*** parameter
+
+P: point type
+T: value type
+
+*** main features
+
+not point-wise accessible
+not value-wise accessible
+
+*** data storage
+
+std::vector of triplets (p_start, length, value)
+
+*** related type
+
+sparse_image<T>
+
+
+** sparse_image<P, T>
+
+*** parameter
+
+P: point type
+T: value type
+
+*** main features
+
+not point-wise accessible
+not value-wise accessible
+
+*** data storage
+
+std::vector of couples (p_start, std::vector<T>)
+
+*** related type
+
+rle_image<P, T>
+
+
+** image_vec<P, T>
+
+*** parameters
+
+P: point type
+T: value type
+
+*** main features
+
+not point-wise accessible
+not value-wise accessible
+
+*** data storage
+
+std::vector< std::pair<P, T> >
+
+
+** image_map<P, T>
+
+*** parameters
+
+P: point type
+T: value type
+
+*** main features
+
+not point-wise accessible
+not value-wise accessible
+
+*** data storage
+
+using std::map<P, T>
+
+*** related type
+
+slow::image_map<P, T>
+
+
+** slow::image_bbmap<P, T>
+
+*** parameters
+
+P: point type
+T: value type
+
+*** main features
+
+point-wise accessible and mutable
+not value-wise accessible
+bounding-boxed
+
+*** data storage
+
+some values are set in a std::map<P, T>
+when not set, a default value is provided by an attribute
+
+*** related type
+
+image_map<P, T>
+
+
+
+* Morpher types
+
+** FIXME
+
+do (really!) nothing when writing at p when outside the image domain
+error when reading at p when outside the image domain
+
+** FIXME
+
+add a default value when p is outside the image domain
+
+** sequence<I>
+
+FIXME: ...
+
+
+
 Local Variables:
 mode: outline
 ispell-local-dictionary: "american"

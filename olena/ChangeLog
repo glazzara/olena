@@ -1,3 +1,7 @@
+2006-11-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* TODO: Add description of primary image types.
+
 2006-11-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add oln::morpher::two_way_rw.
