@@ -65,7 +65,7 @@ namespace oln
 
 	/// Op==.
 	template <typename U>
-	bool operator==(const rgb_<U>& rhs);
+	bool operator==(const rgb_<U>& rhs) const;
 
 	T  red() const;
 	T& red();
@@ -129,7 +129,7 @@ namespace oln
 
       template <typename T>
       template <typename U>
-      bool rgb_<T>::operator==(const rgb_<U>& rhs)
+      bool rgb_<T>::operator==(const rgb_<U>& rhs) const
       {
 	return
 	  val_[0] == rhs.red() and

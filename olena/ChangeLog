@@ -1,3 +1,12 @@
+2006-11-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix fwd_viter_lut and rgb8.
+
+	* oln/value/color/rgb.hh (rgb_<T>::operator==): Make it const.
+	* oln/core/gen/fwd_viter_lut.hh (operator rvalue_type, print): Fix
+	these methods.
+	* tests/morphers/with_lut.cc: Test oln::fwd_viter_lut.
+
 2006-11-07  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add point-set types based on std containers.

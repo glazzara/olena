@@ -27,6 +27,8 @@
 
 /// Test the look-up table morpher.
 
+#include <list>
+
 #include <oln/basics2d.hh>
 #include <oln/morpher/with_lut.hh>
 #include <oln/value/color/rgb.hh>
@@ -143,6 +145,34 @@ int main()
   oln::point2d p(1, 2);
   assert(ima_with_lut(p) == red);
   assert(ima_with_lut.at(1, 2) == red);
+
+
+  // Check fwd_viter_lut.
+  oln_type_of_(image_with_lut_t, fwd_viter) fv(ima_with_lut.lut());
+  std::list<rgb8> fwd_values;
+  std::cout << "values of lut (fwd) =" << std::endl;
+  for_all (fv)
+    {
+      // Push the values to the *back* of the list.
+      fwd_values.push_back(fv);
+      std::cout << "  " << fv << std::endl;
+    }
+
+// FIXME: To be enabled later.
+
+//   // Check bkd_viter_lut.
+//   oln_type_of_(image_with_lut_t, bkd_viter) bv(ima_with_lut.lut());
+//   std::list<rgb8> bkd_values;
+//   std::cout << "values of lut (bkd) =" << std::endl;
+//   for_all (bv)
+//     {
+//       // Push the values to the *front* of the list.
+//       bkd_values.push_front(bv);
+//       std::cout << "  " << bv << std::endl;
+//     }
+//   // Compare the two lists.
+//   assert (fwd_values == bkd_values);
+
 
   // FIXME: To be enabled later, when oln::level::fill is specialized
   // for abstract::mutable_image_being_value_wise_random_accessible.

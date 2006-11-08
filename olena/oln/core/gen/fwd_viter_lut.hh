@@ -117,14 +117,14 @@ namespace oln
   fwd_viter_lut<Lut>::operator typename fwd_viter_lut<Lut>::rvalue_type() const
   {
     precondition(this->is_valid());
-    return this->i_->second;
+    return this->i_->first;
   }
 
   template <typename Lut>
   void fwd_viter_lut<Lut>::print(std::ostream& ostr) const
   {
     precondition(this->is_valid());
-    ostr << "fwd_viter_lut<Lut> { value = " << this->i_->second << " }";
+    ostr << "fwd_viter_lut<Lut> { value = " << this->i_->first << " }";
   }
 
 
@@ -177,6 +177,7 @@ namespace oln
   {
     typedef mutable_fwd_viter_lut<Lut> self_t;
     typedef stc_get_super(self_t) super_t;
+    typedef oln_type_of(self_t, lut_iter) lut_iter_t;
     typedef typename Lut::orig_value_type orig_value_t;
     typedef typename Lut::new_value_type new_value_t;
 
@@ -237,7 +238,7 @@ namespace oln
   mutable_fwd_viter_lut<Lut>::operator typename mutable_fwd_viter_lut<Lut>::lvalue_type() 
   {
     precondition(this->is_valid());
-    return this->i_->second;
+    return this->i_->first;
   }
 
   template <typename Lut>
@@ -250,7 +251,7 @@ namespace oln
     new_value_t cur_new_val = this->i_->first;
 
     // Shortcuts.
-    typedef typename Lut::iterator new_iter_t;
+    typedef lut_iter_t new_iter_t;
     typedef std::pair<new_iter_t, new_iter_t> new_iter_range_t;
 
     // Current ``original'' value(s) associated to the next ``new'' value RHS.
@@ -282,7 +283,7 @@ namespace oln
   {
     precondition(this->is_valid());
     ostr
-      << "mutable_fwd_viter_lut<Lut> { value = " << this->i_->second << " }";
+      << "mutable_fwd_viter_lut<Lut> { value = " << this->i_->first << " }";
   }
 
 
