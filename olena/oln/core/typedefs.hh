@@ -97,23 +97,21 @@ namespace oln
   mlc_decl_typedef(bkd_niter_type);
 
   mlc_decl_typedef(fwd_viter_type);
-  mlc_decl_typedef(mutable_fwd_viter_type);
   // FIXME: bkd_viter_type.
-  // FIXME: mutable_bkd_viter_type.
 
 
-  /*----------------------.
-  | category::point_set.  |
-  `-----------------------*/
+  /*------------.
+  | Point set.  |
+  `------------*/
 
   mlc_decl_typedef(has_known_size_type);
   mlc_decl_typedef(is_random_accessible_type);
   mlc_decl_typedef(is_connected_type);
 
 
-  /*------------------.
-  | category::image.  |
-  `------------------*/
+  /*--------.
+  | Image.  |
+  `--------*/
 
   mlc_decl_typedef(is_computed_type);
   mlc_decl_typedef(value_type);
@@ -134,26 +132,34 @@ namespace oln
   mlc_decl_typedef(is_value_wise_mutable_type);
 
 
-  /*-----------------.
-  | category::grid.  |
-  `-----------------*/
+  /*-------.
+  | Grid.  |
+  `-------*/
 
   // FIXME: Merge with dim_type?
   mlc_decl_typedef(dimvalue_type);
   mlc_decl_typedef(coord_type);
 
 
-  /*-----------------.
-  | category::point. |
-  `-----------------*/
+  /*--------.
+  | Point.  |
+  `--------*/
 
   mlc_decl_typedef(dim_type);
   mlc_decl_typedef(vec_type);
 
 
-  /*-------------------------.
-  | category::lookup_table.  |
-  `-------------------------*/
+  /*---------.
+  | Values.  |
+  `---------*/
+
+  mlc_decl_typedef(value_proxy_type);
+  mlc_decl_typedef(mutable_value_proxy_type);
+
+
+  /*----------------.
+  | Look-up table.  |
+  `----------------*/
 
   mlc_decl_typedef(lut_type);
   mlc_decl_typedef(lut_iter_type);

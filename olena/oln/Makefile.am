@@ -90,6 +90,7 @@ nobase_oln_HEADERS =							\
   core/abstract/image.hh						\
   core/abstract/iterator.hh						\
   core/abstract/iterator_on_points.hh					\
+  core/abstract/iterator_on_values.hh					\
   core/abstract/neighborhood.hh						\
   core/abstract/point.hh						\
   core/abstract/point_set.hh						\
@@ -210,6 +211,7 @@ nobase_oln_HEADERS =							\
   value/bin.hh								\
   value/default.hh							\
   value/greylevel.hh							\
+  value/lut_value_proxy.hh						\
   value/proxy.hh							\
   value/rw_counter.hh							\
   value/tags.hh								\

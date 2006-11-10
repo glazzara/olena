@@ -1,3 +1,74 @@
+2006-11-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Introduce oln::value::lut_value_proxy.
+
+	* olena/oln/value/lut_value_proxy.hh: New.
+	* oln/core/typedefs.hh (mutable_fwd_viter_type): Remove virtual
+	type declaration.
+	(value_proxy_type, mutable_value_proxy_type): New virtual types
+	declarations.
+	Aesthetic changes.
+	* oln/core/abstract/image/value_wise_accessibility/hierarchy.hh
+	(image_being_value_wise_random_accessible::fwd_viter_t): Remove
+	typedef.
+	(image_being_value_wise_random_accessible::value_proxy_t): New
+	typedef.
+	(image_being_value_wise_random_accessible::value): Return a value
+	proxy instead of a value iterator.
+	(mutable_image_being_value_wise_random_accessible::fwd_viter_t):
+	Remove typedef.
+	(mutable_image_being_value_wise_random_accessible::value_proxy_t):
+	New typedef.
+	(mutable_image_being_value_wise_random_accessible::value)): Return
+	a value proxy instead of a value iterator.
+	* oln/morpher/with_lut.hh (oln/value/lut_value_proxy.hh): Include
+	it.
+	(vtypes< morpher::with_lut<Image, Lut> >::value_proxy_type)
+	(vtypes< morpher::with_lut<Image, Lut> >::mutable_value_proxy_type):
+	New typedefs.
+	(single_vtype<morpher::with_lut<Image, Lut>,
+	 typedef_::mutable_fwd_viter_type>): Remove single virtual type.
+	(oln::morpher::with_lut::fwd_viter_type)
+	(oln::morpher::with_lut::mutable_fwd_viter_type): Remove.
+	(oln::morpher::with_lut::value_proxy_type)
+	(oln::morpher::with_lut::mutable_value_proxy_type): New typedefs.
+	(oln::morpher::with_lut::impl_value): Have these methods return
+	value proxies instead of value iterators.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add
+	value/lut_value_proxy.hh.
+
+
+	Remove oln::mutable_fwd_viter_lut and clean up oln::fwd_viter_lut.
+
+	* olena/oln/core/abstract/iterator_on_values.hh: New.
+	* oln/core/internal/fwd_viter_lut.hh:
+	(oln::internal::fwd_viter_lut<Exact>): Inherit from
+	oln::abstract::iterator_on_values<Exact>.
+	s/rvalue_type/value_type/g.
+	(oln::internal::fwd_viter_lut(lut_type&, const value_type&)):
+	Remove ctor.
+	(oln::internal::fwd_viter_lut::start)
+	(oln::internal::fwd_viter_lut::next)
+	(oln::internal::fwd_viter_lut::invalidate)
+	(oln::internal::fwd_viter_lut::is_valid): Rename methods as...
+	(oln::internal::fwd_viter_lut::impl_start)
+	(oln::internal::fwd_viter_lut::impl_next)
+	(oln::internal::fwd_viter_lut::impl_invalidate)
+	(oln::internal::fwd_viter_lut::impl_is_valid): ...these.
+	* oln/core/gen/fwd_viter_lut.hh (oln::fwd_viter_lut<Lut>):
+	s/rvalue_type/value_type/g.
+	(oln::fwd_viter_lut::fwd_viter_lut(const Lut&, const rvalue_type&)):
+	Remove ctor.
+	(oln::fwd_viter_lut::operator rvalue_type): Turn this operator
+	into...
+	(oln::fwd_viter_lut::impl_to_value): ...this method.
+	(oln::mutable_fwd_viter_lut): Remove this class and it virtual
+	types.
+	(operator<<(std::ostream&, const mutable_fwd_viter_lut<Lut>&)):
+	Remove.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add
+	core/abstract/iterator_on_values.hh
+
 2006-11-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix fwd_viter_lut and rgb8.

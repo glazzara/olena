@@ -53,17 +53,21 @@ namespace oln
       public automatic::get_impl< image_being_value_wise_random_accessible, E >
     {
       typedef oln_type_of(E, value) value_t;
-      typedef oln_type_of(E, fwd_viter) fwd_viter_t;
-
+      typedef oln_type_of(E, value_proxy) value_proxy_t;
 
     public:
-      // Value descriptor (read-only access).
-      fwd_viter_t value(const value_t& v) const;
+      /// Get a (read-only) value descriptor from a value.
+      ///
+      /// This method is not really useful, but we keep it for the
+      /// symmetry with
+      /// mutable_image_being_value_wise_random_accessible::value().
+      value_proxy_t value(const value_t& v) const;
 
     protected:
       /// Constructor (protected, empty).
       image_being_value_wise_random_accessible();
     };
+
 
     /// Mutable image having a value-wise random accessibility.
     template <typename E>
@@ -72,12 +76,12 @@ namespace oln
       public automatic::get_impl< mutable_image_being_value_wise_random_accessible, E >
     {
       typedef oln_type_of(E, value) value_t;
-      typedef oln_type_of(E, mutable_fwd_viter) mutable_fwd_viter_t;
+      typedef oln_type_of(E, mutable_value_proxy) mutable_value_proxy_t;
 
     public:
       using image_being_value_wise_random_accessible<E>::value;
-      // Value descriptor (read-write access).
-      mutable_fwd_viter_t value(const value_t& v);
+      /// Get a (read-only) value descriptor from a value.
+      mutable_value_proxy_t value(const value_t& v);
 
     protected:
       /// Constructor (protected, empty).
@@ -91,7 +95,7 @@ namespace oln
     // image_being_value_wise_random_accessible.
 
     template <typename E>
-    typename image_being_value_wise_random_accessible<E>::fwd_viter_t
+    typename image_being_value_wise_random_accessible<E>::value_proxy_t
     image_being_value_wise_random_accessible<E>::value(const typename image_being_value_wise_random_accessible<E>::value_t& v) const
     {
       return this->exact().impl_value(v);
@@ -106,7 +110,7 @@ namespace oln
     // mutable_image_being_value_wise_random_accessible.
 
     template <typename E>
-    typename mutable_image_being_value_wise_random_accessible<E>::mutable_fwd_viter_t
+    typename mutable_image_being_value_wise_random_accessible<E>::mutable_value_proxy_t
     mutable_image_being_value_wise_random_accessible<E>::value(const typename mutable_image_being_value_wise_random_accessible<E>::value_t& v)
     {
       return this->exact().impl_value(v);

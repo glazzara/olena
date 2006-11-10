@@ -30,6 +30,7 @@
 
 # include <oln/morpher/internal/image_value_morpher.hh>
 # include <oln/core/lookup_table.hh>
+# include <oln/value/lut_value_proxy.hh>
 # include <oln/core/gen/fwd_viter_lut.hh>
 
 
@@ -70,17 +71,21 @@ namespace oln
     /* lvalue_type: undefined
        (see oln/morpher/internal/image_value_morpher.hh).  */
 
+    /* FIXME: This virtual type (``is_value_wise_mutable'') is
+       useless, since the presence of mutable_value_proxy_type
+       suffices to state that the image is value-wise mutable.  */
+
     /* Mutability.
        As the virtual type `lvalue' is undefined in with_lut<>, it is
        not point-wise mutable.  However, it is value-wise mutable,
        i.e., the values of the look-up table can be modified.  */
     typedef mlc::true_ is_value_wise_mutable_type;
 
-    // fwd_viter_type: see below.
-    // mutable_fwd_viter_type: see below.
+    typedef value::lut_value_proxy<Lut> value_proxy_type;
+    typedef value::mutable_lut_value_proxy<Lut> mutable_value_proxy_type;
 
+    // fwd_viter_type: see below.
     // FIXME: implement bkd_viter_type!
-    // FIXME: implement mutable_bkd_viter_type!
   };
 
   // Rvalue.
@@ -99,14 +104,6 @@ namespace oln
 		       typedef_::fwd_viter_type >
   {
     typedef fwd_viter_lut<Lut> ret;
-  };
-
-  /// Mutable forward viter vtype of morpher::with_lut.
-  template <typename Image, typename Lut>
-  struct single_vtype< morpher::with_lut<Image, Lut>,
-		       typedef_::mutable_fwd_viter_type >
-  {
-    typedef mutable_fwd_viter_lut<Lut> ret;
   };
   /// \}
 
@@ -131,8 +128,8 @@ namespace oln
       typedef oln_type_of(self_t, value) value_type;
       typedef oln_type_of(self_t, rvalue) rvalue_type;
       typedef oln_type_of(self_t, psite) psite_type;
-      typedef oln_type_of(self_t, fwd_viter) fwd_viter_type;
-      typedef oln_type_of(self_t, mutable_fwd_viter) mutable_fwd_viter_type;
+      typedef oln_type_of(self_t, value_proxy) value_proxy_type;
+      typedef oln_type_of(self_t, mutable_value_proxy) mutable_value_proxy_type;
 
     public:
       with_lut(const Image& image, const Lut& lut);
@@ -141,8 +138,8 @@ namespace oln
       rvalue_type impl_op_read(const psite_type& p) const;
 
       // FIXME: Constness of this method?
-      fwd_viter_type         impl_value(const value_type& v) const;
-      mutable_fwd_viter_type impl_value(const value_type& v);
+      value_proxy_type         impl_value(const value_type& v) const;
+      mutable_value_proxy_type impl_value(const value_type& v);
 
     protected:
       lut_type lut_;
@@ -170,17 +167,17 @@ namespace oln
     }
 
     template <typename Image, typename Lut>
-    typename with_lut<Image, Lut>::fwd_viter_type
+    typename with_lut<Image, Lut>::value_proxy_type
     with_lut<Image, Lut>::impl_value(const value_type& v) const
     {
-      return fwd_viter_type(lut_, v);
+      return value_proxy_type(lut_, v);
     }
 
     template <typename Image, typename Lut>
-    typename with_lut<Image, Lut>::mutable_fwd_viter_type
+    typename with_lut<Image, Lut>::mutable_value_proxy_type
     with_lut<Image, Lut>::impl_value(const value_type& v)
     {
-      return mutable_fwd_viter_type(lut_, v);
+      return mutable_value_proxy_type(lut_, v);
     }
 
     template <typename Image, typename Lut>

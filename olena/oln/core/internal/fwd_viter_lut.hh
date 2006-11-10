@@ -28,7 +28,7 @@
 #ifndef OLN_CORE_INTERNAL_FWD_VITER_LUT_HH
 # define OLN_CORE_INTERNAL_FWD_VITER_LUT_HH
 
-# include <oln/core/abstract/iterator.hh>
+# include <oln/core/abstract/iterator_on_values.hh>
 
 
 namespace oln
@@ -46,8 +46,7 @@ namespace oln
   template <typename Exact>
   struct set_super_type< internal::fwd_viter_lut<Exact> >
   {
-    typedef internal::fwd_viter_lut<Exact> self_t;
-    typedef abstract::iterator<self_t> ret;
+    typedef abstract::iterator_on_values<Exact> ret;
   };
 
 
@@ -66,22 +65,23 @@ namespace oln
 
     public:
       typedef oln_type_of(Exact, lut) lut_type;
-      typedef oln_type_of(Exact, rvalue) rvalue_type;
+      typedef oln_type_of(Exact, value) value_type;
 
     public:
       /// Iterator manipulators.
       /// \{
-      void start();
-      void next();
-      void invalidate();
-      bool is_valid() const;
+      void impl_start();
+      void impl_next();
+      void impl_invalidate();
+      bool impl_is_valid() const;
       /// \}
 
     protected:
       // Construct an uninitialized value iterator.
       fwd_viter_lut(lut_type& lut);
-      // Construct an iterator pointing to value \a val.
-      fwd_viter_lut(lut_type& lut, const rvalue_type& val);
+// FIXME: Should we keep this method?
+//       // Construct an iterator pointing to value \a val.
+//       fwd_viter_lut(lut_type& lut, const value_type& val);
 
     protected:
       /// Look-up table.
@@ -109,33 +109,21 @@ namespace oln
     }
 
     template <typename Exact>
-    fwd_viter_lut<Exact>::fwd_viter_lut(typename fwd_viter_lut<Exact>::lut_type& lut,
-					const typename fwd_viter_lut<Exact>::rvalue_type& val)
-      : super_t(),
-	lut_(lut),
-	i_()
-    {
-      // Initialize underlying iterator (i.e., \a i_.)
-      i_ = lut_.find(val);
-      assert(i_ != lut_.end());
-    }
-
-    template <typename Exact>
     void
-    fwd_viter_lut<Exact>::start()
+    fwd_viter_lut<Exact>::impl_start()
     {
       i_ = lut_.begin();
     }
 
     template <typename Exact>
     void
-    fwd_viter_lut<Exact>::next()
+    fwd_viter_lut<Exact>::impl_next()
     {
       /* Iterate until a different key is reached. In fact,
 	 std::multimap might not be the best choice to implement
 	 new_to_orig_map_.  Maybe a std::map binding orig_val to a
 	 std::set of new_val's would is better?.  */
-      rvalue_type val = i_->first;
+      value_type val = i_->first;
       do
 	++i_;
       while (i_ != lut_.end() and i_->first == val);
@@ -143,14 +131,14 @@ namespace oln
 
     template <typename Exact>
     void
-    fwd_viter_lut<Exact>::invalidate()
+    fwd_viter_lut<Exact>::impl_invalidate()
     {
       i_ = lut_.end();
     }
 
     template <typename Exact>
     bool
-    fwd_viter_lut<Exact>::is_valid() const
+    fwd_viter_lut<Exact>::impl_is_valid() const
     {
       return (i_ != lut_.end());
     }
