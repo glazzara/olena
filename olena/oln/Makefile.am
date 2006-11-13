@@ -155,7 +155,6 @@ nobase_oln_HEADERS =							\
   core/internal/bbox_bkd_piter.hh					\
   core/internal/bbox_fwd_piter.hh					\
   core/internal/dpoint_nd.hh						\
-  core/internal/fwd_viter_lut.hh					\
   core/internal/point_nd.hh						\
   core/internal/topology_morpher.hh					\
   core/internal/tracked_ptr.hh						\

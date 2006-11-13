@@ -1,5 +1,16 @@
 2006-11-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Merge oln::internal::fwd_viter_lut and oln::fwd_viter_lut.
+
+	* oln/core/internal/fwd_viter_lut.hh: Remove this file, and
+	merge...
+	(oln::internal::fwd_viter_lut): ...this class with...
+	* oln/core/gen/fwd_viter_lut.hh (oln::fwd_viter_lut): ...this one.
+	* oln/Makefile.am (nobase_oln_HEADERS): Remove
+	core/internal/fwd_viter_lut.hh.
+
+2006-11-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove virtual type `is_value_wise_mutable'.
 
 	* oln/core/typedefs.hh (is_value_wise_mutable): Remove virtual

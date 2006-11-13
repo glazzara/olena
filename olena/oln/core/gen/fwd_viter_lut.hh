@@ -28,7 +28,7 @@
 #ifndef OLN_CORE_GEN_FWD_VITER_LUT_HH
 # define OLN_CORE_GEN_FWD_VITER_LUT_HH
 
-# include <oln/core/internal/fwd_viter_lut.hh>
+# include <oln/core/abstract/iterator_on_values.hh>
 # include <oln/core/lookup_table.hh>
 
 namespace oln
@@ -45,7 +45,7 @@ namespace oln
   struct set_super_type< fwd_viter_lut<Lut> >
   {
     typedef fwd_viter_lut<Lut> self_t;
-    typedef internal::fwd_viter_lut<self_t> ret;
+    typedef abstract::iterator_on_values<self_t> ret;
   };
 
 
@@ -69,19 +69,34 @@ namespace oln
   {
     typedef fwd_viter_lut<Lut> self_t;
     typedef stc_get_super(self_t) super_t;
+    typedef oln_type_of(self_t, lut_iter) lut_iter_t;
 
   public:
-    typedef oln_type_of(self_t, lut) lut_t;
+    typedef oln_type_of(self_t, lut) lut_type;
     typedef oln_type_of(self_t, value) value_type;
 
   public:
     // Construct an uninitialized value iterator.
     fwd_viter_lut(const Lut& lut);
 
+    /// Iterator manipulators.
+    /// \{
+    void impl_start();
+    void impl_next();
+    void impl_invalidate();
+    bool impl_is_valid() const;
+    /// \}
+
     // Get the value pointed by this iterator (const version).
     value_type impl_to_value() const;
 
     void print(std::ostream& ostr) const;
+
+    protected:
+      /// Look-up table.
+      lut_type& lut_;
+      /// Iterator on \a lut_.
+      lut_iter_t i_;
   };
 
 
@@ -94,11 +109,48 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename Lut>
-  fwd_viter_lut<Lut>::fwd_viter_lut(const Lut& lut)
-    : super_t(lut)
+  fwd_viter_lut<Lut>::fwd_viter_lut(const Lut& lut) :
+    super_t(),
+    lut_(lut),
+    i_()
   {
     // Initialize underlying iterator (i.e., \a i_.)
     this->invalidate();
+  }
+
+  template <typename Exact>
+  void
+  fwd_viter_lut<Exact>::impl_start()
+  {
+    i_ = lut_.begin();
+  }
+
+  template <typename Exact>
+  void
+  fwd_viter_lut<Exact>::impl_next()
+  {
+    /* Iterate until a different key is reached. In fact,
+       std::multimap might not be the best choice to implement
+       new_to_orig_map_.  Maybe a std::map binding orig_val to a
+       std::set of new_val's would is better?.  */
+    value_type val = i_->first;
+    do
+      ++i_;
+    while (i_ != lut_.end() and i_->first == val);
+  }
+
+  template <typename Exact>
+  void
+  fwd_viter_lut<Exact>::impl_invalidate()
+  {
+    i_ = lut_.end();
+  }
+
+  template <typename Exact>
+  bool
+  fwd_viter_lut<Exact>::impl_is_valid() const
+  {
+    return (i_ != lut_.end());
   }
 
   template <typename Lut>
@@ -118,8 +170,7 @@ namespace oln
 
 
   template <typename Lut>
-  std::ostream& operator<<(std::ostream& ostr,
-			   const fwd_viter_lut<Lut>& t)
+  std::ostream& operator<<(std::ostream& ostr, const fwd_viter_lut<Lut>& t)
   {
     t.print(ostr);
     return ostr;
