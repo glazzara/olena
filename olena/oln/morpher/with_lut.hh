@@ -71,17 +71,12 @@ namespace oln
     /* lvalue_type: undefined
        (see oln/morpher/internal/image_value_morpher.hh).  */
 
-    /* FIXME: This virtual type (``is_value_wise_mutable'') is
-       useless, since the presence of mutable_value_proxy_type
-       suffices to state that the image is value-wise mutable.  */
-
+    typedef value::lut_value_proxy<Lut> value_proxy_type;
     /* Mutability.
        As the virtual type `lvalue' is undefined in with_lut<>, it is
        not point-wise mutable.  However, it is value-wise mutable,
-       i.e., the values of the look-up table can be modified.  */
-    typedef mlc::true_ is_value_wise_mutable_type;
-
-    typedef value::lut_value_proxy<Lut> value_proxy_type;
+       i.e., the values of the look-up table can be modified through
+       a mutable value proxy.  */
     typedef value::mutable_lut_value_proxy<Lut> mutable_value_proxy_type;
 
     // fwd_viter_type: see below.

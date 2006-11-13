@@ -129,8 +129,6 @@ namespace oln
   mlc_decl_typedef(topo_type);
   mlc_decl_typedef(bbox_type);
 
-  mlc_decl_typedef(is_value_wise_mutable_type);
-
 
   /*-------.
   | Grid.  |
