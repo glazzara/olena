@@ -1,3 +1,17 @@
+2006-11-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove virtual type `is_value_wise_mutable'.
+
+	* oln/core/typedefs.hh (is_value_wise_mutable): Remove virtual
+	type declaration.
+	* oln/core/abstract/image/value_wise_accessibility/hierarchy.hh:
+	(case_<image_hierarchy_wrt_value_wise_accessibility, E, 1>): No
+	longer use the virtual type `is_value_wise_mutable' in the
+	static switch condition; query `mutable_value_proxy' instead.
+	* oln/morpher/with_lut.hh
+	(vtypes< morpher::with_lut<Image, Lut> >::is_value_wise_mutable_type):
+	Remove typedef.
+
 2006-11-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Introduce oln::value::lut_value_proxy.
