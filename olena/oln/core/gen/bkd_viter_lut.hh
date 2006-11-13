@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_GEN_FWD_VITER_LUT_HH
-# define OLN_CORE_GEN_FWD_VITER_LUT_HH
+#ifndef OLN_CORE_GEN_BKD_VITER_LUT_HH
+# define OLN_CORE_GEN_BKD_VITER_LUT_HH
 
 # include <oln/core/abstract/iterator_on_values.hh>
 # include <oln/core/lookup_table.hh>
@@ -35,37 +35,37 @@ namespace oln
 {
 
   // Forward declaration.
-  template <typename Lut> class fwd_viter_lut;
+  template <typename Lut> class bkd_viter_lut;
 
 
   /// Super type declaration.
   template <typename Lut>
-  struct set_super_type< fwd_viter_lut<Lut> >
+  struct set_super_type< bkd_viter_lut<Lut> >
   {
-    typedef fwd_viter_lut<Lut> self_t;
+    typedef bkd_viter_lut<Lut> self_t;
     typedef abstract::iterator_on_values<self_t> ret;
   };
 
 
-  /// Virtual types associated to oln::fwd_viter_lut<Lut>.
+  /// Virtual types associated to oln::bkd_viter_lut<Lut>.
   template <typename Lut>
-  struct vtypes< fwd_viter_lut<Lut> >
+  struct vtypes< bkd_viter_lut<Lut> >
   {
     // The look-up table is immutable.
     typedef const Lut lut_type;
-    typedef typename Lut::const_iterator lut_iter_type;
+    typedef typename Lut::const_reverse_iterator lut_iter_type;
     typedef typename Lut::new_value_type value_type;
   };
 
 
-  /// Forward value iterator on look-up table.
+  /// Backward value iterator on look-up table.
   template <typename Lut>
-  class fwd_viter_lut :
-    public stc_get_supers(fwd_viter_lut<Lut>)
+  class bkd_viter_lut :
+    public stc_get_supers(bkd_viter_lut<Lut>)
     // Check that Lut is a look-up table.
     // FIXME: an abstract::lookup_table would be useful.
   {
-    typedef fwd_viter_lut<Lut> self_t;
+    typedef bkd_viter_lut<Lut> self_t;
     typedef stc_get_super(self_t) super_t;
     typedef oln_type_of(self_t, lut_iter) lut_iter_t;
 
@@ -75,7 +75,7 @@ namespace oln
 
   public:
     // Construct an uninitialized value iterator.
-    fwd_viter_lut(const Lut& lut);
+    bkd_viter_lut(const Lut& lut);
 
     /// Iterator manipulators.
     /// \{
@@ -100,14 +100,14 @@ namespace oln
 
   template <typename Lut>
   std::ostream& operator<<(std::ostream& ostr,
-			   const fwd_viter_lut<Lut>& t);
+			   const bkd_viter_lut<Lut>& t);
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename Lut>
-  fwd_viter_lut<Lut>::fwd_viter_lut(const Lut& lut) :
+  bkd_viter_lut<Lut>::bkd_viter_lut(const Lut& lut) :
     super_t(),
     lut_(lut),
     i_()
@@ -118,14 +118,14 @@ namespace oln
 
   template <typename Exact>
   void
-  fwd_viter_lut<Exact>::impl_start()
+  bkd_viter_lut<Exact>::impl_start()
   {
-    i_ = lut_.begin();
+    i_ = lut_.rbegin();
   }
 
   template <typename Exact>
   void
-  fwd_viter_lut<Exact>::impl_next()
+  bkd_viter_lut<Exact>::impl_next()
   {
     /* Iterate until a different key is reached. In fact,
        std::multimap might not be the best choice to implement
@@ -134,33 +134,33 @@ namespace oln
     value_type val = i_->first;
     do
       ++i_;
-    while (i_ != lut_.end() and i_->first == val);
+    while (i_ != lut_.rend() and i_->first == val);
   }
 
   template <typename Exact>
   void
-  fwd_viter_lut<Exact>::impl_invalidate()
+  bkd_viter_lut<Exact>::impl_invalidate()
   {
-    i_ = lut_.end();
+    i_ = lut_.rend();
   }
 
   template <typename Exact>
   bool
-  fwd_viter_lut<Exact>::impl_is_valid() const
+  bkd_viter_lut<Exact>::impl_is_valid() const
   {
-    return (i_ != lut_.end());
+    return (i_ != lut_.rend());
   }
 
   template <typename Lut>
-  typename fwd_viter_lut<Lut>::value_type
-  fwd_viter_lut<Lut>::impl_to_value() const
+  typename bkd_viter_lut<Lut>::value_type
+  bkd_viter_lut<Lut>::impl_to_value() const
   {
     precondition(this->is_valid());
     return this->i_->first; 
   }
 
   template <typename Lut>
-  void fwd_viter_lut<Lut>::print(std::ostream& ostr) const
+  void bkd_viter_lut<Lut>::print(std::ostream& ostr) const
   {
     precondition(this->is_valid());
     ostr << "{ value = " << this->i_->first << " }";
@@ -168,7 +168,7 @@ namespace oln
 
 
   template <typename Lut>
-  std::ostream& operator<<(std::ostream& ostr, const fwd_viter_lut<Lut>& t)
+  std::ostream& operator<<(std::ostream& ostr, const bkd_viter_lut<Lut>& t)
   {
     t.print(ostr);
     return ostr;
@@ -179,4 +179,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_GEN_FWD_VITER_LUT_HH
+#endif // ! OLN_CORE_GEN_BKD_VITER_LUT_HH

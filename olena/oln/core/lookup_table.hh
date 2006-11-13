@@ -52,6 +52,9 @@ namespace oln
     typedef typename new_to_orig_map_type::const_iterator const_iterator;
     typedef typename new_to_orig_map_type::iterator iterator;
 
+    typedef typename new_to_orig_map_type::const_reverse_iterator const_reverse_iterator;
+    typedef typename new_to_orig_map_type::reverse_iterator reverse_iterator;
+
   public:
     lookup_table();
 
@@ -59,17 +62,21 @@ namespace oln
 
     const new_value_type operator() (const orig_value_type& orig_value) const;
 
-    /// (Internal) iterators.
+    /// (Internal) iterators bounds.
     /// \{
-    const_iterator begin() const;
-    iterator begin();
+    const_iterator         begin() const;
+    iterator               begin();
+    const_iterator         end() const;
+    iterator               end();
 
-    const_iterator end() const;
-    iterator end();
+    const_reverse_iterator rbegin() const;
+    reverse_iterator       rbegin();
+    const_reverse_iterator rend() const;
+    reverse_iterator       rend();
     /// \}
 
     const_iterator find(const new_value_type& val) const;
-    iterator find(const new_value_type& val);
+    iterator       find(const new_value_type& val);
 
     /// Accessors.
     /// \{
@@ -120,6 +127,10 @@ namespace oln
   }
 
 
+  /*--------------------------.
+  | Direct iterators bounds.  |
+  `--------------------------*/
+
   template <typename Orig_Value, typename New_Value,
 	    typename Orig_Value_Compare, typename New_Value_Compare>
   typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::const_iterator
@@ -151,6 +162,44 @@ namespace oln
   {
     return new_to_orig_map_.end();
   }
+
+
+  /*---------------------------.
+  | Reverse iterators bounds.  |
+  `---------------------------*/
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::const_reverse_iterator
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::rbegin() const
+  {
+    return new_to_orig_map_.rbegin();
+  }
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::reverse_iterator
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::rbegin()
+  {
+    return new_to_orig_map_.rbegin();
+  }
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::const_reverse_iterator
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::rend() const
+  {
+    return new_to_orig_map_.rend();
+  }
+
+  template <typename Orig_Value, typename New_Value,
+	    typename Orig_Value_Compare, typename New_Value_Compare>
+  typename lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::reverse_iterator
+  lookup_table<Orig_Value, New_Value, Orig_Value_Compare, New_Value_Compare>::rend()
+  {
+    return new_to_orig_map_.rend();
+  }
+
 
 
   template <typename Orig_Value, typename New_Value,

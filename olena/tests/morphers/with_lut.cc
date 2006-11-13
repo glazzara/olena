@@ -151,27 +151,18 @@ int main()
   oln_type_of_(image_with_lut_t, fwd_viter) fv(ima_with_lut.lut());
   std::list<rgb8> fwd_values;
   std::cout << "values of lut (fwd) =" << std::endl;
+  // Push the values to the *back* of the list.
   for_all (fv)
-    {
-      // Push the values to the *back* of the list.
-      fwd_values.push_back(fv);
-      std::cout << "  " << fv << std::endl;
-    }
-
-// FIXME: To be enabled later.
-
-//   // Check bkd_viter_lut.
-//   oln_type_of_(image_with_lut_t, bkd_viter) bv(ima_with_lut.lut());
-//   std::list<rgb8> bkd_values;
-//   std::cout << "values of lut (bkd) =" << std::endl;
-//   for_all (bv)
-//     {
-//       // Push the values to the *front* of the list.
-//       bkd_values.push_front(bv);
-//       std::cout << "  " << bv << std::endl;
-//     }
-//   // Compare the two lists.
-//   assert (fwd_values == bkd_values);
+    fwd_values.push_back(fv);
+  // Check bkd_viter_lut.
+  oln_type_of_(image_with_lut_t, bkd_viter) bv(ima_with_lut.lut());
+  std::list<rgb8> bkd_values;
+  std::cout << "values of lut (bkd) =" << std::endl;
+  // Push the values to the *front* of the list (i.e., in reverse order).
+  for_all (bv)
+    bkd_values.push_front(bv);
+  // Compare the two lists.
+  assert (fwd_values == bkd_values);
 
 
   // FIXME: To be enabled later, when oln::level::fill is specialized

@@ -1,5 +1,24 @@
 2006-11-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add backward value iterators on look-up tables.
+
+	* oln/core/lookup_table.hh (oln::lookup_table::reverse_iterator)
+	(oln::lookup_table::const_reverse_iterator): New typedefs.
+	(oln::lookup_table::rbegin, oln::lookup_table::rend): New methods.
+	* oln/core/typedefs.hh (bkd_viter_type): New virtual type
+	declaration.
+	* oln/core/gen/bkd_viter_lut.hh: New.
+	* oln/core/gen/fwd_viter_lut.hh: Typos.
+	* oln/morpher/with_lut.hh
+	(single_vtype<morpher::with_lut<Image,Lut>, typedef_::bkd_viter_type>):
+	New.
+	* tests/morphers/with_lut.cc (main): Test backward value iterator
+	on look-up table.
+	* oln/Makefile.am (nobase_oln_HEADERS): Add
+	core/gen/bkd_viter_lut.hh.
+
+2006-11-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Merge oln::internal::fwd_viter_lut and oln::fwd_viter_lut.
 
 	* oln/core/internal/fwd_viter_lut.hh: Remove this file, and

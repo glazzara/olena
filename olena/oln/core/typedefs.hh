@@ -97,7 +97,7 @@ namespace oln
   mlc_decl_typedef(bkd_niter_type);
 
   mlc_decl_typedef(fwd_viter_type);
-  // FIXME: bkd_viter_type.
+  mlc_decl_typedef(bkd_viter_type);
 
 
   /*------------.

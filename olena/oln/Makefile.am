@@ -123,6 +123,7 @@ nobase_oln_HEADERS =							\
   core/gen/bkd_niter_neighb.hh						\
   core/gen/bkd_piter_bbox.hh						\
   core/gen/bkd_qiter_win.hh						\
+  core/gen/bkd_viter_lut.hh						\
   core/gen/fwd_decls.hh							\
   core/gen/fwd_niter_neighb.hh						\
   core/gen/fwd_piter_bbox.hh						\

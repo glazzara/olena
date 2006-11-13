@@ -32,6 +32,7 @@
 # include <oln/core/lookup_table.hh>
 # include <oln/value/lut_value_proxy.hh>
 # include <oln/core/gen/fwd_viter_lut.hh>
+# include <oln/core/gen/bkd_viter_lut.hh>
 
 
 namespace oln
@@ -80,7 +81,7 @@ namespace oln
     typedef value::mutable_lut_value_proxy<Lut> mutable_value_proxy_type;
 
     // fwd_viter_type: see below.
-    // FIXME: implement bkd_viter_type!
+    // bkd_viter_type: see below.
   };
 
   // Rvalue.
@@ -93,12 +94,20 @@ namespace oln
     typedef oln_value(self_t) ret;
   };
 
-  /// Const forward viter vtype of morpher::with_lut.
+  /// Forward value iterator virtual type for morpher::with_lut.
   template <typename Image, typename Lut>
   struct single_vtype< morpher::with_lut<Image, Lut>,
 		       typedef_::fwd_viter_type >
   {
     typedef fwd_viter_lut<Lut> ret;
+  };
+
+  /// Backward value iterator virtual type for morpher::with_lut.
+  template <typename Image, typename Lut>
+  struct single_vtype< morpher::with_lut<Image, Lut>,
+		       typedef_::bkd_viter_type >
+  {
+    typedef bkd_viter_lut<Lut> ret;
   };
   /// \}
 
