@@ -1,3 +1,11 @@
+2006-11-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Simplify scoop facilities.
+	
+	* stc/scoop.hh: Rename as...
+	* stc/was.scoop.hh: ...this new file.
+	* stc/scoop.hh: New version.
+
 2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/Makefile.am: Alter AM_CXXFLAGS instead of CXXFLAGS.
