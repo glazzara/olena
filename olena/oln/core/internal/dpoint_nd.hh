@@ -51,6 +51,19 @@ namespace oln
   };
 
 
+  template <typename E>
+  struct vtypes< internal::dpoint_nd<E> >
+  {
+  private:
+    typedef oln_dim(E)   dim_t;
+    typedef oln_coord(E) coord_t;
+    typedef xtd::vec<mlc_value(dim_t), coord_t> vec_t;
+  public:
+    typedef typename vec_t::self_type vec_type;
+    // typedef xtd::vec<mlc_value(dim_t), coord_t> vec_type;
+  };
+
+
   namespace internal
   {
 
@@ -59,13 +72,13 @@ namespace oln
     {
       typedef E exact_t;
       typedef dpoint_nd<E> self_t;
-      typedef oln_type_of(E, dim) dim;
-      typedef oln_type_of(E, coord) coord_t;
+      typedef oln_dim(E) dim_t;
+      typedef oln_coord(E) coord_t;
+    typedef xtd::vec< mlc_value(dim_t), coord_t> vec_t;
 
     public:
 
-      enum { n = mlc_value(dim) };
-      typedef xtd::vec<n,coord_t> vec_t;
+      enum { n = mlc_value(dim_t) };
 
       bool impl_equal(const dpoint_nd<E>& rhs) const;
       

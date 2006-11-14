@@ -67,8 +67,15 @@ namespace oln
   struct vtypes< morpher::slice<Image> >
   {
   private:
+    typedef morpher::slice<Image> self_t;
+
     typedef oln_deduce_type_of(Image, grid, dimvalue) orig_dimvalue_type;
     typedef mlc::uint_< mlc_value(orig_dimvalue_type) - 1 > dimvalue_type;
+
+    typedef oln_type_of(Image, fwd_piter) orig_fwd_piter;
+    typedef oln_type_of(Image, bkd_piter) orig_bkd_piter;
+    typedef oln_type_of(Image, fwd_qiter) orig_fwd_qiter;
+    typedef oln_type_of(Image, bkd_qiter) orig_bkd_qiter;
 
   public:
     typedef typename
@@ -84,7 +91,7 @@ namespace oln
 
     // piter_type: see below.
 
-    typedef oln_type_of(Image, value) value_type;
+    typedef oln_value(Image) value_type;
     // rvalue_type: see below.
     // lvalue_type: see below.
 
@@ -96,98 +103,19 @@ namespace oln
 
     typedef oln::morpher::tag::slice morpher_type;
 
+    // Final.
+    typedef oln_deduce(Image, point, coord) coord_type;
+    typedef oln_point(self_t)    psite_type;
+    typedef oln_fwd_piter(Image) piter_type;
+    typedef oln_rvalue(Image)    rvalue_type;
+    typedef oln_lvalue(Image)    lvalue_type;
+
+    typedef typename type_fun::slice_iterator<orig_fwd_piter>::ret fwd_piter_type;
+    typedef typename type_fun::slice_iterator<orig_bkd_piter>::ret bkd_piter_type;
+    typedef typename type_fun::slice_iterator<orig_fwd_qiter>::ret fwd_qiter_type;
+    typedef typename type_fun::slice_iterator<orig_bkd_qiter>::ret bkd_qiter_type;
+    // FIXME: What about niters on morpher::slice?
   };
-
-  // Coord.
-  template <typename Image>
-  struct single_vtype< morpher::slice<Image>, typedef_::coord_type >
-  {
-    typedef oln_deduce_type_of(Image, point, coord) ret;
-  };
-
-  // Psite.
-  template <typename Image>
-  struct single_vtype< morpher::slice<Image>, typedef_::psite_type >
-  {
-  private:
-    typedef morpher::slice<Image> self_t;
-  public:
-    typedef oln_type_of(self_t, point) ret;
-  };
-
-  /* FIXME: Should we keep the `piter' vtype, knowing that the macro
-     `oln_piter' gives the `fwd_piter' vtype (and not the `piter'
-     vtype)?  */
-  // Piter.
-  template <typename Image>
-  struct single_vtype< morpher::slice<Image>, typedef_::piter_type >
-  {
-    typedef oln_type_of(Image, fwd_piter) ret;
-  };
-
-  // Rvalue.
-  template <typename Image>
-  struct single_vtype< morpher::slice<Image>, typedef_::rvalue_type >
-  {
-    typedef oln_type_of(Image, rvalue) ret;
-  };
-
-  // Lvalue.
-  template <typename Image>
-  struct single_vtype< morpher::slice<Image>, typedef_::lvalue_type >
-  {
-    typedef oln_type_of(Image, lvalue) ret;
-  };
-  /// \}
-
-
-  // piters.
-
-  /// fwd_piter vtype of morpher::slice.
-  template <typename Image>
-  struct single_vtype< morpher::slice<Image>, typedef_::fwd_piter_type >
-  {
-  private:
-    typedef oln_type_of(Image, fwd_piter) orig_fwd_piter;
-  public:
-    typedef typename type_fun::slice_iterator<orig_fwd_piter>::ret ret;
-  };
-
-  /// bkd_piter vtype of morpher::slice.
-  template <typename Image>
-  struct single_vtype< morpher::slice<Image>, typedef_::bkd_piter_type >
-  {
-  private:
-    typedef oln_type_of(Image, bkd_piter) orig_bkd_piter;
-  public:
-    typedef typename type_fun::slice_iterator<orig_bkd_piter>::ret ret;
-  };
-
-
-  // qiters.
-
-  /// fwd_qiter vtype of morpher::slice.
-  template <typename Image>
-  struct single_vtype< morpher::slice<Image>, typedef_::fwd_qiter_type >
-  {
-  private:
-    typedef oln_type_of(Image, fwd_qiter) orig_fwd_qiter;
-  public:
-    typedef typename type_fun::slice_iterator<orig_fwd_qiter>::ret ret;
-  };
-
-  /// bkd_qiter vtype of morpher::slice.
-  template <typename Image>
-  struct single_vtype< morpher::slice<Image>, typedef_::bkd_qiter_type >
-  {
-  private:
-    typedef oln_type_of(Image, bkd_qiter) orig_bkd_qiter;
-  public:
-    typedef typename type_fun::slice_iterator<orig_bkd_qiter>::ret ret;
-  };
-
-
-  // FIXME: What about niters on morpher::slice?
 
 
 
@@ -195,7 +123,7 @@ namespace oln
   {
 
     template <typename Image>
-    class slice : public stc_get_supers(slice<Image>)
+    class slice : public image_entry< slice<Image> >
     {
       typedef slice<Image> self_t;
 

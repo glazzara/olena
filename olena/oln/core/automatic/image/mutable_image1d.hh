@@ -30,7 +30,6 @@
 
 # include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
-# include <oln/core/1d/point1d.hh>
 
 
 namespace oln
@@ -69,7 +68,7 @@ namespace oln
     set_impl<abstract::mutable_image1d, tag, E>
     ::impl_at(const oln_coord(E)& index)
     {
-      point1d tmp(index);
+      oln_point(E) tmp(index);
       return this->exact().operator()(tmp);
     }
 

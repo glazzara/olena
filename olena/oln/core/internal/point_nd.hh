@@ -68,6 +68,22 @@ namespace oln
   };
 
 
+  template <typename E>
+  struct vtypes< internal::point_nd<E> >
+  {
+  private:
+    typedef oln_dim(E)   dim_t;
+    typedef oln_coord(E) coord_t;
+    typedef xtd::vec<mlc_value(dim_t), coord_t> vec_t;
+  public:
+
+    typedef double psite_type;
+
+    typedef typename vec_t::self_type vec_type;
+    // typedef xtd::vec<mlc_value(dim_t), coord_t> vec_type;
+  };
+
+
   namespace internal
   {
 
@@ -75,14 +91,14 @@ namespace oln
     class point_nd : public abstract::point<E>
     {
       typedef point_nd<E> self_t;
-      typedef oln_type_of(E, dim) dim;
-      typedef oln_type_of(E, coord) coord_t;
-      typedef oln_type_of(E, dpoint) dpoint_t;
-      typedef oln_type_of(E, vec) vec_t;
+      typedef oln_dim(E) dim_t;
+      typedef oln_coord(E) coord_t;
+      typedef oln_dpoint(E) dpoint_t;
+      typedef xtd::vec< mlc_value(dim_t), coord_t> vec_t;
 
     public:
 
-      enum { n = mlc_value(dim) };
+      enum { n = mlc_value(dim_t) };
       
       coord_t operator[](unsigned i) const;
       coord_t& operator[](unsigned i);

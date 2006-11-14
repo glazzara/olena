@@ -57,12 +57,8 @@ namespace oln
   {
     typedef mlc::true_ is_computed_type;
     typedef xtd::vec<n, oln_value(I)> value_type;
-  };
 
-  template <unsigned n, typename I>
-  struct single_vtype< morpher::stack<n, I>, typedef_::rvalue_type >
-  {
-    typedef xtd::vec<n, oln_value(I)> ret;
+    typedef xtd::vec<n, oln_value(I)> rvalue_type;
   };
 
 

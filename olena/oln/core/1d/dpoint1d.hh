@@ -32,12 +32,19 @@
 # include <mlc/int.hh>
 # include <oln/core/1d/point1d.hh>
 # include <oln/core/internal/dpoint_nd.hh>
-// For oln::dpoint1d and oln::dpoint1df.
-# include <oln/core/1d/aliases.hh>
 
 
 namespace oln
 {
+
+  typedef dpoint1d_<int> dpoint1d;
+
+
+  /// Fwd decls.
+  template <unsigned D> struct grid_;
+  typedef grid_<1> grid1d;
+  template <typename C> struct point1d_;
+  typedef point1d_<int> point1d;
 
 
   /// Super type.
@@ -64,10 +71,10 @@ namespace oln
   /// General 1D dpoint class.
   template <typename C>
   class dpoint1d_
-    : public stc_get_supers(dpoint1d_<C>)
+    : public internal::dpoint_nd< dpoint1d_<C> >
   {
     typedef dpoint1d_<C>                self_t;
-    typedef stc_get_super(dpoint1d_<C>) super_t;
+    typedef internal::dpoint_nd<self_t> super_t;
 
     using super_t::v_;
 

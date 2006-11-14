@@ -28,20 +28,15 @@
 /// Test oln::image_entry.
 
 #include <mlc/assert.hh>
-#include <mlc/cmp.hh>
-// // FIXME: Fix oln/basics2d.hh!
-// #include <oln/core/2d/point2d.hh>
-// namespace oln { template class point2d_<int>; }
-// #include <oln/core/2d/dpoint2d.hh>
+#include <mlc/is_a.hh>
 #include <oln/basics2d.hh>
 
 
 int
 main()
 {
-  typedef oln::dpoint2d_<int> dpoint2d;
-  typedef oln:: stc_get_supers(dpoint2d) dpoint2d_super_type;
+  typedef oln::dpoint2d_<int> dpoint_t;
   mlc::assert_<
-    mlc_eq( dpoint2d_super_type, oln::internal::dpoint_nd< dpoint2d > )
+    mlc_is_a_( dpoint_t, oln::internal::dpoint_nd )
   >::check();
 }

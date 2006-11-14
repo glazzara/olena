@@ -44,8 +44,13 @@ namespace my
 
 namespace oln
 {
-  // Warning, this sugar might be removed in the future.
-  stc_set_super(my::image, oln::image_entry<my::image>);
+
+  template <>
+  struct set_super_type < my::image >
+  {
+    typedef image_entry< my::image > ret;
+  };
+
 
   /// Virtual types associated to my::image.
   /// \{
@@ -88,13 +93,13 @@ namespace oln
 namespace my
 {
   // A very simple 2D image.
-  class image : public oln::get_super_types<my::image>::ret
+  class image : public oln::image_entry< my::image >
   {
   public:
-    typedef image self_type;
+    typedef image self_t;
     // Internal vtypes.
-    typedef oln_type_of_(self_type, grid) grid_t;
-    typedef oln_type_of_(self_type, value) value_t;
+    typedef oln_grid_(self_t)  grid_t;
+    typedef oln_value_(self_t) value_t;
     // FIXME: Add missing typedefs.
   };
 } // end of namespace my

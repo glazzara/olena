@@ -56,7 +56,7 @@ namespace oln
 
   /// A 1D grid.
   template <unsigned D>
-  struct grid_ : public stc_get_supers(grid_<D>)
+  struct grid_ : public abstract::grid< grid_<D> >
   {
   protected:
     grid_() {}

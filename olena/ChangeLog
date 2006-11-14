@@ -1,3 +1,111 @@
+2006-11-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Now call simplified scoop macros.
+	
+	* oln/core/macros.hh
+	(oln_deduce_direct_type_of_, oln_deduce_direct_type_of): Remove.
+	(oln_check_type_of, oln_check_type_of_): Remove.
+	(oln_check_direct_type_of, oln_check_direct_type_of_): Remove.
+	(oln_deduce): New; shortcut to oln_deduce_type_of.
+
+	Add missing shortcuts.
+	
+	* oln/core/typedefs.hh (oln_dim, oln_dim_): New.
+	(oln_vec, oln_vec_): New.
+	(oln_bbox, oln_bbox_): New.
+	(include): Fix and add fwd decls.
+
+	Move single_vtype definitions into vtypes structures.
+	
+	* oln/core/point_set_entry.hh: Update.
+	(single_vtype): Move into...
+	(vtypes): ...this.
+	* oln/core/neighborhood_entry.hh: Likewise.
+	* oln/core/topology_entry.hh: Likewise.
+	* oln/core/image_entry.hh: Likewise.
+	* oln/core/abstract/iterator_on_points.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/gen/topo_add_nbh.hh: Likewise.
+	* oln/core/internal/topology_morpher.hh: Likewise.
+	* oln/morpher/value_cast.hh: Likewise.
+	* oln/morpher/two_way.hh: Likewise.
+	* oln/morpher/thru_fun.hh: Likewise.
+	* oln/morpher/slice.hh: Likewise.
+	* oln/morpher/with_lut.hh: Likewise.
+	* oln/morpher/count_rw.hh: Likewise.
+	* oln/morpher/two_way_rw.hh: Likewise.
+	* oln/morpher/stack.hh: Likewise.
+	* oln/morpher/thru_mfun.hh: Likewise.
+	* oln/morpher/stack_rw.hh: Likewise.
+	* oln/morpher/internal/image_value_morpher.hh: Likewise.
+	
+	Prevent problems due to mutual recursion (thru inheritance
+	and dependent types).
+	
+	* oln/core/abstract/image.hh (decl): Disable static checks.
+	* oln/core/abstract/image/bbox/hierarchy.hh: Update.
+	(decl): Disable static check.
+	* oln/core/abstract/point_set.hh (~point_set): Fix code.
+	(decl): Disable static check.
+	* oln/core/gen/fwd_piter_bbox.hh: Update.
+	Disable static check.
+	* oln/core/gen/bkd_piter_bbox.hh: Update.
+	Disable static check.
+	
+	For safety purpose.
+	
+	* oln/basics2d.hh (include): Move iterator_vtypes up.
+
+	Decouple some files from specific code.
+	
+	* oln/core/automatic/image/mutable_image1d.hh
+	(include): Remove dependency to specific point header.
+	(tmp): Update.
+	* oln/core/automatic/image/mutable_image2d.hh: Likewise.
+	* oln/core/automatic/image/mutable_image3d.hh: Likewise.
+	* oln/core/automatic/image/image1d.hh: Likewise.
+	* oln/core/automatic/image/image2d.hh: Likewise.
+	* oln/core/automatic/image/image3d.hh: Likewise.
+	* oln/core/1d/dpoint1d.hh: Add fwd decls and/or aliases.
+	(include): Remove aliases header.
+	* oln/core/2d/dpoint2d.hh: Likewise.
+	* oln/core/3d/dpoint3d.hh: Likewise.
+	* oln/core/1d/point1d.hh: Add fwd decls and/or aliases.
+	(include): Remove aliases header.
+	* oln/core/2d/point2d.hh: Likewise.
+	* oln/core/3d/point3d.hh: Likewise.
+	* oln/core/1d/neighb1d.hh: Add alias.
+	* oln/core/2d/neighb2d.hh: Likewise.
+	* oln/core/3d/neighb3d.hh: Likewise.
+	* tests/core/point2d.cc (include): Solve FIXME.
+	(main): Change test.
+	* tests/core/dpoint2d.cc: Likewise.
+
+	Update.
+	
+	* tests/morphers/with_lut.cc: Cosmetics.
+	* tests/core/image_entry.cc: Update.
+	* oln/io/pnm.hh: Use shortcuts.
+	(include): Update.
+	* oln/core/abstract/point_set/point_set_having_bbox.hh: Update.
+	* oln/core/gen/bkd_qiter_win.hh: Update.
+	* oln/core/gen/grid.hh: Update.
+	* oln/core/gen/bkd_viter_lut.hh: Update.
+	* oln/core/gen/bbox_fwd_piter.hh: Update.
+	* oln/core/gen/fwd_niter_neighb.hh: Update.
+	* oln/core/gen/fwd_qiter_win.hh: Update.
+	* oln/core/gen/bbox_bkd_piter.hh: Update.
+	* oln/core/gen/bkd_niter_neighb.hh: Update.
+	* oln/core/gen/fwd_viter_lut.hh: Update.
+	* oln/core/internal/point_nd.hh: Update.
+	(vtypes): New.
+	* oln/core/internal/dpoint_nd.hh: Update.
+	(vtypes): New.
+	* oln/morpher/add_isubset.hh: Update.
+	Remove dead code.
+	* oln/morpher/identity.hh: Update.
+	* oln/morpher/add_neighborhood.hh: Update.
+
 2006-11-13  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add backward value iterators on look-up tables.

@@ -41,11 +41,11 @@ namespace oln
     template <typename E>
     class point_set_having_bbox : public virtual point_set<E>
     {
-      typedef oln_check_type_of(E, point) point_t;
-      typedef oln_check_type_of(E, bbox)  bbox_t;
+      typedef oln_point(E) point_t;
+      typedef oln_bbox(E)  bbox_t;
 
-      typedef oln_check_type_of(point_t, coord) coord_t;
-      typedef oln_check_type_of(point_t, dim) dim_t;
+      typedef oln_coord(point_t) coord_t;
+      typedef oln_dim(point_t) dim_t;
       enum { n = mlc_value(dim_t) };
       
     public:

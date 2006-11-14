@@ -36,6 +36,9 @@
 namespace oln
 {
 
+  typedef neighb_<dpoint3d> neighb3d;
+
+
   namespace internal
   {
 

@@ -54,12 +54,7 @@ namespace oln
   struct vtypes< topo_add_nbh<topo, nbh> >
   {
     typedef nbh neighborhood_type;
-  };
-
-  template <typename topo, typename nbh>
-  struct single_vtype< topo_add_nbh<topo, nbh>, typedef_::delegated_type >
-  {
-    typedef topo ret;
+    typedef topo delegated_type;
   };
 
 

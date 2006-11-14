@@ -55,11 +55,11 @@ namespace oln
   {
     /// Identity morpher.
     template <typename Image>
-    class identity : public stc_get_supers(identity<Image>)
+    class identity : public internal::image_extension<Image, identity<Image> >
     {
     private:
       typedef identity<Image> self_t;
-      typedef stc_get_nth_super(self_t, 1) super_t;
+      typedef internal::image_extension<Image, self_t> super_t;
 
     public:
       // FIXME: Handle the constness.

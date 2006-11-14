@@ -65,16 +65,10 @@ namespace oln
     // Morpher type.
     typedef oln::morpher::tag::identity morpher_type; // FIXME: Wrong!
 
-    typedef mlc::undefined is_computed_type;
-    typedef mlc::undefined lvalue_type;
-    typedef mlc::undefined value_type;
-  };
-
-  template <typename Image, typename Exact>
-  struct single_vtype< morpher::internal::image_value_morpher<Image, Exact>,
-		       typedef_::rvalue_type >
-  {
-    typedef mlc::undefined ret;
+    typedef mlc::not_found is_computed_type;
+    typedef mlc::not_found  value_type;
+    typedef mlc::not_found lvalue_type;
+    typedef mlc::not_found rvalue_type;
   };
 
 

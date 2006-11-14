@@ -61,12 +61,8 @@ namespace oln
 
     typedef oln_value(Image)          value_type;
     typedef value::rw_counter<Image> lvalue_type;
-  };
 
-  template <typename Image>
-  struct single_vtype< morpher::count_rw_<Image>, typedef_::rvalue_type >
-  {
-    typedef value::ro_counter<Image> ret;
+    typedef value::ro_counter<Image> rvalue_type;
   };
   
 

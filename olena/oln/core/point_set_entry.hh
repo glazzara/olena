@@ -35,6 +35,35 @@
 namespace oln
 {
 
+  /// Fwd decl.
+  template <typename E> struct point_set_entry;
+
+
+
+
+  /// Virtual types associated to point_set_entry<E>.
+
+  template <typename E>
+  struct vtypes< point_set_entry<E> >
+  {
+    typedef mlc::undefined point_type;
+
+    typedef mlc::undefined fwd_piter_type;
+    typedef mlc::undefined bkd_piter_type;
+
+    typedef mlc::none      bbox_type;
+    typedef mlc::undefined is_random_accessible_type;
+    typedef mlc::undefined has_known_size_type;
+    typedef mlc::undefined is_connected_type;
+
+    // final.
+    typedef oln_deduce(E, point, coord) coord_type;
+    typedef oln_deduce(E, point, grid)  grid_type;
+    typedef oln_deduce(E, point, dim)   dim_type;
+    typedef oln_fwd_piter(E)            piter_type;
+  };
+
+
 
   /// Entry class for point sets: point_set_entry<E> is an alias for
   /// entry< abstract::point_set, E>.
@@ -56,55 +85,6 @@ namespace oln
   }
 
 # endif
-
-
-  /// Virtual types associated to point_set_entry<E>.
-
-  template <typename E>
-  struct vtypes< point_set_entry<E> >
-  {
-    typedef mlc::undefined point_type;
-
-    typedef mlc::undefined piter_type;
-    typedef mlc::undefined fwd_piter_type;
-    typedef mlc::undefined bkd_piter_type;
-
-    typedef mlc::none      bbox_type;
-    typedef mlc::undefined is_random_accessible_type;
-    typedef mlc::undefined has_known_size_type;
-    typedef mlc::undefined is_connected_type;
-  };
-
-
-  template <typename E>
-  struct single_vtype< point_set_entry<E>, typedef_::coord_type >
-  {
-    typedef oln_type_of(E, point) P;
-    typedef oln_type_of(P, coord) ret;
-  };
-
-
-  template <typename E>
-  struct single_vtype< point_set_entry<E>, typedef_::grid_type >
-  {
-    typedef oln_type_of(E, point) P;
-    typedef oln_type_of(P, grid) ret;
-  };
-
-
-  template <typename E>
-  struct single_vtype< point_set_entry<E>, typedef_::dim_type >
-  {
-    typedef oln_type_of(E, point) P;
-    typedef oln_type_of(P, dim) ret;
-  };
-
-
-  template <typename E>
-  struct single_vtype< point_set_entry<E>, typedef_::piter_type >
-  {
-    typedef oln_type_of(E, fwd_piter) ret;
-  };
 
 
 } // end of namespace oln

@@ -60,19 +60,13 @@ namespace oln
   {
   private:
     typedef oln_type_of(Image, rvalue)     old_value_type;
+    typedef morpher::thru_fun<Image, Fun> self_t;
   public:
     typedef mlc::true_ is_computed_type;
     typedef xtd_res_1(Fun, old_value_type) value_type;
-  };
 
-
-  template <typename Image, typename Fun>
-  struct single_vtype< morpher::thru_fun<Image, Fun>, typedef_::rvalue_type >
-  {
-    typedef morpher::thru_fun<Image, Fun> self_t;
-    typedef oln_value(self_t) ret;
+    typedef oln_value(self_t) rvalue_type;
   };
-  
 
 
   namespace morpher

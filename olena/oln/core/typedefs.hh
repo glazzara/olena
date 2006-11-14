@@ -170,6 +170,15 @@ namespace oln
 /// \{
 /// Shortcuts formed such as "oln_something(T) means oln_type_of(T, something)".
 
+# define oln_dim(T)   oln_type_of(T,  dim)
+# define oln_dim_(T)  oln_type_of_(T, dim)
+ 
+# define oln_vec(T)   oln_type_of(T,  vec)
+# define oln_vec_(T)  oln_type_of_(T, vec)
+ 
+# define oln_bbox(T)    oln_type_of(T,  bbox)
+# define oln_bbox_(T)   oln_type_of_(T, bbox)
+
 # define oln_coord(T)   oln_type_of(T,  coord)
 # define oln_coord_(T)  oln_type_of_(T, coord)
 
@@ -231,7 +240,13 @@ namespace oln
 
 
 
-# include <oln/core/type_fun/plain.hh>
+// Fwd decls.
+namespace oln {
+  namespace type_fun {
+    template <typename T> struct plain;
+    template <typename Image, typename Value> struct ch_value;
+  }
+}
 
 
 /// \{

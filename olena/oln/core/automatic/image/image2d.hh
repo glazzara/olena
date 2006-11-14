@@ -30,11 +30,11 @@
 
 # include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
-# include <oln/core/2d/point2d.hh>
 
 
 namespace oln
 {
+
   // Forward declaration.
   namespace abstract
   {
@@ -74,7 +74,7 @@ namespace oln
     set_impl<abstract::image2d, tag, E>
     ::impl_at(const oln_coord(E)& row, const oln_coord(E)& col) const
     {
-      point2d tmp(row, col);
+      oln_point(E) tmp(row, col);
       return this->exact().operator()(tmp);
     }
 
@@ -83,7 +83,7 @@ namespace oln
     set_impl<abstract::image2d, tag, E>
     ::impl_has_at(const oln_coord(E)& row, const oln_coord(E)& col) const
     {
-      point2d tmp(row, col);
+      oln_point(E) tmp(row, col);
       return this->exact().has(tmp);
     }
 

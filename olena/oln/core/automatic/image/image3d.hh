@@ -30,11 +30,11 @@
 
 # include <oln/core/automatic/impl.hh>
 # include <oln/morpher/tags.hh>
-# include <oln/core/3d/point3d.hh>
 
 
 namespace oln
 {
+
   // Forward declaration.
   namespace abstract
   {
@@ -80,7 +80,7 @@ namespace oln
 	      const oln_coord(E)& row,
 	      const oln_coord(E)& col) const
     {
-      point3d tmp(slice, row, col);
+      oln_point(E) tmp(slice, row, col);
       return this->exact().operator()(tmp);
     }
 
@@ -91,7 +91,7 @@ namespace oln
 		  const oln_coord(E)& row,
 		  const oln_coord(E)& col) const
     {
-      point3d tmp(slice, row, col);
+      oln_point(E) tmp(slice, row, col);
       return this->exact().has(tmp);
     }
 

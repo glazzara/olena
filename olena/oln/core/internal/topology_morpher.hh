@@ -49,15 +49,10 @@ namespace oln
   };
 
   template <typename Topo, typename E>
-  struct single_vtype< internal::topology_morpher<Topo, E>, typedef_::morpher_type >
+  struct vtypes< internal::topology_morpher<Topo, E> >
   {
-    typedef morpher::tag::identity ret;
-  };
-
-  template <typename Topo, typename E>
-  struct single_vtype< internal::topology_morpher<Topo, E>, typedef_::delegated_type >
-  {
-    typedef Topo ret;
+    typedef morpher::tag::identity morpher_type;
+    typedef Topo delegated_type;
   };
 
 

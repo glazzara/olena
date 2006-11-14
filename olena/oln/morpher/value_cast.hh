@@ -59,12 +59,8 @@ namespace oln
   {
     typedef mlc::true_ is_computed_type;
     typedef Value       value_type;
-  };
 
-  template <typename Image, typename Value>
-  struct single_vtype< morpher::value_cast<Image, Value>, typedef_::rvalue_type >
-  {
-    typedef Value ret;
+    typedef Value rvalue_type;
   };
   
 

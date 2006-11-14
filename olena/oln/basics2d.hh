@@ -46,6 +46,8 @@
 
 # include <oln/core/2d/topo2d.hh>
 
+# include <oln/core/iterator_vtypes.hh>
+
 # include <oln/core/gen/fwd_piter_bbox.hh>
 # include <oln/core/gen/bkd_piter_bbox.hh>
 
@@ -57,8 +59,6 @@
 # include <oln/core/2d/neighb2d.hh>
 
 # include <oln/core/2d/image2d.hh>
-
-# include <oln/core/iterator_vtypes.hh>
 
 # include <oln/core/spe/row.hh>
 # include <oln/core/spe/col.hh>

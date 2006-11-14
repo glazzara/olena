@@ -61,12 +61,12 @@ namespace oln
   /// Backward value iterator on look-up table.
   template <typename Lut>
   class bkd_viter_lut :
-    public stc_get_supers(bkd_viter_lut<Lut>)
+    public abstract::iterator_on_values< bkd_viter_lut<Lut> >
     // Check that Lut is a look-up table.
     // FIXME: an abstract::lookup_table would be useful.
   {
-    typedef bkd_viter_lut<Lut> self_t;
-    typedef stc_get_super(self_t) super_t;
+    typedef bkd_viter_lut<Lut>                   self_t;
+    typedef abstract::iterator_on_values<self_t> super_t;
     typedef oln_type_of(self_t, lut_iter) lut_iter_t;
 
   public:

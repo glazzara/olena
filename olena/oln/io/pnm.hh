@@ -33,13 +33,7 @@
 # include <fstream>
 # include <string>
 
-# include <oln/core/abstract/iterator.hh>
-# include <oln/core/gen/fwd_piter_bbox.hh>
-# include <oln/core/gen/bkd_piter_bbox.hh>
-# include <oln/core/iterator_vtypes.hh>
-# include <oln/core/2d/aliases.hh>
-# include <oln/core/2d/dpoint2d.hh>
-# include <oln/core/2d/image2d.hh>
+# include <oln/basics2d.hh>
 
 
 namespace oln {
@@ -120,10 +114,10 @@ namespace oln {
       template <typename I>
       void load_pbm_raw(std::ifstream& file, I& ima)
       {
-	oln_type_of(I, coord) cols = 0;
+	oln_coord(I) cols = 0;
 	unsigned bits = 0;
 	unsigned char c = 0;
-	oln_type_of(I, fwd_piter) p(ima.topo());
+	oln_fwd_piter(I) p(ima.topo());
 	for_all(p)
 	  {
 	    if (bits == 0)
@@ -142,7 +136,7 @@ namespace oln {
       template <typename I>
       void load_pbm_ascii(std::ifstream& file, I& ima)
       {
-	oln_type_of(I, fwd_piter) p(ima.topo());
+	oln_fwd_piter(I) p(ima.topo());
 	for_all(p)
 	  ima(p) = (file.get() == '0');
       }
@@ -152,10 +146,10 @@ namespace oln {
       template <typename I>
       void load_pnm_ascii(std::ifstream& file, I& ima)
       {
-	oln_type_of(I, fwd_piter) p(ima.topo());
+	oln_fwd_piter(I) p(ima.topo());
 	for_all(p)
 	  {
-	    oln_type_of(I, value) value;
+	    oln_value(I) value;
 	    file >> value;
 	    ima(p) = value;
 	    // FIXME: Test alt code below.
@@ -172,7 +166,7 @@ namespace oln {
 	size_t len = ima.bbox().ncols();
 	for (int row = ima.pmin().row(); row <= ima.pmax().row(); ++row)
 	  file.read((char*)(ima.adr_at(row, col)),
-		    len * sizeof(oln_type_of(I, value)));
+		    len * sizeof(oln_value(I)));
       }
 
 

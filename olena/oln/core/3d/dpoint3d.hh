@@ -32,13 +32,13 @@
 # include <mlc/int.hh>
 # include <oln/core/3d/point3d.hh>
 # include <oln/core/internal/dpoint_nd.hh>
-// For oln::dpoint3d and oln::dpoint3df.
-# include <oln/core/3d/aliases.hh>
 
 
 namespace oln
 {
 
+  typedef dpoint3d_<int> dpoint3d;
+  
 
   /// Super type.
   template<typename C>
@@ -46,6 +46,13 @@ namespace oln
   {
     typedef internal::dpoint_nd< dpoint3d_<C> > ret;
   };
+
+
+  /// Fwd decls.
+  template <unsigned D> struct grid_;
+  typedef grid_<3> grid3d;
+  template <typename C> struct point3d_;
+  typedef point3d_<int> point3d;
 
 
   /// Virtual types associated to oln::dpoint3d_<C>.
@@ -66,10 +73,10 @@ namespace oln
   /// General 3D dpoint class.
   template <typename C>
   class dpoint3d_
-    : public stc_get_supers(dpoint3d_<C>)
+    : public internal::dpoint_nd< dpoint3d_<C> >
   {
     typedef dpoint3d_<C>                self_t;
-    typedef stc_get_super(dpoint3d_<C>) super_t;
+    typedef internal::dpoint_nd<self_t> super_t;
 
     using super_t::v_;
 

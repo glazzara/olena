@@ -55,7 +55,7 @@ namespace oln
   struct vtypes< fwd_niter_neighb_<point_t> >
   {
     typedef point_t point_type;
-    typedef oln_type_of(point_t, grid)  grid_type;
+    typedef oln_grid(point_t) grid_type;
   };
 
 
@@ -67,7 +67,7 @@ namespace oln
     typedef fwd_niter_neighb_<point_t> self_t;
     typedef abstract::iterator_on_points<self_t> super_t;
 
-    typedef oln_type_of(point_t, dpoint) dpoint_t;
+    typedef oln_dpoint(point_t) dpoint_t;
 
   public:
     

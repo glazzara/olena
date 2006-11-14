@@ -61,17 +61,11 @@ namespace oln
   {
     typedef mlc::undefined grid_type;
     typedef mlc::undefined dpoint_type;
-    typedef mlc::undefined coord_type;
+    typedef oln_deduce(E, dpoint, coord) coord_type;
     typedef mlc::undefined dim_type;
-    typedef mlc::undefined vec_type;
-  };
 
-  template <typename E>
-  struct single_vtype< abstract::point<E>, typedef_::vec_type >
-  {
-    typedef oln_type_of(E, coord) coord_t;
-    typedef oln_type_of(E, dim) dim_t;
-    typedef xtd::vec<mlc_value(dim_t), coord_t> ret;
+    typedef oln_dim(E) dim_t;
+    typedef xtd::vec<mlc_value(dim_t), coord_type> vec_type;
   };
 
 
@@ -83,8 +77,8 @@ namespace oln
     class point : public stc::any__simple<E>,
 		  public oln::type
     {
-      typedef oln_type_of(E, dpoint) dpoint_t;
-      typedef oln_type_of(E, vec)    vec_t;
+      typedef oln_dpoint(E) dpoint_t;
+      typedef oln_vec(E)    vec_t;
 
     public:
 

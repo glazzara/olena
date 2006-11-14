@@ -61,14 +61,18 @@ namespace oln
   {
   private:
     typedef oln_type_of(Image, rvalue) orig_value_type;
+    typedef morpher::with_lut<Image, Lut> self_t;
   public:
     typedef mlc::true_ is_computed_type;
+
     // Value type.
-    typedef typename Lut::new_value_type value_type;
+    typedef typename Lut::new_value_type  value_type;
+    typedef value_type                   rvalue_type;
+    typedef mlc::not_ok                  lvalue_type;
+
     // Look-up table type.
     typedef Lut lut_type;
 
-    // rvalue_type: see below.
     /* lvalue_type: undefined
        (see oln/morpher/internal/image_value_morpher.hh).  */
 
@@ -80,39 +84,9 @@ namespace oln
        a mutable value proxy.  */
     typedef value::mutable_lut_value_proxy<Lut> mutable_value_proxy_type;
 
-    // fwd_viter_type: see below.
-    // bkd_viter_type: see below.
+    typedef fwd_viter_lut<Lut> fwd_viter_type;
+    typedef bkd_viter_lut<Lut> bkd_viter_type;
   };
-
-  // Rvalue.
-  template <typename Image, typename Lut>
-  struct single_vtype< morpher::with_lut<Image, Lut>, typedef_::rvalue_type >
-  {
-  private:
-    typedef morpher::with_lut<Image, Lut> self_t;
-  public:
-    typedef oln_value(self_t) ret;
-  };
-
-  /// Forward value iterator virtual type for morpher::with_lut.
-  template <typename Image, typename Lut>
-  struct single_vtype< morpher::with_lut<Image, Lut>,
-		       typedef_::fwd_viter_type >
-  {
-    typedef fwd_viter_lut<Lut> ret;
-  };
-
-  /// Backward value iterator virtual type for morpher::with_lut.
-  template <typename Image, typename Lut>
-  struct single_vtype< morpher::with_lut<Image, Lut>,
-		       typedef_::bkd_viter_type >
-  {
-    typedef bkd_viter_lut<Lut> ret;
-  };
-  /// \}
-
-
-  // FIXME: What about bkd_viter_type on morpher::with_lut?
 
 
 
@@ -120,12 +94,12 @@ namespace oln
   {
     /// Look-up table addition morpher.
     template <typename Image, typename Lut>
-    class with_lut : public stc_get_supers(mlc_comma_1(with_lut<Image, Lut>))
+    class with_lut : public internal::image_value_morpher<Image, with_lut<Image, Lut> >
       // FIXME: Ensure oln_value(Image) == Lut::new_value_type? Or just let
       // the ctor check this property?
     {
-      typedef with_lut<Image, Lut> self_t;
-      typedef stc_get_super(self_t) super_t;
+      typedef with_lut<Image, Lut>                         self_t;
+      typedef internal::image_value_morpher<Image, self_t> super_t;
 
     public:
       typedef Lut lut_type;

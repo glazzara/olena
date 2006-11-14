@@ -54,7 +54,7 @@ namespace oln
   struct vtypes< bbox_fwd_piter_<point> >
   {
     typedef point point_type;
-    typedef oln_type_of(point, grid) grid_type;
+    typedef oln_grid(point) grid_type;
   };
 
 

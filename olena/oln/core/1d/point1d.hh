@@ -31,12 +31,22 @@
 
 # include <mlc/int.hh>
 # include <oln/core/internal/point_nd.hh>
-// For oln::point1d and oln::point1df.
-# include <oln/core/1d/aliases.hh>
 
 
 namespace oln
 {
+
+  /// Fwd decls.
+  template <unsigned D> struct grid_;
+  template <typename C> struct dpoint1d_;
+  template <typename C> struct  point1d_;
+
+
+  typedef grid_<1> grid1d;
+  typedef dpoint1d_<int> dpoint1d;
+  typedef  point1d_<int>  point1d;
+
+
 
   /* FIXME: Is this the right place for these functions (on types)?
      In particular, the function on dpoint1d should be near the
@@ -47,6 +57,7 @@ namespace oln
   template <typename C> struct  point_ <1, C> { typedef  point1d_<C> ret; };
   template <typename C> struct dpoint_ <1, C> { typedef dpoint1d_<C> ret; };
   /// \}
+
 
 
   /// Super type.
@@ -72,10 +83,10 @@ namespace oln
 
   /// General 1D point class.
   template <typename C>
-  class point1d_ : public stc_get_supers(point1d_<C>)
+  class point1d_ : public internal::point_nd< point1d_<C> >
   {
     typedef point1d_<C> self_t;
-    typedef stc_get_super(point1d_<C>) super_t;
+    typedef internal::point_nd<self_t> super_t;
 
     using super_t::v_;
 

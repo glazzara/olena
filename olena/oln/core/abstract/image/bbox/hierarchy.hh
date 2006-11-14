@@ -87,7 +87,8 @@ namespace oln
     template <typename E>
     image_having_bbox<E>::decl::decl()
     {
-      mlc::assert_< mlc_is_a(bbox, abstract::bbox) >::check();
+      // FIXME: Rec?
+      // mlc::assert_< mlc_is_a(bbox, abstract::bbox) >::check();
     }
 
     template <typename E>
@@ -134,7 +135,7 @@ namespace oln
   /// With bbox.
   template <typename E>
   struct case_< image_hierarchy_wrt_bbox, E, 1 > :
-    where_< mlc::neq_< oln_deduce_type_of(E, topo, bbox), mlc::not_found > >
+    where_< mlc::neq_< oln_deduce(E, topo, bbox), mlc::not_found > >
   {
     typedef abstract::image_having_bbox<E> ret;
   };
@@ -142,14 +143,10 @@ namespace oln
 
   template <typename E> struct image_entry;
 
-
   template <typename E>
   struct single_vtype< image_entry<E>, typedef_::bbox_type >
   {
-  private:
-    typedef oln_type_of(E, topo) topo_t;
-  public:
-    typedef oln_type_of(topo_t, bbox) ret;
+    typedef oln_deduce(E, topo, bbox) ret;
   };
 
 } // end of namespace oln

@@ -35,6 +35,25 @@
 namespace oln
 {
 
+  /// Fwd decl.
+  template <typename E> struct topology_entry;
+
+
+  /// Virtual types associated to topology_entry<E>.
+
+  template <typename E>
+  struct vtypes< topology_entry<E> >
+  {
+    typedef mlc::undefined point_type;
+    typedef mlc::undefined bbox_type;
+    typedef mlc::none      neighborhood_type;
+    typedef mlc::undefined is_random_accessible_type;
+    typedef mlc::none      subset_type;
+
+    typedef mlc::none      morpher_type;
+  };
+
+
 
   /// Entry class for point sets: topology_entry<E> is an alias for
   /// entry< abstract::topology, E>.
@@ -55,25 +74,6 @@ namespace oln
   }
 
 # endif
-
-
-  /// Virtual types associated to topology_entry<E>.
-
-  template <typename E>
-  struct vtypes< topology_entry<E> >
-  {
-    typedef mlc::undefined point_type;
-    typedef mlc::undefined bbox_type;
-    typedef mlc::none      neighborhood_type;
-    typedef mlc::undefined is_random_accessible_type;
-    typedef mlc::none      subset_type;
-  };
-
-  template <typename E>
-  struct single_vtype< topology_entry<E>, typedef_::morpher_type >
-  {
-    typedef mlc::none ret;
-  };
 
 
 } // end of namespace oln

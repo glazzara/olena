@@ -68,9 +68,7 @@ namespace oln
 	decl();
       };
 
-      ~point_set()
-      {
-      }
+      ~point_set();
 
     protected:
 
@@ -91,10 +89,9 @@ namespace oln
     point_set<E>::decl::decl()
     {
       // coherence check:
-      mlc::assert_equal_< oln_type_of(fwd_piter, grid),
-	                  oln_type_of(point,     grid) >::check();
-      mlc::assert_equal_< oln_type_of(bkd_piter, grid),
-	                  oln_type_of(point,     grid) >::check();
+      // FIXME: Rec?
+//       mlc::assert_equal_< oln_grid(fwd_piter), oln_grid(point) >::check();
+//       mlc::assert_equal_< oln_grid(bkd_piter), oln_grid(point) >::check();
     }
 
     template <typename E>
@@ -102,11 +99,11 @@ namespace oln
     {
     }
 
-//     template <typename E>
-//     point_set<E>::~point_set()
-//     {
-//       decl();
-//     }
+    template <typename E>
+    point_set<E>::~point_set()
+    {
+      decl();
+    }
 
 # endif
 

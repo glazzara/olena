@@ -28,119 +28,34 @@
 #ifndef OLN_CORE_MACROS_HH
 # define OLN_CORE_MACROS_HH
 
-// --------------------- //
-// Virtual type access.  //
-// --------------------- //
 
-/// \def oln_type_of(OlnType, Alias)
-///
-/// Macro to retrieve an associated type \a Alias from the exact type of
-/// an oln type \a OlnType whose category is not specified (version to be
-/// used inside a template).
+# include <oln/core/typedefs.hh>
+
+
+# define oln_type_of_(OlnType, Alias)					\
+   oln::direct_type_of_<OlnType, oln::typedef_:: Alias##_type>::ret
+
+
 # define oln_type_of(OlnType, Alias)		\
-   stc_direct_type_of(oln, void, OlnType, Alias)
-// FIXME: Remove direct_ above.
+   typename oln_type_of_(OlnType, Alias)
 
 
-/// FIXME: Temporary macro to be able to perform "oln_type_of(oln_type_of(A, B), C)".
+
 # define oln_deduce_type_of(OlnType, Alias1, Alias2)							\
-typename oln::direct_type_of_<void,										\
-                       typename oln::direct_type_of_<void, OlnType, oln::typedef_::Alias1##_type >::ret,	\
-                       oln::typedef_::Alias2##_type >::ret
-// FIXME: Remove direct_ *twice* above.
+typename oln::direct_type_of_<typename oln::direct_type_of_<OlnType, oln::typedef_::Alias1##_type >::ret,	\
+			       oln::typedef_::Alias2##_type >::ret
 
-
-# define oln_deduce_direct_type_of(OlnType, Alias1, Alias2)							\
-typename oln::direct_type_of_<void,										\
-                       typename oln::direct_type_of_<void, OlnType, oln::typedef_::Alias1##_type >::ret,	\
-                       oln::typedef_::Alias2##_type >::ret
-
-
-/// \def oln_type_of(OlnType, Alias)
-///
-/// Macro to retrieve an associated type \a Alias from the exact type of
-/// an oln type \a OlnType whose category is not specified (version to be
-/// used outside a template).
-# define oln_type_of_(OlnType, Alias)		\
-   stc_direct_type_of_(oln, void, OlnType, Alias)
-// FIXME: Remove direct_ above.
-
-
-/// \def oln_direct_type_of(OlnType, Alias)
-///
-/// Macro to retrieve an associated type \a Alias from an oln type \a
-/// OlnType directly, and whose category is not specified (version to
-/// be used inside a template).
-# define oln_direct_type_of(OlnType, Alias)		\
-   stc_direct_type_of(oln, void, OlnType, Alias)
-
-/// \def oln_direct_type_of_(OlnType, Alias)
-///
-/// Macro to retrieve an associated type \a Alias from an oln type \a
-/// OlnType directly, and whose category is not specified (version to
-/// be used inside a template).
-# define oln_direct_type_of_(OlnType, Alias)		\
-   stc_direct_type_of_(oln, void, OlnType, Alias)
-
-
-// ------------------------------- //
-// Virtual type check and access.  //
-// ------------------------------- //
-
-/* These macros are the same as the previous ones, but they use
-   stc_check_type_of{_,} (resp. stc_check_direct_type_of{_,}) instead of
-   stc_type_of{_,} (resp. stc_direct_type_of{_,}).  */
-
-/// \def oln_check_type_of(OlnType, Alias)
-///
-/// Macro to retrieve an associated type \a Alias from the exact type of
-/// an oln type \a OlnType whose category is not specified (version to be
-/// used inside a template).
-///
-/// If the virtual type is not found, raise a static error.
-# define oln_check_type_of(OlnType, Alias)	\
-   stc_check_direct_type_of(oln, void, OlnType, Alias)
-// FIXME: Remove direct_ above.
-
-/// \def oln_check_type_of(OlnType, Alias)
-///
-/// Macro to retrieve an associated type \a Alias from the exact type of
-/// an oln type \a OlnType whose category is not specified (version to be
-/// used outside a template).
-///
-/// If the virtual type is not found, raise a static error.
-# define oln_check_type_of_(OlnType, Alias)		\
-   stc_check_direct_type_of_(oln, void, OlnType, Alias)
-// FIXME: Remove direct_ above.
-
-
-/// \def oln_check_direct_type_of(OlnType, Alias)
-///
-/// Macro to retrieve an associated type \a Alias from an oln type \a
-/// OlnType directly, and whose category is not specified (version to
-/// be used inside a template).
-///
-/// If the virtual type is not found, raise a static error.
-# define oln_check_direct_type_of(OlnType, Alias)	\
-   stc_check_direct_type_of(oln, void, OlnType, Alias)
-
-/// \def oln_check_direct_type_of_(OlnType, Alias)
-///
-/// Macro to retrieve an associated type \a Alias from an oln type \a
-/// OlnType directly, and whose category is not specified (version to
-/// be used inside a template).
-///
-/// If the virtual type is not found, raise a static error.
-# define oln_check_direct_type_of_(OlnType, Alias)	\
-   stc_check_direct_type_of_(oln, void, OlnType, Alias)
+# define oln_deduce(OlnType, Alias1, Alias2) \
+  oln_deduce_type_of(OlnType, Alias1, Alias2)
 
 
 
-/// Declare the vtype \a Typedef in an abstract class (see sample code
-/// for details).  Warning: this macro assumes that the exact type
-/// parameter is named 'E'.
 #define oln_virtual_typedef(Typedef) \
-  typedef stc_check_direct_type_of(oln, void, E, Typedef) Typedef
+  typedef oln_type_of(E, Typedef) Typedef
+
+
+// FIXME: Rec? The macro below is to ensure that static checks are removed during "Rec" tests.
+// #define oln_virtual_typedef(Typedef) typedef void Typedef
 
 
 #endif // ! OLN_CORE_MACROS_HH

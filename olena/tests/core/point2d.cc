@@ -26,18 +26,15 @@
 // Public License.
 
 #include <mlc/assert.hh>
-#include <mlc/cmp.hh>
-// FIXME: Don't include oln/basics2d.hh, which is too big.
-// (Fix.)
-#include <oln/basics2d.hh>
+#include <mlc/is_a.hh>
+#include <oln/core/2d/point2d.hh>
 
 
 int
 main()
 {
-  typedef oln::point2d_<int> point2d;
-  typedef oln:: stc_get_supers(point2d) point2d_super_type;
+  typedef oln::point2d_<int> point_t;
   mlc::assert_<
-    mlc_eq( point2d_super_type, oln::internal::point_nd< point2d > )
+    mlc_is_a_( point_t, oln::internal::point_nd )
   >::check();
 }

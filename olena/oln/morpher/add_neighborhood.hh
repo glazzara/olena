@@ -70,13 +70,13 @@ namespace oln
     /// Neighborhood addition morpher.
     template <typename Image, typename Neighb>
     class add_neighborhood :
-      public stc_get_supers(mlc_comma_1(add_neighborhood<Image, Neighb>))
+      public internal::image_extension<Image, add_neighborhood<Image, Neighb> >
     {
     private:
 
       typedef add_neighborhood<Image, Neighb> self_t;
-      typedef stc_get_super(self_t) super_t;
-      typedef oln_type_of(self_t, topo) topo_t;
+      typedef internal::image_extension<Image, self_t> super_t;
+      typedef oln_topo(self_t) topo_t;
 
     public:
 

@@ -56,15 +56,16 @@ namespace oln
   struct vtypes< bkd_piter_bbox_<point_t> >
   {
     typedef point_t point_type;
-    typedef oln_type_of(point_t, grid) grid_type;
+    typedef oln_grid(point_t) grid_type;
   };
 
 
 
   /// Abstract forward point iterator class.
   template <typename point_t>
-  class bkd_piter_bbox_ : public internal::bbox_bkd_piter< bkd_piter_bbox_<point_t> >,
-			  private mlc::assert_< mlc_is_a(point_t, abstract::point) >
+  class bkd_piter_bbox_ : public internal::bbox_bkd_piter< bkd_piter_bbox_<point_t> >
+  // FIXME: Rec?
+// 			  , private mlc::assert_< mlc_is_a(point_t, abstract::point) >
   {
     typedef bkd_piter_bbox_<point_t> self_t;
     typedef internal::bbox_bkd_piter<self_t> super_t;

@@ -38,6 +38,43 @@
 namespace oln
 {
 
+  /// Fwd decl.
+  template <typename E> struct image_entry;
+
+
+
+  /// Virtual types associated to image_entry<E>.
+
+  template <typename E>
+  struct vtypes< image_entry<E> >
+  {
+    typedef mlc::undefined topo_type;
+    typedef mlc::undefined grid_type;
+    typedef mlc::undefined point_type;
+    typedef mlc::undefined is_computed_type;
+    typedef mlc::undefined value_type;
+
+    typedef mlc::undefined fwd_piter_type;
+    typedef mlc::undefined bkd_piter_type;
+
+    typedef mlc::undefined fwd_qiter_type;
+    typedef mlc::undefined bkd_qiter_type;
+
+    // final definitions:
+    typedef oln_deduce(E, point, coord) coord_type;
+    typedef oln_fwd_piter(E)            piter_type;
+
+    // default definitions:
+    typedef oln_point(E) psite_type;
+    typedef oln_value(E) rvalue_type;
+
+    /// \brief Morpher type.
+    ///
+    /// Optionally contains a tag indicating a kind of morpher.
+    typedef mlc::none morpher_type;
+  };
+
+
 
   /// Entry class for point sets: image_entry<E> is an alias for
   /// entry< abstract::image, E>.
@@ -60,101 +97,6 @@ namespace oln
 # endif
 
 
-
-  /// Virtual types associated to image_entry<E>.
-
-  template <typename E>
-  struct vtypes< image_entry<E> >
-  {
-    typedef mlc::undefined topo_type;
-    typedef mlc::undefined grid_type;
-
-    // coord_type: see below.
-
-    // psite_type: see below.
-    typedef mlc::undefined point_type;
-
-    typedef mlc::undefined is_computed_type;
-    
-    typedef mlc::undefined value_type;
-    // rvalue_type: see below.
-
-    // piter_type: see below.
-    // fwd_piter_type: see below.
-    // bkd_piter_type: see below.
-
-    // fwd_qiter_type: see below.
-    // bkd_qiter_type: see below.
-
-    /// \brief Morpher type.
-    ///
-    /// Optionally contains a tag indicating a kind of morpher.
-    typedef mlc::none morpher_type;
-  };
-
-
-  // Coord.
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::coord_type >
-  {
-    typedef oln_deduce_type_of(E, point, coord) ret;
-  };
-
-
-  // Psite.
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::psite_type >
-  {
-    typedef oln_type_of(E, point) ret;
-  };
-
-
-  // Rvalue.
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::rvalue_type >
-  {
-    typedef oln_type_of(E, value) ret;
-  };
-
-
-  /* FIXME: Should we keep the `piter' vtype, knowing that the macro
-     `oln_piter' gives the `fwd_piter' vtype (and not the `piter'
-     vtype)?  */
-  // Piter.
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::piter_type >
-  {
-    typedef oln_type_of(E, fwd_piter) ret;
-  };
-
-  // Fwd piter.
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::fwd_piter_type >
-  {
-    typedef mlc::undefined ret;
-  };
-
-  // Bkd piter.
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::bkd_piter_type >
-  {
-    typedef mlc::undefined ret;
-  };
-
-
-  // Fwd qiter.
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::fwd_qiter_type >
-  {
-    typedef mlc::undefined ret;
-  };
-
-  // Bkd qiter.
-  template <typename E>
-  struct single_vtype< image_entry<E>, typedef_::bkd_qiter_type >
-  {
-    typedef mlc::undefined ret;
-  };
 
 
 } // end of namespace oln

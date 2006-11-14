@@ -144,6 +144,7 @@ int main()
 
   oln::point2d p(1, 2);
   assert(ima_with_lut(p) == red);
+
   assert(ima_with_lut.at(1, 2) == red);
 
 

@@ -81,22 +81,10 @@ namespace oln
   public:
     typedef mlc::true_ is_computed_type;
     typedef xtd::vec<n, oln_value(I)> value_type;
+    
+    typedef value::two_way<self_t, fun_t> lvalue_type;
+    typedef xtd::vec<n, oln_value(I)> rvalue_type;
   };
-
-  template <unsigned n, typename I>
-  struct single_vtype< morpher::stack_rw<n, I>, typedef_::lvalue_type >
-  {
-    typedef morpher::stack_rw<n, I> self_t;
-    typedef rwvec<n, oln_value(I)>  fun_t;
-    typedef value::two_way<self_t, fun_t> ret;
-  };
-
-  template <unsigned n, typename I>
-  struct single_vtype< morpher::stack_rw<n, I>, typedef_::rvalue_type >
-  {
-    typedef xtd::vec<n, oln_value(I)> ret;
-  };
-
 
 
   namespace morpher

@@ -32,12 +32,12 @@
 # include <mlc/int.hh>
 # include <oln/core/2d/point2d.hh>
 # include <oln/core/internal/dpoint_nd.hh>
-// For oln::dpoint2d and oln::dpoint2df.
-# include <oln/core/2d/aliases.hh>
 
 
 namespace oln
 {
+
+  typedef dpoint2d_<int> dpoint2d;
 
 
   /// Super type.
@@ -46,6 +46,13 @@ namespace oln
   {
     typedef internal::dpoint_nd< dpoint2d_<C> > ret;
   };
+
+
+  /// Fwd decls.
+  template <unsigned D> struct grid_;
+  typedef grid_<2> grid2d;
+  template <typename C> struct point2d_;
+  typedef point2d_<int> point2d;
 
 
   /// Virtual types associated to oln::dpoint2d_<C>.
@@ -65,10 +72,10 @@ namespace oln
   /// General 2D dpoint class.
   template <typename C>
   class dpoint2d_
-    : public stc_get_supers(dpoint2d_<C>)
+    : public internal::dpoint_nd< dpoint2d_<C> >
   {
     typedef dpoint2d_<C>                self_t;
-    typedef stc_get_super(dpoint2d_<C>) super_t;
+    typedef internal::dpoint_nd<self_t> super_t;
 
     using super_t::v_;
 

@@ -61,12 +61,8 @@ namespace oln
 
     typedef typename Fun::result_type   value_type;
     typedef value::two_way<Image, Fun> lvalue_type;
-  };
 
-  template <typename Image, typename Fun>
-  struct single_vtype< morpher::two_way_rw<Image, Fun>, typedef_::rvalue_type >
-  {
-    typedef typename Fun::result_type ret;
+    typedef typename Fun::result_type rvalue_type;
   };
 
 

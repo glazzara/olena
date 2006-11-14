@@ -36,6 +36,17 @@
 namespace oln
 {
 
+  /// Fwd decl.
+  template <typename E> struct neighborhood_entry;
+
+
+  /// Virtual types associated to neighborhood_entry<E>.
+  template <typename E>
+  struct vtypes< neighborhood_entry<E> >
+  {
+    typedef mlc::undefined grid_type;
+  };
+
 
   /// Entry class for point sets: neighborhood_entry<E> is an alias for
   /// entry< abstract::neighborhood, E>.
@@ -56,15 +67,6 @@ namespace oln
   }
 
 # endif
-
-
-  /// Virtual types associated to neighborhood_entry<E>.
-
-  template <typename E>
-  struct vtypes< neighborhood_entry<E> >
-  {
-    typedef mlc::undefined grid_type;
-  };
 
 
 } // end of namespace oln
