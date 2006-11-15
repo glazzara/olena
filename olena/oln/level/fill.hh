@@ -32,6 +32,7 @@
 # include <iostream>
 
 # include <oln/core/abstract/image.hh>
+# include <oln/core/abstract/image/value_wise_accessibility/hierarchy.hh>
 # include <oln/core/abstract/iterator.hh>
 # include <oln/core/abstract/functions.hh>
 
@@ -72,6 +73,11 @@ namespace oln
     /// Fwd decl.
     template <typename I, typename F>
     void fill(abstract::mutable_image<I>& input, const abstract::fun_p2v<F>& fun);
+
+    /// Fwd decl.
+    template <typename I>
+    void fill(abstract::mutable_image_being_value_wise_random_accessible<I>& input,
+	      const oln_value(I)& value);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -117,6 +123,18 @@ namespace oln
 	  input(p) = fun.exact()(p);
       }
 
+      /// Version specialized for mutable images being value-wise
+      /// random accessible.
+      template <typename I>
+      void fill(abstract::mutable_image_being_value_wise_random_accessible<I>& input,
+		const oln_value(I)& value)
+      {
+	// FIXME: We should not need to call exact() here.
+	oln_viter(I) v(input.exact());
+	for_all(v)
+	  input.value(v) = value;
+      }
+
     } // end of namespace oln::level::impl
 
 
@@ -146,6 +164,14 @@ namespace oln
     void fill(abstract::mutable_image<I>& input, const abstract::fun_p2v<F>& fun)
     {
       return impl::fill(input.exact(), fun);
+    }
+
+    /// Facade.
+    template <typename I>
+    void fill(abstract::mutable_image_being_value_wise_random_accessible<I>& input,
+	      const oln_value(I)& value)
+    {
+      return impl::fill(input.exact(), value);
     }
 
 # endif

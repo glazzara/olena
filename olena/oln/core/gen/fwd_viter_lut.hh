@@ -34,8 +34,11 @@
 namespace oln
 {
 
-  // Forward declaration.
+  // Forward declarations.
   template <typename Lut> class fwd_viter_lut;
+  namespace morpher {
+    template <typename Image, typename Lut> struct with_lut;
+  } // end of namespace oln::morpher
 
 
   /// Super type declaration.
@@ -74,8 +77,11 @@ namespace oln
     typedef oln_type_of(self_t, value) value_type;
 
   public:
-    // Construct an uninitialized value iterator.
+    /// Construct a forward value iterator from a look-up table (LUT).
     fwd_viter_lut(const Lut& lut);
+    /// Construct a forward value iterator from an image having a LUT.
+    template <typename Image>
+    fwd_viter_lut(const morpher::with_lut<Image, Lut>& ima);
 
     /// Iterator manipulators.
     /// \{
@@ -110,6 +116,17 @@ namespace oln
   fwd_viter_lut<Lut>::fwd_viter_lut(const Lut& lut) :
     super_t(),
     lut_(lut),
+    i_()
+  {
+    // Initialize underlying iterator (i.e., \a i_.)
+    this->invalidate();
+  }
+
+  template <typename Lut>
+  template <typename Image>
+  fwd_viter_lut<Lut>::fwd_viter_lut(const morpher::with_lut<Image, Lut>& ima) :
+    super_t(),
+    lut_(ima.lut()),
     i_()
   {
     // Initialize underlying iterator (i.e., \a i_.)

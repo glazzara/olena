@@ -1,5 +1,27 @@
 2006-11-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a specialization of level::fill for value-wise random-accessible
+	images.
+
+	* tests/morphers/with_lut.cc (main): More static checking of
+	the interface of an image with LUT.
+	Test oln::level::fill on an image with LUT.
+	* oln/level/fill.hh
+	(level::fill(abstract::
+	 mutable_image_being_value_wise_random_accessible<I>&))
+	(level::impl::
+	 fill(abstract::mutable_image_being_value_wise_random_accessible<I>&)):
+	 New.
+	* oln/core/typedefs.hh (oln_fwd_viter, oln_fwd_viter_)
+	(oln_bkd_viter, oln_bkd_viter_, oln_viter, oln_viter_): New macros.
+	* oln/core/gen/bkd_viter_lut.hh
+	(bkd_viter_lut::bkd_viter_lut(const morpher::with_lut<Image, Lut>&))
+	* oln/core/gen/fwd_viter_lut.hh
+	(fwd_viter_lut::fwd_viter_lut(const morpher::with_lut<Image, Lut>&))
+	New ctors.
+
+2006-11-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix virtual types of oln::internal::point_nd and
 	oln::internal::dpoint_nd.
 

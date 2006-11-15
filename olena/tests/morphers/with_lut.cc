@@ -114,7 +114,16 @@ int main()
     add(1, white).
     add(2, c);
 
+  // Type of our image with look-up table.
   typedef oln::morpher::with_lut<image_t, lut_t> image_with_lut_t;
+  // Interface check.
+  mlc::assert_<
+    mlc_is_not_a_(image_with_lut_t, oln::abstract::mutable_image)
+  >::check();
+  mlc::assert_<
+    mlc_is_a_(image_with_lut_t,
+	      oln::abstract::mutable_image_being_value_wise_random_accessible)
+  >::check();
   // FIXME: ``ima + lut'' doesn't work.  Maybe a `using' statement is
   // required.
   image_with_lut_t ima_with_lut(ima, lut);
@@ -149,14 +158,14 @@ int main()
 
 
   // Check fwd_viter_lut.
-  oln_type_of_(image_with_lut_t, fwd_viter) fv(ima_with_lut.lut());
+  oln_fwd_viter_(image_with_lut_t) fv(ima_with_lut);
   std::list<rgb8> fwd_values;
   std::cout << "values of lut (fwd) =" << std::endl;
   // Push the values to the *back* of the list.
   for_all (fv)
     fwd_values.push_back(fv);
   // Check bkd_viter_lut.
-  oln_type_of_(image_with_lut_t, bkd_viter) bv(ima_with_lut.lut());
+  oln_bkd_viter_(image_with_lut_t) bv(ima_with_lut);
   std::list<rgb8> bkd_values;
   std::cout << "values of lut (bkd) =" << std::endl;
   // Push the values to the *front* of the list (i.e., in reverse order).
@@ -166,9 +175,10 @@ int main()
   assert (fwd_values == bkd_values);
 
 
-  // FIXME: To be enabled later, when oln::level::fill is specialized
-  // for abstract::mutable_image_being_value_wise_random_accessible.
-#if 0
-  oln::level::apply(ima_with_lut, fun); // 3 ops only !!!
-#endif
+  // Test level::fill.
+  oln::debug::print(ima_with_lut);
+  std::cout << std::endl << std::endl;
+  // Three ops only!
+  oln::level::fill(ima_with_lut, blue);
+  oln::debug::print(ima_with_lut);
 }

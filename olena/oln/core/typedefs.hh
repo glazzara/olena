@@ -167,8 +167,9 @@ namespace oln
 
 
 
+/// Shortcuts formed such as "oln_something(T) means
+/// oln_type_of(T, something)".
 /// \{
-/// Shortcuts formed such as "oln_something(T) means oln_type_of(T, something)".
 
 # define oln_dim(T)   oln_type_of(T,  dim)
 # define oln_dim_(T)  oln_type_of_(T, dim)
@@ -227,6 +228,14 @@ namespace oln
 # define oln_bkd_niter(T)  oln_type_of(T,  bkd_niter)
 # define oln_bkd_niter_(T) oln_type_of_(T, bkd_niter)
 
+# define oln_fwd_viter(T)  oln_type_of(T,  fwd_viter)
+# define oln_fwd_viter_(T) oln_type_of_(T, fwd_viter)
+
+# define oln_bkd_viter(T)  oln_type_of(T,  bkd_viter)
+# define oln_bkd_viter_(T) oln_type_of_(T, bkd_viter)
+
+/// Even shorter shortcuts.
+/// \{
 # define oln_piter(T)  oln_type_of(T,  fwd_piter)
 # define oln_piter_(T) oln_type_of_(T, fwd_piter)
 
@@ -236,8 +245,11 @@ namespace oln
 # define oln_niter(T)  oln_type_of(T,  fwd_niter)
 # define oln_niter_(T) oln_type_of_(T, fwd_niter)
 
+# define oln_viter(T)  oln_type_of(T,  fwd_viter)
+# define oln_viter_(T) oln_type_of_(T, fwd_viter)
 /// \}
 
+/// \}
 
 
 // Fwd decls.
