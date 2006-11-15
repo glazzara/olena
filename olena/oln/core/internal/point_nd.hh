@@ -74,13 +74,8 @@ namespace oln
   private:
     typedef oln_dim(E)   dim_t;
     typedef oln_coord(E) coord_t;
-    typedef xtd::vec<mlc_value(dim_t), coord_t> vec_t;
   public:
-
-    typedef double psite_type;
-
-    typedef typename vec_t::self_type vec_type;
-    // typedef xtd::vec<mlc_value(dim_t), coord_t> vec_type;
+    typedef xtd::vec<mlc_value(dim_t), coord_t> vec_type;
   };
 
 

@@ -1,3 +1,17 @@
+2006-11-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix virtual types of oln::internal::point_nd and
+	oln::internal::dpoint_nd.
+
+	* oln/core/internal/point_nd.hh
+	(oln::vtypes< internal::point_nd<E> >::vec_t)
+	(oln::vtypes< internal::point_nd<E> >::psite_type): Remove
+	typedefs.
+	(oln::vtypes< internal::point_nd<E> >::vec_type): Fix typedef.
+	* oln/core/internal/point_nd.hh
+	(oln::vtypes< internal::point_nd<E> >::vec_t): Remove typedef.
+	(oln::vtypes< internal::point_nd<E> >::vec_type): Fix typedef.	
+
 2006-11-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Now call simplified scoop macros.
