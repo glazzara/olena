@@ -1,3 +1,18 @@
+2006-11-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with the new SCOOP 2 implementation.
+
+	* tests/super.cc, tests/vtypes.cc
+	* tests/vtypes-and-exact.cc: Adjust tests to catch up with the new
+	stc/scoop.hh.
+	* stc/Makefile.am (EXTRA_DIST): Add was.scoop.hh.
+	* tests/Makefile.am
+	(check_PROGRAMS): Remove multiple-supers and
+	vtypes-multiple-supers.
+	(multiple_supers_SOURCES, vtypes_multiple_supers_SOURCES): Remove.
+	(EXTRA_DIST): New.
+	Add multiple-supers.cc and vtypes-multiple-supers.cc.
+
 2006-11-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Simplify scoop facilities.

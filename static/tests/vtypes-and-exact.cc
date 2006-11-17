@@ -34,21 +34,16 @@
 #include <mlc/int.hh>
 
 #include <stc/any.hh>
+#include <stc/exact.hh>
 #include <stc/scoop.hh>
 
 
 // Helper macros.
-#define my_type_of(FromType, Typedef)		\
-  typename my_type_of_(FromType, Typedef)
+#define my_type_of_(FromType, Alias)					\
+  my::direct_type_of_<FromType, my::typedef_:: Alias##_type>::ret
 
-#define my_type_of_(FromType, Typedef)				\
-  stc_type_of_(my, my::category::my_cat, FromType, Typedef)
-
-#define my_direct_type_of(FromExactType, Typedef)	\
-  typename my_direct_type_of_(FromExactType, Typedef)
-
-#define my_direct_type_of_(FromExactType, Typedef)			\
-  stc_direct_type_of_(my, my::category::my_cat, FromExactType, Typedef)
+#define my_type_of(FromType, Alias)		\
+  typename my_type_of_(FromType, Alias)
 
 
 // Namespace equipment.
@@ -69,17 +64,6 @@ namespace my
   mlc_decl_typedef(zorg_type);
 
 
-  /*-----------.
-  | Category.  |
-  `-----------*/
-
-  // We only use one category here.
-  namespace category
-  {
-    struct my_cat;
-  }
-
-
   /*----------------------------------------.
   | A<Exact> --|> stc::any__simple<Exact>.  |
   `----------------------------------------*/
@@ -90,7 +74,7 @@ namespace my
 
   /// Types associated to my::A.
   template <typename Exact>
-  struct vtypes_in_category< category::my_cat, A<Exact> >
+  struct vtypes< A<Exact> >
   {
     // A native type.
     typedef int            foo_type;
@@ -109,6 +93,8 @@ namespace my
 
     // Aliases.
 
+    // META-FIXME: Update comment (stc/scoop.hh as changed since).
+
     /* FIXME: Work around a bug that affects both g++ 4.1 and
        gcc-snapshot (4.2) from Debian.  The versions of the compiler
        used at the moment this text was written were:
@@ -123,14 +109,9 @@ namespace my
        assertions ``Ensure stc::is_any_ works properly.'' below (in
        main).  Using my_direct_type_of (on the exact type) solves
        this!  */
-#if 0
-    typedef my_type_of(self_t, foo) foo_t;
-    typedef my_type_of(self_t, bar) bar_t;
-    typedef my_type_of(self_t, baz) baz_t;
-#endif
-    typedef my_direct_type_of(exact_t, foo) foo_t;
-    typedef my_direct_type_of(exact_t, bar) bar_t;
-    typedef my_direct_type_of(exact_t, baz) baz_t;
+    typedef my_type_of(exact_t, foo) foo_t;
+    typedef my_type_of(exact_t, bar) bar_t;
+    typedef my_type_of(exact_t, baz) baz_t;
   };
 
 
@@ -151,7 +132,7 @@ namespace my
 
   /// Types associated to my::B.
   template <typename Exact>
-  struct vtypes_in_category< category::my_cat, B<Exact> >
+  struct vtypes< B<Exact> >
   {
     // (foo is left untouched.)
 
@@ -165,35 +146,30 @@ namespace my
 
   /// An extended type associated to my::B.
   template <typename Exact>
-  struct ext_vtype_in_category<category::my_cat, B<Exact>, typedef_::yin_type>
+  struct single_vtype< B<Exact>, typedef_::yin_type >
   {
     typedef unsigned long ret;
   };
 
   template <typename Exact>
-  struct B : public stc_get_supers(B<Exact>)
+  struct B : public A<Exact>
   {
     typedef B<Exact> self_t;
     typedef Exact exact_t;
 
     // Aliases.
 
+    // META-FIXME: Update comment (stc/scoop.hh as changed since).
+
     /* FIXME: Same as above; using my_type_of (i.e., using
        stc_to_exact) breaks the assertions ``Ensure stc::is_any_ works
        properly.'' below (in main).  Using my_direct_type_of (on the
        exact type) solves this!  */
-#if 0
-    typedef my_type_of(self_t, foo) foo_t;
-    typedef my_type_of(self_t, bar) bar_t;
-    typedef my_type_of(self_t, baz) baz_t;
-    typedef my_type_of(self_t, quux) quux_t;
-    typedef my_type_of(self_t, yin) yin_t;
-#endif
-    typedef my_direct_type_of(exact_t, foo) foo_t;
-    typedef my_direct_type_of(exact_t, bar) bar_t;
-    typedef my_direct_type_of(exact_t, baz) baz_t;
-    typedef my_direct_type_of(exact_t, quux) quux_t;
-    typedef my_direct_type_of(exact_t, yin) yin_t;
+    typedef my_type_of(exact_t, foo) foo_t;
+    typedef my_type_of(exact_t, bar) bar_t;
+    typedef my_type_of(exact_t, baz) baz_t;
+    typedef my_type_of(exact_t, quux) quux_t;
+    typedef my_type_of(exact_t, yin) yin_t;
   };
 
 
@@ -205,35 +181,36 @@ namespace my
   struct C;
 
   // Super type.
-  stc_set_super(C, B<C>);
+  template <>
+  struct set_super_type<C>
+  {
+    typedef B<C> ret;
+  };
 
   /// Types associated to my::C.
   template <>
-  struct vtypes_in_category<category::my_cat, C>
+  struct vtypes<C>
   {
     // A type defined only here (and not in the super class).
     typedef double zorg_type;
   };
 
-  struct C : public stc_get_supers(C)
+  struct C : public B<C>
   {
     typedef C self_t;
     typedef self_t exact_t;
 
     // Aliases.
 
+    // META-FIXME: Update comment (stc/scoop.hh as changed since).
+
     /* FIXME: Same as above; using my_type_of_ (i.e., using
        stc_to_exact) breaks the assertions ``Ensure stc::is_any_ works
        properly.'' below (in main).  Using my_direct_type_of_ (on the
        exact type) solves this!  */
-#if 0
-    typedef my_type_of_(self_t, foo) foo_t;
-    typedef my_type_of_(self_t, quux) quux_t;
-    typedef my_type_of_(self_t, zorg) zorg_t;
-#endif
-    typedef my_direct_type_of_(exact_t, foo) foo_t;
-    typedef my_direct_type_of_(exact_t, quux) quux_t;
-    typedef my_direct_type_of_(exact_t, zorg) zorg_t;
+    typedef my_type_of_(exact_t, foo) foo_t;
+    typedef my_type_of_(exact_t, quux) quux_t;
+    typedef my_type_of_(exact_t, zorg) zorg_t;
   };
 
 } // end of namespace my

@@ -36,11 +36,11 @@
 
 
 // Helper macros.
-#define my_type_of(FromType, Typedef)		\
-  typename my_type_of_(FromType, Typedef)
+#define my_type_of_(FromType, Alias)					\
+  my::direct_type_of_<FromType, my::typedef_:: Alias##_type>::ret
 
-#define my_type_of_(FromType, Typedef)				\
-  stc_type_of_(my, my::category::my_cat, FromType, Typedef)
+#define my_type_of(FromType, Alias)		\
+  typename my_type_of_(FromType, Alias)
 
 
 // Namespace equipment.
@@ -61,17 +61,6 @@ namespace my
   mlc_decl_typedef(zorg_type);
 
 
-  /*-----------.
-  | Category.  |
-  `-----------*/
-
-  // We only use one category here.
-  namespace category
-  {
-    struct my_cat;
-  }
-
-
   /*----.
   | A.  |
   `----*/
@@ -81,7 +70,7 @@ namespace my
 
   /// Types associated to my::A.
   template <>
-  struct vtypes_in_category<category::my_cat, my::A>
+  struct vtypes<my::A>
   {
     // A native type.
     typedef int            foo_type;
@@ -109,12 +98,16 @@ namespace my
   // Forward declaration.
   struct B;
 
-  // Warning, this sugar might be removed in the future.
-  stc_set_super(B, A);
+  // Set super type.
+  template<>
+  struct set_super_type<B>
+  {
+    typedef A ret;
+  };
 
   /// Types associated to my::B.
   template <>
-  struct vtypes_in_category<category::my_cat, B>
+  struct vtypes<B>
   {
     // (foo is left untouched.)
 
@@ -128,12 +121,12 @@ namespace my
 
   /// An extended type associated to my::B.
   template <>
-  struct ext_vtype_in_category<category::my_cat, B, typedef_::yin_type>
+  struct single_vtype<B, typedef_::yin_type>
   {
     typedef unsigned long ret;
   };
 
-  struct B : public stc_get_supers(B)
+  struct B : public A
   {
     // Aliases.
     typedef my_type_of_(B, foo)  foo_type;
@@ -155,13 +148,16 @@ namespace my
   // from B's vtypes (see the specialization
   // types<category::my_cat, Z>).
 
-  // Warning, this sugar might be removed in the future.
   /// Link to B (``pseudo'' inheritance).
-  stc_set_pseudosuper(Z, B);
+  template<>
+  struct set_super_type<Z>
+  {
+    typedef B ret;
+  };
 
   /// Types associated to my::Z.
   template <>
-  struct vtypes_in_category<category::my_cat, Z>
+  struct vtypes<Z>
   {
     // A type defined only here (and not in the super class).
     typedef double zorg_type;

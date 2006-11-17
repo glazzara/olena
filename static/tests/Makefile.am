@@ -17,11 +17,9 @@ check_PROGRAMS =				\
   entry						\
   exact						\
   find_exact					\
-  multiple-supers				\
   super						\
   vtypes					\
   vtypes-and-exact				\
-  vtypes-multiple-supers			\
 						\
   tour
 
@@ -29,12 +27,13 @@ any_SOURCES                    = any.cc
 entry_SOURCES                  = entry.cc
 exact_SOURCES                  = exact.cc
 find_exact_SOURCES             = find_exact.cc
-multiple_supers_SOURCES        = multiple-supers.cc
 super_SOURCES                  = super.cc
 vtypes_SOURCES                 = vtypes.cc
 vtypes_and_exact_SOURCES       = vtypes-and-exact.cc
-vtypes_multiple_supers_SOURCES = vtypes-multiple-supers.cc
 
 tour_SOURCES = tour.cc
+
+# Old tests.
+EXTRA_DIST = multiple-supers.cc vtypes-multiple-supers.cc
 
 TESTS = $(check_PROGRAMS)

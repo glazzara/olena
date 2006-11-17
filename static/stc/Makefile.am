@@ -10,3 +10,6 @@ nobase_stc_HEADERS =				\
   valist_aggregator.hh				\
 						\
   internal/extract_vtype_from_list.hh
+
+# Old code.
+EXTRA_DIST = was.scoop.hh

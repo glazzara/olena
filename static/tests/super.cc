@@ -56,10 +56,14 @@ namespace my
   // Forward declaration.
   struct B;
 
-  // Warning, this sugar might be removed in the future.
-  stc_set_super(B, A);
+  // Set super type.
+  template<>
+  struct set_super_type<B>
+  {
+    typedef A ret;
+  };
 
-  struct B : public stc_get_supers(B)
+  struct B : public A
   {
   };
 
@@ -76,9 +80,12 @@ namespace my
      simple test, but it doesn't matter: we are only checking the
      super relationship here.  */
 
-  // Warning, this sugar might be removed in the future.
   /// Link to B (``pseudo'' inheritance).
-  stc_set_pseudosuper(C, B);
+  template<>
+  struct set_pseudosuper_type<C>
+  {
+    typedef B ret;
+  };
 
   struct C // no inheritance
   {
