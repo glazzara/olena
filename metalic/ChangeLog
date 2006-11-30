@@ -1,3 +1,7 @@
+2006-11-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/uint.hh: Fix inheritance.
+
 2006-11-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add spaces in macros to please icpc.

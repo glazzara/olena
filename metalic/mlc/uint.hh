@@ -28,7 +28,7 @@
 #ifndef MLC_UINT_HH
 # define MLC_UINT_HH
 
-# include <mlc/bool.hh>
+# include <mlc/bexpr.hh>
 
 
 namespace mlc
@@ -37,27 +37,27 @@ namespace mlc
   // FIXME: doc and complete code...
 
   template <unsigned lvalue, unsigned rvalue>
-  struct uint_equal_ : public bool_<( lvalue == rvalue )>
+  struct uint_equal_ : public bexpr_<( lvalue == rvalue )>
   {};
 
   template <unsigned lvalue, unsigned rvalue>
-  struct uint_not_equal_ : public bool_<( lvalue != rvalue )>
+  struct uint_not_equal_ : public bexpr_<( lvalue != rvalue )>
   {};
 
   template <unsigned lvalue, unsigned rvalue>
-  struct uint_greater_ : public bool_<( lvalue > rvalue )>
+  struct uint_greater_ : public bexpr_<( lvalue > rvalue )>
   {};
 
   template <unsigned lvalue, unsigned rvalue>
-  struct uint_greater_or_equal_ : public bool_<( lvalue >= rvalue )>
+  struct uint_greater_or_equal_ : public bexpr_<( lvalue >= rvalue )>
   {};
 
   template <unsigned lvalue, unsigned rvalue>
-  struct uint_less_ : public bool_<( lvalue < rvalue )>
+  struct uint_less_ : public bexpr_<( lvalue < rvalue )>
   {};
 
   template <unsigned lvalue, unsigned rvalue>
-  struct uint_less_or_equal_ : public bool_<( lvalue <= rvalue )>
+  struct uint_less_or_equal_ : public bexpr_<( lvalue <= rvalue )>
   {};
 
 
