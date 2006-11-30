@@ -1,3 +1,7 @@
+2006-11-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* stc/scoop.hh (stc_scoop_equipment_for_namespace): Rewrite.
+
 2006-11-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	Catch up with the new SCOOP 2 implementation.
