@@ -1,3 +1,7 @@
+2006-12-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	* stc/scoop.hh: Convert to Unix line terminators.
+
 2006-11-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* stc/scoop.hh (stc_scoop_equipment_for_namespace): Rewrite.
