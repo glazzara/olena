@@ -61,7 +61,7 @@ namespace oln
     template <typename E>
     class bbox_bkd_piter : public abstract::iterator_on_points<E>
     {
-      typedef oln_type_of(E, point) point_t;
+      typedef oln_vtype(E, point) point_t;
 
     public:
     
@@ -95,7 +95,7 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    bbox_bkd_piter<E>::bbox_bkd_piter(const bbox_<oln_type_of(E, point)>& bb)
+    bbox_bkd_piter<E>::bbox_bkd_piter(const bbox_<oln_vtype(E, point)>& bb)
       : p_(),
 	bb_(bb)
     {
@@ -104,7 +104,7 @@ namespace oln
     }
     
     template <typename E>
-    const bbox_<oln_type_of(E, point)>&
+    const bbox_<oln_vtype(E, point)>&
     bbox_bkd_piter<E>::bbox() const
     {
       return bb_;
@@ -122,7 +122,7 @@ namespace oln
     void
     bbox_bkd_piter<E>::impl_next()
     {
-      typedef oln_type_of(E, point) point_t;
+      typedef oln_vtype(E, point) point_t;
       invariant(implies(p_ != nop_, bb_.has(p_)));
       for (int i = point_t::n - 1; i >= 0; --i)
 	if (p_[i] == bb_.pmin(i))
@@ -153,14 +153,14 @@ namespace oln
     }
 
     template <typename E>
-    oln_type_of(E, point)
+    oln_vtype(E, point)
     bbox_bkd_piter<E>::impl_to_point() const
     {
       return p_;
     }
 
     template <typename E>
-    const oln_type_of(E, point)*
+    const oln_vtype(E, point)*
     bbox_bkd_piter<E>::impl_point_adr() const
     {
       return &p_;

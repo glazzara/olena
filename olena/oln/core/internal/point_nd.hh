@@ -72,8 +72,8 @@ namespace oln
   struct vtypes< internal::point_nd<E> >
   {
   private:
-    typedef oln_dim(E)   dim_t;
-    typedef oln_coord(E) coord_t;
+    typedef oln_deferred_vtype(E, dim)   dim_t;
+    typedef oln_deferred_vtype(E, coord) coord_t;
   public:
     typedef xtd::vec<mlc_value(dim_t), coord_t> vec_type;
   };
@@ -124,9 +124,7 @@ namespace oln
       point_nd(const vec_t& v);
 
       /// Dtor.
-      ~point_nd()
-      {
-      }
+      ~point_nd();
 
       vec_t v_;
     };
@@ -221,9 +219,9 @@ namespace oln
       v_(v)
     {}
 
-//     template <typename E>
-//     point_nd<E>::~point_nd()
-//     {}
+    template <typename E>
+    point_nd<E>::~point_nd()
+    {}
 
 # endif
 
@@ -256,10 +254,10 @@ namespace oln
   : where_< mlc::and_< mlc_is_a(P, internal::point_nd),
 		       mlc_is_a(D, internal::dpoint_nd) > >
   {
-    typedef oln_type_of(P, coord) P_coord;
-    typedef oln_type_of(D, coord) D_coord;
+    typedef oln_vtype(P, coord) P_coord;
+    typedef oln_vtype(D, coord) D_coord;
     typedef xtd_op_plus_trait(P_coord, D_coord) coord;
-    typedef oln_type_of(P, dim) dim;
+    typedef oln_vtype(P, dim) dim;
     typedef typename point_<mlc_value(dim), coord>::ret ret;
   };
 
@@ -271,10 +269,10 @@ namespace oln
   : where_< mlc::and_< mlc_is_a(P, internal::point_nd),
 		       mlc_is_a(D, internal::dpoint_nd) > >
   {
-    typedef oln_type_of(P, coord) P_coord;
-    typedef oln_type_of(D, coord) D_coord;
+    typedef oln_vtype(P, coord) P_coord;
+    typedef oln_vtype(D, coord) D_coord;
     typedef xtd_op_minus_trait(P_coord, D_coord) coord;
-    typedef oln_type_of(P, dim) dim;
+    typedef oln_vtype(P, dim) dim;
     typedef typename point_<mlc_value(dim), coord>::ret ret;
   };
 
@@ -286,10 +284,10 @@ namespace oln
   : where_< mlc::and_< mlc_is_a(P1, internal::point_nd),
 		       mlc_is_a(P2, internal::point_nd) > >
   {
-    typedef oln_type_of(P1, coord) P1_coord;
-    typedef oln_type_of(P2, coord) P2_coord;
+    typedef oln_vtype(P1, coord) P1_coord;
+    typedef oln_vtype(P2, coord) P2_coord;
     typedef xtd_op_minus_trait(P1_coord, P2_coord) coord;
-    typedef oln_type_of(P1, dim) dim;
+    typedef oln_vtype(P1, dim) dim;
     typedef typename dpoint_<mlc_value(dim), coord>::ret ret;
   };
 

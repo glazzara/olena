@@ -44,7 +44,7 @@ namespace oln
     /// Specialization of oln::automatic::get_impl saving the user
     /// the need to specify the morpher type as tag.
     template < template <class> class abstraction, typename E >
-    class get_impl : public set_impl< abstraction, oln_type_of(E, morpher), E >
+    class get_impl : public set_impl< abstraction, oln_vtype(E, morpher), E >
     {
     };
 

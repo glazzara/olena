@@ -118,7 +118,7 @@ namespace oln
   {
     typedef topo_bbox_<point> self_t;
     typedef topology_entry<self_t> super_t;
-    typedef oln_type_of(self_t, bbox) bbox_t;
+    typedef oln_vtype(self_t, bbox) bbox_t;
 
   public:
 

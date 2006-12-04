@@ -39,6 +39,11 @@ namespace oln
   template <typename E> struct point_set_entry;
 
 
+  template <typename E>
+  struct set_super_type< point_set_entry<E> >
+  {
+    typedef mlc::none ret;
+  };
 
 
   /// Virtual types associated to point_set_entry<E>.
@@ -46,20 +51,20 @@ namespace oln
   template <typename E>
   struct vtypes< point_set_entry<E> >
   {
-    typedef mlc::undefined point_type;
+    typedef stc::abstract point_type;
 
-    typedef mlc::undefined fwd_piter_type;
-    typedef mlc::undefined bkd_piter_type;
+    typedef stc::abstract fwd_piter_type;
+    typedef stc::abstract bkd_piter_type;
 
     typedef mlc::none      bbox_type;
-    typedef mlc::undefined is_random_accessible_type;
-    typedef mlc::undefined has_known_size_type;
-    typedef mlc::undefined is_connected_type;
+    typedef stc::abstract is_random_accessible_type;
+    typedef stc::abstract has_known_size_type;
+    typedef stc::abstract is_connected_type;
 
     // final.
-    typedef oln_deduce(E, point, coord) coord_type;
-    typedef oln_deduce(E, point, grid)  grid_type;
-    typedef oln_deduce(E, point, dim)   dim_type;
+    typedef oln_deduce_vtype(E, point, coord) coord_type;
+    typedef oln_deduce_vtype(E, point, grid)  grid_type;
+    typedef oln_deduce_vtype(E, point, dim)   dim_type;
     typedef oln_fwd_piter(E)            piter_type;
   };
 

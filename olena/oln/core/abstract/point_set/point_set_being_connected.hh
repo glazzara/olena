@@ -166,9 +166,9 @@ namespace oln
   template <typename E>
   struct case_ < point_set_hierarchy_wrt_connectivity, E, 1 >
     : where_< mlc::and_list_<
-        mlc::neq_< oln_type_of(E, bbox), mlc::none >,
-        mlc::eq_< oln_type_of(E, is_connected), mlc::true_ >,
-        mlc::eq_< oln_type_of(E, grid), grid1d >
+        mlc::neq_< oln_vtype(E, bbox), mlc::none >,
+        mlc::eq_< oln_vtype(E, is_connected), mlc::true_ >,
+        mlc::eq_< oln_vtype(E, grid), grid1d >
       > >
   {
     typedef abstract::point_set_being_1d_connected<E> ret;
@@ -177,9 +177,9 @@ namespace oln
   template <typename E>
   struct case_ < point_set_hierarchy_wrt_connectivity, E, 2 >
     : where_< mlc::and_list_<
-        mlc::neq_< oln_type_of(E, bbox), mlc::none >,
-        mlc::eq_< oln_type_of(E, is_connected), mlc::true_ >,
-        mlc::eq_< oln_type_of(E, grid), grid2d >
+        mlc::neq_< oln_vtype(E, bbox), mlc::none >,
+        mlc::eq_< oln_vtype(E, is_connected), mlc::true_ >,
+        mlc::eq_< oln_vtype(E, grid), grid2d >
       > >
   {
     typedef abstract::point_set_being_2d_connected<E> ret;
@@ -188,9 +188,9 @@ namespace oln
   template <typename E>
   struct case_ < point_set_hierarchy_wrt_connectivity, E, 3 >
     : where_< mlc::and_list_<
-        mlc::neq_< oln_type_of(E, bbox), mlc::none >,
-        mlc::eq_< oln_type_of(E, is_connected), mlc::true_ >,
-        mlc::eq_< oln_type_of(E, grid), grid3d >
+        mlc::neq_< oln_vtype(E, bbox), mlc::none >,
+        mlc::eq_< oln_vtype(E, is_connected), mlc::true_ >,
+        mlc::eq_< oln_vtype(E, grid), grid3d >
       > >
   {
     typedef abstract::point_set_being_3d_connected<E> ret;

@@ -56,7 +56,7 @@ namespace oln
       public virtual stc::any__simple<E>
     {
     private:
-      typedef oln_type_of(E, bbox) bbox_t;
+      typedef oln_vtype(E, bbox) bbox_t;
 
     public:
 

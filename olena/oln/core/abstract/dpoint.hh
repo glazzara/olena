@@ -50,14 +50,22 @@ namespace oln
   namespace abstract { template <typename E> class dpoint; }
 
 
+  template <typename E>
+  struct set_super_type< abstract::dpoint<E> >
+  {
+    typedef mlc::none ret;
+  };
+
+
   /// Virtual types associated to abstract::dpoint<E>.
   template <typename E>
   struct vtypes< abstract::dpoint<E> >
   {
-    typedef mlc::undefined grid_type;
-    typedef mlc::undefined point_type;
-    typedef mlc::undefined coord_type;
-    typedef mlc::undefined dim_type;
+    // FIXME: Prefer to use final<deduce..> when possible.
+    typedef stc::abstract grid_type;
+    typedef stc::abstract point_type;
+    typedef stc::abstract coord_type;
+    typedef stc::abstract dim_type;
   };
 
 
@@ -123,10 +131,10 @@ namespace oln
 
 //     template <typename E>
 //     dpoint<E>::~dpoint() {
-//       mlc::assert_defined_< oln_type_of(E, grid)  >::check();
-//       mlc::assert_defined_< oln_type_of(E, point) >::check();
-//       mlc::assert_defined_< oln_type_of(E, coord) >::check();
-//       mlc::assert_defined_< oln_type_of(E, dim)   >::check();
+//       mlc::assert_defined_< oln_vtype(E, grid)  >::check();
+//       mlc::assert_defined_< oln_vtype(E, point) >::check();
+//       mlc::assert_defined_< oln_vtype(E, coord) >::check();
+//       mlc::assert_defined_< oln_vtype(E, dim)   >::check();
 //     }
 
 # endif

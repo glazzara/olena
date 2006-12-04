@@ -34,7 +34,7 @@
 template <typename I>
 unsigned npoints(const oln::abstract::image<I>& input)
 {
-  oln_type_of(I, piter) p(input.topo());
+  oln_vtype(I, piter) p(input.topo());
   unsigned count = 0;
   for_all(p)
     ++count;

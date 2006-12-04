@@ -52,8 +52,8 @@ namespace oln
       public virtual image<E>,
       public automatic::get_impl< image_being_value_wise_random_accessible, E >
     {
-      typedef oln_type_of(E, value) value_t;
-      typedef oln_type_of(E, value_proxy) value_proxy_t;
+      typedef oln_vtype(E, value) value_t;
+      typedef oln_vtype(E, value_proxy) value_proxy_t;
 
     public:
       /// Get a (read-only) value descriptor from a value.
@@ -75,8 +75,8 @@ namespace oln
       public virtual image_being_value_wise_random_accessible<E>,
       public automatic::get_impl< mutable_image_being_value_wise_random_accessible, E >
     {
-      typedef oln_type_of(E, value) value_t;
-      typedef oln_type_of(E, mutable_value_proxy) mutable_value_proxy_t;
+      typedef oln_vtype(E, value) value_t;
+      typedef oln_vtype(E, mutable_value_proxy) mutable_value_proxy_t;
 
     public:
       using image_being_value_wise_random_accessible<E>::value;
@@ -133,8 +133,8 @@ namespace oln
   /// With mutable value-wise random accessibility.
   template <typename E>
   struct case_< image_hierarchy_wrt_value_wise_accessibility, E, 1 > :
-    where_< mlc_and( mlc_is_ok(oln_type_of(E, fwd_viter)),
-		     mlc_is_ok(oln_type_of(E, mutable_value_proxy)) ) >
+    where_< mlc_and( mlc_is_ok(oln_find_vtype(E, fwd_viter)),
+		     mlc_is_ok(oln_find_vtype(E, mutable_value_proxy)) ) >
   {
     typedef abstract::mutable_image_being_value_wise_random_accessible<E> ret;
   };
@@ -142,7 +142,7 @@ namespace oln
   /// With (constant) value-wise random accessibility.
   template <typename E>
   struct case_< image_hierarchy_wrt_value_wise_accessibility, E, 2 > :
-    where_< mlc_is_ok(oln_type_of(E, fwd_viter)) >
+    where_< mlc_is_ok(oln_find_vtype(E, fwd_viter)) >
   {
     typedef abstract::image_being_value_wise_random_accessible<E> ret;
   };

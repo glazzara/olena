@@ -54,10 +54,10 @@ namespace oln
   template <typename piter_t, typename isubset_t>
   struct vtypes< piter_isubset_<piter_t, isubset_t> >
   {
-    typedef oln_type_of(piter_t, point) point_type;
-    typedef oln_type_of(piter_t, grid)  grid_type;
+    typedef oln_vtype(piter_t, point) point_type;
+    typedef oln_vtype(piter_t, grid)  grid_type;
 
-    typedef topo_add_isubset<oln_type_of(piter_t, topo), isubset_t> topo_type;
+    typedef topo_add_isubset<oln_vtype(piter_t, topo), isubset_t> topo_type;
   };
 
 
@@ -69,8 +69,8 @@ namespace oln
     typedef piter_isubset_<piter_t, isubset_t> self_t;
     typedef abstract::iterator_on_points<self_t> super_t;
 
-    typedef oln_type_of(self_t, topo)  topo_t;
-    typedef oln_type_of(self_t, point) point_t;
+    typedef oln_vtype(self_t, topo)  topo_t;
+    typedef oln_vtype(self_t, point) point_t;
 
   public:
     

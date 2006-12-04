@@ -103,7 +103,7 @@ namespace oln
       super_t(image),
       topo_(image.topo(), isubset)
     {
-      // mlc::assert_equal_<oln_type_of(Image, grid), oln_type_of(Isubset, grid)>::check();
+      // mlc::assert_equal_<oln_vtype(Image, grid), oln_vtype(Isubset, grid)>::check();
       // FIXME: check that Image is without a isubset
     }
 
@@ -144,7 +144,7 @@ namespace oln
   operator | (const abstract::image<I>& image,
 	      const abstract::binary_image<S>& isubset)
   {
-    mlc::assert_equal_<oln_type_of(I, grid), oln_type_of(S, grid)>::check();
+    mlc::assert_equal_<oln_vtype(I, grid), oln_vtype(S, grid)>::check();
     // FIXME: check that Image does not have yet a subset
     morpher::add_isubset<I, S> tmp(image.exact(), isubset.exact());
     return tmp;

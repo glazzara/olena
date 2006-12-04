@@ -54,8 +54,8 @@ namespace oln
       public virtual stc::any__simple<E>
     {
     public:
-      typedef oln_type_of(E, value) value_type;
-      typedef oln_type_of(E, fwd_viter) fwd_viter_type;
+      typedef oln_vtype(E, value) value_type;
+      typedef oln_vtype(E, fwd_viter) fwd_viter_type;
 
     public:
       fwd_viter_type impl_value(const value_type& v) const;
@@ -70,8 +70,8 @@ namespace oln
       public virtual stc::any__simple<E>
     {
     public:
-      typedef oln_type_of(E, value) value_type;
-      typedef oln_type_of(E, fwd_viter) fwd_viter_type;
+      typedef oln_vtype(E, value) value_type;
+      typedef oln_vtype(E, fwd_viter) fwd_viter_type;
 
     public:
       fwd_viter_type impl_value(const value_type& v);

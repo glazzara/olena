@@ -44,9 +44,16 @@ namespace oln
 
 
   template <typename dpoint>
+  struct set_super_type< window_<dpoint> >
+  {
+    typedef abstract::window< window_<dpoint> > ret;
+  };
+
+
+  template <typename dpoint>
   struct vtypes< window_<dpoint> >
   {
-    typedef oln_type_of(dpoint, grid) grid_type;
+    typedef oln_vtype(dpoint, grid) grid_type;
   };
 
 

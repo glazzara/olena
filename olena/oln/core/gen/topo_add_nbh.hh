@@ -54,7 +54,7 @@ namespace oln
   struct vtypes< topo_add_nbh<topo, nbh> >
   {
     typedef nbh neighborhood_type;
-    typedef topo delegated_type;
+    typedef topo delegatee_type;
   };
 
 

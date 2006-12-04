@@ -50,7 +50,7 @@ namespace oln
       public automatic::get_impl<image_having_neighborhood, E>
     {
     private:
-      typedef oln_type_of(E, neighborhood) neighborhood_t;
+      typedef oln_vtype(E, neighborhood) neighborhood_t;
 
     public:
 
@@ -106,7 +106,7 @@ namespace oln
   /// With neighborhood.
   template <typename E>
   struct case_< image_hierarchy_wrt_neighborhood, E, 1 > :
-    where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::not_found > >
+    where_< mlc::neq_< oln_find_vtype(E, neighborhood), mlc::not_found > >
   {
     typedef abstract::image_having_neighborhood<E> ret;
   };

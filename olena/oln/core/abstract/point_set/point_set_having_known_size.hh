@@ -73,7 +73,7 @@ namespace oln
 
   template <typename E>
   struct case_ < point_set_hierarchy_wrt_known_size, E, 1 >
-    : where_< mlc::eq_< oln_type_of(E, has_known_size), mlc::true_ > >
+    : where_< mlc::eq_< oln_vtype(E, has_known_size), mlc::true_ > >
   {
     typedef abstract::point_set_having_known_size<E> ret;
   };

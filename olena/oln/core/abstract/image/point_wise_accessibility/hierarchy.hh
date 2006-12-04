@@ -49,7 +49,7 @@ namespace oln
       public virtual image<E>,
       public automatic::get_impl< image_being_point_wise_random_accessible, E >
     {
-      typedef oln_type_of(E, point) point_t;
+      typedef oln_vtype(E, point) point_t;
 
     public:
 
@@ -98,7 +98,7 @@ namespace oln
   /// With point-wise accessibility.
   template <typename E>
   struct case_< image_hierarchy_wrt_point_wise_accessibility, E, 1 > :
-    where_< mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ > >
+    where_< mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ > >
   {
     typedef abstract::image_being_point_wise_random_accessible<E> ret;
   };

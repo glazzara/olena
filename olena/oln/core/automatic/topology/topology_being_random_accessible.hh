@@ -57,7 +57,7 @@ namespace oln
       public virtual stc::any__simple<E>
     {
     private:
-      typedef oln_type_of(E, point) point_t;
+      typedef oln_vtype(E, point) point_t;
 
     public:
 

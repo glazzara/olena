@@ -66,7 +66,7 @@
                                 (a concrete image)
 
 
-  Default case: If no known value type is returned by `oln_type_of(I, value)',
+  Default case: If no known value type is returned by `oln_vtype(I, value)',
   the entry is plugged to abstract::data_image<I>.  */
 
 
@@ -103,7 +103,7 @@ namespace oln
   /// Binary case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 1 > :
-    where_< value::is_binary<oln_type_of(E, value)> >
+    where_< value::is_binary<oln_vtype(E, value)> >
   {
     // Definition of the super class corresponding to this case.
     typedef abstract::binary_image<E> ret;
@@ -112,7 +112,7 @@ namespace oln
   /// Color case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 2 > :
-    where_< value::is_color<oln_type_of(E, value)> >
+    where_< value::is_color<oln_vtype(E, value)> >
   {
     // Definition of the super class corresponding to this case.
     typedef abstract::color_image<E> ret;
@@ -121,7 +121,7 @@ namespace oln
   /// Grey-level case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 3 > :
-    where_< value::is_grey_level<oln_type_of(E, value)> >
+    where_< value::is_grey_level<oln_vtype(E, value)> >
   {
     // Definition of the super class corresponding to this case.
     typedef abstract::grey_level_image<E> ret;
@@ -130,7 +130,7 @@ namespace oln
   /// Label case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 4 > :
-    where_< value::is_label<oln_type_of(E, value)> >
+    where_< value::is_label<oln_vtype(E, value)> >
   {
     // Definition of the super class corresponding to this case.
     typedef abstract::label_image<E> ret;

@@ -75,8 +75,8 @@ namespace oln
                             (client)
 
 
-         The D parameter is the delegated type.  If there is no
-	 delegated type (i.e. D = mlc::none), get_image_impl inherits
+         The D parameter is the delegatee type.  If there is no
+	 delegatee type (i.e. D = mlc::none), get_image_impl inherits
 	 from oln::any_best_speed (trough get_image_impl_helper);
 	 otherwise, get_image_impl is plugged to set_image_impl, a
 	 class than can be specialized by the user.
@@ -91,7 +91,7 @@ namespace oln
       // Entry point.
       template <typename A, typename E>
       struct get_image_impl :
-	public get_image_impl_helper <A, oln_type_of(E, delegated), E>
+	public get_image_impl_helper <A, oln_vtype(E, delegatee), E>
       {
       };
 
@@ -120,7 +120,7 @@ namespace oln
       struct image_impl	:
 	public virtual oln::abstract::any_best_speed<E>
       {
-	typedef oln_type_of(E, delegated) D;
+	typedef oln_vtype(E, delegatee) D;
 	D& delegate() { return this->exact().impl_delegate(); }
 	const D& delegate() const { return this->exact().impl_delegate(); }
       };

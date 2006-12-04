@@ -183,7 +183,7 @@ namespace oln
   struct single_vtype< morpher::add_isubset<Image, Isubset>,
 		       typedef_::fwd_piter_type >
   {
-    typedef piter_isubset_<oln_type_of(Image, fwd_piter), Isubset> ret;
+    typedef piter_isubset_<oln_vtype(Image, fwd_piter), Isubset> ret;
   };
   
   /// bkd_piter vtype on morpher::add_isubset.
@@ -191,7 +191,7 @@ namespace oln
   struct single_vtype< morpher::add_isubset<Image, Isubset>,
 		       typedef_::bkd_piter_type >
   {
-    typedef piter_isubset_<oln_type_of(Image, bkd_piter), Isubset> ret;
+    typedef piter_isubset_<oln_vtype(Image, bkd_piter), Isubset> ret;
   };
 
 
@@ -202,7 +202,7 @@ namespace oln
   struct single_vtype< morpher::add_isubset<Image, Isubset>,
 		       typedef_::fwd_qiter_type >
   {
-    typedef piter_isubset_<oln_type_of(Image, fwd_qiter), Isubset> ret;
+    typedef piter_isubset_<oln_vtype(Image, fwd_qiter), Isubset> ret;
   };
   
   /// bkd_qiter vtype on morpher::add_isubset.
@@ -210,7 +210,7 @@ namespace oln
   struct single_vtype< morpher::add_isubset<Image, Isubset>,
 		       typedef_::bkd_qiter_type >
   {
-    typedef piter_isubset_<oln_type_of(Image, bkd_qiter), Isubset> ret;
+    typedef piter_isubset_<oln_vtype(Image, bkd_qiter), Isubset> ret;
   };
 
 
@@ -221,7 +221,7 @@ namespace oln
   struct single_vtype< morpher::add_isubset<Image, Isubset>,
 		       typedef_::fwd_niter_type >
   {
-    typedef piter_isubset_<oln_type_of(Image, fwd_niter), Isubset> ret;
+    typedef piter_isubset_<oln_vtype(Image, fwd_niter), Isubset> ret;
   };
   
   /// bkd_niter vtype on morpher::add_isubset.
@@ -229,7 +229,7 @@ namespace oln
   struct single_vtype< morpher::add_isubset<Image, Isubset>,
 		       typedef_::bkd_niter_type >
   {
-    typedef piter_isubset_<oln_type_of(Image, bkd_niter), Isubset> ret;
+    typedef piter_isubset_<oln_vtype(Image, bkd_niter), Isubset> ret;
   };
 
 
@@ -254,7 +254,7 @@ namespace oln
 		       typedef_::fwd_niter_type >
   {
   private:
-    typedef oln_type_of(Image, point) point_t;
+    typedef oln_vtype(Image, point) point_t;
   public:
     typedef fwd_niter_neighb_<point_t> ret;
   };
@@ -265,7 +265,7 @@ namespace oln
 		       typedef_::bkd_niter_type >
   {
   private:
-    typedef oln_type_of(Image, point) point_t;
+    typedef oln_vtype(Image, point) point_t;
   public:
     typedef bkd_niter_neighb_<point_t> ret;
   };

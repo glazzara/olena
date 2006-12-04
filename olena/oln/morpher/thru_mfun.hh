@@ -59,7 +59,7 @@ namespace oln
   struct vtypes< morpher::thru_mfun<Image, Fun> >
   {
   private:
-    typedef oln_type_of(Image, rvalue)  old_value_type;
+    typedef oln_vtype(Image, rvalue)  old_value_type;
     typedef morpher::thru_mfun<Image, Fun> self_t;
   public:
     typedef mlc::false_ is_computed_type;

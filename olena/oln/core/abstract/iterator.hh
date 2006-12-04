@@ -35,6 +35,15 @@
 namespace oln
 {
 
+  namespace abstract { template <typename E> class iterator; }
+
+
+  template <typename E>
+  struct set_super_type< abstract::iterator<E> >
+  {
+    typedef mlc::none ret;
+  };
+
 
   namespace abstract
   {

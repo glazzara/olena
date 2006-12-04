@@ -51,7 +51,6 @@ namespace oln
   struct vtypes< image1d<T> >
   {
     typedef topo1d topo_type;
-    typedef grid1d grid_type;
 
     typedef point1d point_type;
 

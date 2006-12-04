@@ -32,30 +32,36 @@
 # include <oln/core/typedefs.hh>
 
 
-# define oln_type_of_(OlnType, Alias)					\
-   oln::direct_type_of_<OlnType, oln::typedef_:: Alias##_type>::ret
+# define oln_vtype_(OlnType, Alias) \
+   stc_vtype_(oln, OlnType, Alias)
 
 
-# define oln_type_of(OlnType, Alias)		\
-   typename oln_type_of_(OlnType, Alias)
+# define oln_vtype(OlnType, Alias) \
+   stc_vtype(oln, OlnType, Alias)
+
+# define oln_find_vtype(OlnType, Alias) \
+   stc_find_vtype(oln, OlnType, Alias)
 
 
 
-# define oln_deduce_type_of(OlnType, Alias1, Alias2)							\
-typename oln::direct_type_of_<typename oln::direct_type_of_<OlnType, oln::typedef_::Alias1##_type >::ret,	\
-			       oln::typedef_::Alias2##_type >::ret
+# define oln_deferred_vtype(OlnType, Alias) \
+   stc_deferred_vtype(oln, OlnType, Alias)
 
-# define oln_deduce(OlnType, Alias1, Alias2) \
-  oln_deduce_type_of(OlnType, Alias1, Alias2)
+# define oln_deduce_deferred_vtype(OlnType, Alias1, Alias2) \
+   stc_deduce_deferred_vtype(oln, OlnType, Alias1, Alias2)
+
+
+# define oln_deduce_vtype(OlnType, Alias1, Alias2) \
+   stc_deduce_vtype(oln, OlnType, Alias1, Alias2)
+
+# define oln_find_deduce_vtype(OlnType, Alias1, Alias2) \
+   stc_find_deduce_vtype(oln, OlnType, Alias1, Alias2)
 
 
 
 #define oln_virtual_typedef(Typedef) \
-  typedef oln_type_of(E, Typedef) Typedef
+  typedef oln_vtype(E, Typedef) Typedef
 
-
-// FIXME: Rec? The macro below is to ensure that static checks are removed during "Rec" tests.
-// #define oln_virtual_typedef(Typedef) typedef void Typedef
 
 
 #endif // ! OLN_CORE_MACROS_HH

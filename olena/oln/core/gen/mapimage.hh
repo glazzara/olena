@@ -48,7 +48,6 @@ namespace oln
   struct vtypes< mapimage<point_t, value_t> >
   {
     typedef topo_bbox_<point_t> topo_type;
-    typedef oln_type_of(point_t, grid) grid_type;
 
     typedef point_t point_type;
     
@@ -77,7 +76,7 @@ namespace oln
   class mapimage : public image_entry< mapimage<point_t, value_t> >
   {
     typedef mapimage<point_t, value_t> self_t;
-    typedef oln_type_of(self_t, topo) topo_t;
+    typedef oln_vtype(self_t, topo) topo_t;
 
   public:
 

@@ -78,8 +78,8 @@ namespace oln
       typedef value_cast<Image, Value> self_t;
       typedef internal::image_value_morpher<Image, self_t> super_t;
 
-      typedef oln_type_of(self_t, psite)  psite_t;
-      typedef oln_type_of(self_t, rvalue) rvalue_t;
+      typedef oln_vtype(self_t, psite)  psite_t;
+      typedef oln_vtype(self_t, rvalue) rvalue_t;
 
     public:
 

@@ -52,7 +52,7 @@ namespace oln
   template <typename E>
   struct vtypes< abstract::iterator_on_values<E> >
   {
-    typedef mlc::undefined value_type;
+    typedef stc::abstract value_type;
   };
 
 
@@ -64,7 +64,7 @@ namespace oln
     class iterator_on_values : public abstract::iterator<E>
     {
     public:
-      typedef oln_type_of(E, value) value_type;
+      typedef oln_vtype(E, value) value_type;
 
       value_type to_value() const;
 

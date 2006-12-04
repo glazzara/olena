@@ -62,7 +62,7 @@ namespace oln
     typedef bbox_<point_t> bbox_type;
 
     typedef mlc::true_ is_random_accessible_type;
-    typedef mlc::true_ has_know_size_type;
+    typedef mlc::true_ has_known_size_type;
     typedef mlc::true_ is_connected_type;
   };
 
@@ -80,9 +80,9 @@ namespace oln
   private:
     typedef point_set_entry<self_type> super_t;
 
-    typedef oln_type_of(point_t, coord) coord_t;
+    typedef oln_vtype(point_t, coord) coord_t;
 
-    typedef oln_type_of(point_t, dim) dim;
+    typedef oln_vtype(point_t, dim) dim;
     enum { n = mlc_value(dim) };
 
   public:

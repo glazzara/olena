@@ -44,7 +44,7 @@ namespace oln
       : public virtual topology<E>,
 	public automatic::get_impl<topology_having_subset, E>
     {
-      typedef oln_type_of(E, subset) subset_t;
+      typedef oln_vtype(E, subset) subset_t;
       
     public:
 
@@ -60,7 +60,7 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    const oln_type_of(E, subset)&
+    const oln_vtype(E, subset)&
     topology_having_subset<E>::subset() const
     {
       return this->exact().impl_subset();
@@ -78,7 +78,7 @@ namespace oln
 
   template <typename E>
   struct case_ < topology_hierarchy_wrt_subset, E, 1 >
-    : where_< mlc::neq_< oln_type_of(E, subset), mlc::none > >
+    : where_< mlc::neq_< oln_vtype(E, subset), mlc::none > >
   {
     typedef abstract::topology_having_subset<E> ret;
   };

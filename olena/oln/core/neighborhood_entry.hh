@@ -40,11 +40,18 @@ namespace oln
   template <typename E> struct neighborhood_entry;
 
 
+  template <typename E>
+  struct set_super_type< neighborhood_entry<E> >
+  {
+    typedef mlc::none ret;
+  };
+
+
   /// Virtual types associated to neighborhood_entry<E>.
   template <typename E>
   struct vtypes< neighborhood_entry<E> >
   {
-    typedef mlc::undefined grid_type;
+    typedef stc::abstract grid_type;
   };
 
 

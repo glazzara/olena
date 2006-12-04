@@ -38,7 +38,7 @@ main()
 {
   // Fill a 3D image using its iterator.
   oln::image3d<char> ima1(3, 3, 3);
-  oln_type_of_(oln::image3d<char>, piter) p1(ima1.topo());
+  oln_vtype_(oln::image3d<char>, piter) p1(ima1.topo());
   for_all(p1)
     ima1(p1) = 1;
 
@@ -56,7 +56,7 @@ main()
 
   // Add the three images.
   oln::image3d<long> sum(ima1.topo());
-  oln_type_of_(oln::image3d<long>, piter) p(sum.topo());
+  oln_vtype_(oln::image3d<long>, piter) p(sum.topo());
   for_all(p)
     sum(p) = ima1(p) + ima2(p) + ima3(p);
   // And check the sum.

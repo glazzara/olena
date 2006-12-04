@@ -55,8 +55,8 @@ namespace oln
   struct vtypes< internal::dpoint_nd<E> >
   {
   private:
-    typedef oln_dim(E)   dim_t;
-    typedef oln_coord(E) coord_t;
+    typedef oln_deferred_vtype(E, dim)   dim_t;
+    typedef oln_deferred_vtype(E, coord) coord_t;
   public:
     typedef xtd::vec<mlc_value(dim_t), coord_t> vec_type;
   };
@@ -72,7 +72,7 @@ namespace oln
       typedef dpoint_nd<E> self_t;
       typedef oln_dim(E) dim_t;
       typedef oln_coord(E) coord_t;
-    typedef xtd::vec< mlc_value(dim_t), coord_t> vec_t;
+      typedef xtd::vec< mlc_value(dim_t), coord_t> vec_t;
 
     public:
 

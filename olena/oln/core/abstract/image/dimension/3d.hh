@@ -72,8 +72,8 @@ namespace oln
     public:
       // Resolve an ambiguity w.r.t. impl_at().
       // FIXME: Too hacky!
-      using automatic::set_impl<abstract::image3d, oln_type_of(E, morpher), E>::impl_at;
-      using automatic::set_impl<abstract::mutable_image3d, oln_type_of(E, morpher), E>::impl_at;
+      using automatic::set_impl<abstract::image3d, oln_vtype(E, morpher), E>::impl_at;
+      using automatic::set_impl<abstract::mutable_image3d, oln_vtype(E, morpher), E>::impl_at;
 
       using image3d<E>::at;
 

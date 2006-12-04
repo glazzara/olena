@@ -61,7 +61,7 @@ namespace oln
     template <typename E>
     class bbox_fwd_piter : public abstract::iterator_on_points<E>
     {
-      typedef oln_type_of(E, point) point_t;
+      typedef oln_vtype(E, point) point_t;
 
     public:
     

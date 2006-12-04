@@ -174,9 +174,9 @@ namespace oln
   /// 1D case.
   template <typename E>
   struct case_< image_hybrid_hierarchy_wrt_classical, E, 1 > :
-    where_< mlc::and_list_< mlc::eq_< oln_type_of(E, grid), oln::grid1d >,
-			    mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ >,
-			    mlc::neq_< oln_deduce_type_of(E, topo, bbox), mlc::not_found >
+    where_< mlc::and_list_< mlc::eq_< oln_vtype(E, grid), oln::grid1d >,
+			    mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
+			    mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
                            >
            >
   {
@@ -187,9 +187,9 @@ namespace oln
   /// 2D case.
   template <typename E>
   struct case_< image_hybrid_hierarchy_wrt_classical, E, 2 > :
-    where_< mlc::and_list_< mlc::eq_< oln_type_of(E, grid), oln::grid2d >,
-			    mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ >,
-			    mlc::neq_< oln_deduce_type_of(E, topo, bbox), mlc::not_found >
+    where_< mlc::and_list_< mlc::eq_< oln_vtype(E, grid), oln::grid2d >,
+			    mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
+			    mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
                            >
            >
   {
@@ -200,9 +200,9 @@ namespace oln
   /// 3D case.
   template <typename E>
   struct case_< image_hybrid_hierarchy_wrt_classical, E, 3 > :
-    where_< mlc::and_list_< mlc::eq_< oln_type_of(E, grid), oln::grid3d >,
-			    mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ >,
-			    mlc::neq_< oln_deduce_type_of(E, topo, bbox), mlc::not_found >
+    where_< mlc::and_list_< mlc::eq_< oln_vtype(E, grid), oln::grid3d >,
+			    mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
+			    mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
                            >
            >
   {
@@ -213,8 +213,8 @@ namespace oln
   /// General case.
   template <typename E>
   struct case_< image_hybrid_hierarchy_wrt_classical, E, 4 > :
-    where_< mlc::and_< mlc::eq_< oln_deduce_type_of(E, topo, is_random_accessible), mlc::true_ >,
-		       mlc::neq_< oln_deduce_type_of(E, topo, bbox), mlc::not_found >
+    where_< mlc::and_< mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
+		       mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
                       >
            >
   {

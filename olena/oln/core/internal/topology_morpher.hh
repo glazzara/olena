@@ -42,17 +42,23 @@ namespace oln
 
   } // end of namespace oln::internal
 
+
+  /// Super type.
   template <typename Topo, typename E>
-  struct set_pseudosuper_type< internal::topology_morpher<Topo, E> >
+  struct set_super_type< internal::topology_morpher<Topo, E> >
   {
-    typedef Topo ret;
+    typedef topology_entry<E> ret;
   };
 
+
+  /// Vtypes.
   template <typename Topo, typename E>
   struct vtypes< internal::topology_morpher<Topo, E> >
   {
     typedef morpher::tag::identity morpher_type;
-    typedef Topo delegated_type;
+
+    /// Delegatee type.
+    typedef Topo delegatee_type;
   };
 
 

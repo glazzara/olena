@@ -81,14 +81,14 @@ namespace oln
   template <typename P>
   oln_coord(P) col(const abstract::point<P>& p)
   {
-    typedef oln_type_of(P, col_comp) comp_t;
+    typedef oln_vtype(P, col_comp) comp_t;
     return p.vec()[mlc_value(comp_t)];
   }
 
   template <typename P>
   oln_coord(P)& col(abstract::point<P>& p)
   {
-    typedef oln_type_of(P, col_comp) comp_t;
+    typedef oln_vtype(P, col_comp) comp_t;
     return p.vec()[mlc_value(comp_t)];
   }
 
@@ -97,14 +97,14 @@ namespace oln
   template <typename D>
   oln_coord(D) col(const abstract::dpoint<D>& p)
   {
-    typedef oln_type_of(D, col_comp) comp_t;
+    typedef oln_vtype(D, col_comp) comp_t;
     return p.vec()[mlc_value(comp_t)];
   }
 
   template <typename D>
   oln_coord(D)& col(abstract::dpoint<D>& p)
   {
-    typedef oln_type_of(D, col_comp) comp_t;
+    typedef oln_vtype(D, col_comp) comp_t;
     return p.vec()[mlc_value(comp_t)];
   }
 
@@ -113,7 +113,7 @@ namespace oln
   template <typename P>
   oln_coord(P) col(const abstract::iterator_on_points<P>& it)
   {
-    typedef oln_deduce_type_of(P, point, col_comp) comp_t;
+    typedef oln_deduce_vtype(P, point, col_comp) comp_t;
     return it.to_point().vec()[mlc_value(comp_t)];
   }
 
@@ -122,14 +122,14 @@ namespace oln
   template <typename Ps>
   oln_coord(Ps) min_col(const abstract::point_set_having_bbox<Ps>& ps)
   {
-    typedef oln_deduce_type_of(Ps, point, col_comp) comp_t;
+    typedef oln_deduce_vtype(Ps, point, col_comp) comp_t;
     return ps.pmin().vec()[mlc_value(comp_t)];
   }
 
   template <typename Ps>
   oln_coord(Ps) max_col(const abstract::point_set_having_bbox<Ps>& ps)
   {
-    typedef oln_deduce_type_of(Ps, point, col_comp) comp_t;
+    typedef oln_deduce_vtype(Ps, point, col_comp) comp_t;
     return ps.pmax().vec()[mlc_value(comp_t)];
   }
 
@@ -138,14 +138,14 @@ namespace oln
   template <typename I>
   oln_coord(I) min_col(const abstract::image_having_bbox<I>& ps)
   {
-    typedef oln_deduce_type_of(I, point, col_comp) comp_t;
+    typedef oln_deduce_vtype(I, point, col_comp) comp_t;
     return ps.pmin().vec()[mlc_value(comp_t)];
   }
 
   template <typename I>
   oln_coord(I) max_col(const abstract::image_having_bbox<I>& ps)
   {
-    typedef oln_deduce_type_of(I, point, col_comp) comp_t;
+    typedef oln_deduce_vtype(I, point, col_comp) comp_t;
     return ps.pmax().vec()[mlc_value(comp_t)];
   }
 

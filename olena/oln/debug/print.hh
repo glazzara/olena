@@ -73,7 +73,7 @@ namespace oln
       template <typename I>
       void print(const abstract::image<I>& input, std::ostream& ostr)
       {
-	oln_type_of(I, fwd_piter) p(input.topo());
+	oln_vtype(I, fwd_piter) p(input.topo());
 	for_all(p)
 	  ostr << p.to_point() << ':' << format(input(p)) << ' ';
       }

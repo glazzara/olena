@@ -125,7 +125,7 @@ namespace oln
   mlc_decl_typedef(neighborhood_type);
   mlc_decl_typedef(subset_type);
 
-  mlc_decl_typedef(delegated_type);
+  mlc_decl_typedef(delegated_type); // FIXME: soon obsolete
   mlc_decl_typedef(topo_type);
   mlc_decl_typedef(bbox_type);
 
@@ -168,85 +168,85 @@ namespace oln
 
 
 /// Shortcuts formed such as "oln_something(T) means
-/// oln_type_of(T, something)".
+/// oln_vtype(T, something)".
 /// \{
 
-# define oln_dim(T)   oln_type_of(T,  dim)
-# define oln_dim_(T)  oln_type_of_(T, dim)
+# define oln_dim(T)   oln_vtype(T,  dim)
+# define oln_dim_(T)  oln_vtype_(T, dim)
  
-# define oln_vec(T)   oln_type_of(T,  vec)
-# define oln_vec_(T)  oln_type_of_(T, vec)
+# define oln_vec(T)   oln_vtype(T,  vec)
+# define oln_vec_(T)  oln_vtype_(T, vec)
  
-# define oln_bbox(T)    oln_type_of(T,  bbox)
-# define oln_bbox_(T)   oln_type_of_(T, bbox)
+# define oln_bbox(T)    oln_vtype(T,  bbox)
+# define oln_bbox_(T)   oln_vtype_(T, bbox)
 
-# define oln_coord(T)   oln_type_of(T,  coord)
-# define oln_coord_(T)  oln_type_of_(T, coord)
+# define oln_coord(T)   oln_vtype(T,  coord)
+# define oln_coord_(T)  oln_vtype_(T, coord)
 
-# define oln_grid(T)    oln_type_of(T,  grid)
-# define oln_grid_(T)   oln_type_of_(T, grid)
+# define oln_grid(T)    oln_vtype(T,  grid)
+# define oln_grid_(T)   oln_vtype_(T, grid)
 
-# define oln_topo(T)    oln_type_of(T,  topo)
-# define oln_topo_(T)   oln_type_of_(T, topo)
+# define oln_topo(T)    oln_vtype(T,  topo)
+# define oln_topo_(T)   oln_vtype_(T, topo)
 
-# define oln_point(T)   oln_type_of(T,  point)
-# define oln_point_(T)  oln_type_of_(T, point)
+# define oln_point(T)   oln_vtype(T,  point)
+# define oln_point_(T)  oln_vtype_(T, point)
 
-# define oln_psite(T)   oln_type_of(T,  psite)
-# define oln_psite_(T)  oln_type_of_(T, psite)
+# define oln_psite(T)   oln_vtype(T,  psite)
+# define oln_psite_(T)  oln_vtype_(T, psite)
 
-# define oln_dpoint(T)  oln_type_of(T,  dpoint)
-# define oln_dpoint_(T) oln_type_of_(T, dpoint)
+# define oln_dpoint(T)  oln_vtype(T,  dpoint)
+# define oln_dpoint_(T) oln_vtype_(T, dpoint)
 
-# define oln_is_computed(T)   oln_type_of(T,  is_computed)
-# define oln_is_computed_(T)  oln_type_of_(T, is_computed)
+# define oln_is_computed(T)   oln_vtype(T,  is_computed)
+# define oln_is_computed_(T)  oln_vtype_(T, is_computed)
 
-# define oln_value(T)   oln_type_of(T,  value)
-# define oln_value_(T)  oln_type_of_(T, value)
+# define oln_value(T)   oln_vtype(T,  value)
+# define oln_value_(T)  oln_vtype_(T, value)
 
-# define oln_rvalue(T)   oln_type_of(T,  rvalue)
-# define oln_rvalue_(T)  oln_type_of_(T, rvalue)
+# define oln_rvalue(T)   oln_vtype(T,  rvalue)
+# define oln_rvalue_(T)  oln_vtype_(T, rvalue)
 
-# define oln_lvalue(T)   oln_type_of(T,  lvalue)
-# define oln_lvalue_(T)  oln_type_of_(T, lvalue)
+# define oln_lvalue(T)   oln_vtype(T,  lvalue)
+# define oln_lvalue_(T)  oln_vtype_(T, lvalue)
 
-# define oln_fwd_piter(T)  oln_type_of(T,  fwd_piter)
-# define oln_fwd_piter_(T) oln_type_of_(T, fwd_piter)
+# define oln_fwd_piter(T)  oln_vtype(T,  fwd_piter)
+# define oln_fwd_piter_(T) oln_vtype_(T, fwd_piter)
 
-# define oln_bkd_piter(T)  oln_type_of(T,  bkd_piter)
-# define oln_bkd_piter_(T) oln_type_of_(T, bkd_piter)
+# define oln_bkd_piter(T)  oln_vtype(T,  bkd_piter)
+# define oln_bkd_piter_(T) oln_vtype_(T, bkd_piter)
 
-# define oln_fwd_qiter(T)  oln_type_of(T,  fwd_qiter)
-# define oln_fwd_qiter_(T) oln_type_of_(T, fwd_qiter)
+# define oln_fwd_qiter(T)  oln_vtype(T,  fwd_qiter)
+# define oln_fwd_qiter_(T) oln_vtype_(T, fwd_qiter)
 
-# define oln_bkd_qiter(T)  oln_type_of(T,  bkd_qiter)
-# define oln_bkd_qiter_(T) oln_type_of_(T, bkd_qiter)
+# define oln_bkd_qiter(T)  oln_vtype(T,  bkd_qiter)
+# define oln_bkd_qiter_(T) oln_vtype_(T, bkd_qiter)
 
-# define oln_fwd_niter(T)  oln_type_of(T,  fwd_niter)
-# define oln_fwd_niter_(T) oln_type_of_(T, fwd_niter)
+# define oln_fwd_niter(T)  oln_vtype(T,  fwd_niter)
+# define oln_fwd_niter_(T) oln_vtype_(T, fwd_niter)
 
-# define oln_bkd_niter(T)  oln_type_of(T,  bkd_niter)
-# define oln_bkd_niter_(T) oln_type_of_(T, bkd_niter)
+# define oln_bkd_niter(T)  oln_vtype(T,  bkd_niter)
+# define oln_bkd_niter_(T) oln_vtype_(T, bkd_niter)
 
-# define oln_fwd_viter(T)  oln_type_of(T,  fwd_viter)
-# define oln_fwd_viter_(T) oln_type_of_(T, fwd_viter)
+# define oln_fwd_viter(T)  oln_vtype(T,  fwd_viter)
+# define oln_fwd_viter_(T) oln_vtype_(T, fwd_viter)
 
-# define oln_bkd_viter(T)  oln_type_of(T,  bkd_viter)
-# define oln_bkd_viter_(T) oln_type_of_(T, bkd_viter)
+# define oln_bkd_viter(T)  oln_vtype(T,  bkd_viter)
+# define oln_bkd_viter_(T) oln_vtype_(T, bkd_viter)
 
 /// Even shorter shortcuts.
 /// \{
-# define oln_piter(T)  oln_type_of(T,  fwd_piter)
-# define oln_piter_(T) oln_type_of_(T, fwd_piter)
+# define oln_piter(T)  oln_vtype(T,  fwd_piter)
+# define oln_piter_(T) oln_vtype_(T, fwd_piter)
 
-# define oln_qiter(T)  oln_type_of(T,  fwd_qiter)
-# define oln_qiter_(T) oln_type_of_(T, fwd_qiter)
+# define oln_qiter(T)  oln_vtype(T,  fwd_qiter)
+# define oln_qiter_(T) oln_vtype_(T, fwd_qiter)
 
-# define oln_niter(T)  oln_type_of(T,  fwd_niter)
-# define oln_niter_(T) oln_type_of_(T, fwd_niter)
+# define oln_niter(T)  oln_vtype(T,  fwd_niter)
+# define oln_niter_(T) oln_vtype_(T, fwd_niter)
 
-# define oln_viter(T)  oln_type_of(T,  fwd_viter)
-# define oln_viter_(T) oln_type_of_(T, fwd_viter)
+# define oln_viter(T)  oln_vtype(T,  fwd_viter)
+# define oln_viter_(T) oln_vtype_(T, fwd_viter)
 /// \}
 
 /// \}

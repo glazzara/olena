@@ -79,8 +79,8 @@ namespace oln
 	oln_virtual_typedef(point);
 
 	// FIXME: Rec?
-// 	oln_virtual_typedef(fwd_piter);
-// 	oln_virtual_typedef(bkd_piter);
+ 	oln_virtual_typedef(fwd_piter);
+ 	oln_virtual_typedef(bkd_piter);
 
  	oln_virtual_typedef(is_computed);
 	oln_virtual_typedef(value);
@@ -144,11 +144,11 @@ namespace oln
     image<E>::decl::decl()
     {
       // FIXME: Rec?
-//       mlc::assert_< mlc_is_a(topo,      abstract::topology)           >::check();
-//       mlc::assert_< mlc_is_a(grid,      abstract::grid)               >::check();
-//       mlc::assert_< mlc_is_a(point,     abstract::point)              >::check();
-//       mlc::assert_< mlc_is_a(fwd_piter, abstract::iterator_on_points) >::check();
-//       mlc::assert_< mlc_is_a(bkd_piter, abstract::iterator_on_points) >::check();
+      mlc::assert_< mlc_is_a(topo,      abstract::topology)           >::check();
+      mlc::assert_< mlc_is_a(grid,      abstract::grid)               >::check();
+      mlc::assert_< mlc_is_a(point,     abstract::point)              >::check();
+      mlc::assert_< mlc_is_a(fwd_piter, abstract::iterator_on_points) >::check();
+      mlc::assert_< mlc_is_a(bkd_piter, abstract::iterator_on_points) >::check();
 
       // FIXME: Rec?
       // mlc::assert_< mlc_is_a(plain,  abstract::image)              >::check();

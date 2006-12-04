@@ -38,10 +38,12 @@ main()
 {
   using namespace oln;
 
-  image2d<int> ima(1, 1);
+  typedef image2d<int> I;
+  I ima(1, 1);
   point2d p(0, 0);
 
   (ima + c4).at(0, 0) = 51;
+
   assert(ima(p) == 51);
 
   image1d<int> sig(1);

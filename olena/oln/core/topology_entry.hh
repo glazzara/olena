@@ -39,15 +39,22 @@ namespace oln
   template <typename E> struct topology_entry;
 
 
+  template <typename E>
+  struct set_super_type< topology_entry<E> >
+  {
+    typedef mlc::none ret;
+  };
+
+
   /// Virtual types associated to topology_entry<E>.
 
   template <typename E>
   struct vtypes< topology_entry<E> >
   {
-    typedef mlc::undefined point_type;
-    typedef mlc::undefined bbox_type;
+    typedef stc::abstract  point_type;
+    typedef stc::abstract  bbox_type;
     typedef mlc::none      neighborhood_type;
-    typedef mlc::undefined is_random_accessible_type;
+    typedef stc::abstract  is_random_accessible_type;
     typedef mlc::none      subset_type;
 
     typedef mlc::none      morpher_type;

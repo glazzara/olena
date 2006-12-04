@@ -42,29 +42,34 @@ namespace oln
   template <typename E> struct image_entry;
 
 
+  template <typename E>
+  struct set_super_type< image_entry<E> >
+  {
+    typedef mlc::none ret;
+  };
+
 
   /// Virtual types associated to image_entry<E>.
 
   template <typename E>
   struct vtypes< image_entry<E> >
   {
-    typedef mlc::undefined topo_type;
-    typedef mlc::undefined grid_type;
-    typedef mlc::undefined point_type;
-    typedef mlc::undefined is_computed_type;
-    typedef mlc::undefined value_type;
+    typedef stc::abstract topo_type;
 
-    typedef mlc::undefined fwd_piter_type;
-    typedef mlc::undefined bkd_piter_type;
+    typedef stc::abstract point_type;
+    typedef stc::final<oln_deduce_deferred_vtype(E, point, grid)>  grid_type;
+    typedef stc::final<oln_deduce_deferred_vtype(E, point, coord)> coord_type;
 
-    typedef mlc::undefined fwd_qiter_type;
-    typedef mlc::undefined bkd_qiter_type;
+    typedef stc::abstract is_computed_type;
+    typedef stc::abstract value_type;
 
-    // final definitions:
-    typedef oln_deduce(E, point, coord) coord_type;
-    typedef oln_fwd_piter(E)            piter_type;
+    typedef stc::abstract fwd_piter_type;
+    typedef stc::abstract bkd_piter_type;
 
-    // default definitions:
+    // FIXME: final definitions:
+    typedef oln_fwd_piter(E) piter_type;
+
+    // FIXME: default definitions:
     typedef oln_point(E) psite_type;
     typedef oln_value(E) rvalue_type;
 

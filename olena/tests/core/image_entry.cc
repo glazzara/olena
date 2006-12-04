@@ -57,21 +57,20 @@ namespace oln
   template<>
   struct vtypes<my::image>
   {
-    // The switch for image_dimension (above image_entry) plugs the
-    // inheritance relation to the right abstract::image_dimension
-    // class using the sole grid information (the grid can be seen
-    // here as a ``tag'').
-    typedef oln::grid2d grid_type;
-
     // Likewise, for the switch of image_typeness using the type of
     // the value of the image.
     typedef char value_type;
 
+    // The switch for image_dimension (above image_entry) plugs the
+    // inheritance relation to the right abstract::image_dimension
+    // class using the grid information fetched from the point type.
+    typedef point2d point_type;
+
     // FIXME: Dummy values.
     typedef topo2d topo_type;
-    typedef point2d point_type;
     typedef my::image concrete_type;
     typedef my::dummy morpher_type;
+    typedef mlc::true_ is_computed_type;
   };
 
   template<>

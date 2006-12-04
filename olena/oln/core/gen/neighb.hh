@@ -56,15 +56,17 @@ namespace oln
   template <typename dpoint>
   struct vtypes< neighb_<dpoint> >
   {
-    typedef oln_type_of(dpoint, grid) grid_type;
+    typedef oln_vtype(dpoint, grid) grid_type;
   };
 
+
+  struct FIXME_ERR;
 
 
   /// Abstract forward dpoint iterator class.
   template <typename dpoint>
   class neighb_ : public neighborhood_entry< neighb_<dpoint> >,
-		  private mlc::assert_< mlc_is_a(dpoint, abstract::dpoint) >
+		  private mlc::assert_< mlc_is_a(dpoint, abstract::dpoint), FIXME_ERR >
   {
     typedef neighb_<dpoint> self_t;
     typedef neighborhood_entry<self_t> super_t;

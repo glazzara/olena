@@ -44,7 +44,7 @@ namespace oln
       : public virtual topology<E>,
 	public automatic::get_impl<topology_having_neighborhood, E>
     {
-      typedef oln_type_of(E, neighborhood) neighborhood_t;
+      typedef oln_vtype(E, neighborhood) neighborhood_t;
       
     public:
 
@@ -64,14 +64,14 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    const oln_type_of(E, neighborhood)&
+    const oln_vtype(E, neighborhood)&
     topology_having_neighborhood<E>::neighborhood() const
     {
       return this->exact().impl_neighborhood();
     }
 
     template <typename E>
-    topology_having_neighborhood<E>::operator oln_type_of(E, neighborhood)() const
+    topology_having_neighborhood<E>::operator oln_vtype(E, neighborhood)() const
     {
       return this->neighborhood();
     }
@@ -89,7 +89,7 @@ namespace oln
 
   template <typename E>
   struct case_ < topology_hierarchy_wrt_neighborhood, E, 1 >
-    : where_< mlc::neq_< oln_type_of(E, neighborhood), mlc::none > >
+    : where_< mlc::neq_< oln_vtype(E, neighborhood), mlc::none > >
   {
     typedef abstract::topology_having_neighborhood<E> ret;
   };

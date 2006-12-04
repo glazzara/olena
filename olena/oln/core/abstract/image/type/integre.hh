@@ -97,9 +97,9 @@ namespace oln {
   /// Binary case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 5 > :
-    where_< mlc::or_list_< mlc::eq_<oln_type_of(E, value), ntg::bin>,
-			   ntg::eq_<ntg::int_u, 1, oln_type_of(E, value)>,
-			   ntg::eq_<ntg::int_s, 1, oln_type_of(E, value)> > >
+    where_< mlc::or_list_< mlc::eq_<oln_vtype(E, value), ntg::bin>,
+			   ntg::eq_<ntg::int_u, 1, oln_vtype(E, value)>,
+			   ntg::eq_<ntg::int_s, 1, oln_vtype(E, value)> > >
   {
     // Definition of the super class corresponding to this case.
     typedef abstract::binary_image<E> ret;
@@ -108,7 +108,7 @@ namespace oln {
   /// Grey-level case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 6 > :
-    where_< mlc_is_a( oln_type_of(E, value), ntg::real_value ) >
+    where_< mlc_is_a( oln_vtype(E, value), ntg::real_value ) >
   {
     // Definition of the super class corresponding to this case
     // (abstract::grey_level_image_ is the conjunction of
@@ -119,7 +119,7 @@ namespace oln {
   /// Label case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 7 > :
-    where_< mlc_is_a( oln_type_of(E, value), ntg::enum_value ) >
+    where_< mlc_is_a( oln_vtype(E, value), ntg::enum_value ) >
   {
     // Definition of the super class corresponding to this case
     // (abstract::label_image_ is the conjunction of
@@ -130,7 +130,7 @@ namespace oln {
   /// Color case.
   template <typename E>
   struct case_< image_hierarchy_wrt_type, E, 8 > :
-    where_< mlc_is_a( oln_type_of(E, value), ntg::color_value ) >
+    where_< mlc_is_a( oln_vtype(E, value), ntg::color_value ) >
   {
     // Definition of the super class corresponding to this case
     // (abstract::color_image_ is the conjunction of

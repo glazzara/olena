@@ -61,11 +61,11 @@ main()
   // same interfaces as the underlying morphed image.
   mlc::assert_< mlc_is_a_(image_with_nbh_t, oln::abstract::image2d) >::check();
   // Check the type of neighborhood.
-  mlc::assert_< mlc_eq(oln_type_of_(image_with_nbh_t, neighborhood),
+  mlc::assert_< mlc_eq(oln_vtype_(image_with_nbh_t, neighborhood),
 		       oln::neighb2d) >::check();
 
   // Instantiate a neighborhood for this image type.
-  oln_type_of_(image_with_nbh_t, neighborhood) nbh;
+  oln_vtype_(image_with_nbh_t, neighborhood) nbh;
   // Instantiate an object, and check its methods.
   image_with_nbh_t ima_with_nbh(ima, nbh);
   oln::neighb2d nbh2 = ima_with_nbh.neighborhood();

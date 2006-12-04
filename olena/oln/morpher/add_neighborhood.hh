@@ -58,7 +58,7 @@ namespace oln
   struct vtypes< morpher::add_neighborhood<Image, Neighb> >
   {
     // Topology type.
-    typedef topo_add_nbh< oln_type_of(Image, topo), Neighb > topo_type;
+    typedef topo_add_nbh< oln_vtype(Image, topo), Neighb > topo_type;
 
     // Neighborhood type.
     typedef Neighb neighborhood_type;
@@ -103,7 +103,7 @@ namespace oln
       super_t(image),
       topo_(image.topo(), nbh)
     {
-      mlc::assert_equal_<oln_type_of(Image, grid), oln_type_of(Neighb, grid)>::check();
+      mlc::assert_equal_<oln_vtype(Image, grid), oln_vtype(Neighb, grid)>::check();
       // FIXME: check that Image is without a nbh
     }
 
@@ -132,7 +132,7 @@ namespace oln
   operator + (const abstract::image<I>& image,
 	      const abstract::neighborhood<N>& nbh)
   {
-    mlc::assert_equal_<oln_type_of(I, grid), oln_type_of(N, grid)>::check();
+    mlc::assert_equal_<oln_vtype(I, grid), oln_vtype(N, grid)>::check();
     // FIXME: check that Image is without a nbh
     morpher::add_neighborhood<I, N> tmp(image.exact(), nbh.exact());
     return tmp;

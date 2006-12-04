@@ -105,14 +105,14 @@ namespace oln
   /// With computability.
   template <typename E>
   struct case_< image_hierarchy_wrt_computability, E, 1 > :
-    where_< mlc::eq_< oln_type_of(E, is_computed), mlc::true_ > >
+    where_< mlc::eq_< oln_vtype(E, is_computed), mlc::true_ > >
   {
     typedef abstract::computed_image<E> ret;
   };
 
   template <typename E>
   struct case_< image_hierarchy_wrt_computability, E, 2 > :
-    where_< mlc::eq_< oln_type_of(E, is_computed), mlc::false_ > >
+    where_< mlc::eq_< oln_vtype(E, is_computed), mlc::false_ > >
   {
     typedef abstract::plain_image<E> ret;
   };

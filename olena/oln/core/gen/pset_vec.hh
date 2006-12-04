@@ -61,7 +61,7 @@ namespace oln
     typedef bkd_piter_on_std_based_pset< std::vector<point_t> > bkd_piter_type;
 
     typedef mlc::false_ is_random_accessible_type;
-    typedef mlc::true_  has_know_size_type;
+    typedef mlc::true_  has_known_size_type;
     typedef mlc::false_ is_connected_type;
   };
 

@@ -34,6 +34,16 @@
 namespace oln
 {
 
+  namespace abstract { template <typename E> class window; }
+
+
+  template <typename E>
+  struct set_super_type< abstract::window<E> >
+  {
+    typedef mlc::none ret;
+  };
+
+
   namespace abstract
   {
 

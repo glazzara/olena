@@ -70,11 +70,11 @@ namespace oln
   {
     typedef bkd_viter_lut<Lut>                   self_t;
     typedef abstract::iterator_on_values<self_t> super_t;
-    typedef oln_type_of(self_t, lut_iter) lut_iter_t;
+    typedef oln_vtype(self_t, lut_iter) lut_iter_t;
 
   public:
-    typedef oln_type_of(self_t, lut) lut_type;
-    typedef oln_type_of(self_t, value) value_type;
+    typedef oln_vtype(self_t, lut) lut_type;
+    typedef oln_vtype(self_t, value) value_type;
 
   public:
     /// Construct a backward value iterator from a look-up table (LUT).

@@ -138,7 +138,7 @@ namespace oln
 
   template <typename E>
   struct case_ < point_set_hierarchy_wrt_bbox, E, 1 >
-    : where_< mlc::eq_< oln_type_of(E, bbox), E > >
+    : where_< mlc::eq_< oln_vtype(E, bbox), E > >
   {
     typedef abstract::bbox<E> ret;
   };
@@ -146,7 +146,7 @@ namespace oln
 
   template <typename E>
   struct case_ < point_set_hierarchy_wrt_bbox, E, 2 >
-    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+    : where_< mlc::neq_< oln_vtype(E, bbox), mlc::none > >
   {
     typedef abstract::point_set_having_bbox<E> ret;
   };

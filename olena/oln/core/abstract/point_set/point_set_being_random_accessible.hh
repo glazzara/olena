@@ -43,7 +43,7 @@ namespace oln
     template <typename E>
     class point_set_being_random_accessible : public virtual point_set<E>
     {
-      typedef oln_type_of(E, point) point_t;
+      typedef oln_vtype(E, point) point_t;
 
     public:
 
@@ -75,7 +75,7 @@ namespace oln
 
   template <typename E>
   struct case_ < point_set_hierarchy_wrt_accessibility, E, 1 >
-    : where_< mlc::eq_< oln_type_of(E, is_random_accessible), mlc::true_ > >
+    : where_< mlc::eq_< oln_vtype(E, is_random_accessible), mlc::true_ > >
   {
     typedef abstract::point_set_being_random_accessible<E> ret;
   };

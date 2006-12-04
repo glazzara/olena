@@ -44,7 +44,7 @@ namespace oln
       : public virtual topology<E>,
 	public automatic::get_impl<topology_having_bbox, E>
     {
-      typedef oln_type_of(E, bbox)  bbox_t;
+      typedef oln_vtype(E, bbox)  bbox_t;
       
     public:
 
@@ -66,21 +66,21 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    const oln_type_of(E, bbox)&
+    const oln_vtype(E, bbox)&
     topology_having_bbox<E>::bbox() const
     {
       return this->exact().impl_bbox();
     }
 
     template <typename E>
-    oln_type_of(E, bbox)&
+    oln_vtype(E, bbox)&
     topology_having_bbox<E>::bbox()
     {
       return this->exact().impl_bbox();
     }
 
     template <typename E>
-    topology_having_bbox<E>::operator oln_type_of(E, bbox)() const
+    topology_having_bbox<E>::operator oln_vtype(E, bbox)() const
     {
       return this->bbox();
     }
@@ -98,7 +98,7 @@ namespace oln
 
   template <typename E>
   struct case_ < topology_hierarchy_wrt_bbox, E, 1 >
-    : where_< mlc::neq_< oln_type_of(E, bbox), mlc::none > >
+    : where_< mlc::neq_< oln_vtype(E, bbox), mlc::none > >
   {
     typedef abstract::topology_having_bbox<E> ret;
   };

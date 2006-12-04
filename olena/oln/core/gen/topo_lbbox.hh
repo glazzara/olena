@@ -66,7 +66,7 @@ namespace oln
     private mlc::assert_< mlc_is_a(point, abstract::point) >
   {
     typedef topo_lbbox_<point> self_t;
-    typedef oln_type_of(self_t, bbox) bbox_t;
+    typedef oln_vtype(self_t, bbox) bbox_t;
 
   public:
 
@@ -103,7 +103,7 @@ namespace oln
 				  unsigned border)
     : bb_(bb), border_(border)
   {
-    typedef oln_type_of(point, dpoint) dpoint_t;
+    typedef oln_vtype(point, dpoint) dpoint_t;
     dpoint_t dp;
     dp.set_all(border);
     lbb_ = bbox_<point>(bb_.pmin() - dp, bb_.pmax() + dp);
@@ -114,7 +114,7 @@ namespace oln
 				  unsigned border)
     : bb_(pmin, pmax), border_(border)
   {
-    typedef oln_type_of(point, dpoint) dpoint_t;
+    typedef oln_vtype(point, dpoint) dpoint_t;
     dpoint_t dp;
     dp.set_all(border);
     lbb_ = bbox_<point>(bb_.pmin() - dp, bb_.pmax() + dp);

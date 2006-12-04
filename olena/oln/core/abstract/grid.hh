@@ -44,7 +44,7 @@ namespace oln {
   template <typename E>
   struct vtypes< abstract::grid<E> >
   {
-    typedef mlc::undefined dimvalue_type;
+    typedef stc::abstract dimvalue_type;
   };
 
   namespace abstract {

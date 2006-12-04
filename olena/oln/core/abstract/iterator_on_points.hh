@@ -53,8 +53,8 @@ namespace oln
   template <typename E>
   struct vtypes< abstract::iterator_on_points<E> >
   {
-    typedef mlc::undefined point_type;
-    typedef oln_deduce(E, point, coord) coord_type;
+    typedef stc::abstract point_type;
+    typedef oln_deduce_deferred_vtype(E, point, coord) coord_type;
   };
 
 

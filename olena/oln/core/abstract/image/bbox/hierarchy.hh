@@ -51,8 +51,8 @@ namespace oln
     {
     private:
 
-      typedef oln_type_of(E, bbox)  bbox_t;
-      typedef oln_type_of(E, point) point_t;
+      typedef oln_vtype(E, bbox)  bbox_t;
+      typedef oln_vtype(E, point) point_t;
 
     public:
 
@@ -135,7 +135,7 @@ namespace oln
   /// With bbox.
   template <typename E>
   struct case_< image_hierarchy_wrt_bbox, E, 1 > :
-    where_< mlc::neq_< oln_deduce(E, topo, bbox), mlc::not_found > >
+    where_< mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found > >
   {
     typedef abstract::image_having_bbox<E> ret;
   };
@@ -146,7 +146,7 @@ namespace oln
   template <typename E>
   struct single_vtype< image_entry<E>, typedef_::bbox_type >
   {
-    typedef oln_deduce(E, topo, bbox) ret;
+    typedef oln_deduce_vtype(E, topo, bbox) ret;
   };
 
 } // end of namespace oln

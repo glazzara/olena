@@ -60,7 +60,7 @@ namespace oln
   struct vtypes< morpher::with_lut<Image, Lut> >
   {
   private:
-    typedef oln_type_of(Image, rvalue) orig_value_type;
+    typedef oln_vtype(Image, rvalue) orig_value_type;
     typedef morpher::with_lut<Image, Lut> self_t;
   public:
     typedef mlc::true_ is_computed_type;
@@ -68,7 +68,6 @@ namespace oln
     // Value type.
     typedef typename Lut::new_value_type  value_type;
     typedef value_type                   rvalue_type;
-    typedef mlc::not_ok                  lvalue_type;
 
     // Look-up table type.
     typedef Lut lut_type;
@@ -103,11 +102,11 @@ namespace oln
 
     public:
       typedef Lut lut_type;
-      typedef oln_type_of(self_t, value) value_type;
-      typedef oln_type_of(self_t, rvalue) rvalue_type;
-      typedef oln_type_of(self_t, psite) psite_type;
-      typedef oln_type_of(self_t, value_proxy) value_proxy_type;
-      typedef oln_type_of(self_t, mutable_value_proxy) mutable_value_proxy_type;
+      typedef oln_vtype(self_t, value) value_type;
+      typedef oln_vtype(self_t, rvalue) rvalue_type;
+      typedef oln_vtype(self_t, psite) psite_type;
+      typedef oln_vtype(self_t, value_proxy) value_proxy_type;
+      typedef oln_vtype(self_t, mutable_value_proxy) mutable_value_proxy_type;
 
     public:
       with_lut(const Image& image, const Lut& lut);

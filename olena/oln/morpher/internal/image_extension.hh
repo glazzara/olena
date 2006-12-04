@@ -48,22 +48,26 @@ namespace oln
   } // end of namespace oln::morpher
 
 
-  /// Create an ``uplink'' from
-  /// oln::morpher::internal::image_extension to the morphed \a Image,
-  /// so as to get all its virtual types.
+  /// Super type.
   template <typename Image, typename Exact>
-  struct
-  set_pseudosuper_type< morpher::internal::image_extension<Image, Exact> >
+  struct set_super_type< morpher::internal::image_extension<Image, Exact> >
   {
-    typedef Image ret;
+    typedef oln::image_entry<Exact> ret;
   };
 
 
+  /// Vtypes.
   template <typename Image, typename Exact>
   struct vtypes< morpher::internal::image_extension<Image, Exact> >
   {
     // Morpher type.
     typedef oln::morpher::tag::identity morpher_type;
+
+    /// Delegatee type:
+    /// Create an ``uplink'' from
+    /// oln::morpher::internal::image_extension to the morphed \a Image,
+    /// so as to get all its virtual types.
+    typedef Image delegatee_type;
   };
 
 

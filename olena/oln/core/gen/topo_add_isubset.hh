@@ -63,7 +63,7 @@ namespace oln
     : public internal::topology_morpher<topo_t, topo_add_isubset<topo_t, isubset_t> >
   {
     typedef topo_add_isubset<topo_t, isubset_t> self_t;
-    typedef oln_type_of(self_t, point) point_t;
+    typedef oln_vtype(self_t, point) point_t;
 
   public:
 

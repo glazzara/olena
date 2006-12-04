@@ -61,6 +61,7 @@ namespace oln
   };
 
 
+
   /// Virtual types associated to oln::morpher::slice<Image>
   /// \{
   template <typename Image>
@@ -69,28 +70,24 @@ namespace oln
   private:
     typedef morpher::slice<Image> self_t;
 
-    typedef oln_deduce_type_of(Image, grid, dimvalue) orig_dimvalue_type;
+    typedef oln_deduce_vtype(Image, grid, dimvalue) orig_dimvalue_type;
     typedef mlc::uint_< mlc_value(orig_dimvalue_type) - 1 > dimvalue_type;
 
-    typedef oln_type_of(Image, fwd_piter) orig_fwd_piter;
-    typedef oln_type_of(Image, bkd_piter) orig_bkd_piter;
-    typedef oln_type_of(Image, fwd_qiter) orig_fwd_qiter;
-    typedef oln_type_of(Image, bkd_qiter) orig_bkd_qiter;
+    typedef oln_vtype(Image, fwd_piter) orig_fwd_piter;
+    typedef oln_vtype(Image, bkd_piter) orig_bkd_piter;
+    typedef oln_vtype(Image, fwd_qiter) orig_fwd_qiter;
+    typedef oln_vtype(Image, bkd_qiter) orig_bkd_qiter;
 
   public:
     typedef typename
-    type_fun::slice_topo< oln_type_of(Image, topo) >::ret topo_type;
+    type_fun::slice_topo< oln_vtype(Image, topo) >::ret topo_type;
 
-    typedef grid_<mlc_value(orig_dimvalue_type) - 1> grid_type;
+    typedef typename point_< mlc_value(dimvalue_type),
+			     oln_deduce_vtype(Image, point, coord) >::ret point_type;
+    typedef point_type psite_type;
+    // FIXME: A better (when overriding is involved) is oln_deferred_vtype(self_t, point).
 
-    // psite_type: see below.
-    typedef typename
-    point_< mlc_value(dimvalue_type),
-	    oln_deduce_type_of(Image, point, coord) >::ret
-    point_type;
-
-    // piter_type: see below.
-
+    typedef oln_is_computed(Image) is_computed_type;
     typedef oln_value(Image) value_type;
     // rvalue_type: see below.
     // lvalue_type: see below.
@@ -104,8 +101,6 @@ namespace oln
     typedef oln::morpher::tag::slice morpher_type;
 
     // Final.
-    typedef oln_deduce(Image, point, coord) coord_type;
-    typedef oln_point(self_t)    psite_type;
     typedef oln_fwd_piter(Image) piter_type;
     typedef oln_rvalue(Image)    rvalue_type;
     typedef oln_lvalue(Image)    lvalue_type;
@@ -127,15 +122,15 @@ namespace oln
     {
       typedef slice<Image> self_t;
 
-      typedef oln_type_of(self_t, topo)   topo_t;
-      typedef oln_type_of(self_t, rvalue) rvalue_t;
-      typedef oln_type_of(self_t, lvalue) lvalue_t;
-      typedef oln_type_of(self_t, point)  point_t;
+      typedef oln_vtype(self_t, topo)   topo_t;
+      typedef oln_vtype(self_t, rvalue) rvalue_t;
+      typedef oln_vtype(self_t, lvalue) lvalue_t;
+      typedef oln_vtype(self_t, point)  point_t;
 
-      typedef oln_type_of(Image,  topo)  orig_topo_t;
-      typedef oln_type_of(Image,  point) orig_point_t;
+      typedef oln_vtype(Image,  topo)  orig_topo_t;
+      typedef oln_vtype(Image,  point) orig_point_t;
 
-      typedef oln_deduce_type_of(Image, point, coord) coord_t;
+      typedef oln_deduce_vtype(Image, point, coord) coord_t;
 
 
     public:

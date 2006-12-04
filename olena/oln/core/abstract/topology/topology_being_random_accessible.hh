@@ -44,7 +44,7 @@ namespace oln
       : public virtual topology<E>,
 	public automatic::get_impl<topology_being_random_accessible, E>
     {
-      typedef oln_type_of(E, point) point_t;
+      typedef oln_vtype(E, point) point_t;
 
     public:
 
@@ -62,13 +62,13 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename E>
-    bool topology_being_random_accessible<E>::has(const oln_type_of(E, point)& p) const
+    bool topology_being_random_accessible<E>::has(const oln_vtype(E, point)& p) const
     {
       return this->exact().impl_has(p);
     }
 
     template <typename E>
-    bool topology_being_random_accessible<E>::has_large(const oln_type_of(E, point)& p) const
+    bool topology_being_random_accessible<E>::has_large(const oln_vtype(E, point)& p) const
     {
       return this->exact().impl_has_large(p);
     }
@@ -86,7 +86,7 @@ namespace oln
 
   template <typename E>
   struct case_ < topology_hierarchy_wrt_accessibility, E, 1 >
-    : where_< mlc::eq_< oln_type_of(E, is_random_accessible), mlc::true_ > >
+    : where_< mlc::eq_< oln_vtype(E, is_random_accessible), mlc::true_ > >
   {
     typedef abstract::topology_being_random_accessible<E> ret;
   };

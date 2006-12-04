@@ -1,3 +1,135 @@
+2006-12-04  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Propagate scoop update to oln.
+	
+	* oln/core/macros.hh
+	(oln_type_of_, oln_type_of, oln_deduce_type_of): Update and rename as...
+	(oln_vtype_, oln_vtype, oln_deduce_vtype): ...these.
+	(oln_deferred_vtype, oln_deduce_deferred_vtype): New.
+	(oln_find_vtype, oln_find_deferred_vtype): New.
+	* tests/morphers/add_neighborhood_morpher.cc: Update.
+	* tests/morphers/morphers.cc: Likewise.
+	* tests/core/image_entry.cc: Likewise.
+	* tests/core/grid.cc: Likewise.
+	* tests/core/image1d.cc: Likewise.
+	* tests/core/image2d.cc: Likewise.
+	* tests/core/image3d.cc: Likewise.
+	* tests/core/npoints.cc: Likewise.
+	* oln/debug/print.hh: Likewise.
+	* oln/core/typedefs.hh: Likewise.
+	* oln/core/automatic/impl.hh: Likewise.
+	* oln/core/automatic/image/image.hh: Likewise.
+	* oln/core/automatic/image/image_being_point_wise_random_accessible.hh: Likewise.
+	* oln/core/automatic/image/image_having_neighborhood.hh: Likewise.
+	* oln/core/automatic/image/image_being_value_wise_random_accessible.hh: Likewise.
+	* oln/core/automatic/topology/topology_having_bbox.hh: Likewise.
+	* oln/core/automatic/topology/topology_having_subset.hh: Likewise.
+	* oln/core/automatic/topology/topology_being_random_accessible.hh: Likewise.
+	* oln/core/automatic/topology/topology_having_neighborhood.hh: Likewise.
+	* oln/core/spe/row.hh: Likewise.
+	* oln/core/spe/col.hh: Likewise.
+	* oln/core/spe/slice.hh: Likewise.
+	* oln/core/iterator_vtypes.hh: Likewise.
+	* oln/core/abstract/iterator_on_points.hh: Likewise.
+	* oln/core/abstract/image/hybrid/classical.hh: Likewise.
+	* oln/core/abstract/image/type/integre.hh: Likewise.
+	* oln/core/abstract/image/type/hierarchy.hh: Likewise.
+	* oln/core/abstract/image/computability/hierarchy.hh: Likewise.
+	* oln/core/abstract/image/dimension/1d.hh: Likewise.
+	* oln/core/abstract/image/dimension/2d.hh: Likewise.
+	* oln/core/abstract/image/dimension/3d.hh: Likewise.
+	* oln/core/abstract/image/point_wise_accessibility/hierarchy.hh: Likewise.
+	* oln/core/abstract/point_set/point_set_being_random_accessible.hh: Likewise.
+	* oln/core/abstract/point_set/point_set_having_known_size.hh: Likewise.
+	* oln/core/abstract/point_set/point_set_being_connected.hh: Likewise.
+	* oln/core/abstract/point_set/point_set_having_bbox.hh: Likewise.
+	* oln/core/abstract/topology/topology_having_bbox.hh: Likewise.
+	* oln/core/abstract/topology/topology_being_random_accessible.hh: Likewise.
+	* oln/core/abstract/topology/topology_having_subset.hh: Likewise.
+	* oln/core/abstract/topology/topology_having_neighborhood.hh: Likewise.
+	* oln/core/abstract/internal/image_impl.hh: Likewise.
+	* oln/core/gen/piter_isubset.hh: Likewise.
+	* oln/core/gen/topo_add_isubset.hh: Likewise.
+	* oln/core/gen/bbox.hh: Likewise.
+	* oln/core/gen/topo_bbox.hh: Likewise.
+	* oln/core/gen/neighb.hh: Likewise.
+	* oln/core/gen/bkd_viter_lut.hh: Likewise.
+	* oln/core/gen/pset_list.hh: Likewise.
+	* oln/core/gen/window.hh: Likewise.
+	* oln/core/gen/topo_lbbox.hh: Likewise.
+	* oln/core/gen/pset_vec.hh: Likewise.
+	* oln/core/gen/pset_.hh: Likewise.
+	* oln/core/gen/fwd_viter_lut.hh: Likewise.
+	* oln/core/gen/mapimage.hh: Likewise.
+	* oln/core/gen/topo_add_nbh.hh: Likewise.
+	* oln/core/internal/topology_morpher.hh: Likewise.
+	* oln/core/internal/point_nd.hh: Likewise.
+	* oln/core/internal/bbox_bkd_piter.hh: Likewise.
+	* oln/core/internal/bbox_fwd_piter.hh: Likewise.
+	* oln/core/internal/dpoint_nd.hh: Likewise.
+	* oln/morpher/add_isubset.hh: Likewise.
+	* oln/morpher/value_cast.hh: Likewise.
+	* oln/morpher/thru_fun.hh: Likewise.
+	* oln/morpher/slice.hh: Likewise.
+	* oln/morpher/with_lut.hh: Likewise.
+	* oln/morpher/thru_mfun.hh: Likewise.
+	* oln/morpher/internal/image_value_morpher.hh: Likewise.
+	* oln/morpher/internal/image_extension.hh: Likewise.
+	* oln/morpher/add_neighborhood.hh: Likewise.
+
+	Entry classes now use:
+	- stc::abstract instead of mlc::undefined;
+	- stc::final when possible;
+	- 'deferred' versions of vtype access when required.
+	
+	* oln/core/point_set_entry.hh: Update.
+	(set_super_type): New.
+	(vtypes): Update.
+	* oln/core/neighborhood_entry.hh: Likewise.
+	* oln/core/topology_entry.hh: Likewise.
+	* oln/core/image_entry.hh: Likewise.
+	* oln/core/abstract/grid.hh: Likewise.
+	* oln/core/abstract/image.hh: Likewise.
+	(decl): Re-activate static checks.
+	* oln/core/abstract/iterator.hh: Likewise.
+	* oln/core/abstract/point.hh: Likewise.
+	* oln/core/abstract/dpoint.hh: Likewise.
+	* oln/core/abstract/iterator_on_values.hh: Likewise.
+	* oln/core/abstract/window.hh: Likewise.
+
+	Remove obsolete definitions of now final vtypes.
+	
+	* tests/core/image_entry.cc: Update.
+	* oln/core/1d/image1d.hh: Likewise.
+	* oln/core/2d/image2d.hh: Likewise.
+	* oln/core/3d/image3d.hh: Likewise.
+	
+	Update tests with the 'find' version of vtype access.
+	
+	* oln/core/abstract/image/mutability/hierarchy.hh: Update.
+	* oln/core/abstract/image/dimension/hierarchy.hh: Likewise.
+	* oln/core/abstract/image/neighborhood/hierarchy.hh: Likewise.
+	* oln/core/abstract/image/bbox/hierarchy.hh: Likewise.
+	* oln/core/abstract/image/value_wise_accessibility/hierarchy.hh: Likewise.
+
+	Update from 'delegated' to 'delegatee'.
+
+	* oln/core/abstract/internal/image_impl.hh: Update.
+	* oln/core/gen/topo_add_nbh.hh: Likewise.
+	* oln/core/internal/topology_morpher.hh: Likewise.
+	* oln/morpher/internal/image_value_morpher.hh: Likewise.
+	* oln/morpher/internal/image_extension.hh: Likewise.
+	* oln/core/typedefs.hh (delegated_type): Add commentary.
+
+	Misc.
+	
+	* tests/core/at.cc: Cosmetic change.
+	* oln/core/gen/bbox.hh (vtypes): Fix typo.
+	* oln/core/gen/pset_list.hh: Likewise.
+	* oln/core/gen/pset_vec.hh: Likewise.
+	* oln/core/gen/pset_.hh: Likewise.
+	* tests/core/image_entry.cc (is_computed_type): Fix missing.
+
 2006-11-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a specialization of level::fill for value-wise random-accessible

@@ -53,9 +53,9 @@ namespace oln
     {
     private:
 
-      typedef oln_type_of(E, topo)   topo_t;
-      typedef oln_type_of(E, rvalue) rvalue_t;
-      typedef oln_type_of(E, psite)  psite_t;
+      typedef oln_vtype(E, topo)   topo_t;
+      typedef oln_vtype(E, rvalue) rvalue_t;
+      typedef oln_vtype(E, psite)  psite_t;
 
     public:
 

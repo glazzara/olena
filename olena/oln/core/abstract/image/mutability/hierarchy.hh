@@ -108,7 +108,7 @@ namespace oln
   /// With mutability.
   template <typename E>
   struct case_< image_hierarchy_wrt_mutability, E, 1 > :
-    where_< mlc_is_ok(oln_lvalue(E)) >
+    where_< mlc::is_found_< oln_find_vtype(E, lvalue) > >
   {
     typedef abstract::mutable_image<E> ret;
   };
