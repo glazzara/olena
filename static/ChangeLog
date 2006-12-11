@@ -1,3 +1,14 @@
+2006-12-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Start a draft of Static's documentation.
+
+	* doc/README, doc/intro.txt, doc/rules.txt, doc/scool.txt,
+	* doc/algorithms.txt: New.
+	* doc/algorithms.ml: New (prototype of Static's type-checking rules,
+	written in Objective Caml).
+
+	* stc/scoop.hh: Typos, FIXMEs.
+
 2006-12-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	* stc/scoop.hh: Convert to Unix line terminators.

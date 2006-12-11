@@ -1,0 +1,20 @@
+Static - Equipment for Static Hierarchies and SCOOP 2		-*- outline -*-
+
+(This a rough, buggy and incomplete draft of explanations on SCOOP 2.
+To be improved, fixed, and completed!)
+
+
+intro.txt		General explanations on SCOOP 2
+scool.txt		Short introduction to SCOOL and its extensions
+rules.txt		More formal rules on SCOOP 2
+algorithms.txt		Algorithms used in the SCOOP paradigm.
+algorithms.ml		Likewise, written in Objective Caml.
+static.txt		?
+...
+
+
+
+Local Variables:
+ispell-local-dictionary: "american"
+End:
+

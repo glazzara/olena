@@ -81,7 +81,7 @@ namespace SCOOPED_NAMESPACE									\
     /* FIXME: nothing here!									\
      *												\
      * mlc::none is not a default value								\
-     * so that the client should define stoppers						\
+     * so that the client has to define stoppers						\
      */												\
   };												\
 												\
@@ -226,7 +226,7 @@ namespace SCOOPED_NAMESPACE									\
     };												\
 												\
     template <typename res1, typename res2>							\
-    struct helper_get_stm									\
+    struct helper_get_stm /* FIXME: Insert mlc::abort_<> statement here?  */			\
     {												\
       /* error */										\
     };												\
@@ -245,6 +245,10 @@ namespace SCOOPED_NAMESPACE									\
 												\
 												\
 												\
+												\
+    /* -------------------- */									\
+    /* Checking algorithm.  */									\
+    /* -------------------- */									\
 												\
     /*												\
      * check_no_final_inherited									\
@@ -459,6 +463,9 @@ namespace SCOOPED_NAMESPACE									\
 												\
 												\
 												\
+    /* ------------------- */									\
+    /* Look-up algorithm.  */									\
+    /* ------------------- */									\
 												\
     /*												\
      * first_stm(from, target)									\
