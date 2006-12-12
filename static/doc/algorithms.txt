@@ -2,8 +2,160 @@ SCOOP 2 - algorithms						-*- outline -*-
 
 These algorithms are expressed in a pseudo-Caml like syntax.
 
+
 ===========================================================================
-* Bottom-up approach (not finished)
+* Preamble
+
+Notes:
+
+- syntax: foo#super returns the type of the super class of foo.
+
+- syntax: 'foo_type' stands for the SCOOP virtual type named foo_type.
+
+- stc::none#super is an error, but calling `find (none, ...)' returns
+  stc::not_found.
+
+
+===========================================================================
+* Top-down approach
+
+These algorithms have been prototyped in algorithms.ml.
+
+** find
+
+function find (source, target, string) =
+  let res = find_rec (source, target) in
+  match res with
+    | stc::abstract               -> error "find: VT is abstract."
+    | stc::not_delegated_abstract -> error "find: VT is abstract."
+    | stc::not_delegated          -> stc::not_found
+    | stc::final t                -> t
+    | t                           -> t
+
+
+** find_rec
+
+function find_rec (source, target) =
+  if (source = mlc::none)
+    stc::not_found
+  else
+    let local_res = find_local (source, target) in
+
+    let super_res = find_rec (source#super, target) in
+    /* FIXME: This might not be efficient, since find_rec can be
+       called several times on the nodes of the delegation branch when 
+       going down the inheritance branch.  Of course, the declarative
+       nature of C++ templates will avoid this cost, but it might be
+       inelegant -- I'm not sure).  */
+    let delegatee = find_rec_in_supers (source, 'delegatee_type') in
+    let delegatee_res = 
+      match delegatee with
+      | stc::not_found -> stc::not_found
+      | stc::abstract  -> stc::not_found
+      | _              -> find_rec delegatee target in
+
+    merge3 (local_res, super_res, delegatee_res)
+
+
+// Like find_rec, but only search in the inheritance branch.
+function find_rec_in_supers (source, target) =
+  if (source = mlc::none)
+    stc::not_found
+  else
+    let local_res = find_local (source, target) in
+    let super_res = find_rec (source#super, target) in
+    merge2 (local_res, super_res)
+
+
+merge2 (local_res, super_res) =
+  match local_res, super_res with
+
+  | stc::abstract,  stc::not_found -> stc::abstract
+  | mlc::not_found, stc::not_found -> stc::not_found
+  | T,              stc::not_found -> T
+  | stc::final<T>,  stc::not_found -> stc::final<T>
+
+  | mlc::not_found, stc::abstract -> stc::not_found
+  | stc::abstract,  stc::abstract -> stc::abstract
+  | T,              stc::abstract -> T
+  | stc::final<T>,  stc::abstract -> stc::final<T>
+
+  | stc::abstract,  U              -> error ("VT redefined abstract.")
+  | mlc::not_found, U              -> U
+  | T,              U              -> T
+  | stc::final<T>,  U              -> stc::final<T>
+
+  | stc::abstract,  stc::final<U>  -> error ("Final VT redefined abstract")
+  | mlc::not_found, stc::final<U>  -> stc::final<U>
+  | T,              stc::final<U>  -> error ("Final VT redefined.")
+  | stc::final<T>,  stc::final<U>  -> error ("Final VT redefined final.")
+
+
+merge3 (local_res, super_res, delegatee_res) =
+  match local_res, super_res, delegatee_res with
+
+  // local_res == stc::not_found.
+  | mlc::not_found, stc::not_found, stc::not_found -> stc::not_found
+  | mlc::not_found, stc::not_found, stc::abstract  -> stc::not_found
+  | mlc::not_found, stc::not_found, stc::final<V>  -> stc::final<V>
+  | mlc::not_found, stc::not_found, V              -> V
+
+  | mlc::not_found, stc::abstract,  stc::not_found -> stc::not_found
+  | mlc::not_found, stc::abstract,  stc::abstract  -> stc::abstract
+  | mlc::not_found, stc::abstract,  stc::final<V>  -> stc::final<V>
+  | mlc::not_found, stc::abstract,  V              -> V
+
+  | mlc::not_found, stc::final<U>,  _              -> stc::final<U>
+  | mlc::not_found, U,              _              -> U
+
+
+  // local_res == stc::not_abstract.
+  | stc::abstract,  stc::not_found, stc::not_found -> stc::abstract
+  | stc::abstract,  stc::not_found, stc::abstract  -> stc::abstract
+  | stc::abstract,  stc::not_found, stc::final<V>  -> stc::final<V>
+  | stc::abstract,  stc::not_found, V              -> V
+
+  | stc::abstract,  stc::abstract,  stc::not_found -> stc::abstract
+  | stc::abstract,  stc::abstract,  stc::abstract  -> stc::abstract
+  | stc::abstract,  stc::abstract,  stc::final<V>  -> stc::final<V>
+  | stc::abstract,  stc::abstract,  V              -> V
+
+  | stc::abstract,  stc::not_delegated_abstract, _ -> stc::not_delegated_abstract
+  | stc::abstract,  stc::not_delegated, _          -> stc::not_delegated_abstract
+
+  | stc::abstract,  stc::final<U>,  _              -> error ("Final VT "
+                                                        "redefined abstract")
+  | stc::abstract,  U,              _              -> error ("VT redefined "
+                                                        "abstract.")
+  // local_res == stc::not_delegated.
+  | stc::not_delegated,  stc::not_found, _         -> stc::not_delegated
+  | stc::not_delegated,  stc::abstract,  _         -> stc::not_delegated_abstract
+  | stc::not_delegated,  stc::not_delegated_abstract, _ -> stc::not_delegated_abstract
+
+  // local_res == stc::not_delegated_abstract.
+  /* FIXME: Shouldn't we introduce a means to tag a vtype both
+     as abstract *and* not delegated?  (Currently, the rule below
+     prevents this).  */
+  | stc::not_delegated_abstract, _, _              -> error ("Local "
+                                                             "declaration of "
+                                                             "not delegated " 
+							     "and abstract")
+
+  // local_res == stc::final<T>.
+  | stc::final<T>,  stc::final<U>,  _              -> error ("Final VT "
+                                                        "redefined final.")
+  | stc::final<T>,  _,              _              -> stc::final<T>
+
+  // local_res == T.
+  | T,              stc::final<U>,  _              -> error ("Final VT "
+                                                        "redefined.")
+  | T,              _,              _              -> T
+
+
+
+
+===========================================================================
+* Bottom-up approach (FIXME: not finished, and old)
 
 This implementation doesn't handle stc::not_delegated properly.
 
@@ -131,141 +283,3 @@ fun merge (inheritance_branch_res delegation_branch_res) =
   | stc::abstract,  U              -> U
 
   | T,              _              -> T
-
-
-Notes:
-
-- syntax: foo#super returns the type of the super class of foo.
-
-- syntax: 'foo_type' stands for the SCOOP virtual type named foo_type.
-
-- stc::none#super is an error, so calling `find (none, ...)' might be
-  an error !
-
-
-===========================================================================
-* Top-down approach
-
-
-** find
-
-FIXME: To be written from algorithms.ml.
-
-** find_rec
-
-function find_rec (source, target) =
-  if (source = mlc::none)
-    stc::not_found
-  else
-    let local_res = find_local (source, target) in
-
-    let super_res = find_rec (source#super, target) in
-    // FIXME: This might not be efficient, since find_rec can be
-    // called several times on the nodes of the delegation branch when 
-    // going down the inheritance branch.  Of course, the declarative
-    // nature of C++ templates will avoid this cost, but it remains
-    // inelegant, IMHO.
-
-    let delegatee = find_rec_in_supers (source, 'delegatee_type') in
-    let delegatee_res =
-      if (delegatee = stc::not_found)
-        stc::not_found
-      else
-        find_rec (delegatee, target) in
-
-    merge3 (local_res, super_res, delegatee_res)
-
-
-// Like find_rec, but only search in the inheritance branch.
-function find_rec_in_supers (source, target) =
-  if (source = mlc::none)
-    stc::not_found
-  else
-    let local_res = find_local (source, target) in
-    let super_res = find_rec (source#super, target) in
-    merge2 (local_res, super_res)
-
-
-merge2 (local_res, super_res) =
-  match local_res, super_res with
-
-  | stc::abstract,  stc::not_found -> stc::abstract
-  | mlc::not_found, stc::not_found -> stc::not_found
-  | T,              stc::not_found -> T
-  | stc::final<T>,  stc::not_found -> stc::final<T>
-
-  | mlc::not_found, stc::abstract -> stc::not_found
-  | stc::abstract,  stc::abstract -> stc::abstract
-  | T,              stc::abstract -> T
-  | stc::final<T>,  stc::abstract -> stc::final<T>
-
-  | stc::abstract,  U              -> error ("VT redefined abstract.")
-  | mlc::not_found, U              -> U
-  | T,              U              -> T
-  | stc::final<T>,  U              -> stc::final<T>
-
-  | stc::abstract,  stc::final<U>  -> error ("Final VT redefined abstract")
-  | mlc::not_found, stc::final<U>  -> stc::final<U>
-  | T,              stc::final<U>  -> error ("Final VT redefined.")
-  | stc::final<T>,  stc::final<U>  -> error ("Final VT redefined final.")
-
-
-merge3 (local_res, super_res, delegatee_res) =
-  match local_res, super_res, delegatee_res with
-
-  // local_res == stc::not_found.
-  | mlc::not_found, stc::not_found, stc::not_found -> stc::not_found
-  | mlc::not_found, stc::not_found, stc::abstract  -> stc::not_found
-  | mlc::not_found, stc::not_found, stc::final<V>  -> stc::final<V>
-  | mlc::not_found, stc::not_found, V              -> V
-
-  | mlc::not_found, stc::abstract,  stc::not_found -> stc::not_found
-  | mlc::not_found, stc::abstract,  stc::abstract  -> stc::abstract
-  | mlc::not_found, stc::abstract,  stc::final<V>  -> stc::final<V>
-  | mlc::not_found, stc::abstract,  V              -> V
-
-  | mlc::not_found, stc::final<U>,  _              -> stc::final<U>
-  | mlc::not_found, U,              _              -> U
-
-
-  // local_res == stc::not_abstract.
-  | stc::abstract,  stc::not_found, stc::not_found -> stc::abstract
-  | stc::abstract,  stc::not_found, stc::abstract  -> stc::abstract
-  | stc::abstract,  stc::not_found, stc::final<V>  -> stc::final<V>
-  | stc::abstract,  stc::not_found, V              -> V
-
-  | stc::abstract,  stc::abstract,  stc::not_found -> stc::abstract
-  | stc::abstract,  stc::abstract,  stc::abstract  -> stc::abstract
-  | stc::abstract,  stc::abstract,  stc::final<V>  -> stc::final<V>
-  | stc::abstract,  stc::abstract,  V              -> V
-
-  | stc::abstract,  stc::not_delegated_abstract, _ -> stc::not_delegated_abstract
-  | stc::abstract,  stc::not_delegated, _          -> stc::not_delegated_abstract
-
-  | stc::abstract,  stc::final<U>,  _              -> error ("Final VT "
-                                                        "redefined abstract")
-  | stc::abstract,  U,              _              -> error ("VT redefined "
-                                                        "abstract.")
-  // local_res == stc::not_delegated.
-  | stc::not_delegated,  stc::not_found, _         -> stc::not_delegated
-  | stc::not_delegated,  stc::abstract,  _         -> stc::not_delegated_abstract
-  | stc::not_delegated,  stc::not_delegated_abstract, _ -> stc::not_delegated_abstract
-
-  // local_res == stc::not_delegated_abstract.
-  /* FIXME: Shouldn't we introduce a means to tag a vtype both
-     as abstract *and* not delegated?  (Currently, the rule below
-     prevents this).  */
-  | stc::not_delegated_abstract, _, _              -> error ("Local "
-                                                             "declaration of "
-                                                             "not delegated " 
-							     "and abstract")
-
-  // local_res == stc::final<T>.
-  | stc::final<T>,  stc::final<U>,  _              -> error ("Final VT "
-                                                        "redefined final.")
-  | stc::final<T>,  _,              _              -> stc::final<T>
-
-  // local_res == T.
-  | T,              stc::final<U>,  _              -> error ("Final VT "
-                                                        "redefined.")
-  | T,              _,              _              -> T

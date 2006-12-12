@@ -1,3 +1,13 @@
+2006-12-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	More examples in doc/algorithms.ml.
+
+	* doc/algorithms.ml (find_rec): Handle abstract delegatee.
+	Add Olena-like examples.
+	Aesthetic changes.
+	* doc/algorithms.txt (Top-down approach): Document `find'.
+	(Bottom-up approach): Move section at the end of the file.
+
 2006-12-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Start a draft of Static's documentation.

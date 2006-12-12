@@ -173,13 +173,12 @@ let rec find_rec (source : cxx_type) (target : string) : cxx_type =
 	       inheritance branch.  Of course, the declarative nature
 	       of C++ templates will avoid this cost, but it remains
 	       inelegant, IMHO.  *)
-
 	  let delegatee = find_rec_in_supers source "delegatee_type" in
 	  let delegatee_res =
-	    if delegatee = Stc_Not_found then
-              Stc_Not_found
-	    else
-              find_rec delegatee target in
+	    match delegatee with
+	    | Stc_Not_found -> Stc_Not_found
+	    | Stc_Abstract  -> Stc_Not_found
+	    | _             -> find_rec delegatee target in
 
 	    merge3 local_res super_res delegatee_res
 	end
@@ -223,8 +222,9 @@ let find (source : cxx_type) (target : string) : cxx_type =
 	 vtype my_type = int;
        }
 *)
-let a = Scoop_Class { super = Stc_None;
-		      vtypes = create_vtypes ["my_type", Std_Int] } in
+let a =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes ["my_type", Std_Int] } in
 assert (find a "my_type" = Std_Int);;
 
 
@@ -247,12 +247,15 @@ assert (find a "my_type" = Std_Int);;
 	 vtype my_type = int;
        }
 *)
-let a = Scoop_Class { super = Stc_None;
-		      vtypes = create_vtypes ["my_type", Std_Int] } in
-let b = Scoop_Class { super = a;
-		      vtypes = create_vtypes ["my_type", Std_Float] } in
-let c = Scoop_Class { super = b;
-		      vtypes = create_vtypes ["my_type", Std_Int] } in
+let a =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes ["my_type", Std_Int] } in
+let b =
+  Scoop_Class { super = a;
+		vtypes = create_vtypes ["my_type", Std_Float] } in
+let c =
+  Scoop_Class { super = b;
+		vtypes = create_vtypes ["my_type", Std_Int] } in
 assert (find c "my_type" = Std_Int);;
 
 
@@ -270,10 +273,12 @@ assert (find c "my_type" = Std_Int);;
 	 vtype my_type = int;
        }
 *)
-let a = Scoop_Class { super = Stc_None;
-		      vtypes = create_vtypes ["my_type", Stc_Abstract] } in
-let b = Scoop_Class { super = a;
-		      vtypes = create_vtypes ["my_type", Std_Int] } in
+let a =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes ["my_type", Stc_Abstract] } in
+let b =
+  Scoop_Class { super = a;
+		vtypes = create_vtypes ["my_type", Std_Int] } in
 assert (find b "my_type" = Std_Int);;
 
 (* - A concrete virtual type cannot be redefined as abstract.
@@ -290,14 +295,15 @@ assert (find b "my_type" = Std_Int);;
 	 vtype my_type = 0;
        }
 *)
-let a = Scoop_Class { super = Stc_None;
-		      vtypes = create_vtypes ["my_type", Std_Int] } in
-let b = Scoop_Class { super = a;
-		      vtypes = create_vtypes ["my_type", Stc_Abstract] } in
-  try
-    ignore (find b "my_type")
-  with Scoop_exception "VT redefined abstract." -> ()
-;;
+let a =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes ["my_type", Std_Int] } in
+let b =
+  Scoop_Class { super = a;
+		vtypes = create_vtypes ["my_type", Stc_Abstract] } in
+try
+  ignore (find b "my_type")
+with Scoop_exception "VT redefined abstract." -> ();;
 
 
 (* ** Final virtual type
@@ -311,9 +317,9 @@ let b = Scoop_Class { super = a;
 	 final vtype my_type = int;
        }
 *)
-let a = Scoop_Class { super = Stc_None;
-		      vtypes = create_vtypes ["my_type", Stc_Final Std_Int] }
-in
+let a =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes ["my_type", Stc_Final Std_Int] } in
 assert (find a "my_type" = Std_Int);;
 
 (* - A virtual type tagged as final in a class cannot be redefined in its
@@ -347,21 +353,21 @@ assert (find a "my_type" = Std_Int);;
 	 final vtype my_type = float;
        }
 *)
-let a = Scoop_Class
-  { super = Stc_None;
-    vtypes = create_vtypes ["my_type", Stc_Final Std_Int] } in
-let b = Scoop_Class
-  { super = a;
-    vtypes = create_vtypes ["my_type", Std_Float] } in
-let c = Scoop_Class
-  { super = a;
-    vtypes = create_vtypes ["my_type", Std_Int] } in
-let d = Scoop_Class
-  { super = a;
-    vtypes = create_vtypes ["my_type", Stc_Final Std_Int] } in
-let e = Scoop_Class
-  { super = a;
-    vtypes = create_vtypes ["my_type", Stc_Final Std_Float] } in
+let a =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes ["my_type", Stc_Final Std_Int] } in
+let b =
+  Scoop_Class { super = a;
+		vtypes = create_vtypes ["my_type", Std_Float] } in
+let c =
+  Scoop_Class { super = a;
+		vtypes = create_vtypes ["my_type", Std_Int] } in
+let d =
+  Scoop_Class { super = a;
+		vtypes = create_vtypes ["my_type", Stc_Final Std_Int] } in
+let e =
+  Scoop_Class { super = a;
+		vtypes = create_vtypes ["my_type", Stc_Final Std_Float] } in
 
   assert (find a "my_type" = Std_Int);
   try ignore (find b "my_type")
@@ -401,15 +407,15 @@ let e = Scoop_Class
      // I would say ``stc::not_found'', but I'm not sure (see intro.txt, too).
      type t = C#my_type;
 *)
-let a = Scoop_Class
-  { super = Stc_None;
-    vtypes = create_vtypes [] } in
-let d = Scoop_Class
-  { super = Stc_None;
-    vtypes = create_vtypes ["my_type", Stc_Abstract] } in
-let c = Scoop_Class
-  { super = a;
-    vtypes = create_vtypes ["delegatee_type", d] } in
+let a =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes [] } in
+let d =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes ["my_type", Stc_Abstract] } in
+let c =
+  Scoop_Class { super = a;
+		vtypes = create_vtypes ["delegatee_type", d] } in
 assert (find c "my_type" = Stc_Not_found);;
 
 
@@ -451,34 +457,34 @@ assert (find c "my_type" = Stc_Not_found);;
        vtype bar = char;         |
      }                           |
 *)
-let a = Scoop_Class
-  { super = Stc_None;
-    vtypes = create_vtypes [] } in
-let b = Scoop_Class
-  { super = a;
-    vtypes = create_vtypes ["foo", Stc_Abstract] } in
+let a =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes [] } in
+let b =
+  Scoop_Class { super = a;
+		vtypes = create_vtypes ["foo", Stc_Abstract] } in
 
-let x = Scoop_Class
-  { super = Stc_None;
-    vtypes = create_vtypes [("bar", Stc_Abstract);
-			    ("hop", Std_Int)] } in
-let y = Scoop_Class
-  { super = x;
-    vtypes = create_vtypes [("bar", Std_Char);
-			    ("baz", Std_Short)] } in
+let x =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes [("bar", Stc_Abstract);
+					("hop", Std_Int)] } in
+let y =
+  Scoop_Class { super = x;
+		vtypes = create_vtypes [("bar", Std_Char);
+					("baz", Std_Short)] } in
 
-let c = Scoop_Class
-  { super = b;
-    vtypes = create_vtypes [("delegatee_type", y);
-			    ("foo", Std_Int);
-			    ("baz", Stc_Not_delegated);
-			    ("hop", Stc_Not_delegated)] } in
-let d = Scoop_Class
-  { super = c;
-    vtypes = create_vtypes [("quux", Std_Unsigned)] } in
-let e = Scoop_Class
-  { super = d;
-    vtypes = create_vtypes [("baz", Std_Float)] } in
+let c =
+  Scoop_Class { super = b;
+		vtypes = create_vtypes [("delegatee_type", y);
+					("foo", Std_Int);
+					("baz", Stc_Not_delegated);
+					("hop", Stc_Not_delegated)] } in
+let d =
+  Scoop_Class { super = c;
+		vtypes = create_vtypes [("quux", Std_Unsigned)] } in
+let e =
+  Scoop_Class { super = d;
+		vtypes = create_vtypes [("baz", Std_Float)] } in
 
 assert (find e "foo" = Std_Int);
 assert (find e "bar" = Std_Char);
@@ -503,21 +509,21 @@ assert (find e "hop" = Stc_Not_found);
      {                                  |
      }                                  |
 *)
-let a = Scoop_Class
-  { super = Stc_None;
-    vtypes = create_vtypes ["foo", Stc_Abstract] } in
+let a =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes ["foo", Stc_Abstract] } in
 
-let x = Scoop_Class
-  { super = Stc_None;
-    vtypes = create_vtypes ["foo", Std_Int] } in
+let x =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes ["foo", Std_Int] } in
 
-let b = Scoop_Class
-  { super = a;
-    vtypes = create_vtypes [("delegatee_type", x);
-			    ("foo", Stc_Not_delegated)] } in
-let c = Scoop_Class
-  { super = b;
-    vtypes = create_vtypes [] } in
+let b =
+  Scoop_Class { super = a;
+		vtypes = create_vtypes [("delegatee_type", x);
+					("foo", Stc_Not_delegated)] } in
+let c =
+  Scoop_Class { super = b;
+		vtypes = create_vtypes [] } in
 
 (* foo is abstract and tagged ``not delegated'' for B.  *)
 try ignore (find b "foo") with Scoop_exception "find: VT is abstract." -> ();
@@ -544,24 +550,68 @@ try ignore (find c "foo") with Scoop_exception "find: VT is abstract." -> ()
        vtype foo = 0                    |
      }                                  |
 *)
-let a = Scoop_Class
-  { super = Stc_None;
-    vtypes = create_vtypes [] } in
+let a =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes [] } in
 
-let x = Scoop_Class
-  { super = Stc_None;
-    vtypes = create_vtypes ["foo", Std_Int] } in
+let x =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes ["foo", Std_Int] } in
 
-let b = Scoop_Class
-  { super = a;
-    vtypes = create_vtypes [("delegatee_type", x);
-			    ("foo", Stc_Not_delegated)] } in
-let c = Scoop_Class
-  { super = b;
-    vtypes = create_vtypes ["foo", Stc_Abstract] } in
+let b =
+  Scoop_Class { super = a;
+		vtypes = create_vtypes [("delegatee_type", x);
+					("foo", Stc_Not_delegated)] } in
+let c =
+  Scoop_Class { super = b;
+		vtypes = create_vtypes ["foo", Stc_Abstract] } in
 
 (* foo is abstract and tagged ``not delegated'' for B.  *)
 assert (find b "foo" = Stc_Not_found);
 (* Likewise for C.  *)
 try ignore (find c "foo") with Scoop_exception "find: VT is abstract." -> ()
 ;;
+
+
+(* Olena-like examples.
+
+     class /image_entry/ < stc::none
+     {
+       vtype value_type = 0;
+     }
+
+     class image2d<int> < image_entry
+     {
+       vtypes value_type = int;
+     }
+
+     class /value_morpher/ < image_entry
+     {
+       vtype delegatee_type = 0;
+       vtype value_type = stc::not_delegated;
+     } 
+
+     class value_cast<image2d<int>, float> < value_morpher
+     {
+       vtype delegatee_type = image2d<int>;
+       vtype value_type = float;
+     }
+*)
+
+let image_entry =
+  Scoop_Class { super = Stc_None;
+		vtypes = create_vtypes ["value_type", Stc_Abstract] } in
+let image2d_int =
+  Scoop_Class { super = image_entry;
+		vtypes = create_vtypes ["value_type", Std_Int] } in
+let value_morpher =
+  Scoop_Class { super = image_entry;
+		vtypes = create_vtypes [("delegatee_type", Stc_Abstract);
+					("value_type", Stc_Not_delegated)]} in
+let value_cast__image2d_int__float =
+  Scoop_Class { super = value_morpher;
+		vtypes = create_vtypes [("delegatee_type", image2d_int);
+					("value_type", Std_Float)] } in
+
+assert (find image2d_int "value_type" = Std_Int);
+assert (find value_cast__image2d_int__float "value_type" = Std_Float);;
