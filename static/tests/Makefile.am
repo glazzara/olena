@@ -21,7 +21,10 @@ check_PROGRAMS =				\
   vtypes					\
   vtypes-and-exact				\
 						\
-  tour
+  tour						\
+						\
+  scoop2
+
 
 any_SOURCES                    = any.cc
 entry_SOURCES                  = entry.cc
@@ -32,6 +35,8 @@ vtypes_SOURCES                 = vtypes.cc
 vtypes_and_exact_SOURCES       = vtypes-and-exact.cc
 
 tour_SOURCES = tour.cc
+
+scoop2_SOURCES = scoop2.cc
 
 # Old tests.
 EXTRA_DIST = multiple-supers.cc vtypes-multiple-supers.cc

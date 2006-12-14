@@ -1,5 +1,15 @@
 2006-12-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	New prototype for SCOOP 2 algorithms.
+
+	* stc/scoop2.hh: New (prototype).
+	* tests/scoop2.cc: New test.
+	* stc/Makefile.am (nobase_stc_HEADERS): Add scoop2.hh
+	* tests/Makefile.am (check_PROGRAMS): Add scoop2.
+	(scoop2_SOURCES): New.
+
+2006-12-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve SCOOP 2 documentation and prototype.
 
 	* doc/algorithms.ml (merge2): Reorder patterns as in merge3.
