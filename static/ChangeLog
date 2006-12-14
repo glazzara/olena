@@ -1,3 +1,14 @@
+2006-12-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve SCOOP 2 documentation and prototype.
+
+	* doc/algorithms.ml (merge2): Reorder patterns as in merge3.
+	Aesthetic changes.
+	(merge3): Aesthetic changes.
+	* doc/algorithms.txt: Adjust.
+	* doc/rules.txt: Typos.
+	Improve the last two examples.
+
 2006-12-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	More examples in doc/algorithms.ml.

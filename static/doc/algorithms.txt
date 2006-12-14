@@ -29,8 +29,8 @@ function find (source, target, string) =
     | stc::abstract               -> error "find: VT is abstract."
     | stc::not_delegated_abstract -> error "find: VT is abstract."
     | stc::not_delegated          -> stc::not_found
-    | stc::final t                -> t
-    | t                           -> t
+    | stc::final<T>               -> T
+    | T                           -> T
 
 
 ** find_rec
@@ -70,25 +70,25 @@ function find_rec_in_supers (source, target) =
 merge2 (local_res, super_res) =
   match local_res, super_res with
 
-  | stc::abstract,  stc::not_found -> stc::abstract
+  // local_res == stc::not_found.
   | mlc::not_found, stc::not_found -> stc::not_found
-  | T,              stc::not_found -> T
-  | stc::final<T>,  stc::not_found -> stc::final<T>
-
-  | mlc::not_found, stc::abstract -> stc::not_found
-  | stc::abstract,  stc::abstract -> stc::abstract
-  | T,              stc::abstract -> T
-  | stc::final<T>,  stc::abstract -> stc::final<T>
-
-  | stc::abstract,  U              -> error ("VT redefined abstract.")
-  | mlc::not_found, U              -> U
-  | T,              U              -> T
-  | stc::final<T>,  U              -> stc::final<T>
-
-  | stc::abstract,  stc::final<U>  -> error ("Final VT redefined abstract")
+  | mlc::not_found, stc::abstract  -> stc::not_found
   | mlc::not_found, stc::final<U>  -> stc::final<U>
-  | T,              stc::final<U>  -> error ("Final VT redefined.")
+  | mlc::not_found, U              -> U
+
+  // local_res == stc::abstract.
+  | stc::abstract,  stc::not_found -> stc::abstract
+  | stc::abstract,  stc::abstract  -> stc::abstract
+  | stc::abstract,  stc::final<U>  -> error ("Final VT redefined abstract")
+  | stc::abstract,  U              -> error ("VT redefined abstract.")
+
+  // local_res == stc::final<T>.
   | stc::final<T>,  stc::final<U>  -> error ("Final VT redefined final.")
+  | stc::final<T>,  _              -> stc::final<T>
+
+  // local_res == stc::final<T>.
+  | T,              stc::final<U>  -> error ("Final VT redefined.")
+  | T,              _              -> T
 
 
 merge3 (local_res, super_res, delegatee_res) =
@@ -109,7 +109,7 @@ merge3 (local_res, super_res, delegatee_res) =
   | mlc::not_found, U,              _              -> U
 
 
-  // local_res == stc::not_abstract.
+  // local_res == stc::abstract.
   | stc::abstract,  stc::not_found, stc::not_found -> stc::abstract
   | stc::abstract,  stc::not_found, stc::abstract  -> stc::abstract
   | stc::abstract,  stc::not_found, stc::final<V>  -> stc::final<V>

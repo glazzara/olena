@@ -73,26 +73,25 @@ let find_local (source: cxx_type) (target: string) : cxx_type =
 let merge2 (local_res : cxx_type) (super_res : cxx_type) : cxx_type =
   match local_res, super_res with
 
-  | Stc_Abstract,  Stc_Not_found -> Stc_Abstract
+  (* local_res == stc::not_found.  *)
   | Stc_Not_found, Stc_Not_found -> Stc_Not_found
-  | Stc_Final t,   Stc_Not_found -> Stc_Final t
-  | t,             Stc_Not_found -> t
+  | Stc_Not_found, Stc_Abstract  -> Stc_Not_found
+  | Stc_Not_found, Stc_Final u   -> Stc_Final u
+  | Stc_Not_found, u             -> u
 
-  | Stc_Not_found, Stc_Abstract -> Stc_Not_found
-  | Stc_Abstract,  Stc_Abstract -> Stc_Abstract
-  | Stc_Final t,   Stc_Abstract -> Stc_Final t
-  | t,             Stc_Abstract -> t
+  (* local_res == stc::abstract.  *)
+  | Stc_Abstract,  Stc_Abstract  -> Stc_Abstract
+  | Stc_Abstract,  Stc_Not_found -> Stc_Abstract
+  | Stc_Abstract,  Stc_Final _   -> error "Final VT redefined abstract"
+  | Stc_Abstract,  _             -> error "VT redefined abstract."
 
-  | Stc_Abstract,  Stc_Final u  -> error "Final VT redefined abstract"
-  | Stc_Not_found, Stc_Final u  -> Stc_Final u
-  | Stc_Final t,   Stc_Final u  -> error "Final VT redefined final."
-  | t,             Stc_Final u  -> error "Final VT redefined."
+  (* local_res == stc::final<T>.  *)
+  | Stc_Final _,   Stc_Final _   -> error "Final VT redefined final."
+  | Stc_Final t,   _             -> Stc_Final t
 
-  | Stc_Abstract,  u            -> error "VT redefined abstract."
-  | Stc_Not_found, u            -> u
-  | Stc_Final t,   u            -> Stc_Final t
-  | t,             u            -> t
-
+  (* local_res == T.  *)
+  | _,             Stc_Final _   -> error "Final VT redefined."
+  | t,             _             -> t
 ;;
 
 (* Another version (rewriting) of merge3.  *)
@@ -111,10 +110,10 @@ let merge3 (local_res : cxx_type) (super_res : cxx_type)
   | Stc_Not_found, Stc_Abstract,  Stc_Final v    -> Stc_Final v
   | Stc_Not_found, Stc_Abstract,  v              -> v
 
-  | Stc_Not_found, Stc_Final u,   _             -> Stc_Final u
-  | Stc_Not_found, u,             _             -> u
+  | Stc_Not_found, Stc_Final u,   _              -> Stc_Final u
+  | Stc_Not_found, u,             _              -> u
 
-  (* local_res == stc::not_abstract.  *)
+  (* local_res == stc::abstract.  *)
   | Stc_Abstract,  Stc_Not_found, Stc_Not_found -> Stc_Abstract
   | Stc_Abstract,  Stc_Not_found, Stc_Abstract  -> Stc_Abstract
   | Stc_Abstract,  Stc_Not_found, Stc_Final v   -> Stc_Final v
@@ -128,9 +127,9 @@ let merge3 (local_res : cxx_type) (super_res : cxx_type)
   | Stc_Abstract,  Stc_Not_delegated_Abstract, _ -> Stc_Not_delegated_Abstract
   | Stc_Abstract,  Stc_Not_delegated, _         -> Stc_Not_delegated_Abstract
 
-  | Stc_Abstract,  Stc_Final u,   _             -> error ("Final VT " ^
+  | Stc_Abstract,  Stc_Final _,   _             -> error ("Final VT " ^
                                                           "redefined abstract")
-  | Stc_Abstract,  u,             _             -> error ("VT redefined " ^
+  | Stc_Abstract,  _,             _             -> error ("VT redefined " ^
                                                           "abstract.")
 
   (* local_res == stc::not_delegated.  *)
@@ -142,20 +141,19 @@ let merge3 (local_res : cxx_type) (super_res : cxx_type)
   (* FIXME: Shouldn't we introduce a means to tag a vtype both
      as abstract *and* not delegated?  (Currently, the rule below
      prevents this).  *)
-  | Stc_Not_delegated_Abstract, _, _           -> error ("Local declaration" ^
+  | Stc_Not_delegated_Abstract, _, _            -> error ("Local declaration" ^
 							  " of not delegated" ^
 							  " and abstract")
 
   (* local_res == stc::final<T>.  *)
-  | Stc_Final t,    Stc_Final u,  _             -> error ("Final VT " ^
+  | Stc_Final _,    Stc_Final _,  _             -> error ("Final VT " ^
                                                           "redefined final.")
   | Stc_Final t,    _,            _             -> Stc_Final t
 
   (* local_res == T.  *)
-  | t,              Stc_Final u,  _             -> error ("Final VT " ^
+  | _,              Stc_Final _,  _             -> error ("Final VT " ^
                                                           "redefined.")
   | t,              _,            _             -> t
-
 ;;
 
 
@@ -380,7 +378,7 @@ let e =
   with Scoop_exception "Final VT redefined final." -> ();
 ;;
 
-(* ** General virtual type lookup
+(* ** General virtual type lookup (i.e., with delegation)
 
    *** Abstract
 
@@ -403,8 +401,6 @@ let e =
        vtype delegatee_type = D;
      }
 
-     // FIXME: What should be the value of ``t''?
-     // I would say ``stc::not_found'', but I'm not sure (see intro.txt, too).
      type t = C#my_type;
 *)
 let a =
@@ -573,7 +569,7 @@ try ignore (find c "foo") with Scoop_exception "find: VT is abstract." -> ()
 ;;
 
 
-(* Olena-like examples.
+(* *** Olena-like examples.
 
      class /image_entry/ < stc::none
      {

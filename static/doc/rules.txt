@@ -16,7 +16,7 @@ SCOOP 2 -- rules						-*- outline -*-
 
   stc::none			(FIXME: What about stc::top ?)
 
-  deferred_type?		(FIXME: Which syntax?)
+  (deferred_type?)		(FIXME: Which syntax?)
 
 
 * Declaration/definition
@@ -93,7 +93,7 @@ SCOOP 2 -- rules						-*- outline -*-
 - Unless declared final (see relevant item), a virtual type of a class
   can be redefined in its subclass(es).  The new value can be the same
   or different for the inital one.  The syntax is the same as the one
-  for defining a virtual type.
+  defining a virtual type.
 
   Ex.:
 
@@ -315,7 +315,7 @@ priori concrete).
 
 This process relies on an `atomic' lookup on each inspected class:
 each of them can be queried for a locally defined virtual type.
-(FIXME: reference to the local_find algorithm.)
+(FIXME: reference to the find_local algorithm.)
 
 The result of this local lookup is
 - mlc::not_found: meaning there is no delegatee_type;
@@ -415,6 +415,8 @@ FIXME: Continue.
 
 FIXME: Continue.
 
+
+
 * Examples
 
 
@@ -471,41 +473,50 @@ FIXME: Continue.
 
 *** E#bar
 
-       A          local_find(A, bar) = mlc::not_found
-       ^
-       |
-       |    X                                        local_find(X, bar) = 0
-       |    ^
-       |    |
-       B    |     local_find(B, bar) = mlc::not_found
-       ^    |
-       |    |
-       |    Y                                     local_find(Y, bar) = char
-       |    |
-       |    |
-       C<>-´              local_find(D, bar) = mlc::not_found
-       ^
-       |
-       D                  local_find(D, bar) = mlc::not_found
-       ^
-       |
-       E                  local_find(E, bar) = mlc::not_found
+  top-down
+  propagation
+
+  |
+  |  find_local(A, bar) = not_found  A
+  |    =>  find(A, bar) = not_found  ^
+  |                                  |    X  find_local(X, bar) = 0
+  |                                  |    ^    =>  find(X, bar) = 0
+  |  find_local(B, bar) = not_found  B    |
+  |    =>  find(B, bar) = not_found  ^    |
+  |                                  |    Y  find_local(Y, bar) = char
+  |                                  |    |    =>  find(Y, bar) = char
+  |  find_local(C, bar) = not_found  C<>-´
+  |    =>  find(C, bar) = char       ^
+  |                                  |
+  |  find_local(D, bar) = not_found  D
+  |    =>  find(D, bar) = char       ^
+  |                                  |
+  |  find_local(E, bar) = not_found  E
+  |    =>  find(E, bar) = char          
+  v
 
 *** E#hop
 
-       A          local_find(A, bar) = mlc::not_found
-       ^
-       |    X
-       B    ^     local_find(B, bar) = mlc::not_found
-       ^    |
-       |    Y
-       C<>-´              local_find(D, bar) = stc::not_delegated
-       ^
-       |
-       D                  local_find(D, hop) = mlc::not_found
-       ^
-       |
-       E                  local_find(E, hop) = mlc::not_found
+  top-down
+  propagation
+
+  |  find_local(A, hop) = not_found  A
+  |    =>  find(A, hop) = not_found  ^
+  |                                  |    X  find_local(X, hop) = int
+  |                                  |    ^    =>  find(X, hop) = int
+  |  find_local(B, hop) = not_found  B    |
+  |    =>  find(B, hop) = not_found  ^    |
+  |                                  |    Y  find_local(Y, hop) = not_found
+  |                                  |    |    =>  find(Y, hop) = int
+  |  find_local(C, hop) = not_deleg  C<>-´
+  |    =>  find(C, hop) = not_found  ^
+  |                                  |
+  |  find_local(D, hop) = not_found  D
+  |    =>  find(D, hop) = not_found  ^
+  |                                  |
+  |  find_local(E, hop) = not_found  E
+  |    =>  find(E, hop) = not_found          
+  v
 
 
 
