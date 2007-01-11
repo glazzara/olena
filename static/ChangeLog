@@ -1,3 +1,9 @@
+2007-01-11  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
+
+	Fix some tests.
+	* tests/vtypes-and-exact.cc: Fix macro.
+	* tests/vtypes.cc: Fix macro.
+
 2006-12-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	New prototype for SCOOP 2 algorithms.

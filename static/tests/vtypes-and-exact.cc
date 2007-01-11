@@ -40,7 +40,7 @@
 
 // Helper macros.
 #define my_type_of_(FromType, Alias)					\
-  my::direct_type_of_<FromType, my::typedef_:: Alias##_type>::ret
+  my::find_vtype<FromType, my::typedef_:: Alias##_type>::ret
 
 #define my_type_of(FromType, Alias)		\
   typename my_type_of_(FromType, Alias)
