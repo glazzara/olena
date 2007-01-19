@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_THRU_MFUN
-# define OLN_MORPHER_THRU_MFUN
+#ifndef OLN_MORPHER_THRU_MFUN_HH
+# define OLN_MORPHER_THRU_MFUN_HH
 
 # include <xtd/res.hh>
 # include <xtd/abstract/open_nary_fun.hh>
@@ -107,34 +107,7 @@ namespace oln
 
     } // end of namespace oln::morpher::ERROR
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename Image, typename Fun>
-    thru_mfun<Image, Fun>::thru_mfun(const Image& image, const Fun& fun) :
-      super_t(image),
-      fun_(fun)
-    {
-    }
-    
-    template <typename Image, typename Fun>
-    typename thru_mfun<Image, Fun>::rvalue_t
-    thru_mfun<Image, Fun>::impl_op_read(const typename thru_mfun<Image, Fun>::psite_t& p) const
-    {
-      return fun_(this->image_(p));
-    }
-    
-    template <typename Image, typename Fun>
-    typename thru_mfun<Image, Fun>::lvalue_t
-    thru_mfun<Image, Fun>::impl_op_readwrite(const typename thru_mfun<Image, Fun>::psite_t& p)
-    {
-      return fun_(this->image_(p));
-    }
-    
-# endif
-
   } // end of namespace oln::morpher
-
 
 } // end of namespace oln
 
@@ -177,5 +150,9 @@ namespace xtd
 } // end of namespace xtd
 
 
+# ifndef OLN_INCLUDE_ONLY
+#  include "thru_mfun.hxx"    
+# endif
 
-#endif // ! OLN_MORPHER_THRU_MFUN
+#endif // ! OLN_MORPHER_THRU_MFUN_HH
+

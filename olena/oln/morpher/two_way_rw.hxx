@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,63 +25,55 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_IDENTITY_HH
-# define OLN_MORPHER_IDENTITY_HH
-
-# include <oln/morpher/internal/image_extension.hh>
-
+#ifndef OLN_MORPHER_TWO_WAY_RW_HXX
+# define OLN_MORPHER_TWO_WAY_RW_HXX
 
 namespace oln
 {
 
   namespace morpher
   {
-    // Forward declaration.
-    template <typename Image> struct identity;
+    // public
 
-  } // end of namespace oln::morpher
-
-
-  /// Super type.
-  template <typename Image>
-  struct set_super_type< morpher::identity<Image> >
-  {
-    typedef morpher::identity<Image> self_t;
-    typedef morpher::internal::image_extension<Image, self_t> ret;
-  };
-
-
-  namespace morpher
-  {
-    /// Identity morpher.
-    template <typename Image>
-    class identity : public internal::image_extension<Image, identity<Image> >
-    {
-    private:
-      typedef identity<Image> self_t;
-      typedef internal::image_extension<Image, self_t> super_t;
-
-    public:
-      // FIXME: Handle the constness.
-      identity(const Image& image);
-
-    };
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename Image>
-    identity<Image>::identity(const Image& image) :
-      super_t(image)
+    template <typename Image, typename Fun>
+    two_way_rw<Image, Fun>::two_way_rw(oln::abstract::mutable_image<Image>& image) :
+      super_t(image.exact()),
+      fun_()
     {
     }
 
-# endif
+    template <typename Image, typename Fun>
+    two_way_rw<Image, Fun>::two_way_rw(oln::abstract::mutable_image<Image>& image,
+				       const oln::abstract::fun_rw<Fun>& fun) :
+      super_t(image.exact()),
+      fun_(fun.exact())
+    {
+    }
+
+    template <typename Image, typename Fun>
+    typename two_way_rw<Image, Fun>::rvalue_t
+    two_way_rw<Image, Fun>::impl_op_read(const typename two_way_rw<Image, Fun>::psite_t& p) const
+    {
+      return fun_.read(this->delegate(), p);
+    }
+
+    template <typename Image, typename Fun>
+    typename two_way_rw<Image, Fun>::lvalue_t
+    two_way_rw<Image, Fun>::impl_op_readwrite(const typename two_way_rw<Image, Fun>::psite_t& p)
+    {
+      typename two_way_rw<Image, Fun>::lvalue_t tmp(this->delegate(), p);
+      return tmp;
+    }
 
   } // end of namespace oln::morpher
 
 } // end of namespace oln
 
-#endif // ! OLN_MORPHER_IDENTITY_HH
+#endif // ! OLN_MORPHER_TWO_WAY_RW_HXX
+
+
+
+
+
 
 

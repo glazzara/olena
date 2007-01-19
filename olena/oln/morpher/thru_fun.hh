@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_THRU_FUN
-# define OLN_MORPHER_THRU_FUN
+#ifndef OLN_MORPHER_THRU_FUN_HH
+# define OLN_MORPHER_THRU_FUN_HH
 
 # include <xtd/res.hh>
 // For xtd::case_<xtd::tag::fun_operator_1, mlc::pair_<F, Expr>, 1>
@@ -149,4 +149,4 @@ namespace xtd
 
 
 
-#endif // ! OLN_MORPHER_THRU_FUN
+#endif // ! OLN_MORPHER_THRU_FUN_HH

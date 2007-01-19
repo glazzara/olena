@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -81,7 +81,7 @@ namespace oln
   public:
     typedef mlc::true_ is_computed_type;
     typedef xtd::vec<n, oln_value(I)> value_type;
-    
+
     typedef value::two_way<self_t, fun_t> lvalue_type;
     typedef xtd::vec<n, oln_value(I)> rvalue_type;
   };
@@ -120,52 +120,6 @@ namespace oln
       xtd::vec<n, I> images_;
     };
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <unsigned n, typename I>
-    stack_rw<n, I>::stack_rw(const xtd::vec<n, I>& images) :
-      super_t(images[0]),
-      images_(images)
-    {
-    }
-    
-    template <unsigned n, typename I>
-    xtd::vec<n, oln_value(I)>
-    stack_rw<n, I>::impl_op_read(const typename stack_rw<n, I>::psite_t& p) const
-    {
-      xtd::vec<n, oln_value(I)> tmp;
-      for (unsigned i = 0; i < n; ++i)
-	tmp[i] = images_[i](p);
-      return tmp;
-    }
-
-    template <unsigned n, typename I>
-    typename stack_rw<n, I>::lvalue_t
-    stack_rw<n, I>::impl_op_readwrite(const typename stack_rw<n, I>::psite_t& p)
-    {
-      lvalue_t tmp(*this, p);
-      return tmp;
-    }
-
-    template <unsigned n, typename I>
-    const I&
-    stack_rw<n, I>::image(unsigned i) const
-    {
-      precondition(i < n);
-      return images_[i];
-    }
-
-    template <unsigned n, typename I>
-    I&
-    stack_rw<n, I>::image(unsigned i)
-    {
-      precondition(i < n);
-      return images_[i];
-    }
-
-# endif
-
   } // end of namespace oln::morpher
 
 
@@ -187,52 +141,18 @@ namespace oln
 	   abstract::mutable_image<I>& image_2,
 	   abstract::mutable_image<I>& image_3);
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-
-  template <typename I>
-  morpher::stack_rw<2, I>
-  stack_rw(abstract::mutable_image<I>& image_0,
-	   abstract::mutable_image<I>& image_1)
-  {
-    morpher::stack_rw<2, I> tmp(xtd::mk_vec(image_0.exact(),
-					    image_1.exact()));
-    return tmp;
-  }
-
-  template <typename I>
-  morpher::stack_rw<3, I>
-  stack_rw(abstract::mutable_image<I>& image_0,
-	   abstract::mutable_image<I>& image_1,
-	   abstract::mutable_image<I>& image_2)
-  {
-    morpher::stack_rw<3, I> tmp(xtd::mk_vec(image_0.exact(),
-					    image_1.exact(),
-					    image_2.exact()));
-    return tmp;
-  }
-
-  template <typename I>
-  morpher::stack_rw<4, I>
-  stack_rw(abstract::mutable_image<I>& image_0,
-	   abstract::mutable_image<I>& image_1,
-	   abstract::mutable_image<I>& image_2,
-	   abstract::mutable_image<I>& image_3)
-  {
-    morpher::stack_rw<4, I> tmp(xtd::mk_vec(image_0.exact(),
-					    image_1.exact(),
-					    image_2.exact(),
-					    image_3.exact()));
-    return tmp;
-  }
-
-# endif
-
 } // end of namespace oln
 
+# ifndef OLN_INCLUDE_ONLY
+#  include "stack_rw.hxx"
+# endif
 
 # include <oln/value/two_way.hxx>
 
 
 #endif // ! OLN_MORPHER_STACK_RW_HH
+
+
+
+
+

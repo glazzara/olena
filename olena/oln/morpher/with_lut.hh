@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -122,50 +122,6 @@ namespace oln
       lut_type lut_;
     };
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename Image, typename Lut>
-    with_lut<Image, Lut>::with_lut(const Image& image, const Lut& lut) :
-      super_t(image),
-      lut_(lut)
-    {
-      mlc::assert_equal_< oln_value(Image), typename Lut::orig_value_type >::check();
-    }
-
-    template <typename Image, typename Lut>
-    typename with_lut<Image, Lut>::rvalue_type
-    with_lut<Image, Lut>::impl_op_read(const typename with_lut<Image, Lut>::psite_type& p) const
-    {
-      // FIXME: What if lut_ has no value for `this->image_(p)'?  At
-      // least, document the behavior of this method (will it abort,
-      // does the LUT have to provide a default value, etc.)
-      return lut_(this->image_(p));
-    }
-
-    template <typename Image, typename Lut>
-    typename with_lut<Image, Lut>::value_proxy_type
-    with_lut<Image, Lut>::impl_value(const value_type& v) const
-    {
-      return value_proxy_type(lut_, v);
-    }
-
-    template <typename Image, typename Lut>
-    typename with_lut<Image, Lut>::mutable_value_proxy_type
-    with_lut<Image, Lut>::impl_value(const value_type& v)
-    {
-      return mutable_value_proxy_type(lut_, v);
-    }
-
-    template <typename Image, typename Lut>
-    const typename with_lut<Image, Lut>::lut_type&
-    with_lut<Image, Lut>::lut() const
-    {
-      return lut_;
-    }
-
-# endif
-
   } // end of namespace oln::morpher
 
 
@@ -176,23 +132,11 @@ namespace oln
   operator + (const abstract::image<I>& image,
 	      lookup_table<K, D>& lut);
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename I, typename K, typename D>
-  morpher::with_lut< I, lookup_table<K, D> >
-  operator + (const abstract::image<I>& image,
-	      lookup_table<K, D>& lut)
-  {
-    typedef lookup_table<K, D> lut_type;
-    mlc::assert_equal_< oln_value(I), typename lut_type::orig_value_type >::check();
-    morpher::with_lut<I, lut_type> tmp(image.exact(), lut);
-    return tmp;
-  }
-
-# endif
-
 } // end of namespace oln
 
+
+# ifndef OLN_INCLUDE_ONLY
+#  include "with_lut.hxx"
+# endif
 
 #endif // ! OLN_MORPHER_WITH_LUT_HH

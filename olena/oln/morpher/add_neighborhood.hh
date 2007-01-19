@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -95,27 +95,6 @@ namespace oln
       topo_t topo_;
     };
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename Image, typename Neighb>
-    add_neighborhood<Image, Neighb>::add_neighborhood(const Image& image, const Neighb& nbh) :
-      super_t(image),
-      topo_(image.topo(), nbh)
-    {
-      mlc::assert_equal_<oln_vtype(Image, grid), oln_vtype(Neighb, grid)>::check();
-      // FIXME: check that Image is without a nbh
-    }
-
-    template <typename Image, typename Neighb>
-    const typename add_neighborhood<Image, Neighb>::topo_t&
-    add_neighborhood<Image, Neighb>::impl_topo() const
-    {
-      return topo_;
-    }
-
-# endif
-
   } // end of namespace oln::morpher
 
 
@@ -124,23 +103,10 @@ namespace oln
   morpher::add_neighborhood<I, N>
   operator + (const abstract::image<I>& image, const abstract::neighborhood<N>& nbh);
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename I, typename N>
-  morpher::add_neighborhood<I, N>
-  operator + (const abstract::image<I>& image,
-	      const abstract::neighborhood<N>& nbh)
-  {
-    mlc::assert_equal_<oln_vtype(I, grid), oln_vtype(N, grid)>::check();
-    // FIXME: check that Image is without a nbh
-    morpher::add_neighborhood<I, N> tmp(image.exact(), nbh.exact());
-    return tmp;
-  }
-
-# endif
-
 } // end of namespace oln
 
+# ifndef OLN_INCLUDE_ONLY
+#  include "add_neighborhood.hxx"
+# endif
 
 #endif // ! OLN_MORPHER_ADD_NEIGHBORHOOD_HH

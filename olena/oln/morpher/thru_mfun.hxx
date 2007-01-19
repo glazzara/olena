@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,63 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_IDENTITY_HH
-# define OLN_MORPHER_IDENTITY_HH
-
-# include <oln/morpher/internal/image_extension.hh>
-
+#ifndef OLN_MORPHER_THRU_MFUN_HXX
+# define OLN_MORPHER_THRU_MFUN_HXX
 
 namespace oln
 {
 
-  namespace morpher
+  template <typename Image, typename Fun>
+  thru_mfun<Image, Fun>::thru_mfun(const Image& image, const Fun& fun) :
+    super_t(image),
+    fun_(fun)
   {
-    // Forward declaration.
-    template <typename Image> struct identity;
-
-  } // end of namespace oln::morpher
-
-
-  /// Super type.
-  template <typename Image>
-  struct set_super_type< morpher::identity<Image> >
+  }
+    
+  template <typename Image, typename Fun>
+  typename thru_mfun<Image, Fun>::rvalue_t
+  thru_mfun<Image, Fun>::impl_op_read(const typename thru_mfun<Image, Fun>::psite_t& p) const
   {
-    typedef morpher::identity<Image> self_t;
-    typedef morpher::internal::image_extension<Image, self_t> ret;
-  };
-
-
-  namespace morpher
+    return fun_(this->image_(p));
+  }
+    
+  template <typename Image, typename Fun>
+  typename thru_mfun<Image, Fun>::lvalue_t
+  thru_mfun<Image, Fun>::impl_op_readwrite(const typename thru_mfun<Image, Fun>::psite_t& p)
   {
-    /// Identity morpher.
-    template <typename Image>
-    class identity : public internal::image_extension<Image, identity<Image> >
-    {
-    private:
-      typedef identity<Image> self_t;
-      typedef internal::image_extension<Image, self_t> super_t;
-
-    public:
-      // FIXME: Handle the constness.
-      identity(const Image& image);
-
-    };
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename Image>
-    identity<Image>::identity(const Image& image) :
-      super_t(image)
-    {
-    }
-
-# endif
-
-  } // end of namespace oln::morpher
+    return fun_(this->image_(p));
+  }
 
 } // end of namespace oln
 
-#endif // ! OLN_MORPHER_IDENTITY_HH
+#endif // ! OLN_MORPHER_THRU_MFUN_HXX
+
+
+
+
+
 
 

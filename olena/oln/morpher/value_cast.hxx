@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,63 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_IDENTITY_HH
-# define OLN_MORPHER_IDENTITY_HH
-
-# include <oln/morpher/internal/image_extension.hh>
-
+#ifndef OLN_MORPHER_VALUE_CAST_HXX
+# define OLN_MORPHER_VALUE_CAST_HXX
 
 namespace oln
 {
 
   namespace morpher
   {
-    // Forward declaration.
-    template <typename Image> struct identity;
 
-  } // end of namespace oln::morpher
-
-
-  /// Super type.
-  template <typename Image>
-  struct set_super_type< morpher::identity<Image> >
-  {
-    typedef morpher::identity<Image> self_t;
-    typedef morpher::internal::image_extension<Image, self_t> ret;
-  };
-
-
-  namespace morpher
-  {
-    /// Identity morpher.
-    template <typename Image>
-    class identity : public internal::image_extension<Image, identity<Image> >
-    {
-    private:
-      typedef identity<Image> self_t;
-      typedef internal::image_extension<Image, self_t> super_t;
-
-    public:
-      // FIXME: Handle the constness.
-      identity(const Image& image);
-
-    };
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename Image>
-    identity<Image>::identity(const Image& image) :
+    template <typename Image, typename Value>
+    value_cast<Image, Value>::value_cast(const Image& image) :
       super_t(image)
     {
     }
 
-# endif
-
   } // end of namespace oln::morpher
+    
+  template <typename Value, typename I>
+  morpher::value_cast<I, Value>
+  value_cast(const abstract::image<I>& ima)
+  {
+    morpher::value_cast<I, Value> tmp(ima.exact());
+    return tmp;
+  }
 
 } // end of namespace oln
 
-#endif // ! OLN_MORPHER_IDENTITY_HH
+#endif // ! OLN_MORPHER_VALUE_CAST_HXX
+
+
+
+
+
+
+
+
+
+
+
 
 

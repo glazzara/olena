@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,70 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_STACK_HH
-# define OLN_MORPHER_STACK_HH
-
-# include <xtd/vec.hh>
-# include <oln/morpher/internal/image_value_morpher.hh>
-
-
+#ifndef OLN_MORPHER_STACK_HXX
+# define OLN_MORPHER_STACK_HXX
 
 namespace oln
 {
 
   namespace morpher
   {
-    // Forward declaration.
-    template <unsigned n, typename I> struct stack;
 
-  } // end of namespace oln::morpher
-
-
-  /// Super type.
-  template <unsigned n, typename I>
-  struct set_super_type< morpher::stack<n, I> >
-  {
-    typedef morpher::stack<n, I> self_t;
-    typedef morpher::internal::image_value_morpher<I, self_t> ret;
-  };
-
-  template <unsigned n, typename I>
-  struct vtypes< morpher::stack<n, I> >
-  {
-    typedef mlc::true_ is_computed_type;
-    typedef xtd::vec<n, oln_value(I)> value_type;
-
-    typedef xtd::vec<n, oln_value(I)> rvalue_type;
-  };
-
-
-  namespace morpher
-  {
-    /// "Stack of images" morpher.
     template <unsigned n, typename I>
-    class stack : public internal::image_value_morpher< I, stack<n, I> >
+    stack<n, I>::stack(const xtd::vec<n, I>& images) :
+      super_t(images[0]),
+      images_(images)
     {
-    private:
+    }
 
-      typedef stack<n, I> self_t;
-      typedef internal::image_value_morpher<I, self_t> super_t;
+    template <unsigned n, typename I>
+    xtd::vec<n, oln_value(I)>
+    stack<n, I>::impl_op_read(const typename stack<n, I>::psite_t& p) const
+    {
+      xtd::vec<n, oln_value(I)> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp[i] = images_[i](p);
+      return tmp;
+    }
 
-      typedef oln_psite(self_t) psite_t;
-      typedef oln_rvalue(self_t) rvalue_t;
-
-    public:
-
-      enum { N = n }; // FIXME: Hum...
-
-      stack(const xtd::vec<n, I>& images);
-
-      xtd::vec<n, oln_value(I)> impl_op_read(const psite_t& p) const;
-
-      const I& image(unsigned i) const;
-
-    protected:
-      xtd::vec<n, I> images_;
-    };
+    template <unsigned n, typename I>
+    const I&
+    stack<n, I>::image(unsigned i) const
+    {
+      precondition(i < n);
+      return images_[i];
+    }
 
   } // end of namespace oln::morpher
 
@@ -96,25 +65,57 @@ namespace oln
   template <typename I>
   morpher::stack<2, I>
   stack(const abstract::image<I>& image_0,
-	const abstract::image<I>& image_1);
+	const abstract::image<I>& image_1)
+  {
+    morpher::stack<2, I> tmp(xtd::mk_vec(image_0.exact(),
+					 image_1.exact()));
+    return tmp;
+  }
 
   template <typename I>
   morpher::stack<3, I>
   stack(const abstract::image<I>& image_0,
 	const abstract::image<I>& image_1,
-	const abstract::image<I>& image_2);
+	const abstract::image<I>& image_2)
+  {
+    morpher::stack<3, I> tmp(xtd::mk_vec(image_0.exact(),
+					 image_1.exact(),
+					 image_2.exact()));
+    return tmp;
+  }
 
   template <typename I>
   morpher::stack<4, I>
   stack(const abstract::image<I>& image_0,
 	const abstract::image<I>& image_1,
 	const abstract::image<I>& image_2,
-	const abstract::image<I>& image_3);
+	const abstract::image<I>& image_3)
+  {
+    morpher::stack<4, I> tmp(xtd::mk_vec(image_0.exact(),
+					 image_1.exact(),
+					 image_2.exact(),
+					 image_3.exact()));
+    return tmp;
+  }
+
 
 } // end of namespace oln
 
-# ifndef OLN_INCLUDE_ONLY
-#  include "stack.hxx"
-# endif
+#endif // ! OLN_MORPHER_STACK_HXX
 
-#endif // ! OLN_MORPHER_STACK_HH
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -108,47 +108,13 @@ namespace oln
 
     } // end of namespace oln::morpher::ERROR
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-    // public
-
-    template <typename Image, typename Fun>
-    two_way_rw<Image, Fun>::two_way_rw(oln::abstract::mutable_image<Image>& image) :
-      super_t(image.exact()),
-      fun_()
-    {
-    }
-
-    template <typename Image, typename Fun>
-    two_way_rw<Image, Fun>::two_way_rw(oln::abstract::mutable_image<Image>& image,
-				       const oln::abstract::fun_rw<Fun>& fun) :
-      super_t(image.exact()),
-      fun_(fun.exact())
-    {
-    }
-    
-    template <typename Image, typename Fun>
-    typename two_way_rw<Image, Fun>::rvalue_t
-    two_way_rw<Image, Fun>::impl_op_read(const typename two_way_rw<Image, Fun>::psite_t& p) const
-    {
-      return fun_.read(this->delegate(), p);
-    }
-    
-    template <typename Image, typename Fun>
-    typename two_way_rw<Image, Fun>::lvalue_t
-    two_way_rw<Image, Fun>::impl_op_readwrite(const typename two_way_rw<Image, Fun>::psite_t& p)
-    {
-      typename two_way_rw<Image, Fun>::lvalue_t tmp(this->delegate(), p);
-      return tmp;
-    }
-
-# endif
-
   } // end of namespace oln::morpher
 
 } // end of namespace oln
 
+# ifndef OLN_INCLUDE_ONLY
+#  include "two_way_rw.hxx"
+# endif
 
 # include <oln/value/two_way.hxx>
 

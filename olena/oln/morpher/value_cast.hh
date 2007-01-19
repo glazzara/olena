@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_VALUE_CAST
-# define OLN_MORPHER_VALUE_CAST
+#ifndef OLN_MORPHER_VALUE_CAST_HH
+# define OLN_MORPHER_VALUE_CAST_HH
 
 # include <xtd/abstract/open_nary_fun.hh>
 # include <xtd/res.hh>
@@ -86,17 +86,6 @@ namespace oln
       value_cast(const Image& image);
     };
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename Image, typename Value>
-    value_cast<Image, Value>::value_cast(const Image& image) :
-      super_t(image)
-    {
-    }
-    
-# endif
-
   } // end of namespace oln::morpher
 
 
@@ -105,21 +94,11 @@ namespace oln
   value_cast(const abstract::image<I>& ima);
 
 
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename Value, typename I>
-  morpher::value_cast<I, Value>
-  value_cast(const abstract::image<I>& ima)
-  {
-    morpher::value_cast<I, Value> tmp(ima.exact());
-    return tmp;
-  }
-
-# endif
-
-
 } // end of namespace oln
 
 
+# ifndef OLN_INCLUDE_ONLY
+#  include "value_cast.hxx"
+# endif
 
-#endif // ! OLN_MORPHER_VALUE_CAST
+#endif // ! OLN_MORPHER_VALUE_CAST_HH

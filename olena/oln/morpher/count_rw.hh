@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -99,41 +99,6 @@ namespace oln
 
     } // end of namespace oln::morpher::ERROR
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-    // public
-
-    template <typename Image>
-    count_rw_<Image>::count_rw_(Image& image) :
-      super_t(image)
-    {
-    }
-
-    template <typename Image>
-    count_rw_<Image>::count_rw_(oln::abstract::mutable_image<Image>& image) :
-      super_t(image.exact())
-    {
-    }
-    
-    template <typename Image>
-    oln_rvalue(count_rw_<Image>)
-    count_rw_<Image>::impl_op_read(const oln_psite(count_rw_<Image>)& p) const
-    {
-      value::ro_counter<Image> tmp(image_, p);
-      return tmp;
-    }
-    
-    template <typename Image>
-    oln_lvalue(count_rw_<Image>)
-    count_rw_<Image>::impl_op_readwrite(const oln_psite(count_rw_<Image>)& p)
-    {
-      value::rw_counter<Image> tmp(image_, p);
-      return tmp;
-    }
-    
-# endif
-
   } // end of namespace oln::morpher
 
 
@@ -145,31 +110,10 @@ namespace oln
   morpher::count_rw_<I>
   count_rw(const oln::abstract::mutable_image<I>& input);
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename I>
-  morpher::count_rw_<I>
-  count_rw(oln::abstract::mutable_image<I>& input)
-  {
-    morpher::count_rw_<I> tmp(input.exact());
-    return tmp;
-  }
-
-  template <typename I>
-  morpher::count_rw_<I>
-  count_rw(const oln::abstract::mutable_image<I>& input)
-  {
-    // FIXME: Hack.
-    I& input_ = const_cast<I&>(input.exact());
-    morpher::count_rw_<I> tmp(input_);
-    return tmp;
-  }
-
-# endif
-
-
 } // end of namespace oln
 
+# ifndef OLN_INCLUDE_ONLY
+#  include "count_rw.hxx"    
+# endif
 
 #endif // ! OLN_MORPHER_COUNT_RW_HH

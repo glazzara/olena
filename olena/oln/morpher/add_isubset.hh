@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_ADD_ISUBSET
-# define OLN_MORPHER_ADD_ISUBSET
+#ifndef OLN_MORPHER_ADD_ISUBSET_HH
+# define OLN_MORPHER_ADD_ISUBSET_HH
 
 # include <oln/core/abstract/image.hh>
 # include <oln/core/abstract/image/type/binary.hh>
@@ -72,7 +72,7 @@ namespace oln
   {
     /// Isubset addition morpher.
     template <typename Image, typename Isubset>
-    class add_isubset : public morpher::internal::image_extension< Image, 
+    class add_isubset : public morpher::internal::image_extension< Image,
 								   add_isubset<Image, Isubset> >
     // FIXME: Uncomment. stc_get_supers(mlc_comma_1(add_isubset<Image, Isubset>))
     {
@@ -93,32 +93,7 @@ namespace oln
     protected:
       topo_t topo_;
     };
-
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename Image, typename Isubset>
-    add_isubset<Image, Isubset>::add_isubset(const Image& image, const Isubset& isubset) :
-      super_t(image),
-      topo_(image.topo(), isubset)
-    {
-      // mlc::assert_equal_<oln_vtype(Image, grid), oln_vtype(Isubset, grid)>::check();
-      // FIXME: check that Image is without a isubset
-    }
-
-    template <typename Image, typename Isubset>
-    const typename add_isubset<Image, Isubset>::topo_t&
-    add_isubset<Image, Isubset>::impl_topo() const
-    {
-      return topo_;
-    }
-
-# endif
-
-
   } // end of namespace oln::morpher
-
 
 
   template <typename I, typename S>
@@ -135,33 +110,10 @@ namespace oln
   operator | (const abstract::image<I>& image,
 	      const xtd::abstract::fun_nary_expr_<1,S>& fsubset);
 
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename I, typename S>
-  morpher::add_isubset<I, S>
-  operator | (const abstract::image<I>& image,
-	      const abstract::binary_image<S>& isubset)
-  {
-    mlc::assert_equal_<oln_vtype(I, grid), oln_vtype(S, grid)>::check();
-    // FIXME: check that Image does not have yet a subset
-    morpher::add_isubset<I, S> tmp(image.exact(), isubset.exact());
-    return tmp;
-  }
-
-  template <typename I, typename S>
-  morpher::add_isubset<I, S>
-  operator | (const abstract::image<I>& image,
-	      const xtd::abstract::fun_nary_expr_<1,S>& fsubset)
-  {
-    morpher::add_isubset<I, S> tmp(image.exact(), fsubset.exact_());
-    return tmp;
-  }
-
-# endif
-
 } // end of namespace oln
 
+# ifndef OLN_INCLUDE_ONLY
+#  include "add_isubset.hxx"
+# endif
 
-#endif // ! OLN_MORPHER_ADD_ISUBSET
+#endif // ! OLN_MORPHER_ADD_ISUBSET_HH

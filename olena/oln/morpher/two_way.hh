@@ -109,56 +109,24 @@ namespace oln
 
     } // end of namespace oln::morpher::ERROR
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-    // public
-
-    template <typename Image, typename Fun>
-    two_way<Image, Fun>::two_way(Image& image) :
-      super_t(image),
-      fun_()
-    {
-    }
-
-    template <typename Image, typename Fun>
-    two_way<Image, Fun>::two_way(Image& image, Fun fun) :
-      super_t(image),
-      fun_(fun)
-    {
-    }
-
-    template <typename Image, typename Fun>
-    two_way<Image, Fun>::two_way(oln::abstract::mutable_image<Image>& image,
-				 const oln::abstract::fun_v2w2v<Fun>& fun) :
-      super_t(image.exact()),
-      fun_(fun.exact())
-    {
-    }
-    
-    template <typename Image, typename Fun>
-    typename two_way<Image, Fun>::rvalue_t
-    two_way<Image, Fun>::impl_op_read(const typename two_way<Image, Fun>::psite_t& p) const
-    {
-      return fun_.direct(image_(p));
-    }
-    
-    template <typename Image, typename Fun>
-    typename two_way<Image, Fun>::lvalue_t
-    two_way<Image, Fun>::impl_op_readwrite(const typename two_way<Image, Fun>::psite_t& p)
-    {
-      value::two_way<Image, Fun> tmp(image_, fun_, p);
-      return tmp;
-    }
-
-# endif
-
   } // end of namespace oln::morpher
 
 } // end of namespace oln
 
 
+# ifndef OLN_INCLUDE_ONLY
+#  include "two_way.hxx"
+# endif
+
 # include <oln/value/two_way.hxx>
 
 
 #endif // ! OLN_MORPHER_TWO_WAY_HH
+
+
+
+
+
+
+
+
