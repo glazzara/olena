@@ -1,3 +1,11 @@
+2007-01-26  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
+
+	Add mini-oln.
+	* samples/mini-oln/README: Add mini-oln. New.
+	* samples/mini-oln/mini-oln.cc: Idem. New.
+	* samples/mini-oln: Idem. New.
+	* samples: Idem. New.
+
 2007-01-11  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
 
 	Fix some tests.
