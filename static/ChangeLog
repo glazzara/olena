@@ -1,3 +1,32 @@
+2007-01-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Polish stc/scoop2.hh.
+	The work is far from beeing finished; we still have to address
+	the problem of deferred virtual types.
+
+	* doc/algorithms.ml: Add a new (non working) example.
+	Typos.
+	* stc/scoop.hh (stc_find_deduce_vtype): Add a missing argument.
+	* stc/scoop2.hh (stc::none): New.
+	(stc::is_found_, stc::is_not_found_): New.
+	(SCOOPED_NAMESPACE): Set to oln.
+	(stc_match_pair_0p_with, stc_match_pair_1p_with
+	(stc_match_pair_2p_with, stc_match_pair_1p_with_error)
+	(stc_match_pair_2p_with_error): New macros.
+	(merge2_): Use them to simplify this struct.
+	(stc_match_triple_0p_with, stc_match_triple_1p_with)
+	(stc_match_triple_2p_with, stc_match_triple_3p_with)
+	(stc_match_triple_2p_with_error, stc_match_triple_3p_with_error):
+	New macros.
+	(merge3_): Use them to simplify this struct.
+	(find): Rename struct as...
+	(find_vtype): ...this.
+	(vtype): New struct.
+	(stc_deferred_vtype, stc_vtype_, stc_vtype)
+	(stc_find_deduce_vtype_, stc_find_deduce_vtype)
+	(stc_deduce_deferred_vtype, stc_deduce_vtype_, stc_deduce_vtype):
+	New macros.
+
 2007-01-26  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
 
 	Add mini-oln.

@@ -80,8 +80,8 @@ let merge2 (local_res : cxx_type) (super_res : cxx_type) : cxx_type =
   | Stc_Not_found, u             -> u
 
   (* local_res == stc::abstract.  *)
-  | Stc_Abstract,  Stc_Abstract  -> Stc_Abstract
   | Stc_Abstract,  Stc_Not_found -> Stc_Abstract
+  | Stc_Abstract,  Stc_Abstract  -> Stc_Abstract
   | Stc_Abstract,  Stc_Final _   -> error "Final VT redefined abstract"
   | Stc_Abstract,  _             -> error "VT redefined abstract."
 
@@ -182,7 +182,7 @@ let rec find_rec (source : cxx_type) (target : string) : cxx_type =
 	end
     | _ -> error "find_rec: source is not a SCOOP class."
 
-(* Like find_rec, but only search in the inheritance branch.  *)
+(* Like find_rec, but search only in the inheritance branch.  *)
 and find_rec_in_supers (source : cxx_type) (target : string) : cxx_type =
   match source with
     | Stc_None -> Stc_Not_found
@@ -204,7 +204,6 @@ let find (source : cxx_type) (target : string) : cxx_type =
     | Stc_Final t                -> t
     | t                          -> t
 ;;
-
 
 
 (*-----------.
@@ -611,3 +610,39 @@ let value_cast__image2d_int__float =
 
 assert (find image2d_int "value_type" = Std_Int);
 assert (find value_cast__image2d_int__float "value_type" = Std_Float);;
+
+
+(*--------------.
+| Limitations.  |
+`--------------*)
+
+(* Another Olena-like example with recursive definitions.
+
+     class internal_dpoint_nd < stc::none
+     {
+       vtype mydim_type = find dpoint2d "dim_type";
+     }
+
+     class dpoint2d < internal_dpoint_nd
+     {
+       // Dummy value (because our C++ types are limited in this prototype).
+       vtype dim_type = int
+     }
+*)
+(* However, we can't write this
+
+     let rec internal_dpoint_nd =
+       Scoop_Class { super = Stc_None;
+     	             vtypes = create_vtypes ["mydim_type",
+                                             (find dpoint2d "dim_type")] }
+     and dpoint2d = 
+       Scoop_Class { super = internal_dpoint_nd;
+     	             vtypes = create_vtypes ["dim_type", Std_Int] }
+     in
+     find dpoint2d "dim_type";;
+     
+   because of the limitations of the recursive definitions of OCaml.
+   These limitations reflect issues w.r.t. recursive definitions in
+   C++ too.  A new mechanism is needed, both in this OCaml prototype
+   and in its C++ counterpart (stc/scoop2.hh).
+*)

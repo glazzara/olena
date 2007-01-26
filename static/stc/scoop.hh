@@ -801,7 +801,7 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n;
 						Namespace::typedef_::Target1##_type>::ret,	\
 			  Namespace::typedef_::Target2##_type>::ret
 
-# define stc_find_deduce_vtype(Namespace, From, Target)						\
+# define stc_find_deduce_vtype(Namespace, From, Target1, Target2)				\
    typename											\
    Namespace::find_vtype< typename								\
                           Namespace::find_vtype<From,						\
