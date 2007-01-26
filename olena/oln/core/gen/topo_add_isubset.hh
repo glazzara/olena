@@ -36,7 +36,7 @@ namespace oln
 {
 
 
-  // Forward declarations.
+  // Forward declaration.
   template <typename topo, typename isubset> class topo_add_isubset;
 
 
@@ -49,7 +49,7 @@ namespace oln
   };
 
 
-  /// Virtual types associated to oln::bbox_<point>.
+  /// Virtual types associated to oln::topo_add_isubset<topo, isubset>.
   template <typename topo, typename isubset>
   struct vtypes< topo_add_isubset<topo, isubset> >
   {
@@ -57,7 +57,7 @@ namespace oln
   };
 
 
-  /// Bounding box topology based on a point class.
+  /// Topology based on another topology and a subset (encoded in an image).
   template <typename topo_t, typename isubset_t>
   class topo_add_isubset
     : public internal::topology_morpher<topo_t, topo_add_isubset<topo_t, isubset_t> >

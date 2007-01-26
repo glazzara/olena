@@ -135,7 +135,12 @@ namespace oln
   /// With bbox.
   template <typename E>
   struct case_< image_hierarchy_wrt_bbox, E, 1 > :
+  // FIXME: Shouldn't we use stc::is_found (resp. mlc::is_found) here?
+# ifdef OLENA_USE_NEW_SCOOP2
+    where_< mlc::neq_< oln_deduce_vtype(E, topo, bbox), stc::not_found > >
+# else
     where_< mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found > >
+# endif // OLENA_USE_NEW_SCOOP2
   {
     typedef abstract::image_having_bbox<E> ret;
   };

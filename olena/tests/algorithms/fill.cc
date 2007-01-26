@@ -40,7 +40,7 @@ main()
   typedef oln::image2d<int> image_t;
   image_t ima(3, 3);
   oln::level::fill(ima, 51);
-  oln_type_of_(image_t, piter) p(ima.topo());
+  oln_piter_(image_t) p(ima.topo());
   for_all(p)
     assert(ima(p) == 51);
 }

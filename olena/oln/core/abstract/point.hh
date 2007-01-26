@@ -69,12 +69,34 @@ namespace oln
     // FIXME: Prefer to use final<deduce..> when possible.
     typedef stc::abstract grid_type;
     typedef stc::abstract dpoint_type;
-    typedef oln_deduce_deferred_vtype(E, dpoint, coord) coord_type;
+# ifndef OLENA_USE_NEW_SCOOP2
+   typedef oln_deduce_deferred_vtype(E, dpoint, coord) coord_type;
+# endif // !OLENA_USE_NEW_SCOOP2
     typedef stc::abstract dim_type;
 
+# ifndef OLENA_USE_NEW_SCOOP2
     typedef oln_dim(E) dim_t;
     typedef xtd::vec<mlc_value(dim_t), coord_type> vec_type;
+# endif // !OLENA_USE_NEW_SCOOP2
   };
+
+# ifdef OLENA_USE_NEW_SCOOP2
+  template <typename E>
+  struct single_vtype< abstract::point<E>, typedef_::coord_type>
+  {
+    typedef oln_deduce_vtype(E, dpoint, coord) ret;
+  };
+
+  template <typename E>
+  struct single_vtype< abstract::point<E>, typedef_::vec_type>
+  {
+  private:
+    typedef oln_dim(E) dim_t;
+    typedef oln_coord(E) coord_t;
+  public:
+    typedef xtd::vec<mlc_value(dim_t), coord_t> ret;
+  };
+# endif // OLENA_USE_NEW_SCOOP2
 
 
   namespace abstract

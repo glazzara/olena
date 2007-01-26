@@ -36,7 +36,7 @@ namespace oln
 {
 
 
-  // Forward declarations.
+  // Forward declaration.
   template <typename topo, typename nbh> class topo_add_nbh;
 
 
@@ -49,7 +49,7 @@ namespace oln
   };
 
 
-  /// Virtual types associated to oln::bbox_<point>.
+  /// Virtual types associated to oln::topo_add_nbh<topo, nbh>.
   template <typename topo, typename nbh>
   struct vtypes< topo_add_nbh<topo, nbh> >
   {
@@ -58,7 +58,7 @@ namespace oln
   };
 
 
-  /// Bounding box topology based on a point class.
+  /// Topology based on another topology and a neighborhood.
   template <typename topo_t, typename nbh_t>
   class topo_add_nbh : public internal::topology_morpher<topo_t, topo_add_nbh<topo_t, nbh_t> >
   {

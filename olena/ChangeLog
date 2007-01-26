@@ -1,3 +1,111 @@
+2007-01-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add temporary helpers to support the new SCOOP 2 implementation.
+	The macro OLENA_USE_NEW_SCOOP2 is used to tag the places where
+	support code is introduced.
+
+	* oln/core/typedefs.hh (stc/scoop2.hh) [OLENA_USE_NEW_SCOOP2]:
+	Include it.
+	(stc/scoop.hh) [!OLENA_USE_NEW_SCOOP2]: Include it.
+	Invoke stc_scoop_equipment_for_namespace(oln).
+
+
+	Temporary hack: define deferred virtual types as single_vtypes
+	when using new SCOOP 2 implementation.
+
+	* oln/core/image_entry.hh
+	(vtypes< image_entry<E> >::rvalue_type)
+	[!OLENA_USE_NEW_SCOOP2]: Define it.
+	(single_vtype<image_entry<E>, typedef_::rvalue_type>
+	[!OLENA_USE_NEW_SCOOP2]: Define it.
+	* oln/core/abstract/iterator_on_points.hh
+	(vtypes< abstract::iterator_on_points<E> >)
+	[!OLENA_USE_NEW_SCOOP2]: Define it.
+	(single_vtype<abstract::iterator_on_points<E>, typedef_::coord_type>)
+	[OLENA_USE_NEW_SCOOP2]: Define it.
+	* oln/core/abstract/point.hh (oln, oln): 
+	(vtypes< abstract::point<E> >::coord_type)
+	(vtypes< abstract::point<E> >::vec_type)
+	[!OLENA_USE_NEW_SCOOP2]: Define them.
+	(single_vtype< abstract::point<E>, typedef_::coord_type>)
+	(single_vtype< abstract::point<E>, typedef_::vec_type>)
+	[OLENA_USE_NEW_SCOOP2]: Define them.
+	* oln/core/internal/point_nd.hh (vtypes< internal::point_nd<E> >):
+	Disable it (duplicate with vtypes< abstract::point<E> >).
+	* oln/core/internal/dpoint_nd.hh
+	(vtypes< internal::dpoint_nd<E> >::vec_type)
+	[!OLENA_USE_NEW_SCOOP2]: Define it.
+	(single_vtype< internal::dpoint_nd<E>, typedef_::vec_type >)
+	[OLENA_USE_NEW_SCOOP2]: Define it.
+
+
+	Fix the usage of stc::not_found and stc::is_found_.
+
+	* oln/core/abstract/image/dimension/hierarchy.hh
+	(case_<image_hierarchy_wrt_dimension, E, 1>)
+	(case_<image_hierarchy_wrt_dimension, E, 3>)
+	(case_<image_hierarchy_wrt_dimension, E, 5>)
+	[OLENA_USE_NEW_SCOOP2]: Use stc::is_found_ to check for the
+	existence of an lvalue.
+	[!OLENA_USE_NEW_SCOOP2]: Use mlc::is_found_ to check for the
+	existence of an lvalue.
+	* oln/core/abstract/image/mutability/hierarchy.hh
+	(case_<image_hierarchy_wrt_mutability, E, 1>)
+	[OLENA_USE_NEW_SCOOP2]: Use stc::is_found_ to check for the
+	existence of an lvalue.
+	[!OLENA_USE_NEW_SCOOP2]: Use mlc::is_found_ to check for the
+	existence of an lvalue.
+	* oln/core/abstract/image/bbox/hierarchy.hh
+	(case_<image_hierarchy_wrt_bbox, E, 1>)
+	[OLENA_USE_NEW_SCOOP2]: Use stc::is_found_ to check for the
+	existence of a bounding box.
+	[!OLENA_USE_NEW_SCOOP2]: Use mlc::is_found_ to check for the
+	existence of a bounding box.
+	* oln/core/abstract/image/hybrid/classical.hh
+	(case_<image_hybrid_hierarchy_wrt_classical, E, 1>)
+	(case_<image_hybrid_hierarchy_wrt_classical, E, 2>)
+	(case_<image_hybrid_hierarchy_wrt_classical, E, 3>)
+	(case_<image_hybrid_hierarchy_wrt_classical, E, 4>)
+	[OLENA_USE_NEW_SCOOP2]: Use stc::not_found to check for the
+	existence of a bounding box.
+	(case_<image_hybrid_hierarchy_wrt_classical, E, 1>)
+	(case_<image_hybrid_hierarchy_wrt_classical, E, 2>)
+	(case_<image_hybrid_hierarchy_wrt_classical, E, 3>)
+	(case_<image_hybrid_hierarchy_wrt_classical, E, 4>)
+	[!OLENA_USE_NEW_SCOOP2]: Use mlc::not_found to check for the
+	existence of a bounding box.
+	* oln/core/abstract/image/value_wise_accessibility/hierarchy.hh
+	(case_<image_hierarchy_wrt_value_wise_accessibility, E, 1>):
+	(case_<image_hierarchy_wrt_value_wise_accessibility, E, 2>):
+	[OLENA_USE_NEW_SCOOP2]: Use stc::is_found_ to check for the
+	existence of a value iterator (and a value proxy).
+	[!OLENA_USE_NEW_SCOOP2]: Use mlc::is_found_ to check for the
+	existence of a value iterator (and a value proxy).
+	* oln/core/abstract/image/neighborhood/hierarchy.hh
+	(case_<image_hierarchy_wrt_neighborhood, E, 1>)
+	[OLENA_USE_NEW_SCOOP2]: Use stc::is_found_ to check for the
+	existence of a neighborhood.
+	[!OLENA_USE_NEW_SCOOP2]: Use mlc::is_found_ to check for the
+	existence of a neighborhood.
+
+
+	* oln/core/abstract/grid.hh (set_super_type<abstract::grid<E>>):
+	New.  Fix abstract::grid not having a super type.
+	* oln/morpher/thru_mfun.hxx: Move all implementations of methods
+	into...
+	(oln::morpher): ...this namespace.
+
+	* oln/core/gen/fwd_viter_lut.hh, oln/core/gen/bkd_viter_lut.hh,
+	* oln/core/gen/topo_bbox.hh, oln/core/gen/topo_lbbox.hh,
+	* oln/core/gen/topo_add_isubset.hh, oln/core/gen/topo_add_nbh.hh,
+	* oln/core/internal/bbox_fwd_piter.hh: Fix comments.
+	* oln/core/2d/point2d.hh (oln): Aesthetic changes.
+
+	* tests/core/point2d.cc: Fix inter-dependent headers.
+	* tests/core/dpoint2d.cc: Add a static assertion.
+	* tests/algorithms/fill.cc:
+	s/oln_type_of_(image_t, piter)/oln_piter_(image_t)/
+
 2007-01-19  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
 
 	Split morphers' interface and implementation.

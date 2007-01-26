@@ -71,7 +71,9 @@ namespace oln
 
     // FIXME: default definitions:
     typedef oln_point(E) psite_type;
+# ifndef OLENA_USE_NEW_SCOOP2
     typedef oln_value(E) rvalue_type;
+# endif // !OLENA_USE_NEW_SCOOP2
 
     /// \brief Morpher type.
     ///
@@ -79,6 +81,13 @@ namespace oln
     typedef mlc::none morpher_type;
   };
 
+# ifdef OLENA_USE_NEW_SCOOP2
+  template <typename E>
+  struct single_vtype< image_entry<E>, typedef_::rvalue_type >
+  {
+    typedef oln_value(E) ret;
+  };
+# endif // OLENA_USE_NEW_SCOOP2
 
 
   /// Entry class for point sets: image_entry<E> is an alias for

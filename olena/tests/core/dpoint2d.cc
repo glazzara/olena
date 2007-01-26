@@ -39,4 +39,7 @@ main()
   mlc::assert_<
     mlc_is_a_( dpoint_t, oln::internal::dpoint_nd )
   >::check();
+
+  typedef oln_vtype_(dpoint_t, vec) vec_t;
+  mlc::assert_< mlc_is_a_( vec_t, mlc_comma_1(xtd::vec< 2u, int >) ) >::check();
 }

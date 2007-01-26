@@ -40,6 +40,13 @@ namespace oln {
     template <typename E> class grid;
   }
 
+  /// Super type declaration.
+  template <typename E>
+  struct set_super_type< abstract::grid<E> >
+  {
+    typedef mlc::none ret;
+  };
+
   /// Virtual types associated to oln::abstract::grid.
   template <typename E>
   struct vtypes< abstract::grid<E> >

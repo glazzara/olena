@@ -44,7 +44,6 @@
 namespace oln
 {
 
-
   /// Function \f$point : (n, coord) \rightarrow point type\f$.
 
   template <unsigned n, typename C>
@@ -67,16 +66,16 @@ namespace oln
     typedef abstract::point<E> ret;
   };
 
-
-  template <typename E>
-  struct vtypes< internal::point_nd<E> >
-  {
-  private:
-    typedef oln_deferred_vtype(E, dim)   dim_t;
-    typedef oln_deferred_vtype(E, coord) coord_t;
-  public:
-    typedef xtd::vec<mlc_value(dim_t), coord_t> vec_type;
-  };
+// FIXME: Already defined in vtypes< abstract::point<E> > (Why?).
+//   template <typename E>
+//   struct vtypes< internal::point_nd<E> >
+//   {
+//   private:
+//     typedef oln_deferred_vtype(E, dim)   dim_t;
+//     typedef oln_deferred_vtype(E, coord) coord_t;
+//   public:
+//     typedef xtd::vec<mlc_value(dim_t), coord_t> vec_type;
+//   };
 
 
   namespace internal

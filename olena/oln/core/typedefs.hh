@@ -41,7 +41,11 @@
 
 # include <stc/any.hh>
 # include <stc/exact.hh>
-# include <stc/scoop.hh>
+# ifdef OLENA_USE_NEW_SCOOP2
+#  include <stc/scoop2.hh>
+# else
+#  include <stc/scoop.hh>
+# endif // OLENA_USE_NEW_SCOOP2
 
 # include <oln/core/type.hh>
 // FIXME: Move to oln/core.
@@ -52,9 +56,11 @@
 | Namespace equipment.  |
 `----------------------*/
 
+# ifndef OLENA_USE_NEW_SCOOP2
 // The virtual types facility is inserted here because it also
 // triggers Metalic's typedef introspection equipment.
 stc_scoop_equipment_for_namespace(oln);
+# endif // !OLENA_USE_NEW_SCOOP2
 
 
 namespace oln

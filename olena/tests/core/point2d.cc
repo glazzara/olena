@@ -27,7 +27,10 @@
 
 #include <mlc/assert.hh>
 #include <mlc/is_a.hh>
+// FIXME: There is an inter-dependency between point2d and dpoint2d.
+// Maybe we'll solve this with the interface/implementation separation?
 #include <oln/core/2d/point2d.hh>
+#include <oln/core/2d/dpoint2d.hh>
 
 
 int

@@ -91,7 +91,7 @@ namespace oln
     bool impl_is_valid() const;
     /// \}
 
-    // Get the value pointed by this iterator (const version).
+    /// Get the value pointed by this iterator.
     value_type impl_to_value() const;
 
     void print(std::ostream& ostr) const;

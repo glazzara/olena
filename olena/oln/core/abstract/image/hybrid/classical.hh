@@ -174,11 +174,16 @@ namespace oln
   /// 1D case.
   template <typename E>
   struct case_< image_hybrid_hierarchy_wrt_classical, E, 1 > :
-    where_< mlc::and_list_< mlc::eq_< oln_vtype(E, grid), oln::grid1d >,
-			    mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
-			    mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
-                           >
-           >
+    where_< mlc::and_list_<
+      mlc::eq_< oln_vtype(E, grid), oln::grid1d >,
+      mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
+    // FIXME: Shouldn't we use stc::is_found (resp. mlc::is_found) here?
+# ifdef OLENA_USE_NEW_SCOOP2
+      mlc::neq_< oln_deduce_vtype(E, topo, bbox), stc::not_found >
+# else
+      mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
+# endif // OLENA_USE_NEW_SCOOP2
+     > >
   {
     typedef abstract::classical_1d_image<E> ret;
   };
@@ -187,11 +192,16 @@ namespace oln
   /// 2D case.
   template <typename E>
   struct case_< image_hybrid_hierarchy_wrt_classical, E, 2 > :
-    where_< mlc::and_list_< mlc::eq_< oln_vtype(E, grid), oln::grid2d >,
-			    mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
-			    mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
-                           >
-           >
+    where_< mlc::and_list_<
+      mlc::eq_< oln_vtype(E, grid), oln::grid2d >,
+      mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
+    // FIXME: Shouldn't we use stc::is_found (resp. mlc::is_found) here?
+# ifdef OLENA_USE_NEW_SCOOP2
+      mlc::neq_< oln_deduce_vtype(E, topo, bbox), stc::not_found >
+# else
+      mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
+# endif // OLENA_USE_NEW_SCOOP2
+    > >
   {
     typedef abstract::classical_2d_image<E> ret;
   };
@@ -200,11 +210,16 @@ namespace oln
   /// 3D case.
   template <typename E>
   struct case_< image_hybrid_hierarchy_wrt_classical, E, 3 > :
-    where_< mlc::and_list_< mlc::eq_< oln_vtype(E, grid), oln::grid3d >,
-			    mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
-			    mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
-                           >
-           >
+    where_< mlc::and_list_<
+      mlc::eq_< oln_vtype(E, grid), oln::grid3d >,
+      mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
+    // FIXME: Shouldn't we use stc::is_found (resp. mlc::is_found) here?
+# ifdef OLENA_USE_NEW_SCOOP2
+    mlc::neq_< oln_deduce_vtype(E, topo, bbox), stc::not_found >
+# else
+    mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
+# endif // OLENA_USE_NEW_SCOOP2
+    > >
   {
     typedef abstract::classical_3d_image<E> ret;
   };
@@ -213,10 +228,15 @@ namespace oln
   /// General case.
   template <typename E>
   struct case_< image_hybrid_hierarchy_wrt_classical, E, 4 > :
-    where_< mlc::and_< mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
-		       mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
-                      >
-           >
+    where_< mlc::and_<
+      mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
+    // FIXME: Shouldn't we use stc::is_found (resp. mlc::is_found) here?
+# ifdef OLENA_USE_NEW_SCOOP2
+      mlc::neq_< oln_deduce_vtype(E, topo, bbox), stc::not_found >
+# else
+      mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
+# endif // OLENA_USE_NEW_SCOOP2
+    > >
   {
     typedef abstract::classical_image<E> ret;
   };

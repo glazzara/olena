@@ -45,7 +45,7 @@ namespace oln
   }
 
 
-  // Super type declaration.
+  /// Super type declaration.
   template <typename E>
   struct set_super_type< internal::bbox_fwd_piter<E> >
   {

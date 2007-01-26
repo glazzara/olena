@@ -35,7 +35,7 @@
 namespace oln
 {
 
-  // Forward declarations.
+  // Forward declaration.
   template <typename point> class topo_bbox_;
 
 
@@ -48,7 +48,7 @@ namespace oln
   };
 
 
-  /// Virtual types associated to oln::bbox_<point>.
+  /// Virtual types associated to oln::topo_bbox_<point>.
   template <typename point>
   struct vtypes< topo_bbox_<point> >
   {

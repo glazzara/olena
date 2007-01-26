@@ -54,13 +54,26 @@ namespace oln
   template <typename E>
   struct vtypes< internal::dpoint_nd<E> >
   {
+# ifndef OLENA_USE_NEW_SCOOP2
   private:
     typedef oln_deferred_vtype(E, dim)   dim_t;
     typedef oln_deferred_vtype(E, coord) coord_t;
   public:
     typedef xtd::vec<mlc_value(dim_t), coord_t> vec_type;
+# endif // !OLENA_USE_NEW_SCOOP2
   };
 
+# ifdef OLENA_USE_NEW_SCOOP2
+  template <typename E>
+  struct single_vtype< internal::dpoint_nd<E>, typedef_::vec_type >
+  {
+  private:
+    typedef oln_deferred_vtype(E, dim)   dim_t;
+    typedef oln_deferred_vtype(E, coord) coord_t;
+  public:
+    typedef xtd::vec<mlc_value(dim_t), coord_t> ret;
+  };
+# endif // OLENA_USE_NEW_SCOOP2
 
   namespace internal
   {
@@ -68,6 +81,10 @@ namespace oln
     template <typename E>
     class dpoint_nd : public abstract::dpoint<E>
     {
+// #ifdef USE_ALT_SCOOP2
+//       typedef typename vtypes< internal::dpoint_nd<E> >::self_type dummy;
+// #endif // USE_ALT_SCOOP2
+
       typedef E exact_t;
       typedef dpoint_nd<E> self_t;
       typedef oln_dim(E) dim_t;

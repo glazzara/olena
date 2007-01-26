@@ -108,7 +108,11 @@ namespace oln
   /// With mutability.
   template <typename E>
   struct case_< image_hierarchy_wrt_mutability, E, 1 > :
+# ifdef OLENA_USE_NEW_SCOOP2
+    where_< stc::is_found_< oln_find_vtype(E, lvalue) > >
+# else
     where_< mlc::is_found_< oln_find_vtype(E, lvalue) > >
+# endif // OLENA_USE_NEW_SCOOP2
   {
     typedef abstract::mutable_image<E> ret;
   };

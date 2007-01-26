@@ -36,7 +36,6 @@
 namespace oln
 {
 
-
   /// Fwd decls.
   template <unsigned D> struct grid_;
   template <typename C> struct dpoint2d_;

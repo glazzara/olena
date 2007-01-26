@@ -31,26 +31,31 @@
 namespace oln
 {
 
-  template <typename Image, typename Fun>
-  thru_mfun<Image, Fun>::thru_mfun(const Image& image, const Fun& fun) :
-    super_t(image),
-    fun_(fun)
+  namespace morpher
   {
-  }
+
+    template <typename Image, typename Fun>
+    thru_mfun<Image, Fun>::thru_mfun(const Image& image, const Fun& fun) :
+      super_t(image),
+      fun_(fun)
+    {
+    }
     
-  template <typename Image, typename Fun>
-  typename thru_mfun<Image, Fun>::rvalue_t
-  thru_mfun<Image, Fun>::impl_op_read(const typename thru_mfun<Image, Fun>::psite_t& p) const
-  {
-    return fun_(this->image_(p));
-  }
+    template <typename Image, typename Fun>
+    typename thru_mfun<Image, Fun>::rvalue_t
+    thru_mfun<Image, Fun>::impl_op_read(const typename thru_mfun<Image, Fun>::psite_t& p) const
+    {
+      return fun_(this->image_(p));
+    }
     
-  template <typename Image, typename Fun>
-  typename thru_mfun<Image, Fun>::lvalue_t
-  thru_mfun<Image, Fun>::impl_op_readwrite(const typename thru_mfun<Image, Fun>::psite_t& p)
-  {
-    return fun_(this->image_(p));
-  }
+    template <typename Image, typename Fun>
+    typename thru_mfun<Image, Fun>::lvalue_t
+    thru_mfun<Image, Fun>::impl_op_readwrite(const typename thru_mfun<Image, Fun>::psite_t& p)
+    {
+      return fun_(this->image_(p));
+    }
+
+  } // end of namespace oln::morpher
 
 } // end of namespace oln
 
