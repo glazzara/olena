@@ -109,7 +109,7 @@
 2006-11-14  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Simplify scoop facilities.
-	
+
 	* stc/scoop.hh: Rename as...
 	* stc/was.scoop.hh: ...this new file.
 	* stc/scoop.hh: New version.
@@ -178,7 +178,7 @@
 2006-09-27  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Enforce safety in some SCOOP tools.
-	
+
 	* stc/scoop.hh (stc_set_nth_super, stc_set_super): Add
 	"end of semicolon" safety.
 	(stc_virtual_typedef): Use oln_check_type_of instead of
@@ -304,7 +304,7 @@
 2006-09-06  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	New macro to declare virtual types in abstract classes.
-	
+
 	* stc/vtypes.hh (stc_virtual_typedef): New.
 
 2006-09-04  Roland Levillain  <roland@lrde.epita.fr>
@@ -313,7 +313,7 @@
 
 	* stc/vtypes.hh (vtypes, single_vtype, ext_vtype): Rename as...
 	(vtypes_in_category, single_vtype_in_category, ext_vtype_in_category):
-	...this.	
+	...this.
 	(vtypes_, single_vtype_, ext_vtype_): Rename as...
 	(vtypes, single_vtype, ext_vtype): ...this.
 	(packed_vtypes): Rename as...
@@ -329,7 +329,7 @@
 	recursions when their definitions involve the knowledge of the
 	exact type of the class these virtual types belong to.
 
-	* static/stc/vtypes.hh (single_vtype, single_vtype_): New template
+	* stc/vtypes.hh (single_vtype, single_vtype_): New template
 	class.
 	(internal::tag::single): New.
 	(internal::tag::external): Rename as...
@@ -340,18 +340,18 @@
 	Check the return type of the algorithm.
 	More documentation.
 	s/external/extended/.
-	* static/tests/vtypes.cc: Conform to the new terminology.
-	* static/tests/vtypes-multiple-supers.cc: Adjust.
+	* tests/vtypes.cc: Conform to the new terminology.
+	* tests/vtypes-multiple-supers.cc: Adjust.
 	* tests/vtypes-and-exact.cc: Likewise.
 	Aesthetic changes.
 	(main): Exercize stc::is_any_.
-	* static/stc/valist_aggregator.hh (valist_aggregator): Use virtual
+	* stc/valist_aggregator.hh (valist_aggregator): Use virtual
 	inheritance.
 
 2006-09-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add materials to handle types without category.
-	
+
 	* stc/vtypes.hh (stc_equip_namespace_with_vtypes): Add
 	ext_vtype_ and packed_vtypes_ for types without category.
 	(ext_vtype, packed_vtypes): Add specializations for
@@ -360,13 +360,13 @@
 2006-08-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Fix missing typedefs and handle types without category.
-	
+
 	* stc/any.hh (any__best_speed): Add typedef exact_type.
 	(any__best_memory): Likewise.
 	* stc/vtypes.hh (stc_equip_namespace_with_vtypes): Add 'vtypes_'
 	and the specialization 'vtypes<void, from_type>' for definitions
 	of associated types from types that do not have any category.
-	
+
 2006-06-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Document method checks in Static tour.
@@ -406,8 +406,8 @@
 	* tests/tour.cc (static_hierarchy_with_any): More on the retrieval
 	of and the conversion to the exact type.
 	(main): Run dynamic tests.
-	(static_hierarchy_with_any::A) 
-	(static_hierarchy_with_a_non_leaf_concrete_class::A) 
+	(static_hierarchy_with_any::A)
+	(static_hierarchy_with_a_non_leaf_concrete_class::A)
 	(static_hierarchy_with_methods::A): Use stc::any instead of
 	stc::any__simple.
 
