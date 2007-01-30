@@ -1,3 +1,10 @@
+2007-01-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add mini-std.
+	
+	* samples/mini-std: New.
+	* samples/mini-oln/design.hh: New.
+
 2007-01-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Polish stc/scoop2.hh.

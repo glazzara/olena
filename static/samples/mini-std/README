@@ -1,0 +1,29 @@
+	-*- outline -*-
+
+* compilation
+
+cd cpp
+g++ -I../../.. -I../../../../metalic -Wall -ansi -pedantic main.cc
+
+* contents
+
+** utility files
+
+concepts.hh
+equipment.hh
+fwddecls.hh
+identity.hh
+impl.hh  
+
+** based on existing std tools
+
+deque.hh
+list.hh
+stack.hh
+vector.hh
+
+algorithm.hh
+
+** morphers
+
+value_cast.hh
