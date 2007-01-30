@@ -98,11 +98,11 @@ namespace oln
   struct case_< image_hierarchy_wrt_dimension, E, 1 > :
     where_< mlc::and_<
       mlc::eq_< oln_grid(E), oln::grid1d >,
-# ifdef OLENA_USE_NEW_SCOOP2
+# ifdef OLENA_USE_SCOOP_ALT
       stc::is_found_< oln_find_vtype(E, lvalue) >
 # else
       mlc::is_found_< oln_find_vtype(E, lvalue) >
-# endif // OLENA_USE_NEW_SCOOP2
+# endif // OLENA_USE_SCOOP_ALT
     > >
   {
     typedef abstract::mutable_image1d<E> ret;
@@ -121,11 +121,11 @@ namespace oln
   struct case_< image_hierarchy_wrt_dimension, E, 3 > :
     where_< mlc::and_<
       mlc::eq_< oln_grid(E), oln::grid2d >,
-# ifdef OLENA_USE_NEW_SCOOP2
+# ifdef OLENA_USE_SCOOP_ALT
       stc::is_found_< oln_find_vtype(E, lvalue) >
 # else
       mlc::is_found_< oln_find_vtype(E, lvalue) >
-# endif // OLENA_USE_NEW_SCOOP2
+# endif // OLENA_USE_SCOOP_ALT
     > >
   {
     typedef abstract::mutable_image2d<E> ret;
@@ -144,11 +144,11 @@ namespace oln
   struct case_< image_hierarchy_wrt_dimension, E, 5 > :
     where_< mlc::and_<
       mlc::eq_< oln_grid(E), oln::grid3d >,
-# ifdef OLENA_USE_NEW_SCOOP2
+# ifdef OLENA_USE_SCOOP_ALT
       stc::is_found_< oln_find_vtype(E, lvalue) >
 # else
       mlc::is_found_< oln_find_vtype(E, lvalue) >
-# endif // OLENA_USE_NEW_SCOOP2
+# endif // OLENA_USE_SCOOP_ALT
     > >
   {
     typedef abstract::mutable_image3d<E> ret;

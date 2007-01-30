@@ -178,11 +178,11 @@ namespace oln
       mlc::eq_< oln_vtype(E, grid), oln::grid1d >,
       mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
     // FIXME: Shouldn't we use stc::is_found (resp. mlc::is_found) here?
-# ifdef OLENA_USE_NEW_SCOOP2
+# ifdef OLENA_USE_SCOOP_ALT
       mlc::neq_< oln_deduce_vtype(E, topo, bbox), stc::not_found >
 # else
       mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
-# endif // OLENA_USE_NEW_SCOOP2
+# endif // OLENA_USE_SCOOP_ALT
      > >
   {
     typedef abstract::classical_1d_image<E> ret;
@@ -196,11 +196,11 @@ namespace oln
       mlc::eq_< oln_vtype(E, grid), oln::grid2d >,
       mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
     // FIXME: Shouldn't we use stc::is_found (resp. mlc::is_found) here?
-# ifdef OLENA_USE_NEW_SCOOP2
+# ifdef OLENA_USE_SCOOP_ALT
       mlc::neq_< oln_deduce_vtype(E, topo, bbox), stc::not_found >
 # else
       mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
-# endif // OLENA_USE_NEW_SCOOP2
+# endif // OLENA_USE_SCOOP_ALT
     > >
   {
     typedef abstract::classical_2d_image<E> ret;
@@ -214,11 +214,11 @@ namespace oln
       mlc::eq_< oln_vtype(E, grid), oln::grid3d >,
       mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
     // FIXME: Shouldn't we use stc::is_found (resp. mlc::is_found) here?
-# ifdef OLENA_USE_NEW_SCOOP2
+# ifdef OLENA_USE_SCOOP_ALT
     mlc::neq_< oln_deduce_vtype(E, topo, bbox), stc::not_found >
 # else
     mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
-# endif // OLENA_USE_NEW_SCOOP2
+# endif // OLENA_USE_SCOOP_ALT
     > >
   {
     typedef abstract::classical_3d_image<E> ret;
@@ -231,11 +231,11 @@ namespace oln
     where_< mlc::and_<
       mlc::eq_< oln_deduce_vtype(E, topo, is_random_accessible), mlc::true_ >,
     // FIXME: Shouldn't we use stc::is_found (resp. mlc::is_found) here?
-# ifdef OLENA_USE_NEW_SCOOP2
+# ifdef OLENA_USE_SCOOP_ALT
       mlc::neq_< oln_deduce_vtype(E, topo, bbox), stc::not_found >
 # else
       mlc::neq_< oln_deduce_vtype(E, topo, bbox), mlc::not_found >
-# endif // OLENA_USE_NEW_SCOOP2
+# endif // OLENA_USE_SCOOP_ALT
     > >
   {
     typedef abstract::classical_image<E> ret;

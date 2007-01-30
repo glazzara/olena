@@ -1,3 +1,20 @@
+2007-01-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with Static.
+
+	* oln/core/typedefs.hh: Catch up with stc/scoop-alt.hh.
+	* oln/core/abstract/image/bbox/hierarchy.hh,
+	* oln/core/abstract/image/dimension/hierarchy.hh,
+	* oln/core/abstract/image/hybrid/classical.hh,
+	* oln/core/abstract/image/mutability/hierarchy.hh,
+	* oln/core/abstract/image/neighborhood/hierarchy.hh,
+	* oln/core/abstract/image/value_wise_accessibility/hierarchy.hh,
+	* oln/core/abstract/iterator_on_points.hh,
+	* oln/core/abstract/point.hh,
+	* oln/core/internal/dpoint_nd.hh,
+	* oln/core/image_entry.hh:
+	s/OLENA_USE_NEW_SCOOP2/OLENA_USE_SCOOP_ALT/g.
+
 2007-01-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add temporary helpers to support the new SCOOP 2 implementation.

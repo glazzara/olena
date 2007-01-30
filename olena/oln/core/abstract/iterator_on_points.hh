@@ -54,19 +54,19 @@ namespace oln
   struct vtypes< abstract::iterator_on_points<E> >
   {
     typedef stc::abstract point_type;
-# ifndef OLENA_USE_NEW_SCOOP2
+# ifndef OLENA_USE_SCOOP_ALT
     typedef oln_deduce_deferred_vtype(E, point, coord) coord_type;
-# endif // !OLENA_USE_NEW_SCOOP2
+# endif // !OLENA_USE_SCOOP_ALT
   };
 
-# ifdef OLENA_USE_NEW_SCOOP2
+# ifdef OLENA_USE_SCOOP_ALT
   template <typename E>
   struct single_vtype< abstract::iterator_on_points<E>,
 			typedef_::coord_type >
   {
     typedef oln_deduce_deferred_vtype(E, point, coord) ret;
   };
-# endif // OLENA_USE_NEW_SCOOP2
+# endif // OLENA_USE_SCOOP_ALT
 
 
   namespace abstract

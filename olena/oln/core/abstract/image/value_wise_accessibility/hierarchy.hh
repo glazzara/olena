@@ -133,7 +133,7 @@ namespace oln
   /// With mutable value-wise random accessibility.
   template <typename E>
   struct case_< image_hierarchy_wrt_value_wise_accessibility, E, 1 > :
-# ifdef OLENA_USE_NEW_SCOOP2
+# ifdef OLENA_USE_SCOOP_ALT
     where_<
       mlc_and( stc::is_found_< oln_find_vtype(E, fwd_viter) >,
 	       stc::is_found_< oln_find_vtype(E, mutable_value_proxy) > )
@@ -143,7 +143,7 @@ namespace oln
       mlc_and( mlc::is_found_< oln_find_vtype(E, fwd_viter) >,
 	       mlc::is_found_< oln_find_vtype(E, mutable_value_proxy) > )
     >
-# endif // OLENA_USE_NEW_SCOOP2
+# endif // OLENA_USE_SCOOP_ALT
   {
     typedef abstract::mutable_image_being_value_wise_random_accessible<E> ret;
   };
@@ -151,11 +151,11 @@ namespace oln
   /// With (constant) value-wise random accessibility.
   template <typename E>
   struct case_< image_hierarchy_wrt_value_wise_accessibility, E, 2 > :
-# ifdef OLENA_USE_NEW_SCOOP2
+# ifdef OLENA_USE_SCOOP_ALT
     where_< stc::is_found_< oln_find_vtype(E, fwd_viter) > >
 # else
     where_< mlc::is_found_< oln_find_vtype(E, fwd_viter) > >
-# endif // OLENA_USE_NEW_SCOOP2
+# endif // OLENA_USE_SCOOP_ALT
   {
     typedef abstract::image_being_value_wise_random_accessible<E> ret;
   };

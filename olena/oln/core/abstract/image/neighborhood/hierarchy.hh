@@ -107,11 +107,11 @@ namespace oln
   template <typename E>
   struct case_< image_hierarchy_wrt_neighborhood, E, 1 > :
   // FIXME: Shouldn't we use stc::is_found (resp. mlc::is_found) here?
-# ifdef OLENA_USE_NEW_SCOOP2
+# ifdef OLENA_USE_SCOOP_ALT
     where_< mlc::neq_< oln_find_vtype(E, neighborhood), stc::not_found > >
 # else
     where_< mlc::neq_< oln_find_vtype(E, neighborhood), mlc::not_found > >
-# endif // OLENA_USE_NEW_SCOOP2
+# endif // OLENA_USE_SCOOP_ALT
   {
     typedef abstract::image_having_neighborhood<E> ret;
   };
