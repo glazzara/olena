@@ -80,11 +80,11 @@ namespace my
      simple test, but it doesn't matter: we are only checking the
      super relationship here.  */
 
-  /// Link to B (``pseudo'' inheritance).
+  /// Delegation to B (used to be called ``pseudo'' inheritance).
   template<>
-  struct set_pseudosuper_type<C>
+  struct vtypes<C>
   {
-    typedef B ret;
+    typedef B delegatee_type;
   };
 
   struct C // no inheritance

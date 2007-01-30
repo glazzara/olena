@@ -7,11 +7,11 @@ nobase_stc_HEADERS =				\
   exact.hh					\
   find_exact.hh					\
   scoop.hh					\
+  scoop-alt.hh					\
   valist_aggregator.hh				\
 						\
   internal/extract_vtype_from_list.hh		\
-						\
-  scoop2.hh
+  internal/match-with.hh
 
 # Old code.
 EXTRA_DIST = was.scoop.hh

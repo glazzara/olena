@@ -35,14 +35,11 @@
 #include <mlc/cmp.hh>
 #include <mlc/assert.hh>
 
-#include <stc/scoop2.hh>
+#include <stc/scoop-alt.hh>
 
-/* FIXME: To be enabled later, when the contents of stc/scoop2.hh is
-   enclosed in a macro.  */
-#if 0
 // Namespace equipment.
 stc_scoop_equipment_for_namespace(my);
-#endif
+
 
 // FIXME: Check single_vtype, too.
 

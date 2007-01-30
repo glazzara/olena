@@ -1,3 +1,68 @@
+2007-01-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename stc/scoop2.hh as	stc/scoop-alt.hh.
+	Encapsulate the contents of SCOOPED_NAMESPACE in
+	stc_scoop_equipment_for_namespace.
+
+	* stc/scoop2.hh: Rename as...
+	* stc/scoop-alt.hh: ...this.
+	Adjust header guards.
+	(ERROR::IN_find__VIRTUAL_TYPE_IS_ABSTRACT)
+	(ERROR::IN_find_local__VIRTUAL_TYPE_MULTIPLY_DEFINED)
+	(ERROR::IN_merge2__FINAL_VIRTUAL_TYPE_REDEFINED_ABSTRACT)
+	(ERROR::IN_merge2__FINAL_VIRTUAL_TYPE_REDEFINED_FINAL)
+	(ERROR::IN_merge2__FINAL_VIRTUAL_TYPE_REDEFINED)
+	(ERROR::IN_merge2__VIRTUAL_TYPE_REDEFINED_ABSTRACT)
+	(ERROR::IN_merge3__FINAL_VIRTUAL_TYPE_REDEFINED_ABSTRACT)
+	(ERROR::IN_merge3__VIRTUAL_TYPE_REDEFINED_ABSTRACT)
+	(ERROR::IN_merge3__LOCAL_DECLARATION_OF_NOT_DELEGATED_AND_ABSTRACT)
+	(ERROR::IN_merge3__FINAL_VIRTUAL_TYPE_REDEFINED_FINAL)
+	(ERROR::IN_merge3__FINAL_VIRTUAL_TYPE_REDEFINED): Rename as...
+	(ERROR::IN_find_VIRTUAL_TYPE_IS_ABSTRACT)
+	(ERROR::IN_find_local_VIRTUAL_TYPE_MULTIPLY_DEFINED)
+	(ERROR::IN_merge2_FINAL_VIRTUAL_TYPE_REDEFINED_ABSTRACT)
+	(ERROR::IN_merge2_FINAL_VIRTUAL_TYPE_REDEFINED_FINAL)
+	(ERROR::IN_merge2_FINAL_VIRTUAL_TYPE_REDEFINED)
+	(ERROR::IN_merge2_VIRTUAL_TYPE_REDEFINED_ABSTRACT)
+	(ERROR::IN_merge3_FINAL_VIRTUAL_TYPE_REDEFINED_ABSTRACT)
+	(ERROR::IN_merge3_VIRTUAL_TYPE_REDEFINED_ABSTRACT)
+	(ERROR::IN_merge3_LOCAL_DECLARATION_OF_NOT_DELEGATED_AND_ABSTRACT)
+	(ERROR::IN_merge3_FINAL_VIRTUAL_TYPE_REDEFINED_FINAL)
+	(ERROR::IN_merge3_FINAL_VIRTUAL_TYPE_REDEFINED): ...these.
+	(SCOOPED_NAMESPACE): Remove macro.
+	(stc_scoop_equipment_for_namespace): New macro.
+	Encapsulate the contents of SCOOPED_NAMESPACE within this macro.
+	(stc_match_pair_0p_with, stc_match_pair_1p_with)
+	(stc_match_pair_2p_with, stc_match_pair_1p_with_error)
+	(stc_match_pair_2p_with_error)
+	(stc_match_triple_0p_with, stc_match_triple_1p_with)
+	(stc_match_triple_2p_with, stc_match_triple_3p_with)
+	(stc_match_triple_2p_with_error, stc_match_triple_3p_with_error):
+	Move and rename these macros as..
+	* stc/internal/match-with.hh (stc_internal_match_pair_0p_with)
+	(stc_internal_match_pair_1p_with, stc_internal_match_pair_2p_with)
+	(stc_internal_match_pair_1p_with_error)
+	(stc_internal_match_pair_2p_with_error)
+	(stc_internal_match_triple_0p_with)
+	(stc_internal_match_triple_1p_with)
+	(stc_internal_match_triple_2p_with)
+	(stc_internal_match_triple_3p_with)
+	(stc_internal_match_triple_2p_with_error)
+	(stc_internal_match_triple_3p_with_error): ...these (new file).
+	* stc/Makefile (nobase_stc_HEADERS): Remove scoop2.hh.
+	Add scoop-alt.hh and internal/match-with.hh.
+
+	* tests/scoop2.cc: Rename as...
+	* tests/scoop-alt.cc: ...this.
+	Adjust.
+	(stc_scoop_equipment_for_namespace): Invoke it.
+	* tests/super.cc (my::set_pseudosuper_type<C>): Remove.
+	(my::vtypes<C>::delegatee_type): New.
+	* tests/Makefile.am (nobase_stc_HEADERS): Add
+	internal/match-with.hh.
+	(scoop2_SOURCES): Remove.
+	(scoop_alt_SOURCES): New.
+
 2007-01-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add mini-std.
