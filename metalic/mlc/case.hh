@@ -191,7 +191,7 @@ namespace NAMESPACE																	\
 																			\
 																			\
 																			\
-  namespace internal																	\
+  namespace mlc_case_internal																\
   {																			\
 																			\
     template <typename use,																\
@@ -393,33 +393,33 @@ namespace NAMESPACE																	\
   template <typename context, typename data>														\
   struct get_case_																	\
   {																			\
-    typedef typename NAMESPACE::internal::select_case_<mlc::internal::a_get_case, context, data>::ret ret;						\
+    typedef typename NAMESPACE::mlc_case_internal::select_case_<mlc::internal::a_get_case, context, data>::ret ret;					\
   };																			\
 																			\
 																			\
   template <typename context, typename data>														\
   struct case_ <context, data, mlc::internal::unknown_case_id>												\
 																			\
-    : private mlc::assert_< mlc::neq_< mlc_comma_2(typename NAMESPACE::internal::select_case_<mlc::internal::a_simple_case,				\
+    : private mlc::assert_< mlc::neq_< mlc_comma_2(typename NAMESPACE::mlc_case_internal::select_case_<mlc::internal::a_simple_case,			\
 						                                              context, data>::ret),					\
 				       mlc::none >,													\
 			    mlc::ERROR::NO_case_STATEMENT_CAN_BE_SELECTED >										\
 																			\
   {																			\
-    typedef typename NAMESPACE::internal::select_case_<mlc::internal::a_simple_case, context, data>::ret ret;						\
+    typedef typename NAMESPACE::mlc_case_internal::select_case_<mlc::internal::a_simple_case, context, data>::ret ret;					\
   };																			\
 																			\
 																			\
   template <typename context, typename data>														\
   struct switch_																	\
 																			\
-    : private mlc::assert_< mlc::neq_< mlc_comma_2(typename NAMESPACE::internal::select_case_<mlc::internal::a_switch_case,				\
+    : private mlc::assert_< mlc::neq_< mlc_comma_2(typename NAMESPACE::mlc_case_internal::select_case_<mlc::internal::a_switch_case,			\
 						                                              context, data>::ret),					\
 				       mlc::none >,													\
 			    mlc::ERROR::NO_case_STATEMENT_CAN_BE_SELECTED >										\
 																			\
   {																			\
-    typedef typename NAMESPACE::internal::select_case_<mlc::internal::a_switch_case, context, data>::ret case_t;					\
+    typedef typename NAMESPACE::mlc_case_internal::select_case_<mlc::internal::a_switch_case, context, data>::ret case_t;				\
     typedef typename case_t::ret ret;															\
   };																			\
 																			\

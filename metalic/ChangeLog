@@ -1,3 +1,9 @@
+2007-02-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	* mlc/case.hh (mlc_case_equipment_for_namespace):
+	Rename NAMESPACE::internal into NAMESPACE::mlc_case_internal.
+	* mlc/cmp.hh (is_not_value, is_not_bexpr): Shorten.
+
 2006-11-30  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/uint.hh: Fix inheritance.

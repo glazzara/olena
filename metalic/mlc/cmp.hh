@@ -83,7 +83,7 @@ namespace mlc
 
   /// Check whether \a T is not a mlc::abstract::value.
   template <typename T>
-  struct is_not_value : public not_<mlc_is_a(T, mlc::abstract::value)>::bexpr
+  struct is_not_value : public mlc_is_not_a(T, mlc::abstract::value)::bexpr
   {
   };
 
@@ -96,7 +96,7 @@ namespace mlc
 
   /// Check whether \a T is not a mlc::abstract::bexpr.
   template <typename T>
-  struct is_not_bexpr : public not_<mlc_is_a(T, mlc::abstract::bexpr)>::bexpr
+  struct is_not_bexpr : public mlc_is_not_a(T, mlc::abstract::bexpr)::bexpr
   {
   };
 
