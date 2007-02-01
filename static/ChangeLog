@@ -1,3 +1,11 @@
+2007-02-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add a tiny example to stress differences between paradigms.
+	
+	* stc/doc/tiny/: New.
+	* stc/scoop.hh (stc_scoop_equipment_for_namespace): Rename
+	SCOOPED_NAMESPACE::internal as SCOOPED_NAMESPACE::stc_vtype_internal.
+
 2007-01-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename stc/scoop2.hh as	stc/scoop-alt.hh.

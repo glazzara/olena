@@ -25,15 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/* \file stc/vtypes.hh
+/* \file stc/scoop2.hh
 
-   \brief Equipment for SCOOP: notably, Virtual types (also known as
+   \brief Equipment for SCOOP2: notably, Virtual types (also known as
    ``properties'') mechanism.
+*/
 
-   Based on Theo's presentation from January 2006 (olena-06-jan.pdf).  */
-
-#ifndef STC_SCOOP_HH
-# define STC_SCOOP_HH
+#ifndef STC_SCOOP2_HH
+# define STC_SCOOP2_HH
 
 # include <mlc/flags.hh>
 # include <mlc/typedef.hh>
@@ -45,6 +44,11 @@
 # include <mlc/cmp.hh>
 # include <mlc/if.hh>
 # include <mlc/is_a.hh>
+# include <mlc/case.hh>
+
+# include <stc/any.hh>
+
+
 
 
 namespace stc
@@ -57,15 +61,21 @@ namespace stc
   template <typename T>
   struct final;
 
+  template < template <class> class >
+  struct is;
+
 } // end of namespace stc
 
 
 
-#define stc_super(T) typename set_super_type< T >::ret
+#define stc_super(T) typename vtypes< T >::super_type
 #define stc_stm(From, Target) typename get_stm< From , Target >::ret
 
 
-# define stc_scoop_equipment_for_namespace(SCOOPED_NAMESPACE)					\
+
+
+
+# define stc_equip_namespace(SCOOPED_NAMESPACE)					\
 												\
 												\
 namespace SCOOPED_NAMESPACE									\
@@ -73,17 +83,6 @@ namespace SCOOPED_NAMESPACE									\
 												\
   mlc_decl_typedef(delegatee_type);								\
 												\
-												\
-  template <typename from_type>									\
-  struct set_super_type										\
-  {												\
-    typedef mlc::none ret;									\
-    /* FIXME: nothing here!									\
-     *												\
-     * mlc::none is not a default value								\
-     * so that the client has to define stoppers						\
-     */												\
-  };												\
 												\
   template <typename from_type>									\
   struct vtypes											\
@@ -148,7 +147,7 @@ namespace SCOOPED_NAMESPACE									\
 												\
 												\
 												\
-  namespace stc_vtype_internal									\
+  namespace internal										\
   {												\
 												\
 												\
@@ -316,7 +315,7 @@ namespace SCOOPED_NAMESPACE									\
     /*												\
      * check_final_stm										\
      */												\
-    												\
+												\
     template <typename curr, typename target, typename stm>					\
     struct check_final_stm									\
     {};												\
@@ -382,7 +381,7 @@ namespace SCOOPED_NAMESPACE									\
      * helper_check(curr, target, stm)								\
      * {											\
      *   super = super(curr);									\
-     * 												\
+     *												\
      *   if (stm == stc::abstract) {								\
      *     check_no_stm_inherited(curr, super, target);						\
      *     return check(super, target);								\
@@ -406,7 +405,7 @@ namespace SCOOPED_NAMESPACE									\
      *     return check(super, target);								\
      *   }											\
      * }											\
-     * 												\
+     *												\
      */												\
 												\
     template <typename curr, typename target>							\
@@ -733,7 +732,7 @@ namespace SCOOPED_NAMESPACE									\
     };												\
 												\
 												\
-  } /* end of SCOOPED_NAMESPACE::stc_vtype_internal */						\
+  } /* end of SCOOPED_NAMESPACE::internal */							\
 												\
 												\
   /*												\
@@ -746,14 +745,14 @@ namespace SCOOPED_NAMESPACE									\
   template <typename from, typename target>							\
   struct deferred_vtype										\
   {												\
-    typedef typename stc_vtype_internal::find<from, target>::ret ret;				\
+    typedef typename internal::find<from, target>::ret ret;					\
   };												\
 												\
   template <typename from, typename target>							\
   struct find_vtype										\
   {												\
-    typedef typename stc_vtype_internal::find<from, target>::ret ret;				\
-    typedef typename stc_vtype_internal::check<from, target>::ret chk;				\
+    typedef typename internal::find<from, target>::ret ret;					\
+    typedef typename internal::check<from, target>::ret chk;					\
   };												\
 												\
   template <typename from, typename target>							\
@@ -768,10 +767,180 @@ namespace SCOOPED_NAMESPACE									\
   };												\
 												\
 												\
+												\
+  mlc_case_equipment_for_namespace(internal);							\
+												\
+  mlc_decl_typedef(tag);									\
+  mlc_decl_typedef(category);									\
+  mlc_decl_typedef(exact_type);									\
+												\
+												\
+  namespace internal										\
+  {												\
+												\
+												\
+    template < template <class> class abstraction,						\
+	       unsigned num = 1 >								\
+    struct selector										\
+    {												\
+    protected: selector() {}									\
+    };												\
+												\
+												\
+    /* fwd decl */										\
+    template < template <class> class abstraction, typename E, unsigned num >			\
+    struct plug_node;										\
+												\
+    template < template <class> class abstraction,						\
+	       typename E,									\
+	       unsigned num,									\
+	       typename another_selector = mlc::false_ >					\
+    struct next_plug_node									\
+    {												\
+      /* here: no other selector */								\
+    protected: next_plug_node() {}								\
+    };												\
+												\
+    template < template <class> class abstraction,						\
+	       typename E >									\
+    struct next_plug_node < abstraction, E, 1, mlc::false_ > 					\
+      : public abstraction<E>									\
+    {												\
+    protected: next_plug_node() {}								\
+    };												\
+												\
+												\
+    template < template <class> class abstraction,						\
+	       typename E,									\
+	       unsigned num >									\
+    struct next_plug_node < abstraction,							\
+			    E,									\
+			    num,								\
+			    mlc::true_>								\
+												\
+    : /* plug to client selectors */								\
+      public virtual switch_< selector<abstraction, num>, E >::ret,				\
+												\
+      /* here: another selector (number is 'num + 1') */					\
+      public plug_node<abstraction, E, num + 1>							\
+    {												\
+    protected: next_plug_node() {}								\
+    };												\
+												\
+												\
+    template < template <class> class abstraction,						\
+	       typename E,									\
+	       unsigned num >									\
+    struct plug_node										\
+      : public next_plug_node< abstraction,							\
+			       E,								\
+			       num,								\
+			       typename mlc::is_defined_< case_< selector<abstraction, num>,	\
+								 E, 1 > >::eval >		\
+    {												\
+    protected: plug_node() {}									\
+    };												\
+												\
+												\
+    template < template <class> class abstraction,						\
+	       unsigned num,									\
+	       typename E >									\
+    struct default_case_ < selector<abstraction, num>,						\
+			   E >									\
+    {												\
+      typedef abstraction<E> ret;								\
+    };												\
+												\
+												\
+    template < template <class> class abstraction,						\
+	       typename E >									\
+    struct plug : public plug_node<abstraction, E, 1>						\
+    {												\
+    protected: plug() {}									\
+    };												\
+												\
+    template <typename abstraction, typename E>							\
+    struct top;											\
+												\
+    template <template<class> class abstraction, typename E>					\
+    struct top < stc::is<abstraction>, E > : public plug< abstraction, E >			\
+    {												\
+    protected: top() {}										\
+    };												\
+												\
+    template <typename E>									\
+    struct top < mlc::not_found, E >								\
+    {												\
+    protected: top() {}										\
+    };												\
+												\
+												\
+  } /* end of namespace internal */								\
+												\
+												\
+												\
+  /* top class */										\
+												\
+  template <typename E> struct top;								\
+												\
+  template <typename E>										\
+  struct vtypes< top<E> >									\
+  {												\
+    typedef mlc::none super_type;								\
+    typedef stc::abstract category;								\
+    typedef stc::final<E> exact_type;								\
+  };												\
+												\
+  template <typename E>										\
+  struct top : public internal::top< stc_find_type(E, category), E >				\
+  {												\
+  protected:											\
+    top() {}											\
+  };												\
+												\
+												\
+												\
+  /* concept class */										\
+												\
+  template <typename E>										\
+  struct Concept : public virtual stc::any<E>							\
+  {												\
+  protected:											\
+    Concept() {}										\
+  };												\
+												\
+												\
+  namespace automatic										\
+  {												\
+												\
+    template < template <class> class abstraction, typename E, typename tag = void >		\
+    struct impl											\
+    /* undefined */ ;										\
+												\
+    template < template <class> class abstraction, typename E >					\
+    struct impl< abstraction, E, mlc::not_found >						\
+    { /* nothing */ };										\
+												\
+    template < template <class> class abstraction, typename E >					\
+    struct impl< abstraction, E, void > : impl< abstraction, E, stc_find_type(E, tag) >		\
+    { /* fetch impl w.r.t. tag */ };								\
+												\
+  } /* end of namespace automatic */								\
+												\
+												\
+												\
 } /* end of SCOOPED_NAMESPACE */								\
 												\
 												\
 struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n;
+
+
+/*
+
+
+//   --------------------------------------------
+//     O L D    B U N C H    O F    M A C R O S
+//   --------------------------------------------
 
 
 
@@ -783,8 +952,11 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n;
 
 
 
+# define stc_deferred_vtype_(Namespace, From, Target) \
+   Namespace::deferred_vtype<From, Namespace::typedef_::Target##_type>::ret
+
 # define stc_deferred_vtype(Namespace, From, Target) \
-   typename Namespace::deferred_vtype<From, Namespace::typedef_::Target##_type>::ret
+   typename stc_deferred_vtype_(Namespace, From, Target)
 
 
 
@@ -832,11 +1004,51 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n;
 		     Namespace::typedef_::Target2##_type>::ret
 
 
-
-
-
 // # define stc_vtype_is_found_(Namespace, From, Target)
 //    mlc::is_found_< Namespace::find_vtype<From, Namespace::typedef_::Target##_type>::ret >
 
 
-#endif // ! STC_SCOOP_HH
+//   ----------------------------------------------------------
+//    E N D    O F    O L D    B U N C H    O F    M A C R O S
+//   ----------------------------------------------------------
+
+*/
+
+
+
+
+# define stc_type_(From, Type) vtype<From, typedef_::Type>::ret
+# define stc_type(From, Type) typename stc_type_(From, Type)
+
+# define stc_find_type(From, Type) typename find_vtype<From, typedef_::Type>::ret
+
+
+// For concepts.
+# define stc_typename(Type) typedef stc_type(Exact, Type) Type
+# define stc_using(Type)    typedef typename super::Type Type
+
+
+// For impl classes.
+# define stc_lookup(Type) typedef typename vtype< stc_type(current, exact_type), typedef_::Type>::ret Type
+
+// typedef stc_type(current, Type) Type
+
+
+# define stc_prop(Name)    mlc::eq_< stc_find_type(E, Name), mlc::true_ >
+
+
+// sugar:
+
+# define stc_Header   					\
+							\
+templ class classname ;            /* fwd decl */	\
+							\
+templ struct vtypes< current > /* vtypes */		\
+{							\
+  typedef super super_type				\
+
+# define stc_End     }
+
+
+
+#endif // ! STC_SCOOP2_HH
