@@ -185,7 +185,7 @@ namespace SCOOPED_NAMESPACE									\
     template <typename from, typename target>							\
     struct find;										\
 												\
-    template <typename from, typename target, typename where, typename res>			\
+    template <typename from, typename target, typename location, typename res>			\
     struct helper_find;										\
 												\
 												\
@@ -470,12 +470,12 @@ namespace SCOOPED_NAMESPACE									\
     /*												\
      * first_stm(from, target)									\
      *												\
-     * returns a pair (Where, Value) with Value being:						\
+     * returns a pair (Location, Value) with Value being:					\
      * - stc::abstract										\
      * - stc::not_delegated									\
      * - mlc::not_found										\
      * - a type T										\
-     * and Where being the class where the stm is found.					\
+     * and Location being the class where the stm is found.					\
      *												\
      *												\
      * helper_first_stm(curr, target, stm)							\
@@ -656,21 +656,21 @@ namespace SCOOPED_NAMESPACE									\
 												\
 												\
     /*												\
-     * helper_find(from, target, where, res)							\
+     * helper_find(from, target, location, res)							\
      *												\
      *												\
      *												\
      */												\
 												\
-    template <typename from, typename target, typename where>					\
-    struct helper_find < from, target, where,							\
+    template <typename from, typename target, typename location>				\
+    struct helper_find < from, target, location,						\
 			 /* if res == */ mlc::not_found >					\
     {												\
       typedef typename delegator_find<from, target>::ret ret;					\
     };												\
 												\
-    template <typename from, typename target, typename where>					\
-    struct helper_find < from, target, where,							\
+    template <typename from, typename target, typename location>				\
+    struct helper_find < from, target, location,						\
 			 /* if res == */ stc::abstract >					\
     {												\
       typedef typename delegator_find<from, target>::ret res_d;					\
@@ -678,23 +678,23 @@ namespace SCOOPED_NAMESPACE									\
 	: mlc::assert_< mlc::is_found_<res_d>,							\
 			ERROR::vtype_declared_but_not_defined					\
 			<  ERROR::_for_vtype_<target>,						\
-			   ERROR::_declaration_is_in_<where>,					\
+			   ERROR::_declaration_is_in_<location>,				\
 			   ERROR::_definition_is_looked_up_from_<from>  > >			\
-      /* FIXME: error("<target> declared in <where> but not defined at <from>"); */		\
+      /* FIXME: error("<target> declared in <location> but not defined at <from>"); */		\
       {												\
 	typedef res_d ret;									\
       };											\
       typedef typename check_::ret ret;								\
     };												\
 												\
-    template <typename from, typename target, typename where>					\
-    struct helper_find < from, target, where,							\
+    template <typename from, typename target, typename location>				\
+    struct helper_find < from, target, location,						\
 			 /* if res == */ stc::not_delegated >					\
     {												\
       typedef typename superior_find<from, target>::ret ret;					\
     };												\
 												\
-    template <typename from, typename target, typename where, typename res>			\
+    template <typename from, typename target, typename location, typename res>			\
     struct helper_find /* otherwise */								\
     {												\
       typedef res ret;										\
@@ -726,10 +726,10 @@ namespace SCOOPED_NAMESPACE									\
     struct find /* otherwise */									\
     {												\
       typedef typename first_stm<from, target>::ret stm;					\
-      typedef mlc_elt(stm, 1) where;								\
+      typedef mlc_elt(stm, 1) location;								\
       typedef mlc_elt(stm, 2) res;								\
       typedef typename helper_find<from, target,						\
-				   where, res>::ret ret;					\
+				   location, res>::ret ret;					\
     };												\
 												\
 												\

@@ -1,3 +1,18 @@
+2007-02-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix mini-oln.
+
+	* samples/mini-oln/mini-oln.cc: Move all Olena classes into the
+	namespace `oln'.
+	(main): Adjust.
+	(oln::image2d::has): Make it const.
+	Remove semicolons following the closing parenthesis of a
+	namespace.
+	Aesthetic changes.
+	* stc/scoop.hh: Replace every occurrence of `where' (as a template
+	parameter) with `location', to comply with the upcoming C++0x
+	standard.
+
 2007-02-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add a tiny example to stress differences between paradigms.
