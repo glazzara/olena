@@ -1,5 +1,11 @@
 2007-02-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a first C++0x concept-based version of mini-oln.
+
+	* samples/mini-oln/concept-c++/mini-oln.cc: New.
+
+2007-02-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix mini-oln.
 
 	* samples/mini-oln/mini-oln.cc: Move all Olena classes into the
