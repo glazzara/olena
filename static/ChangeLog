@@ -1,3 +1,16 @@
+2007-02-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve the Point2d and Point3d concepts in mini-oln.
+
+	* samples/mini-oln/concept-c++/mini-oln.cc
+	(concepts::Point2d, concepts::Point3d): Enrich them.
+	(concept_map Point2d<oln::point2d>)
+	(concept_map Point3d<oln::point3d>): Adjust.
+	(oln::point2d::coord_type, oln::point3d::coord_type): New
+	typedefs.
+	(oln::point2d::row, oln::point2d::col)
+	(oln::point3d::row, oln::point3d::col, oln::point3d::sli): Use it.
+
 2007-02-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a first C++0x concept-based version of mini-oln.

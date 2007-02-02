@@ -61,8 +61,27 @@ mlc_case_equipment_for_namespace(oln);
 
 namespace concepts
 {
-  concept Point2d<typename P> {};
-  concept Point3d<typename P> {};
+  // These concepts are not automatic (i.e., prefixed with `auto'),
+  // since we cannot rely on type signatures for them.  For instance,
+  // using only structural conformance, oln::point3d could be a model
+  // of concepts::Point2d!
+  concept Point2d<typename P>
+  {
+    typename coord_type;
+    // For simplicity purpose, the canonical model of
+    // concepts::Point2d -- oln::point2d -- does not expose its
+    // interface through methods (that's bad OO software engineering
+    // practice, but hey, we're just prototyping here).  Therefore we
+    // cannot express sigatures on row and col accesses, since C++0x
+    // concepts forbid attribute (member) signatures.
+  };
+
+  concept Point3d<typename P>
+  {
+    typename coord_type;
+    // Same remark as above for concepts::Point2d regarding member
+    // signatures.
+  };
 
   auto concept Image<typename I>
   {
@@ -110,22 +129,31 @@ namespace oln
 
   struct point2d : public Point<point2d>
   {
-    int row;
-    int col;
+    typedef int coord_type;
+    coord_type row;
+    coord_type col;
   };
 
   struct point3d : public Point<point2d>
   {
-    int row;
-    int col;
-    int sli;
+    typedef int coord_type;
+    coord_type row;
+    coord_type col;
+    coord_type sli;
   };
 }
 
 namespace concepts
 {
-  concept_map Point2d<oln::point2d> {};
-  concept_map Point3d<oln::point3d> {};
+  concept_map Point2d<oln::point2d>
+  {
+    typedef oln::point2d::coord_type coord_type;
+  };
+  
+  concept_map Point3d<oln::point3d>
+  {
+    typedef oln::point2d::coord_type coord_type;
+  };
 }
 
 
