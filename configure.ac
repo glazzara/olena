@@ -46,12 +46,18 @@ if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS"; then
 fi
 
 
+## ----------------------------- ##
+## Concept C++ compiler set up.  ##
+## ----------------------------- ##
+
+AC_ARG_VAR([CONCEPTCXX], [Concept C++ compiler])
+AC_CHECK_PROGS([CONCEPTCXX], [conceptg++ conceptc++])
+
+
 ## ------- ##
 ## Tests.  ##
 ## ------- ##
 
-# Students should create their test suite in tests/.  Add the needed
-# configure options here.
 AC_CONFIG_FILES([
   metalic/tests/Makefile
   extended/tests/Makefile
@@ -76,6 +82,9 @@ AC_CONFIG_FILES([
       extended/xtd/Makefile
     static/Makefile
       static/stc/Makefile
+      static/samples/Makefile
+      static/samples/mini-oln/Makefile
+      static/samples/mini-oln/concept-c++/Makefile
     olena/Makefile
       olena/oln/Makefile
       olena/img/Makefile

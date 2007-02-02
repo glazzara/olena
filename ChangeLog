@@ -1,3 +1,13 @@
+2007-02-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Configure new Makefiles of static/samples.
+
+	* configure.ac: Declare CONCEPTCXX as a previous variable.
+	Look for a Concept C++ compiler, and store it in CONCEPTCXX.
+	Configure static/samples/Makefile,
+	static/samples/mini-oln/Makefile and 
+	static/samples/mini-oln/concept-c.
+
 2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix CXXFLAGS usage.
