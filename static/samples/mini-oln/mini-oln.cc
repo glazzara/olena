@@ -26,12 +26,7 @@
 // Public License.
 
 /* \file samples/mini-oln/mini-oln.cc
-   \brief A proof of concept of Static using a mini-version of Olena.
-
-   Compile with:
-
-     g++ -I../../../{metalic,static,extended,olena} mini-oln.cc
-*/
+   \brief A proof of concept of Static using a mini-version of Olena.  */
 
 #include <vector>
 
@@ -117,7 +112,7 @@ namespace oln
 
     bool is_valid() const
     {
-      this->exact().is_valid();
+      return this->exact().is_valid();
     };
 
     // auto
@@ -163,7 +158,7 @@ namespace oln
 
     bool has(const point_t& p) const
     {
-      this->exact().has(p);
+      return this->exact().has(p);
     }
   };
 }
@@ -196,12 +191,12 @@ namespace oln
 
     int nrows_get() const
     {
-      this->exact().nrows_get();
+      return this->exact().nrows_get();
     }
 
     int ncols_get() const
     {
-      this->exact().ncols_get();
+      return this->exact().ncols_get();
     }
   };
 }
@@ -234,17 +229,17 @@ namespace oln
 
     int nrows_get() const
     {
-      this->exact().nrows_get();
+      return this->exact().nrows_get();
     }
 
     int ncols_get() const
     {
-      this->exact().ncols_get();
+      return this->exact().ncols_get();
     }
 
     int nslis_get() const
     {
-      this->exact().nslis_get();
+      return this->exact().nslis_get();
     }
   };
 }
@@ -279,10 +274,12 @@ namespace oln
     typedef oln_type_of_(image_with_nbh, niter) niter_t;
     typedef oln_type_of_(image_with_nbh, nbh) nbh_t;
 
+    // FIXME: Implement.
+#if 0
     nbh_t nbh() const
     {
-      // FIXME.
     }
+#endif
   };
 }
 
@@ -359,7 +356,7 @@ namespace oln
 
     bool has(const point_t& p) const
     {
-      this->exact().has(p);
+      return this->exact().has(p);
     }
   };
 }

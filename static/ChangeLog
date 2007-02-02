@@ -1,5 +1,23 @@
 2007-02-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Automate the compilation of mini-oln.
+
+	* samples/mini-oln/mini-oln.cc: Remove compilation
+	usage in comment.
+	(oln::Iterator::is_valid, oln::Image::has)
+	(oln::Image2d::nrows_get, oln::Image2d::ncols_get)
+	(oln::Image3d::nrows_get, oln::Image3d::ncols_get)
+	(oln::Image3d::nslis_get, oln::image_base::has): Add missing
+	return keywords.
+	(oln::image_with_nbh::nbh): Disable method.
+	* Makefile.am (SUBDIRS): Add samples.
+	* samples/mini-oln/concept-c++/mini-oln.cc: Likewise.
+	* samples/Makefile.am,
+	* samples/mini-oln/Makefile.am,
+	* samples/mini-oln/concept-c++/Makefile.am: New.
+
+2007-02-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve the Point2d and Point3d concepts in mini-oln.
 
 	* samples/mini-oln/concept-c++/mini-oln.cc
