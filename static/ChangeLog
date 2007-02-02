@@ -1,3 +1,35 @@
+2007-02-02  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Clean stc/doc/tiny.
+
+	* doc/tiny/more_scoop_2/undefs.hh: Rename as...
+	* doc/tiny/local/undefs.hh: ...this.
+	* doc/tiny/a_la_scoop_1/local_scoop.hh: Rename as...
+	* doc/tiny/a_la_scoop_1/scoopy.hh: ...this.
+	* doc/tiny/more_scoop_2/local_scoop.hh: Rename as...
+	* doc/tiny/local/scoop.hh: ...this.
+	(stc::true_, stc::false_): New.
+	(stc_prop): Update.
+	(stc_decl_associated_type): New.
+	* doc/tiny/a_la_scoop_2/local_scoop.hh: Remove.
+	* doc/tiny/a_la_scoop_1/main.cc,
+	(Current, Super): Rename as...
+	(current, super): ...this to be coherent with SCOOP 2.
+	* doc/tiny/a_la_scoop_1/scoopy.hh,
+	Likewise.
+	* doc/tiny/a_la_scoop_1/desugar.cc,
+	Likewise.
+	* doc/tiny/a_la_scoop_2/main.cc,
+	* doc/tiny/a_la_scoop_2/desugar.cc,
+	* doc/tiny/more_scoop_2/main.cc,
+	* doc/tiny/cpp_with_virtual_types/main.cc,
+	* doc/tiny/design/main.cc,
+	(category): New type in array_iterator.
+	* doc/tiny/cpp_with_concepts/main.cc,
+	* doc/tiny/classical/main.cc,
+	* doc/tiny/generic_programming/main.cc: Update and
+	add copyright header.
+	
 2007-02-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Automate the compilation of mini-oln.

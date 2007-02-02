@@ -1,4 +1,4 @@
-// Copyright (C) 2005, 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2005, 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/* \file stc/scoop2.hh
+/* \file doc/tiny/local/scoop.hh
 
-   \brief Equipment for SCOOP2: notably, Virtual types (also known as
-   ``properties'') mechanism.
-*/
+   \brief Equipment for SCOOP 2 which mimics the file stc/scoop2.hh. */
 
-#ifndef STC_SCOOP2_HH
-# define STC_SCOOP2_HH
+#ifndef STC_DOC_TINY_LOCAL_SCOOP_HH
+# define STC_DOC_TINY_LOCAL_SCOOP_HH
 
 # include <mlc/flags.hh>
 # include <mlc/typedef.hh>
@@ -49,6 +47,8 @@
 # include <stc/any.hh>
 
 
+
+
 namespace stc
 {
 
@@ -62,8 +62,13 @@ namespace stc
   template < template <class> class >
   struct is;
 
+  typedef mlc::bexpr_<true>  true_;
+  typedef mlc::bexpr_<false> false_;
+
 } // end of namespace stc
 
+
+#define stc_decl_associated_type  mlc_decl_typedef
 
 
 #define stc_super(T) typename vtypes< T >::super_type
@@ -901,7 +906,7 @@ namespace SCOOPED_NAMESPACE									\
   /* concept class */										\
 												\
   template <typename E>										\
-  struct Concept : public stc::any<E>								\
+  struct Concept : public virtual stc::any<E>							\
   {												\
   protected:											\
     Concept() {}										\
@@ -1032,6 +1037,8 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n;
 // typedef stc_type(current, Type) Type
 
 
+# define stc_prop(Name)    stc_find_type(E, Name)
+
 
 // sugar:
 
@@ -1047,4 +1054,4 @@ templ struct vtypes< current > /* vtypes */		\
 
 
 
-#endif // ! STC_SCOOP2_HH
+#endif // ! STC_DOC_TINY_LOCAL_SCOOP_HH

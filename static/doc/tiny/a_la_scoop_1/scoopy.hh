@@ -26,64 +26,58 @@
 // Public License.
 
 
-/* \file doc/tiny/cpp_with_virtual_types/main.cc
+/* \file doc/tiny/a_la_scoop_1/scoopy.hh
 
-   \brief Tiny sample use in pseudo-C++ (C++ with virtual types).  */
+   \brief Mini-equipment for SCOOP 1. */
+
+#ifndef STC_DOC_TINY_A_LA_SCOOP_1_SCOOPY_HH
+# define STC_DOC_TINY_A_LA_SCOOP_1_SCOOPY_HH
 
 
-namespace abc
+namespace stc
 {
 
-  // Iterator
+  class abstract;
 
-  class Iterator
+  template <typename Exact>
+  class any
   {
   public:
-    virtual typedef value = 0;
-    virtual void next()              = 0;
-    virtual bool is_valid() const    = 0;
-    virtual void set(const value& v) = 0;
+    Exact& exact() { return *(Exact*)(void*)this; }
+    const Exact& exact() const  { return *(const Exact*)(const void*)this; }
   };
-
-
-  // array_iterator<T>
-
-  template <typename T>
-  class array_iterator : public Iterator
-  {
-  public:
-
-    virtual typedef T value;
-    virtual void next()               { i_ = i_ + 1; }
-    virtual bool is_valid() const     { return i_ >= 0 and i_ < n_; }
-    virtual void set(const value& v)  { v_ = v; }
-
-    array_iterator(int n)             : i_(0), n_(n) {}
-  protected:
-    int   i_, n_;
-    value v_;
-  };
-
-
-  // algo
-
-  void algo(Iterator& iter, Iterator::value val)
-  {
-    if (iter.is_valid())
-      {
-	iter.set(val);
-	iter.next();
-      }
-  }
-
-
-} // abc
-
-
-int main()
-{
-  abc::array_iterator<int> i(7);
-  int val = 51;
-
-  abc::algo(i, val);
+  
 }
+
+
+# define stc_typename(Type) typedef typename vtypes<Exact>::Type Type
+# define stc_using(Type)    typedef typename super::Type Type
+
+
+# define stc_equip_namespace(Namespace)		\
+						\
+namespace Namespace				\
+{						\
+  template <typename T> struct vtypes;		\
+						\
+  /* Any. */					\
+						\
+  template <typename Exact> class Any;		\
+						\
+  template <typename Exact>			\
+  struct vtypes< Any<Exact> >			\
+  {						\
+    typedef Exact exact;			\
+  };						\
+						\
+  template <typename Exact>			\
+  class Any : public stc::any<Exact>		\
+  {						\
+  };						\
+						\
+}						\
+						\
+struct end_with_semicolumn
+
+
+#endif // ! STC_DOC_TINY_A_LA_SCOOP_1_SCOOPY_HH
