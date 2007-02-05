@@ -1,3 +1,8 @@
+2007-02-05  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
+
+	Fix type resolution and misc bugs.
+	* samples/mini-oln/mini-oln.cc: Fix type resolution and misc bugs.
+
 2007-02-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add a README and a "SCOOP 1+" translation in doc/tiny.
