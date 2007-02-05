@@ -1,0 +1,1 @@
+g++ -Wall -ansi -pedantic -I../../../ -I../../../../metalic $1

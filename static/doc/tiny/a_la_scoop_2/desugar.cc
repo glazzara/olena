@@ -48,7 +48,7 @@ namespace abc
   // Iterator
 
   template <typename Exact>
-  struct Iterator : public Concept<Exact>,
+  struct Iterator : public concept_<Exact>,
 		    public automatic::impl<Iterator, Exact>
   {
     stc_typename(value);

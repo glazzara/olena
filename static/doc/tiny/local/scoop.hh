@@ -903,13 +903,24 @@ namespace SCOOPED_NAMESPACE									\
 												\
 												\
 												\
+  /* stc::any vtypes in equipped namespace; code required for SCOOP 1 */			\
+												\
+  template <typename E>										\
+  struct vtypes< stc::any<E> >									\
+  {												\
+    typedef mlc::none super_type;								\
+    typedef stc::final<E> exact_type;								\
+  };												\
+												\
+												\
+												\
   /* concept class */										\
 												\
   template <typename E>										\
-  struct Concept : public virtual stc::any<E>							\
+  struct concept_ : public virtual stc::any<E>							\
   {												\
   protected:											\
-    Concept() {}										\
+    concept_() {}										\
   };												\
 												\
 												\
@@ -1031,6 +1042,12 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n;
 # define stc_using(Type)    typedef typename super::Type Type
 
 
+# define stc_deferred(Type)  \
+  typename deferred_vtype< typename deferred_vtype< current, \
+                                                    typedef_::exact_type >::ret, \
+                           typedef_::Type >::ret
+
+
 // For impl classes.
 # define stc_lookup(Type) typedef typename vtype< stc_type(current, exact_type), typedef_::Type>::ret Type
 
@@ -1049,6 +1066,8 @@ templ class classname ;            /* fwd decl */	\
 templ struct vtypes< current > /* vtypes */		\
 {							\
   typedef super super_type				\
+
+
 
 # define stc_End     }
 

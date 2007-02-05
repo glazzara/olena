@@ -26,9 +26,9 @@
 // Public License.
 
 
-/* \file doc/tiny/a_la_scoop_2/main.cc
+/* \file doc/tiny/a_la_scoop_1_plus/main.cc
 
-   \brief Tiny sample use of SCOOP 2.  */
+   \brief Tiny sample use of FIXME: SCOOP 1.  */
 
 
 #include "../local/scoop.hh"
@@ -47,9 +47,24 @@ namespace abc
 
   // Iterator
 
+# define super      stc::any<Exact>
+  //               -----------------
+  //                  ^
+  //                  |
+# define current    Iterator<Exact>
+  //               -----------------
+
+# define templ      template <typename Exact>
+# define classname  Iterator
+
+  stc_Header;
+
+  typedef stc::abstract value;   // stc::abstract is a feature of SCOOP 2.
+
+  stc_End;
+
   template <typename Exact>
-  struct Iterator : public concept_<Exact>,
-		    public automatic::impl<Iterator, Exact>
+  struct Iterator : public stc::any<Exact>
   {
     stc_typename(value);
     void next()               { this->exact().impl_next();  }
@@ -57,23 +72,24 @@ namespace abc
     void set(const value& v)  { this->exact().impl_set(v);  }
   };
 
+# include "../local/undefs.hh"
+
 
 
   // array_iterator
 
 # define current    array_iterator<T>
-  //                -----------------
+  //               -------------------
 
 # define templ      template <typename T>
 # define classname  array_iterator
 
-# define super      top< current >
+# define super      Iterator< current >
 
 
   stc_Header;
 
-  typedef stc::is<Iterator> category;
-  typedef T value;
+  typedef stc::final<T> value;   // stc::final is a feature of SCOOP 2.
 
   stc_End;
 

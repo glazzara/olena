@@ -1,3 +1,20 @@
+2007-02-05  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add a README and a "SCOOP 1+" translation in doc/tiny.
+	
+	* doc/tiny/a_la_scoop_1_plus: New.
+	* doc/tiny/README: New.
+	* doc/tiny/local/scoop.hh (Concept): Rename as...
+	(concept_): ...this.
+	(stc_equip_namespace): Add "vtypes< stc::any<E> >" so
+	that we can have SCOOP 1 with SCOOP 2 tools.
+	(stc_deferred): New.
+	* doc/tiny/a_la_scoop_2/main.cc: Update. 
+	* doc/tiny/a_la_scoop_2/desugar.cc: Update.
+	* doc/tiny/more_scoop_2/main.cc: Update.
+	(reference): New.
+	* doc/tiny/design/main.cc (is_valid): Fix sig.
+
 2007-02-02  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Clean stc/doc/tiny.

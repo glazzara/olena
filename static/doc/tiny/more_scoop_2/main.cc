@@ -43,6 +43,7 @@ namespace abc
 
   // List of associated types.
   stc_decl_associated_type(value);
+  stc_decl_associated_type(reference);
   stc_decl_associated_type(forward);
   stc_decl_associated_type(backward);
 
@@ -54,7 +55,7 @@ namespace abc
   // Iterator
 
   template <typename Exact>
-  struct Iterator : public Concept<Exact>,
+  struct Iterator : public concept_<Exact>,
 		    public automatic::impl<Iterator, Exact>
   {
     stc_typename(value);
@@ -120,7 +121,7 @@ namespace abc
 
 
 # define super      top<E>
-  //               -------
+  //               --------
   //                  ^
   //                  |
 # define current    iterator_base<E>
@@ -134,6 +135,7 @@ namespace abc
 
   typedef stc::is<Iterator> category;
   typedef stc::abstract value;
+  typedef stc::final< stc_deferred(value) & > reference;
 
   stc_End;
 

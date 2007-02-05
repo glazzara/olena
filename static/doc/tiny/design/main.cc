@@ -38,7 +38,7 @@ namespace abc
   {
     value : type
     next : () -> void
-    is_valid : const bool
+    is_valid : const () -> bool
     set : (v : value const&) -> void
   }
 

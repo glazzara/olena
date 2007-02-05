@@ -1,0 +1,158 @@
+	-*- outline -*-
+
+
+
+* Introduction.
+
+FIXME: ...
+
+
+
+* Contents.
+
+
+** design/
+
+Presents the sample program in a pseudo language.
+
+It defines Iterator as a record type with value (type), next,
+is_valid, set (three methods).  The class array_iterator[T] is an
+implementation of an Iterator.
+
+
+** classical/
+
+Classical object-oriented C++ with abstract class and inheritance.
+The use of "void*" maps a generalization of all value types and allows
+to manually implement a covariant behavior of the "set" method.
+
+
+** cpp_with_virtual_types/
+
+Rewriting of the "classical" example but in an extension of the C++
+language with virtual types.  This code does not compile!  Yet it
+expresses an syntactically elegant solution to the covariance issue.
+
+
+** a_la_scoop_1/
+
+SCOOP 1 aims at writing C++ class hierarchies in a static way
+(with methods and typedefs dispatching at compile-time). 
+
+Same as "cpp_with_virtual_types" but conforming to the 2003 ISO/ANSI
+C++.  The "virtual" keyword has disappeared so polymorphic methods
+now are fast at run-time and the use of covariance is statically
+solved and checked.
+
+To break recursion that appears in types definitions (*), an auxiliary
+structure (vtypes) is introduced.  This structure shall map the
+inheritance tree of the targeted classes so that we also get
+inheritance for virtual types.
+
+For instance, if B derives from A, we should have vtypes<B> deriving
+from vtypes<A>.
+
+(*) Precisely the following code cannot compile:
+      struct Iterator { typedef typename iter::value_ value; };
+      struct iter : Iterator { typedef int value_; };
+    because "Iterator" needs to be compiled before "iter" so
+    the definition of "value_" is unaccessible.
+
+
+** a_la_scoop_1_plus/
+
+Almost like the previous example but with the material offered to
+design with SCOOP 2.
+
+The main difference is that the "vtypes" definitions do not need
+anymore to replicate class inheritance.  When B derives from A,
+vtypes<B> is no more required to derive from vtypes<A>.  Yet the
+expected properties of virtual type inheritance and lookup are
+verified.
+
+Extra features are also provided:
+- "stc::abstract" to declare a typedef and get an error at
+  compile-time when a concrete subclass misses to give its definition;
+- "stc::final" to ensure that a typedef is not overridden in a
+  subclass;
+- "delegatee_type" to offer delegation;
+- furthermore typedef definitions based on deferred ones are now
+  possible (*).
+
+For instance, we can have:
+
+  stc_Header;
+    typedef stc::abstract value;
+    typedef stc::final< stc_deferred(value) & > reference;
+  stc_End;
+
+
+** a_la_scoop_2/
+
+SCOOP 2 aims both at writing C++ class hierarchies in a static way
+(just like SCOOP 1) and at decoupling concepts, models, and
+some automatic implementation when delegation is involved.
+
+In this sample code the "Iterator" concept (deriving from "concept_")
+is defined apart from the "array_iterator" class (deriving from
+"top").  An intermediate (non-client) meta-code looks up for the
+category of the implementation class so that it is plugged to the
+appropriate concept.
+
+What we can expect from this kind of design is better illustrated in
+the "more_scoop_2/" directory.
+
+
+** more_scoop_2/
+
+A more elaborate example than the previous one.
+
+FIXME: Give some explanations.
+
+
+** local/
+
+Material to equip a namespace with SCOOP 2 facilities and to program
+with the SCOOP 2 paradigm.
+
+
+** generic_programming/
+
+Dual code than the "classical" object-oriented C++ example.  Iterator
+only appears in documentation and there is no explicit dependency
+between this concept and the "array_iterator" model.
+
+
+** cpp_with_concepts/
+
+The example is here rewritten in C++0x according to the proposal n2081
+from the evolution working group of the C++ Standard committee (*).
+"Iterator" is then translated into a concept.
+
+(*) www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n2081.pdf 
+
+
+
+* Recap.
+
+			Iterator			array_iterator[T]
+			-------------------------       ------------------------
+
+design/			type				implementation class
+(pseudo-code)
+
+classical/		abstract class			derived class
+
+cpp_with_virtual_types/	abstract class			derived class
+(this is not C++)
+
+generic_programming/	documentation			stand-alone class
+
+a_la_scoop_1/		abstract class			derived class
+(static)		super is Any<Exact>
+
+a_la_scoop_2/		concept-like			"stand-alone"-like class
+(static)		super is concept_<Exact>	super is top<Exact>
+
+cpp_with_concepts/	concept				stand-alone class
+(future C++)
