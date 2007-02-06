@@ -1,3 +1,26 @@
+2007-02-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix mini-oln.
+
+	* samples/mini-oln/mini-oln.cc: Remove useless forward
+	declarations.
+	s/mlc::undefined/stc::abstract/
+	Aesthetic changes.
+	(oln::Image_with_neighborhood): New abstraction.
+	(oln::point3d): Fix base class.
+	(oln::image_with_nbh): Remove (useless).
+	(oln::niter2d, oln::neighborhood2d): New.
+	(oln::set_super_type< image_morpher<E> >, oln::image_morpher<E>):
+	Fix base class.
+	(oln::image_morpher<E>::delegatee_t): Query the virtual type from
+	the exact type.
+	(oln::set_super_type< plus<I, N> >): Fix base class.
+	(oln::vtypes< plus<I, N> >::nbh_type)
+	(oln::vtypes< plus<I, N> >::niter_type): New vtypes.
+	(oln::plus::plus): Call the ctor of the base class.
+	(oln::plus::impl_nbh): New.
+	(main): New tests.
+
 2007-02-06  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
 
 	Fix misc mistakes.
