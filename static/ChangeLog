@@ -1,3 +1,10 @@
+2007-02-06  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
+
+	Fix misc mistakes.
+	* samples/mini-oln/README: Add newline.
+	* samples/mini-oln/mini-oln.cc: Fix misc mistakes
+                (name resolution, SCOOP paradigm, typo).
+
 2007-02-05  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
 
 	Fix type resolution and misc bugs.
