@@ -32,20 +32,22 @@
 
 #include <iostream>
 #include "../local/scoop.hh"
-
-
-stc_equip_namespace(abc);
+#include "concepts.hh"
 
 
 
 namespace abc
 {
 
+  stc_equip_namespace;
+
+  
   // List of associated types.
   stc_decl_associated_type(value);
-  stc_decl_associated_type(reference);
   stc_decl_associated_type(forward);
   stc_decl_associated_type(backward);
+  stc_decl_associated_type(read);
+  stc_decl_associated_type(write);
 
 
 
@@ -55,23 +57,34 @@ namespace abc
   // Iterator
 
   template <typename Exact>
-  struct Iterator : public concept_<Exact>,
-		    public automatic::impl<Iterator, Exact>
+  struct Iterator : public virtual any<Exact>,
+		    public automatic::get_impl<Iterator, Exact>
   {
     stc_typename(value);
 
+    void init()               { return this->exact().impl_init(); }
     bool is_valid() const     { return this->exact().impl_is_valid(); }
-    void set(const value& v)  { this->exact().impl_set(v);  }
   };
+
 
 
   // Forward_Iterator
 
   template <typename Exact>
-  struct Forward_Iterator : public Iterator<Exact>,
-			    public automatic::impl<Forward_Iterator, Exact>
+  struct Forward_Iterator : public virtual Iterator<Exact>,
+			    public automatic::get_impl<Forward_Iterator, Exact>
   {
     void next()  { this->exact().impl_next();  }
+  };
+
+
+  // Backward_Iterator
+
+  template <typename Exact>
+  struct Backward_Iterator : public virtual Iterator<Exact>,
+			     public automatic::get_impl<Backward_Iterator, Exact>
+  {
+    void prev()  { this->exact().impl_prev();  }
   };
 
 
@@ -79,11 +92,80 @@ namespace abc
 
   template <typename Exact>
   struct Bidirectional_Iterator : public Forward_Iterator<Exact>,
-				  public automatic::impl<Bidirectional_Iterator, Exact>
+				  public Backward_Iterator<Exact>,
+				  public automatic::get_impl<Bidirectional_Iterator, Exact>
   {
-    void prev()  { this->exact().impl_prev();  }
   };
 
+
+
+  // Read_Iterator
+
+  template <typename Exact>
+  struct Read_Iterator : public virtual Iterator<Exact>,
+			 public automatic::get_impl<Read_Iterator, Exact>
+  {
+    typedef Iterator<Exact> super;
+    stc_using(value);
+    // FIXME: read below
+    const value& get_value() const   { return this->exact().impl_get_value(); }
+  };
+
+
+  // Read_Only_Iterator
+
+  template <typename Exact>
+  struct Read_Only_Iterator : public Read_Iterator<Exact>,
+			      public automatic::get_impl<Read_Only_Iterator, Exact>
+  {
+  };
+
+
+  // Write_Iterator
+
+  template <typename Exact>
+  struct Write_Iterator : public virtual Iterator<Exact>,
+			  public automatic::get_impl<Write_Iterator, Exact>
+  {
+    typedef Iterator<Exact> super;
+    stc_using(value);
+    void set_value(const value& v)   { return this->exact().impl_set_value(v); }
+  };
+
+
+  // Write_Only_Iterator
+
+  template <typename Exact>
+  struct Write_Only_Iterator : public Write_Iterator<Exact>,
+			       public automatic::get_impl<Write_Only_Iterator, Exact>
+  {
+  };
+
+
+  // Read_Write_Iterator
+
+  template <typename Exact>
+  struct Read_Write_Iterator : public Read_Iterator<Exact>,
+			       public Write_Iterator<Exact>,
+			       public automatic::get_impl<Read_Write_Iterator, Exact>
+  {
+  };
+
+
+  
+
+
+  // FIXME: pick a solution:
+  //
+  //     typedef Iterator<Exact> super;
+  //     stc_using(value);
+  //
+  //     stc_super_is(Iterator);
+  //     stc_using(value);
+  //
+  //     stc_super_using(Iterator, value);
+  //
+  //     stc_using_from(value, Iterator);
 
 
 
@@ -98,20 +180,70 @@ namespace abc
     typedef  selector<Iterator, 1>  Iterator_browsing;
   
     template <typename E>
-    struct case_< Iterator_browsing, E,  1 > : where_< mlc::and_< stc_prop(forward), stc_prop(backward) > >
+    struct case_< Iterator_browsing, E,  1 > : where_< mlc::and_< stc_is(forward),
+								  stc_is(backward) > >
     {
       typedef Bidirectional_Iterator<E> ret;
     };
   
     template <typename E>
-    struct case_< Iterator_browsing, E,  2 > : where_< stc_prop(forward) >
+    struct case_< Iterator_browsing, E,  2 > : where_< stc_is(forward) >
     {
       typedef Forward_Iterator<E> ret;
     };
   
+    template <typename E>
+    struct case_< Iterator_browsing, E,  3 > : where_< stc_is(backward) >
+    {
+      typedef Backward_Iterator<E> ret;
+    };
+
+
+    // selector 2 is about Iterator accessibility (readability / writability)
+
+    typedef  selector<Iterator, 2>  Iterator_accessibility;
+  
+    template <typename E>
+    struct case_< Iterator_accessibility, E,  1 > : where_< mlc::and_< stc_is(read),
+								       stc_is(write) > >
+    {
+      typedef Read_Write_Iterator<E> ret;
+    };
+  
+    template <typename E>
+    struct case_< Iterator_accessibility, E,  2 > : where_< mlc::and_< stc_is(read),
+								       stc_is_not(write) > >
+    {
+      typedef Read_Only_Iterator<E> ret;
+    };
+  
+    template <typename E>
+    struct case_< Iterator_accessibility, E,  3 > : where_< mlc::and_< stc_is(write),
+								       stc_is_not(read) > >
+    {
+      typedef Write_Only_Iterator<E> ret;
+    };
+
+  
   } // end of internal
 
 
+} // end of namespace abc
+
+
+
+
+
+
+# include "identity.hh"
+
+
+
+
+
+
+namespace abc
+{
 
   // - - - - - - - - - - - - - - - - - - - -   classes
 
@@ -132,11 +264,8 @@ namespace abc
 
 
   stc_Header;
-
-  typedef stc::is<Iterator> category;
-  typedef stc::abstract value;
-  typedef stc::final< stc_deferred(value) & > reference;
-
+    typedef stc::final< stc::is<Iterator> > category;
+    typedef stc::abstract value;
   stc_End;
 
 
@@ -144,13 +273,7 @@ namespace abc
   class iterator_base : public super
   {
   public:
-
-    stc_lookup(value);
-
-    // a base class can factor some code!
-    // for instance:
-    const value& get() const { return v_; }
-
+    stc_using(value);
   protected:
     iterator_base() {}
     value v_;
@@ -176,9 +299,7 @@ namespace abc
 
 
   stc_Header;
-
-  typedef stc::abstract delegatee_type;
-
+    typedef stc::abstract delegatee;
   stc_End;
 
 
@@ -186,21 +307,15 @@ namespace abc
   class lightweight_iterator : public super
   {
   public:
-
-    stc_lookup(delegatee_type);
-
-    const delegatee_type& delegatee() const  { return delegatee_; }
-          delegatee_type& delegatee()        { return delegatee_; }
-
+    stc_lookup(delegatee);
+    delegatee& delegatee_;
   protected:
-    lightweight_iterator(delegatee_type& d) : delegatee_(d) {}
-    delegatee_type& delegatee_;
+    lightweight_iterator(delegatee& d) : delegatee_(d) {}
   };
 
 
 # include "../local/undefs.hh"
   
-
 
 
 
@@ -221,11 +336,9 @@ namespace abc
 
 
   stc_Header;
-
-  typedef T value;
-  typedef stc::true_  forward;
-  typedef stc::true_ backward;
-
+    typedef T value;
+    typedef stc::true_ forward;
+    typedef stc::true_ write;
   stc_End;
 
 
@@ -235,12 +348,15 @@ namespace abc
   public:
 
     stc_using(value);
+
+    void impl_init()               { i_ = 0; }
     void impl_next()               { i_ = i_ + 1; }
     bool impl_is_valid() const     { return i_ >= 0 and i_ < n_; }
-    void impl_set(const value& v)  { this->v_ = v; }
-    void impl_prev()               { i_ = i_ - 1; }
+    void impl_set_value(const value& v)  { this->v_ = v; }
 
-    array_iterator(int n)          : i_(0), n_(n) {}
+    array_iterator(int n)          : n_(n) {}
+    int& index()                   { return i_; }
+    int  index() const             { return i_; }
   protected:
     int i_, n_;
   };
@@ -251,151 +367,143 @@ namespace abc
 
 
 
+  // hello_iterator
 
-
-  // algo
-
-  template <typename I>
-  void algo(Iterator<I>& iter, typename I::value val)
-  {
-    std::cout << "Iterator" << std::endl;
-    if (iter.is_valid())
-      {
-	iter.set(val);
-      }
-  }
-
-  template <typename I>
-  void algo(Forward_Iterator<I>& iter, typename I::value val)
-  {
-    std::cout << "Forward_Iterator" << std::endl;
-    while (iter.is_valid())
-      {
-	std::cout << '.';
-	iter.set(val);
-	iter.next();
-      }
-    std::cout << std::endl;
-  }
-
-  template <typename I>
-  void algo(Bidirectional_Iterator<I>& iter, typename I::value val)
-  {
-    std::cout << "Bidirectional_Iterator" << std::endl;
-    while (iter.is_valid())
-      {
-	std::cout << '.';
-	iter.set(val);
-	iter.next();
-      }
-    std::cout << std::endl;
-  }
-
-
-} // abc
-
-
-
-
-
-namespace abc
-{
-
-  namespace tag
-  {
-    struct identity;
-
-  } // abc::tag
-
-} // abc
-
-#include "identity.hh"
-
-
-
-namespace abc
-{
-
-
-
-  // skippy
-
-
-# define current    skippy<I>
-  //               -------------------------
-
-# define templ      template <typename I>
-# define classname  skippy
-
+# define current    hello_iterator<I>
+  //               -------------------
 # define super      lightweight_iterator< current >
+# define templ      template <typename I>
+# define classname  hello_iterator
 
 
   stc_Header;
-
-  typedef I delegatee_type;
-  typedef tag::identity tag;
-
+    typedef I delegatee;
+    typedef behavior::identity behavior;
   stc_End;
 
 
   template <typename I>
-  class skippy : public super
+  class hello_iterator : public super
   {
   public:
 
-    skippy(Iterator<I>& it, unsigned skip)
-      :
-      super(it.exact()),
-      skip_(skip)
+    void impl_init()
     {
+      std::cout << "hello!" << std::endl;
+      super::impl_init();
     }
 
-    void impl_next()
+    hello_iterator(Iterator<I>& it)
+      : super(it.exact())
     {
-      for (unsigned i = 0; i <= skip_; ++i)
-	this->delegatee().next();
     }
-
-    void impl_prev()
-    {
-      for (unsigned i = 0; i <= skip_; ++i)
-	this->delegatee().prev();
-    }
-
-  protected:
-    unsigned skip_;
   };
 
 
 # include "../local/undefs.hh"
 
 
-  template <typename I>
-  skippy<I> skip(Iterator<I>& it, unsigned s)
+
+
+  // Behavior tag for reverse<T>.
+
+  namespace behavior { struct reverse; }
+
+
+
+
+# define current  reverse<T>
+  //             ------------
+# define templ      template <typename T>
+# define classname  reverse
+# define super      top< current >
+
+  stc_Header;
+  typedef T delegatee;
+  typedef behavior::reverse behavior;
+  stc_End;
+
+  template <typename T>
+  class reverse : public super
   {
-    skippy<I> tmp(it, s);
-    return tmp;
-  }
+  public:
+    T& delegatee_;
+    reverse(T& d) : delegatee_(d) {}  // ctor
+  };
 
 
+# include "../local/undefs.hh"
+
+  
 
 } // abc
 
 
 
 
+
+// when reverse applies to an iterator:
+
+# include "reverse_iterator.hh"
+
+
+
+
+// test routines
+
+
+template <typename I>
+void init(abc::Iterator<I>& iter)
+{
+  iter.init();
+}
+
+template <typename I>
+void echo(const abc::Forward_Iterator<I>& iter)
+{
+  std::cout << "Forward Iterator" << std::endl;
+}
+
+template <typename I>
+void echo(const abc::Backward_Iterator<I>& iter)
+{
+  std::cout << "Backward Iterator" << std::endl;
+}
+
+
+
 int main()
 {
   typedef abc::array_iterator<int> iterator_t;
-  int val = 51;
 
   {
-    iterator_t i(8);
-    abc::algo(i, val);
+    // hello
+
+    typedef abc::hello_iterator<iterator_t> iterator2_t;
+
+    iterator_t i(7);
+    i.index() = 51;
+
+    iterator2_t j(i);
+    init(j);
+    std::cout << i.index() << std::endl;
   }
+
   {
-    iterator_t i(8);
-    abc::skippy<iterator_t> ii = skip(i, 1u);
-    abc::algo(ii, val);
+    // reverse
+
+    typedef abc::reverse<iterator_t> iterator2_t;
+
+    iterator_t i(7);
+    echo(i);
+    iterator2_t j = abc::make_reverse(i);
+    echo(j);
+    
+    i.init();
+    std::cout << i.index() << std::endl;
+    
+    j.prev();
+    std::cout << i.index() << std::endl;
   }
+
 }

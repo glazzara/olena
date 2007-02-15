@@ -34,12 +34,14 @@
 #include "../local/scoop.hh"
 
 
-stc_equip_namespace(abc);
 
 
 
 namespace abc
 {
+  stc_equip_namespace;
+
+
 
   // List of associated types.
   stc_decl_associated_type(value);
@@ -47,8 +49,8 @@ namespace abc
 
   // Iterator
 
-# define super      stc::any<Exact>
-  //               -----------------
+# define super      any<Exact>
+  //               ------------
   //                  ^
   //                  |
 # define current    Iterator<Exact>
@@ -64,7 +66,7 @@ namespace abc
   stc_End;
 
   template <typename Exact>
-  struct Iterator : public stc::any<Exact>
+  struct Iterator : public super
   {
     stc_typename(value);
     void next()               { this->exact().impl_next();  }

@@ -34,12 +34,11 @@
 #include "../local/scoop.hh"
 
 
-stc_equip_namespace(abc);
-
-
-
 namespace abc
 {
+
+  stc_equip_namespace;
+
 
   // List of associated types.
   stc_decl_associated_type(value);
@@ -48,8 +47,8 @@ namespace abc
   // Iterator
 
   template <typename Exact>
-  struct Iterator : public concept_<Exact>,
-		    public automatic::impl<Iterator, Exact>
+  struct Iterator : public any<Exact>,
+		    public automatic::get_impl<Iterator, Exact>
   {
     stc_typename(value);
     void next()               { this->exact().impl_next();  }

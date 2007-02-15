@@ -34,12 +34,12 @@
 #include "../local/scoop.hh"
 
 
-stc_equip_namespace(abc);
-
 
 
 namespace abc
 {
+  stc_equip_namespace;
+
 
   // List of associated types.
   stc_decl_associated_type(value);
@@ -48,8 +48,8 @@ namespace abc
   // Iterator
 
   template <typename Exact>
-  struct Iterator : public concept_<Exact>,
-		    public automatic::impl<Iterator, Exact>
+  struct Iterator : public any<Exact>,
+		    public automatic::get_impl<Iterator, Exact>
   {
     stc_typename(value);
     void next()               { this->exact().impl_next();  }
@@ -65,9 +65,10 @@ namespace abc
   template <typename T>
   struct vtypes< array_iterator<T> >
   {
-    typedef top< array_iterator<T> > super_type;
-    typedef stc::is<Iterator> category;
+    typedef array_iterator<T> current;
+    typedef top< current > super_type;
 
+    typedef stc::is<Iterator> category;
     typedef T value;
   };
 
@@ -75,7 +76,8 @@ namespace abc
   class array_iterator : public top< array_iterator<T> >
   {
   public:
-    typedef top< array_iterator<T> > super;
+    typedef array_iterator<T> current;
+    typedef top< current > super;
 
     stc_using(value);
     void impl_next()               { i_ = i_ + 1; }

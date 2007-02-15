@@ -1,0 +1,953 @@
+
+%============================================================
+\section{What Do We Want?}
+
+%------------------------------------------------------------
+\subsection{Expectations}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{What Would Be Great? (\scoop~1)}
+
+Expectations are:
+\begin{itemize}
+\item factor code through class hierarchies
+  \begin{itemize}
+  \item either with ``classical'' hierarchies\\
+    ~ {\tiny{$\leadsto$ ~ abstract classes on top of implementation classes}}
+  \item or with ``modern'' generic programming\\
+    ~ {\tiny{$\leadsto$ ~ hierarchies of concepts \emph{and} hierarchies of implementation classes}}
+  \end{itemize}
+\item get virtual types in C++
+\end{itemize}
+
+\smallskip
+
+with:
+\begin{itemize}
+\item strong type checking
+\item method and type lookup performed at compile-time
+\end{itemize}
+
+\smallskip
+
+and...
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{What Would Be Great? (\scoop~2)}
+
+and...
+
+\smallskip
+
+\begin{itemize}
+\item separate concepts and implementation classes
+%
+\smallskip
+%
+\item have types:
+  \begin{itemize}
+  \item that are defined over other types
+  \item whose definition is given once
+  \item that modify those types
+  \item and that are able to keep their specificities
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{The Need for Virtual Types}
+
+
+\begin{multicols}{2}
+%
+  \begin{center}
+    \includegraphics[scale=.7]{simpleoovt}
+  \end{center}
+%
+\columnbreak
+%
+\begin{itemize}
+\item we sometimes need covariant methods
+\item C++ is limited to invariance...
+\item type safety cannot be guarantied at compile-time
+\end{itemize}
+%
+\end{multicols}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Translation into Valid C++}
+
+\begin{multicols}{2}
+%
+\begin{lstlisting}[escapechar=@]
+class @\blueIterator@
+{
+public:
+  virtual void set_value(void* v) = 0;
+  ...
+};
+
+template <typename T>
+class @\blueArrayIterator@ : public @\blueIterator@
+{
+public:
+  typedef T value;
+  virtual void set_value(void* v)
+  {
+    this->v_ = *(value*)v;
+  }
+  ...
+};
+\end{lstlisting}
+%
+\columnbreak
+%
+\begin{lstlisting}[escapechar=@]
+void fill(@\blueIterator@& it, @\color{darkyellow}{void*}@ v)
+{
+  it.init();
+  while (it.is_valid())
+    it.set_value(v);
+}
+\end{lstlisting}
+%
+\end{multicols}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{The Need for Virtual Types (2/2)}
+
+\begin{multicols}{2}
+%
+  \begin{center}
+    \includegraphics[scale=.7]{simplevt}
+  \end{center}
+%
+\columnbreak
+%
+\begin{itemize}
+\item solution:
+  \begin{itemize}
+  \item virtual types
+  \item behaving just like virtual methods
+  \item expressing that 'value' is an associated type
+  \end{itemize}
+\smallskip
+\item but:
+  \begin{itemize}
+  \item C++ does not feature virtual types
+  \item we also expect them to be statically type checked
+  \end{itemize}
+\end{itemize}
+%
+\end{multicols}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Translation into Pseudo-C++}
+
+\begin{multicols}{2}
+%
+\begin{lstlisting}[escapechar=@]
+class @\blueIterator@
+{
+public:
+  virtual typedef @\color{darkyellow}{value}@ = 0;
+  virtual void set_value(value v) = 0;
+  ...
+};
+
+template <typename T>
+class @\blueArrayIterator@ : public @\blueIterator@
+{
+public:
+  virtual typedef T value;
+  virtual void set_value(value v)
+  {
+    this->v_ = v;
+  }
+  ...
+};
+\end{lstlisting}
+%
+\columnbreak
+%
+\begin{lstlisting}[escapechar=@]
+@\color{red}{/* this slide is NOT valid C++ */}@
+
+void fill(@\blueIterator@& it, @\blueIterator@::@\color{darkyellow}{value}@ v)
+{
+  it.init();
+  while (it.is_valid())
+    it.set_value(v);
+}
+\end{lstlisting}
+%
+\end{multicols}
+
+\end{frame}
+
+
+
+%------------------------------------------------------------
+\subsection{Static OO Hierarchy with Virtual Types (\scoop~1)}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Migration towards \scoop: Static Hierarchy}
+
+\vspace*{-7mm}
+  \begin{center}
+    \includegraphics[scale=.55]{vt1}
+  \end{center}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{\scoop Static Hierarchy (1/3)}
+
+  \begin{block}{Rule}
+    An abstract class takes exactly one parameter: \textbf{Exact}.
+  \end{block}
+
+  \medskip
+
+  \begin{itemize}
+    % 
+    \item this parameter holds its exact type\\
+      ~~~ {\scriptsize $\leadsto$ ~ e.g., when an object is a \textbf{rabbit}, it is an \textbf{Animal$<$rabbit$>$} }
+      % 
+      \smallskip
+      % 
+    \item an abstract class does not need any extra parameter\\
+      ~~~ {\scriptsize $\leadsto$ ~ understand that everything can be known/fetched from \textbf{Exact}! }\\
+      ~~~ {\scriptsize $\leadsto$ ~ \textbf{Iterator} does NOT need \textbf{T} as a parameter }\\
+      ~~~ {\scriptsize $\leadsto$ ~ and we do not want to guess what else \textbf{Iterator} could need }
+      % 
+      \smallskip
+      % 
+    \item a concrete class sets the parameter of its abstract super class
+    \end{itemize}
+
+\end{frame}
+
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{\scoop Static Hierarchy (2/3)}
+
+
+  \begin{block}{Rule}
+    Methods in \scoop slightly differ from their classical writing.
+  \end{block}
+
+  \medskip
+
+  \begin{itemize}
+  \item an abstract method is now \textit{pseudo}-abstract\\
+    ~~~ {\scriptsize $\leadsto$ ~ there is no ``\textbf{virtual ... = 0}'' }\\
+    ~~~ {\scriptsize $\leadsto$ ~ there is some code: }
+    % 
+    \smallskip
+    % 
+  \item the dispatch mechanism is hand-written
+    % 
+    \smallskip
+    % 
+  \item the names of actual concrete methods are prefixed by \textbf{impl\_}\\
+    ~~~ {\scriptsize $\leadsto$ ~ first for disambiguation purpose } \\
+    ~~~ {\scriptsize $\leadsto$ ~ second to allow ``class extension from the top'' (see later) }
+  \end{itemize}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{\scoop Static Hierarchy (3/3)}
+
+  \begin{block}{Rule}
+    The upper most abstract class derives from \textbf{Any}.
+  \end{block}
+
+  \medskip
+
+  \begin{itemize}
+    % 
+  \item so some equipment is inherited\\
+    ~~~ {\scriptsize $\leadsto$ ~ for instance the \textbf{exact()} downcast method }
+    % 
+    \smallskip
+    % 
+  \item {\color{red}{warning:}}
+    \begin{itemize}
+    \item this is only ``\scoop~1'' stuff
+    \item i.e., turn a ``classical'' OO hierarchy into the static world
+    \item we will see more elaborate design later...
+    \end{itemize}
+    % 
+  \end{itemize}
+
+\end{frame}
+
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{\scoop Virtual Type (1/3)}
+
+  First realize that we want something like:
+
+\medskip
+
+\hspace*{0.1\textwidth}
+\begin{minipage}{0.8\textwidth}
+\begin{lstlisting}[basicstyle={\tiny\sffamily}]
+template <typename Exact>
+struct Iterator
+{
+  typedef typename Exact::value value;
+  /*
+   * so 'value' can be used in:
+   * void set_value(value v) { ... }
+   */
+};
+
+template <typename T>
+struct array_iterator : Iterator< array_iterator<T> >
+{
+  typedef T value;
+};
+\end{lstlisting}
+\end{minipage}
+
+\medskip
+
+except that this code does not compile...\\
+{\small (both classes are in mutual recursion at compile-time)}
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Migration towards \scoop (continued)}
+
+%\vspace*{-5mm}
+\hspace*{-5mm}
+\includegraphics[scale=.55]{vt2}
+
+\end{frame}
+
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{\scoop Virtual Type (2/3)}
+
+  \begin{block}{Rule}
+    Split virtual type declarations/definitions from classes.
+  \end{block}
+
+  \medskip
+
+  \begin{itemize}
+    % 
+  \item the \textbf{vtype} structure is specialized for each client class\\
+    ~~~ {\scriptsize $\leadsto$ ~ it holds declarations and definitions of virtual types }\\
+    ~~~ {\scriptsize $\leadsto$ ~ a declaration is performed with \textbf{stc::abstract} }\\
+    ~~~ {\scriptsize $\leadsto$ ~ definitions can be overridden through inheritance }
+    % 
+    \smallskip
+    % 
+  \item client classes have to ``import'' virtual types\\
+    ~~~ {\scriptsize $\leadsto$ ~ with \textbf{stc\_typename} when a virtual type is declared {\tiny(or defined for the 1st time)} }\\
+    ~~~ {\scriptsize $\leadsto$ ~ with \textbf{stc\_using} to use a virtual type in a sub-class {\tiny(when already in a super one)} }
+    % 
+  \end{itemize}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{\scoop Virtual Type (3/3)}
+
+  \begin{block}{Rule}
+    From a client point of view, associated types are already solved.
+  \end{block}
+
+  \medskip
+
+  \begin{itemize}
+    % 
+    \item use the classical access syntax \\
+      ~~~ {\scriptsize $\leadsto$ ~ either \textbf{Iterator$<$I$>$::value} or \textbf{I::value} }
+      % 
+      \smallskip
+      % 
+    \item to make sure a definition is not overridden use \textbf{stc::final$<$..$>$} \\
+      ~~~ {\scriptsize $\leadsto$ ~ Cf. the upcoming sample code }
+      % 
+      \smallskip
+      % 
+    \item ...\\
+      ~~~ {\scriptsize $\leadsto$ ~ actually we do not really have ``actual'' virtual types (but who cares?) }
+    \end{itemize}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Nothing But Code (1/3)}
+
+%
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+#include <stc/scoop.hh>
+
+namespace abc
+{
+  @\color{mediumblue}{stc\_equip\_namespace}@;
+  @\color{mediumblue}{stc\_decl\_associated\_type}@(value);
+
+
+# define templ@~~~~~~~~@template <typename Exact>
+# define classname@~~@Iterator
+# define @\color{mediumpink}{current}~~~~~~\color{red}{Iterator$<$Exact$>$}@
+# define @\color{mediumpink}{super}~~~~~~~~@stc::any<Exact>
+
+  @\color{mediumblue}{stc\_Header}@;
+    typedef stc::abstract value;
+  @\color{mediumblue}{stc\_End}@;
+
+  template <typename Exact>
+  struct Iterator : public super
+  {
+    @\color{mediumblue}{stc\_typename}@(value);
+    void next()@~~~~~~~~~~~~~~~~~~~@{ this->exact().impl_next();  }
+    bool is_valid() const@~~~~~~~~@{ return this->exact().impl_is_valid(); }
+    void set(const value& v)@~~@{ this->exact().impl_set(v);  }
+  };
+
+} // end of namespace abc
+\end{lstlisting}
+%
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Nothing But Code (1/3) --- Desugared Version}
+
+%
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+#include <stc/scoop.hh>
+
+namespace abc
+{
+  @\color{mediumblue}{stc\_equip\_namespace}@;
+  @\color{mediumblue}{stc\_decl\_associated\_type}@(value);
+
+
+  template <typename Exact> struct Iterator;  // fwd decl
+
+  template <typename Exact> @\hspace*{4cm} \color{mediumgreen}{SUGAR-FREE VERSION!}@
+  struct vtypes< @\color{red}{Iterator$<$Exact$>$}@ >
+  {
+    typedef stc::any<Exact> @\color{mediumpink}{super\_type}@;
+    typedef stc::abstract value;
+  };
+  
+  template <typename Exact>
+  struct Iterator : public stc::any<Exact>
+  {
+    typedef @\color{mediumblue}{stc\_type}@(Exact, value) value;
+    void next()@~~~~~~~~~~~~~~~~~~~@{ this->exact().impl_next();  }
+    bool is_valid() const@~~~~~~~~@{ return this->exact().impl_is_valid(); }
+    void set(const value& v)@~~@{ this->exact().impl_set(v);  }
+  };
+
+} // end of namespace abc
+\end{lstlisting}
+%
+
+\end{frame}
+
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Nothing But Code (2/3)}
+
+%
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+namespace abc
+{
+# define templ@~~~~~~~~@template <typename T>
+# define classname@~~@array_iterator
+# define @\color{mediumpink}{current}~~~~~~\color{red}{array\_iterator$<$T$>$}@
+# define @\color{mediumpink}{super}~~~~~~~~@Iterator< current >
+
+  @\color{mediumblue}{stc\_Header}@;
+    typedef stc::final<T> value;
+  @\color{mediumblue}{stc\_End}@;
+
+  template <typename T>
+  class array_iterator : public super
+  {
+  public:
+    @\color{mediumblue}{stc\_using}@(value);
+    void impl_next()@~~~~~~~~~~~~~~~~~~~@{ i_ = i_ + 1; }
+    bool impl_is_valid() const@~~~~~~~~@{ return i_ >= 0 and i_ < n_; }
+    void impl_set(const value& v)@~~@{ v_ = v; }
+    array_iterator(int n)@~~~~~~~~~~~~~~~@: i_(0), n_(n) {}
+  protected:
+    int   i_, n_;
+    value v_;
+  };
+
+} // end of namespace abc
+\end{lstlisting}
+%
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Nothing But Code (2/3) --- Desugared Version}
+
+%
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+namespace abc
+{
+  template <typename T> array_iterator;  // fwd decl
+
+  template <typename T>
+  struct vtypes< @\color{red}{array\_iterator$<$T$>$}@ >
+  {
+    typedef Iterator< array_iterator<T> > @\color{mediumpink}{super\_type}@;
+    typedef stc::final<T> value;
+  }; @\hspace*{6.7cm} \color{mediumgreen}{SUGAR-FREE VERSION!}@
+  
+  template <typename T>
+  class array_iterator : public Iterator< array_iterator<T> >
+  {
+  public:
+    typedef typename Iterator< array_iterator<T> >::value value;
+    void impl_next()@~~~~~~~~~~~~~~~~~~~@{ i_ = i_ + 1; }
+    bool impl_is_valid() const@~~~~~~~~@{ return i_ >= 0 and i_ < n_; }
+    void impl_set(const value& v)@~~@{ v_ = v; }
+    array_iterator(int n)@~~~~~~~~~~~~~~~@: i_(0), n_(n) {}
+  protected:
+    int   i_, n_;
+    value v_;
+  };
+
+} // end of namespace abc
+\end{lstlisting}
+%
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Nothing But Code (3/3)}
+
+%
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+namespace abc
+{
+  // \color{red}{algorithm}
+
+  template <typename @\greenI@>
+  void fill(@\blueIterator@<@\greenI@>& it,@~~@typename @\greenI@::@\color{darkyellow}{value}@ v)
+  {
+    it.init();
+    while (it.is_valid())
+      it.set_value(v);
+  }
+
+} // end of namespace abc
+
+
+// \color{red}{main}
+
+int main()
+{
+  abc::array_iterator<int> i(7);
+  abc::algo(i, 51);
+}
+
+\end{lstlisting}
+%
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Going Further with \scoop 1}
+
+%
+  {\small A static {C++} object-oriented programming ({SCOOP})
+    paradigm mixing benefits of traditional {OOP} and generic
+    programming.
+  }
+%
+  {\scriptsize Nicolas Burrus, Alexandre Duret-Lutz, Thierry G\'eraud,
+    David Lesage, and Rapha\"el Poss.  \textit{In the Proceedings of
+      the Workshop on Multiple Paradigm with Object-Oriented Languages
+      (MPOOL), 2003.}  }
+%
+  
+  \medskip
+
+%
+  {\scriptsize
+    \color{blue}{
+      \url{http://www.lrde.epita.fr/people/theo/papers/geraud.03.mpool.pdf}
+    }
+  }
+%
+
+\end{frame}
+
+
+
+
+
+%------------------------------------------------------------
+\subsection{Some Limitations of OO Designs}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Generic Type Functions}
+
+
+\begin{block}{}
+  We know how to write static hierarchies with virtual types
+\end{block}
+
+% 
+\bigskip
+% 
+
+Yet...
+
+% 
+\bigskip
+%
+
+\begin{block}{new objective:}
+  we want to define some types that behave like generic functions
+\end{block}
+
+% 
+\bigskip
+\bigskip
+%
+
+For instance, something like the {\scriptsize{\textbf{boost::reverse\_iterator$<$OtherIterator$>$}}} \\
+{\scriptsize \color{blue}{ \url{http://www.boost.org/libs/iterator/doc/reverse_iterator.html} } }
+
+
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Example (1/3)}
+
+
+For instance, with \bfI being any iterator type, we want a
+generic iterator class, \bfreverseI:
+
+%
+\bigskip
+%
+
+\begin{itemize}
+\item to be defined once and for all
+  \smallskip
+  %
+\item which inverts the behavior of \bfnext and/or \bfprev
+  \smallskip
+  %
+\item \textit{and} which keeps the other features of \bfI
+\end{itemize}
+
+%
+\bigskip
+%
+
+Note that \textbf{reverse} is just like a function of \bfI
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Example (2/3)}
+
+This class:
+\smallskip
+%
+
+\begin{itemize}
+\item should provide \bfnext iff \bfI provides \bfprev\\
+  ~~~ {\scriptsize $\leadsto$ ~ we do not want any pollution by ``ghost'' methods }
+\end{itemize}
+
+%
+\bigskip
+%
+
+so the snippet below is \textit{not} acceptable:
+
+\smallskip
+
+\begin{multicols}{2}
+%
+\begin{lstlisting}[basicstyle={\tiny\sffamily}]
+template <typename I>
+class reverse ...
+{
+public:
+  void prev() { iter.next(); }
+  next next() { iter.prev(); }
+  ...
+protected;
+  I iter;
+};
+\end{lstlisting}
+%
+\columnbreak
+%
+because this class interface offers some features that might be
+undesirable
+%
+\end{multicols}
+
+%
+\bigskip
+%
+
+{\tiny
+  consequently the client gets inappropriate error messages (try for instance
+  boost::reverse\_iterator with \_\_gnu\_cxx::slist and operator--). 
+}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Example (3/3)}
+
+
+This class:
+\smallskip
+%
+
+\begin{itemize}
+\item should also provide every upcoming methods\\
+  ~~~ {\scriptsize $\leadsto$ ~ i.e., methods that will be added in
+    some new concepts that \bfI will model }
+\end{itemize}
+
+%
+\bigskip
+%
+
+FIXME: illustration...
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Some More Examples}
+
+Then imagine:
+\smallskip
+%
+
+\begin{itemize}
+\item \textbf{say\_hello$<$I$>$} that says hello when \textbf{init} is called
+\smallskip
+%
+\item \textbf{skippy$<$I$>$} that skips $n$ elements when iterating...
+\smallskip
+%
+\item \textbf{log$<$I, L$>$} that logs every method calls (with a
+  given log policy of type \textbf{L})
+\smallskip
+%
+\item \textbf{only\_if$<$I, P$>$} that behave like its container only has
+  elements which satisfies a given predicate (of type \textbf{P}) \smallskip
+%
+%
+\item \textbf{paired$<$I$>$} that FIXME: explain
+%
+\item FIXME: ...
+%
+\end{itemize}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Intrinsically an OO Problem (1/3)}
+
+
+\hspace*{-5mm}
+\begin{minipage}{0.72\textwidth}
+  \includegraphics[scale=.55]{simpledeco}
+\end{minipage}
+\begin{minipage}{0.28\textwidth}
+  That works fine here!
+  \begin{itemize}
+    {\scriptsize
+  \item a \textit{single} actual abstraction (Iterator)
+  \item the decorator class factors code for the identity behavior
+  \item the hello\_iterator class is almost empty
+  \item it just does its job
+  }
+  \end{itemize}
+\end{minipage}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Intrinsically an OO Problem (2/3)}
+
+\hspace*{-7mm}
+\includegraphics[scale=.55]{harddeco}
+
+\smallskip
+
+{\scriptsize
+Without duplicating code, how to
+  \begin{itemize}
+  \item make the \bfprev and/or \bfnext methods appear in \bfhelloiterator \\
+    when they seem required?
+  \item and plug this class to the relevant abstraction,\\
+    either \bfBackwardIterator or \bfForwardIterator?
+\end{itemize}
+}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Intrinsically an OO Problem (3/3)}
+
+We want to express that:
+\smallskip
+%
+
+\begin{itemize}
+\item \bfhelloiterator transforms any \bfIterator class
+\smallskip
+%
+
+\item the behavior of \bfhelloiterator mainly is the identity
+\smallskip
+%
+
+\item the only method modified w.r.t. the ones of \bfI is \textbf{init}
+\smallskip
+%
+
+\item \bfhelloiteratorI derives from the same
+  abstractions then \bfI \smallskip
+%
+\end{itemize}
+
+%
+\bigskip
+%
+
+that does \textit{not} sound like something easily feasible with non-dynamic OO languages...
+
+\end{frame}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% eval: (ispell-change-dictionary "american")
+%%% TeX-master: "slides"
+%%% End:

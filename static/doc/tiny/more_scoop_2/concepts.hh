@@ -25,15 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef STC_DOC_TINY_MORE_SCOOP_2_CONCEPTS_HH
 
-/* \file doc/tiny/local/undefs.hh
+/* \file doc/tiny/more_scoop_2/concepts.hh
 
-   \brief Utility file for tiny sample uses of SCOOP 2.  */
+   \brief Forward declaration of concepts.  */
 
 
-#undef current
-#undef super
-#undef templ
-#undef classname
+namespace abc
+{
 
-// FIXME: Replace templ by 'paramlist'?
+  template <typename Exact> struct Iterator;
+
+  template <typename Exact> struct Forward_Iterator;
+  template <typename Exact> struct Backward_Iterator;
+  template <typename Exact> struct Bidirectional_Iterator;
+
+  template <typename Exact> struct Read_Iterator;
+  template <typename Exact> struct Read_Only_Iterator;
+  template <typename Exact> struct Write_Iterator;
+  template <typename Exact> struct Write_Only_Iterator;
+  template <typename Exact> struct Read_Write_Iterator;
+
+} // end of namespace abc
+
+
+#endif // ! STC_DOC_TINY_MORE_SCOOP_2_CONCEPTS_HH

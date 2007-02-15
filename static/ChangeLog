@@ -1,3 +1,67 @@
+2007-02-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
+
+	Add some slides that present the SCOOP 2 paradigm.
+	
+	* doc/latex/paradigm/slides.tex: New.
+	* doc/latex/paradigm/figures: New.
+	* doc/latex/paradigm/figures/zoomin.fig: New.
+	* doc/latex/paradigm/figures/vt2.fig: New.
+	* doc/latex/paradigm/figures/harder0x.fig: New.
+	* doc/latex/paradigm/figures/simplescoop1.fig: New.
+	* doc/latex/paradigm/figures/concepts.fig: New.
+	* doc/latex/paradigm/figures/alt.fig: New.
+	* doc/latex/paradigm/figures/simplegp.fig: New.
+	* doc/latex/paradigm/figures/evolution.fig: New.
+	* doc/latex/paradigm/figures/simpledeco.fig: New.
+	* doc/latex/paradigm/figures/simpleoo.fig: New.
+	* doc/latex/paradigm/figures/glance.fig: New.
+	* doc/latex/paradigm/figures/getset.fig: New.
+	* doc/latex/paradigm/figures/simple0x.fig: New.
+	* doc/latex/paradigm/figures/simpleoovt.fig: New.
+	* doc/latex/paradigm/figures/corn.fig: New.
+	* doc/latex/paradigm/figures/simplevt.fig: New.
+	* doc/latex/paradigm/figures/selectors.fig: New.
+	* doc/latex/paradigm/figures/scoop1a.fig: New.
+	* doc/latex/paradigm/figures/harddeco.fig: New.
+	* doc/latex/paradigm/figures/design.fig: New.
+	* doc/latex/paradigm/figures/vt1.fig: New.
+	* doc/latex/paradigm/wewant.tex: New.
+	* doc/latex/paradigm/myhyperref.sty: New.
+	* doc/latex/paradigm/atour.tex: New.
+	* doc/latex/paradigm/numberslides.sty: New.
+	* doc/latex/paradigm/newalg.sty: New.
+	* doc/latex/paradigm/Makefile: New.
+	* doc/latex/paradigm/sequel.tex: New.
+
+	Update the tiny examples.
+
+	* doc/tiny/local/scoop.hh
+	(true_, false_): Turn from bexpr_ to static Boolean values.
+	(stc_equip_namespace): Remove the namespace arg.
+	(tag, delegatee_type): Rename as...
+	(behavior, delegatee): ...these.
+	(any): New in scooped namespaced.
+	(top): Remove category so it can be "not found" by default.
+	(concept_): Remove; just use "any" instead.
+	(impl): Split some parts into...
+	(get_impl, set_impl): ...these new classes.
+	(stc_is, stc_is_not): New macros.
+	(stc_Header, stc_End): New macros.
+	* doc/tiny/a_la_scoop_1/main.cc: Add commentary.
+	* doc/tiny/a_la_scoop_1/main.cc: Add commentary.
+	* doc/tiny/a_la_scoop_2/main.cc: Update.
+	* doc/tiny/a_la_scoop_2/desugar.cc: Update.
+	* doc/tiny/a_la_scoop_1_plus/main.cc: Update.
+	* doc/tiny/more_scoop_2/identity.hh: Update.
+	* doc/tiny/more_scoop_2/main.cc: Update.
+	* doc/tiny/local/scoop.hh: Update.
+	* doc/tiny/local/undefs.hh: Update.
+
+	Move some code into independent files.
+	
+	* doc/tiny/more_scoop_2/reverse_iterator.hh: New.
+	* doc/tiny/more_scoop_2/concepts.hh: New.
+
 2007-02-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix mini-oln.

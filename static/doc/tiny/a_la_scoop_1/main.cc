@@ -77,7 +77,7 @@ namespace abc
   template <typename T> class array_iterator;
 
   template <typename T>
-  struct vtypes< current > : vtypes< super >
+  struct vtypes< current > : vtypes< super > // inheritance like in the paper about SCOOP
   {
     typedef T value;
   };

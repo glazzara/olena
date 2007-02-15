@@ -62,8 +62,8 @@ namespace stc
   template < template <class> class >
   struct is;
 
-  typedef mlc::bexpr_<true>  true_;
-  typedef mlc::bexpr_<false> false_;
+  typedef mlc::true_  true_;
+  typedef mlc::false_ false_;
 
 } // end of namespace stc
 
@@ -76,15 +76,31 @@ namespace stc
 
 
 
+// Access to associated type
+# define stc_type_(From, Type) vtype<From, typedef_::Type>::ret
+# define stc_type(From, Type) typename stc_type_(From, Type)
 
 
-# define stc_equip_namespace(SCOOPED_NAMESPACE)					\
+// below the more tolerant version is used, namely stc_deferred,
+// yet it sometimes can be replaced by "stc_find_type(E, Name)"
+# define stc_find_type_(From, Type) find_vtype<From, typedef_::Type>::ret
+# define stc_find_type(From, Type) typename stc_find_type_(From, Type)
+
+// Boolean expression counterpart of stc_find_type
+# define stc_is_found(Type)      mlc::is_found_< stc_deferred(Type) >
+# define stc_is_not_found(Type)  mlc::is_not_found_< stc_deferred(Type) >
+
+
+
+
+# define stc_equip_namespace									\
 												\
 												\
-namespace SCOOPED_NAMESPACE									\
-{												\
+  mlc_decl_typedef(exact_type);									\
 												\
-  mlc_decl_typedef(delegatee_type);								\
+  mlc_decl_typedef(category);									\
+  mlc_decl_typedef(behavior);									\
+  mlc_decl_typedef(delegatee);									\
 												\
 												\
   template <typename from_type>									\
@@ -117,7 +133,7 @@ namespace SCOOPED_NAMESPACE									\
 												\
     template < typename from,									\
 	       typename target >								\
-    struct vtype_not_found;									\
+    struct vtype_not_defined;									\
 												\
 												\
     template < typename curr,									\
@@ -146,7 +162,7 @@ namespace SCOOPED_NAMESPACE									\
     struct no_delegatee_declared_;								\
 												\
 												\
-  } /* end of namespace SCOOPED_NAMESPACE::ERROR */						\
+  } /* end of namespace ERROR */								\
 												\
 												\
 												\
@@ -236,10 +252,10 @@ namespace SCOOPED_NAMESPACE									\
     template <typename from, typename target>							\
     struct get_stm										\
     {												\
-      typedef SCOOPED_NAMESPACE::vtypes<from> decl1;						\
+      typedef vtypes<from> decl1;								\
       typedef typename target::template from_<decl1>::ret res1;					\
 												\
-      typedef SCOOPED_NAMESPACE::single_vtype<from, target> decl2;				\
+      typedef single_vtype<from, target> decl2;							\
       typedef typename decl2::ret ret2;								\
 												\
       typedef typename helper_get_stm<res1, ret2>::ret ret;					\
@@ -309,7 +325,7 @@ namespace SCOOPED_NAMESPACE									\
     template <typename curr, typename target>							\
     struct check_delegatee_inherited								\
       : mlc::assert_< mlc::is_found_< typename first_stm<curr,					\
-				      typedef_::delegatee_type>::ret::second_elt >,		\
+				      typedef_::delegatee>::ret::second_elt >,			\
 		      ERROR::no_delegatee_declared_ >						\
     {												\
     };												\
@@ -626,8 +642,8 @@ namespace SCOOPED_NAMESPACE									\
      *												\
      * delegator_find(from, target)								\
      * {											\
-     *   precondition(target != delegatee_type);						\
-     *   delegatee = superior_find(from, delegatee_type);					\
+     *   precondition(target != delegatee);							\
+     *   delegatee = superior_find(from, delegatee);						\
      *   if (delegatee == mlc::not_found)							\
      *     return mlc::not_found;								\
      *   else											\
@@ -651,7 +667,7 @@ namespace SCOOPED_NAMESPACE									\
     template <typename from, typename target>							\
     struct delegator_find									\
     {												\
-      typedef typename superior_find<from, typedef_::delegatee_type>::ret delegatee;		\
+      typedef typename superior_find<from, typedef_::delegatee>::ret delegatee;			\
       typedef typename helper_delegator_find<from, target, delegatee>::ret ret;			\
     };												\
 												\
@@ -711,17 +727,17 @@ namespace SCOOPED_NAMESPACE									\
      *												\
      * find(from, target)									\
      * {											\
-     *   if (target == delegatee_type)								\
-     *     return superior_find(from, delegatee_type);						\
+     *   if (target == delegatee)								\
+     *     return superior_find(from, delegatee);						\
      *   else											\
      *     return helper_find(from, target);							\
      * }											\
      */												\
 												\
     template <typename from>									\
-    struct find <from, /* if target == */ typedef_::delegatee_type >				\
+    struct find <from, /* if target == */ typedef_::delegatee >					\
     {												\
-      typedef typename superior_find<from, typedef_::delegatee_type>::ret ret;			\
+      typedef typename superior_find<from, typedef_::delegatee>::ret ret;			\
     };												\
 												\
     template <typename from, typename target>							\
@@ -735,7 +751,7 @@ namespace SCOOPED_NAMESPACE									\
     };												\
 												\
 												\
-  } /* end of SCOOPED_NAMESPACE::internal */							\
+  } /* end of internal */									\
 												\
 												\
   /*												\
@@ -762,7 +778,8 @@ namespace SCOOPED_NAMESPACE									\
   struct vtype											\
   {												\
     typedef typename find_vtype<from, target>::ret res;						\
-    struct check_ : mlc::assert_< mlc::is_found_<res> >						\
+    struct check_ : mlc::assert_< mlc::is_found_<res>,						\
+                                  ERROR::vtype_not_defined<from, target> >			\
     {												\
       typedef res ret;										\
     };												\
@@ -773,9 +790,33 @@ namespace SCOOPED_NAMESPACE									\
 												\
   mlc_case_equipment_for_namespace(internal);							\
 												\
-  mlc_decl_typedef(tag);									\
-  mlc_decl_typedef(category);									\
-  mlc_decl_typedef(exact_type);									\
+												\
+												\
+												\
+  /* any */											\
+												\
+  template <typename E>										\
+  struct any;											\
+												\
+  template <typename E>										\
+  struct vtypes< any<E> >									\
+  {												\
+    typedef mlc::none     super_type;								\
+    typedef stc::final<E> exact_type;								\
+  };												\
+												\
+												\
+  template <typename E>										\
+  struct any : public stc::any<E>								\
+  {												\
+    typedef E exact_type;									\
+    using stc::any<E>::exact;									\
+												\
+  protected:											\
+    any() {}											\
+  };												\
+												\
+												\
 												\
 												\
   namespace internal										\
@@ -806,7 +847,7 @@ namespace SCOOPED_NAMESPACE									\
 												\
     template < template <class> class abstraction,						\
 	       typename E >									\
-    struct next_plug_node < abstraction, E, 1, mlc::false_ > 					\
+    struct next_plug_node < abstraction, E, 1, mlc::false_ >					\
       : public abstraction<E>									\
     {												\
     protected: next_plug_node() {}								\
@@ -872,14 +913,16 @@ namespace SCOOPED_NAMESPACE									\
     };												\
 												\
     template <typename E>									\
-    struct top < mlc::not_found, E >								\
+    struct top < mlc::none, E > : public any<E>							\
     {												\
     protected: top() {}										\
     };												\
 												\
+    template <typename E>									\
+    struct top < mlc::not_found, E >; /* FIXME: Error msg here */				\
+												\
 												\
   } /* end of namespace internal */								\
-												\
 												\
 												\
   /* top class */										\
@@ -889,9 +932,8 @@ namespace SCOOPED_NAMESPACE									\
   template <typename E>										\
   struct vtypes< top<E> >									\
   {												\
-    typedef mlc::none super_type;								\
-    typedef stc::abstract category;								\
-    typedef stc::final<E> exact_type;								\
+    typedef any<E>    super_type;								\
+    /* default is "no category" */								\
   };												\
 												\
   template <typename E>										\
@@ -903,138 +945,51 @@ namespace SCOOPED_NAMESPACE									\
 												\
 												\
 												\
-  /* stc::any vtypes in equipped namespace; code required for SCOOP 1 */			\
-												\
-  template <typename E>										\
-  struct vtypes< stc::any<E> >									\
-  {												\
-    typedef mlc::none super_type;								\
-    typedef stc::final<E> exact_type;								\
-  };												\
-												\
-												\
-												\
-  /* concept class */										\
-												\
-  template <typename E>										\
-  struct concept_ : public virtual stc::any<E>							\
-  {												\
-  protected:											\
-    concept_() {}										\
-  };												\
-												\
-												\
   namespace automatic										\
   {												\
 												\
-    template < template <class> class abstraction, typename E, typename tag = void >		\
-    struct impl											\
-    /* undefined */ ;										\
+    /*												\
+     *  set_impl										\
+     */												\
+												\
+    template < template <class> class abstraction, typename behavior, typename E >		\
+    struct set_impl										\
+    /* to be defined by the client */ ;								\
+												\
+												\
+												\
+    /*												\
+     *  impl											\
+     */												\
+												\
+    template < template <class> class abstraction, typename behavior, typename E >		\
+    struct impl : public set_impl< abstraction, behavior, E >					\
+    { /* fetch */ };										\
 												\
     template < template <class> class abstraction, typename E >					\
-    struct impl< abstraction, E, mlc::not_found >						\
+    struct impl< abstraction, /* behavior is */ mlc::not_found, E >				\
     { /* nothing */ };										\
 												\
     template < template <class> class abstraction, typename E >					\
-    struct impl< abstraction, E, void > : impl< abstraction, E, stc_find_type(E, tag) >		\
-    { /* fetch impl w.r.t. tag */ };								\
+    struct impl< abstraction, mlc::none /* behavior */, E >					\
+    { /* nothing */ };										\
+												\
+												\
+												\
+    /*												\
+     *  get_impl										\
+     */												\
+												\
+    template < template <class> class abstraction, typename E >					\
+    struct get_impl : impl< abstraction, stc_find_type(E, behavior), E >			\
+    { /* depends upon behavior */ };								\
+												\
 												\
   } /* end of namespace automatic */								\
 												\
 												\
-												\
-} /* end of SCOOPED_NAMESPACE */								\
-												\
-												\
-struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n;
+struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n
 
-
-/*
-
-
-//   --------------------------------------------
-//     O L D    B U N C H    O F    M A C R O S
-//   --------------------------------------------
-
-
-
-# define stc_find_vtype_(Namespace, From, Target) \
-   Namespace::find_vtype<From, Namespace::typedef_::Target##_type>::ret
-
-# define stc_find_vtype(Namespace, From, Target) \
-   typename stc_find_vtype_(Namespace, From, Target)
-
-
-
-# define stc_deferred_vtype_(Namespace, From, Target) \
-   Namespace::deferred_vtype<From, Namespace::typedef_::Target##_type>::ret
-
-# define stc_deferred_vtype(Namespace, From, Target) \
-   typename stc_deferred_vtype_(Namespace, From, Target)
-
-
-
-# define stc_vtype_(Namespace, From, Target) \
-   Namespace::vtype<From, Namespace::typedef_::Target##_type>::ret
-
-# define stc_vtype(Namespace, From, Target) \
-   typename stc_vtype_(Namespace, From, Target)
-
-
-
-# define stc_find_deduce_vtype_(Namespace, From, Target1, Target2)				\
-   Namespace::find_vtype< Namespace::find_vtype<From,						\
-						Namespace::typedef_::Target1##_type>::ret,	\
-			  Namespace::typedef_::Target2##_type>::ret
-
-# define stc_find_deduce_vtype(Namespace, From, Target1, Target2)				\
-   typename											\
-   Namespace::find_vtype< typename								\
-                          Namespace::find_vtype<From,						\
-						Namespace::typedef_::Target1##_type>::ret,	\
-			  Namespace::typedef_::Target2##_type>::ret
-
-
-
-# define stc_deduce_deferred_vtype(Namespace, From, Target1, Target2)			\
-   typename										\
-   Namespace::deferred_vtype< typename							\
-                     Namespace::deferred_vtype<From,					\
-				      Namespace::typedef_::Target1##_type>::ret,	\
-		     Namespace::typedef_::Target2##_type>::ret				\
-
-
-
-# define stc_deduce_vtype_(Namespace, From, Target1, Target2)				\
-   Namespace::vtype< Namespace::vtype<From,						\
-				      Namespace::typedef_::Target1##_type>::ret,	\
-		     Namespace::typedef_::Target2##_type>::ret
-
-# define stc_deduce_vtype(Namespace, From, Target1, Target2)				\
-   typename										\
-   Namespace::vtype< typename								\
-                     Namespace::vtype<From,						\
-				      Namespace::typedef_::Target1##_type>::ret,	\
-		     Namespace::typedef_::Target2##_type>::ret
-
-
-// # define stc_vtype_is_found_(Namespace, From, Target)
-//    mlc::is_found_< Namespace::find_vtype<From, Namespace::typedef_::Target##_type>::ret >
-
-
-//   ----------------------------------------------------------
-//    E N D    O F    O L D    B U N C H    O F    M A C R O S
-//   ----------------------------------------------------------
-
-*/
-
-
-
-
-# define stc_type_(From, Type) vtype<From, typedef_::Type>::ret
-# define stc_type(From, Type) typename stc_type_(From, Type)
-
-# define stc_find_type(From, Type) typename find_vtype<From, typedef_::Type>::ret
 
 
 // For concepts.
@@ -1042,30 +997,40 @@ struct e_n_d__w_i_t_h___s_e_m_i_c_o_l_o_n;
 # define stc_using(Type)    typedef typename super::Type Type
 
 
-# define stc_deferred(Type)  \
-  typename deferred_vtype< typename deferred_vtype< current, \
-                                                    typedef_::exact_type >::ret, \
-                           typedef_::Type >::ret
-
-
 // For impl classes.
+# define stc_deferred(Type)  typename deferred_vtype<Exact, typedef_::Type >::ret
 # define stc_lookup(Type) typedef typename vtype< stc_type(current, exact_type), typedef_::Type>::ret Type
 
-// typedef stc_type(current, Type) Type
 
 
-# define stc_prop(Name)    stc_find_type(E, Name)
+// the macro below was called stc_prop which was ambiguous
+// (that lets us think that it is true_ or false_) but the
+// result is a mlc::bexpr_!
+// so it has been renamed as stc_is
+# define stc_is(Type)    mlc::eq_< stc_find_type(E, Type), stc::true_ >
+
+// likewise:
+
+# define stc_is_not(Type)			\
+   mlc::or_< mlc::eq_< stc_find_type(E, Type),	\
+                       mlc::not_found >,	\
+             mlc::eq_< stc_find_type(E, Type),	\
+                       stc::false_ > >
+
+# define stc_prop(From, Type)      typename mlc::eq_< stc_find_type(From, Type), stc::true_ >::eval
+
+
 
 
 // sugar:
 
-# define stc_Header   					\
-							\
-templ class classname ;            /* fwd decl */	\
-							\
-templ struct vtypes< current > /* vtypes */		\
-{							\
-  typedef super super_type				\
+# define stc_Header				\
+						\
+templ class classname ; /* fwd decl */		\
+						\
+templ struct vtypes< current > /* vtypes */	\
+{						\
+  typedef super super_type
 
 
 

@@ -1,0 +1,48 @@
+\NeedsTeXFormat{LaTeX2e}
+\RequirePackage[english]{babel}
+
+%% Hyperref should always be included last.
+%% In particular, do not load float.sty or listing.sty after it.
+%% Don't include it if we are using entcs, since it loads it with a
+%% different set of options.
+\RequirePackage{hyperref}
+\makeatletter
+\@ifclassloaded{entcs}{}
+{
+  \hypersetup{bookmarks, bookmarksnumbered, bookmarksopen,
+              colorlinks,
+              citecolor=blue, linkcolor=blue, urlcolor=blue,
+              plainpages=false}
+}
+\makeatother
+
+\newcommand{\lemmaautorefname}{lemma}
+\newcommand{\definitionautorefname}{definition}
+\newcommand{\algorithmautorefname}{algorithm}
+\newcommand{\chapterautorefname}{chapter}
+\newcommand{\sectionautorefname}{section}
+\newcommand{\subsectionautorefname}{subsection}
+\newcommand{\subsubsectionautorefname}{subsubsection}
+\newcommand{\theoremautorefname}{theorem}
+
+%% Thanks to Micha and Thomas Hérault.
+\newcommand{\defautorefname}[3]{%
+  \expandafter\renewcommand\csname #1autorefname\endcsname{%
+    \iflanguage{french}{#3}{#2}%
+  }%
+}
+
+\defautorefname{algorithm} {algorithm} {algorithme}
+\defautorefname{chapter}   {Chapter}   {chapitre}
+\defautorefname{definition}{definition}{définition}
+\defautorefname{lemma}     {lemma}     {lemme}
+\defautorefname{section}   {Section}   {Section}
+\defautorefname{subsection}{Section}   {Section}
+\defautorefname{subsubsection}{Section}   {Section}
+\defautorefname{theorem}   {theorem}   {théorème}
+
+%\AtBeginDocument{
+%\makeatletter
+% \hypersetup{pdftitle=\@title,pdfauthor=\@author}
+%\makeatother
+%}

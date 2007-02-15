@@ -1,0 +1,1257 @@
+\section{A Sequel to \scoop}
+
+
+
+%------------------------------------------------------------
+\subsection{Thoughts about Concepts}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{A Concept-Oriented Design}
+
+\vspace*{-2mm}
+Consider this C++0x design:
+
+\medskip
+
+\includegraphics[scale=.45]{harder0x}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Ruminations (1/3)}
+
+It is great because:
+
+\smallskip
+
+  \begin{itemize}
+  \item we do not have to draw explicit relations between models and concepts\\
+    ~~~ {\scriptsize $\leadsto$ ~ we define \bfarrayiteratorT as a stand-alone class }\\
+    ~~~ {\scriptsize $\leadsto$ ~ we maintain a very low coupling between program entities }
+    % 
+    \smallskip
+    % 
+  \item some concepts are orthogonal\\
+    ~~~ {\scriptsize $\leadsto$ ~ discriminants ``browsing'' and ``accessibility'' are unrelated }
+  \end{itemize}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Ruminations (2/3)}
+
+Yet:
+
+\smallskip
+
+  \begin{itemize}
+  \item we are \textit{clearly} aware of \bfarrayiteratorT being an \textbf{Iterator} \\
+    ~~~ {\scriptsize $\leadsto$ ~ many classes are \textit{explicitly} designed to model some domain concepts }\\
+    % 
+    \smallskip
+    % 
+  \item this design is not so far from a ``classical'' OO design based on multiple inheritance \\
+    ~~~ {\scriptsize $\leadsto$ ~ and we know how to turn hierarchies into the static world }
+  \end{itemize}
+
+\smallskip
+
+\begin{block}{Postulate}
+  Static hierarchies may be a way to get in 2003 ISO/ANSI C++ such a ``C++0x''-like design.
+\end{block}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Ruminations (3/3)}
+
+Furthermore:
+    % 
+    \smallskip
+    % 
+  \begin{itemize}
+  \item when providing implementation classes (models) in C++0x, \\
+    we may also want to factor some code through inheritance \\
+    ~~~ {\scriptsize $\leadsto$ ~ so static hierarchies can be useful to implement models }\\
+    ~~~ {\scriptsize $\leadsto$ ~ and having virtual types (resolved at compile-time) can help }
+    % 
+    \smallskip
+    %
+  \item it is well-known that structural conformance is sometimes not so great \\
+    ~~~ {\scriptsize $\leadsto$ ~ how can a concept express that addition is commutative? }\\
+    ~~~ {\scriptsize $\leadsto$ ~ does a 3D point model the concept of 2D point? }
+  \end{itemize}
+
+\end{frame}
+
+
+
+%------------------------------------------------------------
+\subsection{Towards a Solution}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{The Way We Think (1/3)}
+
+We want to implement \bfarrayiteratorT in classical OO:
+
+\bigskip
+
+\begin{enumerate}
+{\scriptsize{
+
+\item[] \textit{first step}
+\smallskip
+\item we know that \bfarrayiteratorT goes forward
+\item the \bfForwardIterator {\color{red}{ abstract class}} is for iterators going forward
+\item $\Rightarrow ~ $ we {\color{mediumgreen}explicitly} state that \bfarrayiteratorT derives from \bfForwardIterator
+
+\medskip
+\item[] \textit{second step}
+\smallskip
+
+\item \bfForwardIterator {\color{red}{ declares}} \bfnext
+\item $\Rightarrow ~ $ we {\color{red}{define}} \bfnext in \bfarrayiteratorT
+
+}}
+\end{enumerate}
+
+\bigskip
+
+OK...
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{The Way We Think (2/3)}
+
+We want to implement \bfarrayiteratorT in C++-0x:
+
+\bigskip
+
+\begin{enumerate}
+{\scriptsize{
+
+\item[] \textit{first step}
+\smallskip
+\item we know that \bfarrayiteratorT goes forward
+\item the \bfForwardIterator {\color{red}{ concept}} is for iterators going forward
+\item $\Rightarrow ~ $ \bfarrayiteratorT shall {\color{mediumgreen}{implicitly}} model \bfForwardIterator
+
+\medskip
+\item[] \textit{second step}
+\smallskip
+
+\item \bfForwardIterator {\color{red}{ requires}} \bfnext
+\item $\Rightarrow ~ $ we {\color{red}{implement}} \bfnext in \bfarrayiteratorT
+
+}}
+\end{enumerate}
+
+\bigskip
+
+finally that is not so different from classical OO!
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{The Way We Think (3/3)}
+
+now...
+
+\medskip
+
+what can we say about \bfhelloiteratorI?
+
+\medskip
+
+and about \bfreverseI?
+
+\bigskip\medskip
+
+let us try:
+
+\medskip
+
+\begin{enumerate}
+{\scriptsize{
+
+\item[] \textit{first step}
+\smallskip
+\item we know that \bfhelloiteratorI goes the same way of \bfI
+\item and then we are stuck...
+}}
+\end{enumerate}
+
+\bigskip\medskip
+
+so we have to think different!
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Think Different (1/3)}
+
+Let us rewrite:
+\medskip
+%
+\begin{itemize}
+\scriptsize
+\item we know that \bfarrayiteratorT goes forward
+\item $\Rightarrow ~ $ we {\color{mediumgreen}explicitly} state that \bfarrayiteratorT derives from \bfForwardIterator
+\item $\Rightarrow ~ $ we {\color{red}{define}} \bfnext in \bfarrayiteratorT
+\end{itemize}
+
+%
+\bigskip
+%
+
+that way:
+\medskip
+%
+
+\begin{itemize}
+\scriptsize
+\item we {\color{mediumgreen}explicitly} state that \bfarrayiteratorT
+  \begin{itemize} \scriptsize
+  \item is an \bfIterator
+  \item goes forward
+  \end{itemize}
+\item $\leadsto ~ $ \bfarrayiteratorT is {\color{mediumgreen}implicitly} a \bfForwardIterator
+\item $\Rightarrow ~ $ we {\color{red}{define}} \bfnext in \bfarrayiteratorT
+\end{itemize}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Think Different (2/3)}
+
+For \bfhelloiteratorI:
+\medskip
+%
+\begin{itemize}
+\scriptsize
+\item we {\color{mediumgreen}explicitly} state that \bfhelloiteratorI
+  \begin{itemize} \scriptsize
+  \item is an \bfIterator
+  \item goes the same way than \bfI
+  \end{itemize}
+\item $\leadsto ~ $ \bfhelloiteratorI is {\color{mediumgreen}implicitly} a \bfForwardIterator iff \bfI is a \bfForwardIterator
+\item $\leadsto ~ $ \bfnext is {\color{mediumgreen}implicitly} defined in \bfarrayiteratorT in that case
+\end{itemize}
+
+%
+\bigskip
+%
+
+more precisely:
+\medskip
+%
+\begin{itemize}
+\scriptsize
+\item we {\color{mediumgreen}explicitly} state that \bfhelloiteratorI
+  \begin{itemize} \scriptsize
+  \item is an \bfIterator
+  \item behaves like \bfI
+  \end{itemize}
+\item $\leadsto ~ $ we {\color{mediumgreen}implicitly} get from \bfI all we expect for \bfhelloiteratorI
+\item $\Rightarrow ~ $ then we just have to {\color{red}{override}} \bfinit.
+\end{itemize}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Think Different (3/3)}
+
+For \bfreverseI:
+\medskip
+%
+\begin{itemize}
+\scriptsize
+\item we {\color{mediumgreen}explicitly} state that \bfreverseI
+  \begin{itemize} \scriptsize
+  \item behaves most of the time like \bfI
+  \item goes forward (resp. backward) iff \bfI goes backward (resp. forward)
+  \end{itemize}
+\item $\Rightarrow ~ $ then we just have to {\color{red}{implement}} \bfprev and \bfnext in a  {\color{mediumgreen}non-intrusive} way.
+\end{itemize}
+
+%
+\bigskip
+%
+
+Now just realize that:
+\medskip
+%
+\begin{itemize}
+\scriptsize
+\item \bfreverseI can even work when \bfI is \textit{not} an iterator
+\item with \textit{non-intrusive} extensions this class can handle some different ``reverse something'' cases
+\item the definition of the \bfreverseI class contains about  \textit{nothing}!
+\end{itemize}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Temporary Conclusion About OOP}
+
+\begin{block}{trouble with OOP}
+  some types cannot explicitly derive from \bfForwardIterator
+\end{block}
+
+\bigskip
+\bigskip
+
+indeed, some types cannot be explicitly plugged to abstract classes
+because it depends on some other information
+
+\bigskip
+
+{\scriptsize for instance \bfreverseI might be an iterator... or not!
+  and if it is, it might be forward... or not! }
+
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Temporary Conclusion About Concepts}
+
+
+\begin{block}{trouble with concepts}
+  we cannot state that a type is a \bfForwardIterator because it
+  offers the method \bfnext
+\end{block}
+
+\bigskip
+\bigskip
+
+indeed, some types are defined without knowing what methods they
+actually shall feature
+
+\bigskip
+
+{\scriptsize for instance \bfreverseI might implement \bfnext... and
+  sometimes it might not! }
+
+
+\end{frame}
+
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Temporary Conclusion}
+
+
+We really should think different:
+
+\bigskip
+
+\begin{block}{Rationale}
+  if a type has the \textsc{forward} \textit{{\color{red}{property}}}
+  \begin{itemize}
+  \item it offers the method \bfnext because
+      \begin{itemize}
+        \item either it implements this method
+        \item or an implementation of this method is automatically fetched
+      \end{itemize}
+  \item and thus it is a \bfForwardIterator
+  \end{itemize} 
+\end{block}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Discarding A False Solution}
+
+Consider a generic function type \bff (such as \bfreverse), \\ its behavior
+is roughly the identity of the type on which it applies.
+
+\bigskip
+
+Yet forming ``\bffT derives from \bfT'' is clearly \textit{not} a
+solution \\ since some functions \bff are far from the identity.
+
+% FIXME: Instead, we need a delegation mechanism (at compile-time).
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Using Delegation}
+
+  Having \bffT means that an object with this type is constructed over
+  an object with type \bfT.
+
+  \bigskip
+
+  {\scriptsize for instance an object with type
+    \bfreversearrayiteratorT holds an object with type
+    \bfarrayiteratorT }
+
+  \bigskip
+
+  We expect that the behavior of most methods in \bffT rely on methods
+  of \bfT; so we need \textit{delegation}.
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Providing Properties}
+
+  We sometimes said that a type has some properties (for instance the
+  \textsc{forward} property).
+
+\bigskip
+
+\begin{block}{Property}
+  A property is mapped into an associated type\\
+  \textbf{+} \\
+  is turned into a virtual type in order to take benefice from
+  inheritance.
+\end{block}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Providing Delegation}
+
+\begin{block}{Delegatee}
+  The possible presence of a delegatee is handled as a special
+  property of a type.
+\end{block}
+
+\bigskip
+
+For instance \bfI is the delegatee of \bfreverseI, meaning that the
+latter delegates some methods to the former.
+
+\bigskip
+
+In addition the definitions of virtual types can also be delegated.
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Providing a Category}
+
+  We sometimes said that a type belongs to a given category of objects
+  (for instance \bfIterator) without being specific about this type
+  belonging to a more precise sub-category (for instance
+  \bfForwardIterator).
+
+  \bigskip
+
+  \begin{block}{Category}
+    A category is a special property of a type that identifies its
+    belonging to a very large family of types.
+  \end{block}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Providing a Default Behavior}
+
+  We sometimes said that function types have a given behavior (for
+  instance \bfhelloiteratorI almost behaves like the identity of
+  \bfI).
+
+  \bigskip
+
+\begin{block}{Behavior}
+  The behavior of a type is a special property that characterizes most
+  of the implementation of this type.
+\end{block}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Decoupling Implementation Classes From Abstractions}
+
+  We sometimes cannot plug an implementation class to some abstract
+  class (for instance \bfreverseI).
+
+  \bigskip
+
+\begin{block}{Top}
+  Any implementation class derives from a class named \bftop,
+  either directly or through its super classes (when we have an
+  implementation hierarchy).
+\end{block}
+
+  \bigskip
+
+  Remember that we are in a static context so, more precisely, this
+  class is \textbf{top$<$Exact$>$}.
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Fetching Implementation Automatically}
+
+  We sometimes want an implementation class to have some methods that
+  cannot be directly implemented in that class (for instance, if \bfI
+  is an iterator, \bfreverseI shall automatically get an \bfisvalid
+  method).
+
+  \bigskip
+
+\begin{block}{Automatic Implementation}
+  Some implementation is automatically fetched through inheritance thanks
+  to a mechanism located above \bftop.
+\end{block}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Setting A Particular Implementation}
+
+  We sometimes want an implementation class to define a very
+  particular method but in a non-intrusive way (for instance, if
+  \bfreverseI is a forward iterator, \bfnext shall be defined, calling
+  \bfprev on the delegatee).
+
+  \bigskip
+
+\begin{block}{Non-intrusive Implementation}
+  The mechanism located above \bftop allows for setting some
+  particular implementation.
+\end{block}
+
+\end{frame}
+
+
+
+%------------------------------------------------------------
+\subsection{Abstractions and Classes in \scoop~2}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Abstractions}
+
+To implement abstractions:
+
+\medskip
+
+\begin{itemize}
+\item we stick with the 2003 ISO/ANSI C++ Standard\\
+  ~ {\scriptsize{$\leadsto$ ~ so we can wait until C++-0x}}
+%
+  \smallskip
+\item a concept is turned into an abstract class\\
+  ~ {\scriptsize{$\leadsto$ ~ so it is really materialized into code (a C++ type with a name)}}
+%
+  \smallskip
+\item a concept is parameterized by \textbf{Exact}\\
+  ~ {\scriptsize{$\leadsto$ ~ so exact types are known at compile-time (static world)}}
+%
+  \smallskip
+\item a concept refinement is handle by inheritance\\ 
+  ~ {\scriptsize{$\leadsto$ ~ so we effectively get the ``is-a'' relationship}}
+\end{itemize}
+
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Sample of Concept-Oriented Design}
+
+\vspace*{-2mm}
+Consider again this C++0x design:
+
+\medskip
+
+\hspace*{-5mm}
+\includegraphics[scale=.45]{harder0x}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Code of Abstractions (1/2)}
+
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+namespace abc
+{
+
+  template <typename Exact>
+  struct @\color{blue}{Iterator}@ @  :  \color{blue}{any}@<Exact>, @\color{mediumgreen}{automatic::get\_impl}@<Iterator, Exact>
+  {
+    @\color{mediumblue}{stc\_typename@(value);
+    void init()@~~~~~~~~~~~~~~~~@{ return this->exact().impl_init(); }
+    bool is_valid() const@~~~@{ return this->exact().impl_is_valid(); }
+  };
+
+  template <typename Exact>
+  struct @\color{blue}{Backward\_Iterator}@ @  :  @virtual @\color{blue}{Iterator}@<Exact>, @\color{mediumgreen}{automatic::get\_impl}@<Backward_Iterator, Exact>
+  {
+    void prev()@~~~@{ this->exact().impl_prev();  }
+  };
+
+  template <typename Exact>
+  struct @\color{blue}{Forward\_Iterator}@ @  :  @virtual @\color{blue}{Iterator}@<Exact>, @\color{mediumgreen}{automatic::get\_impl}@<Forward_Iterator, Exact>
+  {
+    void next()@~~~@{ this->exact().impl_next();  }
+  };
+
+  template <typename Exact>
+  struct @\color{blue}{Bidirectional\_Iterator}@ @  :  @@\color{blue}{Backward\_Iterator}@<Exact>, @\color{blue}{Forward\_Iterator}@<Exact>
+  {
+  };
+
+  ...
+\end{lstlisting}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Automatically Getting Implementation}
+
+\begin{multicols}{2}
+%
+\vspace*{-9mm}\hspace*{-5mm}
+\includegraphics[scale=.45]{corn}
+%
+\columnbreak
+%
+\begin{itemize}
+\small
+\item we have an ``ear of corn'' design
+\item FIXME
+\end{itemize}
+%
+\end{multicols}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Code of Abstractions (2/2)}
+
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+  template <typename Exact>
+  struct @\color{blue}{Write\_Iterator}@ @  :  @virtual @\color{blue}{Iterator}@<Exact>, @\color{mediumgreen}{automatic::get\_impl}@<Write_Iterator, Exact>
+  {
+    @\color{mediumblue}{stc\_using\_from}@(Iterator, value);
+    void set_value(const value& v)@~~~@{ return this->exact().impl_set_value(v); }
+  };
+
+  template <typename Exact>
+  struct @\color{blue}{Write\_Only\_Iterator}@ @  :  \color{blue}{Write\_Iterator}@<Exact>
+  {
+  };
+
+  template <typename Exact>
+  struct @\color{blue}{Read\_Iterator}@ @  :  @virtual @\color{blue}{Iterator}@<Exact>, @\color{mediumgreen}{automatic::get\_impl}@<Read_Iterator, Exact>
+  {
+    @\color{mediumblue}{stc\_using\_from}@(Iterator, value);
+    const value& get_value() const@~~~@{ return this->exact().impl_get_value(); }
+  };
+
+  template <typename Exact>
+  struct @\color{blue}{Read\_Write\_Iterator}@ @  :  \color{blue}{Read\_Iterator}@<Exact>, @\color{blue}{Write\_Iterator}@<Exact>
+  {
+  };
+
+} // end of namespace abc
+\end{lstlisting}
+
+\end{frame}
+
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Set an Implementation for a Default Behavior}
+
+
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+namespace abc
+{
+  namespace @\color{mediumgreen}{automatic}@
+  {
+    template <typename Exact>
+    struct @\color{mediumgreen}{set\_impl}@< @\color{blue}{Iterator}@, @\color{mediumpink}{behavior::identity}@, Exact >@~~:~~@virtual any<Exact>
+    {
+      void impl_init()@~~~~~~~~~~~~~~~~@{ this->exact().delegatee_.init();  }
+      bool impl_is_valid() const@~~~@{ return this->exact().delegatee_.is_valid(); }
+    };
+
+    template <typename Exact>
+    struct @\color{mediumgreen}{set\_impl}@< @\color{blue}{Read\_Iterator}@, @\color{mediumpink}{behavior::identity}@, Exact >@~~:~~@virtual any<Exact>
+    {
+      @\color{mediumblue}{stc\_typename}@(value);
+      const value& impl_get_value() const@~~~@{ return this->exact().delegatee_.get_value(); }
+    };
+
+    ...
+
+  } // end of namespace abc::automatic
+
+} // end of namespace abc
+\end{lstlisting}
+
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{A Classical Implementation Class}
+
+We have:
+\smallskip
+
+\begin{itemize}
+\scriptsize
+\item we {\color{mediumgreen}{explicitly}} state that \bfarrayiteratorT
+  \begin{itemize} \scriptsize
+  \item is an \bfIterator
+  \item goes forward
+  \item allows to assign a value (write in the container)
+  \end{itemize}
+\item $\Rightarrow ~ $ we have to implement the corresponding methods.
+\end{itemize}
+
+\bigskip
+
+So:
+\smallskip
+
+\begin{itemize}
+  \scriptsize
+\item this class derives from \bftop 
+\item we do \textit{not} have to draw an explicit link towards
+  \bfForwardIterator or to \bfWriteOnlyIterator
+\item we can omit setting the \textsc{read} and \textsc{backward} to
+  'false'\\
+  ~~~ {\scriptsize $\leadsto$ ~ a property is verified when its value is set to ``true'' }\\
+  ~~~ {\scriptsize $\leadsto$ ~ so if a property is unset, its value is not ``true'' }\\
+\end{itemize}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Code of \bfarrayiteratorT}
+
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+# define templ@~~~~~~~~@template <typename T>
+# define classname@~~@array_iterator
+# define current@~~~~~~\color{red}{array\_iterator$<$T$>$}@
+# define super@~~~~~~~~\color{mediumgreen}{top}@< current >
+
+@\color{mediumblue}{stc\_Header}@;
+  typedef stc::is<@\color{blue}{Iterator}@> category;
+  typedef T value;
+  typedef stc::true_ @\color{blue}{forward}@;
+  typedef stc::true_ @\color{blue}{write}@;
+@\color{mediumblue}{stc\_End}@;
+
+template <typename T>
+class array_iterator : public super
+{
+public:
+  @\color{mediumblue}{stc\_using}@(value);
+  void impl_init()@~~~~~~~~~~~~~~~~~~~~~~~~~~~~~@{ i_ = 0; }
+  void impl_next()@~~~~~~~~~~~~~~~~~~~~~~~~~~~~@{ i_ = i_ + 1; }
+  bool impl_is_valid() const@~~~~~~~~~~~~~~~~@{ return i_ >= 0 and i_ < n_; }
+  void impl_set_value(const value& v)@~~~@{ this->v_ = v; }
+
+  array_iterator(int n)@~~~~~~~~~~~~~~~~~~~~~~~~@: n_(n) {}
+  int index() const@~~~~~~~~~~~~~~~~~~~~~~~~~~~~@{ return i_; }
+protected:
+  int i_, n_;
+};
+\end{lstlisting}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{A Generic Function}
+
+Remember:
+\smallskip
+
+\begin{itemize}
+\scriptsize
+\item we {\color{mediumgreen}explicitly} state that \bfhelloiteratorI
+  \begin{itemize} \scriptsize
+  \item is an \bfIterator
+  \item behaves by default like \bfI
+  \end{itemize}
+\item $\leadsto ~ $ we {\color{mediumgreen}implicitly} get from \bfI all we expect for \bfhelloiteratorI
+\item $\Rightarrow ~ $ then we just have to {\color{red}{override}} \bfinit.
+\end{itemize}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Code of \bfhelloiteratorI}
+
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+# define templ@~~~~~~~~@template <typename I>
+# define classname@~~@hello_iterator
+# define current@~~~~~~\color{red}{hello\_iterator$<$I$>$}@
+# define super@~~~~~~~~\color{mediumgreen}{top}@< current >
+
+@\color{mediumblue}{stc\_Header}@;
+  typedef stc::is<@\color{blue}{Iterator}@> category;
+  typedef @\color{mediumpink}{tag::identity}@ behavior;
+  typedef I delegatee;
+@\color{mediumblue}{stc\_End}@;
+
+template <typename I>
+class hello_iterator : public super
+{
+public:
+  I& delegatee_;
+  hello_iterator(I& iter) : delegatee_(iter) {}  // ctor
+
+  // overriding
+  void impl_init()
+  {
+    std::cout << "hello!" << std::endl;
+    super::impl_init();
+  }
+};
+\end{lstlisting}
+
+\end{frame}
+
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Another Generic Function}
+
+Remember:
+\smallskip
+
+\begin{itemize}
+\scriptsize
+\item we {\color{mediumgreen}explicitly} state that \bfreverseT
+  \begin{itemize} \scriptsize
+  \item behaves most of the time like \bfT
+  \item goes forward (resp. backward) iff \bfI goes backward (resp. forward)
+  \end{itemize}
+\item $\Rightarrow ~ $ then we just have to {\color{red}{implement}} \bfprev and \bfnext in a  {\color{mediumgreen}non-intrusive} way.
+\end{itemize}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Code of \bfreverseT (1/2)}
+
+\begin{multicols}{2}
+%
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+// first, name the behavior
+
+namespace behavior { struct reverse; }
+
+
+// then, define the class
+
+# define templ@~~~~~~~~@template <typename T>
+# define classname@~~@reverse
+# define current@~~~~~~\color{red}{reverse$<$T$>$}@
+# define super@~~~~~~~~\color{mediumgreen}{top}@< current >
+
+@\color{mediumblue}{stc\_Header}@;
+  typedef T delegatee;
+  typedef @\color{mediumpink}{behavior::reverse}@ behavior;
+@\color{mediumblue}{stc\_End}@;
+
+template <typename T>
+class reverse : public super
+{
+public:
+  T& delegatee_; // mandatory for delegation
+  reverse(T& d) : delegatee_(d) {}
+};
+\end{lstlisting}
+%
+\columnbreak
+%
+{\scriptsize{ We can extend (non-intrusively) this class type with
+    new virtual types: }} \smallskip
+
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+  @\color{mediumblue}{stc\_Header\_Extension}@(forward);
+    typedef stc_prop(T, backward) ret;
+  @\color{mediumblue}{stc\_End}@;
+
+  @\color{mediumblue}{stc\_Header\_Extension}@(backward);
+    typedef stc_prop(T, forward) ret;
+  @\color{mediumblue}{stc\_End}@;
+\end{lstlisting}
+
+\smallskip {\scriptsize{ meaning that, \bfreverseT is forward iff \bfT
+    has the backward property }}
+%
+\end{multicols}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Code of \bfreverseT (2/2)}
+
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+namespace abc
+{
+
+  namespace @\color{mediumgreen}{automatic}@
+  {
+    // default behavior is 'identity'
+
+    template <template <class> class @\textit{abstraction}@, typename Exact>
+    struct @\color{mediumgreen}{set\_impl}@< @\color{blue}{\textit{abstraction}}@, @\color{mediumpink}{behavior::reverse}@, Exact >@~~:~~\color{mediumgreen}{impl}@< @\color{blue}{\textit{abstraction}}@, @\color{mediumpink}{tag::identity}@, Exact >
+    {};
+
+    // particular implementations
+
+    template <typename Exact>
+    struct @\color{mediumgreen}{set\_impl}@< @\color{blue}{Backward\_Iterator}@, @\color{mediumpink}{behavior::reverse}@, Exact > : virtual any<Exact>
+    {
+      void impl_prev()@~~~@{ this->exact().delegatee_.next();  }@~~~~@// 'prev' means 'next' 
+    };
+
+    template <typename Exact>
+    struct @\color{mediumgreen}{set\_impl}@< @\color{blue}{Forward\_Iterator}@, @\color{mediumpink}{behavior::reverse}@, Exact > : virtual any<Exact>
+    {
+      void impl_next()@~~~@{ this->exact().delegatee_.prev();  }@~~~~@// 'next' means 'prev'
+    };
+
+  } // end of namespace abc::automatic
+
+} // end of namespace abc
+\end{lstlisting}
+
+\end{frame}
+
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Sample use}
+
+\begin{multicols}{2}
+%
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+template <typename @\greenI@>
+void echo(const @\color{blue}{abc::Forward\_Iterator}@<@\greenI@>&)
+{
+  std::cout << "@\textbf{Forward Iterator}@" << std::endl;
+}
+
+template <typename @\greenI@>
+void echo(const @\color{blue}{abc::Backward\_Iterator}@<@\greenI@>&)
+{
+  std::cout << "@\textbf{Backward Iterator}@" << std::endl;
+}
+\end{lstlisting}
+%
+\columnbreak
+%
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+int main()
+{
+  typedef abc::array_iterator<int> iterator_t;
+  
+  iterator_t i(8);
+  echo(i);@~~~@// {\color{darkgray}{gives:}} \textbf{Forward Iterator}
+
+  abc::reverse<iterator_t> j(i);
+  echo(j);@~~~@// {\color{darkgray}{gives:}} \textbf{Backward Iterator}
+  
+  i.init();
+  std::cout << i.index() << std::endl;
+  // {\color{darkgray}{gives: 0}}
+  
+  j.prev();@~~~@// {\color{darkyellow}{actually means ``i.next()''}}
+  std::cout << i.index() << std::endl;
+  // {\color{darkgray}{gives: 1}}
+}
+\end{lstlisting}
+%
+\end{multicols}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Between \bftop and Abstractions (1/2)}
+
+
+\begin{itemize}
+\item an implementation class derives from \bftop\\
+  ~~~ {\tiny $\leadsto$ ~ so, unlike in classical OO, we do \textit{not} plug the class into some abstract class(es)}
+  \medskip
+  % 
+\item this class might be related to some abstractions\\
+  ~~~ {\tiny $\leadsto$ ~ and these possible relationships looks \textit{implicit} to the client}
+  \medskip
+  % 
+\item that depends upon:
+    \smallskip
+    % 
+  \begin{itemize}
+    \scriptsize
+  \item the value of the class category\\
+    ~~~ {\tiny $\leadsto$ ~ for instance the category of \bfarrayiteratorT is set to \textbf{stc::is$<$Iterator$>$}}
+    \smallskip
+    % 
+  \item \textit{and} some computation over the class virtual types\\
+    ~~~ {\tiny $\leadsto$ ~ for instance to be a \bfForwardIterator the \textsc{forward} property shall be true}
+    \smallskip
+    % 
+  \item \textit{and possibly} the nature of the delegatee\\
+    ~~~ {\tiny $\leadsto$ ~ if it exists and provides relevant information}\\
+    ~~~ {\tiny $\leadsto$ ~ for instance \bfT for the class \bfreverseT}
+  \end{itemize}
+  %
+\end{itemize}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Between \bftop and Abstractions (1/2)}
+
+Above \bftop
+\medskip
+
+\begin{itemize}
+  \scriptsize
+\item an equipment exists to link implementation classes with abstractions\\
+    ~~~ {\tiny $\leadsto$ ~ this equipment is a meta-program imported by the macro {\color{mediumblue}{stc\_equip\_namespace}}}
+  \smallskip
+  % 
+\item (and that is also the means to automatically fetch some default implementations)\\
+  ~~~ {\tiny $\leadsto$ ~ so we can have generic function types like \bfreverseT}
+  \smallskip
+  % 
+\item yet the designer has to explain how properties and abstractions are related\\
+  ~~~ {\tiny $\leadsto$ ~ for instance the \textsc{forward} property goes with the \bfForwardIterator abstraction }
+\end{itemize}
+
+\medskip
+
+  \begin{block}{Plugging rules}
+    The relations between properties and abstractions are implemented
+    in a declarative way.
+  \end{block}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{The Running Concept-Oriented Design}
+
+{\scriptsize This design feature two \textit{separate} concept hierarchies:}
+
+\medskip
+
+\includegraphics[scale=.4]{selectors}
+
+\medskip
+
+{\scriptsize we then have to define two \textit{selectors}, one per hierarchy}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Code of Selector 1 (iterator browsing mode)}
+
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+namespace abc
+{
+  namespace @\color{mediumgreen}{internal}@
+  {
+
+    typedef @\color{mediumpink}{selector}@<@\textit{\color{blue}{Iterator}}@, @\color{mediumpink}{1}@> @\color{mediumpink}{Iterator\_browsing}@;
+  
+    template <typename Exact>
+    struct @\color{darkyellow}{case\_}@< @\color{darkpink}{Iterator\_browsing}@, Exact,  @\color{darkyellow}{~1}@ > : @\color{darkyellow}{where\_}@< mlc::and_< stc_is(@\color{mediumblue}{forward}@), stc_is(@\color{mediumblue}{backward}@) > >
+    {
+      typedef @\color{blue}{Bidirectional\_Iterator}@<Exact> ret;
+    };
+  
+    template <typename Exact>
+    struct @\color{darkyellow}{case\_}@< @\color{darkpink}{Iterator\_browsing}@, Exact,  @\color{darkyellow}{~2}@ > : @\color{darkyellow}{where\_}@< stc_is(@\color{mediumblue}{forward}@) >
+    {
+      typedef @\color{blue}{Forward\_Iterator}@<Exact> ret;
+    };
+  
+    template <typename Exact>
+    struct @\color{darkyellow}{case\_}@< @\color{darkpink}{Iterator\_browsing}@, Exact,  @\color{darkyellow}{~3}@ > : @\color{darkyellow}{where\_}@< stc_is(@\color{mediumblue}{backward}@) >
+    {
+      typedef @\color{blue}{Backward\_Iterator}@<Exact> ret;
+    };
+    
+  } // end of namespace abc::internal
+
+} // end of namespace abc
+\end{lstlisting}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Code of Selector 2 (iterator data accessibility)}
+
+\begin{lstlisting}[escapechar=@,basicstyle={\tiny\sffamily}]
+namespace abc
+{
+  namespace @\color{mediumgreen}{internal}@
+  {
+
+    typedef @\color{mediumpink}{selector}@<@\textit{\color{blue}{Iterator}}@, @\color{mediumpink}{2}@> @\color{mediumpink}{Iterator\_accessibility}@;
+  
+    template <typename Exact>
+    struct @\color{darkyellow}{case\_}@< @\color{darkpink}{Iterator\_accessibility}@, Exact,  @\color{darkyellow}{~1}@ > : @\color{darkyellow}{where\_}@< mlc::and_< stc_is(@\color{mediumblue}{read}@), stc_is(@\color{mediumblue}{write}@) > >
+    {
+      typedef @\color{blue}{Read\_Write\_Iterator}@<Exact> ret;
+    };
+  
+    template <typename Exact>
+    struct @\color{darkyellow}{case\_}@< @\color{darkpink}{Iterator\_accessibility}@, Exact,  @\color{darkyellow}{~2}@ > : @\color{darkyellow}{where\_}@< mlc::and_< stc_is(@\color{mediumblue}{read}@), stc_is_not(@\color{mediumblue}{write}@) > >
+    {
+      typedef @\color{blue}{Read\_Only\_Iterator}@<Exact> ret;
+    };
+  
+    template <typename Exact>
+    struct @\color{darkyellow}{case\_}@< @\color{darkpink}{Iterator\_accessibility}@, Exact,  @\color{darkyellow}{~3}@ > : @\color{darkyellow}{where\_}@< mlc::and_< stc_is(@\color{mediumblue}{write}@), stc_is_not(@\color{mediumblue}{read}@) > >
+    {
+      typedef @\color{blue}{Write\_Only\_Iterator}@<Exact> ret;
+    };
+    
+  } // end of namespace abc::internal
+
+} // end of namespace abc
+\end{lstlisting}
+
+\end{frame}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% eval: (ispell-change-dictionary "american")
+%%% TeX-master: "slides"
+%%% End:
