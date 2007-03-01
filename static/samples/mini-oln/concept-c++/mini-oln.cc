@@ -37,9 +37,13 @@
 #include <stc/scoop.hh>
 
 
+/*-------------.
+| Equipement.  |
+`-------------*/
+
 // Helper macros.
 #define oln_type_of_(FromType, Alias)					\
-  oln::find_vtype<FromType, oln::typedef_:: Alias##_type>::ret
+  find_vtype<FromType, oln::typedef_:: Alias##_type>::ret
 
 #define oln_type_of(FromType, Alias)                                    \
   typename oln_type_of_(FromType, Alias)
@@ -48,79 +52,326 @@
 stc_scoop_equipment_for_namespace(oln);
 mlc_case_equipment_for_namespace(oln);
 
+// Virtual types declaration.
+namespace oln
+{
+  mlc_decl_typedef(point_type);
+  mlc_decl_typedef(iter_type);
+  mlc_decl_typedef(value_type);
+
+  mlc_decl_typedef(nbh_type);
+  mlc_decl_typedef(niter_type);
+}
 
 
 /*-----------.
 | Concepts.  |
 `-----------*/
 
-namespace concepts
+namespace oln
 {
-  // These concepts are not automatic (i.e., prefixed with `auto'),
-  // since we cannot rely on type signatures for them.  For instance,
-  // using only structural conformance, oln::point3d could be a model
-  // of concepts::Point2d!
-  concept Point2d<typename P>
-  {
-    typename coord_type;
-    // For simplicity purpose, the canonical model of
-    // concepts::Point2d -- oln::point2d -- does not expose its
-    // interface through methods (that's bad OO software engineering
-    // practice, but hey, we're just prototyping here).  Therefore we
-    // cannot express sigatures on row and col accesses, since C++0x
-    // concepts forbid attribute (member) signatures.
-  };
 
-  concept Point3d<typename P>
+  namespace concepts
   {
-    typename coord_type;
-    // Same remark as above for concepts::Point2d regarding member
-    // signatures.
-  };
+    // These concepts are not automatic (i.e., prefixed with `auto'),
+    // since we cannot rely on type signatures for them.  For instance,
+    // using only structural conformance, oln::point3d could be a model
+    // of concepts::Point2d!
+    concept Point2d<typename P>
+    {
+      typename coord_type;
+      // For simplicity purpose, the canonical model of
+      // concepts::Point2d -- oln::point2d -- does not expose its
+      // interface through methods (that's bad OO software engineering
+      // practice, but hey, we're just prototyping here).  Therefore we
+      // cannot express sigatures on row and col accesses, since C++0x
+      // concepts forbid attribute (member) signatures.
+    };
 
-  auto concept Image<typename I>
-  {
-    typename point_t;
-    typename iter_t;
-    typename value_t;
+    concept Point3d<typename P>
+    {
+      typename coord_type;
+      // Same remark as above for concepts::Point2d regarding member
+      // signatures.
+    };
 
-    // ConceptGCC doesn't support operator signatures yet.
+    auto concept Image<typename I>
+    {
+      typename point_t;
+      typename iter_t;
+      typename value_t;
+
+      // ConceptGCC doesn't support operator signatures yet.
 #if 0
-    value_t& I::operator ()(point_t&);
+      value_t& I::operator ()(point_t&);
 #endif
-    bool I::has(const point_t&) const;
-  };
+      bool I::has(const point_t&) const;
+    };
 
-  auto concept Image2d<typename I> : Image<I>
-  {
-    int I::nrows_get() const;
-    int I::ncols_get() const;
-  };
+    auto concept Image2d<typename I> : Image<I>
+    {
+      int I::nrows_get() const;
+      int I::ncols_get() const;
+    };
 
-  auto concept Image3d<typename I> : Image<I>
-  {
-    int I::nrows_get() const;
-    int I::ncols_get() const;
-    int I::nslis_get() const;
-  };
-}
+    auto concept Image3d<typename I> : Image<I>
+    {
+      int I::nrows_get() const;
+      int I::ncols_get() const;
+      int I::nslis_get() const;
+    };
+
+  } // End of namespace oln::concepts.
+
+} // End of namespace oln.
 
 
-
-/*-------------.
-| Mini-Olena.  |
-`-------------*/
-
-// ------- //
-// Point.  //
-// ------- //
+/*---------------.
+| Abstractions.  |
+`---------------*/
 
 namespace oln
 {
+  // ------- //
+  // Point.  //
+  // ------- //
+
   template <typename E>
   struct Point : public stc::any<E>
   {
   };
+
+
+  // ---------- //
+  // Iterator.  //
+  // ---------- //
+
+  template <typename E>
+  struct Iterator : public stc::any<E>
+  {
+    typedef oln_type_of(E, point) point_t;
+
+    void start()
+    {
+      this->exact().impl_start();
+    }
+
+    void next()
+    {
+      this->exact().impl_next();
+    }
+
+    bool is_valid() const
+    {
+      return this->exact().impl_is_valid();
+    }
+
+    // auto
+    operator point_t() const
+    {
+      return this->exact().impl_op_point_type();
+    }
+  };
+
+
+  // ------- //
+  // Image.  //
+  // ------- //
+
+  template <typename E>
+  struct Image : public stc::any<E>
+  {
+    typedef oln_type_of(E, point) point_t;
+    typedef oln_type_of(E, value) value_t;
+
+    value_t& operator ()(point_t& p)
+    {
+      return this->exact().impl_op_parens(p);
+    }
+
+    bool has(const point_t& p) const
+    {
+      return this->exact().impl_has(p);
+    }
+  };
+
+
+  // --------- //
+  // Image2d.  //
+  // --------- //
+
+  template <typename E>
+  struct Image2d : public Image<E>
+  {
+    typedef oln_type_of(E, point) point_t;
+    typedef oln_type_of(E, value) value_t;
+
+    // FIXME: delete?
+    value_t& operator ()(point_t& p)
+    {
+      return this->exact().impl_op_parens(p);
+    }
+
+    int nrows_get() const
+    {
+      return this->exact().impl_nrows_get();
+    }
+
+    int ncols_get() const
+    {
+      return this->exact().impl_ncols_get();
+    }
+  };
+
+
+  // --------- //
+  // Image3d.  //
+  // --------- //
+
+  template <typename E>
+  struct Image3d : public Image<E>
+  {
+    typedef oln_type_of(E, point) point_t;
+    typedef oln_type_of(E, value) value_t;
+
+    // FIXME: delete?
+    value_t& operator ()(point_t& p)
+    {
+      return this->exact().impl_op_parens(p);
+    }
+
+    int nrows_get() const
+    {
+      return this->exact().impl_nrows_get();
+    }
+
+    int ncols_get() const
+    {
+      return this->exact().impl_ncols_get();
+    }
+
+    int nslis_get() const
+    {
+      return this->exact().impl_nslis_get();
+    }
+  };
+
+
+  // ------------------------- //
+  // Image_with_neighborhood.  //
+  // ------------------------- //
+
+  template <typename E>
+  struct Image_with_neighborhood : public Image<E>
+  {
+    typedef oln_type_of(E, nbh) nbh_t;
+    typedef oln_type_of(E, niter) niter_t;
+
+    nbh_t nbh() const
+    {
+      return this->exact().impl_nbh();
+    }
+  };
+
+} // End of namespace oln.
+
+
+/*---------.
+| Bridge.  |
+`---------*/
+
+namespace oln
+{
+  // -------- //
+  // Switch.  //
+  // -------- //
+
+  // Forward declaration.
+  template <typename E> struct image_dimension_switch;
+
+  // Default version.
+  template <typename E>
+  struct image_dimension_switch : public oln::Image<E>
+  {
+    image_dimension_switch()
+    {
+      std::cout << "image_dimension_switch<E>" << std::endl;
+    }    
+  };
+
+  // Concept-based overloading for Image2d.
+  template <typename E>
+  requires concepts::Point2d< oln_type_of(E, point) >
+  struct image_dimension_switch<E> : public oln::Image2d<E>
+  {
+  public:
+    image_dimension_switch()
+    {
+      std::cout << "image_dimension_switch<E> "
+		<< "requires oln::concepts::Point2d<oln_type_of(E, point)>"
+		<< std::endl;
+    }
+  };
+
+  // Concept-based overloading for Image3d.
+  template <typename E>
+  requires concepts::Point3d< oln_type_of(E, point) >
+  struct image_dimension_switch<E> : public oln::Image3d<E>
+  {
+  public:
+    image_dimension_switch()
+    {
+      std::cout	<< "image_dimension_switch<E> "
+		<< "requires oln::concepts::Point3d<oln_type_of(E, point)>"
+		<< std::endl;
+    }
+  };
+
+
+  // ------------ //
+  // Image base.  //
+  // ------------ //
+
+  // Forward declaration.
+  template <typename E> struct image_base;
+
+  template<typename E>
+  struct set_super_type< image_base<E> >
+  {
+    typedef mlc::none ret;
+  };
+
+  template <typename E>
+  struct vtypes< image_base<E> >
+  {
+    typedef stc::abstract point_type;
+    typedef stc::abstract iter_type;
+    typedef stc::abstract value_type;
+
+    typedef mlc::none niter_type;
+    typedef mlc::none nbh_type;
+  };
+
+  template <typename E>
+  struct image_base : public oln::image_dimension_switch<E>
+  {
+    image_base()
+    {
+    }
+  };
+
+} // End of namespace oln.
+
+
+/*------------------.
+| Implementations.  |
+`------------------*/
+
+namespace oln
+{
+  // -------- //
+  // Points.  //
+  // -------- //
 
   struct point2d : public Point<point2d>
   {
@@ -129,337 +380,42 @@ namespace oln
     coord_type col;
   };
 
-  struct point3d : public Point<point2d>
+  struct point3d : public Point<point3d>
   {
     typedef int coord_type;
     coord_type row;
     coord_type col;
     coord_type sli;
   };
-}
 
-namespace concepts
-{
-  concept_map Point2d<oln::point2d>
+  // Explicitly map point2d and point3d to their concepts.
+  namespace concepts
   {
-    typedef oln::point2d::coord_type coord_type;
-  };
-  
-  concept_map Point3d<oln::point3d>
-  {
-    typedef oln::point2d::coord_type coord_type;
-  };
-}
-
-
-// ---------- //
-// Iterator.  //
-// ---------- //
-
-namespace oln
-{
-  template <typename E>
-  struct Iterator;
-
-  mlc_decl_typedef(point_type);
-
-  template <typename E>
-  struct vtypes< Iterator<E> >
-  {
-    typedef mlc::undefined point_type;
-  };
-
-  template <typename E>
-  struct Iterator : public stc::any<E>
-  {
-    typedef oln_type_of(Iterator, point) point_t;
-
-    void start()
+    concept_map Point2d<oln::point2d>
     {
-      this->exact().start();
-    }
-
-    void next()
-    {
-      this->exact().next();
-    }
-
-    bool is_valid() const
-    {
-      return this->exact().is_valid();
+      typedef oln::point2d::coord_type coord_type;
     };
 
-    // auto
-    operator point_t()
+    concept_map Point3d<oln::point3d>
     {
-      return this->exact().operator point_t();
-    }
-  };
-}
+      typedef oln::point2d::coord_type coord_type;
+    };
+
+  } // End of namespace oln::concepts
 
 
-// ------- //
-// Image.  //
-// ------- //
+  // ------------- //
+  // Iterator 2d.  //
+  // ------------- //
 
-namespace oln
-{
-  template <typename E>
-  struct Image;
-
-  mlc_decl_typedef(iter_type);
-  mlc_decl_typedef(value_type);
-
-  template <typename E>
-  struct vtypes< Image<E> >
-  {
-    typedef mlc::undefined point_type;
-    typedef mlc::undefined iter_type;
-    typedef mlc::undefined value_type;
-  };
-
-  template <typename E>
-  struct Image : public stc::any<E>
-  {
-    typedef oln_type_of(Image, point) point_t;
-    typedef oln_type_of(Image, iter)  iter_t;
-    typedef oln_type_of(Image, value) value_t;
-
-    value_t& operator ()(point_t& p)
-    {
-      return this->exact().operator ()(p);
-    }
-
-    bool has(const point_t& p) const
-    {
-      return this->exact().has(p);
-    }
-  };
-}
-
-
-// --------- //
-// Image2d.  //
-// --------- //
-
-namespace oln
-{
-  struct Image2d;
-
-  template<>
-  struct set_super_type<Image2d>
-  {
-    typedef Image<Image2d> ret;
-  };
-
-  struct Image2d : public Image<Image2d>
-  {
-    typedef oln_type_of_(Image2d, point) point_t;
-    typedef oln_type_of_(Image2d, iter)  iter_t;
-    typedef oln_type_of_(Image2d, value) value_t;
-
-    value_t& operator ()(point_t& p)
-    {
-      return this->exact().operator ()(p);
-    }
-
-    int nrows_get() const
-    {
-      return this->exact().nrows_get();
-    }
-
-    int ncols_get() const
-    {
-      return this->exact().ncols_get();
-    }
-  };
-}
-
-
-// ---------- //
-// Image 3d.  //
-// ---------- //
-
-namespace oln
-{
-  struct Image3d;
-
-  template<>
-  struct set_super_type<Image3d>
-  {
-    typedef Image<Image3d> ret;
-  };
-
-  struct Image3d : public Image<Image3d>
-  {
-    typedef oln_type_of_(Image3d, point) point_t;
-    typedef oln_type_of_(Image3d, iter)  iter_t;
-    typedef oln_type_of_(Image3d, value) value_t;
-
-    value_t& operator ()(point_t& p)
-    {
-      return this->exact().operator ()(p);
-    }
-
-    int nrows_get() const
-    {
-      return this->exact().nrows_get();
-    }
-
-    int ncols_get() const
-    {
-      return this->exact().ncols_get();
-    }
-
-    int nslis_get() const
-    {
-      return this->exact().nslis_get();
-    }
-  };
-}
-
-
-// ------------------------- //
-// Image with neighborhood.  //
-// ------------------------- //
-
-namespace oln
-{
-  struct image_with_nbh;
-
-  mlc_decl_typedef(niter_type);
-  mlc_decl_typedef(nbh_type);
-
-  template<>
-  struct set_super_type<image_with_nbh>
-  {
-    typedef Image<image_with_nbh> ret;
-  };
-
-  template <>
-  struct vtypes<image_with_nbh>
-  {
-    typedef mlc::undefined niter_type;
-    typedef mlc::undefined nbh_type;
-  };
-
-  struct image_with_nbh : public Image<image_with_nbh>
-  {
-    typedef oln_type_of_(image_with_nbh, niter) niter_t;
-    typedef oln_type_of_(image_with_nbh, nbh) nbh_t;
-
-    // FIXME: Implement.
-#if 0
-    nbh_t nbh() const
-    {
-    }
-#endif
-  };
-}
-
-
-// -------- //
-// Switch.  //
-// -------- //
-
-namespace oln
-{
-  // Fwd. decl.
-  template <typename E>
-  class image_dimension_switch;
-
-  // Default version, abort.
-  template <typename E>
-  class image_dimension_switch : mlc::abort_<E>
-  {
-  };
-
-  // Concept-based overloading for Image2d.
-  template <typename E> where concepts::Point2d< oln_type_of(E, point) >
-  class image_dimension_switch<E> : public oln::Image2d
-  {
-  public:
-    image_dimension_switch()
-    {
-      std::cout << "image_dimension_switch<E> "
-		<< "where concepts::Point2d<oln_type_of(E, point)>"
-		<< std::endl;
-    }
-  };
-
-  // Concept-based overloading for Image3d.
-  template <typename E> where concepts::Point3d< oln_type_of(E, point) >
-  class image_dimension_switch<E> : public oln::Image3d
-  {
-  public:
-    image_dimension_switch()
-    {
-      std::cout	<< "image_dimension_switch<E> "
-		<< "where concepts::Point3d<oln_type_of(E, point)>"
-		<< std::endl;
-    }
-  };
-}
-
-
-// ------------ //
-// Image base.  //
-// ------------ //
-
-namespace oln
-{
-  template <typename E>
-  struct image_base;
-
-  template<typename E>
-  struct set_super_type< image_base<E> >
-  {
-    typedef typename oln::image_dimension_switch<E> ret;
-  };
-
-  template <typename E>
-  struct vtypes< image_base<E> >
-  {
-    typedef mlc::undefined point_type;
-    typedef mlc::undefined iter_type;
-    typedef mlc::undefined value_type;
-  };
-
-  template <typename E>
-  struct image_base : public oln::image_dimension_switch<E>
-  {
-    typedef oln_type_of(image_base, point) point_t;
-    typedef oln_type_of(image_base, iter)  iter_t;
-    typedef oln_type_of(image_base, value) value_t;
-
-    value_t& operator ()(point_t& p)
-    {
-      return this->exact().operator ()(p);
-    }
-
-    bool has(const point_t& p) const
-    {
-      return this->exact().has(p);
-    }
-  };
-}
-
-
-// ------------ //
-// iterator2d.  //
-// ------------ //
-
-namespace oln
-{
+  // Forward declarations.
   struct iterator2d;
-
-  template <typename T>
-  struct image2d;
+  template <typename T> struct image2d;
 
   template<>
   struct set_super_type<iterator2d>
   {
-    typedef Iterator<iterator2d> ret;
+    typedef mlc::none ret;
   };
 
   template <>
@@ -479,13 +435,13 @@ namespace oln
     {
     }
 
-    void start()
+    void impl_start()
     {
       p.row = 0;
       p.col = 0;
     }
 
-    void next()
+    void impl_next()
     {
       p.col = p.col + 1;
 
@@ -496,12 +452,12 @@ namespace oln
 	}
     }
 
-    bool is_valid() const
+    bool impl_is_valid() const
     {
       return p.row < nrows;
     }
 
-    operator point_t()
+    point_t& impl_op_point_type()
     {
       return p;
     }
@@ -511,17 +467,14 @@ namespace oln
     int ncols;
     point_t p;
   };
-}
 
 
-// --------- //
-// image2d.  //
-// --------- //
+  // ---------- //
+  // Image 2d.  //
+  // ---------- //
 
-namespace oln
-{
-  template <typename T>
-  struct image2d;
+  // Forward declaration.
+  template <typename T> struct image2d;
 
   template<typename T>
   struct set_super_type< image2d<T> >
@@ -540,9 +493,10 @@ namespace oln
   template <typename T>
   struct image2d : public image_base< image2d<T> >
   {
-    typedef oln_type_of(image2d, point) point_t;
-    typedef oln_type_of(image2d, iter) iter_t;
-    typedef oln_type_of(image2d, value) value_t;
+    typedef image2d<T> self_t;
+    typedef oln_type_of(self_t, point) point_t;
+    typedef oln_type_of(self_t, iter) iter_t;
+    typedef oln_type_of(self_t, value) value_t;
 
     image2d(int nrows, int ncols) :
       data (0),
@@ -552,22 +506,22 @@ namespace oln
       data = new std::vector<value_t>;
     }
 
-    value_t& operator()(const point_t& p)
+    value_t& impl_op_parens(const point_t& p)
     {
       return this->data[p.row * nrows + p.col];
     }
 
-    int nrows_get() const
+    int impl_nrows_get() const
     {
       return nrows;
     }
 
-    int ncols_get() const
+    int impl_ncols_get() const
     {
       return ncols;
     }
 
-    bool has(point_t& p) const
+    bool impl_has(point_t& p) const
     {
       assert(!!data);
       return p.row >= 0 && p.row < nrows && p.col >= 0 && p.col < ncols;
@@ -578,34 +532,43 @@ namespace oln
     int nrows;
     int ncols;
   };
-}
 
 
-// --------------- //
-// image_morpher.  //
-// --------------- //
+  // ----------------- //
+  // Neighborhood 2d.  //
+  // ----------------- //
 
-namespace oln
-{
-  template <typename E>
-  struct image_morpher;
+  struct niter2d {};
+
+  struct neighborhood2d
+  {
+    typedef niter2d niter_type;
+  };
+
+
+  // --------------- //
+  // Image morpher.  //
+  // --------------- //
+
+  // Forward declaration.
+  template <typename E> struct image_morpher;
 
   template<typename E>
   struct set_super_type< image_morpher<E> >
   {
-    typedef image_base< image_morpher<E> > ret;
+    typedef image_base<E> ret;
   };
 
   template <typename E>
   struct vtypes< image_morpher<E> >
   {
-    typedef mlc::undefined delegatee_t;
+    typedef stc::abstract delegatee_type;
   };
 
   template <typename E>
-  struct image_morpher : public image_base< image_morpher<E> >
+  struct image_morpher : public image_base<E>
   {
-    typedef oln_type_of(image_morpher, delegatee) delegatee_t;
+    typedef oln_type_of(E, delegatee) delegatee_t;
 
     image_morpher(delegatee_t& ref_ima) :
       ref_ima (ref_ima)
@@ -619,20 +582,17 @@ namespace oln
   protected:
     delegatee_t& ref_ima;
   };
-}
 
 
-// ------ //
-// plus.  //
-// ------ //
+  // ------------------------- //
+  // Image with neighborhood.  //
+  // ------------------------- //
 
-namespace oln
-{
-  template <typename I, typename N>
-  struct plus;
+  // Forward declaration.
+  template <typename I, typename N> struct plus;
 
   template <typename I, typename N>
-  struct set_super_type< image_morpher<plus<I, N> > >
+  struct set_super_type< plus<I, N> >
   {
     typedef image_morpher< plus <I, N> > ret;
   };
@@ -640,30 +600,48 @@ namespace oln
   template <typename I, typename N>
   struct vtypes< plus<I, N> >
   {
-    typedef I delegatee_t;
+    typedef I delegatee_type;
+    typedef N nbh_type;
+    // For the sake of simplicity, the niter type is obtained directly
+    // from the neighborhood type itself (without using a virtual
+    // type).
+    typedef typename N::niter_type niter_type;
   };
 
   template <typename I, typename N>
-  struct plus : public image_morpher<plus<I, N> >
+  struct plus : public image_morpher< plus<I, N> >
   {
+    typedef plus<I, N> self_t;
+    typedef image_morpher<self_t> super_t;
+
     plus(I& ima, N& nbh) :
+      super_t (ima),
       nbh (nbh)
     {
+    }
+
+    N impl_nbh() const
+    {
+      return nbh;
     }
 
   protected:
     N& nbh;
   };
 
-  // Helper.
+  /// Helper.
   template <typename I, typename N>
+  // FIXME: To be enabled later
+#if 0
+  requires concepts::Image<I>
+#endif
   plus<I, N> operator+(I& lhs, N& rhs)
   {
     plus<I, N> res(lhs, rhs);
     return res;
   }
-}
 
+} // End of namespace oln.
 
 
 /*--------------.
@@ -674,16 +652,25 @@ int main()
 {
   using namespace oln;
 
-  typedef plus<image2d<int>, image_with_nbh> my_ima;
+  point2d p;
+  typedef image2d<int> ima_t;
+  ima_t ima1(10, 10);
 
-  point2d p2d;
-  point3d p3d;
+  iterator2d it(ima1);
 
-  image2d<int> ima(10, 10);
-  image_with_nbh ima_nb;
+  typedef neighborhood2d nbh_t;
 
-  iterator2d it2d(ima);
+//   // A type of image with neighborhood2d.
+//   typedef plus<ima_t, nbh_t> ima_wih_nbh_t;
+//   neighborhood2d nbh;
+//   ima_wih_nbh_t ima2(ima1, nbh);
 
-  // my_ima p = ima + ima_nb;
+//   // Another way to build an image with neigborhood.
+//   ima_wih_nbh_t ima3 = ima1 + nbh;
+
+
+//   // FIXME: Same with 3d.
+//   point3d q;
+
+//   // ...
 }
-

@@ -1,3 +1,102 @@
+2007-03-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix mini-oln and its Concept-C++ counterpart.
+
+	* samples/mini-oln/mini-oln.cc,
+	(oln::Image_with_neighborhood::niter_t): New typedef.
+	(oln::iterator2d::impl_op_point_t)
+	(oln::iterator2d::impl_op_paren): Rename as...
+	(oln::iterator2d::impl_op_point_type)
+	(oln::iterator2d::impl_op_parens): ...this.
+
+	* samples/mini-oln/mini-oln.cc,
+	* samples/mini-oln/concept-c++/mini-oln.cc:
+	(oln::Image::operator(), oln::Image2d::operator())
+	(oln::Image3d::operator()):  Fix the delegations.
+	(oln::set_super_type< image_base<E> >::ret): Set to mlc::none.
+	(oln::image2d::self_t): New typedef.
+	(oln::image2d::point_t, oln::image2d::iter_t)
+	(oln::image2d::value_t): Fix typedefs.
+
+	* samples/mini-oln/concept-c++/mini-oln.cc: s/where/requires/
+	(needed by recent revisions of SVN ConceptGCC).
+	Declare typedefs used
+	as virtual types at the beginning of the file
+	(concepts): Rename namespace as...
+	(oln::concepts): ...this.
+	Group together abstractions on the one hand, and implementations
+	on the other hand.
+	(oln::image_with_nbh): Rename class as...
+	(oln::Image_with_neighborhood): ...this.
+	(oln::vtypes< Iterator<E> >, oln::vtypes< Image<E> >)
+	(oln::vtypes<image_with_nbh>)
+	(oln::set_super_type<Image2d>, oln::set_super_type<Image3d>,
+	(oln::set_super_type<image_with_nbh>): Remove (useless and
+	semantically wrong definitions).
+	(oln::Iterator::point_t, oln::Image::point_t, Image::value_t)
+	(oln::Image2d::point_t, oln::Image2d::value_t)
+	(oln::Image3d::point_t, oln::Image3d::value_t)
+	(oln::Image_with_neighborhood::nbh_t)
+	(oln::Image_with_neighborhood::niter_t): Fix typedefs.
+	(oln::Image::iter_t, oln::Image2d::iter_t, oln::Image3d::iter_t):
+	Remove typedefs.
+	(oln::Iterator::start, oln::Iterator::next)
+	(oln::Iterator::is_valid, oln::Iterator::point_t)
+	(oln::Image::has)
+	(oln::Image2d::nrows_get, oln::Image2d::ncols_get)
+	(oln::Image3d::nrows_get, oln::Image3d::ncols_get)
+	(oln::Image3d::nslis_get, oln::Image_with_neighborhood nbh): Fix
+	the delegations.
+
+	* samples/mini-oln/concept-c++/mini-oln.cc
+	(oln::image_dimension_switch): Inherit oln::Image<E> by default.
+	(oln::vtypes< image_base<E> >::point_type)
+	(oln::vtypes< image_base<E> >::iter_type)
+	(oln::vtypes< image_base<E> >::value_type): Set to stc::abstract.
+	(oln::vtypes< image_base<E> >::niter_type)
+	(oln::vtypes< image_base<E> >::nbh_type): New typedefs.
+	(oln::image_base::point_t, oln::image_base::iter_t)
+	(oln::image_base::value_t): Remove typedefs.
+	(oln::image_base::operator(), oln::image_base::has): Remove
+	methods.
+	(oln::image_base::image_base): Add ctor.
+
+	* samples/mini-oln/concept-c++/mini-oln.cc
+	(oln::set_super_type<iterator2d>::ret): Set to mlc::none.
+	(oln::set_super_type<iterator2d>::start)
+	(oln::set_super_type<iterator2d>::next)
+	(oln::set_super_type<iterator2d>::is_valid)
+	(oln::set_super_type<iterator2d>::operator point_t): Rename as...
+	(oln::set_super_type<iterator2d>::impl_start)
+	(oln::set_super_type<iterator2d>::impl_next)
+	(oln::set_super_type<iterator2d>::impl_is_valid)
+	(oln::set_super_type<iterator2d>::impl_op_point_type): ...these.
+	(oln::image2d::operator(), oln::image2d::nrows_get)
+	(oln::image2d::ncols_get, oln::image2d::has): Rename as...
+	(oln::image2d::impl_op_parens, oln::image2d::impl_nrows_get)
+	(oln::image2d::impl_ncols_get, oln::image2d::impl_has): Rename as...
+	(oln::neighborhood2d): New class.
+	(oln::set_super_type< image_morpher<E> >::ret): Set to
+	image_base<E>.
+	(oln::vtypes< image_morpher<E> >::delegatee_t): Set to
+	stc::abstract.
+	(oln::image_morpher): Inherit from image_base<E>.
+	(oln::image_morpher::delegatee_t): Fix this typedef.
+	(oln::set_super_type< image_morpher < plus<I, N> > >): Turn
+	into...
+	(oln::set_super_type< plus<I, N> >): ...this.
+	(oln::vtypes< plus<I, N> >::delegatee_t): Rename as...
+	(oln::vtypes< plus<I, N> >::delegatee_type): ...this.
+	(oln::vtypes< plus<I, N> >::nbh_type)
+	(oln::vtypes< plus<I, N> >::niter_type): New typedefs.
+	(oln::plus::self_t, oln::plus::super_t): New typedefs.
+	(oln::plus::plus): Pass the equipped image to the ctor of the super
+	class.
+	(oln::plus::impl_nbh): New accessor.
+	(main): Rewrite the test.
+
+	* samples/mini-oln/concept-c++/Makefile.am: Disable mini-oln.
+
 2007-02-15  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	Add some slides that present the SCOOP 2 paradigm.
@@ -971,3 +1070,6 @@
 	(stc_set_pseudosuper, stc_pseudosuper, stc_pseudosuper_): New
 	macros.
 	* tests/properties.cc: Adjust.
+
+	 LocalWords:  typedefs oln ncols nrows typedef
+	

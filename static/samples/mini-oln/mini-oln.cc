@@ -62,18 +62,6 @@ namespace oln
 }
 
 
-// --------------------- //
-// Forward declarations. //
-// --------------------- //
-
-// FIXME: Remove.
-namespace oln
-{
-  struct point2d;
-  struct point3d;
-}
-
-
 /*---------------.
 | Abstractions.  |
 `---------------*/
@@ -88,6 +76,7 @@ namespace oln
   struct Point : public stc::any<E>
   {
   };
+
 
   // ---------- //
   // Iterator.  //
@@ -133,7 +122,7 @@ namespace oln
 
     value_t& operator ()(point_t& p)
     {
-      return this->exact().impl_op_paren(p);
+      return this->exact().impl_op_parens(p);
     }
 
     bool has(const point_t& p) const
@@ -153,10 +142,10 @@ namespace oln
     typedef oln_type_of(E, point) point_t;
     typedef oln_type_of(E, value) value_t;
 
-    //FIXME: delete?
+    // FIXME: delete?
     value_t& operator ()(point_t& p)
     {
-      return this->exact().impl_op_paren(p);
+      return this->exact().impl_op_parens(p);
     }
 
     int nrows_get() const
@@ -181,10 +170,10 @@ namespace oln
     typedef oln_type_of(E, point) point_t;
     typedef oln_type_of(E, value) value_t;
 
-    //FIXME: delete?
+    // FIXME: delete?
     value_t& operator ()(point_t& p)
     {
-      return this->exact().impl_operator_paren(p);
+      return this->exact().impl_op_parens(p);
     }
 
     int nrows_get() const
@@ -212,8 +201,8 @@ namespace oln
   struct Image_with_neighborhood : public Image<E>
   {
     typedef oln_type_of(E, nbh) nbh_t;
+    typedef oln_type_of(E, niter) niter_t;
 
-    // FIXME: Implement.
     nbh_t nbh() const
     {
       return this->exact().impl_nbh();
@@ -265,13 +254,13 @@ namespace oln
   // Image base.  //
   // ------------ //
 
-  template <typename E>
-  struct image_base;
+  // Forward declaration.
+  template <typename E> struct image_base;
 
   template<typename E>
   struct set_super_type< image_base<E> >
   {
-    typedef typename mlc::none ret;
+    typedef mlc::none ret;
   };
 
   template <typename E>
@@ -299,6 +288,7 @@ namespace oln
 /*------------------.
 | Implementations.  |
 `------------------*/
+
 namespace oln
 {
   // -------- //
@@ -319,15 +309,13 @@ namespace oln
   };
 
 
-  // ------------ //
-  // Iterator2d.  //
-  // ------------ //
+  // ------------- //
+  // Iterator 2d.  //
+  // ------------- //
 
   // Forward declarations.
   struct iterator2d;
-
-  template <typename T>
-  struct image2d;
+  template <typename T> struct image2d;
 
   template<>
   struct set_super_type<iterator2d>
@@ -374,7 +362,7 @@ namespace oln
       return p.row < nrows;
     }
 
-    point_t& impl_op_point_t()
+    point_t& impl_op_point_type()
     {
       return p;
     }
@@ -390,8 +378,8 @@ namespace oln
   // Image 2d.  //
   // ---------- //
 
-  template <typename T>
-  struct image2d;
+  // Forward declaration.
+  template <typename T> struct image2d;
 
   template<typename T>
   struct set_super_type< image2d<T> >
@@ -410,9 +398,10 @@ namespace oln
   template <typename T>
   struct image2d : public image_base< image2d<T> >
   {
-    typedef oln_type_of(image2d, point) point_t;
-    typedef oln_type_of(image2d, iter) iter_t;
-    typedef oln_type_of(image2d, value) value_t;
+    typedef image2d<T> self_t;
+    typedef oln_type_of(self_t, point) point_t;
+    typedef oln_type_of(self_t, iter) iter_t;
+    typedef oln_type_of(self_t, value) value_t;
 
     image2d(int nrows, int ncols) :
       data (0),
@@ -422,7 +411,7 @@ namespace oln
       data = new std::vector<value_t>;
     }
 
-    value_t& impl_op_paren(const point_t& p)
+    value_t& impl_op_parens(const point_t& p)
     {
       return this->data[p.row * nrows + p.col];
     }
@@ -466,8 +455,8 @@ namespace oln
   // Image morpher.  //
   // --------------- //
 
-  template <typename E>
-  struct image_morpher;
+  // Forward declaration.
+  template <typename E> struct image_morpher;
 
   template<typename E>
   struct set_super_type< image_morpher<E> >
@@ -504,8 +493,8 @@ namespace oln
   // Image with neighborhood.  //
   // ------------------------- //
 
-  template <typename I, typename N>
-  struct plus;
+  // Forward declaration.
+  template <typename I, typename N> struct plus;
 
   template <typename I, typename N>
   struct set_super_type< plus<I, N> >
@@ -528,7 +517,7 @@ namespace oln
   struct plus : public image_morpher< plus<I, N> >
   {
     typedef plus<I, N> self_t;
-    typedef image_morpher< self_t > super_t;
+    typedef image_morpher<self_t> super_t;
 
     plus(I& ima, N& nbh) :
       super_t (ima),
@@ -581,6 +570,7 @@ int main()
   ima_wih_nbh_t ima3 = ima1 + nbh;
 
 
+  // FIXME: Same with 3d.
   point3d q;
 
   // ...

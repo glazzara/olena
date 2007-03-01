@@ -14,8 +14,10 @@ AM_CXXFLAGS = $(TESTS_CXXFLAGS)
 # Hacky.
 CXX = @CONCEPTCXX@
 
-check_PROGRAMS = mini-oln
+# FIXME: Disabled, since ConceptGCC fails to compile this sample
+# (dying with an Internal Compiler Error).
 
-mini_oln_SOURCES = mini-oln.cc
+# check_PROGRAMS = mini-oln
+# mini_oln_SOURCES = mini-oln.cc
 
-TESTS = $(check_PROGRAMS)
+# TESTS = $(check_PROGRAMS)
