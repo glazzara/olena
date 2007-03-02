@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Copyright (C) 2001, 2002, 2003, 2004, 2006, 2007 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -29,108 +29,58 @@
 #ifndef OLN_CORE_2D_DPOINT2D_HH
 # define OLN_CORE_2D_DPOINT2D_HH
 
-# include <mlc/int.hh>
-# include <oln/core/2d/point2d.hh>
-# include <oln/core/internal/dpoint_nd.hh>
+# include <oln/core/2d/grid2d.hh>
+# include <oln/core/internal/dpoint2d.hh>
 
 
 namespace oln
 {
 
-  typedef dpoint2d_<int> dpoint2d;
+
+  struct  point2d;
+  struct dpoint2d;
 
 
   /// Super type.
-  template<typename C>
-  struct set_super_type< dpoint2d_<C> >
+  template<>
+  struct super_trait_< dpoint2d >
   {
-    typedef internal::dpoint_nd< dpoint2d_<C> > ret;
+    typedef internal::dpoint2d_< dpoint2d > ret;
   };
 
 
-  /// Fwd decls.
-  template <unsigned D> struct grid_;
-  typedef grid_<2> grid2d;
-  template <typename C> struct point2d_;
-  typedef point2d_<int> point2d;
-
-
-  /// Virtual types associated to oln::dpoint2d_<C>.
-  template <typename C>
-  struct vtypes< dpoint2d_<C> >
+  /// Virtual types.
+  template <>
+  struct vtypes< dpoint2d >
   {
-    typedef grid2d        grid_type;
-    typedef point2d       point_type;
-    typedef C             coord_type;
-    typedef mlc::uint_<2> dim_type;
-
-    typedef mlc::uint_<0> row_comp_type;
-    typedef mlc::uint_<1> col_comp_type;
+    typedef grid2d   grid;
+    typedef int      coord;
+    typedef point2d  point;
   };
 
 
-  /// General 2D dpoint class.
-  template <typename C>
-  class dpoint2d_
-    : public internal::dpoint_nd< dpoint2d_<C> >
+  /// Usual 2D dpoint class.
+  class dpoint2d : public internal::dpoint2d_< dpoint2d >
   {
-    typedef dpoint2d_<C>                self_t;
-    typedef internal::dpoint_nd<self_t> super_t;
-
-    using super_t::v_;
-
   public:
-
-    /// Ctor.
-    dpoint2d_();
-
-    /// Ctor.
-    dpoint2d_(const xtd::vec<2,C>& v);
-
-    /// Ctor.
-    dpoint2d_(C row, C col);
-
-    C  row() const;
-    C& row();
-
-    C  col() const;
-    C& col();
+    /// Ctors.
+    dpoint2d();
+    dpoint2d(int row, int col);
   };
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename C>
-  dpoint2d_<C>::dpoint2d_()
+  dpoint2d::dpoint2d()
   {
   }
 
-  /// Ctor.
-  template <typename C>
-  dpoint2d_<C>::dpoint2d_(const xtd::vec<2,C>& v)
-    : super_t(v)
+  dpoint2d::dpoint2d(int row, int col)
   {
+    this->row() = row;
+    this->col() = col;
   }
-
-  /// Ctor.
-  template <typename C>
-  dpoint2d_<C>::dpoint2d_(C row, C col)
-    : super_t(xtd::mk_vec(row, col))
-  {
-  }
-
-  template <typename C>
-  C  dpoint2d_<C>::row() const { return v_[0]; }
-
-  template <typename C>
-  C& dpoint2d_<C>::row()       { return v_[0]; }
-
-  template <typename C>
-  C  dpoint2d_<C>::col() const { return v_[1]; }
-
-  template <typename C>
-  C& dpoint2d_<C>::col()       { return v_[1]; }
 
 # endif
 

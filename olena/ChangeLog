@@ -1,3 +1,38 @@
+2007-03-02  Thierry Geraud  <theo@lrde.epita.fr>
+
+	Start cleaning so the trunk is BROKEN for several weeks.
+
+	Add a temporary SCOOP equipment.
+
+	* oln/stc/scoop.hh: New.
+	* oln/stc/scoop.hxx: New.
+	* oln/core/equipment.hh: New.
+
+	Define some concepts.
+
+	* oln/core/abstract/grid.hh: Rename as...
+	* oln/core/concept/grid.hh: ...this and update.
+	* oln/core/abstract/point.hh: Rename as...
+	* oln/core/concept/point.hh: ...this and update.
+	* oln/core/abstract/dpoint.hh: Rename as...
+	* oln/core/concept/dpoint.hh: ...this and update.
+	* oln/core/concept/operators.hh: New.
+
+	Update implementation classes.
+
+	* oln/core/2d/grid2d.hh: New.
+	* oln/core/2d/dpoint2d.hh: Update.
+	* oln/core/2d/point2d.hh: Update.
+	* oln/core/internal/point_nd.hh: Rename as...
+	* oln/core/internal/point_base.hh: ...this and update.
+	* oln/core/internal/dpoint_base.hh: New.
+	* oln/core/internal/dpoint2d.hh: New.
+	* oln/core/internal/point2d.hh: New.
+
+	Last.
+
+	* oln/core/internal/tracked_ptr.hh (mlc/contract.hh): Include it.
+
 2007-03-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve sanity checks.

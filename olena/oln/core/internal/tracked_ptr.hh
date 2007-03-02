@@ -31,6 +31,8 @@
 # include <set>
 # include <ostream>
 
+# include <mlc/contract.hh>
+
 
 namespace oln
 {

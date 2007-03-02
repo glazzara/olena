@@ -1,4 +1,4 @@
-// Copyright (C) 2005, 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,58 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_GRID_HH
-# define OLN_CORE_ABSTRACT_GRID_HH
+#ifndef OLN_CORE_EQUIPMENT_HH
+# define OLN_CORE_EQUIPMENT_HH
 
-# include <oln/core/type.hh>
-# include <oln/core/typedefs.hh>
-
-
-namespace oln {
-
-  // Forward declaration.
-  namespace abstract
-  {
-    template <typename E> class grid;
-  }
-
-  /// Super type declaration.
-  template <typename E>
-  struct set_super_type< abstract::grid<E> >
-  {
-    typedef mlc::none ret;
-  };
-
-  /// Virtual types associated to oln::abstract::grid.
-  template <typename E>
-  struct vtypes< abstract::grid<E> >
-  {
-    typedef stc::abstract dimvalue_type;
-  };
-
-  namespace abstract {
-
-    template <typename E>
-    struct grid : public virtual stc::any__simple<E>,
-		  public oln::type
-    {
-    protected:
-      grid();
-    };
+# include <cassert>
+# include <mlc/value.hh>
+# include <mlc/contract.hh>
+# include <oln/stc/scoop.hh> // FIXME: Remove "oln/" later.
 
 
-# ifndef OLN_INCLUDE_ONLY
+namespace oln
+{
 
-    template <typename E>
-    grid<E>::grid()
-    {
-    }
+# include <oln/stc/scoop.hxx> // FIXME: Remove "oln/" later.
 
-# endif
 
-  } // end of namespace oln::abstract
+  stc_decl_associated_type(grid);
+  stc_decl_associated_type(coord);
+  stc_decl_associated_type(dim);
+  stc_decl_associated_type(point);
+  stc_decl_associated_type(dpoint);
+  stc_decl_associated_type(psite);
+  stc_decl_associated_type(index);
+  stc_decl_associated_type(value);
+  stc_decl_associated_type(rvalue);
+  stc_decl_associated_type(lvalue);
+  stc_decl_associated_type(iter);
+  stc_decl_associated_type(data);
+  stc_decl_associated_type(box);
+  stc_decl_associated_type(pset);
+  stc_decl_associated_type(n);
+
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_GRID_HH
+
+#endif // ! OLN_CORE_EQUIPMENT_HH
+

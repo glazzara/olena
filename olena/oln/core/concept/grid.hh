@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006, 2007 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2005, 2006, 2007 EPITA Research and Development
+// Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,66 +26,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_2D_POINT2D_HH
-# define OLN_CORE_2D_POINT2D_HH
+#ifndef OLN_CORE_CONCEPT_GRID_HH
+# define OLN_CORE_CONCEPT_GRID_HH
 
-# include <oln/core/2d/grid2d.hh>
-# include <oln/core/internal/point2d.hh>
+# include <oln/core/equipment.hh>
 
 
 namespace oln
 {
 
+  /// Concept-class "Grid".
 
-  struct  point2d;
-  struct dpoint2d;
-
-
-  /// Super type.
-  template<>
-  struct super_trait_< point2d >
+  template <typename Exact>
+  struct Grid : public Any<Exact>
   {
-    typedef internal::point2d_< point2d > ret;
+    stc_typename(dim);
+
+  protected:
+    Grid() {}
   };
-
-
-  /// Virtual types.
-  template <>
-  struct vtypes< point2d >
-  {
-    typedef grid2d   grid;
-    typedef int      coord;
-    typedef dpoint2d dpoint;
-  };
-
-
-  /// Usual 2D point class.
-  class point2d : public internal::point2d_< point2d >
-  {
-  public:
-    /// Ctors.
-    point2d();
-    point2d(int row, int col);
-  };
-
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-  point2d::point2d()
-  {
-  }
-
-  point2d::point2d(int row, int col)
-  {
-    this->row() = row;
-    this->col() = col;
-  }
-
-# endif
 
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_2D_POINT2D_HH
+#endif // ! OLN_CORE_CONCEPT_GRID_HH

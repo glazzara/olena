@@ -26,66 +26,102 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_2D_POINT2D_HH
-# define OLN_CORE_2D_POINT2D_HH
+#ifndef OLN_CORE_INTERNAL_POINT2D_HH
+# define OLN_CORE_INTERNAL_POINT2D_HH
 
-# include <oln/core/2d/grid2d.hh>
-# include <oln/core/internal/point2d.hh>
+# include <oln/core/internal/point_base.hh>
 
 
 namespace oln
 {
 
 
-  struct  point2d;
-  struct dpoint2d;
+  /// Fwd decls.
+  template <unsigned D> struct grid_;
+  namespace internal { template <typename Exact> struct  point2d_; }
 
 
   /// Super type.
-  template<>
-  struct super_trait_< point2d >
+  template<typename Exact>
+  struct super_trait_< internal::point2d_<Exact> >
   {
-    typedef internal::point2d_< point2d > ret;
+    typedef internal::point_base_<Exact> ret;
   };
 
 
   /// Virtual types.
-  template <>
-  struct vtypes< point2d >
+  template <typename Exact>
+  struct vtypes< internal::point2d_<Exact> >
   {
-    typedef grid2d   grid;
-    typedef int      coord;
-    typedef dpoint2d dpoint;
   };
 
 
-  /// Usual 2D point class.
-  class point2d : public internal::point2d_< point2d >
+  namespace internal
   {
-  public:
-    /// Ctors.
-    point2d();
-    point2d(int row, int col);
-  };
+
+
+    template <typename Exact>
+    class point2d_ : public point_base_<Exact>
+    {
+      typedef point_base_<Exact> super;
+      stc_using(coord);
+
+    public:
+
+      coord  row() const;
+      coord& row();
+
+      coord  col() const;
+      coord& col();      
+
+    protected:
+      point2d_();
+    };
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  point2d::point2d()
-  {
-  }
+    template <typename Exact>
+    point2d_<Exact>::point2d_()
+    {
+    }
 
-  point2d::point2d(int row, int col)
-  {
-    this->row() = row;
-    this->col() = col;
-  }
+    template <typename Exact>
+    typename point2d_<Exact>::coord
+    point2d_<Exact>::row() const
+    {
+      return this->v_[0];
+    }
+
+    template <typename Exact>
+    typename point2d_<Exact>::coord &
+    point2d_<Exact>::row()
+    {
+      return this->v_[0];
+    }
+
+    template <typename Exact>
+    typename point2d_<Exact>::coord
+    point2d_<Exact>::col() const
+    {
+      return this->v_[1];
+    }
+
+    template <typename Exact>
+    typename point2d_<Exact>::coord &
+    point2d_<Exact>::col()
+    {
+      return this->v_[1];
+    }
 
 # endif
+
+
+  } // end of namespace oln::internal
 
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_2D_POINT2D_HH
+#endif // ! OLN_CORE_INTERNAL_POINT2D_HH
