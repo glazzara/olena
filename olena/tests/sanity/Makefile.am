@@ -10,17 +10,19 @@ OLN_LOCAL_CPPFLAGS = -I$(top_srcdir)/olena    -I$(top_builddir)/olena
 XTD_LOCAL_CPPFLAGS = -I$(top_srcdir)/extended -I$(top_builddir)/extended
 STC_LOCAL_CPPFLAGS = -I$(top_srcdir)/static   -I$(top_builddir)/static
 MLC_LOCAL_CPPFLAGS = -I$(top_srcdir)/metalic  -I$(top_builddir)/metalic
-CPPFLAGS =					\
+AM_CPPFLAGS =					\
   -I$(srcdir)/..				\
   $(OLN_LOCAL_CPPFLAGS) $(XTD_LOCAL_CPPFLAGS)	\
   $(STC_LOCAL_CPPFLAGS) $(MLC_LOCAL_CPPFLAGS)
 
-check:
-	TOP_SRCDIR=$(top_srcdir) SRCDIR=$(srcdir) \
-	TOP_BUILDDIR=$(top_builddir) \
-	PATH_TO_OLN_SRCDIR=$(OLN_LOCAL_SRC) \
-	PATH_TO_OLN_BUILDDIR=$(OLN_LOCAL_BUILD) \
-	CPPFLAGS="$(CPPFLAGS) $(DEFS) -I$(top_builddir)" \
+check-local:
+	TOP_SRCDIR="$(top_srcdir)" SRCDIR="$(srcdir)"			\
+	TOP_BUILDDIR="$(top_builddir)"					\
+	PATH_TO_OLN_SRCDIR="$(OLN_LOCAL_SRC)"				\
+	PATH_TO_OLN_BUILDDIR="$(OLN_LOCAL_BUILD)"			\
+	CXX="$(CXX)"							\
+	CPPFLAGS="$(CPPFLAGS) $(AM_CPPFLAGS) $(DEFS) -I$(top_builddir)"	\
+	CXXFLAGS="$(CXXFLAGS) $(AM_CXXFLAGS)"				\
 	  $(SHELL) $(srcdir)/includes.test
 
 CLEANFILES = failures incltest.*

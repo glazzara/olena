@@ -1,3 +1,15 @@
+2007-03-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve sanity checks.
+
+	* tests/sanity/Makefile.am (CPPFLAGS): Rename as...
+	(AM_CPPFLAGS): ...this.
+	(check): Rename as...
+	(check-local): ...this.
+	Pass CXX and CXXFLAGS variables to includes.test through the
+	environment.
+	Protect RHS in shell variable assignments.
+
 2007-01-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Catch up with Static.
