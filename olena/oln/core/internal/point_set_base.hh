@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,92 +25,70 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_ITERATOR_HH
-# define OLN_CORE_ABSTRACT_ITERATOR_HH
+#ifndef OLN_CORE_INTERNAL_POINT_SET_BASE_HH
+# define OLN_CORE_INTERNAL_POINT_SET_BASE_HH
 
-# include <oln/core/typedefs.hh>
+# include <oln/core/concept/point_set.hh>
 
 
 namespace oln
 {
 
-  namespace abstract { template <typename E> class iterator; }
+  /// Fwd decls.
+  namespace internal { template <typename Exact> struct point_set_base_; }
+  template <typename P> class box_;
 
 
-  template <typename E>
-  struct set_super_type< abstract::iterator<E> >
+  /// Super type.
+  template <typename Exact>
+  struct super_trait_< internal::point_set_base_<Exact> >
   {
-    typedef mlc::none ret;
+    typedef Point_Set<Exact> ret;
   };
 
 
-  namespace abstract
+  /// Virtual types.
+  template <typename Exact>
+  struct vtypes< internal::point_set_base_<Exact> >
+  {
+    typedef stc::abstract point;
+    typedef stc::abstract fwd_piter;
+    typedef stc::abstract bkd_piter;
+
+    typedef stc_deferred(point)     point__;
+    typedef stc_deferred(fwd_piter) fwd_piter__;
+
+    typedef stc::final< box_<point__> >         box;
+    typedef stc::final<stc_type(point__, grid)> grid;
+    typedef stc::final<fwd_piter__>             piter;
+  };
+
+
+  namespace internal
   {
 
-    /// Abstract iterator class.
-    template <typename E>
-    class iterator : public stc::any__best_memory<E>,
-		     public oln::type
+    /// Base class for point sets.
+
+    template <typename Exact>
+    struct point_set_base_ : public Point_Set<Exact>
     {
-    public:
-
-      void start();
-
-      void next();
-
-      void invalidate();
-
-      bool is_valid() const;
-
     protected:
-      
-      iterator();
-
-    }; // end of class oln::abstract::iterator<E>
-
+      point_set_base_();
+    };
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename E>
-    void iterator<E>::start()
-    {
-      this->exact().impl_start();
-    }
-
-    template <typename E>
-    void iterator<E>::next()
-    {
-      precondition(this->is_valid());
-      this->exact().impl_next();
-    }
-
-    template <typename E>
-    void iterator<E>::invalidate()
-    {
-      this->exact().impl_invalidate();
-    }
-
-    template <typename E>
-    bool iterator<E>::is_valid() const
-    {
-      return this->exact().impl_is_valid();
-    }
-
-    template <typename E>
-    iterator<E>::iterator()
+    template <typename Exact>
+    point_set_base_<Exact>::point_set_base_()
     {
     }
 
 # endif
 
-  } // end of namespace oln::abstract
-
+  } // end of namespace oln::internal
 
 } // end of namespace oln
 
 
-#define for_all(i)  for (i.start(); i.is_valid(); i.next())
-
-
-#endif // ! OLN_CORE_ABSTRACT_ITERATOR_HH
+#endif // ! OLN_CORE_INTERNAL_POINT_SET_BASE_HH

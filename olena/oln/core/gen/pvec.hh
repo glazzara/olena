@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,60 +25,82 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_GEN_BBOX_FWD_PITER_HH
-# define OLN_CORE_GEN_BBOX_FWD_PITER_HH
+#ifndef OLN_CORE_GEN_PVEC_HH
+# define OLN_CORE_GEN_PVEC_HH
 
-# include <oln/core/internal/bbox_fwd_piter.hh>
+# include <vector>
+# include <oln/core/internal/point_set_std_based.hh>
 
 
 namespace oln
 {
 
+  /// Fwd decl.
+  template <typename P> class pvec_;
 
-  // Forward declaration.
-  template <typename point> class bbox_fwd_piter_;
 
-
-  // Super type declaration.
-  template <typename point>
-  struct set_super_type< bbox_fwd_piter_<point> >
+  // Super type.
+  template <typename P>
+  struct super_trait_< pvec_<P> >
   {
-    typedef bbox_fwd_piter_<point> self_t;
-    typedef internal::bbox_fwd_piter<self_t> ret;
+    typedef pvec_<P> current__;
+    typedef internal::point_set_std_based_<current__> ret;
   };
 
 
-  /// Virtual types associated to oln::bbox_fwd_piter_<point>.
-  template <typename point>
-  struct vtypes< bbox_fwd_piter_<point> >
+  /// Virtual types.
+  template <typename P>
+  struct vtypes< pvec_<P> >
   {
-    typedef point point_type;
-    typedef oln_grid(point) grid_type;
+    typedef std::vector<P> std_container;
   };
 
 
+  /// Point set class based on std::set.
 
-  /// Generic forward point iterator class.
-  template <typename point>
-  class bbox_fwd_piter_ : public internal::bbox_fwd_piter< bbox_fwd_piter_<point> >,
-			  private mlc::assert_< mlc_is_a(point, abstract::point) >
+  template <typename P>
+  class pvec_ : public internal::point_set_std_based_< pvec_<P> >
   {
-    typedef bbox_fwd_piter_<point> self_t;
-    typedef internal::bbox_fwd_piter<self_t> super_t;
-
   public:
-    
-    bbox_fwd_piter_(const bbox_<point>& bb);
+      
+    pvec_();
+    pvec_<P>& append(const P& p);
+    const P& operator[](unsigned i) const;
+          P& operator[](unsigned i);
 
-  }; // end of class oln::bbox_fwd_piter_<point>
+  }; // end of class oln::pvec_<P>.
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename point>
-  bbox_fwd_piter_<point>::bbox_fwd_piter_(const bbox_<point>& bb)
-    : super_t(bb)
+  template <typename P>
+  pvec_<P>::pvec_()
   {
+  }
+
+  template <typename P>
+  pvec_<P>&
+  pvec_<P>::append(const P& p)
+  {
+    this->con_.push_back(p);
+    this->take_(p);
+    return *this;
+  }
+
+  template <typename P>
+  const P&
+  pvec_<P>::operator[](unsigned i) const
+  {
+    precondition(i < this->npoints());
+    return this->con_[i];
+  }
+
+  template <typename P>
+  P& pvec_<P>::operator[](unsigned i)
+  {
+    precondition(i < this->npoints());
+    return this->con_[i];
   }
 
 # endif
@@ -87,4 +108,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_GEN_BBOX_FWD_PITER_HH
+#endif // ! OLN_CORE_GEN_PVEC_HH

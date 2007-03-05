@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,23 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
-# define OLN_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
+#ifndef OLN_CORE_GEN_PSET_HH
+# define OLN_CORE_GEN_PSET_HH
 
-# include <oln/core/abstract/entry.hh>
-# include <oln/core/abstract/point_set.hh>
+# include <set>
+# include <oln/core/internal/point_set_std_based.hh>
 
 
 namespace oln
 {
 
-  typedef  hierarchy< abstract::point_set, 1 >  point_set_hierarchy_wrt_known_size;
-  typedef  hierarchy< abstract::point_set, 2 >  point_set_hierarchy_wrt_accessibility;
-  typedef  hierarchy< abstract::point_set, 3 >  point_set_hierarchy_wrt_bbox;
-  typedef  hierarchy< abstract::point_set, 4 >  point_set_hierarchy_wrt_connectivity;
+  /// Fwd decl.
+  template <typename P> class pset_;
+
+
+  // Super type.
+  template <typename P>
+  struct super_trait_< pset_<P> >
+  {
+    typedef pset_<P> current__;
+    typedef internal::point_set_std_based_<current__> ret;
+  };
+
+
+  /// Virtual types.
+  template <typename P>
+  struct vtypes< pset_<P> >
+  {
+    typedef std::set<P> std_container;
+  };
+
+
+  /// Point set class based on std::set.
+
+  template <typename P>
+  class pset_ : public internal::point_set_std_based_< pset_<P> >
+  {
+  public:
+      
+    pset_();
+    pset_<P>& insert(const P& p);
+
+  }; // end of class oln::pset_<P>.
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename P>
+  pset_<P>::pset_()
+  {
+  }
+
+  template <typename P>
+  pset_<P>& pset_<P>::insert(const P& p)
+  {
+    this->con_.insert(p);
+    this->take_(p);
+    return *this;
+  }
+
+# endif
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_POINT_SET_HIERARCHIES_HH
-
+#endif // ! OLN_CORE_GEN_PSET_HH

@@ -1,4 +1,5 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 EPITA Research and
+// Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,21 +26,74 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_POINT_SET_ALL_HH
-# define OLN_CORE_ABSTRACT_POINT_SET_ALL_HH
+#ifndef OLN_CORE_CONCEPT_ITERATOR_HH
+# define OLN_CORE_CONCEPT_ITERATOR_HH
 
-# include <oln/core/abstract/point_set.hh>
+# include <oln/core/equipment.hh>
 
-# include <oln/core/abstract/point_set/hierarchies.hh>
 
-// Hierarchy 1: point set w.r.t. size.
-# include <oln/core/abstract/point_set/point_set_having_known_size.hh>
-// Hierarchy 2: point set w.r.t. accessibility.
-# include <oln/core/abstract/point_set/point_set_being_random_accessible.hh>
-// Hierarchy 3: point set w.r.t. bbox.
-# include <oln/core/abstract/point_set/point_set_having_bbox.hh>
-# include <oln/core/abstract/bbox.hh>
-// Hierarchy 4: point set w.r.t. connexity.
-# include <oln/core/abstract/point_set/point_set_being_connected.hh>
 
-#endif // ! OLN_CORE_ABSTRACT_POINT_SET_ALL_HH
+/// Macro for_all.
+# define for_all(i)  for (i.start(); i.is_valid(); i.next())
+
+
+
+namespace oln
+{
+
+  /// Concept-class "Iterator".
+
+  template <typename Exact>
+  struct Iterator : public Any<Exact>
+  {
+    void start();
+    void next();
+    void invalidate();
+    bool is_valid() const;
+
+  protected:
+    Iterator();
+
+  }; // end of class oln::Iterator<Exact>
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename Exact>
+  void Iterator<Exact>::start()
+  {
+    exact(this)->impl_start();
+  }
+
+  template <typename Exact>
+  void Iterator<Exact>::next()
+  {
+    precondition(this->is_valid());
+    exact(this)->impl_next();
+  }
+
+  template <typename Exact>
+  void Iterator<Exact>::invalidate()
+  {
+    exact(this)->impl_invalidate();
+  }
+
+  template <typename Exact>
+  bool Iterator<Exact>::is_valid() const
+  {
+    return exact(this)->impl_is_valid();
+  }
+
+  template <typename Exact>
+  Iterator<Exact>::Iterator()
+  {
+  }
+
+# endif
+
+} // end of namespace oln
+
+
+
+#endif // ! OLN_CORE_CONCEPT_ITERATOR_HH

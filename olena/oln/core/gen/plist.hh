@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,74 +25,78 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_POINT_SET_ENTRY_HH
-# define OLN_CORE_POINT_SET_ENTRY_HH
+#ifndef OLN_CORE_GEN_PLIST_HH
+# define OLN_CORE_GEN_PLIST_HH
 
-# include <oln/core/abstract/entry.hh>
-# include <oln/core/abstract/point_set/all.hh>
+# include <list>
+# include <oln/core/internal/point_set_std_based.hh>
 
 
 namespace oln
 {
 
   /// Fwd decl.
-  template <typename E> struct point_set_entry;
+  template <typename P> class plist_;
 
 
-  template <typename E>
-  struct set_super_type< point_set_entry<E> >
+  // Super type.
+  template <typename P>
+  struct super_trait_< plist_<P> >
   {
-    typedef mlc::none ret;
+    typedef plist_<P> current__;
+    typedef internal::point_set_std_based_<current__> ret;
   };
 
 
-  /// Virtual types associated to point_set_entry<E>.
-
-  template <typename E>
-  struct vtypes< point_set_entry<E> >
+  /// Virtual types.
+  template <typename P>
+  struct vtypes< plist_<P> >
   {
-    typedef stc::abstract point_type;
-
-    typedef stc::abstract fwd_piter_type;
-    typedef stc::abstract bkd_piter_type;
-
-    typedef mlc::none      bbox_type;
-    typedef stc::abstract is_random_accessible_type;
-    typedef stc::abstract has_known_size_type;
-    typedef stc::abstract is_connected_type;
-
-    // final.
-    typedef oln_deduce_vtype(E, point, coord) coord_type;
-    typedef oln_deduce_vtype(E, point, grid)  grid_type;
-    typedef oln_deduce_vtype(E, point, dim)   dim_type;
-    typedef oln_fwd_piter(E)            piter_type;
+    typedef std::list<P> std_container;
   };
 
 
+  /// Point set class based on std::list.
 
-  /// Entry class for point sets: point_set_entry<E> is an alias for
-  /// entry< abstract::point_set, E>.
-
-  template <typename E>
-  struct point_set_entry : public entry< abstract::point_set, E>
+  template <typename P>
+  class plist_ : public internal::point_set_std_based_< plist_<P> >
   {
-  protected:
-    point_set_entry();
-  };
+  public:
+      
+    plist_();
+    plist_<P>&  append(const P& p);
+    plist_<P>& prepend(const P& p);
+
+  }; // end of class oln::plist_<P>.
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename E>
-  point_set_entry<E>::point_set_entry()
+  template <typename P>
+  plist_<P>::plist_()
   {
+  }
+
+  template <typename P>
+  plist_<P>& plist_<P>::append(const P& p)
+  {
+    this->con_.push_back(p);
+    this->take_(p);
+    return *this;
+  }
+
+  template <typename P>
+  plist_<P>& plist_<P>::prepend(const P& p)
+  {
+    this->con_.push_front(p);
+    this->take_(p);
+    return *this;
   }
 
 # endif
 
-
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_POINT_SET_ENTRY_HH
+#endif // ! OLN_CORE_GEN_PLIST_HH

@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,62 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_POINT_SET_POINT_SET_HAVING_KNOWN_SIZE_HH
-# define OLN_CORE_ABSTRACT_POINT_SET_POINT_SET_HAVING_KNOWN_SIZE_HH
+#ifndef OLN_CORE_2D_BOX2D_HH
+# define OLN_CORE_2D_BOX2D_HH
 
-# include <oln/core/abstract/point_set.hh>
-# include <oln/core/abstract/point_set/hierarchies.hh>
+# include <oln/core/gen/box.hh>
+# include <oln/core/2d/point2d.hh>
 
 
 namespace oln
 {
 
-  namespace abstract
-  {
-
-
-    template <typename E>
-    class point_set_having_known_size : public virtual point_set<E>
-    {
-    public:
-
-      unsigned npoints() const;
-
-    protected:
-      point_set_having_known_size();
-    };
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename E>
-    unsigned 
-    point_set_having_known_size<E>::npoints() const
-    {
-      return this->exact().impl_npoints();
-    }
-    
-    template <typename E>
-    point_set_having_known_size<E>::point_set_having_known_size()
-    {
-    }
-
-# endif
-
-
-  } // end of namespace oln::abstract
-
-
-  template <typename E>
-  struct case_ < point_set_hierarchy_wrt_known_size, E, 1 >
-    : where_< mlc::eq_< oln_vtype(E, has_known_size), mlc::true_ > >
-  {
-    typedef abstract::point_set_having_known_size<E> ret;
-  };
-
+  typedef box_<point2d> box2d;
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_POINT_SET_POINT_SET_HAVING_KNOWN_SIZE_HH
+#endif // ! OLN_CORE_2D_BOX2D_HH
 

@@ -39,22 +39,36 @@ namespace oln
 
 # include <oln/stc/scoop.hxx> // FIXME: Remove "oln/" later.
 
-
-  stc_decl_associated_type(grid);
-  stc_decl_associated_type(coord);
-  stc_decl_associated_type(dim);
-  stc_decl_associated_type(point);
-  stc_decl_associated_type(dpoint);
-  stc_decl_associated_type(psite);
-  stc_decl_associated_type(index);
-  stc_decl_associated_type(value);
-  stc_decl_associated_type(rvalue);
-  stc_decl_associated_type(lvalue);
-  stc_decl_associated_type(iter);
-  stc_decl_associated_type(data);
-  stc_decl_associated_type(box);
-  stc_decl_associated_type(pset);
-  stc_decl_associated_type(n);
+  // b
+  stc_decl_associated_type( bkd_piter );
+  stc_decl_associated_type( box );
+  // c
+  stc_decl_associated_type( coord );
+  // d
+  stc_decl_associated_type( data );
+  stc_decl_associated_type( dim );
+  stc_decl_associated_type( dpoint );
+  // f
+  stc_decl_associated_type( fwd_piter );
+  // g
+  stc_decl_associated_type( grid );
+  // i
+  stc_decl_associated_type( index );
+  // l
+  stc_decl_associated_type( lvalue );
+  // n
+  stc_decl_associated_type( n );
+  // p
+  stc_decl_associated_type( piter );
+  stc_decl_associated_type( point );
+  stc_decl_associated_type( pset );
+  stc_decl_associated_type( psite );
+  // r
+  stc_decl_associated_type( rvalue );
+  // s
+  stc_decl_associated_type( std_container );
+  // v
+  stc_decl_associated_type( value );
 
 
 } // end of namespace oln

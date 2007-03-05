@@ -35,12 +35,8 @@ namespace oln
 
   /// Forward declarations.
   /// \{
-  template <unsigned D> struct grid_;
-  template <typename C> class point2d_;
-  template <typename C> class dpoint2d_;
   template <typename D> class neighb_;
   template <typename D> class window_;
-  template <typename P> class bbox_;
   template <typename P> class topo_lbbox_;
   template <typename P> class fwd_piter_bbox_;
   template <typename P> class bkd_piter_bbox_;
@@ -51,15 +47,10 @@ namespace oln
 
   /// Aliases.
   /// \{
-  typedef grid_<2> grid2d;
-
-  typedef  point2d_<int>  point2d;
-  typedef dpoint2d_<int> dpoint2d;
 
   typedef neighb_<dpoint2d> neighb2d;
   typedef window_<dpoint2d> window2d;
 
-  typedef bbox_<point2d> bbox2d;
   typedef topo_lbbox_<point2d> topo2d;
 
   typedef fwd_piter_bbox_<point2d> fwd_piter2d;
@@ -68,8 +59,6 @@ namespace oln
   typedef fwd_qiter_win_<point2d> fwd_qiter2d;
   typedef bkd_qiter_win_<point2d> bkd_qiter2d;
 
-  typedef  point2d_<float>  point2df;
-  typedef dpoint2d_<float> dpoint2df;
   /// \}
 
 

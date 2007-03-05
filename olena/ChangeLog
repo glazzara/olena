@@ -1,3 +1,39 @@
+2007-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Cleaning point set classes.
+
+	* oln/core/point_set_entry.hh: Rename as...
+	* oln/core/internal/point_set_base.hh: ...this and update.
+	* oln/core/abstract/point_set.hh: Rename as...
+	* oln/core/concept/point_set.hh: ...this and update.
+	* oln/core/abstract/iterator.hh: Rename as...
+	* oln/core/concept/iterator.hh: ...this and update.
+	* oln/core/abstract/iterator_on_points.hh: Rename as...
+	* oln/core/concept/iterator_on_points.hh: ...this and update.
+	* oln/core/abstract/point_set/point_set_being_random_accessible.hh,
+	* oln/core/abstract/point_set/point_set_having_known_size.hh,
+	* oln/core/abstract/point_set/hierarchies.hh,
+	* oln/core/abstract/point_set/all.hh,
+	* oln/core/abstract/point_set/point_set_being_connected.hh,
+	* oln/core/abstract/point_set/point_set_having_bbox.hh: Remove.
+	* oln/core/gen/bbox.hh: Split and rename as...
+	* oln/core/gen/box.hh: ...this and update...
+	* oln/core/gen/fbbox.hh: ...and this and update.
+	* oln/core/gen/bbox_fwd_piter.hh,
+	* oln/core/gen/bbox_bkd_piter.hh: Remove because merge with...
+	* oln/core/gen/box.hh: ...this.
+	* oln/core/gen/pset_.hh: Rename as...
+	* oln/core/gen/pset.hh: ...this and update.
+	* oln/core/gen/pset_list.hh: Rename as...
+	* oln/core/gen/plist.hh: ...this and update.
+	* oln/core/gen/pset_vec.hh: Rename as...
+	* oln/core/gen/pvec.hh: ...this and update.
+	* oln/core/gen/piter_on_std_based_pset.hh: Rename as...
+	* oln/core/internal/point_set_std_based.hh: ...this and update.
+	* oln/core/2d/aliases.hh: Update.
+	* oln/core/equipment.hh: Update.
+	* oln/core/2d/box2d.hh: New.
+
 2007-03-02  Thierry Geraud  <theo@lrde.epita.fr>
 
 	Start cleaning so the trunk is BROKEN for several weeks.
