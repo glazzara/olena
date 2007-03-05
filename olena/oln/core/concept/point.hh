@@ -31,6 +31,7 @@
 
 # include <mlc/value.hh>
 # include <oln/core/equipment.hh>
+# include <oln/core/concept/operators.hh>
 
 
 

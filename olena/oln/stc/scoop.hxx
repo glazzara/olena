@@ -867,22 +867,22 @@ namespace internal
   };
 
   template <typename abstraction, typename E>
-  struct top;
+  struct top__;
 
   template <template<class> class abstraction, typename E>
-  struct top < stc::is<abstraction>, E > : public plug< abstraction, E >
+  struct top__ < stc::is<abstraction>, E > : public plug< abstraction, E >
   {
-  protected: top() {}
+  protected: top__() {}
   };
 
   template <typename E>
-  struct top < mlc::none, E > : public Any<E>
+  struct top__ < mlc::none, E > : public Any<E>
   {
-  protected: top() {}
+  protected: top__() {}
   };
 
   template <typename E>
-  struct top < mlc::not_found, E >; /* FIXME: Error msg here */
+  struct top__ < mlc::not_found, E >; /* FIXME: Error msg here */
 
 
 } /* end of namespace internal */
@@ -900,7 +900,7 @@ struct vtypes< top<E> >
 };
 
 template <typename E>
-struct top : public internal::top< stc_find_type(E, category), E >
+struct top : public internal::top__< stc_find_type(E, category), E >
 {
 protected:
   top() {}

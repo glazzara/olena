@@ -40,35 +40,58 @@ namespace oln
 # include <oln/stc/scoop.hxx> // FIXME: Remove "oln/" later.
 
   // b
+  stc_decl_associated_type( bkd_niter );
   stc_decl_associated_type( bkd_piter );
+  stc_decl_associated_type( bkd_qiter );
   stc_decl_associated_type( box );
+
   // c
   stc_decl_associated_type( coord );
+
   // d
   stc_decl_associated_type( data );
   stc_decl_associated_type( dim );
   stc_decl_associated_type( dpoint );
+
   // f
+  stc_decl_associated_type( fwd_niter );
   stc_decl_associated_type( fwd_piter );
+  stc_decl_associated_type( fwd_qiter );
+
   // g
   stc_decl_associated_type( grid );
+
   // i
   stc_decl_associated_type( index );
+
   // l
   stc_decl_associated_type( lvalue );
+  stc_decl_associated_type( lvaluep );
+
   // n
   stc_decl_associated_type( n );
+  stc_decl_associated_type( nbh );
+  stc_decl_associated_type( niter );
+
   // p
   stc_decl_associated_type( piter );
   stc_decl_associated_type( point );
   stc_decl_associated_type( pset );
   stc_decl_associated_type( psite );
+
+  // q
+  stc_decl_associated_type( qiter );
+
   // r
   stc_decl_associated_type( rvalue );
+  stc_decl_associated_type( rvaluep );
+
   // s
   stc_decl_associated_type( std_container );
+
   // v
   stc_decl_associated_type( value );
+  stc_decl_associated_type( vsite );
 
 
 } // end of namespace oln

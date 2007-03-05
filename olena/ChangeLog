@@ -1,5 +1,29 @@
 2007-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update image concepts and add single_value_image.
+
+	* core/abstract/image.hh: Rename as...
+	* core/concept/image.hh: ...this.
+	Update.
+	Add some code from files in core/abstract/image/.
+	* core/image_entry.hh: Rename as...
+	* core/internal/image_base.hh: ...this.
+	Update.
+	Add some code from files in core/internal/.
+	* core/gen/image_pset_piter.hh,
+	* core/gen/single_value_image.hh,
+	* core/internal/utils.hh,
+	* core/internal/image_selectors.hh: New.
+	* core/topology_entry.hh: Remove this residue.
+	* core/concept/point_set.hh (has): Fix typo.
+	* core/concept/point.hh (oln/core/concept/operators):
+	Include.
+	* core/equipment.hh: Update.
+	* stc/scoop.hxx (internal::top): Rename as...
+	(internal::top__): ...this to disambiguate.
+
+2007-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update some abstractions and remove topology-related classes.
 
 	* oln/core/abstract/value.hh: Rename as...

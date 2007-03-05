@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,65 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_TOPOLOGY_ENTRY_HH
-# define OLN_CORE_TOPOLOGY_ENTRY_HH
-
-# include <oln/core/abstract/entry.hh>
-# include <oln/core/abstract/topology/all.hh>
+#ifndef OLN_CORE_INTERNAL_UTILS_HH
+# define OLN_CORE_INTERNAL_UTILS_HH
 
 
 namespace oln
 {
 
-  /// Fwd decl.
-  template <typename E> struct topology_entry;
-
-
-  template <typename E>
-  struct set_super_type< topology_entry<E> >
+  namespace internal
   {
-    typedef mlc::none ret;
-  };
+
+    /// Simple singleton class.
+
+    template <typename T>
+    struct singleton
+    {
+      singleton()
+      {}
+      singleton(T val)
+	: value(val)
+      {}
+      T value;
+    };
 
 
-  /// Virtual types associated to topology_entry<E>.
+    /// Simple pair class.
 
-  template <typename E>
-  struct vtypes< topology_entry<E> >
-  {
-    typedef stc::abstract  point_type;
-    typedef stc::abstract  bbox_type;
-    typedef mlc::none      neighborhood_type;
-    typedef stc::abstract  is_random_accessible_type;
-    typedef mlc::none      subset_type;
-
-    typedef mlc::none      morpher_type;
-  };
-
-
-
-  /// Entry class for point sets: topology_entry<E> is an alias for
-  /// entry< abstract::topology, E>.
-
-  template <typename E>
-  struct topology_entry : public entry< abstract::topology, E>
-  {
-  protected:
-    topology_entry();
-  };
+    template <typename T1, typename T2>
+    struct pair
+    {
+      pair()
+      {}
+      pair(T1 val1, T2 val2)
+	: value1(val1),
+	  value2(val2)
+      {}
+      T1 value1;
+      T2 value2;
+    };
 
 
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename E>
-  topology_entry<E>::topology_entry()
-  {
-  }
-
-# endif
-
+  } // end of namespace oln::internal
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_TOPOLOGY_ENTRY_HH
+#endif // ! OLN_CORE_INTERNAL_UTILS_HH
+

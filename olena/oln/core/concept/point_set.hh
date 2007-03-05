@@ -30,6 +30,7 @@
 
 # include <ostream>
 # include <oln/core/equipment.hh>
+# include <oln/core/point.hh>
 
 
 namespace oln
@@ -77,7 +78,7 @@ namespace oln
   bool
   Point_Set<Exact>::has(const typename Point_Set<Exact>::point& p) const
   {
-    return exact(this)->impl_has();
+    return exact(this)->impl_has(p);
   }
 
   template <typename Exact>
