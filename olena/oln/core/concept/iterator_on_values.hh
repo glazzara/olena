@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
+// Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,79 +26,72 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_BBOX_HH
-# define OLN_CORE_ABSTRACT_BBOX_HH
+#ifndef OLN_CORE_CONCEPT_ITERATOR_ON_VALUES_HH
+# define OLN_CORE_CONCEPT_ITERATOR_ON_VALUES_HH
 
-# include <oln/core/abstract/point_set/point_set_having_bbox.hh>
+# include <ostream>
+# include <oln/core/concept/iterator.hh>
 
 
 namespace oln
 {
 
+  /// Concept-class "Iterator_on_Values".
 
-  namespace abstract
+  template <typename Exact>
+  struct Iterator_on_Values : public Iterator<Exact>
   {
+    stc_typename(value);
 
-    /// Abstract bbox (bounding box) class.
-    template <typename E>
-    class bbox : public point_set_having_bbox<E>
-    {
-    public:
+    value to_value() const;
 
-      void print(std::ostream& ostr) const;
+    // Default.
+    operator value() const;
 
-      const E& impl_bbox() const;
+  protected:
+    Iterator_on_Values();
 
-      ~bbox()
-      {
-      }
-      
-    protected:
+  }; // end of class oln::Iterator_on_Values<Exact>
 
-      bbox();
 
-    }; // end of class oln::abstract::bbox<E>
+
+  template <typename Exact>
+  std::ostream& operator<<(std::ostream& ostr, const Iterator_on_Values<Exact>& vit);
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
+  template <typename Exact>
+  typename Iterator_on_Values<Exact>::value
+  Iterator_on_Values<Exact>::to_value() const
+  {
+    precondition(this->is_valid());
+    return exact(this)->impl_to_value();
+  }
 
-    template <typename E>
-    void bbox<E>::print(std::ostream& ostr) const
-    {
-      this->exact().impl_print(ostr);
-    }
-      
-    template <typename E>
-    std::ostream& operator<<(std::ostream& ostr, const abstract::bbox<E>& bb)
-    {
-      bb.print(ostr);
-      return ostr;
-    }
+  template <typename Exact>
+  Iterator_on_Values<Exact>::operator typename Iterator_on_Values<Exact>::value() const
+  {
+    precondition(this->is_valid());
+    return this->to_value();
+  }
 
-    template <typename E>
-    const E& bbox<E>::impl_bbox() const
-    {
-      return this->exact();
-    }
+  template <typename Exact>
+  Iterator_on_Values<Exact>::Iterator_on_Values()
+  {
+  }
 
-    template <typename E>
-    bbox<E>::bbox()
-    {
-    }
-    
-//     template <typename E>
-//     bbox<E>::~bbox()
-//     {
-//     }
+  template <typename Exact>
+  std::ostream& operator<<(std::ostream& ostr, const Iterator_on_Values<Exact>& vit)
+  {
+    return ostr << vit.to_point();
+  }
 
 # endif
-
-
-  } // end of namespace oln::abstract
 
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_BBOX_HH
+#endif // ! OLN_CORE_CONCEPT_ITERATOR_ON_VALUES_HH

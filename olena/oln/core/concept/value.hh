@@ -1,4 +1,5 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2005, 2006, 2007 EPITA Research and Development
+// Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,66 +26,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_HAVING_SUBSET_HH
-# define OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_HAVING_SUBSET_HH
+#ifndef OLN_CORE_CONCEPT_VALUE_HH
+# define OLN_CORE_CONCEPT_VALUE_HH
 
-# include <oln/core/abstract/topology.hh>
-# include <oln/core/abstract/topology/hierarchies.hh>
-# include <oln/core/automatic/topology/topology_having_subset.hh>
+# include <oln/core/equipment.hh>
 
 
 namespace oln
 {
 
-  namespace abstract
+  /// Concept-class "Value".
+
+  template <typename Exact>
+  struct Value : public Any<Exact>
   {
-
-    template <typename E>
-    class topology_having_subset
-      : public virtual topology<E>,
-	public automatic::get_impl<topology_having_subset, E>
-    {
-      typedef oln_vtype(E, subset) subset_t;
-      
-    public:
-
-      // abstract
-      const subset_t& subset() const;
-
-    protected:
-
-      topology_having_subset();
-    };
+  protected:
+    Value();
+  };
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename E>
-    const oln_vtype(E, subset)&
-    topology_having_subset<E>::subset() const
-    {
-      return this->exact().impl_subset();
-    }
-
-    template <typename E>
-    topology_having_subset<E>::topology_having_subset()
-    {}
+  Value::Value()
+  {
+  }
 
 # endif
-
-
-  } // end of namespace oln::abstract
-
-
-  template <typename E>
-  struct case_ < topology_hierarchy_wrt_subset, E, 1 >
-    : where_< mlc::neq_< oln_vtype(E, subset), mlc::none > >
-  {
-    typedef abstract::topology_having_subset<E> ret;
-  };
-
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_ABSTRACT_TOPOLOGY_TOPOLOGY_HAVING_SUBSET_HH
+#endif // ! OLN_CORE_CONCEPT_VALUE_HH

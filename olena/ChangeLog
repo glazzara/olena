@@ -1,5 +1,21 @@
 2007-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update some abstractions and remove topology-related classes.
+
+	* oln/core/abstract/value.hh: Rename as...
+	* oln/core/concept/value.hh: ...this and update.
+	* oln/core/abstract/iterator_on_values.hh: Rename as...
+	* oln/core/concept/iterator_on_values.hh: ...this and update.
+	* oln/core/abstract/topology/topology_having_bbox.hh,
+	* oln/core/abstract/topology/hierarchies.hh,
+	* oln/core/abstract/topology/all.hh,
+	* oln/core/abstract/topology/topology_being_random_accessible.hh,
+	* oln/core/abstract/topology/topology_having_subset.hh,
+	* oln/core/abstract/topology/topology_having_neighborhood.hh:
+	Remove.
+
+2007-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Cleaning point set classes.
 
 	* oln/core/point_set_entry.hh: Rename as...
