@@ -47,6 +47,7 @@ namespace oln
 
   // c
   stc_decl_associated_type( coord );
+  stc_decl_associated_type( ch_value );
 
   // d
   stc_decl_associated_type( data );
@@ -72,6 +73,9 @@ namespace oln
   stc_decl_associated_type( n );
   stc_decl_associated_type( nbh );
   stc_decl_associated_type( niter );
+
+  // o
+  stc_decl_associated_type( output );
 
   // p
   stc_decl_associated_type( piter );

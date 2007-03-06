@@ -99,6 +99,11 @@ namespace stc
 # define stc_type_(From, Type) vtype<From, typedef_::Type>::ret
 # define stc_type(From, Type) typename stc_type_(From, Type)
 
+# define stc_get_type_(Type) vtype<Exact, typedef_::Type>::ret
+# define stc_get_type(Type) typename stc_get_type_(Type)
+
+// FIXME: Swap name of stc_type and stc_get_type?
+
 
 // below the more tolerant version is used, namely stc_deferred,
 // yet it sometimes can be replaced by "stc_find_type(E, Name)"
@@ -110,6 +115,11 @@ namespace stc
 # define stc_type_is_not_found(Type)  stc::is_not_found< stc_deferred(Type) >
 
 
+
+# define stc_is_a(T, U)												\
+mlc::wrap_<													\
+  typename mlc::is_a_< sizeof(mlc::form::of< U >()) >::template ret< typename mlc::basic_< stc_deferred(T) >::ret, U >	\
+>
 
 
 
@@ -131,6 +141,7 @@ namespace stc
 
 
 # define stc_deferred_type(From, Type)  typename deferred_vtype< From, typedef_::Type >::ret
+
 
 
 

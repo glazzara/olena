@@ -35,32 +35,81 @@
 namespace oln
 {
 
-  struct grid2d;
+
+  /// \{
+  /// Fwd decls.
+
+  template <typename Exact> struct Grid_2D;
+  struct grid2d_rec;
+  struct grid2d_hex;
+  struct grid2d_tri;
+
+  /// \}
 
 
-  /// Super type.
-  template<>
-  struct super_trait_< grid2d >
-  {
-    typedef Grid< grid2d > ret;
-  };
+  /// \{
+  /// Grid_2D.
 
-
-  /// Virtual types.
-  template <>
-  struct vtypes< grid2d >
+  template <typename Exact>
+  struct vtypes< Grid_2D<Exact> >
   {
     typedef mlc::uint_<2> dim;
   };
-
-
-  /// Rectangular grid class.
-  class grid2d : public Grid< grid2d >
+  
+  template <typename Exact>
+  struct Grid_2D : public Grid<Exact>
   {
-  public:
-    /// Ctor.
-    grid2d() {}
+  protected:
+    Grid_2D() {}
   };
+
+  /// \}
+
+
+  /// \{
+  /// Super types.
+
+  template<>
+  struct super_trait_< grid2d_rec >
+  {
+    typedef Grid_2D< grid2d_rec > ret;
+  };
+
+  template<>
+  struct super_trait_< grid2d_hex >
+  {
+    typedef Grid_2D< grid2d_hex > ret;
+  };
+
+  template<>
+  struct super_trait_< grid2d_tri >
+  {
+    typedef Grid_2D< grid2d_tri > ret;
+  };
+
+  /// \}
+  
+
+
+
+  /// Rectangular grid struct.
+
+  struct grid2d_rec : public Grid_2D< grid2d_rec >
+  {};
+
+  typedef grid2d_rec grid2d; // for short
+
+
+  /// Hexagonal grid struct.
+
+  struct grid2d_hex : public Grid_2D< grid2d_hex >
+  {};
+
+
+  /// Triangular grid struct.
+
+  struct grid2d_tri : public Grid_2D< grid2d_tri >
+  {};
 
 
 } // end of namespace oln

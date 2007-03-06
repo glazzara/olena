@@ -30,7 +30,6 @@
 # define OLN_CORE_CONCEPT_POINT_HH
 
 # include <mlc/value.hh>
-# include <oln/core/equipment.hh>
 # include <oln/core/concept/operators.hh>
 
 

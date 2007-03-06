@@ -1,3 +1,27 @@
+2007-03-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Extend image selectors and add image2d type.
+
+	* core/concept/image.hh (doc): New.
+	(Fast_Image): New.
+	(Random_Accessible_Image, Random_Mutable_Image): Merge into
+	Fast_Image.
+	* core/concept/point_set.hh (include): Update.
+	* core/concept/point.hh: Likewise.
+	* core/2d/array2d.hh (include): Remove abstract/array.
+	(array2d): Rename as...
+	(array2d_): ...this.
+	(imin, jmin, imax, jmax, buffer, ncells): New methods.
+	* core/2d/image2d.hh: Update.
+	* core/2d/image2d_b.hh: New.
+	* core/2d/grid2d.hh (Grid_2D): New.
+	(grid2d_rec, grid2d_hex, grid2d_tri): New.
+	* core/equipment.hh (ch_value, output): New.
+	* core/gen/box.hh: Fix.
+	* core/internal/image_selectors.hh: Update.
+	* core/internal/image_base.hh (qiter, fwd_qiter, bkd_qiter): New.
+	* stc/scoop.hh (stc_get_type_, stc_get_type, stc_is_a): New.
+
 2007-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update image concepts and add single_value_image.

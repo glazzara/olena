@@ -240,7 +240,7 @@ namespace oln
   box_<P>::pmin() const
   {
     for (unsigned i = 0; i < n; ++i)
-      invariant(pmin[i] <= pmax[i]);
+      invariant(this->pmin_[i] <= this->pmax_[i]);
     return this->pmin_;
   }
 
@@ -249,7 +249,7 @@ namespace oln
   box_<P>::pmax() const
   {
     for (unsigned i = 0; i < n; ++i)
-      invariant(pmax[i] >= pmin[i]);
+      invariant(this->pmax_[i] >= this->pmin_[i]);
     return this->pmax_;
   }
 

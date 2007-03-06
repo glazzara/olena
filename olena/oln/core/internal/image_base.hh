@@ -98,7 +98,14 @@ namespace oln
     typedef stc::abstract value;
     typedef stc::abstract rvalue;
 
+    // FIXME: Uncomment below!
+    // typedef stc::abstract output;
     typedef stc::abstract data;
+
+    // FIXME: Temporary hack:
+    typedef mlc::none     qiter;
+    typedef mlc::none fwd_qiter;
+    typedef mlc::none bkd_qiter;
 
     // Deferred.
 

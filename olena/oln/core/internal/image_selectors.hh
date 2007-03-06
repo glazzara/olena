@@ -29,6 +29,7 @@
 # define OLN_CORE_INTERNAL_IMAGE_SELECTORS_HH
 
 # include <oln/core/concept/image.hh>
+# include <oln/core/2d/grid2d.hh>
 
 
 namespace oln
@@ -43,21 +44,82 @@ namespace oln
     typedef  selector<Image, 1>  Image_mutability;
   
     template <typename Exact>
-    struct case_< Image_mutability, Exact,  1 > : where_< stc_type_is_found(lvalue) >
+    struct case_< Image_mutability, Exact,  1 >
+      :
+      where_< stc_type_is_found(lvalue) >
     {
       typedef Mutable_Image<Exact> ret;
     };
 
+    template <typename Exact>
+    struct case_< Image_mutability, Exact,  2 >
+      :
+      where_< mlc::and_< stc_type_is_found(lvalue),
+			 stc_type_is_found(index) > >
+    {
+      typedef Fast_Image<Exact> ret;
+    };
 
-    // 2. point-wise accessibility
 
-    typedef  selector<Image, 2>  Image_pw_accessibility;
+    // 2. dimension
+
+    typedef  selector<Image, 2>  Image_dimension;
   
     template <typename Exact>
-    struct case_< Image_pw_accessibility, Exact,  1 > : where_< mlc::eq_< stc_type(Exact, psite),
-									  stc_type(Exact, point) > >
+    struct case_< Image_dimension, Exact,  1 >
+      :
+      where_< stc_is_a(grid, Grid_2D) >
+    {
+      typedef Image_2D<Exact> ret;
+    };
+
+    // FIXME: ...
+
+
+    // 3. point-wise accessibility
+
+    typedef  selector<Image, 3>  Image_pw_accessibility;
+  
+    template <typename Exact>
+    struct case_< Image_pw_accessibility, Exact,  1 >
+      :
+      where_< mlc::and_list_< mlc::eq_< stc_get_type(psite), stc_get_type(point) >,
+			      stc_type_is_found(lvalue),
+			      stc_is_a(grid, Grid_2D) > >
+    {
+      typedef Point_Wise_Mutable_Image_2D<Exact> ret;
+    };
+
+    template <typename Exact>
+    struct case_< Image_pw_accessibility, Exact,  2 >
+      :
+      where_< mlc::and_< mlc::eq_< stc_get_type(psite), stc_get_type(point) >,
+			 stc_is_a(grid, Grid_2D) > >
+    {
+      typedef Point_Wise_Accessible_Image_2D<Exact> ret;
+    };
+
+    // FIXME: ...
+
+    template <typename Exact>
+    struct default_case_< Image_pw_accessibility, Exact >
+      :
+      where_< mlc::eq_< stc_get_type(psite), stc_get_type(point) > >
     {
       typedef Point_Wise_Accessible_Image<Exact> ret;
+    };
+
+
+    // 4. nbh
+
+    typedef  selector<Image, 4>  Image_nbh;
+
+    template <typename Exact>
+    struct case_< Image_nbh, Exact,  1 >
+      :
+      where_< stc_type_is_found(nbh) >
+    {
+      typedef Image_with_Nbh<Exact> ret;
     };
 
 

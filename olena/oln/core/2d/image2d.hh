@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,79 +29,77 @@
 #ifndef OLN_CORE_2D_IMAGE2D_HH
 # define OLN_CORE_2D_IMAGE2D_HH
 
-# include <oln/core/image_entry.hh>
-# include <oln/core/gen/grid.hh>
-# include <oln/core/internal/tracked_ptr.hh>
+# include <oln/core/internal/image_base.hh>
 # include <oln/core/2d/array2d.hh>
-# include <oln/core/2d/point2d.hh>
-# include <oln/core/2d/topo2d.hh>
-// For fwd_piter and bkd_piter virtual types.
-# include <oln/core/iterator_vtypes.hh>
+# include <oln/core/2d/box2d.hh>
 
 
 namespace oln
 {
 
-  // Forward declaration.
+  // Fwd decl.
   template <typename T> class image2d;
 
 
-  /// Virtual types associated to oln::image2d<T>.
+  /// Virtual types.
   template <typename T>
   struct vtypes< image2d<T> >
   {
-    typedef topo2d topo_type;
+    typedef point2d point;
+    typedef point   psite;
 
-    typedef point2d point_type;
+    typedef int      coord;
+    typedef unsigned index;
 
-    typedef mlc::false_ is_computed_type;
-    typedef T value_type;
-    typedef T& lvalue_type;
+    typedef       T   value;
+    typedef const T& rvalue;
+    typedef       T& lvalue;
+
+    typedef box2d                  pset;
+    typedef array2d_<value, coord> data;
   };
 
 
-  /// Super type declaration.
+  /// Super type.
   template <typename T>
-  struct set_super_type< image2d<T> >
+  struct super_trait_< image2d<T> >
   {
-    typedef image2d<T> self_t;
-    typedef image_entry<self_t> ret;
+    typedef image2d<T> current;
+    typedef internal::image_base_<current> ret;
   };
 
 
   /// General 2D image class.
+
   template <typename T>
-  class image2d : public image_entry< image2d<T> >
+  class image2d : public internal::image_base_< image2d<T> >
   {
-    typedef image2d<T> self_t;
-    typedef array2d<T> array_t;
-
+    typedef image2d<T> current;
+    typedef internal::image_base_<current> super;
   public:
+    stc_using(data);
 
-    /// Ctor without info.
     image2d();
+    image2d(const box2d& b);
+    image2d(unsigned nrows, unsigned ncols);
 
-    /// Ctor using sizes.
-    image2d(unsigned nrows, unsigned ncols, unsigned border = 2);
+    bool impl_owns_(const point2d& p) const;
 
-    /// Ctor using an existing topology.
-    image2d(const topo2d& topo);
+    bool impl_has(const point2d& p) const;
+    bool impl_has_at(int row, int col) const;
 
-    const topo2d& impl_topo() const;
+    const T& impl_read(const point2d& p) const;
+    const T& impl_index_read(unsigned i) const;
+    const T& impl_at(int row, int col) const;
 
-    T impl_op_read(const point2d& p) const;
-    T impl_at(int row, int col) const;
-
-    T& impl_op_readwrite(const point2d& p);
+    T& impl_read_write(const point2d& p);
+    T& impl_index_read_write(unsigned i);
     T& impl_at(int row, int col);
 
-    T* adr_at(int row, int col);
-    const T* adr_at(int row, int col) const;
+    std::size_t npoints() const;
 
-  private:
-
-    topo2d topo_;
-    internal::tracked_ptr<array_t> data_;
+    box2d impl_bbox() const;
+    box2d impl_points() const;
   };
 
 
@@ -110,86 +108,110 @@ namespace oln
 
   template <typename T>
   image2d<T>::image2d()
-    : topo_(),
-      data_()
   {
   }
 
   template <typename T>
-  image2d<T>::image2d(unsigned nrows, unsigned ncols, unsigned border)
-    : topo_(bbox2d(point2d(0,         0        ),
-		   point2d(nrows - 1, ncols - 1)),
-	    border),
-      data_(new array_t(0         - border, 0         - border,
-			nrows - 1 + border, ncols - 1 + border))
+  image2d<T>::image2d(const box2d& b)
   {
+    this->data_ = new data(b.pmin().row(), b.pmin().col(), 
+			   b.pmax().row(), b.pmax().col());
   }
 
   template <typename T>
-  image2d<T>::image2d(const topo2d& topo)
-    : topo_(topo),
-      data_(new array_t(topo.bbox().pmin().row(),
-			topo.bbox().pmin().col(),
-			topo.bbox().pmax().row(),
-			topo.bbox().pmax().col()))
+  image2d<T>::image2d(unsigned nrows, unsigned ncols)
   {
-  }
-
-
-  template <typename T>
-  const topo2d& image2d<T>::impl_topo() const
-  {
-    return topo_;
-  }
-
-
-  template <typename T>
-  T image2d<T>::impl_op_read(const point2d& p) const
-  {
-    precondition(data_ != 0);
-    precondition(topo_.has_large(p));
-    return data_->operator()(p.row(), p.col());
+    precondition(nrows != 0 and ncols != 0);
+    this->data_ = new data(0, 0, nrows - 1, ncols - 1);
   }
 
   template <typename T>
-  T image2d<T>::impl_at(int row, int col) const
+  bool image2d<T>::impl_owns_(const point2d& p) const
   {
-    precondition(data_ != 0);
-    precondition(data_->has(row, col));
-    return data_->operator()(row, col);
+    assert(this->has_data());
+    return this->data_->has(p.row(), p.col());
   }
 
+  template <typename T>
+  bool image2d<T>::impl_has(const point2d& p) const
+  {
+    assert(this->has_data());
+    return this->data_->has(p.row(), p.col());
+  }
 
   template <typename T>
-  T& image2d<T>::impl_op_readwrite(const point2d& p)
+  bool image2d<T>::impl_has_at(int row, int col) const
   {
-    precondition(data_ != 0);
-    precondition(topo_.has_large(p));
-    return data_->operator()(p.row(), p.col());
+    assert(this->has_data());
+    return this->data_->has(row, col);
+  }
+
+  template <typename T>
+  const T& image2d<T>::impl_read(const point2d& p) const
+  {
+    assert(this->has_data());
+    return this->data_->operator()(p.row(), p.col());
+  }
+
+  template <typename T>
+  const T& image2d<T>::impl_index_read(unsigned i) const
+  {
+    assert(this->has_data());
+    assert(i < this->npoints());
+    return this->data_->buffer()[i];
+  }
+
+  template <typename T>
+  const T& image2d<T>::impl_at(int row, int col) const
+  {
+    assert(this->has_data());
+    return this->data_->operator()(row, col);
+  }
+
+  template <typename T>
+  T& image2d<T>::impl_read_write(const point2d& p)
+  {
+    assert(this->has_data());
+    return this->data_->operator()(p.row(), p.col());
+  }
+
+  template <typename T>
+  T& image2d<T>::impl_index_read_write(unsigned i)
+  {
+    assert(this->has_data());
+    assert(i < this->npoints());
+    return this->data_->buffer()[i];
   }
 
   template <typename T>
   T& image2d<T>::impl_at(int row, int col)
   {
-    precondition(data_->has(row, col));
-    return data_->operator()(row, col);
-  }
-
-
-  template <typename T>
-  T* image2d<T>::adr_at(int row, int col)
-  {
-    precondition(data_ != 0);
-    precondition(data_->has(row, col));
-    return &(data_->operator()(row, col));
+    assert(this->has_data());
+    return this->data_->operator()(row, col);
   }
 
   template <typename T>
-  const T* image2d<T>::adr_at(int row, int col) const
+  std::size_t image2d<T>::npoints() const
   {
-    precondition(data_ != 0);
-    precondition(data_->has(row, col));
-    return &(data_->operator()(row, col));
+    assert(this->has_data());
+    return this->data_->ncells();
+  }
+
+  template <typename T>
+  box2d image2d<T>::impl_bbox() const
+  {
+    assert(this->has_data());
+    point2d
+      pmin(this->data_->imin(), this->data_->jmin()),
+      pmax(this->data_->imax(), this->data_->jmax());
+    box2d b(pmin, pmax);
+    return b;
+  }
+
+  template <typename T>
+  box2d image2d<T>::impl_points() const
+  {
+    return this->bbox();
   }
 
 # endif

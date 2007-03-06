@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2003, 2004, 2006 EPITA Research and Development
-// Laboratory
+// Copyright (C) 2001, 2003, 2004, 2006, 2007 EPITA Research and
+// Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,39 +31,49 @@
 
 # include <cstddef>
 # include <mlc/contract.hh>
-# include <oln/core/abstract/array.hh>
 
 
 namespace oln
 {
 
   /// General 2D array class.
-  template <typename value_t, typename coord_t = int>
-  class array2d : public abstract::array
+
+  template <typename T, typename C = int>
+  class array2d_
   {
   public:
 
     /// Ctor.
-    array2d(coord_t imin, coord_t jmin, coord_t imax, coord_t jmax);
+    array2d_(C imin, C jmin, C imax, C jmax);
+
     /// Ctor.
-    array2d(coord_t ilen, coord_t jlen);
+    array2d_(C ilen, C jlen);
 
     /// Dtor.
-    ~array2d();
+    ~array2d_();
 
-    value_t  operator()(coord_t i, coord_t j) const;
-    value_t& operator()(coord_t i, coord_t j);
+    const T& operator()(C i, C j) const;
+          T& operator()(C i, C j);
 
-    bool has(coord_t i, coord_t j) const;
+    bool has(C i, C j) const;
 
     std::size_t memsize() const;
+    std::size_t ncells() const;
+
+    C imin() const;
+    C jmin() const;
+    C imax() const;
+    C jmax() const;
+
+    const T* buffer() const;
+    T* buffer();
 
   protected:
 
-    coord_t   imin_, jmin_, imax_, jmax_;
-    coord_t   ilen_, jlen_;
-    value_t*  buffer_;
-    value_t** array_;
+    C   imin_, jmin_, imax_, jmax_;
+    C   ilen_, jlen_;
+    T*  buffer_;
+    T** array_;
 
   private:
 
@@ -75,9 +85,8 @@ namespace oln
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename value_t, typename coord_t>
-  array2d<value_t, coord_t>::array2d(coord_t imin, coord_t jmin,
-				     coord_t imax, coord_t jmax) :
+  template <typename T, typename C>
+  array2d_<T, C>::array2d_(C imin, C jmin, C imax, C jmax) :
     imin_(imin),
     jmin_(jmin),
     imax_(imax),
@@ -89,8 +98,8 @@ namespace oln
     allocate_();
   }
 
-  template <typename value_t, typename coord_t>
-  array2d<value_t, coord_t>::array2d(coord_t ilen, coord_t jlen) :
+  template <typename T, typename C>
+  array2d_<T, C>::array2d_(C ilen, C jlen) :
     imin_(0),
     jmin_(0),
     ilen_(ilen),
@@ -102,52 +111,95 @@ namespace oln
     allocate_();
   }
 
-  template <typename value_t, typename coord_t>
-  array2d<value_t, coord_t>::~array2d()
+  template <typename T, typename C>
+  array2d_<T, C>::~array2d_()
   {
     deallocate_();
   }
 
-  template <typename value_t, typename coord_t>
-  value_t array2d<value_t, coord_t>::operator()(coord_t i, coord_t j) const
+  template <typename T, typename C>
+  const T& array2d_<T, C>::operator()(C i, C j) const
   {
     precondition(has(i, j));
     return array_[i][j];
   }
 
-  template <typename value_t, typename coord_t>
-  value_t& array2d<value_t, coord_t>::operator()(coord_t i, coord_t j)
+  template <typename T, typename C>
+  T& array2d_<T, C>::operator()(C i, C j)
   {
     precondition(has(i, j));
     return array_[i][j];
   }
 
-  template <typename value_t, typename coord_t>
-  bool array2d<value_t, coord_t>::has(coord_t i, coord_t j) const
+  template <typename T, typename C>
+  bool array2d_<T, C>::has(C i, C j) const
   {
     return
       i >= imin_ and i <= imax_ and
       j >= jmin_ and j <= jmax_;
   }
 
-  template <typename value_t, typename coord_t>
-  size_t array2d<value_t, coord_t>::memsize() const
+
+  template <typename T, typename C>
+  C array2d_<T, C>::imin() const
+  {
+    return imin_;
+  }
+
+  template <typename T, typename C>
+  C array2d_<T, C>::jmin() const
+  {
+    return jmin_;
+  }
+
+  template <typename T, typename C>
+  C array2d_<T, C>::imax() const
+  {
+    return imax_;
+  }
+
+  template <typename T, typename C>
+  C array2d_<T, C>::jmax() const
+  {
+    return jmax_;
+  }
+
+  template <typename T, typename C>
+  const T* array2d_<T, C>::buffer() const
+  {
+    return buffer_;
+  }
+
+  template <typename T, typename C>
+  T* array2d_<T, C>::buffer()
+  {
+    return buffer_;
+  }
+
+  template <typename T, typename C>
+  std::size_t array2d_<T, C>::ncells() const
+  {
+    return std::size_t(ilen_) * std::size_t(jlen_);
+  }
+
+  template <typename T, typename C>
+  std::size_t array2d_<T, C>::memsize() const
   {
     return
       // buffer_
-      size_t(ilen_) * size_t(jlen_) * sizeof(value_t)
+      std::size_t(ilen_) * std::size_t(jlen_) * sizeof(T)
       +
       // array_
-      size_t(ilen_) * sizeof(value_t*);
+      std::size_t(ilen_) * sizeof(T*);
   }
 
-  template <typename value_t, typename coord_t>
-  void array2d<value_t, coord_t>::allocate_()
+  template <typename T, typename C>
+  void array2d_<T, C>::allocate_()
   {
-    buffer_ = new value_t[size_t(ilen_) * size_t(jlen_)];
-    array_ = new value_t*[size_t(ilen_)];
-    value_t* buf = buffer_ - jmin_;
-    for (coord_t i = 0; i < ilen_; ++i)
+    buffer_ = new T[std::size_t(ilen_) * std::size_t(jlen_)];
+    array_ = new T*[std::size_t(ilen_)];
+    T* buf = buffer_ - jmin_;
+    for (C i = 0; i < ilen_; ++i)
       {
 	array_[i] = buf;
 	buf += jlen_;
@@ -155,8 +207,8 @@ namespace oln
     array_ -= imin_;
   }
 
-  template <typename value_t, typename coord_t>
-  void array2d<value_t, coord_t>::deallocate_()
+  template <typename T, typename C>
+  void array2d_<T, C>::deallocate_()
   {
     precondition(buffer_ != 0 and array_ != 0);
     delete[] buffer_;

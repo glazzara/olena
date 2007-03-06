@@ -29,7 +29,72 @@
 #ifndef OLN_CORE_CONCEPT_IMAGE_HH
 # define OLN_CORE_CONCEPT_IMAGE_HH
 
+# include <cstddef>
 # include <oln/core/equipment.hh>
+
+
+/*
+
+
+Image
+  |
+  |
+  |
+  o -- Mutable_Image
+  |      |
+  |      + -- Fast_Image
+  |
+  |
+  |
+  o -- + -- Image_1D
+  |    |
+  |    + -- Image_2D
+  |    |      |
+  |    |      + -- Image_2D_rec
+  |    |      |
+  |    |      + -- Image_2D_hex
+  |    |      |
+  |    |      + -- Image_2D_tri
+  |    |
+  |    + -- Image_3D
+  |
+  |
+  |
+  o -- Point_Wise_Accessible_Image
+  |      |
+  |      |      Image_2D
+  |      |        |
+  |      |        |
+  |      + -- Point_Wise_Accessible_Image_2D
+  |      |      |
+  |      |      |      Mutable_Image
+  |      |      |        |
+  |      |      |        |
+  |      |      + -- Point_Wise_Mutable_Image_2D
+  |      |
+  |      + ...
+  |
+  |
+  |
+  o -- + -- Gray_Level_Image
+  |    |
+  |    + -- Color_Image
+  |    |
+  |    + -- Label_Image
+  |    |      |
+  |    |      + -- Binary_Image
+  |    |      |
+  |    |      + -- String_Image
+  |    |
+  |    + -- Deformation_Field_Image
+  |    |
+  |    + -- Data_Image
+  |
+  |
+  |
+ ...
+
+*/
 
 
 namespace oln
@@ -57,10 +122,12 @@ namespace oln
     stc_typename(box);
     stc_typename(pset);
 
+    // stc_typename(output); // FIXME: Uncomment!
+
     bool owns_(const psite& p) const;
     rvalue operator()(const psite& p) const;
 
-    box bbox() const;
+    box  bbox() const;
     pset points() const;
 
   protected:
@@ -99,6 +166,27 @@ namespace oln
   };
 
 
+  /// Concept-class "Fast_Image".
+
+  template <typename Exact>
+  struct Fast_Image : public virtual Mutable_Image<Exact>,
+		      public automatic::get_impl<Fast_Image, Exact>
+  {
+    stc_using_from(Image, rvalue);
+    stc_using_from(Image, lvalue);
+
+    stc_typename(index);
+
+    rvalue operator[](index i) const;
+    lvalue operator[](index i);
+    std::size_t npoints() const;
+    // FIXME: ...
+
+  protected:
+    Fast_Image();
+ };
+
+
   /// Concept-class "Point_Wise_Accessible_Image".
 
   template <typename Exact>
@@ -114,40 +202,6 @@ namespace oln
 
   protected:
     Point_Wise_Accessible_Image();
-  };
-
-
-  /// Concept-class "Random_Accessible_Image".
-
-  template <typename Exact>
-  struct Random_Accessible_Image : public virtual Image<Exact>,
-				   public automatic::get_impl<Random_Accessible_Image, Exact>
-  {
-    stc_using_from(Image, rvalue);
-
-    stc_typename(index);
-    rvalue operator[](index i) const;
-
-  protected:
-    Random_Accessible_Image();
- };
-
-
-  /// Concept-class "Random_Mutable_Image".
-
-  template <typename Exact>
-  struct Random_Mutable_Image : public virtual Random_Accessible_Image<Exact>,
-				public virtual Mutable_Image<Exact>,
-				public automatic::get_impl<Random_Mutable_Image, Exact>
-  {
-    stc_using_from(Random_Accessible_Image, index);
-    stc_using_from(Mutable_Image, lvalue);
-    using Random_Accessible_Image<Exact>::operator[];
-
-    lvalue operator[](index i);
-
-  protected:
-    Random_Mutable_Image();
   };
 
 
@@ -352,31 +406,31 @@ namespace oln
   {
   }
 
-  // -----------------------------------   Random_Accessible_Image<Exact>
+  // -----------------------------------   Fast_Image<Exact>
 
   template <typename Exact>
-  typename Random_Accessible_Image<Exact>::rvalue
-  Random_Accessible_Image<Exact>::operator[](typename Random_Accessible_Image<Exact>::index i) const
+  typename Fast_Image<Exact>::rvalue
+  Fast_Image<Exact>::operator[](typename Fast_Image<Exact>::index i) const
   {
     return exact(this)->impl_index_read(p);
   }
 
   template <typename Exact>
-  Random_Accessible_Image<Exact>::Random_Accessible_Image()
-  {
-  }
-
-  // -----------------------------------   Random_Mutable_Image<Exact>
-
-  template <typename Exact>
-  typename Random_Mutable_Image<Exact>::lvalue
-  Random_Mutable_Image<Exact>::operator[](typename Random_Accessible_Image<Exact>::index i)
+  typename Fast_Image<Exact>::lvalue
+  Fast_Image<Exact>::operator[](typename Fast_Image<Exact>::index i)
   {
     return exact(this)->impl_index_read_write(p);
   }
 
   template <typename Exact>
-  Random_Mutable_Image<Exact>::Random_Mutable_Image()
+  std::size_t
+  Fast_Image<Exact>::npoints() const
+  {
+    return exact(this)->impl_npoints(p);
+  }
+
+  template <typename Exact>
+  Fast_Image<Exact>::Fast_Image()
   {
   }
 
@@ -481,6 +535,11 @@ namespace oln
   {
     Point_Wise_Mutable_Image_2D<Exact>::point p(row, col);
     return this->at(p);
+  }
+
+  template <typename Exact>
+  Point_Wise_Mutable_Image_2D<Exact>::Point_Wise_Mutable_Image_2D()
+  {
   }
 
 # endif

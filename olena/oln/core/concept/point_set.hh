@@ -29,8 +29,7 @@
 # define OLN_CORE_CONCEPT_POINT_SET_HH
 
 # include <ostream>
-# include <oln/core/equipment.hh>
-# include <oln/core/point.hh>
+# include <oln/core/concept/point.hh>
 
 
 namespace oln
