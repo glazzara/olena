@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Copyright (C) 2001, 2002, 2003, 2004, 2006, 2007 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -52,38 +52,38 @@ namespace oln
 
     neighb2d mk_c4()
     {
-      neighb2d the_;
-      the_
-	.add(dpoint2d(0, 1))
-	.add(dpoint2d(1, 0));
-      return the_;
+      neighb2d tmp;
+      tmp
+	.take(dpoint2d(0, 1))
+	.take(dpoint2d(1, 0));
+      return tmp;
     }
 
     neighb2d mk_c8()
     {
-      neighb2d the_;
-      the_
-	.add(dpoint2d(0, 1))
-	.add(dpoint2d(1,-1))
-	.add(dpoint2d(1, 0))
-	.add(dpoint2d(1, 1));
-      return the_;
+      neighb2d tmp;
+      tmp
+	.take(dpoint2d(0, 1))
+	.take(dpoint2d(1,-1))
+	.take(dpoint2d(1, 0))
+	.take(dpoint2d(1, 1));
+      return tmp;
     }
 
     neighb2d mk_c2_row()
     {
-      neighb2d the_;
-      the_
-	.add(dpoint2d(0, 1));
-      return the_;
+      neighb2d tmp;
+      tmp
+	.take(dpoint2d(0, 1));
+      return tmp;
     }
 
     neighb2d mk_c2_col()
     {
-      neighb2d the_;
-      the_
-	.add(dpoint2d(1, 0));
-      return the_;
+      neighb2d tmp;
+      tmp
+	.take(dpoint2d(1, 0));
+      return tmp;
     }
 
 # endif

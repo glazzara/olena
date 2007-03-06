@@ -102,7 +102,7 @@ namespace oln
     // FIXME: ...
 
     template <typename Exact>
-    struct default_case_< Image_pw_accessibility, Exact >
+    struct case_< Image_pw_accessibility, Exact,  3 >
       :
       where_< mlc::eq_< stc_get_type(psite), stc_get_type(point) > >
     {

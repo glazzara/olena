@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,122 +28,80 @@
 #ifndef OLN_CORE_GEN_WINDOW_HH
 # define OLN_CORE_GEN_WINDOW_HH
 
-# include <set>
-# include <vector>
-# include <mlc/assert.hh>
-# include <oln/core/abstract/dpoint.hh>
-# include <oln/core/abstract/window.hh>
+# include <oln/core/internal/dpoints_impl.hh>
+# include <oln/core/concept/window.hh>
 
 
 namespace oln
 {
 
+
   // Fwd decl.
-  template <typename dpoint> class window_;
+  template <typename Dp> class window_;
 
 
-  template <typename dpoint>
-  struct set_super_type< window_<dpoint> >
+  // Super type.
+  template <typename Dp>
+  struct super_trait_< window_<Dp> >
   {
-    typedef abstract::window< window_<dpoint> > ret;
+    typedef window_<Dp> current__;
+    typedef Window<current__> ret;
   };
 
 
-  template <typename dpoint>
-  struct vtypes< window_<dpoint> >
+  /// Virtual types.
+  template <typename Dp>
+  struct vtypes< window_<Dp> >
   {
-    typedef oln_vtype(dpoint, grid) grid_type;
+    typedef stc_type(Dp, grid) grid;
   };
 
 
-  /// Abstract forward dpoint iterator class.
-  template <typename dpoint>
-  class window_ : public abstract::window< window_<dpoint> >,
-		  private mlc::assert_< mlc_is_a(dpoint, abstract::dpoint) >
-  {
-    typedef window_<dpoint> self_t;
+  /// Generic classical windoworhood class.
 
+  template <typename Dp>
+  class window_ : public Window< window_<Dp> >,
+		  public internal::dpoints_impl_<Dp>
+  {
   public:
     
     window_();
 
-    window_<dpoint>& add(const dpoint& dp);
+    window_<Dp>& take(const Dp& dp);
 
-    template <typename D>
-    window_<dpoint>& add(const abstract::dpoint<D>& dp);
+    window_<Dp> impl_op_unary_minus_() const;
 
-    dpoint dp(unsigned i) const;
+  }; // end of class oln::window_<Dp>
 
-    unsigned card() const;
-
-    bool impl_is_valid() const;
-
-  protected:
-
-    std::set<dpoint>    s_;
-    std::vector<dpoint> v_;
-
-    void update_();
-
-  }; // end of class oln::window_<dpoint>
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename dpoint>
-  window_<dpoint>::window_()
+  template <typename Dp>
+  window_<Dp>::window_()
   {
   }
 
-  template <typename dpoint>
-  window_<dpoint>&
-  window_<dpoint>::add(const dpoint& dp)
+  template <typename Dp>
+  window_<Dp>&
+  window_<Dp>::take(const Dp& dp)
   {
-    s_.insert(dp);
-    update_();
+    this->take_( dp);
     return *this;
   }
 
-  template <typename dpoint>
-  template <typename D>
-  window_<dpoint>&
-  window_<dpoint>::add(const abstract::dpoint<D>& dp)
+  template <typename Dp>
+  window_<Dp>
+  window_<Dp>::impl_op_unary_minus_() const
   {
-    return this->add(dp.exact());
-  }
-
-  template <typename dpoint>
-  unsigned
-  window_<dpoint>::card() const
-  {
-    return v_.size();
-  }
-
-  template <typename dpoint>
-  dpoint
-  window_<dpoint>::dp(unsigned i) const
-  {
-    precondition(i < v_.size());
-    return v_[i];
-  }
-
-  template <typename dpoint>
-  bool
-  window_<dpoint>::impl_is_valid() const
-  {
-    return v_.size() != 0;
-  }
-
-  template <typename dpoint>
-  void
-  window_<dpoint>::update_()
-  {
-    v_.clear();
-    std::copy(s_.begin(), s_.end(),
-	      std::back_inserter(v_));
+    window_<Dp> tmp;
+    for (unsigned i = 0; i < this->size(); ++i)
+      tmp.take(- this->v_[i]);
+    return tmp;
   }
 
 # endif
+  
 
 } // end of namespace oln
 

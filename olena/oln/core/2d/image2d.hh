@@ -46,7 +46,6 @@ namespace oln
   struct vtypes< image2d<T> >
   {
     typedef point2d point;
-    typedef point   psite;
 
     typedef int      coord;
     typedef unsigned index;
@@ -65,17 +64,17 @@ namespace oln
   struct super_trait_< image2d<T> >
   {
     typedef image2d<T> current;
-    typedef internal::image_base_<current> ret;
+    typedef internal::plain_primitive_image_<current> ret;
   };
 
 
   /// General 2D image class.
 
   template <typename T>
-  class image2d : public internal::image_base_< image2d<T> >
+  class image2d : public internal::plain_primitive_image_< image2d<T> >
   {
     typedef image2d<T> current;
-    typedef internal::image_base_<current> super;
+    typedef internal::plain_primitive_image_<current> super;
   public:
     stc_using(data);
 

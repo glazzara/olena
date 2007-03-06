@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
+// Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -29,118 +29,64 @@
 #ifndef OLN_CORE_GEN_NEIGHB_HH
 # define OLN_CORE_GEN_NEIGHB_HH
 
-# include <set>
-# include <vector>
-# include <oln/core/neighborhood_entry.hh>
-# include <oln/core/abstract/dpoint.hh>
+# include <oln/core/internal/dpoints_impl.hh>
+# include <oln/core/concept/neighborhood.hh>
 
 
 namespace oln
 {
 
 
-  // Forward declaration.
-  template <typename dpoint> class neighb_;
+  // Fwd decl.
+  template <typename Dp> class neighb_;
 
 
-  // Super type declaration.
-  template <typename dpoint>
-  struct set_super_type< neighb_<dpoint> >
+  // Super type.
+  template <typename Dp>
+  struct super_trait_< neighb_<Dp> >
   {
-    typedef neighb_<dpoint> self_t;
-    typedef neighborhood_entry<self_t> ret;
+    typedef neighb_<Dp> current__;
+    typedef Neighborhood<current__> ret;
   };
 
 
-  /// Virtual types associated to oln::neighb_<dpoint>.
-  template <typename dpoint>
-  struct vtypes< neighb_<dpoint> >
+  /// Virtual types.
+  template <typename Dp>
+  struct vtypes< neighb_<Dp> >
   {
-    typedef oln_vtype(dpoint, grid) grid_type;
+    typedef stc_type(Dp, grid) grid;
   };
 
 
-  struct FIXME_ERR;
+  /// Generic classical neighborhood class.
 
-
-  /// Abstract forward dpoint iterator class.
-  template <typename dpoint>
-  class neighb_ : public neighborhood_entry< neighb_<dpoint> >,
-		  private mlc::assert_< mlc_is_a(dpoint, abstract::dpoint), FIXME_ERR >
+  template <typename Dp>
+  class neighb_ : public Neighborhood< neighb_<Dp> >,
+		  public internal::dpoints_impl_<Dp>
   {
-    typedef neighb_<dpoint> self_t;
-    typedef neighborhood_entry<self_t> super_t;
-
   public:
     
     neighb_();
 
-    neighb_<dpoint>& add(const dpoint& dp);
+    neighb_<Dp>& take(const Dp& dp);
 
-    template <typename D>
-      neighb_<dpoint>& add(const abstract::dpoint<D>& dp);
-
-    unsigned card() const;
-
-    dpoint dp(unsigned i) const;
-
-    // void print(std::ostream& ostr) const;
-    // friend std::ostream& operator<<(std::ostream& ostr, const neighb_<dpoint>& nbh);
-
-  protected:
-
-    std::set<dpoint>    s_;
-    std::vector<dpoint> v_;
-
-    void update_();
-
-  }; // end of class oln::neighb_<dpoint>
+  }; // end of class oln::neighb_<Dp>
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-
-  template <typename dpoint>
-  neighb_<dpoint>::neighb_()
+  template <typename Dp>
+  neighb_<Dp>::neighb_()
   {
   }
 
-  template <typename dpoint>
-  neighb_<dpoint>& neighb_<dpoint>::add(const dpoint& dp)
+  template <typename Dp>
+  neighb_<Dp>& neighb_<Dp>::take(const Dp& dp)
   {
-    s_.insert(dp);
-    s_.insert(-dp);
-    update_();
+    this->take_( dp);
+    this->take_(-dp);
     return *this;
-  }
-
-  template <typename dpoint>
-  template <typename D>
-  neighb_<dpoint>& neighb_<dpoint>::add(const abstract::dpoint<D>& dp)
-  {
-    return this->add(dp.exact());
-  }
-
-  template <typename dpoint>
-  unsigned neighb_<dpoint>::card() const
-  {
-    return v_.size();
-  }
-
-  template <typename dpoint>
-  dpoint neighb_<dpoint>::dp(unsigned i) const
-  {
-    precondition(i < v_.size());
-    return v_[i];
-  }
-
-  template <typename dpoint>
-  void neighb_<dpoint>::update_()
-  {
-    v_.clear();
-    std::copy(s_.begin(), s_.end(),
-	      std::back_inserter(v_));
   }
 
 # endif

@@ -1,5 +1,39 @@
 2007-03-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update windows and neighborhoods + remove obsolete files.
+
+	* oln/core/abstract/window.hh: Rename as...
+	* oln/core/concept/window.hh: ...this and update.
+	* oln/core/abstract/neighborhood.hh: Rename as...
+	* oln/core/concept/neighborhood.hh: ...this and update.
+	* oln/core/gen/fwd_qiter_win.hh: Rename as...
+	* oln/core/gen/dpoints_piter.hh: ...this and update.
+	* oln/core/internal/dpoints_impl.hh: New.
+	* oln/core/2d/neighb2d.hh: Update.
+	* oln/core/internal/image_base.hh (plain_primitive_image_): New.
+	* oln/core/2d/image2d.hh (image2d): Inherit from plain_primitive_image_.
+	* oln/core/2d/window2d.hh: Update
+	(mk_square): New.
+	* oln/core/gen/neighb.hh: Update.
+	* oln/core/internal/image_selectors.hh: Fix.
+	* oln/core/internal/dpoint_base.hh (include): Fix.
+
+	* oln/core/type.hh,
+	* oln/core/typedefs.hh,
+	* oln/core/macros.hh,
+	* oln/core/neighborhood_entry.hh,
+	* oln/core/gen/bkd_qiter_win.hh,
+	* oln/core/gen/grid.hh,
+	* oln/core/gen/topo_add_isubset.hh,
+	* oln/core/gen/topo_bbox.hh,
+	* oln/core/gen/fwd_niter_neighb.hh,
+	* oln/core/gen/topo_lbbox.hh,
+	* oln/core/gen/bkd_niter_neighb.hh,
+	* oln/core/gen/topo_add_nbh.hh,
+	* oln/core/internal/topology_morpher.hh: Remove.
+
+2007-03-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Extend image selectors and add image2d type.
 
 	* core/concept/image.hh (doc): New.

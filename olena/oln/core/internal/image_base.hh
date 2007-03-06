@@ -33,6 +33,7 @@
 # include <oln/core/internal/utils.hh>
 # include <oln/core/gen/box.hh>
 # include <oln/core/gen/image_pset_piter.hh>
+# include <oln/core/gen/dpoints_piter.hh>
 
 
 
@@ -44,7 +45,10 @@ namespace oln
   namespace internal
   {
     template <typename Exact> struct image_base_;
+
     template <typename Exact> struct primitive_image_;
+    template <typename Exact> struct plain_primitive_image_;
+
     template <typename Exact> struct image_morpher_;
     template <typename Exact> struct single_image_morpher_;
     template <typename Exact> struct multiple_image_morpher_;
@@ -63,6 +67,12 @@ namespace oln
   struct super_trait_< internal::primitive_image_<Exact> >
   {
     typedef internal::image_base_<Exact> ret;
+  };
+
+  template <typename Exact>
+  struct super_trait_< internal::plain_primitive_image_<Exact> >
+  {
+    typedef internal::primitive_image_<Exact> ret;
   };
 
   template <typename Exact>
@@ -100,17 +110,13 @@ namespace oln
 
     // FIXME: Uncomment below!
     // typedef stc::abstract output;
-    typedef stc::abstract data;
 
-    // FIXME: Temporary hack:
-    typedef mlc::none     qiter;
-    typedef mlc::none fwd_qiter;
-    typedef mlc::none bkd_qiter;
+    typedef stc::abstract data;
 
     // Deferred.
 
-    typedef stc_deferred(point) point__;
-    typedef stc_deferred(pset)  pset__;
+    typedef stc_deferred(point)     point__;
+    typedef stc_deferred(pset)      pset__;
 
     // Final.
 
@@ -119,14 +125,24 @@ namespace oln
     typedef stc::final< stc_type(point__, grid) >     grid;
     typedef stc::final< typename pset__::fwd_piter >  fwd_piter;
     typedef stc::final< typename pset__::bkd_piter >  bkd_piter;
-    typedef stc::final< fwd_piter >                   piter;
-
+    typedef fwd_piter                                     piter;
   };
 
 
   template <typename Exact>
   struct vtypes< internal::primitive_image_<Exact> >
   {
+  };
+
+  template <typename Exact>
+  struct vtypes< internal::plain_primitive_image_<Exact> >
+  {
+    typedef stc_deferred(point) point__;
+
+    typedef stc::final< point__ >                      psite;
+    typedef stc::final< dpoints_fwd_piter_<point__> >  fwd_qiter;
+    typedef stc::final< dpoints_bkd_piter_<point__> >  bkd_qiter;
+    typedef fwd_qiter                                      qiter;
   };
 
   template <typename Exact>
@@ -182,6 +198,16 @@ namespace oln
     {
     protected:
       primitive_image_();
+    };
+
+
+    /// plain_primitive_image_<Exact>
+
+    template <typename Exact>
+    class plain_primitive_image_ : public primitive_image_<Exact>
+    {
+    protected:
+      plain_primitive_image_();
     };
 
 
@@ -258,6 +284,13 @@ namespace oln
 
     template <typename Exact>
     primitive_image_<Exact>::primitive_image_()
+    {
+    }
+
+    /// plain_primitive_image_<Exact>
+
+    template <typename Exact>
+    plain_primitive_image_<Exact>::plain_primitive_image_()
     {
     }
 

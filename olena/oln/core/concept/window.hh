@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,43 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_MACROS_HH
-# define OLN_CORE_MACROS_HH
+#ifndef OLN_CORE_CONCEPT_WINDOW_HH
+# define OLN_CORE_CONCEPT_WINDOW_HH
+
+# include <oln/core/equipment.hh>
 
 
-# include <oln/core/typedefs.hh>
+namespace oln
+{
 
+  /// Concept-class "Window".
 
-# define oln_vtype_(OlnType, Alias) \
-   stc_vtype_(oln, OlnType, Alias)
+  template <typename Exact>
+  struct Window : public Any<Exact>
+  {
+    stc_typename(grid);
 
+  protected:
+    Window();
 
-# define oln_vtype(OlnType, Alias) \
-   stc_vtype(oln, OlnType, Alias)
-
-# define oln_find_vtype(OlnType, Alias) \
-   stc_find_vtype(oln, OlnType, Alias)
-
-
-
-# define oln_deferred_vtype(OlnType, Alias) \
-   stc_deferred_vtype(oln, OlnType, Alias)
-
-# define oln_deduce_deferred_vtype(OlnType, Alias1, Alias2) \
-   stc_deduce_deferred_vtype(oln, OlnType, Alias1, Alias2)
-
-
-# define oln_deduce_vtype(OlnType, Alias1, Alias2) \
-   stc_deduce_vtype(oln, OlnType, Alias1, Alias2)
-
-# define oln_find_deduce_vtype(OlnType, Alias1, Alias2) \
-   stc_find_deduce_vtype(oln, OlnType, Alias1, Alias2)
+  }; // end of oln::Window<Exact>
 
 
 
-#define oln_virtual_typedef(Typedef) \
-  typedef oln_vtype(E, Typedef) Typedef
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename Exact>
+  Window<Exact>::Window()
+  {
+  }
+
+# endif
+
+} // end of namespace oln
 
 
-
-#endif // ! OLN_CORE_MACROS_HH
+#endif // ! OLN_CORE_CONCEPT_WINDOW_HH

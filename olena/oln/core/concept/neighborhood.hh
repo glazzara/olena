@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,58 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_NEIGHBORHOOD_ENTRY_HH
-# define OLN_CORE_NEIGHBORHOOD_ENTRY_HH
+#ifndef OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
+# define OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
 
-# include <oln/core/abstract/entry.hh>
-# include <oln/core/abstract/neighborhood.hh>
-
+# include <oln/core/equipment.hh>
 
 
 namespace oln
 {
 
-  /// Fwd decl.
-  template <typename E> struct neighborhood_entry;
+  /// Concept-class "Neighborhood".
 
-
-  template <typename E>
-  struct set_super_type< neighborhood_entry<E> >
+  template <typename Exact>
+  struct Neighborhood : public Any<Exact>
   {
-    typedef mlc::none ret;
-  };
+    stc_typename(grid);
 
-
-  /// Virtual types associated to neighborhood_entry<E>.
-  template <typename E>
-  struct vtypes< neighborhood_entry<E> >
-  {
-    typedef stc::abstract grid_type;
-  };
-
-
-  /// Entry class for point sets: neighborhood_entry<E> is an alias for
-  /// entry< abstract::neighborhood, E>.
-
-  template <typename E>
-  struct neighborhood_entry : public entry< abstract::neighborhood, E>
-  {
   protected:
-    neighborhood_entry();
-  };
+    Neighborhood();
+
+  }; // end of oln::Neighborhood<Exact>
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename E>
-  neighborhood_entry<E>::neighborhood_entry()
+  template <typename Exact>
+  Neighborhood<Exact>::Neighborhood()
   {
   }
 
 # endif
 
-
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_NEIGHBORHOOD_ENTRY_HH
+#endif // ! OLN_CORE_CONCEPT_NEIGHBORHOOD_HH

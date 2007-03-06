@@ -31,6 +31,7 @@
 
 # include <xtd/vec.hh>
 # include <mlc/int.hh>
+# include <oln/core/internal/point_base.hh>
 # include <oln/core/concept/dpoint.hh>
 
 

@@ -28,10 +28,49 @@
 #ifndef OLN_CORE_2D_WINDOW2D_HH
 # define OLN_CORE_2D_WINDOW2D_HH
 
-// Headers required for the complete definition of oln::window2d
-// (i.e., oln::window_<dpoint2d>).
-# include <oln/core/2d/aliases.hh>
-# include <oln/core/2d/dpoint2d.hh>
 # include <oln/core/gen/window.hh>
+# include <oln/core/2d/dpoint2d.hh>
+
+
+namespace oln
+{
+
+  typedef window_<dpoint2d> window2d;
+
+
+  window2d mk_square(unsigned odd_len);
+  
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  window2d mk_square(unsigned odd_len)
+  {
+    precondition(odd_len % 2 == 1);
+    window2d tmp;
+    int half_len = odd_len / 2;
+    for (int drow = - half_len; drow <= half_len; ++drow)
+      for (int dcol = - half_len; dcol <= half_len; ++dcol)
+	tmp.take(dpoint2d(drow, dcol));
+    return tmp;
+  }
+
+# endif
+
+
+  extern const window2d win3x3;
+  extern const window2d win5x5;
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  const window2d win3x3 = mk_square(3);
+  const window2d win5x5 = mk_square(5);
+
+# endif
+
+
+} // end of namespace oln
+
 
 #endif // ! OLN_CORE_2D_WINDOW2D_HH
