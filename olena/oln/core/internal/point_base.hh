@@ -75,6 +75,8 @@ namespace oln
       stc_using(dim);
       stc_using(dpoint);
 
+      using super::n;
+
       coord  operator[](unsigned i) const;
       coord& operator[](unsigned i);
 

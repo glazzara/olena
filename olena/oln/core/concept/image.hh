@@ -412,21 +412,21 @@ namespace oln
   typename Fast_Image<Exact>::rvalue
   Fast_Image<Exact>::operator[](typename Fast_Image<Exact>::index i) const
   {
-    return exact(this)->impl_index_read(p);
+    return exact(this)->impl_index_read(i);
   }
 
   template <typename Exact>
   typename Fast_Image<Exact>::lvalue
   Fast_Image<Exact>::operator[](typename Fast_Image<Exact>::index i)
   {
-    return exact(this)->impl_index_read_write(p);
+    return exact(this)->impl_index_read_write(i);
   }
 
   template <typename Exact>
   std::size_t
   Fast_Image<Exact>::npoints() const
   {
-    return exact(this)->impl_npoints(p);
+    return exact(this)->impl_npoints();
   }
 
   template <typename Exact>
@@ -454,7 +454,6 @@ namespace oln
   typename Value_Wise_Mutable_Image<Exact>::lvaluep
   Value_Wise_Mutable_Image<Exact>::value(const typename Value_Wise_Accessible_Image<Exact>::vsite& v)
   {
-    return exact(this)->impl_value_read_write(p);
   }
 
   template <typename Exact>
@@ -503,7 +502,7 @@ namespace oln
   bool
   Point_Wise_Accessible_Image_2D<Exact>::impl_has_at(coord row, coord col) const
   {
-    Point_Wise_Accessible_Image_2D<Exact>::point p(row, col);
+    typename Point_Wise_Accessible_Image_2D<Exact>::point p(row, col);
     return this->has(p);
   }
 
@@ -511,7 +510,7 @@ namespace oln
   typename Point_Wise_Accessible_Image_2D<Exact>::rvalue
   Point_Wise_Accessible_Image_2D<Exact>::impl_at(coord row, coord col) const
   {
-    Point_Wise_Accessible_Image_2D<Exact>::point p(row, col);
+    typename Point_Wise_Accessible_Image_2D<Exact>::point p(row, col);
     return this->at(p);
   }
 
@@ -533,7 +532,7 @@ namespace oln
   typename Point_Wise_Mutable_Image_2D<Exact>::lvalue
   Point_Wise_Mutable_Image_2D<Exact>::impl_at(coord row, coord col)
   {
-    Point_Wise_Mutable_Image_2D<Exact>::point p(row, col);
+    typename Point_Wise_Mutable_Image_2D<Exact>::point p(row, col);
     return this->at(p);
   }
 

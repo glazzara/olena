@@ -228,7 +228,7 @@ namespace oln
   void
   dpoints_fwd_piter_<P>::impl_start()
   {
-    i_ = 0;
+    this->i_ = 0;
     this->update_p_();
   }
 
@@ -236,7 +236,7 @@ namespace oln
   void
   dpoints_fwd_piter_<P>::impl_next()
   {
-    if (++i_ == n_)
+    if (++this->i_ == this->n_)
       return;
     this->update_p_();
   }
@@ -256,7 +256,7 @@ namespace oln
   void
   dpoints_bkd_piter_<P>::impl_start()
   {
-    i_ = n_ - 1;
+    this->i_ = this->n_ - 1;
     this->update_p_();
   }
 
@@ -264,12 +264,12 @@ namespace oln
   void
   dpoints_bkd_piter_<P>::impl_next()
   {
-    if (i_ == 0)
+    if (this->i_ == 0)
       {
-	i_ = n_;
+	this->i_ = this->n_;
 	return;
       }
-    --i_;
+    --this->i_;
     this->update_p_();
   }
 
