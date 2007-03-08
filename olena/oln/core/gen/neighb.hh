@@ -30,7 +30,7 @@
 # define OLN_CORE_GEN_NEIGHB_HH
 
 # include <oln/core/internal/dpoints_impl.hh>
-# include <oln/core/concept/neighborhood.hh>
+# include <oln/core/internal/neighborhood_base.hh>
 
 
 namespace oln
@@ -46,7 +46,7 @@ namespace oln
   struct super_trait_< neighb_<Dp> >
   {
     typedef neighb_<Dp> current__;
-    typedef Neighborhood<current__> ret;
+    typedef internal::neighborhood_base_<current__> ret;
   };
 
 
@@ -54,14 +54,14 @@ namespace oln
   template <typename Dp>
   struct vtypes< neighb_<Dp> >
   {
-    typedef stc_type(Dp, grid) grid;
+    typedef stc_type(Dp, point) point;
   };
 
 
   /// Generic classical neighborhood class.
 
   template <typename Dp>
-  class neighb_ : public Neighborhood< neighb_<Dp> >,
+  class neighb_ : public internal::neighborhood_base_< neighb_<Dp> >,
 		  public internal::dpoints_impl_<Dp>
   {
   public:

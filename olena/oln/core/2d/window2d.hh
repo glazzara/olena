@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,12 +30,13 @@
 
 # include <oln/core/gen/window.hh>
 # include <oln/core/2d/dpoint2d.hh>
+# include <oln/core/2d/aliases.hh>
 
 
 namespace oln
 {
 
-  typedef window_<dpoint2d> window2d;
+  // FIXME: window2d should be an actual type, not an alias...
 
 
   window2d mk_square(unsigned odd_len);

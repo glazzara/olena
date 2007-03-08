@@ -48,6 +48,8 @@ namespace oln
     typedef point              psite;
     typedef Ps                 pset;
 
+    typedef typename point::coord coord;
+
     typedef T                  value;
     typedef const T&           rvalue;
 

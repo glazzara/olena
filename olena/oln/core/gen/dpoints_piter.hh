@@ -29,8 +29,6 @@
 # define OLN_CORE_GEN_DPOINTS_PITER_HH
 
 # include <oln/core/concept/iterator_on_points.hh>
-# include <oln/core/concept/window.hh>
-# include <oln/core/concept/neighborhood.hh>
 # include <oln/core/internal/dpoints_impl.hh>
 
 
@@ -39,8 +37,8 @@ namespace oln
 
 
   /// Fwd decls.
-  template <typename P> struct dpoints_fwd_piter_;
-  template <typename P> struct dpoints_bkd_piter_;
+  template <typename P> class dpoints_fwd_piter_;
+  template <typename P> class dpoints_bkd_piter_;
 
 
   // Super types.

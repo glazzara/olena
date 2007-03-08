@@ -64,9 +64,9 @@ namespace oln
     class point2d_ : public point_base_<Exact>
     {
       typedef point_base_<Exact> super;
-      stc_using(coord);
 
     public:
+      stc_using(coord);
 
       coord  row() const;
       coord& row();

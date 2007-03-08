@@ -33,7 +33,6 @@
 # include <oln/core/internal/utils.hh>
 # include <oln/core/gen/box.hh>
 # include <oln/core/gen/image_pset_piter.hh>
-# include <oln/core/gen/dpoints_piter.hh>
 
 
 
@@ -139,10 +138,7 @@ namespace oln
   {
     typedef stc_deferred(point) point__;
 
-    typedef stc::final< point__ >                      psite;
-    typedef stc::final< dpoints_fwd_piter_<point__> >  fwd_qiter;
-    typedef stc::final< dpoints_bkd_piter_<point__> >  bkd_qiter;
-    typedef fwd_qiter                                      qiter;
+    typedef stc::final< point__ > psite;
   };
 
   template <typename Exact>

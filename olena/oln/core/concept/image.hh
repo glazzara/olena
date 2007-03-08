@@ -195,9 +195,6 @@ namespace oln
   {
     stc_using_from(Image, point);
 
-    stc_typename(qiter);
-    stc_typename(fwd_qiter);
-    stc_typename(bkd_qiter);
     bool has(const point& p) const;
 
   protected:
@@ -454,6 +451,7 @@ namespace oln
   typename Value_Wise_Mutable_Image<Exact>::lvaluep
   Value_Wise_Mutable_Image<Exact>::value(const typename Value_Wise_Accessible_Image<Exact>::vsite& v)
   {
+    return exact(this)->impl_value_read_write(v);
   }
 
   template <typename Exact>

@@ -88,4 +88,8 @@ namespace oln
 } // end of namespace oln
 
 
+// point2d goes with dpoint2d so:
+# include <oln/core/2d/dpoint2d.hh>
+
+
 #endif // ! OLN_CORE_2D_POINT2D_HH

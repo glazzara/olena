@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
+// Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -35,29 +35,36 @@ namespace oln
 
   /// Forward declarations.
   /// \{
+
+  template <typename P> class box_;
+  template <typename P> class box_fwd_piter_;
+  template <typename P> class box_bkd_piter_;
+
   template <typename D> class neighb_;
   template <typename D> class window_;
-  template <typename P> class topo_lbbox_;
-  template <typename P> class fwd_piter_bbox_;
-  template <typename P> class bkd_piter_bbox_;
-  template <typename P> class fwd_qiter_win_;
-  template <typename P> class bkd_qiter_win_;
+  template <typename P> class dpoints_fwd_piter_;
+  template <typename P> class dpoints_bkd_piter_;
+
   /// \}
 
 
   /// Aliases.
   /// \{
 
-  typedef neighb_<dpoint2d> neighb2d;
-  typedef window_<dpoint2d> window2d;
+  typedef box_<point2d>                box2d;
+  typedef box_fwd_piter_<point2d>      piter2d;
+  typedef box_fwd_piter_<point2d>      fwd_piter2d;
+  typedef box_bkd_piter_<point2d>      bkd_piter2d;
 
-  typedef topo_lbbox_<point2d> topo2d;
+  typedef neighb_<dpoint2d>            neighb2d;
+  typedef dpoints_fwd_piter_<point2d>  niter2d;
+  typedef dpoints_fwd_piter_<point2d>  fwd_niter2d;
+  typedef dpoints_bkd_piter_<point2d>  bkd_niter2d;
 
-  typedef fwd_piter_bbox_<point2d> fwd_piter2d;
-  typedef bkd_piter_bbox_<point2d> bkd_piter2d;
-
-  typedef fwd_qiter_win_<point2d> fwd_qiter2d;
-  typedef bkd_qiter_win_<point2d> bkd_qiter2d;
+  typedef window_<dpoint2d>            window2d;
+  typedef dpoints_fwd_piter_<point2d>  qiter2d;
+  typedef dpoints_fwd_piter_<point2d>  fwd_qiter2d;
+  typedef dpoints_bkd_piter_<point2d>  bkd_qiter2d;
 
   /// \}
 

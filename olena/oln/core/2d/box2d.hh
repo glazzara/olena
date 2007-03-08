@@ -30,12 +30,13 @@
 
 # include <oln/core/gen/box.hh>
 # include <oln/core/2d/point2d.hh>
+# include <oln/core/2d/aliases.hh>
 
 
 namespace oln
 {
 
-  typedef box_<point2d> box2d;
+  // FIXME: box2d should be an actual type, not an alias...
 
 } // end of namespace oln
 

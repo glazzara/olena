@@ -1,3 +1,39 @@
+2007-03-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Move the responsibility of iteration on window points from
+	images to windows.
+
+	* ChangeLog: Add missing former entry.
+	* core/concept/image.hh (value): Add missing code.
+	(qiter, fwd_qiter, bkd_qiter): Move to...
+	* core/concept/window.hh: ...here.
+	(point): New virtual type.
+	* core/concept/neighborhood.hh (point): Likewise.
+	* core/2d/aliases.hh,
+	* core/2d/neighb2d.hh,
+	* core/2d/dpoint2d.hh,
+	* core/2d/window2d.hh,
+	* core/2d/box2d.hh: Update.
+	* core/gen/dpoints_piter.hh (include): Remove useless ones.
+	* oln/core/internal/neighborhood_base.hh: New.
+	* core/gen/neighb.hh: Update inheritance.
+	* oln/core/internal/window_base.hh: New.
+	* core/gen/window.hh: Update inheritance.
+	(vtypes): Update.
+	* core/internal/point_set_std_based.hh: Fix missing return.
+	* core/internal/image_base.hh: Update.
+	* core/internal/point2d.hh: Fix wrong visibility.
+
+2007-03-07  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix name lookup for attribute of super classes.
+
+	* olena/oln/core/concept/image.hh,
+	* olena/oln/core/gen/dpoints_piter.hh,
+	* olena/oln/core/internal/point_base.hh,
+	* olena/oln/core/internal/dpoint_base.hh: Fix name lookup
+	for attribute of super classes.
+
 2007-03-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update windows and neighborhoods + remove obsolete files.

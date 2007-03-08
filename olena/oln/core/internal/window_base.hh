@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,40 +25,72 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
-# define OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
+#ifndef OLN_CORE_INTERNAL_WINDOW_BASE_HH
+# define OLN_CORE_INTERNAL_WINDOW_BASE_HH
 
-# include <oln/core/equipment.hh>
+# include <oln/core/concept/window.hh>
 
 
 namespace oln
 {
 
-  /// Concept-class "Neighborhood".
 
+  // Fwd decl.
+  namespace internal { template <typename Exact> class window_base_; }
+
+
+  // Super type.
   template <typename Exact>
-  struct Neighborhood : public Any<Exact>
+  struct super_trait_< internal::window_base_<Exact> >
   {
-    stc_typename(grid);
-    stc_typename(point);
+    typedef Window<Exact> ret;
+  };
 
-  protected:
-    Neighborhood();
 
-  }; // end of oln::Neighborhood<Exact>
+  /// Virtual types.
+  template <typename Exact>
+  struct vtypes< internal::window_base_<Exact> >
+  {
+    typedef stc::abstract point;
+    typedef stc::abstract fwd_qiter;
+    typedef stc::abstract bkd_qiter;
+
+    typedef stc_deferred(point)     point__;
+    typedef stc_deferred(fwd_qiter) fwd_qiter__;
+
+    typedef stc::final< stc_type(point__, grid) >  grid;
+    typedef stc::final< fwd_qiter__ >              qiter;
+  };
+
+
+  namespace internal
+  {
+
+    /// Base class for implementation of windows class.
+
+    template <typename Exact>
+    class window_base_ : public Window<Exact>
+    {
+    protected:
+      window_base_();
+
+    }; // end of class oln::window_base_<Exact>
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename Exact>
-  Neighborhood<Exact>::Neighborhood()
-  {
-  }
+    template <typename Exact>
+    window_base_<Exact>::window_base_()
+    {
+    }
 
 # endif
+  
+
+  } // end of namespace oln::internal
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
+#endif // ! OLN_CORE_INTERNAL_WINDOW_BASE_HH

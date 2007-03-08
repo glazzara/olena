@@ -28,8 +28,9 @@
 #ifndef OLN_CORE_GEN_WINDOW_HH
 # define OLN_CORE_GEN_WINDOW_HH
 
+# include <oln/core/internal/window_base.hh>
 # include <oln/core/internal/dpoints_impl.hh>
-# include <oln/core/concept/window.hh>
+# include <oln/core/gen/dpoints_piter.hh>
 
 
 namespace oln
@@ -45,7 +46,7 @@ namespace oln
   struct super_trait_< window_<Dp> >
   {
     typedef window_<Dp> current__;
-    typedef Window<current__> ret;
+    typedef internal::window_base_<current__> ret;
   };
 
 
@@ -53,14 +54,16 @@ namespace oln
   template <typename Dp>
   struct vtypes< window_<Dp> >
   {
-    typedef stc_type(Dp, grid) grid;
+    typedef stc_type(Dp, point)       point;
+    typedef dpoints_fwd_piter_<point> fwd_qiter;
+    typedef dpoints_bkd_piter_<point> bkd_qiter;
   };
 
 
   /// Generic classical windoworhood class.
 
   template <typename Dp>
-  class window_ : public Window< window_<Dp> >,
+  class window_ : public internal::window_base_< window_<Dp> >,
 		  public internal::dpoints_impl_<Dp>
   {
   public:

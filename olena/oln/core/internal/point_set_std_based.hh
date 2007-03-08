@@ -109,6 +109,7 @@ namespace oln
       for_all(i)
 	ostr << i.to_point() << ' ';
       ostr << "}";
+      return ostr;
     }
 
 

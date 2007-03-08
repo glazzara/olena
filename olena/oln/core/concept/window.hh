@@ -29,6 +29,7 @@
 # define OLN_CORE_CONCEPT_WINDOW_HH
 
 # include <oln/core/equipment.hh>
+# include <oln/core/concept/point.hh>
 
 
 namespace oln
@@ -40,6 +41,11 @@ namespace oln
   struct Window : public Any<Exact>
   {
     stc_typename(grid);
+    stc_typename(point);
+
+    stc_typename(qiter);
+    stc_typename(fwd_qiter);
+    stc_typename(bkd_qiter);
 
   protected:
     Window();
