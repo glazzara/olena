@@ -66,6 +66,7 @@ namespace oln
   stc_decl_associated_type( index );
 
   // l
+  stc_decl_associated_type( left );
   stc_decl_associated_type( lvalue );
   stc_decl_associated_type( lvaluep );
 
@@ -75,6 +76,7 @@ namespace oln
   stc_decl_associated_type( niter );
 
   // o
+  stc_decl_associated_type( oper );
   stc_decl_associated_type( output );
 
   // p
@@ -87,11 +89,15 @@ namespace oln
   stc_decl_associated_type( qiter );
 
   // r
+  stc_decl_associated_type( right );
   stc_decl_associated_type( rvalue );
   stc_decl_associated_type( rvaluep );
 
   // s
   stc_decl_associated_type( std_container );
+
+  // t
+  stc_decl_associated_type( tag );
 
   // v
   stc_decl_associated_type( value );

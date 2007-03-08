@@ -1,5 +1,30 @@
 2007-03-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add the notion of image plus neighborhood and the underlying
+	mechanism.
+
+	* oln/debug/print_nbh.hh,
+	* oln/debug/iota.hh,
+	* oln/core/concept/image_identity.hh,
+	* oln/core/gen/op.hh,
+	* oln/core/internal/op_image_plus_nbh.hh,
+	* oln/core/internal/special_op.hh: New.
+	* oln/core/concept/image.hh (fwd_niter, bkd_niter, niter): New.
+	* oln/core/concept/neighborhood.hh (category): New.
+	(include): Add op_image_plus_nbh.hh.
+	(oln_decl_op_plus): New.  Handle "Image + Neighborhood".
+	* oln/core/equipment.hh (left, right, oper, tag): New.
+	* oln/core/gen/single_value_image.hh: Fix.
+	* oln/core/internal/neighborhood_base.hh (category): New.
+	(neighborhood_base_): Fix inheritance.
+	* oln/core/internal/image_base.hh (image_extension_): New.
+	(image_base_): Add dpoint.
+	* oln/stc/scoop.hxx (vtypes, super_trait_): Add specialization
+	for const types.
+	(super_trait_): Handle error when not user-defined.
+
+2007-03-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Move the responsibility of iteration on window points from
 	images to windows.
 

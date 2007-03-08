@@ -56,6 +56,7 @@ namespace oln
 
     typedef stc_deferred(point) point__;
     typedef stc::final< stc_type(point__, grid) >  grid;
+    typedef stc::final< stc::is<Neighborhood> >    category;
   };
 
 
@@ -65,7 +66,7 @@ namespace oln
     /// Base class for implementation of neighborhoods class.
 
     template <typename Exact>
-    class neighborhood_base_ : public Neighborhood< neighb_<Exact> >
+    class neighborhood_base_ : public Neighborhood<Exact>
     {
     protected:
       neighborhood_base_();

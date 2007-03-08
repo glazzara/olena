@@ -29,10 +29,11 @@
 # define OLN_CORE_INTERNAL_IMAGE_BASE_HH
 
 # include <oln/core/internal/image_selectors.hh>
+# include <oln/core/concept/image_identity.hh>
+
 # include <oln/core/internal/tracked_ptr.hh>
 # include <oln/core/internal/utils.hh>
 # include <oln/core/gen/box.hh>
-# include <oln/core/gen/image_pset_piter.hh>
 
 
 
@@ -50,6 +51,7 @@ namespace oln
 
     template <typename Exact> struct image_morpher_;
     template <typename Exact> struct single_image_morpher_;
+    template <typename Exact> struct image_extension_;
     template <typename Exact> struct multiple_image_morpher_;
   }
 
@@ -84,6 +86,12 @@ namespace oln
   struct super_trait_< internal::single_image_morpher_<Exact> >
   {
     typedef internal::image_morpher_<Exact> ret;
+  };
+
+  template <typename Exact>
+  struct super_trait_< internal::image_extension_<Exact> >
+  {
+    typedef internal::single_image_morpher_<Exact> ret;
   };
 
   template <typename Exact>
@@ -122,6 +130,7 @@ namespace oln
     typedef stc::final< stc::is<Image> >              category;
     typedef stc::final< box_<point__> >               box;
     typedef stc::final< stc_type(point__, grid) >     grid;
+    typedef stc::final< stc_type(point__, dpoint) >   dpoint;
     typedef stc::final< typename pset__::fwd_piter >  fwd_piter;
     typedef stc::final< typename pset__::bkd_piter >  bkd_piter;
     typedef fwd_piter                                     piter;
@@ -145,12 +154,19 @@ namespace oln
   struct vtypes< internal::image_morpher_<Exact> >
   {
     typedef stc::abstract      delegatee;
+    typedef stc::abstract      behavior;
     typedef stc::not_delegated data;
   };
 
   template <typename Exact>
   struct vtypes< internal::single_image_morpher_<Exact> >
   {
+  };
+
+  template <typename Exact>
+  struct vtypes< internal::image_extension_<Exact> >
+  {
+    typedef stc::final< behavior::identity > behavior;
   };
 
   template <typename Exact>
@@ -239,6 +255,16 @@ namespace oln
     };
 
 
+    /// image_extension_<Exact>
+
+    template <typename Exact>
+    class image_extension_ : public single_image_morpher_<Exact>
+    {
+    protected:
+      image_extension_();
+    };
+
+
     /// multiple_image_morpher_<Exact>
 
     template <typename Exact>
@@ -317,6 +343,13 @@ namespace oln
 
     template <typename Exact>
     single_image_morpher_<Exact>::single_image_morpher_()
+    {
+    }
+
+    // image_extension_<Exact>
+
+    template <typename Exact>
+    image_extension_<Exact>::image_extension_()
     {
     }
 

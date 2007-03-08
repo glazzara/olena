@@ -142,6 +142,11 @@ namespace oln
 			  public automatic::get_impl<Image_with_Nbh, Exact>
   {
     stc_typename(nbh);
+
+    stc_typename(fwd_niter);
+    stc_typename(bkd_niter);
+    typedef fwd_niter niter;
+
     nbh nbhood() const;
 
   protected:

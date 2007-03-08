@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,46 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
-# define OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
+#ifndef OLN_DEBUG_IOTA_HH
+# define OLN_DEBUG_IOTA_HH
 
-# include <oln/core/equipment.hh>
-# include <oln/core/internal/op_image_plus_nbh.hh>
-
-
+# include <oln/core/concept/image.hh>
 
 
 namespace oln
 {
 
-  /// Concept-class "Neighborhood".
-
-  template <typename Exact>
-  struct Neighborhood : public Any<Exact>
+  namespace debug
   {
-    stc_typename(grid);
-    stc_typename(point);
-    stc_typename(category);
-
-  protected:
-    Neighborhood();
-
-  }; // end of oln::Neighborhood<Exact>
 
 
-  oln_decl_op_plus(Image, Neighborhood);
+    template <typename I>
+    void iota(Mutable_Image<I>& in_out)
+    {
+      typename I::value v = 0;
+      typename I::fwd_piter p(in_out.points());
+      for_all(p)
+	in_out(p) = v++;
+    }
 
 
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename Exact>
-  Neighborhood<Exact>::Neighborhood()
-  {
-  }
-
-# endif
+  } // end of namespace oln::debug
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
+#endif // ! OLN_DEBUG_IOTA_HH

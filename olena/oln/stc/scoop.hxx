@@ -56,6 +56,9 @@ namespace ERROR
 
   struct no_delegatee_declared_;
 
+  template <typename T>
+  struct super_trait_not_defined_for_;
+
 
 } /* end of namespace ERROR */
 
@@ -69,6 +72,11 @@ struct vtypes
 {
 };
 
+template <typename from_type>
+struct vtypes <const from_type> : public vtypes <from_type>
+{
+};
+
 template <typename from_type, typename type>
 struct single_vtype
 {
@@ -77,13 +85,26 @@ struct single_vtype
 
 
 
+/* super_trait_ */
 
 template <typename from_type>
 struct super_trait_;
 
 
+template <typename from_type>
+struct super_trait_ <const from_type> : super_trait_<from_type>
+{
+};
+
 template <template <class> class abstraction, typename Exact>
 struct super_trait_< abstraction<Exact> >
+{
+  typedef mlc::none ret;
+};
+
+template <typename from_type>
+struct super_trait_ :
+  mlc::abort_< ERROR::super_trait_not_defined_for_<from_type> >
 {
   typedef mlc::none ret;
 };

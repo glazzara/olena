@@ -54,11 +54,6 @@ namespace oln
     typedef const T&           rvalue;
 
     typedef internal::pair<Ps, T> data;
-
-    // FIXME: To be defined...
-    typedef mlc::none qiter;
-    typedef mlc::none fwd_qiter;
-    typedef mlc::none bkd_qiter;
   };
 
 

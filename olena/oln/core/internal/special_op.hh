@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,46 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
-# define OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
+#ifndef OLN_CORE_INTERNAL_SPECIAL_OP_HH
+# define OLN_CORE_INTERNAL_SPECIAL_OP_HH
 
-# include <oln/core/equipment.hh>
-# include <oln/core/internal/op_image_plus_nbh.hh>
-
-
+# include <oln/core/internal/image_base.hh>
 
 
 namespace oln
 {
 
-  /// Concept-class "Neighborhood".
 
-  template <typename Exact>
-  struct Neighborhood : public Any<Exact>
-  {
-    stc_typename(grid);
-    stc_typename(point);
-    stc_typename(category);
-
-  protected:
-    Neighborhood();
-
-  }; // end of oln::Neighborhood<Exact>
-
-
-  oln_decl_op_plus(Image, Neighborhood);
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename Exact>
-  Neighborhood<Exact>::Neighborhood()
-  {
+  // Fwd decls.
+  namespace internal {
+    template <typename Lcat, typename L, typename OpName, typename Rcat, typename R>
+    class special_op_;
   }
+  template <typename L, typename OpName, typename R> class op_;
 
-# endif
+
+  /// Virtual types.
+  template <typename Lcat, typename L, typename OpName, typename Rcat, typename R>
+  struct vtypes< internal::special_op_<Lcat, L, OpName, Rcat, R> >
+  /* undefined; to be specialized... */
+  ;
+
+
+  /// Super type.
+  template <typename Lcat, typename L, typename OpName, typename Rcat, typename R>
+  struct super_trait_< internal::special_op_<Lcat, L, OpName, Rcat, R> >
+  /* undefined; to be specialized... */
+  ;
+  
+  
+  namespace internal
+  {
+    
+    /// Class for result of "L op R".
+    
+    template <typename Lcat, typename L, typename OpName, typename Rcat, typename R>
+    class special_op_;
+    /* undefined; to be specialized... */
+    
+    
+  } // end of namespace oln::internal
+    
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
+#endif // ! OLN_CORE_INTERNAL_SPECIAL_OP_HH
