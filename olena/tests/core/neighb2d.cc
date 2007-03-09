@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,31 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_AUTOMATIC_IMPL_HH
-# define OLN_CORE_AUTOMATIC_IMPL_HH
+/// Test oln::neighb2d.
 
-// # include <oln/core/typedefs.hh>
+#include <oln/core/2d/image2d.hh>
+#include <oln/core/2d/neighb2d.hh>
 
 
-namespace oln
+namespace test
 {
-  namespace automatic
+
+  template <typename I>
+  unsigned run(const oln::Image_with_Nbh<I>& input)
   {
-    /* Specialize to set an automatic implementation.  */
-    template <template <class> class abstraction, typename tag, typename E>
-    class set_impl
+    oln_piter(I) p(input.points());
+    oln_niter(I) n(p, input.nbhood());
+    unsigned count = 0;
+
+    for_all(p)
     {
-    };
+      for_all(n)
+	if (input.owns_(n))
+	  ++count;
+    }
+    return count;
+  }
+}
 
-    /// Specialization of oln::automatic::get_impl saving the user
-    /// the need to specify the morpher type as tag.
-    template < template <class> class abstraction, typename E >
-    class get_impl : public set_impl< abstraction, oln_vtype(E, morpher), E >
-    {
-    };
 
-  } // end of namespace oln::automatic
-  
-} // end of namespace oln
+int main()
+{
+  using namespace oln;
 
-#endif // ! OLN_CORE_AUTOMATIC_IMPL_HH
+  image2d<bool> ima(3, 3);
+  // 2 + 3 + 2 +
+  // 3 + 4 + 3 +
+  // 2 + 3 + 2 = 24
+  std::cout << test::run(ima + c4) << std::endl;
+  assert(test::run(ima + c4) == 24);
+}

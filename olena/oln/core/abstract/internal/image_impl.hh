@@ -29,7 +29,7 @@
 # define OLN_CORE_ABSTRACT_INTERNAL_IMAGE_IMPL_HH
 
 # include <mlc/flags.hh>
-# include <oln/core/typedefs.hh>
+// # include <oln/core/typedefs.hh>
 # include <oln/core/abstract/any.hh>
 # include <oln/core/macros.hh>
 
