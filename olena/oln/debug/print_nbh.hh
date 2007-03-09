@@ -49,7 +49,8 @@ namespace oln
       // Image
 
       template <typename I>
-      void print_nbh(const Image<I>&, const I& input, std::ostream& ostr)
+      void print_nbh(const Image<I>&,
+		     const I& input, std::ostream& ostr)
       {
 	typename I::fwd_piter p(input.points());
 	typename I::fwd_niter n(p, input.nbhood());
@@ -67,7 +68,8 @@ namespace oln
       // Point_Wise_Accessible_Image
 
       template <typename I>
-      void print_nbh(const Point_Wise_Accessible_Image<I>&,const I& input, std::ostream& ostr)
+      void print_nbh(const Point_Wise_Accessible_Image<I>&,
+		     const I& input, std::ostream& ostr)
       {
 	typename I::fwd_piter p(input.points());
 	typename I::fwd_niter n(p, input.nbhood());

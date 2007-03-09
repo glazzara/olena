@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +28,13 @@
 /// Test image2d.
 
 #include <cassert>
-#include <oln/basics2d.hh>
+#include <oln/core/2d/image2d.hh>
 
 
 template <typename I>
-unsigned npoints(const oln::abstract::image<I>& input)
+unsigned npoints(const oln::Image<I>& input)
 {
-  oln_vtype(I, piter) p(input.topo());
+  typename I::piter p(input.points());
   unsigned count = 0;
   for_all(p)
     ++count;

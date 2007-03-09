@@ -22,26 +22,17 @@ check_PROGRAMS =				\
   dpoint2d					\
   point2d					\
   grid						\
-  image_entry					\
-  image1d					\
   image2d					\
-  image3d					\
   npoints					\
-  pw_value					\
   window2d					\
-						\
   at
 
 # Images and auxiliary structures.
 dpoint2d_SOURCES = dpoint2d.cc
 point2d_SOURCES = point2d.cc
 grid_SOURCES = grid.cc
-image_entry_SOURCES = image_entry.cc
-image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
-image3d_SOURCES = image3d.cc
 npoints_SOURCES = npoints.cc
-pw_value_SOURCES = pw_value.cc
 window2d_SOURCES = window2d.cc
 
 # Methods.

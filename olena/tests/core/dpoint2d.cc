@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,17 +29,17 @@
 
 #include <mlc/assert.hh>
 #include <mlc/is_a.hh>
-#include <oln/basics2d.hh>
+#include <oln/core/2d/dpoint2d.hh>
 
 
 int
 main()
 {
-  typedef oln::dpoint2d_<int> dpoint_t;
+  typedef oln::dpoint2d dpoint_t;
   mlc::assert_<
-    mlc_is_a_( dpoint_t, oln::internal::dpoint_nd )
+    mlc_is_a_( dpoint_t, oln::Dpoint )
   >::check();
 
-  typedef oln_vtype_(dpoint_t, vec) vec_t;
+  typedef dpoint_t::vec_t vec_t;
   mlc::assert_< mlc_is_a_( vec_t, mlc_comma_1(xtd::vec< 2u, int >) ) >::check();
 }

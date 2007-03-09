@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -27,40 +27,25 @@
 
 /// Test oln::window2d.
 
-#include <oln/basics2d.hh>
-#include <oln/debug/print.hh>
-#include <oln/io/pnm.hh>
-#include <oln/morpher/add_neighborhood.hh>
+#include <oln/core/2d/image2d.hh>
+#include <oln/core/2d/window2d.hh>
 
-#include "data.hh"
 
 namespace test
 {
 
   template <typename I, typename W>
-  void run(const oln::abstract::image<I>&  ima,
-	   const oln::abstract::window<W>& win)
+  unsigned run(const oln::Point_Wise_Accessible_Image<I>& input,
+	       const oln::Window<W>& win)
   {
-    oln_piter(I) p(ima.topo());
-    oln_qiter(I) q(p, win);
+    oln_piter(I) p(input.points());
+    oln_qiter(W) q(p, win);
+    unsigned count = 0;
     for_all(p)
-      {
-#if 0
-	// Disable the display to speed up the test.
- 	std::cout << unsigned(ima(p)) << ": ";
-#endif
-	for_all(q)
-	  {
-#if 0
-	    // Likewise.
-	    std::cout << unsigned(ima(q)) << " ";
-#endif
-	  }
-#if 0
-	// Likewise.
- 	std::cout << std::endl;
-#endif
-      }
+      for_all(q)
+      if (input.has(q))
+	++count;
+    return count;
   }
 
 }
@@ -70,16 +55,9 @@ int main()
 {
   using namespace oln;
 
-  image2d<unsigned char> ima = io::load_pgm(rdata("lena32.pgm"));
-#if 0
-  // Disable the display to speed up the test.
-  debug::println(ima);
-#endif
-
-  window2d win;
-  win
-    .add(dpoint2d(-1, 0))
-    .add(dpoint2d(-2, 0));
-
-  test::run(ima, win);
+  image2d<bool> ima(3, 3);
+  // 4 + 6 + 4 +
+  // 6 + 9 + 6 +
+  // 4 + 6 + 4 = 49
+  assert(test::run(ima, win3x3) == 49);
 }

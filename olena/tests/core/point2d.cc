@@ -25,19 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mlc/assert.hh>
-#include <mlc/is_a.hh>
-// FIXME: There is an inter-dependency between point2d and dpoint2d.
-// Maybe we'll solve this with the interface/implementation separation?
 #include <oln/core/2d/point2d.hh>
-#include <oln/core/2d/dpoint2d.hh>
 
 
 int
 main()
 {
-  typedef oln::point2d_<int> point_t;
+  typedef oln::point2d point_t;
   mlc::assert_<
-    mlc_is_a_( point_t, oln::internal::point_nd )
+    mlc_is_a_( point_t, oln::Point )
   >::check();
 }

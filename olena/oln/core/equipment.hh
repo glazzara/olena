@@ -28,10 +28,12 @@
 #ifndef OLN_CORE_EQUIPMENT_HH
 # define OLN_CORE_EQUIPMENT_HH
 
-# include <cassert>
-# include <mlc/value.hh>
 # include <mlc/contract.hh>
 # include <oln/stc/scoop.hh> // FIXME: Remove "oln/" later.
+
+
+# define oln_typename_shortcut__(Type, Alias) typename Type::Alias
+
 
 
 namespace oln
@@ -44,6 +46,10 @@ namespace oln
   stc_decl_associated_type( bkd_piter );
   stc_decl_associated_type( bkd_qiter );
   stc_decl_associated_type( box );
+
+# define oln_bkd_niter(T) oln_typename_shortcut__(T, bkd_niter)
+# define oln_bkd_piter(T) oln_typename_shortcut__(T, bkd_piter)
+# define oln_bkd_qiter(T) oln_typename_shortcut__(T, bkd_qiter)
 
   // c
   stc_decl_associated_type( coord );
@@ -58,6 +64,10 @@ namespace oln
   stc_decl_associated_type( fwd_niter );
   stc_decl_associated_type( fwd_piter );
   stc_decl_associated_type( fwd_qiter );
+
+# define oln_fwd_niter(T) oln_typename_shortcut__(T, fwd_niter)
+# define oln_fwd_piter(T) oln_typename_shortcut__(T, fwd_piter)
+# define oln_fwd_qiter(T) oln_typename_shortcut__(T, fwd_qiter)
 
   // g
   stc_decl_associated_type( grid );
@@ -75,6 +85,8 @@ namespace oln
   stc_decl_associated_type( nbh );
   stc_decl_associated_type( niter );
 
+# define oln_niter(T) oln_typename_shortcut__(T, niter)
+
   // o
   stc_decl_associated_type( oper );
   stc_decl_associated_type( output );
@@ -85,8 +97,13 @@ namespace oln
   stc_decl_associated_type( pset );
   stc_decl_associated_type( psite );
 
+# define oln_piter(T) oln_typename_shortcut__(T, piter)
+# define oln_point(T) oln_typename_shortcut__(T, point)
+
   // q
   stc_decl_associated_type( qiter );
+
+# define oln_qiter(T) oln_typename_shortcut__(T, qiter)
 
   // r
   stc_decl_associated_type( right );
@@ -102,6 +119,8 @@ namespace oln
   // v
   stc_decl_associated_type( value );
   stc_decl_associated_type( vsite );
+
+# define oln_value(T) oln_typename_shortcut__(T, value)
 
 
 } // end of namespace oln

@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,11 +26,9 @@
 // Public License.
 
 #include <cassert>
-// FIXME: Don't include oln/basics2d.hh, which is too big.
-// (Fix.)
-#include <oln/basics1d.hh>
-#include <oln/basics2d.hh>
-#include <oln/morpher/add_neighborhood.hh>
+// FIXME: Disabled #include <oln/basics1d.hh>
+#include <oln/core/2d/image2d.hh>
+#include <oln/core/2d/neighb2d.hh>
 
 
 int
@@ -46,8 +44,9 @@ main()
 
   assert(ima(p) == 51);
 
-  image1d<int> sig(1);
-  point1d i(0);
-  (sig + c2).at(0) = 51;
-  assert(sig(i) == 51);
+  // FIXME: Disabled
+//   image1d<int> sig(1);
+//   point1d i(0);
+//   (sig + c2).at(0) = 51;
+//   assert(sig(i) == 51);
 }

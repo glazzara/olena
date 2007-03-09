@@ -215,7 +215,7 @@ namespace oln
   {
     stc_typename(vsite);
     stc_typename(rvaluep);
-    rvaluep value(const vsite& v) const;
+    rvaluep value_(const vsite& v) const;
 
   protected:
     Value_Wise_Accessible_Image();
@@ -232,7 +232,7 @@ namespace oln
     using Value_Wise_Accessible_Image<Exact>::value;
 
     stc_typename(lvaluep);
-    lvaluep value(const vsite& v);
+    lvaluep value_(const vsite& v);
 
   protected:
     Value_Wise_Mutable_Image();
@@ -440,7 +440,7 @@ namespace oln
 
   template <typename Exact>
   typename Value_Wise_Accessible_Image<Exact>::rvaluep
-  Value_Wise_Accessible_Image<Exact>::value(const typename Value_Wise_Accessible_Image<Exact>::vsite& v) const
+  Value_Wise_Accessible_Image<Exact>::value_(const typename Value_Wise_Accessible_Image<Exact>::vsite& v) const
   {
     return exact(this)->impl_value_read(v);
   }
@@ -454,7 +454,7 @@ namespace oln
 
   template <typename Exact>
   typename Value_Wise_Mutable_Image<Exact>::lvaluep
-  Value_Wise_Mutable_Image<Exact>::value(const typename Value_Wise_Accessible_Image<Exact>::vsite& v)
+  Value_Wise_Mutable_Image<Exact>::value_(const typename Value_Wise_Accessible_Image<Exact>::vsite& v)
   {
     return exact(this)->impl_value_read_write(v);
   }
@@ -514,7 +514,7 @@ namespace oln
   Point_Wise_Accessible_Image_2D<Exact>::impl_at(coord row, coord col) const
   {
     typename Point_Wise_Accessible_Image_2D<Exact>::point p(row, col);
-    return this->at(p);
+    return this->operator()(p);
   }
 
   template <typename Exact>
@@ -536,7 +536,7 @@ namespace oln
   Point_Wise_Mutable_Image_2D<Exact>::impl_at(coord row, coord col)
   {
     typename Point_Wise_Mutable_Image_2D<Exact>::point p(row, col);
-    return this->at(p);
+    return this->operator()(p);
   }
 
   template <typename Exact>

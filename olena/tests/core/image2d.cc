@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,7 @@
 #include <cassert>
 // FIXME: We should not include oln/basics2d.hh, but
 // oln/core/2d/image2d.hh (and oln/core/2d/neigh2d.hh ?).
-#include <oln/basics2d.hh>
+#include <oln/core/2d/image2d.hh>
 #include <oln/level/fill.hh>
 
 int
@@ -38,24 +38,24 @@ main()
 {
   // Fill a 2D image using its iterator.
   oln::image2d<char> ima1(3, 3);
-  oln_vtype_(oln::image2d<char>, piter) p1(ima1.topo());
+  oln::image2d<char>::piter p1(ima1.points());
   for_all(p1)
     ima1(p1) = 1;
 
   // Fill a 2D image using a classic loop.
-  oln::image2d<int> ima2(ima1.topo());
+  oln::image2d<int> ima2(ima1.points());
   for (unsigned i = 0; i < 3; ++i)
     for (unsigned j = 0; j < 3; ++j)
-      ima2(oln::point2d(i, j)) = 2;
+      ima2.at(i, j) = 2;
 
   // Fill a 2D image using the routine oln::level::fill.
-  oln::image2d<long> ima3(ima1.topo());
+  oln::image2d<long> ima3(ima1.points());
   oln::level::fill(ima3, 3);
 
 
   // Add the three images.
-  oln::image2d<long> sum(ima1.topo());
-  oln_vtype_(oln::image2d<long>, piter) p(sum.topo());
+  oln::image2d<long> sum(ima1.points());
+  oln::image2d<long>::piter p(sum.points());
   for_all(p)
     sum(p) = ima1(p) + ima2(p) + ima3(p);
   // And check the sum.
