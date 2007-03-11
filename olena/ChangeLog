@@ -1,3 +1,21 @@
+2007-03-11  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add rle_class, not finish yet.
+
+	* oln/core/rle: New.
+	* oln/core/rle/rle_image.hh: New.
+	* oln/core/rle/rle_psite.hh: New.
+	* oln/core/rle/rle_pset.hh: New.
+
+2007-03-11  Nicolas Ballas  <ballas@bosc-guerard.lrde.epita.fr>
+
+         Add rle_image class, not finish yet.
+	 rle_image class depends on rle_psite class and rle_pset class.
+
+	* oln/core/rle/rle_image.hh: New
+	* oln/core/rle/rle_psite.hh: .
+	* oln/core/rle/rle_pset.hh: .
+
 2007-03-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add test for neighborhood.
