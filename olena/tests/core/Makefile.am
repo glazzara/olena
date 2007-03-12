@@ -23,6 +23,7 @@ check_PROGRAMS =				\
   point2d					\
   grid						\
   image2d					\
+  neighb2d					\
   npoints					\
   neighb2d					\
   window2d					\
@@ -33,6 +34,7 @@ dpoint2d_SOURCES = dpoint2d.cc
 point2d_SOURCES = point2d.cc
 grid_SOURCES = grid.cc
 image2d_SOURCES = image2d.cc
+neighb2d_SOURCES = neighb2d.cc
 npoints_SOURCES = npoints.cc
 window2d_SOURCES = window2d.cc
 neighb2d_SOURCES = neighb2d.cc

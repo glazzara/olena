@@ -29,11 +29,7 @@
 # define OLN_DEBUG_PRINT_HH
 
 # include <iostream>
-# include <oln/core/abstract/image.hh>
-# include <oln/core/abstract/image/hybrid/classical.hh>
-# include <oln/core/abstract/iterator.hh>
-# include <oln/core/spe/row.hh>
-# include <oln/core/spe/col.hh>
+# include <oln/core/concept/image.hh>
 
 # ifdef OLN_ENV_2D
 #  include <oln/core/2d/point2d.hh>
@@ -49,7 +45,7 @@ namespace oln
 
     /// Fwd decl.
     template <typename I>
-    void print(const abstract::image<I>& input, std::ostream& ostr = std::cout);
+    void print(const Image<I>& input, std::ostream& ostr = std::cout);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -70,30 +66,47 @@ namespace oln
 
 
       /// Generic version.
+
       template <typename I>
-      void print(const abstract::image<I>& input, std::ostream& ostr)
+      void print_Gen(const Image<I>& input, std::ostream& ostr)
       {
-	oln_vtype(I, fwd_piter) p(input.topo());
+	oln_fwd_piter(I) p(input.points());
 	for_all(p)
 	  ostr << p.to_point() << ':' << format(input(p)) << ' ';
       }
 
+      template <typename I>
+      void print(const Image<I>& input, std::ostream& ostr)
+      {
+	print_Gen(input, ostr);
+      }
+
+
 
 #  ifdef OLN_ENV_2D
 
-      /// Version for classical 2D images.
+      /// Default version.
+
       template <typename I>
-      void print(const abstract::classical_2d_image<I>& input,
-		 std::ostream& ostr)
+      void print_2D(const Image<I>&, const I& input, std::ostream& ostr)
+      {
+	print_Gen(input, ostr);
+      }
+
+      /// Version for classical 2D images.
+
+      template <typename I>
+      void print_2D(const Point_Wise_Accessible_Image<I>&, const I& input,
+		    std::ostream& ostr)
       {
 	const oln_coord(I)
-	  min_row = oln::min_row(input),
-	  max_row = oln::max_row(input);
+	  min_row = input.bbox().pmin().row(),
+	  max_row = input.bbox().pmax().row();
+	const oln_coord(I)
+	  min_col = input.bbox().pmin().col(),
+	  max_col = input.bbox().pmax().col();
 	for (oln_coord(I) row = min_row; row <= max_row; ++row)
 	  {
-	    const oln_coord(I)
-	      min_col = oln::min_col(input),
-	      max_col = oln::max_col(input);
 	    for (oln_coord(I) col = min_col; col <= max_col; ++col)
 	      {
 		point2d p(row, col);
@@ -107,7 +120,13 @@ namespace oln
 	  }
       }
 
-#  endif
+      template <typename I>
+      void print(const Image_2D<I>& input, std::ostream& ostr)
+      {
+	impl::print_2D(exact(input), exact(input), ostr);
+      }
+
+#  endif //  OLN_ENV_2D
 
 
     } // end of namespace oln::debug::impl
@@ -115,12 +134,14 @@ namespace oln
 
     /// Facade.
     template <typename I>
-    void print(const abstract::image<I>& input, std::ostream& ostr)
+    void print(const Image<I>& input, std::ostream& ostr)
     {
-      impl::print(input.exact(), ostr);
+      impl::print(exact(input), ostr);
     }
 
+
 # endif // ! OLN_INCLUDE_ONLY
+
 
   } // end of namespace oln::debug
 

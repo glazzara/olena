@@ -1,3 +1,20 @@
+2007-03-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add type of 2d images with border.
+
+	* tests/core/Makefile.am (check_PROGRAMS): Add neighb2d.
+	* oln/debug/print.hh: Update.
+	* oln/core/2d/array2d.hh (operator[], blen_): New.
+	* oln/core/2d/image2d.hh (npoints): Fix; rename as...
+	(impl_npoints): ...this.
+	(operator[]): Update.
+	* oln/core/2d/image2d_b.hh: Update.
+	* oln/core/2d/grid2d.hh (OLN_ENV_2D): New.
+	* oln/core/equipment.hh (oln_coord): New.
+	* oln/core/gen/dpoints_piter.hh (dps_): Change type.
+	* oln/core/internal/image_base.hh (impl_npoints): New; default impl.
+	* oln/core/internal/point_set_std_based.hh: Fix.
+
 2007-03-11  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add rle_class, not finish yet.

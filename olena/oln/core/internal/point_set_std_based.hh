@@ -153,7 +153,7 @@ namespace oln
     const typename point_set_std_based_<Exact>::std_container&
     point_set_std_based_<Exact>::con() const
     {
-      this->con_;
+      return this->con_;
     }
 
 # endif

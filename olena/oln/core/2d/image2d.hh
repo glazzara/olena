@@ -95,7 +95,7 @@ namespace oln
     T& impl_index_read_write(unsigned i);
     T& impl_at(int row, int col);
 
-    std::size_t npoints() const;
+    std::size_t impl_npoints() const;
 
     box2d impl_bbox() const;
     box2d impl_points() const;
@@ -157,7 +157,7 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->buffer()[i];
+    return this->data_->operator[](i);
   }
 
   template <typename T>
@@ -179,7 +179,7 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->buffer()[i];
+    return this->data_->operator[](i);
   }
 
   template <typename T>
@@ -190,8 +190,9 @@ namespace oln
   }
 
   template <typename T>
-  std::size_t image2d<T>::npoints() const
+  std::size_t image2d<T>::impl_npoints() const
   {
+    // faster than the default code given by primitive_image_
     assert(this->has_data());
     return this->data_->ncells();
   }

@@ -80,6 +80,9 @@ namespace oln
     {
     public:
 
+      dpoints_piter_impl_(const dpoints_piter_impl_&);
+      void operator=(const dpoints_piter_impl_&);
+
       void impl_invalidate();
 
       bool impl_is_valid() const;
@@ -91,7 +94,7 @@ namespace oln
     protected:
 
       const P* p_ref_;
-      const std::vector<typename P::dpoint>* dps_;
+      std::vector<typename P::dpoint> dps_;
       unsigned n_, i_;
       P p_;
       
@@ -168,7 +171,7 @@ namespace oln
 						const internal::dpoints_impl_<typename P::dpoint>& data)
     {
       p_ref_ = point_adr_(ref);
-      dps_ = &(data.dpoints());
+      dps_ = data.dpoints();
       n_ = data.size();
       i_ = n_;
       postcondition(n_ != 0);
@@ -206,7 +209,7 @@ namespace oln
     void
     dpoints_piter_impl_<P>::update_p_()
     {
-      p_ = *p_ref_+ (*dps_)[i_];
+      p_ = *p_ref_+ dps_[i_];
     }
 
   } // end of namespace oln::internal

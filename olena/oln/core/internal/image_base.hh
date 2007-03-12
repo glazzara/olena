@@ -208,6 +208,8 @@ namespace oln
     template <typename Exact>
     class primitive_image_ : public image_base_<Exact>
     {
+    public:
+      std::size_t impl_npoints() const;
     protected:
       primitive_image_();
     };
@@ -307,6 +309,13 @@ namespace oln
     template <typename Exact>
     primitive_image_<Exact>::primitive_image_()
     {
+    }
+
+    template <typename Exact>
+    std::size_t primitive_image_<Exact>::impl_npoints() const
+    {
+      precondition(this->has_data());
+      return this->pset().npoints();
     }
 
     /// plain_primitive_image_<Exact>

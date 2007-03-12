@@ -55,6 +55,8 @@ namespace oln
   stc_decl_associated_type( coord );
   stc_decl_associated_type( ch_value );
 
+# define oln_coord(T) oln_typename_shortcut__(T, coord)
+
   // d
   stc_decl_associated_type( data );
   stc_decl_associated_type( dim );

@@ -55,6 +55,9 @@ namespace oln
     const T& operator()(C i, C j) const;
           T& operator()(C i, C j);
 
+    const T& operator[](std::size_t ind) const;
+          T& operator[](std::size_t ind);
+
     bool has(C i, C j) const;
 
     std::size_t memsize() const;
@@ -72,6 +75,7 @@ namespace oln
 
     C   imin_, jmin_, imax_, jmax_;
     C   ilen_, jlen_;
+    std::size_t blen_;
     T*  buffer_;
     T** array_;
 
@@ -132,6 +136,22 @@ namespace oln
   }
 
   template <typename T, typename C>
+  const T& array2d_<T, C>::operator[](std::size_t ind) const
+  {
+    precondition(buffer_ != 0);
+    precondition(ind < blen_);
+    return buffer_[ind];
+  }
+
+  template <typename T, typename C>
+  T& array2d_<T, C>::operator[](std::size_t ind)
+  {
+    precondition(buffer_ != 0);
+    precondition(ind < blen_);
+    return buffer_[ind];
+  }
+
+  template <typename T, typename C>
   bool array2d_<T, C>::has(C i, C j) const
   {
     return
@@ -179,7 +199,7 @@ namespace oln
   template <typename T, typename C>
   std::size_t array2d_<T, C>::ncells() const
   {
-    return std::size_t(ilen_) * std::size_t(jlen_);
+    return blen_;
   }
 
   template <typename T, typename C>
@@ -187,7 +207,7 @@ namespace oln
   {
     return
       // buffer_
-      std::size_t(ilen_) * std::size_t(jlen_) * sizeof(T)
+      blen_ * sizeof(T)
       +
       // array_
       std::size_t(ilen_) * sizeof(T*);
@@ -196,7 +216,8 @@ namespace oln
   template <typename T, typename C>
   void array2d_<T, C>::allocate_()
   {
-    buffer_ = new T[std::size_t(ilen_) * std::size_t(jlen_)];
+    blen_ = std::size_t(ilen_) * std::size_t(jlen_);
+    buffer_ = new T[blen_];
     array_ = new T*[std::size_t(ilen_)];
     T* buf = buffer_ - jmin_;
     for (C i = 0; i < ilen_; ++i)

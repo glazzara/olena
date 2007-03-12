@@ -32,6 +32,10 @@
 # include <oln/core/concept/grid.hh>
 
 
+# define OLN_ENV_2D
+
+
+
 namespace oln
 {
 
