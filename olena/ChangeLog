@@ -1,3 +1,38 @@
+2007-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add 1D classes and remove some dead code.
+
+	* oln/core/internal/utils.hh (triplet): New.
+	* oln/core/1d/image1d_b.hh,
+	* oln/core/1d/grid1d.hh,
+	* oln/core/1d/box1d.hh,
+	* oln/core/internal/dpoint1d.hh,
+	* oln/core/internal/point1d.hh: New.
+	* tests/core/grid.cc,
+	* oln/core/1d/neighb1d.hh,
+	* oln/core/1d/dpoint1d.hh,
+	* oln/core/1d/array1d.hh,
+	* oln/core/1d/image1d.hh,
+	* oln/core/1d/window1d.hh,
+	* oln/core/1d/point1d.hh: Update.
+
+	* oln/core/aliases.hh,
+	* oln/core/fwd_decls.hh,
+	* oln/core/1d/aliases.hh,
+	* oln/core/1d/topo1d.hh,
+	* oln/core/1d/fwd_decls.hh,
+	* oln/core/2d/aliases.hh,
+	* oln/core/2d/topo2d.hh,
+	* oln/core/2d/fwd_decls.hh,
+	* oln/core/3d/aliases.hh,
+	* oln/core/3d/topo3d.hh,
+	* oln/core/3d/fwd_decls.hh,
+	* oln/core/gen/fwd_decls.hh: Remove.
+	* oln/core/2d/box2d.hh,
+	* oln/core/2d/neighb2d.hh,
+	* oln/core/2d/window2d.hh (include): Remove aliases.
+	* oln/core/internal/point2d.hh (grid_): Remove fwd decl.
+
 2007-03-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add type of 2d images with border.

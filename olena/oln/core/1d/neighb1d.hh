@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Copyright (C) 2001, 2002, 2003, 2004, 2006, 2007 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -36,6 +36,7 @@
 namespace oln
 {
 
+  // FIXME: neighb2d should be an actual type, not an alias...
   typedef neighb_<dpoint1d> neighb1d;
 
 
@@ -49,10 +50,9 @@ namespace oln
 
     neighb1d mk_c2()
     {
-      neighb1d the_;
-      the_
-	.add(dpoint1d(1));
-      return the_;
+      neighb1d tmp;
+      tmp.take(dpoint1d(1));
+      return tmp;
     }
 
 # endif

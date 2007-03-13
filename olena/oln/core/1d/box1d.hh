@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,53 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_1D_ALIASES_HH
-# define OLN_CORE_1D_ALIASES_HH
+#ifndef OLN_CORE_1D_BOX1D_HH
+# define OLN_CORE_1D_BOX1D_HH
+
+# include <oln/core/gen/box.hh>
+# include <oln/core/1d/point1d.hh>
 
 
 namespace oln
 {
 
-  /// Forward declarations.
-  /// \{
-  template <unsigned D> struct grid_;
-  template <typename C> class point1d_;
-  template <typename C> class dpoint1d_;
-  template <typename D> class neighb_;
-  template <typename D> class window_;
-  template <typename P> class bbox_;
-  template <typename P> class topo_lbbox_;
-  template <typename T> class fwd_piter_bbox_;
-  template <typename T> class bkd_piter_bbox_;
-  template <typename P> class fwd_qiter_win_;
-  template <typename P> class bkd_qiter_win_;
-  /// \}
-
-
-  /// Aliases.
-  /// \{
-  typedef grid_<1> grid1d;
-
-  typedef  point1d_<int>  point1d;
-  typedef dpoint1d_<int> dpoint1d;
-
-  typedef neighb_<dpoint1d> neighb1d;
-  typedef window_<dpoint1d> window1d;
-
-  typedef bbox_<point1d> bbox1d;
-  typedef topo_lbbox_<point1d> topo1d;
-
-  typedef fwd_piter_bbox_<point1d> fwd_piter1d;
-  typedef bkd_piter_bbox_<point1d> bkd_piter1d;
-
-  typedef fwd_qiter_win_<point1d> fwd_qiter1d;
-  typedef bkd_qiter_win_<point1d> bkd_qiter1d;
-
-  typedef  point1d_<float>  point1df;
-  typedef dpoint1d_<float> dpoint1df;
-  /// \}
+  // FIXME: box1d should be an actual type, not an alias...
+  typedef box_<point1d> box1d;
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_1D_ALIASES_HH
+#endif // ! OLN_CORE_1D_BOX1D_HH
+

@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,20 +25,84 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_2D_FWD_DECLS
-# define OLN_CORE_2D_FWD_DECLS
+#ifndef OLN_CORE_INTERNAL_POINT1D_HH
+# define OLN_CORE_INTERNAL_POINT1D_HH
+
+# include <oln/core/internal/point_base.hh>
 
 
 namespace oln
 {
 
-  template <typename V, typename C> class array2d;
-  template <typename C> class dpoint2d_;
-  template <typename C> class point2d_;
-  template <typename T> class image2d;
+
+  /// Fwd decls.
+  namespace internal { template <typename Exact> struct point1d_; }
+
+
+  /// Super type.
+  template<typename Exact>
+  struct super_trait_< internal::point1d_<Exact> >
+  {
+    typedef internal::point_base_<Exact> ret;
+  };
+
+
+  /// Virtual types.
+  template <typename Exact>
+  struct vtypes< internal::point1d_<Exact> >
+  {
+  };
+
+
+  namespace internal
+  {
+
+
+    template <typename Exact>
+    class point1d_ : public point_base_<Exact>
+    {
+      typedef point_base_<Exact> super;
+
+    public:
+      stc_using(coord);
+
+      coord  ind() const;
+      coord& ind();
+
+    protected:
+      point1d_();
+    };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename Exact>
+    point1d_<Exact>::point1d_()
+    {
+    }
+
+    template <typename Exact>
+    typename point1d_<Exact>::coord
+    point1d_<Exact>::ind() const
+    {
+      return this->v_[0];
+    }
+
+    template <typename Exact>
+    typename point1d_<Exact>::coord &
+    point1d_<Exact>::ind()
+    {
+      return this->v_[0];
+    }
+
+# endif
+
+
+  } // end of namespace oln::internal
+
 
 } // end of namespace oln
 
 
-
-#endif // ! OLN_CORE_2D_FWD_DECLS
+#endif // ! OLN_CORE_INTERNAL_POINT1D_HH

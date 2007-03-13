@@ -37,8 +37,7 @@ namespace oln
 
 
   /// Fwd decls.
-  template <unsigned D> struct grid_;
-  namespace internal { template <typename Exact> struct  point2d_; }
+  namespace internal { template <typename Exact> struct point2d_; }
 
 
   /// Super type.

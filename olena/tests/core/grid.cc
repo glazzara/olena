@@ -30,8 +30,8 @@
 #include <cassert>
 #include <oln/core/2d/grid2d.hh>
 // FIXME: Disabled.
-// #include <oln/core/1d/aliases.hh>
-// #include <oln/core/3d/aliases.hh>
+// #include <oln/core/1d/grid1d.hh>
+// #include <oln/core/3d/grid3d.hh>
 
 
 int

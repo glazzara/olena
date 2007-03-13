@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,50 +25,84 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_2D_ALIASES_HH
-# define OLN_CORE_2D_ALIASES_HH
+#ifndef OLN_CORE_INTERNAL_DPOINT1D_HH
+# define OLN_CORE_INTERNAL_DPOINT1D_HH
+
+# include <oln/core/internal/dpoint_base.hh>
 
 
 namespace oln
 {
 
-  /// Forward declarations.
-  /// \{
 
-  template <typename P> class box_;
-  template <typename P> class box_fwd_piter_;
-  template <typename P> class box_bkd_piter_;
-
-  template <typename D> class neighb_;
-  template <typename D> class window_;
-  template <typename P> class dpoints_fwd_piter_;
-  template <typename P> class dpoints_bkd_piter_;
-
-  /// \}
+  /// Fwd decls.
+  namespace internal { template <typename Exact> struct dpoint1d_; }
 
 
-  /// Aliases.
-  /// \{
+  /// Super type.
+  template<typename Exact>
+  struct super_trait_< internal::dpoint1d_<Exact> >
+  {
+    typedef internal::dpoint_base_<Exact> ret;
+  };
 
-  typedef box_<point2d>                box2d;
-  typedef box_fwd_piter_<point2d>      piter2d;
-  typedef box_fwd_piter_<point2d>      fwd_piter2d;
-  typedef box_bkd_piter_<point2d>      bkd_piter2d;
 
-  typedef neighb_<dpoint2d>            neighb2d;
-  typedef dpoints_fwd_piter_<point2d>  niter2d;
-  typedef dpoints_fwd_piter_<point2d>  fwd_niter2d;
-  typedef dpoints_bkd_piter_<point2d>  bkd_niter2d;
+  /// Virtual types.
+  template <typename Exact>
+  struct vtypes< internal::dpoint1d_<Exact> >
+  {
+  };
 
-  typedef window_<dpoint2d>            window2d;
-  typedef dpoints_fwd_piter_<point2d>  qiter2d;
-  typedef dpoints_fwd_piter_<point2d>  fwd_qiter2d;
-  typedef dpoints_bkd_piter_<point2d>  bkd_qiter2d;
 
-  /// \}
+  namespace internal
+  {
+
+
+    template <typename Exact>
+    class dpoint1d_ : public dpoint_base_<Exact>
+    {
+      typedef dpoint_base_<Exact> super;
+
+    public:
+      stc_using(coord);
+
+      coord  ind() const;
+      coord& ind();
+
+    protected:
+      dpoint1d_();
+    };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename Exact>
+    dpoint1d_<Exact>::dpoint1d_()
+    {
+    }
+
+    template <typename Exact>
+    typename dpoint1d_<Exact>::coord
+    dpoint1d_<Exact>::ind() const
+    {
+      return this->v_[0];
+    }
+
+    template <typename Exact>
+    typename dpoint1d_<Exact>::coord &
+    dpoint1d_<Exact>::ind()
+    {
+      return this->v_[0];
+    }
+
+# endif
+
+
+  } // end of namespace oln::internal
 
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_2D_ALIASES_HH
+#endif // ! OLN_CORE_INTERNAL_DPOINT1D_HH

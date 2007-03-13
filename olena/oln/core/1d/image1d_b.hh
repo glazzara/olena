@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_1D_IMAGE1D_HH
-# define OLN_CORE_1D_IMAGE1D_HH
+#ifndef OLN_CORE_1D_IMAGE1D_B_HH
+# define OLN_CORE_1D_IMAGE1D_B_HH
 
 # include <oln/core/internal/image_base.hh>
+# include <oln/core/internal/utils.hh>
 # include <oln/core/1d/array1d.hh>
 # include <oln/core/1d/box1d.hh>
 
@@ -37,13 +37,18 @@
 namespace oln
 {
 
+
+  // FIXME: Conversely to image2d_b, we use here the triplet class
+  // instead of the array_b_ class.
+
+
   // Fwd decl.
-  template <typename T> class image1d;
+  template <typename T> class image1d_b;
 
 
   /// Virtual types.
   template <typename T>
-  struct vtypes< image1d<T> >
+  struct vtypes< image1d_b<T> >
   {
     typedef point1d point;
 
@@ -54,16 +59,18 @@ namespace oln
     typedef const T& rvalue;
     typedef       T& lvalue;
 
-    typedef box1d                  pset;
-    typedef array1d_<value, coord> data;
+    typedef box1d pset;
+    typedef internal::triplet< array1d_<T, int>,
+			       unsigned,
+			       box_<point1d> > data;
   };
 
 
   /// Super type.
   template <typename T>
-  struct super_trait_< image1d<T> >
+  struct super_trait_< image1d_b<T> >
   {
-    typedef image1d<T> current;
+    typedef image1d_b<T> current;
     typedef internal::plain_primitive_image_<current> ret;
   };
 
@@ -71,16 +78,17 @@ namespace oln
   /// General 1D image class.
 
   template <typename T>
-  class image1d : public internal::plain_primitive_image_< image1d<T> >
+  class image1d_b : public internal::plain_primitive_image_< image1d_b<T> >
   {
-    typedef image1d<T> current;
+    typedef image1d_b<T> current;
     typedef internal::plain_primitive_image_<current> super;
+    typedef array1d_<T, int> array_t;
   public:
     stc_using(data);
 
-    image1d();
-    image1d(const box1d& b);
-    image1d(unsigned n);
+    image1d_b();
+    image1d_b(const box1d& b, unsigned border = 2);
+    image1d_b(unsigned n, unsigned border = 2);
 
     bool impl_owns_(const point1d& p) const;
 
@@ -96,6 +104,8 @@ namespace oln
 
     box1d impl_bbox() const;
     box1d impl_points() const;
+
+    unsigned border() const;
   };
 
 
@@ -103,87 +113,92 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename T>
-  image1d<T>::image1d()
+  image1d_b<T>::image1d_b()
   {
   }
 
   template <typename T>
-  image1d<T>::image1d(const box1d& b)
+  image1d_b<T>::image1d_b(const box1d& b, unsigned border)
   {
-    this->data_ = new data(b.pmin().ind(), b.pmax().ind());
+    this->data_ = new data(array_t(b.pmin().ind() - border,
+				   b.pmax().ind() + border),
+			   border,
+			   b);
   }
 
   template <typename T>
-  image1d<T>::image1d(unsigned n)
+  image1d_b<T>::image1d_b(unsigned n, unsigned border)
   {
     precondition(n != 0);
-    this->data_ = new data(0, n - 1);
+    this->data_ = new data(array_t(- border,
+				   n - 1 + border),
+			   border,
+			   box1d(0, n - 1));
   }
 
   template <typename T>
-  bool image1d<T>::impl_owns_(const point1d& p) const
+  bool image1d_b<T>::impl_owns_(const point1d& p) const
   {
     assert(this->has_data());
-    return this->data_->has(p.ind());
+    return this->data_->value1.has(p.ind());
   }
 
   template <typename T>
-  bool image1d<T>::impl_has(const point1d& p) const
+  bool image1d_b<T>::impl_has(const point1d& p) const
   {
     assert(this->has_data());
-    return this->data_->has(p.ind());
+    return this->data_->value3.has(p);
   }
 
   template <typename T>
-  const T& image1d<T>::impl_read(const point1d& p) const
+  const T& image1d_b<T>::impl_read(const point1d& p) const
   {
     assert(this->has_data());
-    return this->data_->operator()(p.ind());
+    return this->data_->value1(p.ind());
   }
 
   template <typename T>
-  const T& image1d<T>::impl_index_read(unsigned i) const
-  {
-    assert(this->has_data());
-    assert(i < this->npoints());
-    return this->data_->operator[](i);
-  }
-
-  template <typename T>
-  T& image1d<T>::impl_read_write(const point1d& p)
-  {
-    assert(this->has_data());
-    return this->data_->operator()(p.ind());
-  }
-
-  template <typename T>
-  T& image1d<T>::impl_index_read_write(unsigned i)
+  const T& image1d_b<T>::impl_index_read(unsigned i) const
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->operator[](i);
+    return this->data_->value1[i];
   }
 
   template <typename T>
-  std::size_t image1d<T>::impl_npoints() const
-  {
-    // faster than the default code given by primitive_image_
-    assert(this->has_data());
-    return this->data_->ncells();
-  }
-
-  template <typename T>
-  box1d image1d<T>::impl_bbox() const
+  T& image1d_b<T>::impl_read_write(const point1d& p)
   {
     assert(this->has_data());
-    box1d b(this->data_->imin(), this->data_->imax());
-    return b;
+    return this->data_->value1(p.ind());
   }
 
   template <typename T>
-  box1d image1d<T>::impl_points() const
+  T& image1d_b<T>::impl_index_read_write(unsigned i)
   {
-    return this->bbox();
+    assert(this->has_data());
+    assert(i < this->npoints());
+    return this->data_->value1[i];
+  }
+
+  template <typename T>
+  box1d image1d_b<T>::impl_bbox() const
+  {
+    assert(this->has_data());
+    return this->data_->value3;
+  }
+
+  template <typename T>
+  box1d image1d_b<T>::impl_points() const
+  {
+    assert(this->has_data());
+    return this->data_->value3;
+  }
+
+  template <typename T>
+  unsigned image1d_b<T>::border() const
+  {
+    assert(this->has_data());
+    return this->data_->value2;
   }
 
 # endif
@@ -192,4 +207,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_1D_IMAGE1D_HH
+#endif // ! OLN_CORE_1D_IMAGE1D_B_HH

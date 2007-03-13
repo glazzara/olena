@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,18 @@
 #ifndef OLN_CORE_1D_WINDOW1D_HH
 # define OLN_CORE_1D_WINDOW1D_HH
 
-// Headers required for the complete definition of oln::window1d
-// (i.e., oln::window_<dpoint1d>).
-# include <oln/core/1d/aliases.hh>
-# include <oln/core/1d/dpoint1d.hh>
 # include <oln/core/gen/window.hh>
+# include <oln/core/1d/dpoint1d.hh>
+
+
+namespace oln
+{
+
+  // FIXME: window1d should be an actual type, not an alias...
+  typedef window_<dpoint1d> window1d;
+
+
+} // end of namespace oln
+
 
 #endif // ! OLN_CORE_1D_WINDOW1D_HH

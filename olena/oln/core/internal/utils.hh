@@ -42,8 +42,8 @@ namespace oln
     {
       singleton()
       {}
-      singleton(T val)
-	: value(val)
+      singleton(T value)
+	: value(value)
       {}
       T value;
     };
@@ -56,12 +56,50 @@ namespace oln
     {
       pair()
       {}
-      pair(T1 val1, T2 val2)
-	: value1(val1),
-	  value2(val2)
+      pair(T1 value1, T2 value2)
+	: value1(value1),
+	  value2(value2)
       {}
       T1 value1;
       T2 value2;
+    };
+
+
+    /// Simple triplet class.
+
+    template <typename T1, typename T2, typename T3>
+    struct triplet
+    {
+      triplet()
+      {}
+      triplet(T1 value1, T2 value2, T3 value3)
+	: value1(value1),
+	  value2(value2),
+	  value3(value3)
+      {}
+      T1 value1;
+      T2 value2;
+      T3 value3;
+    };
+
+
+    /// Simple quartet class.
+
+    template <typename T1, typename T2, typename T3, typename T4>
+    struct quartet
+    {
+      quartet()
+      {}
+      quartet(T1 value1, T2 value2, T3 value3, T4 value4)
+	: value1(value1),
+	  value2(value2),
+	  value3(value3),
+	  value4(value4)
+      {}
+      T1 value1;
+      T2 value2;
+      T3 value3;
+      T4 value4;
     };
 
 

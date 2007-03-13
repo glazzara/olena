@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_3D_TOPO3D_HH
-# define OLN_CORE_3D_TOPO3D_HH
+#ifndef OLN_CORE_1D_GRID1D_HH
+# define OLN_CORE_1D_GRID1D_HH
 
-// Headers required for the complete definition of oln::topo3d
-// (i.e., oln::topo_lbbox_<point3d>).
-# include <oln/core/3d/aliases.hh>
-# include <oln/core/3d/point3d.hh>
-# include <oln/core/3d/dpoint3d.hh>
-# include <oln/core/gen/topo_lbbox.hh>
+# include <mlc/int.hh>
+# include <oln/core/concept/grid.hh>
 
-#endif // ! OLN_CORE_3D_TOPO3D_HH
+
+# define OLN_ENV_1D
+
+
+
+namespace oln
+{
+
+
+  /// \{
+  /// Fwd decls.
+
+  template <typename Exact> struct Grid_1D;
+  struct grid1d;
+
+  /// \}
+
+
+  /// \{
+  /// Grid_1D.
+
+  template <typename Exact>
+  struct vtypes< Grid_1D<Exact> >
+  {
+    typedef mlc::uint_<1> dim;
+  };
+  
+  template <typename Exact>
+  struct Grid_1D : public Grid<Exact>
+  {
+  protected:
+    Grid_1D() {}
+  };
+
+  /// \}
+
+
+  /// \{
+  /// Super type.
+
+  template<>
+  struct super_trait_< grid1d >
+  {
+    typedef Grid_1D< grid1d > ret;
+  };
+
+  /// \}
+  
+
+
+  /// One-dimensional grid struct.
+
+  struct grid1d : public Grid_1D< grid1d >
+  {};
+
+
+} // end of namespace oln
+
+
+#endif // ! OLN_CORE_1D_GRID1D_HH

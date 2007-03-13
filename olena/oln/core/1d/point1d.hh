@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Copyright (C) 2001, 2002, 2003, 2004, 2006, 2007 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -29,119 +29,66 @@
 #ifndef OLN_CORE_1D_POINT1D_HH
 # define OLN_CORE_1D_POINT1D_HH
 
-# include <mlc/int.hh>
-# include <oln/core/internal/point_nd.hh>
+# include <oln/core/1d/grid1d.hh>
+# include <oln/core/internal/point1d.hh>
 
 
 namespace oln
 {
 
-  /// Fwd decls.
-  template <unsigned D> struct grid_;
-  template <typename C> struct dpoint1d_;
-  template <typename C> struct  point1d_;
 
-
-  typedef grid_<1> grid1d;
-  typedef dpoint1d_<int> dpoint1d;
-  typedef  point1d_<int>  point1d;
-
-
-
-  /* FIXME: Is this the right place for these functions (on types)?
-     In particular, the function on dpoint1d should be near the
-     definition of dpoint1d, not point1d's.  */
-  /// Specializations of functions point and dpoint :
-  /// \f$(n, coord) \rightarrow type\f$ for \f$n = 1\f$.
-  /// \{
-  template <typename C> struct  point_ <1, C> { typedef  point1d_<C> ret; };
-  template <typename C> struct dpoint_ <1, C> { typedef dpoint1d_<C> ret; };
-  /// \}
-
+  struct  point1d;
+  struct dpoint1d;
 
 
   /// Super type.
-  template<typename C>
-  struct set_super_type< point1d_<C> >
+  template<>
+  struct super_trait_< point1d >
   {
-    typedef internal::point_nd< point1d_<C> > ret;
+    typedef internal::point1d_< point1d > ret;
   };
 
 
-  /// Virtual types associated to oln::point1d_<C>.
-  template <typename C>
-  struct vtypes< point1d_<C> >
+  /// Virtual types.
+  template <>
+  struct vtypes< point1d >
   {
-    typedef grid1d        grid_type;
-    typedef dpoint1d      dpoint_type;
-    typedef C             coord_type;
-    typedef mlc::uint_<1> dim_type;
-
-    typedef mlc::uint_<0> index_comp_type;
+    typedef grid1d   grid;
+    typedef int      coord;
+    typedef dpoint1d dpoint;
   };
 
 
-  /// General 1D point class.
-  template <typename C>
-  class point1d_ : public internal::point_nd< point1d_<C> >
+  /// Usual 1D point class.
+  class point1d : public internal::point1d_< point1d >
   {
-    typedef point1d_<C> self_t;
-    typedef internal::point_nd<self_t> super_t;
-
-    using super_t::v_;
-
   public:
-
-    /// Ctor.
-    point1d_();
-
-    /// Ctor.
-    point1d_(C index);
-
-    /// Ctor.
-    point1d_(const xtd::vec<1,C>& v);
-
-    /// Dtor.
-    ~point1d_()
-    {
-    }
-
-    C  index() const;
-    C& index();
+    /// Ctors.
+    point1d();
+    point1d(int ind);
   };
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-
-  template <typename C>
-  point1d_<C>::point1d_()
+  point1d::point1d()
   {
   }
 
-  template <typename C>
-  point1d_<C>::point1d_(C index)
-    : super_t (xtd::mk_vec(index))
+  point1d::point1d(int ind)
   {
+    this->ind() = ind;
   }
-
-  template <typename C>
-  point1d_<C>::point1d_(const xtd::vec<1,C>& v)
-    : super_t(v)
-  {
-  }
-
-  template <typename C>
-  C point1d_<C>::index() const { return v_[0]; }
-
-  template <typename C>
-  C& point1d_<C>::index()      { return v_[0]; }
 
 # endif
 
 
 } // end of namespace oln
+
+
+// point1d goes with dpoint1d so:
+# include <oln/core/1d/dpoint1d.hh>
 
 
 #endif // ! OLN_CORE_1D_POINT1D_HH

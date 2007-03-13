@@ -30,13 +30,13 @@
 
 # include <oln/core/gen/window.hh>
 # include <oln/core/2d/dpoint2d.hh>
-# include <oln/core/2d/aliases.hh>
 
 
 namespace oln
 {
 
   // FIXME: window2d should be an actual type, not an alias...
+  typedef window_<dpoint2d> window2d;
 
 
   window2d mk_square(unsigned odd_len);

@@ -31,14 +31,14 @@
 
 # include <oln/core/gen/neighb.hh>
 # include <oln/core/2d/dpoint2d.hh>
-# include <oln/core/2d/aliases.hh>
 
 
 namespace oln
 {
 
   // FIXME: neighb2d should be an actual type, not an alias...
-  
+  typedef neighb_<dpoint2d> neighb2d;
+
 
   namespace internal
   {

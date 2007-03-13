@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Copyright (C) 2001, 2002, 2003, 2004, 2006, 2007 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -29,103 +29,66 @@
 #ifndef OLN_CORE_1D_DPOINT1D_HH
 # define OLN_CORE_1D_DPOINT1D_HH
 
-# include <mlc/int.hh>
-# include <oln/core/1d/point1d.hh>
-# include <oln/core/internal/dpoint_nd.hh>
+# include <oln/core/1d/grid1d.hh>
+# include <oln/core/internal/dpoint1d.hh>
 
 
 namespace oln
 {
 
-  typedef dpoint1d_<int> dpoint1d;
 
-
-  /// Fwd decls.
-  template <unsigned D> struct grid_;
-  typedef grid_<1> grid1d;
-  template <typename C> struct point1d_;
-  typedef point1d_<int> point1d;
+  struct  point1d;
+  struct dpoint1d;
 
 
   /// Super type.
-  template<typename C>
-  struct set_super_type< dpoint1d_<C> >
+  template<>
+  struct super_trait_< dpoint1d >
   {
-    typedef internal::dpoint_nd< dpoint1d_<C> > ret;
+    typedef internal::dpoint1d_< dpoint1d > ret;
   };
 
 
-  /// Virtual types associated to oln::dpoint1d_<C>.
-  template <typename C>
-  struct vtypes< dpoint1d_<C> >
+  /// Virtual types.
+  template <>
+  struct vtypes< dpoint1d >
   {
-    typedef grid1d        grid_type;
-    typedef point1d       point_type;
-    typedef C             coord_type;
-    typedef mlc::uint_<1> dim_type;
-
-    typedef mlc::uint_<0> index_comp_type;
+    typedef grid1d   grid;
+    typedef int      coord;
+    typedef point1d  point;
   };
 
 
-  /// General 1D dpoint class.
-  template <typename C>
-  class dpoint1d_
-    : public internal::dpoint_nd< dpoint1d_<C> >
+  /// Usual 1D dpoint class.
+  class dpoint1d : public internal::dpoint1d_< dpoint1d >
   {
-    typedef dpoint1d_<C>                self_t;
-    typedef internal::dpoint_nd<self_t> super_t;
-
-    using super_t::v_;
-
   public:
-
-    /// Ctor.
-    dpoint1d_();
-
-    /// Ctor.
-    dpoint1d_(const xtd::vec<1,C>& v);
-
-    /// Ctor.
-    dpoint1d_(C index);
-
-    C  index() const;
-    C& index();
+    /// Ctors.
+    dpoint1d();
+    dpoint1d(int ind);
   };
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename C>
-  dpoint1d_<C>::dpoint1d_()
+  dpoint1d::dpoint1d()
   {
   }
 
-  /// Ctor.
-  template <typename C>
-  dpoint1d_<C>::dpoint1d_(const xtd::vec<1,C>& v)
-    : super_t(v)
+  dpoint1d::dpoint1d(int ind)
   {
+    this->ind() = ind;
   }
-
-  /// Ctor.
-  template <typename C>
-  dpoint1d_<C>::dpoint1d_(C index)
-    : super_t(xtd::mk_vec(index))
-  {
-  }
-
-  template <typename C>
-  C  dpoint1d_<C>::index() const { return v_[0]; }
-
-  template <typename C>
-  C& dpoint1d_<C>::index()       { return v_[0]; }
 
 # endif
 
 
 } // end of namespace oln
+
+
+// dpoint1d goes with point1d so:
+# include <oln/core/1d/point1d.hh>
 
 
 #endif // ! OLN_CORE_1D_DPOINT1D_HH

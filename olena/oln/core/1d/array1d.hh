@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2003, 2004, 2006 EPITA Research and Development
-// Laboratory
+// Copyright (C) 2001, 2003, 2004, 2006, 2007 EPITA Research and
+// Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,40 +29,51 @@
 #ifndef OLN_CORE_1D_ARRAY1D_HH
 # define OLN_CORE_1D_ARRAY1D_HH
 
-# include <cstdlib>
+# include <cstddef>
 # include <mlc/contract.hh>
-# include <oln/core/abstract/array.hh>
 
 
 namespace oln
 {
 
   /// General 1D array class.
-  template <typename value_t, typename coord_t = int>
-  class array1d : public abstract::array
+
+  template <typename T, typename C = int>
+  class array1d_
   {
   public:
 
     /// Ctor.
-    array1d(coord_t min, coord_t max);
+    array1d_(C imin, C imax);
+
     /// Ctor.
-    array1d(coord_t len);
+    array1d_(C len);
 
     /// Dtor.
-    ~array1d();
+    ~array1d_();
 
-    value_t  operator()(coord_t i) const;
-    value_t& operator()(coord_t i);
+    const T& operator()(C i) const;
+          T& operator()(C i);
 
-    bool has(coord_t i) const;
+    const T& operator[](std::size_t ind) const;
+          T& operator[](std::size_t ind);
 
-    size_t memsize() const;
+    bool has(C i) const;
+
+    std::size_t memsize() const;
+    std::size_t ncells() const;
+
+    C imin() const;
+    C imax() const;
+
+    const T* buffer() const;
+    T* buffer();
 
   protected:
 
-    coord_t   min_, max_;
-    coord_t   len_;
-    value_t*  buffer_;
+    C   imin_, imax_;
+    C   len_;
+    T*  buffer_;
 
   private:
 
@@ -74,65 +85,113 @@ namespace oln
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename value_t, typename coord_t>
-  array1d<value_t, coord_t>::array1d(coord_t min, coord_t max) :
-    min_(min), max_(max)
+  template <typename T, typename C>
+  array1d_<T, C>::array1d_(C imin, C imax) :
+    imin_(imin),
+    imax_(imax)
   {
-    precondition(max >= min);
-    len_ = max - min + 1;
+    precondition(imax >= imin);
+    len_ = imax - imin + 1;
     allocate_();
   }
 
-  template <typename value_t, typename coord_t>
-  array1d<value_t, coord_t>::array1d(coord_t len) :
-    min_(0), len_(len)
+  template <typename T, typename C>
+  array1d_<T, C>::array1d_(C len) :
+    imin_(0),
+    len_(len)
   {
     precondition(len > 0);
-    max_ = min_ + len_;
+    imax_ = imin_ + len_;
     allocate_();
   }
 
-  template <typename value_t, typename coord_t>
-  array1d<value_t, coord_t>::~array1d()
+  template <typename T, typename C>
+  array1d_<T, C>::~array1d_()
   {
     deallocate_();
   }
 
-  template <typename value_t, typename coord_t>
-  value_t array1d<value_t, coord_t>::operator()(coord_t i) const
+  template <typename T, typename C>
+  const T& array1d_<T, C>::operator()(C i) const
   {
     precondition(has(i));
-    return buffer_[i - min_];
+    return buffer_[i];
   }
 
-  template <typename value_t, typename coord_t>
-  value_t& array1d<value_t, coord_t>::operator()(coord_t i)
+  template <typename T, typename C>
+  T& array1d_<T, C>::operator()(C i)
   {
     precondition(has(i));
-    return buffer_[i - min_];
+    return buffer_[i];
   }
 
-  template <typename value_t, typename coord_t>
-  bool array1d<value_t, coord_t>::has(coord_t i) const
+  template <typename T, typename C>
+  const T& array1d_<T, C>::operator[](std::size_t ind) const
   {
-    return
-      i >= min_ and i <= max_;
+    precondition(buffer_ != 0);
+    precondition(ind < len_);
+    return buffer_[ind];
   }
 
-  template <typename value_t, typename coord_t>
-  size_t array1d<value_t, coord_t>::memsize() const
+  template <typename T, typename C>
+  T& array1d_<T, C>::operator[](std::size_t ind)
   {
-    return size_t(len_) * sizeof(value_t);
+    precondition(buffer_ != 0);
+    precondition(ind < len_);
+    return buffer_[ind];
   }
 
-  template <typename value_t, typename coord_t>
-  void array1d<value_t, coord_t>::allocate_()
+  template <typename T, typename C>
+  bool array1d_<T, C>::has(C i) const
   {
-    buffer_ = new value_t[size_t(len_)];
+    return i >= imin_ and i <= imax_;
   }
 
-  template <typename value_t, typename coord_t>
-  void array1d<value_t, coord_t>::deallocate_()
+
+  template <typename T, typename C>
+  C array1d_<T, C>::imin() const
+  {
+    return imin_;
+  }
+
+  template <typename T, typename C>
+  C array1d_<T, C>::imax() const
+  {
+    return imax_;
+  }
+
+  template <typename T, typename C>
+  const T* array1d_<T, C>::buffer() const
+  {
+    return buffer_;
+  }
+
+  template <typename T, typename C>
+  T* array1d_<T, C>::buffer()
+  {
+    return buffer_;
+  }
+
+  template <typename T, typename C>
+  std::size_t array1d_<T, C>::ncells() const
+  {
+    return len_;
+  }
+
+  template <typename T, typename C>
+  std::size_t array1d_<T, C>::memsize() const
+  {
+    return len_ * sizeof(T);
+  }
+
+  template <typename T, typename C>
+  void array1d_<T, C>::allocate_()
+  {
+    buffer_ = new T[len_];
+  }
+
+  template <typename T, typename C>
+  void array1d_<T, C>::deallocate_()
   {
     precondition(buffer_ != 0);
     delete[] buffer_;
