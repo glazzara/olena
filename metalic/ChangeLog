@@ -1,3 +1,12 @@
+2007-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Tiny fix.
+
+	* mlc/typedef.hh (result): Rename as...
+	(result_): ...this; disambiguation.
+	* mlc/cmp.hh (assert_found_),
+	(assert_not_found_): New.
+
 2007-02-01  Thierry GERAUD  <theo@tegucigalpa.lrde.epita.fr>
 
 	* mlc/case.hh (mlc_case_equipment_for_namespace):

@@ -161,29 +161,29 @@ namespace typedef_ {						\
       static no selector(...);					\
 								\
       template <class T, bool found_>				\
-      struct result;						\
+      struct result_;						\
 								\
       template <class T>					\
-      struct result <T, true> {					\
+      struct result_ <T, true> {				\
 	typedef typename T::TypedefName ret;			\
       };							\
 								\
       template <class T>					\
-      struct result <T, false> {				\
+      struct result_ <T, false> {				\
 	typedef mlc::not_found ret;				\
       };							\
 								\
       template <class T, bool found_>				\
-      struct result2;						\
+      struct result_2;						\
 								\
       template <class T>					\
-      struct result2 <T, true> {				\
+      struct result_2 <T, true> {				\
 	typedef mlc::pair_<mlc::found,				\
 			   typename T::TypedefName> ret;	\
       };							\
 								\
       template <class T>					\
-      struct result2 <T, false> {				\
+      struct result_2 <T, false> {				\
 	typedef mlc::pair_<mlc::not_found,			\
 			   mlc::dummy> ret;			\
       };							\
@@ -205,11 +205,11 @@ namespace typedef_ {						\
       };							\
     public:							\
       typedef							\
-      typename helper_::result<T, found_>::ret			\
+      typename helper_::result_<T, found_>::ret			\
       ret;							\
 								\
       typedef							\
-      typename helper_::result2<T, found_>::ret			\
+      typename helper_::result_2<T, found_>::ret		\
       ret2;							\
     };								\
 								\
@@ -235,7 +235,7 @@ namespace typedef_ {						\
 								\
 }								\
 								\
-struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n			\
+struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_o_n
 
 
 /*! \macro mlc_typedef(Type, TypedefName)

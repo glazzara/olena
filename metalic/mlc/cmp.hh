@@ -161,6 +161,16 @@ namespace mlc
   struct is_found_ : public mlc_is_not_a(T, mlc::not_found)::bexpr
   {
   };
+
+  template <typename T, typename err = no_error_message>
+  struct assert_found_ : public assert_< is_found_<T>, err >
+  {
+  };
+
+  template <typename T, typename err = no_error_message>
+  struct assert_not_found_ : public assert_< is_not_found_<T>, err >
+  {
+  };
   /// \}
 
 
