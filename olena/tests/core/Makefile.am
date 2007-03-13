@@ -19,6 +19,7 @@ AM_CXXFLAGS = $(TESTS_CXXFLAGS)
 
 
 check_PROGRAMS =				\
+  apply						\
   dpoint2d					\
   point2d					\
   grid						\
@@ -40,6 +41,9 @@ neighb2d_SOURCES = neighb2d.cc
 
 # Methods.
 at_SOURCES = at.cc
+
+# FIXME: Temp!
+apply_SOURCES = apply.cc
 
 
 TESTS = $(check_PROGRAMS)

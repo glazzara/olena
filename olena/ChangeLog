@@ -1,5 +1,16 @@
 2007-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add oln_plain_value, update level::apply, and provide a sample test code.
+
+	* oln/core/internal/f_ch_value.hh (oln_plain_value): New.
+	* oln/core/internal/image_base.hh (include): Add f_ch_value.
+	* oln/level/apply.hh: Inactivate almost the whole code.
+	(apply): Update a single version.
+	* tests/core/apply.cc: New.
+	* tests/core/Makefile.am: Update.
+
+2007-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add plain and ch_value functions on images.
 
 	* oln/core/internal/f_ch_value.hh,

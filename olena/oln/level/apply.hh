@@ -29,9 +29,7 @@
 #ifndef OLN_LEVEL_APPLY_HH
 # define OLN_LEVEL_APPLY_HH
 
-# include <oln/core/abstract/image.hh>
-# include <oln/core/abstract/iterator.hh>
-# include <oln/core/abstract/functions.hh>
+# include <oln/core/concept/image.hh>
 
 
 namespace oln
@@ -41,22 +39,23 @@ namespace oln
   {
 
     /// Fwd decl.
-    template <typename I, typename V>
-    oln_plain_value(I, V)
-    apply(const abstract::image<I>& input, V (*fun)(const oln_value(I)&));
+    template <typename R, typename A, typename I>
+    oln_plain_value(I, R)
+    apply(R (*fun)(A), const Image<I>& input);
 
-    /// Fwd decl.
-    template <typename I, typename F>
-    oln_plain_value(I, typename F::result_value)
-    apply(const abstract::image<I>& input, const abstract::fun_v2v<F>& fun);
 
-    /// Fwd decl.
-    template <typename I, typename V>
-    void apply_inplace(abstract::mutable_image<I>& input, V (*fun)(const oln_value(I)&));
+//     /// Fwd decl.
+//     template <typename I, typename F>
+//     oln_plain_value(I, typename F::result_value)
+//     apply(const abstract::image<I>& input, const abstract::fun_v2v<F>& fun);
 
-    /// Fwd decl.
-    template <typename I, typename F>
-    void apply_inplace(abstract::mutable_image<I>& input, const abstract::fun_v2v<F>& fun);
+//     /// Fwd decl.
+//     template <typename I, typename V>
+//     void apply_inplace(abstract::mutable_image<I>& input, V (*fun)(const oln_value(I)&));
+
+//     /// Fwd decl.
+//     template <typename I, typename F>
+//     void apply_inplace(abstract::mutable_image<I>& input, const abstract::fun_v2v<F>& fun);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -65,85 +64,87 @@ namespace oln
     {
 
       /// Generic version.
-      template <typename I, typename V>
-      oln_plain_value(I, V)
-      apply(const abstract::image<I>& input, V (*fun)(const oln_value(I)&))
+
+      template <typename R, typename A, typename I>
+      oln_plain_value(I, R)
+      apply(R (*fun)(A), const Image<I>& input)
       {
-	oln_plain_value(I, V) output(input.topo());
-	oln_piter(I) p(input.topo());
+	oln_plain_value(I, R) output(input.points());
+	oln_piter(I) p(input.points());
 	for_all(p)
 	  output(p) = fun(input(p));
 	return output;
       }
 
-      /// Generic version.
-      template <typename I, typename F>
-      oln_plain_value(I, typename F::result_value)
-      apply(const abstract::image<I>& input, const abstract::fun_v2v<F>& fun)
-      {
-	oln_plain_value(I, typename F::result_value) output(input.topo());
-	oln_piter(I) p(input.topo());
-	for_all(p)
-	  output(p) = fun.exact()(input(p));
-	return output;
-      }
+
+//       /// Generic version.
+//       template <typename I, typename F>
+//       oln_plain_value(I, typename F::result_value)
+//       apply(const abstract::image<I>& input, const abstract::fun_v2v<F>& fun)
+//       {
+// 	oln_plain_value(I, typename F::result_value) output(input.topo());
+// 	oln_piter(I) p(input.topo());
+// 	for_all(p)
+// 	  output(p) = fun.exact()(input(p));
+// 	return output;
+//       }
 
 
-      /// Generic version.
-      template <typename I, typename V>
-      void
-      apply_inplace(abstract::mutable_image<I>& input, V (*fun)(const oln_value(I)&))
-      {
-	oln_piter(I) p(input.topo());
-	for_all(p)
-	  input(p) = fun(input(p));
-      }
+//       /// Generic version.
+//       template <typename I, typename V>
+//       void
+//       apply_inplace(abstract::mutable_image<I>& input, V (*fun)(const oln_value(I)&))
+//       {
+// 	oln_piter(I) p(input.topo());
+// 	for_all(p)
+// 	  input(p) = fun(input(p));
+//       }
 
-      /// Generic version.
-      template <typename I, typename F>
-      void
-      apply_inplace(abstract::mutable_image<I>& input, const abstract::fun_v2v<F>& fun)
-      {
-	oln_piter(I) p(input.topo());
-	for_all(p)
-	  input(p) = fun.exact()(input(p));
-      }
+//       /// Generic version.
+//       template <typename I, typename F>
+//       void
+//       apply_inplace(abstract::mutable_image<I>& input, const abstract::fun_v2v<F>& fun)
+//       {
+// 	oln_piter(I) p(input.topo());
+// 	for_all(p)
+// 	  input(p) = fun.exact()(input(p));
+//       }
 
     } // end of namespace oln::level::impl
 
 
     /// Facade.
-    template <typename I, typename V>
-    oln_plain_value(I, V)
-    apply(const abstract::image<I>& input, V (*fun)(const oln_value(I)&))
+    template <typename R, typename A, typename I>
+    oln_plain_value(I, R)
+    apply(R (*fun)(A), const Image<I>& input)
     {
-      return impl::apply(input, fun);
+      return impl::apply(fun, exact(input));
     }
 
-    /// Facade.
-    template <typename I, typename F>
-    oln_plain_value(I, typename F::result_value)
-    apply(const abstract::image<I>& input, const abstract::fun_v2v<F>& fun)
-    {
-      return impl::apply(input, fun);
-    }
+//     /// Facade.
+//     template <typename I, typename F>
+//     oln_plain_value(I, typename F::result_value)
+//     apply(const abstract::image<I>& input, const abstract::fun_v2v<F>& fun)
+//     {
+//       return impl::apply(input, fun);
+//     }
 
 
-    /// Facade.
-    template <typename I, typename V>
-    void
-    apply_inplace(abstract::mutable_image<I>& input, V (*fun)(const oln_value(I)&))
-    {
-      return impl::apply_inplace(input, fun);
-    }
+//     /// Facade.
+//     template <typename I, typename V>
+//     void
+//     apply_inplace(abstract::mutable_image<I>& input, V (*fun)(const oln_value(I)&))
+//     {
+//       return impl::apply_inplace(input, fun);
+//     }
 
-    /// Facade.
-    template <typename I, typename F>
-    void
-    apply_inplace(abstract::mutable_image<I>& input, const abstract::fun_v2v<F>& fun)
-    {
-      return impl::apply_inplace(input, fun);
-    }
+//     /// Facade.
+//     template <typename I, typename F>
+//     void
+//     apply_inplace(abstract::mutable_image<I>& input, const abstract::fun_v2v<F>& fun)
+//     {
+//       return impl::apply_inplace(input, fun);
+//     }
 
 # endif
 

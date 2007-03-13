@@ -38,6 +38,10 @@ oln::internal::f_ch_value_< stc_type_in_(oln, I, skeleton), T >::ret
 typename oln::internal::f_ch_value_< stc_type_in(oln, I, skeleton), T >::ret
 
 
+# define oln_plain_value(I, T) \
+typename oln::internal::f_ch_value_< stc_type_in(oln, oln_plain(I), skeleton), T >::ret
+
+
 
 namespace oln
 {
