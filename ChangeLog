@@ -1,3 +1,14 @@
+2007-03-13  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Change on rle_class.
+
+	* static/doc/tiny/more_scoop_2/main.cc: .
+	* olena/ChangeLog: .
+	* olena/oln/core/rle/rle_image.hh: .
+	* olena/oln/core/rle/rle_psite.hh: .
+	* olena/oln/core/rle/rle_pset.hh: .
+	* metalic/mlc/bool.hh: .
+
 2007-03-07  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix name lookup	for attribute of super classes.

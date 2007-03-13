@@ -44,7 +44,7 @@ namespace mlc
     ** either true or false.  Thanks to aliases, mlc::bool_<true> and
     ** mlc::bool_<false> are respectively mlc::true_ and mlc::false_.
     */
-    
+
     struct boolean : public value {};
 
   } // end of mlc::abstract
@@ -55,10 +55,10 @@ namespace mlc
   **
   ** Value type corresponding to bool.
   */
-  
+
   template <bool b>
   struct bool_ : public abstract::boolean
-		 
+
   {
     /*! \typedef type
     **
@@ -77,7 +77,7 @@ namespace mlc
     ** regular value of a type T that you know to be a mlc Boolean
     ** expression, you should prefer to use the macro mlc_value(T).
     ** This macro also ensures that T is a mlc value type.
-    ** 
+    **
     */
     static const bool value = b;
   };

@@ -1,3 +1,12 @@
+2007-03-13  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+        Change rle_image/rle_pset storage structure(map<point, value>/ map<point/unsigned>).
+	Note that rle_image know bugs (memory problem).
+
+	* oln/core/rle/rle_image.hh Update
+	* oln/core/rle/rle_pset.hh Update
+	* oln/core/rle/rle_psite.hh Adapte rle_psite class to rle_image and rle_pset changement
+
 2007-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add oln_plain_value, update level::apply, and provide a sample test code.

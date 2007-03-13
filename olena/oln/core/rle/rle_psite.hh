@@ -46,55 +46,63 @@ namespace oln
   **
   **
   */
-  template <typename P, typename T>
+  template <typename P>
   class rle_psite
   {
   public:
-    rle_psite(const rle_image<P, T>& ima, const P& p);
-    const typename std::map<std::pair<P, unsigned>, T>::iterator& iterator_() const;
-    typename std::map<std::pair<P, unsigned>, T>::iterator& iterator_();
-    const P& point_() const;
-  protected:
-    P p_;	                               		                     /*!< point corresponding to the psite */
-    typename std::map<std::pair<P, unsigned>, T>::iterator it_;              /*!< it_ on image map corresponding to p_*/
+    rle_psite();
+    //    template <typename T>
+//     rle_psite(const rle_image<P, T>& ima, const P& p);
+
+    P to_point() const;
+    operator P () const;
+
+    P start_;			/*!< start of the range which contains the psite */
+    unsigned index_;		/*!< index of the point in the range */
   };
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename P, typename T>
-  rle_psite<P, T>::rle_psite(const rle_image<P, T>& ima, const P& p) : p_(p)//, it_(ima.points().con())
+  template <typename P>
+  rle_psite<P>::rle_psite()
   {
-    P pend;
+  }
 
-//     for (this->it_ = ima.get_data_().begin(); this->it_ != ima.get_data_().end(); ++(this->it_))
+//   template <typename P>
+//   template <typename T>
+//   rle_psite<P>::rle_psite(const rle_image<P, T>& ima, const P& p) : start_(p)
+//   {
+//     P pend;
+
+//     typename rle_image<P, T>::piter it (ima.points());
+
+//     for (it.start(); it.is_valid(); it.next())
 //     {
-//       pend = this->it_->first.first;
-//       pend[0] += this->it_->first.second - 1;
-//       if (this->it_->first.first >= p && p <= pend)
-//      	return;
+//       pend = it;
+//       pend[0] += it->second - 1;
+//       if (*it >= p && p <= pend)
+//       {
+// 	this->start_ = it->first;
+// 	this->index_ = it->second - this->start[0];
+//       }
 //     }
-    it_ = ima.get_data_().end();
+//   }
+
+
+  template <typename P>
+  P
+  rle_psite<P>::to_point() const
+  {
+    P p = this->start_;
+
+    p[0] += this->index_;
+    return p;
   }
 
-  template <typename P, typename T>
-  const typename std::map<std::pair<P, unsigned>, T>::iterator&
-  rle_psite<P, T>::iterator_() const
+  template <typename P>
+  rle_psite<P>::operator P() const
   {
-    return this->it_;
-  }
-
-  template <typename P, typename T>
-  typename std::map<std::pair<P, unsigned>, T>::iterator&
-  rle_psite<P, T>::iterator_()
-  {
-    return this->it_;
-  }
-
-  template <typename P, typename T>
-  const P&
-  rle_psite<P, T>::point_() const
-  {
-    return p_;
+    return this->to_point();
   }
 
 # endif /* !OLN_INCLUDE_ONLY */

@@ -64,12 +64,14 @@ namespace oln
     typedef P point;
     typedef typename P::coord coord;
 
-    typedef rle_psite<P, T> psite;
+    typedef rle_psite<P> psite;
 
     typedef rle_pset<point> pset;
 //     typedef typename pset::box box;
 
-    typedef std::map<std::pair<point, unsigned>, value> data;
+    typedef mlc::none plain;
+
+    typedef std::pair< pset, std::map<point, value> > data;
   };
 
 
@@ -99,11 +101,6 @@ namespace oln
     rvalue impl_read(const psite& p) const;
     lvalue impl_read_write(const psite& p);
 
-    //Internal
-    const data& get_data_() const;
-
-  protected:
-    pset pset_;
   };
 
 # ifndef OLN_INCLUDE_ONLY
@@ -111,71 +108,65 @@ namespace oln
   template <typename P, typename T>
   rle_image<P, T>::rle_image()
   {
-    this->data_ = new typename rle_image<P, T>::data;
+    this->data_ = new data;
   }
 
   template <typename P, typename T>
   typename rle_image<P, T>::pset
   rle_image<P, T>::impl_points() const
   {
-    return pset_;
+    return this->data_->first;
   }
-
 
   template <typename P, typename T>
   typename rle_image<P, T>::box
   rle_image<P, T>::impl_bbox() const
   {
-    return pset_.bbox();
+   return this->data_->first.bbox();
   }
 
   template <typename P, typename T>
   bool
   rle_image<P, T>::impl_has(const typename rle_image<P, T>::point& p) const
   {
-    return this->pset_.has(p.point_());
+    return this->data_->first.has(p);
   }
 
   template <typename P, typename T>
   bool
   rle_image<P, T>::impl_owns_(const typename rle_image<P, T>::psite& p) const
   {
-    //FIXME
-    return this->pset_.has(p.point_());
+    return this->data_->first.has(p);
   }
 
   template <typename P, typename T>
   void
   rle_image<P, T>::insert(const typename rle_image<P, T>::point& p, unsigned len, rle_image<P, T>::value val)
   {
-    pset_.insert(p, len);
-    ((this->data_))->operator[](std::make_pair(p, len)) = val;
+    this->data_->first.insert(p, len);
+    this->data_->second[p] = val;
   }
 
   template <typename P, typename T>
   typename rle_image<P, T>::rvalue
-  rle_image<P, T>::impl_read(const rle_image<P, T>::psite& p) const
+  rle_image<P, T>::impl_read(const rle_image<P, T>::psite& ps) const
   {
-    precondition(p.iterator_() != this->data_->end());
-    return p.iterator_()->second;
+    //    precondition(p.iterator_() != this->data_->second.end());
+    return this->data_->second[ps];
   }
 
+  int a = 5;
   template <typename P, typename T>
   typename rle_image<P, T>::lvalue
-  rle_image<P, T>::impl_read_write(const rle_image<P, T>::psite& p)
+  rle_image<P, T>::impl_read_write(const rle_image<P, T>::psite& ps)
   {
-    precondition(p.iterator_() != this->data_->end());
-    return p.iterator_()->second;
-  }
+    std::cout << "read_write: " << std::endl;
+    std::cout << (point)ps << std::endl;
 
-  template <typename P, typename T>
-  const typename rle_image<P, T>::data&
-  rle_image<P, T>::get_data_() const
-  {
-    //FIXME: another way to do that?
-    return *(this->data_.ptr_);
+    //    precondition(p.iterator_() != this->data_->second.end());
+    //return this->data_->second[ps];
+    return a;
   }
-
 
 # endif // !OLN_INCLUDE_ONLY
 
