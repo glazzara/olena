@@ -30,6 +30,7 @@
 
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/internal/utils.hh>
+# include <oln/core/internal/f_pset_plain.hh>
 
 
 namespace oln
@@ -54,6 +55,9 @@ namespace oln
     typedef const T&           rvalue;
 
     typedef internal::pair<Ps, T> data;
+
+    typedef oln_f_pset_plain(Ps, T) plain;
+    typedef single_value_image<Ps, pl::value> skeleton;
   };
 
 
@@ -151,7 +155,7 @@ namespace oln
     this->data_->value2 = new_value;
   }
 
-# endif
+# endif // OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

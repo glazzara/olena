@@ -25,40 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// Test oln::neighb2d.
+#ifndef OLN_CORE_INTERNAL_F_PSET_PLAIN_HH
+# define OLN_CORE_INTERNAL_F_PSET_PLAIN_HH
 
-#include <oln/core/2d/image2d.hh>
-#include <oln/core/2d/neighb2d.hh>
+# include <oln/core/concept/point_set.hh>
 
 
-namespace test
+#define oln_f_pset_plain(Ps, T) typename oln::internal::f_pset_plain_< Ps, T >::ret
+
+
+namespace oln
 {
 
-  template <typename I>
-  unsigned run(const oln::Image_with_Nbh<I>& input)
+  // Fwd decls.
+  struct grid2d_rec;
+  template <typename P> class box_;
+  typedef box_<point2d> box2d;
+  template <typename T> class image2d_b;
+
+
+  namespace internal
   {
-    oln_piter(I) p(input.points());
-    oln_niter(I) n(p, input.nbhood());
-    unsigned count = 0;
 
-    for_all(p)
+    template <typename Gr, typename Ps, typename T>
+    struct f_pset_plain__;
+
+    template <typename T>
+    struct f_pset_plain__< grid2d_rec, box2d, T >
     {
-      for_all(n)
-	if (input.owns_(n))
-	  ++count;
-    }
-    return count;
-  }
-}
+      typedef image2d_b<T> ret;
+    };
+
+    template <typename Ps, typename T>
+    struct f_pset_plain_ : private mlc::assert_< mlc_is_a(Ps, Point_Set) >,
+		      public f_pset_plain__< stc_type(Ps, grid), Ps, T >
+		      
+    {
+    };
+
+  } // end of namespace oln::internal
+
+} // end of namespace oln
 
 
-int main()
-{
-  using namespace oln;
-
-  image2d<bool> ima(3, 3);
-  // 2 + 3 + 2 +
-  // 3 + 4 + 3 +
-  // 2 + 3 + 2 = 24
-  assert(test::run(ima + c4) == 24);
-}
+#endif // ! OLN_CORE_INTERNAL_F_PSET_PLAIN_HH

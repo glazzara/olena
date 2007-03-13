@@ -25,7 +25,6 @@ check_PROGRAMS =				\
   image2d					\
   neighb2d					\
   npoints					\
-  neighb2d					\
   window2d					\
   at
 

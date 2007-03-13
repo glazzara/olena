@@ -95,11 +95,13 @@ namespace oln
 
   // p
   stc_decl_associated_type( piter );
+  stc_decl_associated_type( plain );
   stc_decl_associated_type( point );
   stc_decl_associated_type( pset );
   stc_decl_associated_type( psite );
 
 # define oln_piter(T) oln_typename_shortcut__(T, piter)
+# define oln_plain(T) oln_typename_shortcut__(T, plain)
 # define oln_point(T) oln_typename_shortcut__(T, point)
 
   // q
@@ -114,6 +116,7 @@ namespace oln
 
   // s
   stc_decl_associated_type( std_container );
+  stc_decl_associated_type( skeleton );
 
   // t
   stc_decl_associated_type( tag );

@@ -62,6 +62,9 @@ namespace oln
     typedef N nbh;
     typedef dpoints_fwd_piter_<point__> fwd_niter;
     typedef dpoints_bkd_piter_<point__> bkd_niter;
+
+    typedef op_<oln_plain(I), plus, N> plain;
+    typedef op_<pl::rec<I>,   plus, N> skeleton;
   };
 
 
@@ -81,18 +84,60 @@ namespace oln
       stc_using(data);
       stc_using(delegatee);
 
-      delegatee& impl_image()               { assert(this->has_data()); return this->data_->value1; }
-      const delegatee& impl_image() const   { assert(this->has_data()); return this->data_->value1; }
+      delegatee& impl_image();
+      const delegatee& impl_image() const;
 
-      nbh impl_nbhood() const               { assert(this->has_data()); return this->data_->value2; }
+      nbh impl_nbhood() const;
 
     protected:
-      special_op_(I& ima, N& n)
-      {
-	this->data_ = new data(ima, n);
-      }
+      special_op_();
+      special_op_(I& ima, N& n);
     };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+# define current \
+    special_op_< stc::is<Image>, I, plus, stc::is<Neighborhood>, N >
+
+    template <typename I, typename N>
+    current::special_op_()
+    {
+    }
+
+    template <typename I, typename N>
+    current::special_op_(I& ima, N& n)
+    {
+      this->data_ = new data(ima, n);
+    }
+
+    template <typename I, typename N>
+    typename current::delegatee&
+    current::impl_image()
+    {
+      assert(this->has_data());
+      return this->data_->value1;
+    }
+
+    template <typename I, typename N>
+    const typename current::delegatee&
+    current::impl_image() const
+    {
+      assert(this->has_data());
+      return this->data_->value1;
+    }
+
+    template <typename I, typename N>
+    typename current::nbh
+    current::impl_nbhood() const
+    {
+      assert(this->has_data());
+      return this->data_->value2;
+    }
+
+# undef current
     
+# endif // OLN_INCLUDE_ONLY
     
   } // end of namespace oln::internal
 

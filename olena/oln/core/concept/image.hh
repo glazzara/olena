@@ -123,6 +123,7 @@ namespace oln
     stc_typename(pset);
 
     // stc_typename(output); // FIXME: Uncomment!
+    stc_typename(plain);
 
     bool owns_(const psite& p) const;
     rvalue operator()(const psite& p) const;

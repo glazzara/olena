@@ -99,6 +99,10 @@ namespace stc
 # define stc_type_(From, Type) vtype<From, typedef_::Type>::ret
 # define stc_type(From, Type) typename stc_type_(From, Type)
 
+# define stc_type_in_(Namespace, From, Type) Namespace::vtype<From, Namespace::typedef_::Type>::ret
+# define stc_type_in(Namespace, From, Type) typename stc_type_in_(Namespace, From, Type)
+
+
 # define stc_get_type_(Type) vtype<Exact, typedef_::Type>::ret
 # define stc_get_type(Type) typename stc_get_type_(Type)
 

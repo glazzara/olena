@@ -25,25 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_INSTANT_VALUE_HH
-# define OLN_CORE_INTERNAL_INSTANT_VALUE_HH
+#ifndef OLN_CORE_INTERNAL_F_CH_VALUE_HH
+# define OLN_CORE_INTERNAL_F_CH_VALUE_HH
+
+# include <oln/core/internal/image_base.hh>
 
 
-# define oln_decl_instant_value(Name)				\
-								\
-template <typename V>						\
-struct Name##_t : public internal::instant_value_< Name##_t, V>	\
-{								\
-  Name##_t(const V& v) { this->value = v; }			\
-};								\
-								\
-template <typename V>						\
-Name##_t<V> Name(const V& v)					\
-{								\
-  return Name##_t<V>(v);					\
-}								\
-								\
-struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
+#define oln_ch_value_(I, T) \
+oln::internal::f_ch_value_< stc_type_in_(oln, I, skeleton), T >::ret
+
+#define oln_ch_value(I, T) \
+typename oln::internal::f_ch_value_< stc_type_in(oln, I, skeleton), T >::ret
 
 
 
@@ -53,37 +45,57 @@ namespace oln
   namespace internal
   {
 
-    /// Class internal::instant_value_<M,V>.
+    template <typename I, typename T> struct f_ch_value_;
 
-    template <template<class> class M, typename V>
-    struct instant_value_
+
+    template <template <class> class tc,
+	      typename T>
+    struct f_ch_value_< tc<pl::value>,
+			T >
     {
-      V value;
-
-      /*
-      template <typename W>
-      operator M<W>() const; // FIXME: do not compile with g++-3!!!
-      */
+      typedef tc<T> ret;
     };
 
 
-# ifndef OLN_INCLUDE_ONLY
-
-    /*
-    template <template<class> class M, typename V>
-    template <typename W>
-    instant_value_<M,V>::operator M<W>() const
+    template <template <class, class> class tcc, typename t,
+	      typename T>
+    struct f_ch_value_< tcc<t, pl::value>,
+			T >
     {
-      M<W> tmp(this->value);
-      return tmp;
-    }
-    */
+      typedef tcc<t, T> ret;
+    };
 
-# endif // OLN_INCLUDE_ONLY
+
+    template <template <class> class tc, typename t,
+	      typename T>
+    struct f_ch_value_< tc< pl::rec<t> >,
+			T >
+    {
+      typedef tc< oln_ch_value(t, T) > ret;
+    };
+
+
+    template <template <class, class> class tcc, typename t1, typename t2,
+	      typename T>
+    struct f_ch_value_< tcc< pl::rec<t1>, t2 >,
+			T >
+    {
+      typedef tcc< oln_ch_value(t1, T), t2 > ret;
+    };
+
+
+    template <template <class, class, class> class tccc, typename t1, typename t2, typename t3,
+	      typename T>
+    struct f_ch_value_< tccc< pl::rec<t1>, t2, t3 >,
+			T >
+    {
+      typedef tccc< oln_ch_value(t1, T), t2, t3 > ret;
+    };
+
 
   } // end of namespace oln::internal
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_INSTANT_VALUE_HH
+#endif // ! OLN_CORE_INTERNAL_F_CH_VALUE_HH

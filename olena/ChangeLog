@@ -1,5 +1,28 @@
 2007-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add plain and ch_value functions on images.
+
+	* oln/core/internal/f_ch_value.hh,
+	* oln/core/internal/f_pset_plain.hh: New.
+	* tests/core/neighb2d.cc: Fix.
+	* tests/core/Makefile.am: Fix.
+	* oln/core/concept/image.hh (plain): New.
+	* oln/core/equipment.hh (plain, skeleton): New.
+	(oln_plain): New.
+	* oln/core/2d/image2d.hh: Update.
+	* oln/core/2d/image2d_b.hh: Update.
+	* oln/core/gen/op.hh (op_): New ctor.
+	* oln/core/gen/single_value_image.hh: Update.
+	* oln/core/internal/op_image_plus_nbh.hh: Separate decl and impl.
+	(special_op_): New ctor.
+	* oln/core/internal/instant_value.hh: Inactivate code that does not
+	compile with g++-3.
+	* oln/core/internal/image_base.hh (pl::value, pl::rec): New.
+	(image_base_): Update.
+	* oln/stc/scoop.hh (stc_type_in_, stc_type_in): New.
+
+2007-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add initialization material; extend point2d and box2d with it.
 
 	* oln/core/init.hh,

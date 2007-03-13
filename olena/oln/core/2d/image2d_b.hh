@@ -101,6 +101,9 @@ namespace oln
     typedef box2d pset;
     typedef internal::array_b_<point2d, T> data;
 
+    typedef image2d_b<T>         plain;
+    typedef image2d_b<pl::value> skeleton;
+
     // FIXME: wrong qiter!!!
   };
 

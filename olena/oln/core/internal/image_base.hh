@@ -40,6 +40,19 @@
 namespace oln
 {
 
+
+  // FIXME: Experimental code below.
+
+  namespace pl // placeholder for short
+  {
+    struct value;
+    template <typename t> struct rec;
+   }
+ 
+  // End of experimental code.
+
+
+
   /// Fwd decls.
 
   namespace internal
@@ -116,7 +129,9 @@ namespace oln
     typedef stc::abstract rvalue;
 
     // FIXME: Uncomment below!
-    // typedef stc::abstract output;
+    // typedef stc::abstract ...
+    typedef stc::abstract skeleton;
+    typedef stc::abstract plain;
 
     typedef stc::abstract data;
 
@@ -155,7 +170,11 @@ namespace oln
   {
     typedef stc::abstract      delegatee;
     typedef stc::abstract      behavior;
+    
+    // not delegated:
     typedef stc::not_delegated data;
+    typedef stc::not_delegated plain;
+    typedef stc::not_delegated skeleton;
   };
 
   template <typename Exact>

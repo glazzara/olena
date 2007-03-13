@@ -56,6 +56,9 @@ namespace oln
 
     typedef box2d                  pset;
     typedef array2d_<value, coord> data;
+
+    typedef image2d<T>         plain;
+    typedef image2d<pl::value> skeleton;
   };
 
 

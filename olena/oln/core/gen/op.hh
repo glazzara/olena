@@ -138,6 +138,7 @@ namespace oln
   class op_ : public super
   {
   public:
+    op_();
     op_(L& l, R& r);
 
   }; // end of op_<L, OpName, R>
@@ -145,6 +146,11 @@ namespace oln
 
 
 # ifndef OLN_INCLUDE_ONLY
+
+  template <typename L, typename OpName, typename R>
+  op_<L, OpName, R>::op_()
+  {
+  }
 
   template <typename L, typename OpName, typename R>
   op_<L, OpName, R>::op_(L& l, R& r)
