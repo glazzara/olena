@@ -1,5 +1,4 @@
-// Copyright (C) 2005, 2006, 2007 EPITA Research and Development
-// Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,34 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_GRID_HH
-# define OLN_CORE_CONCEPT_GRID_HH
+#ifndef OLN_CORE_INTERNAL_INSTANT_VALUE_HH
+# define OLN_CORE_INTERNAL_INSTANT_VALUE_HH
 
-# include <oln/core/equipment.hh>
-# include <oln/core/internal/instant_value.hh>
+
+# define oln_decl_instant_value(Name)				\
+								\
+template <typename V>						\
+struct Name##_t : public internal::instant_value_< Name##_t, V>	\
+{								\
+  Name##_t(const V& v) { this->value = v; }			\
+};								\
+								\
+template <typename V>						\
+Name##_t<V> Name(const V& v)					\
+{								\
+  return Name##_t<V>(v);					\
+}								\
+								\
+struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
+
 
 
 namespace oln
 {
 
-  /// Instant values.
-  oln_decl_instant_value(from);
-  oln_decl_instant_value(to);
-
-
-  /// Concept-class "Grid".
-
-  template <typename Exact>
-  struct Grid : public Any<Exact>
+  namespace internal
   {
-    stc_typename(dim);
 
-  protected:
-    Grid() {}
-  };
+    /// Class internal::instant_value_<M,V>.
 
+    template <template<class> class M, typename V>
+    struct instant_value_
+    {
+      V value;
+
+      template <typename W>
+      operator M<W>() const;
+    };
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <template<class> class M, typename V>
+    template <typename W>
+    instant_value_<M,V>::operator M<W>() const
+    {
+      M<W> tmp(this->value);
+      return tmp;
+    }
+
+# endif // OLN_INCLUDE_ONLY
+
+  } // end of namespace oln::internal
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_CONCEPT_GRID_HH
+#endif // ! OLN_CORE_INTERNAL_INSTANT_VALUE_HH

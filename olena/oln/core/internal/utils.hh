@@ -35,6 +35,11 @@ namespace oln
   namespace internal
   {
 
+
+    // FIXME: Rename attributes as first / second / third / fourth?
+
+
+
     /// Simple singleton class.
 
     template <typename T>
@@ -109,4 +114,3 @@ namespace oln
 
 
 #endif // ! OLN_CORE_INTERNAL_UTILS_HH
-

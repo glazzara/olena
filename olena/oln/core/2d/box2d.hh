@@ -28,18 +28,79 @@
 #ifndef OLN_CORE_2D_BOX2D_HH
 # define OLN_CORE_2D_BOX2D_HH
 
-# include <oln/core/gen/box.hh>
 # include <oln/core/2d/point2d.hh>
 
 
 namespace oln
 {
 
+  // Fwd decl.
+  template <typename P> class box_;
+
+
   // FIXME: box2d should be an actual type, not an alias...
   typedef box_<point2d> box2d;
+
+
+  /// init__
+  namespace internal
+  {
+
+    template <typename C>
+    void init__(box2d& b,
+		const initializer_< pair< nrows_t<C>, ncols_t<C> > >& data);
+
+    template <typename C>
+    void init__(box2d& b,
+		const initializer_< triplet< from_t<point2d>, nrows_t<C>, ncols_t<C> > >& data);
+
+  } // end of namespace oln::internal
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_2D_BOX2D_HH
+# include <oln/core/gen/box.hh>
 
+
+# ifndef OLN_INCLUDE_ONLY
+
+namespace oln
+{
+
+  namespace internal
+  {
+
+    template <typename C>
+    void init__(box2d& b,
+		const initializer_< pair< nrows_t<C>, ncols_t<C> > >& data)
+    {
+      C nrows = data->value1.value;
+      C ncols = data->value2.value;
+      precondition(nrows > 0 and ncols > 0);
+      b.pmin().row() = 0;
+      b.pmin().col() = 0;
+      b.pmax().row() = nrows - 1;
+      b.pmax().col() = ncols - 1;
+    }
+
+    template <typename C>
+    void init__(box2d& b,
+		const initializer_< triplet< from_t<point2d>, nrows_t<C>, ncols_t<C> > >& data)
+    {
+      C nrows = data->value2.value;
+      C ncols = data->value3.value;
+      precondition(nrows > 0 and ncols > 0);
+      b.pmin() = data->value1.value;
+      b.pmax().row() = b.pmin().row() + nrows - 1;
+      b.pmax().col() = b.pmin().col() + ncols - 1;
+    }
+
+  } // end of namespace oln::internal
+
+} // end of namespace oln
+
+
+# endif // OLN_INCLUDE_ONLY
+
+
+#endif // ! OLN_CORE_2D_BOX2D_HH

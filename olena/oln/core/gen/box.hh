@@ -32,10 +32,12 @@
 # include <oln/core/concept/point.hh>
 # include <oln/core/concept/iterator_on_points.hh>
 # include <oln/core/internal/point_set_base.hh>
+# include <oln/core/init.hh>
 
 
 namespace oln
 {
+
 
   // Forward declarations.
   template <typename P> class box_;
@@ -62,6 +64,15 @@ namespace oln
   };
 
 
+  /// init__
+  namespace internal
+  {
+    template <typename P>
+    void init__(box_<P>& b,
+		const initializer_< pair< from_t<P>, to_t<P> > >& data);
+  }
+
+
   /// Generic box class based on a point class.
 
   template <typename P>
@@ -83,6 +94,8 @@ namespace oln
 
     box_();
     box_(const P& pmin, const P& pmax);
+    template <typename D>
+    box_(const internal::initializer_<D>& data);
 
     unsigned       impl_npoints() const;
     bool           impl_has(const P& p) const;
@@ -99,6 +112,11 @@ namespace oln
   }; // end of class oln::box_<P>
 
 
+  template <typename P>
+  std::ostream& operator<<(std::ostream& ostr, const box_<P>& b)
+  {
+    return ostr << "{ " << b.pmin() << " .. " << b.pmax() << " }";
+  }
 
 
   // --------------------   iterators  on  box_<P>
@@ -207,6 +225,13 @@ namespace oln
     this->pmin_ = pmin;
     this->pmax_ = pmax;
   }
+
+  template <typename P>
+  template <typename D>
+  box_<P>::box_(const internal::initializer_<D>& data)
+  {
+    internal::init__(*this, data);
+  }
       
   template <typename P>
   unsigned
@@ -267,6 +292,22 @@ namespace oln
     return this->pmax_;
   }
 
+
+  // --------------------   init__
+
+
+  namespace internal
+  {
+
+    template <typename P>
+    void init__(box_<P>& b,
+		const initializer_< pair< from_t<P>, to_t<P> > >& data)
+    {
+      b.pmin() = data->value1.value;
+      b.pmax() = data->value2.value;
+    }
+
+  }
 
 
   // --------------------   box_fwd_piter_<P>
@@ -407,7 +448,7 @@ namespace oln
     return &p_;
   }
 
-# endif
+# endif // OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

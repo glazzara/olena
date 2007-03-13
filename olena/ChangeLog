@@ -1,5 +1,21 @@
 2007-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add initialization material; extend point2d and box2d with it.
+
+	* oln/core/init.hh,
+	* oln/core/internal/initializer.hh,
+	* oln/core/internal/instant_value.hh: New.
+	* oln/core/concept/grid.hh (from, to): New.
+	* oln/core/2d/grid2d.hh (row, col),
+	(drow, dcol, nrows, ncols): New.
+	* oln/core/2d/box2d.hh (init__): New.
+	* oln/core/2d/point2d.hh (init__): New.
+	* oln/core/gen/box.hh (init__): New.
+	(operator<<): New.
+	* oln/core/internal/utils.hh: Add FIXME.
+
+2007-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add 1D classes and remove some dead code.
 
 	* oln/core/internal/utils.hh (triplet): New.

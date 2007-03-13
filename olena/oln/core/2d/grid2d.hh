@@ -32,12 +32,21 @@
 # include <oln/core/concept/grid.hh>
 
 
+
 # define OLN_ENV_2D
 
 
 
 namespace oln
 {
+
+  /// Instant values.
+  oln_decl_instant_value(row);
+  oln_decl_instant_value(col);
+  oln_decl_instant_value(drow);
+  oln_decl_instant_value(dcol);
+  oln_decl_instant_value(nrows);
+  oln_decl_instant_value(ncols);
 
 
   /// \{
