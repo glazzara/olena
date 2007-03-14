@@ -1,5 +1,12 @@
 2007-03-14  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	New sparse_image class, not working yet.
+
+	* oln/core/sparse: New.
+	* oln/core/sparse/sparse_image.hh: New.
+
+2007-03-14  Nicolas Ballas  <ballas@lrde.epita.fr>
+
 	New rle_encode function.
 
 	* oln/core/encode,
