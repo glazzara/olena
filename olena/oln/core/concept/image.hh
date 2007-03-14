@@ -76,6 +76,12 @@ Image
   |
   |
   |
+  o -- + -- Plain_Image
+  |    |
+  |    + -- Computed_Image
+  |
+  |
+  |
   o -- + -- Gray_Level_Image
   |    |
   |    + -- Color_Image

@@ -1,3 +1,75 @@
+2007-03-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Remove dead code.
+
+	* oln/core/abstract/image/hybrid/classical.hh,
+	* oln/core/abstract/image/type/binary.hh,
+	* oln/core/abstract/image/type/data.hh,
+	* oln/core/abstract/image/type/grey_level.hh,
+	* oln/core/abstract/image/type/integre.hh,
+	* oln/core/abstract/image/type/color.hh,
+	* oln/core/abstract/image/type/hierarchy.hh,
+	* oln/core/abstract/image/type/label.hh,
+	* oln/core/abstract/image/mutability/hierarchy.hh,
+	* oln/core/abstract/image/hierarchies.hh,
+	* oln/core/abstract/image/computability/hierarchy.hh,
+	* oln/core/abstract/image/dimension/1d.hh,
+	* oln/core/abstract/image/dimension/2d.hh,
+	* oln/core/abstract/image/dimension/3d.hh,
+	* oln/core/abstract/image/dimension/hierarchy.hh,
+	* oln/core/abstract/image/all.hh,
+	* oln/core/abstract/image/neighborhood/hierarchy.hh,
+	* oln/core/abstract/image/point_wise_accessibility/hierarchy.hh,
+	* oln/core/abstract/image/bbox/hierarchy.hh,
+	* oln/core/abstract/image/value_wise_accessibility/hierarchy.hh,
+	* oln/core/abstract/fwd_decls.hh,
+	* oln/core/abstract/array.hh,
+	* oln/core/abstract/internal/image_impl.hh,
+	* oln/core/automatic/image/image.hh,
+	* oln/core/automatic/image/image1d.hh,
+	* oln/core/automatic/image/image2d.hh,
+	* oln/core/automatic/image/image3d.hh,
+	* oln/core/automatic/image/image_being_point_wise_random_accessible.hh,
+	* oln/core/automatic/image/image_being_value_wise_random_accessible.hh,
+	* oln/core/automatic/image/image_having_neighborhood.hh,
+	* oln/core/automatic/image/mutable_image.hh,
+	* oln/core/automatic/image/mutable_image1d.hh,
+	* oln/core/automatic/image/mutable_image2d.hh,
+	* oln/core/automatic/image/mutable_image3d.hh,
+	* oln/core/automatic/impl.hh,
+	* oln/core/automatic/topology/topology_being_random_accessible.hh,
+	* oln/core/automatic/topology/topology_having_bbox.hh,
+	* oln/core/automatic/topology/topology_having_neighborhood.hh,
+	* oln/core/automatic/topology/topology_having_subset.hh,
+	* oln/core/iterator_vtypes.hh,
+	* oln/core/spe/row.hh,
+	* oln/core/spe/col.hh,
+	* oln/core/spe/slice.hh,
+	* oln/core/type_fun/plain.hh,
+	* oln/core/type_fun/ch_value.hh,
+	* oln/core/type_fun/slice.hh: Remove files.
+
+	* oln/core/abstract/functions.hh: Rename as...
+	* oln/core/concept/functions.hh: ...this and update.
+	* oln/core/concept/image.hh: Add doc.
+
+	* oln/core/abstract/image/hybrid,
+	* oln/core/abstract/image/type,
+	* oln/core/abstract/image/mutability,
+	* oln/core/abstract/image/computability,
+	* oln/core/abstract/image/dimension,
+	* oln/core/abstract/image/neighborhood,
+	* oln/core/abstract/image/point_wise_accessibility,
+	* oln/core/abstract/image/bbox,
+	* oln/core/abstract/image/value_wise_accessibility,
+	* oln/core/abstract/image,
+	* oln/core/abstract/internal,
+	* oln/core/abstract,
+	* oln/core/automatic/image,
+	* oln/core/automatic/topology,
+	* oln/core/spe,
+	* oln/core/type_fun: Remove directories.
+
 2007-03-13  Nicolas Ballas  <ballas@lrde.epita.fr>
 
         Change rle_image/rle_pset storage structure(map<point, value>/ map<point/unsigned>).
