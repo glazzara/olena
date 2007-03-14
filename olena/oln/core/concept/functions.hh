@@ -73,6 +73,16 @@ namespace oln
   };
 
 
+  // Neighborhood -> Value.
+
+  template <typename Exact>
+  struct Accumulator : public Function<Exact>
+  {
+  protected:
+    Accumulator();
+  };
+
+
   /*
 
   // Value1 -> Value2  *and*  Value2 -> Value1.

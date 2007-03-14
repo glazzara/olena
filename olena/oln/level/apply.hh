@@ -41,7 +41,7 @@ namespace oln
     /// Fwd decl.
     template <typename R, typename A, typename I>
     oln_plain_value(I, R)
-    apply(R (*fun)(A), const Image<I>& input);
+      apply(R (*fun)(A), const Image<I>& input);
 
 
 //     /// Fwd decl.
@@ -63,17 +63,64 @@ namespace oln
     namespace impl
     {
 
-      /// Generic version.
-
-      template <typename R, typename A, typename I>
-      oln_plain_value(I, R)
-      apply(R (*fun)(A), const Image<I>& input)
+      template < typename F >
+      struct result
       {
-	oln_plain_value(I, R) output(input.points());
-	oln_piter(I) p(input.points());
-	for_all(p)
-	  output(p) = fun(input(p));
-	return output;
+	  typedef typename F::result ret;
+      };
+
+      template < typename R (*fun)(A) >
+      struct result
+      {
+	  typedef typename R ret;
+      };
+
+      template < typename F >
+      struct argument
+      {
+	  typedef typename F::argument ret;
+      };
+
+      template < typename R (*fun)(A) >
+      struct argument
+      {
+	  typedef typename A	ret;
+      };
+
+
+      // APPLY //
+      //---------
+
+      template <typename F, typename I>
+      oln_plain_value(I, result<typename F>::ret)
+        apply(const F& fun, const Image<I>& input)
+      {
+	typedef argument<typename F>::ret	A;
+        typedef result<typename F>::ret		R;
+
+        oln_ch_value(I, R) output(input.points());
+        oln_piter(I) p(input.points());
+        for_all(p)
+          output(p) = fun( static_cast<A>(input(p)) );
+        return output;
+      }
+
+
+      // APPLY_LOCAL //
+      //---------------
+
+      template <typename F, typename I>
+      oln_plain_value(I, result<typename F>::ret)
+        apply_local(const F& fun, const Image<I>& input)
+      {
+        typedef argument<typename F>::ret	A;
+        typedef result<typename F>::ret		R;
+
+        oln_ch_value(I, R) output(input.points());
+        oln_piter(I) p(input.points());
+        for_all(p)
+	  output(p) = local_apply(fun, input, p);
+        return output;
       }
 
 
@@ -112,13 +159,39 @@ namespace oln
 
     } // end of namespace oln::level::impl
 
+    /// Facades.
+    //----------------------------
 
-    /// Facade.
+    /// Apply.
+
     template <typename R, typename A, typename I>
     oln_plain_value(I, R)
-    apply(R (*fun)(A), const Image<I>& input)
+      apply(R (*fun)(A), const Image<I>& input)
     {
       return impl::apply(fun, exact(input));
+    }
+
+    template <typename F, typename I>
+    oln_plain_value(I, typename F::result)
+      apply(const F& fun, const Image<I>& input)
+    {
+      return impl::apply(fun, exact(input));
+    }
+
+    /// Apply local
+
+    template <typename R, typename A, typename I>
+    oln_plain_value(I, R)
+      apply_local(R (*fun)(A), const Image<I>& input)
+    {
+      return impl::apply_local(fun, exact(input));
+    }
+
+    template <typename F, typename I>
+    oln_plain_value(I, typename F::result)
+      apply_local(const F& fun, const Image<I>& input)
+    {
+      return impl::apply_local(fun, exact(input));
     }
 
 //     /// Facade.

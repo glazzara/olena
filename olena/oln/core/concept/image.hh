@@ -132,7 +132,7 @@ namespace oln
     stc_typename(plain);
 
     bool owns_(const psite& p) const;
-    rvalue operator()(const psite& p) const;
+      rvalue operator()(const psite& p) const;
 
     box  bbox() const;
     pset points() const;

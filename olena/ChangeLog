@@ -1,3 +1,19 @@
+2007-03-14  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Update and add : apply, local canvas.
+
+	* tests/core/Makefile.am: .
+	* oln/function: New.
+	* oln/function/min.hh: New.
+	* oln/level/apply.hh: .
+	* oln/level/local.hh: New.
+	* oln/core/concept/image.hh: .
+	* oln/core/concept/functions.hh: .
+	* oln/core/internal/max_value.hh: New.
+	* oln/morphomath: New.
+	* oln/morphomath/dilatation.hh: New.
+	* oln/morphomath/erosion.hh: New.
+
 2007-03-14  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	New sparse_image class, not working yet.

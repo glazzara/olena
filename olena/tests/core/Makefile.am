@@ -37,7 +37,6 @@ image2d_SOURCES = image2d.cc
 neighb2d_SOURCES = neighb2d.cc
 npoints_SOURCES = npoints.cc
 window2d_SOURCES = window2d.cc
-neighb2d_SOURCES = neighb2d.cc
 
 # Methods.
 at_SOURCES = at.cc
