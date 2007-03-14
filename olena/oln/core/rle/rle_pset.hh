@@ -47,21 +47,38 @@ namespace oln
   template <typename P> struct rle_pset_fwd_piter_;
   template <typename P> struct rle_pset_bkd_piter_;
 
+  // Super type.
+  template <typename P>
+  struct super_trait_< rle_pset<P> >
+  {
+    typedef rle_pset<P> current;
+    typedef internal::point_set_base_<current> ret;
+  };
+
   // Vtypes associated to rle_pset class
   template <typename P>
   struct vtypes< rle_pset<P> >
   {
     typedef P point;
-    typedef typename P::grid grid;
-
-    typedef box_<point> box;
 
     typedef rle_pset_fwd_piter_<P> fwd_piter;
     typedef rle_pset_bkd_piter_<P> bkd_piter;
-    typedef fwd_piter piter;
   };
 
   // rle_pset class
+  /*
+  ** \class rle_pset
+  ** \brief pset correspoding to the rle_image class
+  **
+  ** Note: P must be a point type
+  ** method:
+  ** unsigned impl_npoints() const        : return number of point in the point set
+  ** const box& impl_bbox() const         : return a box which includes all poin into the set
+  ** void insert(const P& p, unsigned len): insert a new range on the point set
+  ** bool impl_has(const P& p) const      : if p include in the set
+  ** const std_container& con() const     : return the container of the point
+  **
+  */
   template <typename P>
   class rle_pset : public internal::point_set_base_<rle_pset <P> >
   {
@@ -81,11 +98,11 @@ namespace oln
     bool impl_has(const P& p) const;
     const std_container& con() const;
 
-    unsigned range_len_(const P& range_start);
+    unsigned range_len_(const P& range_len_) const;
   protected:
-    unsigned npts;
-    std_container con_;
-    fbbox_<point> fb_;
+    unsigned npts;		/*!< number of point in the set*/
+    std_container con_;		/*!< container of the set*/
+    fbbox_<point> fb_;		/*!< pset box*/
   };
 
 
@@ -133,18 +150,10 @@ namespace oln
   bool
   rle_pset<P>::impl_has(const P& p) const
   {
-    P pend;
+    typename std_container::const_iterator irun;
 
-    typename std_container::const_iterator iter;
-
-    for (iter = con_.begin(); iter != con_.end(); ++iter )
-    {
-      pend = iter->first;
-      pend[0] += iter->second - 1;
-      if (iter->first >= p && p <= pend)
-	return 1;
-    }
-    return 0;
+    irun = this->con_.find(p);
+    return irun != this->con_.end();
   }
 
   template <typename P>
@@ -156,9 +165,13 @@ namespace oln
 
   template <typename P>
   unsigned
-  rle_pset<P>::range_len_(const P& range_start)
+  rle_pset<P>::range_len_(const P& range_start) const
   {
-    return this->con_[range_start];
+    typename std_container::const_iterator irun;
+
+    irun = this->con_.find(range_start);
+    assert(irun != this->con_.end());
+    return (irun->second);
   }
 
 # endif // !OLN_INCLUDE_ONLY
@@ -166,10 +179,17 @@ namespace oln
   // end of rle_pset class
 
   // --------------------   iterators  on  classes deriving from internal::rle_pset<P>
-
   // Forward declaration
   template <typename P>
   class rle_pset_fwd_piter_;
+
+  // Super type.
+  template <typename P>
+  struct super_trait_< rle_pset_fwd_piter_<P> >
+  {
+    typedef rle_pset_fwd_piter_<P> current;
+    typedef Iterator_on_Points<current> ret;
+  };
 
   // Virtual types
   template <typename P>
@@ -179,8 +199,20 @@ namespace oln
   };
 
   // class rle_pset_fwd_iterator_
+  /*
+  ** \class rle_pset_fwd_piter_
+  ** \brief foward iterator for rle_pset
+  **
+  ** P must be a point type
+  ** method:
+  ** void impl_start(): set the iterator to the start of pset
+  ** void impl_next(): go to next point
+  ** void impl_invalidate(): invalidate iterator
+  ** void impl_valid(): is the iterator valid?
+  ** + conversions methods
+  */
   template <typename P>
-  class rle_pset_fwd_piter_ : public Iterator_on_Points< rle_pset_fwd_piter_<P> >
+  class  rle_pset_fwd_piter_ : public Iterator_on_Points< rle_pset_fwd_piter_<P> >
   {
     typedef Iterator_on_Points< rle_pset_fwd_piter_<P> > super;
     typedef rle_pset_fwd_piter_<P> current;
@@ -203,7 +235,7 @@ namespace oln
   protected:
     const typename rle_pset<P>::std_container& con_;
     typename rle_pset<P>::std_container::const_iterator it_;
-    rle_psite<P> ps_;
+    rle_psite<P> ps_; /*!< current point */
   };
 
 # ifndef OLN_INCLUDE_ONLY
@@ -229,11 +261,8 @@ namespace oln
   {
     precondition(this->is_valid());
 
-    std::cout << "next: " << std::endl;
-    std::cout << "point start: " << ps_.start_ << " index: " << ps_.index_ << std::endl;
-    std::cout << "point start: " << it_->first << " index: " << it_->second << " ref" << std::endl;
-
     ++this->ps_.index_;
+
     if (this->ps_.index_ >= this->it_->second)
     {
       ++it_;
@@ -291,6 +320,14 @@ namespace oln
   template <typename P>
   class rle_pset_bkd_piter_;
 
+  // Super type.
+  template <typename P>
+  struct super_trait_< rle_pset_bkd_piter_<P> >
+  {
+    typedef rle_pset_bkd_piter_<P> current;
+    typedef Iterator_on_Points<current> ret;
+  };
+
   // Virtual type
   template <typename P>
   struct vtypes< rle_pset_bkd_piter_<P> >
@@ -298,8 +335,18 @@ namespace oln
     typedef P point;
   };
 
-  // class rle_pset_bkd_piter_
-
+  /*
+  ** \class rle_pset_bkd_piter_
+  ** \brief backward iterator for rle_pset
+  **
+  ** P must be a point type
+  ** method:
+  ** void impl_start(): set the iterator to the start of pset
+  ** void impl_next(): go to next point
+  ** void impl_invalidate(): invalidate iterator
+  ** void impl_valid(): is the iterator valid?
+  ** + conversion method
+  */
   template <typename P>
   class rle_pset_bkd_piter_ : public Iterator_on_Points< rle_pset_bkd_piter_<P> >
   {
@@ -322,7 +369,7 @@ namespace oln
   protected:
     const typename rle_pset<P>::std_container& con_;
     typename rle_pset<P>::std_container::const_reverse_iterator it_;
-    rle_psite<P> ps_;
+    rle_psite<P> ps_; /*!< current point*/
   };
 
 # ifndef OLN_INCLUDE_ONLY
@@ -350,7 +397,6 @@ namespace oln
 
     --ps_.index_;
 
-    // ps.index_ is unsigned
     if (ps_.index_ + 1 ==  0)
     {
       ++it_;

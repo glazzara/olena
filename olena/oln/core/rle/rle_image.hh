@@ -67,7 +67,6 @@ namespace oln
     typedef rle_psite<P> psite;
 
     typedef rle_pset<point> pset;
-//     typedef typename pset::box box;
 
     typedef mlc::none plain;
 
@@ -75,7 +74,19 @@ namespace oln
   };
 
 
-  // Rle image class
+  /*
+  ** \class rle_image
+  ** \brief rle image (use a pair of point range and value as representation)
+  **
+  ** method:
+  ** pset impl_points() const                             : return image pset
+  ** box impl_bbox() const                                : return image bbox
+  ** bool impl_has(const point& p) const                  : rle_image has p?
+  ** bool impl_owns_(const psite& p) const                : same has impl_has
+  ** void insert(const point& p, unsigned len, value val) : insert a new range on the image
+  ** rvalue impl_read(const psite& p) const               : return value associated to psite (for reading)
+  ** lvalue impl_read_write(const psite& p)               : lvalue impl_read_write(const psite& p) (for writing)
+  */
   template < typename P, typename T>
   class rle_image : public internal::primitive_image_< rle_image<P, T> >
   {
@@ -136,7 +147,7 @@ namespace oln
   bool
   rle_image<P, T>::impl_owns_(const typename rle_image<P, T>::psite& p) const
   {
-    return this->data_->first.has(p);
+    return this->data_->first.has(p.start_);
   }
 
   template <typename P, typename T>
@@ -151,21 +162,22 @@ namespace oln
   typename rle_image<P, T>::rvalue
   rle_image<P, T>::impl_read(const rle_image<P, T>::psite& ps) const
   {
-    //    precondition(p.iterator_() != this->data_->second.end());
-    return this->data_->second[ps];
+    typename std::map<point, value>::const_iterator irun;
+
+    irun = this->data_->second.find(ps.start_);
+    assert(irun != this->data_->second.end() && ps.index_ < this->data_->first.range_len_(ps.start_));
+    return irun->second;
   }
 
-  int a = 5;
   template <typename P, typename T>
   typename rle_image<P, T>::lvalue
   rle_image<P, T>::impl_read_write(const rle_image<P, T>::psite& ps)
   {
-    std::cout << "read_write: " << std::endl;
-    std::cout << (point)ps << std::endl;
+    typename std::map<point, value>::iterator irun;
 
-    //    precondition(p.iterator_() != this->data_->second.end());
-    //return this->data_->second[ps];
-    return a;
+    irun = this->data_->second.find(ps.start_);
+    assert(irun != this->data_->second.end() && ps.index_ < this->data_->first.range_len_(ps.start_));
+    return irun->second;
   }
 
 # endif // !OLN_INCLUDE_ONLY

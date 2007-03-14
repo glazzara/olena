@@ -1,3 +1,18 @@
+2007-03-14  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	New rle_encode function.
+
+	* oln/core/encode,
+	* oln/core/encode/rle_encode.hh: New
+
+2007-03-14  Nicolas Ballas  <ballas@bosc-guerard.lrde.epita.fr>
+
+	Fix memory bug on rle image
+	Add several assert
+
+	* oln/core/rle/rle_image.hh,
+	* oln/core/rle/rle_pset.hh: Update
+
 2007-03-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Remove dead code.
