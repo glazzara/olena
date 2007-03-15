@@ -1,3 +1,10 @@
+2007-03-15  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Fix bug on sparse image.
+
+	* oln/core/encode/sparse_encode.hh: New.
+	* oln/core/sparse/sparse_image.hh: sparse_image class working now
+
 2007-03-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add type of ''image restricted_to a subset''.

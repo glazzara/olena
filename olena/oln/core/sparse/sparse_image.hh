@@ -133,9 +133,9 @@ namespace oln
   typename sparse_image<P, T>::rvalue
   sparse_image<P, T>::impl_read(const sparse_image<P, T>::psite& ps) const
   {
-    typename std::map<point, value>::const_iterator irun;
+    typename std::map<point, std::vector<value> >::const_iterator irun;
 
-    irun = this->data_->second.find(ps.start_);
+    irun.operator= (this->data_->second.find(ps.start_));
     assert(irun != this->data_->second.end() && ps.index_ < this->data_->first.range_len_(ps.start_));
     return irun->second[ps.index_];
   }
@@ -144,9 +144,9 @@ namespace oln
   typename sparse_image<P, T>::lvalue
   sparse_image<P, T>::impl_read_write(const sparse_image<P, T>::psite& ps)
   {
-    typename std::map<point, value>::const_iterator irun;
+    typename std::map<point, std::vector<value> >::iterator irun;
 
-    irun = this->data_->second.find(ps.start_);
+    irun.operator= (this->data_->second.find(ps.start_));
     assert(irun != this->data_->second.end() && ps.index_ < this->data_->first.range_len_(ps.start_));
     return irun->second[ps.index_];
   }
