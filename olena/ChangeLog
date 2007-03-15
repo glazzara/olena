@@ -1,5 +1,31 @@
 2007-03-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add type of ''image restricted_to a subset''.
+
+	* tests/core/subset.cc: New.
+	* tests/core/Makefile.am: Update.
+	* oln/debug/println.hh: New.
+	* oln/core/internal/op_image_restricted_to_pset.hh: New.
+	* oln/debug/print.hh: Fix copyright.
+	* oln/core/concept/image.hh (bbox): Provide a final impl.
+	* oln/core/rle/rle_image.hh,
+	* oln/core/concept/image_identity.hh,
+	* oln/core/sparse/sparse_image.hh,
+	* oln/core/1d/image1d.hh
+	* oln/core/1d/image1d_b.hh
+	* oln/core/2d/image2d.hh
+	* oln/core/2d/image2d_b.hh: Update.
+	* oln/core/concept/neighborhood.hh (oln_decl_op_plus): Move to...
+	* oln/core/gen/neighb.hh: ...this file.
+	* oln/core/gen/op.hh (oln_decl_op_restricted_to, restricted_to):
+	New.
+	* oln/core/internal/point_set_base.hh (category): New.
+	* oln/core/internal/op_image_plus_nbh.hh: Add static assert.
+	* oln/core/internal/image_base.hh (include): Add
+	op_image_restricted_to_pset.hh.
+
+2007-03-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add external initialization through ''init(target, with, data)''.
 
 	* oln/core/internal/utils.hh (value1, value2, value3, value4):

@@ -132,10 +132,12 @@ namespace oln
     stc_typename(plain);
 
     bool owns_(const psite& p) const;
-      rvalue operator()(const psite& p) const;
+    rvalue operator()(const psite& p) const;
 
-    box  bbox() const;
     pset points() const;
+
+    // With final impl:
+    box  bbox() const;
 
   protected:
     Image();
@@ -357,7 +359,7 @@ namespace oln
   typename Image<Exact>::box
   Image<Exact>::bbox() const
   {
-    return exact(this)->impl_bbox();
+    return this->points().bbox(); // Final impl.
   }
 
   template <typename Exact>
@@ -551,8 +553,7 @@ namespace oln
   {
   }
 
-# endif
-
+# endif // OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

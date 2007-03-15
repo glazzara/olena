@@ -71,8 +71,9 @@
   struct e_n_d___w_i_t_h___a___s_e_m_i___c_o_l_u_m_n
 
 
-# define oln_decl_op_plus(Lconcept, Rconcept)    oln_decl_op_(plus,    Lconcept, +, Rconcept) 
-# define oln_decl_op_such_as(Lconcept, Rconcept) oln_decl_op_(such_as, Lconcept, |, Rconcept) 
+# define oln_decl_op_plus(Lconcept, Rconcept)          oln_decl_op_( plus,          Lconcept, +, Rconcept) 
+# define oln_decl_op_such_as(Lconcept, Rconcept)       oln_decl_op_( such_as,       Lconcept, |, Rconcept) 
+# define oln_decl_op_restricted_to(Lconcept, Rconcept) oln_decl_op_( restricted_to, Lconcept, |, Rconcept) 
 // ...
 
 
@@ -104,6 +105,7 @@ namespace oln
 
   struct plus;
   struct such_as;
+  struct restricted_to;
 
   /// \}
 

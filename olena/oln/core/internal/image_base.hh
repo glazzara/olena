@@ -461,8 +461,21 @@ namespace oln
 } // end of namespace oln
 
 
-// FIXME: Bad!
+
+
+/// \{
+/// FIXME: Bad!
+
 # include <oln/core/internal/f_ch_value.hh>
+# include <oln/core/internal/op_image_restricted_to_pset.hh>
+
+namespace oln
+{
+  oln_decl_op_restricted_to(Image, Point_Set);
+
+} // end of namespace oln
+
+/// \}
 
 
 

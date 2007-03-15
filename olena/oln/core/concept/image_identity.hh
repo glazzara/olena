@@ -54,7 +54,6 @@ namespace oln
 
       bool   impl_owns_(const psite& p) const;
       rvalue impl_read(const psite& p) const;
-      box    impl_bbox() const;
       pset   impl_points() const;
     };
 
@@ -190,13 +189,6 @@ namespace oln
     set_impl< Image, behavior::identity, Exact >::impl_read(const typename set_impl< Image, behavior::identity, Exact >::psite& p) const
     {
       return exact(this)->image()(p);
-    }
-
-    template <typename Exact>
-    typename set_impl< Image, behavior::identity, Exact >::box
-    set_impl< Image, behavior::identity, Exact >::impl_bbox() const
-    {
-      return exact(this)->image().bbox();
     }
 
     template <typename Exact>

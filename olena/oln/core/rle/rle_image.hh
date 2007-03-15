@@ -80,7 +80,6 @@ namespace oln
   **
   ** method:
   ** pset impl_points() const                             : return image pset
-  ** box impl_bbox() const                                : return image bbox
   ** bool impl_has(const point& p) const                  : rle_image has p?
   ** bool impl_owns_(const psite& p) const                : same has impl_has
   ** void insert(const point& p, unsigned len, value val) : insert a new range on the image
@@ -105,7 +104,6 @@ namespace oln
     rle_image();
 
     pset impl_points() const;
-    box impl_bbox() const;
     bool impl_has(const point& p) const;
     bool impl_owns_(const psite& p) const;
     void insert(const point& p, unsigned len, value val);
@@ -127,13 +125,6 @@ namespace oln
   rle_image<P, T>::impl_points() const
   {
     return this->data_->first;
-  }
-
-  template <typename P, typename T>
-  typename rle_image<P, T>::box
-  rle_image<P, T>::impl_bbox() const
-  {
-   return this->data_->first.bbox();
   }
 
   template <typename P, typename T>

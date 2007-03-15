@@ -100,7 +100,6 @@ namespace oln
 
     std::size_t impl_npoints() const;
 
-    box2d impl_bbox() const;
     box2d impl_points() const;
   };
 
@@ -203,7 +202,7 @@ namespace oln
   }
 
   template <typename T>
-  box2d image2d<T>::impl_bbox() const
+  box2d image2d<T>::impl_points() const
   {
     assert(this->has_data());
     point2d
@@ -211,12 +210,6 @@ namespace oln
       pmax(this->data_->imax(), this->data_->jmax());
     box2d b(pmin, pmax);
     return b;
-  }
-
-  template <typename T>
-  box2d image2d<T>::impl_points() const
-  {
-    return this->bbox();
   }
 
   template <typename T, typename D>

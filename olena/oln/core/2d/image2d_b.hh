@@ -146,7 +146,6 @@ namespace oln
 
     std::size_t impl_npoints() const;
 
-    box2d impl_bbox() const;
     box2d impl_points() const;
 
     unsigned border() const;
@@ -241,13 +240,6 @@ namespace oln
   {
     assert(this->has_data());
     return this->data_->array(row, col);
-  }
-
-  template <typename T>
-  box2d image2d_b<T>::impl_bbox() const
-  {
-    assert(this->has_data());
-    return this->data_->box;
   }
 
   template <typename T>

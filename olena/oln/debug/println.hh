@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,72 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_POINT_SET_BASE_HH
-# define OLN_CORE_INTERNAL_POINT_SET_BASE_HH
+#ifndef OLN_DEBUG_PRINTLN_HH
+# define OLN_DEBUG_PRINTLN_HH
 
-# include <oln/core/concept/point_set.hh>
+# include <oln/debug/print.hh>
 
 
 namespace oln
 {
 
-  /// Fwd decls.
-  namespace internal { template <typename Exact> struct point_set_base_; }
-  template <typename P> class box_;
-
-
-  /// Super type.
-  template <typename Exact>
-  struct super_trait_< internal::point_set_base_<Exact> >
-  {
-    typedef Point_Set<Exact> ret;
-  };
-
-
-  /// Virtual types.
-  template <typename Exact>
-  struct vtypes< internal::point_set_base_<Exact> >
-  {
-    typedef stc::abstract point;
-    typedef stc::abstract fwd_piter;
-    typedef stc::abstract bkd_piter;
-
-    typedef stc_deferred(point)     point__;
-    typedef stc_deferred(fwd_piter) fwd_piter__;
-
-    typedef stc::final< stc::is<Point_Set> >    category;
-
-    typedef stc::final< box_<point__> >         box;
-    typedef stc::final<stc_type(point__, grid)> grid;
-    typedef stc::final<fwd_piter__>             piter;
-  };
-
-
-  namespace internal
+  namespace debug
   {
 
-    /// Base class for point sets.
-
-    template <typename Exact>
-    struct point_set_base_ : public Point_Set<Exact>
-    {
-    protected:
-      point_set_base_();
-    };
+    template <typename I>
+    void println(const Image<I>& input, std::ostream& ostr = std::cout);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename Exact>
-    point_set_base_<Exact>::point_set_base_()
+    template <typename I>
+    void println(const Image<I>& input, std::ostream& ostr)
     {
+      print(exact(input), ostr);
+      ostr << std::endl;
     }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
-  } // end of namespace oln::internal
+
+  } // end of namespace oln::debug
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_POINT_SET_BASE_HH
+#endif // ! OLN_DEBUG_PRINTLN_HH

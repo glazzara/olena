@@ -83,7 +83,6 @@ namespace oln
     sparse_image();
 
     pset impl_points() const;
-    box impl_bbox() const;
     bool impl_has(const point& p) const;
     bool impl_owns_(const psite& p) const;
     void insert(const point& p, unsigned len, const std::vector<value>& val);
@@ -106,13 +105,6 @@ namespace oln
   sparse_image<P, T>::impl_points() const
   {
     return this->data_->first;
-  }
-
-  template <typename P, typename T>
-  typename sparse_image<P, T>::box
-  sparse_image<P, T>::impl_bbox() const
-  {
-   return this->data_->first.bbox();
   }
 
   template <typename P, typename T>

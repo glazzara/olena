@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,42 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
-# define OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
-
-# include <oln/core/equipment.hh>
-
+#include <cassert>
+#include <oln/core/2d/image2d.hh>
+#include <oln/core/2d/neighb2d.hh>
 
 
-namespace oln
+int main()
 {
+  using namespace oln;
 
-  /// Concept-class "Neighborhood".
+  image2d<int> ima(5, 5);
 
-  template <typename Exact>
-  struct Neighborhood : public Any<Exact>
-  {
-    stc_typename(grid);
-    stc_typename(point);
-    stc_typename(category);
+  point2d p(1,1), q(3,3);
+  box2d b = init(from(p), to(q));
 
-  protected:
-    Neighborhood();
-
-  }; // end of oln::Neighborhood<Exact>
-
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename Exact>
-  Neighborhood<Exact>::Neighborhood()
-  {
-  }
-
-# endif
-
-} // end of namespace oln
-
-
-#endif // ! OLN_CORE_CONCEPT_NEIGHBORHOOD_HH
+  assert((ima | b).points().npoints() == 9); // FIXME: looks weird
+}

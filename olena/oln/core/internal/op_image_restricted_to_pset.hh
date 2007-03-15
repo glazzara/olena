@@ -25,82 +25,76 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
-# define OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
+#ifndef OLN_CORE_INTERNAL_OP_IMAGE_RESTRICTED_TO_PSET_HH
+# define OLN_CORE_INTERNAL_OP_IMAGE_RESTRICTED_TO_PSET_HH
 
-# include <oln/core/concept/neighborhood.hh>
-# include <oln/core/gen/op.hh>
-# include <oln/core/gen/dpoints_piter.hh>
 # include <oln/core/internal/image_base.hh>
+# include <oln/core/concept/point_set.hh>
+# include <oln/core/gen/op.hh>
 
 
 namespace oln
 {
 
 # define current \
-     special_op_< stc::is<Image>, I, plus, stc::is<Neighborhood>, N >
-
-  // Instant value.
-  oln_decl_instant_value(nbh);
+     special_op_< stc::is<Image>, I, restricted_to, stc::is<Point_Set>, S >
 
 
-  /// Fwd decls.
-  template <typename Exact> struct Image;
-  template <typename Exact> struct Neighborhood;
+//   /// Fwd decls.
+//   template <typename Exact> struct Image;
+//   template <typename Exact> struct Point_Set;
 
 
   /// Super type.
-  template <typename I, typename N>
+  template <typename I, typename S>
   struct super_trait_< internal::current >
   {
-    typedef internal::image_extension_< op_<I, plus, N> > ret;
+    typedef internal::image_extension_< op_<I, restricted_to, S> > ret;
   };
 
 
   /// Virtual types.
-  template <typename I, typename N>
+  template <typename I, typename S>
   struct vtypes< internal::current >
   {
-    typedef op_<I, plus, N> Exact;
+    typedef op_<I, restricted_to, S> Exact;
     typedef stc_type(I, point) point__;
 
     typedef I delegatee;
-    typedef internal::pair<I,N> data;
+    typedef internal::pair<I,S> data;
 
-    typedef N nbh;
-    typedef dpoints_fwd_piter_<point__> fwd_niter;
-    typedef dpoints_bkd_piter_<point__> bkd_niter;
+    typedef S pset;
 
-    typedef op_<oln_plain(I), plus, N> plain;
-    typedef op_<pl::rec<I>,   plus, N> skeleton;
+    typedef op_<oln_plain(I), restricted_to, S> plain;
+    typedef op_<pl::rec<I>,   restricted_to, S> skeleton;
   };
 
 
   namespace internal
   {
     
-    /// Implementation class the result of "Image I + Neighborhood N".
+    /// Implementation class the result of "Image I | Point_Set S".
     
-    template <typename I, typename N>
-    class special_op_< stc::is<Image>, I, plus, stc::is<Neighborhood>, N >
+    template <typename I, typename S>
+    class special_op_< stc::is<Image>, I, restricted_to, stc::is<Point_Set>, S >
       :
-      public internal::image_extension_< op_<I, plus, N> >,
-      private mlc::assert_< mlc_is_not_a(I, Image_with_Nbh) > // FIXME: Add err msg.
+      public internal::image_extension_< op_<I, restricted_to, S> >
     {
-      typedef internal::image_extension_< op_<I, plus, N> > super;
+      typedef internal::image_extension_< op_<I, restricted_to, S> > super;
     public:
-      stc_using(nbh);
+      stc_using(pset);
+      stc_using(box);
       stc_using(data);
       stc_using(delegatee);
 
       delegatee& impl_image();
       const delegatee& impl_image() const;
 
-      nbh impl_nbhood() const;
+      pset impl_points() const;
 
     protected:
       special_op_();
-      special_op_(I& ima, N& n);
+      special_op_(I& ima, S& subset);
     };
 
   } // end of namespace oln::internal
@@ -108,15 +102,15 @@ namespace oln
 
   // init
 
-  template <typename I, typename N, typename D>
+  template <typename I, typename S, typename D>
   bool init_(internal::current* target, const D& dat);
 
-  template <typename N, typename I>
-  bool init(Neighborhood<N>& target,
+  template <typename S, typename I>
+  bool init(Point_Set<S>& target,
 	    with_t,
 	    const internal::current& dat);
 
-  template <typename I, typename N>
+  template <typename I, typename S>
   bool init(Image<I>& target,
 	    with_t,
 	    const internal::current& dat);
@@ -128,18 +122,18 @@ namespace oln
   namespace internal
   {
 
-    template <typename I, typename N>
+    template <typename I, typename S>
     current::special_op_()
     {
     }
 
-    template <typename I, typename N>
-    current::special_op_(I& ima, N& n)
+    template <typename I, typename S>
+    current::special_op_(I& ima, S& subset)
     {
-      this->data_ = new data(ima, n);
+      this->data_ = new data(ima, subset);
     }
 
-    template <typename I, typename N>
+    template <typename I, typename S>
     typename current::delegatee&
     current::impl_image()
     {
@@ -147,7 +141,7 @@ namespace oln
       return this->data_->first;
     }
 
-    template <typename I, typename N>
+    template <typename I, typename S>
     const typename current::delegatee&
     current::impl_image() const
     {
@@ -155,9 +149,9 @@ namespace oln
       return this->data_->first;
     }
 
-    template <typename I, typename N>
-    typename current::nbh
-    current::impl_nbhood() const
+    template <typename I, typename S>
+    typename current::pset
+    current::impl_points() const
     {
       assert(this->has_data());
       return this->data_->second;
@@ -168,27 +162,27 @@ namespace oln
 
   // init
 
-  template <typename I, typename N, typename D>
+  template <typename I, typename S, typename D>
   bool init_(internal::current* this_, const D& dat)
   {
     precondition(not this_->has_data());
-    this_->data__() = new typename op_<I, plus, N>::data;
-    bool ima_ok = init(this_->data__()->first,  with, dat);
-    bool nbh_ok = init(this_->data__()->second, with, dat);
-    postcondition(ima_ok);
-    postcondition(nbh_ok);
-    return ima_ok and nbh_ok;
+    this_->data__() = new typename op_<I, restricted_to, S>::data;
+    bool image_ok  = init(this_->data__()->first,  with, dat);
+    bool subset_ok = init(this_->data__()->second, with, dat);
+    postcondition(image_ok);
+    postcondition(subset_ok);
+    return image_ok and subset_ok;
   }
 
-  template <typename N, typename I>
-  bool init_(Neighborhood<N>* this_,
+  template <typename S, typename I>
+  bool init_(Point_Set<S>* this_,
 	     const internal::current& data)
   {
-    *this_ = data.nbhood();
+    *this_ = data.points();
     return true;
   }
 
-  template <typename I, typename N>
+  template <typename I, typename S>
   bool init(Image<I>* this_,
 	    const internal::current& data)
   {
@@ -203,4 +197,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
+#endif // ! OLN_CORE_INTERNAL_OP_IMAGE_RESTRICTED_TO_PSET_HH

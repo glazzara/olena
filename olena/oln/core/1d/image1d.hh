@@ -97,7 +97,6 @@ namespace oln
 
     std::size_t impl_npoints() const;
 
-    box1d impl_bbox() const;
     box1d impl_points() const;
   };
 
@@ -176,17 +175,11 @@ namespace oln
   }
 
   template <typename T>
-  box1d image1d<T>::impl_bbox() const
+  box1d image1d<T>::impl_points() const
   {
     assert(this->has_data());
     box1d b(this->data_->imin(), this->data_->imax());
     return b;
-  }
-
-  template <typename T>
-  box1d image1d<T>::impl_points() const
-  {
-    return this->bbox();
   }
 
 # endif
