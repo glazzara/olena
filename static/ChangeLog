@@ -1,3 +1,16 @@
+2007-03-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update SCOOP 2 alternative implementation.
+
+	* stc/scoop-alt.hh: Split this file into...
+	* stc/scoop-alt.hh, stc/scoop-alt.inc: ...these.
+	Catch up with the interface of oln/stc/scoop.hh and
+	oln/stc/scoop.hxx.
+	* stc/Makefile.am (nobase_stc_HEADERS): Add scoop-alt.inc.
+	* tests/scoop-alt.cc: Adjust existing tests.
+	(ex8, ex9): New tests.
+	(main): Run them.
+
 2007-03-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix mini-oln and its Concept-C++ counterpart.

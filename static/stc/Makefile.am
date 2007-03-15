@@ -8,6 +8,7 @@ nobase_stc_HEADERS =				\
   find_exact.hh					\
   scoop.hh					\
   scoop-alt.hh					\
+  scoop-alt.inc					\
   valist_aggregator.hh				\
 						\
   internal/extract_vtype_from_list.hh		\

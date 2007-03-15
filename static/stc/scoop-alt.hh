@@ -35,9 +35,15 @@
 #ifndef STC_SCOOP_ALT_HH
 # define STC_SCOOP_ALT_HH
 
+/** Define a stick-macro so that we can check in
+    \file stc/scoop-alt.inc that \file stc/scoop-alt.hh has been
+    included (or not) when including the former from client code.  */
+# define STATIC_SCOOP_ALT_HH_INCLUDED
+
 # include <mlc/flags.hh>
 # include <mlc/typedef.hh>
 # include <mlc/abort.hh>
+# include <mlc/case.hh>
 
 # include <stc/internal/match-with.hh>
 
@@ -53,31 +59,46 @@ namespace stc
 #endif
   using mlc::none;
 
+  // FIXME: Likewise, define a true stc::not_found type.
+#if 0
   struct not_found;
+#endif
+  typedef mlc::not_found not_found;
   struct abstract;
   struct not_delegated;
   struct not_delegated_abstract;
   template <typename T> struct final;
 
+  template < template <class> class category >
+  struct is;
 
-  /// \brief Shortcuts for comparison with stc::not_found.
-  ///
-  /// Duplicate with their Metalic's homonyms, but still useful, since
-  /// they deal with std::not_found (not mlc::not_found).
+
+
+  /// Equality test between a couple of types.
   /// \{
   template <typename T>
-  struct is_not_found_ : public mlc_is_a(T, stc::not_found)::bexpr
-  {
-  };
+  struct is_found : public mlc::bexpr_<true>
+  {};
+
+  template <>
+  struct is_found< mlc::not_found > : public mlc::bexpr_<false>
+  {};
 
   template <typename T>
-  struct is_found_ : public mlc_is_not_a(T, stc::not_found)::bexpr
-  {
-  };
+  struct is_not_found : public mlc::bexpr_<false>
+  {};
+
+  template <>
+  struct is_not_found< mlc::not_found > : public mlc::bexpr_<true>
+  {};
   /// \}
+
 
   namespace ERROR
   {
+    template <typename class_name>
+    struct super_trait_not_defined_for_;
+
     struct IN_find_VIRTUAL_TYPE_IS_ABSTRACT;
 
     struct IN_find_local_VIRTUAL_TYPE_MULTIPLY_DEFINED;
@@ -98,613 +119,108 @@ namespace stc
 } // end of namespace stc
 
 
-#define stc_super(T) typename set_super_type< T >::ret
-
-// Based on doc/algorithm.ml.
-
-
-
-#define stc_scoop_equipment_for_namespace(SCOOPED_NAMESPACE)		      \
-									      \
-namespace SCOOPED_NAMESPACE						      \
-{									      \
-									      \
-  /* Declare delegatee_type.  */					      \
-  mlc_decl_typedef(delegatee_type);					      \
-									      \
-									      \
-  template <typename class_name>					      \
-  struct set_super_type							      \
-  {									      \
-  };									      \
-									      \
-  template <typename class_name>					      \
-  struct vtypes								      \
-  {									      \
-  };									      \
-									      \
-  template <typename class_name, typename type_name>			      \
-  struct single_vtype							      \
-  {									      \
-    typedef mlc::not_found ret;						      \
-  };									      \
-									      \
-  /* ----------------------------------------------------- find_local.  */    \
-									      \
-  /* Highly inspired from Théo's get_stm!  */				      \
-									      \
-  namespace find_local_							      \
-  {									      \
-    /* Forward declaration.  */						      \
-    template <typename T, typename U> struct match_with;		      \
-									      \
-    template <typename T>						      \
-    struct match_with <T, mlc::not_found>				      \
-    {									      \
-      typedef T ret;							      \
-    };									      \
-									      \
-    template <typename U>						      \
-    struct match_with <mlc::not_found, U>				      \
-    {									      \
-      typedef U ret;							      \
-    };									      \
-									      \
-    template <>								      \
-    struct match_with <mlc::not_found, mlc::not_found>			      \
-    {									      \
-      typedef stc::not_found ret;					      \
-    };									      \
-									      \
-    template <typename T, typename U>					      \
-    struct match_with :							      \
-      mlc::abort_<T,							      \
-		  stc::ERROR::IN_find_local_VIRTUAL_TYPE_MULTIPLY_DEFINED>   \
-    {									      \
-    };									      \
-									      \
-  } /* end of namespace find_local_  */					      \
-									      \
-  template <typename source, typename target>				      \
-  struct find_local							      \
-  {									      \
-    typedef SCOOPED_NAMESPACE::vtypes<source> decl1;			      \
-    typedef typename target::template from_<decl1>::ret res1;		      \
-									      \
-    typedef SCOOPED_NAMESPACE::single_vtype<source, target> decl2;	      \
-    typedef typename decl2::ret ret2;					      \
-									      \
-									      \
-    /* Result.  */							      \
-    typedef typename find_local_::match_with<res1, ret2>::ret ret;	      \
-  };									      \
-									      \
-									      \
-  /* --------------------------------------------------------- merge2.  */    \
-									      \
-									      \
-  namespace merge2_							      \
-  {									      \
-    /* Forward declaration.  */						      \
-    template <typename T, typename U> struct match_with;		      \
-									      \
-									      \
-    /* ----------------------------- */					      \
-    /* local_res == stc::not_found.  */					      \
-    /* ----------------------------- */					      \
-									      \
-    stc_internal_match_pair_0p_with(stc::not_found, stc::not_found,	      \
-				    stc::not_found);			      \
-									      \
-    stc_internal_match_pair_0p_with(stc::not_found, stc::abstract,	      \
-				    stc::not_found);			      \
-									      \
-    stc_internal_match_pair_1p_with(U,					      \
-				    stc::not_found, stc::final<U>,	      \
-				    stc::final<U>);			      \
-									      \
-    stc_internal_match_pair_1p_with(U,					      \
-				    stc::not_found, U,			      \
-				    U);					      \
-									      \
-									      \
-    /* ---------------------------- */					      \
-    /* local_res == stc::abstract.  */					      \
-    /* ---------------------------- */					      \
-									      \
-    stc_internal_match_pair_0p_with(stc::abstract, stc::not_found,	      \
-				    stc::abstract);			      \
-									      \
-    stc_internal_match_pair_0p_with(stc::abstract, stc::abstract,	      \
-				    stc::abstract);			      \
-									      \
-    stc_internal_match_pair_1p_with_error(U,				      \
-      stc::abstract, stc::final<U>,					      \
-      stc::ERROR::IN_merge2_FINAL_VIRTUAL_TYPE_REDEFINED_ABSTRACT);	      \
-									      \
-    stc_internal_match_pair_1p_with_error(U,				      \
-      stc::abstract, U,							      \
-      stc::ERROR::IN_merge2_VIRTUAL_TYPE_REDEFINED_ABSTRACT);		      \
-									      \
-									      \
-    /* ---------------------------- */					      \
-    /* local_res == stc::final<T>.  */					      \
-    /* ---------------------------- */					      \
-									      \
-    stc_internal_match_pair_1p_with(T,					      \
-				    stc::final<T>, stc::not_found,	      \
-				    stc::final<T>);			      \
-									      \
-    stc_internal_match_pair_1p_with(T,					      \
-				    stc::final<T>, stc::abstract,	      \
-				    stc::final<T>);			      \
-									      \
-    stc_internal_match_pair_2p_with_error(T, U,				      \
-      stc::final<T>, stc::final<U>,					      \
-      stc::ERROR::IN_merge2_FINAL_VIRTUAL_TYPE_REDEFINED_FINAL);	      \
-									      \
-    stc_internal_match_pair_2p_with(T, U,				      \
-				    stc::final<T>, U,			      \
-				    stc::final<T>);			      \
-									      \
-									      \
-    /* ---------------- */						      \
-    /* local_res == T.  */						      \
-    /* ---------------- */						      \
-									      \
-    stc_internal_match_pair_1p_with(T,					      \
-				    T, stc::not_found,			      \
-				    T);					      \
-									      \
-    stc_internal_match_pair_1p_with(T,					      \
-				    T, stc::abstract,			      \
-				    T);					      \
-									      \
-    stc_internal_match_pair_2p_with_error(T, U,				      \
-      T, stc::final<U>,							      \
-      stc::ERROR::IN_merge2_FINAL_VIRTUAL_TYPE_REDEFINED);		      \
-									      \
-    template <typename T, typename U>					      \
-    struct match_with							      \
-    {									      \
-      typedef T ret;							      \
-    };									      \
-									      \
-  } /* end of namespace merge2_  */					      \
-									      \
-  template <typename local_res, typename super_res>			      \
-  struct merge2								      \
-  {									      \
-    /* Result.  */							      \
-    typedef typename merge2_::match_with<local_res, super_res>::ret ret;      \
-  };									      \
-									      \
-									      \
-  /* --------------------------------------------------------- merge3.  */    \
-									      \
-									      \
-  namespace merge3_							      \
-  {									      \
-    /* Forward declaration.  */						      \
-    template <typename T, typename U, typename V> struct match_with;	      \
-									      \
-									      \
-    /* ----------------------------- */					      \
-    /* local_res == stc::not_found.  */					      \
-    /* ----------------------------- */					      \
-									      \
-    /* super_res == stc::not_found.  */					      \
-    stc_internal_match_triple_0p_with(					      \
-      stc::not_found, stc::not_found, stc::not_found,			      \
-      stc::not_found);							      \
-									      \
-    stc_internal_match_triple_0p_with(					      \
-      stc::not_found, stc::not_found, stc::abstract,			      \
-      stc::not_found);							      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-      stc::not_found, stc::not_found, stc::final<V>,			      \
-      stc::final<V>);							      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-      stc::not_found, stc::not_found, V,				      \
-      V);								      \
-									      \
-    /* super_res == stc::abstract.  */					      \
-    stc_internal_match_triple_0p_with(					      \
-      stc::not_found, stc::abstract, stc::not_found,			      \
-      stc::not_found);							      \
-									      \
-    stc_internal_match_triple_0p_with(					      \
-      stc::not_found, stc::abstract, stc::abstract,			      \
-      stc::abstract);							      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-      stc::not_found, stc::abstract, stc::final<V>,			      \
-      stc::final<V>);							      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-      stc::not_found, stc::abstract, V,					      \
-      V);								      \
-									      \
-    /* super_res is a concrete type.  */				      \
-    stc_internal_match_triple_2p_with(U, V,				      \
-      stc::not_found, stc::final<U>, V,					      \
-      stc::final<U>);							      \
-									      \
-    stc_internal_match_triple_2p_with(U, V,				      \
-      stc::not_found, U, V,						      \
-      U);								      \
-									      \
-									      \
-    /* ---------------------------- */					      \
-    /* local_res == stc::abstract.  */					      \
-    /* ---------------------------- */					      \
-									      \
-    /* super_res == stc::not_found.  */					      \
-    stc_internal_match_triple_0p_with(					      \
-      stc::abstract, stc::not_found, stc::not_found,			      \
-      stc::abstract);							      \
-									      \
-    stc_internal_match_triple_0p_with(					      \
-      stc::abstract, stc::not_found, stc::abstract,			      \
-      stc::abstract);							      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-      stc::abstract, stc::not_found, stc::final<V>,			      \
-      stc::final<V>);							      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-      stc::abstract, stc::not_found, V,					      \
-      V);								      \
-									      \
-									      \
-    /* super_res == stc::abstract.  */					      \
-    stc_internal_match_triple_0p_with(					      \
-      stc::abstract, stc::abstract, stc::not_found,			      \
-      stc::abstract);							      \
-									      \
-    stc_internal_match_triple_0p_with(					      \
-      stc::abstract, stc::abstract, stc::abstract,			      \
-      stc::abstract);							      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-      stc::abstract, stc::abstract, stc::final<V>,			      \
-      stc::final<V>);							      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-      stc::abstract, stc::abstract, V,					      \
-      V);								      \
-									      \
-									      \
-    /* super_res == stc::not_delegated_abstract.  */			      \
-    stc_internal_match_triple_1p_with(V,				      \
-      stc::abstract, stc::not_delegated_abstract, V,			      \
-      stc::not_delegated_abstract);					      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-      stc::abstract, stc::not_delegated, V,				      \
-      stc::not_delegated_abstract);					      \
-									      \
-									      \
-    /* super_res is a concrete type.  */				      \
-    stc_internal_match_triple_2p_with_error(U, V,			      \
-      stc::abstract, stc::final<U>, V,					      \
-      stc::ERROR::IN_merge3_FINAL_VIRTUAL_TYPE_REDEFINED_ABSTRACT);	      \
-									      \
-    stc_internal_match_triple_2p_with_error(U, V,			      \
-      stc::abstract, U, V,						      \
-      stc::ERROR::IN_merge3_VIRTUAL_TYPE_REDEFINED_ABSTRACT);		      \
-									      \
-									      \
-    /* --------------------------------- */				      \
-    /* local_res == stc::not_delegated.  */				      \
-    /* --------------------------------- */				      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-			     stc::not_delegated, stc::not_found, V,	      \
-			     stc::not_delegated);			      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-			     stc::not_delegated, stc::abstract, V,	      \
-			     stc::not_delegated_abstract);		      \
-									      \
-    stc_internal_match_triple_1p_with(V,				      \
-      stc::not_delegated, stc::not_delegated_abstract, V,		      \
-      stc::not_delegated_abstract);					      \
-									      \
-									      \
-    /* ------------------------------------------ */			      \
-    /* local_res == stc::not_delegated_abstract.  */			      \
-    /* ------------------------------------------ */			      \
-									      \
-    /* FIXME: Shouldn't we introduce a means to tag a vtype both as */	      \
-    /* abstract *and* not delegated?  (Currently, the rule below    */	      \
-    /* prevents this).                                              */	      \
-    stc_internal_match_triple_2p_with_error(U, V,			      \
-      stc::not_delegated_abstract, U, V,				      \
-      stc::ERROR::IN_merge3_LOCAL_DECLARATION_OF_NOT_DELEGATED_AND_ABSTRACT); \
-									      \
-									      \
-    /* ---------------------------- */					      \
-    /* local_res == stc::final<T>.  */					      \
-    /* ---------------------------- */					      \
-									      \
-    stc_internal_match_triple_3p_with_error(T, U, V,			      \
-      stc::final<T>, stc::final<U>, V,					      \
-      stc::ERROR::IN_merge3_FINAL_VIRTUAL_TYPE_REDEFINED_FINAL);	      \
-									      \
-    stc_internal_match_triple_3p_with(T, U, V,				      \
-			     stc::final<T>, U, V,			      \
-			     stc::final<T>);				      \
-									      \
-									      \
-    /* ---------------- */						      \
-    /* local_res == T.  */						      \
-    /* ---------------- */						      \
-									      \
-    stc_internal_match_triple_3p_with_error(T, U, V,			      \
-      T, stc::final<U>, V,						      \
-      stc::ERROR::IN_merge3_FINAL_VIRTUAL_TYPE_REDEFINED);		      \
-									      \
-    template <typename T, typename U, typename V>			      \
-    struct match_with							      \
-    {									      \
-      typedef T ret;							      \
-    };									      \
-									      \
-  } /* end of namespace merge3_  */					      \
-									      \
-									      \
-  template <typename local_res, typename super_res, typename delegatee_res>   \
-  struct merge3								      \
-  {									      \
-    /* Result.  */							      \
-    typedef typename							      \
-    merge3_::match_with<local_res, super_res, delegatee_res>::ret ret;	      \
-  };									      \
-									      \
-									      \
-  /* ------------------------------------------------------  find_rec.  */    \
-									      \
-  /* Forward declarations.  */						      \
-  template <typename source, typename target> struct find_rec;		      \
-  template <typename source, typename target> struct find_rec_in_supers;      \
-									      \
-									      \
-  namespace find_rec_							      \
-  {									      \
-									      \
-    namespace find_delegatee_res_					      \
-    {									      \
-      /* Forward declaration.  */					      \
-      template <typename delegatee, typename target> struct match_with;	      \
-									      \
-      template <typename target>					      \
-      struct match_with<stc::not_found, target>				      \
-      {									      \
-	typedef stc::not_found ret;					      \
-      };								      \
-									      \
-      template <typename target>					      \
-      struct match_with<stc::abstract, target>				      \
-      {									      \
-	typedef stc::not_found ret;					      \
-      };								      \
-									      \
-      template <typename delegatee, typename target>			      \
-      struct match_with							      \
-      {									      \
-	typedef typename find_rec<delegatee, target>::ret ret;		      \
-      };								      \
-									      \
-    } /* end of namespace find_delegatee_res_  */			      \
-									      \
-									      \
-    /* Forward declaration.  */						      \
-    template <typename source, typename target> struct match_with;	      \
-									      \
-    template <typename target>						      \
-    struct match_with<stc::none, target>				      \
-    {									      \
-      typedef stc::not_found ret;					      \
-    };									      \
-									      \
-    template <typename source, typename target>				      \
-    struct match_with							      \
-    {									      \
-      typedef typename find_local<source, target>::ret local_res;	      \
-      typedef typename find_rec<stc_super(source), target>::ret super_res;    \
-      /* delegatee_type is the name of the (optional) virtual type  */	      \
-      /* containing the (type of the) delgatee.                     */	      \
-      typedef typename							      \
-      find_rec_in_supers<source, typedef_::delegatee_type>::ret delegatee;    \
-									      \
-      typedef typename							      \
-      find_delegatee_res_::match_with<delegatee, target>::ret delegatee_res;  \
-      typedef typename							      \
-      merge3<local_res, super_res, delegatee_res>::ret ret;		      \
-    };									      \
-									      \
-  } /* end of namespace find_rec_  */					      \
-									      \
-  template <typename source, typename target>				      \
-  struct find_rec							      \
-  {									      \
-    /* Result.  */							      \
-    typedef typename find_rec_::match_with<source, target>::ret ret;	      \
-  };									      \
-									      \
-									      \
-  /* --------------------------------------------- find_rec_in_supers.  */    \
-									      \
-  namespace find_rec_in_supers_						      \
-  {									      \
-    /* Forward declaration.  */						      \
-    template <typename source, typename target> struct match_with;	      \
-									      \
-    template <typename target>						      \
-    struct match_with<stc::none, target>				      \
-    {									      \
-      typedef stc::none ret;						      \
-    };									      \
-									      \
-    template <typename source, typename target>				      \
-    struct match_with							      \
-    {									      \
-      typedef typename find_local<source, target>::ret local_res;	      \
-      typedef typename find_rec<stc_super(source), target>::ret super_res;    \
-      typedef typename merge2<local_res, super_res>::ret ret;		      \
-    };									      \
-									      \
-  } /* end of namespace find_rec_in_supers_  */				      \
-									      \
-  template <typename source, typename target>				      \
-  struct find_rec_in_supers						      \
-  {									      \
-    /* Result.  */							      \
-    typedef typename							      \
-    find_rec_in_supers_::match_with<source, target>::ret ret;		      \
-  };									      \
-									      \
-									      \
-  /* ----------------------------------------------------------- find.  */    \
-									      \
-  namespace find_							      \
-  {									      \
-    /* Forward declaration.  */						      \
-    template <typename T> struct match_with;				      \
-									      \
-    /* FIXME: We'd like to add a static abort here, but we can't, */	      \
-    /* since stc::abstract is not a free parameter (enabling this */	      \
-    /* abort statement would prevent any compilation).            */	      \
-    template <>								      \
-    struct match_with<stc::abstract>					      \
-    /* : mlc::abort_<stc::abstract,					      \
-                     stc::ERROR::IN_find_VIRTUAL_TYPE_IS_ABSTRACT> */	      \
-    {									      \
-    };									      \
-									      \
-    /* FIXME: We'd like to add a static abort here, but we can't, */	      \
-    /* since stc::not_delegated_abstract is not a free parameter  */	      \
-    /* (enabling this abort statement would prevent any           */	      \
-    /* compilation).                                              */	      \
-    template <>								      \
-    struct match_with<stc::not_delegated_abstract>			      \
-    /* : mlc::abort_<stc::not_delegated_abstract,                  */	      \
-    /*               stc::ERROR::IN_find_VIRTUAL_TYPE_IS_ABSTRACT> */	      \
-    {									      \
-    };									      \
-									      \
-    template <>								      \
-    struct match_with<stc::not_delegated>				      \
-    {									      \
-      typedef stc::not_found ret;					      \
-    };									      \
-									      \
-    template <typename T>						      \
-    struct match_with< stc::final<T> >					      \
-    {									      \
-      typedef T ret;							      \
-    };									      \
-									      \
-    template <typename T>						      \
-    struct match_with							      \
-    {									      \
-      typedef T ret;							      \
-    };									      \
-									      \
-  } /* end of namespace find_  */					      \
-									      \
-									      \
-  /** Find a virtual type.  */						      \
-  template <typename source, typename target>				      \
-  struct find_vtype							      \
-  {									      \
-    typedef typename find_rec<source, target>::ret res;			      \
-    /* Result.  */							      \
-    typedef typename find_::match_with<res>::ret ret;			      \
-  };									      \
-									      \
-									      \
-  /** Find a virtual type, and ensure it is found.  */			      \
-  template <typename from, typename target>				      \
-  struct vtype								      \
-  {									      \
-    typedef typename find_vtype<from, target>::ret res;			      \
-    struct check_ : mlc::assert_< mlc::is_found_<res> >			      \
-    {									      \
-      typedef res ret;							      \
-    };									      \
-    typedef typename check_::ret ret;					      \
-  };									      \
-									      \
-} /* end of SCOOPED_NAMESPACE */					      \
-									      \
-struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_o_n;
-
-
 /*------------------.
 | Shortcuts macro.  |
 `------------------*/
 
+# define stc_decl_associated_type  mlc_decl_typedef
+
+
+# define stc_super(T) typename super_trait_< T >::ret
+
+
 // FIXME: Document all these macros.
 
-# define stc_find_vtype_(Namespace, Source, Target)			\
-   Namespace::find_vtype<Source, Namespace::typedef_::Target##_type>::ret
+/// Access to associated type.
+/// \{
+# define stc_type_(Source, Target) vtype<Source, typedef_::Target>::ret
+# define stc_type(Source, Target) typename stc_type_(Source, Target)
 
-# define stc_find_vtype(Namespace, Source, Target)	\
-   typename stc_find_vtype_(Namespace, Source, Target)
+# define stc_type_in_(Namespace, Source, Target)		\
+   Namespace::vtype<Source, Namespace::typedef_::Target>::ret
+# define stc_type_in(Namespace, Source, Target)		\
+   typename stc_type_in_(Namespace, Source, Target)
+
+///   Access from the interior of the class.
+///   \{
+# define stc_get_type_(Target) vtype<Exact, typedef_::Target>::ret
+# define stc_get_type(Target) typename stc_get_type_(Target)
+///   \}
+
+/// \}
+
+
+/// Likewise, but more tolerant.
+/// \{
+# define stc_find_type_(Source, Target)	\
+   find_vtype<Source, typedef_::Target>::ret
+# define stc_find_type(Source, Target)		\
+   typename stc_find_type_(Source, Target)
+/// \}
+
+/// Boolean expression counterpart of stc_find_type
+/// \{
+# define stc_type_is_found(Target)		\
+   stc::is_found< stc_deferred(Target) >
+# define stc_type_is_not_found(Target)		\
+   stc::is_not_found< stc_deferred(Target) >
+/// \}
+
+
+# define stc_is_a(T, U)							 \
+   mlc::wrap_<								 \
+     typename mlc::is_a_< sizeof(mlc::form::of< U >()) >		 \
+       ::template ret< typename mlc::basic_< stc_deferred(T) >::ret, U > \
+     >
+
+
+/// For concepts.
+/// \{
+# define stc_typename(Target) typedef stc_type(Exact, Target) Target
+# define stc_using(Target)    typedef typename super::Target Target
+# define stc_using_from(Abstraction, Target)		\
+   typedef typename Abstraction<Exact>::Target Target
+# define stc_deduce_typename(Src, Target) typedef stc_type(Src, Target) Target
+/// \}
+
+
+/// For implementation classes.
+/// \{
+/// Dummy
+# define stc_deferred(Target)			\
+   stc_find_type(Exact, Target)
+//   typename deferred_vtype<Exact, typedef_::Target >::ret
+# define stc_lookup(Target)					\
+   typedef typename vtype< stc_type(current, exact_type),	\
+                           typedef_::Target>::ret Target
+/// \}
+
+
+/// For set_impl classes.
+/// \{
+# define stc_deferred_typename(Target)  typedef stc_deferred(Target) Target
+/// \}
 
 // Dummy alias, for compatibility purpose (deferred virtual types are
 // not currently handled by this version of stc/scoop2.hh).
-# define stc_deferred_vtype(Namespace, From, Target)	\
-     stc_find_vtype(Namespace, From, Target)
+# define stc_deferred_type(Source, Target)	\
+     stc_find_type(Source, Target)
 
-# define stc_vtype_(Namespace, From, Target)				\
-   Namespace::vtype<From, Namespace::typedef_::Target##_type>::ret
 
-# define stc_vtype(Namespace, From, Target)	\
-   typename stc_vtype_(Namespace, From, Target)
+// The macro below was called stc_prop which was ambiguous
+// (that lets us think that it is true_ or false_) but the
+// result is a mlc::bexpr_!  So it has been renamed as stc_is.
+# define stc_is(Target)    mlc::eq_< stc_find_type(E, Target), stc::true_ >
 
-# define stc_find_deduce_vtype_(Namespace, From, Target1, Target2)	\
-   Namespace::find_vtype<						\
-     Namespace::find_vtype<						\
-       From,								\
-       Namespace::typedef_::Target1##_type				\
-     >::ret,								\
-     Namespace::typedef_::Target2##_type				\
-   >::ret
+// Likewise.
+# define stc_is_not(Target)				\
+   mlc::or_< mlc::eq_< stc_find_type(E, Target),	\
+                       mlc::not_found >,		\
+             mlc::eq_< stc_find_type(E, Target),	\
+                       stc::false_ > >
 
-# define stc_find_deduce_vtype(Namespace, From, Target1, Target2)	\
-   typename Namespace::find_vtype<					\
-     typename Namespace::find_vtype<					\
-       From,								\
-       Namespace::typedef_::Target1##_type				\
-     >::ret,								\
-     Namespace::typedef_::Target2##_type				\
-   >::ret
-
-# define stc_deduce_deferred_vtype(Namespace, From, Target1, Target2)	\
-  stc_find_deduce_vtype(Namespace, From, Target1, Target2)
-
-# define stc_deduce_vtype_(Namespace, From, Target1, Target2)	\
-   Namespace::vtype<						\
-     Namespace::vtype<						\
-       From,							\
-       Namespace::typedef_::Target1##_type			\
-     >::ret,							\
-     Namespace::typedef_::Target2##_type			\
-   >::ret
-
-# define stc_deduce_vtype(Namespace, From, Target1, Target2)	\
-   typename Namespace::vtype<					\
-     typename Namespace::vtype<					\
-       From,							\
-       Namespace::typedef_::Target1##_type			\
-     >::ret,							\
-     Namespace::typedef_::Target2##_type			\
-   >::ret
+# define stc_prop(Source, Target)					\
+   typename mlc::eq_< stc_find_type(Source, Target), stc::true_ >::eval
 
 
 #endif // ! STC_SCOOP_ALT_HH
