@@ -63,6 +63,9 @@ namespace oln
     typedef internal::triplet< array1d_<T, int>,
 			       unsigned,
 			       box_<point1d> > data;
+
+    typedef image1d_b<T>         plain;
+    typedef image1d_b<pl::value> skeleton;
   };
 
 
@@ -140,21 +143,21 @@ namespace oln
   bool image1d_b<T>::impl_owns_(const point1d& p) const
   {
     assert(this->has_data());
-    return this->data_->value1.has(p.ind());
+    return this->data_->first.has(p.ind());
   }
 
   template <typename T>
   bool image1d_b<T>::impl_has(const point1d& p) const
   {
     assert(this->has_data());
-    return this->data_->value3.has(p);
+    return this->data_->third.has(p);
   }
 
   template <typename T>
   const T& image1d_b<T>::impl_read(const point1d& p) const
   {
     assert(this->has_data());
-    return this->data_->value1(p.ind());
+    return this->data_->first(p.ind());
   }
 
   template <typename T>
@@ -162,14 +165,14 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->value1[i];
+    return this->data_->first[i];
   }
 
   template <typename T>
   T& image1d_b<T>::impl_read_write(const point1d& p)
   {
     assert(this->has_data());
-    return this->data_->value1(p.ind());
+    return this->data_->first(p.ind());
   }
 
   template <typename T>
@@ -177,28 +180,28 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->value1[i];
+    return this->data_->first[i];
   }
 
   template <typename T>
   box1d image1d_b<T>::impl_bbox() const
   {
     assert(this->has_data());
-    return this->data_->value3;
+    return this->data_->third;
   }
 
   template <typename T>
   box1d image1d_b<T>::impl_points() const
   {
     assert(this->has_data());
-    return this->data_->value3;
+    return this->data_->third;
   }
 
   template <typename T>
   unsigned image1d_b<T>::border() const
   {
     assert(this->has_data());
-    return this->data_->value2;
+    return this->data_->second;
   }
 
 # endif

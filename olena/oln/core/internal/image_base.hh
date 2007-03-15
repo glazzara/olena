@@ -53,6 +53,11 @@ namespace oln
 
 
 
+  // Instant value.
+  oln_decl_instant_value(ima);
+
+
+
   /// Fwd decls.
 
   namespace internal
@@ -214,6 +219,9 @@ namespace oln
       stc_typename(data);
 
       bool has_data() const;
+      
+      // pseudo-private:
+      tracked_ptr<data>& data__();
      
     protected:
       image_base_();
@@ -323,6 +331,14 @@ namespace oln
     {
     }
 
+    template <typename Exact>
+    tracked_ptr<typename image_base_<Exact>::data>&
+    image_base_<Exact>::data__()
+    {
+      // there is no test here since it is OK even if data_ is unset
+      return this->data_;
+    }
+
     /// primitive_image_<Exact>
 
     template <typename Exact>
@@ -407,10 +423,39 @@ namespace oln
     }
 
 
-# endif
+# endif // OLN_INCLUDE_ONLY
 
 
   } // end of namespace oln::internal
+
+
+
+  // init
+
+
+  template <typename P, typename I>
+  bool init_(box_<P>* this_, const internal::image_base_<I>& data);
+
+  template <typename Target, typename I>
+  bool init_(Target* this_, const internal::single_image_morpher_<I>& data);
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename P, typename I>
+  bool init_(box_<P>* this_, const internal::image_base_<I>& data)
+  {
+    *this_ = data.bbox();
+    return true;
+  }
+
+  template <typename Target, typename I>
+  bool init_(Target* this_, const internal::single_image_morpher_<I>& data)
+  {
+    return init(*this_, with, data.image());
+  }
+
+# endif // OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

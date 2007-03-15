@@ -1,3 +1,44 @@
+2007-03-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add external initialization through ''init(target, with, data)''.
+
+	* oln/core/internal/utils.hh (value1, value2, value3, value4):
+	Rename as...
+	(first, second, third, fourth): ...these.	
+	* oln/core/init.hh (init): New version.
+	(with_t, with, init_): New.
+	* oln/core/1d/image1d.hh (plain, skeleton): New.
+	* oln/core/1d/image1d_b.hh: Likewise and update.
+	* oln/core/2d/neighb2d.hh (OLN_ENABLE_DEFAULT): New.
+	(init_): New.
+	* oln/core/2d/array2d.hh: Add FIXMEs.
+	* oln/core/2d/image2d.hh (init_): New.
+	* oln/core/2d/image2d_b.hh: Likewise.
+	* oln/core/2d/box2d.hh (init__): Change sig.
+	* oln/core/2d/point2d.hh (init__): Replace by...
+	(point2d): ...this new ctor.
+	* oln/core/gen/box.hh: Likewise.
+	* oln/core/equipment.hh (include): Add init.hh.
+	* oln/core/gen/op.hh (op_): New ctor.
+	* oln/core/gen/single_value_image.hh: Update.
+	* oln/core/concept/point_set.hh (box): New instant value.
+	* oln/core/concept/grid.hh (include): Remove.
+	* oln/core/concept/point.hh (include): Add grid.hh.
+	(point): New instant value.
+	* oln/core/concept/value.hh: Fix.
+	* oln/core/internal/initializer.hh (operator*): Rename as...
+	(value): ...this.
+	(init__): Secure.
+	* oln/core/internal/op_image_plus_nbh.hh (current): Move.
+	(init_): New.
+	Update.
+	* oln/core/internal/instant_value.hh (oln_decl_instant_value):
+	Move type definitions into internal.
+	(operator M<W>): Add FIXME.
+	* oln/core/internal/image_base.hh (ima): New instant value.
+	(data__): New method.
+	(init_): New.
+
 2007-03-14  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Update and add : apply, local canvas.

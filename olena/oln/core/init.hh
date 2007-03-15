@@ -38,6 +38,11 @@ namespace oln
 {
 
 
+  template <typename D>
+  internal::initializer_<D>
+  init(const D& d);
+
+
   template <template<class> class M, typename V>
   internal::initializer_< internal::singleton< M<V> > >
   init(const internal::instant_value_<M,V>& v);
@@ -61,8 +66,48 @@ namespace oln
   // ...
 
 
+  const struct with_t {} with = with_t();
+
+
+  /*
+   *
+   * // To be specialized.
+   * template <typename This_, typename Data>
+   * bool init_(This_* this_, const Data& data); // FIXME: give code? err?
+   *
+   */
+
+
+  // The init versions below calls the above init_ routine.
+  // FIXME: Add oln::Any<*> to signature?
+
+
+  // Regular version.
+  template <typename Target, typename Data>
+  bool init(Target& target, with_t, const Data& data);
+
+  // Assignment.
+  template <typename T>
+  bool init(T& target, with_t, const T& data);
+
+  // Unconst data version.
+  template <typename Target, typename Data>
+  bool init(Target& target, with_t, Data& data);
+
+  // Guard: we cannot have "const Target".
+  template <typename Target, typename Data>
+  bool init(const Target& target, with_t, const Data& data);
+
+
 
 # ifndef OLN_INCLUDE_ONLY
+
+  template <typename D>
+  internal::initializer_<D>
+  init(const D& d)
+  {
+    return d;
+  }
 
   template <template<class> class M, typename V>
   internal::initializer_< internal::singleton< M<V> > >
@@ -95,6 +140,46 @@ namespace oln
   }
 
   // ...
+
+
+
+  // Regular version.
+  template <typename Target, typename Data>
+  bool init(Target& target, with_t, const Data& data)
+  {
+    return init_(&target, data);
+  }
+
+  // Assignment.
+  template <typename T>
+  bool init(T& target, with_t, const T& data)
+  {
+    target = data;
+    return true;
+  }
+
+  // Unconst data version.
+  template <typename Target, typename Data>
+  bool init(Target& target, with_t, Data& data)
+  {
+    return init_(&target, const_cast<const Data&>(data));
+  }
+
+
+  namespace ERROR
+  {
+    template <typename T>
+    struct initialization_of_temporary_or_const_object_;
+  }
+
+  // Guard: we cannot have "const Target".
+  template <typename Target, typename Data>
+  bool init(const Target&, with_t, const Data&)
+  {
+    mlc::abort_< Target, ERROR::initialization_of_temporary_or_const_object_<Target> >::check();
+    return false;
+  }
+
 
 # endif // OLN_INCLUDE_ONLY
 

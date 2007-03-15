@@ -30,7 +30,7 @@
 
 # include <mlc/contract.hh>
 # include <oln/stc/scoop.hh> // FIXME: Remove "oln/" later.
-
+# include <oln/core/init.hh>
 
 # define oln_typename_shortcut__(Type, Alias) typename Type::Alias
 

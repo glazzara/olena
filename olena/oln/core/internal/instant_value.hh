@@ -29,20 +29,30 @@
 # define OLN_CORE_INTERNAL_INSTANT_VALUE_HH
 
 
-# define oln_decl_instant_value(Name)				\
-								\
-template <typename V>						\
-struct Name##_t : public internal::instant_value_< Name##_t, V>	\
-{								\
-  Name##_t(const V& v) { this->value = v; }			\
-};								\
-								\
-template <typename V>						\
-Name##_t<V> Name(const V& v)					\
-{								\
-  return Name##_t<V>(v);					\
-}								\
-								\
+# define oln_decl_instant_value(Name)			\
+							\
+namespace internal					\
+{							\
+							\
+  template <typename V>					\
+  struct Name##_t : public instant_value_< Name##_t, V>	\
+  {							\
+    Name##_t(const V& v) { this->value = v; }		\
+  };							\
+							\
+  namespace tag						\
+  {							\
+    struct Name##_t {};					\
+  }							\
+							\
+}							\
+							\
+template <typename V>					\
+internal::Name##_t<V> Name(const V& v)			\
+{							\
+  return internal::Name##_t<V>(v);			\
+}							\
+							\
 struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
 
 
@@ -61,8 +71,10 @@ namespace oln
       V value;
 
       /*
-      template <typename W>
-      operator M<W>() const; // FIXME: do not compile with g++-3!!!
+	// FIXME: do not compile with g++-3!!!
+
+	template <typename W>
+	operator M<W>() const;
       */
     };
 
@@ -70,6 +82,8 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
     /*
+    // FIXME: do not compile with g++-3!!!
+
     template <template<class> class M, typename V>
     template <typename W>
     instant_value_<M,V>::operator M<W>() const

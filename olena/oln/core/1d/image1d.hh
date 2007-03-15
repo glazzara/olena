@@ -56,6 +56,9 @@ namespace oln
 
     typedef box1d                  pset;
     typedef array1d_<value, coord> data;
+
+    typedef image1d<T>         plain;
+    typedef image1d<pl::value> skeleton;
   };
 
 

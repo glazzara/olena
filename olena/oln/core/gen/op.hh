@@ -140,6 +140,8 @@ namespace oln
   public:
     op_();
     op_(L& l, R& r);
+    template <typename D>
+    op_(const internal::initializer_<D>& data);
 
   }; // end of op_<L, OpName, R>
 
@@ -156,6 +158,14 @@ namespace oln
   op_<L, OpName, R>::op_(L& l, R& r)
     : super (l, r)
   {
+  }
+
+  template <typename L, typename OpName, typename R>
+  template <typename D>
+  op_<L, OpName, R>::op_(const internal::initializer_<D>& data)
+  {
+    bool op_ok = this->super::init__(data);
+    postcondition(op_ok);
   }
 
 # endif

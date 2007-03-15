@@ -61,12 +61,12 @@ namespace oln
     {
       pair()
       {}
-      pair(T1 value1, T2 value2)
-	: value1(value1),
-	  value2(value2)
+      pair(T1 first, T2 second)
+	: first(first),
+	  second(second)
       {}
-      T1 value1;
-      T2 value2;
+      T1 first;
+      T2 second;
     };
 
 
@@ -77,14 +77,14 @@ namespace oln
     {
       triplet()
       {}
-      triplet(T1 value1, T2 value2, T3 value3)
-	: value1(value1),
-	  value2(value2),
-	  value3(value3)
+      triplet(T1 first, T2 second, T3 third)
+	: first(first),
+	  second(second),
+	  third(third)
       {}
-      T1 value1;
-      T2 value2;
-      T3 value3;
+      T1 first;
+      T2 second;
+      T3 third;
     };
 
 
@@ -95,16 +95,16 @@ namespace oln
     {
       quartet()
       {}
-      quartet(T1 value1, T2 value2, T3 value3, T4 value4)
-	: value1(value1),
-	  value2(value2),
-	  value3(value3),
-	  value4(value4)
+      quartet(T1 first, T2 second, T3 third, T4 fourth)
+	: first(first),
+	  second(second),
+	  third(third),
+	  fourth(fourth)
       {}
-      T1 value1;
-      T2 value2;
-      T3 value3;
-      T4 value4;
+      T1 first;
+      T2 second;
+      T3 third;
+      T4 fourth;
     };
 
 

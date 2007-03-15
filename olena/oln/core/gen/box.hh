@@ -32,7 +32,6 @@
 # include <oln/core/concept/point.hh>
 # include <oln/core/concept/iterator_on_points.hh>
 # include <oln/core/internal/point_set_base.hh>
-# include <oln/core/init.hh>
 
 
 namespace oln
@@ -64,15 +63,6 @@ namespace oln
   };
 
 
-  /// init__
-  namespace internal
-  {
-    template <typename P>
-    void init__(box_<P>& b,
-		const initializer_< pair< from_t<P>, to_t<P> > >& data);
-  }
-
-
   /// Generic box class based on a point class.
 
   template <typename P>
@@ -81,6 +71,11 @@ namespace oln
   {
     typedef box_<P> current;
     typedef internal::point_set_base_<current> super;
+
+    typedef internal::initializer_<
+      internal::pair< internal::from_t<P>, internal::to_t<P> >
+      > from_to_t;
+
   public:
 
     stc_using(point);
@@ -94,6 +89,8 @@ namespace oln
 
     box_();
     box_(const P& pmin, const P& pmax);
+    box_(const from_to_t& data);
+
     template <typename D>
     box_(const internal::initializer_<D>& data);
 
@@ -227,12 +224,20 @@ namespace oln
   }
 
   template <typename P>
+  box_<P>::box_(const typename box_<P>::from_to_t& dat)
+  {
+    this->pmin_ = dat->first.value;
+    this->pmax_ = dat->second.value;
+  }
+
+  template <typename P>
   template <typename D>
   box_<P>::box_(const internal::initializer_<D>& data)
   {
-    internal::init__(*this, data);
+    bool box_ok = internal::init__(internal::tag::box_t(), *this, data.value());
+    postcondition(box_ok);
   }
-      
+
   template <typename P>
   unsigned
   box_<P>::impl_npoints() const
@@ -290,23 +295,6 @@ namespace oln
   box_<P>::pmax()
   {
     return this->pmax_;
-  }
-
-
-  // --------------------   init__
-
-
-  namespace internal
-  {
-
-    template <typename P>
-    void init__(box_<P>& b,
-		const initializer_< pair< from_t<P>, to_t<P> > >& data)
-    {
-      b.pmin() = data->value1.value;
-      b.pmax() = data->value2.value;
-    }
-
   }
 
 

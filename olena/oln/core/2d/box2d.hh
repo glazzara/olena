@@ -28,6 +28,7 @@
 #ifndef OLN_CORE_2D_BOX2D_HH
 # define OLN_CORE_2D_BOX2D_HH
 
+# include <oln/core/concept/point_set.hh> // for internal::tag::box_t
 # include <oln/core/2d/point2d.hh>
 
 
@@ -46,13 +47,13 @@ namespace oln
   namespace internal
   {
 
-    template <typename C>
-    void init__(box2d& b,
-		const initializer_< pair< nrows_t<C>, ncols_t<C> > >& data);
+    template <typename U>
+    bool init__(tag::box_t, box2d& b,
+		const pair< nrows_t<U>, ncols_t<U> >& data);
 
-    template <typename C>
-    void init__(box2d& b,
-		const initializer_< triplet< from_t<point2d>, nrows_t<C>, ncols_t<C> > >& data);
+    template <typename U>
+    bool init__(tag::box_t, box2d& b,
+		const triplet< from_t<point2d>, nrows_t<U>, ncols_t<U> >& data);
 
   } // end of namespace oln::internal
 
@@ -70,29 +71,31 @@ namespace oln
   namespace internal
   {
 
-    template <typename C>
-    void init__(box2d& b,
-		const initializer_< pair< nrows_t<C>, ncols_t<C> > >& data)
+    template <typename U>
+    bool init__(tag::box_t, box2d& b,
+		const pair< nrows_t<U>, ncols_t<U> >& data)
     {
-      C nrows = data->value1.value;
-      C ncols = data->value2.value;
-      precondition(nrows > 0 and ncols > 0);
+      unsigned nrows = data.first.value;
+      unsigned ncols = data.second.value;
+      precondition(nrows != 0 and ncols != 0);
       b.pmin().row() = 0;
       b.pmin().col() = 0;
       b.pmax().row() = nrows - 1;
       b.pmax().col() = ncols - 1;
+      return true;
     }
 
-    template <typename C>
-    void init__(box2d& b,
-		const initializer_< triplet< from_t<point2d>, nrows_t<C>, ncols_t<C> > >& data)
+    template <typename U>
+    bool init__(tag::box_t, box2d& b,
+		const triplet< from_t<point2d>, nrows_t<U>, ncols_t<U> >& data)
     {
-      C nrows = data->value2.value;
-      C ncols = data->value3.value;
-      precondition(nrows > 0 and ncols > 0);
-      b.pmin() = data->value1.value;
+      unsigned nrows = data.second.value;
+      unsigned ncols = data.third.value;
+      precondition(nrows != 0 and ncols != 0);
+      b.pmin() = data.first.value;
       b.pmax().row() = b.pmin().row() + nrows - 1;
       b.pmax().col() = b.pmin().col() + ncols - 1;
+      return true;
     }
 
   } // end of namespace oln::internal

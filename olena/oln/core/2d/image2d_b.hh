@@ -152,6 +152,8 @@ namespace oln
     unsigned border() const;
   };
 
+  template <typename T, typename D>
+  bool init_(image2d_b<T>* this_, const D& dat);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -260,6 +262,18 @@ namespace oln
   {
     assert(this->has_data());
     return this->data_->border;
+  }
+
+  template <typename T, typename D>
+  bool init_(image2d_b<T>* this_, const D& dat)
+  {
+    precondition(not this_->has_data());
+    box2d b;
+    bool box_ok = init(b, with, dat);
+    postcondition(box_ok);
+    unsigned border = 2; // FIXME: Use init!
+    this_->data__() = new typename image2d_b<T>::data(b.pmin(), b.pmax(), border);
+    return box_ok;
   }
 
 # endif

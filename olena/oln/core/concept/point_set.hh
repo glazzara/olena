@@ -28,12 +28,16 @@
 #ifndef OLN_CORE_CONCEPT_POINT_SET_HH
 # define OLN_CORE_CONCEPT_POINT_SET_HH
 
-# include <ostream>
+# include <iostream>
 # include <oln/core/concept/point.hh>
+# include <oln/core/concept/iterator.hh> // for "for_all"
 
 
 namespace oln
 {
+
+  /// Instant value.
+  oln_decl_instant_value(box);
 
 
   /// Concept-class "Point_Set".

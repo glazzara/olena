@@ -104,6 +104,8 @@ namespace oln
     box2d impl_points() const;
   };
 
+  template <typename T, typename D>
+  bool init_(image2d<T>* this_, const D& dat);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -215,6 +217,18 @@ namespace oln
   box2d image2d<T>::impl_points() const
   {
     return this->bbox();
+  }
+
+  template <typename T, typename D>
+  bool init_(image2d<T>* this_, const D& dat)
+  {
+    precondition(not this_->has_data());
+    box2d b;
+    bool box_ok = init(b, with, dat);
+    postcondition(box_ok);
+    this_->data__() = new typename image2d<T>::data(b.pmin().row(), b.pmin().col(), 
+						    b.pmax().row(), b.pmax().col());
+    return box_ok;
   }
 
 # endif

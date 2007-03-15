@@ -30,7 +30,6 @@
 # define OLN_CORE_CONCEPT_GRID_HH
 
 # include <oln/core/equipment.hh>
-# include <oln/core/internal/instant_value.hh>
 
 
 namespace oln

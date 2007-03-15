@@ -31,7 +31,6 @@
 
 # include <oln/core/2d/grid2d.hh>
 # include <oln/core/internal/point2d.hh>
-# include <oln/core/init.hh>
 
 
 namespace oln
@@ -60,25 +59,18 @@ namespace oln
   };
 
 
-  /// init__
-  namespace internal
-  {
-    template <typename C>
-    void init__(point2d& p,
-		const initializer_< pair< row_t<C>, col_t<C> > >& data);
-  }
-
-
   /// Usual 2D point class.
   class point2d : public internal::point2d_< point2d >
   {
+    typedef internal::initializer_<
+      internal::pair< internal::row_t<int>, internal::col_t<int> >
+    > row_col_t;
   public:
 
     /// Ctors.
     point2d();
-    point2d(int row, int col);
-    template <typename D>
-    point2d(const internal::initializer_<D>& data);
+    point2d(int row, int col); // FIXME: Remove!
+    point2d(const row_col_t& dat);
   };
 
 
@@ -89,27 +81,16 @@ namespace oln
   {
   }
 
-  point2d::point2d(int row, int col)
+  point2d::point2d(int row, int col) // FIXME: Remove!
   {
     this->row() = row;
     this->col() = col;
   }
 
-  template <typename D>
-  point2d::point2d(const internal::initializer_<D>& data)
+  point2d::point2d(const point2d::row_col_t& dat)
   {
-    internal::init__(*this, data);
-  }
-
-  namespace internal
-  {
-    template <typename C>
-    void init__(point2d& p,
-		const initializer_< pair< row_t<C>, col_t<C> > >& data)
-    {
-      p.row() = data->value1.value; // FIXME: first
-      p.col() = data->value2.value; // FIXME: second
-    }
+    this->row() = dat->first.value;
+    this->col() = dat->second.value;
   }
 
 # endif

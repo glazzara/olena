@@ -30,12 +30,15 @@
 # define OLN_CORE_CONCEPT_POINT_HH
 
 # include <mlc/value.hh>
+# include <oln/core/concept/grid.hh>
 # include <oln/core/concept/operators.hh>
 
 
 
 namespace oln
 {
+  /// Instant value.
+  oln_decl_instant_value(point);
 
 
   /// Concept-class "Point".

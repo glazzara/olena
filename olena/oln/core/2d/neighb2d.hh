@@ -40,6 +40,15 @@ namespace oln
   typedef neighb_<dpoint2d> neighb2d;
 
 
+# ifdef OLN_ENABLE_DEFAULT
+
+  // Default is c4.
+  template <typename D>
+  bool init_(neighb2d* this_, const D&);
+
+# endif // OLN_ENABLE_DEFAULT
+
+
   namespace internal
   {
 
@@ -100,12 +109,24 @@ namespace oln
 
 # ifndef OLN_INCLUDE_ONLY
 
+#  ifdef OLN_ENABLE_DEFAULT
+
+    /// Default is c4.
+    template <typename D>
+    bool init_(neighb2d* this_, const D&)
+    {
+      *this_ = c4;
+      return true;
+    }
+
+#  endif // OLN_ENABLE_DEFAULT
+
   const neighb2d c4  = internal::mk_c4();
   const neighb2d c8  = internal::mk_c8();
   const neighb2d c2r = internal::mk_c2_row();
   const neighb2d c2c = internal::mk_c2_col();
 
-# endif
+# endif // OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

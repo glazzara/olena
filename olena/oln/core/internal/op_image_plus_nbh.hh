@@ -28,6 +28,7 @@
 #ifndef OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
 # define OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
 
+# include <oln/core/concept/neighborhood.hh>
 # include <oln/core/gen/op.hh>
 # include <oln/core/gen/dpoints_piter.hh>
 # include <oln/core/internal/image_base.hh>
@@ -36,6 +37,13 @@
 namespace oln
 {
 
+# define current \
+     special_op_< stc::is<Image>, I, plus, stc::is<Neighborhood>, N >
+
+  // Instant value.
+  oln_decl_instant_value(nbh);
+
+
   /// Fwd decls.
   template <typename Exact> struct Image;
   template <typename Exact> struct Neighborhood;
@@ -43,7 +51,7 @@ namespace oln
 
   /// Super type.
   template <typename I, typename N>
-  struct super_trait_< internal::special_op_<stc::is<Image>, I, plus, stc::is<Neighborhood>, N> >
+  struct super_trait_< internal::current >
   {
     typedef internal::image_extension_< op_<I, plus, N> > ret;
   };
@@ -51,7 +59,7 @@ namespace oln
 
   /// Virtual types.
   template <typename I, typename N>
-  struct vtypes< internal::special_op_<stc::is<Image>, I, plus, stc::is<Neighborhood>, N> >
+  struct vtypes< internal::current >
   {
     typedef op_<I, plus, N> Exact;
     typedef stc_type(I, point) point__;
@@ -94,11 +102,30 @@ namespace oln
       special_op_(I& ima, N& n);
     };
 
+  } // end of namespace oln::internal
+
+
+  // init
+
+  template <typename I, typename N, typename D>
+  bool init_(internal::current* target, const D& dat);
+
+  template <typename N, typename I>
+  bool init(Neighborhood<N>& target,
+	    with_t,
+	    const internal::current& dat);
+
+  template <typename I, typename N>
+  bool init(Image<I>& target,
+	    with_t,
+	    const internal::current& dat);
+
+
 
 # ifndef OLN_INCLUDE_ONLY
 
-# define current \
-    special_op_< stc::is<Image>, I, plus, stc::is<Neighborhood>, N >
+  namespace internal
+  {
 
     template <typename I, typename N>
     current::special_op_()
@@ -116,7 +143,7 @@ namespace oln
     current::impl_image()
     {
       assert(this->has_data());
-      return this->data_->value1;
+      return this->data_->first;
     }
 
     template <typename I, typename N>
@@ -124,7 +151,7 @@ namespace oln
     current::impl_image() const
     {
       assert(this->has_data());
-      return this->data_->value1;
+      return this->data_->first;
     }
 
     template <typename I, typename N>
@@ -132,14 +159,47 @@ namespace oln
     current::impl_nbhood() const
     {
       assert(this->has_data());
-      return this->data_->value2;
+      return this->data_->second;
     }
-
-# undef current
-    
-# endif // OLN_INCLUDE_ONLY
     
   } // end of namespace oln::internal
+
+
+  // init
+
+  // FIXME: N is nbh?
+
+  template <typename I, typename N, typename D>
+  bool init_(internal::current* this_, const D& dat)
+  {
+    precondition(not this_->has_data());
+    this_->data__() = new typename op_<I, plus, N>::data;
+    bool ima_ok = init(this_->data__()->first,  with, dat);
+    bool nbh_ok = init(this_->data__()->second, with, dat);
+    postcondition(ima_ok);
+    postcondition(nbh_ok);
+    return ima_ok and nbh_ok;
+  }
+
+  template <typename N, typename I>
+  bool init_(Neighborhood<N>* this_,
+	     const internal::current& data)
+  {
+    *this_ = data.nbhood();
+    return true;
+  }
+
+  template <typename I, typename N>
+  bool init(Image<I>* this_,
+	    const internal::current& data)
+  {
+    *this_ = data.image();
+    return true;
+  }
+
+# endif // OLN_INCLUDE_ONLY
+
+#  undef current
 
 } // end of namespace oln
 

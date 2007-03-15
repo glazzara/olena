@@ -47,7 +47,8 @@ namespace oln
 
 # ifndef OLN_INCLUDE_ONLY
 
-  Value::Value()
+  template <typename Exact>
+  Value<Exact>::Value()
   {
   }
 

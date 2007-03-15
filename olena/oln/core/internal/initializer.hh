@@ -37,10 +37,22 @@ namespace oln
   {
 
     template <typename S>
-    struct bad_initialization_of_
+    struct no_proper_initialization_found_for_
+    {
+      template <typename D>
+      struct with_data_being_;
+    };
+
+    template <typename S>
+    struct bad_initialization_call_for_
     {
       template <typename D>
       struct with_;
+    };
+
+    template <typename S>
+    struct initialization_call_instead_of_assignment_
+    {
     };
 
   } // end of namespace oln::ERROR
@@ -55,19 +67,25 @@ namespace oln
     struct initializer_
     {
       initializer_(const D& data);
-      const D& operator*()  const;
       const D* operator->() const;
+      const D& value()  const;
 
     protected:
       D data_;
     };
 
 
+    // Decl: explicit error when not defined.
     template <typename Tag, typename Subject, typename D>
-    void init__(const Tag& t, Subject& s, const initializer_<D>& d);
+    bool init__(const Tag& t, Subject& s, const D& d);
 
-    template <typename Subject, typename D>
-    void init__(Subject& s, const initializer_<D>& d);
+    // Guard: init is not for assignment.
+    template <typename Tag, typename D>
+    bool init__(const Tag& t, D& subject, const D& data);
+
+    // Guard: explicit error cause wrong type of last arg.
+    template <typename Tag, typename Subject, typename D>
+    bool init__(const Tag& t, Subject& s, const initializer_<D>& d);
 
 
 
@@ -79,29 +97,40 @@ namespace oln
     {}
 
     template <typename D>
-    const D&
-    initializer_<D>::operator*()  const
-    {
-      return this->data_;
-    }
-
-    template <typename D>
     const D*
-    initializer_<D>::operator->() const
+    initializer_<D>::operator->()  const
     {
       return &(this->data_);
     }
 
-    template <typename Tag, typename Subject, typename D>
-    void init__(const Tag&, Subject&, const initializer_<D>&)
+    template <typename D>
+    const D&
+    initializer_<D>::value()  const
     {
-      mlc::abort_<D, typename ERROR::bad_initialization_of_<Subject>::template with_<D> >::check();
+      return this->data_;
     }
 
-    template <typename Subject, typename D>
-    void init__(Subject&, const initializer_<D>&)
+    template <typename Tag, typename D>
+    bool init__(const Tag&, D& subject, const D& data)
     {
-      mlc::abort_<D, typename ERROR::bad_initialization_of_<Subject>::template with_<D> >::check();
+      mlc::abort_<Tag, typename ERROR::initialization_call_instead_of_assignment_<D> >::check();
+      return false;
+    }
+
+    template <typename Tag, typename Subject, typename D>
+    bool init__(const Tag&, Subject&, const D&)
+    {
+      mlc::abort_<Tag, typename ERROR::no_proper_initialization_found_for_<Subject>
+	::template with_data_being_<D> >::check();
+      return false;
+    }
+
+    template <typename Tag, typename Subject, typename D>
+    bool init__(const Tag&, Subject& s, const initializer_<D>& d)
+    {
+      mlc::abort_<Tag, typename ERROR::bad_initialization_call_for_<Subject>
+	::template with_<D> >::check();
+      return false;
     }
 
 # endif //  OLN_INCLUDE_ONLY

@@ -120,7 +120,7 @@ namespace oln
   single_value_image<Ps, T>::impl_owns_(const typename single_value_image<Ps, T>::point& p) const
   {
     assert(this->has_data());
-    return this->data_->value1.has(p);
+    return this->data_->first.has(p);
   }
 
   template <typename Ps, typename T>
@@ -128,7 +128,7 @@ namespace oln
   single_value_image<Ps, T>::impl_has(const typename single_value_image<Ps, T>::point& p) const
   {
     assert(this->has_data());
-    return this->data_->value1.has(p);
+    return this->data_->first.has(p);
   }
 
   template <typename Ps, typename T>
@@ -136,7 +136,7 @@ namespace oln
   single_value_image<Ps, T>::impl_read(const typename single_value_image<Ps, T>::point&) const
   {
     assert(this->has_data());
-    return this->data_->value2;
+    return this->data_->second;
   }
 
   template <typename Ps, typename T>
@@ -144,7 +144,7 @@ namespace oln
   single_value_image<Ps, T>::impl_points() const
   {
     assert(this->has_data());
-    return this->data_->value1;
+    return this->data_->first;
   }
 
   template <typename Ps, typename T>
@@ -152,7 +152,7 @@ namespace oln
   single_value_image<Ps, T>::change_value(const T& new_value)
   {
     assert(this->has_data());
-    this->data_->value2 = new_value;
+    this->data_->second = new_value;
   }
 
 # endif // OLN_INCLUDE_ONLY

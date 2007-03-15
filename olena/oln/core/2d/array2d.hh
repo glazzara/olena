@@ -99,6 +99,7 @@ namespace oln
     precondition(imax >= imin and jmax >= jmin);
     ilen_ = imax - imin + 1;
     jlen_ = jmax - jmin + 1;
+    // FIXME: Test that ilen_ and jlen_ are not huge!
     allocate_();
   }
 
@@ -110,6 +111,7 @@ namespace oln
     jlen_(jlen)
   {
     precondition(ilen > 0 and jlen > 0);
+    // FIXME: Test that ilen_ and jlen_ are not huge!
     imax_ = imin_ + ilen_;
     jmax_ = jmin_ + ilen_;
     allocate_();
