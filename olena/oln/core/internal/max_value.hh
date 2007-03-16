@@ -30,12 +30,11 @@
 
 #include <cassert>
 #include <limits>
-#include <iostream>
 
 namespace oln
 {
 
-#define oln_max(T) std::numeric_limits< T >::max()
+#define oln_max(T) std::numeric_limits<T>::max()
 
 }
 

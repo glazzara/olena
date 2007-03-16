@@ -26,34 +26,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef   	OLN_MORPHOMATH_EROSION_HH_
-# define   	OLN_MORPHOMATH_EROSION_HH_
+#ifndef   	OLN_MORPHO_EROSION_HH
+# define   	OLN_MORPHO_EROSION_HH
 
-#include <oln/fonction/min.hh>
 #include <oln/level/local.hh>
+#include <oln/function/min.hh>
 
 namespace oln
 {
-  namespace impl
+
+  namespace morpho
   {
 
-    /// Generic version
-
-    template <typename I, typename W>
-    I erosion(const Image<I>& input)
+    namespace impl
     {
-      min_<oln_value(I)> min;
-      return apply(min, input);
+
+      /// Generic version
+
+      template <typename I>
+      I erosion(Image_with_Nbh<I>& input)
+      {
+	function::min_<oln_value(I)> min;
+
+	return ::oln::level::apply_local(min, input);
+      }
     }
-  }
 
-  // Facade.
+    // Facade.
 
-  template <typename I, typename W>
-  I erosion(const Point_Wise_Accessible_Image<I>& input)
-  {
-    return impl::erosion(exact(input));
-  }
+    template <typename I>
+    I erosion(Image_with_Nbh<I>& input)
+    {
+      return impl::erosion(exact(input));
+    }
+
+  } // end of namespace
 }
 
-#endif	    /* !OLN_MORPHOMATH_EROSION_HH_ */
+#endif // ! OLN_MORPHO_EROSION_HH

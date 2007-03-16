@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,9 @@
 # define OLN_LEVEL_APPLY_HH
 
 # include <oln/core/concept/image.hh>
-
+# include <oln/core/concept/iterator.hh>
+# include <oln/core/internal/f_ch_value.hh>
+# include <oln/level/local.hh>
 
 namespace oln
 {
@@ -63,63 +65,37 @@ namespace oln
     namespace impl
     {
 
-      template < typename F >
-      struct result
-      {
-	  typedef typename F::result ret;
-      };
-
-      template < typename R (*fun)(A) >
-      struct result
-      {
-	  typedef typename R ret;
-      };
-
-      template < typename F >
-      struct argument
-      {
-	  typedef typename F::argument ret;
-      };
-
-      template < typename R (*fun)(A) >
-      struct argument
-      {
-	  typedef typename A	ret;
-      };
-
-
-      // APPLY //
-      //---------
+      /// apply
 
       template <typename F, typename I>
-      oln_plain_value(I, result<typename F>::ret)
-        apply(const F& fun, const Image<I>& input)
+      oln_plain_value(I, typename F::result)
+      apply( F& f, const Image<I>& input)
       {
-	typedef argument<typename F>::ret	A;
-        typedef result<typename F>::ret		R;
+	typedef typename F::result	result;
+        typedef typename F::argument	argument;
 
-        oln_ch_value(I, R) output(input.points());
+        oln_ch_value(I, result) output(input.points());
         oln_piter(I) p(input.points());
         for_all(p)
-          output(p) = fun( static_cast<A>(input(p)) );
+          output(p) = f( static_cast< argument >(input(p)) );
         return output;
       }
 
 
-      // APPLY_LOCAL //
-      //---------------
+      /// apply_local
 
       template <typename F, typename I>
-      oln_plain_value(I, result<typename F>::ret)
-        apply_local(const F& fun, const Image<I>& input)
+      oln_plain_value(I, typename F::result)
+	apply_local(const Accumulator<F>& fun,
+		    const Image_with_Nbh<I>& input)
       {
-        typedef argument<typename F>::ret	A;
-        typedef result<typename F>::ret		R;
+        typedef typename F::result	result;
+        typedef typename F::argument	argument;
 
-        oln_ch_value(I, R) output(input.points());
+        oln_ch_value(I, argument) output(input.points());
         oln_piter(I) p(input.points());
         for_all(p)
-	  output(p) = local_apply(fun, input, p);
+	  output(p) = local(fun, input, p);
         return output;
       }
 
@@ -166,30 +142,31 @@ namespace oln
 
     template <typename R, typename A, typename I>
     oln_plain_value(I, R)
-      apply(R (*fun)(A), const Image<I>& input)
+    apply(R (*fun)(A), const Image<I>& input)
     {
       return impl::apply(fun, exact(input));
     }
 
     template <typename F, typename I>
     oln_plain_value(I, typename F::result)
-      apply(const F& fun, const Image<I>& input)
+    apply(F& f, const Image<I>& input)
     {
-      return impl::apply(fun, exact(input));
+      return impl::apply(f, exact(input));
     }
 
     /// Apply local
 
     template <typename R, typename A, typename I>
     oln_plain_value(I, R)
-      apply_local(R (*fun)(A), const Image<I>& input)
+    apply_local(R (*fun)(A), const Image<I>& input)
     {
       return impl::apply_local(fun, exact(input));
     }
 
     template <typename F, typename I>
     oln_plain_value(I, typename F::result)
-      apply_local(const F& fun, const Image<I>& input)
+    apply_local(const Accumulator<F>&    fun,
+		const Image_with_Nbh<I>& input)
     {
       return impl::apply_local(fun, exact(input));
     }

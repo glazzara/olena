@@ -1,5 +1,4 @@
-// Copyright (C) 2007 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,43 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef   	OLN_FUNCTION_MIN_HH_
-# define   	OLN_FUNCTION_MIN_HH_
+#ifndef _FUNCTION_MIN_HH
+# define _FUNCTION_MIN_HH
+
+#include <oln/core/concept/functions.hh>
+#include <oln/core/internal/max_value.hh>
+
 
 namespace oln
 {
 
-  template <typename T>
-  struct min_ : oln::Function< min_<T> >
+  namespace function
   {
-      typedef T    argument;
-      typedef void result;
 
-      min_()
-      {
-	init();
-      }
+    template <typename T>
+    struct min_ : public oln::Accumulator< min_<T> >
+    {
+	typedef T    argument;
+	typedef T    result;
 
-      void init()
-      {
-        val_ = oln_max_value(T);
-      }
+	min_()	           { this->init(); }
 
-      T value() const
-      {
-        return val_;
-      }
+	void   init()        { val_ = oln_max(T); }
+	result value() const { return val_; }
 
-      template <typename U>
-      void operator()(U i) const
-      {
-        if (i < val_)
-          val_ = static_cast<T>(i);
-      }
-    private:
-      mutable T val_;
-  };
+	template <typename U>
+	void operator()(U i) const
+	{
+	  if (i < val_)
+	    val_ = static_cast<T>(i);
+	}
+
+      private:
+	mutable T val_;
+    };
+
+  }
 
 }
 
-#endif	    /* !OLN_FUNCTION_MIN_HH_ */
+#endif // ! OLN_FUNCTION_MIN_HH
