@@ -48,8 +48,8 @@ namespace oln
   template <typename Exact>
   struct Function : public Any<Exact>
   {
-    protected:
-      Function();
+  protected:
+    Function();
   };
 
 
@@ -58,8 +58,8 @@ namespace oln
   template <typename Exact>
   struct Function_p2v : public Function<Exact>
   {
-    protected:
-      Function_p2v();
+  protected:
+    Function_p2v();
   };
 
 
@@ -68,8 +68,8 @@ namespace oln
   template <typename Exact>
   struct Function_v2v : public Function<Exact>
   {
-    protected:
-      Function_v2v();
+  protected:
+    Function_v2v();
   };
 
 
@@ -78,8 +78,8 @@ namespace oln
   template <typename Exact>
   struct Accumulator : public Function<Exact>
   {
-    protected:
-      Accumulator();
+  protected:
+    Accumulator();
   };
 
 
@@ -124,8 +124,8 @@ namespace oln
   template <typename Exact>
   struct Function_p2p : public Function<Exact>
   {
-    protected:
-      Function_p2p();
+  protected:
+    Function_p2p();
   };
 
 
@@ -162,6 +162,11 @@ namespace oln
 
   template <typename Exact>
   Function_p2p<Exact>::Function_p2p()
+  {
+  }
+
+  template <typename Exact>
+  Accumulator<Exact>::Accumulator()
   {
   }
 

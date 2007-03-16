@@ -41,23 +41,23 @@ namespace oln
     template <typename T>
     struct min_ : public oln::Accumulator< min_<T> >
     {
-	typedef T    argument;
-	typedef T    result;
+      typedef T    argument;
+      typedef T    result;
 
-	min_()	           { this->init(); }
+      min_()	           { this->init(); }
 
-	void   init()        { val_ = oln_max(T); }
-	result value() const { return val_; }
+      void   init() const  { val_ = oln_max(T); }
+      result value() const { return val_; }
 
-	template <typename U>
-	void operator()(U i) const
-	{
-	  if (i < val_)
-	    val_ = static_cast<T>(i);
-	}
+      template <typename U>
+      void operator()(U i) const
+      {
+	if (i < val_)
+	  val_ = static_cast<T>(i);
+      }
 
-      private:
-	mutable T val_;
+    private:
+      mutable T val_;
     };
 
   }

@@ -5,8 +5,8 @@
 // of the GNU General Public License version 2 as published by the
 // Free Software Foundation.
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 //
@@ -42,7 +42,7 @@ namespace oln
   {
 
     template <typename A, typename I>
-    typename A::result
+    int //typename A::result
     local(const Accumulator<A>&    f,
 	  const Image_with_Nbh<I>& input,
 	  const oln_point(I)&      p);
@@ -62,10 +62,10 @@ namespace oln
       /// Local Apply on neighborhood (nbh included in image).
 
       template <typename A, typename I>
-      typename A::result
-      local(const Accumulator<A>&    f,
-	    const Image_with_Nbh<I>& input,
-	    const oln_point(I)&      p)
+      int//typename A::result
+      local_(const A&    f,
+	     const Image_with_Nbh<I>& input,
+	     const oln_point(I)&      p)
       {
 	f.init();
 	oln_niter(I) n(p, input.points());
@@ -88,10 +88,10 @@ namespace oln
 
       template <typename F, typename I, typename W>
       typename F::result
-      local(const Accumulator<F>& f,
-	    const Image<I>&       input,
-	    const oln_point(I)&   p,
-	    const Window<W>&      win)
+      local_(const F& f,
+	     const Image<I>&       input,
+	     const oln_point(I)&   p,
+	     const Window<W>&      win)
       {
 	f.init();
 	oln_qiter(W) q(p, win);
@@ -106,12 +106,12 @@ namespace oln
     /// Facades.
 
     template <typename A, typename I>
-    typename A::result
+    int//typename A::result
     local(const Accumulator<A>&    f,
 	  const Image_with_Nbh<I>& input,
-	  const oln_point( I )&    p)
+	  const oln_point(I)&      p)
     {
-      return impl::local(f, input, p);
+      return impl::local_(exact(f), input, p);
     }
 
     template <typename F, typename I, typename W>
@@ -121,7 +121,7 @@ namespace oln
 	  const oln_point(I)&   p,
 	  const Window<W>&      win)
     {
-      return impl::local(f, input, p, win);
+      return impl::local_(exact(f), input, p, win);
     }
 
 #endif // ! OLN_INCLUDE_ONLY

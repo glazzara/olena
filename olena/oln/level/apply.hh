@@ -69,7 +69,7 @@ namespace oln
 
       template <typename F, typename I>
       oln_plain_value(I, typename F::result)
-      apply( F& f, const Image<I>& input)
+	apply( F& f, const Image<I>& input)
       {
 	typedef typename F::result	result;
         typedef typename F::argument	argument;
@@ -85,17 +85,19 @@ namespace oln
       /// apply_local
 
       template <typename F, typename I>
-      oln_plain_value(I, typename F::result)
-	apply_local(const Accumulator<F>& fun,
+      I apply_local(const Accumulator<F>&    f,
 		    const Image_with_Nbh<I>& input)
       {
         typedef typename F::result	result;
         typedef typename F::argument	argument;
 
-        oln_ch_value(I, argument) output(input.points());
+	typename I::delegatee out(input.points());
+        I output(out, input.nbhood());
+        // I output(exact(input).image(), input.nbhood());
+        // FIXME: init(output, with, input);
         oln_piter(I) p(input.points());
         for_all(p)
-	  output(p) = local(fun, input, p);
+	  output(p) = level::local(f, input, p);
         return output;
       }
 
@@ -142,14 +144,14 @@ namespace oln
 
     template <typename R, typename A, typename I>
     oln_plain_value(I, R)
-    apply(R (*fun)(A), const Image<I>& input)
+      apply(R (*fun)(A), const Image<I>& input)
     {
       return impl::apply(fun, exact(input));
     }
 
     template <typename F, typename I>
     oln_plain_value(I, typename F::result)
-    apply(F& f, const Image<I>& input)
+      apply(F& f, const Image<I>& input)
     {
       return impl::apply(f, exact(input));
     }
@@ -158,7 +160,7 @@ namespace oln
 
     template <typename R, typename A, typename I>
     oln_plain_value(I, R)
-    apply_local(R (*fun)(A), const Image<I>& input)
+      apply_local(R (*fun)(A), const Image<I>& input)
     {
       return impl::apply_local(fun, exact(input));
     }
@@ -168,7 +170,7 @@ namespace oln
     apply_local(const Accumulator<F>&    fun,
 		const Image_with_Nbh<I>& input)
     {
-      return impl::apply_local(fun, exact(input));
+      return impl::apply_local(fun, input);
     }
 
 //     /// Facade.

@@ -96,7 +96,8 @@ namespace oln
       delegatee& impl_image();
       const delegatee& impl_image() const;
 
-      nbh impl_nbhood() const;
+      nbh  impl_nbhood() const;
+      nbh& impl_nbhood();
 
     protected:
       special_op_();

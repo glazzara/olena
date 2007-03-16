@@ -1,5 +1,22 @@
 2007-03-16  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Update : erosion (bring some error to light).
+
+	* oln/morpho,
+	* oln/morpho/dilation.hh: New.
+	* oln/morpho/dilatation.hh: Remove.
+	* oln/morpho/erosion.hh: .
+	* oln/function/min.hh: .
+	* oln/level/apply.hh: .
+	* oln/level/local.hh: .
+	* oln/core/concept/functions.hh: .
+	* oln/core/internal/op_image_plus_nbh.hh: .
+	* oln/morphomath,
+	* oln/morphomath/dilatation.hh,
+	* oln/morphomath/erosion.hh: Remove.
+
+2007-03-16  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Update : Norme, Sanity, apply of user functors. erosion not yet usable.
 
 	* oln/function/min.hh: .
