@@ -1,5 +1,9 @@
 2007-03-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	* oln/Makefile.am (nobase_oln_HEADERS): Remove obsolete files.
+
+2007-03-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Allow Olena to use the SCOOP Alternative implementation (back).
 
 	* oln/core/equipment.hh [OLENA_USE_SCOOP_ALT]: Include
