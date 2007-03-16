@@ -29,7 +29,11 @@
 # define OLN_CORE_EQUIPMENT_HH
 
 # include <mlc/contract.hh>
-# include <oln/stc/scoop.hh> // FIXME: Remove "oln/" later.
+# ifndef OLENA_USE_SCOOP_ALT
+#   include <oln/stc/scoop.hh> // FIXME: Remove "oln/" later.
+# else
+#   include <stc/scoop-alt.hh>
+# endif
 # include <oln/core/init.hh>
 
 # define oln_typename_shortcut__(Type, Alias) typename Type::Alias
@@ -39,7 +43,11 @@
 namespace oln
 {
 
-# include <oln/stc/scoop.hxx> // FIXME: Remove "oln/" later.
+# ifndef OLENA_USE_SCOOP_ALT
+#  include <oln/stc/scoop.hxx> // FIXME: Remove "oln/" later.
+# else
+#  include <stc/scoop-alt.inc>
+# endif
 
   // b
   stc_decl_associated_type( bkd_niter );

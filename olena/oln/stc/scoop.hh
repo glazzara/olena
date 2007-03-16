@@ -53,7 +53,7 @@ namespace stc
   template <typename T>
   struct final;
 
-  template < template <class> class >
+  template < template <class> class category >
   struct is;
 
   typedef mlc::true_  true_;
