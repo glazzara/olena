@@ -12,13 +12,15 @@ AM_CPPFLAGS =						\
 #
 #   AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_DEBUG)
 #
-# when oln.m4 is available in the distribution, instead of using the 
+# when oln.m4 is available in the distribution, instead of using the
 # set-by-hand TESTS_CXXFLAGS.
 TESTS_CXXFLAGS = @TESTS_CXXFLAGS@
 AM_CXXFLAGS = $(TESTS_CXXFLAGS)
 
 
 check_PROGRAMS =				\
+  rle_image					\
+  sparse_image					\
   apply						\
   dpoint2d					\
   point2d					\
@@ -30,6 +32,7 @@ check_PROGRAMS =				\
   window2d					\
   at
 
+
 # Images and auxiliary structures.
 dpoint2d_SOURCES = dpoint2d.cc
 point2d_SOURCES = point2d.cc
@@ -39,6 +42,8 @@ neighb2d_SOURCES = neighb2d.cc
 npoints_SOURCES = npoints.cc
 subset_SOURCES = subset.cc
 window2d_SOURCES = window2d.cc
+rle_image_SOURCES = rle_image.cc
+sparse_image_SOURCES = sparse_image.cc
 
 # Methods.
 at_SOURCES = at.cc

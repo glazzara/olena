@@ -1,5 +1,13 @@
 2007-03-16  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	New test for rle_class and sparse_image class.
+
+	* tests/core/sparse_image.cc: New.
+	* tests/core/rle_image.cc: New.
+	* tests/core/Makefile.am: Update
+
+2007-03-16  Nicolas Ballas  <ballas@lrde.epita.fr>
+
 	sparse_encode working.
 
 	* oln/core/encode/sparse_encode.hh: Update
