@@ -33,6 +33,8 @@
 
 # include <oln/core/sparse/sparse_image.hh>
 
+# include <vector>
+
 namespace oln
 {
 
@@ -45,13 +47,44 @@ namespace oln
   */
   template <typename I>
   sparse_image<typename I::point, typename I::value>
-  sparse_encode(const Image<I> input)
+  sparse_encode(const Image<I>& input)
   {
     sparse_image<typename I::point, typename I::value>	output;
-    typename I::piter					p (input.points());
-    //    typename I::coord					len = 1;
+    typename I::piter					p(input.points());
+    unsigned						len = 1;
+    typename I::coord					old = 1; /*!< old point first dim coordinate */
     typename I::point					rstart;	/*!< range pointstart */
-    typename I::value					rvalue;	/*!< range value */
+    std::vector<typename I::value>			values;	/*!< range value */
+
+    p.start();
+    if (!p.is_valid())
+      return output;
+
+    rstart = p;
+    //FIXME: is it generall ?
+    old = (p.to_point())[0];
+    values.push_back(input(p.to_point()));
+    p.next();
+    while (p.is_valid())
+    {
+      if ((p.to_point())[0] - 1 == old)
+      {
+	++len;
+	values.push_back(input(p.to_point()));
+      }
+      else
+      {
+	output.insert(rstart, len, values);
+	rstart = p;
+	len = 1;
+	values.clear();
+	values.push_back(input(p.to_point()));
+      }
+      old = (p.to_point())[0];
+      p.next();
+    }
+    output.insert(rstart, len, values);
+    return output;
   }
 }
 

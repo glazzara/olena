@@ -1,3 +1,9 @@
+2007-03-16  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	sparse_encode working.
+
+	* oln/core/encode/sparse_encode.hh: Update
+
 2007-03-15  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Fix bug on sparse image.
