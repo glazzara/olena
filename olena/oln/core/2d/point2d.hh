@@ -93,7 +93,7 @@ namespace oln
     this->col() = dat->second.value;
   }
 
-# endif
+# endif // OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

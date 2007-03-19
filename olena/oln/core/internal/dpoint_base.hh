@@ -45,19 +45,21 @@ namespace oln
   template <typename Exact>
   struct super_trait_< internal::dpoint_base_<Exact> >
   {
-      typedef Dpoint<Exact> ret;
+    typedef Dpoint<Exact> ret;
   };
 
   template <typename Exact>
   struct vtypes< internal::dpoint_base_<Exact> >
   {
-      typedef stc::abstract grid;
+    typedef stc::abstract grid;
 
-      typedef stc_deferred(grid) grid__;
-      typedef stc::final<stc_type(grid__, dim)> dim;
+    typedef stc_deferred(grid) grid__;
+    typedef stc::final<stc_type(grid__, dim)> dim;
 
-      typedef stc::abstract coord;
-      typedef stc::abstract point;
+    typedef stc::abstract coord;
+    typedef stc::abstract point; // FIXME: Just like in point_base.hh
+
+    typedef stc::final< stc::is<Dpoint> > category;
   };
 
 
@@ -67,38 +69,38 @@ namespace oln
     template <typename Exact>
     class dpoint_base_ : public Dpoint<Exact>
     {
-	typedef Dpoint<Exact> super;
+      typedef Dpoint<Exact> super;
 
-      public:
+    public:
 
-	stc_using(grid);
-	stc_using(coord);
-	stc_using(dim);
-	stc_using(point);
+      stc_using(grid);
+      stc_using(coord);
+      stc_using(dim);
+      stc_using(point);
 
-	using super::n;
+      using super::n;
 
-	coord  operator[](unsigned i) const;
-	coord& operator[](unsigned i);
+      coord  operator[](unsigned i) const;
+      coord& operator[](unsigned i);
 
-	bool impl_op_equal_(const Exact& rhs) const;
+      bool impl_op_equal_(const Exact& rhs) const;
 
-	bool impl_op_less_(const Exact& rhs) const;
+      bool impl_op_less_(const Exact& rhs) const;
 
-	Exact& impl_op_plus_equal_(const Exact& rhs);
+      Exact& impl_op_plus_equal_(const Exact& rhs);
 
-	Exact& impl_op_minus_equal_(const Exact& rhs);
+      Exact& impl_op_minus_equal_(const Exact& rhs);
 
-	Exact impl_op_unary_minus_() const;
+      Exact impl_op_unary_minus_() const;
 
-	typedef xtd::vec<n, coord> vec_t;
-	const vec_t& vec() const;
-	vec_t& vec();
+      typedef xtd::vec<n, coord> vec_t;
+      const vec_t& vec() const;
+      vec_t& vec();
 
-      protected:
-	dpoint_base_();
+    protected:
+      dpoint_base_();
 
-	vec_t v_;
+      vec_t v_;
     };
 
 

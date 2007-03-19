@@ -82,7 +82,7 @@ namespace oln
     /// Implementation class the result of "Image I + Neighborhood N".
     
     template <typename I, typename N>
-    class special_op_< stc::is<Image>, I, plus, stc::is<Neighborhood>, N >
+    class current
       :
       public internal::image_extension_< op_<I, plus, N> >,
       private mlc::assert_< mlc_is_not_a(I, Image_with_Nbh) > // FIXME: Add err msg.

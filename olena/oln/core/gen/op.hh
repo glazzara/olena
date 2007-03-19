@@ -29,6 +29,9 @@
 # define OLN_CORE_GEN_OP_HH
 
 # include <oln/core/internal/special_op.hh>
+# include <oln/core/internal/category_of.hh>
+# include <oln/core/concept/function.hh>
+# include <oln/core/concept/value.hh>
 
 
 
@@ -78,26 +81,8 @@
 
 
 
-
-# define  oln_category_of_(Type)  typename oln::internal::category_of_<Type>::ret
-
-
 namespace oln
 {
-
-
-  namespace internal
-  {
-    template <typename T>
-    struct category_of_
-    {
-      typedef stc_type(T, category) ret;
-    };
-
-    // ...
-
-  } // end of namespace oln::internal
-
 
 
   /// \{
@@ -108,6 +93,7 @@ namespace oln
   struct restricted_to;
 
   /// \}
+
 
 
 

@@ -49,6 +49,10 @@ namespace oln
 #  include <stc/scoop-alt.inc>
 # endif
 
+  // a
+
+  stc_decl_associated_type( adapted );
+
   // b
   stc_decl_associated_type( bkd_niter );
   stc_decl_associated_type( bkd_piter );

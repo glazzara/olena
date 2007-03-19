@@ -25,50 +25,96 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_SPECIAL_OP_HH
-# define OLN_CORE_INTERNAL_SPECIAL_OP_HH
+#ifndef OLN_CORE_GEN_FUN_HH
+# define OLN_CORE_GEN_FUN_HH
+
+# include <oln/core/internal/category_of.hh>
+# include <oln/core/concept/function.hh>
+# include <oln/core/concept/point.hh>
+# include <oln/core/concept/value.hh>
+
+
+
+// FIXME: Add "fun" to names below.
+# define oln_arg_of_(T) typename oln::internal::argument_of_< T >::ret
+# define oln_res_of_(T) typename oln::internal::result_of_< T >::ret
+
 
 
 namespace oln
 {
 
 
-  // Fwd decls.
-  namespace internal {
-    template <typename Lcat, typename L, typename OpName, typename Rcat, typename R>
-    class special_op_;
-  }
-  template <typename L, typename OpName, typename R> class op_;
-
-
-  /// Virtual types.
-  template <typename Lcat, typename L, typename OpName, typename Rcat, typename R>
-  struct vtypes< internal::special_op_<Lcat, L, OpName, Rcat, R> >
-  /* undefined; to be specialized... */
-  ;
-
-
-  /// Super type.
-  template <typename Lcat, typename L, typename OpName, typename Rcat, typename R>
-  struct super_trait_< internal::special_op_<Lcat, L, OpName, Rcat, R> >
-  /* undefined; to be specialized... */
-  ;
-  
-  
   namespace internal
   {
-    
-    /// Class for result of "L op R".
-    
-    template <typename Lcat, typename L, typename OpName, typename Rcat, typename R>
-    class special_op_;
-    /* undefined; to be specialized... */
-    
-    
+
+    // result_of_
+
+    template <typename F>
+    struct result_of_
+    {
+      typedef typename F::result ret;
+    };
+
+    template <typename R, typename A>
+    struct result_of_< R (*)(A) >
+    {
+      typedef R ret;
+    };
+
+
+    // argument_of_
+
+    template <typename F>
+    struct argument_of_
+    {
+      typedef typename F::argument ret;
+    };
+
+    template <typename R, typename A>
+    struct argument_of_< R (*)(A) >
+    {
+      typedef A ret;
+    };
+
+
   } // end of namespace oln::internal
-    
+
+
+
+  // Fwd decl.
+  template <typename F> struct fun_p2b_;
+
+  // Category.
+  namespace internal
+  {
+    template <typename F>
+    struct set_category_of_< fun_p2b_<F> >
+    {
+      typedef stc::is< Function_p2b > ret;
+    };
+  }
+
+  // Class.
+  template <typename F>
+  struct fun_p2b_ : public Function_p2b< fun_p2b_<F> >
+  {
+    typedef oln_arg_of_(F) argument;
+    typedef oln_res_of_(F) result;
+
+    fun_p2b_(F f) : f_(f) {}
+
+    result operator()(argument arg) const
+    {
+      return this->f_(arg);
+    }
+
+  private:
+    F f_;
+  };
+
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_SPECIAL_OP_HH
+#endif // ! OLN_CORE_GEN_FUN_HH

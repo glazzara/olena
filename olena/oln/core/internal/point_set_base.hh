@@ -93,4 +93,39 @@ namespace oln
 } // end of namespace oln
 
 
+
+/// \{
+/// FIXME: Bad!
+
+# include <oln/core/gen/fun.hh>
+# include <oln/core/internal/op_pset_such_as_fp2b.hh>
+
+namespace oln
+{
+
+  // Point_Set | Function.
+
+  oln_decl_op_such_as(Point_Set, Function_p2b);
+
+
+  // Specialization.
+
+  template <typename S, typename B, typename P>
+  op_<const S, such_as, const fun_p2b_<B (*)(P)> >
+  operator | (const Point_Set<S>& lhs,
+	      B (*f)(P))
+  {
+    typedef oln_strip_(P) P_;
+    mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.
+    mlc::assert_equal_< P_, typename S::point >::check();
+    op_<const S, such_as, const fun_p2b_<B (*)(P)> > tmp(exact(lhs), f);
+    return tmp;
+  }
+
+
+} // end of namespace oln
+
+/// \}
+
+
 #endif // ! OLN_CORE_INTERNAL_POINT_SET_BASE_HH

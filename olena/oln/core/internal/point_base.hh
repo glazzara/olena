@@ -50,13 +50,15 @@ namespace oln
   template <typename Exact>
   struct vtypes< internal::point_base_<Exact> >
   {
-    typedef stc::abstract grid;
+    typedef stc::abstract grid;  // FIXME: Could be defined and final?
+    typedef stc::abstract coord; // FIXME: Likewise?
+    typedef stc::abstract dpoint;
 
     typedef stc_deferred(grid) grid__;
-    typedef stc::final<stc_type(grid__, dim)> dim;
 
-    typedef stc::abstract coord;
-    typedef stc::abstract dpoint;
+    // Final:
+    typedef stc::final<typename grid__::dim> dim;  // FIXME: Propagate this kind of changes.
+    typedef stc::final< stc::is<Point> >     category;
   };
 
 

@@ -53,7 +53,7 @@ namespace oln
   /// Fwd decls.
 
   template <typename Exact> struct Grid_2D;
-  struct grid2d_rec;
+  struct grid2d;
   struct grid2d_hex;
   struct grid2d_tri;
 
@@ -83,9 +83,9 @@ namespace oln
   /// Super types.
 
   template<>
-  struct super_trait_< grid2d_rec >
+  struct super_trait_< grid2d >
   {
-    typedef Grid_2D< grid2d_rec > ret;
+    typedef Grid_2D< grid2d > ret;
   };
 
   template<>
@@ -107,10 +107,10 @@ namespace oln
 
   /// Rectangular grid struct.
 
-  struct grid2d_rec : public Grid_2D< grid2d_rec >
+  struct grid2d : public Grid_2D< grid2d >
   {};
 
-  typedef grid2d_rec grid2d; // for short
+  typedef grid2d grid2d_rec; // more explicit
 
 
   /// Hexagonal grid struct.

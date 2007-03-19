@@ -25,26 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_FUNCTIONS_HH
-# define OLN_CORE_CONCEPT_FUNCTIONS_HH
+#ifndef OLN_CORE_CONCEPT_FUNCTION_HH
+# define OLN_CORE_CONCEPT_FUNCTION_HH
 
 # include <oln/core/equipment.hh>
+
+
 
 
 namespace oln
 {
 
+
   /*
 
   // Fwd decl.
   namespace morpher {
-  template <typename I, typename F> class two_way;
-  template <typename I, typename F> class two_way_rw;
+    template <typename I, typename F> class two_way;
+    template <typename I, typename F> class two_way_rw;
   }
   namespace value   { template <typename I, typename F> class two_way; }
 
   */
 
+  template <typename Exact>
+  struct Function;
+
+  
   template <typename Exact>
   struct Function : public Any<Exact>
   {
@@ -63,6 +70,16 @@ namespace oln
   };
 
 
+  // Point -> bool.
+
+  template <typename Exact>
+  struct Function_p2b : public Function<Exact>
+  {
+  protected:
+    Function_p2b();
+  };
+
+
   // Value -> Value.
 
   template <typename Exact>
@@ -73,7 +90,7 @@ namespace oln
   };
 
 
-  // Neighborhood -> Value.
+  // Values -> Value.
 
   template <typename Exact>
   struct Accumulator : public Function<Exact>
@@ -92,12 +109,12 @@ namespace oln
   {
   public:
 
-  template <typename I>
-  oln::morpher::two_way<I, Exact>
-  operator()(oln::abstract::mutable_image<I>& input) const;
+    template <typename I>
+    oln::morpher::two_way<I, Exact>
+    operator()(oln::abstract::mutable_image<I>& input) const;
 
   protected:
-  Function_v2w2v();
+    Function_v2w2v();
   };
 
 
@@ -108,12 +125,12 @@ namespace oln
   {
   public:
 
-  template <typename I>
-  oln::morpher::two_way_rw<I, Exact>
-  operator()(oln::abstract::mutable_image<I>& input) const;
+    template <typename I>
+    oln::morpher::two_way_rw<I, Exact>
+    operator()(oln::abstract::mutable_image<I>& input) const;
 
   protected:
-  Function_rw();
+    Function_rw();
   };
 
   */
@@ -133,6 +150,11 @@ namespace oln
 
   template <typename Exact>
   Function<Exact>::Function()
+  {
+  }
+
+  template <typename Exact>
+  Function_p2b<Exact>::Function_p2b()
   {
   }
 
@@ -165,14 +187,9 @@ namespace oln
   {
   }
 
-  template <typename Exact>
-  Accumulator<Exact>::Accumulator()
-  {
-  }
-
 # endif // OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_CONCEPT_FUNCTIONS_HH
+#endif // ! OLN_CORE_CONCEPT_FUNCTION_HH

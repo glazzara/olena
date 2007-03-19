@@ -44,11 +44,29 @@ namespace oln
     Value();
   };
 
+  /// Concept-class "Boolean".
+
+  template <typename Exact>
+  struct Boolean : public Value<Exact>
+  {
+  protected:
+    Boolean();
+  };
+
 
 # ifndef OLN_INCLUDE_ONLY
 
+  // Value.
+
   template <typename Exact>
   Value<Exact>::Value()
+  {
+  }
+
+  // Boolean.
+
+  template <typename Exact>
+  Boolean<Exact>::Boolean()
   {
   }
 

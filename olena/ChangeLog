@@ -1,3 +1,29 @@
+2007-03-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add the type of 'point set such as f : point -> bool.
+
+	* oln/core/concept/functions.hh: Rename as...
+	* oln/core/concept/function.hh: ...this.
+	* oln/core/gen/piter_isubset.hh: Rename as...
+	* oln/core/internal/piter_adaptor.hh: ...this.
+	* oln/core/gen/fun.hh: New.
+	* oln/core/internal/op_pset_such_as_fp2b.hh: New.
+	* oln/core/concept/value.hh (Boolean): New.
+	* oln/core/2d/grid2d.hh (grid2d_rec): Rename as...
+	(grid2d): ...this.
+	(grid2d): Rename as...
+	(grid2d_rec): ...this.
+	* oln/core/2d/point2d.hh: Cosmetic change.
+	* oln/core/equipment.hh (adapted): New.
+	* oln/core/gen/op.hh (category_of_): Move to...
+	* oln/core/internal/category_of.hh: ...this new file.
+	* oln/core/internal/point_base.hh: Add commentary.
+	* oln/core/internal/dpoint_base.hh (vtypes): Add category.
+	* oln/core/internal/point_set_base.hh (operator|): New.
+	(include): Update.
+	* oln/core/internal/op_image_plus_nbh.hh: Cosmetic change.
+	* oln/core/internal/special_op.hh (include): Remove image_base.hh.
+
 2007-03-16  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Update : erosion (bring some error to light).
