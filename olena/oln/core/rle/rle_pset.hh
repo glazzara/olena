@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_RLE_RLE_PSET_HH_
-# define OLN_CORE_RLE_RLE_PSET_HH_
+#ifndef OLN_CORE_RLE_RLE_PSET_HH
+# define OLN_CORE_RLE_RLE_PSET_HH
 
 # include <set>
 # include <utility>
@@ -71,13 +71,6 @@ namespace oln
   ** \brief pset correspoding to the rle_image class
   **
   ** Note: P must be a point type
-  ** method:
-  ** unsigned impl_npoints() const        : return number of point in the point set
-  ** const box& impl_bbox() const         : return a box which includes all poin into the set
-  ** void insert(const P& p, unsigned len): insert a new range on the point set
-  ** bool impl_has(const P& p) const      : if p include in the set
-  ** const std_container& con() const     : return the container of the point
-  **
   */
   template <typename P>
   class rle_pset : public internal::point_set_base_<rle_pset <P> >
@@ -92,17 +85,25 @@ namespace oln
 
     rle_pset();
 
+    /// unsigned impl_npoints() const        : return number of point in the point set
     unsigned impl_npoints() const;
+    /// const box& impl_bbox() const         : return a box which includes all poin into the set
     const box& impl_bbox() const;
+    /// void insert(const P& p, unsigned len): insert a new range on the point set
     void insert(const P& p, unsigned len);
+    /// bool impl_has(const P& p) const      : if p include in the set
     bool impl_has(const P& p) const;
+    /// const std_container& con() const     : return the container of the point
     const std_container& con() const;
 
     unsigned range_len_(const P& range_len_) const;
   protected:
-    unsigned npts;		/*!< number of point in the set*/
-    std_container con_;		/*!< container of the set*/
-    fbbox_<point> fb_;		/*!< pset box*/
+    /// number of point in the set
+    unsigned npts;
+    /// container of the set
+    std_container con_;
+    /// pset box
+    fbbox_<point> fb_;
   };
 
 
@@ -204,15 +205,9 @@ namespace oln
   ** \brief foward iterator for rle_pset
   **
   ** P must be a point type
-  ** method:
-  ** void impl_start(): set the iterator to the start of pset
-  ** void impl_next(): go to next point
-  ** void impl_invalidate(): invalidate iterator
-  ** void impl_valid(): is the iterator valid?
-  ** + conversions methods
   */
   template <typename P>
-  class  rle_pset_fwd_piter_ : public Iterator_on_Points< rle_pset_fwd_piter_<P> >
+  class  rle_pset_fwd_piter_ : public Iterator_on_Points<rle_pset_fwd_piter_<P> >
   {
     typedef Iterator_on_Points< rle_pset_fwd_piter_<P> > super;
     typedef rle_pset_fwd_piter_<P> current;
@@ -221,11 +216,16 @@ namespace oln
 
     rle_pset_fwd_piter_(const rle_pset<P>& con);
 
+    /// void impl_start(): set the iterator to the start of pset
     void impl_start();
+    /// void impl_next(): go to next point
     void impl_next();
+    /// void impl_invalidate(): invalidate iterator
     void impl_invalidate();
+    /// void impl_valid(): is the iterator valid?
     bool impl_is_valid() const;
 
+    /// conversion method
     const rle_psite<P>& impl_to_psite() const;
     point impl_to_point() const;
     const point* impl_psite_adr() const;
@@ -235,13 +235,15 @@ namespace oln
   protected:
     const typename rle_pset<P>::std_container& con_;
     typename rle_pset<P>::std_container::const_iterator it_;
-    rle_psite<P> ps_; /*!< current point */
+    /// current point
+    rle_psite<P> ps_;
   };
 
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename P>
-  rle_pset_fwd_piter_<P>::rle_pset_fwd_piter_(const rle_pset<P>& cont) : con_(cont.con())
+  rle_pset_fwd_piter_<P>::rle_pset_fwd_piter_(const rle_pset<P>& cont) :
+    con_(cont.con())
   {
     this->it_ = this->con_.end();
   }
@@ -340,15 +342,9 @@ namespace oln
   ** \brief backward iterator for rle_pset
   **
   ** P must be a point type
-  ** method:
-  ** void impl_start(): set the iterator to the start of pset
-  ** void impl_next(): go to next point
-  ** void impl_invalidate(): invalidate iterator
-  ** void impl_valid(): is the iterator valid?
-  ** + conversion method
   */
   template <typename P>
-  class rle_pset_bkd_piter_ : public Iterator_on_Points< rle_pset_bkd_piter_<P> >
+  class rle_pset_bkd_piter_ : public Iterator_on_Points<rle_pset_bkd_piter_<P> >
   {
     typedef Iterator_on_Points< rle_pset_bkd_piter_<P> > super;
     typedef rle_pset_bkd_piter_<P> current;
@@ -357,10 +353,16 @@ namespace oln
 
     rle_pset_bkd_piter_(const rle_pset<P>& con);
 
+    /// void impl_start(): set the iterator to the start of pset
     void impl_start();
+    /// void impl_next(): go to next point
     void impl_next();
+    /// void impl_invalidate(): invalidate iterator
     void impl_invalidate();
+    /// void impl_valid(): is the iterator valid?
     bool impl_is_valid() const;
+
+    /// conversion methods
     const rle_psite<P>& impl_to_psite() const;
     point impl_to_point() const;
     const point* impl_psite_adr() const;
@@ -369,7 +371,8 @@ namespace oln
   protected:
     const typename rle_pset<P>::std_container& con_;
     typename rle_pset<P>::std_container::const_reverse_iterator it_;
-    rle_psite<P> ps_; /*!< current point*/
+    /// current point
+    rle_psite<P> ps_;
   };
 
 # ifndef OLN_INCLUDE_ONLY
@@ -454,4 +457,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif /* !OLN_CORE_RLE_RLE_PSET_HH_ */
+#endif // !OLN_CORE_RLE_RLE_PSET_HH

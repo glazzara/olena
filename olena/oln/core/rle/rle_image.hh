@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Copyright (C) 2007 EPITA
 // Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_RLE_RLE_IMAGE_HH_
-# define OLN_CORE_RLE_RLE_IMAGE_HH_
+#ifndef OLN_CORE_RLE_RLE_IMAGE_HH
+# define OLN_CORE_RLE_RLE_IMAGE_HH
 
 # include <map>
 # include <utility>
@@ -78,13 +78,6 @@ namespace oln
   ** \class rle_image
   ** \brief rle image (use a pair of point range and value as representation)
   **
-  ** method:
-  ** pset impl_points() const                             : return image pset
-  ** bool impl_has(const point& p) const                  : rle_image has p?
-  ** bool impl_owns_(const psite& p) const                : same has impl_has
-  ** void insert(const point& p, unsigned len, value val) : insert a new range on the image
-  ** rvalue impl_read(const psite& p) const               : return value associated to psite (for reading)
-  ** lvalue impl_read_write(const psite& p)               : lvalue impl_read_write(const psite& p) (for writing)
   */
   template < typename P, typename T>
   class rle_image : public internal::primitive_image_< rle_image<P, T> >
@@ -103,11 +96,17 @@ namespace oln
 
     rle_image();
 
+    /// pset impl_points() const                             : return image pset
     pset impl_points() const;
+    /// bool impl_has(const point& p) const                  : rle_image has p?
     bool impl_has(const point& p) const;
+    /// bool impl_owns_(const psite& p) const                : same has impl_has
     bool impl_owns_(const psite& p) const;
+    /// void insert(const point& p, unsigned len, value val) : insert a new range on the image
     void insert(const point& p, unsigned len, value val);
+    /// rvalue impl_read(const psite& p) const               : return value associated to psite (for reading)
     rvalue impl_read(const psite& p) const;
+    /// lvalue impl_read_write(const psite& p)               : lvalue impl_read_write(const psite& p) (for writing)
     lvalue impl_read_write(const psite& p);
 
   };
@@ -143,7 +142,8 @@ namespace oln
 
   template <typename P, typename T>
   void
-  rle_image<P, T>::insert(const typename rle_image<P, T>::point& p, unsigned len, rle_image<P, T>::value val)
+  rle_image<P, T>::insert(const typename rle_image<P, T>::point& p,
+			  unsigned len, rle_image<P, T>::value val)
   {
     this->data_->first.insert(p, len);
     this->data_->second[p] = val;
@@ -156,7 +156,8 @@ namespace oln
     typename std::map<point, value>::const_iterator irun;
 
     irun = this->data_->second.find(ps.start_);
-    assert(irun != this->data_->second.end() && ps.index_ < this->data_->first.range_len_(ps.start_));
+    assert(irun != this->data_->second.end() &&
+	   ps.index_ < this->data_->first.range_len_(ps.start_));
     return irun->second;
   }
 
@@ -167,7 +168,8 @@ namespace oln
     typename std::map<point, value>::iterator irun;
 
     irun = this->data_->second.find(ps.start_);
-    assert(irun != this->data_->second.end() && ps.index_ < this->data_->first.range_len_(ps.start_));
+    assert(irun != this->data_->second.end() &&
+	   ps.index_ < this->data_->first.range_len_(ps.start_));
     return irun->second;
   }
 
@@ -175,4 +177,4 @@ namespace oln
 
 } // end of namespace oln
 
-#endif /* !OLN_CORE_RLE_RLE_IMAGE_HH_ */
+#endif // !OLN_CORE_RLE_RLE_IMAGE_HH

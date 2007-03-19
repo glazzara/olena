@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef RLE_ENCODE_HH_
-# define RLE_ENCODE_HH_
+#ifndef OLN_CORE_ENCODE_RLE_ENCODE_HH
+# define OLN_CORE_ENCODE_RLE_ENCODE_HH
 
 # include <oln/core/concept/image.hh>
 
@@ -47,11 +47,13 @@ namespace oln
   rle_image<typename Image<I>::point, typename I::value>
   rle_encode(const Image<I>& input)
   {
-    rle_image<typename I::point, typename I::value>	output;
-    typename I::piter					p (input.points());
-    unsigned						len = 1;
-    typename I::point					rstart;	/*!< range pointstart */
-    typename I::value					rvalue;	/*!< range value */
+    rle_image<typename I::point, typename I::value> output;
+    typename I::piter p (input.points());
+    unsigned len = 1;
+    /// range point start
+    typename I::point rstart;
+    /// range value
+    typename I::value rvalue;
 
     p.start();
     if (!p.is_valid())
@@ -78,4 +80,4 @@ namespace oln
   }
 } // end of namespace oln
 
-#endif /* !RLE_ENCODE_HH_ */
+#endif /* !OLN_CORE_ENCODE_RLE_ENCODE_HH */

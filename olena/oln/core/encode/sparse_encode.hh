@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Copyright (C) 2007 EPITA
 // Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef SPARSE_ENCODE_HH_
-# define SPARSE_ENCODE_HH_
+#ifndef OLN_CORE_ENCODE_SPARSE_ENCODE_HH
+# define OLN_CORE_ENCODE_SPARSE_ENCODE_HH
 
 # include <oln/core/concept/image.hh>
 
@@ -49,28 +49,29 @@ namespace oln
   sparse_image<typename I::point, typename I::value>
   sparse_encode(const Image<I>& input)
   {
-    sparse_image<typename I::point, typename I::value>	output;
-    typename I::piter					p(input.points());
-    unsigned						len = 1;
-    typename I::coord					old = 1; /*!< old point first dim coordinate */
-    typename I::point					rstart;	/*!< range pointstart */
-    std::vector<typename I::value>			values;	/*!< range value */
+    sparse_image<typename I::point, typename I::value> output;
+    typename I::piter p(input.points());
+    unsigned len = 1;
+    typename I::coord old = 1;			/*!< old point first dim coordinate */
+    typename I::point rstart;			/*!< range pointstart */
+    std::vector<typename I::value> values;	/*!< range value */
 
     p.start();
     if (!p.is_valid())
       return output;
 
     rstart = p;
-    //FIXME: is it generall ?
+
+    // FIXME: is it generall ?
     old = (p.to_point())[0];
-    values.push_back(input(p.to_point()));
+    values.push_back(input(p));
     p.next();
     while (p.is_valid())
     {
       if ((p.to_point())[0] - 1 == old)
       {
 	++len;
-	values.push_back(input(p.to_point()));
+	values.push_back(input(p));
       }
       else
       {
@@ -78,7 +79,7 @@ namespace oln
 	rstart = p;
 	len = 1;
 	values.clear();
-	values.push_back(input(p.to_point()));
+	values.push_back(input(p));
       }
       old = (p.to_point())[0];
       p.next();
@@ -88,4 +89,4 @@ namespace oln
   }
 }
 
-#endif /* !SPARSE_ENCODE_HH_ */
+#endif // !OLN_CORE_ENCODE_SPARSE_ENCODE_HH

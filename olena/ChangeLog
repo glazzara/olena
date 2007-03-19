@@ -1,3 +1,11 @@
+2007-03-19  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Clean code.
+
+	* oln/core/rle/rle_image.hh, oln/core/rle/rle_psite.hh,
+	* oln/core/rle/rle_pset.hh, oln/core/encode/sparse_encode.hh: .
+	* oln/core/encode/rle_encode.hh: clean code, add comments, change comments form...
+
 2007-03-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add the type of 'point set such as f : point -> bool.

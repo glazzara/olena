@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_RLE_RLE_PSITE_HH_
-# define OLN_CORE_RLE_RLE_PSITE_HH_
+#ifndef OLN_CORE_RLE_RLE_PSITE_HH
+# define OLN_CORE_RLE_RLE_PSITE_HH
 
 
 # include <map>
@@ -44,9 +44,6 @@ namespace oln
   ** \brief psite for rle image
   **
   ** Note: P must be a point type
-  ** method:
-  ** to_point: convert the psite to corresponding point
-  ** operator P(): convert psite to the corresponding point
   */
   template <typename P>
   class rle_psite
@@ -54,11 +51,15 @@ namespace oln
   public:
     rle_psite();
 
+    // to_point: convert the psite to corresponding point
     P to_point() const;
+    // operator P(): convert psite to the corresponding point
     operator P () const;
 
-    P start_;			/*!< start of the range which contains the psite */
-    unsigned index_;		/*!< index of the point in the range */
+    /// start of the range which contains the psite
+    P start_;
+    /// index of the point in the range
+    unsigned index_;
   };
 
 # ifndef OLN_INCLUDE_ONLY
@@ -88,4 +89,4 @@ namespace oln
 
   //end of class rle_psite
 }
-#endif /* !OLN_CORE_RLE_RLE_PSITE_HH_ */
+#endif // !OLN_CORE_RLE_RLE_PSITE_HH
