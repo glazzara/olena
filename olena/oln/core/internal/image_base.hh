@@ -142,18 +142,18 @@ namespace oln
 
     // Deferred.
 
-    typedef stc_deferred(point)     point__;
-    typedef stc_deferred(pset)      pset__;
+    typedef stc_deferred(point) point__;
+    typedef stc_deferred(pset)  pset__;
 
     // Final.
 
-    typedef stc::final< stc::is<Image> >              category;
-    typedef stc::final< box_<point__> >               box;
-    typedef stc::final< stc_type(point__, grid) >     grid;
-    typedef stc::final< stc_type(point__, dpoint) >   dpoint;
-    typedef stc::final< typename pset__::fwd_piter >  fwd_piter;
-    typedef stc::final< typename pset__::bkd_piter >  bkd_piter;
-    typedef fwd_piter                                     piter;
+    typedef stc::final< stc::is<Image> >         category;
+    typedef stc::final< box_<point__> >          box;
+    typedef stc::final< oln_grid(point__) >      grid;
+    typedef stc::final< oln_dpoint(point__) >    dpoint;
+    typedef stc::final< oln_fwd_piter(pset__) >  fwd_piter;
+    typedef stc::final< oln_bkd_piter(pset__) >  bkd_piter;
+    typedef fwd_piter                            piter;
   };
 
 
@@ -431,7 +431,6 @@ namespace oln
 
 
   // init
-
 
   template <typename P, typename I>
   bool init_(box_<P>* this_, const internal::image_base_<I>& data);

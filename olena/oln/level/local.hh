@@ -28,12 +28,10 @@
 #ifndef OLN_LEVEL_LOCAL_HH
 # define OLN_LEVEL_LOCAL_HH
 
-#include <oln/core/concept/image.hh>
-#include <oln/core/concept/point.hh>
-#include <oln/core/concept/functions.hh>
-#include <oln/core/concept/window.hh>
-#include <oln/core/concept/iterator.hh> // bizarre
-#include <oln/core/equipment.hh>
+# include <oln/core/concept/image.hh>
+# include <oln/core/concept/window.hh>
+# include <oln/core/concept/accumulator.hh>
+
 
 namespace oln
 {
@@ -42,7 +40,7 @@ namespace oln
   {
 
     template <typename A, typename I>
-    int //typename A::result
+    typename A::result
     local(const Accumulator<A>&    f,
 	  const Image_with_Nbh<I>& input,
 	  const oln_point(I)&      p);
@@ -54,37 +52,32 @@ namespace oln
 	  const oln_point(I)&   p,
 	  const Window<W>&      win);
 
+
 # ifndef OLN_INCLUDE_ONLY
 
     namespace impl
     {
 
-      /// Local Apply on neighborhood (nbh included in image).
+      // Generic version with neighborhood.
 
       template <typename A, typename I>
-      int//typename A::result
+      typename A::result
       local_(const A&    f,
 	     const Image_with_Nbh<I>& input,
 	     const oln_point(I)&      p)
       {
 	f.init();
-	oln_niter(I) n(p, input.points());
+	oln_niter(I) n(p, input.nbhood()); // FIXME: 2nd arg should be 'input'!
 	for_all(n)
 	  f(input(n));
 	return f.value();
       }
 
 
-      /// Local Apply on neighborhood (nhb given as argument).
-
-      // ...FIXME
+      // FIXME: Generic version with nbh given as argument?
 
 
-      /// Local Apply on window (window included in image).
-
-      // ...FIXME
-
-      /// Local Apply on window (window is given).
+      // Generic version with window.
 
       template <typename F, typename I, typename W>
       typename F::result
@@ -97,16 +90,16 @@ namespace oln
 	oln_qiter(W) q(p, win);
 	for_all(q)
 	  f(input(q));
-
 	return f.value();
       }
 
-    }
+    } // end of namespace oln::level::impl
 
-    /// Facades.
+
+    // Facades.
 
     template <typename A, typename I>
-    int//typename A::result
+    typename A::result
     local(const Accumulator<A>&    f,
 	  const Image_with_Nbh<I>& input,
 	  const oln_point(I)&      p)
@@ -126,7 +119,8 @@ namespace oln
 
 #endif // ! OLN_INCLUDE_ONLY
 
-  }
-}
+  } // end of namespace oln::level
+
+} // end of namespace oln
 
 #endif // ! OLN_LEVEL_LOCAL_HH

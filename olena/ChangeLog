@@ -1,3 +1,35 @@
+2007-03-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Clean-up morpho, accumulators, and vtypes in base classes.
+
+	* oln/morpho/erosion.hh: Rename as...
+	* oln/morpho/elementary_erosion.hh: ...this.
+	(erosion): Rename as...
+	(elementary_erosion): ...this and update.
+	* oln/core/concept/function.hh (Accumulator): Move to...
+	* oln/core/concept/accumulator.hh: ...this new file.
+	* oln/accumulator/: New.
+	* oln/function/min.hh: Rename as...
+	* oln/accumulator/min.hh: ...this.
+	Split decls and defs.
+	* oln/core/internal/dpoint_nd.hh: Remove; obsolete.
+	* oln/level/apply.hh (apply_local): Uncomment and move to...
+	* oln/level/apply_local.hh: ...this new file.
+	* oln/level/apply.hh (apply_inplace): Uncomment and move to...
+	* oln/level/apply_inplace.hh: ...this new file.
+	* oln/level/local.hh: Fix sigs.
+	* oln/core/init.hh (init): Strengthen sigs with Any.
+	* oln/core/equipment.hh (argument, oln_argument): New.
+	(oln_dim, oln_dpoint, oln_grid): New.
+	(include): Reject init.hh to end of file.
+	* oln/core/gen/fun.hh (fun_v2v_, functorize_v2v): New.
+	* oln/core/internal/point_base.hh,
+	* oln/core/internal/dpoint_base.hh,
+	* oln/core/internal/point_set_base.hh,
+	* oln/core/internal/window_base.hh,
+	* oln/core/internal/neighborhood_base.hh,
+	* oln/core/internal/image_base.hh: Simplify type deductions.
+
 2007-03-19  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Clean code.

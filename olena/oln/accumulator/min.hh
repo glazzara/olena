@@ -1,5 +1,4 @@
-// Copyright (C) 2007 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,47 +25,73 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_EROSION_HH
-# define OLN_MORPHO_EROSION_HH
+#ifndef OLN_ACCUMULATOR_MIN_HH
+# define OLN_ACCUMULATOR_MIN_HH
 
-#include <oln/level/local.hh>
-#include <oln/function/min.hh>
+# include <oln/core/concept/accumulator.hh>
+# include <oln/core/internal/max_value.hh>
+
 
 namespace oln
 {
 
-  namespace morpho
+  namespace accumulator
   {
 
-    template <typename I>
-    I erosion(const Image_with_Nbh<I>& input);
+    template <typename T>
+    struct min_ : public Accumulator< min_<T> >
+    {
+      typedef T argument;
+      typedef T result;
+
+      min_();
+
+      void   init()  const;
+      result value() const;
+
+      template <typename U>
+      void operator()(U i) const;
+
+    private:
+      mutable T val_;
+    };
+
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
+    template <typename T>
+    min_<T>::min_()
     {
-
-      /// Generic version
-
-      template <typename I>
-      I erosion(const Image_with_Nbh<I>& input)
-      {
-	function::min_<oln_value(I)> min;
-	return ::oln::level::apply_local(min, input);
-      }
+      this->init();
     }
 
-    // Facade.
-
-    template <typename I>
-    I erosion(const Image_with_Nbh<I>& input)
+    template <typename T>
+    void
+    min_<T>::init() const
     {
-      return impl::erosion(exact(input));
+      this->val_ = oln_max(T);
     }
 
-#endif // ! OLN_INCLUDE_ONLY
+    template <typename T>
+    typename min_<T>::result
+    min_<T>::value() const
+    {
+      return this->val_;
+    }
 
-  } // end of namespace
-}
+    template <typename T>
+    template <typename U>
+    void
+    min_<T>::operator()(U i) const
+    {
+      if (i < this->val_)
+	this->val_ = static_cast<T>(i);
+    }
 
-#endif // ! OLN_MORPHO_EROSION_HH
+# endif // ! OLN_INCLUDE_ONLY
+
+  } // end of namespace oln::accumulator
+
+} // end of namespace oln
+
+#endif // ! OLN_ACCUMULATOR_MIN_HH

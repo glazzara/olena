@@ -58,8 +58,8 @@ namespace oln
     typedef stc_deferred(point)     point__;
     typedef stc_deferred(fwd_qiter) fwd_qiter__;
 
-    typedef stc::final< stc_type(point__, grid) >  grid;
-    typedef stc::final< fwd_qiter__ >              qiter;
+    typedef stc::final< oln_grid(point__) > grid;
+    typedef stc::final< fwd_qiter__ >       qiter;
   };
 
 

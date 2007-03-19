@@ -57,8 +57,8 @@ namespace oln
     typedef stc_deferred(grid) grid__;
 
     // Final:
-    typedef stc::final<typename grid__::dim> dim;  // FIXME: Propagate this kind of changes.
-    typedef stc::final< stc::is<Point> >     category;
+    typedef stc::final< oln_dim(grid__) > dim;
+    typedef stc::final< stc::is<Point>  > category;
   };
 
 

@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,12 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_LEVEL_APPLY_HH
-# define OLN_LEVEL_APPLY_HH
+#ifndef OLN_LEVEL_APPLY_INPLACE_HH
+# define OLN_LEVEL_APPLY_INPLACE_HH
 
 # include <oln/core/concept/image.hh>
 # include <oln/core/gen/fun.hh>
-# include <oln/core/internal/f_ch_value.hh>
 
 
 namespace oln
@@ -43,12 +41,12 @@ namespace oln
     /// Fwd decls.
 
     template <typename F, typename I>
-    oln_plain_value(I, typename F::result)
-    apply(const Function_v2v<F>& f, const Image<I>& input);
+    void
+    apply_inplace(const Function_v2v<F>& f, Mutable_Image<I>& input)
 
     template <typename R, typename A, typename I>
-    oln_plain_value(I, R)
-    apply(R (*f)(A), const Image<I>& input);
+    void
+    apply_inplace(R (*f)(A), Mutable_Image<I>& input);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -59,19 +57,15 @@ namespace oln
       // Generic version.
 
       template <typename F, typename I>
-      oln_plain_value(I, typename F::result)
-	apply_(const F& f, const Image<I>& input)
+      void
+      apply_inplace_(const F& f, Mutable_Image<I>& input)
       {
-        typedef typename F::argument argument;
-        typedef typename F::result   result;
-
-	oln_plain_value(I, result) output;
-	init(output, with, input);
         oln_piter(I) p(input.points());
         for_all(p)
-          output(p) = f(input(p));
-        return output;
+          input(p) = f(input(p));
+	// FIXME: input(p) = static_cast<oln_value(I)>( f_( static_cast<oln_argument(F)>(input(p)) ) );
       }
+
 
     } // end of namespace oln::level::impl
 
@@ -79,19 +73,18 @@ namespace oln
     /// Facades.
 
     template <typename F, typename I>
-    oln_plain_value(I, typename F::result)
-    apply(const Function_v2v<F>& f, const Image<I>& input)
+    void
+    apply_inplace(const Function_v2v<F>& f, Mutable_Image<I>& input)
     {
-      return impl::apply_(exact(f), exact(input));
+      impl::apply_inplace_(exact(f), exact(input));
     }
 
     template <typename R, typename A, typename I>
-    oln_plain_value(I, R)
-    apply(R (*f)(A), const Image<I>& input)
+    void
+    apply_inplace(R (*f)(A), Mutable_Image<I>& input)
     {
-      return impl::apply_(functorize_v2v(f), exact(input));
+      impl::apply_inplace_(functorize_v2v(fun), exact(input));
     }
-
 
 # endif
 
@@ -100,4 +93,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_LEVEL_APPLY_HH
+#endif // ! OLN_LEVEL_APPLY_INPLACE_HH

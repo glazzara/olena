@@ -25,43 +25,67 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef _FUNCTION_MIN_HH
-# define _FUNCTION_MIN_HH
+#ifndef OLN_LEVEL_APPLY_LOCAL_HH
+# define OLN_LEVEL_APPLY_LOCAL_HH
 
-#include <oln/core/concept/functions.hh>
-#include <oln/core/internal/max_value.hh>
+# include <oln/core/concept/image.hh>
+# include <oln/core/concept/accumulator.hh>
+# include <oln/core/internal/f_ch_value.hh>
+# include <oln/level/local.hh>
 
 
 namespace oln
 {
 
-  namespace function
+  namespace level
   {
 
-    template <typename T>
-    struct min_ : public oln::Accumulator< min_<T> >
+    /// Fwd decl.
+
+    template <typename F, typename I>
+    oln_plain_value(I, typename F::result)
+    apply_local(const Accumulator<F>&    f,
+		const Image_with_Nbh<I>& input);
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    namespace impl
     {
-      typedef T    argument;
-      typedef T    result;
 
-      min_()	           { this->init(); }
+      // Generic version.
 
-      void   init() const  { val_ = oln_max(T); }
-      result value() const { return val_; }
-
-      template <typename U>
-      void operator()(U i) const
+      template <typename F, typename I>
+      oln_plain_value(I, typename F::result)
+      apply_local_(const Accumulator<F>& f,
+		   const Image_with_Nbh<I>& input)
       {
-	if (i < val_)
-	  val_ = static_cast<T>(i);
+	oln_plain_value(I, typename F::result) output;
+	init(output, with, input);
+        oln_piter(I) p(input.points());
+        for_all(p)
+	  output(p) = level::local(f, input, p);
+        return output;
       }
 
-    private:
-      mutable T val_;
-    };
+    } // end of namespace oln::level::impl
 
-  }
 
-}
+    // Facade.
 
-#endif // ! OLN_FUNCTION_MIN_HH
+    template <typename F, typename I>
+    oln_plain_value(I, typename F::result)
+    apply_local(const Accumulator<F>&    f,
+		const Image_with_Nbh<I>& input)
+    {
+      return impl::apply_local_(exact(f), exact(input));
+    }
+
+# endif
+
+  } // end of namespace oln::level
+
+} // end of namespace oln
+
+
+#endif // ! OLN_LEVEL_APPLY_LOCAL_HH

@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,68 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_NEIGHBORHOOD_BASE_HH
-# define OLN_CORE_INTERNAL_NEIGHBORHOOD_BASE_HH
+#ifndef OLN_CORE_CONCEPT_ACCUMULATOR_HH
+# define OLN_CORE_CONCEPT_ACCUMULATOR_HH
 
-# include <oln/core/concept/neighborhood.hh>
+# include <oln/core/concept/function.hh>
 
 
 namespace oln
 {
 
+  // Values -> Value.
 
-  // Fwd decl.
-  namespace internal { template <typename Exact> class neighborhood_base_; }
-
-
-  // Super type.
   template <typename Exact>
-  struct super_trait_< internal::neighborhood_base_<Exact> >
+  struct Accumulator : public Function<Exact>
   {
-    typedef Neighborhood<Exact> ret;
+  protected:
+    Accumulator();
   };
-
-
-  /// Virtual types.
-  template <typename Exact>
-  struct vtypes< internal::neighborhood_base_<Exact> >
-  {
-    typedef stc::abstract point;
-
-    typedef stc_deferred(point) point__;
-    typedef stc::final< oln_grid(point__) >     grid;
-    typedef stc::final< stc::is<Neighborhood> > category;
-  };
-
-
-  namespace internal
-  {
-
-    /// Base class for implementation of neighborhoods class.
-
-    template <typename Exact>
-    class neighborhood_base_ : public Neighborhood<Exact>
-    {
-    protected:
-      neighborhood_base_();
-
-    }; // end of class oln::neighborhood_base_<Exact>
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename Exact>
-    neighborhood_base_<Exact>::neighborhood_base_()
-    {
-    }
+  template <typename Exact>
+  Accumulator<Exact>::Accumulator()
+  {
+  }
 
-# endif
-  
-
-  } // end of namespace oln::internal
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_NEIGHBORHOOD_BASE_HH
+#endif // ! OLN_CORE_CONCEPT_ACCUMULATOR_HH

@@ -84,19 +84,19 @@ namespace oln
 
   // Regular version.
   template <typename Target, typename Data>
-  bool init(Target& target, with_t, const Data& data);
+  bool init(Any<Target>& target, with_t, const Any<Data>& data);
 
   // Assignment.
   template <typename T>
-  bool init(T& target, with_t, const T& data);
+  bool init(Any<T>& target, with_t, const Any<T>& data);
 
-  // Unconst data version.
+  // Unconst->const data version.
   template <typename Target, typename Data>
-  bool init(Target& target, with_t, Data& data);
+  bool init(Any<Target>& target, with_t, Any<Data>& data);
 
   // Guard: we cannot have "const Target".
   template <typename Target, typename Data>
-  bool init(const Target& target, with_t, const Data& data);
+  bool init(const Any<Target>& target, with_t, const Any<Data>& data);
 
 
 
@@ -145,24 +145,24 @@ namespace oln
 
   // Regular version.
   template <typename Target, typename Data>
-  bool init(Target& target, with_t, const Data& data)
+  bool init(Any<Target>& target, with_t, const Any<Data>& data)
   {
-    return init_(&target, data);
+    return init_(exact(&target), exact(data));
   }
 
   // Assignment.
   template <typename T>
-  bool init(T& target, with_t, const T& data)
+  bool init(Any<T>& target, with_t, const Any<T>& data)
   {
-    target = data;
+    exact(target) = exact(data);
     return true;
   }
 
-  // Unconst data version.
+  // Unconst->const data version.
   template <typename Target, typename Data>
-  bool init(Target& target, with_t, Data& data)
+  bool init(Any<Target>& target, with_t, Any<Data>& data)
   {
-    return init_(&target, const_cast<const Data&>(data));
+    return init(target, const_cast<const Data&>(data));
   }
 
 
@@ -174,7 +174,7 @@ namespace oln
 
   // Guard: we cannot have "const Target".
   template <typename Target, typename Data>
-  bool init(const Target&, with_t, const Data&)
+  bool init(const Any<Target>&, with_t, const Any<Data>&)
   {
     mlc::abort_< Target, ERROR::initialization_of_temporary_or_const_object_<Target> >::check();
     return false;

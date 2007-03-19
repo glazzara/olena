@@ -58,11 +58,10 @@ namespace oln
     typedef stc_deferred(point)     point__;
     typedef stc_deferred(fwd_piter) fwd_piter__;
 
-    typedef stc::final< stc::is<Point_Set> >    category;
-
-    typedef stc::final< box_<point__> >         box;
-    typedef stc::final<stc_type(point__, grid)> grid;
-    typedef stc::final<fwd_piter__>             piter;
+    typedef stc::final< stc::is<Point_Set> > category;
+    typedef stc::final< box_<point__> >      box;
+    typedef stc::final< oln_grid(point__) >  grid;
+    typedef stc::final< fwd_piter__ >        piter;
   };
 
 
@@ -117,7 +116,7 @@ namespace oln
   {
     typedef oln_strip_(P) P_;
     mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.
-    mlc::assert_equal_< P_, typename S::point >::check();
+    mlc::assert_equal_< P_, oln_point(S) >::check();
     op_<const S, such_as, const fun_p2b_<B (*)(P)> > tmp(exact(lhs), f);
     return tmp;
   }

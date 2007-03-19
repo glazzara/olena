@@ -54,7 +54,7 @@ namespace oln
     typedef stc::abstract grid;
 
     typedef stc_deferred(grid) grid__;
-    typedef stc::final<stc_type(grid__, dim)> dim;
+    typedef stc::final< oln_dim(grid__) > dim;
 
     typedef stc::abstract coord;
     typedef stc::abstract point; // FIXME: Just like in point_base.hh

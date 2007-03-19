@@ -82,6 +82,9 @@ namespace oln
 
 
 
+  // -----------------------------  fun_p2b_<F>
+
+
   // Fwd decl.
   template <typename F> struct fun_p2b_;
 
@@ -112,6 +115,54 @@ namespace oln
   private:
     F f_;
   };
+
+
+
+
+  // -----------------------------  fun_v2v_<F>
+
+
+  // Fwd decl.
+  template <typename F> struct fun_v2v_;
+
+  // Category.
+  namespace internal
+  {
+    template <typename F>
+    struct set_category_of_< fun_v2v_<F> >
+    {
+      typedef stc::is< Function_v2v > ret;
+    };
+  }
+
+  // Class.
+  template <typename F>
+  struct fun_v2v_ : public Function_v2v< fun_v2v_<F> >
+  {
+    typedef oln_arg_of_(F) argument;
+    typedef oln_res_of_(F) result;
+
+    fun_v2v_(F f) : f_(f) {}
+
+    result operator()(argument arg) const
+    {
+      return this->f_(arg);
+    }
+
+  private:
+    F f_;
+  };
+
+
+  // functorize_v2v
+  template <typename R, typename A>
+  fun_v2v_<R (*)(A)>
+  functorize_v2v(R (*f)(A))
+  {
+    fun_v2v_<R (*)(A)> tmp(f);
+    return tmp;
+  }
+
 
 
 } // end of namespace oln

@@ -90,16 +90,6 @@ namespace oln
   };
 
 
-  // Values -> Value.
-
-  template <typename Exact>
-  struct Accumulator : public Function<Exact>
-  {
-  protected:
-    Accumulator();
-  };
-
-
   /*
 
   // Value1 -> Value2  *and*  Value2 -> Value1.
@@ -187,7 +177,7 @@ namespace oln
   {
   }
 
-# endif // OLN_INCLUDE_ONLY
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

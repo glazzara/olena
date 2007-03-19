@@ -34,7 +34,6 @@
 # else
 #   include <stc/scoop-alt.hh>
 # endif
-# include <oln/core/init.hh>
 
 # define oln_typename_shortcut__(Type, Alias) typename Type::Alias
 
@@ -52,6 +51,9 @@ namespace oln
   // a
 
   stc_decl_associated_type( adapted );
+  stc_decl_associated_type( argument );
+
+# define oln_argument(T) oln_typename_shortcut__(T, argument)
 
   // b
   stc_decl_associated_type( bkd_niter );
@@ -74,6 +76,9 @@ namespace oln
   stc_decl_associated_type( dim );
   stc_decl_associated_type( dpoint );
 
+# define oln_dim(T)    oln_typename_shortcut__(T, dim)
+# define oln_dpoint(T) oln_typename_shortcut__(T, dpoint)
+
   // f
   stc_decl_associated_type( fwd_niter );
   stc_decl_associated_type( fwd_piter );
@@ -85,6 +90,8 @@ namespace oln
 
   // g
   stc_decl_associated_type( grid );
+
+# define oln_grid(T) oln_typename_shortcut__(T, grid)
 
   // i
   stc_decl_associated_type( index );
@@ -141,6 +148,15 @@ namespace oln
 
 
 } // end of namespace oln
+
+
+
+/// \{
+/// FIXME: Bad!
+
+# include <oln/core/init.hh>
+
+/// \}
 
 
 

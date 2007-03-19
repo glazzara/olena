@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,68 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_NEIGHBORHOOD_BASE_HH
-# define OLN_CORE_INTERNAL_NEIGHBORHOOD_BASE_HH
+#ifndef	OLN_MORPHO_ELEMENTARY_EROSION_HH
+# define OLN_MORPHO_ELEMENTARY_EROSION_HH
 
-# include <oln/core/concept/neighborhood.hh>
+#include <oln/level/apply_local.hh>
+#include <oln/accumulator/min.hh>
 
 
 namespace oln
 {
 
-
-  // Fwd decl.
-  namespace internal { template <typename Exact> class neighborhood_base_; }
-
-
-  // Super type.
-  template <typename Exact>
-  struct super_trait_< internal::neighborhood_base_<Exact> >
-  {
-    typedef Neighborhood<Exact> ret;
-  };
-
-
-  /// Virtual types.
-  template <typename Exact>
-  struct vtypes< internal::neighborhood_base_<Exact> >
-  {
-    typedef stc::abstract point;
-
-    typedef stc_deferred(point) point__;
-    typedef stc::final< oln_grid(point__) >     grid;
-    typedef stc::final< stc::is<Neighborhood> > category;
-  };
-
-
-  namespace internal
+  namespace morpho
   {
 
-    /// Base class for implementation of neighborhoods class.
+    // Fwd decl.
 
-    template <typename Exact>
-    class neighborhood_base_ : public Neighborhood<Exact>
-    {
-    protected:
-      neighborhood_base_();
-
-    }; // end of class oln::neighborhood_base_<Exact>
-
+    template <typename I>
+    oln_plain(I)
+    elementary_erosion(const Image_with_Nbh<I>& input);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename Exact>
-    neighborhood_base_<Exact>::neighborhood_base_()
+    namespace impl
     {
+
+      /// Generic version
+
+      template <typename I>
+      oln_plain(I)
+      elementary_erosion_(const Image_with_Nbh<I>& input)
+      {
+	accumulator::min_<oln_value(I)> min;
+	return level::apply_local(min, input);
+      }
+
+    } // end of namespace oln::morpho::impl
+
+
+    // Facade.
+
+    template <typename I>
+    oln_plain(I)
+    elementary_erosion(const Image_with_Nbh<I>& input)
+    {
+      return impl::elementary_erosion_(exact(input));
     }
 
-# endif
-  
+# endif // ! OLN_INCLUDE_ONLY
 
-  } // end of namespace oln::internal
+  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_NEIGHBORHOOD_BASE_HH
+#endif // ! OLN_MORPHO_ELEMENTARY_EROSION_HH
