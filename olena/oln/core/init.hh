@@ -162,7 +162,7 @@ namespace oln
   template <typename Target, typename Data>
   bool init(Any<Target>& target, with_t, Any<Data>& data)
   {
-    return init(target, const_cast<const Data&>(data));
+    return init(target, with, const_cast<const Any<Data>&>(data));
   }
 
 
@@ -174,7 +174,7 @@ namespace oln
 
   // Guard: we cannot have "const Target".
   template <typename Target, typename Data>
-  bool init(const Any<Target>&, with_t, const Any<Data>&)
+  bool init(const Any<Target>& target, with_t, const Any<Data>& data)
   {
     mlc::abort_< Target, ERROR::initialization_of_temporary_or_const_object_<Target> >::check();
     return false;

@@ -269,6 +269,12 @@ namespace oln
   {
     stc_typename(coord);
 
+    // final
+    coord min_row() const;
+    coord max_row() const;
+    coord min_col() const;
+    coord max_col() const;
+
   protected:
     Image_2D();
   };
@@ -485,6 +491,34 @@ namespace oln
   template <typename Exact>
   Image_2D<Exact>::Image_2D()
   {
+  }
+
+  template <typename Exact>
+  typename Image_2D<Exact>::coord
+  Image_2D<Exact>::min_row() const
+  {
+    return this->bbox().pmin().row();
+  }
+
+  template <typename Exact>
+  typename Image_2D<Exact>::coord
+  Image_2D<Exact>::max_row() const
+  {
+    return this->bbox().pmax().row();
+  }
+
+  template <typename Exact>
+  typename Image_2D<Exact>::coord
+  Image_2D<Exact>::min_col() const
+  {
+    return this->bbox().pmin().col();
+  }
+
+  template <typename Exact>
+  typename Image_2D<Exact>::coord
+  Image_2D<Exact>::max_col() const
+  {
+    return this->bbox().pmax().col();
   }
 
   // -----------------------------------   Image_3D<Exact>

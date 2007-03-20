@@ -436,7 +436,10 @@ namespace oln
   bool init_(box_<P>* this_, const internal::image_base_<I>& data);
 
   template <typename Target, typename I>
-  bool init_(Target* this_, const internal::single_image_morpher_<I>& data);
+  bool init_(Any<Target>* this_, const internal::single_image_morpher_<I>& data);
+
+  template <typename P, typename I> // for disambiguation purpose
+  bool init_(box_<P>* this_, const internal::single_image_morpher_<I>& data);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -449,12 +452,19 @@ namespace oln
   }
 
   template <typename Target, typename I>
-  bool init_(Target* this_, const internal::single_image_morpher_<I>& data)
+  bool init_(Any<Target>* this_, const internal::single_image_morpher_<I>& data)
   {
     return init(*this_, with, data.image());
   }
 
-# endif // OLN_INCLUDE_ONLY
+  template <typename P, typename I>
+  bool init_(box_<P>* this_, const internal::single_image_morpher_<I>& data)
+  {
+    *this_ = data.bbox();
+    return true;
+  }
+
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

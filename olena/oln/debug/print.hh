@@ -100,11 +100,11 @@ namespace oln
 		    std::ostream& ostr)
       {
 	const oln_coord(I)
-	  min_row = input.bbox().pmin().row(),
-	  max_row = input.bbox().pmax().row();
+	  min_row = input.min_row(),
+	  max_row = input.max_row();
 	const oln_coord(I)
-	  min_col = input.bbox().pmin().col(),
-	  max_col = input.bbox().pmax().col();
+	  min_col = input.min_col(),
+	  max_col = input.max_col();
 	for (oln_coord(I) row = min_row; row <= max_row; ++row)
 	  {
 	    for (oln_coord(I) col = min_col; col <= max_col; ++col)
@@ -126,7 +126,7 @@ namespace oln
 	impl::print_2D(exact(input), exact(input), ostr);
       }
 
-#  endif //  OLN_ENV_2D
+#  endif // OLN_ENV_2D
 
 
     } // end of namespace oln::debug::impl

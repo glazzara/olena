@@ -102,18 +102,22 @@ namespace oln
 
   // init
 
-  template <typename I, typename S, typename D>
-  bool init_(internal::current* target, const D& dat);
-
   template <typename S, typename I>
-  bool init(Point_Set<S>& target,
-	    with_t,
-	    const internal::current& dat);
+  bool init_(Point_Set<S>* this_,
+	     const internal::current& dat);
 
   template <typename I, typename S>
-  bool init(Image<I>& target,
-	    with_t,
-	    const internal::current& dat);
+  bool init_(Image<I>* this_,
+	     const internal::current& dat);
+
+  template <typename I, typename S, typename D>
+  bool init_(internal::current* this_, const D& dat);
+
+  // prepare
+
+  template <typename I, typename S, typename D>
+  bool prepare(internal::current& target, with_t, const D& dat);
+
 
 
 
@@ -160,37 +164,54 @@ namespace oln
   } // end of namespace oln::internal
 
 
+
   // init
+
+  template <typename S, typename I>
+  bool init_(Point_Set<S>* this_,
+	     const internal::current& data)
+  {
+    exact(*this_) = data.points();
+    return true;
+  }
+
+  template <typename I, typename S>
+  bool init_(Image<I>* this_,
+	     const internal::current& data)
+  {
+    exact(*this_) = data.image();
+    return true;
+  }
 
   template <typename I, typename S, typename D>
   bool init_(internal::current* this_, const D& dat)
   {
     precondition(not this_->has_data());
     this_->data__() = new typename op_<I, restricted_to, S>::data;
-    bool image_ok  = init(this_->data__()->first,  with, dat);
+    bool image_ok  = init(this_->data__()->first, with, dat);
     bool subset_ok = init(this_->data__()->second, with, dat);
     postcondition(image_ok);
     postcondition(subset_ok);
     return image_ok and subset_ok;
   }
 
-  template <typename S, typename I>
-  bool init_(Point_Set<S>* this_,
-	     const internal::current& data)
+
+  // prepare
+
+  template <typename I, typename S, typename D>
+  bool prepare(internal::current& target, with_t, const D& dat)
   {
-    *this_ = data.points();
-    return true;
+    precondition(not target.has_data());
+    target.data__() = new typename op_<I, restricted_to, S>::data;
+    bool image_ok  = prepare(target.data__()->first, with, dat);
+    bool subset_ok = init(target.data__()->second, with, dat);
+    postcondition(image_ok);
+    postcondition(subset_ok);
+    return image_ok and subset_ok;
   }
 
-  template <typename I, typename S>
-  bool init(Image<I>* this_,
-	    const internal::current& data)
-  {
-    *this_ = data.image();
-    return true;
-  }
 
-# endif // OLN_INCLUDE_ONLY
+# endif // ! OLN_INCLUDE_ONLY
 
 #  undef current
 

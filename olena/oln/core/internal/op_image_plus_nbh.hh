@@ -28,6 +28,7 @@
 #ifndef OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
 # define OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
 
+# include <mlc/unconst.hh>
 # include <oln/core/concept/neighborhood.hh>
 # include <oln/core/gen/op.hh>
 # include <oln/core/gen/dpoints_piter.hh>
@@ -107,20 +108,23 @@ namespace oln
   } // end of namespace oln::internal
 
 
+  // prepare
+
+  template <typename I, typename N, typename D>
+  bool prepare(internal::current& target, with_t, const D& dat);
+
   // init
 
   template <typename I, typename N, typename D>
   bool init_(internal::current* target, const D& dat);
 
   template <typename N, typename I>
-  bool init(Neighborhood<N>& target,
-	    with_t,
-	    const internal::current& dat);
+  bool init_(Neighborhood<N>* this_,
+	     const internal::current& dat);
 
   template <typename I, typename N>
-  bool init(Image<I>& target,
-	    with_t,
-	    const internal::current& dat);
+  bool init_(Image<I>* this_,
+	     const internal::current& dat);
 
 
 
@@ -169,32 +173,46 @@ namespace oln
 
   // init
 
+  template <typename N, typename I>
+  bool init_(Neighborhood<N>* this_,
+	     const internal::current& data)
+  {
+    exact(*this_) = data.nbhood();
+    return true;
+  }
+
+  template <typename I, typename N>
+  bool init_(Image<I>* this_,
+	     const internal::current& data)
+  {
+    exact(*this_) = data.image();
+    return true;
+  }
+
   template <typename I, typename N, typename D>
   bool init_(internal::current* this_, const D& dat)
   {
     precondition(not this_->has_data());
     this_->data__() = new typename op_<I, plus, N>::data;
-    bool ima_ok = init(this_->data__()->first,  with, dat);
+    bool ima_ok = init(this_->data__()->first, with, dat);
     bool nbh_ok = init(this_->data__()->second, with, dat);
     postcondition(ima_ok);
     postcondition(nbh_ok);
     return ima_ok and nbh_ok;
   }
 
-  template <typename N, typename I>
-  bool init_(Neighborhood<N>* this_,
-	     const internal::current& data)
-  {
-    *this_ = data.nbhood();
-    return true;
-  }
+  // prepare
 
-  template <typename I, typename N>
-  bool init(Image<I>* this_,
-	    const internal::current& data)
+  template <typename I, typename N, typename D>
+  bool prepare(internal::current& target, with_t, const D& dat)
   {
-    *this_ = data.image();
-    return true;
+    precondition(not target.has_data());
+    target.data__() = new typename op_<I, plus, N>::data;
+    bool ima_ok = prepare(target.data__()->first, with, dat);
+    bool nbh_ok = init(target.data__()->second, with, dat);
+    postcondition(ima_ok);
+    postcondition(nbh_ok);
+    return ima_ok and nbh_ok;
   }
 
 # endif // OLN_INCLUDE_ONLY

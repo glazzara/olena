@@ -104,7 +104,7 @@ namespace oln
   };
 
   template <typename T, typename D>
-  bool init_(image2d<T>* this_, const D& dat);
+  bool prepare(image2d<T>& target, with_t, const D& dat);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -213,18 +213,18 @@ namespace oln
   }
 
   template <typename T, typename D>
-  bool init_(image2d<T>* this_, const D& dat)
+  bool prepare(image2d<T>& target, with_t, const D& dat)
   {
-    precondition(not this_->has_data());
+    precondition(not target.has_data());
     box2d b;
     bool box_ok = init(b, with, dat);
     postcondition(box_ok);
-    this_->data__() = new typename image2d<T>::data(b.pmin().row(), b.pmin().col(), 
+    target.data__() = new typename image2d<T>::data(b.pmin().row(), b.pmin().col(), 
 						    b.pmax().row(), b.pmax().col());
     return box_ok;
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

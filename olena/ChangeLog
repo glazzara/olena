@@ -1,3 +1,21 @@
+2007-03-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Introduce 'prepare' to initialize image structures.
+
+	* oln/core/concept/image.hh (Image_2D): Add min_row, max_row,
+	min_col, and max_col.
+	* oln/debug/print.hh: Update.
+	* oln/level/apply_local.hh (init): Replace by prepare.
+	* oln/core/init.hh: Fix.
+	* oln/core/equipment.hh (oln_box): New.
+	* oln/core/2d/neighb2d.hh: Unconst objects.
+	* oln/core/2d/image2d.hh (init_): Rename as...
+	(prepare): ...this.
+	* oln/core/2d/image2d_b.hh: Likewise.
+	* oln/core/internal/op_image_restricted_to_pset.hh: Likewise.
+	* oln/core/internal/op_image_plus_nbh.hh: Likewise.
+	* oln/core/internal/image_base.hh (init_): New overload.
+
 2007-03-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Clean-up morpho, accumulators, and vtypes in base classes.

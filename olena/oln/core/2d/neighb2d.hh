@@ -101,10 +101,10 @@ namespace oln
   } // end of namespace oln::internal
 
 
-  extern const neighb2d c4;
-  extern const neighb2d c8;
-  extern const neighb2d c2r;
-  extern const neighb2d c2c;
+  extern neighb2d c4;
+  extern neighb2d c8;
+  extern neighb2d c2r;
+  extern neighb2d c2c;
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -121,10 +121,10 @@ namespace oln
 
 #  endif // OLN_ENABLE_DEFAULT
 
-  const neighb2d c4  = internal::mk_c4();
-  const neighb2d c8  = internal::mk_c8();
-  const neighb2d c2r = internal::mk_c2_row();
-  const neighb2d c2c = internal::mk_c2_col();
+  neighb2d c4  = internal::mk_c4();
+  neighb2d c8  = internal::mk_c8();
+  neighb2d c2r = internal::mk_c2_row();
+  neighb2d c2c = internal::mk_c2_col();
 
 # endif // OLN_INCLUDE_ONLY
 

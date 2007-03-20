@@ -61,7 +61,7 @@ namespace oln
 		   const Image_with_Nbh<I>& input)
       {
 	oln_plain_value(I, typename F::result) output;
-	init(output, with, input);
+	prepare(output, with, input);
         oln_piter(I) p(input.points());
         for_all(p)
 	  output(p) = level::local(f, input, p);

@@ -64,6 +64,7 @@ namespace oln
 # define oln_bkd_niter(T) oln_typename_shortcut__(T, bkd_niter)
 # define oln_bkd_piter(T) oln_typename_shortcut__(T, bkd_piter)
 # define oln_bkd_qiter(T) oln_typename_shortcut__(T, bkd_qiter)
+# define oln_box(T)       oln_typename_shortcut__(T, box)
 
   // c
   stc_decl_associated_type( coord );
