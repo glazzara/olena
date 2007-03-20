@@ -1,3 +1,40 @@
+2007-03-20  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix mini-oln, add mutable image type and rgb value.
+
+	* samples/mini-oln/mini-oln.cc,
+	samples/mini-oln/concept-c++/mini-oln.cc : code for image3d tests,
+	new lvalue_t and rvalue_t vtypes for mutable images.
+
+	* samples/mini-oln/mini-oln.cc,
+	(oln::Image::rvalue_t) : New typedef.
+	(oln::Image) : operator() now return a rvalue_t as it is a read
+	only Image by default
+	(oln::Image2d), (oln::Image3d) : operator() is now inherited
+	from oln::Image.
+	(oln::Mutable_Image) : New.
+	(oln::Mutable_Image::lvalue) : New typedef.
+	(oln::switch_image_base_mutable) : New.
+	(oln::image2d) : split impl_op_parens into two versions returning
+	rvalue_t and lvalue_t.
+	(oln::rgb) : new type.
+	(oln::Iterator3d) : New.
+	(oln::niter3d) : New.
+	(oln::Image3d) : New.
+
+	* samples/mini-oln/concept-c++/mini-oln.cc:
+	(oln::concepts::Image::rvalue_t) : New typedef.
+	(oln::concetps::Image) : operator() now return a rvalue_t as it is
+	a read only Image by default
+	(oln::concepts::Mutable_Image) : New.
+	(oln::concetps::Mutable_Image::lvalue) : New typedef.
+	(oln::image_mutability_switch) : New.
+	(oln::image2d) : split impl_op_parens into two versions returning
+	rvalue_t and lvalue_t.
+	(oln::Iterator3d) : New.
+	(oln::niter3d) : New.
+	(oln::Image3d) : New.
+
 2007-03-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update SCOOP 2 alternative implementation.

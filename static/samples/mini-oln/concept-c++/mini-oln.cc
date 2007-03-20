@@ -49,7 +49,7 @@
   typename oln_type_of_(FromType, Alias)
 
 // Add equipment
-stc_scoop_equipment_for_namespace(oln);
+stc_scoop_equipment_for_namespace(oln)
 mlc_case_equipment_for_namespace(oln);
 
 // Virtual types declaration.
@@ -58,6 +58,8 @@ namespace oln
   mlc_decl_typedef(point_type);
   mlc_decl_typedef(iter_type);
   mlc_decl_typedef(value_type);
+  mlc_decl_typedef(rvalue_type);
+  mlc_decl_typedef(lvalue_type);
 
   mlc_decl_typedef(nbh_type);
   mlc_decl_typedef(niter_type);
@@ -73,37 +75,20 @@ namespace oln
 
   namespace concepts
   {
-    // These concepts are not automatic (i.e., prefixed with `auto'),
-    // since we cannot rely on type signatures for them.  For instance,
-    // using only structural conformance, oln::point3d could be a model
-    // of concepts::Point2d!
-    concept Point2d<typename P>
+    auto concept Point<typename I>
     {
       typename coord_type;
-      // For simplicity purpose, the canonical model of
-      // concepts::Point2d -- oln::point2d -- does not expose its
-      // interface through methods (that's bad OO software engineering
-      // practice, but hey, we're just prototyping here).  Therefore we
-      // cannot express sigatures on row and col accesses, since C++0x
-      // concepts forbid attribute (member) signatures.
-    };
-
-    concept Point3d<typename P>
-    {
-      typename coord_type;
-      // Same remark as above for concepts::Point2d regarding member
-      // signatures.
     };
 
     auto concept Image<typename I>
     {
       typename point_t;
       typename iter_t;
-      typename value_t;
+      typename rvalue_t;
 
       // ConceptGCC doesn't support operator signatures yet.
 #if 0
-      value_t& I::operator ()(point_t&);
+      rvalue_t I::operator ()(point_t&) const;
 #endif
       bool I::has(const point_t&) const;
     };
@@ -121,7 +106,17 @@ namespace oln
       int I::nslis_get() const;
     };
 
-  } // End of namespace oln::concepts.
+    auto concept Mutable_Image<typename I> : Image<I>
+    {
+      typename lvalue_t;
+
+      // ConceptGCC doesn't support operator signatures yet.
+#if 0
+      lvalue_t I::operator ()(point_t&);
+#endif
+    };
+
+    } // End of namespace oln::concepts.
 
 } // End of namespace oln.
 
@@ -182,9 +177,9 @@ namespace oln
   struct Image : public stc::any<E>
   {
     typedef oln_type_of(E, point) point_t;
-    typedef oln_type_of(E, value) value_t;
+    typedef oln_type_of(E, rvalue) rvalue_t;
 
-    value_t& operator ()(point_t& p)
+    rvalue_t operator ()(point_t& p) const
     {
       return this->exact().impl_op_parens(p);
     }
@@ -204,13 +199,6 @@ namespace oln
   struct Image2d : public Image<E>
   {
     typedef oln_type_of(E, point) point_t;
-    typedef oln_type_of(E, value) value_t;
-
-    // FIXME: delete?
-    value_t& operator ()(point_t& p)
-    {
-      return this->exact().impl_op_parens(p);
-    }
 
     int nrows_get() const
     {
@@ -233,12 +221,6 @@ namespace oln
   {
     typedef oln_type_of(E, point) point_t;
     typedef oln_type_of(E, value) value_t;
-
-    // FIXME: delete?
-    value_t& operator ()(point_t& p)
-    {
-      return this->exact().impl_op_parens(p);
-    }
 
     int nrows_get() const
     {
@@ -273,6 +255,22 @@ namespace oln
     }
   };
 
+  // ------------- //
+  // Mutable_Image //
+  // ------------- //
+
+  template <typename E>
+  struct Mutable_image : public Image<E>
+  {
+    typedef oln_type_of(E, lvalue) lvalue_t;
+    typedef oln_type_of(E, point) point_t;
+
+    lvalue_t operator ()(point_t& p)
+    {
+      return this->exact().impl_op_parens(p);
+    }
+  };
+
 } // End of namespace oln.
 
 
@@ -296,12 +294,12 @@ namespace oln
     image_dimension_switch()
     {
       std::cout << "image_dimension_switch<E>" << std::endl;
-    }    
+    }
   };
 
   // Concept-based overloading for Image2d.
   template <typename E>
-  requires concepts::Point2d< oln_type_of(E, point) >
+  requires concepts::Point< oln_type_of(E, point) >
   struct image_dimension_switch<E> : public oln::Image2d<E>
   {
   public:
@@ -315,7 +313,7 @@ namespace oln
 
   // Concept-based overloading for Image3d.
   template <typename E>
-  requires concepts::Point3d< oln_type_of(E, point) >
+  requires concepts::Point< oln_type_of(E, point) >
   struct image_dimension_switch<E> : public oln::Image3d<E>
   {
   public:
@@ -323,6 +321,26 @@ namespace oln
     {
       std::cout	<< "image_dimension_switch<E> "
 		<< "requires oln::concepts::Point3d<oln_type_of(E, point)>"
+		<< std::endl;
+    }
+  };
+
+  // ----------------- //
+  // Mutability Switch //
+  // ----------------- //
+
+  // Forward Declaration
+  template <typename E> struct image_mutability_switch;
+
+  template <typename E>
+  requires concepts::Mutable_Image<E>
+  struct image_mutability_switch : public oln::Mutable_Image<E>
+  {
+  public:
+    image_dimension_switch()
+    {
+      std::cout	<< "image_mutability_switch<E> "
+		<< "requires oln::concepts::Mutable_Image<E>"
 		<< std::endl;
     }
   };
@@ -387,21 +405,6 @@ namespace oln
     coord_type col;
     coord_type sli;
   };
-
-  // Explicitly map point2d and point3d to their concepts.
-  namespace concepts
-  {
-    concept_map Point2d<oln::point2d>
-    {
-      typedef oln::point2d::coord_type coord_type;
-    };
-
-    concept_map Point3d<oln::point3d>
-    {
-      typedef oln::point2d::coord_type coord_type;
-    };
-
-  } // End of namespace oln::concepts
 
 
   // ------------- //
@@ -488,6 +491,8 @@ namespace oln
     typedef point2d point_type;
     typedef iterator2d iter_type;
     typedef T value_type;
+    typedef T rvalue_type;
+    typedef T& lvalue_type;
   };
 
   template <typename T>
@@ -497,16 +502,23 @@ namespace oln
     typedef oln_type_of(self_t, point) point_t;
     typedef oln_type_of(self_t, iter) iter_t;
     typedef oln_type_of(self_t, value) value_t;
+    typedef oln_type_of(self_t, rvalue) rvalue_t;
+    typedef oln_type_of(self_t, lvalue) lvalue_t;
 
     image2d(int nrows, int ncols) :
       data (0),
       nrows (nrows),
       ncols (ncols)
     {
-      data = new std::vector<value_t>;
+      data = new value_t[nrows * ncols];
     }
 
-    value_t& impl_op_parens(const point_t& p)
+    rvalue_t impl_op_parens(const point_t& p) const
+    {
+      return this->data[p.row * nrows + p.col];
+    }
+
+    lvalue_t impl_op_parens(const point_t& p)
     {
       return this->data[p.row * nrows + p.col];
     }
@@ -528,7 +540,7 @@ namespace oln
     }
 
   protected:
-    std::vector<value_t>* data;
+    value_t* data;
     int nrows;
     int ncols;
   };
@@ -543,6 +555,174 @@ namespace oln
   struct neighborhood2d
   {
     typedef niter2d niter_type;
+  };
+
+
+  // ------------- //
+  // Iterator 3d.  //
+  // ------------- //
+
+  // Forward declarations.
+  struct iterator3d;
+  template <typename T> struct image3d;
+
+  template<>
+  struct set_super_type<iterator3d>
+  {
+    typedef mlc::none ret;
+  };
+
+  template <>
+  struct vtypes<iterator3d>
+  {
+    typedef point3d point_type;
+  };
+
+  struct iterator3d : public Iterator<iterator3d>
+  {
+    typedef oln_type_of_(iterator2d, point) point_t;
+
+    template <typename T>
+    iterator3d(image3d<T>& ima) :
+      nrows (ima.nrows_get()),
+      ncols (ima.ncols_get()).
+      nslis (ima.nslis_get())
+    {
+    }
+
+    void impl_start()
+    {
+      p.row = 0;
+      p.col = 0;
+      p.sli = 0;
+    }
+
+    void impl_next()
+    {
+      p.sli = p.sli + 1;
+
+      if (p.sli == nslis)
+	{
+	  p.sli = 0;
+	  p.col = p.col + 1;
+	}
+
+      if (p.col == ncols)
+	{
+	  p.col = 0;
+	  p.row = p.row + 1;
+	}
+    }
+
+    bool impl_is_valid() const
+    {
+      return p.row < nrows;
+    }
+
+    point_t& impl_op_point_type()
+    {
+      return p;
+    }
+
+  protected:
+    int nrows;
+    int ncols;
+    int nslis;
+    point_t p;
+  };
+
+
+  // ---------- //
+  // Image 3d.  //
+  // ---------- //
+
+  // Forward declaration.
+  template <typename T> struct image3d;
+
+  template<typename T>
+  struct set_super_type< image3d<T> >
+  {
+    typedef image_base< image3d<T> > ret;
+  };
+
+  template <typename T>
+  struct vtypes< image3d<T> >
+  {
+    typedef point3d point_type;
+    typedef iterator3d iter_type;
+    typedef T value_type;
+    typedef T rvalue_type;
+    typedef T& lvalue_type;
+  };
+
+  template <typename T>
+  struct image3d : public image_base< image3d<T> >
+  {
+    typedef image2d<T> self_t;
+    typedef oln_type_of(self_t, point) point_t;
+    typedef oln_type_of(self_t, iter) iter_t;
+    typedef oln_type_of(self_t, value) value_t;
+    typedef oln_type_of(self_t, rvalue) rvalue_t;
+    typedef oln_type_of(self_t, lvalue) lvalue_t;
+
+    image3d(int nrows, int ncols, int nslis) :
+      data (0),
+      nrows (nrows),
+      ncols (ncols),
+      nslis (nslis)
+    {
+      data = new value_t[nrows * ncols * nslis];
+    }
+
+    rvalue_t impl_op_parens(const point_t& p) const
+    {
+      return this->data[p.row * ncols * nslis + p.col * nslis + p.sli];
+    }
+
+    lvalue_t impl_op_parens(const point_t& p)
+    {
+      return this->data[p.row * ncols * nslis + p.col * nslis + p.sli];
+    }
+
+    int impl_nrows_get() const
+    {
+      return nrows;
+    }
+
+    int impl_ncols_get() const
+    {
+      return ncols;
+    }
+
+    int impl_nslis_get() const
+    {
+      return nslis;
+    }
+
+    bool impl_has(point_t& p) const
+    {
+      assert(!!data);
+      return p.row >= 0 && p.row < nrows && p.col >= 0 && p.col < ncols
+	&& p.sli >= 0 && p.sli < nslis;
+    }
+
+  protected:
+    value_t* data;
+    int nrows;
+    int ncols;
+    int nslis;
+  };
+
+
+  // ----------------- //
+  // Neighborhood 3d.  //
+  // ----------------- //
+
+  struct niter3d {};
+
+  struct neighborhood3d
+  {
+    typedef niter3d niter_type;
   };
 
 
