@@ -30,6 +30,7 @@
 
 # include <oln/core/concept/image.hh>
 # include <oln/core/2d/grid2d.hh>
+# include <oln/value/tags.hh>
 
 
 namespace oln
@@ -135,6 +136,58 @@ namespace oln
       typedef Image_with_Border<Exact> ret;
     };
 
+
+    // 6. value kind
+
+    typedef  selector<Image, 6>  Image_value_kind;
+
+    template <typename Exact>
+    struct case_< Image_value_kind, Exact,  1 >
+      :
+      where_< value::is_gray_level<stc_get_type(value)> >
+    {
+      typedef Gray_Level_Image<Exact> ret;
+    };
+
+    template <typename Exact>
+    struct case_< Image_value_kind, Exact,  2 >
+      :
+      where_< value::is_binary<stc_get_type(value)> >
+    {
+      typedef Binary_Image<Exact> ret;
+    };
+
+    template <typename Exact>
+    struct case_< Image_value_kind, Exact,  3 >
+      :
+      where_< value::is_string<stc_get_type(value)> >
+    {
+      typedef String_Image<Exact> ret;
+    };
+
+    template <typename Exact>
+    struct case_< Image_value_kind, Exact,  4 >
+      :
+      where_< value::is_label<stc_get_type(value)> >
+    {
+      typedef Label_Image<Exact> ret;
+    };
+
+    template <typename Exact>
+    struct case_< Image_value_kind, Exact,  5 >
+      :
+      where_< value::is_color<stc_get_type(value)> >
+    {
+      typedef Color_Image<Exact> ret;
+    };
+
+    // FIXME: Deformation_Field_Image
+
+    template <typename Exact>
+    struct default_case_< Image_value_kind, Exact >
+    {
+      typedef Data_Image<Exact> ret;
+    };
 
 
   } // end of namespace oln::internal

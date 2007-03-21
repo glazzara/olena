@@ -45,9 +45,9 @@ namespace oln
 	  const Image_with_Nbh<I>& input,
 	  const oln_point(I)&      p);
 
-    template <typename F, typename I, typename W>
-    typename F::result
-    local(const Accumulator<F>& f,
+    template <typename A, typename I, typename W>
+    typename A::result
+    local(const Accumulator<A>& f,
 	  const Image<I>&       input,
 	  const oln_point(I)&   p,
 	  const Window<W>&      win);
@@ -62,9 +62,9 @@ namespace oln
 
       template <typename A, typename I>
       typename A::result
-      local_(const A&    f,
+      local_(const A& f,
 	     const Image_with_Nbh<I>& input,
-	     const oln_point(I)&      p)
+	     const oln_point(I)& p)
       {
  	f.init_with(input(p));
 	oln_niter(I) n(p, input.nbhood()); // FIXME: 2nd arg should be 'input'!
@@ -79,12 +79,12 @@ namespace oln
 
       // Generic version with window.
 
-      template <typename F, typename I, typename W>
-      typename F::result
-      local_(const F& f,
-	     const Image<I>&       input,
-	     const oln_point(I)&   p,
-	     const Window<W>&      win)
+      template <typename A, typename I, typename W>
+      typename A::result
+      local_(const A& f,
+	     const Image<I>& input,
+	     const oln_point(I)& p,
+	     const Window<W>& win)
       {
  	f.init();
 	oln_qiter(W) q(p, win);
@@ -107,9 +107,9 @@ namespace oln
       return impl::local_(exact(f), input, p);
     }
 
-    template <typename F, typename I, typename W>
-    typename F::result
-    local(const Accumulator<F>& f,
+    template <typename A, typename I, typename W>
+    typename A::result
+    local(const Accumulator<A>& f,
 	  const Image<I>&       input,
 	  const oln_point(I)&   p,
 	  const Window<W>&      win)

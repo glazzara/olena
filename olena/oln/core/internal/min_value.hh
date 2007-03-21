@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,35 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_VALUE_DEFAULT_HH
-# define OLN_VALUE_DEFAULT_HH
+#ifndef OLN_CORE_INTERNAL_MIN_VALUE_HH
+# define OLN_CORE_INTERNAL_MIN_VALUE_HH
 
-# include <oln/value/graylevel.hh>
+# include <limits>
 
+# define oln_min(T) std::numeric_limits< T >::min()
 
-namespace oln
-{
-
-  namespace value
-  {
-
-    /// White.
-    extern const graylevel white;
-
-    /// Black.
-    extern const graylevel black;
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    const graylevel white = graylevel(1, 1);
-    const graylevel black = graylevel(1, 0);
-
-# endif
-
-  } // end of namespace oln::value
-
-} // end of namespace oln
-
-
-#endif // ! OLN_VALUE_DEFAULT_HH
+# endif // ! OLN_CORE_INTERNAL_MIN_VALUE_HH

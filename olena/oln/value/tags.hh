@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,6 +28,7 @@
 #ifndef OLN_VALUE_TAGS_HH
 # define OLN_VALUE_TAGS_HH
 
+# include <string>
 # include <mlc/bexpr.hh>
 
 
@@ -55,22 +56,22 @@ namespace oln
     struct is_color < color::rgb_<T> > : public mlc::bexpr_<true> {};
 
 
-    // Grey-level trait.
+    // Gray-level trait.
 
     template <typename T>
-    struct is_grey_level : public mlc::bexpr_<false>
+    struct is_gray_level : public mlc::bexpr_<false>
     {};
 
     template <unsigned nbits>
-    class greylevel_;
+    class graylevel_;
 
     template <unsigned nbits>
-    struct is_grey_level < greylevel_<nbits> > : public mlc::bexpr_<true> {};
+    struct is_gray_level < graylevel_<nbits> > : public mlc::bexpr_<true> {};
 
-    class greylevel;
+    class graylevel;
 
     template <>
-    struct is_grey_level < greylevel > : public mlc::bexpr_<true> {};
+    struct is_gray_level < graylevel > : public mlc::bexpr_<true> {};
 
 
     // Binary trait.
@@ -83,16 +84,27 @@ namespace oln
     template <>
     struct is_binary < bool > : public mlc::bexpr_<true> {};
 
-    typedef greylevel_<1> bin;
+    typedef graylevel_<1> bin;
 
     template <>
     struct is_binary < bin >  : public mlc::bexpr_<true> {};
 
 
+    // String trait.
+
+    template <typename T>
+    struct is_string : public mlc::bexpr_<false>
+    {
+    };
+
+    template <>
+    struct is_string < std::string > : public mlc::bexpr_<true> {};
+
+
     // Label trait.
 
     template <typename T>
-    struct is_label : public mlc::bexpr_<false>
+    struct is_label : public mlc::or_< is_binary<T>, is_string<T> >
     {
     };
     

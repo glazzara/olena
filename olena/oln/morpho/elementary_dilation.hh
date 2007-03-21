@@ -25,22 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_DILATION_HH
-# define OLN_MORPHO_DILATION_HH
+#ifndef	OLN_MORPHO_ELEMENTARY_DILATION_HH
+# define OLN_MORPHO_ELEMENTARY_DILATION_HH
 
 #include <oln/level/apply_local.hh>
 #include <oln/border/fill.hh>
 #include <oln/accumulator/max.hh>
 
 
+namespace oln
+{
+
   namespace morpho
   {
 
     // Fwd decl.
 
-    template <typename I, typename W>
+    template <typename I>
     oln_plain(I)
-    dilation(const Image<I>& input, const Window<W>& win);
+    elementary_dilation(const Image_with_Nbh<I>& input);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -50,28 +53,53 @@
 
       // Generic version.
 
-      template <typename I, typename W>
+      template <typename I>
       oln_plain(I)
-      elementary_dilation_(const Image<I>&  input,
-			   const Window<W>& win)
+      elementary_dilation_on_function_(const Image<I>&,
+				       const I& input)
       {
 	border::fill(input, oln_min(oln_value(I)));
 	accumulator::max_<oln_value(I)> max;
-	return level::apply_local(max, input, win);
+	return level::apply_local(max, input);
+      }
+
+      template <typename I>
+      oln_plain(I)
+      elementary_dilation_on_set_(const Image<I>&,
+				  const I&)
+      {
+	oln_plain(I) tmp;
+	std::cerr << "morpho::impl::elementary_dilation_on_set_ is not yet impled!" << std::endl;
+	return tmp;
       }
 
       // FIXME: Add a fast version.
+
+
+      // Impl facade.
+
+      template <typename I>
+      oln_plain(I) elementary_dilation_(const Image<I>& input)
+      {
+	return elementary_dilation_on_function_(exact(input), exact(input));
+      }
+
+      template <typename I>
+      oln_plain(I) elementary_dilation_(const Binary_Image<I>& input)
+      {
+	return elementary_dilation_on_set_(exact(input), exact(input));
+      }
 
     } // end of namespace oln::morpho::impl
 
 
     // Facade.
 
-    template <typename I, typename W>
+    template <typename I>
     oln_plain(I)
-    dilation(const Image<I>& input, const Window<W>& win)
+    elementary_dilation(const Image_with_Nbh<I>& input)
     {
-      return impl::dilation_(exact(input), exact(win));
+      return impl::elementary_dilation_(exact(input));
     }
 
 # endif // ! OLN_INCLUDE_ONLY
@@ -81,4 +109,4 @@
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_DILATION_HH
+#endif // ! OLN_MORPHO_ELEMENTARY_DILATION_HH

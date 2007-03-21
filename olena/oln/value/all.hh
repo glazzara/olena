@@ -31,7 +31,7 @@
 
 # include <oln/value/tags.hh>
 
-# include <oln/value/greylevel.hh>
+# include <oln/value/graylevel.hh>
 # include <oln/value/bin.hh>
 # include <oln/value/default.hh>
 

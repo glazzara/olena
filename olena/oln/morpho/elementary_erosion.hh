@@ -55,21 +55,30 @@ namespace oln
 
       template <typename I>
       oln_plain(I)
-      elementary_erosion_(const Image<I>&,
-			  const I& input)
+      elementary_erosion_on_function_(const Image<I>&,
+				      const I& input)
       {
 	border::fill(input, oln_max(oln_value(I)));
 	accumulator::min_<oln_value(I)> min;
 	return level::apply_local(min, input);
       }
 
+      template <typename I>
+      oln_plain(I)
+      elementary_erosion_on_set_(const Image<I>&,
+				 const I&)
+      {
+	oln_plain(I) tmp;
+	std::cerr << "morpho::impl::elementary_erosion_on_set_ is not yet impled!" << std::endl;
+	return tmp;
+      }
 
 
       // Fast version.
 
 //       template <typename I>
 //       oln_plain(I)
-// 	elementary_erosion_(const /*Fast_*/Image<I>&,
+// 	elementary_erosion_on_function_(const /*Fast_*/Image<I>&,
 // 			    const I& input)
 //       {
 // 	std::cout << "fast" << std::endl;
@@ -100,6 +109,19 @@ namespace oln
 //       }
 
 
+      // Impl facade.
+
+      template <typename I>
+      oln_plain(I) elementary_erosion_(const Image<I>& input)
+      {
+	return elementary_erosion_on_function_(exact(input), exact(input));
+      }
+
+      template <typename I>
+      oln_plain(I) elementary_erosion_(const Binary_Image<I>& input)
+      {
+	return elementary_erosion_on_set_(exact(input), exact(input));
+      }
 
 
     } // end of namespace oln::morpho::impl
@@ -111,7 +133,7 @@ namespace oln
     oln_plain(I)
     elementary_erosion(const Image_with_Nbh<I>& input)
     {
-      return impl::elementary_erosion_(exact(input), exact(input));
+      return impl::elementary_erosion_(exact(input));
     }
 
 # endif // ! OLN_INCLUDE_ONLY

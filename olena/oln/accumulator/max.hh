@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,35 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_VALUE_DEFAULT_HH
-# define OLN_VALUE_DEFAULT_HH
+#ifndef OLN_ACCUMULATOR_MAX_HH
+# define OLN_ACCUMULATOR_MAX_HH
 
-# include <oln/value/graylevel.hh>
+# include <oln/core/concept/accumulator.hh>
+# include <oln/core/internal/min_value.hh>
 
 
 namespace oln
 {
 
-  namespace value
+  namespace accumulator
   {
 
-    /// White.
-    extern const graylevel white;
+    template <typename T>
+    struct max_ : public Accumulator< max_<T> >
+    {
+      typedef T argument;
+      typedef T result;
 
-    /// Black.
-    extern const graylevel black;
+      max_();
+
+      void init()  const;
+      const T& value() const;
+
+      void operator()(const T& val) const;
+
+    private:
+      mutable T val_;
+    };
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    const graylevel white = graylevel(1, 1);
-    const graylevel black = graylevel(1, 0);
+    template <typename T>
+    max_<T>::max_()
+    {
+      this->init();
+    }
 
-# endif
+    template <typename T>
+    void
+    max_<T>::init() const
+    {
+      this->val_ = oln_min(T);
+    }
 
-  } // end of namespace oln::value
+    template <typename T>
+    const T&
+    max_<T>::value() const
+    {
+      return this->val_;
+    }
+
+    template <typename T>
+    void
+    max_<T>::operator()(const T& val) const
+    {
+      if (val > this->val_)
+	this->val_ = val;
+    }
+
+# endif // ! OLN_INCLUDE_ONLY
+
+  } // end of namespace oln::accumulator
 
 } // end of namespace oln
 
-
-#endif // ! OLN_VALUE_DEFAULT_HH
+#endif // ! OLN_ACCUMULATOR_MAX_HH

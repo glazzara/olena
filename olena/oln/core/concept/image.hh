@@ -351,6 +351,69 @@ namespace oln
 
 
 
+  /// Concept-class "Gray_Level_Image".
+
+  template <typename Exact>
+  struct Gray_Level_Image : public virtual Image<Exact>
+  {
+  protected:
+    Gray_Level_Image();
+  };
+
+  /// Concept-class "Color_Image".
+
+  template <typename Exact>
+  struct Color_Image : public virtual Image<Exact>
+  {
+  protected:
+    Color_Image();
+  };
+
+  /// Concept-class "Label_Image".
+
+  template <typename Exact>
+  struct Label_Image : public virtual Image<Exact>
+  {
+  protected:
+    Label_Image();
+  };
+
+  /// Concept-class "Binary_Image".
+
+  template <typename Exact>
+  struct Binary_Image : public Label_Image<Exact>
+  {
+  protected:
+    Binary_Image();
+  };
+
+  /// Concept-class "String_Image".
+
+  template <typename Exact>
+  struct String_Image : public Label_Image<Exact>
+  {
+  protected:
+    String_Image();
+  };
+
+  /// Concept-class "Deformation_Field_Image".
+
+  template <typename Exact>
+  struct Deformation_Field_Image : public virtual Image<Exact>
+  {
+  protected:
+    Deformation_Field_Image();
+  };
+
+  /// Concept-class "Data_Image".
+
+  template <typename Exact>
+  struct Data_Image : public virtual Image<Exact>
+  {
+  protected:
+    Data_Image();
+  };
+
 
 
 
@@ -612,6 +675,56 @@ namespace oln
   Point_Wise_Mutable_Image_2D<Exact>::Point_Wise_Mutable_Image_2D()
   {
   }
+
+  // -----------------------------------   Gray_Level_Image<Exact>
+
+  template <typename Exact>
+  Gray_Level_Image<Exact>::Gray_Level_Image()
+  {
+  }
+
+  // -----------------------------------   Color_Image<Exact>
+
+  template <typename Exact>
+  Color_Image<Exact>::Color_Image()
+  {
+  }
+
+  // -----------------------------------   Label_Image<Exact>
+
+  template <typename Exact>
+  Label_Image<Exact>::Label_Image()
+  {
+  }
+
+  // -----------------------------------   Binary_Image<Exact>
+
+  template <typename Exact>
+  Binary_Image<Exact>::Binary_Image()
+  {
+  }
+
+  // -----------------------------------   String_Image<Exact>
+
+  template <typename Exact>
+  String_Image<Exact>::String_Image()
+  {
+  }
+
+  // -----------------------------------   Deformation_Field_Image<Exact>
+
+  template <typename Exact>
+  Deformation_Field_Image<Exact>::Deformation_Field_Image()
+  {
+  }
+
+  // -----------------------------------   Data_Image<Exact>
+
+  template <typename Exact>
+  Data_Image<Exact>::Data_Image()
+  {
+  }
+
 
 # endif // OLN_INCLUDE_ONLY
 

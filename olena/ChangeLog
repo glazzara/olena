@@ -1,5 +1,37 @@
 2007-03-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add image selection about different kinds of values and update.
+
+	* oln/core/concept/image.hh (Gray_Level_Image, Color_Image)
+	(Label_Image, Binary_Image, String_Image)
+	(Deformation_Field_Image, Data_Image): New.
+	* oln/core/internal/max_value.hh: Fix.
+	* oln/core/internal/image_selectors.hh (Image_value_kind): New. 
+	* oln/morpho/dilation.hh: Fix.
+	* oln/morpho/elementary_erosion.hh (elementary_erosion_): Rename as...
+	(elementary_erosion_on_function_): ...this.
+	(elementary_erosion_on_set_): New.
+	(elementary_erosion_): Dispatch over function/set.
+	(elementary_erosion): Update.
+	* oln/level/local.hh (A): Rename as...
+	(F): ...this.
+	* oln/accumulator/max.hh,
+	* oln/core/internal/min_value.hh,
+	* oln/morpho/elementary_dilation.hh: New.
+	* oln/value/greylevel.hh: Rename as...
+	* oln/value/graylevel.hh: ...this.
+	(greylevel_, greylevel): Rename as...
+	(graylevel_, graylevel): ...these.
+	* oln/value/default.hh (greylevel): Rename as...
+	(graylevel): ...this.
+	* oln/value/all.hh (include): Update.
+	* oln/value/bin.hh (bin): Change from greylevel_<1> to
+	graylevel_<1>.
+	* oln/value/tags.hh (is_grey_level): Rename as...
+	(is_gray_level): ...this.
+
+2007-03-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Handle virtual borders.
 
 	* oln/morpher/add_neighborhood.hh: Remove; obsolete.

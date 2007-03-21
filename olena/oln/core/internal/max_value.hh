@@ -25,17 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_MAX_VALUE_HH_
-# define OLN_CORE_INTERNAL_MAX_VALUE_HH_
+#ifndef OLN_CORE_INTERNAL_MAX_VALUE_HH
+# define OLN_CORE_INTERNAL_MAX_VALUE_HH
 
-#include <cassert>
-#include <limits>
+# include <limits>
 
-namespace oln
-{
+# define oln_max(T) std::numeric_limits< T >::max()
 
-#define oln_max(T) std::numeric_limits<T>::max()
-
-}
-
-#endif	    /* !OLN_CORE_INTERNAL_MAX_VALUE_HH_ */
+#endif // ! OLN_CORE_INTERNAL_MAX_VALUE_HH

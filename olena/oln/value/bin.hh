@@ -31,7 +31,7 @@
 # include <mlc/bexpr.hh>
 # include <xtd/optraits.hh>
 # include <xtd/valtraits.hh>
-# include <oln/value/greylevel.hh>
+# include <oln/value/graylevel.hh>
 
 
 namespace oln
@@ -40,7 +40,7 @@ namespace oln
   namespace value
   {
 
-    typedef greylevel_<1> bin;
+    typedef graylevel_<1> bin;
 
 
     // Binary ops.
