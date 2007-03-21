@@ -163,6 +163,18 @@ namespace oln
   };
 
 
+  /// Concept-class "Image_with_Border".
+
+  template <typename Exact>
+  struct Image_with_Border : public virtual Image<Exact>,
+			     public automatic::get_impl<Image_with_Border, Exact>
+  {
+    unsigned border() const;
+  protected:
+    Image_with_Border();
+  };
+
+
   /// Concept-class "Mutable_Image".
 
   template <typename Exact>
@@ -391,6 +403,20 @@ namespace oln
 
   template <typename Exact>
   Image_with_Nbh<Exact>::Image_with_Nbh()
+  {
+  }
+
+  // -----------------------------------   Image_with_Border<Exact>
+
+  template <typename Exact>
+  unsigned
+  Image_with_Border<Exact>::border() const
+  {
+    return exact(this)->impl_border();
+  }
+
+  template <typename Exact>
+  Image_with_Border<Exact>::Image_with_Border()
   {
   }
 

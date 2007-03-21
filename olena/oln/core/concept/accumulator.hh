@@ -39,6 +39,8 @@ namespace oln
   template <typename Exact>
   struct Accumulator : public Function<Exact>
   {
+    template <typename T>
+    void init_with(const T& val) const;
   protected:
     Accumulator();
   };
@@ -50,6 +52,15 @@ namespace oln
   template <typename Exact>
   Accumulator<Exact>::Accumulator()
   {
+  }
+
+  template <typename Exact>
+  template <typename T>
+  void
+  Accumulator<Exact>::init_with(const T& val) const
+  {
+    exact(this)->init();
+    exact(this)->operator()(val);
   }
 
 # endif // ! OLN_INCLUDE_ONLY

@@ -101,6 +101,8 @@ namespace oln
     typedef box2d pset;
     typedef internal::array_b_<point2d, T> data;
 
+    typedef mlc::true_ vborder;
+
     typedef image2d_b<T>         plain;
     typedef image2d_b<pl::value> skeleton;
 
@@ -148,7 +150,8 @@ namespace oln
 
     box2d impl_points() const;
 
-    unsigned border() const;
+    unsigned impl_border() const;
+    std::size_t pad(const dpoint2d& dp) const;
   };
 
 //   template <typename T, typename D>
@@ -250,10 +253,17 @@ namespace oln
   }
 
   template <typename T>
-  unsigned image2d_b<T>::border() const
+  unsigned image2d_b<T>::impl_border() const
   {
     assert(this->has_data());
     return this->data_->border;
+  }
+
+  template <typename T>
+  std::size_t image2d_b<T>::pad(const dpoint2d& dp) const
+  {
+    assert(this->has_data());
+    return this->data_->array.row_pad() * dp.row() + dp.col();
   }
 
 //   template <typename T, typename D>

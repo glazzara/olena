@@ -46,11 +46,10 @@ namespace oln
 
       min_();
 
-      void   init()  const;
-      result value() const;
+      void init()  const;
+      const T& value() const;
 
-      template <typename U>
-      void operator()(U i) const;
+      void operator()(const T& val) const;
 
     private:
       mutable T val_;
@@ -73,19 +72,18 @@ namespace oln
     }
 
     template <typename T>
-    typename min_<T>::result
+    const T&
     min_<T>::value() const
     {
       return this->val_;
     }
 
     template <typename T>
-    template <typename U>
     void
-    min_<T>::operator()(U i) const
+    min_<T>::operator()(const T& val) const
     {
-      if (i < this->val_)
-	this->val_ = static_cast<T>(i);
+      if (val < this->val_)
+	this->val_ = val;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

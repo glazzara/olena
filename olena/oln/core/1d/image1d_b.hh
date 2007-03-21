@@ -64,6 +64,8 @@ namespace oln
 			       unsigned,
 			       box_<point1d> > data;
 
+    typedef mlc::true_ vborder;
+
     typedef image1d_b<T>         plain;
     typedef image1d_b<pl::value> skeleton;
   };
@@ -107,7 +109,7 @@ namespace oln
 
     box1d impl_points() const;
 
-    unsigned border() const;
+    unsigned impl_border() const;
   };
 
 
@@ -190,7 +192,7 @@ namespace oln
   }
 
   template <typename T>
-  unsigned image1d_b<T>::border() const
+  unsigned image1d_b<T>::impl_border() const
   {
     assert(this->has_data());
     return this->data_->second;

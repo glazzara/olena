@@ -71,6 +71,12 @@ namespace oln
     const T* buffer() const;
     T* buffer();
 
+    std::size_t row_pad() const
+    {
+      precondition(buffer_ != 0 and array_ != 0);
+      return &(array_[imin_+1][jmin_]) - &(array_[imin_][jmin_]);
+    }
+
   protected:
 
     C   imin_, jmin_, imax_, jmax_;

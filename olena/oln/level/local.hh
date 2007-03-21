@@ -66,7 +66,7 @@ namespace oln
 	     const Image_with_Nbh<I>& input,
 	     const oln_point(I)&      p)
       {
-	f.init();
+ 	f.init_with(input(p));
 	oln_niter(I) n(p, input.nbhood()); // FIXME: 2nd arg should be 'input'!
 	for_all(n)
 	  f(input(n));
@@ -86,7 +86,7 @@ namespace oln
 	     const oln_point(I)&   p,
 	     const Window<W>&      win)
       {
-	f.init();
+ 	f.init();
 	oln_qiter(W) q(p, win);
 	for_all(q)
 	  f(input(q));

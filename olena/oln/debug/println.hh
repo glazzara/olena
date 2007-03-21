@@ -46,7 +46,7 @@ namespace oln
     template <typename I>
     void println(const Image<I>& input, std::ostream& ostr)
     {
-      print(exact(input), ostr);
+      debug::print(input, ostr);
       ostr << std::endl;
     }
 

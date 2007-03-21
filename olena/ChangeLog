@@ -1,3 +1,28 @@
+2007-03-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Handle virtual borders.
+
+	* oln/morpher/add_neighborhood.hh: Remove; obsolete.
+	* oln/border/fill.hh: New.
+	* oln/accumulator/min.hh (operator()): Untemplate.
+	* oln/debug/print_nbh.hh: Use macros.
+	* oln/debug/println.hh (println): Remove unuseful exact.
+	* oln/core/concept/image.hh (Image_with_Border): New.
+	* oln/core/concept/image_identity.hh (set_impl): New version.
+	* oln/core/concept/accumulator.hh (init_with): New.
+	* oln/core/1d/image1d_b.hh (vborder): New.
+	(border): Rename as...
+	(impl_border): ...this.
+	* oln/core/2d/image2d_b.hh: Likewise.
+	* oln/core/2d/array2d.hh (row_pad): New.
+	* oln/core/equipment.hh (vborder): New.
+	* oln/core/internal/image_selectors.hh (Image_border): New.
+	* oln/morpho/elementary_erosion.hh (elementary_erosion_): Handle border.
+	(elementary_erosion_): New version; fast, to be activated.
+	(include): Add border/fill.hh.
+	* oln/level/local.hh (init): Replace this call by...
+	(init_with): ...this.
+
 2007-03-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Introduce 'prepare' to initialize image structures.

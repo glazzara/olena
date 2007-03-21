@@ -29,6 +29,7 @@
 # define OLN_MORPHO_ELEMENTARY_EROSION_HH
 
 #include <oln/level/apply_local.hh>
+#include <oln/border/fill.hh>
 #include <oln/accumulator/min.hh>
 
 
@@ -50,15 +51,56 @@ namespace oln
     namespace impl
     {
 
-      /// Generic version
+      // Generic version.
 
       template <typename I>
       oln_plain(I)
-      elementary_erosion_(const Image_with_Nbh<I>& input)
+      elementary_erosion_(const Image<I>&,
+			  const I& input)
       {
+	border::fill(input, oln_max(oln_value(I)));
 	accumulator::min_<oln_value(I)> min;
 	return level::apply_local(min, input);
       }
+
+
+
+      // Fast version.
+
+//       template <typename I>
+//       oln_plain(I)
+// 	elementary_erosion_(const /*Fast_*/Image<I>&,
+// 			    const I& input)
+//       {
+// 	std::cout << "fast" << std::endl;
+
+// 	typedef oln_value(I) T;
+//   	border::fill(input, oln_max(T));
+// 	accumulator::min_<T> min;
+
+// 	oln_plain(I) output;
+// 	prepare(output, with, input);
+
+// 	unsigned n = input.nbhood().size();
+// 	T* jump = new T[n];
+// 	for (unsigned i = 0; i < n; ++i)
+// 	  jump[i] = input.image().pad(input.nbhood()[i]); // FIXME: pad is in Fast...
+
+//         oln_piter(I) p(input.points());
+//         for_all(p)
+// 	  {
+// 	    const T* ptr = & input(p);
+// 	    min.init_with(*ptr);
+// 	    for (unsigned i = 0; i < n; ++i)
+// 	      min(*(ptr + jump[i]));
+// 	    output(p) = min.value();
+// 	  }
+// 	delete[] jump;
+//         return output;
+//       }
+
+
+
 
     } // end of namespace oln::morpho::impl
 
@@ -69,7 +111,7 @@ namespace oln
     oln_plain(I)
     elementary_erosion(const Image_with_Nbh<I>& input)
     {
-      return impl::elementary_erosion_(exact(input));
+      return impl::elementary_erosion_(exact(input), exact(input));
     }
 
 # endif // ! OLN_INCLUDE_ONLY

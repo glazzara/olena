@@ -68,6 +68,15 @@ namespace oln
     };
 
 
+    /// Concept-class "Image_with_Border".
+
+    template <typename Exact>
+    struct set_impl< Image_with_Border, behavior::identity, Exact > : public virtual Any<Exact>
+    {
+      unsigned impl_border() const;
+    };
+
+
     /// Concept-class "Mutable_Image".
 
     template <typename Exact>
@@ -206,6 +215,16 @@ namespace oln
     set_impl< Image_with_Nbh, behavior::identity, Exact >::impl_nbhood() const
     {
       return exact(this)->image().nbhood();
+    }
+
+
+    /// Concept-class "Image_with_Border".
+
+    template <typename Exact>
+    unsigned
+    set_impl< Image_with_Border, behavior::identity, Exact >::impl_border() const
+    {
+      return exact(this)->image().border();
     }
 
 

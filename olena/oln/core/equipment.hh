@@ -143,6 +143,7 @@ namespace oln
 
   // v
   stc_decl_associated_type( value );
+  stc_decl_associated_type( vborder );
   stc_decl_associated_type( vsite );
 
 # define oln_value(T) oln_typename_shortcut__(T, value)

@@ -43,6 +43,8 @@ namespace oln
     void print_nbh(const Image_with_Nbh<I>& input, std::ostream& ostr = std::cout);
 
 
+# ifndef OLN_INCLUDE_ONLY
+
     namespace impl
     {
 
@@ -52,8 +54,8 @@ namespace oln
       void print_nbh(const Image<I>&,
 		     const I& input, std::ostream& ostr)
       {
-	typename I::fwd_piter p(input.points());
-	typename I::fwd_niter n(p, input.nbhood());
+	oln_piter(I) p(input.points());
+	oln_niter(I) n(p, input.nbhood());
 	for_all(p)
 	  {
 	    ostr << input(p) << ": ";
@@ -71,8 +73,8 @@ namespace oln
       void print_nbh(const Point_Wise_Accessible_Image<I>&,
 		     const I& input, std::ostream& ostr)
       {
-	typename I::fwd_piter p(input.points());
-	typename I::fwd_niter n(p, input.nbhood());
+	oln_piter(I) p(input.points());
+	oln_niter(I) n(p, input.nbhood());
 	for_all(p)
 	  {
 	    ostr << input(p) << ": ";
@@ -93,6 +95,7 @@ namespace oln
       impl::print_nbh(exact(input), exact(input), ostr);
     }
 
+# endif // ! OLN_INCLUDE_ONLY
 
 
   } // end of namespace oln::debug

@@ -123,6 +123,19 @@ namespace oln
     };
 
 
+    // 5. border
+
+    typedef  selector<Image, 5>  Image_border;
+
+    template <typename Exact>
+    struct case_< Image_border, Exact,  1 >
+      :
+      where_< stc_type_is_found(vborder) >
+    {
+      typedef Image_with_Border<Exact> ret;
+    };
+
+
 
   } // end of namespace oln::internal
   
