@@ -32,7 +32,6 @@
 #include <oln/border/fill.hh>
 #include <oln/accumulator/min.hh>
 
-
 namespace oln
 {
 

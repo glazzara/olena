@@ -30,6 +30,8 @@
 
 # include <limits>
 
-# define oln_max(T) std::numeric_limits< T >::max()
+#define oln_max(T) std::numeric_limits< T >::max() // FIXME std lib
+#define oln_min(T) std::numeric_limits< T >::min() // FIXME std lib
 
 #endif // ! OLN_CORE_INTERNAL_MAX_VALUE_HH
+

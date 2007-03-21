@@ -28,7 +28,6 @@
 #ifndef OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
 # define OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
 
-# include <mlc/unconst.hh>
 # include <oln/core/concept/neighborhood.hh>
 # include <oln/core/gen/op.hh>
 # include <oln/core/gen/dpoints_piter.hh>

@@ -25,62 +25,73 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_DILATION_HH
-# define OLN_MORPHO_DILATION_HH
+#ifndef OLN_ACCUMULATOR_OR_HH
+# define OLN_ACCUMULATOR_OR_HH
 
-#include <oln/level/apply_local.hh>
-#include <oln/border/fill.hh>
-#include <oln/accumulator/max.hh>
+# include <oln/core/concept/accumulator.hh>
+# include <oln/core/internal/max_value.hh>
+
 
 namespace oln
 {
 
-  namespace morpho
+  namespace accumulator
   {
 
-    // Fwd decl.
+    template <typename T>
+    struct or_ : public Accumulator< or_<T> >
+    {
+      typedef T argument;
+      typedef T result;
 
-    template <typename I, typename W>
-    oln_plain(I)
-      dilation(const Image<I>& input, const Window<W>& win);
+      or_();
+
+      void init()  const;
+      const T& value() const;
+
+      void operator()(const T& val) const;
+
+      mutable T ultimate;
+    private:
+      mutable T val_;
+    };
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
+    template <typename T>
+    or_<T>::or_()
     {
+      this->init();
+    }
 
-      // Generic version.
-
-      template <typename I, typename W>
-      oln_plain(I)
-	elementary_dilation_(const Image<I>&  input,
-			     const Window<W>& win)
-      {
-	border::fill(input, oln_min(oln_value(I)));
-	accumulator::max_<oln_value(I)> max;
-	return level::apply_local(max, input, win);
-      }
-
-      // FIXME: Add a fast version.
-
-    } // end of namespace oln::morpho::impl
-
-
-    // Facade.
-
-    template <typename I, typename W>
-    oln_plain(I)
-      dilation(const Image<I>& input, const Window<W>& win)
+    template <typename T>
+    void
+    or_<T>::init() const
     {
-      return impl::dilation_(exact(input), exact(win));
+      this->val_ = oln_min(T);
+      this->ultimate = oln_max(T);
+    }
+
+    template <typename T>
+    const T&
+    or_<T>::value() const
+    {
+      return this->val_;
+    }
+
+    template <typename T>
+    void
+    or_<T>::operator()(const T& val) const
+    {
+      if (val < this->val_)
+	this->val_ = val;
     }
 
 # endif // ! OLN_INCLUDE_ONLY
 
-  } // end of namespace oln::morpho
+  } // end of namespace oln::accumulator
 
 } // end of namespace oln
 
-
-#endif // ! OLN_MORPHO_DILATION_HH
+#endif // ! OLN_ACCUMULATOR_OR_HH

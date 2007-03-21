@@ -31,7 +31,7 @@
 #include <oln/level/apply_local.hh>
 #include <oln/border/fill.hh>
 #include <oln/accumulator/max.hh>
-
+#include <oln/accumulator/or.hh>
 
 namespace oln
 {
@@ -66,11 +66,11 @@ namespace oln
       template <typename I>
       oln_plain(I)
       elementary_dilation_on_set_(const Image<I>&,
-				  const I&)
+				  const I& input)
       {
-	oln_plain(I) tmp;
-	std::cerr << "morpho::impl::elementary_dilation_on_set_ is not yet impled!" << std::endl;
-	return tmp;
+	border::fill(input, oln_min(oln_value(I)));
+	accumulator::or_<oln_value(I)> accu_or;
+	return level::apply_local(accu_or, input);
       }
 
       // FIXME: Add a fast version.

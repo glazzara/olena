@@ -25,62 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_DILATION_HH
-# define OLN_MORPHO_DILATION_HH
+#ifndef OLN_ACCUMULATOR_AND_HH
+# define OLN_ACCUMULATOR_AND_HH
 
-#include <oln/level/apply_local.hh>
-#include <oln/border/fill.hh>
-#include <oln/accumulator/max.hh>
+# include <oln/core/concept/accumulator.hh>
+# include <oln/core/internal/max_value.hh>
+
 
 namespace oln
 {
 
-  namespace morpho
+  namespace accumulator
   {
 
-    // Fwd decl.
+    template <typename T>
+    struct and_ : public Accumulator< and_<T> >
+    {
+      typedef T argument;
+      typedef T result;
 
-    template <typename I, typename W>
-    oln_plain(I)
-      dilation(const Image<I>& input, const Window<W>& win);
+      and_();
+
+      void init()  const;
+      const T& value() const;
+
+      void operator()(const T& val) const;
+
+    private:
+      mutable T val_;
+    };
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
+    template <typename T>
+    and_<T>::and_()
     {
+      this->init();
+    }
 
-      // Generic version.
-
-      template <typename I, typename W>
-      oln_plain(I)
-	elementary_dilation_(const Image<I>&  input,
-			     const Window<W>& win)
-      {
-	border::fill(input, oln_min(oln_value(I)));
-	accumulator::max_<oln_value(I)> max;
-	return level::apply_local(max, input, win);
-      }
-
-      // FIXME: Add a fast version.
-
-    } // end of namespace oln::morpho::impl
-
-
-    // Facade.
-
-    template <typename I, typename W>
-    oln_plain(I)
-      dilation(const Image<I>& input, const Window<W>& win)
+    template <typename T>
+    void
+    and_<T>::init() const
     {
-      return impl::dilation_(exact(input), exact(win));
+      this->val_ = oln_min(T);
+    }
+
+    template <typename T>
+    const T&
+    and_<T>::value() const
+    {
+      return this->val_;
+    }
+
+    template <typename T>
+    void
+    and_<T>::operator()(const T& val) const
+    {
+      if (val < this->val_)
+	this->val_ = val;
     }
 
 # endif // ! OLN_INCLUDE_ONLY
 
-  } // end of namespace oln::morpho
+  } // end of namespace oln::accumulator
 
 } // end of namespace oln
 
-
-#endif // ! OLN_MORPHO_DILATION_HH
+#endif // ! OLN_ACCUMULATOR_AND_HH

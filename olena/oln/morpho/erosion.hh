@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_DILATION_HH
-# define OLN_MORPHO_DILATION_HH
+#ifndef	OLN_MORPHO_EROSION_HH
+# define OLN_MORPHO_EROSION_HH
 
 #include <oln/level/apply_local.hh>
 #include <oln/border/fill.hh>
-#include <oln/accumulator/max.hh>
+#include <oln/accumulator/min.hh>
 
 namespace oln
 {
@@ -42,7 +42,7 @@ namespace oln
 
     template <typename I, typename W>
     oln_plain(I)
-      dilation(const Image<I>& input, const Window<W>& win);
+    erosion(const Image<I>& input, const Window<W>& win);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -54,12 +54,12 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-	elementary_dilation_(const Image<I>&  input,
-			     const Window<W>& win)
+      elementary_erosion_(const Image<I>&  input,
+			  const Window<W>& win)
       {
 	border::fill(input, oln_min(oln_value(I)));
-	accumulator::max_<oln_value(I)> max;
-	return level::apply_local(max, input, win);
+	accumulator::min_<oln_value(I)> min;
+	return level::apply_local(min, input, win);
       }
 
       // FIXME: Add a fast version.
@@ -71,9 +71,9 @@ namespace oln
 
     template <typename I, typename W>
     oln_plain(I)
-      dilation(const Image<I>& input, const Window<W>& win)
+    erosion(const Image<I>& input, const Window<W>& win)
     {
-      return impl::dilation_(exact(input), exact(win));
+      return impl::erosion_(exact(input), exact(win));
     }
 
 # endif // ! OLN_INCLUDE_ONLY
@@ -83,4 +83,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_DILATION_HH
+#endif // ! OLN_MORPHO_EROSION_HH

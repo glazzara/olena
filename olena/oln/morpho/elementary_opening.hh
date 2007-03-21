@@ -25,12 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_DILATION_HH
-# define OLN_MORPHO_DILATION_HH
+#ifndef	OLN_MORPHO_ELEMENTARY_OPENING_HH
+# define OLN_MORPHO_ELEMENTARY_OPENING_HH
 
 #include <oln/level/apply_local.hh>
 #include <oln/border/fill.hh>
-#include <oln/accumulator/max.hh>
+#include <oln/morpho/elementary_erosion.hh>
+#include <oln/morpho/elementary_dilation.hh>
 
 namespace oln
 {
@@ -42,7 +43,7 @@ namespace oln
 
     template <typename I, typename W>
     oln_plain(I)
-      dilation(const Image<I>& input, const Window<W>& win);
+    elementary_opening(const Image<I>& input, const Window<W>& win);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -54,12 +55,10 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-	elementary_dilation_(const Image<I>&  input,
-			     const Window<W>& win)
+      elementary_opening_(const Image<I>&  input,
+			    const Window<W>& win)
       {
-	border::fill(input, oln_min(oln_value(I)));
-	accumulator::max_<oln_value(I)> max;
-	return level::apply_local(max, input, win);
+	return elementary_dilation(elementary_erosion(input, win), win); // FIXME : memory
       }
 
       // FIXME: Add a fast version.
@@ -71,9 +70,9 @@ namespace oln
 
     template <typename I, typename W>
     oln_plain(I)
-      dilation(const Image<I>& input, const Window<W>& win)
+    elementary_opening(const Image<I>& input, const Window<W>& win)
     {
-      return impl::dilation_(exact(input), exact(win));
+      return impl::elementary_opening_(exact(input), exact(win));
     }
 
 # endif // ! OLN_INCLUDE_ONLY
@@ -83,4 +82,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_DILATION_HH
+#endif // ! OLN_MORPHO_ELEMENTARY_OPENING_HH

@@ -31,7 +31,8 @@
 # include <oln/core/concept/image.hh>
 # include <oln/core/concept/window.hh>
 # include <oln/core/concept/accumulator.hh>
-
+# include <oln/accumulator/or.hh>
+# include <oln/accumulator/and.hh>
 
 namespace oln
 {
@@ -67,7 +68,8 @@ namespace oln
 	     const oln_point(I)& p)
       {
  	f.init_with(input(p));
-	oln_niter(I) n(p, input.nbhood()); // FIXME: 2nd arg should be 'input'!
+	oln_niter(I) n(p, input.nbhood()); // FIXME: 2nd arg should be
+					   // 'input'!
 	for_all(n)
 	  f(input(n));
 	return f.value();
@@ -75,7 +77,6 @@ namespace oln
 
 
       // FIXME: Generic version with nbh given as argument?
-
 
       // Generic version with window.
 
@@ -90,6 +91,80 @@ namespace oln
 	oln_qiter(W) q(p, win);
 	for_all(q)
 	  f(input(q));
+	return f.value();
+      }
+
+
+      // Optimised version for OR operator with neighborhood.
+
+      template <typename A, typename I>
+      typename A::result
+      local_(const ::oln::accumulator::or_< oln_value(I) > f,
+	     const Binary_Image<I>& input,
+	     const oln_point(I)& p)
+      {
+	f.init_with(input(p));
+	oln_niter(I) n(p, input.nbhood()); // FIXME: 2nd arg should be
+					   // 'input'!
+	for_all(n)
+	  if (f(input(n)) == f.ultimate)
+	    return (f.ultimate);
+	return f.value();
+      }
+
+
+      // Optimised version for OR operator with window.
+
+      template <typename A, typename I, typename W>
+      typename A::result
+      local_(const ::oln::accumulator::or_< oln_value(I) > f,
+	     const Binary_Image<I>& input,
+	     const oln_point(I)& p,
+	     const Window<W>& win)
+      {
+ 	f.init();
+	oln_qiter(W) q(p, win);
+	for_all(q)
+	  if (f(input(q)) == f.ultimate)
+	    return (f.ultimate);
+	return f.value();
+      }
+
+
+      // FIXME : same function for OR.
+
+      // Optimised version for AND operator with neighborhood.
+
+      template <typename A, typename I>
+      typename A::result
+      local_(const ::oln::accumulator::and_< oln_value(I) > f,
+	     const Binary_Image<I>& input,
+	     const oln_point(I)& p)
+      {
+	f.init_with(input(p));
+	oln_niter(I) n(p, input.nbhood()); // FIXME: 2nd arg should be
+					   // 'input'!
+	for_all(n)
+	  if (f(input(n)) == f.ultimate)
+	    return (f.ultimate);
+	return f.value();
+      }
+
+
+      // Optimised version for AND operator with window.
+
+      template <typename A, typename I, typename W>
+      typename A::result
+      local_(const ::oln::accumulator::and_< oln_value(I) > f,
+	     const Image<I>& input,
+	     const oln_point(I)& p,
+	     const Window<W>& win)
+      {
+ 	f.init();
+	oln_qiter(W) q(p, win);
+	for_all(q)
+	  if (f(input(q)) == f.ultimate)
+	    return (f.ultimate);
 	return f.value();
       }
 

@@ -1,3 +1,20 @@
+2007-03-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Algo MorphoMath : and, or, opening, closing, elementary algo.
+
+	* oln/accumulator/and.hh: New.
+	* oln/accumulator/or.hh: New.
+	* oln/core/internal/max_value.hh,
+	* oln/core/internal/op_image_plus_nbh.hh,
+	* oln/morpho/elementary_erosion.hh,
+	* oln/morpho/dilation.hh: Update.
+	* oln/morpho/elementary_closing.hh,
+	* oln/morpho/elementary_opening.hh: New.
+	* oln/morpho/elementary_dilation.hh: Update.
+	* oln/morpho/erosion.hh: New.
+	* oln/morpho/opening.hh: New.
+	* oln/level/local.hh: .
+
 2007-03-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add image selection about different kinds of values and update.
