@@ -56,8 +56,8 @@ namespace oln
       opening_(const Image<I>&  input,
 	       const Window<W>& win)
       {
-	oln_plain(I) = elementary_dilation(input, win);
-	return elementary_erosion(tmp, win); // FIXME : inverse(win).
+	oln_plain(I) tmp = morpho::dilation(input, win);
+	return morpho::erosion(tmp, win); // FIXME : inverse(win).
       }
 
       // FIXME: Add a fast version.
@@ -71,7 +71,7 @@ namespace oln
     oln_plain(I)
     opening(const Image<I>& input, const Window<W>& win)
     {
-      return impl::opening_(exact(input), exact(win));
+      return impl::opening_(exact(input), win);
     }
 
 # endif // ! OLN_INCLUDE_ONLY

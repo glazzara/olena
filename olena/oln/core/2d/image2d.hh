@@ -117,7 +117,7 @@ namespace oln
   template <typename T>
   image2d<T>::image2d(const box2d& b)
   {
-    this->data_ = new data(b.pmin().row(), b.pmin().col(), 
+    this->data_ = new data(b.pmin().row(), b.pmin().col(),
 			   b.pmax().row(), b.pmax().col());
   }
 
@@ -219,7 +219,7 @@ namespace oln
     box2d b;
     bool box_ok = init(b, with, dat);
     postcondition(box_ok);
-    target.data__() = new typename image2d<T>::data(b.pmin().row(), b.pmin().col(), 
+    target.data__() = new typename image2d<T>::data(b.pmin().row(), b.pmin().col(),
 						    b.pmax().row(), b.pmax().col());
     return box_ok;
   }

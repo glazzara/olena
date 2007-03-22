@@ -47,6 +47,11 @@ namespace oln
     apply_local(const Accumulator<F>&    f,
 		const Image_with_Nbh<I>& input);
 
+    template <typename F, typename I, typename W>
+    oln_plain_value(I, typename F::result)
+    apply_local(const Accumulator<F>& f,
+		const Image<I>&       input,
+		const Window<W>&      win);
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -57,7 +62,7 @@ namespace oln
 
       template <typename F, typename I>
       oln_plain_value(I, typename F::result)
-      apply_local_(const Accumulator<F>& f,
+      apply_local_(const Accumulator<F>&    f,
 		   const Image_with_Nbh<I>& input)
       {
 	oln_plain_value(I, typename F::result) output;
@@ -65,6 +70,20 @@ namespace oln
         oln_piter(I) p(input.points());
         for_all(p)
 	  output(p) = level::local(f, input, p);
+        return output;
+      }
+
+      template <typename F, typename I, typename W>
+      oln_plain_value(I, typename F::result)
+      apply_local_(const Accumulator<F>& f,
+		   const Image<I>&       input,
+		   const Window<W>&      win)
+      {
+	oln_plain_value(I, typename F::result) output;
+	prepare(output, with, input);
+        oln_piter(I) p(input.points());
+        for_all(p)
+	  output(p) = level::local(f, input, p, win);
         return output;
       }
 
@@ -79,6 +98,15 @@ namespace oln
 		const Image_with_Nbh<I>& input)
     {
       return impl::apply_local_(exact(f), exact(input));
+    }
+
+    template <typename F, typename I, typename W>
+    oln_plain_value(I, typename F::result)
+    apply_local(const Accumulator<F>& f,
+		const Image<I>&       input,
+		const Window<W>&      win)
+    {
+      return impl::apply_local_(exact(f), exact(input), win);
     }
 
 # endif

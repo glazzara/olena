@@ -59,6 +59,8 @@ namespace oln
     namespace impl
     {
 
+      /// Neigborhood.
+
       // Generic version with neighborhood.
 
       template <typename A, typename I>
@@ -70,12 +72,57 @@ namespace oln
  	f.init_with(input(p));
 	oln_niter(I) n(p, input);
 	for_all(n)
-	  f(input(n));
+	  {
+	    f(input(n));
+	  }
 	return f.value();
       }
 
+      // Optimised version for OR operator with neighborhood.
+
+      template <typename B, typename I>
+      B
+      local_(const oln::accumulator::or_<B>& f,
+	     const Image_with_Nbh<I>&        input,
+	     const oln_point(I)&             p)
+      {
+	f.init_with(input(p));
+	if (f.value() == true)
+	  return true;
+	oln_niter(I) n(p, input);
+	for_all(n)
+	  {
+	    f(input(n)); // FIXME: Change to f.take(input(n))?
+	    if (f.value() == true)
+	      return true;
+	  }
+	return f.value();
+      }
+
+      // Optimised version for AND operator with neighborhood.
+
+      template <typename B, typename I>
+      B
+      local_(const accumulator::and_< B > f,
+	     const Image_with_Nbh<I>& input,
+	     const oln_point(I)& p)
+      {
+	f.init_with(input(p));
+	oln_niter(I) n(p, input);
+	for_all(n)
+	  {
+	    f(input(n)); // FIXME: Change to f.take(input(n))?
+	    if (f.value() == false)
+	      return false;
+	  }
+	return f.value();
+      }
 
       // FIXME: Generic version with nbh given as argument?
+
+
+
+      /// On Window.
 
       // Generic version with window.
 
@@ -86,41 +133,19 @@ namespace oln
 	     const oln_point(I)& p,
 	     const Window<W>& win)
       {
- 	f.init();
+	f.init_with(input(p));
 	oln_qiter(W) q(p, win);
 	for_all(q)
-	  f(input(q));
+	  if (input.owns_(q))
+	    f(input(q));
 	return f.value();
       }
-
-
-      // Optimised version for OR operator with neighborhood.
-
-      template <typename B, typename I>
-      B
-      local_(const accumulator::or_<B>& f,
-	     const Binary_Image<I>& input,
-	     const oln_point(I)& p)
-      {
-	f.init_with(input(p));
-	if (f.value() == true)
-	  return true;
-	oln_niter(I) n(p, input);
-	for_all(n)
-	  {
-	    f(input(n)); // FIXME: Change to f.take(input(n))?
-	    if (f.value() == true)
-	      return true;
-	  }
-	return f.value();
-      }
-
 
       // Optimised version for OR operator with window.
 
       template <typename B, typename I, typename W>
       B
-      local_(const accumulator::or_<B>& f,
+      local_(const oln::accumulator::or_<B>& f,
 	     const Binary_Image<I>& input,
 	     const oln_point(I)& p,
 	     const Window<W>& win)
@@ -131,39 +156,17 @@ namespace oln
 	oln_qiter(W) q(p, win);
 	for_all(q)
 	  {
-	    f(input(q));
+	    if (input.owns_(q))
+	      f(input(q));
 	    if (f.value() == true)
 	      return true;
 	  }
 	return f.value();
       }
-
-
-      // FIXME : same function for OR.
-
-      // Optimised version for AND operator with neighborhood.
-
-      template <typename B, typename I>
-      B
-      local_(const accumulator::and_< B > f,
-	     const Binary_Image<I>& input,
-	     const oln_point(I)& p)
-      {
-	f.init_with(input(p));
-	oln_niter(I) n(p, input);
-	for_all(n)
-	  {
-	    f(input(n)); // FIXME: Change to f.take(input(n))?
-	    if (f.value() == true)
-	      return true;
-	  }
-	return f.value();
-      }
-
 
       // Optimised version for AND operator with window.
 
-      template <typename A, typename I, typename W>
+      template <typename B, typename I, typename W>
       B
       local_(const accumulator::and_< B > f,
 	     const Image<I>& input,
@@ -174,9 +177,10 @@ namespace oln
 	oln_qiter(W) q(p, win);
 	for_all(q)
 	  {
-	    f(input(q));
-	    if (f.value() == true)
-	      return true;
+	    if (input.owns_(q))
+	      f(input(q));
+	    if (f.value() == false)
+	      return false;
 	  }
 	return f.value();
       }
@@ -192,7 +196,7 @@ namespace oln
 	  const Image_with_Nbh<I>& input,
 	  const oln_point(I)&      p)
     {
-      return impl::local_(exact(f), input, p);
+      return impl::local_(exact(f), exact(input), p);
     }
 
     template <typename A, typename I, typename W>
@@ -202,7 +206,7 @@ namespace oln
 	  const oln_point(I)&   p,
 	  const Window<W>&      win)
     {
-      return impl::local_(exact(f), input, p, win);
+      return impl::local_(exact(f), exact(input), p, win);
     }
 
 #endif // ! OLN_INCLUDE_ONLY

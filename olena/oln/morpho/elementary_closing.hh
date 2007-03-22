@@ -52,11 +52,9 @@ namespace oln
 
       template <typename I>
       oln_plain(I)
-      elementary_closing_(const Image<I>& input);
+      elementary_closing_(const Image_with_Nbh<I>& input)
       {
-	oln_plain(I) tmp;
-	tmp = elementary_dilation(input);
-	return elementary_erosion(tmp);
+	return elementary_erosion( elementary_dilation(input) );
       }
 
       // FIXME: Add a fast version.

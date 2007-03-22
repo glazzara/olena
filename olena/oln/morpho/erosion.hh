@@ -58,7 +58,7 @@ namespace oln
       {
 	border::fill(input, oln_min(oln_value(I)));
 	accumulator::min_<oln_value(I)> min;
-	return level::apply_local(max, input, win);
+	return level::apply_local(min, input, win);
       }
 
       template <typename I>
