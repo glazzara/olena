@@ -87,7 +87,6 @@ namespace oln
 
     bool impl_owns_(const point2d& p) const;
 
-    bool impl_has(const point2d& p) const;
     bool impl_has_at(int row, int col) const;
 
     const T& impl_read(const point2d& p) const;
@@ -130,13 +129,6 @@ namespace oln
 
   template <typename T>
   bool image2d<T>::impl_owns_(const point2d& p) const
-  {
-    assert(this->has_data());
-    return this->data_->has(p.row(), p.col());
-  }
-
-  template <typename T>
-  bool image2d<T>::impl_has(const point2d& p) const
   {
     assert(this->has_data());
     return this->data_->has(p.row(), p.col());

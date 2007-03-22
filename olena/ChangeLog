@@ -1,3 +1,28 @@
+2007-03-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add type of 'image such_as f:b->p' and factor Image::has as final.
+
+	* tests/core/neighb2d.cc: Fix.
+	* oln/core/internal/op_image_such_as_fp2b.hh: New.
+	* oln/core/gen/pset_such_as.hh: Remove; obsolete.
+	* oln/core/concept/image.hh (has): New final impl.
+	(Point_Wise_Accessible_Image): Remove get_impl inheritance.
+	* oln/core/concept/image_identity.hh: Update.
+	* oln/core/rle/rle_image.hh,
+	* oln/core/sparse/sparse_image.hh,
+	* oln/core/1d/image1d.hh,
+	* oln/core/1d/image1d_b.hh,
+	* oln/core/2d/image2d.hh,
+	* oln/core/2d/image2d_b.hh,
+	* oln/core/gen/single_value_image.hh (impl_has): Remove.
+	* oln/core/internal/op_pset_such_as_fp2b.hh (point): New vtype.
+	(point): Remove this vtype from iterators.
+	* oln/core/internal/point_set_base.hh: Cosmetic.
+	* oln/core/internal/op_image_restricted_to_pset.hh: Cosmetic.
+	* oln/core/internal/image_base.hh (oln_decl_op_such_as): New version
+	for "Image such_as Function_p2b".
+	(operator |): New specialization for C functions.
+
 2007-03-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Basic Morpho : Tested OK.

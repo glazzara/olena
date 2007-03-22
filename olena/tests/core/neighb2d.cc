@@ -38,7 +38,7 @@ namespace test
   unsigned run(const oln::Image_with_Nbh<I>& input)
   {
     oln_piter(I) p(input.points());
-    oln_niter(I) n(p, input.nbhood());
+    oln_niter(I) n(p, input);
     unsigned count = 0;
 
     for_all(p)

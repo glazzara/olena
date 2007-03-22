@@ -83,7 +83,6 @@ namespace oln
     sparse_image();
 
     pset impl_points() const;
-    bool impl_has(const point& p) const;
     bool impl_owns_(const psite& p) const;
     void insert(const point& p, unsigned len, const std::vector<value>& val);
     rvalue impl_read(const psite& p) const;
@@ -105,13 +104,6 @@ namespace oln
   sparse_image<P, T>::impl_points() const
   {
     return this->data_->first;
-  }
-
-  template <typename P, typename T>
-  bool
-  sparse_image<P, T>::impl_has(const typename sparse_image<P, T>::point& p) const
-  {
-    return this->data_->first.has(p);
   }
 
   template <typename P, typename T>

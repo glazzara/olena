@@ -111,8 +111,7 @@ namespace oln
 
   template <typename S, typename B, typename P>
   op_<const S, such_as, const fun_p2b_<B (*)(P)> >
-  operator | (const Point_Set<S>& lhs,
-	      B (*f)(P))
+  operator | (const Point_Set<S>& lhs, B (*f)(P))
   {
     typedef oln_strip_(P) P_;
     mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.

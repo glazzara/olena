@@ -40,12 +40,7 @@ namespace oln
      special_op_< stc::is<Image>, I, restricted_to, stc::is<Point_Set>, S >
 
 
-//   /// Fwd decls.
-//   template <typename Exact> struct Image;
-//   template <typename Exact> struct Point_Set;
-
-
-  /// Super type.
+  // Super type.
   template <typename I, typename S>
   struct super_trait_< internal::current >
   {
@@ -53,7 +48,7 @@ namespace oln
   };
 
 
-  /// Virtual types.
+  // Virtual types.
   template <typename I, typename S>
   struct vtypes< internal::current >
   {
@@ -73,7 +68,7 @@ namespace oln
   namespace internal
   {
     
-    /// Implementation class the result of "Image I | Point_Set S".
+    /// Implementation class for the result of "Image I | Point_Set S".
     
     template <typename I, typename S>
     class special_op_< stc::is<Image>, I, restricted_to, stc::is<Point_Set>, S >

@@ -98,8 +98,6 @@ namespace oln
 
     /// pset impl_points() const                             : return image pset
     pset impl_points() const;
-    /// bool impl_has(const point& p) const                  : rle_image has p?
-    bool impl_has(const point& p) const;
     /// bool impl_owns_(const psite& p) const                : same has impl_has
     bool impl_owns_(const psite& p) const;
     /// void insert(const point& p, unsigned len, value val) : insert a new range on the image
@@ -124,13 +122,6 @@ namespace oln
   rle_image<P, T>::impl_points() const
   {
     return this->data_->first;
-  }
-
-  template <typename P, typename T>
-  bool
-  rle_image<P, T>::impl_has(const typename rle_image<P, T>::point& p) const
-  {
-    return this->data_->first.has(p);
   }
 
   template <typename P, typename T>

@@ -97,8 +97,6 @@ namespace oln
 
     bool impl_owns_(const point1d& p) const;
 
-    bool impl_has(const point1d& p) const;
-
     const T& impl_read(const point1d& p) const;
     const T& impl_index_read(unsigned i) const;
 
@@ -145,13 +143,6 @@ namespace oln
   {
     assert(this->has_data());
     return this->data_->first.has(p.ind());
-  }
-
-  template <typename T>
-  bool image1d_b<T>::impl_has(const point1d& p) const
-  {
-    assert(this->has_data());
-    return this->data_->third.has(p);
   }
 
   template <typename T>

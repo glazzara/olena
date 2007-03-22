@@ -217,11 +217,11 @@ namespace oln
   /// Concept-class "Point_Wise_Accessible_Image".
 
   template <typename Exact>
-  struct Point_Wise_Accessible_Image : public virtual Image<Exact>,
-				       public automatic::get_impl<Point_Wise_Accessible_Image, Exact>
+  struct Point_Wise_Accessible_Image : public virtual Image<Exact>
   {
     stc_using_from(Image, point);
 
+    // final
     bool has(const point& p) const;
 
   protected:
@@ -512,7 +512,8 @@ namespace oln
   bool
   Point_Wise_Accessible_Image<Exact>::has(const typename Point_Wise_Accessible_Image<Exact>::point& p) const
   {
-    return exact(this)->impl_has(p);
+    // FIXME: precondition(this->owns_(p)); ?
+    return this->points().has(p);
   }
 
   template <typename Exact>

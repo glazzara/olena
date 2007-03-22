@@ -477,10 +477,32 @@ namespace oln
 
 # include <oln/core/internal/f_ch_value.hh>
 # include <oln/core/internal/op_image_restricted_to_pset.hh>
+# include <oln/core/internal/op_image_such_as_fp2b.hh>
 
 namespace oln
 {
+  // Image | Point_Set    ( ima restricted_to pset )
+
   oln_decl_op_restricted_to(Image, Point_Set);
+
+
+  // Image | Function_p2b  (     ima such_as "f : p -> b"
+  //                         is  ima restricted_to (ima.points such_as f) )
+  oln_decl_op_such_as(Image, Function_p2b);
+
+
+  // Specialization.
+
+  template <typename I, typename B, typename P>
+  op_<const I, such_as, const fun_p2b_<B (*)(P)> >
+  operator | (const Image<I>& ima, B (*f)(P))
+  {
+    typedef oln_strip_(P) P_;
+    mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.
+    mlc::assert_equal_< P_, oln_point(I) >::check();
+    op_<const I, such_as, const fun_p2b_<B (*)(P)> > tmp(exact(ima), f);
+    return tmp;
+  }
 
 } // end of namespace oln
 

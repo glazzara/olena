@@ -89,7 +89,6 @@ namespace oln
     single_value_image(const Ps& ps, const T& val);
 
     bool impl_owns_(const point& p) const;
-    bool impl_has  (const point& p) const;
 
     rvalue impl_read(const point&) const;
 
@@ -118,14 +117,6 @@ namespace oln
   template <typename Ps, typename T>
   bool
   single_value_image<Ps, T>::impl_owns_(const typename single_value_image<Ps, T>::point& p) const
-  {
-    assert(this->has_data());
-    return this->data_->first.has(p);
-  }
-
-  template <typename Ps, typename T>
-  bool
-  single_value_image<Ps, T>::impl_has(const typename single_value_image<Ps, T>::point& p) const
   {
     assert(this->has_data());
     return this->data_->first.has(p);

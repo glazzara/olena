@@ -104,16 +104,6 @@ namespace oln
     };
 
 
-    /// Concept-class "Point_Wise_Accessible_Image".
-
-    template <typename Exact>
-    struct set_impl< Point_Wise_Accessible_Image, behavior::identity, Exact > : public virtual Any<Exact>
-    {
-      stc_typename(point);
-      bool impl_has(const point& p) const;
-    };
-
-
     /// Concept-class "Value_Wise_Accessible_Image".
 
     template <typename Exact>
@@ -267,16 +257,6 @@ namespace oln
     set_impl< Fast_Image, behavior::identity, Exact >::impl_npoints() const
     {
       return exact(this)->image().npoints();
-    }
-    
-
-    /// Concept-class "Point_Wise_Accessible_Image".
-
-    template <typename Exact>
-    bool
-    set_impl< Point_Wise_Accessible_Image, behavior::identity, Exact >::impl_has(const typename set_impl< Point_Wise_Accessible_Image, behavior::identity, Exact >::point& p) const
-    { 
-      return exact(this)->image().has(p);
     }
 
 

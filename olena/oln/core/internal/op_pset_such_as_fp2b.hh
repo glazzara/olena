@@ -42,7 +42,7 @@ namespace oln
      special_op_< stc::is<Point_Set>, S, such_as, stc::is<Function_p2b>, F >
 
 
-  /// Fwd decls.
+  // Fwd decls.
   namespace internal
   {
     template <typename S, typename F> class current;
@@ -52,7 +52,7 @@ namespace oln
 
 
 
-  /// Super type.
+  // Super type.
   template <typename S, typename F>
   struct super_trait_< internal::current >
   {
@@ -60,10 +60,11 @@ namespace oln
   };
 
 
-  /// Virtual types.
+  // Virtual types.
   template <typename S, typename F>
   struct vtypes< internal::current >
   {
+    typedef oln_point(S) point;
     typedef pset_such_as_fp2b_fwd_piter_<S, F> fwd_piter;
     typedef pset_such_as_fp2b_bkd_piter_<S, F> bkd_piter;
   };
@@ -72,7 +73,7 @@ namespace oln
   namespace internal
   {
 
-    /// Implementation class the result of "Point_Set S | Function_p2b F".
+    /// Implementation class for the result of "Point_Set S | Function_p2b F".
 
     template <typename S, typename F>
     class current
@@ -197,7 +198,6 @@ namespace oln
   template <typename S, typename F>
   struct vtypes< current >
   {
-    typedef typename S::point     point;
     typedef typename S::fwd_piter adapted;
   };
 
@@ -274,7 +274,6 @@ namespace oln
   template <typename S, typename F>
   struct vtypes< current >
   {
-    typedef typename S::point     point;
     typedef typename S::fwd_piter adapted;
   };
 
