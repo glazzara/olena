@@ -67,8 +67,9 @@ namespace oln
       elementary_erosion_on_set_(const Image<I>&,
 				 const I&)
       {
-	oln_plain(I) tmp;
-	std::cerr << "morpho::impl::elementary_erosion_on_set_ is not yet impled!" << std::endl;
+	border::fill(input, oln_max(oln_value(I)));
+	accumulator::and_<oln_value(I)> accu_and;
+	return level::apply_local(accu_and, input);
 	return tmp;
       }
 

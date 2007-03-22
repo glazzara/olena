@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_ELEMENTARY_OPENING_HH
-# define OLN_MORPHO_ELEMENTARY_OPENING_HH
+#ifndef	OLN_MORPHO_CLOSING_HH
+# define OLN_MORPHO_CLOSING_HH
 
 #include <oln/morpho/elementary_erosion.hh>
 #include <oln/morpho/elementary_dilation.hh>
@@ -39,9 +39,10 @@ namespace oln
 
     // Fwd decl.
 
-    template <typename I>
+    template <typename I, typename W>
     oln_plain(I)
-    elementary_opening(const Image_with_Nbh<I>& input);
+    closing(const Image<I>& input, const Window<W>& win);
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -50,27 +51,29 @@ namespace oln
 
       // Generic version.
 
-      template <typename I>
+      template <typename I, typename W>
       oln_plain(I)
-      elementary_opening_(const Image<I>& input);
+      closing_(const Image<I>&  input,
+	       const Window<W>& win)
       {
-	oln_plain(I) tmp;
-	tmp = elementary_erosion(input);
-	return elementary_dilation(tmp);
+	oln_plain(I) = elementary_dilation(input, win);
+	return elementary_erosion(tmp, win); // FIXME : inverse(win).
       }
 
       // FIXME: Add a fast version.
+
+      
 
     } // end of namespace oln::morpho::impl
 
 
     // Facade.
 
-    template <typename I>
+    template <typename I, typename W>
     oln_plain(I)
-    elementary_opening(const Image_with_Nbh<I>& input)
+    closing(const Image<I>& input, const Window<W>& win)
     {
-      return impl::elementary_opening_(exact(input));
+      return impl::closing_(exact(input), exact(win));
     }
 
 # endif // ! OLN_INCLUDE_ONLY
@@ -80,4 +83,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_ELEMENTARY_OPENING_HH
+#endif // ! OLN_MORPHO_CLOSING_HH

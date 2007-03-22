@@ -28,8 +28,6 @@
 #ifndef	OLN_MORPHO_OPENING_HH
 # define OLN_MORPHO_OPENING_HH
 
-#include <oln/level/apply_local.hh>
-#include <oln/border/fill.hh>
 #include <oln/morpho/elementary_erosion.hh>
 #include <oln/morpho/elementary_dilation.hh>
 
@@ -58,9 +56,8 @@ namespace oln
       opening_(const Image<I>&  input,
 	       const Window<W>& win)
       {
-	border::fill(input, oln_min(oln_value(I)));
-	accumulator::max_<oln_value(I)> max;
-	return level::apply_local(max, input, win);
+	oln_plain(I) = elementary_dilation(input, win);
+	return elementary_erosion(tmp, win); // FIXME : inverse(win).
       }
 
       // FIXME: Add a fast version.
@@ -84,4 +81,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_DILATION_HH
+#endif // ! OLN_MORPHO_OPENING_HH

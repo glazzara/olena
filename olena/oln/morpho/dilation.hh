@@ -61,7 +61,32 @@ namespace oln
 	return level::apply_local(max, input, win);
       }
 
+      template <typename I>
+      oln_plain(I)
+      dilation_on_set_(const Image<I>&,
+		       const I& input)
+      {
+	border::fill(input, oln_min(oln_value(I)));
+	accumulator::or_<oln_value(I)> accu_or;
+	return level::apply_local(accu_or, input);
+      }
+
       // FIXME: Add a fast version.
+
+
+      // Impl facade.
+
+      template <typename I>
+      oln_plain(I) dilation_(const Image<I>& input)
+      {
+	return dilation_on_function_(exact(input), exact(input));
+      }
+
+      template <typename I>
+      oln_plain(I) dilation_(const Binary_Image<I>& input)
+      {
+	return dilation_on_set_(exact(input), exact(input));
+      }
 
     } // end of namespace oln::morpho::impl
 

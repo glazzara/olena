@@ -115,22 +115,26 @@ namespace oln
 	return f.value();
       }
 
-      /*
 
       // Optimised version for OR operator with window.
 
-      template <typename A, typename I, typename W>
-      typename A::result
-      local_(const accumulator::or_<oln_value(I)>& f,
+      template <typename B, typename I, typename W>
+      B
+      local_(const accumulator::or_<B>& f,
 	     const Binary_Image<I>& input,
 	     const oln_point(I)& p,
 	     const Window<W>& win)
       {
- 	f.init();
+	f.init_with(input(p));
+	if (f.value() == true)
+	  return true;
 	oln_qiter(W) q(p, win);
 	for_all(q)
-	  if (f(input(q)) == f.ultimate)
-	    return (f.ultimate);
+	  {
+	    f(input(q));
+	    if (f.value() == true)
+	      return true;
+	  }
 	return f.value();
       }
 
@@ -139,17 +143,20 @@ namespace oln
 
       // Optimised version for AND operator with neighborhood.
 
-      template <typename A, typename I>
-      typename A::result
-      local_(const ::oln::accumulator::and_< oln_value(I) > f,
+      template <typename B, typename I>
+      B
+      local_(const accumulator::and_< B > f,
 	     const Binary_Image<I>& input,
 	     const oln_point(I)& p)
       {
 	f.init_with(input(p));
 	oln_niter(I) n(p, input);
 	for_all(n)
-	  if (f(input(n)) == f.ultimate)
-	    return (f.ultimate);
+	  {
+	    f(input(n)); // FIXME: Change to f.take(input(n))?
+	    if (f.value() == true)
+	      return true;
+	  }
 	return f.value();
       }
 
@@ -157,21 +164,22 @@ namespace oln
       // Optimised version for AND operator with window.
 
       template <typename A, typename I, typename W>
-      typename A::result
-      local_(const ::oln::accumulator::and_< oln_value(I) > f,
+      B
+      local_(const accumulator::and_< B > f,
 	     const Image<I>& input,
 	     const oln_point(I)& p,
 	     const Window<W>& win)
       {
- 	f.init();
+	f.init_with(input(p));
 	oln_qiter(W) q(p, win);
 	for_all(q)
-	  if (f(input(q)) == f.ultimate)
-	    return (f.ultimate);
+	  {
+	    f(input(q));
+	    if (f.value() == true)
+	      return true;
+	  }
 	return f.value();
       }
-
-      */
 
     } // end of namespace oln::level::impl
 

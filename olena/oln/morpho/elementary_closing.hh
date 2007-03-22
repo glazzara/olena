@@ -28,8 +28,6 @@
 #ifndef	OLN_MORPHO_ELEMENTARY_CLOSING_HH
 # define OLN_MORPHO_ELEMENTARY_CLOSING_HH
 
-#include <oln/level/apply_local.hh>
-#include <oln/border/fill.hh>
 #include <oln/morpho/elementary_erosion.hh>
 #include <oln/morpho/elementary_dilation.hh>
 
@@ -41,10 +39,9 @@ namespace oln
 
     // Fwd decl.
 
-    template <typename I, typename W>
+    template <typename I>
     oln_plain(I)
-    elementary_closing(const Image<I>& input, const Window<W>& win);
-
+    elementary_closing(const Image_with_Nbh<I>& input);
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -53,12 +50,13 @@ namespace oln
 
       // Generic version.
 
-      template <typename I, typename W>
+      template <typename I>
       oln_plain(I)
-      elementary_closing_(const Image<I>&  input,
-	       const Window<W>& win)
+      elementary_closing_(const Image<I>& input);
       {
-	return elementary_erosion(elementary_dilation(input, win), win); // FIXME : memory
+	oln_plain(I) tmp;
+	tmp = elementary_dilation(input);
+	return elementary_erosion(tmp);
       }
 
       // FIXME: Add a fast version.
@@ -68,11 +66,11 @@ namespace oln
 
     // Facade.
 
-    template <typename I, typename W>
+    template <typename I>
     oln_plain(I)
-    elementary_closing(const Image<I>& input, const Window<W>& win)
+    elementary_closing(const Image_with_Nbh<I>& input)
     {
-      return impl::elementary_closing_(exact(input), exact(win));
+      return impl::elementary_closing_(exact(input));
     }
 
 # endif // ! OLN_INCLUDE_ONLY
