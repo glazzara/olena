@@ -79,7 +79,7 @@ namespace oln
   namespace internal
   {
     
-    /// Implementation class the result of "Image I + Neighborhood N".
+    /// Implementation class for the result of "Image I + Neighborhood N".
     
     template <typename I, typename N>
     class current

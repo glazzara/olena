@@ -29,7 +29,6 @@
 # define OLN_ACCUMULATOR_AND_HH
 
 # include <oln/core/concept/accumulator.hh>
-# include <oln/core/internal/max_value.hh>
 
 
 namespace oln
@@ -68,7 +67,7 @@ namespace oln
     void
     and_<T>::init() const
     {
-      this->val_ = oln_min(T);
+      this->val_ = true;
     }
 
     template <typename T>
@@ -82,8 +81,7 @@ namespace oln
     void
     and_<T>::operator()(const T& val) const
     {
-      if (val < this->val_)
-	this->val_ = val;
+      this->val_ = this->val_ and val;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

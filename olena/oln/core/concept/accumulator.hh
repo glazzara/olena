@@ -60,7 +60,7 @@ namespace oln
   Accumulator<Exact>::init_with(const T& val) const
   {
     exact(this)->init();
-    exact(this)->operator()(val);
+    exact(this)->operator()(val); // FIXME: Change to ->take(val)?
   }
 
 # endif // ! OLN_INCLUDE_ONLY

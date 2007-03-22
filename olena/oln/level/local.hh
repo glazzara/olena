@@ -68,8 +68,7 @@ namespace oln
 	     const oln_point(I)& p)
       {
  	f.init_with(input(p));
-	oln_niter(I) n(p, input.nbhood()); // FIXME: 2nd arg should be
-					   // 'input'!
+	oln_niter(I) n(p, input);
 	for_all(n)
 	  f(input(n));
 	return f.value();
@@ -97,27 +96,32 @@ namespace oln
 
       // Optimised version for OR operator with neighborhood.
 
-      template <typename A, typename I>
-      typename A::result
-      local_(const ::oln::accumulator::or_< oln_value(I) > f,
+      template <typename B, typename I>
+      B
+      local_(const accumulator::or_<B>& f,
 	     const Binary_Image<I>& input,
 	     const oln_point(I)& p)
       {
 	f.init_with(input(p));
-	oln_niter(I) n(p, input.nbhood()); // FIXME: 2nd arg should be
-					   // 'input'!
+	if (f.value() == true)
+	  return true;
+	oln_niter(I) n(p, input);
 	for_all(n)
-	  if (f(input(n)) == f.ultimate)
-	    return (f.ultimate);
+	  {
+	    f(input(n)); // FIXME: Change to f.take(input(n))?
+	    if (f.value() == true)
+	      return true;
+	  }
 	return f.value();
       }
 
+      /*
 
       // Optimised version for OR operator with window.
 
       template <typename A, typename I, typename W>
       typename A::result
-      local_(const ::oln::accumulator::or_< oln_value(I) > f,
+      local_(const accumulator::or_<oln_value(I)>& f,
 	     const Binary_Image<I>& input,
 	     const oln_point(I)& p,
 	     const Window<W>& win)
@@ -142,8 +146,7 @@ namespace oln
 	     const oln_point(I)& p)
       {
 	f.init_with(input(p));
-	oln_niter(I) n(p, input.nbhood()); // FIXME: 2nd arg should be
-					   // 'input'!
+	oln_niter(I) n(p, input);
 	for_all(n)
 	  if (f(input(n)) == f.ultimate)
 	    return (f.ultimate);
@@ -167,6 +170,8 @@ namespace oln
 	    return (f.ultimate);
 	return f.value();
       }
+
+      */
 
     } // end of namespace oln::level::impl
 

@@ -55,7 +55,7 @@ namespace oln
 		     const I& input, std::ostream& ostr)
       {
 	oln_piter(I) p(input.points());
-	oln_niter(I) n(p, input.nbhood());
+	oln_niter(I) n(p, input);
 	for_all(p)
 	  {
 	    ostr << input(p) << ": ";
@@ -74,7 +74,7 @@ namespace oln
 		     const I& input, std::ostream& ostr)
       {
 	oln_piter(I) p(input.points());
-	oln_niter(I) n(p, input.nbhood());
+	oln_niter(I) n(p, input);
 	for_all(p)
 	  {
 	    ostr << input(p) << ": ";

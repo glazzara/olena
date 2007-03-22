@@ -56,7 +56,7 @@ namespace oln
     struct case_< Image_mutability, Exact,  2 >
       :
       where_< mlc::and_< stc_type_is_found(lvalue),
-			 stc_type_is_found(index) > >
+			 stc_type_is_found(index) > > // FIXME: Wrong!
     {
       typedef Fast_Image<Exact> ret;
     };

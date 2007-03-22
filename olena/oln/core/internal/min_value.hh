@@ -30,6 +30,6 @@
 
 # include <limits>
 
-# define oln_min(T) std::numeric_limits< T >::min()
+# define oln_min(T) std::numeric_limits< T >::min() // FIXME std lib
 
-# endif // ! OLN_CORE_INTERNAL_MIN_VALUE_HH
+#endif // ! OLN_CORE_INTERNAL_MIN_VALUE_HH
