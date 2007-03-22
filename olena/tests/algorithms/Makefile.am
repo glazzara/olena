@@ -23,10 +23,11 @@ AM_CXXFLAGS = $(TESTS_CXXFLAGS)
 
 
 check_PROGRAMS =				\
-  fill
+  fill \
+  basic_morpho
 
 # Algorithms.
 fill_SOURCES = fill.cc
-
+basic_morpho_SOURCES = basic_morpho.cc
 
 TESTS = $(check_PROGRAMS)
