@@ -29,9 +29,10 @@
 # define OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
 
 # include <oln/core/concept/neighborhood.hh>
+# include <oln/core/internal/image_base.hh>
 # include <oln/core/gen/op.hh>
 # include <oln/core/gen/dpoints_piter.hh>
-# include <oln/core/internal/image_base.hh>
+# include <oln/core/gen/niter_has.hh>
 
 
 namespace oln
@@ -62,14 +63,15 @@ namespace oln
   struct vtypes< internal::current >
   {
     typedef op_<I, plus, N> Exact;
-    typedef stc_type(I, point) point__;
 
     typedef I delegatee;
     typedef internal::pair<I,N> data;
 
     typedef N nbh;
-    typedef dpoints_fwd_piter_<point__> fwd_niter;
-    typedef dpoints_bkd_piter_<point__> bkd_niter;
+
+    // FIXME: Wrong!
+    typedef niter_has_< dpoints_fwd_piter_<oln_point(I)>, oln_pset(I) > fwd_niter;
+    typedef niter_has_< dpoints_bkd_piter_<oln_point(I)>, oln_pset(I) > bkd_niter;
 
     typedef op_<oln_plain(I), plus, N> plain;
     typedef op_<pl::rec<I>,   plus, N> skeleton;
@@ -96,7 +98,7 @@ namespace oln
       delegatee& impl_image();
       const delegatee& impl_image() const;
 
-      nbh  impl_nbhood() const;
+      const nbh& impl_nbhood() const;
       nbh& impl_nbhood();
 
     protected:
@@ -160,8 +162,16 @@ namespace oln
     }
 
     template <typename I, typename N>
-    typename current::nbh
+    const typename current::nbh&
     current::impl_nbhood() const
+    {
+      assert(this->has_data());
+      return this->data_->second;
+    }
+
+    template <typename I, typename N>
+    typename current::nbh&
+    current::impl_nbhood()
     {
       assert(this->has_data());
       return this->data_->second;

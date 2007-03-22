@@ -64,7 +64,6 @@ namespace oln
   template <typename S, typename F>
   struct vtypes< internal::current >
   {
-    typedef typename S::point point;
     typedef pset_such_as_fp2b_fwd_piter_<S, F> fwd_piter;
     typedef pset_such_as_fp2b_bkd_piter_<S, F> bkd_piter;
   };

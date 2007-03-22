@@ -64,7 +64,8 @@ namespace oln
     struct set_impl< Image_with_Nbh, behavior::identity, Exact > : public virtual Any<Exact>
     {
       stc_typename(nbh);
-      nbh impl_nbhood() const;
+      const nbh& impl_nbhood() const;
+      nbh& impl_nbhood();
     };
 
 
@@ -211,8 +212,15 @@ namespace oln
     /// Concept-class "Image_with_Nbh".
 
     template <typename Exact>
-    typename set_impl< Image_with_Nbh, behavior::identity, Exact >::nbh
+    const typename set_impl< Image_with_Nbh, behavior::identity, Exact >::nbh&
     set_impl< Image_with_Nbh, behavior::identity, Exact >::impl_nbhood() const
+    {
+      return exact(this)->image().nbhood();
+    }
+
+    template <typename Exact>
+    typename set_impl< Image_with_Nbh, behavior::identity, Exact >::nbh&
+    set_impl< Image_with_Nbh, behavior::identity, Exact >::impl_nbhood()
     {
       return exact(this)->image().nbhood();
     }

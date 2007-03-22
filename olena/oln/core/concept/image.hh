@@ -156,7 +156,8 @@ namespace oln
     stc_typename(bkd_niter);
     typedef fwd_niter niter;
 
-    nbh nbhood() const;
+    const nbh& nbhood() const;
+    nbh& nbhood();
 
   protected:
     Image_with_Nbh();
@@ -458,8 +459,15 @@ namespace oln
   // -----------------------------------   Image_with_Nbh<Exact>
 
   template <typename Exact>
-  typename Image_with_Nbh<Exact>::nbh
+  const typename Image_with_Nbh<Exact>::nbh&
   Image_with_Nbh<Exact>::nbhood() const
+  {
+    return exact(this)->impl_nbhood();
+  }
+
+  template <typename Exact>
+  typename Image_with_Nbh<Exact>::nbh&
+  Image_with_Nbh<Exact>::nbhood()
   {
     return exact(this)->impl_nbhood();
   }

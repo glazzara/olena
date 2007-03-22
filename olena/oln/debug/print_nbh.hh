@@ -45,54 +45,20 @@ namespace oln
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
-    {
+    // Generic version.
 
-      // Image
-
-      template <typename I>
-      void print_nbh(const Image<I>&,
-		     const I& input, std::ostream& ostr)
-      {
-	oln_piter(I) p(input.points());
-	oln_niter(I) n(p, input);
-	for_all(p)
-	  {
-	    ostr << input(p) << ": ";
-	    for_all(n)
-	      if (input.owns_(n))
-		ostr << input(n) << " ";
-	    ostr << std::endl;
-	  }
-      }
-
-
-      // Point_Wise_Accessible_Image
-
-      template <typename I>
-      void print_nbh(const Point_Wise_Accessible_Image<I>&,
-		     const I& input, std::ostream& ostr)
-      {
-	oln_piter(I) p(input.points());
-	oln_niter(I) n(p, input);
-	for_all(p)
-	  {
-	    ostr << input(p) << ": ";
-	    for_all(n)
-	      if (input.has(n))
-		ostr << input(n) << " ";
-	    ostr << std::endl;
-	  }
-      }
-
-    } // end of namespace oln::debug::impl
-
-
-    // facade
     template <typename I>
-    void print_nbh(const Image_with_Nbh<I>& input, std::ostream& ostr)
+    void print_nbh(const Image_with_Nbh<I>& input, std::ostream& ostr = std::cout)
     {
-      impl::print_nbh(exact(input), exact(input), ostr);
+      oln_piter(I) p(input.points());
+      oln_niter(I) n(p, input);
+      for_all(p)
+	{
+	  ostr << input(p) << ": ";
+	  for_all(n)
+	    ostr << input(n) << " ";
+	  ostr << std::endl;
+	}
     }
 
 # endif // ! OLN_INCLUDE_ONLY

@@ -51,8 +51,10 @@ namespace oln
   template <typename Exact>
   struct vtypes< internal::piter_adaptor_<Exact> >
   {
-    typedef stc::abstract point;
     typedef stc::abstract adapted;
+
+    typedef stc_deferred(adapted) adapted__;
+    typedef stc::final< oln_point(adapted__) > point;
   };
 
 

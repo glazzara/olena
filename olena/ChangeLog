@@ -1,3 +1,18 @@
+2007-03-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Provide more suitable niter classes.
+
+	* oln/core/gen/niter_has.hh: New.
+	* oln/debug/print_nbh.hh (impl): Remove; useless.
+	* oln/core/concept/image.hh (Image_with_Nbh): Overload nbhood
+	access.
+	* oln/core/concept/image_identity.hh: Update.
+	* oln/core/equipment.hh (oln_pset): New.
+	* oln/core/internal/piter_adaptor.hh (point): Set final.
+	* oln/core/internal/op_pset_such_as_fp2b.hh (point): Remove.
+	* oln/core/internal/op_image_plus_nbh.hh (include): Update.
+	(fwd_niter, bkd_niter): Update.
+
 2007-03-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix : Opening, Closing, erosion, dilation.
