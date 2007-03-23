@@ -28,8 +28,8 @@
 #ifndef	OLN_MORPHO_OPENING_HH
 # define OLN_MORPHO_OPENING_HH
 
-#include <oln/morpho/elementary_erosion.hh>
-#include <oln/morpho/elementary_dilation.hh>
+#include <oln/morpho/erosion.hh>
+#include <oln/morpho/dilation.hh>
 
 namespace oln
 {
@@ -56,8 +56,8 @@ namespace oln
       opening_(const Image<I>&  input,
 	       const Window<W>& win)
       {
-	oln_plain(I) tmp = morpho::dilation(input, win);
-	return morpho::erosion(tmp, win); // FIXME : inverse(win).
+	oln_plain(I) tmp = morpho::erosion(input, win);
+	return morpho::dilation(tmp, win); // FIXME : inverse(win).
       }
 
       // FIXME: Add a fast version.

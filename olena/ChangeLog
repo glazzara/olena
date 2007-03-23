@@ -1,3 +1,17 @@
+2007-03-23  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Mopho : Top_hat_white, top_hat_black, Fix Opening, Renaming.
+
+	* oln/morpho/inside_gradient.hh: Remove.
+	* oln/morpho/gradient_internal.hh: New.
+	* oln/morpho/top_hat_black.hh: New.
+	* oln/morpho/closing.hh: Fixed.
+	* oln/morpho/top_hat_white.hh: New.
+	* oln/morpho/opening.hh: Fixed.
+	* oln/morpho/external_gradient.hh: Remove.
+	* oln/morpho/gradient_external.hh: New.
+	* oln/morpho/laplace.hh: .
+
 2007-03-23  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add internal::box_ and box2d classes.

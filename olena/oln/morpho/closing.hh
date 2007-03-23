@@ -28,8 +28,8 @@
 #ifndef	OLN_MORPHO_CLOSING_HH
 # define OLN_MORPHO_CLOSING_HH
 
-#include <oln/morpho/elementary_erosion.hh>
-#include <oln/morpho/elementary_dilation.hh>
+#include <oln/morpho/erosion.hh>
+#include <oln/morpho/dilation.hh>
 
 namespace oln
 {

@@ -25,11 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_LAPLACE_HH
-# define OLN_MORPHO_LAPLACE_HH
+#ifndef	OLN_MORPHO_TOP_HAT_WHITE_HH
+# define OLN_MORPHO_TOP_HAT_WHITE_HH
 
-#include <oln/morpho/gradient_external.hh>
-#include <oln/morpho/gradient_internal.hh>
+#include <oln/morpho/opening.hh>
+#include <oln/morpho/closing.hh>
 #include <oln/arith/minus.hh>
 
 namespace oln
@@ -40,10 +40,10 @@ namespace oln
 
     // Fwd decl.
 
-    template <typename I>
+    template <typename I, typename W>
     oln_plain(I)
-    laplace(const Image_with_Nbh<I>& input);
-
+    top_hat_white(const Image<I>&  input,
+		  const Window<W>& win);
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -52,11 +52,12 @@ namespace oln
 
       // Generic version.
 
-      template <typename I>
+      template <typename I, typename W>
       oln_plain(I)
-      laplace_(const Image_with_Nbh<I>& input)
+      top_hat_white_(const Image<I>&  input,
+		     const Window<W>& win)
       {
-	return external_gradient(input) - inside_gradient(input);
+	return input - opening(input, win);
       }
 
 
@@ -67,11 +68,12 @@ namespace oln
 
     // Facade.
 
-    template <typename I>
+    template <typename I, typename W>
     oln_plain(I)
-    laplace(const Image_with_Nbh<I>& input)
+    top_hat_white(const Image<I>&  input,
+		  const Window<W>& win)
     {
-      return impl::laplace_(exact(input));
+      return impl::top_hat_white_(exact(input), win);
     }
 
 # endif // ! OLN_INCLUDE_ONLY
@@ -81,4 +83,5 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_LAPLACE_HH
+#endif // ! OLN_MORPHO_TOP_HAT_WHITE_HH
+
