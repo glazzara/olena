@@ -86,16 +86,8 @@ namespace oln
 
   } // end of namespace oln::internal
 
-} // end of namespace oln
-
-
-# include <oln/core/gen/box.hh>
-
 
 # ifndef OLN_INCLUDE_ONLY
-
-namespace oln
-{
 
   box2d::box2d()
   {
@@ -144,10 +136,10 @@ namespace oln
 
   } // end of namespace oln::internal
 
+# endif // ! OLN_INCLUDE_ONLY
+
+
 } // end of namespace oln
-
-
-# endif // OLN_INCLUDE_ONLY
 
 
 #endif // ! OLN_CORE_2D_BOX2D_HH

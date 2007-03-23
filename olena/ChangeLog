@@ -1,3 +1,14 @@
+2007-03-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add Box and comparison operators between point sets.
+
+	* oln/core/gen/pset_compare.hh: New.
+	* oln/core/concept/point_set.hh (Box): New.
+	* oln/core/2d/box2d.hh (include): Remove gen/box.hh.
+	* oln/core/internal/point_set_base.hh
+	(point_set_selector_): New.
+	* oln/stc/scoop.hxx (super_trait_): Change dummy code.
+
 2007-03-23  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Mopho : Top_hat_white, top_hat_black, Fix Opening, Renaming.

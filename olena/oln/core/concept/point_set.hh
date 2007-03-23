@@ -64,6 +64,24 @@ namespace oln
   }; // end of oln::Point_Set<Exact>
 
 
+  /// Concept-class "Box".
+
+  template <typename Exact>
+  struct Box : public Point_Set<Exact>
+  {
+    stc_using_from(Point_Set, point);
+
+    const point& pmin() const;
+    point& pmin();
+    const point& pmax() const;
+    point& pmax();
+
+  protected:
+    Box();
+
+  }; // end of oln::Box<Exact>
+
+
   template <typename Ps>
   std::ostream& operator<<(std::ostream& ostr, const Point_Set<Ps>& pts);
 
@@ -96,6 +114,38 @@ namespace oln
   {
   }
 
+  template <typename Exact>
+  Box<Exact>::Box()
+  {
+  }
+
+  template <typename Exact>
+  const typename Box<Exact>::point&
+  Box<Exact>::pmin() const
+  {
+    return exact(this)->impl_pmin();
+  }
+
+  template <typename Exact>
+  typename Box<Exact>::point&
+  Box<Exact>::pmin()
+  {
+    return exact(this)->impl_pmin();
+  }
+
+  template <typename Exact>
+  const typename Box<Exact>::point&
+  Box<Exact>::pmax() const
+  {
+    return exact(this)->impl_pmax();
+  }
+
+  template <typename Exact>
+  typename Box<Exact>::point&
+  Box<Exact>::pmax()
+  {
+    return exact(this)->impl_pmax();
+  }
 
   template <typename Ps>
   std::ostream& operator<<(std::ostream& ostr, const Point_Set<Ps>& pts)
@@ -112,6 +162,10 @@ namespace oln
 
 
 } // end of namespace oln
+
+
+// FIXME: Bad?
+# include <oln/core/gen/pset_compare.hh>
 
 
 #endif // ! OLN_CORE_CONCEPT_POINT_SET_HH

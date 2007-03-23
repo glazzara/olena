@@ -88,13 +88,21 @@ struct single_vtype
 /* super_trait_ */
 
 template <typename from_type>
-struct super_trait_;
+struct super_trait_
+{
+  typedef mlc::none ret;
+};
 
 
 template <typename from_type>
 struct super_trait_ <const from_type> : super_trait_<from_type>
 {
 };
+
+
+/*
+
+  FIXME: Inactivate since dummy code (many class are not Abstractions but abstraction<Exact>).
 
 template <template <class> class abstraction, typename Exact>
 struct super_trait_< abstraction<Exact> >
@@ -108,6 +116,8 @@ struct super_trait_ :
 {
   typedef mlc::none ret;
 };
+
+*/
 
 
 

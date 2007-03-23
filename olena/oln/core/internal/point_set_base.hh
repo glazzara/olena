@@ -34,7 +34,27 @@
 namespace oln
 {
 
+
+  namespace internal
+  {
+
+    template <bool Is_box, typename Exact>
+    struct point_set_selector_;
+
+    template <typename Exact>
+    struct point_set_selector_< true, Exact > : public Box<Exact>
+    {};
+
+    template <typename Exact>
+    struct point_set_selector_< false, Exact > : public Point_Set<Exact>
+    {};
+
+  } // end of namespace oln::internal
+
+
+
   // point_set_base_ class
+
 
   /// Fwd decls.
   namespace internal { template <typename Exact> struct point_set_base_; }
@@ -46,6 +66,14 @@ namespace oln
   struct super_trait_< internal::point_set_base_<Exact> >
   {
     typedef Point_Set<Exact> ret;
+
+    /*
+      FIXME: Activate to replace the above code.
+
+    typedef stc_deferred(box) box__;
+    typedef mlc::eq_<box__, Exact> test__;
+    typedef internal::point_set_selector_<mlc_bool(test__), Exact> ret;
+    */
   };
 
 
@@ -74,7 +102,7 @@ namespace oln
     /// Base class for point sets.
 
     template <typename Exact>
-    struct point_set_base_ : public Point_Set<Exact>
+    struct point_set_base_ : public Point_Set<Exact> // FIXME: Change inheritance.
     {
     protected:
       point_set_base_();
