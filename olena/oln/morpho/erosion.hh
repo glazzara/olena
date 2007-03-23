@@ -30,7 +30,7 @@
 
 #include <oln/level/apply_local.hh>
 #include <oln/border/fill.hh>
-#include <oln/accumulator/max.hh>
+#include <oln/accumulator/min.hh>
 
 namespace oln
 {
@@ -42,7 +42,7 @@ namespace oln
 
     template <typename I, typename W>
     oln_plain(I)
-      erosion(const Image<I>& input, const Window<W>& win);
+    erosion(const Image<I>& input, const Window<W>& win);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -56,7 +56,7 @@ namespace oln
       oln_plain(I)
       erosion_(const Image<I>& input, const Window<W>& win)
       {
-	border::fill(input, oln_min(oln_value(I)));
+	border::fill(input, oln_max(oln_value(I)));
 	accumulator::min_<oln_value(I)> min;
 	return level::apply_local(min, input, win);
       }
@@ -66,7 +66,7 @@ namespace oln
       erosion_on_set_(const Image<I>&,
 		      const I& input)
       {
-	border::fill(input, oln_min(oln_value(I)));
+	border::fill(input, true);
 	accumulator::and_<oln_value(I)> accu_and;
 	return level::apply_local(accu_and, input);
       }

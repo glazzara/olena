@@ -28,8 +28,8 @@
 #ifndef	OLN_MORPHO_LAPLACE_HH
 # define OLN_MORPHO_LAPLACE_HH
 
-#include <oln/morpho/gradient_external.hh>
-#include <oln/morpho/gradient_internal.hh>
+#include <oln/morpho/elementary_gradient_external.hh>
+#include <oln/morpho/elementary_gradient_internal.hh>
 #include <oln/arith/minus.hh>
 
 namespace oln
@@ -40,9 +40,10 @@ namespace oln
 
     // Fwd decl.
 
-    template <typename I>
+    template <typename I, typename W>
     oln_plain(I)
-    laplace(const Image_with_Nbh<I>& input);
+    laplace(const Image<I>&  input,
+	    const Window<W>& win);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -52,11 +53,12 @@ namespace oln
 
       // Generic version.
 
-      template <typename I>
+      template <typename I, typename W>
       oln_plain(I)
-      laplace_(const Image_with_Nbh<I>& input)
+      laplace_(const Image<I>&  input,
+	       const Window<W>& win)
       {
-	return external_gradient(input) - inside_gradient(input);
+	return gradient_external(input, win) - gradient_internal(input, win);
       }
 
 
@@ -67,11 +69,12 @@ namespace oln
 
     // Facade.
 
-    template <typename I>
+    template <typename I, typename W>
     oln_plain(I)
-    laplace(const Image_with_Nbh<I>& input)
+    laplace(const Image<I>&  input,
+	    const Window<W>& win)
     {
-      return impl::laplace_(exact(input));
+      return impl::laplace_(exact(input), win);
     }
 
 # endif // ! OLN_INCLUDE_ONLY

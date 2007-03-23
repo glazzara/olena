@@ -28,8 +28,8 @@
 #ifndef	OLN_MORPHO_GRADIENT_HH
 # define OLN_MORPHO_GRADIENT_HH
 
-#include <oln/morpho/elementary_erosion.hh>
-#include <oln/morpho/elementary_dilation.hh>
+#include <oln/morpho/erosion.hh>
+#include <oln/morpho/dilation.hh>
 #include <oln/arith/minus.hh>
 
 namespace oln
@@ -40,9 +40,10 @@ namespace oln
 
     // Fwd decl.
 
-    template <typename I>
+    template <typename I, typename W>
     oln_plain(I)
-    gradient(const Image_with_Nbh<I>& input);
+    gradient(const Image<I>&  input,
+	     const Window<W>& win);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -52,26 +53,26 @@ namespace oln
 
       // Generic version.
 
-      template <typename I>
+      template <typename I, typename W>
       oln_plain(I)
-      gradient_(const Image_with_Nbh<I>& input)
+      gradient_(const Image<I>& input,
+		const Window<W>& win)
       {
-	return elementary_dilation(input) - elementary_erosion(input);
+	return dilation(input, win) - erosion(input, win);
       }
 
-
-      // FIXME: Add a fast version.
 
     } // end of namespace oln::morpho::impl
 
 
     // Facade.
 
-    template <typename I>
+    template <typename I, typename W>
     oln_plain(I)
-    gradient(const Image_with_Nbh<I>& input)
+    gradient(const Image<I>&  input,
+	     const Window<W>& win)
     {
-      return impl::gradient_(exact(input));
+      return impl::gradient_(exact(input), win);
     }
 
 # endif // ! OLN_INCLUDE_ONLY

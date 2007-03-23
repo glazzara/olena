@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_GRADIENT_EXTERNAL_HH
-# define OLN_MORPHO_GRADIENT_EXTERNAL_HH
+#ifndef	OLN_MORPHO_ELEMENTARY_GRADIENT_HH
+# define OLN_MORPHO_ELEMENTARY_GRADIENT_HH
 
-#include <oln/morpho/dilation.hh>
+#include <oln/morpho/elementary_erosion.hh>
+#include <oln/morpho/elementary_dilation.hh>
 #include <oln/arith/minus.hh>
 
 namespace oln
@@ -39,10 +40,9 @@ namespace oln
 
     // Fwd decl.
 
-    template <typename I, typename W>
+    template <typename I>
     oln_plain(I)
-    gradient_external(const Image<I>&  input,
-		      const Window<W>& win);
+    elementary_gradient(const Image_with_Nbh<I>& input);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -52,26 +52,26 @@ namespace oln
 
       // Generic version.
 
-      template <typename I, typename W>
+      template <typename I>
       oln_plain(I)
-      gradient_external_(const Image<I>&  input,
-			 const Window<W>& win)
+      elementary_gradient_(const Image_with_Nbh<I>& input)
       {
-	return dilation(input, win) - input;
+	return elementary_dilation(input) - elementary_erosion(input);
       }
 
+
+      // FIXME: Add a fast version.
 
     } // end of namespace oln::morpho::impl
 
 
     // Facade.
 
-    template <typename I, typename W>
+    template <typename I>
     oln_plain(I)
-    gradient_external(const Image<I>& input,
-		      const Window<W>& win)
+    elementary_gradient(const Image_with_Nbh<I>& input)
     {
-      return impl::gradient_external_(exact(input), win);
+      return impl::elementary_gradient_(exact(input));
     }
 
 # endif // ! OLN_INCLUDE_ONLY
@@ -81,4 +81,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_GRADIENT_EXTERNAL_HH
+#endif // ! OLN_MORPHO_ELEMENTARY_GRADIENT_HH

@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_INSIDE_GRADIENT_HH
-# define OLN_MORPHO_INSIDE_GRADIENT_HH
+#ifndef	OLN_MORPHO_GRADIENT_INTERNAL_HH
+# define OLN_MORPHO_GRADIENT_INTERNAL_HH
 
-#include <oln/morpho/elementary_erosion.hh>
+#include <oln/morpho/erosion.hh>
 #include <oln/arith/minus.hh>
 
 namespace oln
@@ -39,9 +39,10 @@ namespace oln
 
     // Fwd decl.
 
-    template <typename I>
+    template <typename I, typename W>
     oln_plain(I)
-    inside_gradient(const Image_with_Nbh<I>& input);
+    gradient_internal(const Image<I>&  input,
+		      const Window<W>& win);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -51,26 +52,27 @@ namespace oln
 
       // Generic version.
 
-      template <typename I>
+      template <typename I, typename W>
       oln_plain(I)
-      inside_gradient_(const Image_with_Nbh<I>& input)
+      gradient_internal_(const Image<I>&  input,
+			 const Window<W>& win)
       {
-	return input - elementary_erosion(input);
+	return input - erosion(input, win);
       }
 
 
-      // FIXME: Add a fast version.
 
     } // end of namespace oln::morpho::impl
 
 
     // Facade.
 
-    template <typename I>
+    template <typename I, typename W>
     oln_plain(I)
-    inside_gradient(const Image_with_Nbh<I>& input)
+    gradient_internal(const Image<I>&  input,
+		      const Window<W>& win)
     {
-      return impl::inside_gradient_(exact(input));
+      return impl::gradient_internal_(exact(input), win);
     }
 
 # endif // ! OLN_INCLUDE_ONLY
@@ -80,4 +82,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_INSIDE_GRADIENT_HH
+#endif // ! OLN_MORPHO_GRADIENT_INTERNAL_HH
