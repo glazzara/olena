@@ -36,7 +36,7 @@ namespace oln
 {
 
   // FIXME: box1d should be an actual type, not an alias...
-  typedef box_<point1d> box1d;
+  typedef gen_box<point1d> box1d;
 
 } // end of namespace oln
 

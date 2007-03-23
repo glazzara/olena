@@ -225,7 +225,7 @@ namespace oln
 
     const C& con_;
     typename C::const_iterator it_;
-    
+
   }; // end of class pset_std_based_fwd_piter_<C>
 
 
@@ -254,7 +254,7 @@ namespace oln
 
     const C& con_;
     typename C::const_reverse_iterator it_;
-    
+
   }; // end of class pset_std_based_bkd_piter_<C>
 
 

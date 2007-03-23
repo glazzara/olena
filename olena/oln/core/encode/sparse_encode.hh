@@ -52,9 +52,12 @@ namespace oln
     sparse_image<typename I::point, typename I::value> output;
     typename I::piter p(input.points());
     unsigned len = 1;
-    typename I::coord old = 1;			/*!< old point first dim coordinate */
-    typename I::point rstart;			/*!< range pointstart */
-    std::vector<typename I::value> values;	/*!< range value */
+    /// old point first dim coordinate
+    typename I::coord old = 1;
+    /// range pointstart
+    typename I::point rstart;
+    /// range value
+    std::vector<typename I::value> values;
 
     p.start();
     if (!p.is_valid())

@@ -48,7 +48,7 @@ namespace oln
     struct value;
     template <typename t> struct rec;
    }
- 
+
   // End of experimental code.
 
 
@@ -148,7 +148,9 @@ namespace oln
     // Final.
 
     typedef stc::final< stc::is<Image> >         category;
-    typedef stc::final< box_<point__> >          box;
+    // FIXME:
+    //typedef stc::final< box_<point__> >          box;
+    typedef stc::final <typename pset__::box>	 box;
     typedef stc::final< oln_grid(point__) >      grid;
     typedef stc::final< oln_dpoint(point__) >    dpoint;
     typedef stc::final< oln_fwd_piter(pset__) >  fwd_piter;
@@ -175,7 +177,7 @@ namespace oln
   {
     typedef stc::abstract      delegatee;
     typedef stc::abstract      behavior;
-    
+
     // not delegated:
     typedef stc::not_delegated data;
     typedef stc::not_delegated plain;
@@ -219,10 +221,10 @@ namespace oln
       stc_typename(data);
 
       bool has_data() const;
-      
+
       // pseudo-private:
       tracked_ptr<data>& data__();
-     
+
     protected:
       image_base_();
 
@@ -433,19 +435,20 @@ namespace oln
   // init
 
   template <typename P, typename I>
-  bool init_(box_<P>* this_, const internal::image_base_<I>& data);
+  bool init_(typename internal::image_base_<I>::box* this_, const internal::image_base_<I>& data);
 
   template <typename Target, typename I>
   bool init_(Any<Target>* this_, const internal::single_image_morpher_<I>& data);
 
   template <typename P, typename I> // for disambiguation purpose
-  bool init_(box_<P>* this_, const internal::single_image_morpher_<I>& data);
+  bool
+  init_(typename internal::image_base_<I>::box** this_, const internal::single_image_morpher_<I>& data);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename P, typename I>
-  bool init_(box_<P>* this_, const internal::image_base_<I>& data)
+  bool init_(typename internal::image_base_<I>::box** this_, const internal::image_base_<I>& data)
   {
     *this_ = data.bbox();
     return true;
@@ -458,7 +461,8 @@ namespace oln
   }
 
   template <typename P, typename I>
-  bool init_(box_<P>* this_, const internal::single_image_morpher_<I>& data)
+  bool
+  init_(typename internal::image_base_<I>::box** this_, const internal::single_image_morpher_<I>& data)
   {
     *this_ = data.bbox();
     return true;

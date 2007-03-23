@@ -34,9 +34,11 @@
 namespace oln
 {
 
+  // point_set_base_ class
+
   /// Fwd decls.
   namespace internal { template <typename Exact> struct point_set_base_; }
-  template <typename P> class box_;
+  template <typename P> class gen_box;
 
 
   /// Super type.
@@ -59,7 +61,8 @@ namespace oln
     typedef stc_deferred(fwd_piter) fwd_piter__;
 
     typedef stc::final< stc::is<Point_Set> > category;
-    typedef stc::final< box_<point__> >      box;
+    //FIXME:
+    typedef gen_box<point__>                 box;
     typedef stc::final< oln_grid(point__) >  grid;
     typedef stc::final< fwd_piter__ >        piter;
   };

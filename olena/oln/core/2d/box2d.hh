@@ -30,6 +30,7 @@
 
 # include <oln/core/concept/point_set.hh> // for internal::tag::box_t
 # include <oln/core/2d/point2d.hh>
+# include <oln/core/internal/box.hh>
 
 
 namespace oln
@@ -39,11 +40,39 @@ namespace oln
   template <typename P> class box_;
 
 
-  // FIXME: box2d should be an actual type, not an alias...
-  typedef box_<point2d> box2d;
+  // Forward declarations
+  struct box2d;
 
+  // Super type
+  template <>
+  struct super_trait_< box2d >
+  {
+    typedef box2d current;
+    typedef internal::box_<box2d> ret;
+  };
 
-  /// init__
+  // Virtual types
+  template <>
+  struct vtypes<box2d>
+  {
+    typedef point2d point;
+    typedef box2d box;
+  };
+
+  // Class box2d
+  class box2d : public internal::box_< box2d >
+  {
+    typedef box2d current;
+    typedef internal::box_< box2d > super;
+  public:
+    // Note: we can't use stc_using because box2d isn't a templated class
+    typedef super::point point;
+
+    box2d();
+    box2d(const box2d::from_to_t& dat);
+    box2d(const point2d& pmin, const point2d& pmax);
+  };
+
   namespace internal
   {
 
@@ -67,6 +96,21 @@ namespace oln
 
 namespace oln
 {
+
+  box2d::box2d()
+  {
+  }
+
+  box2d::box2d(const box2d::from_to_t& dat) :
+    super(dat)
+  {
+  }
+
+  box2d::box2d(const point2d& pmin, const point2d& pmax) :
+    super(pmin, pmax)
+  {
+  }
+
 
   namespace internal
   {

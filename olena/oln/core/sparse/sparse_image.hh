@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+
 #ifndef OLN_CORE_GEN_SPARSE_IMAGE_HH
 # define OLN_CORE_GEN_SPARSE_IMAGE_HH
+
 
 # include <vector>
 # include <map>
@@ -64,12 +66,17 @@ namespace oln
 
     typedef rle_pset<point> pset;
 
-    //FIXME:
+    //FIXME: set correct trait
     typedef mlc::none plain;
 
     typedef std::pair< pset, std::map<point, std::vector<value> > > data;
   };
 
+  /*!
+  ** \class sparse_image
+  ** \brief represent an image not plain
+  **
+  */
   template < typename P, typename T>
   class sparse_image : public internal::primitive_image_< sparse_image<P, T> >
   {
@@ -159,3 +166,4 @@ namespace oln
 } // end of namespace oln
 
 #endif // ! OLN_CORE_GEN_SPARSE_IMAGE_HH
+

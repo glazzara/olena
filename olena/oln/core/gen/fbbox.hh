@@ -47,18 +47,18 @@ namespace oln
     enum { n = mlc_value(dim__) };
 
   public:
-      
+
     fbbox_();
-    operator box_<P>() const;
+    operator gen_box<P>() const;
 
     bool           is_valid() const;
     void           flush();
     fbbox_<P>&     take(const P& p);
-    const box_<P>& box() const;
+    const gen_box<P>& box() const;
 
   private:
     bool    is_valid_;
-    box_<P> b_;
+    gen_box<P> b_;
 
   }; // end of class oln::fbbox_<P>
 
@@ -73,7 +73,7 @@ namespace oln
   }
 
   template <typename P>
-  fbbox_<P>::operator box_<P>() const
+  fbbox_<P>::operator gen_box<P>() const
   {
     precondition(this->is_valid_);
     return this->b_;
@@ -112,7 +112,7 @@ namespace oln
   }
 
   template <typename P>
-  const box_<P>& fbbox_<P>::box() const
+  const gen_box<P>& fbbox_<P>::box() const
   {
     precondition(this->is_valid_);
     return this->b_;

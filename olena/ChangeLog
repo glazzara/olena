@@ -1,3 +1,17 @@
+2007-03-23  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add internal::box_ and box2d classes.
+
+	* oln/core/rle/rle_image.hh, oln/core/sparse/sparse_image.hh
+	* oln/core/encode/sparse_encode.hh, oln/core/encode/rle_encode.hh: change licence and header name
+	* oln/core/1d/box1d.hh: move box_ to gen_box
+	* oln/core/2d/box2d.hh: box2d is know a real class
+	* oln/core/gen/box.hh: rename box_ class as gen_box
+	* oln/core/gen/fbbox.hh: move box_ to gen_box
+	* oln/core/internal/box.hh: New class internal::box_
+	* oln/core/internal/point_set_base.hh, oln/core/internal/image_base.hh: .
+	* oln/core/internal/point_set_std_based.hh: Change vtypes
+
 2007-03-23  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Morpho : Gradient, gradient+ gradient-, Laplace. Arith : +, -.

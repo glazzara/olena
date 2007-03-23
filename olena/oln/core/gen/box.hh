@@ -39,37 +39,37 @@ namespace oln
 
 
   // Forward declarations.
-  template <typename P> class box_;
-  template <typename P> class box_fwd_piter_;
-  template <typename P> class box_bkd_piter_;
+  template <typename P> class gen_box;
+  template <typename P> class gen_box_fwd_piter_;
+  template <typename P> class gen_box_bkd_piter_;
 
 
   // Super type declaration.
   template <typename P>
-  struct super_trait_< box_<P> >
+  struct super_trait_< gen_box<P> >
   {
-    typedef box_<P> current__;
+    typedef gen_box<P> current__;
     typedef internal::point_set_base_<current__> ret;
   };
 
 
-  /// Virtual types associated to oln::box_<P>.
+  /// Virtual types associated to oln::gen_box<P>.
   template <typename P>
-  struct vtypes< box_<P> >
+  struct vtypes< gen_box<P> >
   {
-    typedef P                 point;
-    typedef box_fwd_piter_<P> fwd_piter;
-    typedef box_bkd_piter_<P> bkd_piter;
+    typedef P point;
+    typedef gen_box_fwd_piter_<P> fwd_piter;
+    typedef gen_box_bkd_piter_<P> bkd_piter;
   };
 
 
   /// Generic box class based on a point class.
 
   template <typename P>
-  class box_ : public internal::point_set_base_< box_<P> >,
+  class gen_box : public internal::point_set_base_< gen_box<P> >,
 	       private mlc::assert_< mlc_is_a(P, Point) >
   {
-    typedef box_<P> current;
+    typedef gen_box<P> current;
     typedef internal::point_set_base_<current> super;
 
     typedef internal::initializer_<
@@ -87,16 +87,16 @@ namespace oln
 
   public:
 
-    box_();
-    box_(const P& pmin, const P& pmax);
-    box_(const from_to_t& data);
+    gen_box();
+    gen_box(const P& pmin, const P& pmax);
+    gen_box(const from_to_t& data);
 
     template <typename D>
-    box_(const internal::initializer_<D>& data);
+    gen_box(const internal::initializer_<D>& data);
 
     unsigned       impl_npoints() const;
     bool           impl_has(const P& p) const;
-    const box_<P>& impl_bbox() const;
+    const gen_box<P>& impl_bbox() const;
 
     const P& pmin() const;
           P& pmin();
@@ -106,17 +106,17 @@ namespace oln
   protected:
     point pmin_, pmax_;
 
-  }; // end of class oln::box_<P>
+  }; // end of class oln::gen_box<P>
 
 
   template <typename P>
-  std::ostream& operator<<(std::ostream& ostr, const box_<P>& b)
+  std::ostream& operator<<(std::ostream& ostr, const gen_box<P>& b)
   {
     return ostr << "{ " << b.pmin() << " .. " << b.pmax() << " }";
   }
 
 
-  // --------------------   iterators  on  box_<P>
+  // --------------------   iterators  on  gen_box<P>
 
 
 
@@ -124,16 +124,16 @@ namespace oln
   /// Super types.
 
   template <typename P>
-  struct super_trait_< box_fwd_piter_<P> >
+  struct super_trait_< gen_box_fwd_piter_<P> >
   {
-    typedef box_fwd_piter_<P> current__;
+    typedef gen_box_fwd_piter_<P> current__;
     typedef Iterator_on_Points<current__> ret;
   };
 
   template <typename P>
-  struct super_trait_< box_bkd_piter_<P> >
+  struct super_trait_< gen_box_bkd_piter_<P> >
   {
-    typedef box_bkd_piter_<P> current__;
+    typedef gen_box_bkd_piter_<P> current__;
     typedef Iterator_on_Points<current__> ret;
   };
 
@@ -141,28 +141,28 @@ namespace oln
   /// Virtual types.
 
   template <typename P>
-  struct vtypes< box_fwd_piter_<P> >
+  struct vtypes< gen_box_fwd_piter_<P> >
   {
     typedef P point;
   };
 
   template <typename P>
-  struct vtypes< box_bkd_piter_<P> >
+  struct vtypes< gen_box_bkd_piter_<P> >
   {
     typedef P point;
   };
 
 
-  /// Class box_fwd_piter_<P>.
+  /// Class gen_box_fwd_piter_<P>.
 
   template <typename P>
-  class box_fwd_piter_ : public Iterator_on_Points< box_fwd_piter_<P> >,
+  class gen_box_fwd_piter_ : public Iterator_on_Points< gen_box_fwd_piter_<P> >,
 			 private mlc::assert_< mlc_is_a(P, Point) >
   {
   public:
-    box_fwd_piter_();
-    box_fwd_piter_(const Point_Set< box_<P> >& b);
-    void set_box(const box_<P>& b);
+    gen_box_fwd_piter_();
+    gen_box_fwd_piter_(const Point_Set< gen_box<P> >& b);
+    void set_box(const gen_box<P>& b);
 
     void impl_start();
     void impl_next();
@@ -172,21 +172,21 @@ namespace oln
     const P* impl_point_adr() const;
 
   private:
-    box_<P> b_;
+    gen_box<P> b_;
     P p_, nop_;
   };
 
 
-  /// Class box_bkd_piter_<P>.
+  /// Class gen_box_bkd_piter_<P>.
 
   template <typename P>
-  class box_bkd_piter_ : public Iterator_on_Points< box_bkd_piter_<P> >,
+  class gen_box_bkd_piter_ : public Iterator_on_Points< gen_box_bkd_piter_<P> >,
 			 private mlc::assert_< mlc_is_a(P, Point) >
   {
   public:
-    box_bkd_piter_();
-    box_bkd_piter_(const Point_Set< box_<P> >& b);
-    void set_box(const box_<P>& b);
+    gen_box_bkd_piter_();
+    gen_box_bkd_piter_(const Point_Set< gen_box<P> >& b);
+    void set_box(const gen_box<P>& b);
 
     void impl_start();
     void impl_next();
@@ -196,7 +196,7 @@ namespace oln
     const P* impl_point_adr() const;
 
   private:
-    box_<P> b_;
+    gen_box<P> b_;
     P p_, nop_;
   };
 
@@ -206,16 +206,16 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
 
-  // --------------------   box_<P>
+  // --------------------   gen_box<P>
 
 
   template <typename P>
-  box_<P>::box_()
+  gen_box<P>::gen_box()
   {
   }
 
   template <typename P>
-  box_<P>::box_(const P& pmin, const P& pmax)
+  gen_box<P>::gen_box(const P& pmin, const P& pmax)
   {
     for (unsigned i = 0; i < n; ++i)
       precondition(pmax[i] >= pmin[i]);
@@ -224,7 +224,7 @@ namespace oln
   }
 
   template <typename P>
-  box_<P>::box_(const typename box_<P>::from_to_t& dat)
+  gen_box<P>::gen_box(const typename gen_box<P>::from_to_t& dat)
   {
     this->pmin_ = dat->first.value;
     this->pmax_ = dat->second.value;
@@ -232,7 +232,7 @@ namespace oln
 
   template <typename P>
   template <typename D>
-  box_<P>::box_(const internal::initializer_<D>& data)
+  gen_box<P>::gen_box(const internal::initializer_<D>& data)
   {
     bool box_ok = internal::init__(internal::tag::box_t(), *this, data.value());
     postcondition(box_ok);
@@ -240,7 +240,7 @@ namespace oln
 
   template <typename P>
   unsigned
-  box_<P>::impl_npoints() const
+  gen_box<P>::impl_npoints() const
   {
     unsigned count = 1;
     for (unsigned i = 0; i < n; ++i)
@@ -250,7 +250,7 @@ namespace oln
 
   template <typename P>
   bool
-  box_<P>::impl_has(const P& p) const
+  gen_box<P>::impl_has(const P& p) const
   {
     for (unsigned i = 0; i < n; ++i)
       if (p[i] < this->pmin_[i] or p[i] > this->pmax_[i])
@@ -259,15 +259,15 @@ namespace oln
   }
 
   template <typename P>
-  const box_<P>&
-  box_<P>::impl_bbox() const
+  const gen_box<P>&
+  gen_box<P>::impl_bbox() const
   {
     return *this;
   }
 
   template <typename P>
   const P&
-  box_<P>::pmin() const
+  gen_box<P>::pmin() const
   {
     for (unsigned i = 0; i < n; ++i)
       invariant(this->pmin_[i] <= this->pmax_[i]);
@@ -276,7 +276,7 @@ namespace oln
 
   template <typename P>
   const P&
-  box_<P>::pmax() const
+  gen_box<P>::pmax() const
   {
     for (unsigned i = 0; i < n; ++i)
       invariant(this->pmax_[i] >= this->pmin_[i]);
@@ -285,35 +285,35 @@ namespace oln
 
   template <typename P>
   P&
-  box_<P>::pmin()
+  gen_box<P>::pmin()
   {
     return this->pmin_;
   }
 
   template <typename P>
   P&
-  box_<P>::pmax()
+  gen_box<P>::pmax()
   {
     return this->pmax_;
   }
 
 
-  // --------------------   box_fwd_piter_<P>
+  // --------------------   gen_box_fwd_piter_<P>
 
 
   template <typename P>
-  box_fwd_piter_<P>::box_fwd_piter_()
+  gen_box_fwd_piter_<P>::gen_box_fwd_piter_()
   {
   }
 
   template <typename P>
-  box_fwd_piter_<P>::box_fwd_piter_(const Point_Set< box_<P> >& b)
+  gen_box_fwd_piter_<P>::gen_box_fwd_piter_(const Point_Set< gen_box<P> >& b)
   {
     this->set_box(exact(b));
   }
 
   template <typename P>
-  void box_fwd_piter_<P>::set_box(const box_<P>& b)
+  void gen_box_fwd_piter_<P>::set_box(const gen_box<P>& b)
   {
     b_ = b;
     nop_ = b_.pmax();
@@ -322,13 +322,13 @@ namespace oln
   }
 
   template <typename P>
-  void box_fwd_piter_<P>::impl_start()
+  void gen_box_fwd_piter_<P>::impl_start()
   {
     p_ = b_.pmin();
   }
 
   template <typename P>
-  void box_fwd_piter_<P>::impl_next()
+  void gen_box_fwd_piter_<P>::impl_next()
   {
     for (int i = P::n - 1; i >= 0; --i)
       if (p_[i] == b_.pmax()[i])
@@ -343,47 +343,47 @@ namespace oln
   }
 
   template <typename P>
-  void box_fwd_piter_<P>::impl_invalidate()
+  void gen_box_fwd_piter_<P>::impl_invalidate()
   {
     p_ = nop_;
   }
 
   template <typename P>
-  bool box_fwd_piter_<P>::impl_is_valid() const
+  bool gen_box_fwd_piter_<P>::impl_is_valid() const
   {
     return p_ != nop_;
   }
 
   template <typename P>
-  P box_fwd_piter_<P>::impl_to_point() const
+  P gen_box_fwd_piter_<P>::impl_to_point() const
   {
     return p_;
   }
 
   template <typename P>
-  const P* box_fwd_piter_<P>::impl_point_adr() const
+  const P* gen_box_fwd_piter_<P>::impl_point_adr() const
   {
     return &p_;
   }
 
 
 
-  // --------------------   box_bkd_piter_<P>
+  // --------------------   gen_box_bkd_piter_<P>
 
 
   template <typename P>
-  box_bkd_piter_<P>::box_bkd_piter_()
+  gen_box_bkd_piter_<P>::gen_box_bkd_piter_()
   {
   }
 
   template <typename P>
-  box_bkd_piter_<P>::box_bkd_piter_(const Point_Set< box_<P> >& b)
+  gen_box_bkd_piter_<P>::gen_box_bkd_piter_(const Point_Set< gen_box<P> >& b)
   {
     this->set_box(exact(b));
   }
 
   template <typename P>
-  void box_bkd_piter_<P>::set_box(const box_<P>& b)
+  void gen_box_bkd_piter_<P>::set_box(const gen_box<P>& b)
   {
     b_ = b;
     nop_ = b_.pmin();
@@ -392,13 +392,13 @@ namespace oln
   }
 
   template <typename P>
-  void box_bkd_piter_<P>::impl_start()
+  void gen_box_bkd_piter_<P>::impl_start()
   {
     p_ = b_.pmax();
   }
 
   template <typename P>
-  void box_bkd_piter_<P>::impl_next()
+  void gen_box_bkd_piter_<P>::impl_next()
   {
     for (int i = P::n - 1; i >= 0; --i)
       if (p_[i] == b_.pmin()[i])
@@ -413,33 +413,33 @@ namespace oln
   }
 
   template <typename P>
-  void box_bkd_piter_<P>::impl_invalidate()
+  void gen_box_bkd_piter_<P>::impl_invalidate()
   {
     p_ = nop_;
   }
 
   template <typename P>
-  bool box_bkd_piter_<P>::impl_is_valid() const
+  bool gen_box_bkd_piter_<P>::impl_is_valid() const
   {
     return p_ != nop_;
   }
 
   template <typename P>
-  P box_bkd_piter_<P>::impl_to_point() const
+  P gen_box_bkd_piter_<P>::impl_to_point() const
   {
     return p_;
   }
 
   template <typename P>
-  const P* box_bkd_piter_<P>::impl_point_adr() const
+  const P* gen_box_bkd_piter_<P>::impl_point_adr() const
   {
     return &p_;
   }
 
-# endif // OLN_INCLUDE_ONLY
+# endif // !OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_GEN_BOX_HH
+#endif // !OLN_CORE_GEN_BOX_HH
