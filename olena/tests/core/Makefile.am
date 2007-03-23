@@ -19,31 +19,35 @@ AM_CXXFLAGS = $(TESTS_CXXFLAGS)
 
 
 check_PROGRAMS =				\
-  rle_image					\
-  sparse_image					\
   apply						\
+  at						\
   dpoint2d					\
-  point2d					\
   grid						\
+  image1d					\
   image2d					\
   neighb2d					\
   npoints					\
+  point2d					\
+  pw_value					\
+  rle_image					\
+  sparse_image					\
   subset					\
-  window2d					\
-  at
+  window2d
 
 
 # Images and auxiliary structures.
 dpoint2d_SOURCES = dpoint2d.cc
-point2d_SOURCES = point2d.cc
 grid_SOURCES = grid.cc
+image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
 neighb2d_SOURCES = neighb2d.cc
 npoints_SOURCES = npoints.cc
-subset_SOURCES = subset.cc
-window2d_SOURCES = window2d.cc
+point2d_SOURCES = point2d.cc
+pw_value_SOURCES = pw_value.cc
 rle_image_SOURCES = rle_image.cc
 sparse_image_SOURCES = sparse_image.cc
+subset_SOURCES = subset.cc
+window2d_SOURCES = window2d.cc
 
 # Methods.
 at_SOURCES = at.cc

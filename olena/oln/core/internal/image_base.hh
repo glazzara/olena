@@ -504,6 +504,23 @@ namespace oln
     return tmp;
   }
 
+
+  // Specialization.
+
+  template <typename I, typename J>
+  op_<const I, such_as, const fun_p2b_< Binary_Image<J> > >
+  operator | (const Image<I>& ima, const Binary_Image<J>& f_ima_b)
+  {
+    // FIXME: Activate precondition(f_ima_b.points() >= ima.points());
+    mlc::assert_equal_< oln_point(I), oln_point(J) >::check();
+    op_<const I, such_as, const fun_p2b_< Binary_Image<J> > > tmp(exact(ima), f_ima_b);
+    return tmp;
+  }
+
+
+  // FIXME: What about Mutable_Image so that "ima | something" can be left-value?
+
+
 } // end of namespace oln
 
 /// \}

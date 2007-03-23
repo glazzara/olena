@@ -1,5 +1,24 @@
 2007-03-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add pw_value and operators on functions.
+
+	* oln/core/concept/generator.hh,
+	* oln/core/gen/literal.hh,
+	* oln/core/gen/fun_ops.hh: New.
+	* tests/core/image1d.cc,
+	* tests/core/pw_value.cc: Update.
+	* tests/core/Makefile.am (check_PROGRAMS): Clean.
+	Add image1d and pw_value.
+	* oln/level/fill.hh: Remove too restrictive const&.
+	* oln/core/equipment.hh (result, oln_result, oln_rvalue): New.
+	* oln/core/gen/pw_value.hh: Update.
+	* oln/core/gen/fun.hh (fun_p2b_): New specialization for binary
+	images.
+	* oln/core/internal/image_base.hh (operator|): Likewise.
+	Add a FIXME as a reminder.
+
+2007-03-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Optimize the return of Image::points().
 
 	* oln/debug/iota.hh: Update.

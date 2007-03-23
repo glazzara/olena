@@ -54,7 +54,7 @@ namespace oln
     void fill(Mutable_Image<I>& input, const V values[]);
 
     template <typename I, typename V, typename P>
-    void fill(Mutable_Image<I>& input, V (*fun)(const P&));
+    void fill(Mutable_Image<I>& input, V (*fun)(P));
 
 
 
@@ -100,7 +100,7 @@ namespace oln
       }
 
       template <typename I, typename V, typename P>
-      void fill(Mutable_Image<I>& input, V (*fun)(const P&))
+      void fill(Mutable_Image<I>& input, V (*fun)(P))
       {
 	oln_piter(I) p(input.points());
 	for_all(p)
@@ -134,7 +134,7 @@ namespace oln
     }
 
     template <typename I, typename V, typename P>
-    void fill(Mutable_Image<I>& input, V (*fun)(const P&))
+    void fill(Mutable_Image<I>& input, V (*fun)(P))
     {
       impl::fill(exact(input), fun);
     }

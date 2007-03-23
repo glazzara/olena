@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,9 +29,9 @@
 
 #include <cassert>
 
-#include <oln/basics2d.hh>
+#include <oln/core/2d/image2d.hh>
 #include <oln/core/gen/pw_value.hh>
-
+#include <oln/debug/iota.hh>
 
 
 int main()
@@ -39,12 +39,12 @@ int main()
   using namespace oln;
 
   point2d p(0,0);
-  image2d<int> ima1(3,3);
-  ima1(p) = 1;
+  image2d<double> ima1(3,3);
+  ima1(p) = 1.;
 
-  image2d<float> ima2(3,3);
+  image2d<double> ima2(3,3);
   ima2(p) = 2.3;
 
-  double d = ((pw_value(ima1) + 4 * pw_value(ima2)) / .2)(p);
+  double d = ((pw_value(ima1) + pw_value(ima2) * literal(4.)) / literal(.2))(p);
   assert(d > 50.9999 and d < 51.0001);
 }

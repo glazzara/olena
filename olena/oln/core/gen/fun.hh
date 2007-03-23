@@ -30,7 +30,7 @@
 
 # include <oln/core/internal/category_of.hh>
 # include <oln/core/concept/function.hh>
-# include <oln/core/concept/point.hh>
+# include <oln/core/concept/image.hh>
 # include <oln/core/concept/value.hh>
 
 
@@ -116,6 +116,25 @@ namespace oln
     F f_;
   };
 
+  // Specialization.
+  template <typename I>
+  struct fun_p2b_< Binary_Image<I> > : public Function_p2b< fun_p2b_< Binary_Image<I> > >
+  {
+    typedef const oln_point(I)& argument;
+    typedef       oln_rvalue(I) result;
+
+    fun_p2b_(const Binary_Image<I>& ima)
+      : ima_(exact(ima))
+    {}
+
+    result operator()(argument arg) const
+    {
+      return this->ima_(arg);
+    }
+
+  private:
+    I ima_;
+  };
 
 
 
@@ -162,7 +181,6 @@ namespace oln
     fun_v2v_<R (*)(A)> tmp(f);
     return tmp;
   }
-
 
 
 } // end of namespace oln

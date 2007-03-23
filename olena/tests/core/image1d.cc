@@ -28,33 +28,33 @@
 /// Test oln::image1d.
 
 #include <cassert>
-// FIXME: We should not include oln/basics1d.hh, but
-// oln/core/1d/image1d.hh (and oln/core/1d/neigh1d.hh ?).
-#include <oln/basics1d.hh>
+#include <oln/core/1d/image1d.hh>
 #include <oln/level/fill.hh>
 
 int
 main()
 {
+  using namespace oln;
+
   // Fill a 1D image using its iterator.
-  oln::image1d<char> ima1(3);
-  oln_vtype_(oln::image1d<char>, piter) p1(ima1.topo());
+  image1d<char> ima1(3);
+  image1d<char>::piter p1(ima1.points());
   for_all(p1)
     ima1(p1) = 1;
 
   // Fill a 1D image using a classic loop.
-  oln::image1d<int> ima2(ima1.topo());
+  image1d<int> ima2(ima1.points());
   for (unsigned i = 0; i < 3; ++i)
-    ima2(oln::point1d(i)) = 2;
+    ima2(i) = 2;
 
-  // Fill a 1D image using the routine oln::level::fill.
-  oln::image1d<long> ima3(ima1.topo());
-  oln::level::fill(ima3, 3);
+  // Fill a 1D image using the routine level::fill.
+  image1d<long> ima3(ima1.points());
+  level::fill(ima3, 3);
 
 
   // Add the three images.
-  oln::image1d<long> sum(ima1.topo());
-  oln_vtype_(oln::image1d<long>, piter) p(sum.topo());
+  image1d<long> sum(ima1.points());
+  image1d<long>::piter p(sum.points());
   for_all(p)
     sum(p) = ima1(p) + ima2(p) + ima3(p);
   // And check the sum.

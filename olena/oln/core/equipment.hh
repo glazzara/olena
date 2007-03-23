@@ -131,9 +131,13 @@ namespace oln
 # define oln_qiter(T) oln_typename_shortcut__(T, qiter)
 
   // r
+  stc_decl_associated_type( result );
   stc_decl_associated_type( right );
   stc_decl_associated_type( rvalue );
   stc_decl_associated_type( rvaluep );
+
+# define oln_result(T) oln_typename_shortcut__(T, result)
+# define oln_rvalue(T) oln_typename_shortcut__(T, rvalue)
 
   // s
   stc_decl_associated_type( std_container );
