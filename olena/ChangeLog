@@ -1,3 +1,17 @@
+2007-03-23  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Morpho : Gradient, gradient+ gradient-, Laplace. Arith : +, -.
+
+	* oln/morpho/laplace.hh: New.
+	* oln/morpho/inside_gradient.hh: New.
+	* oln/morpho/gradient.hh: New.
+	* oln/morpho/external_gradient.hh: New.
+	* oln/arith: New.
+	* oln/arith/plus.hh: New.
+	* oln/arith/minus.hh: New.
+	* oln/core/concept/operators.hh: .
+	* oln/core/2d/image2d.hh: .
+
 2007-03-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add pw_value and operators on functions.

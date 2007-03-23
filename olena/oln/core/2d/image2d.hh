@@ -213,7 +213,7 @@ namespace oln
     box2d b;
     bool box_ok = init(b, with, dat);
     postcondition(box_ok);
-    array2d_<T,int> ptr = new array2d_<T,int>(b.pmin().row(),
+    array2d_<T,int>* ptr = new array2d_<T,int>(b.pmin().row(),
 					      b.pmin().col(),
 					      b.pmax().row(),
 					      b.pmax().col());

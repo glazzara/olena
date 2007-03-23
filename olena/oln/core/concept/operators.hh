@@ -158,12 +158,13 @@ namespace oln
     return exact(rhs).op_unary_minus_();
   }
 
-  template <typename T>
+/*  template <typename T>
   T operator- (const Any<T>& lhs, const Any<T>& rhs)
   {
     T tmp = exact(lhs);
     return tmp -= rhs;
   }
+*/
 
 //   template <typename L, typename R>
 //   xtd_op_minus_trait(L, R) operator- (const Any<L>& lhs, const Any<R>& rhs)
