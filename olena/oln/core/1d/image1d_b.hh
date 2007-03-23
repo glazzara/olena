@@ -46,7 +46,7 @@ namespace oln
   template <typename T> class image1d_b;
 
 
-  /// Virtual types.
+  // Virtual types.
   template <typename T>
   struct vtypes< image1d_b<T> >
   {
@@ -60,9 +60,9 @@ namespace oln
     typedef       T& lvalue;
 
     typedef box1d pset;
-    typedef internal::triplet< array1d_<T, int>,
+    typedef internal::triplet< array1d_<T, int>*,
 			       unsigned,
-			       box_<point1d> > data;
+			       box1d > data;
 
     typedef mlc::true_ vborder;
 
@@ -71,7 +71,7 @@ namespace oln
   };
 
 
-  /// Super type.
+  // Super type.
   template <typename T>
   struct super_trait_< image1d_b<T> >
   {
@@ -80,7 +80,7 @@ namespace oln
   };
 
 
-  /// General 1D image class.
+  /// General 1D image class with an external virtual border.
 
   template <typename T>
   class image1d_b : public internal::plain_primitive_image_< image1d_b<T> >
@@ -105,7 +105,7 @@ namespace oln
 
     std::size_t impl_npoints() const;
 
-    box1d impl_points() const;
+    const box1d& impl_points() const;
 
     unsigned impl_border() const;
   };
@@ -122,8 +122,8 @@ namespace oln
   template <typename T>
   image1d_b<T>::image1d_b(const box1d& b, unsigned border)
   {
-    this->data_ = new data(array_t(b.pmin().ind() - border,
-				   b.pmax().ind() + border),
+    this->data_ = new data(new array_t(b.pmin().ind() - border,
+				       b.pmax().ind() + border),
 			   border,
 			   b);
   }
@@ -132,8 +132,8 @@ namespace oln
   image1d_b<T>::image1d_b(unsigned n, unsigned border)
   {
     precondition(n != 0);
-    this->data_ = new data(array_t(- border,
-				   n - 1 + border),
+    this->data_ = new data(new array_t(- border,
+				       n - 1 + border),
 			   border,
 			   box1d(0, n - 1));
   }
@@ -176,7 +176,7 @@ namespace oln
   }
 
   template <typename T>
-  box1d image1d_b<T>::impl_points() const
+  const box1d& image1d_b<T>::impl_points() const
   {
     assert(this->has_data());
     return this->data_->third;
@@ -189,7 +189,7 @@ namespace oln
     return this->data_->second;
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

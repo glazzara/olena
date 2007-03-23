@@ -134,10 +134,10 @@ namespace oln
     bool owns_(const psite& p) const;
     rvalue operator()(const psite& p) const;
 
-    pset points() const;
+    const pset& points() const;
 
     // With final impl:
-    box  bbox() const;
+    const box& bbox() const;
 
   protected:
     Image();
@@ -438,14 +438,14 @@ namespace oln
   }
 
   template <typename Exact>
-  typename Image<Exact>::box
+  const typename Image<Exact>::box&
   Image<Exact>::bbox() const
   {
     return this->points().bbox(); // Final impl.
   }
 
   template <typename Exact>
-  typename Image<Exact>::pset
+  const typename Image<Exact>::pset&
   Image<Exact>::points() const
   {
     return exact(this)->impl_points();
@@ -512,7 +512,6 @@ namespace oln
   bool
   Point_Wise_Accessible_Image<Exact>::has(const typename Point_Wise_Accessible_Image<Exact>::point& p) const
   {
-    // FIXME: precondition(this->owns_(p)); ?
     return this->points().has(p);
   }
 

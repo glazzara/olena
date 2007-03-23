@@ -26,12 +26,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_RLE_RLE_IMAGE_HH
-# define OLN_CORE_RLE_RLE_IMAGE_HH
+#ifndef OLN_CORE_GEN_RLE_IMAGE_HH
+# define OLN_CORE_GEN_RLE_IMAGE_HH
 
 # include <map>
-# include <utility>
-
 
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/rle/rle_psite.hh>
@@ -97,7 +95,7 @@ namespace oln
     rle_image();
 
     /// pset impl_points() const                             : return image pset
-    pset impl_points() const;
+    const pset& impl_points() const;
     /// bool impl_owns_(const psite& p) const                : same has impl_has
     bool impl_owns_(const psite& p) const;
     /// void insert(const point& p, unsigned len, value val) : insert a new range on the image
@@ -118,9 +116,10 @@ namespace oln
   }
 
   template <typename P, typename T>
-  typename rle_image<P, T>::pset
+  const typename rle_image<P, T>::pset&
   rle_image<P, T>::impl_points() const
   {
+    assert(this->has_data());
     return this->data_->first;
   }
 
@@ -128,6 +127,7 @@ namespace oln
   bool
   rle_image<P, T>::impl_owns_(const typename rle_image<P, T>::psite& p) const
   {
+    assert(this->has_data());
     return this->data_->first.has(p.start_);
   }
 
@@ -136,6 +136,7 @@ namespace oln
   rle_image<P, T>::insert(const typename rle_image<P, T>::point& p,
 			  unsigned len, rle_image<P, T>::value val)
   {
+    assert(this->has_data());
     this->data_->first.insert(p, len);
     this->data_->second[p] = val;
   }
@@ -144,6 +145,7 @@ namespace oln
   typename rle_image<P, T>::rvalue
   rle_image<P, T>::impl_read(const rle_image<P, T>::psite& ps) const
   {
+    assert(this->has_data());
     typename std::map<point, value>::const_iterator irun;
 
     irun = this->data_->second.find(ps.start_);
@@ -156,6 +158,7 @@ namespace oln
   typename rle_image<P, T>::lvalue
   rle_image<P, T>::impl_read_write(const rle_image<P, T>::psite& ps)
   {
+    assert(this->has_data());
     typename std::map<point, value>::iterator irun;
 
     irun = this->data_->second.find(ps.start_);
@@ -164,8 +167,8 @@ namespace oln
     return irun->second;
   }
 
-# endif // !OLN_INCLUDE_ONLY
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 
-#endif // !OLN_CORE_RLE_RLE_IMAGE_HH
+#endif // ! OLN_CORE_GEN_RLE_IMAGE_HH

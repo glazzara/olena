@@ -25,10 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef SPARSE_IMAGE_HH_
-# define SPARSE_IMAGE_HH_
+#ifndef OLN_CORE_GEN_SPARSE_IMAGE_HH
+# define OLN_CORE_GEN_SPARSE_IMAGE_HH
 
 # include <vector>
+# include <map>
+
+# include <oln/core/internal/image_base.hh>
+
+
 
 namespace oln
 {
@@ -82,7 +87,7 @@ namespace oln
 
     sparse_image();
 
-    pset impl_points() const;
+    const pset& impl_points() const;
     bool impl_owns_(const psite& p) const;
     void insert(const point& p, unsigned len, const std::vector<value>& val);
     rvalue impl_read(const psite& p) const;
@@ -90,8 +95,8 @@ namespace oln
 
   };
 
-# ifndef OLN_INCLUDE_ONLY
 
+# ifndef OLN_INCLUDE_ONLY
 
   template <typename P, typename T>
   sparse_image<P, T>::sparse_image()
@@ -100,9 +105,10 @@ namespace oln
   }
 
   template <typename P, typename T>
-  typename sparse_image<P, T>::pset
+  const typename sparse_image<P, T>::pset&
   sparse_image<P, T>::impl_points() const
   {
+    assert(this->has_data());
     return this->data_->first;
   }
 
@@ -110,6 +116,7 @@ namespace oln
   bool
   sparse_image<P, T>::impl_owns_(const typename sparse_image<P, T>::psite& p) const
   {
+    assert(this->has_data());
     return this->data_->first.has(p.start_);
   }
 
@@ -117,6 +124,7 @@ namespace oln
   void
   sparse_image<P, T>::insert(const point& p, unsigned len, const std::vector<typename sparse_image<P, T>::value>& val)
   {
+    assert(this->has_data());
      this->data_->first.insert(p, len);
      this->data_->second[p] = val;
   }
@@ -125,6 +133,7 @@ namespace oln
   typename sparse_image<P, T>::rvalue
   sparse_image<P, T>::impl_read(const sparse_image<P, T>::psite& ps) const
   {
+    assert(this->has_data());
     typename std::map<point, std::vector<value> >::const_iterator irun;
 
     irun.operator= (this->data_->second.find(ps.start_));
@@ -136,6 +145,7 @@ namespace oln
   typename sparse_image<P, T>::lvalue
   sparse_image<P, T>::impl_read_write(const sparse_image<P, T>::psite& ps)
   {
+    assert(this->has_data());
     typename std::map<point, std::vector<value> >::iterator irun;
 
     irun.operator= (this->data_->second.find(ps.start_));
@@ -143,10 +153,9 @@ namespace oln
     return irun->second[ps.index_];
   }
 
-
-# endif /* !OLN_INCLUDE_ONLY */
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln
 
-#endif /* !SPARSE_IMAGE_HH_ */
+#endif // ! OLN_CORE_GEN_SPARSE_IMAGE_HH

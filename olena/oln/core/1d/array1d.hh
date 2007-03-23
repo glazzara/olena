@@ -43,6 +43,13 @@ namespace oln
   {
   public:
 
+    // Not impled.
+    array1d_();
+    array1d_(const array1d_<T,C>& rhs);
+    void operator=(const array1d_<T,C>&);
+    // end of Not impled.
+
+
     /// Ctor.
     array1d_(C imin, C imax);
 

@@ -30,55 +30,13 @@
 # define OLN_CORE_2D_IMAGE2D_B_HH
 
 # include <oln/core/internal/image_base.hh>
+# include <oln/core/internal/utils.hh>
 # include <oln/core/2d/array2d.hh>
 # include <oln/core/2d/box2d.hh>
 
 
 namespace oln
 {
-
-
-  // FIXME: Move it!
-
-  namespace internal
-  {
-
-
-    template <typename P, typename T>
-    struct f_point_value_to_array_;
-
-    template <typename T>
-    struct f_point_value_to_array_< point2d, T >
-    {
-      typedef array2d_<T, int> ret;
-    };
-
-
-    template <typename P, typename T>
-    struct array_b_
-    {
-      typedef typename f_point_value_to_array_<P, T>::ret array_t;
-      typedef typename P::coord coord;
-
-      array_b_(const P& pmin, const P& pmax, unsigned border)
-	: array(pmin.row() - border, pmin.col() - border,
-		pmax.row() + border, pmax.col() + border),
-	  border(border),
-	  box(pmin, pmax)
-      {
-      }
-
-      array_t  array;
-      unsigned border;
-      box_<P>  box;
-    };
-
-
-  } // end of namespace oln::internal
-
-
-  // end of FIXME
-
 
 
   // Fwd decl.
@@ -99,14 +57,14 @@ namespace oln
     typedef       T& lvalue;
 
     typedef box2d pset;
-    typedef internal::array_b_<point2d, T> data;
+    typedef internal::triplet< array2d_<T, int>*,
+			       unsigned,
+			       box2d > data;
 
     typedef mlc::true_ vborder;
 
     typedef image2d_b<T>         plain;
     typedef image2d_b<pl::value> skeleton;
-
-    // FIXME: wrong qiter!!!
   };
 
 
@@ -126,6 +84,7 @@ namespace oln
   {
     typedef image2d_b<T> current;
     typedef internal::plain_primitive_image_<current> super;
+    typedef array2d_<T, int> array_t;
   public:
     stc_using(data);
 
@@ -147,7 +106,7 @@ namespace oln
 
     std::size_t impl_npoints() const;
 
-    box2d impl_points() const;
+    const box2d& impl_points() const;
 
     unsigned impl_border() const;
     std::size_t pad(const dpoint2d& dp) const;
@@ -155,6 +114,10 @@ namespace oln
 
 //   template <typename T, typename D>
 //   bool init_(image2d_b<T>* this_, const D& dat);
+
+  template <typename T, typename D>
+  bool prepare(image2d_b<T>& target, with_t, const D& dat);
+
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -167,37 +130,46 @@ namespace oln
   template <typename T>
   image2d_b<T>::image2d_b(const box2d& b, unsigned border)
   {
-    this->data_ = new data(b.pmin(), b.pmax(), border);
+    this->data_ = new data(new array_t(b.pmin().row() - border,
+				       b.pmin().col() - border,
+				       b.pmax().row() + border,
+				       b.pmax().col() + border),
+			   border,
+			   b);
   }
 
   template <typename T>
   image2d_b<T>::image2d_b(unsigned nrows, unsigned ncols, unsigned border)
   {
     precondition(nrows != 0 and ncols != 0);
-    this->data_ = new data(point2d(0, 0),
-			   point2d(nrows - 1, ncols - 1),
-			   border);
+    this->data_ = new data(new array_t(- border,
+				       - border,
+				       nrows - 1 + border,
+				       ncols - 1 + border),
+			   border,
+			   box2d(point2d(0, 0),
+				 point2d(nrows - 1, ncols - 1)));
   }
 
   template <typename T>
   bool image2d_b<T>::impl_owns_(const point2d& p) const
   {
     assert(this->has_data());
-    return this->data_->array.has(p.row(), p.col());
+    return this->data_->first.has(p.row(), p.col());
   }
 
   template <typename T>
   bool image2d_b<T>::impl_has_at(int row, int col) const
   {
     assert(this->has_data());
-    return this->data_->array.has(row, col);
+    return this->data_->first.has(row, col);
   }
 
   template <typename T>
   const T& image2d_b<T>::impl_read(const point2d& p) const
   {
     assert(this->has_data());
-    return this->data_->array(p.row(), p.col());
+    return this->data_->first(p.row(), p.col());
   }
 
   template <typename T>
@@ -205,21 +177,21 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->array[i];
+    return this->data_->first[i];
   }
 
   template <typename T>
   const T& image2d_b<T>::impl_at(int row, int col) const
   {
     assert(this->has_data());
-    return this->data_->array(row, col);
+    return this->data_->first(row, col);
   }
 
   template <typename T>
   T& image2d_b<T>::impl_read_write(const point2d& p)
   {
     assert(this->has_data());
-    return this->data_->array(p.row(), p.col());
+    return this->data_->first(p.row(), p.col());
   }
 
   template <typename T>
@@ -227,35 +199,35 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->array[i];
+    return this->data_->first[i];
   }
 
   template <typename T>
   T& image2d_b<T>::impl_at(int row, int col)
   {
     assert(this->has_data());
-    return this->data_->array(row, col);
+    return this->data_->first(row, col);
   }
 
   template <typename T>
-  box2d image2d_b<T>::impl_points() const
+  const box2d& image2d_b<T>::impl_points() const
   {
     assert(this->has_data());
-    return this->data_->box;
+    return this->data_->third;
   }
 
   template <typename T>
   unsigned image2d_b<T>::impl_border() const
   {
     assert(this->has_data());
-    return this->data_->border;
+    return this->data_->second;
   }
 
   template <typename T>
   std::size_t image2d_b<T>::pad(const dpoint2d& dp) const
   {
     assert(this->has_data());
-    return this->data_->array.row_pad() * dp.row() + dp.col();
+    return this->data_->first.row_pad() * dp.row() + dp.col();
   }
 
 //   template <typename T, typename D>
@@ -278,7 +250,11 @@ namespace oln
     bool box_ok = init(b, with, dat);
     postcondition(box_ok);
     unsigned border = 2; // FIXME: Use init!
-    target.data__() = new typename image2d_b<T>::data(b.pmin(), b.pmax(), border);
+    array2d_<T,int> ptr = new array2d_<T,int>(b.pmin().row() - border,
+					      b.pmin().col() - border,
+					      b.pmax().row() + border,
+					      b.pmax().col() + border);
+    target.data__() = new typename image2d_b<T>::data(ptr, border, b);
     return box_ok;
   }
 

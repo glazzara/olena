@@ -41,8 +41,8 @@ namespace oln
     template <typename I>
     void iota(Mutable_Image<I>& in_out)
     {
-      typename I::value v = 0;
-      typename I::fwd_piter p(in_out.points());
+      oln_value(I) v = 0;
+      oln_fwd_piter(I) p(in_out.points());
       for_all(p)
 	in_out(p) = v++;
     }

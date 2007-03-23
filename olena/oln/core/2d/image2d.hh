@@ -30,6 +30,7 @@
 # define OLN_CORE_2D_IMAGE2D_HH
 
 # include <oln/core/internal/image_base.hh>
+# include <oln/core/internal/utils.hh>
 # include <oln/core/2d/array2d.hh>
 # include <oln/core/2d/box2d.hh>
 
@@ -54,8 +55,8 @@ namespace oln
     typedef const T& rvalue;
     typedef       T& lvalue;
 
-    typedef box2d                  pset;
-    typedef array2d_<value, coord> data;
+    typedef box2d pset;
+    typedef internal::pair< array2d_<value, coord>*, box2d > data;
 
     typedef image2d<T>         plain;
     typedef image2d<pl::value> skeleton;
@@ -78,6 +79,7 @@ namespace oln
   {
     typedef image2d<T> current;
     typedef internal::plain_primitive_image_<current> super;
+    typedef array2d_<T, int> array_t;
   public:
     stc_using(data);
 
@@ -99,7 +101,7 @@ namespace oln
 
     std::size_t impl_npoints() const;
 
-    box2d impl_points() const;
+    const box2d& impl_points() const;
   };
 
   template <typename T, typename D>
@@ -116,36 +118,40 @@ namespace oln
   template <typename T>
   image2d<T>::image2d(const box2d& b)
   {
-    this->data_ = new data(b.pmin().row(), b.pmin().col(),
-			   b.pmax().row(), b.pmax().col());
+    this->data_ = new data(new array_t(b.pmin().row(), b.pmin().col(),
+				       b.pmax().row(), b.pmax().col()),
+			   b);
   }
 
   template <typename T>
   image2d<T>::image2d(unsigned nrows, unsigned ncols)
   {
     precondition(nrows != 0 and ncols != 0);
-    this->data_ = new data(0, 0, nrows - 1, ncols - 1);
+    this->data_ = new data(new array_t(0, 0,
+				       nrows - 1, ncols - 1),
+			   box2d(point2d(0, 0),
+				 point2d(nrows - 1, ncols - 1)));
   }
 
   template <typename T>
   bool image2d<T>::impl_owns_(const point2d& p) const
   {
     assert(this->has_data());
-    return this->data_->has(p.row(), p.col());
+    return this->data_->first.has(p.row(), p.col());
   }
 
   template <typename T>
   bool image2d<T>::impl_has_at(int row, int col) const
   {
     assert(this->has_data());
-    return this->data_->has(row, col);
+    return this->data_->first.has(row, col);
   }
 
   template <typename T>
   const T& image2d<T>::impl_read(const point2d& p) const
   {
     assert(this->has_data());
-    return this->data_->operator()(p.row(), p.col());
+    return this->data_->first(p.row(), p.col());
   }
 
   template <typename T>
@@ -153,21 +159,21 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->operator[](i);
+    return this->data_->first[i];
   }
 
   template <typename T>
   const T& image2d<T>::impl_at(int row, int col) const
   {
     assert(this->has_data());
-    return this->data_->operator()(row, col);
+    return this->data_->first(row, col);
   }
 
   template <typename T>
   T& image2d<T>::impl_read_write(const point2d& p)
   {
     assert(this->has_data());
-    return this->data_->operator()(p.row(), p.col());
+    return this->data_->first(p.row(), p.col());
   }
 
   template <typename T>
@@ -175,14 +181,14 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->operator[](i);
+    return this->data_->first[i];
   }
 
   template <typename T>
   T& image2d<T>::impl_at(int row, int col)
   {
     assert(this->has_data());
-    return this->data_->operator()(row, col);
+    return this->data_->first(row, col);
   }
 
   template <typename T>
@@ -190,18 +196,14 @@ namespace oln
   {
     // faster than the default code given by primitive_image_
     assert(this->has_data());
-    return this->data_->ncells();
+    return this->data_->first.ncells();
   }
 
   template <typename T>
-  box2d image2d<T>::impl_points() const
+  const box2d& image2d<T>::impl_points() const
   {
     assert(this->has_data());
-    point2d
-      pmin(this->data_->imin(), this->data_->jmin()),
-      pmax(this->data_->imax(), this->data_->jmax());
-    box2d b(pmin, pmax);
-    return b;
+    return this->data_->second;
   }
 
   template <typename T, typename D>
@@ -211,8 +213,11 @@ namespace oln
     box2d b;
     bool box_ok = init(b, with, dat);
     postcondition(box_ok);
-    target.data__() = new typename image2d<T>::data(b.pmin().row(), b.pmin().col(),
-						    b.pmax().row(), b.pmax().col());
+    array2d_<T,int> ptr = new array2d_<T,int>(b.pmin().row(),
+					      b.pmin().col(),
+					      b.pmax().row(),
+					      b.pmax().col());
+    target.data__() = new typename image2d<T>::data(ptr, b);
     return box_ok;
   }
 

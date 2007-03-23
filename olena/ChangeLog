@@ -1,3 +1,31 @@
+2007-03-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Optimize the return of Image::points().
+
+	* oln/debug/iota.hh: Update.
+	* oln/core/rle/rle_image.hh,
+	* oln/core/sparse/sparse_image.hh: Add assertions; Fix include.
+	* oln/core/gen/niter_has.hh (pset_): Add &.
+	* oln/core/concept/image.hh (bbox, points, impl_points): Add &.
+	* oln/core/concept/image_identity.hh,
+	* oln/core/rle/rle_image.hh,
+	* oln/core/sparse/sparse_image.hh,
+	* oln/core/1d/image1d.hh,
+	* oln/core/1d/image1d_b.hh,
+	* oln/core/2d/image2d.hh,
+	* oln/core/2d/image2d_b.hh,
+	* oln/core/internal/op_image_restricted_to_pset.hh (impl_points):
+	Update.
+	* oln/basics1d.hh,
+	* oln/basics2d.hh: Remove; obsolete.
+	* oln/core/internal/utils.hh (pair, triplet): New specializations.
+	* oln/core/1d/array1d.hh,
+	* oln/core/2d/array2d.hh: Add method decls without impl.
+	* oln/core/1d/image1d.hh,
+	* oln/core/1d/image1d_b.hh,
+	* oln/core/2d/image2d.hh,
+	* oln/core/2d/image2d_b.hh: Make use of pair and triplet.
+
 2007-03-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add type of 'image such_as f:b->p' and factor Image::has as final.

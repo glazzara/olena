@@ -28,16 +28,14 @@
 #ifndef OLN_CORE_INTERNAL_UTILS_HH
 # define OLN_CORE_INTERNAL_UTILS_HH
 
+# include <mlc/contract.hh>
+
 
 namespace oln
 {
 
   namespace internal
   {
-
-
-    // FIXME: Rename attributes as first / second / third / fourth?
-
 
 
     /// Simple singleton class.
@@ -47,11 +45,14 @@ namespace oln
     {
       singleton()
       {}
-      singleton(T value)
+      singleton(const T& value)
 	: value(value)
       {}
       T value;
     };
+
+    template <typename T>
+    struct singleton< T* >;
 
 
     /// Simple pair class.
@@ -61,13 +62,44 @@ namespace oln
     {
       pair()
       {}
-      pair(T1 first, T2 second)
+      pair(const T1& first, const T2& second)
 	: first(first),
 	  second(second)
       {}
       T1 first;
       T2 second;
     };
+
+    template <typename T1, typename T2>
+    struct pair< T1*, T2 >
+    {
+      typedef pair<T1*,T2> self_t;
+
+      // Not impled.
+      pair();
+      pair(const self_t&);
+      void operator=(const self_t&);
+      // end of Not impled.
+
+      pair(T1* p_first, const T2& second)
+	: first(*p_first),
+	  second(second)
+      {
+	precondition(p_first != 0);
+      }
+      T1& first;
+      T2  second;
+      ~pair()
+      {
+	delete &first;
+      }
+    };
+
+    template <typename T1, typename T2>
+    struct pair< T1, T2* >;
+
+    template <typename T1, typename T2>
+    struct pair< T1*, T2* >;
 
 
     /// Simple triplet class.
@@ -77,7 +109,7 @@ namespace oln
     {
       triplet()
       {}
-      triplet(T1 first, T2 second, T3 third)
+      triplet(const T1& first, const T2& second, const T3& third)
 	: first(first),
 	  second(second),
 	  third(third)
@@ -85,6 +117,33 @@ namespace oln
       T1 first;
       T2 second;
       T3 third;
+    };
+
+    template <typename T1, typename T2, typename T3>
+    struct triplet< T1*, T2, T3 >
+    {
+      typedef triplet<T1*,T2,T3> self_t;
+
+      // Not impled.
+      triplet();
+      triplet(const self_t&);
+      void operator=(const self_t&);
+      // end of Not impled.
+
+      triplet(T1* p_first, const T2& second, const T3& third)
+	: first(*p_first),
+	  second(second),
+	  third(third)
+      {
+	precondition(p_first != 0);
+      }
+      T1& first;
+      T2  second;
+      T3  third;
+      ~triplet()
+      {
+	delete &first;
+      }
     };
 
 
@@ -95,7 +154,7 @@ namespace oln
     {
       quartet()
       {}
-      quartet(T1 first, T2 second, T3 third, T4 fourth)
+      quartet(const T1& first, const T2& second, const T3& third, const T4& fourth)
 	: first(first),
 	  second(second),
 	  third(third),

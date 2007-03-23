@@ -78,7 +78,7 @@ namespace oln
 
   protected:
 
-    const Ps pset_;
+    const Ps& pset_;
 
   }; // end of class oln::niter_has_<P>
 

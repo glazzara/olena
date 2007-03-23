@@ -85,7 +85,7 @@ namespace oln
       delegatee& impl_image();
       const delegatee& impl_image() const;
 
-      pset impl_points() const;
+      const pset& impl_points() const;
 
     protected:
       special_op_();
@@ -149,7 +149,7 @@ namespace oln
     }
 
     template <typename I, typename S>
-    typename current::pset
+    const typename current::pset&
     current::impl_points() const
     {
       assert(this->has_data());

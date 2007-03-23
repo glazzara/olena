@@ -30,6 +30,7 @@
 # define OLN_CORE_1D_IMAGE1D_HH
 
 # include <oln/core/internal/image_base.hh>
+# include <oln/core/internal/utils.hh>
 # include <oln/core/1d/array1d.hh>
 # include <oln/core/1d/box1d.hh>
 
@@ -41,7 +42,7 @@ namespace oln
   template <typename T> class image1d;
 
 
-  /// Virtual types.
+  // Virtual types.
   template <typename T>
   struct vtypes< image1d<T> >
   {
@@ -54,15 +55,15 @@ namespace oln
     typedef const T& rvalue;
     typedef       T& lvalue;
 
-    typedef box1d                  pset;
-    typedef array1d_<value, coord> data;
+    typedef box1d pset;
+    typedef internal::pair< array1d_<value, coord>*, box1d > data;
 
     typedef image1d<T>         plain;
     typedef image1d<pl::value> skeleton;
   };
 
 
-  /// Super type.
+  // Super type.
   template <typename T>
   struct super_trait_< image1d<T> >
   {
@@ -78,6 +79,7 @@ namespace oln
   {
     typedef image1d<T> current;
     typedef internal::plain_primitive_image_<current> super;
+    typedef array1d_<T, int> array_t;
   public:
     stc_using(data);
 
@@ -95,7 +97,7 @@ namespace oln
 
     std::size_t impl_npoints() const;
 
-    box1d impl_points() const;
+    const box1d& impl_points() const;
   };
 
 
@@ -110,28 +112,30 @@ namespace oln
   template <typename T>
   image1d<T>::image1d(const box1d& b)
   {
-    this->data_ = new data(b.pmin().ind(), b.pmax().ind());
+    this->data_ = new data(new array_t(b.pmin().ind(), b.pmax().ind()),
+			   b);
   }
 
   template <typename T>
   image1d<T>::image1d(unsigned n)
   {
     precondition(n != 0);
-    this->data_ = new data(0, n - 1);
+    this->data_ = new data(new array_t(0, n - 1),
+			   box1d(0, n - 1));
   }
 
   template <typename T>
   bool image1d<T>::impl_owns_(const point1d& p) const
   {
     assert(this->has_data());
-    return this->data_->has(p.ind());
+    return this->data_->first.has(p.ind());
   }
 
   template <typename T>
   const T& image1d<T>::impl_read(const point1d& p) const
   {
     assert(this->has_data());
-    return this->data_->operator()(p.ind());
+    return this->data_->first.operator()(p.ind());
   }
 
   template <typename T>
@@ -139,14 +143,14 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->operator[](i);
+    return this->data_->first.operator[](i);
   }
 
   template <typename T>
   T& image1d<T>::impl_read_write(const point1d& p)
   {
     assert(this->has_data());
-    return this->data_->operator()(p.ind());
+    return this->data_->first.operator()(p.ind());
   }
 
   template <typename T>
@@ -154,7 +158,7 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->operator[](i);
+    return this->data_->first.operator[](i);
   }
 
   template <typename T>
@@ -162,18 +166,17 @@ namespace oln
   {
     // faster than the default code given by primitive_image_
     assert(this->has_data());
-    return this->data_->ncells();
+    return this->data_->first.ncells();
   }
 
   template <typename T>
-  box1d image1d<T>::impl_points() const
+  const box1d& image1d<T>::impl_points() const
   {
     assert(this->has_data());
-    box1d b(this->data_->imin(), this->data_->imax());
-    return b;
+    return this->data_->second;
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

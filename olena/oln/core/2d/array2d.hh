@@ -30,6 +30,7 @@
 # define OLN_CORE_2D_ARRAY2D_HH
 
 # include <cstddef>
+# include <iostream>
 # include <mlc/contract.hh>
 
 
@@ -42,6 +43,13 @@ namespace oln
   class array2d_
   {
   public:
+
+    // Not impled.
+    array2d_();
+    array2d_(const array2d_<T,C>& rhs);
+    void operator=(const array2d_<T,C>&);
+    // end of Not impled.
+
 
     /// Ctor.
     array2d_(C imin, C jmin, C imax, C jmax);
