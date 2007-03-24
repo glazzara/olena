@@ -35,8 +35,64 @@
 namespace oln
 {
 
-  // FIXME: box1d should be an actual type, not an alias...
-  typedef gen_box<point1d> box1d;
+  // Forward declarations
+  struct box1d;
+
+  // Super type
+  template <>
+  struct super_trait_< box1d >
+  {
+    typedef box1d current;
+    typedef internal::box_<box1d> ret;
+  };
+
+  // Virtual types
+  template <>
+  struct vtypes<box1d>
+  {
+    typedef point1d point;
+    typedef box1d box;
+  };
+
+  // Class box1d
+  class box1d : public internal::box_< box1d >
+  {
+    typedef box1d current;
+    typedef internal::box_< box1d > super;
+  public:
+    // Note: we can't use stc_using because box1d isn't a templated class
+    typedef super::point point;
+
+    box1d();
+    box1d(const box1d::from_to_t& dat);
+    box1d(const point1d& pmin, const point1d& pmax);
+    template <typename D>
+    box1d(const internal::initializer_<D>& data);
+  };
+
+# ifndef OLN_INCLUDE_ONLY
+
+  box1d::box1d()
+  {
+  }
+
+  box1d::box1d(const box1d::from_to_t& dat) :
+    super(dat)
+  {
+  }
+
+  box1d::box1d(const point1d& pmin, const point1d& pmax) :
+    super(pmin, pmax)
+  {
+  }
+
+  template <typename D>
+  box1d::box1d(const internal::initializer_<D>& data) :
+    super(data)
+  {
+  }
+
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

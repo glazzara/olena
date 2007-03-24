@@ -39,18 +39,14 @@ namespace oln
 
 
   // Forward declarations.
-  namespace internal
-  {
-    template <typename Exact> class box_;
-    template <typename Exact> class box_fwd_piter_;
-    template <typename Exact> class box_bkd_piter_;
-  }
+  namespace internal { template <typename Exact> class box_; }
+  template <typename Exact> class box_fwd_piter_;
+  template <typename Exact> class box_bkd_piter_;
 
   // Super type declaration.
   template <typename Exact>
   struct super_trait_< internal::box_<Exact> >
   {
-    //    typedef box_<Exact> current__;
     typedef internal::point_set_base_<Exact> ret;
   };
 
@@ -59,9 +55,8 @@ namespace oln
   template <typename Exact>
   struct vtypes< internal::box_<Exact> >
   {
-    //typedef point2d point;
-    typedef stc::final< internal::box_fwd_piter_<Exact> > fwd_piter;
-    typedef stc::final< internal::box_bkd_piter_<Exact> > bkd_piter;
+    typedef stc::final< box_fwd_piter_<Exact> > fwd_piter;
+    typedef stc::final< box_bkd_piter_<Exact> > bkd_piter;
   };
 
 
@@ -103,6 +98,8 @@ namespace oln
       box_();
       box_(const point& pmin, const point& pmax);
       box_(const from_to_t& data);
+      template <typename D>
+      box_(const internal::initializer_<D>& data);
 
       point pmin_, pmax_;
 
@@ -121,20 +118,19 @@ namespace oln
 
 
 
-
   /// Super types.
 
   template <typename B>
-  struct super_trait_< internal::box_fwd_piter_<B> >
+  struct super_trait_< box_fwd_piter_<B> >
   {
-    typedef internal::box_fwd_piter_<B> current__;
+    typedef box_fwd_piter_<B> current__;
     typedef Iterator_on_Points<current__> ret;
   };
 
   template <typename B>
-  struct super_trait_<internal:: box_bkd_piter_<B> >
+  struct super_trait_<box_bkd_piter_<B> >
   {
-    typedef internal::box_bkd_piter_<B> current__;
+    typedef box_bkd_piter_<B> current__;
     typedef Iterator_on_Points<current__> ret;
   };
 
@@ -142,80 +138,80 @@ namespace oln
   /// Virtual types.
 
   template <typename B>
-  struct vtypes< internal::box_fwd_piter_<B> >
+  struct vtypes< box_fwd_piter_<B> >
   {
     typedef typename B::point point;
   };
 
   template <typename B>
-  struct vtypes< internal::box_bkd_piter_<B> >
+  struct vtypes< box_bkd_piter_<B> >
   {
     typedef typename B::point point;
   };
 
 
-  namespace internal
+  /// Class box_fwd_piter_<P>.
+
+  template <typename B>
+  class box_fwd_piter_ : public Iterator_on_Points< box_fwd_piter_<B> >,
+			 private mlc::assert_< mlc_is_a(B, Point_Set) >
   {
-    /// Class box_fwd_piter_<P>.
+    typedef box_fwd_piter_<B> current;
+    typedef Iterator_on_Points<current> super;
+  public:
+    stc_using(point);
 
-    template <typename B>
-    class box_fwd_piter_ : public Iterator_on_Points< box_fwd_piter_<B> >,
-			   private mlc::assert_< mlc_is_a(B, Point_Set) >
-    {
-      typedef box_fwd_piter_<B> current;
-      typedef Iterator_on_Points<current> super;
-    public:
-      stc_using(point);
+    box_fwd_piter_();
+    box_fwd_piter_(const B& b);
+    void set_box(const B& b);
 
-      box_fwd_piter_();
-      box_fwd_piter_(const Point_Set< B >& b);
-      void set_box(const B& b);
+    void impl_start();
+    void impl_next();
+    void impl_invalidate();
+    bool impl_is_valid() const;
+    point impl_to_point() const;
+    const point* impl_point_adr() const;
 
-      void impl_start();
-      void impl_next();
-      void impl_invalidate();
-      bool impl_is_valid() const;
-      point impl_to_point() const;
-      const point* impl_point_adr() const;
-
-    private:
-      B b_;
-      point p_, nop_;
-    };
+  private:
+    B b_;
+    point p_, nop_;
+  };
 
 
-    /// Class box_bkd_piter_<B>.
+  /// Class box_bkd_piter_<B>.
 
-    template <typename B>
-    class box_bkd_piter_ : public Iterator_on_Points< box_bkd_piter_<B> >,
-			   private mlc::assert_< mlc_is_a(B, Point_Set) >
-    {
-      typedef box_bkd_piter_<B> current;
-      typedef Iterator_on_Points<current> super;
-    public:
-      stc_using(point);
+  template <typename B>
+  class box_bkd_piter_ : public Iterator_on_Points< box_bkd_piter_<B> >,
+			 private mlc::assert_< mlc_is_a(B, Point_Set) >
+  {
+    typedef box_bkd_piter_<B> current;
+    typedef Iterator_on_Points<current> super;
+  public:
+    stc_using(point);
 
-      box_bkd_piter_();
-      box_bkd_piter_(const Point_Set< B >& b);
-      void set_box(const B& b);
+    box_bkd_piter_();
+    box_bkd_piter_(const B& b);
+    void set_box(const B& b);
 
-      void impl_start();
-      void impl_next();
-      void impl_invalidate();
-      bool impl_is_valid() const;
-      point impl_to_point() const;
-      const point* impl_point_adr() const;
+    void impl_start();
+    void impl_next();
+    void impl_invalidate();
+    bool impl_is_valid() const;
+    point impl_to_point() const;
+    const point* impl_point_adr() const;
 
-    private:
-      B b_;
-      point p_, nop_;
-    };
+  private:
+    B b_;
+    point p_, nop_;
+  };
 
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
+  namespace internal
+  {
 
     // --------------------   box_<Exact>
 
@@ -242,6 +238,13 @@ namespace oln
       this->pmax_ = dat->second.value;
     }
 
+    template <typename Exact>
+    template <typename D>
+    box_<Exact>::box_(const internal::initializer_<D>& data)
+    {
+      bool box_ok = internal::init__(internal::tag::box_t(), *this, data.value());
+      postcondition(box_ok);
+    }
 
     template <typename Exact>
     unsigned
@@ -301,7 +304,7 @@ namespace oln
     {
       return this->pmax_;
     }
-
+  }
 
     // --------------------   box_fwd_piter_<B>
 
@@ -312,9 +315,9 @@ namespace oln
     }
 
     template <typename B>
-    box_fwd_piter_<B>::box_fwd_piter_(const Point_Set< B >& b)
+    box_fwd_piter_<B>::box_fwd_piter_(const B& b)
     {
-      this->set_box(exact(b));
+      this->set_box(b);
     }
 
     template <typename B>
@@ -389,9 +392,9 @@ namespace oln
     }
 
     template <typename B>
-    box_bkd_piter_<B>::box_bkd_piter_(const Point_Set< B >& b)
+    box_bkd_piter_<B>::box_bkd_piter_(const B& b)
     {
-      this->set_box(exact(b));
+      this->set_box(b);
     }
 
     template <typename B>
@@ -456,8 +459,6 @@ namespace oln
     }
 
 # endif // OLN_INCLUDE_ONLY
-  } // end of namespace internal
-
 } // end of namespace oln
 
 

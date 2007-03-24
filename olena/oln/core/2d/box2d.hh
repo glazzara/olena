@@ -36,10 +36,6 @@
 namespace oln
 {
 
-  // Fwd decl.
-  template <typename P> class box_;
-
-
   // Forward declarations
   struct box2d;
 
@@ -71,6 +67,8 @@ namespace oln
     box2d();
     box2d(const box2d::from_to_t& dat);
     box2d(const point2d& pmin, const point2d& pmax);
+    template <typename D>
+    box2d(const internal::initializer_<D>& data);
   };
 
   namespace internal
@@ -100,6 +98,12 @@ namespace oln
 
   box2d::box2d(const point2d& pmin, const point2d& pmax) :
     super(pmin, pmax)
+  {
+  }
+
+  template <typename D>
+  box2d::box2d(const internal::initializer_<D>& data) :
+    super(data)
   {
   }
 

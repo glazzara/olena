@@ -61,6 +61,7 @@ namespace oln
   {
     typedef P point;
 
+    typedef gen_box<P> box;
     typedef rle_pset_fwd_piter_<P> fwd_piter;
     typedef rle_pset_bkd_piter_<P> bkd_piter;
   };

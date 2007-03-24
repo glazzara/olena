@@ -1,3 +1,14 @@
+2007-03-24  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Adapt gen_box and point1d class to the new box hierarchy.
+
+	* tests/core/image1d.cc, oln/core/rle/rle_pset.hh,
+	* core/internal/point_set_base.hh: change vtypes.
+	* oln/core/1d/box1d.hh: box1d is know a real class.
+	* oln/core/2d/box2d.hh: add a constructor.
+	* oln/core/gen/box.hh: adapt gen_box.
+	* oln/core/internal/box.hh: fix a bug.
+
 2007-03-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add image level comparisons and better point set ones.

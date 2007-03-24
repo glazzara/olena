@@ -38,7 +38,8 @@ main()
 
   // Fill a 1D image using its iterator.
   image1d<char> ima1(3);
-  image1d<char>::piter p1(ima1.points());
+  image1d<char>::box box1 = ima1.points();
+  image1d<char>::piter p1 (ima1.points());
   for_all(p1)
     ima1(p1) = 1;
 

@@ -84,13 +84,12 @@ namespace oln
     typedef stc::abstract point;
     typedef stc::abstract fwd_piter;
     typedef stc::abstract bkd_piter;
+    typedef stc::abstract box;
 
     typedef stc_deferred(point)     point__;
     typedef stc_deferred(fwd_piter) fwd_piter__;
 
     typedef stc::final< stc::is<Point_Set> > category;
-    //FIXME:
-    typedef gen_box<point__>                 box;
     typedef stc::final< oln_grid(point__) >  grid;
     typedef stc::final< fwd_piter__ >        piter;
   };
