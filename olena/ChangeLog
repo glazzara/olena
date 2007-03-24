@@ -1,3 +1,29 @@
+2007-03-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update point set hierarchy with Box.
+
+	* oln/level/apply_inplace.hh: Fix.
+	* oln/core/concept/point_set.hh (include): Update.
+	(operator<<): Add decl.
+	* oln/core/gen/pset_compare.hh (operator<=, op_leq_),
+	(operator>=, op_geq_, operator>, op_greater_): New.
+	* oln/core/internal/op_pset_such_as_fp2b.hh (box): New.
+	* oln/core/internal/box.hh (include): Update.
+	(pmin, pmax): Rename as...
+	(impl_pmin, impl_pmax): ...these.
+	(set_box): Remove; move code into...
+	(box): ...this ctor.
+	(box_fwd_piter_, box_bkd_piter_): Strengthen sigs;
+	Remove version without arg.
+	(b_): Add &.
+	* oln/core/internal/point_set_base.hh (point_set_selector_):
+	Simplify.
+	(super_trait_): Update.
+	(point_set_base_): Change inheritance to point_set_selector_.
+	* oln/core/internal/utils.hh (pair): New overload.
+	* oln/core/internal/op_image_restricted_to_pset.hh: Add
+	precondition and postconditions.
+
 2007-03-24  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Adapt gen_box and point1d class to the new box hierarchy.

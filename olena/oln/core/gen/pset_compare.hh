@@ -40,7 +40,16 @@ namespace oln
   bool operator == (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
 
   template <typename L, typename R>
-  bool operator < (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
+  bool operator <  (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
+
+  template <typename L, typename R>
+  bool operator <= (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
+
+  template <typename L, typename R>
+  bool operator >  (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
+
+  template <typename L, typename R>
+  bool operator >= (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -72,16 +81,13 @@ namespace oln
       return true;
     }
 
-    /*
     // Version for Boxes.
 
-      FIXME: Activate.
     template <typename L, typename R>
     bool op_eq_(const Box<L>& lhs, const Box<R>& rhs)
     {
       return lhs.pmin() == rhs.pmin() and lhs.pmax() == rhs.pmax();
     }
-    */
 
 
     //  Point_Set L  <  Point_Set R
@@ -109,23 +115,49 @@ namespace oln
       return true;
     }
 
-    /*
-    // Version for Boxes.
 
-    FIXME: Activate.
+
+    // Box L <= Box R.
+
     template <typename L, typename R>
-    bool op_less_(const Box<L>& lhs, const Box<R>& rhs)
+    bool op_leq_(const Box<L>& lhs, const Box<R>& rhs)
     {
-      // subset test (i.e., lhs <= rhs)
       for (unsigned i = 0; i < L::n; ++i)
 	{
 	  if (lhs.pmin()[i] < rhs.pmin()[i] or lhs.pmax()[i] > rhs.pmax()[i])
 	    return false;
 	}
-      // proper (strict) test
-      return lhs != rhs;
+      return true;
     }
-    */
+
+    // Box L < Box R.
+
+    template <typename L, typename R>
+    bool op_less_(const Box<L>& lhs, const Box<R>& rhs)
+    {
+      return op_leq_(lhs, rhs) and lhs != rhs;
+    }
+
+    // Box L >= Box R.
+
+    template <typename L, typename R>
+    bool op_geq_(const Box<L>& lhs, const Box<R>& rhs)
+    {
+      for (unsigned i = 0; i < L::n; ++i)
+	{
+	  if (lhs.pmin()[i] > rhs.pmin()[i] or lhs.pmax()[i] < rhs.pmax()[i])
+	    return false;
+	}
+      return true;
+    }
+
+    // Box L > Box R.
+
+    template <typename L, typename R>
+    bool op_greater_(const Box<L>& lhs, const Box<R>& rhs)
+    {
+      return op_geq_(lhs, rhs) and lhs != rhs;
+    }
 
 
   } // end of namespace oln::impl
@@ -141,10 +173,31 @@ namespace oln
   }
 
   template <typename L, typename R>
+  bool operator <= (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
+  {
+    assert_same_grid_<L, R>::check();
+    return impl::op_leq_(exact(lhs), exact(rhs));
+  }
+
+  template <typename L, typename R>
   bool operator < (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
   {
     assert_same_grid_<L, R>::check();
     return impl::op_less_(exact(lhs), exact(rhs));
+  }
+
+  template <typename L, typename R>
+  bool operator >= (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
+  {
+    assert_same_grid_<L, R>::check();
+    return impl::op_geq_(exact(lhs), exact(rhs));
+  }
+
+  template <typename L, typename R>
+  bool operator > (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
+  {
+    assert_same_grid_<L, R>::check();
+    return impl::op_greater_(exact(lhs), exact(rhs));
   }
  
 # endif // ! OLN_INCLUDE_ONLY

@@ -129,6 +129,7 @@ namespace oln
     template <typename I, typename S>
     current::special_op_(I& ima, S& subset)
     {
+      precondition(subset <= ima.points());
       this->data_ = new data(ima, subset);
     }
 
@@ -187,6 +188,7 @@ namespace oln
     bool subset_ok = init(this_->data__()->second, with, dat);
     postcondition(image_ok);
     postcondition(subset_ok);
+    postcondition(this_->points() <= this_->image().points());
     return image_ok and subset_ok;
   }
 
@@ -202,6 +204,7 @@ namespace oln
     bool subset_ok = init(target.data__()->second, with, dat);
     postcondition(image_ok);
     postcondition(subset_ok);
+    postcondition(target.points() <= target.image().points());
     return image_ok and subset_ok;
   }
 

@@ -29,8 +29,7 @@
 # define OLN_CORE_CONCEPT_POINT_SET_HH
 
 # include <iostream>
-# include <oln/core/concept/point.hh>
-# include <oln/core/concept/iterator.hh> // for "for_all"
+# include <oln/core/concept/iterator_on_points.hh>
 
 
 namespace oln
@@ -84,6 +83,9 @@ namespace oln
 
   template <typename Ps>
   std::ostream& operator<<(std::ostream& ostr, const Point_Set<Ps>& pts);
+
+  template <typename B>
+  std::ostream& operator<<(std::ostream& ostr, const Box<B>& b);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -151,14 +153,19 @@ namespace oln
   std::ostream& operator<<(std::ostream& ostr, const Point_Set<Ps>& pts)
   {
     ostr << "{ ";
-    typename Ps::piter p(pts);
+    oln_piter(Ps) p(pts);
     for_all(p)
       ostr << p << ' '; // FIXME: Add ','?
     return ostr << " }";
   }
 
+  template <typename B>
+  std::ostream& operator<<(std::ostream& ostr, const Box<B>& b)
+  {
+    return ostr << "{ " << b.pmin() << " .. " << b.pmax() << " }";
+  }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

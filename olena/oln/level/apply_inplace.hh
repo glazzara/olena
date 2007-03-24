@@ -42,7 +42,7 @@ namespace oln
 
     template <typename F, typename I>
     void
-    apply_inplace(const Function_v2v<F>& f, Mutable_Image<I>& input)
+    apply_inplace(const Function_v2v<F>& f, Mutable_Image<I>& input);
 
     template <typename R, typename A, typename I>
     void
@@ -83,7 +83,7 @@ namespace oln
     void
     apply_inplace(R (*f)(A), Mutable_Image<I>& input)
     {
-      impl::apply_inplace_(functorize_v2v(fun), exact(input));
+      impl::apply_inplace_(functorize_v2v(f), exact(input));
     }
 
 # endif

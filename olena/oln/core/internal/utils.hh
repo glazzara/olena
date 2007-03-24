@@ -96,10 +96,34 @@ namespace oln
     };
 
     template <typename T1, typename T2>
-    struct pair< T1, T2* >;
+    struct pair< T1*, T2* >
+    {
+      typedef pair<T1*,T2*> self_t;
+
+      // Not impled.
+      pair();
+      pair(const self_t&);
+      void operator=(const self_t&);
+      // end of Not impled.
+
+      pair(T1* p_first, T2* p_second)
+	: first(*p_first),
+	  second(*p_second)
+      {
+	precondition(p_first  != 0);
+	precondition(p_second != 0);
+      }
+      T1& first;
+      T2& second;
+      ~pair()
+      {
+	delete &first;
+	delete &second;
+      }
+    };
 
     template <typename T1, typename T2>
-    struct pair< T1*, T2* >;
+    struct pair< T1, T2* >;
 
 
     /// Simple triplet class.

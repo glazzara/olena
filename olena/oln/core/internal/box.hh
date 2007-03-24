@@ -28,9 +28,6 @@
 #ifndef OLN_CORE_INTERNAL_BOX_HH
 # define OLN_CORE_INTERNAL_BOX_HH
 
-//# include <oln/core/concept/point.hh>
-# include <oln/core/concept/point_set.hh>
-# include <oln/core/concept/iterator_on_points.hh>
 # include <oln/core/internal/point_set_base.hh>
 
 
@@ -89,10 +86,10 @@ namespace oln
       bool           impl_has(const point& p) const;
       const Exact& impl_bbox() const;
 
-      const point& pmin() const;
-      point& pmin();
-      const point& pmax() const;
-      point& pmax();
+      const point& impl_pmin() const;
+      point& impl_pmin();
+      const point& impl_pmax() const;
+      point& impl_pmax();
 
     protected:
       box_();
@@ -105,11 +102,6 @@ namespace oln
 
     }; // end of class oln::box_<P>
 
-    template <typename Exact>
-    std::ostream& operator<<(std::ostream& ostr, const box_<Exact>& b)
-    {
-      return ostr << "{ " << b.pmin() << " .. " << b.pmax() << " }";
-    }
 
   } // end of namespace internal
 
@@ -161,9 +153,7 @@ namespace oln
   public:
     stc_using(point);
 
-    box_fwd_piter_();
-    box_fwd_piter_(const B& b);
-    void set_box(const B& b);
+    box_fwd_piter_(const Point_Set<B>& b);
 
     void impl_start();
     void impl_next();
@@ -173,8 +163,8 @@ namespace oln
     const point* impl_point_adr() const;
 
   private:
-    B b_;
-    point p_, nop_;
+    const B& b_;
+    point nop_, p_;
   };
 
 
@@ -189,9 +179,7 @@ namespace oln
   public:
     stc_using(point);
 
-    box_bkd_piter_();
-    box_bkd_piter_(const B& b);
-    void set_box(const B& b);
+    box_bkd_piter_(const Point_Set<B>& b);
 
     void impl_start();
     void impl_next();
@@ -201,8 +189,8 @@ namespace oln
     const point* impl_point_adr() const;
 
   private:
-    B b_;
-    point p_, nop_;
+    const B& b_;
+    point nop_, p_;
   };
 
 
@@ -275,7 +263,7 @@ namespace oln
 
     template <typename Exact>
     const typename box_<Exact>::point&
-    box_<Exact>::pmin() const
+    box_<Exact>::impl_pmin() const
     {
       for (unsigned i = 0; i < n; ++i)
 	invariant(this->pmin_[i] <= this->pmax_[i]);
@@ -284,7 +272,7 @@ namespace oln
 
     template <typename Exact>
     const typename box_<Exact>::point&
-    box_<Exact>::pmax() const
+    box_<Exact>::impl_pmax() const
     {
       for (unsigned i = 0; i < n; ++i)
 	invariant(this->pmax_[i] >= this->pmin_[i]);
@@ -293,14 +281,14 @@ namespace oln
 
     template <typename Exact>
     typename box_<Exact>::point&
-    box_<Exact>::pmin()
+    box_<Exact>::impl_pmin()
     {
       return this->pmin_;
     }
 
     template <typename Exact>
     typename box_<Exact>::point&
-    box_<Exact>::pmax()
+    box_<Exact>::impl_pmax()
     {
       return this->pmax_;
     }
@@ -308,23 +296,10 @@ namespace oln
 
     // --------------------   box_fwd_piter_<B>
 
-
     template <typename B>
-    box_fwd_piter_<B>::box_fwd_piter_()
+    box_fwd_piter_<B>::box_fwd_piter_(const Point_Set<B>& b)
+      : b_(exact(b))
     {
-    }
-
-    template <typename B>
-    box_fwd_piter_<B>::box_fwd_piter_(const B& b)
-    {
-      this->set_box(b);
-    }
-
-    template <typename B>
-    void
-    box_fwd_piter_<B>::set_box(const B& b)
-    {
-      b_ = b;
       nop_ = b_.pmax();
       ++nop_[0];
       p_ = nop_;
@@ -385,23 +360,10 @@ namespace oln
 
     // --------------------   box_bkd_piter_<P>
 
-
     template <typename B>
-    box_bkd_piter_<B>::box_bkd_piter_()
+    box_bkd_piter_<B>::box_bkd_piter_(const Point_Set<B>& b)
+      : b_(exact(b))
     {
-    }
-
-    template <typename B>
-    box_bkd_piter_<B>::box_bkd_piter_(const B& b)
-    {
-      this->set_box(b);
-    }
-
-    template <typename B>
-    void
-    box_bkd_piter_<B>::set_box(const B& b)
-    {
-      b_ = b;
       nop_ = b_.pmin();
       --nop_[0];
       p_ = nop_;
