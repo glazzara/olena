@@ -34,32 +34,62 @@
 namespace oln
 {
 
-  /// \{
   /// Operator == (default version).
+  template <typename L, typename R>
+  bool operator==(const Any<L>& lhs, const Any<R>& rhs);
+
+  /// Operator != (default version).
+  template <typename L, typename R>
+  bool operator!=(const Any<L>& lhs, const Any<R>& rhs);
+
+  /// Operator <  (default version).
+  template <typename L, typename R>
+  bool operator< (const Any<L>& lhs, const Any<R>& rhs);
+
+  /// Operator >  (default version).
+  template <typename L, typename R>
+  bool operator> (const Any<L>& lhs, const Any<R>& rhs);
+
+  /// Operator >= (default version).
+  template <typename L, typename R>
+  bool operator>=(const Any<L>& lhs, const Any<R>& rhs);
+
+  /// Operator <= (default version).
+  template <typename L, typename R>
+  bool operator<=(const Any<L>& lhs, const Any<R>& rhs);
+
+  /// Operator += (default version).
+  template <typename L, typename R>
+  L& operator+=(Any<L>& lhs, const Any<R>& rhs);
+
+  /// Operator + (default version).
+  template <typename T>
+  T operator+ (const Any<T>& lhs, const Any<T>& rhs);
+
+  /// Operator -= (default version).
+  template <typename L, typename R>
+  L& operator-=(Any<L>& lhs, const Any<R>& rhs);
+  
+  /// Operator - (default version).
+  template <typename T>
+  T operator- (const Any<T>& rhs);
+
+
+
+
+# ifndef OLN_INCLUDE_ONLY
 
   template <typename L, typename R>
   bool operator==(const Any<L>& lhs, const Any<R>& rhs)
   {
     return exact(lhs).op_equal_(exact(rhs));
   }
-
-  /// \}
-
-
-  /// \{
-  /// Operator != (default version).
  
   template <typename L, typename R>
   bool operator!=(const Any<L>& lhs, const Any<R>& rhs)
   {
-    return not (lhs == rhs);
+    return not (exact(lhs) == exact(rhs));
   }
-
-  /// \}
-
-
-  /// \{
-  /// Operator <  (default version).
 
   template <typename L, typename R>
   bool operator< (const Any<L>& lhs, const Any<R>& rhs)
@@ -67,47 +97,23 @@ namespace oln
     return exact(lhs).op_less_(exact(rhs));
   }
 
-  /// \}
-
-
-  /// \{
-  /// Operator >  (default version).
-
   template <typename L, typename R>
   bool operator> (const Any<L>& lhs, const Any<R>& rhs)
   {
-    return rhs < lhs;
+    return exact(rhs) < exact(lhs);
   }
-
-  /// \}
-
-
-  /// \{
-  /// Operator >= (default version).
 
   template <typename L, typename R>
   bool operator>=(const Any<L>& lhs, const Any<R>& rhs)
   {
-    return not (lhs < rhs);
+    return not (exact(lhs) < exact(rhs));
   }
-
-  /// \}
-
-
-  /// \{
-  /// Operator <= (default version).
 
   template <typename L, typename R>
   bool operator<=(const Any<L>& lhs, const Any<R>& rhs)
   {
-    return not (rhs < lhs);
+    return not (exact(rhs) < exact(lhs));
   }
-
-  /// \}
-
-
-  /// \{
-  /// Operator += (default version).
 
   template <typename L, typename R>
   L& operator+=(Any<L>& lhs, const Any<R>& rhs)
@@ -115,30 +121,12 @@ namespace oln
     return exact(lhs).op_plus_equal_(exact(rhs));
   }
 
-  /// \}
-
-
-  /// \{
-  /// Operators + (default versions).
-
   template <typename T>
   T operator+ (const Any<T>& lhs, const Any<T>& rhs)
   {
     T tmp = exact(lhs);
-    return tmp += rhs;
+    return tmp += exact(rhs);
   }
-
-//   template <typename L, typename R>
-//   xtd_op_plus_trait(L, R) operator+ (const Any<L>& lhs, const Any<R>& rhs)
-//   {
-//     return exact(lhs).op_plus_(exact(rhs));
-//   }
-
-  /// \}
-
-
-  /// \{
-  /// Operator -= (default version).
 
   template <typename L, typename R>
   L& operator-=(Any<L>& lhs, const Any<R>& rhs)
@@ -146,35 +134,38 @@ namespace oln
     return exact(lhs).op_minus_equal_(exact(rhs));
   }
 
-  /// \}
-
-  
-  /// \{
-  /// Operators - (default versions).
-
   template <typename T>
   T operator- (const Any<T>& rhs)
   {
     return exact(rhs).op_unary_minus_();
   }
 
-/*  template <typename T>
+  /*
+
+  FIXME: Activate?
+
+  template <typename L, typename R>
+  xtd_op_plus_trait(L, R) operator+ (const Any<L>& lhs, const Any<R>& rhs)
+  {
+    return exact(lhs).op_plus_(exact(rhs));
+  }
+
+  template <typename T>
   T operator- (const Any<T>& lhs, const Any<T>& rhs)
   {
     T tmp = exact(lhs);
     return tmp -= rhs;
   }
-*/
 
-//   template <typename L, typename R>
-//   xtd_op_minus_trait(L, R) operator- (const Any<L>& lhs, const Any<R>& rhs)
-//   {
-//     return exact(lhs).op_minus_(exact(rhs));
-//   }
+  template <typename L, typename R>
+  xtd_op_minus_trait(L, R) operator- (const Any<L>& lhs, const Any<R>& rhs)
+  {
+    return exact(lhs).op_minus_(exact(rhs));
+  }
 
-  /// \}
+  */
 
-  
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

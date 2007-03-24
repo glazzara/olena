@@ -1,3 +1,53 @@
+
+
+* Rough list
+
+value types (including gray level types, label types, (bool, T) type,
+color types, etc.)
+
+op traits (for C types, oln value types, and also oln types such as
+points, etc.)
+
+image thru a function f (where f is pure, a bijection, a two-way
+function, an accessor, a projection, etc.)
+
+basics important routines: fill, assign, clone, unmorph (undress?),
+convert, ...
+
+torus and mask types, and the proper niter type deductions (with or
+without virtual border)
+
+virtual border adaptation and initialization policies
+
+safe type when image is mutable; question: can we have Mutable_Image&
+as argument when an image, a morpher, is created on the fly?
+
+io pnm
+
+draw routines
+
+window types such as lines, rectangles, and so on
+
+meta-window type; for instance, ball, segment, etc.
+
+const promotions for op_<L,O,R> types
+
+
+* Tiny improvements
+
+Replace point type comparison assertions by an explicit version
+(just like assert_same_grid_)
+
+
+
+* Some ideas
+
+Consider the morphological gradient "d(f) - e(f)", it is a combination
+of local functions; can we make it explicit?  Advantage: no temp image
+created.
+
+
+
 * Renaming
 
 ** point_accessibility

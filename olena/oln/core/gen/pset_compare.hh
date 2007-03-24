@@ -40,15 +40,7 @@ namespace oln
   bool operator == (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
 
   template <typename L, typename R>
-  bool operator <= (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
-
-
-  // FIXME: Guards; without impl!
-  template <typename L, typename R> bool operator <  (const Point_Set<L>&, const Point_Set<R>&);
-  template <typename L, typename R> bool operator >  (const Point_Set<L>&, const Point_Set<R>&);
-  template <typename L, typename R> bool operator >= (const Point_Set<L>&, const Point_Set<R>&);
-  // end of FIXME
-
+  bool operator < (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -92,26 +84,26 @@ namespace oln
     */
 
 
-    //  Point_Set L  <=  Point_Set R
-    // ------------------------------
+    //  Point_Set L  <  Point_Set R
+    // -----------------------------
 
     // Generic version.
 
     template <typename L, typename R>
-    bool op_leq_(const Point_Set<L>& lhs, const Point_Set<R>& rhs)
+    bool op_less_(const Point_Set<L>& lhs, const Point_Set<R>& rhs)
     {
-      // quick test:
-      if (lhs.npoints() > rhs.npoints())
+      if (lhs.npoints() >= rhs.npoints()) // quick test
 	return false;
-      // final test:
-      oln_piter(R) pr(rhs);
-      pr.start();
-      oln_piter(L) pl(lhs);
-      for_all(pl)
+      // we have lhs.npoints() < rhs.npoints()
+      // so we shall now test that all points of lhs are IN rhs
+      oln_piter(R) p_rhs(rhs);
+      p_rhs.start();
+      oln_piter(L) p_lhs(lhs);
+      for_all(p_lhs)
 	{
-	  while (pr.is_valid() and pr.to_point() != pl.to_point())
-	    pr.next();
-	  if (not pr.is_valid())
+	  while (p_rhs.is_valid() and p_rhs.to_point() != p_lhs.to_point())
+	    p_rhs.next();
+	  if (not p_rhs.is_valid())
 	    return false;
 	}
       return true;
@@ -120,14 +112,18 @@ namespace oln
     /*
     // Version for Boxes.
 
-      FIXME: Activate.
+    FIXME: Activate.
     template <typename L, typename R>
-    bool op_leq_(const Box<L>& lhs, const Box<R>& rhs)
+    bool op_less_(const Box<L>& lhs, const Box<R>& rhs)
     {
+      // subset test (i.e., lhs <= rhs)
       for (unsigned i = 0; i < L::n; ++i)
-	if (lhs.pmin()[i] < rhs.pmin()[i] or lhs.pmax()[i] > rhs.pmax()[i])
-	  return false;
-      return true;
+	{
+	  if (lhs.pmin()[i] < rhs.pmin()[i] or lhs.pmax()[i] > rhs.pmax()[i])
+	    return false;
+	}
+      // proper (strict) test
+      return lhs != rhs;
     }
     */
 
@@ -140,15 +136,15 @@ namespace oln
   template <typename L, typename R>
   bool operator == (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
   {
-    mlc::assert_equal_< oln_grid(L), oln_grid(R) >::check(); // FIXME: Add err msg.
+    assert_same_grid_<L, R>::check();
     return impl::op_eq_(exact(lhs), exact(rhs));
   }
 
   template <typename L, typename R>
-  bool operator <= (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
+  bool operator < (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
   {
-    mlc::assert_equal_< oln_grid(L), oln_grid(R) >::check(); // FIXME: Add err msg.
-    return impl::op_leq_(exact(lhs), exact(rhs));
+    assert_same_grid_<L, R>::check();
+    return impl::op_less_(exact(lhs), exact(rhs));
   }
  
 # endif // ! OLN_INCLUDE_ONLY

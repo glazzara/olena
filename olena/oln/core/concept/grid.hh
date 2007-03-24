@@ -52,6 +52,27 @@ namespace oln
   };
 
 
+  namespace ERROR
+  {
+
+    template < typename Type_1,
+	       typename Type_2,
+	       typename Grid_1 = oln_grid(Type_1),
+	       typename Grid_2 = oln_grid(Type_2) >
+    struct both_types_should_have_the_same_grid_
+    {
+    };
+
+  } // end of namespace oln::ERROR
+
+
+  template <typename T1, typename T2>
+  struct assert_same_grid_
+    : public mlc::assert_< mlc::eq_<oln_grid(T1), oln_grid(T2)>,
+			   ERROR::both_types_should_have_the_same_grid_<T1, T2> >
+  {};
+
+
 } // end of namespace oln
 
 
