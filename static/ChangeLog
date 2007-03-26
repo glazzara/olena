@@ -1,3 +1,9 @@
+2007-03-26  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
+
+	Add new mini-std.
+	* samples/mini-std/cpp2/mini-std.cc: Here. New.
+	* samples/mini-std/cpp2: Here. New.
+
 2007-03-20  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Fix mini-oln, add mutable image type and rgb value.
