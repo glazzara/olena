@@ -17,6 +17,15 @@
 
 #include <oln/debug/print.hh>
 
+
+template <typename I>
+void my_test(I ima, int i)
+{
+  oln_piter(I) p1(ima.points());
+  for_all(p1)
+    assert(ima(p1) == i);
+}
+
 int main()
 {
   using namespace oln;
@@ -31,54 +40,19 @@ int main()
   for_all(p1)
     ima(p1) = i++ % 2;
 
-  std::cout << "ima" << std::endl;
-  debug::print(ima);
+  my_test( (morpho::elementary_erosion(ima + c4)).image(), 0);
 
+  my_test( (morpho::elementary_dilation(ima + c4)).image(), 1 );
 
-  I tmp = (morpho::elementary_erosion(ima + c4)).image();
-  p1 = tmp.points();
-  for_all(p1)
-    assert(tmp(p1) == 0);
+  my_test( (morpho::elementary_opening(ima + c4)).image(), 0);
 
-  //  std::cout << "elementary_dilation" << std::endl;
-  tmp = (morpho::elementary_dilation(ima + c4)).image();
-  p1 = tmp.points();
-  for_all(p1)
-    assert(tmp(p1) == 1);
+  my_test( (morpho::elementary_closing(ima + c4)).image(), 1);
 
-  // std::cout << "erosion_w" << std::endl;
-  tmp = morpho::erosion(ima, win3x3);
-  p1 = tmp.points();
-  for_all(p1)
-    assert(tmp(p1) == 0);
+  my_test( morpho::erosion(ima, win3x3), 0);
 
-  // std::cout << "dilation_w" << std::endl;
-  tmp = morpho::dilation(ima, win3x3);
-  p1 = tmp.points();
-  for_all(p1)
-    assert(tmp(p1) == 1);
+  my_test( morpho::dilation(ima, win3x3), 1);
 
-  // std::cout << "elementary_opening" << std::endl;
-  tmp = (morpho::elementary_opening(ima + c4)).image();
-  p1 = tmp.points();
-  for_all(p1)
-    assert(tmp(p1) == 0);
+  my_test( morpho::opening(ima, win3x3), 0);
 
-  // std::cout << "elementary_closing" << std::endl;
-  tmp = (morpho::elementary_closing(ima + c4)).image();
-  p1 = (tmp.points());
-  for_all(p1)
-    assert(tmp(p1) == 1);
-
-  // std::cout << "opening" << std::endl;
-  tmp = morpho::opening(ima, win3x3);
-  p1 = (tmp.points());
-  for_all(p1)
-    assert(tmp(p1) == 1);
-
-  // std::cout << "closing" << std::endl;
-  debug::print( morpho::closing(ima, win3x3) );
-  p1 = (tmp.points());
-  for_all(p1)
-    assert(tmp(p1) == 1);
+  my_test( morpho::closing(ima, win3x3), 1);
 }

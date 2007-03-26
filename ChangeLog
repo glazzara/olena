@@ -1,3 +1,15 @@
+2007-03-26  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix 'Make check morpho' / 'morpho'. draft cc_tarjan .
+
+	* olena/tests/algorithms/basic_morpho.cc: .
+	* olena/oln/morpho/dilation.hh: .
+	* olena/oln/morpho/cc_tarjan.cc: New.
+	* olena/oln/morpho/erosion.hh: .
+	* olena/oln/level/apply.hh: .
+	* olena/oln/core/2d/image2d.hh: .
+	* olena/oln/core/internal/image_base.hh: .
+
 2007-03-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Make check : test basic morpho.

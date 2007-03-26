@@ -213,11 +213,10 @@ namespace oln
     box2d b;
     bool box_ok = init(b, with, dat);
     postcondition(box_ok);
-    array2d_<T,int>* ptr = new array2d_<T,int>(b.pmin().row(), //FIXME
-							       //: *.
-					      b.pmin().col(),
-					      b.pmax().row(),
-					      b.pmax().col());
+    array2d_<T,int>* ptr = new array2d_<T,int>(b.pmin().row(),
+					       b.pmin().col(),
+					       b.pmax().row(),
+					       b.pmax().col());
     target.data__() = new typename image2d<T>::data(ptr, b);
     return box_ok;
   }

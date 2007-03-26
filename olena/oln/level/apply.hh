@@ -66,7 +66,7 @@ namespace oln
         typedef typename F::result   result;
 
 	oln_plain_value(I, result) output;
-	init(output, with, input);
+	prepare(output, with, input);
         oln_piter(I) p(input.points());
         for_all(p)
           output(p) = f(input(p));

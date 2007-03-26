@@ -54,21 +54,24 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      erosion_(const Image<I>& input, const Window<W>& win)
+      erosion_on_function_(const Image<I>&,
+			   const I& input,
+			   const Window<W>& win)
       {
 	border::fill(input, oln_max(oln_value(I)));
 	accumulator::min_<oln_value(I)> min;
 	return level::apply_local(min, input, win);
       }
 
-      template <typename I>
+      template <typename I, typename W>
       oln_plain(I)
       erosion_on_set_(const Image<I>&,
-		      const I& input)
+		      const I& input,
+		      const Window<W>& win)
       {
 	border::fill(input, true);
 	accumulator::and_<oln_value(I)> accu_and;
-	return level::apply_local(accu_and, input);
+	return level::apply_local(accu_and, input, win);
       }
 
       // FIXME: Add a fast version.
@@ -76,16 +79,18 @@ namespace oln
 
       // Impl facade.
 
-      template <typename I>
-      oln_plain(I) erosion_(const Image<I>& input)
+      template <typename I, typename W>
+      oln_plain(I) erosion_(const Image<I>&  input,
+			    const Window<W>& win)
       {
-	return erosion_on_function_(exact(input), exact(input));
+	return erosion_on_function_(exact(input), exact(input), win);
       }
 
-      template <typename I>
-      oln_plain(I) erosion_(const Binary_Image<I>& input)
+      template <typename I, typename W>
+      oln_plain(I) erosion_(const Binary_Image<I>& input,
+			    const Window<W>&       win)
       {
-	return erosion_on_set_(exact(input), exact(input));
+	return erosion_on_set_(exact(input), exact(input), win);
       }
 
     } // end of namespace oln::morpho::impl

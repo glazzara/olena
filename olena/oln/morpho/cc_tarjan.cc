@@ -28,84 +28,76 @@
 #ifndef	OLN_MORPHO_DILATION_HH
 # define OLN_MORPHO_DILATION_HH
 
-#include <oln/level/apply_local.hh>
-#include <oln/border/fill.hh>
-#include <oln/accumulator/max.hh>
-
 namespace oln
 {
 
   namespace morpho
   {
 
-    // Fwd decl.
-
-    template <typename I, typename W>
-    oln_plain(I)
-    dilation(const Image<I>& input, const Window<W>& win);
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    namespace impl
+    template <typename I>
+    oln_point(I) find_root(const oln_point(I)& x)
     {
-
-      // Generic version.
-
-      template <typename I, typename W>
-      oln_plain(I)
-      dilation_on_function_(const Image<I>&,
-			    const I& input,
-			    const Window<W>& win)
+      if (parent[x] != x)
       {
- 	border::fill(input, oln_min(oln_value(I)));
- 	accumulator::max_<oln_value(I)> max;
- 	return level::apply_local(max, input, win);
+	parent[x] = find_root(parent[x]);
+	return parent(x);
       }
-
-      template <typename I, typename W>
-      oln_plain(I)
-      dilation_on_set_(const Image<I>&,
-		       const I& input,
-		       const Window<W>& win)
-      {
-	border::fill(input, oln_min(oln_value(I)));
-	accumulator::or_<oln_value(I)> accu_or;
-	return level::apply_local(accu_or, input, win);
-      }
-
-      // FIXME: Add a fast version.
-
-
-      // Impl facade.
-
-      template <typename I, typename W>
-      oln_plain(I) dilation_(const Image<I>&  input,
-			     const Window<W>& win)
-      {
-	return dilation_on_function_(exact(input), exact(input), win);
-      }
-
-      template <typename I, typename W>
-      oln_plain(I) dilation_(const Binary_Image<I>& input,
-			     const Window<W>&       win)
-      {
-	return dilation_on_set_(exact(input), exact(input), win);
-      }
-
-    } // end of namespace oln::morpho::impl
-
-
-    // Facade.
-
-    template <typename I, typename W>
-    oln_plain(I)
-    dilation(const Image<I>& input, const Window<W>& win)
-    {
-      return impl::dilation_(exact(input), exact(win));
+      return x;
     }
 
-# endif // ! OLN_INCLUDE_ONLY
+    template <typename I>
+    void do_union(const oln_point(I)& n,
+		  const oln_point(I)& p,
+		  const oln_plain_value(I, oln_point(I))& parent)
+    {
+      oln_point(I) r = find_root(n);
+      if (r != p)
+	parent(r) = p;
+    }
+
+    template <typename I>
+    oln_plain_value(I, unsigned)
+      cc_tarjan(const Binary_Image<I>& input)
+    {
+      oln_plain_value(I, unsigned) output;
+      prepare(output, with, input);
+
+      oln_plain_value(I, oln_point(I)) parent;
+      prepare(parent, with, input);
+
+      // Init
+      unsigned current_label = 0;
+      oln_plain(I) is_processed;
+      prepare(is_processed, with, input);
+      oln_piter(I) p(input.points());
+      for_all(p)
+	is_processed(p) = false; // FIXME : built with.
+
+
+      // Fist pass
+      oln_piter(I) p(input.points());
+      for_all(p)
+      {
+	oln_niter(I) n(p, input);
+	for_all(n)
+	{
+	  if ( is_processed(n) )
+	    do_union(n, p, parent);
+	}
+	is_processed(p) = true;
+      }
+
+
+      // Second pass
+      oln_piter(I) p2(input.points());
+      for_all(p2)
+      {
+	if ( parent(p) == p )
+	  output(p) = ++current_label;
+	else
+	  output(p) = output(parent(p));
+      }
+    }
 
   } // end of namespace oln::morpho
 
