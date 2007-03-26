@@ -35,7 +35,7 @@
 
 # include <oln/core/internal/point_set_base.hh>
 
-# include <oln/core/concept/iterator_on_points.hh>
+# include <oln/core/internal/iterator_on_points_base.hh>
 
 # include <oln/core/gen/fbbox.hh>
 
@@ -190,7 +190,7 @@ namespace oln
   struct super_trait_< rle_pset_fwd_piter_<P> >
   {
     typedef rle_pset_fwd_piter_<P> current;
-    typedef Iterator_on_Points<current> ret;
+    typedef internal::iterator_on_points_base<current> ret;
   };
 
   // Virtual types
@@ -208,9 +208,9 @@ namespace oln
   ** P must be a point type
   */
   template <typename P>
-  class  rle_pset_fwd_piter_ : public Iterator_on_Points<rle_pset_fwd_piter_<P> >
+  class  rle_pset_fwd_piter_ : public internal::iterator_on_points_base<rle_pset_fwd_piter_<P> >
   {
-    typedef Iterator_on_Points< rle_pset_fwd_piter_<P> > super;
+    typedef internal::iterator_on_points_base< rle_pset_fwd_piter_<P> > super;
     typedef rle_pset_fwd_piter_<P> current;
   public:
     stc_using(point);
@@ -328,7 +328,7 @@ namespace oln
   struct super_trait_< rle_pset_bkd_piter_<P> >
   {
     typedef rle_pset_bkd_piter_<P> current;
-    typedef Iterator_on_Points<current> ret;
+    typedef internal::iterator_on_points_base<current> ret;
   };
 
   // Virtual type
@@ -345,9 +345,9 @@ namespace oln
   ** P must be a point type
   */
   template <typename P>
-  class rle_pset_bkd_piter_ : public Iterator_on_Points<rle_pset_bkd_piter_<P> >
+  class rle_pset_bkd_piter_ : public internal::iterator_on_points_base<rle_pset_bkd_piter_<P> >
   {
-    typedef Iterator_on_Points< rle_pset_bkd_piter_<P> > super;
+    typedef internal::iterator_on_points_base< rle_pset_bkd_piter_<P> > super;
     typedef rle_pset_bkd_piter_<P> current;
   public:
     stc_using(point);

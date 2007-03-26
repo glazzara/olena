@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,74 +25,73 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_ITERATOR_HH
-# define OLN_CORE_CONCEPT_ITERATOR_HH
+#ifndef OLN_CORE_INTERNAL_ITERATOR_ON_POINTS_BASE_HH
+# define OLN_CORE_INTERNAL_ITERATOR_ON_POINTS_BASE_HH
 
-# include <oln/core/equipment.hh>
-
-
-
-/// Macro for_all.
-# define for_all(i)  for (i.start(); i.is_valid(); i.next())
-
-
+# include <oln/core/concept/iterator_on_points.hh>
 
 namespace oln
 {
 
-  /// Concept-class "Iterator".
+  // implementation
+
+
+  // Forward Declarations
+
+  namespace internal {
+    template <typename Exact>
+    struct iterator_on_points_base;
+  };
+
+  // Super type
 
   template <typename Exact>
-  struct Iterator : virtual public Any<Exact>
+  struct super_trait_< internal::iterator_on_points_base<Exact> >
   {
-    void start();
-    void next();
-    void invalidate();
-    bool is_valid() const;
+    typedef Iterator_on_Points<Exact> ret;
+  };
+
+  // Virtual types
+
+  template <typename Exact>
+  struct vtypes< internal::iterator_on_points_base<Exact> >
+  {
+    typedef stc::abstract point;
+
+    typedef stc_deferred(point) point__;
+    typedef stc::final<typename point__::grid>    grid;
+    typedef stc::final<typename point__::coord>   coord;
+    typedef stc::final<typename point__::dim>     dim;
+    typedef stc::final<typename point__::dpoint>  dpoint;
+  };
+
+
+
+namespace internal
+{
+  // iterator_on_points_base class
+
+  template <typename Exact>
+  class iterator_on_points_base : public Iterator_on_Points<Exact>
+  {
 
   protected:
-    Iterator();
-
-  }; // end of class oln::Iterator<Exact>
-
+    iterator_on_points_base();
+  };
 
 
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename Exact>
-  void Iterator<Exact>::start()
-  {
-    exact(this)->impl_start();
-  }
-
-  template <typename Exact>
-  void Iterator<Exact>::next()
-  {
-    precondition(this->is_valid());
-    exact(this)->impl_next();
-  }
-
-  template <typename Exact>
-  void Iterator<Exact>::invalidate()
-  {
-    exact(this)->impl_invalidate();
-  }
-
-  template <typename Exact>
-  bool Iterator<Exact>::is_valid() const
-  {
-    return exact(this)->impl_is_valid();
-  }
-
-  template <typename Exact>
-  Iterator<Exact>::Iterator()
+  iterator_on_points_base<Exact>::iterator_on_points_base()
   {
   }
 
-# endif
-
-} // end of namespace oln
-
+# endif // !OLN_INCLUDE_ONLY
+}
 
 
-#endif // ! OLN_CORE_CONCEPT_ITERATOR_HH
+
+}
+
+#endif // !OLN_CORE_INTERNAL_ITERATOR_ON_POINTS_BASE_HH

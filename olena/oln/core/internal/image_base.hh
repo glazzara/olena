@@ -148,8 +148,6 @@ namespace oln
     // Final.
 
     typedef stc::final< stc::is<Image> >         category;
-    // FIXME:
-    //typedef stc::final< box_<point__> >          box;
     typedef stc::final <typename pset__::box>	 box;
     typedef stc::final< oln_grid(point__) >      grid;
     typedef stc::final< oln_dpoint(point__) >    dpoint;

@@ -28,7 +28,7 @@
 #ifndef OLN_CORE_INTERNAL_PITER_ADAPTOR_HH
 # define OLN_CORE_INTERNAL_PITER_ADAPTOR_HH
 
-# include <oln/core/concept/iterator_on_points.hh>
+# include <oln/core/internal/iterator_on_points_base.hh>
 
 
 namespace oln
@@ -43,7 +43,7 @@ namespace oln
   template <typename Exact>
   struct super_trait_< internal::piter_adaptor_<Exact> >
   {
-    typedef Iterator_on_Points<Exact> ret;
+    typedef internal::iterator_on_points_base<Exact> ret;
   };
 
 
@@ -65,9 +65,9 @@ namespace oln
     // defined over other types of iterator on points.
 
     template <typename Exact>
-    class piter_adaptor_ : public Iterator_on_Points<Exact>
+    class piter_adaptor_ : public internal::iterator_on_points_base<Exact>
     {
-      typedef Iterator_on_Points<Exact> super;
+      typedef internal::iterator_on_points_base<Exact> super;
     public:
 
       stc_using(point);
@@ -118,21 +118,21 @@ namespace oln
     {
       this->p_.invalidate();
     }
-    
+
     template <typename Exact>
     bool
     piter_adaptor_<Exact>::impl_is_valid() const
     {
       return this->p_.is_valid();
     }
-    
+
     template <typename Exact>
     typename piter_adaptor_<Exact>::point
     piter_adaptor_<Exact>::impl_to_point() const
     {
       return this->p_.to_point();
     }
-    
+
     template <typename Exact>
     const typename piter_adaptor_<Exact>::point*
     piter_adaptor_<Exact>::impl_point_adr() const

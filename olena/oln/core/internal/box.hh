@@ -29,6 +29,7 @@
 # define OLN_CORE_INTERNAL_BOX_HH
 
 # include <oln/core/internal/point_set_base.hh>
+# include <oln/core/internal/iterator_on_points_base.hh>
 
 
 namespace oln
@@ -116,14 +117,14 @@ namespace oln
   struct super_trait_< box_fwd_piter_<B> >
   {
     typedef box_fwd_piter_<B> current__;
-    typedef Iterator_on_Points<current__> ret;
+    typedef internal::iterator_on_points_base<current__> ret;
   };
 
   template <typename B>
   struct super_trait_<box_bkd_piter_<B> >
   {
     typedef box_bkd_piter_<B> current__;
-    typedef Iterator_on_Points<current__> ret;
+    typedef internal::iterator_on_points_base<current__> ret;
   };
 
 
@@ -145,7 +146,7 @@ namespace oln
   /// Class box_fwd_piter_<P>.
 
   template <typename B>
-  class box_fwd_piter_ : public Iterator_on_Points< box_fwd_piter_<B> >,
+  class box_fwd_piter_ : public internal::iterator_on_points_base< box_fwd_piter_<B> >,
 			 private mlc::assert_< mlc_is_a(B, Point_Set) >
   {
     typedef box_fwd_piter_<B> current;
@@ -171,7 +172,7 @@ namespace oln
   /// Class box_bkd_piter_<B>.
 
   template <typename B>
-  class box_bkd_piter_ : public Iterator_on_Points< box_bkd_piter_<B> >,
+  class box_bkd_piter_ : public internal::iterator_on_points_base< box_bkd_piter_<B> >,
 			 private mlc::assert_< mlc_is_a(B, Point_Set) >
   {
     typedef box_bkd_piter_<B> current;

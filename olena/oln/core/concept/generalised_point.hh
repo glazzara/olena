@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,74 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_ITERATOR_HH
-# define OLN_CORE_CONCEPT_ITERATOR_HH
-
-# include <oln/core/equipment.hh>
-
-
-
-/// Macro for_all.
-# define for_all(i)  for (i.start(); i.is_valid(); i.next())
-
-
+#ifndef OLN_CORE_CONCEPT_GENERALISED_POINTS_HH
+# define OLN_CORE_CONCEPT_GENERALISED_POINTS_HH
 
 namespace oln
 {
 
-  /// Concept-class "Iterator".
+  /// FIXME:  Instant value.
+  //  oln_decl_instant_value(point);
+
+
+  // Generalised_Point concept
 
   template <typename Exact>
-  struct Iterator : virtual public Any<Exact>
+  struct Generalised_Point : virtual public Any<Exact>
   {
-    void start();
-    void next();
-    void invalidate();
-    bool is_valid() const;
+    stc_typename(grid);
+    stc_typename(dim);
+    stc_typename(coord);
+    stc_typename(dpoint);
+
+    enum { n = mlc_value(dim) };
 
   protected:
-    Iterator();
-
-  }; // end of class oln::Iterator<Exact>
+    Generalised_Point();
+  };
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename Exact>
-  void Iterator<Exact>::start()
+  Generalised_Point<Exact>::Generalised_Point()
   {
-    exact(this)->impl_start();
-  }
-
-  template <typename Exact>
-  void Iterator<Exact>::next()
-  {
-    precondition(this->is_valid());
-    exact(this)->impl_next();
-  }
-
-  template <typename Exact>
-  void Iterator<Exact>::invalidate()
-  {
-    exact(this)->impl_invalidate();
-  }
-
-  template <typename Exact>
-  bool Iterator<Exact>::is_valid() const
-  {
-    return exact(this)->impl_is_valid();
-  }
-
-  template <typename Exact>
-  Iterator<Exact>::Iterator()
-  {
-  }
-
-# endif
-
-} // end of namespace oln
+  };
 
 
+# endif // OLN_INCLUDE_ONLY
 
-#endif // ! OLN_CORE_CONCEPT_ITERATOR_HH
+}
+
+#endif // !OLN_CORE_CONCEPT_GENERALISED_POINTS_HH

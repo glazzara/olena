@@ -30,8 +30,11 @@
 # define OLN_CORE_CONCEPT_POINT_HH
 
 # include <mlc/value.hh>
+
+# include <oln/core/concept/generalised_point.hh>
 # include <oln/core/concept/grid.hh>
 # include <oln/core/concept/operators.hh>
+
 
 
 
@@ -44,14 +47,9 @@ namespace oln
   /// Concept-class "Point".
 
   template <typename Exact>
-  struct Point : public Any<Exact>
+  struct Point : public Generalised_Point<Exact>
   {
-    stc_typename(grid);
-    stc_typename(dim);
-    stc_typename(coord);
-    stc_typename(dpoint);
-
-    enum { n = mlc_value(dim) };
+    stc_using_from(Generalised_Point, dpoint);
 
     /// Operator ==.
     bool op_equal_(const Exact& rhs) const;

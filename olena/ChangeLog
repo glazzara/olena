@@ -1,3 +1,20 @@
+2007-03-26  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add generalised_point concept.
+
+	* tests/core/sparse_image.cc,
+	* tests/core/rle_image.cc: remove print from tests.
+	* oln/core/rle/rle_pset.hh, oln/core/concept/iterator_on_points.hh,
+	* oln/core/gen/dpoints_piter.hh, oln/core/internal/box.hh,
+	* oln/core/internal/piter_adaptor.hh: there are now derived from iterator_on_point_base class.
+	* oln/core/concept/iterator.hh: add virtual for diamond inheritance.
+	* oln/core/concept/point.hh: remove useless traits declarations. 
+	(there are now declare in generalised_point_class). 
+	* oln/core/concept/generalised_point.hh: New, generalised_point class.
+	* oln/core/internal/image_base.hh: remove dead code.
+	* oln/core/internal/iterator_on_points_base.hh: New iterator_on_point_base class for
+	factorize some code on point iterators.
+
 2007-03-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update point set hierarchy with Box.
