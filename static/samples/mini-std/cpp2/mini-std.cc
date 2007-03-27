@@ -28,29 +28,32 @@
 /* \file samples/mini-std/mini-std.cc
    \brief A proof of concept of Static using a mini-version of STL.  */
 
-#include <mlc/case.hh>
-#include <stc/any.hh>
-#include <stc/scoop.hh>
+/*
+ How to compile:
+ g++ mini-std.cc -I../../../../olena/oln -I../../../../metalic
+ */
 
 #include <list>
-
 #include <iostream>
 
+#include <mlc/contract.hh>
+#include <stc/scoop.hh>
+
+# define mstd_typename_shortcut__(Type, Alias) typename Type::Alias
+
+
+
 /*-------------.
-  | Equipement.  |
-  `-------------*/
-
-// Helper macros.
-#define mstd_type_of_(FromType, Alias)					\
-  find_vtype<FromType, mstd::typedef_:: Alias##_type>::ret
-
-#define mstd_type_of(FromType, Alias)                                    \
-  typename mstd_type_of_(FromType, Alias)
-
+| Equipement.  |
+`-------------*/
 
 // Add equipment
-stc_scoop_equipment_for_namespace(mstd);
 mlc_case_equipment_for_namespace(mstd);
+
+namespace mstd
+{
+# include <stc/scoop.hxx>
+} // End of namespace mstd
 
 
 #define mstd_internal_select_class(T, CLASS) \
@@ -76,30 +79,27 @@ namespace mstd
   } // End of namespace internal
 } // End of namespace mstd
 
+
 // Virtual types declaration.
 namespace mstd
 {
-//   mlc_decl_typedef(is_forward);
-//   mlc_decl_typedef(is_bidirectional);
-//   mlc_decl_typedef(is_randomaccessible);
-
-//   mlc_decl_typedef(is_isfrontinsertion);
-//   mlc_decl_typedef(is_isbackinsertion);
+  mlc_decl_typedef(is_isfrontinsertion);
+  mlc_decl_typedef(is_isbackinsertion);
 
   mlc_decl_typedef(is_unique);
   mlc_decl_typedef(is_sorted);
   mlc_decl_typedef(is_mutable);
 
 
-  mlc_decl_typedef(size_type);
+  mlc_decl_typedef(size_t);
 
-  mlc_decl_typedef(iter_type);
+  mlc_decl_typedef(iter_t);
 
-  mlc_decl_typedef(value_type);
-  mlc_decl_typedef(key_type);
+  mlc_decl_typedef(value_t);
+  mlc_decl_typedef(key_t);
 
-  mlc_decl_typedef(container_type);
-  mlc_decl_typedef(stdcontainer_type);
+  mlc_decl_typedef(container_t);
+  mlc_decl_typedef(stdcontainer_t);
 } // End of namespace mstd.
 
 /*---------------.
@@ -112,14 +112,14 @@ namespace mstd
   // Iterator.  //
   // ---------- //
 
-  template <typename E>
-  struct Iterator : public stc::any<E>
+  template <typename Exact>
+  struct Iterator : virtual public Any<Exact>
   {
-    typedef mstd_type_of(E, value) value_t;
+    stc_typename(value_t);
 
     value_t& operator*()
     {
-      this->exact().impl_op_star();
+      exact(this)->impl_op_star();
     }
   };
 
@@ -127,30 +127,31 @@ namespace mstd
   // Container.  //
   // ----------- //
 
-  template <typename E>
-  struct Container : public stc::any<E>
+  template <typename Exact>
+  struct Container : virtual Any<Exact>
   {
-    typedef mstd_type_of(E, size) size_t;
-    typedef mstd_type_of(E, stdcontainer) stdcontainer_t;
+    stc_typename(value_t);
+    stc_typename(size_t);
+    stc_typename(stdcontainer_t);
 
     size_t size() const
     {
-      return this->exact().impl_size();
+      return exact(this)->impl_size();
     }
 
     bool empty() const
     {
-      return this->exact().impl_empty();
+      return exact(this)->impl_empty();
     }
 
     void clear()
     {
-      this->exact().impl_clear();
+      exact(this)->impl_clear();
     }
 
     stdcontainer_t& get_stdcontainer()
     {
-      return this->exact().impl_get_stdcontainer();
+      return exact(this)->impl_get_stdcontainer();
     }
   };
 
@@ -158,41 +159,45 @@ namespace mstd
   // SortedContainer.  //
   // ----------------- //
 
-  template <typename E>
-  struct SortedContainer : public virtual Container<E>
+  template <typename Exact>
+  struct SortedContainer : public virtual Container<Exact>
   {
+    typedef Container<Exact> super;
   };
 
   // ----------------- //
   // UniqueContainer.  //
   // ----------------- //
 
-  template <typename E>
-  struct UniqueContainer : public virtual Container<E>
+  template <typename Exact>
+  struct UniqueContainer : public virtual Container<Exact>
   {
+    typedef Container<Exact> super;
   };
 
   // ------------------ //
   // MutableContainer.  //
   // ------------------ //
 
-  template <typename E>
-  struct MutableContainer : public virtual Container<E>
+  template <typename Exact>
+  struct MutableContainer : public virtual Container<Exact>
   {
+    typedef Container<Exact> super;
   };
 
   // ------------------ //
   // ForwardContainer.  //
   // ------------------ //
 
-  template <typename E>
-  struct ForwardContainer : public virtual Container<E>
+  template <typename Exact>
+  struct ForwardContainer : public virtual Container<Exact>
   {
-    typedef mstd_type_of(E, iter) iter_t;
+    typedef Container<Exact> super;
+    stc_typename(iter_t);
 
     iter_t begin()
     {
-      return this->exact().impl_begin();
+      return exact(this)->impl_begin();
     }
   };
 
@@ -200,14 +205,15 @@ namespace mstd
   // BiDirContainer.  //
   // ---------------- //
 
-  template <typename E>
-  struct BiDirContainer : public virtual ForwardContainer<E>
+  template <typename Exact>
+  struct BiDirContainer : public virtual ForwardContainer<Exact>
   {
-    typedef mstd_type_of(E, iter) iter_t;
+    typedef ForwardContainer<Exact> super;
+    stc_using(iter_t);
 
     iter_t end()
     {
-      return this->exactl().impl_end();
+      return exact(this)->impl_end();
     }
   };
 
@@ -215,14 +221,15 @@ namespace mstd
   // RandomAccessibleContainer.  //
   // --------------------------- //
 
-  template <typename E>
-  struct RandomAccessibleContainer : public virtual BiDirContainer<E>
+  template <typename Exact>
+  struct RandomAccessibleContainer : public virtual BiDirContainer<Exact>
   {
-    typedef mstd_type_of(E, value) value_t;
+    typedef BiDirContainer<Exact> super;
+    stc_using(value_t);
 
     value_t& operator[] (unsigned n)
     {
-      return this->exact().impl_op_get(n);
+      return exact(this)->impl_op_get(n);
     }
   };
 
@@ -230,15 +237,16 @@ namespace mstd
   // AssociativeContainer.  //
   // ---------------------- //
 
-  template <typename E>
-  struct AssociativeContainer : public virtual BiDirContainer<E>
+  template <typename Exact>
+  struct AssociativeContainer : public virtual BiDirContainer<Exact>
   {
-    typedef mstd_type_of(E, value) value_t;
-    typedef mstd_type_of(E, key) key_t;
+    typedef BiDirContainer<Exact> super;
+    stc_typename(key_t);
+    stc_using(value_t);
 
     value_t& operator[] (key_t& k)
     {
-      //      return this->exact().impl_op_get(k);
+      //      return exact(this)->impl_op_get(k);
     }
   };
 
@@ -246,24 +254,28 @@ namespace mstd
   // FrontInsertionContainer.  //
   // ------------------------- //
 
-  template <typename E>
-  struct FrontInsertionContainer : public virtual Container<E>
+  template<typename Exact>
+  struct FrontInsertionContainer;
+
+  template <typename Exact>
+  struct FrontInsertionContainer : public virtual Container<Exact>
   {
-    typedef mstd_type_of(E, value) value_t;
+    typedef Container<Exact> super;
+    stc_using(value_t);
 
     void push_front(value_t& v)
     {
-      this->exact().impl_push_front(v);
+      exact(this)->impl_push_front(v);
     }
 
     void pop_front()
     {
-      this->exact().impl_pop_front();
+      exact(this)->impl_pop_front();
     }
 
     value_t& front()
     {
-      return this->exact().impl_front();
+      return exact(this)->impl_front();
     }
   };
 
@@ -271,24 +283,25 @@ namespace mstd
   // BackInsertionContainer.  //
   // ------------------------- //
 
-  template <typename E>
-  struct BackInsertionContainer : public virtual Container<E>
+  template <typename Exact>
+  struct BackInsertionContainer : public virtual Container<Exact>
   {
-    typedef mstd_type_of(E, value) value_t;
+    typedef Container<Exact> super;
+    stc_using(value_t);
 
     void push_back(value_t& v)
     {
-      this->exact().impl_push_back(v);
+      exact(this)->impl_push_back(v);
     }
 
     void pop_back()
     {
-      this->exact().impl_pop_back();
+      exact(this)->impl_pop_back();
     }
 
     value_t& back()
     {
-      return this->exact().impl_back();
+      return exact(this)->impl_back();
     }
   };
 } // End of namespace mstd.
@@ -331,142 +344,142 @@ namespace mstd
   // Tag.
   struct switch_is_sorted;
 
-  template <typename E>
-  struct default_case_<switch_is_sorted, E>
+  template <typename Exact>
+  struct default_case_<switch_is_sorted, Exact>
   {
-    typedef Container<E> ret;
+    typedef Container<Exact> ret;
   };
 
 
   // Tag.
   struct switch_is_unique;
 
-  template <typename E>
-  struct default_case_<switch_is_unique, E>
+  template <typename Exact>
+  struct default_case_<switch_is_unique, Exact>
   {
-    typedef Container<E> ret;
+    typedef Container<Exact> ret;
   };
 
 
   // Tag.
   struct switch_is_mutable;
 
-  template <typename E>
-  struct default_case_<switch_is_mutable, E>
+  template <typename Exact>
+  struct default_case_<switch_is_mutable, Exact>
   {
-    typedef Container<E> ret;
+    typedef Container<Exact> ret;
   };
 
 
   // Tag.
   struct switch_is_frontinsertion;
 
-  template <typename E>
-  struct case_<switch_is_frontinsertion, E, 1> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), forwardIterator) >
+  template <typename Exact>
+  struct case_<switch_is_frontinsertion, Exact, 1> :
+    public mlc:: where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), forwardIterator) >
   {
-        typedef FrontInsertionContainer<E> ret;
+        typedef FrontInsertionContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct case_<switch_is_frontinsertion, E, 2> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), backwardIterator) >
+  template <typename Exact>
+  struct case_<switch_is_frontinsertion, Exact, 2> :
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), backwardIterator) >
   {
-    typedef FrontInsertionContainer<E> ret;
+    typedef FrontInsertionContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct case_<switch_is_frontinsertion, E, 3> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), biDirIterator) >
+  template <typename Exact>
+  struct case_<switch_is_frontinsertion, Exact, 3> :
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), biDirIterator) >
   {
-    typedef FrontInsertionContainer<E> ret;
+    typedef FrontInsertionContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct case_<switch_is_frontinsertion, E, 4> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), randomAccessibleIterator) >
+  template <typename Exact>
+  struct case_<switch_is_frontinsertion, Exact, 4> :
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), randomAccessibleIterator) >
   {
-    typedef FrontInsertionContainer<E> ret;
+    typedef FrontInsertionContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct default_case_<switch_is_frontinsertion, E>
+  template <typename Exact>
+  struct default_case_<switch_is_frontinsertion, Exact>
   {
-    typedef Container<E> ret;
+    typedef Container<Exact> ret;
   };
 
   // Tag.
   struct switch_is_backinsertion;
 
-  template <typename E>
-  struct case_<switch_is_backinsertion, E, 1> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), backwardIterator) >
+  template <typename Exact>
+  struct case_<switch_is_backinsertion, Exact, 1> :
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), backwardIterator) >
   {
-    typedef BackInsertionContainer<E> ret;
+    typedef BackInsertionContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct case_<switch_is_backinsertion, E, 2> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), biDirIterator) >
+  template <typename Exact>
+  struct case_<switch_is_backinsertion, Exact, 2> :
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), biDirIterator) >
   {
-    typedef BackInsertionContainer<E> ret;
+    typedef BackInsertionContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct case_<switch_is_backinsertion, E, 3> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), randomAccessibleIterator) >
+  template <typename Exact>
+  struct case_<switch_is_backinsertion, Exact, 3> :
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), randomAccessibleIterator) >
   {
-    typedef BackInsertionContainer<E> ret;
+    typedef BackInsertionContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct default_case_<switch_is_backinsertion, E>
+  template <typename Exact>
+  struct default_case_<switch_is_backinsertion, Exact>
   {
-    typedef Container<E> ret;
+    typedef Container<Exact> ret;
   };
 
   // Tag.
   struct switch_iterator_kind;
 
-  template <typename E>
-  struct case_<switch_iterator_kind, E, 1> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), forwardIterator) >
+  template <typename Exact>
+  struct case_<switch_iterator_kind, Exact, 1> :
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), forwardIterator) >
   {
-    typedef ForwardContainer<E> ret;
+    typedef ForwardContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct case_<switch_iterator_kind, E, 2> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), backwardIterator) >
+  template <typename Exact>
+  struct case_<switch_iterator_kind, Exact, 2> :
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), backwardIterator) >
   {
-    typedef BiDirContainer<E> ret;
+    typedef BiDirContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct case_<switch_iterator_kind, E, 3> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), biDirIterator) >
+  template <typename Exact>
+  struct case_<switch_iterator_kind, Exact, 3> :
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), biDirIterator) >
   {
-    typedef BiDirContainer<E> ret;
+    typedef BiDirContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct case_<switch_iterator_kind, E, 4> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), randomAccessibleIterator) >
+  template <typename Exact>
+  struct case_<switch_iterator_kind, Exact, 4> :
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), randomAccessibleIterator) >
   {
-    typedef RandomAccessibleContainer<E> ret;
+    typedef RandomAccessibleContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct case_<switch_iterator_kind, E, 5> :
-    public mlc::where_ < mstd_internal_select_class(mstd_type_of(E, iter), associativeIterator) >
+  template <typename Exact>
+  struct case_<switch_iterator_kind, Exact, 5> :
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), associativeIterator) >
   {
-    typedef AssociativeContainer<E> ret;
+    typedef AssociativeContainer<Exact> ret;
   };
 
-  template <typename E>
-  struct default_case_<switch_iterator_kind, E>
+  template <typename Exact>
+  struct default_case_<switch_iterator_kind, Exact>
   {
-    typedef Container<E> ret;
+    typedef Container<Exact> ret;
   };
 
   // ---------------- //
@@ -474,44 +487,45 @@ namespace mstd
   // ---------------- //
 
   // Forward declaration.
-  template <typename E> struct container_base;
+  template <typename Exact> struct container_base;
 
-  template<typename E>
-  struct set_super_type< container_base<E> >
+  template<typename Exact>
+  struct super_trait_< container_base<Exact> >
   {
-    typedef mlc::none ret;
+    typedef top<Exact> ret;
   };
 
-  template <typename E>
-  struct vtypes< container_base<E> >
+  template <typename Exact>
+  struct vtypes< container_base<Exact> >
   {
     // Properties
-//     typedef mlc::false_ is_forward;
-//     typedef mlc::false_ is_bidirectional;
-//     typedef mlc::false_ is_randomaccessible;
-
-//     typedef mlc::false_ is_isfrontinsertion;
-//     typedef mlc::false_ is_isbackinsertion;
+    typedef mlc::false_ is_isfrontinsertion;
+    typedef mlc::false_ is_isbackinsertion;
 
     typedef mlc::false_ is_unique;
     typedef mlc::false_ is_sorted;
     typedef mlc::false_ is_mutable;
 
     // Types
-    typedef stc::abstract size_type;
-    typedef stc::abstract value_type;
-    typedef stc::abstract key_type;
+    typedef stc::abstract size_t;
+    typedef stc::abstract value_t;
+    typedef stc::abstract key_t;
 
-    typedef stc::abstract iter_type;
+    typedef stc::abstract iter_t;
 
-    typedef stc::abstract stdcontainer_type;
+    typedef stc::abstract stdcontainer_t;
+
+//     typedef stc_deferred(stdcontainer_t) stdcontainer_t__;
+//     typedef stc::final< typename stdcontainer_t__::size_t > size_t;
   };
 
-  template <typename E>
-  struct container_base : public virtual switch_<switch_is_sorted, E>::ret,
-                          public virtual switch_<switch_is_frontinsertion, E>::ret,
-                          public virtual switch_<switch_is_backinsertion, E>::ret
+  template <typename Exact>
+  struct container_base : public virtual switch_<switch_is_sorted, Exact>::ret,
+                          public virtual switch_<switch_is_frontinsertion, Exact>::ret,
+                          public virtual switch_<switch_is_backinsertion, Exact>::ret
   {
+    typedef top<Exact> super;
+
     container_base()
     {
     }
@@ -534,26 +548,30 @@ namespace mstd
   struct forwardIterator;
 
   template<typename T>
-  struct set_super_type< forwardIterator<T> >
+  struct super_trait_< forwardIterator<T> >
   {
-    typedef mlc::none ret;
+    typedef top< forwardIterator<T> > ret;
   };
 
   template <typename T>
   struct vtypes< forwardIterator<T> >
   {
-    typedef T container_type;
-    typedef typename container_type::value_t value_type;
-    typedef typename container_type::stdcontainer_t::iterator iter_type;
+    typedef T container_t;
+    typedef typename container_t::value_t value_t;
+    typedef typename container_t::stdcontainer_t::iterator iter_t;
   };
 
   template <typename T>
   struct forwardIterator : public Iterator< forwardIterator<T> >
   {
-    typedef forwardIterator<T> self_t;
-    typedef mstd_type_of(self_t, container) container_t;
-    typedef mstd_type_of(self_t, iter) iter_t;
-    typedef mstd_type_of(self_t, value) value_t;
+    typedef forwardIterator<T> current;
+    typedef Iterator< current> super;
+
+
+    stc_deduce_typename(current, container_t);
+    stc_deduce_typename(current, iter_t);
+    stc_deduce_typename(current, value_t);
+
 
     forwardIterator(container_t& c) :
       iter_ (c.get_stdcontainer().begin())
@@ -565,15 +583,15 @@ namespace mstd
       return *iter_;
     }
 
-    self_t& operator++()
+    current& operator++()
     {
       iter_++;
       return *this;
     }
 
-    self_t operator++(int)
+    current operator++(int)
     {
-      self_t ret = *this;
+      current ret = *this;
       ++iter_;
       return ret;
     }
@@ -592,26 +610,30 @@ namespace mstd
   struct biDirIterator;
 
   template<typename T>
-  struct set_super_type< biDirIterator<T> >
+  struct super_trait_< biDirIterator<T> >
   {
-    typedef mlc::none ret;
+    typedef top< biDirIterator<T> > ret;
   };
 
   template <typename T>
   struct vtypes< biDirIterator<T> >
   {
-    typedef T container_type;
-    //typedef typename container_type::value_t value_t;
-    //typedef typename container_type::stdcontainer_t::iterator iter_t;
+    typedef T container_t;
+    //typedef typename container_t::value_t value_t;
+    //typedef typename container_t::stdcontainer_t::iterator iter_t;
+
+    // FIXME
+    typedef T value_t;
+    typedef T iter_t;
   };
 
   template <typename T>
   struct biDirIterator : public Iterator< biDirIterator<T> >
   {
-    typedef biDirIterator<T> self_t;
-    typedef mstd_type_of(self_t, container) container_t;
-    //    typedef mstd_type_of(self_t, iter) iter_t;
-    //    typedef mstd_type_of(self_t, value) value_t;
+    typedef biDirIterator<T> current;
+    stc_deduce_typename(current, container_t);
+    //    typedef stc_deduce_typename(current, iter) iter_t;
+    //    typedef stc_deduce_typename(current, value) value_t;
 
      biDirIterator(container_t& c)
 //       iter_ (c.get_stdcontainer().begin())
@@ -636,7 +658,7 @@ namespace mstd
   struct randomAccessibleIterator;
 
   template<typename T>
-  struct set_super_type< randomAccessibleIterator<T> >
+  struct super_trait_< randomAccessibleIterator<T> >
   {
     typedef mlc::none ret;
   };
@@ -644,31 +666,32 @@ namespace mstd
   template <typename T>
   struct vtypes< randomAccessibleIterator<T> >
   {
-    typedef T container_type;
-    //    typedef typename container_t::value_t value_t;
-    //     typedef typename container_t::stdcontainer_t::iterator iter_t;
+    typedef T container_t;
+    typedef typename container_t::value_t value_t;
+    typedef typename container_t::stdcontainer_t::iterator iter_t;
   };
 
   template <typename T>
   struct randomAccessibleIterator : public Iterator< randomAccessibleIterator<T> >
   {
-//     typedef randomAccessibleIterator<T> self_t;
-//     typedef mstd_type_of(self_t, container) container_t;
-//     typedef mstd_type_of(self_t, iter) iter_t;
-//     typedef mstd_type_of(self_t, value) value_t;
+    typedef randomAccessibleIterator<T> current;
 
-//     randomAccessibleIterator(container_t& c) :
-//       iter_ (c.get_stdcontainer())
-//     {
-//     }
+    stc_deduce_typename(current, container_t);
+    stc_deduce_typename(current, iter_t);
+    stc_deduce_typename(current, value_t);
 
-//     value_t& impl_op_star()
-//     {
-//       return *iter_;
-//     }
+    randomAccessibleIterator(container_t& c) :
+      iter_ (c.get_stdcontainer())
+    {
+    }
 
-//   protected:
-//     iter_t& iter_;
+    value_t& impl_op_star()
+    {
+      return *iter_;
+    }
+
+  protected:
+    iter_t iter_;
   };
 
 
@@ -683,7 +706,7 @@ namespace mstd
   struct list;
 
   template<typename T>
-  struct set_super_type< list<T> >
+  struct super_trait_< list<T> >
   {
     typedef container_base< list<T> > ret;
   };
@@ -691,30 +714,30 @@ namespace mstd
   template <typename T>
   struct vtypes< list<T> >
   {
-    //    typedef mlc::true_ is_forward;
-
-    //     typedef mlc::true_ is_isfrontinsertion;
-    //     typedef mlc::true_ is_isbackinsertion;
+    typedef mlc::true_ is_isfrontinsertion;
+    typedef mlc::true_ is_isbackinsertion;
 
     typedef mlc::true_ is_mutable;
 
 
-    typedef unsigned size_type;
-    typedef T value_type;
+    typedef unsigned size_t;
+    typedef T value_t;
 
-    typedef biDirIterator< list< T > > iter_type;
+    typedef biDirIterator< list< T > > iter_t;
 
-    typedef std::list<T> stdcontainer_type;
+    typedef std::list<T> stdcontainer_t;
   };
 
   template <typename T>
   struct list : public container_base< list<T> >
   {
-    typedef list<T> self_t;
-    typedef mstd_type_of(self_t, size) size_t;
-    typedef mstd_type_of(self_t, value) value_t;
-    typedef mstd_type_of(self_t, iter) iter_t;
-    typedef mstd_type_of(self_t, stdcontainer) stdcontainer_t;
+    typedef list<T> current;
+    typedef container_base<current> super;
+
+    stc_deduce_typename(current, size_t);
+    stc_deduce_typename(current, value_t);
+    stc_deduce_typename(current, iter_t);
+    stc_deduce_typename(current, stdcontainer_t);
 
     list() :
       list_ ()
@@ -853,8 +876,14 @@ int main()
 
   mstd::list<int>::iter_t iter2(l);
 
+  mstd::list<int>::iter_t::container_t a;
+  //a.foo();
+
   mstd::list<int>::iter_t::container_t::value_t fff;
   fff = 5;
-}
+  TEST(fff);
 
+  mstd::list<int>::value_t z;
+  z = 3;
+}
 
