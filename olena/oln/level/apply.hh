@@ -60,7 +60,7 @@ namespace oln
 
       template <typename F, typename I>
       oln_plain_value(I, typename F::result)
-	apply_(const F& f, const Image<I>& input)
+      apply_(const F& f, const Image<I>& input)
       {
         typedef typename F::argument argument;
         typedef typename F::result   result;

@@ -28,6 +28,8 @@
 #ifndef	OLN_MORPHO_DILATION_HH
 # define OLN_MORPHO_DILATION_HH
 
+#include <oln/debug/print.hh>
+
 namespace oln
 {
 
@@ -35,29 +37,89 @@ namespace oln
   {
 
     template <typename I>
-    oln_point(I) find_root(const oln_point(I)& x)
+    oln_point(I) find_root(I& ima,
+			   const oln_point(I)& x,
+			   oln_plain_value(I, oln_point(I))& parent)
     {
-      if (parent[x] != x)
+      std::cout << "enter_root( " << parent(x) << "," << x << " )" << std::endl;
+
+      if (parent(x) != x)
       {
-	parent[x] = find_root(parent[x]);
+	parent(x) = find_root(ima, parent(x), parent);
 	return parent(x);
       }
       return x;
+
+      std::cout << "leave_root" << std::endl;
     }
 
     template <typename I>
-    void do_union(const oln_point(I)& n,
+    void do_union(I& ima,
+		  const oln_point(I)& n,
 		  const oln_point(I)& p,
-		  const oln_plain_value(I, oln_point(I))& parent)
+		  oln_plain_value(I, oln_point(I))& parent)
     {
-      oln_point(I) r = find_root(n);
+      oln_point(I) r = find_root(ima, n, parent);
       if (r != p)
 	parent(r) = p;
     }
 
     template <typename I>
+    void first_pass(const I& input,
+		    oln_plain_value(I, oln_point(I))& parent,
+		    oln_plain(I)& is_processed)
+    {
+      oln_bkd_piter(I) p(input.points());
+      for_all(p)
+	{
+	  if ( input(p) )
+	  {
+	    parent(p) = p;
+	    oln_niter(I) n(p, input);
+	    for_all(n)
+	      {
+		if ( input(n) )
+		{
+		  if ( is_processed(n) )
+		  {
+		    do_union(input ,n, p, parent);
+		    std::cout << "union ("<< p << ") -> parent :" << std::endl;
+		    debug::print(parent);
+		  }
+		}
+	      }
+	    is_processed(p) = true;
+	  }
+	}
+      std::cout << "pass 1" << std::endl;
+    }
+
+    template <typename I>
+    void second_pass(const I& input,
+		     oln_plain_value(I, oln_point(I))& parent,
+		     oln_plain_value(I, unsigned)& output)
+    {
+      unsigned current_label = 0;
+
+      // Second pass
+      oln_fwd_piter(I) p(input.points());
+      for_all(p)
+	{
+	  if ( input(p) )
+	  {
+	    if ( parent(p) == p )
+	      output(p) = ++current_label;
+	    else
+	      output(p) = output(parent(p));
+	    std::cout << "output :" << std::endl;
+	    debug::print(output);
+	  }
+	}
+    }
+
+    template <typename I>
     oln_plain_value(I, unsigned)
-      cc_tarjan(const Binary_Image<I>& input)
+      cc_tarjan(const Image_with_Nbh<I>& input)
     {
       oln_plain_value(I, unsigned) output;
       prepare(output, with, input);
@@ -66,37 +128,18 @@ namespace oln
       prepare(parent, with, input);
 
       // Init
-      unsigned current_label = 0;
       oln_plain(I) is_processed;
       prepare(is_processed, with, input);
-      oln_piter(I) p(input.points());
-      for_all(p)
-	is_processed(p) = false; // FIXME : built with.
+      oln_piter(I) p1(input.points());
+      for_all(p1)
+	is_processed(p1) = false; // FIXME : built with.
 
+      first_pass(input, parent, is_processed);
 
-      // Fist pass
-      oln_piter(I) p(input.points());
-      for_all(p)
-      {
-	oln_niter(I) n(p, input);
-	for_all(n)
-	{
-	  if ( is_processed(n) )
-	    do_union(n, p, parent);
-	}
-	is_processed(p) = true;
-      }
+      second_pass(input, parent, output);
 
-
-      // Second pass
-      oln_piter(I) p2(input.points());
-      for_all(p2)
-      {
-	if ( parent(p) == p )
-	  output(p) = ++current_label;
-	else
-	  output(p) = output(parent(p));
-      }
+      ::oln::debug::print(parent);
+      return output;
     }
 
   } // end of namespace oln::morpho

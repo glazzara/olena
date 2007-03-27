@@ -1,3 +1,13 @@
+2007-03-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add elementary cc_tarjan on Binary image.
+
+	* tests/algorithms/cc_tarjan.cc: New.
+	* tests/algorithms/Makefile.am: Updated for check.
+	* oln/morpho/cc_tarjan.hh: New.
+	* oln/morpho/cc_tarjan.cc: Remove.
+	* oln/level/apply.hh: .
+
 2007-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add traits and fix compile errors.

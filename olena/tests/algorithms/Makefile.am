@@ -23,11 +23,13 @@ AM_CXXFLAGS = $(TESTS_CXXFLAGS)
 
 
 check_PROGRAMS =				\
-  fill \
-  basic_morpho
+  fill						\
+  basic_morpho					\
+  cc_tarjan
 
 # Algorithms.
 fill_SOURCES = fill.cc
 basic_morpho_SOURCES = basic_morpho.cc
+cc_tarjan_SOURCES = cc_tarjan.cc
 
 TESTS = $(check_PROGRAMS)
