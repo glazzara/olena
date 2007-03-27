@@ -80,11 +80,34 @@ namespace oln
   }; // end of oln::Dpoint<Exact>
 
 
+  /// \{
+  /// Operator "Point - Dpoint".
+
+  template <typename P, typename D>
+  struct set_trait_< Point, P, minus_id, Dpoint, D >
+  {
+    typedef P ret;
+  };
+
   template <typename P, typename D>
   P operator-(const Point<P>& lhs, const Dpoint<D>& rhs);
 
+  /// \}
+
+
+  /// \{
+  /// Operator "Point + Dpoint".
+
+  template <typename P, typename D>
+  struct set_trait_< Point, P, plus_id, Dpoint, D >
+  {
+    typedef P ret;
+  };
+
   template <typename P, typename D>
   P operator+(const Point<P>& lhs, const Dpoint<D>& rhs);
+
+  /// \}
 
 
   /// \{

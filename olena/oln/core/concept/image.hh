@@ -200,7 +200,7 @@ namespace oln
 		      public automatic::get_impl<Fast_Image, Exact>
   {
     stc_using_from(Image, rvalue);
-    stc_using_from(Image, lvalue);
+    stc_using_from(Mutable_Image, lvalue);
 
     stc_typename(index);
 

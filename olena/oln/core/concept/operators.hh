@@ -29,6 +29,7 @@
 # define OLN_CORE_CONCEPT_OPERATORS_HH
 
 # include <oln/core/equipment.hh>
+# include <oln/core/gen/traits.hh>
 
 
 namespace oln
@@ -73,7 +74,6 @@ namespace oln
   /// Operator - (default version).
   template <typename T>
   T operator- (const Any<T>& rhs);
-
 
 
 

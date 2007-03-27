@@ -72,9 +72,18 @@ namespace oln
   }; // end of oln::Point<Exact>
 
 
+
   /// Operator -.
+
   template <typename P>
-  typename P::dpoint operator-(const Point<P>& lhs, const Point<P>& rhs);
+  struct set_trait_< Point, P, minus_id, Point, P >
+  {
+    typedef typename P::dpoint ret;
+  };
+
+  template <typename P>
+  typename P::dpoint
+  operator - (const Point<P>& lhs, const Point<P>& rhs);
 
 
 
@@ -88,6 +97,28 @@ namespace oln
   void operator+(const Point<P1>& lhs, const Point<P2>& rhs) /* error */ ;
 
   /// \}
+
+
+
+  namespace ERROR
+  {
+
+    template < typename Type_1,
+	       typename Type_2,
+	       typename Point_1 = oln_point(Type_1),
+	       typename Point_2 = oln_point(Type_2) >
+    struct both_types_should_have_the_same_point_
+    {
+    };
+
+  } // end of namespace oln::ERROR
+
+
+  template <typename T1, typename T2>
+  struct assert_same_point_
+    : public mlc::assert_< mlc::eq_<oln_point(T1), oln_point(T2)>,
+			   ERROR::both_types_should_have_the_same_point_<T1, T2> >
+  {};
 
 
 
@@ -134,12 +165,13 @@ namespace oln
   }
 
   template <typename P>
-  typename P::dpoint operator-(const Point<P>& lhs, const Point<P>& rhs)
+  typename P::dpoint
+  operator-(const Point<P>& lhs, const Point<P>& rhs)
   {
     return lhs.op_minus_(exact(rhs));
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

@@ -29,8 +29,12 @@
 #ifndef OLN_LEVEL_FILL_HH
 # define OLN_LEVEL_FILL_HH
 
+#include <iostream>
+
 # include <oln/core/concept/image.hh>
-// # include <oln/core/concept/function.hh>
+# include <oln/core/concept/point.hh>
+# include <oln/core/gen/fun.hh>
+
 
 
 namespace oln
@@ -38,7 +42,7 @@ namespace oln
 
   namespace ERROR
   {
-    struct FIRST_ARGUMENT_OF_oln_level_fill_IS_NOT_MUTABLE;
+    struct FIRST_ARGUMENT_OF_oln_level_fill_IS_NOT_MUTABLE; // FIXME: Use it!
   }
 
 
@@ -53,15 +57,16 @@ namespace oln
     template <typename I, typename V>
     void fill(Mutable_Image<I>& input, const V values[]);
 
+    template <typename I, typename J>
+    void fill(Mutable_Image<I>& input, const Image<J>& ima);
+
+    template <typename I, typename F>
+    void fill(Mutable_Image<I>& input, const Function_p2v<F>& fun);
+
     template <typename I, typename V, typename P>
     void fill(Mutable_Image<I>& input, V (*fun)(P));
 
-
-
     // FIXME: Inactivated.
-
-//     template <typename I, typename F>
-//     void fill(Mutable_Image<I>& input, const abstract::fun_p2v<F>& fun);
 
 //     template <typename I>
 //     void fill(Value_Wise_Mutable_Image<I>& input, const oln_value(I)& value);
@@ -74,24 +79,15 @@ namespace oln
     {
 
       template <typename I>
-      void fill(Mutable_Image<I>& input, const oln_value(I)& value)
+      void fill_from_value_(Mutable_Image<I>& input, const oln_value(I)& value)
       {
 	oln_piter(I) p(input.points());
 	for_all(p)
 	  input(p) = value;
       }
 
-//       template <typename I>
-//       void fill(Value_Wise_Mutable_Image<I>& input,
-// 		const oln_value(I)& value)
-//       {
-// 	oln_viter(I) v(input);
-// 	for_all(v)
-// 	  input.value_(v) = value;
-//       }
-
       template <typename I, typename V>
-      void fill(Mutable_Image<I>& input, const V values[])
+      void fill_from_values_(Mutable_Image<I>& input, const V values[])
       {
 	oln_piter(I) p(input.points());
 	unsigned i = 0;
@@ -99,20 +95,29 @@ namespace oln
 	  input(p) = values[i++];
       }
 
-      template <typename I, typename V, typename P>
-      void fill(Mutable_Image<I>& input, V (*fun)(P))
+      template <typename I, typename J>
+      void fill_from_image_(Mutable_Image<I>& input, const Image<J>& ima)
       {
 	oln_piter(I) p(input.points());
 	for_all(p)
-	  input(p) = fun(p);
+	  input(p) = ima(p);
       }
 
-//       template <typename I, typename F>
-//       void fill(Mutable_Image<I>& input, const abstract::fun_p2v<F>& fun)
+      template <typename I, typename F>
+      void fill_from_function_(Mutable_Image<I>& input, const F& f)
+      {
+	oln_piter(I) p(input.points());
+	for_all(p)
+	  input(p) = f(p);
+      }
+
+//       template <typename I>
+//       void fill_(Value_Wise_Mutable_Image<I>& input,
+// 		const oln_value(I)& value)
 //       {
-// 	oln_piter(I) p(input.points());
-// 	for_all(p)
-// 	  input(p) = fun.exact()(p);
+// 	oln_viter(I) v(input);
+// 	for_all(v)
+// 	  input.value_(v) = value;
 //       }
 
     } // end of namespace oln::level::impl
@@ -124,34 +129,37 @@ namespace oln
     template <typename I>
     void fill(Mutable_Image<I>& input, const oln_value(I)& value)
     {
-      impl::fill(exact(input), value);
+      impl::fill_from_value_(exact(input), value);
     }
 
     template <typename I, typename V>
     void fill(Mutable_Image<I>& input, const V values[])
     {
-      impl::fill(exact(input), values);
+      impl::fill_from_values_(exact(input), values);
+    }
+
+    template <typename I, typename J>
+    void fill(Mutable_Image<I>& input, const Image<J>& ima)
+    {
+      assert_same_grid_<I, J>::check();
+      precondition(input.points() <= ima.points());
+      impl::fill_from_image_(exact(input), exact(ima));
+    }
+
+    template <typename I, typename F>
+    void fill(Mutable_Image<I>& input, const Function_p2v<F>& fun)
+    {
+      impl::fill_from_function_(exact(input), exact(fun));
     }
 
     template <typename I, typename V, typename P>
-    void fill(Mutable_Image<I>& input, V (*fun)(P))
+    void fill(Mutable_Image<I>& input, V (*f)(P))
     {
-      impl::fill(exact(input), fun);
+      mlc::assert_< mlc_is_a(P, Point) >::check(); // FIXME: Add err msg.
+      impl::fill_from_function_(exact(input), functorize_p2v(f));
     }
 
-//     template <typename I, typename F>
-//     void fill(Mutable_Image<I>& input, const abstract::fun_p2v<F>& fun)
-//     {
-//       impl::fill(exact(input), fun);
-//     }
-
-//     template <typename I>
-//     void fill(Value_Wise_Mutable_Image<I>& input, const oln_value(I)& value)
-//     {
-//       impl::fill(exact(input), value);
-//     }
-
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::level
 

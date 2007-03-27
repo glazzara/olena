@@ -250,10 +250,10 @@ namespace oln
     bool box_ok = init(b, with, dat);
     postcondition(box_ok);
     unsigned border = 2; // FIXME: Use init!
-    array2d_<T,int> ptr = new array2d_<T,int>(b.pmin().row() - border,
-					      b.pmin().col() - border,
-					      b.pmax().row() + border,
-					      b.pmax().col() + border);
+    array2d_<T,int>* ptr = new array2d_<T,int>(b.pmin().row() - border,
+					       b.pmin().col() - border,
+					       b.pmax().row() + border,
+					       b.pmax().col() + border);
     target.data__() = new typename image2d_b<T>::data(ptr, border, b);
     return box_ok;
   }

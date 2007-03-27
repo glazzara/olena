@@ -41,7 +41,7 @@ namespace oln
   namespace internal {
     template <typename Exact>
     struct iterator_on_points_base;
-  };
+  }
 
   // Super type
 
@@ -67,31 +67,30 @@ namespace oln
 
 
 
-namespace internal
-{
-  // iterator_on_points_base class
-
-  template <typename Exact>
-  class iterator_on_points_base : public Iterator_on_Points<Exact>
+  namespace internal
   {
+    // iterator_on_points_base class
 
-  protected:
-    iterator_on_points_base();
-  };
+    template <typename Exact>
+    class iterator_on_points_base : public Iterator_on_Points<Exact>
+    {
+
+    protected:
+      iterator_on_points_base();
+    };
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename Exact>
-  iterator_on_points_base<Exact>::iterator_on_points_base()
-  {
-  }
+    template <typename Exact>
+    iterator_on_points_base<Exact>::iterator_on_points_base()
+    {
+    }
 
-# endif // !OLN_INCLUDE_ONLY
-}
+# endif // ! OLN_INCLUDE_ONLY
 
+  } // end of namespace oln::internal
 
+} // end of namespace oln
 
-}
-
-#endif // !OLN_CORE_INTERNAL_ITERATOR_ON_POINTS_BASE_HH
+#endif // ! OLN_CORE_INTERNAL_ITERATOR_ON_POINTS_BASE_HH

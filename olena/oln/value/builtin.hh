@@ -25,58 +25,74 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_MORPHER_ADD_NEIGHBORHOOD_HXX
-# define OLN_MORPHER_ADD_NEIGHBORHOOD_HXX
+#ifndef OLN_VALUE_BUILTIN_HH
+# define OLN_VALUE_BUILTIN_HH
+
+# include <oln/core/concept/value.hh>
+# include <oln/core/gen/traits.hh>
+
 
 namespace oln
 {
 
-  namespace morpher
+
+  // Fwd decl.
+  namespace internal { template <typename Exact> struct builtin_base; }
+
+
+  // Virtual types.
+  template <typename Exact>
+  struct vtypes< internal::builtin_base<Exact> >
+  {
+    typedef stc::final< stc:is<Value> > category;
+  };
+
+
+  namespace internal
   {
 
-    template <typename Image, typename Neighb>
-    add_neighborhood<Image, Neighb>::add_neighborhood(const Image& image, const Neighb& nbh) :
-      super_t(image),
-      topo_(image.topo(), nbh)
+    // Base class for builtin types.
+    template <typename Exact>
+    struct builtin_base : public Value<Exact>
     {
-      mlc::assert_equal_<oln_vtype(Image, grid), oln_vtype(Neighb, grid)>::check();
-      // FIXME: check that Image is without a nbh
-    }
-
-    template <typename Image, typename Neighb>
-    const typename add_neighborhood<Image, Neighb>::topo_t&
-    add_neighborhood<Image, Neighb>::impl_topo() const
-    {
-      return topo_;
-    }
-
-  } // end of namespace oln::morpher
+    protected:
+      builtin_base();
+    };
+  
+  } // end of namespace oln::internal
 
 
-  template <typename I, typename N>
-  morpher::add_neighborhood<I, N>
-  operator + (const abstract::image<I>& image,
-	      const abstract::neighborhood<N>& nbh)
+
+  // int
+
+  template <>
+  struct super_trait_< int >
   {
-    mlc::assert_equal_<oln_vtype(I, grid), oln_vtype(N, grid)>::check();
-    // FIXME: check that Image is without a nbh
-    morpher::add_neighborhood<I, N> tmp(image.exact(), nbh.exact());
-    return tmp;
-  }
+    typedef internal::builtin_base<int> ret;
+  };
+
+  template <>
+  struct super_trait_< float >
+  {
+    typedef internal::builtin_base<float> ret;
+  };
+
+
+  template <typename Op>
+  struct set_trait_< Value, int, Op, Value, float >
+  {
+    typedef float ret;
+  };
+
+  template <typename Op>
+  struct set_trait_< Value, float, Op, Value, int >
+  {
+    typedef float ret;
+  };
+  
 
 } // end of namespace oln
 
-#endif // ! ADD_NEIGHBORHOOD_HXX
 
-
-
-
-
-
-
-
-
-
-
-
+#endif // ! OLN_VALUE_BUILTIN_HH
 

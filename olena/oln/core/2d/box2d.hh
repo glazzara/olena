@@ -63,6 +63,7 @@ namespace oln
   public:
     // Note: we can't use stc_using because box2d isn't a templated class
     typedef super::point point;
+    typedef super::from_to_t from_to_t;
 
     box2d();
     box2d(const box2d::from_to_t& dat);
@@ -102,9 +103,10 @@ namespace oln
   }
 
   template <typename D>
-  box2d::box2d(const internal::initializer_<D>& data) :
-    super(data)
+  box2d::box2d(const internal::initializer_<D>& data)
   {
+    bool box_ok = internal::init__(internal::tag::box_t(), *this, data.value());
+    postcondition(box_ok);
   }
 
 

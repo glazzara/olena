@@ -199,11 +199,11 @@ namespace oln
 
 # ifndef OLN_INCLUDE_ONLY
 
+
+  // --------------------   internal::box_<Exact>
+
   namespace internal
   {
-
-    // --------------------   box_<Exact>
-
 
     template <typename Exact>
     box_<Exact>::box_()
@@ -293,135 +293,138 @@ namespace oln
     {
       return this->pmax_;
     }
+
+  } // end of namespace oln::internal
+
+
+  // --------------------   box_fwd_piter_<B>
+
+  template <typename B>
+  box_fwd_piter_<B>::box_fwd_piter_(const Point_Set<B>& b)
+    : b_(exact(b))
+  {
+    nop_ = b_.pmax();
+    ++nop_[0];
+    p_ = nop_;
   }
 
-    // --------------------   box_fwd_piter_<B>
+  template <typename B>
+  void
+  box_fwd_piter_<B>::impl_start()
+  {
+    p_ = b_.pmin();
+  }
 
-    template <typename B>
-    box_fwd_piter_<B>::box_fwd_piter_(const Point_Set<B>& b)
-      : b_(exact(b))
-    {
-      nop_ = b_.pmax();
-      ++nop_[0];
-      p_ = nop_;
-    }
-
-    template <typename B>
-    void
-    box_fwd_piter_<B>::impl_start()
-    {
-      p_ = b_.pmin();
-    }
-
-    template <typename B>
-    void
-    box_fwd_piter_<B>::impl_next()
-    {
-      for (int i = B::n - 1; i >= 0; --i)
-	if (p_[i] == b_.pmax()[i])
-	  p_[i] = b_.pmin()[i];
-	else
+  template <typename B>
+  void
+  box_fwd_piter_<B>::impl_next()
+  {
+    for (int i = B::n - 1; i >= 0; --i)
+      if (p_[i] == b_.pmax()[i])
+	p_[i] = b_.pmin()[i];
+      else
 	{
 	  ++p_[i];
 	  break;
 	}
-      if (p_ == b_.pmin())
-	p_ = nop_;
-    }
-
-    template <typename B>
-    void
-    box_fwd_piter_<B>::impl_invalidate()
-    {
+    if (p_ == b_.pmin())
       p_ = nop_;
-    }
+  }
 
-    template <typename B>
-    bool
-    box_fwd_piter_<B>::impl_is_valid() const
-    {
-      return p_ != nop_;
-    }
+  template <typename B>
+  void
+  box_fwd_piter_<B>::impl_invalidate()
+  {
+    p_ = nop_;
+  }
 
-    template <typename B>
-    typename box_fwd_piter_<B>::point
-    box_fwd_piter_<B>::impl_to_point() const
-    {
-      return p_;
-    }
+  template <typename B>
+  bool
+  box_fwd_piter_<B>::impl_is_valid() const
+  {
+    return p_ != nop_;
+  }
 
-    template <typename B>
-    const typename box_fwd_piter_<B>::point*
-    box_fwd_piter_<B>::impl_point_adr() const
-    {
-      return &p_;
-    }
+  template <typename B>
+  typename box_fwd_piter_<B>::point
+  box_fwd_piter_<B>::impl_to_point() const
+  {
+    return p_;
+  }
+
+  template <typename B>
+  const typename box_fwd_piter_<B>::point*
+  box_fwd_piter_<B>::impl_point_adr() const
+  {
+    return &p_;
+  }
 
 
 
-    // --------------------   box_bkd_piter_<P>
+  // --------------------   box_bkd_piter_<P>
 
-    template <typename B>
-    box_bkd_piter_<B>::box_bkd_piter_(const Point_Set<B>& b)
-      : b_(exact(b))
-    {
-      nop_ = b_.pmin();
-      --nop_[0];
-      p_ = nop_;
-    }
+  template <typename B>
+  box_bkd_piter_<B>::box_bkd_piter_(const Point_Set<B>& b)
+    : b_(exact(b))
+  {
+    nop_ = b_.pmin();
+    --nop_[0];
+    p_ = nop_;
+  }
 
-    template <typename B>
-    void
-    box_bkd_piter_<B>::impl_start()
-    {
-      p_ = b_.pmax();
-    }
+  template <typename B>
+  void
+  box_bkd_piter_<B>::impl_start()
+  {
+    p_ = b_.pmax();
+  }
 
-    template <typename B>
-    void
-    box_bkd_piter_<B>::impl_next()
-    {
-      for (int i = B::n - 1; i >= 0; --i)
-	if (p_[i] == b_.pmin()[i])
-	  p_[i] = b_.pmax()[i];
-	else
+  template <typename B>
+  void
+  box_bkd_piter_<B>::impl_next()
+  {
+    for (int i = B::n - 1; i >= 0; --i)
+      if (p_[i] == b_.pmin()[i])
+	p_[i] = b_.pmax()[i];
+      else
 	{
 	  --p_[i];
 	  break;
 	}
-      if (p_ == b_.pmax())
-	p_ = nop_;
-    }
-
-    template <typename B>
-    void
-    box_bkd_piter_<B>::impl_invalidate()
-    {
+    if (p_ == b_.pmax())
       p_ = nop_;
-    }
+  }
 
-    template <typename B>
-    bool
-    box_bkd_piter_<B>::impl_is_valid() const
-    {
-      return p_ != nop_;
-    }
+  template <typename B>
+  void
+  box_bkd_piter_<B>::impl_invalidate()
+  {
+    p_ = nop_;
+  }
 
-    template <typename B>
-    typename box_bkd_piter_<B>::point
-    box_bkd_piter_<B>::impl_to_point() const
-    {
-      return p_;
-    }
+  template <typename B>
+  bool
+  box_bkd_piter_<B>::impl_is_valid() const
+  {
+    return p_ != nop_;
+  }
 
-    template <typename B>
-    const typename box_bkd_piter_<B>::point*
-    box_bkd_piter_<B>::impl_point_adr() const
-    {
-      return &p_;
-    }
+  template <typename B>
+  typename box_bkd_piter_<B>::point
+  box_bkd_piter_<B>::impl_to_point() const
+  {
+    return p_;
+  }
 
-# endif // OLN_INCLUDE_ONLY
+  template <typename B>
+  const typename box_bkd_piter_<B>::point*
+  box_bkd_piter_<B>::impl_point_adr() const
+  {
+    return &p_;
+  }
+
+# endif // ! OLN_INCLUDE_ONLY
+
 } // end of namespace oln
 
 

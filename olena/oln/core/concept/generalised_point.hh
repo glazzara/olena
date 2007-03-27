@@ -31,10 +31,6 @@
 namespace oln
 {
 
-  /// FIXME:  Instant value.
-  //  oln_decl_instant_value(point);
-
-
   // Generalised_Point concept
 
   template <typename Exact>
@@ -58,11 +54,10 @@ namespace oln
   template <typename Exact>
   Generalised_Point<Exact>::Generalised_Point()
   {
-  };
+  }
 
+# endif // ! OLN_INCLUDE_ONLY
 
-# endif // OLN_INCLUDE_ONLY
+} // end of namespace oln
 
-}
-
-#endif // !OLN_CORE_CONCEPT_GENERALISED_POINTS_HH
+#endif // ! OLN_CORE_CONCEPT_GENERALISED_POINTS_HH

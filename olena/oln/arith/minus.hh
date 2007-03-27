@@ -28,36 +28,47 @@
 #ifndef OLN_ARITH_MINUS_HH
 # define OLN_ARITH_MINUS_HH
 
+# include <oln/core/concept/image.hh>
+// # include <oln/core/internal/f_ch_value.hh>
+# include <oln/core/gen/traits.hh>
+
 
 namespace oln
 {
 
-//  namespace arith
-//  {
+  // Trait.
 
-    // Fwd decl.
+  template <typename I, typename J>
+  struct set_trait_< Image, I, minus_id, Image, J >
+  {
+    typedef oln_minus_trait(oln_value(I), oln_value(J)) V;
+    typedef oln_plain_value(I, V) ret;
+  };
 
-    template <typename I>
-    oln_plain(I)
-    operator - (const Image<I>& lhs, const Image<I>& rhs);
+
+  // Fwd decl.
+
+  template <typename I, typename J>
+  oln_minus_trait(I, J)
+  operator - (const Image<I>& lhs, const Image<J>& rhs);
+
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename I>
-    oln_plain(I)
-    operator - (const Image<I>& lhs, const Image<I>& rhs)
-    {
-      oln_plain(I) output;
-      init(output, with, lhs);
-      oln_piter(I) p(lhs.points());
-      for_all(p)
-	output(p) = lhs(p) - rhs(p);
-      return output;
-    }
+  template <typename I, typename J>
+  oln_minus_trait(I, J)
+  operator - (const Image<I>& lhs, const Image<J>& rhs)
+  {
+    precondition(lhs.points() == rhs.points());
+    oln_minus_trait(I, J) output;
+    prepare(output, with, lhs);
+    oln_piter(I) p(lhs.points());
+    for_all(p)
+      output(p) = lhs(p) - rhs(p);
+    return output;
+  }
 
 # endif // ! OLN_INCLUDE_ONLY
-
-//  } // end of namespace oln::arith
 
 } // end of namespace oln
 

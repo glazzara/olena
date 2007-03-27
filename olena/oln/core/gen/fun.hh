@@ -31,6 +31,7 @@
 # include <oln/core/internal/category_of.hh>
 # include <oln/core/concept/function.hh>
 # include <oln/core/concept/image.hh>
+# include <oln/core/concept/point.hh>
 # include <oln/core/concept/value.hh>
 
 
@@ -38,6 +39,10 @@
 // FIXME: Add "fun" to names below.
 # define oln_arg_of_(T) typename oln::internal::argument_of_< T >::ret
 # define oln_res_of_(T) typename oln::internal::result_of_< T >::ret
+
+
+
+// FIXME: Separate defs and decls.
 
 
 
@@ -105,7 +110,7 @@ namespace oln
     typedef oln_arg_of_(F) argument;
     typedef oln_res_of_(F) result;
 
-    fun_p2b_(F f) : f_(f) {}
+    fun_p2b_(const F& f) : f_(f) {}
 
     result operator()(argument arg) const
     {
@@ -138,6 +143,53 @@ namespace oln
 
 
 
+  // -----------------------------  fun_p2v_<F>
+
+
+  // Fwd decl.
+  template <typename F> struct fun_p2v_;
+
+  // Category.
+  namespace internal
+  {
+    template <typename F>
+    struct set_category_of_< fun_p2v_<F> >
+    {
+      typedef stc::is< Function_p2v > ret;
+    };
+  }
+
+  // Class.
+  template <typename F>
+  struct fun_p2v_ : public Function_p2v< fun_p2v_<F> >
+  {
+    typedef oln_arg_of_(F) argument;
+    typedef oln_res_of_(F) result;
+
+    fun_p2v_(const F& f) : f_(f) {}
+
+    result operator()(argument arg) const
+    {
+      return this->f_(arg);
+    }
+
+  private:
+    F f_;
+  };
+
+
+  // functorize_p2v
+
+  template <typename V, typename P>
+  fun_p2v_<V (*)(P)>
+  functorize_p2v(V (*f)(P))
+  {
+    mlc::assert_< mlc_is_a(P, Point) >::check(); // FIXME: Add err msg.
+    fun_p2v_<V (*)(P)> tmp(f);
+    return tmp;
+  }
+
+
   // -----------------------------  fun_v2v_<F>
 
 
@@ -161,7 +213,7 @@ namespace oln
     typedef oln_arg_of_(F) argument;
     typedef oln_res_of_(F) result;
 
-    fun_v2v_(F f) : f_(f) {}
+    fun_v2v_(const F& f) : f_(f) {}
 
     result operator()(argument arg) const
     {
@@ -174,11 +226,12 @@ namespace oln
 
 
   // functorize_v2v
-  template <typename R, typename A>
-  fun_v2v_<R (*)(A)>
-  functorize_v2v(R (*f)(A))
+
+  template <typename Vr, typename Va>
+  fun_v2v_<Vr (*)(Va)>
+  functorize_v2v(Vr (*f)(Va))
   {
-    fun_v2v_<R (*)(A)> tmp(f);
+    fun_v2v_<Vr (*)(Va)> tmp(f);
     return tmp;
   }
 

@@ -1,3 +1,39 @@
+2007-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add traits and fix compile errors.
+
+	* oln/core/gen/traits.hh,
+	* oln/value/builtin.hh: New.
+	* oln/arith/plus.hh (include): Fix.
+	(set_trait_): New.
+	(operator +): Update sig and use 'prepare'.
+	* oln/arith/minus.hh: Likewise.
+	* oln/core/concept/image.hh (Fast_Image): Fix.
+	* oln/core/concept/point.hh (set_trait_): New.
+	(assert_same_point_): New.
+	* oln/core/concept/generalised_point.hh: Fix.
+	* oln/core/concept/dpoint.hh (set_trait_): New.
+	* oln/core/concept/operators.hh (include): Add
+	oln/core/gen/traits.hh.
+	* oln/core/init.hh: Cosmetic change.
+	* oln/core/2d/image2d_b.hh (prepare): Fix.
+	* oln/core/2d/box2d.hh (box2d): Fix.
+	* oln/core/gen/fun.hh (fun_p2b_, fun_v2v_): Add & to ctor arg.
+	(fun_p2v_, functorize_p2v): New.
+	* oln/core/internal/box.hh: Cosmetic changes.
+	* oln/core/internal/image_base.hh (operator |): Activate test.
+	* oln/core/internal/iterator_on_points_base.hh: Fix.
+	* oln/morpher/add_isubset.hh,
+	* oln/morpher/add_isubset.hxx,
+	* oln/morpher/add_neighborhood.hxx: Remove; obsolete.
+	* oln/level/fill.hh (include): Update.
+	(fill): Rename the internal routines as...
+	(fill_from_value_, fill_from_values_): ...these...
+	(fill_from_image_, fill_from_function_): ...and these.
+	(fill_): Activate.
+	(fill): Activate version for Function_p2v.
+	(fill): New version for Image.
+
 2007-03-26  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add generalised_point concept.
