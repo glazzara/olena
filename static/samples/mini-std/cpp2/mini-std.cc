@@ -39,7 +39,7 @@
 #include <mlc/contract.hh>
 #include <stc/scoop.hh>
 
-# define mstd_typename_shortcut__(Type, Alias) typename Type::Alias
+#define mstd_typename_shortcut__(Type, Alias) typename Type::Alias
 
 
 
@@ -557,8 +557,9 @@ namespace mstd
   struct vtypes< forwardIterator<T> >
   {
     typedef T container_t;
-    typedef typename container_t::value_t value_t;
-    typedef typename container_t::stdcontainer_t::iterator iter_t;
+
+    typedef stc_type(container_t, value_t) value_t;
+    typedef stc_type(container_t, stdcontainer_t)::iterator iter_t;
   };
 
   template <typename T>
@@ -619,12 +620,9 @@ namespace mstd
   struct vtypes< biDirIterator<T> >
   {
     typedef T container_t;
-    //typedef typename container_t::value_t value_t;
-    //typedef typename container_t::stdcontainer_t::iterator iter_t;
 
-    // FIXME
-    typedef T value_t;
-    typedef T iter_t;
+    typedef stc_type(container_t, value_t) value_t;
+    typedef stc_type(container_t, stdcontainer_t)::iterator iter_t;
   };
 
   template <typename T>
@@ -632,21 +630,47 @@ namespace mstd
   {
     typedef biDirIterator<T> current;
     stc_deduce_typename(current, container_t);
-    //    typedef stc_deduce_typename(current, iter) iter_t;
-    //    typedef stc_deduce_typename(current, value) value_t;
+    stc_deduce_typename(current, iter_t);
+    stc_deduce_typename(current, value_t);
 
-     biDirIterator(container_t& c)
-//       iter_ (c.get_stdcontainer().begin())
+    biDirIterator(container_t& c) :
+      iter_ (c.get_stdcontainer().begin())
     {
     }
 
-//     value_t& impl_op_star()
-//     {
-//       return *iter_;
-//     }
+    value_t& impl_op_star()
+    {
+      return *iter_;
+    }
+
+    current& operator++()
+    {
+      iter_++;
+      return *this;
+    }
+
+    current operator++(int)
+    {
+      current ret = *this;
+      ++iter_;
+      return ret;
+    }
+
+    current& operator--()
+    {
+      iter_--;
+      return *this;
+    }
+
+    current operator--(int)
+    {
+      current ret = *this;
+      --iter_;
+      return ret;
+    }
 
   protected:
-    // iter_t iter_;
+    iter_t iter_;
   };
 
   // -------------------------- //
@@ -667,8 +691,9 @@ namespace mstd
   struct vtypes< randomAccessibleIterator<T> >
   {
     typedef T container_t;
-    typedef typename container_t::value_t value_t;
-    typedef typename container_t::stdcontainer_t::iterator iter_t;
+
+    typedef stc_type(container_t, value_t) value_t;
+    typedef stc_type(container_t, stdcontainer_t)::iterator iter_t;
   };
 
   template <typename T>
@@ -871,19 +896,19 @@ int main()
   TEST(*iter);
   ++iter;
   TEST(*iter);
-  ++iter;
+  iter++;
   TEST(*iter);
 
   mstd::list<int>::iter_t iter2(l);
+  TEST(*iter2);
+  ++iter2;
+  TEST(*iter2);
+  iter2++;
+  TEST(*iter2);
+  --iter2;
+  TEST(*iter2);
+  iter2--;
+  TEST(*iter2);
 
-  mstd::list<int>::iter_t::container_t a;
-  //a.foo();
-
-  mstd::list<int>::iter_t::container_t::value_t fff;
-  fff = 5;
-  TEST(fff);
-
-  mstd::list<int>::value_t z;
-  z = 3;
+  // mstd::list<int>::iter_t it = l.begin();
 }
-

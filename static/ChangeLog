@@ -1,5 +1,10 @@
 2007-03-27  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
 
+	Fix iterators in mini-std.
+	* mini-std.cc: Here.
+
+2007-03-27  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
+
 	Use SCOOP equipment in mini-std.
 	* mini-std.cc: Here.
 
