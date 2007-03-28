@@ -37,8 +37,8 @@ namespace oln
 {
 
 
-  struct  point2d;
-  struct dpoint2d;
+  class point2d;
+  class dpoint2d;
 
 
   /// Super type.
@@ -93,7 +93,7 @@ namespace oln
     this->col() = dat->second.value;
   }
 
-# endif // OLN_INCLUDE_ONLY
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

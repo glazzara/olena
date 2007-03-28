@@ -38,11 +38,11 @@ namespace oln
 {
 
 
-  // Forward declarations.
+  // Fwd decl.
   template <typename P> class gen_box;
 
 
-  // Super type declaration.
+  // Super type.
   template <typename P>
   struct super_trait_< gen_box<P> >
   {
@@ -51,7 +51,7 @@ namespace oln
   };
 
 
-  /// Virtual types associated to oln::gen_box<P>.
+  /// Virtual types.
   template <typename P>
   struct vtypes< gen_box<P> >
   {
@@ -88,10 +88,6 @@ namespace oln
 
 # ifndef OLN_INCLUDE_ONLY
 
-
-  // --------------------   gen_box<P>
-
-
   template <typename P>
   gen_box<P>::gen_box()
   {
@@ -116,10 +112,9 @@ namespace oln
   {
   }
 
-# endif // !OLN_INCLUDE_ONLY
-
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 
 
-#endif // !OLN_CORE_GEN_BOX_HH
+#endif // ! OLN_CORE_GEN_BOX_HH

@@ -37,8 +37,8 @@ namespace oln
 {
 
 
-  struct  point1d;
-  struct dpoint1d;
+  class  point1d;
+  class dpoint1d;
 
 
   /// Super type.

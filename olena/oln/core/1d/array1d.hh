@@ -59,11 +59,8 @@ namespace oln
     /// Dtor.
     ~array1d_();
 
-    const T& operator()(C i) const;
-          T& operator()(C i);
-
-    const T& operator[](std::size_t ind) const;
-          T& operator[](std::size_t ind);
+    const T& operator[](C i) const;
+          T& operator[](C i);
 
     bool has(C i) const;
 
@@ -119,33 +116,19 @@ namespace oln
   }
 
   template <typename T, typename C>
-  const T& array1d_<T, C>::operator()(C i) const
+  const T& array1d_<T, C>::operator[](C i) const
   {
+    precondition(buffer_ != 0);
     precondition(has(i));
     return buffer_[i];
   }
 
   template <typename T, typename C>
-  T& array1d_<T, C>::operator()(C i)
+  T& array1d_<T, C>::operator[](C i)
   {
+    precondition(buffer_ != 0);
     precondition(has(i));
     return buffer_[i];
-  }
-
-  template <typename T, typename C>
-  const T& array1d_<T, C>::operator[](std::size_t ind) const
-  {
-    precondition(buffer_ != 0);
-    precondition(ind < len_);
-    return buffer_[ind];
-  }
-
-  template <typename T, typename C>
-  T& array1d_<T, C>::operator[](std::size_t ind)
-  {
-    precondition(buffer_ != 0);
-    precondition(ind < len_);
-    return buffer_[ind];
   }
 
   template <typename T, typename C>
@@ -195,17 +178,19 @@ namespace oln
   void array1d_<T, C>::allocate_()
   {
     buffer_ = new T[len_];
+    buffer_ -= imin_;
   }
 
   template <typename T, typename C>
   void array1d_<T, C>::deallocate_()
   {
     precondition(buffer_ != 0);
+    buffer_ += imin_;
     delete[] buffer_;
     buffer_ = 0; // safety
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

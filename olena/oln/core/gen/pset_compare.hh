@@ -90,18 +90,14 @@ namespace oln
     }
 
 
-    //  Point_Set L  <  Point_Set R
-    // -----------------------------
-
-    // Generic version.
+    //  Point_Set L  <=  Point_Set R
 
     template <typename L, typename R>
-    bool op_less_(const Point_Set<L>& lhs, const Point_Set<R>& rhs)
+    bool op_leq_(const Point_Set<L>& lhs, const Point_Set<R>& rhs)
     {
-      if (lhs.npoints() >= rhs.npoints()) // quick test
+      if (lhs.npoints() > rhs.npoints()) // quick test
 	return false;
-      // we have lhs.npoints() < rhs.npoints()
-      // so we shall now test that all points of lhs are IN rhs
+      // all points of lhs are IN rhs?
       oln_piter(R) p_rhs(rhs);
       p_rhs.start();
       oln_piter(L) p_lhs(lhs);
@@ -114,6 +110,19 @@ namespace oln
 	}
       return true;
     }
+
+
+    //  Point_Set L  <  Point_Set R
+
+    template <typename L, typename R>
+    bool op_less_(const Point_Set<L>& lhs, const Point_Set<R>& rhs)
+    {
+      return op_leq_(lhs, rhs) and lhs.npoints() < rhs.npoints();
+    }
+
+
+    
+
 
 
 

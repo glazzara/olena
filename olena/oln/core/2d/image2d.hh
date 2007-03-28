@@ -99,6 +99,8 @@ namespace oln
     T& impl_index_read_write(unsigned i);
     T& impl_at(int row, int col);
 
+    void impl_write(const point2d& p, const T& v);
+
     std::size_t impl_npoints() const;
 
     const box2d& impl_points() const;
@@ -189,6 +191,13 @@ namespace oln
   {
     assert(this->has_data());
     return this->data_->first(row, col);
+  }
+
+  template <typename T>
+  void image2d<T>::impl_write(const point2d& p, const T& v)
+  {
+    assert(this->has_data());
+    this->data_->first(p.row(), p.col()) = v;
   }
 
   template <typename T>

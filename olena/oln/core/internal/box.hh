@@ -61,7 +61,9 @@ namespace oln
 
   namespace internal
   {
-    /// Generic box class based on a point class.
+
+    /// Base implementation class for box types.
+
     template <typename Exact>
     class box_ : public point_set_base_< Exact >
     {
@@ -70,7 +72,6 @@ namespace oln
     public:
       stc_using(point);
       stc_using(box);
-
 
       typedef internal::initializer_<
 	internal::pair< internal::from_t<point>, internal::to_t<point> >
@@ -81,7 +82,6 @@ namespace oln
 
     public:
       enum { n = mlc_value(dim__) };
-
 
       unsigned       impl_npoints() const;
       bool           impl_has(const point& p) const;

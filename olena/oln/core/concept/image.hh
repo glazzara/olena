@@ -133,6 +133,7 @@ namespace oln
 
     bool owns_(const psite& p) const;
     rvalue operator()(const psite& p) const;
+    rvalue read_(const psite& p) const;
 
     const pset& points() const;
 
@@ -183,11 +184,13 @@ namespace oln
 			 public automatic::get_impl<Mutable_Image, Exact>
   {
     stc_using_from(Image, psite);
+    stc_using_from(Image, value);
     using Image<Exact>::operator();
 
     stc_typename(lvalue);
     lvalue operator()(const psite& p);
-
+    void write_(const psite& p, const value& v);
+ 
   protected:
     Mutable_Image();
   };
@@ -438,6 +441,14 @@ namespace oln
   }
 
   template <typename Exact>
+  typename Image<Exact>::rvalue
+  Image<Exact>::read_(const typename Image<Exact>::psite& p) const
+  {
+    precondition(this->owns_(p));
+    return exact(this)->impl_read(p);
+  }
+
+  template <typename Exact>
   const typename Image<Exact>::box&
   Image<Exact>::bbox() const
   {
@@ -499,6 +510,15 @@ namespace oln
   {
     precondition(this->owns_(p));
     return exact(this)->impl_read_write(p);
+  }
+
+  template <typename Exact>
+  void
+  Mutable_Image<Exact>::write_(const typename Mutable_Image<Exact>::psite& p,
+			       const typename Mutable_Image<Exact>::value& v)
+  {
+    precondition(this->owns_(p));
+    exact(this)->impl_write(p, v);
   }
 
   template <typename Exact>

@@ -32,7 +32,7 @@
 # include <algorithm>
 
 # include <oln/core/internal/point_set_base.hh>
-# include <oln/core/concept/iterator_on_points.hh>
+# include <oln/core/internal/iterator_on_points_base.hh>
 # include <oln/core/gen/fbbox.hh>
 
 
@@ -61,9 +61,12 @@ namespace oln
     typedef stc::abstract std_container;
 
     typedef stc_deferred(std_container) std_container__;
-    typedef stc::final< typename std_container__::value_type > point;
+    typedef typename std_container__::value_type point__;
+
+    typedef stc::final< point__ >                                    point;
     typedef stc::final< pset_std_based_fwd_piter_<std_container__> > fwd_piter;
     typedef stc::final< pset_std_based_bkd_piter_<std_container__> > bkd_piter;
+    typedef stc::final< typename f_box_from_point_<point__>::ret >   box;
   };
 
 
@@ -173,14 +176,14 @@ namespace oln
   struct super_trait_< pset_std_based_fwd_piter_<C> >
   {
     typedef pset_std_based_fwd_piter_<C> current__;
-    typedef Iterator_on_Points<current__> ret;
+    typedef internal::iterator_on_points_base<current__> ret;
   };
 
   template <typename C>
   struct super_trait_< pset_std_based_bkd_piter_<C> >
   {
     typedef pset_std_based_bkd_piter_<C> current__;
-    typedef Iterator_on_Points<current__> ret;
+    typedef internal::iterator_on_points_base<current__> ret;
   };
 
 
@@ -203,16 +206,16 @@ namespace oln
   // Class pset_std_based_fwd_piter_<C>.
 
   template <typename C>
-  class pset_std_based_fwd_piter_ : public Iterator_on_Points< pset_std_based_fwd_piter_<C> >
+  class pset_std_based_fwd_piter_ : public internal::iterator_on_points_base< pset_std_based_fwd_piter_<C> >
   {
     typedef pset_std_based_fwd_piter_<C> current;
-    typedef Iterator_on_Points<current>  super;
+    typedef internal::iterator_on_points_base<current> super;
   public:
 
     stc_using(point);
 
     template <typename Ps>
-    pset_std_based_fwd_piter_(const internal::point_set_std_based_<Ps>& con);
+    pset_std_based_fwd_piter_(const Point_Set<Ps>& pset);
 
     void impl_start();
     void impl_next();
@@ -232,16 +235,16 @@ namespace oln
   // Class pset_std_based_bkd_piter_<C>.
 
   template <typename C>
-  class pset_std_based_bkd_piter_ : public Iterator_on_Points< pset_std_based_bkd_piter_<C> >
+  class pset_std_based_bkd_piter_ : public internal::iterator_on_points_base< pset_std_based_bkd_piter_<C> >
   {
     typedef pset_std_based_bkd_piter_<C> current;
-    typedef Iterator_on_Points<current>  super;
+    typedef internal::iterator_on_points_base<current> super;
   public:
 
     stc_using(point);
 
     template <typename Ps>
-    pset_std_based_bkd_piter_(const internal::point_set_std_based_<Ps>& pts);
+    pset_std_based_bkd_piter_(const Point_Set<Ps>& pts);
 
     void impl_start();
     void impl_next();
@@ -268,8 +271,8 @@ namespace oln
 
   template <typename C>
   template <typename Ps>
-  pset_std_based_fwd_piter_<C>::pset_std_based_fwd_piter_(const internal::point_set_std_based_<Ps>& pts)
-    : con_(pts.con())
+  pset_std_based_fwd_piter_<C>::pset_std_based_fwd_piter_(const Point_Set<Ps>& pts)
+    : con_(exact(pts).con())
   {
     this->it_ = this->con_.end();
   }
@@ -325,8 +328,8 @@ namespace oln
 
   template <typename C>
   template <typename Ps>
-  pset_std_based_bkd_piter_<C>::pset_std_based_bkd_piter_(const internal::point_set_std_based_<Ps>& pts)
-    : con_(pts.con())
+  pset_std_based_bkd_piter_<C>::pset_std_based_bkd_piter_(const Point_Set<Ps>& pts)
+    : con_(exact(pts).con())
   {
     this->it_ = this->con_.rend();
   }

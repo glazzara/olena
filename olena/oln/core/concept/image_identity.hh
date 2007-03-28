@@ -85,7 +85,9 @@ namespace oln
     {
       stc_typename(psite);
       stc_typename(lvalue);
+      stc_typename(value);
       lvalue impl_read_write(const psite& p);
+      void impl_write(const psite& p, const value& v);
     };
 
 
@@ -228,12 +230,24 @@ namespace oln
 
     /// Concept-class "Mutable_Image".
 
+# define current set_impl< Mutable_Image, behavior::identity, Exact >
+
     template <typename Exact>
-    typename set_impl< Mutable_Image, behavior::identity, Exact >::lvalue
-    set_impl< Mutable_Image, behavior::identity, Exact >::impl_read_write(const typename set_impl< Mutable_Image, behavior::identity, Exact >::psite& p)
+    typename current::lvalue
+    current::impl_read_write(const typename current::psite& p)
     { 
       return exact(this)->image().operator()(p);
     }
+
+    template <typename Exact>
+    void
+    current::impl_write(const typename current::psite& p,
+			const typename current::value& v)
+    { 
+      return exact(this)->image().write_(p, v);
+    }
+
+# undef current
 
 
     /// Concept-class "Fast_Image".

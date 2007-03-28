@@ -28,6 +28,9 @@
 #ifndef OLN_CORE_CONCEPT_GENERALISED_POINTS_HH
 # define OLN_CORE_CONCEPT_GENERALISED_POINTS_HH
 
+# include <oln/core/equipment.hh>
+
+
 namespace oln
 {
 

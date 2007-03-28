@@ -40,7 +40,7 @@ namespace oln
 
   namespace internal {
     template <typename Exact>
-    struct iterator_on_points_base;
+    struct iterator_on_points_base; // FIXME: End with '_'!
   }
 
   // Super type

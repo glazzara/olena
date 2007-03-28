@@ -79,12 +79,14 @@ namespace oln
     public:
       stc_using(pset);
       stc_using(box);
+      stc_using(psite);
       stc_using(data);
       stc_using(delegatee);
 
       delegatee& impl_image();
       const delegatee& impl_image() const;
 
+      bool impl_owns_(const psite& p) const;
       const pset& impl_points() const;
 
     protected:
@@ -131,6 +133,14 @@ namespace oln
     {
       precondition(subset <= ima.points());
       this->data_ = new data(ima, subset);
+    }
+
+    template <typename I, typename S>
+    bool
+    current::impl_owns_(const typename current::psite& p) const
+    {
+      assert(this->has_data());
+      return this->has(p);
     }
 
     template <typename I, typename S>

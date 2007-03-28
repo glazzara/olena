@@ -95,6 +95,8 @@ namespace oln
     T& impl_read_write(const point1d& p);
     T& impl_index_read_write(unsigned i);
 
+    void impl_write(const point1d& p, const T& v);
+
     std::size_t impl_npoints() const;
 
     const box1d& impl_points() const;
@@ -135,7 +137,7 @@ namespace oln
   const T& image1d<T>::impl_read(const point1d& p) const
   {
     assert(this->has_data());
-    return this->data_->first.operator()(p.ind());
+    return this->data_->first[p.ind()];
   }
 
   template <typename T>
@@ -143,14 +145,14 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->first.operator[](i);
+    return this->data_->first[i];
   }
 
   template <typename T>
   T& image1d<T>::impl_read_write(const point1d& p)
   {
     assert(this->has_data());
-    return this->data_->first.operator()(p.ind());
+    return this->data_->first[p.ind()];
   }
 
   template <typename T>
@@ -158,7 +160,14 @@ namespace oln
   {
     assert(this->has_data());
     assert(i < this->npoints());
-    return this->data_->first.operator[](i);
+    return this->data_->first[i];
+  }
+
+  template <typename T>
+  void image1d<T>::impl_write(const point1d& p, const T& v)
+  {
+    assert(this->has_data());
+    this->data_->first[p.ind()] = v;
   }
 
   template <typename T>

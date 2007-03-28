@@ -31,6 +31,7 @@
 
 # include <oln/core/gen/box.hh>
 # include <oln/core/concept/point.hh>
+# include <oln/core/internal/point_set_base.hh>
 
 
 namespace oln
@@ -48,17 +49,19 @@ namespace oln
 
   public:
 
-    fbbox_();
-    operator gen_box<P>() const;
+    typedef typename f_box_from_point_<P>::ret box_t;
 
-    bool           is_valid() const;
-    void           flush();
-    fbbox_<P>&     take(const P& p);
-    const gen_box<P>& box() const;
+    fbbox_();
+    operator box_t() const;
+
+    bool is_valid() const;
+    void flush();
+    fbbox_<P>& take(const P& p);
+    const box_t& box() const;
 
   private:
-    bool    is_valid_;
-    gen_box<P> b_;
+    bool is_valid_;
+    box_t b_;
 
   }; // end of class oln::fbbox_<P>
 
@@ -73,7 +76,7 @@ namespace oln
   }
 
   template <typename P>
-  fbbox_<P>::operator gen_box<P>() const
+  fbbox_<P>::operator typename fbbox_<P>::box_t() const
   {
     precondition(this->is_valid_);
     return this->b_;
@@ -92,7 +95,8 @@ namespace oln
   }
 
   template <typename P>
-  fbbox_<P>& fbbox_<P>::take(const P& p)
+  fbbox_<P>&
+  fbbox_<P>::take(const P& p)
   {
     if (not this->is_valid_)
       {
@@ -112,13 +116,14 @@ namespace oln
   }
 
   template <typename P>
-  const gen_box<P>& fbbox_<P>::box() const
+  const typename fbbox_<P>::box_t&
+  fbbox_<P>::box() const
   {
     precondition(this->is_valid_);
     return this->b_;
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

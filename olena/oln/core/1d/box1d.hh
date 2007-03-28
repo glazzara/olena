@@ -35,14 +35,13 @@
 namespace oln
 {
 
-  // Forward declarations
-  struct box1d;
+  // Fwd decl.
+  class box1d;
 
   // Super type
   template <>
   struct super_trait_< box1d >
   {
-    typedef box1d current;
     typedef internal::box_<box1d> ret;
   };
 
@@ -57,7 +56,6 @@ namespace oln
   // Class box1d
   class box1d : public internal::box_< box1d >
   {
-    typedef box1d current;
     typedef internal::box_< box1d > super;
   public:
     // Note: we can't use stc_using because box1d isn't a templated class

@@ -1,3 +1,45 @@
+2007-03-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add line2d, bresenham, the safe_image morpher, and underlying types.
+
+	* oln/core/2d/line2d.hh,
+	* oln/core/gen/safe_image.hh,
+	* oln/core/internal/pset_adaptor.hh,
+	* oln/draw,
+	* oln/draw/bresenham.hh: New.
+	* TODO: Augment.
+	* oln/core/concept/image.hh (read_, write_): New.
+	* oln/core/concept/image_identity.hh: Update.
+	* oln/core/concept/generalised_point.hh (include): Fix.
+	* oln/core/concept/point_set.hh (~Point_Set): New.
+	* oln/core/concept/value.hh: Cosmetic changes.
+	* oln/core/1d/array1d.hh (operator()): Remove.
+	(array1d_): Fix.
+	* oln/core/1d/image1d.hh,
+	* oln/core/1d/image1d_b.hh: Update.
+	* oln/core/1d/box1d.hh,
+	* oln/core/1d/point1d.hh,
+	* oln/core/2d/box2d.hh,
+	* oln/core/2d/point2d.hh,
+	* oln/core/gen/box.hh: Clean up.
+	* oln/core/2d/image2d.hh,
+	* oln/core/2d/image2d_b.hh (impl_write): New.
+	* oln/core/gen/pset_compare.hh (op_leq_): New.
+	* oln/core/gen/fbbox.hh (fbbox_): Fix.
+	(box_t): New.
+	(include): Add point_set_base.
+	* oln/core/gen/single_value_image.hh,
+	* oln/core/internal/box.hh: Cosmetic changes.
+	* oln/core/internal/point_set_base.hh (f_box_from_point_): New.
+	* oln/core/internal/op_image_restricted_to_pset.hh (impl_owns_): New.
+	* oln/core/internal/point_set_std_based.hh (box): New in vtypes.
+	(pset_std_based_fwd_piter_): Change inheritance to internal::iterator_on_points_base.
+	Make the constructor argument type more general.
+	(pset_std_based_bkd_piter_): Likewise.
+	* oln/core/internal/image_base.hh (operator |): Add non-const versions.
+	* oln/core/internal/iterator_on_points_base.hh: Add a FIXME.
+	* oln/value/builtin.hh: Fix.
+
 2007-03-28  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Update cc_tarjan impl + facade.

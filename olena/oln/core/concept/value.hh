@@ -70,7 +70,7 @@ namespace oln
   {
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

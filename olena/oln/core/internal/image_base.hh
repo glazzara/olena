@@ -506,6 +506,17 @@ namespace oln
     return tmp;
   }
 
+  template <typename I, typename B, typename P>
+  op_<I, such_as, const fun_p2b_<B (*)(P)> >
+  operator | (Image<I>& ima, B (*f)(P))
+  {
+    typedef oln_strip_(P) P_;
+    mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.
+    mlc::assert_equal_< P_, oln_point(I) >::check();
+    op_<I, such_as, const fun_p2b_<B (*)(P)> > tmp(exact(ima), f);
+    return tmp;
+  }
+
 
   // Specialization "Image such_as ima : P -> B".
 
@@ -516,6 +527,16 @@ namespace oln
     precondition(f_ima_b.points() >= ima.points());
     mlc::assert_equal_< oln_point(I), oln_point(J) >::check();
     op_<const I, such_as, const fun_p2b_< Binary_Image<J> > > tmp(exact(ima), f_ima_b);
+    return tmp;
+  }
+
+  template <typename I, typename J>
+  op_<I, such_as, const fun_p2b_< Binary_Image<J> > >
+  operator | (Image<I>& ima, const Binary_Image<J>& f_ima_b)
+  {
+    precondition(f_ima_b.points() >= ima.points());
+    mlc::assert_equal_< oln_point(I), oln_point(J) >::check();
+    op_<I, such_as, const fun_p2b_< Binary_Image<J> > > tmp(exact(ima), f_ima_b);
     return tmp;
   }
 

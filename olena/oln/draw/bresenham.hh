@@ -25,86 +25,63 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_VALUE_BUILTIN_HH
-# define OLN_VALUE_BUILTIN_HH
+#ifndef OLN_DRAW_BRESENHAM_HH
+# define OLN_DRAW_BRESENHAM_HH
 
-# include <oln/core/concept/value.hh>
-# include <oln/core/gen/traits.hh>
+# include <oln/core/concept/image.hh>
+# include <oln/core/gen/safe_image.hh>
+# include <oln/core/2d/line2d.hh>
+
 
 
 namespace oln
 {
 
-
-  // Fwd decl.
-  namespace internal { template <typename Exact> struct builtin_base; }
-
-
-  // Virtual types.
-  template <typename Exact>
-  struct vtypes< internal::builtin_base<Exact> >
-  {
-    typedef stc::final< stc::is<Value> > category;
-  };
-
-
-  namespace internal
+  namespace draw
   {
 
-    // Base class for builtin types.
-    template <typename Exact>
-    struct builtin_base : public Value<Exact>
-    {
-    protected:
-      builtin_base();
-    };
+    // Fwd decl.
+
+    template <typename I>
+    void bresenham(Mutable_Image<I>& input,
+		   const oln_point(I)& begin, const oln_point(I)& end,
+		   const oln_value(I)& value);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename Exact>
-    builtin_base<Exact>::builtin_base()
+    namespace impl
     {
+
+      template <typename I>
+      void bresenham_(Mutable_Image<I>& input,
+		      const oln_point(I)& begin, const oln_point(I)& end,
+		      const oln_value(I)& value)
+      {
+	line2d l(begin, end);
+	safe_image<I> input_(input);
+	typename line2d::piter p(l); // FIXME: Generalize with an 'assign' routine...
+	for_all(p)
+	  input_(p) = value;
+      }
+
+    } // end of namespace oln::draw::impl
+
+    // Facade.
+
+    template <typename I>
+    void bresenham(Mutable_Image<I>& input,
+		   const oln_point(I)& begin, const oln_point(I)& end,
+		   const oln_value(I)& value)
+    {
+      impl::bresenham_(exact(input), begin, end, value);
     }
 
 # endif // ! OLN_INCLUDE_ONLY
-  
-  } // end of namespace oln::internal
 
-
-
-  // int, float, ...
-
-  template <>
-  struct super_trait_< int >
-  {
-    typedef internal::builtin_base<int> ret;
-  };
-
-  template <>
-  struct super_trait_< float >
-  {
-    typedef internal::builtin_base<float> ret;
-  };
-
-
-  template <typename Op>
-  struct set_trait_< Value, int, Op, Value, float >
-  {
-    typedef float ret;
-  };
-
-  template <typename Op>
-  struct set_trait_< Value, float, Op, Value, int >
-  {
-    typedef float ret;
-  };
-
-  // FIXME: To be continued...
-
+  } // end of namespace oln::draw
 
 } // end of namespace oln
 
 
-#endif // ! OLN_VALUE_BUILTIN_HH
-
+#endif // ! OLN_DRAW_BRESENHAM_HH

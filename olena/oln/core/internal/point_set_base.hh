@@ -34,6 +34,28 @@
 namespace oln
 {
 
+  // function : point -> box
+
+  template <typename P> class gen_box;
+
+  template <typename P>
+  struct f_box_from_point_ { typedef gen_box<P> ret; };
+
+  class point1d;
+  class box1d;
+
+  template <>
+  struct f_box_from_point_< point1d > { typedef box1d ret; };
+
+  class point2d;
+  class box2d;
+
+  template <>
+  struct f_box_from_point_< point2d > { typedef box2d ret; };
+
+  // FIXME: Move the code above elsewhere.
+
+
 
   namespace internal
   {

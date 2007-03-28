@@ -146,7 +146,7 @@ namespace oln
     this->data_->second = new_value;
   }
 
-# endif // OLN_INCLUDE_ONLY
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

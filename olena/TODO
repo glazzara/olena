@@ -12,7 +12,7 @@ image thru a function f (where f is pure, a bijection, a two-way
 function, an accessor, a projection, etc.)
 
 basics important routines: fill, assign, clone, unmorph (undress?),
-convert, ...
+convert, ...  + add 'with' to disambiguate
 
 torus and mask types, and the proper niter type deductions (with or
 without virtual border)
@@ -30,7 +30,10 @@ window types such as lines, rectangles, and so on
 
 meta-window type; for instance, ball, segment, etc.
 
-const promotions for op_<L,O,R> types
+const promotions for op_<L,O,R> types  +  result is Mutable only
+if the underlying type is not 'const'
+
+in image_identity.hh use 'current'
 
 
 * Tiny improvements
