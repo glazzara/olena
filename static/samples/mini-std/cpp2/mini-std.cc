@@ -113,13 +113,24 @@ namespace mstd
   // ---------- //
 
   template <typename Exact>
-  struct Iterator : virtual public Any<Exact>
+  struct Iterator : virtual public Any<Exact>,
+                    virtual public automatic::get_impl<Iterator, Exact>
   {
     stc_typename(value_t);
 
     value_t& operator*()
     {
       exact(this)->impl_op_star();
+    }
+
+    bool operator ==(const Exact& it)
+    {
+      return exact(this)->impl_op_equal(it);
+    }
+
+    bool operator !=(const Exact& it)
+    {
+      return exact(this)->impl_op_nequal(it);
     }
   };
 
@@ -507,7 +518,6 @@ namespace mstd
     typedef mlc::false_ is_mutable;
 
     // Types
-    typedef stc::abstract size_t;
     typedef stc::abstract value_t;
     typedef stc::abstract key_t;
 
@@ -515,14 +525,15 @@ namespace mstd
 
     typedef stc::abstract stdcontainer_t;
 
-//     typedef stc_deferred(stdcontainer_t) stdcontainer_t__;
-//     typedef stc::final< typename stdcontainer_t__::size_t > size_t;
+    typedef stc_deferred(stdcontainer_t) stdcontainer_t__;
+    typedef stc::final< typename stdcontainer_t__::size_type > size_t;
   };
 
   template <typename Exact>
   struct container_base : public virtual switch_<switch_is_sorted, Exact>::ret,
                           public virtual switch_<switch_is_frontinsertion, Exact>::ret,
-                          public virtual switch_<switch_is_backinsertion, Exact>::ret
+                          public virtual switch_<switch_is_backinsertion, Exact>::ret,
+                          public virtual switch_<switch_iterator_kind, Exact>::ret
   {
     typedef top<Exact> super;
 
@@ -573,8 +584,8 @@ namespace mstd
     stc_deduce_typename(current, iter_t);
     stc_deduce_typename(current, value_t);
 
-
     forwardIterator(container_t& c) :
+      c_ (c),
       iter_ (c.get_stdcontainer().begin())
     {
     }
@@ -597,7 +608,28 @@ namespace mstd
       return ret;
     }
 
+    void to_begin()
+    {
+      iter_ = c_.get_stdcontainer().begin();
+    }
+
+    void to_end()
+    {
+      iter_ = c_.get_stdcontainer().end();
+    }
+
+    bool impl_op_equal(const current& it)
+    {
+      return this->iter_ == it.iter_;
+    }
+
+    bool impl_op_nequal(const current& it)
+    {
+      return this->iter_ != it.iter_;
+    }
+
   protected:
+    container_t& c_;
     iter_t iter_;
   };
 
@@ -634,6 +666,7 @@ namespace mstd
     stc_deduce_typename(current, value_t);
 
     biDirIterator(container_t& c) :
+      c_ (c),
       iter_ (c.get_stdcontainer().begin())
     {
     }
@@ -669,7 +702,18 @@ namespace mstd
       return ret;
     }
 
+    void to_begin()
+    {
+      iter_ = c_.get_stdcontainer().begin();
+    }
+
+    void to_end()
+    {
+      iter_ = c_.get_stdcontainer().end();
+    }
+
   protected:
+    container_t& c_;
     iter_t iter_;
   };
 
@@ -744,8 +788,6 @@ namespace mstd
 
     typedef mlc::true_ is_mutable;
 
-
-    typedef unsigned size_t;
     typedef T value_t;
 
     typedef biDirIterator< list< T > > iter_t;
@@ -820,7 +862,9 @@ namespace mstd
 
     iter_t impl_end()
     {
-      return iter_t(*this);
+      iter_t it(*this);
+      it.to_end();
+      return it;
     }
 
     value_t& impl_front()
@@ -910,5 +954,8 @@ int main()
   iter2--;
   TEST(*iter2);
 
-  // mstd::list<int>::iter_t it = l.begin();
+  TEST(iter == iter);
+  TEST(iter != iter);
+
+  mstd::list<int>::iter_t it = l.begin();
 }
