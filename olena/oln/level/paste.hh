@@ -25,29 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_DRAW_BRESENHAM_HH
-# define OLN_DRAW_BRESENHAM_HH
+#ifndef OLN_LEVEL_PASTE_HH
+# define OLN_LEVEL_PASTE_HH
 
 # include <oln/core/concept/image.hh>
-# include <oln/core/gen/safe_image.hh>
-# include <oln/core/2d/line2d.hh>
-# include <oln/core/gen/single_value_image.hh>
-// # include <oln/level/paste.hh>
-
 
 
 namespace oln
 {
 
-  namespace draw
+  namespace level
   {
 
     // Fwd decl.
 
-    template <typename I>
-    void bresenham(Mutable_Image<I>& input,
-		   const oln_point(I)& begin, const oln_point(I)& end,
-		   const oln_value(I)& value);
+    template <typename I, typename J>
+    void paste(const Image<I>& data, /* in */ Mutable_Image<J>& destination);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -55,38 +48,36 @@ namespace oln
     namespace impl
     {
 
-      template <typename I>
-      void bresenham_(Mutable_Image<I>& input,
-		      const oln_point(I)& begin, const oln_point(I)& end,
-		      const oln_value(I)& value)
+      // Generic version.
+
+      template <typename I, typename J>
+      void paste_(const Image<I>& data, Mutable_Image<J>& destination)
       {
-	line2d l(begin, end);
-	safe_image<I> input_(input);
-// 	// FIXME: rec pb.
-//  	single_value_image<typename I::pset, oln_value(I)> tmp(input.points(), value);
-//  	level::paste((tmp | l), input);
-	typename line2d::piter p(l); // FIXME: Generalize with an 'assign' routine...
+	oln_piter(I) p(data.points());
 	for_all(p)
- 	  input_(p) = value;
+	  destination(p) = data(p);
       }
 
-    } // end of namespace oln::draw::impl
+      // FIXME: Fast version...
+
+    } // end of namespace oln::level::impl
+
 
     // Facade.
 
-    template <typename I>
-    void bresenham(Mutable_Image<I>& input,
-		   const oln_point(I)& begin, const oln_point(I)& end,
-		   const oln_value(I)& value)
+    template <typename I, typename J>
+    void paste(const Image<I>& data, Mutable_Image<J>& destination)
     {
-      impl::bresenham_(exact(input), begin, end, value);
+      assert_same_grid_<I, J>::check();
+      precondition(data.points() <= destination.points());
+      impl::paste_(exact(data), exact(destination));
     }
 
 # endif // ! OLN_INCLUDE_ONLY
 
-  } // end of namespace oln::draw
+  } // end of namespace oln::level
 
 } // end of namespace oln
 
 
-#endif // ! OLN_DRAW_BRESENHAM_HH
+#endif // ! OLN_LEVEL_PASTE_HH

@@ -32,12 +32,10 @@
 # include <utility>
 
 # include <oln/core/rle/rle_psite.hh>
-
 # include <oln/core/internal/point_set_base.hh>
-
 # include <oln/core/internal/iterator_on_points_base.hh>
-
 # include <oln/core/gen/fbbox.hh>
+
 
 namespace oln
 {
@@ -61,7 +59,7 @@ namespace oln
   {
     typedef P point;
 
-    typedef gen_box<P> box;
+    typedef typename f_box_from_point_<P>::ret box;
     typedef rle_pset_fwd_piter_<P> fwd_piter;
     typedef rle_pset_bkd_piter_<P> bkd_piter;
   };
@@ -145,7 +143,7 @@ namespace oln
   const typename rle_pset<P>::box&
   rle_pset<P>::impl_bbox() const
   {
-    return fb_;
+    return fb_.box();
   }
 
   template <typename P>

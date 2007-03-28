@@ -50,11 +50,14 @@ namespace oln
     point to_point() const;
     const point* point_adr() const;
 
-    // Default.
+    // Final.
     operator point() const;
 
   protected:
     Iterator_on_Points();
+
+  private:
+    void check__() const;
 
   }; // end of class oln::Iterator_on_Points<Exact>
 
@@ -91,6 +94,17 @@ namespace oln
   Iterator_on_Points<Exact>::Iterator_on_Points()
   {
     mlc::assert_< mlc_is_a(typename Iterator_on_Points<Exact>::point, Point) >::check();
+    this->check__();
+  }
+
+  template <typename Exact>
+  void Iterator_on_Points<Exact>::check__() const
+  {
+    point (Exact::*impl_to_point_adr)() const = & Exact::impl_to_point;
+    impl_to_point_adr = 0;
+    const point* (Exact::*impl_point_adr_adr)() const = & Exact::impl_point_adr;
+    impl_point_adr_adr = 0;
+    // FIXME: & Exact::operator point...
   }
 
   template <typename Exact>
@@ -99,7 +113,7 @@ namespace oln
     return ostr << pit.to_point();
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

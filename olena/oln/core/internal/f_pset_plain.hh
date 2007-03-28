@@ -38,9 +38,10 @@ namespace oln
 {
 
   // Fwd decls.
-  struct grid2d_rec;
+  struct grid2d;
   template <typename P> class box_;
-  typedef box_<point2d> box2d;
+  class box2d;
+  template <typename T> class image2d;
   template <typename T> class image2d_b;
 
 
@@ -51,14 +52,14 @@ namespace oln
     struct f_pset_plain__;
 
     template <typename T>
-    struct f_pset_plain__< grid2d_rec, box2d, T >
+    struct f_pset_plain__< grid2d, box2d, T >
     {
-      typedef image2d_b<T> ret;
+      typedef image2d/*_b*/<T> ret; // FIXME: this type is not always known!
     };
 
     template <typename Ps, typename T>
     struct f_pset_plain_ : private mlc::assert_< mlc_is_a(Ps, Point_Set) >,
-		      public f_pset_plain__< stc_type(Ps, grid), Ps, T >
+			   public f_pset_plain__< stc_type(Ps, grid), Ps, T >
 		      
     {
     };

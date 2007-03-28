@@ -54,6 +54,9 @@ namespace oln
   protected:
     Iterator();
 
+  private:
+    void check__() const;
+
   }; // end of class oln::Iterator<Exact>
 
 
@@ -88,9 +91,23 @@ namespace oln
   template <typename Exact>
   Iterator<Exact>::Iterator()
   {
+    this->check__();
   }
 
-# endif
+  template <typename Exact>
+  void Iterator<Exact>::check__() const
+  {
+    void (Exact::*impl_start_adr)() = & Exact::impl_start;
+    impl_start_adr = 0;
+    void (Exact::*impl_next_adr)() = & Exact::impl_next;
+    impl_next_adr = 0;
+    void (Exact::*impl_invalidate_adr)() = & Exact::impl_invalidate;
+    impl_invalidate_adr = 0;
+    bool (Exact::*impl_is_valid_adr)() const = & Exact::impl_is_valid;
+    impl_is_valid_adr = 0;
+  }
+
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

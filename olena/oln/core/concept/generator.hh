@@ -41,6 +41,9 @@ namespace oln
   {
   protected:
     Generator();
+
+  private:
+    void check__() const;
   };
 
 
@@ -50,6 +53,13 @@ namespace oln
   template <typename Exact>
   Generator<Exact>::Generator()
   {
+    this->check__();
+  }
+
+  template <typename Exact>
+  void Generator<Exact>::check__() const
+  {
+    // FIXME: Is it possible to check Exact's body?
   }
 
 # endif // ! OLN_INCLUDE_ONLY

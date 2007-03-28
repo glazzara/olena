@@ -1,3 +1,21 @@
+2007-03-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Enforce impl check in concepts.
+
+	* oln/core/rle/rle_pset.hh (box, impl_bbox): Fix.
+	* oln/core/concept/iterator_on_points.hh,
+	* oln/core/concept/generator.hh,
+	* oln/core/concept/point.hh,
+	* oln/core/concept/iterator.hh,
+	* oln/core/concept/dpoint.hh,
+	* oln/core/concept/point_set.hh (check__): New.
+	* oln/core/gen/literal.hh (operator()): Use typedefs.
+	* oln/core/internal/f_pset_plain.hh (box2d) : Fix.
+	* oln/draw/bresenham.hh (fill): Move overload with values to...
+	* oln/level/fill.hh: ...this new file.
+	* oln/debug/fill.hh: New; extracted from oln/level/fill.hh.
+	* oln/level/paste.hh; New.
+
 2007-03-28  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix CC_tarjan + test, sequential reconstruction.

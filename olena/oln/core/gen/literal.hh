@@ -47,16 +47,16 @@ namespace oln
   template <typename T>
   struct literal_ : public Generator< literal_<T> >
   {
-    typedef T result;
+    typedef const T& result;
 
     literal_(const T& val) : val_(val) {}
 
-    const result& operator()() const
+    result operator()() const
     {
       return this->val_;
     }
 
-    const result& value() const
+    result value() const
     {
       return this->val_;
     }

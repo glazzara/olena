@@ -59,7 +59,9 @@ namespace oln
 
   protected:
     Point_Set();
-    ~Point_Set();
+
+  private:
+    void check__() const;
 
   }; // end of oln::Point_Set<Exact>
 
@@ -115,13 +117,18 @@ namespace oln
   template <typename Exact>
   Point_Set<Exact>::Point_Set()
   {
+    this->check__();
   }
 
   template <typename Exact>
-  Point_Set<Exact>::~Point_Set()
+  void Point_Set<Exact>::check__() const
   {
-    // FIXME: check method impls.
-    // unsigned (Exact::*m)() const = & Exact::impl_npoints;
+    unsigned (Exact::*impl_npoints_adr)() const = & Exact::impl_npoints;
+    impl_npoints_adr = 0;
+    bool (Exact::*impl_has_adr)(const point& p) const = & Exact::impl_has;
+    impl_has_adr = 0;
+    const box& (Exact::*impl_bbox_adr)() const = & Exact::impl_bbox;
+    impl_bbox_adr = 0;
   }
 
   template <typename Exact>
