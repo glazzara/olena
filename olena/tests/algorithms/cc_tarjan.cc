@@ -4,42 +4,30 @@
 
 #include <oln/morpho/cc_tarjan.hh>
 
-#include <oln/debug/print.hh>
-
-
-template <typename I>
-void set(I& ima,
-	 int i,
-	 int j)
-{
-  oln_point(I) p(i, j);
-  ima(p) = true;
-}
-
 int main()
 {
   using namespace oln;
   typedef image2d<bool> I;
   I ima(3, 3);
 
-  set(ima, 0, 0);
-  set(ima, 0, 1);
-  set(ima, 0, 2);
+  ima.at(0, 0) = true;
+  ima.at(0, 1) = true;
+  ima.at(0, 2) = true;
 
-  set(ima, 2, 0);
-  set(ima, 2, 1);
-  set(ima, 2, 2);
+  ima.at(2, 0) = true;
+  ima.at(2, 1) = true;
+  ima.at(2, 2) = true;
 
-  I out = morpho::cc_tarjan(ima + c4);
+  image2d<unsigned int> out = (morpho::cc_tarjan(ima + c4)).image();
 
-//   for (unsigned i; i < 3; i++)
-//     for (unsigned j; j < 3; j++)
-//     {
-//       if (i == 0)
-// 	assert(ima(i, j) == 1);
-//       if (i == 1)
-// 	assert(ima(i, j) == 0);
-//       if (i == 2)
-// 	assert(ima(i, j) == 2);
-//     }
+  for (unsigned i = 0; i < 3; i++)
+    for (unsigned j = 0; j < 3; j++)
+    {
+      if (i == 0)
+	assert(out.at(i, j) == 1);
+      if (i == 1)
+	assert(out.at(i, j) == 0);
+      if (i == 2)
+	assert(out.at(i, j) == 2);
+    }
 }

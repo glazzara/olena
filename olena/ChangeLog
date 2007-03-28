@@ -1,3 +1,12 @@
+2007-03-28  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix CC_tarjan + test, sequential reconstruction.
+
+	* tests/algorithms/cc_tarjan.cc: .
+	* oln/morpho/reconstruction.hh: New.
+	* oln/morpho/cc_tarjan.hh: .
+	* oln/io/pnm.hh: .
+
 2007-03-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add line2d, bresenham, the safe_image morpher, and underlying types.

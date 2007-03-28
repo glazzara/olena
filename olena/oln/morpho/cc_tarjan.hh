@@ -10,7 +10,7 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 //
-// You should have received a copy of the GNU General Public License
+// You should have receiv a copy of the GNU General Public License
 // along with this library; see the file COPYING.  If not, write to
 // the Free Software Foundation, 51 Franklin Street, Fifth Floor,
 // Boston, MA 02111-1307, USA.
@@ -70,17 +70,14 @@ namespace oln
 	oln_bkd_piter(I) p(input.points());
 	for_all(p)
 	  {
+	    parent(p) = p;
 	    if ( input(p) )
 	    {
-	      parent(p) = p;
 	      oln_niter(I) n(p, input);
 	      for_all(n)
 		{
-		  if ( input(n) )
-		  {
-		    if ( is_processed(n) )
+		  if ( input(n) && is_processed(n) )
 		      do_union(input ,n, p, parent);
-		  }
 		}
 	      is_processed(p) = true;
 	    }
