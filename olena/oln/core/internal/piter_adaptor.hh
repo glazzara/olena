@@ -43,7 +43,7 @@ namespace oln
   template <typename Exact>
   struct super_trait_< internal::piter_adaptor_<Exact> >
   {
-    typedef internal::iterator_on_points_base<Exact> ret;
+    typedef internal::iterator_on_points_base_<Exact> ret;
   };
 
 
@@ -65,9 +65,9 @@ namespace oln
     // defined over other types of iterator on points.
 
     template <typename Exact>
-    class piter_adaptor_ : public internal::iterator_on_points_base<Exact>
+    class piter_adaptor_ : public internal::iterator_on_points_base_<Exact>
     {
-      typedef internal::iterator_on_points_base<Exact> super;
+      typedef internal::iterator_on_points_base_<Exact> super;
     public:
 
       stc_using(point);

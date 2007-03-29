@@ -51,6 +51,13 @@ namespace oln
   template <typename L, typename R>
   bool operator >= (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
 
+  template <typename B1, typename B2>
+  bool intersects (const Box<B1>& box1, const Box<B2>& box2);
+
+  template <typename G>
+  class infty_pset;
+
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -65,6 +72,13 @@ namespace oln
     template <typename L, typename R>
     bool op_eq_(const Point_Set<L>& lhs, const Point_Set<R>& rhs)
     {
+      // first quick test
+      if (lhs.npoints() != rhs.npoints())
+	return false;
+      // second quick test
+      if (not intersects(lhs.bbox(), rhs.bbox()))
+	return false;
+      // exhaustive test
       oln_piter(L) pl(lhs);
       oln_piter(R) pr(rhs);
       for (pl.start(), pr.start();
@@ -89,13 +103,40 @@ namespace oln
       return lhs.pmin() == rhs.pmin() and lhs.pmax() == rhs.pmax();
     }
 
+    // Versions with infinite set.
+
+    template <typename S, typename G>
+    bool op_eq_(const Point_Set<S>&, const infty_pset<G>&)
+    {
+      return false;
+    }
+
+    template <typename G, typename S>
+    bool op_eq_(const infty_pset<G>&, const Point_Set<S>&)
+    {
+      return false;
+    }
+
+    template <typename G>
+    bool op_eq_(const infty_pset<G>&, const infty_pset<G>&)
+    {
+      return true;
+    }
+
 
     //  Point_Set L  <=  Point_Set R
+    // ------------------------------
+
+    // Generic version.
 
     template <typename L, typename R>
-    bool op_leq_(const Point_Set<L>& lhs, const Point_Set<R>& rhs)
+    bool op_subset_(const Point_Set<L>& lhs, const Point_Set<R>& rhs)
     {
-      if (lhs.npoints() > rhs.npoints()) // quick test
+      // first quick test
+      if (lhs.npoints() > rhs.npoints())
+	return false;
+      // second quick test
+      if (not intersects(lhs.bbox(), rhs.bbox()))
 	return false;
       // all points of lhs are IN rhs?
       oln_piter(R) p_rhs(rhs);
@@ -111,25 +152,10 @@ namespace oln
       return true;
     }
 
-
-    //  Point_Set L  <  Point_Set R
-
-    template <typename L, typename R>
-    bool op_less_(const Point_Set<L>& lhs, const Point_Set<R>& rhs)
-    {
-      return op_leq_(lhs, rhs) and lhs.npoints() < rhs.npoints();
-    }
-
-
-    
-
-
-
-
-    // Box L <= Box R.
+    // Version for Boxes.
 
     template <typename L, typename R>
-    bool op_leq_(const Box<L>& lhs, const Box<R>& rhs)
+    bool op_subset_(const Box<L>& lhs, const Box<R>& rhs)
     {
       for (unsigned i = 0; i < L::n; ++i)
 	{
@@ -139,35 +165,66 @@ namespace oln
       return true;
     }
 
-    // Box L < Box R.
+    // Versions with infinite set.
 
-    template <typename L, typename R>
-    bool op_less_(const Box<L>& lhs, const Box<R>& rhs)
+    template <typename S, typename G>
+    bool op_subset_(const Point_Set<S>&, const infty_pset<G>&)
     {
-      return op_leq_(lhs, rhs) and lhs != rhs;
-    }
-
-    // Box L >= Box R.
-
-    template <typename L, typename R>
-    bool op_geq_(const Box<L>& lhs, const Box<R>& rhs)
-    {
-      for (unsigned i = 0; i < L::n; ++i)
-	{
-	  if (lhs.pmin()[i] > rhs.pmin()[i] or lhs.pmax()[i] < rhs.pmax()[i])
-	    return false;
-	}
       return true;
     }
 
-    // Box L > Box R.
-
-    template <typename L, typename R>
-    bool op_greater_(const Box<L>& lhs, const Box<R>& rhs)
+    template <typename G>
+    bool op_subset_(const infty_pset<G>&, const infty_pset<G>&)
     {
-      return op_geq_(lhs, rhs) and lhs != rhs;
+      return true;
     }
 
+    template <typename G, typename S>
+    bool op_subset_(const infty_pset<G>&, const Point_Set<S>&)
+    {
+      return false;
+    }
+    
+
+
+    //  Point_Set L  <  Point_Set R
+    // -----------------------------
+
+    // Generic version.
+
+    template <typename L, typename R>
+    bool op_strict_subset_(const Point_Set<L>& lhs, const Point_Set<R>& rhs)
+    {
+      return op_subset_(lhs, rhs) and lhs.npoints() != rhs.npoints();
+    }
+    
+    // Version for Boxes.
+
+    template <typename L, typename R>
+    bool op_strict_subset_(const Box<L>& lhs, const Box<R>& rhs)
+    {
+      return op_subset_(lhs, rhs) and lhs != rhs;
+    }
+
+    // Versions with infinite set.
+
+    template <typename S, typename G>
+    bool op_strict_subset_(const Point_Set<S>&, const infty_pset<G>&)
+    {
+      return true;
+    }
+
+    template <typename G>
+    bool op_strict_subset_(const infty_pset<G>&, const infty_pset<G>&)
+    {
+      return false;
+    }
+
+    template <typename G, typename S>
+    bool op_strict_subset_(const infty_pset<G>&, const Point_Set<S>&)
+    {
+      return false;
+    }
 
   } // end of namespace oln::impl
 
@@ -185,30 +242,44 @@ namespace oln
   bool operator <= (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
   {
     assert_same_grid_<L, R>::check();
-    return impl::op_leq_(exact(lhs), exact(rhs));
+    return impl::op_subset_(exact(lhs), exact(rhs));
   }
 
   template <typename L, typename R>
   bool operator < (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
   {
     assert_same_grid_<L, R>::check();
-    return impl::op_less_(exact(lhs), exact(rhs));
+    return impl::op_strict_subset_(exact(lhs), exact(rhs));
   }
 
   template <typename L, typename R>
   bool operator >= (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
   {
     assert_same_grid_<L, R>::check();
-    return impl::op_geq_(exact(lhs), exact(rhs));
+    return impl::op_subset_(exact(rhs), exact(lhs));
   }
 
   template <typename L, typename R>
   bool operator > (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
   {
     assert_same_grid_<L, R>::check();
-    return impl::op_greater_(exact(lhs), exact(rhs));
+    return impl::op_strict_subset_(exact(rhs), exact(lhs));
   }
- 
+
+  // Intersects.
+
+  template <typename B1, typename B2>
+  bool intersects (const Box<B1>& box1, const Box<B2>& box2)
+  {
+    assert_same_grid_<B1, B2>::check();
+    for (unsigned i = 0; i < B1::n; ++i)
+      {
+	if (box1.pmax()[i] < box2.pmin()[i] or box2.pmax()[i] < box1.pmin()[i])
+	  return false;
+      }
+    return true;
+  }
+
 # endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln

@@ -176,14 +176,14 @@ namespace oln
   struct super_trait_< pset_std_based_fwd_piter_<C> >
   {
     typedef pset_std_based_fwd_piter_<C> current__;
-    typedef internal::iterator_on_points_base<current__> ret;
+    typedef internal::iterator_on_points_base_<current__> ret;
   };
 
   template <typename C>
   struct super_trait_< pset_std_based_bkd_piter_<C> >
   {
     typedef pset_std_based_bkd_piter_<C> current__;
-    typedef internal::iterator_on_points_base<current__> ret;
+    typedef internal::iterator_on_points_base_<current__> ret;
   };
 
 
@@ -206,10 +206,10 @@ namespace oln
   // Class pset_std_based_fwd_piter_<C>.
 
   template <typename C>
-  class pset_std_based_fwd_piter_ : public internal::iterator_on_points_base< pset_std_based_fwd_piter_<C> >
+  class pset_std_based_fwd_piter_ : public internal::iterator_on_points_base_< pset_std_based_fwd_piter_<C> >
   {
     typedef pset_std_based_fwd_piter_<C> current;
-    typedef internal::iterator_on_points_base<current> super;
+    typedef internal::iterator_on_points_base_<current> super;
   public:
 
     stc_using(point);
@@ -235,10 +235,10 @@ namespace oln
   // Class pset_std_based_bkd_piter_<C>.
 
   template <typename C>
-  class pset_std_based_bkd_piter_ : public internal::iterator_on_points_base< pset_std_based_bkd_piter_<C> >
+  class pset_std_based_bkd_piter_ : public internal::iterator_on_points_base_< pset_std_based_bkd_piter_<C> >
   {
     typedef pset_std_based_bkd_piter_<C> current;
-    typedef internal::iterator_on_points_base<current> super;
+    typedef internal::iterator_on_points_base_<current> super;
   public:
 
     stc_using(point);
@@ -374,7 +374,7 @@ namespace oln
   }
 
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln

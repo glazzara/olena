@@ -95,6 +95,7 @@ namespace oln
       typedef xtd::vec<n, coord> vec_t;
       const vec_t& vec() const;
       vec_t& vec();
+      void set_all(const coord& c);
 
     protected:
       point_base_();
@@ -148,15 +149,22 @@ namespace oln
     }
 
     template <typename Exact>
+    void
+    point_base_<Exact>::set_all(const typename point_base_<Exact>::coord& c)
+    {
+      v_.set_all(c);
+    }
+
+    template <typename Exact>
     point_base_<Exact>::point_base_()
     {
     }
 
-# endif
-
-
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::internal
+
+
 
 
   template <typename Exact>
@@ -173,57 +181,10 @@ namespace oln
     return ostr;
   }
 
-# endif
-
-
-
-//   /// internal::point_base_ + internal::dpoint_base_
-//   template <typename P, typename D>
-//   struct case_ < xtd::op_plus, mlc::pair_<P,D>,
-// 		 oln::id::op_plus_pointnd_dpointnd >
-//   : where_< mlc::and_< mlc_is_a(P, internal::point_base_),
-// 		       mlc_is_a(D, internal::dpoint_base_) > >
-//   {
-//     typedef oln_vtype(P, coord) P_coord;
-//     typedef oln_vtype(D, coord) D_coord;
-//     typedef xtd_op_plus_trait(P_coord, D_coord) coord;
-//     typedef oln_vtype(P, dim) dim;
-//     typedef typename point_<mlc_value(dim), coord>::ret ret;
-//   };
-
-
-//   /// internal::point_base_ - internal::dpoint_base_
-//   template <typename P, typename D>
-//   struct case_ < xtd::op_minus, mlc::pair_<P,D>,
-// 		 oln::id::op_minus_pointnd_dpointnd >
-//   : where_< mlc::and_< mlc_is_a(P, internal::point_base_),
-// 		       mlc_is_a(D, internal::dpoint_base_) > >
-//   {
-//     typedef oln_vtype(P, coord) P_coord;
-//     typedef oln_vtype(D, coord) D_coord;
-//     typedef xtd_op_minus_trait(P_coord, D_coord) coord;
-//     typedef oln_vtype(P, dim) dim;
-//     typedef typename point_<mlc_value(dim), coord>::ret ret;
-//   };
-
-
-//   /// internal::point_base_ - internal::point_base_
-//   template <typename P1, typename P2>
-//   struct case_ < xtd::op_minus, mlc::pair_<P1,P2>,
-// 		 oln::id::op_minus_pointnd_pointnd >
-//   : where_< mlc::and_< mlc_is_a(P1, internal::point_base_),
-// 		       mlc_is_a(P2, internal::point_base_) > >
-//   {
-//     typedef oln_vtype(P1, coord) P1_coord;
-//     typedef oln_vtype(P2, coord) P2_coord;
-//     typedef xtd_op_minus_trait(P1_coord, P2_coord) coord;
-//     typedef oln_vtype(P1, dim) dim;
-//     typedef typename dpoint_<mlc_value(dim), coord>::ret ret;
-//   };
+# endif // ! OLN_INCLUDE_ONLY
 
 
 } // end of namespace oln
-
 
 
 #endif // ! OLN_CORE_INTERNAL_POINT_BASE_HH

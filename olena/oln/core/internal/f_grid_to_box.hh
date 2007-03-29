@@ -25,41 +25,75 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_F_PSET_PLAIN_HH
-# define OLN_CORE_INTERNAL_F_PSET_PLAIN_HH
+#ifndef OLN_CORE_INTERNAL_F_GRID_TO_BOX_HH
+# define OLN_CORE_INTERNAL_F_GRID_TO_BOX_HH
 
-# include <oln/core/concept/point_set.hh>
+# include <oln/core/concept/grid.hh>
 
 
-#define oln_f_pset_plain(Ps, T) typename oln::internal::f_pset_plain_< Ps, T >::ret
+#define oln_f_grid_to_box(G) typename oln::internal::f_grid_to_box_< G >::ret
 
 
 namespace oln
 {
 
-  // Fwd decls.
+  /// \{
+  /// Forward declarations.
+
+  // Grid types.
+
+  struct grid1d;
+
   struct grid2d;
-  template <typename P> class box_;
-  class box2d;
-  template <typename T> class image2d;
-  template <typename T> class image2d_b;
+  struct grid2d_hex;
+  struct grid2d_tri;
+
+  // FIXME: 3D...
+
+  // Box types.
+
+  struct box1d;
+  struct box2d;
+  template <typename P> class gen_box;
+
+  /// \}
+
 
 
   namespace internal
   {
 
-    template <typename Gr, typename Ps, typename T>
-    struct f_pset_plain__;
+    // Fwd decl.
 
-    template <typename T>
-    struct f_pset_plain__< grid2d, box2d, T >
+    template <typename G> struct f_grid_to_;
+
+
+    /// \{
+    /// Definitions.
+
+    template <typename G>
+    struct grid_to_box__;
+
+    template <>
+    struct grid_to_box__< grid1d >
     {
-      typedef image2d/*_b*/<T> ret; // FIXME: this type is not always known!
+      typedef box1d ret;
     };
 
-    template <typename Ps, typename T>
-    struct f_pset_plain_ : private mlc::assert_< mlc_is_a(Ps, Point_Set) >,
-			   public f_pset_plain__< stc_type(Ps, grid), Ps, T >
+    template <>
+    struct grid_to_box__< grid2d >
+    {
+      typedef box2d ret;
+    };
+
+    // FIXME: 2D hex/tri, 3D...
+
+    /// \}
+
+
+    template <typename G>
+    struct f_grid_to_box_ : private mlc::assert_< mlc_is_a(G, Grid) >,
+			    public grid_to_box__< G >
 		      
     {
     };
@@ -69,4 +103,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_F_PSET_PLAIN_HH
+#endif // ! OLN_CORE_INTERNAL_F_GRID_TO_BOX_HH

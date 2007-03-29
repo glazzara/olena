@@ -35,8 +35,11 @@
 #   include <stc/scoop-alt.hh>
 # endif
 
+
 # define oln_typename_shortcut__(Type, Alias) typename Type::Alias
 
+
+# define oln_deduce(Type, Alias_1, Alias_2) typename Type::Alias_1::Alias_2
 
 
 namespace oln

@@ -29,10 +29,9 @@
 # define OLN_DRAW_BRESENHAM_HH
 
 # include <oln/core/concept/image.hh>
-# include <oln/core/gen/safe_image.hh>
 # include <oln/core/2d/line2d.hh>
 # include <oln/core/gen/single_value_image.hh>
-// # include <oln/level/paste.hh>
+# include <oln/level/paste.hh>
 
 
 
@@ -45,7 +44,7 @@ namespace oln
     // Fwd decl.
 
     template <typename I>
-    void bresenham(Mutable_Image<I>& input,
+    void bresenham(Mutable_Image<I>& in_out,
 		   const oln_point(I)& begin, const oln_point(I)& end,
 		   const oln_value(I)& value);
 
@@ -56,18 +55,14 @@ namespace oln
     {
 
       template <typename I>
-      void bresenham_(Mutable_Image<I>& input,
+      void bresenham_(Mutable_Image<I>& in_out,
 		      const oln_point(I)& begin, const oln_point(I)& end,
 		      const oln_value(I)& value)
       {
-	line2d l(begin, end);
-	safe_image<I> input_(input);
-// 	// FIXME: rec pb.
-//  	single_value_image<typename I::pset, oln_value(I)> tmp(input.points(), value);
-//  	level::paste((tmp | l), input);
-	typename line2d::piter p(l); // FIXME: Generalize with an 'assign' routine...
-	for_all(p)
- 	  input_(p) = value;
+	line2d line(begin, end);
+  	single_value_image<line2d, oln_value(I)> line_image(line, value);
+  	level::paste(line_image, in_out);
+	// FIXME: Make it as simple as level::paste(line2d(begin, end) + value, in_out);
       }
 
     } // end of namespace oln::draw::impl
@@ -75,11 +70,11 @@ namespace oln
     // Facade.
 
     template <typename I>
-    void bresenham(Mutable_Image<I>& input,
+    void bresenham(Mutable_Image<I>& in_out,
 		   const oln_point(I)& begin, const oln_point(I)& end,
 		   const oln_value(I)& value)
     {
-      impl::bresenham_(exact(input), begin, end, value);
+      impl::bresenham_(exact(in_out), begin, end, value);
     }
 
 # endif // ! OLN_INCLUDE_ONLY

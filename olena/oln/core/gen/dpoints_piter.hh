@@ -52,7 +52,7 @@ namespace oln
   struct super_trait_< dpoints_fwd_piter_<P> >
   {
     typedef dpoints_fwd_piter_<P> current__;
-    typedef internal::iterator_on_points_base<current__> ret;
+    typedef internal::iterator_on_points_base_<current__> ret;
   };
 
 
@@ -66,7 +66,7 @@ namespace oln
 
   // Forward point iterator class on a set of dpoints.
   template <typename P>
-  class dpoints_fwd_piter_ : public internal::iterator_on_points_base< dpoints_fwd_piter_<P> >,
+  class dpoints_fwd_piter_ : public internal::iterator_on_points_base_< dpoints_fwd_piter_<P> >,
 			     public internal::dpoints_fwd_piter_impl_<P>
   {
   public:
@@ -99,7 +99,7 @@ namespace oln
   struct super_trait_< dpoints_bkd_piter_<P> >
   {
     typedef dpoints_bkd_piter_<P> current__;
-    typedef internal::iterator_on_points_base<current__> ret;
+    typedef internal::iterator_on_points_base_<current__> ret;
   };
 
 
@@ -113,7 +113,7 @@ namespace oln
 
   /// Backward point iterator class on a set of dpoints.
   template <typename P>
-  class dpoints_bkd_piter_ : public internal::iterator_on_points_base< dpoints_bkd_piter_<P> >,
+  class dpoints_bkd_piter_ : public internal::iterator_on_points_base_< dpoints_bkd_piter_<P> >,
 			     public internal::dpoints_bkd_piter_impl_<P>
   {
   public:

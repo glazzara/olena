@@ -28,7 +28,7 @@
 #ifndef OLN_CORE_GEN_IMAGE_PSET_PITER_HH
 # define OLN_CORE_GEN_IMAGE_PSET_PITER_HH
 
-# include <oln/core/concept/iterator_on_points.hh>
+# include <oln/core/internal/iterator_on_points_base.hh>
 # include <oln/core/concept/point_set.hh>
 # include <oln/core/concept/image.hh>
 
@@ -36,52 +36,52 @@
 namespace oln
 {
 
-  /// Fwd decls.
+  // Fwd decls.
 
   template <typename Ps> struct image_pset_fwd_piter_;
   template <typename Ps> struct image_pset_bkd_piter_;
 
 
-  /// Super types.
+  // Super types.
 
   template <typename Ps>
   struct super_trait_< image_pset_fwd_piter_<Ps> >
   {
     typedef image_pset_fwd_piter_<Ps> current__;
-    typedef Iterator_on_Points<current__> ret;
+    typedef internal::iterator_on_points_base_<current__> ret;
   };
 
   template <typename Ps>
   struct super_trait_< image_pset_bkd_piter_<Ps> >
   {
     typedef image_pset_bkd_piter_<Ps> current__;
-    typedef Iterator_on_Points<current__> ret;
+    typedef internal::iterator_on_points_base_<current__> ret;
   };
 
 
-  /// Virtual types.
+  // Virtual types.
 
   template <typename Ps>
   struct vtypes< image_pset_fwd_piter_<Ps> >
   {
-    typedef typename Ps::point point;
+    typedef oln_point(Ps) point;
   };
 
   template <typename Ps>
   struct vtypes< image_pset_bkd_piter_<Ps> >
   {
-    typedef typename Ps::point point;
+    typedef oln_point(Ps) point;
   };
 
 
   /// Class image_pset_fwd_piter_<Ps>.
 
   template <typename Ps>
-  class image_pset_fwd_piter_ : public Iterator_on_Points< image_pset_fwd_piter_<Ps> >,
+  class image_pset_fwd_piter_ : public internal::iterator_on_points_base_< image_pset_fwd_piter_<Ps> >,
 				private mlc::assert_< mlc_is_a(Ps, Point_Set) >
   {
     typedef image_pset_fwd_piter_<Ps> current;
-    typedef Iterator_on_Points<current> super;
+    typedef internal::iterator_on_points_base_<current> super;
   public:
 
     stc_using(point);
@@ -106,11 +106,11 @@ namespace oln
   /// Class image_pset_bkd_piter_<Ps>.
 
   template <typename Ps>
-  class image_pset_bkd_piter_ : public Iterator_on_Points< image_pset_bkd_piter_<Ps> >,
+  class image_pset_bkd_piter_ : public internal::iterator_on_points_base_< image_pset_bkd_piter_<Ps> >,
 				private mlc::assert_< mlc_is_a(Ps, Point_Set) >
   {
     typedef image_pset_fwd_piter_<Ps> current;
-    typedef Iterator_on_Points<current> super;
+    typedef internal::iterator_on_points_base_<current> super;
   public:
 
     stc_using(point);
@@ -244,7 +244,7 @@ namespace oln
     return i_.point_adr();
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

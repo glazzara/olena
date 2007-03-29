@@ -148,7 +148,7 @@ namespace oln
     // Final.
 
     typedef stc::final< stc::is<Image> >         category;
-    typedef stc::final <typename pset__::box>	 box;
+    typedef stc::final< oln_box(pset__) >	 box;
     typedef stc::final< oln_grid(point__) >      grid;
     typedef stc::final< oln_dpoint(point__) >    dpoint;
     typedef stc::final< oln_fwd_piter(pset__) >  fwd_piter;

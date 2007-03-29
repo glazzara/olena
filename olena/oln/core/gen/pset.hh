@@ -35,7 +35,7 @@
 namespace oln
 {
 
-  /// Fwd decl.
+  // Fwd decl.
   template <typename P> class pset_;
 
 
@@ -48,7 +48,7 @@ namespace oln
   };
 
 
-  /// Virtual types.
+  // Virtual types.
   template <typename P>
   struct vtypes< pset_<P> >
   {
@@ -85,7 +85,7 @@ namespace oln
     return *this;
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

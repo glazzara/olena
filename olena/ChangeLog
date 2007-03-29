@@ -1,3 +1,43 @@
+2007-03-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add infinite point set type.
+
+	* oln/core/internal/f_pset_plain.hh: Rename as...
+	* oln/core/internal/f_pset_to_plain_image.hh: ...this.
+	(include): Add f_grid_to_plain_image.hh.
+	(f_pset_plain_, oln_f_pset_plain): Rename as...
+	(f_pset_to_plain_image_, oln_f_pset_to_plain_image): ...these.
+	(pset_to_plain_image__): New versions to handle op_<S, such_as, F>
+	and gen_box<P>.
+	* oln/core/gen/single_value_image.hh: Update.
+	* oln/core/gen/infty_pset.hh,
+	* oln/core/internal/f_grid_to_plain_image.hh,
+	* oln/core/internal/f_grid_to_box.hh: New.
+	* oln/core/internal/iterator_on_points_base.hh
+	(iterator_on_points_base): Rename as...
+	(iterator_on_points_base_): ...this.
+	* oln/core/rle/rle_pset.hh,
+	* oln/core/gen/dpoints_piter.hh,
+	* oln/core/gen/image_pset_piter.hh,
+	* oln/core/internal/box.hh,
+	* oln/core/internal/point_set_std_based.hh,
+	* oln/core/internal/piter_adaptor.hh: Update.
+	* oln/draw/bresenham.hh (bresenham_): Rely on level::paste.
+	(input): Rename as...
+	(in_out): ...this.
+	* oln/core/equipment.hh (oln_deduce): New.
+	* oln/core/gen/pset_compare.hh (intersects): New.
+	(op_leq_, op_less_): Rename as...
+	(op_subset_, op_strict_subset_): ...these.
+	(op_eq_, op_subset_, op_strict_subset_): New versions
+	for infty_pset.
+	(operator>=, operator>): Rely on op_subset_ and op_strict_subset_.
+	* oln/core/gen/pset.hh: Cosmetic changes.
+	* oln/core/gen/safe_image.hh (pset): Use infty_pset.
+	(impl_points): New.
+	* oln/core/internal/image_base.hh: Cosmetic change.
+	* oln/core/internal/point_base.hh (set_all): New.
+
 2007-03-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Enforce impl check in concepts.

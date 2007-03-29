@@ -30,7 +30,7 @@
 
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/internal/utils.hh>
-# include <oln/core/internal/f_pset_plain.hh>
+# include <oln/core/internal/f_pset_to_plain_image.hh>
 
 
 namespace oln
@@ -56,7 +56,7 @@ namespace oln
 
     typedef internal::pair<Ps, T> data;
 
-    typedef oln_f_pset_plain(Ps, T) plain;
+    typedef oln_f_pset_to_plain_image(Ps, T) plain;
     typedef single_value_image<Ps, pl::value> skeleton;
   };
 
@@ -78,7 +78,6 @@ namespace oln
     typedef single_value_image<Ps, T>      current;
     typedef internal::image_base_<current> super;
   public:
-
 
     stc_using(point);
     stc_using(rvalue);
@@ -119,7 +118,7 @@ namespace oln
   single_value_image<Ps, T>::impl_owns_(const typename single_value_image<Ps, T>::point& p) const
   {
     assert(this->has_data());
-    return this->data_->first.has(p);
+    return this->data_->first.has(p); // FIXME: or 'always true'?
   }
 
   template <typename Ps, typename T>

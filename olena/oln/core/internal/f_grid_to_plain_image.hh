@@ -25,64 +25,81 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_ITERATOR_ON_POINTS_BASE_HH
-# define OLN_CORE_INTERNAL_ITERATOR_ON_POINTS_BASE_HH
+#ifndef OLN_CORE_INTERNAL_F_GRID_TO_PLAIN_IMAGE_HH
+# define OLN_CORE_INTERNAL_F_GRID_TO_PLAIN_IMAGE_HH
 
-# include <oln/core/concept/iterator_on_points.hh>
+# include <oln/core/concept/grid.hh>
+
+
+#define oln_f_grid_to_plain_image(G, T) typename oln::internal::f_grid_to_plain_image_< G, T >::ret
 
 
 namespace oln
 {
 
-  // Fwd decl
-  namespace internal { template <typename Exact> struct iterator_on_points_base_; }
+  /// \{
+  /// Forward declarations.
 
-  // Super type
-  template <typename Exact>
-  struct super_trait_< internal::iterator_on_points_base_<Exact> >
-  {
-    typedef Iterator_on_Points<Exact> ret;
-  };
+  // Grid types.
 
-  // Virtual types
-  template <typename Exact>
-  struct vtypes< internal::iterator_on_points_base_<Exact> >
-  {
-    typedef stc::final< stc::is<Iterator_on_Points> > category;
+  struct grid1d;
 
-    typedef stc::abstract point;
+  struct grid2d;
+  struct grid2d_hex;
+  struct grid2d_tri;
 
-    typedef stc_deferred(point) point__;
-    typedef stc::final< oln_grid(point__) >   grid;
-    typedef stc::final< oln_coord(point__) >  coord;
-    typedef stc::final< oln_dim(point__) >    dim;
-    typedef stc::final< oln_dpoint(point__) > dpoint;
-  };
+  // FIXME: 3D...
+
+  // Image types.
+
+  template <typename T> class image1d;
+  template <typename T> class image2d;
+
+  /// \}
 
 
 
   namespace internal
   {
 
-    template <typename Exact>
-    class iterator_on_points_base_ : public Iterator_on_Points<Exact>
+    // Fwd decl.
+
+    template <typename G, typename T> struct f_grid_to_plain_image_;
+
+
+    /// \{
+    /// Definitions.
+
+    template <typename G, typename T>
+    struct grid_to_plain_image__;
+
+    template <typename T>
+    struct grid_to_plain_image__< grid1d, T >
     {
-    protected:
-      iterator_on_points_base_();
+      typedef image1d<T> ret; // FIXME: or image1d_b<T>?
     };
 
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename Exact>
-    iterator_on_points_base_<Exact>::iterator_on_points_base_()
+    template <typename T>
+    struct grid_to_plain_image__< grid2d, T >
     {
-    }
+      typedef image2d<T> ret; // FIXME: or image2d_b<T>?
+    };
 
-# endif // ! OLN_INCLUDE_ONLY
+    // FIXME: 2D hex/tri, 3D...
+
+    /// \}
+
+
+    template <typename G, typename T>
+    struct f_grid_to_plain_image_ : private mlc::assert_< mlc_is_a(G, Grid) >,
+				    public grid_to_plain_image__< G, T >
+		      
+    {
+    };
 
   } // end of namespace oln::internal
 
 } // end of namespace oln
 
-#endif // ! OLN_CORE_INTERNAL_ITERATOR_ON_POINTS_BASE_HH
+
+#endif // ! OLN_CORE_INTERNAL_F_GRID_TO_PLAIN_IMAGE_HH

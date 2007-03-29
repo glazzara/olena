@@ -29,6 +29,7 @@
 # define OLN_CORE_GEN_SAFE_IMAGE_HH
 
 # include <oln/core/internal/image_base.hh>
+# include <oln/core/gen/infty_pset.hh>
 
 
 namespace oln
@@ -47,6 +48,7 @@ namespace oln
     typedef behavior::identity behavior;
 
     typedef internal::singleton<I> data;
+    typedef infty_pset< oln_grid(I) > pset;
 
     typedef safe_image< oln_plain(I) > plain;
     typedef safe_image< pl::rec<I> >   skeleton;
@@ -76,13 +78,16 @@ namespace oln
     stc_using(lvalue);
     stc_using(value);
     stc_using(data);
+    stc_using(pset);
     stc_using(delegatee);
 
     safe_image();
     safe_image(Mutable_Image<I>& ima);
 
     bool impl_owns_(const point& p) const;
+    const pset& impl_points() const;
 
+    // FIXME: Force this type to be read-only?
     rvalue impl_read(const point& p) const;
     lvalue impl_read_write(const point& p);
     void impl_write(const point& p, const value& v);
@@ -123,6 +128,14 @@ namespace oln
   {
     assert(this->has_data());
     return true; // always!
+  }
+
+  template <typename I>
+  const typename safe_image<I>::pset&
+  safe_image<I>::impl_points() const
+  {
+    static infty_pset<oln_grid(I)> infty_;
+    return infty_;
   }
 
   template <typename I>

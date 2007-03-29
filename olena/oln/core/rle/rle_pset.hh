@@ -100,7 +100,7 @@ namespace oln
     /// number of point in the set
     unsigned npts;
     /// container of the set
-    std_container con_;
+    std_container con_; // FIXME: Add a &.
     /// pset box
     fbbox_<point> fb_;
   };
@@ -188,7 +188,7 @@ namespace oln
   struct super_trait_< rle_pset_fwd_piter_<P> >
   {
     typedef rle_pset_fwd_piter_<P> current;
-    typedef internal::iterator_on_points_base<current> ret;
+    typedef internal::iterator_on_points_base_<current> ret;
   };
 
   // Virtual types
@@ -206,9 +206,9 @@ namespace oln
   ** P must be a point type
   */
   template <typename P>
-  class  rle_pset_fwd_piter_ : public internal::iterator_on_points_base<rle_pset_fwd_piter_<P> >
+  class  rle_pset_fwd_piter_ : public internal::iterator_on_points_base_<rle_pset_fwd_piter_<P> >
   {
-    typedef internal::iterator_on_points_base< rle_pset_fwd_piter_<P> > super;
+    typedef internal::iterator_on_points_base_< rle_pset_fwd_piter_<P> > super;
     typedef rle_pset_fwd_piter_<P> current;
   public:
     stc_using(point);
@@ -251,7 +251,7 @@ namespace oln
   void
   rle_pset_fwd_piter_<P>::impl_start()
   {
-    this->it_ = this->con_.begin();
+    this->it_ = this->con_.begin(); // FIXME: Test if (this->it_ != this->con_.end())...
     this->ps_.start_ = this->it_->first;
     this->ps_.index_ = 0;
   }
@@ -313,7 +313,7 @@ namespace oln
     return &ps_;
   }
 
-# endif // !OLN_INCLUDE_ONLY
+# endif // ! OLN_INCLUDE_ONLY
 
   //end of class rle_pset_fwd_iterator_
 
@@ -326,7 +326,7 @@ namespace oln
   struct super_trait_< rle_pset_bkd_piter_<P> >
   {
     typedef rle_pset_bkd_piter_<P> current;
-    typedef internal::iterator_on_points_base<current> ret;
+    typedef internal::iterator_on_points_base_<current> ret;
   };
 
   // Virtual type
@@ -343,9 +343,9 @@ namespace oln
   ** P must be a point type
   */
   template <typename P>
-  class rle_pset_bkd_piter_ : public internal::iterator_on_points_base<rle_pset_bkd_piter_<P> >
+  class rle_pset_bkd_piter_ : public internal::iterator_on_points_base_<rle_pset_bkd_piter_<P> >
   {
-    typedef internal::iterator_on_points_base< rle_pset_bkd_piter_<P> > super;
+    typedef internal::iterator_on_points_base_< rle_pset_bkd_piter_<P> > super;
     typedef rle_pset_bkd_piter_<P> current;
   public:
     stc_using(point);
@@ -386,7 +386,7 @@ namespace oln
   void
   rle_pset_bkd_piter_<P>::impl_start()
   {
-    this->it_ = this->con_.rbegin();
+    this->it_ = this->con_.rbegin(); // FIXME: Test if (this->it_ != this->con_.rend())...
     this->ps_.start_ = this->it_->first;
     this->ps_.index_ = this->it_->second - 1;
   }
@@ -448,7 +448,7 @@ namespace oln
     return &ps_;
   }
 
-# endif // !OLN_INCLUDE_ONLY
+# endif // ! OLN_INCLUDE_ONLY
 
   // end of class rle_pset_bkd_piter_
 
@@ -456,4 +456,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // !OLN_CORE_RLE_RLE_PSET_HH
+#endif // ! OLN_CORE_RLE_RLE_PSET_HH
