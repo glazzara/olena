@@ -1,3 +1,13 @@
+2007-03-29  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	add point implementation for Iterator_On_Points.
+
+	* olena/tests/core/iter_point1d.cc, olena/tests/core/iter_point2d.cc: New.
+	* olena/tests/core/iter_point3d.cc: New test file.
+	* olena/tests/core/Makefile.am: Add new tests in make check.
+	* olena/oln/core/internal/iterator_on_points_impl.hh: New, implementations for Iterator_On_Points.
+	* olena/oln/core/internal/iterator_on_points_base.hh: Now derive from itertor_on_points_impl 
+
 2007-03-26  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix 'Make check morpho' / 'morpho'. draft cc_tarjan .

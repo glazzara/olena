@@ -29,6 +29,7 @@
 # define OLN_CORE_INTERNAL_ITERATOR_ON_POINTS_BASE_HH
 
 # include <oln/core/concept/iterator_on_points.hh>
+# include <oln/core/internal/iterator_on_points_impl.hh>
 
 
 namespace oln
@@ -57,15 +58,20 @@ namespace oln
     typedef stc::final< oln_coord(point__) >  coord;
     typedef stc::final< oln_dim(point__) >    dim;
     typedef stc::final< oln_dpoint(point__) > dpoint;
-  };
 
+    // for getting point implementation
+    typedef stc_deferred(dim) dim__;
+  };
 
 
   namespace internal
   {
 
     template <typename Exact>
-    class iterator_on_points_base_ : public Iterator_on_Points<Exact>
+    class iterator_on_points_base_ : public Iterator_on_Points<Exact>,
+    				     public impl::iterator_on_points_impl
+      <mlc_value(typename vtypes< internal::iterator_on_points_base_<Exact> >::dim__),
+       Exact, typename vtypes< internal::iterator_on_points_base_<Exact> >::point__>
     {
     protected:
       iterator_on_points_base_();
