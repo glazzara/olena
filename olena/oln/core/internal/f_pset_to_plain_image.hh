@@ -101,12 +101,11 @@ namespace oln
       typedef oln_f_grid_to_plain_image(oln_grid(P), T) ret;
     };
 
-    template <typename S, typename F, typename T>
-    struct pset_to_plain_image__< op_<S, such_as, F>, T >
+    template <typename S, typename F_p2b, typename T>
+    struct pset_to_plain_image__< op_<S, such_as, F_p2b>, T >
     {
-      typedef op_<S, such_as, F> Ps;
       typedef typename f_pset_to_plain_image_<S, T>::ret I;
-      typedef op_<I, restricted_to, Ps> ret;
+      typedef op_<I, such_as, F_p2b> ret;
     };
 
     /// \}

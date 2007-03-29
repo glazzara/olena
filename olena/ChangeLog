@@ -1,5 +1,20 @@
 2007-03-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add the image type ''function: p -> v over a point set''.
+
+	* oln/core/gen/image_pset_piter.hh: Remove; obsolete.
+	* oln/core/internal/image_base.hh: Move end of file to...
+	* oln/core/internal/image_ops.hh: ...this new file.
+	(operator/): New.
+	* oln/core/internal/op_fp2v_over_pset.hh: New.
+	* oln/core/gen/op.hh (oln_decl_op_over, over): New.
+	* oln/core/gen/single_value_image.hh,
+	* oln/core/internal/op_image_plus_nbh.hh: Cosmetic changes.
+	* oln/core/internal/f_pset_to_plain_image.hh
+	(pset_to_plain_image__): Fix version op_<S, such_as, F_p2b>.
+
+2007-03-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add infinite point set type.
 
 	* oln/core/internal/f_pset_plain.hh: Rename as...

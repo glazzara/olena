@@ -45,14 +45,14 @@ namespace oln
   template <typename Ps, typename T>
   struct vtypes< single_value_image<Ps, T> >
   {
-    typedef typename Ps::point point;
-    typedef point              psite;
-    typedef Ps                 pset;
+    typedef oln_point(Ps) point;
+    typedef point psite;
+    typedef Ps pset;
 
-    typedef typename point::coord coord;
+    typedef oln_coord(point) coord;
 
-    typedef T                  value;
-    typedef const T&           rvalue;
+    typedef T        value;
+    typedef const T& rvalue;
 
     typedef internal::pair<Ps, T> data;
 

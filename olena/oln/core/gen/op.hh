@@ -77,6 +77,7 @@
 # define oln_decl_op_plus(Lconcept, Rconcept)          oln_decl_op_( plus,          Lconcept, +, Rconcept) 
 # define oln_decl_op_such_as(Lconcept, Rconcept)       oln_decl_op_( such_as,       Lconcept, |, Rconcept) 
 # define oln_decl_op_restricted_to(Lconcept, Rconcept) oln_decl_op_( restricted_to, Lconcept, |, Rconcept) 
+# define oln_decl_op_over(Lconcept, Rconcept)          oln_decl_op_( over,          Lconcept, /, Rconcept) 
 // ...
 
 
@@ -91,6 +92,7 @@ namespace oln
   struct plus;
   struct such_as;
   struct restricted_to;
+  struct over;
 
   /// \}
 

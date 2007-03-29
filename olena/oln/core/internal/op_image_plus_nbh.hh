@@ -45,12 +45,12 @@ namespace oln
   oln_decl_instant_value(nbh);
 
 
-  /// Fwd decls.
+  // Fwd decls.
   template <typename Exact> struct Image;
   template <typename Exact> struct Neighborhood;
 
 
-  /// Super type.
+  // Super type.
   template <typename I, typename N>
   struct super_trait_< internal::current >
   {
@@ -58,7 +58,7 @@ namespace oln
   };
 
 
-  /// Virtual types.
+  // Virtual types.
   template <typename I, typename N>
   struct vtypes< internal::current >
   {
@@ -224,7 +224,7 @@ namespace oln
     return ima_ok and nbh_ok;
   }
 
-# endif // OLN_INCLUDE_ONLY
+# endif // ! OLN_INCLUDE_ONLY
 
 #  undef current
 
