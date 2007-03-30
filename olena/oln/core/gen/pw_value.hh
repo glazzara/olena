@@ -52,7 +52,7 @@ namespace oln
     typedef oln_point(I) argument; // FIXME: psite?
     typedef oln_value(I) result;
 
-    pw_value_(const Point_Wise_Accessible_Image<I>& ima);
+    pw_value_(const Image<I>& ima);
     oln_value(I) operator()(const oln_point(I)& p) const;
 
   protected:
@@ -61,16 +61,17 @@ namespace oln
 
 
   template <typename I>
-  pw_value_<I>
-  pw_value(const Image<I>& ima);
+  pw_value_<I> pw_value(const Image<I>& ima);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename I>
-  pw_value_<I>::pw_value_(const Point_Wise_Accessible_Image<I>& ima)
+  pw_value_<I>::pw_value_(const Image<I>& ima)
     : ima_(exact(ima))
   {
+    mlc::assert_< mlc_is_a(I, Point_Wise_Accessible_Image) >::check();
+    // FIXME: Add err msg above.
   }
 
   template <typename I>
@@ -83,8 +84,10 @@ namespace oln
 
   template <typename I>
   pw_value_<I>
-  pw_value(const Point_Wise_Accessible_Image<I>& ima)
+  pw_value(const Image<I>& ima)
   {
+    mlc::assert_< mlc_is_a(I, Point_Wise_Accessible_Image) >::check();
+    // FIXME: Add err msg above.
     pw_value_<I> tmp(ima);
     return tmp;
   }

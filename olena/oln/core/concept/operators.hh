@@ -100,19 +100,19 @@ namespace oln
   template <typename L, typename R>
   bool operator> (const Any<L>& lhs, const Any<R>& rhs)
   {
-    return exact(rhs) < exact(lhs);
-  }
-
-  template <typename L, typename R>
-  bool operator>=(const Any<L>& lhs, const Any<R>& rhs)
-  {
-    return not (exact(lhs) < exact(rhs));
+    return exact(rhs) < exact(lhs); // use "operator <"
   }
 
   template <typename L, typename R>
   bool operator<=(const Any<L>& lhs, const Any<R>& rhs)
   {
-    return not (exact(rhs) < exact(lhs));
+    return not (exact(rhs) < exact(lhs)); // use "operator <" and "not"
+  }
+
+  template <typename L, typename R>
+  bool operator>=(const Any<L>& lhs, const Any<R>& rhs)
+  {
+    return exact(rhs) <= exact(lhs); // use "operator <="
   }
 
   template <typename L, typename R>

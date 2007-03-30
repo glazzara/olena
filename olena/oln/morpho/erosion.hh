@@ -28,9 +28,12 @@
 #ifndef	OLN_MORPHO_EROSION_HH
 # define OLN_MORPHO_EROSION_HH
 
-#include <oln/level/apply_local.hh>
-#include <oln/border/fill.hh>
-#include <oln/accumulator/min.hh>
+# include <oln/level/apply_local.hh>
+# include <oln/level/compare.hh>
+# include <oln/border/fill.hh>
+# include <oln/accumulator/min.hh>
+# include <oln/accumulator/and.hh>
+
 
 namespace oln
 {
@@ -54,9 +57,7 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      erosion_on_function_(const Image<I>&,
-			   const I& input,
-			   const Window<W>& win)
+      erosion_on_function_(const Image<I>& input, const Window<W>& win)
       {
 	border::fill(input, oln_max(oln_value(I)));
 	accumulator::min_<oln_value(I)> min;
@@ -65,9 +66,7 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      erosion_on_set_(const Image<I>&,
-		      const I& input,
-		      const Window<W>& win)
+      erosion_on_set_(const Image<I>& input, const Window<W>& win)
       {
 	border::fill(input, true);
 	accumulator::and_<oln_value(I)> accu_and;
@@ -80,17 +79,15 @@ namespace oln
       // Impl facade.
 
       template <typename I, typename W>
-      oln_plain(I) erosion_(const Image<I>&  input,
-			    const Window<W>& win)
+      oln_plain(I) erosion_(const Image<I>& input, const Window<W>& win)
       {
-	return erosion_on_function_(exact(input), exact(input), win);
+	return erosion_on_function_(exact(input), exact(win));
       }
 
       template <typename I, typename W>
-      oln_plain(I) erosion_(const Binary_Image<I>& input,
-			    const Window<W>&       win)
+      oln_plain(I) erosion_(const Binary_Image<I>& input, const Window<W>& win)
       {
-	return erosion_on_set_(exact(input), exact(input), win);
+	return erosion_on_set_(exact(input), exact(win));
       }
 
     } // end of namespace oln::morpho::impl
@@ -102,7 +99,9 @@ namespace oln
     oln_plain(I)
     erosion(const Image<I>& input, const Window<W>& win)
     {
-      return impl::erosion_(exact(input), exact(win));
+      oln_plain(I) output = impl::erosion_(exact(input), exact(win));
+      postcondition(output <= input);
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

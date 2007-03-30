@@ -28,8 +28,9 @@
 #ifndef	OLN_MORPHO_CLOSING_HH
 # define OLN_MORPHO_CLOSING_HH
 
-#include <oln/morpho/erosion.hh>
-#include <oln/morpho/dilation.hh>
+# include <oln/morpho/erosion.hh>
+# include <oln/morpho/dilation.hh>
+
 
 namespace oln
 {
@@ -53,8 +54,7 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      closing_(const Image<I>&  input,
-	       const Window<W>& win)
+      closing_(const Image<I>&  input, const Window<W>& win)
       {
 	oln_plain(I) tmp = morpho::dilation(input, win);
 	return morpho::erosion(tmp, win); // FIXME : inverse(win).
@@ -72,7 +72,9 @@ namespace oln
     oln_plain(I)
     closing(const Image<I>& input, const Window<W>& win)
     {
-      return impl::closing_(exact(input), exact(win));
+      oln_plain(I) output = impl::closing_(exact(input), exact(win));
+      postcondition(output >= input);
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

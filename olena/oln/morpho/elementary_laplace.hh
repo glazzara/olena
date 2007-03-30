@@ -28,9 +28,9 @@
 #ifndef	OLN_MORPHO_ELEMENTARY_LAPLACE_HH
 # define OLN_MORPHO_ELEMENTARY_LAPLACE_HH
 
-#include <oln/morpho/elementary_gradient_external.hh>
-#include <oln/morpho/elementary_gradient_internal.hh>
-#include <oln/arith/minus.hh>
+# include <oln/morpho/elementary_gradient_external.hh>
+# include <oln/morpho/elementary_gradient_internal.hh>
+
 
 namespace oln
 {
@@ -56,7 +56,9 @@ namespace oln
       oln_plain(I)
       elementary_laplace_(const Image_with_Nbh<I>& input)
       {
-	return elementary_gradient_external(input) - elementary_gradient_internal(input);
+	oln_plain(I) g_ext = elementary_gradient_external(input);
+	oln_plain(I) g_int = elementary_gradient_internal(input);
+	return g_ext - g_int;
       }
 
 

@@ -42,9 +42,7 @@ namespace oln
 
     template <typename A, typename I>
     typename A::result
-    local(const Accumulator<A>&    f,
-	  const Image_with_Nbh<I>& input,
-	  const oln_point(I)&      p);
+    local(const Accumulator<A>& f, const Image<I>& input, const oln_point(I)& p);
 
     template <typename A, typename I, typename W>
     typename A::result
@@ -72,9 +70,7 @@ namespace oln
  	f.init_with(input(p));
 	oln_niter(I) n(p, input);
 	for_all(n)
-	  {
-	    f(input(n));
-	  }
+	  f(input(n));
 	return f.value();
       }
 
@@ -192,10 +188,9 @@ namespace oln
 
     template <typename A, typename I>
     typename A::result
-    local(const Accumulator<A>&    f,
-	  const Image_with_Nbh<I>& input,
-	  const oln_point(I)&      p)
+    local(const Accumulator<A>& f, const Image<I>& input, const oln_point(I)& p)
     {
+      mlc::assert_< mlc_is_a(I, Image_with_Nbh) >::check();
       return impl::local_(exact(f), exact(input), p);
     }
 
@@ -206,7 +201,7 @@ namespace oln
 	  const oln_point(I)&   p,
 	  const Window<W>&      win)
     {
-      return impl::local_(exact(f), exact(input), p, win);
+      return impl::local_(exact(f), exact(input), p, exact(win));
     }
 
 #endif // ! OLN_INCLUDE_ONLY

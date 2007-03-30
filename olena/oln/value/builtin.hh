@@ -29,7 +29,6 @@
 # define OLN_VALUE_BUILTIN_HH
 
 # include <oln/core/concept/value.hh>
-# include <oln/core/gen/traits.hh>
 
 
 namespace oln
@@ -88,22 +87,12 @@ namespace oln
   };
 
 
-  template <typename Op>
-  struct set_trait_< Value, int, Op, Value, float >
-  {
-    typedef float ret;
-  };
-
-  template <typename Op>
-  struct set_trait_< Value, float, Op, Value, int >
-  {
-    typedef float ret;
-  };
-
-  // FIXME: To be continued...
-
 
 } // end of namespace oln
+
+
+// FIXME: Bad?
+# include <oln/value/builtin_traits.hh>
 
 
 #endif // ! OLN_VALUE_BUILTIN_HH

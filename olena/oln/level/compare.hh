@@ -30,6 +30,10 @@
 
 # include <oln/core/concept/image.hh>
 # include <oln/core/gen/pset_compare.hh>
+# include <oln/core/gen/literal.hh>
+
+// FIXME: Rename this file as "comparison.hh".
+
 
 
 namespace oln
@@ -39,9 +43,22 @@ namespace oln
 
   template <typename L, typename R>
   bool operator == (const Image<L>& lhs, const Image<R>& rhs);
+
+  template <typename I>
+  bool operator == (const Image<I>& lhs, const literal_<oln_value(I)>& val);
   
   template <typename L, typename R>
   bool operator < (const Image<L>& lhs, const Image<R>& rhs);
+
+  template <typename I>
+  bool operator < (const Image<I>& lhs, const literal_<oln_value(I)>& val);
+  
+  template <typename L, typename R>
+  bool operator <= (const Image<L>& lhs, const Image<R>& rhs);
+
+  template <typename I>
+  bool operator <= (const Image<I>& lhs, const literal_<oln_value(I)>& val);
+
 
 
 # ifndef OLN_LNCLUDE_ONLY
@@ -55,12 +72,28 @@ namespace oln
     // Generic version.
 
     template <typename L, typename R>
-    bool op_eq_(const Image<L>& lhs, const Image<R>& rhs);
+    bool op_eq_(const Image<L>& lhs, const Image<R>& rhs)
     {
       precondition(lhs.points() == rhs.points());
       oln_piter(L) p(lhs.points());
       for_all(p)
 	if (lhs(p) != rhs(p))
+	  return false;
+      return true;
+    }
+
+
+    //  Image I  ==  Value V
+    // ----------------------
+
+    // Generic version.
+
+    template <typename I>
+    bool op_eq_(const Image<I>& lhs, const literal_<oln_value(I)>& val)
+    {
+      oln_piter(I) p(lhs.points());
+      for_all(p)
+	if (lhs(p) != val)
 	  return false;
       return true;
     }
@@ -72,7 +105,7 @@ namespace oln
     // Generic version.
 
     template <typename L, typename R>
-    bool op_less_(const Image<L>& lhs, const Image<R>& rhs);
+    bool op_less_(const Image<L>& lhs, const Image<R>& rhs)
     {
       precondition(lhs.points() == rhs.points());
       oln_piter(L) p(lhs.points());
@@ -81,6 +114,56 @@ namespace oln
 	  return false;
       return true;
     }
+
+
+    //  Image I  <  Value V
+    // ---------------------
+
+    // Generic version.
+
+    template <typename I>
+    bool op_less_(const Image<I>& lhs, const literal_<oln_value(I)>& val)
+    {
+      oln_piter(I) p(lhs.points());
+      for_all(p)
+	if (lhs(p) >= val)
+	  return false;
+      return true;
+    }
+
+
+    //  Image L  <=  Image R
+    // ----------------------
+
+    // Generic version.
+
+    template <typename L, typename R>
+    bool op_leq_(const Image<L>& lhs, const Image<R>& rhs)
+    {
+      precondition(lhs.points() == rhs.points());
+      oln_piter(L) p(lhs.points());
+      for_all(p)
+	if (lhs(p) > rhs(p))
+	  return false;
+      return true;
+    }
+
+
+    //  Image I  <=  Value V
+    // ----------------------
+
+    // Generic version.
+
+    template <typename I>
+    bool op_leq_(const Image<I>& lhs, const literal_<oln_value(I)>& val)
+    {
+      oln_piter(I) p(lhs.points());
+      for_all(p)
+	if (lhs(p) > val)
+	  return false;
+      return true;
+    }
+
 
   } // end of namespace oln::level::impl
 
@@ -94,11 +177,36 @@ namespace oln
     return impl::op_eq_(exact(lhs), exact(rhs));
   }
 
+  template <typename I>
+  bool operator == (const Image<I>& lhs, const literal_<oln_value(I)>& val)
+  {
+    return impl::op_eq_(exact(lhs), val);
+  }
+
   template <typename L, typename R>
   bool operator < (const Image<L>& lhs, const Image<R>& rhs)
   {
     assert_same_grid_<L, R>::check();
     return impl::op_less_(exact(lhs), exact(rhs));
+  }
+
+  template <typename I>
+  bool operator < (const Image<I>& lhs, const literal_<oln_value(I)>& val)
+  {
+    return impl::op_less_(exact(lhs), val);
+  }
+
+  template <typename L, typename R>
+  bool operator <= (const Image<L>& lhs, const Image<R>& rhs)
+  {
+    assert_same_grid_<L, R>::check();
+    return impl::op_leq_(exact(lhs), exact(rhs));
+  }
+
+  template <typename I>
+  bool operator <= (const Image<I>& lhs, const literal_<oln_value(I)>& val)
+  {
+    return impl::op_leq_(exact(lhs), val);
   }
 
 # endif // ! OLN_INCLUDE_ONLY

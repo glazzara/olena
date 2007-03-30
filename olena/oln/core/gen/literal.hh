@@ -28,7 +28,6 @@
 #ifndef OLN_CORE_GEN_LITERAL_HH
 # define OLN_CORE_GEN_LITERAL_HH
 
-# include <oln/core/concept/function.hh>
 # include <oln/core/concept/generator.hh>
 # include <oln/core/concept/point.hh>
 # include <oln/core/concept/value.hh>
@@ -54,6 +53,18 @@ namespace oln
     result operator()() const
     {
       return this->val_;
+    }
+
+    operator T() const
+    {
+      return this->val_;
+    }
+    
+    template <typename U>
+    operator literal_<U>() const
+    {
+      literal_<U> tmp(this->val_);
+      return tmp;
     }
 
     result value() const

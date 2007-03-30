@@ -28,8 +28,9 @@
 #ifndef	OLN_MORPHO_EXTERNAL_GRADIENT_HH
 # define OLN_MORPHO_EXTERNAL_GRADIENT_HH
 
-#include <oln/morpho/elementary_dilation.hh>
-#include <oln/arith/minus.hh>
+# include <oln/morpho/elementary_dilation.hh>
+# include <oln/arith/minus.hh>
+
 
 namespace oln
 {
@@ -55,7 +56,8 @@ namespace oln
       oln_plain(I)
       elementary_gradient_external_(const Image_with_Nbh<I>& input)
       {
-	return elementary_dilation(input) - input;
+	oln_plain(I) dil = elementary_dilation(input);
+	return dil - input;
       }
 
 
@@ -70,7 +72,9 @@ namespace oln
     oln_plain(I)
     elementary_gradient_external(const Image_with_Nbh<I>& input)
     {
-      return impl::elementary_gradient_external_(exact(input));
+      oln_plain(I) output = impl::elementary_gradient_external_(exact(input));
+      postcondition(output >= literal(0));
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

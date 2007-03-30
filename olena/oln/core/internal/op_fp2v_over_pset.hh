@@ -90,6 +90,8 @@ namespace oln
       rvalue impl_read(const point& p) const;
       const S& impl_points() const;
 
+      const F& fun() const;
+
     protected:
       special_op_();
       special_op_(F& fun, S& pts);
@@ -137,6 +139,14 @@ namespace oln
     {
       assert(this->has_data());
       return this->data_->second;
+    }
+
+    template <typename F, typename S>
+    const F&
+    current::fun() const
+    {
+      assert(this->has_data());
+      return this->data_->first;
     }
     
   } // end of namespace oln::internal

@@ -28,9 +28,12 @@
 #ifndef	OLN_MORPHO_ELEMENTARY_EROSION_HH
 # define OLN_MORPHO_ELEMENTARY_EROSION_HH
 
-#include <oln/level/apply_local.hh>
-#include <oln/border/fill.hh>
-#include <oln/accumulator/min.hh>
+# include <oln/level/apply_local.hh>
+# include <oln/level/compare.hh>
+# include <oln/border/fill.hh>
+# include <oln/accumulator/min.hh>
+# include <oln/accumulator/and.hh>
+
 
 namespace oln
 {
@@ -54,8 +57,7 @@ namespace oln
 
       template <typename I>
       oln_plain(I)
-      elementary_erosion_on_function_(const Image<I>&,
-				      const I& input)
+      elementary_erosion_on_function_(const Image<I>& input)
       {
 	border::fill(input, oln_max(oln_value(I)));
 	accumulator::min_<oln_value(I)> min;
@@ -64,10 +66,9 @@ namespace oln
 
       template <typename I>
       oln_plain(I)
-      elementary_erosion_on_set_(const Image<I>&,
-				 const I& input)
+      elementary_erosion_on_set_(const Image<I>& input)
       {
-	border::fill(input, oln_max(oln_value(I)));
+	border::fill(input, true);
 	accumulator::and_<oln_value(I)> accu_and;
 	return level::apply_local(accu_and, input);
       }
@@ -113,13 +114,13 @@ namespace oln
       template <typename I>
       oln_plain(I) elementary_erosion_(const Image<I>& input)
       {
-	return elementary_erosion_on_function_(exact(input), exact(input));
+	return elementary_erosion_on_function_(exact(input));
       }
 
       template <typename I>
       oln_plain(I) elementary_erosion_(const Binary_Image<I>& input)
       {
-	return elementary_erosion_on_set_(exact(input), exact(input));
+	return elementary_erosion_on_set_(exact(input));
       }
 
 
@@ -132,7 +133,9 @@ namespace oln
     oln_plain(I)
     elementary_erosion(const Image_with_Nbh<I>& input)
     {
-      return impl::elementary_erosion_(exact(input));
+      oln_plain(I) output = impl::elementary_erosion_(exact(input));
+      postcondition(output <= input);
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

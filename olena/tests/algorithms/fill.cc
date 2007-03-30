@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,19 +28,18 @@
 /// Test oln::level::fill.
 
 #include <cassert>
-// FIXME: We should not include oln/basics2d.hh, but
-// just oln/core/2d/image2d.hh.
-#include <oln/basics2d.hh>
+#include <oln/core/2d/image2d.hh>
 #include <oln/level/fill.hh>
 
 
 int
 main()
 {
-  typedef oln::image2d<int> image_t;
+  using namespace oln;
+  typedef image2d<int> image_t;
   image_t ima(3, 3);
-  oln::level::fill(ima, 51);
-  oln_piter_(image_t) p(ima.topo());
+  level::fill(ima, 51);
+  image_t::piter p(ima.points());
   for_all(p)
     assert(ima(p) == 51);
 }

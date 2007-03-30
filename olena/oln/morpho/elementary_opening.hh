@@ -28,8 +28,9 @@
 #ifndef	OLN_MORPHO_ELEMENTARY_OPENING_HH
 # define OLN_MORPHO_ELEMENTARY_OPENING_HH
 
-#include <oln/morpho/elementary_erosion.hh>
-#include <oln/morpho/elementary_dilation.hh>
+# include <oln/morpho/elementary_erosion.hh>
+# include <oln/morpho/elementary_dilation.hh>
+
 
 namespace oln
 {
@@ -54,7 +55,8 @@ namespace oln
       oln_plain(I)
       elementary_opening_(const Image_with_Nbh<I>& input)
       {
-	return morpho::elementary_dilation( morpho::elementary_erosion(input) );
+	oln_plain(I) ero = morpho::elementary_erosion(input);
+	return morpho::elementary_dilation(ero);
       }
 
       // FIXME: Add a fast version.
@@ -68,7 +70,9 @@ namespace oln
     oln_plain(I)
     elementary_opening(const Image_with_Nbh<I>& input)
     {
-      return impl::elementary_opening_(exact(input));
+      oln_plain(I) output = impl::elementary_opening_(exact(input));
+      postcondition(output <= input);
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

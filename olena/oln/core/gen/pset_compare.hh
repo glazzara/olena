@@ -29,6 +29,7 @@
 # define OLN_CORE_GEN_PSET_COMPARE_HH
 
 # include <oln/core/concept/point_set.hh>
+# include <oln/core/concept/operators.hh>
 
 
 namespace oln
@@ -44,12 +45,6 @@ namespace oln
 
   template <typename L, typename R>
   bool operator <= (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
-
-  template <typename L, typename R>
-  bool operator >  (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
-
-  template <typename L, typename R>
-  bool operator >= (const Point_Set<L>& lhs, const Point_Set<R>& rhs);
 
   template <typename B1, typename B2>
   bool intersects (const Box<B1>& box1, const Box<B2>& box2);
@@ -250,20 +245,6 @@ namespace oln
   {
     assert_same_grid_<L, R>::check();
     return impl::op_strict_subset_(exact(lhs), exact(rhs));
-  }
-
-  template <typename L, typename R>
-  bool operator >= (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
-  {
-    assert_same_grid_<L, R>::check();
-    return impl::op_subset_(exact(rhs), exact(lhs));
-  }
-
-  template <typename L, typename R>
-  bool operator > (const Point_Set<L>& lhs, const Point_Set<R>& rhs)
-  {
-    assert_same_grid_<L, R>::check();
-    return impl::op_strict_subset_(exact(rhs), exact(lhs));
   }
 
   // Intersects.

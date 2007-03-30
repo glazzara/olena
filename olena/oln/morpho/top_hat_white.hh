@@ -28,9 +28,10 @@
 #ifndef	OLN_MORPHO_TOP_HAT_WHITE_HH
 # define OLN_MORPHO_TOP_HAT_WHITE_HH
 
-#include <oln/morpho/opening.hh>
-#include <oln/morpho/closing.hh>
-#include <oln/arith/minus.hh>
+# include <oln/morpho/opening.hh>
+# include <oln/morpho/closing.hh>
+# include <oln/arith/minus.hh>
+
 
 namespace oln
 {
@@ -42,8 +43,8 @@ namespace oln
 
     template <typename I, typename W>
     oln_plain(I)
-    top_hat_white(const Image<I>&  input,
-		  const Window<W>& win);
+    top_hat_white(const Image<I>& input, const Window<W>& win);
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -54,10 +55,10 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      top_hat_white_(const Image<I>&  input,
-		     const Window<W>& win)
+      top_hat_white_(const Image<I>& input, const Window<W>& win)
       {
-	return input - opening(input, win);
+	oln_plain(I) ope = opening(input, win)
+	return input - ope;
       }
 
 
@@ -70,10 +71,11 @@ namespace oln
 
     template <typename I, typename W>
     oln_plain(I)
-    top_hat_white(const Image<I>&  input,
-		  const Window<W>& win)
+    top_hat_white(const Image<I>& input, const Window<W>& win)
     {
-      return impl::top_hat_white_(exact(input), win);
+      oln_plain(I) output = impl::top_hat_white_(exact(input), exact(win));
+      postcondition(output >= literal(0));
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

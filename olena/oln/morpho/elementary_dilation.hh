@@ -28,10 +28,12 @@
 #ifndef	OLN_MORPHO_ELEMENTARY_DILATION_HH
 # define OLN_MORPHO_ELEMENTARY_DILATION_HH
 
-#include <oln/level/apply_local.hh>
-#include <oln/border/fill.hh>
-#include <oln/accumulator/max.hh>
-#include <oln/accumulator/or.hh>
+# include <oln/level/apply_local.hh>
+# include <oln/level/compare.hh>
+# include <oln/border/fill.hh>
+# include <oln/accumulator/max.hh>
+# include <oln/accumulator/or.hh>
+
 
 namespace oln
 {
@@ -55,8 +57,7 @@ namespace oln
 
       template <typename I>
       oln_plain(I)
-      elementary_dilation_on_function_(const Image<I>&,
-				       const I& input)
+      elementary_dilation_on_function_(const Image<I>& input)
       {
 	border::fill(input, oln_min(oln_value(I)));
 	accumulator::max_<oln_value(I)> max;
@@ -65,10 +66,9 @@ namespace oln
 
       template <typename I>
       oln_plain(I)
-      elementary_dilation_on_set_(const Image<I>&,
-				  const I& input)
+      elementary_dilation_on_set_(const Image<I>& input)
       {
-	border::fill(input, oln_min(oln_value(I)));
+	border::fill(input, false);
 	accumulator::or_<oln_value(I)> accu_or;
 	return level::apply_local(accu_or, input);
       }
@@ -81,13 +81,13 @@ namespace oln
       template <typename I>
       oln_plain(I) elementary_dilation_(const Image<I>& input)
       {
-	return elementary_dilation_on_function_(exact(input), exact(input));
+	return elementary_dilation_on_function_(exact(input));
       }
 
       template <typename I>
       oln_plain(I) elementary_dilation_(const Binary_Image<I>& input)
       {
-	return elementary_dilation_on_set_(exact(input), exact(input));
+	return elementary_dilation_on_set_(exact(input));
       }
 
     } // end of namespace oln::morpho::impl
@@ -99,7 +99,9 @@ namespace oln
     oln_plain(I)
     elementary_dilation(const Image_with_Nbh<I>& input)
     {
-      return impl::elementary_dilation_(exact(input));
+      oln_plain(I) output = impl::elementary_dilation_(exact(input));
+      postcondition(output >= input);
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

@@ -25,61 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_ELEMENTARY_CLOSING_HH
-# define OLN_MORPHO_ELEMENTARY_CLOSING_HH
+#ifndef OLN_VALUE_BUILTIN_TRAITS_HH
+# define OLN_VALUE_BUILTIN_TRAITS_HH
 
-# include <oln/morpho/elementary_erosion.hh>
-# include <oln/morpho/elementary_dilation.hh>
+# include <oln/value/builtin.hh>
+# include <oln/core/gen/traits.hh>
 
 
 namespace oln
 {
 
-  namespace morpho
+  template <typename Op>
+  struct set_trait_< Value, int, Op, Value, float >
   {
+    typedef float ret;
+  };
 
-    // Fwd decl.
+  template <typename Op>
+  struct set_trait_< Value, float, Op, Value, int >
+  {
+    typedef float ret;
+  };
 
-    template <typename I>
-    oln_plain(I)
-    elementary_closing(const Image_with_Nbh<I>& input);
+  // FIXME: To be continued...
 
-# ifndef OLN_INCLUDE_ONLY
-
-    namespace impl
-    {
-
-      // Generic version.
-
-      template <typename I>
-      oln_plain(I)
-      elementary_closing_(const Image_with_Nbh<I>& input)
-      {
-	oln_plain(I) dil = elementary_dilation(input);
-	return elementary_erosion(dil);
-      }
-
-      // FIXME: Add a fast version.
-
-    } // end of namespace oln::morpho::impl
-
-
-    // Facade.
-
-    template <typename I>
-    oln_plain(I)
-    elementary_closing(const Image_with_Nbh<I>& input)
-    {
-      oln_plain(I) output = impl::elementary_closing_(exact(input));
-      postcondition(output >= input);
-      return output;
-    }
-
-# endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_ELEMENTARY_CLOSING_HH
+#endif // ! OLN_VALUE_BUILTIN_TRAITS_HH
+

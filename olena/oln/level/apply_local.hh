@@ -44,14 +44,12 @@ namespace oln
 
     template <typename F, typename I>
     oln_plain_value(I, typename F::result)
-    apply_local(const Accumulator<F>&    f,
-		const Image_with_Nbh<I>& input);
+    apply_local(const Accumulator<F>& f, const Image<I>& input);
 
     template <typename F, typename I, typename W>
     oln_plain_value(I, typename F::result)
-    apply_local(const Accumulator<F>& f,
-		const Image<I>&       input,
-		const Window<W>&      win);
+    apply_local(const Accumulator<F>& f, const Image<I>& input, const Window<W>& win);
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -94,19 +92,17 @@ namespace oln
 
     template <typename F, typename I>
     oln_plain_value(I, typename F::result)
-    apply_local(const Accumulator<F>&    f,
-		const Image_with_Nbh<I>& input)
+    apply_local(const Accumulator<F>& f, const Image<I>& input)
     {
+      mlc::assert_< mlc_is_a(I, Image_with_Nbh) >::check();
       return impl::apply_local_(exact(f), exact(input));
     }
 
     template <typename F, typename I, typename W>
     oln_plain_value(I, typename F::result)
-    apply_local(const Accumulator<F>& f,
-		const Image<I>&       input,
-		const Window<W>&      win)
+    apply_local(const Accumulator<F>& f, const Image<I>& input, const Window<W>& win)
     {
-      return impl::apply_local_(exact(f), exact(input), win);
+      return impl::apply_local_(exact(f), exact(input), exact(win));
     }
 
 # endif

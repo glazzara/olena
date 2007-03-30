@@ -48,9 +48,6 @@ namespace oln
 
   */
 
-  template <typename Exact>
-  struct Function;
-
   
   template <typename Exact>
   struct Function : public Any<Exact>

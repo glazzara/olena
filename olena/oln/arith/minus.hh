@@ -29,7 +29,6 @@
 # define OLN_ARITH_MINUS_HH
 
 # include <oln/core/concept/image.hh>
-// # include <oln/core/internal/f_ch_value.hh>
 # include <oln/core/gen/traits.hh>
 
 

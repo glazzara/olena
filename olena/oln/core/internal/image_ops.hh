@@ -70,6 +70,8 @@ namespace oln
     return tmp;
   }
 
+  // FIXME: Add "literal / point set"...
+
 
 
   // Specialization "Image such_as f : P -> B".

@@ -28,8 +28,9 @@
 #ifndef	OLN_MORPHO_GRADIENT_INTERNAL_HH
 # define OLN_MORPHO_GRADIENT_INTERNAL_HH
 
-#include <oln/morpho/erosion.hh>
-#include <oln/arith/minus.hh>
+# include <oln/morpho/erosion.hh>
+# include <oln/arith/minus.hh>
+
 
 namespace oln
 {
@@ -41,8 +42,7 @@ namespace oln
 
     template <typename I, typename W>
     oln_plain(I)
-    gradient_internal(const Image<I>&  input,
-		      const Window<W>& win);
+    gradient_internal(const Image<I>& input, const Window<W>& win);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -54,10 +54,10 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      gradient_internal_(const Image<I>&  input,
-			 const Window<W>& win)
+      gradient_internal_(const Image<I>& input, const Window<W>& win)
       {
-	return input - erosion(input, win);
+	oln_plain(I) ero = erosion(input, win);
+	return input - ero;
       }
 
 
@@ -69,10 +69,11 @@ namespace oln
 
     template <typename I, typename W>
     oln_plain(I)
-    gradient_internal(const Image<I>&  input,
-		      const Window<W>& win)
+    gradient_internal(const Image<I>& input, const Window<W>& win)
     {
-      return impl::gradient_internal_(exact(input), win);
+      oln_plain(I) output = impl::gradient_internal_(exact(input), exact(win));
+      postcondition(output >= literal(0));
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

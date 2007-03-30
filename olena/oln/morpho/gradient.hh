@@ -28,9 +28,10 @@
 #ifndef	OLN_MORPHO_GRADIENT_HH
 # define OLN_MORPHO_GRADIENT_HH
 
-#include <oln/morpho/erosion.hh>
-#include <oln/morpho/dilation.hh>
-#include <oln/arith/minus.hh>
+# include <oln/morpho/erosion.hh>
+# include <oln/morpho/dilation.hh>
+# include <oln/arith/minus.hh>
+
 
 namespace oln
 {
@@ -42,8 +43,7 @@ namespace oln
 
     template <typename I, typename W>
     oln_plain(I)
-    gradient(const Image<I>&  input,
-	     const Window<W>& win);
+    gradient(const Image<I>& input, const Window<W>& win);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -55,10 +55,11 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      gradient_(const Image<I>& input,
-		const Window<W>& win)
+      gradient_(const Image<I>& input, const Window<W>& win)
       {
-	return dilation(input, win) - erosion(input, win);
+	oln_plain(I) dil = dilation(input, win);
+	oln_plain(I) ero = erosion(input, win);
+	return dil - ero;
       }
 
 
@@ -69,10 +70,11 @@ namespace oln
 
     template <typename I, typename W>
     oln_plain(I)
-    gradient(const Image<I>&  input,
-	     const Window<W>& win)
+    gradient(const Image<I>& input, const Window<W>& win)
     {
-      return impl::gradient_(exact(input), win);
+      oln_plain(I) output = impl::gradient_(exact(input), exact(win));
+      postcondition(output >= literal(0));
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

@@ -90,9 +90,8 @@
 
 # define oln_internal_specialize_bin_trait_bool_(Name)	\
 							\
-  template <template <class> class Cl, typename L,	\
-	    template <class> class Cr, typename R>	\
-  struct set_trait_< Cl, L, Name##_id, Cr, R >		\
+  template <typename L, typename R>			\
+  struct set_trait_< Any, L, Name##_id, Any, R >	\
   {							\
     typedef bool ret;					\
   }
@@ -100,9 +99,8 @@
 
 # define oln_internal_specialize_bin_trait_T_(Name)	\
 							\
-  template <template <class> class Cl, typename T,	\
-	    template <class> class Cr>			\
-  struct set_trait_< Cl, T, Name##_id, Cr, T >		\
+  template <typename T>					\
+  struct set_trait_< Any, T, Name##_id, Any, T >	\
   {							\
     typedef T ret;					\
   }
@@ -115,10 +113,28 @@ namespace oln
   
   // set_trait_
 
+
   template <template <class> class Cl, typename L,
 	    typename Op,
 	    template <class> class Cr, typename R>
   struct set_trait_;
+
+
+  template <typename L, typename Op, typename R>
+  struct set_trait_<Any, L, Op, Any, R>
+  {
+    // nothing => do not compile
+  };
+
+
+  template <template <class> class Cl, typename L,
+	    typename Op,
+	    template <class> class Cr, typename R>
+  struct set_trait_ // default is
+    : public set_trait_<Any, L, Op, Any, R>
+  {
+  };
+
 
 
   // ids
@@ -145,7 +161,6 @@ namespace oln
 
   // default (see oln/core/concept/operators.hh)
 
-  /*
 
   oln_internal_specialize_bin_trait_T_(plus);
   oln_internal_specialize_bin_trait_T_(minus);
@@ -164,8 +179,6 @@ namespace oln
   oln_internal_specialize_bin_trait_T_(and);
   oln_internal_specialize_bin_trait_T_(or);
   oln_internal_specialize_bin_trait_T_(xor);
-
-  */
 
 
   namespace internal
@@ -194,6 +207,10 @@ namespace oln
 
 
 } // end of namespace oln
+
+
+// FIXME: Bad?
+# include <oln/value/builtin.hh>
 
 
 #endif // ! OLN_CORE_GEN_TRAITS_HH

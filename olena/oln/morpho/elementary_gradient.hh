@@ -28,9 +28,10 @@
 #ifndef	OLN_MORPHO_ELEMENTARY_GRADIENT_HH
 # define OLN_MORPHO_ELEMENTARY_GRADIENT_HH
 
-#include <oln/morpho/elementary_erosion.hh>
-#include <oln/morpho/elementary_dilation.hh>
-#include <oln/arith/minus.hh>
+# include <oln/morpho/elementary_erosion.hh>
+# include <oln/morpho/elementary_dilation.hh>
+# include <oln/arith/minus.hh>
+
 
 namespace oln
 {
@@ -56,7 +57,9 @@ namespace oln
       oln_plain(I)
       elementary_gradient_(const Image_with_Nbh<I>& input)
       {
-	return elementary_dilation(input) - elementary_erosion(input);
+	oln_plain(I) dil = elementary_dilation(input);
+	oln_plain(I) ero = elementary_erosion(input);
+	return dil - ero;
       }
 
 
@@ -71,7 +74,9 @@ namespace oln
     oln_plain(I)
     elementary_gradient(const Image_with_Nbh<I>& input)
     {
-      return impl::elementary_gradient_(exact(input));
+      oln_plain(I) output = impl::elementary_gradient_(exact(input));
+      postcondition(output >= literal(0));
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

@@ -1,3 +1,51 @@
+2007-03-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add postconditions to morphology.
+
+	* oln/value/builtin.hh: Move traits in...
+	* oln/value/builtin_traits.hh: ...this new file.
+	* tests/core/Makefile.am (check_PROGRAMS): Remove iter_point3d.
+	* tests/algorithms/fill.cc: Update.
+	* TODO: Extend.
+	* oln/core/concept/function.hh: Remove stupid fwd decl.
+	* oln/core/concept/operators.hh (operator>=): Rely now on <=.
+	* oln/core/gen/pset_compare.hh (operator>, operator>=): Remove;
+	obsolete.
+	* oln/core/gen/literal.hh (operator T),
+	(operator U): New conversions.
+	* oln/core/gen/traits.hh (set_trait_): Add default relying on Any.
+	* oln/core/internal/image_ops.hh: Add FIXME.
+	* oln/core/internal/op_fp2v_over_pset.hh (fun): New method.
+	* oln/morpho/reconstruction.hh (include): Fix missing.
+	* oln/morpho/cc_tarjan.hh: Likewise.
+	* oln/morpho/elementary_gradient.hh,
+	* oln/morpho/elementary_closing.hh,
+	* oln/morpho/elementary_gradient_external.hh,
+	* oln/morpho/elementary_opening.hh,
+	* oln/morpho/elementary_laplace.hh,
+	* oln/morpho/elementary_dilation.hh,
+	* oln/morpho/gradient_internal.hh,
+	* oln/morpho/top_hat_black.hh,
+	* oln/morpho/gradient.hh,
+	* oln/morpho/top_hat_white.hh,
+	* oln/morpho/closing.hh,
+	* oln/morpho/opening.hh,
+	* oln/morpho/gradient_external.hh,
+	* oln/morpho/laplace.hh,
+	* oln/morpho/dilation.hh,
+	* oln/morpho/elementary_erosion.hh,
+	* oln/morpho/erosion.hh,
+	* oln/morpho/elementary_gradient_internal.hh: Add postconditions.
+	Introduce explicit temporary variables.
+	Various clean-ups.
+	* oln/arith/minus.hh: Remove obsolete inactivated line.
+	* oln/level/compare.hh (operator==, operator<, operator<=): New
+	versions with a literal.
+	* oln/core/gen/pw_value.hh (pw_value_, pw_value): Weaken sig and
+	add static check.
+	* oln/level/local.hh (local): Likewise.
+	* oln/level/apply_local.hh (apply_local): Likewise.
+
 2007-03-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add the image type ''function: p -> v over a point set''.

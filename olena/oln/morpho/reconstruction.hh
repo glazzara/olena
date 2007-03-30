@@ -28,7 +28,9 @@
 #ifndef	OLN_MORPHO_RECONSTRUCTION_HH
 # define OLN_MORPHO_RECONSTRUCTION_HH
 
-#include <oln/accumulator/max.hh>
+# include <oln/core/concept/image.hh>
+# include <oln/accumulator/max.hh>
+
 
 namespace oln
 {
@@ -47,13 +49,13 @@ namespace oln
 	// first
 	oln_fwd_piter(I) p(input.points());
 	for_all(p)
-	  marker(p) = local(max, marker, p) && mask(p); // FIXME : local_sup.
+	  marker(p) = local(max, marker, p) and mask(p); // FIXME : local_sup.
 
 
 	// second
 	oln_bkd_piter(I) p(input.points());
 	for_all(p)
-	  marker(p) = local(max, marker, p) && mask(p); // FIXME : local_inf.
+	  marker(p) = local(max, marker, p) and mask(p); // FIXME : local_inf.
       }
 
     } // end of namespace oln::morpho::impl

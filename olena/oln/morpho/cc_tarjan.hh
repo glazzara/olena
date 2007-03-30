@@ -28,7 +28,9 @@
 #ifndef	OLN_MORPHO_CC_TARJAN_HH
 # define OLN_MORPHO_CC_TARJAN_HH
 
-#include <oln/debug/print.hh>
+# include <oln/core/concept/image.hh>
+# include <oln/debug/print.hh>
+
 
 namespace oln
 {
@@ -76,8 +78,8 @@ namespace oln
 	      oln_niter(I) n(p, input);
 	      for_all(n)
 		{
-		  if ( input(n) && is_processed(n) )
-		      do_union(input ,n, p, parent);
+		  if ( input(n) == true and is_processed(n) )
+		      do_union(input, n, p, parent);
 		}
 	      is_processed(p) = true;
 	    }
@@ -93,7 +95,7 @@ namespace oln
 	oln_fwd_piter(I) p(input.points());
 	for_all(p)
 	  {
-	    if ( input(p) && parent(p) == p )
+	    if ( input(p) == true and parent(p) == p )
 		output(p) = ++current_label;
 	      else
 		output(p) = output(parent(p));

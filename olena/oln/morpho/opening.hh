@@ -28,8 +28,9 @@
 #ifndef	OLN_MORPHO_OPENING_HH
 # define OLN_MORPHO_OPENING_HH
 
-#include <oln/morpho/erosion.hh>
-#include <oln/morpho/dilation.hh>
+# include <oln/morpho/erosion.hh>
+# include <oln/morpho/dilation.hh>
+
 
 namespace oln
 {
@@ -53,11 +54,10 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      opening_(const Image<I>&  input,
-	       const Window<W>& win)
+      opening_(const Image<I>&  input, const Window<W>& win)
       {
-	oln_plain(I) tmp = morpho::erosion(input, win);
-	return morpho::dilation(tmp, win); // FIXME : inverse(win).
+	oln_plain(I) ero = morpho::erosion(input, win);
+	return morpho::dilation(ero, win); // FIXME : inverse(win).
       }
 
       // FIXME: Add a fast version.
@@ -71,7 +71,9 @@ namespace oln
     oln_plain(I)
     opening(const Image<I>& input, const Window<W>& win)
     {
-      return impl::opening_(exact(input), win);
+      oln_plain(I) output = impl::opening_(exact(input), exact(win));
+      postcondition(output <= input);
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

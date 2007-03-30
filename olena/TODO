@@ -35,6 +35,10 @@ if the underlying type is not 'const'
 
 in image_identity.hh use 'current'
 
+provide arith::minus et al. with explicit output type
+
+use Generalized_Point when possible
+
 
 * Tiny improvements
 

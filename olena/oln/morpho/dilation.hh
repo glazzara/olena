@@ -28,9 +28,12 @@
 #ifndef	OLN_MORPHO_DILATION_HH
 # define OLN_MORPHO_DILATION_HH
 
-#include <oln/level/apply_local.hh>
-#include <oln/border/fill.hh>
-#include <oln/accumulator/max.hh>
+# include <oln/level/apply_local.hh>
+# include <oln/level/compare.hh>
+# include <oln/border/fill.hh>
+# include <oln/accumulator/max.hh>
+# include <oln/accumulator/or.hh>
+
 
 namespace oln
 {
@@ -54,9 +57,7 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      dilation_on_function_(const Image<I>&,
-			    const I& input,
-			    const Window<W>& win)
+      dilation_on_function_(const Image<I>& input, const Window<W>& win)
       {
  	border::fill(input, oln_min(oln_value(I)));
  	accumulator::max_<oln_value(I)> max;
@@ -65,9 +66,7 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      dilation_on_set_(const Image<I>&,
-		       const I& input,
-		       const Window<W>& win)
+      dilation_on_set_(const Image<I>& input, const Window<W>& win)
       {
 	border::fill(input, oln_min(oln_value(I)));
 	accumulator::or_<oln_value(I)> accu_or;
@@ -80,17 +79,15 @@ namespace oln
       // Impl facade.
 
       template <typename I, typename W>
-      oln_plain(I) dilation_(const Image<I>&  input,
-			     const Window<W>& win)
+      oln_plain(I) dilation_(const Image<I>& input, const Window<W>& win)
       {
-	return dilation_on_function_(exact(input), exact(input), win);
+	return dilation_on_function_(exact(input), exact(win));
       }
 
       template <typename I, typename W>
-      oln_plain(I) dilation_(const Binary_Image<I>& input,
-			     const Window<W>&       win)
+      oln_plain(I) dilation_(const Binary_Image<I>& input, const Window<W>& win)
       {
-	return dilation_on_set_(exact(input), exact(input), win);
+	return dilation_on_set_(exact(input), exact(win));
       }
 
     } // end of namespace oln::morpho::impl
@@ -102,7 +99,9 @@ namespace oln
     oln_plain(I)
     dilation(const Image<I>& input, const Window<W>& win)
     {
-      return impl::dilation_(exact(input), exact(win));
+      oln_plain(I) output = impl::dilation_(exact(input), exact(win));
+      postcondition(output >= input);
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY
