@@ -59,7 +59,7 @@ namespace oln
       {
 	oln_plain(I) dil = dilation(input, win);
 	oln_plain(I) ero = erosion(input, win);
-	return dil - ero;
+	return arith::minus<oln_value(I)>(dil, ero);
       }
 
 

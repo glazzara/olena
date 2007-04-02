@@ -25,63 +25,72 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_EXTERNAL_GRADIENT_HH
-# define OLN_MORPHO_EXTERNAL_GRADIENT_HH
+#ifndef OLN_CORE_GEN_VALUE_CAST_HH
+# define OLN_CORE_GEN_VALUE_CAST_HH
 
-# include <oln/morpho/elementary_dilation.hh>
-# include <oln/arith/minus.hh>
+# include <oln/core/gen/fun.hh>
+
+
+// FIXME: Separate defs and decls.
+
 
 
 namespace oln
 {
 
-  namespace morpho
+
+  // -----------------------------  casted_fp2v_<F, V>
+
+
+  // Fwd decl.
+  template <typename F, typename V> struct casted_fp2v_;
+
+  // Category.
+  namespace internal
   {
-
-    // Fwd decl.
-
-    template <typename I>
-    oln_plain(I)
-    elementary_gradient_external(const Image_with_Nbh<I>& input);
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    namespace impl
+    template <typename F, typename V>
+    struct set_category_of_< casted_fp2v_<F, V> >
     {
-
-      // Generic version.
-
-      template <typename I>
-      oln_plain(I)
-      elementary_gradient_external_(const Image_with_Nbh<I>& input)
-      {
-	oln_plain(I) dil = elementary_dilation(input);
-	return arith::minus<oln_value(I)>(dil, input);
-      }
+      typedef stc::is< Function_p2v > ret;
+    };
+  }
 
 
-      // FIXME: Add a fast version.
+  // Class.
+  template <typename F, typename V>
+  struct casted_fp2v_ : public Function_p2v< casted_fp2v_<F, V> >
+  {
+    typedef oln_arg_of_(F) argument;
+    typedef oln_res_of_(F) f_result;
+    typedef V result;
 
-    } // end of namespace oln::morpho::impl
+    casted_fp2v_(const F& f) : f_(f) {}
 
-
-    // Facade.
-
-    template <typename I>
-    oln_plain(I)
-    elementary_gradient_external(const Image_with_Nbh<I>& input)
+    result operator()(argument arg) const
     {
-      oln_plain(I) output = impl::elementary_gradient_external_(exact(input));
-      postcondition(output >= literal(0));
-      return output;
+      return static_cast<V>(this->f_(arg));
     }
 
-# endif // ! OLN_INCLUDE_ONLY
+  private:
+    F f_;
+  };
 
-  } // end of namespace oln::morpho
+
+  // value_cast
+
+  template <typename V, typename F>
+  casted_fp2v_<F, V> value_cast(const Function_p2v<F>& f)
+  {
+    // FIXME: Check that the cast "F::result -> V" is OK.
+    casted_fp2v_<F, V> tmp(exact(f));
+    return tmp;
+  }
+
+
+  // FIXME: Add casted_fv2v_<F,V>?
+
 
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_EXTERNAL_GRADIENT_HH
+#endif // ! OLN_CORE_GEN_VALUE_CAST_HH

@@ -57,7 +57,7 @@ namespace oln
       elementary_gradient_internal_(const Image_with_Nbh<I>& input)
       {
 	oln_plain(I) ero = elementary_erosion(input)
-	return input - ero;
+	return arith::minus<oln_value(I)>(input, ero);
       }
 
 

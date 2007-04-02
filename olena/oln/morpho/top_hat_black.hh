@@ -58,7 +58,7 @@ namespace oln
       top_hat_black_(const Image<I>& input, const Window<W>& win)
       {
 	oln_plain(I) clo = closing(input, win);
-	return clo - input;
+	return arith::minus<oln_value(I)>(clo, input);
       }
 
 

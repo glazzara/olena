@@ -54,10 +54,10 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      gradient_external_(const Image<I>&  input, const Window<W>& win)
+      gradient_external_(const Image<I>& input, const Window<W>& win)
       {
 	oln_plain(I) dil = dilation(input, win);
-	return dil - input;
+	return arith::minus<oln_value(I)>(dil, input);
       }
 
 

@@ -58,9 +58,8 @@ namespace oln
       top_hat_white_(const Image<I>& input, const Window<W>& win)
       {
 	oln_plain(I) ope = opening(input, win)
-	return input - ope;
+	return arith::minus<oln_value(I)>(input, ope);
       }
-
 
       // FIXME: Add a fast version.
 

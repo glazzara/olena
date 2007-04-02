@@ -29,8 +29,14 @@
 # define OLN_ARITH_PLUS_HH
 
 # include <oln/core/concept/image.hh>
-// # include <oln/core/internal/f_ch_value.hh>
 # include <oln/core/gen/traits.hh>
+# include <oln/core/gen/pw_value.hh>
+# include <oln/core/gen/value_cast.hh>
+# include <oln/level/fill.hh>
+# include <oln/core/internal/f_ch_value.hh>
+
+
+// FIXME: what about "ima + literal"?
 
 
 namespace oln
@@ -46,11 +52,21 @@ namespace oln
     typedef oln_plain_value(I, V) ret;
   };
 
-  // Fwd decl.
+
+  // Fwd decls.
   
   template <typename I, typename J>
   oln_plus_trait(I, J)
   operator + (const Image<I>& lhs, const Image<J>& rhs);
+  
+  namespace arith
+  {
+
+    template <typename V, typename I, typename J>
+    oln_plain_value(I, V)
+    plus(const Image<I>& lhs, const Image<J>& rhs);
+
+  } // end of namespace oln::arith
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -67,6 +83,23 @@ namespace oln
       output(p) = lhs(p) + rhs(p);
     return output;
   }
+
+  namespace arith
+  {
+
+    template <typename V, typename I, typename J>
+    oln_plain_value(I, V)
+    plus(const Image<I>& lhs, const Image<J>& rhs)
+    {
+      precondition(lhs.points() == rhs.points());
+      oln_plain_value(I, V) output;
+      prepare(output, with, lhs);
+      level::fill(output,
+ 		  value_cast<V>(pw_value(lhs) + pw_value(rhs)));
+      return output;
+    }
+
+  } // end of namespace oln::arith
 
 # endif // ! OLN_INCLUDE_ONLY
 

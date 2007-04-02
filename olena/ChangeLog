@@ -1,3 +1,26 @@
+2007-04-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add plus and minus with explicit cast.
+
+	* TODO: Extend.
+	* oln/core/gen/pw_value.hh (image): New method.
+	* oln/core/gen/value_cast.hh: New.
+	* oln/arith/plus.hh (plus): New.
+	* oln/arith/minus.hh (minus): New.
+	* oln/morpho/elementary_gradient.hh,
+	* oln/morpho/elementary_gradient_external.hh,
+	* oln/morpho/elementary_laplace.hh,
+	* oln/morpho/gradient_internal.hh,
+	* oln/morpho/top_hat_black.hh,
+	* oln/morpho/gradient.hh,
+	* oln/morpho/top_hat_white.hh,
+	* oln/morpho/closing.hh,
+	* oln/morpho/opening.hh,
+	* oln/morpho/gradient_external.hh,
+	* oln/morpho/laplace.hh,
+	* oln/morpho/elementary_gradient_internal.hh: Update.
+	* oln/level/compare.hh: Add FIXME.
+
 2007-03-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add postconditions to morphology.

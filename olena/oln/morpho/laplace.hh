@@ -41,8 +41,8 @@ namespace oln
     // Fwd decl.
 
     template <typename I, typename W>
-    oln_plain(I)
-    laplace(const Image<I>&  input, const Window<W>& win);
+    oln_minus_trait(I, I)
+    laplace(const Image<I>& input, const Window<W>& win);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -53,8 +53,8 @@ namespace oln
       // Generic version.
 
       template <typename I, typename W>
-      oln_plain(I)
-      laplace_(const Image<I>&  input, const Window<W>& win)
+      oln_minus_trait(I, I)
+      laplace_(const Image<I>& input, const Window<W>& win)
       {
 	oln_plain(I) g_ext = gradient_external(input, win);
 	oln_plain(I) g_int = gradient_internal(input, win);
@@ -70,9 +70,10 @@ namespace oln
     // Facade.
 
     template <typename I, typename W>
-    oln_plain(I)
-    laplace(const Image<I>&  input, const Window<W>& win)
+    oln_minus_trait(I, I)
+    laplace(const Image<I>& input, const Window<W>& win)
     {
+      // FIXME: Add postcondition.
       return impl::laplace_(exact(input), exact(win));
     }
 

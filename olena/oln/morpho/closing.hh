@@ -54,7 +54,7 @@ namespace oln
 
       template <typename I, typename W>
       oln_plain(I)
-      closing_(const Image<I>&  input, const Window<W>& win)
+      closing_(const Image<I>& input, const Window<W>& win)
       {
 	oln_plain(I) tmp = morpho::dilation(input, win);
 	return morpho::erosion(tmp, win); // FIXME : inverse(win).

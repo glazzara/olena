@@ -60,6 +60,9 @@ namespace oln
   bool operator <= (const Image<I>& lhs, const literal_<oln_value(I)>& val);
 
 
+  // FIXME: is-it a good idea to have "ima == lit"?
+  // FIXME: should we rather have "ima == f:p->v"?
+
 
 # ifndef OLN_LNCLUDE_ONLY
 

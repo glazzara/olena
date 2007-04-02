@@ -33,6 +33,7 @@
 # include <oln/core/gen/fun_ops.hh>
 
 
+
 namespace oln
 {
 
@@ -42,6 +43,7 @@ namespace oln
     struct pw_value_works_on_images_not_on_;
 
   } // end of namespace oln::ERROR
+
 
   template <typename I>
   class pw_value_ : public Function_p2v< pw_value_<I> >,
@@ -55,6 +57,8 @@ namespace oln
     pw_value_(const Image<I>& ima);
     oln_value(I) operator()(const oln_point(I)& p) const;
 
+    const I& image() const;
+
   protected:
     const I& ima_;
   };
@@ -62,6 +66,7 @@ namespace oln
 
   template <typename I>
   pw_value_<I> pw_value(const Image<I>& ima);
+
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -80,6 +85,13 @@ namespace oln
   {
     precondition(this->ima_.owns_(p));
     return this->ima_(p);
+  }
+
+  template <typename I>
+  const I&
+  pw_value_<I>::image() const
+  {
+    return this->ima_;
   }
 
   template <typename I>

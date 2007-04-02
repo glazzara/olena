@@ -41,7 +41,7 @@ namespace oln
     // Fwd decl.
 
     template <typename I>
-    oln_plain(I)
+    oln_minus_trait(I, I)
     elementary_laplace(const Image_with_Nbh<I>& input);
 
 
@@ -53,7 +53,7 @@ namespace oln
       // Generic version.
 
       template <typename I>
-      oln_plain(I)
+      oln_minus_trait(I, I)
       elementary_laplace_(const Image_with_Nbh<I>& input)
       {
 	oln_plain(I) g_ext = elementary_gradient_external(input);
@@ -61,18 +61,16 @@ namespace oln
 	return g_ext - g_int;
       }
 
-
-      // FIXME: Add a fast version.
-
     } // end of namespace oln::morpho::impl
 
 
     // Facade.
 
     template <typename I>
-    oln_plain(I)
+    oln_minus_trait(I, I)
     elementary_laplace(const Image_with_Nbh<I>& input)
     {
+      // FIXME: Add postcondition.
       return impl::elementary_laplace_(exact(input));
     }
 

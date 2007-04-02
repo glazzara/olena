@@ -57,7 +57,7 @@ namespace oln
       gradient_internal_(const Image<I>& input, const Window<W>& win)
       {
 	oln_plain(I) ero = erosion(input, win);
-	return input - ero;
+	return arith::minus<oln_value(I)>(input, ero);
       }
 
 
