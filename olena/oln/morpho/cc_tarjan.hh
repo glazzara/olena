@@ -29,14 +29,18 @@
 # define OLN_MORPHO_CC_TARJAN_HH
 
 # include <oln/core/concept/image.hh>
-# include <oln/debug/print.hh>
-
 
 namespace oln
 {
 
   namespace morpho
   {
+
+    template <typename I>
+    oln_plain_value(I, unsigned)
+    cc_tarjan(const Binary_Image<I>& input);
+
+# ifndef OLN_INCLUDE_ONLY
 
     namespace impl
     {
@@ -79,7 +83,7 @@ namespace oln
 	      for_all(n)
 		{
 		  if ( input(n) == true and is_processed(n) )
-		      do_union(input, n, p, parent);
+		    do_union(input, n, p, parent);
 		}
 	      is_processed(p) = true;
 	    }
@@ -133,6 +137,8 @@ namespace oln
     {
       return impl::cc_tarjan_(exact(input));
     }
+
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::morpho
 

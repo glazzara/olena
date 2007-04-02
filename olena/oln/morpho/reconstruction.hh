@@ -30,7 +30,8 @@
 
 # include <oln/core/concept/image.hh>
 # include <oln/accumulator/max.hh>
-
+# include <oln/level/clone.hh>
+# include <oln/level/fill.hh>
 
 namespace oln
 {
@@ -38,37 +39,76 @@ namespace oln
   namespace morpho
   {
 
+    template <typename I , typename J>
+    void
+    reconstruction(const Mutable_Image<I>& marker,
+		   const Binary_Image<J>& mask);
+
+# ifndef OLN_INCLUDE_ONLY
+
     namespace impl
     {
 
-      template <typename I , typename J>
-      void // FIXME : slow version.
-      reconstruction_(const Image_with_Nbh<I>& marker,
-		      const Binary_Image<I>&   mask)
+      template <typename I>
+      bool
+      stability(const Image_with_Nbh<I>& marker,
+		const Image_with_Nbh<I>& tmp)
       {
-	// first
-	oln_fwd_piter(I) p(input.points());
-	for_all(p)
-	  marker(p) = local(max, marker, p) and mask(p); // FIXME : local_sup.
+	oln_piter(I) p(marker.points());
+	for_all(p) // FIXME : Concept doesn't own .image()? add != is better
+	  if (exact(marker).image()(p) != exact(tmp).image()(p))
+	    return false;
+	return true;
+      }
 
+      template <typename I>
+      oln_plain(I)
+      reconstruction_loop(const Image_with_Nbh<I>& marker,
+			  const Binary_Image<I>&   mask)
+      {
+	oln_plain(I) output;
+	prepare(output, with, marker);
 
-	// second
-	oln_bkd_piter(I) p(input.points());
+	accumulator::max_<oln_value(I)> max;
+
+	// first pass
+	oln_fwd_piter(I) p(marker.points());
 	for_all(p)
-	  marker(p) = local(max, marker, p) and mask(p); // FIXME : local_inf.
+	  output(p) = local_sup(max, marker, p) and mask(p);
+
+	// second pass
+	oln_bkd_piter(I) p2(marker.points());
+	for_all(p2)
+	  output(p2) = local_inf(max, marker, p2) and mask(p2);
+
+	return output;
+      }
+
+      template <typename I , typename J>
+      void // FIXME : Slow impl.
+      reconstruction_(const Image_with_Nbh<I>& marker,
+		      const Binary_Image<J>& mask)
+      {
+	oln_plain(I) tmp = level::clone(marker);
+
+	while ( not stability(marker, tmp) )
+	{
+	  level::fill(exact(marker).image(), exact(tmp).image()); //add fill version better.
+	  tmp = reconstruction_loop(marker, mask);
+	}
+
+	level::fill(exact(marker).image(), exact(tmp).image());
       }
 
     } // end of namespace oln::morpho::impl
 
     template <typename I , typename J>
     void
-    reconstruction(const Image_with_Nbh<I>& marker,
-		   const Binary_Image<J>&   mask)
+    reconstruction(const Mutable_Image<I>& marker,
+		   const Binary_Image<J>& mask)
     {
-      impl::reconstruction_(exact(mask), exact(marker));
+      impl::reconstruction_(exact(marker), exact(mask));
     }
-
-  }
 
 # endif // ! OLN_INCLUDE_ONLY
 

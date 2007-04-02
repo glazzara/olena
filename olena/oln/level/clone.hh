@@ -29,9 +29,7 @@
 #ifndef OLN_LEVEL_CLONE_HH
 # define OLN_LEVEL_CLONE_HH
 
-# include <oln/core/abstract/image.hh>
-# include <oln/core/abstract/iterator.hh>
-
+# include <oln/core/concept/image.hh>
 
 namespace oln
 {
@@ -41,7 +39,7 @@ namespace oln
 
     /// Fwd decl.
     template <typename I>
-    oln_plain(I) clone(const abstract::image<I>& input);
+    oln_plain(I) clone(const Image<I>& input);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -51,10 +49,10 @@ namespace oln
 
       /// Generic version.
       template <typename I>
-      oln_plain(I) clone(const abstract::image<I>& input)
+      oln_plain(I) clone(const Image<I>& input)
       {
-	oln_plain(I) output(input.topo());
-	oln_piter(I) p(input.topo());
+	oln_plain(I) output(input.points());
+	oln_piter(I) p(input.points());
 	for_all(p)
 	  output(p) = input(p);
 	return output;
@@ -65,7 +63,7 @@ namespace oln
 
     /// Facade.
     template <typename I>
-    oln_plain(I) clone(const abstract::image<I>& input)
+    oln_plain(I) clone(const Image<I>& input)
     {
       return impl::clone(input);
     }
