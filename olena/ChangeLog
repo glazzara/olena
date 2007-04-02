@@ -1,5 +1,18 @@
 2007-04-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add the type of stack of images.
+
+	* tests/core/stack.cc,
+	* oln/core/gen/image_stack.hh,
+	* oln/core/internal/value_proxy.hh: New.
+	* tests/core/Makefile.am (check_PROGRAMS): Add stack.
+	* oln/core/concept/image.hh (inplace): New.
+	* oln/core/equipment.hh (oln_psite): New.
+	* oln/core/internal/instant_value.hh: Cosmetic change.
+	* oln/stc/scoop.hh (stc_is_found_type): New.
+
+2007-04-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add plus and minus with explicit cast.
 
 	* TODO: Extend.

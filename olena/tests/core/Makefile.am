@@ -33,6 +33,7 @@ check_PROGRAMS =				\
   pw_value					\
   rle_image					\
   sparse_image					\
+  stack						\
   subset					\
   window2d
 
@@ -50,6 +51,7 @@ point2d_SOURCES = point2d.cc
 pw_value_SOURCES = pw_value.cc
 rle_image_SOURCES = rle_image.cc
 sparse_image_SOURCES = sparse_image.cc
+stack_SOURCES = stack.cc
 subset_SOURCES = subset.cc
 window2d_SOURCES = window2d.cc
 

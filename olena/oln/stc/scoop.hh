@@ -118,6 +118,8 @@ namespace stc
 # define stc_type_is_found(Type)      stc::is_found< stc_deferred(Type) >
 # define stc_type_is_not_found(Type)  stc::is_not_found< stc_deferred(Type) >
 
+# define stc_is_found_type(From, Type)      stc::is_found< stc_deferred_type(From, Type) >
+
 
 
 # define stc_is_a(T, U)												\

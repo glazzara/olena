@@ -25,36 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_INSTANT_VALUE_HH
-# define OLN_CORE_INTERNAL_INSTANT_VALUE_HH
+#ifndef OLN_CORE_INTERNAL_VALUE_PROXY_HH
+# define OLN_CORE_INTERNAL_VALUE_PROXY_HH
 
-
-# define oln_decl_instant_value(Name)			\
-							\
-namespace internal					\
-{							\
-							\
-  template <typename V>					\
-  struct Name##_t : public instant_value_< Name##_t, V>	\
-  {							\
-    Name##_t(const V& v) { this->value = v; }		\
-  };							\
-							\
-  namespace tag						\
-  {							\
-    struct Name##_t {};					\
-  }							\
-							\
-}							\
-							\
-template <typename V>					\
-internal::Name##_t<V> Name(const V& v)			\
-{							\
-  return internal::Name##_t<V>(v);			\
-}							\
-							\
-struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
-
+# include <ostream>
+# include <oln/core/concept/value.hh>
 
 
 namespace oln
@@ -63,35 +38,76 @@ namespace oln
   namespace internal
   {
 
-    /// Class internal::instant_value_<M,V>.
 
-    template <template<class> class M, typename V>
-    struct instant_value_
+    template <typename I>
+    class value_proxy_
     {
-      V value;
+    public:
 
-      /*
-	// FIXME: do not compile with g++-3!!!
+      // ctor
+      value_proxy_(I& ima, const oln_psite(I)& p);
 
-	template <typename W>
-	operator M<W>() const;
-      */
+      // assignment => write
+      template <typename T>
+      value_proxy_<I>& operator=(const T& val);
+
+      // conversion => read
+      template <typename T>
+      operator T() const;
+
+      // explicit read
+      oln_value(I) value() const;
+
+    private:
+
+      I& ima_;
+      oln_psite(I) p_;
     };
+
+
+    template <typename I>
+    std::ostream& operator<<(std::ostream& ostr, const value_proxy_<I>& v);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    /*
-    // FIXME: do not compile with g++-3!!!
-
-    template <template<class> class M, typename V>
-    template <typename W>
-    instant_value_<M,V>::operator M<W>() const
+    template <typename I>
+    value_proxy_<I>::value_proxy_(I& ima, const oln_psite(I)& p)
+      : ima_(ima),
+	p_(p)
     {
-      M<W> tmp(this->value);
+    }
+
+    template <typename I>
+    template <typename T>
+    value_proxy_<I>&
+    value_proxy_<I>::operator=(const T& val)
+    {
+      ima_.write_(this->p_, val);
+      return *this;
+    }
+
+    template <typename I>
+    template <typename T>
+    value_proxy_<I>::operator T() const
+    {
+      T tmp = this->ima_.read_(this->p_);
       return tmp;
     }
-    */
+
+    template <typename I>
+    oln_value(I)
+    value_proxy_<I>::value() const
+    {
+      oln_value(I) tmp = this->ima_.read_(this->p_);
+      return tmp;
+    }
+
+    template <typename I>
+    std::ostream& operator<<(std::ostream& ostr, const value_proxy_<I>& v)
+    {
+      return ostr << v.value();
+    }
 
 # endif // ! OLN_INCLUDE_ONLY
 
@@ -100,4 +116,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_INSTANT_VALUE_HH
+#endif // ! OLN_CORE_INTERNAL_VALUE_PROXY_HH

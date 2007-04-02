@@ -127,6 +127,7 @@ namespace oln
 # define oln_plain(T) oln_typename_shortcut__(T, plain)
 # define oln_point(T) oln_typename_shortcut__(T, point)
 # define oln_pset(T)  oln_typename_shortcut__(T, pset)
+# define oln_psite(T) oln_typename_shortcut__(T, psite)
 
   // q
   stc_decl_associated_type( qiter );

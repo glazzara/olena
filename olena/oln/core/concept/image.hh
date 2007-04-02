@@ -190,6 +190,9 @@ namespace oln
     stc_typename(lvalue);
     lvalue operator()(const psite& p);
     void write_(const psite& p, const value& v);
+
+    // final.
+    Exact& inplace();
  
   protected:
     Mutable_Image();
@@ -524,6 +527,13 @@ namespace oln
   template <typename Exact>
   Mutable_Image<Exact>::Mutable_Image()
   {
+  }
+
+  template <typename Exact>
+  Exact&
+  Mutable_Image<Exact>::inplace()
+  {
+    return exact(*this);
   }
 
   // -----------------------------------   Point_Wise_Accessible_Image<Exact>

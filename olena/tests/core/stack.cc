@@ -25,79 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_INSTANT_VALUE_HH
-# define OLN_CORE_INTERNAL_INSTANT_VALUE_HH
+/// Test stack.
+
+#include <cassert>
+#include <oln/core/2d/image2d.hh>
+#include <oln/core/gen/image_stack.hh>
+#include <oln/level/fill.hh>
 
 
-# define oln_decl_instant_value(Name)			\
-							\
-namespace internal					\
-{							\
-							\
-  template <typename V>					\
-  struct Name##_t : public instant_value_< Name##_t, V>	\
-  {							\
-    Name##_t(const V& v) { this->value = v; }		\
-  };							\
-							\
-  namespace tag						\
-  {							\
-    struct Name##_t {};					\
-  }							\
-							\
-}							\
-							\
-template <typename V>					\
-internal::Name##_t<V> Name(const V& v)			\
-{							\
-  return internal::Name##_t<V>(v);			\
-}							\
-							\
-struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
-
-
-
-namespace oln
+xtd::vec<2,int> coords(const oln::point2d& p)
 {
+  return p.vec();
+}
 
-  namespace internal
+
+int main()
+{
+  using namespace oln;
+
+  typedef image2d<int> I;
+  I ima_0(3, 3), ima_1(3, 3);
+  level::fill(stack(ima_0, ima_1).inplace(), coords);
   {
-
-    /// Class internal::instant_value_<M,V>.
-
-    template <template<class> class M, typename V>
-    struct instant_value_
-    {
-      V value;
-
-      /*
-	// FIXME: do not compile with g++-3!!!
-
-	template <typename W>
-	operator M<W>() const;
-      */
-    };
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    /*
-    // FIXME: do not compile with g++-3!!!
-
-    template <template<class> class M, typename V>
-    template <typename W>
-    instant_value_<M,V>::operator M<W>() const
-    {
-      M<W> tmp(this->value);
-      return tmp;
-    }
-    */
-
-# endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::internal
-
-} // end of namespace oln
-
-
-#endif // ! OLN_CORE_INTERNAL_INSTANT_VALUE_HH
+    I::piter p(ima_0.points());
+    for_all(p)
+      assert(ima_0(p) == p.row());
+  }
+  {
+    I::piter p(ima_1.points());
+    for_all(p)
+      assert(ima_1(p) == p.col());
+  }
+}
