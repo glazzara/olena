@@ -34,6 +34,11 @@
 # include <oln/accumulator/min.hh>
 # include <oln/accumulator/and.hh>
 
+// FIXME: Add guard.
+# include <oln/core/2d/rectangle2d.hh>
+# include <oln/core/2d/hline2d.hh>
+# include <oln/core/2d/vline2d.hh>
+
 
 namespace oln
 {
@@ -53,7 +58,7 @@ namespace oln
     namespace impl
     {
 
-      // Generic version.
+      // Generic versions.
 
       template <typename I, typename W>
       oln_plain(I)
@@ -73,7 +78,21 @@ namespace oln
 	return level::apply_local(accu_and, input, win);
       }
 
-      // FIXME: Add a fast version.
+
+      // FIXME: Add guard here.
+      // Versions for rectangles.
+
+      template <typename I>
+      oln_plain(I)
+      erosion_on_function_(const Image_2D<I>& input, const rectangle2d& win)
+      {
+	hline2d hl(win.half_width());
+	vline2d hv(win.half_height());
+	oln_plain(I) tmp = erosion(input, hl);
+	return erosion(tmp, hv);
+      }
+
+      // FIXME: Add other fast versions.
 
 
       // Impl facade.

@@ -25,62 +25,77 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_OPENING_HH
-# define OLN_MORPHO_OPENING_HH
+#ifndef OLN_CORE_2D_VLINE2D_HH
+# define OLN_CORE_2D_VLINE2D_HH
 
-# include <oln/morpho/erosion.hh>
-# include <oln/morpho/dilation.hh>
+# include <oln/core/internal/window.hh>
+# include <oln/core/2d/dpoint2d.hh>
 
 
 namespace oln
 {
 
-  namespace morpho
+  // Fwd decl.
+  class vline2d;
+
+
+  // Super type.
+  template <>
+  struct super_trait_< vline2d >
   {
+    typedef internal::window_<vline2d> ret;
+  };
 
-    // Fwd decl.
 
-    template <typename I, typename W>
-    oln_plain(I)
-    opening(const Image<I>& input, const Window<W>& win);
+  // Virtual types.
+  template <>
+  struct vtypes< vline2d >
+  {
+    typedef point2d point;
+  };
+
+
+  /// 2D vertical line window.
+
+  class vline2d : public internal::window_< vline2d >
+  {
+  public:
+    
+    vline2d(unsigned half_length);
+    vline2d(int drow_min, int drow_max);
+
+  private:
+    void init_(int drow_min, int drow_max);
+    void take(); // safety; w/o impl, it provides from calling super::take(dp).
+
+  }; // end of class oln::vline2d
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
-    {
+  vline2d::vline2d(unsigned half_length)
+  {
+    precondition(half_length > 0);
+    this->init_(- half_length, half_length);
+  }
 
-      // Generic version.
+  vline2d::vline2d(int drow_min, int drow_max)
+  {
+    precondition(drow_max > drow_min);
+    this->init_(drow_min, drow_max);
+  }
 
-      template <typename I, typename W>
-      oln_plain(I)
-      opening_(const Image<I>& input, const Window<W>& win)
-      {
-	oln_plain(I) ero = morpho::erosion(input, win);
-	return morpho::dilation(ero, - win);
-      }
-
-      // FIXME: Add a fast version.
-
-    } // end of namespace oln::morpho::impl
-
-
-    // Facade.
-
-    template <typename I, typename W>
-    oln_plain(I)
-    opening(const Image<I>& input, const Window<W>& win)
-    {
-      oln_plain(I) output = impl::opening_(exact(input), exact(win));
-      postcondition(output <= input);
-      return output;
-    }
+  void
+  vline2d::init_(int drow_min, int drow_max)
+  {
+    for (int drow = drow_min; drow <= drow_max; ++drow)
+      this->internal::window_<vline2d>::take(dpoint2d(drow, 0));
+  }
 
 # endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_OPENING_HH
+#endif // ! OLN_CORE_2D_VLINE2D_HH

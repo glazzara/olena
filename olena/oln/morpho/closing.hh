@@ -57,7 +57,7 @@ namespace oln
       closing_(const Image<I>& input, const Window<W>& win)
       {
 	oln_plain(I) tmp = morpho::dilation(input, win);
-	return morpho::erosion(tmp, win); // FIXME : inverse(win).
+	return morpho::erosion(tmp, - win);
       }
 
       // FIXME: Add a fast version.

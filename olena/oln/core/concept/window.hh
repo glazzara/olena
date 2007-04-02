@@ -47,6 +47,8 @@ namespace oln
     stc_typename(fwd_qiter);
     stc_typename(bkd_qiter);
 
+    Exact op_unary_minus_() const;
+
   protected:
     Window();
 
@@ -61,7 +63,14 @@ namespace oln
   {
   }
 
-# endif
+  template <typename Exact>
+  Exact
+  Window<Exact>::op_unary_minus_() const
+  {
+    return exact(this)->impl_op_unary_minus_();
+  }
+
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

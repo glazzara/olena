@@ -1,5 +1,27 @@
 2007-04-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add some 2d window types and refactor window impl hierarchy.
+
+	* oln/core/2d/vline2d.hh,
+	* oln/core/2d/hline2d.hh,
+	* oln/core/2d/rectangle2d.hh,
+	* oln/core/internal/window.hh: New.
+	* oln/core/concept/window.hh (op_unary_minus_): New.
+	* oln/core/gen/dpoints_piter.hh: Cosmetic change.
+	* oln/core/gen/window.hh (window_): Rename as...
+	(gen_window): ...this and inherit from internal::window_.
+	(fwd_qiter, bkd_qiter, take, impl_op_unary_minus_): Move to...
+	(internal::window_): ...here.
+	* oln/core/2d/window2d.hh (window2d): Replace window_ by
+	gen_window.
+	* oln/core/internal/window_base.hh (point): New.
+	* oln/morpho/closing.hh,
+	* oln/morpho/opening.hh: Fix.
+	* oln/morpho/erosion.hh (erosion_on_function_): New version on
+	rectangle2d.
+
+2007-04-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add the type of stack of images.
 
 	* tests/core/stack.cc,

@@ -25,61 +25,92 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_GEN_WINDOW_HH
-# define OLN_CORE_GEN_WINDOW_HH
+#ifndef OLN_CORE_2D_RECTANGLE2D_HH
+# define OLN_CORE_2D_RECTANGLE2D_HH
 
 # include <oln/core/internal/window.hh>
+# include <oln/core/2d/dpoint2d.hh>
 
 
 namespace oln
 {
 
-
   // Fwd decl.
-  template <typename Dp> class gen_window;
+  class rectangle2d;
 
 
   // Super type.
-  template <typename Dp>
-  struct super_trait_< gen_window<Dp> >
+  template <>
+  struct super_trait_< rectangle2d >
   {
-    typedef gen_window<Dp> current__;
-    typedef internal::window_<current__> ret;
+    typedef internal::window_<rectangle2d> ret;
   };
 
 
   // Virtual types.
-  template <typename Dp>
-  struct vtypes< gen_window<Dp> >
+  template <>
+  struct vtypes< rectangle2d >
   {
-    typedef oln_point(Dp) point;
+    typedef point2d point;
   };
 
 
-  /// Generic classical window class.
+  /// 2D rectangular window.
 
-  template <typename Dp>
-  class gen_window : public internal::window_< gen_window<Dp> >
+  class rectangle2d : public internal::window_< rectangle2d >
   {
   public:
-    
-    gen_window();
 
-  }; // end of class oln::gen_window<Dp>
+    // FIXME: Use instant-init facilities.
+    rectangle2d(unsigned half_height, unsigned half_width);
+
+    unsigned half_height() const;
+    unsigned half_width() const;
+
+  private:
+    void init_(int drow_min, int dcol_min,
+	       int drow_max, int dcol_max);
+    void take(); // safety; w/o impl, it provides from calling super::take(dp).
+
+    unsigned half_height_, half_width_;
+
+  }; // end of class oln::rectangle2d
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename Dp>
-  gen_window<Dp>::gen_window()
+  rectangle2d::rectangle2d(unsigned half_height, unsigned half_width)
   {
+    precondition(half_height > 0 and half_width > 0 );
+    this->half_height_ = half_height;
+    this->half_width_  = half_width;
+    this->init_(- half_height, - half_width,
+		+ half_height, + half_width);
+  }
+
+  unsigned rectangle2d::half_height() const
+  {
+    return this->half_height_;
+  }
+
+  unsigned rectangle2d::half_width() const
+  {
+    return this->half_width_;
+  }
+
+  void
+  rectangle2d::init_(int drow_min, int dcol_min,
+		     int drow_max, int dcol_max)
+  {
+    for (int drow = drow_min; drow <= drow_max; ++drow)
+      for (int dcol = dcol_min; dcol <= dcol_max; ++dcol)
+	this->internal::window_<rectangle2d>::take(dpoint2d(drow, dcol));
   }
 
 # endif // ! OLN_INCLUDE_ONLY
-  
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_GEN_WINDOW_HH
+#endif // ! OLN_CORE_2D_RECTANGLE2D_HH

@@ -25,62 +25,70 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_OPENING_HH
-# define OLN_MORPHO_OPENING_HH
+#ifndef OLN_CORE_2D_HLINE2D_HH
+# define OLN_CORE_2D_HLINE2D_HH
 
-# include <oln/morpho/erosion.hh>
-# include <oln/morpho/dilation.hh>
+# include <oln/core/internal/window.hh>
+# include <oln/core/2d/dpoint2d.hh>
 
 
 namespace oln
 {
 
-  namespace morpho
+  // Fwd decl.
+  class hline2d;
+
+
+  // Super type.
+  template <>
+  struct super_trait_< hline2d >
   {
+    typedef internal::window_<hline2d> ret;
+  };
 
-    // Fwd decl.
 
-    template <typename I, typename W>
-    oln_plain(I)
-    opening(const Image<I>& input, const Window<W>& win);
+  // Virtual types.
+  template <>
+  struct vtypes< hline2d >
+  {
+    typedef point2d point;
+  };
+
+
+  /// 2D horizontal line window.
+
+  class hline2d : public internal::window_< hline2d >
+  {
+  public:
+    
+    hline2d(unsigned half_length);
+
+  private:
+    void init_(int dcol_min, int dcol_max);
+    void take(); // safety; w/o impl, it provides from calling super::take(dp).
+
+  }; // end of class oln::hline2d
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
-    {
+  hline2d::hline2d(unsigned half_length)
+  {
+    precondition(half_length > 0);
+    this->init_(- half_length, + half_length);
+  }
 
-      // Generic version.
-
-      template <typename I, typename W>
-      oln_plain(I)
-      opening_(const Image<I>& input, const Window<W>& win)
-      {
-	oln_plain(I) ero = morpho::erosion(input, win);
-	return morpho::dilation(ero, - win);
-      }
-
-      // FIXME: Add a fast version.
-
-    } // end of namespace oln::morpho::impl
-
-
-    // Facade.
-
-    template <typename I, typename W>
-    oln_plain(I)
-    opening(const Image<I>& input, const Window<W>& win)
-    {
-      oln_plain(I) output = impl::opening_(exact(input), exact(win));
-      postcondition(output <= input);
-      return output;
-    }
+  void
+  hline2d::init_(int dcol_min, int dcol_max)
+  {
+    for (int dcol = dcol_min; dcol <= dcol_max; ++dcol)
+      this->internal::window_<hline2d>::take(dpoint2d(0, dcol));
+  }
 
 # endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_OPENING_HH
+#endif // ! OLN_CORE_2D_HLINE2D_HH
