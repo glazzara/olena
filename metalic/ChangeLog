@@ -1,3 +1,9 @@
+2007-04-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add constness check.
+
+	* mlc/cmp.hh (mlc_is_const, is_const_): New.
+
 2007-03-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Tiny fix.
