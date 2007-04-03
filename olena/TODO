@@ -26,18 +26,12 @@ io pnm
 
 draw routines
 
-window types such as lines, rectangles, and so on
-
 meta-window type; for instance, ball, segment, etc.
-
-provide "- win" for morpho::opening and morpho::closing.
 
 const promotions for op_<L,O,R> types  +  result is Mutable only
 if the underlying type is not 'const'
 
 in image_identity.hh use 'current'
-
-provide arith::minus et al. with explicit output type
 
 use Generalized_Point when possible
 

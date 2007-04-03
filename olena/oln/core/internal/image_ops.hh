@@ -32,21 +32,25 @@
 # include <oln/core/internal/op_image_restricted_to_pset.hh>
 # include <oln/core/internal/op_image_such_as_fp2b.hh>
 # include <oln/core/internal/op_fp2v_over_pset.hh>
+# include <oln/core/gen/literal.hh>
 
 
 
 namespace oln
 {
+  // FIXME: when L is Image the "non-const" version should feature Mutable_Image
+
 
   // Image | Point_Set    ( ima restricted_to pset )
 
   oln_decl_op_restricted_to(Image, Point_Set);
-
+  oln_decl_inplace_image_op(restricted_to, |, Point_Set);
 
 
   // Image | Function_p2b  (     ima such_as "f : p -> b"
   //                         is  ima restricted_to (ima.points such_as f) )
   oln_decl_op_such_as(Image, Function_p2b);
+  oln_decl_inplace_image_op(such_as, |, Function_p2b);
 
 
 
@@ -70,7 +74,16 @@ namespace oln
     return tmp;
   }
 
-  // FIXME: Add "literal / point set"...
+  // Specialisation "literal T over Point_Set".
+
+  template <typename V, typename S>
+  op_<const lit_p2v_<oln_point(S), V>, over, const S>
+  operator / (const literal_<V>& value, const Point_Set<S>& pts)
+  {
+    lit_p2v_<oln_point(S), V> lit(value);
+    op_<const lit_p2v_<oln_point(S), V>, over, const S> tmp(lit, exact(pts));
+    return tmp;
+  }
 
 
 
@@ -89,13 +102,20 @@ namespace oln
 
   template <typename I, typename B, typename P>
   op_<I, such_as, const fun_p2b_<B (*)(P)> >
-  operator | (Image<I>& ima, B (*f)(P))
+  operator | (Mutable_Image<I>& ima, B (*f)(P))
   {
     typedef oln_strip_(P) P_;
     mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.
     mlc::assert_equal_< P_, oln_point(I) >::check();
     op_<I, such_as, const fun_p2b_<B (*)(P)> > tmp(exact(ima), f);
     return tmp;
+  }
+
+  template <typename I, typename B, typename P>
+  inplace_< op_<I, such_as, const fun_p2b_<B (*)(P)> > >
+  operator | (inplace_<I> ima, B (*f)(P))
+  {
+    return inplace(ima.unwrap() | f);
   }
 
 
@@ -113,7 +133,7 @@ namespace oln
 
   template <typename I, typename J>
   op_<I, such_as, const fun_p2b_< Binary_Image<J> > >
-  operator | (Image<I>& ima, const Binary_Image<J>& f_ima_b)
+  operator | (Mutable_Image<I>& ima, const Binary_Image<J>& f_ima_b)
   {
     precondition(f_ima_b.points() >= ima.points());
     mlc::assert_equal_< oln_point(I), oln_point(J) >::check();
@@ -121,8 +141,12 @@ namespace oln
     return tmp;
   }
 
-
-  // FIXME: What about Mutable_Image so that "ima | something" can be left-value?
+  template <typename I, typename J>
+  inplace_< op_<I, such_as, const fun_p2b_< Binary_Image<J> > > >
+  operator | (inplace_<I> ima, const Binary_Image<J>& f_ima_b)
+  {
+    return inplace(ima.unwrap() | f_ima_b);
+  }
 
 
 } // end of namespace oln

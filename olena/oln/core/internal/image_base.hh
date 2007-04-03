@@ -36,6 +36,10 @@
 # include <oln/core/gen/box.hh>
 
 
+# define oln_possible_lvalue(I) \
+    typename internal::possible_lvalue_from_< I >::ret
+
+
 
 namespace oln
 {
@@ -263,6 +267,15 @@ namespace oln
 
     protected:
       image_morpher_();
+    };
+
+
+    template <typename I>
+    struct possible_lvalue_from_
+    {
+      typedef typename mlc::if_< mlc_is_const(I),
+				 stc::not_delegated,
+				 stc_find_type(I, lvalue) >::ret ret;
     };
 
 

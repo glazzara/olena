@@ -32,6 +32,7 @@
 # include <oln/core/internal/category_of.hh>
 # include <oln/core/concept/function.hh>
 # include <oln/core/concept/value.hh>
+# include <oln/core/gen/inplace.hh>
 
 
 
@@ -74,7 +75,23 @@
   struct e_n_d___w_i_t_h___a___s_e_m_i___c_o_l_u_m_n
 
 
-# define oln_decl_op_plus(Lconcept, Rconcept)          oln_decl_op_( plus,          Lconcept, +, Rconcept) 
+
+# define oln_decl_inplace_image_op(OpName, OpSym, Rconcept)	\
+								\
+  template <typename L, typename R>				\
+  inplace_< op_<L, OpName, R> >					\
+  operator OpSym (inplace_<L> lhs, Rconcept<R>& rhs)		\
+  {								\
+    mlc::assert_< mlc_is_a(L, Mutable_Image) >::check();	\
+    op_<L, OpName, R> tmp(exact(lhs), exact(rhs));		\
+    return inplace(tmp);					\
+  }								\
+								\
+  struct e_n_d___w_i_t_h___a___s_e_m_i___c_o_l_u_m_n
+
+
+
+# define oln_decl_op_extended_by(Lconcept, Rconcept)   oln_decl_op_( extended_by,   Lconcept, +, Rconcept) 
 # define oln_decl_op_such_as(Lconcept, Rconcept)       oln_decl_op_( such_as,       Lconcept, |, Rconcept) 
 # define oln_decl_op_restricted_to(Lconcept, Rconcept) oln_decl_op_( restricted_to, Lconcept, |, Rconcept) 
 # define oln_decl_op_over(Lconcept, Rconcept)          oln_decl_op_( over,          Lconcept, /, Rconcept) 
@@ -89,7 +106,7 @@ namespace oln
   /// \{
   /// Operator Names.
 
-  struct plus;
+  struct extended_by;
   struct such_as;
   struct restricted_to;
   struct over;

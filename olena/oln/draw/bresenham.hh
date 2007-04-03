@@ -29,8 +29,8 @@
 # define OLN_DRAW_BRESENHAM_HH
 
 # include <oln/core/concept/image.hh>
+# include <oln/core/gen/inplace.hh>
 # include <oln/core/2d/line2d.hh>
-# include <oln/core/gen/single_value_image.hh>
 # include <oln/level/paste.hh>
 
 
@@ -48,6 +48,11 @@ namespace oln
 		   const oln_point(I)& begin, const oln_point(I)& end,
 		   const oln_value(I)& value);
 
+    template <typename I>
+    void bresenham(inplace_<I> in_out,
+		   const oln_point(I)& begin, const oln_point(I)& end,
+		   const oln_value(I)& value);
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -59,15 +64,13 @@ namespace oln
 		      const oln_point(I)& begin, const oln_point(I)& end,
 		      const oln_value(I)& value)
       {
-	line2d line(begin, end);
-  	single_value_image<line2d, oln_value(I)> line_image(line, value);
-  	level::paste(line_image, in_out);
-	// FIXME: Make it as simple as level::paste(line2d(begin, end) + value, in_out);
+  	level::paste(literal(value) / line2d(begin, end), in_out);
       }
 
     } // end of namespace oln::draw::impl
 
-    // Facade.
+
+    // Facades.
 
     template <typename I>
     void bresenham(Mutable_Image<I>& in_out,
@@ -75,6 +78,14 @@ namespace oln
 		   const oln_value(I)& value)
     {
       impl::bresenham_(exact(in_out), begin, end, value);
+    }
+
+    template <typename I>
+    void bresenham(inplace_<I> in_out,
+		   const oln_point(I)& begin, const oln_point(I)& end,
+		   const oln_value(I)& value)
+    {
+      bresenham(in_out.unwrap(), begin, end, value);
     }
 
 # endif // ! OLN_INCLUDE_ONLY

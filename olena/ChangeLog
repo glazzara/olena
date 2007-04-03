@@ -1,3 +1,28 @@
+2007-04-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add the explicit 'inplace' mechanism.
+
+	* oln/core/internal/op_image_plus_nbh.hh: Rename as...
+	* oln/core/internal/op_image_extended_by_nbh.hh: ...this.
+	* oln/core/gen/inplace.hh: New.
+	* oln/debug/fill.hh,
+	* oln/debug/iota.hh,
+	* oln/level/paste.hh,
+	* oln/level/apply_inplace.hh,
+	* oln/core/gen/safe_image.hh: Update.
+	* oln/core/gen/op.hh (plus): Rename as...
+	(extended_by): ...this; less ambiguous.
+	(oln_decl_inplace_image_op): New.
+	* oln/core/internal/op_image_such_as_fp2b.hh: Fix temp hack;
+	precisely, replace inheritance by delegation.
+	* oln/core/internal/image_base.hh (oln_possible_lvalue): New.
+	(possible_lvalue_from_): New.
+	* oln/core/gen/neighb.hh,
+	* oln/core/internal/image_ops.hh,
+	* oln/core/internal/op_image_restricted_to_pset.hh,
+	* oln/draw/bresenham.hh: Update.
+	* TODO: Update.
+
 2007-04-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add local_sup/inf. Fix clone. Update Reconstruction.

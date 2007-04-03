@@ -52,11 +52,10 @@ namespace oln
   template <typename I, typename S>
   struct vtypes< internal::current >
   {
-    typedef op_<I, restricted_to, S> Exact;
-    typedef stc_type(I, point) point__;
-
     typedef I delegatee;
     typedef internal::pair<I,S> data;
+
+    typedef oln_possible_lvalue(I) lvalue;
 
     typedef S pset;
 

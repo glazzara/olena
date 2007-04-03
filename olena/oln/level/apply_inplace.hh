@@ -30,6 +30,7 @@
 
 # include <oln/core/concept/image.hh>
 # include <oln/core/gen/fun.hh>
+# include <oln/core/gen/inplace.hh>
 
 
 namespace oln
@@ -41,12 +42,19 @@ namespace oln
     /// Fwd decls.
 
     template <typename F, typename I>
-    void
-    apply_inplace(const Function_v2v<F>& f, Mutable_Image<I>& input);
+    void apply_inplace(const Function_v2v<F>& f, Mutable_Image<I>& in_out);
 
     template <typename R, typename A, typename I>
-    void
-    apply_inplace(R (*f)(A), Mutable_Image<I>& input);
+    void apply_inplace(R (*f)(A), Mutable_Image<I>& in_out);
+
+
+    // for images created on the fly
+
+    template <typename F, typename I>
+    void apply_inplace(const Function_v2v<F>& f, inplace_<I> in_out);
+
+    template <typename R, typename A, typename I>
+    void apply_inplace(R (*f)(A), inplace_<I> in_out);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -57,13 +65,12 @@ namespace oln
       // Generic version.
 
       template <typename F, typename I>
-      void
-      apply_inplace_(const F& f, Mutable_Image<I>& input)
+      void apply_inplace_(const F& f, Mutable_Image<I>& in_out)
       {
-        oln_piter(I) p(input.points());
+        oln_piter(I) p(in_out.points());
         for_all(p)
-          input(p) = f(input(p));
-	// FIXME: input(p) = static_cast<oln_value(I)>( f_( static_cast<oln_argument(F)>(input(p)) ) );
+          in_out(p) = f(in_out(p));
+	// FIXME: in_out(p) = static_cast<oln_value(I)>( f_( static_cast<oln_argument(F)>(in_out(p)) ) );
       }
 
 
@@ -73,20 +80,30 @@ namespace oln
     /// Facades.
 
     template <typename F, typename I>
-    void
-    apply_inplace(const Function_v2v<F>& f, Mutable_Image<I>& input)
+    void apply_inplace(const Function_v2v<F>& f, Mutable_Image<I>& in_out)
     {
-      impl::apply_inplace_(exact(f), exact(input));
+      impl::apply_inplace_(exact(f), exact(in_out));
     }
 
     template <typename R, typename A, typename I>
-    void
-    apply_inplace(R (*f)(A), Mutable_Image<I>& input)
+    void apply_inplace(R (*f)(A), Mutable_Image<I>& in_out)
     {
-      impl::apply_inplace_(functorize_v2v(f), exact(input));
+      impl::apply_inplace_(functorize_v2v(f), exact(in_out));
     }
 
-# endif
+    template <typename F, typename I>
+    void apply_inplace(const Function_v2v<F>& f, inplace_<I> in_out)
+    {
+      apply_inplace(f, in_out.unwrap());
+    }
+
+    template <typename R, typename A, typename I>
+    void apply_inplace(R (*f)(A), inplace_<I> in_out)
+    {
+      apply_inplace(f, in_out.unwrap());
+    }
+
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::level
 

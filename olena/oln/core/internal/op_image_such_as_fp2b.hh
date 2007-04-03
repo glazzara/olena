@@ -48,8 +48,7 @@ namespace oln
   template <typename I, typename F>
   struct super_trait_< internal::current >
   {
-    typedef op_< const oln_pset(I), such_as, F > S;
-    typedef internal::special_op_< stc::is<Image>, I, restricted_to, stc::is<Point_Set>, const S > ret;
+    typedef internal::image_extension_< op_<I, such_as, F> > ret;
   };
 
 
@@ -61,6 +60,15 @@ namespace oln
   template <typename I, typename F>
   struct vtypes< internal::current >
   {
+    typedef op_< const oln_pset(I), such_as, F > S__;
+    typedef op_< I, restricted_to, const S__ > delegatee;
+
+    typedef internal::singleton<delegatee> data;
+
+    typedef oln_point(I) point;
+    typedef oln_possible_lvalue(I) lvalue;
+    typedef op_<oln_plain(I), such_as, F> plain;
+    typedef op_<pl::rec<I>,   such_as, F> skeleton;
   };
 
 
@@ -74,8 +82,11 @@ namespace oln
     {
     public:
 
-      stc_using(point);
-      stc_using(box);
+      stc_using(delegatee);
+      stc_using(data);
+
+      delegatee& impl_image();
+      const delegatee& impl_image() const;
 
     protected:
       special_op_();
@@ -92,8 +103,24 @@ namespace oln
 
     template <typename I, typename F>
     current::special_op_(I& ima, F& f)
-      : super(ima, (ima.points() | f))
     {
+      this->data_ = new data( ima | (ima.points() | f) );
+    }
+
+    template <typename I, typename F>
+    typename current::delegatee&
+    current::impl_image()
+    {
+      assert(this->has_data());
+      return this->data_->value;
+    }
+
+    template <typename I, typename F>
+    const typename current::delegatee&
+    current::impl_image() const
+    {
+      assert(this->has_data());
+      return this->data_->value;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

@@ -30,6 +30,7 @@
 
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/gen/infty_pset.hh>
+# include <oln/core/gen/inplace.hh>
 
 
 namespace oln
@@ -100,11 +101,10 @@ namespace oln
 
 
   template <typename I>
-  safe_image<I> safe(Mutable_Image<I>& ima)
-  {
-    safe_image<I> tmp(ima);
-    return tmp;
-  }
+  safe_image<I> safe(Mutable_Image<I>& ima);
+
+  template <typename I>
+  inplace_< safe_image<I> > safe(inplace_<I> ima);
 
 
 
@@ -190,6 +190,21 @@ namespace oln
   {
     assert(this->has_data());
     return this->data_->value;
+  }
+
+  template <typename I>
+  safe_image<I> safe(Mutable_Image<I>& ima)
+  {
+    safe_image<I> tmp(ima);
+    return tmp;
+  }
+
+  template <typename I>
+  inplace_< safe_image<I> > safe(inplace_<I> ima)
+  {
+    safe_image<I> tmp_ = safe(ima.unwrap());
+    inplace_< safe_image<I> > tmp(tmp_);
+    return tmp;
   }
 
 # endif // ! OLN_INCLUDE_ONLY

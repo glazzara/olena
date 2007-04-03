@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
-# define OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
+#ifndef OLN_CORE_INTERNAL_OP_IMAGE_EXTENDED_BY_NBH_HH
+# define OLN_CORE_INTERNAL_OP_IMAGE_EXTENDED_BY_NBH_HH
 
 # include <oln/core/concept/neighborhood.hh>
 # include <oln/core/internal/image_base.hh>
@@ -39,7 +39,7 @@ namespace oln
 {
 
 # define current \
-     special_op_< stc::is<Image>, I, plus, stc::is<Neighborhood>, N >
+     special_op_< stc::is<Image>, I, extended_by, stc::is<Neighborhood>, N >
 
   // Instant value.
   oln_decl_instant_value(nbh);
@@ -54,7 +54,7 @@ namespace oln
   template <typename I, typename N>
   struct super_trait_< internal::current >
   {
-    typedef internal::image_extension_< op_<I, plus, N> > ret;
+    typedef internal::image_extension_< op_<I, extended_by, N> > ret;
   };
 
 
@@ -62,19 +62,21 @@ namespace oln
   template <typename I, typename N>
   struct vtypes< internal::current >
   {
-    typedef op_<I, plus, N> Exact;
+    typedef op_<I, extended_by, N> Exact;
 
     typedef I delegatee;
     typedef internal::pair<I,N> data;
 
     typedef N nbh;
 
+    typedef oln_possible_lvalue(I) lvalue;
+
     // FIXME: Wrong!
     typedef niter_has_< dpoints_fwd_piter_<oln_point(I)>, oln_pset(I) > fwd_niter;
     typedef niter_has_< dpoints_bkd_piter_<oln_point(I)>, oln_pset(I) > bkd_niter;
 
-    typedef op_<oln_plain(I), plus, N> plain;
-    typedef op_<pl::rec<I>,   plus, N> skeleton;
+    typedef op_<oln_plain(I), extended_by, N> plain;
+    typedef op_<pl::rec<I>,   extended_by, N> skeleton;
   };
 
 
@@ -86,10 +88,10 @@ namespace oln
     template <typename I, typename N>
     class current
       :
-      public internal::image_extension_< op_<I, plus, N> >,
+      public internal::image_extension_< op_<I, extended_by, N> >,
       private mlc::assert_< mlc_is_not_a(I, Image_with_Nbh) > // FIXME: Add err msg.
     {
-      typedef internal::image_extension_< op_<I, plus, N> > super;
+      typedef internal::image_extension_< op_<I, extended_by, N> > super;
     public:
       stc_using(nbh);
       stc_using(data);
@@ -202,7 +204,7 @@ namespace oln
   bool init_(internal::current* this_, const D& dat)
   {
     precondition(not this_->has_data());
-    this_->data__() = new typename op_<I, plus, N>::data;
+    this_->data__() = new typename op_<I, extended_by, N>::data;
     bool ima_ok = init(this_->data__()->first, with, dat);
     bool nbh_ok = init(this_->data__()->second, with, dat);
     postcondition(ima_ok);
@@ -216,7 +218,7 @@ namespace oln
   bool prepare(internal::current& target, with_t, const D& dat)
   {
     precondition(not target.has_data());
-    target.data__() = new typename op_<I, plus, N>::data;
+    target.data__() = new typename op_<I, extended_by, N>::data;
     bool ima_ok = prepare(target.data__()->first, with, dat);
     bool nbh_ok = init(target.data__()->second, with, dat);
     postcondition(ima_ok);
@@ -231,4 +233,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_OP_IMAGE_PLUS_NBH_HH
+#endif // ! OLN_CORE_INTERNAL_OP_IMAGE_EXTENDED_BY_NBH_HH

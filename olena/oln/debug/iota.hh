@@ -29,6 +29,7 @@
 # define OLN_DEBUG_IOTA_HH
 
 # include <oln/core/concept/image.hh>
+# include <oln/core/gen/inplace.hh>
 
 
 namespace oln
@@ -37,6 +38,14 @@ namespace oln
   namespace debug
   {
 
+    template <typename I>
+    void iota(Mutable_Image<I>& in_out);
+
+    template <typename I>
+    void iota(inplace_<I> in_out);
+
+
+# ifndef OLN_INCLUDE_ONLY
 
     template <typename I>
     void iota(Mutable_Image<I>& in_out)
@@ -47,6 +56,13 @@ namespace oln
 	in_out(p) = v++;
     }
 
+    template <typename I>
+    void iota(inplace_<I> in_out)
+    {
+      iota(in_out.unwrap());
+    }
+
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::debug
 

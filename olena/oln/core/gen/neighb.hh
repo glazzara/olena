@@ -31,7 +31,7 @@
 
 # include <oln/core/internal/dpoints_impl.hh>
 # include <oln/core/internal/neighborhood_base.hh>
-# include <oln/core/internal/op_image_plus_nbh.hh>
+# include <oln/core/internal/op_image_extended_by_nbh.hh>
 
 
 namespace oln
@@ -39,7 +39,7 @@ namespace oln
 
 
   // Op.
-  oln_decl_op_plus(Image, Neighborhood);
+  oln_decl_op_extended_by(Image, Neighborhood);
 
 
 

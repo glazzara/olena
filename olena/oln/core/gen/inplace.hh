@@ -25,69 +25,73 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_LEVEL_PASTE_HH
-# define OLN_LEVEL_PASTE_HH
+#ifndef OLN_CORE_GEN_INPLACE_HH
+# define OLN_CORE_GEN_INPLACE_HH
 
 # include <oln/core/concept/image.hh>
-# include <oln/core/gen/inplace.hh>
 
 
 namespace oln
 {
 
-  namespace level
+
+  template <typename I>
+  class inplace_ : private mlc::assert_< mlc_is_a(I, Mutable_Image) >
   {
+    typedef inplace_<I> current;
+  public:
 
-    // Fwd decl.
+    inplace_(I& ima);
 
-    template <typename I, typename J>
-    void paste(const Image<I>& data, /* in */ Mutable_Image<J>& destination);
+    I& unwrap() const;  // explicit
+    operator I() const; // implicit
 
-    template <typename I, typename J>
-    void paste(const Image<I>& data, /* in */ inplace_<J> destination);
+  private:
+    I ima_;
+  };
+
+
+
+  template <typename I>
+  inplace_<I>
+  inplace(const Mutable_Image<I>& ima);
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
-    {
+  template <typename I>
+  inplace_<I>::inplace_(I& ima)
+    : ima_(ima)
+  {
+  }
 
-      // Generic version.
+  template <typename I>
+  I&
+  inplace_<I>::unwrap() const
+  {
+    current* this_ = const_cast<current*>(this);
+    return this_->ima_;
+  }
 
-      template <typename I, typename J>
-      void paste_(const Image<I>& data, Mutable_Image<J>& destination)
-      {
-	oln_piter(I) p(data.points());
-	for_all(p)
-	  destination(p) = data(p);
-      }
+  template <typename I>
+  inplace_<I>::operator I() const
+  {
+    return this->unwrap();
+  }
 
-      // FIXME: Fast version...
-
-    } // end of namespace oln::level::impl
-
-
-    // Facade.
-
-    template <typename I, typename J>
-    void paste(const Image<I>& data, Mutable_Image<J>& destination)
-    {
-      assert_same_grid_<I, J>::check();
-      precondition(data.points() <= destination.points());
-      impl::paste_(exact(data), exact(destination));
-    }
-
-    template <typename I, typename J>
-    void paste(const Image<I>& data, /* in */ inplace_<J> destination)
-    {
-      paste(data, destination.unwrap());
-    }
+  template <typename I>
+  inplace_<I>
+  inplace(const Mutable_Image<I>& ima)
+  {
+    I& ima_ = const_cast<I&>(exact(ima));
+    inplace_<I> tmp(ima_);
+    return tmp;
+  }
 
 # endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::level
 
 } // end of namespace oln
 
 
-#endif // ! OLN_LEVEL_PASTE_HH
+#endif // ! OLN_CORE_GEN_INPLACE_HH

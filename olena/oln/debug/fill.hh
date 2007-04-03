@@ -29,6 +29,7 @@
 # define OLN_DEBUG_FILL_HH
 
 # include <oln/core/concept/image.hh>
+# include <oln/core/gen/inplace.hh>
 
 
 namespace oln
@@ -38,17 +39,26 @@ namespace oln
   {
 
     template <typename I, typename V>
-    void fill(Mutable_Image<I>& input, const V values[]);
+    void fill(Mutable_Image<I>& in_out, const V values[]);
+
+    template <typename I, typename V>
+    void fill(inplace_<I> in_out, const V values[]);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename I>
-    void fill(Mutable_Image<I>& input, const oln_value(I)& value)
+    void fill(Mutable_Image<I>& in_out, const oln_value(I)& value)
     {
-      oln_piter(I) p(input.points());
+      oln_piter(I) p(in_out.points());
       for_all(p)
-	input(p) = value;
+	in_out(p) = value;
+    }
+
+    template <typename I, typename V>
+    void fill(inplace_<I> in_out, const V values[])
+    {
+      fill(in_out.unwrap(), values);
     }
 
 # endif // ! OLN_INCLUDE_ONLY
