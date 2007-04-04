@@ -1,3 +1,9 @@
+2007-04-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add reference check.
+
+	* mlc/cmp.hh (mlc_is_reference, is_reference_): New.
+
 2007-04-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add constness check.

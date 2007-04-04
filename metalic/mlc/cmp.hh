@@ -65,6 +65,7 @@
 # define mlc_is_not_builtin(T) mlc::is_not_builtin_< T >
 
 # define mlc_is_const(T)     mlc::is_const_< T >
+# define mlc_is_reference(T) mlc::is_reference_< T >
 
 /// \}
 
@@ -226,7 +227,21 @@ namespace mlc
   };
 
   template <typename T>
-  struct is_const_ <const T> : public bexpr_<true>
+  struct is_const_< const T > : public bexpr_<true>
+  {
+  };
+  /// \}
+
+
+  /// Check whether a type is a reference.
+  /// \{
+  template <typename T>
+  struct is_reference_ : public bexpr_<false>
+  {
+  };
+
+  template <typename T>
+  struct is_reference_< T& > : public bexpr_<true>
   {
   };
   /// \}
