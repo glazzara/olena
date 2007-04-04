@@ -41,7 +41,7 @@ namespace oln
 
     template <typename I , typename J>
     void
-    reconstruction(const Mutable_Image<I>& marker,
+    reconstruction(const Image_with_Nbh<I>& marker,
 		   const Binary_Image<J>& mask);
 
 # ifndef OLN_INCLUDE_ONLY
@@ -51,8 +51,8 @@ namespace oln
 
       template <typename I>
       bool
-      stability(const Image_with_Nbh<I>& marker,
-		const Image_with_Nbh<I>& tmp)
+      stability(Image_with_Nbh<I>& marker,
+		I& tmp)
       {
 	oln_piter(I) p(marker.points());
 	for_all(p) // FIXME : Concept doesn't own .image()? add != is better
@@ -89,22 +89,22 @@ namespace oln
       reconstruction_(const Image_with_Nbh<I>& marker,
 		      const Binary_Image<J>& mask)
       {
-	oln_plain(I) tmp = level::clone(marker);
+	image2d<int> tmp = level::clone(exact(marker).image());
 
 	while ( not stability(marker, tmp) )
 	{
-	  level::fill(exact(marker).image(), exact(tmp).image()); //add fill version better.
+	  level::fill(marker, tmp);
 	  tmp = reconstruction_loop(marker, mask);
 	}
 
-	level::fill(exact(marker).image(), exact(tmp).image());
+	level::fill(marker, tmp);
       }
 
     } // end of namespace oln::morpho::impl
 
     template <typename I , typename J>
     void
-    reconstruction(const Mutable_Image<I>& marker,
+    reconstruction(const Image_with_Nbh<I>& marker,
 		   const Binary_Image<J>& mask)
     {
       impl::reconstruction_(exact(marker), exact(mask));

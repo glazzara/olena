@@ -77,11 +77,11 @@ namespace oln {
 
 	// skip maxvalue
 	if (istr.get() != '\n')
-	  goto err;	  
+	  goto err;
 	if (type != '1' and type != '4')
 	{
-	  std::string line; 
-	  std::getline(istr, line); 
+	  std::string line;
+	  std::getline(istr, line);
 	}
 	return true;
 
@@ -147,7 +147,7 @@ namespace oln {
       template <typename I>
       void load_pnm_ascii(std::ifstream& file, I& ima)
       {
-	oln_fwd_piter(I) p(ima.topo());
+	oln_fwd_piter(I) p(ima.points());
 	for_all(p)
 	  {
 	    oln_value(I) value;
@@ -163,10 +163,10 @@ namespace oln {
       template <typename I>
       void load_pnm_raw_2d(std::ifstream& file, I& ima)
       {
-	int col = ima.col();
-	size_t len = ima.bbox().ncols();
-	for (int row = ima.pmin().row(); row <= ima.pmax().row(); ++row)
-	  file.read((char*)(ima.adr_at(row, col)),
+	int col = ima.max_col();
+	size_t len = ima.bbox().pmax().col();
+	for (int row = ima.min_row(); row <= ima.max_row(); ++row)
+	  file.read((char*)(ima.at(row, col)),
 		    len * sizeof(oln_value(I)));
       }
 
@@ -196,26 +196,26 @@ namespace oln {
     }
 
 
-//     image2d<unsigned char> load_pgm(const std::string& filename)
-//     {
-//       std::ifstream file(filename.c_str());
-//       if (not file)
-// 	{
-// 	  std::cerr << "error: file '" << filename
-// 		    << "' not found!";
-// 	  abort();
-// 	}
-//       char type;
-//       int nrows, ncols;
-//       internal::read_pnm_header('2', '5', file, type, nrows, ncols);
-//       image2d<unsigned char> ima(nrows, ncols);
-//       if (type == '4')
-// 	internal::load_pnm_raw_2d(file, ima);
-//       else
-// 	// type == '1'
-// 	internal::load_pnm_ascii(file, ima);
-//       return ima;
-//     }
+    image2d<unsigned char> load_pgm(const std::string& filename)
+    {
+      std::ifstream file(filename.c_str());
+      if (not file)
+	{
+	  std::cerr << "error: file '" << filename
+		    << "' not found!";
+	  abort();
+	}
+      char type;
+      int nrows, ncols;
+      internal::read_pnm_header('2', '5', file, type, nrows, ncols);
+      image2d<unsigned char> ima(nrows, ncols);
+      if (type == '4')
+	internal::load_pnm_raw_2d(file, ima);
+      else
+	// type == '1'
+	internal::load_pnm_ascii(file, ima);
+      return ima;
+    }
 
   } // end of namespace oln::io
 
