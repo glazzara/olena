@@ -28,6 +28,7 @@
 #ifndef OLN_CORE_GEN_NITER_HAS_HH
 # define OLN_CORE_GEN_NITER_HAS_HH
 
+# include <oln/core/concept/generalized_point.hh>
 # include <oln/core/internal/piter_adaptor.hh>
 # include <oln/core/gen/dpoints_piter.hh>
 
@@ -68,10 +69,8 @@ namespace oln
   {
   public:
 
-    // FIXME: Strenghten sigs (Pl is either a Point or an Iterator_on_Points).
-
     template <typename Pl, typename I>
-    niter_has_(const Pl& p, const Image_with_Nbh<I>& ima);
+    niter_has_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima);
 
     void impl_start();
     void impl_next();
@@ -83,13 +82,13 @@ namespace oln
   }; // end of class oln::niter_has_<P>
 
 
-  
+
 
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename It, typename Ps>
   template <typename Pl, typename I>
-  current::niter_has_(const Pl& p, const Image_with_Nbh<I>& ima)
+  current::niter_has_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima)
     :
     super( It(p, ima) ),
     pset_( ima.points() )

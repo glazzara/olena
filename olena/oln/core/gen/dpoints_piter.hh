@@ -28,6 +28,7 @@
 #ifndef OLN_CORE_GEN_DPOINTS_PITER_HH
 # define OLN_CORE_GEN_DPOINTS_PITER_HH
 
+# include <oln/core/concept/generalized_point.hh>
 # include <oln/core/concept/window.hh>
 # include <oln/core/concept/neighborhood.hh>
 # include <oln/core/concept/image.hh>
@@ -71,16 +72,14 @@ namespace oln
   {
   public:
 
-    // FIXME: Strenghten sigs (Pl is either a Point or an Iterator_on_Points).
-
     template <typename Pl, typename W>
-    dpoints_fwd_piter_(const Pl& p, const Window<W>& win);
+    dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Window<W>& win);
 
     template <typename Pl, typename I>
-    dpoints_fwd_piter_(const Pl& p, const Image_with_Nbh<I>& ima);
+    dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima);
 
     template <typename Pl, typename N>
-    dpoints_fwd_piter_(const Pl& p, const Neighborhood<N>& nbh);
+    dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Neighborhood<N>& nbh);
 
   }; // end of class oln::dpoints_fwd_piter_<P>
 
@@ -118,16 +117,14 @@ namespace oln
   {
   public:
 
-    // FIXME: Strenghten sigs (Pl is either a Point or an Iterator_on_Points).
-
     template <typename Pl, typename W>
-    dpoints_bkd_piter_(const Pl& p, const Window<W>& win);
+    dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Window<W>& win);
 
     template <typename Pl, typename I>
-    dpoints_bkd_piter_(const Pl& p, const Image_with_Nbh<I>& ima);
+    dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima);
 
     template <typename Pl, typename N>
-    dpoints_bkd_piter_(const Pl& p, const Neighborhood<N>& nbh);
+    dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Neighborhood<N>& nbh);
 
   }; // end of class oln::dpoints_bkd_piter_<P>
 
@@ -139,25 +136,25 @@ namespace oln
 
   template <typename P>
   template <typename Pl, typename W>
-  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Pl& p, const Window<W>& win)
+  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Window<W>& win)
     :
-    internal::dpoints_fwd_piter_impl_<P>(p, exact(win))
+    internal::dpoints_fwd_piter_impl_<P>(exact(p), exact(win))
   {
   }
 
   template <typename P>
   template <typename Pl, typename I>
-  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Pl& p, const Image_with_Nbh<I>& ima)
+  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima)
     :
-    internal::dpoints_fwd_piter_impl_<P>(p, ima.nbhood())
+    internal::dpoints_fwd_piter_impl_<P>(exact(p), ima.nbhood())
   {
   }
 
   template <typename P>
   template <typename Pl, typename N>
-  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Pl& p, const Neighborhood<N>& nbh)
+  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Neighborhood<N>& nbh)
     :
-    internal::dpoints_fwd_piter_impl_<P>(p, exact(nbh))
+    internal::dpoints_fwd_piter_impl_<P>(exact(p), exact(nbh))
   {
   }
 
@@ -165,25 +162,25 @@ namespace oln
 
   template <typename P>
   template <typename Pl, typename W>
-  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Pl& p, const Window<W>& win)
+  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Window<W>& win)
     :
-    internal::dpoints_bkd_piter_impl_<P>(p, exact(win))
+    internal::dpoints_bkd_piter_impl_<P>(exact(p), exact(win))
   {
   }
 
   template <typename P>
   template <typename Pl, typename I>
-  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Pl& p, const Image_with_Nbh<I>& ima)
+  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima)
     :
-    internal::dpoints_bkd_piter_impl_<P>(p, ima.nbhood())
+    internal::dpoints_bkd_piter_impl_<P>(exact(p), ima.nbhood())
   {
   }
 
   template <typename P>
   template <typename Pl, typename N>
-  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Pl& p, const Neighborhood<N>& nbh)
+  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Neighborhood<N>& nbh)
     :
-    internal::dpoints_bkd_piter_impl_<P>(p, exact(nbh))
+    internal::dpoints_bkd_piter_impl_<P>(exact(p), exact(nbh))
   {
   }
 

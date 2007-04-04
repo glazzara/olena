@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_GENERALISED_POINTS_HH
-# define OLN_CORE_CONCEPT_GENERALISED_POINTS_HH
+#ifndef OLN_CORE_CONCEPT_GENERALIZED_POINTS_HH
+# define OLN_CORE_CONCEPT_GENERALIZED_POINTS_HH
 
 # include <oln/core/equipment.hh>
 
@@ -34,10 +34,10 @@
 namespace oln
 {
 
-  // Generalised_Point concept
+  // Generalized_Point concept
 
   template <typename Exact>
-  struct Generalised_Point : virtual public Any<Exact>
+  struct Generalized_Point : virtual public Any<Exact>
   {
     stc_typename(grid);
     stc_typename(dim);
@@ -47,7 +47,7 @@ namespace oln
     enum { n = mlc_value(dim) };
 
   protected:
-    Generalised_Point();
+    Generalized_Point();
   };
 
 
@@ -55,7 +55,7 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename Exact>
-  Generalised_Point<Exact>::Generalised_Point()
+  Generalized_Point<Exact>::Generalized_Point()
   {
   }
 
@@ -63,4 +63,4 @@ namespace oln
 
 } // end of namespace oln
 
-#endif // ! OLN_CORE_CONCEPT_GENERALISED_POINTS_HH
+#endif // ! OLN_CORE_CONCEPT_GENERALIZED_POINTS_HH

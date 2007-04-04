@@ -31,7 +31,7 @@
 
 # include <mlc/value.hh>
 
-# include <oln/core/concept/generalised_point.hh>
+# include <oln/core/concept/generalized_point.hh>
 # include <oln/core/concept/grid.hh>
 # include <oln/core/concept/operators.hh>
 
@@ -47,9 +47,9 @@ namespace oln
   /// Concept-class "Point".
 
   template <typename Exact>
-  struct Point : public Generalised_Point<Exact>
+  struct Point : public Generalized_Point<Exact>
   {
-    stc_using_from(Generalised_Point, dpoint);
+    stc_using_from(Generalized_Point, dpoint);
 
     /// Operator ==.
     bool op_equal_(const Exact& rhs) const;

@@ -1,3 +1,15 @@
+2007-04-04  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	minor modifications.
+
+	* oln/core/concept/iterator_on_points.hh,
+	* oln/core/concept/point.hh: change class name Generalised_Point to Generalized_Point.
+	* oln/core/concept/generalised_point.hh: Remove.
+	* oln/core/concept/generalized_point.hh: New, 
+	Change class name Generalised_Point to Generalized_Point.
+	* oln/core/gen/dpoints_piter.hh,
+	* oln/core/gen/niter_has.hh: Strengthen methods signatures.
+
 2007-04-04  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix pnm.hh : image loading (pbm, pgm ...).
