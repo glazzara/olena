@@ -54,7 +54,7 @@ namespace oln
 
   template <typename I>
   inplace_<I>
-  inplace(const Mutable_Image<I>& ima);
+  inplace(Mutable_Image<I>& ima);
 
 
 
@@ -82,10 +82,9 @@ namespace oln
 
   template <typename I>
   inplace_<I>
-  inplace(const Mutable_Image<I>& ima)
+  inplace(Mutable_Image<I>& ima)
   {
-    I& ima_ = const_cast<I&>(exact(ima));
-    inplace_<I> tmp(ima_);
+    inplace_<I> tmp(exact(ima));
     return tmp;
   }
 

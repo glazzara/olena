@@ -154,7 +154,7 @@ namespace oln
   op_<const S, such_as, const fun_p2b_<B (*)(P)> >
   operator | (const Point_Set<S>& lhs, B (*f)(P))
   {
-    typedef oln_strip_(P) P_;
+    typedef mlc_basic(P) P_;
     mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.
     mlc::assert_equal_< P_, oln_point(S) >::check();
     op_<const S, such_as, const fun_p2b_<B (*)(P)> > tmp(exact(lhs), f);

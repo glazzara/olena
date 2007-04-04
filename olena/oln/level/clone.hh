@@ -29,7 +29,8 @@
 #ifndef OLN_LEVEL_CLONE_HH
 # define OLN_LEVEL_CLONE_HH
 
-# include <oln/core/concept/image.hh>
+# include <oln/level/fill.hh>
+
 
 namespace oln
 {
@@ -37,7 +38,7 @@ namespace oln
   namespace level
   {
 
-    /// Fwd decl.
+    // Fwd decl.
     template <typename I>
     oln_plain(I) clone(const Image<I>& input);
 
@@ -47,28 +48,27 @@ namespace oln
     namespace impl
     {
 
-      /// Generic version.
+      // Generic version.
       template <typename I>
       oln_plain(I) clone(const Image<I>& input)
       {
-	oln_plain(I) output(input.points());
-	oln_piter(I) p(input.points());
-	for_all(p)
-	  output(p) = input(p);
+	oln_plain(I) output;
+	prepare(output, with, input);
+	level::fill(output, input);
 	return output;
       }
 
     } // end of namespace oln::level::impl
 
 
-    /// Facade.
+    // Facade.
     template <typename I>
     oln_plain(I) clone(const Image<I>& input)
     {
       return impl::clone(input);
     }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::level
 

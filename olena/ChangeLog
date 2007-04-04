@@ -1,3 +1,22 @@
+2007-04-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a couple of morphers: ''read/write count'' and ''f:v->v applied on image''.
+
+	* oln/core/gen/rw_count_image.hh: New.
+	* oln/core/internal/op_fv2v_applied_on_image.hh: New.
+	* oln/core/gen/neighb.hh: Update.
+	* oln/core/gen/inplace.hh (inplace): Remove const.
+	* oln/core/gen/op.hh (oln_decl_op_applied_on, applied_on): New.
+	* oln/core/internal/image_base.hh (value_morpher_): New.
+	* oln/core/internal/category_of.hh (oln_strip_, strip_): Remove.
+	* oln/core/internal/point_set_base.hh: Update.
+	* oln/core/internal/image_ops.hh: Update.
+	(operator<<): New specializations.
+	* oln/stc/scoop.hh (stc_is_not_found_type): New.
+	* oln/level/fill.hh (fill): New inplace versions.
+	* oln/level/local.hh: Fix window versions.
+	* oln/level/clone.hh: Update.
+
 2007-04-04  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	minor modifications.

@@ -74,6 +74,7 @@ namespace oln
     template <typename Exact> struct image_morpher_;
     template <typename Exact> struct single_image_morpher_;
     template <typename Exact> struct image_extension_;
+    template <typename Exact> struct value_morpher_;
     template <typename Exact> struct multiple_image_morpher_;
   }
 
@@ -112,6 +113,12 @@ namespace oln
 
   template <typename Exact>
   struct super_trait_< internal::image_extension_<Exact> >
+  {
+    typedef internal::single_image_morpher_<Exact> ret;
+  };
+
+  template <typename Exact>
+  struct super_trait_< internal::value_morpher_<Exact> >
   {
     typedef internal::single_image_morpher_<Exact> ret;
   };
@@ -195,6 +202,15 @@ namespace oln
   struct vtypes< internal::image_extension_<Exact> >
   {
     typedef stc::final< behavior::identity > behavior;
+  };
+
+  template <typename Exact>
+  struct vtypes< internal::value_morpher_<Exact> >
+  {
+    typedef stc::final< behavior::identity > behavior;
+    typedef stc::not_delegated  value;
+    typedef stc::not_delegated lvalue;
+    typedef stc::not_delegated rvalue;
   };
 
   template <typename Exact>
@@ -307,6 +323,16 @@ namespace oln
     };
 
 
+    /// value_morpher_<Exact>
+
+    template <typename Exact>
+    class value_morpher_ : public single_image_morpher_<Exact>
+    {
+    protected:
+      value_morpher_();
+    };
+
+
     /// multiple_image_morpher_<Exact>
 
     template <typename Exact>
@@ -407,6 +433,13 @@ namespace oln
 
     template <typename Exact>
     image_extension_<Exact>::image_extension_()
+    {
+    }
+
+    // value_morpher_<Exact>
+
+    template <typename Exact>
+    value_morpher_<Exact>::value_morpher_()
     {
     }
 

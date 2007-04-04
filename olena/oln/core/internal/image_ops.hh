@@ -32,6 +32,7 @@
 # include <oln/core/internal/op_image_restricted_to_pset.hh>
 # include <oln/core/internal/op_image_such_as_fp2b.hh>
 # include <oln/core/internal/op_fp2v_over_pset.hh>
+# include <oln/core/internal/op_fv2v_applied_on_image.hh>
 # include <oln/core/gen/literal.hh>
 
 
@@ -59,6 +60,10 @@ namespace oln
   oln_decl_op_over(Function_p2v, Point_Set);
 
 
+  // Function_v2v << Image      ( f(ima), i.e., for all p, ( f(ima) )(p) = f( ima(p) )  )
+
+  oln_decl_op_applied_on(Function_v2v, Image);
+
 
 
   // Specialization "f : P -> V over Point_Set".
@@ -67,7 +72,7 @@ namespace oln
   op_<const fun_p2v_<V (*)(P)>, over, const S>
   operator / (V (*f)(P), const Point_Set<S>& pts)
   {
-    typedef oln_strip_(P) P_;
+    typedef mlc_basic(P) P_;
     mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.
     mlc::assert_equal_< P_, oln_point(S) >::check();
     op_<const fun_p2v_<V (*)(P)>, over, const S> tmp(f, exact(pts));
@@ -93,7 +98,7 @@ namespace oln
   op_<const I, such_as, const fun_p2b_<B (*)(P)> >
   operator | (const Image<I>& ima, B (*f)(P))
   {
-    typedef oln_strip_(P) P_;
+    typedef mlc_basic(P) P_;
     mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.
     mlc::assert_equal_< P_, oln_point(I) >::check();
     op_<const I, such_as, const fun_p2b_<B (*)(P)> > tmp(exact(ima), f);
@@ -104,7 +109,7 @@ namespace oln
   op_<I, such_as, const fun_p2b_<B (*)(P)> >
   operator | (Mutable_Image<I>& ima, B (*f)(P))
   {
-    typedef oln_strip_(P) P_;
+    typedef mlc_basic(P) P_;
     mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.
     mlc::assert_equal_< P_, oln_point(I) >::check();
     op_<I, such_as, const fun_p2b_<B (*)(P)> > tmp(exact(ima), f);
@@ -115,7 +120,7 @@ namespace oln
   inplace_< op_<I, such_as, const fun_p2b_<B (*)(P)> > >
   operator | (inplace_<I> ima, B (*f)(P))
   {
-    return inplace(ima.unwrap() | f);
+    return (ima.unwrap() | f).inplace();
   }
 
 
@@ -145,8 +150,42 @@ namespace oln
   inplace_< op_<I, such_as, const fun_p2b_< Binary_Image<J> > > >
   operator | (inplace_<I> ima, const Binary_Image<J>& f_ima_b)
   {
-    return inplace(ima.unwrap() | f_ima_b);
+    return (ima.unwrap() | f_ima_b).inplace();
   }
+
+
+  // Specialization
+
+  template <typename W, typename V, typename I>
+  op_<const fun_v2v_<W (*)(V)>, applied_on, const I>
+  operator << (W (*f)(V), const Image<I>& ima)
+  {
+    op_<const fun_v2v_<W (*)(V)>, applied_on, const I> tmp(f, exact(ima));
+    return tmp;
+  }
+
+  template <typename W, typename V, typename I>
+  op_<const fun_v2v_<W (*)(V)>, applied_on, I>
+  operator << (W (*f)(V), Mutable_Image<I>& ima)
+  {
+    op_<const fun_v2v_<W (*)(V)>, applied_on, I> tmp(f, exact(ima));
+    return tmp;
+  }
+
+  template <typename W, typename V, typename I>
+  inplace_< op_<const fun_v2v_<W (*)(V)>, applied_on, I> >
+  operator << (W (*f)(V), inplace_<I> ima)
+  {
+    return (f << ima.unwrap()).inplace();
+  }
+
+  template <typename F, typename I>
+  inplace_< op_<const F, applied_on, I> >
+  operator << (const Function_v2v<F>& f, inplace_<I> ima)
+  {
+    return (exact(f) << ima.unwrap()).inplace();
+  }
+  
 
 
 } // end of namespace oln

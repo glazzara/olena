@@ -28,9 +28,10 @@
 #ifndef OLN_CORE_INTERNAL_CATEGORY_OF_HH
 # define OLN_CORE_INTERNAL_CATEGORY_OF_HH
 
+# include <mlc/basic.hh>
+
 
 # define  oln_category_of_(Type)  typename oln::internal::category_of_< Type >::ret
-# define  oln_strip_(Type)  typename oln::internal::strip_< Type >::ret
 
 
 namespace oln
@@ -43,36 +44,6 @@ namespace oln
 
   namespace internal
   {
-
-    // Strip_
-
-
-    template <typename T>
-    struct strip_
-    {
-      typedef T ret;
-    };
-
-    template <typename T>
-    struct strip_< T* >
-    {
-      typedef typename strip_<T>::ret ret;
-    };
-
-    template <typename T>
-    struct strip_< T& >
-    {
-      typedef typename strip_<T>::ret ret;
-    };
-
-    template <typename T>
-    struct strip_< const T >
-    {
-      typedef typename strip_<T>::ret ret;
-    };
-
-
-
 
     // Category_of_
 
@@ -93,8 +64,7 @@ namespace oln
     template <typename T>
     struct category_of_
     {
-      typedef typename strip_<T>::ret T_;
-      typedef typename set_category_of_<T_>::ret ret;
+      typedef typename set_category_of_< mlc_basic(T) >::ret ret;
     };
 
     // ...

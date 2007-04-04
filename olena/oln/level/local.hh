@@ -129,7 +129,7 @@ namespace oln
 	     const oln_point(I)& p,
 	     const Window<W>& win)
       {
-	f.init_with(input(p));
+	f.init();
 	oln_qiter(W) q(p, win);
 	for_all(q)
 	  if (input.owns_(q))
@@ -146,9 +146,7 @@ namespace oln
 	     const oln_point(I)& p,
 	     const Window<W>& win)
       {
-	f.init_with(input(p));
-	if (f.value() == true)
-	  return true;
+	f.init();
 	oln_qiter(W) q(p, win);
 	for_all(q)
 	  {
@@ -169,7 +167,7 @@ namespace oln
 	     const oln_point(I)& p,
 	     const Window<W>& win)
       {
-	f.init_with(input(p));
+	f.init();
 	oln_qiter(W) q(p, win);
 	for_all(q)
 	  {

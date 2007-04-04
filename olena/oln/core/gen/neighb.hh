@@ -40,6 +40,7 @@ namespace oln
 
   // Op.
   oln_decl_op_extended_by(Image, Neighborhood);
+  oln_decl_inplace_image_op(extended_by, +, Neighborhood);
 
 
 

@@ -34,6 +34,7 @@
 # include <oln/core/concept/image.hh>
 # include <oln/core/concept/point.hh>
 # include <oln/core/gen/fun.hh>
+# include <oln/core/gen/inplace.hh>
 
 
 
@@ -67,6 +68,20 @@ namespace oln
 
 //     template <typename I>
 //     void fill(Value_Wise_Mutable_Image<I>& target, const oln_value(I)& value);
+
+    // versions for temporary images
+
+    template <typename I>
+    void fill(inplace_<I> target, /* with */ const oln_value(I)& value);
+
+    template <typename I, typename J>
+    void fill(inplace_<I> target, /* with */ const Image<J>& data);
+
+    template <typename I, typename F>
+    void fill(inplace_<I> target, /* with */ const Function_p2v<F>& fun);
+
+    template <typename I, typename V, typename P>
+    void fill(inplace_<I> target, /* with */ V (*fun)(P));
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -139,6 +154,32 @@ namespace oln
     {
       mlc::assert_< mlc_is_a(P, Point) >::check(); // FIXME: Add err msg.
       impl::fill_from_function_(exact(target), functorize_p2v(f));
+    }
+
+    // with inplace_<I>
+
+    template <typename I>
+    void fill(inplace_<I> target, const oln_value(I)& value)
+    {
+      fill(target.unwrap(), value);
+    }
+
+    template <typename I, typename J>
+    void fill(inplace_<I> target, const Image<J>& data)
+    {
+      fill(target.unwrap(), data);
+    }
+
+    template <typename I, typename F>
+    void fill(inplace_<I> target, const Function_p2v<F>& fun)
+    {
+      fill(target.unwrap(), fun);
+    }
+
+    template <typename I, typename V, typename P>
+    void fill(inplace_<I> target, V (*fun)(P))
+    {
+      fill(target.unwrap(), fun);
     }
 
 # endif // ! OLN_INCLUDE_ONLY

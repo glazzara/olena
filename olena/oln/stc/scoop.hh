@@ -35,6 +35,7 @@
 # include <mlc/abort.hh>
 # include <mlc/bool.hh>
 # include <mlc/pair.hh>
+# include <mlc/basic.hh>
 # include <mlc/cmp.hh>
 # include <mlc/if.hh>
 # include <mlc/is_a.hh>
@@ -119,6 +120,7 @@ namespace stc
 # define stc_type_is_not_found(Type)  stc::is_not_found< stc_deferred(Type) >
 
 # define stc_is_found_type(From, Type)      stc::is_found< stc_deferred_type(From, Type) >
+# define stc_is_not_found_type(From, Type)  stc::is_not_found< stc_deferred_type(From, Type) >
 
 
 

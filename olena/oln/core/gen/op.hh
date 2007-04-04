@@ -83,7 +83,7 @@
   operator OpSym (inplace_<L> lhs, Rconcept<R>& rhs)		\
   {								\
     mlc::assert_< mlc_is_a(L, Mutable_Image) >::check();	\
-    op_<L, OpName, R> tmp(exact(lhs), exact(rhs));		\
+    op_<L, OpName, R> tmp(lhs.unwrap(), exact(rhs));		\
     return inplace(tmp);					\
   }								\
 								\
@@ -95,6 +95,7 @@
 # define oln_decl_op_such_as(Lconcept, Rconcept)       oln_decl_op_( such_as,       Lconcept, |, Rconcept) 
 # define oln_decl_op_restricted_to(Lconcept, Rconcept) oln_decl_op_( restricted_to, Lconcept, |, Rconcept) 
 # define oln_decl_op_over(Lconcept, Rconcept)          oln_decl_op_( over,          Lconcept, /, Rconcept) 
+# define oln_decl_op_applied_on(Lconcept, Rconcept)    oln_decl_op_( applied_on,    Lconcept, <<, Rconcept) 
 // ...
 
 
@@ -110,6 +111,7 @@ namespace oln
   struct such_as;
   struct restricted_to;
   struct over;
+  struct applied_on;
 
   /// \}
 
