@@ -71,6 +71,9 @@ namespace oln
     /// Operator -=.
     Exact& op_minus_equal_(const Exact& rhs);
 
+    /// Operator %=.
+    Exact& op_mod_equal_(const Exact& rhs);
+
     /// Operator -.
     Exact op_unary_minus_() const;
 
@@ -153,6 +156,12 @@ namespace oln
   }
 
   template <typename Exact>
+  Exact& Dpoint<Exact>::op_mod_equal_(const Exact& rhs)
+  {
+    return exact(this)->impl_op_mod_equal_(rhs);
+  }
+
+  template <typename Exact>
   Exact Dpoint<Exact>::op_unary_minus_() const
   {
     return exact(this)->impl_op_unary_minus_();
@@ -181,6 +190,8 @@ namespace oln
     impl_op_plus_equal_adr = 0;
     Exact& (Exact::*impl_op_minus_equal_adr)(const Exact& rhs) = & Exact::impl_op_minus_equal_;
     impl_op_minus_equal_adr = 0;
+    Exact& (Exact::*impl_op_mod_equal_adr)(const Exact& rhs) = & Exact::impl_op_mod_equal_;
+    impl_op_mod_equal_adr = 0;
     Exact (Exact::*impl_op_unary_minus_adr)() const = & Exact::impl_op_unary_minus_;
     impl_op_unary_minus_adr = 0;
   }

@@ -66,6 +66,8 @@ namespace oln
   namespace internal
   {
 
+    // FIXME: Factor code for classes defined over vectors (dpoint_base_ and point_base_).
+
     template <typename Exact>
     class dpoint_base_ : public Dpoint<Exact>
     {
@@ -88,14 +90,15 @@ namespace oln
       bool impl_op_less_(const Exact& rhs) const;
 
       Exact& impl_op_plus_equal_(const Exact& rhs);
-
       Exact& impl_op_minus_equal_(const Exact& rhs);
+      Exact& impl_op_mod_equal_(const Exact& rhs);
 
       Exact impl_op_unary_minus_() const;
 
       typedef xtd::vec<n, coord> vec_t;
       const vec_t& vec() const;
       vec_t& vec();
+      void set_all(const coord& c);
 
     protected:
       dpoint_base_();
@@ -138,14 +141,22 @@ namespace oln
     Exact& dpoint_base_<Exact>::impl_op_plus_equal_(const Exact& rhs)
     {
       v_ += rhs.v_;
-      return *exact(this);
+      return exact(*this);
     }
 
     template <typename Exact>
     Exact& dpoint_base_<Exact>::impl_op_minus_equal_(const Exact& rhs)
     {
       v_ -= rhs.v_;
-      return *exact(this);
+      return exact(*this);
+    }
+
+    template <typename Exact>
+    Exact& dpoint_base_<Exact>::impl_op_mod_equal_(const Exact& rhs)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	v_[i] %= rhs.v_[i];
+      return exact(*this);
     }
 
     template <typename Exact>
@@ -171,6 +182,13 @@ namespace oln
     }
 
     template <typename Exact>
+    void
+    dpoint_base_<Exact>::set_all(const typename dpoint_base_<Exact>::coord& c)
+    {
+      v_.set_all(c);
+    }
+
+    template <typename Exact>
     dpoint_base_<Exact>::dpoint_base_()
     {
     }
@@ -183,7 +201,7 @@ namespace oln
     point_base_<Exact>::impl_op_plus_equal_(const typename point_base_<Exact>::dpoint& rhs)
     {
       this->v_ += rhs.vec();
-      return *exact(this);
+      return exact(*this);
     }
 
     template <typename Exact>
@@ -191,7 +209,7 @@ namespace oln
     point_base_<Exact>::impl_op_minus_equal_(const typename point_base_<Exact>::dpoint& rhs)
     {
       this->v_ -= rhs.vec();
-      return *exact(this);
+      return exact(*this);
     }
 
     template <typename Exact>

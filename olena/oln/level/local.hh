@@ -63,9 +63,9 @@ namespace oln
 
       template <typename A, typename I>
       typename A::result
-      local_(const A& f,
+      local_(const A&                 f,
 	     const Image_with_Nbh<I>& input,
-	     const oln_point(I)& p)
+	     const oln_point(I)&      p)
       {
  	f.init_with(input(p));
 	oln_niter(I) n(p, input);
@@ -100,8 +100,8 @@ namespace oln
       template <typename B, typename I>
       B
       local_(const accumulator::and_< B > f,
-	     const Image_with_Nbh<I>& input,
-	     const oln_point(I)& p)
+	     const Image_with_Nbh<I>&     input,
+	     const oln_point(I)&          p)
       {
 	f.init_with(input(p));
 	oln_niter(I) n(p, input);

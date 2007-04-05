@@ -63,15 +63,23 @@ namespace oln
   template <typename L, typename R>
   L& operator+=(Any<L>& lhs, const Any<R>& rhs);
 
-  /// Operator + (default version).
+  /// Operator +  (default version).
   template <typename T>
   T operator+ (const Any<T>& lhs, const Any<T>& rhs);
+
+  /// Operator %= (default version).
+  template <typename L, typename R>
+  L& operator%=(Any<L>& lhs, const Any<R>& rhs);
+
+  /// Operator %  (default version).
+  template <typename T>
+  T operator% (const Any<T>& lhs, const Any<T>& rhs);
 
   /// Operator -= (default version).
   template <typename L, typename R>
   L& operator-=(Any<L>& lhs, const Any<R>& rhs);
   
-  /// Operator - (default version).
+  /// Operator -  (default version).
   template <typename T>
   T operator- (const Any<T>& rhs);
 
@@ -126,6 +134,19 @@ namespace oln
   {
     T tmp = exact(lhs);
     return tmp += exact(rhs);
+  }
+
+  template <typename L, typename R>
+  L& operator%=(Any<L>& lhs, const Any<R>& rhs)
+  {
+    return exact(lhs).op_mod_equal_(exact(rhs));
+  }
+
+  template <typename T>
+  T operator% (const Any<T>& lhs, const Any<T>& rhs)
+  {
+    T tmp = exact(lhs);
+    return tmp %= exact(rhs);
   }
 
   template <typename L, typename R>

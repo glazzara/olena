@@ -33,6 +33,7 @@
 # include <oln/core/internal/op_image_such_as_fp2b.hh>
 # include <oln/core/internal/op_fp2v_over_pset.hh>
 # include <oln/core/internal/op_fv2v_applied_on_image.hh>
+# include <oln/core/internal/op_image_through_fv2v.hh>
 # include <oln/core/gen/literal.hh>
 
 
@@ -63,6 +64,12 @@ namespace oln
   // Function_v2v << Image      ( f(ima), i.e., for all p, ( f(ima) )(p) = f( ima(p) )  )
 
   oln_decl_op_applied_on(Function_v2v, Image);
+
+
+  // Image >> Function_v2v       ( f(ima), i.e., for all p, ( f(ima) )(p) = f( ima(p) )  )
+
+  oln_decl_op_through(Image, Function_v2v);
+  oln_decl_inplace_image_op(through, >>, Function_v2v);
 
 
 
@@ -186,6 +193,31 @@ namespace oln
     return (exact(f) << ima.unwrap()).inplace();
   }
   
+
+  // Specialization
+
+  template <typename I, typename W, typename V>
+  inplace_< op_<const I, through, const fun_v2v_<W (*)(V)> > >
+  operator >> (const Image<I>& ima, W (*f)(V))
+  {
+    op_<const I, through, const fun_v2v_<W (*)(V)> > tmp(f, exact(ima));
+    return tmp;
+  }
+
+  template <typename I, typename W, typename V>
+  op_<I, through, const fun_v2v_<W (*)(V)> >
+  operator >> (Mutable_Image<I>& ima, W (*f)(V))
+  {
+    op_<I, through, const fun_v2v_<W (*)(V)> > tmp(exact(ima), f);
+    return tmp;
+  }
+
+  template <typename W, typename V, typename I>
+  inplace_< op_<I, through, const fun_v2v_<W (*)(V)> > >
+  operator >> (inplace_<I> ima, W (*f)(V))
+  {
+    return (ima.unwrap() >> f).inplace();
+  }
 
 
 } // end of namespace oln

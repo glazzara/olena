@@ -60,8 +60,8 @@ namespace oln
 
       template <typename F, typename I>
       oln_plain_value(I, typename F::result)
-      apply_local_(const Accumulator<F>&    f,
-		   const Image_with_Nbh<I>& input)
+	apply_local_(const Accumulator<F>&    f,
+		     const Image_with_Nbh<I>& input)
       {
 	oln_plain_value(I, typename F::result) output;
 	prepare(output, with, input);

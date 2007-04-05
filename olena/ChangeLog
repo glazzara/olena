@@ -1,3 +1,22 @@
+2007-04-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add torus topology and type of ''image >> fun''.
+
+	* oln/core/gen/torus_pset.hh: New.
+	* oln/core/gen/torus_image.hh: New.
+	* oln/core/internal/op_image_through_fv2v.hh: New.
+	* oln/core/concept/dpoint.hh (op_mod_equal_): New.
+	(check__): Update.
+	* oln/core/concept/operators.hh (operator%=, operator%): New.
+	* oln/core/gen/op.hh (through, oln_decl_op_through): New.
+	* oln/core/internal/dpoint_base.hh (impl_op_mod_equal_, set_all): New.
+	* oln/core/internal/box.hh (box_fwd_piter_, box_bkd_piter_): Better ctors.
+	* oln/core/internal/image_ops.hh (operator>>): New.
+	* oln/core/internal/pset_adaptor.hh (adapted_): New.
+	* oln/morpho/elementary_erosion.hh (comment): Extend.
+	* oln/level/local.hh,
+	* oln/level/apply_local.hh: Cosmetic changes.
+
 2007-04-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a couple of morphers: ''read/write count'' and ''f:v->v applied on image''.

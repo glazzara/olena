@@ -106,6 +106,24 @@ namespace oln
 // 	  }
 // 	delete[] jump;
 //         return output;
+
+// 	std::cout << "fast" << std::endl;
+
+// 	typedef oln_value(I) T;
+//   	border::fill(input, oln_max(T));
+// 	accumulator::min_<T> min;
+
+// 	oln_plain(I) output;
+// 	prepare(output, with, input);
+//         oln_fast_piter(I) p(input), out(output);
+//         oln_fast_niter(I) n(p, input);
+//         for_all(p)
+// 	  {
+// 	    for_all(n)
+// 	      min.take(*n);
+// 	    *out = min.value();
+// 	  }
+//         return output;
 //       }
 
 

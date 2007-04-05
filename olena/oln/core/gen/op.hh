@@ -96,6 +96,7 @@
 # define oln_decl_op_restricted_to(Lconcept, Rconcept) oln_decl_op_( restricted_to, Lconcept, |, Rconcept) 
 # define oln_decl_op_over(Lconcept, Rconcept)          oln_decl_op_( over,          Lconcept, /, Rconcept) 
 # define oln_decl_op_applied_on(Lconcept, Rconcept)    oln_decl_op_( applied_on,    Lconcept, <<, Rconcept) 
+# define oln_decl_op_through(Lconcept, Rconcept)       oln_decl_op_( through,       Lconcept, >>, Rconcept) 
 // ...
 
 
@@ -112,6 +113,7 @@ namespace oln
   struct restricted_to;
   struct over;
   struct applied_on;
+  struct through;
 
   /// \}
 

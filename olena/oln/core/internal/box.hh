@@ -154,7 +154,8 @@ namespace oln
   public:
     stc_using(point);
 
-    box_fwd_piter_(const Point_Set<B>& b);
+    template <typename Ps>
+    box_fwd_piter_(const Point_Set<Ps>& ps);
 
     void impl_start();
     void impl_next();
@@ -180,7 +181,8 @@ namespace oln
   public:
     stc_using(point);
 
-    box_bkd_piter_(const Point_Set<B>& b);
+    template <typename Ps>
+    box_bkd_piter_(const Point_Set<Ps>& ps);
 
     void impl_start();
     void impl_next();
@@ -300,8 +302,9 @@ namespace oln
   // --------------------   box_fwd_piter_<B>
 
   template <typename B>
-  box_fwd_piter_<B>::box_fwd_piter_(const Point_Set<B>& b)
-    : b_(exact(b))
+  template <typename Ps>
+  box_fwd_piter_<B>::box_fwd_piter_(const Point_Set<Ps>& ps)
+    : b_(ps.bbox())
   {
     nop_ = b_.pmax();
     ++nop_[0];
@@ -364,8 +367,9 @@ namespace oln
   // --------------------   box_bkd_piter_<P>
 
   template <typename B>
-  box_bkd_piter_<B>::box_bkd_piter_(const Point_Set<B>& b)
-    : b_(exact(b))
+  template <typename Ps>
+  box_bkd_piter_<B>::box_bkd_piter_(const Point_Set<Ps>& ps)
+    : b_(ps.bbox())
   {
     nop_ = b_.pmin();
     --nop_[0];

@@ -81,6 +81,8 @@ namespace oln
       bool impl_has(const point& p) const;
       const box& impl_bbox() const;
 
+      const adapted& adapted_() const { return this->ps_; }
+
     protected:
       adapted ps_;
       pset_adaptor_();
