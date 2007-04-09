@@ -63,7 +63,7 @@ namespace oln
 
       template <typename I>
       oln_plain(I)
-      reconstruction_loop(const Image_with_Nbh<I>& marker,
+      reconstruction_loop(Image_with_Nbh<I>& marker,
 			  const Binary_Image<I>&   mask)
       {
 	oln_plain(I) output;
@@ -86,10 +86,10 @@ namespace oln
 
       template <typename I , typename J>
       void // FIXME : Slow impl.
-      reconstruction_(const Image_with_Nbh<I>& marker,
+      reconstruction_(Image_with_Nbh<I>& marker,
 		      const Binary_Image<J>& mask)
       {
-	image2d<int> tmp = level::clone(exact(marker).image());
+	I tmp = level::clone(marker);
 
 	while ( not stability(marker, tmp) )
 	{
@@ -104,10 +104,10 @@ namespace oln
 
     template <typename I , typename J>
     void
-    reconstruction(const Image_with_Nbh<I>& marker,
+    reconstruction(Image_with_Nbh<I>& marker,
 		   const Binary_Image<J>& mask)
     {
-      impl::reconstruction_(exact(marker), exact(mask));
+      impl::reconstruction_(marker, exact(mask));
     }
 
 # endif // ! OLN_INCLUDE_ONLY

@@ -118,8 +118,7 @@ namespace oln
 
 	oln_plain(I) is_processed;
 	prepare(is_processed, with, input);
-	oln_piter(I) p1(input.points());
-	for_all(p1)
+	oln_piter(I) p1(is_processed.points());
 	  is_processed(p1) = false; // FIXME : built with ?.
 
 	first_pass(input, parent, is_processed);
