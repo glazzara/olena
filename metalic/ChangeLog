@@ -1,3 +1,9 @@
+2007-04-10  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add : mlc_is_not_const.
+
+	* mlc/cmp.hh: Fix.
+
 2007-04-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add reference check.
