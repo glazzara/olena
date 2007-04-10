@@ -1,3 +1,10 @@
+2007-04-10  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix union_find.
+
+	* oln/morpho/union_find.hh: .
+	* oln/canvas/two_pass.hh: .
+
 2007-04-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Draft union_find using canvas (two_pass).

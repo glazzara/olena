@@ -36,11 +36,11 @@ namespace canvas
   {
     f.init();
 
-    oln_piter(I) p1(f.input.points());
+    oln_piter(I) p1(input.points());
     for_all(p1)
       f.first_pass_body(p1);
 
-    oln_bkd_piter(I) p2(f.input.points());
+    oln_bkd_piter(I) p2(input.points());
     for_all(p2)
       f.second_pass_body(p2);
 

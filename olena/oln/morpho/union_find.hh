@@ -31,6 +31,7 @@
 # include <oln/core/concept/image.hh>
 
 # include <oln/canvas/two_pass.hh>
+# include <oln/level/fill.hh>
 
 namespace oln
 {
@@ -40,7 +41,7 @@ namespace oln
 
     template <typename I>
     oln_plain_value(I, unsigned)
-    union_find(const Binary_Image<I>& input);
+    union_find(const Image_with_Nbh<I>& input);
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -50,7 +51,7 @@ namespace oln
       struct union_find_
       {
 	const I&      input;
-	oln_plain(I)  output;
+	oln_plain_value(I, unsigned)  output;
 
 	oln_plain(I) is_processed;
 	oln_plain_value(I, oln_point(I)) parent;
@@ -58,14 +59,15 @@ namespace oln
 	union_find_(const I& in)
 	  : input(in)
 	{
-	  prepare(is_processed, oln::with, input);
-	  prepare(output, oln::with, input);
-	  prepare(parent, oln::with, input);
+	  prepare(is_processed, with, in);
+	  prepare(output, with, in);
+	  prepare(parent, with, in);
 	}
 
-	oln_point(I) find_root(I& ima,
-			       const oln_point(I)& x,
-			       oln_plain_value(I, oln_point(I))& parent)
+	oln_point(I)
+	find_root(const I& ima,
+		  const oln_point(I)& x,
+		  oln_plain_value(I, oln_point(I))& parent)
 	{
 	  if (parent(x) != x)
 	  {
@@ -75,10 +77,11 @@ namespace oln
 	  return x;
 	}
 
-	void do_union(I& ima,
-		      const oln_point(I)& n,
-		      const oln_point(I)& p,
-		      oln_plain_value(I, oln_point(I))& parent)
+	void
+	do_union(const I& ima,
+		 const oln_point(I)& n,
+		 const oln_point(I)& p,
+		 oln_plain_value(I, oln_point(I))& parent)
 	{
 	  oln_point(I) r = find_root(ima, n, parent);
 	  if (r != p)
@@ -87,7 +90,7 @@ namespace oln
 
 	void init()
 	{
-	  oln::level::fill(is_processed, false);
+	  level::fill(is_processed, false);
 	}
 
 	void first_pass_body(const oln_point(I)& p)
@@ -127,10 +130,10 @@ namespace oln
 
     template <typename I>
     oln_plain_value(I, unsigned)
-    union_find(const Binary_Image<I>& input)
+    union_find(const Image_with_Nbh<I>& input)
     {
-      union_find_<I> f(input);
-      canvas::two_pass(f);
+      impl::union_find_<I> f(exact(input));
+      canvas::two_pass(f, input);
       return f.output;
     }
 
