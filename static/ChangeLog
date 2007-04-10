@@ -1,3 +1,8 @@
+2007-04-10  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
+
+	Improve iterator support.
+	* samples/mini-std/cpp2/mini-std.cc: Here.
+
 2007-03-28  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
 
 	Add begin, end, == and =! methods for iterators in mini-std.

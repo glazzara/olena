@@ -66,6 +66,8 @@ template <class T>                                                            \
 no_ CLASS##_select(const T* arg);                                             \
 no_ CLASS##_select(...)
 
+
+
 namespace mstd
 {
   namespace internal
@@ -102,6 +104,7 @@ namespace mstd
   mlc_decl_typedef(stdcontainer_t);
 } // End of namespace mstd.
 
+
 /*---------------.
 | Abstractions.  |
 `---------------*/
@@ -113,9 +116,12 @@ namespace mstd
   // ---------- //
 
   template <typename Exact>
-  struct Iterator : virtual public Any<Exact>,
-                    virtual public automatic::get_impl<Iterator, Exact>
+  struct Iterator : virtual public Any<Exact>
   {
+    typedef Iterator<Exact> current;
+
+    stc_typename(container_t);
+    stc_typename(iter_t);
     stc_typename(value_t);
 
     value_t& operator*()
@@ -139,7 +145,8 @@ namespace mstd
   // ----------- //
 
   template <typename Exact>
-  struct Container : virtual Any<Exact>
+  struct Container : virtual public Any<Exact>,
+                     virtual public automatic::get_impl<Container, Exact>
   {
     stc_typename(value_t);
     stc_typename(size_t);
@@ -579,10 +586,9 @@ namespace mstd
     typedef forwardIterator<T> current;
     typedef Iterator< current> super;
 
-
-    stc_deduce_typename(current, container_t);
-    stc_deduce_typename(current, iter_t);
-    stc_deduce_typename(current, value_t);
+    stc_using(container_t);
+    stc_using(iter_t);
+    stc_using(value_t);
 
     forwardIterator(container_t& c) :
       c_ (c),
@@ -598,12 +604,12 @@ namespace mstd
     current& operator++()
     {
       iter_++;
-      return *this;
+      return *exact(this);
     }
 
     current operator++(int)
     {
-      current ret = *this;
+      current ret = *exact(this);
       ++iter_;
       return ret;
     }
@@ -633,7 +639,6 @@ namespace mstd
     iter_t iter_;
   };
 
-
   // --------------- //
   // BiDirIterator.  //
   // --------------- //
@@ -645,7 +650,7 @@ namespace mstd
   template<typename T>
   struct super_trait_< biDirIterator<T> >
   {
-    typedef top< biDirIterator<T> > ret;
+    typedef Iterator<biDirIterator<T> > ret;
   };
 
   template <typename T>
@@ -661,14 +666,29 @@ namespace mstd
   struct biDirIterator : public Iterator< biDirIterator<T> >
   {
     typedef biDirIterator<T> current;
-    stc_deduce_typename(current, container_t);
-    stc_deduce_typename(current, iter_t);
-    stc_deduce_typename(current, value_t);
+    typedef Iterator<current> super;
+
+    stc_using(container_t);
+    stc_using(iter_t);
+    stc_using(value_t);
 
     biDirIterator(container_t& c) :
       c_ (c),
       iter_ (c.get_stdcontainer().begin())
     {
+    }
+
+    current& operator--()
+    {
+      //iter_--;
+      return *this;
+    }
+
+    current operator--(int)
+    {
+      current ret = *this;
+      //--iter_;
+      return ret;
     }
 
     value_t& impl_op_star()
@@ -679,26 +699,13 @@ namespace mstd
     current& operator++()
     {
       iter_++;
-      return *this;
+      return *exact(this);
     }
 
     current operator++(int)
     {
-      current ret = *this;
+      current ret = *exact(this);
       ++iter_;
-      return ret;
-    }
-
-    current& operator--()
-    {
-      iter_--;
-      return *this;
-    }
-
-    current operator--(int)
-    {
-      current ret = *this;
-      --iter_;
       return ret;
     }
 
@@ -710,6 +717,16 @@ namespace mstd
     void to_end()
     {
       iter_ = c_.get_stdcontainer().end();
+    }
+
+    bool impl_op_equal(const current& it)
+    {
+      return this->iter_ == it.iter_;
+    }
+
+    bool impl_op_nequal(const current& it)
+    {
+      return this->iter_ != it.iter_;
     }
 
   protected:
@@ -752,11 +769,6 @@ namespace mstd
     randomAccessibleIterator(container_t& c) :
       iter_ (c.get_stdcontainer())
     {
-    }
-
-    value_t& impl_op_star()
-    {
-      return *iter_;
     }
 
   protected:
@@ -901,6 +913,7 @@ namespace mstd
 
 int main()
 {
+  // List
   mstd::list<int> l;
   int i = 5;
 
@@ -936,12 +949,18 @@ int main()
   TESTV(l.impl_push_back(i));
   TESTV(l.impl_push_back(++i));
   TESTV(l.impl_push_back(++i));
+
+  // Iterators
   mstd::forwardIterator< mstd::list <int> > iter(l);
   TEST(*iter);
   ++iter;
   TEST(*iter);
   iter++;
   TEST(*iter);
+
+  TEST(iter == iter);
+  TEST(iter != iter);
+
 
   mstd::list<int>::iter_t iter2(l);
   TEST(*iter2);
@@ -954,8 +973,12 @@ int main()
   iter2--;
   TEST(*iter2);
 
-  TEST(iter == iter);
-  TEST(iter != iter);
-
-  mstd::list<int>::iter_t it = l.begin();
+  for (mstd::list<int>::iter_t it = l.begin(); it != l.end(); ++it)
+    TEST(*it);
 }
+
+
+
+
+
+
