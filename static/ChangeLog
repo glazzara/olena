@@ -1,3 +1,8 @@
+2007-04-11  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
+
+	Fix mini-std tests.
+	* mini-std.cc: Fix some old tests and add a new one.
+
 2007-04-10  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
 
 	Improve iterator support.

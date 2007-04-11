@@ -893,6 +893,49 @@ namespace mstd
     stdcontainer_t list_;
   };
 
+  // ---------- //
+  // Morphers.  //
+  // ---------- //
+
+  // container_morpher_
+  template <typename Exact>
+  struct container_morpher_;
+
+  template <typename Exact>
+  struct super_trait_< container_morpher_<Exact> >
+  {
+    typedef container_base<Exact> ret;
+  };
+
+  template <typename Exact>
+  struct container_morpher_ : public container_base<Exact>
+  {
+    stc_typename(delegatee);
+
+  protected:
+    container_morpher_();
+  };
+
+
+  // transform_morpher
+  template <typename Exact>
+  struct transform_morpher;
+
+  template <typename Exact>
+  struct super_trait_< transform_morpher<Exact> >
+  {
+    typedef container_morpher_<Exact> ret;
+  };
+
+  template <typename Exact>
+  struct transform_morpher : public container_morpher_<Exact>
+  {
+    typedef container_morpher_<Exact> super;
+    stc_using(delegatee);
+
+    // FIXME : le type d'it doit changer. (transform_it??)
+  };
+
 } // End of namespace mstd.
 
 
@@ -911,6 +954,17 @@ namespace mstd
                   << std::endl;      \
         (m)
 
+
+template <typename X>
+class Dummy
+{
+};
+
+template <typename Exact>
+void test(mstd::ForwardContainer<Exact>& fc)
+{
+}
+
 int main()
 {
   // List
@@ -919,36 +973,36 @@ int main()
 
   TEST(l.size());
   TEST(l.empty());
-  TESTV(l.impl_push_front(i));
+  TESTV(l.push_front(i));
   TEST(l.size());
   TEST(l.empty());
-  TESTV(l.impl_pop_front());
+  TESTV(l.pop_front());
   TEST(l.size());
   TEST(l.empty());
-  TESTV(l.impl_push_front(i));
-  TESTV(l.impl_push_front(i));
+  TESTV(l.push_front(i));
+  TESTV(l.push_front(i));
   TEST(l.size());
   TEST(l.empty());
   TESTV(l.clear());
   TEST(l.size());
   TEST(l.empty());
-  TESTV(l.impl_push_back(i));
+  TESTV(l.push_back(i));
   TEST(l.size());
   TEST(l.empty());
-  TESTV(l.impl_pop_back());
+  TESTV(l.pop_back());
   TEST(l.size());
   TEST(l.empty());
-  TESTV(l.impl_push_back(i));
-  TESTV(l.impl_push_back(i));
+  TESTV(l.push_back(i));
+  TESTV(l.push_back(i));
   TEST(l.size());
   TEST(l.empty());
   TESTV(l.clear());
   TEST(l.size());
   TEST(l.empty());
 
-  TESTV(l.impl_push_back(i));
-  TESTV(l.impl_push_back(++i));
-  TESTV(l.impl_push_back(++i));
+  TESTV(l.push_back(i));
+  TESTV(l.push_back(++i));
+  TESTV(l.push_back(++i));
 
   // Iterators
   mstd::forwardIterator< mstd::list <int> > iter(l);
@@ -975,6 +1029,12 @@ int main()
 
   for (mstd::list<int>::iter_t it = l.begin(); it != l.end(); ++it)
     TEST(*it);
+
+  // Functions
+  test(l);
+
+//   Dummy<int> a;
+//   test(a);
 }
 
 
