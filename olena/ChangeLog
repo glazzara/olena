@@ -1,5 +1,26 @@
 2007-04-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add the type of value-casted images.
+
+	* oln/core/gen/casted_image.hh: New.
+	* oln/core/gen/value_cast.hh (include): Add casted_image.hh.
+	* oln/morpher/stack_rw.hxx,
+	* oln/morpher/value_cast.hh,
+	* oln/morpher/identity.hh,
+	* oln/morpher/thru_fun.hh,
+	* oln/morpher/tags.hh,
+	* oln/morpher/value_cast.hxx,
+	* oln/morpher/count_rw.hh,
+	* oln/morpher/identity.hxx,
+	* oln/morpher/stack.hh,
+	* oln/morpher/count_rw.hxx,
+	* oln/morpher/stack_rw.hh,
+	* oln/morpher/stack.hxx,
+	* oln/morpher/internal/image_value_morpher.hh,
+	* oln/morpher/internal/image_extension.hh: Remove; obsolete.
+
+2007-04-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix missing ChangeLog text of previous commit.
 
 	Refactor point and dpoint interface.

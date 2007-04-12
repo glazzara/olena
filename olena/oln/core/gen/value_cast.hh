@@ -88,4 +88,7 @@ namespace oln
 } // end of namespace oln
 
 
+# include <oln/core/gen/casted_image.hh>
+
+
 #endif // ! OLN_CORE_GEN_VALUE_CAST_HH
