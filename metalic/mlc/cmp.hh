@@ -64,9 +64,10 @@
 # define mlc_is_builtin(T)     mlc::is_builtin_< T >
 # define mlc_is_not_builtin(T) mlc::is_not_builtin_< T >
 
-# define mlc_is_const(T)     mlc::is_const_< T >
+# define mlc_is_const(T)         mlc::is_const_< T >
 # define mlc_is_not_const(T)     mlc::is_not_const_< T >
-# define mlc_is_reference(T) mlc::is_reference_< T >
+# define mlc_is_reference(T)     mlc::is_reference_< T >
+# define mlc_is_not_reference(T) mlc::is_not_reference_< T >
 
 /// \}
 
@@ -233,7 +234,12 @@ namespace mlc
   };
 
   template <typename T>
-  struct is_not_const_ : public not_< is_const_<T> >::bexpr
+  struct is_not_const_ : public bexpr_<true>
+  {
+  };
+
+  template <typename T>
+  struct is_not_const_< const T > : public bexpr_<false>
   {
   };
   /// \}
@@ -249,6 +255,16 @@ namespace mlc
 
   template <typename T>
   struct is_reference_< T& > : public bexpr_<true>
+  {
+  };
+
+  template <typename T>
+  struct is_not_reference_ : public bexpr_<true>
+  {
+  };
+
+  template <typename T>
+  struct is_not_reference_< T& > : public bexpr_<false>
   {
   };
   /// \}

@@ -1,3 +1,10 @@
+2007-04-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add ''non-reference'' check.
+
+	* mlc/cmp.hh (mlc_is_not_reference): New.
+	(is_not_const_): Update.
+
 2007-04-10  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add : mlc_is_not_const.
