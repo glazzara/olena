@@ -291,8 +291,10 @@ namespace oln
     // final
     coord min_row() const;
     coord max_row() const;
+    unsigned nrows() const;
     coord min_col() const;
     coord max_col() const;
+    unsigned ncols() const;
 
   protected:
     Image_2D();
@@ -306,6 +308,17 @@ namespace oln
 		    public automatic::get_impl<Image_3D, Exact>
   {
     stc_typename(coord);
+
+    // final
+    coord min_row() const;
+    coord max_row() const;
+    unsigned nrows() const;
+    coord min_col() const;
+    coord max_col() const;
+    unsigned ncols() const;
+    coord min_sli() const;
+    coord max_sli() const;
+    unsigned nslis() const;
 
   protected:
     Image_3D();
@@ -635,6 +648,13 @@ namespace oln
   }
 
   template <typename Exact>
+  unsigned
+  Image_2D<Exact>::nrows() const
+  {
+    return this->bbox().pmax().row() - this->bbox().pmin().row() + 1;
+  }
+
+  template <typename Exact>
   typename Image_2D<Exact>::coord
   Image_2D<Exact>::min_col() const
   {
@@ -648,11 +668,81 @@ namespace oln
     return this->bbox().pmax().col();
   }
 
+  template <typename Exact>
+  unsigned
+  Image_2D<Exact>::ncols() const
+  {
+    return this->bbox().pmax().col() - this->bbox().pmin().col() + 1;
+  }
+
   // -----------------------------------   Image_3D<Exact>
 
   template <typename Exact>
   Image_3D<Exact>::Image_3D()
   {
+  }
+
+  template <typename Exact>
+  typename Image_3D<Exact>::coord
+  Image_3D<Exact>::min_row() const
+  {
+    return this->bbox().pmin().row();
+  }
+
+  template <typename Exact>
+  typename Image_3D<Exact>::coord
+  Image_3D<Exact>::max_row() const
+  {
+    return this->bbox().pmax().row();
+  }
+
+  template <typename Exact>
+  unsigned
+  Image_3D<Exact>::nrows() const
+  {
+    return this->bbox().pmax().row() - this->bbox().pmin().row() + 1;
+  }
+
+  template <typename Exact>
+  typename Image_3D<Exact>::coord
+  Image_3D<Exact>::min_col() const
+  {
+    return this->bbox().pmin().col();
+  }
+
+  template <typename Exact>
+  typename Image_3D<Exact>::coord
+  Image_3D<Exact>::max_col() const
+  {
+    return this->bbox().pmax().col();
+  }
+
+  template <typename Exact>
+  unsigned
+  Image_3D<Exact>::ncols() const
+  {
+    return this->bbox().pmax().col() - this->bbox().pmin().col() + 1;
+  }
+
+  template <typename Exact>
+  typename Image_3D<Exact>::coord
+  Image_3D<Exact>::min_sli() const
+  {
+    return this->bbox().pmin().sli();
+  }
+
+  template <typename Exact>
+  typename Image_3D<Exact>::coord
+  Image_3D<Exact>::max_sli() const
+  {
+    return this->bbox().pmax().sli();
+  }
+
+  template <typename Exact>
+  unsigned
+  Image_3D<Exact>::nslis() const
+  {
+    return this->bbox().pmax().sli() - this->bbox().pmin().sli() + 1;
   }
 
   // -----------------------------------   Point_Wise_Accessible_Image_2D<Exact>

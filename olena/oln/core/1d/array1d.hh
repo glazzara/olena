@@ -105,7 +105,7 @@ namespace oln
     len_(len)
   {
     precondition(len > 0);
-    imax_ = imin_ + len_;
+    imax_ = imin_ + len_ - 1;
     allocate_();
   }
 
@@ -191,7 +191,6 @@ namespace oln
   }
 
 # endif // ! OLN_INCLUDE_ONLY
-
 
 } // end of namespace oln
 

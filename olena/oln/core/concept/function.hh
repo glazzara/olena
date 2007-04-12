@@ -62,6 +62,7 @@ namespace oln
   template <typename Exact>
   struct Function_p2v : public Function<Exact>
   {
+    typedef Function_p2v<void> category;
   protected:
     Function_p2v();
   };
@@ -72,6 +73,7 @@ namespace oln
   template <typename Exact>
   struct Function_p2b : public Function<Exact>
   {
+    typedef Function_p2b<void> category;
   protected:
     Function_p2b();
   };
@@ -82,6 +84,7 @@ namespace oln
   template <typename Exact>
   struct Function_v2v : public Function<Exact>
   {
+    typedef Function_v2v<void> category;
   protected:
     Function_v2v();
   };
@@ -128,6 +131,7 @@ namespace oln
   template <typename Exact>
   struct Function_p2p : public Function<Exact>
   {
+    typedef Function_p2p<void> category;
   protected:
     Function_p2p();
   };

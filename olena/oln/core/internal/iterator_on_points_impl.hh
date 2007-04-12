@@ -25,116 +25,109 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-
 #ifndef OLN_CORE_INTERNAL_ITERATOR_ON_POINTS_IMPL_HH
 # define OLN_CORE_INTERNAL_ITERATOR_ON_POINTS_IMPL_HH
+
+# include <oln/core/equipment.hh>
 
 
 namespace oln
 {
 
-  // Forward declarations
-  namespace impl
+  namespace internal
   {
-    template <unsigned n, typename Exact, typename P>
-    struct iterator_on_points_impl;
-  }
 
-
-  template <unsigned n, typename Exact, typename P>
-  struct super_trait_< impl::iterator_on_points_impl<n, Exact, P> >
-  {
-    typedef Any<P> ret;
-  };
-
-  template <unsigned n, typename Exact, typename P>
-  struct vtypes< impl::iterator_on_points_impl<n, Exact, P> >
-  {
-  };
-
-
-  namespace impl
-  {
-    template <unsigned n, typename Exact, typename P>
-    struct iterator_on_points_impl : public virtual Any<Exact>
+    template <unsigned n, typename Exact>
+    struct iterator_on_points_impl_
     {
     };
 
-    /// point1d interface
-    template <typename Exact, typename P>
-    struct iterator_on_points_impl<1, Exact, P> : public virtual Any< Exact >
+    // 1d impl
+    template <typename Exact>
+    struct iterator_on_points_impl_< 1, Exact >
     {
-      typename P::coord ind() const;
+    private:
+      stc_typename(coord);
+    public:
+      coord ind() const;
     };
 
-    /// point2d interface
-    template <typename Exact, typename P>
-    struct iterator_on_points_impl<2, Exact, P>: public virtual Any< Exact >
+    // 2d impl
+    template <typename Exact>
+    struct iterator_on_points_impl_< 2, Exact >
     {
-      typename P::coord row() const;
-      typename P::coord col() const;
+    private:
+      stc_typename(coord);
+    public:
+      coord row() const;
+      coord col() const;
     };
 
-    ///  point3d interface
-    template <typename Exact, typename P>
-    struct iterator_on_points_impl<3, Exact, P>: public virtual Any< Exact >
+    // 3d impl
+    template <typename Exact>
+    struct iterator_on_points_impl_< 3, Exact >
     {
-      typename P::coord row() const;
-      typename P::coord col() const;
-      typename P::coord slice() const;
+    private:
+      stc_typename(coord);
+    public:
+      coord sli() const;
+      coord row() const;
+      coord col() const;
     };
 
 # ifndef OLN_INCLUDE_ONLY
 
-    // point1d
-    template <typename Exact, typename P>
-    typename P::coord
-    iterator_on_points_impl<1, Exact, P>::ind() const
+    // 1d impl
+
+    template <typename Exact>
+    typename iterator_on_points_impl_<1, Exact>::coord
+    iterator_on_points_impl_<1, Exact>::ind() const
     {
-      return exact(this)->to_point().ind();
+      return static_cast<const Exact&>(*this).to_point().ind();
     }
 
-    // point2d
-    template <typename Exact, typename P>
-    typename P::coord
-    iterator_on_points_impl<2, Exact, P>::row() const
+    // 2d impl
+
+    template <typename Exact>
+    typename iterator_on_points_impl_<2, Exact>::coord
+    iterator_on_points_impl_<2, Exact>::row() const
     {
-      return exact(this)->to_point().row();
+      return static_cast<const Exact&>(*this).to_point().row();
     }
 
-
-    template <typename Exact, typename P>
-    typename P::coord
-    iterator_on_points_impl<2, Exact, P>::col() const
+    template <typename Exact>
+    typename iterator_on_points_impl_<2, Exact>::coord
+    iterator_on_points_impl_<2, Exact>::col() const
     {
-      return exact(this)->to_point().col();
+      return static_cast<const Exact&>(*this).to_point().col();
     }
 
-    // point3d
-    template <typename Exact, typename P>
-    typename P::coord
-    iterator_on_points_impl<3, Exact, P>::row() const
+    // 3d impl
+
+    template <typename Exact>
+    typename iterator_on_points_impl_<3, Exact>::coord
+    iterator_on_points_impl_<3, Exact>::sli() const
     {
-      return exact(this)->to_point().row();
+      return static_cast<const Exact&>(*this).to_point().sli();
     }
 
-    template <typename Exact, typename P>
-    typename P::coord
-    iterator_on_points_impl<3, Exact, P>::col() const
+    template <typename Exact>
+    typename iterator_on_points_impl_<3, Exact>::coord
+    iterator_on_points_impl_<3, Exact>::row() const
     {
-      return exact(this)->to_point().col();
+      return static_cast<const Exact&>(*this).to_point().row();
     }
 
-    template <typename Exact, typename P>
-    typename P::coord
-    iterator_on_points_impl<3, Exact, P>::slice() const
+    template <typename Exact>
+    typename iterator_on_points_impl_<3, Exact>::coord
+    iterator_on_points_impl_<3, Exact>::col() const
     {
-      return exact(this)->to_point().slice();
+      return static_cast<const Exact&>(*this).to_point().col();
     }
 
 # endif // ! OLN_INCLUDE_ONLY
 
-  } // end of namespace oln
+  } // end of namespace oln::internal
 
 } // end of namespace oln
 

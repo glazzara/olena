@@ -25,84 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_POINT1D_HH
-# define OLN_CORE_INTERNAL_POINT1D_HH
+#ifndef OLN_CORE_GEN_EXTENDED_BY_HH
+# define OLN_CORE_GEN_EXTENDED_BY_HH
 
-# include <oln/core/internal/point_base.hh>
+
+// "ima + extension"
+
+
+namespace oln
+{
+  struct extended_by;
+}
+
+
+# include <oln/core/internal/op_image_extended_by_nbh.hh>
+# include <oln/core/internal/macro_extended_by.hh>
 
 
 namespace oln
 {
 
-
-  /// Fwd decls.
-  namespace internal { template <typename Exact> struct point1d_; }
-
-
-  /// Super type.
-  template<typename Exact>
-  struct super_trait_< internal::point1d_<Exact> >
-  {
-    typedef internal::point_base_<Exact> ret;
-  };
-
-
-  /// Virtual types.
-  template <typename Exact>
-  struct vtypes< internal::point1d_<Exact> >
-  {
-  };
-
-
-  namespace internal
-  {
-
-
-    template <typename Exact>
-    class point1d_ : public point_base_<Exact>
-    {
-      typedef point_base_<Exact> super;
-
-    public:
-      stc_using(coord);
-
-      coord  ind() const;
-      coord& ind();
-
-    protected:
-      point1d_();
-    };
-
+  oln_decl_op_image_extended_by_const(Neighborhood);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename Exact>
-    point1d_<Exact>::point1d_()
-    {
-    }
+  oln_def_op_image_extended_by_const(Neighborhood);
 
-    template <typename Exact>
-    typename point1d_<Exact>::coord
-    point1d_<Exact>::ind() const
-    {
-      return this->v_[0];
-    }
-
-    template <typename Exact>
-    typename point1d_<Exact>::coord &
-    point1d_<Exact>::ind()
-    {
-      return this->v_[0];
-    }
-
-# endif
-
-
-  } // end of namespace oln::internal
-
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_POINT1D_HH
+#endif // ! OLN_CORE_GEN_EXTENDED_BY_HH

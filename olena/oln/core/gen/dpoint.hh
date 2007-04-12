@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,66 +25,68 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_TRAITS_ID_HH
-# define OLN_CORE_TRAITS_ID_HH
+#ifndef OLN_CORE_GEN_DPOINT_HH
+# define OLN_CORE_GEN_DPOINT_HH
 
-# include <oln/core/traits.hh>
+# include <oln/core/internal/dpoint_base.hh>
+# include <oln/core/internal/point_impl.hh>
 
 
 namespace oln
 {
 
-  namespace id
+# define current dpoint<G, C>
+
+  // Fwd decls.
+  template <typename G, typename C> struct dpoint;
+  template <typename G, typename C> struct  point;
+
+
+  // Super type.
+  template<typename G, typename C>
+  struct super_trait_< current >
   {
-
-    /// \{
-    /// Generic identifiers for operators.
-
-    enum {
-      unop_vproxy  = 1,
-      binop_vproxy = 1
-    };
-
-    /// \}
+    typedef internal::dpoint_base_< current > ret;
+  };
 
 
-    /// \{
-    /// Identifiers for oln binary operators +.
+  // Virtual types.
+  template <typename G, typename C>
+  struct vtypes< current >
+  {
+    typedef G grid;
+    typedef C coord;
+    typedef point<G,C> point;
+  };
 
-    enum {
-      op_plus_pointnd_dpointnd = 2
-    };
 
-    /// \}
-
-
-
-    /// \{
-    /// Identifiers for oln binary operators -.
-
-    enum {
-      op_minus_pointnd_pointnd  = 2,
-      op_minus_pointnd_dpointnd = 3
-    };
-
-    /// \}
+  template <typename G, typename C>
+  class dpoint : public internal::dpoint_base_< current >,
+		 public internal::point_impl_< mlc_value(oln_dim(G)), current >
+  {
+  public:
+    dpoint();
+    // nothing else here
+  };
 
 
 
-    /// \{
-    /// Identifiers for oln unary operators -.
+# ifndef OLN_INCLUDE_ONLY
 
-    enum {
-      op_uminus_dpointnd = 2
-    };
+  template <typename G, typename C>
+  current::dpoint()
+  {
+    mlc::assert_< mlc_is_a(G, Grid) >::check();
+  }
 
-    /// \}
+# endif // ! OLN_INCLUDE_ONLY
 
-
-  } // end of namespace oln::id
+# undef current
 
 } // end of namespace oln
 
 
+# include <oln/core/gen/point.hh>
 
-#endif // ! OLN_CORE_TRAITS_ID_HH
+
+#endif // ! OLN_CORE_GEN_DPOINT_HH

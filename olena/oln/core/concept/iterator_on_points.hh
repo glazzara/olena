@@ -31,7 +31,6 @@
 
 # include <ostream>
 
-# include <oln/core/concept/generalized_point.hh>
 # include <oln/core/concept/iterator.hh>
 # include <oln/core/concept/point.hh>
 
@@ -43,7 +42,7 @@ namespace oln
 
   template <typename Exact>
   struct Iterator_on_Points : public Iterator<Exact>,
-			      virtual public Generalized_Point<Exact>
+			      public Generalized_Point<Exact>
   {
     stc_typename(point);
 

@@ -30,8 +30,10 @@
 
 # include <oln/core/concept/image.hh>
 # include <oln/core/gen/inplace.hh>
-# include <oln/core/2d/line2d.hh>
+# include <oln/core/gen/over.hh>
 # include <oln/level/paste.hh>
+
+# include <oln/core/2d/line2d.hh> // FIXME: 2D!
 
 
 

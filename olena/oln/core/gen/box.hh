@@ -29,90 +29,89 @@
 #ifndef OLN_CORE_GEN_BOX_HH
 # define OLN_CORE_GEN_BOX_HH
 
-# include <oln/core/concept/point.hh>
-# include <oln/core/concept/iterator_on_points.hh>
 # include <oln/core/internal/box.hh>
+# include <oln/core/gen/point.hh>
 
 
 namespace oln
 {
 
+# define current box<G,C>
+
 
   // Fwd decl.
-  template <typename P> class gen_box;
+  template <typename G, typename C> class box;
 
 
   // Super type.
-  template <typename P>
-  struct super_trait_< gen_box<P> >
+  template <typename G, typename C>
+  struct super_trait_< current >
   {
-    typedef gen_box<P> current__;
-    typedef internal::box_<current__> ret;
+    typedef internal::box_< current > ret;
   };
 
 
-  /// Virtual types.
-  template <typename P>
-  struct vtypes< gen_box<P> >
+  // Virtual types.
+  template <typename G, typename C>
+  struct vtypes< current >
   {
-    typedef P point;
-    typedef gen_box<P> box;
+    typedef point<G, C> point;
+    typedef current box;
   };
 
 
   /// Generic box class based on a point class.
 
-  template <typename P>
-  class gen_box : public internal::box_< gen_box<P> >,
-		  private mlc::assert_< mlc_is_a(P, Point) >
+  template <typename G, typename C>
+  class box : public internal::box_< current >
   {
-    typedef gen_box<P> current;
-    typedef internal::box_<current> super;
+    typedef internal::box_< current > super;
   public:
-    stc_using(point);
-    stc_using(box);
+    stc_using(from_to_t);
 
+    box();
 
-  public:
-
-    gen_box();
-    gen_box(const P& pmin, const P& pmax);
-    gen_box(const typename gen_box<P>::from_to_t& data);
+    box(const oln::point<G,C>& pmin, const oln::point<G,C>& pmax);
+    box(const from_to_t& data);
 
     template <typename D>
-    gen_box(const internal::initializer_<D>& data);
+    box(const internal::initializer_<D>& data);
 
-  }; // end of class oln::gen_box<P>
+  }; // end of class oln::box<G,C>
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename P>
-  gen_box<P>::gen_box()
+  template <typename G, typename C>
+  current::box()
+  {
+    mlc::assert_< mlc_is_a(G, Grid) >::check();
+  }
+
+  template <typename G, typename C>
+  current::box(const oln::point<G,C>& pmin,
+	       const oln::point<G,C>& pmax)
+    : super(pmin, pmax)
   {
   }
 
-  template <typename P>
-  gen_box<P>::gen_box(const P& pmin, const P& pmax) :
-    super(pmin, pmax)
-  {
-  }
-
-  template <typename P>
-  gen_box<P>::gen_box(const typename gen_box<P>::from_to_t& data) :
+  template <typename G, typename C>
+  current::box(const typename current::from_to_t& data) :
     super(data)
   {
   }
 
-  template <typename P>
+  template <typename G, typename C>
   template <typename D>
-  gen_box<P>::gen_box(const internal::initializer_<D>& data) :
+  current::box(const internal::initializer_<D>& data) :
     super(data)
   {
   }
 
 # endif // ! OLN_INCLUDE_ONLY
+
+# undef current
 
 } // end of namespace oln
 

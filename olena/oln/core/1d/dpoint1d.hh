@@ -30,26 +30,27 @@
 # define OLN_CORE_1D_DPOINT1D_HH
 
 # include <oln/core/1d/grid1d.hh>
-# include <oln/core/internal/dpoint1d.hh>
+# include <oln/core/internal/dpoint_base.hh>
+# include <oln/core/internal/point_impl.hh>
 
 
 namespace oln
 {
 
-
+  // Fwd decls.
   struct  point1d;
   struct dpoint1d;
 
 
-  /// Super type.
+  // Super type.
   template<>
   struct super_trait_< dpoint1d >
   {
-    typedef internal::dpoint1d_< dpoint1d > ret;
+    typedef internal::dpoint_base_< dpoint1d > ret;
   };
 
 
-  /// Virtual types.
+  // Virtual types.
   template <>
   struct vtypes< dpoint1d >
   {
@@ -60,10 +61,12 @@ namespace oln
 
 
   /// Usual 1D dpoint class.
-  class dpoint1d : public internal::dpoint1d_< dpoint1d >
+  class dpoint1d : public internal::dpoint_base_< dpoint1d >,
+		   public internal::point_impl_< 1, dpoint1d >
   {
+    typedef internal::dpoint_base_< dpoint1d > super;
   public:
-    /// Ctors.
+    stc_using_(coord);
     dpoint1d();
     dpoint1d(int ind);
   };
@@ -81,13 +84,11 @@ namespace oln
     this->ind() = ind;
   }
 
-# endif
-
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 
 
-// dpoint1d goes with point1d so:
 # include <oln/core/1d/point1d.hh>
 
 

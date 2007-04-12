@@ -30,6 +30,7 @@
 
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/internal/value_proxy.hh>
+# include <oln/core/internal/f_ch_value.hh>
 
 # include <mlc/int.hh>
 # include <xtd/vec.hh>

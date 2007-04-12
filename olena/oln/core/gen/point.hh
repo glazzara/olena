@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006 EPITA Research and
-// Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,43 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_BASICS3D_HH
-# define OLN_BASICS3D_HH
+#ifndef OLN_CORE_GEN_POINT_HH
+# define OLN_CORE_GEN_POINT_HH
+
+# include <oln/core/internal/point_base.hh>
+# include <oln/core/internal/point_impl.hh>
 
 
-# define OLN_ENV_3D
+namespace oln
+{
 
-# include <oln/core/typedefs.hh>
-# include <oln/core/case.hh>
-# include <oln/core/traits.hh>
-# include <oln/value/proxy.hh>
-
-# include <oln/core/3d/aliases.hh>
-
-# include <oln/core/gen/grid.hh>
-
-# include <oln/core/3d/point3d.hh>
-# include <oln/core/3d/dpoint3d.hh>
-
-# include <oln/core/3d/topo3d.hh>
-
-# include <oln/core/gen/fwd_piter_bbox.hh>
-# include <oln/core/gen/bkd_piter_bbox.hh>
-
-# include <oln/core/3d/window3d.hh>
-# include <oln/core/gen/fwd_qiter_win.hh>
-# include <oln/core/gen/bkd_qiter_win.hh>
-
-# include <oln/core/gen/neighb.hh>
-# include <oln/core/3d/neighb3d.hh>
-
-# include <oln/core/3d/image3d.hh>
-
-# include <oln/core/iterator_vtypes.hh>
-
-# include <oln/core/spe/slice.hh>
-# include <oln/core/spe/row.hh>
-# include <oln/core/spe/col.hh>
+# define current point<G, C>
 
 
-#endif // ! OLN_BASICS3D_HH
+  // Fwd decls.
+  template <typename G, typename C> struct  point;
+  template <typename G, typename C> struct dpoint;
+
+
+  // Super type.
+  template<typename G, typename C>
+  struct super_trait_< current >
+  {
+    typedef internal::point_base_< current > ret;
+  };
+
+
+  // Virtual types.
+  template <typename G, typename C>
+  struct vtypes< current >
+  {
+    typedef G grid;
+    typedef C coord;
+    typedef dpoint<G,C> dpoint;
+  };
+
+
+  template <typename G, typename C>
+  class point : public internal::point_base_< current >,
+		public internal::point_impl_< mlc_value(oln_dim(G)), current >
+  {
+  public:
+    point();
+    // nothing else here
+  };
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename G, typename C>
+  current::point()
+  {
+    mlc::assert_< mlc_is_a(G, Grid) >::check();
+  }
+
+# endif // ! OLN_INCLUDE_ONLY
+
+# undef current
+
+} // end of namespace oln
+
+
+# include <oln/core/gen/dpoint.hh>
+
+
+#endif // ! OLN_CORE_GEN_POINT_HH

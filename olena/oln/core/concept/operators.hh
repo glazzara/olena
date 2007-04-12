@@ -78,6 +78,10 @@ namespace oln
   /// Operator -= (default version).
   template <typename L, typename R>
   L& operator-=(Any<L>& lhs, const Any<R>& rhs);
+
+  /// Operator -  (default version).
+  template <typename T>
+  T operator- (const Any<T>& lhs, const Any<T>& rhs);
   
   /// Operator -  (default version).
   template <typename T>
@@ -136,6 +140,13 @@ namespace oln
     return tmp += exact(rhs);
   }
 
+  template <typename T>
+  T operator- (const Any<T>& lhs, const Any<T>& rhs)
+  {
+    T tmp = exact(lhs);
+    return tmp -= exact(rhs);
+  }
+
   template <typename L, typename R>
   L& operator%=(Any<L>& lhs, const Any<R>& rhs)
   {
@@ -169,13 +180,6 @@ namespace oln
   xtd_op_plus_trait(L, R) operator+ (const Any<L>& lhs, const Any<R>& rhs)
   {
     return exact(lhs).op_plus_(exact(rhs));
-  }
-
-  template <typename T>
-  T operator- (const Any<T>& lhs, const Any<T>& rhs)
-  {
-    T tmp = exact(lhs);
-    return tmp -= rhs;
   }
 
   template <typename L, typename R>

@@ -79,11 +79,7 @@ namespace oln
     const T* buffer() const;
     T* buffer();
 
-    std::size_t row_pad() const
-    {
-      precondition(buffer_ != 0 and array_ != 0);
-      return &(array_[imin_+1][jmin_]) - &(array_[imin_][jmin_]);
-    }
+    std::size_t i_pad() const;
 
   protected:
 
@@ -105,10 +101,8 @@ namespace oln
 
   template <typename T, typename C>
   array2d_<T, C>::array2d_(C imin, C jmin, C imax, C jmax) :
-    imin_(imin),
-    jmin_(jmin),
-    imax_(imax),
-    jmax_(jmax)
+    imin_(imin), jmin_(jmin),
+    imax_(imax), jmax_(jmax)
   {
     precondition(imax >= imin and jmax >= jmin);
     ilen_ = imax - imin + 1;
@@ -119,15 +113,13 @@ namespace oln
 
   template <typename T, typename C>
   array2d_<T, C>::array2d_(C ilen, C jlen) :
-    imin_(0),
-    jmin_(0),
-    ilen_(ilen),
-    jlen_(jlen)
+    imin_(0),    jmin_(0),
+    ilen_(ilen), jlen_(jlen)
   {
     precondition(ilen > 0 and jlen > 0);
     // FIXME: Test that ilen_ and jlen_ are not huge!
-    imax_ = imin_ + ilen_;
-    jmax_ = jmin_ + ilen_;
+    imax_ = imin_ + ilen_ - 1;
+    jmax_ = jmin_ + ilen_ - 1;
     allocate_();
   }
 
@@ -175,7 +167,6 @@ namespace oln
       j >= jmin_ and j <= jmax_;
   }
 
-
   template <typename T, typename C>
   C array2d_<T, C>::imin() const
   {
@@ -213,6 +204,13 @@ namespace oln
   }
 
   template <typename T, typename C>
+  std::size_t array2d_<T, C>::i_pad() const
+  {
+    precondition(buffer_ != 0 and array_ != 0);
+    return jlen_;
+  }
+
+  template <typename T, typename C>
   std::size_t array2d_<T, C>::ncells() const
   {
     return blen_;
@@ -234,7 +232,7 @@ namespace oln
   {
     blen_ = std::size_t(ilen_) * std::size_t(jlen_);
     buffer_ = new T[blen_];
-    array_ = new T*[std::size_t(ilen_)];
+    array_  = new T*[std::size_t(ilen_)];
     T* buf = buffer_ - jmin_;
     for (C i = 0; i < ilen_; ++i)
       {
@@ -255,8 +253,7 @@ namespace oln
     array_ = 0;  // safety
   }
 
-# endif
-
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

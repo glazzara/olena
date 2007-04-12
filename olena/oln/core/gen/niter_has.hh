@@ -28,7 +28,7 @@
 #ifndef OLN_CORE_GEN_NITER_HAS_HH
 # define OLN_CORE_GEN_NITER_HAS_HH
 
-# include <oln/core/concept/generalized_point.hh>
+# include <oln/core/concept/point.hh>
 # include <oln/core/internal/piter_adaptor.hh>
 # include <oln/core/gen/dpoints_piter.hh>
 

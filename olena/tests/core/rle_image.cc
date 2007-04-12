@@ -1,7 +1,7 @@
 #include <iostream>
+#include <oln/core/2d/image2d.hh>
 #include <oln/core/rle/rle_psite.hh>
 #include <oln/core/rle/rle_image.hh>
-#include <oln/core/2d/image2d.hh>
 #include <oln/debug/print.hh>
 #include <oln/core/rle/rle_pset.hh>
 #include <oln/core/encode/rle_encode.hh>

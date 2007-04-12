@@ -48,12 +48,15 @@ namespace oln
   struct grid2d_hex;
   struct grid2d_tri;
 
-  // FIXME: 3D...
+  struct grid3d;
+
+  // FIXME: ...
 
   // Image types.
 
   template <typename T> class image1d;
   template <typename T> class image2d;
+  template <typename T> class image3d;
 
   /// \}
 
@@ -85,7 +88,13 @@ namespace oln
       typedef image2d<T> ret; // FIXME: or image2d_b<T>?
     };
 
-    // FIXME: 2D hex/tri, 3D...
+    template <typename T>
+    struct grid_to_plain_image__< grid3d, T >
+    {
+      typedef image3d<T> ret; // FIXME: or image3d_b<T>?
+    };
+
+    // FIXME: 2D hex/tri...
 
     /// \}
 

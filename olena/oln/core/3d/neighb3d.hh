@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Copyright (C) 2001, 2002, 2003, 2004, 2006, 2007 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -36,7 +36,17 @@
 namespace oln
 {
 
+  // FIXME: neighb3d should be an actual type, not an alias...
   typedef neighb_<dpoint3d> neighb3d;
+
+
+# ifdef OLN_ENABLE_DEFAULT
+
+  // Default is c6.
+  template <typename D>
+  bool init_(neighb3d* this_, const D&);
+
+# endif // OLN_ENABLE_DEFAULT
 
 
   namespace internal
@@ -45,206 +55,150 @@ namespace oln
     neighb3d mk_c6();
     neighb3d mk_c18();
     neighb3d mk_c26();
-    neighb3d mk_c4_slice();
-    neighb3d mk_c8_slice();
-    neighb3d mk_c4_row();
-    neighb3d mk_c8_row();
-    neighb3d mk_c4_col();
-    neighb3d mk_c8_col();
+
+    neighb3d mk_c4_sli();
+    neighb3d mk_c8_sli();
+
+    neighb3d mk_c2_sli();
+    neighb3d mk_c2_row();
+    neighb3d mk_c2_col();
 
 
 # ifndef OLN_INCLUDE_ONLY
 
     neighb3d mk_c6()
     {
-      static bool flower = true;
-      static neighb3d the_;
-      if (flower)
-	{
-	  the_
-	    .add(dpoint3d(0, 0, 1))
-	    .add(dpoint3d(0, 1, 0))
-	    .add(dpoint3d(1, 0, 0));
-	  flower = false;
-	}
-      return the_;
+      neighb3d tmp;
+      tmp
+	.take(dpoint3d(0, 0, 1))
+	.take(dpoint3d(0, 1, 0))
+	.take(dpoint3d(1, 0, 0));
+      return tmp;
     }
-
 
     neighb3d mk_c18()
     {
-      static bool flower = true;
-      static neighb3d the_;
-      if (flower)
-	{
-	  the_
-	    .add(dpoint3d(0,  0,  1))
-	    .add(dpoint3d(0,  1, -1))
-	    .add(dpoint3d(0,  1,  0))
-	    .add(dpoint3d(0,  1,  1))
-	    .add(dpoint3d(1, -1,  0))
-	    .add(dpoint3d(1,  0, -1))
-	    .add(dpoint3d(1,  0,  0))
-	    .add(dpoint3d(1,  0,  1))
-	    .add(dpoint3d(1,  1,  0));
-	  flower = false;
-	}
-      return the_;
+      neighb3d tmp;
+      tmp
+	.take(dpoint3d(0,  0,  1))
+	.take(dpoint3d(0,  1, -1))
+	.take(dpoint3d(0,  1,  0))
+	.take(dpoint3d(0,  1,  1))
+	.take(dpoint3d(1, -1,  0))
+	.take(dpoint3d(1,  0, -1))
+	.take(dpoint3d(1,  0,  0))
+	.take(dpoint3d(1,  0,  1))
+	.take(dpoint3d(1,  1,  0));
+      return tmp;
     }
-
 
     neighb3d mk_c26()
     {
-      static bool flower = true;
-      static neighb3d the_;
-      if (flower)
-	{
-	  the_
-	    .add(dpoint3d(0,  0,  1))
-	    .add(dpoint3d(0,  1, -1))
-	    .add(dpoint3d(0,  1,  0))
-	    .add(dpoint3d(0,  1,  1))
-	    .add(dpoint3d(1, -1, -1))
-	    .add(dpoint3d(1, -1,  0))
-	    .add(dpoint3d(1, -1,  1))
-	    .add(dpoint3d(1,  0, -1))
-	    .add(dpoint3d(1,  0,  0))
-	    .add(dpoint3d(1,  0,  1))
-	    .add(dpoint3d(1,  1, -1))
-	    .add(dpoint3d(1,  1,  0))
-	    .add(dpoint3d(1,  1,  1));
-	  flower = false;
-	}
-      return the_;
+      neighb3d tmp;
+      tmp
+	.take(dpoint3d(0,  0,  1))
+	.take(dpoint3d(0,  1, -1))
+	.take(dpoint3d(0,  1,  0))
+	.take(dpoint3d(0,  1,  1))
+	.take(dpoint3d(1, -1, -1))
+	.take(dpoint3d(1, -1,  0))
+	.take(dpoint3d(1, -1,  1))
+	.take(dpoint3d(1,  0, -1))
+	.take(dpoint3d(1,  0,  0))
+	.take(dpoint3d(1,  0,  1))
+	.take(dpoint3d(1,  1, -1))
+	.take(dpoint3d(1,  1,  0))
+	.take(dpoint3d(1,  1,  1));
+      return tmp;
     }
 
-
-    neighb3d mk_c4_slice()
+    neighb3d mk_c4_sli()
     {
-      static bool flower = true;
-      static neighb3d the_;
-      if (flower)
-	{
-	  the_
-	    .add(dpoint3d(0, 0, 1))
-	    .add(dpoint3d(0, 1, 0));
-	  flower = false;
-	}
-      return the_;
+      neighb3d tmp;
+      tmp
+	.take(dpoint3d(0, 0, 1))
+	.take(dpoint3d(0, 1, 0));
+      return tmp;
     }
 
-
-    neighb3d mk_c8_slice()
+    neighb3d mk_c8_sli()
     {
-      static bool flower = true;
-      static neighb3d the_;
-      if (flower)
-	{
-	  the_
-	    .add(dpoint3d(0,  0,  1))
-	    .add(dpoint3d(0,  1, -1))
-	    .add(dpoint3d(0,  1,  0))
-	    .add(dpoint3d(0,  1,  1));
-	  flower = false;
-	}
-      return the_;
+      neighb3d tmp;
+      tmp
+	.take(dpoint3d(0,  0,  1))
+	.take(dpoint3d(0,  1, -1))
+	.take(dpoint3d(0,  1,  0))
+	.take(dpoint3d(0,  1,  1));
+      return tmp;
     }
 
-
-    neighb3d mk_c4_row()
+    neighb3d mk_c2_sli()
     {
-      static bool flower = true;
-      static neighb3d the_;
-      if (flower)
-	{
-	  the_
-	    .add(dpoint3d(0, 0, 1))
-	    .add(dpoint3d(1, 0, 0));
-	  flower = false;
-	}
-      return the_;
+      neighb3d tmp;
+      tmp
+	.take(dpoint3d(1, 0, 0));
+      return tmp;
     }
 
-
-    neighb3d mk_c8_row()
+    neighb3d mk_c2_row3d()
     {
-      static bool flower = true;
-      static neighb3d the_;
-      if (flower)
-	{
-	  the_
-	    .add(dpoint3d(0,  0,  1))
-	    .add(dpoint3d(1,  0, -1))
-	    .add(dpoint3d(1,  0,  0))
-	    .add(dpoint3d(1,  0,  1));
-	  flower = false;
-	}
-      return the_;
+      neighb3d tmp;
+      tmp
+	.take(dpoint3d(0, 1, 0));
+      return tmp;
     }
 
-
-    neighb3d mk_c4_col()
+    neighb3d mk_c2_col3d()
     {
-      static bool flower = true;
-      static neighb3d the_;
-      if (flower)
-	{
-	  the_
-	    .add(dpoint3d(0, 1, 0))
-	    .add(dpoint3d(1, 0, 0));
-	  flower = false;
-	}
-      return the_;
+      neighb3d tmp;
+      tmp
+	.take(dpoint3d(0, 0, 1));
+      return tmp;
     }
 
-
-    neighb3d mk_c8_col()
-    {
-      static bool flower = true;
-      static neighb3d the_;
-      if (flower)
-	{
-	  the_
-	    .add(dpoint3d(0,  1,  0))
-	    .add(dpoint3d(1, -1,  0))
-	    .add(dpoint3d(1,  0,  0))
-	    .add(dpoint3d(1,  1,  0));
-	  flower = false;
-	}
-      return the_;
-    }
-
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::internal
 
 
-  extern const neighb3d c6;
-  extern const neighb3d c18;
-  extern const neighb3d c26;
+  extern neighb3d c6;
+  extern neighb3d c18;
+  extern neighb3d c26;
 
-  extern const neighb3d c4_slice;
-  extern const neighb3d c8_slice;
-  extern const neighb3d c4_row;
-  extern const neighb3d c8_row;
-  extern const neighb3d c4_col;
-  extern const neighb3d c8_col;
+  extern neighb3d c4_sli;
+  extern neighb3d c8_sli;
+
+  extern neighb3d c2_sli;
+  extern neighb3d c2_row3d;
+  extern neighb3d c2_col3d;
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  const neighb3d c6       = internal::mk_c6();
-  const neighb3d c18      = internal::mk_c18();
-  const neighb3d c26      = internal::mk_c26();
+#  ifdef OLN_ENABLE_DEFAULT
 
-  const neighb3d c4_slice = internal::mk_c4_slice();
-  const neighb3d c8_slice = internal::mk_c8_slice();
-  const neighb3d c4_row   = internal::mk_c4_row();
-  const neighb3d c8_row   = internal::mk_c8_row();
-  const neighb3d c4_col   = internal::mk_c4_col();
-  const neighb3d c8_col   = internal::mk_c8_col();
+  /// Default is c6.
+  template <typename D>
+  bool init_(neighb3d* this_, const D&)
+  {
+    *this_ = c6;
+    return true;
+  }
 
-# endif
+#  endif // OLN_ENABLE_DEFAULT
+
+  neighb3d c6  = internal::mk_c6();
+  neighb3d c18 = internal::mk_c18();
+  neighb3d c26 = internal::mk_c26();
+
+  neighb3d c4_sli = internal::mk_c4_sli();
+  neighb3d c8_sli = internal::mk_c8_sli();
+
+  neighb3d c2_sli   = internal::mk_c2_sli();
+  neighb3d c2_row3d = internal::mk_c2_row3d();
+  neighb3d c2_col3d = internal::mk_c2_col3d();
+
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

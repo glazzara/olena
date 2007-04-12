@@ -28,6 +28,7 @@
 #include <cassert>
 #include <oln/core/2d/image2d.hh>
 #include <oln/core/2d/neighb2d.hh>
+#include <oln/core/gen/restricted_to.hh>
 
 
 int main()

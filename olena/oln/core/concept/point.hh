@@ -31,7 +31,6 @@
 
 # include <mlc/value.hh>
 
-# include <oln/core/concept/generalized_point.hh>
 # include <oln/core/concept/grid.hh>
 # include <oln/core/concept/operators.hh>
 
@@ -40,8 +39,22 @@
 
 namespace oln
 {
-  /// Instant value.
-  oln_decl_instant_value(point);
+
+  /// Concept-class "Generalized_Point". 
+
+  template <typename Exact>
+  struct Generalized_Point : virtual public Any<Exact>
+  {
+    stc_typename(grid);
+    stc_typename(dim);
+    stc_typename(coord);
+    stc_typename(dpoint);
+
+    enum { n = mlc_value(dim) };
+
+  protected:
+    Generalized_Point();
+  };
 
 
   /// Concept-class "Point".
@@ -127,6 +140,10 @@ namespace oln
 
 # ifndef OLN_INCLUDE_ONLY
 
+  template <typename Exact>
+  Generalized_Point<Exact>::Generalized_Point()
+  {
+  }
 
   template <typename Exact>
   bool Point<Exact>::op_equal_(const Exact& rhs) const
@@ -192,7 +209,6 @@ namespace oln
   }
 
 # endif // ! OLN_INCLUDE_ONLY
-
 
 } // end of namespace oln
 

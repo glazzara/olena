@@ -28,7 +28,7 @@
 #ifndef OLN_CORE_GEN_DPOINTS_PITER_HH
 # define OLN_CORE_GEN_DPOINTS_PITER_HH
 
-# include <oln/core/concept/generalized_point.hh>
+# include <oln/core/concept/point.hh>
 # include <oln/core/concept/window.hh>
 # include <oln/core/concept/neighborhood.hh>
 # include <oln/core/concept/image.hh>

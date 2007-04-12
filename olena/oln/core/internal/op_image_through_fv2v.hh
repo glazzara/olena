@@ -84,7 +84,7 @@ namespace oln
   namespace internal
   {
 
-    /// Implementation class for the result of "Function_v2v F << Image I".
+    /// Implementation class for the result of "Image I >> Function_v2v F".
 
     template <typename I, typename F>
     class current : public super

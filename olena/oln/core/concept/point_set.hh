@@ -36,7 +36,7 @@ namespace oln
 {
 
   /// Instant value.
-  oln_decl_instant_value(box);
+  oln_decl_instant_value(i_box);
 
 
   /// Concept-class "Point_Set".

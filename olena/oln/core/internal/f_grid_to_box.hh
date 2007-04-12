@@ -43,18 +43,18 @@ namespace oln
   // Grid types.
 
   struct grid1d;
-
   struct grid2d;
   struct grid2d_hex;
   struct grid2d_tri;
-
-  // FIXME: 3D...
+  struct grid3d;
+  // ...
 
   // Box types.
 
   struct box1d;
   struct box2d;
-  template <typename P> class gen_box;
+  struct box3d;
+  // ...
 
   /// \}
 
@@ -86,7 +86,13 @@ namespace oln
       typedef box2d ret;
     };
 
-    // FIXME: 2D hex/tri, 3D...
+    // FIXME: 2D hex/tri...
+
+    template <>
+    struct grid_to_box__< grid3d >
+    {
+      typedef box3d ret;
+    };
 
     /// \}
 

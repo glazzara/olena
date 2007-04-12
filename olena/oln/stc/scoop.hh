@@ -136,6 +136,7 @@ mlc::wrap_<													\
 // For concepts.
 # define stc_typename(Type) typedef stc_type(Exact, Type) Type
 # define stc_using(Type)    typedef typename super::Type Type
+# define stc_using_(Type)   typedef super::Type Type
 # define stc_using_from(Abstraction, Type)    typedef typename Abstraction<Exact>::Type Type
 # define stc_deduce_typename(Src, Type) typedef stc_type(Src, Type) Type
 

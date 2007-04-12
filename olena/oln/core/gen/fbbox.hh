@@ -31,7 +31,7 @@
 
 # include <oln/core/gen/box.hh>
 # include <oln/core/concept/point.hh>
-# include <oln/core/internal/point_set_base.hh>
+# include <oln/core/internal/f_point_to_box.hh>
 
 
 namespace oln
@@ -49,7 +49,7 @@ namespace oln
 
   public:
 
-    typedef typename f_box_from_point_<P>::ret box_t;
+    typedef oln_f_point_to_box(P) box_t;
 
     fbbox_();
     operator box_t() const;
@@ -124,7 +124,6 @@ namespace oln
   }
 
 # endif // ! OLN_INCLUDE_ONLY
-
 
 } // end of namespace oln
 

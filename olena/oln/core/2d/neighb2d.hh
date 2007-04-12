@@ -96,15 +96,15 @@ namespace oln
       return tmp;
     }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::internal
 
 
   extern neighb2d c4;
   extern neighb2d c8;
-  extern neighb2d c2r;
-  extern neighb2d c2c;
+  extern neighb2d c2_row;
+  extern neighb2d c2_col;
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -121,16 +121,15 @@ namespace oln
 
 #  endif // OLN_ENABLE_DEFAULT
 
-  neighb2d c4  = internal::mk_c4();
-  neighb2d c8  = internal::mk_c8();
-  neighb2d c2r = internal::mk_c2_row();
-  neighb2d c2c = internal::mk_c2_col();
+  neighb2d c4 = internal::mk_c4();
+  neighb2d c8 = internal::mk_c8();
 
-# endif // OLN_INCLUDE_ONLY
+  neighb2d c2_row = internal::mk_c2_row();
+  neighb2d c2_col = internal::mk_c2_col();
 
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
-
 
 
 #endif // ! OLN_CORE_2D_NEIGHB2D_HH

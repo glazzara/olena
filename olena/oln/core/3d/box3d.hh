@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_2D_BOX2D_HH
-# define OLN_CORE_2D_BOX2D_HH
+#ifndef OLN_CORE_3D_BOX3D_HH
+# define OLN_CORE_3D_BOX3D_HH
 
-# include <oln/core/2d/point2d.hh>
+# include <oln/core/3d/point3d.hh>
 # include <oln/core/concept/point_set.hh> // for internal::tag::i_box_t
 # include <oln/core/internal/box.hh>
 
@@ -37,69 +37,70 @@ namespace oln
 {
 
   // Fwd decl.
-  class box2d;
+  class box3d;
 
   // Super type
   template <>
-  struct super_trait_< box2d >
+  struct super_trait_< box3d >
   {
-    typedef internal::box_<box2d> ret;
+    typedef internal::box_<box3d> ret;
   };
 
   // Virtual types
   template <>
-  struct vtypes<box2d>
+  struct vtypes<box3d>
   {
-    typedef point2d point;
-    typedef box2d box;
+    typedef point3d point;
+    typedef box3d box;
   };
 
-  // Class box2d
-  class box2d : public internal::box_< box2d >
+  // Class box3d
+  class box3d : public internal::box_< box3d >
   {
-    typedef internal::box_< box2d > super;
+    typedef internal::box_< box3d > super;
   public:
     stc_using_(from_to_t);
 
-    box2d();
-    box2d(const from_to_t& dat);
-    box2d(const point2d& pmin, const point2d& pmax);
+    box3d();
+    box3d(const from_to_t& dat);
+    box3d(const point3d& pmin, const point3d& pmax);
     template <typename D>
-    box2d(const internal::initializer_<D>& data);
+    box3d(const internal::initializer_<D>& data);
   };
 
   namespace internal
   {
 
     template <typename U>
-    bool init__(tag::i_box_t, box2d& b,
-		const pair< nrows_t<U>, ncols_t<U> >& data);
+    bool init__(tag::i_box_t, box3d& b,
+		const triplet< nrows_t<U>, ncols_t<U>, nslis_t<U> >& data);
 
     template <typename U>
-    bool init__(tag::i_box_t, box2d& b,
-		const triplet< from_t<point2d>, nrows_t<U>, ncols_t<U> >& data);
+    bool init__(tag::i_box_t, box3d& b,
+		const quartet< from_t<point3d>,
+		               nrows_t<U>, ncols_t<U>, nslis_t<U> >& data);
 
   } // end of namespace oln::internal
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  box2d::box2d()
+  box3d::box3d()
   {
   }
 
-  box2d::box2d(const box2d::from_to_t& dat) :
+  box3d::box3d(const box3d::from_to_t& dat) :
     super(dat)
   {
   }
 
-  box2d::box2d(const point2d& pmin, const point2d& pmax) :
+  box3d::box3d(const point3d& pmin, const point3d& pmax) :
     super(pmin, pmax)
   {
   }
 
   template <typename D>
-  box2d::box2d(const internal::initializer_<D>& data)
+  box3d::box3d(const internal::initializer_<D>& data)
   {
     bool box_ok = internal::init__(internal::tag::i_box_t(), *this, data.value());
     postcondition(box_ok);
@@ -110,29 +111,35 @@ namespace oln
   {
 
     template <typename U>
-    bool init__(tag::i_box_t, box2d& b,
-		const pair< nrows_t<U>, ncols_t<U> >& data)
+    bool init__(tag::i_box_t, box3d& b,
+		const triplet< nrows_t<U>, ncols_t<U>, nslis_t<U> >& data)
     {
       unsigned nrows = data.first.value;
       unsigned ncols = data.second.value;
-      precondition(nrows != 0 and ncols != 0);
+      unsigned nslis = data.third.value;
+      precondition(nrows != 0 and ncols != 0 and nslis != 0);
       b.pmin().row() = 0;
       b.pmin().col() = 0;
+      b.pmin().sli() = 0;
       b.pmax().row() = nrows - 1;
       b.pmax().col() = ncols - 1;
+      b.pmax().sli() = nslis - 1;
       return true;
     }
 
     template <typename U>
-    bool init__(tag::i_box_t, box2d& b,
-		const triplet< from_t<point2d>, nrows_t<U>, ncols_t<U> >& data)
+    bool init__(tag::i_box_t, box3d& b,
+		const quartet< from_t<point3d>,
+		               nrows_t<U>, ncols_t<U>, nslis_t<U> >& data)
     {
       unsigned nrows = data.second.value;
       unsigned ncols = data.third.value;
-      precondition(nrows != 0 and ncols != 0);
+      unsigned nslis = data.fourth.value;
+      precondition(nrows != 0 and ncols != 0 and nslis != 0);
       b.pmin() = data.first.value;
       b.pmax().row() = b.pmin().row() + nrows - 1;
       b.pmax().col() = b.pmin().col() + ncols - 1;
+      b.pmax().sli() = b.pmin().sli() + nslis - 1;
       return true;
     }
 
@@ -144,4 +151,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_2D_BOX2D_HH
+#endif // ! OLN_CORE_3D_BOX3D_HH

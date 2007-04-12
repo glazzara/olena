@@ -26,27 +26,23 @@
 // Public License.
 
 #include <cassert>
-
 #include <oln/core/3d/image3d.hh>
 
 int
 main()
 {
+  using namespace oln;
 
-  oln::image3d<int> ima1(40, 30, 20);
-  oln::image3d<int>::piter p (ima1.points());
-  oln::point3d p1;
+  image3d<int> ima(30, 20, 10);
+  point3d p_;
+  image3d<int>::piter p(ima.points());
 
-  for (p.start(); p.is_valid(); p.next())
+  for_all(p)
   {
-    p1.row() = p.row();
-    p1.col() = p.col();
-    p1.slice() = p.slice();
+    p_.sli() = p.sli();
+    p_.row() = p.row();
+    p_.col() = p.col();
   }
 
-  assert(p1.row() == 39);
-  assert(p1.col() == 29);
-  assert(p1.slice() == 19);
-
-  return 0;
+  assert(p_.sli() == 29 and p_.row() == 19 and p_.col() == 9);
 }

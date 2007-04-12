@@ -33,12 +33,8 @@
 # include <oln/core/concept/value.hh>
 
 
-
-
 namespace oln
 {
-
-
 
   // -----------------------------  literal_<T>
 
@@ -48,36 +44,102 @@ namespace oln
   {
     typedef const T& result;
 
-    literal_(const T& val) : val_(val) {}
+    literal_(const T& val);
 
-    result operator()() const
-    {
-      return this->val_;
-    }
+    const T& operator()() const;
 
-    operator T() const
-    {
-      return this->val_;
-    }
+    operator T() const;
     
     template <typename U>
-    operator literal_<U>() const
-    {
-      literal_<U> tmp(this->val_);
-      return tmp;
-    }
+    operator literal_<U>() const;
 
-    result value() const
-    {
-      return this->val_;
-    }
+    const T& value() const;
 
   private:
     T val_;
   };
 
 
-  // literal
+  template <typename T>
+  literal_<T> literal(const T& val);
+
+
+  // -----------------------------  lit_p2v_<P,T>
+
+
+  template <typename P, typename V>
+  struct lit_p2v_ : public Function_p2v< lit_p2v_<P,V> >
+  {
+    typedef P argument;
+    typedef const V& result;
+
+    lit_p2v_(const V& val);
+
+    const V& operator()(const P&) const;
+
+  private:
+    V val_;
+  };
+
+
+  // -----------------------------  lit_p2b_<P,B>
+
+
+  template <typename P, typename B>
+  struct lit_p2b_ : public Function_p2b< lit_p2b_<P,B> >
+  {
+    typedef P argument;
+    typedef const B& result;
+
+    lit_p2b_(const B& val);
+
+    const B& operator()(const P&) const;
+
+  private:
+    B val_;
+  };
+
+
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  // literal_<T>
+
+  template <typename T>
+  literal_<T>::literal_(const T& val)
+    : val_(val)
+  {
+  }
+
+  template <typename T>
+  const T&
+  literal_<T>::operator()() const
+  {
+    return this->val_;
+  }
+
+  template <typename T>
+  literal_<T>::operator T() const
+  {
+    return this->val_;
+  }
+    
+  template <typename T>
+  template <typename U>
+  literal_<T>::operator literal_<U>() const
+  {
+    literal_<U> tmp(this->val_);
+    return tmp;
+  }
+
+  template <typename T>
+  const T&
+  literal_<T>::value() const
+  {
+    return this->val_;
+  }
+
   template <typename T>
   literal_<T>
   literal(const T& val)
@@ -87,81 +149,38 @@ namespace oln
   }
 
 
-  // -----------------------------  lit_p2v_<P,T>
+  // lit_p2v_<P,V>
 
-
-  // Fwd decl.
-  template <typename P, typename T> struct lit_p2v_;
-
-  // Category.
-  namespace internal
+  template <typename P, typename V>
+  lit_p2v_<P,V>::lit_p2v_(const V& val)
+    : val_(val)
   {
-    template <typename P, typename T>
-    struct set_category_of_< lit_p2v_<P,T> >
-    {
-      typedef stc::is< Function_p2v > ret;
-    };
   }
 
-  // Class.
-  template <typename P, typename T>
-  struct lit_p2v_ : public Function_p2v< lit_p2v_<P,T> >
+  template <typename P, typename V>
+  const V&
+  lit_p2v_<P,V>::operator()(const P&) const
   {
-    typedef P argument;
-    typedef T result;
-
-    lit_p2v_(const T& val)
-      : val_(val)
-    {
-    }
-
-    result operator()(argument) const
-    {
-      return this->val_;
-    }
-
-  private:
-    T val_;
-  };
-
-
-  // -----------------------------  lit_p2b_<P,B>
-
-
-  // Fwd decl.
-  template <typename P, typename B> struct lit_p2b_;
-
-  // Category.
-  namespace internal
-  {
-    template <typename P, typename B>
-    struct set_category_of_< lit_p2b_<P,B> >
-    {
-      typedef stc::is< Function_p2b > ret;
-    };
+    return this->val_;
   }
 
-  // Class.
+
+  //lit_p2b_<P,B>
+
   template <typename P, typename B>
-  struct lit_p2b_ : public Function_p2b< lit_p2b_<P,B> >
+  lit_p2b_<P,B>::lit_p2b_(const B& val)
+    : val_(val)
   {
-    typedef P argument;
-    typedef B result;
+  }
 
-    lit_p2b_(const B& val)
-      : val_(val)
-    {
-    }
+  template <typename P, typename B>
+  const B&
+  lit_p2b_<P,B>::operator()(const P&) const
+  {
+    return this->val_;
+  }
 
-    result operator()(argument) const
-    {
-      return this->val_;
-    }
-
-  private:
-    B val_;
-  };
-
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

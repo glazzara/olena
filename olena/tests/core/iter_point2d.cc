@@ -26,25 +26,22 @@
 // Public License.
 
 #include <cassert>
-
 #include <oln/core/2d/image2d.hh>
 
 int
 main()
 {
+  using namespace oln;
 
-  oln::image2d<int> ima1(40, 30);
-  oln::image2d<int>::piter p (ima1.points());
-  oln::point2d p1;
+  image2d<int> ima(20, 10);
+  point2d p_;
+  image2d<int>::piter p(ima.points());
 
-  for (p.start(); p.is_valid(); p.next())
+  for_all(p)
   {
-    p1.row() = p.row();
-    p1.col() = p.col();
+    p_.row() = p.row();
+    p_.col() = p.col();
   }
 
-  assert(p1.row() == 39);
-  assert(p1.col() == 29);
-
-  return 0;
+  assert(p_.row() == 19 and p_.col() == 9);
 }

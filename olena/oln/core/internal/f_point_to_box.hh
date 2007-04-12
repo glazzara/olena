@@ -25,84 +25,88 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_DPOINT1D_HH
-# define OLN_CORE_INTERNAL_DPOINT1D_HH
+#ifndef OLN_CORE_INTERNAL_F_POINT_TO_BOX_HH
+# define OLN_CORE_INTERNAL_F_POINT_TO_BOX_HH
 
-# include <oln/core/internal/dpoint_base.hh>
+# include <oln/core/concept/point.hh>
+
+
+# define oln_f_point_to_box(P) \
+typename oln::internal::f_point_to_box_< P >::ret
 
 
 namespace oln
 {
 
+  /// \{
+  /// Forward declarations.
 
-  /// Fwd decls.
-  namespace internal { template <typename Exact> struct dpoint1d_; }
+  // Point types.
 
+  struct point1d;
+  struct point2d;
+  struct point3d;
+  template <typename G, typename C> class point;
 
-  /// Super type.
-  template<typename Exact>
-  struct super_trait_< internal::dpoint1d_<Exact> >
-  {
-    typedef internal::dpoint_base_<Exact> ret;
-  };
+  // Box types.
 
+  struct box1d;
+  struct box2d;
+  struct box3d;
+  template <typename G, typename C> class box;
 
-  /// Virtual types.
-  template <typename Exact>
-  struct vtypes< internal::dpoint1d_<Exact> >
-  {
-  };
+  /// \}
+
 
 
   namespace internal
   {
 
+    template <typename P>
+    struct point_to_box__;
 
-    template <typename Exact>
-    class dpoint1d_ : public dpoint_base_<Exact>
+
+    /// \{
+    /// Definitions.
+
+    template <typename G, typename C>
+    struct point_to_box__< point<G, C> >
     {
-      typedef dpoint_base_<Exact> super;
-
-    public:
-      stc_using(coord);
-
-      coord  ind() const;
-      coord& ind();
-
-    protected:
-      dpoint1d_();
+      typedef box<G, C> ret;
     };
 
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename Exact>
-    dpoint1d_<Exact>::dpoint1d_()
+    template <>
+    struct point_to_box__< point1d >
     {
-    }
+      typedef box1d ret;
+    };
 
-    template <typename Exact>
-    typename dpoint1d_<Exact>::coord
-    dpoint1d_<Exact>::ind() const
+    template <>
+    struct point_to_box__< point2d >
     {
-      return this->v_[0];
-    }
+      typedef box2d ret;
+    };
 
-    template <typename Exact>
-    typename dpoint1d_<Exact>::coord &
-    dpoint1d_<Exact>::ind()
+    // FIXME: 2D hex/tri...
+
+    template <>
+    struct point_to_box__< point3d >
     {
-      return this->v_[0];
-    }
+      typedef box3d ret;
+    };
 
-# endif
+    /// \}
 
+
+    template <typename P>
+    struct f_point_to_box_ : private mlc::assert_< mlc_is_a(P, Point) >,
+			     public point_to_box__< P >
+    {
+    };
 
   } // end of namespace oln::internal
-
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_DPOINT1D_HH
+#endif // ! OLN_CORE_INTERNAL_F_POINT_TO_BOX_HH

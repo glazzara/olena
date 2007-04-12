@@ -28,19 +28,14 @@
 #ifndef OLN_CORE_1D_IMAGE1D_B_HH
 # define OLN_CORE_1D_IMAGE1D_B_HH
 
+# include <oln/core/1d/box1d.hh>
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/internal/utils.hh>
 # include <oln/core/1d/array1d.hh>
-# include <oln/core/1d/box1d.hh>
 
 
 namespace oln
 {
-
-
-  // FIXME: Conversely to image2d_b, we use here the triplet class
-  // instead of the array_b_ class.
-
 
   // Fwd decl.
   template <typename T> class image1d_b;

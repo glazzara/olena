@@ -66,7 +66,7 @@ namespace oln
     typedef stc::final< point__ >                                    point;
     typedef stc::final< pset_std_based_fwd_piter_<std_container__> > fwd_piter;
     typedef stc::final< pset_std_based_bkd_piter_<std_container__> > bkd_piter;
-    typedef stc::final< typename f_box_from_point_<point__>::ret >   box;
+    typedef stc::final< oln_f_point_to_box(point__) >                box;
   };
 
 

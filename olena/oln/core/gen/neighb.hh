@@ -31,18 +31,10 @@
 
 # include <oln/core/internal/dpoints_impl.hh>
 # include <oln/core/internal/neighborhood_base.hh>
-# include <oln/core/internal/op_image_extended_by_nbh.hh>
 
 
 namespace oln
 {
-
-
-  // Op.
-  oln_decl_op_extended_by(Image, Neighborhood);
-  oln_decl_inplace_image_op(extended_by, +, Neighborhood);
-
-
 
   // Fwd decl.
   template <typename Dp> class neighb_;
@@ -96,10 +88,13 @@ namespace oln
     return *this;
   }
 
-# endif
-  
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
+
+
+// FIXME: Bad!
+# include <oln/core/gen/extended_by.hh>
 
 
 #endif // ! OLN_CORE_GEN_NEIGHB_HH

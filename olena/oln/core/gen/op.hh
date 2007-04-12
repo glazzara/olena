@@ -30,111 +30,23 @@
 
 # include <oln/core/internal/special_op.hh>
 # include <oln/core/internal/category_of.hh>
-# include <oln/core/concept/function.hh>
-# include <oln/core/concept/value.hh>
-# include <oln/core/gen/inplace.hh>
-
-
-
-// Macro.
-
-# define oln_decl_op_(OpName, Lconcept, OpSym, Rconcept)		\
-									\
-  template <typename L, typename R>					\
-  op_<L, OpName, R>							\
-  operator OpSym (Lconcept<L>& lhs, Rconcept<R>& rhs)			\
-  {									\
-    op_<L, OpName, R> tmp(exact(lhs), exact(rhs));			\
-    return tmp;								\
-  }									\
-									\
-  template <typename L, typename R>					\
-  op_<L, OpName, const R>						\
-  operator OpSym (Lconcept<L>& lhs, const Rconcept<R>& rhs)		\
-  {									\
-    op_<L, OpName, const R> tmp(exact(lhs), exact(rhs));		\
-    return tmp;								\
-  }									\
-									\
-  template <typename L, typename R>					\
-  op_<const L, OpName, R>						\
-  operator OpSym (const Lconcept<L>& lhs, Rconcept<R>& rhs)		\
-  {									\
-    op_<const L, OpName, R> tmp(exact(lhs), exact(rhs));		\
-    return tmp;								\
-  }									\
-									\
-  template <typename L, typename R>					\
-  op_<const L, OpName, const R>						\
-  operator OpSym (const Lconcept<L>& lhs, const Rconcept<R>& rhs)	\
-  {									\
-    op_<const L, OpName, const R> tmp(exact(lhs), exact(rhs));		\
-    return tmp;								\
-  }									\
-									\
-  struct e_n_d___w_i_t_h___a___s_e_m_i___c_o_l_u_m_n
-
-
-
-# define oln_decl_inplace_image_op(OpName, OpSym, Rconcept)	\
-								\
-  template <typename L, typename R>				\
-  inplace_< op_<L, OpName, R> >					\
-  operator OpSym (inplace_<L> lhs, Rconcept<R>& rhs)		\
-  {								\
-    mlc::assert_< mlc_is_a(L, Mutable_Image) >::check();	\
-    op_<L, OpName, R> tmp(lhs.unwrap(), exact(rhs));		\
-    return inplace(tmp);					\
-  }								\
-								\
-  struct e_n_d___w_i_t_h___a___s_e_m_i___c_o_l_u_m_n
-
-
-
-// FIXME: Split into different files so that the client can explicitly include
-// what is really needed...
-
-# define oln_decl_op_extended_by(Lconcept, Rconcept)   oln_decl_op_( extended_by,   Lconcept, +, Rconcept) 
-# define oln_decl_op_such_as(Lconcept, Rconcept)       oln_decl_op_( such_as,       Lconcept, |, Rconcept) 
-# define oln_decl_op_restricted_to(Lconcept, Rconcept) oln_decl_op_( restricted_to, Lconcept, |, Rconcept) 
-# define oln_decl_op_over(Lconcept, Rconcept)          oln_decl_op_( over,          Lconcept, /, Rconcept) 
-# define oln_decl_op_applied_on(Lconcept, Rconcept)    oln_decl_op_( applied_on,    Lconcept, <<, Rconcept) 
-# define oln_decl_op_through(Lconcept, Rconcept)       oln_decl_op_( through,       Lconcept, >>, Rconcept) 
-// ...
-
 
 
 namespace oln
 {
 
-
-  /// \{
-  /// Operator Names.
-
-  struct extended_by;
-  struct such_as;
-  struct restricted_to;
-  struct over;
-  struct applied_on;
-  struct through;
-
-  /// \}
-
-
-
-
   // Fwd decl.
   template <typename L, typename OpName, typename R> class op_;
 
 
-  /// Virtual types.
+  // Virtual types.
   template <typename L, typename OpName, typename R>
   struct vtypes< op_<L, OpName, R> >
   {
   };
 
 
-  /// Super type.
+  // Super type.
 
 # define  super \
   internal::special_op_< oln_category_of_(L), L, OpName, oln_category_of_(R), R >

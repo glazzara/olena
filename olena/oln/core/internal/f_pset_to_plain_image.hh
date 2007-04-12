@@ -32,7 +32,8 @@
 # include <oln/core/internal/f_grid_to_plain_image.hh>
 
 
-#define oln_f_pset_to_plain_image(Ps, T) typename oln::internal::f_pset_to_plain_image_< Ps, T >::ret
+# define oln_f_pset_to_plain_image(Ps, T) \
+  typename oln::internal::f_pset_to_plain_image_< Ps, T >::ret
 
 
 namespace oln
@@ -42,7 +43,7 @@ namespace oln
   /// Forward declarations.
 
   // point set types
-  template <typename P> class gen_box;
+  template <typename G, typename C> class box;
   class box1d;
   class box2d;
   // FIXME: ...
@@ -95,10 +96,16 @@ namespace oln
 
     // ...
 
-    template <typename P, typename T>
-    struct pset_to_plain_image__< gen_box<P>, T >
+    template <typename G, typename T>
+    struct pset_to_plain_image__< box<G, int>, T >
     {
-      typedef oln_f_grid_to_plain_image(oln_grid(P), T) ret;
+      typedef oln_f_grid_to_plain_image(G, T) ret;
+    };
+
+    template <typename G, typename C, typename T>
+    struct pset_to_plain_image__< box<G, C>, T >
+    {
+      // FIXME: Not impled yet (every C should be handled; not only int).
     };
 
     template <typename S, typename F_p2b, typename T>

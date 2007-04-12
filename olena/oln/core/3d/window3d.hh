@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,16 @@
 #ifndef OLN_CORE_3D_WINDOW3D_HH
 # define OLN_CORE_3D_WINDOW3D_HH
 
-// Headers required for the complete definition of oln::window3d
-// (i.e., oln::window_<dpoint3d>).
-# include <oln/core/3d/aliases.hh>
-# include <oln/core/3d/dpoint3d.hh>
 # include <oln/core/gen/window.hh>
+
+
+namespace oln
+{
+
+  // FIXME: window3d should be an actual type, not an alias...
+  typedef gen_window<dpoint3d> window3d;
+
+} // end of namespace oln
+
 
 #endif // ! OLN_CORE_3D_WINDOW3D_HH

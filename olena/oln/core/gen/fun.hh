@@ -42,13 +42,8 @@
 
 
 
-// FIXME: Separate defs and decls.
-
-
-
 namespace oln
 {
-
 
   namespace internal
   {
@@ -87,145 +82,184 @@ namespace oln
 
 
 
-  // -----------------------------  fun_p2b_<F>
+  //  fun_p2b_<F>
+  // -------------
 
 
-  // Fwd decl.
-  template <typename F> struct fun_p2b_;
-
-  // Category.
-  namespace internal
-  {
-    template <typename F>
-    struct set_category_of_< fun_p2b_<F> >
-    {
-      typedef stc::is< Function_p2b > ret;
-    };
-  }
-
-  // Class.
   template <typename F>
   struct fun_p2b_ : public Function_p2b< fun_p2b_<F> >
   {
     typedef oln_arg_of_(F) argument;
     typedef oln_res_of_(F) result;
 
-    fun_p2b_(const F& f) : f_(f) {}
-
-    result operator()(argument arg) const
-    {
-      return this->f_(arg);
-    }
+    fun_p2b_(const F& f);
+    result operator()(argument arg) const;
 
   private:
     F f_;
   };
+ 
+  template <typename B, typename P>
+  fun_p2b_<B (*)(P)>
+  functorize_p2b(B (*f)(P));
+ 
 
   // Specialization.
+
   template <typename I>
-  struct fun_p2b_< Binary_Image<I> > : public Function_p2b< fun_p2b_< Binary_Image<I> > >
+  struct fun_p2b_< Binary_Image<I> >
+    :
+    public Function_p2b< fun_p2b_< Binary_Image<I> > >
   {
     typedef const oln_point(I)& argument;
     typedef       oln_rvalue(I) result;
 
-    fun_p2b_(const Binary_Image<I>& ima)
-      : ima_(exact(ima))
-    {}
-
-    result operator()(argument arg) const
-    {
-      return this->ima_(arg);
-    }
+    fun_p2b_(const I& ima);
+    oln_rvalue(I) operator()(const oln_point(I)& arg) const;
 
   private:
     I ima_;
   };
 
+  template <typename I>
+  fun_p2b_< Binary_Image<I> >
+  functorize_p2b(const Binary_Image<I>& ima);
 
 
-  // -----------------------------  fun_p2v_<F>
+
+  //  fun_p2v_<F>
+  // -------------
 
 
-  // Fwd decl.
-  template <typename F> struct fun_p2v_;
-
-  // Category.
-  namespace internal
-  {
-    template <typename F>
-    struct set_category_of_< fun_p2v_<F> >
-    {
-      typedef stc::is< Function_p2v > ret;
-    };
-  }
-
-  // Class.
   template <typename F>
   struct fun_p2v_ : public Function_p2v< fun_p2v_<F> >
   {
     typedef oln_arg_of_(F) argument;
     typedef oln_res_of_(F) result;
 
-    fun_p2v_(const F& f) : f_(f) {}
-
-    result operator()(argument arg) const
-    {
-      return this->f_(arg);
-    }
+    fun_p2v_(const F& f);
+    result operator()(argument arg) const;
 
   private:
     F f_;
   };
 
-
-  // functorize_p2v
-
   template <typename V, typename P>
   fun_p2v_<V (*)(P)>
-  functorize_p2v(V (*f)(P))
-  {
-    mlc::assert_< mlc_is_a(P, Point) >::check(); // FIXME: Add err msg.
-    fun_p2v_<V (*)(P)> tmp(f);
-    return tmp;
-  }
+  functorize_p2v(V (*f)(P));
 
 
-  // -----------------------------  fun_v2v_<F>
+  //  fun_v2v_<F>
+  // -------------
 
 
-  // Fwd decl.
-  template <typename F> struct fun_v2v_;
-
-  // Category.
-  namespace internal
-  {
-    template <typename F>
-    struct set_category_of_< fun_v2v_<F> >
-    {
-      typedef stc::is< Function_v2v > ret;
-    };
-  }
-
-  // Class.
   template <typename F>
   struct fun_v2v_ : public Function_v2v< fun_v2v_<F> >
   {
     typedef oln_arg_of_(F) argument;
     typedef oln_res_of_(F) result;
 
-    fun_v2v_(const F& f) : f_(f) {}
-
-    result operator()(argument arg) const
-    {
-      return this->f_(arg);
-    }
+    fun_v2v_(const F& f);
+    result operator()(argument arg) const;
 
   private:
     F f_;
   };
 
+  template <typename Vr, typename Va>
+  fun_v2v_<Vr (*)(Va)>
+  functorize_v2v(Vr (*f)(Va));
 
-  // functorize_v2v
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  // fun_p2b_<F>
+
+  template <typename F>
+  fun_p2b_<F>::fun_p2b_(const F& f)
+    : f_(f)
+  {
+  }
+ 
+  template <typename F>
+  typename fun_p2b_<F>::result
+  fun_p2b_<F>::operator()(typename fun_p2b_<F>::argument arg) const
+  {
+    return this->f_(arg);
+  }
+
+  template <typename B, typename P>
+  fun_p2b_<B (*)(P)>
+  functorize_p2b(B (*f)(P))
+  {
+    typedef mlc_basic(P) P_;
+    mlc::assert_< mlc_is_a(P_, Point) >::check();
+    // FIXME: Add static check about B being Boolean.
+    fun_p2b_<B (*)(P)> tmp(f);
+    return tmp;
+  }
+
+  template <typename I>
+  fun_p2b_< Binary_Image<I> >::fun_p2b_(const I& ima)
+    : ima_(ima)
+  {
+  }
+
+  template <typename I>
+  oln_rvalue(I)
+  fun_p2b_< Binary_Image<I> >::operator()(const oln_point(I)& arg) const
+  {
+    return this->ima_(arg);
+  }
+
+  template <typename I>
+  fun_p2b_< Binary_Image<I> >
+  functorize_p2b(const Binary_Image<I>& ima)
+  {
+    fun_p2b_< Binary_Image<I> > tmp(exact(ima));
+    return tmp;
+  }
+
+  // fun_p2v_<F>
+ 
+  template <typename F>
+  fun_p2v_<F>::fun_p2v_(const F& f)
+    : f_(f)
+  {
+  }
+
+  template <typename F>
+  typename fun_p2v_<F>::result
+  fun_p2v_<F>::operator()(typename fun_p2v_<F>::argument arg) const
+  {
+    return this->f_(arg);
+  }
+
+  template <typename V, typename P>
+  fun_p2v_<V (*)(P)>
+  functorize_p2v(V (*f)(P))
+  {
+    typedef mlc_basic(P) P_;
+    mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.
+    fun_p2v_<V (*)(P)> tmp(f);
+    return tmp;
+  }
+
+  // fun_v2v_<F>
+ 
+  template <typename F>
+  fun_v2v_<F>::fun_v2v_(const F& f)
+    : f_(f)
+  {
+  }
+  
+  template <typename F>
+  typename fun_v2v_<F>::result
+  fun_v2v_<F>::operator()(typename fun_v2v_<F>::argument arg) const
+  {
+    return this->f_(arg);
+  }
 
   template <typename Vr, typename Va>
   fun_v2v_<Vr (*)(Va)>
@@ -235,6 +269,7 @@ namespace oln
     return tmp;
   }
 
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

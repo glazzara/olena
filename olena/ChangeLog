@@ -1,5 +1,9 @@
 2007-04-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add 3D, remove some fixmes, and make various cleanups.
+
+2007-04-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add ''theoretical bounding box'' for point set types.
 
 	* TODO: Augment.

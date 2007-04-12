@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2006 EPITA Research and
+// Copyright (C) 2001, 2002, 2003, 2004, 2006, 2007 EPITA Research and
 // Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -29,128 +29,81 @@
 #ifndef OLN_CORE_3D_POINT3D_HH
 # define OLN_CORE_3D_POINT3D_HH
 
-# include <mlc/int.hh>
-# include <oln/core/internal/point_nd.hh>
+# include <oln/core/3d/grid3d.hh>
+# include <oln/core/internal/point_base.hh>
+# include <oln/core/internal/point_impl.hh>
 
 
 namespace oln
 {
 
-  /// Fwd decls.
-  template <unsigned D> struct grid_;
-  template <typename C> struct dpoint3d_;
-  template <typename C> struct  point3d_;
+  // Fwd decls.
+  class  point3d;
+  class dpoint3d;
 
 
-  typedef grid_<3> grid3d;
-  typedef dpoint3d_<int> dpoint3d;
-  typedef  point3d_<int>  point3d;
-
-
-  /* FIXME: Is this the right place for these functions (on types)?
-     In particular, the function on dpoint3d should be near the
-     definition of dpoint3d, not point3d's.  */
-  /// Specializations of functions point and dpoint :
-  /// \f$(n, coord) \rightarrow type\f$ for \f$n = 3\f$.
-  /// \{
-  template <typename C> struct  point_ <3, C> { typedef  point3d_<C> ret; };
-  template <typename C> struct dpoint_ <3, C> { typedef dpoint3d_<C> ret; };
-  /// \}
-
-
-
-  /// Super type.
-  template<typename C>
-  struct set_super_type< point3d_<C> >
+  // Super type.
+  template<>
+  struct super_trait_< point3d >
   {
-    typedef internal::point_nd< point3d_<C> > ret;
+    typedef internal::point_base_< point3d > ret;
   };
 
 
-  /// Virtual types associated to oln::point3d_<C>.
-  template <typename C>
-  struct vtypes< point3d_<C> >
+  // Virtual types.
+  template <>
+  struct vtypes< point3d >
   {
-    typedef grid3d        grid_type;
-    typedef dpoint3d      dpoint_type;
-    typedef C             coord_type;
-    typedef mlc::uint_<3> dim_type;
-
-    typedef mlc::uint_<0> slice_comp_type;
-    typedef mlc::uint_<1> row_comp_type;
-    typedef mlc::uint_<2> col_comp_type;
+    typedef grid3d   grid;
+    typedef int      coord;
+    typedef dpoint3d dpoint;
   };
 
 
-  /// General 3D point class.
-  template <typename C>
-  class point3d_ : public internal::point_nd< point3d_<C> >
+  /// Usual 3D point class.
+  class point3d : public internal::point_base_< point3d >,
+		  public internal::point_impl_< 3, point3d >
   {
-    typedef point3d_<C>                self_t;
-    typedef internal::point_nd<self_t> super_t;
-
-    using super_t::v_;
-
+    typedef internal::initializer_<
+      internal::triplet< internal::sli_t<int>, internal::row_t<int>, internal::col_t<int> >
+    > sli_row_col_t;
+    typedef internal::point_base_< point3d > super;
   public:
+    stc_using_(coord);
 
-    /// Ctor.
-    point3d_();
-
-    /// Ctor.
-    point3d_(C slice, C row, C col);
-
-    /// Ctor.
-    point3d_(const xtd::vec<3,C>& v);
-
-    C  slice() const;
-    C& slice();
-
-    C  row()   const;
-    C& row();
-
-    C  col()   const;
-    C& col();
+    point3d();
+    point3d(int sli, int row, int col); // FIXME: Remove!
+    point3d(const sli_row_col_t& dat);
   };
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename C>
-  point3d_<C>::point3d_()
+  point3d::point3d()
   {
   }
 
-  template <typename C>
-  point3d_<C>::point3d_(C slice, C row, C col)
-    : super_t (xtd::mk_vec(slice, row, col))
+  point3d::point3d(int sli, int row, int col) // FIXME: Remove!
   {
+    this->sli() = sli;
+    this->row() = row;
+    this->col() = col;
   }
 
-  template <typename C>
-  point3d_<C>::point3d_(const xtd::vec<3,C>& v)
-    : super_t(v)
+  point3d::point3d(const point3d::sli_row_col_t& dat)
   {
+    this->sli() = dat->first.value;
+    this->row() = dat->second.value;
+    this->col() = dat->third.value;
   }
 
-  template <typename C>
-  C  point3d_<C>::slice() const { return v_[0]; }
-  template <typename C>
-  C& point3d_<C>::slice()       { return v_[0]; }
-
-  template <typename C>
-  C  point3d_<C>::row()   const { return v_[1]; }
-  template <typename C>
-  C& point3d_<C>::row()         { return v_[1]; }
-
-  template <typename C>
-  C  point3d_<C>::col()   const { return v_[2]; }
-  template <typename C>
-  C& point3d_<C>::col()         { return v_[2]; }
-
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
+
+
+# include <oln/core/3d/dpoint3d.hh>
 
 
 #endif // ! OLN_CORE_3D_POINT3D_HH

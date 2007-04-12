@@ -28,9 +28,14 @@
 #ifndef OLN_CORE_INTERNAL_OP_IMAGE_SUCH_AS_FP2B_HH
 # define OLN_CORE_INTERNAL_OP_IMAGE_SUCH_AS_FP2B_HH
 
-# include <oln/core/internal/op_image_restricted_to_pset.hh>
+# include <oln/core/gen/restricted_to.hh>
 # include <oln/core/internal/op_pset_such_as_fp2b.hh>
 
+
+// "ima such_as f : p -> b"  is  "ima restricted_to (ima.points such_as f)"
+
+// FIXME: That's cool but too much code is involved...
+// FIXME: ...So write a specialized version!
 
 namespace oln
 {

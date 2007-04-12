@@ -25,42 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_GENERALIZED_POINTS_HH
-# define OLN_CORE_CONCEPT_GENERALIZED_POINTS_HH
+#ifndef OLN_CORE_3D_GRID3D_HH
+# define OLN_CORE_3D_GRID3D_HH
 
-# include <oln/core/equipment.hh>
+# include <mlc/int.hh>
+# include <oln/core/2d/grid2d.hh> // So import 2d instant values.
+
+
+
+# define OLN_ENV_3D
+
 
 
 namespace oln
 {
 
-  // Generalized_Point concept
+  /// Instant values.
+  oln_decl_instant_value(sli);
+  oln_decl_instant_value(dsli);
+  oln_decl_instant_value(nslis);
+
+
+  /// \{
+  /// Fwd decls.
+
+  template <typename Exact> struct Grid_3D;
+  struct grid3d;
+
+  /// \}
+
+
+  /// \{
+  /// Grid_3D.
 
   template <typename Exact>
-  struct Generalized_Point : virtual public Any<Exact>
+  struct vtypes< Grid_3D<Exact> >
   {
-    stc_typename(grid);
-    stc_typename(dim);
-    stc_typename(coord);
-    stc_typename(dpoint);
-
-    enum { n = mlc_value(dim) };
-
+    typedef mlc::uint_<3> dim;
+  };
+  
+  template <typename Exact>
+  struct Grid_3D : public Grid<Exact>
+  {
   protected:
-    Generalized_Point();
+    Grid_3D() {}
+  };
+
+  /// \}
+
+
+  // Super type.
+
+  template<>
+  struct super_trait_< grid3d >
+  {
+    typedef Grid_3D< grid3d > ret;
   };
 
 
+  /// Cubic grid struct.
 
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename Exact>
-  Generalized_Point<Exact>::Generalized_Point()
+  struct grid3d : public Grid_3D< grid3d >
   {
-  }
-
-# endif // ! OLN_INCLUDE_ONLY
+  };
 
 } // end of namespace oln
 
-#endif // ! OLN_CORE_CONCEPT_GENERALIZED_POINTS_HH
+
+#endif // ! OLN_CORE_3D_GRID3D_HH

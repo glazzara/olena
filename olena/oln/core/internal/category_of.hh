@@ -29,62 +29,69 @@
 # define OLN_CORE_INTERNAL_CATEGORY_OF_HH
 
 # include <mlc/basic.hh>
+# include <oln/core/internal/utils.hh>
 
 
-# define  oln_category_of_(Type)  typename oln::internal::category_of_< Type >::ret
+# define  oln_category_of_(Type)  \
+  typename oln::internal::category_of_< Type >::ret
+
 
 
 namespace oln
 {
 
-  // Fwd decls.
-  template <typename Exact> struct Boolean;
-
-
-
   namespace internal
   {
 
-    // Category_of_
-
-
-    template <typename T>
-    struct set_category_of_
+    template <typename T1, typename T2>
+    struct get_category_of_
+      : private mlc::abort_< pair<T1,T2> > // FIXME: Add error msg.
     {
-      typedef stc_type(T, category) ret;
     };
 
-    template <>
-    struct set_category_of_< bool > // FIXME: Move into oln/core/value/*.
+    template <template <class> class C>
+    struct get_category_of_< C<void>, mlc::not_found >
     {
-      typedef stc::is< Boolean > ret;
+      typedef stc::is<C> ret;
     };
 
+    template <template <class> class C>
+    struct get_category_of_< mlc::not_found, stc::is<C> >
+    {
+      typedef stc::is<C> ret;
+    };
+
+
+    // category_of_
 
     template <typename T>
     struct category_of_
     {
-      typedef typename set_category_of_< mlc_basic(T) >::ret ret;
+      typedef mlc_basic(T) T__;
+      typedef mlc_typedef(T__, category)   ret_1;
+      typedef stc_find_type(T__, category) ret_2;
+      typedef typename get_category_of_<ret_1, ret_2>::ret ret;
     };
 
-    // ...
 
 
+    template <class C, typename Exact>
+    struct get_category_base_type_;
 
-
-    // only_if_
-
-    template < typename Ret,
-	       typename Check_1,
-	       typename Check_2 = void,
-	       typename Check_3 = void,
-	       typename Check_4 = void >
-    struct only_if_
+    template <template <class> class C, typename Exact>
+    struct get_category_base_type_< stc::is<C>, Exact >
     {
-      typedef Ret ret;
+      typedef C<Exact> ret;
     };
 
-
+    // category_base_type_from_
+    
+    template <typename From, typename Exact>
+    struct category_base_type_from_
+    {
+      typedef oln_category_of_(From) C;
+      typedef typename get_category_base_type_<C, Exact>::ret ret;
+    };
 
   } // end of namespace oln::internal
 

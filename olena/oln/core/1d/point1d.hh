@@ -30,26 +30,27 @@
 # define OLN_CORE_1D_POINT1D_HH
 
 # include <oln/core/1d/grid1d.hh>
-# include <oln/core/internal/point1d.hh>
+# include <oln/core/internal/point_base.hh>
+# include <oln/core/internal/point_impl.hh>
 
 
 namespace oln
 {
 
-
+  // Fwd decls.
   class  point1d;
   class dpoint1d;
 
 
-  /// Super type.
+  // Super type.
   template<>
   struct super_trait_< point1d >
   {
-    typedef internal::point1d_< point1d > ret;
+    typedef internal::point_base_< point1d > ret;
   };
 
 
-  /// Virtual types.
+  // Virtual types.
   template <>
   struct vtypes< point1d >
   {
@@ -60,10 +61,13 @@ namespace oln
 
 
   /// Usual 1D point class.
-  class point1d : public internal::point1d_< point1d >
+  class point1d : public internal::point_base_< point1d >,
+		  public internal::point_impl_< 1, point1d >
   {
+    typedef internal::point_base_< point1d > super;
   public:
-    /// Ctors.
+    stc_using_(coord);
+
     point1d();
     point1d(int ind);
   };
@@ -81,13 +85,11 @@ namespace oln
     this->ind() = ind;
   }
 
-# endif
-
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 
 
-// point1d goes with dpoint1d so:
 # include <oln/core/1d/dpoint1d.hh>
 
 

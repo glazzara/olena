@@ -53,6 +53,12 @@ namespace oln
     Boolean();
   };
 
+  template <>
+  struct vtypes< bool > // FIXME: single_vtype? or move elsewhere?
+  {
+    typedef stc::is<Boolean> category;
+  };
+
 
 # ifndef OLN_INCLUDE_ONLY
 

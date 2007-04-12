@@ -29,10 +29,10 @@
 #ifndef OLN_CORE_1D_IMAGE1D_HH
 # define OLN_CORE_1D_IMAGE1D_HH
 
+# include <oln/core/1d/box1d.hh>
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/internal/utils.hh>
 # include <oln/core/1d/array1d.hh>
-# include <oln/core/1d/box1d.hh>
 
 
 namespace oln

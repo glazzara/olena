@@ -42,7 +42,6 @@ namespace oln
   {
     stc_typename(grid);
     stc_typename(point);
-    stc_typename(category);
 
   protected:
     Neighborhood();
@@ -58,7 +57,7 @@ namespace oln
   {
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

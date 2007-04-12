@@ -34,29 +34,6 @@
 namespace oln
 {
 
-  // function : point -> box
-
-  template <typename P> class gen_box;
-
-  template <typename P>
-  struct f_box_from_point_ { typedef gen_box<P> ret; };
-
-  class point1d;
-  class box1d;
-
-  template <>
-  struct f_box_from_point_< point1d > { typedef box1d ret; };
-
-  class point2d;
-  class box2d;
-
-  template <>
-  struct f_box_from_point_< point2d > { typedef box2d ret; };
-
-  // FIXME: Move the code above elsewhere.
-
-
-
   namespace internal
   {
 
@@ -75,9 +52,8 @@ namespace oln
   // point_set_base_ class
 
 
-  // Fwd decls.
+  // Fwd decl.
   namespace internal { template <typename Exact> struct point_set_base_; }
-  template <typename P> class gen_box;
 
 
   // Super type.
@@ -102,6 +78,7 @@ namespace oln
 
     typedef stc::final< stc::is<Point_Set> > category;
     typedef stc::final< oln_grid(point__) >  grid;
+    // typedef stc::final< oln_coord(point__) > coord;
     typedef stc::final< fwd_piter__ >        piter;
   };
 
@@ -126,45 +103,11 @@ namespace oln
     {
     }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::internal
 
 } // end of namespace oln
-
-
-
-/// \{
-/// FIXME: Bad!
-
-# include <oln/core/gen/fun.hh>
-# include <oln/core/internal/op_pset_such_as_fp2b.hh>
-
-namespace oln
-{
-
-  // Point_Set | Function.
-
-  oln_decl_op_such_as(Point_Set, Function_p2b);
-
-
-  // Specialization.
-
-  template <typename S, typename B, typename P>
-  op_<const S, such_as, const fun_p2b_<B (*)(P)> >
-  operator | (const Point_Set<S>& lhs, B (*f)(P))
-  {
-    typedef mlc_basic(P) P_;
-    mlc::assert_< mlc_is_a(P_, Point) >::check(); // FIXME: Add err msg.
-    mlc::assert_equal_< P_, oln_point(S) >::check();
-    op_<const S, such_as, const fun_p2b_<B (*)(P)> > tmp(exact(lhs), f);
-    return tmp;
-  }
-
-
-} // end of namespace oln
-
-/// \}
 
 
 #endif // ! OLN_CORE_INTERNAL_POINT_SET_BASE_HH

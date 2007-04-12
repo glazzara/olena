@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2003, 2004, 2006 EPITA Research and Development
-// Laboratory
+// Copyright (C) 2001, 2003, 2004, 2006, 2007 EPITA Research and
+// Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,43 +29,75 @@
 #ifndef OLN_CORE_3D_ARRAY3D_HH
 # define OLN_CORE_3D_ARRAY3D_HH
 
-# include <cstdlib>
+# include <cstddef>
+# include <iostream>
 # include <mlc/contract.hh>
-# include <oln/core/abstract/array.hh>
 
 
 namespace oln
 {
 
   /// General 3D array class.
-  template <typename value_t, typename coord_t = int>
-  class array3d : public abstract::array
+
+  template <typename T, typename C = int>
+  class array3d_
   {
   public:
 
+    // Not impled.
+    array3d_();
+    array3d_(const array3d_<T,C>& rhs);
+    void operator=(const array3d_<T,C>&);
+    // end of Not impled.
+
+
     /// Ctor.
-    array3d(coord_t imin, coord_t jmin, coord_t kmin,
-	    coord_t imax, coord_t jmax, coord_t kmax);
+    array3d_(C imin, C jmin, C kmin,
+	     C imax, C jmax, C kmax);
+
     /// Ctor.
-    array3d(coord_t ilen, coord_t jlen, coord_t klen);
+    array3d_(C ilen, C jlen, C klen);
 
     /// Dtor.
-    ~array3d();
+    ~array3d_();
 
-    value_t  operator()(coord_t i, coord_t j, coord_t k) const;
-    value_t& operator()(coord_t i, coord_t j, coord_t k);
+    const T& operator()(C i, C j, C k) const;
+    T& operator()(C i, C j, C k);
 
-    bool has(coord_t i, coord_t j, coord_t k) const;
+    const T& operator[](std::size_t ind) const;
+    T& operator[](std::size_t ind);
 
-    size_t memsize() const;
+    bool has(C i, C j, C k) const;
+
+    std::size_t memsize() const;
+    std::size_t ncells() const;
+
+    C imin() const;
+    C jmin() const;
+    C kmin() const;
+
+    C imax() const;
+    C jmax() const;
+    C kmax() const;
+
+    C ilen() const;
+    C jlen() const;
+    C klen() const;
+
+    const T* buffer() const;
+    T* buffer();
+
+    std::size_t i_pad() const;
+    std::size_t j_pad() const;
 
   protected:
 
-    coord_t    imin_, jmin_, kmin_, imax_, jmax_, kmax_;
-    coord_t    ilen_, jlen_, klen_;
-    value_t*   buffer_;
-    value_t**  array_2nd_dim_;
-    value_t*** array_1st_dim_;
+    C imin_, jmin_, kmin_, imax_, jmax_, kmax_;
+    C ilen_, jlen_, klen_;
+    std::size_t blen_;
+    T*   buffer_;
+    T**  array_tmp_;
+    T*** array_;
 
   private:
 
@@ -74,58 +106,77 @@ namespace oln
   };
 
 
+  template <typename T, typename C>
+  std::ostream& operator<<(std::ostream& ostr, const array3d_<T,C>& arr);
+
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename value_t, typename coord_t>
-  array3d<value_t, coord_t>::array3d(coord_t imin, coord_t jmin, coord_t kmin,
-				     coord_t imax, coord_t jmax, coord_t kmax)
-    : imin_(imin), jmin_(jmin), kmin_(kmin),
-      imax_(imax), jmax_(jmax), kmax_(kmax)
+  template <typename T, typename C>
+  array3d_<T, C>::array3d_(C imin, C jmin, C kmin,
+			   C imax, C jmax, C kmax) :
+    imin_(imin), jmin_(jmin), kmin_(kmin),
+    imax_(imax), jmax_(jmax), kmax_(kmax)
   {
     precondition(imax >= imin and jmax >= jmin and kmax >= kmin);
     ilen_ = imax - imin + 1;
     jlen_ = jmax - jmin + 1;
     klen_ = kmax - kmin + 1;
+    // FIXME: Test that ilen_ and jlen_ are not huge!
     allocate_();
   }
 
-  template <typename value_t, typename coord_t>
-  array3d<value_t, coord_t>::array3d(coord_t ilen, coord_t jlen, coord_t klen)
-    : imin_(0),    jmin_(0),    kmin_(0),
-      ilen_(ilen), jlen_(jlen), klen_(klen)
+  template <typename T, typename C>
+  array3d_<T, C>::array3d_(C ilen, C jlen, C klen) :
+    imin_(0),    jmin_(0),    kmin_(0),
+    ilen_(ilen), jlen_(jlen), klen_(klen)
   {
     precondition(ilen > 0 and jlen > 0 and klen > 0);
-    imax_ = imin_ + ilen_;
-    jmax_ = jmin_ + ilen_;
-    kmax_ = kmin_ + klen_;
+    // FIXME: Test that *len_ are not huge!
+    imax_ = imin_ + ilen_ - 1;
+    jmax_ = jmin_ + ilen_ - 1;
+    kmax_ = kmin_ + klen_ - 1;
     allocate_();
   }
 
-  template <typename value_t, typename coord_t>
-  array3d<value_t, coord_t>::~array3d()
+  template <typename T, typename C>
+  array3d_<T, C>::~array3d_()
   {
     deallocate_();
   }
 
-  template <typename value_t, typename coord_t>
-  value_t
-  array3d<value_t, coord_t>::operator()(coord_t i, coord_t j, coord_t k) const
+  template <typename T, typename C>
+  const T& array3d_<T, C>::operator()(C i, C j, C k) const
   {
     precondition(has(i, j, k));
-    return array_1st_dim_[i][j][k];
+    return array_[i][j][k];
   }
 
-  template <typename value_t, typename coord_t>
-  value_t&
-  array3d<value_t, coord_t>::operator()(coord_t i, coord_t j, coord_t k)
+  template <typename T, typename C>
+  T& array3d_<T, C>::operator()(C i, C j, C k)
   {
     precondition(has(i, j, k));
-    return array_1st_dim_[i][j][k];
+    return array_[i][j][k];
   }
 
-  template <typename value_t, typename coord_t>
-  bool array3d<value_t, coord_t>::has(coord_t i, coord_t j, coord_t k) const
+  template <typename T, typename C>
+  const T& array3d_<T, C>::operator[](std::size_t ind) const
+  {
+    precondition(buffer_ != 0);
+    precondition(ind < blen_);
+    return buffer_[ind];
+  }
+
+  template <typename T, typename C>
+  T& array3d_<T, C>::operator[](std::size_t ind)
+  {
+    precondition(buffer_ != 0);
+    precondition(ind < blen_);
+    return buffer_[ind];
+  }
+
+  template <typename T, typename C>
+  bool array3d_<T, C>::has(C i, C j, C k) const
   {
     return
       i >= imin_ and i <= imax_ and
@@ -133,57 +184,157 @@ namespace oln
       k >= kmin_ and k <= kmax_;
   }
 
-  template <typename value_t, typename coord_t>
-  size_t array3d<value_t, coord_t>::memsize() const
+  template <typename T, typename C>
+  C array3d_<T, C>::imin() const
+  {
+    return imin_;
+  }
+
+  template <typename T, typename C>
+  C array3d_<T, C>::jmin() const
+  {
+    return jmin_;
+  }
+
+  template <typename T, typename C>
+  C array3d_<T, C>::kmin() const
+  {
+    return kmin_;
+  }
+
+  template <typename T, typename C>
+  C array3d_<T, C>::imax() const
+  {
+    return imax_;
+  }
+
+  template <typename T, typename C>
+  C array3d_<T, C>::jmax() const
+  {
+    return jmax_;
+  }
+
+  template <typename T, typename C>
+  C array3d_<T, C>::kmax() const
+  {
+    return kmax_;
+  }
+
+  template <typename T, typename C>
+  C array3d_<T, C>::ilen() const
+  {
+    return ilen_;
+  }
+
+  template <typename T, typename C>
+  C array3d_<T, C>::jlen() const
+  {
+    return jlen_;
+  }
+
+  template <typename T, typename C>
+  C array3d_<T, C>::klen() const
+  {
+    return klen_;
+  }
+
+  template <typename T, typename C>
+  const T* array3d_<T, C>::buffer() const
+  {
+    return buffer_;
+  }
+
+  template <typename T, typename C>
+  T* array3d_<T, C>::buffer()
+  {
+    return buffer_;
+  }
+
+  template <typename T, typename C>
+  std::size_t array3d_<T, C>::i_pad() const
+  {
+    precondition(buffer_ != 0 and array_ != 0);
+    return std::size_t(klen_) * std::size_t(jlen_);
+  }
+
+  template <typename T, typename C>
+  std::size_t array3d_<T, C>::j_pad() const
+  {
+    precondition(buffer_ != 0 and array_ != 0);
+    return klen_;
+  }
+
+  template <typename T, typename C>
+  std::size_t array3d_<T, C>::ncells() const
+  {
+    return blen_;
+  }
+
+  template <typename T, typename C>
+  std::size_t array3d_<T, C>::memsize() const
   {
     return
       // buffer_
-      size_t(ilen_) * size_t(jlen_) * size_t(klen_) * sizeof(value_t)
+      blen_ * sizeof(T)
       +
-      // array_2nd_dim_
-      size_t(ilen_) * size_t(jlen_) * sizeof(value_t*)
+      // array_tmp_
+      std::size_t(ilen_) * std::size_t(jlen_) * sizeof(T*)
       +
-      // array_1st_dim_
-      size_t(ilen_) * sizeof(value_t*);
+      // array_
+      std::size_t(ilen_) * sizeof(T**);
   }
 
-  template <typename value_t, typename coord_t>
-  void array3d<value_t, coord_t>::allocate_()
+  template <typename T, typename C>
+  void array3d_<T, C>::allocate_()
   {
-    buffer_ = new value_t[size_t(ilen_) * size_t(jlen_) * size_t(klen_)];
-    array_2nd_dim_ = new value_t*[size_t(ilen_) * size_t(jlen_)];
-    array_1st_dim_ = new value_t**[size_t(ilen_)];
-    value_t* buf = buffer_ - kmin_;
-    for (coord_t i = 0; i < ilen_; ++i)
+    blen_ = std::size_t(ilen_) * std::size_t(jlen_) * std::size_t(klen_);
+    buffer_    = new T  [blen_];
+    array_tmp_ = new T* [std::size_t(ilen_) * size_t(jlen_)];
+    array_     = new T**[std::size_t(ilen_)];
+    T* buf = buffer_ - kmin_;
+    for (C i = 0; i < ilen_; ++i)
       {
-	value_t** nth_array_2nd_dim = array_2nd_dim_ + i * jlen_;
-	array_1st_dim_[i] = nth_array_2nd_dim - jmin_;
-	for (coord_t j = 0; j < jlen_; ++j)
+ 	T** arr_i_ = array_tmp_ + i * jlen_;
+	array_[i] = arr_i_ - jmin_;
+	for (C j = 0; j < jlen_; ++j)
 	  {
-	    nth_array_2nd_dim[j] = buf;
+	    arr_i_[j] = buf;
 	    buf += klen_;
 	  }
       }
-    array_1st_dim_ -= imin_;
+    array_ -= imin_;
   }
 
-  template <typename value_t, typename coord_t>
-  void array3d<value_t, coord_t>::deallocate_()
+  template <typename T, typename C>
+  void array3d_<T, C>::deallocate_()
   {
-    precondition(buffer_        != 0 and
-		 array_2nd_dim_ != 0 and
-		 array_1st_dim_ != 0);
+    precondition(buffer_ != 0 and array_ != 0 and array_tmp_ != 0);
     delete[] buffer_;
     buffer_ = 0; // safety
-    delete[] array_2nd_dim_;
-    array_2nd_dim_ = 0; // safety
-    array_1st_dim_ += imin_;
-    delete[] array_1st_dim_;
-    array_1st_dim_ = 0;  // safety
+    delete[] array_tmp_;
+    array_tmp_ = 0;  // safety
+    array_ += imin_;
+    delete[] array_;
+    array_ = 0;  // safety
   }
 
-# endif
+  template <typename T, typename C>
+  std::ostream& operator<<(std::ostream& ostr, const array3d_<T,C>& arr)
+  {
+    return ostr << "{"
+		<< " imin=" << arr.imin()
+		<< " jmin=" << arr.jmin()
+		<< " kmin=" << arr.kmin()
+		<< " imax=" << arr.imax()
+		<< " jmax=" << arr.jmax()
+		<< " kmax=" << arr.kmax()
+		<< " ilen=" << arr.ilen()
+		<< " jlen=" << arr.jlen()
+		<< " klen=" << arr.klen()
+		<< " blen=" << arr.ncells() << " }";
+  }
 
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 

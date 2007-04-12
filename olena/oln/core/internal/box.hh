@@ -49,7 +49,7 @@ namespace oln
   };
 
 
-  /// Virtual types associated to oln::box_<P>.
+  // Virtual types associated to oln::box_<P>.
   template <typename Exact>
   struct vtypes< internal::box_<Exact> >
   {
@@ -111,7 +111,7 @@ namespace oln
 
 
 
-  /// Super types.
+  // Super types.
 
   template <typename B>
   struct super_trait_< box_fwd_piter_<B> >
@@ -128,7 +128,7 @@ namespace oln
   };
 
 
-  /// Virtual types.
+  // Virtual types.
 
   template <typename B>
   struct vtypes< box_fwd_piter_<B> >
@@ -233,7 +233,7 @@ namespace oln
     template <typename D>
     box_<Exact>::box_(const internal::initializer_<D>& data)
     {
-      bool box_ok = internal::init__(internal::tag::box_t(), *this, data.value());
+      bool box_ok = internal::init__(internal::tag::i_box_t(), *this, data.value());
       postcondition(box_ok);
     }
 

@@ -28,8 +28,8 @@
 #ifndef OLN_CORE_1D_BOX1D_HH
 # define OLN_CORE_1D_BOX1D_HH
 
-# include <oln/core/gen/box.hh>
 # include <oln/core/1d/point1d.hh>
+# include <oln/core/internal/box.hh>
 
 
 namespace oln
@@ -58,11 +58,10 @@ namespace oln
   {
     typedef internal::box_< box1d > super;
   public:
-    // Note: we can't use stc_using because box1d isn't a templated class
-    typedef super::point point;
+    stc_using_(from_to_t);
 
     box1d();
-    box1d(const box1d::from_to_t& dat);
+    box1d(const from_to_t& dat);
     box1d(const point1d& pmin, const point1d& pmax);
     template <typename D>
     box1d(const internal::initializer_<D>& data);

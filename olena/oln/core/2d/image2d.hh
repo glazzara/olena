@@ -29,10 +29,10 @@
 #ifndef OLN_CORE_2D_IMAGE2D_HH
 # define OLN_CORE_2D_IMAGE2D_HH
 
+# include <oln/core/2d/box2d.hh>
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/internal/utils.hh>
 # include <oln/core/2d/array2d.hh>
-# include <oln/core/2d/box2d.hh>
 
 
 namespace oln
@@ -42,7 +42,7 @@ namespace oln
   template <typename T> class image2d;
 
 
-  /// Virtual types.
+  // Virtual types.
   template <typename T>
   struct vtypes< image2d<T> >
   {

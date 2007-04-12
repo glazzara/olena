@@ -29,10 +29,10 @@
 #ifndef OLN_CORE_2D_IMAGE2D_B_HH
 # define OLN_CORE_2D_IMAGE2D_B_HH
 
+# include <oln/core/2d/box2d.hh>
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/internal/utils.hh>
 # include <oln/core/2d/array2d.hh>
-# include <oln/core/2d/box2d.hh>
 
 
 namespace oln
@@ -43,7 +43,7 @@ namespace oln
   template <typename T> class image2d_b;
 
 
-  /// Virtual types.
+  // Virtual types.
   template <typename T>
   struct vtypes< image2d_b<T> >
   {
@@ -68,7 +68,7 @@ namespace oln
   };
 
 
-  /// Super type.
+  // Super type.
   template <typename T>
   struct super_trait_< image2d_b<T> >
   {
@@ -236,7 +236,7 @@ namespace oln
   std::size_t image2d_b<T>::pad(const dpoint2d& dp) const
   {
     assert(this->has_data());
-    return this->data_->first.row_pad() * dp.row() + dp.col();
+    return this->data_->first.i_pad() * dp.row() + dp.col();
   }
 
 //   template <typename T, typename D>
@@ -268,7 +268,6 @@ namespace oln
   }
 
 # endif // ! OLN_INCLUDE_ONLY
-
 
 } // end of namespace oln
 

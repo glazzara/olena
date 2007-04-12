@@ -514,14 +514,7 @@ namespace oln
 
 # endif // ! OLN_INCLUDE_ONLY
 
-
 } // end of namespace oln
-
-
-
-// FIXME: Bad!
-# include <oln/core/internal/image_ops.hh>
-
 
 
 #endif // ! OLN_CORE_INTERNAL_IMAGE_BASE_HH

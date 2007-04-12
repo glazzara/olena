@@ -28,24 +28,12 @@
 #ifndef OLN_CORE_GEN_FUN_OPS_HH
 # define OLN_CORE_GEN_FUN_OPS_HH
 
-# include <oln/core/concept/function.hh>
-# include <oln/core/concept/point.hh>
+# include <oln/core/gen/fun.hh>
 # include <oln/core/gen/literal.hh>
 
 
 
 # define oln_decl_p2v_cmp_(Name, Sym)							\
-											\
-  template <typename L, typename R> struct p2v_##Name##_;				\
-											\
-  namespace internal									\
-  {											\
-    template <typename L, typename R>							\
-    struct set_category_of_< p2v_##Name##_<L,R> >					\
-    {											\
-      typedef stc::is< Function_p2b > ret;						\
-    };											\
-  }											\
 											\
   template <typename L, typename R>							\
   struct p2v_##Name##_ : public Function_p2b< p2v_##Name##_<L,R> >			\
@@ -94,17 +82,6 @@
 
 # define oln_decl_p2v_arith_(Name, Sym)						\
 										\
-  template <typename L, typename R> struct p2v_##Name##_;			\
-										\
-  namespace internal								\
-  {										\
-    template <typename L, typename R>						\
-    struct set_category_of_< p2v_##Name##_<L,R> >				\
-    {										\
-      typedef stc::is< Function_p2v > ret;					\
-    };										\
-  }										\
-										\
   template <typename L, typename R>						\
   struct p2v_##Name##_ : public Function_p2v< p2v_##Name##_<L,R> >		\
   {										\
@@ -151,17 +128,6 @@
 
 # define oln_decl_p2v_un_(Name, Sym)					\
 									\
-  template <typename T> struct p2v_##Name##_;				\
-									\
-  namespace internal							\
-  {									\
-    template <typename T>						\
-    struct set_category_of_< p2v_##Name##_<T> >				\
-    {									\
-      typedef stc::is< Function_p2v > ret;				\
-    };									\
-  }									\
-									\
   template <typename T>							\
   struct p2v_##Name##_ : public Function_p2v< p2v_##Name##_<T> >	\
   {									\
@@ -193,17 +159,6 @@
 
 
 # define oln_decl_p2b_bin_(Name, Sym)						\
-										\
-  template <typename L, typename R> struct p2b_##Name##_;			\
-										\
-  namespace internal								\
-  {										\
-    template <typename L, typename R>						\
-    struct set_category_of_< p2b_##Name##_<L,R> >				\
-    {										\
-      typedef stc::is< Function_p2b > ret;					\
-    };										\
-  }										\
 										\
   template <typename L, typename R>						\
   struct p2b_##Name##_ : public Function_p2b< p2b_##Name##_<L,R> >		\
@@ -251,17 +206,6 @@
 
 
 # define oln_decl_p2b_un_(Name, Sym)					\
-									\
-  template <typename T> struct p2b_##Name##_;				\
-									\
-  namespace internal							\
-  {									\
-    template <typename T>						\
-    struct set_category_of_< p2b_##Name##_<T> >				\
-    {									\
-      typedef stc::is< Function_p2b > ret;				\
-    };									\
-  }									\
 									\
   template <typename T>							\
   struct p2b_##Name##_ : public Function_p2b< p2b_##Name##_<T> >	\

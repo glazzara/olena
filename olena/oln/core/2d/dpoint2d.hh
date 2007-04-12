@@ -30,26 +30,27 @@
 # define OLN_CORE_2D_DPOINT2D_HH
 
 # include <oln/core/2d/grid2d.hh>
-# include <oln/core/internal/dpoint2d.hh>
+# include <oln/core/internal/dpoint_base.hh>
+# include <oln/core/internal/point_impl.hh>
 
 
 namespace oln
 {
 
-
+  // Fwd decls.
   struct  point2d;
   struct dpoint2d;
 
 
-  /// Super type.
+  // Super type.
   template<>
   struct super_trait_< dpoint2d >
   {
-    typedef internal::dpoint2d_< dpoint2d > ret;
+    typedef internal::dpoint_base_< dpoint2d > ret;
   };
 
 
-  /// Virtual types.
+  // Virtual types.
   template <>
   struct vtypes< dpoint2d >
   {
@@ -60,9 +61,14 @@ namespace oln
 
 
   /// Usual 2D dpoint class.
-  class dpoint2d : public internal::dpoint2d_< dpoint2d >
+  class dpoint2d : public internal::dpoint_base_< dpoint2d >,
+		   public internal::point_impl_< 2, dpoint2d >
   {
+    typedef internal::dpoint_base_< dpoint2d > super;
   public:
+
+    stc_using_(coord);
+
     /// Ctors.
     dpoint2d();
     dpoint2d(int row, int col);
@@ -82,13 +88,11 @@ namespace oln
     this->col() = col;
   }
 
-# endif
-
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 
 
-// dpoint2d goes with point2d so:
 # include <oln/core/2d/point2d.hh>
 
 

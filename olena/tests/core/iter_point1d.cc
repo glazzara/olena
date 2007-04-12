@@ -26,23 +26,20 @@
 // Public License.
 
 #include <cassert>
-
 #include <oln/core/1d/image1d.hh>
-#include <oln/core/internal/iterator_on_points_base.hh>
-
 
 
 int
 main()
 {
+  using namespace oln;
 
-  oln::image1d<int> ima1(40);
-  oln::image1d<int>::piter p (ima1.points());
-  oln::point1d p1;
+  image1d<int> ima(10);
+  point1d p_;
 
-  for (p.start(); p.is_valid(); p.next())
-    p1.ind() = p.ind();
+  image1d<int>::piter p(ima.points());
+  for_all(p)
+    p_.ind() = p.ind();
 
-  assert(p1.ind() == 39);
-  return 0;
+  assert(p_.ind() == 9);
 }

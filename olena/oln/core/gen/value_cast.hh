@@ -31,45 +31,23 @@
 # include <oln/core/gen/fun.hh>
 
 
-// FIXME: Separate defs and decls.
-
-
-
 namespace oln
 {
 
+  // casted_fun_<F, V>
 
-  // -----------------------------  casted_fp2v_<F, V>
-
-
-  // Fwd decl.
-  template <typename F, typename V> struct casted_fp2v_;
-
-  // Category.
-  namespace internal
-  {
-    template <typename F, typename V>
-    struct set_category_of_< casted_fp2v_<F, V> >
-    {
-      typedef stc::is< Function_p2v > ret;
-    };
-  }
-
-
-  // Class.
   template <typename F, typename V>
-  struct casted_fp2v_ : public Function_p2v< casted_fp2v_<F, V> >
+  struct casted_fun_
+    :
+    public oln::internal::category_base_type_from_< F, casted_fun_<F, V> >::ret
   {
     typedef oln_arg_of_(F) argument;
     typedef oln_res_of_(F) f_result;
     typedef V result;
 
-    casted_fp2v_(const F& f) : f_(f) {}
+    casted_fun_(const Function<F>& f);
 
-    result operator()(argument arg) const
-    {
-      return static_cast<V>(this->f_(arg));
-    }
+    result operator()(argument arg) const;
 
   private:
     F f_;
@@ -79,16 +57,33 @@ namespace oln
   // value_cast
 
   template <typename V, typename F>
-  casted_fp2v_<F, V> value_cast(const Function_p2v<F>& f)
+  casted_fun_<F, V> value_cast(const Function<F>& f);
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename F, typename V>
+  casted_fun_<F, V>::casted_fun_(const Function<F>& f)
+    : f_(exact(f))
+  {
+  }
+
+  template <typename F, typename V>
+  typename casted_fun_<F, V>::result
+  casted_fun_<F, V>::operator()(typename casted_fun_<F, V>::argument arg) const
+  {
+    return static_cast<V>(this->f_(arg));
+  }
+
+  template <typename V, typename F>
+  casted_fun_<F, V> value_cast(const Function<F>& f)
   {
     // FIXME: Check that the cast "F::result -> V" is OK.
-    casted_fp2v_<F, V> tmp(exact(f));
+    casted_fun_<F, V> tmp(f);
     return tmp;
   }
 
-
-  // FIXME: Add casted_fv2v_<F,V>?
-
+# endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 
