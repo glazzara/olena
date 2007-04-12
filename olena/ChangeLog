@@ -1,5 +1,146 @@
 2007-04-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix missing ChangeLog text of previous commit.
+
+	Refactor point and dpoint interface.
+
+	* oln/core/traits_id.hh,
+	* oln/core/traits.hh,
+	* oln/core/case.hh,
+	* oln/basics3d.hh: Remove; obsolete.
+	* oln/core/internal/point1d.hh,
+	* oln/core/internal/dpoint1d.hh,
+	* oln/core/internal/point1d.hh,
+	* oln/core/internal/point2d.hh: Remove.
+	Their contents is now in...
+	* oln/core/internal/point_impl.hh: ...this new file.
+	* oln/core/1d/dpoint1d.hh,
+	* oln/core/1d/point1d.hh,
+	* oln/core/2d/dpoint2d.hh,
+	* oln/core/2d/point2d.hh: Update inheritance.
+	* oln/core/concept/generalized_point.hh: Remove.
+	(Generalized_Point): Move into...
+	* oln/core/concept/point.hh: ...this file.
+
+	Handle 3D.
+
+	* oln/core/3d/neighb3d.hh (mk_c4_slice, mk_c8_slice): Rename as...
+	(mk_c4_sli, mk_c8_sli): ...these.
+	(mk_c4_row, mk_c4_col, mk_c8_row, mk_c8_col): Remove.
+	Update.
+	* oln/core/3d/dpoint3d.hh,
+	* oln/core/3d/array3d.hh,
+	* oln/core/3d/image3d.hh,
+	* oln/core/3d/window3d.hh,
+	* oln/core/3d/point3d.hh: Update.
+	* oln/core/3d/image3d_b.hh,
+	* oln/core/3d/grid3d.hh,
+	* oln/core/3d/box3d.hh: New.
+	* oln/core/internal/f_grid_to_plain_image.hh: Add 3D case.
+	* oln/core/internal/f_grid_to_box.hh: Add 3D case.
+	* oln/core/concept/image.hh (Image_3D): Add interface.
+
+	Split operators into different files.
+
+	* oln/core/internal/image_ops.hh: Remove.
+	Split contents into...
+	* oln/core/gen/extended_by.hh,
+	* oln/core/gen/restricted_to.hh,
+	* oln/core/gen/applied_on.hh,
+	* oln/core/gen/through.hh,
+	* oln/core/gen/such_as.hh,
+	* oln/core/gen/over.hh,
+	* oln/core/internal/macro_extended_by.hh: ...these new files.
+	And split decls and defs.
+	* oln/core/gen/op.hh: Update.
+	* oln/core/gen/point.hh: New.
+	* oln/core/gen/dpoint.hh: New.
+
+	Various bug fixes and cleanups.
+
+	* oln/core/rle/rle_pset.hh: Update; use oln_f_point_to_box.
+	* oln/core/concept/iterator_on_points.hh (Iterator_on_Points):
+	Remove virtual inheritance.
+	* oln/core/concept/image.hh (nrows, ncols): New in Image_2D.
+	* oln/core/concept/function.hh (category): New in function
+	concepts.
+	* oln/core/concept/point_set.hh (box): Rename as...
+	(i_box): ...this.
+	* oln/core/concept/neighborhood.hh (category): Remove.
+	* oln/core/concept/value.hh (vtypes<bool>): New.
+	* oln/core/concept/operators.hh (operator-): Fix missing decl.
+	* oln/core/1d/array1d.hh (array1d_): Fix ctor.
+	* oln/core/1d/image1d.hh,
+	* oln/core/1d/image1d_b.hh,
+	* oln/core/2d/image2d.hh,
+	* oln/core/2d/image2d_b.hh (include): Top box inclusion.
+	* oln/core/1d/box1d.hh (point): Remove (useless).
+	(include): Remove gen/box.hh (useless).
+	(box1d): Use stc_using_.
+	* oln/core/2d/box2d.hh: Likewise.
+	(box): Update to...
+	(i_box): ...this.
+	* oln/core/2d/neighb2d.hh (c2r, c2c): Rename as...
+	(c2_row, c2_col): ...these.
+	* oln/core/2d/array2d.hh (row_pad): Rename as...
+	(i_pad): ...this.
+	* oln/core/gen/dpoints_piter.hh (include): Update.
+	* oln/core/gen/box.hh (gen_box): Rename as...
+	(box): ...this.
+	(P): Remove parameter.
+	(G, C): New parameters.
+	* oln/core/gen/fun.hh (set_category_of_): Remove (obsolete).
+	Separate decls and defs.
+	* oln/core/gen/fbbox.hh: Update.
+	* oln/core/gen/niter_has.hh (include): Update.
+	* oln/core/gen/value_cast.hh (set_category_of_): Remove.
+	(casted_fp2v_): Rename as...
+	(casted_fun_): ...this more general class.
+	* oln/core/gen/neighb.hh (include): Update.
+	* oln/core/gen/literal.hh: Split decls and defs.
+	* oln/core/gen/image_stack.hh: Fix missing include.
+	* oln/core/gen/fun_ops.hh (set_category_of_): Remove.
+	* oln/core/internal/op_image_through_fv2v.hh: Fix comment.
+	* oln/core/internal/box.hh: Update.
+	* oln/core/internal/point_set_base.hh (operator|): Move to...
+	* oln/core/gen/such_as.hh: ...this file.
+	* oln/core/internal/point_set_base.hh (f_box_from_point_): Move
+	to...
+	* oln/core/internal/f_point_to_box.hh: ...this new file.
+	* oln/core/internal/op_image_such_as_fp2b.hh (include): Update.
+	* oln/core/internal/point_set_std_based.hh: Update.
+	* oln/core/internal/image_base.hh (include): Remove
+	internal/image_ops.
+	* oln/core/internal/op_fv2v_applied_on_image.hh (value, rvalue):
+	Fix.
+	* oln/core/internal/point_base.hh: Remove FIXMEs.
+	* oln/core/internal/category_of.hh (set_category_of_): Remove.
+	(get_category_of_),
+	(get_category_base_type_): New.
+	* oln/core/internal/iterator_on_points_impl.hh
+	(iterator_on_points_impl): Rename as...
+	(iterator_on_points_impl_): ...this.
+	Remove parameter P.
+	Remove inheritance; update include.
+	Rewrite code using static_cast.
+	* oln/core/internal/f_pset_to_plain_image.hh: Update.
+	* oln/core/internal/iterator_on_points_base.hh (inheritance):
+	Update.
+	* oln/stc/scoop.hh (stc_using_): New.
+	* oln/draw/bresenham.hh (include): Update.
+
+	Update tests.
+
+	* tests/core/iter_point1d.cc,
+	* tests/core/iter_point2d.cc,
+	* tests/core/iter_point3d.cc,
+	* tests/core/subset.cc,
+	* tests/core/rle_image.cc: Update.
+
+	* TODO: Update.
+
+2007-04-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add 3D, remove some fixmes, and make various cleanups.
 
 2007-04-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
