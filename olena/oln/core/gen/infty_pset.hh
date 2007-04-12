@@ -29,6 +29,8 @@
 # define OLN_CORE_GEN_INFTY_PSET_HH
 
 # include <limits>
+# include <ostream>
+
 # include <oln/core/concept/grid.hh>
 # include <oln/core/internal/f_grid_to_box.hh>
 # include <oln/core/internal/point_set_base.hh>
@@ -79,14 +81,14 @@ namespace oln
     infty_pset();
 
     unsigned impl_npoints() const;
-    bool impl_has(const point& p) const;
+    bool impl_has(const point&) const;
     const box& impl_bbox() const;
-
-  protected:
-    box b_;
 
   }; // end of class oln::infty_pset<G>.
 
+
+  template <typename G>
+  std::ostream& operator<<(std::ostream& ostr, const infty_pset<G>& ps);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -94,11 +96,6 @@ namespace oln
   template <typename G>
   infty_pset<G>::infty_pset()
   {
-    typedef oln_coord(point) C;
-    point minus_infty, plus_infty;
-    minus_infty.set_all( std::numeric_limits<C>::min() );
-    plus_infty. set_all( std::numeric_limits<C>::max() );
-    this->b_ = init(from(minus_infty), to(plus_infty));
   }
 
   template <typename G>
@@ -119,7 +116,13 @@ namespace oln
   const typename infty_pset<G>::box&
   infty_pset<G>::impl_bbox() const
   {
-    return this->b_;
+    return box::infty();
+  }
+
+  template <typename G>
+  std::ostream& operator<<(std::ostream& ostr, const infty_pset<G>&)
+  {
+    return ostr << "infty pset";
   }
 
 #endif // ! OLN_INCLUDE_ONLY

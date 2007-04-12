@@ -155,7 +155,11 @@ namespace oln
     Exact& dpoint_base_<Exact>::impl_op_mod_equal_(const Exact& rhs)
     {
       for (unsigned i = 0; i < n; ++i)
-	v_[i] %= rhs.v_[i];
+	{
+	  v_[i] %= rhs.v_[i];
+	  if (v_[i] < 0)
+	    v_[i] += rhs.v_[i];
+	}
       return exact(*this);
     }
 

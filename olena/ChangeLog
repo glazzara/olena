@@ -1,3 +1,23 @@
+2007-04-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add ''theoretical bounding box'' for point set types.
+
+	* TODO: Augment.
+	* oln/core/concept/point_set.hh (theoretical_bbox): New.
+	(impl_theoretical_bbox): New.
+	(infty): New in Box.
+	* oln/core/gen/pset_compare.hh (op_subset_): Fix.
+	* oln/core/gen/infty_pset.hh (b_): Remove.
+	(infty_pset, impl_bbox): Update.
+	(operator<<): New.
+	* oln/core/gen/torus_pset.hh (impl_theoretical_bbox): New.
+	(operator<<): Separate decl and def.
+	* oln/core/gen/op.hh: Cosmetic change.
+	* oln/core/internal/op_image_through_fv2v.hh
+	(value, rvalue, lvalue): Fix.
+	* oln/core/internal/dpoint_base.hh (impl_op_mod_equal_): Fix.
+	* oln/core/internal/category_of.hh: New commentary.
+
 2007-04-10  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix union_find.

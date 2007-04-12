@@ -28,6 +28,8 @@
 #ifndef OLN_CORE_GEN_TORUS_PSET_HH
 # define OLN_CORE_GEN_TORUS_PSET_HH
 
+# include <ostream>
+
 # include <oln/core/internal/pset_adaptor.hh>
 # include <oln/core/concept/dpoint.hh>
 
@@ -77,6 +79,8 @@ namespace oln
     point relocate(const point& p) const;
     bool impl_has(const point& p) const;
 
+    const box& impl_theoretical_bbox() const;
+
   private:
     point pmin_;
     dpoint size_;
@@ -85,10 +89,7 @@ namespace oln
 
 
   template <typename Ps>
-  std::ostream& operator<<(std::ostream& ostr, const torus_pset<Ps>& ps)
-  {
-    return ostr << "torus " << ps.adapted_();
-  }
+  std::ostream& operator<<(std::ostream& ostr, const torus_pset<Ps>& ps);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -131,6 +132,19 @@ namespace oln
   current::impl_has(const typename current::point& p) const
   {
     return this->ps_.has(relocate(p));
+  }
+
+  template <typename Ps>
+  const typename current::box&
+  current::impl_theoretical_bbox() const
+  {
+    return box::infty();
+  }
+
+  template <typename Ps>
+  std::ostream& operator<<(std::ostream& ostr, const torus_pset<Ps>& ps)
+  {
+    return ostr << "torus " << ps.adapted_();
   }
 
 # endif // ! OLN_INCLUDE_ONLY

@@ -57,6 +57,9 @@ namespace oln
     bool has(const point& p) const;
     const box& bbox() const;
 
+    const box& theoretical_bbox() const;
+    const box& impl_theoretical_bbox() const; // FIXME: default?
+
   protected:
     Point_Set();
 
@@ -77,6 +80,8 @@ namespace oln
     point& pmin();
     const point& pmax() const;
     point& pmax();
+
+    static const Exact& infty();
 
   protected:
     Box();
@@ -112,6 +117,21 @@ namespace oln
   Point_Set<Exact>::bbox() const
   {
     return exact(this)->impl_bbox();
+  }
+
+
+  template <typename Exact>
+  const typename Point_Set<Exact>::box&
+  Point_Set<Exact>::theoretical_bbox() const
+  {
+    return exact(this)->impl_theoretical_bbox();
+  }
+
+  template <typename Exact>
+  const typename Point_Set<Exact>::box&
+  Point_Set<Exact>::impl_theoretical_bbox() const
+  {
+    return this->bbox();
   }
 
   template <typename Exact>
@@ -162,6 +182,21 @@ namespace oln
   Box<Exact>::pmax()
   {
     return exact(this)->impl_pmax();
+  }
+
+  template <typename Exact>
+  const Exact&
+  Box<Exact>::infty()
+  {
+    static bool flower = false;
+    static Exact the_;
+    if (not flower)
+      {
+	flower = true;
+	the_.pmin().set_all( std::numeric_limits< oln_coord(point) >::min() );
+	the_.pmax().set_all( std::numeric_limits< oln_coord(point) >::max() );
+      }
+    return the_;
   }
 
   template <typename Ps>

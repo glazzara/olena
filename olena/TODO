@@ -2,6 +2,8 @@
 
 * Rough list
 
+fast iterators
+
 value types (including gray level types, label types, (bool, T) type,
 color types, etc.)
 

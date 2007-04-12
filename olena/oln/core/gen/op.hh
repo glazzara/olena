@@ -91,6 +91,9 @@
 
 
 
+// FIXME: Split into different files so that the client can explicitly include
+// what is really needed...
+
 # define oln_decl_op_extended_by(Lconcept, Rconcept)   oln_decl_op_( extended_by,   Lconcept, +, Rconcept) 
 # define oln_decl_op_such_as(Lconcept, Rconcept)       oln_decl_op_( such_as,       Lconcept, |, Rconcept) 
 # define oln_decl_op_restricted_to(Lconcept, Rconcept) oln_decl_op_( restricted_to, Lconcept, |, Rconcept) 
@@ -179,7 +182,7 @@ namespace oln
     postcondition(op_ok);
   }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 # undef super
 

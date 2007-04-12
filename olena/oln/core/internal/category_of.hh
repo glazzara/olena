@@ -55,7 +55,7 @@ namespace oln
     };
 
     template <>
-    struct set_category_of_< bool >
+    struct set_category_of_< bool > // FIXME: Move into oln/core/value/*.
     {
       typedef stc::is< Boolean > ret;
     };

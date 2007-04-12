@@ -128,22 +128,29 @@ namespace oln
     bool op_subset_(const Point_Set<L>& lhs, const Point_Set<R>& rhs)
     {
       // first quick test
-      if (lhs.npoints() > rhs.npoints())
+      if (lhs.npoints() > rhs.npoints()) // FIXME: May be erroneous for types like plist...
 	return false;
       // second quick test
-      if (not intersects(lhs.bbox(), rhs.bbox()))
+      if (not intersects(lhs.theoretical_bbox(), rhs.theoretical_bbox()))
 	return false;
       // all points of lhs are IN rhs?
-      oln_piter(R) p_rhs(rhs);
-      p_rhs.start();
       oln_piter(L) p_lhs(lhs);
       for_all(p_lhs)
 	{
-	  while (p_rhs.is_valid() and p_rhs.to_point() != p_lhs.to_point())
-	    p_rhs.next();
-	  if (not p_rhs.is_valid())
+	  if (not rhs.has(p_lhs))
 	    return false;
 	}
+      // the following code was erroneous w.r.t. given types of psets:
+      //       oln_piter(R) p_rhs(rhs);
+      //       p_rhs.start();
+      //       oln_piter(L) p_lhs(lhs);
+      //       for_all(p_lhs)
+      // 	{
+      // 	  while (p_rhs.is_valid() and p_rhs.to_point() != p_lhs.to_point())
+      // 	    p_rhs.next();
+      // 	  if (not p_rhs.is_valid())
+      // 	    return false;
+      // 	}
       return true;
     }
 

@@ -64,14 +64,16 @@ namespace oln
     typedef I delegatee;
     typedef internal::pair<I,F> data;
 
-    typedef oln_result(F) rvalue;
-    typedef mlc_basic(rvalue) value;
+    typedef oln_result(F) F_result__;
+
+    typedef mlc_basic(F_result__)  value;
+    typedef value                 rvalue;
 
     typedef typename mlc::if_< mlc::and_list_< mlc_is_not_const(I),
 					       stc_is_found_type(I, lvalue),
-					       mlc_is_reference(oln_result(F)),
-					       mlc_is_not_const(oln_result(F)) >,
-			       stc_find_type(I, lvalue),
+					       mlc_is_reference(F_result__),
+					       mlc_is_not_const(F_result__) >,
+			       F_result__,
 			       stc::not_delegated >::ret lvalue;
 
     typedef op_<oln_plain(I), through, F> plain;
