@@ -1,10 +1,22 @@
 #include <iostream>
 #include <oln/core/2d/image2d.hh>
-#include <oln/core/rle/rle_psite.hh>
-#include <oln/core/rle/rle_image.hh>
+#include <oln/core/gen/rle_psite.hh>
+#include <oln/core/gen/rle_image.hh>
 #include <oln/debug/print.hh>
-#include <oln/core/rle/rle_pset.hh>
-#include <oln/core/encode/rle_encode.hh>
+#include <oln/core/gen/rle_pset.hh>
+#include <oln/core/gen/rle_encode.hh>
+
+template <typename P>
+void test(const oln::rle_pset<P>& my_set)
+{
+  typename oln::rle_pset<P>::piter run (my_set);
+  for (run.start(); run.is_valid(); run.next())
+    ;
+
+   typename oln::rle_pset<P>::bkd_piter run2 (my_set);
+   for (run2.start(); run2.is_valid(); run2.next())
+     ;
+}
 
 
 int main()
@@ -16,6 +28,7 @@ int main()
 
   my_set.insert(p, 5);
   my_set.insert(q, 8);
+  test(my_set);
 
   rle.insert(p, 5, 4);
   rle.insert(q, 8, 9);

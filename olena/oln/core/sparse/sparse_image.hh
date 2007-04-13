@@ -129,7 +129,8 @@ namespace oln
 
   template <typename P, typename T>
   void
-  sparse_image<P, T>::insert(const point& p, unsigned len, const std::vector<typename sparse_image<P, T>::value>& val)
+  sparse_image<P, T>::insert(const point& p, unsigned len,
+			     const std::vector<typename sparse_image<P, T>::value>& val)
   {
     assert(this->has_data());
      this->data_->first.insert(p, len);

@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,59 +25,64 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ENCODE_RLE_ENCODE_HH
-# define OLN_CORE_ENCODE_RLE_ENCODE_HH
+#ifndef OLN_CORE_RLE_RLE_PSITE_HH
+# define OLN_CORE_RLE_RLE_PSITE_HH
 
-# include <oln/core/concept/image.hh>
 
-# include <oln/core/rle/rle_image.hh>
-
+# include <map>
+# include <utility>
 
 namespace oln
 {
 
-  /*!
-  ** encode an image class to a rle_image
+
+  // Forward declaration
+  template <typename P, typename T> struct rle_image;
+
+  /*
+  ** \class rle_psite
+  ** \brief psite for rle image
   **
-  ** @param input has to respect the Image concept
-  **
-  ** @return rle_image
+  ** Note: P must be a point type
   */
-  template <typename I>
-  rle_image<typename Image<I>::point, typename I::value>
-  rle_encode(const Image<I>& input)
+  template <typename P>
+  struct rle_psite
   {
-    rle_image<typename I::point, typename I::value> output;
-    typename I::piter p (input.points());
-    unsigned len = 1;
-    /// range point start
-    typename I::point rstart;
-    /// range value
-    typename I::value rvalue;
+    rle_psite();
 
-    p.start();
-    if (!p.is_valid())
-      return output;
+    P to_point() const;
+    operator P () const;
 
-    rstart = p;
-    rvalue = input(p);
-    p.next();
-    while (p.is_valid())
-    {
-      if (rvalue == input(p))
-	++len;
-      else
-      {
-	output.insert(rstart, len, rvalue);
-	len = 1;
-	rstart = p;
-	rvalue = input(p);
-      }
-      p.next();
-    }
-    output.insert(rstart, len, rvalue);
-    return output;
+    P start_;
+    unsigned index_;
+    unsigned pset_pos_;
+  };
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename P>
+  rle_psite<P>::rle_psite()
+  {
   }
-} // end of namespace oln
 
-#endif /* !OLN_CORE_ENCODE_RLE_ENCODE_HH */
+  template <typename P>
+  P
+  rle_psite<P>::to_point() const
+  {
+    P p = this->start_;
+
+    p[0] += this->index_;
+    return p;
+  }
+
+  template <typename P>
+  rle_psite<P>::operator P() const
+  {
+    return this->to_point();
+  }
+
+# endif /* !OLN_INCLUDE_ONLY */
+
+  //end of class rle_psite
+}
+#endif // !OLN_CORE_RLE_RLE_PSITE_HH

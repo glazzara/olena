@@ -28,11 +28,11 @@
 #ifndef OLN_CORE_GEN_RLE_IMAGE_HH
 # define OLN_CORE_GEN_RLE_IMAGE_HH
 
-# include <map>
+# include <vector>
 
 # include <oln/core/internal/image_base.hh>
-# include <oln/core/rle/rle_psite.hh>
-# include <oln/core/rle/rle_pset.hh>
+# include <oln/core/gen/rle_psite.hh>
+# include <oln/core/gen/rle_pset.hh>
 
 
 
@@ -67,7 +67,7 @@ namespace oln
 
     typedef mlc::none plain;
 
-    typedef std::pair< pset, std::map<point, value> > data;
+    typedef std::pair< pset, std::vector< value > > data;
   };
 
 
@@ -134,33 +134,23 @@ namespace oln
   {
     assert(this->has_data());
     this->data_->first.insert(p, len);
-    this->data_->second[p] = val;
+    this->data_->second.push_back(val);
   }
 
   template <typename P, typename T>
   typename rle_image<P, T>::rvalue
   rle_image<P, T>::impl_read(const rle_image<P, T>::psite& ps) const
   {
-    assert(this->has_data());
-    typename std::map<point, value>::const_iterator irun;
-
-    irun = this->data_->second.find(ps.start_);
-    assert(irun != this->data_->second.end() &&
-	   ps.index_ < this->data_->first.range_len_(ps.start_));
-    return irun->second;
+    assert(this->has_data() && ps.pset_pos_ < this->data_->second.size());
+    return this->data_->second[ps.pset_pos_];
   }
 
   template <typename P, typename T>
   typename rle_image<P, T>::lvalue
   rle_image<P, T>::impl_read_write(const rle_image<P, T>::psite& ps)
   {
-    assert(this->has_data());
-    typename std::map<point, value>::iterator irun;
-
-    irun = this->data_->second.find(ps.start_);
-    assert(irun != this->data_->second.end() &&
-	   ps.index_ < this->data_->first.range_len_(ps.start_));
-    return irun->second;
+    assert(this->has_data() && ps.pset_pos_ < this->data_->second.size());
+    return this->data_->second[ps.pset_pos_];
   }
 
 # endif // ! OLN_INCLUDE_ONLY

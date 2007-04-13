@@ -1,3 +1,15 @@
+2007-04-13  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	rle_class based on std::vector.
+
+	* tests/core/rle_image.cc: add tests.
+	* oln/core/rle/rle_image.hh, oln/core/rle/rle_psite.hh,  oln/core/rle/rle_pset.hh,
+	* oln/core/sparse/sparse_image.hh: Clean code.
+	* oln/core/gen/rle_pset.hh, oln/core/gen/rle_image.hh,
+	* oln/core/gen/rle_psite : New, add rle_image class which is based on a std::vector 
+	* oln/core/encode/rle_encode.hh: Rename.
+	* oln/core/gen/rle_encode.hh: ... this. 
+
 2007-04-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add the type of value-casted images.

@@ -28,7 +28,7 @@
 #ifndef OLN_CORE_RLE_RLE_PSET_HH
 # define OLN_CORE_RLE_RLE_PSET_HH
 
-# include <set>
+# include <vector>
 # include <utility>
 
 # include <oln/core/rle/rle_psite.hh>
@@ -59,7 +59,7 @@ namespace oln
   {
     typedef P point;
 
-    typedef oln_f_point_to_box(P)  box;
+    typedef typename oln::internal::f_point_to_box_< P >::ret box;
     typedef rle_pset_fwd_piter_<P> fwd_piter;
     typedef rle_pset_bkd_piter_<P> bkd_piter;
   };
@@ -76,11 +76,12 @@ namespace oln
   {
     typedef rle_pset<P> current;
     typedef internal::point_set_base_<rle_pset<P> > super;
+
   public:
     stc_using(point);
     stc_using(box);
 
-    typedef std::map<point, unsigned> std_container;
+    typedef std::vector<std::pair<point, unsigned> > std_container;
 
     rle_pset();
 
@@ -120,16 +121,16 @@ namespace oln
   rle_pset<P>::insert(const P& p, unsigned len)
   {
     point pend;
+    typename std_container::value_type elt (p, len);
 
-    this->con_[p] = len;
+    this->con_.push_back(elt);
 
     //update bbox
     fb_.take(p);
     pend = p;
     pend[0] += len - 1;
     fb_.take(pend);
-
-    // update size
+   // update size
     npts += len;
   }
 
@@ -146,8 +147,12 @@ namespace oln
   {
     typename std_container::const_iterator irun;
 
-    irun = this->con_.find(p);
-    return irun != this->con_.end();
+    for (irun = this->con_.begin(); irun != this->con_.end(); ++irun)
+    {
+      if (irun->first == p)
+	return true;
+    }
+    return false;
   }
 
   template <typename P>
@@ -163,7 +168,11 @@ namespace oln
   {
     typename std_container::const_iterator irun;
 
-    irun = this->con_.find(range_start);
+    for (irun = this->con_.begin(); irun != this->con_.end(); ++irun)
+    {
+      if (irun->first == range_start)
+	return irun->second;
+    }
     assert(irun != this->con_.end());
     return (irun->second);
   }
@@ -173,6 +182,106 @@ namespace oln
   // end of rle_pset class
 
   // --------------------   iterators  on  classes deriving from internal::rle_pset<P>
+
+
+  // ------------------- base class for factorizing code
+
+  // Forward declaration
+  template <typename Exact>
+  class rle_pset_piter_;
+
+  template <typename Exact>
+  struct super_trait_< rle_pset_piter_<Exact> >
+  {
+    typedef rle_pset_piter_<Exact> current;
+    typedef internal::iterator_on_points_base_<Exact> ret;
+  };
+
+
+  // Virtual types
+  template <typename Exact>
+  struct vtypes< rle_pset_piter_<Exact> >
+  {
+  };
+
+  // class rle_pset_iterator_
+  /*
+  ** \class rle_pset_piter_
+  ** \brief base iterator class for factorizing code
+  **
+  */
+  template <typename Exact>
+  class  rle_pset_piter_ : public internal::iterator_on_points_base_< Exact >
+  {
+    typedef internal::iterator_on_points_base_< Exact > super;
+    typedef rle_pset_piter_<Exact> current;
+  public:
+    stc_using(point);
+    typedef rle_psite<point> psite;
+
+    const rle_psite<point>& impl_to_psite() const;
+    point impl_to_point() const;
+    const rle_psite<point>* impl_psite_adr() const;
+    operator psite () const;
+    const point* impl_point_adr() const; //FIXME
+
+  protected:
+    rle_pset_piter_(const rle_pset<point>& con);
+
+    const typename rle_pset<point>::std_container& con_;
+
+    point p_;
+    rle_psite<point> ps_;
+  };
+
+# ifndef OLN_INCLUDE_ONLY
+
+  template <typename Exact>
+  rle_pset_piter_<Exact>::rle_pset_piter_(const rle_pset<typename rle_pset_piter_<Exact>::point>& cont) :
+    con_(cont.con())
+  {
+  }
+
+  template <typename Exact>
+  const rle_psite<typename rle_pset_piter_<Exact>::point>&
+  rle_pset_piter_<Exact>::impl_to_psite() const
+  {
+    return ps_;
+  }
+
+  template <typename Exact>
+  typename rle_pset_piter_<Exact>::point
+  rle_pset_piter_<Exact>::impl_to_point() const
+  {
+    return ps_;
+  }
+
+  template <typename Exact>
+  rle_pset_piter_<Exact>::operator typename rle_pset_piter_<Exact>::psite () const
+  {
+    return this->impl_to_psite();
+  }
+
+  template <typename Exact>
+  const rle_psite<typename rle_pset_piter_<Exact>::point>*
+  rle_pset_piter_<Exact>::impl_psite_adr() const
+  {
+    return &ps_;
+  }
+
+  template <typename Exact>
+  const typename rle_pset_piter_<Exact>::point*
+  rle_pset_piter_<Exact>::impl_point_adr() const
+  {
+    return &p_;
+   }
+  //end of class rle_pset_iterator_
+
+# endif // ! OLN_INCLUDE_ONLY
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////
+
   // Forward declaration
   template <typename P>
   class rle_pset_fwd_piter_;
@@ -182,7 +291,7 @@ namespace oln
   struct super_trait_< rle_pset_fwd_piter_<P> >
   {
     typedef rle_pset_fwd_piter_<P> current;
-    typedef internal::iterator_on_points_base_<current> ret;
+    typedef rle_pset_piter_<current> ret;
   };
 
   // Virtual types
@@ -200,9 +309,9 @@ namespace oln
   ** P must be a point type
   */
   template <typename P>
-  class  rle_pset_fwd_piter_ : public internal::iterator_on_points_base_<rle_pset_fwd_piter_<P> >
+  class  rle_pset_fwd_piter_ : public rle_pset_piter_<rle_pset_fwd_piter_<P> >
   {
-    typedef internal::iterator_on_points_base_< rle_pset_fwd_piter_<P> > super;
+    typedef rle_pset_piter_< rle_pset_fwd_piter_<P> > super;
     typedef rle_pset_fwd_piter_<P> current;
   public:
     stc_using(point);
@@ -214,25 +323,18 @@ namespace oln
     void impl_invalidate();
     bool impl_is_valid() const;
 
-    const rle_psite<P>& impl_to_psite() const;
-    point impl_to_point() const;
-    const point* impl_psite_adr() const;
-
-    operator rle_psite<P> () const;
-
   protected:
-    const typename rle_pset<P>::std_container& con_;
-    typename rle_pset<P>::std_container::const_iterator it_;
-    rle_psite<P> ps_;
+    typename rle_pset<point>::std_container::const_iterator it_;
   };
 
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename P>
   rle_pset_fwd_piter_<P>::rle_pset_fwd_piter_(const rle_pset<P>& cont) :
-    con_(cont.con())
+    super(cont)
   {
     this->it_ = this->con_.end();
+    this->ps_.pset_pos_ = this->con_.size();
   }
 
   template <typename P>
@@ -242,6 +344,8 @@ namespace oln
     this->it_ = this->con_.begin(); // FIXME: Test if (this->it_ != this->con_.end())...
     this->ps_.start_ = this->it_->first;
     this->ps_.index_ = 0;
+    this->ps_.pset_pos_ = 0;
+    this->p_ = this->ps_.start_;
   }
 
   template <typename P>
@@ -254,10 +358,13 @@ namespace oln
 
     if (this->ps_.index_ >= this->it_->second)
     {
-      ++it_;
+      ++this->it_;
+      ++this->ps_.pset_pos_;
       this->ps_.start_ = this->it_->first;
       this->ps_.index_ = 0;
     }
+    this->p_ = this->ps_.start_;
+    this->p_[0] += this->ps_.index_;
   }
 
   template <typename P>
@@ -265,6 +372,7 @@ namespace oln
   rle_pset_fwd_piter_<P>::impl_invalidate()
   {
     this->it_ = this->con_.end();
+    this->ps_.pset_pos_ = this->con_.size();
   }
 
   template <typename P>
@@ -273,38 +381,11 @@ namespace oln
   {
     return this->it_ != this->con_.end();
   }
-
-  template <typename P>
-  typename rle_pset_fwd_piter_<P>::point
-  rle_pset_fwd_piter_<P>::impl_to_point() const
-  {
-    return ps_.to_point();
-  }
-
-  template <typename P>
-  const rle_psite<P>&
-  rle_pset_fwd_piter_<P>::impl_to_psite() const
-  {
-    return ps_;
-  }
-
-  template <typename P>
-  rle_pset_fwd_piter_<P>::operator rle_psite<P> () const
-  {
-    return this->impl_to_psite();
-  }
-
-  template <typename P>
-  const typename rle_pset_fwd_piter_<P>::point*
-  rle_pset_fwd_piter_<P>::impl_psite_adr() const
-  {
-    return &ps_;
-  }
-
 # endif // ! OLN_INCLUDE_ONLY
 
   //end of class rle_pset_fwd_iterator_
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
   // Forward declaration
   template <typename P>
   class rle_pset_bkd_piter_;
@@ -314,7 +395,7 @@ namespace oln
   struct super_trait_< rle_pset_bkd_piter_<P> >
   {
     typedef rle_pset_bkd_piter_<P> current;
-    typedef internal::iterator_on_points_base_<current> ret;
+    typedef rle_pset_piter_<current> ret;
   };
 
   // Virtual type
@@ -331,9 +412,9 @@ namespace oln
   ** P must be a point type
   */
   template <typename P>
-  class rle_pset_bkd_piter_ : public internal::iterator_on_points_base_<rle_pset_bkd_piter_<P> >
+  class rle_pset_bkd_piter_ : public rle_pset_piter_<rle_pset_bkd_piter_<P> >
   {
-    typedef internal::iterator_on_points_base_< rle_pset_bkd_piter_<P> > super;
+    typedef rle_pset_piter_< rle_pset_bkd_piter_<P> > super;
     typedef rle_pset_bkd_piter_<P> current;
   public:
     stc_using(point);
@@ -345,24 +426,18 @@ namespace oln
     void impl_invalidate();
     bool impl_is_valid() const;
 
-    const rle_psite<P>& impl_to_psite() const;
-    point impl_to_point() const;
-    const point* impl_psite_adr() const;
-    operator rle_psite<P> () const;
-
   protected:
-    const typename rle_pset<P>::std_container& con_;
-    typename rle_pset<P>::std_container::const_reverse_iterator it_;
-    /// current point
-    rle_psite<P> ps_;
+    typename rle_pset<point>::std_container::const_reverse_iterator it_;
   };
 
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename P>
-  rle_pset_bkd_piter_<P>::rle_pset_bkd_piter_(const rle_pset<P>& cont) : con_(cont.con())
+  rle_pset_bkd_piter_<P>::rle_pset_bkd_piter_(const rle_pset<P>& cont) :
+    super(cont)
   {
     this->it_ = this->con_.rend();
+    this->ps_.pset_pos_ = this->con_.size();
   }
 
   template <typename P>
@@ -372,6 +447,9 @@ namespace oln
     this->it_ = this->con_.rbegin(); // FIXME: Test if (this->it_ != this->con_.rend())...
     this->ps_.start_ = this->it_->first;
     this->ps_.index_ = this->it_->second - 1;
+    this->ps_.pset_pos_ = this->con_.size() - 1;
+    this->p_ = this->ps_.start_;
+    this->p_[0] += this->ps_.index_;
   }
 
   template <typename P>
@@ -380,14 +458,17 @@ namespace oln
   {
     precondition(this->is_valid());
 
-    --ps_.index_;
+    --(this->ps_.index_);
 
-    if (ps_.index_ + 1 ==  0)
+    if (this->ps_.index_ + 1 ==  0)
     {
-      ++it_;
+      ++this->it_;
+      --this->ps_.pset_pos_;
       this->ps_.start_ = this->it_->first;
       this->ps_.index_ = this->it_->second - 1;
     }
+    this->p_ = this->ps_.start_;
+    this->p_[0] += this->ps_.index_;
   }
 
   template <typename P>
@@ -395,6 +476,7 @@ namespace oln
   rle_pset_bkd_piter_<P>::impl_invalidate()
   {
     this->it_ = this->con_.rend();
+    this->ps_.pset_pos_ = this->con_.size();
   }
 
   template <typename P>
@@ -403,34 +485,6 @@ namespace oln
   {
     return this->it_ != this->con_.rend();
   }
-
-  template <typename P>
-  const rle_psite<P>&
-  rle_pset_bkd_piter_<P>::impl_to_psite() const
-  {
-    return ps_;
-  }
-
-  template <typename P>
-  typename rle_pset_bkd_piter_<P>::point
-  rle_pset_bkd_piter_<P>::impl_to_point() const
-  {
-    return ps_;
-  }
-
-  template <typename P>
-  rle_pset_bkd_piter_<P>::operator rle_psite<P> () const
-  {
-    return this->impl_to_psite();
-  }
-
-  template <typename P>
-  const typename rle_pset_bkd_piter_<P>::point*
-  rle_pset_bkd_piter_<P>::impl_psite_adr() const
-  {
-    return &ps_;
-  }
-
 # endif // ! OLN_INCLUDE_ONLY
 
   // end of class rle_pset_bkd_piter_
