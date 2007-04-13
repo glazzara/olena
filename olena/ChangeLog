@@ -1,3 +1,13 @@
+2007-04-13  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Draft canvas : 3 versions (Two_pass).
+
+	* oln/canvas/queue_based.hh: New.
+	* oln/canvas/parallel.hh: New.
+	* oln/canvas/two_pass_until_stability.hh: New.
+	* oln/canvas/two_pass.hh: .
+	* oln/canvas/until_stability.hh: New.
+
 2007-04-13  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	rle_class based on std::vector.

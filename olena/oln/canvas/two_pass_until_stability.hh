@@ -25,44 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_CANVAS_TWO_PASS_HH
-# define OLN_CANVAS_TWO_PASS_HH
+#ifndef	OLN_CANVAS_TWO_PASS_UNTIL_STABILITY_HH
+# define OLN_CANVAS_TWO_PASS_UNTIL_STABILITY_HH
 
 namespace canvas
 {
 
-  namespace v1
+  template <typename F, typename I>
+  void two_pass_until_stability(F f, I input)
   {
-    template <template <class> class F,
-	      typename I>
-    void two_pass(F<I> f)
+    bool stability;
+
+    f.init(input);
+
+    for (;;)
     {
-      mlc::assert_< mlc_is_a(I, Image) >::check();
-
-      f.init();
-
-      // first pass
-      oln_fwd_piter(I) p1(f.input.points());
-      for_all(p1)
-	f.first_pass_body(p1);
-
-      // second pass
-      oln_bkd_piter(I) p2(f.input.points());
-      for_all(p2)
-	f.second_pass_body(p2);
-
-      f.final();
-    }
-  }
-
-  namespace v2
-  {
-    template <typename F, typename I>
-    void two_pass(F f, I input)
-    {
-      mlc::assert_< mlc_is_a(I, Image) >::check();
-
-      f.init(input);
 
       // first pass
       oln_fwd_piter(I) p1(input.points());
@@ -74,33 +51,19 @@ namespace canvas
       for_all(p2)
 	f.second_pass_body(p2, input);
 
-      f.final(input);
+      // stability check
+      stability = f.is_stable(input); // Oblige de posseder output.
+      if (stability)
+	return;
+
+      // prepare a new loop iteration
+      f.re_loop(input);
     }
+
+    f.final(input);
   }
 
-  namespace v3
-  {
-    template <typename F, typename I, typename A>
-    void two_pass(F f, I input, A aux)
-    {
-      mlc::assert_< mlc_is_a(I, Image) >::check();
-
-      f.init(input, aux);
-
-      // first pass
-      oln_fwd_piter(I) p1(input.points());
-      for_all(p1)
-	f.first_pass_body(p1, input, aux);
-
-      // second pass
-      oln_bkd_piter(I) p2(input.points());
-      for_all(p2)
-	f.second_pass_body(p2, input, aux);
-
-      f.final(input, aux);
-    }
-  }
 
 }
 
-#endif // ! OLN_CANVAS_TWO_PASS_HH
+#endif // ! OLN_CANVAS_TWO_PASS_UNTIL_STABILITY_HH
