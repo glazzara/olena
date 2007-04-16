@@ -53,25 +53,6 @@ namespace oln
     // Fwd decls.
 
     template <typename I>
-    void fill(Mutable_Image<I>& target, /* with */ const oln_value(I)& value);
-
-    template <typename I, typename J>
-    void fill(Mutable_Image<I>& target, /* with */ const Image<J>& data);
-
-    template <typename I, typename F>
-    void fill(Mutable_Image<I>& target, /* with */ const Function_p2v<F>& fun);
-
-    template <typename I, typename V, typename P>
-    void fill(Mutable_Image<I>& target, /* with */ V (*fun)(P));
-
-    // FIXME: Inactivated.
-
-//     template <typename I>
-//     void fill(Value_Wise_Mutable_Image<I>& target, const oln_value(I)& value);
-
-    // versions for temporary images
-
-    template <typename I>
     void fill(inplace_<I> target, /* with */ const oln_value(I)& value);
 
     template <typename I, typename J>
@@ -81,7 +62,12 @@ namespace oln
     void fill(inplace_<I> target, /* with */ const Function_p2v<F>& fun);
 
     template <typename I, typename V, typename P>
-    void fill(inplace_<I> target, /* with */ V (*fun)(P));
+    void fill(inplace_<I> target, /* with */ V (*f)(P));
+
+    // FIXME: Inactivated.
+
+    //     template <typename I>
+    //     void fill(Value_Wise_Mutable_Image<I>& target, const oln_value(I)& value);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -130,56 +116,44 @@ namespace oln
     /// Facades.
 
     template <typename I>
-    void fill(Mutable_Image<I>& target, const oln_value(I)& value)
-    {
-      impl::fill_from_value_(exact(target), value);
-    }
-
-    template <typename I, typename J>
-    void fill(Mutable_Image<I>& target, const Image<J>& data)
-    {
-      assert_same_grid_<I, J>::check();
-      precondition(target.points() <= data.points());
-      impl::fill_from_image_(exact(target), exact(data));
-    }
-
-    template <typename I, typename F>
-    void fill(Mutable_Image<I>& target, const Function_p2v<F>& fun)
-    {
-      impl::fill_from_function_(exact(target), exact(fun));
-    }
-
-    template <typename I, typename V, typename P>
-    void fill(Mutable_Image<I>& target, V (*f)(P))
-    {
-      mlc::assert_< mlc_is_a(P, Point) >::check(); // FIXME: Add err msg.
-      impl::fill_from_function_(exact(target), functorize_p2v(f));
-    }
-
-    // with inplace_<I>
-
-    template <typename I>
     void fill(inplace_<I> target, const oln_value(I)& value)
     {
-      fill(target.unwrap(), value);
+      impl::fill_from_value_(target.unwrap(), value);
     }
 
     template <typename I, typename J>
     void fill(inplace_<I> target, const Image<J>& data)
     {
-      fill(target.unwrap(), data);
+      assert_same_grid_<I, J>::check();
+      precondition(target.unwrap().points() <= data.points());
+      impl::fill_from_image_(target.unwrap(), exact(data));
     }
 
     template <typename I, typename F>
     void fill(inplace_<I> target, const Function_p2v<F>& fun)
     {
-      fill(target.unwrap(), fun);
+      typedef mlc_basic(oln_argument(F)) P;
+      mlc::assert_< mlc_is_a(P, Point) >::check(); // FIXME: Add err msg.
+      // FIXME: Check also the value type.
+      impl::fill_from_function_(target.unwrap(), exact(fun));
     }
 
     template <typename I, typename V, typename P>
-    void fill(inplace_<I> target, V (*fun)(P))
+    void fill(inplace_<I> target, V (*f)(P))
     {
-      fill(target.unwrap(), fun);
+      mlc::assert_< mlc_is_a(P, Point) >::check(); // FIXME: Add err msg.
+      // FIXME: Check also the value type.
+      impl::fill_from_function_(target.unwrap(), functorize_p2v(f));
+    }
+
+
+
+    /// Guard.
+
+    template <typename I, typename T>
+    void fill(const Image<I>&, const T&)
+    {
+      mlc::abort_<I>::check(); // FIXME: Add err msg.
     }
 
 # endif // ! OLN_INCLUDE_ONLY

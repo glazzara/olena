@@ -80,27 +80,26 @@ namespace oln
     /// Facades.
 
     template <typename F, typename I>
-    void apply_inplace(const Function_v2v<F>& f, Mutable_Image<I>& in_out)
-    {
-      impl::apply_inplace_(exact(f), exact(in_out));
-    }
-
-    template <typename R, typename A, typename I>
-    void apply_inplace(R (*f)(A), Mutable_Image<I>& in_out)
-    {
-      impl::apply_inplace_(functorize_v2v(f), exact(in_out));
-    }
-
-    template <typename F, typename I>
     void apply_inplace(const Function_v2v<F>& f, inplace_<I> in_out)
     {
-      apply_inplace(f, in_out.unwrap());
+      // FIXME: Add check.
+      impl::apply_inplace_(exact(f), in_out.unwrap());
     }
 
     template <typename R, typename A, typename I>
     void apply_inplace(R (*f)(A), inplace_<I> in_out)
     {
-      apply_inplace(f, in_out.unwrap());
+      // FIXME: Add check.
+      impl::apply_inplace_(functorize_v2v(f), in_out.unwrap());
+    }
+
+
+    /// Guard.
+
+    template <typename T, typename I>
+    void apply_inplace(const T&, const Image<I>&)
+    {
+      mlc::abort_<I>::check(); // FIXME: Add err msg.
     }
 
 # endif // ! OLN_INCLUDE_ONLY

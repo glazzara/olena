@@ -28,7 +28,7 @@
 #ifndef OLN_CORE_2D_RECTANGLE2D_HH
 # define OLN_CORE_2D_RECTANGLE2D_HH
 
-# include <oln/core/internal/window.hh>
+# include <oln/core/internal/symmetrical_window.hh>
 # include <oln/core/2d/dpoint2d.hh>
 
 
@@ -39,11 +39,13 @@ namespace oln
   class rectangle2d;
 
 
+# define super internal::symmetrical_window_<rectangle2d>
+
   // Super type.
   template <>
   struct super_trait_< rectangle2d >
   {
-    typedef internal::window_<rectangle2d> ret;
+    typedef super ret;
   };
 
 
@@ -57,7 +59,7 @@ namespace oln
 
   /// 2D rectangular window.
 
-  class rectangle2d : public internal::window_< rectangle2d >
+  class rectangle2d : public super
   {
   public:
 
@@ -70,9 +72,10 @@ namespace oln
   private:
     void init_(int drow_min, int dcol_min,
 	       int drow_max, int dcol_max);
-    void take(); // safety; w/o impl, it provides from calling super::take(dp).
 
     unsigned half_height_, half_width_;
+
+    void impl_take(); // safety; w/o impl, it prevents from calling take(dp).
 
   }; // end of class oln::rectangle2d
 
@@ -105,10 +108,12 @@ namespace oln
   {
     for (int drow = drow_min; drow <= drow_max; ++drow)
       for (int dcol = dcol_min; dcol <= dcol_max; ++dcol)
-	this->internal::window_<rectangle2d>::take(dpoint2d(drow, dcol));
+	this->super::impl_take(dpoint2d(drow, dcol));
   }
 
 # endif // ! OLN_INCLUDE_ONLY
+
+# undef super
 
 } // end of namespace oln
 

@@ -45,7 +45,8 @@ int main()
 
   typedef image2d<int> I;
   I ima_0(3, 3), ima_1(3, 3);
-  level::fill(stack(ima_0, ima_1).inplace(), coords);
+  image_stack<2,I> ima = stack(ima_0, ima_1);
+  level::fill(inplace(ima), coords);
   {
     I::piter p(ima_0.points());
     for_all(p)

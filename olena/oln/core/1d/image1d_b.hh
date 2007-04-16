@@ -107,6 +107,9 @@ namespace oln
     unsigned impl_border() const;
   };
 
+  template <typename T, typename D>
+  bool prepare(image1d_b<T>& target, with_t, const D& dat);
+
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -191,6 +194,20 @@ namespace oln
   {
     assert(this->has_data());
     return this->data_->second;
+  }
+
+  template <typename T, typename D>
+  bool prepare(image1d_b<T>& target, with_t, const D& dat)
+  {
+    precondition(not target.has_data());
+    box1d b;
+    bool box_ok = init(b, with, dat);
+    postcondition(box_ok);
+    unsigned border = 2; // FIXME: Use init!
+    array1d_<T,int>* ptr = new array1d_<T,int>(b.pmin().ind() - border,
+					       b.pmax().ind() + border);
+    target.data__() = new typename image1d_b<T>::data(ptr, border, b);
+    return box_ok;
   }
 
 # endif // ! OLN_INCLUDE_ONLY

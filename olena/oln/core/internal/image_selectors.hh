@@ -28,9 +28,15 @@
 #ifndef OLN_CORE_INTERNAL_IMAGE_SELECTORS_HH
 # define OLN_CORE_INTERNAL_IMAGE_SELECTORS_HH
 
+# include <oln/core/concept/grid.hh>
 # include <oln/core/concept/image.hh>
+
+// FIXME: Bad! Move Grid_*D into concept/grid.hh...
+# include <oln/core/1d/grid1d.hh>
 # include <oln/core/2d/grid2d.hh>
-# include <oln/value/tags.hh>
+# include <oln/core/3d/grid3d.hh>
+
+# include <oln/value/tags.hh> // FIXME: Bad!
 
 
 namespace oln
@@ -69,9 +75,25 @@ namespace oln
     template <typename Exact>
     struct case_< Image_dimension, Exact,  1 >
       :
+      where_< stc_is_a(grid, Grid_1D) >
+    {
+      typedef Image_1D<Exact> ret;
+    };
+  
+    template <typename Exact>
+    struct case_< Image_dimension, Exact,  2 >
+      :
       where_< stc_is_a(grid, Grid_2D) >
     {
       typedef Image_2D<Exact> ret;
+    };
+  
+    template <typename Exact>
+    struct case_< Image_dimension, Exact,  3 >
+      :
+      where_< stc_is_a(grid, Grid_3D) >
+    {
+      typedef Image_3D<Exact> ret;
     };
 
     // FIXME: ...

@@ -83,6 +83,44 @@ namespace oln
 
 
 
+#  ifdef OLN_ENV_1D
+
+      /// Default version.
+
+      template <typename I>
+      void print_1D(const Image<I>&, const I& input, std::ostream& ostr)
+      {
+	print_Gen(input, ostr);
+      }
+
+      /// Version for classical 1D images.
+
+      template <typename I>
+      void print_1D(const Point_Wise_Accessible_Image<I>&, const I& input,
+		    std::ostream& ostr)
+      {
+	const oln_coord(I)
+	  imin = input.min_ind(),
+	  imax = input.max_ind();
+	for (oln_coord(I) i = imin; i <= imax; ++i)
+	  {
+	    if (input.has(i))
+	      ostr << format(input(i));
+	    else
+	      ostr << '-';
+	    ostr << ' ';
+	  }
+      }
+
+      template <typename I>
+      void print(const Image_1D<I>& input, std::ostream& ostr)
+      {
+	impl::print_1D(exact(input), exact(input), ostr);
+      }
+
+#  endif // OLN_ENV_1D
+
+
 #  ifdef OLN_ENV_2D
 
       /// Default version.
@@ -127,7 +165,6 @@ namespace oln
       }
 
 #  endif // OLN_ENV_2D
-
 
     } // end of namespace oln::debug::impl
 

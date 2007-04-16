@@ -41,14 +41,14 @@ namespace oln
   template <typename L, typename OpName, typename R> class op_;
 
 
-  /// Virtual types.
+  // Virtual types.
   template <typename Lcat, typename L, typename OpName, typename Rcat, typename R>
   struct vtypes< internal::special_op_<Lcat, L, OpName, Rcat, R> >
   /* undefined; to be specialized... */
   ;
 
 
-  /// Super type.
+  // Super type.
   template <typename Lcat, typename L, typename OpName, typename Rcat, typename R>
   struct super_trait_< internal::special_op_<Lcat, L, OpName, Rcat, R> >
   /* undefined; to be specialized... */

@@ -39,27 +39,36 @@ namespace oln
   {
 
     template <typename I>
-    void iota(Mutable_Image<I>& in_out);
-
-    template <typename I>
     void iota(inplace_<I> in_out);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename I>
-    void iota(Mutable_Image<I>& in_out)
+    namespace impl
     {
-      oln_value(I) v = 0;
-      oln_fwd_piter(I) p(in_out.points());
-      for_all(p)
-	in_out(p) = v++;
-    }
+
+      template <typename I>
+      void iota_(Mutable_Image<I>& in_out)
+      {
+	oln_value(I) v = 0;
+	oln_fwd_piter(I) p(in_out.points());
+	for_all(p)
+	  in_out(p) = v++;
+      }
+
+    } // end of namespace oln::debug::impl
 
     template <typename I>
     void iota(inplace_<I> in_out)
     {
-      iota(in_out.unwrap());
+      impl::iota_(in_out.unwrap());
+    }
+
+    // guard
+    template <typename I>
+    void iota(const Image<I>&)
+    {
+      mlc::abort_<I>::check(); // FIXME: Add err msg.
     }
 
 # endif // ! OLN_INCLUDE_ONLY

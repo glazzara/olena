@@ -238,6 +238,7 @@ namespace oln
 
       stc_typename(data);
 
+      bool impl_is_empty() const;
       bool has_data() const;
 
       // pseudo-private:
@@ -360,9 +361,15 @@ namespace oln
     /// image_base_<Exact>
 
     template <typename Exact>
+    bool image_base_<Exact>::impl_is_empty() const
+    {
+      return this->data_ == 0; // FIXME: This is not sufficient...
+    }
+
+    template <typename Exact>
     bool image_base_<Exact>::has_data() const
     {
-      return this->data_ != 0;
+      return this->data_ != 0; // FIXME: redundant with is_empty? (no)
     }
 
     template <typename Exact>

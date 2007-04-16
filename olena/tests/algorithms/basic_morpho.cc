@@ -1,7 +1,11 @@
 
 #include <oln/core/2d/image2d.hh>
-#include <oln/core/2d/window2d.hh>
 #include <oln/core/2d/neighb2d.hh>
+
+#include <oln/core/2d/window2d.hh>
+#include <oln/core/2d/rectangle2d.hh>
+#include <oln/core/2d/hline2d.hh>
+#include <oln/core/2d/vline2d.hh>
 
 #include <oln/morpho/elementary_dilation.hh>
 #include <oln/morpho/elementary_erosion.hh>
@@ -40,13 +44,13 @@ int main()
   for_all(p1)
     ima(p1) = i++ % 2;
 
-  my_test( (morpho::elementary_erosion(ima + c4)).image(), 0);
+  my_test( morpho::elementary_erosion(ima + c4), 0);
 
-  my_test( (morpho::elementary_dilation(ima + c4)).image(), 1 );
+  my_test( morpho::elementary_dilation(ima + c4), 1 );
 
-  my_test( (morpho::elementary_opening(ima + c4)).image(), 0);
+  my_test( morpho::elementary_opening(ima + c4), 0);
 
-  my_test( (morpho::elementary_closing(ima + c4)).image(), 1);
+  my_test( morpho::elementary_closing(ima + c4), 1);
 
   my_test( morpho::erosion(ima, win3x3), 0);
 

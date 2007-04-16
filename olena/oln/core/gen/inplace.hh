@@ -57,6 +57,11 @@ namespace oln
   inplace(Mutable_Image<I>& ima);
 
 
+  template <typename I>
+  inplace_<I>
+  inplace(inplace_<I> ima);
+
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -80,12 +85,21 @@ namespace oln
     return this->unwrap();
   }
 
+  // inplace
+
   template <typename I>
   inplace_<I>
   inplace(Mutable_Image<I>& ima)
   {
     inplace_<I> tmp(exact(ima));
     return tmp;
+  }
+
+  template <typename I>
+  inplace_<I>
+  inplace(inplace_<I> ima)
+  {
+    return ima;
   }
 
 # endif // ! OLN_INCLUDE_ONLY

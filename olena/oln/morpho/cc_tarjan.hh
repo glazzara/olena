@@ -29,6 +29,8 @@
 # define OLN_MORPHO_CC_TARJAN_HH
 
 # include <oln/core/concept/image.hh>
+# include <oln/core/internal/f_ch_value.hh>
+# include <oln/level/fill.hh>
 
 namespace oln
 {
@@ -116,10 +118,10 @@ namespace oln
 	oln_plain_value(I, oln_point(I)) parent;
 	prepare(parent, with, input);
 
-	oln_plain(I) is_processed;
+	// init.
+	oln_plain_value(I, bool) is_processed;
 	prepare(is_processed, with, input);
-	oln_piter(I) p1(is_processed.points());
-	  is_processed(p1) = false; // FIXME : built with ?.
+ 	level::fill(inplace(is_processed), false);
 
 	first_pass(input, parent, is_processed);
 	second_pass(input, parent, output);

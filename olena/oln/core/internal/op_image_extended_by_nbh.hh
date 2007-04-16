@@ -28,6 +28,7 @@
 #ifndef OLN_CORE_INTERNAL_OP_IMAGE_EXTENDED_BY_NBH_HH
 # define OLN_CORE_INTERNAL_OP_IMAGE_EXTENDED_BY_NBH_HH
 
+# include <mlc/unconst.hh>
 # include <oln/core/concept/neighborhood.hh>
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/gen/op.hh>
@@ -123,10 +124,14 @@ namespace oln
 
   template <typename N, typename I>
   bool init_(Neighborhood<N>* this_,
+	     const internal::single_image_morpher_<I>& dat);
+
+  template <typename N, typename I>
+  bool init_(Neighborhood<N>* this_,
 	     const internal::current& dat);
 
   template <typename I, typename N>
-  bool init_(Image<I>* this_,
+  bool init_(Image<I>* this_, // FIXME: Pb with I being "const J"...
 	     const internal::current& dat);
 
 
@@ -186,6 +191,14 @@ namespace oln
 
   template <typename N, typename I>
   bool init_(Neighborhood<N>* this_,
+	     const internal::single_image_morpher_<I>& data)
+  {
+    exact(*this_) = data.nbhood();
+    return true;
+  }
+
+  template <typename N, typename I>
+  bool init_(Neighborhood<N>* this_,
 	     const internal::current& data)
   {
     exact(*this_) = data.nbhood();
@@ -220,7 +233,7 @@ namespace oln
     precondition(not target.has_data());
     target.data__() = new typename op_<I, extended_by, N>::data;
     bool ima_ok = prepare(target.data__()->first, with, dat);
-    bool nbh_ok = init(target.data__()->second, with, dat);
+    bool nbh_ok = init(mlc::unconst_cast(target.data__()->second), with, dat);
     postcondition(ima_ok);
     postcondition(nbh_ok);
     return ima_ok and nbh_ok;

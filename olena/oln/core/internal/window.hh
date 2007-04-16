@@ -72,12 +72,16 @@ namespace oln
     public:
 
       stc_using(point);
-      typedef typename point::dpoint dpoint;
+      typedef oln_dpoint(point) dpoint;
 
-      window_();
       Exact& take(const dpoint& dp);
+      Exact& impl_take(const dpoint& dp);
+
       Exact impl_op_unary_minus_() const;
-      
+
+    protected:
+      window_();
+
     }; // end of class oln::internal::window_<Exact>
 
 
@@ -92,7 +96,14 @@ namespace oln
     Exact&
     window_<Exact>::take(const typename window_<Exact>::dpoint& dp)
     {
-      this->take_( dp);
+      return exact(this)->impl_take(dp);
+    }
+
+    template <typename Exact>
+    Exact&
+    window_<Exact>::impl_take(const typename window_<Exact>::dpoint& dp)
+    {
+      this->take_(dp); // from dpoints_impl_.
       return exact(*this);
     }
     

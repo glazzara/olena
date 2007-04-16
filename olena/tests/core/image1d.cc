@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,7 +38,6 @@ main()
 
   // Fill a 1D image using its iterator.
   image1d<char> ima1(3);
-  image1d<char>::box box1 = ima1.points();
   image1d<char>::piter p1 (ima1.points());
   for_all(p1)
     ima1(p1) = 1;
@@ -50,7 +49,7 @@ main()
 
   // Fill a 1D image using the routine level::fill.
   image1d<long> ima3(ima1.points());
-  level::fill(ima3, 3);
+  level::fill(inplace(ima3), 3);
 
 
   // Add the three images.

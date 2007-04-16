@@ -52,7 +52,7 @@ namespace oln
       stc_typename(box);
       stc_typename(pset);
 
-      bool   impl_owns_(const psite& p) const;
+      bool impl_owns_(const psite& p) const;
       rvalue impl_read(const psite& p) const;
       const pset& impl_points() const;
     };

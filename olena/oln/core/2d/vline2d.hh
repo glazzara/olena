@@ -28,7 +28,7 @@
 #ifndef OLN_CORE_2D_VLINE2D_HH
 # define OLN_CORE_2D_VLINE2D_HH
 
-# include <oln/core/internal/window.hh>
+# include <oln/core/internal/symmetrical_window.hh>
 # include <oln/core/2d/dpoint2d.hh>
 
 
@@ -39,11 +39,13 @@ namespace oln
   class vline2d;
 
 
+# define super internal::symmetrical_window_<vline2d>
+
   // Super type.
   template <>
   struct super_trait_< vline2d >
   {
-    typedef internal::window_<vline2d> ret;
+    typedef super ret;
   };
 
 
@@ -57,7 +59,7 @@ namespace oln
 
   /// 2D vertical line window.
 
-  class vline2d : public internal::window_< vline2d >
+  class vline2d : public super
   {
   public:
     
@@ -66,7 +68,7 @@ namespace oln
 
   private:
     void init_(int drow_min, int drow_max);
-    void take(); // safety; w/o impl, it provides from calling super::take(dp).
+    void impl_take(); // safety; w/o impl, it provides from calling take(dp).
 
   }; // end of class oln::vline2d
 
@@ -90,10 +92,12 @@ namespace oln
   vline2d::init_(int drow_min, int drow_max)
   {
     for (int drow = drow_min; drow <= drow_max; ++drow)
-      this->internal::window_<vline2d>::take(dpoint2d(drow, 0));
+      this->super::impl_take(dpoint2d(drow, 0));
   }
 
 # endif // ! OLN_INCLUDE_ONLY
+
+#undef super
 
 } // end of namespace oln
 

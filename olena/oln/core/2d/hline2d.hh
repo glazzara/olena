@@ -28,7 +28,7 @@
 #ifndef OLN_CORE_2D_HLINE2D_HH
 # define OLN_CORE_2D_HLINE2D_HH
 
-# include <oln/core/internal/window.hh>
+# include <oln/core/internal/symmetrical_window.hh>
 # include <oln/core/2d/dpoint2d.hh>
 
 
@@ -39,11 +39,13 @@ namespace oln
   class hline2d;
 
 
+# define super internal::symmetrical_window_<hline2d>
+
   // Super type.
   template <>
   struct super_trait_< hline2d >
   {
-    typedef internal::window_<hline2d> ret;
+    typedef super ret;
   };
 
 
@@ -57,7 +59,7 @@ namespace oln
 
   /// 2D horizontal line window.
 
-  class hline2d : public internal::window_< hline2d >
+  class hline2d : public super
   {
   public:
     
@@ -65,7 +67,7 @@ namespace oln
 
   private:
     void init_(int dcol_min, int dcol_max);
-    void take(); // safety; w/o impl, it provides from calling super::take(dp).
+    void impl_take(); // safety; w/o impl, it prevents from calling take(dp).
 
   }; // end of class oln::hline2d
 
@@ -83,10 +85,12 @@ namespace oln
   hline2d::init_(int dcol_min, int dcol_max)
   {
     for (int dcol = dcol_min; dcol <= dcol_max; ++dcol)
-      this->internal::window_<hline2d>::take(dpoint2d(0, dcol));
+      this->super::impl_take(dpoint2d(0, dcol));
   }
 
 # endif // ! OLN_INCLUDE_ONLY
+
+# undef super
 
 } // end of namespace oln
 

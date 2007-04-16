@@ -1,3 +1,47 @@
+2007-04-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make 'inplace' mandatory and start a tour.
+
+	* doc: New directory.
+	* doc/tour: New sub-directory.
+	* doc/tour/tour1_extra.cc: New.
+	* doc/tour/tour1.cc: New.
+	* tests/core/image1d.cc: Remove unused decl and update.
+	* tests/core/image2d.cc: Use namespace.
+	* tests/core/image3d.cc: Update.
+	* tests/algorithms/basic_morpho.cc: Remove hack.
+	Update includes.
+	* oln/debug/print.hh (print_1D): New.
+	* tests/core/stack.cc,
+	* tests/algorithms/fill.cc,
+	* oln/debug/iota.hh,
+	* oln/draw/bresenham.hh,
+	* oln/level/fill.hh,
+	* oln/level/clone.hh,
+	* oln/level/apply_inplace.hh: Update.
+	* oln/core/1d/image1d.hh (prepare): New.
+	* oln/core/1d/image1d_b.hh (prepare): New.
+	* oln/core/internal/symmetrical_window.hh: New.
+	* oln/core/internal/window.hh (impl_take): New.
+	(take): Call impl_take.
+	* oln/core/2d/vline2d.hh,
+	* oln/core/2d/hline2d.hh,
+	* oln/core/2d/rectangle2d.hh: Update.
+	* oln/core/2d/neighb2d.hh: Add FIXMEs.
+	* oln/core/gen/inplace.hh (inplace): New overload.
+	* oln/core/concept/image.hh (is_empty): New in Image.
+	(min_ind, max_ind, ninds): New in Image_1D.
+	* oln/core/concept/function.hh: Remove obsolete commented code.
+	* oln/core/concept/image_identity.hh: Cosmetic change.
+	* oln/core/internal/image_selectors.hh (Image_dimension): Handle
+	1D and 3D cases.
+	* oln/core/internal/image_base.hh (impl_is_empty): New.
+	* oln/core/internal/op_image_extended_by_nbh.hh (init_): New
+	overload.
+	(init_): Unconst nbh in the Neighborhood version.	
+	* oln/core/internal/special_op.hh: Cosmetic change.
+	* oln/morpho/cc_tarjan.hh: Fix.
+
 2007-04-13  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Draft canvas : 3 versions (Two_pass).

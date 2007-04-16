@@ -25,75 +25,87 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_DRAW_BRESENHAM_HH
-# define OLN_DRAW_BRESENHAM_HH
+#ifndef OLN_CORE_INTERNAL_SYMMETRICAL_WINDOW_HH
+# define OLN_CORE_INTERNAL_SYMMETRICAL_WINDOW_HH
 
-# include <oln/core/concept/image.hh>
-# include <oln/core/gen/inplace.hh>
-# include <oln/core/gen/over.hh>
-# include <oln/level/paste.hh>
-
-# include <oln/core/2d/line2d.hh> // FIXME: 2D!
-
+# include <oln/core/internal/window.hh>
 
 
 namespace oln
 {
 
-  namespace draw
+
+  // Fwd decl.
+  namespace internal { template <typename Exact> class symmetrical_window_; }
+
+#define current symmetrical_window_<Exact>
+#define super   internal::window_<Exact>
+
+  // Super type.
+  template <typename Exact>
+  struct super_trait_< internal::current >
+  {
+    typedef super ret;
+  };
+
+
+  // Virtual types.
+  template <typename Exact>
+  struct vtypes< internal::current >
+  {
+  };
+
+  namespace internal
   {
 
-    // Fwd decl.
+    /// Base implementation class for symmetrical window classes.
 
-    template <typename I>
-    void bresenham(inplace_<I> in_out,
-		   const oln_point(I)& begin, const oln_point(I)& end,
-		   const oln_value(I)& value);
+    template <typename Exact>
+    class symmetrical_window_ : public super
+    {
+    public:
+      stc_using(dpoint);
+
+      const Exact& impl_op_unary_minus_() const;
+      Exact& impl_take(const dpoint& dp);
+
+    protected:
+      symmetrical_window_();
+
+    }; // end of class oln::internal::symmetrical_window_<Exact>
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
+    template <typename Exact>
+    current::symmetrical_window_()
     {
-
-      template <typename I>
-      void bresenham_(Mutable_Image<I>& in_out,
-		      const oln_point(I)& begin, const oln_point(I)& end,
-		      const oln_value(I)& value)
-      {
-  	level::paste(literal(value) / line2d(begin, end),
-		     inplace(in_out));
-      }
-
-    } // end of namespace oln::draw::impl
-
-
-    // Facade.
-
-    template <typename I>
-    void bresenham(inplace_<I> in_out,
-		   const oln_point(I)& begin, const oln_point(I)& end,
-		   const oln_value(I)& value)
-    {
-      impl::bresenham_(in_out.unwrap(), begin, end, value);
     }
 
-
-    // Guard.
-
-    template <typename I, typename P, typename V>
-    void bresenham(const Image<I>&,
-		   const P&, const P&,
-		   const V&)
+    template <typename Exact>
+    const Exact&
+    current::impl_op_unary_minus_() const
     {
-      mlc::abort_<I>::check(); // FIXME: Add err msg.
+      return exact(*this);
     }
+
+    template <typename Exact>
+    Exact&
+    current::impl_take(const typename current::dpoint& dp)
+    {
+      this->super::impl_take(dp);
+      this->super::impl_take(-dp);
+      return exact(*this);
+    }
+
+  } // end of namespace oln::internal
 
 # endif // ! OLN_INCLUDE_ONLY
 
-  } // end of namespace oln::draw
+# undef super
+# undef current
 
 } // end of namespace oln
 
 
-#endif // ! OLN_DRAW_BRESENHAM_HH
+#endif // ! OLN_CORE_INTERNAL_SYMMETRICAL_WINDOW_HH

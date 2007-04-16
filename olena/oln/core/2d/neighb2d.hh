@@ -52,6 +52,7 @@ namespace oln
   namespace internal
   {
 
+    // FIXME: constify.
     neighb2d mk_c4();
     neighb2d mk_c8();
     neighb2d mk_c2_row();
@@ -101,6 +102,7 @@ namespace oln
   } // end of namespace oln::internal
 
 
+    // FIXME: constify.
   extern neighb2d c4;
   extern neighb2d c8;
   extern neighb2d c2_row;

@@ -36,18 +36,6 @@
 namespace oln
 {
 
-
-  /*
-
-  // Fwd decl.
-  namespace morpher {
-    template <typename I, typename F> class two_way;
-    template <typename I, typename F> class two_way_rw;
-  }
-  namespace value   { template <typename I, typename F> class two_way; }
-
-  */
-
   
   template <typename Exact>
   struct Function : public Any<Exact>
@@ -90,40 +78,15 @@ namespace oln
   };
 
 
-  /*
-
   // Value1 -> Value2  *and*  Value2 -> Value1.
 
   template <typename Exact>
   struct Function_v2w2v : public Function<Exact>
   {
-  public:
-
-    template <typename I>
-    oln::morpher::two_way<I, Exact>
-    operator()(oln::abstract::mutable_image<I>& input) const;
-
+    typedef Function_v2w2v<void> category;
   protected:
     Function_v2w2v();
   };
-
-
-  // (Image, Point) -> Value2  *and*  (Image, Point, Value2) -> Value1.
-
-  template <typename Exact>
-  struct Function_rw : public Function<Exact>
-  {
-  public:
-
-    template <typename I>
-    oln::morpher::two_way_rw<I, Exact>
-    operator()(oln::abstract::mutable_image<I>& input) const;
-
-  protected:
-    Function_rw();
-  };
-
-  */
 
 
   // Point -> Point.
@@ -159,19 +122,10 @@ namespace oln
   {
   }
 
-  /*
-
   template <typename Exact>
   Function_v2w2v<Exact>::Function_v2w2v()
   {
   }
-
-  template <typename Exact>
-  Function_rw<Exact>::Function_rw()
-  {
-  }
-
-  */
 
   template <typename Exact>
   Function_p2p<Exact>::Function_p2p()

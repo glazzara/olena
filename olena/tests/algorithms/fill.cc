@@ -38,7 +38,7 @@ main()
   using namespace oln;
   typedef image2d<int> image_t;
   image_t ima(3, 3);
-  level::fill(ima, 51);
+  level::fill(inplace(ima), 51);
   image_t::piter p(ima.points());
   for_all(p)
     assert(ima(p) == 51);

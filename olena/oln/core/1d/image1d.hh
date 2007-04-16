@@ -85,6 +85,7 @@ namespace oln
 
     image1d();
     image1d(const box1d& b);
+    image1d(const point1d& pmin, const point1d& pmax);
     image1d(unsigned n);
 
     bool impl_owns_(const point1d& p) const;
@@ -102,6 +103,9 @@ namespace oln
     const box1d& impl_points() const;
   };
 
+  template <typename T, typename D>
+  bool prepare(image1d<T>& target, with_t, const D& dat);
+
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -115,6 +119,15 @@ namespace oln
   image1d<T>::image1d(const box1d& b)
   {
     this->data_ = new data(new array_t(b.pmin().ind(), b.pmax().ind()),
+			   b);
+  }
+
+  template <typename T>
+  image1d<T>::image1d(const point1d& pmin, const point1d& pmax)
+  {
+    precondition(pmax >= pmin);
+    box1d b(pmin, pmax);
+    this->data_ = new data(new array_t(pmin.ind(), pmax.ind()),
 			   b);
   }
 
@@ -183,6 +196,19 @@ namespace oln
   {
     assert(this->has_data());
     return this->data_->second;
+  }
+
+  template <typename T, typename D>
+  bool prepare(image1d<T>& target, with_t, const D& dat)
+  {
+    precondition(not target.has_data());
+    box1d b;
+    bool box_ok = init(b, with, dat);
+    postcondition(box_ok);
+    array1d_<T,int>* ptr = new array1d_<T,int>(b.pmin().ind(),
+					       b.pmax().ind());
+    target.data__() = new typename image1d<T>::data(ptr, b);
+    return box_ok;
   }
 
 # endif // ! OLN_INCLUDE_ONLY

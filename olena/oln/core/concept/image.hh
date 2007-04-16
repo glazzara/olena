@@ -131,7 +131,9 @@ namespace oln
     // stc_typename(output); // FIXME: Uncomment!
     stc_typename(plain);
 
+    bool is_empty() const; // Not subject to delegation.
     bool owns_(const psite& p) const;
+
     rvalue operator()(const psite& p) const;
     rvalue read_(const psite& p) const;
 
@@ -209,11 +211,16 @@ namespace oln
     stc_using_from(Mutable_Image, lvalue);
 
     stc_typename(index);
+    // FIXME: Confusing!  We already have indices for 1D images...
+    // FIXME: Use "offset" instead!
 
     rvalue operator[](index i) const;
     lvalue operator[](index i);
     std::size_t npoints() const;
-    // FIXME: ...
+
+    // FIXME: Add:
+    // point point_at_offset(o) const
+    // std::size_t offset_from_point(point p) const
 
   protected:
     Fast_Image();
@@ -274,6 +281,11 @@ namespace oln
 		    public automatic::get_impl<Image_1D, Exact>
   {
     stc_typename(coord);
+
+    // final
+    coord min_ind() const;
+    coord max_ind() const;
+    unsigned ninds() const;
 
   protected:
     Image_1D();
@@ -443,8 +455,16 @@ namespace oln
 
   template <typename Exact>
   bool
+  Image<Exact>::is_empty() const
+  {
+    return exact(this)->impl_is_empty();
+  }
+
+  template <typename Exact>
+  bool
   Image<Exact>::owns_(const typename Image<Exact>::psite& p) const
   {
+    precondition(not this->is_empty());
     return exact(this)->impl_owns_(p);
   }
 
@@ -624,6 +644,27 @@ namespace oln
   template <typename Exact>
   Image_1D<Exact>::Image_1D()
   {
+  }
+
+  template <typename Exact>
+  typename Image_1D<Exact>::coord
+  Image_1D<Exact>::min_ind() const
+  {
+    return this->bbox().pmin().ind();
+  }
+
+  template <typename Exact>
+  typename Image_1D<Exact>::coord
+  Image_1D<Exact>::max_ind() const
+  {
+    return this->bbox().pmax().ind();
+  }
+
+  template <typename Exact>
+  unsigned
+  Image_1D<Exact>::ninds() const
+  {
+    return this->bbox().pmax().ind() - this->bbox().pmin().ind() + 1;
   }
 
   // -----------------------------------   Image_2D<Exact>
