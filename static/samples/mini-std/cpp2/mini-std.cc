@@ -363,6 +363,13 @@ namespace mstd
   struct switch_is_sorted;
 
   template <typename Exact>
+  struct case_<switch_is_sorted, Exact, 1> :
+    public mlc::where_ < mlc::eq_< stc_find_type(Exact, is_sorted), stc::true_ > >
+  {
+        typedef SortedContainer<Exact> ret;
+  };
+
+  template <typename Exact>
   struct default_case_<switch_is_sorted, Exact>
   {
     typedef Container<Exact> ret;
@@ -371,6 +378,13 @@ namespace mstd
 
   // Tag.
   struct switch_is_unique;
+
+  template <typename Exact>
+  struct case_<switch_is_unique, Exact, 1> :
+    public mlc::where_ < mlc::eq_< stc_find_type(Exact, is_unique), stc::true_ > >
+  {
+        typedef UniqueContainer<Exact> ret;
+  };
 
   template <typename Exact>
   struct default_case_<switch_is_unique, Exact>
@@ -394,7 +408,7 @@ namespace mstd
 
   template <typename Exact>
   struct case_<switch_is_frontinsertion, Exact, 1> :
-    public mlc:: where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), forwardIterator) >
+    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), forwardIterator) >
   {
         typedef FrontInsertionContainer<Exact> ret;
   };
@@ -504,6 +518,34 @@ namespace mstd
   // Container base.  //
   // ---------------- //
 
+  // Sub-types used to avoid "duplicate base type" problems.
+  template <typename Exact>
+  struct container_base_is_sorted : public virtual switch_<switch_is_sorted, Exact>::ret
+  {};
+
+  template <typename Exact>
+  struct container_base_is_unique : public virtual switch_<switch_is_unique, Exact>::ret
+  {};
+
+  template <typename Exact>
+  struct container_base_is_mutable: public virtual switch_<switch_is_mutable, Exact>::ret
+  {};
+
+  template <typename Exact>
+  struct container_base_is_frontinsertion
+    : public virtual switch_<switch_is_frontinsertion, Exact>::ret
+  {};
+
+  template <typename Exact>
+  struct container_base_is_backinsertion
+    : public virtual switch_<switch_is_backinsertion, Exact>::ret
+  {};
+
+  template <typename Exact>
+  struct container_base_iterator_kind
+    : public virtual switch_<switch_iterator_kind, Exact>::ret
+  {};
+
   // Forward declaration.
   template <typename Exact> struct container_base;
 
@@ -537,10 +579,12 @@ namespace mstd
   };
 
   template <typename Exact>
-  struct container_base : public virtual switch_<switch_is_sorted, Exact>::ret,
-                          public virtual switch_<switch_is_frontinsertion, Exact>::ret,
-                          public virtual switch_<switch_is_backinsertion, Exact>::ret,
-                          public virtual switch_<switch_iterator_kind, Exact>::ret
+  struct container_base : public virtual container_base_is_sorted<Exact>,
+                          public virtual container_base_is_unique<Exact>,
+                          public virtual container_base_is_mutable<Exact>,
+                          public virtual container_base_is_frontinsertion<Exact>,
+                          public virtual container_base_is_backinsertion<Exact>,
+                          public virtual container_base_iterator_kind<Exact>
   {
     typedef top<Exact> super;
 
@@ -680,14 +724,14 @@ namespace mstd
 
     current& operator--()
     {
-      //iter_--;
+      iter_--;
       return *this;
     }
 
     current operator--(int)
     {
       current ret = *this;
-      //--iter_;
+      --iter_;
       return ret;
     }
 
@@ -897,6 +941,76 @@ namespace mstd
   // Morphers.  //
   // ---------- //
 
+  // Iterators
+
+  // iterator_morpher_
+  template <typename Exact>
+  struct iterator_morpher_;
+
+  template <typename Exact>
+  struct super_trait_< iterator_morpher_<Exact> >
+  {
+    typedef Iterator<Exact> ret;
+  };
+
+  template <typename Exact>
+  struct vtypes<iterator_morpher_<Exact> >
+  {
+  };
+
+  template <typename Exact>
+  struct iterator_morpher_ : public Iterator<Exact>
+  {
+    stc_typename(delegatee);
+
+  protected:
+    iterator_morpher_();
+  };
+
+
+  template <typename Iterator>
+  struct transform_morpher_iterator;
+
+  template <typename Iterator>
+  struct super_trait_<transform_morpher_iterator<Iterator> >
+  {
+    typedef iterator_morpher_<transform_morpher_iterator<Iterator> > ret;
+  };
+
+  template <typename Iterator>
+  struct vtypes<transform_morpher_iterator<Iterator> >
+  {
+    typedef Iterator delegatee;
+  };
+
+  template <typename Iterator>
+  struct transform_morpher_iterator : public iterator_morpher_<transform_morpher_iterator<Iterator> >
+  {
+    typedef iterator_morpher_<transform_morpher_iterator<Iterator> > super;
+    stc_using(delegatee);
+    stc_using(value_t);
+
+    typedef std::unary_function<value_t&,value_t> transform_t;
+
+    transform_morpher_iterator(delegatee& deleg, transform_t& trans) :
+      deleg_ (deleg),
+      trans_ (trans)
+    {
+    }
+
+    value_t& impl_op_star()
+    {
+      return (*trans_)(*(deleg_.iter_));
+    }
+
+  private:
+    delegatee& deleg_;
+    transform_t& trans_;
+  };
+
+
+  // Containers
+
   // container_morpher_
   template <typename Exact>
   struct container_morpher_;
@@ -905,6 +1019,11 @@ namespace mstd
   struct super_trait_< container_morpher_<Exact> >
   {
     typedef container_base<Exact> ret;
+  };
+
+  template <typename Exact>
+  struct vtypes<container_morpher_<Exact> >
+  {
   };
 
   template <typename Exact>
@@ -918,22 +1037,43 @@ namespace mstd
 
 
   // transform_morpher
-  template <typename Exact>
+  template <typename Container>
   struct transform_morpher;
 
-  template <typename Exact>
-  struct super_trait_< transform_morpher<Exact> >
+  template <typename Container>
+  struct super_trait_<transform_morpher<Container> >
   {
-    typedef container_morpher_<Exact> ret;
+    typedef container_morpher_<Container> ret;
   };
 
-  template <typename Exact>
-  struct transform_morpher : public container_morpher_<Exact>
+  template <typename Container>
+  struct vtypes<transform_morpher<Container> >
   {
-    typedef container_morpher_<Exact> super;
-    stc_using(delegatee);
+    typedef Container delegatee;
+    typedef transform_morpher_iterator<typename Container::iter_t> iter_t;
+  };
 
-    // FIXME : le type d'it doit changer. (transform_it??)
+  template <typename Container>
+  struct transform_morpher : public container_morpher_<transform_morpher<Container> >
+  {
+    typedef transform_morpher<Container> current;
+    typedef container_morpher_<Container> super;
+
+    stc_using(delegatee);
+    stc_using(value_t);
+
+    typedef std::unary_function<value_t&,value_t> transform_t;
+
+    transform_morpher(delegatee& d, transform_t& trans) :
+      container_morpher_<current>(),
+      deleg_ (d),
+      trans_ (trans)
+    {
+    }
+
+  protected:
+    delegatee& deleg_;
+    transform_t& trans_;
   };
 
 } // End of namespace mstd.
@@ -941,7 +1081,7 @@ namespace mstd
 
 
 /*-------.
-  | Main.  |
+| Main.  |
 `--------*/
 
 #define TEST(m)                      \
@@ -964,6 +1104,14 @@ template <typename Exact>
 void test(mstd::ForwardContainer<Exact>& fc)
 {
 }
+
+class transform : public std::unary_function<int&, int>
+{
+  int operator() (int& i)
+  {
+    return i + 1;
+  }
+};
 
 int main()
 {
@@ -1033,12 +1181,12 @@ int main()
   // Functions
   test(l);
 
-//   Dummy<int> a;
-//   test(a);
+  //   Dummy<int> a;
+  //   test(a);
+
+  // Morphers
+  transform t;
+  mstd::transform_morpher<mstd::list<int> > tm(l, t);
+
+  // mstd::transform_morpher_iterator< mstd::list<int>::iter_t > im(l, t);
 }
-
-
-
-
-
-
