@@ -30,9 +30,7 @@
 
 # include <vector>
 
-# include <oln/core/internal/image_base.hh>
-# include <oln/core/gen/rle_psite.hh>
-# include <oln/core/gen/rle_pset.hh>
+# include <oln/core/internal/encoded_image.hh>
 
 
 
@@ -47,7 +45,7 @@ namespace oln
   struct super_trait_< rle_image<P, T> >
   {
     typedef rle_image<P, T> current;
-    typedef internal::primitive_image_<current> ret;
+    typedef internal::encoded_image_<current> ret;
   };
 
   // Virtual types
@@ -61,29 +59,20 @@ namespace oln
     typedef P point;
     typedef typename P::coord coord;
 
-    typedef rle_psite<P> psite;
+    typedef typename vtypes< internal::encoded_image_< rle_image<P, T> > >::pset pset__;
 
-    typedef rle_pset<point> pset;
-
-    typedef mlc::none plain;
-
-    typedef std::pair< pset, std::vector< value > > data;
+    typedef std::pair< pset__, std::vector< value > > data;
   };
 
 
-  /*
-  ** \class rle_image
-  ** \brief rle image (use a pair of point range and value as representation)
-  **
-  */
+  // rle_image
   template < typename P, typename T>
-  class rle_image : public internal::primitive_image_< rle_image<P, T> >
+  class rle_image : public internal::encoded_image_< rle_image<P, T> >
   {
     typedef rle_image<P, T> current;
-    typedef internal::primitive_image_< rle_image<P, T> > super;
+    typedef internal::encoded_image_<current> super;
   public:
     stc_using(pset);
-    stc_using(box);
     stc_using(point);
     stc_using(value);
     stc_using(rvalue);
@@ -93,10 +82,6 @@ namespace oln
 
     rle_image();
 
-
-    const pset& impl_points() const;
-
-    bool impl_owns_(const psite& p) const;
     void insert(const point& p, unsigned len, value val);
     rvalue impl_read(const psite& p) const;
     lvalue impl_read_write(const psite& p);
@@ -109,22 +94,6 @@ namespace oln
   rle_image<P, T>::rle_image()
   {
     this->data_ = new data;
-  }
-
-  template <typename P, typename T>
-  const typename rle_image<P, T>::pset&
-  rle_image<P, T>::impl_points() const
-  {
-    assert(this->has_data());
-    return this->data_->first;
-  }
-
-  template <typename P, typename T>
-  bool
-  rle_image<P, T>::impl_owns_(const typename rle_image<P, T>::psite& p) const
-  {
-    assert(this->has_data());
-    return this->data_->first.has(p.start_);
   }
 
   template <typename P, typename T>

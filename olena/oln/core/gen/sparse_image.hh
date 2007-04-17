@@ -31,9 +31,8 @@
 
 
 # include <vector>
-# include <map>
 
-# include <oln/core/internal/image_base.hh>
+# include <oln/core/internal/encoded_image.hh>
 
 
 
@@ -48,7 +47,7 @@ namespace oln
   struct super_trait_< sparse_image<P, T> >
   {
     typedef sparse_image<P, T> current;
-    typedef internal::primitive_image_<current> ret;
+    typedef internal::encoded_image_<current> ret;
   };
 
   // Virtual types
@@ -62,29 +61,20 @@ namespace oln
     typedef P point;
     typedef typename P::coord coord;
 
-    typedef rle_psite<P> psite;
+    typedef typename vtypes< internal::encoded_image_< sparse_image<P, T> > >::pset pset__;
 
-    typedef rle_pset<point> pset;
-
-    //FIXME: set correct trait
-    typedef mlc::none plain;
-
-    typedef std::pair< pset, std::map<point, std::vector<value> > > data;
+    typedef std::pair< pset__, std::vector <std::vector<value> > > data;
   };
 
-  /*!
-  ** \class sparse_image
-  ** \brief represent an image not plain
-  **
-  */
+  // sparse_image class
   template < typename P, typename T>
-  class sparse_image : public internal::primitive_image_< sparse_image<P, T> >
+  class sparse_image : public internal::encoded_image_< sparse_image<P, T> >
   {
     typedef sparse_image<P, T> current;
-    typedef internal::primitive_image_< sparse_image<P, T> > super;
+    typedef internal::encoded_image_< current > super;
+
   public:
     stc_using(pset);
-    stc_using(box);
     stc_using(point);
     stc_using(value);
     stc_using(rvalue);
@@ -94,8 +84,6 @@ namespace oln
 
     sparse_image();
 
-    const pset& impl_points() const;
-    bool impl_owns_(const psite& p) const;
     void insert(const point& p, unsigned len, const std::vector<value>& val);
     rvalue impl_read(const psite& p) const;
     lvalue impl_read_write(const psite& p);
@@ -112,53 +100,33 @@ namespace oln
   }
 
   template <typename P, typename T>
-  const typename sparse_image<P, T>::pset&
-  sparse_image<P, T>::impl_points() const
-  {
-    assert(this->has_data());
-    return this->data_->first;
-  }
-
-  template <typename P, typename T>
-  bool
-  sparse_image<P, T>::impl_owns_(const typename sparse_image<P, T>::psite& p) const
-  {
-    assert(this->has_data());
-    return this->data_->first.has(p.start_);
-  }
-
-  template <typename P, typename T>
   void
   sparse_image<P, T>::insert(const point& p, unsigned len,
 			     const std::vector<typename sparse_image<P, T>::value>& val)
   {
     assert(this->has_data());
      this->data_->first.insert(p, len);
-     this->data_->second[p] = val;
+     this->data_->second.push_back(val);
   }
 
   template <typename P, typename T>
   typename sparse_image<P, T>::rvalue
   sparse_image<P, T>::impl_read(const sparse_image<P, T>::psite& ps) const
   {
-    assert(this->has_data());
-    typename std::map<point, std::vector<value> >::const_iterator irun;
+    assert(this->has_data() && ps.pset_pos_ < this->data_->second.size() &&
+	   ps.index_ < this->data_->second[ps.pset_pos_].size());
 
-    irun.operator= (this->data_->second.find(ps.start_));
-    assert(irun != this->data_->second.end() && ps.index_ < this->data_->first.range_len_(ps.start_));
-    return irun->second[ps.index_];
+    return this->data_->second[ps.pset_pos_][ps.index_];
   }
 
   template <typename P, typename T>
   typename sparse_image<P, T>::lvalue
   sparse_image<P, T>::impl_read_write(const sparse_image<P, T>::psite& ps)
   {
-    assert(this->has_data());
-    typename std::map<point, std::vector<value> >::iterator irun;
+    assert(this->has_data() && ps.pset_pos_ < this->data_->second.size() &&
+	   ps.index_ < this->data_->second[ps.pset_pos_].size());
 
-    irun.operator= (this->data_->second.find(ps.start_));
-    assert(irun != this->data_->second.end() && ps.index_ < this->data_->first.range_len_(ps.start_));
-    return irun->second[ps.index_];
+    return this->data_->second[ps.pset_pos_][ps.index_];
   }
 
 # endif // ! OLN_INCLUDE_ONLY

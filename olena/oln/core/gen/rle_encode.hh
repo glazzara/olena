@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ENCODE_RLE_ENCODE_HH
-# define OLN_CORE_ENCODE_RLE_ENCODE_HH
+#ifndef OLN_CORE_GEN_RLE_ENCODE_HH
+# define OLN_CORE_GEN_RLE_ENCODE_HH
 
 # include <oln/core/concept/image.hh>
 
@@ -81,4 +81,4 @@ namespace oln
   }
 } // end of namespace oln
 
-#endif /* !OLN_CORE_ENCODE_RLE_ENCODE_HH */
+#endif /* !OLN_CORE_GEN_RLE_ENCODE_HH */

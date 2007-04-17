@@ -26,12 +26,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_ENCODE_SPARSE_ENCODE_HH
-# define OLN_CORE_ENCODE_SPARSE_ENCODE_HH
+#ifndef OLN_CORE_GEN_SPARSE_ENCODE_HH
+# define OLN_CORE_GEN_SPARSE_ENCODE_HH
 
 # include <oln/core/concept/image.hh>
 
-# include <oln/core/sparse/sparse_image.hh>
+# include <oln/core/gen/sparse_image.hh>
 
 # include <vector>
 

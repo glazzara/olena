@@ -1,3 +1,23 @@
+2007-04-17  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add a new class encoded_image_ in order to factorize code for rle_image and sparse_image. rle_image and sparse_image are know based on std::vector.
+
+	* tests/core/sparse_image.cc, 
+	* tests/core/rle_image.cc: Add new tests.
+	* oln/core/rle/rle_image.hh,  oln/core/rle/rle_psite.hh,
+	* oln/core/rle/rle_pset.hh, oln/core/gen/sparse_encode.hh,
+	* oln/core/gen/rle_pset.hh, oln/core/gen/rle_psite.hh,
+	* oln/core/encode/sparse_encode.hh, 
+	* oln/core/sparse/sparse_image.hh: Remove.
+	* oln/core/gen/rle_image.hh:  rle_image is an encoded_image_.
+	* oln/core/gen/rle_encode.hh: Header inclusion modifcation.
+	* oln/core/gen/sparse_image.hh: sparse_image is an encoded_image,
+	and it is based on a std::vector.
+	* oln/core/internal/encoded_image.hh: New.
+	* oln/core/internal/encoded_image_psite.hh: New.
+	* oln/core/internal/encoded_image_pset.hh: New..
+
+
 2007-04-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make 'inplace' mandatory and start a tour.

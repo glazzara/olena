@@ -25,64 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_RLE_RLE_PSITE_HH
-# define OLN_CORE_RLE_RLE_PSITE_HH
+#ifndef OLN_CORE_INTERNAL_ENCODED_IMAGE_PSITE_HH
+# define OLN_CORE_INTERNAL_ENCODED_IMAGE_PSITE_HH
 
-
-# include <map>
-# include <utility>
 
 namespace oln
 {
 
-
-  // Forward declaration
-  template <typename P, typename T> struct rle_image;
-
-  /*
-  ** \class rle_psite
-  ** \brief psite for rle image
-  **
-  ** Note: P must be a point type
-  */
-  template <typename P>
-  struct rle_psite
+  namespace internal
   {
-    rle_psite();
 
-    P to_point() const;
-    operator P () const;
+    // psite for encoded images
 
-    P start_;
-    unsigned index_;
-    unsigned pset_pos_;
-  };
+    template <typename P>
+    struct enc_image_psite_
+    {
+      enc_image_psite_();
+
+      P to_point() const;
+      operator P () const;
+
+      P start_;
+      unsigned index_;
+      unsigned pset_pos_;
+    };
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename P>
-  rle_psite<P>::rle_psite()
-  {
-  }
+    template <typename P>
+    enc_image_psite_<P>::enc_image_psite_()
+    {
+    }
 
-  template <typename P>
-  P
-  rle_psite<P>::to_point() const
-  {
-    P p = this->start_;
+    template <typename P>
+    P
+    enc_image_psite_<P>::to_point() const
+    {
+      P p = this->start_;
 
-    p[0] += this->index_;
-    return p;
-  }
+      p[0] += this->index_;
+      return p;
+    }
 
-  template <typename P>
-  rle_psite<P>::operator P() const
-  {
-    return this->to_point();
-  }
+    template <typename P>
+    enc_image_psite_<P>::operator P() const
+    {
+      return this->to_point();
+    }
 
 # endif /* !OLN_INCLUDE_ONLY */
 
-  //end of class rle_psite
-}
-#endif // !OLN_CORE_RLE_RLE_PSITE_HH
+  } // end of namespace internal
+
+} // end of namespace oln
+
+
+#endif // ! OLN_CORE_INTERNAL_ENCODED_IMAGE_PSITE_HH
