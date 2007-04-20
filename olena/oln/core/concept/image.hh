@@ -337,12 +337,56 @@ namespace oln
   };
 
 
+  /// Concept-class "Point_Wise_Accessible_Image_1D".
+
+  template <typename Exact>
+  struct Point_Wise_Accessible_Image_1D : public virtual Point_Wise_Accessible_Image<Exact>,
+					  public virtual Image_1D<Exact>
+  {
+    stc_using_from(Point_Wise_Accessible_Image, point);
+    stc_using_from(Point_Wise_Accessible_Image, rvalue);
+    stc_using_from(Image_1D, coord);
+
+    bool   has_at(coord ind) const;
+    rvalue     at(coord ind) const;
+
+    // default
+    bool   impl_has_at(coord ind) const;
+    rvalue     impl_at(coord ind) const;
+
+  protected:
+    Point_Wise_Accessible_Image_1D();
+  };
+
+
+  /// Concept-class "Point_Wise_Mutable_Image_1D".
+
+  template <typename Exact>
+  struct Point_Wise_Mutable_Image_1D : public virtual Point_Wise_Accessible_Image_1D<Exact>,
+				       public virtual Mutable_Image<Exact>
+  {
+    stc_using_from(Point_Wise_Accessible_Image_1D, point);
+    stc_using_from(Point_Wise_Accessible_Image_1D, coord);
+    stc_using_from(Mutable_Image, lvalue);
+
+    using Point_Wise_Accessible_Image_1D<Exact>::at;
+    using Point_Wise_Accessible_Image_1D<Exact>::impl_at;
+
+    lvalue at(coord ind);
+
+    // default
+    lvalue impl_at(coord ind);
+
+  protected:
+    Point_Wise_Mutable_Image_1D();
+  };
+
+
   /// Concept-class "Point_Wise_Accessible_Image_2D".
 
   template <typename Exact>
   struct Point_Wise_Accessible_Image_2D : public virtual Point_Wise_Accessible_Image<Exact>,
-					  public virtual Image_2D<Exact>,
-					  public automatic::get_impl<Point_Wise_Accessible_Image_2D, Exact>
+					  public virtual Image_2D<Exact>
   {
     stc_using_from(Point_Wise_Accessible_Image, point);
     stc_using_from(Point_Wise_Accessible_Image, rvalue);
@@ -364,13 +408,14 @@ namespace oln
 
   template <typename Exact>
   struct Point_Wise_Mutable_Image_2D : public virtual Point_Wise_Accessible_Image_2D<Exact>,
-				       public virtual Mutable_Image<Exact>,
-				       public automatic::get_impl<Point_Wise_Mutable_Image_2D, Exact>
+				       public virtual Mutable_Image<Exact>
   {
     stc_using_from(Point_Wise_Accessible_Image_2D, point);
     stc_using_from(Point_Wise_Accessible_Image_2D, coord);
     stc_using_from(Mutable_Image, lvalue);
+
     using Point_Wise_Accessible_Image_2D<Exact>::at;
+    using Point_Wise_Accessible_Image_2D<Exact>::impl_at;
 
     lvalue at(coord row, coord col);
 
@@ -381,6 +426,51 @@ namespace oln
     Point_Wise_Mutable_Image_2D();
   };
 
+
+
+  /// Concept-class "Point_Wise_Accessible_Image_3D".
+
+  template <typename Exact>
+  struct Point_Wise_Accessible_Image_3D : public virtual Point_Wise_Accessible_Image<Exact>,
+					  public virtual Image_3D<Exact>
+  {
+    stc_using_from(Point_Wise_Accessible_Image, point);
+    stc_using_from(Point_Wise_Accessible_Image, rvalue);
+    stc_using_from(Image_3D, coord);
+
+    bool   has_at(coord sli, coord row, coord col) const;
+    rvalue     at(coord sli, coord row, coord col) const;
+
+    // default
+    bool   impl_has_at(coord sli, coord row, coord col) const;
+    rvalue     impl_at(coord sli, coord row, coord col) const;
+
+  protected:
+    Point_Wise_Accessible_Image_3D();
+  };
+
+
+  /// Concept-class "Point_Wise_Mutable_Image_3D".
+
+  template <typename Exact>
+  struct Point_Wise_Mutable_Image_3D : public virtual Point_Wise_Accessible_Image_3D<Exact>,
+				       public virtual Mutable_Image<Exact>
+  {
+    stc_using_from(Point_Wise_Accessible_Image_3D, point);
+    stc_using_from(Point_Wise_Accessible_Image_3D, coord);
+    stc_using_from(Mutable_Image, lvalue);
+
+    using Point_Wise_Accessible_Image_3D<Exact>::at;
+    using Point_Wise_Accessible_Image_3D<Exact>::impl_at;
+
+    lvalue at(coord sli, coord row, coord col);
+
+    // default
+    lvalue impl_at(coord sli, coord row, coord col);
+
+  protected:
+    Point_Wise_Mutable_Image_3D();
+  };
 
 
   /// Concept-class "Gray_Level_Image".
@@ -786,6 +876,65 @@ namespace oln
     return this->bbox().pmax().sli() - this->bbox().pmin().sli() + 1;
   }
 
+  // -----------------------------------   Point_Wise_Accessible_Image_1D<Exact>
+
+  template <typename Exact>
+  bool
+  Point_Wise_Accessible_Image_1D<Exact>::has_at(coord ind) const
+  {
+    return exact(this)->impl_has_at(ind);
+  }
+
+  template <typename Exact>
+  typename Point_Wise_Accessible_Image_1D<Exact>::rvalue
+  Point_Wise_Accessible_Image_1D<Exact>::at(coord ind) const
+  {
+    return exact(this)->impl_at(ind);
+  }
+
+  template <typename Exact>
+  bool
+  Point_Wise_Accessible_Image_1D<Exact>::impl_has_at(coord ind) const
+  {
+    typename Point_Wise_Accessible_Image_1D<Exact>::point p(ind);
+    return this->has(p);
+  }
+
+  template <typename Exact>
+  typename Point_Wise_Accessible_Image_1D<Exact>::rvalue
+  Point_Wise_Accessible_Image_1D<Exact>::impl_at(coord ind) const
+  {
+    typename Point_Wise_Accessible_Image_1D<Exact>::point p(ind);
+    return this->operator()(p);
+  }
+
+  template <typename Exact>
+  Point_Wise_Accessible_Image_1D<Exact>::Point_Wise_Accessible_Image_1D()
+  {
+  }
+
+  // -----------------------------------   Point_Wise_Mutable_Image_1D<Exact>
+
+  template <typename Exact>
+  typename Point_Wise_Mutable_Image_1D<Exact>::lvalue
+  Point_Wise_Mutable_Image_1D<Exact>::at(coord ind)
+  {
+    return exact(this)->impl_at(ind);
+  }
+
+  template <typename Exact>
+  typename Point_Wise_Mutable_Image_1D<Exact>::lvalue
+  Point_Wise_Mutable_Image_1D<Exact>::impl_at(coord ind)
+  {
+    typename Point_Wise_Mutable_Image_1D<Exact>::point p(ind);
+    return this->operator()(p);
+  }
+
+  template <typename Exact>
+  Point_Wise_Mutable_Image_1D<Exact>::Point_Wise_Mutable_Image_1D()
+  {
+  }
+
   // -----------------------------------   Point_Wise_Accessible_Image_2D<Exact>
 
   template <typename Exact>
@@ -842,6 +991,65 @@ namespace oln
 
   template <typename Exact>
   Point_Wise_Mutable_Image_2D<Exact>::Point_Wise_Mutable_Image_2D()
+  {
+  }
+
+  // -----------------------------------   Point_Wise_Accessible_Image_3D<Exact>
+
+  template <typename Exact>
+  bool
+  Point_Wise_Accessible_Image_3D<Exact>::has_at(coord sli, coord row, coord col) const
+  {
+    return exact(this)->impl_has_at(sli, row, col);
+  }
+
+  template <typename Exact>
+  typename Point_Wise_Accessible_Image_3D<Exact>::rvalue
+  Point_Wise_Accessible_Image_3D<Exact>::at(coord sli, coord row, coord col) const
+  {
+    return exact(this)->impl_at(sli, row, col);
+  }
+
+  template <typename Exact>
+  bool
+  Point_Wise_Accessible_Image_3D<Exact>::impl_has_at(coord sli, coord row, coord col) const
+  {
+    typename Point_Wise_Accessible_Image_3D<Exact>::point p(sli, row, col);
+    return this->has(p);
+  }
+
+  template <typename Exact>
+  typename Point_Wise_Accessible_Image_3D<Exact>::rvalue
+  Point_Wise_Accessible_Image_3D<Exact>::impl_at(coord sli, coord row, coord col) const
+  {
+    typename Point_Wise_Accessible_Image_3D<Exact>::point p(sli, row, col);
+    return this->operator()(p);
+  }
+
+  template <typename Exact>
+  Point_Wise_Accessible_Image_3D<Exact>::Point_Wise_Accessible_Image_3D()
+  {
+  }
+
+  // -----------------------------------   Point_Wise_Mutable_Image_3D<Exact>
+
+  template <typename Exact>
+  typename Point_Wise_Mutable_Image_3D<Exact>::lvalue
+  Point_Wise_Mutable_Image_3D<Exact>::at(coord sli, coord row, coord col)
+  {
+    return exact(this)->impl_at(sli, row, col);
+  }
+
+  template <typename Exact>
+  typename Point_Wise_Mutable_Image_3D<Exact>::lvalue
+  Point_Wise_Mutable_Image_3D<Exact>::impl_at(coord sli, coord row, coord col)
+  {
+    typename Point_Wise_Mutable_Image_3D<Exact>::point p(sli, row, col);
+    return this->operator()(p);
+  }
+
+  template <typename Exact>
+  Point_Wise_Mutable_Image_3D<Exact>::Point_Wise_Mutable_Image_3D()
   {
   }
 

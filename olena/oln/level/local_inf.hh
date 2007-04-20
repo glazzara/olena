@@ -133,7 +133,7 @@ namespace oln
 		 const Window<W>& win)
       {
 	f.init_with(input(p));
-	oln_qiter(W) q(p, win);
+	oln_qiter(W) q(win, p);
 	for_all(q)
 	  if (q < p)
 	    if (input.owns_(q))
@@ -153,7 +153,7 @@ namespace oln
 	f.init_with(input(p));
 	if (f.value() == true)
 	  return true;
-	oln_qiter(W) q(p, win);
+	oln_qiter(W) q(win, p);
 	for_all(q)
 	  if (q < p)
 	  {
@@ -175,7 +175,7 @@ namespace oln
 		 const Window<W>& win)
       {
 	f.init_with(input(p));
-	oln_qiter(W) q(p, win);
+	oln_qiter(W) q(win, p);
 	for_all(q)
 	  if (q < p)
 	  {

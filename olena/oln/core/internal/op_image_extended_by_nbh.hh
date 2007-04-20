@@ -42,6 +42,10 @@ namespace oln
 # define current \
      special_op_< stc::is<Image>, I, extended_by, stc::is<Neighborhood>, N >
 
+# define current_with_const_N \
+     special_op_< stc::is<Image>, I, extended_by, stc::is<Neighborhood>, const N >
+
+
   // Instant value.
   oln_decl_instant_value(nbh);
 
@@ -117,21 +121,27 @@ namespace oln
   template <typename I, typename N, typename D>
   bool prepare(internal::current& target, with_t, const D& dat);
 
-  // init
+  // init current
 
   template <typename I, typename N, typename D>
   bool init_(internal::current* target, const D& dat);
 
-  template <typename N, typename I>
-  bool init_(Neighborhood<N>* this_,
-	     const internal::single_image_morpher_<I>& dat);
+  // init with current
 
   template <typename N, typename I>
   bool init_(Neighborhood<N>* this_,
 	     const internal::current& dat);
 
+  template <typename N, typename I>
+  bool init_(Neighborhood<N>* this_,
+	     const internal::current_with_const_N& dat);
+
   template <typename I, typename N>
   bool init_(Image<I>* this_, // FIXME: Pb with I being "const J"...
+	     const internal::current& dat);
+
+  template <typename A, typename I, typename N>
+  bool init_(Any<A>* this_,
 	     const internal::current& dat);
 
 
@@ -191,7 +201,7 @@ namespace oln
 
   template <typename N, typename I>
   bool init_(Neighborhood<N>* this_,
-	     const internal::single_image_morpher_<I>& data)
+	     const internal::current& data)
   {
     exact(*this_) = data.nbhood();
     return true;
@@ -199,7 +209,7 @@ namespace oln
 
   template <typename N, typename I>
   bool init_(Neighborhood<N>* this_,
-	     const internal::current& data)
+	     const internal::current_with_const_N& data)
   {
     exact(*this_) = data.nbhood();
     return true;
@@ -213,6 +223,13 @@ namespace oln
     return true;
   }
 
+  template <typename A, typename I, typename N>
+  bool init_(Any<A>* this_,
+	     const internal::current& data)
+  {
+    return init(*this_, with, data.image());
+  }
+
   template <typename I, typename N, typename D>
   bool init_(internal::current* this_, const D& dat)
   {
@@ -224,6 +241,7 @@ namespace oln
     postcondition(nbh_ok);
     return ima_ok and nbh_ok;
   }
+
 
   // prepare
 
@@ -241,7 +259,8 @@ namespace oln
 
 # endif // ! OLN_INCLUDE_ONLY
 
-#  undef current
+# undef current
+# undef current_with_const_N
 
 } // end of namespace oln
 

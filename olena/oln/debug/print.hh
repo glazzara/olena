@@ -64,6 +64,11 @@ namespace oln
 	return value;
       }
 
+      char format(bool value)
+      {
+	return value ? '|' : '-';
+      }
+
 
       /// Generic version.
 
@@ -104,10 +109,10 @@ namespace oln
 	  imax = input.max_ind();
 	for (oln_coord(I) i = imin; i <= imax; ++i)
 	  {
-	    if (input.has(i))
-	      ostr << format(input(i));
+	    if (input.has_at(i))
+	      ostr << format(input.at(i));
 	    else
-	      ostr << '-';
+	      ostr << ' ';
 	    ostr << ' ';
 	  }
       }
@@ -147,11 +152,10 @@ namespace oln
 	  {
 	    for (oln_coord(I) col = min_col; col <= max_col; ++col)
 	      {
-		point2d p(row, col);
-		if (input.has(p))
-		  ostr << format(input(p));
+		if (input.has_at(row, col))
+		  ostr << format(input.at(row, col));
 		else
-		  ostr << '-';
+		  ostr << ' ';
 		ostr << ' ';
 	      }
 	    ostr << std::endl;

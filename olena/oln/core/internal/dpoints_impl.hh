@@ -32,6 +32,7 @@
 # include <set>
 # include <vector>
 # include <iterator>
+# include <ostream>
 # include <oln/core/concept/dpoint.hh>
 
 
@@ -45,13 +46,13 @@ namespace oln
 
     template <typename Dp>
     class dpoints_impl_
-      : private mlc::assert_< mlc_is_a(Dp, Dpoint) > 
     {
     public:
 
       unsigned size() const;
       const Dp& operator[](unsigned i) const;
       const std::vector<Dp>& dpoints() const;
+      bool has(const Dp& dp) const;
 
     protected:
 
@@ -66,6 +67,18 @@ namespace oln
       std::set<Dp> s_;
 
     }; // end of class oln::internal::dpoints_impl_<Dp>
+
+
+    template <typename Dp>
+    std::ostream& operator<<(std::ostream& ostr,
+			     const dpoints_impl_<Dp>& dps)
+    {
+      ostr << "[ ";
+      unsigned n = dps.size();
+      for (unsigned i = 0; i < n; ++i)
+	ostr << dps[i] << (i == n - 1 ? " ]" : ", ");
+      return ostr;
+    }
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -94,11 +107,19 @@ namespace oln
       return v_;
     }
 
+    template <typename Dp>
+    bool
+    dpoints_impl_<Dp>::has(const Dp& dp) const
+    {
+      return s_.find(dp) != s_.end();
+    }
+
     // protected:
 
     template <typename Dp>
     dpoints_impl_<Dp>::dpoints_impl_()
     {
+      mlc::assert_< mlc_is_a(Dp, Dpoint) >::check(); // FIXME: Add err msg.
     }
 
     template <typename Dp>
@@ -119,7 +140,7 @@ namespace oln
       std::copy(s_.begin(), s_.end(), std::back_inserter(v_));
     }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::internal
 

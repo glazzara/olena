@@ -485,39 +485,39 @@ namespace oln
 
   // init
 
-  template <typename I>
-  bool init_(typename I::box* this_, const internal::image_base_<I>& data);
+//   template <typename I>
+//   bool init_(typename I::box* this_, const internal::image_base_<I>& data);
 
-  template <typename Target, typename I>
-  bool init_(Any<Target>* this_, const internal::single_image_morpher_<I>& data);
+//   template <typename Target, typename I>
+//   bool init_(Any<Target>* this_, const internal::single_image_morpher_<I>& data);
 
-  template <typename I> // for disambiguation purpose
-  bool
-  init_(typename I::box* this_, const internal::single_image_morpher_<I>& data);
+//   template <typename I> // for disambiguation purpose
+//   bool
+//   init_(typename I::box* this_, const internal::single_image_morpher_<I>& data);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename I>
-  bool init_(typename I::box* this_, const internal::image_base_<I>& data)
-  {
-    *this_ = data.bbox();
-    return true;
-  }
+//   template <typename I>
+//   bool init_(typename I::box* this_, const internal::image_base_<I>& data)
+//   {
+//     *this_ = data.bbox();
+//     return true;
+//   }
 
-  template <typename Target, typename I>
-  bool init_(Any<Target>* this_, const internal::single_image_morpher_<I>& data)
-  {
-    return init(*this_, with, data.image());
-  }
+//   template <typename Target, typename I>
+//   bool init_(Any<Target>* this_, const internal::single_image_morpher_<I>& data)
+//   {
+//     return init(*this_, with, data.image());
+//   }
 
-  template <typename I>
-  bool
-  init_(typename I::box* this_, const internal::single_image_morpher_<I>& data)
-  {
-    *this_ = data.bbox();
-    return true;
-  }
+//   template <typename I>
+//   bool
+//   init_(typename I::box* this_, const internal::single_image_morpher_<I>& data)
+//   {
+//     *this_ = data.bbox();
+//     return true;
+//   }
 
 # endif // ! OLN_INCLUDE_ONLY
 

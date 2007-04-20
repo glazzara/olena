@@ -1,4 +1,4 @@
-w// Copyright (C) 2001, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -93,10 +93,10 @@ int main()
   // or modify a pixel value, we just the same notation than the one
   // of functions:
  
-  img1a(0)  = 7;   // Assign value  7 to the  1st pixel of img1a.
-  img1a(10) = 51;  // Assign value 51 to the 11th pixel of img1a.
+  img1a.at(0)  = 7;   // Assign value  7 to the  1st pixel of img1a.
+  img1a.at(10) = 51;  // Assign value 51 to the 11th pixel of img1a.
 
-  std::cout << "img1b(10) = " << img1b(10)
+  std::cout << "img1b.at(10) = " << img1b.at(10)
 	    << std::endl; // Print 51 since img1b is img1a.
 
   // As you can see, Olena provides a unique easy syntax to access an
@@ -116,12 +116,12 @@ int main()
   image1d<int> img;       // A variable.
 
   img = img2a; // img is img2a
-  img(5) = 19; // so img2a(5) is set to 19.
+  img.at(5) = 19; // so img2a at index 5 is set to 19.
 
   img = img2b; // img is NOW img2b
-  img(5) = 69; // so img2b(5) is set to 69.
+  img.at(5) = 69; // so img2b at index 5 is set to 69.
 
-  std::cout << (100 * img2a(5) + img2b(5)) // Gives 1969.
+  std::cout << (100 * img2a.at(5) + img2b.at(5)) // Gives 1969.
 	    << std::endl;
 
 
@@ -235,7 +235,7 @@ int main()
   // img3a.points() = { (0) .. (19) }
   // img3b.points() = { (5) .. (14) }
 
-  // The notion of point sets plays an inportant role in Olena.  Many
+  // The notion of point sets plays an important role in Olena.  Many
   // tests are performed at run-time to ensure that the program is
   // correct.
 
@@ -253,7 +253,7 @@ int main()
   // instance, calling "img3a(9)" actually runs a code equivalent to
   // this test:
 
-  point1d p = 9;
+  point1d p(9);
   std::cout << (img3a.points().has(p) ?
 		"true" :
 		"false") << std::endl; // which gives 'true'.
@@ -288,14 +288,14 @@ int main()
   // domain with an index i:
 
   for (int i = 5; i <= 14; ++i)
-    img3b(i) = 'a' + i - 5;
+    img3b.at(i) = 'a' + i - 5;
   debug::println(img3b);
   // a b c d e f g h i j
 
-  // There is a safer way to iterate that avoids to provide a wrong
-  // value for the minimum or maximum index value:
+  // There is a safer way to iterate that prevents from providing a
+  // wrong value for the minimum or maximum index value:
   for (int i = img3b.min_ind(); i <= img3b.max_ind(); ++i)
-    img3b(i) = 'b' + i - img3b.min_ind();
+    img3b.at(i) = 'b' + i - img3b.min_ind();
   debug::println(img3b);
   // b c d e f g h i j k
 

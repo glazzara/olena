@@ -38,7 +38,7 @@ int main()
 
   // Let us take a few examples to illustrate how images and data are
   // managed.  In these examples, we will use the notion of "block of
-  // instructions" from the C/C+ languages: "{" ... "}".
+  // instructions" from the C/C++ languages: "{" ... "}".
 
 
 
@@ -48,7 +48,7 @@ int main()
   { // A new block starts here.
 
     image1d<float> local_ima(1000);
-    // A non-empty image is created; a memory buffer automatically is
+    // A non-empty image is created; a memory buffer is automatically
     // allocated to store image data.  Some code using 'local_ima' can
     // be inserted here...
 
@@ -149,7 +149,7 @@ int main()
   //   anon --> | 0 2 4 6 8 |
   //            +-----------+
   //
-  // and the temporary 'anon' disapears.
+  // and the temporary 'anon' disappears.
 
 
 
@@ -203,8 +203,8 @@ int main()
   //   anon --> | 0 2 4 6 8 |
   //            +-----------+
   //
-  // so the original data, which is unreachable, are deallocated and
-  // the temporary 'anon' disappears; we end up with:
+  // so the original data, unreachable, are deallocated and the
+  // temporary 'anon' disappears; we end up with:
   //
   //            +-----------+
   //   ima ---> | 0 2 4 6 8 |

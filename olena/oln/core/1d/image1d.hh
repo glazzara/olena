@@ -86,20 +86,22 @@ namespace oln
     image1d();
     image1d(const box1d& b);
     image1d(const point1d& pmin, const point1d& pmax);
+    image1d(int imin, int imax);
     image1d(unsigned n);
 
     bool impl_owns_(const point1d& p) const;
 
     const T& impl_read(const point1d& p) const;
     const T& impl_index_read(unsigned i) const;
-
     T& impl_read_write(const point1d& p);
     T& impl_index_read_write(unsigned i);
-
     void impl_write(const point1d& p, const T& v);
 
-    std::size_t impl_npoints() const;
+    bool impl_has_at(int ind) const;
+    const T& impl_at(int ind) const;
+    T& impl_at(int ind);
 
+    std::size_t impl_npoints() const;
     const box1d& impl_points() const;
   };
 
@@ -132,11 +134,19 @@ namespace oln
   }
 
   template <typename T>
+  image1d<T>::image1d(int imin, int imax)
+  {
+    precondition(imax >= imin);
+    this->data_ = new data(new array_t(imin, imax),
+			   box1d(point1d(imin), point1d(imax)));
+  }
+
+  template <typename T>
   image1d<T>::image1d(unsigned n)
   {
     precondition(n != 0);
     this->data_ = new data(new array_t(0, n - 1),
-			   box1d(0, n - 1));
+			   box1d(point1d(0), point1d(n - 1)));
   }
 
   template <typename T>
@@ -181,6 +191,27 @@ namespace oln
   {
     assert(this->has_data());
     this->data_->first[p.ind()] = v;
+  }
+
+  template <typename T>
+  bool image1d<T>::impl_has_at(int ind) const
+  {
+    assert(this->has_data());
+    return this->data_->first.has(ind);
+  }
+
+  template <typename T>
+  const T& image1d<T>::impl_at(int ind) const
+  {
+    assert(this->has_data());
+    return this->data_->first[ind];
+  }
+
+  template <typename T>
+  T& image1d<T>::impl_at(int ind)
+  {
+    assert(this->has_data());
+    return this->data_->first[ind];
   }
 
   template <typename T>

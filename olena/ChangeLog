@@ -1,3 +1,41 @@
+2007-04-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add tour2.cc and fix missing pw features.
+
+	* doc/tour/tour2.cc: New.
+	* doc/tour/tour1_extra.cc,
+	* doc/tour/tour1.cc: Fix english.
+	* oln/core/1d/image1d.hh
+	(image1d): New ctor overload.
+	(impl_has_at, impl_at): New.
+	* oln/core/1d/point1d.hh (point1d): Add explicit.
+	* tests/core/image1d.cc,
+	* doc/tour/tour1.cc,
+	* oln/debug/print.hh: Update.
+	* oln/debug/print.hh (format): Add bool case.
+	* oln/core/2d/image2d.hh (init_): New.
+	* oln/core/gen/dpoints_piter.hh (dpoints_fwd_piter_),
+	(dpoints_bkd_piter_): Switch args.
+	* oln/level/local_sup.hh,
+	* oln/level/local_inf.hh,
+	* oln/level/local.hh: Update.
+	* oln/core/concept/image.hh
+	(Point_Wise_Accessible_Image_1D),
+	(Point_Wise_Mutable_Image_1D),
+	(Point_Wise_Accessible_Image_3D),
+	(Point_Wise_Mutable_Image_3D): New.
+	* oln/core/concept/image_identity.hh (set_impl): Remove empty
+	code.
+	* oln/core/internal/image_selectors.hh
+	(Image_pw_accessibility): Fix missing cases.
+	* oln/core/internal/image_base.hh (init_): Deactivate.
+	* oln/core/internal/op_image_extended_by_nbh.hh
+	(current_with_const_N): New.
+	(init_): New overload with Any.
+	* oln/core/internal/dpoints_impl.hh
+	(has): New.
+	Move static check from inheritance to ctor.
+
 2007-04-17  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add a new class encoded_image_ in order to factorize code for rle_image and sparse_image. rle_image and sparse_image are know based on std::vector.

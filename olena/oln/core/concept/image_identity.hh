@@ -152,22 +152,8 @@ namespace oln
     };
 
 
-    /// Concept-class "Point_Wise_Accessible_Image_2D".
-
-    template <typename Exact>
-    struct set_impl< Point_Wise_Accessible_Image_2D, behavior::identity, Exact > : public virtual Any<Exact>
-    {
-      // default code is provided in Point_Wise_Accessible_Image_2D<Exact>
-    };
-
-
-    /// Concept-class "Point_Wise_Mutable_Image_2D".
-
-    template <typename Exact>
-    struct set_impl< Point_Wise_Mutable_Image_2D, behavior::identity, Exact > : public virtual Any<Exact>
-    {
-      // default code is provided in Point_Wise_Mutable_Image_2D<Exact>
-    };
+    // For concept-classes "Point_Wise_Accessible_Image_*D" and "Point_Wise_Mutable_Image_*D"
+    // code is directly provided (no delegation).
 
 
 
@@ -294,7 +280,7 @@ namespace oln
     }
 
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
 
   } // end of namespace oln::automatic

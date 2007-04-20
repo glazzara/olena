@@ -45,7 +45,7 @@ main()
   // Fill a 1D image using a classic loop.
   image1d<int> ima2(ima1.points());
   for (unsigned i = 0; i < 3; ++i)
-    ima2(i) = 2;
+    ima2.at(i) = 2;
 
   // Fill a 1D image using the routine level::fill.
   image1d<long> ima3(ima1.points());

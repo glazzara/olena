@@ -96,15 +96,36 @@ namespace oln
       typedef Image_3D<Exact> ret;
     };
 
-    // FIXME: ...
-
 
     // 3. point-wise accessibility
 
     typedef  selector<Image, 3>  Image_pw_accessibility;
-  
+
+    //       1D
+
     template <typename Exact>
     struct case_< Image_pw_accessibility, Exact,  1 >
+      :
+      where_< mlc::and_list_< mlc::eq_< stc_get_type(psite), stc_get_type(point) >,
+			      stc_type_is_found(lvalue),
+			      stc_is_a(grid, Grid_1D) > >
+    {
+      typedef Point_Wise_Mutable_Image_1D<Exact> ret;
+    };
+
+    template <typename Exact>
+    struct case_< Image_pw_accessibility, Exact,  2 >
+      :
+      where_< mlc::and_< mlc::eq_< stc_get_type(psite), stc_get_type(point) >,
+			 stc_is_a(grid, Grid_1D) > >
+    {
+      typedef Point_Wise_Accessible_Image_1D<Exact> ret;
+    };
+
+    //       2D
+  
+    template <typename Exact>
+    struct case_< Image_pw_accessibility, Exact,  3 >
       :
       where_< mlc::and_list_< mlc::eq_< stc_get_type(psite), stc_get_type(point) >,
 			      stc_type_is_found(lvalue),
@@ -114,7 +135,7 @@ namespace oln
     };
 
     template <typename Exact>
-    struct case_< Image_pw_accessibility, Exact,  2 >
+    struct case_< Image_pw_accessibility, Exact,  4 >
       :
       where_< mlc::and_< mlc::eq_< stc_get_type(psite), stc_get_type(point) >,
 			 stc_is_a(grid, Grid_2D) > >
@@ -122,10 +143,31 @@ namespace oln
       typedef Point_Wise_Accessible_Image_2D<Exact> ret;
     };
 
-    // FIXME: ...
+    //       3D
+  
+    template <typename Exact>
+    struct case_< Image_pw_accessibility, Exact,  5 >
+      :
+      where_< mlc::and_list_< mlc::eq_< stc_get_type(psite), stc_get_type(point) >,
+			      stc_type_is_found(lvalue),
+			      stc_is_a(grid, Grid_3D) > >
+    {
+      typedef Point_Wise_Mutable_Image_3D<Exact> ret;
+    };
 
     template <typename Exact>
-    struct case_< Image_pw_accessibility, Exact,  3 >
+    struct case_< Image_pw_accessibility, Exact,  6 >
+      :
+      where_< mlc::and_< mlc::eq_< stc_get_type(psite), stc_get_type(point) >,
+			 stc_is_a(grid, Grid_3D) > >
+    {
+      typedef Point_Wise_Accessible_Image_3D<Exact> ret;
+    };
+
+    //       other
+
+    template <typename Exact>
+    struct case_< Image_pw_accessibility, Exact,  7 >
       :
       where_< mlc::eq_< stc_get_type(psite), stc_get_type(point) > >
     {

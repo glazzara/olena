@@ -72,14 +72,14 @@ namespace oln
   {
   public:
 
-    template <typename Pl, typename W>
-    dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Window<W>& win);
+    template <typename W, typename Pl>
+    dpoints_fwd_piter_(const Window<W>& win, const Generalized_Point<Pl>& p);
 
-    template <typename Pl, typename I>
-    dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima);
+    template <typename I, typename Pl>
+    dpoints_fwd_piter_(const Image_with_Nbh<I>& ima, const Generalized_Point<Pl>& p);
 
-    template <typename Pl, typename N>
-    dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Neighborhood<N>& nbh);
+    template <typename N, typename Pl>
+    dpoints_fwd_piter_(const Neighborhood<N>& nbh, const Generalized_Point<Pl>& p);
 
   }; // end of class oln::dpoints_fwd_piter_<P>
 
@@ -117,14 +117,14 @@ namespace oln
   {
   public:
 
-    template <typename Pl, typename W>
-    dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Window<W>& win);
+    template <typename W, typename Pl>
+    dpoints_bkd_piter_(const Window<W>& win, const Generalized_Point<Pl>& p);
 
-    template <typename Pl, typename I>
-    dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima);
+    template <typename I, typename Pl>
+    dpoints_bkd_piter_(const Image_with_Nbh<I>& ima, const Generalized_Point<Pl>& p);
 
-    template <typename Pl, typename N>
-    dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Neighborhood<N>& nbh);
+    template <typename N, typename Pl>
+    dpoints_bkd_piter_(const Neighborhood<N>& nbh, const Generalized_Point<Pl>& p);
 
   }; // end of class oln::dpoints_bkd_piter_<P>
 
@@ -135,24 +135,24 @@ namespace oln
   // fwd
 
   template <typename P>
-  template <typename Pl, typename W>
-  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Window<W>& win)
+  template <typename W, typename Pl>
+  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Window<W>& win, const Generalized_Point<Pl>& p)
     :
-    internal::dpoints_fwd_piter_impl_<P>(exact(p), exact(win))
+    internal::dpoints_fwd_piter_impl_<P>(exact(p), exact(win)) // FIXME: Propagate "win first, then p".
   {
   }
 
   template <typename P>
-  template <typename Pl, typename I>
-  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima)
+  template <typename I, typename Pl>
+  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Image_with_Nbh<I>& ima, const Generalized_Point<Pl>& p)
     :
     internal::dpoints_fwd_piter_impl_<P>(exact(p), ima.nbhood())
   {
   }
 
   template <typename P>
-  template <typename Pl, typename N>
-  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Generalized_Point<Pl>& p, const Neighborhood<N>& nbh)
+  template <typename N, typename Pl>
+  dpoints_fwd_piter_<P>::dpoints_fwd_piter_(const Neighborhood<N>& nbh, const Generalized_Point<Pl>& p)
     :
     internal::dpoints_fwd_piter_impl_<P>(exact(p), exact(nbh))
   {
@@ -161,24 +161,24 @@ namespace oln
   // bkd
 
   template <typename P>
-  template <typename Pl, typename W>
-  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Window<W>& win)
+  template <typename W, typename Pl>
+  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Window<W>& win, const Generalized_Point<Pl>& p)
     :
     internal::dpoints_bkd_piter_impl_<P>(exact(p), exact(win))
   {
   }
 
   template <typename P>
-  template <typename Pl, typename I>
-  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima)
+  template <typename I, typename Pl>
+  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Image_with_Nbh<I>& ima, const Generalized_Point<Pl>& p)
     :
     internal::dpoints_bkd_piter_impl_<P>(exact(p), ima.nbhood())
   {
   }
 
   template <typename P>
-  template <typename Pl, typename N>
-  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Generalized_Point<Pl>& p, const Neighborhood<N>& nbh)
+  template <typename N, typename Pl>
+  dpoints_bkd_piter_<P>::dpoints_bkd_piter_(const Neighborhood<N>& nbh, const Generalized_Point<Pl>& p)
     :
     internal::dpoints_bkd_piter_impl_<P>(exact(p), exact(nbh))
   {

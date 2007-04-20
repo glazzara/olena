@@ -69,7 +69,7 @@ namespace oln
     stc_using_(coord);
 
     point1d();
-    point1d(int ind);
+    explicit point1d(int ind);
   };
 
 
