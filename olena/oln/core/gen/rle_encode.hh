@@ -38,6 +38,22 @@ namespace oln
 {
 
   /*!
+  ** test if Point p1 and p2 are on the same line
+  */
+  template <typename P>
+  bool
+  on_the_same_line(P p1, P p2)
+  {
+    unsigned dim = mlc_value(typename P::grid::dim);
+    bool same_line = true;
+
+    for (int n = dim - 1; same_line && n > 0; --n)
+      same_line = p1[n] == p2[n];
+    return same_line;
+  }
+
+
+  /*!
   ** encode an image class to a rle_image
   **
   ** @param input has to respect the Image concept
@@ -49,7 +65,7 @@ namespace oln
   rle_encode(const Image<I>& input)
   {
     rle_image<typename I::point, typename I::value> output;
-    typename I::piter p (input.points());
+    typename Image<I>::piter p (input.points());
     unsigned len = 1;
     /// range point start
     typename I::point rstart;
@@ -65,7 +81,7 @@ namespace oln
     p.next();
     while (p.is_valid())
     {
-      if (rvalue == input(p))
+      if (rvalue == input(p) && on_the_same_line(rstart, p.to_point()))
 	++len;
       else
       {

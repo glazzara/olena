@@ -44,6 +44,12 @@ int main()
 
   rle2 = rle_encode(ima2d);
 
+  oln::rle_image<oln::point2d, int>::piter p1(rle2.points());
+  for_all(p1)
+    {
+      assert(ima2d(p1) == rle2(p1));
+    }
+
 //   oln::debug::print(rle2);
 //   std::cout << std::endl;
 

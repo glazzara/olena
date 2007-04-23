@@ -78,6 +78,8 @@ namespace oln
 
 # ifndef OLN_INCLUDE_ONLY
 
+
+
     template <typename Exact>
     encoded_image_<Exact>::encoded_image_()
     {

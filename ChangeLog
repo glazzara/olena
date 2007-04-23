@@ -1,3 +1,15 @@
+2007-04-23  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	fix a bug on rle_encode, add a test.
+
+	* olena/tests/core/3dtorle.cc: New test.
+	* olena/tests/core/rle_image.cc: Update test.
+	* olena/tests/core/Makefile.am: Update.
+	* olena/oln/core/gen/rle_image.hh,
+	* olena/oln/core/gen/rle_encode.hh: fix a bug.
+	* olena/oln/core/concept/iterator_on_values.hh: change vit.to_point() to vit.to_value().
+	* olena/oln/core/internal/encoded_image.hh: small modifications.
+
 2007-03-29  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	add point implementation for Iterator_On_Points.

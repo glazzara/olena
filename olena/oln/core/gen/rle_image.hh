@@ -85,7 +85,6 @@ namespace oln
     void insert(const point& p, unsigned len, value val);
     rvalue impl_read(const psite& p) const;
     lvalue impl_read_write(const psite& p);
-
   };
 
 # ifndef OLN_INCLUDE_ONLY

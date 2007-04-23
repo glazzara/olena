@@ -35,7 +35,8 @@ check_PROGRAMS =				\
   sparse_image					\
   stack						\
   subset					\
-  window2d
+  window2d					\
+  3dtorle
 
 
 # Images and auxiliary structures.
@@ -54,6 +55,7 @@ sparse_image_SOURCES = sparse_image.cc
 stack_SOURCES = stack.cc
 subset_SOURCES = subset.cc
 window2d_SOURCES = window2d.cc
+3dtorle_SOURCES = 3dtorle.cc
 
 # Methods.
 at_SOURCES = at.cc

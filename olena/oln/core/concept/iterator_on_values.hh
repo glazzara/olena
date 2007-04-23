@@ -85,7 +85,7 @@ namespace oln
   template <typename Exact>
   std::ostream& operator<<(std::ostream& ostr, const Iterator_on_Values<Exact>& vit)
   {
-    return ostr << vit.to_point();
+    return ostr << vit.to_value();
   }
 
 # endif
