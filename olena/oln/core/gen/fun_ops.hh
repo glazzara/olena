@@ -76,6 +76,16 @@
     return tmp;										\
   }											\
 											\
+  template <typename L>									\
+  p2v_##Name##_<L, lit_p2v_<oln_argument(L), oln_result(L)> >				\
+  operator Sym (const Function_p2v<L>& left, const oln_result(L)& right)		\
+  {											\
+    mlc::assert_< mlc_is_a(oln_argument(L), Point) >::check();				\
+    lit_p2v_<oln_argument(L), oln_result(L)> right_(right);				\
+    p2v_##Name##_<L, lit_p2v_<oln_argument(L), oln_result(L)> > tmp(left, right_);	\
+    return tmp;										\
+  }											\
+											\
   struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
 
 

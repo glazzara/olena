@@ -39,26 +39,37 @@ namespace oln
   {
 
     template <typename I, typename V>
-    void fill(Mutable_Image<I>& in_out, const V values[]);
-
-    template <typename I, typename V>
     void fill(inplace_<I> in_out, const V values[]);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    template <typename I>
-    void fill(Mutable_Image<I>& in_out, const oln_value(I)& value)
+    namespace impl
     {
-      oln_piter(I) p(in_out.points());
-      for_all(p)
-	in_out(p) = value;
-    }
+
+      template <typename I, typename V>
+      void fill_(Mutable_Image<I>& in_out, const V values[])
+      {
+	unsigned i = 0;
+	oln_piter(I) p(in_out.points());
+	for_all(p)
+	  in_out(p) = values[i++];
+      }
+
+    } // end of namespace oln::impl
 
     template <typename I, typename V>
     void fill(inplace_<I> in_out, const V values[])
     {
-      fill(in_out.unwrap(), values);
+      impl::fill_(in_out.unwrap(), values);
+    }
+
+    // Guard.
+
+    template <typename I, typename V>
+    void fill(const Image<I>&, const V[])
+    {
+      mlc::abort_<I>::check(); // FIXME: Add err msg.
     }
 
 # endif // ! OLN_INCLUDE_ONLY

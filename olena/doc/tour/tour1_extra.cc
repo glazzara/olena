@@ -29,6 +29,8 @@
 
 #include <oln/core/1d/image1d.hh>
 #include <oln/arith/plus.hh>
+#include <oln/debug/println.hh>
+
 
 
 int main()
@@ -91,7 +93,7 @@ int main()
   {
     image1d<int> orig(5); // An original image.
     for (int i = 0; i < 5; ++i)
-      orig(i) = i;
+      orig.at(i) = i;
     debug::println(orig);
     // 0 1 2 3 4
 
@@ -160,7 +162,7 @@ int main()
   {
     image1d<int> ima(5);
     for (int i = 0; i < 5; ++i)
-      ima(i) = i;
+      ima.at(i) = i;
     debug::println(ima);
     // 0 1 2 3 4
 

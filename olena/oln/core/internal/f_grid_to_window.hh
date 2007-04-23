@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,21 +25,94 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_1D_WINDOW1D_HH
-# define OLN_CORE_1D_WINDOW1D_HH
+#ifndef OLN_CORE_INTERNAL_F_GRID_TO_WINDOW_HH
+# define OLN_CORE_INTERNAL_F_GRID_TO_WINDOW_HH
 
+# include <oln/core/concept/grid.hh>
 # include <oln/core/gen/window.hh>
-# include <oln/core/1d/dpoint1d.hh>
+
+
+#define oln_f_grid_to_window(G) typename oln::internal::f_grid_to_window_< G >::ret
 
 
 namespace oln
 {
 
-  // FIXME: window1d should be an actual type, not an alias...
-  typedef gen_window<dpoint1d> window1d;
+  /// \{
+  /// Forward declarations.
 
+  // Grid types.
+
+  struct grid1d;
+  struct grid2d;
+  struct grid2d_hex;
+  struct grid2d_tri;
+  struct grid3d;
+  // ...
+
+  // Dpoint types.
+  struct dpoint1d;
+  struct dpoint2d;
+  struct dpoint3d;
+  // ...
+
+  // Window types.
+
+  typedef gen_window<dpoint1d> window1d;
+  typedef gen_window<dpoint2d> window2d;
+  typedef gen_window<dpoint3d> window3d;
+  // ...
+
+  /// \}
+
+
+
+  namespace internal
+  {
+
+    // Fwd decl.
+
+    template <typename G> struct f_grid_to_;
+
+
+    /// \{
+    /// Definitions.
+
+    template <typename G>
+    struct grid_to_window__;
+
+    template <>
+    struct grid_to_window__< grid1d >
+    {
+      typedef window1d ret;
+    };
+
+    template <>
+    struct grid_to_window__< grid2d >
+    {
+      typedef window2d ret;
+    };
+
+    // FIXME: 2D hex/tri...
+
+    template <>
+    struct grid_to_window__< grid3d >
+    {
+      typedef window3d ret;
+    };
+
+    /// \}
+
+
+    template <typename G>
+    struct f_grid_to_window_ : private mlc::assert_< mlc_is_a(G, Grid) >,
+			       public grid_to_window__< G >
+    {
+    };
+
+  } // end of namespace oln::internal
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_1D_WINDOW1D_HH
+#endif // ! OLN_CORE_INTERNAL_F_GRID_TO_WINDOW_HH

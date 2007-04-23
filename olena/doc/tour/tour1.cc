@@ -311,7 +311,7 @@ int main()
 
 
   // Indeed, the loops above depict the "classical" way to iterate
-  // over the contents of a 1D image.  The next tour file explains
+  // over the contents of a 1D image.  The next tour file introduces
   // the solution provided by Olena to write better loops...
 
 

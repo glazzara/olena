@@ -25,21 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_1D_WINDOW1D_HH
-# define OLN_CORE_1D_WINDOW1D_HH
-
-# include <oln/core/gen/window.hh>
-# include <oln/core/1d/dpoint1d.hh>
+#ifndef OLN_DEBUG_FORMAT_HH
+# define OLN_DEBUG_FORMAT_HH
 
 
 namespace oln
 {
 
-  // FIXME: window1d should be an actual type, not an alias...
-  typedef gen_window<dpoint1d> window1d;
+  namespace debug
+  {
 
+    // Fwd decls.
+
+    template <typename T>
+    const T&
+    format(const T& value);
+
+    unsigned
+    format(const unsigned char& value);
+
+    char
+    format(bool value);
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    template <typename T>
+    const T& format(const T& value)
+    {
+      return value;
+    }
+
+    unsigned format(const unsigned char& value)
+    {
+      return value;
+    }
+
+    char format(bool value)
+    {
+      return value ? '|' : '-';
+    }
+
+# endif // ! OLN_INCLUDE_ONLY
+
+  } // end of namespace oln::debug
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_1D_WINDOW1D_HH
+#endif // ! OLN_DEBUG_FORMAT_HH

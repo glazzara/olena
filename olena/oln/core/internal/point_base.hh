@@ -97,8 +97,11 @@ namespace oln
       vec_t& vec();
       void set_all(const coord& c);
 
+      // FIXME: Add 'static const Exact& zero();'
+
     protected:
       point_base_();
+      point_base_(coord val);
 
       vec_t v_;
     };

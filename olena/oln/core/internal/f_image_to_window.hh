@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,21 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_1D_WINDOW1D_HH
-# define OLN_CORE_1D_WINDOW1D_HH
+#ifndef OLN_CORE_INTERNAL_F_IMAGE_TO_WINDOW_HH
+# define OLN_CORE_INTERNAL_F_IMAGE_TO_WINDOW_HH
 
-# include <oln/core/gen/window.hh>
-# include <oln/core/1d/dpoint1d.hh>
-
-
-namespace oln
-{
-
-  // FIXME: window1d should be an actual type, not an alias...
-  typedef gen_window<dpoint1d> window1d;
+# include <oln/core/internal/f_grid_to_window.hh>
 
 
-} // end of namespace oln
+#define oln_f_image_to_window(I)  oln_f_grid_to_window(oln_grid(I))
 
 
-#endif // ! OLN_CORE_1D_WINDOW1D_HH
+#endif // ! OLN_CORE_INTERNAL_F_IMAGE_TO_WINDOW_HH

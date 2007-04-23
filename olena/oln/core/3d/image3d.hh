@@ -109,6 +109,9 @@ namespace oln
   template <typename T, typename D>
   bool prepare(image3d<T>& target, with_t, const D& dat);
 
+  template <typename T>
+  bool init_(box3d* this_, const image3d<T>& data);
+
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -238,6 +241,13 @@ namespace oln
 					       b.pmax().col());
     target.data__() = new typename image3d<T>::data(ptr, b);
     return box_ok;
+  }
+
+  template <typename T>
+  bool init_(box3d* this_, const image3d<T>& data)
+  {
+    *this_ = data.bbox();
+    return true;
   }
 
 # endif // ! OLN_INCLUDE_ONLY

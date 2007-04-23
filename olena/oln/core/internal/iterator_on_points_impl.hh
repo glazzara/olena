@@ -37,6 +37,22 @@ namespace oln
   namespace internal
   {
 
+    // base impl
+
+    template <typename Exact>
+    struct iterator_on_points_impl_base_
+    {
+    private:
+      stc_typename(point);
+      typedef typename point::vec_t vec_t;
+    public:
+      const vec_t& vec() const;
+      vec_t& vec();
+    };
+
+
+    // no-d impl is empty
+
     template <unsigned n, typename Exact>
     struct iterator_on_points_impl_
     {
@@ -45,6 +61,8 @@ namespace oln
     // 1d impl
     template <typename Exact>
     struct iterator_on_points_impl_< 1, Exact >
+      :
+      public iterator_on_points_impl_base_<Exact>
     {
     private:
       stc_typename(coord);
@@ -55,6 +73,8 @@ namespace oln
     // 2d impl
     template <typename Exact>
     struct iterator_on_points_impl_< 2, Exact >
+      :
+      public iterator_on_points_impl_base_<Exact>
     {
     private:
       stc_typename(coord);
@@ -66,6 +86,8 @@ namespace oln
     // 3d impl
     template <typename Exact>
     struct iterator_on_points_impl_< 3, Exact >
+      :
+      public iterator_on_points_impl_base_<Exact>
     {
     private:
       stc_typename(coord);
@@ -76,6 +98,22 @@ namespace oln
     };
 
 # ifndef OLN_INCLUDE_ONLY
+
+    // base impl
+
+    template <typename Exact>
+    const typename iterator_on_points_impl_base_<Exact>::vec_t&
+    iterator_on_points_impl_base_<Exact>::vec() const
+    {
+      return static_cast<const Exact&>(*this).to_point().vec();
+    }
+
+    template <typename Exact>
+    typename iterator_on_points_impl_base_<Exact>::vec_t&
+    iterator_on_points_impl_base_<Exact>::vec()
+    {
+      return static_cast<const Exact&>(*this).to_point().vec();
+    }
 
     // 1d impl
 

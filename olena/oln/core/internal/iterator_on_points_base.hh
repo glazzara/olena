@@ -69,6 +69,9 @@ namespace oln
       : public Iterator_on_Points<Exact>,
  	public internal::iterator_on_points_impl_<mlc_value(stc_deferred(dim)), Exact>
     {
+    public:
+      // Disambiguate.
+      stc_using_from(Iterator_on_Points, point);
     protected:
       iterator_on_points_base_();
     };

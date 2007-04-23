@@ -108,6 +108,8 @@ namespace oln
       const nbh& impl_nbhood() const;
       nbh& impl_nbhood();
 
+      operator I() const;
+ 
     protected:
       special_op_();
       special_op_(I& ima, N& n);
@@ -150,6 +152,11 @@ namespace oln
 
   namespace internal
   {
+    template <typename I, typename N>
+    current::operator I() const
+    {
+      return this->image();
+    }
 
     template <typename I, typename N>
     current::special_op_()

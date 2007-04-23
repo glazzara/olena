@@ -209,7 +209,7 @@ namespace oln
   {
   public:
 
-    pset_such_as_fp2b_fwd_piter_();
+    pset_such_as_fp2b_fwd_piter_(const op_<S, such_as, F>& pset);
     pset_such_as_fp2b_fwd_piter_(const Point_Set< op_<S, such_as, F> >& pset);
 
     void impl_start();
@@ -222,6 +222,13 @@ namespace oln
 
 
 #  ifndef OLN_INCLUDE_ONLY
+
+  template <typename S, typename F>
+  current::pset_such_as_fp2b_fwd_piter_(const op_<S, such_as, F>& pset)
+    : super(pset.adapted_()),
+      f_(pset.fun_())
+  {
+  }
 
   template <typename S, typename F>
   current::pset_such_as_fp2b_fwd_piter_(const Point_Set< op_<S, such_as, F> >& pset)
@@ -285,6 +292,7 @@ namespace oln
   {
   public:
 
+    pset_such_as_fp2b_bkd_piter_(const op_<S, such_as, F>& pset);
     pset_such_as_fp2b_bkd_piter_(const Point_Set< op_<S, such_as, F> >& pset);
 
     void impl_start();
@@ -297,6 +305,13 @@ namespace oln
 
 
 # ifndef OLN_INCLUDE_ONLY
+
+  template <typename S, typename F>
+  current::pset_such_as_fp2b_bkd_piter_(const op_<S, such_as, F>& pset)
+    : super(pset.adapted_()),
+      f_(pset.fun_())
+  {
+  }
 
   template <typename S, typename F>
   current::pset_such_as_fp2b_bkd_piter_(const Point_Set< op_<S, such_as, F> >& pset)

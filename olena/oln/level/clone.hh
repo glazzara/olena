@@ -50,11 +50,11 @@ namespace oln
 
       // Generic version.
       template <typename I>
-      oln_plain(I) clone(const Image<I>& input)
+      oln_plain(I) clone_(const Image<I>& input)
       {
 	oln_plain(I) output;
 	prepare(output, with, input);
-	level::fill(output, input);
+	level::fill(inplace(output), input);
 	return output;
       }
 
@@ -65,7 +65,7 @@ namespace oln
     template <typename I>
     oln_plain(I) clone(const Image<I>& input)
     {
-      return impl::clone(input);
+      return impl::clone_(input);
     }
 
 # endif // ! OLN_INCLUDE_ONLY

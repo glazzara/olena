@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,21 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_1D_WINDOW1D_HH
-# define OLN_CORE_1D_WINDOW1D_HH
+#ifndef OLN_CONVERT_TO_WINDOW_HH
+# define OLN_CONVERT_TO_WINDOW_HH
 
-# include <oln/core/gen/window.hh>
-# include <oln/core/1d/dpoint1d.hh>
+# include <oln/core/concept/image.hh>
+# include <oln/core/internal/f_image_to_window.hh>
 
 
 namespace oln
 {
 
-  // FIXME: window1d should be an actual type, not an alias...
-  typedef gen_window<dpoint1d> window1d;
+  namespace convert
+  {
 
+    // Fwd decl.
+
+    template <typename I>
+    oln_f_image_to_window(I)
+    to_window(const Binary_Image<I>& input);
+
+
+# ifndef OLN_INCLUDE_ONLY
+
+    // Generic version.
+
+    template <typename I>
+    oln_f_image_to_window(I)
+    to_window(const Binary_Image<I>& input)
+    {
+      oln_f_image_to_window(I) tmp;
+      oln_dpoint(I) dp;
+      oln_piter(I) p(input.points());
+      for_all(p)
+	if (input(p) == true)
+	  {
+	    dp.vec() = p.vec();
+	    // FIXME: Better s.a. dp = p.to_dpoint();
+	    tmp.take(dp);
+	  }
+      return tmp;
+    }
+
+# endif // ! OLN_INCLUDE_ONLY
+
+  } // end of namespace oln::convert
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_1D_WINDOW1D_HH
+#endif // ! OLN_CONVERT_TO_WINDOW_HH

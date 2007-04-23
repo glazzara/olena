@@ -29,9 +29,7 @@
 
 #include <oln/core/2d/image2d.hh>
 #include <oln/core/2d/window2d.hh>
-#include <oln/level/fill.hh>
 #include <oln/debug/println.hh>
-
 
 
 
@@ -318,9 +316,52 @@ int main()
 
   } // End of 2nd version.
 
+  std::cout << std::endl;
 
 
-  // This last version is:
+  // Above, p and q behave just like points; for instance, the
+  // following expressions are valid:
+
+  //    int r = p.row();
+  //    to get the current row value,
+
+  //    bool b = img(p);
+  //    to get the pixel value at the current point,
+
+  // or point2d pp = p + dp;
+  //    where dp is a delta-point to get a point nearby p.
+
+  // Yet, p and q are "more than points" since they allow to
+  // browse/iterate over a set of points, respectivelly, the domain of
+  // 'img' and the window centered at p.
+
+
+  // The domain of 'img' is obtained with "img.points()" and is
+  // provided to the 'p' object so that it knows how to iterate.
+
+  // For a "basic" image, its set of points is an n-dimensional box.
+  // In the 2D space, the box type is called 'box2d'.  We also have
+  // 'box1d' and 'box3d' for other dimensions.
+
+  box2d pts = img.points();
+  std::cout << "img points are " << pts << std::endl;
+  // Prints:
+  // img points are { (0, 0) .. (3, 4) }
+
+  // The type of iterators over a point set is obtained with the
+  // expression: "name_of_the_point_set_type::piter", where 'piter'
+  // means "point iterator" for short.
+
+  // The same construction is available for iterators on window
+  // points, whose types are obtained in a similar way with
+  // "name_of_the_window_type::qiter".  Here the 'q' in 'qiter'
+  // emphases the fact that a window is not really a set of points but
+  // "a set of dpoints and a center point".
+
+
+
+  // The second version of our example contrasts with the more
+  // "classical" ones; it is:
 
   // - shorter,
   //   so it is less error-prone for the developer;

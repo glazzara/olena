@@ -108,6 +108,9 @@ namespace oln
   template <typename T, typename D>
   bool prepare(image1d<T>& target, with_t, const D& dat);
 
+  template <typename T>
+  bool init_(box1d* this_, const image1d<T>& data);
+
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -240,6 +243,13 @@ namespace oln
 					       b.pmax().ind());
     target.data__() = new typename image1d<T>::data(ptr, b);
     return box_ok;
+  }
+
+  template <typename T>
+  bool init_(box1d* this_, const image1d<T>& data)
+  {
+    *this_ = data.bbox();
+    return true;
   }
 
 # endif // ! OLN_INCLUDE_ONLY

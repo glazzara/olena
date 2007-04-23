@@ -76,6 +76,8 @@ namespace oln
     torus_pset(const Ps& pset);
     void init_pset(const Ps& pset);
 
+    operator Ps() const;
+
     point relocate(const point& p) const;
     bool impl_has(const point& p) const;
 
@@ -105,9 +107,9 @@ namespace oln
     : super(pset)
   {
     mlc::assert_< mlc_is_a(Ps, Point_Set) >::check();
-    this->pmin_ = pset.pmin();
+    this->pmin_ = pset.bbox().pmin();
     dpoint unit; unit.set_all(1);
-    this->size_ = pset.pmax() - pset.pmin() + unit;
+    this->size_ = pset.bbox().pmax() - pset.bbox().pmin() + unit;
   }
 
   template <typename Ps>
@@ -115,9 +117,15 @@ namespace oln
   current::init_pset(const Ps& pset)
   {
     this->ps_ = pset;
-    this->pmin_ = pset.pmin();
+    this->pmin_ = pset.bbox().pmin();
     dpoint unit; unit.set_all(1);
-    this->size_ = pset.pmax() - pset.pmin() + unit;
+    this->size_ = pset.bbox().pmax() - pset.bbox().pmin() + unit;
+  }
+
+  template <typename Ps>
+  current::operator Ps() const
+  {
+    return this->ps_;
   }
 
   template <typename Ps>

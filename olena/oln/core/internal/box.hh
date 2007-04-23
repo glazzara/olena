@@ -306,6 +306,7 @@ namespace oln
   box_fwd_piter_<B>::box_fwd_piter_(const Point_Set<Ps>& ps)
     : b_(ps.bbox())
   {
+    mlc::assert_< mlc_is_a(B, Point_Set) >::check(); // FIXME: Add err msg.
     nop_ = b_.pmax();
     ++nop_[0];
     p_ = nop_;
@@ -371,6 +372,7 @@ namespace oln
   box_bkd_piter_<B>::box_bkd_piter_(const Point_Set<Ps>& ps)
     : b_(ps.bbox())
   {
+    mlc::assert_< mlc_is_a(B, Point_Set) >::check(); // FIXME: Add err msg.
     nop_ = b_.pmin();
     --nop_[0];
     p_ = nop_;

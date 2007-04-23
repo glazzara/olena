@@ -1,3 +1,45 @@
+2007-04-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add tour3.cc and update.
+
+	* doc/tour/tour3.cc: New.
+	* oln/convert: New directory.
+	* oln/convert/to_window.hh: New.
+	* oln/core/internal/f_grid_to_window.hh: New.
+	* oln/core/internal/f_image_to_window.hh: New.
+	* doc/tour/tour2.cc: Add some text.
+	* doc/tour/tour1_extra.cc (include): Fix missing.
+	(at): Update.
+	* doc/tour/tour1.cc: Change a word.
+	* oln/debug/fill.hh (fill_): New.
+	(fill): Update.
+	* oln/debug/print.hh (format): Move into...
+	* oln/debug/format.hh: ...this new file.
+	* oln/core/1d/window1d.hh: Fix.
+	* oln/core/1d/image1d.hh,
+	* oln/core/2d/image2d_b.hh,
+	* oln/core/3d/image3d.hh (init_): New.
+	* oln/core/gen/torus_pset.hh (operator Ps): New.
+	(torus_pset): Fix ctor.
+	* oln/core/gen/niter_has.hh: Update.
+	* oln/core/gen/fun_ops.hh (oln_decl_p2v_cmp_): New overload.
+	* oln/core/concept/image.hh (dpoint): New in Image.
+	* oln/core/internal/box.hh: Add static check.
+	* oln/core/internal/op_image_extended_by_nbh.hh (operator I): New.
+	* oln/core/internal/point_base.hh (point_base_): New ctor overload;
+	decl only.
+	* oln/core/internal/op_pset_such_as_fp2b.hh
+	(pset_such_as_fp2b_fwd_piter_),
+	(pset_such_as_fp2b_bkd_piter_): New ctor overload.
+	* oln/core/internal/iterator_on_points_impl.hh
+	(iterator_on_points_impl_base_): New.
+	(vec): New.
+	* oln/core/internal/iterator_on_points_base.hh (point):
+	Disambiguate.
+	* oln/level/local.hh: Update.
+	* oln/level/clone.hh (clone_): New.
+	(clone): Update.
+
 2007-04-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add tour2.cc and fix missing pw features.

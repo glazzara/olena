@@ -114,11 +114,11 @@ namespace oln
     std::size_t pad(const dpoint2d& dp) const;
   };
 
-//   template <typename T, typename D>
-//   bool init_(image2d_b<T>* this_, const D& dat);
-
   template <typename T, typename D>
   bool prepare(image2d_b<T>& target, with_t, const D& dat);
+
+  template <typename T>
+  bool init_(box2d* this_, const image2d_b<T>& data);
 
 
 
@@ -239,18 +239,6 @@ namespace oln
     return this->data_->first.i_pad() * dp.row() + dp.col();
   }
 
-//   template <typename T, typename D>
-//   bool init_(image2d_b<T>* this_, const D& dat)
-//   {
-//     precondition(not this_->has_data());
-//     box2d b;
-//     bool box_ok = init(b, with, dat);
-//     postcondition(box_ok);
-//     unsigned border = 2; // FIXME: Use init!
-//     this_->data__() = new typename image2d_b<T>::data(b.pmin(), b.pmax(), border);
-//     return box_ok;
-//   }
-
   template <typename T, typename D>
   bool prepare(image2d_b<T>& target, with_t, const D& dat)
   {
@@ -265,6 +253,13 @@ namespace oln
 					       b.pmax().col() + border);
     target.data__() = new typename image2d_b<T>::data(ptr, border, b);
     return box_ok;
+  }
+
+  template <typename T>
+  bool init_(box2d* this_, const image2d_b<T>& data)
+  {
+    *this_ = data.bbox();
+    return true;
   }
 
 # endif // ! OLN_INCLUDE_ONLY

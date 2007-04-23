@@ -69,8 +69,8 @@ namespace oln
   {
   public:
 
-    template <typename Pl, typename I>
-    niter_has_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima);
+    template <typename I, typename Pl>
+    niter_has_(const Image_with_Nbh<I>& ima, const Generalized_Point<Pl>& p);
 
     void impl_start();
     void impl_next();
@@ -87,10 +87,10 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename It, typename Ps>
-  template <typename Pl, typename I>
-  current::niter_has_(const Generalized_Point<Pl>& p, const Image_with_Nbh<I>& ima)
+  template <typename I, typename Pl>
+  current::niter_has_(const Image_with_Nbh<I>& ima, const Generalized_Point<Pl>& p)
     :
-    super( It(p, ima) ),
+    super( It(ima, p) ),
     pset_( ima.points() )
   {
   }

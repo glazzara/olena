@@ -30,6 +30,7 @@
 
 # include <iostream>
 # include <oln/core/concept/image.hh>
+# include <oln/debug/format.hh>
 
 # ifdef OLN_ENV_2D
 #  include <oln/core/2d/point2d.hh>
@@ -52,23 +53,6 @@ namespace oln
 
     namespace impl
     {
-
-      template <typename T>
-      const T& format(const T& value)
-      {
-	return value;
-      }
-
-      unsigned format(const unsigned char& value)
-      {
-	return value;
-      }
-
-      char format(bool value)
-      {
-	return value ? '|' : '-';
-      }
-
 
       /// Generic version.
 
