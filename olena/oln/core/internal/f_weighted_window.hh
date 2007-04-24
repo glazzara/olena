@@ -28,12 +28,17 @@
 #ifndef OLN_CORE_INTERNAL_F_WEIGHTED_WINDOW_HH
 # define OLN_CORE_INTERNAL_F_WEIGHTED_WINDOW_HH
 
+# include <mlc/basic.hh>
 # include <oln/core/concept/dpoint.hh>
 # include <oln/core/concept/weighted_window.hh>
 
 
 # define oln_f_weighted_window(W, Dp) \
-typename oln::internal::f_weighted_window_< W, Dp >::ret
+typename oln::internal::f_weighted_window_< mlc_basic( W ), Dp >::ret
+
+
+# define oln_f_image_to_weighted_window(I) \
+typename oln::internal::f_weighted_window_< oln_value(I), oln_dpoint(I) >::ret
 
 
 namespace oln
@@ -51,7 +56,9 @@ namespace oln
 
   // Weighted window types.
 
+  template <typename W> struct weighted_window1d;
   template <typename W> struct weighted_window2d;
+  template <typename W> struct weighted_window3d;
   template <typename W, typename Dp> class weighted_window;
 
   /// \}
@@ -75,12 +82,24 @@ namespace oln
     };
 
     template <typename W>
+    struct weighted_window__< W, dpoint1d >
+    {
+      typedef weighted_window1d<W> ret;
+    };
+
+    template <typename W>
     struct weighted_window__< W, dpoint2d >
     {
       typedef weighted_window2d<W> ret;
     };
 
-    // FIXME: 1D, 3D, 2D hex/tri...
+    // FIXME: 2D hex/tri...
+
+    template <typename W>
+    struct weighted_window__< W, dpoint3d >
+    {
+      typedef weighted_window3d<W> ret;
+    };
 
     /// \}
 

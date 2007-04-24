@@ -1,5 +1,40 @@
 2007-04-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add some linear filters and update.
+
+	* oln/convert/to_weighted_window.hh,
+	* oln/core/1d/weighted_window1d.hh,
+	* oln/core/3d/weighted_window3d.hh,
+	* oln/linear/log_5x5.hh,
+	* oln/linear/laplacian_8_cross.hh,
+	* oln/linear/laplacian.hh,
+	* oln/linear/log_7x7.hh,
+	* oln/linear/laplacian_4.hh,
+	* oln/linear/log_17x17.hh,
+	* oln/linear/laplacian_8.hh,
+	* oln/linear/log_13x13.hh,
+	* oln/linear/sharpen.hh,
+	* oln/linear/mean.hh,
+	* oln/linear/mexican_hat.hh: New.
+	* tests/core/window2d.cc: Update.
+	* tests/core/3dtorle.cc: Fix.
+	* tests/core/neighb2d.cc: Update.
+	* oln/core/2d/weighted_window2d.hh: Update.
+	* oln/core/concept/point.hh (check__): Remove.
+	* oln/core/concept/dpoint.hh (check__): Remove.
+	* oln/core/concept/window.hh (size): New.
+	* oln/core/internal/dpoint_base.hh
+	(impl_op_plus_equal_),
+	(impl_op_minus_equal_),
+	(impl_op_minus_): Disambiguate.
+	* oln/core/internal/f_weighted_window.hh: Update.
+	* oln/core/internal/dpoints_impl.hh (size): Rename as...
+	(impl_size): ...this.
+	* oln/morpho/cc_tarjan.hh: Update.
+	* oln/linear/convolution.hh: Cosmetic change.
+
+2007-04-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add weighted window equipment and convolution.
 
 	* oln/core/2d/weighted_window2d.hh,

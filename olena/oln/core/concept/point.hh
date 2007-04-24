@@ -82,9 +82,6 @@ namespace oln
   protected:
     Point();
 
-  private:
-    void check__() const;
-
   }; // end of oln::Point<Exact>
 
 
@@ -178,27 +175,11 @@ namespace oln
   template <typename Exact>
   Point<Exact>::Point()
   {
-    this->check__();
     // FIXME: Uncomment!
     // mlc::assert_defined_< oln_vtype(Exact, grid)   >::check();
     // mlc::assert_defined_< oln_vtype(Exact, dPoint) >::check();
     // mlc::assert_defined_< oln_vtype(Exact, coord)  >::check();
     // mlc::assert_defined_< oln_vtype(Exact, dim)    >::check();
-  }
-
-  template <typename Exact>
-  void Point<Exact>::check__() const
-  {
-    bool (Exact::*impl_op_equal_adr)(const Exact& rhs) const = & Exact::impl_op_equal_;
-    impl_op_equal_adr = 0;
-    bool (Exact::*impl_op_less_adr)(const Exact& rhs) const = & Exact::impl_op_less_;
-    impl_op_less_adr = 0;
-    Exact& (Exact::*impl_op_plus_equal_adr)(const dpoint& rhs) = & Exact::impl_op_plus_equal_;
-    impl_op_plus_equal_adr = 0;
-    Exact& (Exact::*impl_op_minus_equal_adr)(const dpoint& rhs) = & Exact::impl_op_minus_equal_;
-    impl_op_minus_equal_adr = 0;
-    dpoint (Exact::*impl_op_minus_adr)(const Exact& rhs) const = & Exact::impl_op_minus_;
-    impl_op_minus_adr = 0;
   }
 
   template <typename P>

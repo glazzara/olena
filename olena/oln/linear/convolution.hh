@@ -47,13 +47,13 @@ namespace oln
     oln_plain_value(I, V)
     convolution(const Image<I>& f, const Image<J>& g);
 
-    template <typename V, typename I, typename W>
-    oln_plain_value(I, V)
-    convolution(const Image<I>& f, const Weighted_Window<W>& w_win);
-
     template <typename V, typename I, typename W, unsigned n>
     oln_plain_value(I, V)
     convolution(const Image<I>& f, const W (&values)[n]);
+
+    template <typename V, typename I, typename W>
+    oln_plain_value(I, V)
+    convolution(const Image<I>& f, const Weighted_Window<W>& w_win);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -92,7 +92,7 @@ namespace oln
 
       template <typename V, typename I, typename W>
       oln_plain_value(I, V)
-      convolution_window_(const Point_Wise_Accessible_Image<I>& input, const W& win)
+      convolution_window_(const Point_Wise_Accessible_Image<I>& input, const W& w_win)
       {
 	oln_plain_value(I, V) output;
 	prepare(output, with, input);
@@ -100,11 +100,11 @@ namespace oln
 	for_all(p)
 	  {
 	    V val = 0;
-	    for (unsigned i = 0; i < win.size(); ++i)
+	    for (unsigned i = 0; i < w_win.size(); ++i)
 	      {
-		oln_point(I) q = p.to_point() + win.dp(i);
+		oln_point(I) q = p.to_point() + w_win.dp(i);
 		if (input.has(q))
-		  val += win.w(i) * input(q);
+		  val += w_win.w(i) * input(q);
 	      }
 	    output(p) = val;
 	  }

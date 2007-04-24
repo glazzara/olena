@@ -80,9 +80,6 @@ namespace oln
   protected:
     Dpoint();
 
-  private:
-    void check__() const;
-
   }; // end of oln::Dpoint<Exact>
 
 
@@ -170,30 +167,11 @@ namespace oln
   template <typename Exact>
   Dpoint<Exact>::Dpoint()
   {
-    this->check__();
     // FIXME: Uncomment!
     //       mlc::assert_defined_< oln_vtype(Exact, grid)  >::check();
     //       mlc::assert_defined_< oln_vtype(Exact, point) >::check();
     //       mlc::assert_defined_< oln_vtype(Exact, coord) >::check();
     //       mlc::assert_defined_< oln_vtype(Exact, dim)   >::check();
-  }
-
-
-  template <typename Exact>
-  void Dpoint<Exact>::check__() const
-  {
-    bool (Exact::*impl_op_equal_adr)(const Exact& rhs) const = & Exact::impl_op_equal_;
-    impl_op_equal_adr = 0;
-    bool (Exact::*impl_op_less_adr)(const Exact& rhs) const = & Exact::impl_op_less_;
-    impl_op_less_adr = 0;
-    Exact& (Exact::*impl_op_plus_equal_adr)(const Exact& rhs) = & Exact::impl_op_plus_equal_;
-    impl_op_plus_equal_adr = 0;
-    Exact& (Exact::*impl_op_minus_equal_adr)(const Exact& rhs) = & Exact::impl_op_minus_equal_;
-    impl_op_minus_equal_adr = 0;
-    Exact& (Exact::*impl_op_mod_equal_adr)(const Exact& rhs) = & Exact::impl_op_mod_equal_;
-    impl_op_mod_equal_adr = 0;
-    Exact (Exact::*impl_op_unary_minus_adr)() const = & Exact::impl_op_unary_minus_;
-    impl_op_unary_minus_adr = 0;
   }
 
 

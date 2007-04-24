@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,39 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// Test oln::window2d.
+#ifndef	OLN_LINEAR_MEAN_HH
+# define OLN_LINEAR_MEAN_HH
 
-#include <oln/core/2d/image2d.hh>
-#include <oln/core/2d/window2d.hh>
+# include <oln/core/gen/literal.hh>
+# include <oln/convert/to_weighted_window.hh>
+# include <oln/linear/convolution.hh>
 
 
-namespace test
+namespace oln
 {
 
-  template <typename I, typename W>
-  unsigned run(const oln::Point_Wise_Accessible_Image<I>& input,
-	       const oln::Window<W>& win)
+  namespace linear
   {
-    oln_piter(I) p(input.points());
-    oln_qiter(W) q(win, p);
-    unsigned count = 0;
-    for_all(p)
-      for_all(q)
-      if (input.has(q))
-	++count;
-    return count;
-  }
 
-}
+    // Fwd decl.
+
+    template <typename V, typename I, typename W>
+    oln_plain_value(I, V)
+    mean(const Image<I>& f, const Window<W>& win);
 
 
-int main()
-{
-  using namespace oln;
+# ifndef OLN_INCLUDE_ONLY
 
-  image2d<bool> ima(3, 3);
-  // 4 + 6 + 4 +
-  // 6 + 9 + 6 +
-  // 4 + 6 + 4 = 49
-  assert(test::run(ima, win3x3) == 49);
-}
+    namespace impl
+    {
+
+      // Generic version.
+
+      template <typename V, typename I, typename W>
+      oln_plain_value(I, V)
+      mean_(const Image<I>& f, const Window<W>& win)
+      {
+	lit_p2v_<oln_point(I), float> g(1.f / win.size());
+	return linear::convolution<V>(f, convert::to_weighted_window(g, win));
+      }
+
+    } // end of namespace oln::linear::impl
+
+
+    // Facade.
+
+    template <typename V, typename I, typename W>
+    oln_plain_value(I, V)
+    mean(const Image<I>& f, const Window<W>& win)
+    {
+      return impl::mean_<V>(f, win);
+    }
+
+#  endif // ! OLN_INCLUDE_ONLY
+
+  } // end of namespace oln::linear
+
+} // end of namespace oln
+
+
+#endif // ! OLN_LINEAR_MEAN_HH

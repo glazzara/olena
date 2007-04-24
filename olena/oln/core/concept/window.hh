@@ -48,6 +48,7 @@ namespace oln
     stc_typename(bkd_qiter);
 
     Exact op_unary_minus_() const;
+    unsigned size() const;
 
   protected:
     Window();
@@ -68,6 +69,13 @@ namespace oln
   Window<Exact>::op_unary_minus_() const
   {
     return exact(this)->impl_op_unary_minus_();
+  }
+
+  template <typename Exact>
+  unsigned
+  Window<Exact>::size() const
+  {
+    return exact(this)->impl_size();
   }
 
 # endif // ! OLN_INCLUDE_ONLY

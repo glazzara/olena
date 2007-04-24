@@ -49,7 +49,7 @@ namespace oln
     {
     public:
 
-      unsigned size() const;
+      unsigned impl_size() const;
       const Dp& operator[](unsigned i) const;
       const std::vector<Dp>& dpoints() const;
       bool has(const Dp& dp) const;
@@ -87,7 +87,7 @@ namespace oln
 
     template <typename Dp>
     unsigned
-    dpoints_impl_<Dp>::size() const
+    dpoints_impl_<Dp>::impl_size() const
     {
       return v_.size();
     }

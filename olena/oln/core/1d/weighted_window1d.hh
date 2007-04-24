@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_2D_WEIGHTED_WINDOW2D_HH
-# define OLN_CORE_2D_WEIGHTED_WINDOW2D_HH
+#ifndef OLN_CORE_1D_WEIGHTED_WINDOW1D_HH
+# define OLN_CORE_1D_WEIGHTED_WINDOW1D_HH
 
 # include <cmath>
 # include <oln/core/internal/weighted_window.hh>
-# include <oln/core/2d/dpoint2d.hh>
+# include <oln/core/1d/dpoint1d.hh>
 
 
 
@@ -39,10 +39,10 @@ namespace oln
 
 
   // Fwd decl.
-  template <typename W> class weighted_window2d;
+  template <typename W> class weighted_window1d;
 
 
-# define current weighted_window2d<W>
+# define current weighted_window1d<W>
 # define super   internal::weighted_window_< current >
 
 
@@ -59,45 +59,44 @@ namespace oln
   struct vtypes< current >
   {
     typedef W       weight;
-    typedef point2d point;
+    typedef point1d point;
   };
 
 
-  /// Generic classical weighted_window2d class.
+  /// Generic classical weighted_window1d class.
 
   template <typename W>
-  class weighted_window2d : public super
+  class weighted_window1d : public super
   {
   public:
     stc_using(weight);
     
-    weighted_window2d();
+    weighted_window1d();
 
     template <unsigned n>
     void impl_fill_with(const weight (&values)[n]);
 
-  }; // end of class oln::weighted_window2d<W>
+  }; // end of class oln::weighted_window1d<W>
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename W>
-  weighted_window2d<W>::weighted_window2d()
+  weighted_window1d<W>::weighted_window1d()
   {
   }
 
   template <typename W>
   template <unsigned n>
   void
-  weighted_window2d<W>::impl_fill_with(const weight (&values)[n])
+  weighted_window1d<W>::impl_fill_with(const weight (&values)[n])
   {
-    int h = int(std::sqrt(n)) / 2;
-    precondition((2 * h + 1) * (2 * h + 1) == n);
+    precondition(n % 2 == 1);
+    int h = int(n) / 2;
     unsigned i = 0;
-    for (int drow = -h; drow <= h; ++drow)
-      for (int dcol = -h; dcol <= h; ++dcol)
-	this->take(values[i++], dpoint2d(drow, dcol));
+    for (int dind = -h; dind <= h; ++dind)
+      this->take(values[i++], dpoint1d(dind));
   }
 
 # endif // ! OLN_INCLUDE_ONLY
@@ -108,4 +107,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_2D_WEIGHTED_WINDOW2D_HH
+#endif // ! OLN_CORE_1D_WEIGHTED_WINDOW1D_HH

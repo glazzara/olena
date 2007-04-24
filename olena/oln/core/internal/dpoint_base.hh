@@ -204,7 +204,8 @@ namespace oln
     Exact&
     point_base_<Exact>::impl_op_plus_equal_(const typename point_base_<Exact>::dpoint& rhs)
     {
-      this->v_ += rhs.vec();
+      typedef typename point_base_<Exact>::dpoint dpoint__;
+      this->v_ += rhs.dpoint_base_<dpoint__>::vec();
       return exact(*this);
     }
 
@@ -212,7 +213,8 @@ namespace oln
     Exact&
     point_base_<Exact>::impl_op_minus_equal_(const typename point_base_<Exact>::dpoint& rhs)
     {
-      this->v_ -= rhs.vec();
+      typedef typename point_base_<Exact>::dpoint dpoint__;
+      this->v_ -= rhs.dpoint_base_<dpoint__>::vec();
       return exact(*this);
     }
 
@@ -221,7 +223,7 @@ namespace oln
     point_base_<Exact>::impl_op_minus_(const Exact& rhs) const
     {
       typename point_base_<Exact>::dpoint tmp;
-      tmp.vec() = this->v_ - rhs.vec();
+      tmp.vec() = this->v_ - rhs.point_base_<Exact>::vec();
       return tmp;
     }
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,39 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// Test oln::window2d.
-
-#include <oln/core/2d/image2d.hh>
-#include <oln/core/2d/window2d.hh>
+#ifndef	OLN_LINEAR_LAPLACIAN_HH
+# define OLN_LINEAR_LAPLACIAN_HH
 
 
-namespace test
+# ifdef OLN_ENV_2D
+#  include <oln/linear/laplacian_4.hh>
+# endif // ! OLN_ENV_2D
+
+// FIXME: 1D, 3D, ...
+
+
+
+namespace oln
 {
 
-  template <typename I, typename W>
-  unsigned run(const oln::Point_Wise_Accessible_Image<I>& input,
-	       const oln::Window<W>& win)
+  namespace linear
   {
-    oln_piter(I) p(input.points());
-    oln_qiter(W) q(win, p);
-    unsigned count = 0;
-    for_all(p)
-      for_all(q)
-      if (input.has(q))
-	++count;
-    return count;
-  }
 
-}
+    // Fwd decl.
+
+    template <typename V, typename I>
+    oln_plain_value(I, V)
+    laplacian(const Image<I>& f);
 
 
-int main()
-{
-  using namespace oln;
+# ifndef OLN_INCLUDE_ONLY
 
-  image2d<bool> ima(3, 3);
-  // 4 + 6 + 4 +
-  // 6 + 9 + 6 +
-  // 4 + 6 + 4 = 49
-  assert(test::run(ima, win3x3) == 49);
-}
+    namespace impl
+    {
+
+      // Dispatch w.r.t. image dimension.
+
+
+#  ifdef OLN_ENV_2D
+
+      template <typename V, typename I>
+      oln_plain_value(I, V)
+      laplacian_(const Image_2D<I>& f)
+      {
+	return oln::linear::laplacian_4<V>(f);
+      }
+
+#  endif // ! OLN_ENV_2D
+
+
+      // FIXME: 1D, 3D, ...
+
+
+    } // end of namespace oln::linear::impl
+
+
+    // Facade.
+
+    template <typename V, typename I>
+    oln_plain_value(I, V)
+    laplacian(const Image<I>& f)
+    {
+      return impl::laplacian_<V>(f);
+    }
+
+#  endif // ! OLN_INCLUDE_ONLY
+
+  } // end of namespace oln::linear
+
+} // end of namespace oln
+
+
+#endif // ! OLN_LINEAR_LAPLACIAN_HH

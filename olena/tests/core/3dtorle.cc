@@ -36,7 +36,7 @@
 
 float my_sinus(const oln::point3d& p)
 {
-  return sin(p.sli() + p.row() + p.col());
+  return std::sin(float(p.sli() + p.row() + p.col()));
 }
 
 

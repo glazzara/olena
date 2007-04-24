@@ -81,7 +81,7 @@ namespace oln
 	    parent(p) = p;
 	    if ( input(p) )
 	    {
-	      oln_niter(I) n(p, input);
+	      oln_niter(I) n(input, p);
 	      for_all(n)
 		{
 		  if ( input(n) == true and is_processed(n) )
