@@ -601,6 +601,16 @@
 	* oln/core/internal/f_pset_to_plain_image.hh
 	(pset_to_plain_image__): Fix version op_<S, such_as, F_p2b>.
 
+2007-03-29  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	add point implementation for Iterator_On_Points.
+
+	* tests/core/iter_point1d.cc, tests/core/iter_point2d.cc: New.
+	* tests/core/iter_point3d.cc: New test file.
+	* tests/core/Makefile.am: Add new tests in make check.
+	* oln/core/internal/iterator_on_points_impl.hh: New, implementations for Iterator_On_Points.
+	* oln/core/internal/iterator_on_points_base.hh: Now derive from itertor_on_points_impl 
+
 2007-03-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add infinite point set type.
@@ -778,6 +788,18 @@
 	* oln/core/internal/image_base.hh: remove dead code.
 	* oln/core/internal/iterator_on_points_base.hh: New iterator_on_point_base class for
 	factorize some code on point iterators.
+
+2007-03-26  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix 'Make check morpho' / 'morpho'. draft cc_tarjan .
+
+	* tests/algorithms/basic_morpho.cc: .
+	* oln/morpho/dilation.hh: .
+	* oln/morpho/cc_tarjan.cc: New.
+	* oln/morpho/erosion.hh: .
+	* oln/level/apply.hh: .
+	* oln/core/2d/image2d.hh: .
+	* oln/core/internal/image_base.hh: .
 
 2007-03-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -970,6 +992,13 @@
 	* oln/core/internal/image_base.hh (oln_decl_op_such_as): New version
 	for "Image such_as Function_p2b".
 	(operator |): New specialization for C functions.
+
+2007-03-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Make check : test basic morpho.
+
+	* tests/algorithms/Makefile.am: .
+	* tests/algorithms/basic_morpho.cc: New.
 
 2007-03-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
@@ -1444,6 +1473,16 @@
 
 2007-03-13  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	Change on rle_class.
+
+	* static/doc/tiny/more_scoop_2/main.cc: .
+	* ChangeLog: .
+	* oln/core/rle/rle_image.hh: .
+	* oln/core/rle/rle_psite.hh: .
+	* oln/core/rle/rle_pset.hh: .
+
+2007-03-13  Nicolas Ballas  <ballas@lrde.epita.fr>
+
         Change rle_image/rle_pset storage structure(map<point, value>/ map<point/unsigned>).
 	Note that rle_image know bugs (memory problem).
 
@@ -1651,10 +1690,10 @@
 
 	Fix name lookup for attribute of super classes.
 
-	* olena/oln/core/concept/image.hh,
-	* olena/oln/core/gen/dpoints_piter.hh,
-	* olena/oln/core/internal/point_base.hh,
-	* olena/oln/core/internal/dpoint_base.hh: Fix name lookup
+	* oln/core/concept/image.hh,
+	* oln/core/gen/dpoints_piter.hh,
+	* oln/core/internal/point_base.hh,
+	* oln/core/internal/dpoint_base.hh: Fix name lookup
 	for attribute of super classes.
 
 2007-03-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
