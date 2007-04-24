@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,18 +26,7 @@
 // Public License.
 
 #include <cassert>
-#include <cmath>
-#include <oln/core/3d/image3d.hh>
-#include <oln/level/fill.hh>
-#include <oln/debug/print.hh>
-#include <ostream>
-#include <oln/core/gen/rle_image.hh>
-#include <oln/core/gen/rle_encode.hh>
-
-float my_sinus(const oln::point3d& p)
-{
-  return std::sin(float(p.sli() + p.row() + p.col()));
-}
+#include <oln/core/1d/image1d.hh>
 
 
 int
@@ -45,46 +34,26 @@ main()
 {
   using namespace oln;
 
-  // Fill a 3D image with a cos.
-  image3d<float> ima3d(20, 20, 20);
+  image1d<int> ima(10);
 
-  level::fill(inplace(ima3d), my_sinus);
+  image1d<int>::piter p(ima.points());
+  image1d<int>::fiter f(ima);
+  int i = 0;
 
-
-  // Transform it into a 3 states image
-  // value < 0         => -1
-  // value > 0         => 1
-  // value next to 0   => 0
-  image3d<short> ima3s(20, 20, 20);
-  image3d<float>::piter p(ima3d.points());
   for_all(p)
     {
-      if (ima3d(p) < 0.05 && ima3d(p) > -0.05)
-	ima3s(p) = 0;
-      else
-      {
-	if (ima3d(p) < 0)
-	  ima3s(p) = -1;
-	else
-	  ima3s(p) = 1;
-      }
+      ima(p) = i++;
     }
+  i = 0;
 
-//   oln::debug::print(ima3s);
-//   std::cout << std::endl;
-
-  // Encode ima3s into a rle_image
-  rle_image<point3d, short> ima3rle;
-
-
-  ima3rle = rle_encode(ima3s);
-  rle_image<point3d, short>::piter p1(ima3rle.points());
-  for_all(p1)
+  for_all(f)
     {
-//       if (ima3rle(p1))
-// 	ima3rle(p1) = 42;
-      // this test is too long
-           assert(ima3s(p1) == ima3rle(p1));
+      assert(*f == i ++);
+      *f = 5;
     }
 
+  f.start();
+  assert(f.is_valid());
+  f.invalidate();
+  assert(!f.is_valid());
 }

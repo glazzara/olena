@@ -33,6 +33,7 @@
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/internal/utils.hh>
 # include <oln/core/1d/array1d.hh>
+# include <oln/core/1d/fast_iterator_1d.hh>
 
 
 namespace oln
@@ -60,6 +61,8 @@ namespace oln
 
     typedef image1d<T>         plain;
     typedef image1d<pl::value> skeleton;
+
+    typedef fast_iterator_1d<value, coord> fiter;
   };
 
 
@@ -81,6 +84,8 @@ namespace oln
     typedef internal::plain_primitive_image_<current> super;
     typedef array1d_<T, int> array_t;
   public:
+    //FIXME (fast image concept??)
+    typedef typename vtypes< image1d<T> >::fiter fiter;
     stc_using(data);
 
     image1d();
@@ -88,6 +93,9 @@ namespace oln
     image1d(const point1d& pmin, const point1d& pmax);
     image1d(int imin, int imax);
     image1d(unsigned n);
+
+    array_t& img_array();
+    const array_t& img_array() const;
 
     bool impl_owns_(const point1d& p) const;
 
@@ -150,6 +158,20 @@ namespace oln
     precondition(n != 0);
     this->data_ = new data(new array_t(0, n - 1),
 			   box1d(point1d(0), point1d(n - 1)));
+  }
+
+  template <typename T>
+  typename image1d<T>::array_t&
+  image1d<T>::img_array()
+  {
+    return this->data_->first;
+  }
+
+  template <typename T>
+  const typename image1d<T>::array_t&
+  image1d<T>::img_array() const
+  {
+    return this->data_->first;
   }
 
   template <typename T>

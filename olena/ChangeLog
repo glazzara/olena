@@ -1,3 +1,14 @@
+2007-04-24  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	fast_iterator for image1d.
+
+	* tests/core/fiter_point1d.cc: New test.
+	* tests/core/3dtorle.cc: Update test (it was too long).
+	* tests/core/Makefile.am: Update.
+	* oln/core/1d/image1d.hh: new fiter type.
+	* oln/core/1d/fast_iterator_1d.hh: New, fast iterator for image 1d.
+	* oln/core/concept/fast_iterator.hh: New concept (operator* for fast iterators).
+
 2007-04-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some linear filters and update.

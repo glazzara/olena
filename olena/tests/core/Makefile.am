@@ -27,6 +27,7 @@ check_PROGRAMS =				\
   image2d					\
   iter_point1d					\
   iter_point2d					\
+  fiter_point1d					\
   neighb2d					\
   npoints					\
   point2d					\
@@ -46,6 +47,7 @@ image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
 iter_point1d_SOURCES = iter_point1d.cc
 iter_point2d_SOURCES = iter_point2d.cc
+fiter_point1d_SOURCES = fiter_point1d.cc
 neighb2d_SOURCES = neighb2d.cc
 npoints_SOURCES = npoints.cc
 point2d_SOURCES = point2d.cc
