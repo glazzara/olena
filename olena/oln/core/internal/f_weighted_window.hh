@@ -25,59 +25,75 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_DEBUG_FILL_HH
-# define OLN_DEBUG_FILL_HH
+#ifndef OLN_CORE_INTERNAL_F_WEIGHTED_WINDOW_HH
+# define OLN_CORE_INTERNAL_F_WEIGHTED_WINDOW_HH
 
-# include <oln/core/concept/image.hh>
-# include <oln/core/gen/inplace.hh>
+# include <oln/core/concept/dpoint.hh>
+# include <oln/core/concept/weighted_window.hh>
+
+
+# define oln_f_weighted_window(W, Dp) \
+typename oln::internal::f_weighted_window_< W, Dp >::ret
 
 
 namespace oln
 {
 
-  namespace debug
+  /// \{
+  /// Forward declarations.
+
+  // Dpoint types.
+
+  struct dpoint1d;
+  struct dpoint2d;
+  struct dpoint3d;
+  template <typename G, typename C> class dpoint;
+
+  // Weighted window types.
+
+  template <typename W> struct weighted_window2d;
+  template <typename W, typename Dp> class weighted_window;
+
+  /// \}
+
+
+
+  namespace internal
   {
 
-    template <typename I, typename V, unsigned n>
-    void fill(inplace_<I> in_out, const V (&values)[n]);
+    template <typename W, typename Dp>
+    struct weighted_window__;
 
 
-# ifndef OLN_INCLUDE_ONLY
+    /// \{
+    /// Definitions.
 
-    namespace impl
+    template <typename W, typename G, typename C>
+    struct weighted_window__< W, oln::dpoint<G, C> >
     {
+      typedef weighted_window< W, oln::dpoint<G, C> > ret;
+    };
 
-      template <typename I, typename V, unsigned n>
-      void fill_(Mutable_Image<I>& in_out, const V (&values)[n])
-      {
-	unsigned i = 0;
-	oln_piter(I) p(in_out.points());
-	for_all(p)
-	  in_out(p) = values[i++];
-      }
-
-    } // end of namespace oln::impl
-
-    template <typename I, typename V, unsigned n>
-    void fill(inplace_<I> in_out, const V (&values)[n])
+    template <typename W>
+    struct weighted_window__< W, dpoint2d >
     {
-      // FIXME: Uncomment: precondition(n == in_out.points().npoints());
-      impl::fill_(in_out.unwrap(), values);
-    }
+      typedef weighted_window2d<W> ret;
+    };
 
-    // Guard.
+    // FIXME: 1D, 3D, 2D hex/tri...
 
-    template <typename I, typename V, unsigned n>
-    void fill(const Image<I>&, const V (&) [n])
+    /// \}
+
+
+    template <typename W, typename Dp>
+    struct f_weighted_window_ : private mlc::assert_< mlc_is_a(Dp, Dpoint) >,
+				public weighted_window__<W, Dp>
     {
-      mlc::abort_<I>::check(); // FIXME: Add err msg.
-    }
+    };
 
-# endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::debug
+  } // end of namespace oln::internal
 
 } // end of namespace oln
 
 
-#endif // ! OLN_DEBUG_FILL_HH
+#endif // ! OLN_CORE_INTERNAL_F_WEIGHTED_WINDOW_HH

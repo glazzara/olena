@@ -25,59 +25,62 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_DEBUG_FILL_HH
-# define OLN_DEBUG_FILL_HH
+#ifndef OLN_CORE_GEN_WEIGHTED_WINDOW_HH
+# define OLN_CORE_GEN_WEIGHTED_WINDOW_HH
 
-# include <oln/core/concept/image.hh>
-# include <oln/core/gen/inplace.hh>
+# include <oln/core/internal/weighted_window.hh>
 
 
 namespace oln
 {
 
-  namespace debug
-  {
 
-    template <typename I, typename V, unsigned n>
-    void fill(inplace_<I> in_out, const V (&values)[n]);
+  // Fwd decl.
+  template <typename W, typename Dp> class weighted_window;
+
+
+  // Super type.
+  template <typename W, typename Dp>
+  struct super_trait_< weighted_window<W,Dp> >
+  {
+    typedef weighted_window<W,Dp> current__;
+    typedef internal::weighted_window_<current__> ret;
+  };
+
+
+  // Virtual types.
+  template <typename W, typename Dp>
+  struct vtypes< weighted_window<W,Dp> >
+  {
+    typedef W             weight;
+    typedef oln_point(Dp) point;
+  };
+
+
+  /// Generic classical weighted_window class.
+
+  template <typename W, typename Dp>
+  class weighted_window : public internal::weighted_window_< weighted_window<W,Dp> >
+  {
+  public:
+    
+    weighted_window();
+
+  }; // end of class oln::weighted_window<W,Dp>
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
-    {
-
-      template <typename I, typename V, unsigned n>
-      void fill_(Mutable_Image<I>& in_out, const V (&values)[n])
-      {
-	unsigned i = 0;
-	oln_piter(I) p(in_out.points());
-	for_all(p)
-	  in_out(p) = values[i++];
-      }
-
-    } // end of namespace oln::impl
-
-    template <typename I, typename V, unsigned n>
-    void fill(inplace_<I> in_out, const V (&values)[n])
-    {
-      // FIXME: Uncomment: precondition(n == in_out.points().npoints());
-      impl::fill_(in_out.unwrap(), values);
-    }
-
-    // Guard.
-
-    template <typename I, typename V, unsigned n>
-    void fill(const Image<I>&, const V (&) [n])
-    {
-      mlc::abort_<I>::check(); // FIXME: Add err msg.
-    }
+  template <typename W, typename Dp>
+  weighted_window<W,Dp>::weighted_window()
+  {
+  }
 
 # endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::debug
+  
 
 } // end of namespace oln
 
 
-#endif // ! OLN_DEBUG_FILL_HH
+#endif // ! OLN_CORE_GEN_WEIGHTED_WINDOW_HH

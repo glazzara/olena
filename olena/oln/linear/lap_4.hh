@@ -25,21 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_DEBUG_FILL_HH
-# define OLN_DEBUG_FILL_HH
+#ifndef	OLN_LINEAR_LAP_4_HH
+# define OLN_LINEAR_LAP_4_HH
 
-# include <oln/core/concept/image.hh>
-# include <oln/core/gen/inplace.hh>
+# include <oln/linear/convolution.hh>
+# include <oln/core/2d/weighted_window2d.hh>
 
 
 namespace oln
 {
 
-  namespace debug
+  namespace linear
   {
 
-    template <typename I, typename V, unsigned n>
-    void fill(inplace_<I> in_out, const V (&values)[n]);
+    // Fwd decl.
+
+    template <typename V, typename I>
+    oln_plain_value(I, V)
+    lap_4(const Image_2D<I>& f);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -47,37 +50,33 @@ namespace oln
     namespace impl
     {
 
-      template <typename I, typename V, unsigned n>
-      void fill_(Mutable_Image<I>& in_out, const V (&values)[n])
+      // Generic version.
+
+      template <typename V, typename I>
+      oln_plain_value(I, V)
+      lap_4_(const Image_2D<I>& f)
       {
-	unsigned i = 0;
-	oln_piter(I) p(in_out.points());
-	for_all(p)
-	  in_out(p) = values[i++];
+	int values[] = { 0,  1,  0,
+			 1, -4,  1,
+			 0,  1,  0 };
+	return linear::convolution<V>(f, values);
       }
 
-    } // end of namespace oln::impl
 
-    template <typename I, typename V, unsigned n>
-    void fill(inplace_<I> in_out, const V (&values)[n])
+    } // end of namespace oln::linear::impl
+
+    template <typename V, typename I>
+    oln_plain_value(I, V)
+    lap_4(const Image_2D<I>& f)
     {
-      // FIXME: Uncomment: precondition(n == in_out.points().npoints());
-      impl::fill_(in_out.unwrap(), values);
-    }
-
-    // Guard.
-
-    template <typename I, typename V, unsigned n>
-    void fill(const Image<I>&, const V (&) [n])
-    {
-      mlc::abort_<I>::check(); // FIXME: Add err msg.
+      return impl::lap_4_<V>(f);
     }
 
 # endif // ! OLN_INCLUDE_ONLY
 
-  } // end of namespace oln::debug
+  } // end of namespace oln::linear
 
 } // end of namespace oln
 
 
-#endif // ! OLN_DEBUG_FILL_HH
+#endif // ! OLN_LINEAR_LAP_4_HH

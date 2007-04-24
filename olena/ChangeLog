@@ -1,3 +1,24 @@
+2007-04-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add weighted window equipment and convolution.
+
+	* oln/core/2d/weighted_window2d.hh,
+	* oln/core/gen/weighted_window.hh,
+	* oln/core/concept/weighted_window.hh,
+	* oln/core/internal/weighted_window.hh,
+	* oln/core/internal/f_weighted_window.hh,
+	* oln/core/internal/weighted_window_base.hh,
+	* oln/core/internal/weighted_dpoints_impl.hh: New.
+	* oln/linear: New directory.
+	* oln/linear/convolution.hh,
+	* oln/linear/lap_4.hh: New.
+	* doc/tour/tour3.cc: Activate code.
+	* oln/debug/fill.hh (n): New parameter.
+	* oln/core/2d/image2d.hh (image2d): New ctor overload.
+	* oln/core/equipment.hh (weight): New vtype.
+	* oln/core/concept/image.hh: Add commentary.
+	* oln/core/internal/window_base.hh (category): New.
+
 2007-04-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add tour3.cc and update.

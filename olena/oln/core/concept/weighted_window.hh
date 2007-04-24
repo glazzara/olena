@@ -25,59 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_DEBUG_FILL_HH
-# define OLN_DEBUG_FILL_HH
+#ifndef OLN_CORE_CONCEPT_WEIGHTED_WINDOW_HH
+# define OLN_CORE_CONCEPT_WEIGHTED_WINDOW_HH
 
-# include <oln/core/concept/image.hh>
-# include <oln/core/gen/inplace.hh>
+# include <oln/core/equipment.hh>
 
 
 namespace oln
 {
 
-  namespace debug
+  /// Concept-class "Weighted_Window".
+
+  template <typename Exact>
+  struct Weighted_Window : public Any<Exact>
   {
 
-    template <typename I, typename V, unsigned n>
-    void fill(inplace_<I> in_out, const V (&values)[n]);
+//     stc_typename(grid);
+//     stc_typename(point);
+
+    stc_typename(weight);
+
+//     stc_typename(qiter);
+//     stc_typename(fwd_qiter);
+//     stc_typename(bkd_qiter);
+
+  protected:
+    Weighted_Window();
+
+  }; // end of oln::Weighted_Window<Exact>
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
-    {
-
-      template <typename I, typename V, unsigned n>
-      void fill_(Mutable_Image<I>& in_out, const V (&values)[n])
-      {
-	unsigned i = 0;
-	oln_piter(I) p(in_out.points());
-	for_all(p)
-	  in_out(p) = values[i++];
-      }
-
-    } // end of namespace oln::impl
-
-    template <typename I, typename V, unsigned n>
-    void fill(inplace_<I> in_out, const V (&values)[n])
-    {
-      // FIXME: Uncomment: precondition(n == in_out.points().npoints());
-      impl::fill_(in_out.unwrap(), values);
-    }
-
-    // Guard.
-
-    template <typename I, typename V, unsigned n>
-    void fill(const Image<I>&, const V (&) [n])
-    {
-      mlc::abort_<I>::check(); // FIXME: Add err msg.
-    }
+  template <typename Exact>
+  Weighted_Window<Exact>::Weighted_Window()
+  {
+  }
 
 # endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::debug
 
 } // end of namespace oln
 
 
-#endif // ! OLN_DEBUG_FILL_HH
+#endif // ! OLN_CORE_CONCEPT_WEIGHTED_WINDOW_HH

@@ -157,6 +157,9 @@ namespace oln
 
 # define oln_value(T) oln_typename_shortcut__(T, value)
 
+  // w
+  stc_decl_associated_type( weight );
+
 
 } // end of namespace oln
 

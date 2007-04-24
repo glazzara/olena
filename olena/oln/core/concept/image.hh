@@ -127,7 +127,7 @@ namespace oln
 
     stc_typename(box);
     stc_typename(pset);
-    stc_typename(dpoint);
+    stc_typename(dpoint); // FIXME: Move into Point_Wise_Accessible_Image
 
     // stc_typename(output); // FIXME: Uncomment!
     stc_typename(plain);

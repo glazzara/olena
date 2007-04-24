@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_INTERNAL_WINDOW_BASE_HH
-# define OLN_CORE_INTERNAL_WINDOW_BASE_HH
+#ifndef OLN_CORE_INTERNAL_WEIGHTED_WINDOW_BASE_HH
+# define OLN_CORE_INTERNAL_WEIGHTED_WINDOW_BASE_HH
 
-# include <oln/core/concept/window.hh>
+# include <oln/core/concept/weighted_window.hh>
 
 
 namespace oln
@@ -36,57 +36,61 @@ namespace oln
 
 
   // Fwd decl.
-  namespace internal { template <typename Exact> class window_base_; }
+  namespace internal { template <typename Exact> class weighted_window_base_; }
 
 
   // Super type.
   template <typename Exact>
-  struct super_trait_< internal::window_base_<Exact> >
+  struct super_trait_< internal::weighted_window_base_<Exact> >
   {
-    typedef Window<Exact> ret;
+    typedef Weighted_Window<Exact> ret;
   };
 
 
   /// Virtual types.
   template <typename Exact>
-  struct vtypes< internal::window_base_<Exact> >
+  struct vtypes< internal::weighted_window_base_<Exact> >
   {
-    typedef stc::abstract point;
-    typedef stc::abstract fwd_qiter;
-    typedef stc::abstract bkd_qiter;
 
-    typedef stc_deferred(point)     point__;
-    typedef stc_deferred(fwd_qiter) fwd_qiter__;
+//     typedef stc::abstract point;
+//     typedef stc::abstract fwd_qiter;
+//     typedef stc::abstract bkd_qiter;
+//     typedef stc::abstract weight;
 
-    typedef stc::final< oln_grid(point__) > grid;
-    typedef stc::final< fwd_qiter__ >       qiter;
+//     typedef stc_deferred(point)     point__;
+//     typedef stc_deferred(fwd_qiter) fwd_qiter__;
 
-    typedef stc::final< stc::is<Window> >   category;
+//     typedef stc::final< oln_grid(point__) > grid;
+//     typedef stc::final< fwd_qiter__ >       qiter;
+
+    typedef stc::final< stc::is<Weighted_Window> >   category;
   };
 
 
   namespace internal
   {
 
-    /// Base class for implementation of window classes.
+    /// Base class for implementation of weighted_window classes.
 
     template <typename Exact>
-    class window_base_ : public Window<Exact>
+    class weighted_window_base_ : public Weighted_Window<Exact>
     {
     public:
+
       stc_typename(point);
+      stc_typename(weight);
 
     protected:
-      window_base_();
+      weighted_window_base_();
 
-    }; // end of class oln::internal::window_base_<Exact>
+    }; // end of class oln::internal::weighted_window_base_<Exact>
 
 
 
 # ifndef OLN_INCLUDE_ONLY
 
     template <typename Exact>
-    window_base_<Exact>::window_base_()
+    weighted_window_base_<Exact>::weighted_window_base_()
     {
     }
 
@@ -97,4 +101,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_INTERNAL_WINDOW_BASE_HH
+#endif // ! OLN_CORE_INTERNAL_WEIGHTED_WINDOW_BASE_HH

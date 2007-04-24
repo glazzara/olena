@@ -97,7 +97,7 @@ int main()
   // 3 4 5 
   // 6 7 8 
 
-  /* HERE
+
 
   // The algorithm defined at the end of this file is very close to
   // the one of the tour former file.  The major difference is that it
@@ -251,7 +251,7 @@ int main()
   // 8: 4 7 0
 
 
-  */
+
 
   // Last, the way a predicate is defined can also rely on some image
   // values.  For that the user can on the fly provide an expression

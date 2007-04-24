@@ -86,6 +86,7 @@ namespace oln
     image2d();
     image2d(const box2d& b);
     image2d(unsigned nrows, unsigned ncols);
+    image2d(int min_row, int min_col, int max_row, int max_col);
 
     bool impl_owns_(const point2d& p) const;
 
@@ -126,6 +127,16 @@ namespace oln
     this->data_ = new data(new array_t(b.pmin().row(), b.pmin().col(),
 				       b.pmax().row(), b.pmax().col()),
 			   b);
+  }
+
+  template <typename T>
+  image2d<T>::image2d(int min_row, int min_col, int max_row, int max_col)
+  {
+    precondition(max_row >= min_row and max_col >= min_col);
+    this->data_ = new data(new array_t(min_row, min_col,
+				       max_row, max_col),
+			   box2d(point2d(min_row, min_col),
+				 point2d(max_row, max_col)));
   }
 
   template <typename T>
