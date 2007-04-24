@@ -33,6 +33,7 @@
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/internal/utils.hh>
 # include <oln/core/3d/array3d.hh>
+# include <oln/core/3d/fast_iterator_3d.hh>
 
 
 namespace oln
@@ -60,6 +61,8 @@ namespace oln
 
     typedef image3d<T>         plain;
     typedef image3d<pl::value> skeleton;
+
+    typedef fast_iterator_3d<value, coord> fiter;
   };
 
 
@@ -81,11 +84,16 @@ namespace oln
     typedef internal::plain_primitive_image_<current> super;
     typedef array3d_<T, int> array_t;
   public:
+    //FIXME (fast image concept??)
+    typedef typename vtypes< image3d<T> >::fiter fiter;
     stc_using(data);
 
     image3d();
     image3d(const box3d& b);
     image3d(unsigned nslis, unsigned nrows, unsigned ncols);
+
+    array_t& img_array();
+    const array_t& img_array() const;
 
     bool impl_owns_(const point3d& p) const;
 
@@ -144,6 +152,20 @@ namespace oln
 				 point3d(nslis - 1,
 					 nrows - 1,
 					 ncols - 1)));
+  }
+
+  template <typename T>
+  typename image3d<T>::array_t&
+  image3d<T>::img_array()
+  {
+    return this->data_->first;
+  }
+
+  template <typename T>
+  const typename image3d<T>::array_t&
+  image3d<T>::img_array() const
+  {
+    return this->data_->first;
   }
 
   template <typename T>

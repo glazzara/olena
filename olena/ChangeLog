@@ -1,5 +1,19 @@
 2007-04-24  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	fast iterator for image 2d and 3d.
+
+	* tests/core/fiter_point1d.cc: Update test.
+	* tests/core/fiter_point2d.cc:,
+	* tests/core/fiter_point3d.cc: New test.
+	* tests/core/Makefile.am: Update.
+	* oln/core/1d/fast_iterator_1d.hh: remove a useless include.
+	* oln/core/2d/fast_iterator_2d.hh,
+	* oln/core/3d/fast_iterator_3d.hh: New fast iterator
+	* oln/core/2d/image2d.hh,
+	* oln/core/3d/image3d.hh: add fast iterator on the image 
+
+2007-04-24  Nicolas Ballas  <ballas@lrde.epita.fr>
+
 	fast_iterator for image1d.
 
 	* tests/core/fiter_point1d.cc: New test.

@@ -26,17 +26,18 @@
 // Public License.
 
 #include <cassert>
-#include <oln/core/1d/image1d.hh>
+#include <oln/core/2d/image2d.hh>
+
 
 int
 main()
 {
   using namespace oln;
 
-  image1d<int> ima(10);
+  image2d<int> ima(20, 20);
 
-  image1d<int>::piter p(ima.points());
-  image1d<int>::fiter f(ima);
+  image2d<int>::piter p(ima.points());
+  image2d<int>::fiter f(ima);
   int i = 0;
 
   for_all(p)
