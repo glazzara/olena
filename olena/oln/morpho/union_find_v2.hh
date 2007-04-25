@@ -47,17 +47,16 @@ namespace oln
 
     namespace impl
     {
+
       template <typename I>
       struct union_find_
       {
-	const I&      input;
 	oln_plain_value(I, unsigned)  output;
 
 	oln_plain(I) is_processed;
 	oln_plain_value(I, oln_point(I)) parent;
 
-	union_find_(const I& in)
-	  : input(in)
+	union_find_(I in)
 	{
 	  prepare(is_processed, with, in);
 	  prepare(output, with, in);
@@ -93,7 +92,7 @@ namespace oln
 	  level::fill(inplace(is_processed), false);
 	}
 
-	void first_pass_body(const oln_point(I)& p)
+	void first_pass_body(const oln_point(I)& p, I input)
 	{
 	  parent(p) = p;
 	  if ( input(p) )
@@ -109,7 +108,7 @@ namespace oln
 
 	}
 
-	void second_pass_body(const oln_point(I)& p)
+	void second_pass_body(const oln_point(I)& p, I input)
 	{
 	  unsigned current_label = 0;
 	  if ( input(p) == true and parent(p) == p )
@@ -120,7 +119,6 @@ namespace oln
 
 	void final()
 	{
-	}
 
       };
 
@@ -133,7 +131,7 @@ namespace oln
     union_find(const Image_with_Nbh<I>& input)
     {
       impl::union_find_<I> f(exact(input));
-      canvas::v1::two_pass(f);
+      canvas::v2::two_pass(f, input);
       return f.output;
     }
 

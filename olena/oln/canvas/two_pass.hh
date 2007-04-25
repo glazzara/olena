@@ -25,6 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+# include <oln/core/concept/image.hh>
+
 #ifndef	OLN_CANVAS_TWO_PASS_HH
 # define OLN_CANVAS_TWO_PASS_HH
 
@@ -34,10 +36,10 @@ namespace canvas
   namespace v1
   {
     template <template <class> class F,
-	      typename I>
+	      typename I> // Data owned by f.
     void two_pass(F<I> f)
     {
-      mlc::assert_< mlc_is_a(I, Image) >::check();
+//      mlc::assert_< mlc_is_a(I, Image) >::check();
 
       f.init();
 
@@ -55,12 +57,12 @@ namespace canvas
     }
   }
 
-  namespace v2
+  namespace v2 // Data owned by f but not input
   {
     template <typename F, typename I>
     void two_pass(F f, I input)
     {
-      mlc::assert_< mlc_is_a(I, Image) >::check();
+//      mlc::assert_< mlc_is_a(I, Image) >::check();
 
       f.init(input);
 
@@ -78,12 +80,12 @@ namespace canvas
     }
   }
 
-  namespace v3
+  namespace v3 // Auxiliar data given as argument.
   {
     template <typename F, typename I, typename A>
     void two_pass(F f, I input, A aux)
     {
-      mlc::assert_< mlc_is_a(I, Image) >::check();
+//      mlc::assert_< mlc_is_a(I, Image) >::check();
 
       f.init(input, aux);
 
@@ -99,6 +101,49 @@ namespace canvas
 
       f.final(input, aux);
     }
+  }
+
+
+  namespace v4 // Via Inheritens.
+  {
+
+    template <typename I>
+    class two_pass
+    {
+
+      void init(I input) { }
+
+      void final(I input) { }
+
+      void first_pass_body(const oln_point(I)& p)
+      {
+	assert (0 && "two_pass canvas : procedure 'void first_pass_body(const oln_point(I)& p)' must be defined");
+      }
+
+      void second_pass_body(const oln_point(I)& p)
+      {
+	assert (0 && "two_pass canvas : procedure 'void second_pass_body(const oln_point(I)& p)' must be defined");
+      }
+
+      void run(I input)
+      {
+	init(input);
+
+	// first pass
+	oln_fwd_piter(I) p1(input.points());
+	for_all(p1)
+	  first_pass_body(p1, input);
+
+	// second pass
+	oln_bkd_piter(I) p2(input.points());
+	for_all(p2)
+	  second_pass_body(p2, input);
+
+	final(input);
+      }
+
+    };
+
   }
 
 }
