@@ -41,7 +41,7 @@ namespace oln
     /// Classes to factor code for iterators based on vector of dpoints.
 
     template <typename P>
-    class dpoints_piter_impl_ : private mlc::assert_< mlc_is_a(P, Point) > // FIXME: Add err msg.
+    class dpoints_piter_impl_
     {
     public:
       // dpoints_piter_impl_(const dpoints_piter_impl_&);
@@ -49,7 +49,6 @@ namespace oln
       void impl_invalidate();
       bool impl_is_valid() const;
       
-      P impl_to_point() const;
       const P* impl_point_adr() const;
 
     protected:
@@ -133,6 +132,7 @@ namespace oln
 	n_(dps.size()),
 	i_(n_)
     {
+      mlc::assert_< mlc_is_a(P, Point) >::check(); // FIXME: Add err msg.
       precondition(dps.size() != 0);
     }
 
@@ -148,13 +148,6 @@ namespace oln
     dpoints_piter_impl_<P>::impl_is_valid() const
     {
       return this->i_ != this->n_;
-    }
-
-    template <typename P>
-    P
-    dpoints_piter_impl_<P>::impl_to_point() const
-    {
-      return this->p_;
     }
 
     template <typename P>

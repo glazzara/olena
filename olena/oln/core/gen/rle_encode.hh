@@ -42,13 +42,13 @@ namespace oln
   */
   template <typename P>
   bool
-  on_the_same_line(P p1, P p2)
+  on_the_same_line(const P& p1, const P& p2)
   {
     unsigned dim = mlc_value(typename P::grid::dim);
     bool same_line = true;
 
-    for (int n = dim - 1; same_line && n > 0; --n)
-      same_line = p1[n] == p2[n];
+    for (int n = dim - 1; same_line and n > 0; --n)
+      same_line = (p1[n] == p2[n]);
     return same_line;
   }
 
@@ -61,16 +61,16 @@ namespace oln
   ** @return rle_image
   */
   template <typename I>
-  rle_image<typename Image<I>::point, typename I::value>
+  rle_image<oln_point(I), oln_value(I)>
   rle_encode(const Image<I>& input)
   {
-    rle_image<typename I::point, typename I::value> output;
-    typename Image<I>::piter p (input.points());
+    rle_image<oln_point(I), oln_value(I)> output;
+    oln_piter(I) p (input.points());
     unsigned len = 1;
     /// range point start
-    typename I::point rstart;
+    oln_point(I) rstart;
     /// range value
-    typename I::value rvalue;
+    oln_value(I) rvalue;
 
     p.start();
     if (!p.is_valid())
@@ -81,7 +81,8 @@ namespace oln
     p.next();
     while (p.is_valid())
     {
-      if (rvalue == input(p) && on_the_same_line(rstart, p.to_point()))
+      if (rvalue == input(p) and
+	  on_the_same_line(rstart, oln_point(I)(p))) // FIXME: to_point
 	++len;
       else
       {
@@ -95,6 +96,7 @@ namespace oln
     output.insert(rstart, len, rvalue);
     return output;
   }
+
 } // end of namespace oln
 
-#endif /* !OLN_CORE_GEN_RLE_ENCODE_HH */
+#endif // ! OLN_CORE_GEN_RLE_ENCODE_HH

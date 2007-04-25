@@ -80,8 +80,8 @@ namespace oln
 	    V val = 0;
 	    for_all(q)
 	      {
-		oln_dpoint(I) dp = O - q.to_point();
-		p_q = p.to_point() + dp;
+		oln_dpoint(I) dp = O - oln_point(I)(q); // FIXME: to_point
+		p_q = oln_point(I)(p) + dp; // FIXME: to_point
 		if (f.has(p_q))
 		  val += g(q) * f(p_q); // FIXME: f(p + (O - q));
 	      }
@@ -102,7 +102,7 @@ namespace oln
 	    V val = 0;
 	    for (unsigned i = 0; i < w_win.size(); ++i)
 	      {
-		oln_point(I) q = p.to_point() + w_win.dp(i);
+		oln_point(I) q = oln_point(I)(p) + w_win.dp(i); // FIXME: to_point
 		if (input.has(q))
 		  val += w_win.w(i) * input(q);
 	      }

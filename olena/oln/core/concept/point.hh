@@ -113,6 +113,16 @@ namespace oln
 
 
 
+  namespace internal
+  {
+    
+    template <typename P>
+    const P& to_point(const Point<P>& p);
+
+  } // end of namespace oln::internal
+
+
+
   namespace ERROR
   {
 
@@ -181,6 +191,17 @@ namespace oln
     // mlc::assert_defined_< oln_vtype(Exact, coord)  >::check();
     // mlc::assert_defined_< oln_vtype(Exact, dim)    >::check();
   }
+
+  namespace internal
+  {
+    
+    template <typename P>
+    const P& to_point(const Point<P>& p)
+    {
+      return exact(p);
+    }
+
+  } // end of namespace oln::internal
 
   template <typename P>
   typename P::dpoint

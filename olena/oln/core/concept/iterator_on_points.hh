@@ -46,7 +46,6 @@ namespace oln
   {
     stc_typename(point);
 
-    point to_point() const;
     const point* point_adr() const;
 
     // Final.
@@ -61,19 +60,20 @@ namespace oln
   }; // end of class oln::Iterator_on_Points<Exact>
 
 
-  template <typename Exact>
-  std::ostream& operator<<(std::ostream& ostr, const Iterator_on_Points<Exact>& pit);
+  template <typename It>
+  std::ostream& operator<<(std::ostream& ostr, const Iterator_on_Points<It>& it);
+
+
+  namespace internal
+  {
+    
+    template <typename It>
+    const oln_point(It)& to_point(const Iterator_on_Points<It>& it);
+
+  } // end of namespace oln::internal
 
 
 # ifndef OLN_INCLUDE_ONLY
-
-  template <typename Exact>
-  typename Iterator_on_Points<Exact>::point
-  Iterator_on_Points<Exact>::to_point() const
-  {
-    precondition(this->is_valid());
-    return exact(this)->impl_to_point();
-  }
 
   template <typename Exact>
   const typename Iterator_on_Points<Exact>::point*
@@ -86,7 +86,7 @@ namespace oln
   Iterator_on_Points<Exact>::operator typename Iterator_on_Points<Exact>::point() const
   {
     precondition(this->is_valid());
-    return this->to_point();
+    return *(exact(this)->impl_point_adr());
   }
 
   template <typename Exact>
@@ -99,18 +99,26 @@ namespace oln
   template <typename Exact>
   void Iterator_on_Points<Exact>::check__() const
   {
-    point (Exact::*impl_to_point_adr)() const = & Exact::impl_to_point;
-    impl_to_point_adr = 0;
     const point* (Exact::*impl_point_adr_adr)() const = & Exact::impl_point_adr;
     impl_point_adr_adr = 0;
-    // FIXME: & Exact::operator point...
   }
 
-  template <typename Exact>
-  std::ostream& operator<<(std::ostream& ostr, const Iterator_on_Points<Exact>& pit)
+  template <typename It>
+  std::ostream& operator<<(std::ostream& ostr, const Iterator_on_Points<It>& it)
   {
-    return ostr << pit.to_point();
+    return ostr << (oln_point(It)(it));
   }
+
+  namespace internal
+  {
+    
+    template <typename It>
+    const oln_point(It)& to_point(const Iterator_on_Points<It>& it)
+    {
+      return *(it.point_adr());
+    }
+
+  } // end of namespace oln::internal
 
 # endif // ! OLN_INCLUDE_ONLY
 

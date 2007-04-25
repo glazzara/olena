@@ -1,3 +1,25 @@
+2007-04-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Replace 'to_point' method by internal routine.
+
+	* oln/core/concept/iterator_on_points.hh (to_point): Remove method.
+	(to_point): New internal routine.
+	* oln/core/concept/point.hh: Likewise.
+	* oln/convert/to_weighted_window.hh,
+	* oln/debug/print.hh,
+	* oln/core/gen/traits.hh,
+	* oln/core/gen/sparse_encode.hh,
+	* oln/core/gen/pset_compare.hh,
+	* oln/core/gen/rle_encode.hh,
+	* oln/core/internal/box.hh,
+	* oln/core/internal/dpoints_piter_impl.hh,
+	* oln/core/internal/encoded_image_psite.hh,
+	* oln/core/internal/point_set_std_based.hh,
+	* oln/core/internal/piter_adaptor.hh,
+	* oln/core/internal/encoded_image_pset.hh,
+	* oln/core/internal/iterator_on_points_impl.hh,
+	* oln/linear/convolution.hh: Update.
+
 2007-04-24  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	fast iterator for image 2d and 3d.

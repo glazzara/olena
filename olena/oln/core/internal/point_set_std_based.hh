@@ -103,17 +103,9 @@ namespace oln
     }; // end of class point_set_std_based_<Exact>
 
 
-    template <typename Exact>
+    template <typename Ps>
     std::ostream& operator<<(std::ostream& ostr,
-			     const point_set_std_based_<Exact>& pts)
-    {
-      typename Exact::fwd_piter i(pts);
-      ostr << "{ ";
-      for_all(i)
-	ostr << i.to_point() << ' ';
-      ostr << "}";
-      return ostr;
-    }
+			     const point_set_std_based_<Ps>& pts);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -159,7 +151,19 @@ namespace oln
       return this->con_;
     }
 
-# endif
+    template <typename Ps>
+    std::ostream& operator<<(std::ostream& ostr,
+			     const point_set_std_based_<Ps>& pts)
+    {
+      oln_fwd_piter(Ps) p(pts);
+      ostr << "{ ";
+      for_all(p)
+	ostr << p << ' ';
+      ostr << "}";
+      return ostr;
+    }
+
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::internal
 
@@ -221,7 +225,6 @@ namespace oln
     void impl_next();
     void impl_invalidate();
     bool impl_is_valid() const;
-    point impl_to_point() const;
     const point* impl_point_adr() const;
 
   private:
@@ -250,7 +253,6 @@ namespace oln
     void impl_next();
     void impl_invalidate();
     bool impl_is_valid() const;
-    point impl_to_point() const;
     const point* impl_point_adr() const;
 
   private:
@@ -299,13 +301,6 @@ namespace oln
   bool pset_std_based_fwd_piter_<C>::impl_is_valid() const
   {
     return this->it_ != this->con_.end();
-  }
-
-  template <typename C>
-  typename pset_std_based_fwd_piter_<C>::point
-  pset_std_based_fwd_piter_<C>::impl_to_point() const
-  {
-    return *this->it_;
   }
 
   template <typename C>
@@ -359,20 +354,12 @@ namespace oln
   }
 
   template <typename C>
-  typename pset_std_based_bkd_piter_<C>::point
-  pset_std_based_bkd_piter_<C>::impl_to_point() const
-  {
-    return *this->it_;
-  }
-
-  template <typename C>
   const typename pset_std_based_bkd_piter_<C>::point*
   pset_std_based_bkd_piter_<C>::impl_point_adr() const
   {
     return &(*(this->it_));
     // FIXME: Read comments in pset_std_based_fwd_piter_<C>.
   }
-
 
 # endif // ! OLN_INCLUDE_ONLY
 

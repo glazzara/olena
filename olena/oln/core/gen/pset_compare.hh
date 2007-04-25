@@ -82,7 +82,7 @@ namespace oln
 	{
 	  if (not pr.is_valid()) // while pl is valid
 	    return false;
-	  if (pl.to_point() != pr.to_point())
+	  if (oln_point(L)(pl) != oln_point(R)(pr)) // FIXME: to_point
 	    return false;
 	}
       if (pr.is_valid()) // while pl is not valid
@@ -146,7 +146,7 @@ namespace oln
       //       oln_piter(L) p_lhs(lhs);
       //       for_all(p_lhs)
       // 	{
-      // 	  while (p_rhs.is_valid() and p_rhs.to_point() != p_lhs.to_point())
+      // 	  while (p_rhs.is_valid() and p_rhs != p_lhs)
       // 	    p_rhs.next();
       // 	  if (not p_rhs.is_valid())
       // 	    return false;

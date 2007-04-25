@@ -80,7 +80,6 @@ namespace oln
       void impl_next();
       void impl_invalidate();
       bool impl_is_valid() const;
-      point        impl_to_point()  const;
       const point* impl_point_adr() const;
 
     protected:
@@ -127,20 +126,13 @@ namespace oln
     }
 
     template <typename Exact>
-    typename piter_adaptor_<Exact>::point
-    piter_adaptor_<Exact>::impl_to_point() const
-    {
-      return this->p_.to_point();
-    }
-
-    template <typename Exact>
     const typename piter_adaptor_<Exact>::point*
     piter_adaptor_<Exact>::impl_point_adr() const
     {
       return this->p_.point_adr();
     }
 
-# endif
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::internal
 

@@ -65,7 +65,7 @@ namespace oln
       oln_f_image_to_weighted_window(I) output;
       oln_piter(I) p(input.points());
       for_all(p)
-	output.take(input(p), O - p.to_point()); // FIXME: zero - p
+	output.take(input(p), O - oln_point(I)(p)); // FIXME: replace to_point by zero - p
       return output;
     }
 
@@ -78,7 +78,7 @@ namespace oln
       oln_point(W) O; O.set_all(0);
       oln_qiter(W) q(win, O);
       for_all(q)
-	output.take(weight_(q), O - q.to_point());
+	output.take(weight_(q), O - oln_point(W)(q)); // FIXME: to_point
       return output;
     }
 

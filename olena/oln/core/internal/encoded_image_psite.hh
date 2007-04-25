@@ -42,7 +42,6 @@ namespace oln
     {
       enc_image_psite_();
 
-      P to_point() const;
       operator P () const;
 
       P start_;
@@ -58,22 +57,14 @@ namespace oln
     }
 
     template <typename P>
-    P
-    enc_image_psite_<P>::to_point() const
-    {
-      P p = this->start_;
-
-      p[0] += this->index_;
-      return p;
-    }
-
-    template <typename P>
     enc_image_psite_<P>::operator P() const
     {
-      return this->to_point();
+      P tmp = this->start_;
+      tmp[0] += this->index_;
+      return tmp;
     }
 
-# endif /* !OLN_INCLUDE_ONLY */
+# endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace internal
 

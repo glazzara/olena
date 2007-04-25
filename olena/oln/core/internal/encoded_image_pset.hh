@@ -218,7 +218,6 @@ namespace oln
       typedef enc_image_psite_<point> psite;
 
       const enc_image_psite_<point>& impl_to_psite() const;
-      point impl_to_point() const;
       const enc_image_psite_<point>* impl_psite_adr() const;
       operator psite () const;
       const point* impl_point_adr() const; //FIXME
@@ -243,13 +242,6 @@ namespace oln
     template <typename Exact>
     const enc_image_psite_<typename enc_image_pset_piter_<Exact>::point>&
     enc_image_pset_piter_<Exact>::impl_to_psite() const
-    {
-      return ps_;
-    }
-
-    template <typename Exact>
-    typename enc_image_pset_piter_<Exact>::point
-    enc_image_pset_piter_<Exact>::impl_to_point() const
     {
       return ps_;
     }

@@ -61,7 +61,7 @@ namespace oln
       {
 	oln_fwd_piter(I) p(input.points());
 	for_all(p)
-	  ostr << p.to_point() << ':' << format(input(p)) << ' ';
+	  ostr << p << ':' << format(input(p)) << ' ';
       }
 
       template <typename I>

@@ -161,7 +161,6 @@ namespace oln
     void impl_next();
     void impl_invalidate();
     bool impl_is_valid() const;
-    point impl_to_point() const;
     const point* impl_point_adr() const;
 
   private:
@@ -188,7 +187,6 @@ namespace oln
     void impl_next();
     void impl_invalidate();
     bool impl_is_valid() const;
-    point impl_to_point() const;
     const point* impl_point_adr() const;
 
   private:
@@ -350,13 +348,6 @@ namespace oln
   }
 
   template <typename B>
-  typename box_fwd_piter_<B>::point
-  box_fwd_piter_<B>::impl_to_point() const
-  {
-    return p_;
-  }
-
-  template <typename B>
   const typename box_fwd_piter_<B>::point*
   box_fwd_piter_<B>::impl_point_adr() const
   {
@@ -413,13 +404,6 @@ namespace oln
   box_bkd_piter_<B>::impl_is_valid() const
   {
     return p_ != nop_;
-  }
-
-  template <typename B>
-  typename box_bkd_piter_<B>::point
-  box_bkd_piter_<B>::impl_to_point() const
-  {
-    return p_;
   }
 
   template <typename B>

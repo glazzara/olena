@@ -105,14 +105,14 @@ namespace oln
     const typename iterator_on_points_impl_base_<Exact>::vec_t&
     iterator_on_points_impl_base_<Exact>::vec() const
     {
-      return static_cast<const Exact&>(*this).to_point().vec();
+      return static_cast<const Exact*>(this)->impl_point_adr()->vec();
     }
 
     template <typename Exact>
     typename iterator_on_points_impl_base_<Exact>::vec_t&
     iterator_on_points_impl_base_<Exact>::vec()
     {
-      return static_cast<const Exact&>(*this).to_point().vec();
+      return const_cast<vec_t&>(static_cast<Exact*>(this)->impl_point_adr()->vec());
     }
 
     // 1d impl
@@ -121,7 +121,7 @@ namespace oln
     typename iterator_on_points_impl_<1, Exact>::coord
     iterator_on_points_impl_<1, Exact>::ind() const
     {
-      return static_cast<const Exact&>(*this).to_point().ind();
+      return static_cast<const Exact*>(this)->impl_point_adr()->ind();
     }
 
     // 2d impl
@@ -130,14 +130,14 @@ namespace oln
     typename iterator_on_points_impl_<2, Exact>::coord
     iterator_on_points_impl_<2, Exact>::row() const
     {
-      return static_cast<const Exact&>(*this).to_point().row();
+      return static_cast<const Exact*>(this)->impl_point_adr()->row();
     }
 
     template <typename Exact>
     typename iterator_on_points_impl_<2, Exact>::coord
     iterator_on_points_impl_<2, Exact>::col() const
     {
-      return static_cast<const Exact&>(*this).to_point().col();
+      return static_cast<const Exact*>(this)->impl_point_adr()->col();
     }
 
     // 3d impl
@@ -146,21 +146,21 @@ namespace oln
     typename iterator_on_points_impl_<3, Exact>::coord
     iterator_on_points_impl_<3, Exact>::sli() const
     {
-      return static_cast<const Exact&>(*this).to_point().sli();
+      return static_cast<const Exact*>(this)->impl_point_adr()->sli();
     }
 
     template <typename Exact>
     typename iterator_on_points_impl_<3, Exact>::coord
     iterator_on_points_impl_<3, Exact>::row() const
     {
-      return static_cast<const Exact&>(*this).to_point().row();
+      return static_cast<const Exact*>(this)->impl_point_adr()->row();
     }
 
     template <typename Exact>
     typename iterator_on_points_impl_<3, Exact>::coord
     iterator_on_points_impl_<3, Exact>::col() const
     {
-      return static_cast<const Exact&>(*this).to_point().col();
+      return static_cast<const Exact*>(this)->impl_point_adr()->col();
     }
 
 # endif // ! OLN_INCLUDE_ONLY
