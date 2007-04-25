@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_UNION_FIND_HH
-# define OLN_MORPHO_UNION_FIND_HH
+#ifndef	OLN_MORPHO_CC_TARJAN_HH
+# define OLN_MORPHO_CC_TARJAN_HH
 
 # include <oln/core/concept/image.hh>
 
@@ -41,22 +41,23 @@ namespace oln
 
     template <typename I>
     oln_plain_value(I, unsigned)
-    union_find(const Image_with_Nbh<I>& input);
+    cc_tarjan(const Image_with_Nbh<I>& input);
 
 # ifndef OLN_INCLUDE_ONLY
 
     namespace impl
     {
-
       template <typename I>
-      struct union_find_
+      struct cc_tarjan_
       {
+	const I&      input;
 	oln_plain_value(I, unsigned)  output;
 
 	oln_plain(I) is_processed;
 	oln_plain_value(I, oln_point(I)) parent;
 
-	union_find_(I in)
+	cc_tarjan_(const I& in)
+	  : input(in)
 	{
 	  prepare(is_processed, with, in);
 	  prepare(output, with, in);
@@ -92,7 +93,7 @@ namespace oln
 	  level::fill(inplace(is_processed), false);
 	}
 
-	void first_pass_body(const oln_point(I)& p, I input)
+	void first_pass_body(const oln_point(I)& p)
 	{
 	  parent(p) = p;
 	  if ( input(p) )
@@ -108,7 +109,7 @@ namespace oln
 
 	}
 
-	void second_pass_body(const oln_point(I)& p, I input)
+	void second_pass_body(const oln_point(I)& p)
 	{
 	  unsigned current_label = 0;
 	  if ( input(p) == true and parent(p) == p )
@@ -119,6 +120,7 @@ namespace oln
 
 	void final()
 	{
+	}
 
       };
 
@@ -128,10 +130,10 @@ namespace oln
 
     template <typename I>
     oln_plain_value(I, unsigned)
-    union_find(const Image_with_Nbh<I>& input)
+    cc_tarjan(const Image_with_Nbh<I>& input)
     {
-      impl::union_find_<I> f(exact(input));
-      canvas::v2::two_pass(f, input);
+      impl::cc_tarjan_<I> f(exact(input));
+      canvas::v1::two_pass(f);
       return f.output;
     }
 
@@ -142,4 +144,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_UNION_FIND_HH
+#endif // ! OLN_MORPHO_CC_TARJAN_HH

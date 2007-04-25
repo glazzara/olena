@@ -1,5 +1,21 @@
 2007-04-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Fix cc_tarjan alorithms (4 versions).
+
+	* oln/morpho/union_find.hh: Remove.
+	* oln/morpho/cc_tarjan_v0.hh: New.
+	* oln/morpho/cc_tarjan_v1.hh: New.
+	* oln/morpho/cc_tarjan_v2.hh: New.
+	* oln/morpho/cc_tarjan_v3.hh: New.
+	* oln/morpho/cc_tarjan_v4.hh: New.
+	* oln/morpho/union_find_v2.hh: Remove.
+	* oln/morpho/union_find_procedure.hh: Remove.
+	* oln/morpho/union_find_v3.hh: Remove.
+	* oln/morpho/union_find_v4.hh: Remove.
+	* oln/canvas/two_pass.hh: .
+
+2007-04-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Implementations for each canvas propositions.
 
 	* oln/morpho/cc_tarjan.hh: Rename union_find_procedure.

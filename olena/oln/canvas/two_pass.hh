@@ -44,12 +44,12 @@ namespace canvas
       f.init();
 
       // first pass
-      oln_fwd_piter(I) p1(f.input.points());
+      oln_bkd_piter(I) p1(f.input.points());
       for_all(p1)
 	f.first_pass_body(p1);
 
       // second pass
-      oln_bkd_piter(I) p2(f.input.points());
+      oln_fwd_piter(I) p2(f.input.points());
       for_all(p2)
 	f.second_pass_body(p2);
 
@@ -67,12 +67,12 @@ namespace canvas
       f.init(input);
 
       // first pass
-      oln_fwd_piter(I) p1(input.points());
+      oln_bkd_piter(I) p1(input.points());
       for_all(p1)
 	f.first_pass_body(p1, input);
 
       // second pass
-      oln_bkd_piter(I) p2(input.points());
+      oln_fwd_piter(I) p2(input.points());
       for_all(p2)
 	f.second_pass_body(p2, input);
 
@@ -90,12 +90,12 @@ namespace canvas
       f.init(input, aux);
 
       // first pass
-      oln_fwd_piter(I) p1(input.points());
+      oln_bkd_piter(I) p1(input.points());
       for_all(p1)
 	f.first_pass_body(p1, input, aux);
 
       // second pass
-      oln_bkd_piter(I) p2(input.points());
+      oln_fwd_piter(I) p2(input.points());
       for_all(p2)
 	f.second_pass_body(p2, input, aux);
 
@@ -130,12 +130,12 @@ namespace canvas
 	init(input);
 
 	// first pass
-	oln_fwd_piter(I) p1(input.points());
+	oln_bkd_piter(I) p1(input.points());
 	for_all(p1)
 	  first_pass_body(p1, input);
 
 	// second pass
-	oln_bkd_piter(I) p2(input.points());
+	oln_fwd_piter(I) p2(input.points());
 	for_all(p2)
 	  second_pass_body(p2, input);
 

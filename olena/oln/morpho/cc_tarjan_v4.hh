@@ -25,10 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_UNION_FIND_HH
-# define OLN_MORPHO_UNION_FIND_HH
-
-# include <oln/core/concept/image.hh>
+#ifndef	OLN_MORPHO_CC_TARJAN_HH
+# define OLN_MORPHO_CC_TARJAN_HH
 
 # include <oln/canvas/two_pass.hh>
 # include <oln/level/fill.hh>
@@ -39,87 +37,84 @@ namespace oln
   namespace morpho
   {
 
+    // Fwd declaration.
+
     template <typename I>
     oln_plain_value(I, unsigned)
-    union_find(const Image_with_Nbh<I>& input);
+    cc_tarjan(const Image_with_Nbh<I>& f);
 
 # ifndef OLN_INCLUDE_ONLY
 
     namespace impl
     {
+
       template <typename I>
-      struct union_find_
+      struct cc_tarjan_ : canvas::v4::two_pass<I>
       {
-	const I&      input;
-	oln_plain_value(I, unsigned)  output;
+	typedef oln_point(I) point;
 
-	oln_plain(I) is_processed;
-	oln_plain_value(I, oln_point(I)) parent;
+	oln_plain_value(I, unsigned) output;
+	oln_plain_value(I, bool) is_processed;
+	oln_plain_value(I, point) parent;
 
-	union_find_(const I& in)
-	  : input(in)
+	void init(I f)
 	{
-	  prepare(is_processed, with, in);
-	  prepare(output, with, in);
-	  prepare(parent, with, in);
-	}
-
-	oln_point(I)
-	find_root(const I& ima,
-		  const oln_point(I)& x,
-		  oln_plain_value(I, oln_point(I))& parent)
-	{
-	  if (parent(x) != x)
-	  {
-	    parent(x) = find_root(ima, parent(x), parent);
-	    return parent(x);
-	  }
-	  return x;
-	}
-
-	void
-	do_union(const I& ima,
-		 const oln_point(I)& n,
-		 const oln_point(I)& p,
-		 oln_plain_value(I, oln_point(I))& parent)
-	{
-	  oln_point(I) r = find_root(ima, n, parent);
-	  if (r != p)
-	    parent(r) = p;
-	}
-
-	void init()
-	{
+	  prepare(is_processed, with, f);
+	  prepare(output, with, f);
+	  prepare(parent, with, f);
 	  level::fill(inplace(is_processed), false);
 	}
 
-	void first_pass_body(const oln_point(I)& p)
+	void first_pass_body(const point& p, I f)
 	{
 	  parent(p) = p;
-	  if ( input(p) )
+	  if ( f(p) )
 	  {
-	    oln_niter(I) n(input, p);
+	    oln_niter(I) n(f, p);
 	    for_all(n)
 	      {
-		if ( input(n) == true and is_processed(n) )
-		  do_union(input, n, p, parent);
+		if ( f(n) == true and is_processed(n) )
+		  do_union(f, n, p);
 	      }
 	    is_processed(p) = true;
 	  }
 
 	}
 
-	void second_pass_body(const oln_point(I)& p)
+	void second_pass_body(const point& p, I f)
 	{
 	  unsigned current_label = 0;
-	  if ( input(p) == true and parent(p) == p )
+	  if ( f(p) == true and parent(p) == p )
 	    output(p) = ++current_label;
 	  else
 	    output(p) = output(parent(p));
 	}
 
-	void final()
+	void final(I f)
 	{
+	}
+
+
+       	// auxiliary methods
+
+	point find_root(const I& ima,
+			const point& x)
+	{
+	  if (parent(x) != x)
+	  {
+	    parent(x) = find_root(ima, parent(x));
+	    return parent(x);
+	  }
+	  return x;
+	}
+
+	void do_union(const I& ima,
+		      const point& n,
+		      const point& p)
+	{
+	  point r = find_root(ima, n);
+	  if (r != p)
+	    parent(r) = p;
 	}
 
       };
@@ -130,11 +125,11 @@ namespace oln
 
     template <typename I>
     oln_plain_value(I, unsigned)
-    union_find(const Image_with_Nbh<I>& input)
+    cc_tarjan(const Image_with_Nbh<I>& f)
     {
-      impl::union_find_<I> f(exact(input));
-      canvas::v1::two_pass(f);
-      return f.output;
+      impl::cc_tarjan_<I> f_cc_tarjan(exact(f));
+
+      return f_cc_tarjan.run();
     }
 
 # endif // ! OLN_INCLUDE_ONLY
@@ -144,4 +139,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_UNION_FIND_HH
+#endif // ! OLN_MORPHO_CC_TARJAN_HH
