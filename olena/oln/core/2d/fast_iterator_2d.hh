@@ -30,110 +30,53 @@
 # define OLN_CORE_2D_FAST_ITERATOR_2D_HH
 
 # include <cassert>
-# include <oln/core/concept/fast_iterator.hh>
+# include <oln/core/internal/fast_iterator_base.hh>
 
 namespace oln
 {
 
   // Fwd decl.
   template <typename T> class image2d;
-  template <typename T, typename C> class fast_iterator_2d;
+  template <typename T> class fast_iterator_2d;
 
   // Super type.
-  template <typename T, typename C>
-  struct super_trait_< fast_iterator_2d<T, C> >
+  template <typename T>
+  struct super_trait_< fast_iterator_2d<T> >
   {
-    typedef fast_iterator_2d<T, C> current;
-    typedef Fast_Iterator<current> ret;
+    typedef fast_iterator_2d<T> current;
+    typedef internal::fast_iterator_without_b_<current> ret;
   };
 
   // Virtual types.
-  template <typename T, typename C>
-  struct vtypes< fast_iterator_2d<T, C> >
+  template <typename T>
+  struct vtypes< fast_iterator_2d<T> >
   {
     typedef T value;
   };
 
   // fast iterator for image2d
-  template <typename T, typename C>
-  class fast_iterator_2d : public Fast_Iterator< fast_iterator_2d<T, C> >
+  template <typename T>
+  class fast_iterator_2d :
+    public internal::fast_iterator_without_b_< fast_iterator_2d<T> >
   {
-    typedef fast_iterator_2d<T, C> current;
-    typedef Fast_Iterator<current> super;
+    typedef fast_iterator_2d<T> current;
+    typedef internal::fast_iterator_without_b_<current> super;
   public:
-    stc_using(value);
+
     fast_iterator_2d(image2d<T>& ima);
-
-    void impl_start();
-    void impl_next();
-    void impl_invalidate();
-    bool impl_is_valid() const;
-
-    value& impl_dereference();
-    const value& impl_dereference() const;
-
-  protected:
-    T* start_;            // buffer start
-    T* current_elt_;
-    T* eoi_;              // buffer end;
   };
 
 # ifndef OLN_INCLUDE_ONLY
 
   // initialize the fields start_ and eoi_, to image buffer start and end
-  template <typename T, typename C>
-  fast_iterator_2d<T, C>::fast_iterator_2d(image2d<T>& ima)
+  template <typename T>
+  fast_iterator_2d<T>::fast_iterator_2d(image2d<T>& ima)
   {
-    start_ = ima.img_array().buffer() + ima.img_array().imin() * ima.img_array().jmin() +
-      ima.img_array().jmin();
-    current_elt_ = start_;
-    eoi_ = ima.img_array().buffer() + (ima.img_array().imax() - ima.img_array().imin() + 1)  *
-      (ima.img_array().jmax() - ima.img_array().imin() + 1);
-  }
-
-  template <typename T, typename C>
-  void
-  fast_iterator_2d<T, C>::impl_start()
-  {
-    current_elt_ = start_;
-  }
-
-  template <typename T, typename C>
-  void
-  fast_iterator_2d<T, C>::impl_next()
-  {
-    assert(this->impl_is_valid());
-    ++current_elt_;
-  }
-
-  template <typename T, typename C>
-  void
-  fast_iterator_2d<T, C>::impl_invalidate()
-  {
-    current_elt_ = eoi_;
-  }
-
-  template <typename T, typename C>
-  bool
-  fast_iterator_2d<T, C>::impl_is_valid() const
-  {
-    return current_elt_ != eoi_;
-  }
-
-  template <typename T, typename C>
-  typename fast_iterator_2d<T, C>::value&
-  fast_iterator_2d<T, C>::impl_dereference()
-  {
-    assert(this->impl_is_valid());
-    return *current_elt_;
-  }
-
-  template <typename T, typename C>
-  const typename  fast_iterator_2d<T, C>::value&
-  fast_iterator_2d<T, C>::impl_dereference() const
-  {
-    assert(this->impl_is_valid());
-    return *current_elt_;
+    this->start_ = ima.img_array().buffer() +
+      ima.img_array().imin() * ima.img_array().jmin() + ima.img_array().jmin();
+    this->current_elt_ = this->start_;
+    this->eoi_ = ima.img_array().buffer() + (ima.img_array().imax() + 1)  *
+      (ima.img_array().jmax() + 1);
   }
 
 # endif // ! OLN_INCLUDE_ONLY

@@ -62,7 +62,7 @@ namespace oln
     typedef image3d<T>         plain;
     typedef image3d<pl::value> skeleton;
 
-    typedef fast_iterator_3d<value, coord> fiter;
+    typedef fast_iterator_3d<value> fiter;
   };
 
 

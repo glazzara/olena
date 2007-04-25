@@ -1,5 +1,4 @@
-// Copyright (C) 2007
-// EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,64 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#include <cassert>
+#include <oln/core/1d/image1d_b.hh>
 
-#ifndef OLN_CORE_CONCEPT_FAST_ITERATOR_HH
-# define OLN_CORE_CONCEPT_FAST_ITERATOR_HH
-
-# include <oln/core/concept/iterator.hh>
-
-namespace oln
+int
+main()
 {
+  using namespace oln;
 
-  //  Concept-class "Fast_Iterator".
-  template <typename Exact>
-  struct Fast_Iterator : public Iterator<Exact>
-  {
-    stc_typename(value);
+  image1d_b<int> ima(50, 5);
 
-    value& operator* ();
-    const value& operator*() const;
+  image1d_b<int>::piter p(ima.points());
+  image1d_b<int>::fiter f(ima);
+  int i = 0;
 
-  protected:
-    Fast_Iterator();
+  for_all(p)
+    ima(p) = i++;
 
-  private:
-    void check__() const;
-  };
+  i = 0;
 
-# ifndef OLN_INCLUDE_ONLY
+  for_all(f)
+    {
+      assert(*f == i ++);
+      *f = 5;
+    }
 
-  template <typename Exact>
-  Fast_Iterator<Exact>::Fast_Iterator()
-  {
-  }
+  for_all(p)
+    assert(ima(p) == 5);
 
-  template <typename Exact>
-  typename Fast_Iterator<Exact>::value&
-  Fast_Iterator<Exact>::operator* ()
-  {
-    precondition(exact(this)->impl_is_valid());
-    return exact(this)->impl_dereference();
-  }
-
-  template <typename Exact>
-  const typename Fast_Iterator<Exact>::value&
-  Fast_Iterator<Exact>::operator* () const
-  {
-    precondition(exact(this)->impl_is_valid());
-    return exact(this)->impl_dereference();
-  }
-
-  template <typename Exact>
-  void Fast_Iterator<Exact>::check__() const
-  {
-    // FIXME
-  }
-
-# endif // ! OLN_INCLUDE_ONLY
-
-} // end of namespace oln
-
-
-
-#endif // ! OLN_CORE_CONCEPT_FAST_ITERATOR_HH
+  f.start();
+  assert(f.is_valid());
+  f.invalidate();
+  assert(!f.is_valid());
+}

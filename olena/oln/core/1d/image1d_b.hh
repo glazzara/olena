@@ -32,6 +32,7 @@
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/internal/utils.hh>
 # include <oln/core/1d/array1d.hh>
+# include <oln/core/1d/fast_iterator_1d_b.hh>
 
 
 namespace oln
@@ -63,6 +64,8 @@ namespace oln
 
     typedef image1d_b<T>         plain;
     typedef image1d_b<pl::value> skeleton;
+
+    typedef fast_iterator_1d_b<value> fiter;
   };
 
 
@@ -84,11 +87,16 @@ namespace oln
     typedef internal::plain_primitive_image_<current> super;
     typedef array1d_<T, int> array_t;
   public:
+    //FIXME (fast image concept??)
+    typedef typename vtypes< image1d_b<T> >::fiter fiter;
     stc_using(data);
 
     image1d_b();
     image1d_b(const box1d& b, unsigned border = 2);
     image1d_b(unsigned n, unsigned border = 2);
+
+    array_t& img_array();
+    const array_t& img_array() const;
 
     bool impl_owns_(const point1d& p) const;
 
@@ -135,7 +143,21 @@ namespace oln
     this->data_ = new data(new array_t(- border,
 				       n - 1 + border),
 			   border,
-			   box1d(0, n - 1));
+			   box1d(point1d(0), point1d(n - 1)));
+  }
+
+  template <typename T>
+  typename image1d_b<T>::array_t&
+  image1d_b<T>::img_array()
+  {
+    return this->data_->first;
+  }
+
+  template <typename T>
+  const typename image1d_b<T>::array_t&
+  image1d_b<T>::img_array() const
+  {
+    return this->data_->first;
   }
 
   template <typename T>
@@ -201,7 +223,7 @@ namespace oln
   {
     precondition(not target.has_data());
     box1d b;
-    bool box_ok = init(b, with, dat);
+    bool box_ok = init5A(b, with, dat);
     postcondition(box_ok);
     unsigned border = 2; // FIXME: Use init!
     array1d_<T,int>* ptr = new array1d_<T,int>(b.pmin().ind() - border,

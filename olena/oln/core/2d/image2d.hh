@@ -62,7 +62,7 @@ namespace oln
     typedef image2d<T>         plain;
     typedef image2d<pl::value> skeleton;
 
-    typedef fast_iterator_2d<value, coord> fiter;
+    typedef fast_iterator_2d<value> fiter;
   };
 
 

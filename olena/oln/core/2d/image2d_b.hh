@@ -33,6 +33,7 @@
 # include <oln/core/internal/image_base.hh>
 # include <oln/core/internal/utils.hh>
 # include <oln/core/2d/array2d.hh>
+# include <oln/core/2d/fast_iterator_2d_b.hh>
 
 
 namespace oln
@@ -65,6 +66,8 @@ namespace oln
 
     typedef image2d_b<T>         plain;
     typedef image2d_b<pl::value> skeleton;
+
+    typedef fast_iterator_2d_b<value> fiter;
   };
 
 
@@ -86,11 +89,16 @@ namespace oln
     typedef internal::plain_primitive_image_<current> super;
     typedef array2d_<T, int> array_t;
   public:
+    //FIXME (fast image concept??)
+    typedef typename vtypes< image2d_b<T> >::fiter fiter;
     stc_using(data);
 
     image2d_b();
     image2d_b(const box2d& b, unsigned border = 2);
     image2d_b(unsigned nrows, unsigned ncols, unsigned border = 2);
+
+    array_t& img_array();
+    const array_t& img_array() const;
 
     bool impl_owns_(const point2d& p) const;
 
@@ -151,6 +159,20 @@ namespace oln
 			   border,
 			   box2d(point2d(0, 0),
 				 point2d(nrows - 1, ncols - 1)));
+  }
+
+  template <typename T>
+  typename image2d_b<T>::array_t&
+  image2d_b<T>::img_array()
+  {
+    return this->data_->first;
+  }
+
+  template <typename T>
+  const typename image2d_b<T>::array_t&
+  image2d_b<T>::img_array() const
+  {
+    return this->data_->first;
   }
 
   template <typename T>

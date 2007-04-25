@@ -30,6 +30,8 @@ check_PROGRAMS =				\
   fiter_point1d					\
   fiter_point2d					\
   fiter_point3d					\
+  fiter_point1d_b				\
+  fiter_point2d_b				\
   neighb2d					\
   npoints					\
   point2d					\
@@ -52,6 +54,8 @@ iter_point2d_SOURCES = iter_point2d.cc
 fiter_point1d_SOURCES = fiter_point1d.cc
 fiter_point2d_SOURCES = fiter_point2d.cc
 fiter_point3d_SOURCES = fiter_point3d.cc
+fiter_point1d_b_SOURCES = fiter_point1d_b.cc
+fiter_point2d_b_SOURCES = fiter_point2d_b.cc
 neighb2d_SOURCES = neighb2d.cc
 npoints_SOURCES = npoints.cc
 point2d_SOURCES = point2d.cc

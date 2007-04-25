@@ -1,5 +1,5 @@
-// Copyright (C) 2007
-//  EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA
+// Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,67 +26,68 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_3D_FAST_ITERATOR_3D_HH
-# define OLN_CORE_3D_FAST_ITERATOR_3D_HH
+#ifndef OLN_CORE_1D_FAST_ITERATOR_1D_B_HH
+# define OLN_CORE_1D_FAST_ITERATOR_1D_B_HH
 
-# include <cassert>
 # include <oln/core/internal/fast_iterator_base.hh>
 
 namespace oln
 {
-
   // Fwd decl.
-  template <typename T> class image3d;
-  template <typename T> class fast_iterator_3d;
+  template <typename T> class image1d_b;
+  template <typename T> class fast_iterator_1d_b;
 
   // Super type.
   template <typename T>
-  struct super_trait_< fast_iterator_3d<T> >
+  struct super_trait_< fast_iterator_1d_b<T> >
   {
-    typedef fast_iterator_3d<T> current;
-    typedef internal::fast_iterator_without_b_<current> ret;
+    typedef fast_iterator_1d_b<T> current;
+    typedef internal::fast_iterator_base_<current> ret;
   };
 
   // Virtual types.
   template <typename T>
-  struct vtypes< fast_iterator_3d<T> >
+  struct vtypes< fast_iterator_1d_b<T> >
   {
     typedef T value;
   };
 
-  // fast iterator for image3d
+  // Fast iterator for image in one dimension
   template <typename T>
-  class fast_iterator_3d : public internal::fast_iterator_without_b_< fast_iterator_3d<T> >
+  class fast_iterator_1d_b :
+    public internal::fast_iterator_base_< fast_iterator_1d_b<T> >
   {
-    typedef fast_iterator_3d<T> current;
-    typedef internal::fast_iterator_without_b_<current> super;
+    typedef fast_iterator_1d_b<T> current;
+    typedef internal::fast_iterator_base_<current> super;
   public:
 
-    fast_iterator_3d(image3d<T>& ima);
+    fast_iterator_1d_b(image1d_b<T>& ima);
+    void impl_next();
   };
 
 # ifndef OLN_INCLUDE_ONLY
 
   // initialize the fields start_ and eoi_, to image buffer start and end
   template <typename T>
-  fast_iterator_3d<T>::fast_iterator_3d(image3d<T>& ima)
+  fast_iterator_1d_b<T>::fast_iterator_1d_b(image1d_b<T>& ima)
   {
-    this->start_ = ima.img_array().buffer() +
-      ima.img_array().imin() * ima.img_array().jmin() * ima.img_array().kmin() +
-      ima.img_array().jmin() * ima.img_array().kmin() +
-      ima.img_array().kmin();
+    unsigned border = ima.border();
 
+    this->start_ = ima.img_array().buffer() + ima.img_array().imin() + border;
     this->current_elt_ = this->start_;
+    this->eoi_ = ima.img_array().buffer() + ima.img_array().imax() - border + 1;
+  }
 
-    this->eoi_ = ima.img_array().buffer() +
-      (ima.img_array().imax() - ima.img_array().imin() + 1) *
-      (ima.img_array().jmax() - ima.img_array().imin() + 1) *
-      (ima.img_array().kmax() - ima.img_array().kmin() + 1);
+  template <typename T>
+  void
+  fast_iterator_1d_b<T>::impl_next()
+  {
+    ++(this->current_elt_);
   }
 
 # endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 
+#endif // OLN_CORE_1D_FAST_ITERATOR_1D_B_HH
 
-#endif // !OLN_CORE_3D_FAST_ITERATOR_3D_HH
