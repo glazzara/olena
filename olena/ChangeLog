@@ -1,3 +1,17 @@
+2007-04-26  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	cc-tarjan(two_pass) : Fix + Comparative statement : v0, v1, v2.
+
+	* tests/algorithms/cc_tarjan_v2.cc: New.
+	* tests/algorithms/Makefile.am: .
+	* tests/algorithms/cc_tarjan_v0.cc: New.
+	* tests/algorithms/cc_tarjan_v1.cc: New.
+	* oln/core/concept/point.hh: .
+	* oln/morpho/cc_tarjan_v1.hh: .
+	* oln/morpho/cc_tarjan_v2.hh: .
+	* oln/morpho/cc_tarjan_v4.hh: .
+	* oln/canvas/two_pass.hh: .
+
 2007-04-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Introduce zero and update some traits and ops.

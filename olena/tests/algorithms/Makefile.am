@@ -25,11 +25,17 @@ AM_CXXFLAGS = $(TESTS_CXXFLAGS)
 check_PROGRAMS =				\
   fill						\
   basic_morpho					\
-  cc_tarjan
+  cc_tarjan					\
+  cc_tarjan_v0					\
+  cc_tarjan_v1					\
+  cc_tarjan_v2
 
 # Algorithms.
 fill_SOURCES = fill.cc
 basic_morpho_SOURCES = basic_morpho.cc
 cc_tarjan_SOURCES = cc_tarjan.cc
+cc_tarjan_v0_SOURCES = cc_tarjan_v0.cc
+cc_tarjan_v1_SOURCES = cc_tarjan_v1.cc
+cc_tarjan_v2_SOURCES = cc_tarjan_v2..cc
 
 TESTS = $(check_PROGRAMS)

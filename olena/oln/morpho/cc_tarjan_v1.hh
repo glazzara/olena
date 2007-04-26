@@ -32,6 +32,7 @@
 
 # include <oln/canvas/two_pass.hh>
 # include <oln/level/fill.hh>
+# include <oln/core/internal/f_ch_value.hh>
 
 namespace oln
 {
@@ -55,7 +56,7 @@ namespace oln
 	const I&      f;
 
 	oln_plain_value(I, unsigned)  output;
-	oln_plain(I, bool) is_processed;
+	oln_plain_value(I, bool) is_processed;
 	oln_plain_value(I, point) parent;
 
 	cc_tarjan_(const I& f)
@@ -65,9 +66,9 @@ namespace oln
 
 	void init()
 	{
-	  prepare(is_processed, with, in);
-	  prepare(output, with, in);
-	  prepare(parent, with, in);
+	  prepare(is_processed, with, f);
+	  prepare(output, with, f);
+	  prepare(parent, with, f);
 	  level::fill(inplace(is_processed), false);
 	}
 
@@ -114,7 +115,7 @@ namespace oln
 	void do_union(const point& n,
 		      const point& p)
 	{
-	  point r = find_root(ima, n, parent);
+	  point r = find_root(n);
 	  if (r != p)
 	    parent(r) = p;
 	}

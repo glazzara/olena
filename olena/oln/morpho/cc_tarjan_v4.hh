@@ -28,6 +28,9 @@
 #ifndef	OLN_MORPHO_CC_TARJAN_HH
 # define OLN_MORPHO_CC_TARJAN_HH
 
+# include <oln/core/concept/image.hh>
+# include <oln/core/internal/f_ch_value.hh>
+
 # include <oln/canvas/two_pass.hh>
 # include <oln/level/fill.hh>
 
@@ -49,7 +52,7 @@ namespace oln
     {
 
       template <typename I>
-      struct cc_tarjan_ : canvas::v4::two_pass<I>
+      struct cc_tarjan_ : public canvas::v4::two_pass<I>
       {
 	typedef oln_point(I) point;
 
@@ -57,40 +60,44 @@ namespace oln
 	oln_plain_value(I, bool) is_processed;
 	oln_plain_value(I, point) parent;
 
-	void init(I f)
+	cc_tarjan_(const I& img)
 	{
-	  prepare(is_processed, with, f);
-	  prepare(output, with, f);
-	  prepare(parent, with, f);
+	}
+
+	void init()
+	{
+	  prepare(is_processed, with, this.f);
+	  prepare(output, with, this.f);
+	  prepare(parent, with, this.f);
 	  level::fill(inplace(is_processed), false);
 	}
 
-	void first_pass_body(const point& p, I f)
+	void first_pass_body(const point& p)
 	{
 	  parent(p) = p;
 	  if ( f(p) )
 	  {
-	    oln_niter(I) n(f, p);
+	    oln_niter(I) n(this.f, p);
 	    for_all(n)
 	      {
-		if ( f(n) == true and is_processed(n) )
-		  do_union(f, n, p);
+		if ( this.f(n) == true and is_processed(n) )
+		  do_union(this.f, n, p);
 	      }
 	    is_processed(p) = true;
 	  }
 
 	}
 
-	void second_pass_body(const point& p, I f)
+	void second_pass_body(const point& p)
 	{
 	  unsigned current_label = 0;
-	  if ( f(p) == true and parent(p) == p )
+	  if ( this.f(p) == true and parent(p) == p )
 	    output(p) = ++current_label;
 	  else
 	    output(p) = output(parent(p));
 	}
 
-	void final(I f)
+	void final()
 	{
 	}
 
@@ -129,7 +136,9 @@ namespace oln
     {
       impl::cc_tarjan_<I> f_cc_tarjan(exact(f));
 
-      return f_cc_tarjan.run();
+      f_cc_tarjan.run();
+
+      return f_cc_tarjan.output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

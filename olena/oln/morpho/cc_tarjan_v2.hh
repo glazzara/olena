@@ -29,6 +29,7 @@
 # define OLN_MORPHO_CC_TARJAN_HH
 
 # include <oln/core/concept/image.hh>
+# include <oln/core/internal/f_ch_value.hh>
 
 # include <oln/canvas/two_pass.hh>
 # include <oln/level/fill.hh>
@@ -54,8 +55,10 @@ namespace oln
 	typedef oln_point(I) point;
 
 	oln_plain_value(I, unsigned)  output;
-	oln_plain(I, bool) is_processed;
+	oln_plain_value(I, bool) is_processed;
 	oln_plain_value(I, point) parent;
+
+	cc_tarjan_() {}
 
 	void init(I f)
 	{
@@ -92,6 +95,7 @@ namespace oln
 
 	void final(I f)
 	{
+	  f = f;
 	}
 
 	point find_root(const I& ima,
@@ -106,7 +110,9 @@ namespace oln
 	}
 
 	void do_union(const I& ima,
-		      const point& n)
+		      const point& n,
+		      const point& p)
+
 	{
 	  point r = find_root(ima, n);
 	  if (r != p)
@@ -123,8 +129,8 @@ namespace oln
     oln_plain_value(I, unsigned)
     cc_tarjan(const Image_with_Nbh<I>& f)
     {
-      impl::cc_tarjan_<I> run(exact(f));
-      canvas::v2::two_pass(run, f);
+      impl::cc_tarjan_<I> run;
+      canvas::v2::two_pass(run, exact(f));
       return run.output;
     }
 

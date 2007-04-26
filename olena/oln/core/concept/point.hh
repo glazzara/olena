@@ -30,6 +30,7 @@
 # define OLN_CORE_CONCEPT_POINT_HH
 
 # include <mlc/value.hh>
+# include <xtd/vec.hh>
 
 # include <oln/core/concept/grid.hh>
 # include <oln/core/concept/operators.hh>

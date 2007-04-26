@@ -37,69 +37,69 @@ namespace canvas
   {
     template <template <class> class F,
 	      typename I> // Data owned by f.
-    void two_pass(F<I> f)
+    void two_pass(F<I> fun)
     {
 //      mlc::assert_< mlc_is_a(I, Image) >::check();
 
-      f.init();
+      fun.init();
 
       // first pass
-      oln_bkd_piter(I) p1(f.input.points());
+      oln_bkd_piter(I) p1(fun.f.points());
       for_all(p1)
-	f.first_pass_body(p1);
+	fun.first_pass_body(p1);
 
       // second pass
-      oln_fwd_piter(I) p2(f.input.points());
+      oln_fwd_piter(I) p2(fun.f.points());
       for_all(p2)
-	f.second_pass_body(p2);
+	fun.second_pass_body(p2);
 
-      f.final();
+      fun.final();
     }
   }
 
-  namespace v2 // Data owned by f but not input
+  namespace v2 // Data owned by f but not input.
   {
     template <typename F, typename I>
-    void two_pass(F f, I input)
+    void two_pass(F fun, I f)
     {
 //      mlc::assert_< mlc_is_a(I, Image) >::check();
 
-      f.init(input);
+      fun.init(f);
 
       // first pass
-      oln_bkd_piter(I) p1(input.points());
+      oln_bkd_piter(I) p1(f.points());
       for_all(p1)
-	f.first_pass_body(p1, input);
+	fun.first_pass_body(p1, f);
 
       // second pass
-      oln_fwd_piter(I) p2(input.points());
+      oln_fwd_piter(I) p2(f.points());
       for_all(p2)
-	f.second_pass_body(p2, input);
+	fun.second_pass_body(p2, f);
 
-      f.final(input);
+      fun.final(f);
     }
   }
 
   namespace v3 // Auxiliar data given as argument.
   {
     template <typename F, typename I, typename A>
-    void two_pass(F f, I input, A aux)
+    void two_pass(F fun, I f, A aux)
     {
 //      mlc::assert_< mlc_is_a(I, Image) >::check();
 
-      f.init(input, aux);
+      f.init(f, aux);
 
       // first pass
-      oln_bkd_piter(I) p1(input.points());
+      oln_bkd_piter(I) p1(f.points());
       for_all(p1)
-	f.first_pass_body(p1, input, aux);
+	f.first_pass_body(p1, f, aux);
 
       // second pass
-      oln_fwd_piter(I) p2(input.points());
+      oln_fwd_piter(I) p2(f.points());
       for_all(p2)
-	f.second_pass_body(p2, input, aux);
+	f.second_pass_body(p2, f, aux);
 
-      f.final(input, aux);
+      f.final(f, aux);
     }
   }
 
@@ -108,38 +108,37 @@ namespace canvas
   {
 
     template <typename I>
-    class two_pass
+    struct two_pass
     {
 
-      void init(I input) { }
+      const I&      f;
 
-      void final(I input) { }
+      
 
-      void first_pass_body(const oln_point(I)& p)
+      void init();
+
+      void final();
+
+      void first_pass_body(const oln_point(I)& p);
+
+      void second_pass_body(const oln_point(I)& p);
+
+      void run()
       {
-	assert (0 && "two_pass canvas : procedure 'void first_pass_body(const oln_point(I)& p)' must be defined");
-      }
-
-      void second_pass_body(const oln_point(I)& p)
-      {
-	assert (0 && "two_pass canvas : procedure 'void second_pass_body(const oln_point(I)& p)' must be defined");
-      }
-
-      void run(I input)
-      {
-	init(input);
+	init(f);
 
 	// first pass
-	oln_bkd_piter(I) p1(input.points());
+	oln_bkd_piter(I) p1(f.points());
 	for_all(p1)
-	  first_pass_body(p1, input);
+	  first_pass_body(p1);
 
 	// second pass
-	oln_fwd_piter(I) p2(input.points());
+	oln_fwd_piter(I) p2(f.points());
 	for_all(p2)
-	  second_pass_body(p2, input);
+	  second_pass_body(p2);
 
-	final(input);
+	final(f);
+
       }
 
     };
