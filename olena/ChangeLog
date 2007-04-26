@@ -40,6 +40,33 @@
 	* oln/value/builtin_traits.hh
 	(set_trait_, set_utrait_): New specializations.
 
+2007-04-25  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add fast iterator for image with border in 1d or 2d.
+
+	* olena/tests/core/fiter_point1d_b.cc,
+	* olena/tests/core/fiter_point2d_b.cc: New test.
+	* olena/tests/core/Makefile.am: Update.
+	* olena/oln/core/1d/fast_iterator_1d_b.hh: 
+	 New fast_iterator for image1d_b.
+
+	* olena/oln/core/2d/fast_iterator_2d_b.hh: 
+	New fast_iterator for image1d_b.
+
+	* olena/oln/core/1d/fast_iterator_1d.hh,
+	* olena/oln/core/2d/fast_iterator_2d.hh,
+	* olena/oln/core/3d/fast_iterator_3d.hh: factorizing some codes 
+	* olena/oln/core/1d/image1d_b.hh, 
+	* olena/oln/core/2d/image2d_b.hh: add method to get the
+	array associated with the image.
+
+	* olena/oln/core/1d/image1d.hh,
+	* olena/oln/core/2d/image2d.hh,
+	* olena/oln/core/3d/image3d.hh: Change fiter type.
+	* olena/oln/core/concept/fast_iterator.hh: factorizing some codes.
+	* olena/oln/core/internal/fast_iterator_base.hh: New base class
+	for fast iterator based on image with array.
+
 2007-04-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix cc_tarjan alorithms (4 versions).
