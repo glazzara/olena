@@ -48,6 +48,10 @@
 # define oln_mod_trait(L, R) \
     typename oln::get_trait_<L, oln::mod_id, R>::ret
 
+# define oln_uminus_trait(T) \
+    typename oln::get_utrait_<oln::uminus_id, T>::ret
+
+
 // cmp
 
 # define oln_eq_trait(L, R) \
@@ -55,6 +59,7 @@
 
 # define oln_neq_trait(L, R) \
     typename oln::get_trait_<L, oln::neq_id, R>::ret
+
 
 // ord
 
@@ -70,6 +75,7 @@
 # define oln_greater_trait(L, R) \
     typename oln::get_trait_<L, oln::greater_id, R>::ret
 
+
 // logic
 
 # define oln_and_trait(L, R) \
@@ -80,6 +86,9 @@
 
 # define oln_xor_trait(L, R) \
     typename oln::get_trait_<L, oln::xor_id, R>::ret
+
+# define oln_not_trait(T) \
+    typename oln::get_utrait_<oln::not_id, T>::ret
 
 
 
@@ -111,8 +120,8 @@
 namespace oln
 {
   
-  // set_trait_
 
+  // set_trait_ for binary operators.
 
   template <template <class> class Cl, typename L,
 	    typename Op,
@@ -130,8 +139,33 @@ namespace oln
   template <template <class> class Cl, typename L,
 	    typename Op,
 	    template <class> class Cr, typename R>
-  struct set_trait_ // default is
-    : public set_trait_<Any, L, Op, Any, R>
+  struct set_trait_
+    :  // default is
+    public set_trait_<Any, L, Op, Any, R>
+  {
+  };
+
+
+
+  // set_utrait_ for unary operators.
+
+  template <typename Op,
+	    template <class> class C, typename T>
+  struct set_utrait_;
+
+
+  template <typename Op, typename T>
+  struct set_utrait_<Op, Any, T>
+  {
+    // nothing => do not compile
+  };
+
+
+  template <typename Op,
+	    template <class> class C, typename T>
+  struct set_utrait_
+    :  // default is
+    public set_utrait_<Op, Any, T>
   {
   };
 
@@ -145,6 +179,12 @@ namespace oln
   struct div_id;
   struct mod_id;
 
+  struct uminus_id;
+
+  struct plus_equal_id;
+  struct minus_equal_id;
+  struct modulus_equal_id;
+
   struct eq_id;
   struct neq_id;
 
@@ -156,6 +196,7 @@ namespace oln
   struct and_id;
   struct or_id;
   struct xor_id;
+  struct not_id;
 
 
 
@@ -181,6 +222,10 @@ namespace oln
   oln_internal_specialize_bin_trait_T_(xor);
 
 
+  // Fwd decl.
+  template <typename T> struct value_;
+
+
   namespace internal
   {
 
@@ -196,12 +241,50 @@ namespace oln
     {
       typedef typename oln::set_trait_< Cl, L, Op, Cr, R >::ret ret;
     };
+
+    // get_utrait_cat_
     
+    template <typename Op, typename C, typename T>
+    struct get_utrait_cat__;
+    
+    template < typename Op,
+	       template <class> class C, typename T >
+    struct get_utrait_cat__< Op, stc::is<C>, T >
+    {
+      typedef typename oln::set_utrait_< Op, C, T >::ret ret;
+    };
+
+    // clean_for_trait_
+
+    template <typename T>
+    struct clean_for_trait_
+    {
+      typedef T ret;
+    };
+
+    template <typename T>
+    struct clean_for_trait_< const oln::value_<T>  > { typedef T ret; };
+    template <typename T>
+    struct clean_for_trait_< const oln::value_<T>& > { typedef T ret; };
+    template <typename T>
+    struct clean_for_trait_<       oln::value_<T>& > { typedef T ret; };
+
+    // FIXME: Add clean_for_trait_ for builtins?
+
   } // end of namespace oln::internal
 
 
   template <typename L, typename Op, typename R>
-  struct get_trait_ : public internal::get_trait_cat__< oln_category_of_(L), L, Op, oln_category_of_(R), R >
+  struct get_trait_ : public internal::get_trait_cat__< oln_category_of_(L),
+							typename internal::clean_for_trait_<L>::ret,
+							Op,
+							oln_category_of_(R),
+							typename internal::clean_for_trait_<R>::ret >
+  {
+  };
+
+  template <typename Op, typename T>
+  struct get_utrait_ : public internal::get_utrait_cat__< Op, oln_category_of_(T), T >
   {
   };
 

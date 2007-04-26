@@ -42,9 +42,28 @@ namespace oln
   };
 
   template <typename Op>
+  struct set_trait_< Value, int, Op, Value, double >
+  {
+    typedef double ret;
+  };
+
+  template <typename Op>
   struct set_trait_< Value, float, Op, Value, int >
   {
     typedef float ret;
+  };
+
+
+  template <typename Op>
+  struct set_trait_< Value, bool, Op, Value, bool >
+  {
+    typedef bool ret;
+  };
+
+  template <typename Op>
+  struct set_utrait_< Op, Boolean, bool >
+  {
+    typedef bool ret;
   };
 
   // FIXME: To be continued...

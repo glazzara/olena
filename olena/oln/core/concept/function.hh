@@ -45,28 +45,6 @@ namespace oln
   };
 
 
-  // Point -> Value.
-
-  template <typename Exact>
-  struct Function_p2v : public Function<Exact>
-  {
-    typedef Function_p2v<void> category;
-  protected:
-    Function_p2v();
-  };
-
-
-  // Point -> bool.
-
-  template <typename Exact>
-  struct Function_p2b : public Function<Exact>
-  {
-    typedef Function_p2b<void> category;
-  protected:
-    Function_p2b();
-  };
-
-
   // Value -> Value.
 
   template <typename Exact>
@@ -78,25 +56,47 @@ namespace oln
   };
 
 
-  // Value1 -> Value2  *and*  Value2 -> Value1.
+  // Point -> Value.
 
   template <typename Exact>
-  struct Function_v2w2v : public Function<Exact>
+  struct Function_p2v : public Function_v2v<Exact>
   {
-    typedef Function_v2w2v<void> category;
+    typedef Function_p2v<void> category;
   protected:
-    Function_v2w2v();
+    Function_p2v();
+  };
+
+
+  // Point -> bool.
+
+  template <typename Exact>
+  struct Function_p2b : public Function_p2v<Exact>
+  {
+    typedef Function_p2b<void> category;
+  protected:
+    Function_p2b();
   };
 
 
   // Point -> Point.
 
   template <typename Exact>
-  struct Function_p2p : public Function<Exact>
+  struct Function_p2p : public Function_p2v<Exact>
   {
     typedef Function_p2p<void> category;
   protected:
     Function_p2p();
+  };
+
+
+  // Value1 -> Value2  *and*  Value2 -> Value1.
+
+  template <typename Exact>
+  struct Function_v2w2v : public Function<Exact> // FIXME: public Function_v2v<Exact>?
+  {
+    typedef Function_v2w2v<void> category;
+  protected:
+    Function_v2w2v();
   };
 
 

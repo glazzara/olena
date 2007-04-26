@@ -25,55 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_GEN_LITERAL_HH
-# define OLN_CORE_GEN_LITERAL_HH
+#ifndef OLN_CORE_GEN_CONSTANT_HH
+# define OLN_CORE_GEN_CONSTANT_HH
 
 # include <oln/core/concept/generator.hh>
 # include <oln/core/concept/point.hh>
-# include <oln/core/concept/value.hh>
+# include <oln/core/gen/value.hh>
 
 
 namespace oln
 {
 
-  // -----------------------------  literal_<T>
-
-
-  template <typename T>
-  struct literal_ : public Generator< literal_<T> >
-  {
-    typedef const T& result;
-
-    literal_(const T& val);
-
-    const T& operator()() const;
-
-    operator T() const;
-    
-    template <typename U>
-    operator literal_<U>() const;
-
-    const T& value() const;
-
-  private:
-    T val_;
-  };
-
-
-  template <typename T>
-  literal_<T> literal(const T& val);
-
-
-  // -----------------------------  lit_p2v_<P,T>
-
+  // constant_p2v_<P,T>
 
   template <typename P, typename V>
-  struct lit_p2v_ : public Function_p2v< lit_p2v_<P,V> >
+  struct constant_p2v_ : public Function_p2v< constant_p2v_<P,V> >
   {
     typedef P argument;
     typedef const V& result;
 
-    lit_p2v_(const V& val);
+    constant_p2v_(const V& val);
 
     const V& operator()(const P&) const;
 
@@ -82,16 +53,15 @@ namespace oln
   };
 
 
-  // -----------------------------  lit_p2b_<P,B>
-
+  // constant_p2b_<P,B>
 
   template <typename P, typename B>
-  struct lit_p2b_ : public Function_p2b< lit_p2b_<P,B> >
+  struct constant_p2b_ : public Function_p2b< constant_p2b_<P,B> >
   {
     typedef P argument;
     typedef const B& result;
 
-    lit_p2b_(const B& val);
+    constant_p2b_(const B& val);
 
     const B& operator()(const P&) const;
 
@@ -104,78 +74,33 @@ namespace oln
 
 # ifndef OLN_INCLUDE_ONLY
 
-  // literal_<T>
-
-  template <typename T>
-  literal_<T>::literal_(const T& val)
-    : val_(val)
-  {
-  }
-
-  template <typename T>
-  const T&
-  literal_<T>::operator()() const
-  {
-    return this->val_;
-  }
-
-  template <typename T>
-  literal_<T>::operator T() const
-  {
-    return this->val_;
-  }
-    
-  template <typename T>
-  template <typename U>
-  literal_<T>::operator literal_<U>() const
-  {
-    literal_<U> tmp(this->val_);
-    return tmp;
-  }
-
-  template <typename T>
-  const T&
-  literal_<T>::value() const
-  {
-    return this->val_;
-  }
-
-  template <typename T>
-  literal_<T>
-  literal(const T& val)
-  {
-    literal_<T> tmp(val);
-    return tmp;
-  }
-
-
-  // lit_p2v_<P,V>
+  // constant_p2v_<P,V>
 
   template <typename P, typename V>
-  lit_p2v_<P,V>::lit_p2v_(const V& val)
+  constant_p2v_<P,V>::constant_p2v_(const V& val)
     : val_(val)
   {
   }
 
   template <typename P, typename V>
   const V&
-  lit_p2v_<P,V>::operator()(const P&) const
+  constant_p2v_<P,V>::operator()(const P&) const
   {
     return this->val_;
   }
 
 
-  //lit_p2b_<P,B>
+  //constant_p2b_<P,B>
 
   template <typename P, typename B>
-  lit_p2b_<P,B>::lit_p2b_(const B& val)
+  constant_p2b_<P,B>::constant_p2b_(const B& val)
     : val_(val)
   {
   }
 
   template <typename P, typename B>
   const B&
-  lit_p2b_<P,B>::operator()(const P&) const
+  constant_p2b_<P,B>::operator()(const P&) const
   {
     return this->val_;
   }
@@ -185,4 +110,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_GEN_LITERAL_HH
+#endif // ! OLN_CORE_GEN_CONSTANT_HH

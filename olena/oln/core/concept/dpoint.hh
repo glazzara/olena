@@ -58,24 +58,6 @@ namespace oln
     stc_typename(point);
 
     enum { n = mlc_value(dim) };
-    
-    /// Operator ==.
-    bool op_equal_(const Exact& rhs) const;
-
-    /// Operator <.
-    bool op_less_(const Exact& rhs) const;
-
-    /// Operator +=.
-    Exact& op_plus_equal_(const Exact& rhs);
-
-    /// Operator -=.
-    Exact& op_minus_equal_(const Exact& rhs);
-
-    /// Operator %=.
-    Exact& op_mod_equal_(const Exact& rhs);
-
-    /// Operator -.
-    Exact op_unary_minus_() const;
 
   protected:
     Dpoint();
@@ -83,86 +65,74 @@ namespace oln
   }; // end of oln::Dpoint<Exact>
 
 
-  /// \{
-  /// Operator "Point - Dpoint".
 
-  template <typename P, typename D>
-  struct set_trait_< Point, P, minus_id, Dpoint, D >
-  {
-    typedef P ret;
-  };
+  // Operators on Dpoints.
 
-  template <typename P, typename D>
-  P operator-(const Point<P>& lhs, const Dpoint<D>& rhs);
+  template <typename D1, typename D2>
+  bool operator == (const Dpoint<D1>& lhs, const Dpoint<D2>& rhs);
 
-  /// \}
+  template <typename D1, typename D2>
+  bool operator < (const Dpoint<D1>& lhs, const Dpoint<D2>& rhs);
+
+  template <typename D, typename D2>
+  D& operator += (Dpoint<D>& lhs, const Dpoint<D2>& rhs);
+
+  template <typename D, typename D2>
+  D& operator -= (Dpoint<D>& lhs, const Dpoint<D2>& rhs);
+
+  template <typename D>
+  D operator - (const Dpoint<D>& rhs);
+
+  template <typename D, typename D2>
+  D& operator %= (Dpoint<D>& lhs, const Dpoint<D2>& rhs);
 
 
-  /// \{
-  /// Operator "Point + Dpoint".
+
+  // \{
+  // Traits.
 
   template <typename P, typename D>
   struct set_trait_< Point, P, plus_id, Dpoint, D >
   {
-    typedef P ret;
+    typedef P ret; // FIXME: Wrong! (too restrictive)
   };
 
   template <typename P, typename D>
-  P operator+(const Point<P>& lhs, const Dpoint<D>& rhs);
+  struct set_trait_< Point, P, minus_id, Dpoint, D >
+  {
+    typedef P ret; // FIXME: Wrong! (too restrictive)
+  };
 
-  /// \}
+  // \}
 
 
-  /// \{
-  /// Invalid operators.
+
+  // Operators mixing Generalized_Point and Dpoint.
+
+  template <typename P, typename D>
+  oln_plus_trait(P, D)
+  operator + (const Generalized_Point<P>& lhs, const Dpoint<D>& rhs);
+
+  template <typename P, typename D>
+  oln_minus_trait(P, D)
+  operator - (const Generalized_Point<P>& lhs, const Dpoint<D>& rhs);
+
+
+
+  // \{
+  // Invalid operators.
 
   template <typename D, typename P>
-  void operator-(const Dpoint<D>& lhs, const Point<P>& rhs) /* error */ ;
+  void operator - (const Dpoint<D>& lhs, const Generalized_Point<P>& rhs);
 
   template <typename D, typename P>
-  void operator+(const Dpoint<D>& lhs, const Point<P>& rhs) /* error */ ;
+  void operator + (const Dpoint<D>& lhs, const Generalized_Point<P>& rhs);
 
-  /// \}
+  // \}
+
 
 
 # ifndef OLN_INCLUDE_ONLY
-
-
-  template <typename Exact>
-  bool Dpoint<Exact>::op_equal_(const Exact& rhs) const
-  {
-    return exact(this)->impl_op_equal_(rhs);
-  }
-
-  template <typename Exact>
-  bool Dpoint<Exact>::op_less_(const Exact& rhs) const
-  {
-    return exact(this)->impl_op_less_(rhs);
-  }
-
-  template <typename Exact>
-  Exact& Dpoint<Exact>::op_plus_equal_(const Exact& rhs)
-  {
-    return exact(this)->impl_op_plus_equal_(rhs);
-  }
-
-  template <typename Exact>
-  Exact& Dpoint<Exact>::op_minus_equal_(const Exact& rhs)
-  {
-    return exact(this)->impl_op_minus_equal_(rhs);
-  }
-
-  template <typename Exact>
-  Exact& Dpoint<Exact>::op_mod_equal_(const Exact& rhs)
-  {
-    return exact(this)->impl_op_mod_equal_(rhs);
-  }
-
-  template <typename Exact>
-  Exact Dpoint<Exact>::op_unary_minus_() const
-  {
-    return exact(this)->impl_op_unary_minus_();
-  }
 
   template <typename Exact>
   Dpoint<Exact>::Dpoint()
@@ -175,27 +145,104 @@ namespace oln
   }
 
 
-  /// \{
-  /// Operators.
+  // Operators on Dpoints.
 
-  template <typename P, typename D>
-  P operator-(const Point<P>& lhs, const Dpoint<D>& rhs)
+  template <typename D1, typename D2>
+  bool operator == (const Dpoint<D1>& lhs, const Dpoint<D2>& rhs)
   {
-    P tmp = exact(lhs);
-    return tmp -= rhs;
+    return exact(lhs).vec() == exact(rhs).vec();
+  }
+
+  template <typename D1, typename D2>
+  bool operator < (const Dpoint<D1>& lhs, const Dpoint<D2>& rhs)
+  {
+    return exact(lhs).vec() < exact(rhs).vec();
+  }
+
+  template <typename D, typename D2>
+  D& operator += (Dpoint<D>& lhs, const Dpoint<D2>& rhs)
+  {
+    exact(lhs).vec() += exact(rhs).vec();
+    return exact(lhs);
+  }
+
+  template <typename D, typename D2>
+  D& operator -= (Dpoint<D>& lhs, const Dpoint<D2>& rhs)
+  {
+    exact(lhs).vec() -= exact(rhs).vec();
+    return exact(lhs);
+  }
+
+  template <typename D>
+  D operator - (const Dpoint<D>& rhs)
+  {
+    D tmp;
+    tmp.vec() = - exact(rhs).vec();
+    return tmp;
+  }
+
+  template <typename D, typename D2>
+  D& operator %= (Dpoint<D>& lhs, const Dpoint<D2>& rhs)
+  {
+    exact(lhs).vec() %= exact(rhs).vec();
+    return exact(lhs);
+  }
+
+
+  // Operators mixing Generalized_Point and Dpoint.
+
+  template <typename P, typename D>  // from oln/core/concept/point.hh
+  P& operator += (Generalized_Point<P>& lhs, const Dpoint<D>& rhs)
+  {
+    exact(lhs).vec() += exact(rhs).vec();
+    return exact(lhs);
+  }
+
+  template <typename P, typename D>  // from oln/core/concept/point.hh
+  P& operator -= (Generalized_Point<P>& lhs, const Dpoint<D>& rhs)
+  {
+    exact(lhs).vec() -= exact(rhs).vec();
+    return exact(lhs);
   }
 
   template <typename P, typename D>
-  P operator+(const Point<P>& lhs, const Dpoint<D>& rhs)
+  oln_plus_trait(P, D)
+  operator + (const Generalized_Point<P>& lhs, const Dpoint<D>& rhs)
   {
-    P tmp = exact(lhs);
-    return tmp += rhs;
+    oln_plus_trait(P, D) tmp;
+    tmp.vec() = exact(lhs).vec() + exact(rhs).vec();
+    return tmp;
   }
 
-  /// \}
+  template <typename P, typename D>
+  oln_minus_trait(P, D)
+  operator - (const Generalized_Point<P>& lhs, const Dpoint<D>& rhs)
+  {
+    oln_minus_trait(P, D) tmp;
+    tmp.vec() = exact(lhs).vec() - exact(rhs).vec();
+    return tmp;
+  }
+
+
+  // Invalid operators.
+
+  template <typename D, typename P>
+  void operator + (const Dpoint<D>& lhs, const Generalized_Point<P>& rhs)
+  {
+    mlc::abort_<D,
+      ERROR::operator_< plus_id >::template _is_invalid_for_types_<D, P>
+      >::check();
+  }
+
+  template <typename D, typename P>
+  void operator - (const Dpoint<D>& lhs, const Generalized_Point<P>& rhs)
+  {
+    mlc::abort_<D,
+      ERROR::operator_< minus_id >::template _is_invalid_for_types_<D, P>
+      >::check();
+  }
 
 # endif // ! OLN_INCLUDE_ONLY
-
 
 } // end of namespace oln
 

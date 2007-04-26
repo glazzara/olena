@@ -29,106 +29,171 @@
 # define OLN_CORE_GEN_FUN_OPS_HH
 
 # include <oln/core/gen/fun.hh>
-# include <oln/core/gen/literal.hh>
+# include <oln/core/gen/constant.hh>
 
 
 
-# define oln_decl_p2v_cmp_(Name, Sym)							\
+# define oln_decl_binary_fun_(Kind, Name, Sym)					\
+										\
+  template <typename L, typename R>						\
+  struct Kind##_##Name##_ : public Function_##Kind< Kind##_##Name##_<L,R> >	\
+  {										\
+    typedef oln_argument(L) argument;						\
+    typedef oln_##Name##_trait(oln_result(L), oln_result(R)) result;		\
+										\
+    Kind##_##Name##_(const L& left, const R& right)				\
+      : left_(left),								\
+	right_(right)								\
+    {										\
+    }										\
+										\
+    result operator()(argument arg) const					\
+    {										\
+      return this->left_(arg) Sym this->right_(arg);				\
+    }										\
+										\
+  private:									\
+    L left_;									\
+    R right_;									\
+  };										\
+										\
+  struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
+
+
+
+
+# define oln_decl_unary_fun_(Kind, Name, Sym)					\
+										\
+  template <typename T>								\
+  struct Kind##_##Name##_ : public Function_##Kind< Kind##_##Name##_<T> >	\
+  {										\
+    typedef oln_argument(T) argument;						\
+    typedef oln_##Name##_trait(oln_result(T)) result;				\
+										\
+    Kind##_##Name##_(const T& oper)						\
+      : oper_(oper)								\
+    {										\
+    }										\
+										\
+    result operator()(argument arg) const					\
+    {										\
+      return Sym this->oper_(arg);						\
+    }										\
+										\
+  private:									\
+    T oper_;									\
+  };										\
+										\
+  struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
+
+
+
+
+# define oln_decl_binary_op_(IKind, Name, Sym, OKind)					\
+											\
+											\
+  oln_decl_binary_fun_(OKind, Name, Sym);						\
+											\
 											\
   template <typename L, typename R>							\
-  struct p2v_##Name##_ : public Function_p2b< p2v_##Name##_<L,R> >			\
+  struct set_trait_< Function_##IKind, L, Name##_id, Function_##IKind, R >		\
   {											\
-    typedef oln_arg_of_(L) argument;							\
-    typedef bool result;  /* FIXME: trait! */						\
-											\
-    p2v_##Name##_(const Function_p2v<L>& left, const Function_p2v<R>& right)		\
-      : left_(exact(left)),								\
-	right_(exact(right))								\
-    {											\
-    }											\
-    bool operator()(argument arg) const							\
-    {											\
-      return this->left_(arg) Sym this->right_(arg);					\
-    }											\
-  private:										\
-    L left_;										\
-    R right_;										\
+    typedef OKind##_##Name##_<L, R> ret;						\
   };											\
 											\
   template <typename L, typename R>							\
-  p2v_##Name##_<L,R>									\
-  operator Sym (const Function_p2v<L>& left, const Function_p2v<R>& right)		\
+  oln_##Name##_trait(L, R)								\
+  operator Sym (const Function_##IKind<L>& left, const Function_##IKind<R>& right)	\
   {											\
     mlc::assert_< mlc_is_a(oln_argument(L), Point) >::check();				\
     mlc::assert_< mlc_is_a(oln_argument(R), Point) >::check();				\
     mlc::assert_equal_< oln_argument(L), oln_argument(R) >::check();			\
-    p2v_##Name##_<L,R> tmp(left, right);						\
+    oln_##Name##_trait(L, R) tmp(exact(left), exact(right));				\
     return tmp;										\
   }											\
+											\
 											\
   template <typename L, typename R>							\
-  p2v_##Name##_<L, lit_p2v_<oln_argument(L), R> >					\
-  operator Sym (const Function_p2v<L>& left, const literal_<R>& right)			\
+  struct set_trait_< Function_##IKind, L, Name##_id, Value, R >				\
+  {											\
+    typedef OKind##_##Name##_<L, constant_##IKind##_<oln_argument(L), R> > ret;		\
+  };											\
+											\
+  template <typename L, typename R>							\
+  oln_##Name##_trait(L, value_<R>)							\
+  operator Sym (const Function_##IKind<L>& left, const value_<R>& right)		\
   {											\
     mlc::assert_< mlc_is_a(oln_argument(L), Point) >::check();				\
-    lit_p2v_<oln_argument(L), R> right_(right.value());					\
-    p2v_##Name##_<L, lit_p2v_<oln_argument(L), R> > tmp(left, right_);			\
+    oln_##Name##_trait(L, value_<R>) tmp(exact(left), make_value(right));		\
     return tmp;										\
   }											\
 											\
-  template <typename L>									\
-  p2v_##Name##_<L, lit_p2v_<oln_argument(L), oln_result(L)> >				\
-  operator Sym (const Function_p2v<L>& left, const oln_result(L)& right)		\
+											\
+  template <typename L, typename R>							\
+  struct set_trait_< Value, L, Name##_id, Function_##IKind, R  >			\
   {											\
-    mlc::assert_< mlc_is_a(oln_argument(L), Point) >::check();				\
-    lit_p2v_<oln_argument(L), oln_result(L)> right_(right);				\
-    p2v_##Name##_<L, lit_p2v_<oln_argument(L), oln_result(L)> > tmp(left, right_);	\
+    typedef OKind##_##Name##_<constant_##IKind##_<oln_argument(R), L>, R> ret;		\
+  };											\
+											\
+  template <typename L, typename R>							\
+  oln_##Name##_trait(value_<L>, R)							\
+  operator Sym (const value_<L>& left, const Function_##IKind<R>& right)		\
+  {											\
+    mlc::assert_< mlc_is_a(oln_argument(R), Point) >::check();				\
+    oln_##Name##_trait(value_<L>, R) tmp(make_value(left), exact(right));		\
     return tmp;										\
   }											\
+											\
 											\
   struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
 
 
 
-# define oln_decl_p2v_arith_(Name, Sym)						\
+
+
+# define oln_decl_unary_op_(IKind, Name, Sym, OKind)	\
+							\
+							\
+  oln_decl_unary_fun_(OKind, Name, Sym);		\
+							\
+							\
+  template <typename T>					\
+  struct set_utrait_< Name##_id, Function_##IKind, T >	\
+  {							\
+    typedef OKind##_##Name##_<T> ret;			\
+  };							\
+							\
+  template <typename T>					\
+  oln_##Name##_trait(T)					\
+  operator Sym (const Function_##IKind<T>& oper)	\
+  {							\
+    oln_##Name##_trait(T) tmp(exact(oper));		\
+    return tmp;						\
+  }							\
+							\
+							\
+  struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
+
+
+
+
+# define oln_decl_builtin_op_(IKind, Name, Sym, Builtin)			\
 										\
-  template <typename L, typename R>						\
-  struct p2v_##Name##_ : public Function_p2v< p2v_##Name##_<L,R> >		\
-  {										\
-    typedef oln_arg_of_(L) argument;						\
-    typedef oln_res_of_(L) result; /* FIXME: trait! */				\
-										\
-    p2v_##Name##_(const Function_p2v<L>& left, const Function_p2v<R>& right)	\
-      : left_(exact(left)),							\
-	right_(exact(right))							\
-    {										\
-    }										\
-    result operator()(argument arg) const					\
-    {										\
-      return this->left_(arg) Sym this->right_(arg);				\
-    }										\
-  private:									\
-    L left_;									\
-    R right_;									\
-  };										\
-										\
-  template <typename L, typename R>						\
-  p2v_##Name##_<L,R>								\
-  operator Sym (const Function_p2v<L>& left, const Function_p2v<R>& right)	\
+  template <typename L>								\
+  oln_##Name##_trait(L, value_<Builtin>)					\
+  operator Sym (const Function_##IKind<L>& left, const Builtin& right)		\
   {										\
     mlc::assert_< mlc_is_a(oln_argument(L), Point) >::check();			\
+    oln_##Name##_trait(L, value_<Builtin>) tmp(exact(left), make_value(right));	\
+    return tmp;									\
+  }										\
+										\
+  template <typename R>								\
+  oln_##Name##_trait(value_<Builtin>, R)					\
+  operator Sym (const Builtin& left, const Function_##IKind<R>& right)		\
+  {										\
     mlc::assert_< mlc_is_a(oln_argument(R), Point) >::check();			\
-    p2v_##Name##_<L,R> tmp(left, right);					\
-    return tmp;									\
-  }										\
-										\
-  template <typename L, typename R>						\
-  p2v_##Name##_<L, lit_p2v_<oln_argument(L), R> >				\
-  operator Sym (const Function_p2v<L>& left, const literal_<R>& right)		\
-  {										\
-    mlc::assert_< mlc_is_a(oln_argument(L), Point) >::check();			\
-    lit_p2v_<oln_argument(L), R> right_(right.value());				\
-    p2v_##Name##_<L, lit_p2v_<oln_argument(L), R> > tmp(left, right_);		\
+    oln_##Name##_trait(value_<Builtin>, R) tmp(make_value(left), exact(right));	\
     return tmp;									\
   }										\
 										\
@@ -136,113 +201,15 @@
 
 
 
-# define oln_decl_p2v_un_(Name, Sym)					\
-									\
-  template <typename T>							\
-  struct p2v_##Name##_ : public Function_p2v< p2v_##Name##_<T> >	\
-  {									\
-    typedef oln_arg_of_(T) argument;					\
-    typedef oln_res_of_(T) result;  /* FIXME: trait! */			\
-									\
-    p2v_##Name##_(const Function_p2v<T>& oper)				\
-      : oper_(exact(oper))						\
-    {									\
-    }									\
-    result operator()(argument arg) const				\
-    {									\
-      return Sym this->oper_(arg);					\
-    }									\
-  private:								\
-    T oper_;								\
-  };									\
-									\
-  template <typename T>							\
-  p2v_##Name##_<T>							\
-  operator Sym (const Function_p2v<T>& oper)				\
-  {									\
-    p2v_##Name##_<T> tmp(oper);						\
-    return tmp;								\
-  }									\
-									\
-  struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
-
-
-
-# define oln_decl_p2b_bin_(Name, Sym)						\
-										\
-  template <typename L, typename R>						\
-  struct p2b_##Name##_ : public Function_p2b< p2b_##Name##_<L,R> >		\
-  {										\
-    typedef oln_arg_of_(L) argument;						\
-    typedef oln_res_of_(L) result;						\
-										\
-    p2b_##Name##_(const Function_p2b<L>& left, const Function_p2b<R>& right)	\
-      : left_(exact(left)),							\
-	right_(exact(right))							\
-    {										\
-    }										\
-    result operator()(argument arg) const					\
-    {										\
-      return this->left_(arg) Sym this->right_(arg);				\
-    }										\
-  private:									\
-    L left_;									\
-    R right_;									\
-  };										\
-										\
-  template <typename L, typename R>						\
-  p2b_##Name##_<L,R>								\
-  operator Sym (const Function_p2b<L>& left, const Function_p2b<R>& right)	\
-  {										\
-    mlc::assert_< mlc_is_a(oln_argument(L), Point) >::check();			\
-    mlc::assert_< mlc_is_a(oln_argument(R), Point) >::check();			\
-    p2b_##Name##_<L,R> tmp(left, right);					\
-    return tmp;									\
-  }										\
-										\
-  template <typename L, typename R>						\
-  p2b_##Name##_<L, lit_p2b_<oln_argument(L), R> >				\
-  operator Sym (const Function_p2b<L>& left, const literal_<R>& right)		\
-  {										\
-    mlc::assert_< mlc_is_a(oln_argument(L), Point) >::check();			\
-    lit_p2b_<oln_argument(L), R> right_(right.value());				\
-    p2b_##Name##_<L, lit_p2b_<oln_argument(L), R> > tmp(left, right_);		\
-    return tmp;									\
-  }										\
-										\
-  struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
-
-
-
-
-# define oln_decl_p2b_un_(Name, Sym)					\
-									\
-  template <typename T>							\
-  struct p2b_##Name##_ : public Function_p2b< p2b_##Name##_<T> >	\
-  {									\
-    typedef oln_arg_of_(T) argument;					\
-    typedef oln_res_of_(T) result; /* FIXME: trait! */			\
-									\
-    p2b_##Name##_(const Function_p2b<T>& oper)				\
-      : oper_(exact(oper))						\
-    {									\
-    }									\
-    result operator()(argument arg) const				\
-    {									\
-      return Sym this->oper_(arg);					\
-    }									\
-  private:								\
-    T oper_;								\
-  };									\
-									\
-  template <typename T>							\
-  p2b_##Name##_<T>							\
-  operator Sym (const Function_p2b<T>& oper)				\
-  {									\
-    p2b_##Name##_<T> tmp(oper);						\
-    return tmp;								\
-  }									\
-									\
+# define oln_decl_binary_op_p2v_(Name, Sym, OKind)	\
+							\
+  oln_decl_binary_op_( p2v, Name, Sym, OKind );		\
+							\
+  oln_decl_builtin_op_( p2v, Name, Sym, unsigned );	\
+  oln_decl_builtin_op_( p2v, Name, Sym, int );		\
+  oln_decl_builtin_op_( p2v, Name, Sym, float );	\
+  oln_decl_builtin_op_( p2v, Name, Sym, double );	\
+							\
   struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
 
 
@@ -250,30 +217,36 @@
 namespace oln
 {
 
-  oln_decl_p2v_cmp_( eq,      == );
-  oln_decl_p2v_cmp_( not_eq,  != );
-  oln_decl_p2v_cmp_( less,    <  );
-  oln_decl_p2v_cmp_( leq,     <= );
-  oln_decl_p2v_cmp_( greater, >  );
-  oln_decl_p2v_cmp_( geq,     >= );
+  //                input              output
+  //                 vvv                vvv
 
-  oln_decl_p2v_arith_( plus,  + );
-  oln_decl_p2v_arith_( minus, - );
-  oln_decl_p2v_arith_( times, * );
-  oln_decl_p2v_arith_( div,   / );
-  oln_decl_p2v_arith_( mod,   % );
+  oln_decl_binary_op_p2v_( eq,      ==, p2b );
+  oln_decl_binary_op_p2v_( neq,     !=, p2b );
 
-  oln_decl_p2v_un_( uminus, - );
+  oln_decl_binary_op_p2v_( less,    < , p2b );
+  oln_decl_binary_op_p2v_( leq,     <=, p2b );
+  oln_decl_binary_op_p2v_( greater, > , p2b );
+  oln_decl_binary_op_p2v_( geq,     >=, p2b );
 
-  oln_decl_p2b_bin_( and, && );
-  oln_decl_p2b_bin_(  or, || );
-  oln_decl_p2b_bin_( xor, ^ );
-  // FIXME: nand, nor, xnor?
+  oln_decl_binary_op_p2v_( plus,    +,  p2v );
+  oln_decl_binary_op_p2v_( minus,   -,  p2v );
+  oln_decl_binary_op_p2v_( times,   *,  p2v );
+  oln_decl_binary_op_p2v_( div,     /,  p2v );
+  oln_decl_binary_op_p2v_( mod,     %,  p2v );
 
-  oln_decl_p2b_un_( not, ! );
+  oln_decl_unary_op_( p2v, uminus,  -,  p2v );
+
+  oln_decl_binary_op_( p2b, and,    &&, p2b );
+  oln_decl_binary_op_( p2b, or,     ||, p2b );
+  oln_decl_binary_op_( p2b, xor,     ^, p2b );
+
+  oln_decl_unary_op_(  p2b, not,     !, p2b );
 
 
 } // end of namespace oln
+
+
+  // FIXME: nand, nor, xnor?
 
 
 #endif // ! OLN_CORE_GEN_FUN_OPS_HH

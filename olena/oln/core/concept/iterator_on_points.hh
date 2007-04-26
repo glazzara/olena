@@ -73,6 +73,37 @@ namespace oln
   } // end of namespace oln::internal
 
 
+
+  // \{
+  // Operator - traits.
+
+  template <typename P, typename It>
+  struct set_trait_< Point, P, minus_id, Iterator_on_Points, It >
+  {
+    typedef oln_point(It) Pit;
+    typedef oln_minus_trait(P, Pit) ret;
+  };
+
+  template <typename It, typename P>
+  struct set_trait_< Iterator_on_Points, It, minus_id, Point, P >
+  {
+    typedef oln_point(It) Pit;
+    typedef oln_minus_trait(Pit, P) ret;
+  };
+
+  template <typename It1, typename It2>
+  struct set_trait_< Iterator_on_Points, It1, minus_id, Iterator_on_Points, It2 >
+  {
+    typedef oln_point(It1) Pit1;
+    typedef oln_point(It2) Pit2;
+    typedef oln_minus_trait(Pit1, Pit2) ret;
+  };
+
+  // \}
+
+
+
+
 # ifndef OLN_INCLUDE_ONLY
 
   template <typename Exact>

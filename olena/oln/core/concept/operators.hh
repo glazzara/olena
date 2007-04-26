@@ -30,165 +30,212 @@
 
 # include <oln/core/equipment.hh>
 # include <oln/core/gen/traits.hh>
+# include <oln/core/gen/value.hh>
 
 
 namespace oln
 {
 
-  /// Operator == (default version).
-  template <typename L, typename R>
-  bool operator==(const Any<L>& lhs, const Any<R>& rhs);
 
-  /// Operator != (default version).
-  template <typename L, typename R>
-  bool operator!=(const Any<L>& lhs, const Any<R>& rhs);
+  // Default versions for some operators.
 
-  /// Operator <  (default version).
   template <typename L, typename R>
-  bool operator< (const Any<L>& lhs, const Any<R>& rhs);
+  bool
+  operator != (const Any<L>& lhs, const Any<R>& rhs); // Using "==".
 
-  /// Operator >  (default version).
   template <typename L, typename R>
-  bool operator> (const Any<L>& lhs, const Any<R>& rhs);
+  bool
+  operator > (const Any<L>& lhs, const Any<R>& rhs); // Using "<".
 
-  /// Operator >= (default version).
   template <typename L, typename R>
-  bool operator>=(const Any<L>& lhs, const Any<R>& rhs);
+  bool
+  operator <= (const Any<L>& lhs, const Any<R>& rhs); // Using "<".
 
-  /// Operator <= (default version).
   template <typename L, typename R>
-  bool operator<=(const Any<L>& lhs, const Any<R>& rhs);
+  bool
+  operator >= (const Any<L>& lhs, const Any<R>& rhs); // Using "<=".
 
-  /// Operator += (default version).
-  template <typename L, typename R>
-  L& operator+=(Any<L>& lhs, const Any<R>& rhs);
-
-  /// Operator +  (default version).
   template <typename T>
-  T operator+ (const Any<T>& lhs, const Any<T>& rhs);
+  T
+  operator + (const Any<T>& lhs, const Any<T>& rhs); // Using "+=".
 
-  /// Operator %= (default version).
+  template <typename T>
+  T
+  operator - (const Any<T>& lhs, const Any<T>& rhs); // Using "+=".
+
+  template <typename T>
+  T
+  operator % (const Any<T>& lhs, const Any<T>& rhs); // Using "%=".
+
+
+
+
+
+  // FIXME: Add: template <typename T> T operator - (const Any<T>& rhs);
+
+
+
+
+  namespace ERROR
+  {
+
+    template <typename Op>
+    struct operator_
+    {
+      // unary
+      template <typename T> struct _is_missing_for_;
+      template <typename T> struct _is_invalid_for_;
+      // binary
+      template <typename L, typename R> struct _is_missing_for_types_;
+      template <typename L, typename R> struct _is_invalid_for_types_;
+    };
+
+  } // end of namespace oln::ERROR
+
+
+
+  //  Guards.
+  // ----------------
+
+  // Operator ==.
   template <typename L, typename R>
-  L& operator%=(Any<L>& lhs, const Any<R>& rhs);
+  void operator == (const Any<L>& lhs, const Any<R>& rhs);
 
-  /// Operator %  (default version).
-  template <typename T>
-  T operator% (const Any<T>& lhs, const Any<T>& rhs);
-
-  /// Operator -= (default version).
+  // Operator <.
   template <typename L, typename R>
-  L& operator-=(Any<L>& lhs, const Any<R>& rhs);
+  void operator < (const Any<L>& lhs, const Any<R>& rhs);
 
-  /// Operator -  (default version).
+  // Operator -.
   template <typename T>
-  T operator- (const Any<T>& lhs, const Any<T>& rhs);
-  
-  /// Operator -  (default version).
-  template <typename T>
-  T operator- (const Any<T>& rhs);
+  void operator - (const Any<T>& rhs);
+
+  // Operator +=.
+  template <typename L, typename R>
+  void operator += (const Any<L>& lhs, const Any<R>& rhs);
+
+  // Operator -=.
+  template <typename L, typename R>
+  void operator -= (const Any<L>& lhs, const Any<R>& rhs);
+
+  // Operator %=.
+  template <typename L, typename R>
+  void operator %= (const Any<L>& lhs, const Any<R>& rhs);
+
+  // ----------------
+  //  end of Guards.
+
 
 
 
 # ifndef OLN_INCLUDE_ONLY
-
-  template <typename L, typename R>
-  bool operator==(const Any<L>& lhs, const Any<R>& rhs)
-  {
-    return exact(lhs).op_equal_(exact(rhs));
-  }
  
   template <typename L, typename R>
-  bool operator!=(const Any<L>& lhs, const Any<R>& rhs)
+  bool operator != (const Any<L>& lhs, const Any<R>& rhs)
   {
     return not (exact(lhs) == exact(rhs));
   }
 
   template <typename L, typename R>
-  bool operator< (const Any<L>& lhs, const Any<R>& rhs)
-  {
-    return exact(lhs).op_less_(exact(rhs));
-  }
-
-  template <typename L, typename R>
-  bool operator> (const Any<L>& lhs, const Any<R>& rhs)
+  bool operator > (const Any<L>& lhs, const Any<R>& rhs)
   {
     return exact(rhs) < exact(lhs); // use "operator <"
   }
 
   template <typename L, typename R>
-  bool operator<=(const Any<L>& lhs, const Any<R>& rhs)
+  bool operator <= (const Any<L>& lhs, const Any<R>& rhs)
   {
     return not (exact(rhs) < exact(lhs)); // use "operator <" and "not"
   }
 
   template <typename L, typename R>
-  bool operator>=(const Any<L>& lhs, const Any<R>& rhs)
+  bool operator >= (const Any<L>& lhs, const Any<R>& rhs)
   {
     return exact(rhs) <= exact(lhs); // use "operator <="
   }
 
-  template <typename L, typename R>
-  L& operator+=(Any<L>& lhs, const Any<R>& rhs)
-  {
-    return exact(lhs).op_plus_equal_(exact(rhs));
-  }
-
   template <typename T>
-  T operator+ (const Any<T>& lhs, const Any<T>& rhs)
+  T operator + (const Any<T>& lhs, const Any<T>& rhs)
   {
     T tmp = exact(lhs);
     return tmp += exact(rhs);
   }
 
   template <typename T>
-  T operator- (const Any<T>& lhs, const Any<T>& rhs)
+  T operator - (const Any<T>& lhs, const Any<T>& rhs)
   {
     T tmp = exact(lhs);
     return tmp -= exact(rhs);
   }
 
-  template <typename L, typename R>
-  L& operator%=(Any<L>& lhs, const Any<R>& rhs)
-  {
-    return exact(lhs).op_mod_equal_(exact(rhs));
-  }
-
   template <typename T>
-  T operator% (const Any<T>& lhs, const Any<T>& rhs)
+  T operator % (const Any<T>& lhs, const Any<T>& rhs)
   {
     T tmp = exact(lhs);
     return tmp %= exact(rhs);
   }
 
+
+
+  //  Guards.
+  // ----------------
+
+  // Operator ==.
   template <typename L, typename R>
-  L& operator-=(Any<L>& lhs, const Any<R>& rhs)
+  void operator == (const Any<L>& lhs, const Any<R>& rhs)
   {
-    return exact(lhs).op_minus_equal_(exact(rhs));
+    mlc::abort_<L,
+      ERROR::operator_< eq_id >::template _is_missing_for_types_<L, R>
+      >::check();
   }
 
+  // Operator <.
+  template <typename L, typename R>
+  void operator < (const Any<L>& lhs, const Any<R>& rhs)
+  {
+    mlc::abort_<L,
+      ERROR::operator_< less_id >::template _is_missing_for_types_<L, R>
+      >::check();
+  }
+
+  // Operator +=.
+  template <typename L, typename R>
+  void operator += (const Any<L>& lhs, const Any<R>& rhs)
+  {
+    mlc::abort_<L,
+      ERROR::operator_< plus_equal_id >::template _is_missing_for_types_<L, R>
+      >::check();
+  }
+
+  // Operator -=.
+  template <typename L, typename R>
+  void operator -= (const Any<L>& lhs, const Any<R>& rhs)
+  {
+    mlc::abort_<L,
+      ERROR::operator_< minus_equal_id >::template _is_missing_for_types_<L, R>
+      >::check();
+  }
+
+  // Operator %=.
+  template <typename L, typename R>
+  void operator %= (const Any<L>& lhs, const Any<R>& rhs)
+  {
+    mlc::abort_<L,
+      ERROR::operator_< modulus_equal_id >::template _is_missing_for_types_<L, R>
+      >::check();
+  }
+
+  // Operator -.
   template <typename T>
-  T operator- (const Any<T>& rhs)
+  void operator - (const Any<T>& rhs)
   {
-    return exact(rhs).op_unary_minus_();
+    mlc::abort_<T,
+      ERROR::operator_< uminus_id >::template _is_missing_for_<T>
+      >::check();
   }
 
-  /*
+  // ----------------
+  //  end of Guards.
 
-  FIXME: Activate?
-
-  template <typename L, typename R>
-  xtd_op_plus_trait(L, R) operator+ (const Any<L>& lhs, const Any<R>& rhs)
-  {
-    return exact(lhs).op_plus_(exact(rhs));
-  }
-
-  template <typename L, typename R>
-  xtd_op_minus_trait(L, R) operator- (const Any<L>& lhs, const Any<R>& rhs)
-  {
-    return exact(lhs).op_minus_(exact(rhs));
-  }
-
-  */
 
 # endif // ! OLN_INCLUDE_ONLY
 

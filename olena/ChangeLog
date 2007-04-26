@@ -1,3 +1,45 @@
+2007-04-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Better oln operators mechanism.
+
+	* oln/core/gen/literal.hh: Rename as...
+	* oln/core/gen/constant.hh: ...this.
+	(lit_p2v_, lit_p2b_): Rename as...
+	(constant_p2v_, constant_p2b_): ...these.
+	(literal_): Remove.
+	* oln/core/gen/value.hh: New.
+	* oln/core/gen/traits.hh
+	(oln_not_trait, not_id),
+	(set_utrait_, get_utrait_),
+	(uminus_id, plus_equal_id, minus_equal_id, modulus_equal_id):
+	New.
+	* oln/core/gen/fun_ops.hh
+	(oln_decl_p2v_cmp_),
+	(oln_decl_p2v_arith_),
+	(oln_decl_p2b_bin_): Merge into...
+	(oln_decl_binary_fun_): ...this new macro.
+	(oln_decl_p2v_un_),
+	(oln_decl_p2b_un_): Merge into...
+	(oln_decl_unary_fun_): ...this new macro.
+	(oln_decl_binary_op_),
+	(oln_decl_binary_op_p2v_),
+	(oln_decl_builtin_op_),
+	(oln_decl_unary_op_): New.
+	* oln/core/concept/iterator_on_points.hh (set_trait_): New.
+	* oln/core/concept/function.hh
+	(Function_p2v): Change inheritance to Function_v2v.
+	(Function_p2b): Change inheritance to Function_p2v.
+	(Function_p2p): Change inheritance to Function_p2v.
+	(Function_v2w2v): New commentary.
+	* oln/core/concept/point.hh
+	(op_equal_, op_less_, op_plus_equal_): Remove.
+	(op_minus_equal_, op_minus_): Remove.
+	(operator): New.
+	* oln/core/concept/dpoint.hh: Likewise.
+	* oln/core/concept/operators.hh: Rewrite.
+	* oln/value/builtin_traits.hh
+	(set_trait_, set_utrait_): New specializations.
+
 2007-04-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix cc_tarjan alorithms (4 versions).
