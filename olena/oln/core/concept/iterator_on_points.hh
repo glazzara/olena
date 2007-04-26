@@ -99,6 +99,22 @@ namespace oln
     typedef oln_minus_trait(Pit1, Pit2) ret;
   };
 
+  template <typename Exact> struct Dpoint; // Fwd decl.
+
+  template <typename It, typename D>
+  struct set_trait_< Iterator_on_Points, It, plus_id, Dpoint, D >
+  {
+    typedef oln_point(It) P;
+    typedef oln_plus_trait(P, D) ret;
+  };
+
+  template <typename It, typename D>
+  struct set_trait_< Iterator_on_Points, It, minus_id, Dpoint, D >
+  {
+    typedef oln_point(It) P;
+    typedef oln_minus_trait(P, D) ret;
+  };
+
   // \}
 
 

@@ -42,6 +42,12 @@ namespace oln
   };
 
   template <typename Op>
+  struct set_trait_< Value, double, Op, Value, double >
+  {
+    typedef double ret;
+  };
+
+  template <typename Op>
   struct set_trait_< Value, int, Op, Value, double >
   {
     typedef double ret;

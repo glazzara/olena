@@ -25,64 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_EXTERNAL_GRADIENT_HH
-# define OLN_MORPHO_EXTERNAL_GRADIENT_HH
+#ifndef OLN_CONVERT_TO_DPOINT_HH
+# define OLN_CONVERT_TO_DPOINT_HH
 
-# include <oln/core/gen/zero.hh>
-# include <oln/morpho/elementary_dilation.hh>
-# include <oln/arith/minus.hh>
+# include <oln/core/concept/point.hh>
 
 
 namespace oln
 {
 
-  namespace morpho
+  namespace convert
   {
 
     // Fwd decl.
 
-    template <typename I>
-    oln_plain(I)
-    elementary_gradient_external(const Image_with_Nbh<I>& input);
+    template <typename P>
+    oln_dpoint(P)
+    to_dpoint(const Generalized_Point<P>& p);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
+    // Generic version.
+
+    template <typename P>
+    oln_dpoint(P)
+    to_dpoint(const Generalized_Point<P>& p)
     {
-
-      // Generic version.
-
-      template <typename I>
-      oln_plain(I)
-      elementary_gradient_external_(const Image_with_Nbh<I>& input)
-      {
-	oln_plain(I) dil = elementary_dilation(input);
-	return arith::minus<oln_value(I)>(dil, input);
-      }
-
-
-      // FIXME: Add a fast version.
-
-    } // end of namespace oln::morpho::impl
-
-
-    // Facade.
-
-    template <typename I>
-    oln_plain(I)
-    elementary_gradient_external(const Image_with_Nbh<I>& input)
-    {
-      oln_plain(I) output = impl::elementary_gradient_external_(exact(input));
-      postcondition(output >= zero);
-      return output;
+      oln_dpoint(P) tmp;
+      tmp.vec() = exact(p).vec();
+      return tmp;
     }
 
 # endif // ! OLN_INCLUDE_ONLY
 
-  } // end of namespace oln::morpho
+  } // end of namespace oln::convert
 
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_EXTERNAL_GRADIENT_HH
+#endif // ! OLN_CONVERT_TO_DPOINT_HH

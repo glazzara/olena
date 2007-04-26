@@ -1,5 +1,51 @@
 2007-04-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Introduce zero and update some traits and ops.
+
+	* oln/convert/to_dpoint.hh: New.
+	* oln/core/gen/zero.hh: New.
+	* oln/core/concept/literal.hh: New.
+	* tests/core/pw_value.cc,
+	* oln/core/gen/over.hh,
+	* oln/convert/to_weighted_window.hh,
+	* oln/draw/bresenham.hh,
+	* oln/morpho/elementary_gradient.hh,
+	* oln/morpho/elementary_gradient_external.hh,
+	* oln/morpho/gradient_internal.hh,
+	* oln/morpho/top_hat_black.hh,
+	* oln/morpho/gradient.hh,
+	* oln/morpho/top_hat_white.hh,
+	* oln/morpho/gradient_external.hh,
+	* oln/morpho/elementary_gradient_internal.hh,
+	* oln/level/compare.hh,
+	* oln/linear/convolution.hh,
+	* oln/linear/mean.hh: Update.
+	* oln/core/gen/traits.hh
+	(oln_internal_specialize_un_trait_T_): New.
+	(clean_for_trait_): New specializations.
+	* oln/core/gen/value.hh (set_trait_): Remove.
+	* oln/core/gen/such_as.hh: Add reminder.
+	* oln/core/concept/iterator_on_points.hh
+	(set_trait_): New specializations.
+	* oln/core/concept/point.hh (assign_): New.
+	(operator): Fix.
+	* oln/core/concept/dpoint.hh: Likewise.
+	* oln/core/concept/window.hh (op_unary_minus_): Change into...
+	(operator-): ...this.
+	* oln/core/concept/operators.hh: Fix.
+	* oln/core/internal/dpoint_base.hh
+	(impl_op_equal_),
+	(impl_op_mod_equal_),
+	(impl_op_less_),
+	(impl_op_plus_equal_),
+	(impl_op_minus_equal_),
+	(impl_op_mod_equal_),
+	(impl_op_unary_minus_): Rmove; obsolete.
+	* oln/value/builtin.hh (super_trait_): New ones.
+	* oln/value/builtin_traits.hh (set_trait_): New one.
+
+2007-04-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Better oln operators mechanism.
 
 	* oln/core/gen/literal.hh: Rename as...

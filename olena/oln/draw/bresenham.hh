@@ -61,7 +61,7 @@ namespace oln
 		      const oln_point(I)& begin, const oln_point(I)& end,
 		      const oln_value(I)& value)
       {
-  	level::paste(literal(value) / line2d(begin, end),
+  	level::paste(make_value(value) / line2d(begin, end),
 		     inplace(in_out));
       }
 

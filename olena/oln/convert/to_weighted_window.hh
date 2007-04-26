@@ -28,6 +28,7 @@
 #ifndef OLN_CONVERT_TO_WEIGHTED_WINDOW_HH
 # define OLN_CONVERT_TO_WEIGHTED_WINDOW_HH
 
+# include <oln/core/gen/zero.hh>
 # include <oln/core/concept/image.hh>
 # include <oln/core/concept/window.hh>
 # include <oln/core/concept/function.hh>
@@ -61,11 +62,10 @@ namespace oln
     oln_f_image_to_weighted_window(I)
     to_weighted_window(const Image<I>& input)
     {
-      oln_point(I) O; O.set_all(0);
       oln_f_image_to_weighted_window(I) output;
       oln_piter(I) p(input.points());
       for_all(p)
-	output.take(input(p), O - oln_point(I)(p)); // FIXME: replace to_point by zero - p
+	output.take(input(p), zero - oln_point(I)(p));
       return output;
     }
 

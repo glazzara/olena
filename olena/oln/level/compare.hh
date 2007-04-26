@@ -30,7 +30,6 @@
 
 # include <oln/core/concept/image.hh>
 # include <oln/core/gen/pset_compare.hh>
-# include <oln/core/gen/literal.hh>
 
 // FIXME: Rename this file as "comparison.hh".
 
@@ -45,19 +44,19 @@ namespace oln
   bool operator == (const Image<L>& lhs, const Image<R>& rhs);
 
   template <typename I>
-  bool operator == (const Image<I>& lhs, const literal_<oln_value(I)>& val);
+  bool operator == (const Image<I>& lhs, const oln_value(I)& val);
   
   template <typename L, typename R>
   bool operator < (const Image<L>& lhs, const Image<R>& rhs);
 
   template <typename I>
-  bool operator < (const Image<I>& lhs, const literal_<oln_value(I)>& val);
+  bool operator < (const Image<I>& lhs, const oln_value(I)& val);
   
   template <typename L, typename R>
   bool operator <= (const Image<L>& lhs, const Image<R>& rhs);
 
   template <typename I>
-  bool operator <= (const Image<I>& lhs, const literal_<oln_value(I)>& val);
+  bool operator <= (const Image<I>& lhs, const oln_value(I)& val);
 
 
   // FIXME: is-it a good idea to have "ima == lit"?
@@ -92,7 +91,7 @@ namespace oln
     // Generic version.
 
     template <typename I>
-    bool op_eq_(const Image<I>& lhs, const literal_<oln_value(I)>& val)
+    bool op_eq_(const Image<I>& lhs, const oln_value(I)& val)
     {
       oln_piter(I) p(lhs.points());
       for_all(p)
@@ -125,7 +124,7 @@ namespace oln
     // Generic version.
 
     template <typename I>
-    bool op_less_(const Image<I>& lhs, const literal_<oln_value(I)>& val)
+    bool op_less_(const Image<I>& lhs, const oln_value(I)& val)
     {
       oln_piter(I) p(lhs.points());
       for_all(p)
@@ -158,7 +157,7 @@ namespace oln
     // Generic version.
 
     template <typename I>
-    bool op_leq_(const Image<I>& lhs, const literal_<oln_value(I)>& val)
+    bool op_leq_(const Image<I>& lhs, const oln_value(I)& val)
     {
       oln_piter(I) p(lhs.points());
       for_all(p)
@@ -181,7 +180,7 @@ namespace oln
   }
 
   template <typename I>
-  bool operator == (const Image<I>& lhs, const literal_<oln_value(I)>& val)
+  bool operator == (const Image<I>& lhs, const oln_value(I)& val)
   {
     return impl::op_eq_(exact(lhs), val);
   }
@@ -194,7 +193,7 @@ namespace oln
   }
 
   template <typename I>
-  bool operator < (const Image<I>& lhs, const literal_<oln_value(I)>& val)
+  bool operator < (const Image<I>& lhs, const oln_value(I)& val)
   {
     return impl::op_less_(exact(lhs), val);
   }
@@ -207,7 +206,7 @@ namespace oln
   }
 
   template <typename I>
-  bool operator <= (const Image<I>& lhs, const literal_<oln_value(I)>& val)
+  bool operator <= (const Image<I>& lhs, const oln_value(I)& val)
   {
     return impl::op_leq_(exact(lhs), val);
   }

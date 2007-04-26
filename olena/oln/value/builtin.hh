@@ -72,7 +72,13 @@ namespace oln
 
 
 
-  // int, float, ...
+  // unsigned, int, float, double,...
+
+  template <>
+  struct super_trait_< unsigned >
+  {
+    typedef internal::builtin_base<unsigned> ret;
+  };
 
   template <>
   struct super_trait_< int >
@@ -84,6 +90,12 @@ namespace oln
   struct super_trait_< float >
   {
     typedef internal::builtin_base<float> ret;
+  };
+
+  template <>
+  struct super_trait_< double >
+  {
+    typedef internal::builtin_base<double> ret;
   };
 
 

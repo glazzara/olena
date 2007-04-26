@@ -70,12 +70,6 @@ namespace oln
 
 
 
-
-  // FIXME: Add: template <typename T> T operator - (const Any<T>& rhs);
-
-
-
-
   namespace ERROR
   {
 
@@ -184,7 +178,7 @@ namespace oln
   void operator == (const Any<L>& lhs, const Any<R>& rhs)
   {
     mlc::abort_<L,
-      ERROR::operator_< eq_id >::template _is_missing_for_types_<L, R>
+      typename ERROR::operator_< eq_id >::_is_missing_for_types_<L, R>
       >::check();
   }
 
@@ -193,7 +187,7 @@ namespace oln
   void operator < (const Any<L>& lhs, const Any<R>& rhs)
   {
     mlc::abort_<L,
-      ERROR::operator_< less_id >::template _is_missing_for_types_<L, R>
+      typename ERROR::operator_< less_id >::template _is_missing_for_types_<L, R>
       >::check();
   }
 
@@ -202,7 +196,7 @@ namespace oln
   void operator += (const Any<L>& lhs, const Any<R>& rhs)
   {
     mlc::abort_<L,
-      ERROR::operator_< plus_equal_id >::template _is_missing_for_types_<L, R>
+      typename ERROR::operator_< plus_equal_id >::template _is_missing_for_types_<L, R>
       >::check();
   }
 
@@ -211,7 +205,7 @@ namespace oln
   void operator -= (const Any<L>& lhs, const Any<R>& rhs)
   {
     mlc::abort_<L,
-      ERROR::operator_< minus_equal_id >::template _is_missing_for_types_<L, R>
+      typename ERROR::operator_< minus_equal_id >::template _is_missing_for_types_<L, R>
       >::check();
   }
 
@@ -220,7 +214,7 @@ namespace oln
   void operator %= (const Any<L>& lhs, const Any<R>& rhs)
   {
     mlc::abort_<L,
-      ERROR::operator_< modulus_equal_id >::template _is_missing_for_types_<L, R>
+      typename ERROR::operator_< modulus_equal_id >::template _is_missing_for_types_<L, R>
       >::check();
   }
 
@@ -229,7 +223,7 @@ namespace oln
   void operator - (const Any<T>& rhs)
   {
     mlc::abort_<T,
-      ERROR::operator_< uminus_id >::template _is_missing_for_<T>
+      typename ERROR::operator_< uminus_id >::template _is_missing_for_<T>
       >::check();
   }
 

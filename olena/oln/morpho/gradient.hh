@@ -28,6 +28,7 @@
 #ifndef	OLN_MORPHO_GRADIENT_HH
 # define OLN_MORPHO_GRADIENT_HH
 
+# include <oln/core/gen/zero.hh>
 # include <oln/morpho/erosion.hh>
 # include <oln/morpho/dilation.hh>
 # include <oln/arith/minus.hh>
@@ -73,7 +74,7 @@ namespace oln
     gradient(const Image<I>& input, const Window<W>& win)
     {
       oln_plain(I) output = impl::gradient_(exact(input), exact(win));
-      postcondition(output >= literal(0));
+      postcondition(output >= zero);
       return output;
     }
 

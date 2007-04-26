@@ -25,64 +25,67 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_EXTERNAL_GRADIENT_HH
-# define OLN_MORPHO_EXTERNAL_GRADIENT_HH
+#ifndef OLN_CORE_GEN_ZERO_HH
+# define OLN_CORE_GEN_ZERO_HH
 
-# include <oln/core/gen/zero.hh>
-# include <oln/morpho/elementary_dilation.hh>
-# include <oln/arith/minus.hh>
+# include <oln/core/concept/literal.hh>
 
 
 namespace oln
 {
 
-  namespace morpho
+  struct zero_t : public Literal< zero_t >
   {
 
-    // Fwd decl.
+    template <typename T>
+    operator T() const;
 
-    template <typename I>
-    oln_plain(I)
-    elementary_gradient_external(const Image_with_Nbh<I>& input);
+    // builtins:
+    operator unsigned() const;
+    operator int() const;
+    operator float() const;
+    operator double() const;
+  }
+
+  zero;
+
+
+
+  // Default unary minus operator.
+
+  template <typename T>
+  T
+  operator - (const Any<T>& rhs); // Use binary -.
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
-    {
+  template <typename T>
+  zero_t::operator T() const
+  {
+    mlc::assert_< mlc_is_a(T, Any) >::check(); // FIXME: Add err msg.
+    T tmp;
+    tmp.assign_(*this);
+    return tmp;
+  }
 
-      // Generic version.
-
-      template <typename I>
-      oln_plain(I)
-      elementary_gradient_external_(const Image_with_Nbh<I>& input)
-      {
-	oln_plain(I) dil = elementary_dilation(input);
-	return arith::minus<oln_value(I)>(dil, input);
-      }
-
-
-      // FIXME: Add a fast version.
-
-    } // end of namespace oln::morpho::impl
+  zero_t::operator unsigned() const { return 0u;  }
+  zero_t::operator int()      const { return 0;   }
+  zero_t::operator float()    const { return 0.f; }
+  zero_t::operator double()   const { return 0.;  }
 
 
-    // Facade.
-
-    template <typename I>
-    oln_plain(I)
-    elementary_gradient_external(const Image_with_Nbh<I>& input)
-    {
-      oln_plain(I) output = impl::elementary_gradient_external_(exact(input));
-      postcondition(output >= zero);
-      return output;
-    }
+  template <typename T>
+  T
+  operator - (const Any<T>& rhs)
+  {
+    return zero - exact(rhs);
+  }
 
 # endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_EXTERNAL_GRADIENT_HH
+#endif // ! OLN_CORE_GEN_ZERO_HH

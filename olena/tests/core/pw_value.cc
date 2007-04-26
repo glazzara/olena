@@ -45,6 +45,6 @@ int main()
   image2d<double> ima2(3,3);
   ima2(p) = 2.3;
 
-  double d = ((pw_value(ima1) + pw_value(ima2) * literal(4.)) / literal(.2))(p);
+  double d = ((pw_value(ima1) + pw_value(ima2) * 4.) / .2)(p);
   assert(d > 50.9999 and d < 51.0001);
 }

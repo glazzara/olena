@@ -59,6 +59,8 @@ namespace oln
 
     enum { n = mlc_value(dim) };
 
+    void assign_(zero_t);
+
   protected:
     Dpoint();
 
@@ -144,6 +146,12 @@ namespace oln
     //       mlc::assert_defined_< oln_vtype(Exact, dim)   >::check();
   }
 
+  template <typename Exact>
+  void
+  Dpoint<Exact>::assign_(zero_t)
+  {
+    exact(this)->vec().set_all(0);
+  }
 
   // Operators on Dpoints.
 
@@ -156,7 +164,7 @@ namespace oln
   template <typename D1, typename D2>
   bool operator < (const Dpoint<D1>& lhs, const Dpoint<D2>& rhs)
   {
-    return exact(lhs).vec() < exact(rhs).vec();
+    return xtd::lexi_less(exact(lhs).vec(), exact(rhs).vec());
   }
 
   template <typename D, typename D2>
@@ -230,7 +238,7 @@ namespace oln
   void operator + (const Dpoint<D>& lhs, const Generalized_Point<P>& rhs)
   {
     mlc::abort_<D,
-      ERROR::operator_< plus_id >::template _is_invalid_for_types_<D, P>
+      typename ERROR::operator_< plus_id >::template _is_invalid_for_types_<D, P>
       >::check();
   }
 
@@ -238,7 +246,7 @@ namespace oln
   void operator - (const Dpoint<D>& lhs, const Generalized_Point<P>& rhs)
   {
     mlc::abort_<D,
-      ERROR::operator_< minus_id >::template _is_invalid_for_types_<D, P>
+      typename ERROR::operator_< minus_id >::template _is_invalid_for_types_<D, P>
       >::check();
   }
 

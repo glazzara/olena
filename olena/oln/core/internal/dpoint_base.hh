@@ -85,15 +85,7 @@ namespace oln
       coord  operator[](unsigned i) const;
       coord& operator[](unsigned i);
 
-      bool impl_op_equal_(const Exact& rhs) const;
-
-      bool impl_op_less_(const Exact& rhs) const;
-
-      Exact& impl_op_plus_equal_(const Exact& rhs);
-      Exact& impl_op_minus_equal_(const Exact& rhs);
-      Exact& impl_op_mod_equal_(const Exact& rhs);
-
-      Exact impl_op_unary_minus_() const;
+      Exact& impl_op_mod_equal_(const Exact& rhs); // FIXME: Remove HERE
 
       typedef xtd::vec<n, coord> vec_t;
       const vec_t& vec() const;
@@ -126,32 +118,6 @@ namespace oln
     }
 
     template <typename Exact>
-    bool dpoint_base_<Exact>::impl_op_equal_(const Exact& rhs) const
-    {
-      return v_ == rhs.v_;
-    }
-
-    template <typename Exact>
-    bool dpoint_base_<Exact>::impl_op_less_(const Exact& rhs) const
-    {
-      return xtd::lexi_less(v_, rhs.v_);
-    }
-
-    template <typename Exact>
-    Exact& dpoint_base_<Exact>::impl_op_plus_equal_(const Exact& rhs)
-    {
-      v_ += rhs.v_;
-      return exact(*this);
-    }
-
-    template <typename Exact>
-    Exact& dpoint_base_<Exact>::impl_op_minus_equal_(const Exact& rhs)
-    {
-      v_ -= rhs.v_;
-      return exact(*this);
-    }
-
-    template <typename Exact>
     Exact& dpoint_base_<Exact>::impl_op_mod_equal_(const Exact& rhs)
     {
       for (unsigned i = 0; i < n; ++i)
@@ -161,14 +127,6 @@ namespace oln
 	    v_[i] += rhs.v_[i];
 	}
       return exact(*this);
-    }
-
-    template <typename Exact>
-    Exact dpoint_base_<Exact>::impl_op_unary_minus_() const
-    {
-      Exact tmp;
-      tmp.v_ = - v_;
-      return tmp;
     }
 
     template <typename Exact>

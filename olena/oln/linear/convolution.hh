@@ -30,9 +30,9 @@
 
 # include <oln/core/concept/image.hh>
 # include <oln/core/concept/weighted_window.hh>
-
 # include <oln/core/internal/f_weighted_window.hh>
 # include <oln/core/internal/f_ch_value.hh>
+# include <oln/convert/to_dpoint.hh>
 
 
 namespace oln
@@ -69,10 +69,6 @@ namespace oln
       {
 	oln_plain_value(I, V) output;
 	prepare(output, with, f);
-
-	oln_point(I) O; O.set_all(0);
-	oln_point(I) p_q;
-
 	oln_piter(I) p(f.points());
 	oln_piter(J) q(g.points());
 	for_all(p)
@@ -80,10 +76,9 @@ namespace oln
 	    V val = 0;
 	    for_all(q)
 	      {
-		oln_dpoint(I) dp = O - oln_point(I)(q); // FIXME: to_point
-		p_q = oln_point(I)(p) + dp; // FIXME: to_point
+		oln_point(I) p_q = p - convert::to_dpoint(q);
 		if (f.has(p_q))
-		  val += g(q) * f(p_q); // FIXME: f(p + (O - q));
+		  val += g(q) * f(p_q);
 	      }
 	    output(p) = val;
 	  }
@@ -102,7 +97,7 @@ namespace oln
 	    V val = 0;
 	    for (unsigned i = 0; i < w_win.size(); ++i)
 	      {
-		oln_point(I) q = oln_point(I)(p) + w_win.dp(i); // FIXME: to_point
+		oln_point(I) q = p + w_win.dp(i);
 		if (input.has(q))
 		  val += w_win.w(i) * input(q);
 	      }

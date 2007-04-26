@@ -28,6 +28,7 @@
 #ifndef	OLN_MORPHO_ELEMENTARY_GRADIENT_INTERNAL_HH
 # define OLN_MORPHO_ELEMENTARY_GRADIENT_INTERNAL_HH
 
+# include <oln/core/gen/zero.hh>
 # include <oln/morpho/elementary_erosion.hh>
 # include <oln/arith/minus.hh>
 
@@ -73,7 +74,7 @@ namespace oln
     elementary_gradient_internal(const Image_with_Nbh<I>& input)
     {
       oln_plain(I) output = impl::elementary_gradient_internal_(exact(input));
-      postcondition(output >= literal(0));
+      postcondition(output >= zero);
       return output;
     }
 

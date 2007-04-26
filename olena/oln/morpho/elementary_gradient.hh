@@ -28,6 +28,7 @@
 #ifndef	OLN_MORPHO_ELEMENTARY_GRADIENT_HH
 # define OLN_MORPHO_ELEMENTARY_GRADIENT_HH
 
+# include <oln/core/gen/zero.hh>
 # include <oln/morpho/elementary_erosion.hh>
 # include <oln/morpho/elementary_dilation.hh>
 # include <oln/arith/minus.hh>
@@ -75,7 +76,7 @@ namespace oln
     elementary_gradient(const Image_with_Nbh<I>& input)
     {
       oln_plain(I) output = impl::elementary_gradient_(exact(input));
-      postcondition(output >= literal(0));
+      postcondition(output >= zero);
       return output;
     }
 

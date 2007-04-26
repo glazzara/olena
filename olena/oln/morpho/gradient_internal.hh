@@ -28,6 +28,7 @@
 #ifndef	OLN_MORPHO_GRADIENT_INTERNAL_HH
 # define OLN_MORPHO_GRADIENT_INTERNAL_HH
 
+# include <oln/core/gen/zero.hh>
 # include <oln/morpho/erosion.hh>
 # include <oln/arith/minus.hh>
 
@@ -72,7 +73,7 @@ namespace oln
     gradient_internal(const Image<I>& input, const Window<W>& win)
     {
       oln_plain(I) output = impl::gradient_internal_(exact(input), exact(win));
-      postcondition(output >= literal(0));
+      postcondition(output >= zero);
       return output;
     }
 

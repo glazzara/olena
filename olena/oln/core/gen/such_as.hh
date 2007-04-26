@@ -60,6 +60,13 @@ namespace oln
 
   // Image | Function_p2b
 
+  // FIXME: Do it!
+//   template <typename I, typename F>
+//   set_trait_< Image, I, pipe_id, Function_p2b, F >
+//   {
+//     typedef op_<I, such_as, F> ret;
+//   };
+
   template <typename I, typename F>
   op_<const I, such_as, const F>
   operator | (const Image<I>& ima, const Function_p2b<F>& f);

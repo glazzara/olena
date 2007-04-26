@@ -115,6 +115,15 @@
   }
 
 
+# define oln_internal_specialize_un_trait_T_(Name)	\
+							\
+  template <typename T>					\
+  struct set_utrait_< Name##_id, Any, T >		\
+  {							\
+    typedef T ret;					\
+  }
+
+
 
 
 namespace oln
@@ -144,6 +153,18 @@ namespace oln
     public set_trait_<Any, L, Op, Any, R>
   {
   };
+
+
+  // "absorbing" a literal:
+  template <typename L> struct Literal; // Fwd decl
+  template <typename L, typename Op, template <class> class C, typename R>
+  struct set_trait_<Literal, L, Op, C, R>
+    : public set_trait_<C, R, Op, C, R>
+  {};
+  template <template <class> class C, typename L, typename Op, typename R>
+  struct set_trait_<C, L, Op, Literal, R>
+    : public set_trait_<C, L, Op, C, L>
+  {};
 
 
 
@@ -209,6 +230,8 @@ namespace oln
   oln_internal_specialize_bin_trait_T_(div);
   oln_internal_specialize_bin_trait_T_(mod);
 
+  oln_internal_specialize_un_trait_T_(uminus);
+
   oln_internal_specialize_bin_trait_bool_(eq);
   oln_internal_specialize_bin_trait_bool_(neq);
 
@@ -220,6 +243,8 @@ namespace oln
   oln_internal_specialize_bin_trait_T_(and);
   oln_internal_specialize_bin_trait_T_(or);
   oln_internal_specialize_bin_trait_T_(xor);
+
+  oln_internal_specialize_un_trait_T_(not);
 
 
   // Fwd decl.
@@ -259,17 +284,30 @@ namespace oln
     template <typename T>
     struct clean_for_trait_
     {
-      typedef T ret;
+      typedef T ret; // default is identity
     };
 
     template <typename T>
-    struct clean_for_trait_< const oln::value_<T>  > { typedef T ret; };
-    template <typename T>
-    struct clean_for_trait_< const oln::value_<T>& > { typedef T ret; };
-    template <typename T>
-    struct clean_for_trait_<       oln::value_<T>& > { typedef T ret; };
+    struct clean_for_trait_< T& >
+    {
+      // remove &
+      typedef typename clean_for_trait_<T>::ret ret;
+    }; 
 
-    // FIXME: Add clean_for_trait_ for builtins?
+    template <typename T>
+    struct clean_for_trait_< const oln::value_<T>  >  { typedef T ret; };
+    template <typename T>
+    struct clean_for_trait_<       oln::value_<T>  >  { typedef T ret; };
+
+    // builtins
+    template <> struct clean_for_trait_< const unsigned >  { typedef unsigned ret; };
+    template <> struct clean_for_trait_<       unsigned >  { typedef unsigned ret; };
+    template <> struct clean_for_trait_< const int >       { typedef int      ret; };
+    template <> struct clean_for_trait_<       int >       { typedef int      ret; };
+    template <> struct clean_for_trait_< const float >     { typedef float    ret; };
+    template <> struct clean_for_trait_<       float >     { typedef float    ret; };
+    template <> struct clean_for_trait_< const double >    { typedef double   ret; };
+    template <> struct clean_for_trait_<       double >    { typedef double   ret; };
 
   } // end of namespace oln::internal
 
@@ -284,7 +322,9 @@ namespace oln
   };
 
   template <typename Op, typename T>
-  struct get_utrait_ : public internal::get_utrait_cat__< Op, oln_category_of_(T), T >
+  struct get_utrait_ : public internal::get_utrait_cat__< Op,
+							  oln_category_of_(T),
+							  typename internal::clean_for_trait_<T>::ret >
   {
   };
 

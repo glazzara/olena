@@ -33,6 +33,7 @@
 
 # include <oln/core/concept/grid.hh>
 # include <oln/core/concept/operators.hh>
+# include <oln/core/gen/zero.hh>
 
 
 
@@ -116,6 +117,9 @@ namespace oln
   template <typename Exact>
   struct Point : public Generalized_Point<Exact>
   {
+
+    void assign_(zero_t);
+
   protected:
     Point();
 
@@ -171,6 +175,13 @@ namespace oln
   {
   }
 
+  template <typename Exact>
+  void
+  Point<Exact>::assign_(zero_t)
+  {
+    exact(this)->vec().set_all(0);
+  }
+
   template <typename P>
   oln_minus_trait(P, P)
   operator - (const Generalized_Point<P>& lhs, const Generalized_Point<P>& rhs)
@@ -191,8 +202,9 @@ namespace oln
   bool
   operator < (const Generalized_Point<P1>& lhs, const Generalized_Point<P2>& rhs)
   {
-    return exact(lhs).vec() < exact(rhs).vec();
+    return xtd::lexi_less(exact(lhs).vec(), exact(rhs).vec());
   }
+
 
   // Invalid operators.
 
@@ -201,7 +213,7 @@ namespace oln
 		   const Generalized_Point<P2>& rhs)
   {
     mlc::abort_<P1,
-      ERROR::operator_< plus_id >::template _is_invalid_for_types_<P1, P2>
+      typename ERROR::operator_< plus_id >::template _is_invalid_for_types_<P1, P2>
       >::check();
   }
 
@@ -210,7 +222,7 @@ namespace oln
 		    const Generalized_Point<P2>& rhs)
   {
     mlc::abort_<P1,
-      ERROR::operator_< plus_equal_id >::template _is_invalid_for_types_<P1, P2>
+      typename ERROR::operator_< plus_equal_id >::template _is_invalid_for_types_<P1, P2>
       >::check();
   }
 
@@ -219,7 +231,7 @@ namespace oln
 		    const Generalized_Point<P2>& rhs)
   {
     mlc::abort_<P1,
-      ERROR::operator_< minus_equal_id >::template _is_invalid_for_types_<P1, P2>
+      typename ERROR::operator_< minus_equal_id >::template _is_invalid_for_types_<P1, P2>
       >::check();
   }
 
@@ -227,7 +239,7 @@ namespace oln
   void operator - (const Generalized_Point<P>& rhs)
   {
     mlc::abort_<P,
-      ERROR::operator_< uminus_id >::template _is_invalid_for_<P>
+      typename ERROR::operator_< uminus_id >::template _is_invalid_for_<P>
       >::check();
   }
 
@@ -258,6 +270,7 @@ namespace oln
 # endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
+
 
 
 #endif // ! OLN_CORE_CONCEPT_POINT_HH

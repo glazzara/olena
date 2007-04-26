@@ -47,7 +47,6 @@ namespace oln
     stc_typename(fwd_qiter);
     stc_typename(bkd_qiter);
 
-    Exact op_unary_minus_() const;
     unsigned size() const;
 
   protected:
@@ -55,6 +54,9 @@ namespace oln
 
   }; // end of oln::Window<Exact>
 
+
+  template <typename W>
+  W operator - (const Window<W>& rhs);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -65,17 +67,16 @@ namespace oln
   }
 
   template <typename Exact>
-  Exact
-  Window<Exact>::op_unary_minus_() const
-  {
-    return exact(this)->impl_op_unary_minus_();
-  }
-
-  template <typename Exact>
   unsigned
   Window<Exact>::size() const
   {
     return exact(this)->impl_size();
+  }
+
+  template <typename W>
+  W operator - (const Window<W>& rhs)
+  {
+    return exact(rhs).impl_op_unary_minus_();
   }
 
 # endif // ! OLN_INCLUDE_ONLY

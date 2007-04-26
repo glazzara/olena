@@ -28,6 +28,7 @@
 #ifndef	OLN_MORPHO_TOP_HAT_BLACK_HH
 # define OLN_MORPHO_TOP_HAT_BLACK_HH
 
+# include <oln/core/gen/zero.hh>
 # include <oln/morpho/opening.hh>
 # include <oln/morpho/closing.hh>
 # include <oln/arith/minus.hh>
@@ -74,7 +75,7 @@ namespace oln
     top_hat_black(const Image<I>& input, const Window<W>& win)
     {
       oln_plain(I) output = impl::top_hat_black_(exact(input), exact(win));
-      postcondition(output >= literal(0));
+      postcondition(output >= zero);
       return output;
     }
 

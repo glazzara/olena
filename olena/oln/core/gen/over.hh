@@ -37,7 +37,8 @@ namespace oln
 
 # include <oln/core/internal/op_fp2v_over_pset.hh>
 # include <oln/core/gen/fun.hh>
-# include <oln/core/gen/literal.hh>
+# include <oln/core/gen/constant.hh>
+# include <oln/core/gen/value.hh>
 
 
 namespace oln
@@ -60,8 +61,8 @@ namespace oln
   // V / Point_Set
 
   template <typename V, typename S>
-  op_<const lit_p2v_<oln_point(S), V>, over, const S>
-  operator / (const literal_<V>& value, const Point_Set<S>& pset);
+  op_<const constant_p2v_<oln_point(S), V>, over, const S>
+  operator / (const value_<V>& v, const Point_Set<S>& pset);
 
 
 
@@ -92,11 +93,11 @@ namespace oln
   // V / Point_Set
 
   template <typename V, typename S>
-  op_<const lit_p2v_<oln_point(S), V>, over, const S>
-  operator / (const literal_<V>& value, const Point_Set<S>& pset)
+  op_<const constant_p2v_<oln_point(S), V>, over, const S>
+  operator / (const value_<V>& v, const Point_Set<S>& pset)
   {
-    lit_p2v_<oln_point(S), V> lit(value);
-    op_<const lit_p2v_<oln_point(S), V>, over, const S> tmp(lit, exact(pset));
+    constant_p2v_<oln_point(S), V> v_(v);
+    op_<const constant_p2v_<oln_point(S), V>, over, const S> tmp(v_, exact(pset));
     return tmp;
   }
 

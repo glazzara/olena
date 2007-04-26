@@ -93,14 +93,6 @@ namespace oln
   value_<T> make_value(const value_<T>& val);
 
 
-  // traits
-
-  template <typename L, typename Op, typename R>
-  struct set_trait_< Value, value_<L>, Op, Value, value_<R> >
-  {
-    typedef typename get_trait_<L, Op, R>::ret ret;
-  };
-
 
 # ifndef OLN_INCLUDE_ONLY
 

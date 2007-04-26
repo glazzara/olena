@@ -25,64 +25,64 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_EXTERNAL_GRADIENT_HH
-# define OLN_MORPHO_EXTERNAL_GRADIENT_HH
+#ifndef OLN_CORE_CONCEPT_LITERAL_HH
+# define OLN_CORE_CONCEPT_LITERAL_HH
 
-# include <oln/core/gen/zero.hh>
-# include <oln/morpho/elementary_dilation.hh>
-# include <oln/arith/minus.hh>
+# include <oln/core/concept/operators.hh>
 
 
 namespace oln
 {
 
-  namespace morpho
+  /// Concept-class "Literal".
+
+  template <typename Exact>
+  struct Literal : public Any<Exact>
   {
+    typedef Literal<void> category;
+  protected:
+    Literal();
+  };
 
-    // Fwd decl.
 
-    template <typename I>
-    oln_plain(I)
-    elementary_gradient_external(const Image_with_Nbh<I>& input);
+  // Default.
+
+  template <typename L, typename R>
+  oln_minus_trait(R, R)
+  operator - (const Literal<L>& lhs, const Any<R>& rhs);
+
+  template <typename L, typename R>
+  oln_plus_trait(R, R)
+  operator + (const Literal<L>& lhs, const Any<R>& rhs);
+
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    namespace impl
-    {
+  template <typename Exact>
+  Literal<Exact>::Literal()
+  {
+  }
 
-      // Generic version.
+  template <typename L, typename R>
+  oln_minus_trait(R, R)
+  operator - (const Literal<L>& lhs, const Any<R>& rhs)
+  {
+    oln_minus_trait(R, R) tmp = exact(lhs).operator R() - exact(rhs);
+    return tmp;
+  }
 
-      template <typename I>
-      oln_plain(I)
-      elementary_gradient_external_(const Image_with_Nbh<I>& input)
-      {
-	oln_plain(I) dil = elementary_dilation(input);
-	return arith::minus<oln_value(I)>(dil, input);
-      }
-
-
-      // FIXME: Add a fast version.
-
-    } // end of namespace oln::morpho::impl
-
-
-    // Facade.
-
-    template <typename I>
-    oln_plain(I)
-    elementary_gradient_external(const Image_with_Nbh<I>& input)
-    {
-      oln_plain(I) output = impl::elementary_gradient_external_(exact(input));
-      postcondition(output >= zero);
-      return output;
-    }
+  template <typename L, typename R>
+  oln_plus_trait(R, R)
+  operator + (const Literal<L>& lhs, const Any<R>& rhs)
+  {
+    oln_plus_trait(R, R) tmp = exact(lhs).operator R() + exact(rhs);
+    return tmp;
+  }
 
 # endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_EXTERNAL_GRADIENT_HH
+#endif // ! OLN_CORE_CONCEPT_LITERAL_HH
