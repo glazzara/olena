@@ -26,7 +26,7 @@
 // Public License.
 
 #include <cassert>
-#include <oln/core/2d/image2d_b.hh>
+#include <oln/core/3d/image3d_b.hh>
 
 
 int
@@ -34,22 +34,20 @@ main()
 {
   using namespace oln;
 
-  image2d_b<int> ima(50, 50, 2);
+  image3d_b<int> ima(100, 100, 100, 2);
 
-  image2d_b<int>::piter p(ima.points());
-  image2d_b<int>::fiter f(ima);
+  image3d_b<int>::piter p(ima.points());
+  image3d_b<int>::fiter f(ima);
   int i = 0;
 
   for_all(p)
-    {
-      ima(p) = i++;
-    }
+    ima(p) = i++;
 
   i = 0;
 
   for_all(f)
     {
-      assert(*f == i ++);
+      assert(*f == i++);
       *f = 5;
     }
 

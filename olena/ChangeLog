@@ -1,3 +1,16 @@
+2007-04-27  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	fast iterator on image3b_b.
+
+	* tests/core/fiter_point2d_b.cc: update test.
+	* tests/core/fiter_point3d_b.cc: New test.
+	* tests/core/Makefile.am: Update.
+	* oln/core/2d/fast_iterator_2d.hh,
+	* oln/core/2d/fast_iterator_2d_b.hh,
+	* oln/core/3d/fast_iterator_3d.hh: clean code.
+	* oln/core/3d/image3d_b.hh: add method to get the image array.
+	* oln/core/3d/fast_iterator_3d_b.hh: New fast iterator.
+
 2007-04-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Augment morphology.

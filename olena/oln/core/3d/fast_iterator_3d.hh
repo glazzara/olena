@@ -71,10 +71,7 @@ namespace oln
   template <typename T>
   fast_iterator_3d<T>::fast_iterator_3d(image3d<T>& ima)
   {
-    this->start_ = ima.img_array().buffer() +
-      ima.img_array().imin() * ima.img_array().jmin() * ima.img_array().kmin() +
-      ima.img_array().jmin() * ima.img_array().kmin() +
-      ima.img_array().kmin();
+    this->start_ = ima.img_array().buffer();
 
     this->current_elt_ = this->start_;
 

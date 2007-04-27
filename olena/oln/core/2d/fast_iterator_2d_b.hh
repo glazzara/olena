@@ -18,7 +18,7 @@
 //
 // As a special exception, you may use this file as part of a free
 // software library without restriction.  Specifically, if other files
-// instantiate templates or use macros or inline functions from this
+// instantiate templates or use macros or inraw functions from this
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
@@ -53,7 +53,7 @@ namespace oln
     typedef T value;
   };
 
-  // Fast iterator for image in one dimension
+  // Fast iterator for image in two dimension
   template <typename T>
   class fast_iterator_2d_b :
     public internal::fast_iterator_base_< fast_iterator_2d_b<T> >
@@ -68,7 +68,7 @@ namespace oln
 
   protected:
     unsigned border_size_;
-    int line_offset_;
+    int row_offset_;
     value *eor_; // end of row
   };
 
@@ -76,22 +76,20 @@ namespace oln
 
   template <typename T>
   fast_iterator_2d_b<T>::fast_iterator_2d_b(image2d_b<T>& ima) :
-    border_size_(ima.border()), line_offset_(ima.img_array().i_pad())
+    border_size_(ima.border()), row_offset_(ima.img_array().i_pad())
   {
     this->start_ = ima.img_array().buffer() +
-      (this->border_size_) * this->line_offset_ + this->border_size_;
+      (this->border_size_) * this->row_offset_ + this->border_size_;
 
     this->current_elt_ = this->start_;
 
 
     this->eor_ = ima.img_array().buffer() +
-      (this->border_size_) * this->line_offset_ + this->line_offset_ -
+      (this->border_size_) * this->row_offset_ + this->row_offset_ -
       this->border_size_;
 
     this->eoi_ = this->eor_ +
-      this->line_offset_ * (ima.img_array().imax() - this->border_size_);
-
-
+      this->row_offset_ * (ima.img_array().imax() - this->border_size_);
   }
 
   template <typename T>
@@ -103,7 +101,7 @@ namespace oln
     if (this->current_elt_ == this->eor_ and this->current_elt_ != this->eoi_)
     {
       this->current_elt_ += 2 * this->border_size_;
-      this->eor_ += this->line_offset_;
+      this->eor_ += this->row_offset_;
     }
   }
 
