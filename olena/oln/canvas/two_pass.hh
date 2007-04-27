@@ -37,7 +37,7 @@ namespace canvas
   {
     template <template <class> class F,
 	      typename I> // Data owned by f.
-    void two_pass(F<I> fun)
+    void two_pass(F<I>& fun)
     {
 //      mlc::assert_< mlc_is_a(I, Image) >::check();
 
@@ -104,7 +104,7 @@ namespace canvas
   }
 
 
-  namespace v4 // Via Inheritens.
+  namespace v4 // Via Inheritance.
   {
 
     template <typename I>

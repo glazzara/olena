@@ -25,64 +25,67 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_GEN_WINDOW_HH
-# define OLN_CORE_GEN_WINDOW_HH
+#ifndef	OLN_MORPHO_HIT_OR_MISS_CLOSING_HH
+# define OLN_MORPHO_HIT_OR_MISS_CLOSING_HH
 
-# include <oln/core/internal/window.hh>
+# include <oln/morpho/hit_or_miss_opening.hh>
+# include <oln/morpho/complementation.hh>
+# include <oln/morpho/closing.hh>
 
 
 namespace oln
 {
 
-
-  // Fwd decl.
-  template <typename Dp> class gen_window;
-
-
-  // Super type.
-  template <typename Dp>
-  struct super_trait_< gen_window<Dp> >
+  namespace morpho
   {
-    typedef gen_window<Dp> current__;
-    typedef internal::window_<current__> ret;
-  };
 
+    // Fwd decl.
 
-  // Virtual types.
-  template <typename Dp>
-  struct vtypes< gen_window<Dp> >
-  {
-    typedef oln_point(Dp) point;
-  };
-
-
-  /// Generic classical window class.
-
-  template <typename Dp>
-  class gen_window : public internal::window_< gen_window<Dp> >
-  {
-  public:
-    
-    gen_window();
-
-    template <unsigned n>
-    void impl_fill_with(const bool (&values)[n]);
-
-  }; // end of class oln::gen_window<Dp>
-
+    template <typename I, typename W1, typename W2>
+    oln_plain(I)
+    hit_or_miss_closing(const Image<I>& input,
+			const Window<W1>& B1, const Window<W2>& B2);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename Dp>
-  gen_window<Dp>::gen_window()
-  {
-  }
+    namespace impl
+    {
+
+      // Generic version.
+
+      template <typename I, typename W1, typename W2>
+      oln_plain(I)
+      hit_or_miss_closing_(const Image<I>& input,
+			   const Window<W1>& B1, const Window<W2>& B2)
+      {
+	oln_plain(I)
+	  com = morpho::complementation(input),
+	  ope = morpho::hit_or_miss_opening(com, B1, B2);
+	return morpho::complementation(ope);
+      }
+
+    } // end of namespace oln::morpho::impl
+
+
+    // Facade.
+
+    template <typename I, typename W1, typename W2>
+    oln_plain(I)
+    hit_or_miss_closing(const Image<I>& input,
+			const Window<W1>& B1, const Window<W2>& B2)
+    {
+      // FIXME: Add: precondition(inter(B1, B2).card() == 0);
+      oln_plain(I) output = impl::hit_or_miss_closing_(exact(input),
+						       exact(B1), exact(B2));
+      postcondition(output >= morpho::closing(input, B1));
+    }
 
 # endif // ! OLN_INCLUDE_ONLY
-  
+
+  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_GEN_WINDOW_HH
+#endif // ! OLN_MORPHO_HIT_OR_MISS_CLOSING_HH

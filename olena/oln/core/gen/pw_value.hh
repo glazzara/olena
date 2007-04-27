@@ -45,10 +45,34 @@ namespace oln
   } // end of namespace oln::ERROR
 
 
+  // Fwd decl.
+  template <typename I> class pw_value_;
+
+
+  namespace internal
+  {
+
+    template <bool b, typename I>
+    struct pw_value_base_;
+
+    template <typename I>
+    struct pw_value_base_< true, I > : public Function_p2b< pw_value_<I> >
+    {
+    };
+
+    template <typename I>
+    struct pw_value_base_< false, I > : public Function_p2v< pw_value_<I> >
+    {
+    };
+
+  } // end of namespace oln::internal
+
+
   template <typename I>
-  class pw_value_ : public Function_p2v< pw_value_<I> >,
-		    private mlc::assert_< mlc_is_a(I, Image),
-					  ERROR::pw_value_works_on_images_not_on_<I> >
+  class pw_value_
+    :
+    public internal::pw_value_base_< mlc_is_a(I, Binary_Image)::eval::value,
+				     I >
   {
   public:
     typedef oln_point(I) argument; // FIXME: psite?
@@ -62,6 +86,7 @@ namespace oln
   protected:
     const I& ima_;
   };
+
 
 
   template <typename I>
@@ -93,6 +118,8 @@ namespace oln
   {
     return this->ima_;
   }
+
+  // pw_value
 
   template <typename I>
   pw_value_<I>

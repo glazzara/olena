@@ -25,14 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_DILATION_HH
-# define OLN_MORPHO_DILATION_HH
+#ifndef	OLN_MORPHO_HIT_OR_MISS_HH
+# define OLN_MORPHO_HIT_OR_MISS_HH
 
-# include <oln/level/apply_local.hh>
-# include <oln/level/compare.hh>
-# include <oln/border/fill.hh>
-# include <oln/accumulator/max.hh>
-# include <oln/accumulator/or.hh>
+# include <oln/morpho/erosion.hh>
+
+# include <oln/arith/min.hh>
+# include <oln/arith/negate.hh>
+
+# include <oln/logic/not.hh>
+# include <oln/logic/and.hh>
 
 
 namespace oln
@@ -43,9 +45,10 @@ namespace oln
 
     // Fwd decl.
 
-    template <typename I, typename W>
+    template <typename I, typename W1, typename W2>
     oln_plain(I)
-    dilation(const Image<I>& input, const Window<W>& win);
+    hit_or_miss(const Image<I>& input,
+		const Window<W1>& B1, const Window<W2>& B2);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -53,24 +56,28 @@ namespace oln
     namespace impl
     {
 
-      // Generic version.
+      // Generic versions.
 
-      template <typename I, typename W>
+      template <typename I, typename W1, typename W2>
       oln_plain(I)
-      dilation_on_function_(const Image<I>& input, const Window<W>& win)
+      hit_or_miss_on_function_(const Image<I>& input,
+			       const Window<W1>& B1, const Window<W2>& B2)
       {
- 	border::fill(input, oln_min(oln_value(I)));
- 	accumulator::max_<oln_value(I)> max;
- 	return level::apply_local(max, input, win);
+	oln_plain(I)
+	  fit  = erosion(input, B1),
+	  miss = erosion(arith::negate(input), B2);
+	return arith::min(fit, miss);
       }
 
-      template <typename I, typename W>
+      template <typename I, typename W1, typename W2>
       oln_plain(I)
-      dilation_on_set_(const Image<I>& input, const Window<W>& win)
+      hit_or_miss_on_set_(const Binary_Image<I>& input,
+			  const Window<W1>& B1, const Window<W2>& B2)
       {
-	border::fill(input, oln_min(oln_value(I)));
-	accumulator::or_<oln_value(I)> accu_or;
-	return level::apply_local(accu_or, input, win);
+	oln_plain(I)
+	  fit  = erosion(input, B1),
+	  miss = erosion(not input, B2);
+	return fit and miss;
       }
 
       // FIXME: Add a fast version.
@@ -78,30 +85,38 @@ namespace oln
 
       // Impl facade.
 
-      template <typename I, typename W>
-      oln_plain(I) dilation_(const Image<I>& input, const Window<W>& win)
+      template <typename I, typename W1, typename W2>
+      oln_plain(I)
+      hit_or_miss_(const Image<I>& input,
+		   const W1& B1, const W2& B2)
       {
-	return dilation_on_function_(exact(input), exact(win));
+	return hit_or_miss_on_function_(exact(input), B1, B2);
       }
 
-      template <typename I, typename W>
-      oln_plain(I) dilation_(const Binary_Image<I>& input, const Window<W>& win)
+      template <typename I, typename W1, typename W2>
+      oln_plain(I)
+      hit_or_miss_(const Binary_Image<I>& input,
+		   const W1& B1, const W2& B2)
       {
-	return dilation_on_set_(exact(input), exact(win));
+	return hit_or_miss_on_set_(exact(input), B1, B2);
       }
+      
 
     } // end of namespace oln::morpho::impl
 
 
     // Facade.
 
-    template <typename I, typename W>
+    template <typename I, typename W1, typename W2>
     oln_plain(I)
-    dilation(const Image<I>& input, const Window<W>& win)
+    hit_or_miss(const Image<I>& input,
+		const Window<W1>& B1, const Window<W2>& B2)
     {
-      oln_plain(I) output = impl::dilation_(exact(input), exact(win));
-      if (win.is_centered())
-	postcondition(output >= input);
+      // FIXME: Add: precondition(inter(B1, B2).card() == 0);
+      oln_plain(I) output = impl::hit_or_miss_(exact(input),
+					       exact(B1), exact(B2));
+      if (B1.is_centered()) // FIXME: ok?
+	postcondition(output <= input);
       return output;
     }
 
@@ -112,4 +127,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_DILATION_HH
+#endif // ! OLN_MORPHO_HIT_OR_MISS_HH

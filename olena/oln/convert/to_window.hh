@@ -30,6 +30,7 @@
 
 # include <oln/core/concept/image.hh>
 # include <oln/core/internal/f_image_to_window.hh>
+# include <oln/convert/to_dpoint.hh>
 
 
 namespace oln
@@ -38,11 +39,22 @@ namespace oln
   namespace convert
   {
 
-    // Fwd decl.
+    // Fwd decls.
+
+    namespace internal
+    {
+      template <unsigned n>
+      struct to_window_values_;
+    }
 
     template <typename I>
     oln_f_image_to_window(I)
     to_window(const Binary_Image<I>& input);
+
+    template <unsigned n>
+    internal::to_window_values_<n>
+    to_window(const bool (&values)[n]);
+    // FIXME: Wrong semantics: to_window should really give a window...
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -53,17 +65,58 @@ namespace oln
     oln_f_image_to_window(I)
     to_window(const Binary_Image<I>& input)
     {
-      oln_f_image_to_window(I) tmp;
+      oln_f_image_to_window(I) win;
       oln_dpoint(I) dp;
       oln_piter(I) p(input.points());
       for_all(p)
 	if (input(p) == true)
-	  {
-	    dp.vec() = p.vec();
-	    // FIXME: Better s.a. dp = p.to_dpoint();
-	    tmp.take(dp);
-	  }
-      return tmp;
+	  win.take(convert::to_dpoint(p));
+      return win;
+    }
+
+
+    namespace internal
+    {
+
+      template <typename G, typename W, unsigned n>
+      void fill_(W& win, const bool (&values)[n])
+      {
+	int h = int(std::sqrt(n)) / 2;
+	precondition((2 * h + 1) * (2 * h + 1) == n);
+	unsigned i = 0;
+	for (int drow = -h; drow <= h; ++drow) // FIXME: Replace 'int' by 'oln_coord(W)'
+	  for (int dcol = -h; dcol <= h; ++dcol)
+	    if (values[i++] == true)
+	      win.take(oln_dpoint(W)(drow, dcol));
+      }
+
+      template <unsigned n>
+      struct to_window_values_
+      {
+	const bool (&values_)[n];
+
+	to_window_values_(const bool (&values)[n])
+	  : values_(values)
+	{}
+
+	template <typename W>
+	operator W() const
+	{
+	  mlc::assert_< mlc_is_a(W, Window) >::check(); // FIXME: Add err msg.
+	  W tmp;
+	  fill_<oln_grid(W)>(tmp, values_);
+	  return tmp;
+	}
+      };
+
+    } // end of namespace oln::convert::internal
+
+
+    template <unsigned n>
+    internal::to_window_values_<n>
+    to_window(const bool (&values)[n])
+    {
+      return internal::to_window_values_<n>(values);
     }
 
 # endif // ! OLN_INCLUDE_ONLY

@@ -25,64 +25,65 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_GEN_WINDOW_HH
-# define OLN_CORE_GEN_WINDOW_HH
+#ifndef	OLN_MORPHO_HIT_OR_MISS_BACKGROUND_OPENING_HH
+# define OLN_MORPHO_HIT_OR_MISS_BACKGROUND_OPENING_HH
 
-# include <oln/core/internal/window.hh>
+# include <oln/morpho/hit_or_miss_opening.hh>
+# include <oln/morpho/complementation.hh>
 
 
 namespace oln
 {
 
-
-  // Fwd decl.
-  template <typename Dp> class gen_window;
-
-
-  // Super type.
-  template <typename Dp>
-  struct super_trait_< gen_window<Dp> >
+  namespace morpho
   {
-    typedef gen_window<Dp> current__;
-    typedef internal::window_<current__> ret;
-  };
 
+    // Fwd decl.
 
-  // Virtual types.
-  template <typename Dp>
-  struct vtypes< gen_window<Dp> >
-  {
-    typedef oln_point(Dp) point;
-  };
-
-
-  /// Generic classical window class.
-
-  template <typename Dp>
-  class gen_window : public internal::window_< gen_window<Dp> >
-  {
-  public:
-    
-    gen_window();
-
-    template <unsigned n>
-    void impl_fill_with(const bool (&values)[n]);
-
-  }; // end of class oln::gen_window<Dp>
-
+    template <typename I, typename W1, typename W2>
+    oln_plain(I)
+    hit_or_miss_background_opening(const Image<I>& input,
+				   const Window<W1>& B1, const Window<W2>& B2);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename Dp>
-  gen_window<Dp>::gen_window()
-  {
-  }
+    namespace impl
+    {
+
+      // Generic version.
+
+      template <typename I, typename W1, typename W2>
+      oln_plain(I)
+      hit_or_miss_background_opening_(const Image<I>& input,
+				      const Window<W1>& B1, const Window<W2>& B2)
+      {
+	oln_plain(I)
+	  com = morpho::complementation(input),
+	  output = morpho::hit_or_miss_opening(com, B2, B1);
+	return output;
+      }
+
+    } // end of namespace oln::morpho::impl
+
+
+    // Facade.
+
+    template <typename I, typename W1, typename W2>
+    oln_plain(I)
+    hit_or_miss_background_opening(const Image<I>& input,
+				   const Window<W1>& B1, const Window<W2>& B2)
+    {
+      // FIXME: Add: precondition(inter(B1, B2).card() == 0);
+      return impl::hit_or_miss_background_opening_(exact(input),
+						   exact(B1), exact(B2));
+    }
 
 # endif // ! OLN_INCLUDE_ONLY
-  
+
+  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CORE_GEN_WINDOW_HH
+#endif // ! OLN_MORPHO_HIT_OR_MISS_BACKGROUND_OPENING_HH

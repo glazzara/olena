@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,71 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_WINDOW_HH
-# define OLN_CORE_CONCEPT_WINDOW_HH
-
-# include <oln/core/equipment.hh>
-# include <oln/core/concept/point.hh>
+#ifndef	OLN_MORPHO_HIT_OR_MISS_ALL_HH
+# define OLN_MORPHO_HIT_OR_MISS_ALL_HH
 
 
-namespace oln
-{
+# include <oln/morpho/hit_or_miss.hh>
 
-  /// Concept-class "Window".
+# include <oln/morpho/hit_or_miss_opening.hh>
+# include <oln/morpho/hit_or_miss_closing.hh>
 
-  template <typename Exact>
-  struct Window : public Any<Exact>
-  {
-    stc_typename(grid);
-    stc_typename(point);
-
-    stc_typename(qiter);
-    stc_typename(fwd_qiter);
-    stc_typename(bkd_qiter);
-
-    unsigned size() const;
-    bool is_centered() const;
-
-  protected:
-    Window();
-
-  }; // end of oln::Window<Exact>
+# include <oln/morpho/hit_or_miss_background_opening.hh>
+# include <oln/morpho/hit_or_miss_background_closing.hh>
 
 
-  template <typename W>
-  W operator - (const Window<W>& rhs);
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-  template <typename Exact>
-  Window<Exact>::Window()
-  {
-  }
-
-  template <typename Exact>
-  unsigned
-  Window<Exact>::size() const
-  {
-    return exact(this)->impl_size();
-  }
-
-  template <typename Exact>
-  bool
-  Window<Exact>::is_centered() const
-  {
-    return exact(this)->impl_is_centered();
-  }
-
-  template <typename W>
-  W operator - (const Window<W>& rhs)
-  {
-    return exact(rhs).impl_op_unary_minus_();
-  }
-
-# endif // ! OLN_INCLUDE_ONLY
-
-} // end of namespace oln
-
-
-#endif // ! OLN_CORE_CONCEPT_WINDOW_HH
+#endif // ! OLN_MORPHO_HIT_OR_MISS_ALL_HH

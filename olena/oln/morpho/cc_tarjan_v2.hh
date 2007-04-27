@@ -68,7 +68,7 @@ namespace oln
 	  level::fill(inplace(is_processed), false);
 	}
 
-	void first_pass_body(const point& p, I f)
+	void first_pass_body(const point& p, const I& f)
 	{
 	  parent(p) = p;
 	  if ( f(p) )
@@ -84,7 +84,7 @@ namespace oln
 
 	}
 
-	void second_pass_body(const point& p, I f)
+	void second_pass_body(const point& p, const I& f)
 	{
 	  unsigned current_label = 0;
 	  if ( f(p) == true and parent(p) == p )
@@ -93,9 +93,8 @@ namespace oln
 	    output(p) = output(parent(p));
 	}
 
-	void final(I f)
+	void final(const I&)
 	{
-	  f = f;
 	}
 
 	point find_root(const I& ima,

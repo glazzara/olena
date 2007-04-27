@@ -74,7 +74,7 @@ namespace oln
 			     const dpoints_impl_<Dp>& dps)
     {
       ostr << "[ ";
-      unsigned n = dps.size();
+      unsigned n = dps.impl_size();
       for (unsigned i = 0; i < n; ++i)
 	ostr << dps[i] << (i == n - 1 ? " ]" : ", ");
       return ostr;

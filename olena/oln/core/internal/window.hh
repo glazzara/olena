@@ -31,6 +31,7 @@
 # include <oln/core/internal/window_base.hh>
 # include <oln/core/internal/dpoints_impl.hh>
 # include <oln/core/gen/dpoints_piter.hh>
+# include <oln/core/gen/zero.hh>
 
 
 namespace oln
@@ -76,6 +77,7 @@ namespace oln
 
       Exact& take(const dpoint& dp);
       Exact& impl_take(const dpoint& dp);
+      bool impl_is_centered() const;
 
       Exact impl_op_unary_minus_() const;
 
@@ -105,6 +107,13 @@ namespace oln
     {
       this->take_(dp); // from dpoints_impl_.
       return exact(*this);
+    }
+
+    template <typename Exact>
+    bool
+    window_<Exact>::impl_is_centered() const
+    {
+      return this->has(zero);
     }
     
     template <typename Exact>

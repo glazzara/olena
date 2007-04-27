@@ -119,7 +119,8 @@ namespace oln
     erosion(const Image<I>& input, const Window<W>& win)
     {
       oln_plain(I) output = impl::erosion_(exact(input), exact(win));
-      postcondition(output <= input);
+      if (win.is_centered())
+	postcondition(output <= input);
       return output;
     }
 

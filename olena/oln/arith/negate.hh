@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,29 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_LEVEL_APPLY_HH
-# define OLN_LEVEL_APPLY_HH
+#ifndef OLN_ARITH_NEGATE_HH
+# define OLN_ARITH_NEGATE_HH
 
 # include <oln/core/concept/image.hh>
-# include <oln/core/gen/fun.hh>
-# include <oln/core/internal/f_ch_value.hh>
+# include <oln/core/internal/max_value.hh>
+# include <oln/core/internal/min_value.hh>
 
 
 namespace oln
 {
-
-  namespace level
+  
+  namespace arith
   {
 
-    // Fwd decls.
+    // Fwd decl.
 
-    template <typename F, typename I>
-    oln_plain_value(I, typename F::result)
-    apply(const Function_v2v<F>& f, const Image<I>& input);
-
-    template <typename R, typename A, typename I>
-    oln_plain_value(I, R)
-    apply(R (*f)(A), const Image<I>& input);
+    template <typename I>
+    oln_plain(I)
+    negate(const Image<I>& input);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -56,48 +51,46 @@ namespace oln
     namespace impl
     {
 
-      // Generic version.
+      // FIXME: Trash code! Not so simple...
 
-      template <typename F, typename I>
-      oln_plain_value(I, typename F::result)
-      apply_(const F& f, const Image<I>& input)
+      template <typename T>
+      T value_negate_(const T& v)
       {
-        typedef typename F::argument argument;
-        typedef typename F::result   result;
-
-	oln_plain_value(I, result) output;
-	prepare(output, with, input);
-        oln_piter(I) p(input.points());
-        for_all(p)
-          output(p) = f(input(p));
-        return output;
+	return static_cast<T>(oln_min(T) + (oln_max(T) - v));
       }
 
-    } // end of namespace oln::level::impl
+
+      // Generic version.
+
+      template <typename I>
+      oln_plain(I)
+      negate_(const Image<I>& input)
+      {
+	oln_plain(I) output;
+	prepare(output, with, input);
+	oln_piter(I) p(input.points());
+	for_all(p)
+	  output(p) = value_negate_<oln_value(I)>(input(p));
+	return output;
+      }
+
+    } // end of namespace oln::arith::impl
 
 
-    // Facades.
+    // Facade.
 
-    template <typename F, typename I>
-    oln_plain_value(I, typename F::result)
-    apply(const Function_v2v<F>& f, const Image<I>& input)
+    template <typename I>
+    oln_plain(I)
+    negate(const Image<I>& input)
     {
-      return impl::apply_(exact(f), exact(input));
+      return impl::negate_(exact(input));
     }
 
-    template <typename R, typename A, typename I>
-    oln_plain_value(I, R)
-    apply(R (*f)(A), const Image<I>& input)
-    {
-      return impl::apply_(functorize_v2v(f), exact(input));
-    }
 
+  } // end of namespace oln::arith
 
 # endif // ! OLN_INCLUDE_ONLY
 
-  } // end of namespace oln::level
-
 } // end of namespace oln
 
-
-#endif // ! OLN_LEVEL_APPLY_HH
+#endif // ! OLN_ARITH_NEGATE_HH

@@ -34,6 +34,7 @@
 # include <oln/level/fill.hh>
 # include <oln/core/internal/f_ch_value.hh>
 
+
 namespace oln
 {
 
@@ -44,6 +45,11 @@ namespace oln
     oln_plain_value(I, unsigned)
     cc_tarjan(const Image_with_Nbh<I>& f);
 
+    template <typename I>
+    oln_plain_value(I, unsigned)
+    cc_tarjan(const Image_with_Nbh<I>& f, unsigned& nlabels);
+
+
 # ifndef OLN_INCLUDE_ONLY
 
     namespace impl
@@ -53,11 +59,12 @@ namespace oln
       {
 	typedef oln_point(I) point;
 
-	const I&      f;
+	const I& f;
 
 	oln_plain_value(I, unsigned)  output;
 	oln_plain_value(I, bool) is_processed;
 	oln_plain_value(I, point) parent;
+	unsigned nlabels;
 
 	cc_tarjan_(const I& f)
 	  : f(f)
@@ -70,12 +77,13 @@ namespace oln
 	  prepare(output, with, f);
 	  prepare(parent, with, f);
 	  level::fill(inplace(is_processed), false);
+	  nlabels = 0;
 	}
 
 	void first_pass_body(const point& p)
 	{
 	  parent(p) = p;
-	  if ( f(p) )
+	  if (f(p) == true)
 	  {
 	    oln_niter(I) n(f, p);
 	    for_all(n)
@@ -85,31 +93,34 @@ namespace oln
 	      }
 	    is_processed(p) = true;
 	  }
-
 	}
 
 	void second_pass_body(const point& p)
 	{
-	  unsigned current_label = 0;
-	  if ( f(p) == true and parent(p) == p )
-	    output(p) = ++current_label;
+	  if (f(p) == true)
+	    {
+	      if (parent(p) == p)
+		output(p) = ++nlabels;
+	      else
+		output(p) = output(parent(p));
+	    }
 	  else
-	    output(p) = output(parent(p));
+	    output(p) = 0; // bg label
 	}
 
-	void final() { }
+	void final()
+	{
+	}
 
 
 	// auxiliary methods
 
-	point find_root(const point& x)
+	point find_root(const point& x) // FIXME: or w/o const&?
 	{
-	  if (parent(x) != x)
-	  {
-	    parent(x) = find_root(parent(x));
-	    return parent(x);
-	  }
-	  return x;
+	  if (parent(x) == x)
+	    return x;
+	  else
+	    return parent(x) = find_root(parent(x));
 	}
 
 	void do_union(const point& n,
@@ -124,15 +135,28 @@ namespace oln
 
     } // end of namespace oln::morpho::impl
 
-// Facades.
+
+    // Facades.
+
+    template <typename I>
+    oln_plain_value(I, unsigned)
+    cc_tarjan(const Image_with_Nbh<I>& f, unsigned& nlabels)
+    {
+      impl::cc_tarjan_<I> run(exact(f));
+      std::cout << run.output.is_empty() << std::endl;
+      canvas::v1::two_pass(run);
+      std::cout << run.output.is_empty() << std::endl;
+      nlabels = run.nlabels;
+      oln_plain_value(I, unsigned) tmp = run.output;
+      return tmp;
+    }
 
     template <typename I>
     oln_plain_value(I, unsigned)
     cc_tarjan(const Image_with_Nbh<I>& f)
     {
-      impl::cc_tarjan_<I> run(exact(f));
-      canvas::v1::two_pass(run);
-      return run.output;
+      unsigned nlabels;
+      return cc_tarjan(f, nlabels);
     }
 
 # endif // ! OLN_INCLUDE_ONLY

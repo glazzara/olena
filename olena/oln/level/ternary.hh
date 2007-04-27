@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,12 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_LEVEL_APPLY_HH
-# define OLN_LEVEL_APPLY_HH
+#ifndef OLN_LEVEL_TERNARY_HH
+# define OLN_LEVEL_TERNARY_HH
 
 # include <oln/core/concept/image.hh>
-# include <oln/core/gen/fun.hh>
-# include <oln/core/internal/f_ch_value.hh>
+# include <oln/core/gen/ternary_fun.hh>
+# include <oln/core/gen/pw_value.hh>
+# include <oln/core/level/fill.hh>
 
 
 namespace oln
@@ -40,15 +40,11 @@ namespace oln
   namespace level
   {
 
-    // Fwd decls.
+    // Fwd decl.
 
-    template <typename F, typename I>
-    oln_plain_value(I, typename F::result)
-    apply(const Function_v2v<F>& f, const Image<I>& input);
-
-    template <typename R, typename A, typename I>
-    oln_plain_value(I, R)
-    apply(R (*f)(A), const Image<I>& input);
+    template <typename B, typename T, typename F>
+    oln_plain(T) // FIXME: oln_promote_trait(oln_value(T), oln_value(B))
+    ternary(const Binary_Image<B>& b, const Image<T>& t, const Image<F>& f);
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -58,19 +54,14 @@ namespace oln
 
       // Generic version.
 
-      template <typename F, typename I>
-      oln_plain_value(I, typename F::result)
-      apply_(const F& f, const Image<I>& input)
+      template <typename B, typename T, typename F>
+      oln_plain(T)
+      ternary(const Binary_Image<B>& b, const Image<T>& t, const Image<F>& f)
       {
-        typedef typename F::argument argument;
-        typedef typename F::result   result;
-
-	oln_plain_value(I, result) output;
-	prepare(output, with, input);
-        oln_piter(I) p(input.points());
-        for_all(p)
-          output(p) = f(input(p));
-        return output;
+	oln_plain(T) output;
+	prepare(output, with, t);
+	return level::fill(inplace(output),
+			   ternary_fun(pw_value(b), pw_value(t), pw_value(f)));
       }
 
     } // end of namespace oln::level::impl
@@ -78,20 +69,16 @@ namespace oln
 
     // Facades.
 
-    template <typename F, typename I>
-    oln_plain_value(I, typename F::result)
-    apply(const Function_v2v<F>& f, const Image<I>& input)
+    template <typename B, typename T, typename F>
+    oln_plain(T)
+    ternary(const Binary_Image<B>& b, const Image<T>& t, const Image<F>& f)
     {
-      return impl::apply_(exact(f), exact(input));
+      oln::assert_same_point_<B, T>::check();
+      oln::assert_same_point_<T, F>::check();
+      precondition(b.points() >= t.points());
+      precondition(t.points() == f.points());
+      return impl::ternary_(exact(b), exact(t), exact(f));
     }
-
-    template <typename R, typename A, typename I>
-    oln_plain_value(I, R)
-    apply(R (*f)(A), const Image<I>& input)
-    {
-      return impl::apply_(functorize_v2v(f), exact(input));
-    }
-
 
 # endif // ! OLN_INCLUDE_ONLY
 
@@ -100,4 +87,4 @@ namespace oln
 } // end of namespace oln
 
 
-#endif // ! OLN_LEVEL_APPLY_HH
+#endif // ! OLN_LEVEL_TERNARY_HH

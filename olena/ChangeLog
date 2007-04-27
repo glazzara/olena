@@ -1,3 +1,40 @@
+2007-04-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment morphology.
+
+	* oln/core/gen/ternary_fun.hh: New.
+	* oln/logic: New directory.
+	* oln/logic/and.hh,
+	* oln/logic/not.hh,
+	* oln/morpho/hit_or_miss_all.hh,
+	* oln/morpho/hit_or_miss.hh,
+	* oln/morpho/hit_or_miss_background_closing.hh,
+	* oln/morpho/hit_or_miss_background_opening.hh,
+	* oln/morpho/hit_or_miss_closing.hh,
+	* oln/morpho/complementation.hh,
+	* oln/morpho/hit_or_miss_opening.hh,
+	* oln/level/ternary.hh,
+	* oln/arith/min.hh,
+	* oln/arith/negate.hh: New.
+	* oln/convert/to_window.hh
+	(to_window_values_, fill_): New in internal.
+	(to_window): New overload.
+	* oln/convert/to_weighted_window.hh: Update.
+	* oln/core/gen/dpoints_piter.hh
+	(dpoints_fwd_piter_, dpoints_bkd_piter_): New ctor overloads.
+	* oln/core/gen/window.hh (impl_fill_with): New.
+	* oln/core/gen/pw_value.hh (pw_value_base_): New.
+	(pw_value): Make inheritance flexible. 
+	* oln/core/concept/window.hh (is_centered): New.
+	* oln/core/internal/window.hh (impl_is_centered): New.
+	* oln/core/internal/dpoints_impl.hh: Fix.
+	* oln/morpho/cc_tarjan_v1.hh (cc_tarjan): New facade.
+	* oln/morpho/cc_tarjan_v2.hh: Fix.
+	* oln/morpho/erosion.hh (postcondition): Fix.
+	* oln/morpho/dilation.hh (postcondition): Fix.
+	* oln/level/apply.hh: Cosmetic change.
+	* oln/canvas/two_pass.hh: Fix.
+
 2007-04-26  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	cc-tarjan(two_pass) : Fix + Comparative statement : v0, v1, v2.

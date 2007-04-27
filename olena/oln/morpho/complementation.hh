@@ -25,68 +25,65 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CONVERT_TO_WEIGHTED_WINDOW_HH
-# define OLN_CONVERT_TO_WEIGHTED_WINDOW_HH
+#ifndef	OLN_MORPHO_COMPLEMENTATION_HH
+# define OLN_MORPHO_COMPLEMENTATION_HH
 
-# include <oln/core/concept/image.hh>
-# include <oln/core/concept/window.hh>
-# include <oln/core/concept/function.hh>
-# include <oln/core/gen/zero.hh>
-# include <oln/convert/to_dpoint.hh>
-# include <oln/core/internal/f_weighted_window.hh>
+# include <oln/arith/negate.hh>
+# include <oln/logic/not.hh>
 
 
 namespace oln
 {
 
-  namespace convert
+  namespace morpho
   {
 
     // Fwd decl.
 
     template <typename I>
-    oln_f_image_to_weighted_window(I)
-    to_weighted_window(const Image<I>& input);
-
-
-    template <typename F, typename W>
-    oln_f_weighted_window(oln_result(F), oln_dpoint(W))
-    to_weighted_window(const Function_p2v<F>& weight, // FIXME: should be Function_dp2v?
-		       const Window<W>& win);
+    oln_plain(I)
+    complementation(const Image<I>& input);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-    // Generic versions.
+    namespace impl
+    {
+
+      // Generic versions.
+
+      template <typename I>
+      oln_plain(I)
+      complementation_(const Image<I>& input)
+      {
+	return arith::negate(input);
+      }
+
+      template <typename I>
+      oln_plain(I)
+      complementation_(const Binary_Image<I>& input)
+      {
+	return not input;
+      }
+
+    } // end of namespace oln::morpho::impl
+
+
+    // Facade.
 
     template <typename I>
-    oln_f_image_to_weighted_window(I)
-    to_weighted_window(const Image<I>& input)
+    oln_plain(I)
+    complementation(const Image<I>& input)
     {
-      oln_f_image_to_weighted_window(I) w_win;
-      oln_piter(I) p(input.points());
-      for_all(p)
-	w_win.take(input(p), convert::to_dpoint(p));
-      return w_win;
-    }
-
-    template <typename F, typename W>
-    oln_f_weighted_window(oln_result(F), oln_dpoint(W))
-    to_weighted_window(const Function_p2v<F>& weight, const Window<W>& win)
-    {
-      const F& weight_ = exact(weight);
-      oln_f_weighted_window(oln_result(F), oln_dpoint(W)) w_win;
-      oln_qiter(W) q(win, zero);
-      for_all(q)
-	w_win.take(weight_(q), convert::to_dpoint(q));
-      return w_win;
+      oln_plain(I) output = impl::complementation_(exact(input));
+      return output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY
 
-  } // end of namespace oln::convert
+  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-#endif // ! OLN_CONVERT_TO_WEIGHTED_WINDOW_HH
+#endif // ! OLN_MORPHO_COMPLEMENTATION_HH

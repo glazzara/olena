@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,71 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_CORE_CONCEPT_WINDOW_HH
-# define OLN_CORE_CONCEPT_WINDOW_HH
+#ifndef OLN_LOGIC_NOT_HH
+# define OLN_LOGIC_NOT_HH
 
-# include <oln/core/equipment.hh>
-# include <oln/core/concept/point.hh>
+# include <oln/core/concept/image.hh>
+# include <oln/core/gen/traits.hh>
+# include <oln/core/gen/pw_value.hh>
+# include <oln/level/fill.hh>
+
 
 
 namespace oln
 {
 
-  /// Concept-class "Window".
+  // Trait.
 
-  template <typename Exact>
-  struct Window : public Any<Exact>
+  template <typename I>
+  struct set_utrait_< not_id, Image, I >
   {
-    stc_typename(grid);
-    stc_typename(point);
-
-    stc_typename(qiter);
-    stc_typename(fwd_qiter);
-    stc_typename(bkd_qiter);
-
-    unsigned size() const;
-    bool is_centered() const;
-
-  protected:
-    Window();
-
-  }; // end of oln::Window<Exact>
+    typedef oln_plain(I) ret;
+  };
 
 
-  template <typename W>
-  W operator - (const Window<W>& rhs);
+  // Fwd decl.
+  
+  template <typename I>
+  oln_plain(I)
+  operator not (const Binary_Image<I>& rhs);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
-  template <typename Exact>
-  Window<Exact>::Window()
+  namespace logic
   {
-  }
+    namespace impl
+    {
 
-  template <typename Exact>
-  unsigned
-  Window<Exact>::size() const
-  {
-    return exact(this)->impl_size();
-  }
+      // Generic version.
 
-  template <typename Exact>
-  bool
-  Window<Exact>::is_centered() const
-  {
-    return exact(this)->impl_is_centered();
-  }
+      template <typename I>
+      oln_plain(I)
+      not_(const Binary_Image<I>& rhs)
+      {
+	oln_plain(I) output;
+	prepare(output, with, rhs);
+	level::fill(inplace(output), not pw_value(rhs));
+	return output;
+      }
 
-  template <typename W>
-  W operator - (const Window<W>& rhs)
+
+    } // end of namespace oln::logic::impl
+
+  } // end of namespace oln::logic
+
+
+  // Facade.
+
+  template <typename I>
+  oln_plain(I)
+  operator not (const Binary_Image<I>& rhs)
   {
-    return exact(rhs).impl_op_unary_minus_();
+    return logic::impl::not_(rhs);
   }
 
 # endif // ! OLN_INCLUDE_ONLY
 
 } // end of namespace oln
 
-
-#endif // ! OLN_CORE_CONCEPT_WINDOW_HH
+#endif // ! OLN_LOGIC_NOT_HH
