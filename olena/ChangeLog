@@ -1,3 +1,18 @@
+2007-04-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Canvas : Add union-find, two_pass version. Fix reconstruction.
+
+	* oln/core/internal/point_impl.hh: Whitespaces.
+	* oln/morpho/binary_reconstruction_v0.hh: Procedure version.
+	* oln/morpho/fast_binary_reconstruction.hh: Fast hybrid version.
+	* oln/morpho/reconstruction.hh: removed.
+	* oln/morpho/binary_reconstruction.hh: Removed.
+	* oln/morpho/binary_reconstruction_v1.hh: Canvas version.
+	* oln/level/local_sup.hh: Fixed.
+	* oln/level/local_inf.hh: Fixed.
+	* oln/canvas/union_find.hh: New.
+	* oln/canvas/two_pass.hh: New version (v4) with inheritens.
+
 2007-04-27  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	fast iterator on image3b_b.

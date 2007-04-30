@@ -54,7 +54,8 @@ namespace oln
 
     namespace impl
     {
-      template <typename I>
+      template <typename I> // FIXME : template< op_<I, extended_by, N>,
+                            // typename I, Typename N> ?
       struct cc_tarjan_
       {
 	typedef oln_point(I) point;
@@ -128,7 +129,7 @@ namespace oln
 	{
 	  point r = find_root(n);
 	  if (r != p)
-	    parent(r) = p;
+	    parent(r) = p5A5A;
 	}
 
       };

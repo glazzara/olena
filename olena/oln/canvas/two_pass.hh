@@ -5,8 +5,8 @@
 // of the GNU General Public License version 2 as published by the
 // Free Software Foundation.
 //
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 // General Public License for more details.
 //
@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-# include <oln/core/concept/image.hh>
+#include <oln/core/concept/image.hh>
 
 #ifndef	OLN_CANVAS_TWO_PASS_HH
 # define OLN_CANVAS_TWO_PASS_HH
@@ -60,7 +60,7 @@ namespace canvas
   namespace v2 // Data owned by f but not input.
   {
     template <typename F, typename I>
-    void two_pass(F fun, I f)
+    void two_pass(F& fun, I f)
     {
 //      mlc::assert_< mlc_is_a(I, Image) >::check();
 
@@ -83,7 +83,7 @@ namespace canvas
   namespace v3 // Auxiliar data given as argument.
   {
     template <typename F, typename I, typename A>
-    void two_pass(F fun, I f, A aux)
+    void two_pass(F fun, I f, A& aux)
     {
 //      mlc::assert_< mlc_is_a(I, Image) >::check();
 
@@ -107,38 +107,44 @@ namespace canvas
   namespace v4 // Via Inheritance.
   {
 
-    template <typename I>
+    template <typename Exact>
     struct two_pass
     {
+      void init()
+      {
+	this->exact().impl_init();
+      }
 
-      const I&      f;
+      void final()
+      {
+	this->exact().impl_final();
+      }
 
-      
+      void first_pass_body(const oln_point(I)& p)
+      {
+	this->exact().impl_first_pass_body(p);
+      }
 
-      void init();
-
-      void final();
-
-      void first_pass_body(const oln_point(I)& p);
-
-      void second_pass_body(const oln_point(I)& p);
+      void second_pass_body(const oln_point(I)& p)
+      {
+	this->exact().impl_second_pass_body(p);
+      }
 
       void run()
       {
 	init(f);
 
 	// first pass
-	oln_bkd_piter(I) p1(f.points());
+	oln_bkd_piter(typename Exact::I) p1(f.points());
 	for_all(p1)
 	  first_pass_body(p1);
 
 	// second pass
-	oln_fwd_piter(I) p2(f.points());
+	oln_fwd_piter(typename Exact::I) p2(f.points());
 	for_all(p2)
 	  second_pass_body(p2);
 
 	final(f);
-
       }
 
     };
