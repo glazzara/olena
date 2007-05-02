@@ -153,7 +153,8 @@ namespace oln
     template <typename I, typename T>
     void fill(const Image<I>&, const T&)
     {
-      mlc::abort_<I>::check(); // FIXME: Add err msg.
+      mlc::abort_< I,
+	ERROR::keyword_inplace_is_missing >::check();
     }
 
 # endif // ! OLN_INCLUDE_ONLY

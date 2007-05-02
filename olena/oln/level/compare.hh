@@ -30,9 +30,9 @@
 
 # include <oln/core/concept/image.hh>
 # include <oln/core/gen/pset_compare.hh>
+# include <oln/core/gen/value.hh>
 
 // FIXME: Rename this file as "comparison.hh".
-
 
 
 namespace oln
@@ -42,21 +42,30 @@ namespace oln
 
   template <typename L, typename R>
   bool operator == (const Image<L>& lhs, const Image<R>& rhs);
-
-  template <typename I>
-  bool operator == (const Image<I>& lhs, const oln_value(I)& val);
   
   template <typename L, typename R>
   bool operator < (const Image<L>& lhs, const Image<R>& rhs);
-
-  template <typename I>
-  bool operator < (const Image<I>& lhs, const oln_value(I)& val);
   
-  template <typename L, typename R>
+  template <typename L, typename R> // required!
   bool operator <= (const Image<L>& lhs, const Image<R>& rhs);
 
-  template <typename I>
-  bool operator <= (const Image<I>& lhs, const oln_value(I)& val);
+
+  // with a value:
+
+  template <typename I, typename V>
+  bool operator == (const Image<I>& lhs, const value_<V>& val);
+
+  template <typename I, typename V>
+  bool operator < (const Image<I>& lhs, const value_<V>& val);
+
+  template <typename I, typename V>
+  bool operator <= (const Image<I>& lhs, const value_<V>& val);
+
+  template <typename I, typename V>
+  bool operator > (const Image<I>& lhs, const value_<V>& val);
+
+  template <typename I, typename V>
+  bool operator >= (const Image<I>& lhs, const value_<V>& val);
 
 
   // FIXME: is-it a good idea to have "ima == lit"?
@@ -74,28 +83,11 @@ namespace oln
     // Generic version.
 
     template <typename L, typename R>
-    bool op_eq_(const Image<L>& lhs, const Image<R>& rhs)
+    bool operator_equal_(const Image<L>& lhs, const Image<R>& rhs)
     {
-      precondition(lhs.points() == rhs.points());
       oln_piter(L) p(lhs.points());
       for_all(p)
-	if (lhs(p) != rhs(p))
-	  return false;
-      return true;
-    }
-
-
-    //  Image I  ==  Value V
-    // ----------------------
-
-    // Generic version.
-
-    template <typename I>
-    bool op_eq_(const Image<I>& lhs, const oln_value(I)& val)
-    {
-      oln_piter(I) p(lhs.points());
-      for_all(p)
-	if (lhs(p) != val)
+	if (not (lhs(p) == rhs(p)))
 	  return false;
       return true;
     }
@@ -107,28 +99,11 @@ namespace oln
     // Generic version.
 
     template <typename L, typename R>
-    bool op_less_(const Image<L>& lhs, const Image<R>& rhs)
+    bool operator_less_(const Image<L>& lhs, const Image<R>& rhs)
     {
-      precondition(lhs.points() == rhs.points());
       oln_piter(L) p(lhs.points());
       for_all(p)
-	if (lhs(p) >= rhs(p))
-	  return false;
-      return true;
-    }
-
-
-    //  Image I  <  Value V
-    // ---------------------
-
-    // Generic version.
-
-    template <typename I>
-    bool op_less_(const Image<I>& lhs, const oln_value(I)& val)
-    {
-      oln_piter(I) p(lhs.points());
-      for_all(p)
-	if (lhs(p) >= val)
+	if (not (lhs(p) < rhs(p)))
 	  return false;
       return true;
     }
@@ -140,32 +115,77 @@ namespace oln
     // Generic version.
 
     template <typename L, typename R>
-    bool op_leq_(const Image<L>& lhs, const Image<R>& rhs)
+    bool operator_less_or_equal_(const Image<L>& lhs, const Image<R>& rhs)
     {
-      precondition(lhs.points() == rhs.points());
       oln_piter(L) p(lhs.points());
       for_all(p)
-	if (lhs(p) > rhs(p))
+	if (not (lhs(p) <= rhs(p)))
 	  return false;
       return true;
     }
 
 
-    //  Image I  <=  Value V
+    //  Image I  ==  Value V
     // ----------------------
 
     // Generic version.
 
     template <typename I>
-    bool op_leq_(const Image<I>& lhs, const oln_value(I)& val)
+    bool operator_image_equal_to_value_(const Image<I>& lhs,
+					const oln_value(I)& val)
     {
       oln_piter(I) p(lhs.points());
       for_all(p)
-	if (lhs(p) > val)
+	if (not (lhs(p) == val))
 	  return false;
       return true;
     }
 
+
+    //  Image I  cmp  Value V
+    // -----------------------
+
+    // Generic versions.
+
+    template <typename I>
+    bool operator_image_less_than_value_(const Image<I>& lhs, const oln_value(I)& val)
+    {
+      oln_piter(I) p(lhs.points());
+      for_all(p)
+	if (not (lhs(p) < val))
+	  return false;
+      return true;
+    }
+
+    template <typename I>
+    bool operator_image_less_or_equal_than_value_(const Image<I>& lhs, const oln_value(I)& val)
+    {
+      oln_piter(I) p(lhs.points());
+      for_all(p)
+	if (not (lhs(p) <= val))
+	  return false;
+      return true;
+    }
+
+    template <typename I>
+    bool operator_image_greater_than_value_(const Image<I>& lhs, const oln_value(I)& val)
+    {
+      oln_piter(I) p(lhs.points());
+      for_all(p)
+	if (not (lhs(p) > val))
+	  return false;
+      return true;
+    }
+
+    template <typename I>
+    bool operator_image_greater_or_equal_than_value_(const Image<I>& lhs, const oln_value(I)& val)
+    {
+      oln_piter(I) p(lhs.points());
+      for_all(p)
+	if (not (lhs(p) >= val))
+	  return false;
+      return true;
+    }
 
   } // end of namespace oln::level::impl
 
@@ -176,39 +196,62 @@ namespace oln
   bool operator == (const Image<L>& lhs, const Image<R>& rhs)
   {
     assert_same_grid_<L, R>::check();
-    return impl::op_eq_(exact(lhs), exact(rhs));
-  }
-
-  template <typename I>
-  bool operator == (const Image<I>& lhs, const oln_value(I)& val)
-  {
-    return impl::op_eq_(exact(lhs), val);
+    precondition(lhs.points() == rhs.points());
+    return impl::operator_equal_(exact(lhs), exact(rhs));
   }
 
   template <typename L, typename R>
   bool operator < (const Image<L>& lhs, const Image<R>& rhs)
   {
     assert_same_grid_<L, R>::check();
-    return impl::op_less_(exact(lhs), exact(rhs));
-  }
-
-  template <typename I>
-  bool operator < (const Image<I>& lhs, const oln_value(I)& val)
-  {
-    return impl::op_less_(exact(lhs), val);
+    precondition(lhs.points() == rhs.points());
+    return impl::operator_less_(exact(lhs), exact(rhs));
   }
 
   template <typename L, typename R>
   bool operator <= (const Image<L>& lhs, const Image<R>& rhs)
   {
     assert_same_grid_<L, R>::check();
-    return impl::op_leq_(exact(lhs), exact(rhs));
+    precondition(lhs.points() == rhs.points());
+    return impl::operator_less_or_equal_(exact(lhs), exact(rhs));
   }
 
-  template <typename I>
-  bool operator <= (const Image<I>& lhs, const oln_value(I)& val)
+
+  // with a value:
+
+  template <typename I, typename V>
+  bool operator == (const Image<I>& lhs, const value_<V>& val)
   {
-    return impl::op_leq_(exact(lhs), val);
+    // FIXME: insert static assertion?
+    return impl::operator_image_equal_to_value_(exact(lhs), val.unwrap());
+  }
+
+  template <typename I, typename V>
+  bool operator < (const Image<I>& lhs, const value_<V>& val)
+  {
+    // FIXME: insert static assertion?
+    return impl::operator_image_less_than_value_(exact(lhs), val.unwrap());
+  }
+
+  template <typename I, typename V>
+  bool operator <= (const Image<I>& lhs, const value_<V>& val)
+  {
+    // FIXME: insert static assertion?
+    return impl::operator_image_less_or_equal_than_value_(exact(lhs), val.unwrap());
+  }
+
+  template <typename I, typename V>
+  bool operator > (const Image<I>& lhs, const value_<V>& val)
+  {
+    // FIXME: insert static assertion?
+    return impl::operator_image_greater_than_value_(exact(lhs), val.unwrap());
+  }
+
+  template <typename I, typename V>
+  bool operator >= (const Image<I>& lhs, const value_<V>& val)
+  {
+    // FIXME: insert static assertion?
+    return impl::operator_image_greater_or_equal_than_value_(exact(lhs), val.unwrap());
   }
 
 # endif // ! OLN_INCLUDE_ONLY

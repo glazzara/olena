@@ -83,7 +83,12 @@ namespace oln
 # define oln_dim(T)    oln_typename_shortcut__(T, dim)
 # define oln_dpoint(T) oln_typename_shortcut__(T, dpoint)
 
+  // e
+  stc_decl_associated_type( encoding );
+# define oln_encoding(T) oln_typename_shortcut__(T, encoding)
+
   // f
+  stc_decl_associated_type( fiter );
   stc_decl_associated_type( fwd_niter );
   stc_decl_associated_type( fwd_piter );
   stc_decl_associated_type( fwd_qiter );
@@ -108,6 +113,7 @@ namespace oln
   // n
   stc_decl_associated_type( n );
   stc_decl_associated_type( nbh );
+  stc_decl_associated_type( nbits );
   stc_decl_associated_type( niter );
 
 # define oln_niter(T) oln_typename_shortcut__(T, niter)

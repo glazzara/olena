@@ -44,21 +44,6 @@ namespace oln
     Value();
   };
 
-  /// Concept-class "Boolean".
-
-  template <typename Exact>
-  struct Boolean : public Value<Exact>
-  {
-  protected:
-    Boolean();
-  };
-
-  template <>
-  struct vtypes< bool > // FIXME: single_vtype? or move elsewhere?
-  {
-    typedef stc::is<Boolean> category;
-  };
-
 
 # ifndef OLN_INCLUDE_ONLY
 
@@ -66,13 +51,6 @@ namespace oln
 
   template <typename Exact>
   Value<Exact>::Value()
-  {
-  }
-
-  // Boolean.
-
-  template <typename Exact>
-  Boolean<Exact>::Boolean()
   {
   }
 

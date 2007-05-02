@@ -40,6 +40,10 @@ namespace oln
   struct Literal : public Any<Exact>
   {
     typedef Literal<void> category;
+
+    template <typename T>
+    operator T() const; // NEW
+
   protected:
     Literal();
   };
@@ -62,6 +66,15 @@ namespace oln
   template <typename Exact>
   Literal<Exact>::Literal()
   {
+  }
+
+  template <typename Exact>
+  template <typename T>
+  Literal<Exact>::operator T() const
+  {
+    T tmp;
+    assignment_(tmp, exact(*this));
+    return tmp;
   }
 
   template <typename L, typename R>

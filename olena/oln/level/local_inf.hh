@@ -68,7 +68,7 @@ namespace oln
 		 const oln_point(I)& p)
       {
  	f.init_with(input(p));
-	oln_niter(I) n(input, p);
+	oln_niter(I) n(p, input);
 	for_all(n)
 	  if (n < p)
 	    f(input(n));
@@ -86,7 +86,7 @@ namespace oln
 	f.init_with(input(p));
 	if (f.value() == true)
 	  return true;
-	oln_niter(I) n(input, p);
+	oln_niter(I) n(p, input);
 	for_all(n)
 	  if (n < p)
 	  {
@@ -106,7 +106,7 @@ namespace oln
 		 const oln_point(I)& p)
       {
 	f.init_with(input(p));
-	oln_niter(I) n(input, p);
+	oln_niter(I) n(p, input);
 	for_all(n)
 	  if (n < p)
 	  {

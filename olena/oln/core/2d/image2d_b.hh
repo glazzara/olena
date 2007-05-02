@@ -89,8 +89,7 @@ namespace oln
     typedef internal::plain_primitive_image_<current> super;
     typedef array2d_<T, int> array_t;
   public:
-    //FIXME (fast image concept??)
-    typedef typename vtypes< image2d_b<T> >::fiter fiter;
+    typedef stc_type(current, fiter) fiter;
     stc_using(data);
 
     image2d_b();

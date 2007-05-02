@@ -90,7 +90,7 @@ namespace oln
       precondition(lhs.points() == rhs.points());
       oln_plain_value(I, V) output;
       prepare(output, with, lhs);
-      level::fill(output,
+      level::fill(inplace(output),
  		  value_cast<V>(pw_value(lhs) - pw_value(rhs)));
       return output;
     }

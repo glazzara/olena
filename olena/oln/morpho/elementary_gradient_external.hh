@@ -74,7 +74,7 @@ namespace oln
     elementary_gradient_external(const Image_with_Nbh<I>& input)
     {
       oln_plain(I) output = impl::elementary_gradient_external_(exact(input));
-      postcondition(output >= zero);
+      postcondition(output >= oln_value(I)(zero));
       return output;
     }
 

@@ -25,65 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_TOP_HAT_WHITE_HH
-# define OLN_MORPHO_TOP_HAT_WHITE_HH
-
-# include <oln/core/gen/zero.hh>
-# include <oln/morpho/opening.hh>
-# include <oln/morpho/closing.hh>
-# include <oln/arith/minus.hh>
+#ifndef OLN_VALUE_MLC_EXTRA_HH
+# define OLN_VALUE_MLC_EXTRA_HH
 
 
-namespace oln
+
+namespace mlc
 {
-
-  namespace morpho
+  namespace math
   {
 
-    // Fwd decl.
-
-    template <typename I, typename W>
-    oln_plain(I)
-    top_hat_white(const Image<I>& input, const Window<W>& win);
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    namespace impl
+    template <int X, unsigned N>
+    struct pow_
     {
+      enum { value = X * pow_<X, N-1>::value };
+    };
 
-      // Generic version.
-
-      template <typename I, typename W>
-      oln_plain(I)
-      top_hat_white_(const Image<I>& input, const Window<W>& win)
-      {
-	oln_plain(I) ope = opening(input, win)
-	return arith::minus<oln_value(I)>(input, ope);
-      }
-
-      // FIXME: Add a fast version.
-
-    } // end of namespace oln::morpho::impl
-
-
-    // Facade.
-
-    template <typename I, typename W>
-    oln_plain(I)
-    top_hat_white(const Image<I>& input, const Window<W>& win)
+    template <int X>
+    struct pow_< X, 0 >
     {
-      oln_plain(I) output = impl::top_hat_white_(exact(input), exact(win));
-      postcondition(output >= oln_value(I)(zero));
-      return output;
-    }
+      enum { value = 1 };
+    };
 
-# endif // ! OLN_INCLUDE_ONLY
+    template <>
+    struct pow_< 0, 0 >
+    {
+      enum { value = 1 };
+    };
 
-  } // end of namespace oln::morpho
+    template <unsigned N>
+    struct pow_< 0, N >
+    {
+      enum { value = 0 };
+    };
 
-} // end of namespace oln
+
+    template <unsigned N>
+    struct two_pow_ : public pow_<2, N>
+    {
+    };
 
 
-#endif // ! OLN_MORPHO_TOP_HAT_WHITE_HH
+  } // end of namespace mlc::math
+
+} // end of namespace mlc
+
+
+
+#endif // ! OLN_VALUE_MLC_EXTRA_HH
 

@@ -25,65 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_TOP_HAT_WHITE_HH
-# define OLN_MORPHO_TOP_HAT_WHITE_HH
+#ifndef OLN_VALUE_BOOL_HH
+# define OLN_VALUE_BOOL_HH
 
-# include <oln/core/gen/zero.hh>
-# include <oln/morpho/opening.hh>
-# include <oln/morpho/closing.hh>
-# include <oln/arith/minus.hh>
+# include <oln/core/internal/value_base.hh>
 
 
 namespace oln
 {
 
-  namespace morpho
+  // Super type.
+  template<>
+  struct super_trait_< bool >
   {
+    typedef internal::boolean_value_< bool > ret;
+  };
 
-    // Fwd decl.
-
-    template <typename I, typename W>
-    oln_plain(I)
-    top_hat_white(const Image<I>& input, const Window<W>& win);
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    namespace impl
-    {
-
-      // Generic version.
-
-      template <typename I, typename W>
-      oln_plain(I)
-      top_hat_white_(const Image<I>& input, const Window<W>& win)
-      {
-	oln_plain(I) ope = opening(input, win)
-	return arith::minus<oln_value(I)>(input, ope);
-      }
-
-      // FIXME: Add a fast version.
-
-    } // end of namespace oln::morpho::impl
-
-
-    // Facade.
-
-    template <typename I, typename W>
-    oln_plain(I)
-    top_hat_white(const Image<I>& input, const Window<W>& win)
-    {
-      oln_plain(I) output = impl::top_hat_white_(exact(input), exact(win));
-      postcondition(output >= oln_value(I)(zero));
-      return output;
-    }
-
-# endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::morpho
+  // Virtual types.
+  template <>
+  struct vtypes< bool >
+  {
+    typedef bool encoding;
+    // FIXME: ...
+  };
 
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_TOP_HAT_WHITE_HH
-
+#endif // ! OLN_VALUE_BOOL_HH

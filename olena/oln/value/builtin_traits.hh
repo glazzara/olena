@@ -32,45 +32,41 @@
 # include <oln/core/gen/traits.hh>
 
 
+# define oln_decl_builtin_binary_trait(T1, T2, R)			\
+									\
+  template <typename Op>						\
+  struct set_trait_< Value, T1, Op, Value, T2 > { typedef R ret; };	\
+									\
+  template <typename Op>						\
+  struct set_trait_< Value, T2, Op, Value, T1 > { typedef R ret; };	\
+									\
+  struct e_n_d___w_i_t_h___s_e_m_i_c_o_l_u_m_n
+
+
 namespace oln
 {
 
-  template <typename Op>
-  struct set_trait_< Value, int, Op, Value, float >
-  {
-    typedef float ret;
-  };
+  oln_decl_builtin_binary_trait(unsigned char,  float, float);
+  oln_decl_builtin_binary_trait(unsigned short, float, float);
+  oln_decl_builtin_binary_trait(unsigned int,   float, float);
+  oln_decl_builtin_binary_trait(unsigned long,  float, float);
 
-  template <typename Op>
-  struct set_trait_< Value, double, Op, Value, double >
-  {
-    typedef double ret;
-  };
+  oln_decl_builtin_binary_trait(signed char,  float, float);
+  oln_decl_builtin_binary_trait(signed short, float, float);
+  oln_decl_builtin_binary_trait(signed int,   float, float);
+  oln_decl_builtin_binary_trait(signed long,  float, float);
 
-  template <typename Op>
-  struct set_trait_< Value, int, Op, Value, double >
-  {
-    typedef double ret;
-  };
+  oln_decl_builtin_binary_trait(unsigned char,  double, double);
+  oln_decl_builtin_binary_trait(unsigned short, double, double);
+  oln_decl_builtin_binary_trait(unsigned int,   double, double);
+  oln_decl_builtin_binary_trait(unsigned long,  double, double);
 
-  template <typename Op>
-  struct set_trait_< Value, float, Op, Value, int >
-  {
-    typedef float ret;
-  };
+  oln_decl_builtin_binary_trait(signed char,  double, double);
+  oln_decl_builtin_binary_trait(signed short, double, double);
+  oln_decl_builtin_binary_trait(signed int,   double, double);
+  oln_decl_builtin_binary_trait(signed long,  double, double);
 
-
-  template <typename Op>
-  struct set_trait_< Value, bool, Op, Value, bool >
-  {
-    typedef bool ret;
-  };
-
-  template <typename Op>
-  struct set_utrait_< Op, Boolean, bool >
-  {
-    typedef bool ret;
-  };
+  oln_decl_builtin_binary_trait(float, double, double);
 
   // FIXME: To be continued...
 

@@ -1,3 +1,47 @@
+2007-05-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add materials for value types and builtins.
+
+	* oln/core/internal/f_grid_coord_to_point.hh: New.
+	* oln/core/internal/macros_ops.hh: New.
+	* oln/core/internal/value_base.hh: New.
+	* oln/morpho/thinning.hh: New.
+	* oln/value/gray_level.hh: New.
+	* oln/value/bool.hh: New.
+	* oln/value/gray.hh: New.
+	* oln/value/black.hh: New.
+	* oln/value/mlc_extra.hh: New.
+	* oln/core/2d/image2d_b.hh (fiter): Update.
+	* oln/core/3d/image3d_b.hh: Likewise.
+	* oln/core/equipment.hh (encoding, fiter, nbits): New.
+	* oln/core/gen/extended_by.hh: Add mutable nbh version.
+	* oln/core/gen/inplace.hh: New error type.
+	* oln/core/gen/value.hh (unwrap): New.
+	(make_value): New overload.
+	* oln/core/gen/zero.hh: Replace operators by...
+	(assignment_): New.
+	* oln/core/concept/literal.hh (operator T): New.
+	* oln/core/concept/dpoint.hh (operator%=): Fix and factor.
+	* oln/core/internal/dpoint_base.hh (impl_op_mod_equal_): Remove.
+	* oln/core/concept/value.hh (Boolean): Remove.
+	* oln/core/concept/operators.hh: Handle builtins.
+	* oln/morpho/elementary_gradient.hh (postcondition): Update.
+	* oln/morpho/top_hat_black.hh,
+	* oln/morpho/top_hat_white.hh,
+	* oln/morpho/elementary_gradient_internal.hh,
+	* oln/morpho/elementary_gradient_external.hh,
+	* oln/morpho/gradient_internal.hh,
+	* oln/morpho/gradient.hh,
+	* oln/morpho/gradient_external.hh: Likewise.
+	* oln/arith/plus.hh,
+	* oln/arith/minus.hh,
+	* oln/level/local_sup.hh,
+	* oln/level/fill.hh,
+	* oln/level/local_inf.hh,
+	* oln/value/builtin_traits.hh,
+	* oln/value/builtin.hh: Update.
+	* oln/level/compare.hh: Update.
+
 2007-04-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Canvas : Add union-find, two_pass version. Fix reconstruction.

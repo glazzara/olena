@@ -34,17 +34,17 @@
 namespace oln
 {
 
+  struct zero_t;
+
+
+  void assignment_(int&      i, const zero_t&) { i = 0;   }
+  void assignment_(unsigned& u, const zero_t&) { u = 0u;  }
+  void assignment_(float&    f, const zero_t&) { f = 0.f; }
+  void assignment_(double&   d, const zero_t&) { d = 0.;  }
+
+
   struct zero_t : public Literal< zero_t >
   {
-
-    template <typename T>
-    operator T() const;
-
-    // builtins:
-    operator unsigned() const;
-    operator int() const;
-    operator float() const;
-    operator double() const;
   }
 
   zero;
@@ -60,21 +60,6 @@ namespace oln
 
 
 # ifndef OLN_INCLUDE_ONLY
-
-  template <typename T>
-  zero_t::operator T() const
-  {
-    mlc::assert_< mlc_is_a(T, Any) >::check(); // FIXME: Add err msg.
-    T tmp;
-    tmp.assign_(*this);
-    return tmp;
-  }
-
-  zero_t::operator unsigned() const { return 0u;  }
-  zero_t::operator int()      const { return 0;   }
-  zero_t::operator float()    const { return 0.f; }
-  zero_t::operator double()   const { return 0.;  }
-
 
   template <typename T>
   T

@@ -85,8 +85,6 @@ namespace oln
       coord  operator[](unsigned i) const;
       coord& operator[](unsigned i);
 
-      Exact& impl_op_mod_equal_(const Exact& rhs); // FIXME: Remove HERE
-
       typedef xtd::vec<n, coord> vec_t;
       const vec_t& vec() const;
       vec_t& vec();
@@ -115,18 +113,6 @@ namespace oln
     {
       assert(i < n);
       return v_[i];
-    }
-
-    template <typename Exact>
-    Exact& dpoint_base_<Exact>::impl_op_mod_equal_(const Exact& rhs)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	{
-	  v_[i] %= rhs.v_[i];
-	  if (v_[i] < 0)
-	    v_[i] += rhs.v_[i];
-	}
-      return exact(*this);
     }
 
     template <typename Exact>

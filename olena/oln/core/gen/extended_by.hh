@@ -46,11 +46,13 @@ namespace oln
 {
 
   oln_decl_op_image_extended_by_const(Neighborhood);
+  oln_decl_op_image_extended_by_mutable(Neighborhood);
 
 
 # ifndef OLN_INCLUDE_ONLY
 
   oln_def_op_image_extended_by_const(Neighborhood);
+  oln_def_op_image_extended_by_mutable(Neighborhood);
 
 # endif // ! OLN_INCLUDE_ONLY
 

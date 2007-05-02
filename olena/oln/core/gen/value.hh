@@ -79,6 +79,8 @@ namespace oln
     template <typename U>
     operator value_<U>() const;
 
+    const T& unwrap() const;
+
   private:
     T val_;
   };
@@ -146,14 +148,25 @@ namespace oln
   }
 
   template <typename T>
-  value_<T> make_value(const T& val)
+  const T&
+  value_<T>::unwrap() const
+  {
+    return this->val_;
+  }
+
+  // make_value
+
+  template <typename T>
+  value_<T>
+  make_value(const T& val)
   {
     value_<T> tmp = val;
     return tmp;
   }
 
   template <typename T>
-  value_<T> make_value(const value_<T>& val)
+  value_<T>
+  make_value(const value_<T>& val)
   {
     return val;
   }

@@ -28,84 +28,59 @@
 #ifndef OLN_VALUE_BUILTIN_HH
 # define OLN_VALUE_BUILTIN_HH
 
-# include <oln/core/concept/value.hh>
+# include <oln/core/internal/value_base.hh>
 
 
 namespace oln
 {
 
-
-  // Fwd decl.
-  namespace internal { template <typename Exact> struct builtin_base; }
-
-
-  // Virtual types.
-  template <typename Exact>
-  struct vtypes< internal::builtin_base<Exact> >
-  {
-    typedef stc::final< stc::is<Value> > category;
-  };
-
-
-  namespace internal
-  {
-
-    // Base class for builtin types.
-    template <typename Exact>
-    struct builtin_base : public Value<Exact>
-    {
-    protected:
-      builtin_base();
-    };
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename Exact>
-    builtin_base<Exact>::builtin_base()
-    {
-    }
-
-# endif // ! OLN_INCLUDE_ONLY
-  
-  } // end of namespace oln::internal
-
-
-
-  // unsigned, int, float, double,...
-
-  template <>
-  struct super_trait_< unsigned >
-  {
-    typedef internal::builtin_base<unsigned> ret;
-  };
+  // int
 
   template <>
   struct super_trait_< int >
   {
-    typedef internal::builtin_base<int> ret;
+    typedef internal::data_value_<int> ret;
   };
+
+  template <>
+  struct vtypes< int >
+  {
+  };
+
+
+  // float
 
   template <>
   struct super_trait_< float >
   {
-    typedef internal::builtin_base<float> ret;
+    typedef internal::data_value_<float> ret;
   };
+
+  template <>
+  struct vtypes< float >
+  {
+  };
+
+
+  // double
 
   template <>
   struct super_trait_< double >
   {
-    typedef internal::builtin_base<double> ret;
+    typedef internal::data_value_<double> ret;
   };
 
+  template <>
+  struct vtypes< double >
+  {
+  };
 
+  // FIXME: To be continued...
 
 } // end of namespace oln
 
 
-// FIXME: Bad?
 # include <oln/value/builtin_traits.hh>
 
 
 #endif // ! OLN_VALUE_BUILTIN_HH
-

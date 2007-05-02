@@ -62,6 +62,13 @@ namespace oln
   inplace(inplace_<I> ima);
 
 
+  namespace ERROR
+  {
+
+    struct keyword_inplace_is_missing;
+
+  } // end of namespace oln::ERROR
+
 
 # ifndef OLN_INCLUDE_ONLY
 

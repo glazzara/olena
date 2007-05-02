@@ -73,7 +73,7 @@ namespace oln
       coord& row();
 
       coord  col() const;
-      coord& col();
+      coord& col();      
     };
 
 

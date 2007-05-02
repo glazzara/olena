@@ -73,7 +73,7 @@ namespace oln
     gradient_internal(const Image<I>& input, const Window<W>& win)
     {
       oln_plain(I) output = impl::gradient_internal_(exact(input), exact(win));
-      postcondition(output >= zero);
+      postcondition(output >= oln_value(I)(zero));
       return output;
     }
 

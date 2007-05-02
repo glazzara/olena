@@ -31,6 +31,7 @@
 # include <oln/core/equipment.hh>
 # include <oln/core/gen/traits.hh>
 # include <oln/core/gen/value.hh>
+# include <oln/core/internal/macros_ops.hh>
 
 
 namespace oln
@@ -61,12 +62,19 @@ namespace oln
 
   template <typename T>
   T
-  operator - (const Any<T>& lhs, const Any<T>& rhs); // Using "+=".
+  operator - (const Any<T>& lhs, const Any<T>& rhs); // Using "-=".
 
   template <typename T>
   T
   operator % (const Any<T>& lhs, const Any<T>& rhs); // Using "%=".
 
+
+
+  // With builtin:
+
+  oln_def_cmp_ops_with_builtin(int);
+  oln_def_cmp_ops_with_builtin(float);
+  oln_def_cmp_ops_with_builtin(double);
 
 
 
@@ -119,6 +127,43 @@ namespace oln
   //  end of Guards.
 
 
+
+  // FIXME: Just a try.
+
+  // The result of "a builtin Op any type" is just like
+  // the commuted operation, that is, "any type Op a builtin".
+  // As a consequence, we never have to handle the case of a builtin
+  // being the lhs operand.
+
+  template <typename T>
+  oln_plus_trait(T, int)
+  operator+ (int lhs, const Any<T>& rhs)
+  {
+    return exact(rhs) + lhs;
+  }
+
+  template <typename T>
+  oln_times_trait(T, int)
+  operator* (int lhs, const Any<T>& rhs)
+  {
+    return exact(rhs) * lhs;
+  }
+
+  template <typename T>
+  oln_times_trait(T, float)
+  operator* (float lhs, const Any<T>& rhs)
+  {
+    return exact(rhs) * lhs;
+  }
+
+  template <typename T>
+  oln_times_trait(T, double)
+  operator* (double lhs, const Any<T>& rhs)
+  {
+    return exact(rhs) * lhs;
+  }
+
+  // FIXME: end of "Just a try".
 
 
 # ifndef OLN_INCLUDE_ONLY
@@ -175,7 +220,7 @@ namespace oln
 
   // Operator ==.
   template <typename L, typename R>
-  void operator == (const Any<L>& lhs, const Any<R>& rhs)
+  void operator == (const Any<L>&, const Any<R>&)
   {
     mlc::abort_<L,
       typename ERROR::operator_< eq_id >::_is_missing_for_types_<L, R>
@@ -184,7 +229,7 @@ namespace oln
 
   // Operator <.
   template <typename L, typename R>
-  void operator < (const Any<L>& lhs, const Any<R>& rhs)
+  void operator < (const Any<L>&, const Any<R>&)
   {
     mlc::abort_<L,
       typename ERROR::operator_< less_id >::template _is_missing_for_types_<L, R>
@@ -193,7 +238,7 @@ namespace oln
 
   // Operator +=.
   template <typename L, typename R>
-  void operator += (const Any<L>& lhs, const Any<R>& rhs)
+  void operator += (const Any<L>&, const Any<R>&)
   {
     mlc::abort_<L,
       typename ERROR::operator_< plus_equal_id >::template _is_missing_for_types_<L, R>
@@ -202,7 +247,7 @@ namespace oln
 
   // Operator -=.
   template <typename L, typename R>
-  void operator -= (const Any<L>& lhs, const Any<R>& rhs)
+  void operator -= (const Any<L>&, const Any<R>&)
   {
     mlc::abort_<L,
       typename ERROR::operator_< minus_equal_id >::template _is_missing_for_types_<L, R>
@@ -211,7 +256,7 @@ namespace oln
 
   // Operator %=.
   template <typename L, typename R>
-  void operator %= (const Any<L>& lhs, const Any<R>& rhs)
+  void operator %= (const Any<L>&, const Any<R>&)
   {
     mlc::abort_<L,
       typename ERROR::operator_< modulus_equal_id >::template _is_missing_for_types_<L, R>
@@ -220,7 +265,7 @@ namespace oln
 
   // Operator -.
   template <typename T>
-  void operator - (const Any<T>& rhs)
+  void operator - (const Any<T>&)
   {
     mlc::abort_<T,
       typename ERROR::operator_< uminus_id >::template _is_missing_for_<T>

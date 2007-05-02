@@ -25,64 +25,87 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_MORPHO_ELEMENTARY_GRADIENT_INTERNAL_HH
-# define OLN_MORPHO_ELEMENTARY_GRADIENT_INTERNAL_HH
+#ifndef OLN_CORE_INTERNAL_F_GRID_COORD_TO_POINT_HH
+# define OLN_CORE_INTERNAL_F_GRID_COORD_TO_POINT_HH
 
-# include <oln/core/gen/zero.hh>
-# include <oln/morpho/elementary_erosion.hh>
-# include <oln/arith/minus.hh>
+# include <oln/core/concept/grid.hh>
+
+
+# define oln_f_grid_coord_to_point(G, C) \
+typename oln::internal::f_grid_coord_to_point_< G, C >::ret
 
 
 namespace oln
 {
 
-  namespace morpho
+  /// \{
+  /// Forward declarations.
+
+  // Grid types.
+
+  struct grid1d;
+  struct grid2d; // FIXME: hex, tri...
+  struct grid3d;
+
+  // Point types.
+
+  struct point1d;
+  struct point2d;
+  struct point3d;
+  template <typename G, typename C> class point;
+
+  /// \}
+
+
+
+  namespace internal
   {
 
-    // Fwd decl.
-
-    template <typename I>
-    oln_plain(I)
-    elementary_gradient_internal(const Image_with_Nbh<I>& input);
+    template <typename G, typename C>
+    struct grid_coord_to_point__;
 
 
-# ifndef OLN_INCLUDE_ONLY
+    /// \{
+    /// Definitions.
 
-    namespace impl
+    template <typename G, typename C>
+    struct grid_coord_to_point__
     {
+      typedef oln::point<G, C> ret;
+    };
 
-      // Generic version.
-
-      template <typename I>
-      oln_plain(I)
-      elementary_gradient_internal_(const Image_with_Nbh<I>& input)
-      {
-	oln_plain(I) ero = elementary_erosion(input)
-	return arith::minus<oln_value(I)>(input, ero);
-      }
-
-
-      // FIXME: Add a fast version.
-
-    } // end of namespace oln::morpho::impl
-
-
-    // Facade.
-
-    template <typename I>
-    oln_plain(I)
-    elementary_gradient_internal(const Image_with_Nbh<I>& input)
+    template <>
+    struct grid_coord_to_point__< grid1d, int >
     {
-      oln_plain(I) output = impl::elementary_gradient_internal_(exact(input));
-      postcondition(output >= oln_value(I)(zero));
-      return output;
-    }
+      typedef point1d ret;
+    };
 
-# endif // ! OLN_INCLUDE_ONLY
+    template <>
+    struct grid_coord_to_point__< grid2d, int >
+    {
+      typedef point2d ret;
+    };
 
-  } // end of namespace oln::morpho
+    // FIXME: 2D hex/tri...
+
+    template <>
+    struct grid_coord_to_point__< grid3d, int >
+    {
+      typedef point3d ret;
+    };
+
+    /// \}
+
+
+    template <typename G, typename C>
+    struct f_grid_coord_to_point_ : private mlc::assert_< mlc_is_a(G, Grid) >,
+				    public grid_coord_to_point__< G, C >
+    {
+    };
+
+  } // end of namespace oln::internal
 
 } // end of namespace oln
 
 
-#endif // ! OLN_MORPHO_ELEMENTARY_GRADIENT_INTERNAL_HH
+#endif // ! OLN_CORE_INTERNAL_F_GRID_COORD_TO_POINT_HH

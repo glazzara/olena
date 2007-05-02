@@ -30,6 +30,7 @@
 # define OLN_CORE_CONCEPT_DPOINT_HH
 
 # include <oln/core/concept/point.hh>
+# include <xtd/vec.hh>
 
 
 
@@ -192,7 +193,13 @@ namespace oln
   template <typename D, typename D2>
   D& operator %= (Dpoint<D>& lhs, const Dpoint<D2>& rhs)
   {
-    exact(lhs).vec() %= exact(rhs).vec();
+    // FIXME: Check that D::n == D2::n
+    for (unsigned i = 0; i < D::n; ++i)
+      {
+	exact(lhs)[i] %= exact(rhs)[i];
+	if (exact(lhs)[i] < 0)
+	  exact(lhs)[i] += exact(rhs)[i];
+      }
     return exact(lhs);
   }
 
