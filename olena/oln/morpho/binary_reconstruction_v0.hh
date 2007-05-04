@@ -33,6 +33,7 @@
 # include <oln/accumulator/max.hh>
 # include <oln/level/clone.hh>
 # include <oln/level/fill.hh>
+# include <oln/level/compare.hh>
 # include <oln/level/local_inf.hh>
 # include <oln/level/local_sup.hh>
 
@@ -51,18 +52,6 @@ namespace oln
 
     namespace impl
     {
-
-      template <typename I>
-      bool
-      stability(const Image_with_Nbh<I>& marker,
-		oln_plain(I)& tmp)
-      {
-	oln_piter(I) p(marker.points());
-	for_all(p)
-	  if (marker(p) != tmp(p))
-	    return false;
-	return true;
-      }
 
       template <typename I, typename J>
       oln_plain(I)
@@ -88,19 +77,32 @@ namespace oln
       }
 
       template <typename I , typename J>
-      void // FIXME : Slow impl.
+      oln_plain(I)
       binary_reconstruction_(const Image_with_Nbh<I>& marker,
 			     const Binary_Image<J>& mask)
       {
-	oln_plain(I) tmp = level::clone(marker);
+	accumulator::max_<oln_value(I)> max;
+	oln_plain(I)
+	  output = level::clone(marker),
+	  memo;
 
-	while ( not stability(marker, tmp) )
+	do
 	{
-	  level::fill(inplace(exact(marker).image()), tmp);
-	  tmp = binary_reconstruction_loop(marker, mask);
-	}
+	  memo = level::clone(output);
 
-	level::fill(inplace(exact(marker).image()), tmp);
+	  // first pass
+	  oln_fwd_piter(I) p1(marker.points());
+	  for_all(p1)
+	    output(p1) = level::local_sup(max, output, p1) and mask(p1);
+
+	  // second pass
+	  oln_bkd_piter(I) p2(marker.points());
+	  for_all(p2)
+	    output(p2) = level::local_inf(max, output, p2) and mask(p2);
+
+	} while (output != memo);
+
+	return output;
       }
 
     } // end of namespace oln::morpho::impl

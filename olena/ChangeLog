@@ -1,3 +1,15 @@
+2007-05-04  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix Reconstruction. Draft canvas unionfind. .
+
+	* oln/morpho/binary_reconstruction_v0.hh: .
+	* oln/morpho/cc_tarjan_v4.hh: .
+	* oln/morpho/cc_tarjan_v1.hh: .
+	* oln/level/local_sup.hh: .
+	* oln/level/local_inf.hh: .
+	* oln/canvas/union_find.hh: .
+	* oln/canvas/two_pass.hh: .
+
 2007-05-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add materials for value types and builtins.

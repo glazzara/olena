@@ -29,18 +29,15 @@
 # define OLN_MORPHO_CC_TARJAN_HH
 
 # include <oln/core/concept/image.hh>
-# include <oln/core/internal/f_ch_value.hh>
-
 # include <oln/canvas/two_pass.hh>
 # include <oln/level/fill.hh>
+# include <oln/core/internal/f_ch_value.hh>
 
 namespace oln
 {
 
   namespace morpho
   {
-
-    // Fwd declaration.
 
     template <typename I>
     oln_plain_value(I, unsigned)
@@ -50,95 +47,95 @@ namespace oln
 
     namespace impl
     {
-
       template <typename I>
-      struct cc_tarjan_ : public canvas::v4::two_pass<I>
+      struct cc_tarjan_ : public canvas::v4::two_pass<I, cc_tarjan_<I> >
       {
 	typedef oln_point(I) point;
 
-	oln_plain_value(I, unsigned) output;
+	const I& f;
+
+	oln_plain_value(I, unsigned)  output;
 	oln_plain_value(I, bool) is_processed;
 	oln_plain_value(I, point) parent;
+	unsigned nlabels;
 
-	cc_tarjan_(const I& img)
+	cc_tarjan_(const I& f)
+	  : canvas::v4::two_pass<I, cc_tarjan_<I> >(f),
+	    f(f)
 	{
 	}
 
-	void init()
+	void impl_init()
 	{
-	  prepare(is_processed, with, this.f);
-	  prepare(output, with, this.f);
-	  prepare(parent, with, this.f);
+	  prepare(is_processed, with, f);
+	  prepare(output, with, f);
+	  prepare(parent, with, f);
 	  level::fill(inplace(is_processed), false);
+	  nlabels = 0;
 	}
 
-	void first_pass_body(const point& p)
+	void impl_first_pass_body(const point& p)
 	{
 	  parent(p) = p;
-	  if ( f(p) )
+	  if (f(p) == true)
 	  {
-	    oln_niter(I) n(this.f, p);
+	    oln_niter(I) n(f, p);
 	    for_all(n)
 	      {
-		if ( this.f(n) == true and is_processed(n) )
-		  do_union(this.f, n, p);
+		if ( f(n) == true and is_processed(n) )
+		  do_union(n, p);
 	      }
 	    is_processed(p) = true;
 	  }
-
 	}
 
-	void second_pass_body(const point& p)
+	void impl_second_pass_body(const point& p)
 	{
-	  unsigned current_label = 0;
-	  if ( this.f(p) == true and parent(p) == p )
-	    output(p) = ++current_label;
+	  if (f(p) == true)
+	    {
+	      if (parent(p) == p)
+		output(p) = ++nlabels;
+	      else
+		output(p) = output(parent(p));
+	    }
 	  else
-	    output(p) = output(parent(p));
+	    output(p) = 0; // bg label
 	}
 
-	void final()
+	void impl_final()
 	{
 	}
 
+	// auxiliary methods
 
-       	// auxiliary methods
-
-	point find_root(const I& ima,
-			const point& x)
+	point find_root(const point& x) // FIXME: or w/o const&?
 	{
-	  if (parent(x) != x)
-	  {
-	    parent(x) = find_root(ima, parent(x));
-	    return parent(x);
-	  }
-	  return x;
+	  if (parent(x) == x)
+	    return x;
+	  else
+	    return parent(x) = find_root(parent(x));
 	}
 
-	void do_union(const I& ima,
-		      const point& n,
+	void do_union(const point& n,
 		      const point& p)
 	{
-	  point r = find_root(ima, n);
+	  point r = find_root(n);
 	  if (r != p)
 	    parent(r) = p;
 	}
-
       };
 
     } // end of namespace oln::morpho::impl
-
-// Facades.
 
     template <typename I>
     oln_plain_value(I, unsigned)
     cc_tarjan(const Image_with_Nbh<I>& f)
     {
-      impl::cc_tarjan_<I> f_cc_tarjan(exact(f));
+      impl::cc_tarjan_<I> cc(exact(f));
 
-      f_cc_tarjan.run();
+      cc.run();
 
-      return f_cc_tarjan.output;
+      return cc.output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY
@@ -146,6 +143,5 @@ namespace oln
   } // end of namespace oln::morpho
 
 } // end of namespace oln
-
 
 #endif // ! OLN_MORPHO_CC_TARJAN_HH

@@ -43,15 +43,24 @@ namespace canvas
     oln_bkd_piter(I) p1(fun.f.points());
     for_all(p1)
     {
-      fun.parent(p1) = p1;
-      if (fun.f(p) == true)
+      if (fun.is_in_I(p1))
       {
-	oln_niter(I) n(f, p);
+	fun.make_set(p);
+	oln_niter(I) n(fun.f.points(), p);
 	for_all(n)
 	  {
-	    if (is_processed(n))
-	      if (f.condition_bck(p1, n))
-		fun.first_pass_body(p1);
+	    if ( fun.p_in_D_upper_or_equal(p1) )
+	    {
+	      if (is_processed(n))
+		fun.first_pass_body1(p1);
+	    }
+	    else
+	      if ( fun.p_in_Do(p1) )
+		fun.is_processed(p1) = false;
+	      else ( fun.p_in_D_lower_or_equal(p1) )
+		{
+		  fun.first_pass_body2(p1);
+		}
 	  }
       }
     }
@@ -60,11 +69,13 @@ namespace canvas
     oln_fwd_piter(I) p2(fun.f.points());
     for_all(p2)
     {
-      if (fun.f(p2) == true)
-	if (fun.condition_fwd(p2))
-	{
-	  fun.second_pass_body(p2);
-	}
+      if (fun.is_in_I(p2))
+      {
+	if (fun.is_root(p2))
+	  fun.set_output_value(p2);
+	else
+	  fun.output(p) = fun.output(fun.parent(p)) ; //bg label
+      }
     }
 
     fun.final();

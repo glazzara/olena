@@ -68,9 +68,9 @@ namespace oln
 		 const oln_point(I)& p)
       {
  	f.init_with(input(p));
-	oln_niter(I) n(p, input);
+	oln_niter(I) n(input, p);
 	for_all(n)
-	  if (n < p)
+	  if (n > p)
 	    f(input(n));
 	return f.value();
       }
@@ -86,9 +86,9 @@ namespace oln
 	f.init_with(input(p));
 	if (f.value() == true)
 	  return true;
-	oln_niter(I) n(p, input);
+	oln_niter(I) n(input, p);
 	for_all(n)
-	  if (n < p)
+	  if (n > p)
 	  {
 	    f(input(n)); // FIXME: Change to f.take(input(n))?
 	    if (f.value() == true)
@@ -106,9 +106,9 @@ namespace oln
 		 const oln_point(I)& p)
       {
 	f.init_with(input(p));
-	oln_niter(I) n(p, input);
+	oln_niter(I) n(input, p);
 	for_all(n)
-	  if (n < p)
+	  if (n > p)
 	  {
 	    f(input(n)); // FIXME: Change to f.take(input(n))?
 	    if (f.value() == false)
@@ -135,7 +135,7 @@ namespace oln
 	f.init_with(input(p));
 	oln_qiter(W) q(win, p);
 	for_all(q)
-	  if (q < p)
+	  if (q > p)
 	    if (input.owns_(q))
 	      f(input(q));
 	return f.value();
@@ -155,7 +155,7 @@ namespace oln
 	  return true;
 	oln_qiter(W) q(win, p);
 	for_all(q)
-	  if (q < p)
+	  if (q > p)
 	  {
 	    if (input.owns_(q))
 	      f(input(q));
@@ -177,7 +177,7 @@ namespace oln
 	f.init_with(input(p));
 	oln_qiter(W) q(win, p);
 	for_all(q)
-	  if (q < p)
+	  if (q > p)
 	  {
 	    if (input.owns_(q))
 	      f(input(q));

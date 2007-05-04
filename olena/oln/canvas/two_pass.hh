@@ -25,132 +25,198 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <oln/core/concept/image.hh>
-
 #ifndef	OLN_CANVAS_TWO_PASS_HH
 # define OLN_CANVAS_TWO_PASS_HH
 
-namespace canvas
+# include <oln/core/concept/image.hh>
+
+
+namespace oln
 {
 
-  namespace v1
-  {
-    template <template <class> class F,
-	      typename I> // Data owned by f.
-    void two_pass(F<I>& fun)
-    {
-//      mlc::assert_< mlc_is_a(I, Image) >::check();
-
-      fun.init();
-
-      // first pass
-      oln_bkd_piter(I) p1(fun.f.points());
-      for_all(p1)
-	fun.first_pass_body(p1);
-
-      // second pass
-      oln_fwd_piter(I) p2(fun.f.points());
-      for_all(p2)
-	fun.second_pass_body(p2);
-
-      fun.final();
-    }
-  }
-
-  namespace v2 // Data owned by f but not input.
-  {
-    template <typename F, typename I>
-    void two_pass(F& fun, I f)
-    {
-//      mlc::assert_< mlc_is_a(I, Image) >::check();
-
-      fun.init(f);
-
-      // first pass
-      oln_bkd_piter(I) p1(f.points());
-      for_all(p1)
-	fun.first_pass_body(p1, f);
-
-      // second pass
-      oln_fwd_piter(I) p2(f.points());
-      for_all(p2)
-	fun.second_pass_body(p2, f);
-
-      fun.final(f);
-    }
-  }
-
-  namespace v3 // Auxiliar data given as argument.
-  {
-    template <typename F, typename I, typename A>
-    void two_pass(F fun, I f, A& aux)
-    {
-//      mlc::assert_< mlc_is_a(I, Image) >::check();
-
-      f.init(f, aux);
-
-      // first pass
-      oln_bkd_piter(I) p1(f.points());
-      for_all(p1)
-	f.first_pass_body(p1, f, aux);
-
-      // second pass
-      oln_fwd_piter(I) p2(f.points());
-      for_all(p2)
-	f.second_pass_body(p2, f, aux);
-
-      f.final(f, aux);
-    }
-  }
-
-
-  namespace v4 // Via Inheritance.
+  namespace canvas
   {
 
-    template <typename Exact>
-    struct two_pass
+    namespace v1
     {
-      void init()
+      template <template <class> class F,
+		typename I> // Data owned by f.
+      void two_pass(F<I>& fun)
       {
-	this->exact().impl_init();
-      }
+	mlc::assert_< mlc_is_a(I, Image) >::check();
 
-      void final()
-      {
-	this->exact().impl_final();
-      }
-
-      void first_pass_body(const oln_point(I)& p)
-      {
-	this->exact().impl_first_pass_body(p);
-      }
-
-      void second_pass_body(const oln_point(I)& p)
-      {
-	this->exact().impl_second_pass_body(p);
-      }
-
-      void run()
-      {
-	init(f);
+	fun.init();
 
 	// first pass
-	oln_bkd_piter(typename Exact::I) p1(f.points());
+	oln_bkd_piter(I) p1(fun.f.points());
 	for_all(p1)
-	  first_pass_body(p1);
+	  fun.first_pass_body(p1);
 
 	// second pass
-	oln_fwd_piter(typename Exact::I) p2(f.points());
+	oln_fwd_piter(I) p2(fun.f.points());
 	for_all(p2)
-	  second_pass_body(p2);
+	  fun.second_pass_body(p2);
 
-	final(f);
+	fun.final();
       }
+    }
 
-    };
+    namespace v2 // Data owned by f but not input.
+    {
+      template <typename F, typename I>
+      void two_pass(F& fun, I f)
+      {
+	mlc::assert_< mlc_is_a(I, Image) >::check();
 
-  }
+	fun.init(f);
 
-}
+	// first pass
+	oln_bkd_piter(I) p1(f.points());
+	for_all(p1)
+	  fun.first_pass_body(p1, f);
+
+	// second pass
+	oln_fwd_piter(I) p2(f.points());
+	for_all(p2)
+	  fun.second_pass_body(p2, f);
+
+	fun.final(f);
+      }
+    }
+
+    namespace v3 // Auxiliar data given as argument.
+    {
+      template <typename F, typename I, typename A>
+      void two_pass(F& fun, I& f, A& aux)
+      {
+	mlc::assert_< mlc_is_a(I, Image) >::check();
+
+	f.init(f, aux);
+
+	// first pass
+	oln_bkd_piter(I) p1(f.points());
+	for_all(p1)
+	  f.first_pass_body(p1, f, aux);
+
+	// second pass
+	oln_fwd_piter(I) p2(f.points());
+	for_all(p2)
+	  f.second_pass_body(p2, f, aux);
+
+	f.final(f, aux);
+      }
+    }
+
+
+    namespace v4 // Via Inheritance.
+    {
+      template <typename I, typename Exact>
+      struct two_pass : public virtual Any<Exact>
+      {
+	void init()
+	{
+	  exact(this)->impl_init();
+	}
+
+	void first_pass_body(const oln_point(I)& p)
+	{
+	  exact(this)->impl_first_pass_body(p);
+	}
+
+	void second_pass_body(const oln_point(I)& p)
+	{
+	  exact(this)->impl_second_pass_body(p);
+	}
+
+	void final()
+	{
+	  exact(this)->impl_final();
+	}
+
+	// Concrete method.
+	void run()
+	{
+	  init();
+
+	  // first pass
+	  for_all(p1)
+	    first_pass_body(p1);
+
+	  // second pass
+
+	  for_all(p2)
+	    second_pass_body(p2);
+
+	  final();
+	}
+
+
+      protected:
+
+	// Ctor.
+	two_pass(const Image<I>& f) :
+	  p1(f.points()),
+	  p2(f.points())
+	{
+	}
+
+	oln_bkd_piter(I) p1;
+	oln_fwd_piter(I) p2;
+
+      };
+    }
+
+
+    namespace v5
+    {
+      template<typename I, typename Exact>
+      struct two_pass
+      {
+	const I& f;
+
+	void init()
+	{
+	  assert(0 && "'void init()' not implemented.");
+	}
+
+	void final()
+	{
+	  assert(0 && "'void final()' not implemented.");
+	}
+
+	void first_pass_body(const oln_point(I)&)
+	{
+	  assert(0 && "'void first_pass_body(const oln_point(I)& p)' not implemented.");
+	}
+
+	void second_pass_body(const oln_point(I)&)
+	{
+	  assert(0 && "'void second_pass_body(const oln_point(I)& p)' not implemented.");
+	}
+
+	void run()
+	{
+	  init();
+
+	  // first pass
+	  oln_bkd_piter(I) p1(f.points());
+	  for_all(p1)
+	    first_pass_body(p1);
+
+	  // second pass
+	  oln_fwd_piter(I) p2(f.points());
+	  for_all(p2)
+	    second_pass_body(p2);
+
+	  typename Exact::final();
+	}
+
+      };
+
+    } // end of namespace v5
+
+  } // end of namespace morpho
+
+} // end of namespace oln
 
 #endif // ! OLN_CANVAS_TWO_PASS_HH
