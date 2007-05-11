@@ -55,17 +55,14 @@ namespace mstd
 # include <stc/scoop.hxx>
 } // End of namespace mstd
 
-
-#define mstd_internal_select_class(T, CLASS) \
-mlc::bexpr_ < sizeof(internal::CLASS##_select(internal::makePtr< T >())) == sizeof(internal::yes_) >
-
-#define mstd_internal_select_mechanism(CLASS) \
-template <class E>                                                            \
-yes_ CLASS##_select(const CLASS<E>* arg);                                     \
-template <class T>                                                            \
-no_ CLASS##_select(const T* arg);                                             \
-no_ CLASS##_select(...)
-
+// FIXME
+struct transform : public std::unary_function<int&, int>
+{
+  result_type operator() (argument_type i)
+  {
+    return i + 1;
+  }
+};
 
 
 namespace mstd
@@ -102,8 +99,76 @@ namespace mstd
 
   mlc_decl_typedef(container_t);
   mlc_decl_typedef(stdcontainer_t);
+
+  mlc_decl_typedef(primitiveIterator_t);
 } // End of namespace mstd.
 
+/*----------------------------.
+| Automatic implementations.  |
+`----------------------------*/
+
+namespace mstd
+{
+  namespace behavior { struct identity; }
+
+  // Forward declarations.
+  template <typename Exact>
+  struct Container;
+
+  template <typename Exact>
+  struct ForwardContainer;
+
+  template <typename Exact>
+  struct BiDirContainer;
+
+  template <typename Exact>
+  struct Iterator;
+
+  namespace automatic
+  {
+    template <typename Exact>
+    struct set_impl< Container, behavior::identity, Exact > : public virtual Any<Exact>
+    {
+      stc_typename(value_t);
+
+      value_t impl_size() const
+      {
+        return exact(this)->get_deleg().impl_size();
+      }
+
+      bool impl_empty() const
+      {
+        return exact(this)->get_deleg().impl_empty();
+      }
+
+      void impl_clear()
+      {
+        exact(this)->get_deleg().impl_clear();
+      }
+    };
+
+    template <typename Exact>
+    struct set_impl< ForwardContainer, behavior::identity, Exact > : public virtual Any<Exact>
+    {
+      stc_typename(iter_t);
+    };
+
+    template <typename Exact>
+    struct set_impl< BiDirContainer, behavior::identity, Exact > : public virtual Any<Exact>
+    {
+      stc_typename(iter_t);
+    };
+
+    template <typename Exact>
+    struct set_impl< Iterator, behavior::identity, Exact > : public virtual Any<Exact>
+    {
+      bool impl_op_nequal(const Exact& it)
+      {
+        return exact(this)->get_deleg().impl_op_nequal(it.get_deleg());
+      }
+    };
+  }
+};
 
 /*---------------.
 | Abstractions.  |
@@ -116,17 +181,19 @@ namespace mstd
   // ---------- //
 
   template <typename Exact>
-  struct Iterator : virtual public Any<Exact>
+  struct Iterator : virtual public Any<Exact>,
+                    virtual public automatic::set_impl< Iterator, behavior::identity, Exact >
   {
     typedef Iterator<Exact> current;
 
     stc_typename(container_t);
     stc_typename(iter_t);
     stc_typename(value_t);
+    stc_typename(primitiveIterator_t);
 
-    value_t& operator*()
+    value_t operator*()
     {
-      exact(this)->impl_op_star();
+      return exact(this)->impl_op_star();
     }
 
     bool operator ==(const Exact& it)
@@ -146,7 +213,8 @@ namespace mstd
 
   template <typename Exact>
   struct Container : virtual public Any<Exact>,
-                     virtual public automatic::get_impl<Container, Exact>
+                     virtual public automatic::set_impl< Container, behavior::identity, Exact >
+  //automatic::get_impl<Container, Exact>
   {
     stc_typename(value_t);
     stc_typename(size_t);
@@ -208,7 +276,8 @@ namespace mstd
   // ------------------ //
 
   template <typename Exact>
-  struct ForwardContainer : public virtual Container<Exact>
+  struct ForwardContainer : public virtual Container<Exact>,
+                            public virtual automatic::set_impl<ForwardContainer, behavior::identity, Exact>
   {
     typedef Container<Exact> super;
     stc_typename(iter_t);
@@ -224,7 +293,8 @@ namespace mstd
   // ---------------- //
 
   template <typename Exact>
-  struct BiDirContainer : public virtual ForwardContainer<Exact>
+  struct BiDirContainer : public virtual ForwardContainer<Exact>,
+                          public virtual automatic::set_impl<BiDirContainer, behavior::identity, Exact>
   {
     typedef ForwardContainer<Exact> super;
     stc_using(iter_t);
@@ -349,16 +419,6 @@ namespace mstd
   template <typename T>
   struct associativeIterator;
 
-  // Bridge equipment
-  namespace internal
-  {
-    mstd_internal_select_mechanism(forwardIterator);
-    mstd_internal_select_mechanism(backwardIterator);
-    mstd_internal_select_mechanism(biDirIterator);
-    mstd_internal_select_mechanism(randomAccessibleIterator);
-    mstd_internal_select_mechanism(associativeIterator);
-  } // End of namespace interal
-
   // Tag.
   struct switch_is_sorted;
 
@@ -408,28 +468,28 @@ namespace mstd
 
   template <typename Exact>
   struct case_<switch_is_frontinsertion, Exact, 1> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), forwardIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), forwardIterator) >
   {
         typedef FrontInsertionContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_is_frontinsertion, Exact, 2> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), backwardIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), backwardIterator) >
   {
     typedef FrontInsertionContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_is_frontinsertion, Exact, 3> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), biDirIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), biDirIterator) >
   {
     typedef FrontInsertionContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_is_frontinsertion, Exact, 4> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), randomAccessibleIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), randomAccessibleIterator) >
   {
     typedef FrontInsertionContainer<Exact> ret;
   };
@@ -445,21 +505,21 @@ namespace mstd
 
   template <typename Exact>
   struct case_<switch_is_backinsertion, Exact, 1> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), backwardIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), backwardIterator) >
   {
     typedef BackInsertionContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_is_backinsertion, Exact, 2> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), biDirIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), biDirIterator) >
   {
     typedef BackInsertionContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_is_backinsertion, Exact, 3> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), randomAccessibleIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), randomAccessibleIterator) >
   {
     typedef BackInsertionContainer<Exact> ret;
   };
@@ -475,35 +535,35 @@ namespace mstd
 
   template <typename Exact>
   struct case_<switch_iterator_kind, Exact, 1> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), forwardIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), forwardIterator) >
   {
     typedef ForwardContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_iterator_kind, Exact, 2> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), backwardIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), backwardIterator) >
   {
     typedef BiDirContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_iterator_kind, Exact, 3> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), biDirIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t)::primitiveIterator_t, biDirIterator) > // ::primitiveIterator_t
   {
     typedef BiDirContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_iterator_kind, Exact, 4> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), randomAccessibleIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), randomAccessibleIterator) >
   {
     typedef RandomAccessibleContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_iterator_kind, Exact, 5> :
-    public mlc::where_ < mstd_internal_select_class(stc_find_type(Exact, iter_t), associativeIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), associativeIterator) >
   {
     typedef AssociativeContainer<Exact> ret;
   };
@@ -622,6 +682,7 @@ namespace mstd
 
     typedef stc_type(container_t, value_t) value_t;
     typedef stc_type(container_t, stdcontainer_t)::iterator iter_t;
+    typedef forwardIterator<T> primitiveIterator_t;
   };
 
   template <typename T>
@@ -704,6 +765,7 @@ namespace mstd
 
     typedef stc_type(container_t, value_t) value_t;
     typedef stc_type(container_t, stdcontainer_t)::iterator iter_t;
+    typedef biDirIterator<T> primitiveIterator_t;
   };
 
   template <typename T>
@@ -799,6 +861,7 @@ namespace mstd
 
     typedef stc_type(container_t, value_t) value_t;
     typedef stc_type(container_t, stdcontainer_t)::iterator iter_t;
+    typedef randomAccessibleIterator<T> primitiveIterator_t;
   };
 
   template <typename T>
@@ -933,7 +996,7 @@ namespace mstd
       return list_.back();
     }
 
-  private:
+  protected:
     stdcontainer_t list_;
   };
 
@@ -964,48 +1027,78 @@ namespace mstd
     stc_typename(delegatee);
 
   protected:
-    iterator_morpher_();
+    iterator_morpher_()
+    {
+    }
   };
 
 
-  template <typename Iterator>
+  template <typename Iterator, typename Functor>
   struct transform_morpher_iterator;
 
-  template <typename Iterator>
-  struct super_trait_<transform_morpher_iterator<Iterator> >
+  template <typename Iterator, typename Functor>
+  struct super_trait_<transform_morpher_iterator<Iterator, Functor> >
   {
-    typedef iterator_morpher_<transform_morpher_iterator<Iterator> > ret;
+    typedef iterator_morpher_<transform_morpher_iterator<Iterator, Functor> > ret;
   };
 
-  template <typename Iterator>
-  struct vtypes<transform_morpher_iterator<Iterator> >
+  template <typename Iterator, typename Functor>
+  struct vtypes<transform_morpher_iterator<Iterator, Functor> >
   {
     typedef Iterator delegatee;
   };
 
-  template <typename Iterator>
-  struct transform_morpher_iterator : public iterator_morpher_<transform_morpher_iterator<Iterator> >
+  template <typename Iterator, typename Functor>
+  struct transform_morpher_iterator : public iterator_morpher_<transform_morpher_iterator<Iterator, Functor> >
   {
-    typedef iterator_morpher_<transform_morpher_iterator<Iterator> > super;
+    typedef transform_morpher_iterator<Iterator, Functor> current;
+    typedef iterator_morpher_<current> super;
     stc_using(delegatee);
     stc_using(value_t);
+    stc_using(primitiveIterator_t);
 
-    typedef std::unary_function<value_t&,value_t> transform_t;
-
-    transform_morpher_iterator(delegatee& deleg, transform_t& trans) :
+    transform_morpher_iterator(delegatee deleg, Functor trans) :
       deleg_ (deleg),
       trans_ (trans)
     {
     }
 
-    value_t& impl_op_star()
+    value_t impl_op_star()
     {
-      return (*trans_)(*(deleg_.iter_));
+      typedef std::unary_function<value_t&,value_t> transform_t;
+      mlc::assert_< mlc_is_a(Functor, transform_t) >::check();
+      value_t val = *deleg_;
+      return trans_(val);
     }
 
-  private:
+    delegatee& get_deleg()
+    {
+      return deleg_;
+    }
+
+    delegatee& get_deleg() const
+    {
+      return deleg_;
+    }
+
+
+    //FIXME
+    current& operator++()
+    {
+      deleg_++;
+      return *exact(this);
+    }
+
+    //FIXME
+    current operator++(int)
+    {
+      current ret = *exact(this);
+      ++deleg_;
+      return ret;
+    }
+  protected:
     delegatee& deleg_;
-    transform_t& trans_;
+    Functor trans_;
   };
 
 
@@ -1024,6 +1117,7 @@ namespace mstd
   template <typename Exact>
   struct vtypes<container_morpher_<Exact> >
   {
+    typedef behavior::identity behavior;
   };
 
   template <typename Exact>
@@ -1032,48 +1126,73 @@ namespace mstd
     stc_typename(delegatee);
 
   protected:
-    container_morpher_();
+    container_morpher_()
+    {
+    }
   };
 
 
   // transform_morpher
-  template <typename Container>
+  template <typename Container, typename Functor>
   struct transform_morpher;
 
-  template <typename Container>
-  struct super_trait_<transform_morpher<Container> >
+  template <typename Container, typename Functor>
+  struct super_trait_<transform_morpher<Container, Functor> >
   {
     typedef container_morpher_<Container> ret;
   };
 
-  template <typename Container>
-  struct vtypes<transform_morpher<Container> >
+  template <typename Container, typename Functor>
+  struct vtypes<transform_morpher<Container, Functor> >
   {
     typedef Container delegatee;
-    typedef transform_morpher_iterator<typename Container::iter_t> iter_t;
+    typedef transform_morpher_iterator<typename Container::iter_t, Functor> iter_t;
   };
 
-  template <typename Container>
-  struct transform_morpher : public container_morpher_<transform_morpher<Container> >
+  template <typename Container, typename Functor>
+  struct transform_morpher : public container_morpher_<transform_morpher<Container, Functor> >
   {
-    typedef transform_morpher<Container> current;
-    typedef container_morpher_<Container> super;
+    typedef transform_morpher<Container, Functor> current;
+    typedef container_morpher_<current> super;
 
     stc_using(delegatee);
     stc_using(value_t);
+    stc_using(iter_t);
 
-    typedef std::unary_function<value_t&,value_t> transform_t;
+    //typedef std::unary_function<value_t&,value_t> transform_t;
 
-    transform_morpher(delegatee& d, transform_t& trans) :
+    transform_morpher(delegatee& d, Functor trans) :
       container_morpher_<current>(),
       deleg_ (d),
       trans_ (trans)
     {
     }
 
+    delegatee& get_deleg()
+    {
+      return deleg_;
+    }
+
+    delegatee& get_deleg() const
+    {
+      return deleg_;
+    }
+
+    iter_t impl_begin()
+    {
+      return iter_t(deleg_.begin(), trans_);
+    }
+
+    iter_t impl_end()
+    {
+      //      iter_t it(deleg_.end(), trans_);
+      //      it.get_deleg().to_end();
+      return iter_t(deleg_.end(), trans_);
+    }
+
   protected:
     delegatee& deleg_;
-    transform_t& trans_;
+    Functor trans_;
   };
 
 } // End of namespace mstd.
@@ -1104,14 +1223,6 @@ template <typename Exact>
 void test(mstd::ForwardContainer<Exact>& fc)
 {
 }
-
-class transform : public std::unary_function<int&, int>
-{
-  int operator() (int& i)
-  {
-    return i + 1;
-  }
-};
 
 int main()
 {
@@ -1178,15 +1289,36 @@ int main()
   for (mstd::list<int>::iter_t it = l.begin(); it != l.end(); ++it)
     TEST(*it);
 
-  // Functions
+  // Fonctions
   test(l);
 
   //   Dummy<int> a;
   //   test(a);
 
   // Morphers
-  transform t;
-  mstd::transform_morpher<mstd::list<int> > tm(l, t);
+  typedef mstd::transform_morpher<mstd::list<int>, transform > morpher_t;
+  morpher_t tm(l, transform());
 
-  // mstd::transform_morpher_iterator< mstd::list<int>::iter_t > im(l, t);
+  typedef mstd::transform_morpher_iterator<mstd::list<int>::iter_t, transform> itmorpher_t;
+  mlc::assert_< mlc_is_a_(itmorpher_t, mstd::Iterator) >::check();
+
+  typedef mstd::transform_morpher_iterator<mstd::list<int>::iter_t, transform> realiter_t;
+  mlc::assert_< mlc_eq(morpher_t::iter_t, realiter_t) >::check();
+
+  std::cout << "= Morpher" << std::endl;
+  for (morpher_t::iter_t im = tm.begin(); im != tm.end(); ++im)
+    TEST(*im);
+  std::cout << "= Morpher fin" << std::endl;
+
+  morpher_t::iter_t im = tm.begin();
+  TEST(*im);
+
+  {
+    mstd::list<int>::iter_t it = l.begin();
+    mstd::transform_morpher_iterator<mstd::list<int>::iter_t, transform> im(it, transform());
+    TEST(*it);
+    TEST(*im);
+  }
+  tm.clear();
+  TEST(tm.size());
 }
