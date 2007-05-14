@@ -53,29 +53,6 @@ namespace oln
     namespace impl
     {
 
-      template <typename I, typename J>
-      oln_plain(I)
-      binary_reconstruction_loop(const Image_with_Nbh<I>& marker,
-				 const Binary_Image<J>& mask)
-      {
-	oln_plain(I) output;
-	prepare(output, with, marker);
-
-	accumulator::max_<oln_value(I)> max;
-
-	// first pass
-	oln_fwd_piter(I) p(marker.points());
-	for_all(p)
-	  output(p) = level::local_sup(max, marker, p) and mask(p);
-
-	// second pass
-	oln_bkd_piter(I) p2(marker.points());
-	for_all(p2)
-	  output(p2) = level::local_inf(max, marker, p2) and mask(p2);
-
-	return output;
-      }
-
       template <typename I , typename J>
       oln_plain(I)
       binary_reconstruction_(const Image_with_Nbh<I>& marker,
@@ -108,11 +85,11 @@ namespace oln
     } // end of namespace oln::morpho::impl
 
     template <typename I , typename J>
-    void
+    oln_plain(I)
     binary_reconstruction(Binary_Image<I>& marker,
 			  const Binary_Image<J>& mask)
     {
-      impl::binary_reconstruction_(marker + c4, mask);
+      return impl::binary_reconstruction_(marker + c4, mask);
     }
 
 # endif // ! OLN_INCLUDE_ONLY

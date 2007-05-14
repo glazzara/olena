@@ -39,6 +39,7 @@
 # include <oln/core/internal/f_ch_value.hh> // FIXME : could be auto
 					    // included ?
 
+# include <oln/canvas/reconstruction.hh>
 
 namespace oln
 {
@@ -47,8 +48,8 @@ namespace oln
   {
 
     template <typename I , typename J>
-    void
-    binary_reconstruction(const Binary_Image<I>& marker,
+    oln_plain(I)
+    binary_reconstruction(const Image_with_Nbh<I>& marker,
 			  const Binary_Image<J>& mask);
 
 # ifndef OLN_INCLUDE_ONLY
@@ -56,76 +57,61 @@ namespace oln
     namespace impl
     {
 
-      template <typename I>
+      template <typename I, typename J>
       struct binary_reconstruction_
       {
+	typedef I Ima;
+	const I& marker;
+	const J& mask;
+	I output, memo;
+
 	accumulator::max_<oln_value(I)> accu;
 
-	oln_plain(I) output, memo;
-	const I& f;
-
-	binary_reconstruction_(const I& f)
-	  : f(f)
+	binary_reconstruction_(const Binary_Image<I>& marker,
+			       const J& mask)
+	  : marker(exact(marker)), mask(mask)
 	{
 	}
 
 	void init()
 	{
-	  prepare(output, with, f);
-	  output = level::clone(marker);
 	}
 
-	void forward_scan(const oln_point(I)& p,
-			  const oln_point(I)& n)
+	bool condition_fwd(const oln_point(I) p)
 	{
-	  accu(fun.f(n));
+	  return mask(p);
 	}
 
-	void backward_scan(const oln_point(I)& p,
-			   const oln_point(I)& n)
+	bool condition_bkd(const oln_point(I)& p)
 	{
-	  accu(fun.f(n));
+	  return mask(p);
 	}
 
-      }
-
-      template <typename I , typename J>
-      oln_plain(I)
-      binary_reconstruction_(const Image_with_Nbh<I>& marker,
-			     const Binary_Image<J>& mask)
-      {
-	accumulator::max_<oln_value(I)> max;
-	oln_plain(I)
-	  output = level::clone(marker),
-	  memo;
-
-	do
+	bool is_stable()
 	{
-	  memo = level::clone(output);
+	  return output == memo;
+	}
 
-	  // first pass
-	  oln_fwd_piter(I) p1(marker.points());
-	  for_all(p1)
-	    output(p1) = level::local_sup(max, output, p1) and mask(p1);
+	void re_loop()
+	{
+	}
 
-	  // second pass
-	  oln_bkd_piter(I) p2(marker.points());
-	  for_all(p2)
-	    output(p2) = level::local_inf(max, output, p2) and mask(p2);
+	void final()
+	{
+	}
 
-	} while (output != memo);
-
-	return output;
-      }
+      };
 
     } // end of namespace oln::morpho::impl
 
     template <typename I , typename J>
     oln_plain(I)
-    binary_reconstruction(const Binary_Image<I>& marker,
+    binary_reconstruction(const Image_with_Nbh<I>& marker,
 			  const Binary_Image<J>& mask)
     {
-      impl::binary_reconstruction_(marker + c4, mask);
+      impl::binary_reconstruction_<I,J> run(exact(marker), exact(mask));
+      canvas::reconstruction(run);
+      return run.output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

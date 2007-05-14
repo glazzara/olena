@@ -86,24 +86,24 @@ namespace oln
 
     namespace v3 // Auxiliar data given as argument.
     {
-      template <typename F, typename I, typename A>
-      void two_pass(F& fun, I& f, A& aux)
+      template <typename F, typename D>
+      void two_pass(F& fun, D& data)
       {
-	mlc::assert_< mlc_is_a(I, Image) >::check();
+	mlc::assert_< mlc_is_a(typename D::I, Image) >::check();
 
-	f.init(f, aux);
+	fun.init(data);
 
 	// first pass
-	oln_bkd_piter(I) p1(f.points());
+	oln_bkd_piter(D::I) p1(data.f.points());
 	for_all(p1)
-	  f.first_pass_body(p1, f, aux);
+	  fun.first_pass_body(p1, data);
 
 	// second pass
-	oln_fwd_piter(I) p2(f.points());
+	oln_fwd_piter(D::I) p2(data.f.points());
 	for_all(p2)
-	  f.second_pass_body(p2, f, aux);
+	  fun.second_pass_body(p2, data);
 
-	f.final(f, aux);
+	fun.final(data);
       }
     }
 
@@ -165,55 +165,6 @@ namespace oln
 
       };
     }
-
-
-    namespace v5
-    {
-      template<typename I, typename Exact>
-      struct two_pass
-      {
-	const I& f;
-
-	void init()
-	{
-	  assert(0 && "'void init()' not implemented.");
-	}
-
-	void final()
-	{
-	  assert(0 && "'void final()' not implemented.");
-	}
-
-	void first_pass_body(const oln_point(I)&)
-	{
-	  assert(0 && "'void first_pass_body(const oln_point(I)& p)' not implemented.");
-	}
-
-	void second_pass_body(const oln_point(I)&)
-	{
-	  assert(0 && "'void second_pass_body(const oln_point(I)& p)' not implemented.");
-	}
-
-	void run()
-	{
-	  init();
-
-	  // first pass
-	  oln_bkd_piter(I) p1(f.points());
-	  for_all(p1)
-	    first_pass_body(p1);
-
-	  // second pass
-	  oln_fwd_piter(I) p2(f.points());
-	  for_all(p2)
-	    second_pass_body(p2);
-
-	  typename Exact::final();
-	}
-
-      };
-
-    } // end of namespace v5
 
   } // end of namespace morpho
 

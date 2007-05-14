@@ -28,27 +28,48 @@
 #ifndef	OLN_CANVAS_QUEUE_BASED_HH
 # define OLN_CANVAS_QUEUE_BASED_HH
 
-namespace canvas
+namespace oln
 {
 
-  template <typename F, typename I>
-  void queue_based(F f, I input)
+  namespace canvas
   {
-    queue q;
 
-    f.init(input);
-
-    oln_piter(I) p1(input.points());
-    for_all(p1)
-      f.enqueue(p1, q, input);
-
-    while ( !q.empty() ) do
+    template <template <class> class F,
+	      typename I, typename Queue>
+    void queue_based(F<I>& fun)
     {
-      oln_piter(I) p = q.deq();
-      f.loop(p, input);
+      Queue q;
+
+      fun.init();
+
+      // initialization
+      oln_piter(I) p1(fun.f.points());
+      for_all(p1)
+	if ( fun.condition1() ) // FIXME : part of the canvas or not ?
+	  q.enqueue(p1);
+
+      // Data-driven Propagation
+      oln_piter(I) p;
+      while ( !q.empty() )
+      {
+	p = q.deq();
+	oln_niter(I) n(fun.f, p);
+	for_all(n)
+	  {
+	    if ( fun.condition2(p, n) )
+	    {
+	      fun.process(p, n);
+	      // region settings
+	      q.enqueue(n);
+	    }
+	  }
+      }
+
+      fun.final();
     }
 
-    f.final(input);
-  }
+  } // end of namespace canvas
+
+} // end of namespace oln
 
 #endif // ! OLN_CANVAS_QUEUE_BASED_HH

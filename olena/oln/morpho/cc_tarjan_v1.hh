@@ -29,7 +29,6 @@
 # define OLN_MORPHO_CC_TARJAN_HH
 
 # include <oln/core/concept/image.hh>
-
 # include <oln/canvas/two_pass.hh>
 # include <oln/level/fill.hh>
 # include <oln/core/internal/f_ch_value.hh>
@@ -143,9 +142,7 @@ namespace oln
     cc_tarjan(const Image_with_Nbh<I>& f, unsigned& nlabels)
     {
       impl::cc_tarjan_<I> run(exact(f));
-      std::cout << run.output.is_empty() << std::endl;
       canvas::v1::two_pass(run);
-      std::cout << run.output.is_empty() << std::endl;
       nlabels = run.nlabels;
       oln_plain_value(I, unsigned) tmp = run.output;
       return tmp;

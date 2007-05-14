@@ -1,3 +1,20 @@
+2007-05-14  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add dOrnellas morphological canvas + Reconstruction.
+
+	* oln/morpho/binary_reconstruction_v0.hh: Remove useless code.
+	* oln/morpho/binary_reconstruction_v2.hh: Impl with canvas reconstruction.
+	* oln/morpho/cc_tarjan_v1.hh: Minor modification.
+	* oln/morpho/binary_reconstruction_v1.hh: Draft sequential canvas.
+	* oln/morpho/cc_tarjan_v3.hh: cc with auxiliary data canvas.
+	* oln/level/apply_local.hh: whitespaces.
+	* oln/canvas/reconstruction.hh: Canvas reconstruction.
+	* oln/canvas/queue_based.hh: dOrnellas canvas.
+	* oln/canvas/sequential.hh: dOrnellas canvas.
+	* oln/canvas/parallel.hh: dOrnellas canvas.
+	* oln/canvas/two_pass_until_stability.hh: Fix.
+	* oln/canvas/two_pass.hh: Remove useless code.
+
 2007-05-04  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix Reconstruction. Draft canvas unionfind. .

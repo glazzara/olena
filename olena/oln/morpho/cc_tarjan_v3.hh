@@ -29,9 +29,9 @@
 # define OLN_MORPHO_CC_TARJAN_HH
 
 # include <oln/core/concept/image.hh>
-
 # include <oln/canvas/two_pass.hh>
 # include <oln/level/fill.hh>
+# include <oln/core/internal/f_ch_value.hh>
 
 namespace oln
 {
@@ -47,78 +47,87 @@ namespace oln
 
     namespace impl
     {
-      template <typename I>
-      struct cc_tarjan_
-      {
-	const I&      input;
-	oln_plain_value(I, unsigned)  output;
 
+      template <typename T>
+      struct data_
+      {
+	typedef T I;
+
+	const I& f;
+	oln_plain_value(I, unsigned) output;
 	oln_plain(I) is_processed;
 	oln_plain_value(I, oln_point(I)) parent;
 
-	cc_tarjan_(const I& in)
-	  : input(in)
+	data_(const I& f)
+	  : f(f)
 	{
-	  prepare(is_processed, with, in);
-	  prepare(output, with, in);
-	  prepare(parent, with, in);
+	}
+      };
+
+      template <typename Data>
+      struct cc_tarjan_
+      {
+	cc_tarjan_()
+	{
 	}
 
-	oln_point(I)
-	find_root(const I& ima,
-		  const oln_point(I)& x,
-		  oln_plain_value(I, oln_point(I))& parent)
+	oln_point(Data::I)
+	find_root(Data& data,
+		  const oln_point(Data::I)& x)
 	{
-	  if (parent(x) != x)
+	  if (data.parent(x) != x)
 	  {
-	    parent(x) = find_root(ima, parent(x), parent);
-	    return parent(x);
+	    data.parent(x) = find_root(data, data.parent(x));
+	    return data.parent(x);
 	  }
 	  return x;
 	}
 
 	void
-	do_union(const I& ima,
-		 const oln_point(I)& n,
-		 const oln_point(I)& p,
-		 oln_plain_value(I, oln_point(I))& parent)
+	do_union(Data& data,
+		 const oln_point(Data::I)& n,
+		 const oln_point(Data::I)& p)
 	{
-	  oln_point(I) r = find_root(ima, n, parent);
+	  oln_point(Data::I) r = find_root(data, n);
 	  if (r != p)
-	    parent(r) = p;
+	    data.parent(r) = p;
 	}
 
-	void init()
+	void init(Data& data)
 	{
-	  level::fill(inplace(is_processed), false);
+	  prepare(data.is_processed, with, data.f);
+	  prepare(data.output, with, data.f);
+	  prepare(data.parent, with, data.f);
+	  level::fill(inplace(data.is_processed), false);
 	}
 
-	void first_pass_body(const oln_point(I)& p)
+	void first_pass_body(const oln_point(Data::I)& p,
+			     Data& data)
 	{
-	  parent(p) = p;
-	  if ( input(p) )
+	  data.parent(p) = p;
+	  if ( data.f(p) )
 	  {
-	    oln_niter(I) n(input, p);
+	    oln_niter(Data::I) n(data.f, p);
 	    for_all(n)
 	      {
-		if ( input(n) == true and is_processed(n) )
-		  do_union(input, n, p, parent);
+		if ( data.f(n) == true and data.is_processed(n) )
+		  do_union(data, n, p);
 	      }
-	    is_processed(p) = true;
+	    data.is_processed(p) = true;
 	  }
-
 	}
 
-	void second_pass_body(const oln_point(I)& p)
+	void second_pass_body(const oln_point(Data::I)& p,
+			      Data& data)
 	{
 	  unsigned current_label = 0;
-	  if ( input(p) == true and parent(p) == p )
-	    output(p) = ++current_label;
+	  if ( data.f(p) == true and data.parent(p) == p )
+	    data.output(p) = ++current_label;
 	  else
-	    output(p) = output(parent(p));
+	    data.output(p) = data.output(data.parent(p));
 	}
 
-	void final()
+	void final(Data&)
 	{
 	}
 
@@ -132,9 +141,12 @@ namespace oln
     oln_plain_value(I, unsigned)
     cc_tarjan(const Image_with_Nbh<I>& input)
     {
-      impl::cc_tarjan_<I> f(exact(input));
-      canvas::v1::two_pass(f);
-      return f.output;
+      typedef impl::data_<I> data_t;
+
+      data_t data(exact(input));
+      impl::cc_tarjan_< impl::data_<I> > f;
+      canvas::v3::two_pass(f, data);
+      return data.output;
     }
 
 # endif // ! OLN_INCLUDE_ONLY

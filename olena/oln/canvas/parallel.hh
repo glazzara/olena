@@ -28,15 +28,36 @@
 #ifndef	OLN_CANVAS_PARALLEL_HH
 # define OLN_CANVAS_PARALLEL_HH
 
-namespace canvas
+// FIXME : ~~same code as apply_local
+
+namespace oln
 {
 
-  template <typename F, typename I>
-  void parallel(F f, I input)
+  namespace canvas
   {
-    
-  }
 
-}
+    template <template <class> class F,
+	      typename I>
+    void parallel(F<I>& fun)
+    {
+      fun.init();
+
+      oln_piter(I) p(fun.f.points());
+      oln_niter(I) n(fun.f, p);
+      for_all(p)
+	{
+	  for_all(n)
+	    {
+	      fun.process(p, n);
+	    }
+	}
+
+      fun.final();
+
+    }
+
+  } // end of namespace canvas
+
+} // end of namespace oln
 
 #endif // ! OLN_CANVAS_PARALLEL_HH

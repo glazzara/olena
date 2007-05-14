@@ -25,8 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_CANVAS_TWO_PASS_UNTIL_STABILITY_HH
-# define OLN_CANVAS_TWO_PASS_UNTIL_STABILITY_HH
+#ifndef	OLN_CANVAS_SEQUENTIAL_HH
+# define OLN_CANVAS_SEQUENTIAL_HH
+
+// FIXME : similar to two_pass_until_stability
 
 namespace oln
 {
@@ -36,7 +38,7 @@ namespace oln
 
     template <template <class> class F,
 	      typename I>
-    void two_pass_until_stability(F<I>& fun)
+    void sequential(F<I>& fun)
     {
       bool stability;
 
@@ -45,30 +47,50 @@ namespace oln
       for (;;)
       {
 
-	// first pass
+	// Forward Scan
 	oln_fwd_piter(I) p1(fun.f.points());
+	oln_niter(I) n1(fun.f, p1);
 	for_all(p1)
-	  fun.first_pass_body(p1);
+	  {
+	    fun.accu.init_with( fun.f(p1) );
+	    for_all(n1)
+	      {
+		if (n1 < p1)
+		  fun.forward_scan(p1, n1);
+	      }
+	    fun.output(p1) = fun.accu.value();
+	    //fun.accu.reload(); // FIXME : need reload
+	  }
 
-	// second pass
+	// Backward Scan
 	oln_bkd_piter(I) p2(fun.f.points());
+	oln_niter(I) n2(fun.f, p2);
 	for_all(p2)
-	  fun.second_pass_body(p2);
+	  {
+	    fun.accu.init_with(fun.f(p2));
+	    for_all(n2)
+	      {
+		if (n2 >= p2)
+		  fun.backward_scan(p2, n2);
+	      }
+	    fun.output(p2) = fun.accu.value();
+	    //fun.accu.reload();
+	  }
 
 	// stability check
-	stability = fun.is_stable(); // Oblige de posseder output.
+	stability = fun.is_stable();
 	if (stability)
 	  break;
 
 	// prepare a new loop iteration
-	fun.re_loop(input);
+	fun.re_loop();
       }
 
-      fun.final(input);
+      fun.final();
     }
 
-  } // end of namespace canvas
+  } // end of namespace canva
 
 } // end of namespace oln
 
-#endif // ! OLN_CANVAS_TWO_PASS_UNTIL_STABILITY_HH
+#endif // ! OLN_CANVAS_SEQUENTIAL_HH

@@ -25,8 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef	OLN_CANVAS_TWO_PASS_UNTIL_STABILITY_HH
-# define OLN_CANVAS_TWO_PASS_UNTIL_STABILITY_HH
+#ifndef	OLN_CANVAS_RECONSTRUCTION_HH
+# define OLN_CANVAS_RECONSTRUCTION_HH
+
+# include <oln/level/clone.hh>
+# include <oln/level/local_sup.hh>
+# include <oln/level/local_inf.hh>
+
+// FIXME : similar to two_pass_until_stability
 
 namespace oln
 {
@@ -34,41 +40,50 @@ namespace oln
   namespace canvas
   {
 
-    template <template <class> class F,
-	      typename I>
-    void two_pass_until_stability(F<I>& fun)
+    template <typename F>
+    void reconstruction(F& fun)
     {
+      typedef typename F::Ima I;
+
       bool stability;
+      fun.output = level::clone(fun.marker);
 
       fun.init();
 
-      for (;;)
+      do
       {
+	fun.memo = level::clone(fun.output);
 
-	// first pass
-	oln_fwd_piter(I) p1(fun.f.points());
+	// Forward Scan
+	oln_fwd_piter(I) p1(fun.marker.points());
 	for_all(p1)
-	  fun.first_pass_body(p1);
+	  {
+	    if ( fun.condition_fwd(p1) )
+	      fun.output(p1) = level::local_sup(fun.accu, fun.output, p1);
+	  }
 
-	// second pass
-	oln_bkd_piter(I) p2(fun.f.points());
+	// Backward Scan
+	oln_bkd_piter(I) p2(fun.marker.points());
 	for_all(p2)
-	  fun.second_pass_body(p2);
+	  {
+	    if ( fun.condition_bkd(p2) )
+	      fun.output(p2) = level::local_sup(fun.accu, fun.output, p2);
+	  }
 
 	// stability check
-	stability = fun.is_stable(); // Oblige de posseder output.
+	stability = fun.is_stable();
 	if (stability)
 	  break;
 
 	// prepare a new loop iteration
-	fun.re_loop(input);
-      }
+	fun.re_loop();
+      } while (true);
 
-      fun.final(input);
+      fun.final();
     }
 
-  } // end of namespace canvas
+  } // end of namespace canva
 
 } // end of namespace oln
 
-#endif // ! OLN_CANVAS_TWO_PASS_UNTIL_STABILITY_HH
+#endif // ! OLN_CANVAS_RECONSTRUCTION_HH
