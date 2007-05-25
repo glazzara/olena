@@ -33,6 +33,7 @@
 
 # include <oln/core/concept/image.hh>
 # include <oln/core/concept/point.hh>
+# include <oln/core/concept/iterator.hh>
 # include <oln/core/gen/fun.hh>
 # include <oln/core/gen/inplace.hh>
 

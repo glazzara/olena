@@ -1,3 +1,27 @@
+2007-05-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add raw code for morphological reconstruction by d.
+
+	* oln/morpho/Rd: New directory.
+	* oln/morpho/Rd/hybrid.hh,
+	* oln/morpho/Rd/queue_based.hh,
+	* oln/morpho/Rd/parallel.cc,
+	* oln/morpho/Rd/hybrid.cc,
+	* oln/morpho/Rd/union_find.hh,
+	* oln/morpho/Rd/queue_based.cc,
+	* oln/morpho/Rd/sequential.hh,
+	* oln/morpho/Rd/debase.union_find.hh,
+	* oln/morpho/Rd/parallel.hh,
+	* oln/morpho/Rd/diff.cc,
+	* oln/morpho/Rd/union_find.cc,
+	* oln/morpho/Rd/sequential.cc,
+	* oln/morpho/Rd/utils.hh,
+	* oln/io/save_pgm.hh,
+	* oln/io/load_pgm.hh: New.
+	* oln/debug/format.hh: Update.
+	* oln/core/gen/neighb.hh (niter): New associated type.
+	* oln/level/fill.hh (iterator): Add include.
+
 2007-05-14  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add dOrnellas morphological canvas + Reconstruction.

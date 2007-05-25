@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,61 +25,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_DEBUG_FORMAT_HH
-# define OLN_DEBUG_FORMAT_HH
+#ifndef	OLN_MORPHO_RD_PARALLEL_HH
+# define OLN_MORPHO_RD_PARALLEL_HH
 
-# include <string>
-# include <sstream>
+# include <oln/morpho/Rd/utils.hh>
 
 
 namespace oln
 {
 
-  namespace debug
+  namespace morpho
   {
 
-    // Fwd decls.
-
-    template <typename T>
-    const T&
-    format(const T& value);
-
-    std::string
-    format(const unsigned char& value);
-
-    char
-    format(bool value);
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename T>
-    const T& format(const T& value)
+    namespace Rd
     {
-      return value;
-    }
 
-    std::string format(const unsigned char& value)
-    {
-      std::ostringstream ostr;
-      if (value < 10)
-	ostr << "00";
-      else if (value < 100)
-	ostr << '0';
-      ostr << unsigned(value);
-      return ostr.str();
-    }
+      template <typename I, typename N>
+      I parallel(const I& f, const I& g, const N& nbh)
+      {
+	precondition(f <= g);
+	I o_(f.points());
+	oln_piter(I) p(f.points());
 
-    char format(bool value)
-    {
-      return value ? '|' : '-';
-    }
+	// initialisation
+	I o = level::clone(f);
 
-# endif // ! OLN_INCLUDE_ONLY
+	bool stability;
+	do
+	  {
+	    level::paste(o, inplace(o_)); // memorisation
 
-  } // end of namespace oln::debug
+	    // opere
+	    for_all(p)
+	      o(p) = max_N(o_, p,nbh);
+	    // conditionne
+	    for_all(p)
+	      o(p) = min(o(p), g(p));
+
+	    stability = (o == o_);
+	  }
+	while (not stability);
+
+	postcondition(o <= g);
+	return o;
+      }
+
+    } // end of namespace oln::morpho::Rd
+
+  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-#endif // ! OLN_DEBUG_FORMAT_HH
+#endif // ! OLN_MORPHO_RD_PARALLEL_HH

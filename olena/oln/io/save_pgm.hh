@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,61 +26,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_DEBUG_FORMAT_HH
-# define OLN_DEBUG_FORMAT_HH
+#ifndef OLN_IO_SAVE_PGM_HH
+# define OLN_IO_SAVE_PGM_HH
 
-# include <string>
-# include <sstream>
+# include <iostream>
+# include <fstream>
+
+# include <oln/core/2d/image2d.hh>
 
 
 namespace oln
 {
 
-  namespace debug
+  namespace io
   {
 
-    // Fwd decls.
-
-    template <typename T>
-    const T&
-    format(const T& value);
-
-    std::string
-    format(const unsigned char& value);
-
-    char
-    format(bool value);
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename T>
-    const T& format(const T& value)
+    void save_pgm(const image2d<unsigned char>& ima, const std::string& filename)
     {
-      return value;
+      std::ofstream file(filename.c_str());
+      if (not file)
+	{
+	  std::cerr << "error: cannot open file '" << filename
+		    << "'!";
+	  abort();
+	}
+      file << "P5" << std::endl;
+      file << "# olena" << std::endl;
+      file << ima.ncols() << ' ' << ima.nrows() << std::endl;
+      file << "255" << std::endl;
+      int col = ima.min_col();
+      size_t len = ima.ncols() * sizeof(unsigned char);
+      for (int row = ima.min_row(); row <= ima.max_row(); ++row)
+	file.write((char*)(&(ima.at(row, col))), len);
     }
 
-    std::string format(const unsigned char& value)
-    {
-      std::ostringstream ostr;
-      if (value < 10)
-	ostr << "00";
-      else if (value < 100)
-	ostr << '0';
-      ostr << unsigned(value);
-      return ostr.str();
-    }
-
-    char format(bool value)
-    {
-      return value ? '|' : '-';
-    }
-
-# endif // ! OLN_INCLUDE_ONLY
-
-  } // end of namespace oln::debug
+  } // end of namespace oln::io
 
 } // end of namespace oln
 
 
-#endif // ! OLN_DEBUG_FORMAT_HH
+#endif // ! OLN_IO_SAVE_PGM_HH

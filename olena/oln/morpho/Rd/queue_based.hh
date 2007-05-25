@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,61 +25,82 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef OLN_DEBUG_FORMAT_HH
-# define OLN_DEBUG_FORMAT_HH
+#ifndef	OLN_MORPHO_RD_QUEUE_BASED_HH
+# define OLN_MORPHO_RD_QUEUE_BASED_HH
 
-# include <string>
-# include <sstream>
+# include <queue>
+# include <oln/morpho/Rd/utils.hh>
 
 
 namespace oln
 {
 
-  namespace debug
+  namespace morpho
   {
 
-    // Fwd decls.
-
-    template <typename T>
-    const T&
-    format(const T& value);
-
-    std::string
-    format(const unsigned char& value);
-
-    char
-    format(bool value);
-
-
-# ifndef OLN_INCLUDE_ONLY
-
-    template <typename T>
-    const T& format(const T& value)
+    namespace Rd
     {
-      return value;
-    }
 
-    std::string format(const unsigned char& value)
-    {
-      std::ostringstream ostr;
-      if (value < 10)
-	ostr << "00";
-      else if (value < 100)
-	ostr << '0';
-      ostr << unsigned(value);
-      return ostr.str();
-    }
+      template <typename I, typename N>
+      I queue_based(const I& f, const I& g, const N& nbh,
+		    bool echo = false)
+      {
+	if (echo) std::cout << std::endl;
 
-    char format(bool value)
-    {
-      return value ? '|' : '-';
-    }
+	typedef oln_point(I) point;
+	std::queue<point> q;
+	I o;
 
-# endif // ! OLN_INCLUDE_ONLY
+	// initialisation
+	{
+	  o = regional_maxima(f, nbh);
+	  if (echo) debug::println(o);
 
-  } // end of namespace oln::debug
+	  oln_piter(I) p(f.points());
+	  oln_niter(N) n(nbh, p);
+
+	  for_all(p)
+	    if (o(p) != 0)
+	      {
+		bool ok = false;
+		for_all(n) if (f.has(n))
+		  if (o(n) == 0)
+		    ok = true;
+		if (ok)
+		  q.push(p);
+	      }
+	}
+
+	// propagation
+	{
+	  point p;
+	  oln_niter(N) n(nbh, p);
+	  while (not q.empty())
+	    {
+	      p = q.front();
+	      if (echo) std::cout << std::endl << "pop " << p << " :";
+	      q.pop();
+	      for_all(n) if (f.has(n))
+		{
+		  if (o(n) < o(p) and o(n) != g(n))
+		    {
+		      o(n) = min(o(p), g(n));
+		      if (echo) std::cout << " push " << n;
+		      q.push(n);
+		    }
+		}
+	    }
+	  if (echo) std::cout << std::endl;
+	}
+
+	return o;
+      }
+
+    } // end of namespace oln::morpho::Rd
+
+  } // end of namespace oln::morpho
 
 } // end of namespace oln
 
 
-#endif // ! OLN_DEBUG_FORMAT_HH
+#endif // ! OLN_MORPHO_RD_QUEUE_BASED_HH

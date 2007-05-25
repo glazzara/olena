@@ -31,6 +31,7 @@
 
 # include <oln/core/internal/dpoints_impl.hh>
 # include <oln/core/internal/neighborhood_base.hh>
+# include <oln/core/gen/dpoints_piter.hh>
 
 
 namespace oln
@@ -64,7 +65,10 @@ namespace oln
 		  public internal::dpoints_impl_<Dp>
   {
   public:
-    
+
+    typedef stc_type(Dp, point) P;
+    typedef dpoints_fwd_piter_<P> niter;
+
     neighb_();
 
     neighb_<Dp>& take(const Dp& dp);
