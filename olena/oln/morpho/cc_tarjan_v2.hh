@@ -49,16 +49,19 @@ namespace oln
     namespace impl
     {
 
-      template <typename I>
+      template <typename I, typename N>
       struct cc_tarjan_
       {
 	typedef oln_point(I) point;
 
+	const N& nbh;
 	oln_plain_value(I, unsigned)  output;
 	oln_plain_value(I, bool) is_processed;
 	oln_plain_value(I, point) parent;
 
-	cc_tarjan_() {}
+	cc_tarjan_(const N& nbh)
+	  : nbh(nbh)
+	{ }
 
 	void init(I f)
 	{
@@ -73,8 +76,8 @@ namespace oln
 	  parent(p) = p;
 	  if ( f(p) )
 	  {
-	    oln_niter(I) n(f, p);
-	    for_all(n)
+	    oln_niter(N) n(nbh, p);
+	    for_all(n) if ( f.has(n) )
 	      {
 		if ( f(n) == true and is_processed(n) )
 		  do_union(f, n, p);
@@ -124,11 +127,12 @@ namespace oln
 
 // Facades.
 
-    template <typename I>
+    template <typename I, typename N>
     oln_plain_value(I, unsigned)
-    cc_tarjan(const Image_with_Nbh<I>& f)
+    cc_tarjan(const Binary_Image<I>& f,
+	      const Neighborhood<N>& nbh)
     {
-      impl::cc_tarjan_<I> run;
+      impl::cc_tarjan_<I,N> run(exact(nbh));
       canvas::v2::two_pass(run, exact(f));
       return run.output;
     }

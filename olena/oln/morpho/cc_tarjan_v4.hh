@@ -47,21 +47,22 @@ namespace oln
 
     namespace impl
     {
-      template <typename I>
-      struct cc_tarjan_ : public canvas::v4::two_pass<I, cc_tarjan_<I> >
+      template <typename I, typename N>
+      struct cc_tarjan_ : public canvas::v4::two_pass<I, cc_tarjan_<I, N> >
       {
 	typedef oln_point(I) point;
 
 	const I& f;
+	const N& nbh;
 
 	oln_plain_value(I, unsigned)  output;
 	oln_plain_value(I, bool) is_processed;
 	oln_plain_value(I, point) parent;
 	unsigned nlabels;
 
-	cc_tarjan_(const I& f)
-	  : canvas::v4::two_pass<I, cc_tarjan_<I> >(f),
-	    f(f)
+	cc_tarjan_(const I& f, const N& nbh)
+	  : canvas::v4::two_pass<I, cc_tarjan_<I, N> >(f),
+	    f(f), nbh(nbh)
 	{
 	}
 
@@ -79,8 +80,8 @@ namespace oln
 	  parent(p) = p;
 	  if (f(p) == true)
 	  {
-	    oln_niter(I) n(f, p);
-	    for_all(n)
+	    oln_niter(N) n(nbh, p);
+	    for_all(n) if ( f.has(n) )
 	      {
 		if ( f(n) == true and is_processed(n) )
 		  do_union(n, p);
@@ -127,11 +128,12 @@ namespace oln
 
     } // end of namespace oln::morpho::impl
 
-    template <typename I>
+    template <typename I, typename N>
     oln_plain_value(I, unsigned)
-    cc_tarjan(const Image_with_Nbh<I>& f)
+    cc_tarjan(const Image<I>& f,
+	      const Neighborhood<N>& nbh)
     {
-      impl::cc_tarjan_<I> cc(exact(f));
+      impl::cc_tarjan_<I, N> cc(exact(f), exact(nbh));
 
       cc.run();
 

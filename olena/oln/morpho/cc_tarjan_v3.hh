@@ -48,18 +48,21 @@ namespace oln
     namespace impl
     {
 
-      template <typename T>
+      template <typename T, typename U>
       struct data_
       {
 	typedef T I;
+	typedef U N;
 
 	const I& f;
+	const N& nbh;
+
 	oln_plain_value(I, unsigned) output;
 	oln_plain(I) is_processed;
 	oln_plain_value(I, oln_point(I)) parent;
 
-	data_(const I& f)
-	  : f(f)
+	data_(const I& f, const N& nbh)
+	  : f(f), nbh(nbh)
 	{
 	}
       };
@@ -107,8 +110,8 @@ namespace oln
 	  data.parent(p) = p;
 	  if ( data.f(p) )
 	  {
-	    oln_niter(Data::I) n(data.f, p);
-	    for_all(n)
+	    oln_niter(Data::N) n(data.nbh, p);
+	    for_all(n) if ( data.f.has(n) )
 	      {
 		if ( data.f(n) == true and data.is_processed(n) )
 		  do_union(data, n, p);
@@ -137,14 +140,15 @@ namespace oln
 
 // Facades.
 
-    template <typename I>
+    template <typename I, typename N>
     oln_plain_value(I, unsigned)
-    cc_tarjan(const Image_with_Nbh<I>& input)
+    cc_tarjan(const Binary_Image<I>& input,
+	      const Neighborhood<N>& nbh)
     {
-      typedef impl::data_<I> data_t;
+      typedef impl::data_<I, N> data_t;
 
-      data_t data(exact(input));
-      impl::cc_tarjan_< impl::data_<I> > f;
+      data_t data(exact(input), exact(nbh));
+      impl::cc_tarjan_< data_t > f;
       canvas::v3::two_pass(f, data);
       return data.output;
     }

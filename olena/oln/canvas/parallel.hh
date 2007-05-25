@@ -36,10 +36,13 @@ namespace oln
   namespace canvas
   {
 
-    template <template <class> class F,
-	      typename I>
-    void parallel(F<I>& fun)
+    template <typename F>
+    void parallel(F& fun)
     {
+
+      typedef typename F::image I;
+      mlc::assert_< mlc_is_a(I, Image) >::check();
+
       fun.init();
 
       oln_piter(I) p(fun.f.points());

@@ -34,10 +34,13 @@ namespace oln
   namespace canvas
   {
 
-    template <template <class> class F,
-	      typename I>
-    void two_pass_until_stability(F<I>& fun)
+    template <typename F>
+    void two_pass_until_stability(F& fun)
     {
+
+      typedef typename F::image I;
+      mlc::assert_< mlc_is_a(I, Image) >::check();
+
       bool stability;
 
       fun.init();

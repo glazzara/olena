@@ -47,45 +47,46 @@ namespace oln
     namespace impl
     {
       template <typename I>
-      oln_point(I) find_root(I& ima,
+      oln_point(I) find_root(const I& f,
 			     const oln_point(I)& x,
 			     oln_plain_value(I, oln_point(I))& parent)
       {
 	if (parent(x) != x)
 	{
-	  parent(x) = find_root(ima, parent(x), parent);
+	  parent(x) = find_root(f, parent(x), parent);
 	  return parent(x);
 	}
 	return x;
       }
 
       template <typename I>
-      void do_union(I& ima,
+      void do_union(const I& f,
 		    const oln_point(I)& n,
 		    const oln_point(I)& p,
 		    oln_plain_value(I, oln_point(I))& parent)
       {
-	oln_point(I) r = find_root(ima, n, parent);
+	oln_point(I) r = find_root(f, n, parent);
 	if (r != p)
 	  parent(r) = p;
       }
 
-      template <typename I>
-      void first_pass(const I& input,
+      template <typename I, typename N>
+      void first_pass(const I& f,
 		      oln_plain_value(I, oln_point(I))& parent,
-		      oln_plain(I)& is_processed)
+		      oln_plain(I)& is_processed,
+		      const N& nhb)
       {
-	oln_bkd_piter(I) p(input.points());
+	oln_bkd_piter(I) p(f.points());
 	for_all(p)
 	  {
 	    parent(p) = p;
-	    if ( input(p) )
+	    if ( f(p) )
 	    {
-	      oln_niter(I) n(input, p);
-	      for_all(n)
-		{
-		  if ( input(n) == true and is_processed(n) )
-		    do_union(input, n, p, parent);
+	      oln_niter(N) n(nhb, p);
+	      for_all(n) if ( f.has(n) )
+	      {
+		  if ( f(n) == true and is_processed(n) )
+		    do_union(f, n, p, parent);
 		}
 	      is_processed(p) = true;
 	    }
@@ -93,38 +94,40 @@ namespace oln
       }
 
       template <typename I>
-      void second_pass(const I& input,
+      void second_pass(const I& f,
 		       oln_plain_value(I, oln_point(I))& parent,
 		       oln_plain_value(I, unsigned)& output)
       {
 	unsigned current_label = 0;
-	oln_fwd_piter(I) p(input.points());
+	oln_fwd_piter(I) p(f.points());
 	for_all(p)
 	  {
-	    if ( input(p) == true and parent(p) == p )
+	    if ( f(p) == true and parent(p) == p )
 		output(p) = ++current_label;
 	      else
 		output(p) = output(parent(p));
 	  }
       }
 
-      template <typename I>
+      template <typename I, typename N>
       oln_plain_value(I, unsigned)
-      cc_tarjan_(const Image_with_Nbh<I>& input)
+      cc_tarjan_(const I& f,
+		 const N& nhb)
       {
 	oln_plain_value(I, unsigned) output;
-	prepare(output, with, input);
-
+	prepare(output, with, f);
 	oln_plain_value(I, oln_point(I)) parent;
-	prepare(parent, with, input);
+	prepare(parent, with, f);
 
-	// init.
+	// Init
 	oln_plain_value(I, bool) is_processed;
-	prepare(is_processed, with, input);
+	prepare(is_processed, with, f);
  	level::fill(inplace(is_processed), false);
+	// First pass
+	first_pass(f, parent, is_processed, nhb);
+	// Second pass
+	second_pass(f, parent, output);
 
-	first_pass(input, parent, is_processed);
-	second_pass(input, parent, output);
 	return output;
       }
 
@@ -132,11 +135,12 @@ namespace oln
 
     // Facades.
 
-    template <typename I>
+    template <typename I, typename N>
     oln_plain_value(I, unsigned)
-    cc_tarjan(const Binary_Image<I>& input)
+    cc_tarjan(const Binary_Image<I>& f,
+	      const Neighborhood<N>& nhb)
     {
-      return impl::cc_tarjan_(exact(input));
+      return impl::cc_tarjan_(exact(f), exact(nhb));
     }
 
 # endif // ! OLN_INCLUDE_ONLY

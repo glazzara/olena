@@ -36,10 +36,13 @@ namespace oln
   namespace canvas
   {
 
-    template <template <class> class F,
-	      typename I>
-    void sequential(F<I>& fun)
+    template <typename F>
+    void sequential(F& fun)
     {
+
+      typedef typename F::image I;
+      mlc::assert_< mlc_is_a(I, Image) >::check();
+
       bool stability;
 
       fun.init();

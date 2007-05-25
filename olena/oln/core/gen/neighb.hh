@@ -33,7 +33,6 @@
 # include <oln/core/internal/neighborhood_base.hh>
 # include <oln/core/gen/dpoints_piter.hh>
 
-
 namespace oln
 {
 

@@ -34,10 +34,13 @@ namespace oln
   namespace canvas
   {
 
-    template <template <class> class F,
-	      typename I, typename Queue>
-    void queue_based(F<I>& fun)
+    template <typename F, typename Queue>
+    void queue_based(F& fun)
     {
+
+      typedef typename F::image I;
+      mlc::assert_< mlc_is_a(I, Image) >::check();
+
       Queue q;
 
       fun.init();
