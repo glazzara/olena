@@ -1,3 +1,9 @@
+2007-06-15  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
+
+	Add logger morpher and fix transform morpher.
+	* samples/mini-std/cpp2/Makefile: New.
+	* samples/mini-std/cpp2/mini-std.cc: Here.
+
 2007-05-11  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
 
 	Add auto implementation and fix morphers.

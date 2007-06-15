@@ -535,35 +535,35 @@ namespace mstd
 
   template <typename Exact>
   struct case_<switch_iterator_kind, Exact, 1> :
-    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), forwardIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t)::primitiveIterator_t, forwardIterator) >
   {
     typedef ForwardContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_iterator_kind, Exact, 2> :
-    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), backwardIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t)::primitiveIterator_t, backwardIterator) >
   {
     typedef BiDirContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_iterator_kind, Exact, 3> :
-    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t)::primitiveIterator_t, biDirIterator) > // ::primitiveIterator_t
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t)::primitiveIterator_t, biDirIterator) >
   {
     typedef BiDirContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_iterator_kind, Exact, 4> :
-    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), randomAccessibleIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t)::primitiveIterator_t, randomAccessibleIterator) >
   {
     typedef RandomAccessibleContainer<Exact> ret;
   };
 
   template <typename Exact>
   struct case_<switch_iterator_kind, Exact, 5> :
-    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t), associativeIterator) >
+    public mlc::where_ < mlc_is_a(stc_find_type(Exact, iter_t)::primitiveIterator_t, associativeIterator) >
   {
     typedef AssociativeContainer<Exact> ret;
   };
@@ -1076,20 +1076,18 @@ namespace mstd
       return deleg_;
     }
 
-    delegatee& get_deleg() const
+    delegatee get_deleg() const
     {
       return deleg_;
     }
 
 
-    //FIXME
     current& operator++()
     {
       deleg_++;
       return *exact(this);
     }
 
-    //FIXME
     current operator++(int)
     {
       current ret = *exact(this);
@@ -1097,7 +1095,7 @@ namespace mstd
       return ret;
     }
   protected:
-    delegatee& deleg_;
+    delegatee deleg_;
     Functor trans_;
   };
 
@@ -1159,8 +1157,6 @@ namespace mstd
     stc_using(value_t);
     stc_using(iter_t);
 
-    //typedef std::unary_function<value_t&,value_t> transform_t;
-
     transform_morpher(delegatee& d, Functor trans) :
       container_morpher_<current>(),
       deleg_ (d),
@@ -1185,14 +1181,93 @@ namespace mstd
 
     iter_t impl_end()
     {
-      //      iter_t it(deleg_.end(), trans_);
-      //      it.get_deleg().to_end();
-      return iter_t(deleg_.end(), trans_);
+      iter_t it(deleg_.end(), trans_);
+      it.get_deleg().to_end();
+      return it;
     }
 
   protected:
     delegatee& deleg_;
     Functor trans_;
+  };
+
+  // logger morpher
+#define LOGGER(name) NAME##_logger_morpher
+#define LOGGER_STREAM std::cerr
+#define LOGGER_BEGIN(NAME)                                                       \
+  template <typename Container>                                                  \
+  struct NAME##_logger_morpher;                                                  \
+                                                                                 \
+  template <typename Container>                                                  \
+  struct super_trait_<NAME##_logger_morpher<Container> >                         \
+  {                                                                              \
+    typedef container_morpher_<Container> ret;                                   \
+  };                                                                             \
+                                                                                 \
+  template <typename Container>                                                  \
+  struct vtypes<NAME##_logger_morpher<Container> >                               \
+  {                                                                              \
+    typedef Container delegatee;                                                 \
+  };                                                                             \
+                                                                                 \
+  template <typename Container>                                                  \
+  struct NAME##_logger_morpher :                                                 \
+        public container_morpher_<NAME##_logger_morpher<Container> >             \
+  {                                                                              \
+    typedef NAME##_logger_morpher<Container> current;                            \
+    typedef container_morpher_<current> super;                                   \
+                                                                                 \
+    stc_using(delegatee);                                                        \
+    stc_using(iter_t);                                                           \
+                                                                                 \
+    NAME##_logger_morpher(delegatee& d) :                                        \
+      container_morpher_<current>(),                                             \
+      deleg_ (d)                                                                 \
+    {                                                                            \
+    }                                                                            \
+                                                                                 \
+    delegatee& get_deleg()                                                       \
+    {                                                                            \
+      return deleg_;                                                             \
+    }                                                                            \
+                                                                                 \
+    delegatee& get_deleg() const                                                 \
+    {                                                                            \
+      return deleg_;                                                             \
+    }
+
+#define LOGMETHOD(MESSAGE, RETURNTYPE, NAME)                                     \
+                                                                                 \
+    RETURNTYPE NAME()                                                           \
+    {                                                                            \
+      LOGGER_STREAM << __FILE__ << ":" << __LINE__ << ":"                        \
+                << MESSAGE << std::endl;                                         \
+      return deleg_.NAME();                                                      \
+    }
+
+#define LOGMETHODVOID(MESSAGE, RETURNTYPE, NAME)                                 \
+                                                                                 \
+    RETURNTYPE NAME()                                                           \
+    {                                                                            \
+      LOGGER_STREAM << __FILE__ << ":" << __LINE__ << ":"                        \
+                << MESSAGE << std::endl;                                         \
+      deleg_.NAME();                                                             \
+    }
+
+#define LOGMETHODARG(MESSAGE, RETURNTYPE, NAME, ARGTYPE, ARGNAME)                \
+                                                                                 \
+    RETURNTYPE NAME(ARGTYPE)                                                     \
+    {                                                                            \
+      LOGGER_STREAM << __FILE__ << ":" << __LINE__ << ":"                        \
+                << MESSAGE << std::endl;                                         \
+      return deleg_.NAME(ARGNAME);                                               \
+    }
+
+
+#define LOGGER_END()                                                             \
+                                                                                 \
+  protected:                                                                     \
+    delegatee& deleg_;                                                           \
   };
 
 } // End of namespace mstd.
@@ -1223,6 +1298,15 @@ template <typename Exact>
 void test(mstd::ForwardContainer<Exact>& fc)
 {
 }
+
+// Create logger class.
+namespace mstd
+{
+  LOGGER_BEGIN(begin)
+    LOGMETHOD("Begin has been triggered.", iter_t, begin)
+    LOGMETHOD("End has been triggered.", iter_t, end)
+  LOGGER_END()
+};
 
 int main()
 {
@@ -1295,30 +1379,56 @@ int main()
   //   Dummy<int> a;
   //   test(a);
 
-  // Morphers
+  // *** Morphers ***
   typedef mstd::transform_morpher<mstd::list<int>, transform > morpher_t;
-  morpher_t tm(l, transform());
+  typedef mstd::begin_logger_morpher<mstd::list<int> > logger_t;
 
-  typedef mstd::transform_morpher_iterator<mstd::list<int>::iter_t, transform> itmorpher_t;
-  mlc::assert_< mlc_is_a_(itmorpher_t, mstd::Iterator) >::check();
+  typedef mstd::transform_morpher<logger_t, transform > translog_t;
 
-  typedef mstd::transform_morpher_iterator<mstd::list<int>::iter_t, transform> realiter_t;
-  mlc::assert_< mlc_eq(morpher_t::iter_t, realiter_t) >::check();
 
-  std::cout << "= Morpher" << std::endl;
-  for (morpher_t::iter_t im = tm.begin(); im != tm.end(); ++im)
-    TEST(*im);
-  std::cout << "= Morpher fin" << std::endl;
-
-  morpher_t::iter_t im = tm.begin();
-  TEST(*im);
-
+  // Transform
   {
-    mstd::list<int>::iter_t it = l.begin();
-    mstd::transform_morpher_iterator<mstd::list<int>::iter_t, transform> im(it, transform());
-    TEST(*it);
+    morpher_t tm(l, transform());
+
+    typedef mstd::transform_morpher_iterator<mstd::list<int>::iter_t, transform> itmorpher_t;
+    mlc::assert_< mlc_is_a_(itmorpher_t, mstd::Iterator) >::check();
+
+    typedef mstd::transform_morpher_iterator<mstd::list<int>::iter_t, transform> realiter_t;
+    mlc::assert_< mlc_eq(morpher_t::iter_t, realiter_t) >::check();
+
+    std::cout << "= Morpher" << std::endl;
+    for (morpher_t::iter_t im = tm.begin(); im != tm.end(); ++im)
+      TEST(*im);
+    std::cout << "= Morpher fin" << std::endl;
+
+    morpher_t::iter_t im = tm.begin();
+    TEST(*im);
+
+    {
+      mstd::list<int>::iter_t it = l.begin();
+      mstd::transform_morpher_iterator<mstd::list<int>::iter_t, transform> im(it, transform());
+      TEST(*it);
+      TEST(*im);
+    }
+    TEST(tm.size());
+  }
+
+  // Logger
+  {
+    logger_t lm(l);
+
+    logger_t::iter_t im = lm.begin();
+    for (; im != lm.end(); ++im)
+      TEST(*im);
     TEST(*im);
   }
-  tm.clear();
-  TEST(tm.size());
+
+  // Transform + Log
+  {
+    logger_t lm(l);
+    translog_t tlm(lm, transform());
+
+    translog_t::iter_t im = tlm.begin();
+    TEST(*im);
+  }
 }
