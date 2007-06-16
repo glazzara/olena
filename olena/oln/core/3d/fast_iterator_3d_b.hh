@@ -82,24 +82,25 @@ namespace oln
   template <typename T>
   fast_iterator_3d_b<T>::fast_iterator_3d_b(image3d_b<T>& ima) :
     border_size_(ima.border()),
-    sli_offset_(ima.img_array().i_pad()),
-    row_offset_(ima.img_array().j_pad())
+
+    sli_offset_((ima.points().pmax().col() + 2 * border_size_ -
+		 ima.points().pmin().col() + 1) *
+		(ima.points().pmax().row() + 2 * border_size_ -
+		 ima.points().pmin().row() + 1)),
+
+    row_offset_((ima.points().pmax().col() - ima.points().pmin().col())
+		+ 2 * border_size_ + 1)
   {
-    this->start_ = &ima(point3d(0, 0, 0));
+    this->start_ = &ima(ima.points().pmin());
 
     this->current_elt_ = this->start_;
 
-    this->eor_ = this->start_ + ima.ncols();
+    this->eor_ = &ima.at(0, 0, ima.points().pmax().col()) + 1;
 
-    this->eos_ = ima.img_array().buffer() +
-      this->sli_offset_ * this->border_size_ +
-      this->row_offset_ * (ima.img_array().jlen() - 1 - this->border_size_) +
-      + ima.img_array().klen() - this->border_size_ ;
+    this->eos_ = &ima.at(0, ima.points().pmax().row(),
+			 ima.points().pmax().col()) + 1;
 
-    this->eoi_ = ima.img_array().buffer() +
-      this->sli_offset_ * (ima.img_array().ilen() - 1 - this->border_size_) +
-      this->row_offset_ * (ima.img_array().jlen() - 1 - this->border_size_) +
-      + ima.img_array().klen() - this->border_size_ ;
+    this->eoi_ = &ima(ima.points().pmax()) + 1;
   }
 
   template <typename T>

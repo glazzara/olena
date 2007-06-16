@@ -1,3 +1,28 @@
+2007-06-16  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Adapt image1d, image2d, image3d to the Fast_image concept.
+
+	* tests/core/fiter_point1d_b.cc,
+	* tests/core/fiter_point2d_b.cc: Update tests.
+	* tests/core/fast_image2d.cc,
+	* tests/core/fast_image2d_b.cc,
+	* tests/core/fast_image3d.cc,
+	* tests/core/fast_image3d_b.cc: New tests.
+	* tests/core/Makefile.am: Update.
+	* oln/core/1d/image1d.hh,
+	* oln/core/1d/image1d_b.hh,
+	* oln/core/2d/image2d.hh,
+	* oln/core/2d/image2d_b.hh,
+	* oln/core/3d/image3d.hh,
+	* oln/core/3d/image3d_b.hh: Adapt image classes to fast image concept.
+	* oln/core/1d/fast_iterator_1d.hh,
+	* oln/core/1d/fast_iterator_1d_b.hh,
+	* oln/core/2d/fast_iterator_2d.hh,
+	* oln/core/2d/fast_iterator_2d_b.hh,
+	* oln/core/3d/fast_iterator_3d.hh,
+	* oln/core/3d/fast_iterator_3d_b.hh: Depend on image interface.
+	* oln/core/concept/image.hh: .
+
 2007-05-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix wrong type in cc_tarjan versions.

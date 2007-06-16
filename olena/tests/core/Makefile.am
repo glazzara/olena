@@ -25,6 +25,10 @@ check_PROGRAMS =				\
   grid						\
   image1d					\
   image2d					\
+  fast_image2d					\
+  fast_image2d_b				\
+  fast_image3d					\
+  fast_image3d_b				\
   iter_point1d					\
   iter_point2d					\
   fiter_point1d					\
@@ -50,6 +54,10 @@ dpoint2d_SOURCES = dpoint2d.cc
 grid_SOURCES = grid.cc
 image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
+fast_image2d_SOURCES = fast_image2d.cc
+fast_image2d_b_SOURCES = fast_image2d_b.cc
+fast_image3d_SOURCES = fast_image3d.cc
+fast_image3d_b_SOURCES = fast_image3d_b.cc
 iter_point1d_SOURCES = iter_point1d.cc
 iter_point2d_SOURCES = iter_point2d.cc
 fiter_point1d_SOURCES = fiter_point1d.cc

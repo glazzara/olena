@@ -71,11 +71,9 @@ namespace oln
   template <typename T>
   fast_iterator_1d_b<T>::fast_iterator_1d_b(image1d_b<T>& ima)
   {
-    unsigned border = ima.border();
-
-    this->start_ = ima.img_array().buffer() + ima.img_array().imin() + border;
+    this->start_ = &ima(ima.points().pmin());
     this->current_elt_ = this->start_;
-    this->eoi_ = ima.img_array().buffer() + ima.img_array().imax() - border + 1;
+    this->eoi_ = &ima(ima.points().pmax()) + 1;
   }
 
   template <typename T>

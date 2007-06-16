@@ -76,20 +76,17 @@ namespace oln
 
   template <typename T>
   fast_iterator_2d_b<T>::fast_iterator_2d_b(image2d_b<T>& ima) :
-    border_size_(ima.border()), row_offset_(ima.img_array().i_pad())
+    border_size_(ima.border()),
+    row_offset_((ima.points().pmax().col() - ima.points().pmin().col())
+		+ 2 * border_size_ + 1)
   {
-    this->start_ = ima.img_array().buffer() +
-      (this->border_size_) * this->row_offset_ + this->border_size_;
 
+    this->start_ = &ima(ima.points().pmin());
     this->current_elt_ = this->start_;
 
-
-    this->eor_ = ima.img_array().buffer() +
-      (this->border_size_) * this->row_offset_ + this->row_offset_ -
-      this->border_size_;
-
-    this->eoi_ = this->eor_ +
-      this->row_offset_ * (ima.img_array().imax() - this->border_size_);
+    this->eor_ = &ima.at(ima.points().pmin().row(), ima.points().pmax().col())
+      + 1;
+    this->eoi_ = &ima(ima.points().pmax()) + 1;
   }
 
   template <typename T>

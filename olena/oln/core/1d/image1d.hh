@@ -86,7 +86,9 @@ namespace oln
   public:
     //FIXME (fast image concept??)
     typedef typename vtypes< image1d<T> >::fiter fiter;
+    typedef typename vtypes< image1d<T> >::index index;
     stc_using(data);
+    stc_using(point);
 
     image1d();
     image1d(const box1d& b);
@@ -94,8 +96,8 @@ namespace oln
     image1d(int imin, int imax);
     image1d(unsigned n);
 
-    array_t& img_array();
-    const array_t& img_array() const;
+    point point_at_offset(index offset) const;
+    index offset_from_point(point p) const;
 
     bool impl_owns_(const point1d& p) const;
 
@@ -160,18 +162,19 @@ namespace oln
 			   box1d(point1d(0), point1d(n - 1)));
   }
 
+  // fast image implementation:
   template <typename T>
-  typename image1d<T>::array_t&
-  image1d<T>::img_array()
+  typename image1d<T>::point
+  image1d<T>::point_at_offset(typename image1d<T>::index offset) const
   {
-    return this->data_->first;
+    return point1d(offset);
   }
 
   template <typename T>
-  const typename image1d<T>::array_t&
-  image1d<T>::img_array() const
+  typename image1d<T>::index
+  image1d<T>::offset_from_point(typename image1d<T>::point p) const
   {
-    return this->data_->first;
+    return p.ind();
   }
 
   template <typename T>
@@ -192,7 +195,8 @@ namespace oln
   const T& image1d<T>::impl_index_read(unsigned i) const
   {
     assert(this->has_data());
-    assert(i < this->npoints());
+    //FIXME: impl_npoints -> npoints
+    assert(i < this->impl_npoints());
     return this->data_->first[i];
   }
 
@@ -207,7 +211,8 @@ namespace oln
   T& image1d<T>::impl_index_read_write(unsigned i)
   {
     assert(this->has_data());
-    assert(i < this->npoints());
+    //FIXME: impl_npoints -> npoints
+    assert(i < this->impl_npoints());
     return this->data_->first[i];
   }
 

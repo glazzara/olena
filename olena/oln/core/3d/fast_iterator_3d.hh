@@ -71,14 +71,9 @@ namespace oln
   template <typename T>
   fast_iterator_3d<T>::fast_iterator_3d(image3d<T>& ima)
   {
-    this->start_ = ima.img_array().buffer();
-
+    this->start_ = &ima(ima.points().pmin());
     this->current_elt_ = this->start_;
-
-    this->eoi_ = ima.img_array().buffer() +
-      (ima.img_array().imax() - ima.img_array().imin() + 1) *
-      (ima.img_array().jmax() - ima.img_array().imin() + 1) *
-      (ima.img_array().kmax() - ima.img_array().kmin() + 1);
+    this->eoi_ = &ima(ima.points().pmax()) + 1;
   }
 
 # endif // ! OLN_INCLUDE_ONLY

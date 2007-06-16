@@ -72,10 +72,9 @@ namespace oln
   template <typename T>
   fast_iterator_2d<T>::fast_iterator_2d(image2d<T>& ima)
   {
-    this->start_ = ima.img_array().buffer();
+    this->start_ = &ima(ima.points().pmin());
     this->current_elt_ = this->start_;
-    this->eoi_ = ima.img_array().buffer() + (ima.img_array().imax() + 1)  *
-      (ima.img_array().jmax() + 1);
+    this->eoi_ = &ima(ima.points().pmax()) + 1;
   }
 
 # endif // ! OLN_INCLUDE_ONLY

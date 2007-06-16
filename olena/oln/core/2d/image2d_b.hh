@@ -89,15 +89,18 @@ namespace oln
     typedef internal::plain_primitive_image_<current> super;
     typedef array2d_<T, int> array_t;
   public:
-    typedef stc_type(current, fiter) fiter;
+    // FIXME: Fast image concept
+    typedef typename vtypes< image2d_b<T> >::fiter fiter;
+    typedef typename vtypes< image2d_b<T> >::index index;
+    stc_using(point);
     stc_using(data);
 
     image2d_b();
     image2d_b(const box2d& b, unsigned border = 2);
     image2d_b(unsigned nrows, unsigned ncols, unsigned border = 2);
 
-    array_t& img_array();
-    const array_t& img_array() const;
+    point point_at_offset(index offset) const;
+    index offset_from_point(point p) const;
 
     bool impl_owns_(const point2d& p) const;
 
@@ -161,17 +164,18 @@ namespace oln
   }
 
   template <typename T>
-  typename image2d_b<T>::array_t&
-  image2d_b<T>::img_array()
+  typename image2d_b<T>::point
+  image2d_b<T>::point_at_offset(typename image2d_b<T>::index offset) const
   {
-    return this->data_->first;
+    return point2d(offset / (this->data_->third.pmax().col() + 1),
+		   offset % (this->data_->third.pmax().col() + 1));
   }
 
   template <typename T>
-  const typename image2d_b<T>::array_t&
-  image2d_b<T>::img_array() const
+  typename image2d_b<T>::index
+  image2d_b<T>::offset_from_point(typename image2d_b<T>::point p) const
   {
-    return this->data_->first;
+    return p.row() * (this->data_->third.pmax().col() + 1) + p.col();
   }
 
   template <typename T>

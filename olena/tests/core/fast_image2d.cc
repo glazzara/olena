@@ -26,36 +26,32 @@
 // Public License.
 
 #include <cassert>
-#include <oln/core/1d/image1d_b.hh>
+#include <oln/core/2d/image2d.hh>
+
+using namespace oln;
+
+void test(const image2d<int>& ima)
+{
+  point2d q;
+  image2d<int>::piter p(ima.points());
+  image2d<int>::index offset;
+
+  assert(ima.offset_from_point(point2d(0, 0)) == 0);
+
+  for_all(p)
+  {
+    q = p;
+    offset = ima.offset_from_point(q);
+    q = ima.point_at_offset(offset);
+    assert(q == p);
+  }
+}
+
 
 int
 main()
 {
-  using namespace oln;
-
-  image1d_b<int> ima(50, 5);
-
-  image1d_b<int>::piter p(ima.points());
-  image1d_b<int>::fiter f(ima);
-  int i = 0;
-
-  for_all(p)
-    ima(p) = i++;
-
-
-  i = 0;
-
-  for_all(f)
-  {
-    assert(*f == i ++);
-    *f = 5;
-  }
-
-  for_all(p)
-    assert(ima(p) == 5);
-
-  f.start();
-  assert(f.is_valid());
-  f.invalidate();
-  assert(!f.is_valid());
+  image2d<int> ima(50, 50), ima2(30, 50), ima3(50, 30);
+  test(ima);
+  test(ima2);
 }

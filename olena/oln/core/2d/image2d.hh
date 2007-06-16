@@ -86,6 +86,8 @@ namespace oln
   public:
     //FIXME (fast image concept??)
     typedef typename vtypes< image2d<T> >::fiter fiter;
+    typedef typename vtypes< image2d<T> >::index index;
+    stc_using(point);
     stc_using(data);
 
     image2d();
@@ -93,8 +95,8 @@ namespace oln
     image2d(unsigned nrows, unsigned ncols);
     image2d(int min_row, int min_col, int max_row, int max_col);
 
-    array_t& img_array();
-    const array_t& img_array() const;
+    point point_at_offset(index offset) const;
+    index offset_from_point(point p) const;
 
     bool impl_owns_(const point2d& p) const;
 
@@ -158,17 +160,18 @@ namespace oln
   }
 
   template <typename T>
-  typename image2d<T>::array_t&
-  image2d<T>::img_array()
+  typename image2d<T>::point
+  image2d<T>::point_at_offset(typename image2d<T>::index offset) const
   {
-    return this->data_->first;
+    return point2d(offset / (this->data_->second.pmax().col() + 1),
+		   offset % (this->data_->second.pmax().col() + 1));
   }
 
   template <typename T>
-  const typename image2d<T>::array_t&
-  image2d<T>::img_array() const
+  typename image2d<T>::index
+  image2d<T>::offset_from_point(typename image2d<T>::point p) const
   {
-    return this->data_->first;
+    return p.row() * (this->data_->second.pmax().col() + 1) + p.col();
   }
 
   template <typename T>
@@ -196,7 +199,8 @@ namespace oln
   const T& image2d<T>::impl_index_read(unsigned i) const
   {
     assert(this->has_data());
-    assert(i < this->npoints());
+    //FIXME impl_npoints -> npoints
+    assert(i < this->impl_npoints());
     return this->data_->first[i];
   }
 
@@ -218,7 +222,8 @@ namespace oln
   T& image2d<T>::impl_index_read_write(unsigned i)
   {
     assert(this->has_data());
-    assert(i < this->npoints());
+    // FIXME impl_npoints -> npoints
+    assert(i < this->impl_npoints());
     return this->data_->first[i];
   }
 

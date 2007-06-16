@@ -196,7 +196,7 @@ namespace oln
 
     // final.
     Exact& inplace();
- 
+
   protected:
     Mutable_Image();
   };

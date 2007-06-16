@@ -70,9 +70,9 @@ namespace oln
   template <typename T>
   fast_iterator_1d<T>::fast_iterator_1d(image1d<T>& ima)
   {
-    this->start_ = ima.img_array().buffer() + ima.img_array().imin();
+    this->start_ = &ima(ima.points().pmin());
     this->current_elt_ = this->start_;
-    this->eoi_ = ima.img_array().buffer() + ima.img_array().imax() + 1;
+    this->eoi_ = &ima(ima.points().pmax()) + 1;
   }
 
 # endif // ! OLN_INCLUDE_ONLY

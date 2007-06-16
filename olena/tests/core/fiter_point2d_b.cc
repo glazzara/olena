@@ -28,14 +28,10 @@
 #include <cassert>
 #include <oln/core/2d/image2d_b.hh>
 
+using namespace oln;
 
-int
-main()
+void test(image2d_b<int>& ima)
 {
-  using namespace oln;
-
-  image2d_b<int> ima(50, 50, 2);
-
   image2d_b<int>::piter p(ima.points());
   image2d_b<int>::fiter f(ima);
   int i = 0;
@@ -60,4 +56,16 @@ main()
   assert(f.is_valid());
   f.invalidate();
   assert(!f.is_valid());
+}
+
+
+int
+main()
+{
+
+  image2d_b<int> ima1(60, 55, 2), ima2(30, 70), ima3(60, 60);
+
+  test(ima1);
+  test(ima2);
+  test(ima3);
 }
