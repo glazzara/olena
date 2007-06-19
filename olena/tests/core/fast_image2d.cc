@@ -34,7 +34,7 @@ void test(const image2d<int>& ima)
 {
   point2d q;
   image2d<int>::piter p(ima.points());
-  image2d<int>::index offset;
+  image2d<int>::offset offset;
 
   assert(ima.offset_from_point(point2d(0, 0)) == 0);
 

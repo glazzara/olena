@@ -36,7 +36,7 @@ main()
   image1d<int> ima(10);
 
   image1d<int>::piter p(ima.points());
-  image1d<int>::fiter f(ima);
+  image1d<int>::pixter f(ima);
   int i = 0;
 
   for_all(p)

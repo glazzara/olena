@@ -51,7 +51,7 @@ namespace oln
     typedef point2d point;
 
     typedef int      coord;
-    typedef unsigned index;
+    typedef unsigned offset;
 
     typedef       T   value;
     typedef const T& rvalue;
@@ -67,7 +67,7 @@ namespace oln
     typedef image2d_b<T>         plain;
     typedef image2d_b<pl::value> skeleton;
 
-    typedef fast_iterator_2d_b<value> fiter;
+    typedef fast_iterator_2d_b<value> pixter;
   };
 
 
@@ -90,8 +90,8 @@ namespace oln
     typedef array2d_<T, int> array_t;
   public:
     // FIXME: Fast image concept
-    typedef typename vtypes< image2d_b<T> >::fiter fiter;
-    typedef typename vtypes< image2d_b<T> >::index index;
+    typedef typename vtypes< image2d_b<T> >::pixter pixter;
+    typedef typename vtypes< image2d_b<T> >::offset offset;
     stc_using(point);
     stc_using(data);
 
@@ -99,8 +99,8 @@ namespace oln
     image2d_b(const box2d& b, unsigned border = 2);
     image2d_b(unsigned nrows, unsigned ncols, unsigned border = 2);
 
-    point point_at_offset(index offset) const;
-    index offset_from_point(point p) const;
+    point point_at_offset( offset) const;
+    offset offset_from_point(point p) const;
 
     bool impl_owns_(const point2d& p) const;
 
@@ -165,14 +165,14 @@ namespace oln
 
   template <typename T>
   typename image2d_b<T>::point
-  image2d_b<T>::point_at_offset(typename image2d_b<T>::index offset) const
+  image2d_b<T>::point_at_offset(typename image2d_b<T>::offset offset) const
   {
     return point2d(offset / (this->data_->third.pmax().col() + 1),
 		   offset % (this->data_->third.pmax().col() + 1));
   }
 
   template <typename T>
-  typename image2d_b<T>::index
+  typename image2d_b<T>::offset
   image2d_b<T>::offset_from_point(typename image2d_b<T>::point p) const
   {
     return p.row() * (this->data_->third.pmax().col() + 1) + p.col();

@@ -50,7 +50,7 @@ namespace oln
     typedef point3d point;
 
     typedef int      coord;
-    typedef unsigned index;
+    typedef unsigned offset;
 
     typedef       T   value;
     typedef const T& rvalue;
@@ -62,7 +62,7 @@ namespace oln
     typedef image3d<T>         plain;
     typedef image3d<pl::value> skeleton;
 
-    typedef fast_iterator_3d<value> fiter;
+    typedef fast_iterator_3d<value> pixter;
   };
 
 
@@ -85,8 +85,8 @@ namespace oln
     typedef array3d_<T, int> array_t;
   public:
     //FIXME (fast image concept??)
-    typedef typename vtypes< image3d<T> >::fiter fiter;
-    typedef typename vtypes< image3d<T> >::index index;
+    typedef typename vtypes< image3d<T> >::pixter pixter;
+    typedef typename vtypes< image3d<T> >::offset offset;
     stc_using(point);
     stc_using(data);
 
@@ -94,8 +94,8 @@ namespace oln
     image3d(const box3d& b);
     image3d(unsigned nslis, unsigned nrows, unsigned ncols);
 
-    point point_at_offset(index offset) const;
-    index offset_from_point(point p) const;
+    point point_at_offset(offset offset) const;
+    offset offset_from_point(point p) const;
 
     bool impl_owns_(const point3d& p) const;
 
@@ -159,7 +159,7 @@ namespace oln
   // Fast Image implementation
   template <typename T>
   typename image3d<T>::point
-  image3d<T>::point_at_offset(typename image3d<T>::index offset) const
+  image3d<T>::point_at_offset(typename image3d<T>::offset offset) const
   {
 
     return point3d(offset / ((this->data_->second.pmax().col() + 1) *
@@ -170,7 +170,7 @@ namespace oln
   }
 
   template <typename T>
-  typename image3d<T>::index
+  typename image3d<T>::offset
   image3d<T>::offset_from_point(typename image3d<T>::point p) const
   {
     return p.sli() * (this->data_->second.pmax().col() + 1) *

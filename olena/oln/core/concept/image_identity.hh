@@ -98,10 +98,11 @@ namespace oln
     {
       stc_typename(rvalue);
       stc_typename(lvalue);
-      stc_typename(index);
+      stc_typename(offset);
+//       stc_typename(pixter);
 
-      rvalue impl_index_read(index i) const;
-      lvalue impl_index_read_write(index i);
+      rvalue impl_offset_read(offset i) const;
+      lvalue impl_offset_read_write(offset i);
       std::size_t impl_npoints() const;
     };
 
@@ -221,7 +222,7 @@ namespace oln
     template <typename Exact>
     typename current::lvalue
     current::impl_read_write(const typename current::psite& p)
-    { 
+    {
       return exact(this)->image().operator()(p);
     }
 
@@ -229,7 +230,7 @@ namespace oln
     void
     current::impl_write(const typename current::psite& p,
 			const typename current::value& v)
-    { 
+    {
       return exact(this)->image().write_(p, v);
     }
 
@@ -240,18 +241,18 @@ namespace oln
 
     template <typename Exact>
     typename set_impl< Fast_Image, behavior::identity, Exact >::rvalue
-    set_impl< Fast_Image, behavior::identity, Exact >::impl_index_read(typename set_impl< Fast_Image, behavior::identity, Exact >::index i) const
-    { 
+    set_impl< Fast_Image, behavior::identity, Exact >::impl_offset_read(typename set_impl< Fast_Image, behavior::identity, Exact >::offset i) const
+    {
       return exact(this)->image()[i];
     }
 
     template <typename Exact>
     typename set_impl< Fast_Image, behavior::identity, Exact >::lvalue
-    set_impl< Fast_Image, behavior::identity, Exact >::impl_index_read_write(typename set_impl< Fast_Image, behavior::identity, Exact >::index i)
+    set_impl< Fast_Image, behavior::identity, Exact >::impl_offset_read_write(typename set_impl< Fast_Image, behavior::identity, Exact >::offset i)
     {
       return exact(this)->image()[i];
     }
-    
+
     template <typename Exact>
     std::size_t
     set_impl< Fast_Image, behavior::identity, Exact >::impl_npoints() const
@@ -275,7 +276,7 @@ namespace oln
     template <typename Exact>
     typename set_impl< Value_Wise_Mutable_Image, behavior::identity, Exact >::lvaluep
     set_impl< Value_Wise_Mutable_Image, behavior::identity, Exact >::impl_value_read_write(const typename set_impl< Value_Wise_Mutable_Image, behavior::identity, Exact >::vsite& v)
-    { 
+    {
       return exact(this)->image().value(v);
     }
 

@@ -88,7 +88,6 @@ namespace oln
 # define oln_encoding(T) oln_typename_shortcut__(T, encoding)
 
   // f
-  stc_decl_associated_type( fiter );
   stc_decl_associated_type( fwd_niter );
   stc_decl_associated_type( fwd_piter );
   stc_decl_associated_type( fwd_qiter );
@@ -102,8 +101,6 @@ namespace oln
 
 # define oln_grid(T) oln_typename_shortcut__(T, grid)
 
-  // i
-  stc_decl_associated_type( index );
 
   // l
   stc_decl_associated_type( left );
@@ -121,9 +118,11 @@ namespace oln
   // o
   stc_decl_associated_type( oper );
   stc_decl_associated_type( output );
+  stc_decl_associated_type( offset );
 
   // p
   stc_decl_associated_type( piter );
+  stc_decl_associated_type( pixter );
   stc_decl_associated_type( plain );
   stc_decl_associated_type( point );
   stc_decl_associated_type( pset );

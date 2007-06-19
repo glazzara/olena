@@ -211,12 +211,11 @@ namespace oln
     stc_using_from(Image, rvalue);
     stc_using_from(Mutable_Image, lvalue);
 
-    stc_typename(index);
-    // FIXME: Confusing!  We already have indices for 1D images...
-    // FIXME: Use "offset" instead!
+    stc_typename(offset);
+    stc_typename(pixter);
 
-    rvalue operator[](index i) const;
-    lvalue operator[](index i);
+    rvalue operator[](offset i) const;
+    lvalue operator[](offset i);
     std::size_t npoints() const;
 
     // FIXME: Add:
@@ -678,16 +677,16 @@ namespace oln
 
   template <typename Exact>
   typename Fast_Image<Exact>::rvalue
-  Fast_Image<Exact>::operator[](typename Fast_Image<Exact>::index i) const
+  Fast_Image<Exact>::operator[](typename Fast_Image<Exact>::offset i) const
   {
-    return exact(this)->impl_index_read(i);
+    return exact(this)->impl_offset_read(i);
   }
 
   template <typename Exact>
   typename Fast_Image<Exact>::lvalue
-  Fast_Image<Exact>::operator[](typename Fast_Image<Exact>::index i)
+  Fast_Image<Exact>::operator[](typename Fast_Image<Exact>::offset i)
   {
-    return exact(this)->impl_index_read_write(i);
+    return exact(this)->impl_offset_read_write(i);
   }
 
   template <typename Exact>

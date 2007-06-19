@@ -1,3 +1,28 @@
+2007-06-19  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	change fiter name to pixter, and index name to offset in Fast_image concept.
+
+	* tests/core/fiter_point1d.cc,
+	* tests/core/fiter_point2d.cc,
+	* tests/core/fiter_point1d_b.cc,
+	* tests/core/fiter_point3d.cc,
+	* tests/core/fiter_point2d_b.cc,
+	* tests/core/fiter_point3d_b.cc,
+	* tests/core/fast_image2d.cc,
+	* tests/core/fast_image2d_b.cc,
+	* tests/core/fast_image3d.cc,
+	* tests/core/fast_image3d_b.cc,
+	* oln/core/1d/image1d.hh,
+	* oln/core/1d/image1d_b.hh,
+	* oln/core/2d/image2d.hh,
+	* oln/core/2d/image2d_b.hh,
+	* oln/core/equipment.hh,
+	* oln/core/3d/image3d.hh,
+	* oln/core/3d/image3d_b.hh,
+	* oln/core/concept/image.hh,
+	* oln/core/concept/image_identity.hh,
+	* oln/core/internal/image_selectors.hh: Change types name.
+
 2007-06-16  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Adapt image1d, image2d, image3d to the Fast_image concept.

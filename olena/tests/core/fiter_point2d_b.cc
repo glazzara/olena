@@ -33,7 +33,7 @@ using namespace oln;
 void test(image2d_b<int>& ima)
 {
   image2d_b<int>::piter p(ima.points());
-  image2d_b<int>::fiter f(ima);
+  image2d_b<int>::pixter f(ima);
   int i = 0;
 
   for_all(p)

@@ -49,7 +49,7 @@ namespace oln
     // 1. mutability
 
     typedef  selector<Image, 1>  Image_mutability;
-  
+
     template <typename Exact>
     struct case_< Image_mutability, Exact,  1 >
       :
@@ -58,11 +58,13 @@ namespace oln
       typedef Mutable_Image<Exact> ret;
     };
 
+
+    // FIXME: don't work
     template <typename Exact>
     struct case_< Image_mutability, Exact,  2 >
       :
       where_< mlc::and_< stc_type_is_found(lvalue),
-			 stc_type_is_found(index) > > // FIXME: Wrong!
+			 stc_type_is_found(offset) > > // FIXME: Wrong!
     {
       typedef Fast_Image<Exact> ret;
     };
@@ -71,7 +73,7 @@ namespace oln
     // 2. dimension
 
     typedef  selector<Image, 2>  Image_dimension;
-  
+
     template <typename Exact>
     struct case_< Image_dimension, Exact,  1 >
       :
@@ -79,7 +81,7 @@ namespace oln
     {
       typedef Image_1D<Exact> ret;
     };
-  
+
     template <typename Exact>
     struct case_< Image_dimension, Exact,  2 >
       :
@@ -87,7 +89,7 @@ namespace oln
     {
       typedef Image_2D<Exact> ret;
     };
-  
+
     template <typename Exact>
     struct case_< Image_dimension, Exact,  3 >
       :
@@ -123,7 +125,7 @@ namespace oln
     };
 
     //       2D
-  
+
     template <typename Exact>
     struct case_< Image_pw_accessibility, Exact,  3 >
       :
@@ -144,7 +146,7 @@ namespace oln
     };
 
     //       3D
-  
+
     template <typename Exact>
     struct case_< Image_pw_accessibility, Exact,  5 >
       :
@@ -255,7 +257,7 @@ namespace oln
 
 
   } // end of namespace oln::internal
-  
+
 } // end of namespace oln
 
 

@@ -37,7 +37,7 @@ main()
   image2d<int> ima(20, 20);
 
   image2d<int>::piter p(ima.points());
-  image2d<int>::fiter f(ima);
+  image2d<int>::pixter f(ima);
   int i = 0;
 
   for_all(p)

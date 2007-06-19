@@ -49,7 +49,7 @@ namespace oln
     typedef point1d point;
 
     typedef int      coord;
-    typedef unsigned index;
+    typedef unsigned offset;
 
     typedef       T   value;
     typedef const T& rvalue;
@@ -65,7 +65,7 @@ namespace oln
     typedef image1d_b<T>         plain;
     typedef image1d_b<pl::value> skeleton;
 
-    typedef fast_iterator_1d_b<value> fiter;
+    typedef fast_iterator_1d_b<value> pixter;
   };
 
 
@@ -88,8 +88,8 @@ namespace oln
     typedef array1d_<T, int> array_t;
   public:
     //FIXME (fast image concept??)
-    typedef typename vtypes< image1d_b<T> >::fiter fiter;
-    typedef typename vtypes< image1d_b<T> >::index index;
+    typedef typename vtypes< image1d_b<T> >::pixter pixter;
+    typedef typename vtypes< image1d_b<T> >::offset offset;
     stc_using(data);
     stc_using(point);
 
@@ -102,8 +102,8 @@ namespace oln
     array_t& img_array();
     const array_t& img_array() const;
 
-    point point_at_offset(index offset) const;
-    index offset_from_point(point p) const;
+    point point_at_offset(offset offset) const;
+    offset offset_from_point(point p) const;
 
     bool impl_owns_(const point1d& p) const;
 
@@ -170,13 +170,13 @@ namespace oln
   // fast image implementation:
   template <typename T>
   typename image1d_b<T>::point
-  image1d_b<T>::point_at_offset(typename image1d_b<T>::index offset) const
+  image1d_b<T>::point_at_offset(typename image1d_b<T>::offset offset) const
   {
     return point1d(offset);
   }
 
   template <typename T>
-  typename image1d_b<T>::index
+  typename image1d_b<T>::offset
   image1d_b<T>::offset_from_point(typename image1d_b<T>::point p) const
   {
     return p.ind();

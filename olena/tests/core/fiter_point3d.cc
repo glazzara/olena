@@ -37,7 +37,7 @@ main()
   image3d<int> ima(20, 20, 20);
 
   image3d<int>::piter p(ima.points());
-  image3d<int>::fiter f(ima);
+  image3d<int>::pixter f(ima);
   int i = 0;
 
   for_all(p)
