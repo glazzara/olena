@@ -10,16 +10,16 @@ namespace mln
 {
 
   // fwd decls
-  template <typename D> class dpoints_fwd_qiter;
-  template <typename D> class dpoints_bkd_qiter;
+  template <typename D> class dpoints_fwd_piter;
+  template <typename D> class dpoints_bkd_piter;
  
 
   template <typename D>
   struct window_ : public Window< window_<D> >,
 		   public internal::set_of_<D>
   {
-    typedef dpoints_fwd_qiter<D> fwd_qiter;
-    typedef dpoints_bkd_qiter<D> bkd_qiter;
+    typedef dpoints_fwd_piter<D> fwd_qiter;
+    typedef dpoints_bkd_piter<D> bkd_qiter;
     typedef fwd_qiter qiter;
 
     window_();
@@ -27,10 +27,6 @@ namespace mln
     bool is_centered() const;
     bool is_symmetric() const;
   };
-
-  template <typename D>
-  std::ostream& operator<<(std::ostream& ostr,
-			   const window_<D>& win);
  
 
 # ifndef MLN_INCLUDE_ONLY
@@ -54,23 +50,12 @@ namespace mln
     return false;
   }
 
-  template <typename D>
-  std::ostream& operator<<(std::ostream& ostr,
-			   const window_<D>& win)
-  {
-    ostr << '[';
-    for (unsigned i = 0; i < win.nelements(); ++i)
-      ostr << win.element(i)
-	   << (i == win.nelements() - 1 ? ']' : ',');
-    return ostr;
-  }
-
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
-# include <core/dpoints_qiter.hh>
+# include <core/dpoints_piter.hh>
 
 
 #endif // ! MLN_CORE_WINDOW_HH

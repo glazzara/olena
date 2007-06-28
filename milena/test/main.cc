@@ -7,6 +7,8 @@
 #include <core/window2d.hh>
 #include <core/rectangle2d.hh>
 
+#include <core/neighb2d.hh>
+
 #include <morpho/erosion.hh>
 
 
@@ -29,6 +31,8 @@ int main()
       0, 1, 0,
       1, 0, 0 };
   window2d win = mk_window2d(w);
+  std::cout << win << std::endl;
+  std::cout << c8() << std::endl;
 
   /*
     {
@@ -56,4 +60,5 @@ int main()
     image2d<int> ima2 = morpho::erosion(ima, win);
     debug::println(ima2);
   }
+
 }

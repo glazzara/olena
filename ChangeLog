@@ -1,5 +1,20 @@
 2007-06-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add milena neighborhood.
+
+	* milena/test/main.cc: Update.
+	* milena/core/neighb2d.hh: New.
+	* milena/core/neighb.hh: New.
+	* milena/core/concept/neighborhood.hh: New.
+	* milena/core/dpoints_qiter.hh: Rename as...
+	* milena/core/dpoints_piter.hh: ...this.
+	* milena/core/internal/set_of.hh (operator<<): New;
+	factor code.
+	* milena/core/rectangle2d.hh: Update.
+	* milena/core/window.hh: Update.
+
+2007-06-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update milena.
 
 	* milena/test/main.cc: Use erosion.

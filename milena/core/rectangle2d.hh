@@ -4,7 +4,7 @@
 # include <core/concept/window.hh>
 # include <core/internal/set_of.hh>
 # include <core/dpoint2d.hh>
-# include <core/dpoints_qiter.hh>
+# include <core/dpoints_piter.hh>
 
 
 namespace mln
@@ -13,8 +13,8 @@ namespace mln
   struct rectangle2d : public Window< rectangle2d >,
 		       public internal::set_of_<dpoint2d>
   {
-    typedef dpoints_fwd_qiter<dpoint2d> fwd_qiter;
-    typedef dpoints_bkd_qiter<dpoint2d> bkd_qiter;
+    typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
+    typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
     typedef fwd_qiter qiter;
 
     rectangle2d(unsigned half_height, unsigned half_width);

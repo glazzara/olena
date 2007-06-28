@@ -1,5 +1,5 @@
-#ifndef MLN_CORE_DPOINTS_QITER_HH
-# define MLN_CORE_DPOINTS_QITER_HH
+#ifndef MLN_CORE_DPOINTS_PITER_HH
+# define MLN_CORE_DPOINTS_PITER_HH
 
 # include <core/concept/piter.hh>
 # include <core/concept/genpoint.hh>
@@ -9,7 +9,7 @@ namespace mln
 {
 
   template <typename D>
-  class dpoints_fwd_qiter : public Piter< dpoints_fwd_qiter<D> >
+  class dpoints_fwd_piter : public Piter< dpoints_fwd_piter<D> >
   {
   public:
 
@@ -21,7 +21,7 @@ namespace mln
     typedef mln_coord(D) coord;
 
     template <typename Dps, typename Pref>
-    dpoints_fwd_qiter(const Dps& dps,
+    dpoints_fwd_piter(const Dps& dps,
 		      const GenPoint<Pref>& p_ref);
 
     operator point() const;
@@ -48,7 +48,7 @@ namespace mln
 
   template <typename D>
   template <typename Dps, typename Pref>
-  dpoints_fwd_qiter<D>::dpoints_fwd_qiter(const Dps& dps,
+  dpoints_fwd_piter<D>::dpoints_fwd_piter(const Dps& dps,
 					  const GenPoint<Pref>& p_ref)
     : dps_(exact(dps).vec()),
       p_ref_(* force_exact<Pref>(p_ref).pointer())
@@ -57,7 +57,7 @@ namespace mln
   }
 
   template <typename D>
-  dpoints_fwd_qiter<D>::operator mln_point(D)() const
+  dpoints_fwd_piter<D>::operator mln_point(D)() const
   {
     assert(is_valid());
     return p_;
@@ -65,28 +65,28 @@ namespace mln
 
   template <typename D>
   const mln_point(D)*
-  dpoints_fwd_qiter<D>::pointer() const
+  dpoints_fwd_piter<D>::pointer() const
   {
     return & p_;
   }
 
   template <typename D>
   bool
-  dpoints_fwd_qiter<D>::is_valid() const
+  dpoints_fwd_piter<D>::is_valid() const
   {
     return i_ != dps_.size();
   }
 
   template <typename D>
   void
-  dpoints_fwd_qiter<D>::invalidate()
+  dpoints_fwd_piter<D>::invalidate()
   {
     i_ = dps_.size();
   }
 
   template <typename D>
   void
-  dpoints_fwd_qiter<D>::start()
+  dpoints_fwd_piter<D>::start()
   {
     i_ = 0;
     update_p_();
@@ -94,7 +94,7 @@ namespace mln
 
   template <typename D>
   void
-  dpoints_fwd_qiter<D>::next_()
+  dpoints_fwd_piter<D>::next_()
   {
     ++i_;
     update_p_();
@@ -102,7 +102,7 @@ namespace mln
 
   template <typename D>
   void
-  dpoints_fwd_qiter<D>::update_p_()
+  dpoints_fwd_piter<D>::update_p_()
   {
     if (is_valid())
       p_ = p_ref_ + dps_[i_];
@@ -110,7 +110,7 @@ namespace mln
 
   template <typename D>
   mln_coord(D)
-  dpoints_fwd_qiter<D>::operator[](unsigned i) const
+  dpoints_fwd_piter<D>::operator[](unsigned i) const
   {
     return p_[i];
   }
@@ -120,4 +120,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_DPOINTS_QITER_HH
+#endif // ! MLN_CORE_DPOINTS_PITER_HH

@@ -36,6 +36,10 @@ namespace mln
     };
 
 
+    template <typename E>
+    std::ostream& operator<<(std::ostream& ostr, const set_of_<E>& s);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename E>
@@ -96,6 +100,17 @@ namespace mln
     {
       v_.clear();
       std::copy(s_.begin(), s_.end(), std::back_inserter(v_));
+    }
+
+    template <typename E>
+    std::ostream& operator<<(std::ostream& ostr,
+			     const set_of_<E>& s)
+    {
+      ostr << '[';
+      for (unsigned i = 0; i < s.nelements(); ++i)
+	ostr << s.element(i)
+	     << (i == s.nelements() - 1 ? ']' : ',');
+      return ostr;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
