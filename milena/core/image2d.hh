@@ -18,6 +18,9 @@ namespace mln
     image2d();
     image2d(int nrows, int ncols);
     image2d(const box2d& b);
+    image2d(const image2d<T>& rhs);
+
+    image2d& operator=(const image2d<T>& rhs);
 
     bool has_data() const;
     const box2d& domain() const;
@@ -61,6 +64,34 @@ namespace mln
     : b_(b)
   {
     allocate_();
+  }
+
+  template <typename T>
+  image2d<T>::image2d(const image2d<T>& rhs)
+    : b_(rhs.domain())
+  {
+    allocate_();
+    std::memcpy(this->buffer_,
+		rhs.buffer_,
+		b_.npoints() * sizeof(value));
+  }
+
+  // assignment
+
+  template <typename T>
+  image2d<T>&
+  image2d<T>::operator=(const image2d<T>& rhs)
+  {
+    assert(rhs.has_data());
+    if (& rhs == this)
+      return *this;
+    if (this->has_data())
+      this->deallocate_();
+    this->b_ = rhs.domain();
+    std::memcpy(this->buffer_,
+		rhs.buffer_,
+		b_.npoints() * sizeof(value));
+    return *this;
   }
 
   // methods

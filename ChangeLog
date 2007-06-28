@@ -1,5 +1,20 @@
 2007-06-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update milena.
+
+	* milena/test/main.cc: Use erosion.
+	* milena/debug/println.hh: Remove version with win.
+	Add a facade.
+	New 2D version.
+	* milena/level/fill.hh: Add overloads.
+	* milena/core/concept/point_set.hh (npoints): New.
+	* milena/core/concept/box.hh (npoints): New.
+	* milena/core/image2d.hh (operator=): New.
+	(image2d): New cpy ctor.
+	* milena/value/props.hh: Extend.
+
+2007-06-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Change oln_ into mln_.
 
 	* milena/morpho/erosion.hh: New.

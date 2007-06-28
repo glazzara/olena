@@ -15,7 +15,9 @@ namespace mln
       const point& pmax() const;
     */
 
-    const E& bbox() const; // final
+    // final
+    const E& bbox() const;
+    std::size_t npoints() const;
 
   protected:
     Box();
@@ -38,6 +40,19 @@ namespace mln
     m1 = 0;
     point (E::*m2)() const = & E::pmax;
     m2 = 0;
+  }
+
+  template <typename E>
+  std::size_t
+  Box<E>::npoints() const
+  {
+    std::size_t count = 1;
+    for (unsigned i = 0; i < E::point::dim; ++i)
+      count *=
+	exact(this)->pmax()[i]
+	+ 1
+	- exact(this)->pmin()[i];
+    return count;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

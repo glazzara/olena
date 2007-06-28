@@ -20,6 +20,7 @@ namespace mln
 
       bool has(const psite& p) const;
       const box_<point>& bbox() const;
+      std::size_t npoints() const;
      */
 
   protected:
@@ -45,6 +46,8 @@ namespace mln
     m1 = 0;
     const box_<point>& (E::*m2)() const = & E::bbox;
     m2 = 0;
+    std::size_t (E::*m3)() const = & E::npoints;
+    m3 = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
