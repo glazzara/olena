@@ -20,10 +20,10 @@ namespace mln
 
 
   template <typename P>
-  P& operator+=(Point<P>& lhs, const oln_dpoint(P)& rhs);
+  P& operator+=(Point<P>& lhs, const mln_dpoint(P)& rhs);
 
   template <typename P>
-  P& operator-=(Point<P>& lhs, const oln_dpoint(P)& rhs);
+  P& operator-=(Point<P>& lhs, const mln_dpoint(P)& rhs);
 
 
 
@@ -41,7 +41,7 @@ namespace mln
   }
 
   template <typename P>
-  P& operator+=(Point<P>& lhs, const oln_dpoint(P)& rhs)
+  P& operator+=(Point<P>& lhs, const mln_dpoint(P)& rhs)
   {
     for (unsigned i = 0; i < P::dim; ++i)
       exact(lhs)[i] += rhs[i];
@@ -49,7 +49,7 @@ namespace mln
   }
 
   template <typename P>
-  P& operator-=(Point<P>& lhs, const oln_dpoint(P)& rhs)
+  P& operator-=(Point<P>& lhs, const mln_dpoint(P)& rhs)
   {
     for (unsigned i = 0; i < P::dim; ++i)
       exact(lhs)[i] -= rhs[i];

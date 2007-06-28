@@ -12,7 +12,7 @@ namespace mln
   {
 
     template <typename T1, typename T2>
-    struct same_point : mlc::equal<oln_point(T2), oln_point(T2)>
+    struct same_point : mlc::equal<mln_point(T2), mln_point(T2)>
     {
     };
 

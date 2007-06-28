@@ -14,11 +14,11 @@ namespace mln
     struct image_base_ : public Image<E>
     {
       typedef S pset;
-      typedef oln_psite(S) psite;
-      typedef oln_point(S) point;
+      typedef mln_psite(S) psite;
+      typedef mln_point(S) point;
 
-      typedef oln_fwd_piter(S) fwd_piter;
-      typedef oln_bkd_piter(S) bkd_piter;
+      typedef mln_fwd_piter(S) fwd_piter;
+      typedef mln_bkd_piter(S) bkd_piter;
       typedef fwd_piter piter;
 
       bool has(const psite& p) const;
@@ -47,7 +47,7 @@ namespace mln
     }
 
     template <typename S, typename E>
-    const box_<oln_point(S)>&
+    const box_<mln_point(S)>&
     image_base_<S,E>::bbox() const
     {
       return exact(this)->domain().bbox();

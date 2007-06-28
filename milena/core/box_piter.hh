@@ -17,8 +17,8 @@ namespace mln
 
     typedef P psite;
     typedef P point;
-    typedef oln_coord(P) coord;
-    typedef oln_dpoint(P) dpoint;
+    typedef mln_coord(P) coord;
+    typedef mln_dpoint(P) dpoint;
 
     box_fwd_piter_(const box_<P>& b)
       : b_(b)
@@ -89,7 +89,7 @@ namespace mln
 
     typedef P psite;
     typedef P point;
-    typedef oln_coord(P) coord;
+    typedef mln_coord(P) coord;
 
     box_bkd_piter_(const box_<P>& b)
       : b_(b)

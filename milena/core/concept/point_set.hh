@@ -35,11 +35,11 @@ namespace mln
   template <typename E>
   Point_Set<E>::Point_Set()
   {
-    typedef oln_point(E) point;
-    typedef oln_psite(E) psite;
-    typedef oln_piter(E) piter;
-    typedef oln_fwd_piter(E) fwd_piter;
-    typedef oln_bkd_piter(E) bkd_piter;
+    typedef mln_point(E) point;
+    typedef mln_psite(E) psite;
+    typedef mln_piter(E) piter;
+    typedef mln_fwd_piter(E) fwd_piter;
+    typedef mln_bkd_piter(E) bkd_piter;
     
     bool (E::*m1)(const psite& p) const = & E::has;
     m1 = 0;

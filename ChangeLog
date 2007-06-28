@@ -1,5 +1,33 @@
 2007-06-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Change oln_ into mln_.
+
+	* milena/morpho/erosion.hh: New.
+	* milena/io: New.
+	* milena/value/props.hh: New.
+	* milena/border: New.
+
+	* milena/test/main.cc,
+	* milena/debug/println.hh,
+	* milena/level/fill.hh,
+	* milena/core/dpoints_qiter.hh,
+	* milena/core/macros.hh,
+	* milena/core/box_piter.hh,
+	* milena/core/concept/image.hh,
+	* milena/core/concept/genpoint.hh,
+	* milena/core/concept/piter.hh,
+	* milena/core/concept/point_set.hh,
+	* milena/core/concept/window.hh,
+	* milena/core/concept/box.hh,
+	* milena/core/concept/point.hh,
+	* milena/core/concept/dpoint.hh,
+	* milena/core/internal/image_adaptor.hh,
+	* milena/core/internal/image_base.hh,
+	* milena/core/safe_image.hh,
+	* milena/mlc/same_point.hh: Change oln_ into mln_.
+
+2007-06-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Introducing mini-olena (milena).
 
 	* milena: New.

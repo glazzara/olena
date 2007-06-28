@@ -38,12 +38,12 @@ namespace mln
   bool operator<(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs);
 
   template <typename Pl, typename Pr>
-  oln_dpoint(Pl)
+  mln_dpoint(Pl)
   operator-(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs);
 
   template <typename P>
-  oln_point(P)
-  operator+(const GenPoint<P>& lhs, const oln_dpoint(P)& rhs);
+  mln_point(P)
+  operator+(const GenPoint<P>& lhs, const mln_dpoint(P)& rhs);
 
   template <typename P>
   std::ostream& operator<<(std::ostream& ostr, const GenPoint<P>& p);
@@ -54,9 +54,9 @@ namespace mln
   template <typename E>
   GenPoint<E>::GenPoint()
   {
-    typedef  oln_point(E)  point;
-    typedef oln_dpoint(E) dpoint;
-    typedef oln_coord(E)  coord;
+    typedef  mln_point(E)  point;
+    typedef mln_dpoint(E) dpoint;
+    typedef mln_coord(E)  coord;
     const point* (E::*m1)() const = & E::pointer;
     m1 = 0;
     coord (E::*m2)(unsigned i) const = & E::operator[];
@@ -92,12 +92,12 @@ namespace mln
 
 
   template <typename Pl, typename Pr>
-  oln_dpoint(Pl)
+  mln_dpoint(Pl)
   operator-(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs)
   {
     const Pl& lhs_ = force_exact<Pl>(lhs);
     const Pr& rhs_ = force_exact<Pr>(rhs);
-    oln_dpoint(Pl) tmp;
+    mln_dpoint(Pl) tmp;
     for (unsigned i = 0; i < Pl::dim; ++i)
       tmp[i] = lhs_[i] - rhs_[i];
     return tmp;
@@ -105,11 +105,11 @@ namespace mln
 
 
   template <typename P>
-  oln_point(P)
-  operator+(const GenPoint<P>& lhs, const oln_dpoint(P)& rhs)
+  mln_point(P)
+  operator+(const GenPoint<P>& lhs, const mln_dpoint(P)& rhs)
   {
     const P& lhs_ = force_exact<P>(lhs);
-    oln_point(P) tmp;
+    mln_point(P) tmp;
     for (unsigned i = 0; i < P::dim; ++i)
       tmp[i] = lhs_[i] + rhs[i];
     return tmp;

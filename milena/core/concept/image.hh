@@ -52,13 +52,13 @@ namespace mln
   {
     // provided by internal::image_base_:
 
-    typedef oln_pset(E)  pset;
-    typedef oln_point(E) point;
-    typedef oln_psite(E) psite;
+    typedef mln_pset(E)  pset;
+    typedef mln_point(E) point;
+    typedef mln_psite(E) psite;
     
-    typedef oln_piter(E)     piter;
-    typedef oln_fwd_piter(E) fwd_piter;
-    typedef oln_bkd_piter(E) bkd_piter;
+    typedef mln_piter(E)     piter;
+    typedef mln_fwd_piter(E) fwd_piter;
+    typedef mln_bkd_piter(E) bkd_piter;
     
     bool (E::*m1)(const psite& p) const = & E::has;
     m1 = 0;
@@ -67,9 +67,9 @@ namespace mln
 
     // to be provided in concrete image classes:
 
-    typedef oln_value(E)  value;
-    typedef oln_rvalue(E) rvalue;
-    typedef oln_lvalue(E) lvalue;
+    typedef mln_value(E)  value;
+    typedef mln_rvalue(E) rvalue;
+    typedef mln_lvalue(E) lvalue;
     
     bool (E::*m3)() const = & E::has_data;
     m3 = 0;

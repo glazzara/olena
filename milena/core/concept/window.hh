@@ -30,9 +30,9 @@ namespace mln
   template <typename E>
   Window<E>::Window()
   {
-    typedef oln_qiter(E) qiter;
-    typedef oln_fwd_qiter(E) fwd_qiter;
-    typedef oln_bkd_qiter(E) bkd_qiter;
+    typedef mln_qiter(E) qiter;
+    typedef mln_fwd_qiter(E) fwd_qiter;
+    typedef mln_bkd_qiter(E) bkd_qiter;
 
     bool (E::*m1)() const = & E::is_empty;
     m1 = 0;

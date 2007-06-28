@@ -16,9 +16,9 @@ namespace mln
     enum { dim = D::dim };
 
     typedef D           dpoint;
-    typedef oln_point(D) point;
+    typedef mln_point(D) point;
     typedef point        psite;
-    typedef oln_coord(D) coord;
+    typedef mln_coord(D) coord;
 
     template <typename Dps, typename Pref>
     dpoints_fwd_qiter(const Dps& dps,
@@ -57,14 +57,14 @@ namespace mln
   }
 
   template <typename D>
-  dpoints_fwd_qiter<D>::operator point() const
+  dpoints_fwd_qiter<D>::operator mln_point(D)() const
   {
     assert(is_valid());
     return p_;
   }
 
   template <typename D>
-  const oln_point(D)*
+  const mln_point(D)*
   dpoints_fwd_qiter<D>::pointer() const
   {
     return & p_;
@@ -109,7 +109,7 @@ namespace mln
   }
 
   template <typename D>
-  oln_coord(D)
+  mln_coord(D)
   dpoints_fwd_qiter<D>::operator[](unsigned i) const
   {
     return p_[i];

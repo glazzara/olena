@@ -31,8 +31,8 @@ namespace mln
   template <typename E>
   Piter<E>::Piter()
   {
-    typedef oln_psite(E) psite;
-    typedef oln_point(E) point;
+    typedef mln_psite(E) psite;
+    typedef mln_point(E) point;
     const point* (E::*m)() const = & E::pointer;
     m = 0;
   }

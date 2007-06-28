@@ -33,7 +33,7 @@ namespace mln
   template <typename E>
   Box<E>::Box()
   {
-    typedef oln_point(E) point;
+    typedef mln_point(E) point;
     point (E::*m1)() const = & E::pmin;
     m1 = 0;
     point (E::*m2)() const = & E::pmax;

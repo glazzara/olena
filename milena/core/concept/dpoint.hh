@@ -42,8 +42,8 @@ namespace mln
   template <typename E>
   Dpoint<E>::Dpoint()
   {
-    typedef oln_point(E) point;
-    typedef oln_coord(E) coord;
+    typedef mln_point(E) point;
+    typedef mln_coord(E) coord;
     enum { dim = E::dim };
     coord (E::*m)(unsigned i) const = & E::operator[];
     m = 0;

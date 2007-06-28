@@ -25,7 +25,7 @@ namespace mln
     void println(const Image<I>& input_)
     {
       const I& input = exact(input_);
-      oln_piter(I) p(input.domain());
+      mln_piter(I) p(input.domain());
       for_all(p)
 	std::cout << input(p) << ' ';
       std::cout << std::endl;
@@ -39,8 +39,8 @@ namespace mln
       const I& input = exact(input_);
       const W& win   = exact(win_);
 
-      oln_piter(I) p(input.domain());
-      oln_qiter(W) q(win, p);
+      mln_piter(I) p(input.domain());
+      mln_qiter(W) q(win, p);
       for_all(p)
 	{
 	  std::cout << input(p) << ':';

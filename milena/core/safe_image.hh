@@ -15,8 +15,8 @@ namespace mln
 
     safe_image(Image<I>& ima);
 
-    oln_rvalue(I) operator()(const oln_psite(I)& p) const;
-    oln_lvalue(I) operator()(const oln_psite(I)& p);
+    mln_rvalue(I) operator()(const mln_psite(I)& p) const;
+    mln_lvalue(I) operator()(const mln_psite(I)& p);
   };
 
 
@@ -36,20 +36,20 @@ namespace mln
   }
 
   template <typename I>
-  oln_rvalue(I)
-  safe_image<I>::operator()(const oln_psite(I)& p) const
+  mln_rvalue(I)
+  safe_image<I>::operator()(const mln_psite(I)& p) const
   {
-    static oln_value(I) tmp;
+    static mln_value(I) tmp;
     if (not this->owns_(p))
       return tmp;
     return this->adaptee_(p);
   }
 
   template <typename I>
-  oln_lvalue(I)
-  safe_image<I>::operator()(const oln_psite(I)& p)
+  mln_lvalue(I)
+  safe_image<I>::operator()(const mln_psite(I)& p)
   {
-    static oln_value(I) tmp;
+    static mln_value(I) tmp;
     if (not this->owns_(p))
       return tmp;
     return this->adaptee_(p);

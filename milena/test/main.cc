@@ -5,6 +5,8 @@
 #include <core/window2d.hh>
 #include <core/rectangle2d.hh>
 
+#include <morpho/erosion.hh>
+
 
 int main()
 {
@@ -26,6 +28,7 @@ int main()
   std::cout << win << std::endl;
 
   debug::println(ima, win);
+  morpho::erosion(ima, win);
 
   rectangle2d rec(1, 2);
   std::cout << rec << std::endl;

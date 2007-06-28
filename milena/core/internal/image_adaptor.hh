@@ -11,14 +11,14 @@ namespace mln
   {
 
     template <typename I, typename E>
-    struct image_adaptor_ : public internal::image_base_< oln_pset(I), E >
+    struct image_adaptor_ : public internal::image_base_< mln_pset(I), E >
     {
-      typedef oln_psite(I) psite;
-      typedef oln_pset(I)  pset;
+      typedef mln_psite(I) psite;
+      typedef mln_pset(I)  pset;
 
-      typedef oln_value(I)   value;
-      typedef oln_rvalue(I) rvalue;
-      typedef oln_lvalue(I) lvalue;
+      typedef mln_value(I)   value;
+      typedef mln_rvalue(I) rvalue;
+      typedef mln_lvalue(I) lvalue;
 
       bool has_data() const;
 
@@ -51,21 +51,21 @@ namespace mln
     }
 
     template <typename I, typename E>
-    const oln_pset(I)&
+    const mln_pset(I)&
     image_adaptor_<I,E>::domain() const
     {
       return adaptee_.domain();
     }
 
     template <typename I, typename E>
-    oln_rvalue(I)
+    mln_rvalue(I)
     image_adaptor_<I,E>::operator()(const psite& p) const
     {
       return adaptee_(p);
     }
 
     template <typename I, typename E>
-    oln_lvalue(I)
+    mln_lvalue(I)
     image_adaptor_<I,E>::operator()(const psite& p)
     {
       return adaptee_(p);
