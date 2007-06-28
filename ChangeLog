@@ -1,5 +1,19 @@
 2007-06-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update milena.
+
+	* olena/oln/morpho/Rd/union_find.hh: Update.
+	* milena/test/main.cc: Use Rd.
+	* milena/morpho/Rd.hh: New.
+	* milena/level/fill.hh: Add assertions.
+	* milena/level/compare.hh: New.
+	* milena/level/paste.hh: New.
+	* milena/core/macros.hh (mln_ch_value): New.
+	* milena/core/concept/image.hh: Update.
+	* milena/core/image2d.hh: Update.
+
+2007-06-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add milena neighborhood.
 
 	* milena/test/main.cc: Update.

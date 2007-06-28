@@ -29,6 +29,7 @@
 # define OLN_MORPHO_RD_UNION_FIND_HH
 
 # include <oln/morpho/Rd/utils.hh>
+# include <oln/core/internal/max_value.hh>
 
 
 namespace oln
@@ -45,6 +46,7 @@ namespace oln
       struct union_find_t
       {
 	typedef oln_point(I) point;
+	typedef oln_value(I) value;
 
 	// in:
 	I f, g;
@@ -55,8 +57,8 @@ namespace oln
 
 	// aux:
 	std::vector<point> S;
-	I data;
-	oln_plain_value(I, bool) is_proc;
+	// was: I data;
+	oln_plain_value(I, bool) isproc;
 	oln_plain_value(I, point) parent;
 
 	union_find_t(const I& f, const I& g, const N& nbh)
@@ -64,14 +66,15 @@ namespace oln
 	{
 	  prepare(o, with, f);
 	  prepare(parent, with, f);
-	  prepare(is_proc, with, f);
-	  prepare(data, with, f);
+	  prepare(isproc, with, f);
+	  // was: prepare(data, with, f);
 	
 	  // init
 
 	  std::cout << "0 ";
-	  level::fill(inplace(is_proc), false);
+	  level::fill(inplace(isproc), false);
 	  S = histo_reverse_sort(g);
+	  level::paste(f, inplace(o)); // new: replace make_set(p) { data(p) = f(p) }
 
 	  // first pass
 
@@ -83,35 +86,40 @@ namespace oln
 	      make_set(p);
 	      oln_niter(N) n(nbh, p);
 	      for_all(n)
-		if (f.has(n) and is_proc(n))
-		  do_union(n, p);
-	      is_proc(p) = true;
+		{
+		  if (f.has(n))
+		    assert(isproc(n) == is_proc(n, p));
+		  if (f.has(n) and isproc(n))
+		    do_union(n, p);
+		}
+	      isproc(p) = true;
 	    }
 
 	  // second pass
 
 	  std::cout << "2 ";
-	  level::fill(inplace(is_proc), false);
 	  for (int i = S.size() - 1; i >= 0; --i)
 	    {
 	      point p = S[i];
-	      assert(is_proc(p) == false);
 	      if (parent(p) == p)
-		o(p) = data(p) == 255 ? g(p) : data(p);
+		if (o(p) == oln_max(value))
+		  o(p) = g(p);
 	      else
-		{
-		  assert(is_proc(parent(p)) == true);
-		  o(p) = o(parent(p));
-		}
-	      is_proc(p) = true;
+		o(p) = o(parent(p));
 	    }
 
 	}
  
+	bool is_proc(const point& n, const point& p) const
+	{
+	  return g(n) > g(p) or (g(n) == g(p) and n < p);
+	}
+
 	void make_set(const point& p)
 	{
 	  parent(p) = p;
-	  data(p) = f(p);
+	  // was: data(p) = f(p);
+	  // now: in "initialization"
 	}
 
 	point find_root(const point& x)
@@ -122,24 +130,21 @@ namespace oln
 	    return parent(x) = find_root(parent(x));
 	}
 
-	bool equiv(const point& r, const point& p)
-	{
-	  return g(r) == g(p) or g(p) >= data(r);
-	}
-
 	void do_union(const point& n, const point& p)
 	{
 	  point r = find_root(n);
 	  if (r != p)
 	    {
-	      if (equiv(r, p))
+	      // NEW: o replaces data
+
+	      if (g(r) == g(p) or g(p) >= o(r)) // equiv test
 		{
 		  parent(r) = p;
-		  if (data(r) > data(p))
-		    data(p) = data(r); // increasing criterion
+		  if (o(r) > o(p))
+		    o(p) = o(r); // increasing criterion
 		}
 	      else
-		data(p) = 255;
+		o(p) = oln_max(value);
 	    }
 	}
       

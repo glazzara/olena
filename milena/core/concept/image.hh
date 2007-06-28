@@ -25,6 +25,12 @@ namespace mln
       rvalue operator()(const psite& p) const;
       lvalue operator()(const psite& p);
 
+      template <typename T>
+      struct change_value
+      {
+        typedef ret;
+      };
+
 
       // provided by internal::image_base_:
 
@@ -59,7 +65,7 @@ namespace mln
     typedef mln_piter(E)     piter;
     typedef mln_fwd_piter(E) fwd_piter;
     typedef mln_bkd_piter(E) bkd_piter;
-    
+
     bool (E::*m1)(const psite& p) const = & E::has;
     m1 = 0;
     const box_<point>& (E::*m2)() const = & E::bbox;
@@ -70,6 +76,8 @@ namespace mln
     typedef mln_value(E)  value;
     typedef mln_rvalue(E) rvalue;
     typedef mln_lvalue(E) lvalue;
+
+    typedef mln_ch_value(E, value) change;
     
     bool (E::*m3)() const = & E::has_data;
     m3 = 0;

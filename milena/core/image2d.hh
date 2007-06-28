@@ -15,6 +15,12 @@ namespace mln
     typedef const T& rvalue;
     typedef T&       lvalue;
 
+    template <typename U>
+    struct change_value
+    {
+      typedef image2d<U> ret;
+    };
+
     image2d();
     image2d(int nrows, int ncols);
     image2d(const box2d& b);

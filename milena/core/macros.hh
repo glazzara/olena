@@ -25,4 +25,8 @@
 # define mln_rvalue(T)     typename T::rvalue
 # define mln_lvalue(T)     typename T::lvalue
 
+
+# define mln_ch_value(I, T) typename I::template change_value<T>::ret
+
+
 #endif // ! MLN_CORE_MACROS_HH
