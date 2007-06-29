@@ -1,3 +1,14 @@
+2007-06-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add support for Doxygen in Milena.
+
+	* configure.ac (milena/Makefile, milena/doc/Makefile):
+	Configure them.
+	* Makefile.am (SUBDIRS): Add milena.
+	* milena/Makefile.am: New.
+	* milena/doc/Makefile.am, milena/doc/Doxyfile.in:
+	New files (copied from LRDE TC's project).	
+
 2007-06-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update milena.
@@ -596,3 +607,12 @@
 	Add Vcs helper.
 
 	* vcs/oln.rb: New.
+
+
+Local Variables:
+ispell-local-dictionary: "american"
+End:
+
+$Rev$
+$Id$
+$Date$
