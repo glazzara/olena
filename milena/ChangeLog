@@ -1,0 +1,18 @@
+2007-06-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up Doxygen's configuration and add support for Vcs.
+
+	* doc/Doxyfile.in: Wrap long lines.
+	(INPUT_ENCODING): Set to ISO-8859-1.
+	* test/: Rename as...
+	* tests/: ...this.
+	* vcs/milena.rb: New file.
+
+
+Local Variables:
+ispell-local-dictionary: "american"
+End:
+
+$Rev: 988 $
+$Id: ChangeLog 988 2007-06-29 10:57:30Z levill_r $
+$Date: 2007-06-29 12:57:30 +0200 (Fri, 29 Jun 2007) $
