@@ -1,3 +1,16 @@
+2007-07-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Move Milena source files to mln/.
+
+	* mln/: New directory.
+	* border/, convert/, core/, debug/, io/, level/, morpho/, value/,
+	* README: Move...
+	* mln/border/, mln/convert/, mln/core/, mln/debug/,
+	* mln/io/, mln/level/, mln/morpho/, mln/value/:
+	* mln/README: ...here.
+	Adjust inclusion paths.
+	* tests/main.cc: Likewise.
+
 2007-07-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Start milena documentation.

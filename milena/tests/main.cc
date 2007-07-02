@@ -1,16 +1,16 @@
 #include <cmath>
 
-#include <core/image2d.hh>
-#include <level/fill.hh>
-#include <debug/println.hh>
+#include <mln/core/image2d.hh>
+#include <mln/level/fill.hh>
+#include <mln/debug/println.hh>
 
-#include <core/window2d.hh>
-#include <core/rectangle2d.hh>
+#include <mln/core/window2d.hh>
+#include <mln/core/rectangle2d.hh>
 
-#include <core/neighb2d.hh>
+#include <mln/core/neighb2d.hh>
 
-#include <morpho/erosion.hh>
-#include <morpho/Rd.hh>
+#include <mln/morpho/erosion.hh>
+#include <mln/morpho/Rd.hh>
 
 
 typedef unsigned char int_u8;
