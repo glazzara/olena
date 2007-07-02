@@ -1,6 +1,9 @@
 #ifndef MLN_CORE_MACROS_HH
 # define MLN_CORE_MACROS_HH
 
+/*! \file mln/core/macros.hh
+ * This file defines the set of milena macros.
+ */
 
 # define mln_point(T)      typename T::point
 # define mln_dpoint(T)     typename T::dpoint

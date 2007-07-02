@@ -1,13 +1,24 @@
 #ifndef MLN_CORE_EXACT_HH
 # define MLN_CORE_EXACT_HH
 
+/*! \file mln/core/exact.hh
+ * This file defines the mln::exact downcast routines.
+ */
+
 # include <core/concept/object.hh>
 
 
 namespace mln
 {
 
-  // exact
+  /*! The mln::exact routine downcasts an object towards its exact
+   * type.
+   * 
+   * The only argument is an mln::Object.  The return follows the
+   * nature of the argument (either a pointer or a reference, const or
+   * not).
+   */ 
+  /// \{
 
   template <typename E>
   E* exact(Object<E>* ptr);
@@ -21,8 +32,18 @@ namespace mln
   template <typename E>
   const E& exact(const Object<E>& ref);
 
+  /// \}
 
-  // force_exact
+
+
+  /*! The mln::force_exact is a violent cast routine.
+   * 
+   * It preserves the nature (pointer or reference, const or mutable)
+   * of its argument.  The parameter \a E should not have qualifiers.
+   *
+   * \todo Move into mln::internal.
+   */ 
+  /// \{
 
   template <typename E, typename O>
   E* force_exact(O* ptr);
@@ -35,6 +56,8 @@ namespace mln
 
   template <typename E, typename O>
   const E& force_exact(const O& ref);
+
+  /// \}
 
 
 

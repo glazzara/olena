@@ -1,8 +1,6 @@
 #ifndef MLN_MLC_EQUAL_HH
 # define MLN_MLC_EQUAL_HH
 
-# include <core/concept/genpoint.hh>
-
 
 namespace mln
 {

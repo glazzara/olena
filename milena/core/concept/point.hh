@@ -1,12 +1,20 @@
 #ifndef MLN_CORE_CONCEPT_POINT_HH
 # define MLN_CORE_CONCEPT_POINT_HH
 
+/*! \file mln/core/exact.hh
+ * This file defines the concept of mln::Point.
+ */
+
 # include <core/concept/psite.hh>
 
 
 namespace mln
 {
 
+  /*! Base class for implementation of point.
+   *
+   * A point is 
+   */
   template <typename P>
   struct Point : public Psite<P>
   {

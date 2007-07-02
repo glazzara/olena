@@ -1,6 +1,10 @@
 #ifndef MLN_CORE_CONCEPT_GENPOINT_HH
 # define MLN_CORE_CONCEPT_GENPOINT_HH
 
+/*! \file mln/core/concept/genpoint.hh
+ * This file defines the concept of mln::GenPoint.
+ */
+
 # include <core/concept/object.hh>
 # include <core/macros.hh>
 # include <mlc/equal.hh>
@@ -10,9 +14,20 @@
 namespace mln
 {
 
+  /*! Base class for implementation classes that are points or that
+   *  have the behavior of points.
+   *
+   * "GenPoint" is "General Point" for short.
+   *
+   * This class does not derive from mln::Object; it is for use as a
+   * parallel hierarchy.
+   *
+   * \relates mln::doc::GenPoint
+   */
   template <typename E>
   struct GenPoint // stand-alone class!
   {
+
     /*
       typedef point;
       typedef dpoint;
@@ -31,6 +46,9 @@ namespace mln
   };
 
 
+
+  /*! \relates mln::GenPoint
+   */
   template <typename Pl, typename Pr>
   bool operator==(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs);
 
@@ -38,12 +56,12 @@ namespace mln
   bool operator<(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs);
 
   template <typename Pl, typename Pr>
-  mln_dpoint(Pl)
+  typename Pl::dpoint
   operator-(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs);
 
   template <typename P>
-  mln_point(P)
-  operator+(const GenPoint<P>& lhs, const mln_dpoint(P)& rhs);
+  typename P::point
+  operator+(const GenPoint<P>& lhs, const typename P::dpoint& rhs);
 
   template <typename P>
   std::ostream& operator<<(std::ostream& ostr, const GenPoint<P>& p);

@@ -1,3 +1,18 @@
+2007-07-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Start milena documentation.
+
+	* core/macros.hh,
+	* core/concept/genpoint.hh,
+	* core/concept/psite.hh,
+	* core/concept/object.hh,
+	* core/concept/point.hh,
+	* core/ops.hh,
+	* core/exact.hh: Add some documentation.
+	* core/concept/doc: New.
+	* core/concept/doc/genpoint.hh: New.
+	* mlc/equal.hh: Remove include.
+
 2007-06-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Clean up Doxygen's configuration and add support for Vcs.
