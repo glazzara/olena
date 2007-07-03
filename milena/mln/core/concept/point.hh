@@ -1,8 +1,8 @@
 #ifndef MLN_CORE_CONCEPT_POINT_HH
 # define MLN_CORE_CONCEPT_POINT_HH
 
-/*! \file mln/core/exact.hh
- * This file defines the concept of mln::Point.
+/*! \file mln/core/concept/point.hh
+ * \brief This file defines the concept of mln::Point.
  */
 
 # include <mln/core/concept/psite.hh>
@@ -11,15 +11,19 @@
 namespace mln
 {
 
-  /*! Base class for implementation of point.
+  /*! \brief Base class for implementation of point classes.
    *
-   * A point is 
+   * A point is a vector in a space.
    */
   template <typename P>
   struct Point : public Psite<P>
   {
-    // final
+    /*! \brief The associated point type is itself.
+     */
     typedef P point;
+
+    /*! \brief The pointer is this point address.
+     */
     const P* pointer() const;
 
   protected:
@@ -27,9 +31,36 @@ namespace mln
   };
 
 
+  /*! \brief Add a delta-point \p rhs to a point \p lhs.
+   *
+   * @param[in,out] lhs The targeted point.
+   * @param[in] rhs A delta-point.
+   *
+   * \pre The type of \p rhs has to be the Dpoint type associated with
+   * the type of \p lhs; otherwise this test does not compile.
+   *
+   * \return A reference to the point \p lhs once translated by \p
+   * rhs.
+   *
+   * \relates mln::Point
+   */
   template <typename P>
   P& operator+=(Point<P>& lhs, const mln_dpoint(P)& rhs);
 
+
+  /*! \brief Remove a delta-point \p rhs to a point \p lhs.
+   *
+   * @param[in,out] lhs The targeted point.
+   * @param[in] rhs A delta-point.
+   *
+   * \pre The type of \p rhs has to be the Dpoint type associated with
+   * the type of \p lhs; otherwise this test does not compile.
+   *
+   * \return A reference to the point \p lhs once translated by - \p
+   * rhs.
+   *
+   * \relates mln::Point
+   */
   template <typename P>
   P& operator-=(Point<P>& lhs, const mln_dpoint(P)& rhs);
 

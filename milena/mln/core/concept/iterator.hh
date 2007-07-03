@@ -1,15 +1,25 @@
 #ifndef MLN_CORE_CONCEPT_ITERATOR_HH
 # define MLN_CORE_CONCEPT_ITERATOR_HH
 
+/*! \file mln/core/concept/iterator.hh
+ * \brief This file defines the concept of mln::Iterator.
+ */
+
 # include <mln/core/concept/object.hh>
 
-
+/*! \brief Loop to browse all the elements targetted by the iterator
+ * \p x.
+ */
 # define for_all(x) for(x.start(); x.is_valid(); x.next())
 
 
 namespace mln
 {
-
+  /*! \brief Base class for implementation classes that are iterators.
+   *
+   * \see mln::doc::Iterator for a complete documentation of this
+   * class contents.
+   */
   template <typename E>
   struct Iterator : public Object<E>
   {
@@ -20,6 +30,14 @@ namespace mln
       void next_();
     */
 
+    /*! \brief Go to the next element.
+     *
+     * \warning This is a final method; iterator classes should not
+     * re-defined this method.  The actual "next" operation has to be
+     * defined through the \em next_ method.
+     *
+     * \pre The iterator is valid.
+     */ 
     void next(); // final
 
   protected:

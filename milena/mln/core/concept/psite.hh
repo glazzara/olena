@@ -2,7 +2,7 @@
 # define MLN_CORE_CONCEPT_PSITE_HH
 
 /*! \file mln/core/concept/psite.hh
- * This file defines the concept of mln::Psite.
+ * \brief This file defines the concept of mln::Psite.
  */
 
 # include <mln/core/concept/genpoint.hh>
@@ -11,8 +11,8 @@
 namespace mln
 {
 
-  /*! Base class for implementation classes of the notion of "point
-   *  site".
+  /*! \brief Base class for implementation classes of the notion of
+   *  "point site".
    *
    * A point site ("psite" for short) is an object that allows an
    * efficient access to data associated with a point.  A point site

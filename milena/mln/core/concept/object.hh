@@ -2,7 +2,7 @@
 # define MLN_CORE_CONCEPT_OBJECT_HH
 
 /*! \file mln/core/concept/object.hh
- * This file contains the top milena class.
+ * \brief This file contains the top milena class.
  */
 
 # include <cassert>
@@ -16,7 +16,7 @@ namespace mln
 
   /*! \brief Base class for almost every class defined in milena.
    *
-   *  The parameter \a E is the exact type.
+   * The parameter \a E is the exact type.
    */
   template <typename E>
   struct Object

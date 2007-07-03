@@ -1,6 +1,10 @@
 #ifndef MLN_CORE_CONCEPT_POINT_SET_HH
 # define MLN_CORE_CONCEPT_POINT_SET_HH
 
+/*! \file mln/core/concept/point_set.hh
+ * \brief This file defines the concept of mln::Point_Set.
+ */
+
 # include <mln/core/concept/point.hh>
 # include <mln/core/concept/piter.hh>
 
@@ -8,6 +12,11 @@
 namespace mln
 {
 
+  /*! \brief Base class for implementation classes of point sets.
+   *
+   * \see mln::doc::Point_Set for a complete documentation of this
+   * class contents.
+   */
   template <typename E>
   struct Point_Set : public Object<E>
   {

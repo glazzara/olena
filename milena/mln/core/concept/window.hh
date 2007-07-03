@@ -1,12 +1,21 @@
 #ifndef MLN_CORE_CONCEPT_WINDOW_HH
 # define MLN_CORE_CONCEPT_WINDOW_HH
 
+/*! \file mln/core/concept/window.hh
+ * \brief This file defines the concept of mln::Window.
+ */
+
 # include <mln/core/concept/object.hh>
 
 
 namespace mln
 {
 
+  /*! \brief Base class for implementation classes that are windows.
+   *
+   * \see mln::doc::Window for a complete documentation of this class
+   * contents.
+   */
   template <typename E>
   struct Window : public Object<E>
   {

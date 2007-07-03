@@ -1,12 +1,24 @@
 #ifndef MLN_CORE_CONCEPT_BOX_HH
 # define MLN_CORE_CONCEPT_BOX_HH
 
+/*! \file mln/core/concept/box.hh
+ * \brief This file defines the concept of mln::Box.
+ */
+
 # include <mln/core/concept/point_set.hh>
 
 
 namespace mln
 {
 
+  /*! \brief Base class for implementation classes of boxes.
+   *
+   * Boxes are particular point sets useful to bound any set of
+   * points.
+   *
+   * \see mln::doc::Box for a complete documentation of this class
+   * contents.
+   */
   template <typename E>
   struct Box : public Point_Set<E>
   {
@@ -15,9 +27,8 @@ namespace mln
       const point& pmax() const;
     */
 
-    // final
-    const E& bbox() const;
-    std::size_t npoints() const;
+    const E& bbox() const; //! final; \see mln::doc::Box::bbox
+    std::size_t npoints() const;  //! final; \see mln::doc::Box::npoints
 
   protected:
     Box();

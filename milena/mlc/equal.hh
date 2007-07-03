@@ -1,5 +1,5 @@
-#ifndef MLN_MLC_EQUAL_HH
-# define MLN_MLC_EQUAL_HH
+#ifndef MLC_EQUAL_HH
+# define MLC_EQUAL_HH
 
 
 namespace mln
@@ -25,4 +25,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MLC_EQUAL_HH
+#endif // ! MLC_EQUAL_HH

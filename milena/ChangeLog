@@ -1,3 +1,32 @@
+2007-07-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some documentation.
+
+	* doc/Doxyfile.in: Try to properly handle some macros.
+	* mln/core/macros.hh,
+	* mln/core/concept/genpoint.hh,
+	* mln/core/concept/point_set.hh,
+	* mln/core/concept/psite.hh,
+	* mln/core/concept/object.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/point.hh,
+	* mlc/equal.hh,
+	* mlc/same_point.hh,
+	* mln/core/concept/iterator.hh: Add some documentation.
+	* mln/core/concept/doc/image.hh: New.
+	* mln/core/concept/doc/genpoint.hh: Update.
+	* mln/core/concept/doc/piter.hh: New.
+	* mln/core/concept/doc/point_set.hh: New.
+	* mln/core/concept/doc/object.hh: New.
+	* mln/core/concept/doc/neighborhood.hh: New.
+	* mln/core/concept/doc/window.hh: New.
+	* mln/core/concept/doc/box.hh: New.
+	* mln/core/concept/doc/iterator.hh: New.
+	* mln/core/concept/doc/dpoint.hh: New.
+	* mln/core/contract.hh: New.
+	* mlc/same_coord.hh: New.
+
 2007-07-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move Milena source files to mln/.
