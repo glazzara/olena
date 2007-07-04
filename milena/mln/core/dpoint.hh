@@ -1,6 +1,11 @@
 #ifndef MLN_CORE_DPOINT_HH
 # define MLN_CORE_DPOINT_HH
 
+/*! \file mln/core/dpoint.hh
+ *
+ * \brief This file defines a generic delta-point class.
+ */
+
 # include <mln/core/concept/dpoint.hh>
 # include <mln/core/internal/coord_impl.hh>
 
@@ -12,19 +17,51 @@ namespace mln
   template <unsigned n, typename C> struct point_;
 
 
+  /*! \brief Generic delta-point class.
+   *
+   * Parameters are \c n the dimension of the space and \c C the
+   * coordinate type in this space.
+   */
   template <unsigned n, typename C>
   struct dpoint_ : public Dpoint< dpoint_<n,C> >,
 		   public internal::mutable_coord_impl_< n, C, dpoint_<n,C> >
   {
+    /*! \var dim
+     * \brief Dimension of the space.
+     * \invariant dim > 0 
+     */
     enum { dim = n };
-    typedef C coord;
+
+    /*! \brief Point associated type.
+     */
     typedef point_<n,C> point;
 
+    /*! Coordinate associated type.
+     */
+    typedef C coord;
+
+    /*! \brief Read-only access to the \p i-th coordinate value.
+     * \param[in] i The coordinate index.
+     * \pre \p i < \c dim
+     */
     C  operator[](unsigned i) const;
+
+    /*! \brief Read-write access to the \p i-th coordinate value.
+     * \param[in] i The coordinate index.
+     * \pre \p i < \c dim
+     */
     C& operator[](unsigned i);
 
+    /*! \brief Constructor without argument.
+     */
     dpoint_();
+
+    /*! \brief Constructor; all coordinates are set to the value \p c.
+     */
     dpoint_(C c);
+
+    /*! \brief Set all coordinates to the value \p c.
+     */
     void set_all(C c);
 
   protected:

@@ -9,6 +9,10 @@ namespace mln
   {
 
     /*! \brief Documentation class for mln::Window.
+     *
+     * A window is the definition of a set of points located around a
+     * central point.
+     *
      * \see mln::Window
      */
     template <typename E>

@@ -27,8 +27,23 @@ namespace mln
       const point& pmax() const;
     */
 
-    const E& bbox() const; //! final; \see mln::doc::Box::bbox
-    std::size_t npoints() const;  //! final; \see mln::doc::Box::npoints
+    /*! \brief Return the bounding box of this point set.
+     *
+     * Return the bounding box of this point set, so that is itself.
+     * This method is declared by the mln::Point_Set concept.
+     *
+     * \warning This method is final for all box classes.
+     */
+    const E& bbox() const;
+
+    /*! \brief Return the number of points of this box.
+     *
+     * Return the number of points of this box.  This method is
+     * declared by the mln::Point_Set concept.
+     *
+     * \warning This method is final for all box classes.
+     */
+    std::size_t npoints() const;
 
   protected:
     Box();

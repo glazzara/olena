@@ -2,7 +2,7 @@
 # define MLN_CORE_OPS_HH
 
 /*! \file mln/core/ops.hh
- * Default definitions of some operators.
+ * \brief Definitions of some operators.
  */
 
 # include <mln/core/concept/object.hh>
@@ -12,7 +12,9 @@
 namespace mln
 {
 
-  /*! The "not equal to" operator is here defined for every milena
+  /*! \brief General definition of the "not equal to" operator.
+   *
+   * The "not equal to" operator is here defined for every milena
    * objects.  It relies on the definition of the "equal to" operator.
    * It returns "not (lhs == rhs)".
    *
@@ -22,7 +24,10 @@ namespace mln
   template <typename O1, typename O2>
   bool operator!=(const Object<O1>& lhs, const Object<O2>& rhs);
 
-  /*! The "greater than" operator is here defined for every milena
+
+  /*! \brief General definition of the "greater than" operator.
+   *
+   * The "greater than" operator is here defined for every milena
    * objects.  It relies on the definition of the "less than"
    * operator.  It returns "rhs < lhs".
    *
@@ -32,7 +37,11 @@ namespace mln
   template <typename O1, typename O2>
   bool operator>(const Object<O1>& lhs, const Object<O2>& rhs);
 
-  /*! The "greater than or equal to" operator is here defined for
+
+  /*! \brief General definition of the "greater than or equal to"
+   *  operator.
+   *
+   * The "greater than or equal to" operator is here defined for
    * every milena objects.  It relies on the definition of the "less
    * than or equal to" operator.  It returns "rhs <= lhs".
    *
@@ -42,7 +51,11 @@ namespace mln
   template <typename O1, typename O2>
   bool operator>=(const Object<O1>& lhs, const Object<O2>& rhs);
 
-  /*! A default version of the "less than or equal to" operator is
+
+  /*! \brief Default definition of the "less than or equal to"
+   *  operator.
+   *
+   * A default version of the "less than or equal to" operator is
    * defined for every milena objects.  It relies on the definition of
    * the "less than" operator.  It returns "not (rhs < lhs)".
    *

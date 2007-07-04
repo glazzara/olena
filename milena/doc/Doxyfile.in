@@ -1041,7 +1041,10 @@ INCLUDE_FILE_PATTERNS  =
 # undefined via #undef or recursively expanded use the := operator 
 # instead of the = operator.
 
-PREDEFINED             = 
+PREDEFINED             =					\
+			"mln_coord(T)=typename T::coord"	\
+			"mln_point(T)=typename T::point"	\
+			"mln_dpoint(T)=typename T::dpoint"
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES
 # then this tag can be used to specify a list of macro names that
@@ -1049,10 +1052,7 @@ PREDEFINED             =
 # sources will be used.  Use the PREDEFINED tag if you want to use a
 # different macro definition.
 
-EXPAND_AS_DEFINED      = 			\
-			mln_point		\
-			mln_dpoint		\
-			mln_coord
+EXPAND_AS_DEFINED      = 
 
 
 # If the SKIP_FUNCTION_MACROS tag is set to YES (the default) then 

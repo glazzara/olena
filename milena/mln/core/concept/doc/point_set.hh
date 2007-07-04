@@ -9,6 +9,7 @@ namespace mln
   {
 
     /*! \brief Documentation class for mln::Point_Set.
+     *
      * \see mln::Point_Set
      */
     template <typename E>
@@ -34,9 +35,9 @@ namespace mln
        */
       typedef void bkd_piter;
 
-      /*! \brief Test if the \p p belongs to this point set. 
+      /*! \brief Test if \p p belongs to this point set. 
        *
-       * @param[in] p A point site.
+       * \param[in] p A point site.
        * \return True if \p p is an element of the point set.
        */
       bool has(const psite& p) const;

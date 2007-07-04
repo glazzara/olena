@@ -2,7 +2,7 @@
 # define MLN_CORE_EXACT_HH
 
 /*! \file mln/core/exact.hh
- * This file defines the mln::exact downcast routines.
+ * \brief This file defines the mln::exact downcast routines.
  */
 
 # include <mln/core/concept/object.hh>
@@ -11,12 +11,16 @@
 namespace mln
 {
 
-  /*! The mln::exact routine downcasts an object towards its exact
-   * type.
+  /*! \brief Exact cast routine for mln objects.
    * 
-   * The only argument is an mln::Object.  The return follows the
-   * nature of the argument (either a pointer or a reference, const or
-   * not).
+   * This set of routines can be used to downcast an object towards
+   * its exact type.  The only argument, respectively \p ptr or \p
+   * ref, should be an mln::Object.
+   *
+   * \c The parameter E is the exact type of the object.
+   *
+   * \return The return follows the nature of the argument (either a
+   * pointer or a reference, const or not).
    */ 
   /// \{
 
@@ -36,11 +40,17 @@ namespace mln
 
 
 
-  /*! The mln::force_exact is a violent cast routine.
+  /*! \brief Violent exact cast routine.
+   *
+   * This cast is an alternative to the mln::exact cast.  It is used
+   * for objects than do not derive from mln::Object.
    * 
    * It preserves the nature (pointer or reference, const or mutable)
    * of its argument.  The parameter \a E should not have qualifiers.
    *
+   * \warning Prefer not to use this cast!   
+   *
+   * \see mln::exact
    * \todo Move into mln::internal.
    */ 
   /// \{

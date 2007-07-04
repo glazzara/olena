@@ -1,12 +1,21 @@
 #ifndef MLN_CORE_CONCEPT_IMAGE_HH
 # define MLN_CORE_CONCEPT_IMAGE_HH
 
+/*! \file mln/core/concept/image.hh
+ * \brief This file defines the concept of mln::Image.
+ */
+
 # include <mln/core/concept/point_set.hh>
 
 
 namespace mln
 {
 
+  /*! \brief Base class for implementation of image classes.
+   *
+   * \see mln::doc::Image for a complete documentation of this class
+   * contents.
+   */
   template <typename E>
   struct Image : public Object<E>
   {

@@ -13,7 +13,10 @@ namespace mln
 
   /*! \brief Base class for implementation of point classes.
    *
-   * A point is a vector in a space.
+   * A point is an element of a space.
+   *
+   * For instance, mln::point2d is the type of elements defined on the
+   * discrete square grid of the 2D plane.
    */
   template <typename P>
   struct Point : public Psite<P>
@@ -33,8 +36,8 @@ namespace mln
 
   /*! \brief Add a delta-point \p rhs to a point \p lhs.
    *
-   * @param[in,out] lhs The targeted point.
-   * @param[in] rhs A delta-point.
+   * \param[in,out] lhs The targeted point.
+   * \param[in] rhs A delta-point.
    *
    * \pre The type of \p rhs has to be the Dpoint type associated with
    * the type of \p lhs; otherwise this test does not compile.
@@ -50,8 +53,8 @@ namespace mln
 
   /*! \brief Remove a delta-point \p rhs to a point \p lhs.
    *
-   * @param[in,out] lhs The targeted point.
-   * @param[in] rhs A delta-point.
+   * \param[in,out] lhs The targeted point.
+   * \param[in] rhs A delta-point.
    *
    * \pre The type of \p rhs has to be the Dpoint type associated with
    * the type of \p lhs; otherwise this test does not compile.

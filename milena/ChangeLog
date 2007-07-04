@@ -1,3 +1,37 @@
+2007-07-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Extend mln documentation.
+
+	* doc/Doxyfile.in (PREDEFINED): Handle some macros.
+	* mln/core/neighb2d.hh,
+	* mln/core/dpoint2d.hh,
+	* mln/core/macros.hh,
+	* mln/core/box.hh,
+	* mln/core/point.hh,
+	* mln/core/rectangle2d.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/genpoint.hh,
+	* mln/core/concept/object.hh,
+	* mln/core/concept/doc/image.hh,
+	* mln/core/concept/doc/genpoint.hh,
+	* mln/core/concept/doc/point_set.hh,
+	* mln/core/concept/doc/object.hh,
+	* mln/core/concept/doc/neighborhood.hh,
+	* mln/core/concept/doc/window.hh,
+	* mln/core/concept/doc/box.hh,
+	* mln/core/concept/doc/iterator.hh,
+	* mln/core/concept/doc/dpoint.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/point.hh,
+	* mln/core/concept/dpoint.hh,
+	* mln/core/window2d.hh,
+	* mln/core/dpoint.hh,
+	* mln/core/ops.hh,
+	* mln/core/exact.hh,
+	* mln/core/box2d.hh,
+	* mln/core/point2d.hh: Add extra documentation.
+
 2007-07-04  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add benchmark about C++ compilation time.

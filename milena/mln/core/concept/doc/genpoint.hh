@@ -9,6 +9,7 @@ namespace mln
   {
 
     /*! \brief Documentation class for mln::GenPoint.
+     *
      * \see mln::GenPoint
      */
     template <typename E>
@@ -50,7 +51,7 @@ namespace mln
 
       /*! \brief Read-only access to the \p i-th coordinate value.
        *
-       * @param[in] i The coordinate index.
+       * \param[in] i The coordinate index.
        *
        * \pre \p i < \c dim
        *

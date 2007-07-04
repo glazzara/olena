@@ -1,5 +1,5 @@
 /*! \file mln/core/concept/doc/neighborhood.hh
- * This file documents the concept of mln::Neighborhood.
+ * \brief This file documents the concept of mln::Neighborhood.
  */
 
 namespace mln
@@ -8,14 +8,26 @@ namespace mln
   namespace doc
   {
 
-    /*! Documentation class for mln::Neighborhood.
+    /*! \brief Documentation class for mln::Neighborhood.
+     *
      * \see mln::Neighborhood
      */
     template <typename E>
     struct Neighborhood : public Object<E>
     {
+      /*! \brief Piter type associated to this neighborhood to browse
+       * neighbors.
+       */
       typedef void niter;
+
+      /*! \brief Piter type associated to this neighborhood to browse
+       * neighbors in a forward way.
+       */
       typedef void fwd_niter;
+
+      /*! \brief Piter type associated to this neighborhood to browse
+       * neighbors in a backward way.
+       */
       typedef void bkd_niter;
     };
 

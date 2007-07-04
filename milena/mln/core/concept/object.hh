@@ -11,6 +11,17 @@
 # include <mln/core/macros.hh>
 
 
+/*! \namespace mln
+ * \brief The namespace mln corresponds to the Milena (mini-Olena) project.
+ *
+ * The contents of mln mimics the contents of the olena project but
+ * in a simplified way.  Some classes have the same name in both
+ * projects and roughly have the same behavior.
+ *
+ * \warning The Milena project is independent from the Olena
+ * project; the user has to choose between both the project she
+ * wants to work with.
+ */
 namespace mln
 {
 

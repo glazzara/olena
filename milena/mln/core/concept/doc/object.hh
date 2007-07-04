@@ -4,6 +4,7 @@
 
 namespace mln
 {
+
   /*! \namespace mln::doc
    * \brief The namespace mln::doc is only for documentation purpose.
    *

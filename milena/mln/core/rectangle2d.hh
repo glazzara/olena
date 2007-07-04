@@ -10,6 +10,7 @@
 namespace mln
 {
  
+  // FIXME: doc.
   struct rectangle2d : public Window< rectangle2d >,
 		       public internal::set_of_<dpoint2d>
   {

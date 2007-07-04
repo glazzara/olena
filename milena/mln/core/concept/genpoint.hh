@@ -57,8 +57,8 @@ namespace mln
   /*! \brief Equality comparison between a couple of generalized point \p lhs
    *  and \p rhs.
    *
-   * @param[in] lhs A first generalized point.
-   * @param[in] rhs A second generalized point.
+   * \param[in] lhs A first generalized point.
+   * \param[in] rhs A second generalized point.
    *
    * \pre Both \p lhs and \p rhs have to be defined on the same
    * topology; otherwise this test does not compile.
@@ -73,10 +73,10 @@ namespace mln
 
 
   /*! \brief Ordering "less than" comparison between a couple of generalized
-   *  point \p lhs and \p rhs.
+   *  points \p lhs and \p rhs.
    *
-   * @param[in] lhs A first generalized point.
-   * @param[in] rhs A second generalized point.
+   * \param[in] lhs A first generalized point.
+   * \param[in] rhs A second generalized point.
    *
    * This test is based on a lexicographical ordering over coordinates.
    *
@@ -99,8 +99,8 @@ namespace mln
   /*! \brief Difference between a couple of generalized point \p lhs and \p
    *  rhs.
    *
-   * @param[in] lhs A first generalized point.
-   * @param[in] rhs A second generalized point.
+   * \param[in] lhs A first generalized point.
+   * \param[in] rhs A second generalized point.
    *
    * \warning There is no type promotion in milena so the client
    * has to make sure that both points are defined with the same
@@ -112,7 +112,7 @@ namespace mln
    *
    * \post The result, \p dp, is such as \p lhs == \p rhs + \p dp. 
    *
-   * \return A delta-point.
+   * \return A delta-point (temporary object).
    *
    * \see mln::Dpoint
    * \relates mln::GenPoint
@@ -124,13 +124,13 @@ namespace mln
 
   /*! \brief Add a delta-point \p rhs to a generalized point \p lhs.
    *
-   * @param[in] lhs A generalized point.
-   * @param[in] rhs A delta-point.
+   * \param[in] lhs A generalized point.
+   * \param[in] rhs A delta-point.
    *
    * The type of \p rhs has to be exactly the delta-point type
    * associated with the type of \p lhs.
    *
-   * \return A new point (temporary object).
+   * \return A point (temporary object).
    *
    * \see mln::Dpoint
    * \relates mln::GenPoint
@@ -146,19 +146,12 @@ namespace mln
   /*! \brief Print a generalized point \p p into the output stream \p
    *  ostr.
    *
-   * @param[in,out] ostr An output stream.
-   * @param[in] p A generalized point.
+   * \param[in,out] ostr An output stream.
+   * \param[in] p A generalized point.
    *
-   * The type of \p rhs has to be exactly the delta-point type
-   * associated with the type of \p lhs.
+   * \return The modified output stream \p ostr.
    *
-   * \return The modified output stream.
-   *
-   * \see mln::Dpoint
    * \relates mln::GenPoint
-   *
-   * \todo Introduce the notion of "generalized dpoint" and
-   * add the more general extra operator+(GenPoint, GenDpoint).
    */
   template <typename P>
   std::ostream& operator<<(std::ostream& ostr, const GenPoint<P>& p);
@@ -208,7 +201,6 @@ namespace mln
     return false;
   }
 
-
   template <typename Pl, typename Pr>
   mln_dpoint(Pl)
   operator-(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs)
@@ -224,7 +216,6 @@ namespace mln
     assert(rhs + tmp == lhs);
     return tmp;
   }
-
 
   template <typename P>
   mln_point(P)

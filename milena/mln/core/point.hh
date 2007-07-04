@@ -1,6 +1,11 @@
 #ifndef MLN_CORE_POINT_HH
 # define MLN_CORE_POINT_HH
 
+/*! \file mln/core/point.hh
+ *
+ * \brief This file defines a generic point class.
+ */
+
 # include <mln/core/concept/point.hh>
 # include <mln/core/internal/coord_impl.hh>
 
@@ -12,19 +17,51 @@ namespace mln
   template <unsigned n, typename C> struct dpoint_;
 
 
+  /*! \brief Generic point class.
+   *
+   * Parameters are \c n the dimension of the space and \c C the
+   * coordinate type in this space.
+   */
   template <unsigned n, typename C>
   struct point_ : public Point< point_<n,C> >,
 		  public internal::mutable_coord_impl_< n, C, point_<n,C> >
   {
+    /*! \var dim
+     * \brief Dimension of the space.
+     * \invariant dim > 0 
+     */
     enum { dim = n };
-    typedef C coord;
+
+    /*! \brief Dpoint associated type.
+     */
     typedef dpoint_<n,C> dpoint;
 
+    /*! Coordinate associated type.
+     */
+    typedef C coord;
+
+    /*! \brief Read-only access to the \p i-th coordinate value.
+     * \param[in] i The coordinate index.
+     * \pre \p i < \c dim
+     */
     C  operator[](unsigned i) const;
+
+    /*! \brief Read-write access to the \p i-th coordinate value.
+     * \param[in] i The coordinate index.
+     * \pre \p i < \c dim
+     */
     C& operator[](unsigned i);
 
+    /*! \brief Constructor without argument.
+     */
     point_();
+
+    /*! \brief Constructor; all coordinates are set to the value \p c.
+     */
     point_(C c);
+
+    /*! \brief Set all coordinates to the value \p c.
+     */
     void set_all(C c);
 
   protected:

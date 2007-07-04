@@ -5,11 +5,11 @@
  * This file defines the set of milena macros.
  */
 
-/*! \def mln_point(T)
+/*! \def mln_point
  */
-# define mln_point(T)      typename T::point
+# define mln_point      typename T::point
 
-/*! \def mln_dpoint(T)
+/*! \def mln_dpoint
  */
 # define mln_dpoint(T)     typename T::dpoint
 

@@ -1,5 +1,5 @@
 /*! \file mln/core/concept/doc/box.hh
- * This file documents the concept of mln::Box.
+ * \brief This file documents the concept of mln::Box.
  */
 
 namespace mln
@@ -8,29 +8,29 @@ namespace mln
   namespace doc
   {
 
-    /*! Documentation class for mln::Box.
+    /*! \brief Documentation class for mln::Box.
      * \see mln::Box
      */
     template <typename E>
     struct Box : public Point_Set<E>
     {
-      /*! \fn const point& pmin() const
+      /*! \brief Return the box "minimum" point.
        *
-       * Return the minimum point w.r.t. the ordering between points.
-       *
-       * In 2D this minimum is the top left point of the box.
+       * Return the "minimum" point w.r.t. the ordering between points.
+       * For instance, with mln::box2d, this minimum is the top left
+       * point of the box.
        */
       const point& pmin() const;
 
-      /*! \fn const point& pmax() const
+      /*! \brief Return the box "maximum" point.
        *
-       * Return the maximum point w.r.t. the ordering between points.
-       *
-       * In 2D this maximum is the bottom right point of the box.
+       * Return the "maximum" point w.r.t. the ordering between points.
+       * For instance, with mln::box2d, this maximum is the bottom
+       * right point of the box.
        */
       const point& pmax() const;
 
-      /*! \fn const E& bbox() const
+      /*! \brief Return the bounding box of this point set.
        *
        * Return the bounding box of this point set, so that is itself.
        * This method is declared by the mln::Point_Set concept.
@@ -39,7 +39,7 @@ namespace mln
        */
       const E& bbox() const;
 
-      /*! \fn std::size_t npoints() const
+      /*! \brief Return the number of points of this box.
        *
        * Return the number of points of this box.  This method is
        * declared by the mln::Point_Set concept.

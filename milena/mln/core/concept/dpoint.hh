@@ -1,6 +1,10 @@
 #ifndef MLN_CORE_CONCEPT_DPOINT_HH
 # define MLN_CORE_CONCEPT_DPOINT_HH
 
+/*! \file mln/core/concept/dpoint.hh
+ * \brief This file defines the concept of mln::Dpoint.
+ */
+
 # include <mln/core/concept/object.hh>
 
 
@@ -8,6 +12,16 @@ namespace mln
 {
 
 
+  /*! \brief Base class for implementation of delta-point classes.
+   *
+   * A delta-point is a vector defined by a couple of points.
+   *
+   * Given two points, A and B, the vector AB is mapped into the
+   * delta-point D = AB.  Practically one can write: D = B - A.   
+   *
+   * \see mln::doc::Dpoint for a complete documentation of this class
+   * contents.
+   */
   template <typename E>
   struct Dpoint : public Object<E>
   {
@@ -23,15 +37,65 @@ namespace mln
   };
 
 
+  /*! \brief Give the negate of the delta-point \p rhs.
+   *
+   * \param[in] rhs The targeted delta-point.
+   *
+   * \invariant For all delta-point dp, we have: -(-dp) == dp.
+   *
+   * \return A delta-point (temporary object).
+   *
+   * \relates mln::Dpoint
+   */
   template <typename D>
-  D operator-(const Dpoint<D>& dp);
+  D operator-(const Dpoint<D>& rhs);
 
+
+  /*! \brief Equality comparison between a couple of delta-point \p lhs
+   *  and \p rhs.
+   *
+   * \param[in] lhs A first delta-point.
+   * \param[in] rhs A second delta-point.
+   *
+   * \pre Both \p lhs and \p rhs have to be defined on the same
+   * topology; otherwise this test does not compile.
+   *
+   * \return True if both delta-points have the same coordinates,
+   * otherwise false.
+   *
+   * \relates mln::Dpoint
+   */
   template <typename Dl, typename Dr>
   bool operator==(const Dpoint<Dl>& lhs, const Dpoint<Dr>& rhs);
 
+
+  /*! \brief Ordering "less than" comparison between a couple of
+   *  delta-points \p lhs and \p rhs.
+   *
+   * \param[in] lhs A first delta-point.
+   * \param[in] rhs A second delta-point.
+   *
+   * \pre Both \p lhs and \p rhs have to be defined on the same
+   * topology; otherwise this test does not compile.
+   *
+   * \return True if both delta-points have the same coordinates,
+   * otherwise false.
+   *
+   * \relates mln::Dpoint
+   */
   template <typename Dl, typename Dr>
   bool operator<(const Dpoint<Dl>& lhs, const Dpoint<Dr>& rhs);
 
+
+  /*! \brief Print a delta-point \p p into the output stream \p ostr.
+   *
+   * \param[in,out] ostr An output stream.
+   * \param[in] dp A delta-point.
+   *
+   * \return The modified output stream \p ostr.
+   *
+   * \relates mln::Dpoint
+   */
   template <typename D>
   std::ostream& operator<<(std::ostream& ostr, const Dpoint<D>& dp);
 
@@ -50,11 +114,11 @@ namespace mln
   }
 
   template <typename D>
-  D operator-(const Dpoint<D>& dp)
+  D operator-(const Dpoint<D>& rhs)
   {
     D tmp; 
     for (unsigned i = 0; i < D::dim; ++i)
-      tmp[i] = - exact(dp)[i];
+      tmp[i] = - exact(rhs)[i];
     return tmp;
   }
 
