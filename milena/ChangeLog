@@ -1,3 +1,16 @@
+2007-07-04  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add benchmark about C++ compilation time.
+
+	* sandbox: New.
+	* sandbox/cxxcompilation: New.
+	* sandbox/cxxcompilation/compilation_unit.rb: Tools used to create compilation unit file
+	for benchmark.
+	* sandbox/cxxcompilation/test.cc: Test file used in benchmark.
+	* sandbox/cxxcompilation/methods: Describes some existing method which improve compilation
+	time.
+	* sandbox/cxxcompilation/vaucanson_bench: Benchmark on Vaucanson method.
+
 2007-07-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some documentation.
