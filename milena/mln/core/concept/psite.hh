@@ -2,7 +2,7 @@
 # define MLN_CORE_CONCEPT_PSITE_HH
 
 /*! \file mln/core/concept/psite.hh
- * \brief This file defines the concept of mln::Psite.
+ * \brief Definition of the concept of mln::Psite.
  */
 
 # include <mln/core/concept/genpoint.hh>

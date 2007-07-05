@@ -3,7 +3,7 @@
 
 /*! \file mln/core/point2d.hh
  *
- * \brief This file defines the mln::point2d alias and its creation
+ * \brief Definition of the mln::point2d alias and of its construction
  * routine.
  */
 
@@ -19,12 +19,12 @@ namespace mln
   typedef point_<2,int> point2d;
 
 
-  /*! \brief Create a 2D point.
+  /*! \brief Create an mln::point2d.
    *
    * \param[in] row Index of row.
    * \param[in] col Index of column.
    *
-   * \return A point2d.
+   * \return A 2D point.
    */
   point2d mk_point2d(int row, int col)
   {

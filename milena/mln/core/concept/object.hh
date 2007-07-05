@@ -2,13 +2,15 @@
 # define MLN_CORE_CONCEPT_OBJECT_HH
 
 /*! \file mln/core/concept/object.hh
- * \brief This file contains the top milena class.
+ *
+ * \brief Definition of the top milena class mln::Object.
  */
 
 # include <cassert>
 # include <iostream>
 
 # include <mln/core/macros.hh>
+# include <mln/core/contract.hh>
 
 
 /*! \namespace mln

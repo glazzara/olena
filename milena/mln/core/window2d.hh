@@ -3,7 +3,7 @@
 
 /*! \file mln/core/window2d.hh
  *
- * \brief This file defines the mln::window2d alias and its creation
+ * \brief Definition of the mln::window2d alias and of a construction
  * routine.
  */
 
@@ -21,13 +21,13 @@ namespace mln
   typedef window_<dpoint2d> window2d;
 
 
-  /*! \brief Create a 2D window with arbitrary shape.
+  /*! \brief Create an mln::window2d.
    *
    * \param[in] values Array of Booleans.
    *
    * \pre The array size, \c M, has to be a square of an odd integer.
    *
-   * \return A window2d.
+   * \return A 2D window.
    */
   template <unsigned M>
   window2d mk_window2d(const bool (&values)[M]);

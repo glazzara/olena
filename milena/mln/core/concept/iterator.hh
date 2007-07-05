@@ -2,7 +2,7 @@
 # define MLN_CORE_CONCEPT_ITERATOR_HH
 
 /*! \file mln/core/concept/iterator.hh
- * \brief This file defines the concept of mln::Iterator.
+ * \brief Definition of the concept of mln::Iterator.
  */
 
 # include <mln/core/concept/object.hh>

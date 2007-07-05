@@ -1,6 +1,11 @@
 #ifndef MLN_CORE_DPOINTS_PITER_HH
 # define MLN_CORE_DPOINTS_PITER_HH
 
+/*! \file mln/core/dpoints_piter.hh
+ *
+ * \brief Definition of mln::dpoints_fwd_piter and mln::dpoints_bkd_piter.
+ */
+
 # include <mln/core/concept/piter.hh>
 # include <mln/core/concept/genpoint.hh>
 
@@ -8,30 +13,59 @@
 namespace mln
 {
 
+  /*! \brief A generic forward iterator on points of windows and of
+   *  neighborhoods.
+   *
+   * The parameter \c D is the type of delta-points.
+   */
   template <typename D>
   class dpoints_fwd_piter : public Piter< dpoints_fwd_piter<D> >
   {
   public:
 
+    /// Space dimension.
     enum { dim = D::dim };
 
+    /// Dpoint associated type.
     typedef D           dpoint;
+
+    /// Point associated type.
     typedef mln_point(D) point;
+
+    /// Psite associated type.
     typedef point        psite;
+
+    /// Coordinate associated type.
     typedef mln_coord(D) coord;
 
+    /*! \brief Constructor.
+     *
+     * \param[in] dps   Object that can provide an array of delta-points.
+     * \param[in] p_ref Center point to iterate around.
+     */
     template <typename Dps, typename Pref>
     dpoints_fwd_piter(const Dps& dps,
 		      const GenPoint<Pref>& p_ref);
 
-    operator point() const;
+    /// Convertion to point.
+    operator mln_point(D) () const;
+
+    /// Address of the point.
     const point* pointer() const;
 
+    /// Test the iterator validity.
     bool is_valid() const;
+
+    /// Invalidate the iterator.
     void invalidate();
+
+    /// Start an iteration.
     void start();
+
+    /// Go to the next point.
     void next_();
 
+    /// Give the i-th coordinate.
     coord operator[](unsigned i) const;
    
   private:
@@ -57,7 +91,7 @@ namespace mln
   }
 
   template <typename D>
-  dpoints_fwd_piter<D>::operator mln_point(D)() const
+  dpoints_fwd_piter<D>::operator mln_point(D) () const
   {
     assert(is_valid());
     return p_;

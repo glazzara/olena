@@ -2,7 +2,7 @@
 # define MLN_CORE_CONCEPT_DPOINT_HH
 
 /*! \file mln/core/concept/dpoint.hh
- * \brief This file defines the concept of mln::Dpoint.
+ * \brief Definition of the concept of mln::Dpoint.
  */
 
 # include <mln/core/concept/object.hh>

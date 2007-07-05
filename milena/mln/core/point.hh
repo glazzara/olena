@@ -3,7 +3,7 @@
 
 /*! \file mln/core/point.hh
  *
- * \brief This file defines a generic point class.
+ * \brief Definition of the generic point class mln::point_.
  */
 
 # include <mln/core/concept/point.hh>
@@ -36,7 +36,7 @@ namespace mln
      */
     typedef dpoint_<n,C> dpoint;
 
-    /*! Coordinate associated type.
+    /*! \brief Coordinate associated type.
      */
     typedef C coord;
 

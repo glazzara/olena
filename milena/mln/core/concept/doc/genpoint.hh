@@ -36,10 +36,15 @@ namespace mln
       typedef void coord;
 
 
-      // FIXME:
-      // typedef void topo;
-      // operator point() const;
+      // FIXME: typedef void topo;
 
+
+      /*! \brief Either \c E is a point or an convertion operator into
+       *  a point is defined.
+       *
+       * \return A point.
+       */
+      operator point() const;
 
       /*! \brief Give a hook to the point address.
        *

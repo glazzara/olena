@@ -2,7 +2,7 @@
 # define MLN_CORE_EXACT_HH
 
 /*! \file mln/core/exact.hh
- * \brief This file defines the mln::exact downcast routines.
+ * \brief Definition of the mln::exact downcast routines.
  */
 
 # include <mln/core/concept/object.hh>

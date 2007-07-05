@@ -2,7 +2,7 @@
 # define MLN_CORE_CONCEPT_POINT_SET_HH
 
 /*! \file mln/core/concept/point_set.hh
- * \brief This file defines the concept of mln::Point_Set.
+ * \brief Definition of the concept of mln::Point_Set.
  */
 
 # include <mln/core/concept/point.hh>

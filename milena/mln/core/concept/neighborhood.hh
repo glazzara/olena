@@ -2,7 +2,7 @@
 # define MLN_CORE_CONCEPT_NEIGHBORHOOD_HH
 
 /*! \file mln/core/concept/neighborhood.hh
- * \brief This file defines the concept of mln::Neighborhood.
+ * \brief Definition of the concept of mln::Neighborhood.
  */
 
 # include <mln/core/concept/object.hh>

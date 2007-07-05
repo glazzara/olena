@@ -3,8 +3,8 @@
 
 /*! \file mln/core/dpoint2d.hh
  *
- * \brief This file defines the mln::dpoint2d alias and its creation
- * routine.
+ * \brief Definition of the mln::dpoint2d alias and of its
+ * construction routine.
  */
 
 # include <mln/core/dpoint.hh>
@@ -19,12 +19,12 @@ namespace mln
   typedef dpoint_<2,int> dpoint2d;
 
 
-  /*! \brief Create a 2D delta-point.
+  /*! \brief Create an mln::dpoint2d.
    *
    * \param[in] row Index of row.
    * \param[in] col Index of column.
    *
-   * \return A dpoint2d.
+   * \return A 2D delta-point.
    */
   dpoint2d mk_dpoint2d(int row, int col)
   {

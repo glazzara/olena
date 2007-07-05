@@ -3,7 +3,7 @@
 
 /*! \file mln/core/dpoint.hh
  *
- * \brief This file defines a generic delta-point class.
+ * \brief Definition of the generic delta-point class mln::dpoint_.
  */
 
 # include <mln/core/concept/dpoint.hh>
@@ -36,7 +36,7 @@ namespace mln
      */
     typedef point_<n,C> point;
 
-    /*! Coordinate associated type.
+    /*! \brief Coordinate associated type.
      */
     typedef C coord;
 

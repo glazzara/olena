@@ -9,19 +9,23 @@ namespace mln
   {
 
     /*! \brief Documentation class for mln::Piter.
+     *
      * \see mln::Piter
      */
     template <typename E>
     struct Piter : public Iterator<E>,
 		   public GenPoint<E>
     {
-      // FIXME: HERE
+      /*! \brief Psite associated type.
+       * \invariant This type has to derive from mln::Psite.
+       */
       typedef void psite;
-      typedef void point;
 
+      /*! \brief Convertion into a point-site.
+       *
+       * \return A point site.
+       */
       operator psite() const;
-      operator point() const;
-      const point* pointer() const;
     };
 
   } // end of namespace mln::doc

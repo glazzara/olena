@@ -1,6 +1,11 @@
 #ifndef MLN_CORE_INTERNAL_COORD_IMPL_HH
 # define MLN_CORE_INTERNAL_COORD_IMPL_HH
 
+/*! \file mln/core/internal/coord_impl.hh
+ *
+ * \brief Define some implementation classes for generalized points.
+ */
+
 # include <mln/core/concept/object.hh>
 
 
@@ -12,6 +17,11 @@ namespace mln
 
     // coord_impl
 
+    /*! \brief Implementation class to equip generalized points with
+     * explicit access to their coordinates.
+     *
+     * \internal
+     */
     template <unsigned n, typename C, typename E>
     struct coord_impl_;
 

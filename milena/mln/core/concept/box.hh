@@ -2,7 +2,7 @@
 # define MLN_CORE_CONCEPT_BOX_HH
 
 /*! \file mln/core/concept/box.hh
- * \brief This file defines the concept of mln::Box.
+ * \brief Definition of the concept of mln::Box.
  */
 
 # include <mln/core/concept/point_set.hh>

@@ -2,7 +2,7 @@
 # define MLN_CORE_CONCEPT_IMAGE_HH
 
 /*! \file mln/core/concept/image.hh
- * \brief This file defines the concept of mln::Image.
+ * \brief Definition of the concept of mln::Image.
  */
 
 # include <mln/core/concept/point_set.hh>

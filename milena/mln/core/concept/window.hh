@@ -2,7 +2,7 @@
 # define MLN_CORE_CONCEPT_WINDOW_HH
 
 /*! \file mln/core/concept/window.hh
- * \brief This file defines the concept of mln::Window.
+ * \brief Definition of the concept of mln::Window.
  */
 
 # include <mln/core/concept/object.hh>

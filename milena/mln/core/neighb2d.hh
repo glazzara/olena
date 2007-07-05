@@ -3,7 +3,7 @@
 
 /*! \file mln/core/neighb2d.hh
  *
- * \brief This file defines the mln::neighb2d alias and some classical
+ * \brief Definition of the mln::neighb2d alias and of some classical
  * 2D neighborhoods.
  */
 

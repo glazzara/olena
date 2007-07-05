@@ -2,7 +2,7 @@
 # define MLN_CORE_CONCEPT_GENPOINT_HH
 
 /*! \file mln/core/concept/genpoint.hh
- * \brief This file defines the concept of mln::GenPoint.
+ * \brief Definition of the concept of mln::GenPoint.
  */
 # include <mlc/equal.hh>
 # include <mlc/same_point.hh>
@@ -25,7 +25,7 @@ namespace mln
    *
    * \warning This class does \em not derive from mln::Object; it is
    * for use as a parallel hierarchy.
-   *
+   * 
    * \see mln::doc::GenPoint for a complete documentation of this
    * class contents.
    */
@@ -163,7 +163,7 @@ namespace mln
   GenPoint<E>::GenPoint()
   {
     const int dim = E::dim;
-    invariant(dim > 0);
+    mln_invariant(dim > 0);
     typedef  mln_point(E)  point;
     typedef mln_dpoint(E) dpoint;
     typedef mln_coord(E)  coord;
