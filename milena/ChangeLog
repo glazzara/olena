@@ -1,5 +1,25 @@
 2007-07-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Make milena compile with g++-2.95.
+
+	* tests/main.cc,
+	* mln/morpho/Rd.hh,
+	* mln/level/fill.hh,
+	* mln/level/compare.hh,
+	* mln/level/paste.hh,
+	* mln/core/macros.hh,
+	* mln/core/box.hh,
+	* mln/core/rectangle2d.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/ops.hh,
+	* mln/core/exact.hh,
+	* mln/core/image2d.hh,
+	* mln/core/contract.hh,
+	* mln/core/box2d.hh,
+	* mln/value/props.hh: Adapt to g++-2.95.
+
+2007-07-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add extra documentation in milena.
 
 	* mln/core/window2d.cc,

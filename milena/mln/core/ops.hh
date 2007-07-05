@@ -71,7 +71,7 @@ namespace mln
   template <typename O1, typename O2>
   bool operator!=(const Object<O1>& lhs, const Object<O2>& rhs)
   {
-    return not (exact(lhs) == exact(rhs));
+    return ! (exact(lhs) == exact(rhs));
   }
 
   template <typename O1, typename O2>
@@ -90,7 +90,7 @@ namespace mln
   bool operator<=(const Object<O1>& lhs, const Object<O2>& rhs)
   {
     // if partial ordering, this operator should be re-defined!
-    return not (exact(rhs) < exact(lhs));
+    return ! (exact(rhs) < exact(lhs));
   }  
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -140,7 +140,7 @@ namespace mln
   box_<P>::has(const P& p) const
   {
     for (unsigned i = 0; i < P::dim; ++i)
-      if (p[i] < pmin_[i] or p[i] > pmax_[i])
+      if (p[i] < pmin_[i] || p[i] > pmax_[i])
 	return false;
     return true;
   }

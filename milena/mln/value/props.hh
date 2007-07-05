@@ -1,7 +1,8 @@
 #ifndef MLN_VALUE_PROPS_HH
 # define MLN_VALUE_PROPS_HH
 
-# include <limits>
+# include <climits>
+# include <cfloat>
 
 # define mln_min(T) mln::value::props<T>::min()
 # define mln_max(T) mln::value::props<T>::max()
@@ -63,29 +64,29 @@ namespace mln
     template <>
     struct props<unsigned int>
     {
-      static unsigned int min() { return std::numeric_limits<unsigned int>::min(); }
-      static unsigned int max() { return std::numeric_limits<unsigned int>::max(); }
+      static unsigned int min() { return 0; }
+      static unsigned int max() { return UINT_MAX; }
     };
 
     template <>
     struct props<signed int>
     {
-      static signed int min() { return std::numeric_limits<signed int>::min(); }
-      static signed int max() { return std::numeric_limits<signed int>::max(); }
+      static signed int min() { return INT_MIN; }
+      static signed int max() { return INT_MAX; }
     };
 
     template <>
     struct props<unsigned long int>
     {
-      static unsigned long int min() { return std::numeric_limits<unsigned long int>::min(); }
-      static unsigned long int max() { return std::numeric_limits<unsigned long int>::max(); }
+      static unsigned long int min() { return 0; }
+      static unsigned long int max() { return ULONG_MAX; }
     };
 
     template <>
     struct props<signed long int>
     {
-      static signed long int min() { return std::numeric_limits<signed long int>::min(); }
-      static signed long int max() { return std::numeric_limits<signed long int>::max(); }
+      static signed long int min() { return LONG_MIN; }
+      static signed long int max() { return LONG_MAX; }
     };
 
     // floating
@@ -93,15 +94,15 @@ namespace mln
     template <>
     struct props<float>
     {
-      static float min() { return std::numeric_limits<float>::min(); }
-      static float max() { return std::numeric_limits<float>::max(); }
+      static float min() { return FLT_MIN; }
+      static float max() { return FLT_MAX; }
     };
 
     template <>
     struct props<double>
     {
-      static double min() { return std::numeric_limits<double>::min(); }
-      static double max() { return std::numeric_limits<double>::max(); }
+      static double min() { return DBL_MIN; }
+      static double max() { return DBL_MAX; }
     };
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -97,7 +97,7 @@ namespace mln
     : half_height_(half_height),
       half_width_(half_width)
   {
-    assert(half_height != 0 and half_width != 0);
+    mln_precondition(half_height != 0 && half_width != 0);
     const int drow = half_height, dcol = half_width;
     for (int row = - drow; row <= drow; ++row)
       for (int col = - dcol; col <= dcol; ++col)

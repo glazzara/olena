@@ -21,7 +21,7 @@ namespace mln
     {
       const I& data  = exact(data_);
       I& destination = exact(destination_);
-      assert(ima.has_data() and destination.has_data());
+      assert(ima.has_data() && destination.has_data());
 
       mln_piter(I) p(data.domain());
       for_all(p)

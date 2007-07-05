@@ -2,7 +2,8 @@
 # define MLN_CORE_CONTRACT_HH
 
 /*! \file mln/core/contract.hh
- * Definition of the set of contracts.
+ *
+ * \brief Definition of the set of contracts.
  */
 
 # include <cassert>
@@ -21,7 +22,7 @@
 # define mln_postcondition(expr) assert(expr)
 
 /// Implication.
-# define mln_implies(lexpr, repxr) assert(not (rexpr) or (lexpr))
+# define mln_implies(lexpr, repxr) assert(! (rexpr) || (lexpr))
 
 
 #endif // ! MLN_CORE_CONTRACT_HH

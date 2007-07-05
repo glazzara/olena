@@ -73,7 +73,8 @@ namespace mln
   Box<E>::npoints() const
   {
     std::size_t count = 1;
-    for (unsigned i = 0; i < E::point::dim; ++i)
+    typedef typename E::point P; // helps g++-3.3.5
+    for (unsigned i = 0; i < P::dim; ++i)
       count *=
 	exact(this)->pmax()[i]
 	+ 1

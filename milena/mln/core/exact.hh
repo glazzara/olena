@@ -39,6 +39,23 @@ namespace mln
   /// \}
 
 
+  namespace internal
+  {
+
+    template <typename E, typename O>
+    struct helper_force_exact_
+    {
+      typedef E ret;
+    };
+
+    template <typename E, typename O>
+    struct helper_force_exact_< E, const O >
+    {
+      typedef const E ret;
+    };
+
+  } // end of namespace mln::internal
+
 
   /*! \brief Violent exact cast routine.
    *
@@ -62,13 +79,17 @@ namespace mln
   const E* force_exact(const O* ptr);
 
   template <typename E, typename O>
-  E& force_exact(O& ref);
-
-  template <typename E, typename O>
-  const E& force_exact(const O& ref);
+  typename internal::helper_force_exact_<E, O>::ret & // help g++-3.3
+  force_exact(O& ref);
 
   /// \}
 
+
+//   template <typename E, typename O>
+//   E& force_exact(O& ref);
+
+//   template <typename E, typename O>
+//   const E& force_exact(const O& ref);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -113,16 +134,23 @@ namespace mln
     return (const E*)(const void*)ptr;
   }
 
-  template <typename E, typename O>
-  E& force_exact(O& ref)
-  {
-    return *(E*)(void*)(&ref);
-  }
+//   template <typename E, typename O>
+//   E& force_exact(O& ref)
+//   {
+//     return *(E*)(void*)(&ref);
+//   }
+
+//   template <typename E, typename O>
+//   const E& force_exact(const O& ref)
+//   {
+//     return *(const E*)(const void*)(&ref);
+//   }
 
   template <typename E, typename O>
-  const E& force_exact(const O& ref)
+  typename internal::helper_force_exact_<E, O>::ret &
+  force_exact(O& ref)
   {
-    return *(const E*)(const void*)(&ref);
+    return *(E*)(void*)(&ref);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

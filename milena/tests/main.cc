@@ -16,10 +16,10 @@
 typedef unsigned char int_u8;
 
 
-int_u8 cos_sin(const mln::point2d& p)
-{
-  return (int_u8)(255 * std::cos(float(p.row())) * std::sin(float(p.col())));
-}
+// static int_u8 cos_sin(const mln::point2d& p)
+// {
+//   return (int_u8)(255 * std::cos(float(p.row())) * std::sin(float(p.col())));
+// }
 
 
 int main()

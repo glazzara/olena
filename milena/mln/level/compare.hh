@@ -26,7 +26,7 @@ namespace mln
     const R& rhs = exact(rhs_);
     mln_piter(L) p(lhs.domain());
     for_all(p)
-      if (not (lhs(p) == rhs(p)))
+      if (! (lhs(p) == rhs(p)))
 	return false;
     return true;
   }
@@ -38,7 +38,7 @@ namespace mln
     const R& rhs = exact(rhs_);
     mln_piter(L) p(lhs.domain());
     for_all(p)
-      if (not (lhs(p) < rhs(p)))
+      if (! (lhs(p) < rhs(p)))
 	return false;
     return true;
   }
@@ -50,7 +50,7 @@ namespace mln
     const R& rhs = exact(rhs_);
     mln_piter(L) p(lhs.domain());
     for_all(p)
-      if (not (lhs(p) <= rhs(p)))
+      if (! (lhs(p) <= rhs(p)))
 	return false;
     return true;
   }

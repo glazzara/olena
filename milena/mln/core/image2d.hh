@@ -1,6 +1,11 @@
 #ifndef MLN_CORE_IMAGE2D_HH
 # define MLN_CORE_IMAGE2D_HH
 
+/*! \file mln/core/image2d.hh
+ *
+ * \brief Definition of the basic mln::image2d class.
+ */
+
 # include <mln/core/internal/image_base.hh>
 # include <mln/core/box2d.hh>
 
@@ -8,32 +13,58 @@
 namespace mln
 {
 
+  /*! \brief Basic 2D image class.
+   *
+   * The parameter \c T is the type of pixel values.  This image class
+   * stores data in memory and has no virtual border.
+   */
   template <typename T>
   struct image2d : public internal::image_base_< box2d, image2d<T> >
   {
+    /// Value associated type.
     typedef T         value;
+
+    /// Return type of read-only access.
     typedef const T& rvalue;
+
+    /// Return type of read-write access.
     typedef T&       lvalue;
 
+    /// Change value type.
     template <typename U>
     struct change_value
     {
       typedef image2d<U> ret;
     };
 
+    /// Constructor without argument.
     image2d();
+
+    /// Constructor with the numbers of rows and columns.
     image2d(int nrows, int ncols);
+
+    /// Constructor with a box.
     image2d(const box2d& b);
+
+    /// Copy constructor.
     image2d(const image2d<T>& rhs);
 
+    /// Assignment operator.
     image2d& operator=(const image2d<T>& rhs);
 
+    /// Test if this image has been initialized.
     bool has_data() const;
+
+    /// Give the definition domain.
     const box2d& domain() const;
 
+    /// Read-only access to the image value located at \p p.
     const T& operator()(const point2d& p) const;
+
+    /// Read-write access to the image value located at \p p.
     T& operator()(const point2d& p);
 
+    /// Destructor.
     ~image2d();
 
   private:
@@ -44,6 +75,8 @@ namespace mln
 
     void allocate_();
     void deallocate_();
+
+    typedef internal::image_base_< box2d, image2d<T> > super;
   };
 
 
@@ -74,7 +107,8 @@ namespace mln
 
   template <typename T>
   image2d<T>::image2d(const image2d<T>& rhs)
-    : b_(rhs.domain())
+    : super(rhs),
+      b_(rhs.domain())
   {
     allocate_();
     std::memcpy(this->buffer_,
@@ -106,7 +140,7 @@ namespace mln
   bool
   image2d<T>::has_data() const
   {
-    return buffer_ != 0 and array_ != 0;
+    return buffer_ != 0 && array_ != 0;
   }
 
   template <typename T>
@@ -120,7 +154,7 @@ namespace mln
   const T&
   image2d<T>::operator()(const point2d& p) const
   {
-    assert(this->has_data() and this->owns_(p));
+    assert(this->has_data() && this->owns_(p));
     return array_[p.row()][p.col()];
   }
 
@@ -128,7 +162,7 @@ namespace mln
   T&
   image2d<T>::operator()(const point2d& p)
   {
-    assert(this->has_data() and this->owns_(p));
+    assert(this->has_data() && this->owns_(p));
     return array_[p.row()][p.col()];
   }
 

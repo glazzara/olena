@@ -97,7 +97,7 @@ namespace mln
 		{
 		  if (f.has(n))
 		    assert(is_proc(n) == is_proc__(n, p));
-		  if (f.has(n) and is_proc(n))
+		  if (f.has(n) && is_proc(n))
 		    do_union(n, p);
 		}
 	      is_proc(p) = true;
@@ -119,7 +119,7 @@ namespace mln
   
 	bool is_proc__(const point& n, const point& p) const
 	{
-	  return g(n) > g(p) or (g(n) == g(p) and n < p);
+	  return g(n) > g(p) || (g(n) == g(p) && n < p);
 	}
 
 	void make_set(const point& p)
@@ -137,7 +137,7 @@ namespace mln
 
 	bool equiv(const point& r, const point& p)
 	{
-	  return g(r) == g(p) or g(p) >= o(r);
+	  return g(r) == g(p) || g(p) >= o(r);
 	}
 
 	void do_union(const point& n, const point& p)

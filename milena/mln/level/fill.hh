@@ -34,7 +34,7 @@ namespace mln
 	      const mln_value(I)& value)
     {
       I& ima = exact(ima_);
-      assert(ima.has_data());
+      mln_precondition(ima.has_data());
       mln_piter(I) p(ima.domain());
       for_all(p)
 	ima(p) = value;
@@ -45,7 +45,7 @@ namespace mln
 	      mln_value(I) (*f)(const mln_point(I)& p))
     {
       I& ima = exact(ima_);
-      assert(ima.has_data());
+      mln_precondition(ima.has_data());
       mln_piter(I) p(ima.domain());
       for_all(p)
 	ima(p) = f(p);
@@ -56,7 +56,7 @@ namespace mln
 	      const mln_value(I) array[])
     {
       I& ima = exact(ima_);
-      assert(ima.has_data());
+      mln_precondition(ima.has_data());
       mln_piter(I) p(ima.domain());
       unsigned i = 0;
       for_all(p)
@@ -69,7 +69,7 @@ namespace mln
     {
       I&        ima = exact(ima_);
       const J& data = exact(data_);
-      assert(ima.has_data() and data.has_data());
+      mln_precondition(ima.has_data() && data.has_data());
 
       mln_piter(I) p(ima.domain());
       for_all(p)

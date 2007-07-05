@@ -33,7 +33,7 @@ namespace mln
    */
   box2d mk_box2d(unsigned nrows, unsigned ncols)
   {
-    mln_precondition(nrows != 0 and ncols != 0);
+    mln_precondition(nrows != 0 && ncols != 0);
     box2d tmp(mk_point2d(0, 0),
 	      mk_point2d(nrows - 1, ncols - 1));
     return tmp;
@@ -56,7 +56,7 @@ namespace mln
   box2d mk_box2d(int min_row, int max_row,
 		 int min_col, int max_col)
   {
-    mln_precondition(max_row >= min_row and max_col >= min_col);
+    mln_precondition(max_row >= min_row && max_col >= min_col);
     box2d tmp(mk_point2d(min_row, min_col),
 	      mk_point2d(max_row, max_col));
     return tmp;
