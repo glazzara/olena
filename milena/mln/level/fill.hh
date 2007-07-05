@@ -28,6 +28,11 @@
 #ifndef MLN_LEVEL_FILL_HH
 # define MLN_LEVEL_FILL_HH
 
+/*! \file mln/level/fill.hh
+ *
+ * \brief Fill an image, that is, set pixel values.
+ */
+
 # include <mln/core/concept/image.hh>
 
 
@@ -37,21 +42,66 @@ namespace mln
   namespace level
   {
 
+    /*! Fill the whole image \p ima with the single value \p v.
+     *
+     * \param[in,out] ima The image to be filled.
+     * \param[in] v The value to assign to all pixels.
+     *
+     * \pre \p ima has to be initialized.
+     */
     template <typename I>
-    void fill(Image<I>& ima_,
-	      const mln_value(I)& value);
+    void fill(Image<I>& ima,
+	      const mln_value(I)& v);
 
+
+    /*! Fill the image \p ima by applying the function \p f.
+     *
+     * \param[in,out] ima The image to be filled.
+     * \param[in] f The function that defines the value of every pixel.
+     *
+     * The signature of \p f has to be:
+     * " value f(const point& p) "
+     *
+     * \pre \p ima has to be initialized.
+     */
     template <typename I>
-    void fill(Image<I>& ima_,
+    void fill(Image<I>& ima,
 	      mln_value(I) (*f)(const mln_point(I)& p));
 
-    template <typename I>
-    void fill(Image<I>& ima_,
-	      const mln_value(I) array[]);
 
+    /*! Fill the image \p ima with the values given by the array \p arr.
+     *
+     * \param[in,out] ima The image to be filled.
+     * \param[in] arr The array of values.
+     *
+     * \warning The size of the array has to be larger than the number
+     * of image points, otherwise the program crashes.
+     *
+     * \pre \p ima has to be initialized.
+     *
+     * \todo Add as parameter the array size, then add a test.
+     */
+    template <typename I>
+    void fill(Image<I>& ima,
+	      const mln_value(I) arr[]);
+
+
+    /*! Fill the image \p ima with the values of the image \p data.
+     *
+     * \param[in,out] ima The image to be filled.
+     * \param[in] data The image.
+     *
+     * \warning The definition domain of \p ima has to be included in
+     * the one of \p data.
+     *
+     * \pre \p ima has to be initialized.
+     *
+     * \todo Test domain inclusion.
+     */
     template <typename I, typename J>
-    void fill(Image<I>& ima_,
+    void fill(Image<I>& ima,
 	      const Image<J>& data);
+
 
 
 # ifndef MLN_INCLUDE_ONLY

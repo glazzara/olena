@@ -28,20 +28,52 @@
 #ifndef MLN_LEVEL_COMPARE_HH
 # define MLN_LEVEL_COMPARE_HH
 
+/*! \file mln/level/compare.hh
+ *
+ * \brief Comparison operators between the pixel values of images.
+ */
+
 # include <mln/core/concept/image.hh>
 
 
 namespace mln
 {
 
+  /*! Point-wise test if the pixel values of \p lhs are equal to the
+   *  pixel values of \p rhs.
+   *
+   * \param[in] lhs A first image.
+   * \param[in] rhs A second image.
+   *
+   * \todo Test domain equality.
+   */
   template <typename L, typename R>
   bool operator == (const Image<L>& lhs, const Image<R>& rhs);
+
   
+  /*! Point-wise test if the pixel values of \p lhs are point-wise
+   *  less than the pixel values of \p rhs.
+   *
+   * \param[in] lhs A first image.
+   * \param[in] rhs A second image.
+   *
+   * \todo Test domain equality.
+   */
   template <typename L, typename R>
   bool operator < (const Image<L>& lhs, const Image<R>& rhs);
+
   
+  /*! Point-wise test if the pixel values of \p lhs are point-wise
+   *  less than or equal to the pixel values of \p rhs.
+   *
+   * \param[in] lhs A first image.
+   * \param[in] rhs A second image.
+   *
+   * \todo Test domain equality.
+   */
   template <typename L, typename R> // required!
   bool operator <= (const Image<L>& lhs, const Image<R>& rhs);
+
 
 
 # ifndef MLN_INCLUDE_ONLY

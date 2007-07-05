@@ -1,5 +1,19 @@
 2007-07-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add extra documentation to milena.
+
+	* mln/debug/all.hh,
+	* mln/level/all.hh,
+	* mln/value/all.hh: New facade files.
+
+	* mln/debug/println.hh,
+	* mln/level/fill.hh,
+	* mln/level/compare.hh,
+	* mln/level/paste.hh,
+	* mln/value/props.hh: Add documentation.
+
+2007-07-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add copyright to milena files.
 
 	* tests/main.cc,

@@ -28,11 +28,22 @@
 #ifndef MLN_VALUE_PROPS_HH
 # define MLN_VALUE_PROPS_HH
 
+/*! \file mln/value/props.hh
+ *
+ * \brief Define properties of value types.
+ */
+
 # include <climits>
 # include <cfloat>
 
+
+/// Get the minimum value of type \c T.
 # define mln_min(T) mln::value::props<T>::min()
+
+
+/// Get the maximum value of type \c T.
 # define mln_max(T) mln::value::props<T>::max()
+
 
 
 namespace mln
@@ -41,10 +52,15 @@ namespace mln
   namespace value
   {
 
+    /*! Class that defines the properties of the value type \c T.
+     */
     template <typename T>
     struct props
     {
+      /// Minimum value for type \c T.
       static T min();
+
+      /// Maximum value for type \c T.
       static T max();
     };
 

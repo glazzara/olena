@@ -25,74 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DEBUG_PRINTLN_HH
-# define MLN_DEBUG_PRINTLN_HH
+#ifndef MLN_LEVEL_ALL_HH
+# define MLN_LEVEL_ALL_HH
 
-/*! \file mln/debug/println.hh
+/*! \file mln/level/all.hh
  *
- * \brief Print an image on the standard output.
+ * \brief File that includes all level-related routines.
  */
-
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-# include <mln/core/box2d.hh>
 
 
 namespace mln
 {
 
-  namespace debug
-  {
+  /*! Namespace of image processing routines related to pixel levels.
+   */
+  namespace level {}
 
-    /// Print the image \p input on the standard output.
-    template <typename I>
-    void println(const Image<I>& input);
+}
 
 
-# ifndef MLN_INCLUDE_ONLY
-
-    namespace impl
-    {
-
-      template <typename S, typename I>
-      void println(const S&, const Image<I>& input_)
-      {
-	const I& input = exact(input_);
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  std::cout << input(p) << ' ';
-	std::cout << std::endl;
-      }
-
-      template <typename I>
-      void println(const box2d& b,
-		   const I& input)
-      {
-	for (int row = b.pmin().row(); row <= b.pmax().row(); ++row)
-	  {
-	    for (int col = b.pmin().col(); col <= b.pmax().col(); ++col)
-	      std::cout << input(mk_point2d(row, col)) << ' ';
-	    std::cout << std::endl;
-	  }
-      }
-
-    } // end of namespace mln::debug::impl
+# include <mln/level/fill.hh>
+# include <mln/level/compare.hh>
+# include <mln/level/paste.hh>
 
 
 
-    // facade
-
-    template <typename I>
-    void println(const Image<I>& input)
-    {
-      impl::println(exact(input).domain(), exact(input));
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::debug
-
-} // end of namespace mln
-
-
-#endif // ! MLN_DEBUG_PRINTLN_HH
+#endif // ! MLN_LEVEL_ALL_HH

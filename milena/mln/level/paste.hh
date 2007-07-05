@@ -28,6 +28,11 @@
 #ifndef MLN_LEVEL_PASTE_HH
 # define MLN_LEVEL_PASTE_HH
 
+/*! \file mln/level/paste.hh
+ *
+ * \brief Paste the contents of an image into another one.
+ */
+
 # include <mln/core/concept/image.hh>
 
 
@@ -37,6 +42,23 @@ namespace mln
   namespace level
   {
 
+    /*! Paste the contents of image \p data into the image \p
+     *  destination.
+     *
+     * \param[in] data The input image providing pixels values.
+     * \param[in,out] destination The image in which values are
+     * assigned.
+     *
+     * This routine runs: \n
+     * for all p of \p data, \p destination(p) = \p data(p).
+     *
+     * \warning The definition domain of \p data has to be included
+     * in the one of \p destination.
+     *
+     * \pre Both images have to be initialized.
+     *
+     * \todo Test domain inclusion.
+     */
     template <typename I, typename J>
     void paste(const Image<I>& data, Image<J>& destination);
 
