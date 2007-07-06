@@ -1,3 +1,12 @@
+2007-07-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Histogramm : Draft.
+
+	* oln/histo: New.
+	* oln/histo/histo_median.hh: New.
+	* oln/histo/histo_min.hh: New.
+	* oln/histo/histogram.hh: New.
+
 2007-06-19  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	change fiter name to pixter, and index name to offset in Fast_image concept.

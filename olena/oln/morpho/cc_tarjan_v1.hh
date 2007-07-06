@@ -33,7 +33,6 @@
 # include <oln/level/fill.hh>
 # include <oln/core/internal/f_ch_value.hh>
 
-
 namespace oln
 {
 

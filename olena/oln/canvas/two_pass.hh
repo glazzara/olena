@@ -37,9 +37,9 @@ namespace oln
   namespace canvas
   {
 
-    namespace v1
+    namespace v1 // Data owned by f.
     {
-      template <typename F> // Data owned by f.
+      template <typename F>
       void two_pass(F& fun)
       {
 
@@ -109,7 +109,7 @@ namespace oln
     }
 
 
-    namespace v4 // Via Inheritance.
+    namespace v4 // Via static Inheritens.
     {
       template <typename I, typename Exact>
       struct two_pass : public virtual Any<Exact>

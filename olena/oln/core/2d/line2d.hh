@@ -91,7 +91,7 @@ namespace oln
 # ifndef OLN_INCLUDE_ONLY
 
   line2d::line2d(const point2d& begin,
-		   const point2d& end)
+		 const point2d& end)
     : beg_(begin),
       end_(end)
   {
