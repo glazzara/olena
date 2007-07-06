@@ -83,9 +83,10 @@ namespace mln
      */
     point_();
 
-    /*! \brief Constructor; all coordinates are set to the value \p c.
+    /*! \brief Constructor; coordinates are set by function \p f.
      */
-    point_(C c);
+    template <typename F>
+    point_(F f);
 
     /*! \brief Set all coordinates to the value \p c.
      */
@@ -102,14 +103,14 @@ namespace mln
   C point_<n,C>::operator[](unsigned i) const
   {
     assert(i < n);
-    return coord_[i];
+    return this->coord_[i];
   }
 
   template <unsigned n, typename C>
   C& point_<n,C>::operator[](unsigned i)
   {
     assert(i < n);
-    return coord_[i];
+    return this->coord_[i];
   }
 
   template <unsigned n, typename C>
@@ -118,9 +119,11 @@ namespace mln
   }
 
   template <unsigned n, typename C>
-  point_<n,C>::point_(C c)
+  template <typename F>
+  point_<n,C>::point_(F f)
   {
-    set_all(c);
+    for (unsigned i = 0; i < n; ++i)
+      coord_[i] = f(i);
   }
 
   template <unsigned n, typename C>

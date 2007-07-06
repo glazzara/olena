@@ -30,9 +30,12 @@
 
 /*! \file mln/core/internal/coord_impl.hh
  *
+ * \internal
+ *
  * \brief Define some implementation classes for generalized points.
  */
 
+# include <mln/core/internal/force_exact.hh>
 # include <mln/core/concept/object.hh>
 
 
@@ -41,6 +44,13 @@ namespace mln
 
   namespace internal
   {
+
+    template <typename E>
+    struct coord_impl_base_
+    {
+      mln_internal_add_force_exact_(coord_impl_base_<E>)
+    };
+
 
     // coord_impl
 
@@ -54,12 +64,17 @@ namespace mln
 
     template <typename C, typename E>
     struct coord_impl_<1, C, E>
+      : coord_impl_base_<E>
     {
       C ind() const;
+    private:
+      typedef coord_impl_<1, C, E> self_;
+
     };
 
     template <typename C, typename E>
     struct coord_impl_<2, C, E>
+      : coord_impl_base_<E>
     {
       C row() const;
       C col() const;
@@ -67,6 +82,7 @@ namespace mln
 
     template <typename C, typename E>
     struct coord_impl_<3, C, E>
+      : coord_impl_base_<E>
     {
       C sli() const;
       C row() const;
@@ -81,6 +97,7 @@ namespace mln
 
     template <typename C, typename E>
     struct mutable_coord_impl_<1, C, E>
+      : coord_impl_base_<E>
     {
       C  ind() const;
       C& ind();
@@ -88,6 +105,7 @@ namespace mln
 
     template <typename C, typename E>
     struct mutable_coord_impl_<2, C, E>
+      : coord_impl_base_<E>
     {
       C  row() const;
       C& row();
@@ -97,6 +115,7 @@ namespace mln
 
     template <typename C, typename E>
     struct mutable_coord_impl_<3, C, E>
+      : coord_impl_base_<E>
     {
       C  sli() const;
       C& sli();
@@ -116,7 +135,7 @@ namespace mln
     template <typename C, typename E>
     C coord_impl_<1, C, E>::ind() const
     {
-      return force_exact<E>(*this)[0];
+      return this->force_exact_()[0];
     }
 
     // 2
@@ -124,13 +143,13 @@ namespace mln
     template <typename C, typename E>
     C coord_impl_<2, C, E>::row() const
     {
-      return force_exact<E>(*this)[0];
+      return this->force_exact_()[0];
     }
 
     template <typename C, typename E>
     C coord_impl_<2, C, E>::col() const
     {
-      return force_exact<E>(*this)[1];
+      return this->force_exact_()[1];
     }
 
     // 3
@@ -138,19 +157,19 @@ namespace mln
     template <typename C, typename E>
     C coord_impl_<3, C, E>::sli() const
     {
-      return force_exact<E>(*this)[0];
+      return this->force_exact_()[0];
     }
 
     template <typename C, typename E>
     C coord_impl_<3, C, E>::row() const
     {
-      return force_exact<E>(*this)[1];
+      return this->force_exact_()[1];
     }
 
     template <typename C, typename E>
     C coord_impl_<3, C, E>::col() const
     {
-      return force_exact<E>(*this)[2];
+      return this->force_exact_()[2];
     }
 
 
@@ -161,13 +180,13 @@ namespace mln
     template <typename C, typename E>
     C  mutable_coord_impl_<1, C, E>::ind() const
     {
-      return force_exact<E>(*this)[0];
+      return this->force_exact_()[0];
     }
 
     template <typename C, typename E>
     C& mutable_coord_impl_<1, C, E>::ind()
     {
-      return force_exact<E>(*this)[0];
+      return this->force_exact_()[0];
     }
 
     // 2
@@ -175,25 +194,25 @@ namespace mln
     template <typename C, typename E>
     C  mutable_coord_impl_<2, C, E>::row() const
     {
-      return force_exact<E>(*this)[0];
+      return this->force_exact_()[0];
     }
 
     template <typename C, typename E>
     C& mutable_coord_impl_<2, C, E>::row()
     {
-      return force_exact<E>(*this)[0];
+      return this->force_exact_()[0];
     }
 
     template <typename C, typename E>
     C  mutable_coord_impl_<2, C, E>::col() const
     {
-      return force_exact<E>(*this)[1];
+      return this->force_exact_()[1];
     }
 
     template <typename C, typename E>
     C& mutable_coord_impl_<2, C, E>::col()
     {
-      return force_exact<E>(*this)[1];
+      return this->force_exact_()[1];
     }
 
     // 3
@@ -201,37 +220,37 @@ namespace mln
     template <typename C, typename E>
     C  mutable_coord_impl_<3, C, E>::sli() const
     {
-      return force_exact<E>(*this)[0];
+      return this->force_exact_()[0];
     }
 
     template <typename C, typename E>
     C& mutable_coord_impl_<3, C, E>::sli()
     {
-      return force_exact<E>(*this)[0];
+      return this->force_exact_()[0];
     }
 
     template <typename C, typename E>
     C  mutable_coord_impl_<3, C, E>::row() const
     {
-      return force_exact<E>(*this)[1];
+      return this->force_exact_()[1];
     }
 
     template <typename C, typename E>
     C& mutable_coord_impl_<3, C, E>::row()
     {
-      return force_exact<E>(*this)[1];
+      return this->force_exact_()[1];
     }
 
     template <typename C, typename E>
     C  mutable_coord_impl_<3, C, E>::col() const
     {
-      return force_exact<E>(*this)[2];
+      return this->force_exact_()[2];
     }
 
     template <typename C, typename E>
     C& mutable_coord_impl_<3, C, E>::col()
     {
-      return force_exact<E>(*this)[2];
+      return this->force_exact_()[2];
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -25,75 +25,63 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_EXACT_HH
-# define MLN_CORE_EXACT_HH
+#ifndef MLN_FUN_ALL_HH
+# define MLN_FUN_ALL_HH
 
-/*! \file mln/core/exact.hh
- * \brief Definition of the mln::exact downcast routines.
+/*! \file mln/fun/all.hh
+ *
+ * \brief FIXME.
  */
-
-# include <mln/core/concept/object.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Exact cast routine for mln objects.
-   * 
-   * This set of routines can be used to downcast an object towards
-   * its exact type.  The only argument, respectively \p ptr or \p
-   * ref, should be an mln::Object.
-   *
-   * \c The parameter E is the exact type of the object.
-   *
-   * \return The return follows the nature of the argument (either a
-   * pointer or a reference, const or not).
-   */ 
-  /// \{
+  namespace fun
+  {
 
-  template <typename E>
-  E* exact(Object<E>* ptr);
+    template <typename T>
+    struct all
+    {
+      all(T t);
+      template <typename U>
+      T operator()(const U&) const;
+    private:
+      T t_;
+    };
 
-  template <typename E>
-  const E* exact(const Object<E>* ptr);
+  } // end of namespace mln::fun
 
-  template <typename E>
-  E& exact(Object<E>& ref);
-
-  template <typename E>
-  const E& exact(const Object<E>& ref);
-
-  /// \}
-
-
+  template <typename T>
+  fun::all<T> all(T t);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // exact
-
-  template <typename E>
-  E* exact(Object<E>* ptr)
+  namespace fun
   {
-    return (E*)(void*)ptr;
-  }
 
-  template <typename E>
-  const E* exact(const Object<E>* ptr)
-  {
-    return (const E*)(const void*)ptr;
-  }
+    template <typename T>
+    all<T>::all(T t)
+      : t_(t)
+    {
+    }
 
-  template <typename E>
-  E& exact(Object<E>& ref)
-  {
-    return *(E*)(void*)(&ref);
-  }
+    template <typename T>
+    template <typename U>
+    T
+    all<T>::operator()(const U&) const
+    {
+      return t_;
+    }
 
-  template <typename E>
-  const E& exact(const Object<E>& ref)
+  } // end of namespace mln::fun
+
+  template <typename T>
+  fun::all<T> all(T t)
   {
-    return *(const E*)(const void*)(&ref);
+    fun::all<T> tmp(t);
+    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -101,4 +89,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_EXACT_HH
+#endif // ! MLN_FUN_ALL_HH

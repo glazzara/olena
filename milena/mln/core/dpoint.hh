@@ -83,9 +83,10 @@ namespace mln
      */
     dpoint_();
 
-    /*! \brief Constructor; all coordinates are set to the value \p c.
+    /*! \brief Constructor; coordinates are set by function \p f.
      */
-    dpoint_(C c);
+    template <typename F>
+    dpoint_(F f);
 
     /*! \brief Set all coordinates to the value \p c.
      */
@@ -118,9 +119,11 @@ namespace mln
   }
 
   template <unsigned n, typename C>
-  dpoint_<n,C>::dpoint_(C c)
+  template <typename F>
+  dpoint_<n,C>::dpoint_(F f)
   {
-    set_all(c);
+    for (unsigned i = 0; i < n; ++i)
+      coord_[i] = f(i);
   }
 
   template <unsigned n, typename C>

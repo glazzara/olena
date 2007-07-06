@@ -36,8 +36,10 @@
 # include <mlc/same_coord.hh>
 
 # include <mln/core/concept/object.hh>
+
 # include <mln/core/macros.hh>
 # include <mln/core/contract.hh>
+# include <mln/core/internal/force_exact.hh>
 
 
 namespace mln
@@ -57,7 +59,8 @@ namespace mln
    * class contents.
    */
   template <typename E>
-  struct GenPoint // stand-alone class!
+  struct GenPoint
+  //    : virtual internal::object_<E>
   {
 
     /*
@@ -75,8 +78,11 @@ namespace mln
       coord operator[](unsigned i) const;
     */
 
+    mln_internal_add_force_exact_(GenPoint<E>)
+
   protected:
     GenPoint();
+
   };
 
 
@@ -189,8 +195,9 @@ namespace mln
   template <typename E>
   GenPoint<E>::GenPoint()
   {
-    const int dim = E::dim;
+    int dim = E::dim;
     mln_invariant(dim > 0);
+    dim = 0;
     typedef  mln_point(E)  point;
     typedef mln_dpoint(E) dpoint;
     typedef mln_coord(E)  coord;
@@ -204,8 +211,8 @@ namespace mln
   bool operator==(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs)
   {
     // FIXME: mlc::same_grid<Pl, Pr>::check();
-    const Pl& lhs_ = force_exact<Pl>(lhs);
-    const Pr& rhs_ = force_exact<Pr>(rhs);
+    const Pl& lhs_ = lhs.force_exact_();
+    const Pr& rhs_ = rhs.force_exact_();
     mlc::same_point<Pl, Pr>::check();
     for (unsigned i = 0; i < Pl::dim; ++i)
       if (lhs_[i] != rhs_[i])
@@ -217,8 +224,8 @@ namespace mln
   bool operator<(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs)
   {
     // FIXME: mlc::same_grid<Pl, Pr>::check();
-    const Pl& lhs_ = force_exact<Pl>(lhs);
-    const Pr& rhs_ = force_exact<Pr>(rhs);
+    const Pl& lhs_ = lhs.force_exact_();
+    const Pr& rhs_ = rhs.force_exact_();
     for (unsigned i = 0; i < Pl::dim; ++i)
       {
 	if (lhs_[i] == rhs_[i])
@@ -235,8 +242,8 @@ namespace mln
     mlc::equal<mln_dpoint(Pl), mln_dpoint(Pr)>::check();
     // FIXME: mlc::same_grid<Pl, Pr>::check();
     mlc::same_coord<Pl, Pr>::check();
-    const Pl& lhs_ = force_exact<Pl>(lhs);
-    const Pr& rhs_ = force_exact<Pr>(rhs);
+    const Pl& lhs_ = lhs.force_exact_();
+    const Pr& rhs_ = rhs.force_exact_();
     mln_dpoint(Pl) tmp;
     for (unsigned i = 0; i < Pl::dim; ++i)
       tmp[i] = lhs_[i] - rhs_[i];
@@ -248,7 +255,7 @@ namespace mln
   mln_point(P)
   operator+(const GenPoint<P>& lhs, const mln_dpoint(P)& rhs)
   {
-    const P& lhs_ = force_exact<P>(lhs);
+    const P& lhs_ = lhs.force_exact_();
     mln_point(P) tmp;
     for (unsigned i = 0; i < P::dim; ++i)
       tmp[i] = lhs_[i] + rhs[i];
@@ -258,7 +265,8 @@ namespace mln
   template <typename P>
   std::ostream& operator<<(std::ostream& ostr, const GenPoint<P>& p)
   {
-    const P& p_ = force_exact<P>(p);
+    const P& p_ = p.force_exact_();
+
     ostr << '(';
     for (unsigned i = 0; i < P::dim; ++i)
       {

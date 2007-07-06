@@ -1,3 +1,27 @@
+2007-07-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make milena work correctly with g++-2.95.
+
+	* mln/core/exact.hh (force_exact): Move in...
+	* mln/core/internal/force_exact.hh: ...this new file.
+	(force_exact_): Now a method and g++-2.95 compatible.
+	* mln/core/concept/genpoint.hh: Update.
+	* mln/core/dpoints_piter.hh: Update.
+	* mln/core/internal/coord_impl.hh: Update.
+
+	* tests/window2d.cc: New.
+	* tests/box2d.cc: New.
+	* tests/point2d.cc: New.
+	* tests/dpoint2d.cc: New.
+	* mln/fun: New.
+	* mln/fun/all.hh: New.
+	* mln/core/window.hh (is_centered): Update.
+
+	* doc/Doxyfile.in (PREDEFINED): Add extra macros.
+	* mln/core/point.hh (point_): Change arg from val to fun.
+	* mln/core/dpoint.hh (dpoint_): Change arg from val to fun.
+	* mln/core/image2d.hh: Add explicit typedefs.
+
 2007-07-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add extra documentation to milena.

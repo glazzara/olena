@@ -36,6 +36,7 @@
 # include <mln/core/concept/window.hh>
 # include <mln/core/internal/set_of.hh>
 # include <mln/core/dpoint.hh>
+# include <mln/fun/all.hh>
 
 
 namespace mln
@@ -100,7 +101,7 @@ namespace mln
   template <typename D>
   bool window_<D>::is_centered() const
   {
-    static const D origin(0);
+    static const D origin = all(0);
     return this->has(origin);
   }
 

@@ -48,6 +48,17 @@ namespace mln
   template <typename T>
   struct image2d : public internal::image_base_< box2d, image2d<T> >
   {
+
+    // warning: just to make effective types appear in Doxygen 
+    typedef box2d   pset;
+    typedef point2d psite;
+    typedef point2d point;
+    typedef mln_fwd_piter(box2d) fwd_piter;
+    typedef mln_bkd_piter(box2d) bkd_piter;
+    typedef fwd_piter piter;
+    // end of warning
+
+
     /// Value associated type.
     typedef T         value;
 
