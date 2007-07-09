@@ -1,3 +1,25 @@
+2007-07-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add materials to handle values in milena.
+
+	* tests/vset.cc: New.
+	* tests/int_u8.cc: New.
+	* TODO: New.
+	* mln/core/concept/value_set.hh: New.
+	* mln/core/concept/viter.hh: New.
+	* mln/core/concept/doc/value_set.hh: New.
+	* mln/core/concept/doc/viter.hh: New.
+	* mln/core/concept/value.hh: New.
+	* mln/value/vset.hh: New.
+	* mln/value/viter.hh: New.
+	* mln/value/int_u.hh: New.
+	* mln/value/internal: New.
+	* mln/value/internal/value_like.hh: New.
+	* doc/Doxyfile.in (PREDEFINED): Add mln_viter et al.
+	* mln/core/macros.hh: Sort.
+	(mln_enc, mln_equiv): New.
+	* mln/value/props.hh (mln_card, card): New.
+
 2007-07-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make milena work correctly with g++-2.95.

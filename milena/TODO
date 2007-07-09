@@ -1,0 +1,25 @@
+	-*- outline -*-
+
+
+* compilation
+
+g++-4.1 -I.. int_u8.cc -Wall -Wextra -Wconversion
+
+
+* value
+
+Value_Set
+props { ... }
+notion of lowq
++ values() : vset dans Image ?
+
+
+* function
+
+Function_p2v
+Function_p2b
+Function_v2w
+
+F apply(I, F)
+O transform(I, F)
+

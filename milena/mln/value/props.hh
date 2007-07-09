@@ -45,6 +45,10 @@
 # define mln_max(T) mln::value::props<T>::max()
 
 
+/// Get the number of values for value type \c T.
+# define mln_card(T) mln::value::props<T>::card()
+
+
 
 namespace mln
 {
@@ -62,6 +66,9 @@ namespace mln
 
       /// Maximum value for type \c T.
       static T max();
+
+      /// Number of values for type \c T.
+      static std::size_t card();
     };
 
 
@@ -72,6 +79,7 @@ namespace mln
     {
       static bool min() { return false; }
       static bool max() { return true; }
+      static std::size_t card() { return 2; }
     };
 
     // integers
@@ -79,22 +87,25 @@ namespace mln
     template <>
     struct props<unsigned char>
     {
-      static unsigned char min() { return 0; }
+      static unsigned char min() { return   0; }
       static unsigned char max() { return 255; }
+      static std::size_t  card() { return 256; }
     };
 
     template <>
     struct props<signed char>
     {
-      static signed char min() { return -128; }
-      static signed char max() { return  127; }
+      static signed char  min() { return -128; }
+      static signed char  max() { return  127; }
+      static std::size_t card() { return  256; }
     };
 
     template <>
     struct props<unsigned short>
     {
-      static unsigned short min() { return 0; }
+      static unsigned short min() { return     0; }
       static unsigned short max() { return 65535; }
+      static std::size_t   card() { return 65536; }
     };
 
     template <>
@@ -102,6 +113,7 @@ namespace mln
     {
       static signed short min() { return -32768; }
       static signed short max() { return  32767; }
+      static std::size_t card() { return 655356; }
     };
 
     template <>
@@ -109,13 +121,15 @@ namespace mln
     {
       static unsigned int min() { return 0; }
       static unsigned int max() { return UINT_MAX; }
+      static std::size_t card() { return std::size_t(UINT_MAX) + 1; }
     };
 
     template <>
     struct props<signed int>
     {
-      static signed int min() { return INT_MIN; }
-      static signed int max() { return INT_MAX; }
+      static signed int  min() { return INT_MIN; }
+      static signed int  max() { return INT_MAX; }
+      static std::size_t card() { return std::size_t(UINT_MAX) + 1; }
     };
 
     template <>

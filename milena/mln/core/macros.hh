@@ -33,63 +33,108 @@
  * \brief Definition of the set of milena macros.
  */
 
-/// Shortcut to access the point type associated to T.
-# define mln_point(T)      typename T::point
 
-/// Shortcut to access the dpoint type associated to T.
-# define mln_dpoint(T)     typename T::dpoint
+// b
 
-/// Shortcut to access the psite type associated to T.
-# define mln_psite(T)      typename T::psite
+/// Shortcut to access the bkd_niter type associated to T.
+# define mln_bkd_niter(T)  typename T::bkd_niter
 
-/// Shortcut to access the pset type associated to T.
-# define mln_pset(T)       typename T::pset
+/// Shortcut to access the bkd_piter type associated to T.
+# define mln_bkd_piter(T)  typename T::bkd_piter
+
+/// Shortcut to access the bkd_qiter type associated to T.
+# define mln_bkd_qiter(T)  typename T::bkd_qiter
+
+/// Shortcut to access the bkd_viter type associated to T.
+# define mln_bkd_viter(T)  typename T::bkd_viter
 
 /// Shortcut to access the box type associated to T.
 # define mln_box(T)        typename T::box
+
+
+// c
 
 /// Shortcut to access the coord type associated to T.
 # define mln_coord(T)      typename T::coord
 
 
-/// Shortcut to access the piter type associated to T.
-# define mln_piter(T)      typename T::piter
+// d
 
-/// Shortcut to access the fwd_piter type associated to T.
-# define mln_fwd_piter(T)  typename T::fwd_piter
-
-/// Shortcut to access the bkd_piter type associated to T.
-# define mln_bkd_piter(T)  typename T::bkd_piter
+/// Shortcut to access the dpoint type associated to T.
+# define mln_dpoint(T)     typename T::dpoint
 
 
-/// Shortcut to access the qiter type associated to T.
-# define mln_qiter(T)      typename T::qiter
+// e
 
-/// Shortcut to access the fwd_qiter type associated to T.
-# define mln_fwd_qiter(T)  typename T::fwd_qiter
+/// Shortcut to access the encoding type associated to T.
+# define mln_enc(T)        typename T::enc
 
-/// Shortcut to access the bkd_qiter type associated to T.
-# define mln_bkd_qiter(T)  typename T::bkd_qiter
+/// Shortcut to access the equivalent type associated to T.
+# define mln_equiv(T)      typename T::equiv
 
 
-/// Shortcut to access the niter type associated to T.
-# define mln_niter(T)      typename T::niter
+// f
 
 /// Shortcut to access the fwd_niter type associated to T.
 # define mln_fwd_niter(T)  typename T::fwd_niter
 
-/// Shortcut to access the bkd_niter type associated to T.
-# define mln_bkd_niter(T)  typename T::bkd_niter
+/// Shortcut to access the fwd_piter type associated to T.
+# define mln_fwd_piter(T)  typename T::fwd_piter
+
+/// Shortcut to access the fwd_qiter type associated to T.
+# define mln_fwd_qiter(T)  typename T::fwd_qiter
+
+/// Shortcut to access the fwd_viter type associated to T.
+# define mln_fwd_viter(T)  typename T::fwd_viter
 
 
-/// Shortcut to access the value type associated to T.
-# define mln_value(T)      typename T::value
+// l
+
+
+/// Shortcut to access the lvalue type associated to T.
+# define mln_lvalue(T)     typename T::lvalue
+
+
+// p
+
+/// Shortcut to access the piter type associated to T.
+# define mln_piter(T)      typename T::piter
+
+/// Shortcut to access the pset type associated to T.
+# define mln_pset(T)       typename T::pset
+
+/// Shortcut to access the psite type associated to T.
+# define mln_psite(T)      typename T::psite
+
+/// Shortcut to access the point type associated to T.
+# define mln_point(T)      typename T::point
+
+
+// q
+
+/// Shortcut to access the qiter type associated to T.
+# define mln_qiter(T)      typename T::qiter
+
+
+// n
+
+/// Shortcut to access the niter type associated to T.
+# define mln_niter(T)      typename T::niter
+
+
+// r
 
 /// Shortcut to access the rvalue type associated to T.
 # define mln_rvalue(T)     typename T::rvalue
 
-/// Shortcut to access the lvalue type associated to T.
-# define mln_lvalue(T)     typename T::lvalue
+
+// v
+
+/// Shortcut to access the value type associated to T.
+# define mln_value(T)      typename T::value
+
+/// Shortcut to access the viter type associated to T.
+# define mln_viter(T)      typename T::viter
 
 
 
