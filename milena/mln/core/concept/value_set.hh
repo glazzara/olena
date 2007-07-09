@@ -53,7 +53,10 @@ namespace mln
       typedef bkd_viter;
 
       bool has(const value& v) const;
+
       value operator[](std::size_t i) const;
+      std::size_t index_of(const value& v) const;
+
       std::size_t nvalues() const;
      */
 

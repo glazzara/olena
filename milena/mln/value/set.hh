@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_VSET_HH
-# define MLN_VALUE_VSET_HH
+#ifndef MLN_VALUE_SET_HH
+# define MLN_VALUE_SET_HH
 
 /*! \file mln/value/vset.hh
  *
@@ -48,37 +48,55 @@ namespace mln
     template <typename S> struct bkd_viter_;
 
 
-    /*! Class that defines the properties of the value type \c T.
+    /*! Class that defines the set of values of type \c T.
+     *
+     * This is an exhaustive value set over \c T.
      */
     template <typename T>
-    struct vset_ : public Value_Set< vset_<T> >
+    struct set_ : public Value_Set< set_<T> >
     {
+      /// Value associated type.
       typedef T value;
 
-      typedef fwd_viter_< vset_<T> > fwd_viter;
-      typedef bkd_viter_< vset_<T> > bkd_viter;
+      /// Forward Viter associated type.
+      typedef fwd_viter_< set_<T> > fwd_viter;
+
+      /// Backward Viter associated type.
+      typedef bkd_viter_< set_<T> > bkd_viter;
+
+      /// Viter associated type.
       typedef fwd_viter viter;
 
+      /// Test if \p v belongs to this set: always true!
       bool has(const T& v) const;
 
+      /// Give the \p i-th value.
       T operator[](std::size_t i) const;
 
+      /// Give the index of value \p v in this set.
+      std::size_t index_of(const T& v) const;
+
+      /// Give the number of values.
       std::size_t nvalues() const;
+
+      /// Return a singleton.
+      static const set_<T>& the();
     };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
     bool
-    vset_<T>::has(const T& v) const
+    set_<T>::has(const T& v) const
     {
       return true;
     }
 
     template <typename T>
     T
-    vset_<T>::operator[](std::size_t i) const
+    set_<T>::operator[](std::size_t i) const
     {
       mln_precondition(i < nvalues());
       return mln_min(T) + i;
@@ -86,14 +104,37 @@ namespace mln
 
     template <typename T>
     std::size_t
-    vset_<T>::nvalues() const
+    set_<T>::index_of(const T& v) const
+    {
+      return v - mln_min(T);
+    }
+
+    template <typename T>
+    std::size_t
+    set_<T>::nvalues() const
     {
       return mln_card(T);
+    }
+
+    template <typename T>
+    const set_<T>&
+    set_<T>::the()
+    {
+      static set_<T> the_;
+      return the_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::value
+
+
+
+  typedef value::set_<bool>     Booleans;
+  typedef value::set_<int>      integers();
+  typedef value::set_<unsigned> naturals();
+
+
 
 } // end of namespace mln
 
@@ -101,4 +142,4 @@ namespace mln
 # include <mln/value/viter.hh>
 
 
-#endif // ! MLN_VALUE_VSET_HH
+#endif // ! MLN_VALUE_SET_HH

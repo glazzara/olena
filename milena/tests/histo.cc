@@ -25,59 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/value_set.hh
- * \brief This file documents the concept of mln::Value_Set.
+/*! \file tests/histo.cc
+ *
+ * \brief Tests on mln::value::histo<S>.
  */
 
-namespace mln
+#include <mln/value/int_u.hh>
+#include <mln/value/set.hh>
+#include <mln/value/histo.hh>
+
+
+
+int main()
 {
+  using namespace mln;
+  using namespace mln::value;
 
-  namespace doc
-  {
 
-    /*! \brief Documentation class for mln::Value_Set.
-     *
-     * \see mln::Value_Set
-     */
-    template <typename E>
-    struct Value_Set : public Object<E>
-    {
-      /*! \brief Value associated type.
-       */
-      typedef void value;
+  histo_on_type<bool> h;
 
-      /*! \brief Viter associated type.
-       */
-      typedef void viter;
+  for (unsigned i = 0; i < 5; ++i)
+    h.take(false);
+  for (unsigned i = 0; i < 2; ++i)
+    h.take(true);
+  h.untake(true);
 
-      /*! \brief Forward Viter associated type.
-       */
-      typedef void fwd_viter;
+  std::cout << h << std::endl;
+  std::cout << h[0] * 10 + h[1] << std::endl;
+  std::cout << h(false) * 10 + h(true) << std::endl;
 
-      /*! \brief Backward Viter associated type.
-       */
-      typedef void bkd_viter;
+  h.clear();
+  std::cout << h << std::endl;
 
-      /*! \brief Test if \p v belongs to this set of values.
-       *
-       * \param[in] v A value.
-       * \return True if \p v is an element of the set of values.
-       */
-      bool has(const value& v) const;
 
-      /*! \brief Give the number of values in this set.
-       */
-      std::size_t nvalues() const;
+  // ...
 
-      /*! \brief Give the \p i-th value of this set.
-       */
-      value operator[](std::size_t i) const;
 
-      /*! \brief Give the index of value \p v in this set.
-       */
-      std::size_t index_of(const value& v) const;
-    };
-
-  } // end of namespace mln::doc
-
-} // end of namespace mln
+  typedef value::set_<int_u8> S;
+  histo_on_set<S> h_u8(S::the());
+  std::cout << h_u8 << std::endl;
+}

@@ -86,8 +86,17 @@ namespace mln
     };
 
 
+    // Fwd decl.
+    template <typename T> struct vset_;
+
+
     /// Alias for unsigned 8bit integers.
-    typedef value::int_u_<8> int_u8;
+    typedef int_u_<8> int_u8;
+
+    /// Alias for the set of unsigned 8bit integers.
+    typedef vset_<int_u8> int_u8_set;
+
+
 
 
     /*! \brief Print an int_u8 \p i into the output stream \p ostr.

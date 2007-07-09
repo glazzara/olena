@@ -27,11 +27,11 @@
 
 /*! \file tests/vset.cc
  *
- * \brief Tests on mln::vset.
+ * \brief Tests on mln::value::set_<T>.
  */
 
 #include <mln/value/int_u.hh>
-#include <mln/value/vset.hh>
+#include <mln/value/set.hh>
 
 
 
@@ -43,7 +43,7 @@ int main()
   // typedef value::int_u8 T;
   // typedef short T;
 
-  typedef value::vset_<T> S;
+  typedef value::set_<T> S;
   S s;
 
   {

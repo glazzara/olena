@@ -1,5 +1,21 @@
 2007-07-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add progressive histogram and median in milena.
+
+	* tests/median.cc: New.
+	* mln/value/vset.hh: Rename as...
+	* mln/value/set.hh: ... this new file.
+	* tests/vset.cc: Update.
+	* tests/histo.cc: New.
+	* mln/histo: New.
+	* mln/core/concept/value_set.hh: Update.
+	* mln/core/concept/doc/value_set.hh: Update.
+	* mln/value/histo.hh: New.
+	* mln/value/median.hh: New.
+	* mln/value/int_u.hh: Update.
+
+2007-07-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add materials to handle values in milena.
 
 	* tests/vset.cc: New.
