@@ -176,6 +176,27 @@ namespace mln
   operator+(const GenPoint<P>& lhs, const mln_dpoint(P)& rhs);
 
 
+  /*! \brief Substract a delta-point \p rhs to a generalized point \p lhs.
+   *
+   * \param[in] lhs A generalized point.
+   * \param[in] rhs A delta-point.
+   *
+   * The type of \p rhs has to be exactly the delta-point type
+   * associated with the type of \p lhs.
+   *
+   * \return A point (temporary object).
+   *
+   * \see mln::Dpoint
+   * \relates mln::GenPoint
+   *
+   * \todo Introduce the notion of "generalized dpoint" and
+   * add the more general extra operator-(GenPoint, GenDpoint).
+   */
+  template <typename P>
+  mln_point(P)
+  operator-(const GenPoint<P>& lhs, const mln_dpoint(P)& rhs);
+
+
   /*! \brief Print a generalized point \p p into the output stream \p
    *  ostr.
    *
@@ -259,6 +280,17 @@ namespace mln
     mln_point(P) tmp;
     for (unsigned i = 0; i < P::dim; ++i)
       tmp[i] = lhs_[i] + rhs[i];
+    return tmp;
+  }
+
+  template <typename P>
+  mln_point(P)
+  operator-(const GenPoint<P>& lhs, const mln_dpoint(P)& rhs)
+  {
+    const P& lhs_ = lhs.force_exact_();
+    mln_point(P) tmp;
+    for (unsigned i = 0; i < P::dim; ++i)
+      tmp[i] = lhs_[i] - rhs[i];
     return tmp;
   }
 

@@ -1,3 +1,20 @@
+2007-07-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add border to milena 2D image.
+
+	* tests/main.cc: Update.
+	* tests/image2d_b.cc: New.
+	* mln/core/concept/image.hh (npoints): New.
+	* mln/core/concept/doc/image.hh: Update.
+	* mln/core/internal/image_base.hh: Update.
+	* mln/core/concept/genpoint.hh
+	(operator-): New.
+	* mln/core/image2d.hh: Rename as...
+	* mln/core/image2d_b.hh: ...this.
+	(vb_, bdr_): New.
+	(image2d_b): Update.
+	* mln/border/thickness.hh: New.
+
 2007-07-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add progressive histogram and median in milena.

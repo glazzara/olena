@@ -70,11 +70,11 @@ namespace mln
       /// Test if \p p belongs to the image domain.
       bool has(const psite& p) const;
 
-      /// Test if a pixel value is accessible at \p p.
-      bool owns_(const psite& p) const;
-
       /// Give a bounding box of the image domain.
       const box_<point>& bbox() const;
+
+      /// Give the number of points of the image domain.
+      std::size_t npoints() const;
 
     protected:
       image_base_();
@@ -91,17 +91,17 @@ namespace mln
     }
 
     template <typename S, typename E>
-    bool
-    image_base_<S,E>::owns_(const psite& p) const // default
-    {
-      return this->has(p);
-    }
-
-    template <typename S, typename E>
     const box_<mln_point(S)>&
     image_base_<S,E>::bbox() const
     {
       return exact(this)->domain().bbox();
+    }
+
+    template <typename S, typename E>
+    std::size_t
+    image_base_<S,E>::npoints() const
+    {
+      return exact(this)->domain().npoints();      
     }
 
     template <typename S, typename E>

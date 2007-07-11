@@ -25,16 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_IMAGE2D_HH
-# define MLN_CORE_IMAGE2D_HH
+#ifndef MLN_CORE_IMAGE2D_B_HH
+# define MLN_CORE_IMAGE2D_B_HH
 
-/*! \file mln/core/image2d.hh
+/*! \file mln/core/image2d_b.hh
  *
- * \brief Definition of the basic mln::image2d class.
+ * \brief Definition of the basic mln::image2d_b class.
  */
 
 # include <mln/core/internal/image_base.hh>
 # include <mln/core/box2d.hh>
+
+# include <mln/border/thickness.hh>
+# include <mln/fun/all.hh>
 
 
 namespace mln
@@ -43,10 +46,11 @@ namespace mln
   /*! \brief Basic 2D image class.
    *
    * The parameter \c T is the type of pixel values.  This image class
-   * stores data in memory and has no virtual border.
+   * stores data in memory and has a virtual border with constant
+   * thickness around data.
    */
   template <typename T>
-  struct image2d : public internal::image_base_< box2d, image2d<T> >
+  struct image2d_b : public internal::image_base_< box2d, image2d_b<T> >
   {
 
     // warning: just to make effective types appear in Doxygen 
@@ -72,29 +76,46 @@ namespace mln
     template <typename U>
     struct change_value
     {
-      typedef image2d<U> ret;
+      typedef image2d_b<U> ret;
     };
 
     /// Constructor without argument.
-    image2d();
+    image2d_b();
 
-    /// Constructor with the numbers of rows and columns.
-    image2d(int nrows, int ncols);
+    /// Constructor with the numbers of rows and columns and the
+    /// border thickness.
+    image2d_b(int nrows, int ncols, unsigned bdr = border::thickness);
 
-    /// Constructor with a box.
-    image2d(const box2d& b);
+    /// Constructor with a box and the border thickness (default is
+    /// 3).
+    image2d_b(const box2d& b, unsigned bdr = border::thickness);
 
     /// Copy constructor.
-    image2d(const image2d<T>& rhs);
+    image2d_b(const image2d_b<T>& rhs);
 
     /// Assignment operator.
-    image2d& operator=(const image2d<T>& rhs);
+    image2d_b& operator=(const image2d_b<T>& rhs);
+
+    /// Test if \p p is valid.
+    bool owns_(const point2d& p) const;
 
     /// Test if this image has been initialized.
     bool has_data() const;
 
     /// Give the definition domain.
     const box2d& domain() const;
+
+    /// Give the border thickness.
+    unsigned border() const;
+
+    /// Give the number of rows (not including the border).
+    unsigned nrows() const;
+
+    /// Give the number of cols (not including the border).
+    unsigned ncols() const;
+
+    /// Give the number of cells (points including border ones).
+    std::size_t ncells() const;
 
     /// Read-only access to the image value located at \p p.
     const T& operator()(const point2d& p) const;
@@ -103,18 +124,21 @@ namespace mln
     T& operator()(const point2d& p);
 
     /// Destructor.
-    ~image2d();
+    ~image2d_b();
 
   private:
 
-    box2d b_;
+    box2d b_;  // theoretical box
     T* buffer_;
     T** array_;
+    unsigned bdr_;
+    box2d vb_; // virtual box, i.e., box including the virtual border
 
+    void update_vb_();
     void allocate_();
     void deallocate_();
 
-    typedef internal::image_base_< box2d, image2d<T> > super;
+    typedef internal::image_base_< box2d, image2d_b<T> > super;
   };
 
 
@@ -123,42 +147,47 @@ namespace mln
   // ctors
 
   template <typename T>
-  image2d<T>::image2d()
+  image2d_b<T>::image2d_b()
   {
     buffer_ = 0;
-    array_ = 0;
+    array_  = 0;
+    bdr_    = border::thickness; // default value in ctors.
   }
 
   template <typename T>
-  image2d<T>::image2d(int nrows, int ncols)
+  image2d_b<T>::image2d_b(int nrows, int ncols, unsigned bdr)
   {
     b_ = mk_box2d(nrows, ncols);
+    bdr_ = bdr;
     allocate_();
   }
 
   template <typename T>
-  image2d<T>::image2d(const box2d& b)
-    : b_(b)
+  image2d_b<T>::image2d_b(const box2d& b, unsigned bdr)
+    : b_(b),
+      bdr_(bdr)
   {
+    bdr_ = bdr;
     allocate_();
   }
 
   template <typename T>
-  image2d<T>::image2d(const image2d<T>& rhs)
+  image2d_b<T>::image2d_b(const image2d_b<T>& rhs)
     : super(rhs),
-      b_(rhs.domain())
+      b_(rhs.domain()),
+      bdr_(rhs.border())
   {
     allocate_();
     std::memcpy(this->buffer_,
 		rhs.buffer_,
-		b_.npoints() * sizeof(value));
+		ncells() * sizeof(value));
   }
 
   // assignment
 
   template <typename T>
-  image2d<T>&
-  image2d<T>::operator=(const image2d<T>& rhs)
+  image2d_b<T>&
+  image2d_b<T>::operator=(const image2d_b<T>& rhs)
   {
     assert(rhs.has_data());
     if (& rhs == this)
@@ -166,9 +195,11 @@ namespace mln
     if (this->has_data())
       this->deallocate_();
     this->b_ = rhs.domain();
+    this->bdr_ = rhs.border();
+    allocate_();
     std::memcpy(this->buffer_,
 		rhs.buffer_,
-		b_.npoints() * sizeof(value));
+		ncells() * sizeof(value));
     return *this;
   }
 
@@ -176,36 +207,83 @@ namespace mln
 
   template <typename T>
   bool
-  image2d<T>::has_data() const
+  image2d_b<T>::has_data() const
   {
     return buffer_ != 0 && array_ != 0;
   }
 
   template <typename T>
   const box2d&
-  image2d<T>::domain() const
+  image2d_b<T>::domain() const
   {
+    mln_precondition(this->has_data());
     return b_;
   }
 
   template <typename T>
-  const T&
-  image2d<T>::operator()(const point2d& p) const
+  unsigned
+  image2d_b<T>::border() const
   {
-    assert(this->has_data() && this->owns_(p));
+    mln_precondition(this->has_data());
+    return bdr_;
+  }
+
+  template <typename T>
+  unsigned
+  image2d_b<T>::nrows() const
+  {
+    mln_precondition(this->has_data());
+    return 1 + b_.pmax().row() - b_.pmin().row();
+  }
+
+  template <typename T>
+  unsigned
+  image2d_b<T>::ncols() const
+  {
+    mln_precondition(this->has_data());
+    return 1 + b_.pmax().col() - b_.pmin().col();
+  }
+
+  template <typename T>
+  std::size_t
+  image2d_b<T>::ncells() const
+  {
+    mln_precondition(this->has_data());
+    std::size_t s = 1;
+    s *= nrows() + 2 * bdr_;
+    s *= ncols() + 2 * bdr_;
+    return s;
+  }
+
+  template <typename T>
+  bool
+  image2d_b<T>::owns_(const point2d& p) const
+  {
+    mln_precondition(this->has_data());
+    return p.row() >= vb_.pmin().row()
+      &&   p.row() <= vb_.pmax().row()
+      &&   p.col() >= vb_.pmin().col()
+      &&   p.col() <= vb_.pmax().col();
+  }
+
+  template <typename T>
+  const T&
+  image2d_b<T>::operator()(const point2d& p) const
+  {
+    mln_precondition(this->owns_(p));
     return array_[p.row()][p.col()];
   }
 
   template <typename T>
   T&
-  image2d<T>::operator()(const point2d& p)
+  image2d_b<T>::operator()(const point2d& p)
   {
-    assert(this->has_data() && this->owns_(p));
+    mln_precondition(this->owns_(p));
     return array_[p.row()][p.col()];
   }
 
   template <typename T>
-  image2d<T>::~image2d()
+  image2d_b<T>::~image2d_b()
   {
     deallocate_();
   }
@@ -214,26 +292,34 @@ namespace mln
 
   template <typename T>
   void
-  image2d<T>::allocate_()
+  image2d_b<T>::update_vb_()
   {
-    unsigned
-      nrows = 1 + b_.pmax().row() - b_.pmin().row(),
-      ncols = 1 + b_.pmax().col() - b_.pmin().col(),
-      len = nrows * ncols;
-    buffer_ = new T[len];
-    array_ = new T*[nrows];
-    T* buf = buffer_ - b_.pmin().col();
-    for (unsigned i = 0; i < nrows; ++i)
-      {
-	array_[i] = buf;
-	buf += ncols;
-      }
-    array_ -= b_.pmin().row();
+    vb_.pmin() = b_.pmin() - dpoint2d(all(bdr_));
+    vb_.pmax() = b_.pmax() + dpoint2d(all(bdr_));
   }
 
   template <typename T>
   void
-  image2d<T>::deallocate_()
+  image2d_b<T>::allocate_()
+  {
+    update_vb_();
+    unsigned
+      nr = nrows() + 2 * bdr_,
+      nc = ncols() + 2 * bdr_;
+    buffer_ = new T[ncells()];
+    array_ = new T*[nr];
+    T* buf = buffer_ - (b_.pmin().col() - bdr_);
+    for (unsigned i = 0; i < nr; ++i)
+      {
+	array_[i] = buf;
+	buf += nc;
+      }
+    array_ -= b_.pmin().row() - bdr_;
+  }
+
+  template <typename T>
+  void
+  image2d_b<T>::deallocate_()
   {
     if (buffer_)
       {
@@ -242,7 +328,7 @@ namespace mln
       }
     if (array_)
       {
-	array_ += b_.pmin().row();
+	array_ += b_.pmin().row() - bdr_;
 	delete[] array_;
 	array_ = 0;
       }
@@ -253,4 +339,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_IMAGE2D_HH
+#endif // ! MLN_CORE_IMAGE2D_B_HH

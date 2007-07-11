@@ -80,6 +80,7 @@ namespace mln
 
       bool has(const psite& p) const;
       const box_<point>& bbox() const;
+      std::size_t npoints() const;
      */
 
   protected:

@@ -156,6 +156,10 @@ namespace mln
        * \return A bounding box of the image domain.
        */
       const box_<point>& bbox() const;
+
+      /*! \brief Give the number of points of the image domain. 
+       */
+      std::size_t npoints() const;
     };
 
   } // end of namespace mln::doc
