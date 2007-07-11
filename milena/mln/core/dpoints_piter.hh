@@ -94,7 +94,7 @@ namespace mln
 
     /// Give the i-th coordinate.
     coord operator[](unsigned i) const;
-   
+
   private:
     const std::vector<D>& dps_;
     const point& p_ref_;

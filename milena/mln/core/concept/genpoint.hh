@@ -60,7 +60,6 @@ namespace mln
    */
   template <typename E>
   struct GenPoint
-  //    : virtual internal::object_<E>
   {
 
     /*

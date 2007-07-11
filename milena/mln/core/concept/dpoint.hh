@@ -78,6 +78,19 @@ namespace mln
   D operator-(const Dpoint<D>& rhs);
 
 
+  /*! \brief Add the couple of delta-points \p lhs and \p rhs.
+   *
+   * \param[in] lhs A delta-point.
+   * \param[in] rhs Another delta-point.
+   *
+   * \return A delta-point (temporary object).
+   *
+   * \relates mln::Dpoint
+   */
+  template <typename D>
+  D operator+(const Dpoint<D>& lhs, const Dpoint<D>& rhs);
+
+
   /*! \brief Equality comparison between a couple of delta-point \p lhs
    *  and \p rhs.
    *
@@ -146,6 +159,15 @@ namespace mln
     D tmp; 
     for (unsigned i = 0; i < D::dim; ++i)
       tmp[i] = - exact(rhs)[i];
+    return tmp;
+  }
+
+  template <typename D>
+  D operator+(const Dpoint<D>& lhs, const Dpoint<D>& rhs)
+  {
+    D tmp; 
+    for (unsigned i = 0; i < D::dim; ++i)
+      tmp[i] = exact(lhs)[i] + exact(rhs)[i];
     return tmp;
   }
 

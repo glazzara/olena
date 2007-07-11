@@ -88,6 +88,11 @@ namespace mln
      */
     P& pmax();
 
+    /*! \brief Give the length of the \p i-th side.
+     * \pre i < dim
+     */
+    unsigned len(unsigned i) const;
+
     /*! \brief Constructor without argument.
      */
     box_();
@@ -148,6 +153,14 @@ namespace mln
   box_<P>::pmax()
   {
     return pmax_;
+  }
+
+  template <typename P>
+  unsigned
+  box_<P>::len(unsigned i) const
+  {
+    mln_precondition(i < P::dim);
+    return 1 + pmax_[i] - pmin_[i];    
   }
 
   template <typename P>

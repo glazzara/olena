@@ -56,6 +56,12 @@ namespace mln
   struct rectangle2d : public Window< rectangle2d >,
 		       public internal::set_of_<dpoint2d>
   {
+    /// Point associated type.
+    typedef point2d point;
+
+    /// Dpoint associated type.
+    typedef dpoint2d dpoint;
+
     /*! \brief Piter type to browse a rectangle such as: "for each row
      * (increasing), for each column (increasing)."
      */

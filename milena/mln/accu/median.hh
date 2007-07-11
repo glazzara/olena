@@ -25,21 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_MEDIAN_HH
-# define MLN_VALUE_MEDIAN_HH
+#ifndef MLN_ACCU_MEDIAN_HH
+# define MLN_ACCU_MEDIAN_HH
 
-/*! \file mln/value/median.hh
+/*! \file mln/accu/median.hh
  *
  * \brief Define FIXME
  */
 
-# include <mln/value/histo.hh>
+# include <mln/accu/histo.hh>
 
 
 namespace mln
 {
 
-  namespace value
+  namespace accu
   {
 
 
@@ -55,10 +55,14 @@ namespace mln
 
       void   take(const value& v);
       void untake(const value& v);
-      void clear();
+      void init();
+
+      unsigned card() const { return h_.sum(); }
 
       operator value() const;
       value to_value() const;
+
+      const histo_on_set<S>& histo() const;
 
       // FIXME: remove
       void debug__() const
@@ -71,19 +75,30 @@ namespace mln
 
     protected:
 
-      histo_on_set<S> h_;
+      mutable histo_on_set<S> h_;
       const S& s_; // derived from h_
 
-      std::size_t sum_minus_, sum_plus_;
+      mutable std::size_t sum_minus_, sum_plus_;
 
-      std::size_t i_; // the median index
-      value v_;       // the median value
+      mutable bool valid_;
+      mutable std::size_t i_; // the median index
+      mutable value v_;       // the median value
 
       // Auxiliary methods
-      void go_minus_();
-      void go_plus_();
+      void update_() const;
+      void go_minus_() const;
+      void go_plus_() const;
     };
 
+
+    template <typename T>
+    struct median_on : public median< value::set_<T> >
+    {
+      median_on()
+	: median< value::set_<T> >(value::set_<T>::the())
+      {
+      }
+    };
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -94,7 +109,7 @@ namespace mln
       : h_(s),
 	s_(h_.vset())
     {
-      clear();
+      init();
     }
 
 
@@ -102,101 +117,64 @@ namespace mln
     void
     median<S>::take(const value& v)
     {
-      // update h_
       h_.take(v);
 
-      // particular case:
-      // current state was initialization
-      if (h_[i_] == 0)
-	{
-	  // std::cout << "init!" << std::endl;
-	  i_ = s_.index_of(v);
-	  v_ = v;
-	  return;
-	}
-
-      // particular case:
-      // the median does not change
-      if (v == v_)
-	{
-	  // std::cout << "no change!" << std::endl;
-	  return;
-	}
-
-      // general case:
-
       if (v < v_)
-	{
-	  ++sum_minus_;
-	  if (2 * sum_minus_ > h_.sum())
-	    go_minus_();
-	}
-      else
-	// v > v_
-	{
-	  ++sum_plus_;
-	  if (2 * sum_plus_ > h_.sum())
-	    go_plus_();
-	}
+	++sum_minus_;
+      else if (v > v_)
+	++sum_plus_;
+
+      if (valid_)
+	valid_ = false;
     }
 
-    
+
     template <typename S>
     void
     median<S>::untake(const value& v)
     {
       mln_precondition(h_(v) != 0);
-
-      // update h_
       h_.untake(v);
 
-      // particular case:
-      // the only value has been removed
-      if (h_.sum() == 0)
-	{
-	  clear();
-	  return;
-	}
-
-      // general case:
       if (v < v_)
-	{
-	  --sum_minus_;
-	  if (2 * sum_plus_ > h_.sum())
-	    go_plus_();
-	}
+	--sum_minus_;
       else if (v > v_)
-	{
-	  --sum_plus_;
-	  if (2 * sum_minus_ > h_.sum())
-	    go_minus_();
-	}
+	--sum_plus_;
+
+      if (valid_)
+	valid_ = false;
+    }
+
+    
+    template <typename S>
+    void
+    median<S>::update_() const
+    {
+      valid_ = true;
+
+      if (h_.sum() == 0)
+	return;
+
+      if (2 * sum_minus_ > h_.sum())
+	go_minus_();
       else
-	// v == v_
-	{
-	  if (h_[i_] == 0)
-	    {
-	      // go to the heaviest side
-	      if (sum_plus_ > sum_minus_)
-		go_plus_();
-	      else
-		go_minus_(); // default when both sides are balanced
-	    }
-	  else
-	    {
-	      if (2 * sum_plus_ > h_.sum())
-		go_plus_();
-	      else if (2 * sum_minus_ > h_.sum())
-		go_minus_();
-	      // else no change
-	    }
-	}
+	if (2 * sum_plus_ > h_.sum())
+	  go_plus_();
+      else
+	if (h_[i_] == 0)
+	  {
+	    // go to the heaviest side
+	    if (sum_plus_ > sum_minus_)
+	      go_plus_();
+	    else
+	      go_minus_(); // default when both sides are balanced
+	  }
     }
 
 
     template <typename S>
     void
-    median<S>::go_minus_()
+    median<S>::go_minus_() const
     {
       do
 	{
@@ -213,7 +191,7 @@ namespace mln
 
     template <typename S>
     void
-    median<S>::go_plus_()
+    median<S>::go_plus_() const
     {
       do
 	{
@@ -230,26 +208,37 @@ namespace mln
 
     template <typename S>
     void
-    median<S>::clear()
+    median<S>::init()
     {
-      h_.clear();
+      h_.init();
       sum_minus_ = 0;
       sum_plus_ = 0;
       i_ = (mln_max(value) - mln_min(value)) / 2;
       v_ = s_[i_];
+      valid_ = true;
     }
+
 
     template <typename S>
     median<S>::operator typename median<S>::value () const
     {
-      return v_;
+      return to_value();
     }
 
     template <typename S>
     typename median<S>::value
     median<S>::to_value() const
     {
+      if (not valid_)
+	update_();
       return v_;
+    }
+
+    template <typename S>
+    const histo_on_set<S>&
+    median<S>::histo() const
+    {
+      return h_;
     }
 
     template <typename S>
@@ -262,9 +251,9 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::value
+  } // end of namespace mln::accu
 
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_MEDIAN_HH
+#endif // ! MLN_ACCU_MEDIAN_HH

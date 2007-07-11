@@ -35,6 +35,7 @@
 
 # include <mln/core/concept/dpoint.hh>
 # include <mln/core/internal/coord_impl.hh>
+# include <mln/fun/all.hh>
 
 
 namespace mln
@@ -86,11 +87,14 @@ namespace mln
     /*! \brief Constructor; coordinates are set by function \p f.
      */
     template <typename F>
-    dpoint_(F f);
+    dpoint_(F f); // FIXME: Bound parameter!
 
     /*! \brief Set all coordinates to the value \p c.
      */
     void set_all(C c);
+
+    /// Give the null delta-point (all coordinates are 0).
+    static const dpoint_<n,C>& zero();
 
   protected:
     C coord_[n];
@@ -131,6 +135,13 @@ namespace mln
   {
     for (unsigned i = 0; i < n; ++i)
       coord_[i] = c;
+  }
+
+  template <unsigned n, typename C>
+  const dpoint_<n,C>& dpoint_<n,C>::zero()
+  {
+    static const dpoint_<n,C> zero_(all(0));
+    return zero_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

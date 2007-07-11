@@ -50,11 +50,11 @@
 							\
     E& force_exact_() const				\
     {							\
-	static const E exact_obj;			\
-	static const Type& exact_obj_ref = exact_obj;	\
+	static const E* exact_obj;			\
+	static const Type& exact_obj_ref = *exact_obj;	\
 	static const int exact_offset =			\
             (const char*)(void*)(&exact_obj_ref)	\
-	  - (const char*)(void*)(&exact_obj);		\
+	  - (const char*)(void*)( exact_obj);		\
       return *(E*)((char*)(this) - exact_offset);	\
     }
 

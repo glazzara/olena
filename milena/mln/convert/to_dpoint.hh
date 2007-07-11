@@ -25,75 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DEBUG_PRINTLN_HH
-# define MLN_DEBUG_PRINTLN_HH
+#ifndef MLN_CONVERT_TO_DPOINT_HH
+# define MLN_CONVERT_TO_DPOINT_HH
 
-/*! \file mln/debug/println.hh
+/*! \file mln/convert/to_dpoint.hh
  *
- * \brief Print an image on the standard output.
+ * \brief Convertions to mln::Dpoint.
  */
-
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-# include <mln/core/box2d.hh>
 
 
 namespace mln
 {
 
-  namespace debug
+  namespace convert
   {
 
-    /// Print the image \p input on the standard output.
-    template <typename I>
-    void println(const Image<I>& input);
+    template <typename P>
+    mln_dpoint(P) to_dpoint(const GenPoint<P>& p);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
+    template <typename P>
+    mln_dpoint(P) to_dpoint(const GenPoint<P>& p_)
     {
-
-      template <typename S, typename I>
-      void println(const S&, const Image<I>& input_)
-      {
-	const I& input = exact(input_);
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  std::cout << input(p) << ' ';
-	std::cout << std::endl;
-      }
-
-      template <typename I>
-      void println(const box2d& b,
-		   const I& input)
-      {
-	for (int row = b.pmin().row(); row <= b.pmax().row(); ++row)
-	  {
-	    for (int col = b.pmin().col(); col <= b.pmax().col(); ++col)
-	      std::cout << input(mk_point2d(row, col)) << ' ';
-	    std::cout << std::endl;
-	  }
-	std::cout << std::endl;
-      }
-
-    } // end of namespace mln::debug::impl
-
-
-
-    // facade
-
-    template <typename I>
-    void println(const Image<I>& input)
-    {
-      impl::println(exact(input).domain(), exact(input));
+      const P& p = p_.force_exact_();
+      mln_dpoint(P) tmp;
+      for (unsigned i = 0; i < P::dim; ++i)
+	tmp[i] = p[i];
+      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::debug
+  } // end of namespace mln::convert
 
 } // end of namespace mln
 
 
-#endif // ! MLN_DEBUG_PRINTLN_HH
+#endif // ! MLN_CONVERT_TO_DPOINT_HH

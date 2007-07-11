@@ -1,5 +1,33 @@
 2007-07-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Better milena median.
+
+	* tests/median.cc: Update.
+	* mln/convert/to_dpoint.hh: New.
+	* mln/debug/println.hh (println): Add endl.
+	* mln/level/median.hh: New.
+	* mln/io/save_pgm.hh: New.
+	* mln/io/load_pgm.hh: New.
+	* mln/core/box.hh (len): New.
+	* mln/core/concept/box.hh: Likewise.
+	* mln/core/point.hh (zero): New.
+	* mln/core/dpoint.hh: Likewise.
+	* mln/core/concept/window.hh (dpoint, point): New.
+	* mln/core/window.hh,
+	* mln/core/rectangle2d.hh: Update.
+	* mln/core/concept/genpoint.hh: Remove dead line.
+	* mln/core/concept/dpoint.hh (operator+): New.
+	* mln/core/image2d_b.hh: .
+	* mln/core/internal/force_exact.hh: Avoid obj creation.
+	* mln/accu: New.
+	* mln/value/histo.hh: Rename as...
+	* mln/value/median.hh: ...this.
+	* mln/accu/histo.hh: Rename as...
+	* mln/accu/median.hh: ...this.
+	* mln/accu/median_alt.hh: New.
+
+2007-07-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add border to milena 2D image.
 
 	* tests/main.cc: Update.

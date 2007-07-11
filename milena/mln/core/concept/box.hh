@@ -52,6 +52,7 @@ namespace mln
     /*
       const point& pmin() const;
       const point& pmax() const;
+      unsigned len(unsigned i) const; // FIXME: Doc!
     */
 
     /*! \brief Return the bounding box of this point set.
@@ -102,10 +103,7 @@ namespace mln
     std::size_t count = 1;
     typedef typename E::point P; // helps g++-3.3.5
     for (unsigned i = 0; i < P::dim; ++i)
-      count *=
-	exact(this)->pmax()[i]
-	+ 1
-	- exact(this)->pmin()[i];
+      count *= exact(this)->len(i);
     return count;
   }
 

@@ -35,6 +35,7 @@
 
 # include <mln/core/concept/point.hh>
 # include <mln/core/internal/coord_impl.hh>
+# include <mln/fun/all.hh>
 
 
 namespace mln
@@ -92,6 +93,9 @@ namespace mln
      */
     void set_all(C c);
 
+    /// Give the origin (all coordinates are 0).
+    static const point_<n,C>& zero();
+
   protected:
     C coord_[n];
   };
@@ -131,6 +135,13 @@ namespace mln
   {
     for (unsigned i = 0; i < n; ++i)
       coord_[i] = c;
+  }
+
+  template <unsigned n, typename C>
+  const point_<n,C>& point_<n,C>::zero()
+  {
+    static const point_<n,C> zero_(all(0));
+    return zero_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

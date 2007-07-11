@@ -34,8 +34,11 @@
  */
 
 # include <mln/core/concept/window.hh>
+# include <mln/core/concept/genpoint.hh>
 # include <mln/core/internal/set_of.hh>
 # include <mln/core/dpoint.hh>
+
+# include <mln/convert/to_dpoint.hh>
 # include <mln/fun/all.hh>
 
 
@@ -56,6 +59,12 @@ namespace mln
   struct window_ : public Window< window_<D> >,
 		   public internal::set_of_<D>
   {
+    /// Point associated type.
+    typedef mln_point(D) point;
+
+    /// Dpoint associated type.
+    typedef D dpoint;
+
     /*! \brief Piter type to browse the points of a generic window
      * w.r.t. the ordering of delta-points.
      */
@@ -88,7 +97,26 @@ namespace mln
      */
     bool is_symmetric() const;
   };
- 
+
+
+  // FIXME: Move both ops below to mln/core/concept/window.hh
+
+  /// Shift a window \p win with a delta-point \p dp.
+  template <typename W>
+  window_<mln_dpoint(W)> operator+(const Window<W>& win,
+				   const mln_dpoint(W)& dp);
+
+  /// Shift a window \p win with the delta-point (-\p dp).
+  template <typename W>
+  window_<mln_dpoint(W)> operator-(const Window<W>& win,
+				   const mln_dpoint(W)& dp);
+
+  /// Substract \p rhs from \p lhs.
+  // FIXME: Give details!
+  template <typename Wl, typename Wr>
+  window_<mln_dpoint(Wl)> operator-(const Window<Wl>& lhs,
+				    const Window<Wr>& rhs);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -110,6 +138,39 @@ namespace mln
   {
     assert(0); // FIXME: nyi!
     return false;
+  }
+
+  template <typename W>
+  window_<mln_dpoint(W)> operator+(const Window<W>& win,
+				   const mln_dpoint(W)& dp)
+  {
+    window_<mln_dpoint(W)> tmp;
+    mln_qiter(W) q(win, W::point::zero());
+    for_all(q)
+      tmp.insert(convert::to_dpoint(q) + dp);
+    return tmp;
+  }
+
+  template <typename W>
+  window_<mln_dpoint(W)> operator-(const Window<W>& win,
+				   const mln_dpoint(W)& dp)
+  {
+    return win + (-dp);
+  }
+
+  template <typename W, typename Wr>
+  window_<mln_dpoint(W)> operator-(const Window<W>& lhs,
+				   const Window<Wr>& rhs)
+  {
+    window_<mln_dpoint(W)> tmp;
+    mln_qiter(W) q(lhs, W::point::zero());
+    for_all(q)
+      {
+	mln_dpoint(W) dp = convert::to_dpoint(q);
+	if (not exact(rhs).has(dp))
+	  tmp.insert(dp);
+      }
+    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

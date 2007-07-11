@@ -180,7 +180,7 @@ namespace mln
     allocate_();
     std::memcpy(this->buffer_,
 		rhs.buffer_,
-		ncells() * sizeof(value));
+		ncells() * sizeof(T));
   }
 
   // assignment
@@ -199,7 +199,7 @@ namespace mln
     allocate_();
     std::memcpy(this->buffer_,
 		rhs.buffer_,
-		ncells() * sizeof(value));
+		ncells() * sizeof(T));
     return *this;
   }
 
@@ -233,7 +233,7 @@ namespace mln
   image2d_b<T>::nrows() const
   {
     mln_precondition(this->has_data());
-    return 1 + b_.pmax().row() - b_.pmin().row();
+    return b_.len(0);
   }
 
   template <typename T>
@@ -241,7 +241,7 @@ namespace mln
   image2d_b<T>::ncols() const
   {
     mln_precondition(this->has_data());
-    return 1 + b_.pmax().col() - b_.pmin().col();
+    return b_.len(1);
   }
 
   template <typename T>
@@ -249,10 +249,7 @@ namespace mln
   image2d_b<T>::ncells() const
   {
     mln_precondition(this->has_data());
-    std::size_t s = 1;
-    s *= nrows() + 2 * bdr_;
-    s *= ncols() + 2 * bdr_;
-    return s;
+    return vb_.npoints();
   }
 
   template <typename T>
@@ -260,10 +257,7 @@ namespace mln
   image2d_b<T>::owns_(const point2d& p) const
   {
     mln_precondition(this->has_data());
-    return p.row() >= vb_.pmin().row()
-      &&   p.row() <= vb_.pmax().row()
-      &&   p.col() >= vb_.pmin().col()
-      &&   p.col() <= vb_.pmax().col();
+    return vb_.has(p);
   }
 
   template <typename T>
@@ -304,17 +298,19 @@ namespace mln
   {
     update_vb_();
     unsigned
-      nr = nrows() + 2 * bdr_,
-      nc = ncols() + 2 * bdr_;
-    buffer_ = new T[ncells()];
+      nr = vb_.len(0),
+      nc = vb_.len(1);
+    buffer_ = new T[nr * nc];
     array_ = new T*[nr];
-    T* buf = buffer_ - (b_.pmin().col() - bdr_);
+    T* buf = buffer_ - vb_.pmin().col();
     for (unsigned i = 0; i < nr; ++i)
       {
 	array_[i] = buf;
 	buf += nc;
       }
-    array_ -= b_.pmin().row() - bdr_;
+    array_ -= vb_.pmin().row();
+    mln_postcondition(vb_.len(0) == b_.nrows() + 2 * bdr_);
+    mln_postcondition(vb_.len(1) == b_.ncols() + 2 * bdr_);
   }
 
   template <typename T>
@@ -328,7 +324,7 @@ namespace mln
       }
     if (array_)
       {
-	array_ += b_.pmin().row() - bdr_;
+	array_ += vb_.pmin().row();
 	delete[] array_;
 	array_ = 0;
       }

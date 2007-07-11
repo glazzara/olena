@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,68 +26,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_WINDOW_HH
-# define MLN_CORE_CONCEPT_WINDOW_HH
+#ifndef MLN_IO_SAVE_PGM_HH
+# define MLN_IO_SAVE_PGM_HH
 
-/*! \file mln/core/concept/window.hh
- * \brief Definition of the concept of mln::Window.
- */
+# include <iostream>
+# include <fstream>
 
-# include <mln/core/concept/object.hh>
+# include <mln/core/image2d_b.hh>
+# include <mln/value/int_u.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Base class for implementation classes that are windows.
-   *
-   * \see mln::doc::Window for a complete documentation of this class
-   * contents.
-   */
-  template <typename E>
-  struct Window : public Object<E>
+  namespace io
   {
-    /*
-      typedef point;
-      typedef dpoint;
 
-      typedef qiter;
-      typedef fwd_qiter;
-      typedef bkd_qiter;
+    void save_pgm(const image2d_b<value::int_u8>& ima, const std::string& filename)
+    {
+      std::ofstream file(filename.c_str());
+      if (not file)
+	{
+	  std::cerr << "error: cannot open file '" << filename
+		    << "'!";
+	  abort();
+	}
+      file << "P5" << std::endl;
+      file << "# olena" << std::endl;
+      file << ima.ncols() << ' ' << ima.nrows() << std::endl;
+      file << "255" << std::endl;
+      point2d p = mk_point2d(ima.domain().pmin().row(),
+			     ima.domain().pmin().col());
+      size_t len = ima.ncols() * sizeof(unsigned char);
+      for (;
+	   p.row() <= ima.domain().pmax().row();
+	   ++p.row())
+	{
+	  file.write((char*)(& ima(p)), len);
+	}
+    }
 
-      bool is_empty() const;
-      bool is_centered() const;
-      bool is_symmetric() const;
-    */
-
-  protected:
-    Window();
-  };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <typename E>
-  Window<E>::Window()
-  {
-    typedef  mln_point(E)  point;
-    typedef mln_dpoint(E) dpoint;
-
-    typedef     mln_qiter(E)     qiter;
-    typedef mln_fwd_qiter(E) fwd_qiter;
-    typedef mln_bkd_qiter(E) bkd_qiter;
-
-    bool (E::*m1)() const = & E::is_empty;
-    m1 = 0;
-    bool (E::*m2)() const = & E::is_centered;
-    m2 = 0;
-    bool (E::*m3)() const = & E::is_symmetric;
-    m3 = 0;
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
+  } // end of namespace mln::io
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_WINDOW_HH
+#endif // ! MLN_IO_SAVE_PGM_HH
