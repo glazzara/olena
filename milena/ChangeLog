@@ -1,3 +1,43 @@
+2007-07-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add naive median to milena + fix problems with g++-2.95.
+
+	* tests/window2d.cc: .
+	* tests/median.cc: .
+	* tests/box2d.cc: .
+	* tests/naive_median.cc: New.
+	* tests/histo.cc: .
+	* tests/rectangle2d.cc: New.
+	* mln/convert/to_dpoint.hh: Fix missing include.
+	* mln/level/naive: New.
+	* mln/level/naive/median.hh: New.
+	* mln/level/median.hh: Update.
+	* mln/io/save_pgm.hh,
+	* mln/io/load_pgm.hh: Conform with g++-2.95.
+	* mln/core/dpoint2d.hh (up, down, left, right): New.
+	* mln/core/box.hh: Add impl inheritance.
+	* mln/core/rectangle2d.hh: Fake typedef; add FIXME.
+	(sym_): New.
+	* mln/core/concept/window.hh (operator-): New.
+	* mln/core/concept/doc/window.hh: Update.
+	* mln/core/window.hh (sym_): New.
+	(operators): Help g++-2.95.
+	* mln/core/image2d_b.hh: Add impl inheritance.
+	(init_with, bbox): New.
+	(nrows, ncols): Remove; now inherited.
+	* mln/core/internal/coord_impl.hh: Fix missing include.
+	* mln/core/internal/box_impl.hh: New.
+	* mln/core/internal/set_of.hh: Turn to lazy.
+	(operator==): New.
+	* mln/accu/median.hh: Conform with g++-2.95.
+	* mln/value/viter.hh: Help g++-2.95.
+	* mln/value/set.hh: Cosmetics.
+	* mln/value/int_u.hh: Help g++-2.95.
+	* mln/value/internal/value_like.hh (to_equiv): New.
+	* mln/border/thickness.hh: Remove const.
+	* img: New.
+	* img/lena.pgm: New.
+
 2007-07-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Better milena median.

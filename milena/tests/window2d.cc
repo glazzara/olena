@@ -39,5 +39,7 @@ int main()
   using namespace mln;
 
   window2d w;
-  std::cout << w.is_centered() << std::endl;
+  mln_assertion(w.is_centered() == false);
+  mln_assertion(w.is_symmetric() == true);
 }
+

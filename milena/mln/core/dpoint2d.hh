@@ -53,6 +53,17 @@ namespace mln
    *
    * \return A 2D delta-point.
    */
+  dpoint2d mk_dpoint2d(int row, int col);
+
+
+  const dpoint2d up    = mk_dpoint2d( -1,  0 );
+  const dpoint2d down  = mk_dpoint2d( +1,  0 );
+  const dpoint2d left  = mk_dpoint2d(  0, -1 );
+  const dpoint2d right = mk_dpoint2d(  0, +1 );
+
+
+# ifndef MLN_INCLUDE_ONLY
+
   dpoint2d mk_dpoint2d(int row, int col)
   {
     dpoint2d tmp;
@@ -60,6 +71,8 @@ namespace mln
     tmp[1] = col;
     return tmp;
   }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

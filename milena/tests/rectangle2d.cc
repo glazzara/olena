@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/box2d.cc
+/*! \file tests/rectangle2d.cc
  *
- * \brief Tests on mln::box2d.
+ * \brief Tests on mln::rectangle2d.
  */
 
-#include <mln/core/box2d.hh>
+#include <mln/core/rectangle2d.hh>
 
 
 
@@ -38,5 +38,12 @@ int main()
 {
   using namespace mln;
 
-  box2d b = mk_box2d(2, 3);
+  const unsigned h = 3, w = 4;
+  rectangle2d rec(h, w);
+
+  mln_assertion(rec.is_centered());
+  mln_assertion(rec.is_symmetric());
+  mln_assertion(rec == -rec);
+  mln_assertion(rec.nelements() == (2*h+1) * (2*w+1));
 }
+

@@ -33,6 +33,7 @@
  */
 
 # include <mln/core/concept/object.hh>
+# include <mln/core/concept/iterator.hh>
 
 
 namespace mln
@@ -57,11 +58,21 @@ namespace mln
       bool is_empty() const;
       bool is_centered() const;
       bool is_symmetric() const;
+
+      E sym_() const;
     */
 
   protected:
     Window();
   };
+
+
+  /*! \brief Compute the symmetrical window of \p rhs.
+   *
+   * \relates mln::Window
+   */
+  template <typename W>
+  W operator-(const Window<W>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -82,6 +93,14 @@ namespace mln
     m2 = 0;
     bool (E::*m3)() const = & E::is_symmetric;
     m3 = 0;
+    E (E::*m4)() const = & E::sym_;
+    m4 = 0;
+  }
+
+  template <typename W>
+  W operator-(const Window<W>& rhs)
+  {
+    return exact(rhs).sym_();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -27,188 +27,32 @@
 
 /*! \file tests/median.cc
  *
- * \brief Tests on mln::value::median<S>.
+ * \brief Test on mln::level::median.
  */
 
-#include <cmath>
-
 #include <mln/core/image2d_b.hh>
-#include <mln/value/int_u.hh>
-
-#include <mln/level/fill.hh>
-#include <mln/level/median.hh>
-#include <mln/debug/println.hh>
-
 #include <mln/core/rectangle2d.hh>
 
 #include <mln/io/load_pgm.hh>
 #include <mln/io/save_pgm.hh>
+
+#include <mln/value/int_u.hh>
+#include <mln/level/median.hh>
 
 
 using namespace mln;
 using namespace mln::value;
 
 
-int_u8 f(const point2d& p)
-{
-  return unsigned((2
-		   + std::cos(float(p.row()))
-		   + std::sin(float(p.col()))) * 63.9);
-}
-
-
 int main()
 {
-
-
-//   typedef set_<int_u8> S;
-
-//   median<S> m(S::the());
-
-//   {
-
-//     unsigned vals[] = { 42, 69, 51, 12, 51, 12, 42 };
-//     unsigned n = sizeof(vals)/sizeof(unsigned);
-
-//     for (unsigned i = 0; i < n; ++i)
-//       {
-// 	std::cout << "taking " << vals[i] << ':' << std::endl;
-// 	m.take(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//     for (int i = int(n) - 1; i >= 0; --i)
-//       {
-// 	std::cout << "untaking " << vals[i] << ':' << std::endl;
-// 	m.untake(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//   }
+  rectangle2d rec(64, 64);
+  border::thickness = 66;
 
   image2d_b<int_u8>
-    lena = io::load_pgm("lena.pgm"),
+    lena = io::load_pgm("../img/lena.pgm"),
     out(lena.domain());
 
-  rectangle2d rec(64, 64);
   level::median(lena, rec, out);
-
   io::save_pgm(out, "out.pgm");
 }
-
-
-
-
-//   {
-
-//     unsigned vals[] = { 42, 69, 51, 12, 51, 12, 42 };
-//     unsigned n = sizeof(vals)/sizeof(unsigned);
-
-//     for (unsigned i = 0; i < n; ++i)
-//       {
-// 	std::cout << "taking " << vals[i] << ':' << std::endl;
-// 	m.take(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//     for (unsigned i = 0; i < n; ++i)
-//       {
-// 	std::cout << "untaking " << vals[i] << ':' << std::endl;
-// 	m.untake(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//   }
-
-
-
-//   {
-
-//     unsigned vals[] = { 42, 42, 69, 69, 51, 51, 12, 12, 51, 51, 12, 12, 42, 42 };
-//     unsigned n = sizeof(vals)/sizeof(unsigned);
-
-//     for (unsigned i = 0; i < n; ++i)
-//       {
-// 	std::cout << "taking " << vals[i] << ':' << std::endl;
-// 	m.take(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//     for (int i = int(n) - 1; i >= 0; --i)
-//       {
-// 	std::cout << "untaking " << vals[i] << ':' << std::endl;
-// 	m.untake(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//   }
-
-
-//   {
-
-//     unsigned vals[] = { 42, 42, 69, 69, 51, 51, 12, 12, 51, 51, 12, 12, 42, 42 };
-//     unsigned n = sizeof(vals)/sizeof(unsigned);
-
-//     for (unsigned i = 0; i < n; ++i)
-//       {
-// 	std::cout << "taking " << vals[i] << ':' << std::endl;
-// 	m.take(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//     for (unsigned i = 0; i < n; ++i)
-//       {
-// 	std::cout << "untaking " << vals[i] << ':' << std::endl;
-// 	m.untake(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//   }
-
-
-
-
-//   {
-
-//     unsigned vals[] = { 42, 69, 51, 12, 51, 12, 42, 69, 51, 12, 51, 12, 42 };
-//     unsigned n = sizeof(vals)/sizeof(unsigned);
-
-//     for (unsigned i = 0; i < n; ++i)
-//       {
-// 	std::cout << "taking " << vals[i] << ':' << std::endl;
-// 	m.take(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//     for (int i = int(n) - 1; i >= 0; --i)
-//       {
-// 	std::cout << "untaking " << vals[i] << ':' << std::endl;
-// 	m.untake(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//   }
-
-
-//   {
-
-//     unsigned vals[] = { 42, 69, 51, 12, 51, 12, 42, 69, 51, 12, 51, 12, 42 };
-//     unsigned n = sizeof(vals)/sizeof(unsigned);
-
-//     for (unsigned i = 0; i < n; ++i)
-//       {
-// 	std::cout << "taking " << vals[i] << ':' << std::endl;
-// 	m.take(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//     for (unsigned i = 0; i < n; ++i)
-//       {
-// 	std::cout << "untaking " << vals[i] << ':' << std::endl;
-// 	m.untake(vals[i]);
-// 	std::cout << m << std::endl;
-//       }
-
-//   }
-
-

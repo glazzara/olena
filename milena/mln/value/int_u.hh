@@ -126,7 +126,7 @@ namespace mln
 
     std::ostream& operator<<(std::ostream& ostr, const int_u8& i)
     {
-      return ostr << unsigned(i);
+      return ostr << unsigned(i.to_equiv());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

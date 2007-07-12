@@ -40,7 +40,7 @@ namespace mln
   namespace border
   {
 
-    const unsigned thickness = 3;
+    unsigned thickness = 3;
 
   } // end of namespace mln::border
 

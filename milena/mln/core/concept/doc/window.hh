@@ -75,6 +75,10 @@ namespace mln
       /*! \brief Test if the window is symmetric.
        */
       bool is_symmetric() const;
+
+      /*! \brief Give the symmetrical window.
+       */
+      E sym_() const;
     };
 
   } // end of namespace mln::doc

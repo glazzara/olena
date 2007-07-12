@@ -61,7 +61,7 @@ namespace mln
 	if (istr.get() != 'P' )
 	  goto err;
 	type = istr.get();
-	if (type < '1' or type > '6')
+	if (type < '1' || type > '6')
 	  goto err;
 	if (istr.get() != '\n')
 	  goto err;
@@ -75,13 +75,13 @@ namespace mln
 
 	// get size
 	istr >> ncols >> nrows;
-	if (nrows <= 0 or ncols <= 0)
+	if (nrows <= 0 || ncols <= 0)
 	  goto err;
 
 	// skip maxvalue
 	if (istr.get() != '\n')
 	  goto err;
-	if (type != '1' and type != '4')
+	if (type != '1' && type != '4')
 	{
 	  std::string line;
 	  std::getline(istr, line);
@@ -89,7 +89,7 @@ namespace mln
 	return true;
 
       err:
-	if (not test)
+	if (! test)
 	  {
 	    std::cerr << "error: badly formed header!";
 	    abort();
@@ -103,7 +103,7 @@ namespace mln
 			   int& nrows, int& ncols)
       {
 	read_pnm_header(istr, type, nrows, ncols);
-	if (not (type == ascii or type == raw))
+	if (! (type == ascii || type == raw))
 	  {
 	    std::cerr << "error: bad pnm type; "
 		      << "expected P" << ascii
@@ -151,7 +151,7 @@ namespace mln
     image2d_b<value::int_u8> load_pgm(const std::string& filename)
     {
       std::ifstream file(filename.c_str());
-      if (not file)
+      if (! file)
 	{
 	  std::cerr << "error: file '" << filename
 		    << "' not found!";

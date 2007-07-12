@@ -52,6 +52,8 @@ namespace mln
    *  o o x o o
    *  o o o o o
    * is defined with half_height = 1 and half_width = 2.
+   *
+   * \todo Consider width instead of half_width (same for height).
    */
   struct rectangle2d : public Window< rectangle2d >,
 		       public internal::set_of_<dpoint2d>
@@ -70,7 +72,7 @@ namespace mln
     /*! \brief Piter type to browse a rectangle such as: "for each row
      * (decreasing), for each column (decreasing)."
      */
-    typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
+    typedef dpoints_fwd_piter<dpoint2d> bkd_qiter; // FIXME: bkd!!!
 
     /*! \brief Same as fwd_qiter.
      */
@@ -104,7 +106,10 @@ namespace mln
     /*! \brief Give the rectangle width.
      */
     unsigned width() const;
-    
+
+    /// Get the symmetrical window.
+    rectangle2d sym_() const;
+
   protected:
     unsigned half_height_, half_width_;
   };
@@ -155,6 +160,11 @@ namespace mln
   unsigned rectangle2d::width() const
   {
     return 2 * half_width_ + 1;
+  }
+
+  rectangle2d rectangle2d::sym_() const
+  {
+    return *this;
   }
 
   std::ostream& operator<<(std::ostream& ostr,

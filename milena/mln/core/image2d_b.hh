@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/internal/image_base.hh>
+# include <mln/core/internal/box_impl.hh>
 # include <mln/core/box2d.hh>
 
 # include <mln/border/thickness.hh>
@@ -50,7 +51,8 @@ namespace mln
    * thickness around data.
    */
   template <typename T>
-  struct image2d_b : public internal::image_base_< box2d, image2d_b<T> >
+  struct image2d_b : public internal::image_base_< box2d, image2d_b<T> >,
+		     public internal::box_impl_< 2, int, image2d_b<T> >
   {
 
     // warning: just to make effective types appear in Doxygen 
@@ -79,6 +81,7 @@ namespace mln
       typedef image2d_b<U> ret;
     };
 
+
     /// Constructor without argument.
     image2d_b();
 
@@ -96,6 +99,14 @@ namespace mln
     /// Assignment operator.
     image2d_b& operator=(const image2d_b<T>& rhs);
 
+
+    /// Initialize an empty image.
+    void init_with(int nrows, int ncols, unsigned bdr = border::thickness);
+
+    /// Initialize an empty image.
+    void init_with(const box2d& b, unsigned bdr = border::thickness);
+
+
     /// Test if \p p is valid.
     bool owns_(const point2d& p) const;
 
@@ -105,14 +116,11 @@ namespace mln
     /// Give the definition domain.
     const box2d& domain() const;
 
+    /// Give a bounding box.
+    const box2d& bbox() const;
+
     /// Give the border thickness.
     unsigned border() const;
-
-    /// Give the number of rows (not including the border).
-    unsigned nrows() const;
-
-    /// Give the number of cols (not including the border).
-    unsigned ncols() const;
 
     /// Give the number of cells (points including border ones).
     std::size_t ncells() const;
@@ -128,9 +136,10 @@ namespace mln
 
   private:
 
-    box2d b_;  // theoretical box
-    T* buffer_;
+    T*  buffer_;
     T** array_;
+
+    box2d b_;  // theoretical box
     unsigned bdr_;
     box2d vb_; // virtual box, i.e., box including the virtual border
 
@@ -148,15 +157,25 @@ namespace mln
 
   template <typename T>
   image2d_b<T>::image2d_b()
+    : buffer_(0),
+      array_ (0)
   {
-    buffer_ = 0;
-    array_  = 0;
-    bdr_    = border::thickness; // default value in ctors.
+    bdr_ = border::thickness; // default value in ctors.
   }
 
   template <typename T>
   image2d_b<T>::image2d_b(int nrows, int ncols, unsigned bdr)
+    : buffer_(0),
+      array_ (0)
   {
+    init_with(nrows, ncols, bdr);
+  }
+
+  template <typename T>
+  void
+  image2d_b<T>::init_with(int nrows, int ncols, unsigned bdr)
+  {
+    mln_precondition(! this->has_data());
     b_ = mk_box2d(nrows, ncols);
     bdr_ = bdr;
     allocate_();
@@ -164,9 +183,18 @@ namespace mln
 
   template <typename T>
   image2d_b<T>::image2d_b(const box2d& b, unsigned bdr)
-    : b_(b),
-      bdr_(bdr)
+    : buffer_(0),
+      array_ (0)
   {
+    init_with(b, bdr);
+  }
+
+  template <typename T>
+  void
+  image2d_b<T>::init_with(const box2d& b, unsigned bdr)
+  {
+    mln_precondition(! this->has_data());
+    b_ = b;
     bdr_ = bdr;
     allocate_();
   }
@@ -189,7 +217,7 @@ namespace mln
   image2d_b<T>&
   image2d_b<T>::operator=(const image2d_b<T>& rhs)
   {
-    assert(rhs.has_data());
+    mln_precondition(rhs.has_data());
     if (& rhs == this)
       return *this;
     if (this->has_data())
@@ -221,27 +249,19 @@ namespace mln
   }
 
   template <typename T>
+  const box2d&
+  image2d_b<T>::bbox() const
+  {
+    mln_precondition(this->has_data());
+    return b_;
+  }
+
+  template <typename T>
   unsigned
   image2d_b<T>::border() const
   {
     mln_precondition(this->has_data());
     return bdr_;
-  }
-
-  template <typename T>
-  unsigned
-  image2d_b<T>::nrows() const
-  {
-    mln_precondition(this->has_data());
-    return b_.len(0);
-  }
-
-  template <typename T>
-  unsigned
-  image2d_b<T>::ncols() const
-  {
-    mln_precondition(this->has_data());
-    return b_.len(1);
   }
 
   template <typename T>
@@ -309,8 +329,8 @@ namespace mln
 	buf += nc;
       }
     array_ -= vb_.pmin().row();
-    mln_postcondition(vb_.len(0) == b_.nrows() + 2 * bdr_);
-    mln_postcondition(vb_.len(1) == b_.ncols() + 2 * bdr_);
+    mln_postcondition(vb_.len(0) == b_.len(0) + 2 * bdr_);
+    mln_postcondition(vb_.len(1) == b_.len(1) + 2 * bdr_);
   }
 
   template <typename T>

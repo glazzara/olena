@@ -44,15 +44,14 @@ namespace mln
   namespace internal
   {
 
-
     /*! \brief An "efficient" mathematical set class.
      *
      * \internal
      *
      * This set class is designed to store a mathematical set and to
-     * present it to the user as a linear array.
+     * present it to the user as a linear array (std::vector).
      *
-     * Elements are stored by copy.
+     * Elements are stored by copy.  Implementation is lazy.
      *
      * \invariant \a v_.size() == s_.size()
      *
@@ -122,30 +121,35 @@ namespace mln
        */
       const std::vector<E>& vec() const;
 
-
     protected:
-      /*! \brief Array of elements.
-       *
-       * This structure is always up-to-date so that the access method
-       * vec is as fastest as possible.
-       */
-      std::vector<E> v_;
 
+      /// Constructor without arguments.
+      set_of_();
 
     private:
+
+      /*! \brief Array of elements.
+       *
+       * This structure is only updated (if required) when elements
+       * are accessed.
+       */
+      mutable std::vector<E> v_;
+
       /*! \brief Set of elements.
        *
-       * This is an auxiliary structure.
+       * This structure is always up-to-date w.r.t. the set contents.
        */
       std::set<E> s_;
 
 
-      /*! \brief Update both attributes.
+      /*! \brief Update \a v_ from \a s_.
        *
        * FIXME: explain.
        */
-      void update_();
-      
+      void update_() const;
+
+      /// Tell if \a v_ needs to be updated.
+      mutable bool needs_update_;
     };
 
 
@@ -163,14 +167,32 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const set_of_<E>& s);
 
 
+    /*! \brief Test if both sets \p lhs and \p rhs are equal.
+     *
+     * \param[in] lhs A set.
+     * \param[in] rhs Another set.
+     *
+     * \relates mln::internal::set_of_
+     */
+    template <typename E>
+    bool operator==(const set_of_<E>& lhs, const set_of_<E>& rhs);
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+    template <typename E>
+    set_of_<E>::set_of_()
+    {
+      needs_update_ = false;
+    }
 
     template <typename E>
     void
     set_of_<E>::insert(const E& elt)
     {
       s_.insert(elt);
-      update_();
+      if (needs_update_ == false)
+	needs_update_ = true;
     }
 
     template <typename E>
@@ -178,6 +200,8 @@ namespace mln
     set_of_<E>::element(unsigned i) const
     {
       assert(i < v_.size());
+      if (needs_update_)
+	update_();
       return v_[i];
     }
 
@@ -185,6 +209,8 @@ namespace mln
     unsigned
     set_of_<E>::nelements() const
     {
+      if (needs_update_)
+	update_();
       return v_.size();
     }
 
@@ -199,7 +225,7 @@ namespace mln
     bool
     set_of_<E>::is_empty() const
     {
-      return v_.size() == 0;
+      return nelements() == 0;
     }
 
     template <typename E>
@@ -208,6 +234,7 @@ namespace mln
     {
       v_.clear();
       s_.clear();
+      needs_update_ = false;
       mln_postcondition(is_empty());
     }
 
@@ -215,16 +242,22 @@ namespace mln
     const std::vector<E>&
     set_of_<E>::vec() const
     {
+      if (needs_update_)
+	update_();
       return v_;
     }
 
     template <typename E>
     void
-    set_of_<E>::update_()
+    set_of_<E>::update_() const
     {
+      mln_precondition(needs_update_);
       v_.clear();
       std::copy(s_.begin(), s_.end(), std::back_inserter(v_));
-      // no s_.clear() here to save some execution time
+      // no s_.clear() here:
+      // - we want to keep information up-to-date in s_
+      // - we want to save some execution time
+      needs_update_ = false;
     }
 
     template <typename E>
@@ -232,10 +265,23 @@ namespace mln
 			     const set_of_<E>& s)
     {
       ostr << '[';
-      for (unsigned i = 0; i < s.nelements(); ++i)
+      const unsigned n = s.nelements();
+      for (unsigned i = 0; i < n; ++i)
 	ostr << s.element(i)
 	     << (i == s.nelements() - 1 ? ']' : ',');
       return ostr;
+    }
+
+    template <typename E>
+    bool operator==(const set_of_<E>& lhs, const set_of_<E>& rhs)
+    {
+      if (lhs.nelements() != rhs.nelements())
+	return false;
+      const unsigned n = lhs.nelements();
+      for (unsigned i = 0; i < n; ++i)
+	if (rhs.element(i) != lhs.element(i))
+	  return false;
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -30,7 +30,7 @@
 
 /*! \file mln/level/median.hh
  *
- * \brief Median filter on an image.
+ * \brief Median filtering of an image.
  */
 
 # include <mln/core/concept/image.hh>
@@ -44,18 +44,14 @@ namespace mln
   namespace level
   {
 
-    /*! FIXME: Median the image \p ima with the values of the image \p data.
+    /*! Compute in \p output the median filter of image \p input by
+     *  the window \p win.
      *
      * \param[in] input The image to be filtered.
      * \param[in] win The window.
      * \param[in,out] output The output image.
      *
-     * \warning The definition domain of \p ima has to be included in
-     * the one of \p data.
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \todo Test domain inclusion.
+     * \pre \p input and \p output have to be initialized.
      */
     template <typename I, typename W, typename O>
     void median(const Image<I>& input, const Window<W>& win,
@@ -73,44 +69,80 @@ namespace mln
 		  const W& win,
 		  O& output)
       {
-  	dpoint2d dp = mk_dpoint2d(0, 1);
+	mln_precondition(input.has_data());
+	mln_precondition(output.has_data());
+
+	int
+	  min_row = input.min_row(), max_row = input.max_row(),
+	  min_col = input.min_col(), max_col = input.max_col();
 
 	window2d
-	  w_plus  = win - (win - dp),
-	  w_minus = (win - dp) - win;
+	  win_fwd_plus  = win - (win + left),
+	  win_fwd_minus = (win + left) - win,
+	  win_bkd_plus  = win - (win + right),
+	  win_bkd_minus = (win + right) - win,
+	  win_bot  = win - (win + up),
+	  win_top = (win + up) - win;
+
+	point2d p;
+	mln_qiter(W)
+	  q_fp(win_fwd_plus, p), q_fm(win_fwd_minus, p),
+	  q_bp(win_bkd_plus, p), q_bm(win_bkd_minus, p),
+	  q_top(win_top, p), q_bot(win_bot, p);
 	
 	accu::median_on<mln_value(I)> med;
 
-	point2d p;
-	mln_qiter(W) q(win, p);
-	mln_qiter(W) q_plus(w_plus, p);
-	mln_qiter(W) q_minus(w_minus, p);
+	// initialization
 
-	for (p.row() = input.domain().pmin().row();
-	     p.row() <= input.domain().pmax().row();
-	     ++p.row())
+	p = input.domain().pmin() + up;
+	med.init();
+	{
+	  mln_qiter(W) q(win, p);
+	  for_all(q) if (input.has(q))
+	    med.take(input(q));
+	}
+
+	int& row = p.row();
+	int& col = p.col();
+	bool fwd = true;
+
+	mln_assertion(p.col() == min_col);
+	mln_assertion(p.row() == min_row - 1);
+
+	for (row = min_row; row <= max_row; ++row)
 	  {
-	    // init
-	    med.init();
-	    p.col() = input.domain().pmin().col();
-	    for_all(q)
-	      if (input.has(q))
-		med.take(input(q));
+	    // "go down"
+	    for_all(q_top) if (input.has(q_top))
+	      med.untake(input(q_top));
+	    for_all(q_bot) if (input.has(q_bot))
+	      med.take(input(q_bot));
 	    output(p) = med;
 
-	    // other col
-	    for (++p.col();
-		 p.col() <= input.domain().pmax().col();
-		 ++p.col())
-	      {
-		for_all(q_plus)
-		  if (input.has(q_plus))
-		    med.take(input(q_plus));
-		for_all(q_minus)
-		  if (input.has(q_minus))
-		    med.untake(input(q_minus));
-		output(p) = med;
-	      }
+	    if (fwd)
+	      // browse line fwd
+	      while (col < max_col)
+		{
+		  ++col;
+		  for_all(q_fm) if (input.has(q_fm))
+		    med.untake(input(q_fm));
+		  for_all(q_fp) if (input.has(q_fp))
+		    med.take(input(q_fp));
+		  output(p) = med;
+		}
+	    else
+	      // browse line bkd
+	      while (col > min_col)
+		{
+		  --col;
+		  for_all(q_bm) if (input.has(q_bm))
+		    med.untake(input(q_bm));
+		  for_all(q_bp) if (input.has(q_bp))
+		    med.take(input(q_bp));
+		  output(p) = med;
+		}
+
+	    // change browsing
+	    fwd = ! fwd;
 	  }
       }
 

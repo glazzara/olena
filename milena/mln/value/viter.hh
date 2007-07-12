@@ -130,7 +130,7 @@ namespace mln
     }
 
     template <typename S>
-    fwd_viter_<S>::operator typename fwd_viter_<S>::value () const
+    fwd_viter_<S>::operator mln_value(S) () const
     {
       mln_precondition(is_valid());
       return s_[i_];
@@ -175,7 +175,7 @@ namespace mln
     }
 
     template <typename S>
-    bkd_viter_<S>::operator typename bkd_viter_<S>::value () const
+    bkd_viter_<S>::operator mln_value(S) () const
     {
       mln_precondition(is_valid());
       return s_[i_];

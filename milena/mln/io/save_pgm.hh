@@ -45,7 +45,7 @@ namespace mln
     void save_pgm(const image2d_b<value::int_u8>& ima, const std::string& filename)
     {
       std::ofstream file(filename.c_str());
-      if (not file)
+      if (! file)
 	{
 	  std::cerr << "error: cannot open file '" << filename
 		    << "'!";

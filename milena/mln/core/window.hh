@@ -96,6 +96,9 @@ namespace mln
      * \todo Implementation!
      */
     bool is_symmetric() const;
+
+    /// Give the symmetrical window.
+    window_<D> sym_() const;
   };
 
 
@@ -136,16 +139,27 @@ namespace mln
   template <typename D>
   bool window_<D>::is_symmetric() const
   {
-    assert(0); // FIXME: nyi!
-    return false;
+    return this->sym_() == *this;
+  }
+
+  template <typename D>
+  window_<D>
+  window_<D>::sym_() const
+  {
+    window_<D> tmp;
+    const unsigned n = this->nelements();
+    for (unsigned i = 0; i < n; ++i)
+      tmp.insert(- this->element(i));
+    return tmp;
   }
 
   template <typename W>
   window_<mln_dpoint(W)> operator+(const Window<W>& win,
 				   const mln_dpoint(W)& dp)
   {
+    typedef mln_point(W) P;
     window_<mln_dpoint(W)> tmp;
-    mln_qiter(W) q(win, W::point::zero());
+    mln_qiter(W) q(win, P::zero());
     for_all(q)
       tmp.insert(convert::to_dpoint(q) + dp);
     return tmp;
@@ -162,12 +176,13 @@ namespace mln
   window_<mln_dpoint(W)> operator-(const Window<W>& lhs,
 				   const Window<Wr>& rhs)
   {
+    typedef mln_point(W) P;
     window_<mln_dpoint(W)> tmp;
-    mln_qiter(W) q(lhs, W::point::zero());
+    mln_qiter(W) q(lhs, P::zero());
     for_all(q)
       {
 	mln_dpoint(W) dp = convert::to_dpoint(q);
-	if (not exact(rhs).has(dp))
+	if (! exact(rhs).has(dp))
 	  tmp.insert(dp);
       }
     return tmp;

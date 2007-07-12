@@ -66,6 +66,9 @@ namespace mln
 
 	/// Convertion towards equivalent type.
 	operator V() const;
+	
+	/// Explicit convertion towards equivalent type.
+	V to_equiv() const;
 
 	/// Assignment from equivalent type.
 	E& operator=(const V& v);
@@ -97,6 +100,13 @@ namespace mln
 
       template <typename V, typename E>
       value_like_<V, E>::operator V() const
+      {
+	return v_;
+      }
+
+      template <typename V, typename E>
+      V
+      value_like_<V, E>::to_equiv() const
       {
 	return v_;
       }

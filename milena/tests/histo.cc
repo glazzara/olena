@@ -31,8 +31,7 @@
  */
 
 #include <mln/value/int_u.hh>
-#include <mln/value/set.hh>
-#include <mln/value/histo.hh>
+#include <mln/accu/histo.hh>
 
 
 
@@ -40,6 +39,7 @@ int main()
 {
   using namespace mln;
   using namespace mln::value;
+  using namespace mln::accu;
 
 
   histo_on_type<bool> h;
@@ -54,7 +54,7 @@ int main()
   std::cout << h[0] * 10 + h[1] << std::endl;
   std::cout << h(false) * 10 + h(true) << std::endl;
 
-  h.clear();
+  h.init();
   std::cout << h << std::endl;
 
 

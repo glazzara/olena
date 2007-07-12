@@ -33,6 +33,8 @@
  * \brief Convertions to mln::Dpoint.
  */
 
+# include <mln/core/concept/genpoint.hh>
+
 
 namespace mln
 {
@@ -40,6 +42,7 @@ namespace mln
   namespace convert
   {
 
+    /// Convert a generalized point \p p into a delta-point.
     template <typename P>
     mln_dpoint(P) to_dpoint(const GenPoint<P>& p);
 

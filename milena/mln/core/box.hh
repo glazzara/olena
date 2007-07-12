@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/box.hh>
+# include <mln/core/internal/box_impl.hh>
 # include <mln/core/point.hh>
 
 
@@ -50,7 +51,8 @@ namespace mln
    * Parameter \c P is the corresponding type of point.
    */
   template <typename P>
-  struct box_ : public Box< box_<P> >
+  struct box_ : public Box< box_<P> >,
+		public internal::box_impl_< P::dim, mln_coord(P), box_<P> >
   {
     /*! \brief Psite associated type.
      */

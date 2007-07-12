@@ -25,18 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/box2d.cc
+/*! \file tests/naive_median.cc
  *
- * \brief Tests on mln::box2d.
+ * \brief Test on mln::level::naive::median.
  */
 
-#include <mln/core/box2d.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/rectangle2d.hh>
 
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
+
+#include <mln/value/int_u.hh>
+#include <mln/level/naive/median.hh>
+
+
+using namespace mln;
+using namespace mln::value;
 
 
 int main()
 {
-  using namespace mln;
+  rectangle2d rec(8, 8);
+  border::thickness = 9;
 
-  box2d b = mk_box2d(2, 3);
+  image2d_b<int_u8>
+    lena = io::load_pgm("../img/lena.pgm"),
+    out(lena.domain());
+
+  level::naive::median(lena, rec, out);
+  io::save_pgm(out, "out.pgm");
 }

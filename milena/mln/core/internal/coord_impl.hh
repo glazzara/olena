@@ -36,7 +36,6 @@
  */
 
 # include <mln/core/internal/force_exact.hh>
-# include <mln/core/concept/object.hh>
 
 
 namespace mln

@@ -89,7 +89,7 @@ namespace mln
 
     template <typename T>
     bool
-    set_<T>::has(const T& v) const
+    set_<T>::has(const T&) const
     {
       return true;
     }
@@ -130,9 +130,10 @@ namespace mln
 
 
 
+  // FIXME: Turn definitions into objects!
   typedef value::set_<bool>     Booleans;
-  typedef value::set_<int>      integers();
-  typedef value::set_<unsigned> naturals();
+  typedef value::set_<int>      integers;
+  typedef value::set_<unsigned> naturals;
 
 
 

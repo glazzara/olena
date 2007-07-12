@@ -220,7 +220,7 @@ namespace mln
 
 
     template <typename S>
-    median<S>::operator typename median<S>::value () const
+    median<S>::operator mln_value(S) () const
     {
       return to_value();
     }
@@ -229,7 +229,7 @@ namespace mln
     typename median<S>::value
     median<S>::to_value() const
     {
-      if (not valid_)
+      if (! valid_)
 	update_();
       return v_;
     }
