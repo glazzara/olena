@@ -81,12 +81,20 @@
 /// Shortcut to access the fwd_piter type associated to T.
 # define mln_fwd_piter(T)  typename T::fwd_piter
 
+/// Shortcut to access the fwd_pixter type associated to T.
+# define mln_fwd_pixter(T)  typename T::fwd_pixter
+
+/// Shortcut to access the bkd_piter type associated to T.
+# define mln_bkd_piter(T)  typename T::bkd_piter
+
 /// Shortcut to access the fwd_qiter type associated to T.
 # define mln_fwd_qiter(T)  typename T::fwd_qiter
 
+/// Shortcut to access the fwd_qixter type associated to T.
+# define mln_fwd_qixter(T)  typename T::fwd_qixter
+
 /// Shortcut to access the fwd_viter type associated to T.
 # define mln_fwd_viter(T)  typename T::fwd_viter
-
 
 // l
 
@@ -99,6 +107,9 @@
 
 /// Shortcut to access the piter type associated to T.
 # define mln_piter(T)      typename T::piter
+
+/// Shortcut to access the pixter type associated to T.
+# define mln_pixter(T)  typename T::pixter
 
 /// Shortcut to access the pset type associated to T.
 # define mln_pset(T)       typename T::pset
@@ -114,6 +125,9 @@
 
 /// Shortcut to access the qiter type associated to T.
 # define mln_qiter(T)      typename T::qiter
+
+// Shortcut to access to the qixter type associated to T
+# define mln_qixter(T)      typename T::qixter
 
 
 // n

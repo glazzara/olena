@@ -162,6 +162,11 @@ namespace mln
       std::size_t npoints() const;
     };
 
+    template <typename E>
+    struct Fast_Image : public Image<E>
+    {
+    };
+
   } // end of namespace mln::doc
 
 } // end of namespace mln

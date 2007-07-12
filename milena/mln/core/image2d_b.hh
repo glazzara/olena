@@ -39,6 +39,8 @@
 
 # include <mln/border/thickness.hh>
 # include <mln/fun/all.hh>
+# include <mln/core/pixter2d_b.hh>
+# include <mln/core/dpoints_pixter.hh>
 
 
 namespace mln
@@ -55,7 +57,7 @@ namespace mln
 		     public internal::box_impl_< 2, int, image2d_b<T> >
   {
 
-    // warning: just to make effective types appear in Doxygen 
+    // warning: just to make effective types appear in Doxygen
     typedef box2d   pset;
     typedef point2d psite;
     typedef point2d point;
@@ -63,6 +65,15 @@ namespace mln
     typedef mln_bkd_piter(box2d) bkd_piter;
     typedef fwd_piter piter;
     // end of warning
+
+    /// Forward pixel iterator associated to image2d
+    typedef fwd_pixter2d_b<T> fwd_pixter;
+
+    /// Foward pixel iterator on dpoints assoicated to image 2d
+    typedef dpoints_pixter< image2d_b<T> > fwd_qixter;
+
+    typedef fwd_pixter pixter;
+    typedef fwd_qixter qixter;
 
 
     /// Value associated type.
@@ -130,6 +141,9 @@ namespace mln
 
     /// Read-write access to the image value located at \p p.
     T& operator()(const point2d& p);
+
+    /// Return an offset from a dpoints
+    int offset(const dpoint2d& dp);
 
     /// Destructor.
     ~image2d_b();
@@ -348,6 +362,13 @@ namespace mln
 	delete[] array_;
 	array_ = 0;
       }
+  }
+
+  template <typename T>
+  int
+  image2d_b<T>::offset(const dpoint2d& dp)
+  {
+    return dp[0] * vb_.pmax()[1] + dp[1];
   }
 
 # endif // ! MLN_INCLUDE_ONLY

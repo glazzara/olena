@@ -1,3 +1,18 @@
+2007-07-12  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add pixel iterators to milena.
+
+	* tests/pixter_dpoint2d.cc,
+	* tests/pixter_point2d.cc: New tests.
+	* mln/core/dpoints_piter.hh: Delete trailing whitespace.
+	* mln/core/macros.hh: Add macro to get pixel iterator from an image.
+	* mln/core/concept/image.hh,
+	* mln/core/concept/doc/image.hh: Delte trailing whitespace.
+	* mln/core/concept/fast_iterator.hh: New fast iterator concept.
+	* mln/core/pixter2d_b.hh: New pixel iterator on image2d_b.
+	* mln/core/image2d_b.hh: Add a method to get an offset from a dpoint.
+	* mln/core/dpoints_pixter.hh: New pixel iterator.
+
 2007-07-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add naive median to milena + fix problems with g++-2.95.

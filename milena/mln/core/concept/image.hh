@@ -98,7 +98,7 @@ namespace mln
     typedef mln_pset(E)  pset;
     typedef mln_point(E) point;
     typedef mln_psite(E) psite;
-    
+
     typedef mln_piter(E)     piter;
     typedef mln_fwd_piter(E) fwd_piter;
     typedef mln_bkd_piter(E) bkd_piter;
@@ -115,7 +115,7 @@ namespace mln
     typedef mln_lvalue(E) lvalue;
 
     typedef mln_ch_value(E, value) change;
-    
+
     bool (E::*m3)() const = & E::has_data;
     m3 = 0;
     bool (E::*m4)(const psite& p) const = & E::owns_;
