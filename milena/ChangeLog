@@ -1,5 +1,14 @@
 2007-07-12  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	Fix bug in pixter_dpoint2d.
+
+	* tests/pixter_dpoint2d.cc: Update.
+	* mln/core/dpoints_piter.hh: Update.
+	* mln/core/concept/doc/fast_iterator.hh: New documentation.
+	* mln/core/image2d_b.hh: Change offset method.
+
+2007-07-12  Nicolas Ballas  <ballas@lrde.epita.fr>
+
 	Add pixel iterators to milena.
 
 	* tests/pixter_dpoint2d.cc,

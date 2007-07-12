@@ -61,6 +61,7 @@ namespace mln
     typedef box2d   pset;
     typedef point2d psite;
     typedef point2d point;
+    typedef dpoint2d dpoint;
     typedef mln_fwd_piter(box2d) fwd_piter;
     typedef mln_bkd_piter(box2d) bkd_piter;
     typedef fwd_piter piter;
@@ -71,6 +72,7 @@ namespace mln
 
     /// Foward pixel iterator on dpoints assoicated to image 2d
     typedef dpoints_pixter< image2d_b<T> > fwd_qixter;
+
 
     typedef fwd_pixter pixter;
     typedef fwd_qixter qixter;
@@ -368,7 +370,7 @@ namespace mln
   int
   image2d_b<T>::offset(const dpoint2d& dp)
   {
-    return dp[0] * vb_.pmax()[1] + dp[1];
+    return dp[0] * vb_.len(1) + dp[1];
   }
 
 # endif // ! MLN_INCLUDE_ONLY

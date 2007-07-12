@@ -88,7 +88,7 @@ namespace mln
 
     /// Start an iteration.
     void start();
-xb
+
     /// Go to the next point.
     void next_();
 
