@@ -40,6 +40,9 @@ namespace oln
 
   namespace io
   {
+    void save_pgm(const image2d<unsigned char>& ima, const std::string& filename);
+
+#ifndef OLN_INCLUDE_ONLY
 
     void save_pgm(const image2d<unsigned char>& ima, const std::string& filename)
     {
@@ -59,6 +62,8 @@ namespace oln
       for (int row = ima.min_row(); row <= ima.max_row(); ++row)
 	file.write((char*)(&(ima.at(row, col))), len);
     }
+
+#endif // !OLN_INCLUDE_ONLY
 
   } // end of namespace oln::io
 

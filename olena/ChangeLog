@@ -1,3 +1,12 @@
+2007-07-12  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Separate interface from implementation.
+
+	* oln/core/gen/zero.hh,
+	* oln/io/save_pgm.hh,
+	* oln/io/load_pgm.hh,
+	* oln/io/pnm.hh: Separte interface from implementation.
+
 2007-07-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Histogramm : Draft.

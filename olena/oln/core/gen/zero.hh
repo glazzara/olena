@@ -36,18 +36,26 @@ namespace oln
 
   struct zero_t;
 
+  // Forward declartions
+  void assignment_(int&      i, const zero_t&);
+  void assignment_(unsigned& u, const zero_t&);
+  void assignment_(float&    f, const zero_t&);
+  void assignment_(double&   d, const zero_t&);
 
+  struct zero_t : public Literal< zero_t >
+  {
+  };
+
+#ifndef OLN_INCLUDE_ONLY
   void assignment_(int&      i, const zero_t&) { i = 0;   }
   void assignment_(unsigned& u, const zero_t&) { u = 0u;  }
   void assignment_(float&    f, const zero_t&) { f = 0.f; }
   void assignment_(double&   d, const zero_t&) { d = 0.;  }
 
 
-  struct zero_t : public Literal< zero_t >
-  {
-  }
+  struct zero_t zero;
+#endif // ! OLN_INCLUDE_ONLY
 
-  zero;
 
 
 

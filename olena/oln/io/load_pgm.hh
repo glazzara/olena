@@ -42,6 +42,28 @@ namespace oln {
 
     namespace internal {
 
+      // Forward declaration
+      void abort();
+
+      bool read_pnm_header(std::istream& istr,
+			   char& type,
+			   int& nrows, int& ncols,
+			   bool test = false);
+
+      void read_pnm_header(char ascii, char raw,
+			   std::istream& istr,
+			   char& type,
+			   int& nrows, int& ncols);
+
+      template <typename I>
+      void load_pgm_ascii(std::ifstream& file, I& ima);
+
+      template <typename I>
+      void load_pgm_raw_2d(std::ifstream& file, I& ima);
+
+
+#ifndef OLN_INCLUDE_ONLY
+
       void abort()
       {
 	std::cerr << " aborting." << std::endl;
@@ -51,7 +73,7 @@ namespace oln {
       bool read_pnm_header(std::istream& istr,
 			   char& type,
 			   int& nrows, int& ncols,
-			   bool test = false)
+			   bool test)
       {
 	// check magic
 	if (istr.get() != 'P' )
@@ -136,9 +158,15 @@ namespace oln {
 	  file.read((char*)(&(ima.at(row, col))), len);
       }
 
+#endif // ! OLN_INCLUDE_ONLY
+
 
     } // end of namespace oln::io::internal
 
+
+    image2d<unsigned char> load_pgm(const std::string& filename);
+
+#ifndef OLN_INCLUDE_ONLY
 
     image2d<unsigned char> load_pgm(const std::string& filename)
     {
@@ -160,6 +188,8 @@ namespace oln {
 	  internal::load_pgm_ascii(file, ima);
       return ima;
     }
+
+#endif // ! OLN_INCLUDE_ONLY
 
   } // end of namespace oln::io
 
