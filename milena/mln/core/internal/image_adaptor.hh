@@ -103,6 +103,7 @@ namespace mln
     template <typename I, typename E, typename S>
     bool image_adaptor_<I,E,S>::owns_(const psite& p) const
     {
+      mln_precondition(exact(this)->has_data());
       return adaptee_.owns_(p);
     }
 
@@ -110,6 +111,7 @@ namespace mln
     const S&
     image_adaptor_<I,E,S>::domain() const
     {
+      mln_precondition(exact(this)->has_data());
       return adaptee_.domain();
     }
 

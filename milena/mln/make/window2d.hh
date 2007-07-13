@@ -53,13 +53,13 @@ namespace mln
      * \return A 2D window.
      */
     template <unsigned M>
-    mln::window2d window2d(const bool (&values)[M]);
+    mln::window2d window2d(bool (&values)[M]);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned M>
-    mln::window2d window2d(const bool (&values)[M])
+    mln::window2d window2d(bool (&values)[M])
     {
       int h = unsigned(std::sqrt(float(M))) / 2;
       assert((2 * h + 1) * (2 * h + 1) == M);

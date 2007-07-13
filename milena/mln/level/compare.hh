@@ -45,7 +45,7 @@ namespace mln
    * \param[in] lhs A first image.
    * \param[in] rhs A second image.
    *
-   * \todo Test domain equality.
+   * \pre lhs.domain == rhs.domain
    */
   template <typename L, typename R>
   bool operator == (const Image<L>& lhs, const Image<R>& rhs);
@@ -57,7 +57,7 @@ namespace mln
    * \param[in] lhs A first image.
    * \param[in] rhs A second image.
    *
-   * \todo Test domain equality.
+   * \pre lhs.domain == rhs.domain
    */
   template <typename L, typename R>
   bool operator < (const Image<L>& lhs, const Image<R>& rhs);
@@ -69,7 +69,7 @@ namespace mln
    * \param[in] lhs A first image.
    * \param[in] rhs A second image.
    *
-   * \todo Test domain equality.
+   * \pre lhs.domain == rhs.domain
    */
   template <typename L, typename R> // required!
   bool operator <= (const Image<L>& lhs, const Image<R>& rhs);
@@ -83,6 +83,7 @@ namespace mln
   {
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
+    mln_precondition(lhs.domain() == rhs.domain());
     mln_piter(L) p(lhs.domain());
     for_all(p)
       if (! (lhs(p) == rhs(p)))
@@ -95,6 +96,7 @@ namespace mln
   {
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
+    mln_precondition(lhs.domain() == rhs.domain());
     mln_piter(L) p(lhs.domain());
     for_all(p)
       if (! (lhs(p) < rhs(p)))
@@ -107,6 +109,7 @@ namespace mln
   {
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
+    mln_precondition(lhs.domain() == rhs.domain());
     mln_piter(L) p(lhs.domain());
     for_all(p)
       if (! (lhs(p) <= rhs(p)))

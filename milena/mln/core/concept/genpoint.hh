@@ -185,9 +185,6 @@ namespace mln
    *
    * \see mln::Dpoint
    * \relates mln::GenPoint
-   *
-   * \todo Introduce the notion of "generalized dpoint" and
-   * add the more general extra operator-(GenPoint, GenDpoint).
    */
   template <typename P>
   mln_point(P)

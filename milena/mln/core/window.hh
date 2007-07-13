@@ -94,8 +94,6 @@ namespace mln
     bool is_centered() const;
 
     /*! \brief Test if the window is symmetric.
-     *
-     * \todo Implementation!
      */
     bool is_symmetric() const;
 

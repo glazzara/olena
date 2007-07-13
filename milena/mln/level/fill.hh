@@ -50,8 +50,7 @@ namespace mln
      * \pre \p ima has to be initialized.
      */
     template <typename I>
-    void fill(Image<I>& ima,
-	      const mln_value(I)& v);
+    void fill(Image<I>& ima, const mln_value(I)& v);
 
 
     /*! Fill the image \p ima by applying the function \p f.
@@ -65,8 +64,7 @@ namespace mln
      * \pre \p ima has to be initialized.
      */
     template <typename I>
-    void fill(Image<I>& ima,
-	      mln_value(I) (*f)(const mln_point(I)& p));
+    void fill(Image<I>& ima,  mln_value(I) (*f)(const mln_point(I)& p));
 
 
     /*! Fill the image \p ima with the values given by the array \p arr.
@@ -78,12 +76,10 @@ namespace mln
      * of image points, otherwise the program crashes.
      *
      * \pre \p ima has to be initialized.
-     *
-     * \todo Add as parameter the array size, then add a test.
+     * \pre N == \p ima.npoints
      */
-    template <typename I>
-    void fill(Image<I>& ima,
-	      const mln_value(I) arr[]);
+    template <typename I, unsigned N>
+    void fill(Image<I>& ima, mln_value(I) (&arr)[N]);
 
 
     /*! Fill the image \p ima with the values of the image \p data.
@@ -94,13 +90,10 @@ namespace mln
      * \warning The definition domain of \p ima has to be included in
      * the one of \p data.
      *
-     * \pre \p ima has to be initialized.
-     *
-     * \todo Test domain inclusion.
+     * \pre \p ima.domain <= \p data.domain.
      */
     template <typename I, typename J>
-    void fill(Image<I>& ima,
-	      const Image<J>& data);
+    void fill(Image<I>& ima, const Image<J>& data);
 
 
 
@@ -128,16 +121,17 @@ namespace mln
 	ima(p) = f(p);
     }
 
-    template <typename I>
+    template <typename I, unsigned N>
     void fill(Image<I>& ima_,
-	      const mln_value(I) array[])
+	      mln_value(I) (&arr)[N])
     {
       I& ima = exact(ima_);
       mln_precondition(ima.has_data());
+      mln_precondition(N == ima.npoints());
       mln_piter(I) p(ima.domain());
       unsigned i = 0;
       for_all(p)
-	ima(p) = array[i++];
+	ima(p) = arr[i++];
     }
 
     template <typename I, typename J>
@@ -146,7 +140,7 @@ namespace mln
     {
       I&        ima = exact(ima_);
       const J& data = exact(data_);
-      mln_precondition(ima.has_data() && data.has_data());
+      mln_precondition(ima.domain() <= data.domain());
 
       mln_piter(I) p(ima.domain());
       for_all(p)

@@ -52,12 +52,11 @@ namespace mln
      * This routine runs: \n
      * for all p of \p data, \p destination(p) = \p data(p).
      *
-     * \warning The definition domain of \p data has to be included
-     * in the one of \p destination.
+     * \warning The definition domain of \p data has to be included in
+     * the one of \p destination; so using mln::safe_image does not 
+     * make pasting outside the destination domain work.
      *
-     * \pre Both images have to be initialized.
-     *
-     * \todo Test domain inclusion.
+     * \pre \p data.domain <= \p destination.domain
      */
     template <typename I, typename J>
     void paste(const Image<I>& data, Image<J>& destination);
@@ -69,8 +68,8 @@ namespace mln
     void paste(const Image<I>& data_, Image<J>& destination_)
     {
       const I& data  = exact(data_);
-      I& destination = exact(destination_);
-      assert(ima.has_data() && destination.has_data());
+      J& destination = exact(destination_);
+      mln_precondition(data.domain() <= destination.domain());
 
       mln_piter(I) p(data.domain());
       for_all(p)

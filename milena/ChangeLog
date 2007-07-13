@@ -1,5 +1,19 @@
 2007-07-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix make doc, handle todos, and pass tests with g++-2.95.
+
+	* tests/safe_image.cc,
+	* mln/core/concept/genpoint.hh,
+	* mln/core/window.hh,
+	* mln/core/internal/image_adaptor.hh,
+	* mln/core/internal/set_of.hh,
+	* mln/level/fill.hh,
+	* mln/level/compare.hh,
+	* mln/level/paste.hh,
+	* mln/make/window2d.hh: Fix.
+
+2007-07-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add subimage in milena.
 
 	* tests/subimage.cc: New.

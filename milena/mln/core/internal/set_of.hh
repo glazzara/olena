@@ -37,6 +37,8 @@
 # include <set>
 # include <iterator>
 
+# include <mln/core/internal/force_exact.hh>
+
 
 namespace mln
 {
@@ -70,9 +72,9 @@ namespace mln
        *
        * If \p elt is already in the set, this method is a no-op.
        *
-       * \todo Returns exact(*this).
+       * \return The set itself after insertion.
        */
-      void insert(const E& elt);
+      set_of_<E>& insert(const E& elt);
 
 
       /*! \brief Return the i-th element of the set.
@@ -189,12 +191,13 @@ namespace mln
     }
 
     template <typename E>
-    void
+    set_of_<E>&
     set_of_<E>::insert(const E& elt)
     {
       s_.insert(elt);
       if (needs_update_ == false)
 	needs_update_ = true;
+      return internal::force_exact< set_of_<E> >(*this);
     }
 
     template <typename E>

@@ -32,6 +32,7 @@
 
 #include <mln/core/image2d_b.hh>
 #include <mln/core/safe_image.hh>
+#include <mln/level/paste.hh>
 
 
 int main()
@@ -44,4 +45,5 @@ int main()
 
   point2d p = make::point2d(-5, -1);
   ima_(p) = 0;
+  level::paste(ima, ima_);
 }
