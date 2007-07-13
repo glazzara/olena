@@ -37,6 +37,8 @@
 # include <mln/core/window2d.hh>
 # include <mln/accu/median.hh>
 
+# include <mln/canvas/sbrowsing.hh>
+
 
 namespace mln
 {
@@ -65,9 +67,9 @@ namespace mln
     {
 
       template <typename I, typename W, typename O>
-      void median(const I& input,
-		  const W& win,
-		  O& output)
+      void median_as_procedure(const I& input,
+			       const W& win,
+			       O& output)
       {
 	mln_precondition(input.has_data());
 	mln_precondition(output.has_data());
@@ -145,6 +147,91 @@ namespace mln
 	    fwd = ! fwd;
 	  }
       }
+
+
+      template <typename I, typename W, typename O>
+      struct median_functor
+      { 
+	// i/o
+
+	const I& input;
+	const W& win;
+	O& output;
+
+	// aux data
+
+	mln_point(I) p;
+	window2d     win_fp, win_fm, win_bp, win_bm, win_dp, win_dm;
+	mln_qiter(W)   q_fp,   q_fm,   q_bp,   q_bm,   q_dp,   q_dm;
+	accu::median_on<mln_value(I)> med;
+
+	// ctor
+
+	median_functor(I& input_, const W& win_, O& output_)
+	  :
+	  // i/o
+	  input(exact(input_)),
+	  win(exact(win_)),
+	  output(exact(output_)),
+	  // aux data
+	  p(),
+	  win_fp(win - (win + left)),   win_fm((win + left)  - win),
+	  win_bp(win - (win + right)),  win_bm((win + right) - win),
+	  win_dp(win - (win + up)),     win_dm((win + up)    - win),
+	  q_fp(win_fp, p),  q_fm(win_fm, p),
+	  q_bp(win_bp, p),  q_bm(win_bm, p),
+	  q_dp(win_dp, p),  q_dm(win_dm, p)
+	{
+	}
+
+	// parts
+
+	void init()
+	{
+	  med.init();
+	  mln_qiter(W) q(win, p);
+	  for_all(q) if (input.has(q))
+	    med.take(input(q));
+	}
+
+	void down()
+	{
+	  for_all(q_dm) if (input.has(q_dm))
+	    med.untake(input(q_dm));
+	  for_all(q_dp) if (input.has(q_dp))
+	    med.take(input(q_dp));
+	  output(p) = med;
+	}
+
+	void fwd()
+	{
+	  for_all(q_fm) if (input.has(q_fm))
+	    med.untake(input(q_fm));
+	  for_all(q_fp) if (input.has(q_fp))
+	    med.take(input(q_fp));
+	  output(p) = med;
+	}
+
+	void bkd()
+	{
+	  for_all(q_bm) if (input.has(q_bm))
+	    med.untake(input(q_bm));
+	  for_all(q_bp) if (input.has(q_bp))
+	    med.take(input(q_bp));
+	  output(p) = med;
+	}
+
+      }; // end of median_functor
+
+
+      template <typename I, typename W, typename O>
+      void median(I& input, const W& win, O& output)
+      {
+	// FIXME: resize border!
+	impl::median_functor<I,W,O> f(input, win, output);
+	canvas::sbrowsing(f);
+      }
+
 
     } // end of namespace mln::level::impl
 

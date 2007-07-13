@@ -1,5 +1,15 @@
 2007-07-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a canvas to milena.
+
+	* mln/level/median.hh (impl::median): Rename as...
+	(impl::median_as_procedure): ...this.
+	(impl::median_functor, impl::median): New.
+	* mln/canvas: New.
+	* mln/canvas/sbrowsing.hh: New.
+
+2007-07-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add pixel in milena.
 
 	* tests/pixel.cc: New.
