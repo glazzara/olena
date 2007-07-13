@@ -52,7 +52,7 @@ namespace mln
     template <typename P>
     mln_dpoint(P) to_dpoint(const GenPoint<P>& p_)
     {
-      const P& p = p_.force_exact_();
+      const P& p = internal::force_exact<P>(p_);
       mln_dpoint(P) tmp;
       for (unsigned i = 0; i < P::dim; ++i)
 	tmp[i] = p[i];

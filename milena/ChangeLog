@@ -1,5 +1,22 @@
 2007-07-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add pixel in milena.
+
+	* tests/pixel.cc: New.
+	* mln/core/pixel.hh: New.
+	* mln/core/concept/genpixel.hh: New.
+
+	* mln/core/internal/force_exact.hh
+	(mln_internal_add_force_exact_): Remove.
+	(force_exact): New.
+	* mln/convert/to_dpoint.hh,
+	* mln/core/dpoints_piter.hh,
+	* mln/core/concept/genpoint.hh,
+	* mln/core/internal/coord_impl.hh,
+	* mln/core/internal/box_impl.hh: Update.
+
+2007-07-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add subset notion in milena.
 
 	Add materials.

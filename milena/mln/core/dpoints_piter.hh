@@ -112,7 +112,7 @@ namespace mln
   dpoints_fwd_piter<D>::dpoints_fwd_piter(const Dps& dps,
 					  const GenPoint<Pref>& p_ref)
     : dps_(exact(dps).vec()),
-      p_ref_(* p_ref.force_exact_().pointer())
+      p_ref_(* internal::force_exact<Pref>(p_ref).pointer())
   {
     invalidate();
   }

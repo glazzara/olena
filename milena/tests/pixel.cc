@@ -25,57 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_FORCE_EXACT_HH
-# define MLN_CORE_INTERNAL_FORCE_EXACT_HH
-
-/*! \file mln/core/internal/force_exact.hh
+/*! \file tests/pixel.cc
  *
- * \brief Definition of a violent cast for internal use only.
- *
- * \internal
+ * \brief Tests on mln::pixel.
  */
 
+#include <mln/core/pixel.hh>
+#include <mln/core/image2d_b.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace internal
+  typedef image2d_b<int> I;
+  I ima(3, 3);
+
   {
+    pixel<I> pxl(ima);
+    pxl.site() = make::point2d(1, 1);
+    *pxl = 51;
+    mln_assertion(ima.at(1,1) == 51);
+  }
 
-    /*! \brief Violent cast.
-     *
-     * \internal
-     *
-     * This cast is an alternative to the mln::exact cast.  It is used
-     * for objects than do not derive from mln::Object.
-     *
-     * \warning Do not to use this cast!   
-     *
-     * \see mln::exact
-     */ 
-    template <typename E, typename T>
-    E& force_exact(const T& ref)
-    {
-      /*
-	static const E exact_obj;
-	static const Type& exact_obj_ref = exact_obj;
-	static const int exact_offset =
-	(const char*)(void*)(&exact_obj_ref)
-	- (const char*)(void*)(&exact_obj);
-	return *(E*)((char*)(this_) - exact_offset);
-      */
-      static const E* exact_obj;
-      static const T& exact_obj_ref = *exact_obj;
-      static const int exact_offset =
-	(const char*)(void*)(&exact_obj_ref)
-	- (const char*)(void*)( exact_obj);
-      return *(E*)((char*)(&ref) - exact_offset);
-    }
+  {
+    pixel<const I> pxl(ima);
+    pxl.site() = make::point2d(1, 1);
+    ima.at(1,1) = 51;
+    mln_assertion(*pxl == 51);
 
-  } // end of namespace mln::internal
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_INTERNAL_FORCE_EXACT_HH
+    // hopefully the code below does not compile:
+    // *pxl = 0;
+    // assignment of read-only location
+  }
+}

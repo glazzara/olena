@@ -45,13 +45,6 @@ namespace mln
   namespace internal
   {
 
-    template <typename E>
-    struct box_impl_base_
-    {
-      mln_internal_add_force_exact_(box_impl_base_<E>)
-    };
-
-
     // box_impl
 
     /*! \brief Implementation class to equip objects having a bounding
@@ -64,7 +57,6 @@ namespace mln
 
     template <typename C, typename E> // FIXME: Add an extra param to replace 'unsigned'.
     struct box_impl_<2, C, E>
-      : box_impl_base_<E>
     {
       /// Give the number of rows.
       unsigned nrows() const;
@@ -95,37 +87,37 @@ namespace mln
     template <typename C, typename E>
     unsigned box_impl_<2, C, E>::nrows() const
     {
-      return this->force_exact_().bbox().len(0);
+      return internal::force_exact<E>(*this).bbox().len(0);
     }
 
     template <typename C, typename E>
     C box_impl_<2, C, E>::min_row() const
     {
-      return this->force_exact_().bbox().pmin()[0];
+      return internal::force_exact<E>(*this).bbox().pmin()[0];
     }
 
     template <typename C, typename E>
     C box_impl_<2, C, E>::max_row() const
     {
-      return this->force_exact_().bbox().pmax()[0];
+      return internal::force_exact<E>(*this).bbox().pmax()[0];
     }
 
     template <typename C, typename E>
     unsigned box_impl_<2, C, E>::ncols() const
     {
-      return this->force_exact_().bbox().len(1);
+      return internal::force_exact<E>(*this).bbox().len(1);
     }
 
     template <typename C, typename E>
     C box_impl_<2, C, E>::min_col() const
     {
-      return this->force_exact_().bbox().pmin()[1];
+      return internal::force_exact<E>(*this).bbox().pmin()[1];
     }
 
     template <typename C, typename E>
     C box_impl_<2, C, E>::max_col() const
     {
-      return this->force_exact_().bbox().pmax()[1];
+      return internal::force_exact<E>(*this).bbox().pmax()[1];
     }
 
 # endif // ! MLN_INCLUDE_ONLY
