@@ -79,7 +79,7 @@ namespace mln
 		+ 2 * border_size_ + 1)
   {
     this->start_ = &ima(ima.domain().pmin());
-    this->eor_ = &ima(mk_point2d(ima.domain().pmin()[0], ima.domain().pmax()[1])) + 1;
+    this->eor_ = &ima(make::point2d(ima.domain().pmin()[0], ima.domain().pmax()[1])) + 1;
     this->eoi_ = &ima(ima.domain().pmax()) + 1;
   }
 
@@ -88,7 +88,7 @@ namespace mln
   {
     ++(this->current_);
 
-    if (this->current_ == this->eor_ and this->current_ != this->eoi_)
+    if (this->current_ == this->eor_ && this->current_ != this->eoi_)
     {
       this->current_ += 2 * this->border_size_;
       this->eor_ += this->row_offset_;

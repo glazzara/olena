@@ -25,34 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BOX2D_HH
-# define MLN_CORE_BOX2D_HH
+#ifndef MLN_FUN_CHESS_HH
+# define MLN_FUN_CHESS_HH
 
-/*! \file mln/core/box2d.hh
+/*! \file mln/fun/chess.hh
  *
- * \brief Definition of the mln::box2d alias and of construction
- * routines.
+ * \brief FIXME.
  */
 
-# include <mln/core/box.hh>
+# include <mln/core/concept/function.hh>
 # include <mln/core/point2d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a box defined on the 2D square grid with
-   * integer coordinates.
-   *
-   * \see mln::rectangle2d.
-   */
-  typedef box_<point2d> box2d;
+  namespace fun
+  {
 
+    // FIXME: Doc!
+
+    struct chess_t : public Function_p2b< chess_t >
+    {
+      bool operator()(const point2d& p) const;
+    }
+
+    chess;
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    bool
+    chess_t::operator()(const point2d& p) const
+    {
+      return (p.row() + p.col()) % 2 == 0;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-# include <mln/make/box2d.hh>
-
-
-#endif // ! MLN_CORE_BOX2D_HH
+#endif // ! MLN_FUN_CHESS_HH

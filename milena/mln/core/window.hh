@@ -37,6 +37,7 @@
 # include <mln/core/concept/genpoint.hh>
 # include <mln/core/internal/set_of.hh>
 # include <mln/core/dpoint.hh>
+# include <mln/core/box.hh>
 
 # include <mln/convert/to_dpoint.hh>
 # include <mln/fun/all.hh>
@@ -79,6 +80,7 @@ namespace mln
      */
     typedef fwd_qiter qiter;
 
+
     /*! \brief Constructor without argument.
      *
      * The constructed window is empty. 
@@ -99,6 +101,10 @@ namespace mln
 
     /// Give the symmetrical window.
     window_<D> sym_() const;
+
+  protected:
+    
+    box_<point> b_;
   };
 
 
@@ -159,7 +165,7 @@ namespace mln
   {
     typedef mln_point(W) P;
     window_<mln_dpoint(W)> tmp;
-    mln_qiter(W) q(win, P::zero());
+    mln_qiter(W) q(win, P::zero);
     for_all(q)
       tmp.insert(convert::to_dpoint(q) + dp);
     return tmp;
@@ -178,7 +184,7 @@ namespace mln
   {
     typedef mln_point(W) P;
     window_<mln_dpoint(W)> tmp;
-    mln_qiter(W) q(lhs, P::zero());
+    mln_qiter(W) q(lhs, P::zero);
     for_all(q)
       {
 	mln_dpoint(W) dp = convert::to_dpoint(q);

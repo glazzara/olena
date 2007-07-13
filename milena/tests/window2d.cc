@@ -31,6 +31,9 @@
  */
 
 #include <mln/core/window2d.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/convert/to_image.hh>
+#include <mln/debug/println.hh>
 
 
 
@@ -41,5 +44,9 @@ int main()
   window2d w;
   mln_assertion(w.is_centered() == false);
   mln_assertion(w.is_symmetric() == true);
-}
 
+  w.insert(make::dpoint2d(-1,-1));
+  w.insert(make::dpoint2d( 1, 1));
+  image2d_b<bool> ima = convert::to_image(w);
+  debug::println(ima);
+}

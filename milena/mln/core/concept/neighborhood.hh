@@ -50,6 +50,8 @@ namespace mln
       typedef niter;
       typedef fwd_niter;
       typedef bkd_niter;
+
+      typedef dpoint;
     */
 
   protected:
@@ -65,6 +67,7 @@ namespace mln
     typedef mln_niter(E) niter;
     typedef mln_fwd_niter(E) fwd_niter;
     typedef mln_bkd_niter(E) bkd_niter;
+    typedef mln_dpoint(E) dpoint;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -25,34 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BOX2D_HH
-# define MLN_CORE_BOX2D_HH
-
-/*! \file mln/core/box2d.hh
+/*! \file tests/to_image.cc
  *
- * \brief Definition of the mln::box2d alias and of construction
- * routines.
+ * \brief Tests on mln::convert::to_image.
  */
 
-# include <mln/core/box.hh>
-# include <mln/core/point2d.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/window2d.hh>
+#include <mln/core/psubset.hh>
+#include <mln/fun/chess.hh>
+#include <mln/level/compare.hh>
+
+#include <mln/convert/to_image.hh>
 
 
-namespace mln
+#include <mln/debug/println.hh>
+
+
+
+int main()
 {
+  using namespace mln;
 
-  /*! \brief Type alias for a box defined on the 2D square grid with
-   * integer coordinates.
-   *
-   * \see mln::rectangle2d.
-   */
-  typedef box_<point2d> box2d;
+  box2d box_3x3 = make::box2d(-1,+1, -1,+1);
+  //                          ^^^^^  ^^^^^
+  //                          rows   cols
 
+  //         center point
+  //              V
+  bool X[] = { 1, 0, 1,
+	       0, 1, 0,   // < center point
+	       1, 0, 1 };
 
-} // end of namespace mln
+  image2d_b<bool> ima_X = convert::to_image(box_3x3 | fun::chess);
+  window2d win_X = make::window2d(X);
+  mln_assertion(convert::to_image(win_X) == ima_X);
 
-
-# include <mln/make/box2d.hh>
-
-
-#endif // ! MLN_CORE_BOX2D_HH
+  // FIXME: nbh!
+}

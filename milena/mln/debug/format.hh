@@ -25,34 +25,68 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BOX2D_HH
-# define MLN_CORE_BOX2D_HH
+#ifndef MLN_DEBUG_FORMAT_HH
+# define MLN_DEBUG_FORMAT_HH
 
-/*! \file mln/core/box2d.hh
+/*! \file mln/debug/format.hh
  *
- * \brief Definition of the mln::box2d alias and of construction
- * routines.
+ * \brief Routines that format a value to print it properly.
  */
-
-# include <mln/core/box.hh>
-# include <mln/core/point2d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a box defined on the 2D square grid with
-   * integer coordinates.
-   *
-   * \see mln::rectangle2d.
-   */
-  typedef box_<point2d> box2d;
+  namespace debug
+  {
 
+    /// Default version for formatting a value is a no-op.
+    template <typename T>
+    const T& format(const T& v);
+
+    /// Format a Boolean to print it nicely: "|" for true and "-" for
+    /// false.
+    char format(bool v);
+
+    /// Format a signed char to print it properly, i.e., like an
+    /// integer value.
+    signed short format(signed char v);
+
+    /// Format an unsigned char to print it properly, i.e., like an
+    /// integer value.
+    unsigned short format(unsigned char v);
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename T>
+    const T& format(const T& v)
+    {
+      return v;
+    }
+
+    char format(bool v)
+    {
+      return v ? '|' : '-';
+    }
+
+    signed short format(signed char v)
+    {
+      return v;
+    }
+
+    unsigned short format(unsigned char v)
+    {
+      return v;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+
+  } // end of namespace mln::debug
 
 } // end of namespace mln
 
 
-# include <mln/make/box2d.hh>
-
-
-#endif // ! MLN_CORE_BOX2D_HH
+#endif // ! MLN_DEBUG_FORMAT_HH

@@ -25,83 +25,77 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DEBUG_PRINTLN_HH
-# define MLN_DEBUG_PRINTLN_HH
+#ifndef MLN_MAKE_BOX2D_HH
+# define MLN_MAKE_BOX2D_HH
 
-/*! \file mln/debug/println.hh
+/*! \file mln/make/box2d.hh
  *
- * \brief Print an image on the standard output.
+ * \brief Routines to construct an mln::box2d.
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-# include <mln/debug/format.hh>
-
 # include <mln/core/box2d.hh>
+# include <mln/make/point2d.hh>
 
 
 namespace mln
 {
 
-  namespace debug
+  namespace make
   {
 
-    /// Print the image \p input on the standard output.
-    template <typename I>
-    void println(const Image<I>& input);
+    /*! \brief Create an mln::box2d.
+     *
+     * \param[in] nrows Number of rows.
+     * \param[in] ncols Number of columns.
+     *
+     * \pre \p nrows != 0 and \p ncols != 0.
+     *
+     * \return A 2D box.
+     */
+    mln::box2d box2d(unsigned nrows, unsigned ncols);
+
+
+    /*! \brief Create an mln::box2d.
+     *
+     * \overload
+     *
+     * \param[in] min_row Index of the top most row.
+     * \param[in] max_row Index of the botton most row.
+     * \param[in] min_col Index of the left most column.
+     * \param[in] max_col Index of the right most column.
+     *
+     * \pre \p max_row >= \p min_row and \p max_col >= \p min_col.
+     *
+     * \return A 2D box.
+     */
+    mln::box2d box2d(int min_row, int max_row,
+		     int min_col, int max_col);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
+    mln::box2d box2d(unsigned nrows, unsigned ncols)
     {
+      mln_precondition(nrows != 0 && ncols != 0);
+      mln::box2d tmp(make::point2d(0, 0),
+		     make::point2d(nrows - 1, ncols - 1));
+      return tmp;
+    }
 
-      // generic version
-      template <typename S, typename I>
-      void println(const S&, const Image<I>& input_)
-      {
-	const I& input = exact(input_);
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  std::cout << format( input(p) ) << ' ';
-	std::cout << std::endl;
-      }
-
-      // "domain == box2d" version
-      template <typename I>
-      void println(const box2d& b, const I& input)
-      {
-	point2d p;
-	int& row = p.row();
-	int& col = p.col();
-	const int max_row = b.max_row(), max_col = b.max_col();
-
-	for (row = b.min_row(); row <= max_row; ++row)
-	  {
-	    for (col = b.min_col(); col <= max_col; ++col)
-	      std::cout << format( input(p) ) << ' ';
-	    std::cout << std::endl;
-	  }
-	std::cout << std::endl;
-      }
-
-    } // end of namespace mln::debug::impl
-
-
-
-    // facade
-
-    template <typename I>
-    void println(const Image<I>& input)
+    mln::box2d box2d(int min_row, int max_row,
+		     int min_col, int max_col)
     {
-      impl::println(exact(input).domain(), exact(input));
+      mln_precondition(max_row >= min_row && max_col >= min_col);
+      mln::box2d tmp(make::point2d(min_row, min_col),
+		     make::point2d(max_row, max_col));
+      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::debug
+  } // end of namespace mln::make
 
 } // end of namespace mln
 
 
-#endif // ! MLN_DEBUG_PRINTLN_HH
+#endif // ! MLN_MAKE_BOX2D_HH

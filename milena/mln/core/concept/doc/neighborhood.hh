@@ -56,6 +56,9 @@ namespace mln
        * neighbors in a backward way.
        */
       typedef void bkd_niter;
+
+      /// Dpoint associated type.
+      typedef void dpoint;
     };
 
   } // end of namespace mln::doc

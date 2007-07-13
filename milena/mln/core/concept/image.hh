@@ -55,7 +55,7 @@ namespace mln
 
       bool has_data() const;
 
-      bool owns_(const psite& p) const; // default is like "has(p)"
+      bool owns_(const psite& p) const;
       const pset& domain() const;
 
       rvalue operator()(const psite& p) const;

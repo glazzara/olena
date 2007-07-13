@@ -44,6 +44,12 @@ namespace mln
 
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
     mln_lvalue(I) operator()(const mln_psite(I)& p);
+
+    template <typename U>
+    struct change_value
+    {
+      typedef safe_image<mln_ch_value(I, U)> ret;
+    };
   };
 
 
@@ -67,7 +73,7 @@ namespace mln
   safe_image<I>::operator()(const mln_psite(I)& p) const
   {
     static mln_value(I) tmp;
-    if (not this->owns_(p))
+    if (! this->owns_(p))
       return tmp;
     return this->adaptee_(p);
   }
@@ -77,7 +83,7 @@ namespace mln
   safe_image<I>::operator()(const mln_psite(I)& p)
   {
     static mln_value(I) tmp;
-    if (not this->owns_(p))
+    if (! this->owns_(p))
       return tmp;
     return this->adaptee_(p);
   }

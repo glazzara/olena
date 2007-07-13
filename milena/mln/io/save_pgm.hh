@@ -55,8 +55,8 @@ namespace mln
       file << "# olena" << std::endl;
       file << ima.ncols() << ' ' << ima.nrows() << std::endl;
       file << "255" << std::endl;
-      point2d p = mk_point2d(ima.domain().pmin().row(),
-			     ima.domain().pmin().col());
+      point2d p = make::point2d(ima.domain().pmin().row(),
+				ima.domain().pmin().col());
       size_t len = ima.ncols() * sizeof(unsigned char);
       for (;
 	   p.row() <= ima.domain().pmax().row();

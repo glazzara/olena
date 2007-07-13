@@ -60,7 +60,7 @@ int main()
 
 
 
-//   box2d b = mk_box2d(/* row = */ 1, 3,
+//   box2d b = make::box2d(/* row = */ 1, 3,
 // 		     /* col = */ 4, 6);
 //   std::cout << b << std::endl;
 
@@ -68,7 +68,7 @@ int main()
 //     { 0, 1, 0,
 //       0, 1, 0,
 //       1, 0, 0 };
-//   window2d win = mk_window2d(w);
+//   window2d win = make::window2d(w);
 //   std::cout << win << std::endl;
 //   std::cout << c8() << std::endl;
 

@@ -17,10 +17,10 @@ main()
   I::piter f(ima.domain());
   window_<I::dpoint> set;
 
-  set.insert(mk_dpoint2d(0, -1));
-  set.insert(mk_dpoint2d(0, -1));
-  set.insert(mk_dpoint2d(1, 0));
-  set.insert(mk_dpoint2d(1, 0));
+  set.insert(make::dpoint2d(0, -1));
+  set.insert(make::dpoint2d(0, -1));
+  set.insert(make::dpoint2d(1, 0));
+  set.insert(make::dpoint2d(1, 0));
 
   for_all(f)
   {

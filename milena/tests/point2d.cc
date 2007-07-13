@@ -50,7 +50,7 @@ int main()
   mln_assertion(p.col() == 1 && p[1] == 1);
 
   // construction
-  q = mk_point2d(5, 1);
+  q = make::point2d(5, 1);
   mln_assertion(p == q);
   
   q.set_all(0);

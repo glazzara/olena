@@ -87,14 +87,14 @@ namespace mln
     /*! \brief Constructor; coordinates are set by function \p f.
      */
     template <typename F>
-    point_(F f);
+    point_(const Function<F>& f);
 
     /*! \brief Set all coordinates to the value \p c.
      */
     void set_all(C c);
 
-    /// Give the origin (all coordinates are 0).
-    static const point_<n,C>& zero();
+    /// Origin point (all coordinates are 0).
+    static const point_<n,C> zero;
 
   protected:
     C coord_[n];
@@ -124,8 +124,9 @@ namespace mln
 
   template <unsigned n, typename C>
   template <typename F>
-  point_<n,C>::point_(F f)
+  point_<n,C>::point_(const Function<F>& f_)
   {
+    const F& f = exact(f_);
     for (unsigned i = 0; i < n; ++i)
       coord_[i] = f(i);
   }
@@ -138,11 +139,7 @@ namespace mln
   }
 
   template <unsigned n, typename C>
-  const point_<n,C>& point_<n,C>::zero()
-  {
-    static const point_<n,C> zero_(all(0));
-    return zero_;
-  }
+  const point_<n,C> point_<n,C>::zero = all(0);
 
 # endif // ! MLN_INCLUDE_ONLY
   

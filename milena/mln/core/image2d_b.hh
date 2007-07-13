@@ -112,6 +112,9 @@ namespace mln
     /// Assignment operator.
     image2d_b& operator=(const image2d_b<T>& rhs);
 
+    /// Destructor.
+    ~image2d_b();
+
 
     /// Initialize an empty image.
     void init_with(int nrows, int ncols, unsigned bdr = border::thickness);
@@ -129,9 +132,6 @@ namespace mln
     /// Give the definition domain.
     const box2d& domain() const;
 
-    /// Give a bounding box.
-    const box2d& bbox() const;
-
     /// Give the border thickness.
     unsigned border() const;
 
@@ -144,11 +144,16 @@ namespace mln
     /// Read-write access to the image value located at \p p.
     T& operator()(const point2d& p);
 
-    /// Return an offset from a dpoints
+    /// Read-only access to the image value located at (\p row, \p col).
+    const T& at(int row, int col) const;
+
+    /// Read-write access to the image value located at (\p row, \p col).
+    T& at(int row, int col);
+
+
+    /// Return the offset corresponding to the dpoint \p dp.
     int offset(const dpoint2d& dp);
 
-    /// Destructor.
-    ~image2d_b();
 
   private:
 
@@ -165,6 +170,7 @@ namespace mln
 
     typedef internal::image_base_< box2d, image2d_b<T> > super;
   };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -192,7 +198,7 @@ namespace mln
   image2d_b<T>::init_with(int nrows, int ncols, unsigned bdr)
   {
     mln_precondition(! this->has_data());
-    b_ = mk_box2d(nrows, ncols);
+    b_ = make::box2d(nrows, ncols);
     bdr_ = bdr;
     allocate_();
   }
@@ -265,14 +271,6 @@ namespace mln
   }
 
   template <typename T>
-  const box2d&
-  image2d_b<T>::bbox() const
-  {
-    mln_precondition(this->has_data());
-    return b_;
-  }
-
-  template <typename T>
   unsigned
   image2d_b<T>::border() const
   {
@@ -310,6 +308,22 @@ namespace mln
   {
     mln_precondition(this->owns_(p));
     return array_[p.row()][p.col()];
+  }
+
+  template <typename T>
+  const T&
+  image2d_b<T>::at(int row, int col) const
+  {
+    mln_precondition(this->owns_(make::point2d(row, col)));
+    return array_[row][col];
+  }
+
+  template <typename T>
+  T&
+  image2d_b<T>::at(int row, int col)
+  {
+    mln_precondition(this->owns_(make::point2d(row, col)));
+    return array_[row][col];
   }
 
   template <typename T>

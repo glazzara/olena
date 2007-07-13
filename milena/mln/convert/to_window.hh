@@ -25,34 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BOX2D_HH
-# define MLN_CORE_BOX2D_HH
+#ifndef MLN_CONVERT_TO_WINDOW_HH
+# define MLN_CONVERT_TO_WINDOW_HH
 
-/*! \file mln/core/box2d.hh
+/*! \file mln/convert/to_window.hh
  *
- * \brief Definition of the mln::box2d alias and of construction
- * routines.
+ * \brief Convertions to mln::Image.
  */
 
-# include <mln/core/box.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/core/window.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a box defined on the 2D square grid with
-   * integer coordinates.
-   *
-   * \see mln::rectangle2d.
-   */
-  typedef box_<point2d> box2d;
+  namespace convert
+  {
 
+    /// Convert a neighborhood \p nbh into a window.
+    template <typename N>
+    window_<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename N>
+    window_<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh_)
+    {
+      const N& nbh = exact(nbh_);
+      typedef mln_dpoint(N) D;
+      typedef mln_point(D) P;
+      window_<D> win;
+      mln_niter(N) n(nbh, P::zero);
+      for_all(n)
+	win.insert(n - P::zero);
+      return win;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::convert
 
 } // end of namespace mln
 
 
-# include <mln/make/box2d.hh>
-
-
-#endif // ! MLN_CORE_BOX2D_HH
+#endif // ! MLN_CONVERT_TO_WINDOW_HH

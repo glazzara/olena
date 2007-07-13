@@ -1,3 +1,90 @@
+2007-07-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add subset notion in milena.
+
+	Add materials.
+
+	* mln/convert/to_image.hh: New.
+	* mln/convert/to_window.hh: New.
+	* mln/estim: New.
+	* mln/estim/count.hh: New.
+	* mln/debug/format.hh: New.
+	* mln/geom: New.
+	* mln/geom/pmin_pmax.hh: New.
+	* mln/geom/bbox.hh: New.
+	* mln/core/psubset.hh: New.
+	* mln/core/psubset_piter.hh: New.
+	* mln/core/concept/function.hh: New.
+	* mln/core/internal/piter_adaptor.hh: New.
+	* mln/fun/chess.hh: New.
+
+	Add some tests.
+
+	* tests/safe_image.cc: New.
+	* tests/to_image.cc: New.
+	* tests/psubset.cc: New.
+	* tests/println.cc: New.
+
+	Several improvements.
+
+	* mln/debug/println.hh: Use debug::format.
+	* mln/core/box.hh (len): Move...
+	* mln/core/concept/box.hh: ...here.
+	* mln/core/point.hh (zero): Turn into var.
+	(point_): Bound ctor arg f.
+	* mln/core/dpoint.hh: Likewise.
+	* mln/core/neighb.hh (dpoint): New typedef.
+	* mln/core/concept/image.hh: Remove obsolete commentary.
+	* mln/core/concept/iterator.hh
+	(for_all_remaining): New macro.
+	* mln/core/concept/point_set.hh (operator<<): New.
+	* mln/core/concept/neighborhood.hh
+	(dpoint): Make it appear in commentary.
+	* mln/core/concept/doc/neighborhood.hh (dpoint): New.
+	* mln/core/concept/doc/box.hh: Cosmetics.
+	* mln/core/window.hh (b_): New attribute.
+	Update.
+	* mln/core/image2d_b.hh (bbox): Remove; redundant.
+	(at): New couple of methods.
+	Update.
+	* mln/core/internal/image_adaptor.hh: Fix.
+	* mln/core/internal/image_base.hh: Add preconditions.
+	* mln/core/internal/set_of.hh: Add a todo entry.
+	* mln/core/safe_image.hh: Help g++-2.95.
+	* mln/fun/all.hh: Add inheritance.
+
+	Change mk_<object> into make::<object>.
+
+	* mln/make: New directory.
+	* mln/core/dpoint2d.hh (mk_dpoint2d): Move to...
+	* mln/make/dpoint2d.hh: this new file.
+	(mk_dpoint2d): Rename as...
+	(dpoint2d): ...this.
+	* mln/core/window2d.hh (mk_window2d): Move to...
+	* mln/make/window2d.hh: this new file.
+	(mk_window2d): Rename as...
+	(window2d): ...this.
+	* mln/core/box2d.hh (mk_box2d): Move to...
+	* mln/make/box2d.hh: this new file.
+	(mk_box2d): Rename as...
+	(box2d): ...this.
+	* mln/core/point2d.hh (mk_point2d): Move to...
+	* mln/make/point2d.hh: this new file.
+	(mk_point2d): Rename as...
+	(point2d): ...this.
+	* tests/window2d.cc,
+	* tests/pixter_dpoint2d.cc,
+	* tests/box2d.cc,
+	* tests/point2d.cc,
+	* tests/dpoint2d.cc,
+	* tests/main.cc,
+	* mln/core/neighb2d.hh,
+	* mln/debug/println.hh,
+	* mln/core/rectangle2d.hh,
+	* mln/core/pixter2d_b.hh,
+	* mln/io/save_pgm.hh,
+	* mln/io/load_pgm.hh: Update.
+
 2007-07-12  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Fix bug in pixter_dpoint2d.

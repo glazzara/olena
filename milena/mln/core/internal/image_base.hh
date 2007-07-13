@@ -87,6 +87,7 @@ namespace mln
     bool
     image_base_<S,E>::has(const psite& p) const
     {
+      mln_precondition(exact(this)->has_data());
       return exact(this)->domain().has(p);
     }
 
@@ -94,6 +95,7 @@ namespace mln
     const box_<mln_point(S)>&
     image_base_<S,E>::bbox() const
     {
+      mln_precondition(exact(this)->has_data());
       return exact(this)->domain().bbox();
     }
 
@@ -101,6 +103,7 @@ namespace mln
     std::size_t
     image_base_<S,E>::npoints() const
     {
+      mln_precondition(exact(this)->has_data());
       return exact(this)->domain().npoints();      
     }
 

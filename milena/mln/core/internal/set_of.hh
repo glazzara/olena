@@ -69,6 +69,8 @@ namespace mln
        * \param[in] elt The element to be inserted.
        *
        * If \p elt is already in the set, this method is a no-op.
+       *
+       * \todo Returns exact(*this).
        */
       void insert(const E& elt);
 

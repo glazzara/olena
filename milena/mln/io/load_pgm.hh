@@ -134,7 +134,7 @@ namespace mln
       template <typename I>
       void load_pgm_raw_2d(std::ifstream& file, I& ima)
       {
-	point2d p = mk_point2d(0, ima.domain().pmin().col());
+	point2d p = make::point2d(0, ima.domain().pmin().col());
 	size_t len = ima.ncols() * sizeof(mln_value(I));
 	for (p.row()  = ima.domain().pmin().row();
 	     p.row() <= ima.domain().pmax().row();

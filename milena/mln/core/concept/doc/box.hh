@@ -41,7 +41,7 @@ namespace mln
     template <typename E>
     struct Box : public Point_Set<E>
     {
-      /*! \brief Return the box "minimum" point.
+      /*! \brief Give the box "minimum" point.
        *
        * Return the "minimum" point w.r.t. the ordering between points.
        * For instance, with mln::box2d, this minimum is the top left
@@ -49,7 +49,7 @@ namespace mln
        */
       const point& pmin() const;
 
-      /*! \brief Return the box "maximum" point.
+      /*! \brief Give the box "maximum" point.
        *
        * Return the "maximum" point w.r.t. the ordering between points.
        * For instance, with mln::box2d, this maximum is the bottom

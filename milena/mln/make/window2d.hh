@@ -25,34 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BOX2D_HH
-# define MLN_CORE_BOX2D_HH
+#ifndef MLN_MAKE_WINDOW2D_HH
+# define MLN_MAKE_WINDOW2D_HH
 
-/*! \file mln/core/box2d.hh
+/*! \file mln/make/window2d.hh
  *
- * \brief Definition of the mln::box2d alias and of construction
- * routines.
+ * \brief Routine to create an mln::window2d.
  */
 
-# include <mln/core/box.hh>
-# include <mln/core/point2d.hh>
+# include <cmath>
+# include <mln/core/window2d.hh>
+# include <mln/make/dpoint2d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a box defined on the 2D square grid with
-   * integer coordinates.
-   *
-   * \see mln::rectangle2d.
-   */
-  typedef box_<point2d> box2d;
+  namespace make
+  {
 
+    /*! \brief Create an mln::window2d.
+     *
+     * \param[in] values Array of Booleans.
+     *
+     * \pre The array size, \c M, has to be a square of an odd integer.
+     *
+     * \return A 2D window.
+     */
+    template <unsigned M>
+    mln::window2d window2d(const bool (&values)[M]);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <unsigned M>
+    mln::window2d window2d(const bool (&values)[M])
+    {
+      int h = unsigned(std::sqrt(float(M))) / 2;
+      assert((2 * h + 1) * (2 * h + 1) == M);
+      mln::window2d tmp;
+      unsigned i = 0;
+      for (int row = - h; row <= h; ++row)
+	for (int col = - h; col <= h; ++col)
+	  if (values[i++])
+	    tmp.insert(make::dpoint2d(row, col));
+      return tmp;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::make
 
 } // end of namespace mln
 
 
-# include <mln/make/box2d.hh>
-
-
-#endif // ! MLN_CORE_BOX2D_HH
+#endif // ! MLN_MAKE_WINDOW2D_HH

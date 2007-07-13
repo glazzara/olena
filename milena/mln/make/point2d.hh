@@ -25,34 +25,48 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BOX2D_HH
-# define MLN_CORE_BOX2D_HH
+#ifndef MLN_MAKE_POINT2D_HH
+# define MLN_MAKE_POINT2D_HH
 
-/*! \file mln/core/box2d.hh
+/*! \file mln/make/point2d.hh
  *
- * \brief Definition of the mln::box2d alias and of construction
- * routines.
+ * \brief Routine to construct an mln::point2d.
  */
 
-# include <mln/core/box.hh>
 # include <mln/core/point2d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a box defined on the 2D square grid with
-   * integer coordinates.
-   *
-   * \see mln::rectangle2d.
-   */
-  typedef box_<point2d> box2d;
+  namespace make
+  {
 
+    /*! \brief Create an mln::point2d.
+     *
+     * \param[in] row Row coordinate.
+     * \param[in] Col Column coordinate.
+     *
+     * \return A 2D point.
+     */
+    mln::point2d point2d(int row, int col);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    mln::point2d point2d(int row, int col)
+    {
+      mln::point2d tmp;
+      tmp[0] = row;
+      tmp[1] = col;
+      return tmp;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::make
 
 } // end of namespace mln
 
 
-# include <mln/make/box2d.hh>
-
-
-#endif // ! MLN_CORE_BOX2D_HH
+#endif // ! MLN_MAKE_POINT2D_HH

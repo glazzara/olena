@@ -87,14 +87,14 @@ namespace mln
     /*! \brief Constructor; coordinates are set by function \p f.
      */
     template <typename F>
-    dpoint_(F f); // FIXME: Bound parameter!
+    dpoint_(const Function<F>& f);
 
     /*! \brief Set all coordinates to the value \p c.
      */
     void set_all(C c);
 
-    /// Give the null delta-point (all coordinates are 0).
-    static const dpoint_<n,C>& zero();
+    /// Null delta-point (all coordinates are 0).
+    static const dpoint_<n,C> zero;
 
   protected:
     C coord_[n];
@@ -124,8 +124,9 @@ namespace mln
 
   template <unsigned n, typename C>
   template <typename F>
-  dpoint_<n,C>::dpoint_(F f)
+  dpoint_<n,C>::dpoint_(const Function<F>& f_)
   {
+    const F& f = exact(f_);
     for (unsigned i = 0; i < n; ++i)
       coord_[i] = f(i);
   }
@@ -138,11 +139,7 @@ namespace mln
   }
 
   template <unsigned n, typename C>
-  const dpoint_<n,C>& dpoint_<n,C>::zero()
-  {
-    static const dpoint_<n,C> zero_(all(0));
-    return zero_;
-  }
+  const dpoint_<n,C> dpoint_<n,C>::zero = all(0);
 
 # endif // ! MLN_INCLUDE_ONLY
   

@@ -64,6 +64,20 @@ namespace mln
   };
 
 
+  /*! \brief Print a point set \p pset into the output stream \p
+   *  ostr.
+   *
+   * \param[in,out] ostr An output stream.
+   * \param[in] pset A point set.
+   *
+   * \return The modified output stream \p ostr.
+   *
+   * \relates mln::Point_Set
+   */
+  template <typename S>
+  std::ostream& operator<<(std::ostream& ostr, const Point_Set<S>& pset);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   // fwd decl
@@ -74,7 +88,8 @@ namespace mln
   {
     typedef mln_point(E) point;
     typedef mln_psite(E) psite;
-    typedef mln_piter(E) piter;
+
+    typedef mln_piter(E)         piter;
     typedef mln_fwd_piter(E) fwd_piter;
     typedef mln_bkd_piter(E) bkd_piter;
     
@@ -84,6 +99,18 @@ namespace mln
     m2 = 0;
     std::size_t (E::*m3)() const = & E::npoints;
     m3 = 0;
+  }
+
+
+  template <typename S>
+  std::ostream& operator<<(std::ostream& ostr, const Point_Set<S>& pset_)
+  {
+    const S& pset = exact(pset_);
+    ostr << '{';
+    mln_piter(S) p(pset);
+    for_all(p)
+      ostr << p;
+    return ostr << '}';
   }
 
 # endif // ! MLN_INCLUDE_ONLY

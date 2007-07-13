@@ -55,6 +55,9 @@ namespace mln
   struct neighb_ : public Neighborhood< neighb_<D> >,
 		   public internal::set_of_<D>
   {
+    /// Dpoint associated type.
+    typedef D dpoint;
+
     /*! \brief Piter type to browse the points of a generic
      * neighborhood w.r.t. the ordering of delta-points.
      */

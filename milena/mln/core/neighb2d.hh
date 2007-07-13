@@ -101,8 +101,8 @@ namespace mln
     static neighb2d it;
     if (flower)
       {
-	it.insert(mk_dpoint2d(0, 1));
-	it.insert(mk_dpoint2d(1, 0));
+	it.insert(make::dpoint2d(0, 1));
+	it.insert(make::dpoint2d(1, 0));
 	flower = false;
       }
     return it;
@@ -114,10 +114,10 @@ namespace mln
     static neighb2d it;
     if (flower)
       {
-	it.insert(mk_dpoint2d(0, 1));
-	it.insert(mk_dpoint2d(1,-1));
-	it.insert(mk_dpoint2d(1, 0));
-	it.insert(mk_dpoint2d(1, 1));
+	it.insert(make::dpoint2d(0, 1));
+	it.insert(make::dpoint2d(1,-1));
+	it.insert(make::dpoint2d(1, 0));
+	it.insert(make::dpoint2d(1, 1));
 	flower = false;
       }
     return it;
@@ -129,7 +129,7 @@ namespace mln
     static neighb2d it;
     if (flower)
       {
-	it.insert(mk_dpoint2d(0, 1));
+	it.insert(make::dpoint2d(0, 1));
 	flower = false;
       }
     return it;
@@ -141,7 +141,7 @@ namespace mln
     static neighb2d it;
     if (flower)
       {
-	it.insert(mk_dpoint2d(1, 0));
+	it.insert(make::dpoint2d(1, 0));
 	flower = false;
       }
     return it;

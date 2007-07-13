@@ -46,24 +46,10 @@ namespace mln
   typedef point_<2,int> point2d;
 
 
-  /*! \brief Create an mln::point2d.
-   *
-   * \param[in] row Index of row.
-   * \param[in] col Index of column.
-   *
-   * \return A 2D point.
-   */
-  point2d mk_point2d(int row, int col)
-  {
-    point2d tmp;
-    tmp[0] = row;
-    tmp[1] = col;
-    return tmp;
-  }
-
 } // end of namespace mln
 
 
+# include <mln/make/point2d.hh>
 # include <mln/core/dpoint2d.hh>
 
 

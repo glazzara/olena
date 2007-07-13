@@ -38,5 +38,5 @@ int main()
 {
   using namespace mln;
 
-  box2d b = mk_box2d(2, 3);
+  box2d b = make::box2d(2, 3);
 }

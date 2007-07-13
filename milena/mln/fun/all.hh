@@ -33,6 +33,10 @@
  * \brief FIXME.
  */
 
+# include <mln/core/concept/function.hh>
+
+
+// FIXME: Usually all.hh is the file to include all files in the current directory...
 
 namespace mln
 {
@@ -41,7 +45,7 @@ namespace mln
   {
 
     template <typename T>
-    struct all
+    struct all : public Function< all<T> >
     {
       all(T t);
       template <typename U>

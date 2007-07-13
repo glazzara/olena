@@ -105,7 +105,7 @@ namespace mln
     }
 
     template <typename I, typename E>
-    const image_adaptor_<I,E>::pset&
+    const typename image_adaptor_<I,E>::pset&
     image_adaptor_<I,E>::domain() const
     {
       return adaptee_.domain();

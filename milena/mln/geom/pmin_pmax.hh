@@ -25,34 +25,66 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BOX2D_HH
-# define MLN_CORE_BOX2D_HH
+#ifndef MLN_GEOM_PMIN_PMAX_HH
+# define MLN_GEOM_PMIN_PMAX_HH
 
-/*! \file mln/core/box2d.hh
+/*! \file mln/geom/pmin_pmax.hh
  *
- * \brief Definition of the mln::box2d alias and of construction
- * routines.
+ * \brief Several routines to compute the minimum point and/or maximum
+ * point.
  */
 
-# include <mln/core/box.hh>
-# include <mln/core/point2d.hh>
+# include <utility>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a box defined on the 2D square grid with
-   * integer coordinates.
-   *
-   * \see mln::rectangle2d.
-   */
-  typedef box_<point2d> box2d;
+  namespace geom
+  {
 
+
+    /// Compute the minimum and maximum points when browsing with
+    /// iterator \p p.
+    template <typename I>
+    std::pair<mln_point(I), mln_point(I)>
+    pmin_pmax(const Piter<I>& p);
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I>
+    std::pair<mln_point(I), mln_point(I)>
+    pmin_pmax(Piter<I>& p_)
+    {
+      I& p = exact(p_);
+
+      typedef mln_point(I) P;
+      std::pair<P, P> tmp;
+      P& pmin = tmp.first;
+      P& pmax = tmp.second;
+
+      // init with first point
+      p.start();
+      pmin = pmax = p;
+
+      // update with remaining points
+      for_all_remaining(p)
+	for (unsigned i = 0; i < P::dim; ++i)
+	  if (p[i] < pmin[i])
+	    pmin[i] = p[i];
+	  else if (p[i] > pmax[i])
+	    pmax[i] = p[i];
+
+      return tmp;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::geom
 
 } // end of namespace mln
 
 
-# include <mln/make/box2d.hh>
-
-
-#endif // ! MLN_CORE_BOX2D_HH
+#endif // ! MLN_GEOM_PMIN_PMAX_HH

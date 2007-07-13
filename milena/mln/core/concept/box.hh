@@ -52,10 +52,17 @@ namespace mln
     /*
       const point& pmin() const;
       const point& pmax() const;
-      unsigned len(unsigned i) const; // FIXME: Doc!
     */
 
-    /*! \brief Return the bounding box of this point set.
+    /*! \brief Give the length of the \p i-th side of the box.
+     *
+     * \pre i < point::dim
+     *
+     * \warning This method is final for all box classes.
+     */
+    unsigned len(unsigned i) const;
+
+    /*! \brief Give the bounding box of this point set.
      *
      * Return the bounding box of this point set, so that is itself.
      * This method is declared by the mln::Point_Set concept.
@@ -64,7 +71,7 @@ namespace mln
      */
     const E& bbox() const;
 
-    /*! \brief Return the number of points of this box.
+    /*! \brief Give the number of points of this box.
      *
      * Return the number of points of this box.  This method is
      * declared by the mln::Point_Set concept.
@@ -84,6 +91,12 @@ namespace mln
   const E& Box<E>::bbox() const
   {
     return exact(*this);
+  }
+
+  template <typename E>
+  unsigned Box<E>::len(unsigned i) const
+  {
+    return 1 + exact(this)->pmax()[i] - exact(this)->pmin()[i];
   }
 
   template <typename E>

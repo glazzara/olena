@@ -139,7 +139,7 @@ namespace mln
     const int drow = half_height, dcol = half_width;
     for (int row = - drow; row <= drow; ++row)
       for (int col = - dcol; col <= dcol; ++col)
-	insert(mk_dpoint2d(row, col));
+	insert(make::dpoint2d(row, col));
   }
 
   bool rectangle2d::is_centered() const

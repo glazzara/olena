@@ -40,6 +40,14 @@
 # define for_all(x) for(x.start(); x.is_valid(); x.next())
 
 
+/*! \brief Loop to browse all the remaining elements targetted by the
+ * iterator \p x.
+ */
+# define for_all_remaining(x) \
+  if (! x.is_valid()) {} else while (x.next(), x.is_valid())
+
+
+
 namespace mln
 {
   /*! \brief Base class for implementation classes that are iterators.
