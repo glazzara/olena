@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_PITER_ADAPTOR_HH
 # define MLN_CORE_INTERNAL_PITER_ADAPTOR_HH
 
-/*! \file mln/core/internal/piter_adaptor_.hh
+/*! \file mln/core/internal/piter_adaptor.hh
  *
  * \brief Definition of iterators on points of boxes.
  */
@@ -69,12 +69,12 @@ namespace mln
       typedef mln_coord(Pi) coord;
 
 
-      /// Constructor from a point iterator \p \piter.
+      /// Constructor from a point iterator \p piter.
       piter_adaptor_(const Pi& piter);
 
 
       /// Convertion to point.
-      operator point() const;
+      operator mln_point(Pi) () const;
 
       /// Address of the point.
       const point* pointer() const;

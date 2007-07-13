@@ -45,7 +45,7 @@ namespace mln
     /*! \brief Create an mln::dpoint2d.
      *
      * \param[in] row Row coordinate.
-     * \param[in] Col Column coordinate.
+     * \param[in] col Column coordinate.
      *
      * \return A 2D dpoint.
      */

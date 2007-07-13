@@ -58,7 +58,7 @@ namespace mln
       fwd_viter_(const Value_Set<S>& s);
 
       /// Convertion into a value.
-      operator value() const;
+      operator mln_value(S) () const;
 
       /// Test if the iterator is valid.
       bool is_valid() const;
@@ -95,7 +95,7 @@ namespace mln
       bkd_viter_(const Value_Set<S>& s);
 
       /// Convertion into a value.
-      operator value() const;
+      operator mln_value(S) () const;
 
       /// Test if the iterator is valid.
       bool is_valid() const;

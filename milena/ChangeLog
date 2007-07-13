@@ -1,5 +1,25 @@
 2007-07-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add subimage in milena.
+
+	* tests/subimage.cc: New.
+	* mln/core/subimage.hh: New.
+	* mln/debug/println.hh: Handle "not has" cases.
+	* mln/core/concept/box.hh
+	(operator==, operator<, operator<=): New.
+	* mln/core/concept/point_set.hh: Likewise.
+	* mln/core/internal/image_adaptor.hh: Add default parameter.
+	* mln/core/internal/piter_adaptor.hh: .
+	* mln/accu/histo.hh,
+	* mln/accu/median.hh,
+	* mln/accu/median_alt.hh,
+	* mln/value/viter.hh,
+	* mln/value/set.hh,
+	* mln/make/dpoint2d.hh,
+	* mln/make/point2d.hh: Fix doc.
+
+2007-07-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add a canvas to milena.
 
 	* mln/level/median.hh (impl::median): Rename as...

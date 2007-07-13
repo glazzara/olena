@@ -67,7 +67,7 @@ namespace mln
 	std::cout << std::endl;
       }
 
-      // "domain == box2d" version
+      // 2D version
       template <typename I>
       void println(const box2d& b, const I& input)
       {
@@ -79,7 +79,10 @@ namespace mln
 	for (row = b.min_row(); row <= max_row; ++row)
 	  {
 	    for (col = b.min_col(); col <= max_col; ++col)
-	      std::cout << format( input(p) ) << ' ';
+	      if (input.has(p))
+		std::cout << format( input(p) ) << ' ';
+	      else
+		std::cout << "  ";
 	    std::cout << std::endl;
 	  }
 	std::cout << std::endl;
@@ -94,7 +97,7 @@ namespace mln
     template <typename I>
     void println(const Image<I>& input)
     {
-      impl::println(exact(input).domain(), exact(input));
+      impl::println(exact(input).bbox(), exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

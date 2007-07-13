@@ -59,7 +59,7 @@ namespace mln
 
       unsigned card() const { return h_.sum(); }
 
-      operator value() const;
+      operator mln_value(S) () const;
       value to_value() const;
 
       const histo_on_set<S>& histo() const;

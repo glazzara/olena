@@ -46,14 +46,16 @@ namespace mln
      *
      * \internal
      */
-    template <typename I, typename E>
-    struct image_adaptor_ : public internal::image_base_< mln_pset(I), E >
+    template < typename I,
+	       typename E,
+	       typename S = mln_pset(I) >
+    struct image_adaptor_ : public internal::image_base_< S, E >
     {
       /// Psite associated type.
-      typedef mln_psite(I) psite;
+      typedef mln_psite(S) psite;
 
       /// Point_Set associated type.
-      typedef mln_pset(I)  pset;
+      typedef S pset;
 
       /// Value associated type.
       typedef mln_value(I)   value;
@@ -71,7 +73,7 @@ namespace mln
       bool owns_(const psite& p) const;
 
       /// Give the definition domain.
-      const pset& domain() const;
+      const S& domain() const;
 
       /// Read-only access of pixel value at point site \p p.
       rvalue operator()(const psite& p) const;
@@ -92,41 +94,43 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename E>
-    bool image_adaptor_<I,E>::has_data() const
+    template <typename I, typename E, typename S>
+    bool image_adaptor_<I,E,S>::has_data() const
     {
       return adaptee_.has_data();
     }
 
-    template <typename I, typename E>
-    bool image_adaptor_<I,E>::owns_(const psite& p) const
+    template <typename I, typename E, typename S>
+    bool image_adaptor_<I,E,S>::owns_(const psite& p) const
     {
       return adaptee_.owns_(p);
     }
 
-    template <typename I, typename E>
-    const typename image_adaptor_<I,E>::pset&
-    image_adaptor_<I,E>::domain() const
+    template <typename I, typename E, typename S>
+    const S&
+    image_adaptor_<I,E,S>::domain() const
     {
       return adaptee_.domain();
     }
 
-    template <typename I, typename E>
-    typename image_adaptor_<I,E>::rvalue
-    image_adaptor_<I,E>::operator()(const psite& p) const
+    template <typename I, typename E, typename S>
+    typename image_adaptor_<I,E,S>::rvalue
+    image_adaptor_<I,E,S>::operator()(const psite& p) const
     {
+      mln_precondition(exact(this)->owns_(p));
       return adaptee_(p);
     }
 
-    template <typename I, typename E>
-    typename image_adaptor_<I,E>::lvalue
-    image_adaptor_<I,E>::operator()(const psite& p)
+    template <typename I, typename E, typename S>
+    typename image_adaptor_<I,E,S>::lvalue
+    image_adaptor_<I,E,S>::operator()(const psite& p)
     {
+      mln_precondition(exact(this)->owns_(p));
       return adaptee_(p);
     }
 
-    template <typename I, typename E>
-    image_adaptor_<I,E>::image_adaptor_(Image<I>& adaptee)
+    template <typename I, typename E, typename S>
+    image_adaptor_<I,E,S>::image_adaptor_(Image<I>& adaptee)
       : adaptee_(exact(adaptee))
     {
     }

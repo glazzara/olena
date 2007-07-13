@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_HISTO_HH
 # define MLN_ACCU_HISTO_HH
 
-/*! \file mln/value/histo.hh
+/*! \file mln/accu/histo.hh
  *
  * \brief Define a couple of generic histogram classes.
  */

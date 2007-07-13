@@ -64,6 +64,43 @@ namespace mln
   };
 
 
+  /*! \brief Equality test between point sets \p lhs and \p rhs.
+   *
+   * \param[in] lhs A point set.
+   * \param[in] rhs Another point set.
+   *
+   * \relates mln::Point_Set
+   */
+  template <typename Sl, typename Sr>
+  bool operator==(const Point_Set<Sl>& lhs, const Point_Set<Sr>& rhs);
+
+
+
+  /*! \brief Inclusion test between point sets \p lhs and \p rhs.
+   *
+   * \param[in] lhs A point set (included?).
+   * \param[in] rhs Another point set (includer?).
+   *
+   * \relates mln::Point_Set
+   */
+  template <typename Sl, typename Sr>
+  bool operator<=(const Point_Set<Sl>& lhs, const Point_Set<Sr>& rhs);
+
+
+
+  /*! \brief Strict inclusion test between point sets \p lhs and \p
+   *  rhs.
+   *
+   * \param[in] lhs A point set (strictly included?).
+   * \param[in] rhs Another point set (includer?).
+   *
+   * \relates mln::Point_Set
+   */
+  template <typename Sl, typename Sr>
+  bool operator<(const Point_Set<Sl>& lhs, const Point_Set<Sr>& rhs);
+
+
+
   /*! \brief Print a point set \p pset into the output stream \p
    *  ostr.
    *
@@ -76,6 +113,7 @@ namespace mln
    */
   template <typename S>
   std::ostream& operator<<(std::ostream& ostr, const Point_Set<S>& pset);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -99,6 +137,66 @@ namespace mln
     m2 = 0;
     std::size_t (E::*m3)() const = & E::npoints;
     m3 = 0;
+  }
+
+
+  // operators
+
+
+  template <typename Sl, typename Sr>
+  bool operator==(const Point_Set<Sl>& lhs_, const Point_Set<Sr>& rhs_)
+  {
+    // FIXME: Same grid!
+    const Sl& lhs = exact(lhs_);
+    const Sr& rhs = exact(rhs_);
+
+    // easy test:
+    if (lhs.npoints() != rhs.npoints())
+      return false;
+
+    // exhaustive test:
+    mln_fwd_piter(Sl) pl(lhs);
+    mln_fwd_piter(Sr) pr(rhs);
+    for (pl.start(),      pr.start();
+	 pl.is_valid() && pr.is_valid();
+	 pl.next(),       pr.next())
+      if (pl != pr)
+	return false; // difference found
+
+    // both sets are equal only if both browsings are completed
+    // at the same time:
+    return ! pl.is_valid() && ! pr.is_valid();
+  }
+
+
+  template <typename Sl, typename Sr>
+  bool operator<=(const Point_Set<Sl>& lhs_, const Point_Set<Sr>& rhs_)
+  {
+    // FIXME: Same grid!
+    const Sl& lhs = exact(lhs_);
+    const Sr& rhs = exact(rhs_);
+
+    // easy test:
+    if (lhs.npoints() > rhs.npoints())
+      return false;
+
+    // exhaustive test:
+    mln_piter(Sl) pl(lhs);
+    for_all(pl)
+      if (! rhs.has(pl))
+	return false;
+
+    return true;
+  }
+
+
+  template <typename Sl, typename Sr>
+  bool operator<(const Point_Set<Sl>& lhs_, const Point_Set<Sr>& rhs_)
+  {
+    // FIXME: Same grid!
+    const Sl& lhs = exact(lhs_);
+    const Sr& rhs = exact(rhs_);
+    return lhs <= rhs && lhs.npoints() != rhs.npoints();
   }
 
 

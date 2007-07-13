@@ -25,48 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_POINT2D_HH
-# define MLN_MAKE_POINT2D_HH
-
-/*! \file mln/make/point2d.hh
+/*! \file tests/subimage.cc
  *
- * \brief Routine to construct an mln::point2d.
+ * \brief Tests on mln::subimage.
  */
 
-# include <mln/core/point2d.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/subimage.hh>
+#include <mln/fun/chess.hh>
+#include <mln/debug/println.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace make
-  {
+  image2d_b<int> ima(8, 8);
+  debug::println(ima | fun::chess);
 
-    /*! \brief Create an mln::point2d.
-     *
-     * \param[in] row Row coordinate.
-     * \param[in] col Column coordinate.
-     *
-     * \return A 2D point.
-     */
-    mln::point2d point2d(int row, int col);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    mln::point2d point2d(int row, int col)
-    {
-      mln::point2d tmp;
-      tmp[0] = row;
-      tmp[1] = col;
-      return tmp;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::make
-
-} // end of namespace mln
-
-
-#endif // ! MLN_MAKE_POINT2D_HH
+  // mln_assertion((box_8x8 | fun::chess).npoints() == 32);
+}

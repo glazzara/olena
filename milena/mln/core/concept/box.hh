@@ -85,7 +85,46 @@ namespace mln
   };
 
 
+
+  /*! \brief Equality test between boxes \p lhs and \p rhs.
+   *
+   * \param[in] lhs A box.
+   * \param[in] rhs Another box.
+   *
+   * \relates mln::Box
+   */
+  template <typename Bl, typename Br>
+  bool operator==(const Box<Bl>& lhs, const Box<Br>& rhs);
+
+
+
+  /*! \brief Inclusion test between boxes \p lhs and \p rhs.
+   *
+   * \param[in] lhs A box (included?).
+   * \param[in] rhs Another box (includor?).
+   *
+   * \relates mln::Box
+   */
+  template <typename Bl, typename Br>
+  bool operator<=(const Box<Bl>& lhs, const Box<Br>& rhs);
+
+
+  /*! \brief Strict inclusion test between boxes \p lhs and \p rhs.
+   *
+   * \param[in] lhs A box (strictly included?).
+   * \param[in] rhs Another box (includor?).
+   *
+   * \relates mln::Box
+   */
+  template <typename Bl, typename Br>
+  bool operator<(const Box<Bl>& lhs, const Box<Br>& rhs);
+
+
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+  // Box<E>
 
   template <typename E>
   const E& Box<E>::bbox() const
@@ -114,10 +153,45 @@ namespace mln
   Box<E>::npoints() const
   {
     std::size_t count = 1;
-    typedef typename E::point P; // helps g++-3.3.5
+    typedef mln_point(E) P; // helps g++-3.3.5
     for (unsigned i = 0; i < P::dim; ++i)
       count *= exact(this)->len(i);
     return count;
+  }
+
+
+  // operators
+
+  template <typename Bl, typename Br>
+  bool operator==(const Box<Bl>& lhs_, const Box<Br>& rhs_)
+  {
+    // FIXME: Same grid!
+    const Bl& lhs = exact(lhs_);
+    const Br& rhs = exact(rhs_);
+    return lhs.pmin() == rhs.pmin() && lhs.pmax() == rhs.pmax();
+  }
+
+  template <typename Bl, typename Br>
+  bool operator<=(const Box<Bl>& lhs_, const Box<Br>& rhs_)
+  {
+    // FIXME: Same grid!
+    const Bl& lhs = exact(lhs_);
+    const Br& rhs = exact(rhs_);
+    typedef mln_point(Bl) P;
+    for (unsigned i = 0; i < P::dim; ++i)
+      if (lhs.pmin()[i] < rhs.pmin()[i] ||
+	  lhs.pmax()[i] > rhs.pmax()[i])
+	return false;
+    return true;
+  }
+
+  template <typename Bl, typename Br>
+  bool operator<(const Box<Bl>& lhs_, const Box<Br>& rhs_)
+  {
+    // FIXME: Same grid!
+    const Bl& lhs = exact(lhs_);
+    const Br& rhs = exact(rhs_);
+    return lhs <= rhs && ! lhs == rhs;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

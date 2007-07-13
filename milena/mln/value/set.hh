@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_SET_HH
 # define MLN_VALUE_SET_HH
 
-/*! \file mln/value/vset.hh
+/*! \file mln/value/set.hh
  *
  * \brief Define some basic sets of values from value types.
  */

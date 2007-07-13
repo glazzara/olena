@@ -57,7 +57,7 @@ namespace mln
       void untake(const value& v);
       void init();
 
-      operator value() const;
+      operator mln_value(S) () const;
       value to_value() const;
 
       // FIXME: remove
@@ -249,7 +249,7 @@ namespace mln
     }
 
     template <typename S>
-    median_alt<S>::operator typename median_alt<S>::value () const
+    median_alt<S>::operator mln_value(S) () const
     {
       return v_;
     }
