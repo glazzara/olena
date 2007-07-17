@@ -1,5 +1,26 @@
 2007-07-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	New 2D window types in mln.
+
+	* tests/median.cc: Clean up.
+	* tests/hmedian.cc: New.
+	* tests/erosion.cc: Clean up.
+	* tests/rectangle2d.cc: Update.
+	* mln/core/hline2d.hh: New.
+	* mln/core/rectangle2d.hh
+	(half_width_, half_height_): Change to...
+	(width_, height_): ...these.
+	Update.
+	* mln/core/vline2d.hh: New.
+	* mln/morpho/erosion.hh (erosion_wrt_win): New overload.
+	* mln/level/was.median.hh: New.
+	* mln/level/approx: New.
+	* mln/level/approx/median.hh: New.
+	* mln/level/median.hh (median_as_procedure): Move into...
+	* mln/level/was.hmedian.hh: ...this new file.
+
+2007-07-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add delta to windows in mln.
 
 	* tests/erosion.cc: New.

@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_RECTANGLE2D_HH
-# define MLN_CORE_RECTANGLE2D_HH
+#ifndef MLN_CORE_VLINE2D_HH
+# define MLN_CORE_VLINE2D_HH
 
-/*! \file mln/core/rectangle2d.hh
+/*! \file mln/core/vline2d.hh
  *
- * \brief Definition of the mln::rectangle2d window.
+ * \brief Definition of the mln::vline2d window.
  */
 
 # include <mln/core/concept/window.hh>
@@ -42,19 +42,19 @@
 namespace mln
 {
  
-  /*! \brief Rectangular window defined on the 2D square grid.
+  /*! \brief Vertical line window defined on the 2D square grid.
    *
-   * A rectangle2d is a 2D window with rectangular shape.  It is
-   * centered and symmetrical.
+   * An vline2d is centered and symmetrical; so its width is 1 and
+   * its height (length) is odd.
    *
    * For instance: \n
-   *  o o o o o \n
-   *  o o x o o \n
-   *  o o o o o \n
-   * is defined with height = 3 and width = 5.
+   *  o \n
+   *  x \n
+   *  o \n
+   * is defined with length = 5.
    */
-  struct rectangle2d : public Window< rectangle2d >,
-		       public internal::set_of_<dpoint2d>
+  struct vline2d : public Window< vline2d >,
+		   public internal::set_of_<dpoint2d>
   {
     /// Point associated type.
     typedef point2d point;
@@ -62,12 +62,12 @@ namespace mln
     /// Dpoint associated type.
     typedef dpoint2d dpoint;
 
-    /*! \brief Piter type to browse a rectangle such as: "for each row
+    /*! \brief Piter type to browse a vline such as: "for each row
      * (increasing), for each column (increasing)."
      */
     typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
 
-    /*! \brief Piter type to browse a rectangle such as: "for each row
+    /*! \brief Piter type to browse a vline such as: "for each row
      * (decreasing), for each column (decreasing)."
      */
     typedef dpoints_fwd_piter<dpoint2d> bkd_qiter; // FIXME: bkd!!!
@@ -78,12 +78,11 @@ namespace mln
 
     /*! \brief Constructor.
      *
-     * \param[in] height sic
-     * \param[in] width sic
+     * \param[in] length Length, thus height, of the vertical line.
      *
-     * \pre Height and width are odd.
+     * \pre \p length is odd.
      */
-    rectangle2d(unsigned height, unsigned width);
+    vline2d(unsigned length);
 
     /*! \brief Test if the window is centered.
      *
@@ -97,13 +96,9 @@ namespace mln
      */
     bool is_symmetric() const;
 
-    /*! \brief Give the rectangle height.
+    /*! \brief Give the vline length, that is, its height.
      */
-    unsigned height() const;
-
-    /*! \brief Give the rectangle width.
-     */
-    unsigned width() const;
+    unsigned length() const;
 
     /*! \brief Give the maximum coordinate gap between the window
      * center and a window point.
@@ -111,73 +106,66 @@ namespace mln
     unsigned delta() const;
 
     /// Get the symmetrical window.
-    rectangle2d sym_() const;
+    vline2d sym_() const;
 
   protected:
-    unsigned height_, width_;
+    unsigned length_;
   };
 
 
-  /*! \brief Print a rectangle window \p win into the output stream \p
-   *  ostr.
+  /*! \brief Print a vertical 2D line window \p win into the output
+   *  stream \p ostr.
    *
    * \param[in,out] ostr An output stream.
-   * \param[in] win A rectangle window.
+   * \param[in] win A vertical 2D line window.
    *
    * \return The modified output stream \p ostr.
    *
-   * \relates mln::rectangle2d
+   * \relates mln::vline2d
    */
-  std::ostream& operator<<(std::ostream& ostr, const rectangle2d& win);
+  std::ostream& operator<<(std::ostream& ostr, const vline2d& win);
 
  
 
 # ifndef MLN_INCLUDE_ONLY
 
-  rectangle2d::rectangle2d(unsigned height, unsigned width)
-    : height_(height),
-      width_(width)
+  vline2d::vline2d(unsigned length)
+    : length_(length)
   {
-    mln_precondition(height % 2 == 1 && width % 2 == 1);
-    const int drow = height / 2, dcol = width / 2;
+    mln_precondition(length % 2 == 1);
+    const int drow = length / 2;
     for (int row = - drow; row <= drow; ++row)
-      for (int col = - dcol; col <= dcol; ++col)
-	insert(make::dpoint2d(row, col));
+      insert(make::dpoint2d(row, 0));
   }
 
-  bool rectangle2d::is_centered() const
+  bool vline2d::is_centered() const
   {
     return true;
   }
 
-  bool rectangle2d::is_symmetric() const
+  bool vline2d::is_symmetric() const
   {
     return true;
   }
 
-  unsigned rectangle2d::height() const
+  unsigned vline2d::length() const
   {
-    return height_;
+    return length_;
   }
 
-  unsigned rectangle2d::width() const
+  unsigned vline2d::delta() const
   {
-    return width_;
+    return length_ / 2;
   }
 
-  unsigned rectangle2d::delta() const
-  {
-    return width_ > height_ ? width_ / 2 : height_ / 2;
-  }
-
-  rectangle2d rectangle2d::sym_() const
+  vline2d vline2d::sym_() const
   {
     return *this;
   }
 
-  std::ostream& operator<<(std::ostream& ostr, const rectangle2d& win)
+  std::ostream& operator<<(std::ostream& ostr, const vline2d& win)
   {
-    ostr << "[rectangle2d: width=" << win.width() << ", height=" << win.height() << ']';
+    ostr << "[line2d: length=" << win.length() << ']';
     return ostr;
   }
 
@@ -187,9 +175,4 @@ namespace mln
 
 
 
-// when rectangle2d is involved, one surely also wants:
-# include <mln/core/hline2d.hh>
-# include <mln/core/vline2d.hh>
-
-
-#endif // ! MLN_CORE_RECTANGLE2D_HH
+#endif // ! MLN_CORE_VLINE2D_HH

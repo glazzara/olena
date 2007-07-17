@@ -45,13 +45,13 @@
 #include <mln/fun/ops.hh>
 
 
-using namespace mln;
-using namespace mln::value;
-
 
 int main()
 {
-  rectangle2d rec(4, 4);//64, 64);
+  using namespace mln;
+  using value::int_u8;
+
+  rectangle2d rec(21, 21);
   border::thickness = 66;
 
   image2d_b<int_u8>

@@ -38,12 +38,12 @@ int main()
 {
   using namespace mln;
 
-  const unsigned h = 3, w = 4;
+  const unsigned h = 3, w = 5;
   rectangle2d rec(h, w);
 
   mln_assertion(rec.is_centered());
   mln_assertion(rec.is_symmetric());
   mln_assertion(rec == -rec);
-  mln_assertion(rec.nelements() == (2*h+1) * (2*w+1));
+  mln_assertion(rec.nelements() == h * w);
 }
 

@@ -34,9 +34,11 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/window2d.hh>
-# include <mln/accu/median.hh>
 
+# include <mln/core/window2d.hh>
+# include <mln/core/hline2d.hh>
+
+# include <mln/accu/median.hh>
 # include <mln/canvas/sbrowsing.hh>
 
 
@@ -66,88 +68,6 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename W, typename O>
-      void median_as_procedure(const I& input,
-			       const W& win,
-			       O& output)
-      {
-	mln_precondition(input.has_data());
-	mln_precondition(output.has_data());
-
-	int
-	  min_row = input.min_row(), max_row = input.max_row(),
-	  min_col = input.min_col(), max_col = input.max_col();
-
-	window2d
-	  win_fwd_plus  = win - (win + left),
-	  win_fwd_minus = (win + left) - win,
-	  win_bkd_plus  = win - (win + right),
-	  win_bkd_minus = (win + right) - win,
-	  win_bot  = win - (win + up),
-	  win_top = (win + up) - win;
-
-	point2d p;
-	mln_qiter(W)
-	  q_fp(win_fwd_plus, p), q_fm(win_fwd_minus, p),
-	  q_bp(win_bkd_plus, p), q_bm(win_bkd_minus, p),
-	  q_top(win_top, p), q_bot(win_bot, p);
-	
-	accu::median_on<mln_value(I)> med;
-
-	// initialization
-
-	p = input.domain().pmin() + up;
-	med.init();
-	{
-	  mln_qiter(W) q(win, p);
-	  for_all(q) if (input.has(q))
-	    med.take(input(q));
-	}
-
-	int& row = p.row();
-	int& col = p.col();
-	bool fwd = true;
-
-	mln_assertion(p.col() == min_col);
-	mln_assertion(p.row() == min_row - 1);
-
-	for (row = min_row; row <= max_row; ++row)
-	  {
-	    // "go down"
-	    for_all(q_top) if (input.has(q_top))
-	      med.untake(input(q_top));
-	    for_all(q_bot) if (input.has(q_bot))
-	      med.take(input(q_bot));
-	    output(p) = med;
-
-	    if (fwd)
-	      // browse line fwd
-	      while (col < max_col)
-		{
-		  ++col;
-		  for_all(q_fm) if (input.has(q_fm))
-		    med.untake(input(q_fm));
-		  for_all(q_fp) if (input.has(q_fp))
-		    med.take(input(q_fp));
-		  output(p) = med;
-		}
-	    else
-	      // browse line bkd
-	      while (col > min_col)
-		{
-		  --col;
-		  for_all(q_bm) if (input.has(q_bm))
-		    med.untake(input(q_bm));
-		  for_all(q_bp) if (input.has(q_bp))
-		    med.take(input(q_bp));
-		  output(p) = med;
-		}
-
-	    // change browsing
-	    fwd = ! fwd;
-	  }
-      }
-
 
       template <typename I, typename W, typename O>
       struct median_functor
@@ -167,7 +87,7 @@ namespace mln
 
 	// ctor
 
-	median_functor(I& input_, const W& win_, O& output_)
+	median_functor(const I& input_, const W& win_, O& output_)
 	  :
 	  // i/o
 	  input(exact(input_)),
@@ -224,13 +144,77 @@ namespace mln
       }; // end of median_functor
 
 
+
+
       template <typename I, typename W, typename O>
-      void median(I& input, const W& win, O& output)
+      void median(const I& input, const Window<W>& win, O& output)
       {
 	// FIXME: resize border!
-	impl::median_functor<I,W,O> f(input, win, output);
+	impl::median_functor<I,W,O> f(input, exact(win), output);
 	canvas::sbrowsing(f);
       }
+
+
+
+
+      template <typename I, typename O>
+      void median(const I& input, const hline2d& win, O& output)
+      {
+	const int
+	  max_row = input.max_row(),
+	  min_col = input.min_col(),
+	  max_col = input.max_col();
+	const unsigned half = win.length() / 2;
+
+	point2d p;
+	int& row = p.row();
+	int& col = p.col();
+
+	accu::median_on<mln_value(I)> med;
+
+	for (row = input.min_row(); row <= max_row; ++row)
+	  {
+	    int ct, cu;
+
+	    // initialization (before first point of the row)
+	    med.init();
+	    for (ct = min_col; ct < min_col + half; ++ct)
+	      med.take(input.at(row, ct));
+
+	    // left columns (just take new points)
+	    for (col = min_col; col <= min_col + half; ++col, ++ct)
+	      {
+		med.take(input.at(row, ct));
+		output(p) = med;
+	      }
+	    
+	    // middle columns (both take and untake)
+	    cu = min_col;
+	    for (; col <= max_col - half; ++cu, ++col, ++ct)
+	      {
+		med.take(input.at(row, ct));
+		med.untake(input.at(row, cu));
+		output(p) = med;
+	      }
+
+	    // right columns (now just untake old points)
+	    for (; col <= max_col; ++cu, ++col)
+	      {
+		med.untake(input.at(row, cu));
+		output(p) = med;
+	      }
+	  }
+      }
+
+
+      // FIXME: Use transpose.
+
+//       template <typename I, typename O>
+//       void median(const I& input, const vline2d& win, O& output)
+//       {
+
+// 	median(, hline2d(win.length()), output);
+//       }
 
 
     } // end of namespace mln::level::impl
@@ -242,6 +226,7 @@ namespace mln
     void median(const Image<I>& input, const Window<W>& win,
 		Image<O>& output)
     {
+      mln_assertion(exact(output).domain() == exact(input).domain());
       impl::median(exact(input), exact(win), exact(output)); 
     }
 

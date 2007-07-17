@@ -106,6 +106,7 @@ namespace mln
 
       // FIXME: stage 3: dispatch w.r.t. fast property
 
+
       // stage 2: dispatch w.r.t. the value kind
 
       template <typename I, typename W, typename O>
@@ -123,20 +124,35 @@ namespace mln
       }
 
 
-      // stage 1: dispatch w.r.t. the window type
 
-      template <typename I, typename W, typename O> // general case
+      // stage 1: dispatch w.r.t. the window type
+      //   |
+      //   V
+
+      template <typename I, typename W, typename O>
       void erosion_wrt_win(const Image<I>& input, const Window<W>& win, Image<O>& output)
       {
 	erosion_wrt_value(mln_kind(I)(), exact(input), exact(win), output);
+	//                   | 
+	//                    -->  call stage 2: dispatch w.r.t. the value kind
       }
 
-//       template <typename I, typename O> // rectangle2d
-//       void erosion_wrt_win(const Image<I>& input, const rectangle2d& win, Image<O>& output)
-//       {
-// 	return FIXME;
-//       }
-      
+#  ifdef MLN_CORE_RECTANGLE2D_HH
+
+      template <typename I, typename O>
+      void erosion_wrt_win(const Image<I>& input, const rectangle2d& win, Image<O>& output)
+      {
+	O tmp(exact(output).domain());
+	morpho::erosion(input, hline2d(win.width()),  tmp);
+	morpho::erosion(tmp,   vline2d(win.height()), output);
+      }
+
+#  endif // MLN_CORE_RECTANGLE2D_HH
+
+      //   ^
+      //   |
+      // end of stage1 (dispatch w.r.t. the window type)
+
 
     } // end of namespace mln::morpho::impl
 
@@ -146,6 +162,9 @@ namespace mln
     template <typename I, typename W, typename O>
     void erosion(const Image<I>& input, const Window<W>& win, Image<O>& output)
     {
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      mln_precondition(! exact(win).is_empty());
+
       impl::erosion_wrt_win(input, exact(win), output);
       if (exact(win).is_centered())
 	mln_postcondition(output <= input);
