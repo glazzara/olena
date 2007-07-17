@@ -1,3 +1,34 @@
+2007-07-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Introduce accumulators and point-wise operations in mln.
+
+	* tests/pw_value.cc: New.
+	* mln/estim/mean.hh: New.
+	* mln/fun/chess.hh (result): New.
+	* mln/fun/ops.hh: New.
+	* mln/fun/val.hh: New.
+	* mln/fun/pw_value.hh: New.
+	* mln/fun/var.hh: New.
+	* mln/core/concept/doc/accumulator.hh: New.
+	* mln/core/concept/accumulator.hh: New.
+	* mln/core/concept/function.hh (Function_i2v): New.
+	* mln/core/macros.hh (mln_result): New.
+	* mln/arith: New.
+	* mln/arith/plus.hh: New.
+	* mln/level/apply.hh: New.
+	* mln/level/transform.hh: New.
+	* mln/accu/counter.hh: New.
+	* mln/accu/mean.hh: New.
+	* mln/value/kind.hh: New.
+	* mln/value/props.hh (mln_kind, kind): New.
+
+	* mln/estim/count.hh: Remove; useless.
+	* mln/fun/all.hh (all): Change inheritance.
+	* mln/core/point.hh (point_): Strenghten sigs.
+	* mln/core/dpoint.hh (dpoint_): Likewise.
+	* mln/accu/histo.hh: Add inheritance.
+	* mln/accu/median.hh: Likewise.
+
 2007-07-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix make doc, handle todos, and pass tests with g++-2.95.

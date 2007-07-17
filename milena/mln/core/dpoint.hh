@@ -87,7 +87,7 @@ namespace mln
     /*! \brief Constructor; coordinates are set by function \p f.
      */
     template <typename F>
-    dpoint_(const Function<F>& f);
+    dpoint_(const Function_i2v<F>& f);
 
     /*! \brief Set all coordinates to the value \p c.
      */
@@ -124,7 +124,7 @@ namespace mln
 
   template <unsigned n, typename C>
   template <typename F>
-  dpoint_<n,C>::dpoint_(const Function<F>& f_)
+  dpoint_<n,C>::dpoint_(const Function_i2v<F>& f_)
   {
     const F& f = exact(f_);
     for (unsigned i = 0; i < n; ++i)

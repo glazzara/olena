@@ -68,6 +68,18 @@ namespace mln
   };
 
 
+  // Index -> Value.
+
+  /// Base class for implementation of function-objects from index to
+  /// value.
+  template <typename E>
+  struct Function_i2v : public Function_v2v<E>
+  {
+  protected:
+    Function_i2v();
+  };
+
+
   // Point -> Value.
 
   /// Base class for implementation of function-objects from point to
@@ -110,10 +122,16 @@ namespace mln
   template <typename E>
   Function<E>::Function()
   {
+    typedef mln_result(E) result;
   }
 
   template <typename E>
   Function_v2v<E>::Function_v2v()
+  {
+  }
+
+  template <typename E>
+  Function_i2v<E>::Function_i2v()
   {
   }
 

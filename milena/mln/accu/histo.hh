@@ -37,6 +37,7 @@
 # include <algorithm>
 
 # include <mln/core/concept/value_set.hh>
+# include <mln/core/concept/accumulator.hh>
 # include <mln/value/set.hh>
 
 
@@ -50,7 +51,7 @@ namespace mln
     /*! Generic histogram class over a value set with type \c S.
      */
     template <typename S>
-    struct histo_on_set
+    struct histo_on_set : public Accumulator< histo_on_set<S> >
     {
       histo_on_set(const Value_Set<S>& s);
 
@@ -84,6 +85,9 @@ namespace mln
 
 
     /*! Generic histogram class over the set of values of type \c T.
+     *
+     * \todo Inheritance is badly formed since this concrete class
+     * derives from another concrete class.
      */
     template <typename T>
     struct histo_on_type : public histo_on_set< value::set_<T> >

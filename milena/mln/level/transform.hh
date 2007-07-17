@@ -25,48 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_CHESS_HH
-# define MLN_FUN_CHESS_HH
+#ifndef MLN_LEVEL_TRANSFORM_HH
+# define MLN_LEVEL_TRANSFORM_HH
 
-/*! \file mln/fun/chess.hh
+/*! \file mln/level/transform.hh
  *
- * \brief FIXME.
+ * \brief Transform the contents of an image into another one.
  */
 
+# include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
 
 
 namespace mln
 {
 
-  namespace fun
+  namespace level
   {
 
-    // FIXME: Doc!
-
-    struct chess_t : public Function_p2b< chess_t >
-    {
-      typedef bool result;
-      bool operator()(const point2d& p) const;
-    }
-
-    chess;
+    /*! Transform the image \p input through a function \p f to set
+     *  the \p output image.
+     *
+     * \param[in] input The input image.
+     * \param[in] f The function.
+     * \param[out] output The result image.
+     *
+     * This routine runs: \n
+     * for all p of \p input, \p output(p) = \p f( \p input(p) ).
+     *
+     * \pre \p output.domain >= \p input.domain
+     */
+    template <typename I, typename F, typename O>
+    void transform(const Image<I>& input, const Function_v2v<F>& f, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    bool
-    chess_t::operator()(const point2d& p) const
+    template <typename I, typename F, typename O>
+    void transform(const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
     {
-      return (p.row() + p.col()) % 2 == 0;
+      const I& input  = exact(input_);
+      const F& f      = exact(f_);
+            O& output = exact(output_);
+
+      mln_precondition(output.domain() >= input.domain());
+
+      mln_piter(I) p(input.domain());
+      for_all(p)
+	output(p) = f( input(p) );
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::fun
+  } // end of namespace mln::level
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_CHESS_HH
+#endif // ! MLN_LEVEL_TRANSFORM_HH

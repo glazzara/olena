@@ -25,48 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_CHESS_HH
-# define MLN_FUN_CHESS_HH
-
-/*! \file mln/fun/chess.hh
+/*! \file tests/pw_value.cc
  *
- * \brief FIXME.
+ * \brief Test on mln::fun::pw_value_.
  */
 
-# include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/fun/pw_value.hh>
+#include <mln/fun/ops.hh>
+#include <mln/fun/val.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace fun
-  {
+  image2d_b<int> ima(3, 3);
+  point2d p = make::point2d(1, 1);
+  ima(p) = 51;
 
-    // FIXME: Doc!
-
-    struct chess_t : public Function_p2b< chess_t >
-    {
-      typedef bool result;
-      bool operator()(const point2d& p) const;
-    }
-
-    chess;
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    bool
-    chess_t::operator()(const point2d& p) const
-    {
-      return (p.row() + p.col()) % 2 == 0;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::fun
-
-} // end of namespace mln
-
-
-#endif // ! MLN_FUN_CHESS_HH
+  std::cout << (pw_value(ima) == val(51))(p) << std::endl;
+}

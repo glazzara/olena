@@ -25,48 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_CHESS_HH
-# define MLN_FUN_CHESS_HH
-
-/*! \file mln/fun/chess.hh
- *
- * \brief FIXME.
+/*! \file mln/core/concept/doc/accumulator.hh
+ * \brief This file documents the concept of mln::Accumulator.
  */
-
-# include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
-
 
 namespace mln
 {
 
-  namespace fun
+  namespace doc
   {
 
-    // FIXME: Doc!
-
-    struct chess_t : public Function_p2b< chess_t >
+    /*! \brief Documentation class for mln::Accumulator.
+     * \see mln::Accumulator
+     */
+    template <typename E>
+    struct Accumulator
     {
-      typedef bool result;
-      bool operator()(const point2d& p) const;
-    }
+      /// The value type of elements to accumulate.
+      typedef void value;
 
-    chess;
+      /// Initialize the accumulator.
+      void init();
 
+      /// Take into account a value \p v (an element).
+      void take(const value& v);
+    };
 
-# ifndef MLN_INCLUDE_ONLY
-
-    bool
-    chess_t::operator()(const point2d& p) const
-    {
-      return (p.row() + p.col()) % 2 == 0;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::fun
+  } // end of namespace mln::doc
 
 } // end of namespace mln
-
-
-#endif // ! MLN_FUN_CHESS_HH

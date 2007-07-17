@@ -25,48 +25,85 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_CHESS_HH
-# define MLN_FUN_CHESS_HH
+#ifndef MLN_ACCU_COUNTER_HH
+# define MLN_ACCU_COUNTER_HH
 
-/*! \file mln/fun/chess.hh
+/*! \file mln/accu/counter.hh
  *
- * \brief FIXME.
+ * \brief Define an accumulator that counts.
  */
 
-# include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/concept/accumulator.hh>
 
 
 namespace mln
 {
 
-  namespace fun
+  namespace accu
   {
 
-    // FIXME: Doc!
 
-    struct chess_t : public Function_p2b< chess_t >
+    /*! Generic counter accumulator class.
+     */
+    template <typename V>
+    struct counter : public Accumulator< counter<V> >
     {
-      typedef bool result;
-      bool operator()(const point2d& p) const;
-    }
+      typedef V value;
 
-    chess;
+      counter();
+      void take(const value&);
+      void init();
+
+      operator std::size_t() const;
+      std::size_t to_value() const;
+      
+    protected:
+
+      std::size_t count_;
+    };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    bool
-    chess_t::operator()(const point2d& p) const
+    template <typename V>
+    counter<V>::counter()
     {
-      return (p.row() + p.col()) % 2 == 0;
+      init();
+    }
+
+    template <typename V>
+    void
+    counter<V>::take(const value&)
+    {
+      ++count_;
+    }
+
+    template <typename V>
+    void
+    counter<V>::init()
+    {
+      count_ = 0;
+    }
+
+    template <typename V>
+    counter<V>::operator std::size_t() const
+    {
+      return to_value();
+    }
+
+    template <typename V>
+    std::size_t
+    counter<V>::to_value() const
+    {
+      return count_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::fun
+  } // end of namespace mln::accu
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_CHESS_HH
+#endif // ! MLN_ACCU_COUNTER_HH

@@ -138,6 +138,9 @@
 
 // r
 
+/// Shortcut to access the result type associated to T.
+# define mln_result(T)     typename T::result
+
 /// Shortcut to access the rvalue type associated to T.
 # define mln_rvalue(T)     typename T::rvalue
 

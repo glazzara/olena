@@ -25,48 +25,73 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_CHESS_HH
-# define MLN_FUN_CHESS_HH
+#ifndef MLN_FUN_VAL_HH
+# define MLN_FUN_VAL_HH
 
-/*! \file mln/fun/chess.hh
+/*! \file mln/fun/val.hh
  *
  * \brief FIXME.
  */
 
 # include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
 
 
 namespace mln
 {
 
+  // FIXME: Doc!
+
   namespace fun
   {
 
-    // FIXME: Doc!
-
-    struct chess_t : public Function_p2b< chess_t >
+    template <typename T>
+    struct val_ : public Function_p2v< val_<T> >
     {
-      typedef bool result;
-      bool operator()(const point2d& p) const;
-    }
+      typedef T result;
+      val_(T t);
+      template <typename P>
+      T operator()(const P&) const;
+    private:
+      T t_;
+    };
 
-    chess;
+  } // end of namespace mln::fun
+
+  template <typename T>
+  fun::val_<T> val(T t);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    bool
-    chess_t::operator()(const point2d& p) const
+  namespace fun
+  {
+
+    template <typename T>
+    val_<T>::val_(T t)
+      : t_(t)
     {
-      return (p.row() + p.col()) % 2 == 0;
     }
 
-# endif // ! MLN_INCLUDE_ONLY
+    template <typename T>
+    template <typename P>
+    T
+    val_<T>::operator()(const P&) const
+    {
+      return t_;
+    }
 
   } // end of namespace mln::fun
+
+  template <typename T>
+  fun::val_<T> val(T t)
+  {
+    fun::val_<T> tmp(t);
+    return tmp;
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_CHESS_HH
+#endif // ! MLN_FUN_VAL_HH

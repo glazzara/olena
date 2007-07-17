@@ -25,48 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_CHESS_HH
-# define MLN_FUN_CHESS_HH
+#ifndef MLN_VALUE_KIND_HH
+# define MLN_VALUE_KIND_HH
 
-/*! \file mln/fun/chess.hh
+/*! \file mln/value/tags.hh
  *
- * \brief FIXME.
+ * \brief Define the set of kinds of value.
  */
-
-# include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
 
 
 namespace mln
 {
 
-  namespace fun
+  namespace value
   {
 
     // FIXME: Doc!
 
-    struct chess_t : public Function_p2b< chess_t >
+    struct kind
     {
-      typedef bool result;
-      bool operator()(const point2d& p) const;
-    }
+    };
 
-    chess;
+    struct gray_level_kind : kind {};
+    struct color_kind  : kind {};
+    struct label_kind  : kind {};
+    struct binary_kind : kind {};
+    struct data_kind   : kind {};
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    bool
-    chess_t::operator()(const point2d& p) const
-    {
-      return (p.row() + p.col()) % 2 == 0;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::fun
+  } // end of namespace mln::value
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_CHESS_HH
+#endif // ! MLN_VALUE_KIND_HH

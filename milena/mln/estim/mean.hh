@@ -25,48 +25,57 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_CHESS_HH
-# define MLN_FUN_CHESS_HH
+#ifndef MLN_ESTIM_MEAN_HH
+# define MLN_ESTIM_MEAN_HH
 
-/*! \file mln/fun/chess.hh
+/*! \file mln/estim/mean.hh
  *
- * \brief FIXME.
+ * \brief Compute the mean pixel value.
  */
 
-# include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/accu/mean.hh>
 
 
 namespace mln
 {
 
-  namespace fun
+  namespace estim
   {
 
-    // FIXME: Doc!
 
-    struct chess_t : public Function_p2b< chess_t >
-    {
-      typedef bool result;
-      bool operator()(const point2d& p) const;
-    }
+    /*! \brief Compute the mean value of the pixels of image \p input.
+     *
+     * Parameter \c S is the type of the mean value.
+     */
+    template <typename S, typename I>
+    S mean(const Image<I>& input);
 
-    chess;
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    bool
-    chess_t::operator()(const point2d& p) const
+    template <typename S, typename I>
+    S
+    mean(const Image<I>& input_)
     {
-      return (p.row() + p.col()) % 2 == 0;
+      const I& input = exact(input_);
+      mln_precondition(input.has_data());
+
+      accu::mean<mln_value(I), S> m;
+
+      mln_piter(I) p(input.domain());
+      for_all(p)
+	m.take(input(p));
+
+      return m;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::fun
+  } // end of namespace mln::estim
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_CHESS_HH
+#endif // ! MLN_ESTIM_MEAN_HH

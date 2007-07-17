@@ -33,6 +33,7 @@
  * \brief Define FIXME
  */
 
+# include <mln/core/concept/accumulator.hh>
 # include <mln/accu/histo.hh>
 
 
@@ -47,7 +48,7 @@ namespace mln
      * with type \c S.
      */
     template <typename S>
-    struct median
+    struct median : public Accumulator< median<S> >
     {
       typedef mln_value(S) value;
 
@@ -91,6 +92,11 @@ namespace mln
     };
 
 
+    /*! Generic median class over the set of values of type \c T.
+     *
+     * \todo Inheritance is badly formed since this concrete class
+     * derives from another concrete class.
+     */
     template <typename T>
     struct median_on : public median< value::set_<T> >
     {

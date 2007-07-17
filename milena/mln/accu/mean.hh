@@ -25,73 +25,92 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_ALL_HH
-# define MLN_FUN_ALL_HH
+#ifndef MLN_ACCU_MEAN_HH
+# define MLN_ACCU_MEAN_HH
 
-/*! \file mln/fun/all.hh
+/*! \file mln/accu/mean.hh
  *
- * \brief FIXME.
+ * \brief Define an accumulator that computes a mean.
  */
 
-# include <mln/core/concept/function.hh>
+# include <mln/core/concept/accumulator.hh>
 
-
-// FIXME: Usually all.hh is the file to include all files in the current directory...
 
 namespace mln
 {
 
-  namespace fun
+  namespace accu
   {
 
-    template <typename T>
-    struct all : public Function_i2v< all<T> >
+
+    /*! Generic mean accumulator class.
+     *
+     * Parameter \c V is the type of values that we sum.  Parameter \c
+     * S is the type to store the sum of values; the default type of
+     * \c S is \c V.  Parameter \c M is the type of the mean value;
+     * the default type of \c M is \c S.
+     */
+    template <typename V, typename S = V, typename M = S>
+    struct mean : public Accumulator< mean<V,S,M> >
     {
-      typedef T result;
-      all(T t);
-      template <typename U>
-      T operator()(const U&) const;
-    private:
-      T t_;
+      typedef V value;
+
+      mean();
+      void take(const value& v);
+      void init();
+
+      operator M() const;
+      M to_value() const;
+      
+    protected:
+
+      std::size_t count_;
+      S sum_;
     };
 
-  } // end of namespace mln::fun
-
-  template <typename T>
-  fun::all<T> all(T t);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  namespace fun
-  {
-
-    template <typename T>
-    all<T>::all(T t)
-      : t_(t)
+    template <typename V, typename S, typename M>
+    mean<V,S,M>::mean()
     {
+      init();
     }
 
-    template <typename T>
-    template <typename U>
-    T
-    all<T>::operator()(const U&) const
+    template <typename V, typename S, typename M>
+    void mean<V,S,M>::take(const value& v)
     {
-      return t_;
+      ++count_;
+      sum_ += v;
     }
 
-  } // end of namespace mln::fun
+    template <typename V, typename S, typename M>
+    void
+    mean<V,S,M>::init()
+    {
+      count_ = 0;
+      sum_ = 0;
+    }
 
-  template <typename T>
-  fun::all<T> all(T t)
-  {
-    fun::all<T> tmp(t);
-    return tmp;
-  }
+    template <typename V, typename S, typename M>
+    mean<V,S,M>::operator M() const
+    {
+      return to_value;
+    }
+
+    template <typename V, typename S, typename M>
+    M
+    mean<V,S,M>::to_value() const
+    {
+      return sum_ / count_;
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::accu
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_ALL_HH
+#endif // ! MLN_ACCU_MEAN_HH

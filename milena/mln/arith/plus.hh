@@ -25,48 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_CHESS_HH
-# define MLN_FUN_CHESS_HH
+#ifndef MLN_ARITH_PLUS_HH
+# define MLN_ARITH_PLUS_HH
 
-/*! \file mln/fun/chess.hh
+/*! \file mln/arith/plus.hh
  *
- * \brief FIXME.
+ * \brief Point-wise addition between images.
  */
 
-# include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/concept/image.hh>
 
 
 namespace mln
 {
 
-  namespace fun
+  namespace arith
   {
 
-    // FIXME: Doc!
+    /*! Point-wise addition of images \p lhs and \p rhs.
+     *
+     * \param[in] lhs First operand image.
+     * \param[in] rhs Second operand image.
+     * \param[out] output The result image.
+     *
+     * \pre \p output.domain == \p lhs.domain == \p rhs.domain
+     */
+    template <typename L, typename R, typename O>
+    void plus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
 
-    struct chess_t : public Function_p2b< chess_t >
-    {
-      typedef bool result;
-      bool operator()(const point2d& p) const;
-    }
-
-    chess;
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    bool
-    chess_t::operator()(const point2d& p) const
+    template <typename L, typename R, typename O>
+    void plus(const Image<L>& lhs_, const Image<R>& rhs_, Image<O>& output_)
     {
-      return (p.row() + p.col()) % 2 == 0;
+      const L& lhs = exact(lhs_);
+      const R& rhs = exact(rhs_);
+      O& output = exact(output_);
+
+      mln_precondition(rhs.domain() == lhs.domain());
+      mln_precondition(output.domain() == lhs.domain());
+
+      mln_piter(I) p(output.domain());
+      for_all(p)
+	output(p) = lhs(p) + rhs(p);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::fun
+  } // end of namespace mln::arith
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_CHESS_HH
+#endif // ! MLN_ARITH_PLUS_HH

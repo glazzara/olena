@@ -25,48 +25,106 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_CHESS_HH
-# define MLN_FUN_CHESS_HH
+#ifndef MLN_FUN_PW_VALUE_HH
+# define MLN_FUN_PW_VALUE_HH
 
-/*! \file mln/fun/chess.hh
+/*! \file mln/fun/pw_value.hh
  *
  * \brief FIXME.
  */
 
 # include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/value/props.hh>
+
 
 
 namespace mln
 {
 
+  // Fwd decl.
+  namespace fun { template <typename I> struct pw_value; }
+
+
+
+  // FIXME: Doc!
+  
+  template <typename I>
+  fun::pw_value<I> pw_value(const Image<I>& ima);
+  
+
+
   namespace fun
   {
 
+    // FIXME: Move!
+
+    namespace internal
+    {
+
+      template <typename K, typename E>
+      struct function_ : Function_p2v<E>
+      {};
+
+      template <typename E>
+      struct function_< value::binary_kind, E > : Function_p2b<E>
+      {};
+
+    } // end of namespace mln::fun::internal
+
+
     // FIXME: Doc!
 
-    struct chess_t : public Function_p2b< chess_t >
+    template <typename I>
+    struct pw_value : public internal::function_< mln_kind(I), pw_value<I> >
     {
-      typedef bool result;
-      bool operator()(const point2d& p) const;
-    }
+      typedef mln_value(I) result;
+      pw_value(const I& ima);
+      mln_rvalue(I) operator()(const mln_psite(I)& p) const;
+    protected:
+      const I& ima_;
+    };
 
-    chess;
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    bool
-    chess_t::operator()(const point2d& p) const
+    // fun::pw_value<I>
+
+    template <typename I>
+    pw_value<I>::pw_value(const I& ima)
+      : ima_(ima)
     {
-      return (p.row() + p.col()) % 2 == 0;
+    }
+
+    template <typename I>
+    mln_rvalue(I)
+      pw_value<I>::operator()(const mln_psite(I)& p) const
+    {
+      mln_precondition(ima_.owns_(p));
+      return ima_(p);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::fun
 
+# ifndef MLN_INCLUDE_ONLY
+
+  // pw_value
+
+  template <typename I>
+  fun::pw_value<I>
+  pw_value(const Image<I>& ima)
+  {
+    mln_precondition(exact(ima).has_data());
+    fun::pw_value<I> tmp(exact(ima));
+    return tmp;
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
+
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_CHESS_HH
+#endif // ! MLN_FUN_PW_VALUE_HH

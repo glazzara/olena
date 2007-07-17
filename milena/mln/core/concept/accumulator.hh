@@ -25,48 +25,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_CHESS_HH
-# define MLN_FUN_CHESS_HH
+#ifndef MLN_CORE_CONCEPT_ACCUMULATOR_HH
+# define MLN_CORE_CONCEPT_ACCUMULATOR_HH
 
-/*! \file mln/fun/chess.hh
+/*! \file mln/core/concept/accumulator.hh
  *
- * \brief FIXME.
+ * \brief Definition of the concept of mln::Accumulator.
  */
 
-# include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/concept/object.hh>
 
 
 namespace mln
 {
 
-  namespace fun
+
+  /*! \brief Base class for implementation of accumulators.
+   *
+   * The parameter \a E is the exact type.
+   *
+   * \see mln::doc::Accumulator for a complete documentation of this
+   * class contents.
+   */
+  template <typename E>
+  struct Accumulator : public Object<E>
   {
-
-    // FIXME: Doc!
-
-    struct chess_t : public Function_p2b< chess_t >
-    {
-      typedef bool result;
-      bool operator()(const point2d& p) const;
-    }
-
-    chess;
+    /*
+      typedef value;
+      void init();
+      void take(const value& v);
+     */
+  protected:
+    Accumulator();
+  };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    bool
-    chess_t::operator()(const point2d& p) const
-    {
-      return (p.row() + p.col()) % 2 == 0;
-    }
+  template <typename E>
+  Accumulator<E>::Accumulator()
+  {
+    typedef mln_value(E) value;
+    void (E::*m1)() = & E::init;
+    m1 = 0;
+    void (E::*m2)(const value&) = & E::take;
+    m2 = 0;
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_CHESS_HH
+#endif // ! MLN_CORE_CONCEPT_ACCUMULATOR_HH

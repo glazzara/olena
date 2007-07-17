@@ -36,6 +36,9 @@
 # include <climits>
 # include <cfloat>
 
+# include <mln/core/macros.hh>
+# include <mln/value/kind.hh>
+
 
 /// Get the minimum value of type \c T.
 # define mln_min(T) mln::value::props<T>::min()
@@ -49,12 +52,18 @@
 # define mln_card(T) mln::value::props<T>::card()
 
 
+/// Get the kind of the value type of image \c I.
+# define mln_kind(I) typename mln::value::props< mln_value(I) >::kind
+
+
+
 
 namespace mln
 {
 
   namespace value
   {
+
 
     /*! Class that defines the properties of the value type \c T.
      */
@@ -80,6 +89,7 @@ namespace mln
       static bool min() { return false; }
       static bool max() { return true; }
       static std::size_t card() { return 2; }
+      typedef binary_kind kind;
     };
 
     // integers
@@ -90,6 +100,7 @@ namespace mln
       static unsigned char min() { return   0; }
       static unsigned char max() { return 255; }
       static std::size_t  card() { return 256; }
+      typedef data_kind kind;
     };
 
     template <>
@@ -98,6 +109,7 @@ namespace mln
       static signed char  min() { return -128; }
       static signed char  max() { return  127; }
       static std::size_t card() { return  256; }
+      typedef data_kind kind;
     };
 
     template <>
@@ -106,6 +118,7 @@ namespace mln
       static unsigned short min() { return     0; }
       static unsigned short max() { return 65535; }
       static std::size_t   card() { return 65536; }
+      typedef data_kind kind;
     };
 
     template <>
@@ -114,6 +127,7 @@ namespace mln
       static signed short min() { return -32768; }
       static signed short max() { return  32767; }
       static std::size_t card() { return 655356; }
+      typedef data_kind kind;
     };
 
     template <>
@@ -122,6 +136,7 @@ namespace mln
       static unsigned int min() { return 0; }
       static unsigned int max() { return UINT_MAX; }
       static std::size_t card() { return std::size_t(UINT_MAX) + 1; }
+      typedef data_kind kind;
     };
 
     template <>
@@ -130,6 +145,7 @@ namespace mln
       static signed int  min() { return INT_MIN; }
       static signed int  max() { return INT_MAX; }
       static std::size_t card() { return std::size_t(UINT_MAX) + 1; }
+      typedef data_kind kind;
     };
 
     template <>
@@ -137,6 +153,7 @@ namespace mln
     {
       static unsigned long int min() { return 0; }
       static unsigned long int max() { return ULONG_MAX; }
+      typedef data_kind kind;
     };
 
     template <>
@@ -144,6 +161,7 @@ namespace mln
     {
       static signed long int min() { return LONG_MIN; }
       static signed long int max() { return LONG_MAX; }
+      typedef data_kind kind;
     };
 
     // floating
@@ -153,6 +171,7 @@ namespace mln
     {
       static float min() { return FLT_MIN; }
       static float max() { return FLT_MAX; }
+      typedef data_kind kind;
     };
 
     template <>
@@ -160,6 +179,7 @@ namespace mln
     {
       static double min() { return DBL_MIN; }
       static double max() { return DBL_MAX; }
+      typedef data_kind kind;
     };
 
 # endif // ! MLN_INCLUDE_ONLY
