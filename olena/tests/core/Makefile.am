@@ -21,6 +21,7 @@ AM_CXXFLAGS = $(TESTS_CXXFLAGS)
 check_PROGRAMS =				\
   apply						\
   at						\
+  box2d						\
   dpoint2d					\
   grid						\
   image1d					\
@@ -51,6 +52,7 @@ check_PROGRAMS =				\
 
 # Images and auxiliary structures.
 dpoint2d_SOURCES = dpoint2d.cc
+box2d_SOURCES = box2d.cc
 grid_SOURCES = grid.cc
 image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc

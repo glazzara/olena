@@ -59,10 +59,26 @@ namespace oln
     typedef P point;
     typedef typename P::coord coord;
 
-    typedef typename vtypes< internal::encoded_image_< rle_image<P, T> > >::pset pset__;
-
-    typedef std::pair< pset__, std::vector< value > > data;
+#ifndef OLENA_USE_SCOOP_ALT
+  private:
+    typedef rle_image<P, T> self__;
+  public:
+    typedef std::pair< stc_deferred_type(self__, pset),
+		       std::vector< value > > data;
+#endif
   };
+
+#ifdef OLENA_USE_SCOOP_ALT
+  template <typename P, typename T>
+  struct single_vtype< rle_image<P, T>, typedef_::data >
+  {
+  private:
+    typedef rle_image<P, T> self__;
+    typedef T value__;
+  public:
+    typedef std::pair< stc_type(self__, pset), std::vector< value__ > > ret;
+  };
+#endif
 
 
   // rle_image

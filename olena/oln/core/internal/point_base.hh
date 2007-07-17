@@ -44,7 +44,9 @@ namespace oln
   template <typename Exact>
   struct super_trait_< internal::point_base_<Exact> >
   {
-    typedef Point<Exact> ret;
+    // super_trait_ set to mlc::none, since Point is a concept
+    // (interface).
+    typedef mlc::none ret;
   };
 
   template <typename Exact>
@@ -57,7 +59,12 @@ namespace oln
     typedef stc_deferred(grid) grid__;
 
     // Final:
+    // FIXME: Improve scoop-alt to get rid of this difference.
+# ifndef OLENA_USE_SCOOP_ALT
     typedef stc::final< oln_dim(grid__) > dim;
+# else
+    typedef stc::final< stc_deferred_from(grid__, dim) > dim;
+# endif
     typedef stc::final< stc::is<Point>  > category;
   };
 

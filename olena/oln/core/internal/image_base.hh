@@ -159,11 +159,19 @@ namespace oln
     // Final.
 
     typedef stc::final< stc::is<Image> >         category;
+# ifndef OLENA_USE_SCOOP_ALT
     typedef stc::final< oln_box(pset__) >	 box;
     typedef stc::final< oln_grid(point__) >      grid;
     typedef stc::final< oln_dpoint(point__) >    dpoint;
     typedef stc::final< oln_fwd_piter(pset__) >  fwd_piter;
     typedef stc::final< oln_bkd_piter(pset__) >  bkd_piter;
+# else
+    typedef stc::final< stc_deferred_from(pset__,  box) >        box;
+    typedef stc::final< stc_deferred_from(point__, grid) >       grid;
+    typedef stc::final< stc_deferred_from(point__, dpoint) >     dpoint;
+    typedef stc::final< stc_deferred_from(pset__,  fwd_piter) >  fwd_piter;
+    typedef stc::final< stc_deferred_from(pset__,  bkd_piter) >  bkd_piter;
+# endif
     typedef fwd_piter                            piter;
   };
 

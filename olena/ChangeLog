@@ -1,3 +1,72 @@
+2007-07-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have more tests pass with scoop-alt, and clean up a bit.
+	Despite the new proxy-deferred mechanism in scoop-alt, a lot of
+	tests still fail to compile.  A real deferring mechanism (as in
+	standard scoop) is required.
+
+	* oln/core/2d/image2d.hh (super_trait_< image2d<T> >): Move this
+	class above vtypes< image2d<T> >.
+	* oln/core/internal/box.hh
+	(vtypes< box_fwd_piter_<B> >::point)
+	(vtypes< box_bkd_piter_<B> >::point): Use stc_deduce_typename
+	instead of a bare B::point.
+	(box_fwd_piter_, box_bkd_piter_) [OLENA_USE_SCOOP_ALT]: Don't
+	check static assertions (mlc_is_a(B, Point_Set)), since scoop-alt
+	doesn't handle it yet.
+	* oln/core/internal/f_ch_value.hh (oln_ch_value_, oln_ch_value)
+	(oln_plain_value) [OLENA_USE_SCOOP_ALT]: Rely on stc_find_type_in
+	instead of stc_type_in since scoop-alt doesn't handle it yet.
+	* oln/core/internal/image_base.hh,
+	* oln/core/internal/encoded_image.hh,
+	* oln/core/gen/rle_image.hh,
+	* oln/core/gen/sparse_image.hh,
+	* oln/core/internal/dpoint_base.hh,
+	* oln/core/internal/point_base.hh,
+	* oln/core/internal/iterator_on_points_base.hh,
+	* oln/core/internal/piter_adaptor.hh
+	* oln/core/internal/neighborhood_base.hh,
+	[OLENA_USE_SCOOP_ALT]: Handle deferred vtypes à la scoop-alt.
+	* oln/core/internal/point_set_base.hh: Likewise.
+	(super_trait_< internal::point_set_base_<Exact> >::ret): Set to
+	mlc::none.
+	(point_set_base_): Adjust super class: inherit from
+	internal::point_set_selector_< stc_type(Exact, box)*, Exact >.
+	instead of super_trait_< point_set_base_<Exact> >::ret.
+	* oln/core/internal/dpoint_base.hh
+	(super_trait_< internal::dpoint_base_<Exact> >::ret)
+	* oln/core/internal/point_base.hh
+	(super_trait_< internal::point_base_<Exact> >::ret):
+	* oln/core/internal/iterator_on_points_base.hh
+	Set to mlc::none.
+
+	* oln/core/internal/category_of.hh: Rewrite the category
+	retrieval, so that super_traits_ relationships not ending with
+	mlc::none are caught.
+	(get_category_of_): Remove.
+	Replaced by...
+	(get_category_as_a_typedef_, get_category_as_a_vtype_):
+	...these (new) classes.
+	(category_of_): Adjust.
+
+	* oln/core/internal/encoded_image_pset.hh
+	(vtypes< internal::enc_image_pset_<P> >::std_container): New
+	typedef.
+	(enc_image_pset_::std_container): New typedef.
+	Use it to define...
+	(enc_image_pset_piter_::con_): ...this member.
+	(enc_image_pset_fwd_piter_, enc_image_pset_bkd_piter_):
+	Use stc_using to retrieve the vtype std_container.
+	Use it to define...
+	(enc_image_pset_fwd_piter_::it_, enc_image_pset_bkd_piter_::it_):
+	...these members.
+
+	* tests/core/box2d.cc: New test.
+	* tests/core/Makefile.am (check_PROGRAMS): Add box2d.
+	(box2d_SOURCES): New.
+	* oln/Makefile.am (nobase_oln_HEADERS): Remove dead files.
+	Add value/gray_level.hh.
+
 2007-07-12  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Separate interface from implementation.

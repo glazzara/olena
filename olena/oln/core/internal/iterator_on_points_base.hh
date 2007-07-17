@@ -42,7 +42,9 @@ namespace oln
   template <typename Exact>
   struct super_trait_< internal::iterator_on_points_base_<Exact> >
   {
-    typedef Iterator_on_Points<Exact> ret;
+    // super_trait_ set to mlc::none, since Iterator_on_Points is a
+    // concept (interface).
+    typedef mlc::none ret;
   };
 
   // Virtual types
@@ -54,10 +56,18 @@ namespace oln
     typedef stc::abstract point;
 
     typedef stc_deferred(point) point__;
+    // FIXME: Improve scoop-alt to get rid of this difference.
+# ifndef OLENA_USE_SCOOP_ALT
     typedef stc::final< oln_grid(point__) >   grid;
     typedef stc::final< oln_coord(point__) >  coord;
     typedef stc::final< oln_dim(point__) >    dim;
     typedef stc::final< oln_dpoint(point__) > dpoint;
+# else
+    typedef stc::final< stc_deferred_from(point__, grid  ) > grid;
+    typedef stc::final< stc_deferred_from(point__, coord ) > coord;
+    typedef stc::final< stc_deferred_from(point__, dim   ) > dim;
+    typedef stc::final< stc_deferred_from(point__, dpoint) > dpoint;
+# endif
   };
 
 
@@ -67,7 +77,13 @@ namespace oln
     template <typename Exact>
     class iterator_on_points_base_
       : public Iterator_on_Points<Exact>,
- 	public internal::iterator_on_points_impl_<mlc_value(stc_deferred(dim)), Exact>
+# ifndef OLENA_USE_SCOOP_ALT
+  	public internal::iterator_on_points_impl_<mlc_value(stc_deferred(dim)),
+						  Exact>
+# else
+  	public internal::iterator_on_points_impl_<mlc_value(stc_type(Exact, dim)),
+						  Exact>
+# endif
     {
     public:
       // Disambiguate.

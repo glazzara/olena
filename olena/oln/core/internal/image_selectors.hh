@@ -59,7 +59,7 @@ namespace oln
     };
 
 
-    // FIXME: don't work
+    // FIXME: doesn't work
     template <typename Exact>
     struct case_< Image_mutability, Exact,  2 >
       :

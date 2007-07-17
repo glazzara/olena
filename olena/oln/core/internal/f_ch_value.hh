@@ -30,16 +30,32 @@
 
 # include <oln/core/internal/image_base.hh>
 
+// FIXME: scoop-alt is not robust to vtype checks (is_defined).
+# ifndef OLENA_USE_SCOOP_ALT
+#  define oln_ch_value_(I, T)						\
+    oln::internal::f_ch_value_< stc_type_in_(oln, I, skeleton), T >::ret
 
-#define oln_ch_value_(I, T) \
-oln::internal::f_ch_value_< stc_type_in_(oln, I, skeleton), T >::ret
+#  define oln_ch_value(I, T)						\
+    typename oln::internal::f_ch_value_< stc_type_in(oln, I, skeleton), T >::ret
 
-#define oln_ch_value(I, T) \
-typename oln::internal::f_ch_value_< stc_type_in(oln, I, skeleton), T >::ret
+#  define oln_plain_value(I, T)				\
+    typename oln::internal::f_ch_value_<		\
+      stc_type_in(oln, oln_plain(I), skeleton), T	\
+    >::ret
+# else
+#  define oln_ch_value_(I, T)						\
+    oln::internal::f_ch_value_< stc_find_type_in_(oln, I, skeleton), T >::ret
 
+#  define oln_ch_value(I, T)			\
+    typename oln::internal::f_ch_value_<	\
+      stc_find_type_in(oln, I, skeleton), T	\
+    >::ret
 
-# define oln_plain_value(I, T) \
-typename oln::internal::f_ch_value_< stc_type_in(oln, oln_plain(I), skeleton), T >::ret
+#  define oln_plain_value(I, T)				\
+    typename oln::internal::f_ch_value_<		\
+      stc_find_type_in(oln, oln_plain(I), skeleton), T	\
+    >::ret
+# endif
 
 
 

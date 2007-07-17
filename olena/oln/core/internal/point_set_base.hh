@@ -60,7 +60,9 @@ namespace oln
   template <typename Exact>
   struct super_trait_< internal::point_set_base_<Exact> >
   {
-    typedef internal::point_set_selector_< stc_deferred(box)*, Exact > ret;
+    // Set to mlc::none, since Point_Set and Box (the super classes of
+    // point_set_selector) are both concepts.
+    typedef mlc::none ret;
   };
 
 
@@ -77,7 +79,12 @@ namespace oln
     typedef stc_deferred(fwd_piter) fwd_piter__;
 
     typedef stc::final< stc::is<Point_Set> > category;
+    // FIXME: Improve scoop-alt to get rid of this difference.
+# ifndef OLENA_USE_SCOOP_ALT
     typedef stc::final< oln_grid(point__) >  grid;
+# else
+    typedef stc::final< stc_deferred_from(point__, grid) > grid;
+# endif
     // typedef stc::final< oln_coord(point__) > coord;
     typedef stc::final< fwd_piter__ >        piter;
   };
@@ -89,7 +96,8 @@ namespace oln
     /// Base class for point sets.
 
     template <typename Exact>
-    struct point_set_base_ : public super_trait_< point_set_base_<Exact> >::ret
+    struct point_set_base_ :
+      public internal::point_set_selector_< stc_type(Exact, box)*, Exact >
     {
     protected:
       point_set_base_();

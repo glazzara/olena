@@ -55,7 +55,12 @@ namespace oln
     typedef stc::abstract point;
 
     typedef stc_deferred(point) point__;
+    // FIXME: Improve scoop-alt to get rid of this difference.
+# ifndef OLENA_USE_SCOOP_ALT
     typedef stc::final< oln_grid(point__) >     grid;
+# else
+    typedef stc::final< stc_deferred_from(point__, grid) > grid;
+# endif
     typedef stc::final< stc::is<Neighborhood> > category;
   };
 

@@ -45,7 +45,9 @@ namespace oln
   template <typename Exact>
   struct super_trait_< internal::dpoint_base_<Exact> >
   {
-    typedef Dpoint<Exact> ret;
+    // super_trait_ set to mlc::none, since Point is a concept
+    // (interface).
+    typedef mlc::none ret;
   };
 
   template <typename Exact>
@@ -54,7 +56,13 @@ namespace oln
     typedef stc::abstract grid;
 
     typedef stc_deferred(grid) grid__;
+
+    // FIXME: Improve scoop-alt to get rid of this difference.
+# ifndef OLENA_USE_SCOOP_ALT
     typedef stc::final< oln_dim(grid__) > dim;
+# else
+    typedef stc::final< stc_deferred_from(grid__, dim) > dim;
+# endif
 
     typedef stc::abstract coord;
     typedef stc::abstract point; // FIXME: Just like in point_base.hh
@@ -66,7 +74,8 @@ namespace oln
   namespace internal
   {
 
-    // FIXME: Factor code for classes defined over vectors (dpoint_base_ and point_base_).
+    // FIXME: Factor code for classes defined over vectors
+    // (dpoint_base_ and point_base_).
 
     template <typename Exact>
     class dpoint_base_ : public Dpoint<Exact>

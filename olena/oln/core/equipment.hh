@@ -170,8 +170,8 @@ namespace oln
 
 
 
-/// \{
 /// FIXME: Bad!
+/// \{
 
 # include <oln/core/init.hh>
 

@@ -133,21 +133,25 @@ namespace oln
   template <typename B>
   struct vtypes< box_fwd_piter_<B> >
   {
-    typedef typename B::point point;
+    stc_deduce_typename(B, point);
   };
 
   template <typename B>
   struct vtypes< box_bkd_piter_<B> >
   {
-    typedef typename B::point point;
+    stc_deduce_typename(B, point);
   };
 
 
   /// Class box_fwd_piter_<P>.
 
   template <typename B>
-  class box_fwd_piter_ : public internal::iterator_on_points_base_< box_fwd_piter_<B> >,
-			 private mlc::assert_< mlc_is_a(B, Point_Set) >
+  class box_fwd_piter_ : public internal::iterator_on_points_base_< box_fwd_piter_<B> >
+  // FIXME: It seems we cannot check this assertion using while using
+  // scoop-alt.  Investigate.
+# ifndef OLENA_USE_SCOOP_ALT
+		       , private mlc::assert_< mlc_is_a(B, Point_Set) >
+# endif
   {
     typedef box_fwd_piter_<B> current;
     typedef internal::iterator_on_points_base_<current> super;
@@ -172,8 +176,12 @@ namespace oln
   /// Class box_bkd_piter_<B>.
 
   template <typename B>
-  class box_bkd_piter_ : public internal::iterator_on_points_base_< box_bkd_piter_<B> >,
-			 private mlc::assert_< mlc_is_a(B, Point_Set) >
+  class box_bkd_piter_ : public internal::iterator_on_points_base_< box_bkd_piter_<B> >
+  // FIXME: It seems we cannot check this assertion using while using
+  // scoop-alt.  Investigate.
+# ifndef OLENA_USE_SCOOP_ALT
+		       , private mlc::assert_< mlc_is_a(B, Point_Set) >
+# endif
   {
     typedef box_bkd_piter_<B> current;
     typedef internal::iterator_on_points_base_<current> super;

@@ -43,22 +43,51 @@ namespace oln
   namespace internal
   {
 
-    template <typename T1, typename T2>
-    struct get_category_of_
-      : private mlc::abort_< pair<T1,T2> > // FIXME: Add error msg.
+    // get_category_as_a_vtype_
+
+    namespace ERROR
+    {
+      struct ILL_DEFINED_CATEGORY_IN_TYPEDEF;
+      struct CATEGORY_NOT_FOUND_AS_A_TYPEDEF_NOR_AS_A_VTYPE;
+    }
+
+    // Default case: error.
+    template <typename T>
+    struct get_category_as_a_vtype_ :
+      private mlc::abort_
+       <T, ERROR::CATEGORY_NOT_FOUND_AS_A_TYPEDEF_NOR_AS_A_VTYPE>
     {
     };
 
+    // Default case: error.
     template <template <class> class C>
-    struct get_category_of_< C<void>, mlc::not_found >
+    struct get_category_as_a_vtype_< stc::is<C> >
     {
       typedef stc::is<C> ret;
     };
 
-    template <template <class> class C>
-    struct get_category_of_< mlc::not_found, stc::is<C> >
+
+    // get_category_as_a_typedef_
+
+    // Default case: error.
+    template <typename T, typename U>
+    struct get_category_as_a_typedef_
+      : private mlc::abort_<T, ERROR::ILL_DEFINED_CATEGORY_IN_TYPEDEF>
+    {
+    };
+
+    template <typename T, template <class> class C>
+    struct get_category_as_a_typedef_< T, C<void> >
     {
       typedef stc::is<C> ret;
+    };
+
+    template <typename T>
+    struct get_category_as_a_typedef_< T, mlc::not_found >
+    {
+      typedef stc_find_type(T, category) cat_vtype;
+      // Try to get the category from the vtypes of T.
+      typedef typename get_category_as_a_vtype_<cat_vtype>::ret ret;
     };
 
 
@@ -68,9 +97,8 @@ namespace oln
     struct category_of_
     {
       typedef mlc_basic(T) T__;
-      typedef mlc_typedef(T__, category)   ret_1;
-      typedef stc_find_type(T__, category) ret_2;
-      typedef typename get_category_of_<ret_1, ret_2>::ret ret;
+      typedef mlc_typedef(T__, category) cat_typedef;
+      typedef typename get_category_as_a_typedef_<T__, cat_typedef>::ret ret;
     };
 
 

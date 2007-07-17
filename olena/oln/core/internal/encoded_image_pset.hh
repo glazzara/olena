@@ -65,6 +65,7 @@ namespace oln
     typedef typename oln::internal::f_point_to_box_< P >::ret box;
     typedef internal::enc_image_pset_fwd_piter_<P> fwd_piter;
     typedef internal::enc_image_pset_bkd_piter_<P> bkd_piter;
+    typedef std::vector<std::pair<point, unsigned> > std_container;
   };
 
   namespace internal
@@ -81,7 +82,7 @@ namespace oln
       stc_using(point);
       stc_using(box);
 
-      typedef std::vector<std::pair<point, unsigned> > std_container;
+      typedef stc_type(current, std_container) std_container;
 
       enc_image_pset_();
 
@@ -125,7 +126,7 @@ namespace oln
 
       this->con_.push_back(elt);
 
-      //update bbox
+      // update bbox
       fb_.take(p);
       pend = p;
       pend[0] += len - 1;
@@ -216,6 +217,7 @@ namespace oln
     public:
       stc_using(point);
       typedef enc_image_psite_<point> psite;
+      typedef stc_type(enc_image_pset_<point>, std_container) std_container;
 
       const enc_image_psite_<point>& impl_to_psite() const;
       const enc_image_psite_<point>* impl_psite_adr() const;
@@ -225,7 +227,7 @@ namespace oln
     protected:
       enc_image_pset_piter_(const enc_image_pset_<point>& con);
 
-      const typename enc_image_pset_<point>::std_container& con_;
+      const std_container& con_;
 
       point p_;
       enc_image_psite_<point> ps_;
@@ -294,12 +296,14 @@ namespace oln
   {
     // class enc_image_pset__fwd_iterator_
     template <typename P>
-    class  enc_image_pset_fwd_piter_ : public enc_image_pset_piter_<enc_image_pset_fwd_piter_<P> >
+    class enc_image_pset_fwd_piter_ :
+      public enc_image_pset_piter_<enc_image_pset_fwd_piter_<P> >
     {
       typedef enc_image_pset_piter_< enc_image_pset_fwd_piter_<P> > super;
       typedef enc_image_pset_fwd_piter_<P> current;
     public:
       stc_using(point);
+      stc_using(std_container);
 
       enc_image_pset_fwd_piter_(const enc_image_pset_<P>& con);
 
@@ -309,7 +313,7 @@ namespace oln
       bool impl_is_valid() const;
 
     protected:
-      typename enc_image_pset_<point>::std_container::const_iterator it_;
+      typename std_container::const_iterator it_;
     };
 
 # ifndef OLN_INCLUDE_ONLY
@@ -395,12 +399,14 @@ namespace oln
   {
     // enc_image_pset_bkd_piter_
     template <typename P>
-    class enc_image_pset_bkd_piter_ : public enc_image_pset_piter_<enc_image_pset_bkd_piter_<P> >
+    class enc_image_pset_bkd_piter_ :
+      public enc_image_pset_piter_<enc_image_pset_bkd_piter_<P> >
     {
       typedef enc_image_pset_piter_< enc_image_pset_bkd_piter_<P> > super;
       typedef enc_image_pset_bkd_piter_<P> current;
     public:
       stc_using(point);
+      stc_using(std_container);
 
       enc_image_pset_bkd_piter_(const enc_image_pset_<P>& con);
 
@@ -410,7 +416,8 @@ namespace oln
       bool impl_is_valid() const;
 
     protected:
-      typename enc_image_pset_<point>::std_container::const_reverse_iterator it_;
+//       typename enc_image_pset_<point>::std_container::const_reverse_iterator it_;
+      typename std_container::const_reverse_iterator it_;
     };
 
 # ifndef OLN_INCLUDE_ONLY

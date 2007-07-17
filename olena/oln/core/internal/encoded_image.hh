@@ -50,12 +50,27 @@ namespace oln
   template <typename Exact>
   struct vtypes< internal::encoded_image_<Exact> >
   {
+# ifndef OLENA_USE_SCOOP_ALT
     typedef stc_deferred(point) point__;
     typedef internal::enc_image_psite_<point__> psite;
     typedef internal::enc_image_pset_<point__> pset;
+# endif
     typedef mlc::none plain;
   };
 
+# ifdef OLENA_USE_SCOOP_ALT
+  template <typename Exact>
+  struct single_vtype< internal::encoded_image_<Exact>, typedef_::psite >
+  {
+    typedef internal::enc_image_psite_< stc_type(Exact, point) > ret;
+  };
+
+  template <typename Exact>
+  struct single_vtype< internal::encoded_image_<Exact>, typedef_::pset >
+  {
+    typedef internal::enc_image_pset_< stc_type(Exact, point) > ret;
+  };
+# endif
 
   namespace internal
   {

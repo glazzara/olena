@@ -43,6 +43,15 @@ namespace oln
   template <typename T> class image2d;
 
 
+  /// Super type.
+  template <typename T>
+  struct super_trait_< image2d<T> >
+  {
+    typedef image2d<T> current;
+    typedef internal::plain_primitive_image_<current> ret;
+  };
+
+
   // Virtual types.
   template <typename T>
   struct vtypes< image2d<T> >
@@ -63,15 +72,6 @@ namespace oln
     typedef image2d<pl::value> skeleton;
 
     typedef fast_iterator_2d<value> pixter;
-  };
-
-
-  /// Super type.
-  template <typename T>
-  struct super_trait_< image2d<T> >
-  {
-    typedef image2d<T> current;
-    typedef internal::plain_primitive_image_<current> ret;
   };
 
 

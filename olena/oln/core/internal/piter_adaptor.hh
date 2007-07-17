@@ -54,7 +54,11 @@ namespace oln
     typedef stc::abstract adapted;
 
     typedef stc_deferred(adapted) adapted__;
+# ifndef OLENA_USE_SCOOP_ALT
     typedef stc::final< oln_point(adapted__) > point;
+# else
+    typedef stc::final< stc_deferred_from (adapted__, point) > point;
+# endif
   };
 
 
