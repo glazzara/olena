@@ -1,5 +1,16 @@
 2007-07-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update stc/scoop.{hh,hxx} with the latest version from Olena.
+
+	* stc/was.scoop.hh: Rename as...
+	* stc/scoop-old-2006.hh: ...this.
+	* stc/scoop.hh: Rename as...
+	* stc/scoop-old-2007.hh: ...this.
+	* stc/scoop.hh, stc/scoop.hxx: New.
+	Imported from olena/stc/.
+
+2007-07-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a deferred vtype lookup mechanism to scoop-alt.
 
 	* stc/scoop-alt.hh (deferred): New declaration.
