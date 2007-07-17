@@ -1,3 +1,20 @@
+2007-07-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a deferred vtype lookup mechanism to scoop-alt.
+
+	* stc/scoop-alt.hh (deferred): New declaration.
+	(stc_find_type_in_, stc_find_type_in)
+	(stc_is_found_type, stc_is_not_found_type): New macros.
+	(stc_is_a): Rely on stc_find_type, not stc_deferred.
+	(stc_using_): New macro.
+	(stc_deferred): Rely on stc::deferred<>, not deferred_vtype<>.
+	(stc_deferred_from): New macro.
+	* stc/scoop-alt.inc (find_vtype): New forward declaration.
+	(direct_): New unwrapping mechanism.
+	(find_vtype): Use it.
+	* tests/scoop-alt.cc (ex9): Add a Point concept (interface).
+	Fix this test case.
+
 2007-06-15  Thomas Moulard  <thomas.moulard@lrde.epita.fr>
 
 	Add logger morpher and fix transform morpher.

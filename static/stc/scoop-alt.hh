@@ -64,10 +64,15 @@ namespace stc
   struct not_found;
 #endif
   typedef mlc::not_found not_found;
+  // FIXME: Document all these tags!
   struct abstract;
   struct not_delegated;
   struct not_delegated_abstract;
   template <typename T> struct final;
+
+  // Deferred vtype lookup.
+  // FIXME: Document.
+  template <typename Source, typename Target> struct deferred;
 
   template < template <class> class category >
   struct is;
@@ -131,6 +136,8 @@ namespace stc
 
 // FIXME: Document all these macros.
 
+// FIXME: Consistency: stc_type vs vtype<>. 
+
 /// Access to associated type.
 /// \{
 # define stc_type_(Source, Target) vtype<Source, typedef_::Target>::ret
@@ -150,46 +157,76 @@ namespace stc
 /// \}
 
 
+// FIXME: Consistency: stc_find_type vs find_vtype<>. 
+
 /// Likewise, but more tolerant.
 /// \{
-# define stc_find_type_(Source, Target)	\
+# define stc_find_type_(Source, Target)		\
    find_vtype<Source, typedef_::Target>::ret
 # define stc_find_type(Source, Target)		\
    typename stc_find_type_(Source, Target)
+
+# define stc_find_type_in_(Namespace, Source, Target)			\
+   Namespace::find_vtype<Source, Namespace::typedef_::Target>::ret
+# define stc_find_type_in(Namespace, Source, Target)	\
+   typename stc_find_type_in_(Namespace, Source, Target)
+
+
 /// \}
 
 /// Boolean expression counterpart of stc_find_type
 /// \{
-# define stc_type_is_found(Target)		\
-   stc::is_found< stc_deferred(Target) >
-# define stc_type_is_not_found(Target)		\
-   stc::is_not_found< stc_deferred(Target) >
+# define stc_type_is_found(Target)			\
+   stc::is_found< stc_find_type(Exact, Target) >
+# define stc_type_is_not_found(Target)			\
+   stc::is_not_found< stc_find_type(Exact, Target) >
+
+# define stc_is_found_type(From, Type)			\
+   stc::is_found< stc_deferred_type(From, Type) >
+# define stc_is_not_found_type(From, Type)		\
+   stc::is_not_found< stc_deferred_type(From, Type) >
 /// \}
 
 
+// FIXME: Using stc_deferred here (in scoop-alt) is probably nonsense.
+// We probably ought to introduce another macro for stc_deferred /
+// stc_deferred_from (and try to stick as much as possible to its
+// initial meaning); something like stc_deferred_def /
+// stc_deferred_def_from.
+# if 0
 # define stc_is_a(T, U)							 \
    mlc::wrap_<								 \
      typename mlc::is_a_< sizeof(mlc::form::of< U >()) >		 \
        ::template ret< typename mlc::basic_< stc_deferred(T) >::ret, U > \
      >
+#endif
+
+# define stc_is_a(T, U)							\
+   mlc::wrap_<								\
+     typename mlc::is_a_< sizeof(mlc::form::of< U >()) >		\
+       ::template ret< typename mlc::basic_< stc_find_type(Exact, T) >::ret, U > \
+     >
+
 
 
 /// For concepts.
 /// \{
 # define stc_typename(Target) typedef stc_type(Exact, Target) Target
 # define stc_using(Target)    typedef typename super::Target Target
+# define stc_using_(Target)   typedef super::Target Target
 # define stc_using_from(Abstraction, Target)		\
    typedef typename Abstraction<Exact>::Target Target
+// FIXME: Might be renamed as stc_typename_from for consistency purpose.
 # define stc_deduce_typename(Src, Target) typedef stc_type(Src, Target) Target
 /// \}
 
 
 /// For implementation classes.
 /// \{
-/// Dummy
 # define stc_deferred(Target)			\
-   stc_find_type(Exact, Target)
-//   typename deferred_vtype<Exact, typedef_::Target >::ret
+   stc::deferred<Exact, typedef_::Target>
+# define stc_deferred_from(Source, Target)	\
+   stc::deferred<Source, typedef_::Target>
 # define stc_lookup(Target)					\
    typedef typename vtype< stc_type(current, exact_type),	\
                            typedef_::Target>::ret Target

@@ -734,6 +734,28 @@ namespace my
   // FIXME: I (Roland) don't know why this test succeeds, while the
   // equivalent SCOOP 2 hierarchy doesn't work in Olena.
 
+
+  /*--------.
+  | Point.  |
+  `--------*/
+
+  // Forward declaration.
+  namespace ex9
+  {
+    template <typename Exact>
+    struct Point
+    {
+      stc_typename(grid);
+      stc_typename(dim);
+
+      enum { n = mlc_value(dim) };
+
+    }; // end of oln::Point<Exact>
+
+  }
+
+
+
   /*------------------------.
   | internal::point_base_.  |
   `------------------------*/
@@ -751,6 +773,8 @@ namespace my
   template <typename Exact>
   struct super_trait_< ex9::internal::point_base_<Exact> >
   {
+    // super_trait_ set to stc::none, since Point is a concept
+    // (interface).
     typedef stc::none ret;
   };
 
@@ -761,8 +785,8 @@ namespace my
     typedef stc::abstract grid;
 
     typedef stc_deferred(grid) grid__;
-    typedef stc::final<stc_type(grid__, dim)> dim;
-
+    typedef stc_deferred_from(grid__, dim) dim__;
+    typedef stc::final< dim__ > dim;
   };
 
   // Actual definition.
@@ -773,8 +797,10 @@ namespace my
       template <typename Exact>
       struct point_base_ : public stc::none
       {
-	stc_typename(dim);
-	static const unsigned dim_val = mlc_value(dim);
+	typedef Point<Exact> super;
+
+	stc_using(dim);
+  	static const unsigned dim_val = mlc_value(dim);
       };
     } // end of namespace my::ex9::internal
   }
@@ -784,19 +810,41 @@ namespace my
   | internal::point2d_.  |
   `---------------------*/
 
-  // FIXME: Add internal::point2d_, as in Olena, and check whether
-  // this addition triggers the same behavior observed in Olena.
+  namespace ex9
+  {
+    // Forward declarations.
+    namespace internal
+    {
+      template <typename Exact> struct point2d_;
+    }
+  }
 
-//   namespace ex9
-//   {
-//     // Forward declarations.
-//     namespace internal
-//     {
-//       template <typename Exact> struct point2d_;
-//     }
-//   }
+  /// Super type.
+  template<typename Exact>
+  struct super_trait_< ex9::internal::point2d_<Exact> >
+  {
+    typedef ex9::internal::point_base_<Exact> ret;
+  };
 
-  // ...
+  /// Virtual types associated to internal::point2d_<Exact>.
+  template <typename Exact>
+  struct vtypes< ex9::internal::point2d_<Exact> >
+  {
+  };
+  
+  namespace ex9
+  {
+    // Actual definition.
+    namespace internal
+    {
+
+      template <typename Exact>
+      struct point2d_ : public point_base_<Exact>
+      {
+	typedef point_base_<Exact> super;
+      };
+    }
+  }
 
 
   /*---------.
@@ -846,7 +894,7 @@ namespace my
   template <>
   struct super_trait_< ex9::point2d >
   {
-    typedef ex9::internal::point_base_<ex9::point2d> ret;
+    typedef ex9::internal::point2d_<ex9::point2d> ret;
   };
 
 
@@ -860,7 +908,7 @@ namespace my
   // Actual definition.
   namespace ex9
   {
-    struct point2d : public internal::point_base_< point2d >
+    struct point2d : public internal::point2d_< point2d >
     {
     };
   }

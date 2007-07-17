@@ -614,6 +614,10 @@ struct find_rec_in_supers
 
 /* ----------------------------------------------------------- find.  */
 
+/* Forward declaration.  */
+template <typename source, typename target> struct find_vtype;
+
+/* Unwrap the result.  */
 namespace find_
 {
   /* Forward declaration.  */
@@ -660,14 +664,49 @@ namespace find_
 
 } /* End of namespace find_.  */
 
+/* Evaluate the result, removing any deferred tag.  */
+namespace direct_
+{
+  /* Forward declaration.  */
+  template <typename T> struct match_with;
+
+  /* One-layer deferred type..  */
+  template <typename Source, typename Target>
+  struct match_with< stc::deferred<Source, Target> >
+  {
+    /* Get direct definitions of Source and Target.  */
+    typedef typename direct_::match_with<Source>::ret direct_source;
+    typedef typename direct_::match_with<Target>::ret direct_target;
+
+    /* Resolve the virtual type.  */
+    typedef typename find_vtype<direct_source, direct_target>::ret res;
+
+    /* Re-lauch the direct process, in case the previous result was
+       itself a postponed virtual type definition.  */
+    typedef typename direct_::match_with<res>::ret ret;
+  };
+
+
+  /* Default version.  */
+  template <typename T>
+  struct match_with
+  {
+    typedef T ret;
+  };
+} /* End of namespace direct_.  */
+
 
 /** Find a virtual type.  */
 template <typename source, typename target>
 struct find_vtype
 {
   typedef typename find_rec<source, target>::ret res;
-  /* Result.  */
-  typedef typename find_::match_with<res>::ret ret;
+
+  /* Unwrap the result.  */
+  typedef typename find_::match_with<res>::ret unwrapped;
+
+  /* Remove potential deferred tag, and return result.  */
+  typedef typename direct_::match_with<unwrapped>::ret ret;
 };
 
 
@@ -682,6 +721,7 @@ struct vtype
   };
   typedef typename check_::ret ret;
 };
+
 
 
 /*------------.
