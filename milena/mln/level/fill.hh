@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/concept/function.hh>
 
 
 namespace mln
@@ -51,6 +52,17 @@ namespace mln
      */
     template <typename I>
     void fill(Image<I>& ima, const mln_value(I)& v);
+
+
+    /*! Fill the whole image \p ima with the function \p f.
+     *
+     * \param[in,out] ima The image to be filled.
+     * \param[in] f The function.
+     *
+     * \pre \p ima has to be initialized.
+     */
+    template <typename I, typename F>
+    void fill(Image<I>& ima, const Function_p2v<F>& f);
 
 
     /*! Fill the image \p ima by applying the function \p f.
@@ -108,6 +120,18 @@ namespace mln
       mln_piter(I) p(ima.domain());
       for_all(p)
 	ima(p) = value;
+    }
+
+    template <typename I, typename F>
+    void fill(Image<I>& ima_,
+	      const Function_p2v<F>& f_)
+    {
+      I& ima = exact(ima_);
+      mln_precondition(ima.has_data());
+      const F& f = exact(f_);
+      mln_piter(I) p(ima.domain());
+      for_all(p)
+	ima(p) = f(p);
     }
 
     template <typename I>

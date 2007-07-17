@@ -25,67 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/window.hh
- * \brief This file documents the concept of mln::Window.
+#ifndef MLN_ARITH_MINUS_HH
+# define MLN_ARITH_MINUS_HH
+
+/*! \file mln/arith/minus.hh
+ *
+ * \brief Point-wise substraction between images.
  */
+
+# include <mln/core/concept/image.hh>
+
 
 namespace mln
 {
 
-  namespace doc
+  namespace arith
   {
 
-    /*! \brief Documentation class for mln::Window.
+    /*! Point-wise substraction of images \p lhs and \p rhs.
      *
-     * A window is the definition of a set of points located around a
-     * central point.
+     * \param[in] lhs First operand image.
+     * \param[in] rhs Second operand image.
+     * \param[out] output The result image.
      *
-     * \see mln::Window
+     * \pre \p output.domain == \p lhs.domain == \p rhs.domain
      */
-    template <typename E>
-    struct Window : public Object<E>
+    template <typename L, typename R, typename O>
+    void minus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename L, typename R, typename O>
+    void minus(const Image<L>& lhs_, const Image<R>& rhs_, Image<O>& output_)
     {
-      /*! \brief Piter type associated to this window to browse its
-       * points.
-       */
-      typedef void qiter;
+      const L& lhs = exact(lhs_);
+      const R& rhs = exact(rhs_);
+      O& output = exact(output_);
 
-      /*! \brief Piter type associated to this window to browse its
-       * points in a forward way.
-       */
-      typedef void fwd_qiter;
+      mln_precondition(rhs.domain() == lhs.domain());
+      mln_precondition(output.domain() == lhs.domain());
 
-      /*! \brief Piter type associated to this window to browse its
-       * points in a backward way.
-       */
-      typedef void bkd_qiter;
+      mln_piter(I) p(output.domain());
+      for_all(p)
+	output(p) = lhs(p) - rhs(p);
+    }
 
-      /*! \brief Test if the window is empty.
-       *
-       * A window of null size is empty.
-       */
-      bool is_empty() const;
+# endif // ! MLN_INCLUDE_ONLY
 
-      /*! \brief Test if the window is centered.
-       *
-       * A window is centered is the origin belongs to the window.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       */
-      bool is_symmetric() const;
-
-      /*! \brief Give the maximum coordinate gap between the window
-	center and a window point.
-       */
-      unsigned delta() const;
-
-      /*! \brief Give the symmetrical window.
-       */
-      E sym_() const;
-    };
-
-  } // end of namespace mln::doc
+  } // end of namespace mln::arith
 
 } // end of namespace mln
+
+
+#endif // ! MLN_ARITH_MINUS_HH

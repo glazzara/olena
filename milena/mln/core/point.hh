@@ -96,6 +96,13 @@ namespace mln
     /// Origin point (all coordinates are 0).
     static const point_<n,C> zero;
 
+
+    /// Type of the array of coordinates.
+    typedef const C (&vec_t)[n];
+
+    /// Hook to coordinates.
+    vec_t to_vec() const { return coord_; }
+
   protected:
     C coord_[n];
   };

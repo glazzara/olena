@@ -41,6 +41,7 @@
 
 # include <mln/convert/to_dpoint.hh>
 # include <mln/fun/all.hh>
+# include <mln/norm/infty.hh>
 
 
 namespace mln
@@ -97,6 +98,11 @@ namespace mln
      */
     bool is_symmetric() const;
 
+    /*! \brief Give the maximum coordinate gap between the window
+      center and a window point.
+    */
+    unsigned delta() const;
+
     /// Give the symmetrical window.
     window_<D> sym_() const;
 
@@ -128,6 +134,8 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  // window_<D>
+
   template <typename D>
   window_<D>::window_()
   {
@@ -147,6 +155,20 @@ namespace mln
   }
 
   template <typename D>
+  unsigned window_<D>::delta() const
+  {
+    unsigned d = 0;
+    const unsigned n = this->nelements();
+    for (unsigned i = 0; i < n; ++i)
+      {
+	unsigned dd = norm::infty(this->element(i).to_vec());
+	if (dd > d)
+	  d = dd;
+      }
+    return d;
+  }
+
+  template <typename D>
   window_<D>
   window_<D>::sym_() const
   {
@@ -156,6 +178,8 @@ namespace mln
       tmp.insert(- this->element(i));
     return tmp;
   }
+
+  // operators
 
   template <typename W>
   window_<mln_dpoint(W)> operator+(const Window<W>& win,

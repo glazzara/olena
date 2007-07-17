@@ -107,6 +107,11 @@ namespace mln
      */
     unsigned width() const;
 
+    /*! \brief Give the maximum coordinate gap between the window
+     * center and a window point.
+     */
+    unsigned delta() const;
+
     /// Get the symmetrical window.
     rectangle2d sym_() const;
 
@@ -160,6 +165,11 @@ namespace mln
   unsigned rectangle2d::width() const
   {
     return 2 * half_width_ + 1;
+  }
+
+  unsigned rectangle2d::delta() const
+  {
+    return half_width_ > half_height_ ? half_width_ : half_height_;
   }
 
   rectangle2d rectangle2d::sym_() const

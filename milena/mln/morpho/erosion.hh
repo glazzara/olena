@@ -30,8 +30,11 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
-// FIXME: # include <mln/border/assign.hh>
+# include <mln/accu/min.hh>
 # include <mln/value/props.hh>
+# include <mln/level/compare.hh>
+# include <mln/level/fill.hh>
+// FIXME: # include <mln/border/assign.hh>
 
 
 namespace mln
@@ -40,8 +43,8 @@ namespace mln
   namespace morpho
   {
 
-    template <typename I, typename W>
-    I erosion(const Image<I>& input, const Window<W>& win);
+    template <typename I, typename W, typename O>
+    void erosion(const Image<I>& input, const Window<W>& win, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -49,41 +52,103 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename W>
-      I erosion(const Image<I>& input_, const Window<W>& win_)
+      // on function
+
+      template <typename I, typename W, typename O>
+      void erosion_on_function(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
       {
 	const I& input = exact(input_);
 	const W& win   = exact(win_);
+	O& output      = exact(output_);
 
-	typedef mln_value(I) value;
+	accu::min<mln_value(I)> min;
 
-	I output(input.domain());
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);
 	for_all(p)
 	  {
-	    value v = mln_max(value);
-	    for_all(q) if (input.owns_(q))
-	      {
-		if (input(q) < v)
-		  v = input(q);
-	      }
-	    output(p) = v;
+	    min.init();
+	    for_all(q) if (input.has(q))
+	      min.take(input(q));
+	    output(p) = min;
 	  }
-	return output;
       }
 
+
+      // on set
+
+      template <typename I, typename W, typename O>
+      void erosion_on_set(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
+      {
+	const I& input = exact(input_);
+	const W& win   = exact(win_);
+	O& output      = exact(output_);
+
+	level::fill(output, input);
+
+	mln_piter(I) p(input.domain());
+	mln_qiter(W) q(win, p);
+	for_all(p)
+	  if (input(p))
+	    for_all(q) if (input.has(q))
+	      if (! input(q))
+		{
+		  output(p) = false;
+		  break;
+		}
+      }
+
+
+
       // ...
+
+
+
+      // FIXME: stage 3: dispatch w.r.t. fast property
+
+      // stage 2: dispatch w.r.t. the value kind
+
+      template <typename I, typename W, typename O>
+      void erosion_wrt_value(value::binary_kind, // binary => morphology on sets
+			     const Image<I>& input, const Window<W>& win, Image<O>& output)
+      {
+	return impl::erosion_on_set(exact(input), exact(win), output);
+      }
+
+      template <typename K, typename I, typename W, typename O>
+      void erosion_wrt_value(K, // otherwise => morphology on functions
+			     const Image<I>& input, const Window<W>& win, Image<O>& output)
+      {
+	return impl::erosion_on_function(exact(input), exact(win), output);
+      }
+
+
+      // stage 1: dispatch w.r.t. the window type
+
+      template <typename I, typename W, typename O> // general case
+      void erosion_wrt_win(const Image<I>& input, const Window<W>& win, Image<O>& output)
+      {
+	erosion_wrt_value(mln_kind(I)(), exact(input), exact(win), output);
+      }
+
+//       template <typename I, typename O> // rectangle2d
+//       void erosion_wrt_win(const Image<I>& input, const rectangle2d& win, Image<O>& output)
+//       {
+// 	return FIXME;
+//       }
+      
 
     } // end of namespace mln::morpho::impl
 
 
     // facade
 
-    template <typename I, typename W>
-    I erosion(const Image<I>& input, const Window<W>& win)
+    template <typename I, typename W, typename O>
+    void erosion(const Image<I>& input, const Window<W>& win, Image<O>& output)
     {
-      return impl::erosion(exact(input), exact(win)); 
+      impl::erosion_wrt_win(input, exact(win), output);
+      if (exact(win).is_centered())
+	mln_postcondition(output <= input);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

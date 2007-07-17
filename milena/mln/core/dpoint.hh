@@ -96,6 +96,14 @@ namespace mln
     /// Null delta-point (all coordinates are 0).
     static const dpoint_<n,C> zero;
 
+    const C* coords_() const { return coord_; }
+
+    /// Type of the array of coordinates.
+    typedef const C (&vec_t)[n];
+
+    /// Hook to coordinates.
+    vec_t to_vec() const { return coord_; }
+
   protected:
     C coord_[n];
   };

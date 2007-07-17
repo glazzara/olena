@@ -25,29 +25,62 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/window2d.cc
+#ifndef MLN_NORM_INFTY_HH
+# define MLN_NORM_INFTY_HH
+
+/*! \file mln/norm/infty.hh
  *
- * \brief Tests on mln::window2d.
+ * \brief Define some infinity-norm related routines.
  */
 
-#include <mln/core/window2d.hh>
-#include <mln/core/image2d_b.hh>
-#include <mln/convert/to_image.hh>
-#include <mln/debug/println.hh>
+# include <cmath>
 
 
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  window2d w;
-  mln_assertion(w.is_centered() == false);
-  mln_assertion(w.is_symmetric() == true);
+  namespace norm
+  {
 
-  w.insert(make::dpoint2d(-1,-1));
-  w.insert(make::dpoint2d( 1, 1));
-  image2d_b<bool> ima = convert::to_image(w);
-  debug::println(ima);
-  mln_assertion(w.delta() == 1);
-}
+    /// Infinity-norm of a vector \p vec.
+    template <unsigned n, typename C>
+    C infty(const C (&vec)[n]);
+
+    /// Infinity-norm distance between vectors \p v1 and \p v2.
+    template <unsigned n, typename C>
+    C infty_distance(const C (&v1)[n], const C (&v2)[n]);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <unsigned n, typename C>
+    C infty(const C (&vec)[n])
+    {
+      C c = 0;
+      for (unsigned i = 0; i < n; ++i)
+	if (std::abs(vec[i]) > c)
+	  c = std::abs(vec[i]);
+      return c;
+    }
+
+    template <unsigned n, typename C>
+    C infty_distance(const C (&v1)[n], const C (&v2)[n])
+    {
+      C d = 0;
+      for (unsigned i = 0; i < n; ++i)
+	{
+	  C dd = v2[i] > v1[i] ? v2[i] - v1[i] : v1[i] - v2[i];
+	  if (dd > d)
+	    d = dd;
+	}
+      return d;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::norm
+
+} // end of namespace mln
+
+
+#endif // ! MLN_NORM_INFTY_HH

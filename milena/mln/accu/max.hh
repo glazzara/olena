@@ -25,67 +25,88 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/window.hh
- * \brief This file documents the concept of mln::Window.
+#ifndef MLN_ACCU_MAX_HH
+# define MLN_ACCU_MAX_HH
+
+/*! \file mln/accu/max.hh
+ *
+ * \brief Define an accumulator that computes a max.
  */
+
+# include <mln/core/concept/accumulator.hh>
+# include <mln/value/props.hh>
+
 
 namespace mln
 {
 
-  namespace doc
+  namespace accu
   {
 
-    /*! \brief Documentation class for mln::Window.
+
+    /*! Generic max accumulator class.
      *
-     * A window is the definition of a set of points located around a
-     * central point.
-     *
-     * \see mln::Window
+     * The parameter \c V is the type of values.
      */
-    template <typename E>
-    struct Window : public Object<E>
+    template <typename V>
+    struct max : public Accumulator< max<V> >
     {
-      /*! \brief Piter type associated to this window to browse its
-       * points.
-       */
-      typedef void qiter;
+      typedef V value;
 
-      /*! \brief Piter type associated to this window to browse its
-       * points in a forward way.
-       */
-      typedef void fwd_qiter;
+      max();
+      void take(const value& v);
+      void init();
 
-      /*! \brief Piter type associated to this window to browse its
-       * points in a backward way.
-       */
-      typedef void bkd_qiter;
+      operator V() const;
+      V to_value() const;
+      
+    protected:
 
-      /*! \brief Test if the window is empty.
-       *
-       * A window of null size is empty.
-       */
-      bool is_empty() const;
-
-      /*! \brief Test if the window is centered.
-       *
-       * A window is centered is the origin belongs to the window.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       */
-      bool is_symmetric() const;
-
-      /*! \brief Give the maximum coordinate gap between the window
-	center and a window point.
-       */
-      unsigned delta() const;
-
-      /*! \brief Give the symmetrical window.
-       */
-      E sym_() const;
+      V v_;
     };
 
-  } // end of namespace mln::doc
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename V>
+    max<V>::max()
+    {
+      init();
+    }
+
+    template <typename V>
+    void max<V>::take(const value& v)
+    {
+      if (v > v_)
+	v_ = v;
+    }
+
+    template <typename V>
+    void
+    max<V>::init()
+    {
+      v_ = mln_min(V);
+    }
+
+    template <typename V>
+    max<V>::operator V() const
+    {
+      return v_;
+    }
+
+    template <typename V>
+    V
+    max<V>::to_value() const
+    {
+      return v_;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::accu
 
 } // end of namespace mln
+
+
+#endif // ! MLN_ACCU_MAX_HH

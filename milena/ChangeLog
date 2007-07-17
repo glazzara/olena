@@ -1,5 +1,30 @@
 2007-07-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add delta to windows in mln.
+
+	* tests/erosion.cc: New.
+	* mln/arith/minus.hh: New.
+	* mln/core/point.hh,
+	* mln/core/dpoint.hh (vec_t, to_vec): New.
+	* mln/core/rectangle2d.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/concept/doc/window.hh,
+	* mln/core/window.hh (delta): New.
+	* mln/level/fill.hh: New overload.
+	* mln/norm: New.
+	* mln/norm/infty.hh: New.
+	* mln/accu/min.hh: New.
+	* mln/accu/sum.hh: New.
+	* mln/accu/max.hh: New.
+
+	* tests/window2d.cc: Use delta.
+	* tests/box2d.cc: Add assertion.
+	* tests/dpoint2d.cc: Test to_vec.
+	* mln/morpho/erosion.hh: Add dispatch.
+	* mln/accu/mean.hh: Rewrite.
+
+2007-07-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Introduce accumulators and point-wise operations in mln.
 
 	* tests/pw_value.cc: New.

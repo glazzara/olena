@@ -25,29 +25,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/window2d.cc
+/*! \file tests/median.cc
  *
- * \brief Tests on mln::window2d.
+ * \brief Test on mln::level::median.
  */
 
-#include <mln/core/window2d.hh>
 #include <mln/core/image2d_b.hh>
-#include <mln/convert/to_image.hh>
-#include <mln/debug/println.hh>
+#include <mln/core/rectangle2d.hh>
 
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
+
+#include <mln/value/int_u.hh>
+#include <mln/level/fill.hh>
+#include <mln/morpho/erosion.hh>
+
+#include <mln/fun/pw_value.hh>
+#include <mln/fun/val.hh>
+#include <mln/fun/ops.hh>
+
+
+using namespace mln;
+using namespace mln::value;
 
 
 int main()
 {
-  using namespace mln;
+  rectangle2d rec(4, 4);//64, 64);
+  border::thickness = 66;
 
-  window2d w;
-  mln_assertion(w.is_centered() == false);
-  mln_assertion(w.is_symmetric() == true);
+  image2d_b<int_u8>
+    lena = io::load_pgm("../img/lena.pgm"),
+    out(lena.domain());
 
-  w.insert(make::dpoint2d(-1,-1));
-  w.insert(make::dpoint2d( 1, 1));
-  image2d_b<bool> ima = convert::to_image(w);
-  debug::println(ima);
-  mln_assertion(w.delta() == 1);
+  morpho::erosion(lena, rec, out);
+  io::save_pgm(out, "out.pgm");
+
+  /*
+  {
+    image2d_b<bool> bin(lena.domain()), out(lena.domain());
+    level::fill(bin, pw_value(1) > val(127));
+    morpho::erosion(bin, rec, out);
+
+    image2d_b<int_u8> test(lena.domain());
+    image2d_b<int_u8>::piter p(lena.domain());
+    for_all(p)
+      test(p) = out(p) ? 255 : 0;
+    io::save_pgm(test, "test.pgm");
+  }
+  */
+
 }

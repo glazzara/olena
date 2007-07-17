@@ -33,7 +33,8 @@
  * \brief Define an accumulator that computes a mean.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/accu/counter.hh>
+# include <mln/accu/sum.hh>
 
 
 namespace mln
@@ -64,8 +65,8 @@ namespace mln
       
     protected:
 
-      std::size_t count_;
-      S sum_;
+      accu::counter<V> count_;
+      accu::sum<V,S>   sum_;
     };
 
 
@@ -81,16 +82,16 @@ namespace mln
     template <typename V, typename S, typename M>
     void mean<V,S,M>::take(const value& v)
     {
-      ++count_;
-      sum_ += v;
+      count_.take(v);
+      sum_.take(v);
     }
 
     template <typename V, typename S, typename M>
     void
     mean<V,S,M>::init()
     {
-      count_ = 0;
-      sum_ = 0;
+      count_.init();
+      sum_.init();
     }
 
     template <typename V, typename S, typename M>
@@ -103,7 +104,7 @@ namespace mln
     M
     mean<V,S,M>::to_value() const
     {
-      return sum_ / count_;
+      return sum_.to_value() / count_.to_value();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -59,6 +59,8 @@ namespace mln
       bool is_centered() const;
       bool is_symmetric() const;
 
+      unsigned delta() const;
+
       E sym_() const;
     */
 
@@ -93,8 +95,10 @@ namespace mln
     m2 = 0;
     bool (E::*m3)() const = & E::is_symmetric;
     m3 = 0;
-    E (E::*m4)() const = & E::sym_;
+    unsigned (E::*m4)() const = & E::delta;
     m4 = 0;
+    E (E::*m_)() const = & E::sym_;
+    m_ = 0;
   }
 
   template <typename W>
