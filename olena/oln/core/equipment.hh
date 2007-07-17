@@ -30,7 +30,7 @@
 
 # include <mlc/contract.hh>
 # ifndef OLENA_USE_SCOOP_ALT
-#   include <oln/stc/scoop.hh> // FIXME: Remove "oln/" later.
+#   include <stc/scoop.hh>
 # else
 #   include <stc/scoop-alt.hh>
 # endif
@@ -46,7 +46,7 @@ namespace oln
 {
 
 # ifndef OLENA_USE_SCOOP_ALT
-#  include <oln/stc/scoop.hxx> // FIXME: Remove "oln/" later.
+#  include <stc/scoop.hxx>
 # else
 #  include <stc/scoop-alt.inc>
 # endif

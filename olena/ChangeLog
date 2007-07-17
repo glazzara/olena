@@ -1,5 +1,14 @@
 2007-07-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use SCOOP mechanism from static/stc/, not olena/oln/stc/.
+
+	* oln/core/equipment.hh: Include stc/scoop.hh (resp. stc/scoop.hxx)
+	instead of oln/stc/scoop.hh (resp. oln/stc/scoop.hxx).
+	* oln/stc/scoop.hh, oln/stc/scoop.hxx: Remove.
+	* oln/stc: Remove directory.
+
+2007-07-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have more tests pass with scoop-alt, and clean up a bit.
 	Despite the new proxy-deferred mechanism in scoop-alt, a lot of
 	tests still fail to compile.  A real deferring mechanism (as in
