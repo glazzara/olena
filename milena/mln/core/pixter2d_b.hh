@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_PIXTER2D_B_HH
 # define MLN_CORE_PIXTER2D_B_HH
 
-# include <mln/core/internal/fast_iterator_base.hh>
+# include <mln/core/internal/pixel_iterator_base.hh>
 # include <mln/core/point2d.hh>
 # include <iostream>
 
@@ -39,7 +39,6 @@
  * \brief Pixel iterator class on a image 2d with border.
  */
 
-# include <mln/core/concept/fast_iterator.hh>
 
 
 namespace mln
@@ -50,7 +49,7 @@ namespace mln
 
   template <typename T>
   class fwd_pixter2d_b :
-    public internal::fast_iterator_base_< fwd_pixter2d_b<T>, image2d_b<T> >
+    public internal::pixel_iterator_base_< fwd_pixter2d_b<T>, image2d_b<T> >
   {
   public:
     /// Image pixel value type.

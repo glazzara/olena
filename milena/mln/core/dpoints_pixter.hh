@@ -30,7 +30,7 @@
 
 # include <cassert>
 # include <vector>
-# include <mln/core/concept/fast_iterator.hh>
+# include <mln/core/internal/pixel_iterator_base.hh>
 
 
 namespace mln
@@ -41,8 +41,9 @@ namespace mln
    * The parameter \c I is the image type.
    */
   template <typename I>
-  class dpoints_pixter : public Fast_Iterator< dpoints_pixter<I> >
+  class dpoints_pixter : public internal::pixel_iterator_base_< I, dpoints_pixter<I> >
   {
+    typedef typename internal::pixel_iterator_base_< I, dpoints_pixter<I> > super;
   public:
     /// Image pixel value
     typedef mln_value(I) value;
@@ -51,14 +52,14 @@ namespace mln
     /// Image pixel lvalue
     typedef mln_lvalue(I) lvalue;
 
-    /*! \brief Constructo.
+    /*! \brief Constructor.
      *
      * \param[in] dps   Object that can provide an array of delta-points.
      * \param[in] p_ref Center point to iterate around.
      * \param[in] ima   Image to iterate.
      */
     template <typename Dps>
-    dpoints_pixter(const Dps& dps, const typename I::point& p_ref,I& ima);
+    dpoints_pixter(const Dps& dps, const typename I::psite& p_ref,I& ima);
 
     /// Set the iterator at the start.
     void start();
@@ -68,10 +69,6 @@ namespace mln
     void invalidate();
     ///  Is the iterator valid?
     bool is_valid() const;
-
-    /// Get the iterator value
-    rvalue operator* ();
-    lvalue operator* () const;
 
   private:
     /// offset of each dpoints
@@ -87,8 +84,9 @@ namespace mln
 
   template <typename I>
   template <typename Dps>
-  dpoints_pixter<I>::dpoints_pixter(const Dps& dps, const typename I::point& ref, I& ima)
+  dpoints_pixter<I>::dpoints_pixter(const Dps& dps, const typename I::psite& ref, I& ima) : super(ima)
   {
+    this->p_ = ref;
     pixref_ = &ima(ref);
     for (typename std::vector<typename I::dpoint>::const_iterator it = dps.vec().begin();
 	 it != dps.vec().end();
@@ -100,13 +98,16 @@ namespace mln
   template <typename I>
   void dpoints_pixter<I>::start()
   {
+    pixref_ = &ima_(this->p_);
     i_ = offset_.begin();
+    this->current_value_ = pixref_ + *i_;
   }
 
   template <typename I>
   void dpoints_pixter<I>::next_()
   {
     ++i_;
+    this->current_value_ = pixref_ + *i_;
   }
 
   template <typename I>
@@ -119,22 +120,6 @@ namespace mln
   void dpoints_pixter<I>::invalidate()
   {
     i_ = offset_.end();
-  }
-
-  template <typename I>
-  typename dpoints_pixter<I>::rvalue
-  dpoints_pixter<I>::operator* ()
-  {
-    assert(this->is_valid());
-    return *(pixref_ + *i_);
-  }
-
-  template <typename I>
-  typename dpoints_pixter<I>::lvalue
-  dpoints_pixter<I>::operator* () const
-  {
-    assert(this->is_valid());
-    return *(pixref_ + *i_);
   }
 
 #endif // ! MLN_INCLUDE_ONLY

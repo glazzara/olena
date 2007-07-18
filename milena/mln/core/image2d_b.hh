@@ -151,8 +151,16 @@ namespace mln
     T& at(int row, int col);
 
 
+    /// Fast Image method
+
     /// Return the offset corresponding to the dpoint \p dp.
     int offset(const dpoint2d& dp);
+
+    /// Return the offset corresponding to the dpoint \p p.
+    int offset(const point2d& p);
+
+    /// Return the point corresponding to the offset \p offset.
+    point2d point_at_offset(int offset);
 
 
   private:
@@ -385,6 +393,20 @@ namespace mln
   image2d_b<T>::offset(const dpoint2d& dp)
   {
     return dp[0] * vb_.len(1) + dp[1];
+  }
+
+  template <typename T>
+  int
+  image2d_b<T>::offset(const point2d& p)
+  {
+    return p[0] * vb_.len(1) + p[1];
+  }
+
+  template <typename T>
+  point2d
+  image2d_b<T>::point_at_offset(int offset)
+  {
+    return point2d(offset / (vb_.len(1) + 1), offset % (vb_.len(1) + 1));
   }
 
 # endif // ! MLN_INCLUDE_ONLY

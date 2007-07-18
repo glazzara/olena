@@ -64,6 +64,8 @@ namespace mln
   {
     typedef mln_psite(I) psite;
     typedef mln_value(I) value;
+    typedef mln_rvalue(I) rvalue;
+    typedef I ima;
 
     pixel(I& ima);
     pixel(I& ima, const psite& p);
@@ -151,7 +153,7 @@ namespace mln
   }
 
 # endif // ! MLN_INCLUDE_ONLY
-  
+
 } // end of namespace mln
 
 

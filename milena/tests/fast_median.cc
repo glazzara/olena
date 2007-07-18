@@ -25,55 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_FAST_ITERATOR_HH
-# define MLN_CORE_CONCEPT_FAST_ITERATOR_HH
-
-/*! \file mln/core/concept/fast_iterator.hh
- * \brief Definition of the concept of mln::Fast_Iterator.
+/*! \file tests/fast_median.cc
+ *
+ * \brief Test on mln::level::fast_median.
  */
 
-# include <mln/core/concept/iterator.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/rectangle2d.hh>
 
-namespace mln
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
+
+#include <mln/value/int_u.hh>
+#include <mln/level/fast_median.hh>
+#include <mln/level/approx/median.hh>
+
+
+
+
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
+  rectangle2d rect(51, 51);
+  border::thickness = 52;
 
-  template <typename E>
-  struct Fast_Iterator : public Iterator<E>
-  {
-    /*
-      typedef rvalue
-      typedef lvalue
-      rvalue operator* ();
-      lvalue operator* () const;
-    */
-  protected:
-    Fast_Iterator();
-  };
+  image2d_b<int_u8>
+    lena = io::load_pgm("../img/lena.pgm"),
+    out(lena.domain());
 
-#ifndef MLN_INCLUDE_ONLY
+  level::fast_median(lena, rect, out);
+  io::save_pgm(out, "out.pgm");
 
-  /*! \brief Fast Iterator concept class.
-   *
-   * \see FIXME
-   */
-  template <typename E>
-  Fast_Iterator<E>::Fast_Iterator()
-  {
-    typedef mln_value(E) value;
-    typedef mln_rvalue(E) rvalue;
-    typedef mln_lvalue(E) lvalue;
-
-    rvalue (E::*m1)() = &E::operator*;
-    m1 = 0;
-    lvalue (E::*m2)() const = &E::operator*;
-    m2 = 0;
-  }
-
-#endif // ! MLN_INCLUDE_ONLY
-
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_CONCEPT_FAST_ITERATOR_HH
+//   level::approx::median(lena, rec, out);
+//   io::save_pgm(out, "outa.pgm");
+}

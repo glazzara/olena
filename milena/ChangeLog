@@ -1,3 +1,21 @@
+2007-07-18  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Change fast_iterator hierarchy.
+
+	* tests/fast_median.cc: New test.
+	* tests/pixter_point2d.cc: Update test.
+	* mln/core/pixel.hh: Add typedefs in the class pixel_.
+	* mln/core/macros.hh: Add new macros.
+	* mln/core/concept/pixel_iterator.hh: New, rename Fast_Iterator concep as Pixel Iterator.
+	* mln/core/concept/fast_iterator.hh: Remove.
+	* mln/core/concept/genpixel.hh: Constructor fixed.
+	* mln/core/pixter2d_b.hh: Broken!.
+	* mln/core/image2d_b.hh: Add new method point_at_offset.
+	* mln/core/dpoints_pixter.hh: Adapt dpoint_pixter to the new hierarchy.
+	* mln/core/internal/pixel_iterator_base.hh: New, rename fast_iterator_base_ as pixel_iterator_base_.
+	* mln/core/internal/fast_iterator_base.hh: Remove.
+	* mln/level/fast_median.hh: New median using qixter.
+
 2007-07-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	New 2D window types in mln.

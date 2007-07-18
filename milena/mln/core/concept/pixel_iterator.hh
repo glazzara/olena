@@ -25,40 +25,57 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <cassert>
-#include <mln/core/image2d_b.hh>
+#ifndef MLN_CORE_CONCEPT_PIXEL_ITERATOR_HH
+# define MLN_CORE_CONCEPT_PIXEL_ITERATOR_HH
 
+/*! \file mln/core/concept/fast_iterator.hh
+ * \brief Definition of the concept of mln::Pixel_Iterator.
+ */
 
-int
-main()
+# include <mln/core/concept/iterator.hh>
+# include <mln/core/concept/genpixel.hh>
+
+namespace mln
 {
-  using namespace mln;
 
-  image2d_b<int> ima(20, 20);
+  /*! \brief Pixel Iterator concept class.
+   *
+   * \see FIXME
+   */
+  template <typename E>
+  struct Pixel_Iterator :
+    public Iterator<E>,
+    public GenPixel<E>
+  {
+    /*
+      typedef rvalue
+      typedef lvalue
+      lvalue operator* ();
+      rvalue operator* () const;
+    */
+  protected:
+    Pixel_Iterator();
+  };
 
-  image2d_b<int>::piter p(ima.domain());
-  image2d_b<int>::pixter f(ima);
-  int i = 0;
+#ifndef MLN_INCLUDE_ONLY
 
-  for_all(p)
-    {
-      ima(p) = i++;
-    }
-  i = 0;
+  template <typename E>
+  Pixel_Iterator<E>::Pixel_Iterator()
+  {
+    typedef mln_value(E) value;
+    typedef mln_rvalue(E) rvalue;
+    typedef mln_lvalue(E) lvalue;
 
-  for_all(f)
-    {
-      assert(*f == i ++);
-      *f = 5;
-    }
+    lvalue (E::*m1)() = & E::operator*;
+    m1 = 0;
+    rvalue (E::*m2)() const = & E::operator*;
+    m2 = 0;
+  }
 
-  for_all(p)
-    {
-      assert(ima(p) == 5);
-    }
+#endif // ! MLN_INCLUDE_ONLY
 
-  f.start();
-  assert(f.is_valid());
-  f.invalidate();
-  assert(!f.is_valid());
-}
+
+} // end of namespace mln
+
+
+#endif // ! MLN_CORE_CONCEPT_PIXEL_ITERATOR_HH

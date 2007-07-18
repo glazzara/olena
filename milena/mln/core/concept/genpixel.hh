@@ -51,7 +51,7 @@ namespace mln
    *
    * \warning This class does \em not derive from mln::Object; it is
    * for use as a parallel hierarchy.
-   * 
+   *
    * \see mln::doc::GenPixel for a complete documentation of this
    * class contents.
    */
@@ -60,12 +60,13 @@ namespace mln
   {
 
     /*
-      typedef image; // not const!
-      typedef psite;
+      typedef ima; // not const!
+      typede  psite;
       typedef rvalue;
+      typedef value;
 
-      const image& image() const;
-      const psite& psite() const; // FIXME ou cpy
+      const ima& image() const;
+      const psite& site() const; // FIXME ou cpy
 
       rvalue operator*() const;
 
@@ -98,17 +99,19 @@ namespace mln
   template <typename E>
   GenPixel<E>::GenPixel()
   {
-    // FIXME
-//     int dim = E::dim;
-//     mln_invariant(dim > 0);
-//     dim = 0;
-//     typedef  mln_point(E)  point;
-//     typedef mln_dpoint(E) dpoint;
-//     typedef mln_coord(E)  coord;
-//     const point* (E::*m1)() const = & E::pointer;
-//     m1 = 0;
-//     coord (E::*m2)(unsigned i) const = & E::operator[];
-//     m2 = 0;
+    typedef mln_value(E) value;
+    typedef mln_rvalue(E) rvalue;
+    typedef mln_ima(E) ima;
+    typedef mln_psite(E) psite;
+
+    const ima& (E::*m1)() const = & E::image;
+    m1 = 0;
+    const psite& (E::*m2)() const = & E::site;
+    m2 = 0;
+    rvalue (E::*m3)() const = & E::operator*;
+    m3 = 0;
+    const value* (E::*m4)() const = & E::address;
+    m4 = 0;
   }
 
 

@@ -96,6 +96,15 @@
 /// Shortcut to access the fwd_viter type associated to T.
 # define mln_fwd_viter(T)  typename T::fwd_viter
 
+// i
+
+/// Shortcut to access the fwd_viter type associated to T.
+# define mln_image(T)      typename T::image
+
+/// Shortcut to access the fwd_viter type associated to T.
+# define mln_ima(T)        typename T::ima
+
+
 // l
 
 
@@ -109,7 +118,7 @@
 # define mln_piter(T)      typename T::piter
 
 /// Shortcut to access the pixter type associated to T.
-# define mln_pixter(T)  typename T::pixter
+# define mln_pixter(T)     typename T::pixter
 
 /// Shortcut to access the pset type associated to T.
 # define mln_pset(T)       typename T::pset
