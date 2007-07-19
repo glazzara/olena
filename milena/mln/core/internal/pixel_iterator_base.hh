@@ -93,11 +93,11 @@ namespace mln
 
     protected:
 
-      /// Current pixel / value
-      value* value_ptr_;
-
       /// Image associated to the iterator
       I& image_;
+
+      /// Current pixel / value
+      value* value_ptr_;
 
       // FIXME: Inactivated:
 
@@ -174,101 +174,8 @@ namespace mln
 //       return p_;
 //     }
 
-
-
-
-
-// FIXME: Dead code
-// #################
-
-
-
-//     /*! \brief pixel_iterator_base_ class
-//      */
-//     template <typename E, typename I>
-//     class pixel_iterator_base_ : public Pixel_Iterator<E>
-//     {
-//     public:
-//       /// I pixel value type.
-//       typedef mln_value(I) value;
-//       /// I pixel rvalue type.
-//       typedef mln_value(I)& rvalue;
-//       /// I pixel lvalue type
-//       typedef mln_value(I) lvalue;
-
-//       // Go to the beginning of the image.
-//       void start();
-//       // Go on the next element.
-//       void next_();
-//       // Invalidate the iterator.
-//       void invalidate();
-//       // Is the iterator referencing a correct position in the image?
-//       bool is_valid() const;
-
-
-//       // Return the current pixel.
-//       rvalue operator* ();
-//       lvalue operator* () const;
-
-//     protected:
-//       // beginning of the image
-//       value* start_;
-//       // end of the image
-//       value* eoi_;
-//       // current position in the image
-//       value* current_;
-//       // End of Factoriasable
-
-//       pixel_iterator_base_();
-//     };
-
-// #ifndef MLN_INCLUDE_ONLY
-
-//     template <typename E, typename I>
-//     pixel_iterator_base_<E,I>::pixel_iterator_base_()
-//     {
-//     }
-
-//     template <typename E, typename I>
-//     void pixel_iterator_base_<E,I>::start()
-//     {
-//       current_ = start_;
-//     }
-
-//     template <typename E, typename I>
-//     void pixel_iterator_base_<E,I>::next_()
-//     {
-//       ++current_;
-//     }
-
-//     template <typename E, typename I>
-//     void pixel_iterator_base_<E,I>::invalidate()
-//     {
-//       current_ = eoi_;
-//     }
-
-//     template <typename E, typename I>
-//     bool pixel_iterator_base_<E,I>::is_valid() const
-//     {
-//       return (current_ != eoi_);
-//     }
-
-//     template <typename E, typename I>
-//     typename pixel_iterator_base_<E,I>::rvalue
-//     pixel_iterator_base_<E,I>::operator*()
-//     {
-//       return *current_;
-//     }
-
-
-//     template <typename E, typename I>
-//     typename pixel_iterator_base_<E,I>::lvalue
-//     pixel_iterator_base_<E,I>::operator*() const
-//     {
-//       return *current_;
-//     }
-
 #endif // ! MLN_INCLUDE_ONLY
+
   } // end of namespace internal
 
 } // end of namespace mln

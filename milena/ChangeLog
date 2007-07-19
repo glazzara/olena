@@ -1,3 +1,11 @@
+2007-07-19  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Repair lineary pixel iterator.
+
+	* mln/core/pixter2d_b.hh: Adapt pixter2d_b to the new pixel iterator hierachy.
+	* mln/core/internal/pixel_iterator_base.hh: Fix dead code.
+	* mln/core/internal/lineary_pixel_iterator_base.hh: New factorization class.
+
 2007-07-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix pixel iterators on sets of dpoints.

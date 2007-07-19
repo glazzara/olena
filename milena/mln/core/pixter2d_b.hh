@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_PIXTER2D_B_HH
 # define MLN_CORE_PIXTER2D_B_HH
 
-# include <mln/core/internal/pixel_iterator_base.hh>
+# include <mln/core/internal/lineary_pixel_iterator_base.hh>
 # include <mln/core/point2d.hh>
 # include <iostream>
 
@@ -49,8 +49,9 @@ namespace mln
 
   template <typename T>
   class fwd_pixter2d_b :
-    public internal::pixel_iterator_base_< fwd_pixter2d_b<T>, image2d_b<T> >
+    public internal::lineary_pixel_iterator_base_<image2d_b<T>, fwd_pixter2d_b<T> >
   {
+    typedef internal::lineary_pixel_iterator_base_<image2d_b<T>, fwd_pixter2d_b<T> > super;
   public:
     /// Image pixel value type.
     typedef mln_value(image2d_b<T>) value;
@@ -59,37 +60,41 @@ namespace mln
      *
      * \param[in] ima   Image to iterate.
      */
-    fwd_pixter2d_b(image2d_b<T>& ima);
-    /// Move the iterator to the next elements
+    fwd_pixter2d_b(image2d_b<T>& image);
+    /// Move the iterator on the next element.
     void next_();
 
   private:
+    /// Size of the image border.
     unsigned border_size_;
+    /// Row offset.
     unsigned row_offset_;
+    /// End of a row.
     value *eor_;
   };
 
 #ifndef MLN_INCLUDE_ONLY
 
   template <typename T>
-  fwd_pixter2d_b<T>::fwd_pixter2d_b(image2d_b<T>& ima) :
-    border_size_(ima.border()),
-    row_offset_((ima.domain().pmax()[1] - ima.domain().pmin()[1])
+  fwd_pixter2d_b<T>::fwd_pixter2d_b(image2d_b<T>& image) :
+    super(image),
+    border_size_(image.border()),
+    row_offset_((image.domain().pmax()[1] - image.domain().pmin()[1])
 		+ 2 * border_size_ + 1)
   {
-    this->start_ = &ima(ima.domain().pmin());
-    this->eor_ = &ima(make::point2d(ima.domain().pmin()[0], ima.domain().pmax()[1])) + 1;
-    this->eoi_ = &ima(ima.domain().pmax()) + 1;
+    this->start_ = &image(image.domain().pmin());
+    this->eor_ = &image(make::point2d(image.domain().pmin()[0], image.domain().pmax()[1])) + 1;
+    this->eoi_ = &image(image.domain().pmax()) + 1;
   }
 
   template <typename T>
   void fwd_pixter2d_b<T>::next_()
   {
-    ++(this->current_);
+    ++(this->value_ptr_);
 
-    if (this->current_ == this->eor_ && this->current_ != this->eoi_)
+    if (this->value_ptr_ == this->eor_ && this->value_ptr_ != this->eoi_)
     {
-      this->current_ += 2 * this->border_size_;
+      this->value_ptr_ += 2 * this->border_size_;
       this->eor_ += this->row_offset_;
     }
   }
