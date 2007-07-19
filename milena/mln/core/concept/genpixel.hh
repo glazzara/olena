@@ -60,17 +60,22 @@ namespace mln
   {
 
     /*
-      typedef ima; // not const!
-      typede  psite;
       typedef rvalue;
       typedef value;
+      // FIXME: lvalue?
 
-      const ima& image() const;
-      const psite& site() const; // FIXME ou cpy
+
+      // FIXME: Inactivated:
+      //  typedef ima; // not const!
+      //  typedef psite;
+      //  const ima& image() const;
+      //  const psite& site() const; // FIXME ou cpy
+      //  value* address();
 
       rvalue operator*() const;
+      lvalue operator*();
 
-      const value* address() const;
+      const value*& address() const;
     */
 
   protected:
@@ -89,7 +94,7 @@ namespace mln
    * \relates mln::GenPixel
    */
   template <typename P>
-  std::ostream& operator<<(std::ostream& ostr, const GenPixel<P>& p);
+  std::ostream& operator<<(std::ostream& ostr, const GenPixel<P>& pxl);
 
 
 
@@ -101,17 +106,20 @@ namespace mln
   {
     typedef mln_value(E) value;
     typedef mln_rvalue(E) rvalue;
-    typedef mln_ima(E) ima;
-    typedef mln_psite(E) psite;
 
-    const ima& (E::*m1)() const = & E::image;
-    m1 = 0;
-    const psite& (E::*m2)() const = & E::site;
-    m2 = 0;
+    // FIXME: Inactivated:
+
+//     typedef mln_ima(E) ima;
+//     typedef mln_psite(E) psite;
+//     const ima& (E::*m1)() const = & E::image;
+//     m1 = 0;
+//     const psite& (E::*m2)() const = & E::site;
+//     m2 = 0;
+
     rvalue (E::*m3)() const = & E::operator*;
     m3 = 0;
-    const value* (E::*m4)() const = & E::address;
-    m4 = 0;
+//     const value *const & (E::*m4)() const = & E::address;
+//     m4 = 0;
   }
 
 

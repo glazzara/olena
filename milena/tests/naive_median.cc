@@ -46,8 +46,8 @@ using namespace mln::value;
 
 int main()
 {
-  rectangle2d rec(8, 8);
-  border::thickness = 9;
+  rectangle2d rec(51, 51);
+  border::thickness = 52;
 
   image2d_b<int_u8>
     lena = io::load_pgm("../img/lena.pgm"),

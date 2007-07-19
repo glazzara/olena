@@ -71,13 +71,13 @@ namespace mln
      * \param[in] p_ref Center point to iterate around.
      */
     template <typename Dps, typename Pref>
-    dpoints_fwd_piter(const Dps& dps,
+    dpoints_fwd_piter(const Dps& dps, // FIXME: explicitly set_of_<D>?
 		      const GenPoint<Pref>& p_ref);
 
     /// Convertion to point.
     operator mln_point(D) () const;
 
-    /// Address of the point.
+    /// Address of the point this iterator designates.
     const point* pointer() const;
 
     /// Test the iterator validity.
@@ -95,13 +95,20 @@ namespace mln
     /// Give the i-th coordinate.
     coord operator[](unsigned i) const;
 
+    /// The point around which this iterator moves.
+    const point& center_point() const;
+
+    /// Force this iterator to update its location to take into
+    /// account that its center point may have moved. 
+    void update();
+
   private:
     const std::vector<D>& dps_;
-    const point& p_ref_;
+    const point& p_ref_; // reference point (or "center point")
 
     unsigned i_;
-    point p_;
-    void update_p_();
+    point p_; // location of this iterator; p_ makes this iterator be
+	      // itself a potential center point (Cf. the pointer() method).
   };
 
 
@@ -120,7 +127,7 @@ namespace mln
   template <typename D>
   dpoints_fwd_piter<D>::operator mln_point(D) () const
   {
-    assert(is_valid());
+    mln_precondition(is_valid());
     return p_;
   }
 
@@ -150,7 +157,7 @@ namespace mln
   dpoints_fwd_piter<D>::start()
   {
     i_ = 0;
-    update_p_();
+    update();
   }
 
   template <typename D>
@@ -158,12 +165,19 @@ namespace mln
   dpoints_fwd_piter<D>::next_()
   {
     ++i_;
-    update_p_();
+    update();
+  }
+
+  template <typename D>
+  const mln_point(D)&
+  dpoints_fwd_piter<D>::center_point() const
+  {
+    return p_ref_;
   }
 
   template <typename D>
   void
-  dpoints_fwd_piter<D>::update_p_()
+  dpoints_fwd_piter<D>::update()
   {
     if (is_valid())
       p_ = p_ref_ + dps_[i_];
@@ -173,6 +187,14 @@ namespace mln
   mln_coord(D)
   dpoints_fwd_piter<D>::operator[](unsigned i) const
   {
+    mln_precondition(is_valid());
+
+    // below we test that no update is required
+    // meaning that p_ref_ has not moved or that
+    // the user has explicitly called update()
+    mln_precondition(p_ref_ + dps_[i_] == p_);
+    // FIXME: Explain this issue in the class documentation...
+
     return p_[i];
   }
 

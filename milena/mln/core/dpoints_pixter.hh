@@ -35,6 +35,7 @@
 
 namespace mln
 {
+
   /*! \brief A generic forward iterator on image pixel of a windows and of
    *  neighborhoods.
    *
@@ -45,6 +46,7 @@ namespace mln
   {
     typedef typename internal::pixel_iterator_base_< I, dpoints_pixter<I> > super;
   public:
+
     /// Image pixel value
     typedef mln_value(I) value;
     /// Image pixel rvalue
@@ -58,73 +60,149 @@ namespace mln
      * \param[in] p_ref Center point to iterate around.
      * \param[in] ima   Image to iterate.
      */
-    template <typename Dps>
-    dpoints_pixter(const Dps& dps, const typename I::psite& p_ref,I& ima);
+    template <typename Dps, typename Pref>
+    dpoints_pixter(const Dps& dps,
+		   const GenPoint<Pref>& p_ref,
+		   I& image);
 
-    /// Set the iterator at the start.
+    template <typename Dps, typename Pref>
+    dpoints_pixter(const Dps& dps,
+		   const GenPixel<Pref>& p_ref,
+		   I& image);
+
+    /// Start an iteration.
     void start();
+
     /// Go to the next pixel.
     void next_();
+
     /// Invalidate the iterator.
     void invalidate();
-    ///  Is the iterator valid?
+
+    /// Test the iterator validity.
     bool is_valid() const;
 
+    /// Force this iterator to update its location to take into
+    /// account that its center point may have moved. 
+    void update();
+
+    /// The value around which this iterator moves.
+    const value& center_value() const;
+
   private:
+
     /// offset of each dpoints
     std::vector<int> offset_;
+
     /// current offset
-    std::vector<int>::iterator i_;
-    /// reference pixel in the image
-    value* pixref_;
+    int i_;
+
+    /// reference pixel / point in the image
+    value** value_ref_;
+    //    or:
+    const mln_point(I)* p_ref_;
+
+
+    template <typename Dps>
+    void init_(const Dps& dps);
   };
 
 
 #ifndef MLN_INCLUDE_ONLY
 
   template <typename I>
-  template <typename Dps>
-  dpoints_pixter<I>::dpoints_pixter(const Dps& dps, const typename I::psite& ref, I& ima) : super(ima)
+  template <typename Dps, typename Pref>
+  dpoints_pixter<I>::dpoints_pixter(const Dps& dps,
+				    const GenPoint<Pref>& p_ref,
+				    I& image)
+    : super(image)
   {
-    this->p_ = ref;
-    pixref_ = &ima(ref);
-    for (typename std::vector<typename I::dpoint>::const_iterator it = dps.vec().begin();
-	 it != dps.vec().end();
-	 ++it)
-      offset_.push_back(ima.offset(*it));
+    p_ref_ = internal::force_exact<Pref>(p_ref).pointer();
+    value_ref_ = 0;
+    init_(dps);
   }
 
 
   template <typename I>
+  template <typename Dps, typename Pref>
+  dpoints_pixter<I>::dpoints_pixter(const Dps& dps,
+				    const GenPixel<Pref>& p_ref,
+				    I& image)
+    : super(image)
+  {
+    p_ref_ = 0;
+    value_ref_ = internal::force_exact<Pref>(p_ref).address();
+    init_(dps);
+  }
+
+  template <typename I>
+  const mln_value(I)&
+  dpoints_pixter<I>::center_value() const
+  {
+    mln_invariant(value_ref_ != 0 || p_ref_ != 0);
+    if (p_ref_)
+      return image_(*p_ref_);
+    else
+      return ** value_ref_;
+  }
+
+  template <typename I>
+  template <typename Dps>
+  void
+  dpoints_pixter<I>::init_(const Dps& dps)
+  {
+    for (unsigned i = 0; i < dps.nelements(); ++i)
+      offset_.push_back(this->image_.offset(dps.element(i)));
+
+    if (dps.nelements() > 1)
+      for (unsigned i = dps.nelements() - 1; i > 0; --i)
+	offset_[i] -= offset_[i - 1];
+
+    // offset_[0] is absolute; other offsets are relative.
+    invalidate();
+  }
+
+  template <typename I>
+  void dpoints_pixter<I>::update()
+  {
+    if (is_valid())
+      {
+	if (p_ref_)
+	  this->value_ptr_ = & image_(*p_ref_) + offset_[i_];
+	else
+	  this->value_ptr_ = * value_ref_ + offset_[i_];
+      }
+  }
+
+  template <typename I>
   void dpoints_pixter<I>::start()
   {
-    pixref_ = &ima_(this->p_);
-    i_ = offset_.begin();
-    this->current_value_ = pixref_ + *i_;
+    i_ = 0;
+    update();
   }
 
   template <typename I>
   void dpoints_pixter<I>::next_()
   {
     ++i_;
-    this->current_value_ = pixref_ + *i_;
+    this->value_ptr_ += offset_[i_];    
   }
 
   template <typename I>
   bool dpoints_pixter<I>::is_valid() const
   {
-    return i_ != offset_.end();
+    return i_ != offset_.size();
   }
 
   template <typename I>
   void dpoints_pixter<I>::invalidate()
   {
-    i_ = offset_.end();
+    i_ = offset_.size();
   }
 
 #endif // ! MLN_INCLUDE_ONLY
 
-}
+} // end of namespace mln
 
 
 #endif // MLN_CORE_DPOINTS_PIXTER_HH

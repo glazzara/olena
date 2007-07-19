@@ -30,7 +30,7 @@
 
 /*! \file mln/level/was.median.hh
  *
- * \brief Obsolete routine for the median filter.
+ * \brief Obsolete routines for median filtering.
  */
 
 
@@ -42,6 +42,9 @@ namespace mln
 
     namespace impl
     {
+
+
+      // prefer using a canvas
 
       template <typename I, typename W, typename O>
       void median_as_procedure(const I& input,
@@ -124,6 +127,62 @@ namespace mln
 	    fwd = ! fwd;
 	  }
       }
+
+
+
+      // horizontal median
+
+      template <typename I, typename O>
+      void hmedian(const I& input, const hline2d& win, O& output)
+      {
+
+	const int
+	  max_row = input.max_row(),
+	  min_col = input.min_col(),
+	  max_col = input.max_col();
+	const unsigned half = win.length() / 2;
+
+	point2d p;
+	int& row = p.row();
+	int& col = p.col();
+
+	accu::median_on<mln_value(I)> med;
+
+	for (row = input.min_row(); row <= max_row; ++row)
+	  {
+	    int ct, cu;
+
+	    // initialization (before first point of the row)
+	    med.init();
+	    for (ct = min_col; ct < min_col + half; ++ct)
+	      med.take(input.at(row, ct));
+
+	    // left columns (just take new points)
+	    for (col = min_col; col <= min_col + half; ++col, ++ct)
+	      {
+		med.take(input.at(row, ct));
+		output(p) = med;
+	      }
+	    
+	    // middle columns (both take and untake)
+	    cu = min_col;
+	    for (; col <= max_col - half; ++cu, ++col, ++ct)
+	      {
+		med.take(input.at(row, ct));
+		med.untake(input.at(row, cu));
+		output(p) = med;
+	      }
+
+	    // right columns (now just untake old points)
+	    for (; col <= max_col; ++cu, ++col)
+	      {
+		med.untake(input.at(row, cu));
+		output(p) = med;
+	      }
+	  }
+
+      } // end of hmedian
+
 
 
     } // end of namespace mln::level::impl

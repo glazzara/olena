@@ -76,15 +76,15 @@ namespace mln
     psite& site();
 
     mln_rvalue(I) operator*() const;
-    typename pixel_lvalue<I>::ret operator*();
+    mln_lvalue(I) operator*();
 
-    const value* address() const;
-    value* address();
+    value** address() const;
 
   protected:
 
     I& ima_;
     psite p_;
+    value* value_ptr_;
   };
 
 
@@ -101,6 +101,7 @@ namespace mln
     : ima_(image),
       p_(p)
   {
+    value_ptr_ = & ima_(p);
   }
 
   template <typename I>
@@ -132,24 +133,17 @@ namespace mln
   }
 
   template <typename I>
-  typename pixel_lvalue<I>::ret
+  mln_lvalue(I)
   pixel<I>::operator*()
   {
     return ima_(p_);
   }
 
   template <typename I>
-  const mln_value(I)*
+  mln_value(I)**
   pixel<I>::address() const
   {
-    return & ima_(p_);
-  }
-
-  template <typename I>
-  mln_value(I)*
-  pixel<I>::address()
-  {
-    return & ima_(p_);
+    return (mln_value(I)**)(& this->value_ptr_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -103,7 +103,7 @@ namespace mln
 	med.init();
 	{
 	  mln_qixter(I) q(win, p, input);
-	  for_all(q) //if (input.has(q))
+	  for_all(q)
 	    med.take(*q);
 	}
 
@@ -118,10 +118,10 @@ namespace mln
 	  {
 
 	    // "go down"
-	    for_all(q_top) //if (input.has(q_top))
+	    for_all(q_top)
 	      med.untake(*q_top);
 
-	    for_all(q_bot) //if (input.has(q_bot))
+	    for_all(q_bot)
 	      med.take(*q_bot);
 
 	    output(p) = med;
@@ -130,11 +130,10 @@ namespace mln
 	      // browse line fwd
 	      while (col < max_col)
 		{
-		  std::cout << "debug: psite" << q_fm.psite() << "\n";
 		  ++col;
-		  for_all(q_fm) //if (input.has(q_fm))
+		  for_all(q_fm)
 		    med.untake(*q_fm);
-		  for_all(q_fp) //if (input.has(q_fp))
+		  for_all(q_fp)
 		    med.take(*q_fp);
 		  output(p) = med;
 		}
@@ -143,9 +142,9 @@ namespace mln
 	      while (col > min_col)
 		{
 		  --col;
-		  for_all(q_bm) //if (input.has(q_bm))
+		  for_all(q_bm)
 		    med.untake(*q_bm);
-		  for_all(q_bp) //if (input.has(q_bp))
+		  for_all(q_bp)
 		    med.take(*q_bp);
 		  output(p) = med;
 		}

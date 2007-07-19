@@ -1,3 +1,23 @@
+2007-07-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix pixel iterators on sets of dpoints.
+
+	* tests/fast_median.cc (test): New.
+	* tests/naive_median.cc: Update.
+	* mln/debug/iota.hh: New.
+	* mln/core/pixel.hh (value_ptr_): New.
+	* mln/core/dpoints_piter.hh (center_point): New.
+	(update_p_): Rename as...
+	(update): ...this.
+	* mln/core/concept/genpixel.hh: Inactivate some code.
+	* mln/core/dpoints_pixter.hh: Update.
+	* mln/core/internal/pixel_iterator_base.hh: Clean-up.
+	* mln/level/was.hmedian.hh (hmedian): Move...
+	* mln/level/was.median.hh: ...here.
+	* mln/level/was.hmedian.hh: Remove.
+	* mln/level/fast_median.hh: Clean-up.
+	Contents
+
 2007-07-18  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Change fast_iterator hierarchy.

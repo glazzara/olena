@@ -28,10 +28,9 @@
 #ifndef MLN_CORE_INTERNAL_PIXEL_ITERATOR_BASE_HH
 # define MLN_CORE_INTERNAL_PIXEL_ITERATOR_BASE_HH
 
-/*! \file mln/core/internal/fast_iterator_base.hh
+/*! \file mln/core/internal/pixel_iterator_base.hh
  *
- * \brief Base class for Fast_Iterator concept implementation.
- *        Usefull for code factorisation
+ * \brief Base class for Pixel_Iterator concept implementation classes.
  */
 
 # include <mln/core/concept/pixel_iterator.hh>
@@ -44,126 +43,158 @@ namespace mln
   {
 
     /*! \brief pixel_iterator_base_ class
+     *
      */
-    template <typename Image, typename Exact>
-    class pixel_iterator_base_ : public Pixel_Iterator<Exact>
+    template <typename I, typename E>
+    class pixel_iterator_base_ : public Pixel_Iterator<E>
     {
     public:
-      /// Image type.
-      typedef Image ima;
-      /// Image value type.
-      typedef mln_value(Image) value;
-      /// Image lvalue type.
-      typedef mln_lvalue(Image) lvalue;
-      /// Image rvalue type.
-      typedef mln_rvalue(Image) rvalue;
-      /// Image psite type.
-      typedef mln_psite(Image) psite;
 
-      /// Get the image associated to the current pixel iterator.
-      const ima& image() const;
+      /// Image value type.
+      typedef mln_value(I) value;
+
+      /// Image lvalue type.
+      typedef mln_lvalue(I) lvalue;
+
+      /// Image rvalue type.
+      typedef mln_rvalue(I) rvalue;
+
+
       /// pixel iterator value.
       lvalue operator* ();
+
       /// Get the pixel iterator value.
       rvalue operator* () const;
-      /// Address of the current iterator value/pixel.
-      const value* address() const;
-      /// Address of the current iterator value/pixel.
-      value* address();
 
-      /// psite associated to the iterator.
-      const psite& site() const;
-      /// psite associated to the iterator.
-      psite& site();
+
+      /// Address of the current iterator value/pixel.
+      value** address() const;
+
+
+      // FIXME: Inactivated:
+
+//       /// I type.
+//       typedef I ima;
+
+//       /// Image psite type.
+//       typedef mln_psite(I) psite;
+
+//       /// Get the image associated to the current pixel iterator.
+//       const ima& image() const;
+
+//       /// psite associated to the iterator.
+//       const psite& site() const;
+
+//       /// psite associated to the iterator.
+//       psite& site();
+
+//       /// Address of the current iterator value/pixel.
+//       value* address();
 
     protected:
-      /// Current pixel value
-      value* current_value_;
-      /// Image associated to the iterator
-      ima&   ima_;
-      /// Psite of the pixel
-      psite  p_;
 
-      pixel_iterator_base_(ima& source);
+      /// Current pixel / value
+      value* value_ptr_;
+
+      /// Image associated to the iterator
+      I& image_;
+
+      // FIXME: Inactivated:
+
+//       /// Psite of the pixel
+//       psite  p_;
+
+      pixel_iterator_base_(I& image);
     };
 
 #ifndef MLN_INCLUDE_ONLY
 
-    template <typename Image, typename Exact>
-    pixel_iterator_base_<Image, Exact>::pixel_iterator_base_(ima& source) :
-      ima_(source)
+    template <typename I, typename E>
+    pixel_iterator_base_<I, E>::pixel_iterator_base_(I& image) :
+      image_(image),
+      value_ptr_(0)
     {
     }
 
-    template <typename Image, typename Exact>
-    const typename pixel_iterator_base_<Image, Exact>::ima&
-    pixel_iterator_base_<Image, Exact>::image() const
+//     template <typename I, typename E>
+//     const typename pixel_iterator_base_<I, E>::ima&
+//     pixel_iterator_base_<I, E>::image() const
+//     {
+//       return ima_;
+//     }
+
+    template <typename I, typename E>
+    mln_lvalue(I)
+    pixel_iterator_base_<I, E>::operator* ()
     {
-      return ima_;
+      mln_precondition(exact(this)->is_valid());
+      mln_precondition(value_ptr_ != 0);
+      return *value_ptr_;
     }
 
-    template <typename Image, typename Exact>
-    typename pixel_iterator_base_<Image, Exact>::lvalue
-    pixel_iterator_base_<Image, Exact>::operator* ()
+    template <typename I, typename E>
+    mln_rvalue(I)
+    pixel_iterator_base_<I, E>::operator* () const
     {
-      assert(exact(this)->is_valid());
-      return *current_value_;
+      mln_precondition(exact(this)->is_valid());
+      mln_precondition(value_ptr_ != 0);
+      return *value_ptr_;
     }
 
-    template <typename Image, typename Exact>
-    typename pixel_iterator_base_<Image, Exact>::rvalue
-    pixel_iterator_base_<Image, Exact>::operator* () const
+    template <typename I, typename E>
+    mln_value(I) **
+    pixel_iterator_base_<I, E>::address() const
     {
-      assert(exact(this)->is_valid());
-      return *current_value_;
+      mln_precondition(exact(this)->is_valid());
+      mln_precondition(value_ptr_ != 0);
+      return & (mln_value(I)*)(value_ptr_);
     }
 
-    template <typename Image, typename Exact>
-    const typename pixel_iterator_base_<Image, Exact>::value*
-    pixel_iterator_base_<Image, Exact>::address() const
-    {
-      assert(exact(this)->is_valid());
-      return current_value_;
-    }
+//     template <typename I, typename E>
+//     mln_value(I)*
+//     pixel_iterator_base_<I, E>::address()
+//     {
+//       mln_precondition(exact(this)->is_valid());
+//       return value_ptr_;
+//     }
 
-    template <typename Image, typename Exact>
-    typename pixel_iterator_base_<Image, Exact>::value*
-    pixel_iterator_base_<Image, Exact>::address()
-    {
-      assert(exact(this)->is_valid());
-      return current_value_;
-    }
+//     template <typename I, typename E>
+//     const typename pixel_iterator_base_<I, E>::psite&
+//     pixel_iterator_base_<I, E>::site() const
+//     {
+//       //FIXME: update psite
+//       return p_;
+//     }
 
-    template <typename Image, typename Exact>
-    const typename pixel_iterator_base_<Image, Exact>::psite&
-    pixel_iterator_base_<Image, Exact>::site() const
-    {
-      //FIXME: update psite
-      return p_;
-    }
+//     template <typename I, typename E>
+//     typename pixel_iterator_base_<I, E>::psite&
+//     pixel_iterator_base_<I, E>::site()
+//     {
+//       //FIXME: update psite
+//       return p_;
+//     }
 
-    template <typename Image, typename Exact>
-    typename pixel_iterator_base_<Image, Exact>::psite&
-    pixel_iterator_base_<Image, Exact>::site()
-    {
-      //FIXME: update psite
-      return p_;
-    }
+
+
 
 
 // FIXME: Dead code
+// #################
+
+
+
 //     /*! \brief pixel_iterator_base_ class
 //      */
-//     template <typename Exact, typename Image>
-//     class pixel_iterator_base_ : public Pixel_Iterator<Exact>
+//     template <typename E, typename I>
+//     class pixel_iterator_base_ : public Pixel_Iterator<E>
 //     {
 //     public:
-//       /// Image pixel value type.
-//       typedef mln_value(Image) value;
-//       /// Image pixel rvalue type.
-//       typedef mln_value(Image)& rvalue;
-//       /// Image pixel lvalue type
-//       typedef mln_value(Image) lvalue;
+//       /// I pixel value type.
+//       typedef mln_value(I) value;
+//       /// I pixel rvalue type.
+//       typedef mln_value(I)& rvalue;
+//       /// I pixel lvalue type
+//       typedef mln_value(I) lvalue;
 
 //       // Go to the beginning of the image.
 //       void start();
@@ -193,46 +224,46 @@ namespace mln
 
 // #ifndef MLN_INCLUDE_ONLY
 
-//     template <typename Exact, typename Image>
-//     pixel_iterator_base_<Exact, Image>::pixel_iterator_base_()
+//     template <typename E, typename I>
+//     pixel_iterator_base_<E,I>::pixel_iterator_base_()
 //     {
 //     }
 
-//     template <typename Exact, typename Image>
-//     void pixel_iterator_base_<Exact, Image>::start()
+//     template <typename E, typename I>
+//     void pixel_iterator_base_<E,I>::start()
 //     {
 //       current_ = start_;
 //     }
 
-//     template <typename Exact, typename Image>
-//     void pixel_iterator_base_<Exact, Image>::next_()
+//     template <typename E, typename I>
+//     void pixel_iterator_base_<E,I>::next_()
 //     {
 //       ++current_;
 //     }
 
-//     template <typename Exact, typename Image>
-//     void pixel_iterator_base_<Exact, Image>::invalidate()
+//     template <typename E, typename I>
+//     void pixel_iterator_base_<E,I>::invalidate()
 //     {
 //       current_ = eoi_;
 //     }
 
-//     template <typename Exact, typename Image>
-//     bool pixel_iterator_base_<Exact, Image>::is_valid() const
+//     template <typename E, typename I>
+//     bool pixel_iterator_base_<E,I>::is_valid() const
 //     {
 //       return (current_ != eoi_);
 //     }
 
-//     template <typename Exact, typename Image>
-//     typename pixel_iterator_base_<Exact, Image>::rvalue
-//     pixel_iterator_base_<Exact, Image>::operator*()
+//     template <typename E, typename I>
+//     typename pixel_iterator_base_<E,I>::rvalue
+//     pixel_iterator_base_<E,I>::operator*()
 //     {
 //       return *current_;
 //     }
 
 
-//     template <typename Exact, typename Image>
-//     typename pixel_iterator_base_<Exact, Image>::lvalue
-//     pixel_iterator_base_<Exact, Image>::operator*() const
+//     template <typename E, typename I>
+//     typename pixel_iterator_base_<E,I>::lvalue
+//     pixel_iterator_base_<E,I>::operator*() const
 //     {
 //       return *current_;
 //     }

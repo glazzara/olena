@@ -25,80 +25,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/fast_median.cc
+#ifndef MLN_DEBUG_IOTA_HH
+# define MLN_DEBUG_IOTA_HH
+
+/*! \file mln/debug/iota.hh
  *
- * \brief Test on mln::level::fast_median.
+ * \brief FIXME
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/rectangle2d.hh>
-
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
-
-#include <mln/value/int_u.hh>
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
-#include <mln/level/fast_median.hh>
-
-#include <mln/core/dpoints_pixter.hh>
-#include <mln/core/pixel.hh>
+# include <mln/core/concept/image.hh>
 
 
 namespace mln
 {
 
-  template <typename I, typename W>
-  void test(I& input, const W& win)
+  namespace debug
   {
-    mln_point(I) p;
-    p.row() = p.col() = 1;
 
+    /// FIXME
+    template <typename I>
+    void iota(Image<I>& input);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I>
+    void iota(Image<I>& input_)
     {
-      mln_qixter(I) qix(win, p, input);
-      for_all(qix)
-	std::cout << *qix << ' ';
-      std::cout << " :  " << qix.center_value() << std::endl;
-    }
+      unsigned i = 0;
+      I& input = exact(input_);
+      mln_piter(I) p(input.domain());
+      for_all(p)
+	input(p) = ++i;
+      }
 
-    {
-      pixel<I> pix(input, p);
-      mln_qixter(I) qix(win, pix, input);
-      for_all(qix)
-	std::cout << *qix << ' ';
-      std::cout << " :  " << qix.center_value() << std::endl;
-    }
-  }
+# endif // ! MLN_INCLUDE_ONLY
 
-}
+  } // end of namespace mln::debug
+
+} // end of namespace mln
 
 
-
-int main()
-{
-  using namespace mln;
-  using value::int_u8;
-
-//   {
-//     rectangle2d rect(3, 3);
-//     border::thickness = 4;
-//     image2d_b<int_u8> ima(3, 3);
-//     debug::iota(ima);
-//     debug::println(ima);
-//     test(ima, rect);
-//   }
-
-
-  {
-    rectangle2d rect(51, 51);
-    border::thickness = 52;
-    
-    image2d_b<int_u8>
-      lena = io::load_pgm("../img/lena.pgm"),
-      out(lena.domain());
-    
-    level::fast_median(lena, rect, out);
-    io::save_pgm(out, "out.pgm");
-  }
-
-}
+#endif // ! MLN_DEBUG_IOTA_HH
