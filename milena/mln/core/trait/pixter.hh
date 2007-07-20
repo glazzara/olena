@@ -25,62 +25,87 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_OBJECT_HH
-# define MLN_CORE_CONCEPT_OBJECT_HH
+#ifndef MLN_CORE_TRAIT_PIXTER_HH
+# define MLN_CORE_TRAIT_PIXTER_HH
 
-/*! \file mln/core/concept/object.hh
+/*! \file mln/core/trait/pixter.hh
  *
- * \brief Definition of the top milena class mln::Object.
+ * \brief Definition of some traits over image types.
  */
 
-# include <cassert>
-# include <iostream>
-
-# include <mln/core/macros.hh>
-# include <mln/core/contract.hh>
-# include <mln/core/internal/fixme.hh>
+# include <mln/metal/none.hh>
 
 
-/*! \namespace mln
- * \brief The namespace mln corresponds to the Milena (mini-Olena) project.
- *
- * The contents of mln mimics the contents of the olena project but
- * in a simplified way.  Some classes have the same name in both
- * projects and roughly have the same behavior.
- *
- * \warning The Milena project is independent from the Olena
- * project; the user has to choose between both the project she
- * wants to work with.
- */
 namespace mln
 {
 
-  /*! \brief Base class for almost every class defined in milena.
-   *
-   * The parameter \a E is the exact type.
-   */
-  template <typename E>
-  struct Object
+  namespace trait
   {
-  protected:
-    Object();
-  };
 
 
-# ifndef MLN_INCLUDE_ONLY
+    // pixter
 
-  template <typename E>
-  Object<E>::Object()
-  {
-  }
+    template <typename I>
+    struct fwd_pixter
+    {
+      typedef metal::none ret;
+    };
 
-# endif // ! MLN_INCLUDE_ONLY
+    template <typename I>
+    struct bkd_pixter
+    {
+      typedef metal::none ret;
+    };
+
+    template <typename I>
+    struct pixter : fwd_pixter<I>
+    {
+    };
+
+
+    // qixter
+
+    template <typename I, typename W>
+    struct fwd_qixter
+    {
+      typedef metal::none ret;
+    };
+
+    template <typename I, typename W>
+    struct bkd_qixter
+    {
+      typedef metal::none ret;
+    };
+
+    template <typename I, typename W>
+    struct qixter : fwd_qixter<I, W>
+    {
+    };
+
+
+    // nixter
+
+    template <typename I, typename N>
+    struct fwd_nixter
+    {
+      typedef metal::none ret;
+    };
+
+    template <typename I, typename N>
+    struct bkd_nixter
+    {
+      typedef metal::none ret;
+    };
+
+    template <typename I, typename N>
+    struct nixter : fwd_nixter<I, N>
+    {
+    };
+
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-# include <mln/core/exact.hh>
-# include <mln/core/ops.hh>
-
-
-#endif // ! MLN_CORE_CONCEPT_OBJECT_HH
+#endif // ! MLN_CORE_TRAIT_PIXTER_HH

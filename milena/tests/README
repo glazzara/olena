@@ -1,0 +1,1 @@
+g++-4.1 -I.. -ansi -pedantic -W -Wall -Wextra -Wconversion sample.cc

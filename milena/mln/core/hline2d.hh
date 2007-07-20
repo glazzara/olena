@@ -68,7 +68,7 @@ namespace mln
     /*! \brief Piter type to browse a hline such as: "for each row
      * (decreasing), for each column (decreasing)."
      */
-    typedef dpoints_fwd_piter<dpoint2d> bkd_qiter; // FIXME: bkd!!!
+    typedef internal::fixme bkd_qiter;
 
     /*! \brief Same as fwd_qiter.
      */

@@ -28,79 +28,76 @@
 #ifndef MLN_CORE_PIXTER2D_B_HH
 # define MLN_CORE_PIXTER2D_B_HH
 
-# include <mln/core/internal/lineary_pixel_iterator_base.hh>
-# include <mln/core/point2d.hh>
-# include <iostream>
-
-
-//FIXME comment
 /*! \file mln/core/pixter2d_b.hh
  *
  * \brief Pixel iterator class on a image 2d with border.
  */
+
+# include <mln/core/internal/pixel_iterator_base.hh>
+# include <mln/core/point2d.hh>
 
 
 
 namespace mln
 {
 
-  // Forward declaration
-  template <typename T> class image2d_b;
-
-  template <typename T>
-  class fwd_pixter2d_b :
-    public internal::lineary_pixel_iterator_base_<image2d_b<T>, fwd_pixter2d_b<T> >
+  template <typename I>
+  class fwd_pixter2d_b : public internal::pixel_iterator_base_< I, fwd_pixter2d_b<I> >
   {
-    typedef internal::lineary_pixel_iterator_base_<image2d_b<T>, fwd_pixter2d_b<T> > super;
+    typedef internal::pixel_iterator_base_< I, fwd_pixter2d_b<I> > super_;
+    typedef mln_value(super_) value_;
   public:
-    /// Image pixel value type.
-    typedef mln_value(image2d_b<T>) value;
 
     /*! \brief Constructor.
      *
-     * \param[in] ima   Image to iterate.
+     * \param[in] image Image to iterate over its pixels.
      */
-    fwd_pixter2d_b(image2d_b<T>& image);
-    /// Move the iterator on the next element.
+    fwd_pixter2d_b(I& image);
+
+    /// Go to the next pixel.
     void next_();
 
   private:
-    /// Size of the image border.
-    unsigned border_size_;
+
+    /// Twice the size of the image border.
+    unsigned border_x2_;
+
     /// Row offset.
     unsigned row_offset_;
-    /// End of a row.
-    value *eor_;
+
+    /// End of the current row.
+    value_* eor_;
   };
+
+
+  // FIXME: bkd_pixter2d_b
+
 
 #ifndef MLN_INCLUDE_ONLY
 
-  template <typename T>
-  fwd_pixter2d_b<T>::fwd_pixter2d_b(image2d_b<T>& image) :
-    super(image),
-    border_size_(image.border()),
-    row_offset_((image.domain().pmax()[1] - image.domain().pmin()[1])
-		+ 2 * border_size_ + 1)
+  template <typename I>
+  fwd_pixter2d_b<I>::fwd_pixter2d_b(I& image) :
+    super_(image)
   {
-    this->start_ = &image(image.domain().pmin());
-    this->eor_ = &image(make::point2d(image.domain().pmin()[0], image.domain().pmax()[1])) + 1;
-    this->eoi_ = &image(image.domain().pmax()) + 1;
+    mln_precondition(image.has_data());
+    border_x2_ = 2 * image.border();
+    row_offset_ = image.max_col() - image.min_col() + 1 + border_x2_;
+    eor_ = & image.at(image.min_row(), image.max_col()) + 1;
   }
 
-  template <typename T>
-  void fwd_pixter2d_b<T>::next_()
+  template <typename I>
+  void
+  fwd_pixter2d_b<I>::next_()
   {
-    ++(this->value_ptr_);
-
-    if (this->value_ptr_ == this->eor_ && this->value_ptr_ != this->eoi_)
+    ++this->value_ptr_;
+    if (this->value_ptr_ == eor_ && this->value_ptr_ != this->eoi_)
     {
-      this->value_ptr_ += 2 * this->border_size_;
-      this->eor_ += this->row_offset_;
+      this->value_ptr_ += border_x2_;
+      eor_ += row_offset_;
     }
   }
 
 #endif // ! MLN_INCLUDE_ONLY
-
 
 } // end of namespace mln
 

@@ -25,33 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/fast_iterator.hh
- * \brief This file documents the concept of mln::Fast_Iterator.
+#ifndef MLN_CORE_METAL_NONE_HH
+# define MLN_CORE_METAL_NONE_HH
+
+/*! \file mln/core/metal/none.hh
+ *
+ * \brief Definition of a type that means "none".
  */
+
 
 namespace mln
 {
 
-  namespace doc
+  namespace metal
   {
-    /*! \brief Documentation class for mln::Iterator.
-     * \see mln::Fast_Iterator
-     */
-    template <typename E>
-    struct Fast_Iterator : public Iterator<E>
-    {
-      /*! \brief Dereference operator.
-       * return the current pixel
-       */
-      rvalue operator* ();
 
-      /*! \brief Dereference operator.
-       * return the current pixel
-       */
-      lvalue operator* () const;
-    protected:
-      Fast_Iterator();
-    };
-  } // end of namespace doc
+
+    /*! \brief Type meaning "none".
+     *
+     * This type is for use when a type is required and none can be
+     * provided.
+     */
+    struct none;
+    
+
+  } // end of namespace mln::metal
 
 } // end of namespace mln
+
+
+#endif // ! MLN_CORE_METAL_NONE_HH

@@ -28,47 +28,60 @@
 #ifndef MLN_CORE_DPOINTS_PIXTER_HH
 # define MLN_CORE_DPOINTS_PIXTER_HH
 
+/*! \file mln/core/dpoints_pixter.hh
+ *
+ * \brief Definition of mln::dpoints_fwd_pixter and
+ * mln::dpoints_bkd_pixter.
+ */
+
 # include <cassert>
 # include <vector>
-# include <mln/core/internal/pixel_iterator_base.hh>
+
+# include <mln/core/concept/pixel_iterator.hh>
+# include <mln/core/concept/genpixel.hh>
+# include <mln/core/internal/pixel_impl.hh>
+
 
 
 namespace mln
 {
 
-  /*! \brief A generic forward iterator on image pixel of a windows and of
+  /*! \brief A generic forward iterator on pixels of windows and of
    *  neighborhoods.
    *
    * The parameter \c I is the image type.
    */
   template <typename I>
-  class dpoints_pixter : public internal::pixel_iterator_base_< I, dpoints_pixter<I> >
+  class dpoints_fwd_pixter : public Pixel_Iterator< dpoints_fwd_pixter<I> >,
+			     public internal::pixel_impl_< I, dpoints_fwd_pixter<I> >
   {
-    typedef typename internal::pixel_iterator_base_< I, dpoints_pixter<I> > super;
+    typedef typename internal::pixel_impl_< I, dpoints_fwd_pixter<I> > super;
   public:
 
-    /// Image pixel value
-    typedef mln_value(I) value;
-    /// Image pixel rvalue
-    typedef mln_rvalue(I) rvalue;
-    /// Image pixel lvalue
-    typedef mln_lvalue(I) lvalue;
+    /// Using super value type.
+    typedef mln_value(super) value;
 
     /*! \brief Constructor.
      *
-     * \param[in] dps   Object that can provide an array of delta-points.
-     * \param[in] p_ref Center point to iterate around.
-     * \param[in] ima   Image to iterate.
+     * \param[in] image Image subject to iteration.
+     * \param[in] dps   Object that can provide a set of delta-points.
+     * \param[in] p_ref Center (generalized) point to iterate around.
      */
     template <typename Dps, typename Pref>
-    dpoints_pixter(const Dps& dps,
-		   const GenPoint<Pref>& p_ref,
-		   I& image);
+    dpoints_fwd_pixter(I& image,
+		       const Dps& dps,
+		       const GenPoint<Pref>& p_ref);
 
+    /*! \brief Constructor.
+     *
+     * \param[in] image Image subject to iteration.
+     * \param[in] dps   Object that can provide a set of delta-points.
+     * \param[in] p_ref Center (generalized) pixel to iterate around.
+     */
     template <typename Dps, typename Pref>
-    dpoints_pixter(const Dps& dps,
-		   const GenPixel<Pref>& p_ref,
-		   I& image);
+    dpoints_fwd_pixter(I& image,
+		       const Dps& dps,
+		       const GenPixel<Pref>& p_ref);
 
     /// Start an iteration.
     void start();
@@ -87,7 +100,7 @@ namespace mln
     void update();
 
     /// The value around which this iterator moves.
-    const value& center_value() const;
+    const mln_value(I)& center_value() const;
 
   private:
 
@@ -95,7 +108,7 @@ namespace mln
     std::vector<int> offset_;
 
     /// current offset
-    int i_;
+    unsigned i_;
 
     /// reference pixel / point in the image
     value** value_ref_;
@@ -108,16 +121,24 @@ namespace mln
   };
 
 
+  // FIXME: dpoints_bkd_pixter<I>
+
+
+
 #ifndef MLN_INCLUDE_ONLY
+
+
+  // dpoints_fwd_pixter<I>
 
   template <typename I>
   template <typename Dps, typename Pref>
-  dpoints_pixter<I>::dpoints_pixter(const Dps& dps,
-				    const GenPoint<Pref>& p_ref,
-				    I& image)
+  dpoints_fwd_pixter<I>::dpoints_fwd_pixter(I& image,
+					    const Dps& dps,
+					    const GenPoint<Pref>& p_ref)
     : super(image)
   {
-    p_ref_ = internal::force_exact<Pref>(p_ref).pointer();
+    mln_precondition(image.has_data());
+    p_ref_ = internal::force_exact<Pref>(p_ref).pointer_();
     value_ref_ = 0;
     init_(dps);
   }
@@ -125,19 +146,20 @@ namespace mln
 
   template <typename I>
   template <typename Dps, typename Pref>
-  dpoints_pixter<I>::dpoints_pixter(const Dps& dps,
-				    const GenPixel<Pref>& p_ref,
-				    I& image)
+  dpoints_fwd_pixter<I>::dpoints_fwd_pixter(I& image,
+					    const Dps& dps,
+					    const GenPixel<Pref>& p_ref)
     : super(image)
   {
+    mln_precondition(image.has_data());
     p_ref_ = 0;
-    value_ref_ = internal::force_exact<Pref>(p_ref).address();
+    value_ref_ = internal::force_exact<Pref>(p_ref).address_();
     init_(dps);
   }
 
   template <typename I>
   const mln_value(I)&
-  dpoints_pixter<I>::center_value() const
+  dpoints_fwd_pixter<I>::center_value() const
   {
     mln_invariant(value_ref_ != 0 || p_ref_ != 0);
     if (p_ref_)
@@ -149,21 +171,21 @@ namespace mln
   template <typename I>
   template <typename Dps>
   void
-  dpoints_pixter<I>::init_(const Dps& dps)
+  dpoints_fwd_pixter<I>::init_(const Dps& dps)
   {
     for (unsigned i = 0; i < dps.nelements(); ++i)
       offset_.push_back(this->image_.offset(dps.element(i)));
-
+    // offset_[0] is absolute
+    // other offsets are relative: 
     if (dps.nelements() > 1)
       for (unsigned i = dps.nelements() - 1; i > 0; --i)
 	offset_[i] -= offset_[i - 1];
-
-    // offset_[0] is absolute; other offsets are relative.
     invalidate();
   }
 
   template <typename I>
-  void dpoints_pixter<I>::update()
+  void
+  dpoints_fwd_pixter<I>::update()
   {
     if (is_valid())
       {
@@ -175,27 +197,31 @@ namespace mln
   }
 
   template <typename I>
-  void dpoints_pixter<I>::start()
+  void
+  dpoints_fwd_pixter<I>::start()
   {
     i_ = 0;
     update();
   }
 
   template <typename I>
-  void dpoints_pixter<I>::next_()
+  void
+  dpoints_fwd_pixter<I>::next_()
   {
     ++i_;
     this->value_ptr_ += offset_[i_];    
   }
 
   template <typename I>
-  bool dpoints_pixter<I>::is_valid() const
+  bool
+  dpoints_fwd_pixter<I>::is_valid() const
   {
     return i_ != offset_.size();
   }
 
   template <typename I>
-  void dpoints_pixter<I>::invalidate()
+  void
+  dpoints_fwd_pixter<I>::invalidate()
   {
     i_ = offset_.size();
   }

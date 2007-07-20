@@ -29,6 +29,7 @@
 # define MLN_CORE_CONCEPT_POINT_SET_HH
 
 /*! \file mln/core/concept/point_set.hh
+ *
  * \brief Definition of the concept of mln::Point_Set.
  */
 
@@ -50,7 +51,7 @@ namespace mln
     /*
       typedef point;
       typedef psite;
-      typedef piter;
+
       typedef fwd_piter;
       typedef bkd_piter;
 
@@ -127,7 +128,6 @@ namespace mln
     typedef mln_point(E) point;
     typedef mln_psite(E) psite;
 
-    typedef mln_piter(E)         piter;
     typedef mln_fwd_piter(E) fwd_piter;
     typedef mln_bkd_piter(E) bkd_piter;
     

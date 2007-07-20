@@ -1,3 +1,70 @@
+2007-07-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Clean-up and update pixel related material.
+	* tests/README: New.
+	* mln/core/trait: New.
+	* mln/core/trait/pixter.hh: New.
+	* mln/core/internal/pixel_impl.hh: New.
+	* mln/core/internal/fixme.hh: New.
+	* mln/core/concept/fast_image.hh: New.
+	* mln/core/concept/doc/fast_iterator.hh: Rename as...
+	* mln/core/concept/doc/pixel_iterator.hh: ...this new file.
+	Update.
+	* mln/core/concept/doc/fast_image.hh: New.
+	* mln/core/concept/doc/genpixel.hh: New.
+	* mln/core/tags.hh: New.
+	* mln/metal: New.
+	* mln/metal/none.hh: New.
+	* mln/core/internal/lineary_pixel_iterator_base.hh: Remove.
+
+	* mln/core/dpoints_piter.hh,
+	* mln/core/box_piter.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/internal/piter_adaptor.hh,
+	* mln/core/concept/genpoint.hh,
+	* mln/core/concept/psite.hh,
+	* mln/core/concept/point.hh,
+	* mln/core/concept/doc/genpoint.hh (pointer): Rename as...
+	(pointer_): ...this.
+
+	* tests/window2d.cc: Cosmetic change.
+	* TODO: Update.
+	* mln/core/macros.hh (mln_ima): Remove.
+	(*ixter): Update.
+	(mln_piter, mln_qiter, mln_niter): Update.
+	* mln/core/psubset.hh (bkd_piter): Use fixme.
+	(npoints): Update.
+	* mln/core/box.hh (piter): Remove.
+	* mln/core/rectangle2d.hh (bkd_piter): Use fixme.
+	* mln/core/pixter2d_b.hh: Clean-up and update.
+	* mln/core/window.hh (bkd_piter): Use fixme.
+	* mln/core/dpoints_pixter.hh: Clean-up and update.
+	* mln/core/internal/pixel_iterator_base.hh: Clean-up and update.
+	* mln/core/internal/box_impl.hh: Touch doc.
+	* mln/core/internal/image_base.hh (dpoint, coord): New.
+	(pointer): Update.
+	* mln/core/pixel.hh: Clean-up and update.
+	* mln/core/hline2d.hh (bkd_piter): Use fixme.
+	* mln/core/concept/image.hh (piter): Remove.
+	(dpoint, coord): New.
+	* mln/core/concept/pixel_iterator.hh: Update.
+	* mln/core/concept/point_set.hh (piter): Remove.
+	* mln/core/concept/object.hh: New include.
+	* mln/core/concept/doc/image.hh: Update.
+	* mln/core/concept/doc/point_set.hh: Update.
+	* mln/core/concept/genpixel.hh: Clean-up and update.
+	* mln/core/vline2d.hh (bkd_piter): Use fixme.
+	* mln/core/image2d_b.hh: Clean-up and update.
+	(buffer): New.
+	(offset, point_at_offset): Fix.
+	* mln/level/fast_median.hh: Update.
+	* mln/level/median.hh: Prefer mln_coord to int.
+	* mln/canvas/sbrowsing.hh: Update doc.
+	* tests/fast_median.cc,
+	* tests/pixter_point2d.cc,
+	* tests/pixter_dpoint2d.cc,
+	* tests/pixel.cc: Update.
+
 2007-07-19  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Repair lineary pixel iterator.

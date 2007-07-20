@@ -78,10 +78,7 @@ namespace mln
     typedef psubset_fwd_piter_<S,F> fwd_piter;
 
     /// Backward Piter associated type.
-    typedef psubset_fwd_piter_<S,F> bkd_piter; // FIXME: bkd!!!
-
-    /// Piter associated type.
-    typedef fwd_piter piter;
+    typedef internal::fixme bkd_piter;
 
 
     /// Constructor without argument.
@@ -180,7 +177,7 @@ namespace mln
   psubset<S,F>::npoints() const
   {
     std::size_t n = 0;
-    piter p(*this);
+    fwd_piter p(*this);
     for_all(p)
       ++n;
     return n;

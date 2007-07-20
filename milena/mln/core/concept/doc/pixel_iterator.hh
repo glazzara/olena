@@ -25,62 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_OBJECT_HH
-# define MLN_CORE_CONCEPT_OBJECT_HH
-
-/*! \file mln/core/concept/object.hh
+/*! \file mln/core/concept/doc/pixel_iterator.hh
  *
- * \brief Definition of the top milena class mln::Object.
+ * \brief This file documents the concept of mln::Pixel_Iterator.
  */
 
-# include <cassert>
-# include <iostream>
-
-# include <mln/core/macros.hh>
-# include <mln/core/contract.hh>
-# include <mln/core/internal/fixme.hh>
-
-
-/*! \namespace mln
- * \brief The namespace mln corresponds to the Milena (mini-Olena) project.
- *
- * The contents of mln mimics the contents of the olena project but
- * in a simplified way.  Some classes have the same name in both
- * projects and roughly have the same behavior.
- *
- * \warning The Milena project is independent from the Olena
- * project; the user has to choose between both the project she
- * wants to work with.
- */
 namespace mln
 {
 
-  /*! \brief Base class for almost every class defined in milena.
-   *
-   * The parameter \a E is the exact type.
-   */
-  template <typename E>
-  struct Object
+  namespace doc
   {
-  protected:
-    Object();
-  };
 
+    /*! \brief Documentation class for mln::Iterator.
+     * \see mln::Pixel_Iterator
+     */
+    template <typename E>
+    struct Pixel_Iterator : public Iterator<E>,
+			    public GenPixel<E>
+    {
+      /*! \brief Type returned by the read-write dereference operator.
+       */
+      typedef void lvalue;
 
-# ifndef MLN_INCLUDE_ONLY
+      /*! \brief Dereference operator.
+       *
+       * \return The current pixel value; this value cannot be
+       * modified.
+       */
+      lvalue operator*() const;
 
-  template <typename E>
-  Object<E>::Object()
-  {
-  }
+    protected:
+      Pixel_Iterator();
+    };
 
-# endif // ! MLN_INCLUDE_ONLY
+  } // end of namespace doc
 
 } // end of namespace mln
-
-
-# include <mln/core/exact.hh>
-# include <mln/core/ops.hh>
-
-
-#endif // ! MLN_CORE_CONCEPT_OBJECT_HH

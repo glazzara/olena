@@ -36,9 +36,6 @@
 # include <mlc/same_coord.hh>
 
 # include <mln/core/concept/object.hh>
-
-# include <mln/core/macros.hh>
-# include <mln/core/contract.hh>
 # include <mln/core/internal/force_exact.hh>
 
 
@@ -73,7 +70,7 @@ namespace mln
       either Point
       or operator point() const;
 
-      const point* pointer() const;
+      const point* pointer_() const;
       coord operator[](unsigned i) const;
     */
 
@@ -218,7 +215,7 @@ namespace mln
     typedef  mln_point(E)  point;
     typedef mln_dpoint(E) dpoint;
     typedef mln_coord(E)  coord;
-    const point* (E::*m1)() const = & E::pointer;
+    const point* (E::*m1)() const = & E::pointer_;
     m1 = 0;
     coord (E::*m2)(unsigned i) const = & E::operator[];
     m2 = 0;

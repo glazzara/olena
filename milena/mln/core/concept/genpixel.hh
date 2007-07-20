@@ -29,13 +29,11 @@
 # define MLN_CORE_CONCEPT_GENPIXEL_HH
 
 /*! \file mln/core/concept/genpixel.hh
+ *
  * \brief Definition of the concept of mln::Genpixel.
  */
 
 # include <mln/core/concept/object.hh>
-
-# include <mln/core/macros.hh>
-# include <mln/core/contract.hh>
 # include <mln/core/internal/force_exact.hh>
 
 
@@ -58,75 +56,29 @@ namespace mln
   template <typename E>
   struct GenPixel
   {
-
     /*
+      typedef  value;
       typedef rvalue;
-      typedef value;
-      // FIXME: lvalue?
-
-
-      // FIXME: Inactivated:
-      //  typedef ima; // not const!
-      //  typedef psite;
-      //  const ima& image() const;
-      //  const psite& site() const; // FIXME ou cpy
-      //  value* address();
 
       rvalue operator*() const;
-      lvalue operator*();
-
-      const value*& address() const;
+      value** address_() const;
     */
-
   protected:
     GenPixel();
-
   };
-
-  /*! \brief Print a generalized pixel \p p into the output stream \p
-   *  ostr.
-   *
-   * \param[in,out] ostr An output stream.
-   * \param[in] p A generalized pixel.
-   *
-   * \return The modified output stream \p ostr.
-   *
-   * \relates mln::GenPixel
-   */
-  template <typename P>
-  std::ostream& operator<<(std::ostream& ostr, const GenPixel<P>& pxl);
-
 
 
 # ifndef MLN_INCLUDE_ONLY
-
 
   template <typename E>
   GenPixel<E>::GenPixel()
   {
     typedef mln_value(E) value;
     typedef mln_rvalue(E) rvalue;
-
-    // FIXME: Inactivated:
-
-//     typedef mln_ima(E) ima;
-//     typedef mln_psite(E) psite;
-//     const ima& (E::*m1)() const = & E::image;
-//     m1 = 0;
-//     const psite& (E::*m2)() const = & E::site;
-//     m2 = 0;
-
-    rvalue (E::*m3)() const = & E::operator*;
-    m3 = 0;
-//     const value *const & (E::*m4)() const = & E::address;
-//     m4 = 0;
-  }
-
-
-  template <typename P>
-  std::ostream& operator<<(std::ostream& ostr, const GenPixel<P>& pxl)
-  {
-    return ostr << pxl.psite() << '@' << & pxl.image();
+    rvalue (E::*m1)() const = & E::operator*;
+    m1 = 0;
+    value** (E::*m2)() const = & E::address_;
+    m2 = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

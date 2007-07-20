@@ -160,21 +160,22 @@ namespace mln
       template <typename I, typename O>
       void median(const I& input, const hline2d& win, O& output)
       {
-	const int
+	typedef mln_coord(I) coord;
+	const coord
 	  max_row = input.max_row(),
 	  min_col = input.min_col(),
 	  max_col = input.max_col();
-	const unsigned half = win.length() / 2;
+	const coord half = win.length() / 2;
 
 	point2d p;
-	int& row = p.row();
-	int& col = p.col();
+	coord& row = p.row();
+	coord& col = p.col();
 
 	accu::median_on<mln_value(I)> med;
 
 	for (row = input.min_row(); row <= max_row; ++row)
 	  {
-	    int ct, cu;
+	    coord ct, cu;
 
 	    // initialization (before first point of the row)
 	    med.init();

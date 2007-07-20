@@ -42,20 +42,19 @@ int main()
   I ima(3, 3);
 
   {
-    pixel<I> pxl(ima);
-    pxl.site() = make::point2d(1, 1);
+    pixel<I> pxl(ima, make::point2d(1, 1));
     *pxl = 51;
-    mln_assertion(ima.at(1,1) == 51);
+    mln_assertion(ima.at(1, 1) == 51);
   }
 
   {
-    pixel<const I> pxl(ima);
-    pxl.site() = make::point2d(1, 1);
-    ima.at(1,1) = 51;
+    pixel<const I> pxl(ima, make::point2d(1, 1));
+    ima.at(1, 1) = 51;
     mln_assertion(*pxl == 51);
 
     // hopefully the code below does not compile:
     // *pxl = 0;
     // assignment of read-only location
   }
+
 }

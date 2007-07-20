@@ -81,28 +81,19 @@
 /// Shortcut to access the fwd_piter type associated to T.
 # define mln_fwd_piter(T)  typename T::fwd_piter
 
-/// Shortcut to access the fwd_pixter type associated to T.
-# define mln_fwd_pixter(T)  typename T::fwd_pixter
-
 /// Shortcut to access the bkd_piter type associated to T.
 # define mln_bkd_piter(T)  typename T::bkd_piter
 
 /// Shortcut to access the fwd_qiter type associated to T.
 # define mln_fwd_qiter(T)  typename T::fwd_qiter
 
-/// Shortcut to access the fwd_qixter type associated to T.
-# define mln_fwd_qixter(T)  typename T::fwd_qixter
-
 /// Shortcut to access the fwd_viter type associated to T.
 # define mln_fwd_viter(T)  typename T::fwd_viter
 
 // i
 
-/// Shortcut to access the fwd_viter type associated to T.
+/// Shortcut to access the image type associated to T.
 # define mln_image(T)      typename T::image
-
-/// Shortcut to access the fwd_viter type associated to T.
-# define mln_ima(T)        typename T::ima
 
 
 // l
@@ -115,10 +106,8 @@
 // p
 
 /// Shortcut to access the piter type associated to T.
-# define mln_piter(T)      typename T::piter
-
-/// Shortcut to access the pixter type associated to T.
-# define mln_pixter(T)     typename T::pixter
+# define mln_piter(T)      typename T::fwd_piter
+# define mln_piter_(T)              T::fwd_piter
 
 /// Shortcut to access the pset type associated to T.
 # define mln_pset(T)       typename T::pset
@@ -133,16 +122,13 @@
 // q
 
 /// Shortcut to access the qiter type associated to T.
-# define mln_qiter(T)      typename T::qiter
-
-// Shortcut to access to the qixter type associated to T
-# define mln_qixter(T)      typename T::qixter
+# define mln_qiter(T)      typename T::fwd_qiter
 
 
 // n
 
 /// Shortcut to access the niter type associated to T.
-# define mln_niter(T)      typename T::niter
+# define mln_niter(T)      typename T::fwd_niter
 
 
 // r
@@ -160,7 +146,9 @@
 # define mln_value(T)      typename T::value
 
 /// Shortcut to access the viter type associated to T.
-# define mln_viter(T)      typename T::viter
+# define mln_viter(T)      typename T::fwd_viter
+
+
 
 
 
@@ -170,6 +158,28 @@
  * \c T is the new value type
  */
 # define mln_ch_value(I, T) typename I::template change_value<T>::ret
+
+
+
+// FIXME: Doc!
+
+# define mln_fwd_pixter(I)  typename mln::trait::fwd_pixter<I>::ret
+# define mln_fwd_pixter_(I)          mln::trait::fwd_pixter<I>::ret
+
+# define mln_bkd_pixter(I) typename mln::trait::bkd_pixter<I>::ret
+# define mln_pixter(I)  mln_fwd_pixter(I)
+# define mln_pixter_(I) mln_fwd_pixter_(I)
+
+
+# define mln_fwd_qixter(I, W) typename mln::trait::fwd_qixter<I, W>::ret
+# define mln_bkd_qixter(I, W) typename mln::trait::bkd_qixter<I, W>::ret
+# define mln_qixter(I, W) mln_fwd_qixter(I, W)
+
+
+# define mln_fwd_nixter(I, N) typename mln::trait::fwd_nixter<I, N>::ret
+# define mln_bkd_nixter(I, N) typename mln::trait::bkd_nixter<I, N>::ret
+# define mln_nixter(I, N) mln_fwd_nixter(I, N)
+
 
 
 #endif // ! MLN_CORE_MACROS_HH

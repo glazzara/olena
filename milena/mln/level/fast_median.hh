@@ -36,7 +36,6 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/window2d.hh>
 # include <mln/accu/median.hh>
-# include <ostream>
 
 
 namespace mln
@@ -85,24 +84,20 @@ namespace mln
 	  win_bot  = win - (win + up),
 	  win_top = (win + up) - win;
 
-
-
-	//Fixme bug
-	point2d p;
-
 	accu::median_on<mln_value(I)> med;
 
 	// initialization
 
-	p = input.domain().pmin() + up;
-	mln_qixter(I)
-	  q_fp(win_fwd_plus, p, input), q_fm(win_fwd_minus, p, input),
-	  q_bp(win_bkd_plus, p, input), q_bm(win_bkd_minus, p, input),
-	  q_top(win_top, p, input), q_bot(win_bot, p, input);
+	point2d p = input.domain().pmin() + up;
+
+	mln_qixter(I, window2d)
+	  q_fp(input, win_fwd_plus, p), q_fm(input, win_fwd_minus, p),
+	  q_bp(input, win_bkd_plus, p), q_bm(input, win_bkd_minus, p),
+	  q_top(input, win_top, p), q_bot(input, win_bot, p);
 
 	med.init();
 	{
-	  mln_qixter(I) q(win, p, input);
+	  mln_qixter(I, W) q(input, win, p);
 	  for_all(q)
 	    med.take(*q);
 	}

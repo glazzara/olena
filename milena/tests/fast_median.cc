@@ -55,7 +55,7 @@ namespace mln
     p.row() = p.col() = 1;
 
     {
-      mln_qixter(I) qix(win, p, input);
+      mln_qixter(I, W) qix(input, win, p);
       for_all(qix)
 	std::cout << *qix << ' ';
       std::cout << " :  " << qix.center_value() << std::endl;
@@ -63,7 +63,7 @@ namespace mln
 
     {
       pixel<I> pix(input, p);
-      mln_qixter(I) qix(win, pix, input);
+      mln_qixter(I, W) qix(input, win, pix);
       for_all(qix)
 	std::cout << *qix << ' ';
       std::cout << " :  " << qix.center_value() << std::endl;

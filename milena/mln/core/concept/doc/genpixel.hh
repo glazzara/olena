@@ -25,62 +25,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_OBJECT_HH
-# define MLN_CORE_CONCEPT_OBJECT_HH
+#ifndef MLN_CORE_CONCEPT_DOC_GENPIXEL_HH
+# define MLN_CORE_CONCEPT_DOC_GENPIXEL_HH
 
-/*! \file mln/core/concept/object.hh
- *
- * \brief Definition of the top milena class mln::Object.
+/*! \file mln/core/concept/doc/genpixel.hh
+ * \brief This file documents the concept of mln::GenPixel.
  */
 
-# include <cassert>
-# include <iostream>
 
-# include <mln/core/macros.hh>
-# include <mln/core/contract.hh>
-# include <mln/core/internal/fixme.hh>
-
-
-/*! \namespace mln
- * \brief The namespace mln corresponds to the Milena (mini-Olena) project.
- *
- * The contents of mln mimics the contents of the olena project but
- * in a simplified way.  Some classes have the same name in both
- * projects and roughly have the same behavior.
- *
- * \warning The Milena project is independent from the Olena
- * project; the user has to choose between both the project she
- * wants to work with.
- */
 namespace mln
 {
 
-  /*! \brief Base class for almost every class defined in milena.
-   *
-   * The parameter \a E is the exact type.
-   */
-  template <typename E>
-  struct Object
+  namespace doc
   {
-  protected:
-    Object();
-  };
+
+    /*! \brief Documentation class for mln::GenPixel.
+     *
+     * \see mln::GenPixel
+     */
+    template <typename E>
+    struct GenPixel
+    {
+
+      /// Value associated type.
+      typedef void value;
+
+      /// Read-only value associated type.
+      typedef void rvalue;
 
 
-# ifndef MLN_INCLUDE_ONLY
+      /*! \brief Give the value of this generalized pixel.
+       *
+       * \return A read-only value.
+       */
+      rvalue operator*() const;
 
-  template <typename E>
-  Object<E>::Object()
-  {
-  }
+      /*! \brief Give a hook to the value address.
+       *
+       * This method allows for iterators to refer to a generalized
+       * pixel.
+       *
+       * \return A pointer to the value address.
+       */
+      value** address_() const;
 
-# endif // ! MLN_INCLUDE_ONLY
+    protected:
+      GenPixel();
+    };
+
+  } // end of namespace mln::doc
 
 } // end of namespace mln
-
-
-# include <mln/core/exact.hh>
-# include <mln/core/ops.hh>
-
-
-#endif // ! MLN_CORE_CONCEPT_OBJECT_HH

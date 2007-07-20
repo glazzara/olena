@@ -28,52 +28,52 @@
 #ifndef MLN_CORE_CONCEPT_PIXEL_ITERATOR_HH
 # define MLN_CORE_CONCEPT_PIXEL_ITERATOR_HH
 
-/*! \file mln/core/concept/fast_iterator.hh
+/*! \file mln/core/concept/pixel_iterator.hh
+ *
  * \brief Definition of the concept of mln::Pixel_Iterator.
  */
 
 # include <mln/core/concept/iterator.hh>
 # include <mln/core/concept/genpixel.hh>
 
+
 namespace mln
 {
 
-  /*! \brief Pixel Iterator concept class.
+  /*! \brief Base class for the implementation of pixel iterator
+   *  classes.
    *
-   * \see FIXME
+   * An iterator on pixels is an iterator that is bound to a
+   * particular image and that browses over a set of image pixels.
+   *
+   * \see mln::doc::Pixel_Iterator for a complete documentation of
+   * this class contents.
    */
   template <typename E>
-  struct Pixel_Iterator :
-    public Iterator<E>,
-    public GenPixel<E>
+  struct Pixel_Iterator : public Iterator<E>,
+			  public GenPixel<E>
   {
     /*
-      typedef rvalue
-      typedef lvalue
-      lvalue operator* ();
-      rvalue operator* () const;
+      typedef lvalue;
+
+      lvalue operator*();
     */
   protected:
     Pixel_Iterator();
   };
+
 
 #ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
   Pixel_Iterator<E>::Pixel_Iterator()
   {
-    typedef mln_value(E) value;
-    typedef mln_rvalue(E) rvalue;
     typedef mln_lvalue(E) lvalue;
-
-    lvalue (E::*m1)() = & E::operator*;
-    m1 = 0;
-    rvalue (E::*m2)() const = & E::operator*;
-    m2 = 0;
+    lvalue (E::*m)() = & E::operator*;
+    m = 0;
   }
 
 #endif // ! MLN_INCLUDE_ONLY
-
 
 } // end of namespace mln
 

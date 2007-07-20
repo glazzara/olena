@@ -78,7 +78,7 @@ namespace mln
     operator mln_point(D) () const;
 
     /// Address of the point this iterator designates.
-    const point* pointer() const;
+    const point* pointer_() const;
 
     /// Test the iterator validity.
     bool is_valid() const;
@@ -108,7 +108,7 @@ namespace mln
 
     unsigned i_;
     point p_; // location of this iterator; p_ makes this iterator be
-	      // itself a potential center point (Cf. the pointer() method).
+	      // itself a potential center point (Cf. the pointer_() method).
   };
 
 
@@ -119,7 +119,7 @@ namespace mln
   dpoints_fwd_piter<D>::dpoints_fwd_piter(const Dps& dps,
 					  const GenPoint<Pref>& p_ref)
     : dps_(exact(dps).vec()),
-      p_ref_(* internal::force_exact<Pref>(p_ref).pointer())
+      p_ref_(* internal::force_exact<Pref>(p_ref).pointer_())
   {
     invalidate();
   }
@@ -133,7 +133,7 @@ namespace mln
 
   template <typename D>
   const mln_point(D)*
-  dpoints_fwd_piter<D>::pointer() const
+  dpoints_fwd_piter<D>::pointer_() const
   {
     return & p_;
   }

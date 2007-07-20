@@ -65,7 +65,7 @@ namespace mln
 		 public GenPoint<E>
   {
     /*
-    const point* pointer() const
+    const point* pointer_() const
     {
       return & (exact(this)->operator point());
     }

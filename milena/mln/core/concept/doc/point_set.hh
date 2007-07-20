@@ -50,10 +50,6 @@ namespace mln
        */
       typedef void psite;
 
-      /*! \brief Piter associated type.
-       */
-      typedef void piter;
-
       /*! \brief Forward Piter associated type.
        */
       typedef void fwd_piter;

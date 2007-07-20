@@ -1,25 +1,54 @@
 	-*- outline -*-
 
 
-* compilation
+* large changes
 
-g++-4.1 -I.. int_u8.cc -Wall -Wextra -Wconversion
-
-
-* value
-
-Value_Set
-props { ... }
-notion of lowq
-+ values() : vset dans Image ?
+introduce grids
 
 
-* function
+* adds-on
 
-Function_p2v
-Function_p2b
-Function_v2w
+** abstractions
 
-F apply(I, F)
-O transform(I, F)
+Function_i2i
+Weighted_Window
 
+** types
+
+value::proxy to dispatch read/write + the corresponding image type
+a mean_value object { sum; count } and operator+
+value_cast<T>(image)
+t_image to "transpose" the 0 and the i-th coordinates
+image defined by f/pset
+
+** extensions
+
+in Fast_Image: memcpy and memset-like methods (?)
+.offset() into GenPixel
+notion of low-quantization
+vset and .values() in Image
+built-in op objects -> reverse lhs/rhs
+
+
+* renaming
+
+GenPixel, GenPoint, Psite, Piter: longer name (?)
+mlc into metal
+point-wise material: pw::value_of, pw::constant, and pw::variable
+kind-related: mln_value_kind(I) and mln_kind(V)
+
+
+* clean-up
+
+accu::histo and median: remove inheritance
+
+
+* processing routines
+
+reconstructions + their canvases
+fast versions of level::fill and level::paste
+histogram class
+sorting points w.r.t. their value (array of offsets, psites, points)
+border::* and no-op versions if not fast image
+arith::inplace_plus et al.
+linear:: for convolutions

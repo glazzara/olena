@@ -79,7 +79,7 @@ namespace mln
        *
        * \return A point address.
        */
-      const point* pointer() const;
+      const point* pointer_() const;
 
       /*! \brief Read-only access to the \p i-th coordinate value.
        *

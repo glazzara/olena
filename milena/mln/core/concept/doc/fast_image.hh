@@ -25,62 +25,68 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_OBJECT_HH
-# define MLN_CORE_CONCEPT_OBJECT_HH
-
-/*! \file mln/core/concept/object.hh
- *
- * \brief Definition of the top milena class mln::Object.
+/*! \file mln/core/concept/doc/fast_image.hh
+ * \brief This file documents the concept of mln::Fast_Image.
  */
 
-# include <cassert>
-# include <iostream>
-
-# include <mln/core/macros.hh>
-# include <mln/core/contract.hh>
-# include <mln/core/internal/fixme.hh>
-
-
-/*! \namespace mln
- * \brief The namespace mln corresponds to the Milena (mini-Olena) project.
- *
- * The contents of mln mimics the contents of the olena project but
- * in a simplified way.  Some classes have the same name in both
- * projects and roughly have the same behavior.
- *
- * \warning The Milena project is independent from the Olena
- * project; the user has to choose between both the project she
- * wants to work with.
- */
 namespace mln
 {
 
-  /*! \brief Base class for almost every class defined in milena.
-   *
-   * The parameter \a E is the exact type.
-   */
-  template <typename E>
-  struct Object
+  namespace doc
   {
-  protected:
-    Object();
-  };
+
+    /*! \brief Documentation class for mln::Fast_Image.
+     * \see mln::Fast_Image
+     */
+    template <typename E>
+    struct Fast_Image : public Image<E>
+    {
+
+      /*! \brief Give the border thickness.
+       *
+       * \pre The image has to be initialized.
+       */
+      unsigned border();
+
+      /*! \brief Give the offset corresponding to the delta-point \p
+       *  dp.
+       *
+       * \param[in] p A delta-point.
+       *
+       * \pre The image has to be initialized.
+       */
+      int offset(const dpoint& dp);
 
 
-# ifndef MLN_INCLUDE_ONLY
+      /*! \brief Give the offset of the point \p p.
+       *
+       * \param[in] p A point.
+       *
+       * \pre The image has to own the point \p p.
+       */
+      unsigned offset(const point& p);
 
-  template <typename E>
-  Object<E>::Object()
-  {
-  }
 
-# endif // ! MLN_INCLUDE_ONLY
+      /*! \brief Give the point at offset \p o.
+       *
+       * \param[in] p An offset.
+       *
+       * \pre The image has to be initialized.
+       * \pre o < ncells()
+       */
+      point point_at_offset(unsigned o) const;
+
+
+      /*! \brief Give a hook to the value buffer.
+       *
+       * \internal
+       *
+       * \pre The image has to be initialized.
+       */
+      const value* buffer() const;
+
+    };
+
+  } // end of namespace mln::doc
 
 } // end of namespace mln
-
-
-# include <mln/core/exact.hh>
-# include <mln/core/ops.hh>
-
-
-#endif // ! MLN_CORE_CONCEPT_OBJECT_HH

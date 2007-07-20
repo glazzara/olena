@@ -39,8 +39,12 @@
 
 # include <mln/border/thickness.hh>
 # include <mln/fun/all.hh>
-# include <mln/core/pixter2d_b.hh>
-# include <mln/core/dpoints_pixter.hh>
+
+
+// FIXME:
+
+// # include <mln/core/pixter2d_b.hh>
+// # include <mln/core/dpoints_pixter.hh>
 
 
 namespace mln
@@ -64,18 +68,19 @@ namespace mln
     typedef dpoint2d dpoint;
     typedef mln_fwd_piter(box2d) fwd_piter;
     typedef mln_bkd_piter(box2d) bkd_piter;
-    typedef fwd_piter piter;
     // end of warning
 
-    /// Forward pixel iterator associated to image2d
-    typedef fwd_pixter2d_b<T> fwd_pixter;
 
-    /// Foward pixel iterator on dpoints assoicated to image 2d
-    typedef dpoints_pixter< image2d_b<T> > fwd_qixter;
+    // FIXME:
 
+//     /// Forward pixel iterator associated to image2d
+//     typedef fwd_pixter2d_b<T> fwd_pixter;
 
-    typedef fwd_pixter pixter;
-    typedef fwd_qixter qixter;
+//     /// Foward pixel iterator on dpoints assoicated to image 2d
+//     typedef dpoints_pixter< image2d_b<T> > fwd_qixter;
+
+//     typedef fwd_pixter pixter;
+//     typedef fwd_qixter qixter;
 
 
     /// Value associated type.
@@ -153,14 +158,17 @@ namespace mln
 
     /// Fast Image method
 
-    /// Return the offset corresponding to the dpoint \p dp.
+    /// Give the offset corresponding to the delta-point \p dp.
     int offset(const dpoint2d& dp);
 
-    /// Return the offset corresponding to the dpoint \p p.
-    int offset(const point2d& p);
+    /// Give the offset corresponding to the point \p p.
+    unsigned offset(const point2d& p);
 
-    /// Return the point corresponding to the offset \p offset.
-    point2d point_at_offset(int offset);
+    /// Give the point corresponding to the offset \p o.
+    point2d point_at_offset(unsigned o) const;
+
+    /// Give a hook to the value buffer.
+    const T* buffer() const;
 
 
   private:
@@ -340,6 +348,46 @@ namespace mln
     deallocate_();
   }
 
+  template <typename T>
+  const T*
+  image2d_b<T>::buffer() const
+  {
+    mln_precondition(this->has_data());
+    return buffer_;
+  }
+
+  template <typename T>
+  int
+  image2d_b<T>::offset(const dpoint2d& dp)
+  {
+    mln_precondition(this->has_data());
+    int o = dp[0] * vb_.len(1) + dp[1];
+    return o;
+  }
+
+  template <typename T>
+  unsigned
+  image2d_b<T>::offset(const point2d& p)
+  {
+    mln_precondition(this->owns_(p));
+    unsigned o = & this->operator()(p) - this->buffer_;
+    mln_postcondition(p == point_at_offset(o));
+    return o;
+  }
+
+  template <typename T>
+  point2d
+  image2d_b<T>::point_at_offset(unsigned o) const
+  {
+    mln_precondition(o < ncells());
+    mln_precondition(this->has_data());
+    point2d p = make::point2d(o / vb_.len(1) + vb_.min_row(),
+			      o % vb_.len(1) + vb_.min_col());
+    mln_postcondition(& this->operator()(p) == this->buffer_ + o);
+    return p;
+  }
+
+
   // private
 
   template <typename T>
@@ -388,28 +436,52 @@ namespace mln
       }
   }
 
-  template <typename T>
-  int
-  image2d_b<T>::offset(const dpoint2d& dp)
-  {
-    return dp[0] * vb_.len(1) + dp[1];
-  }
-
-  template <typename T>
-  int
-  image2d_b<T>::offset(const point2d& p)
-  {
-    return p[0] * vb_.len(1) + p[1];
-  }
-
-  template <typename T>
-  point2d
-  image2d_b<T>::point_at_offset(int offset)
-  {
-    return point2d(offset / (vb_.len(1) + 1), offset % (vb_.len(1) + 1));
-  }
-
 # endif // ! MLN_INCLUDE_ONLY
+
+} // end of namespace mln
+
+
+
+# include <mln/core/trait/pixter.hh>
+# include <mln/core/dpoints_pixter.hh>
+# include <mln/core/pixter2d_b.hh>
+
+
+namespace mln
+{
+
+  namespace trait
+  {
+
+    // pixter
+
+    template <typename T>
+    struct fwd_pixter< image2d_b<T> >
+    {
+      typedef fwd_pixter2d_b< image2d_b<T> > ret;
+    };
+
+    template <typename T>
+    struct bkd_pixter< image2d_b<T> >
+    {
+      typedef internal::fixme ret;
+    };
+
+    // qixter
+
+    template <typename T, typename W>
+    struct fwd_qixter< image2d_b<T>, W >
+    {
+      typedef dpoints_fwd_pixter< image2d_b<T> > ret;
+    };
+
+    template <typename T, typename W>
+    struct bkd_qixter< image2d_b<T>, W >
+    {
+      typedef internal::fixme ret;
+    };
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 

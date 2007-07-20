@@ -70,10 +70,6 @@ namespace mln
      */
     typedef box_bkd_piter_<P> bkd_piter;
 
-    /*! \brief Piter associated type.
-     */
-    typedef fwd_piter piter;
-
     /*! \brief Minimum point.
      */
     P  pmin() const;

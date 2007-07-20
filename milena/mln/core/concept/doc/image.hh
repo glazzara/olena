@@ -121,10 +121,16 @@ namespace mln
        */
       typedef void psite;
 
-      /*! \brief Piter associated type.
-       * \invariant This type has to derive from mln::Piter.
+
+      /*! \brief Coordinate associated type.
        */
-      typedef void piter;
+      typedef void coord;
+
+      /*! \brief Dpoint associated type.
+       * \invariant This type has to derive from mln::Dpoint.
+       */
+      typedef void dpoint;
+
 
       /*! \brief Forward point iterator associated type.
        * \invariant This type has to derive from mln::Piter.
@@ -135,6 +141,7 @@ namespace mln
        * \invariant This type has to derive from mln::Piter.
        */
       typedef void bkd_piter;
+
 
       /*! \brief Test if \p p belongs to the image domain. 
        *
@@ -162,10 +169,6 @@ namespace mln
       std::size_t npoints() const;
     };
 
-    template <typename E>
-    struct Fast_Image : public Image<E>
-    {
-    };
 
   } // end of namespace mln::doc
 

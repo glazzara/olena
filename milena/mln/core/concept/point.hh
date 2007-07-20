@@ -55,7 +55,7 @@ namespace mln
 
     /*! \brief The pointer is this point address.
      */
-    const P* pointer() const;
+    const P* pointer_() const;
 
   protected:
     Point();
@@ -105,7 +105,7 @@ namespace mln
   }
 
   template <typename P>
-  const P* Point<P>::pointer() const
+  const P* Point<P>::pointer_() const
   {
     return exact(this);
   }

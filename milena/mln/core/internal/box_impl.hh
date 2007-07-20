@@ -48,7 +48,7 @@ namespace mln
     // box_impl
 
     /*! \brief Implementation class to equip objects having a bounding
-     * box with methods.
+     * box.
      *
      * \internal
      */

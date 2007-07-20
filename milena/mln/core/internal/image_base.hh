@@ -58,14 +58,20 @@ namespace mln
       /// Point associated type.
       typedef mln_point(S) point;
 
+
+      /// Dpoint associated type.
+      typedef mln_dpoint(point) dpoint;
+
+      /// Coordinate associated type.
+      typedef mln_coord(point) coord;
+
+
       /// Forward Piter associated type.
       typedef mln_fwd_piter(S) fwd_piter;
 
       /// Backward Piter associated type.
       typedef mln_bkd_piter(S) bkd_piter;
 
-      /// Piter associated type.
-      typedef fwd_piter piter;
 
       /// Test if \p p belongs to the image domain.
       bool has(const psite& p) const;

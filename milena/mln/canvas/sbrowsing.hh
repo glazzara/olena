@@ -45,12 +45,18 @@ namespace mln
     /*! FIXME: Doc!
      *
      *
-     * F should be
-     * {
-     *   input;  p;  --- attributes
-     *   void init();
-     *   void down(); void fwd(); void bkd(); --- methods
-     * }
+     * F shall feature: \n
+     * { \n
+     *   --- as attributes: \n
+     *   input; \n
+     *   p; \n
+     *   --- as methods: \n
+     *   void init(); \n
+     *   void down(); \n
+     *   void fwd(); \n
+     *   void bkd(); \n
+     * } \n
+     *
      */
     template <typename F>
     void sbrowsing(F& f);

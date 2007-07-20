@@ -30,10 +30,11 @@
 
 /*! \file mln/core/internal/pixel_iterator_base.hh
  *
- * \brief Base class for Pixel_Iterator concept implementation classes.
+ * \brief Base class to factor code for pixel iterator classes.
  */
 
 # include <mln/core/concept/pixel_iterator.hh>
+# include <mln/core/internal/pixel_impl.hh>
 
 
 namespace mln
@@ -42,137 +43,73 @@ namespace mln
   namespace internal
   {
 
-    /*! \brief pixel_iterator_base_ class
+    /*! \brief A base class for pixel iterators. 
      *
      */
     template <typename I, typename E>
-    class pixel_iterator_base_ : public Pixel_Iterator<E>
+    class pixel_iterator_base_ : public Pixel_Iterator<E>,
+				 public internal::pixel_impl_<I, E>
     {
+      typedef internal::pixel_impl_<I, E> super_;
+      typedef mln_value(super_) value_;
+
     public:
 
-      /// Image value type.
-      typedef mln_value(I) value;
+      /// Start an iteration.
+      void start();
 
-      /// Image lvalue type.
-      typedef mln_lvalue(I) lvalue;
+      /// Invalidate the iterator.
+      void invalidate();
 
-      /// Image rvalue type.
-      typedef mln_rvalue(I) rvalue;
-
-
-      /// pixel iterator value.
-      lvalue operator* ();
-
-      /// Get the pixel iterator value.
-      rvalue operator* () const;
-
-
-      /// Address of the current iterator value/pixel.
-      value** address() const;
-
-
-      // FIXME: Inactivated:
-
-//       /// I type.
-//       typedef I ima;
-
-//       /// Image psite type.
-//       typedef mln_psite(I) psite;
-
-//       /// Get the image associated to the current pixel iterator.
-//       const ima& image() const;
-
-//       /// psite associated to the iterator.
-//       const psite& site() const;
-
-//       /// psite associated to the iterator.
-//       psite& site();
-
-//       /// Address of the current iterator value/pixel.
-//       value* address();
+      /// Test if the iterator is valid.
+      bool is_valid() const;
 
     protected:
 
-      /// Image associated to the iterator
-      I& image_;
+      /// Beginning of the image.
+      value_* boi_;
 
-      /// Current pixel / value
-      value* value_ptr_;
+      /// End of the image (past-the-end).
+      value_* eoi_;
 
-      // FIXME: Inactivated:
-
-//       /// Psite of the pixel
-//       psite  p_;
-
+      /// Constructor.
       pixel_iterator_base_(I& image);
     };
+
 
 #ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename E>
-    pixel_iterator_base_<I, E>::pixel_iterator_base_(I& image) :
-      image_(image),
-      value_ptr_(0)
+    pixel_iterator_base_<I, E>::pixel_iterator_base_(I& image)
+      : super_(image)
     {
-    }
-
-//     template <typename I, typename E>
-//     const typename pixel_iterator_base_<I, E>::ima&
-//     pixel_iterator_base_<I, E>::image() const
-//     {
-//       return ima_;
-//     }
-
-    template <typename I, typename E>
-    mln_lvalue(I)
-    pixel_iterator_base_<I, E>::operator* ()
-    {
-      mln_precondition(exact(this)->is_valid());
-      mln_precondition(value_ptr_ != 0);
-      return *value_ptr_;
+      mln_precondition(image.has_data());
+      I& ima = this->image_;
+      boi_ = & ima( ima.domain().pmin() );
+      eoi_ = & ima( ima.domain().pmax() ) + 1;
+      invalidate();
     }
 
     template <typename I, typename E>
-    mln_rvalue(I)
-    pixel_iterator_base_<I, E>::operator* () const
+    void
+    pixel_iterator_base_<I, E>::start()
     {
-      mln_precondition(exact(this)->is_valid());
-      mln_precondition(value_ptr_ != 0);
-      return *value_ptr_;
+      this->value_ptr_ = boi_;
     }
 
     template <typename I, typename E>
-    mln_value(I) **
-    pixel_iterator_base_<I, E>::address() const
+    void
+    pixel_iterator_base_<I, E>::invalidate()
     {
-      mln_precondition(exact(this)->is_valid());
-      mln_precondition(value_ptr_ != 0);
-      return & (mln_value(I)*)(value_ptr_);
+      this->value_ptr_ = eoi_;
     }
 
-//     template <typename I, typename E>
-//     mln_value(I)*
-//     pixel_iterator_base_<I, E>::address()
-//     {
-//       mln_precondition(exact(this)->is_valid());
-//       return value_ptr_;
-//     }
-
-//     template <typename I, typename E>
-//     const typename pixel_iterator_base_<I, E>::psite&
-//     pixel_iterator_base_<I, E>::site() const
-//     {
-//       //FIXME: update psite
-//       return p_;
-//     }
-
-//     template <typename I, typename E>
-//     typename pixel_iterator_base_<I, E>::psite&
-//     pixel_iterator_base_<I, E>::site()
-//     {
-//       //FIXME: update psite
-//       return p_;
-//     }
+    template <typename I, typename E>
+    bool
+    pixel_iterator_base_<I, E>::is_valid() const
+    {
+      return this->value_ptr_ != eoi_;
+    }
 
 #endif // ! MLN_INCLUDE_ONLY
 

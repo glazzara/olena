@@ -34,24 +34,11 @@
  */
 
 # include <mln/core/concept/genpixel.hh>
+# include <mln/core/internal/pixel_impl.hh>
 
 
 namespace mln
 {
-
-
-  template <typename I>
-  struct pixel_lvalue
-  {
-    typedef mln_lvalue(I) ret;
-  };
-
-  template <typename I>
-  struct pixel_lvalue< const I >
-  {
-    typedef mln_rvalue(I) ret;
-  };
-
 
 
   /*! \brief Generic pixel class.
@@ -60,31 +47,23 @@ namespace mln
    */
   template <typename I>
   struct pixel : public Object< pixel<I> >,
-		 public GenPixel< pixel<I> >
+		 public GenPixel< pixel<I> >,
+		 internal::pixel_impl_< I, pixel<I> >
   {
-    typedef mln_psite(I) psite;
-    typedef mln_value(I) value;
-    typedef mln_rvalue(I) rvalue;
-    typedef I ima;
+    /// Constructor.
+    pixel(I& image);
 
-    pixel(I& ima);
-    pixel(I& ima, const psite& p);
+    /// Constructor.
+    pixel(I& image, const mln_point(I)& p);
 
-    const I& image() const;
+    /// Change the pixel to the one at point \p p.
+    void change_to(const mln_point(I)& p);
 
-    const psite& site() const;
-    psite& site();
+    /// Test if this pixel is valid.
+    bool is_valid() const;
 
-    mln_rvalue(I) operator*() const;
-    mln_lvalue(I) operator*();
-
-    value** address() const;
-
-  protected:
-
-    I& ima_;
-    psite p_;
-    value* value_ptr_;
+  private:
+    typedef internal::pixel_impl_<I, pixel<I> > super;
   };
 
 
@@ -92,58 +71,37 @@ namespace mln
 
   template <typename I>
   pixel<I>::pixel(I& image)
-    : ima_(image)
+    : super(image)
   {
+    this->value_ptr_ = 0;
   }
 
   template <typename I>
-  pixel<I>::pixel(I& image, const psite& p)
-    : ima_(image),
-      p_(p)
+  pixel<I>::pixel(I& image, const mln_point(I)& p)
+    : super(image)
   {
-    value_ptr_ = & ima_(p);
+    mln_precondition(this->image_.owns_(p));
+    change_to(p);
   }
 
   template <typename I>
-  const I&
-  pixel<I>::image() const
+  void
+  pixel<I>::change_to(const mln_point(I)& p)
   {
-    return ima_;
+    mln_precondition(this->image_.owns_(p));
+    this->value_ptr_ = & this->image_(p);
   }
 
   template <typename I>
-  const mln_psite(I)&
-  pixel<I>::site() const
+  bool
+  pixel<I>::is_valid() const
   {
-    return p_;
-  }
-
-  template <typename I>
-  mln_psite(I)&
-  pixel<I>::site()
-  {
-    return p_;
-  }
-
-  template <typename I>
-  mln_rvalue(I)
-  pixel<I>::operator*() const
-  {
-    return ima_(p_);
-  }
-
-  template <typename I>
-  mln_lvalue(I)
-  pixel<I>::operator*()
-  {
-    return ima_(p_);
-  }
-
-  template <typename I>
-  mln_value(I)**
-  pixel<I>::address() const
-  {
-    return (mln_value(I)**)(& this->value_ptr_);
+    I& ima = this->image_;
+    if (this->value_ptr_ == 0 || ! ima.has_data())
+      return false;
+    int o = this->value_ptr_ - ima.buffer();
+    mln_point(I) p = ima.point_at_offset(o);
+    return ima.owns_(p);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

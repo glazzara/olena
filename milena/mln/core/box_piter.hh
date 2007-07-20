@@ -76,7 +76,7 @@ namespace mln
     operator P() const;
 
     /// Address of the point.
-    const P* pointer() const;
+    const P* pointer_() const;
 
     /// Give the i-th coordinate.
     coord operator[](unsigned i) const;
@@ -136,7 +136,7 @@ namespace mln
     operator P() const;
 
     /// Address of the point.
-    const P* pointer() const;
+    const P* pointer_() const;
 
     /// Give the i-th coordinate.
     coord operator[](unsigned i) const;
@@ -183,7 +183,7 @@ namespace mln
 
   template <typename P>
   const P*
-  box_fwd_piter_<P>::pointer() const
+  box_fwd_piter_<P>::pointer_() const
   {
     return & p_;
   }
@@ -254,7 +254,7 @@ namespace mln
 
   template <typename P>
   const P*
-  box_bkd_piter_<P>::pointer() const
+  box_bkd_piter_<P>::pointer_() const
   {
     return & p_;
   }

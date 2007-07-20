@@ -74,7 +74,9 @@ namespace mln
       typedef point;
       typedef psite;
 
-      typedef piter;
+      typedef coord;
+      typedef dpoint;
+
       typedef fwd_piter;
       typedef bkd_piter;
 
@@ -99,7 +101,9 @@ namespace mln
     typedef mln_point(E) point;
     typedef mln_psite(E) psite;
 
-    typedef mln_piter(E)     piter;
+    typedef mln_coord(E)  coord;
+    typedef mln_dpoint(E) dpoint;
+
     typedef mln_fwd_piter(E) fwd_piter;
     typedef mln_bkd_piter(E) bkd_piter;
 

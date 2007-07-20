@@ -75,7 +75,7 @@ namespace mln
     /*! \brief Piter type to browse the points of a generic window
      * w.r.t. the reverse ordering of delta-points.
      */
-    typedef dpoints_bkd_piter<D> bkd_qiter;
+    typedef internal::fixme bkd_qiter;
 
     /*! \brief Same as fwd_qiter.
      */

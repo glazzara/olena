@@ -34,31 +34,29 @@ main()
 {
   using namespace mln;
 
-  image2d_b<int> ima(20, 20);
+  typedef image2d_b<int> I;
+  I ima(20, 20);
 
-  image2d_b<int>::piter p(ima.domain());
-  image2d_b<int>::pixter f(ima);
+  mln_piter_(I) p(ima.domain());
+
+  mln_pixter_(I) pix(ima);
   int i = 0;
 
   for_all(p)
-    {
-      ima(p) = i++;
-    }
+    ima(p) = i++;
   i = 0;
 
-  for_all(f)
+  for_all(pix)
     {
-      assert(*f == i ++);
-      *f = 5;
+      mln_assertion(*pix == i ++);
+      *pix = 5;
     }
 
   for_all(p)
-    {
-      assert(ima(p) == 5);
-    }
+    mln_assertion(ima(p) == 5);
 
-  f.start();
-  assert(f.is_valid());
-  f.invalidate();
-  assert(!f.is_valid());
+  pix.start();
+  mln_assertion(pix.is_valid());
+  pix.invalidate();
+  mln_assertion(! pix.is_valid());
 }
