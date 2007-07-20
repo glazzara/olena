@@ -49,15 +49,38 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I>
-    void iota(Image<I>& input_)
+    namespace impl
     {
-      unsigned i = 0;
-      I& input = exact(input_);
-      mln_piter(I) p(input.domain());
-      for_all(p)
-	input(p) = ++i;
+
+      template <typename I>
+      void iota(Image<I>& input_)
+      {
+	unsigned i = 0;
+	I& input = exact(input_);
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  input(p) = ++i;
       }
+
+      template <typename I>
+      void iota(Fast_Image<I>& input_)
+      {
+	unsigned i = 0;
+	I& input = exact(input_);
+	mln_pixter(I) p(input);
+	for_all(p)
+	  *p = ++i;
+      }
+
+    } // end of namespace mln::debug::impl
+
+
+    template <typename I>
+    void iota(Image<I>& input)
+    {
+      mln_precondition(exact(input).has_data());
+      impl::iota(exact(input));
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

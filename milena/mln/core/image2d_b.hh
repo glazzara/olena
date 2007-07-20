@@ -38,6 +38,7 @@
 # include <mln/core/box2d.hh>
 
 # include <mln/border/thickness.hh>
+# include <mln/value/set.hh>
 # include <mln/fun/all.hh>
 
 
@@ -49,6 +50,23 @@
 
 namespace mln
 {
+
+  // Fwd decl.
+  template <typename T> struct image2d_b;
+
+
+  namespace trait
+  {
+    
+    template <typename T>
+    struct is_fast< image2d_b<T> >
+    {
+      typedef metal::true_ ret;
+    };
+    
+  } // end of mln::trait
+
+
 
   /*! \brief Basic 2D image class.
    *
@@ -69,6 +87,7 @@ namespace mln
     typedef mln_fwd_piter(box2d) fwd_piter;
     typedef mln_bkd_piter(box2d) bkd_piter;
     // end of warning
+
 
 
     // FIXME:
@@ -98,6 +117,9 @@ namespace mln
     {
       typedef image2d_b<U> ret;
     };
+
+    /// Value_Set associated type.
+    typedef mln::value::set_<T> vset;
 
 
     /// Constructor without argument.
@@ -134,6 +156,9 @@ namespace mln
     /// Test if this image has been initialized.
     bool has_data() const;
 
+    /// Give the set of values of the image.
+    const vset& values() const;
+
     /// Give the definition domain.
     const box2d& domain() const;
 
@@ -143,11 +168,17 @@ namespace mln
     /// Give the number of cells (points including border ones).
     std::size_t ncells() const;
 
-    /// Read-only access to the image value located at \p p.
+    /// Read-only access to the image value located at point \p p.
     const T& operator()(const point2d& p) const;
 
-    /// Read-write access to the image value located at \p p.
+    /// Read-write access to the image value located at point \p p.
     T& operator()(const point2d& p);
+
+    /// Read-only access to the image value located at offset \p o.
+    const T& operator[](unsigned o) const;
+
+    /// Read-write access to the image value located at offset \p o.
+    T& operator[](unsigned o);
 
     /// Read-only access to the image value located at (\p row, \p col).
     const T& at(int row, int col) const;
@@ -279,6 +310,13 @@ namespace mln
   }
 
   template <typename T>
+  const typename image2d_b<T>::vset&
+  image2d_b<T>::values() const
+  {
+    return vset::the();
+  }
+
+  template <typename T>
   const box2d&
   image2d_b<T>::domain() const
   {
@@ -324,6 +362,22 @@ namespace mln
   {
     mln_precondition(this->owns_(p));
     return array_[p.row()][p.col()];
+  }
+
+  template <typename T>
+  const T&
+  image2d_b<T>::operator[](unsigned o) const
+  {
+    mln_precondition(o < ncells());
+    return *(buffer_ + o);
+  }
+
+  template <typename T>
+  T&
+  image2d_b<T>::operator[](unsigned o)
+  {
+    mln_precondition(o < ncells());
+    return *(buffer_ + o);
   }
 
   template <typename T>
@@ -380,7 +434,6 @@ namespace mln
   image2d_b<T>::point_at_offset(unsigned o) const
   {
     mln_precondition(o < ncells());
-    mln_precondition(this->has_data());
     point2d p = make::point2d(o / vb_.len(1) + vb_.min_row(),
 			      o % vb_.len(1) + vb_.min_col());
     mln_postcondition(& this->operator()(p) == this->buffer_ + o);
@@ -459,6 +512,12 @@ namespace mln
     struct fwd_pixter< image2d_b<T> >
     {
       typedef fwd_pixter2d_b< image2d_b<T> > ret;
+    };
+
+    template <typename T>
+    struct fwd_pixter< const image2d_b<T> >
+    {
+      typedef fwd_pixter2d_b< const image2d_b<T> > ret;
     };
 
     template <typename T>

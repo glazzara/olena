@@ -1,1 +1,3 @@
-g++-4.1 -I.. -ansi -pedantic -W -Wall -Wextra -Wconversion sample.cc
+g++-4.1 -ansi -pedantic -W -Wall -Wextra -Wconversion  -I..  sample.cc
+
+g++-2.95 -ansi -pedantic -W -Wall -Wconversion -ftemplate-depth-51  -I..  sample.cc

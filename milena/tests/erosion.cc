@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/median.cc
+/*! \file tests/erosion.cc
  *
- * \brief Test on mln::level::median.
+ * \brief Test on mln::morpho::erosion.
  */
 
 #include <mln/core/image2d_b.hh>

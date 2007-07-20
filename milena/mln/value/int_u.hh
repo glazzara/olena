@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/value.hh>
+# include <mln/metal/math.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/props.hh>
 
@@ -83,6 +84,8 @@ namespace mln
     template <unsigned n>
     struct props< int_u_<n> > : public props< typename internal::encoding_<n>::ret >
     {
+      static const unsigned   nbits = n;
+      static const std::size_t card = metal::pow<2, n>::value;
     };
 
 

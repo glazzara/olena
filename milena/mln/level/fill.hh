@@ -33,6 +33,8 @@
  * \brief Fill an image, that is, set pixel values.
  */
 
+# include <cstring>
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
 
@@ -49,6 +51,8 @@ namespace mln
      * \param[in] v The value to assign to all pixels.
      *
      * \pre \p ima has to be initialized.
+     *
+     * \todo Optimize when \p ima is large and sizeof(mln_value(I)) > 1.
      */
     template <typename I>
     void fill(Image<I>& ima, const mln_value(I)& v);
@@ -60,6 +64,8 @@ namespace mln
      * \param[in] f The function.
      *
      * \pre \p ima has to be initialized.
+     *
+     * \todo Take benefit from quantization when possible.
      */
     template <typename I, typename F>
     void fill(Image<I>& ima, const Function_p2v<F>& f);
@@ -74,6 +80,8 @@ namespace mln
      * " value f(const point& p) "
      *
      * \pre \p ima has to be initialized.
+     *
+     * \todo Take benefit from quantization when possible.
      */
     template <typename I>
     void fill(Image<I>& ima,  mln_value(I) (*f)(const mln_point(I)& p));
@@ -103,28 +111,70 @@ namespace mln
      * the one of \p data.
      *
      * \pre \p ima.domain <= \p data.domain.
+     *
+     * \todo Use memcpy when possible.
      */
     template <typename I, typename J>
     void fill(Image<I>& ima, const Image<J>& data);
 
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I>
-    void fill(Image<I>& ima_,
-	      const mln_value(I)& value)
+    namespace impl
     {
-      I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
-      mln_piter(I) p(ima.domain());
-      for_all(p)
-	ima(p) = value;
+
+
+      // fill_with_value
+
+      template <typename I>
+      void fill_with_value(Image<I>& ima_, const mln_value(I)& value,
+			   bool force_call = false)
+      {
+	force_call = false; // just to avoid warning ("unused param")
+	I& ima = exact(ima_);
+	mln_piter(I) p(ima.domain());
+	for_all(p)
+	  ima(p) = value;
+      }
+
+      template <typename I>
+      void fill_with_value(Fast_Image<I>& ima_, const mln_value(I)& value)
+      {
+	I& ima = exact(ima_);
+	if (sizeof(mln_value(I)) == 1)
+	  {
+	    std::memset((void*)(ima.buffer()),
+			value,
+			sizeof(mln_value(I)) * ima.ncells());
+	  }
+ 	else
+	  {
+	    // FIXME: Use memcpy on a chunck when image size is large!
+	    fill_with_value(ima, value, true);
+	  }
+      }
+
+
+    } // end of namespace mln::level::impl
+
+
+
+    // with: value
+
+    template <typename I>
+    void fill(Image<I>& ima, const mln_value(I)& value)
+    {
+      mln_precondition(exact(ima).has_data());
+      impl::fill_with_value(exact(ima), value);
     }
 
+
+    // with: Function_p2v<F>
+
     template <typename I, typename F>
-    void fill(Image<I>& ima_,
-	      const Function_p2v<F>& f_)
+    void fill(Image<I>& ima_, const Function_p2v<F>& f_)
     {
       I& ima = exact(ima_);
       mln_precondition(ima.has_data());
@@ -133,6 +183,9 @@ namespace mln
       for_all(p)
 	ima(p) = f(p);
     }
+
+
+    // with: value f(const point&)
 
     template <typename I>
     void fill(Image<I>& ima_,
@@ -145,9 +198,11 @@ namespace mln
 	ima(p) = f(p);
     }
 
+
+    // with: value arr[N]
+
     template <typename I, unsigned N>
-    void fill(Image<I>& ima_,
-	      mln_value(I) (&arr)[N])
+    void fill(Image<I>& ima_, mln_value(I) (&arr)[N])
     {
       I& ima = exact(ima_);
       mln_precondition(ima.has_data());
@@ -158,9 +213,11 @@ namespace mln
 	ima(p) = arr[i++];
     }
 
+
+    // with: Image<J>
+
     template <typename I, typename J>
-    void fill(Image<I>& ima_,
-	      const Image<J>& data_)
+    void fill(Image<I>& ima_, const Image<J>& data_)
     {
       I&        ima = exact(ima_);
       const J& data = exact(data_);

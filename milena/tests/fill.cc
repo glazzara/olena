@@ -25,49 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixter_dpoint2d.cc
+/*! \file tests/fill.cc
  *
- * \brief Test on mln::dpoints_fwd_pixter.
+ * \brief Tests on mln::level::fill
  */
 
-#include <cassert>
-#include <iostream>
-
 #include <mln/core/image2d_b.hh>
-#include <mln/core/window.hh>
-#include <mln/core/dpoints_pixter.hh>
-
 #include <mln/level/fill.hh>
+
+#include <mln/debug/println.hh>
+#include <mln/value/props.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
-  typedef I::dpoint      D;
-  typedef window_<D>     W;
 
-  typedef dpoints_fwd_pixter<I> qixter;
+  unsigned u = 300;
+  unsigned char uc = u;
+  mln_assertion(uc == 44);
 
-  const unsigned size = 20;
-  I ima(size, size);
+//   {
+//     const unsigned size = 3;
+//     image2d_b<unsigned> ima(size, size);
+//     level::fill(ima, u);
+//     debug::println(ima);
+//   }
 
-  const int value = 51;
-  level::fill(ima, value);
+  {
+    const unsigned size = 10000;
+    image2d_b<unsigned char> ima(size, size);
+    for (unsigned i = 0; i < 5; ++i)
+      level::fill(ima, uc);
+  }
 
-  W win;
-  win
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(1, 0))
-    .insert(make::dpoint2d(1, 0));
-
-  mln_piter_(I) p(ima.domain());
-  qixter        qix(ima, win, p);
-
-  for_all(p)
-    if (p[0] > 0 && p[1] > 0 && p[0] < int(size - 1) && p[1] < int(size - 1))
-      for_all(qix)
-      	mln_assertion(*qix == value);
 }

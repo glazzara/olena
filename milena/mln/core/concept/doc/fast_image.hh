@@ -51,7 +51,7 @@ namespace mln
       /*! \brief Give the offset corresponding to the delta-point \p
        *  dp.
        *
-       * \param[in] p A delta-point.
+       * \param[in] dp A delta-point.
        *
        * \pre The image has to be initialized.
        */
@@ -69,7 +69,7 @@ namespace mln
 
       /*! \brief Give the point at offset \p o.
        *
-       * \param[in] p An offset.
+       * \param[in] o An offset.
        *
        * \pre The image has to be initialized.
        * \pre o < ncells()
@@ -84,6 +84,27 @@ namespace mln
        * \pre The image has to be initialized.
        */
       const value* buffer() const;
+
+      /*! \brief Read-only access to the image value at offset \p o.
+       *
+       * \param[in] o An offset.
+       *
+       * \pre o < ncells()
+       *
+       * \return The value at \p o (not assignable).
+       */
+      rvalue operator[](unsigned o) const;
+
+
+      /*! \brief Read-write access to the image value at offset \p o.
+       *
+       * \param[in] o An offset.
+       *
+       * \pre o < ncells()
+       *
+       * \return The value at \p o (assignable).
+       */
+      lvalue operator[](unsigned o);
 
     };
 

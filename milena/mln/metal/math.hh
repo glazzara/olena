@@ -25,49 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixter_dpoint2d.cc
+#ifndef MLN_METAL_MATH_HH
+# define MLN_METAL_MATH_HH
+
+/*! \file mln/metal/math.hh
  *
- * \brief Test on mln::dpoints_fwd_pixter.
+ * \brief Definition of some mathematical static functions.
  */
 
-#include <cassert>
-#include <iostream>
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/window.hh>
-#include <mln/core/dpoints_pixter.hh>
-
-#include <mln/level/fill.hh>
-
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  typedef image2d_b<int> I;
-  typedef I::dpoint      D;
-  typedef window_<D>     W;
+  namespace metal
+  {
 
-  typedef dpoints_fwd_pixter<I> qixter;
+    // pow<x, n>
 
-  const unsigned size = 20;
-  I ima(size, size);
+    template <int x, unsigned n>
+    struct pow
+    {
+      enum { value = x * pow<x, n-1>::value };
+    };
 
-  const int value = 51;
-  level::fill(ima, value);
+    template <int x>
+    struct pow< x, 0 >
+    {
+      enum { value = 1 };
+    };
 
-  W win;
-  win
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(1, 0))
-    .insert(make::dpoint2d(1, 0));
 
-  mln_piter_(I) p(ima.domain());
-  qixter        qix(ima, win, p);
+  } // end of namespace mln::metal
 
-  for_all(p)
-    if (p[0] > 0 && p[1] > 0 && p[0] < int(size - 1) && p[1] < int(size - 1))
-      for_all(qix)
-      	mln_assertion(*qix == value);
-}
+} // end of namespace mln
+
+
+#endif // ! MLN_METAL_MATH_HH

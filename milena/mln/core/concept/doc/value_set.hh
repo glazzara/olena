@@ -46,10 +46,6 @@ namespace mln
        */
       typedef void value;
 
-      /*! \brief Viter associated type.
-       */
-      typedef void viter;
-
       /*! \brief Forward Viter associated type.
        */
       typedef void fwd_viter;

@@ -132,7 +132,7 @@ namespace mln
       template <typename I, typename W, typename O>
       void erosion_wrt_win(const Image<I>& input, const Window<W>& win, Image<O>& output)
       {
-	erosion_wrt_value(mln_kind(I)(), exact(input), exact(win), output);
+	erosion_wrt_value(mln_value_kind(I)(), exact(input), exact(win), output);
 	//                   | 
 	//                    -->  call stage 2: dispatch w.r.t. the value kind
       }

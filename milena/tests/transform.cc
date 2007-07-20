@@ -25,49 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixter_dpoint2d.cc
+/*! \file tests/transform.cc
  *
- * \brief Test on mln::dpoints_fwd_pixter.
+ * \brief Tests on mln::level::transform
  */
 
-#include <cassert>
-#include <iostream>
+#include <cmath>
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/window.hh>
-#include <mln/core/dpoints_pixter.hh>
+#include <mln/level/transform.hh>
+#include <mln/debug/iota.hh>
 
-#include <mln/level/fill.hh>
+
+struct mysqrt : mln::Function_v2v<mysqrt>
+{
+  typedef unsigned short result;
+  result operator()(unsigned short c) const
+  {
+    return result( std::sqrt(float(c)) );
+  }
+};
+
 
 
 int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
-  typedef I::dpoint      D;
-  typedef window_<D>     W;
+  const unsigned size = 10000;
+  image2d_b<unsigned short>
+    ima(size, size);
 
-  typedef dpoints_fwd_pixter<I> qixter;
+  (std::cout << "iota... ").flush(); 
+  debug::iota(ima);
+  std::cout << "done" << std::endl;
 
-  const unsigned size = 20;
-  I ima(size, size);
-
-  const int value = 51;
-  level::fill(ima, value);
-
-  W win;
-  win
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(1, 0))
-    .insert(make::dpoint2d(1, 0));
-
-  mln_piter_(I) p(ima.domain());
-  qixter        qix(ima, win, p);
-
-  for_all(p)
-    if (p[0] > 0 && p[1] > 0 && p[0] < int(size - 1) && p[1] < int(size - 1))
-      for_all(qix)
-      	mln_assertion(*qix == value);
+  (std::cout << "transform... ").flush(); 
+  level::transform(ima, mysqrt(), ima);
+  std::cout << "done" << std::endl;
 }

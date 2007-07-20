@@ -56,6 +56,11 @@ namespace mln
        */
       typedef void lvalue;
 
+      /*! \brief Value set associated type.
+       * \invariant This type has to derive from mln::Value_Set.
+       */
+      typedef void vset;
+
       /*! \brief Test if the image have been initialized.
        */
       bool has_data() const;
@@ -73,13 +78,19 @@ namespace mln
        */
       const pset& domain() const;
 
-      /*! \brief Read access to the image value located at \p p.
+      /*! \brief Give the set of values of the image.
+       *
+       * \return A reference to the value set.
+       */
+      const vset& values() const;
+
+      /*! \brief Read-only access to the image value located at \p p.
        *
        * \param[in] p A point site.
        *
        * \pre The image has to own the site \p p.
        *
-       * \return The value at \p p.
+       * \return The value at \p p (not assignable).
        */
       rvalue operator()(const psite& p) const;
 
@@ -89,7 +100,7 @@ namespace mln
        *
        * \pre The image has to own the site \p p.
        *
-       * \return The value at \p p.
+       * \return The value at \p p (assignable).
        */
       lvalue operator()(const psite& p);
 

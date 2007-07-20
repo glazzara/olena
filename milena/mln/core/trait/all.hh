@@ -25,49 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixter_dpoint2d.cc
+#ifndef MLN_CORE_TRAIT_ALL_HH
+# define MLN_CORE_TRAIT_ALL_HH
+
+/*! \file mln/core/trait/all.hh
  *
- * \brief Test on mln::dpoints_fwd_pixter.
+ * \brief File that includes all traits.
  */
 
-#include <cassert>
-#include <iostream>
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/window.hh>
-#include <mln/core/dpoints_pixter.hh>
-
-#include <mln/level/fill.hh>
-
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  typedef image2d_b<int> I;
-  typedef I::dpoint      D;
-  typedef window_<D>     W;
+  /*! Namespace for image traits.
+   */
+  namespace trait {}
 
-  typedef dpoints_fwd_pixter<I> qixter;
-
-  const unsigned size = 20;
-  I ima(size, size);
-
-  const int value = 51;
-  level::fill(ima, value);
-
-  W win;
-  win
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(1, 0))
-    .insert(make::dpoint2d(1, 0));
-
-  mln_piter_(I) p(ima.domain());
-  qixter        qix(ima, win, p);
-
-  for_all(p)
-    if (p[0] > 0 && p[1] > 0 && p[0] < int(size - 1) && p[1] < int(size - 1))
-      for_all(qix)
-      	mln_assertion(*qix == value);
 }
+
+
+# include <mln/core/trait/is_fast.hh>
+# include <mln/core/trait/is_lowq.hh>
+# include <mln/core/trait/pixter.hh>
+
+
+#endif // ! MLN_CORE_TRAIT_ALL_HH

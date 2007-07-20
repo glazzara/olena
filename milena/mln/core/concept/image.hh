@@ -33,6 +33,7 @@
  */
 
 # include <mln/core/concept/point_set.hh>
+# include <mln/core/trait/all.hh>
 
 
 namespace mln
@@ -52,8 +53,10 @@ namespace mln
       typedef value;
       typedef rvalue;
       typedef lvalue;
+      typedef vset;
 
       bool has_data() const;
+      const vset& values() const;
 
       bool owns_(const psite& p) const;
       const pset& domain() const;
@@ -136,6 +139,9 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
+
+# include <mln/core/concept/fast_image.hh>
 
 
 #endif // ! MLN_CORE_CONCEPT_IMAGE_HH

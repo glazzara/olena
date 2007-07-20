@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_FAST_MEDIAN_HH
 # define MLN_LEVEL_FAST_MEDIAN_HH
 
-/*! \file mln/level/median.hh
+/*! \file mln/level/fast_median.hh
  *
  * \brief Fast Median filtering of an image.
  */

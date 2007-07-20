@@ -1055,6 +1055,7 @@ PREDEFINED             =						\
 			"mln_fwd_viter(T)=typename T::fwd_viter"	\
 			"mln_bkd_viter(T)=typename T::bkd_viter"	\
 			"mln_value(T)=typename T::value"		\
+			"mln_vset(T)=typename T::vset"			\
 			"mln_rvalue(T)=typename T::rvalue"		\
 			"mln_lvalue(T)=typename T::lvalue"		\
 			"mln_coord(T)=typename T::coord"		\

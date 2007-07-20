@@ -48,7 +48,6 @@ namespace mln
   {
     /*
       typedef value;
-      typedef viter;
       typedef fwd_viter;
       typedef bkd_viter;
 
@@ -71,7 +70,6 @@ namespace mln
   Value_Set<E>::Value_Set()
   {
     typedef mln_value(E) value;
-    typedef mln_viter(E) viter;
     typedef mln_fwd_viter(E) fwd_viter;
     typedef mln_bkd_viter(E) bkd_viter;
     

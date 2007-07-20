@@ -105,14 +105,14 @@
 
 // p
 
-/// Shortcut to access the piter type associated to T.
+/// Shortcut to access the type of point iterator (piter) associated to T.
 # define mln_piter(T)      typename T::fwd_piter
 # define mln_piter_(T)              T::fwd_piter
 
-/// Shortcut to access the pset type associated to T.
+/// Shortcut to access the type of point set (pset) associated to T.
 # define mln_pset(T)       typename T::pset
 
-/// Shortcut to access the psite type associated to T.
+/// Shortcut to access the type of point site (psite) associated to T.
 # define mln_psite(T)      typename T::psite
 
 /// Shortcut to access the point type associated to T.
@@ -144,6 +144,12 @@
 
 /// Shortcut to access the value type associated to T.
 # define mln_value(T)      typename T::value
+
+/// Shortcut to the kind of values for an image with type \c I.
+# define mln_value_kind(T) typename mln::value::props< mln_value(I) >::kind
+
+/// Shortcut to access the type of value set (vset) associated to T.
+# define mln_vset(T)       typename T::vset
 
 /// Shortcut to access the viter type associated to T.
 # define mln_viter(T)      typename T::fwd_viter

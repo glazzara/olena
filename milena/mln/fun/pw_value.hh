@@ -63,11 +63,11 @@ namespace mln
     {
 
       template <typename K, typename E>
-      struct function_ : Function_p2v<E>
+      struct select_function_ : Function_p2v<E>
       {};
 
       template <typename E>
-      struct function_< value::binary_kind, E > : Function_p2b<E>
+      struct select_function_< value::binary_kind, E > : Function_p2b<E>
       {};
 
     } // end of namespace mln::fun::internal
@@ -76,7 +76,7 @@ namespace mln
     // FIXME: Doc!
 
     template <typename I>
-    struct pw_value : public internal::function_< mln_kind(I), pw_value<I> >
+    struct pw_value : public internal::select_function_< mln_value_kind(I), pw_value<I> >
     {
       typedef mln_value(I) result;
       pw_value(const I& ima);

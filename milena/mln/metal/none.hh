@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_METAL_NONE_HH
 # define MLN_CORE_METAL_NONE_HH
 
-/*! \file mln/core/metal/none.hh
+/*! \file mln/metal/none.hh
  *
  * \brief Definition of a type that means "none".
  */

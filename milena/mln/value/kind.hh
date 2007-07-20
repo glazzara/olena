@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_KIND_HH
 # define MLN_VALUE_KIND_HH
 
-/*! \file mln/value/tags.hh
+/*! \file mln/value/kind.hh
  *
  * \brief Define the set of kinds of value.
  */

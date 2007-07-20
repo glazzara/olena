@@ -25,49 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixter_dpoint2d.cc
+#ifndef MLN_CORE_TRAIT_IS_FAST_HH
+# define MLN_CORE_TRAIT_IS_FAST_HH
+
+/*! \file mln/core/trait/is_fast.hh
  *
- * \brief Test on mln::dpoints_fwd_pixter.
+ * \brief Definition of the is_fast image trait.
  */
 
-#include <cassert>
-#include <iostream>
-
-#include <mln/core/image2d_b.hh>
-#include <mln/core/window.hh>
-#include <mln/core/dpoints_pixter.hh>
-
-#include <mln/level/fill.hh>
+# include <mln/metal/bool.hh>
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  typedef image2d_b<int> I;
-  typedef I::dpoint      D;
-  typedef window_<D>     W;
+  namespace trait
+  {
 
-  typedef dpoints_fwd_pixter<I> qixter;
 
-  const unsigned size = 20;
-  I ima(size, size);
+    // FIXME: Doc!
 
-  const int value = 51;
-  level::fill(ima, value);
+    template <typename I>
+    struct is_fast
+    {
+      typedef metal::false_ ret;
+    };
 
-  W win;
-  win
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(1, 0))
-    .insert(make::dpoint2d(1, 0));
 
-  mln_piter_(I) p(ima.domain());
-  qixter        qix(ima, win, p);
+  } // end of namespace mln::trait
 
-  for_all(p)
-    if (p[0] > 0 && p[1] > 0 && p[0] < int(size - 1) && p[1] < int(size - 1))
-      for_all(qix)
-      	mln_assertion(*qix == value);
-}
+} // end of namespace mln
+
+
+#endif // ! MLN_CORE_TRAIT_IS_FAST_HH

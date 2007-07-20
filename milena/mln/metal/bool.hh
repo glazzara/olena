@@ -25,49 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixter_dpoint2d.cc
+#ifndef MLN_METAL_BOOL_HH
+# define MLN_METAL_BOOL_HH
+
+/*! \file mln/metal/bool.hh
  *
- * \brief Test on mln::dpoints_fwd_pixter.
+ * \brief Definition of a Boolean value type.
  */
 
-#include <cassert>
-#include <iostream>
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/window.hh>
-#include <mln/core/dpoints_pixter.hh>
-
-#include <mln/level/fill.hh>
-
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  typedef image2d_b<int> I;
-  typedef I::dpoint      D;
-  typedef window_<D>     W;
+  namespace metal
+  {
 
-  typedef dpoints_fwd_pixter<I> qixter;
+    // Fwd decls.
+    struct true_;
+    struct false_;
 
-  const unsigned size = 20;
-  I ima(size, size);
 
-  const int value = 51;
-  level::fill(ima, value);
 
-  W win;
-  win
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(1, 0))
-    .insert(make::dpoint2d(1, 0));
+    // FIXME: Doc!
 
-  mln_piter_(I) p(ima.domain());
-  qixter        qix(ima, win, p);
+    template <bool b> struct bool_;
 
-  for_all(p)
-    if (p[0] > 0 && p[1] > 0 && p[0] < int(size - 1) && p[1] < int(size - 1))
-      for_all(qix)
-      	mln_assertion(*qix == value);
-}
+    template <>
+    struct bool_< true >
+    {
+      typedef true_ type;
+      static const bool value = true;
+    };
+
+    template <>
+    struct bool_< false >
+    {
+      typedef false_ type;
+      static const bool value = false;
+    };
+
+
+  } // end of namespace mln::metal
+
+} // end of namespace mln
+
+
+# include <mln/metal/bexpr.hh>
+
+
+#endif // ! MLN_METAL_BOOL_HH

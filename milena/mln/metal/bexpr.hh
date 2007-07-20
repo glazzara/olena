@@ -25,49 +25,78 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixter_dpoint2d.cc
+#ifndef MLN_METAL_BEXPR_HH
+# define MLN_METAL_BEXPR_HH
+
+/*! \file mln/metal/bexpr.hh
  *
- * \brief Test on mln::dpoints_fwd_pixter.
+ * \brief Definition of types for static Boolean expressions.
  */
 
-#include <cassert>
-#include <iostream>
-
-#include <mln/core/image2d_b.hh>
-#include <mln/core/window.hh>
-#include <mln/core/dpoints_pixter.hh>
-
-#include <mln/level/fill.hh>
+# include <mln/metal/bool.hh>
 
 
-int main()
+
+namespace mln
 {
-  using namespace mln;
 
-  typedef image2d_b<int> I;
-  typedef I::dpoint      D;
-  typedef window_<D>     W;
+  namespace metal
+  {
 
-  typedef dpoints_fwd_pixter<I> qixter;
 
-  const unsigned size = 20;
-  I ima(size, size);
+    /// "true" type.
+    struct true_
+    {
+      static void check();
+      typedef true_ eval;
+      enum { to_bool = true };
+    };
 
-  const int value = 51;
-  level::fill(ima, value);
 
-  W win;
-  win
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(1, 0))
-    .insert(make::dpoint2d(1, 0));
+    /// "false" type.
+    struct false_
+    {
+      typedef false_ eval;
+      enum { to_bool = false };
+    };
 
-  mln_piter_(I) p(ima.domain());
-  qixter        qix(ima, win, p);
+    
+    /// Negate type.
+    template <typename B>
+    struct not_ : bool_<( ! B::to_bool )>::type
+    {};
+    
 
-  for_all(p)
-    if (p[0] > 0 && p[1] > 0 && p[0] < int(size - 1) && p[1] < int(size - 1))
-      for_all(qix)
-      	mln_assertion(*qix == value);
-}
+    /// And type.
+    template <typename L, typename R>
+    struct and_ : bool_<( L::to_bool && R::to_bool )>::type
+    {};
+    
+
+    /// Or type.
+    template <typename L, typename R>
+    struct or_ : bool_<( L::to_bool || R::to_bool )>::type
+    {};
+    
+
+    /// Xor type.
+    template <typename L, typename R>
+    struct xor_ : bool_<( L::to_bool ^ R::to_bool )>::type
+    {};
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    void true_::check()
+    {
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::metal
+
+} // end of namespace mln
+
+
+#endif // ! MLN_METAL_BOOL_HH

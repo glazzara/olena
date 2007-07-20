@@ -41,19 +41,19 @@
 
 
 /// Get the minimum value of type \c T.
-# define mln_min(T) mln::value::props<T>::min()
+# define mln_min(T) mln::value::props< T >::min
 
 
 /// Get the maximum value of type \c T.
-# define mln_max(T) mln::value::props<T>::max()
+# define mln_max(T) mln::value::props< T >::max
 
 
 /// Get the number of values for value type \c T.
-# define mln_card(T) mln::value::props<T>::card()
+# define mln_card(T) mln::value::props< T >::card
 
 
-/// Get the kind of the value type of image \c I.
-# define mln_kind(I) typename mln::value::props< mln_value(I) >::kind
+/// Get the kind of value type \c T.
+# define mln_kind(T) typename mln::value::props< T >::kind
 
 
 
@@ -71,118 +71,123 @@ namespace mln
     struct props
     {
       /// Minimum value for type \c T.
-      static T min();
+      static const T min;
 
       /// Maximum value for type \c T.
-      static T max();
+      static const T max;
 
       /// Number of values for type \c T.
-      static std::size_t card();
+      static const std::size_t card;
     };
 
 
-# ifndef MLN_INCLUDE_ONLY
+
+    // bool
 
     template <>
     struct props<bool>
     {
-      static bool min() { return false; }
-      static bool max() { return true; }
-      static std::size_t card() { return 2; }
+      static const bool min = false;
+      static const bool max = true;
+      static const std::size_t card = 2;
       typedef binary_kind kind;
     };
+
 
     // integers
 
     template <>
     struct props<unsigned char>
     {
-      static unsigned char min() { return   0; }
-      static unsigned char max() { return 255; }
-      static std::size_t  card() { return 256; }
+      static const unsigned char min =   0;
+      static const unsigned char max = 255;
+      static const std::size_t  card = 256;
       typedef data_kind kind;
     };
 
     template <>
     struct props<signed char>
     {
-      static signed char  min() { return -128; }
-      static signed char  max() { return  127; }
-      static std::size_t card() { return  256; }
+      static const signed char  min = -128;
+      static const signed char  max =  127;
+      static const std::size_t card =  256;
       typedef data_kind kind;
     };
 
     template <>
     struct props<unsigned short>
     {
-      static unsigned short min() { return     0; }
-      static unsigned short max() { return 65535; }
-      static std::size_t   card() { return 65536; }
+      static const unsigned short min =     0;
+      static const unsigned short max = 65535;
+      static const std::size_t   card = 65536;
       typedef data_kind kind;
     };
 
     template <>
     struct props<signed short>
     {
-      static signed short min() { return -32768; }
-      static signed short max() { return  32767; }
-      static std::size_t card() { return 655356; }
+      static const signed short min = -32768;
+      static const signed short max =  32767;
+      static const std::size_t card = 655356;
       typedef data_kind kind;
     };
 
     template <>
     struct props<unsigned int>
     {
-      static unsigned int min() { return 0; }
-      static unsigned int max() { return UINT_MAX; }
-      static std::size_t card() { return std::size_t(UINT_MAX) + 1; }
+      static const unsigned int min = 0;
+      static const unsigned int max = UINT_MAX;
       typedef data_kind kind;
+      static const std::size_t card = 0;
     };
 
     template <>
     struct props<signed int>
     {
-      static signed int  min() { return INT_MIN; }
-      static signed int  max() { return INT_MAX; }
-      static std::size_t card() { return std::size_t(UINT_MAX) + 1; }
+      static const signed int  min = INT_MIN;
+      static const signed int  max = INT_MAX;
       typedef data_kind kind;
+      static const std::size_t card = 0;
     };
 
     template <>
     struct props<unsigned long int>
     {
-      static unsigned long int min() { return 0; }
-      static unsigned long int max() { return ULONG_MAX; }
+      static const unsigned long int min = 0;
+      static const unsigned long int max = ULONG_MAX;
       typedef data_kind kind;
+      static const std::size_t card = 0;
     };
 
     template <>
     struct props<signed long int>
     {
-      static signed long int min() { return LONG_MIN; }
-      static signed long int max() { return LONG_MAX; }
+      static const signed long int min = LONG_MIN;
+      static const signed long int max = LONG_MAX;
       typedef data_kind kind;
+      static const std::size_t card = 0;
     };
+
 
     // floating
 
     template <>
     struct props<float>
     {
-      static float min() { return FLT_MIN; }
-      static float max() { return FLT_MAX; }
+      static const float min() { return FLT_MIN; }
+      static const float max() { return FLT_MAX; }
       typedef data_kind kind;
+      static const std::size_t card = 0;
     };
 
     template <>
     struct props<double>
     {
-      static double min() { return DBL_MIN; }
-      static double max() { return DBL_MAX; }
+      static const double min() { return DBL_MIN; }
+      static const double max() { return DBL_MAX; }
       typedef data_kind kind;
+      static const std::size_t card = 0;
     };
-
-# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::value
 

@@ -42,12 +42,30 @@ namespace mln
   namespace internal
   {
 
+
+
+    template <typename Is_fast, typename E>
+    struct select_image_concept_;
+
+    template <typename E>
+    struct select_image_concept_< metal::true_, E >
+      : public Fast_Image<E>
+    {};
+
+    template <typename E>
+    struct select_image_concept_< metal::false_, E >
+      : public Image<E>
+    {};
+
+
+
     /*! \brief A base class for images.
      *
      * \internal
      */
     template <typename S, typename E>
-    struct image_base_ : public Image<E>
+    struct image_base_ : public select_image_concept_< typename trait::is_fast<E>::ret,
+						       E >
     {
       /// Point_Set associated type.
       typedef S pset;

@@ -1,5 +1,50 @@
 2007-07-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Handle low quantization and fast properties.
+
+	* tests/transform.cc: New.
+	* tests/fill.cc: New.
+	* mln/core/macros.hh (mln_value_kind, mln_vset): New.
+	* mln/core/trait/is_fast.hh: New.
+	* mln/core/trait/all.hh: New.
+	* mln/core/trait/is_lowq.hh: New.
+	* mln/core/internal/image_base.hh
+	(select_image_concept_): New.
+	* mln/core/concept/image.hh (vset, values): New.
+	Update.
+	* mln/core/concept/fast_image.hh (operator[]): New.
+	* mln/metal/math.hh: New.
+	* mln/metal/bool.hh: New.
+	* mln/metal/bexpr.hh: New.
+	* mln/value/lut_vec.hh: New.
+	* mln/value/int_u.hh (nbits, card): New.
+
+	* tests/README (g++-2.95): New hints.
+	* tests/pixter_dpoint2d.cc: Fix warning.
+	* tests/erosion.cc: Fix doc.
+	* doc/Doxyfile.in: Update.
+	* mln/debug/iota.hh: New overload.
+	* mln/fun/pw_value.hh (function_): Rename as...
+	(select_function_): ...this.
+	* mln/core/trait/pixter.hh
+	(pixter, qixter, nixter): Remove; obsolete.
+	* mln/core/concept/value_set.hh (viter): Likewise.
+	* mln/core/concept/doc/image.hh,
+	* mln/core/concept/doc/value_set.hh,
+	* mln/core/concept/doc/fast_image.hh: Update.
+	* mln/core/image2d_b.hh: Update.
+	* mln/metal/none.hh: Fix doc.
+	* mln/morpho/erosion.hh: Update.
+	* mln/level/fill.hh: Add todos.
+	New overload.
+	* mln/level/fast_median.hh: Fix doc.
+	* mln/level/transform.hh: New overload.
+	* mln/value/props.hh (min): Change to var.
+	* mln/value/kind.hh: Fix doc.
+	* mln/value/set.hh (viter): Remove; obsolete.
+
+2007-07-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Clean-up and update pixel related material.
 	* tests/README: New.
 	* mln/core/trait: New.

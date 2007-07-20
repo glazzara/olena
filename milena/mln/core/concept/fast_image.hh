@@ -33,7 +33,6 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/trait/pixter.hh>
 
 
 namespace mln
@@ -55,6 +54,9 @@ namespace mln
       point point_at_offset(unsigned o) const;
 
       const value* buffer() const;
+
+      rvalue operator[](unsigned o) const;
+      lvalue operator[](unsigned o);
      */
 
   protected:
@@ -69,7 +71,6 @@ namespace mln
   {
     typedef mln_point(E)   point;
     typedef mln_dpoint(E) dpoint;
-    typedef mln_value(E)   value;
 
     typedef mln_fwd_pixter(E) fwd_pixter;
     typedef mln_bkd_pixter(E) bkd_pixter;
@@ -80,10 +81,21 @@ namespace mln
     m2 = 0;
     point (E::*m3)(unsigned) const = & E::point_at_offset;
     m3 = 0;
-    const value* (E::*m4)() const = & E::buffer;
+    unsigned (E::*m4)() const = & E::border;
     m4 = 0;
-    unsigned (E::*m5)() const = & E::border;
+
+    typedef mln_value(E) value;
+
+    const value* (E::*m5)() const = & E::buffer;
     m5 = 0;
+
+    typedef mln_rvalue(E) rvalue;
+    typedef mln_lvalue(E) lvalue;
+
+    rvalue (E::*m6)(unsigned) const = & E::operator[];
+    m6 = 0;
+    lvalue (E::*m7)(unsigned) = & E::operator[];
+    m7 = 0;
 
     // FIXME: how to check that qixter are defined when W is unknown!
   }

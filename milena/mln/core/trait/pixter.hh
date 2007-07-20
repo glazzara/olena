@@ -57,11 +57,6 @@ namespace mln
       typedef metal::none ret;
     };
 
-    template <typename I>
-    struct pixter : fwd_pixter<I>
-    {
-    };
-
 
     // qixter
 
@@ -77,11 +72,6 @@ namespace mln
       typedef metal::none ret;
     };
 
-    template <typename I, typename W>
-    struct qixter : fwd_qixter<I, W>
-    {
-    };
-
 
     // nixter
 
@@ -95,11 +85,6 @@ namespace mln
     struct bkd_nixter
     {
       typedef metal::none ret;
-    };
-
-    template <typename I, typename N>
-    struct nixter : fwd_nixter<I, N>
-    {
     };
 
 

@@ -25,15 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_SET_HH
-# define MLN_VALUE_SET_HH
+#ifndef MLN_VALUE_LUT_VEC_HH
+# define MLN_VALUE_LUT_VEC_HH
 
-/*! \file mln/value/set.hh
+/*! \file mln/value/lut_vec.hh
  *
- * \brief Define some basic sets of values from value types.
+ * \brief Define some basic lut_vecs of values from value types.
  */
 
+# include <vector>
+
 # include <mln/core/concept/value_set.hh>
+# include <mln/core/concept/function.hh>
 # include <mln/value/props.hh>
 
 
@@ -48,77 +51,104 @@ namespace mln
     template <typename S> struct bkd_viter_;
 
 
-    /*! Class that defines the set of values of type \c T.
+    /*! Class that defines FIXME
      *
-     * This is an exhaustive value set over \c T.
+     * \warning This is a multi-set!!!
+     * FIXME
+     *
      */
-    template <typename T>
-    struct set_ : public Value_Set< set_<T> >
+    template <typename S, typename T>
+    struct lut_vec : public Value_Set< lut_vec<S,T> >
     {
       /// Value associated type.
       typedef T value;
 
       /// Forward Viter associated type.
-      typedef fwd_viter_< set_<T> > fwd_viter;
+      typedef fwd_viter_< lut_vec<S,T> > fwd_viter;
 
       /// Backward Viter associated type.
-      typedef bkd_viter_< set_<T> > bkd_viter;
-
-      /// Test if \p v belongs to this set: always true!
-      bool has(const T& v) const;
+      typedef bkd_viter_< lut_vec<S,T> > bkd_viter;
 
       /// Give the \p i-th value.
       T operator[](std::size_t i) const;
 
-      /// Give the index of value \p v in this set.
-      std::size_t index_of(const T& v) const;
-
       /// Give the number of values.
       std::size_t nvalues() const;
 
-      /// Return a singleton.
-      static const set_<T>& the();
+      // Apply the look-up-table.  FIXME: Doc!
+      T operator()(const mln_value(S)& val) const;
+
+      /// Test if \p v belongs to this set.
+      bool has(const value& v) const;
+
+      /// Give the index of value \p v in this set.
+      std::size_t index_of(const value& v) const;
+
+      /// Ctor. FIXME!
+      template <typename F>
+      lut_vec(const S& vset, const Function_v2v<F>& f);
+
+    protected:
+
+      const S& vset_;
+      std::vector<T> vec_;
+      unsigned n_;
     };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename T>
+    template <typename S, typename T>
     bool
-    set_<T>::has(const T&) const
+    lut_vec<S,T>::has(const T&) const
     {
-      return true;
+      mln_invariant(0); // FIXME
+      return false;
     }
 
-    template <typename T>
+    template <typename S, typename T>
+    std::size_t
+    lut_vec<S,T>::index_of(const T& v) const
+    {
+      mln_invariant(0); // FIXME
+      return 0;
+    }
+
+    template <typename S, typename T>
+    template <typename F>
+    lut_vec<S,T>::lut_vec(const S& vset, const Function_v2v<F>& f)
+      : vset_(vset)
+    {
+      const F& f_ = exact(f);
+      n_ = vset.nvalues();
+      vec_.reserve(n_);
+      for (unsigned i = 0; i < n_; ++i)
+	vec_[i] = f_(vset[i]);
+    }
+
+    template <typename S, typename T>
     T
-    set_<T>::operator[](std::size_t i) const
+    lut_vec<S,T>::operator()(const mln_value(S)& val) const
+    {
+      unsigned i = vset_.index_of(val);
+      mln_precondition(i < n_);
+      return vec_[vset_.index_of(val)];
+    }
+
+    template <typename S, typename T>
+    T
+    lut_vec<S,T>::operator[](std::size_t i) const
     {
       mln_precondition(i < nvalues());
-      return mln_min(T) + i;
+      return vec_[i];
     }
 
-    template <typename T>
+    template <typename S, typename T>
     std::size_t
-    set_<T>::index_of(const T& v) const
+    lut_vec<S,T>::nvalues() const
     {
-      return v - mln_min(T);
-    }
-
-    template <typename T>
-    std::size_t
-    set_<T>::nvalues() const
-    {
-      return mln_card(T);
-    }
-
-    template <typename T>
-    const set_<T>&
-    set_<T>::the()
-    {
-      static set_<T> the_;
-      return the_;
+      return vec_.size();
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -132,4 +162,4 @@ namespace mln
 # include <mln/value/viter.hh>
 
 
-#endif // ! MLN_VALUE_SET_HH
+#endif // ! MLN_VALUE_LUT_VEC_HH
