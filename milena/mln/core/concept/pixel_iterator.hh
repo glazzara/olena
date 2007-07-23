@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/iterator.hh>
-# include <mln/core/concept/genpixel.hh>
+# include <mln/core/concept/generalized_pixel.hh>
 
 
 namespace mln
@@ -51,7 +51,7 @@ namespace mln
    */
   template <typename E>
   struct Pixel_Iterator : public Iterator<E>,
-			  public GenPixel<E>
+			  public Generalized_Pixel<E>
   {
     /*
       typedef lvalue;

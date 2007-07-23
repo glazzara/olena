@@ -25,17 +25,13 @@ image defined by f/pset
 
 in Fast_Image: memcpy and memset-like methods (?)
 .offset() into GenPixel
-notion of low-quantization
-vset and .values() in Image
 built-in op objects -> reverse lhs/rhs
 
 
 * renaming
 
-GenPixel, GenPoint, Psite, Piter: longer name (?)
 mlc into metal
 point-wise material: pw::value_of, pw::constant, and pw::variable
-kind-related: mln_value_kind(I) and mln_kind(V)
 
 
 * clean-up
@@ -52,3 +48,16 @@ sorting points w.r.t. their value (array of offsets, psites, points)
 border::* and no-op versions if not fast image
 arith::inplace_plus et al.
 linear:: for convolutions
+
+
+svn mv genpoint.hh generalized_point.hh
+svn mv genpixel.hh generalized_pixel.hh
+svn mv psite.hh point_site.hh
+svn mv viter.hh value_iterator.hh
+svn mv piter.hh point_iterator.hh
+
+
+svn mv doc/genpoint.hh doc/generalized_point.hh
+svn mv doc/genpixel.hh doc/generalized_pixel.hh
+svn mv doc/viter.hh doc/value_iterator.hh
+svn mv doc/piter.hh doc/point_iterator.hh

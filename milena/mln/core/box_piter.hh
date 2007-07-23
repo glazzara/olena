@@ -33,7 +33,7 @@
  * \brief Definition of iterators on points of boxes.
  */
 
-# include <mln/core/concept/piter.hh>
+# include <mln/core/concept/point_iterator.hh>
 # include <mln/core/concept/box.hh>
 
 
@@ -47,14 +47,14 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_fwd_piter_ : public Piter< box_fwd_piter_<P> >
+  class box_fwd_piter_ : public Point_Iterator< box_fwd_piter_<P> >
   {
   public:
 
     /// Space dimension.
     enum { dim = P::dim };
 
-    /// Psite associated type.
+    /// Point_Site associated type.
     typedef P psite;
 
     /// Point associated type.
@@ -107,14 +107,14 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_bkd_piter_ : public Piter< box_bkd_piter_<P> >
+  class box_bkd_piter_ : public Point_Iterator< box_bkd_piter_<P> >
   {
   public:
 
     /// Space dimension.
     enum { dim = P::dim };
 
-    /// Psite associated type.
+    /// Point_Site associated type.
     typedef P psite;
 
     /// Point associated type.

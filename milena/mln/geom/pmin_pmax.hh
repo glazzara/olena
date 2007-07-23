@@ -48,7 +48,7 @@ namespace mln
     /// iterator \p p.
     template <typename I>
     std::pair<mln_point(I), mln_point(I)>
-    pmin_pmax(const Piter<I>& p);
+    pmin_pmax(const Point_Iterator<I>& p);
 
 
 
@@ -56,7 +56,7 @@ namespace mln
 
     template <typename I>
     std::pair<mln_point(I), mln_point(I)>
-    pmin_pmax(Piter<I>& p_)
+    pmin_pmax(Point_Iterator<I>& p_)
     {
       I& p = exact(p_);
 

@@ -38,7 +38,7 @@
 # include <vector>
 
 # include <mln/core/concept/pixel_iterator.hh>
-# include <mln/core/concept/genpixel.hh>
+# include <mln/core/concept/generalized_pixel.hh>
 # include <mln/core/internal/pixel_impl.hh>
 
 
@@ -70,7 +70,7 @@ namespace mln
     template <typename Dps, typename Pref>
     dpoints_fwd_pixter(I& image,
 		       const Dps& dps,
-		       const GenPoint<Pref>& p_ref);
+		       const Generalized_Point<Pref>& p_ref);
 
     /*! \brief Constructor.
      *
@@ -81,7 +81,7 @@ namespace mln
     template <typename Dps, typename Pref>
     dpoints_fwd_pixter(I& image,
 		       const Dps& dps,
-		       const GenPixel<Pref>& p_ref);
+		       const Generalized_Pixel<Pref>& p_ref);
 
     /// Start an iteration.
     void start();
@@ -134,7 +134,7 @@ namespace mln
   template <typename Dps, typename Pref>
   dpoints_fwd_pixter<I>::dpoints_fwd_pixter(I& image,
 					    const Dps& dps,
-					    const GenPoint<Pref>& p_ref)
+					    const Generalized_Point<Pref>& p_ref)
     : super(image)
   {
     mln_precondition(image.has_data());
@@ -148,7 +148,7 @@ namespace mln
   template <typename Dps, typename Pref>
   dpoints_fwd_pixter<I>::dpoints_fwd_pixter(I& image,
 					    const Dps& dps,
-					    const GenPixel<Pref>& p_ref)
+					    const Generalized_Pixel<Pref>& p_ref)
     : super(image)
   {
     mln_precondition(image.has_data());

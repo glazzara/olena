@@ -1,3 +1,60 @@
+2007-07-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Renaming some concepts with more explicit and longer names.
+
+	* mln/core/concept/piter.hh,
+	* mln/core/concept/genpoint.hh,
+	* mln/core/concept/psite.hh,
+	* mln/core/concept/viter.hh,
+	* mln/core/concept/doc/genpoint.hh,
+	* mln/core/concept/doc/piter.hh,
+	* mln/core/concept/doc/viter.hh,
+	* mln/core/concept/doc/genpixel.hh,
+	* mln/core/concept/genpixel.hh: Rename respectively as...
+	* mln/core/concept/point_iterator.hh,
+	* mln/core/concept/generalized_point.hh,
+	* mln/core/concept/point_site.hh,
+	* mln/core/concept/value_iterator.hh,
+	* mln/core/concept/doc/generalized_point.hh,
+	* mln/core/concept/doc/point_iterator.hh,
+	* mln/core/concept/doc/value_iterator.hh,
+	* mln/core/concept/doc/generalized_pixel.hh,
+	* mln/core/concept/generalized_pixel.hh: ...these.
+
+	* mln/convert/to_dpoint.hh,
+	* mln/geom/pmin_pmax.hh,
+	* mln/core/dpoints_piter.hh,
+	* mln/core/psubset.hh,
+	* mln/core/box.hh,
+	* mln/core/psubset_piter.hh,
+	* mln/core/rectangle2d.hh,
+	* mln/core/box_piter.hh,
+	* mln/core/window.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/internal/image_adaptor.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/internal/piter_adaptor.hh,
+	* mln/core/pixel.hh,
+	* mln/core/hline2d.hh,
+	* mln/core/neighb.hh,
+	* mln/core/concept/value_set.hh,
+	* mln/core/concept/point.hh,
+	* mln/core/concept/pixel_iterator.hh,
+	* mln/core/concept/point_set.hh,
+	* mln/core/concept/doc/image.hh,
+	* mln/core/concept/doc/value_set.hh,
+	* mln/core/concept/doc/pixel_iterator.hh,
+	* mln/core/concept/doc/point_set.hh,
+	* mln/core/concept/doc/window.hh,
+	* mln/core/concept/doc/neighborhood.hh,
+	* mln/core/vline2d.hh,
+	* mln/level/approx/median.hh,
+	* mln/value/lut_vec.hh,
+	* mln/value/viter.hh,
+	* mln/value/set.hh: Update.
+
+	* TODO: Update.
+
 2007-07-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Handle low quantization and fast properties.

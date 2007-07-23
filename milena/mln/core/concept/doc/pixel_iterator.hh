@@ -41,7 +41,7 @@ namespace mln
      */
     template <typename E>
     struct Pixel_Iterator : public Iterator<E>,
-			    public GenPixel<E>
+			    public Generalized_Pixel<E>
     {
       /*! \brief Type returned by the read-write dereference operator.
        */

@@ -33,7 +33,7 @@
  * \brief Definition of the concept of mln::Point.
  */
 
-# include <mln/core/concept/psite.hh>
+# include <mln/core/concept/point_site.hh>
 
 
 namespace mln
@@ -47,7 +47,7 @@ namespace mln
    * discrete square grid of the 2D plane.
    */
   template <typename P>
-  struct Point : public Psite<P>
+  struct Point : public Point_Site<P>
   {
     /*! \brief The associated point type is itself.
      */

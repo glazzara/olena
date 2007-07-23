@@ -33,8 +33,8 @@
  * \brief Definition of mln::dpoints_fwd_piter and mln::dpoints_bkd_piter.
  */
 
-# include <mln/core/concept/piter.hh>
-# include <mln/core/concept/genpoint.hh>
+# include <mln/core/concept/point_iterator.hh>
+# include <mln/core/concept/generalized_point.hh>
 
 
 namespace mln
@@ -46,7 +46,7 @@ namespace mln
    * The parameter \c D is the type of delta-points.
    */
   template <typename D>
-  class dpoints_fwd_piter : public Piter< dpoints_fwd_piter<D> >
+  class dpoints_fwd_piter : public Point_Iterator< dpoints_fwd_piter<D> >
   {
   public:
 
@@ -59,7 +59,7 @@ namespace mln
     /// Point associated type.
     typedef mln_point(D) point;
 
-    /// Psite associated type.
+    /// Point_Site associated type.
     typedef point        psite;
 
     /// Coordinate associated type.
@@ -72,7 +72,7 @@ namespace mln
      */
     template <typename Dps, typename Pref>
     dpoints_fwd_piter(const Dps& dps, // FIXME: explicitly set_of_<D>?
-		      const GenPoint<Pref>& p_ref);
+		      const Generalized_Point<Pref>& p_ref);
 
     /// Convertion to point.
     operator mln_point(D) () const;
@@ -117,7 +117,7 @@ namespace mln
   template <typename D>
   template <typename Dps, typename Pref>
   dpoints_fwd_piter<D>::dpoints_fwd_piter(const Dps& dps,
-					  const GenPoint<Pref>& p_ref)
+					  const Generalized_Point<Pref>& p_ref)
     : dps_(exact(dps).vec()),
       p_ref_(* internal::force_exact<Pref>(p_ref).pointer_())
   {

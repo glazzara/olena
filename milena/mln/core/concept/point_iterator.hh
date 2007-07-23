@@ -25,60 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_GENPIXEL_HH
-# define MLN_CORE_CONCEPT_GENPIXEL_HH
+#ifndef MLN_CORE_CONCEPT_PITER_HH
+# define MLN_CORE_CONCEPT_PITER_HH
 
-/*! \file mln/core/concept/genpixel.hh
+/*! \file mln/core/concept/point_iterator.hh
  *
- * \brief Definition of the concept of mln::Genpixel.
+ * \brief Definition of the concept of mln::Point_Iterator.
  */
 
-# include <mln/core/concept/object.hh>
-# include <mln/core/internal/force_exact.hh>
+# include <mln/core/concept/iterator.hh>
+# include <mln/core/concept/generalized_point.hh>
 
 
 namespace mln
 {
 
-  // FIXME: \class GenPixel GenPixel.hh "mln/core/concept/doc/GenPixel.hh"
-
-  /*! \brief Base class for implementation classes that are pixels or that
-   *  have the behavior of pixels.
+  /*! \brief Base class for implementation of classes of iterator on
+   *  points.
    *
-   * "GenPixel" is "Generalized Pixel" for short.
+   * An iterator on points is an iterator that browse over a set of
+   * points.
    *
-   * \warning This class does \em not derive from mln::Object; it is
-   * for use as a parallel hierarchy.
-   *
-   * \see mln::doc::GenPixel for a complete documentation of this
-   * class contents.
+   * \see mln::doc::Point_Iterator for a complete documentation of this class
+   * contents.
    */
   template <typename E>
-  struct GenPixel
+  struct Point_Iterator : public Iterator<E>,
+		 public Generalized_Point<E>
   {
     /*
-      typedef  value;
-      typedef rvalue;
+      typedef psite;
+      operator psite() const;
+     */
 
-      rvalue operator*() const;
-      value** address_() const;
-    */
   protected:
-    GenPixel();
+    Point_Iterator();
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
-  GenPixel<E>::GenPixel()
+  Point_Iterator<E>::Point_Iterator()
   {
-    typedef mln_value(E) value;
-    typedef mln_rvalue(E) rvalue;
-    rvalue (E::*m1)() const = & E::operator*;
-    m1 = 0;
-    value** (E::*m2)() const = & E::address_;
-    m2 = 0;
+    typedef mln_psite(E) psite;
+    psite (E::*m)() const = & E::operator psite;
+    m = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -86,4 +78,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_GENPIXEL_HH
+#endif // ! MLN_CORE_CONCEPT_PITER_HH

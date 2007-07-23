@@ -45,17 +45,17 @@ namespace mln
     template <typename E>
     struct Window : public Object<E>
     {
-      /*! \brief Piter type associated to this window to browse its
+      /*! \brief Point_Iterator type associated to this window to browse its
        * points.
        */
       typedef void qiter;
 
-      /*! \brief Piter type associated to this window to browse its
+      /*! \brief Point_Iterator type associated to this window to browse its
        * points in a forward way.
        */
       typedef void fwd_qiter;
 
-      /*! \brief Piter type associated to this window to browse its
+      /*! \brief Point_Iterator type associated to this window to browse its
        * points in a backward way.
        */
       typedef void bkd_qiter;

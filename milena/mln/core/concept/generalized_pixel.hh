@@ -25,36 +25,65 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/piter.hh
- * \brief This file documents the concept of mln::Piter.
+#ifndef MLN_CORE_CONCEPT_GENPIXEL_HH
+# define MLN_CORE_CONCEPT_GENPIXEL_HH
+
+/*! \file mln/core/concept/generalized_pixel.hh
+ *
+ * \brief Definition of the concept of mln::Genpixel.
  */
+
+# include <mln/core/concept/object.hh>
+# include <mln/core/internal/force_exact.hh>
+
 
 namespace mln
 {
 
-  namespace doc
+  // FIXME: \class Generalized_Pixel Generalized_Pixel.hh "mln/core/concept/doc/Generalized_Pixel.hh"
+
+  /*! \brief Base class for implementation classes that are pixels or that
+   *  have the behavior of pixels.
+   *
+   * "Generalized_Pixel" is "Generalized Pixel" for short.
+   *
+   * \warning This class does \em not derive from mln::Object; it is
+   * for use as a parallel hierarchy.
+   *
+   * \see mln::doc::Generalized_Pixel for a complete documentation of this
+   * class contents.
+   */
+  template <typename E>
+  struct Generalized_Pixel
   {
+    /*
+      typedef  value;
+      typedef rvalue;
 
-    /*! \brief Documentation class for mln::Piter.
-     *
-     * \see mln::Piter
-     */
-    template <typename E>
-    struct Piter : public Iterator<E>,
-		   public GenPoint<E>
-    {
-      /*! \brief Psite associated type.
-       * \invariant This type has to derive from mln::Psite.
-       */
-      typedef void psite;
+      rvalue operator*() const;
+      value** address_() const;
+    */
+  protected:
+    Generalized_Pixel();
+  };
 
-      /*! \brief Convertion into a point-site.
-       *
-       * \return A point site.
-       */
-      operator psite() const;
-    };
 
-  } // end of namespace mln::doc
+# ifndef MLN_INCLUDE_ONLY
+
+  template <typename E>
+  Generalized_Pixel<E>::Generalized_Pixel()
+  {
+    typedef mln_value(E) value;
+    typedef mln_rvalue(E) rvalue;
+    rvalue (E::*m1)() const = & E::operator*;
+    m1 = 0;
+    value** (E::*m2)() const = & E::address_;
+    m2 = 0;
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
+
+#endif // ! MLN_CORE_CONCEPT_GENPIXEL_HH

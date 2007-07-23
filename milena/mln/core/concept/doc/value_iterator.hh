@@ -25,45 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_DPOINT_HH
-# define MLN_CONVERT_TO_DPOINT_HH
-
-/*! \file mln/convert/to_dpoint.hh
- *
- * \brief Convertions to mln::Dpoint.
+/*! \file mln/core/concept/doc/value_iterator.hh
+ * \brief This file documents the concept of mln::Value_Iterator.
  */
-
-# include <mln/core/concept/generalized_point.hh>
-
 
 namespace mln
 {
 
-  namespace convert
+  namespace doc
   {
 
-    /// Convert a generalized point \p p into a delta-point.
-    template <typename P>
-    mln_dpoint(P) to_dpoint(const Generalized_Point<P>& p);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename P>
-    mln_dpoint(P) to_dpoint(const Generalized_Point<P>& p_)
+    /*! \brief Documentation class for mln::Value_Iterator.
+     *
+     * \see mln::Value_Iterator
+     */
+    template <typename E>
+    struct Value_Iterator : public Iterator<E>
     {
-      const P& p = internal::force_exact<P>(p_);
-      mln_dpoint(P) tmp;
-      for (unsigned i = 0; i < P::dim; ++i)
-	tmp[i] = p[i];
-      return tmp;
-    }
+      /*! \brief Value associated type.
+       */
+      typedef void value;
 
-# endif // ! MLN_INCLUDE_ONLY
+      /*! \brief Convertion into a value.
+       *
+       * \return A value.
+       */
+      operator value() const;
+    };
 
-  } // end of namespace mln::convert
+  } // end of namespace mln::doc
 
 } // end of namespace mln
-
-
-#endif // ! MLN_CONVERT_TO_DPOINT_HH

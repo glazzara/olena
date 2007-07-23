@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/point.hh>
-# include <mln/core/concept/piter.hh>
+# include <mln/core/concept/point_iterator.hh>
 
 
 namespace mln

@@ -70,7 +70,7 @@ namespace mln
       /// Point_Set associated type.
       typedef S pset;
 
-      /// Psite associated type.
+      /// Point_Site associated type.
       typedef mln_psite(S) psite;
 
       /// Point associated type.
@@ -84,10 +84,10 @@ namespace mln
       typedef mln_coord(point) coord;
 
 
-      /// Forward Piter associated type.
+      /// Forward Point_Iterator associated type.
       typedef mln_fwd_piter(S) fwd_piter;
 
-      /// Backward Piter associated type.
+      /// Backward Point_Iterator associated type.
       typedef mln_bkd_piter(S) bkd_piter;
 
 

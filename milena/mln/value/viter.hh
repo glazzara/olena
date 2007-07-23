@@ -33,7 +33,7 @@
  * \brief Definition of iterators on value sets.
  */
 
-# include <mln/core/concept/viter.hh>
+# include <mln/core/concept/value_iterator.hh>
 
 
 
@@ -49,7 +49,7 @@ namespace mln
      * The parameter \c S is the type of value set.
      */
     template <typename S>
-    struct fwd_viter_ : public Viter< fwd_viter_<S> >
+    struct fwd_viter_ : public Value_Iterator< fwd_viter_<S> >
     {
       /// Value associated type.
       typedef mln_value(S) value;
@@ -86,7 +86,7 @@ namespace mln
      * The parameter \c S is the type of value set.
      */
     template <typename S>
-    struct bkd_viter_ : public Viter< bkd_viter_<S> >
+    struct bkd_viter_ : public Value_Iterator< bkd_viter_<S> >
     {
       /// Value associated type.
       typedef mln_value(S) value;

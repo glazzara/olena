@@ -32,7 +32,7 @@
  * \brief Definition of the concept of mln::Value_Set.
  */
 
-# include <mln/core/concept/viter.hh>
+# include <mln/core/concept/value_iterator.hh>
 
 
 namespace mln

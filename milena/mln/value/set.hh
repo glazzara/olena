@@ -58,10 +58,10 @@ namespace mln
       /// Value associated type.
       typedef T value;
 
-      /// Forward Viter associated type.
+      /// Forward Value_Iterator associated type.
       typedef fwd_viter_< set_<T> > fwd_viter;
 
-      /// Backward Viter associated type.
+      /// Backward Value_Iterator associated type.
       typedef bkd_viter_< set_<T> > bkd_viter;
 
       /// Test if \p v belongs to this set: always true!

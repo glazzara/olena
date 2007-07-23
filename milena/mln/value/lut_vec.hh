@@ -63,10 +63,10 @@ namespace mln
       /// Value associated type.
       typedef T value;
 
-      /// Forward Viter associated type.
+      /// Forward Value_Iterator associated type.
       typedef fwd_viter_< lut_vec<S,T> > fwd_viter;
 
-      /// Backward Viter associated type.
+      /// Backward Value_Iterator associated type.
       typedef bkd_viter_< lut_vec<S,T> > bkd_viter;
 
       /// Give the \p i-th value.

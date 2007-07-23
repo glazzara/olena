@@ -51,7 +51,7 @@ namespace mln
 	       typename S = mln_pset(I) >
     struct image_adaptor_ : public internal::image_base_< S, E >
     {
-      /// Psite associated type.
+      /// Point_Site associated type.
       typedef mln_psite(S) psite;
 
       /// Point_Set associated type.

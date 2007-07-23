@@ -25,52 +25,62 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_PITER_HH
-# define MLN_CORE_CONCEPT_PITER_HH
+#ifndef MLN_CORE_CONCEPT_PSITE_HH
+# define MLN_CORE_CONCEPT_PSITE_HH
 
-/*! \file mln/core/concept/piter.hh
- *
- * \brief Definition of the concept of mln::Piter.
+/*! \file mln/core/concept/point_site.hh
+ * \brief Definition of the concept of mln::Point_Site.
  */
 
-# include <mln/core/concept/iterator.hh>
-# include <mln/core/concept/genpoint.hh>
+# include <mln/core/concept/generalized_point.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Base class for implementation of classes of iterator on
-   *  points.
+  /*! \brief Base class for implementation classes of the notion of
+   *  "point site".
    *
-   * An iterator on points is an iterator that browse over a set of
-   * points.
+   * A point site ("psite" for short) is an object that allows an
+   * efficient access to data associated with a point.  A point site
+   * is either a point or designates a point: regular points, deriving
+   * from mln::Point, are point sites, yet some point sites are not
+   * points.)  A point site has the behavior expected from every
+   * point; see mln::Generalized_Point.
    *
-   * \see mln::doc::Piter for a complete documentation of this class
-   * contents.
+   * When a point site is not a point, it is automatically convertible
+   * to the point it designates.
+   *
+   *
+   * Let us take the example of a 2D image encoded as an array of runs
+   * of values.  With a point, a pair (row index, column index),
+   * retrieving the corresponding pixel value would mean to browse the
+   * array of runs to find the value location.  That would not be
+   * efficient.  Conversely, a point site dedicated to this image
+   * structure allows for value access in contant time; precisely the
+   * proper point site is a pair (index of run, index within the run).
    */
   template <typename E>
-  struct Piter : public Iterator<E>,
-		 public GenPoint<E>
+  struct Point_Site : public Object<E>,
+		 public Generalized_Point<E>
   {
     /*
-      typedef psite;
-      operator psite() const;
-     */
+    const point* pointer_() const
+    {
+      return & (exact(this)->operator point());
+    }
+    */
 
   protected:
-    Piter();
+    Point_Site();
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
-  Piter<E>::Piter()
+  Point_Site<E>::Point_Site()
   {
-    typedef mln_psite(E) psite;
-    psite (E::*m)() const = & E::operator psite;
-    m = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -78,4 +88,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_PITER_HH
+#endif // ! MLN_CORE_CONCEPT_PSITE_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/genpoint.hh
- * \brief This file documents the concept of mln::GenPoint.
+/*! \file mln/core/concept/doc/generalized_point.hh
+ * \brief This file documents the concept of mln::Generalized_Point.
  */
 
 namespace mln
@@ -35,12 +35,12 @@ namespace mln
   namespace doc
   {
 
-    /*! \brief Documentation class for mln::GenPoint.
+    /*! \brief Documentation class for mln::Generalized_Point.
      *
-     * \see mln::GenPoint
+     * \see mln::Generalized_Point
      */
     template <typename E>
-    struct GenPoint
+    struct Generalized_Point
     {
       /*! \var dim
        * \brief Dimension of the space.

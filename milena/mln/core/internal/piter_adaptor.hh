@@ -33,7 +33,7 @@
  * \brief Definition of iterators on points of boxes.
  */
 
-# include <mln/core/concept/piter.hh>
+# include <mln/core/concept/point_iterator.hh>
 # include <mln/core/concept/box.hh>
 
 
@@ -49,14 +49,14 @@ namespace mln
      * parameter E is the exact type.
      */
     template <typename Pi, typename E>
-    class piter_adaptor_ : public Piter<E>
+    class piter_adaptor_ : public Point_Iterator<E>
     {
     public:
 
       /// Space dimension.
       enum { dim = Pi::dim };
 
-      /// Psite associated type.
+      /// Point_Site associated type.
       typedef mln_psite(Pi) psite;
 
       /// Point associated type.

@@ -127,8 +127,8 @@ namespace mln
        */
       typedef void point;
 
-      /*! \brief Psite associated type.
-       * \invariant This type has to derive from mln::Psite.
+      /*! \brief Point_Site associated type.
+       * \invariant This type has to derive from mln::Point_Site.
        */
       typedef void psite;
 
@@ -144,12 +144,12 @@ namespace mln
 
 
       /*! \brief Forward point iterator associated type.
-       * \invariant This type has to derive from mln::Piter.
+       * \invariant This type has to derive from mln::Point_Iterator.
        */
       typedef void fwd_piter;
 
       /*! \brief Backward point iterator associated type.
-       * \invariant This type has to derive from mln::Piter.
+       * \invariant This type has to derive from mln::Point_Iterator.
        */
       typedef void bkd_piter;
 

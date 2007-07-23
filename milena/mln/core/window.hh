@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/window.hh>
-# include <mln/core/concept/genpoint.hh>
+# include <mln/core/concept/generalized_point.hh>
 # include <mln/core/internal/set_of.hh>
 # include <mln/core/dpoint.hh>
 # include <mln/core/box.hh>
@@ -67,12 +67,12 @@ namespace mln
     /// Dpoint associated type.
     typedef D dpoint;
 
-    /*! \brief Piter type to browse the points of a generic window
+    /*! \brief Point_Iterator type to browse the points of a generic window
      * w.r.t. the ordering of delta-points.
      */
     typedef dpoints_fwd_piter<D> fwd_qiter;
 
-    /*! \brief Piter type to browse the points of a generic window
+    /*! \brief Point_Iterator type to browse the points of a generic window
      * w.r.t. the reverse ordering of delta-points.
      */
     typedef internal::fixme bkd_qiter;

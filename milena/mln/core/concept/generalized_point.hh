@@ -28,8 +28,8 @@
 #ifndef MLN_CORE_CONCEPT_GENPOINT_HH
 # define MLN_CORE_CONCEPT_GENPOINT_HH
 
-/*! \file mln/core/concept/genpoint.hh
- * \brief Definition of the concept of mln::GenPoint.
+/*! \file mln/core/concept/generalized_point.hh
+ * \brief Definition of the concept of mln::Generalized_Point.
  */
 # include <mlc/equal.hh>
 # include <mlc/same_point.hh>
@@ -42,21 +42,21 @@
 namespace mln
 {
 
-  // FIXME: \class GenPoint genpoint.hh "mln/core/concept/doc/genpoint.hh"
+  // FIXME: \class Generalized_Point generalized_point.hh "mln/core/concept/doc/generalized_point.hh"
 
   /*! \brief Base class for implementation classes that are points or that
    *  have the behavior of points.
    *
-   * "GenPoint" is "Generalized Point" for short.
+   * "Generalized_Point" is "Generalized Point" for short.
    *
    * \warning This class does \em not derive from mln::Object; it is
    * for use as a parallel hierarchy.
    * 
-   * \see mln::doc::GenPoint for a complete documentation of this
+   * \see mln::doc::Generalized_Point for a complete documentation of this
    * class contents.
    */
   template <typename E>
-  struct GenPoint
+  struct Generalized_Point
   {
 
     /*
@@ -75,7 +75,7 @@ namespace mln
     */
 
   protected:
-    GenPoint();
+    Generalized_Point();
 
   };
 
@@ -93,10 +93,10 @@ namespace mln
    * \return True if both generalized points have the same
    * coordinates, otherwise false.
    *
-   * \relates mln::GenPoint
+   * \relates mln::Generalized_Point
    */
   template <typename Pl, typename Pr>
-  bool operator==(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs);
+  bool operator==(const Generalized_Point<Pl>& lhs, const Generalized_Point<Pr>& rhs);
 
 
   /*! \brief Ordering "less than" comparison between a couple of generalized
@@ -117,10 +117,10 @@ namespace mln
    * \return True if \p lhs is before \p rhs in the sense of the
    * coordinates lexicographic comparison, otherwise false.
    *
-   * \relates mln::GenPoint
+   * \relates mln::Generalized_Point
    */
   template <typename Pl, typename Pr>
-  bool operator<(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs);
+  bool operator<(const Generalized_Point<Pl>& lhs, const Generalized_Point<Pr>& rhs);
 
 
   /*! \brief Difference between a couple of generalized point \p lhs and \p
@@ -142,11 +142,11 @@ namespace mln
    * \return A delta-point (temporary object).
    *
    * \see mln::Dpoint
-   * \relates mln::GenPoint
+   * \relates mln::Generalized_Point
    */
   template <typename Pl, typename Pr>
   mln_dpoint(Pl)
-  operator-(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs);
+  operator-(const Generalized_Point<Pl>& lhs, const Generalized_Point<Pr>& rhs);
 
 
   /*! \brief Add a delta-point \p rhs to a generalized point \p lhs.
@@ -160,14 +160,14 @@ namespace mln
    * \return A point (temporary object).
    *
    * \see mln::Dpoint
-   * \relates mln::GenPoint
+   * \relates mln::Generalized_Point
    *
    * \todo Introduce the notion of "generalized dpoint" and
-   * add the more general extra operator+(GenPoint, GenDpoint).
+   * add the more general extra operator+(Generalized_Point, GenDpoint).
    */
   template <typename P>
   mln_point(P)
-  operator+(const GenPoint<P>& lhs, const mln_dpoint(P)& rhs);
+  operator+(const Generalized_Point<P>& lhs, const mln_dpoint(P)& rhs);
 
 
   /*! \brief Substract a delta-point \p rhs to a generalized point \p lhs.
@@ -181,11 +181,11 @@ namespace mln
    * \return A point (temporary object).
    *
    * \see mln::Dpoint
-   * \relates mln::GenPoint
+   * \relates mln::Generalized_Point
    */
   template <typename P>
   mln_point(P)
-  operator-(const GenPoint<P>& lhs, const mln_dpoint(P)& rhs);
+  operator-(const Generalized_Point<P>& lhs, const mln_dpoint(P)& rhs);
 
 
   /*! \brief Print a generalized point \p p into the output stream \p
@@ -196,10 +196,10 @@ namespace mln
    *
    * \return The modified output stream \p ostr.
    *
-   * \relates mln::GenPoint
+   * \relates mln::Generalized_Point
    */
   template <typename P>
-  std::ostream& operator<<(std::ostream& ostr, const GenPoint<P>& p);
+  std::ostream& operator<<(std::ostream& ostr, const Generalized_Point<P>& p);
 
 
 
@@ -207,7 +207,7 @@ namespace mln
 
 
   template <typename E>
-  GenPoint<E>::GenPoint()
+  Generalized_Point<E>::Generalized_Point()
   {
     int dim = E::dim;
     mln_invariant(dim > 0);
@@ -223,7 +223,7 @@ namespace mln
 
 
   template <typename Pl, typename Pr>
-  bool operator==(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs)
+  bool operator==(const Generalized_Point<Pl>& lhs, const Generalized_Point<Pr>& rhs)
   {
     // FIXME: mlc::same_grid<Pl, Pr>::check();
     const Pl& lhs_ = internal::force_exact<Pl>(lhs);
@@ -236,7 +236,7 @@ namespace mln
   }
 
   template <typename Pl, typename Pr>
-  bool operator<(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs)
+  bool operator<(const Generalized_Point<Pl>& lhs, const Generalized_Point<Pr>& rhs)
   {
     // FIXME: mlc::same_grid<Pl, Pr>::check();
     const Pl& lhs_ = internal::force_exact<Pl>(lhs);
@@ -252,7 +252,7 @@ namespace mln
 
   template <typename Pl, typename Pr>
   mln_dpoint(Pl)
-  operator-(const GenPoint<Pl>& lhs, const GenPoint<Pr>& rhs)
+  operator-(const Generalized_Point<Pl>& lhs, const Generalized_Point<Pr>& rhs)
   {
     mlc::equal<mln_dpoint(Pl), mln_dpoint(Pr)>::check();
     // FIXME: mlc::same_grid<Pl, Pr>::check();
@@ -268,7 +268,7 @@ namespace mln
 
   template <typename P>
   mln_point(P)
-  operator+(const GenPoint<P>& lhs, const mln_dpoint(P)& rhs)
+  operator+(const Generalized_Point<P>& lhs, const mln_dpoint(P)& rhs)
   {
     const P& lhs_ = internal::force_exact<P>(lhs);
     mln_point(P) tmp;
@@ -279,7 +279,7 @@ namespace mln
 
   template <typename P>
   mln_point(P)
-  operator-(const GenPoint<P>& lhs, const mln_dpoint(P)& rhs)
+  operator-(const Generalized_Point<P>& lhs, const mln_dpoint(P)& rhs)
   {
     const P& lhs_ = internal::force_exact<P>(lhs);
     mln_point(P) tmp;
@@ -289,7 +289,7 @@ namespace mln
   }
 
   template <typename P>
-  std::ostream& operator<<(std::ostream& ostr, const GenPoint<P>& p)
+  std::ostream& operator<<(std::ostream& ostr, const Generalized_Point<P>& p)
   {
     const P& p_ = internal::force_exact<P>(p);
 

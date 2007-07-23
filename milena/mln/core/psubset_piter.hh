@@ -33,7 +33,7 @@
  * \brief Definition of iterators on points of psubsetes.
  */
 
-# include <mln/core/concept/piter.hh>
+# include <mln/core/concept/point_iterator.hh>
 # include <mln/core/internal/piter_adaptor.hh>
 # include <mln/core/psubset.hh>
 

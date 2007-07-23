@@ -46,11 +46,11 @@ namespace mln
        */
       typedef void value;
 
-      /*! \brief Forward Viter associated type.
+      /*! \brief Forward Value_Iterator associated type.
        */
       typedef void fwd_viter;
 
-      /*! \brief Backward Viter associated type.
+      /*! \brief Backward Value_Iterator associated type.
        */
       typedef void bkd_viter;
 

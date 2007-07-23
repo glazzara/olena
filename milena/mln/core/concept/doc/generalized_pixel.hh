@@ -28,8 +28,8 @@
 #ifndef MLN_CORE_CONCEPT_DOC_GENPIXEL_HH
 # define MLN_CORE_CONCEPT_DOC_GENPIXEL_HH
 
-/*! \file mln/core/concept/doc/genpixel.hh
- * \brief This file documents the concept of mln::GenPixel.
+/*! \file mln/core/concept/doc/generalized_pixel.hh
+ * \brief This file documents the concept of mln::Generalized_Pixel.
  */
 
 
@@ -39,12 +39,12 @@ namespace mln
   namespace doc
   {
 
-    /*! \brief Documentation class for mln::GenPixel.
+    /*! \brief Documentation class for mln::Generalized_Pixel.
      *
-     * \see mln::GenPixel
+     * \see mln::Generalized_Pixel
      */
     template <typename E>
-    struct GenPixel
+    struct Generalized_Pixel
     {
 
       /// Value associated type.
@@ -70,7 +70,7 @@ namespace mln
       value** address_() const;
 
     protected:
-      GenPixel();
+      Generalized_Pixel();
     };
 
   } // end of namespace mln::doc

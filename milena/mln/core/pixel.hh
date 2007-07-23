@@ -33,7 +33,7 @@
  * \brief Definition of the generic pixel class mln::pixel.
  */
 
-# include <mln/core/concept/genpixel.hh>
+# include <mln/core/concept/generalized_pixel.hh>
 # include <mln/core/internal/pixel_impl.hh>
 
 
@@ -47,7 +47,7 @@ namespace mln
    */
   template <typename I>
   struct pixel : public Object< pixel<I> >,
-		 public GenPixel< pixel<I> >,
+		 public Generalized_Pixel< pixel<I> >,
 		 internal::pixel_impl_< I, pixel<I> >
   {
     /// Constructor.

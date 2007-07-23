@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/viter.hh
- * \brief This file documents the concept of mln::Viter.
+/*! \file mln/core/concept/doc/point_iterator.hh
+ * \brief This file documents the concept of mln::Point_Iterator.
  */
 
 namespace mln
@@ -35,22 +35,24 @@ namespace mln
   namespace doc
   {
 
-    /*! \brief Documentation class for mln::Viter.
+    /*! \brief Documentation class for mln::Point_Iterator.
      *
-     * \see mln::Viter
+     * \see mln::Point_Iterator
      */
     template <typename E>
-    struct Viter : public Iterator<E>
+    struct Point_Iterator : public Iterator<E>,
+		   public Generalized_Point<E>
     {
-      /*! \brief Value associated type.
+      /*! \brief Point_Site associated type.
+       * \invariant This type has to derive from mln::Point_Site.
        */
-      typedef void value;
+      typedef void psite;
 
-      /*! \brief Convertion into a value.
+      /*! \brief Convertion into a point-site.
        *
-       * \return A value.
+       * \return A point site.
        */
-      operator value() const;
+      operator psite() const;
     };
 
   } // end of namespace mln::doc

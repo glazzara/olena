@@ -46,15 +46,15 @@ namespace mln
        */
       typedef void point;
 
-      /*! \brief Psite associated type.
+      /*! \brief Point_Site associated type.
        */
       typedef void psite;
 
-      /*! \brief Forward Piter associated type.
+      /*! \brief Forward Point_Iterator associated type.
        */
       typedef void fwd_piter;
 
-      /*! \brief Backward Piter associated type.
+      /*! \brief Backward Point_Iterator associated type.
        */
       typedef void bkd_piter;
 

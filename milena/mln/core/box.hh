@@ -54,7 +54,7 @@ namespace mln
   struct box_ : public Box< box_<P> >,
 		public internal::box_impl_< P::dim, mln_coord(P), box_<P> >
   {
-    /*! \brief Psite associated type.
+    /*! \brief Point_Site associated type.
      */
     typedef P psite;
 
@@ -62,11 +62,11 @@ namespace mln
      */
     typedef P point;
     
-    /*! \brief Forward Piter associated type.
+    /*! \brief Forward Point_Iterator associated type.
      */
     typedef box_fwd_piter_<P> fwd_piter;
 
-    /*! \brief Backward Piter associated type.
+    /*! \brief Backward Point_Iterator associated type.
      */
     typedef box_bkd_piter_<P> bkd_piter;
 

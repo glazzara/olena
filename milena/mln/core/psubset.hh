@@ -67,17 +67,17 @@ namespace mln
   template <typename S, typename F>
   struct psubset : public Point_Set< psubset<S,F> >
   {
-    /// Psite associated type.
+    /// Point_Site associated type.
     typedef mln_psite(S) psite;
 
     /// Point associated type.
     typedef mln_point(S) point;
 
     
-    /// Forward Piter associated type.
+    /// Forward Point_Iterator associated type.
     typedef psubset_fwd_piter_<S,F> fwd_piter;
 
-    /// Backward Piter associated type.
+    /// Backward Point_Iterator associated type.
     typedef internal::fixme bkd_piter;
 
 
