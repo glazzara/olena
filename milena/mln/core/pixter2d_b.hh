@@ -45,7 +45,8 @@ namespace mln
   class fwd_pixter2d_b : public internal::pixel_iterator_base_< I, fwd_pixter2d_b<I> >
   {
     typedef internal::pixel_iterator_base_< I, fwd_pixter2d_b<I> > super_;
-    typedef mln_value(super_) value_;
+    typedef typename super_::value_ value_;
+
   public:
 
     /*! \brief Constructor.

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_SAFE_IMAGE_HH
-# define MLN_CORE_SAFE_IMAGE_HH
+#ifndef MLN_CORE_SAFE_HH
+# define MLN_CORE_SAFE_HH
 
 # include <mln/core/internal/image_adaptor.hh>
 
@@ -34,6 +34,7 @@
 namespace mln
 {
 
+  // FIXME: Doc!
 
   template <typename I>
   struct safe_image : public internal::image_adaptor_< I, safe_image<I> >
@@ -100,4 +101,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_SAFE_IMAGE_HH
+#endif // ! MLN_CORE_SAFE_HH

@@ -55,11 +55,11 @@ namespace mln
   class dpoints_fwd_pixter : public Pixel_Iterator< dpoints_fwd_pixter<I> >,
 			     public internal::pixel_impl_< I, dpoints_fwd_pixter<I> >
   {
-    typedef typename internal::pixel_impl_< I, dpoints_fwd_pixter<I> > super;
+    typedef typename internal::pixel_impl_< I, dpoints_fwd_pixter<I> > super_;
   public:
 
     /// Using super value type.
-    typedef mln_value(super) value;
+    typedef typename super_::value_ value_;
 
     /*! \brief Constructor.
      *
@@ -111,7 +111,7 @@ namespace mln
     unsigned i_;
 
     /// reference pixel / point in the image
-    value** value_ref_;
+    value_** value_ref_;
     //    or:
     const mln_point(I)* p_ref_;
 
@@ -135,7 +135,7 @@ namespace mln
   dpoints_fwd_pixter<I>::dpoints_fwd_pixter(I& image,
 					    const Dps& dps,
 					    const Generalized_Point<Pref>& p_ref)
-    : super(image)
+    : super_(image)
   {
     mln_precondition(image.has_data());
     p_ref_ = internal::force_exact<Pref>(p_ref).pointer_();
@@ -149,7 +149,7 @@ namespace mln
   dpoints_fwd_pixter<I>::dpoints_fwd_pixter(I& image,
 					    const Dps& dps,
 					    const Generalized_Pixel<Pref>& p_ref)
-    : super(image)
+    : super_(image)
   {
     mln_precondition(image.has_data());
     p_ref_ = 0;

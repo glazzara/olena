@@ -41,6 +41,7 @@ namespace mln
     template <typename E>
     struct Image : public Object<E>
     {
+
       /*! \brief Value associated type.
        *
        *  \invariant This type is neither qualified by const, nor by
@@ -60,6 +61,7 @@ namespace mln
        * \invariant This type has to derive from mln::Value_Set.
        */
       typedef void vset;
+
 
       /*! \brief Test if the image have been initialized.
        */

@@ -54,7 +54,7 @@ namespace mln
      * \pre \p input and \p output have to be initialized.
      */
     template <typename I, typename W, typename O>
-    void fast_median(Image<I>& input, const Window<W>& win,
+    void fast_median(const Image<I>& input, const Window<W>& win,
 		     Image<O>& output);
 
 
@@ -65,7 +65,7 @@ namespace mln
     {
 
       template <typename I, typename W, typename O>
-      void fast_median(I& input,
+      void fast_median(const I& input,
 		       const W& win,
 		       O& output)
       {
@@ -90,14 +90,14 @@ namespace mln
 
 	point2d p = input.domain().pmin() + up;
 
-	mln_qixter(I, window2d)
+	mln_qixter(const I, window2d)
 	  q_fp(input, win_fwd_plus, p), q_fm(input, win_fwd_minus, p),
 	  q_bp(input, win_bkd_plus, p), q_bm(input, win_bkd_minus, p),
 	  q_top(input, win_top, p), q_bot(input, win_bot, p);
 
 	med.init();
 	{
-	  mln_qixter(I, W) q(input, win, p);
+	  mln_qixter(const I, W) q(input, win, p);
 	  for_all(q)
 	    med.take(*q);
 	}
@@ -154,7 +154,7 @@ namespace mln
     // facade
 
     template <typename I, typename W, typename O>
-    void fast_median(Image<I>& input, const Window<W>& win,
+    void fast_median(const Image<I>& input, const Window<W>& win,
 		     Image<O>& output)
     {
       impl::fast_median(exact(input), exact(win), exact(output));

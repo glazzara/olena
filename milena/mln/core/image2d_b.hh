@@ -190,10 +190,10 @@ namespace mln
     /// Fast Image method
 
     /// Give the offset corresponding to the delta-point \p dp.
-    int offset(const dpoint2d& dp);
+    int offset(const dpoint2d& dp) const;
 
     /// Give the offset corresponding to the point \p p.
-    unsigned offset(const point2d& p);
+    unsigned offset(const point2d& p) const;
 
     /// Give the point corresponding to the offset \p o.
     point2d point_at_offset(unsigned o) const;
@@ -412,7 +412,7 @@ namespace mln
 
   template <typename T>
   int
-  image2d_b<T>::offset(const dpoint2d& dp)
+  image2d_b<T>::offset(const dpoint2d& dp) const
   {
     mln_precondition(this->has_data());
     int o = dp[0] * vb_.len(1) + dp[1];
@@ -421,7 +421,7 @@ namespace mln
 
   template <typename T>
   unsigned
-  image2d_b<T>::offset(const point2d& p)
+  image2d_b<T>::offset(const point2d& p) const
   {
     mln_precondition(this->owns_(p));
     unsigned o = & this->operator()(p) - this->buffer_;
@@ -532,6 +532,12 @@ namespace mln
     struct fwd_qixter< image2d_b<T>, W >
     {
       typedef dpoints_fwd_pixter< image2d_b<T> > ret;
+    };
+
+    template <typename T, typename W>
+    struct fwd_qixter< const image2d_b<T>, W >
+    {
+      typedef dpoints_fwd_pixter< const image2d_b<T> > ret;
     };
 
     template <typename T, typename W>

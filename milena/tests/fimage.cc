@@ -25,25 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/safe_image.cc
+/*! \file tests/fimage.cc
  *
- * \brief Tests on mln::safe_image.
+ * \brief Tests on mln::fimage.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/safe.hh>
-#include <mln/level/paste.hh>
+#include <mln/core/fimage.hh>
+#include <mln/core/box2d.hh>
+#include <mln/fun/chess.hh>
+#include <mln/debug/println.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
-  I ima(1, 1);
-  safe_image<I> ima_ = safe(ima);
-
-  point2d p = make::point2d(-5, -1);
-  ima_(p) = 0;
-  level::paste(ima, ima_);
+  debug::println( fun::chess | make::box2d(8, 8) );
 }

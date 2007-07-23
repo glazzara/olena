@@ -49,8 +49,8 @@ namespace mln
     /*
       unsigned border();
 
-      int offset(const dpoint& dp);
-      unsigned offset(const point& p);
+      int offset(const dpoint& dp) const;
+      unsigned offset(const point& p) const;
       point point_at_offset(unsigned o) const;
 
       const value* buffer() const;
@@ -75,9 +75,9 @@ namespace mln
     typedef mln_fwd_pixter(E) fwd_pixter;
     typedef mln_bkd_pixter(E) bkd_pixter;
 
-    int (E::*m1)(const dpoint&) = & E::offset;
+    int (E::*m1)(const dpoint&) const = & E::offset;
     m1 = 0;
-    unsigned (E::*m2)(const point&) = & E::offset;
+    unsigned (E::*m2)(const point&) const = & E::offset;
     m2 = 0;
     point (E::*m3)(unsigned) const = & E::point_at_offset;
     m3 = 0;

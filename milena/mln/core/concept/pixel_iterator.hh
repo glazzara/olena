@@ -54,8 +54,9 @@ namespace mln
 			  public Generalized_Pixel<E>
   {
     /*
-      typedef lvalue;
+      only if the iterator is constructed on a mutable image:
 
+      typedef lvalue;
       lvalue operator*();
     */
   protected:
@@ -68,9 +69,9 @@ namespace mln
   template <typename E>
   Pixel_Iterator<E>::Pixel_Iterator()
   {
-    typedef mln_lvalue(E) lvalue;
-    lvalue (E::*m)() = & E::operator*;
-    m = 0;
+//     typedef mln_lvalue(E) lvalue;
+//     lvalue (E::*m)() = & E::operator*;
+//     m = 0;
   }
 
 #endif // ! MLN_INCLUDE_ONLY

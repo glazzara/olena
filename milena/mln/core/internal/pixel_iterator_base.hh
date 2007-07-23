@@ -43,6 +43,22 @@ namespace mln
   namespace internal
   {
 
+
+    template <typename I>
+    struct qualified_value
+    {
+      typedef mln_value(I) ret;
+    };
+
+
+    template <typename I>
+    struct qualified_value< const I >
+    {
+      typedef const mln_value(I) ret;
+    };
+
+
+
     /*! \brief A base class for pixel iterators. 
      *
      */
@@ -51,8 +67,7 @@ namespace mln
 				 public internal::pixel_impl_<I, E>
     {
       typedef internal::pixel_impl_<I, E> super_;
-      typedef mln_value(super_) value_;
-
+ 
     public:
 
       /// Start an iteration.
@@ -63,6 +78,9 @@ namespace mln
 
       /// Test if the iterator is valid.
       bool is_valid() const;
+
+      /// Qualified (const or not) value type.
+      typedef typename qualified_value<I>::ret value_;
 
     protected:
 

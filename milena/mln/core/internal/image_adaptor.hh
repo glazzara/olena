@@ -51,11 +51,15 @@ namespace mln
 	       typename S = mln_pset(I) >
     struct image_adaptor_ : public internal::image_base_< S, E >
     {
+
       /// Point_Site associated type.
       typedef mln_psite(S) psite;
 
       /// Point_Set associated type.
       typedef S pset;
+
+      /// Value_Set associated type.
+      typedef mln_vset(I) vset;
 
       /// Value associated type.
       typedef mln_value(I)   value;
@@ -66,6 +70,7 @@ namespace mln
       /// Return type of read-write access.
       typedef mln_lvalue(I) lvalue;
 
+
       /// Test if this image has been initialized.
       bool has_data() const;
 
@@ -75,11 +80,15 @@ namespace mln
       /// Give the definition domain.
       const S& domain() const;
 
+      /// Give the set of values.
+      const vset& values() const;
+
       /// Read-only access of pixel value at point site \p p.
       rvalue operator()(const psite& p) const;
 
       /// Read-write access of pixel value at point site \p p.
       lvalue operator()(const psite& p);
+
 
     protected:
       I& adaptee_;
@@ -113,6 +122,13 @@ namespace mln
     {
       mln_precondition(exact(this)->has_data());
       return adaptee_.domain();
+    }
+
+    template <typename I, typename E, typename S>
+    const mln_vset(I)&
+    image_adaptor_<I,E,S>::values() const
+    {
+      return adaptee_.values();
     }
 
     template <typename I, typename E, typename S>

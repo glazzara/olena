@@ -17,7 +17,6 @@ Weighted_Window
 
 value::proxy to dispatch read/write + the corresponding image type
 a mean_value object { sum; count } and operator+
-value_cast<T>(image)
 t_image to "transpose" the 0 and the i-th coordinates
 image defined by f/pset
 
@@ -45,6 +44,5 @@ reconstructions + their canvases
 fast versions of level::fill and level::paste
 histogram class
 sorting points w.r.t. their value (array of offsets, psites, points)
-border::* and no-op versions if not fast image
 arith::inplace_plus et al.
 linear:: for convolutions

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_VEC_HH
-# define MLN_CORE_VEC_HH
+#ifndef MLN_CORE_METAL_VEC_HH
+# define MLN_CORE_METAL_VEC_HH
 
 # include <mln/core/concept/object.hh>
 
@@ -34,29 +34,34 @@
 namespace mln
 {
 
-  template <unsigned n, typename T>
-  struct vec : public Object< vec<n,T> >
+  namespace metal
   {
-    enum { dim = n };
-    typedef T coord;
 
-    T& operator[](unsigned i)
+    template <unsigned n, typename T>
+    struct vec : public Object< vec<n,T> >
     {
-      assert(i < n);
-      return coord_[i];
-    }
+      enum { dim = n };
+      typedef T coord;
 
-    T operator[](unsigned i) const
-    {
-      assert(i < n);
-      return coord_[i];
-    }
+      T& operator[](unsigned i)
+      {
+	assert(i < n);
+	return coord_[i];
+      }
+
+      T operator[](unsigned i) const
+      {
+	assert(i < n);
+	return coord_[i];
+      }
     
-  protected:
-    T coord_[n];
-  };
+    protected:
+      T coord_[n];
+    };
+  
+  } // end of namespace mln::metal
   
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_VEC_HH
+#endif // ! MLN_CORE_METAL_VEC_HH

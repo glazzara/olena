@@ -25,25 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/safe_image.cc
+/*! \file tests/assign.cc
  *
- * \brief Tests on mln::safe_image.
+ * \brief Tests on mln::level::assign.
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/safe.hh>
-#include <mln/level/paste.hh>
+#include <mln/level/assign.hh>
+#include <mln/level/compare.hh>
+#include <mln/debug/iota.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
-  I ima(1, 1);
-  safe_image<I> ima_ = safe(ima);
-
-  point2d p = make::point2d(-5, -1);
-  ima_(p) = 0;
-  level::paste(ima, ima_);
+  const unsigned size = 1000;
+  image2d_b<int> rhs(size, size), lhs(rhs.domain());
+  debug::iota(rhs);
+  level::assign(lhs, rhs);
+  mln_assertion(lhs == rhs);
 }

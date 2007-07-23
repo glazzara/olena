@@ -77,8 +77,9 @@ namespace mln
     typedef mln_rvalue(E) rvalue;
     rvalue (E::*m1)() const = & E::operator*;
     m1 = 0;
-    value** (E::*m2)() const = & E::address_;
-    m2 = 0;
+    // FIXME: Activate (so add qualif_value):
+//     value** (E::*m2)() const = & E::address_;
+//     m2 = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

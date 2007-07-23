@@ -1,5 +1,45 @@
 2007-07-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add some morphers and handle constness in pixterators.
+
+	Add new morphers.
+
+	* tests/cast_image.cc: New.
+	* tests/assign.cc: New.
+	* tests/fimage.cc: New.
+	* mln/core/fimage.hh: New.
+	* mln/level/assign.hh: New.
+	* mln/value/cast.hh: New.
+
+	* mln/core/safe.hh: Rename as...
+	* mln/core/safe_image.hh: ...this.
+	* tests/safe_image.cc: Update.
+	* mln/core/vec.hh: Rename as...
+	* mln/metal/vec.hh: ...this.
+
+	Handle constness in pixel iterators.
+
+	* mln/core/internal/pixel_impl.hh (value_): New.
+	(address): Update.
+	* mln/core/internal/pixel_iterator_base.hh
+	(qualified_value, value_): New.
+	* mln/core/pixter2d_b.hh (value_): Update.
+	* mln/core/dpoints_pixter.hh (value_): Update.
+	* mln/core/internal/image_adaptor.hh
+	(vset, values): Fix missing.
+	* mln/core/concept/generalized_pixel.hh
+	(ctor): Comment check on address.
+	* mln/core/concept/pixel_iterator.hh
+	(ctor): Comment check on lvalue and op*.
+	* mln/core/concept/fast_image.hh (offset): Fix missing const.
+	* mln/core/image2d_b.hh: Likewise.
+	* mln/core/concept/doc/image.hh: Cosmetic changes.
+	* mln/level/fast_median.hh (input): Update.
+
+	* TODO: Update.
+
+2007-07-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Some renaming and add phantom border routines.
 
 	* mln/pw: New directory.

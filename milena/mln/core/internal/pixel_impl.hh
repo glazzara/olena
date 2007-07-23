@@ -62,6 +62,9 @@ namespace mln
       /// Image rvalue type.
       typedef mln_rvalue(I) rvalue;
 
+      /// Qualified value type.
+      typedef value value_;
+
 
       /// pixel iterator value.
       lvalue operator*();
@@ -105,13 +108,16 @@ namespace mln
       /// Image rvalue type.
       typedef mln_rvalue(I) rvalue;
 
+      /// Qualified value type.
+      typedef const value value_;
+
 
       /// Get the pixel iterator value.
       rvalue operator*() const;
 
 
       /// Address of the current iterator value/pixel.
-      value** address_() const;
+      const value** address_() const;
 
     protected:
 
@@ -197,11 +203,11 @@ namespace mln
     }
 
     template <typename I, typename E>
-    mln_value(I) **
+    const mln_value(I) **
     pixel_impl_<const I, E>::address_() const
     {
       mln_precondition(is_valid_());
-      return (value**)(& this->value_ptr_);
+      return (const value**)(& this->value_ptr_);
     }
 
 #endif // ! MLN_INCLUDE_ONLY
