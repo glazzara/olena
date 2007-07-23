@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,29 +36,34 @@
 
 
 // Helper macros.
-#define my_type_of_(FromType, Alias)					\
-  my::find_vtype<FromType, my::typedef_:: Alias##_type>::ret
+#define my_type_of_(FromType, Alias)			\
+  my::find_vtype< FromType, my::typedef_:: Alias >::ret
 
 #define my_type_of(FromType, Alias)		\
   typename my_type_of_(FromType, Alias)
 
 
-// Namespace equipment.
-stc_scoop_equipment_for_namespace(my);
 
 
 namespace my
 {
+  /*----------------------.
+  | Namespace equipment.  |
+  `----------------------*/
+
+#include <stc/scoop.hxx>
+
+
   /*-----------.
   | Typedefs.  |
   `-----------*/
 
-  mlc_decl_typedef(foo_type);
-  mlc_decl_typedef(bar_type);
-  mlc_decl_typedef(baz_type);
-  mlc_decl_typedef(quux_type);
-  mlc_decl_typedef(yin_type);
-  mlc_decl_typedef(zorg_type);
+  mlc_decl_typedef(foo);
+  mlc_decl_typedef(bar);
+  mlc_decl_typedef(baz);
+  mlc_decl_typedef(quux);
+  mlc_decl_typedef(yin);
+  mlc_decl_typedef(zorg);
 
 
   /*----.
@@ -73,21 +78,21 @@ namespace my
   struct vtypes<my::A>
   {
     // A native type.
-    typedef int            foo_type;
+    typedef int            foo;
     // A Metalic value, used here is to ensure that
     // mlc::abstract::values are accepted as virtual types, as well as
     // any other type).
-    typedef mlc::int_<42>  bar_type;
+    typedef mlc::int_<42>  bar;
     // An undefined type.
-    typedef mlc::undefined baz_type;
+    typedef mlc::undefined baz;
   };
 
   struct A
   {
     // Aliases.
-    typedef my_type_of_(A, foo) foo_type;
-    typedef my_type_of_(A, bar) bar_type;
-    typedef my_type_of_(A, baz) baz_type;
+    typedef my_type_of_(A, foo) foo;
+    typedef my_type_of_(A, bar) bar;
+    typedef my_type_of_(A, baz) baz;
   };
 
 
@@ -100,7 +105,7 @@ namespace my
 
   // Set super type.
   template<>
-  struct set_super_type<B>
+  struct super_trait_<B>
   {
     typedef A ret;
   };
@@ -112,16 +117,16 @@ namespace my
     // (foo is left untouched.)
 
     // A type redefined here.
-    typedef double bar_type;
+    typedef double bar;
     // A type defined here (but declared abstract in the super class).
-    typedef char baz_type;
+    typedef char baz;
     // A type defined only here (and not in the super class).
-    typedef long quux_type;
+    typedef long quux;
   };
 
   /// An extended type associated to my::B.
   template <>
-  struct single_vtype<B, typedef_::yin_type>
+  struct single_vtype<B, typedef_::yin>
   {
     typedef unsigned long ret;
   };
@@ -129,11 +134,11 @@ namespace my
   struct B : public A
   {
     // Aliases.
-    typedef my_type_of_(B, foo)  foo_type;
-    typedef my_type_of_(B, bar)  bar_type;
-    typedef my_type_of_(B, baz)  baz_type;
-    typedef my_type_of_(B, quux) quux_type;
-    typedef my_type_of_(B, yin)  yin_type;
+    typedef my_type_of_(B, foo)  foo;
+    typedef my_type_of_(B, bar)  bar;
+    typedef my_type_of_(B, baz)  baz;
+    typedef my_type_of_(B, quux) quux;
+    typedef my_type_of_(B, yin)  yin;
   };
 
 
@@ -145,33 +150,28 @@ namespace my
   struct Z;
 
   // Z doesn't derive from B, but we want its vtypes to ``inherit''
-  // from B's vtypes (see the specialization
-  // types<category::my_cat, Z>).
-
-  /// Link to B (``pseudo'' inheritance).
-  template<>
-  struct set_super_type<Z>
-  {
-    typedef B ret;
-  };
+  // from B's vtypes.
 
   /// Types associated to my::Z.
   template <>
   struct vtypes<Z>
   {
+    /// Delegation to B (used to be called ``pseudo'' inheritance).
+    typedef B delegatee;
+
     // A type defined only here (and not in the super class).
-    typedef double zorg_type;
+    typedef double zorg;
   };
 
   struct Z // no inheritance
   {
     // Aliases.
-    typedef my_type_of_(Z, foo)  foo_type;
-    typedef my_type_of_(Z, bar)  bar_type;
-    typedef my_type_of_(Z, baz)  baz_type;
-    typedef my_type_of_(Z, quux) quux_type;
-    typedef my_type_of_(Z, yin)  yin_type;
-    typedef my_type_of_(Z, zorg) zorg_type;
+    typedef my_type_of_(Z, foo)  foo;
+    typedef my_type_of_(Z, bar)  bar;
+    typedef my_type_of_(Z, baz)  baz;
+    typedef my_type_of_(Z, quux) quux;
+    typedef my_type_of_(Z, yin)  yin;
+    typedef my_type_of_(Z, zorg) zorg;
   };
 
 } // end of namespace my
@@ -181,21 +181,21 @@ int
 main()
 {
   // Check types associated to A.
-  mlc::assert_<mlc_eq(my::A::foo_type,  int)>::check();
-  mlc::assert_<mlc_eq(my::A::bar_type,  mlc::int_<42>)>::check();
+  mlc::assert_<mlc_eq(my::A::foo,  int)>::check();
+  mlc::assert_<mlc_eq(my::A::bar,  mlc::int_<42>)>::check();
 
   // Check types associated to B.
-  mlc::assert_<mlc_eq(my::B::baz_type,  char)>::check();
-  mlc::assert_<mlc_eq(my::B::quux_type, long)>::check();
-  mlc::assert_<mlc_eq(my::B::yin_type,  unsigned long)>::check();
+  mlc::assert_<mlc_eq(my::B::baz,  char)>::check();
+  mlc::assert_<mlc_eq(my::B::quux, long)>::check();
+  mlc::assert_<mlc_eq(my::B::yin,  unsigned long)>::check();
 
-  mlc::assert_<mlc_neq(my::B::bar_type, my::A::bar_type)>::check();
+  mlc::assert_<mlc_neq(my::B::bar, my::A::bar)>::check();
 
   // Check types associated to Z.
-  mlc::assert_<mlc_eq(my::Z::foo_type,  int)>::check();
-  mlc::assert_<mlc_eq(my::Z::bar_type,  double)>::check();
-  mlc::assert_<mlc_eq(my::Z::baz_type,  char)>::check();
-  mlc::assert_<mlc_eq(my::Z::quux_type, long)>::check();
-  mlc::assert_<mlc_eq(my::Z::yin_type,  unsigned long)>::check();
-  mlc::assert_<mlc_eq(my::Z::zorg_type, double)>::check();
+  mlc::assert_<mlc_eq(my::Z::foo,  int)>::check();
+  mlc::assert_<mlc_eq(my::Z::bar,  double)>::check();
+  mlc::assert_<mlc_eq(my::Z::baz,  char)>::check();
+  mlc::assert_<mlc_eq(my::Z::quux, long)>::check();
+  mlc::assert_<mlc_eq(my::Z::yin,  unsigned long)>::check();
+  mlc::assert_<mlc_eq(my::Z::zorg, double)>::check();
 }

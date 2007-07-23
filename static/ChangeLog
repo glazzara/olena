@@ -1,5 +1,18 @@
 2007-07-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust tests to the new interface of Static.
+
+	* tests/super.cc, tests/vtypes-and-exact.cc:
+	No longer use stc_scoop_equipment_for_namespace.
+	Include stc/scoop.hxx instead.
+	Remove the `_type' suffix from all virtual types.
+	s/set_super_type/super_trait_/.
+	* tests/vtypes.cc: Likewise.
+	my::set_super_type<Z>: Remove.
+	vtypes<Z>::delegatee: New virtual type.
+
+2007-07-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Clean up stc/scoop.hxx a bit.
 
 	* stc/scoop.hxx: Add a copyright header.

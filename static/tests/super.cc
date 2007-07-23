@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,12 +33,11 @@
 #include <stc/scoop.hh>
 
 
-// Namespace equipment.
-stc_scoop_equipment_for_namespace(my);
-
-
 namespace my
 {
+
+// Namespace equipment.
+# include <stc/scoop.hxx>
 
   /*----.
   | A.  |
@@ -58,7 +57,7 @@ namespace my
 
   // Set super type.
   template<>
-  struct set_super_type<B>
+  struct super_trait_<B>
   {
     typedef A ret;
   };
@@ -84,7 +83,7 @@ namespace my
   template<>
   struct vtypes<C>
   {
-    typedef B delegatee_type;
+    typedef B delegatee;
   };
 
   struct C // no inheritance

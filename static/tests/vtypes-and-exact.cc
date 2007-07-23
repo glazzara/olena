@@ -1,4 +1,4 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,28 +40,33 @@
 
 // Helper macros.
 #define my_type_of_(FromType, Alias)					\
-  my::find_vtype<FromType, my::typedef_:: Alias##_type>::ret
+  my::find_vtype< FromType, my::typedef_:: Alias >::ret
 
 #define my_type_of(FromType, Alias)		\
   typename my_type_of_(FromType, Alias)
 
 
-// Namespace equipment.
-stc_scoop_equipment_for_namespace(my);
 
 
 namespace my
 {
+  /*----------------------.
+  | Namespace equipment.  |
+  `----------------------*/
+
+#include <stc/scoop.hxx>
+
+
   /*-----------.
   | Typedefs.  |
   `-----------*/
 
-  mlc_decl_typedef(foo_type);
-  mlc_decl_typedef(bar_type);
-  mlc_decl_typedef(baz_type);
-  mlc_decl_typedef(quux_type);
-  mlc_decl_typedef(yin_type);
-  mlc_decl_typedef(zorg_type);
+  mlc_decl_typedef(foo);
+  mlc_decl_typedef(bar);
+  mlc_decl_typedef(baz);
+  mlc_decl_typedef(quux);
+  mlc_decl_typedef(yin);
+  mlc_decl_typedef(zorg);
 
 
   /*----------------------------------------.
@@ -77,12 +82,12 @@ namespace my
   struct vtypes< A<Exact> >
   {
     // A native type.
-    typedef int            foo_type;
+    typedef int            foo;
     // A Metalic value, used here to ensure that mlc::abstract::values
     // are accepted as virtual types, as well as any other type).
-    typedef mlc::int_<42>  bar_type;
+    typedef mlc::int_<42>  bar;
     // An undefined type.
-    typedef mlc::undefined baz_type;
+    typedef mlc::undefined baz;
   };
 
   template <typename Exact>
@@ -92,23 +97,6 @@ namespace my
     typedef Exact exact_t;
 
     // Aliases.
-
-    // META-FIXME: Update comment (stc/scoop.hh as changed since).
-
-    /* FIXME: Work around a bug that affects both g++ 4.1 and
-       gcc-snapshot (4.2) from Debian.  The versions of the compiler
-       used at the moment this text was written were:
-
-       g++ 4.1      : g++ (GCC) 4.1.2 20060920 (prerelease) (Debian 4.1.1-14)
-       gcc-snapshot : g++ (GCC) 4.2.0 20060922 (experimental)
-
-
-       Problem description:
-
-       Using my_type_of (i.e., using stc_to_exact) breaks the
-       assertions ``Ensure stc::is_any_ works properly.'' below (in
-       main).  Using my_direct_type_of (on the exact type) solves
-       this!  */
     typedef my_type_of(exact_t, foo) foo_t;
     typedef my_type_of(exact_t, bar) bar_t;
     typedef my_type_of(exact_t, baz) baz_t;
@@ -125,7 +113,7 @@ namespace my
 
   // Super type.
   template <typename Exact>
-  struct set_super_type< B<Exact> >
+  struct super_trait_< B<Exact> >
   {
     typedef A<Exact> ret;
   };
@@ -137,16 +125,16 @@ namespace my
     // (foo is left untouched.)
 
     // A type redefined here.
-    typedef double bar_type;
+    typedef double bar;
     // A type defined here (but declared abstract in the super class).
-    typedef char baz_type;
+    typedef char baz;
     // A type defined only here (and not in the super class).
-    typedef long quux_type;
+    typedef long quux;
   };
 
   /// An extended type associated to my::B.
   template <typename Exact>
-  struct single_vtype< B<Exact>, typedef_::yin_type >
+  struct single_vtype< B<Exact>, typedef_::yin >
   {
     typedef unsigned long ret;
   };
@@ -158,13 +146,6 @@ namespace my
     typedef Exact exact_t;
 
     // Aliases.
-
-    // META-FIXME: Update comment (stc/scoop.hh as changed since).
-
-    /* FIXME: Same as above; using my_type_of (i.e., using
-       stc_to_exact) breaks the assertions ``Ensure stc::is_any_ works
-       properly.'' below (in main).  Using my_direct_type_of (on the
-       exact type) solves this!  */
     typedef my_type_of(exact_t, foo) foo_t;
     typedef my_type_of(exact_t, bar) bar_t;
     typedef my_type_of(exact_t, baz) baz_t;
@@ -182,7 +163,7 @@ namespace my
 
   // Super type.
   template <>
-  struct set_super_type<C>
+  struct super_trait_<C>
   {
     typedef B<C> ret;
   };
@@ -192,7 +173,7 @@ namespace my
   struct vtypes<C>
   {
     // A type defined only here (and not in the super class).
-    typedef double zorg_type;
+    typedef double zorg;
   };
 
   struct C : public B<C>
@@ -201,13 +182,6 @@ namespace my
     typedef self_t exact_t;
 
     // Aliases.
-
-    // META-FIXME: Update comment (stc/scoop.hh as changed since).
-
-    /* FIXME: Same as above; using my_type_of_ (i.e., using
-       stc_to_exact) breaks the assertions ``Ensure stc::is_any_ works
-       properly.'' below (in main).  Using my_direct_type_of_ (on the
-       exact type) solves this!  */
     typedef my_type_of_(exact_t, foo) foo_t;
     typedef my_type_of_(exact_t, quux) quux_t;
     typedef my_type_of_(exact_t, zorg) zorg_t;
