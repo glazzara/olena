@@ -16,10 +16,10 @@ namespace abc
   //         |    +-- Random_Access_Container
   //         |
 
-  template <typename E> class Container;
-  template <typename E> class Forward_Container;
-  template <typename E> class Reversible_Container;
-  template <typename E> class Random_Access_Container;
+  template <typename Exact> class Container;
+  template <typename Exact> class Forward_Container;
+  template <typename Exact> class Reversible_Container;
+  template <typename Exact> class Random_Access_Container;
 
   //         |
   //         +-- Sequence
@@ -29,9 +29,9 @@ namespace abc
   //         |    +-- Back_Insertion_Sequence
   //         |
 
-  template <typename E> class Sequence;
-  template <typename E> class Front_Insertion_Sequence;
-  template <typename E> class Back_Insertion_Sequence;
+  template <typename Exact> class Sequence;
+  template <typename Exact> class Front_Insertion_Sequence;
+  template <typename Exact> class Back_Insertion_Sequence;
 
   //         |
   //         +-- Associative_Container
@@ -45,13 +45,13 @@ namespace abc
   //              +-- Unique_Associative_Container
   //              +-- Multiple_Associative_Container
 
-  template <typename E> class Associative_Container;
-  template <typename E> class Simple_Associative_Container;
-  template <typename E> class Pair_Associative_Container;
-  template <typename E> class Sorted_Associative_Container;
-  template <typename E> class Hashed_Associative_Container;
-  template <typename E> class Unique_Associative_Container;
-  template <typename E> class Multiple_Associative_Container;
+  template <typename Exact> class Associative_Container;
+  template <typename Exact> class Simple_Associative_Container;
+  template <typename Exact> class Pair_Associative_Container;
+  template <typename Exact> class Sorted_Associative_Container;
+  template <typename Exact> class Hashed_Associative_Container;
+  template <typename Exact> class Unique_Associative_Container;
+  template <typename Exact> class Multiple_Associative_Container;
 
 
 
@@ -69,13 +69,13 @@ namespace abc
   //                                  |
   //                                  +-- Random_Access_Iterator
 
-  template <typename E> class Iterator;
-  template <typename E> class Trivial_Iterator;
-  template <typename E> class Input_Iterator;
-  template <typename E> class Output_Iterator;
-  template <typename E> class Forward_Iterator;
-  template <typename E> class Bidirectional_Iterator;
-  template <typename E> class Random_Access_Iterator;
+  template <typename Exact> class Iterator;
+  template <typename Exact> class Trivial_Iterator;
+  template <typename Exact> class Input_Iterator;
+  template <typename Exact> class Output_Iterator;
+  template <typename Exact> class Forward_Iterator;
+  template <typename Exact> class Bidirectional_Iterator;
+  template <typename Exact> class Random_Access_Iterator;
 
 
 } // end of namespace abc

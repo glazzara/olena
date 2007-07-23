@@ -1194,80 +1194,80 @@ namespace mstd
   // logger morpher
 #define LOGGER(name) NAME##_logger_morpher
 #define LOGGER_STREAM std::cerr
-#define LOGGER_BEGIN(NAME)                                                       \
-  template <typename Container>                                                  \
-  struct NAME##_logger_morpher;                                                  \
-                                                                                 \
-  template <typename Container>                                                  \
-  struct super_trait_<NAME##_logger_morpher<Container> >                         \
-  {                                                                              \
-    typedef container_morpher_<Container> ret;                                   \
-  };                                                                             \
-                                                                                 \
-  template <typename Container>                                                  \
-  struct vtypes<NAME##_logger_morpher<Container> >                               \
-  {                                                                              \
-    typedef Container delegatee;                                                 \
-  };                                                                             \
-                                                                                 \
-  template <typename Container>                                                  \
-  struct NAME##_logger_morpher :                                                 \
-        public container_morpher_<NAME##_logger_morpher<Container> >             \
-  {                                                                              \
-    typedef NAME##_logger_morpher<Container> current;                            \
-    typedef container_morpher_<current> super;                                   \
-                                                                                 \
-    stc_using(delegatee);                                                        \
-    stc_using(iter_t);                                                           \
-                                                                                 \
-    NAME##_logger_morpher(delegatee& d) :                                        \
-      container_morpher_<current>(),                                             \
-      deleg_ (d)                                                                 \
-    {                                                                            \
-    }                                                                            \
-                                                                                 \
-    delegatee& get_deleg()                                                       \
-    {                                                                            \
-      return deleg_;                                                             \
-    }                                                                            \
-                                                                                 \
-    delegatee& get_deleg() const                                                 \
-    {                                                                            \
-      return deleg_;                                                             \
+#define LOGGER_BEGIN(NAME)						\
+  template <typename Container>						\
+  struct NAME##_logger_morpher;						\
+									\
+  template <typename Container>						\
+  struct super_trait_<NAME##_logger_morpher<Container> >		\
+  {									\
+    typedef container_morpher_<Container> ret;				\
+  };									\
+									\
+  template <typename Container>						\
+  struct vtypes<NAME##_logger_morpher<Container> >			\
+  {									\
+    typedef Container delegatee;					\
+  };									\
+									\
+  template <typename Container>						\
+  struct NAME##_logger_morpher :					\
+        public container_morpher_<NAME##_logger_morpher<Container> >	\
+  {									\
+    typedef NAME##_logger_morpher<Container> current;			\
+    typedef container_morpher_<current> super;				\
+									\
+    stc_using(delegatee);						\
+    stc_using(iter_t);							\
+									\
+    NAME##_logger_morpher(delegatee& d) :				\
+      container_morpher_<current>(),					\
+      deleg_ (d)							\
+    {									\
+    }									\
+									\
+    delegatee& get_deleg()						\
+    {									\
+      return deleg_;							\
+    }									\
+									\
+    delegatee& get_deleg() const					\
+    {									\
+      return deleg_;							\
     }
 
-#define LOGMETHOD(MESSAGE, RETURNTYPE, NAME)                                     \
-                                                                                 \
-    RETURNTYPE NAME()                                                           \
-    {                                                                            \
-      LOGGER_STREAM << __FILE__ << ":" << __LINE__ << ":"                        \
-                << MESSAGE << std::endl;                                         \
-      return deleg_.NAME();                                                      \
+#define LOGMETHOD(MESSAGE, RETURNTYPE, NAME)				\
+									\
+    RETURNTYPE NAME()							\
+    {									\
+      LOGGER_STREAM << __FILE__ << ":" << __LINE__ << ": "		\
+                << MESSAGE << std::endl;				\
+      return deleg_.NAME();						\
     }
 
-#define LOGMETHODVOID(MESSAGE, RETURNTYPE, NAME)                                 \
-                                                                                 \
-    RETURNTYPE NAME()                                                           \
-    {                                                                            \
-      LOGGER_STREAM << __FILE__ << ":" << __LINE__ << ":"                        \
-                << MESSAGE << std::endl;                                         \
-      deleg_.NAME();                                                             \
+#define LOGMETHODVOID(MESSAGE, RETURNTYPE, NAME)			\
+									\
+    RETURNTYPE NAME()							\
+    {									\
+      LOGGER_STREAM << __FILE__ << ":" << __LINE__ << ": "		\
+                << MESSAGE << std::endl;				\
+      deleg_.NAME();							\
     }
 
-#define LOGMETHODARG(MESSAGE, RETURNTYPE, NAME, ARGTYPE, ARGNAME)                \
-                                                                                 \
-    RETURNTYPE NAME(ARGTYPE)                                                     \
-    {                                                                            \
-      LOGGER_STREAM << __FILE__ << ":" << __LINE__ << ":"                        \
-                << MESSAGE << std::endl;                                         \
-      return deleg_.NAME(ARGNAME);                                               \
+#define LOGMETHODARG(MESSAGE, RETURNTYPE, NAME, ARGTYPE, ARGNAME)	\
+									\
+    RETURNTYPE NAME(ARGTYPE)						\
+    {									\
+      LOGGER_STREAM << __FILE__ << ":" << __LINE__ << ": "		\
+                << MESSAGE << std::endl;				\
+      return deleg_.NAME(ARGNAME);					\
     }
 
 
-#define LOGGER_END()                                                             \
-                                                                                 \
-  protected:                                                                     \
-    delegatee& deleg_;                                                           \
+#define LOGGER_END()				\
+						\
+  protected:					\
+    delegatee& deleg_;				\
   };
 
 } // End of namespace mstd.

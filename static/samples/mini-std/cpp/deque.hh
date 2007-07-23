@@ -8,17 +8,18 @@
 namespace abc
 {
 
-
   template <typename T> class deque;
 
-
+  typename <template T>
+  struct super_trait_< deque<T> >
+  {
+    typedef deque<T> self__;
+    typedef primary_std_container<self__> ret;
+  };
 
   template <typename T>
   struct vtypes< deque<T> >
   {
-    typedef deque<T> E;
-    typedef primary_std_container<E> super_type;
-
     typedef std::deque<T> std_type;
 
     // As Reversible_Container:

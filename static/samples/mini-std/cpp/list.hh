@@ -11,13 +11,16 @@ namespace abc
 
   template <typename T> class list;
 
+  typename <template T>
+  struct super_trait_< list<T> >
+  {
+    typedef list<T> self__;
+    typedef primary_std_container<self__> ret;
+  };
 
   template <typename T>
   struct vtypes< list<T> >
   {
-    typedef list<T> E;
-    typedef primary_std_container<E> super_type;
-
     typedef std::list<T> std_type;
 
     // As Reversible_Container:

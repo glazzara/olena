@@ -14,25 +14,25 @@ namespace abc
   {
 
     // front insertion
-    template <typename b, typename E> struct front_insertion_sequence;
-    template <typename E> struct front_insertion_sequence <mlc::true_,  E> : virtual Front_Insertion_Sequence<E> {};
-    template <typename E> struct front_insertion_sequence <mlc::false_, E> : virtual Sequence<E> {};
+    template <typename b, typename Exact> struct front_insertion_sequence;
+    template <typename Exact> struct front_insertion_sequence <mlc::true_,  Exact> : virtual Front_Insertion_Sequence<Exact> {};
+    template <typename Exact> struct front_insertion_sequence <mlc::false_, Exact> : virtual Sequence<Exact> {};
 
     // back insertion
-    template <typename b, typename E> struct back_insertion_sequence;
-    template <typename E> struct back_insertion_sequence <mlc::true_,  E> : virtual Back_Insertion_Sequence<E> {};
-    template <typename E> struct back_insertion_sequence <mlc::false_, E> : virtual Sequence<E> {};
+    template <typename b, typename Exact> struct back_insertion_sequence;
+    template <typename Exact> struct back_insertion_sequence <mlc::true_,  Exact> : virtual Back_Insertion_Sequence<Exact> {};
+    template <typename Exact> struct back_insertion_sequence <mlc::false_, Exact> : virtual Sequence<Exact> {};
 
     // random access
-    template <typename b, typename E> struct random_access_container;
-    template <typename E> struct random_access_container <mlc::true_,  E> : virtual Random_Access_Container<E> {};
-    template <typename E> struct random_access_container <mlc::false_, E> : virtual Container<E> {};
+    template <typename b, typename Exact> struct random_access_container;
+    template <typename Exact> struct random_access_container <mlc::true_,  Exact> : virtual Random_Access_Container<Exact> {};
+    template <typename Exact> struct random_access_container <mlc::false_, Exact> : virtual Container<Exact> {};
 
-    template <typename E>
+    template <typename Exact>
     struct container_switch
-      : front_insertion_sequence< abc_vtype(E, has_front_insertion), E >,
-	back_insertion_sequence < abc_vtype(E, has_back_insertion),  E >,
-	random_access_container < abc_vtype(E, has_random_access),   E >
+      : front_insertion_sequence< abc_vtype(Exact, has_front_insertion), Exact >,
+	back_insertion_sequence < abc_vtype(Exact, has_back_insertion),  Exact >,
+	random_access_container < abc_vtype(Exact, has_random_access),   Exact >
     {
     protected:
       container_switch() {}
@@ -55,15 +55,19 @@ namespace abc
 
 
 
-  // Class container_base<E>.
+  // Class container_base<Exact>.
 
-  template <typename E> class container_base;
+  template <typename Exact> class container_base;
 
-  template <typename E>
-  struct vtypes< container_base<E> >
+  template <typename Exact>
+  struct super_trait_< container_base<Exact> >
   {
-    typedef mlc::none super_type;
+    typedef mlc::none ret;
+  };
 
+  template <typename Exact>
+  struct vtypes< container_base<Exact> >
+  {
     typedef stc::abstract value_type;
     typedef stc::abstract iterator;
     typedef stc::abstract const_iterator;
@@ -78,39 +82,48 @@ namespace abc
     typedef stc::abstract tag;
   };
 
-  template <typename E>
-  class container_base : public internal::container_switch<E>
+  template <typename Exact>
+  class container_base : public internal::container_switch<Exact>
   {
   public:
     // FIXME: remove below.
-    typedef typename Back_Insertion_Sequence<E>::reference reference;
-    typedef typename Back_Insertion_Sequence<E>::const_reference const_reference;
+    typedef typename Back_Insertion_Sequence<Exact>::reference reference;
+    typedef typename Back_Insertion_Sequence<Exact>::const_reference const_reference;
   protected:
     container_base() {}
   };
 
 
 
-  // Class morpher_container<E>.
+  // Class morpher_container<Exact>.
 
-  template <typename E> class morpher_container;
+  template <typename Exact> class morpher_container;
 
-  template <typename E>
-  struct vtypes< morpher_container<E> >
+
+  template <typename Exact>
+  struct super_trait_< morpher_container<Exact> >
   {
-    typedef container_base<E> super_type;
-    typedef stc::abstract delegatee_type;
+    typedef container_base<Exact> ret;
   };
 
-  template <typename E>
-  class morpher_container : public container_base<E>
+  template <typename Exact>
+  struct vtypes< morpher_container<Exact> >
+  {
+    typedef stc::abstract delegatee;
+  };
+
+  template <typename Exact>
+  class morpher_container : public container_base<Exact>
   {
   public:
-    stc_using_from(Container<E>, value_type);
-    abc_typename(delegatee_type);
+    stc_using_from(Container, value_type);
+    abc_typename(delegatee);
 
-    const delegatee_type& delegatee() const { return this->exact().impl_delegatee(); }
-    delegatee_type&       delegatee()       { return this->exact().impl_delegatee(); }
+    // FIXME: `delegatee_' and `impl_delegatee_' are not elegant
+    // names, but we cannot use `delegatee' (since it is a typedef in
+    // this class).  Find better names.
+    const delegatee& delegatee_() const { return this->exact().impl_delegatee_(); }
+    delegatee&       delegatee_()       { return this->exact().impl_delegatee_(); }
 
   protected:
     morpher_container() {}
@@ -118,36 +131,46 @@ namespace abc
 
 
 
-  // Class primary_container<E>.
+  // Class primary_container<Exact>.
 
-  template <typename E> class primary_container;
+  template <typename Exact> class primary_container;
 
-  template <typename E>
-  struct vtypes< primary_container<E> >
+  template <typename Exact>
+  struct super_trait_< primary_container<Exact> >
   {
-    typedef container_base<E> super_type;
+    typedef container_base<Exact> ret;
+  };
+
+  template <typename Exact>
+  struct vtypes< primary_container<Exact> >
+  {
     typedef mlc::none tag;
   };
 
-  template <typename E>
-  class primary_container : public container_base<E>
+  template <typename Exact>
+  class primary_container : public container_base<Exact>
   {
   public:
-    stc_using_from(Container<E>, value_type);
+    stc_using_from(Container, value_type);
   protected:
     primary_container() {}
   };
 
 
 
-  // Class primary_std_container<E>.
+  // Class primary_std_container<Exact>.
 
-  template <typename E> class primary_std_container;
+  template <typename Exact> class primary_std_container;
 
-  template <typename E>
-  struct vtypes< primary_std_container<E> >
+  template <typename Exact>
+  struct super_trait_< primary_std_container<Exact> >
   {
-    typedef primary_container<E> super_type;
+    typedef primary_container<Exact> ret;
+  };
+
+  template <typename Exact>
+  struct vtypes< primary_std_container<Exact> >
+  {
     typedef stc::abstract std_type;
 
     typedef stc_defer(std_type) container_t;
@@ -159,11 +182,11 @@ namespace abc
     typedef stc::final<typename container_t::size_type> size_type;
   };
   
-  template <typename E>
-  class primary_std_container : public primary_container<E>
+  template <typename Exact>
+  class primary_std_container : public primary_container<Exact>
   {
   public:
-    typedef primary_container<E> super;
+    typedef primary_container<Exact> super;
 
     stc_using(iterator);
     stc_using(const_iterator);
@@ -179,8 +202,8 @@ namespace abc
     bool           impl_empty() const  { return data_.empty(); }
 
     // Forward_Container.
-    bool impl_equal(const E& rhs) const  { return data_ == rhs.data_; }
-    bool impl_less (const E& rhs) const  { return data_ <  rhs.data_; }
+    bool impl_equal(const Exact& rhs) const  { return data_ == rhs.data_; }
+    bool impl_less (const Exact& rhs) const  { return data_ <  rhs.data_; }
 
   protected:
 
@@ -189,7 +212,7 @@ namespace abc
     primary_std_container(size_type n, const value_type& t)  : data_(n, t)      {}
     primary_std_container(const primary_std_container& rhs)  : data_(rhs.data_) {}
     
-    abc_vtype(E, std_type) data_;    
+    abc_vtype(Exact, std_type) data_;    
   };
   
 

@@ -10,15 +10,17 @@ namespace abc
 
   template <typename T, typename S> class stack;
 
-
+  template <typename T, S>
+  struct super_trait_< list<T, S> >
+  {
+    typedef stack<T, S> self__;
+    typedef morpher_container<self__> ret;
+  };
 
   template <typename T, typename S>
   struct vtypes< stack<T,S> >
   {
-    typedef stack<T,S> E;
-    typedef morpher_container<E> super_type;
-
-    typedef S delegatee_type;
+    typedef S delegatee;
 
     // Properties.
     typedef mlc::false_ has_front_insertion;
@@ -39,7 +41,7 @@ namespace abc
 
     stc_using(reference);
     stc_using(value_type);
-    stc_using(delegatee_type);
+    stc_using(delegatee);
     
     // Renaming.
     reference top()
@@ -57,8 +59,8 @@ namespace abc
       this->pop_back();
     }
 
-    const delegatee_type& impl_delegatee() const { return this->seq_; }
-    delegatee_type&       impl_delegatee()       { return this->seq_; }
+    const delegatee& impl_delegatee_() const { return this->seq_; }
+    delegatee&       impl_delegatee_()       { return this->seq_; }
 
   protected:
     S seq_;

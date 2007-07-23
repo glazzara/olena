@@ -41,26 +41,25 @@
 
 // Helper macros.
 #define oln_type_of_(FromType, Alias)					\
-  find_vtype<FromType, oln::typedef_:: Alias##_type>::ret
+  find_vtype<FromType, oln::typedef_:: Alias>::ret
 
 #define oln_type_of(FromType, Alias)                                    \
   typename oln_type_of_(FromType, Alias)
 
-// Add equipment
-stc_scoop_equipment_for_namespace(oln)
+// Add equipment.
 mlc_case_equipment_for_namespace(oln);
 
 // Virtual types declaration.
 namespace oln
 {
-  mlc_decl_typedef(point_type);
-  mlc_decl_typedef(iter_type);
-  mlc_decl_typedef(value_type);
-  mlc_decl_typedef(rvalue_type);
-  mlc_decl_typedef(lvalue_type);
+  mlc_decl_typedef(point);
+  mlc_decl_typedef(iter);
+  mlc_decl_typedef(value);
+  mlc_decl_typedef(rvalue);
+  mlc_decl_typedef(lvalue);
 
-  mlc_decl_typedef(nbh_type);
-  mlc_decl_typedef(niter_type);
+  mlc_decl_typedef(nbh);
+  mlc_decl_typedef(niter);
 }
 
 
@@ -70,12 +69,20 @@ namespace oln
 
 namespace oln
 {
+
+  // --------------------- //
+  // Namespace equipment.  //
+  // --------------------- //
+
+#include <stc/scoop.hxx>
+
+
   // ------- //
   // Point.  //
   // ------- //
 
-  template <typename E>
-  struct Point : public stc::any<E>
+  template <typename Exact>
+  struct Point : public stc::any<Exact>
   {
   };
 
@@ -84,10 +91,10 @@ namespace oln
   // Iterator.  //
   // ---------- //
 
-  template <typename E>
-  struct Iterator : public stc::any<E>
+  template <typename Exact>
+  struct Iterator : public stc::any<Exact>
   {
-    typedef oln_type_of(E, point) point_t;
+    typedef oln_type_of(Exact, point) point_t;
 
     void start()
     {
@@ -116,11 +123,11 @@ namespace oln
   // Image.  //
   // ------- //
 
-  template <typename E>
-  struct Image : public stc::any<E>
+  template <typename Exact>
+  struct Image : public stc::any<Exact>
   {
-    typedef oln_type_of(E, point) point_t;
-    typedef oln_type_of(E, rvalue) rvalue_t;
+    typedef oln_type_of(Exact, point) point_t;
+    typedef oln_type_of(Exact, rvalue) rvalue_t;
 
     rvalue_t operator ()(point_t& p) const
     {
@@ -138,14 +145,14 @@ namespace oln
   // Image2d.  //
   // --------- //
 
-  template <typename E>
-  struct Image2d : public virtual Image<E>
+  template <typename Exact>
+  struct Image2d : public virtual Image<Exact>
   {
-    typedef oln_type_of(E, point) point_t;
+    typedef oln_type_of(Exact, point) point_t;
 
     // inherited from Image
 
-    // typedef oln_type_of(E, rvalue) rvalue_t;
+    // typedef oln_type_of(Exact, rvalue) rvalue_t;
 
     // rvalue_t& operator ()(point_t& p)
     // {
@@ -168,14 +175,14 @@ namespace oln
   // Image3d.  //
   // --------- //
 
-  template <typename E>
-  struct Image3d : public virtual Image<E>
+  template <typename Exact>
+  struct Image3d : public virtual Image<Exact>
   {
-    typedef oln_type_of(E, point) point_t;
+    typedef oln_type_of(Exact, point) point_t;
 
     // inherited from Image
 
-    // typedef oln_type_of(E, rvalue) rvalue_t;
+    // typedef oln_type_of(Exact, rvalue) rvalue_t;
 
     // rvalue_t& operator ()(point_t& p)
     // {
@@ -203,11 +210,11 @@ namespace oln
   // Mutable_Image //
   // ------------- //
 
-  template <typename E>
-  struct Mutable_Image : public virtual Image<E>
+  template <typename Exact>
+  struct Mutable_Image : public virtual Image<Exact>
   {
-    typedef oln_type_of(E, point) point_t;
-    typedef oln_type_of(E, lvalue) lvalue_t;
+    typedef oln_type_of(Exact, point) point_t;
+    typedef oln_type_of(Exact, lvalue) lvalue_t;
 
     lvalue_t operator ()(point_t& p)
     {
@@ -220,11 +227,11 @@ namespace oln
   // Image_with_neighborhood.  //
   // ------------------------- //
 
-  template <typename E>
-  struct Image_with_neighborhood : public virtual Image<E>
+  template <typename Exact>
+  struct Image_with_neighborhood : public virtual Image<Exact>
   {
-    typedef oln_type_of(E, nbh) nbh_t;
-    typedef oln_type_of(E, niter) niter_t;
+    typedef oln_type_of(Exact, nbh) nbh_t;
+    typedef oln_type_of(Exact, niter) niter_t;
 
     nbh_t nbh() const
     {
@@ -252,24 +259,24 @@ namespace oln
   struct point2d;
   struct point3d;
 
-  template <typename E>
-  struct case_<switch_image_base, E, 1> :
-    public mlc::where_ < mlc::eq_ <oln_type_of(E, point), point2d> >
+  template <typename Exact>
+  struct case_<switch_image_base, Exact, 1> :
+    public mlc::where_ < mlc::eq_ <oln_type_of(Exact, point), point2d> >
   {
-    typedef Image2d<E> ret;
+    typedef Image2d<Exact> ret;
   };
 
-  template <typename E>
-  struct case_<switch_image_base, E, 2> :
-    public mlc::where_ < mlc::eq_ <oln_type_of(E, point), point3d> >
+  template <typename Exact>
+  struct case_<switch_image_base, Exact, 2> :
+    public mlc::where_ < mlc::eq_ <oln_type_of(Exact, point), point3d> >
   {
-    typedef Image3d<E> ret;
+    typedef Image3d<Exact> ret;
   };
 
-  template <typename E>
-  struct default_case_<switch_image_base, E>
+  template <typename Exact>
+  struct default_case_<switch_image_base, Exact>
   {
-    typedef Image<E> ret;
+    typedef Image<Exact> ret;
   };
 
   // ----------------- //
@@ -279,17 +286,17 @@ namespace oln
   // Tag.
   struct switch_image_base_mutable;
 
-  template <typename E>
-  struct case_<switch_image_base_mutable, E, 1> :
-    public mlc::where_ < mlc::is_found_< stc_vtype(oln, E, lvalue) > >
+  template <typename Exact>
+  struct case_<switch_image_base_mutable, Exact, 1> :
+    public mlc::where_ < stc_type_is_found(lvalue) >
   {
-    typedef Mutable_Image<E> ret;
+    typedef Mutable_Image<Exact> ret;
   };
 
-  template <typename E>
-  struct default_case_<switch_image_base_mutable, E>
+  template <typename Exact>
+  struct default_case_<switch_image_base_mutable, Exact>
   {
-    typedef Image<E> ret;
+    typedef Image<Exact> ret;
   };
 
   // ------------ //
@@ -297,30 +304,31 @@ namespace oln
   // ------------ //
 
   // Forward declaration.
-  template <typename E> struct image_base;
+  template <typename Exact> struct image_base;
 
-  template<typename E>
-  struct set_super_type< image_base<E> >
+  template<typename Exact>
+  struct super_trait_< image_base<Exact> >
   {
     typedef mlc::none ret;
   };
 
-  template <typename E>
-  struct vtypes< image_base<E> >
+  template <typename Exact>
+  struct vtypes< image_base<Exact> >
   {
-    typedef stc::abstract point_type;
-    typedef stc::abstract iter_type;
-    typedef stc::abstract value_type;
-    typedef stc::abstract rvalue_type;
-    typedef stc::abstract lvalue_type;
+    typedef stc::abstract point;
+    typedef stc::abstract iter;
+    typedef stc::abstract value;
+    typedef stc::abstract rvalue;
+    typedef stc::abstract lvalue;
 
-    typedef mlc::none niter_type;
-    typedef mlc::none nbh_type;
+    typedef mlc::none niter;
+    typedef mlc::none nbh;
   };
 
-  template <typename E>
-  struct image_base : public virtual switch_<switch_image_base, E>::ret,
-		      public virtual switch_<switch_image_base_mutable, E>::ret
+  template <typename Exact>
+  struct image_base :
+    public virtual switch_<switch_image_base, Exact>::ret,
+    public virtual switch_<switch_image_base_mutable, Exact>::ret
   {
     image_base()
     {
@@ -363,7 +371,7 @@ namespace oln
   template <typename T> struct image2d;
 
   template<>
-  struct set_super_type<iterator2d>
+  struct super_trait_<iterator2d>
   {
     typedef mlc::none ret;
   };
@@ -371,7 +379,7 @@ namespace oln
   template <>
   struct vtypes<iterator2d>
   {
-    typedef point2d point_type;
+    typedef point2d point;
   };
 
   struct iterator2d : public Iterator<iterator2d>
@@ -427,7 +435,7 @@ namespace oln
   template <typename T> struct image2d;
 
   template<typename T>
-  struct set_super_type< image2d<T> >
+  struct super_trait_< image2d<T> >
   {
     typedef image_base< image2d<T> > ret;
   };
@@ -435,11 +443,11 @@ namespace oln
   template <typename T>
   struct vtypes< image2d<T> >
   {
-    typedef point2d point_type;
-    typedef iterator2d iter_type;
-    typedef T value_type;
-    typedef value_type rvalue_type;
-    typedef value_type& lvalue_type;
+    typedef point2d point;
+    typedef iterator2d iter;
+    typedef T value;
+    typedef value rvalue;
+    typedef value& lvalue;
   };
 
   template <typename T>
@@ -499,7 +507,7 @@ namespace oln
 
   struct neighborhood2d
   {
-    typedef niter2d niter_type;
+    typedef niter2d niter;
   };
 
 
@@ -512,7 +520,7 @@ namespace oln
   template <typename T> struct image3d;
 
   template<>
-  struct set_super_type<iterator3d>
+  struct super_trait_<iterator3d>
   {
     typedef mlc::none ret;
   };
@@ -520,7 +528,7 @@ namespace oln
   template <>
   struct vtypes<iterator3d>
   {
-    typedef point3d point_type;
+    typedef point3d point;
   };
 
   struct iterator3d : public Iterator<iterator3d>
@@ -584,7 +592,7 @@ namespace oln
   template <typename T> struct image3d;
 
   template<typename T>
-  struct set_super_type< image3d<T> >
+  struct super_trait_< image3d<T> >
   {
     typedef image_base< image3d<T> > ret;
   };
@@ -592,11 +600,11 @@ namespace oln
   template <typename T>
   struct vtypes< image3d<T> >
   {
-    typedef point3d point_type;
-    typedef iterator3d iter_type;
-    typedef T value_type;
-    typedef value_type rvalue_type;
-    typedef value_type& lvalue_type;
+    typedef point3d point;
+    typedef iterator3d iter;
+    typedef T value;
+    typedef value rvalue;
+    typedef value& lvalue;
   };
 
   template <typename T>
@@ -665,7 +673,7 @@ namespace oln
 
   struct neighborhood3d
   {
-    typedef niter3d niter_type;
+    typedef niter3d niter;
   };
 
 
@@ -674,24 +682,24 @@ namespace oln
   // --------------- //
 
   // Forward declaration.
-  template <typename E> struct image_morpher;
+  template <typename Exact> struct image_morpher;
 
-  template<typename E>
-  struct set_super_type< image_morpher<E> >
+  template<typename Exact>
+  struct super_trait_< image_morpher<Exact> >
   {
-    typedef image_base<E> ret;
+    typedef image_base<Exact> ret;
   };
 
-  template <typename E>
-  struct vtypes< image_morpher<E> >
+  template <typename Exact>
+  struct vtypes< image_morpher<Exact> >
   {
-    typedef stc::abstract delegatee_type;
+    typedef stc::abstract delegatee;
   };
 
-  template <typename E>
-  struct image_morpher : public image_base<E>
+  template <typename Exact>
+  struct image_morpher : public image_base<Exact>
   {
-    typedef oln_type_of(E, delegatee) delegatee_t;
+    typedef oln_type_of(Exact, delegatee) delegatee_t;
 
     image_morpher(delegatee_t& ref_ima) :
       ref_ima (ref_ima)
@@ -715,7 +723,7 @@ namespace oln
   template <typename I, typename N> struct plus;
 
   template <typename I, typename N>
-  struct set_super_type< plus<I, N> >
+  struct super_trait_< plus<I, N> >
   {
     typedef image_morpher< plus <I, N> > ret;
   };
@@ -723,12 +731,12 @@ namespace oln
   template <typename I, typename N>
   struct vtypes< plus<I, N> >
   {
-    typedef I delegatee_type;
-    typedef N nbh_type;
+    typedef I delegatee;
+    typedef N nbh;
     // For the sake of simplicity, the niter type is obtained directly
     // from the neighborhood type itself (without using a virtual
     // type).
-    typedef typename N::niter_type niter_type;
+    typedef typename N::niter niter;
   };
 
   template <typename I, typename N>

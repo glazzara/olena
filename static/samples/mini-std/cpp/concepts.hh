@@ -9,9 +9,9 @@ namespace abc
 
   // Container
 
-  template <typename E>
-  class Container : public virtual stc::any__simple<E>,
-		    public automatic::impl<Container, E>
+  template <typename Exact>
+  class Container : public virtual stc::any__simple<Exact>,
+		    public automatic::impl<Container, Exact>
   {
   public:
       
@@ -39,13 +39,13 @@ namespace abc
 
   // Forward_Container
 
-  template <typename E>
-  class Forward_Container : public virtual Container<E>,
-			    public automatic::impl<Forward_Container, E>
+  template <typename Exact>
+  class Forward_Container : public virtual Container<Exact>,
+			    public automatic::impl<Forward_Container, Exact>
   {
   public:
 
-    typedef Forward_Container<E> self_type;
+    typedef Forward_Container<Exact> self_type;
 
     // Methods.
     bool operator==(const self_type& rhs) const   { return this->exact().impl_equal(rhs.exact()); }
@@ -65,9 +65,9 @@ namespace abc
 
   // Reversible_Container
 
-  template <typename E>
-  class Reversible_Container : public virtual Forward_Container<E>,
-			       public automatic::impl<Reversible_Container, E>
+  template <typename Exact>
+  class Reversible_Container : public virtual Forward_Container<Exact>,
+			       public automatic::impl<Reversible_Container, Exact>
   {
   public:
 
@@ -89,13 +89,13 @@ namespace abc
 
   // Random_Access_Container
 
-  template <typename E>
-  class Random_Access_Container : public virtual Reversible_Container<E>,
-				  public automatic::impl<Random_Access_Container, E>
+  template <typename Exact>
+  class Random_Access_Container : public virtual Reversible_Container<Exact>,
+				  public automatic::impl<Random_Access_Container, Exact>
   {
   public:
 
-    typedef Reversible_Container<E> super;
+    typedef Reversible_Container<Exact> super;
     stc_using(reference);
     stc_using(const_reference);
     stc_using(size_type);
@@ -113,13 +113,13 @@ namespace abc
 
   // Sequence
 
-  template <typename E>
-  class Sequence : public virtual Forward_Container<E>,
-		   public automatic::impl<Sequence, E>
+  template <typename Exact>
+  class Sequence : public virtual Forward_Container<Exact>,
+		   public automatic::impl<Sequence, Exact>
   {
   public:
 
-    typedef Forward_Container<E> super;
+    typedef Forward_Container<Exact> super;
     stc_using(iterator);
     stc_using(value_type);
     stc_using(reference);
@@ -155,13 +155,13 @@ namespace abc
 
   // Front_Insertion_Sequence
 
-  template <typename E>
-  class Front_Insertion_Sequence : public virtual Sequence<E>,
-				   public automatic::impl<Front_Insertion_Sequence, E>
+  template <typename Exact>
+  class Front_Insertion_Sequence : public virtual Sequence<Exact>,
+				   public automatic::impl<Front_Insertion_Sequence, Exact>
   {
   public:
 
-    typedef Sequence<E> super;
+    typedef Sequence<Exact> super;
     stc_using(value_type);
 
     // Concrete.
@@ -183,13 +183,13 @@ namespace abc
 
   // Back_Insertion_Sequence
 
-  template <typename E>
-  class Back_Insertion_Sequence : public virtual Sequence<E>,
-				  public automatic::impl<Back_Insertion_Sequence, E>
+  template <typename Exact>
+  class Back_Insertion_Sequence : public virtual Sequence<Exact>,
+				  public automatic::impl<Back_Insertion_Sequence, Exact>
   {
   public:
 
-    typedef Sequence<E> super;
+    typedef Sequence<Exact> super;
     stc_using(reference);
     stc_using(value_type);
 
@@ -216,9 +216,9 @@ namespace abc
 
   // Iterator
 
-  template <typename E>
-  class Iterator : public virtual stc::any__simple<E>,
-		   public automatic::impl<Iterator, E>
+  template <typename Exact>
+  class Iterator : public virtual stc::any__simple<Exact>,
+		   public automatic::impl<Iterator, Exact>
   {
   public:
 
@@ -232,13 +232,13 @@ namespace abc
 
   // Trivial_Iterator
 
-  template <typename E>
-  class Trivial_Iterator : public virtual Iterator<E>,
-			   public automatic::impl<Trivial_Iterator, E>
+  template <typename Exact>
+  class Trivial_Iterator : public virtual Iterator<Exact>,
+			   public automatic::impl<Trivial_Iterator, Exact>
   {
   public:
 
-    typedef Trivial_Iterator<E> self_type;
+    typedef Trivial_Iterator<Exact> self_type;
 
     // Typedef.
     abc_typename(value_type);
@@ -262,9 +262,9 @@ namespace abc
 
   // Input_Iterator
 
-  template <typename E>
-  class Input_Iterator : public virtual Trivial_Iterator<E>,
-			 public automatic::impl<Input_Iterator, E>
+  template <typename Exact>
+  class Input_Iterator : public virtual Trivial_Iterator<Exact>,
+			 public automatic::impl<Input_Iterator, Exact>
   {
   public:
 
@@ -272,12 +272,12 @@ namespace abc
     abc_typename(distance_type);
 
     // Method.
-    E& operator++()           { return this->exact().impl_preinc(); }
+    Exact& operator++()           { return this->exact().impl_preinc(); }
 
     // Concrete.
-    E operator++(int) const
+    Exact operator++(int) const
     {
-      E cpy(*this);
+      Exact cpy(*this);
       ++(*this);
       return cpy;
     }
@@ -290,13 +290,13 @@ namespace abc
 
   // Output_Iterator
 
-  template <typename E>
-  class Output_Iterator : public virtual Trivial_Iterator<E>,
-			  public automatic::impl<Output_Iterator, E>
+  template <typename Exact>
+  class Output_Iterator : public virtual Trivial_Iterator<Exact>,
+			  public automatic::impl<Output_Iterator, Exact>
   {
   public:
 
-    typedef Trivial_Iterator<E> super;
+    typedef Trivial_Iterator<Exact> super;
     stc_using(value_type);
 
     using super::operator*;
@@ -314,9 +314,9 @@ namespace abc
   
   // Forward_Iterator
 
-  template <typename E>
-  class Forward_Iterator : public virtual Input_Iterator<E>, public virtual Output_Iterator<E>,
-			   public automatic::impl<Forward_Iterator, E>
+  template <typename Exact>
+  class Forward_Iterator : public virtual Input_Iterator<Exact>, public virtual Output_Iterator<Exact>,
+			   public automatic::impl<Forward_Iterator, Exact>
   {
   public:
     // nothing
@@ -328,19 +328,19 @@ namespace abc
 
   // Bidirectional_Iterator
 
-  template <typename E>
-  class Bidirectional_Iterator : public virtual Forward_Iterator<E>,
-				 public automatic::impl<Bidirectional_Iterator, E>
+  template <typename Exact>
+  class Bidirectional_Iterator : public virtual Forward_Iterator<Exact>,
+				 public automatic::impl<Bidirectional_Iterator, Exact>
   {
   public:
 
     // Method.
-    E& operator--()           { return this->exact().impl_predec(); }
+    Exact& operator--()           { return this->exact().impl_predec(); }
 
     // Concrete.
-    E operator--(int) const
+    Exact operator--(int) const
     {
-      E cpy(*this);
+      Exact cpy(*this);
       --(*this);
       return cpy;
     }

@@ -6,33 +6,32 @@
 # include <stc/scoop.hh>
 
 
-stc_scoop_equipment_for_namespace(abc);
-
-
 
 // Patch.
 
 # define abc_vtype_(From, Target) abc::vtype<From, abc::typedef_::Target>::ret
 # define abc_vtype(From, Target) typename abc_vtype_(From, Target)
 
-# define abc_typename(Vtype) typedef abc_vtype(E, Vtype) Vtype
+# define abc_typename(Vtype) typedef abc_vtype(Exact, Vtype) Vtype
 
-# define stc_defer(Target) typename abc::deferred_vtype<E, abc::typedef_::Target>::ret
-
-# define stc_using(Vtype) typedef typename super::Vtype Vtype
-# define stc_using_from(From, Vtype) typedef typename From::Vtype Vtype
+# define stc_defer(Target)						\
+   typename abc::deferred_vtype<Exact, abc::typedef_::Target>::ret
 
 # define stc_introducing(Vtype) typedef abc_vtype(self_type, Vtype) Vtype
 
-// stc_deferred_vtype(test, E, dim)
+// stc_deferred_vtype(test, Exact, dim)
 
 
 
 namespace abc
 {
 
-  /// \{
+// Namespace equipment.
+#include <stc/scoop.hxx>
+
+
   /// Typedef declarations.
+  /// \{
 
   // From std.
   mlc_decl_typedef(value_type);
@@ -64,17 +63,19 @@ namespace abc
   namespace automatic
   {
 
-    template < template <class> class abstraction, typename E, typename tag = void >
+    template < template <class> class abstraction,
+	       typename Exact, typename tag = void >
     struct impl;
 
-    template < template <class> class abstraction, typename E >
-    struct impl< abstraction, E, mlc::none >
+    template < template <class> class abstraction, typename Exact >
+    struct impl< abstraction, Exact, mlc::none >
     {
       // none means nothing!
     };
 
-    template < template <class> class abstraction, typename E >
-    struct impl< abstraction, E, void > : impl< abstraction, E, abc_vtype(E, tag) >
+    template < template <class> class abstraction, typename Exact >
+    struct impl< abstraction, Exact, void >
+      : impl< abstraction, Exact, abc_vtype(Exact, tag) >
     {
       // fetch impl w.r.t. tag
     };

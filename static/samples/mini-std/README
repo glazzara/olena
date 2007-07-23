@@ -5,6 +5,8 @@
 cd cpp
 g++ -I../../.. -I../../../../metalic -Wall -ansi -pedantic main.cc
 
+or just use `make'
+
 * contents
 
 ** utility files

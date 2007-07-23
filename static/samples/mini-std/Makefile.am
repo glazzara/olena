@@ -1,3 +1,5 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-SUBDIRS = mini-std mini-oln
+SUBDIRS = cpp cpp2
+
+EXTRA_DIST = README design.hh

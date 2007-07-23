@@ -1,5 +1,56 @@
 2007-07-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust samples to the new interface of Static.
+
+	* samples/mini-std/cpp/equipment.hh:
+	No longer use stc_scoop_equipment_for_namespace.
+	Include stc/scoop.hxx instead.
+	Rename template parameters `E' to `Exact'.
+	(stc_using, stc_using_from): Remove macros.
+	* samples/mini-std/cpp/impl.hh:
+	(morpher_container, primary_container): Adjust callers of
+	stc_using_from.
+	(morpher_container::delegatee): Rename methods as...
+	(morpher_container::delegatee_): ...these.
+	Adjust callers.
+	* samples/mini-std/cpp/stack.hh,
+	* samples/mini-std/cpp/value_cast.hh
+	(impl_delegatee): Rename methods as...
+	(impl_delegatee_): ...these.
+	* samples/mini-std/cpp/concepts.hh,
+	* samples/mini-std/cpp/impl.hh,
+	* samples/mini-std/cpp/list.hh,
+	* samples/mini-std/cpp/vector.hh,
+	* samples/mini-std/cpp/deque.hh,
+	* samples/mini-std/cpp/stack.hh,
+	* samples/mini-std/cpp/value_cast.hh,
+	* samples/mini-std/cpp/identity.hh,
+	* samples/mini-std/cpp/fwddecls.hh
+	Remove the `_type' suffix from all virtual types.
+	Remove virtual types named `super_type' and replace them with a
+	`super_trait_' class.
+	Rename template parameters `E' to `Exact'.
+	* samples/mini-oln/mini-oln.cc: Likewise.
+	s/set_super_type/super_trait_/.
+	* samples/mini-std/cpp2/mini-std.cc
+	(LOGGER_BEGIN, LOGMETHODVOID, LOGMETHODARG, LOGGER_END): Wrap long
+	lines in macros.
+	(LOGMETHOD): Likewise.
+	Add a space after the printed location.
+	* samples/mini-std/Makefile.am,
+	* samples/mini-std/cpp/Makefile.am:
+	New.
+	* samples/mini-std/cpp2/Makefile: Rename as...
+	* samples/mini-std/cpp2/Makefile.am: ...this.
+	(CPPFLAGS, .PHONY): Remove variables.
+	(all, mini-std): Remove targets.
+	(AM_CPPFLAGS, TESTS_CXXFLAGS, AM_CXXFLAGS)
+	(check_PROGRAMS, mini_std_SOURCES, TESTS):
+	New variables.
+	* samples/Makefile.am (SUBDIRS): Add mini-std.
+
+2007-07-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust tests to the new interface of Static.
 
 	* tests/super.cc, tests/vtypes-and-exact.cc:

@@ -11,14 +11,17 @@ namespace abc
 
   template <typename T, typename C> class value_cast_;
 
+  template <typename T, C>
+  struct super_trait_< value_cast_<T, C> >
+  {
+    typedef value_cast_<T, C> self__;
+    typedef morpher_container<self__> super_type;
+  };
 
   template <typename T, typename C>
   struct vtypes< value_cast_<T,C> >
   {
-    typedef value_cast_<T,C> E;
-    typedef morpher_container<E> super_type;
-
-    typedef C delegatee_type;
+    typedef C delegatee;
 
     typedef T value_type;
     typedef T& reference;
@@ -36,15 +39,15 @@ namespace abc
     typedef value_cast_<T,C> self_type;
     typedef morpher_container<self_type> super;
 
-    stc_using(delegatee_type);
+    stc_using(delegatee);
     
     value_cast_(Container<C>& con)
       : con_(con.exact())
     {
     }
 
-    const delegatee_type& impl_delegatee() const { return this->con_; }
-    delegatee_type&       impl_delegatee()       { return this->con_; }
+    const delegatee& impl_delegatee_() const { return this->con_; }
+    delegatee&       impl_delegatee_()       { return this->con_; }
 
   protected:
     C& con_;

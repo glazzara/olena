@@ -11,13 +11,16 @@ namespace abc
 
   template <typename T> class vector;
 
+  template <typename T>
+  struct super_trait_< vector<T> >
+  {
+    typedef vector<T> self__;
+    typedef primary_std_container<self__> ret;
+  };
 
   template <typename T>
   struct vtypes< vector<T> >
   {
-    typedef vector<T> E;
-    typedef primary_std_container<E> super_type;
-
     typedef std::vector<T> std_type;
 
     // As Reversible_Container:
