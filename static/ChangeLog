@@ -1,3 +1,15 @@
+2007-07-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up stc/scoop.hxx a bit.
+
+	* stc/scoop.hxx: Add a copyright header.
+	Typos.
+	Re-indent some parts.
+	(helper_check): Fix documentation.
+	Actually use check_final_stm and check_delegatee_inherited as
+	described in the documentation.
+	(helper_find): Add some documentation.
+
 2007-07-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update stc/scoop.{hh,hxx} with the latest version from Olena.
