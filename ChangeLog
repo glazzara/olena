@@ -1,3 +1,12 @@
+2007-07-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Configure new Makefiles.
+
+	* configure.ac (static/samples/mini-std/Makefile)
+	(static/samples/mini-std/cpp/Makefile)
+	(static/samples/mini-std/cpp2/Makefile):
+	Configure them.
+
 2007-06-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add support for Doxygen in Milena.

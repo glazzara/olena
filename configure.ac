@@ -84,7 +84,10 @@ AC_CONFIG_FILES([
       static/stc/Makefile
       static/samples/Makefile
       static/samples/mini-oln/Makefile
-      static/samples/mini-oln/concept-c++/Makefile
+        static/samples/mini-oln/concept-c++/Makefile
+      static/samples/mini-std/Makefile
+        static/samples/mini-std/cpp/Makefile
+        static/samples/mini-std/cpp2/Makefile
     milena/Makefile
       milena/doc/Makefile
     olena/Makefile
