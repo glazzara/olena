@@ -1,3 +1,29 @@
+// Copyright (C) 2005, 2006, 2007 EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+// Boston, MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
 
 /* \file oln/stc/scoop.hxx
    \brief To be included within a namespace to import SCOOP 2 equipment. */
@@ -102,7 +128,8 @@ struct super_trait_ <const from_type> : super_trait_<from_type>
 
 /*
 
-  FIXME: Inactivate since dummy code (many class are not Abstractions but abstraction<Exact>).
+  FIXME: Inactivate since dummy code (many class are not Abstractions
+  but abstraction<Exact>).
 
 template <template <class> class abstraction, typename Exact>
 struct super_trait_< abstraction<Exact> >
@@ -241,7 +268,7 @@ namespace internal
    * Returns the statement for class 'from' corresponding to 'target'.
    * This statement is either defined in 'vtypes' or in 'single_vtype'.
    *
-   * This routine is local; it does not recourse on superior classes.
+   * This routine is local; it does not recur on superior classes.
    *
    */
 
@@ -299,16 +326,17 @@ namespace internal
   struct check_no_final_inherited
 
     : mlc::assert_< mlc_is_not_a(stm, stc::final),
-		      ERROR::final_vtype_redefined_< orig,
-						     mlc::pair_<curr, stm>,
-						     target >
+		    ERROR::final_vtype_redefined_< orig,
+						   mlc::pair_<curr, stm>,
+						   target >
                   >,
-	/* rec */ check_no_final_inherited<orig, stc_super(curr), target>
+    /* rec */ check_no_final_inherited<orig, stc_super(curr), target>
   {
   };
 
   template <typename orig, typename target, typename stm>
-  struct check_no_final_inherited <orig, /* if curr == */ mlc::none, target, stm>
+  struct check_no_final_inherited <orig, /* if curr == */ mlc::none,
+				   target, stm>
   {
   };
 
@@ -324,11 +352,11 @@ namespace internal
   struct check_no_stm_inherited
 
     : mlc::assert_< stc::is_not_found<stm>,
-		      ERROR::vtype_declared_but_already_set_< orig,
-							      mlc::pair_<curr, stm>,
-							      target >
-		      >,
-	/* rec */ check_no_stm_inherited<orig, stc_super(curr), target>
+		    ERROR::vtype_declared_but_already_set_< orig,
+							    mlc::pair_<curr, stm>,
+							    target >
+		  >,
+    /* rec */ check_no_stm_inherited<orig, stc_super(curr), target>
   {
   };
 
@@ -342,7 +370,7 @@ namespace internal
    * check_delegatee_inherited
    */
 
-  template <typename curr, typename target>
+  template <typename curr>
   struct check_delegatee_inherited
     : mlc::assert_< stc::is_found< typename first_stm<curr,
 				     typedef_::delegatee>::ret::second_elt >,
@@ -422,7 +450,7 @@ namespace internal
    *   super = super(curr);
    *
    *   if (stm == stc::abstract) {
-   *     check_no_stm_inherited(curr, super, target);
+   *     check_no_stm_inherited((curr, abstract), super, target);
    *     return check(super, target);
    *   }
    *   if (stm == stc::final<T>) {
@@ -463,10 +491,8 @@ namespace internal
     : check_no_final_inherited< mlc::pair_<curr, stc::final<T> >,
 				  stc_super(curr),
 				  target >
+    , check_final_stm< curr, target, T >
   {
-    /* FIXME:
-	 check_final_stm(T);
-    */
     typedef typename check<stc_super(curr), target>::ret ret;
   };
 
@@ -476,10 +502,8 @@ namespace internal
     : check_no_final_inherited< mlc::pair_<curr, stc::not_delegated>,
 				  stc_super(curr),
 				  target >
+    , check_delegatee_inherited< curr >
   {
-    /* FIXME:
-	 check_delegatee_inherited(curr);
-    */
     typedef typename check<stc_super(curr), target>::ret ret;
   };
 
@@ -567,7 +591,7 @@ namespace internal
   struct first_stm /* otherwise */
   {
     typedef typename helper_first_stm<from, target,
-					stc_stm(from, target)>::ret ret;
+				      stc_stm(from, target)>::ret ret;
   };
 
 
@@ -662,6 +686,7 @@ namespace internal
    *
    * delegator_find(from, target)
    * {
+   *   // FIXME: This precondition is not actually enforced in the algorithm.
    *   precondition(target != delegatee);
    *   delegatee = superior_find(from, delegatee);
    *   if (delegatee == mlc::not_found)
@@ -696,8 +721,23 @@ namespace internal
   /*
    * helper_find(from, target, where, res)
    *
+   * FIXME: ...
    *
-   *
+   * helper_find(from, target, where, res)
+   * {
+   *   if (res == mlc::not_found)
+   *     return delegator_find(from, target)
+   *   else if (res = stc::abstract)
+   *     {
+   *       res_d = delegator_find(source, target)
+   *       assert(res_d != mlc::not_found,
+   *              "<target> declared <where> but not defined at <from>")
+   *     }
+   *   else if (res = stc::not_delegated)
+   *     return superior_find(from, target)
+   *   else
+   *     return res
+   * }
    */
 
   template <typename from, typename target, typename where>
@@ -712,6 +752,7 @@ namespace internal
 			 /* if res == */ stc::abstract >
   {
     typedef typename delegator_find<from, target>::ret res_d;
+    // FIXME: Might be shorten using mlc::assert_and_return_.
     struct check_
 	: mlc::assert_< stc::is_found<res_d>,
 			ERROR::vtype_declared_but_not_defined
@@ -871,10 +912,10 @@ namespace internal
 	       unsigned num >
   struct plug_node
     : public next_plug_node< abstraction,
-			       E,
-			       num,
-			       typename mlc::is_defined_< case_< selector<abstraction, num>,
-								 E, 1 > >::eval >
+			     E,
+			     num,
+			     typename mlc::is_defined_< case_< selector<abstraction, num>,
+							       E, 1 > >::eval >
   {
   protected: plug_node() {}
   };
