@@ -40,6 +40,12 @@
 # define for_all(x) for(x.start(); x.is_valid(); x.next())
 
 
+/*! \brief Loop to browse all the elements targetted by the couples of
+ * iterators \p x1 and \p x2.
+ */
+# define for_all_2(x1, x2) for(x1.start(),x2.start(); x1.is_valid(); x1.next(),x2.next())
+
+
 /*! \brief Loop to browse all the remaining elements targetted by the
  * iterator \p x.
  */

@@ -31,12 +31,12 @@ built-in op objects -> reverse lhs/rhs
 * renaming
 
 mlc into metal
-point-wise material: pw::value_of, pw::constant, and pw::variable
 
 
 * clean-up
 
 accu::histo and median: remove inheritance
+select_function in fun::internal::selector_p2? etc.
 
 
 * processing routines
@@ -48,16 +48,3 @@ sorting points w.r.t. their value (array of offsets, psites, points)
 border::* and no-op versions if not fast image
 arith::inplace_plus et al.
 linear:: for convolutions
-
-
-svn mv genpoint.hh generalized_point.hh
-svn mv genpixel.hh generalized_pixel.hh
-svn mv psite.hh point_site.hh
-svn mv viter.hh value_iterator.hh
-svn mv piter.hh point_iterator.hh
-
-
-svn mv doc/genpoint.hh doc/generalized_point.hh
-svn mv doc/genpixel.hh doc/generalized_pixel.hh
-svn mv doc/viter.hh doc/value_iterator.hh
-svn mv doc/piter.hh doc/point_iterator.hh

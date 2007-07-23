@@ -25,73 +25,57 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_VAL_HH
-# define MLN_FUN_VAL_HH
+#ifndef MLN_BORDER_RESIZE_HH
+# define MLN_BORDER_RESIZE_HH
 
-/*! \file mln/fun/val.hh
+/*! \file mln/border/resize.hh
  *
  * \brief FIXME.
  */
 
-# include <mln/core/concept/function.hh>
+# include <mln/core/concept/image.hh>
 
 
 namespace mln
 {
 
-  // FIXME: Doc!
-
-  namespace fun
+  namespace border
   {
 
-    template <typename T>
-    struct val_ : public Function_p2v< val_<T> >
-    {
-      typedef T result;
-      val_(T t);
-      template <typename P>
-      T operator()(const P&) const;
-    private:
-      T t_;
-    };
-
-  } // end of namespace mln::fun
-
-  template <typename T>
-  fun::val_<T> val(T t);
+    /*! Resize the virtual (outer) border of image \p ima to at least
+     *  \p thickness.
+     *
+     * \param[in,out] ima The image whose border is to be resized.
+     * \param[in] thickness The expected minimum border size.
+     *
+     * \pre \p ima has to be initialized.
+     *
+     * \warning If the image border already has a size greater than \p
+     * thickness, this routine is a no-op.
+     *
+     * \todo Implement it.
+     */
+    template <typename I>
+    void resize(const Fast_Image<I>& ima, unsigned thickness);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  namespace fun
-  {
-
-    template <typename T>
-    val_<T>::val_(T t)
-      : t_(t)
+    template <typename I>
+    void resize(const Fast_Image<I>& ima_, unsigned thickness)
     {
+      const I& ima = exact(ima_);
+      mln_precondition(ima_.has_data());
+      if (ima.border() >= thickness)
+	return;
+      mln_invariant(0); // FIXME: NYI
     }
-
-    template <typename T>
-    template <typename P>
-    T
-    val_<T>::operator()(const P&) const
-    {
-      return t_;
-    }
-
-  } // end of namespace mln::fun
-
-  template <typename T>
-  fun::val_<T> val(T t)
-  {
-    fun::val_<T> tmp(t);
-    return tmp;
-  }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::border
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_VAL_HH
+#endif // ! MLN_BORDER_RESIZE_HH

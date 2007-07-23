@@ -25,49 +25,97 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_WINDOW_HH
-# define MLN_CONVERT_TO_WINDOW_HH
+#ifndef MLN_PW_VALUE_HH
+# define MLN_PW_VALUE_HH
 
-/*! \file mln/convert/to_window.hh
+/*! \file mln/fun/pw/value.hh
  *
- * \brief Convertions to mln::Window.
+ * \brief FIXME.
  */
 
-# include <mln/core/concept/neighborhood.hh>
-# include <mln/core/window.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/value/props.hh>
+
 
 
 namespace mln
 {
 
-  namespace convert
+  namespace pw
   {
 
-    /// Convert a neighborhood \p nbh into a window.
-    template <typename N>
-    window_<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh);
+    // FIXME: Move!
+
+    namespace internal
+    {
+
+      template <typename K, typename E>
+      struct select_function_ : Function_p2v<E>
+      {};
+
+      template <typename E>
+      struct select_function_< value::binary_kind, E > : Function_p2b<E>
+      {};
+
+    } // end of namespace mln::pw::internal
+
+
+    // FIXME: Doc!
+
+    template <typename I>
+    struct value_ : public internal::select_function_< mln_value_kind(I), value_<I> >
+    {
+      typedef mln_value(I) result;
+      value_(const I& ima);
+      mln_rvalue(I) operator()(const mln_psite(I)& p) const;
+    protected:
+      const I& ima_;
+    };
+
+
+
+    // FIXME: Doc!
+  
+    template <typename I>
+    value_<I> value(const Image<I>& ima);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename N>
-    window_<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh_)
+    // pw::value_<I>
+
+    template <typename I>
+    value_<I>::value_(const I& ima)
+      : ima_(ima)
     {
-      const N& nbh = exact(nbh_);
-      typedef mln_dpoint(N) D;
-      typedef mln_point(D) P;
-      window_<D> win;
-      mln_niter(N) n(nbh, P::zero);
-      for_all(n)
-	win.insert(n - P::zero);
-      return win;
+    }
+
+    template <typename I>
+    mln_rvalue(I)
+    value_<I>::operator()(const mln_psite(I)& p) const
+    {
+      mln_precondition(ima_.owns_(p));
+      return ima_(p);
+    }
+
+    // pw::value(ima)
+    
+    template <typename I>
+    value_<I>
+    value(const Image<I>& ima)
+    {
+      mln_precondition(exact(ima).has_data());
+      value_<I> tmp(exact(ima));
+      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::convert
+  } // end of namespace mln::pw
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CONVERT_TO_WINDOW_HH
+#endif // ! MLN_PW_VALUE_HH

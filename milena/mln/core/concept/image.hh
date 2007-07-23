@@ -134,6 +134,10 @@ namespace mln
     m6 = 0;
     lvalue (E::*m7)(const psite& p) = & E::operator();
     m7 = 0;
+
+    typedef mln_vset(E) vset;
+    const vset& (E::*m8)() const = & E::values;
+    m8 = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

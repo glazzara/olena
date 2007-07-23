@@ -25,74 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_VAR_HH
-# define MLN_FUN_VAR_HH
+#ifndef MLN_BORDER_MIRROR_HH
+# define MLN_BORDER_MIRROR_HH
 
-/*! \file mln/fun/var.hh
+/*! \file mln/border/mirror.hh
  *
  * \brief FIXME.
  */
 
-# include <mln/core/concept/function.hh>
+# include <mln/core/concept/image.hh>
 
 
 namespace mln
 {
 
-  // FIXME: Doc!
-
-  namespace fun
+  namespace border
   {
 
-    template <typename V>
-    struct var_ : public Function_p2v< var_<V> >
-    {
-      typedef V result;
-      var_(const V& v);
-      template <typename P>
-      const V& operator()(const P&) const;
-    private:
-      const V& v_;
-    };
-
-  } // end of namespace mln::fun
-
-
-  template <typename V>
-  fun::var_<V> var(const V& v);
+    /*! Mirror the virtual (outer) border of image \p ima with the
+     *  (inner) level contents of this image.
+     *
+     * \param[in,out] ima The image whose border is to be mirrored.
+     *
+     * \pre \p ima has to be initialized.
+     *
+     * \todo Implement it + optimize with memset if possible.
+     */
+    template <typename I>
+    void mirror(const Fast_Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  namespace fun
-  {
-
-    template <typename V>
-    var_<V>::var_(const V& v)
-      : v_(v)
+    template <typename I>
+    void mirror(const Fast_Image<I>& ima_)
     {
+      const I& ima = exact(ima_);
+      mln_precondition(ima_.has_data());
+      mln_invariant(0); // FIXME: NYI
     }
-
-    template <typename V>
-    template <typename P>
-    const V&
-    var_<V>::operator()(const P&) const
-    {
-      return v_;
-    }
-
-  } // end of namespace mln::fun
-
-  template <typename V>
-  fun::var_<V> var(const V& v)
-  {
-    fun::var_<V> tmp(v);
-    return tmp;
-  }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::border
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_VAR_HH
+#endif // ! MLN_BORDER_MIRROR_HH

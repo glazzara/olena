@@ -25,52 +25,78 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/erosion.cc
+#ifndef MLN_PW_CST_HH
+# define MLN_PW_CST_HH
+
+/*! \file mln/pw/cst.hh
  *
- * \brief Test on mln::morpho::erosion.
+ * \brief FIXME.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/rectangle2d.hh>
-
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
-
-#include <mln/value/int_u.hh>
-#include <mln/level/fill.hh>
-#include <mln/morpho/erosion.hh>
-
-#include <mln/pw/value.hh>
-#include <mln/pw/cst.hh>
-#include <mln/fun/ops.hh>
+# include <mln/core/concept/function.hh>
 
 
-
-int main()
+namespace mln
 {
-  using namespace mln;
-  using value::int_u8;
 
-  rectangle2d rec(21, 21);
-  border::thickness = 66;
-
-  image2d_b<int_u8>
-    lena = io::load_pgm("../img/lena.pgm"),
-    out(lena.domain());
-
-  morpho::erosion(lena, rec, out);
-  io::save_pgm(out, "out.pgm");
-
+  namespace pw
   {
-    image2d_b<bool> bin(lena.domain()), out(lena.domain());
-    level::fill(bin, pw::value(lena) > pw::cst(127));
-    morpho::erosion(bin, rec, out);
 
-    image2d_b<int_u8> test(lena.domain());
-    image2d_b<int_u8>::fwd_piter p(lena.domain());
-    for_all(p)
-      test(p) = out(p) ? 255 : 0;
-    io::save_pgm(test, "test.pgm");
-  }
+    // FIXME: Doc!
 
-}
+    template <typename T>
+    struct cst_ : public Function_p2v< cst_<T> >
+    {
+      typedef T result;
+
+      cst_(T t);
+
+      template <typename P>
+      T operator()(const P&) const;
+
+    private:
+      T t_;
+    };
+
+
+    // FIXME: Doc!
+
+    template <typename T>
+    cst_<T> cst(T t);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    // pw::cst_<T>
+
+    template <typename T>
+    cst_<T>::cst_(T t)
+      : t_(t)
+    {
+    }
+
+    template <typename T>
+    template <typename P>
+    T
+    cst_<T>::operator()(const P&) const
+    {
+      return t_;
+    }
+
+    // pw::cst(t)
+
+    template <typename T>
+    cst_<T> cst(T t)
+    {
+      cst_<T> tmp(t);
+      return tmp;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::pw
+
+} // end of namespace mln
+
+
+#endif // ! MLN_PW_CST_HH

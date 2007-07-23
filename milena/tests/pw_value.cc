@@ -31,9 +31,9 @@
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/fun/pw_value.hh>
 #include <mln/fun/ops.hh>
-#include <mln/fun/val.hh>
+#include <mln/pw/value.hh>
+#include <mln/pw/cst.hh>
 
 
 int main()
@@ -44,5 +44,5 @@ int main()
   point2d p = make::point2d(1, 1);
   ima(p) = 51;
 
-  std::cout << (pw_value(ima) == val(51))(p) << std::endl;
+  mln_assertion( (pw::value(ima) == pw::cst(51))(p) == true );
 }

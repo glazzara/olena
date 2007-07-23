@@ -25,106 +25,76 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_PW_VALUE_HH
-# define MLN_FUN_PW_VALUE_HH
+#ifndef MLN_PW_VAR_HH
+# define MLN_PW_VAR_HH
 
-/*! \file mln/fun/pw_value.hh
+/*! \file mln/pw/var.hh
  *
  * \brief FIXME.
  */
 
 # include <mln/core/concept/function.hh>
-# include <mln/core/concept/image.hh>
-# include <mln/value/props.hh>
-
 
 
 namespace mln
 {
 
-  // Fwd decl.
-  namespace fun { template <typename I> struct pw_value; }
-
-
-
   // FIXME: Doc!
-  
-  template <typename I>
-  fun::pw_value<I> pw_value(const Image<I>& ima);
-  
 
-
-  namespace fun
+  namespace pw
   {
 
-    // FIXME: Move!
-
-    namespace internal
+    template <typename V>
+    struct var_ : public Function_p2v< var_<V> >
     {
+      typedef V result;
 
-      template <typename K, typename E>
-      struct select_function_ : Function_p2v<E>
-      {};
+      var_(const V& v);
 
-      template <typename E>
-      struct select_function_< value::binary_kind, E > : Function_p2b<E>
-      {};
+      template <typename P>
+      const V& operator()(const P&) const;
 
-    } // end of namespace mln::fun::internal
-
-
-    // FIXME: Doc!
-
-    template <typename I>
-    struct pw_value : public internal::select_function_< mln_value_kind(I), pw_value<I> >
-    {
-      typedef mln_value(I) result;
-      pw_value(const I& ima);
-      mln_rvalue(I) operator()(const mln_psite(I)& p) const;
-    protected:
-      const I& ima_;
+    private:
+      const V& v_;
     };
 
 
+    template <typename V>
+    var_<V> var(const V& v);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-    // fun::pw_value<I>
+    // pw::var_<V>
 
-    template <typename I>
-    pw_value<I>::pw_value(const I& ima)
-      : ima_(ima)
+    template <typename V>
+    var_<V>::var_(const V& v)
+      : v_(v)
     {
     }
 
-    template <typename I>
-    mln_rvalue(I)
-      pw_value<I>::operator()(const mln_psite(I)& p) const
+    template <typename V>
+    template <typename P>
+    const V&
+    var_<V>::operator()(const P&) const
     {
-      mln_precondition(ima_.owns_(p));
-      return ima_(p);
+      return v_;
+    }
+
+    // pw::var(v)
+
+    template <typename V>
+    var_<V> var(const V& v)
+    {
+      var_<V> tmp(v);
+      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::fun
-
-# ifndef MLN_INCLUDE_ONLY
-
-  // pw_value
-
-  template <typename I>
-  fun::pw_value<I>
-  pw_value(const Image<I>& ima)
-  {
-    mln_precondition(exact(ima).has_data());
-    fun::pw_value<I> tmp(exact(ima));
-    return tmp;
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
+  } // end of namespace mln::pw
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_PW_VALUE_HH
+#endif // ! MLN_PW_VAR_HH

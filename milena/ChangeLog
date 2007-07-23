@@ -1,5 +1,31 @@
 2007-07-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Some renaming and add phantom border routines.
+
+	* mln/pw: New directory.
+	* mln/fun/var.hh: Rename as...
+	* mln/pw/var.hh: ...this.
+	* mln/fun/val.hh: Rename as...
+	* mln/pw/cst.hh: ...this.
+	* mln/fun/pw_value.hh: Renameas ...
+	* mln/pw/value.hh: ...this.
+	* mln/core/concept/image.hh: .
+	* mln/core/concept/iterator.hh: .
+
+	* tests/erosion.cc,
+	* tests/pw_value.cc,
+	* TODO: Update.
+
+	* mln/convert/to_window.hh: Fix doc.
+
+	* mln/border/resize.hh: New.
+	* mln/border/fill.hh: New.
+	* mln/border/all.hh: New.
+	* mln/border/duplicate.hh: New.
+	* mln/border/mirror.hh: New.
+
+2007-07-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Renaming some concepts with more explicit and longer names.
 
 	* mln/core/concept/piter.hh,

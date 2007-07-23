@@ -25,52 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/erosion.cc
+#ifndef MLN_BORDER_ALL_HH
+# define MLN_BORDER_ALL_HH
+
+/*! \file mln/border/all.hh
  *
- * \brief Test on mln::morpho::erosion.
+ * \brief File that includes all border-related routines.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/rectangle2d.hh>
 
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
-
-#include <mln/value/int_u.hh>
-#include <mln/level/fill.hh>
-#include <mln/morpho/erosion.hh>
-
-#include <mln/pw/value.hh>
-#include <mln/pw/cst.hh>
-#include <mln/fun/ops.hh>
-
-
-
-int main()
+namespace mln
 {
-  using namespace mln;
-  using value::int_u8;
 
-  rectangle2d rec(21, 21);
-  border::thickness = 66;
-
-  image2d_b<int_u8>
-    lena = io::load_pgm("../img/lena.pgm"),
-    out(lena.domain());
-
-  morpho::erosion(lena, rec, out);
-  io::save_pgm(out, "out.pgm");
-
-  {
-    image2d_b<bool> bin(lena.domain()), out(lena.domain());
-    level::fill(bin, pw::value(lena) > pw::cst(127));
-    morpho::erosion(bin, rec, out);
-
-    image2d_b<int_u8> test(lena.domain());
-    image2d_b<int_u8>::fwd_piter p(lena.domain());
-    for_all(p)
-      test(p) = out(p) ? 255 : 0;
-    io::save_pgm(test, "test.pgm");
-  }
+  /*! Namespace of routines related to image virtual (outer) border.
+   */
+  namespace border {}
 
 }
+
+
+# include <mln/border/duplicate.hh>
+# include <mln/border/fill.hh>
+# include <mln/border/mirror.hh>
+# include <mln/border/resize.hh>
+# include <mln/border/thickness.hh>
+
+
+#endif // ! MLN_BORDER_ALL_HH
