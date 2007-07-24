@@ -1,5 +1,34 @@
 2007-07-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add int_s, an histogram class, and distributed sort.
+
+	* tests/int_s8.cc: New.
+	* tests/int_u8.cc: Augment.
+	* mln/histo/sort.hh: New.
+	* mln/histo/data.hh: New.
+	* mln/histo/compute.hh: New.
+	* mln/accu/histo.hh: Fix doc.
+	* mln/accu/median.hh: Fix doc.
+	* mln/value/int_s8.hh: New.
+	* mln/value/int_u16.hh: New.
+	* mln/value/int_u8.hh: New.
+	* mln/value/int_s.hh: New.
+	* mln/value/int_u.hh (zero, one): New.
+	(encoding_): Move to...
+	* mln/value/internal/encoding.hh: ...this new file.
+	* tests/median.cc,
+	* tests/fast_median.cc,
+	* tests/main.cc,
+	* tests/hmedian.cc,
+	* tests/erosion.cc,
+	* tests/naive_median.cc,
+	* tests/vset.cc,
+	* tests/histo.cc,
+	* mln/io/save_pgm.hh,
+	* mln/io/load_pgm.hh: Update.
+
+2007-07-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Make value::set works for any type.
 
 	* mln/value/set.hh: Rename as...

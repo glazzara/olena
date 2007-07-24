@@ -25,155 +25,112 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_HISTO_HH
-# define MLN_ACCU_HISTO_HH
+#ifndef MLN_HISTO_DATA_HH
+# define MLN_HISTO_DATA_HH
 
-/*! \file mln/accu/histo.hh
+/*! \file mln/histo/data.hh
  *
- * \brief Define a generic histogram accumulator class.
+ * \brief Define a generic histogram class.
  */
 
 # include <vector>
 # include <algorithm>
 
 # include <mln/core/concept/value_set.hh>
-# include <mln/core/concept/accumulator.hh>
-# include <mln/value/set.hh>
 
 
 namespace mln
 {
 
-  namespace accu
+  namespace histo
   {
 
 
     /*! Generic histogram class over a value set with type \c S.
      */
     template <typename S>
-    struct histo : public Accumulator< histo<S> >
+    struct data
     {
-      histo(const Value_Set<S>& s);
-      histo();
-
       typedef mln_value(S) value;
 
-      void   take(const value& v);
-      void untake(const value& v);
-      void init();
+      data(const Value_Set<S>& s);
+
+      void clear();
 
       std::size_t operator()(const value& v) const;
-      std::size_t operator[](std::size_t i) const;
-      std::size_t nvalues() const;
-      std::size_t sum() const;
+      std::size_t& operator()(const value& v);
 
       const std::vector<std::size_t>& vec() const;
-
       const S& vset() const;
+      std::size_t operator[](unsigned i) const;
       
     protected:
 
       const S& s_;
       std::vector<std::size_t> h_;
-      std::size_t sum_;
     };
 
 
     template <typename S>
-    std::ostream& operator<<(std::ostream& ostr, const histo<S>& h);
-
+    std::ostream& operator<<(std::ostream& ostr, const data<S>& h);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S>
-    histo<S>::histo(const Value_Set<S>& s)
+    data<S>::data(const Value_Set<S>& s)
       : s_(exact(s)),
-	h_(s_.nvalues(), 0),
-	sum_(0)
+	h_(s_.nvalues(), 0)
     {
-    }
-
-    template <typename S>
-    histo<S>::histo()
-      : s_(S::the()),
-	h_(s_.nvalues(), 0),
-	sum_(0)
-    {
+      clear();
     }
 
     template <typename S>
     void
-    histo<S>::take(const value& v)
-    {
-      ++h_[s_.index_of(v)];
-      ++sum_;
-    }
-
-    template <typename S>
-    void
-    histo<S>::untake(const value& v)
-    {
-      mln_precondition(h_[s_.index_of(v)] > 0);
-      mln_precondition(sum_ > 0);
-      --h_[s_.index_of(v)];
-      --sum_;
-    }
-
-    template <typename S>
-    void
-    histo<S>::init()
+    data<S>::clear()
     {
       std::fill(h_.begin(), h_.end(), 0);
-      sum_ = 0;
     }
 
     template <typename S>
     std::size_t
-    histo<S>::operator()(const value& v) const
+    data<S>::operator()(const value& v) const
     {
       return h_[s_.index_of(v)];
     }
 
     template <typename S>
-    std::size_t
-    histo<S>::operator[](std::size_t i) const
+    std::size_t&
+    data<S>::operator()(const value& v)
     {
-      mln_precondition(i < s_.nvalues());
-      return h_[i];
-    }
-    
-    template <typename S>
-    std::size_t
-    histo<S>::nvalues() const
-    {
-      return s_.nvalues();
+      return h_[s_.index_of(v)];
     }
 
-    template <typename S>
-    std::size_t
-    histo<S>::sum() const
-    {
-      return sum_;
-    }
-
-    template <typename S>
-    const std::vector<std::size_t>&
-    histo<S>::vec() const
-    {
-      return h_;
-    }
-    
     template <typename S>
     const S&
-    histo<S>::vset() const
+    data<S>::vset() const
     {
       return s_;
     }
 
     template <typename S>
-    std::ostream& operator<<(std::ostream& ostr, const histo<S>& h)
+    std::size_t
+    data<S>::operator[](unsigned i) const
+    {
+      mln_precondition(i < s_.nvalues());
+      return h_[i];      
+    }
+
+    template <typename S>
+    const std::vector<std::size_t>&
+    data<S>::vec() const
+    {
+      return h_;
+    }
+
+    template <typename S>
+    std::ostream& operator<<(std::ostream& ostr, const data<S>& h)
     {
       mln_viter(S) v(h.vset());
       for_all(v)
@@ -184,9 +141,9 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::accu
+  } // end of namespace mln::histo
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_HISTO_HH
+#endif // ! MLN_HISTO_DATA_HH

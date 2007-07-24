@@ -30,7 +30,7 @@
  * \brief Tests on mln::value::int_u8.
  */
 
-#include <mln/value/int_u.hh>
+#include <mln/value/int_u8.hh>
 
 
 
@@ -39,11 +39,18 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  int_u8 i = 3;
-  i = 2;
-  mln_assertion(i == 2);
-  mln_assertion(i != 3);
+  {
+    int_u8 i = 3;
+    i = 2;
+    mln_assertion(i == 2);
+    mln_assertion(i != 3);
 
-  mln_assertion(-i == -2);
-  mln_assertion(-3 * i == -6);
+    mln_assertion(-i == -2);
+    mln_assertion(-3 * i == -6);
+  }
+
+  {
+    int_u8 i = 128;
+    std::cout << i + i << std::endl;
+  }
 }

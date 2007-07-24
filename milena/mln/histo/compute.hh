@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,49 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_SAVE_PGM_HH
-# define MLN_IO_SAVE_PGM_HH
+#ifndef MLN_HISTO_COMPUTE_HH
+# define MLN_HISTO_COMPUTE_HH
 
-# include <iostream>
-# include <fstream>
+/*! \file mln/histo/compute.hh
+ *
+ * \brief Routine to compute an histogram.
+ */
 
-# include <mln/core/image2d_b.hh>
-# include <mln/value/int_u8.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/histo/data.hh>
 
 
 namespace mln
 {
 
-  namespace io
+  namespace histo
   {
 
-    void save_pgm(const image2d_b<value::int_u8>& ima, const std::string& filename)
+    /// Compute the histogram of image \p input.
+    template <typename I>
+    data<mln_vset(I)> compute(const Image<I>& input);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    namespace impl
     {
-      std::ofstream file(filename.c_str());
-      if (! file)
-	{
-	  std::cerr << "error: cannot open file '" << filename
-		    << "'!";
-	  abort();
-	}
-      file << "P5" << std::endl;
-      file << "# olena" << std::endl;
-      file << ima.ncols() << ' ' << ima.nrows() << std::endl;
-      file << "255" << std::endl;
-      point2d p = make::point2d(ima.domain().pmin().row(),
-				ima.domain().pmin().col());
-      size_t len = ima.ncols() * sizeof(unsigned char);
-      for (;
-	   p.row() <= ima.domain().pmax().row();
-	   ++p.row())
-	{
-	  file.write((char*)(& ima(p)), len);
-	}
+
+      template <typename I>
+      data<mln_vset(I)> compute(const Image<I>& input_)
+      {
+	const I& input = exact(input_);
+	data<mln_vset(I)> h(input.values());
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  ++h(input(p));
+	return h;
+      }
+
+      template <typename I>
+      data<mln_vset(I)> compute(const Fast_Image<I>& input_)
+      {
+	const I& input = exact(input_);
+	data<mln_vset(I)> h(input.values());
+	mln_pixter(const I) p(input);
+	for_all(p)
+	  ++h(*p);
+	return h;
+      }
+
+    } // end of namespace mln::histo::impl
+
+
+    template <typename I>
+    data<mln_vset(I)> compute(const Image<I>& input)
+    {
+      mln_precondition(exact(input).has_data());
+      return impl::compute(exact(input));
     }
 
-  } // end of namespace mln::io
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::histo
 
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_SAVE_PGM_HH
+#endif // ! MLN_HISTO_COMPUTE_HH

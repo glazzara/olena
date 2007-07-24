@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,49 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_SAVE_PGM_HH
-# define MLN_IO_SAVE_PGM_HH
+/*! \file tests/int_s.cc
+ *
+ * \brief Tests on mln::value::int_s.
+ */
 
-# include <iostream>
-# include <fstream>
-
-# include <mln/core/image2d_b.hh>
-# include <mln/value/int_u8.hh>
+#include <mln/value/int_s.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_s;
 
-  namespace io
   {
+    int_s<7> i = 3;
+    i = 2;
+    mln_assertion(i == 2);
+    mln_assertion(i != 3);
 
-    void save_pgm(const image2d_b<value::int_u8>& ima, const std::string& filename)
-    {
-      std::ofstream file(filename.c_str());
-      if (! file)
-	{
-	  std::cerr << "error: cannot open file '" << filename
-		    << "'!";
-	  abort();
-	}
-      file << "P5" << std::endl;
-      file << "# olena" << std::endl;
-      file << ima.ncols() << ' ' << ima.nrows() << std::endl;
-      file << "255" << std::endl;
-      point2d p = make::point2d(ima.domain().pmin().row(),
-				ima.domain().pmin().col());
-      size_t len = ima.ncols() * sizeof(unsigned char);
-      for (;
-	   p.row() <= ima.domain().pmax().row();
-	   ++p.row())
-	{
-	  file.write((char*)(& ima(p)), len);
-	}
-    }
+    mln_assertion(-i == -2);
+    mln_assertion(-3 * i == -6);
+  }
 
-  } // end of namespace mln::io
-
-} // end of namespace mln
-
-
-#endif // ! MLN_IO_SAVE_PGM_HH
+}

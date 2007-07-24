@@ -30,7 +30,7 @@
  * \brief Tests on mln::value::set_<T>.
  */
 
-#include <mln/value/int_u.hh>
+#include <mln/value/int_u8.hh>
 #include <mln/value/set.hh>
 
 

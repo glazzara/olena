@@ -30,7 +30,7 @@
 
 /*! \file mln/accu/median.hh
  *
- * \brief Define FIXME
+ * \brief Define a generic median accumulator class.
  */
 
 # include <mln/core/concept/accumulator.hh>

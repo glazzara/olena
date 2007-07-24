@@ -36,7 +36,7 @@
 #include <mln/io/load_pgm.hh>
 #include <mln/io/save_pgm.hh>
 
-#include <mln/value/int_u.hh>
+#include <mln/value/int_u8.hh>
 #include <mln/level/naive/median.hh>
 
 

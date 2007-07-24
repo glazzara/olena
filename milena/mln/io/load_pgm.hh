@@ -34,7 +34,7 @@
 # include <string>
 
 # include <mln/core/image2d_b.hh>
-# include <mln/value/int_u.hh>
+# include <mln/value/int_u8.hh>
 
 
 namespace mln

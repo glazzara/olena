@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_INT_U_HH
-# define MLN_VALUE_INT_U_HH
+#ifndef MLN_VALUE_INT_S_HH
+# define MLN_VALUE_INT_S_HH
 
-/*! \file mln/value/int_u.hh
+/*! \file mln/value/int_s.hh
  *
- * \brief Define a generic class for unsigned integers.
+ * \brief Define a generic class for signed integers.
  */
 
 # include <mln/metal/math.hh>
@@ -48,18 +48,18 @@ namespace mln
   {
 
 
-    /*! \brief Unsigned integer value class.
+    /*! \brief Signed integer value class.
      *
      * The parameter is \c n the number of encoding bits.
      */
     template <unsigned n>
-    struct int_u
-      : public internal::value_like_< typename internal::encoding_int_u_<n>::ret,
-				      int_u<n> >
+    struct int_s
+      : public internal::value_like_< typename internal::encoding_int_s_<n>::ret,
+				      int_s<n> >
     {
     protected:
-      typedef internal::value_like_< typename internal::encoding_int_u_<n>::ret,
-				     int_u<n> > super;
+      typedef internal::value_like_< typename internal::encoding_int_s_<n>::ret,
+				     int_s<n> > super;
 
     public:
 
@@ -67,80 +67,88 @@ namespace mln
       typedef typename super::enc enc;
 
       /// Constructor without argument.
-      int_u();
+      int_s();
 
       /// Constructor from an integer.
-      int_u(int i);
+      int_s(int i);
+
+      /// Negation.
+      int_s<n> operator-() const;
 
       /// Zero value.
-      static const int_u<n> zero;
+      static const int_s<n> zero;
 
       /// Unit value.
-      static const int_u<n> one;
+      static const int_s<n> one;
     };
-
-
-    // Safety.
-    template <> struct int_u<0>;
-    template <> struct int_u<1>;
 
 
 
     template <unsigned n>
-    struct props< int_u<n> >
+    struct props< int_s<n> >
     {
+      static const int_s<n> max; // = 2^(n-1) - 1
+      static const int_s<n> min; // = - max
       static const std::size_t card = metal::pow<2, n>::value;
-      static const int_u<n> min; // = 0
-      static const int_u<n> max; // = card - 1
       static const unsigned nbits = n;
       typedef data_kind kind;
     };
 
 
+    // Safety.
+    template <> struct int_s<0>;
+    template <> struct int_s<1>;
 
-    /*! \brief Print an unsigned integer \p i into the output stream \p ostr.
+
+
+    /*! \brief Print an signed integer \p i into the output stream \p ostr.
      *
      * \param[in,out] ostr An output stream.
-     * \param[in] i An unsigned integer.
+     * \param[in] i An signed integer.
      *
      * \return The modified output stream \p ostr.
      */
     template <unsigned n>
-    std::ostream& operator<<(std::ostream& ostr, const int_u<n>& i);
+    std::ostream& operator<<(std::ostream& ostr, const int_s<n>& i);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n>
-    int_u<n>::int_u()
+    int_s<n>::int_s()
     {
     }
 
     template <unsigned n>
-    int_u<n>::int_u(int i)
+    int_s<n>::int_s(int i)
     {
-      mln_precondition(i >= 0);
+      mln_precondition(i >= mln_min(enc));
       mln_precondition(i <= mln_max(enc));
       this->v_ = enc(i);
     }
 
     template <unsigned n>
-    const int_u<n> int_u<n>::zero = 0;
+    int_s<n> int_s<n>::operator-() const
+    {
+      return - this->v_;
+    }
 
     template <unsigned n>
-    const int_u<n> int_u<n>::one = 1;
-
-
-    template <unsigned n>
-    const int_u<n>
-    props< int_u<n> >::min = 0;
+    const int_s<n> int_s<n>::zero = 0;
 
     template <unsigned n>
-    const int_u<n>
-    props< int_u<n> >::max = metal::pow<2, n>::value - 1;
+    const int_s<n> int_s<n>::one = 1;
 
     template <unsigned n>
-    std::ostream& operator<<(std::ostream& ostr, const int_u<n>& i)
+    const int_s<n>
+    props< int_s<n> >::min = 1 - metal::pow<2, n - 1>::value;
+
+    template <unsigned n>
+    const int_s<n>
+    props< int_s<n> >::max = metal::pow<2, n - 1>::value - 1;
+
+    template <unsigned n>
+    std::ostream& operator<<(std::ostream& ostr, const int_s<n>& i)
     {
       return ostr << debug::format(i.to_equiv());
     }
@@ -152,4 +160,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_INT_U_HH
+#endif // ! MLN_VALUE_INT_S_HH

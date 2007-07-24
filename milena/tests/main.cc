@@ -39,13 +39,12 @@
 #include <mln/morpho/erosion.hh>
 #include <mln/morpho/Rd.hh>
 
+#include <mln/value/int_u8.hh>
 
-typedef unsigned char int_u8;
 
-
-// static int_u8 cos_sin(const mln::point2d& p)
+// static value::int_u8 cos_sin(const mln::point2d& p)
 // {
-//   return (int_u8)(255 * std::cos(float(p.row())) * std::sin(float(p.col())));
+//   return (value::int_u8)(255 * std::cos(float(p.row())) * std::sin(float(p.col())));
 // }
 
 
@@ -54,7 +53,7 @@ int main()
   using namespace mln;
 
   const unsigned size = 1000;
-  image2d_b<int_u8> f(size, size);
+  image2d_b<value::int_u8> f(size, size);
   morpho::Rd(f, f, c8());
 }
 

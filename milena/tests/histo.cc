@@ -27,25 +27,49 @@
 
 /*! \file tests/histo.cc
  *
- * \brief Tests on mln::value::histo<S>.
+ * \brief Tests on mln::accu::histo<S> and mln::histo::data<S>.
  */
 
+#include <iterator>
+
+#include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
+
+#include <mln/debug/iota.hh>
 #include <mln/accu/histo.hh>
+#include <mln/histo/compute.hh>
+#include <mln/histo/sort.hh>
 
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  accu::histo< value::set<bool> > h;
+  {
+    accu::histo< value::set<bool> > h;
+    
+    for (unsigned i = 0; i < 5; ++i)
+      h.take(false);
+    for (unsigned i = 0; i < 2; ++i)
+      h.take(true);
+    h.untake(true);
+    
+    mln_assertion(h[0] * 10 + h[1] == 51);
+    mln_assertion(h(false) * 10 + h(true) == 51);
+  }
 
-  for (unsigned i = 0; i < 5; ++i)
-    h.take(false);
-  for (unsigned i = 0; i < 2; ++i)
-    h.take(true);
-  h.untake(true);
+  {
+    image2d_b<int_u8> ima(3, 3);
+    debug::iota(ima);
+    histo::data< value::set<int_u8> > h = histo::compute(ima);
+    std::cout << h << std::endl;
 
-  mln_assertion(h[0] * 10 + h[1] == 51);
-  mln_assertion(h(false) * 10 + h(true) == 51);
+    std::vector<point2d> vec = histo::sort_points_decreasing(ima);
+    std::copy(vec.begin(), vec.end(),
+	      std::ostream_iterator<point2d>(std::cout, " "));
+    std::cout << std::endl;
+  }
+
 }
