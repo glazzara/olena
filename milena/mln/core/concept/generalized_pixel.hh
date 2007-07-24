@@ -35,6 +35,7 @@
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/internal/force_exact.hh>
+# include <mln/core/trait/qlf_value.hh>
 
 
 namespace mln
@@ -52,6 +53,8 @@ namespace mln
    *
    * \see mln::doc::Generalized_Pixel for a complete documentation of this
    * class contents.
+   *
+   * \todo (later) Add an access to the targetted image.
    */
   template <typename E>
   struct Generalized_Pixel
@@ -59,9 +62,10 @@ namespace mln
     /*
       typedef  value;
       typedef rvalue;
+      typedef image;
 
       rvalue operator*() const;
-      value** address_() const;
+      mln_qlf_value(image)** address_() const;
     */
   protected:
     Generalized_Pixel();
@@ -75,11 +79,14 @@ namespace mln
   {
     typedef mln_value(E) value;
     typedef mln_rvalue(E) rvalue;
+
     rvalue (E::*m1)() const = & E::operator*;
     m1 = 0;
-    // FIXME: Activate (so add qualif_value):
-//     value** (E::*m2)() const = & E::address_;
-//     m2 = 0;
+
+    typedef mln_image(E) image;
+
+    mln_qlf_value(image)** (E::*m2)() const = & E::address_;
+    m2 = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

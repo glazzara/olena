@@ -84,8 +84,8 @@ namespace mln
       /// Read-only access of pixel value at point site \p p.
       T operator()(const psite& p) const;
 
-      /// Read-write access of pixel value at point site \p p.
-      void operator()(const psite& p);
+      /// Read-write access is present but disabled.
+      void operator()(const psite&);
 
       /// Give the set of values of the image.
       const vset& values() const;
@@ -153,7 +153,7 @@ namespace mln
 
     template <typename T, typename I>
     void
-    cast_image<T,I>::operator()(const psite& p)
+    cast_image<T,I>::operator()(const psite&)
     {
       mln_invariant(0); // FIXME: Turn into a compile-time error...
     }

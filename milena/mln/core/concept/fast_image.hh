@@ -33,6 +33,8 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/concept/generalized_point.hh>
+# include <mln/core/trait/qlf_value.hh>
 
 
 namespace mln
@@ -50,14 +52,27 @@ namespace mln
       unsigned border();
 
       int offset(const dpoint& dp) const;
-      unsigned offset(const point& p) const;
       point point_at_offset(unsigned o) const;
 
+      mln_qlf_value(E)* buffer();
       const value* buffer() const;
 
       rvalue operator[](unsigned o) const;
       lvalue operator[](unsigned o);
      */
+
+
+    /*! \brief Give the offset of the point \p p.
+     *
+     * \param[in] p A generalized point.
+     *
+     * \warning This method is final.
+     *
+     * \pre The image has to be initialized and to own the point \p p.
+     * \post p == point_at_offset(result)
+     */
+    template <typename P>
+    unsigned offset(const Generalized_Point<P>& p) const;
 
   protected:
     Fast_Image();
@@ -65,6 +80,22 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  template <typename E>
+  template <typename P>
+  unsigned
+  Fast_Image<E>::offset(const Generalized_Point<P>& p_) const
+  {
+    // FIXME: check that P is mln_point(E)
+    const E& this_ = exact(this);
+    const P& p = internal::force_exact<P>(p_);
+    mln_precondition(this_->has_data());
+    mln_precondition(this_->owns_(p));
+
+    unsigned o = & this_->operator()(p) - this_->buffer();
+    mln_postcondition(p == this_->point_at_offset(o));
+    return o;
+  }
 
   template <typename E>
   Fast_Image<E>::Fast_Image()
@@ -77,15 +108,15 @@ namespace mln
 
     int (E::*m1)(const dpoint&) const = & E::offset;
     m1 = 0;
-    unsigned (E::*m2)(const point&) const = & E::offset;
+    point (E::*m2)(unsigned) const = & E::point_at_offset;
     m2 = 0;
-    point (E::*m3)(unsigned) const = & E::point_at_offset;
+    unsigned (E::*m3)() const = & E::border;
     m3 = 0;
-    unsigned (E::*m4)() const = & E::border;
-    m4 = 0;
 
     typedef mln_value(E) value;
 
+    mln_qlf_value(E)* (E::*m4)() = & E::buffer;
+    m4 = 0;
     const value* (E::*m5)() const = & E::buffer;
     m5 = 0;
 

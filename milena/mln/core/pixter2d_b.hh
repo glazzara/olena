@@ -45,9 +45,11 @@ namespace mln
   class fwd_pixter2d_b : public internal::pixel_iterator_base_< I, fwd_pixter2d_b<I> >
   {
     typedef internal::pixel_iterator_base_< I, fwd_pixter2d_b<I> > super_;
-    typedef typename super_::value_ value_;
 
   public:
+
+    /// Image type.
+    typedef I image;
 
     /*! \brief Constructor.
      *
@@ -67,7 +69,7 @@ namespace mln
     unsigned row_offset_;
 
     /// End of the current row.
-    value_* eor_;
+    mln_qlf_value(I)* eor_;
   };
 
 

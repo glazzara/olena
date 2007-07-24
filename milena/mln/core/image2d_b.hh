@@ -192,14 +192,14 @@ namespace mln
     /// Give the offset corresponding to the delta-point \p dp.
     int offset(const dpoint2d& dp) const;
 
-    /// Give the offset corresponding to the point \p p.
-    unsigned offset(const point2d& p) const;
-
     /// Give the point corresponding to the offset \p o.
     point2d point_at_offset(unsigned o) const;
 
     /// Give a hook to the value buffer.
     const T* buffer() const;
+
+    /// Give a hook to the value buffer.
+    T* buffer();
 
 
   private:
@@ -411,21 +411,19 @@ namespace mln
   }
 
   template <typename T>
+  T*
+  image2d_b<T>::buffer()
+  {
+    mln_precondition(this->has_data());
+    return buffer_;
+  }
+
+  template <typename T>
   int
   image2d_b<T>::offset(const dpoint2d& dp) const
   {
     mln_precondition(this->has_data());
     int o = dp[0] * vb_.len(1) + dp[1];
-    return o;
-  }
-
-  template <typename T>
-  unsigned
-  image2d_b<T>::offset(const point2d& p) const
-  {
-    mln_precondition(this->owns_(p));
-    unsigned o = & this->operator()(p) - this->buffer_;
-    mln_postcondition(p == point_at_offset(o));
     return o;
   }
 

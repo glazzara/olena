@@ -53,6 +53,9 @@ namespace mln
     {
     public:
 
+      /// Image type.
+      typedef I image;
+
       /// Image value type.
       typedef mln_value(I) value;
 
@@ -61,9 +64,6 @@ namespace mln
 
       /// Image rvalue type.
       typedef mln_rvalue(I) rvalue;
-
-      /// Qualified value type.
-      typedef value value_;
 
 
       /// pixel iterator value.
@@ -102,14 +102,14 @@ namespace mln
     {
     public:
 
+      /// Image type.
+      typedef const I image;
+
       /// Image value type.
       typedef mln_value(I) value;
 
       /// Image rvalue type.
       typedef mln_rvalue(I) rvalue;
-
-      /// Qualified value type.
-      typedef const value value_;
 
 
       /// Get the pixel iterator value.

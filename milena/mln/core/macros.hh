@@ -121,6 +121,9 @@
 
 // q
 
+/// Shortcut to access the qualified (const or mutable) value type associated to T.
+# define mln_qlf_value(T)      typename mln::trait::qlf_value< T >::ret
+
 /// Shortcut to access the qiter type associated to T.
 # define mln_qiter(T)      typename T::fwd_qiter
 
@@ -163,27 +166,27 @@
  * \c I is an image type
  * \c T is the new value type
  */
-# define mln_ch_value(I, T) typename I::template change_value<T>::ret
+# define mln_ch_value(I, T) typename I ::template change_value< T >::ret
 
 
 
 // FIXME: Doc!
 
-# define mln_fwd_pixter(I)  typename mln::trait::fwd_pixter<I>::ret
-# define mln_fwd_pixter_(I)          mln::trait::fwd_pixter<I>::ret
+# define mln_fwd_pixter(I)  typename mln::trait::fwd_pixter< I >::ret
+# define mln_fwd_pixter_(I)          mln::trait::fwd_pixter< I >::ret
 
-# define mln_bkd_pixter(I) typename mln::trait::bkd_pixter<I>::ret
+# define mln_bkd_pixter(I) typename mln::trait::bkd_pixter< I >::ret
 # define mln_pixter(I)  mln_fwd_pixter(I)
 # define mln_pixter_(I) mln_fwd_pixter_(I)
 
 
-# define mln_fwd_qixter(I, W) typename mln::trait::fwd_qixter<I, W>::ret
-# define mln_bkd_qixter(I, W) typename mln::trait::bkd_qixter<I, W>::ret
+# define mln_fwd_qixter(I, W) typename mln::trait::fwd_qixter< I, W >::ret
+# define mln_bkd_qixter(I, W) typename mln::trait::bkd_qixter< I, W >::ret
 # define mln_qixter(I, W) mln_fwd_qixter(I, W)
 
 
-# define mln_fwd_nixter(I, N) typename mln::trait::fwd_nixter<I, N>::ret
-# define mln_bkd_nixter(I, N) typename mln::trait::bkd_nixter<I, N>::ret
+# define mln_fwd_nixter(I, N) typename mln::trait::fwd_nixter< I, N >::ret
+# define mln_bkd_nixter(I, N) typename mln::trait::bkd_nixter< I, N >::ret
 # define mln_nixter(I, N) mln_fwd_nixter(I, N)
 
 

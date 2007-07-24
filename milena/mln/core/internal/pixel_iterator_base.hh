@@ -35,6 +35,7 @@
 
 # include <mln/core/concept/pixel_iterator.hh>
 # include <mln/core/internal/pixel_impl.hh>
+# include <mln/core/trait/qlf_value.hh>
 
 
 namespace mln
@@ -42,21 +43,6 @@ namespace mln
 
   namespace internal
   {
-
-
-    template <typename I>
-    struct qualified_value
-    {
-      typedef mln_value(I) ret;
-    };
-
-
-    template <typename I>
-    struct qualified_value< const I >
-    {
-      typedef const mln_value(I) ret;
-    };
-
 
 
     /*! \brief A base class for pixel iterators. 
@@ -79,16 +65,13 @@ namespace mln
       /// Test if the iterator is valid.
       bool is_valid() const;
 
-      /// Qualified (const or not) value type.
-      typedef typename qualified_value<I>::ret value_;
-
     protected:
 
       /// Beginning of the image.
-      value_* boi_;
+      mln_qlf_value(I)* boi_;
 
       /// End of the image (past-the-end).
-      value_* eoi_;
+      mln_qlf_value(I)* eoi_;
 
       /// Constructor.
       pixel_iterator_base_(I& image);

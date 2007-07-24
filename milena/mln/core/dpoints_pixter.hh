@@ -58,9 +58,6 @@ namespace mln
     typedef typename internal::pixel_impl_< I, dpoints_fwd_pixter<I> > super_;
   public:
 
-    /// Using super value type.
-    typedef typename super_::value_ value_;
-
     /*! \brief Constructor.
      *
      * \param[in] image Image subject to iteration.
@@ -111,7 +108,7 @@ namespace mln
     unsigned i_;
 
     /// reference pixel / point in the image
-    value_** value_ref_;
+    mln_qlf_value(I)** value_ref_;
     //    or:
     const mln_point(I)* p_ref_;
 

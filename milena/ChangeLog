@@ -1,3 +1,36 @@
+2007-07-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Handle constness properly in pixel iterators.
+
+	* mln/core/trait/qlf_value.hh: New.
+	* mln/core/internal/pixel_iterator_base.hh
+	(qualified_value): Move and rename as...
+	* mln/core/trait/qlf_value.hh (qlf_value): ...this.
+	* doc/Doxyfile.in: Update.
+	* mln/core/macros.hh (mln_qlf_value): New.
+	Add space.
+	* mln/core/pixter2d_b.hh (eor_): Update type.
+	(image): New.
+	* mln/core/dpoints_pixter.hh (value_ref_): Update type.
+	* mln/core/internal/pixel_impl.hh
+	(value_): Remove; obsolete.
+	(image): New.
+	* mln/core/fimage.hh: Fix warning.
+	* mln/core/concept/generalized_pixel.hh (image): New.
+	(address_): Update type.
+	(todo): New.
+	(ctor): Re-activate check.
+	* mln/core/concept/fast_image.hh (offset): New; factor code.
+	(buffer): New overload.
+	* mln/core/concept/doc/generalized_pixel.hh (image): New.
+	(address_): Update type.
+	* mln/core/concept/doc/fast_image.hh (offset): Remove; factored.
+	* mln/core/image2d_b.hh (offset): Remove; factored.
+	(buffer): New.
+	* mln/level/assign.hh: Fix doc.
+	* mln/value/cast.hh: Fix warning.
+	* TODO: Update.
+
 2007-07-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some morphers and handle constness in pixterators.

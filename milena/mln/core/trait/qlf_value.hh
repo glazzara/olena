@@ -25,57 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_DOC_GENPIXEL_HH
-# define MLN_CORE_CONCEPT_DOC_GENPIXEL_HH
+#ifndef MLN_CORE_TRAIT_QLF_VALUE_HH
+# define MLN_CORE_TRAIT_QLF_VALUE_HH
 
-/*! \file mln/core/concept/doc/generalized_pixel.hh
- * \brief This file documents the concept of mln::Generalized_Pixel.
+/*! \file mln/core/trait/qlf_value.hh
+ *
+ * \brief Definition of the qlf_value image trait.
  */
+
+# include <mln/core/macros.hh>
 
 
 namespace mln
 {
 
-  namespace doc
+  namespace trait
   {
 
-    /*! \brief Documentation class for mln::Generalized_Pixel.
-     *
-     * \see mln::Generalized_Pixel
-     */
-    template <typename E>
-    struct Generalized_Pixel
+
+    template <typename I>
+    struct qlf_value
     {
-
-      /// Image associated type (with possible const qualification).
-      typedef void image;
-
-      /// Value associated type.
-      typedef void value;
-
-      /// Read-only value associated type.
-      typedef void rvalue;
-
-
-      /*! \brief Give the value of this generalized pixel.
-       *
-       * \return A read-only value.
-       */
-      rvalue operator*() const;
-
-      /*! \brief Give a hook to the value address.
-       *
-       * This method allows for iterators to refer to a generalized
-       * pixel.
-       *
-       * \return A pointer to the value address.
-       */
-      mln_qlf_value(ima)** address_() const;
-
-    protected:
-      Generalized_Pixel();
+      typedef mln_value(I) ret;
     };
 
-  } // end of namespace mln::doc
+
+    template <typename I>
+    struct qlf_value< const I >
+    {
+      typedef const mln_value(I) ret;
+    };
+
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
+
+
+#endif // ! MLN_CORE_TRAIT_QLF_VALUE_HH

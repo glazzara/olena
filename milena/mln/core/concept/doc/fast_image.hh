@@ -58,15 +58,6 @@ namespace mln
       int offset(const dpoint& dp);
 
 
-      /*! \brief Give the offset of the point \p p.
-       *
-       * \param[in] p A point.
-       *
-       * \pre The image has to own the point \p p.
-       */
-      unsigned offset(const point& p);
-
-
       /*! \brief Give the point at offset \p o.
        *
        * \param[in] o An offset.

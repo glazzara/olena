@@ -82,8 +82,8 @@ namespace mln
       /// Read-only access of pixel value at point site \p p.
       mln_result(F) operator()(const psite& p) const;
 
-      /// Read-write access of pixel value at point site \p p.
-      void operator()(const psite& p);
+      /// Read-write access is present but disabled.
+      void operator()(const psite&);
 
       /// Give the set of values of the image.
       const vset& values() const;
@@ -150,7 +150,7 @@ namespace mln
 
     template <typename F, typename S>
     void
-    fimage<F,S>::operator()(const psite& p)
+    fimage<F,S>::operator()(const psite&)
     {
       mln_invariant(0); // FIXME: Turn into a compile-time error...
     }

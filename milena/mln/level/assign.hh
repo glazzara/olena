@@ -44,7 +44,7 @@ namespace mln
 
     /*! Assignment of image \p target with image \p data.
      *
-     * \param[out] output The image to be assigned.
+     * \param[out] target The image to be assigned.
      * \param[in] data The auxiliary image.
      *
      * \pre target.domain = data.domain
