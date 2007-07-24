@@ -119,7 +119,7 @@ namespace mln
     };
 
     /// Value_Set associated type.
-    typedef mln::value::set_<T> vset;
+    typedef mln::value::set<T> vset;
 
 
     /// Constructor without argument.

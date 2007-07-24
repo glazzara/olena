@@ -84,7 +84,7 @@ namespace mln
 	  win_bot  = win - (win + up),
 	  win_top = (win + up) - win;
 
-	accu::median_on<mln_value(I)> med;
+	accu::median<mln_vset(I)> med(input.values());
 
 	// initialization
 

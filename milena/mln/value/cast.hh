@@ -47,7 +47,7 @@ namespace mln
      *
      */
     template <typename T, typename I>
-    struct cast_image : public internal::image_base_< mln_pset(I), cast_image<T,I> >
+    struct cast_image : public mln::internal::image_base_< mln_pset(I), cast_image<T,I> >
     {
       /// Point_Site associated type.
       typedef mln_psite(I) psite;
@@ -65,7 +65,7 @@ namespace mln
       typedef void lvalue; // FIXME
 
       /// Value set associated type.
-      typedef mln::value::set_<T> vset;
+      typedef mln::value::set<T> vset;
 
 
       /// Constructor.
@@ -159,7 +159,7 @@ namespace mln
     }
 
     template <typename T, typename I>
-    const mln::value::set_<T>&
+    const mln::value::set<T>&
     cast_image<T,I>::values() const
     {
       return vset::the();

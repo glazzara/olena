@@ -120,7 +120,7 @@ namespace mln
     void transform(const Image<I>& input, const Function_v2v<F>& f, Image<O>& output)
     {
       mln_precondition(exact(output).domain() >= exact(input).domain());
-      impl::transform(mln_is_lowq(I)(),
+      impl::transform(mln_is_value_lowq(I)(),
 		      exact(input), exact(f), exact(output));
     }
 

@@ -18,7 +18,6 @@ Weighted_Window
 value::proxy to dispatch read/write + the corresponding image type
 a mean_value object { sum; count } and operator+
 t_image to "transpose" the 0 and the i-th coordinates
-image defined by f/pset
 
 ** extensions
 
@@ -35,7 +34,6 @@ mlc into metal
 
 * clean-up
 
-accu::histo and median: remove inheritance
 select_function in fun::internal::selector_p2? etc.
 
 

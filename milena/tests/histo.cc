@@ -30,7 +30,6 @@
  * \brief Tests on mln::value::histo<S>.
  */
 
-#include <mln/value/int_u.hh>
 #include <mln/accu/histo.hh>
 
 
@@ -38,11 +37,8 @@
 int main()
 {
   using namespace mln;
-  using namespace mln::value;
-  using namespace mln::accu;
 
-
-  histo_on_type<bool> h;
+  accu::histo< value::set<bool> > h;
 
   for (unsigned i = 0; i < 5; ++i)
     h.take(false);
@@ -50,18 +46,6 @@ int main()
     h.take(true);
   h.untake(true);
 
-  std::cout << h << std::endl;
-  std::cout << h[0] * 10 + h[1] << std::endl;
-  std::cout << h(false) * 10 + h(true) << std::endl;
-
-  h.init();
-  std::cout << h << std::endl;
-
-
-  // ...
-
-
-  typedef value::set_<int_u8> S;
-  histo_on_set<S> h_u8(S::the());
-  std::cout << h_u8 << std::endl;
+  mln_assertion(h[0] * 10 + h[1] == 51);
+  mln_assertion(h(false) * 10 + h(true) == 51);
 }

@@ -86,10 +86,10 @@ namespace mln
 
 
     template <typename T>
-    struct median_alt_on : public median_alt< value::set_<T> >
+    struct median_alt_on : public median_alt< value::set<T> >
     {
       median_alt_on()
-	: median_alt< value::set_<T> >(value::set_<T>::the())
+	: median_alt< value::set<T> >(value::set<T>::the())
       {
       }
     };

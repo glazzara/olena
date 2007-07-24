@@ -37,7 +37,7 @@
 # include <mln/value/props.hh>
 
 
-# define mln_is_lowq(I)  typename mln::trait::is_lowq< I >::ret
+# define mln_is_lowq(T)  typename mln::trait::is_lowq< T >::ret
 
 
 
@@ -50,10 +50,10 @@ namespace mln
 
     // FIXME: Doc!
 
-    template <typename I>
+    template <typename T>
     struct is_lowq
     {
-      typedef typename metal::bool_<( mln_card(mln_value(I)) != 0 )>::type ret;
+      typedef typename metal::bool_<( mln_card(T) != 0 )>::type ret;
     };
 
 

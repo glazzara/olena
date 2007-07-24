@@ -63,7 +63,7 @@ namespace mln
       typedef void lvalue; // FIXME
 
       /// Value set associated type.
-      typedef mln::value::set_<mln_result(F)> vset;
+      typedef mln::value::set<mln_result(F)> vset;
 
 
       /// Constructor.
@@ -156,7 +156,7 @@ namespace mln
     }
 
   template <typename F, typename S>
-  const mln::value::set_<mln_result(F)>&
+  const mln::value::set<mln_result(F)>&
   fimage<F,S>::values() const
   {
     return vset::the();

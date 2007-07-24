@@ -78,7 +78,7 @@ namespace mln
 	{
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
-	  accu::median_on<mln_value(I)> med;
+	  accu::median<mln_vset(I)> med(input.values());
 
 	  for_all(p)
 	    {

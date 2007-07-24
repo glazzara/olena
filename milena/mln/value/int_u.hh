@@ -33,10 +33,10 @@
  * \brief Define a generic class for unsigned integers.
  */
 
-# include <mln/core/concept/value.hh>
 # include <mln/metal/math.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/props.hh>
+# include <mln/value/set.hh>
 
 
 namespace mln
@@ -89,15 +89,11 @@ namespace mln
     };
 
 
-    // Fwd decl.
-    template <typename T> struct vset_;
-
-
     /// Alias for unsigned 8bit integers.
     typedef int_u_<8> int_u8;
 
     /// Alias for the set of unsigned 8bit integers.
-    typedef vset_<int_u8> int_u8_set;
+    typedef set<int_u8> int_u8_set;
 
 
 

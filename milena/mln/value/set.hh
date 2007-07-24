@@ -33,8 +33,8 @@
  * \brief Define some basic sets of values from value types.
  */
 
-# include <mln/core/concept/value_set.hh>
-# include <mln/value/props.hh>
+# include <mln/value/internal/iterable_set.hh>
+# include <mln/core/trait/is_lowq.hh>
 
 
 namespace mln
@@ -43,41 +43,41 @@ namespace mln
   namespace value
   {
 
-    // Fwd decls.
-    template <typename S> struct fwd_viter_;
-    template <typename S> struct bkd_viter_;
+
+    // Fwd decl.
+    template <typename T> struct set;    
+
+
+    namespace internal
+    {
+
+      template <typename T, typename lowq = metal::false_ >
+      struct run_set_selector_ // no inheritance
+      {};
+
+      template <typename T>
+      struct run_set_selector_< T, metal::true_ > // lowq so iterable
+	:
+	public iterable_set< T, mln::value::set<T> >
+      {};
+
+      template <typename T>
+      struct set_selector_ : public run_set_selector_< T, mln_is_lowq(T) >
+      {};
+
+    } // end of namespace mln::value::internal
+
 
 
     /*! Class that defines the set of values of type \c T.
      *
-     * This is an exhaustive value set over \c T.
+     * This is the exhaustive set of values obtainable from type \c T.
      */
     template <typename T>
-    struct set_ : public Value_Set< set_<T> >
+    struct set : public internal::set_selector_<T>
     {
-      /// Value associated type.
-      typedef T value;
-
-      /// Forward Value_Iterator associated type.
-      typedef fwd_viter_< set_<T> > fwd_viter;
-
-      /// Backward Value_Iterator associated type.
-      typedef bkd_viter_< set_<T> > bkd_viter;
-
-      /// Test if \p v belongs to this set: always true!
-      bool has(const T& v) const;
-
-      /// Give the \p i-th value.
-      T operator[](std::size_t i) const;
-
-      /// Give the index of value \p v in this set.
-      std::size_t index_of(const T& v) const;
-
-      /// Give the number of values.
-      std::size_t nvalues() const;
-
       /// Return a singleton.
-      static const set_<T>& the();
+      static const set<T>& the();
     };
 
 
@@ -85,39 +85,10 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
-    bool
-    set_<T>::has(const T&) const
+    const set<T>&
+    set<T>::the()
     {
-      return true;
-    }
-
-    template <typename T>
-    T
-    set_<T>::operator[](std::size_t i) const
-    {
-      mln_precondition(i < nvalues());
-      return mln_min(T) + i;
-    }
-
-    template <typename T>
-    std::size_t
-    set_<T>::index_of(const T& v) const
-    {
-      return v - mln_min(T);
-    }
-
-    template <typename T>
-    std::size_t
-    set_<T>::nvalues() const
-    {
-      return mln_card(T);
-    }
-
-    template <typename T>
-    const set_<T>&
-    set_<T>::the()
-    {
-      static set_<T> the_;
+      static set<T> the_;
       return the_;
     }
 
@@ -125,11 +96,7 @@ namespace mln
 
   } // end of namespace mln::value
 
-
 } // end of namespace mln
-
-
-# include <mln/value/viter.hh>
 
 
 #endif // ! MLN_VALUE_SET_HH

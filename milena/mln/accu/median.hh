@@ -53,6 +53,7 @@ namespace mln
       typedef mln_value(S) value;
 
       median(const Value_Set<S>& s);
+      median();
 
       void   take(const value& v);
       void untake(const value& v);
@@ -63,20 +64,11 @@ namespace mln
       operator mln_value(S) () const;
       value to_value() const;
 
-      const histo_on_set<S>& histo() const;
-
-      // FIXME: remove
-      void debug__() const
-      {
-	std::cout << "  i = " << i_
-		  << "  v = " << v_
-		  << "  s = " << sum_minus_ << " ; " << h_[i_] << " ; " << sum_plus_ << " = " << h_.sum()
-		  << std::endl;
-      }
+      const accu::histo<S>& histo() const;
 
     protected:
 
-      mutable histo_on_set<S> h_;
+      mutable accu::histo<S> h_;
       const S& s_; // derived from h_
 
       mutable std::size_t sum_minus_, sum_plus_;
@@ -92,23 +84,7 @@ namespace mln
     };
 
 
-    /*! Generic median class over the set of values of type \c T.
-     *
-     * \todo Inheritance is badly formed since this concrete class
-     * derives from another concrete class.
-     */
-    template <typename T>
-    struct median_on : public median< value::set_<T> >
-    {
-      median_on()
-	: median< value::set_<T> >(value::set_<T>::the())
-      {
-      }
-    };
-
-
 # ifndef MLN_INCLUDE_ONLY
-
 
     template <typename S>
     median<S>::median(const Value_Set<S>& s)
@@ -118,6 +94,13 @@ namespace mln
       init();
     }
 
+    template <typename S>
+    median<S>::median()
+      : h_(),
+	s_(h_.vset())
+    {
+      init();
+    }
 
     template <typename S>
     void
@@ -134,7 +117,6 @@ namespace mln
 	valid_ = false;
     }
 
-
     template <typename S>
     void
     median<S>::untake(const value& v)
@@ -150,7 +132,6 @@ namespace mln
       if (valid_)
 	valid_ = false;
     }
-
     
     template <typename S>
     void
@@ -177,7 +158,6 @@ namespace mln
 	  }
     }
 
-
     template <typename S>
     void
     median<S>::go_minus_() const
@@ -193,7 +173,6 @@ namespace mln
       while (2 * sum_minus_ > h_.sum());
       v_ = s_[i_];
     }
-
 
     template <typename S>
     void
@@ -211,7 +190,6 @@ namespace mln
       v_ = s_[i_];
     }
 
-
     template <typename S>
     void
     median<S>::init()
@@ -223,7 +201,6 @@ namespace mln
       v_ = s_[i_];
       valid_ = true;
     }
-
 
     template <typename S>
     median<S>::operator mln_value(S) () const
@@ -241,7 +218,7 @@ namespace mln
     }
 
     template <typename S>
-    const histo_on_set<S>&
+    const accu::histo<S>&
     median<S>::histo() const
     {
       return h_;
@@ -250,10 +227,8 @@ namespace mln
     template <typename S>
     std::ostream& operator<<(std::ostream& ostr, const median<S>& m)
     {
-      m.debug__();
       return ostr << m.to_value();
     }
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

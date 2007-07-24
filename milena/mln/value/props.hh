@@ -65,19 +65,14 @@ namespace mln
   {
 
 
-    /*! Class that defines the properties of the value type \c T.
+    /*! Class that defines the properties (by default) of any value
+     * type \c T.
      */
     template <typename T>
     struct props
     {
-      /// Minimum value for type \c T.
-      static const T min;
-
-      /// Maximum value for type \c T.
-      static const T max;
-
-      /// Number of values for type \c T.
-      static const std::size_t card;
+      typedef data_kind kind;
+      static const std::size_t card = 0;
     };
 
 

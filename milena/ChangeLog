@@ -1,5 +1,34 @@
 2007-07-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Make value::set works for any type.
+
+	* mln/value/set.hh: Rename as...
+	* mln/value/internal/iterable_set.hh: ...this.
+	(the): Remove.
+	(E): New.
+	* mln/value/set.hh: New.
+
+	* tests/vset.cc,
+	* tests/histo.cc,
+	* TODO,
+	* mln/core/macros.hh,
+	* mln/core/trait/is_lowq.hh,
+	* mln/core/fimage.hh,
+	* mln/core/image2d_b.hh,
+	* mln/level/naive/median.hh,
+	* mln/level/was.median.hh,
+	* mln/level/fast_median.hh,
+	* mln/level/transform.hh,
+	* mln/level/median.hh,
+	* mln/accu/histo.hh,
+	* mln/accu/median.hh,
+	* mln/accu/median_alt.hh,
+	* mln/value/props.hh,
+	* mln/value/cast.hh,
+	* mln/value/int_u.hh: Update.
+
+2007-07-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Handle constness properly in pixel iterators.
 
 	* mln/core/trait/qlf_value.hh: New.

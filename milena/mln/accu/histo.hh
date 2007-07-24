@@ -51,9 +51,10 @@ namespace mln
     /*! Generic histogram class over a value set with type \c S.
      */
     template <typename S>
-    struct histo_on_set : public Accumulator< histo_on_set<S> >
+    struct histo : public Accumulator< histo<S> >
     {
-      histo_on_set(const Value_Set<S>& s);
+      histo(const Value_Set<S>& s);
+      histo();
 
       typedef mln_value(S) value;
 
@@ -79,41 +80,32 @@ namespace mln
 
 
     template <typename S>
-    std::ostream& operator<<(std::ostream& ostr, const histo_on_set<S>& h);
-
-
-
-
-    /*! Generic histogram class over the set of values of type \c T.
-     *
-     * \todo Inheritance is badly formed since this concrete class
-     * derives from another concrete class.
-     */
-    template <typename T>
-    struct histo_on_type : public histo_on_set< value::set_<T> >
-    {
-      histo_on_type();
-    };
+    std::ostream& operator<<(std::ostream& ostr, const histo<S>& h);
 
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-    // histo_on_set<S>
+    template <typename S>
+    histo<S>::histo(const Value_Set<S>& s)
+      : s_(exact(s)),
+	h_(s_.nvalues(), 0),
+	sum_(0)
+    {
+    }
 
     template <typename S>
-    histo_on_set<S>::histo_on_set(const Value_Set<S>& s)
-      : s_(exact(s)),
-	h_(exact(s).nvalues(), 0),
+    histo<S>::histo()
+      : s_(S::the()),
+	h_(s_.nvalues(), 0),
 	sum_(0)
     {
     }
 
     template <typename S>
     void
-    histo_on_set<S>::take(const value& v)
+    histo<S>::take(const value& v)
     {
       ++h_[s_.index_of(v)];
       ++sum_;
@@ -121,7 +113,7 @@ namespace mln
 
     template <typename S>
     void
-    histo_on_set<S>::untake(const value& v)
+    histo<S>::untake(const value& v)
     {
       mln_precondition(h_[s_.index_of(v)] > 0);
       mln_precondition(sum_ > 0);
@@ -131,7 +123,7 @@ namespace mln
 
     template <typename S>
     void
-    histo_on_set<S>::init()
+    histo<S>::init()
     {
       std::fill(h_.begin(), h_.end(), 0);
       sum_ = 0;
@@ -139,14 +131,14 @@ namespace mln
 
     template <typename S>
     std::size_t
-    histo_on_set<S>::operator()(const value& v) const
+    histo<S>::operator()(const value& v) const
     {
       return h_[s_.index_of(v)];
     }
 
     template <typename S>
     std::size_t
-    histo_on_set<S>::operator[](std::size_t i) const
+    histo<S>::operator[](std::size_t i) const
     {
       mln_precondition(i < s_.nvalues());
       return h_[i];
@@ -154,53 +146,41 @@ namespace mln
     
     template <typename S>
     std::size_t
-    histo_on_set<S>::nvalues() const
+    histo<S>::nvalues() const
     {
       return s_.nvalues();
     }
 
     template <typename S>
     std::size_t
-    histo_on_set<S>::sum() const
+    histo<S>::sum() const
     {
       return sum_;
     }
 
     template <typename S>
     const std::vector<std::size_t>&
-    histo_on_set<S>::vec() const
+    histo<S>::vec() const
     {
       return h_;
     }
     
     template <typename S>
     const S&
-    histo_on_set<S>::vset() const
+    histo<S>::vset() const
     {
       return s_;
     }
 
     template <typename S>
-    std::ostream& operator<<(std::ostream& ostr, const histo_on_set<S>& h)
+    std::ostream& operator<<(std::ostream& ostr, const histo<S>& h)
     {
       mln_viter(S) v(h.vset());
       for_all(v)
 	if (h(v) != 0)
 	  ostr << v << ':' << h(v) << ' ';
-      ostr << std::endl;
       return ostr;
     }
-
-
-    // histo_on_type<T>
-
-    template <typename T>
-    histo_on_type<T>::histo_on_type()
-      : histo_on_set< value::set_<T> >(value::set_<T>::the())
-    {
-    }
-    
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

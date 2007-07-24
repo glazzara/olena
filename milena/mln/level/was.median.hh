@@ -72,7 +72,7 @@ namespace mln
 	  q_bp(win_bkd_plus, p), q_bm(win_bkd_minus, p),
 	  q_top(win_top, p), q_bot(win_bot, p);
 	
-	accu::median_on<mln_value(I)> med;
+	accu::median<mln_vset(I)> med(input.values());
 
 	// initialization
 
@@ -146,7 +146,7 @@ namespace mln
 	int& row = p.row();
 	int& col = p.col();
 
-	accu::median_on<mln_value(I)> med;
+	accu::median<mln_vset(I)> med(input.values());
 
 	for (row = input.min_row(); row <= max_row; ++row)
 	  {

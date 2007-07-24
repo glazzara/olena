@@ -35,29 +35,31 @@
 
 
 
+template <typename T>
+void test()
+{
+  typedef mln::value::set<T> S;
+  S s;
+
+  mln_fwd_viter(S) v(s);
+  for_all(v)
+    std::cout << v << ' ';
+  std::cout << std::endl;
+
+  mln_bkd_viter(S) w(s);
+  for_all(w)
+    std::cout << w << ' ';
+  std::cout << std::endl;
+}
+
+
+
 int main()
 {
   using namespace mln;
 
-  typedef bool T;
-  // typedef value::int_u8 T;
-  // typedef short T;
-
-  typedef value::set_<T> S;
-  S s;
-
-  {
-    S::fwd_viter v(s);
-    for_all(v)
-      std::cout << v << ' ';
-    std::cout << std::endl;
-  }
-
-  {
-    S::bkd_viter v(s);
-    for_all(v)
-      std::cout << v << ' ';
-    std::cout << std::endl;
-  }
-
+  test<bool>();
+//   test<unsigned char>();
+//   test<unsigned short>();
+//   test<value::int_u8>();
 }

@@ -80,10 +80,10 @@ namespace mln
 
 	// aux data
 
+	accu::median<mln_vset(I)> med;
 	mln_point(I) p;
 	window2d     win_fp, win_fm, win_bp, win_bm, win_dp, win_dm;
 	mln_qiter(W)   q_fp,   q_fm,   q_bp,   q_bm,   q_dp,   q_dm;
-	accu::median_on<mln_value(I)> med;
 
 	// ctor
 
@@ -94,6 +94,7 @@ namespace mln
 	  win(exact(win_)),
 	  output(exact(output_)),
 	  // aux data
+	  med(input.values()),
 	  p(),
 	  win_fp(win - (win + left)),   win_fm((win + left)  - win),
 	  win_bp(win - (win + right)),  win_bm((win + right) - win),
@@ -171,7 +172,7 @@ namespace mln
 	coord& row = p.row();
 	coord& col = p.col();
 
-	accu::median_on<mln_value(I)> med;
+	accu::median<mln_vset(I)> med(input.values());
 
 	for (row = input.min_row(); row <= max_row; ++row)
 	  {
