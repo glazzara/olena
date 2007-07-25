@@ -43,36 +43,36 @@ namespace mln
     namespace internal
     {
 
-      template <unsigned n> struct encoding_int_u_;
+      template <unsigned n> struct encoding_unsigned_;
 
-      template <> struct encoding_int_u_<8>  { typedef unsigned char  ret; };
-      template <> struct encoding_int_u_<16> { typedef unsigned short ret; };
-      template <> struct encoding_int_u_<32> { typedef unsigned int   ret; }; // FIXME!!!
-      template <> struct encoding_int_u_<64> { typedef unsigned long  ret; }; // FIXME!!!
+      template <> struct encoding_unsigned_<8>  { typedef unsigned char  ret; };
+      template <> struct encoding_unsigned_<16> { typedef unsigned short ret; };
+      template <> struct encoding_unsigned_<32> { typedef unsigned int   ret; }; // FIXME!!!
+      template <> struct encoding_unsigned_<64> { typedef unsigned long  ret; }; // FIXME!!!
 
-      template <> struct encoding_int_u_<99> { typedef void ret; }; // stopper
+      template <> struct encoding_unsigned_<99> { typedef void ret; }; // stopper
 
       template <unsigned n>
-      struct encoding_int_u_
+      struct encoding_unsigned_
       {
-	typedef typename encoding_int_u_<n+1>::ret ret;
+	typedef typename encoding_unsigned_<n+1>::ret ret;
       };
 
 
 
-      template <unsigned n> struct encoding_int_s_;
+      template <unsigned n> struct encoding_signed_;
 
-      template <> struct encoding_int_s_<8>  { typedef signed char  ret; };
-      template <> struct encoding_int_s_<16> { typedef signed short ret; };
-      template <> struct encoding_int_s_<32> { typedef signed int   ret; }; // FIXME!!!
-      template <> struct encoding_int_s_<64> { typedef signed long  ret; }; // FIXME!!!
+      template <> struct encoding_signed_<8>  { typedef signed char  ret; };
+      template <> struct encoding_signed_<16> { typedef signed short ret; };
+      template <> struct encoding_signed_<32> { typedef signed int   ret; }; // FIXME!!!
+      template <> struct encoding_signed_<64> { typedef signed long  ret; }; // FIXME!!!
 
-      template <> struct encoding_int_s_<99> { typedef void ret; }; // stopper
+      template <> struct encoding_signed_<99> { typedef void ret; }; // stopper
 
       template <unsigned n>
-      struct encoding_int_s_
+      struct encoding_signed_
       {
-	typedef typename encoding_int_s_<n+1>::ret ret;
+	typedef typename encoding_signed_<n+1>::ret ret;
       };
 
 

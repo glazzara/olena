@@ -25,71 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_VALUE_HH
-# define MLN_CORE_CONCEPT_VALUE_HH
+#ifndef MLN_FUN_TO_ENC_HH
+# define MLN_FUN_TO_ENC_HH
 
-/*! \file mln/core/concept/value.hh
- * \brief Definition of the concept of mln::Value.
+/*! \file mln/fun/to_enc.hh
+ *
+ * \brief FIXME.
  */
 
-# include <mln/core/concept/object.hh>
+# include <mln/core/concept/function.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Base class for implementation classes of values.
-   *
-   * \see mln::doc::Value for a complete documentation of this class
-   * contents.
-   */
-  template <typename E>
-  struct Value : public Object<E>
+  namespace fun
   {
-    /*
-      typedef enc;   // encoding type
-      typedef equiv; // equivalent type
-    */
 
-    /// Pre-incrementation.
-    E& operator++();
+    // FIXME: Doc!
 
-    /// Pre-decrementation.
-    E& operator--();
-
-  protected:
-    Value();
-  };
+    template <typename V>
+    struct to_enc : public Function_v2v< to_enc<V> >
+    {
+      typedef typename V::enc result;
+      result operator()(const V& v) const;
+    };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename E>
-  Value<E>::Value()
-  {
-    typedef mln_enc(E) enc;
-    typedef mln_equiv(E) equiv;
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator++()
-  {
-    exact(this)->operator+=(E::one);
-    return exact(*this);
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator--()
-  {
-    exact(this)->operator-=(E::one);
-    return exact(*this);
-  }
+    template <typename V>
+    typename V::enc
+    to_enc<V>::operator()(const V& v) const
+    {
+      return v.to_enc();
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_VALUE_HH
+#endif // ! MLN_FUN_TO_ENC_HH

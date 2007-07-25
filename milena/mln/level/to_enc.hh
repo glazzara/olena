@@ -25,71 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_VALUE_HH
-# define MLN_CORE_CONCEPT_VALUE_HH
+#ifndef MLN_LEVEL_TO_ENC_HH
+# define MLN_LEVEL_TO_ENC_HH
 
-/*! \file mln/core/concept/value.hh
- * \brief Definition of the concept of mln::Value.
+/*! \file mln/level/to_enc.hh
+ *
+ * \brief Transform with fun::to_enc the contents of an image into
+ * another one.
  */
 
-# include <mln/core/concept/object.hh>
+# include <mln/level/transform.hh>
+# include <mln/fun/to_enc.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Base class for implementation classes of values.
-   *
-   * \see mln::doc::Value for a complete documentation of this class
-   * contents.
-   */
-  template <typename E>
-  struct Value : public Object<E>
+  namespace level
   {
-    /*
-      typedef enc;   // encoding type
-      typedef equiv; // equivalent type
-    */
 
-    /// Pre-incrementation.
-    E& operator++();
-
-    /// Pre-decrementation.
-    E& operator--();
-
-  protected:
-    Value();
-  };
+    /*! Set the \p output image with the encoding values of the image \p input pixels.
+     *
+     * \param[in] input The input image.
+     * \param[out] output The result image.
+     *
+     * \pre \p output.domain >= \p input.domain
+     */
+    template <typename I, typename O>
+    void to_enc(const Image<I>& input, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename E>
-  Value<E>::Value()
-  {
-    typedef mln_enc(E) enc;
-    typedef mln_equiv(E) equiv;
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator++()
-  {
-    exact(this)->operator+=(E::one);
-    return exact(*this);
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator--()
-  {
-    exact(this)->operator-=(E::one);
-    return exact(*this);
-  }
+    template <typename I, typename O>
+    void to_enc(const Image<I>& input, Image<O>& output)
+    {
+      mln_precondition(exact(output).domain() >= exact(input).domain());
+      level::transform(input, fun::to_enc< mln_value(I) >(), output);
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::level
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_VALUE_HH
+#endif // ! MLN_LEVEL_TO_ENC_HH

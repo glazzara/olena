@@ -69,6 +69,9 @@ namespace mln
 	
 	/// Explicit convertion towards equivalent type.
 	V to_equiv() const;
+	
+	/// Explicit convertion towards encoding type.
+	V to_enc() const;
 
 	/// Assignment from equivalent type.
 	E& operator=(const V& v);
@@ -107,6 +110,13 @@ namespace mln
       template <typename V, typename E>
       V
       value_like_<V, E>::to_equiv() const
+      {
+	return v_;
+      }
+
+      template <typename V, typename E>
+      V
+      value_like_<V, E>::to_enc() const
       {
 	return v_;
       }

@@ -38,6 +38,7 @@
 
 # include <mln/core/macros.hh>
 # include <mln/value/kind.hh>
+# include <mln/metal/bool.hh>
 
 
 /// Get the minimum value of type \c T.
@@ -49,11 +50,15 @@
 
 
 /// Get the number of values for value type \c T.
-# define mln_card(T) mln::value::props< T >::card
+# define mln_card_(T) mln::value::props< T >::card_
 
 
 /// Get the kind of value type \c T.
 # define mln_kind(T) typename mln::value::props< T >::kind
+
+
+/// Test is the value type \c T is low quantized.
+# define mln_is_lowq(T) typename metal::bool_<( mln_card_(T) != 0 )>::type
 
 
 
@@ -72,9 +77,27 @@ namespace mln
     struct props
     {
       typedef data_kind kind;
-      static const std::size_t card = 0;
+      static const std::size_t card_ = 0;
     };
 
+
+    namespace internal
+    {
+
+      template <typename T>
+      struct convert_
+      {
+	static T value_at_index(std::size_t i)
+	{
+	  return mln_min(T) + i;
+	}
+	static std::size_t index_of_value(const T& v)
+	{
+	  return v - mln_min(T);
+	}
+      };
+
+    } // end of namespace mln::value::internal
 
 
     // bool
@@ -84,7 +107,7 @@ namespace mln
     {
       static const bool min = false;
       static const bool max = true;
-      static const std::size_t card = 2;
+      static const std::size_t card_ = 2;
       typedef binary_kind kind;
     };
 
@@ -96,7 +119,7 @@ namespace mln
     {
       static const unsigned char min =   0;
       static const unsigned char max = 255;
-      static const std::size_t  card = 256;
+      static const std::size_t  card_ = 256;
       typedef data_kind kind;
     };
 
@@ -105,7 +128,7 @@ namespace mln
     {
       static const signed char  min = -128;
       static const signed char  max =  127;
-      static const std::size_t card =  256;
+      static const std::size_t card_ =  256;
       typedef data_kind kind;
     };
 
@@ -114,7 +137,7 @@ namespace mln
     {
       static const unsigned short min =     0;
       static const unsigned short max = 65535;
-      static const std::size_t   card = 65536;
+      static const std::size_t   card_ = 65536;
       typedef data_kind kind;
     };
 
@@ -123,7 +146,7 @@ namespace mln
     {
       static const signed short min = -32768;
       static const signed short max =  32767;
-      static const std::size_t card = 655356;
+      static const std::size_t card_ = 655356;
       typedef data_kind kind;
     };
 
@@ -133,7 +156,7 @@ namespace mln
       static const unsigned int min = 0;
       static const unsigned int max = UINT_MAX;
       typedef data_kind kind;
-      static const std::size_t card = 0;
+      static const std::size_t card_ = 0;
     };
 
     template <>
@@ -142,7 +165,7 @@ namespace mln
       static const signed int  min = INT_MIN;
       static const signed int  max = INT_MAX;
       typedef data_kind kind;
-      static const std::size_t card = 0;
+      static const std::size_t card_ = 0;
     };
 
     template <>
@@ -151,7 +174,7 @@ namespace mln
       static const unsigned long int min = 0;
       static const unsigned long int max = ULONG_MAX;
       typedef data_kind kind;
-      static const std::size_t card = 0;
+      static const std::size_t card_ = 0;
     };
 
     template <>
@@ -160,7 +183,7 @@ namespace mln
       static const signed long int min = LONG_MIN;
       static const signed long int max = LONG_MAX;
       typedef data_kind kind;
-      static const std::size_t card = 0;
+      static const std::size_t card_ = 0;
     };
 
 
@@ -172,7 +195,7 @@ namespace mln
       static const float min() { return FLT_MIN; }
       static const float max() { return FLT_MAX; }
       typedef data_kind kind;
-      static const std::size_t card = 0;
+      static const std::size_t card_ = 0;
     };
 
     template <>
@@ -181,7 +204,7 @@ namespace mln
       static const double min() { return DBL_MIN; }
       static const double max() { return DBL_MAX; }
       typedef data_kind kind;
-      static const std::size_t card = 0;
+      static const std::size_t card_ = 0;
     };
 
   } // end of namespace mln::value

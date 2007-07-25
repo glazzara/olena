@@ -25,41 +25,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TRAIT_IS_LOWQ_HH
-# define MLN_CORE_TRAIT_IS_LOWQ_HH
-
-/*! \file mln/core/trait/is_lowq.hh
+/*! \file tests/labeling.cc
  *
- * \brief Definition of the is_lowq image trait.
+ * \brief Tests on mln::level::labeling.
  */
 
-# include <mln/metal/bool.hh>
-# include <mln/value/props.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/neighb2d.hh>
+
+#include <mln/value/int_u8.hh>
+#include <mln/value/label.hh>
+
+#include <mln/pw/value.hh>
+#include <mln/pw/cst.hh>
+#include <mln/fun/ops.hh>
+
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
+
+#include <mln/level/fill.hh>
+#include <mln/level/labeling.hh>
+#include <mln/level/to_enc.hh>
 
 
-# define mln_is_lowq(T)  typename mln::trait::is_lowq< T >::ret
 
-
-
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
+  using value::label;
 
-  namespace trait
+  image2d_b<int_u8> lena = io::load_pgm("../img/lena.pgm");
+
+  image2d_b<bool> bin(lena.domain());
+  level::fill(bin, pw::value(lena) > pw::cst(127));
+
   {
+    image2d_b<int_u8> lab(lena.domain());
+    level::labeling(bin, c4(), lab);
+    io::save_pgm(lab, "lab.pgm");
+  }
 
+  {
+    image2d_b< label<8> > lab(lena.domain());
+    level::labeling(bin, c4(), lab);
+    
+    image2d_b< int_u8 > out(lena.domain());
+    level::to_enc(lab, out);
+    io::save_pgm(out, "out.pgm");
+  }
 
-    // FIXME: Doc!
-
-    template <typename T>
-    struct is_lowq
-    {
-      typedef typename metal::bool_<( mln_card(T) != 0 )>::type ret;
-    };
-
-
-  } // end of namespace mln::trait
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_TRAIT_IS_LOWQ_HH
+}

@@ -25,71 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_VALUE_HH
-# define MLN_CORE_CONCEPT_VALUE_HH
-
-/*! \file mln/core/concept/value.hh
- * \brief Definition of the concept of mln::Value.
+/*! \file tests/label.cc
+ *
+ * \brief Tests on mln::value::label.
  */
 
-# include <mln/core/concept/object.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/label.hh>
 
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
+  using value::label;
 
-  /*! \brief Base class for implementation classes of values.
-   *
-   * \see mln::doc::Value for a complete documentation of this class
-   * contents.
-   */
-  template <typename E>
-  struct Value : public Object<E>
-  {
-    /*
-      typedef enc;   // encoding type
-      typedef equiv; // equivalent type
-    */
-
-    /// Pre-incrementation.
-    E& operator++();
-
-    /// Pre-decrementation.
-    E& operator--();
-
-  protected:
-    Value();
-  };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <typename E>
-  Value<E>::Value()
-  {
-    typedef mln_enc(E) enc;
-    typedef mln_equiv(E) equiv;
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator++()
-  {
-    exact(this)->operator+=(E::one);
-    return exact(*this);
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator--()
-  {
-    exact(this)->operator-=(E::one);
-    return exact(*this);
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_CONCEPT_VALUE_HH
+  int_u8 i = 51;
+  label<8> l = 50;
+  ++l;
+  mln_assertion(l == l);
+  mln_assertion(i == l.to_enc());  
+}

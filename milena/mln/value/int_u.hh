@@ -37,7 +37,6 @@
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/internal/encoding.hh>
 # include <mln/value/props.hh>
-# include <mln/value/set.hh>
 # include <mln/debug/format.hh>
 
 
@@ -54,11 +53,11 @@ namespace mln
      */
     template <unsigned n>
     struct int_u
-      : public internal::value_like_< typename internal::encoding_int_u_<n>::ret,
+      : public internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
 				      int_u<n> >
     {
     protected:
-      typedef internal::value_like_< typename internal::encoding_int_u_<n>::ret,
+      typedef internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
 				     int_u<n> > super;
 
     public:
@@ -77,6 +76,12 @@ namespace mln
 
       /// Unit value.
       static const int_u<n> one;
+
+      /// Self addition.
+      int_u<n>& operator+=(int i);
+
+      /// Self subtraction.
+      int_u<n>& operator-=(int i);
     };
 
 
@@ -89,9 +94,9 @@ namespace mln
     template <unsigned n>
     struct props< int_u<n> >
     {
-      static const std::size_t card = metal::pow<2, n>::value;
+      static const std::size_t card_ = metal::pow<2, n>::value;
       static const int_u<n> min; // = 0
-      static const int_u<n> max; // = card - 1
+      static const int_u<n> max; // = card_ - 1
       static const unsigned nbits = n;
       typedef data_kind kind;
     };
@@ -122,6 +127,26 @@ namespace mln
       mln_precondition(i >= 0);
       mln_precondition(i <= mln_max(enc));
       this->v_ = enc(i);
+    }
+
+    template <unsigned n>
+    int_u<n>&
+    int_u<n>::operator+=(int i)
+    {
+      mln_precondition(long(this->v_) + i >= 0);
+      mln_precondition(long(this->v_) + i <= mln_max(enc));
+      this->v_ += i;
+      return *this;
+    }
+
+    template <unsigned n>
+    int_u<n>&
+    int_u<n>::operator-=(int i)
+    {
+      mln_precondition(long(this->v_) - i >= 0);
+      mln_precondition(long(this->v_) - i <= mln_max(enc));
+      this->v_ -= i;
+      return *this;
     }
 
     template <unsigned n>

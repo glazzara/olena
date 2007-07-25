@@ -37,7 +37,6 @@
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/internal/encoding.hh>
 # include <mln/value/props.hh>
-# include <mln/value/set.hh>
 # include <mln/debug/format.hh>
 
 
@@ -54,11 +53,11 @@ namespace mln
      */
     template <unsigned n>
     struct int_s
-      : public internal::value_like_< typename internal::encoding_int_s_<n>::ret,
+      : public internal::value_like_< typename internal::encoding_signed_<n>::ret,
 				      int_s<n> >
     {
     protected:
-      typedef internal::value_like_< typename internal::encoding_int_s_<n>::ret,
+      typedef internal::value_like_< typename internal::encoding_signed_<n>::ret,
 				     int_s<n> > super;
 
     public:
@@ -80,6 +79,12 @@ namespace mln
 
       /// Unit value.
       static const int_s<n> one;
+
+      /// Self addition.
+      int_s<n>& operator+=(int i);
+
+      /// Self subtraction.
+      int_s<n>& operator-=(int i);
     };
 
 
@@ -89,7 +94,7 @@ namespace mln
     {
       static const int_s<n> max; // = 2^(n-1) - 1
       static const int_s<n> min; // = - max
-      static const std::size_t card = metal::pow<2, n>::value;
+      static const std::size_t card_ = metal::pow<2, n>::value;
       static const unsigned nbits = n;
       typedef data_kind kind;
     };
@@ -128,9 +133,30 @@ namespace mln
     }
 
     template <unsigned n>
-    int_s<n> int_s<n>::operator-() const
+    int_s<n>
+    int_s<n>::operator-() const
     {
       return - this->v_;
+    }
+
+    template <unsigned n>
+    int_s<n>&
+    int_s<n>::operator+=(int i)
+    {
+      mln_precondition(long(this->v_) + i >= mln_min(enc));
+      mln_precondition(long(this->v_) + i <= mln_max(enc));
+      this->v_ += i;
+      return *this;
+    }
+
+    template <unsigned n>
+    int_s<n>&
+    int_s<n>::operator-=(int i)
+    {
+      mln_precondition(long(this->v_) - i >= mln_min(enc));
+      mln_precondition(long(this->v_) - i <= mln_max(enc));
+      this->v_ -= i;
+      return *this;
     }
 
     template <unsigned n>

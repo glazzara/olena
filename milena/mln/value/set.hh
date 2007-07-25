@@ -34,7 +34,7 @@
  */
 
 # include <mln/value/internal/iterable_set.hh>
-# include <mln/core/trait/is_lowq.hh>
+# include <mln/value/props.hh>
 
 
 namespace mln
@@ -43,26 +43,17 @@ namespace mln
   namespace value
   {
 
-
-    // Fwd decl.
-    template <typename T> struct set;    
-
-
     namespace internal
     {
 
-      template <typename T, typename lowq = metal::false_ >
-      struct run_set_selector_ // no inheritance
+      template <typename T, typename E, typename is_lowq = metal::false_>
+      struct set_selector_ // no inheritance
       {};
 
-      template <typename T>
-      struct run_set_selector_< T, metal::true_ > // lowq so iterable
+      template <typename T, typename E>
+      struct set_selector_< T, E, metal::true_ > // lowq so iterable
 	:
-	public iterable_set< T, mln::value::set<T> >
-      {};
-
-      template <typename T>
-      struct set_selector_ : public run_set_selector_< T, mln_is_lowq(T) >
+	public iterable_set< T, E >
       {};
 
     } // end of namespace mln::value::internal
@@ -74,7 +65,7 @@ namespace mln
      * This is the exhaustive set of values obtainable from type \c T.
      */
     template <typename T>
-    struct set : public internal::set_selector_<T>
+    struct set : public internal::set_selector_< T, set<T>, mln_is_lowq(T) >
     {
       /// Return a singleton.
       static const set<T>& the();

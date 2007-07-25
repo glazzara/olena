@@ -1,5 +1,35 @@
 2007-07-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a label type and labeling.
+
+	* tests/labeling.cc: New.
+	* tests/label.cc: New.
+	* mln/fun/to_enc.hh: New.
+	* mln/level/to_enc.hh: New.
+	* mln/level/labeling.hh: New.
+	* mln/value/label.hh: New.
+	* img/tiny.pgm: New.
+
+	* tests/README: Fix missing CR.
+	* doc/Doxyfile.in: Update.
+	* mln/core/trait/is_lowq.hh: Remove.
+	* mln/core/trait/all.hh: Update.
+	* mln/core/macros.hh: Update.
+	* mln/value/set.hh: Update.
+	* mln/core/concept/value.hh (++, --): New.
+	* mln/level/fill.hh (memset): Force cast.
+	* mln/value/lut_vec.hh: Fix warning.
+	* mln/value/props.hh (card, mln_card): Rename as...
+	(card_, mln_card_): ...these.
+	(convert_): New.
+	* mln/value/int_s.hh (+=, -=): New.
+	* mln/value/int_u.hh: Likewise.
+	* mln/value/internal/iterable_set.hh: Use convert_.
+	* mln/value/internal/encoding.hh: Factor names.
+	* mln/value/internal/value_like.hh (to_enc): New.
+
+2007-07-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add pset and pvec point sets.
 
 	* tests/sort_points.cc: New.

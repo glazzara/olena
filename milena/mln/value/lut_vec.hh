@@ -131,8 +131,7 @@ namespace mln
     T
     lut_vec<S,T>::operator()(const mln_value(S)& val) const
     {
-      unsigned i = vset_.index_of(val);
-      mln_precondition(i < n_);
+      mln_precondition(vset_.index_of(val) < n_);
       return vec_[vset_.index_of(val)];
     }
 

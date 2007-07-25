@@ -45,7 +45,6 @@ namespace mln
 
 
 # include <mln/core/trait/is_fast.hh>
-# include <mln/core/trait/is_lowq.hh>
 # include <mln/core/trait/pixter.hh>
 
 

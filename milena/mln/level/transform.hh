@@ -80,6 +80,7 @@ namespace mln
 	  output(p) = f( input(p) );
       }
 
+
       template <typename I, typename F, typename O>
       void transform(metal::true_, // low quantization
 		     const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
@@ -93,6 +94,7 @@ namespace mln
 	for_all(p)
 	  output(p) = lut(input(p));
       }
+
 
 //       template <typename I, typename F, typename O>
 //       void transform(metal::true_, // low quantization

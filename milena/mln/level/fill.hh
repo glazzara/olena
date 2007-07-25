@@ -146,7 +146,7 @@ namespace mln
 	if (sizeof(mln_value(I)) == 1)
 	  {
 	    std::memset((void*)(ima.buffer()),
-			value,
+			*(const int*)(& value), // violent cast
 			sizeof(mln_value(I)) * ima.ncells());
 	  }
  	else

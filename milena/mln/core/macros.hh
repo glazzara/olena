@@ -152,7 +152,7 @@
 # define mln_value_kind(I) typename mln::value::props< mln_value(I) >::kind
 
 /// Shortcut to test if the values of an image with type \c I are lowly quantifized.
-# define mln_is_value_lowq(I)  typename mln::trait::is_lowq< mln_value(I) >::ret
+# define mln_is_value_lowq(I)  mln_is_lowq( mln_value(I) )
 
 /// Shortcut to access the type of value set (vset) associated to T.
 # define mln_vset(T)       typename T::vset
