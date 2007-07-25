@@ -25,45 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/histo.cc
+/*! \file tests/pset.cc
  *
- * \brief Tests on mln::accu::histo<S> and mln::histo::data<S>.
+ * \brief Tests on mln::pset.
  */
 
 #include <iterator>
 
-#include <mln/core/image2d_b.hh>
-#include <mln/value/int_u8.hh>
-
-#include <mln/debug/iota.hh>
-#include <mln/accu/histo.hh>
-#include <mln/histo/compute.hh>
+#include <mln/core/point2d.hh>
+#include <mln/core/pset.hh>
 
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  {
-    accu::histo< value::set<bool> > h;
-    
-    for (unsigned i = 0; i < 5; ++i)
-      h.take(false);
-    for (unsigned i = 0; i < 2; ++i)
-      h.take(true);
-    h.untake(true);
-    
-    mln_assertion(h[0] * 10 + h[1] == 51);
-    mln_assertion(h(false) * 10 + h(true) == 51);
-  }
+  pset<point2d> ps;
+  ps
+    .insert(make::point2d(6, 9))
+    .insert(make::point2d(4, 2))
+    .insert(make::point2d(4, 2))
+    .insert(make::point2d(5, 1));
+  mln_assertion(ps.npoints() == 3);
 
-  {
-    image2d_b<int_u8> ima(3, 3);
-    debug::iota(ima);
-    histo::data< value::set<int_u8> > h = histo::compute(ima);
-    std::cout << h << std::endl;
-  }
+  std::cout << ps.bbox() << std::endl;
 
+  std::copy(ps.vect().begin(), ps.vect().end(),
+	    std::ostream_iterator<point2d>(std::cout, " "));
+  std::cout << std::endl;
+
+  
 }

@@ -59,6 +59,8 @@ namespace mln
      *
      * The parameter \c E is the element type, which shall not be
      * const-qualified.
+     *
+     * \todo Add a remove method.
      */
     template <typename E>
     class set_of_
@@ -123,7 +125,7 @@ namespace mln
        *
        * \return An array (std::vector) of elements.
        */
-      const std::vector<E>& vec() const;
+      const std::vector<E>& vect() const;
 
     protected:
 
@@ -245,7 +247,7 @@ namespace mln
 
     template <typename E>
     const std::vector<E>&
-    set_of_<E>::vec() const
+    set_of_<E>::vect() const
     {
       if (needs_update_)
 	update_();

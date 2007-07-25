@@ -25,15 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_HISTO_SORT_HH
-# define MLN_HISTO_SORT_HH
+#ifndef MLN_LEVEL_SORT_POINTS_HH
+# define MLN_LEVEL_SORT_POINTS_HH
 
-/*! \file mln/histo/sort.hh
+/*! \file mln/level/sort_points.hh
  *
- * \brief Routine to sort an histogram.
+ * \brief Sort_Points the contents of an image into another one.
  */
 
 # include <vector>
+# include <utility>
+# include <algorithm>
 
 # include <mln/core/concept/image.hh>
 # include <mln/histo/compute.hh>
@@ -42,16 +44,18 @@
 namespace mln
 {
 
-  namespace histo
+  namespace level
   {
 
-    /// Sort points of image \p input by decreasing values.
+    /*! Sort points the image \p input through a function \p f to set
+     *  the \p output image.
+     *
+     * \param[in] input The input image.
+     *
+     * \pre \p input.has_data
+     */
     template <typename I>
-    std::vector<mln_point(I)> sort_points_decreasing(const Image<I>& input);
-
-    /// Sort points of image \p input by increasing values.
-    template <typename I>
-    std::vector<mln_point(I)> sort_points_increasing(const Image<I>& input);
+    std::vector<mln_point(I)> sort_points(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -60,45 +64,55 @@ namespace mln
     {
 
       template <typename I>
-      std::vector<mln_point(I)>
-      sort_points_decreasing(const Image<I>& input_)
+      struct value_point_less_
       {
-	const I& input = exact(input_);
+	const I& ima_;
 
-	typedef mln_vset(I) S;
-	const S& vset = input.values();
-	const unsigned n = vset.nvalues();
+	value_point_less_(const I& ima)
+	  : ima_(ima)
+	{
+	}
 
-	// h
-	histo::data<S> h = compute(input);
+	bool operator()(const mln_point(I)& lhs,
+			const mln_point(I)& rhs) const
+	{
+	  return ima_(lhs) < ima_(rhs) || (ima_(lhs) == ima_(rhs)
+					   && lhs < rhs);
+	}
+      };
 
-	// preparing output data
-	std::vector<unsigned> loc(vset.nvalues());
-	loc[n-1] = 0;
-	for (unsigned i = n - 2; i != 0; --i) 
-	  loc[i] = loc[i+1] + h[i+1];
+      template <typename I>
+      std::vector<mln_point(I)>
+      sort_points(metal::false_, // general case
+		  const Image<I>& input_)
+      {
+	const I& input  = exact(input_);
 
-	// computing output data
-	std::vector<mln_point(I)> vec(input.npoints());
+	std::vector<mln_point(I)> vec;
+	vec.reserve(input.npoints());
+
 	mln_fwd_piter(I) p(input.domain());
 	for_all(p)
-	  vec[loc[vset.index_of(input(p))]++] = p;
+	  vec.push_back(p);
 
+	std::sort(vec.begin(), vec.end(),
+		  value_point_less_<I>(input));		  
 	return vec;
       }
 
       template <typename I>
       std::vector<mln_point(I)>
-      sort_points_increasing(const Image<I>& input_)
+      sort_points(metal::true_, // low quantization
+		  const Image<I>& input_)
       {
-	const I& input = exact(input_);
+	const I& input  = exact(input_);
 
 	typedef mln_vset(I) S;
 	const S& vset = input.values();
 	const unsigned n = vset.nvalues();
 
 	// h
-	histo::data<S> h = compute(input);
+	histo::data<S> h = histo::compute(input);
 
 	// preparing output data
 	std::vector<unsigned> loc(vset.nvalues());
@@ -106,6 +120,13 @@ namespace mln
 	for (unsigned i = 1; i != n; ++i) 
 	  loc[i] = loc[i-1] + h[i-1];
 
+	/*
+	  MEMO. Decreasing case is:
+	    loc[n-1] = 0;
+	    for (unsigned i = n - 2; i != 0; --i) 
+	      loc[i] = loc[i+1] + h[i+1];
+	*/
+
 	// computing output data
 	std::vector<mln_point(I)> vec(input.npoints());
 	mln_fwd_piter(I) p(input.domain());
@@ -115,33 +136,23 @@ namespace mln
 	return vec;
       }
 
-    } // end of namespace mln::histo::impl
+    } // end of namespace mln::level::impl
 
 
     template <typename I>
     std::vector<mln_point(I)>
-    sort_points_decreasing(const Image<I>& input)
+    sort_points(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      mln_precondition(exact(input).values().nvalues() > 1); // FIXME
-      return impl::sort_points_decreasing(exact(input));
+      return impl::sort_points(mln_is_value_lowq(I)(), exact(input));
     }
 
-
-    template <typename I>
-    std::vector<mln_point(I)>
-    sort_points_increasing(const Image<I>& input)
-    {
-      mln_precondition(exact(input).has_data());
-      mln_precondition(exact(input).values().nvalues() > 1); // FIXME
-      return impl::sort_points_increasing(exact(input));
-    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::histo
+  } // end of namespace mln::level
 
 } // end of namespace mln
 
 
-#endif // ! MLN_HISTO_SORT_HH
+#endif // ! MLN_LEVEL_SORT_POINTS_HH

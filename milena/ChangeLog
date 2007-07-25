@@ -1,3 +1,22 @@
+2007-07-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add pset and pvec point sets.
+
+	* tests/sort_points.cc: New.
+	* tests/pset.cc: New.
+	* tests/histo.cc: Update.
+	* mln/histo/sort.hh: Rename as...
+	* mln/level/sort_points.hh: ...this new file.
+	(sort_points): New overload.
+	* mln/histo/data.hh (vec): Rename as...
+	(vect): ...this.
+	* mln/core/dpoints_piter.hh: Update.
+	* mln/core/pvec.hh: New.
+	* mln/core/pset.hh: New.
+	* mln/core/internal/set_of.hh: Update.
+	* mln/accu/histo.hh: Update.
+	* mln/accu/bbox.hh: New.
+
 2007-07-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add int_s, an histogram class, and distributed sort.

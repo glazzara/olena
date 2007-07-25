@@ -60,7 +60,7 @@ namespace mln
       std::size_t operator()(const value& v) const;
       std::size_t& operator()(const value& v);
 
-      const std::vector<std::size_t>& vec() const;
+      const std::vector<std::size_t>& vect() const;
       const S& vset() const;
       std::size_t operator[](unsigned i) const;
       
@@ -124,7 +124,7 @@ namespace mln
 
     template <typename S>
     const std::vector<std::size_t>&
-    data<S>::vec() const
+    data<S>::vect() const
     {
       return h_;
     }

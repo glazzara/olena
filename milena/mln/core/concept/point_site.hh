@@ -62,7 +62,7 @@ namespace mln
    */
   template <typename E>
   struct Point_Site : public Object<E>,
-		 public Generalized_Point<E>
+		      public Generalized_Point<E>
   {
     /*
     const point* pointer_() const

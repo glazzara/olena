@@ -51,7 +51,7 @@ namespace mln
    */
   template <typename E>
   struct Point_Iterator : public Iterator<E>,
-		 public Generalized_Point<E>
+			  public Generalized_Point<E>
   {
     /*
       typedef psite;

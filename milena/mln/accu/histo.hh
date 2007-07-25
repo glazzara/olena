@@ -67,7 +67,7 @@ namespace mln
       std::size_t nvalues() const;
       std::size_t sum() const;
 
-      const std::vector<std::size_t>& vec() const;
+      const std::vector<std::size_t>& vect() const;
 
       const S& vset() const;
       
@@ -160,7 +160,7 @@ namespace mln
 
     template <typename S>
     const std::vector<std::size_t>&
-    histo<S>::vec() const
+    histo<S>::vect() const
     {
       return h_;
     }

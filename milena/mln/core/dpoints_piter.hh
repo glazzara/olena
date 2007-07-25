@@ -118,7 +118,7 @@ namespace mln
   template <typename Dps, typename Pref>
   dpoints_fwd_piter<D>::dpoints_fwd_piter(const Dps& dps,
 					  const Generalized_Point<Pref>& p_ref)
-    : dps_(exact(dps).vec()),
+    : dps_(exact(dps).vect()),
       p_ref_(* internal::force_exact<Pref>(p_ref).pointer_())
   {
     invalidate();
