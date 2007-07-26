@@ -27,10 +27,10 @@
 
 /*! \file tests/rectangle2d.cc
  *
- * \brief Tests on mln::rectangle2d.
+ * \brief Tests on mln::win/rectangle2d.
  */
 
-#include <mln/core/rectangle2d.hh>
+#include <mln/core/win/rectangle2d.hh>
 
 
 
@@ -39,7 +39,7 @@ int main()
   using namespace mln;
 
   const unsigned h = 3, w = 5;
-  rectangle2d rec(h, w);
+  win::rectangle2d rec(h, w);
 
   mln_assertion(rec.is_centered());
   mln_assertion(rec.is_symmetric());

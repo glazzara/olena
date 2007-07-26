@@ -35,7 +35,7 @@
  */
 
 # include <mln/level/transform.hh>
-# include <mln/fun/to_enc.hh>
+# include <mln/fun/v2v/enc.hh>
 
 
 namespace mln
@@ -61,7 +61,7 @@ namespace mln
     void to_enc(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() >= exact(input).domain());
-      level::transform(input, fun::to_enc< mln_value(I) >(), output);
+      level::transform(input, fun::v2v::enc< mln_value(I) >(), output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

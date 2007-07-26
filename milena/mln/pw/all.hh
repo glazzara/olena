@@ -25,23 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/subimage.cc
+#ifndef MLN_PW_ALL_HH
+# define MLN_PW_ALL_HH
+
+/*! \file mln/fun/pw/all.hh
  *
- * \brief Tests on mln::subimage.
+ * \brief File that includes all "point-wise" expression tools.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/subimage.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/debug/println.hh>
 
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  image2d_b<int> ima(8, 8);
-  debug::println(ima | fun::p2b::chess);
+  /*! Namespace of "point-wise" expression tools.
+   */
+  namespace pw {}
 
-  // mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
-}
+} // end of namespace mln
+
+
+# include <mln/pw/value.hh>
+# include <mln/pw/cst.hh>
+# include <mln/pw/var.hh>
+
+# include <mln/fun/ops.hh>
+
+
+#endif // ! MLN_PW_ALL_HH

@@ -137,17 +137,17 @@ namespace mln
 	//                    -->  call stage 2: dispatch w.r.t. the value kind
       }
 
-#  ifdef MLN_CORE_RECTANGLE2D_HH
+#  ifdef MLN_CORE_WIN_RECTANGLE2D_HH
 
       template <typename I, typename O>
-      void erosion_wrt_win(const Image<I>& input, const rectangle2d& win, Image<O>& output)
+      void erosion_wrt_win(const Image<I>& input, const win::rectangle2d& win, Image<O>& output)
       {
 	O tmp(exact(output).domain());
-	morpho::erosion(input, hline2d(win.width()),  tmp);
-	morpho::erosion(tmp,   vline2d(win.height()), output);
+	morpho::erosion(input, win::hline2d(win.width()),  tmp);
+	morpho::erosion(tmp,   win::vline2d(win.height()), output);
       }
 
-#  endif // MLN_CORE_RECTANGLE2D_HH
+#  endif // MLN_CORE_WIN_RECTANGLE2D_HH
 
       //   ^
       //   |

@@ -25,47 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_TO_ENC_HH
-# define MLN_FUN_TO_ENC_HH
-
-/*! \file mln/fun/to_enc.hh
- *
- * \brief FIXME.
- */
-
-# include <mln/core/concept/function.hh>
+#ifndef MLN_METAL_EQUAL_HH
+# define MLN_METAL_EQUAL_HH
 
 
 namespace mln
 {
 
-  namespace fun
+  namespace metal
   {
 
-    // FIXME: Doc!
-
-    template <typename V>
-    struct to_enc : public Function_v2v< to_enc<V> >
+    template <typename T1, typename T2>
+    struct equal
     {
-      typedef typename V::enc result;
-      result operator()(const V& v) const;
+    };
+
+    template <typename T>
+    struct equal< T, T >
+    {
+      static void check() {}
     };
 
 
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename V>
-    typename V::enc
-    to_enc<V>::operator()(const V& v) const
-    {
-      return v.to_enc();
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::fun
+  } // end of namespace mln::metal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_TO_ENC_HH
+#endif // ! MLN_METAL_EQUAL_HH

@@ -25,23 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/subimage.cc
+#ifndef MLN_MATH_ALL_HH
+# define MLN_MATH_ALL_HH
+
+/*! \file mln/math/all.hh
  *
- * \brief Tests on mln::subimage.
+ * \brief File that includes all mathematical routines.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/subimage.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/debug/println.hh>
 
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  image2d_b<int> ima(8, 8);
-  debug::println(ima | fun::p2b::chess);
+  /*! Namespace of mathematical routines.
+   */
+  namespace math {}
 
-  // mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
 }
+
+
+# include <mln/math/sign.hh>
+# include <mln/math/abs.hh>
+# include <mln/math/min.hh>
+# include <mln/math/max.hh>
+
+
+
+#endif // ! MLN_MATH_ALL_HH

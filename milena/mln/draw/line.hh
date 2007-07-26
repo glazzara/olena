@@ -25,23 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/subimage.cc
+#ifndef MLN_DRAW_LINE_HH
+# define MLN_DRAW_LINE_HH
+
+/*! \file mln/draw/line.hh
  *
- * \brief Tests on mln::subimage.
+ * \brief Draw a line in an image.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/subimage.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/debug/println.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/line2d.hh>
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  image2d_b<int> ima(8, 8);
-  debug::println(ima | fun::p2b::chess);
+  namespace draw
+  {
 
-  // mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
-}
+    /// Draw a line at level \p v in image \p ima between the points \p beg and \p end.
+    template <typename I>
+    void line(Image<I>& ima,
+	      const mln_point(I)& beg, const mln_point(I)& end,
+	      const mln_value(I)& v);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    namespace impl
+    {
+
+      template <typename I>
+      void line(I& ima,
+		const point2d& beg, const point2d& end,
+		const mln_value(I)& v)
+      {
+	line2d l(beg, end);
+	mln_piter(line2d) p(l);
+	for_all(p)
+	  ima(p) = v;
+      }
+
+      // FIXME: Overload.
+
+    } // end of namespace mln::draw::impl
+
+
+    // Facade.
+
+    template <typename I>
+    void line(Image<I>& ima,
+	      const mln_point(I)& beg, const mln_point(I)& end,
+	      const mln_value(I)& v)
+    {
+      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).has(beg) && exact(ima).has(end));
+      impl::line(exact(ima), beg, end, v);
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::draw
+
+} // end of namespace mln
+
+
+#endif // ! MLN_DRAW_LINE_HH

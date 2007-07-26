@@ -25,23 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/subimage.cc
- *
- * \brief Tests on mln::subimage.
- */
+#ifndef MLN_METAL_SAME_COORD_HH
+# define MLN_METAL_SAME_COORD_HH
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/subimage.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/debug/println.hh>
+# include <mln/metal/equal.hh>
+# include <mln/core/macros.hh>
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  image2d_b<int> ima(8, 8);
-  debug::println(ima | fun::p2b::chess);
+  namespace metal
+  {
 
-  // mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
-}
+    template <typename T1, typename T2>
+    struct same_coord : metal::equal<mln_coord(T1), mln_coord(T2)>
+    {
+    };
+
+  } // end of namespace mln::metal
+
+} // end of namespace mln
+
+
+#endif // ! MLN_METAL_SAME_COORD_HH

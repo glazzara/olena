@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/rectangle2d.hh>
+#include <mln/core/win/rectangle2d.hh>
 
 #include <mln/io/load_pgm.hh>
 #include <mln/io/save_pgm.hh>
@@ -80,7 +80,7 @@ int main()
   using value::int_u8;
 
 //   {
-//     rectangle2d rect(3, 3);
+//     win::rectangle2d rect(3, 3);
 //     border::thickness = 4;
 //     image2d_b<int_u8> ima(3, 3);
 //     debug::iota(ima);
@@ -90,7 +90,7 @@ int main()
 
 
   {
-    rectangle2d rect(51, 51);
+    win::rectangle2d rect(51, 51);
     border::thickness = 52;
     
     image2d_b<int_u8>

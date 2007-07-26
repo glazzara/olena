@@ -32,7 +32,7 @@
 
 #include <mln/core/fimage.hh>
 #include <mln/core/box2d.hh>
-#include <mln/fun/chess.hh>
+#include <mln/fun/p2b/chess.hh>
 #include <mln/debug/println.hh>
 
 
@@ -40,5 +40,5 @@ int main()
 {
   using namespace mln;
 
-  debug::println( fun::chess | make::box2d(8, 8) );
+  debug::println( fun::p2b::chess | make::box2d(8, 8) );
 }

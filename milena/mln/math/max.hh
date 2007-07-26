@@ -25,27 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLC_SAME_POINT_HH
-# define MLC_SAME_POINT_HH
+#ifndef MLN_MATH_MAX_HH
+# define MLN_MATH_MAX_HH
 
-# include <mlc/equal.hh>
-# include <mln/core/macros.hh>
+/*! \file mln/math/max.hh
+ *
+ * \brief Define max routine.
+ */
 
 
 namespace mln
 {
 
-  namespace mlc
+  namespace math
   {
 
-    template <typename T1, typename T2>
-    struct same_point : mlc::equal<mln_point(T1), mln_point(T2)>
-    {
-    };
+    template <typename T>
+    T max(const T& v1, const T& v2);
 
-  } // end of namespace mln::mlc
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename T>
+    T max(const T& v1, const T& v2)
+    {
+      return v1 > v2 ? v1 : v2;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::math
 
 } // end of namespace mln
 
 
-#endif // ! MLC_SAME_POINT_HH
+#endif // ! MLN_MATH_MAX_HH

@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/dpoint.hh>
 # include <mln/core/internal/coord_impl.hh>
-# include <mln/fun/all.hh>
+# include <mln/fun/i2v/all.hh>
 
 
 namespace mln

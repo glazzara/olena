@@ -25,31 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLC_EQUAL_HH
-# define MLC_EQUAL_HH
+#ifndef MLN_FUN_V2V_ENC_HH
+# define MLN_FUN_V2V_ENC_HH
+
+/*! \file mln/fun/v2v/enc.hh
+ *
+ * \brief FIXME.
+ */
+
+# include <mln/core/concept/function.hh>
 
 
 namespace mln
 {
 
-  namespace mlc
+  namespace fun
   {
 
-    template <typename T1, typename T2>
-    struct equal
+    namespace v2v
     {
-    };
 
-    template <typename T>
-    struct equal< T, T >
-    {
-      static void check() {}
-    };
+      // FIXME: Doc!
+
+      template <typename V>
+      struct enc : public Function_v2v< enc<V> >
+      {
+	typedef typename V::enc result;
+	result operator()(const V& v) const;
+      };
 
 
-  } // end of namespace mln::mlc
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename V>
+      typename V::enc
+      enc<V>::operator()(const V& v) const
+      {
+	return v.to_enc();
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::v2v
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLC_EQUAL_HH
+#endif // ! MLN_FUN_V2V_ENC_HH

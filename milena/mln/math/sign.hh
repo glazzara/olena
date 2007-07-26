@@ -25,73 +25,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_ALL_HH
-# define MLN_FUN_ALL_HH
+#ifndef MLN_MATH_SIGN_HH
+# define MLN_MATH_SIGN_HH
 
-/*! \file mln/fun/all.hh
+/*! \file mln/math/sign.hh
  *
- * \brief FIXME.
+ * \brief Define sign routine.
  */
 
-# include <mln/core/concept/function.hh>
-
-
-// FIXME: Usually all.hh is the file to include all files in the current directory...
 
 namespace mln
 {
 
-  namespace fun
+  namespace math
   {
 
+    enum sign_t
+      {
+	negative = -1,
+	null     =  0,
+	positive = +1
+      };
+
+
     template <typename T>
-    struct all : public Function_i2v< all<T> >
-    {
-      typedef T result;
-      all(T t);
-      template <typename U>
-      T operator()(const U&) const;
-    private:
-      T t_;
-    };
-
-  } // end of namespace mln::fun
-
-  template <typename T>
-  fun::all<T> all(T t);
+    sign_t sign(const T& v);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  namespace fun
-  {
-
     template <typename T>
-    all<T>::all(T t)
-      : t_(t)
+    sign_t sign(const T& v)
     {
+      return v > 0 ? positive : (v < 0 ? negative : null);
     }
-
-    template <typename T>
-    template <typename U>
-    T
-    all<T>::operator()(const U&) const
-    {
-      return t_;
-    }
-
-  } // end of namespace mln::fun
-
-  template <typename T>
-  fun::all<T> all(T t)
-  {
-    fun::all<T> tmp(t);
-    return tmp;
-  }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::math
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_ALL_HH
+#endif // ! MLN_MATH_SIGN_HH

@@ -133,7 +133,7 @@ namespace mln
       // horizontal median
 
       template <typename I, typename O>
-      void hmedian(const I& input, const hline2d& win, O& output)
+      void hmedian(const I& input, const win::hline2d& win, O& output)
       {
 
 	const int

@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_PVEC_HH
-# define MLN_CORE_PVEC_HH
+#ifndef MLN_CORE_LINE2D_HH
+# define MLN_CORE_LINE2D_HH
 
-/*! \file mln/core/pvec.hh
+/*! \file mln/core/line2d.hh
  *
  * \brief Definition of a point set class based on std::vector.
  */
@@ -36,160 +36,156 @@
 # include <vector>
 
 # include <mln/core/concept/point_set.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/core/pvec_piter.hh>
+# include <mln/core/box2d.hh>
+# include <mln/math/all.hh>
 
 
 namespace mln
 {
 
-  // Fwd decls.
-  template <typename P> struct pvec_fwd_piter_;
-  template <typename P> struct pvec_bkd_piter_;
 
-
-  /*! \brief Point set class based on std::vector.
-   *
-   * This is a multi-set of points.
-   *
-   * \warning We have some troubles with point set comparison based on
-   * a call to npoints().  FIXME: Explain!
-   *
-   * \todo Make it work with P being a Point_Site.
+  /*! \brief 2D line point set class.
    */
-  template <typename P>
-  class pvec : public Point_Set< pvec<P> >
+  class line2d : public Point_Set< line2d >
   {
   public:
 
     /// Point associated type.
-    typedef P point;
+    typedef point2d point;
 
     /// Point_Site associated type.
-    typedef P psite;
+    typedef point2d psite;
 
     /// Forward Point_Iterator associated type.
-    typedef pvec_fwd_piter_<P> fwd_piter;
+    typedef pvec_fwd_piter_<point2d> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef pvec_bkd_piter_<P> bkd_piter;
+    typedef pvec_bkd_piter_<point2d> bkd_piter;
 
-    /// Constructor.
-    pvec();
 
-    /// Constructor from a vector \p vect.
-    pvec(const std::vector<P>& vect);
+    /// Constructor from point \p beg to point \p end.
+    line2d(const point2d& beg, const point2d& end);
+
 
     /// Test is \p p belongs to this point set.
-    bool has(const P& p) const;
+    bool has(const point2d& p) const;
 
     /// Give the number of points.
     std::size_t npoints() const;
 
     /// Give the exact bounding box.
-    const box_<P>& bbox() const;
+    const box_<point2d>& bbox() const;
 
     /// Append a point \p p.
-    pvec<P>& append(const P& p);
-
-    /// Clear this set.
-    void clear();
+    line2d& append(const point2d& p);
 
     /// Return the corresponding std::vector of points.
-    const std::vector<P>& vect() const;
+    const std::vector<point2d>& vect() const;
 
     /// Return the \p i-th point.
-    const P& operator[](unsigned i) const;
+    const point2d& operator[](unsigned i) const;
 
   protected:
 
-    std::vector<P> vect_;
-    mutable accu::bbox<P> bb_;
-    mutable bool bb_needs_update_;
+    point2d beg_, end_;
+    std::vector<point2d> vect_;
+    box2d bb_;
 
-    void update_bb_();
-    // FIXME: Add invariant  bb_.is_valid() <=> npoints() != 0
+    void compute_();
   };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename P>
-  pvec<P>::pvec()
+  line2d::line2d(const point2d& beg, const point2d& end)
+    : beg_(beg),
+      end_(end)
   {
-    bb_needs_update_ = false;
+    compute_();
   }
 
-  template <typename P>
-  pvec<P>::pvec(const std::vector<P>& vect)
-    : vect_(vect)
-  {
-    bb_needs_update_ = true;
-  }
-
-  template <typename P>
   void
-  pvec<P>::update_bb_()
+  line2d::compute_()
   {
-    bb_.clear();
-    for (unsigned i = 0; i < vect_.size(); ++i)
-      bb_.take(vect_[i]);
-    bb_needs_update_ = false;
+    // vect_
+    dpoint2d dp = end_ - beg_;
+    int
+      srow = math::sign(dp.row()), drow = math::abs(dp.row()), ddrow = 2 * drow,
+      scol = math::sign(dp.col()), dcol = math::abs(dp.col()), ddcol = 2 * dcol,
+      row = beg_.row(),
+      col = beg_.row();
+    if ( dcol > drow )
+      {
+	int e = ddrow - dcol;
+	for (int i = 0; i < dcol; ++i)
+	  {
+	    vect_.push_back(make::point2d(row, col));
+	    while (e >= 0)
+	      {
+		row += srow;
+		e -= ddcol;
+	      }
+	    col += scol;
+	    e += ddrow;
+	  }
+      }
+    else
+      {
+	int e = ddcol - drow;
+	for (int i = 0; i < drow; ++i)
+	  {
+	    vect_.push_back(make::point2d(row, col));
+	    while (e >= 0)
+	      {
+		col += scol;
+		e -= ddrow;
+	      }
+	    row += srow;
+	    e += ddcol;
+	  }
+      }
+    vect_.push_back(make::point2d(row, col));
+    // bb_
+    bb_.pmin() = make::point2d(math::min(beg_.row(), end_.row()),
+			       math::min(beg_.col(), end_.col()));
+    bb_.pmax() = make::point2d(math::max(beg_.row(), end_.row()),
+			       math::max(beg_.col(), end_.col()));
   }
 
-  template <typename P>
   bool
-  pvec<P>::has(const P& p) const
+  line2d::has(const point2d& p) const
   {
+    if (! bb_.has(p))
+      return false;
+    // FIXME: Optimize!
     for (unsigned i = 0; i < vect_.size(); ++i)
       if (vect_[i] == p)
 	return true;
     return false;
   }
 
-  template <typename P>
   std::size_t
-  pvec<P>::npoints() const
+  line2d::npoints() const
   {
     return vect_.size();
   }
 
-  template <typename P>
-  const box_<P>&
-  pvec<P>::bbox() const
+  const box2d&
+  line2d::bbox() const
   {
-    mln_precondition(npoints() != 0);
-    if (bb_needs_update_)
-      update_bb_();
-    return bb_.to_value();
+    return bb_;
   }
 
-  template <typename P>
-  pvec<P>&
-  pvec<P>::append(const P& p)
-  {
-    vect_.push_back(p);
-    return *this;
-  }
-
-  template <typename P>
-  void
-  pvec<P>::clear()
-  {
-    vect_.clear();
-    bb_needs_update_ = false;
-  }
-
-  template <typename P>
-  const std::vector<P>&
-  pvec<P>::vect() const
+  const std::vector<point2d>&
+  line2d::vect() const
   {
     return vect_;
   }
 
-  template <typename P>
-  const P&
-  pvec<P>::operator[](unsigned i) const
+  const point2d&
+  line2d::operator[](unsigned i) const
   {
     mln_precondition(i < npoints());
     return vect_[i];
@@ -200,7 +196,4 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/core/pvec_piter.hh>
-
-
-#endif // ! MLN_CORE_PVEC_HH
+#endif // ! MLN_CORE_LINE2D_HH

@@ -44,7 +44,7 @@ namespace mln
   /*! \brief Type alias for a box defined on the 2D square grid with
    * integer coordinates.
    *
-   * \see mln::rectangle2d.
+   * \see mln::win::rectangle2d.
    */
   typedef box_<point2d> box2d;
 

@@ -1,3 +1,90 @@
+2007-07-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Various clean-ups + add line2d.
+
+	Clean-up functions.
+
+	* mln/fun/i2v,
+	* mln/fun/p2b,
+	* mln/fun/p2v,
+	* mln/fun/v2v: New directories.
+	* mln/fun/chess.hh: Rename as...
+	* mln/fun/p2b/chess.hh: New.
+	* mln/fun/to_enc.hh: Rename as...
+	* mln/fun/v2v/enc.hh: ...this.
+	(to_enc): Rename as...
+	(enc): ...this.
+	* mln/fun/all.hh: Rename as...
+	* mln/fun/i2v/all.hh: ...this.
+	* mln/core/point.hh,
+	* mln/core/window.hh,
+	* mln/core/dpoint.hh,
+	* mln/core/image2d_b.hh,
+	* mln/level/to_enc.hh: Update.
+
+	Clean-up windows.
+
+	* mln/core/win: New directory.
+	* mln/core/hline2d.hh: Rename as...
+	* mln/core/win/hline2d.hh: ...this.
+	* mln/core/rectangle2d.hh: Rename as...
+	* mln/core/win/rectangle2d.hh: ...this.
+	* mln/core/vline2d.hh: Rename as...
+	* mln/core/win/vline2d.hh: ...this.
+	* tests/median.cc,
+	* tests/fast_median.cc,
+	* tests/main.cc,
+	* tests/to_image.cc,
+	* tests/psubset.cc,
+	* tests/fimage.cc,
+	* tests/rectangle2d.cc,
+	* tests/cast_image.cc,
+	* tests/subimage.cc,
+	* tests/hmedian.cc,
+	* tests/erosion.cc,
+	* tests/naive_median.cc,
+	* mln/core/box2d.hh,
+	* mln/morpho/erosion.hh,
+	* mln/level/was.median.hh,
+	* mln/level/median.hh,
+	* mln/level/approx/median.hh: Update.
+
+	Clean-up metal.
+
+	* mlc/equal.hh: Rename as...
+	* mln/metal/equal.hh: ...this.
+	* mlc/same_coord.hh: Rename as...
+	* mln/metal/same_coord.hh: ...this.
+	* mlc/same_point.hh: Rename as...
+	* mln/metal/same_point.hh: ...this.
+	* mlc: Remove.
+	* mln/core/concept/generalized_point.hh: Update.
+
+	Light changes.
+
+	* TODO: Update.
+	* mln/core/dpoints_piter.hh
+	(dpoints_bkd_piter): New; fake.
+	* mln/core/fimage.hh: Add doc.
+	* mln/core/pvec.hh
+	(pvec_fwd_piter_, pvec_bkd_piter_): Move to...
+	* mln/core/pvec_piter.hh: ...this new file.
+	* mln/core/internal/fixme.hh: Add empty body.
+
+	New stuff.
+
+	* tests/line2d.cc: New.
+	* mln/pw/all.hh: New.
+	* mln/core/line2d.hh: New.
+	* mln/math: New.
+	* mln/math/min.hh: New.
+	* mln/math/abs.hh: New.
+	* mln/math/max.hh: New.
+	* mln/math/all.hh: New.
+	* mln/math/sign.hh: New.
+	* mln/draw: New.
+	* mln/draw/line.hh: New.
+
 2007-07-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a label type and labeling.

@@ -45,7 +45,8 @@ namespace mln
      *
      * \internal
      */
-    struct fixme;
+    struct fixme
+    {};
 
   } // end of namespace mln::internal
 

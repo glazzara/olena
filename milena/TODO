@@ -30,18 +30,19 @@ built-in op objects -> reverse lhs/rhs
 
 mlc into metal
 + look for "same_grid" etc.
+rectangle2d, hlin2d, etc -> core/win/
 
 
 * clean-up
 
 select_function in fun::internal::selector_p2? etc.
+value::cast(something) -> mln::cast_image or mln::fun::casted<F> etc.
 
 
 * processing routines
 
 reconstructions + their canvases
 fast versions of level::fill and level::paste
-histogram class
 sorting points w.r.t. their value (array of offsets, psites, points)
 arith::inplace_plus et al.
 linear:: for convolutions

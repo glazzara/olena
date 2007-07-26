@@ -34,7 +34,7 @@
  */
 
 # include <mln/level/median.hh>
-# include <mln/core/rectangle2d.hh>
+# include <mln/core/win/rectangle2d.hh>
 
 
 namespace mln
@@ -59,14 +59,14 @@ namespace mln
        * \pre \p input and \p output have to be initialized.
        */
       template <typename I, typename O>
-      void median(const Image<I>& input, const rectangle2d& win,
+      void median(const Image<I>& input, const win::rectangle2d& win,
 		  Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename I, typename O>
-      void median(const Image<I>& input_, const rectangle2d& win,
+      void median(const Image<I>& input_, const win::rectangle2d& win,
 		  Image<O>& output_)
       {
 	const I& input = exact(input_);
@@ -74,8 +74,8 @@ namespace mln
 	mln_assertion(output.domain() == input.domain());
 
 	O tmp(output.domain());
-	level::median(input, hline2d(win.width()),  tmp);
-	level::median(tmp,   vline2d(win.height()), output);
+	level::median(input, win::hline2d(win.width()),  tmp);
+	level::median(tmp,   win::vline2d(win.height()), output);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

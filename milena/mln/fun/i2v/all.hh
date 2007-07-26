@@ -25,27 +25,83 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLC_SAME_COORD_HH
-# define MLC_SAME_COORD_HH
+#ifndef MLN_FUN_ALL_HH
+# define MLN_FUN_ALL_HH
 
-# include <mlc/equal.hh>
-# include <mln/core/macros.hh>
+/*! \file mln/fun/i2v/all.hh
+ *
+ * \brief FIXME.
+ */
 
+# include <mln/core/concept/function.hh>
+
+
+// FIXME: Usually all.hh is the file to include all files in the current directory...
 
 namespace mln
 {
 
-  namespace mlc
+  namespace fun
   {
 
-    template <typename T1, typename T2>
-    struct same_coord : mlc::equal<mln_coord(T1), mln_coord(T2)>
+    namespace i2v
     {
-    };
 
-  } // end of namespace mln::mlc
+      template <typename T>
+      struct all : public Function_i2v< all<T> >
+      {
+	typedef T result;
+	all(T t);
+	template <typename U>
+	T operator()(const U&) const;
+      private:
+	T t_;
+      };
+
+    } // end of namespace mln::fun::i2v
+
+  } // end of namespace mln::fun
+
+  template <typename T>
+  fun::i2v::all<T> all(T t);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+  namespace fun
+  {
+
+    namespace i2v
+    {
+
+      template <typename T>
+      all<T>::all(T t)
+	: t_(t)
+      {
+      }
+
+      template <typename T>
+      template <typename U>
+      T
+      all<T>::operator()(const U&) const
+      {
+	return t_;
+      }
+
+    } // end of namespace mln::fun::i2v
+
+  } // end of namespace mln::fun
+
+  template <typename T>
+  fun::i2v::all<T> all(T t)
+  {
+    fun::i2v::all<T> tmp(t);
+    return tmp;
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
-#endif // ! MLC_SAME_COORD_HH
+#endif // ! MLN_FUN_ALL_HH

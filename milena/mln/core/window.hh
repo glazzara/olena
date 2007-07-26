@@ -40,7 +40,7 @@
 # include <mln/core/box.hh>
 
 # include <mln/convert/to_dpoint.hh>
-# include <mln/fun/all.hh>
+# include <mln/fun/i2v/all.hh>
 # include <mln/norm/infty.hh>
 
 

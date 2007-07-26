@@ -25,23 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/subimage.cc
+#ifndef MLN_FUN_P2B_CHESS_HH
+# define MLN_FUN_P2B_CHESS_HH
+
+/*! \file mln/fun/p2b/chess.hh
  *
- * \brief Tests on mln::subimage.
+ * \brief FIXME.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/subimage.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/debug/println.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/core/point2d.hh>
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  image2d_b<int> ima(8, 8);
-  debug::println(ima | fun::p2b::chess);
+  namespace fun
+  {
 
-  // mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
-}
+    namespace p2b
+    {
+
+      // FIXME: Doc!
+
+      struct chess_t : public Function_p2b< chess_t >
+      {
+	typedef bool result;
+	bool operator()(const point2d& p) const;
+      }
+
+      chess;
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      bool
+      chess_t::operator()(const point2d& p) const
+      {
+	return (p.row() + p.col()) % 2 == 0;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::p2b
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+
+#endif // ! MLN_FUN_P2B_CHESS_HH

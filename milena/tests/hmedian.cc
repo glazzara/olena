@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/rectangle2d.hh>
+#include <mln/core/win/rectangle2d.hh>
 
 #include <mln/io/load_pgm.hh>
 #include <mln/io/save_pgm.hh>
@@ -55,9 +55,9 @@ int main()
     out(lena.domain()),
     ref(lena.domain());
 
-  level::median(lena, rectangle2d(1, 101), ref);
+  level::median(lena, win::rectangle2d(1, 101), ref);
 
-  level::median(lena, hline2d(101), out);
+  level::median(lena, win::hline2d(101), out);
   io::save_pgm(out, "out.pgm");
 
   // FIXME: mln_assertion(out == ref);

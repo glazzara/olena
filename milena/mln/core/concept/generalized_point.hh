@@ -31,9 +31,9 @@
 /*! \file mln/core/concept/generalized_point.hh
  * \brief Definition of the concept of mln::Generalized_Point.
  */
-# include <mlc/equal.hh>
-# include <mlc/same_point.hh>
-# include <mlc/same_coord.hh>
+# include <mln/metal/equal.hh>
+# include <mln/metal/same_point.hh>
+# include <mln/metal/same_coord.hh>
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/internal/force_exact.hh>
@@ -225,10 +225,10 @@ namespace mln
   template <typename Pl, typename Pr>
   bool operator==(const Generalized_Point<Pl>& lhs, const Generalized_Point<Pr>& rhs)
   {
-    // FIXME: mlc::same_grid<Pl, Pr>::check();
+    // FIXME: metal::same_grid<Pl, Pr>::check();
     const Pl& lhs_ = internal::force_exact<Pl>(lhs);
     const Pr& rhs_ = internal::force_exact<Pr>(rhs);
-    mlc::same_point<Pl, Pr>::check();
+    metal::same_point<Pl, Pr>::check();
     for (unsigned i = 0; i < Pl::dim; ++i)
       if (lhs_[i] != rhs_[i])
 	return false;
@@ -238,7 +238,7 @@ namespace mln
   template <typename Pl, typename Pr>
   bool operator<(const Generalized_Point<Pl>& lhs, const Generalized_Point<Pr>& rhs)
   {
-    // FIXME: mlc::same_grid<Pl, Pr>::check();
+    // FIXME: metal::same_grid<Pl, Pr>::check();
     const Pl& lhs_ = internal::force_exact<Pl>(lhs);
     const Pr& rhs_ = internal::force_exact<Pr>(rhs);
     for (unsigned i = 0; i < Pl::dim; ++i)
@@ -254,9 +254,9 @@ namespace mln
   mln_dpoint(Pl)
   operator-(const Generalized_Point<Pl>& lhs, const Generalized_Point<Pr>& rhs)
   {
-    mlc::equal<mln_dpoint(Pl), mln_dpoint(Pr)>::check();
-    // FIXME: mlc::same_grid<Pl, Pr>::check();
-    mlc::same_coord<Pl, Pr>::check();
+    metal::equal<mln_dpoint(Pl), mln_dpoint(Pr)>::check();
+    // FIXME: metal::same_grid<Pl, Pr>::check();
+    metal::same_coord<Pl, Pr>::check();
     const Pl& lhs_ = internal::force_exact<Pl>(lhs);
     const Pr& rhs_ = internal::force_exact<Pr>(rhs);
     mln_dpoint(Pl) tmp;

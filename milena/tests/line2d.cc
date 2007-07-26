@@ -25,48 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_CHESS_HH
-# define MLN_FUN_CHESS_HH
-
-/*! \file mln/fun/chess.hh
+/*! \file tests/line2d.cc
  *
- * \brief FIXME.
+ * \brief Tests on mln::line2d.
  */
 
-# include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
+#include <iterator>
+
+#include <mln/core/image2d_b.hh>
+
+#include <mln/level/fill.hh>
+#include <mln/draw/line.hh>
+#include <mln/debug/println.hh>
+
+#include <mln/core/fimage.hh>
+#include <mln/pw/cst.hh>
+#include <mln/level/paste.hh>
+#include <mln/level/compare.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace fun
-  {
+  point2d b = make::point2d(0,0), e = make::point2d(6,9);
+  line2d l(b, e);
+  mln_assertion(l.npoints() == 10);
 
-    // FIXME: Doc!
+  image2d_b<bool> ima(10,10);
+  level::fill(ima, false);
+  draw::line(ima, b, e, true);
 
-    struct chess_t : public Function_p2b< chess_t >
-    {
-      typedef bool result;
-      bool operator()(const point2d& p) const;
-    }
+  image2d_b<bool> ima2(10,10);
+  level::fill(ima2, false);
+  level::paste(pw::cst(true) | l, ima2);
 
-    chess;
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    bool
-    chess_t::operator()(const point2d& p) const
-    {
-      return (p.row() + p.col()) % 2 == 0;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::fun
-
-} // end of namespace mln
-
-
-#endif // ! MLN_FUN_CHESS_HH
+  mln_assertion(ima2 == ima);
+}

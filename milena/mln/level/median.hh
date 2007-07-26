@@ -36,7 +36,7 @@
 # include <mln/core/concept/image.hh>
 
 # include <mln/core/window2d.hh>
-# include <mln/core/hline2d.hh>
+# include <mln/core/win/hline2d.hh>
 
 # include <mln/accu/median.hh>
 # include <mln/canvas/sbrowsing.hh>
@@ -159,7 +159,7 @@ namespace mln
 
 
       template <typename I, typename O>
-      void median(const I& input, const hline2d& win, O& output)
+      void median(const I& input, const win::hline2d& win, O& output)
       {
 	typedef mln_coord(I) coord;
 	const coord
@@ -212,10 +212,10 @@ namespace mln
       // FIXME: Use transpose.
 
 //       template <typename I, typename O>
-//       void median(const I& input, const vline2d& win, O& output)
+//       void median(const I& input, const win::vline2d& win, O& output)
 //       {
 
-// 	median(, hline2d(win.length()), output);
+// 	median(, win::hline2d(win.length()), output);
 //       }
 
 

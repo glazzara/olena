@@ -32,7 +32,7 @@
 
 #include <mln/core/image2d_b.hh>
 #include <mln/core/psubset.hh>
-#include <mln/fun/chess.hh>
+#include <mln/fun/p2b/chess.hh>
 #include <mln/convert/to_image.hh>
 
 
@@ -41,5 +41,5 @@ int main()
   using namespace mln;
 
   box2d box_8x8 = make::box2d(8, 8);
-  mln_assertion((box_8x8 | fun::chess).npoints() == 32);
+  mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
 }

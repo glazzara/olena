@@ -25,23 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/subimage.cc
+#ifndef MLN_MATH_MIN_HH
+# define MLN_MATH_MIN_HH
+
+/*! \file mln/math/min.hh
  *
- * \brief Tests on mln::subimage.
+ * \brief Define min routine.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/subimage.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/debug/println.hh>
 
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  image2d_b<int> ima(8, 8);
-  debug::println(ima | fun::p2b::chess);
+  namespace math
+  {
 
-  // mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
-}
+    template <typename T>
+    T min(const T& v1, const T& v2);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename T>
+    T min(const T& v1, const T& v2)
+    {
+      return v1 < v2 ? v1 : v2;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::math
+
+} // end of namespace mln
+
+
+#endif // ! MLN_MATH_MIN_HH

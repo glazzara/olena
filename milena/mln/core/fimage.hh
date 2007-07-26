@@ -102,6 +102,9 @@ namespace mln
 
 
 
+    /*! \brief FIXME
+     *
+     */
     template <typename F, typename S>
     fimage<F,S>
     operator | (const Function_p2v<F>& f, const Point_Set<S>& ps)

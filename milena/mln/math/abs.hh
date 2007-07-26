@@ -25,23 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/subimage.cc
+#ifndef MLN_MATH_ABS_HH
+# define MLN_MATH_ABS_HH
+
+/*! \file mln/math/abs.hh
  *
- * \brief Tests on mln::subimage.
+ * \brief Define abs routine.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/subimage.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/debug/println.hh>
+# include <cmath>
 
 
-int main()
+
+namespace mln
 {
-  using namespace mln;
 
-  image2d_b<int> ima(8, 8);
-  debug::println(ima | fun::p2b::chess);
+  namespace math
+  {
 
-  // mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
-}
+    template <typename T>
+    T abs(const T& v);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename T>
+    T abs(const T& v)
+    {
+      return std::abs(v);
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::math
+
+} // end of namespace mln
+
+
+#endif // ! MLN_MATH_ABS_HH
