@@ -1,5 +1,14 @@
 2007-07-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a queue of points.
+
+	* tests/pqueue.cc: New.
+	* TODO: Update.
+	* mln/core/pvec.hh: Fix.
+	* mln/core/pqueue.hh: New.
+
+2007-07-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add stack and transpose morphers.
 
 	* tests/t_image.cc: New.

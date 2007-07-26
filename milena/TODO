@@ -17,7 +17,6 @@ Weighted_Window
 
 value::proxy to dispatch read/write + the corresponding image type
 a mean_value object { sum; count } and operator+
-t_image to "transpose" the 0 and the i-th coordinates
 
 ** extensions
 
@@ -28,9 +27,6 @@ built-in op objects -> reverse lhs/rhs
 
 * renaming
 
-mlc into metal
-+ look for "same_grid" etc.
-rectangle2d, hlin2d, etc -> core/win/
 
 
 * clean-up

@@ -25,17 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_PVEC_HH
-# define MLN_CORE_PVEC_HH
+#ifndef MLN_CORE_PQUEUE_HH
+# define MLN_CORE_PQUEUE_HH
 
-/*! \file mln/core/pvec.hh
+/*! \file mln/core/pqueue.hh
  *
- * \brief Definition of a point set class based on std::vector.
+ * \brief Definition of a point set class based on std::deque.
  */
 
 # include <vector>
+# include <deque>
+# include <algorithm>
+# include <iterator>
 
 # include <mln/core/concept/point_set.hh>
+# include <mln/core/pvec_piter.hh>
 # include <mln/accu/bbox.hh>
 
 
@@ -47,17 +51,19 @@ namespace mln
   template <typename P> struct pvec_bkd_piter_;
 
 
-  /*! \brief Point set class based on std::vector.
+  /*! \brief Point queue class (based on std::deque).
    *
-   * This is a multi-set of points.
-   *
-   * \warning We have some troubles with point set comparison based on
-   * a call to npoints().  FIXME: Explain!
+   * This is a mathematical set of points (unique insertion).
    *
    * \todo Make it work with P being a Point_Site.
+   * \todo Add a parameter flag to choose another policy for "push"
+   * (i.e., no-op if multiple or allow multiple insertions).
+   *
+   * \warning We have some troubles with point set comparison based on
+   * a call to npoints() when this container is multiple.
    */
   template <typename P>
-  class pvec : public Point_Set< pvec<P> >
+  class pqueue : public Point_Set< pqueue<P> >
   {
   public:
 
@@ -74,10 +80,7 @@ namespace mln
     typedef pvec_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
-    pvec();
-
-    /// Constructor from a vector \p vect.
-    pvec(const std::vector<P>& vect);
+    pqueue();
 
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
@@ -88,10 +91,18 @@ namespace mln
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
 
-    /// Append a point \p p.
-    pvec<P>& append(const P& p);
+    /// Push a point \p p in the queue.
+    pqueue<P>& push(const P& p);
 
-    /// Clear this set.
+    /// Pop (remove) the front point \p p from the queue; \p p is the
+    /// least recently inserted point.
+    void pop();
+
+    /// Give the front point \p p of the queue; \p p is the least
+    /// recently inserted point.
+    const P& front() const;
+
+    /// Clear the queue.
     void clear();
 
     /// Return the corresponding std::vector of points.
@@ -102,12 +113,16 @@ namespace mln
 
   protected:
 
-    std::vector<P> vect_;
+    std::deque<P> q_;
+
+    mutable std::vector<P> vect_;
+    mutable bool vect_needs_update_;
+    void vect_update_() const;
+
     mutable accu::bbox<P> bb_;
     mutable bool bb_needs_update_;
+    void bb_update_() const;
 
-    void update_bb_() const;
-    // FIXME: Add invariant  bb_.is_valid() <=> npoints() != 0
   };
 
 
@@ -115,86 +130,119 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
-  pvec<P>::pvec()
+  pqueue<P>::pqueue()
   {
+    vect_needs_update_ = false;
     bb_needs_update_ = false;
   }
 
   template <typename P>
-  pvec<P>::pvec(const std::vector<P>& vect)
-    : vect_(vect)
+  void
+  pqueue<P>::vect_update_() const
   {
-    bb_needs_update_ = true;
+    vect_.clear();
+    vect_.reserve(q_.size());
+    std::copy(q_.begin(), q_.end(),
+	      std::back_inserter(vect_));
+    vect_needs_update_ = false;
   }
 
   template <typename P>
   void
-  pvec<P>::update_bb_() const
+  pqueue<P>::bb_update_() const
   {
     bb_.init();
-    for (unsigned i = 0; i < vect_.size(); ++i)
-      bb_.take(vect_[i]);
+    for (unsigned i = 0; i < q_.size(); ++i)
+      bb_.take(q_[i]);
     bb_needs_update_ = false;
   }
 
   template <typename P>
   bool
-  pvec<P>::has(const P& p) const
+  pqueue<P>::has(const P& p) const
   {
-    for (unsigned i = 0; i < vect_.size(); ++i)
-      if (vect_[i] == p)
+    for (unsigned i = 0; i < q_.size(); ++i)
+      if (q_[i] == p)
 	return true;
     return false;
   }
 
   template <typename P>
   std::size_t
-  pvec<P>::npoints() const
+  pqueue<P>::npoints() const
   {
-    return vect_.size();
+    return q_.size();
   }
 
   template <typename P>
   const box_<P>&
-  pvec<P>::bbox() const
+  pqueue<P>::bbox() const
   {
     mln_precondition(npoints() != 0);
     if (bb_needs_update_)
-      update_bb_();
+      bb_update_();
     return bb_.to_value();
   }
 
   template <typename P>
-  pvec<P>&
-  pvec<P>::append(const P& p)
+  pqueue<P>&
+  pqueue<P>::push(const P& p)
   {
-    vect_.push_back(p);
-    if (! bb_needs_update_)
-      bb_needs_update_ = true;
-    return *this;
+    mln_precondition(! has(p));
+    // FIXME: Our choice is "error if multiple insertions"
+    q_.push_back(p);
+    if (! vect_needs_update_)
+      {
+	vect_needs_update_ = true;
+	bb_needs_update_ = true;
+      }
   }
 
   template <typename P>
   void
-  pvec<P>::clear()
+  pqueue<P>::pop()
   {
+    q_.pop_front();
+    if (! vect_needs_update_)
+      {
+	vect_needs_update_ = true;
+	bb_needs_update_ = true;
+      }
+  }
+
+  template <typename P>
+  const P&
+  pqueue<P>::front() const
+  {
+    mln_precondition(! q_.empty());
+    return q_.front();
+  }
+
+  template <typename P>
+  void
+  pqueue<P>::clear()
+  {
+    q_.clear();
     vect_.clear();
+    vect_needs_update_ = false;
     bb_needs_update_ = false;
   }
 
   template <typename P>
   const std::vector<P>&
-  pvec<P>::vect() const
+  pqueue<P>::vect() const
   {
+    if (vect_needs_update_)
+      vect_update_();
     return vect_;
   }
 
   template <typename P>
   const P&
-  pvec<P>::operator[](unsigned i) const
+  pqueue<P>::operator[](unsigned i) const
   {
     mln_precondition(i < npoints());
-    return vect_[i];
+    return q_[i];
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -202,7 +250,4 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/core/pvec_piter.hh>
-
-
-#endif // ! MLN_CORE_PVEC_HH
+#endif // ! MLN_CORE_PQUEUE_HH
