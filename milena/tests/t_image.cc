@@ -25,35 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/median.cc
+/*! \file tests/+t_image.cc
  *
- * \brief Test on mln::level::median.
+ * \brief Tests on mln::t_image.
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/win/rectangle2d.hh>
+#include <mln/core/t_image.hh>
 
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/level/median.hh>
-
-
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  win::rectangle2d rect(51, 51);
-  border::thickness = 52;
+  typedef image2d_b<int> I;
 
-  image2d_b<int_u8>
-    lena = io::load_pgm("../img/lena.pgm"),
-    out(lena.domain());
+  I ima(2, 3);
+  debug::iota(ima);
+  debug::println(ima);
 
-  level::median(lena, rect, out);
-  io::save_pgm(out, "out.pgm");
+  t_image<I> tima(ima, 0, 1);
+  debug::println(tima);
 }

@@ -28,6 +28,8 @@
 #ifndef MLN_CORE_METAL_VEC_HH
 # define MLN_CORE_METAL_VEC_HH
 
+# include <cstdarg>
+
 # include <mln/core/concept/object.hh>
 
 
@@ -37,27 +39,55 @@ namespace mln
   namespace metal
   {
 
+    // FIXME: Doc! + Change coord into comp.
+
     template <unsigned n, typename T>
     struct vec : public Object< vec<n,T> >
     {
       enum { dim = n };
       typedef T coord;
 
-      T& operator[](unsigned i)
-      {
-	assert(i < n);
-	return coord_[i];
-      }
-
-      T operator[](unsigned i) const
-      {
-	assert(i < n);
-	return coord_[i];
-      }
+      T& operator[](unsigned i);
+      T  operator[](unsigned i) const;
     
     protected:
       T coord_[n];
     };
+
+
+    template <unsigned n, typename T>
+    std::ostream& operator<<(std::ostream& ostr, const vec<n,T>& v);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <unsigned n, typename T>
+    T&
+    vec<n,T>::operator[](unsigned i)
+    {
+      mln_precondition(i < n);
+      return coord_[i];
+    }
+
+    template <unsigned n, typename T>
+    T
+    vec<n,T>::operator[](unsigned i) const
+    {
+      mln_precondition(i < n);
+      return coord_[i];
+    }
+    
+    template <unsigned n, typename T>
+    std::ostream& operator<<(std::ostream& ostr, const vec<n,T>& v)
+    {
+      ostr << "[ ";
+      for (unsigned i = 0; i < n; ++i)
+	ostr << v[i] << ' ';
+      return ostr << ']';
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
   
   } // end of namespace mln::metal
   

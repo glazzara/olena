@@ -78,28 +78,14 @@ namespace mln
   struct image2d_b : public internal::image_base_< box2d, image2d_b<T> >,
 		     public internal::box_impl_< 2, int, image2d_b<T> >
   {
-
-    // warning: just to make effective types appear in Doxygen
+    // Warning: just to make effective types appear in Doxygen:
     typedef box2d   pset;
     typedef point2d psite;
     typedef point2d point;
     typedef dpoint2d dpoint;
     typedef mln_fwd_piter(box2d) fwd_piter;
     typedef mln_bkd_piter(box2d) bkd_piter;
-    // end of warning
-
-
-
-    // FIXME:
-
-//     /// Forward pixel iterator associated to image2d
-//     typedef fwd_pixter2d_b<T> fwd_pixter;
-
-//     /// Foward pixel iterator on dpoints assoicated to image 2d
-//     typedef dpoints_pixter< image2d_b<T> > fwd_qixter;
-
-//     typedef fwd_pixter pixter;
-//     typedef fwd_qixter qixter;
+    // End of warning.
 
 
     /// Value associated type.

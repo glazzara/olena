@@ -38,6 +38,7 @@
 # include <mln/core/window2d.hh>
 # include <mln/core/win/hline2d.hh>
 
+# include <mln/core/t_image.hh>
 # include <mln/accu/median.hh>
 # include <mln/canvas/sbrowsing.hh>
 
@@ -156,37 +157,41 @@ namespace mln
       }
 
 
-
-
       template <typename I, typename O>
       void median(const I& input, const win::hline2d& win, O& output)
       {
 	typedef mln_coord(I) coord;
 	const coord
-	  max_row = input.max_row(),
-	  min_col = input.min_col(),
-	  max_col = input.max_col();
+	  max_row = input.bbox().max_row(),
+	  min_col = input.bbox().min_col(),
+	  max_col = input.bbox().max_col();
 	const coord half = win.length() / 2;
 
 	point2d p;
 	coord& row = p.row();
 	coord& col = p.col();
 
+	point2d pt;
+	coord& ct = pt.col();
+
+	point2d pu;
+	coord& cu = pu.col();
+
 	accu::median<mln_vset(I)> med(input.values());
 
-	for (row = input.min_row(); row <= max_row; ++row)
+	for (row = input.bbox().min_row(); row <= max_row; ++row)
 	  {
-	    coord ct, cu;
+	    pt.row() = pu.row() = row;
 
 	    // initialization (before first point of the row)
 	    med.init();
 	    for (ct = min_col; ct < min_col + half; ++ct)
-	      med.take(input.at(row, ct));
+	      med.take(input(pt));
 
 	    // left columns (just take new points)
 	    for (col = min_col; col <= min_col + half; ++col, ++ct)
 	      {
-		med.take(input.at(row, ct));
+		med.take(input(pt));
 		output(p) = med;
 	      }
 	    
@@ -194,29 +199,29 @@ namespace mln
 	    cu = min_col;
 	    for (; col <= max_col - half; ++cu, ++col, ++ct)
 	      {
-		med.take(input.at(row, ct));
-		med.untake(input.at(row, cu));
+		med.take(input(pt));
+		med.untake(input(pu));
 		output(p) = med;
 	      }
 
 	    // right columns (now just untake old points)
 	    for (; col <= max_col; ++cu, ++col)
 	      {
-		med.untake(input.at(row, cu));
+		med.untake(input(pu));
 		output(p) = med;
 	      }
 	  }
       }
 
 
-      // FIXME: Use transpose.
-
-//       template <typename I, typename O>
-//       void median(const I& input, const win::vline2d& win, O& output)
-//       {
-
-// 	median(, win::hline2d(win.length()), output);
-//       }
+      template <typename I, typename O>
+      void median(const I& input, const win::vline2d& win, O& output)
+      {
+	t_image<O> swap_output = swap_coords(output, 0, 1);
+	impl::median(swap_coords(input, 0, 1),
+		     win::hline2d(win.length()),
+		     swap_output);
+      }
 
 
     } // end of namespace mln::level::impl

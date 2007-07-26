@@ -43,6 +43,19 @@ namespace mln
   {
 
 
+    template <typename I>
+    struct morpher_lvalue_
+    {
+      typedef mln_lvalue(I) ret;
+    };
+    
+    template <typename I>
+    struct morpher_lvalue_< const I >
+    {
+      typedef mln_rvalue(I) ret;
+    };
+
+
 
     template <typename Is_fast, typename E>
     struct select_image_concept_;

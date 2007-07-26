@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/median.cc
+/*! \file tests/approx_median.cc
  *
- * \brief Test on mln::level::median.
+ * \brief Test on mln::level::approx::median.
  */
 
 #include <mln/core/image2d_b.hh>
@@ -37,7 +37,7 @@
 #include <mln/io/save_pgm.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/level/median.hh>
+#include <mln/level/approx/median.hh>
 
 
 
@@ -54,6 +54,6 @@ int main()
     lena = io::load_pgm("../img/lena.pgm"),
     out(lena.domain());
 
-  level::median(lena, rect, out);
+  level::approx::median(lena, rect, out);
   io::save_pgm(out, "out.pgm");
 }

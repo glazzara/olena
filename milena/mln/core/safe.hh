@@ -51,6 +51,7 @@ namespace mln
     {
       typedef safe_image<mln_ch_value(I, U)> ret;
     };
+
   };
 
 
@@ -62,10 +63,9 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-
   template <typename I>
   safe_image<I>::safe_image(Image<I>& ima)
-    : super(ima)
+    : super(exact(ima))
   {
   }
 

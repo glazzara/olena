@@ -1,5 +1,27 @@
 2007-07-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add stack and transpose morphers.
+
+	* tests/t_image.cc: New.
+	* tests/stack.cc: New.
+	* tests/approx_median.cc: New.
+	* mln/core/t_image.hh: New.
+	* mln/value/stack.hh: New.
+	* tests/median.cc: Update.
+	* tests/README: Update.
+	* mln/core/internal/image_base.hh
+	(morpher_lvalue_): New.
+	* mln/core/internal/image_adaptor.hh: Use morpher_lvalue_.
+	(image_adaptor_): Change Image<I> into I.
+	* mln/core/safe.hh: Update.
+	* mln/core/image2d_b.hh: Remove dead code.
+	* mln/metal/vec.hh: Split decls and defs.
+	(operator<<): New.
+	* mln/level/median.hh (hline2d): Update.
+	(vline2d): New.
+
+2007-07-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix doc.
 
 	* tests/int_s8.cc: Rename as...

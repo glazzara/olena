@@ -68,7 +68,7 @@ namespace mln
       typedef mln_rvalue(I) rvalue;
 
       /// Return type of read-write access.
-      typedef mln_lvalue(I) lvalue;
+      typedef typename internal::morpher_lvalue_<I>::ret lvalue;
 
 
       /// Test if this image has been initialized.
@@ -94,7 +94,7 @@ namespace mln
       I& adaptee_;
 
       /// Constructor from an \p adaptee image.
-      image_adaptor_(Image<I>& adaptee);
+      image_adaptor_(I& adaptee);
     };
 
     // FIXME: image_const_adaptor_
@@ -148,8 +148,8 @@ namespace mln
     }
 
     template <typename I, typename E, typename S>
-    image_adaptor_<I,E,S>::image_adaptor_(Image<I>& adaptee)
-      : adaptee_(exact(adaptee))
+    image_adaptor_<I,E,S>::image_adaptor_(I& adaptee)
+      : adaptee_(adaptee)
     {
     }
 
