@@ -1,5 +1,19 @@
 2007-07-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix doc.
+
+	* tests/int_s8.cc: Rename as...
+	* tests/int_s.cc: ...this.
+	* tests/sort_points.cc,
+	* mln/pw/all.hh,
+	* mln/pw/value.hh,
+	* mln/core/win/vline2d.hh,
+	* mln/core/win/hline2d.hh,
+	* mln/core/win/rectangle2d.hh: Fix doc.
+	* doc/Doxyfile.in: Update.
+
+2007-07-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Various clean-ups + add line2d.
 
 	Clean-up functions.

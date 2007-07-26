@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/histo.cc
+/*! \file tests/sort_points.cc
  *
- * \brief Tests on mln::accu::histo<S> and mln::histo::data<S>.
+ * \brief Tests on mln::level::sort_points.
  */
 
 #include <iterator>

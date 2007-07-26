@@ -122,7 +122,7 @@ namespace mln
      *
      * \return The modified output stream \p ostr.
      *
-     * \relates mln::hline2d
+     * \relates mln::win::hline2d
      */
     std::ostream& operator<<(std::ostream& ostr, const hline2d& win);
 

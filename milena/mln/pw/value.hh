@@ -28,7 +28,7 @@
 #ifndef MLN_PW_VALUE_HH
 # define MLN_PW_VALUE_HH
 
-/*! \file mln/fun/pw/value.hh
+/*! \file mln/pw/value.hh
  *
  * \brief FIXME.
  */

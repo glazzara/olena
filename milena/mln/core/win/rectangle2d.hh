@@ -129,7 +129,7 @@ namespace mln
      *
      * \return The modified output stream \p ostr.
      *
-     * \relates mln::rectangle2d
+     * \relates mln::win::rectangle2d
      */
     std::ostream& operator<<(std::ostream& ostr, const rectangle2d& win);
 
