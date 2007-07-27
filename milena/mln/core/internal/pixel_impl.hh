@@ -173,7 +173,6 @@ namespace mln
     mln_value(I) **
     pixel_impl_<I, E>::address_() const
     {
-      mln_precondition(is_valid_());
       return (value**)(& this->value_ptr_);
     }
 
@@ -206,7 +205,6 @@ namespace mln
     const mln_value(I) **
     pixel_impl_<const I, E>::address_() const
     {
-      mln_precondition(is_valid_());
       return (const value**)(& this->value_ptr_);
     }
 

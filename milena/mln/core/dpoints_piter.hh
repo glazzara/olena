@@ -102,7 +102,8 @@ namespace mln
     /// account that its center point may have moved. 
     void update();
 
-  private:
+  protected:
+
     const std::vector<D>& dps_;
     const point& p_ref_; // reference point (or "center point")
 

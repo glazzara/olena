@@ -482,6 +482,7 @@ namespace mln
 # include <mln/core/trait/pixter.hh>
 # include <mln/core/dpoints_pixter.hh>
 # include <mln/core/pixter2d_b.hh>
+# include <mln/core/w_window.hh>
 
 
 namespace mln

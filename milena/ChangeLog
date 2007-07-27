@@ -1,3 +1,22 @@
+2007-07-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add weighted windows and related tools + a generic convolution.
+
+	* tests/convolve.cc: New.
+	* tests/w_window2d_int.cc: New.
+	* mln/core/w_window.hh: New.
+	* mln/core/concept/weighted_window.hh: New.
+	* mln/core/w_window2d_int.hh: New.
+	* mln/math/round.hh: New.
+	* mln/linear: New.
+	* mln/linear/convolve.hh: New.
+	* mln/make/w_window2d.hh: New.
+	* mln/make/w_window2d_int.hh: New.
+	* mln/core/dpoints_piter.hh: Change accessibility.
+	* mln/core/internal/pixel_impl.hh
+	(address_): Remove preconditions.
+	* mln/core/image2d_b.hh: Update include.
+
 2007-07-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a queue of points.
