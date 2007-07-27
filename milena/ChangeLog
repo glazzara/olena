@@ -1,5 +1,27 @@
 2007-07-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Clean-up windows!
+
+	* mln/core/internal/dpoints_base.hh: New.
+	* mln/core/concept/doc/weighted_window.hh: New.
+	* mln/core/w_window.hh
+	(element, nelements): Rename as...
+	(dp, ndpoints): ...these.
+	(sym_): Add body.
+	Update.
+	* mln/core/window.hh (super_): Update.
+	(qiter): Remove; obsolete.
+	(point, dpoint, is_centered, delta): Remove; factored.
+	* mln/core/dpoints_pixter.hh: Update.
+	* mln/core/concept/weighted_window.hh
+	(is_symmetric): Remove; too ambiguous.
+	* mln/core/win/vline2d.hh: Update inheritance.
+	* mln/core/win/hline2d.hh: Likewise.
+	* mln/core/win/rectangle2d.hh: Likewise.
+	(qiter): Remove; obsolete.
+
+2007-07-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add weighted windows and related tools + a generic convolution.
 
 	* tests/convolve.cc: New.

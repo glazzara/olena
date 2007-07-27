@@ -35,13 +35,11 @@
 
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/generalized_point.hh>
-# include <mln/core/internal/set_of.hh>
+# include <mln/core/internal/dpoints_base.hh>
 # include <mln/core/dpoint.hh>
 # include <mln/core/box.hh>
 
 # include <mln/convert/to_dpoint.hh>
-# include <mln/fun/i2v/all.hh>
-# include <mln/norm/infty.hh>
 
 
 namespace mln
@@ -58,14 +56,11 @@ namespace mln
    * parameter is \c D, type of delta-point.
    */
   template <typename D>
-  struct window_ : public Window< window_<D> >,
-		   public internal::set_of_<D>
+  class window_ : public Window< window_<D> >,
+		  public internal::dpoints_base_<D, window_<D> >
   {
-    /// Point associated type.
-    typedef mln_point(D) point;
-
-    /// Dpoint associated type.
-    typedef D dpoint;
+    typedef internal::dpoints_base_<D, window_<D> > super_;
+  public:
 
     /*! \brief Point_Iterator type to browse the points of a generic window
      * w.r.t. the ordering of delta-points.
@@ -75,11 +70,7 @@ namespace mln
     /*! \brief Point_Iterator type to browse the points of a generic window
      * w.r.t. the reverse ordering of delta-points.
      */
-    typedef internal::fixme bkd_qiter;
-
-    /*! \brief Same as fwd_qiter.
-     */
-    typedef fwd_qiter qiter;
+    typedef dpoints_bkd_piter<D> bkd_qiter;
 
 
     /*! \brief Constructor without argument.
@@ -88,27 +79,20 @@ namespace mln
      */
     window_();
 
-    /*! \brief Test if the window is centered.
-     *
-     * \return True if the delta-point 0 belongs to the window.
-     */
-    bool is_centered() const;
 
     /*! \brief Test if the window is symmetric.
      */
     bool is_symmetric() const;
 
-    /*! \brief Give the maximum coordinate gap between the window
-      center and a window point.
-    */
-    unsigned delta() const;
+    /// Insert a delta-point \p dp.
+    window_<D>& insert(const D& dp);
 
     /// Give the symmetrical window.
     window_<D> sym_() const;
 
   protected:
     
-    box_<point> b_;
+    box_<mln_point(D)> b_;
   };
 
 
@@ -142,30 +126,18 @@ namespace mln
   }
 
   template <typename D>
-  bool window_<D>::is_centered() const
-  {
-    static const D origin = all(0);
-    return this->has(origin);
-  }
-
-  template <typename D>
   bool window_<D>::is_symmetric() const
   {
     return this->sym_() == *this;
   }
 
   template <typename D>
-  unsigned window_<D>::delta() const
+  window_<D>&
+  window_<D>::insert(const D& dp)
   {
-    unsigned d = 0;
-    const unsigned n = this->nelements();
-    for (unsigned i = 0; i < n; ++i)
-      {
-	unsigned dd = norm::infty(this->element(i).to_vec());
-	if (dd > d)
-	  d = dd;
-      }
-    return d;
+    mln_precondition(! has(dp));
+    this->super_::insert(dp);
+    return *this;
   }
 
   template <typename D>
@@ -173,11 +145,12 @@ namespace mln
   window_<D>::sym_() const
   {
     window_<D> tmp;
-    const unsigned n = this->nelements();
+    const unsigned n = this->ndpoints();
     for (unsigned i = 0; i < n; ++i)
-      tmp.insert(- this->element(i));
+      tmp.insert(- this->dp(i));
     return tmp;
   }
+
 
   // operators
 

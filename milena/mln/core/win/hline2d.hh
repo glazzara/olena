@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/window.hh>
-# include <mln/core/internal/set_of.hh>
+# include <mln/core/internal/dpoints_base.hh>
 # include <mln/core/dpoint2d.hh>
 # include <mln/core/dpoints_piter.hh>
 
@@ -55,7 +55,7 @@ namespace mln
      * is defined with length = 5.
      */
     struct hline2d : public Window< hline2d >,
-		     public mln::internal::set_of_<dpoint2d>
+		     public internal::dpoints_base_< dpoint2d, hline2d >
     {
       /// Point associated type.
       typedef point2d point;

@@ -170,12 +170,12 @@ namespace mln
   void
   dpoints_fwd_pixter<I>::init_(const Dps& dps)
   {
-    for (unsigned i = 0; i < dps.nelements(); ++i)
-      offset_.push_back(this->image_.offset(dps.element(i)));
+    for (unsigned i = 0; i < dps.ndpoints(); ++i)
+      offset_.push_back(this->image_.offset(dps.dp(i)));
     // offset_[0] is absolute
     // other offsets are relative: 
-    if (dps.nelements() > 1)
-      for (unsigned i = dps.nelements() - 1; i > 0; --i)
+    if (dps.ndpoints() > 1)
+      for (unsigned i = dps.ndpoints() - 1; i > 0; --i)
 	offset_[i] -= offset_[i - 1];
     invalidate();
   }

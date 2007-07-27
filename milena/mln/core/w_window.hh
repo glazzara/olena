@@ -62,21 +62,21 @@ namespace mln
     /// Dpoint associated type.
     typedef D dpoint;
 
-    /// Point_Iterator type to browse the points of a generic w_window.
+
+    /// Point_Iterator type to browse (forward) the points of a generic w_window.
     typedef with_w_< dpoints_fwd_piter<D>, W > fwd_qiter;
 
-    /// Point_Iterator type to browse the points of a generic w_window.
+    /// Point_Iterator type to browse (backward) the points of a generic w_window.
     typedef with_w_< dpoints_bkd_piter<D>, W > bkd_qiter;
 
 
     /// Constructor without argument.
     w_window_();
 
-    /// Give the corresponding window.
-    const window_<D>& window() const;
 
-    /// Give the symmetrical w_window.
-    w_window_<D,W> sym_() const;
+    /// Insert a delta-point \p d and its associated weight \p w.
+    w_window_<D,W>& insert(const D& d, const W& w);
+
 
     /// Give the \p i-th weight.
     W weight(unsigned i) const;
@@ -84,17 +84,22 @@ namespace mln
     /// Give access to the vector of weights.
     const std::vector<W>& weights() const;
 
+
+    // Give the \p i-th delta-point.
+    const D& dp(unsigned i) const;
+
+    /// Give the number of delta-points.
+    unsigned ndpoints() const;
+
     /// Give access to the vector of delta-points.
     const std::vector<D>& vect() const;
 
-    /// Insert a delta-point \p d and its associated weight \p w.
-    w_window_<D,W>& insert(const D& d, const W& w);
+    /// Give the corresponding window.
+    const window_<D>& window() const;
 
-    /// Give the number of elements (pairs of delta-point/weight).
-    unsigned nelements() const;
 
-    // FIXME: Rename as dpoint(i); same in mln/core/dpoints_pixter.hh:174.
-    const D& element(unsigned i) const;
+    /// Give the symmetrical w_window.
+    w_window_<D,W> sym_() const;
 
   protected:
     
@@ -154,7 +159,7 @@ namespace mln
   std::ostream& operator<<(std::ostream& ostr, const w_window_<D,W>& wwin)
   {
     ostr << '[';
-    for (unsigned i = 0; i < wwin.window().nelements(); ++i)
+    for (unsigned i = 0; i < wwin.window().ndpoints(); ++i)
       ostr << wwin.vect()[i] << ':' << wwin.weight(i) << ' ';
     return ostr << ']';
   }
@@ -172,6 +177,23 @@ namespace mln
   }
 
   template <typename D, typename W>
+  const D&
+  w_window_<D,W>::dp(unsigned i) const
+  {
+    mln_precondition(i < win_.ndpoints());
+    mln_invariant(wei_.size() == win_.ndpoints());
+    return win_.dp(i);
+  }
+
+  template <typename D, typename W>
+  unsigned
+  w_window_<D,W>::ndpoints() const
+  {
+    mln_invariant(wei_.size() == win_.ndpoints());
+    return win_.ndpoints();
+  }
+
+  template <typename D, typename W>
   const std::vector<D>&
   w_window_<D,W>::vect() const
   {
@@ -186,28 +208,11 @@ namespace mln
   }
 
   template <typename D, typename W>
-  unsigned
-  w_window_<D,W>::nelements() const
-  {
-    mln_invariant(wei_.size() == win_.nelements());
-    return win_.nelements();
-  }
-
-  template <typename D, typename W>
-  const D&
-  w_window_<D,W>::element(unsigned i) const
-  {
-    mln_precondition(i < wei_.size());
-    mln_invariant(wei_.size() == win_.nelements());
-    return win_.element(i);
-  }
-
-  template <typename D, typename W>
   W
   w_window_<D,W>::weight(unsigned i) const
   {
     mln_precondition(i < wei_.size());
-    mln_invariant(wei_.size() == win_.nelements());
+    mln_invariant(wei_.size() == win_.ndpoints());
     return wei_[i];
   }
 
@@ -215,24 +220,27 @@ namespace mln
   w_window_<D,W>&
   w_window_<D,W>::insert(const D& d, const W& w)
   {
+    mln_invariant(wei_.size() == win_.ndpoints());
+
     if (win_.has(d))
       // no-op
       return *this;
 
     // memorization: d_i -> w_i
     std::map<D, W> memo_wei_;
-    for (unsigned i = 0; i < win_.nelements(); ++i)
-      memo_wei_[win_.element(i)] = wei_[i];
+    for (unsigned i = 0; i < win_.ndpoints(); ++i)
+      memo_wei_[win_.dp(i)] = wei_[i];
 
     // insertion of d and w:
     win_.insert(d);
     memo_wei_[d] = w;
 
     // re-mapping: w_i <- d_i
-    wei_.resize(win_.nelements());
-    for (unsigned i = 0; i < win_.nelements(); ++i)
-      wei_[i] = memo_wei_[win_.element(i)];
+    wei_.resize(win_.ndpoints());
+    for (unsigned i = 0; i < win_.ndpoints(); ++i)
+      wei_[i] = memo_wei_[win_.dp(i)];
 
+    mln_invariant(wei_.size() == win_.ndpoints());
     return *this;
   }
 
@@ -241,7 +249,8 @@ namespace mln
   w_window_<D,W>
   w_window_<D,W>::sym_() const
   {
-    // FIXME
+    w_window_<D,W> tmp(*this);
+    tmp.win_ = - this->win_;
     return *this;
   }
 

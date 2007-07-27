@@ -50,30 +50,30 @@ namespace mln
   struct Weighted_Window : public Object<E>
   {
     /*
+      typedef fwd_qiter;
+      typedef bkd_piter;
+
       typedef point;
       typedef dpoint;
-
-      typedef fwd_qiter;
-      typedef bkd_qiter;
 
       E sym_() const;
     */
 
+    /// Test if the weighted window is empty; final method.
     bool is_empty() const
     {
       return exact(this)->window().is_empty();
     }
 
+    /// Test if the weighted window is centered; final method.
     bool is_centered() const
     {
       return exact(this)->window().is_centered();
     }
 
-    bool is_symmetric() const
-    {
-      return exact(this)->window().is_symmetric();
-    }
+    // FIXME: Remove because too ambiguous: bool is_symmetric() const
     
+    /// Give the maximum coordinate gap.
     unsigned delta() const
     {
       return exact(this)->window().delta();
@@ -84,7 +84,7 @@ namespace mln
   };
 
 
-  /*! \brief Compute the symmetrical weighted_window of \p rhs.
+  /*! \brief Compute the symmetrical weighted window of \p rhs.
    *
    * \relates mln::Weighted_Window
    */
