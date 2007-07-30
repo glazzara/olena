@@ -1,3 +1,18 @@
+2007-07-30  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add RLE and Sparse image to milena.
+
+	* tests/sparse_image.cc,
+	* tests/run_pset.cc,
+	* tests/rle_image.cc: test.
+	* mln/core/sparse_encode.hh: Encode an image into a sparse image.
+	* mln/core/internal/run_image.hh: New, factorisation class.
+	* mln/core/internal/run_psite.hh: New, run psite class.
+	* mln/core/internal/run_pset.hh: New, point set of run image.
+	* mln/core/rle_image.hh: New, rle_image class.
+	* mln/core/rle_encode.hh: Encode an image into an rle image.
+	* mln/core/sparse_image.hh: New, sparse_image class.
+
 2007-07-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Clean-up windows!
