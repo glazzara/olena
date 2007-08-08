@@ -370,6 +370,8 @@ namespace internal
    * check_delegatee_inherited
    */
 
+  // FIXME: Improve location in error message (as in other check_*
+  // routines).
   template <typename curr>
   struct check_delegatee_inherited
     : mlc::assert_< stc::is_found< typename first_stm<curr,
@@ -502,7 +504,12 @@ namespace internal
     : check_no_final_inherited< mlc::pair_<curr, stc::not_delegated>,
 				  stc_super(curr),
 				  target >
+// FIXME: Disabled.  Seems to break the lookup, even in valid cases
+// (use the examples image.cc and morpher.cc in the repository of the
+// LCSD '07 draft to observe this behavior).
+#if 0
     , check_delegatee_inherited< curr >
+#endif
   {
     typedef typename check<stc_super(curr), target>::ret ret;
   };

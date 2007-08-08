@@ -1,3 +1,11 @@
+2007-08-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Disable check_delegatee_inherited.
+
+	* stc/scoop.hxx (helper_check): Disable
+	`check_delegatee_inherited<curr>' since it triggers errors in
+	valid cases.
+
 2007-07-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Adjust samples to the new interface of Static.
