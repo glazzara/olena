@@ -60,13 +60,12 @@ namespace mln
       typedef V value;
 
       mean();
-      void take(const value& v);
+
       void init();
+      void take(const value& v);
+      void take(const mean<V,S,M>& other);
 
-      operator M() const;
       M to_value() const;
-
-      mean<V,S,M>& operator+=(const mean<V,S,M>& rhs);
 
     protected:
 
@@ -85,13 +84,6 @@ namespace mln
     }
 
     template <typename V, typename S, typename M>
-    void mean<V,S,M>::take(const value& v)
-    {
-      count_.take(v);
-      sum_.take(v);
-    }
-
-    template <typename V, typename S, typename M>
     void
     mean<V,S,M>::init()
     {
@@ -100,9 +92,18 @@ namespace mln
     }
 
     template <typename V, typename S, typename M>
-    mean<V,S,M>::operator M() const
+    void mean<V,S,M>::take(const value& v)
     {
-      return to_value();
+      count_.take(v);
+      sum_.take(v);
+    }
+
+    template <typename V, typename S, typename M>
+    void
+    mean<V,S,M>::take(const mean<V,S,M>& other)
+    {
+      count_.take(other.count_);
+      sum_.take(other.sum_);
     }
 
     template <typename V, typename S, typename M>
@@ -110,15 +111,6 @@ namespace mln
     mean<V,S,M>::to_value() const
     {
       return sum_.to_value() / count_.to_value();
-    }
-
-    template <typename V, typename S, typename M>
-    mean<V,S,M>&
-    mean<V,S,M>::operator+=(const mean<V,S,M>& rhs)
-    {
-      count_ += rhs.count_;
-      sum_ += rhs.sum_;
-      return *this;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -70,7 +70,7 @@ namespace mln
 	    min.init();
 	    for_all(q) if (input.has(q))
 	      min.take(input(q));
-	    output(p) = min;
+	    output(p) = min.to_value();
 	  }
       }
 

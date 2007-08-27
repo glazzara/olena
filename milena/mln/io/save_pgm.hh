@@ -55,14 +55,31 @@ namespace mln
       file << "# olena" << std::endl;
       file << ima.ncols() << ' ' << ima.nrows() << std::endl;
       file << "255" << std::endl;
-      point2d p = make::point2d(ima.domain().pmin().row(),
-				ima.domain().pmin().col());
-      size_t len = ima.ncols() * sizeof(unsigned char);
-      for (;
-	   p.row() <= ima.domain().pmax().row();
-	   ++p.row())
+      const int
+	min_row = ima.domain().pmin().row(),
+	max_row = ima.domain().pmax().row();
+      point2d p;
+      if (sizeof(value::int_u8) == 1)
 	{
-	  file.write((char*)(& ima(p)), len);
+	  p.col() = ima.domain().pmin().col();
+	  size_t len = ima.ncols();
+	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
+	    file.write((char*)(& ima(p)), len);
+	}
+      else
+	{
+	  // FIXME: code for g++-2.95 when sizeof(int_u8) == 2!!!
+	  const int
+	    min_col = ima.domain().pmin().col(),
+	    max_col = ima.domain().pmax().col();
+	  std::cout << min_row << ' ' << max_row << std::endl;
+	  std::cout << min_col << ' ' << max_col << std::endl;
+	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
+	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
+	      {
+		unsigned char c = ima(p);
+		file.write((char*)(&c), 1);
+	      }
 	}
     }
 

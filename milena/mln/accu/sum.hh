@@ -56,13 +56,12 @@ namespace mln
       typedef V value;
 
       sum();
-      void take(const value& v);
+
       void init();
+      void take(const value& v);
+      void take(const sum<V,S>& other);
 
-      operator S() const;
       S to_value() const;
-
-      sum<V,S>& operator+=(const sum<V,S>& rhs);
       
     protected:
 
@@ -80,12 +79,6 @@ namespace mln
     }
 
     template <typename V, typename S>
-    void sum<V,S>::take(const value& v)
-    {
-      sum_ += v;
-    }
-
-    template <typename V, typename S>
     void
     sum<V,S>::init()
     {
@@ -93,9 +86,16 @@ namespace mln
     }
 
     template <typename V, typename S>
-    sum<V,S>::operator S() const
+    void sum<V,S>::take(const value& v)
     {
-      return to_value;
+      sum_ += v;
+    }
+
+    template <typename V, typename S>
+    void
+    sum<V,S>::take(const sum<V,S>& other)
+    {
+      sum_ += other.sum_;
     }
 
     template <typename V, typename S>
@@ -103,14 +103,6 @@ namespace mln
     sum<V,S>::to_value() const
     {
       return sum_;
-    }
-
-    template <typename V, typename S>
-    sum<V,S>&
-    sum<V,S>::operator+=(const sum<V,S>& rhs)
-    {
-      sum_ += rhs.sum_;
-      return *this;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

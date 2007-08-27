@@ -203,8 +203,9 @@ namespace mln
     template <>
     struct props<float>
     {
-      static const float min() { return FLT_MIN; }
-      static const float max() { return FLT_MAX; }
+      static const float min = FLT_MIN;
+      static const float max = FLT_MAX;
+      static const float epsilon = 0.00001f;
       typedef data_kind kind;
       static const std::size_t card_ = 0;
       typedef float sum;
@@ -213,8 +214,9 @@ namespace mln
     template <>
     struct props<double>
     {
-      static const double min() { return DBL_MIN; }
-      static const double max() { return DBL_MAX; }
+      static const double min = DBL_MIN;
+      static const double max = DBL_MAX;
+      static const double epsilon = 0.0000001;
       typedef data_kind kind;
       static const std::size_t card_ = 0;
       typedef double sum;

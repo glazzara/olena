@@ -56,9 +56,10 @@ namespace mln
     template <typename I>
     mln_sum(mln_value(I)) mean(const Image<I>& input)
     {
+      mln_precondition(exact(input).has_data());
       typedef mln_value(I) V;
       typedef mln_sum(V)   S;
-      return level::run(input, accu::mean<V, S>());
+      return level::run(input, accu::mean<V, S>()).to_value();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

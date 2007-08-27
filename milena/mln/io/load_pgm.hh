@@ -135,12 +135,29 @@ namespace mln
       void load_pgm_raw_2d(std::ifstream& file, I& ima)
       {
 	point2d p = make::point2d(0, ima.domain().pmin().col());
-	size_t len = ima.ncols() * sizeof(mln_value(I));
-	for (p.row()  = ima.domain().pmin().row();
-	     p.row() <= ima.domain().pmax().row();
-	     ++p.row())
+	typedef mln_value(I) V;
+	const mln_coord(I)
+	  min_row = ima.domain().pmin().row(),
+	  max_row = ima.domain().pmax().row();
+	if (sizeof(V) == 1)
 	  {
-	    file.read((char*)(& ima(p)), len);
+	    size_t len = ima.ncols() * sizeof(mln_enc(V));
+	    for (p.row() = min_row; p.row() <= max_row; ++p.row())
+	      file.read((char*)(& ima(p)), len);
+	  }
+	else
+	  {
+	    // FIXME: code for g++-2.95 when sizeof(int_u8) == 2!!!
+	    const mln_coord(I)
+	      min_col = ima.domain().pmin().col(),
+	      max_col = ima.domain().pmax().col();
+	    for (p.row()  = min_row; p.row() <= max_row; ++p.row())
+	      for (p.col()  = min_col; p.col() <= max_col; ++p.col())
+		{
+		  unsigned char c;
+		  file.read((char*)(&c), 1);
+		  ima(p) = c;
+		}
 	  }
       }
 
@@ -160,6 +177,7 @@ namespace mln
       char type;
       int nrows, ncols;
       internal::read_pnm_header('2', '5', file, type, nrows, ncols);
+
       image2d_b<value::int_u8> ima(nrows, ncols);
       if (type == '5')
 	internal::load_pgm_raw_2d(file, ima);

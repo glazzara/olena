@@ -54,10 +54,11 @@ namespace mln
       typedef P value;
 
       bbox();
+
       void take(const P& p);
+      void take(const bbox<P>& other);
       void init();
 
-      operator box_<P>() const;
       const box_<P>& to_value() const;
 
       bool is_valid() const;
@@ -79,7 +80,8 @@ namespace mln
     }
 
     template <typename P>
-    void bbox<P>::take(const P& p)
+    void
+    bbox<P>::take(const P& p)
     {
       if (! is_valid_)
 	{
@@ -97,16 +99,33 @@ namespace mln
 
     template <typename P>
     void
-    bbox<P>::init()
+    bbox<P>::take(const bbox<P>& other)
     {
-      is_valid_ = false;
+      if (! other.is_valid_)
+	{
+	  // no-op
+	  return;
+	}
+      if (! this->is_valid_)
+	{
+	  // 'other' makes '*this' valid
+	  *this = other;
+	  return;
+	}
+      // both are valids so:
+      const box_<P>& o_b = other.b_;
+      for (unsigned i = 0; i < P::dim; ++i)
+	if (o_b.pmin()[i] < b_.pmin()[i])
+	  b_.pmin()[i] = o_b.pmin()[i];
+	else if (o_b.pmax()[i] > b_.pmax()[i])
+	  b_.pmax()[i] = o_b.pmax()[i];
     }
 
     template <typename P>
-    bbox<P>::operator box_<P>() const
+    void
+    bbox<P>::init()
     {
-      mln_precondition(is_valid_);
-      return b_;
+      is_valid_ = false;
     }
 
     template <typename P>

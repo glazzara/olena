@@ -25,17 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_TO_ENC_HH
-# define MLN_LEVEL_TO_ENC_HH
+#ifndef MLN_LEVEL_STRETCH_HH
+# define MLN_LEVEL_STRETCH_HH
 
-/*! \file mln/level/to_enc.hh
+/*! \file mln/level/stretch.hh
  *
- * \brief Transform with fun::v2v::enc the contents of an image into
+ * \brief Transform with fun::stretch the contents of an image into
  * another one.
  */
 
+# include <mln/estim/min_max.hh>
+# include <mln/value/int_u.hh>
+# include <mln/fun/v2v/linear.hh>
 # include <mln/level/transform.hh>
-# include <mln/fun/v2v/enc.hh>
 
 
 namespace mln
@@ -44,24 +46,48 @@ namespace mln
   namespace level
   {
 
-    /*! Set the \p output image with the encoding values of the image \p input pixels.
+    /*! Stretch the values of \p input so that they can be stored in \p output.
      *
      * \param[in] input The input image.
      * \param[out] output The result image.
      *
-     * \pre \p output.domain >= \p input.domain
+     * \pre \p output.domain == \p input.domain
      */
     template <typename I, typename O>
-    void to_enc(const Image<I>& input, Image<O>& output);
+    void stretch(const Image<I>& input, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace impl
+    {
+
+      template <unsigned n, typename I, typename O>
+      void stretch(value::int_u<n>,
+		   const Image<I>& input, Image<O>& output)
+      {
+	mln_value(I) min_, max_;
+	estim::min_max(input, min_, max_);
+	if (max_ == min_)
+	  return; // FIXME
+	float min = float(min_), max = float(max_);
+	const float epsilon = value::props<float>::epsilon;
+ 	float m = 0.0f - 0.5f + epsilon;
+ 	float M = mln_max(value::int_u<n>) + 0.5f - epsilon;
+	float a = (M - m) / (max - min);
+	float b = (m * max - M * min) / (max - min);
+	fun::v2v::linear<float, float, int> f(a, b);
+	level::transform(input, f, output);
+      }
+
+    } // end of namespace mln::level::impl
+
+
     template <typename I, typename O>
-    void to_enc(const Image<I>& input, Image<O>& output)
+    void stretch(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      level::transform(input, fun::v2v::enc< mln_value(I) >(), output);
+      impl::stretch(mln_value(O)(), input, output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -71,4 +97,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_TO_ENC_HH
+#endif // ! MLN_LEVEL_STRETCH_HH

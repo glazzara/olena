@@ -25,87 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_COUNT_HH
-# define MLN_ACCU_COUNT_HH
+#ifndef MLN_LINEAR_LOG_HH
+# define MLN_LINEAR_LOG_HH
 
-/*! \file mln/accu/count.hh
+/*! \file mln/linear/log.hh
  *
- * \brief Define an accumulator that counts.
+ * \brief Laplacian of Gaussian.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/linear/convolve.hh>
+# include <mln/make/w_window2d_int.hh>
+
 
 
 namespace mln
 {
 
-  namespace accu
+  namespace linear
   {
 
-
-    /*! Generic counter accumulator class.
-     */
-    template <typename V>
-    struct count : public Accumulator< count<V> >
-    {
-      typedef V value;
-
-      count();
-
-      void init();
-      void take(const value&);
-      void take(const count<V>& other);
-
-      std::size_t to_value() const;
-
-    protected:
-
-      std::size_t count_;
-    };
-
+    template <typename I, typename O>
+    void LoG_5x5(const Image<I>& input, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V>
-    count<V>::count()
-    {
-      init();
-    }
+    // LoG_5x5  (Cf. Sonka et al., pages 85-86)
 
-    template <typename V>
-    void
-    count<V>::init()
+    template <typename I, typename O>
+    void LoG_5x5(const Image<I>& input, Image<O>& output)
     {
-      count_ = 0;
-    }
-
-    template <typename V>
-    void
-    count<V>::take(const value&)
-    {
-      ++count_;
-    }
-
-    template <typename V>
-    void
-    count<V>::take(const count<V>& other)
-    {
-      count_ += other.count_;
-    }
-
-    template <typename V>
-    std::size_t
-    count<V>::to_value() const
-    {
-      return count_;
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      int ws[] = { 0,  0, -1,  0,  0,
+		   0, -1, -2, -1,  0,
+		  -1, -2, 16, -2, -1,
+		   0, -1, -2, -1,  0,
+		   0,  0, -1,  0,  0 };
+      convolve(input, make::w_window2d_int(ws), output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::accu
+  } // end of namespace mln::linear
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_COUNT_HH
+#endif // ! MLN_LINEAR_CONVOLVE_HH

@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/internal/fixme.hh>
 
 
 namespace mln
@@ -61,8 +62,8 @@ namespace mln
     void mirror(const Fast_Image<I>& ima_)
     {
       const I& ima = exact(ima_);
-      mln_precondition(ima_.has_data());
-      mln_invariant(0); // FIXME: NYI
+      mln_precondition(ima.has_data());
+      internal::fixme();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

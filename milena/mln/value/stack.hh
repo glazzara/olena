@@ -143,9 +143,11 @@ namespace mln
     stack_image<2, const I>
     stack(const Image<I>& ima1, const Image<I>& ima2);
   
+
     template <typename I>
     stack_image<2, I>
     stack(Image<I>& ima1, Image<I>& ima2);
+
 
 
 # ifndef MLN_INCLUDE_ONLY

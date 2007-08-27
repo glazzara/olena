@@ -25,87 +25,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_COUNT_HH
-# define MLN_ACCU_COUNT_HH
+#ifndef MLN_ESTIM_MIN_MAX_HH
+# define MLN_ESTIM_MIN_MAX_HH
 
-/*! \file mln/accu/count.hh
+/*! \file mln/estim/min_max.hh
  *
- * \brief Define an accumulator that counts.
+ * \brief Compute the min_max pixel value.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/accu/min_max.hh>
+# include <mln/level/take.hh>
 
 
 namespace mln
 {
 
-  namespace accu
+  namespace estim
   {
 
-
-    /*! Generic counter accumulator class.
+    /*! \brief Compute the min and max values of the pixels of image \p input.
+     *
+     * \param[in] input The image.
+     * \param[out] min The minimum pixel value of \p input.
+     * \param[out] max The maximum pixel value of \p input.
      */
-    template <typename V>
-    struct count : public Accumulator< count<V> >
-    {
-      typedef V value;
-
-      count();
-
-      void init();
-      void take(const value&);
-      void take(const count<V>& other);
-
-      std::size_t to_value() const;
-
-    protected:
-
-      std::size_t count_;
-    };
-
+    template <typename I>
+    void min_max(const Image<I>& input,
+		 mln_value(I)& min, mln_value(I)& max);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V>
-    count<V>::count()
+    template <typename I>
+    void min_max(const Image<I>& input,
+		 mln_value(I)& min, mln_value(I)& max)
     {
-      init();
-    }
-
-    template <typename V>
-    void
-    count<V>::init()
-    {
-      count_ = 0;
-    }
-
-    template <typename V>
-    void
-    count<V>::take(const value&)
-    {
-      ++count_;
-    }
-
-    template <typename V>
-    void
-    count<V>::take(const count<V>& other)
-    {
-      count_ += other.count_;
-    }
-
-    template <typename V>
-    std::size_t
-    count<V>::to_value() const
-    {
-      return count_;
+      mln_precondition(exact(input).has_data());
+      accu::min_max<mln_value(I)> a;
+      a.init();
+      level::take(a, input);
+      min = a.min();
+      max = a.max();
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::accu
+  } // end of namespace mln::estim
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_COUNT_HH
+#endif // ! MLN_ESTIM_MIN_MAX_HH

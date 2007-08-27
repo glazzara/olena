@@ -85,7 +85,7 @@ namespace mln
 	      med.init();
 	      for_all(q) if (input.has(q))
 		med.take(input(q));
-	      output(p) = med;
+	      output(p) = med.to_value();
 	    }
 	}
 

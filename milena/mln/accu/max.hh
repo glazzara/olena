@@ -54,10 +54,11 @@ namespace mln
       typedef V value;
 
       max();
+
       void take(const value& v);
+      void take(const max<V>& other);
       void init();
 
-      operator V() const;
       V to_value() const;
       
     protected:
@@ -76,7 +77,8 @@ namespace mln
     }
 
     template <typename V>
-    void max<V>::take(const value& v)
+    void
+    max<V>::take(const value& v)
     {
       if (v > v_)
 	v_ = v;
@@ -84,15 +86,17 @@ namespace mln
 
     template <typename V>
     void
-    max<V>::init()
+    max<V>::take(const max<V>& other)
     {
-      v_ = mln_min(V);
+      if (other.v_ > v_)
+	v_ = other.v_;
     }
 
     template <typename V>
-    max<V>::operator V() const
+    void
+    max<V>::init()
     {
-      return v_;
+      v_ = mln_min(V);
     }
 
     template <typename V>

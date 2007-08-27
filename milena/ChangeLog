@@ -1,5 +1,46 @@
 2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update accus and add LoG filter.
+
+	* mln/core/concept/accumulator.hh (merge): New.
+	* mln/core/concept/doc/accumulator.hh
+	(take): New; overload.
+	* mln/accu/bbox.hh,
+	* mln/accu/count.hh,
+	* mln/accu/histo.hh,
+	* mln/accu/max.hh,
+	* mln/accu/mean.hh,
+	* mln/accu/min.hh,
+	* mln/accu/sum.hh (operator+=): Rename as...
+	(take): ...this.
+	(conversion): Remove operator; too risky.
+	Update.
+	* mln/estim/mean.hh: Update.
+	* mln/level/fast_median.hh: Update.
+	* mln/level/median.hh: Update.
+	* mln/level/naive/median.hh: Update.
+	* mln/morpho/erosion.hh: Update.
+
+	* mln/border/duplicate.hh,
+	* mln/border/fill.hh,
+	* mln/border/mirror.hh,
+	* mln/border/resize.hh: Add fixme.
+
+	* mln/io/load_pgm,
+	* mln/io/save_pgm: Fix for g++-2.95.
+	* mln/linear/convolve.hh: Use border.
+	* tests/convolve.cc: Update.
+
+	* mln/accu/min_max.hh: New.
+	* mln/estim/min_max.hh: New.
+	* mln/fun/v2v/linear.hh: New.
+	* mln/level/stretch.hh: New.
+	* mln/linear/log.hh: New.
+	* mln/value/props.hh (epsilon): New.
+	* tests/linear_log.cc: New.
+
+2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add 'decorated image' morpher.
 
 	* mln/core/decorated_image.hh: New.

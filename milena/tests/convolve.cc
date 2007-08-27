@@ -40,6 +40,7 @@
 
 #include <mln/core/w_window.hh>
 #include <mln/make/w_window2d.hh>
+#include <mln/border/thickness.hh>
 #include <mln/linear/convolve.hh>
 
 
@@ -47,6 +48,8 @@ int main()
 {
   using namespace mln;
   using value::int_u8;
+
+  border::thickness = 2;
 
   image2d_b<int_u8>
     lena = io::load_pgm("../img/lena.pgm"),

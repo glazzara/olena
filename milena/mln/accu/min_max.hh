@@ -25,15 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_COUNT_HH
-# define MLN_ACCU_COUNT_HH
+#ifndef MLN_ACCU_MIN_MAX_HH
+# define MLN_ACCU_MIN_MAX_HH
 
-/*! \file mln/accu/count.hh
+/*! \file mln/accu/min_max.hh
  *
- * \brief Define an accumulator that counts.
+ * \brief Define an accumulator that computes a min and a max.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <utility>
+
+# include <mln/accu/min.hh>
+# include <mln/accu/max.hh>
 
 
 namespace mln
@@ -43,24 +46,31 @@ namespace mln
   {
 
 
-    /*! Generic counter accumulator class.
+    /*! Generic min and max accumulator class.
+     *
+     * The parameter \c V is the type of values.
      */
     template <typename V>
-    struct count : public Accumulator< count<V> >
+    struct min_max : public Accumulator< min_max<V> >
     {
       typedef V value;
 
-      count();
+      min_max();
 
+      void take(const value& v);
+      void take(const min_max<V>& other);
       void init();
-      void take(const value&);
-      void take(const count<V>& other);
 
-      std::size_t to_value() const;
+      V min() const;
+      V max() const;
+
+      std::pair<V,V> to_value() const;
+      void values(V& min, V& max) const;
 
     protected:
 
-      std::size_t count_;
+      accu::min<V> min_;
+      accu::max<V> max_;
     };
 
 
@@ -68,37 +78,63 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V>
-    count<V>::count()
+    min_max<V>::min_max()
     {
       init();
     }
 
     template <typename V>
     void
-    count<V>::init()
+    min_max<V>::init()
     {
-      count_ = 0;
+      min_.init();
+      max_.init();
+    }
+
+    template <typename V>
+    void min_max<V>::take(const value& v)
+    {
+      min_.take(v);
+      max_.take(v);
+    }
+    
+    template <typename V>
+    void
+    min_max<V>::take(const min_max<V>& other)
+    {
+      min_.take(other.min_);
+      max_.take(other.max_);
+    }
+
+    template <typename V>
+    V
+    min_max<V>::min() const
+    {
+      return min_.to_value();
+    }
+
+    template <typename V>
+    V
+    min_max<V>::max() const
+    {
+      return max_.to_value();
+    }
+
+    template <typename V>
+    std::pair<V,V>
+    min_max<V>::to_value() const
+    {
+      std::pair<V,V> tmp(min_.to_value(),
+			 max_.to_value());
+      return tmp;
     }
 
     template <typename V>
     void
-    count<V>::take(const value&)
+    min_max<V>::values(V& min, V& max) const
     {
-      ++count_;
-    }
-
-    template <typename V>
-    void
-    count<V>::take(const count<V>& other)
-    {
-      count_ += other.count_;
-    }
-
-    template <typename V>
-    std::size_t
-    count<V>::to_value() const
-    {
-      return count_;
+      min = min_.to_value();
+      max = max_.to_value();
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -108,4 +144,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_COUNT_HH
+#endif // ! MLN_ACCU_MIN_MAX_HH

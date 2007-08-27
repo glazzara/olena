@@ -49,6 +49,9 @@ namespace mln
 
       /// Take into account a value \p v (an element).
       void take(const value& v);
+
+      /// Take into account another accumulator \p other.
+      void take(const E& other);
     };
 
   } // end of namespace mln::doc

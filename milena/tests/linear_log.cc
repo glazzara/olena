@@ -25,87 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_COUNT_HH
-# define MLN_ACCU_COUNT_HH
-
-/*! \file mln/accu/count.hh
+/*! \file tests/linear_log.cc
  *
- * \brief Define an accumulator that counts.
+ * \brief Tests on mln::linear::log.
  */
 
-# include <mln/core/concept/accumulator.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
+
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
+
+#include <mln/border/thickness.hh>
+#include <mln/linear/log.hh>
+
+#include <mln/estim/min_max.hh>
+#include <mln/level/stretch.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  namespace accu
+  border::thickness = 2;
+
+  image2d_b<int_u8> lena = io::load_pgm("../img/lena.pgm");
+
+  image2d_b<int> tmp(lena.domain());
+  linear::LoG_5x5(lena, tmp);
   {
+    int min, max;
+    estim::min_max(tmp, min, max);
+    mln_assertion(min == -929 && max == 1458);
+  }
 
-
-    /*! Generic counter accumulator class.
-     */
-    template <typename V>
-    struct count : public Accumulator< count<V> >
-    {
-      typedef V value;
-
-      count();
-
-      void init();
-      void take(const value&);
-      void take(const count<V>& other);
-
-      std::size_t to_value() const;
-
-    protected:
-
-      std::size_t count_;
-    };
-
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename V>
-    count<V>::count()
-    {
-      init();
-    }
-
-    template <typename V>
-    void
-    count<V>::init()
-    {
-      count_ = 0;
-    }
-
-    template <typename V>
-    void
-    count<V>::take(const value&)
-    {
-      ++count_;
-    }
-
-    template <typename V>
-    void
-    count<V>::take(const count<V>& other)
-    {
-      count_ += other.count_;
-    }
-
-    template <typename V>
-    std::size_t
-    count<V>::to_value() const
-    {
-      return count_;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::accu
-
-} // end of namespace mln
-
-
-#endif // ! MLN_ACCU_COUNT_HH
+  image2d_b<int_u8> out(lena.domain());
+  level::stretch(tmp, out);
+  io::save_pgm(out, "out.pgm");
+  {
+    int_u8 min, max;
+    estim::min_max(out, min, max);
+    mln_assertion(min == 0 && max == 255);
+  }
+}

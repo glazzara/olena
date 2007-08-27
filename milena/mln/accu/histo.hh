@@ -59,6 +59,7 @@ namespace mln
       typedef mln_value(S) value;
 
       void   take(const value& v);
+      void   take(const histo<S>& other);
       void untake(const value& v);
       void init();
 
@@ -109,6 +110,15 @@ namespace mln
     {
       ++h_[s_.index_of(v)];
       ++sum_;
+    }
+
+    template <typename S>
+    void
+    histo<S>::take(const histo<S>& other)
+    {
+      for (unsigned i = 0; i < h_.size(); ++i)
+	h_[i] += other.h_[i];
+      sum_ += other.sum_;
     }
 
     template <typename S>

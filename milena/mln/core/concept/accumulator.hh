@@ -54,10 +54,25 @@ namespace mln
       typedef value;
       void init();
       void take(const value& v);
+      void take(const E& other);
      */
   protected:
     Accumulator();
   };
+
+
+  /*! \brief Merge two accumulators.
+   *
+   * The parameter \a E is the accumulator exact type.
+   *
+   * \param[in] lhs An accumulator.
+   * \param[in] rhs Another accumulator.
+   * \result A temporary accumulator.
+   *
+   * \see relates mln::Accumulator
+   */
+  template <typename E>
+  E merge(const Accumulator<E>& lhs, const Accumulator<E>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -70,6 +85,16 @@ namespace mln
     m1 = 0;
     void (E::*m2)(const value&) = & E::take;
     m2 = 0;
+    void (E::*m3)(const E&) = & E::take;
+    m3 = 0;
+  }
+
+  template <typename E>
+  E merge(const Accumulator<E>& lhs, const Accumulator<E>& rhs)
+  {
+    E tmp(exact(lhs));
+    tmp.take(exact(rhs));
+    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

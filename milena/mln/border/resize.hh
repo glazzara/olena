@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/internal/fixme.hh>
 
 
 namespace mln
@@ -65,10 +66,12 @@ namespace mln
     void resize(const Fast_Image<I>& ima_, unsigned thickness)
     {
       const I& ima = exact(ima_);
-      mln_precondition(ima_.has_data());
+      mln_precondition(ima.has_data());
       if (ima.border() >= thickness)
 	return;
-      mln_invariant(0); // FIXME: NYI
+      internal::fixme();
+      mln_postcondition(ima.border() >= thickness);
+      return;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

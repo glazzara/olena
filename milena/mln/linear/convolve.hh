@@ -35,6 +35,8 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/weighted_window.hh>
+# include <mln/border/resize.hh>
+# include <mln/border/duplicate.hh>
 
 
 
@@ -85,6 +87,9 @@ namespace mln
 	const I& input = exact(input_);
 	const W& win = exact(win_);
 	O& output = exact(output_);
+
+	border::resize(input, win.delta());
+	border::duplicate(input);
 
  	mln_pixter(O)          p_out(output);
 

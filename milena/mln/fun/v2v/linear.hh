@@ -25,87 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_COUNT_HH
-# define MLN_ACCU_COUNT_HH
+#ifndef MLN_FUN_V2V_LINEAR_HH
+# define MLN_FUN_V2V_LINEAR_HH
 
-/*! \file mln/accu/count.hh
+/*! \file mln/fun/v2v/linear.hh
  *
- * \brief Define an accumulator that counts.
+ * \brief FIXME.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/core/concept/function.hh>
 
 
 namespace mln
 {
 
-  namespace accu
+  namespace fun
   {
 
-
-    /*! Generic counter accumulator class.
-     */
-    template <typename V>
-    struct count : public Accumulator< count<V> >
+    namespace v2v
     {
-      typedef V value;
 
-      count();
+      /*! Linear function.
+       *
+       * f(v) = a * v + b.
+       *
+       * \c V is the type of input values; \c T is the type used to
+       * compute the result; \c R is the result type.
+       * 
+       * By defaut, \c T is \c V and \c R is \c T.
+       */
+      template <typename V, typename T = V, typename R = T>
+      struct linear : public Function_v2v< linear<V,T,R> >
+      {
+	typedef R result;
+	R operator()(const V& v) const;
 
-      void init();
-      void take(const value&);
-      void take(const count<V>& other);
-
-      std::size_t to_value() const;
-
-    protected:
-
-      std::size_t count_;
-    };
-
+	linear(T a, T b);
+	T a, b;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V>
-    count<V>::count()
-    {
-      init();
-    }
+      template <typename V, typename T, typename R>
+      linear<V,T,R>::linear(T a, T b)
+	: a(a),
+	  b(b)
+      {
+      }
 
-    template <typename V>
-    void
-    count<V>::init()
-    {
-      count_ = 0;
-    }
-
-    template <typename V>
-    void
-    count<V>::take(const value&)
-    {
-      ++count_;
-    }
-
-    template <typename V>
-    void
-    count<V>::take(const count<V>& other)
-    {
-      count_ += other.count_;
-    }
-
-    template <typename V>
-    std::size_t
-    count<V>::to_value() const
-    {
-      return count_;
-    }
+      template <typename V, typename T, typename R>
+      R
+      linear<V,T,R>::operator()(const V& v) const
+      {
+	return R(a * T(v) + b);
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::accu
+    } // end of namespace mln::fun::v2v
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_COUNT_HH
+#endif // ! MLN_FUN_V2V_LINEAR_HH

@@ -55,13 +55,13 @@ namespace mln
       median(const Value_Set<S>& s);
       median();
 
-      void   take(const value& v);
-      void untake(const value& v);
       void init();
+      void   take(const value& v);
+      void   take(const median<S>& other);
+      void untake(const value& v);
 
       unsigned card() const { return h_.sum(); }
 
-      operator mln_value(S) () const;
       value to_value() const;
 
       const accu::histo<S>& histo() const;
@@ -112,6 +112,25 @@ namespace mln
 	++sum_minus_;
       else if (v > v_)
 	++sum_plus_;
+
+      if (valid_)
+	valid_ = false;
+    }
+
+    template <typename S>
+    void
+    median<S>::take(const median<S>& other)
+    {
+      // h_
+      h_.take(other.h_);
+
+      // sum_minus_
+      for (unsigned i = 0; i < i_; ++i)
+	sum_minus_ += other.h_[i];
+
+      // sum_plus_
+      for (unsigned i = i_ + 1; i < h_.nvalues(); ++i)
+	sum_plus_ += other.h_[i];
 
       if (valid_)
 	valid_ = false;
@@ -200,12 +219,6 @@ namespace mln
       i_ = (mln_max(value) - mln_min(value)) / 2;
       v_ = s_[i_];
       valid_ = true;
-    }
-
-    template <typename S>
-    median<S>::operator mln_value(S) () const
-    {
-      return to_value();
     }
 
     template <typename S>
