@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/accumulator.hh>
+# include <mln/value/props.hh>
 
 
 namespace mln
@@ -46,10 +47,10 @@ namespace mln
     /*! Generic sum accumulator class.
      *
      * Parameter \c V is the type of values that we sum.  Parameter \c
-     * S is the type to store the sum value; the default type of
-     * \c S is \c V.
+     * S is the type to store the value sum; the default type of
+     * \c S is the summation type (property) of \c V.
      */
-    template <typename V, typename S = V>
+    template <typename V, typename S = mln_sum(V)>
     struct sum : public Accumulator< sum<V,S> >
     {
       typedef V value;
@@ -60,6 +61,8 @@ namespace mln
 
       operator S() const;
       S to_value() const;
+
+      sum<V,S>& operator+=(const sum<V,S>& rhs);
       
     protected:
 
@@ -99,7 +102,15 @@ namespace mln
     S
     sum<V,S>::to_value() const
     {
-      return sum_ / count_;
+      return sum_;
+    }
+
+    template <typename V, typename S>
+    sum<V,S>&
+    sum<V,S>::operator+=(const sum<V,S>& rhs)
+    {
+      sum_ += rhs.sum_;
+      return *this;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

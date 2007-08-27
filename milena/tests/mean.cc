@@ -25,21 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/psubset.cc
+/*! \file tests/assign.cc
  *
- * \brief Tests on mln::psubset.
+ * \brief Tests on mln::level::assign.
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/psubset.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/convert/to_image.hh>
+#include <mln/value/int_u8.hh>
+
+#include <mln/debug/iota.hh>
+#include <mln/estim/mean.hh>
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  box2d box_8x8 = make::box2d(8, 8);
-  mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
+  image2d_b<int_u8> ima(3, 3);
+  debug::iota(ima);
+  // 1 2 3
+  // 4 5 6
+  // 7 8 9
+  mln_assertion(estim::mean(ima) == 5);
+
+  // FIXME: Add example on accu::mean used several times.
 }

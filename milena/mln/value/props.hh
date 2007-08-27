@@ -61,6 +61,9 @@
 # define mln_is_lowq(T) typename metal::bool_<( mln_card_(T) != 0 )>::type
 
 
+/// Give the summation type for values of type \c T.
+# define mln_sum(T) typename mln::value::props< T >::sum
+
 
 
 namespace mln
@@ -121,6 +124,7 @@ namespace mln
       static const unsigned char max = 255;
       static const std::size_t  card_ = 256;
       typedef data_kind kind;
+      typedef float sum;
     };
 
     template <>
@@ -130,6 +134,7 @@ namespace mln
       static const signed char  max =  127;
       static const std::size_t card_ =  256;
       typedef data_kind kind;
+      typedef float sum;
     };
 
     template <>
@@ -139,6 +144,7 @@ namespace mln
       static const unsigned short max = 65535;
       static const std::size_t   card_ = 65536;
       typedef data_kind kind;
+      typedef float sum;
     };
 
     template <>
@@ -148,6 +154,7 @@ namespace mln
       static const signed short max =  32767;
       static const std::size_t card_ = 655356;
       typedef data_kind kind;
+      typedef float sum;
     };
 
     template <>
@@ -157,6 +164,7 @@ namespace mln
       static const unsigned int max = UINT_MAX;
       typedef data_kind kind;
       static const std::size_t card_ = 0;
+      typedef float sum;
     };
 
     template <>
@@ -166,6 +174,7 @@ namespace mln
       static const signed int  max = INT_MAX;
       typedef data_kind kind;
       static const std::size_t card_ = 0;
+      typedef float sum;
     };
 
     template <>
@@ -175,6 +184,7 @@ namespace mln
       static const unsigned long int max = ULONG_MAX;
       typedef data_kind kind;
       static const std::size_t card_ = 0;
+      typedef float sum;
     };
 
     template <>
@@ -184,6 +194,7 @@ namespace mln
       static const signed long int max = LONG_MAX;
       typedef data_kind kind;
       static const std::size_t card_ = 0;
+      typedef float sum;
     };
 
 
@@ -196,6 +207,7 @@ namespace mln
       static const float max() { return FLT_MAX; }
       typedef data_kind kind;
       static const std::size_t card_ = 0;
+      typedef float sum;
     };
 
     template <>
@@ -205,6 +217,7 @@ namespace mln
       static const double max() { return DBL_MAX; }
       typedef data_kind kind;
       static const std::size_t card_ = 0;
+      typedef double sum;
     };
 
   } // end of namespace mln::value

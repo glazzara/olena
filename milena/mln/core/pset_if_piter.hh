@@ -25,17 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_PSUBSET_PITER_HH
-# define MLN_CORE_PSUBSET_PITER_HH
+#ifndef MLN_CORE_PSET_IF_PITER_HH
+# define MLN_CORE_PSET_IF_PITER_HH
 
-/*! \file mln/core/psubset_piter.hh
+/*! \file mln/core/pset_if_piter.hh
  *
- * \brief Definition of iterators on points of psubsetes.
+ * \brief Definition of iterators on points of pset_ifes.
  */
 
 # include <mln/core/concept/point_iterator.hh>
 # include <mln/core/internal/piter_adaptor.hh>
-# include <mln/core/psubset.hh>
+# include <mln/core/internal/fixme.hh>
+# include <mln/core/pset_if.hh>
 
 
 namespace mln
@@ -46,20 +47,21 @@ namespace mln
    * Parameter \c S is a point set type; parameter F is a function
    * from point to Boolean.
    *
-   * \see mln::psubset
+   * \see mln::pset_if
    */
   template <typename S, typename F>
-  class psubset_fwd_piter_ : public internal::piter_adaptor_< mln_fwd_piter(S),
-							      psubset_fwd_piter_<S,F> >
+  class pset_if_fwd_piter_
+    : public internal::piter_adaptor_< mln_fwd_piter(S),
+				       pset_if_fwd_piter_<S,F> >
   {
     typedef mln_fwd_piter(S) adaptee_;
-    typedef psubset_fwd_piter_<S,F> self_;
+    typedef pset_if_fwd_piter_<S,F> self_;
     typedef internal::piter_adaptor_<adaptee_, self_> super_;
 
   public:
 
     /// Constructor from a subset of points.
-    psubset_fwd_piter_(const psubset<S,F>& subset);
+    pset_if_fwd_piter_(const pset_if<S,F>& subset);
 
     /// Start an iteration.
     void start();
@@ -69,20 +71,25 @@ namespace mln
 
   private:
 
-    const psubset<S,F>& subset_;
+    const pset_if<S,F>& subset_;
   };
 
-  // FIXME: psubset_bkd_piter_<S,F>
+
+  // FIXME:
+  template <typename S, typename F>
+  class pset_if_bkd_piter_
+    : public internal::fixme
+  {};
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-  // psubset_fwd_piter_<S,F>
+  // pset_if_fwd_piter_<S,F>
 
   template <typename S, typename F>
-  psubset_fwd_piter_<S,F>::psubset_fwd_piter_(const psubset<S,F>& subset)
+  pset_if_fwd_piter_<S,F>::pset_if_fwd_piter_(const pset_if<S,F>& subset)
     : super_(adaptee_(subset.overset())),
       subset_(subset)
   {
@@ -90,7 +97,7 @@ namespace mln
 
   template <typename S, typename F>
   void
-  psubset_fwd_piter_<S,F>::start()
+  pset_if_fwd_piter_<S,F>::start()
   {
     this->piter_.start();
     while (this->piter_.is_valid() && ! subset_.pred(this->piter_))
@@ -99,7 +106,7 @@ namespace mln
 
   template <typename S, typename F>
   void
-  psubset_fwd_piter_<S,F>::next_()
+  pset_if_fwd_piter_<S,F>::next_()
   {
     do
       this->piter_.next();
@@ -107,7 +114,7 @@ namespace mln
   }
   
 
-  // FIXME: psubset_bkd_piter_<S,F>
+  // FIXME: pset_if_bkd_piter_<S,F>
 
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -115,4 +122,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_PSUBSET_PITER_HH
+#endif // ! MLN_CORE_PSET_IF_PITER_HH

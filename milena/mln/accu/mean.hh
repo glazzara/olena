@@ -33,7 +33,7 @@
  * \brief Define an accumulator that computes a mean.
  */
 
-# include <mln/accu/counter.hh>
+# include <mln/accu/count.hh>
 # include <mln/accu/sum.hh>
 
 
@@ -48,10 +48,13 @@ namespace mln
      *
      * Parameter \c V is the type of values that we sum.  Parameter \c
      * S is the type to store the sum of values; the default type of
-     * \c S is \c V.  Parameter \c M is the type of the mean value;
-     * the default type of \c M is \c S.
+     * \c S is the summation type (property) of \c V.  Parameter \c M
+     * is the type of the mean value; the default type of \c M is \c
+     * S.
      */
-    template <typename V, typename S = V, typename M = S>
+    template <typename V,
+	      typename S = mln_sum(V),
+	      typename M = S>
     struct mean : public Accumulator< mean<V,S,M> >
     {
       typedef V value;
@@ -62,10 +65,12 @@ namespace mln
 
       operator M() const;
       M to_value() const;
-      
+
+      mean<V,S,M>& operator+=(const mean<V,S,M>& rhs);
+
     protected:
 
-      accu::counter<V> count_;
+      accu::count<V> count_;
       accu::sum<V,S>   sum_;
     };
 
@@ -97,7 +102,7 @@ namespace mln
     template <typename V, typename S, typename M>
     mean<V,S,M>::operator M() const
     {
-      return to_value;
+      return to_value();
     }
 
     template <typename V, typename S, typename M>
@@ -105,6 +110,15 @@ namespace mln
     mean<V,S,M>::to_value() const
     {
       return sum_.to_value() / count_.to_value();
+    }
+
+    template <typename V, typename S, typename M>
+    mean<V,S,M>&
+    mean<V,S,M>::operator+=(const mean<V,S,M>& rhs)
+    {
+      count_ += rhs.count_;
+      sum_ += rhs.sum_;
+      return *this;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

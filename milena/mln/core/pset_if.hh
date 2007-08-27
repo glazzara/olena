@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_PSUBSET_HH
-# define MLN_CORE_PSUBSET_HH
+#ifndef MLN_CORE_PSET_IF_HH
+# define MLN_CORE_PSET_IF_HH
 
-/*! \file mln/core/psubset.hh
+/*! \file mln/core/pset_if.hh
  *
- * \brief This file defines a generic class for subset of point set.
+ * \brief Definition of the restriction of a point set w.r.t. a predicate.
  */
 
 # include <mln/core/concept/point_set.hh>
@@ -41,9 +41,9 @@ namespace mln
 {
 
   // Fwd decls.
-  template <typename S, typename F> struct psubset;
-  template <typename S, typename F> struct psubset_fwd_piter_;
-  template <typename S, typename F> struct psubset_bkd_piter_;
+  template <typename S, typename F> struct pset_if;
+  template <typename S, typename F> struct pset_if_fwd_piter_;
+  template <typename S, typename F> struct pset_if_bkd_piter_;
 
 
 
@@ -54,7 +54,7 @@ namespace mln
    * \return A subset of points.
    */
   template <typename S, typename F>
-  psubset<S, F>
+  pset_if<S, F>
   operator | (const Point_Set<S>& pset, const Function_p2b<F>& f);
 
 
@@ -65,7 +65,7 @@ namespace mln
    * from point to Boolean.
    */
   template <typename S, typename F>
-  struct psubset : public Point_Set< psubset<S,F> >
+  struct pset_if : public Point_Set< pset_if<S,F> >
   {
     /// Point_Site associated type.
     typedef mln_psite(S) psite;
@@ -75,14 +75,14 @@ namespace mln
 
     
     /// Forward Point_Iterator associated type.
-    typedef psubset_fwd_piter_<S,F> fwd_piter;
+    typedef pset_if_fwd_piter_<S,F> fwd_piter;
 
     /// Backward Point_Iterator associated type.
     typedef internal::fixme bkd_piter;
 
 
     /// Constructor without argument.
-    psubset(const S& pset, const F& f);
+    pset_if(const S& pset, const F& f);
 
 
     /// Test if \p p belongs to the subset. 
@@ -112,46 +112,46 @@ namespace mln
 
 
   template <typename S, typename F>
-  psubset<S, F>
+  pset_if<S, F>
   operator | (const Point_Set<S>& pset, const Function_p2b<F>& f)
   {
-    psubset<S, F> tmp(exact(pset), exact(f));
+    pset_if<S, F> tmp(exact(pset), exact(f));
     return tmp;
   }
 
 
-  // psubset<S,F>
+  // pset_if<S,F>
 
   template <typename S, typename F>
   bool
-  psubset<S,F>::has(const psite& p) const
+  pset_if<S,F>::has(const psite& p) const
   {
     return pset_.has(p) && f_(p);
   }
 
   template <typename S, typename F>
   const box_<mln_point(S)>&
-  psubset<S,F>::bbox() const
+  pset_if<S,F>::bbox() const
   {
     return pset_.bbox();
   }
 
   template <typename S, typename F>
   const S&
-  psubset<S,F>::overset() const
+  pset_if<S,F>::overset() const
   {
     return pset_;
   }
 
   template <typename S, typename F>
   bool
-  psubset<S,F>::pred(const psite& p) const
+  pset_if<S,F>::pred(const psite& p) const
   {
     return f_(p);
   }
   
   template <typename S, typename F>
-  psubset<S,F>::psubset(const S& pset, const F& f)
+  pset_if<S,F>::pset_if(const S& pset, const F& f)
     : pset_(pset),
       f_(f)
   {
@@ -163,7 +163,7 @@ namespace mln
 
 
 
-# include <mln/core/psubset_piter.hh>
+# include <mln/core/pset_if_piter.hh>
 
 
 
@@ -174,7 +174,7 @@ namespace mln
 
   template <typename S, typename F>
   std::size_t
-  psubset<S,F>::npoints() const
+  pset_if<S,F>::npoints() const
   {
     std::size_t n = 0;
     fwd_piter p(*this);
@@ -188,4 +188,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_PSUBSET_HH
+#endif // ! MLN_CORE_PSET_IF_HH

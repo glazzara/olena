@@ -25,33 +25,55 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pqueue.cc
+#ifndef MLN_LEVEL_RUN_HH
+# define MLN_LEVEL_RUN_HH
+
+/*! \file mln/level/run.hh
  *
- * \brief Tests on mln::pqueue.
+ * \brief Run an accumulator onto image pixel values.
  */
 
-#include <mln/core/point2d.hh>
-#include <mln/core/pqueue.hh>
+# include <mln/level/take.hh>
 
 
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  pqueue<point2d> q;
-  q
-    .push(make::point2d(6, 9))
-    .push(make::point2d(5, 1))
-    .push(make::point2d(4, 2));
-  mln_assertion(q.npoints() == 3);
+  namespace level
+  {
 
-  std::cout << q.bbox() << std::endl;
-  std::cout << q << std::endl;
+    /*! Run an accumulator onto the pixel values of the image \p input.
+     *
+     * \param[in] input The input image.
+     * \param[in] a The accumulator.
+     * \return A resulting accumulator.
+     *
+     * This routine runs: \n
+     *   res = \p a \n
+     *   res.init() \n
+     *   level::take(res, \p input) \n
+     *   return res \n
+     */
+    template <typename I, typename A>
+    A run(const Image<I>& input, const Accumulator<A>& a);
 
-  q.pop();
-  mln_assertion(q.npoints() == 2);
-  point2d p = q.front();
-  mln_assertion(q.npoints() == 2);
-  mln_assertion(p == make::point2d(5, 1));
-}
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I, typename A>
+    A run(const Image<I>& input, const Accumulator<A>& a)
+    {
+      A res = exact(a);
+      res.init();
+      level::take(res, input);
+      return res;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::level
+
+} // end of namespace mln
+
+
+#endif // ! MLN_LEVEL_RUN_HH

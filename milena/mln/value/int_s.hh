@@ -97,6 +97,7 @@ namespace mln
       static const std::size_t card_ = metal::pow<2, n>::value;
       static const unsigned nbits = n;
       typedef data_kind kind;
+      typedef float sum;
     };
 
 

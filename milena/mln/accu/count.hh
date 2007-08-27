@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_COUNTER_HH
-# define MLN_ACCU_COUNTER_HH
+#ifndef MLN_ACCU_COUNT_HH
+# define MLN_ACCU_COUNT_HH
 
-/*! \file mln/accu/counter.hh
+/*! \file mln/accu/count.hh
  *
  * \brief Define an accumulator that counts.
  */
@@ -46,17 +46,19 @@ namespace mln
     /*! Generic counter accumulator class.
      */
     template <typename V>
-    struct counter : public Accumulator< counter<V> >
+    struct count : public Accumulator< count<V> >
     {
       typedef V value;
 
-      counter();
+      count();
       void take(const value&);
       void init();
 
       operator std::size_t() const;
       std::size_t to_value() const;
-      
+
+      count<V>& operator+=(const count<V>& rhs);
+
     protected:
 
       std::size_t count_;
@@ -67,36 +69,44 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V>
-    counter<V>::counter()
+    count<V>::count()
     {
       init();
     }
 
     template <typename V>
     void
-    counter<V>::take(const value&)
+    count<V>::take(const value&)
     {
       ++count_;
     }
 
     template <typename V>
     void
-    counter<V>::init()
+    count<V>::init()
     {
       count_ = 0;
     }
 
     template <typename V>
-    counter<V>::operator std::size_t() const
+    count<V>::operator std::size_t() const
     {
       return to_value();
     }
 
     template <typename V>
     std::size_t
-    counter<V>::to_value() const
+    count<V>::to_value() const
     {
       return count_;
+    }
+
+    template <typename V>
+    count<V>&
+    count<V>::operator+=(const count<V>& rhs)
+    {
+      count_ += rhs.count_;
+      return *this;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -106,4 +116,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_COUNTER_HH
+#endif // ! MLN_ACCU_COUNT_HH

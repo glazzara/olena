@@ -25,31 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_PW_ALL_HH
-# define MLN_PW_ALL_HH
-
-/*! \file mln/pw/all.hh
+/*! \file tests/set_p.cc
  *
- * \brief File that includes all "point-wise" expression tools.
+ * \brief Tests on mln::set_p.
  */
 
+#include <iterator>
 
-namespace mln
+#include <mln/core/point2d.hh>
+#include <mln/core/set_p.hh>
+
+
+
+int main()
 {
+  using namespace mln;
 
-  /*! Namespace of "point-wise" expression tools.
-   */
-  namespace pw {}
+  set_p<point2d> ps;
+  ps
+    .insert(make::point2d(6, 9))
+    .insert(make::point2d(4, 2))
+    .insert(make::point2d(4, 2))
+    .insert(make::point2d(5, 1));
+  mln_assertion(ps.npoints() == 3);
 
-} // end of namespace mln
+  std::cout << ps.bbox() << std::endl;
 
+  std::copy(ps.vect().begin(), ps.vect().end(),
+	    std::ostream_iterator<point2d>(std::cout, " "));
+  std::cout << std::endl;
 
-# include <mln/pw/value.hh>
-# include <mln/pw/cst.hh>
-# include <mln/pw/var.hh>
-# include <mln/pw/image.hh>
-
-# include <mln/fun/ops.hh>
-
-
-#endif // ! MLN_PW_ALL_HH
+  
+}

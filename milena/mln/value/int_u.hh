@@ -99,6 +99,7 @@ namespace mln
       static const int_u<n> max; // = card_ - 1
       static const unsigned nbits = n;
       typedef data_kind kind;
+      typedef float sum;
     };
 
 

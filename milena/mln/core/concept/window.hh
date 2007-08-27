@@ -77,6 +77,14 @@ namespace mln
   W operator-(const Window<W>& rhs);
 
 
+  /*! \brief Equality comparison between windows \p lhs and \p rhs.
+   *
+   * \relates mln::Window
+   */
+  template <typename Wl, typename Wr>
+  bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
@@ -105,6 +113,26 @@ namespace mln
   W operator-(const Window<W>& rhs)
   {
     return exact(rhs).sym_();
+  }
+
+  template <typename Wl, typename Wr>
+  bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs)
+  {
+    // FIXME: Same grid!
+    typedef mln_point(Wl) P;
+
+    mln_fwd_qiter(Wl) ql(exact(lhs), P::zero);
+    mln_fwd_qiter(Wr) qr(exact(rhs), P::zero);
+
+    for (ql.start(),      qr.start();
+	 ql.is_valid() && qr.is_valid();
+	 ql.next(),       qr.next())
+      if (ql != qr)
+	return false; // difference found
+
+    // both windows are equal only if both browsings are completed at
+    // the same time:
+    return ! ql.is_valid() && ! qr.is_valid();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

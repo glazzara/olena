@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_FIMAGE_HH
-# define MLN_CORE_FIMAGE_HH
+#ifndef MLN_PW_IMAGE_HH
+# define MLN_PW_IMAGE_HH
 
-/*! \file mln/core/fimage.hh
+/*! \file mln/pw/image.hh
  *
  * \brief Definition of an image class FIXME
  */
@@ -41,11 +41,28 @@
 namespace mln
 {
 
+  // Fwd decl.
+  namespace pw { template <typename F, typename S> struct image; }
+
+
+  
+  /*! \brief FIXME
+   *
+   */
+  template <typename F, typename S>
+  pw::image<F,S>
+  operator | (const Function_p2v<F>& f, const Point_Set<S>& ps);
+
+
+
+  namespace pw
+  {
+
     /*! \brief FIXME
      *
      */
     template <typename F, typename S>
-    struct fimage : public internal::image_base_< S, fimage<F,S> >
+    struct image : public internal::image_base_< S, image<F,S> >
     {
       /// Point_Site associated type.
       typedef mln_psite(S) psite;
@@ -67,7 +84,7 @@ namespace mln
 
 
       /// Constructor.
-      fimage(const Function_p2v<F>& f, const Point_Set<S>& ps);
+      image(const Function_p2v<F>& f, const Point_Set<S>& ps);
 
 
       /// Test if this image has been initialized.
@@ -100,52 +117,52 @@ namespace mln
       S pset_;
     };
 
-
-
-    /*! \brief FIXME
-     *
-     */
-    template <typename F, typename S>
-    fimage<F,S>
-    operator | (const Function_p2v<F>& f, const Point_Set<S>& ps)
-    {
-      fimage<F,S> tmp(f, ps);
-      return tmp;
-    }
+  } // end of namespace mln::pw
   
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+  template <typename F, typename S>
+  pw::image<F,S>
+  operator | (const Function_p2v<F>& f, const Point_Set<S>& ps)
+  {
+    pw::image<F,S> tmp(f, ps);
+    return tmp;
+  }
+
+  namespace pw
+  {
+
     template <typename F, typename S>
-    fimage<F,S>::fimage(const Function_p2v<F>& f, const Point_Set<S>& ps)
+    image<F,S>::image(const Function_p2v<F>& f, const Point_Set<S>& ps)
       : f_(exact(f)),
 	pset_(exact(ps))
     {
     }
 
     template <typename F, typename S>
-    bool fimage<F,S>::has_data() const
+    bool image<F,S>::has_data() const
     {
       return true;
     }
 
     template <typename F, typename S>
-    bool fimage<F,S>::owns_(const psite& p) const
+    bool image<F,S>::owns_(const psite& p) const
     {
       return pset_.has(p);
     }
 
     template <typename F, typename S>
     const S&
-    fimage<F,S>::domain() const
+    image<F,S>::domain() const
     {
       return pset_;
     }
 
     template <typename F, typename S>
     mln_result(F)
-    fimage<F,S>::operator()(const psite& p) const
+      image<F,S>::operator()(const psite& p) const
     {
       mln_precondition(pset_.has(p));
       return f_(p);
@@ -153,21 +170,23 @@ namespace mln
 
     template <typename F, typename S>
     void
-    fimage<F,S>::operator()(const psite&)
+    image<F,S>::operator()(const psite&)
     {
       mln_invariant(0); // FIXME: Turn into a compile-time error...
     }
 
-  template <typename F, typename S>
-  const mln::value::set<mln_result(F)>&
-  fimage<F,S>::values() const
-  {
-    return vset::the();
-  }
+    template <typename F, typename S>
+    const mln::value::set<mln_result(F)>&
+    image<F,S>::values() const
+    {
+      return vset::the();
+    }
+
+  } // end of namespace mln::pw
   
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_FIMAGE_HH
+#endif // ! MLN_PW_IMAGE_HH

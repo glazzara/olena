@@ -30,7 +30,7 @@
 
 /*! \file mln/level/apply.hh
  *
- * \brief Apply some function-objects on an image.
+ * \brief Apply a function-object onto image pixel values.
  */
 
 # include <mln/core/concept/image.hh>
@@ -52,53 +52,54 @@ namespace mln
      * This routine runs: \n
      *   for all p of \p input, \p f( \p input(p) ) \n
      *   return \p f
+     *
+     * \todo Find a meaning for this routine! (Clue: f is mutable
+     * and/or same for input?)
      */
     template <typename I, typename F>
     F apply(const Image<I>& input, const Function<F>& f);
 
 
-    /*! Apply an accumulator to the image \p input.
-     *
-     * \param[in] input The input image.
-     * \param[in] a The accumulator.
-     * \result A copy of the accumulator.
-     *
-     * This routine runs: \n
-     *   a.init() \n
-     *   for all p of \p input, \p a.take( \p input(p) ) \n
-     *   return \p a
-     */
-    template <typename I, typename A>
-    A apply(const Image<I>& input, const Accumulator<A>& a);
-
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace impl
+    {
+
+      template <typename I, typename F>
+      F apply(const Image<I>& input_, const Function<F>& f_)
+      {
+	const I& input  = exact(input_);
+	F f = exact(f_);
+	
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  f(input(p));
+	return f;
+      }
+
+      template <typename I, typename F>
+      F apply(const Fast_Image<I>& input_, const Function<F>& f_)
+      {
+	const I& input  = exact(input_);
+	F f = exact(f_);
+	
+	mln_pixter(const I) pxl(input);
+	for_all(pxl)
+	  f(input(*pxl));
+	return f;
+      }
+
+    } // end of namespace mln::level::impl
+
+
+    // Facades.
+
     template <typename I, typename F>
-    F apply(const Image<I>& input_, const Function<F>& f_)
+    F apply(const Image<I>& input, const Function<F>& f)
     {
-      const I& input  = exact(input_);
-      F f = exact(f_);
-      mln_precondition(input.has_data());
-
-      mln_piter(I) p(input.domain());
-      for_all(p)
-	f(input(p));
-      return f;
-    }
-
-    template <typename I, typename A>
-    A apply(const Image<I>& input_, const Accumulator<A>& a_)
-    {
-      const I& input  = exact(input_);
-      A a = exact(a_);
-      mln_precondition(input.has_data());
-
-      a.init();
-      mln_piter(I) p(input.domain());
-      for_all(p)
-	a.take(input(p));
-      return a;
+      mln_precondition(exact(input).has_data());
+      return impl::apply(exact(input), f);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

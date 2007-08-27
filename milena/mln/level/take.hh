@@ -25,53 +25,78 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DRAW_LINE_HH
-# define MLN_DRAW_LINE_HH
+#ifndef MLN_LEVEL_TAKE_HH
+# define MLN_LEVEL_TAKE_HH
 
-/*! \file mln/draw/line.hh
+/*! \file mln/level/take.hh
  *
- * \brief Draw a line in an image.
+ * \brief Make an accumulator take image pixel values.
  */
 
+# include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
-# include <mln/core/line2d.hh>
-# include <mln/level/paste.hh>
-# include <mln/pw/image.hh>
-# include <mln/pw/cst.hh>
 
 
 namespace mln
 {
 
-  namespace draw
+  namespace level
   {
 
-    /// Draw a line at level \p v in image \p ima between the points
-    /// \p beg and \p end.
-    template <typename I>
-    void line(Image<I>& ima,
-	      const mln_point(I)& beg, const mln_point(I)& end,
-	      const mln_value(I)& v);
+    /*! Make an accumulator take the values of the image \p input.
+     *
+     * \param[in,out] a The accumulator.
+     * \param[in] input The input image.
+     *
+     * This routine runs: \n
+     *   for all p of \p input, \p a.take( \p input(p) ) \n
+     *
+     * \warning This routine does not perform a.init().
+     */
+    template <typename A, typename I>
+    void take(Accumulator<A>& a, const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I>
-    void line(Image<I>& ima,
-	      const mln_point(I)& beg, const mln_point(I)& end,
-	      const mln_value(I)& v)
+    namespace impl
     {
-      mln_precondition(exact(ima).has_data());
-      mln_precondition(exact(ima).has(beg) && exact(ima).has(end));
-      level::paste(pw::cst(v) | line2d(beg, end),
-		   ima);
+
+      template <typename A, typename I>
+      void take(A& a, const Image<I>& input_)
+      {
+	const I& input = exact(input_);
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  a.take(input(p));
+      }
+
+      template <typename A, typename I>
+      void take(A& a, const Fast_Image<I>& input_)
+      {
+	const I& input = exact(input_);
+	mln_pixter(const I) pxl(input);
+	for_all(pxl)
+	  a.take(*pxl);
+      }
+
+    } // end of namespace mln::level::impl
+
+
+    // Facade.
+
+    template <typename A, typename I>
+    void take(Accumulator<A>& a, const Image<I>& input)
+    {
+      mln_precondition(exact(input).has_data());
+      impl::take(exact(a), exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::draw
+  } // end of namespace mln::level
 
 } // end of namespace mln
 
 
-#endif // ! MLN_DRAW_LINE_HH
+#endif // ! MLN_LEVEL_TAKE_HH

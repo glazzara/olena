@@ -25,26 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_PVEC_PITER_HH
-# define MLN_CORE_PVEC_PITER_HH
+#ifndef MLN_CORE_VEC_P_PITER_HH
+# define MLN_CORE_VEC_P_PITER_HH
 
-/*! \file mln/core/pvec_piter.hh
+/*! \file mln/core/vec_p_piter.hh
  *
- * \brief Definition of point iterators on mln::pvec.
+ * \brief Definition of point iterators on mln::vec_p.
  */
 
-# include <mln/core/pvec.hh>
+# include <mln/core/vec_p.hh>
 # include <mln/core/internal/fixme.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Forward iterator on points of a pvec<P>.
+  /*! \brief Forward iterator on points of a vec_p<P>.
    *
    */
   template <typename P>
-  struct pvec_fwd_piter_ : public Point_Iterator< pvec_fwd_piter_<P> >
+  struct vec_p_fwd_piter_ : public Point_Iterator< vec_p_fwd_piter_<P> >
   {
     enum { dim = P::dim };
 
@@ -62,7 +62,7 @@ namespace mln
 
     /// Coordinate associated type.
     template <typename S>
-    pvec_fwd_piter_(const Point_Set<S>& s);
+    vec_p_fwd_piter_(const Point_Set<S>& s);
 
     /// Give a hook to the point address.
     const P* pointer_() const;
@@ -95,7 +95,7 @@ namespace mln
 
   // FIXME:
   template <typename P>
-  struct pvec_bkd_piter_ : internal::fixme
+  struct vec_p_bkd_piter_ : internal::fixme
   {};
 
 
@@ -104,7 +104,7 @@ namespace mln
 
   template <typename P>
   template <typename S>
-  pvec_fwd_piter_<P>::pvec_fwd_piter_(const Point_Set<S>& s)
+  vec_p_fwd_piter_<P>::vec_p_fwd_piter_(const Point_Set<S>& s)
     : vect_(exact(s).vect())
   {
     invalidate();
@@ -112,14 +112,14 @@ namespace mln
 
   template <typename P>
   const P*
-  pvec_fwd_piter_<P>::pointer_() const
+  vec_p_fwd_piter_<P>::pointer_() const
   {
     return & p_;
   }
 
   template <typename P>
   mln_coord(P)
-  pvec_fwd_piter_<P>::operator[](unsigned i) const
+  vec_p_fwd_piter_<P>::operator[](unsigned i) const
   {
     mln_precondition(i < dim);
     mln_precondition(is_valid());
@@ -128,21 +128,21 @@ namespace mln
 
   template <typename P>
   bool
-  pvec_fwd_piter_<P>::is_valid() const
+  vec_p_fwd_piter_<P>::is_valid() const
   {
     return i_ < vect_.size();
   }
 
   template <typename P>
   void
-  pvec_fwd_piter_<P>::invalidate()
+  vec_p_fwd_piter_<P>::invalidate()
   {
     i_ = vect_.size();
   }
 
   template <typename P>
   void
-  pvec_fwd_piter_<P>::start()
+  vec_p_fwd_piter_<P>::start()
   {
     i_ = 0;
     if (is_valid())
@@ -151,14 +151,14 @@ namespace mln
 
   template <typename P>
   void
-  pvec_fwd_piter_<P>::next_()
+  vec_p_fwd_piter_<P>::next_()
   {
     ++i_;
     p_ = vect_[i_];
   }
 
   template <typename P>
-  pvec_fwd_piter_<P>::operator P() const
+  vec_p_fwd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());
     return p_;
@@ -169,4 +169,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_PVEC_PITER_HH
+#endif // ! MLN_CORE_VEC_P_PITER_HH

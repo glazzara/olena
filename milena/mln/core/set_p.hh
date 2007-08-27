@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_PSET_HH
-# define MLN_CORE_PSET_HH
+#ifndef MLN_CORE_SET_P_HH
+# define MLN_CORE_SET_P_HH
 
-/*! \file mln/core/pset.hh
+/*! \file mln/core/set_p.hh
  *
  * \brief Definition of a point set class based on std::set.
  */
@@ -36,7 +36,7 @@
 # include <mln/core/concept/point_set.hh>
 # include <mln/core/internal/set_of.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/core/pvec.hh>
+# include <mln/core/vec_p.hh>
 
 
 namespace mln
@@ -50,8 +50,8 @@ namespace mln
    * \todo Test if \p P being a Point_Site is ok.
    */
   template <typename P>
-  class pset : public Point_Set< pset<P> >,
-	       private internal::set_of_<P>
+  class set_p : public Point_Set< set_p<P> >,
+		private internal::set_of_<P>
   {
     typedef internal::set_of_<P> super_;
 
@@ -64,13 +64,13 @@ namespace mln
     typedef P psite;
 
     /// Forward Point_Iterator associated type.
-    typedef pvec_fwd_piter_<P> fwd_piter;
+    typedef vec_p_fwd_piter_<P> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef internal::fixme    bkd_piter;
+    typedef vec_p_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
-    pset();
+    set_p();
 
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
@@ -82,7 +82,7 @@ namespace mln
     std::size_t npoints() const;
 
     /// Insert a point \p p.
-    pset<P>& insert(const P& p);
+    set_p<P>& insert(const P& p);
 
     /// Return the \p i-th point.
     const P& operator[](unsigned i) const;
@@ -103,27 +103,27 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
-  pset<P>::pset()
+  set_p<P>::set_p()
   {
   }
 
   template <typename P>
   bool
-  pset<P>::has(const P& p) const
+  set_p<P>::has(const P& p) const
   {
     return this->super_::has(p);
   }
 
   template <typename P>
   std::size_t
-  pset<P>::npoints() const
+  set_p<P>::npoints() const
   {
     return this->super_::nelements();
   }
 
   template <typename P>
-  pset<P>&
-  pset<P>::insert(const P& p)
+  set_p<P>&
+  set_p<P>::insert(const P& p)
   {
     this->super_::insert(p);
     bb_.take(p);
@@ -132,7 +132,7 @@ namespace mln
 
   template <typename P>
   const P&
-  pset<P>::operator[](unsigned i) const
+  set_p<P>::operator[](unsigned i) const
   {
     mln_precondition(i < npoints());
     return this->super_::element(i);
@@ -140,7 +140,7 @@ namespace mln
 
   template <typename P>
   void
-  pset<P>::clear()
+  set_p<P>::clear()
   {
     this->super_::clear();
     bb_.init();
@@ -148,7 +148,7 @@ namespace mln
 
   template <typename P>
   const box_<mln_point(P)>&
-  pset<P>::bbox() const
+  set_p<P>::bbox() const
   {
     mln_precondition(npoints() != 0);
     return bb_.to_value();
@@ -159,4 +159,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_PSET_HH
+#endif // ! MLN_CORE_SET_P_HH

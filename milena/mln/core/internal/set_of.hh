@@ -173,16 +173,6 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const set_of_<E>& s);
 
 
-    /*! \brief Test if both sets \p lhs and \p rhs are equal.
-     *
-     * \param[in] lhs A set.
-     * \param[in] rhs Another set.
-     *
-     * \relates mln::internal::set_of_
-     */
-    template <typename E>
-    bool operator==(const set_of_<E>& lhs, const set_of_<E>& rhs);
-
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -277,18 +267,6 @@ namespace mln
 	ostr << s.element(i)
 	     << (i == s.nelements() - 1 ? ']' : ',');
       return ostr;
-    }
-
-    template <typename E>
-    bool operator==(const set_of_<E>& lhs, const set_of_<E>& rhs)
-    {
-      if (lhs.nelements() != rhs.nelements())
-	return false;
-      const unsigned n = lhs.nelements();
-      for (unsigned i = 0; i < n; ++i)
-	if (rhs.element(i) != lhs.element(i))
-	  return false;
-      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

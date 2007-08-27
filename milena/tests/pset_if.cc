@@ -25,23 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/subimage.cc
+/*! \file tests/pset_if.cc
  *
- * \brief Tests on mln::subimage.
+ * \brief Tests on mln::pset_if.
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/subimage.hh>
+#include <mln/core/pset_if.hh>
 #include <mln/fun/p2b/chess.hh>
-#include <mln/debug/println.hh>
+#include <mln/convert/to_image.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  image2d_b<int> ima(8, 8);
-  debug::println(ima | fun::p2b::chess);
-
-  // mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
+  box2d box_8x8 = make::box2d(8, 8);
+  mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
 }

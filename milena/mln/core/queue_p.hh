@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_PQUEUE_HH
-# define MLN_CORE_PQUEUE_HH
+#ifndef MLN_CORE_QUEUE_P_HH
+# define MLN_CORE_QUEUE_P_HH
 
-/*! \file mln/core/pqueue.hh
+/*! \file mln/core/queue_p.hh
  *
  * \brief Definition of a point set class based on std::deque.
  */
@@ -39,7 +39,7 @@
 # include <iterator>
 
 # include <mln/core/concept/point_set.hh>
-# include <mln/core/pvec_piter.hh>
+# include <mln/core/vec_p_piter.hh>
 # include <mln/accu/bbox.hh>
 
 
@@ -47,8 +47,8 @@ namespace mln
 {
 
   // Fwd decls.
-  template <typename P> struct pvec_fwd_piter_;
-  template <typename P> struct pvec_bkd_piter_;
+  template <typename P> struct vec_p_fwd_piter_;
+  template <typename P> struct vec_p_bkd_piter_;
 
 
   /*! \brief Point queue class (based on std::deque).
@@ -63,7 +63,7 @@ namespace mln
    * a call to npoints() when this container is multiple.
    */
   template <typename P>
-  class pqueue : public Point_Set< pqueue<P> >
+  class queue_p : public Point_Set< queue_p<P> >
   {
   public:
 
@@ -74,13 +74,13 @@ namespace mln
     typedef P psite;
 
     /// Forward Point_Iterator associated type.
-    typedef pvec_fwd_piter_<P> fwd_piter;
+    typedef vec_p_fwd_piter_<P> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef pvec_bkd_piter_<P> bkd_piter;
+    typedef vec_p_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
-    pqueue();
+    queue_p();
 
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
@@ -92,7 +92,7 @@ namespace mln
     const box_<P>& bbox() const;
 
     /// Push a point \p p in the queue.
-    pqueue<P>& push(const P& p);
+    queue_p<P>& push(const P& p);
 
     /// Pop (remove) the front point \p p from the queue; \p p is the
     /// least recently inserted point.
@@ -130,7 +130,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
-  pqueue<P>::pqueue()
+  queue_p<P>::queue_p()
   {
     vect_needs_update_ = false;
     bb_needs_update_ = false;
@@ -138,7 +138,7 @@ namespace mln
 
   template <typename P>
   void
-  pqueue<P>::vect_update_() const
+  queue_p<P>::vect_update_() const
   {
     vect_.clear();
     vect_.reserve(q_.size());
@@ -149,7 +149,7 @@ namespace mln
 
   template <typename P>
   void
-  pqueue<P>::bb_update_() const
+  queue_p<P>::bb_update_() const
   {
     bb_.init();
     for (unsigned i = 0; i < q_.size(); ++i)
@@ -159,7 +159,7 @@ namespace mln
 
   template <typename P>
   bool
-  pqueue<P>::has(const P& p) const
+  queue_p<P>::has(const P& p) const
   {
     for (unsigned i = 0; i < q_.size(); ++i)
       if (q_[i] == p)
@@ -169,14 +169,14 @@ namespace mln
 
   template <typename P>
   std::size_t
-  pqueue<P>::npoints() const
+  queue_p<P>::npoints() const
   {
     return q_.size();
   }
 
   template <typename P>
   const box_<P>&
-  pqueue<P>::bbox() const
+  queue_p<P>::bbox() const
   {
     mln_precondition(npoints() != 0);
     if (bb_needs_update_)
@@ -185,8 +185,8 @@ namespace mln
   }
 
   template <typename P>
-  pqueue<P>&
-  pqueue<P>::push(const P& p)
+  queue_p<P>&
+  queue_p<P>::push(const P& p)
   {
     mln_precondition(! has(p));
     // FIXME: Our choice is "error if multiple insertions"
@@ -200,7 +200,7 @@ namespace mln
 
   template <typename P>
   void
-  pqueue<P>::pop()
+  queue_p<P>::pop()
   {
     q_.pop_front();
     if (! vect_needs_update_)
@@ -212,7 +212,7 @@ namespace mln
 
   template <typename P>
   const P&
-  pqueue<P>::front() const
+  queue_p<P>::front() const
   {
     mln_precondition(! q_.empty());
     return q_.front();
@@ -220,7 +220,7 @@ namespace mln
 
   template <typename P>
   void
-  pqueue<P>::clear()
+  queue_p<P>::clear()
   {
     q_.clear();
     vect_.clear();
@@ -230,7 +230,7 @@ namespace mln
 
   template <typename P>
   const std::vector<P>&
-  pqueue<P>::vect() const
+  queue_p<P>::vect() const
   {
     if (vect_needs_update_)
       vect_update_();
@@ -239,7 +239,7 @@ namespace mln
 
   template <typename P>
   const P&
-  pqueue<P>::operator[](unsigned i) const
+  queue_p<P>::operator[](unsigned i) const
   {
     mln_precondition(i < npoints());
     return q_[i];
@@ -250,4 +250,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_PQUEUE_HH
+#endif // ! MLN_CORE_QUEUE_P_HH

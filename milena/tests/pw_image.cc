@@ -25,35 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pset.cc
+/*! \file tests/fimage.cc
  *
- * \brief Tests on mln::pset.
+ * \brief Tests on mln::fimage.
  */
 
-#include <iterator>
-
-#include <mln/core/point2d.hh>
-#include <mln/core/pset.hh>
-
+#include <mln/fun/p2b/chess.hh>
+#include <mln/core/box2d.hh>
+#include <mln/pw/image.hh>
+#include <mln/debug/println.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  pset<point2d> ps;
-  ps
-    .insert(make::point2d(6, 9))
-    .insert(make::point2d(4, 2))
-    .insert(make::point2d(4, 2))
-    .insert(make::point2d(5, 1));
-  mln_assertion(ps.npoints() == 3);
-
-  std::cout << ps.bbox() << std::endl;
-
-  std::copy(ps.vect().begin(), ps.vect().end(),
-	    std::ostream_iterator<point2d>(std::cout, " "));
-  std::cout << std::endl;
-
-  
+  debug::println( fun::p2b::chess | make::box2d(8, 8) );
 }

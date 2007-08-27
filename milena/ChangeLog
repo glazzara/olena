@@ -1,3 +1,61 @@
+2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Renaming.
+
+	* mln/core/fimage.hh,
+	* tests/fimage.cc: Rename as...
+	* mln/pw/image.hh,
+	* tests/pw_image.cc: ...these.
+	* mln/pw/all.hh,
+	* mln/draw/line.hh,
+	* tests/line2d.cc: Update.
+
+	* mln/core/pqueue.hh,
+	* mln/core/pvec.hh,
+	* mln/core/pvec_piter.hh,
+	* mln/core/pset.hh,
+	* tests/pqueue.cc,
+	* tests/pset.cc: Rename as...
+	* mln/core/queue_p.hh,
+	* mln/core/vec_p.hh,
+	* mln/core/vec_p_piter.hh,
+	* mln/core/set_p.hh,
+	* tests/queue_p.cc,
+	* tests/set_p.cc: ...these.
+	* mln/core/line2d.hh: Update.
+
+	* mln/core/psubset.hh,
+	* mln/core/psubset_piter.hh,
+	* mln/core/subimage.hh,
+	* tests/psubset.cc,
+	* tests/subimage.cc: Rename as...
+	* mln/core/pset_if.hh,
+	* mln/core/pset_if_piter.hh,
+	* mln/core/image_if.hh,
+	* tests/pset_if.cc,
+	* tests/image_if.cc: ...these.
+	* tests/to_image.cc: Update.
+
+	* mln/accu/counter.hh: Rename as...
+	* mln/accu/count.hh: ...this.
+	* mln/accu/count.hh,
+	* mln/accu/mean.hh,
+	* mln/accu/sum.hh (operator+=): New.
+	* mln/value/props.hh (mln_sum, sum): New.
+	* mln/accu/mean.hh,
+	* mln/accu/sum.hh,
+	* mln/value/int_u.hh,
+	* mln/value/int_s.hh: Update.
+	* mln/level/apply.hh: Move accumulator version into...
+	* mln/level/take.hh: ...this new file.
+	* mln/level/run.hh: New.
+	* mln/estim/mean.hh: Update.
+
+	* mln/core/internal/set_of.hh (operator==): Remove;
+	too error-prone.
+	* mln/core/concept/window.hh (operator==): New.
+	* tests/rectangle2d.cc: Fix.
+
 2007-07-30  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add RLE and Sparse image to milena.

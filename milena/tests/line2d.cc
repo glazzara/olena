@@ -35,13 +35,8 @@
 #include <mln/core/image2d_b.hh>
 
 #include <mln/level/fill.hh>
-#include <mln/draw/line.hh>
-#include <mln/debug/println.hh>
-
-#include <mln/core/fimage.hh>
-#include <mln/pw/cst.hh>
-#include <mln/level/paste.hh>
 #include <mln/level/compare.hh>
+#include <mln/draw/line.hh>
 
 
 int main()

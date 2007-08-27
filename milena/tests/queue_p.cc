@@ -25,20 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/fimage.cc
+/*! \file tests/queue_p.cc
  *
- * \brief Tests on mln::fimage.
+ * \brief Tests on mln::queue_p.
  */
 
-#include <mln/core/fimage.hh>
-#include <mln/core/box2d.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/debug/println.hh>
+#include <mln/core/point2d.hh>
+#include <mln/core/queue_p.hh>
+
 
 
 int main()
 {
   using namespace mln;
 
-  debug::println( fun::p2b::chess | make::box2d(8, 8) );
+  queue_p<point2d> q;
+  q
+    .push(make::point2d(6, 9))
+    .push(make::point2d(5, 1))
+    .push(make::point2d(4, 2));
+  mln_assertion(q.npoints() == 3);
+
+  std::cout << q.bbox() << std::endl;
+  std::cout << q << std::endl;
+
+  q.pop();
+  mln_assertion(q.npoints() == 2);
+  point2d p = q.front();
+  mln_assertion(q.npoints() == 2);
+  mln_assertion(p == make::point2d(5, 1));
 }

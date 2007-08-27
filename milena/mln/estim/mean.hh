@@ -33,8 +33,8 @@
  * \brief Compute the mean pixel value.
  */
 
-# include <mln/core/concept/image.hh>
 # include <mln/accu/mean.hh>
+# include <mln/level/run.hh>
 
 
 namespace mln
@@ -43,32 +43,22 @@ namespace mln
   namespace estim
   {
 
-
     /*! \brief Compute the mean value of the pixels of image \p input.
      *
-     * Parameter \c S is the type of the mean value.
+     * \param[in] input The image.
      */
-    template <typename S, typename I>
-    S mean(const Image<I>& input);
-
+    template <typename I>
+    mln_sum(mln_value(I)) mean(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S, typename I>
-    S
-    mean(const Image<I>& input_)
+    template <typename I>
+    mln_sum(mln_value(I)) mean(const Image<I>& input)
     {
-      const I& input = exact(input_);
-      mln_precondition(input.has_data());
-
-      accu::mean<mln_value(I), S> m;
-
-      mln_piter(I) p(input.domain());
-      for_all(p)
-	m.take(input(p));
-
-      return m;
+      typedef mln_value(I) V;
+      typedef mln_sum(V)   S;
+      return level::run(input, accu::mean<V, S>());
     }
 
 # endif // ! MLN_INCLUDE_ONLY
