@@ -30,9 +30,10 @@
 
 /*! \file mln/convert/to_window.hh
  *
- * \brief Convertions to mln::Window.
+ * \brief Conversions to mln::window.
  */
 
+# include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/window.hh>
 
@@ -45,21 +46,41 @@ namespace mln
 
     /// Convert a neighborhood \p nbh into a window.
     template <typename N>
-    window_<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh);
+    window<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh);
+
+    /// Convert a binary image \p input into a window.
+    template <typename I>
+    window<mln_dpoint(I)> to_window(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename N>
-    window_<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh_)
+    window<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh_)
     {
       const N& nbh = exact(nbh_);
       typedef mln_dpoint(N) D;
       typedef mln_point(D) P;
-      window_<D> win;
+      window<D> win;
       mln_niter(N) n(nbh, P::zero);
       for_all(n)
 	win.insert(n - P::zero);
+      return win;
+    }
+
+    template <typename I>
+    window<mln_dpoint(I)> to_window(const Image<I>& input_)
+    {
+      const I& input = exact(input_);
+      mln_precondition(input.has_data());
+      // FIXME: Check that input is binary!
+      typedef mln_dpoint(I) D;
+      typedef mln_point(D) P;
+      window<D> win;
+      mln_piter(I) p(input.domain());
+      for_all(p)
+	if (input(p))
+	  win.insert(p - P::zero);
       return win;
     }
 

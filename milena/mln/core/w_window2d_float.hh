@@ -25,32 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WINDOW2D_HH
-# define MLN_CORE_WINDOW2D_HH
+#ifndef MLN_CORE_W_WINDOW2D_FLOAT_HH
+# define MLN_CORE_W_WINDOW2D_FLOAT_HH
 
-/*! \file mln/core/window2d.hh
+/*! \file mln/core/w_window2d_float.hh
  *
- * \brief Definition of the mln::window2d alias and of a construction
- * routine.
+ * \brief Definition of the mln::w_window2d_float alias.
  */
 
-# include <mln/core/window.hh>
+# include <mln/core/w_window.hh>
 # include <mln/core/dpoint2d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a window with arbitrary shape, defined on
-   * the 2D square grid with integer coordinates.
+  /*! \brief Type alias for a w_window with arbitrary shape, defined
+   * on the 2D square grid (with integer coordinates) and whose
+   * weights are floating values.
    */
-  typedef window<dpoint2d> window2d;
+  typedef w_window<dpoint2d, float> w_window2d_float;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/window2d.hh>
+# include <mln/make/w_window2d.hh>
 
 
-#endif // ! MLN_CORE_WINDOW2D_HH
+#endif // ! MLN_CORE_W_WINDOW2D_FLOAT_HH

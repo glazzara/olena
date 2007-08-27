@@ -30,12 +30,13 @@
 
 /*! \file mln/make/w_window2d.hh
  *
- * \brief Routine to create an mln::w_window_ in the 2D case.
+ * \brief Routine to create an mln::w_window in the 2D case.
  */
 
 # include <cmath>
+
 # include <mln/core/w_window.hh>
-# include <mln/make/dpoint2d.hh>
+# include <mln/core/dpoint2d.hh>
 
 
 namespace mln
@@ -44,7 +45,7 @@ namespace mln
   namespace make
   {
 
-    /*! \brief Create a mln::w_window_ in the 2D case.
+    /*! \brief Create a 2D mln::w_window from an array of weights.
      *
      * \param[in] weights Array.
      *
@@ -53,24 +54,24 @@ namespace mln
      * \return A 2D weighted window.
      */
     template <typename W, unsigned M>
-    mln::w_window_<mln::dpoint2d, W> w_window2d(W (&weights)[M]);
+    mln::w_window<mln::dpoint2d, W> w_window2d(W (&weights)[M]);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename W, unsigned M>
-    mln::w_window_<mln::dpoint2d, W>
+    mln::w_window<mln::dpoint2d, W>
     w_window2d(W (&weights)[M])
     {
       int h = unsigned(std::sqrt(float(M))) / 2;
       mln_precondition((2 * h + 1) * (2 * h + 1) == M);
-      mln::w_window_<mln::dpoint2d, W> tmp;
+      mln::w_window<mln::dpoint2d, W> tmp;
       unsigned i = 0;
       for (int row = - h; row <= h; ++row)
 	for (int col = - h; col <= h; ++col)
 	  {
 	    if (weights[i] != 0)
-	      tmp.insert(make::dpoint2d(row, col), weights[i]);
+	      tmp.insert(weights[i], make::dpoint2d(row, col));
 	    i++;
 	  }
       return tmp;

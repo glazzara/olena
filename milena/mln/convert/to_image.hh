@@ -37,6 +37,7 @@
 
 # include <mln/core/concept/point_set.hh>
 # include <mln/core/concept/window.hh>
+# include <mln/core/concept/weighted_window.hh>
 # include <mln/core/concept/neighborhood.hh>
 
 # include <mln/convert/to_window.hh>
@@ -61,6 +62,10 @@ namespace mln
     /// Convert a neighborhood \p nbh into a binary image.
     template <typename N>
     image2d_b<bool> to_image(const Neighborhood<N>& nbh);
+
+    /// Convert a weighted window \p w_win into an image.
+    template <typename W>
+    image2d_b<mln_weight(W)> to_image(const Weighted_Window<W>& w_win);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -98,6 +103,22 @@ namespace mln
     {
       return to_image(convert::to_window(nbh));
     }
+
+    template <typename W>
+    image2d_b<mln_weight(W)> to_image(const Weighted_Window<W>& w_win_)
+    {
+      const W& w_win = exact(w_win_);
+      mln_precondition(! w_win.is_empty());
+
+      typedef mln_point(W) P;
+      box2d b = geom::bbox(w_win);
+      image2d_b<mln_weight(W)> ima(b);
+      mln_qiter(W) q(w_win, P::zero);
+      for_all(q)
+	ima(q) = q.w();
+      return ima;
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

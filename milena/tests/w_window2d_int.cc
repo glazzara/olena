@@ -31,18 +31,21 @@
  */
 
 #include <mln/core/w_window2d_int.hh>
+#include <mln/core/win/rectangle2d.hh>
+
+#include <mln/convert/to_image.hh>
+#include <mln/convert/to_w_window.hh>
+#include <mln/debug/println.hh>
 
 
-
-template <typename W, typename P>
-void test(const W& w, const P& p)
+struct my_f : mln::Function_p2v< my_f >
 {
-  mln_qiter(W) q(w, p);
-  for_all(q)
-    std::cout << q << ':' << q.weight() << ' ';
-  std::cout << std::endl;
-}
-
+  typedef int result;
+  int operator()(const mln::point2d& p) const
+  {
+    return p.row() + p.col();
+  }
+};
 
 
 int main()
@@ -52,8 +55,12 @@ int main()
   int ws[] = { -1, 0, 1,
 	       -2, 0, 2,
 	       -1, 0, 1 };
-  w_window2d_int ww = make::w_window2d_int(ws);
-  std::cout << ww << std::endl;
+  w_window2d_int w_win = make::w_window2d(ws);
 
-  test(ww, make::point2d(0,0));
+  image2d_b<int> ima = convert::to_image(w_win);
+  w_window2d_int w_win_2 = convert::to_w_window(ima);
+  mln_assertion(w_win_2 == w_win);
+
+  w_window2d_int tmp = make::w_window(win::rectangle2d(3, 5), my_f());
+  debug::println(convert::to_image(tmp));
 }

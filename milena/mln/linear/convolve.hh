@@ -48,10 +48,13 @@ namespace mln
 
     /*! Convolution of image \p input by the weighted window \p win.
      *
+     * \warning Computation of \p output(p) is performed with the
+     * value type of \p output.
+     *
      * \pre output.domain = input.domain
      */
     template <typename I, typename W, typename O>
-    void convolve(const Image<I>& input, const Weighted_Window<W>& win,
+    void convolve(const Image<I>& input, const Weighted_Window<W>& w_win,
 		  Image<O>& output);
 
 
@@ -61,47 +64,47 @@ namespace mln
     {
 
       template <typename I, typename W, typename O>
-      void convolve(const Image<I>& input_, const Weighted_Window<W>& win_,
+      void convolve(const Image<I>& input_, const Weighted_Window<W>& w_win_,
 		    Image<O>& output_)
       {
 	const I& input = exact(input_);
-	const W& win = exact(win_);
+	const W& w_win = exact(w_win_);
 	O& output = exact(output_);
 
 	mln_piter(I) p(input.domain());
-	mln_qiter(W) q(win, p);
+	mln_qiter(W) q(w_win, p);
 
 	for_all(p)
 	  {
 	    mln_value(O) v = 0;
 	    for_all(q) if (input.has(q))
-	      v += input(q) * q.weight();
+	      v += input(q) * q.w();
 	    output(p) = v;
 	  }
       }
 
       template <typename I, typename W, typename O>
-      void convolve(const Fast_Image<I>& input_, const Weighted_Window<W>& win_,
+      void convolve(const Fast_Image<I>& input_, const Weighted_Window<W>& w_win_,
 		    Fast_Image<O>& output_)
       {
 	const I& input = exact(input_);
-	const W& win = exact(win_);
+	const W& w_win = exact(w_win_);
 	O& output = exact(output_);
 
-	border::resize(input, win.delta());
+	border::resize(input, w_win.delta());
 	border::duplicate(input);
 
  	mln_pixter(O)          p_out(output);
 
 	mln_pixter(const I)    p(input);
-	mln_qixter(const I, W) q(input, win, p);
+	mln_qixter(const I, W) q(input, w_win, p);
 
  	for_all_2(p, p_out)
 	  {
 	    mln_value(O) v = 0;
 	    unsigned i = 0;
 	    for_all(q)
-	      v += win.weight(i++) * *q;
+	      v += w_win.w(i++) * *q;
  	    *p_out = v;
 	  }
       }
@@ -109,11 +112,11 @@ namespace mln
     } // end of namespace mln::linear::impl
 
     template <typename I, typename W, typename O>
-    void convolve(const Image<I>& input, const Weighted_Window<W>& win,
+    void convolve(const Image<I>& input, const Weighted_Window<W>& w_win,
 		  Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::convolve(exact(input), exact(win), exact(output));
+      impl::convolve(exact(input), - exact(w_win), exact(output));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

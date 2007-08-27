@@ -25,32 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WINDOW2D_HH
-# define MLN_CORE_WINDOW2D_HH
+#ifndef MLN_CONVERT_TO_W_WINDOW_HH
+# define MLN_CONVERT_TO_W_WINDOW_HH
 
-/*! \file mln/core/window2d.hh
+/*! \file mln/convert/to_w_window.hh
  *
- * \brief Definition of the mln::window2d alias and of a construction
- * routine.
+ * \brief Conversions to mln::w_window.
  */
 
+# include <mln/core/concept/image.hh>
 # include <mln/core/window.hh>
-# include <mln/core/dpoint2d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a window with arbitrary shape, defined on
-   * the 2D square grid with integer coordinates.
-   */
-  typedef window<dpoint2d> window2d;
+  namespace convert
+  {
 
+    /// Convert an image \p input into a weighted window.
+    template <typename I>
+    w_window<mln_dpoint(I), mln_value(I)> to_w_window(const Image<I>& input);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I>
+    w_window<mln_dpoint(I), mln_value(I)> to_w_window(const Image<I>& input_)
+    {
+      const I& input = exact(input_);
+      mln_precondition(input.has_data());
+      // FIXME: Check that input is scalar?
+      typedef mln_dpoint(I) D;
+      typedef mln_point(D) P;
+      w_window<D, mln_value(I)> w_win;
+      mln_piter(I) p(input.domain());
+      for_all(p)
+	if (input(p) != 0)
+	  w_win.insert(input(p), p - P::zero);
+      return w_win;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::convert
 
 } // end of namespace mln
 
 
-# include <mln/make/window2d.hh>
-
-
-#endif // ! MLN_CORE_WINDOW2D_HH
+#endif // ! MLN_CONVERT_TO_W_WINDOW_HH

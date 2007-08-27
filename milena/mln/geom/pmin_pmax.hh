@@ -51,6 +51,13 @@ namespace mln
     pmin_pmax(const Point_Iterator<I>& p);
 
 
+    /// Compute the minimum and maximum points, \p pmin and \p max,
+    /// when browsing with iterator \p p.
+    template <typename I>
+    void
+    pmin_pmax(const Point_Iterator<I>& p,  mln_point(I)& pmin, mln_point(I)& pmax);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -78,6 +85,16 @@ namespace mln
 	    pmax[i] = p[i];
 
       return tmp;
+    }
+
+    template <typename I>
+    void
+    pmin_pmax(const Point_Iterator<I>& p, mln_point(I)& pmin, mln_point(I)& pmax)
+    {
+      typedef mln_point(I) P;
+      std::pair<P, P> tmp = pmin_pmax(p);
+      pmin = tmp.first;
+      pmax = tmp.second;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

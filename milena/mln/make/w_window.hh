@@ -25,32 +25,62 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WINDOW2D_HH
-# define MLN_CORE_WINDOW2D_HH
+#ifndef MLN_MAKE_W_WINDOW_HH
+# define MLN_MAKE_W_WINDOW_HH
 
-/*! \file mln/core/window2d.hh
+/*! \file mln/make/w_window.hh
  *
- * \brief Definition of the mln::window2d alias and of a construction
- * routine.
+ * \brief Routine to create a mln::w_window.
  */
 
-# include <mln/core/window.hh>
-# include <mln/core/dpoint2d.hh>
+# include <mln/core/concept/window.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/core/w_window.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a window with arbitrary shape, defined on
-   * the 2D square grid with integer coordinates.
-   */
-  typedef window<dpoint2d> window2d;
+  namespace make
+  {
 
+    /*! \brief Create a mln::w_window from a window and a weight
+     *  function.
+     *
+     * \param[in] weights Array.
+     *
+     * \pre The array size, \c M, has to be a square of an odd integer.
+     *
+     * \return A  weighted window.
+     */
+    template <typename W, typename F>
+    mln::w_window<mln_dpoint(W), mln_result(F)> w_window(const Window<W>&       win,
+							 const Function_p2v<F>& wei);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename W, typename F>
+    mln::w_window<mln_dpoint(W), mln_result(F)> w_window(const Window<W>&       win_,
+							 const Function_p2v<F>& wei_)
+    {
+      const W& win = exact(win_);
+      const F& wei = exact(wei_);
+      mln_precondition(! win.is_empty());
+      typedef mln_dpoint(W) D;
+      typedef mln_point(D)  P;
+      mln::w_window<D, mln_result(F)> w_win;
+      mln_qiter(W) q(win, P::zero);
+      for_all(q)
+	w_win.insert(wei(q), q - P::zero);
+      return w_win;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::make
 
 } // end of namespace mln
 
 
-# include <mln/make/window2d.hh>
-
-
-#endif // ! MLN_CORE_WINDOW2D_HH
+#endif // ! MLN_MAKE_W_WINDOW_HH

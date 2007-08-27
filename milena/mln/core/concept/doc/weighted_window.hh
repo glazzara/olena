@@ -56,6 +56,18 @@ namespace mln
        */
       typedef void bkd_qiter;
 
+      /// Point associated type.
+      typedef void point;
+
+      /// Dpoint associated type.
+      typedef void dpoint;
+
+      /// Weight associated type.
+      typedef void weight;
+
+      /// Window associated type.
+      typedef void window;
+
       /*! \brief Test if the weighted window is empty.
        *
        * A weighted_window of null size is empty.
@@ -72,6 +84,10 @@ namespace mln
 	center and a window point.
        */
       unsigned delta() const;
+
+      /*! \brief Give the corresponding window.
+       */
+      const window& win() const;
 
       /*! \brief Give the symmetrical weighted_window.
        */

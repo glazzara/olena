@@ -25,32 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WINDOW2D_HH
-# define MLN_CORE_WINDOW2D_HH
-
-/*! \file mln/core/window2d.hh
+/*! \file tests/linear_lAP.cc
  *
- * \brief Definition of the mln::window2d alias and of a construction
- * routine.
+ * \brief Tests on mln::linear::lap_4.
  */
 
-# include <mln/core/window.hh>
-# include <mln/core/dpoint2d.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/io/load_pgm.hh>
+
+#include <mln/border/thickness.hh>
+#include <mln/linear/lap.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  /*! \brief Type alias for a window with arbitrary shape, defined on
-   * the 2D square grid with integer coordinates.
-   */
-  typedef window<dpoint2d> window2d;
+  border::thickness = 1;
 
-
-} // end of namespace mln
-
-
-# include <mln/make/window2d.hh>
-
-
-#endif // ! MLN_CORE_WINDOW2D_HH
+  image2d_b<int_u8> lena = io::load_pgm("../img/lena.pgm");
+  image2d_b<int> tmp(lena.domain());
+  linear::lap_4(lena, tmp);
+}

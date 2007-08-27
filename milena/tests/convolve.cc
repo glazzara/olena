@@ -38,8 +38,7 @@
 #include <mln/math/round.hh>
 #include <mln/level/transform.hh>
 
-#include <mln/core/w_window.hh>
-#include <mln/make/w_window2d.hh>
+#include <mln/core/w_window2d_float.hh>
 #include <mln/border/thickness.hh>
 #include <mln/linear/convolve.hh>
 
@@ -60,7 +59,7 @@ int main()
 		 .04, .04, .04, .04, .04,
 		 .04, .04, .04, .04, .04,
 		 .04, .04, .04, .04, .04 };
-  w_window_<dpoint2d,float> w = make::w_window2d(ws);
+  w_window2d_float w = make::w_window2d(ws);
 
   image2d_b<float> tmp(lena.domain());
   linear::convolve(lena, w, tmp);

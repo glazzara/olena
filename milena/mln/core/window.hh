@@ -30,7 +30,7 @@
 
 /*! \file mln/core/window.hh
  *
- * \brief Definition of the generic window class mln::window_.
+ * \brief Definition of the generic window class mln::window.
  */
 
 # include <mln/core/concept/window.hh>
@@ -56,10 +56,10 @@ namespace mln
    * parameter is \c D, type of delta-point.
    */
   template <typename D>
-  class window_ : public Window< window_<D> >,
-		  public internal::dpoints_base_<D, window_<D> >
+  class window : public Window< window<D> >,
+		 public internal::dpoints_base_<D, window<D> >
   {
-    typedef internal::dpoints_base_<D, window_<D> > super_;
+    typedef internal::dpoints_base_<D, window<D> > super_;
   public:
 
     /*! \brief Point_Iterator type to browse the points of a generic window
@@ -77,7 +77,7 @@ namespace mln
      *
      * The constructed window is empty. 
      */
-    window_();
+    window();
 
 
     /*! \brief Test if the window is symmetric.
@@ -85,10 +85,10 @@ namespace mln
     bool is_symmetric() const;
 
     /// Insert a delta-point \p dp.
-    window_<D>& insert(const D& dp);
+    window<D>& insert(const D& dp);
 
     /// Give the symmetrical window.
-    window_<D> sym_() const;
+    window<D> sym_() const;
 
   protected:
     
@@ -100,40 +100,40 @@ namespace mln
 
   /// Shift a window \p win with a delta-point \p dp.
   template <typename W>
-  window_<mln_dpoint(W)> operator+(const Window<W>& win,
-				   const mln_dpoint(W)& dp);
+  window<mln_dpoint(W)> operator+(const Window<W>& win,
+				  const mln_dpoint(W)& dp);
 
   /// Shift a window \p win with the delta-point (-\p dp).
   template <typename W>
-  window_<mln_dpoint(W)> operator-(const Window<W>& win,
-				   const mln_dpoint(W)& dp);
+  window<mln_dpoint(W)> operator-(const Window<W>& win,
+				  const mln_dpoint(W)& dp);
 
   /// Substract \p rhs from \p lhs.
   // FIXME: Give details!
   template <typename Wl, typename Wr>
-  window_<mln_dpoint(Wl)> operator-(const Window<Wl>& lhs,
-				    const Window<Wr>& rhs);
+  window<mln_dpoint(Wl)> operator-(const Window<Wl>& lhs,
+				   const Window<Wr>& rhs);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // window_<D>
+  // window<D>
 
   template <typename D>
-  window_<D>::window_()
+  window<D>::window()
   {
   }
 
   template <typename D>
-  bool window_<D>::is_symmetric() const
+  bool window<D>::is_symmetric() const
   {
     return this->sym_() == *this;
   }
 
   template <typename D>
-  window_<D>&
-  window_<D>::insert(const D& dp)
+  window<D>&
+  window<D>::insert(const D& dp)
   {
     mln_precondition(! has(dp));
     this->super_::insert(dp);
@@ -141,10 +141,10 @@ namespace mln
   }
 
   template <typename D>
-  window_<D>
-  window_<D>::sym_() const
+  window<D>
+  window<D>::sym_() const
   {
-    window_<D> tmp;
+    window<D> tmp;
     const unsigned n = this->ndpoints();
     for (unsigned i = 0; i < n; ++i)
       tmp.insert(- this->dp(i));
@@ -155,11 +155,11 @@ namespace mln
   // operators
 
   template <typename W>
-  window_<mln_dpoint(W)> operator+(const Window<W>& win,
-				   const mln_dpoint(W)& dp)
+  window<mln_dpoint(W)> operator+(const Window<W>& win,
+				  const mln_dpoint(W)& dp)
   {
     typedef mln_point(W) P;
-    window_<mln_dpoint(W)> tmp;
+    window<mln_dpoint(W)> tmp;
     mln_qiter(W) q(win, P::zero);
     for_all(q)
       tmp.insert(convert::to_dpoint(q) + dp);
@@ -167,18 +167,18 @@ namespace mln
   }
 
   template <typename W>
-  window_<mln_dpoint(W)> operator-(const Window<W>& win,
-				   const mln_dpoint(W)& dp)
+  window<mln_dpoint(W)> operator-(const Window<W>& win,
+				  const mln_dpoint(W)& dp)
   {
     return win + (-dp);
   }
 
   template <typename W, typename Wr>
-  window_<mln_dpoint(W)> operator-(const Window<W>& lhs,
-				   const Window<Wr>& rhs)
+  window<mln_dpoint(W)> operator-(const Window<W>& lhs,
+				  const Window<Wr>& rhs)
   {
     typedef mln_point(W) P;
-    window_<mln_dpoint(W)> tmp;
+    window<mln_dpoint(W)> tmp;
     mln_qiter(W) q(lhs, P::zero);
     for_all(q)
       {

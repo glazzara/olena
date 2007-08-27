@@ -37,6 +37,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/point_set.hh>
 # include <mln/core/concept/window.hh>
+# include <mln/core/concept/weighted_window.hh>
 # include <mln/geom/pmin_pmax.hh>
 
 
@@ -47,10 +48,16 @@ namespace mln
   {
 
 
-    /// Compute the precise bounding box of a window \p win centered
-    /// at the origin.
+    /// Compute the precise bounding box of a window \p win when
+    /// centered at the origin.
     template <typename W>
     box_<mln_point(W)> bbox(const Window<W>& win);
+
+
+    /// Compute the precise bounding box of a weighted window \p w_win
+    /// when centered at the origin.
+    template <typename W>
+    box_<mln_point(W)> bbox(const Weighted_Window<W>& w_win);
 
 
     /// Compute the precise bounding box of a point set \p pset.
@@ -78,6 +85,12 @@ namespace mln
 
       box_<P> tmp(pp.first, pp.second);
       return tmp;
+    }
+
+    template <typename W>
+    box_<mln_point(W)> bbox(const Weighted_Window<W>& w_win)
+    {
+      return bbox(exact(w_win).win());
     }
 
     template <typename S>

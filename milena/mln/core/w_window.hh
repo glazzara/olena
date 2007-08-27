@@ -30,13 +30,13 @@
 
 /*! \file mln/core/w_window.hh
  *
- * \brief Definition of the generic weighted window class mln::w_window_.
+ * \brief Definition of the generic weighted window class mln::w_window.
  */
 
 # include <map>
 
-# include <mln/core/concept/weighted_window.hh>
 # include <mln/core/window.hh>
+# include <mln/core/concept/weighted_window.hh>
 
 
 namespace mln
@@ -54,13 +54,19 @@ namespace mln
    * the type of weights.
    */
   template <typename D, typename W>
-  struct w_window_ : public Weighted_Window< w_window_<D,W> >
+  struct w_window : public Weighted_Window< w_window<D,W> >
   {
     /// Point associated type.
     typedef mln_point(D) point;
 
     /// Dpoint associated type.
     typedef D dpoint;
+
+    /// Weight associated type.
+    typedef W weight;
+
+    /// Window associated type.
+    typedef mln::window<D> window;
 
 
     /// Point_Iterator type to browse (forward) the points of a generic w_window.
@@ -71,15 +77,15 @@ namespace mln
 
 
     /// Constructor without argument.
-    w_window_();
+    w_window();
 
 
-    /// Insert a delta-point \p d and its associated weight \p w.
-    w_window_<D,W>& insert(const D& d, const W& w);
+    /// Insert a couple of weight \p w and delta-point \p d.
+    w_window<D,W>& insert(const W& w, const D& d);
 
 
     /// Give the \p i-th weight.
-    W weight(unsigned i) const;
+    W w(unsigned i) const;
 
     /// Give access to the vector of weights.
     const std::vector<W>& weights() const;
@@ -95,22 +101,31 @@ namespace mln
     const std::vector<D>& vect() const;
 
     /// Give the corresponding window.
-    const window_<D>& window() const;
+    const mln::window<D>& win() const;
 
 
     /// Give the symmetrical w_window.
-    w_window_<D,W> sym_() const;
+    w_window<D,W> sym_() const;
 
   protected:
     
-    window_<D>     win_;
+    mln::window<D> win_;
     std::vector<W> wei_;
   };
 
 
-  /// Print a weighted window \p wwin into an output stream \p ostr.
+  /* \brief Print a weighted window \p w_win into an output stream \p ostr.
+   * \relates mln::w_window
+   */
   template <typename D, typename W>
-  std::ostream& operator<<(std::ostream& ostr, const w_window_<D,W>& wwin);
+  std::ostream& operator<<(std::ostream& ostr, const w_window<D,W>& w_win);
+
+
+  /* \brief Equality test between two weighted windows \p lhs and \p rhs.
+   * \relates mln::w_window
+   */
+  template <typename D, typename Wl, typename Wr>
+  bool operator==(const w_window<D,Wl>& lhs, const w_window<D,Wr>& rhs);
 
 
 
@@ -122,7 +137,7 @@ namespace mln
     template <typename Ds, typename P>
     with_w_(const Ds& ds, const P& p);
 
-    W weight() const;
+    W w() const;
 
   protected:
     const std::vector<W> wei_;
@@ -146,39 +161,30 @@ namespace mln
   
   template <typename It, typename W>
   W
-  with_w_<It,W>::weight() const
+  with_w_<It,W>::w() const
   {
     mln_precondition(this->i_ < wei_.size());
     return wei_[this->i_];
   }
 
 
-  // w_window_<D,W>
+  // w_window<D,W>
 
   template <typename D, typename W>
-  std::ostream& operator<<(std::ostream& ostr, const w_window_<D,W>& wwin)
-  {
-    ostr << '[';
-    for (unsigned i = 0; i < wwin.window().ndpoints(); ++i)
-      ostr << wwin.vect()[i] << ':' << wwin.weight(i) << ' ';
-    return ostr << ']';
-  }
-
-  template <typename D, typename W>
-  w_window_<D,W>::w_window_()
+  w_window<D,W>::w_window()
   {
   }
 
   template <typename D, typename W>
-  const window_<D>&
-  w_window_<D,W>::window() const
+  const mln::window<D>&
+  w_window<D,W>::win() const
   {
     return win_;
   }
 
   template <typename D, typename W>
   const D&
-  w_window_<D,W>::dp(unsigned i) const
+  w_window<D,W>::dp(unsigned i) const
   {
     mln_precondition(i < win_.ndpoints());
     mln_invariant(wei_.size() == win_.ndpoints());
@@ -187,7 +193,7 @@ namespace mln
 
   template <typename D, typename W>
   unsigned
-  w_window_<D,W>::ndpoints() const
+  w_window<D,W>::ndpoints() const
   {
     mln_invariant(wei_.size() == win_.ndpoints());
     return win_.ndpoints();
@@ -195,21 +201,21 @@ namespace mln
 
   template <typename D, typename W>
   const std::vector<D>&
-  w_window_<D,W>::vect() const
+  w_window<D,W>::vect() const
   {
     return win_.vect();
   }
 
   template <typename D, typename W>
   const std::vector<W>&
-  w_window_<D,W>::weights() const
+  w_window<D,W>::weights() const
   {
     return wei_;
   }
 
   template <typename D, typename W>
   W
-  w_window_<D,W>::weight(unsigned i) const
+  w_window<D,W>::w(unsigned i) const
   {
     mln_precondition(i < wei_.size());
     mln_invariant(wei_.size() == win_.ndpoints());
@@ -217,12 +223,13 @@ namespace mln
   }
 
   template <typename D, typename W>
-  w_window_<D,W>&
-  w_window_<D,W>::insert(const D& d, const W& w)
+  w_window<D,W>&
+  w_window<D,W>::insert(const W& w, const D& d)
   {
     mln_invariant(wei_.size() == win_.ndpoints());
+    mln_precondition(! win_.has(d));
 
-    if (win_.has(d))
+    if (w == W(0)) // FIXME: Implicit restriction "W scalar"...
       // no-op
       return *this;
 
@@ -244,19 +251,48 @@ namespace mln
     return *this;
   }
 
-
   template <typename D, typename W>
-  w_window_<D,W>
-  w_window_<D,W>::sym_() const
+  w_window<D,W>
+  w_window<D,W>::sym_() const
   {
-    w_window_<D,W> tmp(*this);
+    w_window<D,W> tmp(*this);
     tmp.win_ = - this->win_;
     return *this;
+  }
+
+  // operators
+
+  template <typename D, typename W>
+  std::ostream& operator<<(std::ostream& ostr, const w_window<D,W>& w_win)
+  {
+    ostr << '[';
+    for (unsigned i = 0; i < w_win.win().ndpoints(); ++i)
+      ostr << w_win.vect()[i] << ':' << w_win.w(i) << ' ';
+    return ostr << ']';
+  }
+
+  template <typename D, typename Wl, typename Wr>
+  bool operator==(const w_window<D,Wl>& lhs, const w_window<D,Wr>& rhs)
+  {
+    if (lhs.ndpoints() != rhs.ndpoints())
+      return false;
+    if (lhs.win() != rhs.win())
+      return false;
+    const std::vector<Wl>& wl = lhs.weights();
+    const std::vector<Wr>& wr = rhs.weights();
+    mln_assertion(wl.size() == wr.size());
+    for (unsigned i = 0; i < wl.size(); ++i)
+      if (wr[i] != wl[i])
+	return false;
+    return true;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
+
+# include <mln/make/w_window.hh>
 
 
 #endif // ! MLN_CORE_W_WINDOW_HH

@@ -53,10 +53,12 @@ namespace mln
     mln_dpoint(P) to_dpoint(const Generalized_Point<P>& p_)
     {
       const P& p = internal::force_exact<P>(p_);
-      mln_dpoint(P) tmp;
+      mln_dpoint(P) dp;
       for (unsigned i = 0; i < P::dim; ++i)
-	tmp[i] = p[i];
-      return tmp;
+	dp[i] = p[i];
+      typedef mln_point(P) P_;
+      mln_postcondition(dp == p - P_::zero);
+      return dp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

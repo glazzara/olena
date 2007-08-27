@@ -44,13 +44,13 @@ namespace mln
    * on the 2D square grid (with integer coordinates) and whose
    * weights are integers.
    */
-  typedef w_window_<dpoint2d, int> w_window2d_int;
+  typedef w_window<dpoint2d, int> w_window2d_int;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/w_window2d_int.hh>
+# include <mln/make/w_window2d.hh>
 
 
 #endif // ! MLN_CORE_W_WINDOW2D_INT_HH

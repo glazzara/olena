@@ -55,6 +55,8 @@ namespace mln
 
       typedef point;
       typedef dpoint;
+      typedef weight;
+      typedef window;
 
       E sym_() const;
     */
@@ -62,13 +64,13 @@ namespace mln
     /// Test if the weighted window is empty; final method.
     bool is_empty() const
     {
-      return exact(this)->window().is_empty();
+      return exact(this)->win().is_empty();
     }
 
     /// Test if the weighted window is centered; final method.
     bool is_centered() const
     {
-      return exact(this)->window().is_centered();
+      return exact(this)->win().is_centered();
     }
 
     // FIXME: Remove because too ambiguous: bool is_symmetric() const
@@ -76,7 +78,7 @@ namespace mln
     /// Give the maximum coordinate gap.
     unsigned delta() const
     {
-      return exact(this)->window().delta();
+      return exact(this)->win().delta();
     }
     
   protected:
@@ -99,12 +101,17 @@ namespace mln
   {
     typedef  mln_point(E)  point;
     typedef mln_dpoint(E) dpoint;
+    typedef mln_weight(E) weight;
+    typedef mln_window(E) window;
 
     typedef mln_fwd_qiter(E) fwd_qiter;
     typedef mln_bkd_qiter(E) bkd_qiter;
 
-    E (E::*m_)() const = & E::sym_;
-    m_ = 0;
+    E (E::*m1)() const = & E::sym_;
+    m1 = 0;
+
+    const window& (E::*m2)() const = & E::win;
+    m2 = 0;
   }
 
   template <typename W>

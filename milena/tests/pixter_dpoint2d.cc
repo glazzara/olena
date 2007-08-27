@@ -46,7 +46,7 @@ int main()
 
   typedef image2d_b<int> I;
   typedef I::dpoint      D;
-  typedef window_<D>     W;
+  typedef window<D>      W;
 
   typedef dpoints_fwd_pixter<I> qixter;
 

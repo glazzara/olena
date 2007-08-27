@@ -161,6 +161,16 @@
 # define mln_viter(T)      typename T::fwd_viter
 
 
+// w
+
+/// Shortcut to access the weight type associated to T.
+# define mln_weight(T)     typename T::weight
+
+/// Shortcut to access the window type associated to T.
+# define mln_window(T)     typename T::window
+
+
+
 
 
 

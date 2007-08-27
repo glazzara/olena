@@ -30,7 +30,7 @@
 
 /*! \file mln/estim/min_max.hh
  *
- * \brief Compute the min_max pixel value.
+ * \brief Compute the min and max pixel values of an image.
  */
 
 # include <mln/accu/min_max.hh>

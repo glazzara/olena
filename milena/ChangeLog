@@ -1,5 +1,43 @@
 2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add some linear filters and augment related tools.
+
+	* mln/linear/convolve.hh: Add doc.
+	* mln/linear/log.hh (LoG_7x7, LoG_13x13, LoG_17x17): New.
+	* mln/linear/lap.hh: New.
+	* tests/linear_lap.cc: New.
+	* mln/convert/to_dpoint.hh: Add postcondition.
+	* mln/convert/to_w_window.hh: New.
+	* mln/core/w_window2d_float.hh: New.
+	* mln/make/w_window.hh: New.
+	* mln/make/w_window2d_int.hh: Remove; useless.
+
+	* mln/core/concept/doc/weighted_window.hh: Augment doc.
+	(weight, window): Rename as...
+	(w, win): ...these.
+	(weight, window): New associated types.
+	* mln/core/concept/weighted_window.hh: Update.
+
+	* mln/core/window.hh (window_): Rename as...
+	(window): ...this.
+	* mln/core/w_window.hh (w_window_): Rename as...
+	(w_window): ...this.
+	(insert): Swap args; add precondition.
+	Update.
+	* mln/convert/to_image.hh,
+	* mln/convert/to_window.hh,
+	* mln/geom/pmin_pmax.hh,
+	* mln/geom/bbox.hh: New overload.
+	* mln/core/window2d.hh,
+	* mln/core/w_window2d_int.hh,
+	* mln/linear/convolve.hh,
+	* mln/make/w_window2d.hh,
+	* tests/convolve.cc,
+	* tests/pixter_dpoint2d.cc,
+	* tests/w_window2d_int.cc: Update.
+
+2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update accus and add LoG filter.
 
 	* mln/core/concept/accumulator.hh (merge): New.
