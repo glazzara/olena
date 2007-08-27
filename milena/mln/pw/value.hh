@@ -33,9 +33,8 @@
  * \brief FIXME.
  */
 
-# include <mln/core/concept/function.hh>
+# include <mln/fun/internal/selector.hh>
 # include <mln/core/concept/image.hh>
-# include <mln/value/props.hh>
 
 
 
@@ -45,26 +44,12 @@ namespace mln
   namespace pw
   {
 
-    // FIXME: Move!
-
-    namespace internal
-    {
-
-      template <typename K, typename E>
-      struct select_function_ : Function_p2v<E>
-      {};
-
-      template <typename E>
-      struct select_function_< value::binary_kind, E > : Function_p2b<E>
-      {};
-
-    } // end of namespace mln::pw::internal
-
 
     // FIXME: Doc!
 
     template <typename I>
-    struct value_ : public internal::select_function_< mln_value_kind(I), value_<I> >
+    struct value_
+      : fun::internal::selector_p2_< mln_value(I), value_<I> >::ret
     {
       typedef mln_value(I) result;
       value_(const I& ima);

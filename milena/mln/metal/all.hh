@@ -25,68 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ESTIM_MEAN_HH
-# define MLN_ESTIM_MEAN_HH
+#ifndef MLN_METAL_ALL_HH
+# define MLN_METAL_ALL_HH
 
-/*! \file mln/estim/mean.hh
+/*! \file mln/metal/all.hh
  *
- * \brief Compute the mean pixel value.
+ * \brief File that includes all meta-programming tools.
  */
-
-# include <mln/accu/mean.hh>
-# include <mln/level/compute.hh>
-
 
 namespace mln
 {
 
-  namespace estim
-  {
-
-    /*! \brief Compute the mean value of the pixels of image \p input.
-     *
-     * \param[in] input The image.
-     * \return The mean value.
-     */
-    template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input);
-
-
-    /*! \brief Compute the mean value of the pixels of image \p input.
-     *
-     * \param[in] input The image.
-     * \param[out] result The mean value.
-     *
-     * The free parameter \c S is the type used to compute the
-     * summation.
-     */
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input)
-    {
-      mln_precondition(exact(input).has_data());
-      return level::compute(input,
-			    accu::mean<mln_value(I)>()).to_value();
-    }
-
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result)
-    {
-      mln_precondition(exact(input).has_data());
-      result = level::compute(input,
-			      accu::mean<mln_value(I), S, M>()).to_value();
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::estim
+  /// Namespace of meta-programming tools.
+  namespace metal {}
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ESTIM_MEAN_HH
+# include <mln/metal/bexpr.hh> // <- bool.hh
+# include <mln/metal/equal.hh>
+# include <mln/metal/if.hh>
+# include <mln/metal/is_a.hh>
+# include <mln/metal/math.hh>
+# include <mln/metal/none.hh>
+# include <mln/metal/unqualif.hh> // <- unconst.hh, unptr.hh, unref.hh
+# include <mln/metal/vec.hh>
+
+# include <mln/metal/same_coord.hh>
+# include <mln/metal/same_point.hh>
+
+
+#endif // ! MLN_METAL_ALL_HH

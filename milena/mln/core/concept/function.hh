@@ -99,6 +99,7 @@ namespace mln
   template <typename E>
   struct Function_p2b : public Function_p2v<E>
   {
+    typedef bool result;
   protected:
     Function_p2b();
   };

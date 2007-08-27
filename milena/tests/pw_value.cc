@@ -43,6 +43,5 @@ int main()
   image2d_b<int> ima(3, 3);
   point2d p = make::point2d(1, 1);
   ima(p) = 51;
-
   mln_assertion( (pw::value(ima) == pw::cst(51))(p) == true );
 }

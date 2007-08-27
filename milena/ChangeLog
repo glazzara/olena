@@ -1,5 +1,47 @@
 2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add proper inheritance to functions.
+
+	* mln/core/concept/doc/neighborhood.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/neighb.hh (point): New.
+	* mln/convert/to_image.hh
+	(helper_dim_, helper_image_from_): New in mln::internal.
+	(image_from_): New in mln.
+	(mln_image_from): New macro.
+	(to_image): Fix; now generalized.
+
+	* mln/metal/all.hh: New.
+	* mln/metal/equal.hh: Update.
+	(mlc_equal): New.
+	* mln/metal/if.hh: New.
+	* mln/metal/is_a.hh: New.
+	* mln/metal/unptr.hh: New.
+	* mln/metal/unqualif.hh: New.
+	* mln/metal/unref.hh: New.
+
+	* mln/core/concept/function.hh (result): New in Function_p2b.
+	* mln/fun/internal: New directory.
+	* mln/pw/cst.hh: Precise inheritance.
+	* mln/pw/value.hh: Likewise.
+	(select_function_): Move to...
+	* mln/fun/internal/selector.hh: ...this new file.
+	(select_function_): Rename as...
+	(selector_): ...this.
+	* mln/fun/c.hh: New.
+	* mln/convert/to_fun.hh: New.
+
+	* mln/convert/to_window.hh (to_window): New overload.
+	* mln/estim/mean.hh (mean): New overload.
+	* mln/estim/sum.hh: New.
+	* mln/level/run.hh: Rename as...
+	* mln/level/compute.hh: ...this.
+	(run): Rename as...
+	(compute): ...this.
+	* tests/w_window2d_int.cc: Augment.
+
+2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add some linear filters and augment related tools.
 
 	* mln/linear/convolve.hh: Add doc.

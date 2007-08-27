@@ -25,68 +25,64 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ESTIM_MEAN_HH
-# define MLN_ESTIM_MEAN_HH
+#ifndef MLN_CORE_METAL_IS_A_HH
+# define MLN_CORE_METAL_IS_A_HH
 
-/*! \file mln/estim/mean.hh
+/*! \file mln/metal/is_a.hh
  *
- * \brief Compute the mean pixel value.
+ * \brief Definition of a type that means "is_a".
  */
 
-# include <mln/accu/mean.hh>
-# include <mln/level/compute.hh>
+
+# define mlc_is_a(T, U) mln::metal::is_a< T, U >
+
 
 
 namespace mln
 {
 
-  namespace estim
+  namespace metal
   {
 
-    /*! \brief Compute the mean value of the pixels of image \p input.
-     *
-     * \param[in] input The image.
-     * \return The mean value.
-     */
-    template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input);
-
-
-    /*! \brief Compute the mean value of the pixels of image \p input.
-     *
-     * \param[in] input The image.
-     * \param[out] result The mean value.
-     *
-     * The free parameter \c S is the type used to compute the
-     * summation.
-     */
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input)
+    namespace internal
     {
-      mln_precondition(exact(input).has_data());
-      return level::compute(input,
-			    accu::mean<mln_value(I)>()).to_value();
-    }
 
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result)
-    {
-      mln_precondition(exact(input).has_data());
-      result = level::compute(input,
-			      accu::mean<mln_value(I), S, M>()).to_value();
-    }
+      typedef char yes_;
+      struct no_ { char dummy[2]; };
 
-# endif // ! MLN_INCLUDE_ONLY
+      template <typename T>
+      struct make_
+      {
+	static T* ptr();
+      };
 
-  } // end of namespace mln::estim
+      template <typename T, template <class> class U>
+      struct helper_is_a_
+      {
+
+	template<class V>
+	static yes_ selector(U<V>*);
+	static no_  selector(...);
+      };
+
+    } // end of namespace mln::metal::internal
+
+
+
+    /*! \brief "is_a" check.
+     *
+     * FIXME: Doc!
+     */
+    template <typename T, template <class> class U>
+    struct is_a : bool_<( sizeof( internal::helper_is_a_<T,U>::selector(internal::make_<T>::ptr()) )
+			  ==
+			  sizeof( internal::yes_ )  )>::type
+    {};
+    
+
+  } // end of namespace mln::metal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ESTIM_MEAN_HH
+#endif // ! MLN_CORE_METAL_IS_A_HH

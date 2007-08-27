@@ -25,68 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ESTIM_MEAN_HH
-# define MLN_ESTIM_MEAN_HH
+#ifndef MLN_CORE_METAL_IF_HH
+# define MLN_CORE_METAL_IF_HH
 
-/*! \file mln/estim/mean.hh
+/*! \file mln/metal/if.hh
  *
- * \brief Compute the mean pixel value.
+ * \brief Definition of an "if-then-else" expression type.
  */
 
-# include <mln/accu/mean.hh>
-# include <mln/level/compute.hh>
+# include <mln/metal/bool.hh>
+
+# define mlc_if(Cond, Then, Else) typename mln::metal::if_< Cond, Then, Else >::ret
+
 
 
 namespace mln
 {
 
-  namespace estim
+  namespace metal
   {
 
-    /*! \brief Compute the mean value of the pixels of image \p input.
-     *
-     * \param[in] input The image.
-     * \return The mean value.
-     */
-    template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input);
-
-
-    /*! \brief Compute the mean value of the pixels of image \p input.
-     *
-     * \param[in] input The image.
-     * \param[out] result The mean value.
-     *
-     * The free parameter \c S is the type used to compute the
-     * summation.
-     */
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input)
+    namespace internal
     {
-      mln_precondition(exact(input).has_data());
-      return level::compute(input,
-			    accu::mean<mln_value(I)>()).to_value();
-    }
 
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result)
+      template <bool cond, typename Then, typename Else>
+      struct helper_if_;
+
+      template <typename Then, typename Else>
+      struct helper_if_< true, Then, Else >
+      {
+	typedef Then ret;
+      };
+
+      template <typename Then, typename Else>
+      struct helper_if_< false, Then, Else >
+      {
+	typedef Else ret;
+      };
+
+    } // end of namespace mln::metal::internal
+
+
+    /*! \brief "if-then-else" expression.
+     *
+     * FIXME: Doc!
+     */
+    template <typename Cond, typename Then, typename Else>
+    struct if_ : internal::helper_if_< Cond::value, Then, Else >
     {
-      mln_precondition(exact(input).has_data());
-      result = level::compute(input,
-			      accu::mean<mln_value(I), S, M>()).to_value();
-    }
+      // ret is inherited.
+    };
 
-# endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::estim
+  } // end of namespace mln::metal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ESTIM_MEAN_HH
+#endif // ! MLN_CORE_METAL_IF_HH

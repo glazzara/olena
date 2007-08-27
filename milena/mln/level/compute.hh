@@ -25,68 +25,55 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ESTIM_MEAN_HH
-# define MLN_ESTIM_MEAN_HH
+#ifndef MLN_LEVEL_COMPUTE_HH
+# define MLN_LEVEL_COMPUTE_HH
 
-/*! \file mln/estim/mean.hh
+/*! \file mln/level/compute.hh
  *
- * \brief Compute the mean pixel value.
+ * \brief Compute an accumulator onto image pixel values.
  */
 
-# include <mln/accu/mean.hh>
-# include <mln/level/compute.hh>
+# include <mln/level/take.hh>
 
 
 namespace mln
 {
 
-  namespace estim
+  namespace level
   {
 
-    /*! \brief Compute the mean value of the pixels of image \p input.
+    /*! Compute an accumulator onto the pixel values of the image \p input.
      *
-     * \param[in] input The image.
-     * \return The mean value.
+     * \param[in] input The input image.
+     * \param[in] a The accumulator.
+     * \return A resulting accumulator.
+     *
+     * This routine computes: \n
+     *   res = \p a \n
+     *   res.init() \n
+     *   level::take(res, \p input) \n
+     *   return res \n
      */
-    template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input);
-
-
-    /*! \brief Compute the mean value of the pixels of image \p input.
-     *
-     * \param[in] input The image.
-     * \param[out] result The mean value.
-     *
-     * The free parameter \c S is the type used to compute the
-     * summation.
-     */
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result);
+    template <typename I, typename A>
+    A compute(const Image<I>& input, const Accumulator<A>& a);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input)
+    template <typename I, typename A>
+    A compute(const Image<I>& input, const Accumulator<A>& a)
     {
-      mln_precondition(exact(input).has_data());
-      return level::compute(input,
-			    accu::mean<mln_value(I)>()).to_value();
-    }
-
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result)
-    {
-      mln_precondition(exact(input).has_data());
-      result = level::compute(input,
-			      accu::mean<mln_value(I), S, M>()).to_value();
+      A res = exact(a);
+      res.init();
+      level::take(res, input);
+      return res;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::estim
+  } // end of namespace mln::level
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ESTIM_MEAN_HH
+#endif // ! MLN_LEVEL_COMPUTE_HH

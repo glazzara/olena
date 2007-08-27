@@ -58,6 +58,9 @@ namespace mln
     /// Dpoint associated type.
     typedef D dpoint;
 
+    /// Point associated type.
+    typedef mln_point(D) point;
+
     /*! \brief Point_Iterator type to browse the points of a generic
      * neighborhood w.r.t. the ordering of delta-points.
      */

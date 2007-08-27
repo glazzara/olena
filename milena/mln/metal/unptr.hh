@@ -25,55 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_RUN_HH
-# define MLN_LEVEL_RUN_HH
+#ifndef MLN_METAL_UNPTR_HH
+# define MLN_METAL_UNPTR_HH
 
-/*! \file mln/level/run.hh
- *
- * \brief Run an accumulator onto image pixel values.
- */
 
-# include <mln/level/take.hh>
+# define mlc_unptr(T) typename mln::metal::unptr< T >::ret
 
 
 namespace mln
 {
 
-  namespace level
+  namespace metal
   {
 
-    /*! Run an accumulator onto the pixel values of the image \p input.
-     *
-     * \param[in] input The input image.
-     * \param[in] a The accumulator.
-     * \return A resulting accumulator.
-     *
-     * This routine runs: \n
-     *   res = \p a \n
-     *   res.init() \n
-     *   level::take(res, \p input) \n
-     *   return res \n
-     */
-    template <typename I, typename A>
-    A run(const Image<I>& input, const Accumulator<A>& a);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I, typename A>
-    A run(const Image<I>& input, const Accumulator<A>& a)
+    template <typename T>
+    struct unptr
     {
-      A res = exact(a);
-      res.init();
-      level::take(res, input);
-      return res;
-    }
+      typedef T ret;
+    };
 
-# endif // ! MLN_INCLUDE_ONLY
+    template <typename T>
+    struct unptr< T* >
+    {
+      typedef mlc_unptr(T) ret;
+    };
 
-  } // end of namespace mln::level
+  } // end of namespace mln::metal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_RUN_HH
+#endif // ! MLN_METAL_UNPTR_HH

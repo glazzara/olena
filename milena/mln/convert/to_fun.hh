@@ -25,68 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ESTIM_MEAN_HH
-# define MLN_ESTIM_MEAN_HH
+#ifndef MLN_CONVERT_TO_FUN_HH
+# define MLN_CONVERT_TO_FUN_HH
 
-/*! \file mln/estim/mean.hh
+/*! \file mln/convert/to_fun.hh
  *
- * \brief Compute the mean pixel value.
+ * \brief Conversions towards some mln::Function.
  */
 
-# include <mln/accu/mean.hh>
-# include <mln/level/compute.hh>
+# include <mln/pw/value.hh>
+# include <mln/fun/c.hh>
 
 
 namespace mln
 {
 
-  namespace estim
+  namespace convert
   {
 
-    /*! \brief Compute the mean value of the pixels of image \p input.
-     *
-     * \param[in] input The image.
-     * \return The mean value.
-     */
+    /// Convert a C unary function into an mln::fun::C.
+    template <typename R, typename A>
+    fun::C<R(*)(A)> to_fun(R (*f)(A));
+
+    /// Convert an image into a function.
     template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input);
-
-
-    /*! \brief Compute the mean value of the pixels of image \p input.
-     *
-     * \param[in] input The image.
-     * \param[out] result The mean value.
-     *
-     * The free parameter \c S is the type used to compute the
-     * summation.
-     */
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result);
+    pw::value_<I> to_fun(const Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input)
+    template <typename R, typename A>
+    fun::C<R(*)(A)> to_fun(R (*f_)(A))
     {
-      mln_precondition(exact(input).has_data());
-      return level::compute(input,
-			    accu::mean<mln_value(I)>()).to_value();
+      fun::C<R(*)(A)> f(f_);
+      return f;
     }
 
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result)
+    template <typename I>
+    pw::value_<I> to_fun(const Image<I>& ima)
     {
-      mln_precondition(exact(input).has_data());
-      result = level::compute(input,
-			      accu::mean<mln_value(I), S, M>()).to_value();
+      return pw::value(ima);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::estim
+  } // end of namespace mln::convert
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ESTIM_MEAN_HH
+#endif // ! MLN_CONVERT_TO_FUN_HH

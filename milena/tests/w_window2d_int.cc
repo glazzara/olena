@@ -35,32 +35,40 @@
 
 #include <mln/convert/to_image.hh>
 #include <mln/convert/to_w_window.hh>
-#include <mln/debug/println.hh>
+
+#include <mln/convert/to_fun.hh>
+#include <mln/estim/sum.hh>
 
 
-struct my_f : mln::Function_p2v< my_f >
+int f(mln::point2d p)
 {
-  typedef int result;
-  int operator()(const mln::point2d& p) const
-  {
-    return p.row() + p.col();
-  }
-};
+  return p.row() + p.col();
+}
 
 
 int main()
 {
   using namespace mln;
 
-  int ws[] = { -1, 0, 1,
-	       -2, 0, 2,
-	       -1, 0, 1 };
-  w_window2d_int w_win = make::w_window2d(ws);
+  {
+    int ws[] = { -1, 0, 1,
+		 -2, 0, 2,
+		 -1, 0, 1 };
+    w_window2d_int w_win = make::w_window2d(ws);
 
-  image2d_b<int> ima = convert::to_image(w_win);
-  w_window2d_int w_win_2 = convert::to_w_window(ima);
-  mln_assertion(w_win_2 == w_win);
+    image2d_b<int> ima = convert::to_image(w_win);
+    w_window2d_int w_win_2 = convert::to_w_window(ima);
+    mln_assertion(w_win_2 == w_win);
+  }
 
-  w_window2d_int tmp = make::w_window(win::rectangle2d(3, 5), my_f());
-  debug::println(convert::to_image(tmp));
+  {
+    w_window2d_int w_win = make::w_window(win::rectangle2d(3, 5),
+					  convert::to_fun(f));
+    //  -3 -2 -1  0 +1
+    //  -2 -1  0 +1 +2 
+    //  -1  0 +1 +2 +3 
+    image2d_b<int> ima = convert::to_image(w_win);
+    mln_assertion(estim::sum(ima) == 0);
+  }
+
 }

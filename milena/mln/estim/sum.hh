@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ESTIM_MEAN_HH
-# define MLN_ESTIM_MEAN_HH
+#ifndef MLN_ESTIM_SUM_HH
+# define MLN_ESTIM_SUM_HH
 
-/*! \file mln/estim/mean.hh
+/*! \file mln/estim/sum.hh
  *
- * \brief Compute the mean pixel value.
+ * \brief Compute the sum pixel value.
  */
 
-# include <mln/accu/mean.hh>
+# include <mln/accu/sum.hh>
 # include <mln/level/compute.hh>
 
 
@@ -43,43 +43,39 @@ namespace mln
   namespace estim
   {
 
-    /*! \brief Compute the mean value of the pixels of image \p input.
+    /*! \brief Compute the sum value of the pixels of image \p input.
      *
      * \param[in] input The image.
-     * \return The mean value.
+     * \return The sum value.
      */
     template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input);
+    mln_sum(mln_value(I)) sum(const Image<I>& input);
 
 
-    /*! \brief Compute the mean value of the pixels of image \p input.
+    /*! \brief Compute the sum value of the pixels of image \p input.
      *
      * \param[in] input The image.
-     * \param[out] result The mean value.
-     *
-     * The free parameter \c S is the type used to compute the
-     * summation.
+     * \param[out] result The sum value.
      */
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result);
+    template <typename I, typename S>
+    void sum(const Image<I>& input, S& result);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    mln_sum(mln_value(I)) mean(const Image<I>& input)
+    mln_sum(mln_value(I)) sum(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      return level::compute(input,
-			    accu::mean<mln_value(I)>()).to_value();
+      return level::compute(input, accu::sum<mln_value(I)>()).to_value();
     }
 
-    template <typename S, typename I, typename M>
-    void mean(const Image<I>& input, M& result)
+    template <typename I, typename S>
+    void sum(const Image<I>& input, S& result)
     {
       mln_precondition(exact(input).has_data());
       result = level::compute(input,
-			      accu::mean<mln_value(I), S, M>()).to_value();
+			      accu::sum<mln_value(I), S>()).to_value();
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -89,4 +85,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_ESTIM_MEAN_HH
+#endif // ! MLN_ESTIM_SUM_HH

@@ -33,7 +33,7 @@
  * \brief FIXME.
  */
 
-# include <mln/core/concept/function.hh>
+# include <mln/fun/internal/selector.hh>
 
 
 namespace mln
@@ -45,11 +45,12 @@ namespace mln
     // FIXME: Doc!
 
     template <typename T>
-    struct cst_ : public Function_p2v< cst_<T> >
+    struct cst_
+      : fun::internal::selector_p2_<T, cst_<T> >::ret
     {
       typedef T result;
 
-      cst_(T t);
+      cst_(const T& t);
 
       template <typename P>
       T operator()(const P&) const;
@@ -62,7 +63,7 @@ namespace mln
     // FIXME: Doc!
 
     template <typename T>
-    cst_<T> cst(T t);
+    cst_<T> cst(const T& t);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -70,7 +71,7 @@ namespace mln
     // pw::cst_<T>
 
     template <typename T>
-    cst_<T>::cst_(T t)
+    cst_<T>::cst_(const T& t)
       : t_(t)
     {
     }
@@ -86,7 +87,7 @@ namespace mln
     // pw::cst(t)
 
     template <typename T>
-    cst_<T> cst(T t)
+    cst_<T> cst(const T& t)
     {
       cst_<T> tmp(t);
       return tmp;

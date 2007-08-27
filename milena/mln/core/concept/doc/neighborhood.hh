@@ -59,6 +59,9 @@ namespace mln
 
       /// Dpoint associated type.
       typedef void dpoint;
+
+      /// Point associated type.
+      typedef void  point;
     };
 
   } // end of namespace mln::doc

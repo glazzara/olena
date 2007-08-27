@@ -28,6 +28,11 @@
 #ifndef MLN_METAL_EQUAL_HH
 # define MLN_METAL_EQUAL_HH
 
+# include <mln/metal/bool.hh>
+
+
+# define mlc_equal(T1, T2) mln::metal::equal< T1, T2 >
+
 
 namespace mln
 {
@@ -36,15 +41,12 @@ namespace mln
   {
 
     template <typename T1, typename T2>
-    struct equal
-    {
-    };
+    struct equal : false_
+    {};
 
     template <typename T>
-    struct equal< T, T >
-    {
-      static void check() {}
-    };
+    struct equal< T, T > : true_
+    {};
 
 
   } // end of namespace mln::metal
