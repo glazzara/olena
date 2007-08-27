@@ -25,49 +25,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixter_dpoint2d.cc
+/*! \file tests/convolve.cc
  *
- * \brief Test on mln::dpoints_fwd_pixter.
+ * \brief Tests on mln::linear::convolve.
  */
 
-#include <cassert>
-#include <iostream>
-
 #include <mln/core/image2d_b.hh>
-#include <mln/core/window.hh>
-#include <mln/core/dpoints_pixter.hh>
+#include <mln/value/int_u8.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/core/w_window2d_int.hh>
+#include <mln/core/win/rectangle2d.hh>
+#include <mln/core/pixel.hh>
+
+#include <mln/debug/iota.hh>
+#include <mln/pw/cst.hh>
+#include <mln/border/thickness.hh>
+#include <mln/linear/local/convolve.hh>
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  typedef image2d_b<int> I;
-  typedef I::dpoint      D;
-  typedef window<D>      W;
+  const unsigned size = 3;
+  border::thickness = size - 1;
 
-  typedef dpoints_fwd_pixter<I> qixter;
+  image2d_b<int_u8> ima(size, size);
+  debug::iota(ima);
 
-  const unsigned size = 20;
-  I ima(size, size);
+  point2d p = make::point2d(1,1);
+  w_window2d_int w_win = make::w_window(win::rectangle2d(size, size),
+					pw::cst(1));
 
-  const int value = 51;
-  level::fill(ima, value);
+  int res;
+  {
+    linear::local::convolve(ima, p, w_win, res);
+    mln_assertion(res == size*size * (size*size + 1) / 2);
+  }
 
-  W win;
-  win
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(0, -1))
-    .insert(make::dpoint2d(1, 0))
-    .insert(make::dpoint2d(1, 0));
+  {
+    typedef image2d_b<int_u8> I;
+    linear::local::convolve(pixel<const I>(ima, p), w_win, res);
+    linear::local::convolve(pixel<I>(ima, p), w_win, res);
+  }
+  {
+    linear::local::convolve(make::pixel(ima, p), w_win, res);
+    mln_assertion(res == size*size * (size*size + 1) / 2);
+  }
 
-  mln_piter_(I) p(ima.domain());
-  qixter        qix(ima, win, p);
-
-  for_all(p)
-    if (p[0] > 0 && p[1] > 0 && p[0] < int(size - 1) && p[1] < int(size - 1))
-      for_all(qix)
-      	mln_assertion(*qix == value);
+  res = 0;
 }

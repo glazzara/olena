@@ -86,7 +86,7 @@ namespace mln
 	
 	mln_pixter(const I) pxl(input);
 	for_all(pxl)
-	  f(input(*pxl));
+	  f(pxl.val());
 	return f;
       }
 

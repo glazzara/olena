@@ -1,5 +1,47 @@
 2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add local convolution.
+
+	* mln/core/concept/doc/generalized_pixel.hh,
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/internal/pixel_impl.hh (ima): New.
+	* mln/core/concept/doc/generalized_pixel.hh,
+	* mln/core/concept/doc/pixel_iterator.hh 
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/concept/pixel_iterator.hh,
+	* mln/core/dpoints_pixter.hh (ctor): Better sig.
+	(center_value): Rename as...
+	(center_val): ...this.
+	* mln/core/internal/pixel_impl.hh (operator*): Rename as...
+	(val): ...this.
+	* mln/debug/iota.hh,
+	* mln/histo/compute.hh,
+	* mln/level/apply.hh,
+	* mln/level/assign.hh,
+	* mln/level/fast_median.hh,
+	* mln/level/take.hh,
+	* mln/level/transform.hh,
+	* mln/linear/convolve.hh,
+	: Update.
+	* mln/core/pixel.hh (is_valid): Disambiguate.
+	(include): Fix.
+
+	* mln/linear/local: New directory.
+	* mln/linear/local/convolve.hh: New.
+	* mln/make/pixel.hh: New.
+	* mln/metal/const.hh: New.
+	* tests/decorated_image.cc: Fix warning.
+	* tests/local_convolve.cc: New.
+	* tests/pixel.cc: Update and augment.
+	* tests/pixter_point2d.cc: Rename as...
+	* tests/pixter2d_b.cc: ...this.
+	Clean, update, and augment.
+	* tests/pixter_dpoint2d.cc: Rename as...
+	* tests/dpoints_pixter.cc: ...this.
+	Clean, update, and augment.
+
+2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add proper inheritance to functions.
 
 	* mln/core/concept/doc/neighborhood.hh,

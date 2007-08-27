@@ -77,7 +77,7 @@ namespace mln
 	const I& input = exact(input_);
 	mln_pixter(const I) pxl(input);
 	for_all(pxl)
-	  a.take(*pxl);
+	  a.take(pxl.val());
       }
 
     } // end of namespace mln::level::impl

@@ -67,10 +67,14 @@ namespace mln
 
 
       /// pixel iterator value.
-      lvalue operator*();
+      lvalue val();
 
       /// Get the pixel iterator value.
-      rvalue operator*() const;
+      rvalue val() const;
+
+
+      /// Give the pixel image.
+      I& ima() const;
 
 
       /// Address of the current iterator value/pixel.
@@ -113,7 +117,11 @@ namespace mln
 
 
       /// Get the pixel iterator value.
-      rvalue operator*() const;
+      rvalue val() const;
+
+
+      /// Give the pixel image.
+      const I& ima() const;
 
 
       /// Address of the current iterator value/pixel.
@@ -155,7 +163,7 @@ namespace mln
 
     template <typename I, typename E>
     mln_lvalue(I)
-    pixel_impl_<I, E>::operator*()
+    pixel_impl_<I, E>::val()
     {
       mln_precondition(is_valid_());
       return *value_ptr_;
@@ -163,10 +171,18 @@ namespace mln
 
     template <typename I, typename E>
     mln_rvalue(I)
-    pixel_impl_<I, E>::operator*() const
+    pixel_impl_<I, E>::val() const
     {
       mln_precondition(is_valid_());
       return *value_ptr_;
+    }
+
+    template <typename I, typename E>
+    I&
+    pixel_impl_<I, E>::ima() const
+    {
+      // a const pixel, yet a mutable image
+      return const_cast<I&>(image_);
     }
 
     template <typename I, typename E>
@@ -195,10 +211,17 @@ namespace mln
 
     template <typename I, typename E>
     mln_rvalue(I)
-    pixel_impl_<const I, E>::operator*() const
+    pixel_impl_<const I, E>::val() const
     {
       mln_precondition(is_valid_());
       return *value_ptr_;
+    }
+
+    template <typename I, typename E>
+    const I&
+    pixel_impl_<const I, E>::ima() const
+    {
+      return image_;
     }
 
     template <typename I, typename E>

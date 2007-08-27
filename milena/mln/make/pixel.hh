@@ -25,38 +25,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <cassert>
-#include <mln/core/image2d_b.hh>
+#ifndef MLN_MAKE_PIXEL_HH
+# define MLN_MAKE_PIXEL_HH
+
+/*! \file mln/make/pixel.hh
+ *
+ * \brief Routine to construct an mln::pixel.
+ */
+
+# include <mln/core/concept/image.hh>
+# include <mln/core/pixel.hh>
 
 
-int
-main()
+namespace mln
 {
-  using namespace mln;
 
-  typedef image2d_b<int> I;
-  I ima(20, 20);
+  namespace make
+  {
 
-  mln_piter_(I) p(ima.domain());
+    /// Create an mln::pixel from a constant image \p ima and a point \p p.
+    template <typename I>
+    mln::pixel<const I> pixel(const Image<I>& ima, const mln_point(I)& p);
 
-  mln_pixter_(I) pix(ima);
-  int i = 0;
+    /// Create an mln::pixel from a mutable image \p ima and a point \p p.
+    template <typename I>
+    mln::pixel<I> pixel(Image<I>& ima, const mln_point(I)& p);
 
-  for_all(p)
-    ima(p) = i++;
-  i = 0;
 
-  for_all(pix)
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I>
+    mln::pixel<const I> pixel(const Image<I>& ima, const mln_point(I)& p)
     {
-      mln_assertion(*pix == i ++);
-      *pix = 5;
+      mln::pixel<const I> tmp(exact(ima), p);
+      return tmp;
     }
 
-  for_all(p)
-    mln_assertion(ima(p) == 5);
+    template <typename I>
+    mln::pixel<I> pixel(Image<I>& ima, const mln_point(I)& p)
+    {
+      mln::pixel<I> tmp(exact(ima), p);
+      return tmp;
+    }
 
-  pix.start();
-  mln_assertion(pix.is_valid());
-  pix.invalidate();
-  mln_assertion(! pix.is_valid());
-}
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::make
+
+} // end of namespace mln
+
+
+#endif // ! MLN_MAKE_PIXEL_HH

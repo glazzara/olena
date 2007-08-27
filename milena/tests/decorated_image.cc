@@ -39,7 +39,7 @@ unsigned count_read = 0, count_write = 0;
 template <typename I>
 struct counter
 {
-  void reading(const I& ima, const mln_psite(I)& p) const
+  void reading(const I&, const mln_psite(I)&) const
   {
     ++count_read;
   }

@@ -31,6 +31,8 @@
 /*! \file mln/level/transform.hh
  *
  * \brief Transform the contents of an image into another one.
+ *
+ * \todo Clean this file + overload with pixel iterators.
  */
 
 # include <mln/core/concept/image.hh>
@@ -110,7 +112,7 @@ namespace mln
 // 	po.start();
 // 	for_all(pi)
 // 	  {
-// 	    *po = lut(*pi);
+// 	    po.val() = lut(pi.val());
 // 	    po.next();
 // 	  }
 //       }

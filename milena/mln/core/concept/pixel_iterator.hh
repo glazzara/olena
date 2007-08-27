@@ -57,7 +57,7 @@ namespace mln
       only if the iterator is constructed on a mutable image:
 
       typedef lvalue;
-      lvalue operator*();
+      lvalue val();
     */
   protected:
     Pixel_Iterator();
@@ -70,7 +70,7 @@ namespace mln
   Pixel_Iterator<E>::Pixel_Iterator()
   {
 //     typedef mln_lvalue(E) lvalue;
-//     lvalue (E::*m)() = & E::operator*;
+//     lvalue (E::*m)() = & E::val;
 //     m = 0;
   }
 

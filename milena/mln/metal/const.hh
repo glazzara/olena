@@ -25,41 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixel.cc
- *
- * \brief Tests on mln::pixel.
- */
-
-#include <mln/core/image2d_b.hh>
-#include <mln/core/pixel.hh>
-#include <mln/metal/equal.hh>
+#ifndef MLN_METAL_CONST_HH
+# define MLN_METAL_CONST_HH
 
 
-int main()
+# define mlc_const(T) typename mln::metal::const_< T >::ret
+
+
+namespace mln
 {
-  using namespace mln;
 
-  typedef image2d_b<int> I;
-  I ima(3, 3);
-
+  namespace metal
   {
-    pixel<I> pxl(ima, make::point2d(1, 1));
-    pxl.val() = 51;
-    mln_assertion(ima.at(1, 1) == 51);
-  }
 
-  {
-    pixel<const I> pxl(ima, make::point2d(1, 1));
-    ima.at(1, 1) = 51;
-    mln_assertion(pxl.val() == 51);
+    template <typename T>
+    struct const_
+    {
+      typedef const T ret;
+    };
 
-    // hopefully the code below does not compile:
-    // pxl.val() = 0;
-    // assignment of read-only location
-  }
+    template <typename T>
+    struct const_< const T >
+    {
+      typedef const T ret;
+    };
 
-  {
-    mln::metal::equal< mln_image_(pixel<I>), I >::check();
-    mln::metal::equal< mln_image_(pixel<const I>), const I >::check();
-  }
-}
+  } // end of namespace mln::metal
+
+} // end of namespace mln
+
+
+#endif // ! MLN_METAL_CONST_HH

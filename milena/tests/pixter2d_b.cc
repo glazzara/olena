@@ -25,14 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixel.cc
+/*! \file tests/pixter2d_b.cc
  *
- * \brief Tests on mln::pixel.
+ * \brief Tests on mln::fwd_pixter2d_b.
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/pixel.hh>
-#include <mln/metal/equal.hh>
+
+
+const unsigned size = 20;
+const int v = 51;
+
+
+template <typename I>
+void test_fill(I& ima)
+{
+  mln_pixter(I) pxl(ima);
+  unsigned i = 0;
+  for_all(pxl)
+    {
+      ++i;
+      pxl.val() = v;
+    }
+  mln_assertion(i == size * size);
+  mln_assertion(! pxl.is_valid());
+
+  mln_piter(I) p(ima.domain());
+  for_all(p)
+    mln_assertion(ima(p) == v);
+}
+
+
+template <typename I>
+void test_const(const I& imac, I& ima)
+{
+  {
+    mln_pixter(const I) pxl(imac); // const is mandatory
+    pxl.start();
+    mln_assertion(pxl.val() == v);
+    // pxl.val() = v; // error is OK since pixter on 'const I' 
+  }
+  {
+    // mln_pixter(I) pxl_(imac); // error is OK since mutable I but const imac
+    mln_pixter(I) pxl(ima);
+    pxl.start();
+    pxl.val() = 2 * pxl.val();
+    mln_assertion(pxl.val() == 2 * v);
+  }
+  {
+    mln_pixter(const I) pxl(ima); // const promotion is OK
+    pxl.start();
+    mln_assertion(pxl.val() == 2 * v);
+    // pxl.val() = v; // error is OK since pixter on 'const I' 
+  }
+}
+
 
 
 int main()
@@ -40,26 +87,8 @@ int main()
   using namespace mln;
 
   typedef image2d_b<int> I;
-  I ima(3, 3);
+  I ima(size, size);
 
-  {
-    pixel<I> pxl(ima, make::point2d(1, 1));
-    pxl.val() = 51;
-    mln_assertion(ima.at(1, 1) == 51);
-  }
-
-  {
-    pixel<const I> pxl(ima, make::point2d(1, 1));
-    ima.at(1, 1) = 51;
-    mln_assertion(pxl.val() == 51);
-
-    // hopefully the code below does not compile:
-    // pxl.val() = 0;
-    // assignment of read-only location
-  }
-
-  {
-    mln::metal::equal< mln_image_(pixel<I>), I >::check();
-    mln::metal::equal< mln_image_(pixel<const I>), const I >::check();
-  }
+  test_fill(ima);
+  test_const(ima, ima);
 }

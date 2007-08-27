@@ -62,9 +62,10 @@ namespace mln
     /*
       typedef  value;
       typedef rvalue;
-      typedef image;
+      typedef image; // is const or not
 
-      rvalue operator*() const;
+      rvalue val() const;
+      image& ima() const;
       mln_qlf_value(image)** address_() const;
     */
   protected:
@@ -80,13 +81,16 @@ namespace mln
     typedef mln_value(E) value;
     typedef mln_rvalue(E) rvalue;
 
-    rvalue (E::*m1)() const = & E::operator*;
+    rvalue (E::*m1)() const = & E::val;
     m1 = 0;
 
     typedef mln_image(E) image;
-
-    mln_qlf_value(image)** (E::*m2)() const = & E::address_;
+    // FIXME: check "without &"
+    image& (E::*m2)() const = & E::ima;
     m2 = 0;
+
+    mln_qlf_value(image)** (E::*m3)() const = & E::address_;
+    m3 = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

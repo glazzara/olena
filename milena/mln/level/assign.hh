@@ -80,7 +80,7 @@ namespace mln
 	mln_pixter(L) lhs(target);
 	mln_pixter(const R) rhs(data);
 	for_all_2(lhs, rhs)
-	  *lhs = *rhs;
+	  lhs.val() = rhs.val();
       }
 
     } // end of namespace mln::level::impl

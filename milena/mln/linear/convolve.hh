@@ -46,10 +46,13 @@ namespace mln
   namespace linear
   {
 
-    /*! Convolution of image \p input by the weighted window \p win.
+    /*! Convolution of image \p input by the weighted window \p w_win.
      *
      * \warning Computation of \p output(p) is performed with the
      * value type of \p output.
+     *
+     * \warning The weighted window is used as-is, considering that
+     * its symmetrization is handled by the client.
      *
      * \pre output.domain = input.domain
      */
@@ -97,26 +100,29 @@ namespace mln
  	mln_pixter(O)          p_out(output);
 
 	mln_pixter(const I)    p(input);
-	mln_qixter(const I, W) q(input, w_win, p);
+	mln_qixter(const I, W) q(p, w_win);
 
  	for_all_2(p, p_out)
 	  {
 	    mln_value(O) v = 0;
 	    unsigned i = 0;
 	    for_all(q)
-	      v += w_win.w(i++) * *q;
- 	    *p_out = v;
+	      v += w_win.w(i++) * q.val();
+ 	    p_out.val() = v;
 	  }
       }
 
     } // end of namespace mln::linear::impl
+
+
+    // Facade.
 
     template <typename I, typename W, typename O>
     void convolve(const Image<I>& input, const Weighted_Window<W>& w_win,
 		  Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::convolve(exact(input), - exact(w_win), exact(output));
+      impl::convolve(exact(input), exact(w_win), exact(output));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -61,7 +61,14 @@ namespace mln
        *
        * \return A read-only value.
        */
-      rvalue operator*() const;
+      rvalue val() const;
+
+      /*! \brief Give the image of this generalized pixel.
+       *
+       * The constness of a pixel object is not transmitted to the
+       * underlying image.
+       */
+      image& ima() const;
 
       /*! \brief Give a hook to the value address.
        *

@@ -69,7 +69,7 @@ namespace mln
 	I& input = exact(input_);
 	mln_pixter(I) p(input);
 	for_all(p)
-	  *p = ++i;
+	  p.val() = ++i;
       }
 
     } // end of namespace mln::debug::impl

@@ -96,17 +96,19 @@ namespace mln
   bool
   pixel<I>::is_valid() const
   {
-    I& ima = this->image_;
-    if (this->value_ptr_ == 0 || ! ima.has_data())
+    if (this->value_ptr_ == 0 || ! this->image_.has_data())
       return false;
-    int o = this->value_ptr_ - ima.buffer();
-    mln_point(I) p = ima.point_at_offset(o);
-    return ima.owns_(p);
+    int o = this->value_ptr_ - this->image_.buffer();
+    mln_point(I) p = this->image_.point_at_offset(o);
+    return this->image_.owns_(p);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
+
+# include <mln/make/pixel.hh>
 
 
 #endif // ! MLN_CORE_PIXEL_HH

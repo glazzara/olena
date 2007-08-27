@@ -47,12 +47,12 @@ namespace mln
        */
       typedef void lvalue;
 
-      /*! \brief Dereference operator.
+      /*! \brief Give the pixel value.
        *
        * \return The current pixel value; this value cannot be
        * modified.
        */
-      lvalue operator*() const;
+      lvalue val() const;
 
     protected:
       Pixel_Iterator();

@@ -25,41 +25,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixel.cc
+/*! \file tests/dpoints_pixter.cc
  *
- * \brief Tests on mln::pixel.
+ * \brief Test on mln::dpoints_fwd_pixter.
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/pixel.hh>
-#include <mln/metal/equal.hh>
+#include <mln/core/win/rectangle2d.hh>
+#include <mln/make/pixel.hh>
+
+
+
+template <typename I, typename W>
+void test_fill(I& ima, const W& win)
+{
+  mln_piter(I) p(ima.domain());
+  mln_qixter(I, W) q(ima, win, p);
+  for_all(p)
+    {
+      unsigned i = 0;
+      for_all(q)
+	++i, q.val() = 51;
+      mln_assertion(i == 9);
+    }
+}
+
+
+// FIXME: test promotion and other constructions
+
+
+template <typename P, typename W>
+void test_pixel(const P& pxl, const W& win)
+{
+  mln_qixter(mln_image(P), W) q(pxl, win);
+  for_all(q)
+    q.val() = 2 * q.val();
+}
+
 
 
 int main()
 {
   using namespace mln;
 
+  border::thickness = 1;
   typedef image2d_b<int> I;
-  I ima(3, 3);
+  I ima(5, 5);
 
-  {
-    pixel<I> pxl(ima, make::point2d(1, 1));
-    pxl.val() = 51;
-    mln_assertion(ima.at(1, 1) == 51);
-  }
+  win::rectangle2d rect(3, 3);
+  point2d p = make::point2d(1, 1);
 
-  {
-    pixel<const I> pxl(ima, make::point2d(1, 1));
-    ima.at(1, 1) = 51;
-    mln_assertion(pxl.val() == 51);
-
-    // hopefully the code below does not compile:
-    // pxl.val() = 0;
-    // assignment of read-only location
-  }
-
-  {
-    mln::metal::equal< mln_image_(pixel<I>), I >::check();
-    mln::metal::equal< mln_image_(pixel<const I>), const I >::check();
-  }
+  test_fill(ima, rect);
+  test_pixel(make::pixel(ima, p), rect); 
 }

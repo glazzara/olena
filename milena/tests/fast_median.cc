@@ -57,16 +57,16 @@ namespace mln
     {
       mln_qixter(I, W) qix(input, win, p);
       for_all(qix)
-	std::cout << *qix << ' ';
-      std::cout << " :  " << qix.center_value() << std::endl;
+	std::cout << qix.val() << ' ';
+      std::cout << " :  " << qix.center_val() << std::endl;
     }
 
     {
       pixel<I> pix(input, p);
       mln_qixter(I, W) qix(input, win, pix);
       for_all(qix)
-	std::cout << *qix << ' ';
-      std::cout << " :  " << qix.center_value() << std::endl;
+	std::cout << qix.val() << ' ';
+      std::cout << " :  " << qix.center_val() << std::endl;
     }
   }
 

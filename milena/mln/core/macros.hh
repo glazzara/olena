@@ -94,6 +94,7 @@
 
 /// Shortcut to access the image type associated to T.
 # define mln_image(T)      typename T::image
+# define mln_image_(T)              T::image
 
 
 // l

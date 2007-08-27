@@ -71,14 +71,12 @@ namespace mln
 
     /*! \brief Constructor.
      *
-     * \param[in] image Image subject to iteration.
-     * \param[in] dps   Object that can provide a set of delta-points.
-     * \param[in] p_ref Center (generalized) pixel to iterate around.
+     * \param[in] pxl_ref Center (generalized) pixel to iterate around.
+     * \param[in] dps     Object that can provide a set of delta-points.
      */
     template <typename Dps, typename Pref>
-    dpoints_fwd_pixter(I& image,
-		       const Dps& dps,
-		       const Generalized_Pixel<Pref>& p_ref);
+    dpoints_fwd_pixter(const Generalized_Pixel<Pref>& pxl_ref,
+		       const Dps& dps);
 
     /// Start an iteration.
     void start();
@@ -97,7 +95,7 @@ namespace mln
     void update();
 
     /// The value around which this iterator moves.
-    const mln_value(I)& center_value() const;
+    const mln_value(I)& center_val() const;
 
   private:
 
@@ -140,23 +138,23 @@ namespace mln
     init_(dps);
   }
 
-
   template <typename I>
   template <typename Dps, typename Pref>
-  dpoints_fwd_pixter<I>::dpoints_fwd_pixter(I& image,
-					    const Dps& dps,
-					    const Generalized_Pixel<Pref>& p_ref)
-    : super_(image)
+  dpoints_fwd_pixter<I>::dpoints_fwd_pixter(const Generalized_Pixel<Pref>& pxl_ref_,
+					    const Dps& dps)
+    : super_(internal::force_exact<Pref>(pxl_ref_).ima())
   {
-    mln_precondition(image.has_data());
+    const Pref& pxl_ref = internal::force_exact<Pref>(pxl_ref_);
+    mln_precondition(pxl_ref.ima().has_data());
     p_ref_ = 0;
-    value_ref_ = internal::force_exact<Pref>(p_ref).address_();
+    // potential promotion from (T**) to (const T**) shall be forced:
+    value_ref_ = (mln_qlf_value(I)**)(void*)(pxl_ref.address_());
     init_(dps);
   }
 
   template <typename I>
   const mln_value(I)&
-  dpoints_fwd_pixter<I>::center_value() const
+  dpoints_fwd_pixter<I>::center_val() const
   {
     mln_invariant(value_ref_ != 0 || p_ref_ != 0);
     if (p_ref_)

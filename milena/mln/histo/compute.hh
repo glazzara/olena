@@ -71,7 +71,7 @@ namespace mln
 	data<mln_vset(I)> h(input.values());
 	mln_pixter(const I) p(input);
 	for_all(p)
-	  ++h(*p);
+	  ++h(p.val());
 	return h;
       }
 
