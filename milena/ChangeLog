@@ -1,5 +1,24 @@
 2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add 'decorated image' morpher.
+
+	* mln/core/decorated_image.hh: New.
+	* mln/core/internal/image_adaptor.hh (adaptee): New.
+	* mln/metal/unconst.hh: New.
+	* mln/metal/vec.hh (vec): New ctors.
+	(operator==): New.
+	* mln/metal/make: New directory.
+	* mln/metal/make/vec.hh: New.
+	* mln/value/proxy: New.
+	* mln/value/stack.hh (helper_stack_image_lvalue_): New.
+	(read_, write_): New.
+	(operator()): Fix.
+	(stack): New overload for n=2 and I mutable.
+	* tests/decorated_image.cc: New.
+	* tests/stack.cc: Augment.
+
+2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Handle const promotion for morphers.
 
 	* mln/core/internal/image_adaptor.hh (operator I): New.

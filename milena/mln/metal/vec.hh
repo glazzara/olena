@@ -47,6 +47,9 @@ namespace mln
       enum { dim = n };
       typedef T coord;
 
+      vec();
+      vec(T (&values)[n]);
+
       T& operator[](unsigned i);
       T  operator[](unsigned i) const;
     
@@ -59,7 +62,23 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const vec<n,T>& v);
 
 
+    template <unsigned n, typename T>
+    bool operator==(const vec<n,T>& lhs, const vec<n,T>& rhs);
+
+
 # ifndef MLN_INCLUDE_ONLY
+ 
+    template <unsigned n, typename T>
+    vec<n,T>::vec()
+    {
+    }
+
+    template <unsigned n, typename T>
+    vec<n,T>::vec(T (&values)[n])
+    {
+      for (unsigned i = 0; i < n; ++i)
+	coord_[i] = values[i];
+    }
 
     template <unsigned n, typename T>
     T&
@@ -76,7 +95,9 @@ namespace mln
       mln_precondition(i < n);
       return coord_[i];
     }
-    
+
+    // operators
+
     template <unsigned n, typename T>
     std::ostream& operator<<(std::ostream& ostr, const vec<n,T>& v)
     {
@@ -86,12 +107,24 @@ namespace mln
       return ostr << ']';
     }
 
+    template <unsigned n, typename T>
+    bool operator==(const vec<n,T>& lhs, const vec<n,T>& rhs)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	if (lhs[i] != rhs[i])
+	  return false;
+      return true;
+    }
+
 # endif // ! MLN_INCLUDE_ONLY
 
   
   } // end of namespace mln::metal
   
 } // end of namespace mln
+
+
+# include <mln/metal/make/vec.hh>
 
 
 #endif // ! MLN_CORE_METAL_VEC_HH

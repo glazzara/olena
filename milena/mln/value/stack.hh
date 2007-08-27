@@ -36,6 +36,7 @@
 # include <mln/core/internal/image_base.hh>
 # include <mln/metal/vec.hh>
 # include <mln/value/set.hh>
+# include <mln/value/proxy.hh>
 
 
 namespace mln
@@ -43,6 +44,37 @@ namespace mln
 
   namespace value
   {
+
+    // Fwd decl.
+    template <unsigned n, typename I> struct stack_image;
+
+
+    namespace internal
+    {
+
+      template <unsigned n, typename I>
+      struct helper_stack_image_lvalue_
+      {
+	typedef value::proxy< stack_image<n,I> > ret;
+	static ret make(stack_image<n,I>& ima, const mln_psite(I)& p)
+	{
+	  ret tmp(ima, p);
+	  return tmp;
+	}
+      };
+
+      template <unsigned n, typename I>
+      struct helper_stack_image_lvalue_< n, const I >
+      {
+	typedef metal::vec<n, mln_value(I)> ret;
+	static ret make(stack_image<n, const I>& ima, const mln_psite(I)& p)
+	{
+	  return ima.read_(p);
+	}
+      };
+
+    } // end of namespace mln::value::internal
+
 
     /*! \brief FIXME
      *
@@ -63,7 +95,7 @@ namespace mln
       typedef value rvalue;
 
       /// Return type of read-write access.
-      typedef void lvalue; // FIXME
+      typedef typename internal::helper_stack_image_lvalue_<n,I>::ret lvalue;
 
       /// Value set associated type.
       typedef mln::value::set<value> vset;
@@ -84,9 +116,11 @@ namespace mln
 
       /// Read-only access of pixel value at point site \p p.
       rvalue operator()(const psite& p) const;
+      value read_(const psite& p) const;
 
       /// Read-write access of pixel value at point site \p p.
-      void operator()(const psite&);
+      lvalue operator()(const psite&);
+      void write_(const psite& p, const value& v);
 
       /// Give the set of values of the image.
       const vset& values() const;
@@ -106,20 +140,17 @@ namespace mln
 
 
     template <typename I>
-    stack_image<2,const I>
-    stack(const Image<I>& ima1, const Image<I>& ima2)
-    {
-      mln_precondition(exact(ima1).domain() == exact(ima2).domain());
-      metal::vec<2, const I*> imas;
-      imas[0] = & exact(ima1);
-      imas[1] = & exact(ima2);
-      stack_image<2, const I> tmp(imas);
-      return tmp;
-    }
+    stack_image<2, const I>
+    stack(const Image<I>& ima1, const Image<I>& ima2);
   
+    template <typename I>
+    stack_image<2, I>
+    stack(Image<I>& ima1, Image<I>& ima2);
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    // stack_image<n, I>
 
     template <unsigned n, typename I>
     stack_image<n,I>::stack_image(const metal::vec<n,I*>& imas)
@@ -158,7 +189,7 @@ namespace mln
 
     template <unsigned n, typename I>
     metal::vec<n, mln_value(I)>
-    stack_image<n,I>::operator()(const psite& p) const
+    stack_image<n,I>::read_(const psite& p) const
     {
       mln_precondition(this->owns_(p));
       metal::vec<n, mln_value(I)> tmp;
@@ -168,10 +199,27 @@ namespace mln
     }
 
     template <unsigned n, typename I>
-    void
-    stack_image<n,I>::operator()(const psite&)
+    metal::vec<n, mln_value(I)>
+    stack_image<n,I>::operator()(const psite& p) const
     {
-      mln_invariant(0); // FIXME: Turn into a compile-time error...
+      return read_(p);
+    }
+
+    template <unsigned n, typename I>
+    void
+    stack_image<n,I>::write_(const psite& p, const value& v)
+    {
+      mln_precondition(this->owns_(p));
+      // FIXME!!!
+      for (unsigned i = 0; i < n; ++i)
+	imas_[i]->operator()(p) = v[i];
+    }
+
+    template <unsigned n, typename I>
+    typename stack_image<n,I>::lvalue
+    stack_image<n,I>::operator()(const psite& p)
+    {
+      return internal::helper_stack_image_lvalue_<n,I>::make(*this, p);
     }
 
     template <unsigned n, typename I>
@@ -181,6 +229,32 @@ namespace mln
       return vset::the();
     }
   
+    // stack(..)
+
+    template <typename I>
+    stack_image<2, const I>
+    stack(const Image<I>& ima1, const Image<I>& ima2)
+    {
+      mln_precondition(exact(ima1).domain() == exact(ima2).domain());
+      metal::vec<2, const I*> imas;
+      imas[0] = & exact(ima1);
+      imas[1] = & exact(ima2);
+      stack_image<2, const I> tmp(imas);
+      return tmp;
+    }
+
+    template <typename I>
+    stack_image<2, I>
+    stack(Image<I>& ima1, Image<I>& ima2)
+    {
+      mln_precondition(exact(ima1).domain() == exact(ima2).domain());
+      metal::vec<2, I*> imas;
+      imas[0] = & exact(ima1);
+      imas[1] = & exact(ima2);
+      stack_image<2, I> tmp(imas);
+      return tmp;
+    }
+
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::value

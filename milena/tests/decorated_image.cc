@@ -25,15 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/stack.cc
+/*! \file tests/decorated_image.cc
  *
- * \brief Tests on mln::value::stack.
+ * \brief Tests on mln::decorated_image.
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/value/stack.hh>
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
+#include <mln/core/decorated_image.hh>
+
+
+unsigned count_read = 0, count_write = 0;
+
+template <typename I>
+struct counter
+{
+  void reading(const I& ima, const mln_psite(I)& p) const
+  {
+    ++count_read;
+  }
+  void writing(I&, const mln_psite(I)&, const mln_value(I)&)
+  {
+    ++count_write;
+  }
+};
 
 
 int main()
@@ -41,14 +55,13 @@ int main()
   using namespace mln;
 
   typedef image2d_b<int> I;
-
-  box2d b = make::box2d(1, 1);
-  image2d_b<int> ima5(b), ima1(b);
-
+  I ima(1, 1);
   point2d p = make::point2d(0, 0);
-  metal::vec<2, int> v = metal::make::vec(5, 1);
 
-  value::stack(ima5, ima1)(p) = v;
-  mln_assertion(value::stack(ima5, ima1)(p) == v);
-  mln_assertion(ima5(p) == 5 && ima1(p) == 1);
+  decorated_image< I, counter<I> > ima_ = decorate(ima, counter<I>());
+  ima_(p) = ima_(p) = 51;
+  mln_assertion(count_read == 1 && count_write == 2);
+
+  const I& imac = ima;
+  decorated_image< const I, counter<I> > cima_ = decorate(imac, counter<I>());
 }

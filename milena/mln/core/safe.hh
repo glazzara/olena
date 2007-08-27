@@ -80,7 +80,7 @@ namespace mln
 
   template <typename I>
   safe_image<I>::safe_image(I& ima, const mln_value(I)& default_value)
-    : super_(exact(ima)),
+    : super_(ima),
       default_value_(default_value)
   {
   }

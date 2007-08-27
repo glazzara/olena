@@ -25,30 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/stack.cc
- *
- * \brief Tests on mln::value::stack.
- */
-
-#include <mln/core/image2d_b.hh>
-#include <mln/value/stack.hh>
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
+#ifndef MLN_METAL_UNCONST_HH
+# define MLN_METAL_UNCONST_HH
 
 
-int main()
+# define mlc_unconst(T) typename mln::metal::unconst< T >::ret
+
+
+namespace mln
 {
-  using namespace mln;
 
-  typedef image2d_b<int> I;
+  namespace metal
+  {
 
-  box2d b = make::box2d(1, 1);
-  image2d_b<int> ima5(b), ima1(b);
+    template <typename T>
+    struct unconst
+    {
+      typedef T ret;
+    };
 
-  point2d p = make::point2d(0, 0);
-  metal::vec<2, int> v = metal::make::vec(5, 1);
+    template <typename T>
+    struct unconst< const T >
+    {
+      typedef T ret;
+    };
 
-  value::stack(ima5, ima1)(p) = v;
-  mln_assertion(value::stack(ima5, ima1)(p) == v);
-  mln_assertion(ima5(p) == 5 && ima1(p) == 1);
-}
+  } // end of namespace mln::metal
+
+} // end of namespace mln
+
+
+#endif // ! MLN_METAL_UNCONST_HH

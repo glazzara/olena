@@ -92,6 +92,12 @@ namespace mln
       /// Convertion to the underlying (adapted) image.
       operator I() const;
 
+      /// Give the adaptee (underlying adapted) image.
+      const I& adaptee() const;
+
+      /// Give the adaptee (underlying adapted) image.
+      I& adaptee();
+
     protected:
       I& adaptee_;
 
@@ -102,6 +108,20 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    template <typename I, typename E, typename S>
+    const I&
+    image_adaptor_<I,E,S>::adaptee() const
+    {
+      return adaptee_;
+    }
+
+    template <typename I, typename E, typename S>
+    I&
+    image_adaptor_<I,E,S>::adaptee()
+    {
+      return adaptee_;
+    }
 
     template <typename I, typename E, typename S>
     image_adaptor_<I,E,S>::image_adaptor_(I& adaptee)
