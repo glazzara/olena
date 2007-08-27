@@ -78,7 +78,7 @@ namespace mln
       bool owns_(const psite& p) const;
 
       /// Give the definition domain.
-      const S& domain() const;
+      const mln_pset(I)& domain() const;
 
       /// Give the set of values.
       const vset& values() const;
@@ -89,6 +89,8 @@ namespace mln
       /// Read-write access of pixel value at point site \p p.
       lvalue operator()(const psite& p);
 
+      /// Convertion to the underlying (adapted) image.
+      operator I() const;
 
     protected:
       I& adaptee_;
@@ -97,11 +99,15 @@ namespace mln
       image_adaptor_(I& adaptee);
     };
 
-    // FIXME: image_const_adaptor_
-
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    template <typename I, typename E, typename S>
+    image_adaptor_<I,E,S>::image_adaptor_(I& adaptee)
+      : adaptee_(adaptee)
+    {
+    }
 
     template <typename I, typename E, typename S>
     bool image_adaptor_<I,E,S>::has_data() const
@@ -117,7 +123,7 @@ namespace mln
     }
 
     template <typename I, typename E, typename S>
-    const S&
+    const mln_pset(I)&
     image_adaptor_<I,E,S>::domain() const
     {
       mln_precondition(exact(this)->has_data());
@@ -148,9 +154,10 @@ namespace mln
     }
 
     template <typename I, typename E, typename S>
-    image_adaptor_<I,E,S>::image_adaptor_(I& adaptee)
-      : adaptee_(adaptee)
+    image_adaptor_<I,E,S>::operator I() const
     {
+      mln_precondition(exact(this)->has_data());
+      return adaptee_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

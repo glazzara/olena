@@ -1,5 +1,29 @@
 2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Handle const promotion for morphers.
+
+	* mln/core/internal/image_adaptor.hh (operator I): New.
+	(pset_): Remove; uncompatible with temporary pset.
+	(domain): Change sig.
+	* mln/core/inplace.hh: New.
+	* tests/line2d.cc: Augment; use inplace.
+	* mln/core/sub_image.hh: New.
+	* tests/sub_image.cc: New.
+
+	* mln/core/safe.hh (safe): New overload; const version.
+	(safe_image): Update.
+	(default_value): New.
+	(operator safe_image<const I>): New.
+	* tests/safe_image.cc: Augment.
+	* mln/core/queue_p.hh (push): Fix missing return.
+	* mln/core/internal/image_base.hh: Add doc.
+	* mln/core/pset_if_piter.hh (fixme): Remove include; useless.
+	* mln/core/vec_p_piter.hh: Likewise.
+	* mln/make/box2d: Change arg list (all min first).
+	* tests/to_image.cc: Update.
+
+2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Renaming.
 
 	* mln/core/fimage.hh,

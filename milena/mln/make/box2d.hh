@@ -60,16 +60,16 @@ namespace mln
      * \overload
      *
      * \param[in] min_row Index of the top most row.
-     * \param[in] max_row Index of the botton most row.
      * \param[in] min_col Index of the left most column.
+     * \param[in] max_row Index of the botton most row.
      * \param[in] max_col Index of the right most column.
      *
      * \pre \p max_row >= \p min_row and \p max_col >= \p min_col.
      *
      * \return A 2D box.
      */
-    mln::box2d box2d(int min_row, int max_row,
-		     int min_col, int max_col);
+    mln::box2d box2d(int min_row, int min_col,
+		     int max_row, int max_col);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -82,8 +82,8 @@ namespace mln
       return tmp;
     }
 
-    mln::box2d box2d(int min_row, int max_row,
-		     int min_col, int max_col)
+    mln::box2d box2d(int min_row, int min_col,
+		     int max_row, int max_col)
     {
       mln_precondition(max_row >= min_row && max_col >= min_col);
       mln::box2d tmp(make::point2d(min_row, min_col),

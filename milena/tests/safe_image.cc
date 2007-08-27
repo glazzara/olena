@@ -32,7 +32,6 @@
 
 #include <mln/core/image2d_b.hh>
 #include <mln/core/safe.hh>
-#include <mln/level/paste.hh>
 
 
 int main()
@@ -41,9 +40,30 @@ int main()
 
   typedef image2d_b<int> I;
   I ima(1, 1);
-  safe_image<I> ima_ = safe(ima);
+  point2d
+    in = make::point2d(0, 0),
+    out = make::point2d(-999, -999);
 
-  point2d p = make::point2d(-5, -1);
-  ima_(p) = 0;
-  level::paste(ima, ima_);
+  {
+    safe_image<I> ima_ = safe(ima, 7);
+
+    ima_(in) = 51;
+    mln_assertion(ima_(in) == 51);
+    
+    ima_(out) = 0;
+    mln_assertion(ima_(out) == 7);
+
+    // test "image_adaptor_<..>::operator I() const"
+    I ima2 = ima_;
+    const I ima3 = ima_;
+  }
+
+  {
+    safe_image<const I> ima_ = safe(ima, 7);
+
+    ima(in) = 51;
+    mln_assertion(ima_(in) == 51);
+    mln_assertion(ima_(out) == 7);
+  }
+
 }

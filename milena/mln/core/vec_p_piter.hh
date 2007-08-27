@@ -34,7 +34,6 @@
  */
 
 # include <mln/core/vec_p.hh>
-# include <mln/core/internal/fixme.hh>
 
 
 namespace mln

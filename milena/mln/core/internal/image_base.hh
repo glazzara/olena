@@ -43,6 +43,11 @@ namespace mln
   {
 
 
+    /*! \brief Return the lvalue type when an image with type \c I is
+     *  morphed.
+     *
+     * \internal
+     */
     template <typename I>
     struct morpher_lvalue_
     {
@@ -56,7 +61,10 @@ namespace mln
     };
 
 
-
+    /*! \brief Selector for image inheritance (fast or regular).
+     *
+     * \internal
+     */
     template <typename Is_fast, typename E>
     struct select_image_concept_;
 
@@ -77,8 +85,10 @@ namespace mln
      * \internal
      */
     template <typename S, typename E>
-    struct image_base_ : public select_image_concept_< typename trait::is_fast<E>::ret,
-						       E >
+    struct image_base_
+
+      : public select_image_concept_< typename trait::is_fast<E>::ret,
+				      E >
     {
       /// Point_Set associated type.
       typedef S pset;
@@ -113,12 +123,20 @@ namespace mln
       /// Give the number of points of the image domain.
       std::size_t npoints() const;
 
+
+      // FIXME: Add owns_(p) based on has(p)?
+
     protected:
       image_base_();
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    template <typename S, typename E>
+    image_base_<S,E>::image_base_()
+    {
+    }
 
     template <typename S, typename E>
     bool
@@ -142,11 +160,6 @@ namespace mln
     {
       mln_precondition(exact(this)->has_data());
       return exact(this)->domain().npoints();      
-    }
-
-    template <typename S, typename E>
-    image_base_<S,E>::image_base_()
-    {
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -37,14 +37,17 @@ namespace mln
   // FIXME: Doc!
 
   template <typename I>
-  struct safe_image : public internal::image_adaptor_< I, safe_image<I> >
+  class safe_image : public internal::image_adaptor_< I, safe_image<I> >
   {
-    typedef internal::image_adaptor_< I, safe_image<I> > super;
+    typedef internal::image_adaptor_< I, safe_image<I> > super_;
+  public:
 
-    safe_image(Image<I>& ima);
+    safe_image(I& ima, const mln_value(I)& default_value);
 
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
-    mln_lvalue(I) operator()(const mln_psite(I)& p);
+
+    typedef typename super_::lvalue lvalue;
+    lvalue operator()(const mln_psite(I)& p);
 
     template <typename U>
     struct change_value
@@ -52,20 +55,33 @@ namespace mln
       typedef safe_image<mln_ch_value(I, U)> ret;
     };
 
+    /// Const promotion via convertion.
+    operator safe_image<const I>() const;
+
+  protected:
+    mln_value(I) default_value_;
   };
 
 
 
   template <typename I>
-  safe_image<I> safe(Image<I>& ima);
+  safe_image<I> safe(Image<I>& ima,
+		     mln_value(I) default_value = mln_value(I)());
+
+  template <typename I>
+  safe_image<const I> safe(const Image<I>& ima,
+			   mln_value(I) default_value = mln_value(I)());
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+  // safe_image<I>
+
   template <typename I>
-  safe_image<I>::safe_image(Image<I>& ima)
-    : super(exact(ima))
+  safe_image<I>::safe_image(I& ima, const mln_value(I)& default_value)
+    : super_(exact(ima)),
+      default_value_(default_value)
   {
   }
 
@@ -73,26 +89,44 @@ namespace mln
   mln_rvalue(I)
   safe_image<I>::operator()(const mln_psite(I)& p) const
   {
-    static mln_value(I) tmp;
     if (! this->owns_(p))
-      return tmp;
+      return default_value_;
     return this->adaptee_(p);
   }
 
   template <typename I>
-  mln_lvalue(I)
+  typename safe_image<I>::lvalue
   safe_image<I>::operator()(const mln_psite(I)& p)
   {
-    static mln_value(I) tmp;
+    static mln_value(I) forget_it_;
     if (! this->owns_(p))
-      return tmp;
+      // so default_value_ is returned but cannot be modified
+      return forget_it_ = default_value_;
     return this->adaptee_(p);
   }
 
   template <typename I>
-  safe_image<I> safe(Image<I>& ima)
+  safe_image<I>::operator safe_image<const I>() const
   {
-    safe_image<I> tmp(ima);
+    safe_image<const I> tmp(this->adaptee_, default_value_);
+    return tmp;
+  }
+
+  // safe
+
+  template <typename I>
+  safe_image<I> safe(Image<I>& ima,
+		     mln_value(I) default_value)
+  {
+    safe_image<I> tmp(exact(ima), default_value);
+    return tmp;
+  }
+
+  template <typename I>
+  safe_image<const I> safe(const Image<I>& ima,
+			   mln_value(I) default_value)
+  {
+    safe_image<const I> tmp(exact(ima), default_value);
     return tmp;
   }
 

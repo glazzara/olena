@@ -25,98 +25,99 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_IMAGE_IF_HH
-# define MLN_CORE_IMAGE_IF_HH
-
-/*! \file mln/core/image_if.hh
- *
- * \brief Definition of a base class for image adaptors.
- */
+#ifndef MLN_CORE_SUB_IMAGE_HH
+# define MLN_CORE_SUB_IMAGE_HH
 
 # include <mln/core/internal/image_adaptor.hh>
-# include <mln/core/pset_if.hh>
 
 
 namespace mln
 {
 
-  /*! \brief A base class for image adaptors.
-   *
-   */
-  template <typename I, typename F>
-  struct image_if : public internal::image_adaptor_< I,
-						     image_if<I,F>,
-						     pset_if<mln_pset(I),F>  >
+  // FIXME: Doc!
+
+  template <typename I, typename S>
+  class sub_image : public internal::image_adaptor_< I,
+						     sub_image<I,S>,
+						     S >
   {
-    /// Point_Set associated type.
-    typedef pset_if<mln_pset(I), F> pset;
+    typedef internal::image_adaptor_<I, sub_image<I,S>, S> super_;
+  public:
 
-    /// Constructor from an \p adaptee image.
-    image_if(I& adaptee, const F& f);
+    sub_image(I& ima, const S& pset);
 
-    /// Test if a pixel value is accessible at \p p.
     bool owns_(const mln_psite(I)& p) const;
 
-    /// Give the definition domain.
-    const pset& domain() const;
-
-    template <typename T>
+    template <typename U>
     struct change_value
     {
-      typedef image_if<mln_ch_value(I,T), F> ret;
+      typedef internal::fixme ret;
     };
 
+    const S& domain() const;
+
     /// Const promotion via convertion.
-    operator image_if<const I, F>() const;
+    operator sub_image<const I, S>() const;
 
   protected:
-
-    pset pset_;
-    F f_;
-
-    typedef image_if<I,F> self_;
-    typedef internal::image_adaptor_< I, self_, pset > super_;
+    const S& pset_;
   };
 
 
 
-  template <typename I, typename F>
-  image_if<I, F>
-  operator | (Image<I>& ima, const Function_p2b<F>& f)
-  {
-    image_if<I, F> tmp(exact(ima), exact(f));
-    return tmp;
-  }
+  template <typename I, typename S>
+  sub_image<const I, S> operator|(const Image<I>& ima, const Point_Set<S>& pset);
+
+  template <typename I, typename S>
+  sub_image<I, S> operator|(Image<I>& ima, const Point_Set<S>& pset);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename I, typename F>
-  image_if<I,F>::image_if(I& adaptee, const F& f)
-    : super_(adaptee),
-      pset_(adaptee.domain() | f),
-      f_(f)
+  template <typename I, typename S>
+  sub_image<I,S>::sub_image(I& ima, const S& pset)
+    : super_(ima),
+      pset_(pset)
   {
   }
 
-  template <typename I, typename F>
+  template <typename I, typename S>
   bool
-  image_if<I,F>::owns_(const mln_psite(I)& p) const
+  sub_image<I,S>::owns_(const mln_psite(I)& p) const
   {
-    return pset_.has(p);
+    return this->domain().has(p);
   }
 
-  template <typename I, typename F>
-  const pset_if<mln_pset(I), F>&
-  image_if<I,F>::domain() const
+  template <typename I, typename S>
+  const S&
+  sub_image<I,S>::domain() const
   {
     return pset_;
   }
 
-  template <typename I, typename F>
-  image_if<I,F>::operator image_if<const I, F>() const
+  template <typename I, typename S>
+  sub_image<I,S>::operator sub_image<const I, S>() const
   {
-    image_if<const I, F> tmp(this->adaptee_, this->f_);
+    sub_image<const I, S> tmp(this->adaptee_, this->pset_);
+    return tmp;
+  }
+
+  // operator
+
+  template <typename I, typename S>
+  sub_image<const I, S>
+  operator|(const Image<I>& ima, const Point_Set<S>& pset)
+  {
+    sub_image<const I, S> tmp(exact(ima), exact(pset));
+    return tmp;
+  }
+
+  template <typename I, typename S>
+  sub_image<I, S>
+  operator|(Image<I>& ima, const Point_Set<S>& pset)
+  {
+    sub_image<I, S> tmp(exact(ima), exact(pset));
     return tmp;
   }
 
@@ -125,4 +126,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_IMAGE_IF_HH
+#endif // ! MLN_CORE_SUB_IMAGE_HH

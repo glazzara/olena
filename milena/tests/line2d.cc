@@ -33,10 +33,13 @@
 #include <iterator>
 
 #include <mln/core/image2d_b.hh>
+#include <mln/core/sub_image.hh>
+#include <mln/core/inplace.hh>
 
 #include <mln/level/fill.hh>
 #include <mln/level/compare.hh>
 #include <mln/draw/line.hh>
+#include <mln/debug/println.hh>
 
 
 int main()
@@ -56,4 +59,10 @@ int main()
   level::paste(pw::cst(true) | l, ima2);
 
   mln_assertion(ima2 == ima);
+
+  image2d_b<bool> ima3(10,10);
+  level::fill(ima3, false);
+  level::fill(inplace(ima3 | l), true);
+
+  mln_assertion(ima3 == ima);
 }

@@ -196,6 +196,7 @@ namespace mln
 	vect_needs_update_ = true;
 	bb_needs_update_ = true;
       }
+    return *this;
   }
 
   template <typename P>
