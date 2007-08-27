@@ -25,57 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW_LINE_HH
-# define MLN_MAKE_W_WINDOW_LINE_HH
+#ifndef MLN_FUN_V2V_ID_HH
+# define MLN_FUN_V2V_ID_HH
 
-/*! \file mln/make/w_window_line.hh
+/*! \file mln/fun/id.hh
  *
- * \brief Routine to create an horizontal mln::w_window.
+ * \brief FIXME.
  */
 
-# include <mln/core/w_window.hh>
+# include <mln/fun/internal/selector.hh>
 
 
 namespace mln
 {
 
-  namespace make
+  namespace fun
   {
 
-    /*! \brief Create an horizontal centered and symmetrical
-     *  mln::w_window.
-     *
-     * The free parameter \c D is a type of delta-point. 
-     *
-     * \pre The window length \c L has to be odd.
-     *
-     * \return A window.
-     */
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L]);
+    namespace v2v
+    {
+
+      // FIXME: Doc!
+
+      template <typename T>
+      struct id
+	: fun::internal::selector_<T, T, id<T> >::ret
+      {
+	typedef T result;
+	T operator()(const T& t) const;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L])
-    {
-      mln_precondition(L % 2 == 1);
-      mln::w_window<D,W> w_win;
-      D dp = D::zero;
-      for (unsigned i = 0; i < L; ++i)
-	{
-	  dp[D::dim - 1] = i - L / 2;
-	  w_win.insert(w[i], dp);
-	}
-      return w_win;
-    }
+      template <typename T>
+      T
+      id<T>::operator()(const T& t) const
+      {
+	return t;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::make
+    } // end of namespace mln::fun::v2v
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_W_WINDOW_LINE_HH
+#endif // ! MLN_FUN_V2V_ID_HH

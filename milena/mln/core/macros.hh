@@ -148,6 +148,7 @@
 
 /// Shortcut to access the value type associated to T.
 # define mln_value(T)      typename T::value
+# define mln_value_(T)     T::value
 
 /// Shortcut to the kind of values for an image with type \c I.
 # define mln_value_kind(I) typename mln::value::props< mln_value(I) >::kind

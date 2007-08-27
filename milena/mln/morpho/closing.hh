@@ -25,68 +25,55 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LINEAR_LINE_X2_CONVOLVE_HH
-# define MLN_LINEAR_LINE_X2_CONVOLVE_HH
+#ifndef MLN_MORPHO_CLOSING_HH
+# define MLN_MORPHO_CLOSING_HH
 
-/*! \file mln/linear/line_x2_convolve.hh
+/*! \file mln/morpho/closing.hh
  *
- * \brief 2D convolution by a couple of line kernels.
+ * \brief Morphological closing.
  */
 
-# include <mln/linear/line_convolve.hh>
-# include <mln/core/t_image.hh>
-
+# include <mln/morpho/includes.hh>
 
 
 namespace mln
 {
 
-  namespace linear
+  namespace morpho
   {
 
-    /*! Convolution of an image \p input by two weighted line-shapes
-     *  windows.
+    /*! Morphological closing.
      *
-     * \warning Computation of \p output(p) is performed with the
-     * value type of \p output.
-     *
-     * \warning The weighted window is used as-is, considering that
-     * its symmetrization is handled by the client.
-     *
-     * \pre output.domain = input.domain
+     * This operator is e_{-B} o d_B. 
      */
-    template <typename I,
-	      typename W, unsigned Nr, unsigned Nc,
-	      typename O>
-    void line_x2_convolve(const Image<I>& input,
-			  W (&row_weights)[Nr], W (&col_weights)[Nc],
-			  Image<O>& output);
+    template <typename I, typename W, typename O>
+    void closing(const Image<I>& input, const Window<W>& win, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I,
-	      typename W, unsigned Nr, unsigned Nc,
-	      typename O>
-    void line_x2_convolve(const Image<I>& input,
-			  W (&row_weights)[Nr], W (&col_weights)[Nc],
-			  Image<O>& output)
+    template <typename I, typename W, typename O>
+    void closing(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
     {
-      // FIXME: Check 2D.
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      const I& input = exact(input_);
+      const W& win = exact(win_);
+      O& output = exact(output_);
 
-      O tmp(exact(output).domain());
-      linear::line_convolve(input, row_weights, tmp);
+      mln_precondition(output.domain() == input.domain());
+      mln_precondition(! win.is_empty());
 
-      t_image<O> swap_output = swap_coords(output, 0, 1);
-      linear::line_convolve(swap_coords(tmp, 0, 1), col_weights, swap_output);
+      O temp(input.domain());
+      dilation(input, win, temp);
+      erosion(temp, -win, output);
+
+      mln_postcondition(output >= input);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::linear
+  } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_LINEAR_LINE_X2_CONVOLVE_HH
+#endif // ! MLN_MORPHO_CLOSING_HH

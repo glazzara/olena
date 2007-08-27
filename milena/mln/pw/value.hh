@@ -86,7 +86,7 @@ namespace mln
     }
 
     // pw::value(ima)
-    
+     
     template <typename I>
     value_<I>
     value(const Image<I>& ima)

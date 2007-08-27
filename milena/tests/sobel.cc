@@ -32,12 +32,10 @@
 
 #include <mln/core/image2d_b.hh>
 #include <mln/value/int_u8.hh>
+#include <mln/level/saturate.hh>
 
 #include <mln/io/load_pgm.hh>
 #include <mln/io/save_pgm.hh>
-
-#include <mln/math/round_sat.hh>
-#include <mln/level/transform.hh>
 
 #include <mln/border/thickness.hh>
 #include <mln/linear/sobel.hh>
@@ -57,6 +55,6 @@ int main()
   image2d_b<int> tmp(lena.domain());
   linear::sobel(lena, tmp);
 
-  level::transform(tmp, math::round_sat_<int_u8>(), out);
+  level::saturate(tmp, out);
   io::save_pgm(out, "out.pgm");
 }

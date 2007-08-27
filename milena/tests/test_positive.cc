@@ -25,57 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW_LINE_HH
-# define MLN_MAKE_W_WINDOW_LINE_HH
-
-/*! \file mln/make/w_window_line.hh
+/*! \file tests/test_positive.cc
  *
- * \brief Routine to create an horizontal mln::w_window.
+ * \brief Tests on mln::test::positive.
  */
 
-# include <mln/core/w_window.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/level/fill.hh>
+#include <mln/test/positive.hh>
 
 
-namespace mln
+// both test routines can be called with a p2b function
+
+template <typename F>
+void test_p2v(const mln::Function_p2v<F>&)
 {
+}
 
-  namespace make
-  {
-
-    /*! \brief Create an horizontal centered and symmetrical
-     *  mln::w_window.
-     *
-     * The free parameter \c D is a type of delta-point. 
-     *
-     * \pre The window length \c L has to be odd.
-     *
-     * \return A window.
-     */
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L]);
+template <typename F>
+void test_v2b(const mln::Function_v2b<F>&)
+{
+}
 
 
-# ifndef MLN_INCLUDE_ONLY
 
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L])
-    {
-      mln_precondition(L % 2 == 1);
-      mln::w_window<D,W> w_win;
-      D dp = D::zero;
-      for (unsigned i = 0; i < L; ++i)
-	{
-	  dp[D::dim - 1] = i - L / 2;
-	  w_win.insert(w[i], dp);
-	}
-      return w_win;
-    }
+int main()
+{
+  using namespace mln;
+  typedef image2d_b<int> I;
 
-# endif // ! MLN_INCLUDE_ONLY
+  I ima(1,1);
+  level::fill(ima, 0);
 
-  } // end of namespace mln::make
+  test_v2b(fun::v2v::id<mln_value_(I)>() >= pw::cst(0));
 
-} // end of namespace mln
-
-
-#endif // ! MLN_MAKE_W_WINDOW_LINE_HH
+  // test2(fun::v2v::id<mln_value_(I)>() >= pw::cst(0));
+  // test::positive(ima);
+}

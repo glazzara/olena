@@ -53,6 +53,7 @@ namespace mln
      */
   protected:
     Function();
+    Function(const Function&);
   };
 
 
@@ -65,6 +66,7 @@ namespace mln
   {
   protected:
     Function_v2v();
+    Function_v2v(const Function_v2v&);
   };
 
 
@@ -77,6 +79,7 @@ namespace mln
   {
   protected:
     Function_i2v();
+    Function_i2v(const Function_i2v&);
   };
 
 
@@ -85,10 +88,25 @@ namespace mln
   /// Base class for implementation of function-objects from point to
   /// value.
   template <typename E>
-  struct Function_p2v : public Function_v2v<E>
+  struct Function_p2v : public virtual Function_v2v<E>
   {
   protected:
     Function_p2v();
+    Function_p2v(const Function_p2v&);
+  };
+
+
+  // Value -> bool.
+
+  /// Base class for implementation of function-objects from value to
+  /// bool.
+  template <typename E>
+  struct Function_v2b : public virtual Function_v2v<E>
+  {
+    typedef bool result;
+  protected:
+    Function_v2b();
+    Function_v2b(const Function_v2b&);
   };
 
 
@@ -97,11 +115,13 @@ namespace mln
   /// Base class for implementation of function-objects from point to
   /// bool.
   template <typename E>
-  struct Function_p2b : public Function_p2v<E>
+  struct Function_p2b : public Function_p2v<E>,
+			public Function_v2b<E>
   {
     typedef bool result;
   protected:
     Function_p2b();
+    Function_p2b(const Function_p2b&);
   };
 
 
@@ -114,6 +134,7 @@ namespace mln
   {
   protected:
     Function_p2p();
+    Function_p2p(const Function_p2p&);
   };
 
 
@@ -127,7 +148,17 @@ namespace mln
   }
 
   template <typename E>
+  Function<E>::Function(const Function<E>&)
+  {
+  }
+
+  template <typename E>
   Function_v2v<E>::Function_v2v()
+  {
+  }
+
+  template <typename E>
+  Function_v2v<E>::Function_v2v(const Function_v2v<E>&)
   {
   }
 
@@ -137,12 +168,47 @@ namespace mln
   }
 
   template <typename E>
+  Function_i2v<E>::Function_i2v(const Function_i2v<E>&)
+  {
+  }
+
+  template <typename E>
   Function_p2v<E>::Function_p2v()
   {
   }
 
   template <typename E>
+  Function_p2v<E>::Function_p2v(const Function_p2v<E>&)
+  {
+  }
+
+  template <typename E>
+  Function_v2b<E>::Function_v2b()
+  {
+  }
+
+  template <typename E>
+  Function_v2b<E>::Function_v2b(const Function_v2b<E>&)
+  {
+  }
+
+  template <typename E>
   Function_p2b<E>::Function_p2b()
+  {
+  }
+
+  template <typename E>
+  Function_p2b<E>::Function_p2b(const Function_p2b<E>&)
+  {
+  }
+
+  template <typename E>
+  Function_p2p<E>::Function_p2p()
+  {
+  }
+
+  template <typename E>
+  Function_p2p<E>::Function_p2p(const Function_p2p<E>&)
   {
   }
 

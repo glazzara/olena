@@ -25,57 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW_LINE_HH
-# define MLN_MAKE_W_WINDOW_LINE_HH
+#ifndef MLN_MORPHO_INCLUDES_HH
+# define MLN_MORPHO_INCLUDES_HH
 
-/*! \file mln/make/w_window_line.hh
+/*! \file mln/morpho/includes.hh
  *
- * \brief Routine to create an horizontal mln::w_window.
+ * \brief Basic list of includes for all files in mln/morpho/.
  */
 
-# include <mln/core/w_window.hh>
+
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/window.hh>
+
+# include <mln/accu/min.hh>
+# include <mln/accu/max.hh>
+
+# include <mln/arith/minus.hh>
+
+# include <mln/level/compare.hh>
+# include <mln/level/fill.hh>
+
+# include <mln/border/resize.hh>
+# include <mln/border/fill.hh>
+
+# include <mln/morpho/dilation.hh>
+# include <mln/morpho/erosion.hh>
 
 
-namespace mln
-{
 
-  namespace make
-  {
-
-    /*! \brief Create an horizontal centered and symmetrical
-     *  mln::w_window.
-     *
-     * The free parameter \c D is a type of delta-point. 
-     *
-     * \pre The window length \c L has to be odd.
-     *
-     * \return A window.
-     */
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L]);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L])
-    {
-      mln_precondition(L % 2 == 1);
-      mln::w_window<D,W> w_win;
-      D dp = D::zero;
-      for (unsigned i = 0; i < L; ++i)
-	{
-	  dp[D::dim - 1] = i - L / 2;
-	  w_win.insert(w[i], dp);
-	}
-      return w_win;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::make
-
-} // end of namespace mln
-
-
-#endif // ! MLN_MAKE_W_WINDOW_LINE_HH
+#endif // ! MLN_MORPHO_INCLUDES_HH

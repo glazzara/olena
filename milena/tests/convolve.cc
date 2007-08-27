@@ -63,7 +63,7 @@ int main()
 
   image2d_b<float> tmp(lena.domain());
   linear::convolve(lena, w, tmp);
-  level::transform(tmp, math::round_<int_u8>(), out);
+  level::transform(tmp, math::round<int_u8>(), out);
 
   io::save_pgm(out, "out.pgm");
 }

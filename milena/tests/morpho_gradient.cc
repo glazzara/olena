@@ -25,57 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW_LINE_HH
-# define MLN_MAKE_W_WINDOW_LINE_HH
-
-/*! \file mln/make/w_window_line.hh
+/*! \file tests/erosion.cc
  *
- * \brief Routine to create an horizontal mln::w_window.
+ * \brief Test on mln::morpho::erosion.
  */
 
-# include <mln/core/w_window.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/win/rectangle2d.hh>
+
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
+
+#include <mln/value/int_u8.hh>
+#include <mln/morpho/gradient.hh>
 
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  namespace make
-  {
+  win::rectangle2d rect(5, 5);
+  border::thickness = 2;
 
-    /*! \brief Create an horizontal centered and symmetrical
-     *  mln::w_window.
-     *
-     * The free parameter \c D is a type of delta-point. 
-     *
-     * \pre The window length \c L has to be odd.
-     *
-     * \return A window.
-     */
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L]);
+  image2d_b<int_u8>
+    lena = io::load_pgm("../img/tiny.pgm"),
+    out(lena.domain());
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L])
-    {
-      mln_precondition(L % 2 == 1);
-      mln::w_window<D,W> w_win;
-      D dp = D::zero;
-      for (unsigned i = 0; i < L; ++i)
-	{
-	  dp[D::dim - 1] = i - L / 2;
-	  w_win.insert(w[i], dp);
-	}
-      return w_win;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::make
-
-} // end of namespace mln
-
-
-#endif // ! MLN_MAKE_W_WINDOW_LINE_HH
+  morpho::gradient(lena, rect, out);
+  io::save_pgm(out, "out.pgm");
+}

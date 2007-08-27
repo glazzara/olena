@@ -54,6 +54,20 @@ namespace mln
     void plus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
 
 
+    /*! Point-wise addition of image \p rhs in image \p lhs.
+     *
+     * \param[in] lhs First operand image (subject to addition).
+     * \param[in,out] rhs Second operand image (to be added to \p lhs).
+     *
+     * This addition performs: \n
+     *   for all p of rhs.domain \n
+     *     lhs(p) += rhs(p)
+     *
+     * \pre \p rhs.domain <= \p lhs.domain
+     */
+    template <typename L, typename R>
+    void plus_inplace(Image<L>& lhs, const Image<R>& rhs);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -81,10 +95,29 @@ namespace mln
 	  op.val() = lp.val() + rp.val();
       }
 
+      template <typename L, typename R>
+      void plus_inplace_(Image<L>& lhs_, const Image<R>& rhs_)
+      {
+	L& lhs = exact(lhs_);
+	const R& rhs = exact(rhs_);
+	mln_piter(R) p(rhs.domain());
+	for_all(p)
+	  lhs(p) += rhs(p);
+      }
+
+      template <typename L, typename R>
+      void plus_inplace_(Fast_Image<L>& lhs, const Fast_Image<R>& rhs)
+      {
+	mln_pixter(L) lp(exact(lhs));
+	mln_pixter(const R) rp(exact(rhs));
+	for_all_2(rp, lp)
+	  lp.val() += rp.val();
+      }
+
     } // end of namespace mln::arith::impl
 
 
-    // Facade.
+    // Facades.
 
     template <typename L, typename R, typename O>
     void plus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
@@ -92,6 +125,13 @@ namespace mln
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
       impl::plus_(exact(lhs), exact(rhs), exact(output));
+    }
+
+    template <typename L, typename R>
+    void plus_inplace(Image<L>& lhs, const Image<R>& rhs)
+    {
+      mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
+      impl::plus_inplace_(exact(lhs), exact(rhs));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

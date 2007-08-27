@@ -51,11 +51,13 @@ namespace mln
 
       //       Function_v2v
       //         |
-      //         + -- Function_i2v
-      //         |
-      //         + -- Function_p2v
-      //                |
-      //                + -- Function_p2b
+      //         + ---------------------- Function_v2b
+      //         |                           |
+      //         + -- Function_i2v           |
+      //         |                           |
+      //         + -- Function_p2v           |
+      //                |                    |
+      //                + -- Function_p2b -- +
       //                |
       //                + -- Function_p2p
 
@@ -69,9 +71,9 @@ namespace mln
 
       template <int arg, int res, typename E> struct helper_selector_;
 
-      // no b2* type => v2v type
+      // b2* => v2v type, except for v2b
       template <typename E>
-      struct helper_selector_< b_, b_, E > { typedef Function_v2v<E> ret; };
+      struct helper_selector_< b_, b_, E > { typedef Function_v2b<E> ret; };
       template <typename E>
       struct helper_selector_< b_, i_, E > { typedef Function_v2v<E> ret; };
       template <typename E>
@@ -79,7 +81,7 @@ namespace mln
       template <typename E>
       struct helper_selector_< b_, v_, E > { typedef Function_v2v<E> ret; };
 
-      // i2* => only i2v type
+      // i2* => i2v type
       template <typename E>
       struct helper_selector_< i_, b_, E > { typedef Function_i2v<E> ret; };
       template <typename E>
@@ -99,9 +101,9 @@ namespace mln
       template <typename E>
       struct helper_selector_< p_, v_, E > { typedef Function_p2v<E> ret; };
 
-      // v2* => only v2v type
+      // v2* => v2v type, except for v2b
       template <typename E>
-      struct helper_selector_< v_, b_, E > { typedef Function_v2v<E> ret; };
+      struct helper_selector_< v_, b_, E > { typedef Function_v2b<E> ret; };
       template <typename E>
       struct helper_selector_< v_, i_, E > { typedef Function_v2v<E> ret; };
       template <typename E>

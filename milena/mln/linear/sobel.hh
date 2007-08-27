@@ -34,8 +34,7 @@
  */
 
 # include <mln/arith/plus.hh>
-# include <mln/fun/v2v/abs.hh>
-# include <mln/level/apply.hh>
+# include <mln/level/abs.hh>
 # include <mln/linear/line_x2_convolve.hh>
 
 
@@ -97,11 +96,14 @@ namespace mln
       template <typename I, typename O>
       void sobel_(const Image<I>& input, Image<O>& output)
       {
-	O temp_h(exact(input).domain()), temp_v(exact(input).domain());
-	sobel_h(input, temp_h);
-	sobel_v(input, temp_v);
-	arith::plus(temp_h, temp_v, output);
-	level::apply(exact(output), fun::v2v::abs<mln_value(O)>());
+	// h
+	sobel_h(input, output);
+	// v
+	O temp(exact(input).domain());
+	sobel_v(input, temp);
+	// output
+	arith::plus_inplace(output, temp);
+	level::abs_inplace(output);
       }
 
     } // end of namespace mln::linear::impl

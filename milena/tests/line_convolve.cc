@@ -36,7 +36,6 @@
 #include <mln/io/load_pgm.hh>
 #include <mln/io/save_pgm.hh>
 #include <mln/math/round.hh>
-#include <mln/math/round_sat.hh>
 #include <mln/level/transform.hh>
 
 #include <mln/core/w_window2d_float.hh>
@@ -59,6 +58,6 @@ int main()
   float ws[] = { .11, .11, .11, .11, .11, .11, .11, .11, .11 };
   linear::line_convolve(lena, ws, tmp);
   
-  level::transform(tmp, math::round_<int_u8>(), out);
+  level::transform(tmp, math::round<int_u8>(), out);
   io::save_pgm(out, "out.pgm");
 }

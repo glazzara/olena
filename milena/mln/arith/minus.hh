@@ -54,22 +54,84 @@ namespace mln
     void minus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
 
 
+    /*! Point-wise substraction of image \p lhs in image \p rhs.
+     *
+     * \param[in,out] lhs First operand image (subject to substraction).
+     * \param[in] rhs Second operand image (to be substracted to \p lhs).
+     *
+     * This substraction performs: \n
+     *   for all p of rhs.domain \n
+     *     lhs(p) -= rhs(p)
+     *
+     * \pre \p rhs.domain <= \p lhs.domain
+     */
+    template <typename L, typename R>
+    void minus_inplace(Image<L>& lhs, const Image<R>& rhs);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename L, typename R, typename O>
-    void minus(const Image<L>& lhs_, const Image<R>& rhs_, Image<O>& output_)
+    namespace impl
     {
-      const L& lhs = exact(lhs_);
-      const R& rhs = exact(rhs_);
-      O& output = exact(output_);
 
-      mln_precondition(rhs.domain() == lhs.domain());
-      mln_precondition(output.domain() == lhs.domain());
+      template <typename L, typename R, typename O>
+      void minus_(const Image<L>& lhs_, const Image<R>& rhs_, Image<O>& output_)
+      {
+	const L& lhs = exact(lhs_);
+	const R& rhs = exact(rhs_);
+	O& output = exact(output_);
+	mln_piter(L) p(lhs.domain());
+	for_all(p)
+	  output(p) = lhs(p) - rhs(p);
+      }
 
-      mln_piter(I) p(output.domain());
-      for_all(p)
-	output(p) = lhs(p) - rhs(p);
+      template <typename L, typename R, typename O>
+      void minus_(const Fast_Image<L>& lhs, const Fast_Image<R>& rhs, Fast_Image<O>& output)
+      {
+	mln_pixter(const L) lp(exact(lhs));
+	mln_pixter(const R) rp(exact(rhs));
+	mln_pixter(O)       op(exact(output));
+	for_all_3(lp, rp, op)
+	  op.val() = lp.val() - rp.val();
+      }
+
+      template <typename L, typename R>
+      void minus_inplace_(Image<L>& lhs_, const Image<R>& rhs_)
+      {
+	L& lhs = exact(lhs_);
+	const R& rhs = exact(rhs_);
+	mln_piter(R) p(rhs.domain());
+	for_all(p)
+	  lhs(p) -= rhs(p);
+      }
+
+      template <typename L, typename R>
+      void minus_inplace_(Fast_Image<L>& lhs, const Fast_Image<R>& rhs)
+      {
+	mln_pixter(L) lp(exact(lhs));
+	mln_pixter(const R) rp(exact(rhs));
+	for_all_2(rp, lp)
+	  lp.val() -= rp.val();
+      }
+
+    } // end of namespace mln::arith::impl
+
+
+    // Facades.
+
+    template <typename L, typename R, typename O>
+    void minus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
+    {
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+      mln_precondition(exact(output).domain() == exact(lhs).domain());
+      impl::minus_(exact(lhs), exact(rhs), exact(output));
+    }
+
+    template <typename L, typename R>
+    void minus_inplace(Image<L>& lhs, const Image<R>& rhs)
+    {
+      mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
+      impl::minus_inplace_(exact(lhs), exact(rhs));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

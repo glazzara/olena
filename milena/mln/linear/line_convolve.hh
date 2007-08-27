@@ -56,15 +56,15 @@ namespace mln
      * \pre output.domain = input.domain
      */
     template <typename I, typename W, unsigned N, typename O>
-    void line_convolve(const Image<I>& input, const W (&weights)[N],
-		   Image<O>& output);
+    void line_convolve(const Image<I>& input, W (&weights)[N],
+		       Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename W, unsigned N, typename O>
-    void line_convolve(const Image<I>& input, const W (&weights)[N],
-		   Image<O>& output)
+    void line_convolve(const Image<I>& input, W (&weights)[N],
+		       Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
       linear::convolve(input,

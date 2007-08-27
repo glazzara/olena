@@ -28,13 +28,7 @@
 #ifndef MLN_MORPHO_EROSION_HH
 # define MLN_MORPHO_EROSION_HH
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-# include <mln/accu/min.hh>
-# include <mln/value/props.hh>
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
-// FIXME: # include <mln/border/assign.hh>
+# include <mln/morpho/includes.hh>
 
 
 namespace mln
@@ -43,6 +37,11 @@ namespace mln
   namespace morpho
   {
 
+    /*! Morphological erosion.
+     *
+     * \todo Overload erosion_wrt_win for hline and vline and for fast
+     * images.
+     */
     template <typename I, typename W, typename O>
     void erosion(const Image<I>& input, const Window<W>& win, Image<O>& output);
 
@@ -52,7 +51,7 @@ namespace mln
     namespace impl
     {
 
-      // on function
+      // On function.
 
       template <typename I, typename W, typename O>
       void erosion_on_function(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
@@ -75,7 +74,7 @@ namespace mln
       }
 
 
-      // on set
+      // On set.
 
       template <typename I, typename W, typename O>
       void erosion_on_set(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
@@ -104,10 +103,10 @@ namespace mln
 
 
 
-      // FIXME: stage 3: dispatch w.r.t. fast property
+      // FIXME: Stage 3: dispatch w.r.t. fast property
 
 
-      // stage 2: dispatch w.r.t. the value kind
+      // Stage 2: dispatch w.r.t. the value kind.
 
       template <typename I, typename W, typename O>
       void erosion_wrt_value(value::binary_kind, // binary => morphology on sets
@@ -125,7 +124,7 @@ namespace mln
 
 
 
-      // stage 1: dispatch w.r.t. the window type
+      // Stage 1: dispatch w.r.t. the window type.
       //   |
       //   V
 
@@ -142,9 +141,9 @@ namespace mln
       template <typename I, typename O>
       void erosion_wrt_win(const Image<I>& input, const win::rectangle2d& win, Image<O>& output)
       {
-	O tmp(exact(output).domain());
-	morpho::erosion(input, win::hline2d(win.width()),  tmp);
-	morpho::erosion(tmp,   win::vline2d(win.height()), output);
+	O temp(exact(output).domain());
+	morpho::erosion(input, win::hline2d(win.width()),  temp);
+	morpho::erosion(temp,  win::vline2d(win.height()), output);
       }
 
 #  endif // MLN_CORE_WIN_RECTANGLE2D_HH
@@ -157,7 +156,7 @@ namespace mln
     } // end of namespace mln::morpho::impl
 
 
-    // facade
+    // Facade.
 
     template <typename I, typename W, typename O>
     void erosion(const Image<I>& input, const Window<W>& win, Image<O>& output)
@@ -166,6 +165,7 @@ namespace mln
       mln_precondition(! exact(win).is_empty());
 
       impl::erosion_wrt_win(input, exact(win), output);
+
       if (exact(win).is_centered())
 	mln_postcondition(output <= input);
     }

@@ -31,6 +31,8 @@
 /*! \file mln/level/fill.hh
  *
  * \brief Fill an image, that is, set pixel values.
+ *
+ * \todo Overload for fast images.
  */
 
 # include <cstring>

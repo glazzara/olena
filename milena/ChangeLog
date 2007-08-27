@@ -1,5 +1,47 @@
 2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Augment morpho and add saturation for int-like types.
+
+	* mln/arith/minus.hh (minus_inplace): New.
+	* mln/arith/plus.hh (plus_inplace): New.
+	* mln/fun/v2v/saturate.hh: New.
+	* mln/level/abs.hh: New.
+	* mln/level/saturate.hh: New.
+	* mln/linear/sobel.hh: Update.
+	* mln/math/round.hh (round_): Rename as...
+	(round): ...this.
+	* tests/convolve.cc,
+	* tests/line_convolve.cc,
+	* tests/sobel.cc: Update.
+
+	* mln/linear/line_convolve.hh,
+	* mln/linear/line_x2_convolve.hh,
+	* mln/make/w_window_line.hh: Unconst array literals to help
+	g++-2.95.
+
+	* mln/core/concept/function.hh (Function_v2b): New.
+	* mln/core/macros.hh (mln_value_): New.
+	* mln/fun/ops.hh (l_, r_, f_): Add const.
+	(mln_decl_binary_expr_): Use 'Out' part of fun type name.
+	(mln_decl_unary_expr_): Likewise.
+	New overload for "v2v -> v2b" operators.
+	* mln/fun/v2v/id.hh: New.
+	* mln/level/assign.hh,
+	* mln/level/fill.hh: Add todo.
+	* mln/morpho/erosion.hh: Update.
+
+	* mln/morpho/includes.hh,
+	* mln/morpho/closing.hh,
+	* mln/morpho/dilation.hh
+	* mln/morpho/gradient.hh
+	* mln/morpho/opening.hh: New.
+	* mln/test: New directory.
+	* mln/test/positive.hh,
+	* mln/test/predicate.hh,
+	* tests/morpho_gradient.cc: New.
+
+2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Augment tools for linear filtering; add sobel.
 
 	* mln/core/decorated_image.hh

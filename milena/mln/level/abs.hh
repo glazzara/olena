@@ -25,68 +25,65 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LINEAR_LINE_X2_CONVOLVE_HH
-# define MLN_LINEAR_LINE_X2_CONVOLVE_HH
+#ifndef MLN_LEVEL_ABS_HH
+# define MLN_LEVEL_ABS_HH
 
-/*! \file mln/linear/line_x2_convolve.hh
+/*! \file mln/level/abs.hh
  *
- * \brief 2D convolution by a couple of line kernels.
+ * \brief Apply the absolute value (abs) function to image pixel
+ * values.
  */
 
-# include <mln/linear/line_convolve.hh>
-# include <mln/core/t_image.hh>
-
+# include <mln/fun/v2v/abs.hh>
+# include <mln/level/apply.hh>
+# include <mln/level/transform.hh>
 
 
 namespace mln
 {
 
-  namespace linear
+  namespace level
   {
 
-    /*! Convolution of an image \p input by two weighted line-shapes
-     *  windows.
+
+    /*! Apply the absolute value (abs) function to image pixel values.
      *
-     * \warning Computation of \p output(p) is performed with the
-     * value type of \p output.
-     *
-     * \warning The weighted window is used as-is, considering that
-     * its symmetrization is handled by the client.
-     *
-     * \pre output.domain = input.domain
+     * \param[in] input The input image.
+     * \param[out] output The output image.
      */
-    template <typename I,
-	      typename W, unsigned Nr, unsigned Nc,
-	      typename O>
-    void line_x2_convolve(const Image<I>& input,
-			  W (&row_weights)[Nr], W (&col_weights)[Nc],
-			  Image<O>& output);
+    template <typename I, typename O>
+    void abs(const Image<I>& input, Image<O>& output);
+
+
+    /*! Apply the absolute value (abs) function to image pixel values.
+     *
+     * \param[in,out] input The input image.
+     */
+    template <typename I>
+    void abs_inplace(Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I,
-	      typename W, unsigned Nr, unsigned Nc,
-	      typename O>
-    void line_x2_convolve(const Image<I>& input,
-			  W (&row_weights)[Nr], W (&col_weights)[Nc],
-			  Image<O>& output)
+    template <typename I, typename O>
+    void abs(const Image<I>& input, Image<O>& output)
     {
-      // FIXME: Check 2D.
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      mln_precondition(exact(input).domain() == exact(output).domain());
+      level::transform(input, fun::v2v::abs<mln_value(I)>(), output);
+    }
 
-      O tmp(exact(output).domain());
-      linear::line_convolve(input, row_weights, tmp);
-
-      t_image<O> swap_output = swap_coords(output, 0, 1);
-      linear::line_convolve(swap_coords(tmp, 0, 1), col_weights, swap_output);
+    template <typename I>
+    void abs_inplace(Image<I>& input)
+    {
+      mln_precondition(exact(input).has_data());
+      level::apply(input, fun::v2v::abs<mln_value(I)>());
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::linear
+  } // end of namespace mln::level
 
 } // end of namespace mln
 
 
-#endif // ! MLN_LINEAR_LINE_X2_CONVOLVE_HH
+#endif // ! MLN_LEVEL_ABS_HH

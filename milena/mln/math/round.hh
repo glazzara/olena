@@ -47,7 +47,7 @@ namespace mln
 
 
     template <typename R>
-    struct round_ : public Function_v2v< round_<R> >
+    struct round : public Function_v2v< round<R> >
     {
       typedef R result;
 
@@ -61,7 +61,7 @@ namespace mln
 
     template <typename R>
     template <typename T>
-    R round_<R>::operator()(const T& v) const
+    R round<R>::operator()(const T& v) const
     {
       return (long int)(v + 0.49999); // FIXME: !!!
     }

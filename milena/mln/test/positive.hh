@@ -25,68 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LINEAR_LINE_X2_CONVOLVE_HH
-# define MLN_LINEAR_LINE_X2_CONVOLVE_HH
+#ifndef MLN_TEST_POSITIVE_HH
+# define MLN_TEST_POSITIVE_HH
 
-/*! \file mln/linear/line_x2_convolve.hh
+/*! \file mln/test/positive.hh
  *
- * \brief 2D convolution by a couple of line kernels.
+ * \brief Test if an image only contains positive values.
  */
 
-# include <mln/linear/line_convolve.hh>
-# include <mln/core/t_image.hh>
-
+# include <mln/test/predicate.hh>
+# include <mln/pw/all.hh>
+# include <mln/fun/v2v/id.hh>
 
 
 namespace mln
 {
 
-  namespace linear
+  namespace test
   {
 
-    /*! Convolution of an image \p input by two weighted line-shapes
-     *  windows.
-     *
-     * \warning Computation of \p output(p) is performed with the
-     * value type of \p output.
-     *
-     * \warning The weighted window is used as-is, considering that
-     * its symmetrization is handled by the client.
-     *
-     * \pre output.domain = input.domain
-     */
-    template <typename I,
-	      typename W, unsigned Nr, unsigned Nc,
-	      typename O>
-    void line_x2_convolve(const Image<I>& input,
-			  W (&row_weights)[Nr], W (&col_weights)[Nc],
-			  Image<O>& output);
+    /// Test if an image only contains positive values.
+    template <typename I>
+    bool positive(const Image<I>& input);
 
-
+  
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I,
-	      typename W, unsigned Nr, unsigned Nc,
-	      typename O>
-    void line_x2_convolve(const Image<I>& input,
-			  W (&row_weights)[Nr], W (&col_weights)[Nc],
-			  Image<O>& output)
+    template <typename I>
+    bool positive(const Image<I>& input_)
     {
-      // FIXME: Check 2D.
-      mln_precondition(exact(output).domain() == exact(input).domain());
-
-      O tmp(exact(output).domain());
-      linear::line_convolve(input, row_weights, tmp);
-
-      t_image<O> swap_output = swap_coords(output, 0, 1);
-      linear::line_convolve(swap_coords(tmp, 0, 1), col_weights, swap_output);
+      const I& input = exact(input_);
+      mln_precondition(input.has_data());
+      return test::predicate(input.domain(),
+			     pw::value(input) >= pw::cst(0));
+      // FIXME: test the version below.
+//       return test::predicate(input,
+// 			     fun::v2v::id<mln_value(I)>() >= pw::cst(0));
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::linear
+  } // end of namespace mln::test
 
 } // end of namespace mln
 
 
-#endif // ! MLN_LINEAR_LINE_X2_CONVOLVE_HH
+#endif // ! MLN_TEST_POSITIVE_HH

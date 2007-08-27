@@ -31,6 +31,8 @@
 /*! \file mln/level/assign.hh
  *
  * \brief Assignment between a couple of images.
+ *
+ * \todo Assign should be a precondition then a call to level::fill.
  */
 
 # include <mln/core/concept/image.hh>

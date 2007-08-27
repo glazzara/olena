@@ -25,57 +25,81 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW_LINE_HH
-# define MLN_MAKE_W_WINDOW_LINE_HH
+#ifndef MLN_FUN_V2V_SATURATE_HH
+# define MLN_FUN_V2V_SATURATE_HH
 
-/*! \file mln/make/w_window_line.hh
+/*! \file mln/fun/v2v/saturate.hh
  *
- * \brief Routine to create an horizontal mln::w_window.
+ * \brief FIXME.
  */
 
-# include <mln/core/w_window.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/value/props.hh>
 
 
 namespace mln
 {
 
-  namespace make
+  namespace fun
   {
 
-    /*! \brief Create an horizontal centered and symmetrical
-     *  mln::w_window.
-     *
-     * The free parameter \c D is a type of delta-point. 
-     *
-     * \pre The window length \c L has to be odd.
-     *
-     * \return A window.
-     */
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L]);
+    namespace v2v
+    {
+
+      // FIXME: Doc!
+
+      template <typename V>
+      struct saturate : public Function_v2v< saturate<V> >
+      {
+	saturate();
+	saturate(const V& min, const V& max);
+
+	typedef V result;
+
+	template <typename W>
+	V operator()(const W& v) const;
+
+      protected:
+	V min_, max_;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L])
-    {
-      mln_precondition(L % 2 == 1);
-      mln::w_window<D,W> w_win;
-      D dp = D::zero;
-      for (unsigned i = 0; i < L; ++i)
-	{
-	  dp[D::dim - 1] = i - L / 2;
-	  w_win.insert(w[i], dp);
-	}
-      return w_win;
-    }
+      template <typename V>
+      saturate<V>::saturate()
+	: min_(mln_min(V)),
+	  max_(mln_max(V))
+      {
+      }
+
+      template <typename V>
+      saturate<V>::saturate(const V& min, const V& max)
+	: min_(min),
+	  max_(max)
+      {
+	mln_precondition(max > min);
+      }
+
+      template <typename V>
+      template <typename W>
+      V
+      saturate<V>::operator()(const W& v) const
+      {
+	if (v < min_)
+	  return min_;
+	if (v > max_)
+	  return max_;
+	return v;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::make
+    } // end of namespace mln::fun::v2v
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_W_WINDOW_LINE_HH
+#endif // ! MLN_FUN_V2V_SATURATE_HH
