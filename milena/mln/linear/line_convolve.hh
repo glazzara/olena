@@ -25,36 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_ALL_HH
-# define MLN_VALUE_ALL_HH
+#ifndef MLN_LINEAR_LINE_CONVOLVE_HH
+# define MLN_LINEAR_LINE_CONVOLVE_HH
 
-/*! \file mln/value/all.hh
+/*! \file mln/linear/line_convolve.hh
  *
- * \brief File that includes all "value types"-related materials.
+ * \brief Convolution by a line-shaped kernel.
  */
+
+# include <mln/linear/convolve.hh>
+# include <mln/make/w_window_line.hh>
+
 
 
 namespace mln
 {
 
-  /*! Namespace of materials related to ixel value types.
-   */
-  namespace value {}
+  namespace linear
+  {
 
-}
+    /*! Convolution of an image \p input by a line-shaped weighted
+     *  window defined by the array of \p weights.
+     *
+     * \warning Computation of \p output(p) is performed with the
+     * value type of \p output.
+     *
+     * \warning The weighted window is used as-is, considering that
+     * its symmetrization is handled by the client.
+     *
+     * \pre output.domain = input.domain
+     */
+    template <typename I, typename W, unsigned N, typename O>
+    void line_convolve(const Image<I>& input, const W (&weights)[N],
+		   Image<O>& output);
 
 
-# include <mln/value/aliases.hh>
-# include <mln/value/label.hh>
-# include <mln/value/props.hh>
-# include <mln/value/proxy.hh>
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I, typename W, unsigned N, typename O>
+    void line_convolve(const Image<I>& input, const W (&weights)[N],
+		   Image<O>& output)
+    {
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      linear::convolve(input,
+		       make::w_window_line<mln_dpoint(I)>(weights),
+		       output);
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::linear
+
+} // end of namespace mln
 
 
-// FIXME: that includes concept/image.hh!
-
-// # include <mln/value/cast.hh>
-// # include <mln/value/stack.hh>
-
-
-
-#endif // ! MLN_VALUE_ALL_HH
+#endif // ! MLN_LINEAR_LINE_CONVOLVE_HH

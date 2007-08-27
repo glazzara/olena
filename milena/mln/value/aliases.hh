@@ -25,36 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_ALL_HH
-# define MLN_VALUE_ALL_HH
+#ifndef MLN_VALUE_ALIASES_HH
+# define MLN_VALUE_ALIASES_HH
 
-/*! \file mln/value/all.hh
+/*! \file mln/value/aliases.hh
  *
- * \brief File that includes all "value types"-related materials.
+ * \brief File that includes all aliases of value types.
  */
 
 
-namespace mln
-{
+# include <mln/value/int_u8.hh>
+# include <mln/value/int_u16.hh>
 
-  /*! Namespace of materials related to ixel value types.
-   */
-  namespace value {}
-
-}
+# include <mln/value/int_s8.hh>
 
 
-# include <mln/value/aliases.hh>
-# include <mln/value/label.hh>
-# include <mln/value/props.hh>
-# include <mln/value/proxy.hh>
-
-
-// FIXME: that includes concept/image.hh!
-
-// # include <mln/value/cast.hh>
-// # include <mln/value/stack.hh>
-
-
-
-#endif // ! MLN_VALUE_ALL_HH
+#endif // ! MLN_VALUE_ALIASES_HH

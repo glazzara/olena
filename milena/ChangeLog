@@ -1,5 +1,41 @@
 2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Augment tools for linear filtering; add sobel.
+
+	* mln/core/decorated_image.hh
+	(helper_decorated_image_write_): Replace by...
+	(decorated_image_impl_): ...this.
+	(impl_): New.
+	(lvalue): Update.
+	(write_): Remove; now in impl_.
+
+	* mln/value/all.hh: Update.
+	* mln/value/props.hh,
+	* mln/value/int_u.hh,
+	* mln/value/int_s.hh (min, max): Change to proc.
+	* mln/value/props.hh (mln_min, mln_max): Update.
+	(epsilon): Change to proc.
+	* mln/value/aliases.hh: New.
+	* mln/level/stretch.hh: Update.
+
+	* mln/arith/abs.hh: New.
+	* mln/arith/plus.hh: Overload.
+	* mln/fun/v2v/abs.hh: New.
+	* mln/level/apply.hh: Fix meaning; add todo.
+	* mln/math/abs.hh: Overload.
+
+	* mln/core/concept/iterator.hh (for_all_3): New.
+	* mln/math/round_sat.hh: New.
+	* mln/make/w_window_line.hh: New.
+	* mln/metal/abort.hh: New.
+	* mln/linear/line_convolve.hh: New.
+	* mln/linear/line_x2_convolve.hh: New.
+	* mln/linear/sobel.hh: New.
+	* tests/line_convolve.cc: New.
+	* tests/sobel.cc: New.
+
+2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add local convolution.
 
 	* mln/core/concept/doc/generalized_pixel.hh,

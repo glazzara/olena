@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/concept/accumulator.hh>
+# include <mln/core/concept/function.hh>
 
 
 namespace mln
@@ -45,19 +45,19 @@ namespace mln
 
     /*! Apply a function-object to the image \p input.
      *
-     * \param[in] input The input image.
+     * \param[in,out] input The input image.
      * \param[in] f The function-object.
-     * \result A copy of the function-object.
      *
      * This routine runs: \n
-     *   for all p of \p input, \p f( \p input(p) ) \n
-     *   return \p f
+     *   for all p of \p input, \p input(p) = \p f( \p input(p) ) \n
      *
-     * \todo Find a meaning for this routine! (Clue: f is mutable
-     * and/or same for input?)
+     * This routine is equivalent to level::tranform(input, f, input)
+     * but it is faster since a single iterator is required.
+     *
+     * \todo Add versions for lowq images.
      */
     template <typename I, typename F>
-    F apply(const Image<I>& input, const Function<F>& f);
+    void apply(Image<I>& input, const Function_v2v<F>& f);
 
 
 
@@ -67,39 +67,33 @@ namespace mln
     {
 
       template <typename I, typename F>
-      F apply(const Image<I>& input_, const Function<F>& f_)
+      void apply_(Image<I>& input_, const F& f)
       {
-	const I& input  = exact(input_);
-	F f = exact(f_);
-	
+	I& input   = exact(input_);
 	mln_piter(I) p(input.domain());
 	for_all(p)
-	  f(input(p));
-	return f;
+	  input(p) = f(input(p));
       }
 
       template <typename I, typename F>
-      F apply(const Fast_Image<I>& input_, const Function<F>& f_)
+      void apply_(Fast_Image<I>& input_, const F& f)
       {
-	const I& input  = exact(input_);
-	F f = exact(f_);
-	
-	mln_pixter(const I) pxl(input);
+	I& input   = exact(input_);
+	mln_pixter(I) pxl(input);
 	for_all(pxl)
-	  f(pxl.val());
-	return f;
+	  pxl.val() = f(pxl.val());
       }
 
     } // end of namespace mln::level::impl
 
 
-    // Facades.
+    // Facade.
 
     template <typename I, typename F>
-    F apply(const Image<I>& input, const Function<F>& f)
+    void apply(Image<I>& input, const Function_v2v<F>& f)
     {
       mln_precondition(exact(input).has_data());
-      return impl::apply(exact(input), f);
+      impl::apply_(exact(input), exact(f));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

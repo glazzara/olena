@@ -25,76 +25,68 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_STRETCH_HH
-# define MLN_LEVEL_STRETCH_HH
+#ifndef MLN_LINEAR_LINE_X2_CONVOLVE_HH
+# define MLN_LINEAR_LINE_X2_CONVOLVE_HH
 
-/*! \file mln/level/stretch.hh
+/*! \file mln/linear/line_x2_convolve.hh
  *
- * \brief Transform with fun::stretch the contents of an image into
- * another one.
+ * \brief 2D convolution by a couple of line kernels.
  */
 
-# include <mln/estim/min_max.hh>
-# include <mln/value/int_u.hh>
-# include <mln/fun/v2v/linear.hh>
-# include <mln/level/transform.hh>
+# include <mln/linear/line_convolve.hh>
+# include <mln/core/t_image.hh>
+
 
 
 namespace mln
 {
 
-  namespace level
+  namespace linear
   {
 
-    /*! Stretch the values of \p input so that they can be stored in \p output.
+    /*! Convolution of an image \p input by two weighted line-shapes
+     *  windows.
      *
-     * \param[in] input The input image.
-     * \param[out] output The result image.
+     * \warning Computation of \p output(p) is performed with the
+     * value type of \p output.
      *
-     * \pre \p output.domain == \p input.domain
+     * \warning The weighted window is used as-is, considering that
+     * its symmetrization is handled by the client.
+     *
+     * \pre output.domain = input.domain
      */
-    template <typename I, typename O>
-    void stretch(const Image<I>& input, Image<O>& output);
+    template <typename I,
+	      typename W, unsigned Nr, unsigned Nc,
+	      typename O>
+    void line_x2_convolve(const Image<I>& input,
+			  const W (&row_weights)[Nr], const W (&col_weights)[Nc],
+			  Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
+    template <typename I,
+	      typename W, unsigned Nr, unsigned Nc,
+	      typename O>
+    void line_x2_convolve(const Image<I>& input,
+			  const W (&row_weights)[Nr], const W (&col_weights)[Nc],
+			  Image<O>& output)
     {
-
-      template <unsigned n, typename I, typename O>
-      void stretch(value::int_u<n>,
-		   const Image<I>& input, Image<O>& output)
-      {
-	mln_value(I) min_, max_;
-	estim::min_max(input, min_, max_);
-	if (max_ == min_)
-	  return; // FIXME
-	float min = float(min_), max = float(max_);
-	const float epsilon = value::props<float>::epsilon();
- 	float m = 0.0f - 0.5f + epsilon;
- 	float M = mln_max(value::int_u<n>) + 0.5f - epsilon;
-	float a = (M - m) / (max - min);
-	float b = (m * max - M * min) / (max - min);
-	fun::v2v::linear<float, float, int> f(a, b);
-	level::transform(input, f, output);
-      }
-
-    } // end of namespace mln::level::impl
-
-
-    template <typename I, typename O>
-    void stretch(const Image<I>& input, Image<O>& output)
-    {
+      // FIXME: Check 2D.
       mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::stretch(mln_value(O)(), input, output);
+
+      O tmp(exact(output).domain());
+      linear::line_convolve(input, row_weights, tmp);
+
+      t_image<O> swap_output = swap_coords(output, 0, 1);
+      linear::line_convolve(swap_coords(tmp, 0, 1), col_weights, swap_output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::level
+  } // end of namespace mln::linear
 
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_STRETCH_HH
+#endif // ! MLN_LINEAR_LINE_X2_CONVOLVE_HH

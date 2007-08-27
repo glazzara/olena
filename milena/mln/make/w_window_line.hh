@@ -25,36 +25,57 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_ALL_HH
-# define MLN_VALUE_ALL_HH
+#ifndef MLN_MAKE_W_WINDOW_LINE_HH
+# define MLN_MAKE_W_WINDOW_LINE_HH
 
-/*! \file mln/value/all.hh
+/*! \file mln/make/w_window_line.hh
  *
- * \brief File that includes all "value types"-related materials.
+ * \brief Routine to create an horizontal mln::w_window.
  */
+
+# include <mln/core/w_window.hh>
 
 
 namespace mln
 {
 
-  /*! Namespace of materials related to ixel value types.
-   */
-  namespace value {}
+  namespace make
+  {
 
-}
-
-
-# include <mln/value/aliases.hh>
-# include <mln/value/label.hh>
-# include <mln/value/props.hh>
-# include <mln/value/proxy.hh>
-
-
-// FIXME: that includes concept/image.hh!
-
-// # include <mln/value/cast.hh>
-// # include <mln/value/stack.hh>
+    /*! \brief Create an horizontal centered and symmetrical
+     *  mln::w_window.
+     *
+     * The free parameter \c D is a type of delta-point. 
+     *
+     * \pre The window length \c L has to be odd.
+     *
+     * \return A window.
+     */
+    template <typename D, typename W, unsigned L>
+    mln::w_window<D,W> w_window_line(const W (&w)[L]);
 
 
+# ifndef MLN_INCLUDE_ONLY
 
-#endif // ! MLN_VALUE_ALL_HH
+    template <typename D, typename W, unsigned L>
+    mln::w_window<D,W> w_window_line(const W (&w)[L])
+    {
+      mln_precondition(L % 2 == 1);
+      mln::w_window<D,W> w_win;
+      D dp = D::zero;
+      for (unsigned i = 0; i < L; ++i)
+	{
+	  dp[D::dim - 1] = i - L / 2;
+	  w_win.insert(w[i], dp);
+	}
+      return w_win;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::make
+
+} // end of namespace mln
+
+
+#endif // ! MLN_MAKE_W_WINDOW_LINE_HH

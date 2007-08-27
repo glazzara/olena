@@ -25,36 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_ALL_HH
-# define MLN_VALUE_ALL_HH
+#ifndef MLN_METAL_ABORT_HH
+# define MLN_METAL_ABORT_HH
 
-/*! \file mln/value/all.hh
- *
- * \brief File that includes all "value types"-related materials.
- */
+# include <mln/metal/bool.hh>
 
 
 namespace mln
 {
 
-  /*! Namespace of materials related to ixel value types.
-   */
-  namespace value {}
+  namespace metal
+  {
 
-}
-
-
-# include <mln/value/aliases.hh>
-# include <mln/value/label.hh>
-# include <mln/value/props.hh>
-# include <mln/value/proxy.hh>
+    template <typename T>
+    struct abort : false_
+    {};
 
 
-// FIXME: that includes concept/image.hh!
+  } // end of namespace mln::metal
 
-// # include <mln/value/cast.hh>
-// # include <mln/value/stack.hh>
-
+} // end of namespace mln
 
 
-#endif // ! MLN_VALUE_ALL_HH
+#endif // ! MLN_METAL_ABORT_HH

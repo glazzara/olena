@@ -35,13 +35,39 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename I, typename D> class decorated_image;
+
+
+  namespace internal
+  {
+
+    template <typename I, typename E>
+    struct decorated_image_impl_
+    {
+      typedef mln::value::proxy<E> lvalue;
+      void write_(const mln_psite(I)& p, const mln_value(I)& v);
+    };
+
+    template <typename I, typename E>
+    struct decorated_image_impl_< const I, E >
+    {
+      typedef mln::value::proxy<const E> lvalue;
+    };
+
+  } // end of namespace::internal
+
+
+
   // FIXME: Doc!
 
   template <typename I, typename D>
-  class decorated_image : public internal::image_adaptor_< I, decorated_image<I,D> >
+  class decorated_image : public internal::image_adaptor_< I, decorated_image<I,D> >,
+			  public internal::decorated_image_impl_< I, decorated_image<I,D> >
   {
     typedef decorated_image<I, D> self_;
     typedef internal::image_adaptor_< I, self_ > super_;
+    typedef internal::decorated_image_impl_< I, self_ > impl_;
   public:
 
     decorated_image(I& ima, const D& deco);
@@ -49,13 +75,12 @@ namespace mln
 
     typedef mln_value(I)                    value;
     typedef mln::value::proxy<const self_> rvalue;
-    typedef mln::value::proxy<self_>       lvalue;
+    typedef typename impl_::lvalue         lvalue;
 
     rvalue operator()(const mln_psite(I)& p) const;
     lvalue operator()(const mln_psite(I)& p);
 
     mln_value(I) read_(const mln_psite(I)& p) const;
-    void write_(const mln_psite(I)& p, const mln_value(I)& v);
 
     template <typename V>
     struct change_value
@@ -110,7 +135,7 @@ namespace mln
   }
 
   template <typename I, typename D>
-  mln::value::proxy< const decorated_image<I,D> >
+  typename decorated_image<I,D>::rvalue
   decorated_image<I,D>::operator()(const mln_psite(I)& p) const
   {
     rvalue tmp(*this, p);
@@ -118,7 +143,7 @@ namespace mln
   }
 
   template <typename I, typename D>
-  mln::value::proxy< decorated_image<I,D> >
+  typename decorated_image<I,D>::lvalue
   decorated_image<I,D>::operator()(const mln_psite(I)& p)
   {
     lvalue tmp(*this, p);
@@ -128,30 +153,16 @@ namespace mln
   namespace internal
   {
 
-    template <typename I, typename D>
+    template <typename I, typename E>
     void
-    helper_decorated_image_write_(decorated_image<I,D>& ima,
-				  const mln_psite(I)& p, const mln_value(I)& v)
+    decorated_image_impl_<I,E>::write_(const mln_psite(I)& p, const mln_value(I)& v)
     {
+      E& ima = internal::force_exact<E>(*this);
       ima.decoration().writing(ima.adaptee(), p, v);
       ima.adaptee()(p) = v;
     }
 
-    template <typename I, typename D>
-    void
-    helper_decorated_image_write_(decorated_image<const I,D>&,
-				  const mln_psite(I)&, const mln_value(I)&)
-      // FIXME: Static assertion instead.
-      ;
-
   } // end of namespace mln::internal
-
-  template <typename I, typename D>
-  void
-  decorated_image<I,D>::write_(const mln_psite(I)& p, const mln_value(I)& v)
-  {
-    internal::helper_decorated_image_write_(*this, p, v);
-  }
 
   template <typename I, typename D>
   mln_value(I)

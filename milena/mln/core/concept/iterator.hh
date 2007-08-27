@@ -46,6 +46,15 @@
 # define for_all_2(x1, x2) for(x1.start(),x2.start(); x1.is_valid(); x1.next(),x2.next())
 
 
+/*! \brief Loop to browse all the elements targetted by the triplet of
+ * iterators \p x1, \p x2, and \p x3.
+ */
+# define for_all_3(x1, x2, x3)			\
+  for(x1.start(), x2.start(), x3.start();	\
+      x1.is_valid();				\
+      x1.next(), x2.next(), x3.next())
+
+
 /*! \brief Loop to browse all the remaining elements targetted by the
  * iterator \p x.
  */

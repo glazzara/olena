@@ -89,21 +89,22 @@ namespace mln
 
 
 
+    // Safety.
+    template <> struct int_s<0>;
+    template <> struct int_s<1>;
+
+
+
     template <unsigned n>
     struct props< int_s<n> >
     {
-      static const int_s<n> max; // = 2^(n-1) - 1
-      static const int_s<n> min; // = - max
       static const std::size_t card_ = metal::pow<2, n>::value;
+      static const int_s<n> max() { return metal::pow<2, n-1>::value - 1; }
+      static const int_s<n> min() { return - max(); }
       static const unsigned nbits = n;
       typedef data_kind kind;
       typedef float sum;
     };
-
-
-    // Safety.
-    template <> struct int_s<0>;
-    template <> struct int_s<1>;
 
 
 
@@ -165,14 +166,6 @@ namespace mln
 
     template <unsigned n>
     const int_s<n> int_s<n>::one = 1;
-
-    template <unsigned n>
-    const int_s<n>
-    props< int_s<n> >::min = 1 - metal::pow<2, n - 1>::value;
-
-    template <unsigned n>
-    const int_s<n>
-    props< int_s<n> >::max = metal::pow<2, n - 1>::value - 1;
 
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const int_s<n>& i)

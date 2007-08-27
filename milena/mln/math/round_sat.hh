@@ -25,36 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_ALL_HH
-# define MLN_VALUE_ALL_HH
+#ifndef MLN_MATH_ROUND_SAT_HH
+# define MLN_MATH_ROUND_SAT_HH
 
-/*! \file mln/value/all.hh
+/*! \file mln/math/round_sat.hh
  *
- * \brief File that includes all "value types"-related materials.
+ * \brief Define round_sat routine.
  */
+
+# include <cmath>
+
+# include <mln/core/concept/function.hh>
+# include <mln/value/props.hh>
+
 
 
 namespace mln
 {
 
-  /*! Namespace of materials related to ixel value types.
-   */
-  namespace value {}
-
-}
+  namespace math
+  {
 
 
-# include <mln/value/aliases.hh>
-# include <mln/value/label.hh>
-# include <mln/value/props.hh>
-# include <mln/value/proxy.hh>
+    template <typename R>
+    struct round_sat_ : public Function_v2v< round_sat_<R> >
+    {
+      typedef R result;
+
+      template <typename T>
+      result operator()(const T& v) const;
+
+    };
 
 
-// FIXME: that includes concept/image.hh!
+# ifndef MLN_INCLUDE_ONLY
 
-// # include <mln/value/cast.hh>
-// # include <mln/value/stack.hh>
+    template <typename R>
+    template <typename T>
+    R round_sat_<R>::operator()(const T& v) const
+    {
+      long int l = (long int)(v + 0.49999); // FIXME: !!!
+      return
+	l < mln_min(R)
+	? mln_min(R)
+	: (l > mln_max(R)
+	   ? mln_max(R)
+	   : R(l));
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::math
+
+} // end of namespace mln
 
 
-
-#endif // ! MLN_VALUE_ALL_HH
+#endif // ! MLN_MATH_ROUND_SAT_HH

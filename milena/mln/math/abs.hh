@@ -34,6 +34,7 @@
  */
 
 # include <cmath>
+# include <mln/value/all.hh>
 
 
 
@@ -53,6 +54,18 @@ namespace mln
     T abs(const T& v)
     {
       return std::abs(v);
+    }
+
+    template <unsigned n>
+    value::int_u<n> abs(const value::int_u<n>& v)
+    {
+      return v;
+    }
+
+    template <unsigned n>
+    value::int_s<n> abs(const value::int_s<n>& v)
+    {
+      return std::abs(v.to_enc());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

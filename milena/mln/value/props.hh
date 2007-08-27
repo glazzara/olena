@@ -42,11 +42,11 @@
 
 
 /// Get the minimum value of type \c T.
-# define mln_min(T) mln::value::props< T >::min
+# define mln_min(T) mln::value::props< T >::min()
 
 
 /// Get the maximum value of type \c T.
-# define mln_max(T) mln::value::props< T >::max
+# define mln_max(T) mln::value::props< T >::max()
 
 
 /// Get the number of values for value type \c T.
@@ -108,8 +108,8 @@ namespace mln
     template <>
     struct props<bool>
     {
-      static const bool min = false;
-      static const bool max = true;
+      static const bool min() { return false; }
+      static const bool max() { return true; }
       static const std::size_t card_ = 2;
       typedef binary_kind kind;
     };
@@ -120,8 +120,8 @@ namespace mln
     template <>
     struct props<unsigned char>
     {
-      static const unsigned char min =   0;
-      static const unsigned char max = 255;
+      static const unsigned char min() { return   0; }
+      static const unsigned char max() { return 255; }
       static const std::size_t  card_ = 256;
       typedef data_kind kind;
       typedef float sum;
@@ -130,8 +130,8 @@ namespace mln
     template <>
     struct props<signed char>
     {
-      static const signed char  min = -128;
-      static const signed char  max =  127;
+      static const signed char  min() { return -128; }
+      static const signed char  max() { return  127; }
       static const std::size_t card_ =  256;
       typedef data_kind kind;
       typedef float sum;
@@ -140,8 +140,8 @@ namespace mln
     template <>
     struct props<unsigned short>
     {
-      static const unsigned short min =     0;
-      static const unsigned short max = 65535;
+      static const unsigned short min() { return     0; }
+      static const unsigned short max() { return 65535; }
       static const std::size_t   card_ = 65536;
       typedef data_kind kind;
       typedef float sum;
@@ -150,8 +150,8 @@ namespace mln
     template <>
     struct props<signed short>
     {
-      static const signed short min = -32768;
-      static const signed short max =  32767;
+      static const signed short min() { return -32768; }
+      static const signed short max() { return  32767; }
       static const std::size_t card_ = 655356;
       typedef data_kind kind;
       typedef float sum;
@@ -160,8 +160,8 @@ namespace mln
     template <>
     struct props<unsigned int>
     {
-      static const unsigned int min = 0;
-      static const unsigned int max = UINT_MAX;
+      static const unsigned int min() { return 0; }
+      static const unsigned int max() { return UINT_MAX; }
       typedef data_kind kind;
       static const std::size_t card_ = 0;
       typedef float sum;
@@ -170,8 +170,8 @@ namespace mln
     template <>
     struct props<signed int>
     {
-      static const signed int  min = INT_MIN;
-      static const signed int  max = INT_MAX;
+      static const signed int  min() { return INT_MIN; }
+      static const signed int  max() { return INT_MAX; }
       typedef data_kind kind;
       static const std::size_t card_ = 0;
       typedef float sum;
@@ -180,8 +180,8 @@ namespace mln
     template <>
     struct props<unsigned long int>
     {
-      static const unsigned long int min = 0;
-      static const unsigned long int max = ULONG_MAX;
+      static const unsigned long int min() { return 0; }
+      static const unsigned long int max() { return ULONG_MAX; }
       typedef data_kind kind;
       static const std::size_t card_ = 0;
       typedef float sum;
@@ -190,8 +190,8 @@ namespace mln
     template <>
     struct props<signed long int>
     {
-      static const signed long int min = LONG_MIN;
-      static const signed long int max = LONG_MAX;
+      static const signed long int min() { return LONG_MIN; }
+      static const signed long int max() { return LONG_MAX; }
       typedef data_kind kind;
       static const std::size_t card_ = 0;
       typedef float sum;
@@ -203,9 +203,9 @@ namespace mln
     template <>
     struct props<float>
     {
-      static const float min = FLT_MIN;
-      static const float max = FLT_MAX;
-      static const float epsilon = 0.00001f;
+      static const float min() { return FLT_MIN; }
+      static const float max() { return FLT_MAX; }
+      static const float epsilon() { return 0.00001f; }
       typedef data_kind kind;
       static const std::size_t card_ = 0;
       typedef float sum;
@@ -214,9 +214,9 @@ namespace mln
     template <>
     struct props<double>
     {
-      static const double min = DBL_MIN;
-      static const double max = DBL_MAX;
-      static const double epsilon = 0.0000001;
+      static const double min() { return DBL_MIN; }
+      static const double max() { return DBL_MAX; }
+      static const double epsilon() { return 0.0000001; }
       typedef data_kind kind;
       static const std::size_t card_ = 0;
       typedef double sum;

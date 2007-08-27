@@ -25,36 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_ALL_HH
-# define MLN_VALUE_ALL_HH
+#ifndef MLN_FUN_V2V_ABS_HH
+# define MLN_FUN_V2V_ABS_HH
 
-/*! \file mln/value/all.hh
+/*! \file mln/fun/v2v/abs.hh
  *
- * \brief File that includes all "value types"-related materials.
+ * \brief FIXME.
  */
+
+# include <mln/core/concept/function.hh>
+# include <mln/math/abs.hh>
 
 
 namespace mln
 {
 
-  /*! Namespace of materials related to ixel value types.
-   */
-  namespace value {}
+  namespace fun
+  {
 
-}
+    namespace v2v
+    {
 
+      // FIXME: Doc!
 
-# include <mln/value/aliases.hh>
-# include <mln/value/label.hh>
-# include <mln/value/props.hh>
-# include <mln/value/proxy.hh>
-
-
-// FIXME: that includes concept/image.hh!
-
-// # include <mln/value/cast.hh>
-// # include <mln/value/stack.hh>
+      template <typename V>
+      struct abs : public Function_v2v< abs<V> >
+      {
+	typedef V result;
+	V operator()(const V& v) const;
+      };
 
 
+# ifndef MLN_INCLUDE_ONLY
 
-#endif // ! MLN_VALUE_ALL_HH
+      template <typename V>
+      V
+      abs<V>::operator()(const V& v) const
+      {
+	return mln::math::abs(v);
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::v2v
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+
+#endif // ! MLN_FUN_V2V_ABS_HH

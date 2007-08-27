@@ -25,36 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_ALL_HH
-# define MLN_VALUE_ALL_HH
-
-/*! \file mln/value/all.hh
+/*! \file tests/sobel.cc
  *
- * \brief File that includes all "value types"-related materials.
+ * \brief Tests on mln::linear::sobel.
  */
 
+#include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
 
-namespace mln
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
+
+#include <mln/math/round_sat.hh>
+#include <mln/level/transform.hh>
+
+#include <mln/border/thickness.hh>
+#include <mln/linear/sobel.hh>
+
+
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  /*! Namespace of materials related to ixel value types.
-   */
-  namespace value {}
+  border::thickness = 1;
 
+  image2d_b<int_u8>
+    lena = io::load_pgm("../img/lena.pgm"),
+    out(lena.domain());
+
+  image2d_b<int> tmp(lena.domain());
+  linear::sobel(lena, tmp);
+
+  level::transform(tmp, math::round_sat_<int_u8>(), out);
+  io::save_pgm(out, "out.pgm");
 }
-
-
-# include <mln/value/aliases.hh>
-# include <mln/value/label.hh>
-# include <mln/value/props.hh>
-# include <mln/value/proxy.hh>
-
-
-// FIXME: that includes concept/image.hh!
-
-// # include <mln/value/cast.hh>
-// # include <mln/value/stack.hh>
-
-
-
-#endif // ! MLN_VALUE_ALL_HH

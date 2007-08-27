@@ -95,8 +95,8 @@ namespace mln
     struct props< int_u<n> >
     {
       static const std::size_t card_ = metal::pow<2, n>::value;
-      static const int_u<n> min; // = 0
-      static const int_u<n> max; // = card_ - 1
+      static const int_u<n> min() { return 0; }
+      static const int_u<n> max() { return card_ - 1; }
       static const unsigned nbits = n;
       typedef data_kind kind;
       typedef float sum;
@@ -155,15 +155,6 @@ namespace mln
 
     template <unsigned n>
     const int_u<n> int_u<n>::one = 1;
-
-
-    template <unsigned n>
-    const int_u<n>
-    props< int_u<n> >::min = 0;
-
-    template <unsigned n>
-    const int_u<n>
-    props< int_u<n> >::max = metal::pow<2, n>::value - 1;
 
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const int_u<n>& i)

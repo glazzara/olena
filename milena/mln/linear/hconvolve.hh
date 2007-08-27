@@ -25,18 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LINEAR_CONVOLVE_HH
-# define MLN_LINEAR_CONVOLVE_HH
+#ifndef MLN_LINEAR_LINE_CONVOLVE_HH
+# define MLN_LINEAR_LINE_CONVOLVE_HH
 
-/*! \file mln/linear/convolve.hh
+/*! \file mln/linear/line_convolve.hh
  *
- * \brief Convolution.
+ * \brief Convolution by an horizontal kernel.
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/weighted_window.hh>
-# include <mln/border/resize.hh>
-# include <mln/border/duplicate.hh>
+# include <vector>
+
+# include <mln/linear/convolve.hh>
+# include <mln/make/w_window_line.hh>
+# include <mln/core/t_image.hh>
 
 
 
@@ -46,7 +47,8 @@ namespace mln
   namespace linear
   {
 
-    /*! Convolution of an image \p input by the weighted window \p w_win.
+    /*! Convolution of an image \p input by an horizontal weighted
+     *  window defined by the array of \p weights.
      *
      * \warning Computation of \p output(p) is performed with the
      * value type of \p output.
@@ -56,73 +58,45 @@ namespace mln
      *
      * \pre output.domain = input.domain
      */
-    template <typename I, typename W, typename O>
-    void convolve(const Image<I>& input, const Weighted_Window<W>& w_win,
-		  Image<O>& output);
+    template <typename I, typename W, unsigned N, typename O>
+    void line_convolve(const Image<I>& input, const W (&weights)[N],
+		   Image<O>& output);
+
+    // FIXME: Doc!
+    template <typename I, typename W, unsigned Nr, unsigned Nc, typename O>
+    void line_convolve(const Image<I>& input,
+		   const W (&row_weights)[Nr], const W (&col_weights)[Nc],
+		   Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
-    {
-
-      template <typename I, typename W, typename O>
-      void convolve_(const Image<I>& input_, const Weighted_Window<W>& w_win_,
-		     Image<O>& output_)
-      {
-	const I& input = exact(input_);
-	const W& w_win = exact(w_win_);
-	O& output = exact(output_);
-
-	mln_piter(I) p(input.domain());
-	mln_qiter(W) q(w_win, p);
-
-	for_all(p)
-	  {
-	    mln_value(O) v = 0;
-	    for_all(q) if (input.has(q))
-	      v += input(q) * q.w();
-	    output(p) = v;
-	  }
-      }
-
-      template <typename I, typename W, typename O>
-      void convolve_(const Fast_Image<I>& input_, const Weighted_Window<W>& w_win_,
-		     Fast_Image<O>& output_)
-      {
-	const I& input = exact(input_);
-	const W& w_win = exact(w_win_);
-	O& output = exact(output_);
-
-	border::resize(input, w_win.delta());
-	border::duplicate(input);
-
- 	mln_pixter(O)          p_out(output);
-
-	mln_pixter(const I)    p(input);
-	mln_qixter(const I, W) q(p, w_win);
-
- 	for_all_2(p, p_out)
-	  {
-	    mln_value(O) v = 0;
-	    unsigned i = 0;
-	    for_all(q)
-	      v += w_win.w(i++) * q.val();
- 	    p_out.val() = v;
-	  }
-      }
-
-    } // end of namespace mln::linear::impl
-
-
-    // Facade.
-
-    template <typename I, typename W, typename O>
-    void convolve(const Image<I>& input, const Weighted_Window<W>& w_win,
-		  Image<O>& output)
+    template <typename I, typename W, unsigned N, typename O>
+    void line_convolve(const Image<I>& input, const W (&weights)[N],
+		   Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::convolve_(exact(input), exact(w_win), exact(output));
+      linear::convolve(input,
+		       make::w_window_line<mln_dpoint(I)>(weights),
+		       output);
+    }
+
+
+    template <typename I, typename W, unsigned Nr, unsigned Nc, typename O>
+    void line_convolve(const Image<I>& input,
+		   const W (&row_weights)[Nr], const W (&col_weights)[Nc],
+		   Image<O>& output)
+    {
+      // FIXME: Check 2D.
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      O tmp(exact(output).domain());
+      linear::convolve(input,
+		       make::w_window_line<mln_dpoint(I)>(row_weights),
+		       tmp);
+      t_image<O> swap_output = swap_coords(output, 0, 1);
+      linear::convolve(swap_coords(tmp, 0, 1),
+		       make::w_window_line<mln_dpoint(I)>(col_weights),
+		       swap_output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -132,4 +106,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LINEAR_CONVOLVE_HH
+#endif // ! MLN_LINEAR_LINE_CONVOLVE_HH
