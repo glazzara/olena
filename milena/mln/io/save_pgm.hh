@@ -33,6 +33,7 @@
 # include <fstream>
 
 # include <mln/core/image2d_b.hh>
+# include <mln/geom/size2d.hh>
 # include <mln/value/int_u8.hh>
 
 
@@ -53,16 +54,16 @@ namespace mln
 	}
       file << "P5" << std::endl;
       file << "# olena" << std::endl;
-      file << ima.ncols() << ' ' << ima.nrows() << std::endl;
+      file << geom::ncols(ima) << ' ' << geom::nrows(ima) << std::endl;
       file << "255" << std::endl;
       const int
-	min_row = ima.domain().pmin().row(),
-	max_row = ima.domain().pmax().row();
+	min_row = geom::min_row(ima),
+	max_row = geom::max_row(ima);
       point2d p;
       if (sizeof(value::int_u8) == 1)
 	{
-	  p.col() = ima.domain().pmin().col();
-	  size_t len = ima.ncols();
+	  p.col() = geom::min_col(ima);
+	  size_t len = geom::ncols(ima);
 	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	    file.write((char*)(& ima(p)), len);
 	}
@@ -70,10 +71,8 @@ namespace mln
 	{
 	  // FIXME: code for g++-2.95 when sizeof(int_u8) == 2!!!
 	  const int
-	    min_col = ima.domain().pmin().col(),
-	    max_col = ima.domain().pmax().col();
-	  std::cout << min_row << ' ' << max_row << std::endl;
-	  std::cout << min_col << ' ' << max_col << std::endl;
+	    min_col = geom::min_col(ima),
+	    max_col = geom::max_col(ima);
 	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
 	      {

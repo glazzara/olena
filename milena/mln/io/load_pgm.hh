@@ -137,11 +137,11 @@ namespace mln
 	point2d p = make::point2d(0, ima.domain().pmin().col());
 	typedef mln_value(I) V;
 	const mln_coord(I)
-	  min_row = ima.domain().pmin().row(),
-	  max_row = ima.domain().pmax().row();
+	  min_row = geom::min_row(ima),
+	  max_row = geom::max_row(ima);
 	if (sizeof(V) == 1)
 	  {
-	    size_t len = ima.ncols() * sizeof(mln_enc(V));
+	    size_t len = geom::ncols(ima) * sizeof(mln_enc(V));
 	    for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	      file.read((char*)(& ima(p)), len);
 	  }
@@ -149,8 +149,8 @@ namespace mln
 	  {
 	    // FIXME: code for g++-2.95 when sizeof(int_u8) == 2!!!
 	    const mln_coord(I)
-	      min_col = ima.domain().pmin().col(),
-	      max_col = ima.domain().pmax().col();
+	      min_col = geom::min_col(ima),
+	      max_col = geom::max_col(ima);
 	    for (p.row()  = min_row; p.row() <= max_row; ++p.row())
 	      for (p.col()  = min_col; p.col() <= max_col; ++p.col())
 		{

@@ -55,8 +55,8 @@ namespace mln
 	mln_precondition(output.has_data());
 
 	int
-	  min_row = input.min_row(), max_row = input.max_row(),
-	  min_col = input.min_col(), max_col = input.max_col();
+	  min_row = geom::min_row(input), max_row = geom::max_row(input),
+	  min_col = geom::min_col(input), max_col = geom::max_col(input);
 
 	window2d
 	  win_fwd_plus  = win - (win + left),
@@ -76,7 +76,7 @@ namespace mln
 
 	// initialization
 
-	p = input.domain().pmin() + up;
+	p = input.bbox().pmin() + up;
 	med.init();
 	{
 	  mln_qiter(W) q(win, p);
@@ -137,9 +137,8 @@ namespace mln
       {
 
 	const int
-	  max_row = input.max_row(),
-	  min_col = input.min_col(),
-	  max_col = input.max_col();
+	  min_row = geom::min_row(input), max_row = geom::max_row(input),
+	  min_col = geom::min_col(input), max_col = geom::max_col(input);
 	const unsigned half = win.length() / 2;
 
 	point2d p;
@@ -148,7 +147,7 @@ namespace mln
 
 	accu::median<mln_vset(I)> med(input.values());
 
-	for (row = input.min_row(); row <= max_row; ++row)
+	for (row = min_row; row <= max_row; ++row)
 	  {
 	    int ct, cu;
 

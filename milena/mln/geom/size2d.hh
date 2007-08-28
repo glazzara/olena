@@ -25,25 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d_b.cc
+#ifndef MLN_GEOM_SIZE2D_HH
+# define MLN_GEOM_SIZE2D_HH
+
+/*! \file mln/geom/size2d.hh
  *
- * \brief Tests on mln::image2d_b.
+ * \brief Facade to include 2D size access routines.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/geom/size2d.hh>
+# include <mln/geom/nrows.hh>
+# include <mln/geom/ncols.hh>
 
 
-int main()
-{
-  using namespace mln;
-
-  const unsigned nrows = 1;
-  const unsigned ncols = 66;
-  const unsigned border = 4;
-
-  image2d_b<int> f(nrows, ncols, border);
-
-  mln_assertion(f.npoints() == geom::nrows(f) * geom::ncols(f));
-  mln_assertion(f.ncells()  == (nrows + 2 * border) * (ncols + 2 * border));
-}
+#endif // ! MLN_GEOM_SIZE2D_HH

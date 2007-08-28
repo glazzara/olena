@@ -35,6 +35,7 @@
 
 # include <mln/core/internal/pixel_iterator_base.hh>
 # include <mln/core/point2d.hh>
+# include <mln/geom/size2d.hh>
 
 
 
@@ -84,8 +85,8 @@ namespace mln
   {
     mln_precondition(image.has_data());
     border_x2_ = 2 * image.border();
-    row_offset_ = image.max_col() - image.min_col() + 1 + border_x2_;
-    eor_ = & image.at(image.min_row(), image.max_col()) + 1;
+    row_offset_ = geom::max_col(image) - geom::min_col(image) + 1 + border_x2_;
+    eor_ = & image.at(geom::min_row(image), geom::max_col(image)) + 1;
   }
 
   template <typename I>

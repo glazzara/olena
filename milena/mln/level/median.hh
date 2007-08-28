@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/geom/size2d.hh>
 
 # include <mln/core/window2d.hh>
 # include <mln/core/win/hline2d.hh>
@@ -162,9 +163,10 @@ namespace mln
       {
 	typedef mln_coord(I) coord;
 	const coord
-	  max_row = input.bbox().max_row(),
-	  min_col = input.bbox().min_col(),
-	  max_col = input.bbox().max_col();
+	  min_row = geom::min_row(input),
+	  max_row = geom::max_row(input),
+	  min_col = geom::min_col(input),
+	  max_col = geom::max_col(input);
 	const coord half = win.length() / 2;
 
 	point2d p;
@@ -179,7 +181,7 @@ namespace mln
 
 	accu::median<mln_vset(I)> med(input.values());
 
-	for (row = input.bbox().min_row(); row <= max_row; ++row)
+	for (row = min_row; row <= max_row; ++row)
 	  {
 	    pt.row() = pu.row() = row;
 

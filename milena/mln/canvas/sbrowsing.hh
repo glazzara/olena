@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/dpoint2d.hh> // for "up"
+# include <mln/geom/size2d.hh>
 
 
 namespace mln
@@ -69,11 +70,11 @@ namespace mln
     {
       mln_precondition(f.input.has_data());
       int
-	min_row = f.input.min_row(), max_row = f.input.max_row(),
-	min_col = f.input.min_col(), max_col = f.input.max_col();
+	min_row = geom::min_row(f.input), max_row = geom::max_row(f.input),
+	min_col = geom::min_col(f.input), max_col = geom::max_col(f.input);
 
       // p
-      f.p = f.input.domain().pmin() + up;
+      f.p = f.input.bbox().pmin() + up;
       int& row = f.p.row();
       int& col = f.p.col();
 

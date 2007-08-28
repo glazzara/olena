@@ -73,8 +73,8 @@ namespace mln
 	mln_precondition(output.has_data());
 
 	int
-	  min_row = input.min_row(), max_row = input.max_row(),
-	  min_col = input.min_col(), max_col = input.max_col();
+	  min_row = geom::min_row(input), max_row = geom::max_row(input),
+	  min_col = geom::min_col(input), max_col = geom::max_col(input);
 
 	window2d
 	  win_fwd_plus  = win - (win + left),

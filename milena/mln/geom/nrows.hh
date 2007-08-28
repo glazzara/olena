@@ -25,25 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d_b.cc
+#ifndef MLN_GEOM_NROWS_HH
+# define MLN_GEOM_NROWS_HH
+
+/*! \file mln/geom/nrows.hh
  *
- * \brief Tests on mln::image2d_b.
+ * \brief Give the number of rows of an image.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/geom/size2d.hh>
+# include <mln/geom/min_row.hh>
+# include <mln/geom/max_row.hh>
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  const unsigned nrows = 1;
-  const unsigned ncols = 66;
-  const unsigned border = 4;
+  namespace geom
+  {
 
-  image2d_b<int> f(nrows, ncols, border);
+    /// Give the number of rows of an image.
+    template <typename I>
+    unsigned nrows(const Image<I>& ima);
 
-  mln_assertion(f.npoints() == geom::nrows(f) * geom::ncols(f));
-  mln_assertion(f.ncells()  == (nrows + 2 * border) * (ncols + 2 * border));
-}
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I>
+    unsigned nrows(const Image<I>& ima)
+    {
+      mln_precondition(exact(ima).has_data());
+      return geom::max_row(ima) - geom::min_row(ima) + 1;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::geom
+
+} // end of namespace mln
+
+
+#endif // ! MLN_GEOM_NROWS_HH

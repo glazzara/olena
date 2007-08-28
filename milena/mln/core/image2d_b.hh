@@ -34,7 +34,6 @@
  */
 
 # include <mln/core/internal/image_base.hh>
-# include <mln/core/internal/box_impl.hh>
 # include <mln/core/box2d.hh>
 
 # include <mln/border/thickness.hh>
@@ -75,8 +74,7 @@ namespace mln
    * thickness around data.
    */
   template <typename T>
-  struct image2d_b : public internal::image_base_< box2d, image2d_b<T> >,
-		     public internal::box_impl_< 2, int, image2d_b<T> >
+  struct image2d_b : public internal::image_base_< box2d, image2d_b<T> >
   {
     // Warning: just to make effective types appear in Doxygen:
     typedef box2d   pset;

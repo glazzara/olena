@@ -1,5 +1,29 @@
 2007-08-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Replace 2D specific methods in 2D images by routines.
+
+	* mln/geom/max_col.hh: New.
+	* mln/geom/nrows.hh: New.
+	* mln/geom/min_row.hh: New.
+	* mln/geom/max_row.hh: New.
+	* mln/geom/ncols.hh: New.
+	* mln/geom/size2d.hh: New.
+	* mln/geom/min_col.hh: New.
+
+	* mln/core/image2d_b.hh (image2d_b): Remove inheritance to
+	box_impl.
+
+	* tests/image2d_b.cc,
+	* mln/core/pixter2d_b.hh,
+	* mln/io/save_pgm.hh,
+	* mln/io/load_pgm.hh,
+	* mln/level/was.median.hh,
+	* mln/level/median.hh,
+	* mln/level/fast_median.hh,
+	* mln/canvas/sbrowsing.hh: Update.
+
+2007-08-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix compilation errors.
 
 	* tests/run_pset.cc: Fix and clean.
