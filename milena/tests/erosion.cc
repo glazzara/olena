@@ -54,12 +54,13 @@ int main()
   win::rectangle2d rec(21, 21);
   border::thickness = 66;
 
-  image2d_b<int_u8>
-    lena = io::load_pgm("../img/lena.pgm"),
-    out(lena.domain());
+  image2d_b<int_u8> lena = io::load_pgm("../img/lena.pgm");
 
-  morpho::erosion(lena, rec, out);
-  io::save_pgm(out, "out.pgm");
+  { 
+    image2d_b<int_u8> out(lena.domain());
+    morpho::erosion(lena, rec, out);
+    io::save_pgm(out, "out.pgm");
+  }
 
   {
     image2d_b<bool> bin(lena.domain()), out(lena.domain());

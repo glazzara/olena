@@ -148,7 +148,8 @@ namespace mln
   }
 
   template <typename E>
-  Function<E>::Function(const Function<E>&)
+  Function<E>::Function(const Function<E>& rhs)
+    : Object<E>(rhs)
   {
   }
 
@@ -158,7 +159,8 @@ namespace mln
   }
 
   template <typename E>
-  Function_v2v<E>::Function_v2v(const Function_v2v<E>&)
+  Function_v2v<E>::Function_v2v(const Function_v2v<E>& rhs)
+    : Function<E>(rhs)
   {
   }
 
@@ -168,7 +170,8 @@ namespace mln
   }
 
   template <typename E>
-  Function_i2v<E>::Function_i2v(const Function_i2v<E>&)
+  Function_i2v<E>::Function_i2v(const Function_i2v<E>& rhs)
+    : Function_v2v<E>(rhs)
   {
   }
 
@@ -178,7 +181,8 @@ namespace mln
   }
 
   template <typename E>
-  Function_p2v<E>::Function_p2v(const Function_p2v<E>&)
+  Function_p2v<E>::Function_p2v(const Function_p2v<E>& rhs)
+    : Function_v2v<E>(rhs)
   {
   }
 
@@ -188,7 +192,8 @@ namespace mln
   }
 
   template <typename E>
-  Function_v2b<E>::Function_v2b(const Function_v2b<E>&)
+  Function_v2b<E>::Function_v2b(const Function_v2b<E>& rhs)
+    : Function_v2v<E>(rhs)
   {
   }
 
@@ -198,7 +203,10 @@ namespace mln
   }
 
   template <typename E>
-  Function_p2b<E>::Function_p2b(const Function_p2b<E>&)
+  Function_p2b<E>::Function_p2b(const Function_p2b<E>& rhs)
+    : Function_v2v<E>(rhs),
+      Function_p2v<E>(rhs),
+      Function_v2b<E>(rhs)
   {
   }
 
@@ -208,7 +216,8 @@ namespace mln
   }
 
   template <typename E>
-  Function_p2p<E>::Function_p2p(const Function_p2p<E>&)
+  Function_p2p<E>::Function_p2p(const Function_p2p<E>& rhs)
+    : Function_p2v<E>(rhs)
   {
   }
 

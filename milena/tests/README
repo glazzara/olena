@@ -4,14 +4,28 @@
 
 * compilation
 
-g++-4.1 -ansi -pedantic -W -Wall -Wextra -Wconversion  -I..  sample.cc
+** g++-4.1
+*** options
+-ansi -pedantic -W -Wall -Wextra -Wconversion
+*** sample
+g++-4.1 -ansi -pedantic -W -Wall -Wextra -Wconversion -I.. sample.cc
 
-g++-2.95 -ansi -pedantic -W -Wall -Wconversion -ftemplate-depth-51  -I..  sample.cc
+** g++-2.95
+*** options
+-ansi -pedantic -W -Wall -Wconversion -ftemplate-depth-51
+*** sample
+g++-2.95 -ansi -pedantic -W -Wall -Wconversion -ftemplate-depth-51 -I.. sample.cc
+
+** icpc-9.1
+*** options
+-w1 -Wcheck -Werror -ansi
+*** sample
+icpc-9.1 -w1 -Wcheck -Werror -ansi -I.. sample.cc
 
 
 * bench
 
+** median
 naive: 18s
 median: 1s
 approx: 0.05s
-

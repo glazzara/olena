@@ -65,7 +65,7 @@ namespace mln
       typedef P point;
       typedef internal::run_psite<point> psite;
       typedef std::vector<std::pair<point, unsigned> > std_container;
-      typedef  run_fwd_piter_<P> fwd_piter;
+      typedef run_fwd_piter_<P> fwd_piter;
       typedef run_bkd_piter_<P> bkd_piter;
 
 
@@ -217,7 +217,7 @@ namespace mln
     }
 
     template <typename P, typename E>
-    run_piter_<P, E>::operator typename run_piter_<P, E>::psite () const
+    run_piter_<P, E>::operator internal::run_psite<P> () const
     {
       return site_;
     }

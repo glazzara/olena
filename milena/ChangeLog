@@ -1,3 +1,14 @@
+2007-08-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix compilation errors.
+
+	* tests/run_pset.cc: Fix and clean.
+	* tests/README: Augment.
+	* tests/erosion.cc: Clean.
+	* mln/core/internal/run_pset.hh: Fix.
+	* mln/core/concept/function.hh: Add explicit calls to cpy
+	ctors.
+
 2007-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Augment morpho and add saturation for int-like types.
