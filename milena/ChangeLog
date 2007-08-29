@@ -1,3 +1,18 @@
+2007-08-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add morphological top-hats and contrast.
+
+	* tests/morpho_gradient.cc: Fix doc.
+	* mln/geom/pmin_pmax.hh (pmin_pmax): Overload for point set.
+	* mln/geom/bbox.hh: Update.
+	* mln/morpho/includes.hh (include): Add mln/test/positive.hh
+	and mln/arith/plus.hh.
+	* mln/morpho/gradient.hh: Add commentaries.
+
+	* tests/morpho_contrast.cc: New.
+	* mln/morpho/contrast.hh: New.
+	* mln/morpho/top_hat.hh: New.
+
 2007-08-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Replace 2D specific methods in 2D images by routines.

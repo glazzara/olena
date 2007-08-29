@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/erosion.cc
+/*! \file tests/morpho_gradient.cc
  *
- * \brief Test on mln::morpho::erosion.
+ * \brief Test on mln::morpho::gradient.
  */
 
 #include <mln/core/image2d_b.hh>

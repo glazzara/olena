@@ -25,35 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
-
-/*! \file mln/morpho/includes.hh
+/*! \file tests/morpho_contrast.cc
  *
- * \brief Basic list of includes for all files in mln/morpho/.
+ * \brief Test on mln::morpho::contrast.
  */
 
+#include <mln/core/image2d_b.hh>
+#include <mln/core/win/rectangle2d.hh>
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
 
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-
-# include <mln/arith/plus.hh>
-# include <mln/arith/minus.hh>
-
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
-
-# include <mln/test/positive.hh>
-
-# include <mln/border/resize.hh>
-# include <mln/border/fill.hh>
-
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/morpho/contrast.hh>
+#include <mln/level/saturate.hh>
 
 
+int main()
+{
+  using namespace mln;
+  using value::int_u8;
 
-#endif // ! MLN_MORPHO_INCLUDES_HH
+  win::rectangle2d rect(5, 5);
+  border::thickness = 2;
+
+  image2d_b<int_u8>
+    lena = io::load_pgm("../img/tiny.pgm"),
+    out(lena.domain());
+
+  image2d_b<int> tmp(lena.domain());
+  morpho::contrast(lena, rect, tmp);
+
+  level::saturate(tmp, out);
+  io::save_pgm(out, "out.pgm");
+}

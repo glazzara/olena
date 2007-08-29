@@ -36,12 +36,29 @@
 
 # include <utility>
 
+# include <mln/core/concept/point_set.hh>
+# include <mln/core/concept/box.hh>
+
+
 
 namespace mln
 {
 
   namespace geom
   {
+
+
+    /// Compute the minimum and maximum points of point set \p s.
+    template <typename S>
+    std::pair<mln_point(S), mln_point(S)>
+    pmin_pmax(const Point_Set<S>& s);
+
+
+    /// Compute the minimum and maximum points, \p pmin and \p max,
+    /// of point set \p s.
+    template <typename S>
+    void
+    pmin_pmax(const Point_Set<S>& s,  mln_point(S)& pmin, mln_point(S)& pmax);
 
 
     /// Compute the minimum and maximum points when browsing with
@@ -61,40 +78,86 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I>
-    std::pair<mln_point(I), mln_point(I)>
-    pmin_pmax(Point_Iterator<I>& p_)
-    {
-      I& p = exact(p_);
 
-      typedef mln_point(I) P;
-      std::pair<P, P> tmp;
-      P& pmin = tmp.first;
-      P& pmax = tmp.second;
+    // Versions with point iterator. 
+
+    template <typename I>
+    void
+    pmin_pmax(const Point_Iterator<I>& p_, mln_point(I)& pmin, mln_point(I)& pmax)
+    {
+      I p = exact(p_); // a copy of p_
 
       // init with first point
       p.start();
+      mln_precondition(p.is_valid());
       pmin = pmax = p;
 
       // update with remaining points
+      typedef mln_point(I) P;
       for_all_remaining(p)
 	for (unsigned i = 0; i < P::dim; ++i)
 	  if (p[i] < pmin[i])
 	    pmin[i] = p[i];
 	  else if (p[i] > pmax[i])
 	    pmax[i] = p[i];
-
-      return tmp;
     }
 
     template <typename I>
-    void
-    pmin_pmax(const Point_Iterator<I>& p, mln_point(I)& pmin, mln_point(I)& pmax)
+    std::pair<mln_point(I), mln_point(I)>
+    pmin_pmax(const Point_Iterator<I>& p)
     {
       typedef mln_point(I) P;
-      std::pair<P, P> tmp = pmin_pmax(p);
-      pmin = tmp.first;
-      pmax = tmp.second;
+      std::pair<P, P> tmp;
+      pmin_pmax(p, tmp.first, tmp.second); // calls the previous version
+      return tmp;
+    }
+
+
+    // Versions with point set. 
+
+    namespace impl
+    {
+
+      // General case.
+
+      template <typename S>
+      void
+      pmin_pmax_(const Point_Set<S>& s, mln_point(S)& pmin, mln_point(S)& pmax)
+      {
+	mln_piter(S) it(exact(s));
+	pmin_pmax(it, pmin, pmax);
+      }
+
+      // Box.
+
+      template <typename B>
+      void
+      pmin_pmax_(const Box<B>& b, mln_point(B)& pmin, mln_point(B)& pmax)
+      {
+	pmin = exact(b).pmin();
+	pmax = exact(b).pmax();
+      }
+
+    } // end of namespace mln::geom::impl
+
+
+    template <typename S>
+    void
+    pmin_pmax(const Point_Set<S>& s, mln_point(S)& pmin, mln_point(S)& pmax)
+    {
+      mln_precondition(exact(s).npoints() != 0);
+      impl::pmin_pmax_(exact(s), pmin, pmax);
+    }
+
+    template <typename S>
+    std::pair<mln_point(S), mln_point(S)>
+    pmin_pmax(const Point_Set<S>& s)
+    {
+      mln_precondition(exact(s).npoints() != 0);
+      typedef mln_point(S) P;
+      std::pair<P, P> tmp;
+      pmin_pmax(p_, tmp.first, tmp.second); // calls the previous version
+      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

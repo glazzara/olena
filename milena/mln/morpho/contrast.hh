@@ -25,35 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
+#ifndef MLN_MORPHO_CONTRAST_HH
+# define MLN_MORPHO_CONTRAST_HH
 
-/*! \file mln/morpho/includes.hh
+/*! \file mln/morpho/contrast.hh
  *
- * \brief Basic list of includes for all files in mln/morpho/.
+ * \brief Morphological contrast operator (based on top-hats).
+ *
+ * \todo Save memory.
  */
 
-
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-
-# include <mln/arith/plus.hh>
-# include <mln/arith/minus.hh>
-
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
-
-# include <mln/test/positive.hh>
-
-# include <mln/border/resize.hh>
-# include <mln/border/fill.hh>
-
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
+# include <mln/morpho/top_hat.hh>
 
 
+namespace mln
+{
 
-#endif // ! MLN_MORPHO_INCLUDES_HH
+  namespace morpho
+  {
+
+    /*! Morphological contrast operator (based on top-hats).
+     *
+     * This operator is Id + wth_B - bth_B. 
+     */
+    template <typename I, typename W, typename O>
+    void contrast(const Image<I>& input, const Window<W>& win,
+		  Image<O>& output);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I, typename W, typename O>
+    void contrast(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
+    {
+      const I& input = exact(input_);
+      const W& win = exact(win_);
+      O& output = exact(output_);
+
+      mln_precondition(output.domain() == input.domain());
+      mln_precondition(! win.is_empty());
+
+      top_hat_white(input, win, output); // output = wth
+      arith::plus_inplace(output, input); // now output = wth + input
+      O temp(input.domain());
+      top_hat_black(input, win, temp); // temp = bth
+      arith::minus_inplace(output, temp); // now output = wth + input - bth
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::morpho
+
+} // end of namespace mln
+
+
+#endif // ! MLN_MORPHO_CONTRAST_HH

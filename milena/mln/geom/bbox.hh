@@ -100,8 +100,7 @@ namespace mln
       mln_precondition(pset.npoints() != 0);
 
       typedef mln_point(S) P;
-      mln_piter(S) p(pset);
-      std::pair<P, P> pp = geom::pmin_pmax(p);
+      std::pair<P, P> pp = geom::pmin_pmax(pset);
 
       box_<P> tmp(pp.first, pp.second);
       // FIXME: mln_postcondition(tmp <= pset.bbox());

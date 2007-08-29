@@ -25,17 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_GRADIENT_HH
-# define MLN_MORPHO_GRADIENT_HH
+#ifndef MLN_MORPHO_TOP_HAT_HH
+# define MLN_MORPHO_TOP_HAT_HH
 
-/*! \file mln/morpho/gradient.hh
+/*! \file mln/morpho/top_hat.hh
  *
- * \brief Morphological gradient.
+ * \brief Morphological top-hats.
  *
  * \todo Save memory.
  */
 
-# include <mln/morpho/includes.hh>
+# include <mln/morpho/opening.hh>
+# include <mln/morpho/closing.hh>
 
 
 namespace mln
@@ -44,56 +45,40 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological gradient.
+    /*! Morphological white top-hat (for object / light objects).
      *
-     * This operator is d_B - e_B. 
+     * This operator is Id - ope_B. 
      */
     template <typename I, typename W, typename O>
-    void gradient(const Image<I>& input, const Window<W>& win,
-		  Image<O>& output);
+    void top_hat_white(const Image<I>& input, const Window<W>& win,
+		       Image<O>& output);
 
 
-    /*! Morphological internal gradient.
+    /*! Morphological black top-hat (for background / dark objects).
      *
-     * This operator is Id - e_B. 
+     * This operator is clo_B - Id.
      */
     template <typename I, typename W, typename O>
-    void gradient_internal(const Image<I>& input, const Window<W>& win,
-			   Image<O>& output);
+    void top_hat_black(const Image<I>& input, const Window<W>& win,
+		       Image<O>& output);
 
 
-    /*! Morphological external gradient.
+    /*! Morphological self-complementary top-hat.
      *
-     * This operator is d_B - Id. 
+     * This operator is \n
+     *   = top_hat_white + top_hat_black \n
+     *   = (input - opening) + (closing - input) \n
+     *   = closing - opening. \n
      */
     template <typename I, typename W, typename O>
-    void gradient_external(const Image<I>& input, const Window<W>& win,
-			   Image<O>& output);
+    void top_hat_self_complementary(const Image<I>& input, const Window<W>& win,
+				    Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename W, typename O>
-    void gradient(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
-    {
-      const I& input = exact(input_);
-      const W& win = exact(win_);
-      O& output = exact(output_);
-
-      mln_precondition(output.domain() == input.domain());
-      mln_precondition(! win.is_empty());
-
-      dilation(input, win, output); // output = dilation
-      O temp(input.domain());
-      erosion(input, win, temp); // temp = erosion
-      arith::minus_inplace(output, temp); // now output = dilation - erosion
-
-      mln_postcondition(test::positive(output));
-    }
-
-    template <typename I, typename W, typename O>
-    void gradient_internal(const Image<I>& input_, const Window<W>& win_,
-			   Image<O>& output_)
+    void top_hat_white(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
     {
       const I& input = exact(input_);
       const W& win = exact(win_);
@@ -103,15 +88,14 @@ namespace mln
       mln_precondition(! win.is_empty());
 
       O temp(input.domain());
-      erosion(input, win, temp); // temp = erosion
-      arith::minus(input, temp, output); // output = input - erosion
+      opening(input, win, temp); // temp = opening
+      arith::minus(input, temp, output); // output = input - opening
 
       mln_postcondition(test::positive(output));
     }
 
     template <typename I, typename W, typename O>
-    void gradient_external(const Image<I>& input_, const Window<W>& win_,
-			   Image<O>& output_)
+    void top_hat_black(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
     {
       const I& input = exact(input_);
       const W& win = exact(win_);
@@ -120,8 +104,26 @@ namespace mln
       mln_precondition(output.domain() == input.domain());
       mln_precondition(! win.is_empty());
 
-      dilation(input, win, output); // output = dilation
-      arith::minus_inplace(output, input); // now output = dilation - input
+      closing(input, win, output); // output = closing
+      arith::minus_inplace(output, input); // now output = closing - input
+
+      mln_postcondition(test::positive(output));
+    }
+
+    template <typename I, typename W, typename O>
+    void top_hat_self_complementary(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
+    {
+      const I& input = exact(input_);
+      const W& win = exact(win_);
+      O& output = exact(output_);
+
+      mln_precondition(output.domain() == input.domain());
+      mln_precondition(! win.is_empty());
+
+      closing(input, win, output); // output = closing
+      O temp(input.domain());
+      opening(input, win, temp); // temp = opening
+      arith::minus_inplace(output, temp); // now output = closing - opening
 
       mln_postcondition(test::positive(output));
     }
@@ -133,4 +135,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_GRADIENT_HH
+#endif // ! MLN_MORPHO_TOP_HAT_HH
