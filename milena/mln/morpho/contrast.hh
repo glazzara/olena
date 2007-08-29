@@ -66,10 +66,10 @@ namespace mln
       mln_precondition(! win.is_empty());
 
       top_hat_white(input, win, output); // output = wth
-      arith::plus_inplace(output, input); // now output = wth + input
+      morpho::plus_inplace(output, input); // now output = wth + input
       O temp(input.domain());
       top_hat_black(input, win, temp); // temp = bth
-      arith::minus_inplace(output, temp); // now output = wth + input - bth
+      morpho::minus_inplace(output, temp); // now output = wth + input - bth
     }
 
 # endif // ! MLN_INCLUDE_ONLY

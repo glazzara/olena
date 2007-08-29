@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/erosion.cc
+/*! \file tests/morpho_erosion.cc
  *
  * \brief Test on mln::morpho::erosion.
  */

@@ -40,9 +40,6 @@
 # include <mln/accu/min.hh>
 # include <mln/accu/max.hh>
 
-# include <mln/arith/plus.hh>
-# include <mln/arith/minus.hh>
-
 # include <mln/level/compare.hh>
 # include <mln/level/fill.hh>
 
@@ -54,6 +51,8 @@
 # include <mln/morpho/dilation.hh>
 # include <mln/morpho/erosion.hh>
 
+# include <mln/morpho/minus.hh>
+# include <mln/morpho/plus.hh>
 
 
 #endif // ! MLN_MORPHO_INCLUDES_HH

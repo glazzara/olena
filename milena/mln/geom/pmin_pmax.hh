@@ -108,7 +108,7 @@ namespace mln
     {
       typedef mln_point(I) P;
       std::pair<P, P> tmp;
-      pmin_pmax(p, tmp.first, tmp.second); // calls the previous version
+      pmin_pmax(p, tmp.first, tmp.second); // Calls the previous version.
       return tmp;
     }
 
@@ -156,7 +156,7 @@ namespace mln
       mln_precondition(exact(s).npoints() != 0);
       typedef mln_point(S) P;
       std::pair<P, P> tmp;
-      pmin_pmax(p_, tmp.first, tmp.second); // calls the previous version
+      pmin_pmax(s, tmp.first, tmp.second); // Calls the previous version.
       return tmp;
     }
 

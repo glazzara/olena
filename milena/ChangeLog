@@ -1,5 +1,23 @@
 2007-08-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add morphology plus and minus.
+
+	* tests/erosion.cc: Rename as...
+	* tests/morpho_erosion.cc: ...this.
+	* mln/geom/pmin_pmax.hh: Fix.
+	* mln/morpho/plus.hh: New.
+	* mln/morpho/minus.hh: New.
+	* mln/logical: New.
+	* mln/logical/and.hh: New.
+	* mln/logical/and_not.hh: New.
+	* mln/logical/or.hh: New.
+	* mln/morpho/includes.hh,
+	* mln/morpho/gradient.hh,
+	* mln/morpho/contrast.hh,
+	* mln/morpho/top_hat.hh: Update.
+
+2007-08-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add morphological top-hats and contrast.
 
 	* tests/morpho_gradient.cc: Fix doc.

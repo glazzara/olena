@@ -89,7 +89,7 @@ namespace mln
 
       O temp(input.domain());
       opening(input, win, temp); // temp = opening
-      arith::minus(input, temp, output); // output = input - opening
+      morpho::minus(input, temp, output); // output = input - opening
 
       mln_postcondition(test::positive(output));
     }
@@ -105,7 +105,7 @@ namespace mln
       mln_precondition(! win.is_empty());
 
       closing(input, win, output); // output = closing
-      arith::minus_inplace(output, input); // now output = closing - input
+      morpho::minus_inplace(output, input); // now output = closing - input
 
       mln_postcondition(test::positive(output));
     }
@@ -123,7 +123,7 @@ namespace mln
       closing(input, win, output); // output = closing
       O temp(input.domain());
       opening(input, win, temp); // temp = opening
-      arith::minus_inplace(output, temp); // now output = closing - opening
+      morpho::minus_inplace(output, temp); // now output = closing - opening
 
       mln_postcondition(test::positive(output));
     }

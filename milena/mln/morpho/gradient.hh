@@ -86,7 +86,7 @@ namespace mln
       dilation(input, win, output); // output = dilation
       O temp(input.domain());
       erosion(input, win, temp); // temp = erosion
-      arith::minus_inplace(output, temp); // now output = dilation - erosion
+      morpho::minus_inplace(output, temp); // now output = dilation - erosion
 
       mln_postcondition(test::positive(output));
     }
@@ -104,7 +104,7 @@ namespace mln
 
       O temp(input.domain());
       erosion(input, win, temp); // temp = erosion
-      arith::minus(input, temp, output); // output = input - erosion
+      morpho::minus(input, temp, output); // output = input - erosion
 
       mln_postcondition(test::positive(output));
     }
@@ -121,7 +121,7 @@ namespace mln
       mln_precondition(! win.is_empty());
 
       dilation(input, win, output); // output = dilation
-      arith::minus_inplace(output, input); // now output = dilation - input
+      morpho::minus_inplace(output, input); // now output = dilation - input
 
       mln_postcondition(test::positive(output));
     }
