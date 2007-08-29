@@ -61,7 +61,7 @@ namespace mln
      * \param[in] lhs First operand image.
      * \param[in,out] rhs Second operand image.
      *
-     * This addition performs: \n
+     * It performs: \n
      *   for all p of rhs.domain \n
      *     lhs(p) = lhs(p) or rhs(p)
      *

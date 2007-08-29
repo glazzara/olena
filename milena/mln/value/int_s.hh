@@ -71,6 +71,9 @@ namespace mln
       /// Constructor from an integer.
       int_s(int i);
 
+      /// Assignment from an integer.
+      int_s<n>& operator=(int i);
+
       /// Negation.
       int_s<n> operator-() const;
 
@@ -132,6 +135,16 @@ namespace mln
       mln_precondition(i >= mln_min(enc));
       mln_precondition(i <= mln_max(enc));
       this->v_ = enc(i);
+    }
+
+    template <unsigned n>
+    int_s<n>&
+    int_s<n>::operator=(int i)
+    {
+      mln_precondition(i >= mln_min(enc));
+      mln_precondition(i <= mln_max(enc));
+      this->v_ = i;
+      return *this;
     }
 
     template <unsigned n>

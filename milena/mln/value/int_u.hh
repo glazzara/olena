@@ -71,6 +71,9 @@ namespace mln
       /// Constructor from an integer.
       int_u(int i);
 
+      /// Assignment from an integer.
+      int_u<n>& operator=(int i);
+
       /// Zero value.
       static const int_u<n> zero;
 
@@ -128,6 +131,16 @@ namespace mln
       mln_precondition(i >= 0);
       mln_precondition(i <= mln_max(enc));
       this->v_ = enc(i);
+    }
+
+    template <unsigned n>
+    int_u<n>&
+    int_u<n>::operator=(int i)
+    {
+      mln_precondition(i >= 0);
+      mln_precondition(i <= mln_max(enc));
+      this->v_ = i;
+      return *this;
     }
 
     template <unsigned n>

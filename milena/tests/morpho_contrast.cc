@@ -37,7 +37,11 @@
 #include <mln/io/save_pgm.hh>
 
 #include <mln/value/int_u8.hh>
+#include <mln/value/int_s.hh>
+
 #include <mln/morpho/contrast.hh>
+
+#include <mln/level/fill.hh>
 #include <mln/level/saturate.hh>
 
 
@@ -53,9 +57,23 @@ int main()
     lena = io::load_pgm("../img/tiny.pgm"),
     out(lena.domain());
 
-  image2d_b<int> tmp(lena.domain());
-  morpho::contrast(lena, rect, tmp);
+  image2d_b< value::int_s<10> >
+    in(lena.domain()),
+    tmp(lena.domain());
+
+  level::fill(in, lena);
+  morpho::contrast(in, rect, tmp);
 
   level::saturate(tmp, out);
   io::save_pgm(out, "out.pgm");
+
+  {
+    // self-duality test: 
+    morpho::complementation_inplace(in);
+    image2d_b< value::int_s<10> > tmp_(lena.domain());
+    morpho::contrast(in, rect, tmp_);
+    morpho::complementation_inplace(tmp_);
+    mln_assertion(tmp_ == tmp);
+  }
+
 }

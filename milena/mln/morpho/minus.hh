@@ -64,7 +64,9 @@ namespace mln
 		  const Image<I>& lhs, const Image<J>& rhs,
 		  Image<O>& output)
       {
+	// FIXME: mln_precondition(rhs <= lhs);
 	return logical::and_not(lhs, rhs, output);
+	// FIXME: mln_postcondition(output <= lhs);
       }
 
       template <typename K, typename I, typename J, typename O>
@@ -85,19 +87,14 @@ namespace mln
     {
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
-      mln_precondition(rhs <= lhs);
 
       impl::minus_(mln_value_kind(I)(), exact(lhs), exact(rhs), output);
-
-      mln_postcondition(output <= lhs);
     }
 
     template <typename I, typename J>
     void minus_inplace(Image<I>& lhs, const Image<J>& rhs)
     {
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      mln_precondition(rhs <= lhs);
-
       morpho::minus(lhs, rhs, lhs); // Calls the previous version.
     }
 

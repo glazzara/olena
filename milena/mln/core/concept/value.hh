@@ -62,6 +62,18 @@ namespace mln
   };
 
 
+
+  namespace value
+  {
+
+    /// Cast a value \p src from type \c Src to type \c Dest. 
+    template <typename Dest, typename Src>
+    Dest cast(const Src& src);
+
+  } // end of namespace mln::value
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
@@ -86,6 +98,40 @@ namespace mln
     exact(this)->operator-=(E::one);
     return exact(*this);
   }
+
+
+  namespace value
+  {
+
+    namespace internal
+    {
+
+      template <typename S>
+      const S&
+      cast_(const S& src, ...)
+      {
+	return src;
+      }
+
+      template <typename T, typename S>
+      typename S::equiv
+      cast_(const T& dummy, const Value<S>& src)
+      {
+	return exact(src);
+      }
+
+    } // end of namespace mln::value::internal
+
+
+    template <typename Dest, typename Src>
+    Dest cast(const Src& src)
+    {
+      return internal::cast_(src, src);
+    }
+
+
+  } // end of namespace mln::value
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -1,5 +1,24 @@
 2007-08-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add morphological complementation.
+
+	* tests/morpho_contrast.cc: Augment.
+	* mln/core/concept/value.hh (cast): New.
+	* mln/fun/v2v/saturate.hh: Update.
+	* mln/morpho/minus.hh: Move assertions.
+	* mln/logical/and.hh,
+	* mln/logical/and_not.hh,
+	* mln/logical/or.hh: Fix doc.
+
+	* mln/value/int_s.hh (operator=): New.
+	* mln/value/int_u.hh: Likewise.
+	* mln/morpho/complementation.hh: New.
+	* mln/morpho/includes.hh: Update.
+	* mln/arith/revert.hh: New.
+	* mln/logical/not.hh: New.
+
+2007-08-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add morphology plus and minus.
 
 	* tests/erosion.cc: Rename as...

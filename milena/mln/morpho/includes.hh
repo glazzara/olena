@@ -53,6 +53,7 @@
 
 # include <mln/morpho/minus.hh>
 # include <mln/morpho/plus.hh>
+# include <mln/morpho/complementation.hh>
 
 
 #endif // ! MLN_MORPHO_INCLUDES_HH

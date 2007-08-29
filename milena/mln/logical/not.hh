@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LOGICAL_AND_HH
-# define MLN_LOGICAL_AND_HH
+#ifndef MLN_LOGICAL_NOT_HH
+# define MLN_LOGICAL_NOT_HH
 
-/*! \file mln/logical/and.hh
+/*! \file mln/logical/not.hh
  *
- * \brief Point-wise "logical and" between binary images.
+ * \brief Point-wise "logical not" of a binary image.
  *
  * \todo Add static assertion and save one iterator in in-place version.
  */
@@ -44,31 +44,27 @@ namespace mln
   namespace logical
   {
 
-    /*! Point-wise "logical and" between images \p lhs and \p rhs.
+    /*! Point-wise "logical not" of image \p input.
      *
-     * \param[in] lhs First operand image.
-     * \param[in] rhs Second operand image.
+     * \param[in] input the input image.
      * \param[out] output The result image.
      *
-     * \pre \p output.domain == \p lhs.domain == \p rhs.domain
+     * \pre \p output.domain == \p input.domain
      */
-    template <typename L, typename R, typename O>
-    void and_(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
+    template <typename I, typename O>
+    void not_(const Image<I>& input, Image<O>& output);
 
 
-    /*! Point-wise in-place "logical and" of image \p rhs in image \p lhs.
+    /*! Point-wise in-place "logical not" of image \p input.
      *
-     * \param[in] lhs First operand image.
-     * \param[in,out] rhs Second operand image.
+     * \param[in,out] input The target image.
      *
      * It performs: \n
-     *   for all p of rhs.domain \n
-     *     lhs(p) = lhs(p) and rhs(p)
-     *
-     * \pre \p rhs.domain <= \p lhs.domain
+     *   for all p of input.domain \n
+     *     input(p) = not input(p)
      */
-    template <typename L, typename R>
-    void and_inplace(Image<L>& lhs, const Image<R>& rhs);
+    template <typename I>
+    void not_inplace(Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -76,25 +72,23 @@ namespace mln
     namespace impl
     {
 
-      template <typename L, typename R, typename O>
-      void and__(const Image<L>& lhs_, const Image<R>& rhs_, Image<O>& output_)
+      template <typename I, typename O>
+      void not__(const Image<I>& input_, Image<O>& output_)
       {
-	const L& lhs = exact(lhs_);
-	const R& rhs = exact(rhs_);
+	const I& input = exact(input_);
 	O& output = exact(output_);
-	mln_piter(L) p(lhs.domain());
+	mln_piter(I) p(input.domain());
 	for_all(p)
-	  output(p) = lhs(p) && rhs(p);
+	  output(p) = ! input(p);
       }
 
-      template <typename L, typename R, typename O>
-      void and__(const Fast_Image<L>& lhs, const Fast_Image<R>& rhs, Fast_Image<O>& output)
+      template <typename I, typename O>
+      void not__(const Fast_Image<I>& input, Fast_Image<O>& output)
       {
-	mln_pixter(const L) lp(exact(lhs));
-	mln_pixter(const R) rp(exact(rhs));
+	mln_pixter(const I) ip(exact(input));
 	mln_pixter(O)       op(exact(output));
-	for_all_3(lp, rp, op)
-	  op.val() = lp.val() && rp.val();
+	for_all_2(ip, op)
+	  op.val() = ! ip.val();
       }
 
     } // end of namespace mln::logical::impl
@@ -102,19 +96,18 @@ namespace mln
 
     // Facades.
 
-    template <typename L, typename R, typename O>
-    void and_(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
+    template <typename I, typename O>
+    void not_(const Image<I>& input, Image<O>& output)
     {
-      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      mln_precondition(exact(output).domain() == exact(lhs).domain());
-      impl::and__(exact(lhs), exact(rhs), exact(output));
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      impl::not__(exact(input), exact(output));
     }
 
-    template <typename L, typename R>
-    void and_inplace(Image<L>& lhs, const Image<R>& rhs)
+    template <typename I>
+    void not_inplace(Image<I>& input)
     {
-      mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
-      impl::and__(exact(lhs), exact(rhs), exact(lhs));
+      mln_precondition(exact(input).has_data());
+      impl::not__(exact(input), exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -124,4 +117,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LOGICAL_AND_HH
+#endif // ! MLN_LOGICAL_NOT_HH

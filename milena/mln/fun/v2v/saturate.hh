@@ -57,7 +57,7 @@ namespace mln
 	typedef V result;
 
 	template <typename W>
-	V operator()(const W& v) const;
+	V operator()(const W& w) const;
 
       protected:
 	V min_, max_;
@@ -84,13 +84,13 @@ namespace mln
       template <typename V>
       template <typename W>
       V
-      saturate<V>::operator()(const W& v) const
+      saturate<V>::operator()(const W& w) const
       {
-	if (v < min_)
+	if (w < min_)
 	  return min_;
-	if (v > max_)
+	if (w > max_)
 	  return max_;
-	return v;
+	return mln::value::cast<V>(w);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
