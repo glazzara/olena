@@ -81,9 +81,9 @@ namespace mln
        */
       unsigned delta() const;
 
-      /*! \brief Give the symmetrical window.
+      /*! \brief Apply a central symmetry to the target window.
        */
-      E sym_() const;
+      E& sym();
     };
 
   } // end of namespace mln::doc

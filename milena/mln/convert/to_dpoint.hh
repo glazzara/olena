@@ -30,7 +30,7 @@
 
 /*! \file mln/convert/to_dpoint.hh
  *
- * \brief Convertions to mln::Dpoint.
+ * \brief Conversions to mln::Dpoint.
  */
 
 # include <mln/core/concept/generalized_point.hh>

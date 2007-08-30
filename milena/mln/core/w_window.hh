@@ -104,8 +104,8 @@ namespace mln
     const mln::window<D>& win() const;
 
 
-    /// Give the symmetrical w_window.
-    w_window<D,W> sym_() const;
+    /// Apply a central symmetry to the target window.
+    w_window<D,W>& sym();
 
   protected:
     
@@ -252,11 +252,13 @@ namespace mln
   }
 
   template <typename D, typename W>
-  w_window<D,W>
-  w_window<D,W>::sym_() const
+  w_window<D,W>&
+  w_window<D,W>::sym()
   {
-    w_window<D,W> tmp(*this);
-    tmp.win_ = - this->win_;
+    w_window<D,W> tmp;
+    for (unsigned i = 0; i < this->ndpoints(); ++i)
+      tmp.insert(this->w(i), this->dp(i));
+    *this = tmp;
     return *this;
   }
 

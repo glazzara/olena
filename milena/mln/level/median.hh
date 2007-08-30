@@ -38,10 +38,13 @@
 
 # include <mln/core/window2d.hh>
 # include <mln/core/win/hline2d.hh>
-
 # include <mln/core/t_image.hh>
+
 # include <mln/accu/median.hh>
 # include <mln/canvas/sbrowsing.hh>
+
+# include <mln/geom/shift.hh>
+# include <mln/set/diff.hh>
 
 
 namespace mln
@@ -98,9 +101,12 @@ namespace mln
 	  // aux data
 	  med(input.values()),
 	  p(),
-	  win_fp(win - (win + left)),   win_fm((win + left)  - win),
-	  win_bp(win - (win + right)),  win_bm((win + right) - win),
-	  win_dp(win - (win + up)),     win_dm((win + up)    - win),
+	  win_fp(set::diff(win, geom::shift(win, left))),
+	  win_fm(set::diff(geom::shift(win, left),  win)),
+	  win_bp(set::diff(win, geom::shift(win, right))),
+	  win_bm(set::diff(geom::shift(win, right), win)),
+	  win_dp(set::diff(win, geom::shift(win, up))),
+	  win_dm(set::diff(geom::shift(win, up),    win)),
 	  q_fp(win_fp, p),  q_fm(win_fm, p),
 	  q_bp(win_bp, p),  q_bm(win_bm, p),
 	  q_dp(win_dp, p),  q_dm(win_dm, p)

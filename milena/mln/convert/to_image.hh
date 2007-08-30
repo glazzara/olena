@@ -30,7 +30,7 @@
 
 /*! \file mln/convert/to_image.hh
  *
- * \brief Convertions to mln::Image.
+ * \brief Conversions to mln::Image.
  */
 
 # include <mln/core/image2d_b.hh>

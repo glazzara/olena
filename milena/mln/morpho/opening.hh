@@ -64,7 +64,7 @@ namespace mln
 
       O temp(input.domain());
       erosion(input, win, temp);
-      dilation(temp, -win, output);
+      dilation(temp, geom::sym(win), output);
 
       mln_postcondition(output <= input);
     }

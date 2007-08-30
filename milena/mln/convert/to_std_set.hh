@@ -25,37 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
+#ifndef MLN_CONVERT_TO_STD_SET_HH
+# define MLN_CONVERT_TO_STD_SET_HH
 
-/*! \file mln/morpho/includes.hh
+/*! \file mln/convert/to_std_set.hh
  *
- * \brief Basic list of includes for all files in mln/morpho/.
+ * \brief Conversions to std::set.
  */
 
+# include <set>
+# include <algorithm>
+# include <iterator>
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
-
-# include <mln/test/positive.hh>
-
-# include <mln/border/resize.hh>
-# include <mln/border/fill.hh>
-
-# include <mln/geom/sym.hh>
-
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
-
-# include <mln/morpho/minus.hh>
-# include <mln/morpho/plus.hh>
-# include <mln/morpho/complementation.hh>
+# include <mln/core/window.hh>
 
 
-#endif // ! MLN_MORPHO_INCLUDES_HH
+namespace mln
+{
+
+  namespace convert
+  {
+
+    /// Convert a window \p win into a std::set of delta-points.
+    template <typename W>
+    std::set<mln_dpoint(W)> to_std_set(const Window<W>& win);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename W>
+    std::set<mln_dpoint(W)> to_std_set(const Window<W>& win)
+    {
+      typedef mln_dpoint(W) D;
+      typedef mln_point(D)  P;
+      std::set<D> s;
+      mln_qiter(W) q(exact(win), P::zero);
+      for_all(q)
+	s.insert(q - P::zero);
+      return s;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::convert
+
+} // end of namespace mln
+
+
+#endif // ! MLN_CONVERT_TO_STD_SET_HH

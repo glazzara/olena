@@ -89,9 +89,9 @@ namespace mln
        */
       const window& win() const;
 
-      /*! \brief Give the symmetrical weighted_window.
+      /*! \brief Apply a central symmetry to the target weighted window.
        */
-      E sym_() const;
+      E& sym();
     };
 
   } // end of namespace mln::doc

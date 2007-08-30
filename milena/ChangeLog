@@ -1,3 +1,42 @@
+2007-08-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make operations on windows more explicit.
+
+	* mln/convert/to_std_set.hh: New.
+	* mln/geom/sym.hh: New.
+	* mln/geom/shift.hh: New.
+	* mln/set: New directory.
+	* mln/set/inter.hh: New.
+	* mln/set/diff.hh: New.
+	* mln/set/union.hh: New.
+	* mln/set/sym_diff.hh: New.
+
+	* mln/convert/to_image.hh: Typo.
+	* mln/convert/to_window.hh (to_window): New overload.
+	* mln/convert/to_dpoint.hh: Typo.
+	* mln/core/w_window.hh (sym_): Rename as...
+	(sym): ...this and update.
+	* mln/core/window.hh: Likewise.
+	(operator-): Remove the unary version.
+	(operator+, operator-): Remove; now handle by...
+	* mln/geom/shift.hh (shift): ...this.
+	* mln/core/concept/weighted_window.hh: Update.
+	(operator-): Remove.
+	* mln/core/concept/window.hh: Likewise.
+	* mln/core/concept/doc/weighted_window.hh,
+	* mln/core/concept/doc/window.hh,
+	* mln/core/win/vline2d.hh,
+	* mln/core/win/hline2d.hh,
+	* mln/core/win/rectangle2d.hh,
+	* mln/morpho/includes.hh,
+	* mln/morpho/closing.hh,
+	* mln/morpho/opening.hh,
+	* mln/level/was.median.hh,
+	* mln/level/median.hh,
+	* mln/level/fast_median.hh,
+	* tests/rectangle2d.cc: Update.
+	* mln/core/concept/value.hh: Fix warning.
+
 2007-08-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add morphological complementation.

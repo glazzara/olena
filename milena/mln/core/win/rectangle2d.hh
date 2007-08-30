@@ -111,8 +111,8 @@ namespace mln
        */
       unsigned delta() const;
 
-      /// Get the symmetrical window.
-      rectangle2d sym_() const;
+      /// Apply a central symmetry to the target window.
+      rectangle2d& sym();
 
     protected:
       unsigned height_, width_;
@@ -171,7 +171,7 @@ namespace mln
       return width_ > height_ ? width_ / 2 : height_ / 2;
     }
 
-    rectangle2d rectangle2d::sym_() const
+    rectangle2d& rectangle2d::sym()
     {
       return *this;
     }

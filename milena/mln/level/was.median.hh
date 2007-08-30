@@ -59,12 +59,12 @@ namespace mln
 	  min_col = geom::min_col(input), max_col = geom::max_col(input);
 
 	window2d
-	  win_fwd_plus  = win - (win + left),
-	  win_fwd_minus = (win + left) - win,
-	  win_bkd_plus  = win - (win + right),
-	  win_bkd_minus = (win + right) - win,
-	  win_bot  = win - (win + up),
-	  win_top = (win + up) - win;
+	  win_fwd_plus  = set::diff(win, geom::shift(win, left)),
+	  win_fwd_minus = set::diff(geom::shift(win, left), win),
+	  win_bkd_plus  = set::diff(win, geom::shift(win, right)),
+	  win_bkd_minus = set::diff(geom::shift(win, right), win),
+	  win_bot  = set::diff(win, geom::shift(win, up)),
+	  win_top = set::diff(geom::shift(win, up), win);
 
 	point2d p;
 	mln_qiter(W)

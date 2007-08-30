@@ -39,6 +39,7 @@
 namespace mln
 {
 
+
   /*! \brief Base class for implementation classes that are windows.
    *
    * \see mln::doc::Window for a complete documentation of this class
@@ -61,7 +62,7 @@ namespace mln
 
       unsigned delta() const;
 
-      E sym_() const;
+      E& sym();
     */
 
   protected:
@@ -69,20 +70,15 @@ namespace mln
   };
 
 
-  /*! \brief Compute the symmetrical window of \p rhs.
-   *
-   * \relates mln::Window
-   */
-  template <typename W>
-  W operator-(const Window<W>& rhs);
-
-
   /*! \brief Equality comparison between windows \p lhs and \p rhs.
    *
    * \relates mln::Window
+   *
+   * \todo Move into mln/set/compare.hh and delegate to replace this special impl.
    */
   template <typename Wl, typename Wr>
   bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -105,14 +101,8 @@ namespace mln
     m3 = 0;
     unsigned (E::*m4)() const = & E::delta;
     m4 = 0;
-    E (E::*m_)() const = & E::sym_;
-    m_ = 0;
-  }
-
-  template <typename W>
-  W operator-(const Window<W>& rhs)
-  {
-    return exact(rhs).sym_();
+    E& (E::*m5)() = & E::sym;
+    m5 = 0;
   }
 
   template <typename Wl, typename Wr>

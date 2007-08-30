@@ -25,37 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
+#ifndef MLN_GEOM_SYM_HH
+# define MLN_GEOM_SYM_HH
 
-/*! \file mln/morpho/includes.hh
+/*! \file mln/geom/sym.hh
  *
- * \brief Basic list of includes for all files in mln/morpho/.
+ * \brief Give the symmetrical object.
  */
 
-
-# include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
-
-# include <mln/test/positive.hh>
-
-# include <mln/border/resize.hh>
-# include <mln/border/fill.hh>
-
-# include <mln/geom/sym.hh>
-
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
-
-# include <mln/morpho/minus.hh>
-# include <mln/morpho/plus.hh>
-# include <mln/morpho/complementation.hh>
 
 
-#endif // ! MLN_MORPHO_INCLUDES_HH
+namespace mln
+{
+
+  namespace geom
+  {
+
+    /*! \brief Give the symmetrical window of \p win.
+     */
+    template <typename W>
+    W sym(const Window<W>& win);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename W>
+    W sym(const Window<W>& win)
+    {
+      W tmp = exact(win);
+      return tmp.sym();
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::geom
+
+} // end of namespace mln
+
+
+#endif // ! MLN_GEOM_SYM_HH

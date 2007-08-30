@@ -25,37 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
+#ifndef MLN_GEOM_SHIFT_HH
+# define MLN_GEOM_SHIFT_HH
 
-/*! \file mln/morpho/includes.hh
+/*! \file mln/geom/shift.hh
  *
- * \brief Basic list of includes for all files in mln/morpho/.
+ * \brief Shift.
  */
 
-
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
-
-# include <mln/test/positive.hh>
-
-# include <mln/border/resize.hh>
-# include <mln/border/fill.hh>
-
-# include <mln/geom/sym.hh>
-
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
-
-# include <mln/morpho/minus.hh>
-# include <mln/morpho/plus.hh>
-# include <mln/morpho/complementation.hh>
+# include <mln/core/window.hh>
 
 
-#endif // ! MLN_MORPHO_INCLUDES_HH
+
+namespace mln
+{
+
+  namespace geom
+  {
+
+    /// Shift a window \p win with a delta-point \p dp.
+    template <typename W>
+    window<mln_dpoint(W)>
+    shift(const Window<W>& win, const mln_dpoint(W)& dp);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename W>
+    window<mln_dpoint(W)>
+    shift(const Window<W>& win, const mln_dpoint(W)& dp)
+    {
+      typedef mln_point(W) P;
+      window<mln_dpoint(W)> tmp;
+      mln_qiter(W) q(win, P::zero);
+      for_all(q)
+	tmp.insert(convert::to_dpoint(q) + dp);
+      return tmp;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::geom
+
+} // end of namespace mln
+
+
+#endif // ! MLN_GEOM_SHIFT_HH

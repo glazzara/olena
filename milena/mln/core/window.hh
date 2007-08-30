@@ -40,6 +40,7 @@
 # include <mln/core/box.hh>
 
 # include <mln/convert/to_dpoint.hh>
+# include <mln/geom/sym.hh>
 
 
 namespace mln
@@ -87,32 +88,14 @@ namespace mln
     /// Insert a delta-point \p dp.
     window<D>& insert(const D& dp);
 
-    /// Give the symmetrical window.
-    window<D> sym_() const;
+    /// Apply a central symmetry to the target window.
+    window<D>& sym();
 
   protected:
     
     box_<mln_point(D)> b_;
   };
 
-
-  // FIXME: Move both ops below to mln/core/concept/window.hh
-
-  /// Shift a window \p win with a delta-point \p dp.
-  template <typename W>
-  window<mln_dpoint(W)> operator+(const Window<W>& win,
-				  const mln_dpoint(W)& dp);
-
-  /// Shift a window \p win with the delta-point (-\p dp).
-  template <typename W>
-  window<mln_dpoint(W)> operator-(const Window<W>& win,
-				  const mln_dpoint(W)& dp);
-
-  /// Substract \p rhs from \p lhs.
-  // FIXME: Give details!
-  template <typename Wl, typename Wr>
-  window<mln_dpoint(Wl)> operator-(const Window<Wl>& lhs,
-				   const Window<Wr>& rhs);
 
 
 
@@ -128,7 +111,7 @@ namespace mln
   template <typename D>
   bool window<D>::is_symmetric() const
   {
-    return this->sym_() == *this;
+    return geom::sym(*this) == *this;
   }
 
   template <typename D>
@@ -141,52 +124,15 @@ namespace mln
   }
 
   template <typename D>
-  window<D>
-  window<D>::sym_() const
+  window<D>&
+  window<D>::sym()
   {
     window<D> tmp;
     const unsigned n = this->ndpoints();
     for (unsigned i = 0; i < n; ++i)
       tmp.insert(- this->dp(i));
-    return tmp;
-  }
-
-
-  // operators
-
-  template <typename W>
-  window<mln_dpoint(W)> operator+(const Window<W>& win,
-				  const mln_dpoint(W)& dp)
-  {
-    typedef mln_point(W) P;
-    window<mln_dpoint(W)> tmp;
-    mln_qiter(W) q(win, P::zero);
-    for_all(q)
-      tmp.insert(convert::to_dpoint(q) + dp);
-    return tmp;
-  }
-
-  template <typename W>
-  window<mln_dpoint(W)> operator-(const Window<W>& win,
-				  const mln_dpoint(W)& dp)
-  {
-    return win + (-dp);
-  }
-
-  template <typename W, typename Wr>
-  window<mln_dpoint(W)> operator-(const Window<W>& lhs,
-				  const Window<Wr>& rhs)
-  {
-    typedef mln_point(W) P;
-    window<mln_dpoint(W)> tmp;
-    mln_qiter(W) q(lhs, P::zero);
-    for_all(q)
-      {
-	mln_dpoint(W) dp = convert::to_dpoint(q);
-	if (! exact(rhs).has(dp))
-	  tmp.insert(dp);
-      }
-    return tmp;
+    *this = tmp;
+    return *this;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

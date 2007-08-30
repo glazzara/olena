@@ -25,37 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
+#ifndef MLN_SET_INTER_HH
+# define MLN_SET_INTER_HH
 
-/*! \file mln/morpho/includes.hh
+/*! \file mln/set/inter.hh
  *
- * \brief Basic list of includes for all files in mln/morpho/.
+ * \brief Several routines to compute the intersection between a
+ * couple of sets.
  */
 
-
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
-
-# include <mln/test/positive.hh>
-
-# include <mln/border/resize.hh>
-# include <mln/border/fill.hh>
-
-# include <mln/geom/sym.hh>
-
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
-
-# include <mln/morpho/minus.hh>
-# include <mln/morpho/plus.hh>
-# include <mln/morpho/complementation.hh>
+# include <mln/convert/to_std_set.hh>
+# include <mln/convert/to_window.hh>
+# include <mln/metal/equal.hh>
 
 
-#endif // ! MLN_MORPHO_INCLUDES_HH
+
+namespace mln
+{
+
+  namespace set
+  {
+
+    /*! \brief Intersection between a couple of windows.
+     *
+     * \relates mln::Window
+     */
+    template <typename Wl, typename Wr>
+    window<mln_dpoint(Wl)>
+    inter(const Window<Wl>& lhs, const Window<Wr>& rhs);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename Wl, typename Wr>
+    window<mln_dpoint(Wl)>
+    inter(const Window<Wl>& lhs, const Window<Wr>& rhs)
+    {
+      mln::metal::equal<mln_dpoint(Wl), mln_dpoint(Wr)>::check();
+      typedef mln_dpoint(Wl) D;
+      std::set<D>
+	sl = convert::to_std_set(lhs),
+	sr = convert::to_std_set(rhs),
+	s;
+      std::set_intersection(sl.begin(), sl.end(),
+			    sr.begin(), sr.end(),
+			    std::inserter(s, s.begin()));
+      return convert::to_window(s);
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::set
+
+} // end of namespace mln
+
+
+#endif // ! MLN_SET_INTER_HH

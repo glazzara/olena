@@ -115,7 +115,7 @@ namespace mln
 
       template <typename T, typename S>
       typename S::equiv
-      cast_(const T& dummy, const Value<S>& src)
+      cast_(const T&, const Value<S>& src)
       {
 	return exact(src);
       }

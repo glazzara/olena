@@ -33,10 +33,14 @@
  * \brief Conversions to mln::window.
  */
 
+# include <set>
+ 
+# include <mln/core/concept/dpoint.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/window.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
+# include <mln/metal/is_a.hh>
 
 
 namespace mln
@@ -56,6 +60,10 @@ namespace mln
     /// Convert a point set \p pset into a window.
     template <typename S, typename F>
     window<mln_dpoint(S)> to_window(const Point_Set<S>& pset);
+
+    /// Convert an std::set \p s of delta-points into a window.
+    template <typename D>
+    window<D> to_window(const std::set<D>& s);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -93,6 +101,17 @@ namespace mln
     window<mln_dpoint(S)> to_window(const Point_Set<S>& pset)
     {
       return to_window(pw::cst(true) | pset);
+    }
+
+    template <typename D>
+    window<D> to_window(const std::set<D>& s)
+    {
+      mln::metal::is_a<D, Dpoint>::check();
+      window<D> win;
+      for (typename std::set<D>::const_iterator i = s.begin();
+	   i != s.end(); ++i)
+	win.insert(*i);
+      return win;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

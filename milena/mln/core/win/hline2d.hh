@@ -106,8 +106,8 @@ namespace mln
        */
       unsigned delta() const;
 
-      /// Get the symmetrical window.
-      hline2d sym_() const;
+      /// Apply a central symmetry to the target window.
+      hline2d& sym();
 
     protected:
       unsigned length_;
@@ -159,7 +159,7 @@ namespace mln
       return length_ / 2;
     }
 
-    hline2d hline2d::sym_() const
+    hline2d& hline2d::sym()
     {
       return *this;
     }

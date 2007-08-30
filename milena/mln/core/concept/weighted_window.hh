@@ -58,7 +58,7 @@ namespace mln
       typedef weight;
       typedef window;
 
-      E sym_() const;
+      E& sym();
     */
 
     /// Test if the weighted window is empty; final method.
@@ -107,17 +107,11 @@ namespace mln
     typedef mln_fwd_qiter(E) fwd_qiter;
     typedef mln_bkd_qiter(E) bkd_qiter;
 
-    E (E::*m1)() const = & E::sym_;
+    E& (E::*m1)() = & E::sym;
     m1 = 0;
 
     const window& (E::*m2)() const = & E::win;
     m2 = 0;
-  }
-
-  template <typename W>
-  W operator-(const Weighted_Window<W>& rhs)
-  {
-    return exact(rhs).sym_();
   }
 
 # endif // ! MLN_INCLUDE_ONLY
