@@ -25,75 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_VALUE_HH
-# define MLN_CORE_CONCEPT_VALUE_HH
-
-/*! \file mln/core/concept/value.hh
- * \brief Definition of the concept of mln::Value.
+/*! \file tests/morpho_laplacian.cc
+ *
+ * \brief Test on mln::morpho::laplacian.
  */
 
-# include <mln/core/concept/object.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/win/rectangle2d.hh>
+
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
+
+#include <mln/value/int_u_sat.hh>
+#include <mln/core/cast_image.hh>
+#include <mln/pw/image.hh>
+#include <mln/arith/plus.hh>
+
+#include <mln/morpho/laplacian.hh>
 
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  /*! \brief Base class for implementation classes of values.
-   *
-   * \see mln::doc::Value for a complete documentation of this class
-   * contents.
-   */
-  template <typename E>
-  struct Value : public Object<E>
-  {
-    /*
-      typedef enc;   // encoding type
-      typedef equiv; // equivalent type
-    */
+  win::rectangle2d rect(5, 5);
+  border::thickness = 2;
 
-    /// Pre-incrementation.
-    E& operator++();
+  image2d_b<int_u8> lena = io::load_pgm("../img/tiny.pgm");
+  image2d_b<int> lap(lena.domain());
+  morpho::laplacian(lena, rect, lap);
 
-    /// Pre-decrementation.
-    E& operator--();
-
-  protected:
-    Value();
-  };
-
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <typename E>
-  Value<E>::Value()
-  {
-    typedef mln_enc(E) enc;
-    typedef mln_equiv(E) equiv;
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator++()
-  {
-    exact(this)->operator+=(E::one);
-    return exact(*this);
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator--()
-  {
-    exact(this)->operator-=(E::one);
-    return exact(*this);
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-} // end of namespace mln
-
-
-# include <mln/value/cast.hh>
-
-
-#endif // ! MLN_CORE_CONCEPT_VALUE_HH
+  image2d_b< value::int_u_sat<8> > out(lena.domain());
+  arith::plus_cst(lap, 128, out);
+  io::save_pgm(out, "out.pgm");
+}

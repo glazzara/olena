@@ -61,7 +61,7 @@ namespace mln
 
     /*! Morphological hit-or-miss opening.
      *
-     * This operator is d_(-Bh) o HMT_(Bh,Bm).
+     * This operator is HMTope_(Bh,Bm) = d_(-Bh) o HMT_(Bh,Bm).
      */
     template <typename I, typename Wh, typename Wm, typename O>
     void hit_or_miss_opening(const Image<I>& input,
@@ -70,7 +70,7 @@ namespace mln
 
     /*! Morphological hit-or-miss opening of the background.
      *
-     * This operator is FIXME.
+     * This operator is HMTopeBG = HMTope_(Bm,Bh) o C = d_(-Bm) o HMT_(Bh,Bm).
      */
     template <typename I, typename Wh, typename Wm, typename O>
     void hit_or_miss_background_opening(const Image<I>& input,
@@ -79,7 +79,7 @@ namespace mln
 
     /*! Morphological hit-or-miss closing.
      *
-     * This operator is FIXME.
+     * This operator is C o HMTope o C.
      */
     template <typename I, typename Wh, typename Wm, typename O>
     void hit_or_miss_closing(const Image<I>& input,
@@ -88,7 +88,7 @@ namespace mln
 
     /*! Morphological hit-or-miss closing of the background.
      *
-     * This operator is FIXME.
+     * This operator is C o HMTopeBG o C.
      */
     template <typename I, typename Wh, typename Wm, typename O>
     void hit_or_miss_background_closing(const Image<I>& input,
@@ -150,7 +150,8 @@ namespace mln
 		erosion(input, win_hit,  ero_fg);
 		dilation(input, win_miss, dil_bg);
 		level::fill(output,
-			    fun::p2v::ternary(pw::value(input) == pw::value(ero_fg) && pw::value(dil_bg) < pw::value(input),
+			    fun::p2v::ternary(pw::value(input) == pw::value(ero_fg)
+					        && pw::value(dil_bg) < pw::value(input),
 					      pw::value(input) - pw::value(dil_bg),
 					      pw::cst(V::zero)));
 	      }
@@ -160,12 +161,13 @@ namespace mln
 		erosion(input, win_miss, ero_bg);
 		dilation(input, win_hit, dil_fg);
 		level::fill(output,
-			    fun::p2v::ternary(pw::value(input) == pw::value(dil_fg) && pw::value(ero_bg) > pw::value(input),
+			    fun::p2v::ternary(pw::value(input) == pw::value(dil_fg)
+					        && pw::value(ero_bg) > pw::value(input),
 					      pw::value(ero_bg) - pw::value(input),
 					      pw::cst(V::zero)));
 	      }
 	    else
-	      level::fill(output, pw::cst(V::zero));
+	      level::fill(output, V::zero);
 	  }
 	else // Unconstrained: UHMT.
 	  {
@@ -201,6 +203,7 @@ namespace mln
       O temp(exact(input).domain());
       hit_or_miss(input, win_hit, win_miss, temp);
       dilation(temp, geom::sym(win_hit), output);
+      // FIXME: Postcondition.
     }
 
     template <typename I, typename Wh, typename Wm, typename O>
@@ -209,7 +212,18 @@ namespace mln
 					Image<O>& output)
     {
       impl::hit_or_miss_preconditions_(input, win_hit, win_miss, output);
-      hit_or_miss_opening(input, win_miss, win_hit, output);
+      O temp(exact(input).domain());
+      complementation(input, temp);
+      hit_or_miss_opening(temp, win_miss, win_hit, output);
+#  ifndef NDEBUG
+      {
+	O temp(exact(input).domain());
+	hit_or_miss(input, win_hit, win_miss, temp);
+	O output_(exact(input).domain());
+	dilation(temp, geom::sym(win_miss), output_);
+	mln_postcondition(output_ == output);
+      }
+#  endif // ! NDEBUG
     }
 
     template <typename I, typename Wh, typename Wm, typename O>
@@ -222,6 +236,7 @@ namespace mln
       complementation(input, temp);
       hit_or_miss_opening(temp, win_hit, win_miss, output);
       complementation_inplace(output);
+      // FIXME: Postcondition.
     }
 
     template <typename I, typename Wh, typename Wm, typename O>
@@ -231,6 +246,16 @@ namespace mln
     {
       impl::hit_or_miss_preconditions_(input, win_hit, win_miss, output);
       hit_or_miss_closing(input, win_miss, win_hit, output);
+#  ifndef NDEBUG
+      {
+	O temp(exact(input).domain());
+	complementation(input, temp);
+	O output_(exact(input).domain());
+	hit_or_miss_background_opening(temp, win_hit, win_miss, output_);
+	complementation_inplace(output_);
+	mln_postcondition(output_ == output);
+      }
+#  endif // ! NDEBUG
     }
 
 # endif // ! MLN_INCLUDE_ONLY

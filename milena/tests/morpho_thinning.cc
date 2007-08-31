@@ -25,75 +25,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_VALUE_HH
-# define MLN_CORE_CONCEPT_VALUE_HH
-
-/*! \file mln/core/concept/value.hh
- * \brief Definition of the concept of mln::Value.
+/*! \file tests/morpho_thinning.cc
+ *
+ * \brief Test on mln::morpho::thinning.
  */
 
-# include <mln/core/concept/object.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
+
+#include <mln/core/win/rectangle2d.hh>
+#include <mln/core/window2d.hh>
+
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
+
+#include <mln/morpho/thinning.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  /*! \brief Base class for implementation classes of values.
-   *
-   * \see mln::doc::Value for a complete documentation of this class
-   * contents.
-   */
-  template <typename E>
-  struct Value : public Object<E>
-  {
-    /*
-      typedef enc;   // encoding type
-      typedef equiv; // equivalent type
-    */
+  bool fg[] = { 0, 0, 0,
+		0, 1, 0,
+		0, 0, 0 };
+  window2d win_fg = make::window2d(fg);
 
-    /// Pre-incrementation.
-    E& operator++();
+  bool bg[] = { 0, 0, 0,
+		1, 0, 1,
+		0, 0, 0 };
+  window2d win_bg = make::window2d(bg);
 
-    /// Pre-decrementation.
-    E& operator--();
+  border::thickness = 2;
 
-  protected:
-    Value();
-  };
+  image2d_b<int_u8>
+    pic = io::load_pgm("../img/picasso.pgm"),
+    out(pic.domain());
 
+  morpho::thinning(pic, win_fg, win_bg, out);
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <typename E>
-  Value<E>::Value()
-  {
-    typedef mln_enc(E) enc;
-    typedef mln_equiv(E) equiv;
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator++()
-  {
-    exact(this)->operator+=(E::one);
-    return exact(*this);
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator--()
-  {
-    exact(this)->operator-=(E::one);
-    return exact(*this);
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-} // end of namespace mln
-
-
-# include <mln/value/cast.hh>
-
-
-#endif // ! MLN_CORE_CONCEPT_VALUE_HH
+  io::save_pgm(out, "out.pgm");
+}

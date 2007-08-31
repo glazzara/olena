@@ -31,9 +31,14 @@
 /*! \file mln/arith/plus.hh
  *
  * \brief Point-wise addition between images.
+ *
+ * \todo Speedup versions with cst.
  */
 
 # include <mln/core/concept/image.hh>
+
+# include <mln/pw/cst.hh>
+# include <mln/pw/image.hh>
 
 
 namespace mln
@@ -52,6 +57,18 @@ namespace mln
      */
     template <typename L, typename R, typename O>
     void plus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
+
+
+    /*! Point-wise addition of the value \p val to image \p input.
+     *
+     * \param[in] input The image.
+     * \param[in] val The value.
+     * \param[out] output The result image.
+     *
+     * \pre \p output.domain == \p input.domain
+     */
+    template <typename I, typename V, typename O>
+    void plus_cst(const Image<I>& input, const V& val, Image<O>& output);
 
 
     /*! Point-wise addition of image \p rhs in image \p lhs.
@@ -127,11 +144,25 @@ namespace mln
       impl::plus_(exact(lhs), exact(rhs), exact(output));
     }
 
+    template <typename I, typename V, typename O>
+    void plus_cst(const Image<I>& input, const V& val, Image<O>& output)
+    {
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      plus(input, pw::cst(val) | exact(input).domain(), output); // Calls the previous version.
+    }
+
     template <typename L, typename R>
     void plus_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
       impl::plus_inplace_(exact(lhs), exact(rhs));
+    }
+
+    template <typename I, typename V>
+    void plus_cst_inplace(Image<I>& input, const V& val)
+    {
+      mln_precondition(exact(input).has_data());
+      plus_inplace(input, pw::cst(val) | exact(input).domain()); // Calls the previous version.
     }
 
 # endif // ! MLN_INCLUDE_ONLY

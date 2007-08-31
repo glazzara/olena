@@ -1,5 +1,34 @@
 2007-08-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Augment morphology.
+
+	* mln/value/cast.hh: Rename as...
+	* mln/core/cast_image.hh: ...this.
+	Update.
+	* mln/core/concept/value.hh (cast): Move to and rename as...
+	* mln/value/cast.hh (cast_image): ...this, here.
+	* tests/cast_image.cc: Update.
+
+	* mln/morpho/thickening.hh: New.
+	* mln/morpho/laplacian.hh: New.
+	* mln/morpho/thick_miss.hh: New.
+	* mln/morpho/thin_fit.hh: New.
+	* mln/morpho/thinning.hh: New.
+	* tests/morpho_thinning.cc: New.
+	* tests/morpho_laplacian.cc: New.
+	* tests/morpho_hit_or_miss.cc: Update.
+
+	* mln/morpho/plus.hh (mln_postcondition): Remove.
+	* mln/morpho/minus.hh: Remove dead lines.
+	* mln/morpho/hit_or_miss.hh: Augment doc.
+	Add postconditions.
+	Add a FIXME.
+	* mln/io/save_pgm.hh: Rewrite.
+	* mln/arith/plus.hh (plus_cst, plus_cst_inplace): New.
+	* img/picasso.pgm: Invert.
+
+2007-08-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add hit-or-miss and p2v ternary+elif functions.
 
 	* tests/morpho_hit_or_miss.cc: New.

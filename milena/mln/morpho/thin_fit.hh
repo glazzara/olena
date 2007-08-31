@@ -25,75 +25,55 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_VALUE_HH
-# define MLN_CORE_CONCEPT_VALUE_HH
+#ifndef MLN_MORPHO_THIN_FIT_HH
+# define MLN_MORPHO_THIN_FIT_HH
 
-/*! \file mln/core/concept/value.hh
- * \brief Definition of the concept of mln::Value.
+/*! \file mln/morpho/thin_fit.hh
+ *
+ * \brief Morphological thin-fit.
  */
 
-# include <mln/core/concept/object.hh>
+# include <mln/morpho/hit_or_miss.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Base class for implementation classes of values.
-   *
-   * \see mln::doc::Value for a complete documentation of this class
-   * contents.
-   */
-  template <typename E>
-  struct Value : public Object<E>
+  namespace morpho
   {
-    /*
-      typedef enc;   // encoding type
-      typedef equiv; // equivalent type
-    */
 
-    /// Pre-incrementation.
-    E& operator++();
 
-    /// Pre-decrementation.
-    E& operator--();
-
-  protected:
-    Value();
-  };
-
+    /*! Morphological thin-fit.
+     *
+     * This operator is THIN_B = Id - HMTope_B where B = (Bfg, Bbg).
+     */
+    template <typename I, typename Wfg, typename Wbg, typename O>
+    void thin_fit(const Image<I>& input,
+		  const Window<Wfg>& win_fg, const Window<Wbg>& win_bg,
+		  Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename E>
-  Value<E>::Value()
-  {
-    typedef mln_enc(E) enc;
-    typedef mln_equiv(E) equiv;
-  }
+    template <typename I, typename Wfg, typename Wbg, typename O>
+    void thin_fit(const Image<I>& input,
+		  const Window<Wfg>& win_fg, const Window<Wbg>& win_bg,
+		  Image<O>& output)
+    {
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      mln_precondition(exact(win_fg).is_centered());
+      mln_precondition(set::inter(exact(win_fg), exact(win_bg)).is_empty());
 
-  template <typename E>
-  E&
-  Value<E>::operator++()
-  {
-    exact(this)->operator+=(E::one);
-    return exact(*this);
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator--()
-  {
-    exact(this)->operator-=(E::one);
-    return exact(*this);
-  }
+      O temp(exact(input).domain());
+      hit_or_miss_opening(input, win_fg, win_bg, temp);
+      morpho::minus(input, temp, output);
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-# include <mln/value/cast.hh>
-
-
-#endif // ! MLN_CORE_CONCEPT_VALUE_HH
+#endif // ! MLN_MORPHO_THIN_FIT_HH

@@ -85,10 +85,7 @@ namespace mln
     {
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
-
       impl::plus_(mln_value_kind(I)(), exact(lhs), exact(rhs), output);
-
-      mln_postcondition(output <= lhs);
     }
 
     template <typename I, typename J>

@@ -25,75 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_VALUE_HH
-# define MLN_CORE_CONCEPT_VALUE_HH
+#ifndef MLN_MORPHO_LAPLACIAN_HH
+# define MLN_MORPHO_LAPLACIAN_HH
 
-/*! \file mln/core/concept/value.hh
- * \brief Definition of the concept of mln::Value.
+/*! \file mln/morpho/laplacian.hh
+ *
+ * \brief Morphological laplacian.
+ *
+ * \todo Save memory.
  */
 
-# include <mln/core/concept/object.hh>
+# include <mln/morpho/includes.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Base class for implementation classes of values.
-   *
-   * \see mln::doc::Value for a complete documentation of this class
-   * contents.
-   */
-  template <typename E>
-  struct Value : public Object<E>
+  namespace morpho
   {
-    /*
-      typedef enc;   // encoding type
-      typedef equiv; // equivalent type
-    */
 
-    /// Pre-incrementation.
-    E& operator++();
-
-    /// Pre-decrementation.
-    E& operator--();
-
-  protected:
-    Value();
-  };
-
+    /*! Morphological laplacian.
+     *
+     * This operator is (d_B - Id) - (Id - e_B). 
+     */
+    template <typename I, typename W, typename O>
+    void laplacian(const Image<I>& input, const Window<W>& win,
+		   Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename E>
-  Value<E>::Value()
-  {
-    typedef mln_enc(E) enc;
-    typedef mln_equiv(E) equiv;
-  }
+    template <typename I, typename W, typename O>
+    void laplacian(const Image<I>& input, const Window<W>& win, Image<O>& output)
+    {
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      mln_precondition(! exact(win).is_empty());
 
-  template <typename E>
-  E&
-  Value<E>::operator++()
-  {
-    exact(this)->operator+=(E::one);
-    return exact(*this);
-  }
+      dilation(input, win, output); // output = dilation
+      morpho::minus_inplace(output, input); // now output = dilation - input
 
-  template <typename E>
-  E&
-  Value<E>::operator--()
-  {
-    exact(this)->operator-=(E::one);
-    return exact(*this);
-  }
+      O temp(exact(input).domain());
+      {
+	O temp_(exact(input).domain());
+	erosion(input, win, temp_); // temp_ = erosion
+	morpho::minus(input, temp_, temp); // temp = input - erosion
+      }
+      morpho::minus_inplace(output, temp); // now output = (dilation - input) - (input - erosion)
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-# include <mln/value/cast.hh>
-
-
-#endif // ! MLN_CORE_CONCEPT_VALUE_HH
+#endif // ! MLN_MORPHO_LAPLACIAN_HH

@@ -64,9 +64,7 @@ namespace mln
 		  const Image<I>& lhs, const Image<J>& rhs,
 		  Image<O>& output)
       {
-	// FIXME: mln_precondition(rhs <= lhs);
 	return logical::and_not(lhs, rhs, output);
-	// FIXME: mln_postcondition(output <= lhs);
       }
 
       template <typename K, typename I, typename J, typename O>
@@ -87,7 +85,6 @@ namespace mln
     {
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
-
       impl::minus_(mln_value_kind(I)(), exact(lhs), exact(rhs), output);
     }
 

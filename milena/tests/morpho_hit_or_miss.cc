@@ -76,10 +76,10 @@ int main()
   border::thickness = 2;
 
   image2d_b<int_u8>
-    lena = io::load_pgm("../img/picasso.pgm"),
-    out(lena.domain());
+    pic = io::load_pgm("../img/picasso.pgm"),
+    out(pic.domain());
 
-  morpho::hit_or_miss(lena, win_hit, win_miss, out);
+  morpho::hit_or_miss(pic, win_hit, win_miss, out);
 
   io::save_pgm(out, "out.pgm");
 }

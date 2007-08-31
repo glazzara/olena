@@ -27,14 +27,14 @@
 
 /*! \file tests/cast_image.cc
  *
- * \brief Tests on mln::value::cast_image.
+ * \brief Tests on mln::cast_image.
  */
 
 #include <mln/core/image2d_b.hh>
 #include <mln/fun/p2b/chess.hh>
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
-#include <mln/value/cast.hh>
+#include <mln/core/cast_image.hh>
 
 
 int main()
@@ -44,5 +44,5 @@ int main()
   image2d_b<bool> ima(8, 8);
   level::fill(ima, fun::p2b::chess);
   debug::println(ima);
-  debug::println( value::cast<int>(ima) );
+  debug::println( cast_image<int>(ima) );
 }
