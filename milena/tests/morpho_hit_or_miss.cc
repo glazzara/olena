@@ -25,39 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
-
-/*! \file mln/morpho/includes.hh
+/*! \file tests/morpho_hit_or_miss.cc
  *
- * \brief Basic list of includes for all files in mln/morpho/.
+ * \brief Test on mln::morpho::hit_or_miss.
  */
 
+#include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
+#include <mln/core/win/rectangle2d.hh>
+#include <mln/core/window2d.hh>
+#include <mln/geom/shift.hh>
+#include <mln/set/diff.hh>
 
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
+#include <mln/level/fill.hh>
+#include <mln/level/stretch.hh>
 
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
-
-# include <mln/test/positive.hh>
-
-# include <mln/border/resize.hh>
-# include <mln/border/fill.hh>
-
-# include <mln/geom/sym.hh>
-# include <mln/set/inter.hh>
-
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
-
-# include <mln/morpho/min.hh>
-# include <mln/morpho/complementation.hh>
-# include <mln/morpho/minus.hh>
-# include <mln/morpho/plus.hh>
+#include <mln/morpho/hit_or_miss.hh>
 
 
-#endif // ! MLN_MORPHO_INCLUDES_HH
+int main()
+{
+  using namespace mln;
+  using value::int_u8;
+
+  window2d win_hit = geom::shift(win::rectangle2d(3, 3),
+				 make::dpoint2d(+1, +1));
+  window2d win_miss = set::diff(win::rectangle2d(5, 5), win_hit);
+
+  {
+    bool hit[] = { 0, 0, 0, 0, 0,
+		   0, 0, 0, 0, 0,
+		   0, 0, 1, 1, 1,
+		   0, 0, 1, 1, 1,
+		   0, 0, 1, 1, 1 };
+    window2d win_hit_ = make::window2d(hit);
+    mln_precondition(win_hit_ == win_hit);
+
+    bool miss[] = { 1, 1, 1, 1, 1,
+		    1, 1, 1, 1, 1,
+		    1, 1, 0, 0, 0,
+		    1, 1, 0, 0, 0,
+		    1, 1, 0, 0, 0 };
+    window2d win_miss_ = make::window2d(miss);
+    mln_precondition(win_miss_ == win_miss);
+  }
+
+  border::thickness = 2;
+
+  image2d_b<int_u8>
+    lena = io::load_pgm("../img/picasso.pgm"),
+    out(lena.domain());
+
+  morpho::hit_or_miss(lena, win_hit, win_miss, out);
+
+  io::save_pgm(out, "out.pgm");
+}

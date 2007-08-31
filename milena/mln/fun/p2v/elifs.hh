@@ -25,39 +25,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
+#ifndef MLN_FUN_P2V_ELIFS_HH
+# define MLN_FUN_P2V_ELIFS_HH
 
-/*! \file mln/morpho/includes.hh
+/*! \file mln/fun/p2v/elifs.hh
  *
- * \brief Basic list of includes for all files in mln/morpho/.
+ * \brief FIXME.
  */
 
-
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
-
-# include <mln/test/positive.hh>
-
-# include <mln/border/resize.hh>
-# include <mln/border/fill.hh>
-
-# include <mln/geom/sym.hh>
-# include <mln/set/inter.hh>
-
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
-
-# include <mln/morpho/min.hh>
-# include <mln/morpho/complementation.hh>
-# include <mln/morpho/minus.hh>
-# include <mln/morpho/plus.hh>
+# include <mln/fun/p2v/ternary.hh>
 
 
-#endif // ! MLN_MORPHO_INCLUDES_HH
+namespace mln
+{
+
+  namespace fun
+  {
+
+    namespace p2v
+    {
+
+      template <typename T1, typename N1,
+		typename T2, typename N2,
+		typename O>
+      ternary_<T1, N1,
+	       ternary_<T2, N2, O> >
+      elifs(const Function_p2b<T1>& f_if_1, const Function_p2v<N1>& f_then_1,
+	    const Function_p2b<T2>& f_if_2, const Function_p2v<N2>& f_then_2,
+	    const Function_p2v<O>&  f_otherwise);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename T1, typename N1,
+		typename T2, typename N2,
+		typename O>
+      ternary_<T1, N1,
+	       ternary_<T2, N2, O> >
+      elifs(const Function_p2b<T1>& f_if_1, const Function_p2v<N1>& f_then_1,
+	    const Function_p2b<T2>& f_if_2, const Function_p2v<N2>& f_then_2,
+	    const Function_p2v<O>&  f_otherwise)
+      {
+	typedef ternary_<T2, N2, O> T2_N2_O;
+	T2_N2_O f_otherwise_1(f_if_2, f_then_2, f_otherwise);
+	ternary_<T1, N1, T2_N2_O> tmp(f_if_1, f_then_1, f_otherwise_1);
+	return tmp;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::p2v
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+
+#endif // ! MLN_FUN_P2V_ELIFS_HH

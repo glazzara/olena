@@ -1,3 +1,19 @@
+2007-08-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add hit-or-miss and p2v ternary+elif functions.
+
+	* tests/morpho_hit_or_miss.cc: New.
+	* mln/fun/p2v/elifs.hh: New.
+	* mln/fun/p2v/ternary.hh: New.
+	* mln/morpho/min.hh: New.
+	* mln/morpho/hit_or_miss.hh: New.
+	* mln/arith/min.hh: New.
+	* mln/value/int_u_sat.hh: New.
+	* img/picasso.pgm: New.
+
+	* mln/arith/revert.hh: Fix.
+	* mln/morpho/includes.hh: Update.
+
 2007-08-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make operations on windows more explicit.

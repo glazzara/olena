@@ -95,7 +95,7 @@ namespace mln
 	mln_pixter(const I) ip(exact(input));
 	mln_pixter(O)       op(exact(output));
 	for_all_2(ip, op)
-	  op.val() = mln_min(V) + (mln_max(V) - op.val());
+	  op.val() = mln_min(V) + (mln_max(V) - ip.val());
       }
 
     } // end of namespace mln::arith::impl
