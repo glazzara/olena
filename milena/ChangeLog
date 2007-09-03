@@ -1,5 +1,18 @@
 2007-09-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add room in sandbox.
+
+	* sandbox/duhamel: New.
+	* sandbox/levillain: New.
+	* sandbox/nivault: New.
+	* sandbox/jardonnet: New.
+	* sandbox/geraud: New.
+	* sandbox/garrigues: New.
+	* sandbox/cxxcompilation: Rename as...
+	* sandbox/ballas: ...this.
+
+2007-09-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix doc.
 
 	* tests/t_image.cc,
