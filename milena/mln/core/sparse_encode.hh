@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SPARSE_ENCODE_HH
 # define MLN_CORE_SPARSE_ENCODE_HH
 
-/*! \file mln/core/sparse_image.hh
+/*! \file mln/core/sparse_encode.hh
  *
  * \brief FIXME
  */

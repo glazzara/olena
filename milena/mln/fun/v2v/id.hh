@@ -28,9 +28,9 @@
 #ifndef MLN_FUN_V2V_ID_HH
 # define MLN_FUN_V2V_ID_HH
 
-/*! \file mln/fun/id.hh
+/*! \file mln/fun/v2v/id.hh
  *
- * \brief FIXME.
+ * \brief Identity function.
  */
 
 # include <mln/fun/internal/selector.hh>

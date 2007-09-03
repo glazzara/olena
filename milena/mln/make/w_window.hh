@@ -47,9 +47,8 @@ namespace mln
     /*! \brief Create a mln::w_window from a window and a weight
      *  function.
      *
-     * \param[in] weights Array.
-     *
-     * \pre The array size, \c M, has to be a square of an odd integer.
+     * \param[in] win The window.
+     * \param[in] wei A weight function.
      *
      * \return A  weighted window.
      */

@@ -1,5 +1,22 @@
 2007-09-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix doc.
+
+	* tests/t_image.cc,
+	* tests/local_convolve.cc,
+	* tests/mean.cc,
+	* tests/pw_image.cc,
+	* tests/linear_lap.cc,
+	* doc/Doxyfile.in,
+	* mln/fun/v2v/id.hh,
+	* mln/core/sparse_encode.hh,
+	* mln/core/internal/dpoints_base.hh,
+	* mln/core/rle_encode.hh,
+	* mln/make/w_window.hh: Fix doc.
+	* mln/linear/hconvolve.hh: Remove; obsolete.
+
+2007-09-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix missing file.
 
 	* mln/value/cast.hh: New.

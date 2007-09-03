@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/assign.cc
+/*! \file tests/mean.cc
  *
- * \brief Tests on mln::level::assign.
+ * \brief Tests on mln::estim::mean.
  */
 
 #include <mln/core/image2d_b.hh>

@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_DPOINTS_BASE_HH
 # define MLN_CORE_INTERNAL_DPOINTS_BASE_HH
 
-/*! \file mln/core/internal/dpoints_base_.hh
+/*! \file mln/core/internal/dpoints_base.hh
  *
  * \brief Definition of a base class for classes based on a set of dpoints.
  */

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/linear_lAP.cc
+/*! \file tests/linear_lap.cc
  *
  * \brief Tests on mln::linear::lap_4.
  */

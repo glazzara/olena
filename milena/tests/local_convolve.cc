@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/convolve.cc
+/*! \file tests/local_convolve.cc
  *
- * \brief Tests on mln::linear::convolve.
+ * \brief Tests on mln::linear::local::convolve.
  */
 
 #include <mln/core/image2d_b.hh>
