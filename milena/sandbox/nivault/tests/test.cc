@@ -34,9 +34,10 @@
 int main()
 {
   mln::image2d_b<mln::value::int_u<8u> >	im1 = mln::io::load_pgm("../../../img/lena.pgm");
-  mln::image2d_b<float>	im2;
+  mln_precondition(im1.has_data());
+  mln::image2d_b<mln::value::int_u<8u> >	im2(im1.domain());
 
-  mln::linear::gaussian(im1, 0.2, im2);
+  mln::linear::gaussian(im1, 2, im2);
 
-  // mln::io::save_pgm(im2, "gausslena.pgm");
+  mln::io::save_pgm(im2, "gausslena.pgm");
  }

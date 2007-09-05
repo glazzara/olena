@@ -1,5 +1,11 @@
 2007-09-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	Fast gaussian works on 2d images
+	* sandbox/nivault/fast_gaussian.hh: .
+	* sandbox/nivault/tests/test.cc: .
+
+2007-09-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Add fast-gaussian
 	* sandbox/nivault/fast_gaussian.hh: New.
 	* sandbox/nivault/tests/test.cc: New.

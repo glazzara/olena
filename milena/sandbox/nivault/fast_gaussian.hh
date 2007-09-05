@@ -30,7 +30,7 @@
 
 #include <mln/core/concept/image.hh>
 #include <mln/level/paste.hh>
-#include <mln/geom/ncols.hh>
+
 
 
 namespace mln
@@ -178,7 +178,7 @@ namespace mln
 	  + c.n[3]*ima(current - d - d - d)
 	  - c.d[1]*tmp1[i - 1] - c.d[2]*tmp1[i - 2]
 	  - c.d[3]*tmp1[i - 3] - c.d[4]*tmp1[i - 4];
-	current += d;
+	current = current + d;
       }
 
       // Non causal part
@@ -211,7 +211,7 @@ namespace mln
 	  + c.nm[4]*ima(current + d + d + d)
 	  - c.dm[1]*tmp2[i+1] - c.dm[2]*tmp2[i+2]
 	  - c.dm[3]*tmp2[i+3] - c.dm[4]*tmp2[i+4];
-	current -= d;
+	current = current - d;
       }
 
       // Combine results from causal and non-causal parts.
@@ -220,7 +220,7 @@ namespace mln
       for (int i = 0; i < len; ++i)
       {
 	ima(current) = tmp1[i] + tmp2[i];
-	current += d;
+	current = current + d;
       }
     }
 
@@ -230,14 +230,23 @@ namespace mln
     gaussian_(Image<I>& img_, const F& coef)
     {
       I& img = exact(img_);
-      typedef mln_point(I) P;
-      // Apply on columns.
 
-      recursivefilter_<float>(img, coef,
-			      make::point2d(0, - img.border()), // FIXME
-			      make::point2d(0, geom::ncols(img) - 1 + img.border()),
-			      geom::ncols(img) + 2 * img.border(),
-			      make::dpoint2d(0, 1));
+      // Apply on rows.
+      for (int j = 0; j < geom::ncols(img); ++j)
+	recursivefilter_<float>(img, coef,
+				make::point2d(-img.border(), j),
+				make::point2d(geom::nrows(img) - 1 + img.border(), j),
+				geom::nrows(img) + 2 * img.border(),
+				make::dpoint2d(1, 0));
+
+      // Apply on columns.
+      for (int i = 0; i < geom::nrows(img); ++i)
+	recursivefilter_<float>(img, coef,
+				make::point2d(i, -img.border()),
+				make::point2d(i, geom::ncols(img) - 1 + img.border()),
+				geom::ncols(img) + 2 * img.border(),
+				make::dpoint2d(0, 1));
+
     }
 
 
