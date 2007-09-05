@@ -1,3 +1,9 @@
+2007-09-05  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add fill optimized.
+	* sandbox/duhamel/compil.cmd: Compile fills_test.cc.
+	* sandbox/duhamel/fills_test.cc: Here.
+
 2007-09-05  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
 
 	Add 1d handling
