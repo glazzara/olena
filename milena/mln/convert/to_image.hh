@@ -55,26 +55,32 @@ namespace mln
   // FIXME: Move elsewhere.
   namespace internal
   {
-    
+
     template <typename T>
     struct helper_dim_
     {
       typedef mln_point(T) P;
       enum { value = P::dim };
     };
-    
+
     template <unsigned dim, typename V> struct helper_image_from_;
-    
+
     template <typename V>
     struct helper_image_from_< 2, V >
     {
       typedef image2d_b<V> ret;
     };
-    
+
+    template <typename V>
+    struct helper_image_from_< 1, V >
+    {
+      typedef image1d_b<V> ret;
+    };
+
   } // end of namespace mln::internal
 
 
-  // FIXME: Doc + move elsewhere!    
+  // FIXME: Doc + move elsewhere!
   template <typename T, typename V>
   struct image_from_
   {

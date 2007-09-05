@@ -1,3 +1,37 @@
+2007-09-05  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
+
+	Add 1d handling
+	* mln/convert/to_image.hh: .
+	* mln/core/box1d.hh: New.
+	* mln/core/dpoint1d.hh: New.
+	* mln/core/image1d_b.hh: New.
+	* mln/core/internal/box_impl.hh: .
+	* mln/core/neighb1d.hh: New.
+	* mln/core/pixter1d_b.hh: New.
+	* mln/core/point1d.hh: New.
+	* mln/core/w_window1d_float.hh: New.
+	* mln/core/w_window1d_int.hh: New.
+	* mln/core/win/segment1d.hh: New.
+	* mln/core/window1d.hh: New.
+	* mln/geom/max_ind.hh: New.
+	* mln/geom/min_ind.hh: New.
+	* mln/geom/ninds.hh: New.
+	* mln/geom/size1d.hh: New.
+	* mln/make/box1d.hh: New.
+	* mln/make/dpoint1d.hh: New.
+	* mln/make/point1d.hh: New.
+	* mln/make/w_window1d.hh: New.
+	* mln/make/w_window1d_int.hh: New.
+	* mln/make/window1d.hh: New.
+	* sandbox/garrigues/TODO: New.
+	* tests/box1d.cc: New.
+	* tests/dpoint1d.cc: New.
+	* tests/image1d_b.cc: New.
+	* tests/pixter1d_b.cc: New.
+	* tests/point1d.cc: New.
+	* tests/w_window1d_int.cc: New.
+	* tests/window1d.cc: New.
+
 2007-09-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fast gaussian works on 2d images

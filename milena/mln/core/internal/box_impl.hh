@@ -77,9 +77,22 @@ namespace mln
       C max_col() const;
     };
 
+    template <typename C, typename E> // FIXME: Add an extra param to replace 'unsigned'.
+    struct box_impl_<1, C, E>
+    {
+      /// Give the number of inds.
+      unsigned ninds() const;
+
+      /// Give the minimum ind.
+      C min_ind() const;
+
+      /// Give the minimum ind.
+      C max_ind() const;
+    };
+
 
 # ifndef MLN_INCLUDE_ONLY
-    
+
     // box_impl
 
     // 2
@@ -118,6 +131,26 @@ namespace mln
     C box_impl_<2, C, E>::max_col() const
     {
       return internal::force_exact<E>(*this).bbox().pmax()[1];
+    }
+
+    // 1
+
+    template <typename C, typename E>
+    unsigned box_impl_<1, C, E>::ninds() const
+    {
+      return internal::force_exact<E>(*this).bbox().len(0);
+    }
+
+    template <typename C, typename E>
+    C box_impl_<1, C, E>::min_ind() const
+    {
+      return internal::force_exact<E>(*this).bbox().pmin()[0];
+    }
+
+    template <typename C, typename E>
+    C box_impl_<1, C, E>::max_ind() const
+    {
+      return internal::force_exact<E>(*this).bbox().pmax()[0];
     }
 
 # endif // ! MLN_INCLUDE_ONLY
