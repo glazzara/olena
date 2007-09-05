@@ -102,7 +102,7 @@ namespace mln
 	O temp(exact(input).domain());
 	sobel_v(input, temp);
 	// output
-	arith::plus_inplace(output, temp);
+	arith::plus_inplace(output, temp); // FIXME: abs before plus!!!
 	level::abs_inplace(output);
       }
 

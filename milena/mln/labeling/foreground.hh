@@ -25,54 +25,55 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling.cc
+#ifndef MLN_LABELING_FOREGROUND_HH
+# define MLN_LABELING_FOREGROUND_HH
+
+/*! \file mln/labeling/foreground.hh
  *
- * \brief Tests on mln::level::labeling.
+ * \brief Connected component labeling of the object part in a binary
+ * image.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/neighb2d.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/value/label.hh>
-
-#include <mln/pw/value.hh>
-#include <mln/pw/cst.hh>
-#include <mln/fun/ops.hh>
-
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
-
-#include <mln/level/fill.hh>
-#include <mln/level/labeling.hh>
-#include <mln/level/to_enc.hh>
+# include <mln/labeling/level.hh>
 
 
-
-int main()
+namespace mln
 {
-  using namespace mln;
-  using value::int_u8;
-  using value::label;
 
-  image2d_b<int_u8> lena = io::load_pgm("../img/lena.pgm");
-
-  image2d_b<bool> bin(lena.domain());
-  level::fill(bin, pw::value(lena) > pw::cst(127));
-
+  namespace labeling
   {
-    image2d_b<int_u8> lab(lena.domain());
-    level::labeling(bin, c4(), lab);
-    io::save_pgm(lab, "lab.pgm");
-  }
 
-  {
-    image2d_b< label<8> > lab(lena.domain());
-    level::labeling(bin, c4(), lab);
-    
-    image2d_b< int_u8 > out(lena.domain());
-    level::to_enc(lab, out);
-    io::save_pgm(out, "out.pgm");
-  }
+    /*! Connected component labeling of the object part in a binary
+     * image.
+     *
+     * \param[in]  input  The input image.
+     * \param[in]  nbh    The neighborhood to consider.
+     * \param[out] output The label image.
+     * \param[out] nlabels The number of labels.
+     *
+     * \return The number of labels.
+     */
+    template <typename I, typename N, typename O>
+    bool foreground(const Image<I>& input, const Neighborhood<N>& nbh,
+		    Image<O>& output,
+		    unsigned& nlabels);
 
-}
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I, typename N, typename O>
+    bool foreground(const Image<I>& input, const Neighborhood<N>& nbh,
+		    Image<O>& output,
+		    unsigned& nlabels)
+    {
+      return labeling::level(input, true, nbh, output, nlabels);
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::labeling
+
+} // end of namespace mln
+
+
+#endif // ! MLN_LABELING_FOREGROUND_HH

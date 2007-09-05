@@ -79,6 +79,9 @@ namespace mln
     /// Constructor from a vector \p vect.
     vec_p(const std::vector<P>& vect);
 
+    /// Reserve \p n cells.
+    void reserve(std::size_t n);
+
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
 
@@ -99,6 +102,9 @@ namespace mln
 
     /// Return the \p i-th point.
     const P& operator[](unsigned i) const;
+
+    /// Hook to data.
+    std::vector<P>& hook_();
 
   protected:
 
@@ -125,6 +131,20 @@ namespace mln
     : vect_(vect)
   {
     bb_needs_update_ = true;
+  }
+
+  template <typename P>
+  void
+  vec_p<P>::reserve(std::size_t n)
+  {
+    vect_.reserve(n);
+  }
+
+  template <typename P>
+  std::vector<P>&
+  vec_p<P>::hook_()
+  {
+    return vect_;
   }
 
   template <typename P>

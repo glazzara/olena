@@ -25,16 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LABELING_FOREGROUND_HH
-# define MLN_LABELING_FOREGROUND_HH
+#ifndef MLN_LABELING_FLAT_ZONES_HH
+# define MLN_LABELING_FLAT_ZONES_HH
 
-/*! \file mln/labeling/foreground.hh
+/*! \file mln/labeling/flat_zones.hh
  *
- * \brief Foreground a function-object onto image pixel values.
+ * \brief Connected component labeling of the flat zones of an image.
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/function.hh>
+# include <mln/labeling/base.hh>
 
 
 namespace mln
@@ -43,22 +42,19 @@ namespace mln
   namespace labeling
   {
 
-    /*! Foreground a function-object to the image \p input.
+    /*! Connected component labeling of the flat zones of an image.
      *
-     * \param[in,out] input The input image.
-     * \param[in] f The function-object.
+     * \param[in]  input  The input image.
+     * \param[in]  nbh    The neighborhood to consider.
+     * \param[out] output The label image.
+     * \param[out] nlabels The number of labels.
      *
-     * This routine runs: \n
-     *   for all p of \p input, \p input(p) = \p f( \p input(p) ) \n
-     *
-     * This routine is equivalent to labeling::tranform(input, f, input)
-     * but it is faster since a single iterator is required.
-     *
-     * \todo Add versions for lowq images.
+     * \return The number of labels.
      */
-    template <typename I, typename F>
-    void foreground(Image<I>& input, const Function_v2v<F>& f);
-
+    template <typename I, typename N, typename O>
+    bool flat_zones(const Image<I>& input, const Neighborhood<N>& nbh,
+		    Image<O>& output,
+		    unsigned& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -66,34 +62,43 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename F>
-      void foreground_(Image<I>& input_, const F& f)
+      template <typename I_, typename N_, typename O_>
+      struct flat_zones_ : base_<I_,N_,O_>
       {
-	I& input   = exact(input_);
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  input(p) = f(input(p));
-      }
+	typedef mln_point(I_) P;
 
-      template <typename I, typename F>
-      void foreground_(Fast_Image<I>& input_, const F& f)
-      {
-	I& input   = exact(input_);
-	mln_pixter(I) pxl(input);
-	for_all(pxl)
-	  pxl.val() = f(pxl.val());
-      }
+	// requirements from mln::canvas::labeling:
+
+	typedef mln_pset(I_) S;
+	const S& s;
+	mln_value(O) nlabels;
+	bool status;
+
+	bool equiv(const P& n, const P&) const { return input(n) == input(p); }
+
+	// end of requirements
+
+	flat_zones_(const I_& input, const N_& nbh, O_& output)
+	  : base_<I_,N_,O_>(input, nbh, output),
+	    s(input.domain())
+	{}
+      };
 
     } // end of namespace mln::labeling::impl
 
 
     // Facade.
 
-    template <typename I, typename F>
-    void foreground(Image<I>& input, const Function_v2v<F>& f)
+    template <typename I, typename N, typename O>
+    bool flat_zones(const Image<I>& input, const Neighborhood<N>& nbh,
+		    Image<O>& output,
+		    unsigned& nlabels)
     {
-      mln_precondition(exact(input).has_data());
-      impl::foreground_(exact(input), exact(f));
+      typedef impl::flat_zones_<I,N,O> F;
+      F f(exact(input), exact(nbh), exact(output));
+      canvas::labeling<F> run(f);
+      nlabels = f.nlabels;
+      return f.status;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -103,4 +108,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LABELING_FOREGROUND_HH
+#endif // ! MLN_LABELING_FLAT_ZONES_HH

@@ -47,10 +47,13 @@ int main()
 
   image2d_b<int_u8> ima(3, 3);
   debug::iota(ima);
-  std::vector<point2d> vec = level::sort_points(ima);
-
-  std::copy(vec.begin(), vec.end(),
-	    std::ostream_iterator<point2d>(std::cout, " "));
-  std::cout << std::endl;
-
+  vec_p<point2d> vec;
+  {
+    vec = level::sort_points_increasing(ima);
+    std::cout << vec << std::endl;
+  }
+  {
+    vec = level::sort_points_decreasing(ima);
+    std::cout << vec << std::endl;
+  }
 }

@@ -86,7 +86,7 @@ namespace mln
      * \todo Take benefit from quantization when possible.
      */
     template <typename I>
-    void fill(Image<I>& ima,  mln_value(I) (*f)(const mln_point(I)& p));
+    void fill(Image<I>& ima,  mln_value(I) (*(&f))(const mln_point(I)& p));
 
 
     /*! Fill the image \p ima with the values given by the array \p arr.
@@ -191,8 +191,9 @@ namespace mln
 
     template <typename I>
     void fill(Image<I>& ima_,
-	      mln_value(I) (*f)(const mln_point(I)& p))
+	      mln_value(I) (*(&f))(const mln_point(I)& p))
     {
+      mln_precondition(f != 0);
       I& ima = exact(ima_);
       mln_precondition(ima.has_data());
       mln_piter(I) p(ima.domain());

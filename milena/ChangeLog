@@ -1,3 +1,36 @@
+2007-09-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add labeling routines.
+
+	* tests/sort_points.cc: Rename as...
+	* tests/level_sort_points.cc: ...this.
+	Augment.
+	* tests/labeling.cc: Rename as...
+	* tests/labeling_foreground.cc: ...this.
+	Update.
+	* tests/labeling_regional_maxima.cc: New.
+	* mln/convert/to_vec_p.hh: New.
+	* mln/pw/image.hh (change_value): Use fixme.
+	* mln/core/vec_p.hh (reserve, hook_): New.
+	* mln/core/vec_p_piter.hh (vec_p_bkd_piter_): Code.
+	* mln/level/sort_points.hh (sort_points): Rename as...
+	(sort_points_increasing): ...this.
+	(sort_points_decreasing): New.
+	* mln/level/fill.hh: Add & to the C function arg; that fixes
+	the behavior of icpc when calling fill with the literal 0.
+	* mln/level/labeling.hh: Remove; obsolete because of
+	labeling::level.
+	* mln/linear/sobel.hh: Add FIXME.
+	* mln/canvas/labeling.hh: New.
+	* mln/labeling/flat_zones.hh: New.
+	* mln/labeling/+foreground.hh: Remove.
+	* mln/labeling/level.hh: New.
+	* mln/labeling/foreground.hh: New.
+	* mln/labeling/regional_minima.hh: New.
+	* mln/labeling/base.hh: New.
+	* mln/labeling/regional_maxima.hh: New.
+	* mln/labeling/background.hh: New.
+
 2007-09-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add room in sandbox.

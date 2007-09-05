@@ -92,14 +92,62 @@ namespace mln
 
 
 
-  // FIXME:
+  /*! \brief Backward iterator on points of a vec_p<P>.
+   *
+   */
   template <typename P>
-  struct vec_p_bkd_piter_ : internal::fixme
-  {};
+  struct vec_p_bkd_piter_ : public Point_Iterator< vec_p_bkd_piter_<P> >
+  {
+    enum { dim = P::dim };
+
+    /// Point_Site associated type.
+    typedef P psite;
+
+    /// Point associated type.
+    typedef P point;
+
+    /// Dpoint associated type.
+    typedef mln_dpoint(P) dpoint;
+
+    /// Coordinate associated type.
+    typedef mln_coord(P) coord;
+
+    /// Coordinate associated type.
+    template <typename S>
+    vec_p_bkd_piter_(const Point_Set<S>& s);
+
+    /// Give a hook to the point address.
+    const P* pointer_() const;
+
+    /// Read-only access to the \p i-th coordinate.
+    coord operator[](unsigned i) const;
+
+    /// Test if the iterator is valid.
+    bool is_valid() const;
+
+    /// Invalidate the iterator.
+    void invalidate();
+
+    /// Start an iteration.
+    void start();
+
+    /// Go to the next point.
+    void next_();
+
+    /// Convert the iterator into a point.
+    operator P() const;
+
+  protected:
+    const std::vector<P>& vect_;
+    int i_;
+    P p_;
+  };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  // vec_p_fwd_piter_<P>
 
   template <typename P>
   template <typename S>
@@ -153,11 +201,78 @@ namespace mln
   vec_p_fwd_piter_<P>::next_()
   {
     ++i_;
-    p_ = vect_[i_];
+    if (is_valid())
+      p_ = vect_[i_];
   }
 
   template <typename P>
   vec_p_fwd_piter_<P>::operator P() const
+  {
+    mln_precondition(is_valid());
+    return p_;
+  }
+
+
+  // vec_p_bkd_piter_<P>
+
+  template <typename P>
+  template <typename S>
+  vec_p_bkd_piter_<P>::vec_p_bkd_piter_(const Point_Set<S>& s)
+    : vect_(exact(s).vect())
+  {
+    invalidate();
+  }
+
+  template <typename P>
+  const P*
+  vec_p_bkd_piter_<P>::pointer_() const
+  {
+    return & p_;
+  }
+
+  template <typename P>
+  mln_coord(P)
+  vec_p_bkd_piter_<P>::operator[](unsigned i) const
+  {
+    mln_precondition(i < dim);
+    mln_precondition(is_valid());
+    return p_[i];
+  }
+
+  template <typename P>
+  bool
+  vec_p_bkd_piter_<P>::is_valid() const
+  {
+    return i_ >= 0;
+  }
+
+  template <typename P>
+  void
+  vec_p_bkd_piter_<P>::invalidate()
+  {
+    i_ = -1;
+  }
+
+  template <typename P>
+  void
+  vec_p_bkd_piter_<P>::start()
+  {
+    i_ = vect_.size() - 1;
+    if (is_valid())
+      p_ = vect_[i_];
+  }
+
+  template <typename P>
+  void
+  vec_p_bkd_piter_<P>::next_()
+  {
+    --i_;
+    if (is_valid())
+      p_ = vect_[i_];
+  }
+
+  template <typename P>
+  vec_p_bkd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());
     return p_;

@@ -109,7 +109,7 @@ namespace mln
       template <typename U>
       struct change_value
       {
-	typedef void ret;
+	typedef internal::fixme ret;
       };
 
     protected:

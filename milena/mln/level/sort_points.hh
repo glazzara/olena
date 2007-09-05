@@ -31,13 +31,14 @@
 /*! \file mln/level/sort_points.hh
  *
  * \brief Sort_Points the contents of an image into another one.
+ *
+ * \todo Factor code + optimize.
  */
 
-# include <vector>
-# include <utility>
 # include <algorithm>
 
 # include <mln/core/concept/image.hh>
+# include <mln/convert/to_vec_p.hh>
 # include <mln/histo/compute.hh>
 
 
@@ -55,13 +56,15 @@ namespace mln
      * \pre \p input.has_data
      */
     template <typename I>
-    std::vector<mln_point(I)> sort_points(const Image<I>& input);
+    vec_p<mln_point(I)> sort_points_increasing(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
+
+      // utility
 
       template <typename I>
       struct value_point_less_
@@ -82,31 +85,40 @@ namespace mln
       };
 
       template <typename I>
-      std::vector<mln_point(I)>
-      sort_points(metal::false_, // general case
-		  const Image<I>& input_)
+      struct value_point_greater_
       {
-	const I& input  = exact(input_);
+	const I& ima_;
 
-	std::vector<mln_point(I)> vec;
-	vec.reserve(input.npoints());
+	value_point_greater_(const I& ima)
+	  : ima_(ima)
+	{
+	}
 
-	mln_fwd_piter(I) p(input.domain());
-	for_all(p)
-	  vec.push_back(p);
+	bool operator()(const mln_point(I)& lhs,
+			const mln_point(I)& rhs) const
+	{
+	  return ima_(lhs) > ima_(rhs) || (ima_(lhs) == ima_(rhs)
+					   && lhs > rhs);
+	}
+      };
 
-	std::sort(vec.begin(), vec.end(),
+
+      // increasing
+
+      template <typename I>
+      vec_p<mln_point(I)>
+      sort_points_increasing_(metal::false_, const I& input) // general case
+      {
+	vec_p<mln_point(I)> v = convert::to_vec_p(input.domain());
+	std::sort(v.hook_().begin(), v.hook_().end(),
 		  value_point_less_<I>(input));		  
-	return vec;
+	return v;
       }
 
       template <typename I>
-      std::vector<mln_point(I)>
-      sort_points(metal::true_, // low quantization
-		  const Image<I>& input_)
+      vec_p<mln_point(I)>
+      sort_points_increasing_(metal::true_, const I& input) // low quantization
       {
-	const I& input  = exact(input_);
-
 	typedef mln_vset(I) S;
 	const S& vset = input.values();
 	const unsigned n = vset.nvalues();
@@ -120,12 +132,46 @@ namespace mln
 	for (unsigned i = 1; i != n; ++i) 
 	  loc[i] = loc[i-1] + h[i-1];
 
-	/*
-	  MEMO. Decreasing case is:
-	    loc[n-1] = 0;
-	    for (unsigned i = n - 2; i != 0; --i) 
-	      loc[i] = loc[i+1] + h[i+1];
-	*/
+	// computing output data
+	std::vector<mln_point(I)> vec(input.npoints());
+	mln_fwd_piter(I) p(input.domain());
+	for_all(p)
+	  vec[loc[vset.index_of(input(p))]++] = p;
+
+	vec_p<mln_point(I)> v;
+	v.hook_() = vec;
+	return v;
+      }
+
+
+      // decreasing
+
+      template <typename I>
+      vec_p<mln_point(I)>
+      sort_points_decreasing_(metal::false_, const I& input) // general case
+      {
+	vec_p<mln_point(I)> v = convert::to_vec_p(input.domain());
+	std::sort(v.hook_().begin(), v.hook_().end(),
+		  value_point_greater_<I>(input));		  
+	return v;
+      }
+
+      template <typename I>
+      vec_p<mln_point(I)>
+      sort_points_decreasing_(metal::true_, const I& input) // low quantization
+      {
+	typedef mln_vset(I) S;
+	const S& vset = input.values();
+	const unsigned n = vset.nvalues();
+
+	// h
+	histo::data<S> h = histo::compute(input);
+
+	// preparing output data
+	std::vector<unsigned> loc(vset.nvalues());
+	loc[n-1] = 0;
+	for (unsigned i = n - 2; i != 0; --i) 
+	  loc[i] = loc[i+1] + h[i+1];
 
 	// computing output data
 	std::vector<mln_point(I)> vec(input.npoints());
@@ -133,20 +179,32 @@ namespace mln
 	for_all(p)
 	  vec[loc[vset.index_of(input(p))]++] = p;
 
-	return vec;
+	vec_p<mln_point(I)> v;
+	v.hook_() = vec;
+	return v;
       }
+
 
     } // end of namespace mln::level::impl
 
 
+    // Facades.
+
     template <typename I>
-    std::vector<mln_point(I)>
-    sort_points(const Image<I>& input)
+    vec_p<mln_point(I)>
+    sort_points_increasing(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      return impl::sort_points(mln_is_value_lowq(I)(), exact(input));
+      return impl::sort_points_increasing_(mln_is_value_lowq(I)(), exact(input));
     }
 
+    template <typename I>
+    vec_p<mln_point(I)>
+    sort_points_decreasing(const Image<I>& input)
+    {
+      mln_precondition(exact(input).has_data());
+      return impl::sort_points_decreasing_(mln_is_value_lowq(I)(), exact(input));
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
