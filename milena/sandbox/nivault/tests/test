@@ -1,0 +1,4 @@
+#!/bin/bash
+
+g++ -I../../.. -I../.. -I.. test.cc -O1
+./a.out

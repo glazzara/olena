@@ -1,3 +1,11 @@
+2007-09-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add fast-gaussian
+	* sandbox/nivault/fast_gaussian.hh: New.
+	* sandbox/nivault/tests/test.cc: New.
+	* sandbox/nivault/tests/test: New.
+	* sandbox/nivault/tests: New.
+
 2007-09-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add labeling routines.
