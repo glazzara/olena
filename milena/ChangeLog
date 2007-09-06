@@ -1,3 +1,9 @@
+2007-09-06  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
+
+	add convertion from histo to image1d
+	* mln/convert/to_image.hh: add the function
+	* tests/histo_to_image1d_b.cc: a test
+
 2007-09-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add imaset_ and imacpy_ in sandbox.
