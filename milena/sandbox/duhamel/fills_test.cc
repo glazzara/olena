@@ -175,6 +175,27 @@ namespace mln
 		     sizeof (mln_value(I)) * k);
       }
   }
+
+  template <typename I>
+  void imaset_(I& ima, const mln_value(I)& value, std::size_t n)
+  {
+    // FIXME Preconditions
+    mln_value(I)* ptr = &ima[0];
+
+    for (std::size_t i = 0; i < n; ++i)
+      *ptr++ = value;
+  }
+
+  template <typename I>
+  void imacpy_(I& dst, I& src, std::size_t n)
+  {
+    // FIXME Preconditions
+    mln_value(I)* u = &dst[0];
+    mln_value(I)* v = &src[0];
+
+    for (std::size_t i = 0; i < n; ++i)
+      *u++ = *v++;
+  }
 }
 
 
@@ -184,7 +205,19 @@ int main()
   using namespace mln;
   image2d_b<value::int_u8> ima(3, 3);
 
+  image2d_b<value::int_u8> i1(3, 3);
+  image2d_b<value::int_u8> i2(3, 3);
+
+  //  fill_ptr(ima, 5);
   fill_opt2(ima, 5);
   debug::println(ima);
 
+  imaset_(i1, 3, 50);
+  debug::println(i1);
+  mln_assertion (i1[42] == 3);
+  imacpy_(i2, i1, 50);
+  debug::println(i2);
+
+  for (int i = 0; i < 50; ++i)
+    mln_assertion (i1[i] == i2[i]);
 }

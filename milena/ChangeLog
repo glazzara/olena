@@ -1,3 +1,8 @@
+2007-09-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add imaset_ and imacpy_ in sandbox.
+	* fills_test.cc: .
+
 2007-09-06  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
 
 	add to_vec_p(win, p_center)
