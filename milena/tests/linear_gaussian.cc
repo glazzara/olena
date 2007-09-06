@@ -25,19 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+/*! \file tests/linear_gaussian.cc
+ *
+ * \brief Test on mln::linear::gaussian.
+ */
+
 #include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/int_u_sat.hh>
+
 #include <mln/io/load_pgm.hh>
 #include <mln/io/save_pgm.hh>
 
-#include <fast_gaussian.hh>
+#include <mln/level/transform.hh>
+#include <mln/level/saturate.hh>
+#include <mln/math/round.hh>
+
+#include <mln/linear/gaussian.hh>
+
 
 int main()
 {
-  mln::image2d_b<mln::value::int_u<8u> >	im1 = mln::io::load_pgm("../../../img/lena.pgm");
-  mln_precondition(im1.has_data());
-  mln::image2d_b<mln::value::int_u<8u> >	im2(im1.domain());
+  using namespace mln;
 
-  mln::linear::gaussian(im1, 2, im2);
+  image2d_b< value::int_u8 > lena = io::load_pgm("../img/lena.pgm");
 
-  mln::io::save_pgm(im2, "gausslena.pgm");
+  image2d_b<float> tmp(lena.domain());
+  linear::gaussian(lena, 5.1f, tmp);
+
+  image2d_b< value::int_u_sat<8> > out(lena.domain());
+  level::transform(tmp, math::round<int>(), out);
+  io::save_pgm(out, "out.pgm");
  }
