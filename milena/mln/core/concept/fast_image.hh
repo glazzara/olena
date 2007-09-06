@@ -51,7 +51,7 @@ namespace mln
     /*
       unsigned border();
 
-      int offset(const dpoint& dp) const;
+      int offset(const dpoint& dp) const; // FIXME: std::ptr_diff_t?
       point point_at_offset(unsigned o) const;
 
       mln_qlf_value(E)* buffer();
@@ -59,6 +59,8 @@ namespace mln
 
       rvalue operator[](unsigned o) const;
       lvalue operator[](unsigned o);
+
+      std::size_t ncells() const;
      */
 
 
@@ -72,7 +74,8 @@ namespace mln
      * \post p == point_at_offset(result)
      */
     template <typename P>
-    unsigned offset(const Generalized_Point<P>& p) const;
+    unsigned
+    offset_at(const Generalized_Point<P>& p) const;
 
   protected:
     Fast_Image();
@@ -83,11 +86,11 @@ namespace mln
 
   template <typename E>
   template <typename P>
-  unsigned
-  Fast_Image<E>::offset(const Generalized_Point<P>& p_) const
+  unsigned // FIXME: std::size_t?
+  Fast_Image<E>::offset_at(const Generalized_Point<P>& p_) const
   {
     // FIXME: check that P is mln_point(E)
-    const E& this_ = exact(this);
+    const E* this_ = exact(this);
     const P& p = internal::force_exact<P>(p_);
     mln_precondition(this_->has_data());
     mln_precondition(this_->owns_(p));
@@ -127,6 +130,9 @@ namespace mln
     m6 = 0;
     lvalue (E::*m7)(unsigned) = & E::operator[];
     m7 = 0;
+
+    std::size_t (E::*m8)() const = & E::ncells;
+    m8 = 0;
 
     // FIXME: how to check that qixter are defined when W is unknown!
   }

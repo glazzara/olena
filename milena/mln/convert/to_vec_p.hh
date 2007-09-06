@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/vec_p.hh>
+# include <mln/core/concept/window.hh>
 
 
 namespace mln
@@ -47,9 +48,9 @@ namespace mln
     vec_p<mln_point(S)> to_vec_p(const Point_Set<S>& pset);
 
 
-    /// Convert a window \p win with a point \p p into a vec_p (point set vector).
+    /// Convert a window \p win centered at point \p p into a vec_p (point set vector).
     template <typename W>
-    vec_p<mln_point(W)> to_vec_p(const Window<W>& win, const mln_point(W) p);
+    vec_p<mln_point(W)> to_vec_p(const Window<W>& win, const mln_point(W)& p);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -67,17 +68,16 @@ namespace mln
     }
 
     template <typename W>
-    vec_p<mln_point(W)> to_vec_p(const Window<W>& win, const mln_point(W) p_center)
+    vec_p<mln_point(W)> to_vec_p(const Window<W>& win, const mln_point(W)& p)
     {
       vec_p<mln_point(W)> v;
-      mln_qiter(W) dp(win, p_center);
-
       v.reserve(exact(win).ndpoints());
-
-      for_all(dp)
-	v.append(dp);
+      mln_qiter(W) q(win, p);
+      for_all(q)
+	v.append(q);
       return v;
     }
+
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::convert

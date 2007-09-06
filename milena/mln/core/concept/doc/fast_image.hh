@@ -97,6 +97,13 @@ namespace mln
        */
       lvalue operator[](unsigned o);
 
+
+      /*! \brief Give the number of pixels of the image including
+       *  those of the virtual border.
+       *
+       * \pre The image has to be initialized.
+       */
+      std::size_t ncells() const;
     };
 
   } // end of namespace mln::doc

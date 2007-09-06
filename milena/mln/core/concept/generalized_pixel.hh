@@ -41,12 +41,8 @@
 namespace mln
 {
 
-  // FIXME: \class Generalized_Pixel Generalized_Pixel.hh "mln/core/concept/doc/Generalized_Pixel.hh"
-
   /*! \brief Base class for implementation classes that are pixels or that
    *  have the behavior of pixels.
-   *
-   * "Generalized_Pixel" is "Generalized Pixel" for short.
    *
    * \warning This class does \em not derive from mln::Object; it is
    * for use as a parallel hierarchy.

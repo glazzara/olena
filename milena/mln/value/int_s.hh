@@ -101,7 +101,7 @@ namespace mln
     template <unsigned n>
     struct props< int_s<n> >
     {
-      static const std::size_t card_ = metal::pow<2, n>::value;
+      static const std::size_t card_ = metal::pow<2, n>::value - 1;
       static const int_s<n> max() { return metal::pow<2, n-1>::value - 1; }
       static const int_s<n> min() { return - max(); }
       static const unsigned nbits = n;
@@ -132,8 +132,10 @@ namespace mln
     template <unsigned n>
     int_s<n>::int_s(int i)
     {
-      mln_precondition(i >= mln_min(enc));
-      mln_precondition(i <= mln_max(enc));
+      static const int max = metal::pow<2, n-1>::value - 1;
+      static const int min = - max;
+      mln_precondition(i >= min);
+      mln_precondition(i <= max);
       this->v_ = enc(i);
     }
 
@@ -141,8 +143,10 @@ namespace mln
     int_s<n>&
     int_s<n>::operator=(int i)
     {
-      mln_precondition(i >= mln_min(enc));
-      mln_precondition(i <= mln_max(enc));
+      static const int max = metal::pow<2, n-1>::value - 1;
+      static const int min = - max;
+      mln_precondition(i >= min);
+      mln_precondition(i <= max);
       this->v_ = i;
       return *this;
     }

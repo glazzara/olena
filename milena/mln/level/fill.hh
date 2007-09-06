@@ -39,6 +39,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
+# include <mln/level/memset_.hh>
 
 
 namespace mln
@@ -131,10 +132,8 @@ namespace mln
       // fill_with_value
 
       template <typename I>
-      void fill_with_value(Image<I>& ima_, const mln_value(I)& value,
-			   bool force_call = false)
+      void fill_with_value(Image<I>& ima_, const mln_value(I)& value)
       {
-	force_call = false; // just to avoid warning ("unused param")
 	I& ima = exact(ima_);
 	mln_piter(I) p(ima.domain());
 	for_all(p)
@@ -145,17 +144,7 @@ namespace mln
       void fill_with_value(Fast_Image<I>& ima_, const mln_value(I)& value)
       {
 	I& ima = exact(ima_);
-	if (sizeof(mln_value(I)) == 1)
-	  {
-	    std::memset((void*)(ima.buffer()),
-			*(const int*)(& value), // violent cast
-			sizeof(mln_value(I)) * ima.ncells());
-	  }
- 	else
-	  {
-	    // FIXME: Use memcpy on a chunck when image size is large!
-	    fill_with_value(ima, value, true);
-	  }
+	level::memset_(ima, ima.point_at_offset(0), value, ima.ncells());
       }
 
 

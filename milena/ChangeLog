@@ -1,3 +1,21 @@
+2007-09-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add memcpy_ and memset_ for fast images; some fixes.
+
+	* tests/histo.cc: Augment.
+	* tests/level_memcpy_.cc: New.
+	* tests/level_memset_.cc: New.
+	* mln/convert/to_vec_p.hh: Typos.
+	* mln/core/concept/generalized_pixel.hh (doc): Fix.
+	* mln/core/concept/fast_image.hh (ncells): New.
+	Add FIXMEs.
+	* mln/core/concept/doc/fast_image.hh: Update.
+	* mln/level/fill.hh (fill_with_value): Use memset_.
+	* mln/level/memset_.hh: New.
+	* mln/level/memcpy_.hh: New.
+	* mln/value/int_s.hh (props): Fix card_.
+	(int_s): Fix preconditions.
+
 2007-09-06  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
 
 	add convertion from histo to image1d
