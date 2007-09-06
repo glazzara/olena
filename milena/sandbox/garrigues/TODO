@@ -13,7 +13,9 @@ R core/win/vline1d.hh		|
 
 C R core/w_window1d_float.hh
 C R core/w_window1d_int.hh
+
 C R geom/size1d.hh
+
 C R make/box1d.hh
 C R make/dpoint1d.hh
 C R make/point1d.hh

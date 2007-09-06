@@ -1,3 +1,10 @@
+2007-09-06  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
+
+	add to_vec_p(win, p_center)
+	* mln/convert/to_vec_p.hh: add the convertion function
+	* sandbox/garrigues/TODO: .
+	* tests/to_vec_p.cc: New. 1d and 2d test
+
 2007-09-06  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Move fast gaussian out of sandbox

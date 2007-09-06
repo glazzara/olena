@@ -25,64 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_VEC_P_HH
-# define MLN_CONVERT_TO_VEC_P_HH
-
-/*! \file mln/convert/to_vec_p.hh
+/*! \file tests/point1d.cc
  *
- * \brief Conversions to mln::vec_p.
+ * \brief Tests on mln::point1d.
  */
 
-# include <mln/core/vec_p.hh>
+#include <mln/core/point1d.hh>
+#include <mln/core/point2d.hh>
+#include <mln/core/vec_p.hh>
 
+#include <mln/core/win/segment1d.hh>
+#include <mln/core/win/rectangle2d.hh>
 
-namespace mln
+#include <mln/convert/to_vec_p.hh>
+
+int main()
 {
+  using namespace mln;
 
-  namespace convert
-  {
+  typedef vec_p<point1d> vec1d;
+  point1d p1 = make::point1d(6);
+  win::segment1d win1d(5);
+  vec1d v1(convert::to_vec_p(win1d, p1));
 
-    /// Convert a point set \p pset into a vec_p (point set vector).
-    template <typename S>
-    vec_p<mln_point(S)> to_vec_p(const Point_Set<S>& pset);
+  for (int i=0; i < v1.npoints(); i++)
+    std::cout << (v1[i]);
 
+  std::cout << "\n";
 
-    /// Convert a window \p win with a point \p p into a vec_p (point set vector).
-    template <typename W>
-    vec_p<mln_point(W)> to_vec_p(const Window<W>& win, const mln_point(W) p);
+  typedef vec_p<point2d> vec2d;
+  point2d p2 = make::point2d(10,10);
+  win::rectangle2d win2d(3, 3);
+  vec2d v2(convert::to_vec_p(win2d, p2));
 
+  for (int i=0; i < v2.npoints(); i++)
+    std::cout << (v2[i]);
 
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename S>
-    vec_p<mln_point(S)> to_vec_p(const Point_Set<S>& pset_)
-    {
-      const S& pset = exact(pset_);
-      vec_p<mln_point(S)> v;
-      v.reserve(pset.npoints());
-      mln_fwd_piter(S) p(pset);
-      for_all(p)
-	v.append(p);
-      return v;
-    }
-
-    template <typename W>
-    vec_p<mln_point(W)> to_vec_p(const Window<W>& win, const mln_point(W) p_center)
-    {
-      vec_p<mln_point(W)> v;
-      mln_qiter(W) dp(win, p_center);
-
-      v.reserve(exact(win).ndpoints());
-
-      for_all(dp)
-	v.append(dp);
-      return v;
-    }
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::convert
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CONVERT_TO_VEC_P_HH
+}
