@@ -67,6 +67,16 @@ namespace mln
 	std::cout << std::endl;
       }
 
+      template <typename S, typename I>
+      void println_with_border(const S&, const Fast_Image<I>& input_)
+      {
+	const I& input = exact(input_);
+	std::cout << input.ncells() << std::endl;
+ 	for (int i = 0; i < input.ncells(); i++)
+	  std::cout << input.buffer()[i] << ' ';
+	std::cout << std::endl;
+      }
+
       // 2D version
       template <typename I>
       void println(const box2d& b, const I& input)
@@ -88,6 +98,20 @@ namespace mln
 	std::cout << std::endl;
       }
 
+      template <typename I>
+      void println_with_border(const box2d& b, const Fast_Image<I>& input_)
+      {
+	const I& input = exact(input_);
+	const int ncols = b.ncols() + 2 * input.border();
+ 	for (int i = 0; i < input.ncells(); i++)
+	{
+	  std::cout << input.buffer()[i] << ' ';
+	  if (((i+1) % ncols) == 0)
+	    std::cout << std::endl;
+	}
+	std::cout << std::endl;
+      }
+
     } // end of namespace mln::debug::impl
 
 
@@ -98,6 +122,12 @@ namespace mln
     void println(const Image<I>& input)
     {
       impl::println(exact(input).bbox(), exact(input));
+    }
+
+    template <typename I>
+    void println_with_border(const Fast_Image<I>& input)
+    {
+      impl::println_with_border(exact(input).bbox(), exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

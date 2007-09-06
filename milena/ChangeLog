@@ -1,3 +1,13 @@
+2007-09-06  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
+
+	add println_with_border
+	* mln/debug/println.hh:
+	     add 3 function :
+		println_with_border(const box2d& b, const Fast_Image<I>& input_)
+		impl::println_with_border(const S&, const Fast_Image<I>& input_)
+		impl::println_with_border(const box2d& b, const Fast_Image<I>& input_)
+	* tests/println_with_border.cc: New.
+
 2007-09-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add memcpy_ and memset_ for fast images; some fixes.
