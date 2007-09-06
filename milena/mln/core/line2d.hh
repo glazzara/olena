@@ -115,7 +115,7 @@ namespace mln
       srow = math::sign(dp.row()), drow = math::abs(dp.row()), ddrow = 2 * drow,
       scol = math::sign(dp.col()), dcol = math::abs(dp.col()), ddcol = 2 * dcol,
       row = beg_.row(),
-      col = beg_.row();
+      col = beg_.col();
     if ( dcol > drow )
       {
 	int e = ddrow - dcol;

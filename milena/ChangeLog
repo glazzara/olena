@@ -1,3 +1,8 @@
+2007-09-06  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
+
+	bug fix in line2d.hh
+	* core/line2d.hh:  col = beg_.row() replaced by col = beg_.col();
+
 2007-09-05  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add fill optimized.
