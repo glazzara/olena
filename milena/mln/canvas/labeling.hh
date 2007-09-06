@@ -44,6 +44,8 @@ namespace mln
   namespace canvas
   {
 
+    // General version.
+
     template <typename F>
     struct labeling
     {
@@ -148,6 +150,10 @@ namespace mln
       }
 
     };
+
+
+    // FIXME: Fast version.
+
 
   } // end of namespace mln::canvas
 

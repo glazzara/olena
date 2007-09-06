@@ -1,3 +1,19 @@
+2007-09-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Tiny fix and add some preconditions.
+
+	* mln/convert/to_image.hh: Fix.
+	* mln/linear/line_convolve.hh: Add todo.
+	* mln/canvas/labeling.hh: Add comments.
+	* mln/labeling/flat_zones.hh,
+	* mln/labeling/foreground.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/labeling/regional_maxima.hh: Add precondition.
+	* mln/labeling/background.hh: .
+	* mln/labeling/level.hh (level_): Rename as...
+	(level_t): ...this.
+	(level_): New.
+
 2007-09-06  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Median specialized for fast image

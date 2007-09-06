@@ -103,6 +103,7 @@ namespace mln
     bool regional_minima(const Image<I>& input, const Neighborhood<N>& nbh,
 			 Image<O>& output, unsigned& nlabels)
     {
+      mln_precondition(exact(output).domain() == exact(input).domain());
       typedef impl::regional_minima_<I,N,O> F;
       F f(exact(input), exact(nbh), exact(output));
       canvas::labeling<F> run(f);

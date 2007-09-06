@@ -66,8 +66,10 @@ namespace mln
     namespace impl
     {
 
+      // Functors.
+
       template <typename I_, typename N_, typename O_>
-      struct level_ : base_<I_,N_,O_>
+      struct level_t : base_<I_,N_,O_>
       {
 	typedef mln_point(I_) P;
 
@@ -84,12 +86,27 @@ namespace mln
 
 	const mln_value(I_)& val;
 
-	level_(const I_& input, const mln_value(I_)& val, const N_& nbh, O_& output)
+	level_t(const I_& input, const mln_value(I_)& val, const N_& nbh, O_& output)
 	  : base_<I_,N_,O_>(input, nbh, output),
 	    s(input.domain()),
 	    val(val)
 	{}
       };
+
+      // Routines.
+
+      template <typename I, typename N, typename O>
+      bool level_(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
+		  Image<O>& output, unsigned& nlabels)
+      {
+	typedef impl::level_t<I,N,O> F;
+	F f(exact(input), val, exact(nbh), exact(output));
+	canvas::labeling<F> run(f);
+	nlabels = f.nlabels;
+	return f.status;
+      }
+
+      // FIXME: Add fast versions.
 
     } // end of namespace mln::labeling::impl
 
@@ -101,11 +118,7 @@ namespace mln
 	       Image<O>& output, unsigned& nlabels)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef impl::level_<I,N,O> F;
-      F f(exact(input), val, exact(nbh), exact(output));
-      canvas::labeling<F> run(f);
-      nlabels = f.nlabels;
-      return f.status;
+      return impl::level_(exact(input), val, nbh, output, nlabels);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

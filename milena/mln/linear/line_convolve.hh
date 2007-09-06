@@ -54,6 +54,8 @@ namespace mln
      * its symmetrization is handled by the client.
      *
      * \pre output.domain = input.domain
+     *
+     * \todo Optimize.
      */
     template <typename I, typename W, unsigned N, typename O>
     void line_convolve(const Image<I>& input, W (&weights)[N],

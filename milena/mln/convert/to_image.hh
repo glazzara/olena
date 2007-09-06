@@ -33,6 +33,7 @@
  * \brief Conversions to mln::Image.
  */
 
+# include <mln/core/image1d_b.hh>
 # include <mln/core/image2d_b.hh>
 
 # include <mln/core/concept/point_set.hh>
@@ -132,7 +133,7 @@ namespace mln
       mln_precondition(! win.is_empty());
 
       typedef mln_point(W) P;
-      box2d b = geom::bbox(win);
+      box_<P> b = geom::bbox(win);
       mln_image_from(W, bool) ima(b);
       level::fill(ima, false);
       mln_qiter(W) q(win, P::zero);

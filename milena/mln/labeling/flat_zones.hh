@@ -94,6 +94,7 @@ namespace mln
 		    Image<O>& output,
 		    unsigned& nlabels)
     {
+      mln_precondition(exact(output).domain() == exact(input).domain());
       typedef impl::flat_zones_<I,N,O> F;
       F f(exact(input), exact(nbh), exact(output));
       canvas::labeling<F> run(f);

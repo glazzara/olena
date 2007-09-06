@@ -66,6 +66,7 @@ namespace mln
 		    Image<O>& output,
 		    unsigned& nlabels)
     {
+      mln_precondition(exact(output).domain() == exact(input).domain());
       return labeling::level(input, true, nbh, output, nlabels);
     }
 
