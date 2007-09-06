@@ -1,3 +1,8 @@
+2007-09-06  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Median specialized for fast image
+	* sandbox/nivault/median.hh: New.
+
 2007-09-06  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
 
 	bug fix in line2d.hh
