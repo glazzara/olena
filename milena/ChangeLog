@@ -1,3 +1,8 @@
+2007-09-07  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
+
+	fix compil in value_behavior.cc
+	* sandbox/garrigues/value_behavior.cc: some fixes
+
 2007-09-07  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	New canvas for line processing, and median_dir use it now

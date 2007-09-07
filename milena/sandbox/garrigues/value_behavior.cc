@@ -22,18 +22,21 @@ struct behave : V
   operator= (const typename behavior::to_compute& v)
   {
     this->v_ = behavior::compute(v);
+    return *this;
   }
 
   V&
   operator+= (const typename behavior::to_compute& v)
   {
     this->v_ = behavior::compute(this->v_ + v);
+    return *this;
   }
 
   V&
   operator-= (const typename behavior::to_compute& v)
   {
     this->v_ = behavior::compute(this->v_ - v);
+    return *this;
   }
 
 };
@@ -47,10 +50,10 @@ struct saturated
 
   static val compute(to_compute n)
     {
-      if (props<val>::min() > n)
-	return props<val>::min();
-      if (props<val>::max() < n)
-	return props<val>::max();
+      if (mln_min(val) > n)
+	return mln_min(val);
+      if (mln_max(val) < n)
+	return mln_max(val);
       return n;
     }
 
