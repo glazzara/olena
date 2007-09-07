@@ -1,3 +1,9 @@
+2007-09-07  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	New canvas for line processing, and median_dir use it now
+	* sandbox/nivault/dirbrowsing.hh: New.
+	* sandbox/nivault/median.hh: Use dirbrowsing.hh
+
 2007-09-07  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
 
 	add behavior to value types
