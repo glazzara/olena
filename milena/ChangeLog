@@ -1,3 +1,15 @@
+2007-09-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update level median filter with directional cases.
+
+	* mln/core/point.hh (operator+=): New.
+	* tests/dpoint2d.cc: Update.
+	* mln/canvas/browsing/snake_fwd.hh: Fix missing namespace.
+	* sandbox/nivault/dirbrowsing.hh: Rename as...
+	* mln/canvas/dirbrowsing.hh: ...this.
+	* mln/level/median.hh: Update.
+	* sandbox/nivault/median.hh: Update.
+
 2007-09-07  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
 
 	make the tests compile

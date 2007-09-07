@@ -73,296 +73,178 @@ namespace mln
 		Image<O>& output);
 
 
-# ifndef MLN_INCLUDE_ONLY
+    // FIXME: Doc!
+    template <typename I, typename O>
+    void median_dir(const Image<I>& input, unsigned dir, unsigned length,
+		    Image<O>& output);
 
+
+
+# ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
 
+      // Directional median.
+
       template <typename I, typename O>
-      struct median_dir_functor
+      struct median_dir_t
       {
-	  // type
-	  typedef mln_point(I) point;
+	typedef mln_point(I) point;
+	enum { dim = point::dim };
 
-	  // i/o
-	  const I& input;
-	  O& output;
-	  int dir;
-	  int dim;
-	  const win::hline2d& win;
-	  accu::median<mln_vset(I)> med;
+	// i/o
+	const I& input;
+	const unsigned dir;
+	const unsigned length;
+	O& output;
 
-	  // ctor
-	  median_dir_functor(const Image<I>& input_, const win::hline2d& win_, int dir_, O& output_)
-	    :
-	    input(exact(input_)),
-	    output(exact(output_)),
-	    dir(dir_),
-	    dim(I::point::dim),
-	    win(win_),
+	// aux data
+	const mln_point(I)
+	  pmin = input.domain().pmin(),
+	  pmax = input.domain().pmax();
+	const mln_coord(I)
+	  pmin_dir = pmin[dir],
+	  pmax_dir = pmax[dir],
+	  pmin_dir_plus  = pmin[dir] + length / 2,
+	  pmax_dir_minus = pmax[dir] - length / 2;
+	accu::median<mln_vset(I)> med;
+
+	// ctor
+	median_dir_t(const I& input, unsigned dir, unsigned length, O& output)
+	  : // i/o
+	    input(exact(input)),
+	    dir(dir),
+	    length(length),
+	    output(exact(output)),
+	    // aux data
+	    pmin(input.domain().pmin()),
+	    pmax(input.domain().pmax()),
+	    pmin_dir(pmin[dir]),
+	    pmax_dir(pmax[dir]),
+	    pmin_dir_plus (pmin[dir] + length / 2),
+	    pmax_dir_minus(pmax[dir] - length / 2),
 	    med(input.values())
-	  {
-	  }
+	{
+	}
 
-	  //parts
-	  void init()
-	  {
-	  }
+	void init()
+	{
+	}
 
-	  void process(mln_point(I) p)
-	  {
-	    mln_point(I)
-	      pmin = input.domain().pmin(),
-	      pmax = input.domain().pmax(),
-	      pt = p,
-	      pu = p;
+	void process(const mln_point(I)& p_)
+	{
+	  mln_point(I)
+	    p  = p_,
+	    pt = p,
+	    pu = p;
 
-	    mln_coord(I)& ct = pt[dir];
-	    mln_coord(I)& cu = pu[dir];
+	  typedef mln_coord(I)& coord_ref;
+	  coord_ref
+	    ct = pt[dir],
+	    cu = pu[dir],
+	    p_dir = p[dir];
 
-	    // initialization (before first point of the row)
-	    med.init();
-	    for (ct = pmin[dir]; ct < pmin[dir] + (win.length() / 2); ++ct)
+	  // initialization (before first point of the row)
+	  med.init();
+	  for (ct = pmin_dir; ct < pmin_dir_plus; ++ct)
+	    if (input.has(pt))
 	      med.take(input(pt));
 
-	    // left columns (just take new points)
-	    for (p[dir] = pmin[dir]; p[dir] <= pmin[dir] + (win.length() / 2); ++p[dir], ++ct)
+	  // left columns (just take new points)
+	  for (p_dir = pmin_dir; p_dir <= pmin_dir_plus; ++p_dir, ++ct)
 	    {
-	      med.take(input(pt));
-	      output(p) = med.to_value();
+	      if (input.has(pt))
+		med.take(input(pt));
+	      if (output.has(p))
+		output(p) = med.to_value();
 	    }
 
-	    // middle columns (both take and untake)
-	    cu = pmin[dir];
-	    for (; p[dir] <= pmax[dir] - (win.length() / 2); ++cu, ++p[dir], ++ct)
+	  // middle columns (both take and untake)
+	  cu = pmin[dir];
+	  for (; p_dir <= pmax_dir_minus; ++cu, ++p_dir, ++ct)
 	    {
-	      med.take(input(pt));
-	      med.untake(input(pu));
-	      output(p) = med.to_value();
+	      if (input.has(pt))
+		med.take(input(pt));
+	      if (input.has(pu))
+		med.untake(input(pu));
+	      if (output.has(p))
+		output(p) = med.to_value();
 	    }
 
-	    // right columns (now just untake old points)
-	    for (; p[dir] <= pmax[dir]; ++cu, ++p[dir])
+	  // right columns (now just untake old points)
+	  for (; p_dir <= pmax_dir; ++cu, ++p_dir)
 	    {
-	      med.untake(input(pu));
-	      output(p) = med.to_value();
+	      if (input.has(pu))
+		med.untake(input(pu));
+	      if (output.has(p))
+		output(p) = med.to_value();
 	    }
-	  }
+	}
       };
 
+
       template <typename I, typename O>
-      void median_dir(const Image<I>& input_, const win::hline2d& win, unsigned dir, O& output)
+      void median_dir_(const Image<I>& input_, unsigned dir, unsigned length, O& output)
       {
-	struct median_dir_functor<I,O> func(input_, win, dir, output);
-	canvas::dirbrowsing(func);
+	median_dir_t<I,O> f(input_, win, dir, output);
+	canvas::dirbrowsing(f);
       }
 
 
-//       // median_dir monolythique
 
-//       template <typename I, typename O>
-//       void median_dir(const Image<I>& input_, const win::hline2d& win, int dir, O& output)
-//       {
-// 	const unsigned dim = I::point::dim;
-// 	mln_precondition(dir < dim);
-// 	const I& input = exact(input_);
-// 	mln_point(I)
-// 	  pmin = input.domain().pmin(),
-// 	  pmax = input.domain().pmax();
+      // General median.
 
-// 	const unsigned half = win.length() / 2;
-
-// 	mln_point(I) p;
-// 	mln_point(I) pt;
-// 	mln_point(I) pu;
-
-// 	mln_coord(I)& ct = pt[dir];
-// 	mln_coord(I)& cu = pu[dir];
-
-// 	accu::median<mln_vset(I)> med(input.values());
-
-// 	p = pmin;
-// 	do
-// 	{
-// 	  //traitement
-// 	  pt = pu = p;
-
-// 	  // initialization (before first point of the row)
-// 	  med.init();
-// 	  for (ct = pmin[dir]; ct < pmin[dir] + half; ++ct)
-// 	    med.take(input(pt));
-
-// 	  // left columns (just take new points)
-// 	  for (p[dir] = pmin[dir]; p[dir] <= pmin[dir] + half; ++p[dir], ++ct)
-// 	  {
-// 	    med.take(input(pt));
-// 	    output(p) = med.to_value();
-// 	  }
-
-// 	  // middle columns (both take and untake)
-// 	  cu = pmin[dir];
-// 	  for (; p[dir] <= pmax[dir] - half; ++cu, ++p[dir], ++ct)
-// 	  {
-// 	    med.take(input(pt));
-// 	    med.untake(input(pu));
-// 	    output(p) = med.to_value();
-// 	  }
-
-// 	  // right columns (now just untake old points)
-// 	  for (; p[dir] <= pmax[dir]; ++cu, ++p[dir])
-// 	  {
-// 	    med.untake(input(pu));
-// 	    output(p) = med.to_value();
-// 	  }
-
-// 	  // next line
-// 	  for (int c = dim - 1; c >= 0; --c)
-// 	  {
-// 	    if (c == dir)
-// 	      continue;
-// 	    if (p[c] != pmax[c])
-// 	    {
-// 	      ++p[c];
-// 	      break;
-// 	    }
-// 	    p[c] = pmin[c];
-// 	  }
-// 	  p[dir] = pmin[dir];
-// 	} while (p != pmin);
-//       }
-
-      template <typename I, typename O>
-      void median(const Image<I>& input_, const win::hline2d& win, O& output)
+      template <typename I, typename W, typename O>
+      void median_(const I& input, const Window<W>& win, O& output)
       {
-
-	I& input = exact(input_);
-	typedef mln_coord(I) coord;
-	const coord
-	  min_row = geom::min_row(input),
-	  max_row = geom::max_row(input),
-	  min_col = geom::min_col(input),
-	  max_col = geom::max_col(input);
-	const coord half = win.length() / 2;
-
-	point2d p;
-	coord& row = p.row();
-	coord& col = p.col();
-
-	point2d pt;
-	coord& ct = pt.col();
-
-	point2d pu;
-	coord& cu = pu.col();
-
-	accu::median<mln_vset(I)> med(input.values());
-
-	for (row = min_row; row <= max_row; ++row)
-	  {
-	    pt.row() = pu.row() = row;
-
-	    // initialization (before first point of the row)
-	    med.init();
-	    for (ct = min_col; ct < min_col + half; ++ct)
-	      med.take(input(pt));
-
-	    // left columns (just take new points)
-	    for (col = min_col; col <= min_col + half; ++col, ++ct)
-	      {
-		med.take(input(pt));
-		output(p) = med.to_value();
-	      }
-
-	    // middle columns (both take and untake)
-	    cu = min_col;
-	    for (; col <= max_col - half; ++cu, ++col, ++ct)
-	      {
-		med.take(input(pt));
-		med.untake(input(pu));
-		output(p) = med.to_value();
-	      }
-
-	    // right columns (now just untake old points)
-	    for (; col <= max_col; ++cu, ++col)
-	      {
-		med.untake(input(pu));
-		output(p) = med.to_value();
-	      }
-	  }
+	impl::median_t<I,W,O> f(input, exact(win), output);
+	canvas::browsing::snake_fwd(f);
       }
 
-      template <typename I, typename O>
-      void median(const Fast_Image<I>& input_, const win::hline2d& win, O& output)
-      {
 
-	I& input = exact(input_);
-	border::resize(input, win.delta());;
-	border::duplicate(input);
-
-	typedef mln_coord(I) coord;
-	const coord
-	  min_row = geom::min_row(input),
-	  max_row = geom::max_row(input),
-	  min_col = geom::min_col(input),
-	  max_col = geom::max_col(input);
-	const coord half = win.length() / 2;
-
-	point2d p;
-	coord& row = p.row();
-	coord& col = p.col();
-
-	point2d pt;
-	coord& ct = pt.col();
-
-	point2d pu;
-	coord& cu = pu.col();
-
-	accu::median<mln_vset(I)> med(input.values());
-
-	for (row = min_row; row <= max_row; ++row)
-	  {
-	    pt.row() = pu.row() = row;
-
-	    // initialization (before first point of the row)
-	    med.init();
-	    for (ct = min_col - half; ct < min_col + half; ++ct)
-	      med.take(input(pt));
-
-	    // middle columns (both take and untake)
-	    cu = min_col;
-	    for (col = min_col; col <= max_col; ++cu, ++col, ++ct)
-	      {
-		med.take(input(pt));
-		med.untake(input(pu));
-		output(p) = med.to_value();
-	      }
-
-	  }
-      }
+#  ifdef MLN_CORE_WIN_HLINE2D_HH
 
       template <typename I, typename O>
-      void median(const I& input,
-		  const win::vline2d& win,
-		  O& output)
+      void median_(const Image<I>& input, const win::hline2d& win, O& output)
       {
-	t_image<O> swap_output = swap_coords(output, 0, 1);
-	impl::median(swap_coords(input, 0, 1),
-		     win::hline2d(win.length()),
-		     swap_output);
+	median_dir(input, 0, win.length(), output);
       }
 
+#  endif
+
+#  ifdef MLN_CORE_WIN_VLINE2D_HH
+
+      template <typename I, typename O>
+      void median_(const Image<I>& input, const win::vline2d& win, O& output)
+      {
+	median_dir(input, 1, win.length(), output);
+      }
+
+#  endif
 
     } // end of namespace mln::level::impl
 
 
-    // facade
+    // Facades.
 
     template <typename I, typename W, typename O>
     void median(const Image<I>& input, const Window<W>& win,
 		Image<O>& output)
     {
-      mln_assertion(exact(output).domain() == exact(input).domain());
-      impl::median(exact(input), exact(win), exact(output)); 
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      impl::median_(exact(input), exact(win), exact(output)); 
+    }
+
+    template <typename I, typename O>
+    void median_dir(const Image<I>& input, unsigned dir, unsigned length,
+		    Image<O>& output)
+    {
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      typedef mln_point(I) P;
+      mln_precondition(dir < P::dim);
+      mln_precondition(length % 2 == 1);
+      impl::median_dir_(exact(input), exact(win), exact(output)); 
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -75,7 +75,7 @@ namespace mln
       {
 	f.process(p);
 
-	for (int c = f.dim - 1; c >= 0; --c)
+	for (int c = F::dim - 1; c >= 0; --c)
 	{
 	  if (c == f.dir)
 	    continue;

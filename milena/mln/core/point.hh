@@ -96,6 +96,8 @@ namespace mln
     /// Origin point (all coordinates are 0).
     static const point_<n,C> zero;
 
+    /// Shifting by \p dp.
+    point_<n, C>& operator+=(const dpoint& dp);
 
     /// Type of the array of coordinates.
     typedef const C (&vec_t)[n];
@@ -147,6 +149,15 @@ namespace mln
 
   template <unsigned n, typename C>
   const point_<n,C> point_<n,C>::zero = all(0);
+
+  template <unsigned n, typename C>
+  point_<n, C>&
+  point_<n,C>::operator+=(const dpoint& dp)
+  {
+    for (unsigned i = 0; i < n; ++i)
+      coord_[i] += dp[i];
+    return *this;
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
   

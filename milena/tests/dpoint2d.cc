@@ -50,4 +50,7 @@ int main()
 
   const int (&vec)[2] = dp.to_vec();
   mln_assertion(vec[0] == 3);
+
+  p += dp;
+  mln_assertion(q == p);  
 }

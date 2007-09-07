@@ -31,20 +31,18 @@
 /*! \file mln/level/median.hh
  *
  * \brief Median filtering of an image.
+ *
+ * \todo Add Fast_Image versions.
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/geom/size2d.hh>
-
-# include <mln/core/window2d.hh>
-# include <mln/core/win/hline2d.hh>
-# include <mln/core/t_image.hh>
-
-# include <mln/accu/median.hh>
-# include <mln/canvas/browsing/snake_fwd.hh>
-
+# include <mln/core/window.hh>
 # include <mln/geom/shift.hh>
 # include <mln/set/diff.hh>
+
+# include <mln/canvas/browsing/snake_fwd.hh>
+# include <mln/canvas/dirbrowsing.hh>
+# include <mln/accu/median.hh>
 
 
 namespace mln
@@ -58,7 +56,7 @@ namespace mln
      *
      * \param[in] input The image to be filtered.
      * \param[in] win The window.
-     * \param[in,out] output The output image.
+     * \param[out] output The output image.
      *
      * \pre \p input and \p output have to be initialized.
      */
@@ -67,16 +65,40 @@ namespace mln
 		Image<O>& output);
 
 
-# ifndef MLN_INCLUDE_ONLY
 
+    /*! Compute in \p output the median filter of image \p input in
+     *  the direction \p dir with strength \p length.
+     *
+     * \param[in] input The image to be filtered.
+     * \param[in] dir The filtering direction.
+     * \param[in] length The filtering strength.
+     * \param[out] output The output image.
+     *
+     * \pre \p input and \p output have to be initialized.
+     * \pre \p dir is between 0 and less than the image dimension.
+     * \pre \p length has to be odd.
+     */
+    template <typename I, typename O>
+    void median_dir(const Image<I>& input, unsigned dir, unsigned length,
+		    Image<O>& output);
+
+
+
+# ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
 
 
+      // Functors.
+
+
       template <typename I, typename W, typename O>
-      struct median_functor
+      struct median_t
       { 
+	typedef mln_point(I)  P;
+	typedef mln_dpoint(I) D;
+
 	// i/o
 
 	const I& input;
@@ -86,13 +108,13 @@ namespace mln
 	// aux data
 
 	accu::median<mln_vset(I)> med;
-	mln_point(I) p;
-	window2d     win_fp, win_fm, win_bp, win_bm, win_dp, win_dm;
+	P p;
+	window<D>    win_fp, win_fm, win_bp, win_bm, win_dp, win_dm;
 	mln_qiter(W)   q_fp,   q_fm,   q_bp,   q_bm,   q_dp,   q_dm;
 
 	// ctor
 
-	median_functor(const I& input_, const W& win_, O& output_)
+	median_t(const I& input_, const W& win_, O& output_)
 	  :
 	  // i/o
 	  input(exact(input_)),
@@ -150,99 +172,163 @@ namespace mln
 	  output(p) = med.to_value();
 	}
 
-      }; // end of median_functor
+      }; // end of median_t
 
 
+
+      template <typename I, typename O>
+      struct median_dir_t
+      {
+	typedef mln_point(I) point;
+	enum { dim = point::dim };
+
+	// i/o
+	const I& input;
+	const unsigned dir;
+	const unsigned length;
+	O& output;
+
+	// aux data
+	const mln_point(I)
+	  pmin, pmax;
+	const mln_coord(I)
+	  pmin_dir,      pmax_dir,
+	  pmin_dir_plus, pmax_dir_minus;
+	accu::median<mln_vset(I)> med;
+
+	// ctor
+	median_dir_t(const I& input, unsigned dir, unsigned length, O& output)
+	  : // i/o
+	    input(input),
+	    dir(dir),
+	    length(length),
+	    output(exact(output)),
+	    // aux data
+	    pmin(input.domain().pmin()),
+	    pmax(input.domain().pmax()),
+	    pmin_dir(pmin[dir]),
+	    pmax_dir(pmax[dir]),
+	    pmin_dir_plus (pmin[dir] + length / 2),
+	    pmax_dir_minus(pmax[dir] - length / 2),
+	    med(input.values())
+	{
+	}
+
+	void init()
+	{
+	}
+
+	void process(const mln_point(I)& p_)
+	{
+	  mln_point(I)
+	    p  = p_,
+	    pt = p,
+	    pu = p;
+
+	  typedef mln_coord(I)& coord_ref;
+	  coord_ref
+	    ct = pt[dir],
+	    cu = pu[dir],
+	    p_dir = p[dir];
+
+	  // initialization (before first point of the row)
+	  med.init();
+	  for (ct = pmin_dir; ct < pmin_dir_plus; ++ct)
+	    if (input.has(pt))
+	      med.take(input(pt));
+
+	  // left columns (just take new points)
+	  for (p_dir = pmin_dir; p_dir <= pmin_dir_plus; ++p_dir, ++ct)
+	    {
+	      if (input.has(pt))
+		med.take(input(pt));
+	      if (output.has(p))
+		output(p) = med.to_value();
+	    }
+
+	  // middle columns (both take and untake)
+	  cu = pmin[dir];
+	  for (; p_dir <= pmax_dir_minus; ++cu, ++p_dir, ++ct)
+	    {
+	      if (input.has(pt))
+		med.take(input(pt));
+	      if (input.has(pu))
+		med.untake(input(pu));
+	      if (output.has(p))
+		output(p) = med.to_value();
+	    }
+
+	  // right columns (now just untake old points)
+	  for (; p_dir <= pmax_dir; ++cu, ++p_dir)
+	    {
+	      if (input.has(pu))
+		med.untake(input(pu));
+	      if (output.has(p))
+		output(p) = med.to_value();
+	    }
+	}
+
+      }; // end of median_dir_t
+
+
+
+      template <typename I, typename O>
+      void median_dir_(const Image<I>& input, unsigned dir, unsigned length, O& output)
+      {
+	median_dir_t<I,O> f(exact(input), dir, length, output);
+	canvas::dirbrowsing(f);
+      }
 
 
       template <typename I, typename W, typename O>
-      void median(const I& input, const Window<W>& win, O& output)
+      void median_(const Image<I>& input, const Window<W>& win, O& output)
       {
 	// FIXME: resize border!
-	impl::median_functor<I,W,O> f(input, exact(win), output);
+	median_t<I,W,O> f(exact(input), exact(win), output);
 	canvas::browsing::snake_fwd(f);
       }
 
 
+#  ifdef MLN_CORE_WIN_HLINE2D_HH
       template <typename I, typename O>
-      void median(const I& input, const win::hline2d& win, O& output)
+      void median_(const Image<I>& input, const win::hline2d& win, O& output)
       {
-	typedef mln_coord(I) coord;
-	const coord
-	  min_row = geom::min_row(input),
-	  max_row = geom::max_row(input),
-	  min_col = geom::min_col(input),
-	  max_col = geom::max_col(input);
-	const coord half = win.length() / 2;
-
-	point2d p;
-	coord& row = p.row();
-	coord& col = p.col();
-
-	point2d pt;
-	coord& ct = pt.col();
-
-	point2d pu;
-	coord& cu = pu.col();
-
-	accu::median<mln_vset(I)> med(input.values());
-
-	for (row = min_row; row <= max_row; ++row)
-	  {
-	    pt.row() = pu.row() = row;
-
-	    // initialization (before first point of the row)
-	    med.init();
-	    for (ct = min_col; ct < min_col + half; ++ct)
-	      med.take(input(pt));
-
-	    // left columns (just take new points)
-	    for (col = min_col; col <= min_col + half; ++col, ++ct)
-	      {
-		med.take(input(pt));
-		output(p) = med.to_value();
-	      }
-	    
-	    // middle columns (both take and untake)
-	    cu = min_col;
-	    for (; col <= max_col - half; ++cu, ++col, ++ct)
-	      {
-		med.take(input(pt));
-		med.untake(input(pu));
-		output(p) = med.to_value();
-	      }
-
-	    // right columns (now just untake old points)
-	    for (; col <= max_col; ++cu, ++col)
-	      {
-		med.untake(input(pu));
-		output(p) = med.to_value();
-	      }
-	  }
+	median_dir(input, 1, win.length(), output); // FIXME: Make 1 explicit!
       }
+#  endif
 
-
+#  ifdef MLN_CORE_WIN_VLINE2D_HH
       template <typename I, typename O>
-      void median(const I& input, const win::vline2d& win, O& output)
+      void median_(const Image<I>& input, const win::vline2d& win, O& output)
       {
-	t_image<O> swap_output = swap_coords(output, 0, 1);
-	impl::median(swap_coords(input, 0, 1),
-		     win::hline2d(win.length()),
-		     swap_output);
+	median_dir(input, 0, win.length(), output);
       }
+#  endif
 
 
     } // end of namespace mln::level::impl
 
 
-    // facade
+
+    // Facades.
 
     template <typename I, typename W, typename O>
     void median(const Image<I>& input, const Window<W>& win,
 		Image<O>& output)
     {
       mln_assertion(exact(output).domain() == exact(input).domain());
-      impl::median(exact(input), exact(win), exact(output)); 
+      impl::median_(exact(input), exact(win), exact(output)); 
+    }
+
+    template <typename I, typename O>
+    void median_dir(const Image<I>& input, unsigned dir, unsigned length,
+		    Image<O>& output)
+    {
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      typedef mln_point(I) P;
+      mln_precondition(dir < P::dim);
+      mln_precondition(length % 2 == 1);
+      impl::median_dir_(exact(input), dir, length, exact(output)); 
     }
 
 # endif // ! MLN_INCLUDE_ONLY

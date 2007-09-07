@@ -43,71 +43,76 @@ namespace mln
   namespace canvas
   {
 
-    /*! FIXME: Doc!
-     *
-     *
-     * F shall feature: \n
-     * { \n
-     *   --- as attributes: \n
-     *   input; \n
-     *   p; \n
-     *   --- as methods: \n
-     *   void init(); \n
-     *   void down(); \n
-     *   void fwd(); \n
-     *   void bkd(); \n
-     * } \n
-     *
-     */
-    template <typename F>
-    void snake_fwd(F& f);
+    namespace browsing
+    {
+
+      /*! FIXME: Doc!
+       *
+       *
+       * F shall feature: \n
+       * { \n
+       *   --- as attributes: \n
+       *   input; \n
+       *   p; \n
+       *   --- as methods: \n
+       *   void init(); \n
+       *   void down(); \n
+       *   void fwd(); \n
+       *   void bkd(); \n
+       * } \n
+       *
+       */
+      template <typename F>
+      void snake_fwd(F& f);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename F>
-    void snake_fwd(F& f)
-    {
-      mln_precondition(f.input.has_data());
-      int
-	min_row = geom::min_row(f.input), max_row = geom::max_row(f.input),
-	min_col = geom::min_col(f.input), max_col = geom::max_col(f.input);
+      template <typename F>
+      void snake_fwd(F& f)
+      {
+	mln_precondition(f.input.has_data());
+	int
+	  min_row = geom::min_row(f.input), max_row = geom::max_row(f.input),
+	  min_col = geom::min_col(f.input), max_col = geom::max_col(f.input);
 
-      // p
-      f.p = f.input.bbox().pmin() + up;
-      int& row = f.p.row();
-      int& col = f.p.col();
+	// p
+	f.p = f.input.bbox().pmin() + up;
+	int& row = f.p.row();
+	int& col = f.p.col();
 
-      // initialization
-      f.init();
+	// initialization
+	f.init();
 
-      bool fwd = true;
-      for (row = min_row; row <= max_row; ++row)
-	{
-	  // go down
-	  f.down();
+	bool fwd = true;
+	for (row = min_row; row <= max_row; ++row)
+	  {
+	    // go down
+	    f.down();
 
-	  if (fwd)
-	    // browse line fwd
-	    while (col < max_col)
-	      {
-		++col;
-		f.fwd();
-	      }
-	  else
-	    // browse line bkd
-	    while (col > min_col)
-	      {
-		--col;
-		f.bkd();
-	      }
+	    if (fwd)
+	      // browse line fwd
+	      while (col < max_col)
+		{
+		  ++col;
+		  f.fwd();
+		}
+	    else
+	      // browse line bkd
+	      while (col > min_col)
+		{
+		  --col;
+		  f.bkd();
+		}
 
-	  // change browsing
-	  fwd = ! fwd;
-	}
-    }
+	    // change browsing
+	    fwd = ! fwd;
+	  }
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::canvas::browsing
 
   } // end of namespace mln::canvas
 
