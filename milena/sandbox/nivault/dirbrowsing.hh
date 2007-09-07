@@ -63,7 +63,7 @@ namespace mln
     template <typename F>
     void dirbrowsing(F& f)
     {
-      mln_point(F::point)
+      mln_point(F)
 	pmin = f.input.domain().pmin(),
 	pmax = f.input.domain().pmax();
 

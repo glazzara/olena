@@ -1,3 +1,10 @@
+2007-09-07  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Some fix for compiling
+	* sandbox/nivault/dirbrowsing.hh: .
+	* sandbox/nivault/median.hh: .
+	* sandbox/nivault/tests/test: .
+
 2007-09-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add hint to tests.

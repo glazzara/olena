@@ -43,7 +43,7 @@
 # include <mln/core/dpoint.hh>
 
 # include <mln/accu/median.hh>
-# include <mln/canvas/sbrowsing.hh>
+# include <mln/canvas/browsing/snake_fwd.hh>
 
 # include <mln/geom/shift.hh>
 # include <mln/set/diff.hh>
@@ -88,13 +88,13 @@ namespace mln
 	  // i/o
 	  const I& input;
 	  O& output;
-	  unsigned dir;
+	  int dir;
 	  int dim;
 	  const win::hline2d& win;
 	  accu::median<mln_vset(I)> med;
 
 	  // ctor
-	  median_dir_functor(const Image<I>& input_, const win::hline2d& win_, unsigned dir_, O& output_)
+	  median_dir_functor(const Image<I>& input_, const win::hline2d& win_, int dir_, O& output_)
 	    :
 	    input(exact(input_)),
 	    output(exact(output_)),
@@ -162,7 +162,7 @@ namespace mln
 //       // median_dir monolythique
 
 //       template <typename I, typename O>
-//       void median_dir(const Image<I>& input_, const win::hline2d& win, unsigned dir, O& output)
+//       void median_dir(const Image<I>& input_, const win::hline2d& win, int dir, O& output)
 //       {
 // 	const unsigned dim = I::point::dim;
 // 	mln_precondition(dir < dim);
