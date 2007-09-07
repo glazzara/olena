@@ -1,3 +1,11 @@
+2007-09-07  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
+
+	make the tests compile
+	* mln/convert/to_image.hh: replace box2d by box_<P> to handle 1d
+	* mln/debug/println.hh: stupid error
+	* tests/convert_to_vec_p.cc: stupid error
+	* tests/w_window1d_int.cc: rectangle1d ??? replaced by segment1d
+
 2007-09-07  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Some fix for compiling

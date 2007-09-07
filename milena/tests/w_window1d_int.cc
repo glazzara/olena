@@ -31,6 +31,7 @@
  */
 
 #include <mln/core/w_window1d_int.hh>
+#include <mln/core/win/segment1d.hh>
 
 #include <mln/convert/to_image.hh>
 #include <mln/convert/to_w_window.hh>
@@ -61,7 +62,7 @@ int main()
   }
 
   {
-    w_window1d_int w_win = make::w_window(win::rectangle1d(3, 5),
+    w_window1d_int w_win = make::w_window(win::segment1d(3),
 					  convert::to_fun(f));
     //  -3 -2 -1  0 +1
     //  -2 -1  0 +1 +2

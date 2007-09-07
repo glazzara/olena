@@ -44,6 +44,7 @@
 # include <mln/convert/to_window.hh>
 # include <mln/geom/bbox.hh>
 # include <mln/level/fill.hh>
+# include <mln/histo/data.hh>
 
 
 # define mln_image_from(Src, Value) typename mln::image_from_< Src, Value >::ret
@@ -113,7 +114,9 @@ namespace mln
 
     /// Convert an histo \p h into an image1d_b.
     template <typename S>
-    image1d_b<std::size_t> to_image(const histo::data<S>& h);
+    image1d_b<std::size_t>
+    to_image(const
+	     mln::histo::data<S>& h);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -158,7 +161,7 @@ namespace mln
       mln_precondition(! w_win.is_empty());
 
       typedef mln_point(W) P;
-      box2d b = geom::bbox(w_win);
+      box_<P> b = geom::bbox(w_win);
       mln_image_from(W, mln_weight(W)) ima(b);
       mln_qiter(W) q(w_win, P::zero);
       for_all(q)

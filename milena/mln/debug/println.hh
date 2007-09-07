@@ -102,8 +102,8 @@ namespace mln
       void println_with_border(const box2d& b, const Fast_Image<I>& input_)
       {
 	const I& input = exact(input_);
-	const int ncols = b.ncols() + 2 * input.border();
- 	for (int i = 0; i < input.ncells(); i++)
+	const std::size_t ncols = b.ncols() + 2 * input.border();
+ 	for (size_t i = 0; i < input.ncells(); i++)
 	{
 	  std::cout << input.buffer()[i] << ' ';
 	  if (((i+1) % ncols) == 0)
