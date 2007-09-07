@@ -1,6 +1,17 @@
 
 	-*- outline -*-
 
+* tests
+
+run, e.g.:
+
+cd tests/
+for i in *cc
+do
+echo $i
+g++-4.1 -ansi -pedantic -W -Wall -Wextra -Wconversion -I.. $i
+done
+
 
 * compilation
 

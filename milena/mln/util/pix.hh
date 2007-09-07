@@ -49,6 +49,7 @@ namespace mln
       pix_(const Image<I>& ima, const mln_point(I)& p);
       const I& ima() const;
       const mln_point(I)& p() const;
+      operator mln_rvalue(I)() const;
     private:
       const I& ima_;
       const mln_point(I)& p_;
@@ -84,6 +85,12 @@ namespace mln
     pix_<I>::p() const
     {
       return p_;
+    }
+
+    template <typename I>
+    pix_<I>::operator mln_rvalue(I)() const
+    {
+      return ima_(p_);
     }
 
     // pix

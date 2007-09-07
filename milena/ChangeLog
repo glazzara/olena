@@ -1,5 +1,12 @@
 2007-09-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add hint to tests.
+
+	* tests/README: Add hint.
+	* mln/util/pix.hh (operator rvalue): New.
+
+2007-09-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add area opening over its new canvas.
 
 	* tests/morpho_opening_area.cc: New.
