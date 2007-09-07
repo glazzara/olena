@@ -25,96 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_COUNT_HH
-# define MLN_ACCU_COUNT_HH
+#ifndef MLN_MORPHO_OPENING_AREA_HH
+# define MLN_MORPHO_OPENING_AREA_HH
 
-/*! \file mln/accu/count.hh
+/*! \file mln/morpho/opening_area.hh
  *
- * \brief Define an accumulator that counts.
+ * \brief Morphological area opening.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/morpho/opening_attribute.hh>
+# include <mln/accu/count.hh>
 
 
 namespace mln
 {
 
-  namespace accu
+  namespace morpho
   {
 
-
-    /*! Generic counter accumulator class.
+    /*! Morphological area opening.
      */
-    template <typename V>
-    struct count : public Accumulator< count<V> >
-    {
-      typedef V value;
-      typedef std::size_t result; // FIXME: Up in Accumulator.
-
-      count();
-
-      void init();
-      void take(const value&);
-      void take(const count<V>& other);
-
-      std::size_t to_value() const;
-      void set_value(std::size_t c);
-
-    protected:
-
-      std::size_t count_;
-    };
-
+    template <typename I, typename N, typename O>
+    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
+		      Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V>
-    count<V>::count()
+    template <typename I, typename N, typename O>
+    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
+		      Image<O>& output)
     {
-      init();
-    }
-
-    template <typename V>
-    void
-    count<V>::init()
-    {
-      count_ = 0;
-    }
-
-    template <typename V>
-    void
-    count<V>::take(const value&)
-    {
-      ++count_;
-    }
-
-    template <typename V>
-    void
-    count<V>::take(const count<V>& other)
-    {
-      count_ += other.count_;
-    }
-
-    template <typename V>
-    std::size_t
-    count<V>::to_value() const
-    {
-      return count_;
-    }
-
-    template <typename V>
-    void
-    count<V>::set_value(std::size_t c)
-    {
-      count_ = c;
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      typedef util::pix_<I> pix_t;
+      opening_attribute< accu::count<pix_t> >(input, nbh, lambda, output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::accu
+  } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_COUNT_HH
+#endif // ! MLN_MORPHO_OPENING_AREA_HH

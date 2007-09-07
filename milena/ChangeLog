@@ -1,3 +1,18 @@
+2007-09-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add area opening over its new canvas.
+
+	* tests/morpho_opening_area.cc: New.
+	* mln/core/concept/accumulator.hh (take_as_init): New.
+	* mln/morpho/opening_attribute.hh: New.
+	* mln/morpho/opening_area.hh: New.
+	* mln/morpho/includes.hh: Add neighborhood.hh.
+	* mln/canvas/morpho: New.
+	* mln/canvas/morpho/algebraic_union_find.hh: New.
+	* mln/accu/count.hh (result): New.
+	* mln/util: New.
+	* mln/util/pix.hh: New.
+
 2007-09-07  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
 
 	fix compil in value_behavior.cc

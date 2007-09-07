@@ -56,6 +56,11 @@ namespace mln
       void take(const value& v);
       void take(const E& other);
      */
+
+    // Default impl.
+    template <typename T>
+    void take_as_init(const T& t); // 't' is either value or E.
+
   protected:
     Accumulator();
   };
@@ -87,6 +92,15 @@ namespace mln
     m2 = 0;
     void (E::*m3)(const E&) = & E::take;
     m3 = 0;
+  }
+
+  template <typename E>
+  template <typename T>
+  void
+  Accumulator<E>::take_as_init(const T& t) // either value or E
+  {
+    exact(this)->init();
+    exact(this)->take(t);
   }
 
   template <typename E>

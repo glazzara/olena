@@ -25,96 +25,82 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_COUNT_HH
-# define MLN_ACCU_COUNT_HH
+#ifndef MLN_UTIL_PIX_HH
+# define MLN_UTIL_PIX_HH
 
-/*! \file mln/accu/count.hh
+/*! \file mln/util/pix.hh
  *
- * \brief Define an accumulator that counts.
+ * \brief Definition of an instant pix.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/core/concept/image.hh>
 
 
 namespace mln
 {
 
-  namespace accu
+  namespace util
   {
 
-
-    /*! Generic counter accumulator class.
-     */
-    template <typename V>
-    struct count : public Accumulator< count<V> >
+    /// Pix structure.
+    template <typename I>
+    struct pix_
     {
-      typedef V value;
-      typedef std::size_t result; // FIXME: Up in Accumulator.
-
-      count();
-
-      void init();
-      void take(const value&);
-      void take(const count<V>& other);
-
-      std::size_t to_value() const;
-      void set_value(std::size_t c);
-
-    protected:
-
-      std::size_t count_;
+      pix_(const Image<I>& ima, const mln_point(I)& p);
+      const I& ima() const;
+      const mln_point(I)& p() const;
+    private:
+      const I& ima_;
+      const mln_point(I)& p_;
     };
+    
 
+    /// Routine to construct a pix on the fly.
+    template <typename I>
+    pix_<I>
+    pix(const Image<I>& ima, const mln_point(I)& p);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V>
-    count<V>::count()
+    // pix_<I>
+
+    template <typename I>
+    pix_<I>::pix_(const Image<I>& ima, const mln_point(I)& p)
+      : ima_(exact(ima)),
+	p_(p)
     {
-      init();
     }
 
-    template <typename V>
-    void
-    count<V>::init()
+    template <typename I>
+    const I&
+    pix_<I>::ima() const
     {
-      count_ = 0;
+      return ima_;
     }
 
-    template <typename V>
-    void
-    count<V>::take(const value&)
+    template <typename I>
+    const mln_point(I)&
+    pix_<I>::p() const
     {
-      ++count_;
+      return p_;
     }
 
-    template <typename V>
-    void
-    count<V>::take(const count<V>& other)
-    {
-      count_ += other.count_;
-    }
+    // pix
 
-    template <typename V>
-    std::size_t
-    count<V>::to_value() const
+    template <typename I>
+    pix_<I>
+    pix(const Image<I>& ima, const mln_point(I)& p)
     {
-      return count_;
-    }
-
-    template <typename V>
-    void
-    count<V>::set_value(std::size_t c)
-    {
-      count_ = c;
+      pix_<I> tmp(ima, p);
+      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::accu
+  } // end of namespace mln::util
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_COUNT_HH
+#endif // ! MLN_UTIL_PIX_HH

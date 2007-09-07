@@ -25,40 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
-
-/*! \file mln/morpho/includes.hh
+/*! \file tests/morpho_opening_area.cc
  *
- * \brief Basic list of includes for all files in mln/morpho/.
+ * \brief Test on mln::morpho::opening_area.
  */
 
+#include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/core/neighb2d.hh>
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-# include <mln/core/concept/neighborhood.hh>
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
 
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
-
-# include <mln/test/positive.hh>
-
-# include <mln/border/resize.hh>
-# include <mln/border/fill.hh>
-
-# include <mln/geom/sym.hh>
-# include <mln/set/inter.hh>
-
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
-
-# include <mln/morpho/min.hh>
-# include <mln/morpho/complementation.hh>
-# include <mln/morpho/minus.hh>
-# include <mln/morpho/plus.hh>
+#include <mln/morpho/opening_area.hh>
 
 
-#endif // ! MLN_MORPHO_INCLUDES_HH
+
+int main()
+{
+  using namespace mln;
+  using value::int_u8;
+
+  image2d_b<int_u8>
+    lena = io::load_pgm("../img/lena.pgm"),
+    out(lena.domain());
+
+  morpho::opening_area(lena, c4(), 510, out);
+  io::save_pgm(out, "out.pgm");
+}
