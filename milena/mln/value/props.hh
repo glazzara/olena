@@ -31,6 +31,7 @@
 /*! \file mln/value/props.hh
  *
  * \brief Define properties of value types.
+ *  FIXME : add interop typedef in each props
  */
 
 # include <climits>

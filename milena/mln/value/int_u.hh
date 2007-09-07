@@ -103,6 +103,7 @@ namespace mln
       static const unsigned nbits = n;
       typedef data_kind kind;
       typedef float sum;
+      typedef int interop;
     };
 
 

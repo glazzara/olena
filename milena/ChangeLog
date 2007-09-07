@@ -1,3 +1,10 @@
+2007-09-07  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
+
+	add behavior to value types
+	* mln/value/int_u.hh: add interop to prop
+	* mln/value/props.hh: add interop to prop
+	* sandbox/garrigues/value_behavior.cc: try to implement behaviors
+
 2007-09-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Renaming sbrowsing and tests.
