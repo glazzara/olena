@@ -1,3 +1,9 @@
+2007-09-07  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Median can be processed for any direction
+	* sandbox/nivault/median.hh: .
+	* sandbox/nivault/tests/test.cc: Test on lena for median_dir
+
 2007-09-06  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
 
 	add println_with_border
