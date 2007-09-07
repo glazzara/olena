@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/point1d.cc
+/*! \file tests/convert_to_vec_p.cc
  *
- * \brief Tests on mln::point1d.
+ * \brief Tests on mln::convert::to_vec_p.
  */
 
 #include <mln/core/point1d.hh>

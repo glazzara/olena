@@ -25,34 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/naive_median.cc
+/*! \file tests/debug_println_with_border.cc
  *
- * \brief Test on mln::level::naive::median.
+ * \brief Test on mln::debug::println_with_border.
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/win/rectangle2d.hh>
-
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/level/naive/median.hh>
+#include <mln/level/fill.hh>
+#include <mln/debug/println.hh>
 
 
 using namespace mln;
-using namespace mln::value;
 
 
 int main()
 {
-  win::rectangle2d rec(51, 51);
-  border::thickness = 52;
-
-  image2d_b<int_u8>
-    lena = io::load_pgm("../img/lena.pgm"),
-    out(lena.domain());
-
-  level::naive::median(lena, rec, out);
-  io::save_pgm(out, "out.pgm");
+  border::thickness = 3;
+  image2d_b<bool> msk(3, 3);
+  msk.at(1, 1) = true;
+  debug::println_with_border(msk);
 }

@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_SBROWSING_HH
-# define MLN_CANVAS_SBROWSING_HH
+#ifndef MLN_CANVAS_BROWSING_SNAKE_FWD_HH
+# define MLN_CANVAS_BROWSING_SNAKE_FWD_HH
 
-/*! \file mln/canvas/sbrowsing.hh
+/*! \file mln/canvas/browsing/snake_fwd.hh
  *
- * \brief Sbrowsing of an image.
+ * \brief Browsing in a snake-way, forward.
  */
 
 # include <mln/core/dpoint2d.hh> // for "up"
@@ -60,13 +60,13 @@ namespace mln
      *
      */
     template <typename F>
-    void sbrowsing(F& f);
+    void snake_fwd(F& f);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename F>
-    void sbrowsing(F& f)
+    void snake_fwd(F& f)
     {
       mln_precondition(f.input.has_data());
       int
@@ -114,4 +114,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CANVAS_SBROWSING_HH
+#endif // ! MLN_CANVAS_BROWSING_SNAKE_FWD_HH

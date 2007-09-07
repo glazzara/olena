@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/hmedian.cc
+/*! \file tests/level_naive_median.cc
  *
- * \brief Test on the hline2d version of mln::level::median.
+ * \brief Test on mln::level::naive::median.
  */
 
 #include <mln/core/image2d_b.hh>
@@ -37,28 +37,22 @@
 #include <mln/io/save_pgm.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/level/median.hh>
-#include <mln/level/compare.hh>
+#include <mln/level/naive/median.hh>
 
 
+using namespace mln;
+using namespace mln::value;
 
 
 int main()
 {
-  using namespace mln;
-  using value::int_u8;
-
-  border::thickness = 0;
+  win::rectangle2d rec(51, 51);
+  border::thickness = 52;
 
   image2d_b<int_u8>
     lena = io::load_pgm("../img/lena.pgm"),
-    out(lena.domain()),
-    ref(lena.domain());
+    out(lena.domain());
 
-  level::median(lena, win::rectangle2d(1, 101), ref);
-
-  level::median(lena, win::hline2d(101), out);
+  level::naive::median(lena, rec, out);
   io::save_pgm(out, "out.pgm");
-
-  // FIXME: mln_assertion(out == ref);
 }

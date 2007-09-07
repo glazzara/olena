@@ -25,22 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/println.cc
+/*! \file tests/value_int_s.cc
  *
- * \brief Test on mln::debug::println.
+ * \brief Tests on mln::value::int_s.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/level/fill.hh>
-#include <mln/debug/println.hh>
-
-
-using namespace mln;
+#include <mln/value/int_s.hh>
 
 
 int main()
 {
-  image2d_b<bool> msk(3, 3);
-  msk.at(1, 1) = true;
-  debug::println(msk);
+  using namespace mln;
+  using value::int_s;
+
+  {
+    int_s<7> i = 3;
+    i = 2;
+    mln_assertion(i == 2);
+    mln_assertion(i != 3);
+
+    mln_assertion(-i == -2);
+    mln_assertion(-3 * i == -6);
+  }
+
 }

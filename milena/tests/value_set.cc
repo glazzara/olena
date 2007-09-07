@@ -25,32 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/int_u8.cc
+/*! \file tests/value_set.cc
  *
- * \brief Tests on mln::value::int_u8.
+ * \brief Tests on mln::value::set_<T>.
  */
 
 #include <mln/value/int_u8.hh>
+#include <mln/value/set.hh>
+
+
+
+template <typename T>
+void test()
+{
+  typedef mln::value::set<T> S;
+  S s;
+
+  mln_fwd_viter(S) v(s);
+  for_all(v)
+    std::cout << v << ' ';
+  std::cout << std::endl;
+
+  mln_bkd_viter(S) w(s);
+  for_all(w)
+    std::cout << w << ' ';
+  std::cout << std::endl;
+}
 
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  {
-    int_u8 i = 3;
-    i = 2;
-    mln_assertion(i == 2);
-    mln_assertion(i != 3);
-
-    mln_assertion(-i == -2);
-    mln_assertion(-3 * i == -6);
-  }
-
-  {
-    int_u8 i = 128;
-    std::cout << i + i << std::endl;
-  }
+  test<bool>();
+//   test<unsigned char>();
+//   test<unsigned short>();
+//   test<value::int_u8>();
 }

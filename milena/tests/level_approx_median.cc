@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/approx_median.cc
+/*! \file tests/level_approx_median.cc
  *
  * \brief Test on mln::level::approx::median.
  */

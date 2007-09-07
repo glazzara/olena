@@ -1,3 +1,59 @@
+2007-09-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Renaming sbrowsing and tests.
+
+	* mln/canvas/browsing: New directory.
+
+	* mln/canvas/sbrowsing.hh,
+	* mln/linear/fast_gaussian.hh,
+	* tests/approx_median.cc,
+	* tests/assign.cc,
+	* tests/convolve.cc,
+	* tests/fast_median.cc,
+	* tests/fill.cc,
+	* tests/histo.cc,
+	* tests/hmedian.cc,
+	* tests/int_s.cc,
+	* tests/int_u8.cc,
+	* tests/label.cc,
+	* tests/mean.cc,
+	* tests/median.cc,
+	* tests/naive_median.cc,
+	* tests/println.cc,
+	* tests/println_with_border.cc,
+	* tests/rectangle2d.cc,
+	* tests/sobel.cc,
+	* tests/to_image.cc,
+	* tests/to_vec_p.cc,
+	* tests/transform.cc,
+	* tests/vset.cc: Respectively rename as...
+
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/linear/gaussian.hh,
+	* tests/level_approx_median.cc,
+	* tests/level_assign.cc,
+	* tests/linear_convolve.cc,
+	* tests/level_median_fast.cc,
+	* tests/level_fill.cc,
+	* tests/histo_compute.cc,
+	* tests/level_median_hline2d.cc,
+	* tests/value_int_s.cc,
+	* tests/value_int_u8.cc,
+	* tests/value_label.cc,
+	* tests/estim_mean.cc,
+	* tests/level_median.cc,
+	* tests/level_naive_median.cc,
+	* tests/debug_println.cc,
+	* tests/debug_println_with_border.cc,
+	* tests/win_rectangle2d.cc,
+	* tests/linear_sobel.cc,
+	* tests/convert_to_image.cc,
+	* tests/convert_to_vec_p.cc,
+	* tests/level_transform.cc,
+	* tests/value_set.cc: ...these.
+
+	* mln/level/median.hh: Update.
+
 2007-09-07  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Median can be processed for any direction

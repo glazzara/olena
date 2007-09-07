@@ -25,23 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/println_with_border.cc
+/*! \file tests/convert_to_image.cc
  *
- * \brief Test on mln::debug::println_with_border.
+ * \brief Tests on mln::convert::to_image.
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/level/fill.hh>
+#include <mln/core/window2d.hh>
+#include <mln/core/pset_if.hh>
+#include <mln/fun/p2b/chess.hh>
+#include <mln/level/compare.hh>
+
+#include <mln/convert/to_image.hh>
+
+
 #include <mln/debug/println.hh>
 
-
-using namespace mln;
 
 
 int main()
 {
-  border::thickness = 3;
-  image2d_b<bool> msk(3, 3);
-  msk.at(1, 1) = true;
-  debug::println_with_border(msk);
+  using namespace mln;
+
+  box2d box_3x3 = make::box2d(-1,-1, +1,+1);
+  //                          ^^^^^  ^^^^^
+  //                          from   to
+
+  //         center point
+  //              V
+  bool X[] = { 1, 0, 1,
+	       0, 1, 0,   // < center point
+	       1, 0, 1 };
+
+  image2d_b<bool> ima_X = convert::to_image(box_3x3 | fun::p2b::chess);
+  window2d win_X = make::window2d(X);
+  mln_assertion(convert::to_image(win_X) == ima_X);
+
+  // FIXME: nbh!
 }

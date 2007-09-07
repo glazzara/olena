@@ -25,29 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/mean.cc
+/*! \file tests/debug_println.cc
  *
- * \brief Tests on mln::estim::mean.
+ * \brief Test on mln::debug::println.
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/value/int_u8.hh>
+#include <mln/level/fill.hh>
+#include <mln/debug/println.hh>
 
-#include <mln/debug/iota.hh>
-#include <mln/estim/mean.hh>
+
+using namespace mln;
 
 
 int main()
 {
-  using namespace mln;
-  using value::int_u8;
-
-  image2d_b<int_u8> ima(3, 3);
-  debug::iota(ima);
-  // 1 2 3
-  // 4 5 6
-  // 7 8 9
-  mln_assertion(estim::mean(ima) == 5);
-
-  // FIXME: Add example on accu::mean used several times.
+  image2d_b<bool> msk(3, 3);
+  msk.at(1, 1) = true;
+  debug::println(msk);
 }

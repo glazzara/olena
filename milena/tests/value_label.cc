@@ -25,41 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/vset.cc
+/*! \file tests/value_label.cc
  *
- * \brief Tests on mln::value::set_<T>.
+ * \brief Tests on mln::value::label.
  */
 
 #include <mln/value/int_u8.hh>
-#include <mln/value/set.hh>
-
-
-
-template <typename T>
-void test()
-{
-  typedef mln::value::set<T> S;
-  S s;
-
-  mln_fwd_viter(S) v(s);
-  for_all(v)
-    std::cout << v << ' ';
-  std::cout << std::endl;
-
-  mln_bkd_viter(S) w(s);
-  for_all(w)
-    std::cout << w << ' ';
-  std::cout << std::endl;
-}
+#include <mln/value/label.hh>
 
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
+  using value::label;
 
-  test<bool>();
-//   test<unsigned char>();
-//   test<unsigned short>();
-//   test<value::int_u8>();
+  int_u8 i = 51;
+  label<8> l = 50;
+  ++l;
+  mln_assertion(l == l);
+  mln_assertion(i == l.to_enc());  
 }

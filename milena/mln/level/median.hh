@@ -41,7 +41,7 @@
 # include <mln/core/t_image.hh>
 
 # include <mln/accu/median.hh>
-# include <mln/canvas/sbrowsing.hh>
+# include <mln/canvas/browsing/snake_fwd.hh>
 
 # include <mln/geom/shift.hh>
 # include <mln/set/diff.hh>
@@ -160,7 +160,7 @@ namespace mln
       {
 	// FIXME: resize border!
 	impl::median_functor<I,W,O> f(input, exact(win), output);
-	canvas::sbrowsing(f);
+	canvas::browsing::snake_fwd(f);
       }
 
 

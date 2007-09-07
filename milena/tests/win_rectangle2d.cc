@@ -25,25 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/label.cc
+/*! \file tests/win_rectangle2d.cc
  *
- * \brief Tests on mln::value::label.
+ * \brief Tests on mln::win::rectangle2d.
  */
 
-#include <mln/value/int_u8.hh>
-#include <mln/value/label.hh>
+#include <mln/core/win/rectangle2d.hh>
+#include <mln/geom/sym.hh>
 
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
-  using value::label;
 
-  int_u8 i = 51;
-  label<8> l = 50;
-  ++l;
-  mln_assertion(l == l);
-  mln_assertion(i == l.to_enc());  
+  const unsigned h = 3, w = 5;
+  win::rectangle2d rec(h, w);
+
+  mln_assertion(rec.is_centered());
+  mln_assertion(rec.is_symmetric());
+  mln_assertion(rec == geom::sym(rec));
+  mln_assertion(rec.ndpoints() == h * w);
 }
+

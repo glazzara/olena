@@ -25,26 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/rectangle2d.cc
+/*! \file tests/estim_mean.cc
  *
- * \brief Tests on mln::win/rectangle2d.
+ * \brief Tests on mln::estim::mean.
  */
 
-#include <mln/core/win/rectangle2d.hh>
-#include <mln/geom/sym.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
 
+#include <mln/debug/iota.hh>
+#include <mln/estim/mean.hh>
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  const unsigned h = 3, w = 5;
-  win::rectangle2d rec(h, w);
+  image2d_b<int_u8> ima(3, 3);
+  debug::iota(ima);
+  // 1 2 3
+  // 4 5 6
+  // 7 8 9
+  mln_assertion(estim::mean(ima) == 5);
 
-  mln_assertion(rec.is_centered());
-  mln_assertion(rec.is_symmetric());
-  mln_assertion(rec == geom::sym(rec));
-  mln_assertion(rec.ndpoints() == h * w);
+  // FIXME: Add example on accu::mean used several times.
 }
-

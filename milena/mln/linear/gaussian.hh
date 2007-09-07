@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004  EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004 EPITA Research and Development
+// Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +26,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LINEAR_FAST_GAUSSIAN_HH__
-# define MLN_LINEAR_FAST_GAUSSIAN_HH__
+#ifndef MLN_LINEAR_GAUSSIAN_HH
+# define MLN_LINEAR_GAUSSIAN_HH
 
-/*! \file mln/linear/fast_gaussian.hh
+/*! \file mln/linear/gaussian.hh
  *
- * \brief Fast gaussian.
+ * \brief Gaussian filter.
  */
 
 # include <mln/core/concept/image.hh>
@@ -44,7 +45,7 @@ namespace mln
   namespace linear
   {
 
-    /*! Fast gaussian of an image \p input
+    /*! Gaussian filter of an image \p input
      *
      * \pre output.domain = input.domain
      */
@@ -314,5 +315,4 @@ namespace mln
 } // end of namespace mln
 
 
-
-#endif // MLN_LINEAR_FAST_GAUSSIAN_HH__
+#endif // ! MLN_LINEAR_GAUSSIAN_HH

@@ -25,24 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/assign.cc
+/*! \file tests/value_int_u8.cc
  *
- * \brief Tests on mln::level::assign.
+ * \brief Tests on mln::value::int_u8.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/level/assign.hh>
-#include <mln/level/compare.hh>
-#include <mln/debug/iota.hh>
+#include <mln/value/int_u8.hh>
+
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  const unsigned size = 1000;
-  image2d_b<int> rhs(size, size), lhs(rhs.domain());
-  debug::iota(rhs);
-  level::assign(lhs, rhs);
-  mln_assertion(lhs == rhs);
+  {
+    int_u8 i = 3;
+    i = 2;
+    mln_assertion(i == 2);
+    mln_assertion(i != 3);
+
+    mln_assertion(-i == -2);
+    mln_assertion(-3 * i == -6);
+  }
+
+  {
+    int_u8 i = 128;
+    std::cout << i + i << std::endl;
+  }
 }

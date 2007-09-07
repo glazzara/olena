@@ -25,42 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/transform.cc
+/*! \file tests/linear_sobel.cc
  *
- * \brief Tests on mln::level::transform
+ * \brief Tests on mln::linear::sobel.
  */
 
-#include <cmath>
-
 #include <mln/core/image2d_b.hh>
-#include <mln/level/transform.hh>
-#include <mln/debug/iota.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/level/saturate.hh>
 
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
 
-struct mysqrt : mln::Function_v2v<mysqrt>
-{
-  typedef unsigned short result;
-  result operator()(unsigned short c) const
-  {
-    return result( std::sqrt(float(c)) );
-  }
-};
-
+#include <mln/border/thickness.hh>
+#include <mln/linear/sobel.hh>
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  const unsigned size = 10000;
-  image2d_b<unsigned short>
-    ima(size, size);
+  border::thickness = 1;
 
-  (std::cout << "iota... ").flush(); 
-  debug::iota(ima);
-  std::cout << "done" << std::endl;
+  image2d_b<int_u8>
+    lena = io::load_pgm("../img/lena.pgm"),
+    out(lena.domain());
 
-  (std::cout << "transform... ").flush(); 
-  level::transform(ima, mysqrt(), ima);
-  std::cout << "done" << std::endl;
+  image2d_b<int> tmp(lena.domain());
+  linear::sobel(lena, tmp);
+
+  level::saturate(tmp, out);
+  io::save_pgm(out, "out.pgm");
 }

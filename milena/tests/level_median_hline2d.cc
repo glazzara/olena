@@ -25,27 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/int_s.cc
+/*! \file tests/level_median_hline2d.cc
  *
- * \brief Tests on mln::value::int_s.
+ * \brief Test on the hline2d version of mln::level::median.
  */
 
-#include <mln/value/int_s.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/win/rectangle2d.hh>
+
+#include <mln/io/load_pgm.hh>
+#include <mln/io/save_pgm.hh>
+
+#include <mln/value/int_u8.hh>
+#include <mln/level/median.hh>
+#include <mln/level/compare.hh>
+
+
 
 
 int main()
 {
   using namespace mln;
-  using value::int_s;
+  using value::int_u8;
 
-  {
-    int_s<7> i = 3;
-    i = 2;
-    mln_assertion(i == 2);
-    mln_assertion(i != 3);
+  border::thickness = 0;
 
-    mln_assertion(-i == -2);
-    mln_assertion(-3 * i == -6);
-  }
+  image2d_b<int_u8>
+    lena = io::load_pgm("../img/lena.pgm"),
+    out(lena.domain()),
+    ref(lena.domain());
 
+  level::median(lena, win::rectangle2d(1, 101), ref);
+
+  level::median(lena, win::hline2d(101), out);
+  io::save_pgm(out, "out.pgm");
+
+  // FIXME: mln_assertion(out == ref);
 }

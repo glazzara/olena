@@ -25,39 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/fill.cc
+/*! \file tests/level_transform.cc
  *
- * \brief Tests on mln::level::fill
+ * \brief Tests on mln::level::transform
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/level/fill.hh>
+#include <cmath>
 
-#include <mln/debug/println.hh>
-#include <mln/value/props.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/level/transform.hh>
+#include <mln/debug/iota.hh>
+
+
+struct mysqrt : mln::Function_v2v<mysqrt>
+{
+  typedef unsigned short result;
+  result operator()(unsigned short c) const
+  {
+    return result( std::sqrt(float(c)) );
+  }
+};
+
 
 
 int main()
 {
   using namespace mln;
 
+  const unsigned size = 10000;
+  image2d_b<unsigned short>
+    ima(size, size);
 
-  unsigned u = 300;
-  unsigned char uc = u;
-  mln_assertion(uc == 44);
+  (std::cout << "iota... ").flush(); 
+  debug::iota(ima);
+  std::cout << "done" << std::endl;
 
-//   {
-//     const unsigned size = 3;
-//     image2d_b<unsigned> ima(size, size);
-//     level::fill(ima, u);
-//     debug::println(ima);
-//   }
-
-  {
-    const unsigned size = 10000;
-    image2d_b<unsigned char> ima(size, size);
-    for (unsigned i = 0; i < 5; ++i)
-      level::fill(ima, uc);
-  }
-
+  (std::cout << "transform... ").flush(); 
+  level::transform(ima, mysqrt(), ima);
+  std::cout << "done" << std::endl;
 }

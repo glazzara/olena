@@ -25,67 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/histo.cc
+/*! \file tests/level_fill.cc
  *
- * \brief Tests on mln::accu::histo<S> and mln::histo::data<S>.
+ * \brief Tests on mln::level::fill
  */
 
-#include <iterator>
-
 #include <mln/core/image2d_b.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/value/int_s.hh>
+#include <mln/level/fill.hh>
 
-#include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
-#include <mln/accu/histo.hh>
-#include <mln/histo/compute.hh>
-
+#include <mln/value/props.hh>
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  {
-    accu::histo< value::set<bool> > h;
-    
-    for (unsigned i = 0; i < 5; ++i)
-      h.take(false);
-    for (unsigned i = 0; i < 2; ++i)
-      h.take(true);
-    h.untake(true);
-    
-    mln_assertion(h[0] * 10 + h[1] == 51);
-    mln_assertion(h(false) * 10 + h(true) == 51);
-  }
 
-  {
-    image2d_b<int_u8> ima(3, 3);
-    debug::iota(ima);
-    ima.at(0,0) = 2;
-    debug::println(ima);
-
-    histo::data< value::set<int_u8> > h = histo::compute(ima);
-    std::cout << h << std::endl;
-
-    int_u8 i = 2;
-    std::cout << h(i) << std::endl;
-  }
+  unsigned u = 300;
+  unsigned char uc = u;
+  mln_assertion(uc == 44);
 
 //   {
-//     typedef value::int_s<5> int_s5;
-//     image2d_b<int_s5> ima(3, 3);
-//     debug::iota(ima);
-//     ima.at(0,0) = 2;
+//     const unsigned size = 3;
+//     image2d_b<unsigned> ima(size, size);
+//     level::fill(ima, u);
 //     debug::println(ima);
-
-//     histo::data< value::set<int_s5> > h = histo::compute(ima);
-//     std::cout << h(2) << std::endl;
-
-//     for (unsigned i = 0; i < h.vset().nvalues(); ++i)
-//       std::cout << h[i] << std::endl;
 //   }
+
+  {
+    const unsigned size = 10000;
+    image2d_b<unsigned char> ima(size, size);
+    for (unsigned i = 0; i < 5; ++i)
+      level::fill(ima, uc);
+  }
 
 }
