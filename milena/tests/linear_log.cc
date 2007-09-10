@@ -33,8 +33,8 @@
 #include <mln/core/image2d_b.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 
 #include <mln/border/thickness.hh>
 #include <mln/linear/log.hh>
@@ -50,7 +50,7 @@ int main()
 
   border::thickness = 2;
 
-  image2d_b<int_u8> lena = io::load_pgm("../img/lena.pgm");
+  image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
 
   image2d_b<int> tmp(lena.domain());
   linear::LoG_5x5(lena, tmp);
@@ -62,7 +62,7 @@ int main()
 
   image2d_b<int_u8> out(lena.domain());
   level::stretch(tmp, out);
-  io::save_pgm(out, "out.pgm");
+  io::pgm::save(out, "out.pgm");
   {
     int_u8 min, max;
     estim::min_max(out, min, max);

@@ -33,8 +33,8 @@
 #include <mln/core/image2d_b.hh>
 #include <mln/core/win/rectangle2d.hh>
 
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/level/naive/median.hh>
@@ -50,9 +50,9 @@ int main()
   border::thickness = 52;
 
   image2d_b<int_u8>
-    lena = io::load_pgm("../img/lena.pgm"),
+    lena = io::pgm::load("../img/lena.pgm"),
     out(lena.domain());
 
   level::naive::median(lena, rec, out);
-  io::save_pgm(out, "out.pgm");
+  io::pgm::save(out, "out.pgm");
 }

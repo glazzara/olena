@@ -34,8 +34,8 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u_sat.hh>
 
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 
 #include <mln/level/transform.hh>
 #include <mln/level/saturate.hh>
@@ -48,12 +48,12 @@ int main()
 {
   using namespace mln;
 
-  image2d_b< value::int_u8 > lena = io::load_pgm("../img/lena.pgm");
+  image2d_b< value::int_u8 > lena = io::pgm::load("../img/lena.pgm");
 
   image2d_b<float> tmp(lena.domain());
   linear::gaussian(lena, 5.1f, tmp);
 
   image2d_b< value::int_u_sat<8> > out(lena.domain());
   level::transform(tmp, math::round<int>(), out);
-  io::save_pgm(out, "out.pgm");
+  io::pgm::save(out, "out.pgm");
  }

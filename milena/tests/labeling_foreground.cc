@@ -35,8 +35,8 @@
 #include <mln/value/int_u8.hh>
 #include <mln/pw/all.hh>
 
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 #include <mln/labeling/foreground.hh>
 
 
@@ -46,12 +46,12 @@ int main()
   using value::int_u8;
 
   image2d_b<int_u8>
-    lena = io::load_pgm("../img/tiny.pgm"),
+    lena = io::pgm::load("../img/tiny.pgm"),
     out(lena.domain());
 
   unsigned n;
   labeling::foreground((pw::value(lena) > pw::cst(127)) | lena.domain(),
 		       c4(), out, n);
-  io::save_pgm(out, "out.pgm");
+  io::pgm::save(out, "out.pgm");
   mln_assertion(n == 14);
 }

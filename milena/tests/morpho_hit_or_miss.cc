@@ -38,8 +38,8 @@
 #include <mln/geom/shift.hh>
 #include <mln/set/diff.hh>
 
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 #include <mln/level/fill.hh>
 #include <mln/level/stretch.hh>
 
@@ -53,7 +53,7 @@ int main()
 
   window2d win_hit = geom::shift(win::rectangle2d(3, 3),
 				 make::dpoint2d(+1, +1));
-  window2d win_miss = set::diff(win::rectangle2d(5, 5), win_hit);
+  window2d win_miss = mln::set::diff(win::rectangle2d(5, 5), win_hit);
 
   {
     bool hit[] = { 0, 0, 0, 0, 0,
@@ -76,10 +76,10 @@ int main()
   border::thickness = 2;
 
   image2d_b<int_u8>
-    pic = io::load_pgm("../img/picasso.pgm"),
+    pic = io::pgm::load("../img/picasso.pgm"),
     out(pic.domain());
 
   morpho::hit_or_miss(pic, win_hit, win_miss, out);
 
-  io::save_pgm(out, "out.pgm");
+  io::pgm::save(out, "out.pgm");
 }

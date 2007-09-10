@@ -33,8 +33,8 @@
 #include <mln/core/image2d_b.hh>
 #include <mln/core/win/rectangle2d.hh>
 
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/level/fill.hh>
@@ -54,12 +54,12 @@ int main()
   win::rectangle2d rec(21, 21);
   border::thickness = 66;
 
-  image2d_b<int_u8> lena = io::load_pgm("../img/lena.pgm");
+  image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
 
   { 
     image2d_b<int_u8> out(lena.domain());
     morpho::erosion(lena, rec, out);
-    io::save_pgm(out, "out.pgm");
+    io::pgm::save(out, "out.pgm");
   }
 
   {
@@ -71,7 +71,7 @@ int main()
     image2d_b<int_u8>::fwd_piter p(lena.domain());
     for_all(p)
       test(p) = out(p) ? 255 : 0;
-    io::save_pgm(test, "test.pgm");
+    io::pgm::save(test, "test.pgm");
   }
 
 }

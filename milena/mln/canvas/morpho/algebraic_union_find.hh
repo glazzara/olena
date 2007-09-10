@@ -100,7 +100,6 @@ namespace mln
 	  // second pass
 	  {
 	    mln_bkd_piter(S) p(f.s);
-	    mln_niter(N) n(f.nbh, p);
 	    for_all(p)
 	      if (is_root(p))
 		f.output(p) = f.input(p);

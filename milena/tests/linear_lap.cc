@@ -32,7 +32,7 @@
 
 #include <mln/core/image2d_b.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/io/load_pgm.hh>
+#include <mln/io/pgm/load.hh>
 
 #include <mln/border/thickness.hh>
 #include <mln/linear/lap.hh>
@@ -45,7 +45,7 @@ int main()
 
   border::thickness = 1;
 
-  image2d_b<int_u8> lena = io::load_pgm("../img/lena.pgm");
+  image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
   image2d_b<int> tmp(lena.domain());
   linear::lap_4(lena, tmp);
 }

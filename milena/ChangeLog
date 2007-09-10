@@ -1,3 +1,43 @@
+2007-09-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Renaming io and fix warnings.
+
+	* mln/io/pgm: New directory.
+	* mln/io/save_pgm.hh: Rename as...
+	* mln/io/pgm/save.hh: ...this.
+	(save_pgn): Rename as...
+	(save): ...this.
+	* mln/io/load_pgm.hh: Rename as...
+	* mln/io/pgm/load.hh: ...this.
+	(load_pgm): Rename as...
+	(load): ...this.
+
+	* tests/level_naive_median.cc,
+	* tests/linear_log.cc,
+	* tests/level_median_hline2d.cc,
+	* tests/morpho_thinning.cc,
+	* tests/morpho_erosion.cc,
+	* tests/morpho_hit_or_miss.cc,
+	* tests/morpho_laplacian.cc,
+	* tests/morpho_opening_area.cc,
+	* tests/labeling_regional_maxima.cc,
+	* tests/level_median_fast.cc,
+	* tests/level_approx_median.cc,
+	* tests/level_median.cc,
+	* tests/linear_convolve.cc,
+	* tests/linear_sobel.cc,
+	* tests/line_convolve.cc,
+	* tests/linear_gaussian.cc,
+	* tests/linear_lap.cc,
+	* tests/labeling_foreground.cc,
+	* tests/morpho_contrast.cc,
+	* tests/morpho_gradient.cc: Update.
+
+	* mln/linear/gaussian.hh,
+	* mln/canvas/morpho/algebraic_union_find.hh,
+	* mln/canvas/dirbrowsing.hh,
+	* mln/canvas/labeling.hh: Fix warnings.
+
 2007-09-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update level median filter with directional cases.

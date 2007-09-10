@@ -34,8 +34,8 @@
 #include <mln/value/int_u8.hh>
 #include <mln/level/saturate.hh>
 
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 
 #include <mln/border/thickness.hh>
 #include <mln/linear/sobel.hh>
@@ -49,12 +49,12 @@ int main()
   border::thickness = 1;
 
   image2d_b<int_u8>
-    lena = io::load_pgm("../img/lena.pgm"),
+    lena = io::pgm::load("../img/lena.pgm"),
     out(lena.domain());
 
   image2d_b<int> tmp(lena.domain());
   linear::sobel(lena, tmp);
 
   level::saturate(tmp, out);
-  io::save_pgm(out, "out.pgm");
+  io::pgm::save(out, "out.pgm");
 }

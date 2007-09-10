@@ -77,7 +77,7 @@ namespace mln
 
 	for (int c = F::dim - 1; c >= 0; --c)
 	{
-	  if (c == f.dir)
+	  if (c == int(f.dir))
 	    continue;
 	  if (p[c] != pmax[c])
 	  {

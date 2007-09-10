@@ -52,143 +52,143 @@ namespace mln
     template <class I, class O>
     void
     gaussian(const Image<I>& input, float sigma,
-	     Image<O>& output)
+	     Image<O>& output);
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace impl
+    namespace impl
+    {
+
+      struct recursivefilter_coef_
       {
 
-	struct recursivefilter_coef_
-	{
+	/*!
+	** \brief Constructor.
+	*/
+	recursivefilter_coef_(float a0, float a1,
+			      float b0, float b1,
+			      float c0, float c1,
+			      float w0, float w1,
+			      float s);
+	std::vector<float> n, d, nm, dm;
+	float sumA, sumC;
+      };
 
-	    /*!
-	    ** \brief Constructor.
-	    */
-	    recursivefilter_coef_(float a0, float a1,
-				  float b0, float b1,
-				  float c0, float c1,
-				  float w0, float w1,
-				  float s);
-	    std::vector<float> n, d, nm, dm;
-	    float sumA, sumC;
-	};
+      recursivefilter_coef_::recursivefilter_coef_(float a0, float a1,
+						   float b0, float b1,
+						   float c0, float c1,
+						   float w0, float w1,
+						   float s)
+      {
+	n.reserve(5);
+	d.reserve(5);
+	nm.reserve(5);
+	dm.reserve(5);
 
-	recursivefilter_coef_::recursivefilter_coef_(float a0, float a1,
-						     float b0, float b1,
-						     float c0, float c1,
-						     float w0, float w1,
-						     float s)
-	{
-	  n.reserve(5);
-	  d.reserve(5);
-	  nm.reserve(5);
-	  dm.reserve(5);
+	b0 /= s;
+	b1 /= s;
+	w0 /= s;
+	w1 /= s;
 
-	  b0 /= s;
-	  b1 /= s;
-	  w0 /= s;
-	  w1 /= s;
+	float sin0 = sin(w0);
+	float sin1 = sin(w1);
+	float cos0 = cos(w0);
+	float cos1 = cos(w1);
 
-	  float sin0 = sin(w0);
-	  float sin1 = sin(w1);
-	  float cos0 = cos(w0);
-	  float cos1 = cos(w1);
+	sumA  =
+	  (2.0 * a1 * exp( b0 ) * cos0 * cos0 - a0 * sin0 * exp( 2.0 * b0 )
+	   + a0 * sin0 - 2.0 * a1 * exp( b0 )) /
+	  (( 2.0 * cos0 * exp( b0 ) - exp( 2.0 * b0 ) - 1 ) * sin0);
 
-	  sumA  =
-	    (2.0 * a1 * exp( b0 ) * cos0 * cos0 - a0 * sin0 * exp( 2.0 * b0 )
-	     + a0 * sin0 - 2.0 * a1 * exp( b0 )) /
-	    (( 2.0 * cos0 * exp( b0 ) - exp( 2.0 * b0 ) - 1 ) * sin0);
+	sumC  =
+	  (2.0 * c1 * exp( b1 ) * cos1 * cos1 - c0 * sin1 * exp( 2.0 * b1 )
+	   + c0 * sin1 - 2.0 * c1 * exp( b1 ))
+	  / (( 2.0 * cos1 * exp( b1 ) - exp( 2.0 * b1 ) - 1 ) * sin1);
 
-	  sumC  =
-	    (2.0 * c1 * exp( b1 ) * cos1 * cos1 - c0 * sin1 * exp( 2.0 * b1 )
-	     + c0 * sin1 - 2.0 * c1 * exp( b1 ))
-	    / (( 2.0 * cos1 * exp( b1 ) - exp( 2.0 * b1 ) - 1 ) * sin1);
+	a0 /= (sumA + sumC);
+	a1 /= (sumA + sumC);
+	c0 /= (sumA + sumC);
+	c1 /= (sumA + sumC);
 
-	  a0 /= (sumA + sumC);
-	  a1 /= (sumA + sumC);
-	  c0 /= (sumA + sumC);
-	  c1 /= (sumA + sumC);
+	n[3] =
+	  exp( -b1 - 2*b0 ) * (c1 * sin1 - cos1 * c0) +
+	  exp( -b0 - 2*b1 ) * (a1 * sin0 - cos0 * a0);
+	n[2] =
+	  2 * exp(-b0 - b1) * ((a0 + c0) * cos1 * cos0 -
+			       cos1 * a1 * sin0 -
+			       cos0 * c1 * sin1) +
+	  c0 * exp(-2 * b0) + a0 * exp(-2 * b1);
+	n[1] =
+	  exp(-b1) * (c1 * sin1 - (c0 + 2*a0) * cos1) +
+	  exp(-b0) * (a1 * sin0 - (2*c0 + a0) * cos0);
+	n[0] =
+	  a0 + c0;
 
-	  n[3] =
-	    exp( -b1 - 2*b0 ) * (c1 * sin1 - cos1 * c0) +
-	    exp( -b0 - 2*b1 ) * (a1 * sin0 - cos0 * a0);
-	  n[2] =
-	    2 * exp(-b0 - b1) * ((a0 + c0) * cos1 * cos0 -
-				 cos1 * a1 * sin0 -
-				 cos0 * c1 * sin1) +
-	    c0 * exp(-2 * b0) + a0 * exp(-2 * b1);
-	  n[1] =
-	    exp(-b1) * (c1 * sin1 - (c0 + 2*a0) * cos1) +
-	    exp(-b0) * (a1 * sin0 - (2*c0 + a0) * cos0);
-	  n[0] =
-	    a0 + c0;
+	d[4] = exp(-2 * b0 - 2 * b1);
+	d[3] =
+	  -2 * cos0 * exp(-b0 - 2*b1) -
+	  2 * cos1 * exp(-b1 - 2*b0);
+	d[2] =
+	  4 * cos1 * cos0 * exp(-b0 - b1) +
+	  exp(-2*b1) + exp(-2*b0);
+	d[1] =
+	  -2*exp(-b1) * cos1 - 2 * exp(-b0) * cos0;
 
-	  d[4] = exp(-2 * b0 - 2 * b1);
-	  d[3] =
-	    -2 * cos0 * exp(-b0 - 2*b1) -
-	    2 * cos1 * exp(-b1 - 2*b0);
-	  d[2] =
-	    4 * cos1 * cos0 * exp(-b0 - b1) +
-	    exp(-2*b1) + exp(-2*b0);
-	  d[1] =
-	    -2*exp(-b1) * cos1 - 2 * exp(-b0) * cos0;
-
-	  for (unsigned i = 1; i <= 3; ++i)
+	for (unsigned i = 1; i <= 3; ++i)
 	  {
 	    dm[i] = d[i];
 	    nm[i] = n[i] - d[i] * n[0];
 	  }
-	  dm[4] = d[4];
-	  nm[4] = -d[4] * n[0];
-	}
+	dm[4] = d[4];
+	nm[4] = -d[4] * n[0];
+      }
 
 
 
-	template <class WorkType, class I>
-	void
-	recursivefilter_(I& ima,
-			 const recursivefilter_coef_& c,
-			 const mln_point(I)& start,
-			 const mln_point(I)& finish,
-			 int len,
-			 const mln_dpoint(I)& d)
-	{
-	  std::vector<WorkType>	tmp1(len);
-	  std::vector<WorkType>	tmp2(len);
+      template <class WorkType, class I>
+      void
+      recursivefilter_(I& ima,
+		       const recursivefilter_coef_& c,
+		       const mln_point(I)& start,
+		       const mln_point(I)& finish,
+		       int len,
+		       const mln_dpoint(I)& d)
+      {
+	std::vector<WorkType>	tmp1(len);
+	std::vector<WorkType>	tmp2(len);
 
-	  // The fourth degree approximation implies to have a special
-	  // look on the four first points we consider that there is
-	  // no signal before 0 (to be discussed)
+	// The fourth degree approximation implies to have a special
+	// look on the four first points we consider that there is
+	// no signal before 0 (to be discussed)
 
-	  // --
-	  // Causal part
+	// --
+	// Causal part
 
-	  tmp1[0] =
-	    c.n[0] * ima(start);
+	tmp1[0] =
+	  c.n[0] * ima(start);
 
-	  tmp1[1] =
-	    c.n[0] * ima(start + d)
-	    + c.n[1] * ima(start)
-	    - c.d[1] * tmp1[0];
+	tmp1[1] =
+	  c.n[0] * ima(start + d)
+	  + c.n[1] * ima(start)
+	  - c.d[1] * tmp1[0];
 
-	  tmp1[2] =
-	    c.n[0] * ima(start + d + d)
-	    + c.n[1] * ima(start + d)
-	    + c.n[2] * ima(start)
-	    - c.d[1] * tmp1[1]
-	    - c.d[2] * tmp1[0];
+	tmp1[2] =
+	  c.n[0] * ima(start + d + d)
+	  + c.n[1] * ima(start + d)
+	  + c.n[2] * ima(start)
+	  - c.d[1] * tmp1[1]
+	  - c.d[2] * tmp1[0];
 
-	  tmp1[3] =
-	    c.n[0] * ima(start + d + d + d)
-	    + c.n[1] * ima(start + d + d)
-	    + c.n[2] * ima(start + d)
-	    + c.n[3] * ima(start)
-	    - c.d[1] * tmp1[2] - c.d[2]*tmp1[1]
-	    - c.d[3] * tmp1[0];
+	tmp1[3] =
+	  c.n[0] * ima(start + d + d + d)
+	  + c.n[1] * ima(start + d + d)
+	  + c.n[2] * ima(start + d)
+	  + c.n[3] * ima(start)
+	  - c.d[1] * tmp1[2] - c.d[2]*tmp1[1]
+	  - c.d[3] * tmp1[0];
 
-	  mln_point(I) current(start + d + d + d + d);
-	  for (mln_coord(I) i = 4; i < len; ++i)
+	mln_point(I) current(start + d + d + d + d);
+	for (mln_coord(I) i = 4; i < len; ++i)
 	  {
 	    tmp1[i] =
 	      c.n[0] * ima(current)
@@ -200,28 +200,28 @@ namespace mln
 	    current = current + d;
 	  }
 
-	  // Non causal part
+	// Non causal part
 
-	  tmp2[len - 1] = 0;
+	tmp2[len - 1] = 0;
 
-	  tmp2[len - 2] =
-	    c.nm[1] * ima(finish);
+	tmp2[len - 2] =
+	  c.nm[1] * ima(finish);
 
-	  tmp2[len - 3] =
-	    c.nm[1] * ima(finish - d)
-	    + c.nm[2] * ima(finish)
-	    - c.dm[1] * tmp2[len-2];
+	tmp2[len - 3] =
+	  c.nm[1] * ima(finish - d)
+	  + c.nm[2] * ima(finish)
+	  - c.dm[1] * tmp2[len-2];
 
-	  tmp2[len - 4] =
-	    c.nm[1] * ima(finish - d - d)
-	    + c.nm[2] * ima(finish - d)
-	    + c.nm[3] * ima(finish)
-	    - c.dm[1] * tmp2[len-3]
-	    - c.dm[2] * tmp2[len-2];
+	tmp2[len - 4] =
+	  c.nm[1] * ima(finish - d - d)
+	  + c.nm[2] * ima(finish - d)
+	  + c.nm[3] * ima(finish)
+	  - c.dm[1] * tmp2[len-3]
+	  - c.dm[2] * tmp2[len-2];
 
-	  current = finish - d - d - d ;
+	current = finish - d - d - d ;
 
-	  for (int i = len - 5; i >= 0; --i)
+	for (int i = len - 5; i >= 0; --i)
 	  {
 	    tmp2[i] =
 	      c.nm[1] * ima(current)
@@ -233,63 +233,63 @@ namespace mln
 	    current = current - d;
 	  }
 
-	  // Combine results from causal and non-causal parts.
+	// Combine results from causal and non-causal parts.
 
-	  current = start;
-	  for (int i = 0; i < len; ++i)
+	current = start;
+	for (int i = 0; i < len; ++i)
 	  {
 	    ima(current) = tmp1[i] + tmp2[i];
 	    current = current + d;
 	  }
-	}
+      }
 
 
-	template <class I, class F>
-	void
-	gaussian_(Image<I>& img_, const F& coef)
-	{
-	  I& img = exact(img_);
+      template <class I, class F>
+      void
+      gaussian_(Image<I>& img_, const F& coef)
+      {
+	I& img = exact(img_);
 
-	  // Apply on rows.
-	  for (int j = 0; j < geom::ncols(img); ++j)
-	    recursivefilter_<float>(img, coef,
-				    make::point2d(-img.border(), j),
-				    make::point2d(geom::nrows(img) - 1 + img.border(), j),
-				    geom::nrows(img) + 2 * img.border(),
-				    make::dpoint2d(1, 0));
+	// Apply on rows.
+	for (unsigned j = 0; j < geom::ncols(img); ++j)
+	  recursivefilter_<float>(img, coef,
+				  make::point2d(-img.border(), j),
+				  make::point2d(geom::nrows(img) - 1 + img.border(), j),
+				  geom::nrows(img) + 2 * img.border(),
+				  make::dpoint2d(1, 0));
 
-	  // Apply on columns.
-	  for (int i = 0; i < geom::nrows(img); ++i)
-	    recursivefilter_<float>(img, coef,
-				    make::point2d(i, -img.border()),
-				    make::point2d(i, geom::ncols(img) - 1 + img.border()),
-				    geom::ncols(img) + 2 * img.border(),
-				    make::dpoint2d(0, 1));
+	// Apply on columns.
+	for (unsigned i = 0; i < geom::nrows(img); ++i)
+	  recursivefilter_<float>(img, coef,
+				  make::point2d(i, -img.border()),
+				  make::point2d(i, geom::ncols(img) - 1 + img.border()),
+				  geom::ncols(img) + 2 * img.border(),
+				  make::dpoint2d(0, 1));
 
-	}
+      }
 
 
-	template <class I, class F, class O>
-	void
-	gaussian_common_(const Image<I>& in,
-			 const F& coef,
-			 float sigma,
-			 Image<O>& out)
-	{
-	  mln_ch_value(O, float) work_img(exact(in).domain());
-	  level::paste(in, work_img);
+      template <class I, class F, class O>
+      void
+      gaussian_common_(const Image<I>& in,
+		       const F& coef,
+		       float sigma,
+		       Image<O>& out)
+      {
+	mln_ch_value(O, float) work_img(exact(in).domain());
+	level::paste(in, work_img);
 
-	  // On tiny sigma, Derich algorithm doesn't work.
-	  // It is the same thing that to convolve with a Dirac.
-	  if (sigma > 0.006)
-	    gaussian_(work_img, coef);
-	  /* Convert the result image to the user-requested datatype.
-	     FIXME: We are making an unnecessary copy in case the
-	     user expects a ntg::float_s image.  */
-	  level::paste(work_img, out);
-	}
+	// On tiny sigma, Derich algorithm doesn't work.
+	// It is the same thing that to convolve with a Dirac.
+	if (sigma > 0.006)
+	  gaussian_(work_img, coef);
+	/* Convert the result image to the user-requested datatype.
+	   FIXME: We are making an unnecessary copy in case the
+	   user expects a ntg::float_s image.  */
+	level::paste(work_img, out);
+      }
 
-      } // end of namespace mln::linear::impl
+    } // end of namespace mln::linear::impl
 
     // Facade.
 
@@ -298,14 +298,13 @@ namespace mln
     gaussian(const Image<I>& input, float sigma,
 	     Image<O>& output)
     {
-      recursivefilter_coef_
+      impl::recursivefilter_coef_
 	coef(1.68f, 3.735f,
 	     1.783f, 1.723f,
 	     -0.6803f, -0.2598f,
 	     0.6318f, 1.997f,
 	     sigma);
-
-      gaussian_common_(in, coef, sigma, out);
+      impl::gaussian_common_(input, coef, sigma, output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

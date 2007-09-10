@@ -34,8 +34,8 @@
 #include <mln/value/int_u8.hh>
 #include <mln/core/neighb2d.hh>
 
-#include <mln/io/load_pgm.hh>
-#include <mln/io/save_pgm.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 
 #include <mln/morpho/opening_area.hh>
 
@@ -47,9 +47,9 @@ int main()
   using value::int_u8;
 
   image2d_b<int_u8>
-    lena = io::load_pgm("../img/lena.pgm"),
+    lena = io::pgm::load("../img/lena.pgm"),
     out(lena.domain());
 
   morpho::opening_area(lena, c4(), 510, out);
-  io::save_pgm(out, "out.pgm");
+  io::pgm::save(out, "out.pgm");
 }
