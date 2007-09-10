@@ -1,3 +1,12 @@
+2007-09-10  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add iterator on line
+	* mln/core/image1d_b.hh,
+	* mln/core/image2d_b.hh: Type line_piter added.
+	* mln/core/line_piter.hh: The Iterator.
+	* mln/core/macros.hh: New macro mln_line_piter.
+	* tests/line_piter.cc: New.
+
 2007-09-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add fast histogram-based erosion and color skeleton.

@@ -110,6 +110,9 @@
 # define mln_piter(T)      typename T::fwd_piter
 # define mln_piter_(T)              T::fwd_piter
 
+/// Shortcut to access the type of point by line iterator (line_piter) associated to T.
+# define mln_line_piter(T) typename T::line_piter
+
 /// Shortcut to access the type of point set (pset) associated to T.
 # define mln_pset(T)       typename T::pset
 
