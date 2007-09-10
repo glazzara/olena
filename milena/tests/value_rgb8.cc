@@ -38,9 +38,30 @@ int main()
 {
   using namespace mln;
   using value::rgb8;
+  using value::rgb;
 
   {
-    rgb8 c;
-    // todo matthieu
+    rgb8 v;
+    v.red() = 0;
+    v.green() = 1;
+    v.blue() = 2;
+    value::int_u8_x3_t t = {0,1,2};
+    rgb8 w( t );
+
+    std::cout << w << std::endl;
+    std::cout << v << std::endl;
+
+    mln_assertion(w == w);
+    mln_assertion(w == v);
+    v.green () = 255;
+    std::cout << v << std::endl;
+    mln_assertion(v != w);
+
+    rgb<20> b = rgb<20>::max_blue;
+    std::cout << b << std::endl;
+
+    rgb<20> c = rgb<20>::white;
+    std::cout << c << std::endl;
+
   }
 }

@@ -1,3 +1,15 @@
+2007-09-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	add rgb value type and separate prinln and println_with_border
+	* mln/debug/println.hh: Splitted
+	* mln/debug/println_with_border.hh: New.
+	* mln/value/rgb.hh: templated value rgb<n>
+	* mln/value/rgb8.hh: just a typedef
+	* mln/value/rgb8_non_templated.hh: the old version without template
+					   (to delete)
+	* tests/debug_println_with_border.cc: (uplate includes)
+	* tests/value_rgb8.cc: tests rgb operation
+
 2007-09-10  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	FIXME notation for Guillaume

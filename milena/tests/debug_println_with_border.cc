@@ -34,6 +34,7 @@
 #include <mln/core/image1d_b.hh>
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
+#include <mln/debug/println_with_border.hh>
 
 
 using namespace mln;

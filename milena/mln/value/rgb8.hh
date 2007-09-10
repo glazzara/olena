@@ -34,8 +34,7 @@
  * 8-bit encoded.
  */
 
-# include <mln/core/concept/value.hh>
-# include <mln/value/int_u8.hh>
+# include <mln/value/rgb.hh>
 
 
 namespace mln
@@ -44,68 +43,10 @@ namespace mln
   namespace value
   {
 
-
-    typedef int_u8 int_u8_x3_t[3];
-    typedef unsigned char uchar_x3_t[3];
-    typedef float float_x3_t[3];
-
-
     /*! \brief Color class for red-green-blue where every component is
      * 8-bit encoded.
      */
-    class rgb8 : public Value< rgb8 >
-    {
-    public:
-
-      /// Encoding associated type.
-      typedef int_u8_x3_t enc;
-
-      /// Equivalent associated type.
-      typedef int_u8_x3_t equiv;
-
-      int_u8  red() const   { return c_[0]; }
-      int_u8& red()         { return c_[0]; }
-
-      int_u8  green() const { return c_[1]; }
-      int_u8& green()       { return c_[1]; }
-
-      int_u8  blue() const  { return c_[2]; }
-      int_u8& blue()        { return c_[2]; }
-
-      // todo matthieu
-
-    private:
-      int_u8_x3_t c_;
-    };
-
-
-    struct props< rgb8 >
-    {
-      static const unsigned nbits = 24;
-      static const std::size_t card_ = metal::pow<2, nbits>::value;
-      typedef color_kind kind;
-      typedef float_x3_t sum;
-      typedef uchar_x3_t interop;
-    };
-
-
-
-    /*! \brief Print an rgb8 \p c into the output stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] c An rgb8.
-     *
-     * \return The modified output stream \p ostr.
-     */
-    std::ostream& operator<<(std::ostream& ostr, const rgb8& c);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    // todo matthieu
-
-# endif // ! MLN_INCLUDE_ONLY
-
+    typedef rgb<8> rgb8;
   } // end of namespace mln::value
 
 } // end of namespace mln
