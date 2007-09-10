@@ -38,6 +38,11 @@
 # include <mln/morpho/includes.hh>
 
 
+
+// todo simon
+// this file should be like erosion
+
+
 namespace mln
 {
 

@@ -58,7 +58,7 @@ namespace mln
     window<mln_dpoint(I)> to_window(const Image<I>& ima);
 
     /// Convert a point set \p pset into a window.
-    template <typename S, typename F>
+    template <typename S>
     window<mln_dpoint(S)> to_window(const Point_Set<S>& pset);
 
     /// Convert an std::set \p s of delta-points into a window.
@@ -97,7 +97,7 @@ namespace mln
       return win;
     }
 
-    template <typename S, typename F>
+    template <typename S>
     window<mln_dpoint(S)> to_window(const Point_Set<S>& pset)
     {
       return to_window(pw::cst(true) | pset);

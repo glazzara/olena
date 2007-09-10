@@ -1,3 +1,21 @@
+2007-09-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add fast histogram-based erosion and color skeleton.
+	* tests/morpho_erosion_min_h.cc: New.
+	* tests/value_rgb8.cc: New.
+	* mln/level/ero.hh: New; temporary, rename it!
+	* mln/accu/min_h.hh: New.
+	* mln/core/vec_p.hh (dpoint): New.
+	* mln/core/window.hh (operator<<): New.
+	* mln/value/rgb8.hh: New.
+
+	* tests/morpho_erosion.cc: Update.
+	* mln/convert/to_window.hh: Fix sig.
+	* mln/morpho/dilation.hh: Add todo.
+	* mln/morpho/erosion.hh: Add todo.
+	* mln/level/approx/median.hh: Add todo.
+	* mln/value/props.hh: Fix missing include.
+
 2007-09-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	bug fix in image1d_b

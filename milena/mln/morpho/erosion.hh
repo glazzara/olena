@@ -148,6 +148,17 @@ namespace mln
 
 #  endif // MLN_CORE_WIN_RECTANGLE2D_HH
 
+
+//   ifdef MLN_CORE_WIN_RECTANGLE2D_HH
+
+//       template <typename I, typename O>
+//       void erosion_wrt_win(const Image<I>& input, const win::octagon2d& win, Image<O>& output)
+//       {
+// 	todo simon
+//       }
+
+//   endif MLN_CORE_WIN_RECTANGLE2D_HH
+
       //   ^
       //   |
       // end of stage1 (dispatch w.r.t. the window type)

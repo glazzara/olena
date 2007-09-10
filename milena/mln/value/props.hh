@@ -34,6 +34,7 @@
  *  FIXME : add interop typedef in each props
  */
 
+# include <cstddef>
 # include <climits>
 # include <cfloat>
 

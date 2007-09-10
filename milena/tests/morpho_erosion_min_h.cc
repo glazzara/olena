@@ -38,12 +38,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/level/fill.hh>
-#include <mln/morpho/erosion.hh>
-
-#include <mln/pw/value.hh>
-#include <mln/pw/cst.hh>
-#include <mln/fun/ops.hh>
+#include <mln/level/ero.hh>
 
 #include <mln/convert/to_vec_p.hh>
 #include <mln/convert/to_window.hh>
@@ -60,31 +55,11 @@ int main()
   image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
 
   { 
+    vec_p<point2d> vec = convert::to_vec_p(rec, point2d::zero);
+    window2d win = convert::to_window(vec);
+
     image2d_b<int_u8> out(lena.domain());
-    morpho::erosion(lena, rec, out);
+    level::ero(lena, win, out);
     io::pgm::save(out, "out.pgm");
   }
-
-//   { 
-//     vec_p<point2d> vec = convert::to_vec_p(rec, point2d::zero);
-//     window2d win = convert::to_window(vec);
-
-//     image2d_b<int_u8> out(lena.domain());
-//     level::ero(lena, win, out);
-//     morpho::erosion(lena, win, out);
-//     io::pgm::save(out, "out.pgm");
-//   }
-
-//   {
-//     image2d_b<bool> bin(lena.domain()), out(lena.domain());
-//     level::fill(bin, pw::value(lena) > pw::cst(127));
-//     morpho::erosion(bin, rec, out);
-
-//     image2d_b<int_u8> test(lena.domain());
-//     image2d_b<int_u8>::fwd_piter p(lena.domain());
-//     for_all(p)
-//       test(p) = out(p) ? 255 : 0;
-//     io::pgm::save(test, "test.pgm");
-//   }
-
 }

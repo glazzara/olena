@@ -97,6 +97,16 @@ namespace mln
   };
 
 
+  // FIXME: Move code at EOF + doc.
+  template <typename D>
+  std::ostream& operator<<(std::ostream& ostr, const window<D>& win)
+  {
+    // FIXME
+    for (unsigned i = 0; i < win.ndpoints(); ++i)
+      ostr << win.dp(i);
+    return ostr;
+  }
+
 
 
 # ifndef MLN_INCLUDE_ONLY

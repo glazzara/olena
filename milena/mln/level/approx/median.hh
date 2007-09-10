@@ -78,6 +78,13 @@ namespace mln
 	level::median(tmp,   win::vline2d(win.height()), output);
       }
 
+//       template <typename I, typename O>
+//       void median(const Image<I>& input_, const win::disk2d& win,
+// 		  Image<O>& output_)
+//       {
+// 	// todo simon
+//       }
+
 # endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::level::approx
