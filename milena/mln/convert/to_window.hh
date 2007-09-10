@@ -77,6 +77,8 @@ namespace mln
       window<D> win;
       mln_niter(N) n(nbh, P::zero);
       for_all(n)
+// FIXME: pour Guillaume
+//     if (n < P::zero)
 	win.insert(n - P::zero);
       return win;
     }

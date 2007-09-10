@@ -1,5 +1,10 @@
 2007-09-10  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	FIXME notation for Guillaume
+	* mln/convert/to_window.hh: .
+
+2007-09-10  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Add iterator on line
 	* mln/core/image1d_b.hh,
 	* mln/core/image2d_b.hh: Type line_piter added.
