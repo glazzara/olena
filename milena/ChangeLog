@@ -1,3 +1,13 @@
+2007-09-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	bug fix in image1d_b
+	* mln/core/image1d_b.hh: re-add array_ attribute in the image1d_b class
+				we actually need it to handle the border offset
+				    => array_ = buffer_ - vb_.pmin().ind();
+)
+	* mln/debug/println.hh: update
+	* tests/debug_println_with_border.cc: add 1d test.
+
 2007-09-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Renaming io and fix warnings.

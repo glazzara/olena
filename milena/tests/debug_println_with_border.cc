@@ -31,6 +31,7 @@
  */
 
 #include <mln/core/image2d_b.hh>
+#include <mln/core/image1d_b.hh>
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
 
@@ -41,7 +42,34 @@ using namespace mln;
 int main()
 {
   border::thickness = 3;
-  image2d_b<bool> msk(3, 3);
-  msk.at(1, 1) = true;
-  debug::println_with_border(msk);
+
+  {
+    image2d_b<bool> msk(3, 3);
+    msk.at(0, 0) = true;
+    msk.at(1, 0) = true;
+    msk.at(2, 0) = true;
+
+    msk.at(0, 1) = true;
+    msk.at(1, 1) = false;
+    msk.at(2, 1) = true;
+
+    msk.at(0, 2) = true;
+    msk.at(1, 2) = true;
+    msk.at(2, 2) = true;
+
+    debug::println(msk);
+    debug::println_with_border(msk);
+  }
+
+  {
+    image1d_b<bool> msk(3);
+    msk.at(0) = false;
+    msk.at(1) = true;
+    msk.at(2) = false;
+
+    debug::println(msk);
+    debug::println_with_border(msk);
+
+  }
+
 }

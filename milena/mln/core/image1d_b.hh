@@ -189,6 +189,7 @@ namespace mln
   private:
 
     T*  buffer_;
+    T*  array_;
 
     box1d b_;  // theoretical box
     unsigned bdr_;
@@ -209,14 +210,16 @@ namespace mln
 
   template <typename T>
   image1d_b<T>::image1d_b()
-    : buffer_(0)
+    : buffer_(0),
+      array_ (0)
   {
     bdr_ = border::thickness; // default value in ctors.
   }
 
   template <typename T>
   image1d_b<T>::image1d_b(int ninds, unsigned bdr)
-    : buffer_(0)
+    : buffer_(0),
+      array_ (0)
   {
     init_with(ninds, bdr);
   }
@@ -233,7 +236,8 @@ namespace mln
 
   template <typename T>
   image1d_b<T>::image1d_b(const box1d& b, unsigned bdr)
-    : buffer_(0)
+    : buffer_(0),
+      array_ (0)
   {
     init_with(b, bdr);
   }
@@ -286,7 +290,7 @@ namespace mln
   bool
   image1d_b<T>::has_data() const
   {
-    return buffer_ != 0;
+    return buffer_ != 0 && array_ != 0;;
   }
 
   template <typename T>
@@ -333,7 +337,7 @@ namespace mln
   image1d_b<T>::operator()(const point1d& p) const
   {
     mln_precondition(this->owns_(p));
-    return buffer_[p.ind()];
+    return array_[p.ind()];
   }
 
   template <typename T>
@@ -341,7 +345,7 @@ namespace mln
   image1d_b<T>::operator()(const point1d& p)
   {
     mln_precondition(this->owns_(p));
-    return buffer_[p.ind()];
+    return array_[p.ind()];
   }
 
   template <typename T>
@@ -365,7 +369,7 @@ namespace mln
   image1d_b<T>::at(int ind) const
   {
     mln_precondition(this->owns_(make::point1d(ind)));
-    return buffer_[ind];
+    return array_[ind];
   }
 
   template <typename T>
@@ -373,7 +377,7 @@ namespace mln
   image1d_b<T>::at(int ind)
   {
     mln_precondition(this->owns_(make::point1d(ind)));
-    return buffer_[ind];
+    return array_[ind];
   }
 
   template <typename T>
@@ -436,6 +440,7 @@ namespace mln
     unsigned
       ni = vb_.len(0);
     buffer_ = new T[ni];
+    array_ = buffer_ - vb_.pmin().ind();
     mln_postcondition(vb_.len(0) == b_.len(0) + 2 * bdr_);
   }
 

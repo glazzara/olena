@@ -71,9 +71,8 @@ namespace mln
       void println_with_border(const S&, const Fast_Image<I>& input_)
       {
 	const I& input = exact(input_);
-	std::cout << input.ncells() << std::endl;
  	for (int i = 0; i < input.ncells(); i++)
-	  std::cout << input.buffer()[i] << ' ';
+	  std::cout << format( input.buffer()[i] ) << ' ';
 	std::cout << std::endl;
       }
 
@@ -105,7 +104,7 @@ namespace mln
 	const std::size_t ncols = b.ncols() + 2 * input.border();
  	for (size_t i = 0; i < input.ncells(); i++)
 	{
-	  std::cout << input.buffer()[i] << ' ';
+	  std::cout << format( input.buffer()[i] ) << ' ';
 	  if (((i+1) % ncols) == 0)
 	    std::cout << std::endl;
 	}
