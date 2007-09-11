@@ -172,6 +172,7 @@ namespace mln
       do
 	--i_;
       while (h_[i_] == 0);
+      v_ = s_[i_];
     }
 
     template <typename S>
