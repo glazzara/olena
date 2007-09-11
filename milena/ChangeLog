@@ -1,5 +1,15 @@
 2007-09-11  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	Add some 2d windows and tests
+	* mln/core/win/backdiag2d.hh: New.
+	* mln/core/win/diag2d.hh: New.
+	* mln/core/win/disk2d.hh: New.
+	* mln/core/win/octagon2d.hh: New.
+	* tests/win_backdiag2d.cc: New.
+	* tests/win_diag2d.cc: New.
+
+2007-09-11  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Fix bug on max_h accu
 	* mln/accu/max_h.hh: Fixed.
 
