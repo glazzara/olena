@@ -1,3 +1,38 @@
+2007-09-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	add pbm, ppm, pgm 16bits handling
+	* img/lena.pbm: lena in pbm
+	* img/lena.ppm: lena in ppm
+	* mln/convert/to_rgb.hh: operation to convert
+		some values to rgb in order to make pgm::load<rgb8>
+		compile
+	* mln/io/pbm/load.hh:
+		load a pbm image into an image2d_b<bool>
+	* mln/io/pbm/save.hh: New.
+		save an image2d_b<bool> into a pbm image file
+	* mln/io/pbm: New.
+	* mln/io/pgm/load.hh:
+		add 16 bits handling
+	* mln/io/pgm/save.hh:
+		add 16 bits handling
+	* mln/io/ppm/load.hh: New.
+		load a ppm image into an image2d_b<rgb8>
+	* mln/io/ppm/save.hh: New.
+		save an image2d_b<rgb8> into a ppm image file
+	* mln/io/ppm: New directory.
+	* mln/value/int_u.hh:
+		fix to compile with the good flags
+	* mln/value/rgb.hh:
+		update of rgb values
+	* tests/io_pbm.cc:
+		a test
+	* tests/io_pgm.cc:
+		a test
+	* tests/io_pgm16.cc:
+		a test
+	* tests/io_ppm.cc:
+		a test
+
 2007-09-11  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Optims for erosion and dilation on octagons

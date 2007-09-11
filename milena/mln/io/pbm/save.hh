@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PGM_SAVE_HH
-# define MLN_IO_PGM_SAVE_HH
+#ifndef MLN_IO_PBM_SAVE_HH
+# define MLN_IO_PBM_SAVE_HH
 
 # include <iostream>
 # include <fstream>
@@ -50,7 +50,7 @@ namespace mln
   namespace io
   {
 
-    namespace pgm
+    namespace pbm
     {
 
       template <typename I>
@@ -72,10 +72,10 @@ namespace mln
 			<< "'!";
 	      abort();
 	    }
-	  file << "P5" << std::endl;
+	  file << "P4" << std::endl;
 	  file << "# milena" << std::endl;
 	  file << geom::ncols(ima) << ' ' << geom::nrows(ima) << std::endl;
-	  file << mln_max(mln_value(I)) << std::endl;
+	  file << "255" << std::endl;
 	}
 
 // 	template <typename I>
@@ -113,7 +113,6 @@ namespace mln
 	template <typename I>
 	void save_(const Image<I>& ima_, const std::string& filename)
 	{
-	  typedef typename I::value::enc T;
 	  const I& ima = exact(ima_);
 	  std::ofstream file(filename.c_str());
 	  save_header_(ima, filename, file);
@@ -123,11 +122,17 @@ namespace mln
 	    min_col = geom::min_col(ima),
 	    max_col = geom::max_col(ima);
 	  point2d p;
+
+	  unsigned char c = 0;
+	  int i = 0;
 	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
 	      {
-		T c = ima(p);
-		file.write((char*)(&c), sizeof(T));
+		c += ima(p);
+		if (i && (i % 8 == 0))
+		  file.write((char*)(&c), 1);
+		c = c * 2;
+		++i;
 	      }
 	}
 
@@ -137,28 +142,17 @@ namespace mln
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename)
       {
-	mln::metal::or_<
-	  mln::metal::equal<mln_value(I), value::int_u<8> >,
-
-	  mln::metal::or_<
-	  mln::metal::equal<mln_value(I), value::int_u_sat<8> >,
-
-	  mln::metal::or_<
-	  mln::metal::equal<mln_value(I), value::int_u<16> >,
-	  mln::metal::equal<mln_value(I), value::int_u_sat<16> >
-	  >
-	  >
-	  >::check();
+	mln::metal::equal<mln_value(I), bool >::check();
 	impl::save_(exact(ima), filename);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::pgm
+    } // end of namespace mln::pbm
 
   } // end of namespace mln::io
 
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_PGM_SAVE_HH
+#endif // ! MLN_IO_PBM_SAVE_HH

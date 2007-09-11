@@ -26,15 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PGM_LOAD_HH
-# define MLN_IO_PGM_LOAD_HH
+#ifndef MLN_IO_PPM_LOAD_HH
+# define MLN_IO_PPM_LOAD_HH
 
 # include <iostream>
 # include <fstream>
 # include <string>
 
 # include <mln/core/image2d_b.hh>
-# include <mln/value/int_u8.hh>
+# include <mln/value/rgb8.hh>
 
 
 namespace mln
@@ -43,7 +43,7 @@ namespace mln
   namespace io
   {
 
-    namespace pgm
+    namespace ppm
     {
 
       namespace internal
@@ -142,9 +142,9 @@ namespace mln
 	  const mln_coord(I)
 	    min_row = geom::min_row(ima),
 	    max_row = geom::max_row(ima);
-	  if (sizeof(V) <= 2)
+	  if (sizeof(V) == 1)
 	    {
-	      size_t len = geom::ncols(ima) * sizeof(mln_enc(V));
+	      size_t len = geom::ncols(ima) * sizeof(mln_enc(V)) * 3;
 	      for (p.row() = min_row; p.row() <= max_row; ++p.row())
 		file.read((char*)(& ima(p)), len);
 	    }
@@ -159,7 +159,11 @@ namespace mln
 		  {
 		    unsigned char c;
 		    file.read((char*)(&c), 1);
-		    ima(p) = c;
+		    ima(p).red() = c;
+		    file.read((char*)(&c), 1);
+		    ima(p).green() = c;
+		    file.read((char*)(&c), 1);
+		    ima(p).blue() = c;
 		  }
 	    }
 	}
@@ -167,8 +171,8 @@ namespace mln
 
       } // end of namespace mln::io::internal
 
-      template <typename V>
-      image2d_b<V> load(const std::string& filename)
+
+      image2d_b<value::rgb8> load(const std::string& filename)
       {
 	std::ifstream file(filename.c_str());
 	if (! file)
@@ -179,27 +183,22 @@ namespace mln
 	  }
 	char type;
 	int nrows, ncols;
-	internal::read_pnm_header('2', '5', file, type, nrows, ncols);
+	internal::read_pnm_header('3', '6', file, type, nrows, ncols);
 
-	image2d_b<V> ima(nrows, ncols);
-	if (type == '5')
+	image2d_b<value::rgb8> ima(nrows, ncols);
+	if (type == '6')
 	  internal::load_raw_2d(file, ima);
 	else
-	  if (type == '2')
+	  if (type == '3')
 	    internal::load_ascii(file, ima);
 	return ima;
       }
 
-      image2d_b<value::int_u8> load(const std::string& filename)
-      {
-	return load<value::int_u8>(filename);
-      }
-
-    } // end of namespace mln::io::pgm
+    } // end of namespace mln::io::ppm
 
   } // end of namespace mln::io
 
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_PGM_LOAD_HH
+#endif // ! MLN_IO_PPM_LOAD_HH

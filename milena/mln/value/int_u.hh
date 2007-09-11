@@ -130,7 +130,7 @@ namespace mln
     int_u<n>::int_u(int i)
     {
       mln_precondition(i >= 0);
-      mln_precondition(i <= mln_max(enc));
+      mln_precondition(unsigned(i) <= mln_max(enc));
       this->v_ = enc(i);
     }
 
@@ -139,7 +139,7 @@ namespace mln
     int_u<n>::operator=(int i)
     {
       mln_precondition(i >= 0);
-      mln_precondition(i <= mln_max(enc));
+      mln_precondition(unsigned(i) <= mln_max(enc));
       this->v_ = i;
       return *this;
     }

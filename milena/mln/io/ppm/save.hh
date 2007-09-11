@@ -26,16 +26,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PGM_SAVE_HH
-# define MLN_IO_PGM_SAVE_HH
+#ifndef MLN_IO_PPM_SAVE_HH
+# define MLN_IO_PPM_SAVE_HH
 
 # include <iostream>
 # include <fstream>
+
+# include <mln/core/concept/image.hh>
 
 # include <mln/geom/size2d.hh>
 # include <mln/metal/equal.hh>
 # include <mln/metal/bexpr.hh>
 
+# include <mln/convert/to_rgb.hh>
 
 namespace mln
 {
@@ -50,7 +53,7 @@ namespace mln
   namespace io
   {
 
-    namespace pgm
+    namespace ppm
     {
 
       template <typename I>
@@ -72,10 +75,10 @@ namespace mln
 			<< "'!";
 	      abort();
 	    }
-	  file << "P5" << std::endl;
+	  file << "P6" << std::endl;
 	  file << "# milena" << std::endl;
 	  file << geom::ncols(ima) << ' ' << geom::nrows(ima) << std::endl;
-	  file << mln_max(mln_value(I)) << std::endl;
+	  file << "255" << std::endl;
 	}
 
 // 	template <typename I>
@@ -113,7 +116,6 @@ namespace mln
 	template <typename I>
 	void save_(const Image<I>& ima_, const std::string& filename)
 	{
-	  typedef typename I::value::enc T;
 	  const I& ima = exact(ima_);
 	  std::ofstream file(filename.c_str());
 	  save_header_(ima, filename, file);
@@ -123,12 +125,13 @@ namespace mln
 	    min_col = geom::min_col(ima),
 	    max_col = geom::max_col(ima);
 	  point2d p;
+
 	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
-	      {
-		T c = ima(p);
-		file.write((char*)(&c), sizeof(T));
-	      }
+	    {
+	      const value::int_u8* c = convert::to_rgb(ima(p)).buffer();
+	      file.write((char*)(c), 3);
+	    }
 	}
 
       } // end of namespace mln::io::impl
@@ -137,28 +140,20 @@ namespace mln
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename)
       {
-	mln::metal::or_<
-	  mln::metal::equal<mln_value(I), value::int_u<8> >,
-
-	  mln::metal::or_<
-	  mln::metal::equal<mln_value(I), value::int_u_sat<8> >,
-
-	  mln::metal::or_<
-	  mln::metal::equal<mln_value(I), value::int_u<16> >,
-	  mln::metal::equal<mln_value(I), value::int_u_sat<16> >
-	  >
-	  >
-	  >::check();
+// 	mln::metal::or_<
+// 	  mln::metal::equal<mln_value(I), value::int_u<8> >,
+// 	  mln::metal::equal<mln_value(I), value::int_u_sat<8> >
+// 	  >::check();
 	impl::save_(exact(ima), filename);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::pgm
+    } // end of namespace mln::ppm
 
   } // end of namespace mln::io
 
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_PGM_SAVE_HH
+#endif // ! MLN_IO_PPM_SAVE_HH
