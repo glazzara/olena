@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_ERO_HH
-# define MLN_LEVEL_ERO_HH
+#ifndef MLN_MORPHO_EROSION_FAST_HH
+# define MLN_MORPHO_EROSION_FAST_HH
 
-/*! \file mln/level/ero.hh
+/*! \file mln/morpho/erosion_fast.hh
  *
  * \brief Ero filtering of an image.
  *
@@ -47,7 +47,7 @@
 namespace mln
 {
 
-  namespace level
+  namespace morpho
   {
 
     /*! Compute in \p output the ero filter of image \p input by
@@ -60,8 +60,8 @@ namespace mln
      * \pre \p input and \p output have to be initialized.
      */
     template <typename I, typename W, typename O>
-    void ero(const Image<I>& input, const Window<W>& win,
-		Image<O>& output);
+    void erosion_fast(const Image<I>& input, const Window<W>& win,
+		      Image<O>& output);
 
 
 
@@ -76,7 +76,7 @@ namespace mln
 
 
       template <typename I, typename W, typename O>
-      struct ero_t
+      struct erosion_fast_t
       { 
 	typedef mln_point(I)  P;
 	typedef mln_dpoint(I) D;
@@ -96,7 +96,7 @@ namespace mln
 
 	// ctor
 
-	ero_t(const I& input_, const W& win_, O& output_)
+	erosion_fast_t(const I& input_, const W& win_, O& output_)
 	  :
 	  // i/o
 	  input(exact(input_)),
@@ -154,35 +154,35 @@ namespace mln
 	  output(p) = min.to_value();
 	}
 
-      }; // end of ero_t
+      }; // end of erosion_fast_t
 
 
       template <typename I, typename W, typename O>
-      void ero_(const Image<I>& input, const Window<W>& win, O& output)
+      void erosion_fast_(const Image<I>& input, const Window<W>& win, O& output)
       {
 	// FIXME: resize border!
-	ero_t<I,W,O> f(exact(input), exact(win), output);
+	erosion_fast_t<I,W,O> f(exact(input), exact(win), output);
 	canvas::browsing::snake_fwd(f);
       }
 
-    } // end of namespace mln::level::impl
+    } // end of namespace mln::morpho::impl
 
 
     // Facades.
 
     template <typename I, typename W, typename O>
-    void ero(const Image<I>& input, const Window<W>& win,
-		Image<O>& output)
+    void erosion_fast(const Image<I>& input, const Window<W>& win,
+		      Image<O>& output)
     {
       mln_assertion(exact(output).domain() == exact(input).domain());
-      impl::ero_(exact(input), exact(win), exact(output)); 
+      impl::erosion_fast_(exact(input), exact(win), exact(output)); 
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::level
+  } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_ERO_HH
+#endif // ! MLN_MORPHO_EROSION_FAST_HH

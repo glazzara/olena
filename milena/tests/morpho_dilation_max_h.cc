@@ -38,7 +38,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/morpho/erosion_fast.hh>
+#include <mln/morpho/dilation_fast.hh>
 
 #include <mln/convert/to_vec_p.hh>
 #include <mln/convert/to_window.hh>
@@ -59,7 +59,7 @@ int main()
     window2d win = convert::to_window(vec);
 
     image2d_b<int_u8> out(lena.domain());
-    morpho::erosion_fast(lena, win, out);
+    morpho::dilation_fast(lena, win, out);
     io::pgm::save(out, "out.pgm");
   }
 }

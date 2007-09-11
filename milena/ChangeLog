@@ -1,3 +1,13 @@
+2007-09-11  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Move fast erosion and add fast dilation with max accu
+	* mln/accu/max_h.hh: New. Max Accu.
+	* mln/level/ero.hh: Rename as...
+	* mln/morpho/erosion_fast.hh: ...this.
+	* mln/morpho/dilation_fast.hh: Fast dilation.
+	* tests/morpho_dilation_max_h.cc: New.
+	* tests/morpho_erosion_min_h.cc: Update.
+
 2007-09-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	add rgb value type and separate prinln and println_with_border
