@@ -28,6 +28,12 @@
 #ifndef MLN_MORPHO_EROSION_HH
 # define MLN_MORPHO_EROSION_HH
 
+/*! \file mln/morpho/erosion.hh
+ *
+ * \brief Morphological erosion.
+ *
+ */
+
 # include <mln/morpho/includes.hh>
 
 
@@ -132,7 +138,7 @@ namespace mln
       void erosion_wrt_win(const Image<I>& input, const Window<W>& win, Image<O>& output)
       {
 	erosion_wrt_value(mln_value_kind(I)(), exact(input), exact(win), output);
-	//                   | 
+	//                   |
 	//                    -->  call stage 2: dispatch w.r.t. the value kind
       }
 
@@ -149,15 +155,26 @@ namespace mln
 #  endif // MLN_CORE_WIN_RECTANGLE2D_HH
 
 
-//   ifdef MLN_CORE_WIN_RECTANGLE2D_HH
+#  ifdef MLN_CORE_WIN_OCTAGON2D_HH
+#   ifdef MLN_CORE_WIN_DIAG2D_HH
+#    ifdef MLN_CORE_WIN_BACKDIAG2D_HH
 
-//       template <typename I, typename O>
-//       void erosion_wrt_win(const Image<I>& input, const win::octagon2d& win, Image<O>& output)
-//       {
-// 	todo simon
-//       }
+      template <typename I, typename O>
+      void erosion_wrt_win(const Image<I>& input, const win::octagon2d& win, Image<O>& output)
+      {
+	const unsigned len = win.length() / 3 + 1;
 
-//   endif MLN_CORE_WIN_RECTANGLE2D_HH
+	O temp1(exact(output).domain());
+	O temp2(exact(output).domain());
+	morpho::erosion(input, win::hline2d(len),  temp1);
+	morpho::erosion(temp1, win::vline2d(len),  temp2);
+	morpho::erosion(temp2, win::diag2d(len),  temp1);
+	morpho::erosion(temp1, win::backdiag2d(len),  output);
+      }
+
+#    endif // MLN_CORE_WIN_BACKDIAG2D_HH
+#   endif // MLN_CORE_WIN_DIAG2D_HH
+#  endif // MLN_CORE_WIN_OCTAGON2D_HH
 
       //   ^
       //   |

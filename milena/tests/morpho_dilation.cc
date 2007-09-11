@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho_erosion.cc
+/*! \file tests/morpho_dilation.cc
  *
- * \brief Test on mln::morpho::erosion.
+ * \brief Test on mln::morpho::dilation.
  */
 
 #include <mln/core/image2d_b.hh>
@@ -42,7 +42,7 @@
 
 #include <mln/value/int_u8.hh>
 #include <mln/level/fill.hh>
-#include <mln/morpho/erosion.hh>
+#include <mln/morpho/dilation.hh>
 
 #include <mln/pw/value.hh>
 #include <mln/pw/cst.hh>
@@ -62,16 +62,16 @@ int main()
 
   image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
 
-  { 
-    image2d_b<int_u8> out(lena.domain());
-    morpho::erosion(lena, rec, out);
-    io::pgm::save(out, "out1.pgm");
-  }
+//   { 
+//     image2d_b<int_u8> out(lena.domain());
+//     morpho::dilation(lena, rec, out);
+//     io::pgm::save(out, "out1.pgm");
+//   }
 
   {
     win::octagon2d oct(31);
     image2d_b<int_u8> out(lena.domain());
-    morpho::erosion(lena, oct, out);
+    morpho::dilation(lena, oct, out);
     io::pgm::save(out, "out2.pgm");
   }
 
@@ -81,14 +81,14 @@ int main()
 
 //     image2d_b<int_u8> out(lena.domain());
 //     level::ero(lena, win, out);
-//     morpho::erosion(lena, win, out);
+//     morpho::dilation(lena, win, out);
 //     io::pgm::save(out, "out.pgm");
 //   }
 
 //   {
 //     image2d_b<bool> bin(lena.domain()), out(lena.domain());
 //     level::fill(bin, pw::value(lena) > pw::cst(127));
-//     morpho::erosion(bin, rec, out);
+//     morpho::dilation(bin, rec, out);
 
 //     image2d_b<int_u8> test(lena.domain());
 //     image2d_b<int_u8>::fwd_piter p(lena.domain());

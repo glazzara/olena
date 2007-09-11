@@ -1,3 +1,13 @@
+2007-09-11  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Optims for erosion and dilation on octagons
+	* mln/core/win/octagon2d.hh: Well created.
+	* mln/morpho/dilation.hh: Fill and Optim.
+	* mln/morpho/erosion.hh: Optim.
+	* tests/morpho_dilation.cc: New.
+	* tests/morpho_erosion.cc: Update.
+	* tests/win_octagon2d.cc: New.
+
 2007-09-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add fill, paste for fast_image and FIXME rle and sparse image.
