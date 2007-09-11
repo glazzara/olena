@@ -40,6 +40,9 @@
 
 #include <mln/level/fill.hh>
 
+#include <mln/debug/println_with_border.hh>
+
+
 namespace mln
 {
 
@@ -213,10 +216,10 @@ int main()
   debug::println(ima);
 
   imaset_(i1, 3, 50);
-  debug::println(i1);
+  debug::println_with_border(i1);
   mln_assertion (i1[42] == 3);
   imacpy_(i2, i1, 50);
-  debug::println(i2);
+  debug::println_with_border(i2);
 
   for (int i = 0; i < 50; ++i)
     mln_assertion (i1[i] == i2[i]);

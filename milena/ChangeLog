@@ -1,3 +1,12 @@
+2007-09-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add fill, paste for fast_image and FIXME rle and sparse image.
+	* fill.hh: New.
+	* fills_test.cc: .
+	* main.cc: New.
+	* mem.hh: New.
+	* paste.hh: New.
+
 2007-09-11  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add some 2d windows and tests
