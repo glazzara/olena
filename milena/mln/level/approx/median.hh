@@ -35,7 +35,12 @@
 
 # include <mln/level/median.hh>
 # include <mln/core/win/rectangle2d.hh>
-
+# include <mln/core/win/disk2d.hh>
+# include <mln/core/win/octagon2d.hh>
+# include <mln/core/win/hline2d.hh>
+# include <mln/core/win/vline2d.hh>
+# include <mln/core/win/diag2d.hh>
+# include <mln/core/win/backdiag2d.hh>
 
 namespace mln
 {
@@ -62,8 +67,65 @@ namespace mln
       void median(const Image<I>& input, const win::rectangle2d& win,
 		  Image<O>& output);
 
+      /*! Compute in \p output an approximate of the median filter of
+       *  image \p input by the 2D disk \p win.
+       *
+       * \param[in] input The image to be filtered.
+       * \param[in] win The disk.
+       * \param[in,out] output The output image.
+       *
+       * The approximation is based on a vertical median and
+       * an horizontal median an two diagonal median.
+       *
+       * \pre \p input and \p output have to be initialized.
+       */
+      template <typename I, typename O>
+      void median(const Image<I>& input, const win::disk2d& win,
+		  Image<O>& output);
+
+      /*! Compute in \p output an approximate of the median filter of
+       *  image \p input by the 2D octagon \p win.
+       *
+       * \param[in] input The image to be filtered.
+       * \param[in] win The octagon.
+       * \param[in,out] output The output image.
+       *
+       * The approximation is based on a vertical median and
+       * an horizontal median an two diagonal median.
+       *
+       * \pre \p input and \p output have to be initialized.
+       */
+      template <typename I, typename O>
+      void median(const Image<I>& input, const win::octagon2d& win,
+		  Image<O>& output);
+
 
 # ifndef MLN_INCLUDE_ONLY
+
+      namespace impl
+      {
+
+	template <typename I, typename O>
+	void median_(const I& input, const unsigned length,
+		     O& output)
+	{
+	  const unsigned len = length / 3 + 1;
+
+	  O
+	    tmp1(output.domain()),
+	    tmp2(output.domain());
+
+	  level::median(input, win::hline2d(len),  tmp1);
+	  level::median(tmp1, win::vline2d(len),  tmp2);
+	  level::median(tmp2, win::diag2d(len),  tmp1);
+	  level::median(tmp1, win::backdiag2d(len),  output);
+
+      }
+
+      } // end of namespace mln::level::approx::impl
+
+
+      // Facades.
 
       template <typename I, typename O>
       void median(const Image<I>& input_, const win::rectangle2d& win,
@@ -78,12 +140,23 @@ namespace mln
 	level::median(tmp,   win::vline2d(win.height()), output);
       }
 
-//       template <typename I, typename O>
-//       void median(const Image<I>& input_, const win::disk2d& win,
-// 		  Image<O>& output_)
-//       {
-// 	// todo simon
-//       }
+      template <typename I, typename O>
+      void median(const Image<I>& input, const win::disk2d& win,
+		  Image<O>& output)
+      {
+	mln_assertion(exact(output).domain() == exact(input).domain());
+
+	impl::median_(exact(input), win.length(), exact(output));
+      }
+
+      template <typename I, typename O>
+      void median(const Image<I>& input, const win::octagon2d& win,
+		  Image<O>& output)
+      {
+	mln_assertion(exact(output).domain() == exact(input).domain());
+
+	impl::median_(exact(input), win.length(), exact(output));
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 

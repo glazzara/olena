@@ -32,6 +32,7 @@
 
 #include <mln/core/image2d_b.hh>
 #include <mln/core/win/rectangle2d.hh>
+#include <mln/core/win/octagon2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -48,12 +49,14 @@ int main()
   using value::int_u8;
 
   win::rectangle2d rect(51, 51);
+  win::octagon2d oct(13);
   border::thickness = 52;
 
   image2d_b<int_u8>
     lena = io::pgm::load("../img/lena.pgm"),
     out(lena.domain());
 
-  level::approx::median(lena, rect, out);
+//  level::approx::median(lena, rect, out);
+  level::approx::median(lena, oct, out);
   io::pgm::save(out, "out.pgm");
 }

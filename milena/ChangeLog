@@ -1,3 +1,9 @@
+2007-09-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add approx median for disk and octogon
+	* mln/level/approx/median.hh: Update.
+	* tests/level_approx_median.cc: Update.
+
 2007-09-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	add pbm, ppm, pgm 16bits handling
