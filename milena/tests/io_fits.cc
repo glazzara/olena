@@ -25,36 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/ppm_load.cc
+/*! \file tests/fits_load.cc
  *
- * \brief Test on mln::io::ppm::load.
+ * \brief Test on mln::io::fits::load.
  */
 
 #include <mln/core/image2d_b.hh>
 
-#include <mln/value/int_u8.hh>
-#include <mln/value/rgb8.hh>
+#include <mln/level/compare.hh>
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-#include <mln/io/ppm/save.hh>
+#include <mln/io/fits/load.hh>
+#include <mln/io/pfm/save.hh>
+#include <mln/io/pfm/load.hh>
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
-  using value::rgb8;
-
   {
-    image2d_b<rgb8>
-      lena = io::pgm::load<rgb8>("../img/lena.pgm");
+    image2d_b<float>
+      fits_in = io::fits::load("../img/test.fits");
 
-    //io::pgm::save(lena, "out.pgm");
-  }
-  {
-    image2d_b<int_u8>
-      lena = io::pgm::load<int_u8>("../img/lena.pgm");
+    io::pfm::save(fits_in, "out.pfm");
 
-    io::pgm::save(lena, "out.pgm");
+    image2d_b<float>
+      pfm = io::pfm::load("out.pfm");
+
+    io::pfm::save(fits_in, "out2.pfm");
+
+    image2d_b<float>
+      pfm2 = io::pfm::load("out2.pfm");
+
+    mln_assertion(pfm == pfm2);
+
+//   }
+//   {
+//     image2d_b<int_u8>
+//       lena = io::fits::load<int_u8>("../img/lena.fits");
+
+//     io::fits::save(lena, "out.fits");
   }
 }

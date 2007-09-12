@@ -78,22 +78,25 @@ namespace mln
 	  file << mln_max(mln_value(I)) << std::endl;
 	}
 
-// 	template <typename I>
-// 	void save_(const Fast_Image<I>& ima_, const std::string& filename)
-// 	{
-// 	  const I& ima = exact(ima_);
-// 	  std::ofstream file(filename.c_str());
-// 	  save_header_(ima, filename, file);
-// 	  const int
-// 	    min_row = geom::min_row(ima),
-// 	    max_row = geom::max_row(ima);
-// 	  point2d p;
-// 	  if (sizeof(mln_value(I)) == 1)
+	template <typename I>
+	void save_(const Fast_Image<I>& ima_, const std::string& filename)
+	{
+	  std::cout << "testestse" ;
+	  const I& ima = exact(ima_);
+	  std::ofstream file(filename.c_str());
+	  save_header_(ima, filename, file);
+	  const int
+	    min_row = geom::min_row(ima),
+	    max_row = geom::max_row(ima);
+	  point2d p;
+
+// FIXME : ask theo if I can remove this else
+// 	  if (sizeof(mln_value(I)) <= 2)
 // 	    {
-// 	      p.col() = geom::min_col(ima);
-// 	      size_t len = geom::ncols(ima);
-// 	      for (p.row() = min_row; p.row() <= max_row; ++p.row())
-// 		file.write((char*)(& ima(p)), len);
+	      p.col() = geom::min_col(ima);
+	      size_t len = geom::ncols(ima) * sizeof(mln_value(I));
+	      for (p.row() = min_row; p.row() <= max_row; ++p.row())
+		file.write((char*)(& ima(p)), len);
 // 	    }
 // 	  else
 // 	    {
@@ -108,11 +111,12 @@ namespace mln
 // 		    file.write((char*)(&c), 1);
 // 		  }
 // 	    }
-// 	}
+	}
 
 	template <typename I>
 	void save_(const Image<I>& ima_, const std::string& filename)
 	{
+
 	  typedef typename I::value::enc T;
 	  const I& ima = exact(ima_);
 	  std::ofstream file(filename.c_str());

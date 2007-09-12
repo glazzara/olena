@@ -1,3 +1,17 @@
+2007-09-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	add fits + pfm handling
+	* mln/convert/to_image.hh: .
+	* mln/io/fits/load.hh: New.
+	* mln/io/fits: New.
+	* mln/io/pfm/load.hh: New.
+	* mln/io/pfm/save.hh: New.
+	* mln/io/pfm: New.
+	* mln/io/pgm/save.hh: .
+	* tests/io_fits.cc: New.
+	* tests/io_pgm.cc: .
+	* tests/io_pgm16.cc: .
+
 2007-09-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	add sym for weighted windows and beginning of dmap feature

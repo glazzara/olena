@@ -84,7 +84,7 @@ int main()
   io::pgm::save(out, "out16.pgm");
 
   image2d_b<int_u16>
-    lena2 = io::pgm::load<int_u16>("out.pgm");
+    lena2 = io::pgm::load<int_u16>("out16.pgm");
    image2d_b<int_u8> out2(lena.domain());
 
    level::transform(lena2, to8bits(), out2);
