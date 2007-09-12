@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/window.hh>
+# include <mln/core/concept/w_window.hh>
 
 
 
@@ -48,11 +49,23 @@ namespace mln
     template <typename W>
     W sym(const Window<W>& win);
 
+    /*! \brief Give the symmetrical weighted window of \p w_win.
+     */
+    template <typename W>
+    W sym(const Weighted_Window<W>& w_win);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename W>
     W sym(const Window<W>& win)
+    {
+      W tmp = exact(win);
+      return tmp.sym();
+    }
+
+    template <typename W>
+    W sym(const Weighted_Window<W>& w_win)
     {
       W tmp = exact(win);
       return tmp.sym();

@@ -1,5 +1,12 @@
 2007-09-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	add sym for weighted windows and beginning of dmap feature
+	* mln/geom/sym.hh: Update (geom::sym).
+	* sandbox/nivault/dmap.hh: New.
+	* sandbox/nivault/dmap.hxx: New.
+
+2007-09-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Add approx median for disk and octogon
 	* mln/level/approx/median.hh: Update.
 	* tests/level_approx_median.cc: Update.
