@@ -1,3 +1,10 @@
+2007-09-13  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	disk2d windows well created, fix on sym
+	* mln/core/win/disk2d.hh: Well created.
+	* mln/geom/sym.hh: Fixed.
+	* tests/win_disk2d.cc: New.
+
 2007-09-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	add fits + pfm handling

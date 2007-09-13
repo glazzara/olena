@@ -129,7 +129,12 @@ namespace mln
       : length_(length)
     {
       mln_precondition(length % 2 == 1);
-      insert(dpoint2d::zero); //FIXME : Do the right insert.
+      const int r = length / 2;
+      const int r2 = r * r;
+      for (int a = -r; a <= r; ++a)
+	for (int b = -r; b <= r; ++b)
+	  if (a * a + b * b <= r2)
+	    insert(make::dpoint2d(a, b));
     }
 
     bool disk2d::is_centered() const

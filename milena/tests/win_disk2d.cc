@@ -25,57 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_GEOM_SYM_HH
-# define MLN_GEOM_SYM_HH
-
-/*! \file mln/geom/sym.hh
+/*! \file tests/win_diag2d.cc
  *
- * \brief Give the symmetrical object.
+ * \brief Tests on mln::win::diag2d.
  */
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/concept/weighted_window.hh>
+#include <mln/core/win/disk2d.hh>
 
+#include <mln/convert/to_image.hh>
 
+#include <mln/debug/println.hh>
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace geom
-  {
+  const unsigned l = 55;
+  win::disk2d disk(l);
 
-    /*! \brief Give the symmetrical window of \p win.
-     */
-    template <typename W>
-    W sym(const Window<W>& win);
+  debug::println(convert::to_image(disk));
+}
 
-    /*! \brief Give the symmetrical weighted window of \p w_win.
-     */
-    template <typename W>
-    W sym(const Weighted_Window<W>& w_win);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename W>
-    W sym(const Window<W>& win)
-    {
-      W tmp = exact(win);
-      return tmp.sym();
-    }
-
-    template <typename W>
-    W sym(const Weighted_Window<W>& w_win)
-    {
-      W tmp = exact(w_win);
-      return tmp.sym();
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::geom
-
-} // end of namespace mln
-
-
-#endif // ! MLN_GEOM_SYM_HH
