@@ -34,7 +34,7 @@
 # include <string>
 
 # include <mln/core/image2d_b.hh>
-
+# include <mln/io/internal/pnm/load_header.hh>
 
 namespace mln
 {
@@ -47,74 +47,6 @@ namespace mln
 
       namespace internal
       {
-
-	void abort()
-	{
-	  std::cerr << " aborting." << std::endl;
-	  exit(0);
-	}
-
-	bool read_pnm_header(std::istream& istr,
-			     char& type,
-			     int& nrows, int& ncols,
-			     bool test = false)
-	{
-	  // check magic
-	  if (istr.get() != 'P' )
-	    goto err;
-	  type = istr.get();
-	  if (type < '1' || type > '6')
-	    goto err;
-	  if (istr.get() != '\n')
-	    goto err;
-
-	  // skip comments
-	  while (istr.peek() == '#')
-	  {
-	    std::string line;
-	    std::getline(istr, line);
-	  }
-
-	  // get size
-	  istr >> ncols >> nrows;
-	  if (nrows <= 0 || ncols <= 0)
-	    goto err;
-
-	  // skip maxvalue
-	  if (istr.get() != '\n')
-	    goto err;
-	  if (type != '1' && type != '4')
-	  {
-	    std::string line;
-	    std::getline(istr, line);
-	  }
-	  return true;
-
-	err:
-	  if (! test)
-	  {
-	    std::cerr << "error: badly formed header!";
-	    abort();
-	  }
-	  return false;
-	}
-
-	void read_pnm_header(char ascii, char raw,
-			     std::istream& istr,
-			     char& type,
-			     int& nrows, int& ncols)
-	{
-	  read_pnm_header(istr, type, nrows, ncols);
-	  if (! (type == ascii || type == raw))
-	  {
-	    std::cerr << "error: bad pnm type; "
-		      << "expected P" << ascii
-		      << " or P" << raw
-		      << ", get P" << type << "!";
-	    abort();
-	  }
-	}
-
 
 	/// load_ascii.
 	template <typename I>
@@ -136,8 +68,6 @@ namespace mln
 	template <typename I>
 	void load_raw_2d(std::ifstream& file, I& ima)
 	{
-	      std::cout << "test"<< std::endl;
-
 	  point2d p = make::point2d(0, ima.domain().pmin().col());
 	  typedef mln_value(I) V;
 	  const mln_coord(I)
@@ -174,7 +104,7 @@ namespace mln
       }
       char type;
       int nrows, ncols;
-      internal::read_pnm_header('1', '4', file, type, nrows, ncols);
+      io::internal::pnm::read_header('1', '4', file, type, nrows, ncols);
 
       image2d_b<bool> ima(nrows, ncols);
       if (type == '4')

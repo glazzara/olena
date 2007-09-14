@@ -39,6 +39,7 @@
 # include <mln/metal/bexpr.hh>
 
 # include <mln/convert/to_rgb.hh>
+# include <mln/io/internal/pnm/save.hh>
 
 namespace mln
 {
@@ -62,89 +63,11 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace impl
-      {
-
-	template <typename I>
-	void save_header_(const I& ima, const std::string& filename,
-			      std::ofstream& file)
-	{
-	  if (! file)
-	    {
-	      std::cerr << "error: cannot open file '" << filename
-			<< "'!";
-	      abort();
-	    }
-	  file << "P6" << std::endl;
-	  file << "# milena" << std::endl;
-	  file << geom::ncols(ima) << ' ' << geom::nrows(ima) << std::endl;
-	  file << "255" << std::endl;
-	}
-
-// 	template <typename I>
-// 	void save_(const Fast_Image<I>& ima_, const std::string& filename)
-// 	{
-// 	  const I& ima = exact(ima_);
-// 	  std::ofstream file(filename.c_str());
-// 	  save_header_(ima, filename, file);
-// 	  const int
-// 	    min_row = geom::min_row(ima),
-// 	    max_row = geom::max_row(ima);
-// 	  point2d p;
-// 	  if (sizeof(mln_value(I)) == 1)
-// 	    {
-// 	      p.col() = geom::min_col(ima);
-// 	      size_t len = geom::ncols(ima);
-// 	      for (p.row() = min_row; p.row() <= max_row; ++p.row())
-// 		file.write((char*)(& ima(p)), len);
-// 	    }
-// 	  else
-// 	    {
-// 	      // FIXME: code for g++-2.95 when sizeof(int_u8) == 2!!!
-// 	      const int
-// 		min_col = geom::min_col(ima),
-// 		max_col = geom::max_col(ima);
-// 	      for (p.row() = min_row; p.row() <= max_row; ++p.row())
-// 		for (p.col() = min_col; p.col() <= max_col; ++p.col())
-// 		  {
-// 		    unsigned char c = ima(p);
-// 		    file.write((char*)(&c), 1);
-// 		  }
-// 	    }
-// 	}
-
-	template <typename I>
-	void save_(const Image<I>& ima_, const std::string& filename)
-	{
-	  const I& ima = exact(ima_);
-	  std::ofstream file(filename.c_str());
-	  save_header_(ima, filename, file);
-	  const int
-	    min_row = geom::min_row(ima),
-	    max_row = geom::max_row(ima),
-	    min_col = geom::min_col(ima),
-	    max_col = geom::max_col(ima);
-	  point2d p;
-
-	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
-	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
-	    {
-	      const value::int_u8* c = convert::to_rgb(ima(p)).buffer();
-	      file.write((char*)(c), 3);
-	    }
-	}
-
-      } // end of namespace mln::io::impl
-
-
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename)
       {
-// 	mln::metal::or_<
-// 	  mln::metal::equal<mln_value(I), value::int_u<8> >,
-// 	  mln::metal::equal<mln_value(I), value::int_u_sat<8> >
-// 	  >::check();
-	impl::save_(exact(ima), filename);
+	mln::metal::instance_of<mln_value(I), value::rgb >::check();
+	io::internal::pnm::save(PPM, exact(ima), filename);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

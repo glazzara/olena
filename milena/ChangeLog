@@ -1,3 +1,63 @@
+2007-09-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	improving PNM format support
+	* img/test.fits:
+	  a fits image
+
+	* mln/io/internal:
+		The functions to save and load ppm, pbm and pgm format
+		looked quite similar. I add this directory to factorise
+		all these similarities
+
+	* mln/io/internal/abort.hh:
+		the abort function used in loading functions
+	* mln/io/internal/pnm/load.hh:
+		functions to load pnm files, 8 or 16 bits.
+	* mln/io/internal/pnm/load_header.hh:
+		function to read a pnm header.
+	* mln/io/internal/pnm/macros.hh:
+		Some macros to identify the magic numbers of the formats
+	* mln/io/internal/pnm/save.hh:
+		functions to load pnm files, 8 or 16 bits.
+	* mln/io/internal/pnm/save_header.hh:
+		function to save a pnm header.
+
+	* mln/io/internal/pnm:
+		all internal treatments of pnm format, used by
+		concrete formats (pbm, pgm, ppm)
+
+	* mln/io/pbm/load.hh:
+		loading of pbm format done
+	* mln/io/pbm/save.hh:
+		saving of pbm format done
+
+	* mln/io/pfm/load.hh:
+		loading of pfm format done
+
+	* mln/io/pgm/load.hh:
+		loading of pgm format done
+	* mln/io/pgm/save.hh:
+		saving of pgm 8/16 bits format done
+
+	* mln/io/ppm/load.hh:
+		loading of ppm 8/16 bits format done
+	* mln/io/ppm/save.hh:
+		loading of ppm 8/16 bits format done
+
+	* mln/value/rgb.hh:
+		To fix : we can't apply level:transform on rgb images
+		   convert_< rgb8 > could be one part of the problem.
+
+	* mln/value/rgb16.hh:
+		add rgb16 type to test ppm 16bits
+
+	* tests/io_pbm.cc:
+		some tests
+	* tests/io_pgm.cc:
+		some tests
+	* tests/io_ppm16.cc:
+		some tests
+
 2007-09-13  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	disk2d windows well created, fix on sym

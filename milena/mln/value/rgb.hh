@@ -98,8 +98,14 @@ namespace mln
 
       /// substraction
       rgb<n> operator-(const rgb<n>& v) const;
-      rgb<n> operator-(const enc& i) const ;
+      rgb<n> operator-(const enc& i) const;
       rgb<n> operator-(const size_t& i) const;
+
+      /// multiplication
+      rgb<n> operator*(const enc& i) const;
+
+      /// division
+      rgb<n> operator/(const enc& i) const;
 
       /// Self addition
       rgb<n>& operator+=(const rgb<n>& v);
@@ -125,18 +131,11 @@ namespace mln
       static const unsigned nbits = 24;
       static const std::size_t card_ = metal::pow<2, nbits>::value;
       static const rgb<n> max() { rgb<n> c(props< int_u<n> >::max); return c; }
-      static const rgb<n>
-      min()
-      {
-	const rgb<n> c(props< int_u<n> >::min());
-	return c;
-      }
-
+      static const rgb<n> min() { const rgb<n> c(props< int_u<n> >::min()); return c; }
       typedef color_kind kind;
       typedef float_x3_t sum;
       typedef uchar_x3_t interop;
     };
-
 
 
     /*! \brief Print an rgb \p c into the output stream \p ostr.
@@ -160,7 +159,7 @@ namespace mln
     template <unsigned n>
     rgb<n>::rgb(equiv a)
     {
-      std::memcpy(this->c_, a, 3);
+      std::memcpy(this->c_, a, 3 * sizeof(enc));
     }
 
     template <unsigned n>
@@ -183,7 +182,7 @@ namespace mln
     rgb<n>&
     rgb<n>::operator=(const rgb<n>& v)
     {
-      std::memcpy(this->c_, v.c_, 3);
+      std::memcpy(this->c_, v.c_, 3 * sizeof(enc));
       return *this;
     }
 
@@ -288,6 +287,27 @@ namespace mln
 	this->c_[i] += v.c_[i];
       return *this;
     }
+
+    template <unsigned n>
+    rgb<n>
+    rgb<n>::operator*(const enc& i) const
+    {
+      rgb<n> res;
+      for (int j = 0; j < 3; j++)
+	res.c_[j] = this->c_[j] * i;
+      return res;
+    }
+
+    template <unsigned n>
+    rgb<n>
+    rgb<n>::operator/(const enc& i) const
+    {
+      rgb<n> res;
+      for (int j = 0; j < 3; j++)
+	res.c_[j] = this->c_[j] * i;
+      return res;
+    }
+
 
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const rgb<n>& v)

@@ -25,25 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pbm_load.cc
+#ifndef MLN_VALUE_RGB16_HH
+# define MLN_VALUE_RGB16_HH
+
+/*! \file mln/value/rgb16.hh
  *
- * \brief Test on mln::io::pbm::load.
+ * \brief Color class for red-green-blue where every component is
+ * 16-bit encoded.
  */
 
-#include <mln/core/image2d_b.hh>
+# include <mln/value/rgb.hh>
 
-#include <mln/io/pbm/load.hh>
-#include <mln/io/pbm/save.hh>
 
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  image2d_b< bool >
-    lena = io::pbm::load("../img/lena.pbm");
-  image2d_b<bool> out(lena.domain());
+  namespace value
+  {
 
-  //level::transform(lena, binarise(), out);
+    /*! \brief Color class for red-green-blue where every component is
+     * 16-bit encoded.
+     */
+    typedef rgb<16> rgb16;
+  } // end of namespace mln::value
 
-  io::pbm::save(lena, "out.pbm");
-}
+} // end of namespace mln
+
+
+#endif // ! MLN_VALUE_RGB16_HH

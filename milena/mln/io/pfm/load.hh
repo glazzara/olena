@@ -120,7 +120,6 @@ namespace mln
 		      << "' not found!";
 	    abort();
 	  }
-	char type;
 	int nrows, ncols;
 	internal::read_pfm_header(file, nrows, ncols);
 

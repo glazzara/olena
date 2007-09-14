@@ -36,6 +36,8 @@
 # include <mln/core/image2d_b.hh>
 # include <mln/value/int_u8.hh>
 
+# include <mln/io/internal/pnm/load.hh>
+
 
 namespace mln
 {
@@ -46,148 +48,10 @@ namespace mln
     namespace pgm
     {
 
-      namespace internal
-      {
-
-	void abort()
-	{
-	  std::cerr << " aborting." << std::endl;
-	  exit(0);
-	}
-
-	bool read_pnm_header(std::istream& istr,
-			     char& type,
-			     int& nrows, int& ncols,
-			     bool test = false)
-	{
-	  // check magic
-	  if (istr.get() != 'P' )
-	    goto err;
-	  type = istr.get();
-	  if (type < '1' || type > '6')
-	    goto err;
-	  if (istr.get() != '\n')
-	    goto err;
-
-	  // skip comments
-	  while (istr.peek() == '#')
-	    {
-	      std::string line;
-	      std::getline(istr, line);
-	    }
-
-	  // get size
-	  istr >> ncols >> nrows;
-	  if (nrows <= 0 || ncols <= 0)
-	    goto err;
-
-	  // skip maxvalue
-	  if (istr.get() != '\n')
-	    goto err;
-	  if (type != '1' && type != '4')
-	    {
-	      std::string line;
-	      std::getline(istr, line);
-	    }
-	  return true;
-
-	err:
-	  if (! test)
-	    {
-	      std::cerr << "error: badly formed header!";
-	      abort();
-	    }
-	  return false;
-	}
-
-	void read_pnm_header(char ascii, char raw,
-			     std::istream& istr,
-			     char& type,
-			     int& nrows, int& ncols)
-	{
-	  read_pnm_header(istr, type, nrows, ncols);
-	  if (! (type == ascii || type == raw))
-	    {
-	      std::cerr << "error: bad pnm type; "
-			<< "expected P" << ascii
-			<< " or P" << raw
-			<< ", get P" << type << "!";
-	      abort();
-	    }
-	}
-
-
-	/// load_ascii.
-	template <typename I>
-	void load_ascii(std::ifstream& file, I& ima)
-	{
-	  mln_fwd_piter(I) p(ima.domain());
-	  for_all(p)
-	    {
-	      unsigned value;
-	      file >> value;
-	      ima(p) = value;
-	      // FIXME: Test alt code below.
-	      // file >> ima(p);
-	    }
-	}
-
-
-	/// load_raw_2d.
-	template <typename I>
-	void load_raw_2d(std::ifstream& file, I& ima)
-	{
-	  point2d p = make::point2d(0, ima.domain().pmin().col());
-	  typedef mln_value(I) V;
-	  const mln_coord(I)
-	    min_row = geom::min_row(ima),
-	    max_row = geom::max_row(ima);
-	  if (sizeof(V) <= 2)
-	    {
-	      size_t len = geom::ncols(ima) * sizeof(mln_enc(V));
-	      for (p.row() = min_row; p.row() <= max_row; ++p.row())
-		file.read((char*)(& ima(p)), len);
-	    }
-	  else
-	    {
-	      // FIXME: code for g++-2.95 when sizeof(int_u8) == 2!!!
-	      const mln_coord(I)
-		min_col = geom::min_col(ima),
-		max_col = geom::max_col(ima);
-	      for (p.row()  = min_row; p.row() <= max_row; ++p.row())
-		for (p.col()  = min_col; p.col() <= max_col; ++p.col())
-		  {
-		    unsigned char c;
-		    file.read((char*)(&c), 1);
-		    ima(p) = c;
-		  }
-	    }
-	}
-
-
-      } // end of namespace mln::io::internal
-
       template <typename V>
       image2d_b<V> load(const std::string& filename)
       {
-	std::ifstream file(filename.c_str());
-	if (! file)
-	  {
-	    std::cerr << "error: file '" << filename
-		      << "' not found!";
-	    abort();
-	  }
-	char type;
-	int nrows, ncols;
-	internal::read_pnm_header('2', '5', file, type, nrows, ncols);
-
-	image2d_b<V> ima(nrows, ncols);
-	if (type == '5')
-	  internal::load_raw_2d(file, ima);
-	else
-	  if (type == '2')
-	    internal::load_ascii(file, ima);
-	return ima;
+	return io::internal::pnm::load<V>(PGM, filename);
       }
 
       image2d_b<value::int_u8> load(const std::string& filename)

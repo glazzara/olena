@@ -27,23 +27,84 @@
 
 /*! \file tests/pbm_load.cc
  *
- * \brief Test on mln::io::pbm::load.
+ * \brief Test on mln::io::pbm::load for 16bits ppm
  */
 
 #include <mln/core/image2d_b.hh>
+#include <mln/core/win/rectangle2d.hh>
 
-#include <mln/io/pbm/load.hh>
-#include <mln/io/pbm/save.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/value/rgb16.hh>
+
+#include <mln/io/ppm/load.hh>
+#include <mln/io/ppm/save.hh>
+
+#include <mln/level/compare.hh>
+
+
+using namespace mln;
+
+struct to16bits : mln::Function_v2v<to16bits>
+{
+
+  typedef value::rgb16 result;
+  result operator()(value::rgb8 v) const
+  {
+    result ret(v.red().to_enc() * 256,
+	       v.green().to_enc() * 256,
+	       v.blue().to_enc() * 256);
+    return ret;
+  }
+};
+
+struct to8bits : mln::Function_v2v<to8bits>
+{
+
+  typedef value::rgb8 result;
+  result operator()(value::rgb16 v) const
+  {
+    result ret(v.red().to_enc() / 256,
+	       v.green().to_enc() / 256,
+	       v.blue().to_enc() / 256);
+    return ret;
+  }
+};
 
 int main()
 {
   using namespace mln;
+  using value::rgb8;
+  using value::rgb16;
 
-  image2d_b< bool >
-    lena = io::pbm::load("../img/lena.pbm");
-  image2d_b<bool> out(lena.domain());
+  typedef image2d_b<rgb8> I;
 
-  //level::transform(lena, binarise(), out);
 
-  io::pbm::save(lena, "out.pbm");
+  // load a 8bits image A
+  image2d_b<rgb8>
+    a = io::ppm::load<rgb8>("../img/lena.ppm");
+  image2d_b<rgb16> b(a.domain());
+
+  image2d_b<rgb8>::fwd_piter  p(b.domain());
+
+  // save it as a 16bits ppm image B
+  to16bits f;
+  for_all(p)
+    b(p) = f(a(p));
+  io::ppm::save(b, "out16.ppm");
+
+  // reload B into C
+  image2d_b<rgb16>
+    c = io::ppm::load<rgb16>("out16.ppm");
+  image2d_b<rgb8> d(a.domain());
+
+
+  // save C as a 8bits ppm image D
+  to8bits g;
+  for_all(p)
+    d(p) = g(c(p));
+  io::ppm::save(d, "out8.ppm");
+
+  // D should equals A
+  mln_assertion(d == a);
+
 }

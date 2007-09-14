@@ -26,90 +26,95 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PBM_SAVE_HH
-# define MLN_IO_PBM_SAVE_HH
+#ifndef MLN_IO_PNM_LOAD_HEADER_HH
+# define MLN_IO_PNM_LOAD_HEADER_HH
 
 # include <iostream>
 # include <fstream>
-
-# include <mln/geom/size2d.hh>
-# include <mln/metal/equal.hh>
-# include <mln/metal/bexpr.hh>
-
-# include <mln/io/internal/pnm/save.hh>
-
+# include <string>
 
 namespace mln
 {
 
-  // Fwd decl.
-  namespace value {
-    template <unsigned> class int_u;
-    template <unsigned> class int_u_sat;
-  }
-
-
   namespace io
   {
 
-    namespace pbm
+    namespace internal
     {
 
-      template <typename I>
-      void save(const Image<I>& ima, const std::string& filename);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      namespace impl
+      namespace pnm
       {
 
-	template <typename I>
-	void save_(const Image<I>& ima_, const std::string& filename)
+
+	bool read_header(std::istream& istr,
+			     char& type,
+			     int& nrows, int& ncols,
+			     bool test = false)
 	{
-	  const I& ima = exact(ima_);
-	  std::ofstream file(filename.c_str());
+	  // check magic
+	  if (istr.get() != 'P' )
+	    goto err;
+	  type = istr.get();
 
-	  //FIXME : why do we need a max val???
-	  io::internal::pnm::save_header(PBM, 255, ima, filename, file);
+	  if (type < '1' || type > '6')
+	    goto err;
+	  if (istr.get() != '\n')
+	    goto err;
 
-	  const int
-	    min_row = geom::min_row(ima),
-	    max_row = geom::max_row(ima),
-	    min_col = geom::min_col(ima),
-	    max_col = geom::max_col(ima);
-	  point2d p;
+	  // skip comments
+	  while (istr.peek() == '#')
+	    {
+	      std::string line;
+	      std::getline(istr, line);
+	    }
 
-	  unsigned char c = 0;
-	  int i = 0;
-	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
-	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
-	      {
-		c += ima(p);
-		if (i && (i % 8 == 0))
-		  file.write((char*)(&c), 1);
-		c = c * 2;
-		++i;
-	      }
+	  // get size
+	  istr >> ncols >> nrows;
+	  if (nrows <= 0 || ncols <= 0)
+	    goto err;
+
+	  // skip maxvalue
+	  if (istr.get() != '\n')
+	    goto err;
+	  if (type != '1' && type != '4')
+	    {
+	      std::string line;
+	      std::getline(istr, line);
+	    }
+	  return true;
+
+	err:
+	  if (! test)
+	    {
+	      std::cerr << "error: badly formed header!";
+	      abort();
+	    }
+	  return false;
 	}
 
-      } // end of namespace mln::io::impl
+	void read_header(char ascii, char raw,
+			     std::istream& istr,
+			     char& type,
+			     int& nrows, int& ncols)
+	{
+	  read_header(istr, type, nrows, ncols);
+	  if (! (type == ascii || type == raw))
+	    {
+	      std::cerr << "error: bad pnm type; "
+			<< "expected P" << ascii
+			<< " or P" << raw
+			<< ", get P" << type << "!";
+	      abort();
+	    }
+	}
 
+      } // end of namespace mln::io::internal::pnm
 
-      template <typename I>
-      void save(const Image<I>& ima, const std::string& filename)
-      {
-	mln::metal::equal<mln_value(I), bool >::check();
-	impl::save_(exact(ima), filename);
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::pbm
+    } // end of namespace mln::io::internal
 
   } // end of namespace mln::io
 
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_PBM_SAVE_HH
+#endif // ! MLN_IO_PNM_LOAD_HEADER_HH

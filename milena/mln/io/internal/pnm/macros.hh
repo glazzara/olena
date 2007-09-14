@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,25 +26,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pbm_load.cc
+#ifndef MLN_IO_PNM_MACROS_HH
+# define MLN_IO_PNM_MACROS_HH
+
+/*! \file mln/io/internal/pnm/macros.hh
  *
- * \brief Test on mln::io::pbm::load.
+ * \brief Definition of pnm formats macros.
  */
 
-#include <mln/core/image2d_b.hh>
+/// Portable Pixel Map Format
+# define PPM		'6'
+# define PPM_ASCII	'3'
 
-#include <mln/io/pbm/load.hh>
-#include <mln/io/pbm/save.hh>
+/// Portable Gray Map Format
+# define PGM		'5'
+# define PGM_ASCII	'2'
 
-int main()
-{
-  using namespace mln;
+/// Portable Bit Map Format
+# define PBM		'4'
+# define PBM_ASCII	'1'
 
-  image2d_b< bool >
-    lena = io::pbm::load("../img/lena.pbm");
-  image2d_b<bool> out(lena.domain());
-
-  //level::transform(lena, binarise(), out);
-
-  io::pbm::save(lena, "out.pbm");
-}
+#endif // ! MLN_IO_PNM_LOAD_HH

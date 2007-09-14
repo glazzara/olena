@@ -37,7 +37,6 @@
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/io/ppm/save.hh>
 
 int main()
 {
@@ -45,12 +44,11 @@ int main()
   using value::int_u8;
   using value::rgb8;
 
-  {
-    image2d_b<rgb8>
-      lena = io::pgm::load<rgb8>("../img/lena.pgm");
+  //   {
+  // //     image2d_b<rgb8>
+  // //       lena = io::pgm::load<rgb8>("../img/lena.pgm");
+  //   }
 
-    //io::pgm::save(lena, "out.pgm");
-  }
   {
     image2d_b<int_u8>
       lena = io::pgm::load<int_u8>("../img/lena.pgm");

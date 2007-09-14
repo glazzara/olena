@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,25 +26,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pbm_load.cc
- *
- * \brief Test on mln::io::pbm::load.
- */
+#ifndef MLN_IO_PNM_SAVE_HEADER_HH
+# define MLN_IO_PNM_SAVE_HEADER_HH
 
-#include <mln/core/image2d_b.hh>
+# include <iostream>
+# include <fstream>
 
-#include <mln/io/pbm/load.hh>
-#include <mln/io/pbm/save.hh>
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  image2d_b< bool >
-    lena = io::pbm::load("../img/lena.pbm");
-  image2d_b<bool> out(lena.domain());
+  namespace io
+  {
 
-  //level::transform(lena, binarise(), out);
+    namespace internal
+    {
 
-  io::pbm::save(lena, "out.pbm");
-}
+# ifndef MLN_INCLUDE_ONLY
+
+      namespace pnm
+      {
+
+	template <typename I>
+	void save_header(const char type,
+			 const I& ima, const std::string& filename,
+			 std::ofstream& file)
+	{
+	  if (! file)
+	    {
+	      std::cerr << "error: cannot open file '" << filename
+			<< "'!";
+	      abort();
+	    }
+	  file << "P" << type << std::endl;
+	  file << "# milena" << std::endl;
+	  file << geom::ncols(ima) << ' ' << geom::nrows(ima) << std::endl;
+	}
+
+	template <typename I>
+	void save_header(const char type, const int maxval,
+			 const I& ima, const std::string& filename,
+			 std::ofstream& file)
+	{
+	  save_header(type, ima, filename, file);
+	  file << maxval << std::endl;
+	}
+
+      } // end of namespace mln::io::internal::pnm
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::internal
+
+  } // end of namespace mln::io
+
+} // end of namespace mln
+
+
+#endif // ! MLN_IO_PNM_SAVE_HEADER_HH
