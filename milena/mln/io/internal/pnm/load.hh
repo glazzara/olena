@@ -29,6 +29,11 @@
 #ifndef MLN_IO_PNM_LOAD_HH
 # define MLN_IO_PNM_LOAD_HH
 
+/*! \file mln/io/internal/pnm/load.hh
+ *
+ * \brief load a PNM 8/16bits image
+ */
+
 # include <iostream>
 # include <fstream>
 # include <string>
@@ -52,39 +57,40 @@ namespace mln
 
       namespace pnm
       {
+
+# ifndef MLN_INCLUDE_ONLY
+
 	template <unsigned int n>
-	void load_raw_2d_uncontiguous(std::ifstream& file,
-				      image2d_b< value::rgb<n> >& ima)
+	void read_value(std::ifstream& file,
+			value::rgb<n>& v)
 	{
-	  typedef typename value::rgb<n>::enc E;
+	  typedef typename value::rgb<n>::enc::enc E;
 
-	  const int
-	    min_row = geom::min_row(ima),
-	    max_row = geom::max_row(ima),
-	    min_col = geom::min_col(ima),
-	    max_col = geom::max_col(ima);
-
-	  point2d p;
-	  std::cout << "g++ == 2.95 load as rgb\n";
-	  for (p.row()  = min_row; p.row() <= max_row; ++p.row())
-	    for (p.col()  = min_col; p.col() <= max_col; ++p.col())
-	    {
-	      E c;
-	      file.read((char*)(&c), sizeof(E));
-	      ima(p).red() = c;
-	      file.read((char*)(&c), sizeof(E));
-	      ima(p).green() = c;
-	      file.read((char*)(&c), sizeof(E));
-	      ima(p).blue() = c;
-	    }
+	  E c;
+	  file.read((char*)(&c), sizeof(E));
+	  v.red() = c;
+	  file.read((char*)(&c), sizeof(E));
+	  v.green() = c;
+	  file.read((char*)(&c), sizeof(E));
+	  v.blue() = c;
 	}
 
-	template <unsigned int n>
-	void load_raw_2d_uncontiguous(std::ifstream& file,
-				      image2d_b< value::int_u<n> >& ima)
+	template <class V>
+	void read_value(std::ifstream& file,
+			V& v)
 	{
-	  typedef typename value::int_u<n>::enc E;
+	  typedef typename V::enc E;
 
+	  E c;
+	  file.read((char*)(&c), sizeof(E));
+	  v = c;
+	}
+
+	// used in g++-2.95 (sizeof(int_u8) == 2)
+	template <typename V>
+	void load_raw_2d_uncontiguous(std::ifstream& file,
+				      image2d_b<V>& ima)
+	{
 	  const int
 	    min_row = geom::min_row(ima),
 	    max_row = geom::max_row(ima),
@@ -94,12 +100,7 @@ namespace mln
 	  point2d p;
 	  for (p.row()  = min_row; p.row() <= max_row; ++p.row())
 	    for (p.col()  = min_col; p.col() <= max_col; ++p.col())
-	    {
-	      E c;
-	      file.read((char*)(&c), sizeof(E));
-	      ima(p) = c;
-	    }
-
+	      read_value(file, ima(p));
 	}
 
 	template <typename I>
@@ -155,17 +156,19 @@ namespace mln
 	  }
 	  char type = 0;
 	  int nrows, ncols;
-	  io::internal::pnm::read_header(type_ - 3, type_, file, type, nrows, ncols);
+	  read_header(type_ - 3, type_, file, type, nrows, ncols);
 
 	  image2d_b<V> ima(nrows, ncols);
 	  if (type == type_)
-	    io::internal::pnm::load_raw_2d(file, ima);
+	    load_raw_2d(file, ima);
 	  else
 	    if (type == (type_ - 3))
-	      io::internal::pnm::load_ascii(file, ima);
+	      pnm::load_ascii(file, ima);
 	  return ima;
 
 	}
+
+# endif // ! MLN_INCLUDE_ONLY
 
       } // end of namespace mln::io::internal::pnm
 

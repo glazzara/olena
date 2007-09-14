@@ -29,27 +29,19 @@
 #ifndef MLN_IO_PPM_SAVE_HH
 # define MLN_IO_PPM_SAVE_HH
 
-# include <iostream>
-# include <fstream>
+/*! \file mln/io/ppm/save.hh
+ *
+ * \brief save a PPM image.
+ */
 
 # include <mln/core/concept/image.hh>
 
-# include <mln/geom/size2d.hh>
-# include <mln/metal/equal.hh>
-# include <mln/metal/bexpr.hh>
+# include <mln/metal/templated_by.hh>
 
-# include <mln/convert/to_rgb.hh>
 # include <mln/io/internal/pnm/save.hh>
 
 namespace mln
 {
-
-  // Fwd decl.
-  namespace value {
-    template <unsigned> class int_u;
-    template <unsigned> class int_u_sat;
-  }
-
 
   namespace io
   {
@@ -66,7 +58,9 @@ namespace mln
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename)
       {
-	mln::metal::instance_of<mln_value(I), value::rgb >::check();
+	mln::metal::templated_by<mln_value(I), value::rgb >::check();
+
+	//call the generic function for pnm files
 	io::internal::pnm::save(PPM, exact(ima), filename);
       }
 

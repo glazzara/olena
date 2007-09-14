@@ -73,11 +73,13 @@ namespace mln
       int_u<n>  blue() const  { return c_[2]; }
       int_u<n>& blue()        { return c_[2]; }
 
+      /// Ctors
       rgb<n>();
       rgb<n>(equiv a);
       rgb<n>(enc r, enc g, enc b);
       rgb<n>(enc l);
 
+      /// assignments
       rgb<n>& operator=(const rgb<n>& v);
       rgb<n>& operator=(const enc& i);
 
@@ -109,7 +111,6 @@ namespace mln
 
       /// Self addition
       rgb<n>& operator+=(const rgb<n>& v);
-
 
       /// Self subtraction.
       rgb<n>& operator-=(const rgb<n>& v);

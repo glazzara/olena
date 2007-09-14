@@ -25,30 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/ppm_load.cc
+#ifndef MLN_METAL_TEMPLATED_BY_HH
+# define MLN_METAL_TEMPLATED_BY_HH
+
+/*! \file mln/metal/templated_by.hh
  *
- * \brief Test on mln::io::ppm::load.
+ * \brief check if a type is templated by a given template.
+ *
+ * \todo : make it more generic,
+ *         make it work on g++-2.95
+ *         (where templated_by< X<i>, Y >::check() compile)
  */
 
-#include <mln/core/image2d_b.hh>
-
-#include <mln/value/rgb8.hh>
-
-#include <mln/io/ppm/load.hh>
-#include <mln/io/ppm/save.hh>
+# include <mln/metal/bool.hh>
 
 
+# define mln_templated_by(T1, T2) mln::metal::templated_by< T1, T2 >
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
-  using value::rgb8;
-  using value::int_u8;
 
-    image2d_b<rgb8>
-      lena = io::ppm::load("../img/lena.ppm");
+  namespace metal
+  {
 
-    io::ppm::save(lena, "out.ppm");
+    template <typename T1, template <unsigned int X> class T2 >
+    struct templated_by : false_
+    {};
 
-}
+    template < template <unsigned int> class T, unsigned int V>
+    struct templated_by< T<V>, T > : true_
+    {};
+
+
+
+  } // end of namespace mln::metal
+
+} // end of namespace mln
+
+
+#endif // ! MLN_METAL_TEMPLATED_BY_HH

@@ -1,3 +1,14 @@
+2007-09-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	improve io's, add some comments
+	* mln/io/internal/pnm/load.hh: .
+	* mln/io/internal/pnm/save.hh: .
+	* mln/io/pgm/save.hh: .
+	* mln/io/ppm/save.hh: .
+	* mln/metal/templated_by.hh: New.
+	* mln/value/rgb.hh: .
+	* tests/io_ppm.cc: .
+
 2007-09-14  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add 3d handling

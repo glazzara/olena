@@ -64,28 +64,6 @@ namespace mln
       namespace impl
       {
 
-	template <typename I>
-	void save_(const Image<I>& ima_, const std::string& filename)
-	{
-
-	  typedef typename I::value::enc T;
-	  const I& ima = exact(ima_);
-	  std::ofstream file(filename.c_str());
-	  io::internal::pnm::save_header(5, ima, filename, file);
-	  const int
-	    min_row = geom::min_row(ima),
-	    max_row = geom::max_row(ima),
-	    min_col = geom::min_col(ima),
-	    max_col = geom::max_col(ima);
-	  point2d p;
-	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
-	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
-	      {
-		T c = ima(p);
-		file.write((char*)(&c), sizeof(T));
-	      }
-	}
-
       } // end of namespace mln::io::impl
 
 

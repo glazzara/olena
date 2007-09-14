@@ -29,6 +29,12 @@
 #ifndef MLN_IO_PNM_SAVE_HH
 # define MLN_IO_PNM_SAVE_HH
 
+/*! \file mln/io/internal/pnm/save.hh
+ *
+ * \brief function to save PNM images,
+ *
+ */
+
 # include <iostream>
 # include <fstream>
 
@@ -40,15 +46,7 @@
 # include <mln/io/internal/pnm/save_header.hh>
 # include <mln/io/internal/pnm/macros.hh>
 
-# include <mln/metal/instance_of.hh>
-
 # include <mln/geom/size2d.hh>
-
-/*! \file mln/level/transform.hh
- *
- * \brief save pgm,
- *
- */
 
 namespace mln
 {
@@ -59,50 +57,43 @@ namespace mln
     namespace internal
     {
 
-
-# ifndef MLN_INCLUDE_ONLY
-
       namespace pnm
       {
 
-	// for 3dimensionals values (rgb)
+# ifndef MLN_INCLUDE_ONLY
+
+	// write a value into a file whatever the compiler
 	template <unsigned int n>
-	void save_data_uncontiguous(std::ofstream& file,
-			       const image2d_b< value::rgb<n> >& ima)
+	void write_value(std::ofstream& file,
+			 const value::rgb<n>& c)
 	{
-	  typedef typename value::rgb<n>::enc V;
 	  typedef typename value::rgb<n>::enc::enc E;
 
-	  const int
-	    min_row = geom::min_row(ima),
-	    max_row = geom::max_row(ima),
-	    min_col = geom::min_col(ima),
-	    max_col = geom::max_col(ima);
-
-	  point2d p;
-
-	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
-	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
-	    {
-	      const V* buf = ima(p).buffer();
-
-	      E v = buf[0].to_enc();
-	      file.write((char*)&v, sizeof(E));
-	      v = ima(p).green().to_enc();
-	      file.write((char*)&v, sizeof(E));
-	      v = ima(p).blue().to_enc();
- 	      file.write((char*)&v, sizeof(E));
-	    }
-
+	  E v = c.red().to_enc();
+	  file.write((char*)&v, sizeof(E));
+	  v = c.green().to_enc();
+	  file.write((char*)&v, sizeof(E));
+	  v = c.blue().to_enc();
+	  file.write((char*)&v, sizeof(E));
 	}
 
-	// for scalar value
 	template <typename V>
-	void save_data_uncontiguous(std::ofstream& file,
-			       const image2d_b<V>& ima)
+	void write_value(std::ofstream& file,
+			 V& v)
 	{
 	  typedef typename V::enc E;
 
+	  E c = v.to_enc();
+	  file.write((char*)(&c), sizeof(E));
+	}
+
+	// save data for g++-2.95 and non fast images
+	template <typename I>
+	void save_data_uncontiguous(std::ofstream& file,
+				    const Fast_Image< I >& ima_)
+	{
+	  const I& ima = exact(ima_);
+
 	  const int
 	    min_row = geom::min_row(ima),
 	    max_row = geom::max_row(ima),
@@ -112,17 +103,15 @@ namespace mln
 	  point2d p;
 	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
-	    {
-	      E c = ima(p).to_enc();
-	      file.write((char*)(&c), sizeof(E));
-	    }
-
+	      write_value(file, ima(p));
 	}
 
+	// save data for g++ > 2.95 with fast images
 	template <typename I>
-	void save_data(std::ofstream& file,
-		   const I& ima)
+	void save_data_contiguous(std::ofstream& file,
+				  const Fast_Image<I>& ima_)
 	{
+	  const I& ima = exact(ima_);
 	  const int
 	    min_row = geom::min_row(ima),
 	    max_row = geom::max_row(ima);
@@ -133,24 +122,40 @@ namespace mln
 	    file.write((char*)(& ima(p)), len);
 	}
 
+
+	// caller for non fast images
 	template <typename I>
-	void save(const int type, const Fast_Image<I>& ima_, const std::string& filename)
+	void save_data(std::ofstream& file,
+		       const Fast_Image<I>& ima)
+	{
+	  if (sizeof(value::int_u8) == 1)
+	    save_data_contiguous(file, ima);
+	  else
+	    save_data_uncontiguous(file, ima);
+	}
+
+	// caller for non fast images
+	template <typename I>
+	void save_data(std::ofstream& file,
+		       const Image<I>& ima)
+	{
+	  save_data_uncontiguous(file, ima);
+	}
+
+	// main function : save header and data
+	template <typename I>
+	void save(const int type, const Image<I>& ima_, const std::string& filename)
 	{
 	  const I& ima = exact(ima_);
 	  std::ofstream file(filename.c_str());
 	  io::internal::pnm::save_header(type, mln_max(mln_value(I)::enc),
 					 ima, filename, file);
-
-	  if (sizeof(value::int_u8) == 1)
-	    save_data(file, ima);
- 	  else
-	    save_data_uncontiguous(file, ima);
+	  save_data(file, ima);
 	}
 
-      } // end of namespace mln::io::internal::pnm
-
-
 # endif // ! MLN_INCLUDE_ONLY
+
+      } // end of namespace mln::io::internal::pnm
 
     } // end of namespace mln::internal
 
