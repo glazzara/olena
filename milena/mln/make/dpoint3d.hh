@@ -25,18 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW1D_HH
-# define MLN_MAKE_W_WINDOW1D_HH
+#ifndef MLN_MAKE_DPOINT3D_HH
+# define MLN_MAKE_DPOINT3D_HH
 
-/*! \file mln/make/w_window1d.hh
+/*! \file mln/make/dpoint3d.hh
  *
- * \brief Routine to create an mln::w_window in the 1D case.
+ * \brief Routine to construct an mln::dpoint3d.
  */
 
-# include <cmath>
-
-# include <mln/core/w_window.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/dpoint3d.hh>
 
 
 namespace mln
@@ -45,34 +42,25 @@ namespace mln
   namespace make
   {
 
-    /*! \brief Create a 1D mln::w_window from an array of weights.
+    /*! \brief Create an mln::dpoint3d.
      *
-     * \param[in] weights Array.
+     * \param[in] sli Sli coordinate.
+     * \param[in] row Row coordinate.
+     * \param[in] col Col coordinate.
      *
-     * \pre The array size, \c M, has to be a square of an odd integer.
-     *
-     * \return A 1D weighted window.
+     * \return A 3D dpoint.
      */
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W> w_window1d(W (&weights)[M]);
+    mln::dpoint3d dpoint3d(int sli, int row, int col);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W>
-    w_window1d(W (&weights)[M])
+    mln::dpoint3d dpoint3d(int sli, int row, int col)
     {
-      int h = M / 2;
-      mln_precondition(1 == (M % 2));
-      mln::w_window<mln::dpoint1d, W> tmp;
-      unsigned i = 0;
-      for (int ind = - h; ind <= h; ++ind)
-	  {
-	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint1d(ind));
-	    i++;
-	  }
+      mln::dpoint3d tmp;
+      tmp[0] = sli;
+      tmp[1] = row;
+      tmp[2] = col;
       return tmp;
     }
 
@@ -83,4 +71,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_W_WINDOW1D_HH
+#endif // ! MLN_MAKE_DPOINT3D_HH

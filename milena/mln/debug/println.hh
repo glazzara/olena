@@ -74,7 +74,9 @@ namespace mln
 	point2d p;
 	int& row = p.row();
 	int& col = p.col();
-	const int max_row = b.max_row(), max_col = b.max_col();
+	const int
+	  max_row = b.max_row(),
+	  max_col = b.max_col();
 
 	for (row = b.min_row(); row <= max_row; ++row)
 	  {
@@ -86,6 +88,35 @@ namespace mln
 	    std::cout << std::endl;
 	  }
 	std::cout << std::endl;
+      }
+
+      template <typename I>
+      void println(const box3d& b, const I& input)
+      {
+	point3d p;
+	int& sli = p.sli();
+	int& row = p.row();
+	int& col = p.col();
+	const int
+	  min_sli = b.min_sli(),
+	  max_row = b.max_row(),
+	  max_col = b.max_col();
+
+	for (row = b.min_row(); row <= max_row; ++row)
+	{
+	  for (sli = b.max_sli(); sli >= min_sli; --sli)
+	  {
+	    for (int i = min_sli; i <= sli; ++i)
+	      std::cout << ' ';
+	    for (col = b.min_col(); col <= max_col; ++col)
+	      if (input.has(p))
+		std::cout << format( input(p) ) << ' ';
+	      else
+		std::cout << "  ";
+	    std::cout << std::endl;
+	  }
+	  std::cout << std::endl;
+	}
       }
 
     } // end of namespace mln::debug::impl

@@ -25,62 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW1D_HH
-# define MLN_MAKE_W_WINDOW1D_HH
-
-/*! \file mln/make/w_window1d.hh
+/*! \file tests/w_window3d_int.cc
  *
- * \brief Routine to create an mln::w_window in the 1D case.
+ * \brief Tests on mln::w_window3d_int.
  */
 
-# include <cmath>
+#include <mln/core/w_window3d_int.hh>
+#include <mln/core/win/cube3d.hh>
 
-# include <mln/core/w_window.hh>
-# include <mln/core/dpoint1d.hh>
+#include <mln/convert/to_image.hh>
+#include <mln/convert/to_w_window.hh>
+
+#include <mln/convert/to_fun.hh>
+#include <mln/estim/sum.hh>
+
+#include <mln/debug/println.hh>
 
 
-namespace mln
+int f(mln::point3d p)
 {
+  return p.sli() + p.row() + p.col();
+}
 
-  namespace make
+
+int main()
+{
+  using namespace mln;
+
   {
+    int ws[3][9] = {{-3, -2, -3,
+		     -2,  1, -2,
+		     -3, -2, -3},
+		    { 2,  0, -2,
+		      0,  0,  0,
+		      2,  0, -2},
+		    { 3,  2,  3,
+		      2, -1,  2,
+		      3,  2,  3}};
+    w_window3d_int w_win = make::w_window3d(ws);
 
-    /*! \brief Create a 1D mln::w_window from an array of weights.
-     *
-     * \param[in] weights Array.
-     *
-     * \pre The array size, \c M, has to be a square of an odd integer.
-     *
-     * \return A 1D weighted window.
-     */
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W> w_window1d(W (&weights)[M]);
+    image3d_b<int> ima = convert::to_image(w_win);
+    w_window3d_int w_win_2 = convert::to_w_window(ima);
+    mln_assertion(w_win_2 == w_win);
+  }
 
+  {
+    w_window3d_int w_win = make::w_window(win::cube3d(3),
+					  convert::to_fun(f));
+    //  -3 -2 -1  0 +1
+    //  -2 -1  0 +1 +2
+    //  -1  0 +1 +2 +3
+    image3d_b<int> ima = convert::to_image(w_win);
+    debug::println(ima);
+    mln_assertion(estim::sum(ima) == 0);
+  }
 
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W>
-    w_window1d(W (&weights)[M])
-    {
-      int h = M / 2;
-      mln_precondition(1 == (M % 2));
-      mln::w_window<mln::dpoint1d, W> tmp;
-      unsigned i = 0;
-      for (int ind = - h; ind <= h; ++ind)
-	  {
-	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint1d(ind));
-	    i++;
-	  }
-      return tmp;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::make
-
-} // end of namespace mln
-
-
-#endif // ! MLN_MAKE_W_WINDOW1D_HH
+}

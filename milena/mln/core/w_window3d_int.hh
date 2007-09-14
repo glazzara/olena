@@ -25,62 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW1D_HH
-# define MLN_MAKE_W_WINDOW1D_HH
+#ifndef MLN_CORE_W_WINDOW3D_INT_HH
+# define MLN_CORE_W_WINDOW3D_INT_HH
 
-/*! \file mln/make/w_window1d.hh
+/*! \file mln/core/w_window3d_int.hh
  *
- * \brief Routine to create an mln::w_window in the 1D case.
+ * \brief Definition of the mln::w_window3d_int alias.
  */
 
-# include <cmath>
-
 # include <mln/core/w_window.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/dpoint3d.hh>
 
 
 namespace mln
 {
 
-  namespace make
-  {
+  /*! \brief Type alias for a w_window with arbitrary shape, defined
+   * on the 3D grid (with integer coordinates) and whose
+   * weights are integers.
+   */
+  typedef w_window<dpoint3d, int> w_window3d_int;
 
-    /*! \brief Create a 1D mln::w_window from an array of weights.
-     *
-     * \param[in] weights Array.
-     *
-     * \pre The array size, \c M, has to be a square of an odd integer.
-     *
-     * \return A 1D weighted window.
-     */
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W> w_window1d(W (&weights)[M]);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W>
-    w_window1d(W (&weights)[M])
-    {
-      int h = M / 2;
-      mln_precondition(1 == (M % 2));
-      mln::w_window<mln::dpoint1d, W> tmp;
-      unsigned i = 0;
-      for (int ind = - h; ind <= h; ++ind)
-	  {
-	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint1d(ind));
-	    i++;
-	  }
-      return tmp;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::make
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_W_WINDOW1D_HH
+# include <mln/make/w_window3d.hh>
+
+
+#endif // ! MLN_CORE_W_WINDOW3D_INT_HH

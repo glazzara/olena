@@ -25,62 +25,72 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW1D_HH
-# define MLN_MAKE_W_WINDOW1D_HH
-
-/*! \file mln/make/w_window1d.hh
+/*! \file tests/pixter3d_b.cc
  *
- * \brief Routine to create an mln::w_window in the 1D case.
+ * \brief Tests on mln::fwd_pixter3d_b.
  */
 
-# include <cmath>
-
-# include <mln/core/w_window.hh>
-# include <mln/core/dpoint1d.hh>
+#include <mln/core/image3d_b.hh>
 
 
-namespace mln
+const unsigned size = 5;
+const unsigned len = 125;
+const int v = 51;
+
+
+template <typename I>
+void test_fill(I& ima)
 {
-
-  namespace make
-  {
-
-    /*! \brief Create a 1D mln::w_window from an array of weights.
-     *
-     * \param[in] weights Array.
-     *
-     * \pre The array size, \c M, has to be a square of an odd integer.
-     *
-     * \return A 1D weighted window.
-     */
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W> w_window1d(W (&weights)[M]);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W>
-    w_window1d(W (&weights)[M])
+  mln_pixter(I) pxl(ima);
+  unsigned i = 0;
+  for_all(pxl)
     {
-      int h = M / 2;
-      mln_precondition(1 == (M % 2));
-      mln::w_window<mln::dpoint1d, W> tmp;
-      unsigned i = 0;
-      for (int ind = - h; ind <= h; ++ind)
-	  {
-	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint1d(ind));
-	    i++;
-	  }
-      return tmp;
+      ++i;
+      pxl.val() = v;
     }
+  std::cout << i << std::endl;
+  mln_assertion(i == len);
+  mln_assertion(! pxl.is_valid());
 
-# endif // ! MLN_INCLUDE_ONLY
+  mln_piter(I) p(ima.domain());
+  for_all(p)
+    mln_assertion(ima(p) == v);
+}
 
-  } // end of namespace mln::make
 
-} // end of namespace mln
+template <typename I>
+void test_const(const I& imac, I& ima)
+{
+  {
+    mln_pixter(const I) pxl(imac); // const is mandatory
+    pxl.start();
+    mln_assertion(pxl.val() == v);
+    // pxl.val() = v; // error is OK since pixter on 'const I'
+  }
+  {
+    // mln_pixter(I) pxl_(imac); // error is OK since mutable I but const imac
+    mln_pixter(I) pxl(ima);
+    pxl.start();
+    pxl.val() = 2 * pxl.val();
+    mln_assertion(pxl.val() == 2 * v);
+  }
+  {
+    mln_pixter(const I) pxl(ima); // const promotion is OK
+    pxl.start();
+    mln_assertion(pxl.val() == 2 * v);
+    // pxl.val() = v; // error is OK since pixter on 'const I'
+  }
+}
 
 
-#endif // ! MLN_MAKE_W_WINDOW1D_HH
+
+int main()
+{
+  using namespace mln;
+
+  typedef image3d_b<int> I;
+  I ima(size, size, size);
+
+  test_fill(ima);
+  test_const(ima, ima);
+}

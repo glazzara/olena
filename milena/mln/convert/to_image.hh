@@ -35,6 +35,7 @@
 
 # include <mln/core/image1d_b.hh>
 # include <mln/core/image2d_b.hh>
+# include <mln/core/image3d_b.hh>
 
 # include <mln/core/concept/point_set.hh>
 # include <mln/core/concept/window.hh>
@@ -66,6 +67,12 @@ namespace mln
     };
 
     template <unsigned dim, typename V> struct helper_image_from_;
+
+    template <typename V>
+    struct helper_image_from_< 3, V >
+    {
+      typedef image3d_b<V> ret;
+    };
 
     template <typename V>
     struct helper_image_from_< 2, V >

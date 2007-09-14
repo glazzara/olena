@@ -1,3 +1,38 @@
+2007-09-14  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add 3d handling
+	* mln/convert/to_image.hh: Update.
+	* mln/core/box3d.hh: New.
+	* mln/core/dpoint3d.hh: New.
+	* mln/core/image3d_b.hh: New.
+	* mln/core/internal/box_impl.hh: Update.
+	* mln/core/neighb3d.hh: New.
+	* mln/core/pixter3d_b.hh: New.
+	* mln/core/point3d.hh: New.
+	* mln/core/w_window3d_float.hh: New.
+	* mln/core/w_window3d_int.hh: New.
+	* mln/core/win/cube3d.hh: New.
+	* mln/core/window3d.hh: New.
+	* mln/debug/println.hh: Update.
+	* mln/geom/max_sli.hh: New.
+	* mln/geom/min_sli.hh: New.
+	* mln/geom/nslis.hh: New.
+	* mln/geom/size3d.hh: New.
+	* mln/make/box3d.hh: New.
+	* mln/make/dpoint3d.hh: New.
+	* mln/make/point3d.hh: New.
+	* mln/make/w_window1d.hh: Precondition of oddness fixed.
+	* mln/make/w_window3d.hh: New.
+	* mln/make/w_window3d_int.hh: New.
+	* mln/make/window3d.hh: New.
+	* tests/box3d.cc: New.
+	* tests/dpoint3d.cc: New.
+	* tests/image3d_b.cc: New.
+	* tests/pixter3d_b.cc: New.
+	* tests/point3d.cc: New.
+	* tests/w_window3d_int.cc: New.
+	* tests/window3d.cc: New.
+
 2007-09-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	improving PNM format support

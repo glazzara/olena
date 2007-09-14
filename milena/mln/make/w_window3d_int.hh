@@ -25,18 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW1D_HH
-# define MLN_MAKE_W_WINDOW1D_HH
+#ifndef MLN_MAKE_W_WINDOW3D_INT_HH
+# define MLN_MAKE_W_WINDOW3D_INT_HH
 
-/*! \file mln/make/w_window1d.hh
+/*! \file mln/make/w_window3d_int.hh
  *
- * \brief Routine to create an mln::w_window in the 1D case.
+ * \brief Routine to create a mln::w_window3d_int.
  */
 
-# include <cmath>
-
-# include <mln/core/w_window.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/w_window3d_int.hh>
+# include <mln/make/w_window3d.hh>
 
 
 namespace mln
@@ -45,35 +43,27 @@ namespace mln
   namespace make
   {
 
-    /*! \brief Create a 1D mln::w_window from an array of weights.
+    /*! \brief Create a mln::w_window3d_int.
      *
-     * \param[in] weights Array.
+     * \param[in] weights Array of integers.
      *
-     * \pre The array size, \c M, has to be a square of an odd integer.
+     * \pre The array size, \c M, has to be an odd integer.
+     * \pre The array size, \c N, has to be the square of \c M.
      *
-     * \return A 1D weighted window.
+     * \return A 3D int-weighted window.
      */
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W> w_window1d(W (&weights)[M]);
+    template <unsigned M, unsigned N>
+    mln::w_window3d_int w_window3d_int(int (&weights)[M][N]);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W>
-    w_window1d(W (&weights)[M])
+    template <unsigned M, unsigned N>
+    mln::w_window3d_int
+    w_window3d_int(int (&weights)[M][N])
     {
-      int h = M / 2;
-      mln_precondition(1 == (M % 2));
-      mln::w_window<mln::dpoint1d, W> tmp;
-      unsigned i = 0;
-      for (int ind = - h; ind <= h; ++ind)
-	  {
-	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint1d(ind));
-	    i++;
-	  }
-      return tmp;
+      mln_precondition(1 == (M % 2) && M * M == N);
+      return make::w_window3d(weights);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -83,4 +73,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_W_WINDOW1D_HH
+#endif // ! MLN_MAKE_W_WINDOW3D_INT_HH

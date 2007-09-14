@@ -25,18 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW1D_HH
-# define MLN_MAKE_W_WINDOW1D_HH
+#ifndef MLN_MAKE_WINDOW3D_HH
+# define MLN_MAKE_WINDOW3D_HH
 
-/*! \file mln/make/w_window1d.hh
+/*! \file mln/make/window3d.hh
  *
- * \brief Routine to create an mln::w_window in the 1D case.
+ * \brief Routine to create an mln::window3d.
  */
 
 # include <cmath>
-
-# include <mln/core/w_window.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/window3d.hh>
+# include <mln/make/dpoint3d.hh>
 
 
 namespace mln
@@ -45,34 +44,33 @@ namespace mln
   namespace make
   {
 
-    /*! \brief Create a 1D mln::w_window from an array of weights.
+    /*! \brief Create an mln::window3d.
      *
-     * \param[in] weights Array.
+     * \param[in] values Array of Booleans.
      *
-     * \pre The array size, \c M, has to be a square of an odd integer.
+     * \pre The array size, \c M, has to be an odd integer.
+     * \pre The array size, \c N, has to be the square of \c N.
      *
-     * \return A 1D weighted window.
+     * \return A 3D window.
      */
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W> w_window1d(W (&weights)[M]);
+    template <unsigned M, unsigned N>
+    mln::window3d window3d(bool (&values)[M][N]);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W>
-    w_window1d(W (&weights)[M])
+    template <unsigned M, unsigned N>
+    mln::window3d window3d(bool (&values)[M][N])
     {
       int h = M / 2;
-      mln_precondition(1 == (M % 2));
-      mln::w_window<mln::dpoint1d, W> tmp;
+      mln_precondition((M % 2) == 1 && M * M == N);
+      mln::window3d tmp;
       unsigned i = 0;
-      for (int ind = - h; ind <= h; ++ind)
-	  {
-	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint1d(ind));
-	    i++;
-	  }
+      for (int sli = - h; sli <= h; ++sli)
+	for (int row = - h; row <= h; ++row)
+	  for (int col = - h; col <= h; ++col)
+	    if (values[i / N][i++ % N])
+	      tmp.insert(make::dpoint3d(sli, row, col));
       return tmp;
     }
 
@@ -83,4 +81,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_W_WINDOW1D_HH
+#endif // ! MLN_MAKE_WINDOW3D_HH

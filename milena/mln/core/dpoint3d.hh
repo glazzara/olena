@@ -25,62 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW1D_HH
-# define MLN_MAKE_W_WINDOW1D_HH
+#ifndef MLN_CORE_DPOINT3D_HH
+# define MLN_CORE_DPOINT3D_HH
 
-/*! \file mln/make/w_window1d.hh
+/*! \file mln/core/dpoint3d.hh
  *
- * \brief Routine to create an mln::w_window in the 1D case.
+ * \brief Definition of the mln::dpoint3d alias and of its
+ * construction routine.
  */
 
-# include <cmath>
-
-# include <mln/core/w_window.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/dpoint.hh>
 
 
 namespace mln
 {
 
-  namespace make
-  {
+  /*! \brief Type alias for a delta-point defined on the 3D square
+   * grid with integer coordinates.
+   */
+  typedef dpoint_<3,int> dpoint3d;
 
-    /*! \brief Create a 1D mln::w_window from an array of weights.
-     *
-     * \param[in] weights Array.
-     *
-     * \pre The array size, \c M, has to be a square of an odd integer.
-     *
-     * \return A 1D weighted window.
-     */
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W> w_window1d(W (&weights)[M]);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W>
-    w_window1d(W (&weights)[M])
-    {
-      int h = M / 2;
-      mln_precondition(1 == (M % 2));
-      mln::w_window<mln::dpoint1d, W> tmp;
-      unsigned i = 0;
-      for (int ind = - h; ind <= h; ++ind)
-	  {
-	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint1d(ind));
-	    i++;
-	  }
-      return tmp;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::make
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_W_WINDOW1D_HH
+# include <mln/make/dpoint3d.hh>
+# include <mln/core/point3d.hh>
+
+
+namespace mln
+{
+
+  // FIXME: Doc!
+  const dpoint3d segolene   = make::dpoint3d( 0,  0, -1);
+  const dpoint3d sarkosy    = make::dpoint3d( 0,  0, +1);
+  // FIXME: More serious directions :)
+  const dpoint3d top        = make::dpoint3d( 0, -1,  0);
+  const dpoint3d bottom     = make::dpoint3d( 0, +1,  0);
+  const dpoint3d back       = make::dpoint3d(-1,  0,  0);
+  const dpoint3d front      = make::dpoint3d(+1,  0,  0);
+
+} // end of namespace mln
+
+
+#endif // ! MLN_CORE_DPOINT3D_HH

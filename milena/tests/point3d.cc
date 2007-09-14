@@ -25,62 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW1D_HH
-# define MLN_MAKE_W_WINDOW1D_HH
-
-/*! \file mln/make/w_window1d.hh
+/*! \file tests/point3d.cc
  *
- * \brief Routine to create an mln::w_window in the 1D case.
+ * \brief Tests on mln::point3d.
  */
 
-# include <cmath>
-
-# include <mln/core/w_window.hh>
-# include <mln/core/dpoint1d.hh>
+#include <mln/core/point3d.hh>
 
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
 
-  namespace make
-  {
+  point3d p, q;
 
-    /*! \brief Create a 1D mln::w_window from an array of weights.
-     *
-     * \param[in] weights Array.
-     *
-     * \pre The array size, \c M, has to be a square of an odd integer.
-     *
-     * \return A 1D weighted window.
-     */
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W> w_window1d(W (&weights)[M]);
+  // assignment
 
+  p[0] = 4;
+  p.sli() += 1;
+  mln_assertion(p.sli() == 5 && p[0] == 5);
+  p[1] = 2;
+  p.row() += 7;
+  mln_assertion(p.row() == 9 && p[1] == 9);
+  p[2] = 6;
+  p.col() += -3;
+  mln_assertion(p.col() == 3 && p[2] == 3);
 
-# ifndef MLN_INCLUDE_ONLY
+  // construction
+  q = make::point3d(5, 9, 3);
+  mln_assertion(p == q);
 
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint1d, W>
-    w_window1d(W (&weights)[M])
-    {
-      int h = M / 2;
-      mln_precondition(1 == (M % 2));
-      mln::w_window<mln::dpoint1d, W> tmp;
-      unsigned i = 0;
-      for (int ind = - h; ind <= h; ++ind)
-	  {
-	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint1d(ind));
-	    i++;
-	  }
-      return tmp;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::make
-
-} // end of namespace mln
-
-
-#endif // ! MLN_MAKE_W_WINDOW1D_HH
+  q.set_all(0);
+  for (unsigned i = 0; i < p.dim; ++i)
+    mln_assertion(q[i] == 0);
+}

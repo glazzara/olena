@@ -56,6 +56,37 @@ namespace mln
     struct box_impl_;
 
     template <typename C, typename E> // FIXME: Add an extra param to replace 'unsigned'.
+    struct box_impl_<3, C, E>
+    {
+      /// Give the number of slis.
+      unsigned nslis() const;
+
+      /// Give the minimum sli.
+      C min_sli() const;
+
+      /// Give the minimum sli.
+      C max_sli() const;
+
+      /// Give the number of rows.
+      unsigned nrows() const;
+
+      /// Give the minimum row.
+      C min_row() const;
+
+      /// Give the minimum row.
+      C max_row() const;
+
+      /// Give the number of cols.
+      unsigned ncols() const;
+
+      /// Give the minimum col.
+      C min_col() const;
+
+      /// Give the minimum col.
+      C max_col() const;
+    };
+
+    template <typename C, typename E> // FIXME: Add an extra param to replace 'unsigned'.
     struct box_impl_<2, C, E>
     {
       /// Give the number of rows.
@@ -94,6 +125,63 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     // box_impl
+
+    // 3
+
+    template <typename C, typename E>
+    unsigned box_impl_<3, C, E>::nslis() const
+    {
+      return internal::force_exact<E>(*this).bbox().len(0);
+    }
+
+    template <typename C, typename E>
+    C box_impl_<3, C, E>::min_sli() const
+    {
+      return internal::force_exact<E>(*this).bbox().pmin()[0];
+    }
+
+    template <typename C, typename E>
+    C box_impl_<3, C, E>::max_sli() const
+    {
+      return internal::force_exact<E>(*this).bbox().pmax()[0];
+    }
+
+    template <typename C, typename E>
+    unsigned box_impl_<3, C, E>::nrows() const
+    {
+      return internal::force_exact<E>(*this).bbox().len(1);
+    }
+
+    template <typename C, typename E>
+    C box_impl_<3, C, E>::min_row() const
+    {
+      return internal::force_exact<E>(*this).bbox().pmin()[1];
+    }
+
+    template <typename C, typename E>
+    C box_impl_<3, C, E>::max_row() const
+    {
+      return internal::force_exact<E>(*this).bbox().pmax()[1];
+    }
+
+    template <typename C, typename E>
+    unsigned box_impl_<3, C, E>::ncols() const
+    {
+      return internal::force_exact<E>(*this).bbox().len(2);
+    }
+
+    template <typename C, typename E>
+    C box_impl_<3, C, E>::min_col() const
+    {
+      return internal::force_exact<E>(*this).bbox().pmin()[2];
+    }
+
+    template <typename C, typename E>
+    C box_impl_<3, C, E>::max_col() const
+    {
+      return internal::force_exact<E>(*this).bbox().pmax()[2];
+    }
+
 
     // 2
 
