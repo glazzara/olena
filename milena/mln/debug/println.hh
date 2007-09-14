@@ -37,8 +37,6 @@
 # include <mln/core/concept/window.hh>
 # include <mln/debug/format.hh>
 
-# include <mln/core/box2d.hh>
-
 
 namespace mln
 {
@@ -67,6 +65,8 @@ namespace mln
 	std::cout << std::endl;
       }
 
+# ifdef MLN_CORE_BOX2D_HH
+
       // 2D version
       template <typename I>
       void println(const box2d& b, const I& input)
@@ -89,6 +89,10 @@ namespace mln
 	  }
 	std::cout << std::endl;
       }
+
+# endif // MLN_CORE_BOX2D_HH
+
+# ifdef MLN_CORE_BOX3D_HH
 
       template <typename I>
       void println(const box3d& b, const I& input)
@@ -118,6 +122,8 @@ namespace mln
 	  std::cout << std::endl;
 	}
       }
+
+# endif // MLN_CORE_BOX3D_HH
 
     } // end of namespace mln::debug::impl
 
