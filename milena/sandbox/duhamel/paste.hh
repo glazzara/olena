@@ -27,7 +27,8 @@ namespace mln
     template <typename I, typename J>
     void paste(const rle_image<I, J>& data_, rle_image<I, J>& destination_)
     {
-      imacpy_ (destination_, data_, data_.size ());
+      // TO FIX
+      imacpy_ (destination_, data_, 42);
     }
 
 

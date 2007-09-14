@@ -1,3 +1,6 @@
+#ifndef FILL_HH
+# define FILL_HH
+
 # include <cstring>
 
 # include <mln/core/concept/image.hh>
@@ -125,3 +128,4 @@ namespace mln
     }
   }
 }
+#endif

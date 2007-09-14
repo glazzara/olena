@@ -1,3 +1,15 @@
+2007-09-14  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	labeling and level for fast image in sandboy but need to fix.
+	* fill.hh: .
+	* labeling.hh: New.
+	* labeling_cpy_from_mln.hh: New.
+	* labeling_level_fast.cc: New.
+	* level.hh: New.
+	* level_cpy_from_mln.hh: New.
+	* main.cc: .
+	* paste.hh: .
+
 2007-09-14  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Println fixed
