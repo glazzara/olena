@@ -1,5 +1,11 @@
 2007-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	add some comments
+	* mln/io/internal/pnm/load.hh: .
+	* mln/io/internal/pnm/save.hh: .
+
+2007-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	move the io_fits test
 		from:
 	* sandbox/garrigues/io_fits.cc:

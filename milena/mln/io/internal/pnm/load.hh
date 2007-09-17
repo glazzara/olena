@@ -59,7 +59,7 @@ namespace mln
       {
 
 # ifndef MLN_INCLUDE_ONLY
-
+	//read a rgb value (sizeof(int_u8) != 1)
 	template <unsigned int n>
 	void read_value(std::ifstream& file,
 			value::rgb<n>& v)
@@ -75,6 +75,7 @@ namespace mln
 	  v.blue() = c;
 	}
 
+	//read a scalar value (sizeof(int_u8) != 1)
 	template <class V>
 	void read_value(std::ifstream& file,
 			V& v)
@@ -86,7 +87,7 @@ namespace mln
 	  v = c;
 	}
 
-	// used in g++-2.95 (sizeof(int_u8) == 2)
+	// used when (sizeof(int_u8) != 1)
 	template <typename V>
 	void load_raw_2d_uncontiguous(std::ifstream& file,
 				      image2d_b<V>& ima)
@@ -103,6 +104,7 @@ namespace mln
 	      read_value(file, ima(p));
 	}
 
+	// used in g++ > 2.95
 	template <typename I>
 	void load_raw_2d_contiguous(std::ifstream& file, I& ima)
 	{
@@ -143,7 +145,7 @@ namespace mln
 	    load_raw_2d_uncontiguous(file, ima);
 	}
 
-	/// load pnm format
+	/// main function : load pnm format
 	template <typename V>
 	image2d_b<V> load(char type_, const std::string& filename)
 	{

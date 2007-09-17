@@ -62,7 +62,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-	// write a value into a file whatever the compiler
+	// write a rgb value into for uncontiguous datas
 	template <unsigned int n>
 	void write_value(std::ofstream& file,
 			 const value::rgb<n>& c)
@@ -77,6 +77,7 @@ namespace mln
 	  file.write((char*)&v, sizeof(E));
 	}
 
+	// write a scalar value into for uncontiguous datas
 	template <typename V>
 	void write_value(std::ofstream& file,
 			 V& v)
@@ -87,10 +88,10 @@ namespace mln
 	  file.write((char*)(&c), sizeof(E));
 	}
 
-	// save data for g++-2.95 and non fast images
+	// save data for (sizeof(int_u8) != 1) and non fast images
 	template <typename I>
 	void save_data_uncontiguous(std::ofstream& file,
-				    const Fast_Image< I >& ima_)
+				    const Image< I >& ima_)
 	{
 	  const I& ima = exact(ima_);
 
@@ -106,7 +107,8 @@ namespace mln
 	      write_value(file, ima(p));
 	}
 
-	// save data for g++ > 2.95 with fast images
+	// save data when (sizeof(int_u8) == 1) with fast images
+	// (faster)
 	template <typename I>
 	void save_data_contiguous(std::ofstream& file,
 				  const Fast_Image<I>& ima_)
@@ -123,7 +125,7 @@ namespace mln
 	}
 
 
-	// caller for non fast images
+	// caller for fast images
 	template <typename I>
 	void save_data(std::ofstream& file,
 		       const Fast_Image<I>& ima)
