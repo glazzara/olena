@@ -1,3 +1,10 @@
+2007-09-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix fill for border in sandbox.
+
+	* border_fill.cc: Test file of fill border with println_with_border.
+	* border_fill.hh: Fix fill for border, but need to be optimize.
+
 2007-09-17  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add vector and trait for binary
