@@ -1,3 +1,10 @@
+2007-09-17  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add vector and trait for binary
+	* sandbox/nivault/binary_arith.hh: New.
+	* sandbox/nivault/tests/test.cc: Update.
+	* sandbox/nivault/vec.hh: New.
+
 2007-09-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Bug fix.
