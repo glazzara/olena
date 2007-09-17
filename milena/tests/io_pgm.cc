@@ -33,7 +33,6 @@
 #include <mln/core/image2d_b.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/value/rgb8.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -42,12 +41,6 @@ int main()
 {
   using namespace mln;
   using value::int_u8;
-  using value::rgb8;
-
-  //   {
-  // //     image2d_b<rgb8>
-  // //       lena = io::pgm::load<rgb8>("../img/lena.pgm");
-  //   }
 
   {
     image2d_b<int_u8>

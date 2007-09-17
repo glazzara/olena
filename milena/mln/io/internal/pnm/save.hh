@@ -41,7 +41,10 @@
 # include <mln/core/concept/image.hh>
 
 # include <mln/value/rgb.hh>
+# include <mln/value/rgb8.hh>
 # include <mln/value/int_u8.hh>
+
+# include <mln/metal/templated_by.hh>
 
 # include <mln/io/internal/pnm/save_header.hh>
 # include <mln/io/internal/pnm/macros.hh>
@@ -150,8 +153,8 @@ namespace mln
 	{
 	  const I& ima = exact(ima_);
 	  std::ofstream file(filename.c_str());
-	  io::internal::pnm::save_header(type, mln_max(mln_value(I)::enc),
-					 ima, filename, file);
+	  io::internal::pnm::save_header(type, ima, filename, file);
+
 	  save_data(file, ima);
 	}
 

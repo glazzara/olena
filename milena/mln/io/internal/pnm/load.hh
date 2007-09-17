@@ -158,7 +158,9 @@ namespace mln
 	  }
 	  char type = 0;
 	  int nrows, ncols;
-	  read_header(type_ - 3, type_, file, type, nrows, ncols);
+	  unsigned int maxval;
+	  read_header(type_ - 3, type_, file, type,
+		      nrows, ncols, maxval);
 
 	  image2d_b<V> ima(nrows, ncols);
 	  if (type == type_)
@@ -167,6 +169,51 @@ namespace mln
 	    if (type == (type_ - 3))
 	      pnm::load_ascii(file, ima);
 	  return ima;
+
+	}
+
+	/// a new function to load pnm files :
+	/// the destination is an argument to check if
+	/// the type match the file to load.
+	template <typename I>
+	void load(char type_,
+		  Image<I>& ima_,
+		  const std::string& filename)
+	{
+	  std::ifstream file(filename.c_str());
+	  if (! file)
+	  {
+	    std::cerr << "error: file '" << filename
+		      << "' not found!";
+	    abort();
+	  }
+
+	  I& ima = exact(ima_);
+
+	  char type = 0;
+	  int nrows, ncols;
+	  unsigned int maxval;
+	  read_header(type_ - 3, type_, file, type,
+		      nrows, ncols, maxval);
+
+	  if (value::props< mln_value(I) >::max() != maxval)
+	  {
+	    std::cerr << "max ref : " << value::props< mln_value(I) >::max()
+		      << "max image : " << maxval
+		      << std::endl;
+
+	    std::cerr << "error: file '" << filename
+		      << "' cannot be loaded into this type of image"
+		      << std::endl;
+	    abort();
+	  }
+
+	  ima.init_with(nrows, ncols);
+	  if (type == type_)
+	    load_raw_2d(file, ima);
+	  else
+	    if (type == (type_ - 3))
+	      pnm::load_ascii(file, ima);
 
 	}
 

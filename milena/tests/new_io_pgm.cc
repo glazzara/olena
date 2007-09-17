@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,51 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PGM_LOAD_HH
-# define MLN_IO_PGM_LOAD_HH
+/*! \file tests/ppm_load.cc
+ *
+ * \brief Test on mln::io::ppm::load.
+ */
 
-# include <iostream>
-# include <fstream>
-# include <string>
+#include <mln/core/image2d_b.hh>
 
-# include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/int_u.hh>
+#include <mln/value/rgb8.hh>
 
-# include <mln/value/int_u8.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 
-# include <mln/io/internal/pnm/load.hh>
-
-
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
+  using value::rgb8;
 
-  namespace io
   {
+    image2d_b< value::int_u<8> >
+      lena;
+    io::pgm::load(lena, "../img/lena.pgm");
 
-    namespace pgm
-    {
-
-      template <typename V>
-      image2d_b<V> load(const std::string& filename)
-      {
-	return io::internal::pnm::load<V>(PGM, filename);
-      }
-
-      image2d_b<value::int_u8> load(const std::string& filename)
-      {
-	return load<value::int_u8>(filename);
-      }
-
-      template <typename I>
-      void load(Image<I>& ima,
-	    const std::string& filename)
-      {
-	io::internal::pnm::load<I>(PGM, ima, filename);
-      }
-    } // end of namespace mln::io::pgm
-
-  } // end of namespace mln::io
-
-} // end of namespace mln
-
-
-#endif // ! MLN_IO_PGM_LOAD_HH
+    io::pgm::save(lena, "out.pgm");
+  }
+}

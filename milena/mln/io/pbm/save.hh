@@ -70,8 +70,7 @@ namespace mln
 	  const I& ima = exact(ima_);
 	  std::ofstream file(filename.c_str());
 
-	  //FIXME : why do we need a max val???
-	  io::internal::pnm::save_header(PBM, 255, ima, filename, file);
+	  io::internal::pnm::save_header(PBM, ima, filename, file);
 
 	  const int
 	    min_row = geom::min_row(ima),

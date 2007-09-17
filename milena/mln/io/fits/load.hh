@@ -75,6 +75,9 @@ namespace mln
 
 	const int ncols = naxes[0], nrows = naxes[1];
 
+	std::cout << "ncols : " << ncols
+		  << "nrows : " << nrows << std::endl;
+
 	image2d_b<float> output(nrows, ncols);
 
 	nullval  = 0; // don't check null values

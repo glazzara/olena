@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,51 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PGM_LOAD_HH
-# define MLN_IO_PGM_LOAD_HH
+/*! \file tests/pbm_load.cc
+ *
+ * \brief Test on mln::io::pbm::load.
+ */
 
-# include <iostream>
-# include <fstream>
-# include <string>
+#include <mln/core/image2d_b.hh>
 
-# include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
 
-# include <mln/value/int_u8.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 
-# include <mln/io/internal/pnm/load.hh>
+#include <mln/level/transform.hh>
+#include <mln/level/compare.hh>
 
 
-namespace mln
+  using namespace mln;
+
+struct to19bits : mln::Function_v2v<to19bits>
 {
 
-  namespace io
+  typedef value::int_u<19> result;
+  result operator()(value::int_u8 v) const
   {
+    result ret(v * 524288);
+    return ret;
+  }
+};
 
-    namespace pgm
-    {
+struct to8bits : mln::Function_v2v<to8bits>
+{
 
-      template <typename V>
-      image2d_b<V> load(const std::string& filename)
-      {
-	return io::internal::pnm::load<V>(PGM, filename);
-      }
+  typedef value::int_u8 result;
+  result operator()(value::int_u<19> v) const
+  {
+    result ret(v / 524288);
+    return ret;
+  }
+};
 
-      image2d_b<value::int_u8> load(const std::string& filename)
-      {
-	return load<value::int_u8>(filename);
-      }
+int main()
+{
+  using namespace mln;
+  using value::int_u8;
+  using value::int_u;
+  typedef value::int_u<19> int_u19;
 
-      template <typename I>
-      void load(Image<I>& ima,
-	    const std::string& filename)
-      {
-	io::internal::pnm::load<I>(PGM, ima, filename);
-      }
-    } // end of namespace mln::io::pgm
+  border::thickness = 52;
 
-  } // end of namespace mln::io
+  image2d_b<int_u8>
+    lena = io::pgm::load<int_u8>("../img/lena.pgm");
+  image2d_b<int_u19> out(lena.domain());
 
-} // end of namespace mln
+  level::transform(lena, to19bits(), out);
 
+  io::pgm::save(out, "out19.pgm");
 
-#endif // ! MLN_IO_PGM_LOAD_HH
+  image2d_b<int_u19>
+    lena2 = io::pgm::load<int_u19>("out19.pgm");
+   image2d_b<int_u8> out2(lena.domain());
+
+   level::transform(lena2, to8bits(), out2);
+
+   io::pgm::save(out2, "out8.pgm");
+
+   assert(out2 == lena);
+
+}

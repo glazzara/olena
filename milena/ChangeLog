@@ -1,3 +1,36 @@
+2007-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Improve pnm support.
+
+	* mln/io/fits/load.hh: start debug, only the first column of the image
+          is filled
+
+	* mln/io/internal/pnm/load.hh: add a second funtion to load a function
+          load(ima, filename). Then we can check if ima is the right type to
+          load the image in the file filename.
+
+	* mln/io/internal/pnm/load_header.hh: update read_header to get the
+          maxvalue of the pnm header. We need it to check if max(mln_value(I))
+          == maxval
+
+	* mln/io/internal/pnm/save.hh:
+	* mln/io/internal/pnm/save_header.hh: change save_header(type, maxval,
+          ima, filename, file) to save_header(type, maxval, ima, filename,
+          file)
+
+	* mln/io/pbm/save.hh:
+	* mln/io/pgm/load.hh:
+	* mln/io/pgm/save.hh:
+	* mln/io/ppm/load.hh: update to support save_header changes
+
+	* sandbox/garrigues/io_fits.cc: start debuging io fits
+
+	* tests/io_pgm.cc:
+	* tests/io_pgm19.cc:
+	* tests/io_pgm27.cc:
+	* tests/io_ppm23.cc:
+	* tests/new_io_pgm.cc: tests. save pgm and ppm N bits works.
+
 2007-09-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix duplicate for border in sandbox.

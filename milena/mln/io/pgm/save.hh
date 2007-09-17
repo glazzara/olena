@@ -35,7 +35,7 @@
 # include <mln/io/internal/pnm/save.hh>
 
 # include <mln/geom/size2d.hh>
-# include <mln/metal/equal.hh>
+# include <mln/metal/templated_by.hh>
 # include <mln/metal/bexpr.hh>
 
 
@@ -61,26 +61,12 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace impl
-      {
-
-      } // end of namespace mln::io::impl
-
-
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename)
       {
 	mln::metal::or_<
-	  mln::metal::equal<mln_value(I), value::int_u<8> >,
-
-	  mln::metal::or_<
-	  mln::metal::equal<mln_value(I), value::int_u_sat<8> >,
-
-	  mln::metal::or_<
-	  mln::metal::equal<mln_value(I), value::int_u<16> >,
-	  mln::metal::equal<mln_value(I), value::int_u_sat<16> >
-	  >
-	  >
+	  mln::metal::templated_by<mln_value(I), value::int_u >,
+	  mln::metal::templated_by<mln_value(I), value::int_u_sat >
 	  >::check();
 	io::internal::pnm::save(PGM, exact(ima), filename);
       }

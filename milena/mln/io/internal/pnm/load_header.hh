@@ -46,10 +46,11 @@ namespace mln
       {
 
 
-	bool read_header(std::istream& istr,
-			     char& type,
-			     int& nrows, int& ncols,
-			     bool test = false)
+	bool read_header(std::ifstream& istr,
+			 char& type,
+			 int& nrows, int& ncols,
+			 unsigned int& maxval,
+			 bool test = false)
 	{
 	  // check magic
 	  if (istr.get() != 'P' )
@@ -63,49 +64,61 @@ namespace mln
 
 	  // skip comments
 	  while (istr.peek() == '#')
-	    {
-	      std::string line;
-	      std::getline(istr, line);
-	    }
+	  {
+	    std::string line;
+	    std::getline(istr, line);
+	  }
 
 	  // get size
 	  istr >> ncols >> nrows;
 	  if (nrows <= 0 || ncols <= 0)
 	    goto err;
 
-	  // skip maxvalue
+	  // get maxvalue
 	  if (istr.get() != '\n')
 	    goto err;
 	  if (type != '1' && type != '4')
-	    {
-	      std::string line;
-	      std::getline(istr, line);
-	    }
+	  {
+	    istr >> maxval;
+	    if (istr.get() != '\n')
+	      goto err;
+	  }
 	  return true;
 
 	err:
 	  if (! test)
-	    {
-	      std::cerr << "error: badly formed header!";
-	      abort();
-	    }
+	  {
+	    std::cerr << "error: badly formed header!";
+	    abort();
+	  }
 	  return false;
 	}
 
 	void read_header(char ascii, char raw,
-			     std::istream& istr,
-			     char& type,
-			     int& nrows, int& ncols)
+			 std::ifstream& istr,
+			 char& type,
+			 int& nrows, int& ncols,
+			 unsigned int& maxval)
 	{
-	  read_header(istr, type, nrows, ncols);
+	  read_header(istr, type, nrows, ncols, maxval);
 	  if (! (type == ascii || type == raw))
-	    {
-	      std::cerr << "error: bad pnm type; "
-			<< "expected P" << ascii
-			<< " or P" << raw
-			<< ", get P" << type << "!";
-	      abort();
-	    }
+	  {
+	    std::cerr << "error: bad pnm type; "
+		      << "expected P" << ascii
+		      << " or P" << raw
+		      << ", get P" << type << "!";
+	    abort();
+	  }
+	}
+
+	void read_header(char ascii, char raw,
+			 std::ifstream& istr,
+			 char& type,
+			 int& nrows, int& ncols)
+	{
+	  unsigned int maxval;
+	  read_header(ascii, raw, istr, type,
+		      nrows, ncols, maxval);
 	}
 
       } // end of namespace mln::io::internal::pnm

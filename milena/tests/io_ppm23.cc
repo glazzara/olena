@@ -25,53 +25,86 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/fits_load.cc
+/*! \file tests/pbm_load.cc
  *
- * \brief Test on mln::io::fits::load.
+ * \brief Test on mln::io::pbm::load for 23bits ppm
  */
 
 #include <mln/core/image2d_b.hh>
+#include <mln/core/win/rectangle2d.hh>
+
+#include <mln/value/rgb8.hh>
+
+#include <mln/io/ppm/load.hh>
+#include <mln/io/ppm/save.hh>
 
 #include <mln/level/compare.hh>
-#include <mln/debug/println.hh>
 
-#include <mln/io/fits/load.hh>
-#include <mln/io/pfm/save.hh>
-#include <mln/io/pfm/load.hh>
+
+using namespace mln;
+
+typedef value::rgb<23> rgb23;
+
+struct to23bits : mln::Function_v2v<to23bits>
+{
+
+  typedef rgb23 result;
+  result operator()(value::rgb8 v) const
+  {
+    result ret(v.red().to_enc() * 256,
+	       v.green().to_enc() * 256,
+	       v.blue().to_enc() * 256);
+    return ret;
+  }
+};
+
+struct to8bits : mln::Function_v2v<to8bits>
+{
+
+  typedef value::rgb8 result;
+  result operator()(rgb23 v) const
+  {
+    result ret(v.red().to_enc() / 256,
+	       v.green().to_enc() / 256,
+	       v.blue().to_enc() / 256);
+    return ret;
+  }
+};
 
 int main()
 {
   using namespace mln;
-  {
-    image2d_b<float>
-      fits_in = io::fits::load("../../img/test.fits");
+  using value::rgb8;
 
-    debug::println(fits_in);
+  typedef image2d_b<rgb8> I;
 
-    io::pfm::save(fits_in, "out.pfm");
 
-    image2d_b<float>
-      pfm = io::pfm::load("out.pfm");
+  // load a 8bits image A
+  image2d_b<rgb8>
+    a = io::ppm::load<rgb8>("../img/lena.ppm");
+  image2d_b<rgb23> b(a.domain());
 
-    io::pfm::save(fits_in, "out2.pfm");
+  image2d_b<rgb8>::fwd_piter  p(b.domain());
 
-    image2d_b<float>
-      pfm2 = io::pfm::load("out2.pfm");
+  // save it as a 23bits ppm image B
+  to23bits f;
+  for_all(p)
+    b(p) = f(a(p));
+  io::ppm::save(b, "out23.ppm");
 
-    image2d_b<float>::fwd_piter  p(fits_in.domain());
-    for_all(p)
-      if (fits_in(p) != pfm(p))
-	std::cout << "at " << p
-		  << " ref :" << fits_in(p)
-		  << " pfm2 : " << pfm(p) << std::endl;
+  // reload B into C
+  image2d_b<rgb23>
+    c = io::ppm::load<rgb23>("out23.ppm");
+  image2d_b<rgb8> d(a.domain());
 
-    mln_assertion(fits_in == pfm2);
 
-    //   }
-    //   {
-    //     image2d_b<int_u8>
-    //       lena = io::fits::load<int_u8>("../img/lena.fits");
+  // save C as a 8bits ppm image D
+  to8bits g;
+  for_all(p)
+    d(p) = g(c(p));
+  io::ppm::save(d, "out8.ppm");
 
-    //     io::fits::save(lena, "out.fits");
-  }
+  // D should equals A
+  mln_assertion(d == a);
+
 }

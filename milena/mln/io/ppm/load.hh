@@ -57,6 +57,13 @@ namespace mln
 	return load< value::rgb8 >(filename);
       }
 
+      template <typename I>
+      void load(Image<I>& ima,
+		const std::string& filename)
+      {
+	io::internal::pnm::load<I>(PPM, ima, filename);
+      }
+
     } // end of namespace mln::io::ppm
 
   } // end of namespace mln::io

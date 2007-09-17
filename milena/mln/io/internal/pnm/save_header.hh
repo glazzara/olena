@@ -32,6 +32,8 @@
 # include <iostream>
 # include <fstream>
 
+# include <mln/value/rgb.hh>
+
 namespace mln
 {
 
@@ -46,29 +48,37 @@ namespace mln
       namespace pnm
       {
 
+	template <typename V>
+	void save_max_val(V&, std::ofstream& file)
+	{
+	  if (mln_max(V) > 1)
+	    file << mln_max(V) << std::endl;
+	}
+
+	template <unsigned int n>
+	void save_max_val(value::rgb<n>&, std::ofstream& file)
+	{
+	  typedef typename value::rgb<n>::enc E;
+	  file << mln_max(E) << std::endl;
+	}
+
 	template <typename I>
 	void save_header(const char type,
 			 const I& ima, const std::string& filename,
 			 std::ofstream& file)
 	{
 	  if (! file)
-	    {
-	      std::cerr << "error: cannot open file '" << filename
-			<< "'!";
-	      abort();
-	    }
+	  {
+	    std::cerr << "error: cannot open file '" << filename
+		      << "'!";
+	    abort();
+	  }
 	  file << "P" << type << std::endl;
 	  file << "# milena" << std::endl;
 	  file << geom::ncols(ima) << ' ' << geom::nrows(ima) << std::endl;
-	}
 
-	template <typename I>
-	void save_header(const char type, const int maxval,
-			 const I& ima, const std::string& filename,
-			 std::ofstream& file)
-	{
-	  save_header(type, ima, filename, file);
-	  file << maxval << std::endl;
+	  mln_value(I) i;
+	  save_max_val(i, file);
 	}
 
       } // end of namespace mln::io::internal::pnm
