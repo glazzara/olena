@@ -170,7 +170,7 @@ namespace mln
 	// preparing output data
 	std::vector<unsigned> loc(vset.nvalues());
 	loc[n-1] = 0;
-	for (unsigned i = n - 2; i != 0; --i) 
+	for (int i = n - 2; i >= 0; --i) 
 	  loc[i] = loc[i+1] + h[i+1];
 
 	// computing output data

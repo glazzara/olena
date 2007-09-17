@@ -1,3 +1,13 @@
+2007-09-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Bug fix.
+
+	* tests/linear_gaussian.cc: Remove useless include.
+	* mln/convert/to_image.hh (to_image): Fix bug in histogram
+	version.
+	* mln/core/image1d_b.hh (point_at_offset): Fix bug.
+	* mln/level/sort_points.hh (sort_points_decreasing_): Fix bug.
+
 2007-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	add some comments

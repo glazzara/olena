@@ -330,6 +330,10 @@ namespace mln
   bool
   image1d_b<T>::owns_(const point1d& p) const
   {
+    if (! vb_.has(p))
+      {
+	std::cout << " p = " <<  p << std::endl;
+      }
     mln_precondition(this->has_data());
     return vb_.has(p);
   }
@@ -418,7 +422,7 @@ namespace mln
   image1d_b<T>::point_at_offset(unsigned o) const
   {
     mln_precondition(o < ncells());
-    point1d p = make::point1d(o);
+    point1d p = make::point1d(o + vb_.min_ind());
     mln_postcondition(& this->operator()(p) == this->buffer_ + o);
     return p;
   }

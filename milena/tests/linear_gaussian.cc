@@ -38,7 +38,6 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/level/transform.hh>
-#include <mln/level/saturate.hh>
 #include <mln/math/round.hh>
 
 #include <mln/linear/gaussian.hh>
