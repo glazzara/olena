@@ -1,3 +1,12 @@
+2007-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	move the io_fits test
+		from:
+	* sandbox/garrigues/io_fits.cc:
+		to:
+	* tests/io_fits.cc: Remove.
+		because it can't compile without the cfitsio library
+
 2007-09-14  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	labeling and level for fast image in sandboy but need to fix.
