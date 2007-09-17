@@ -1,5 +1,13 @@
 2007-09-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix duplicate for border in sandbox.
+
+	* border_duplicate.cc: Test for duplicate border.
+	* border_duplicate.hh: Fix duplicate border.
+	* border_fill.hh: .
+
+2007-09-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix fill for border in sandbox.
 
 	* border_fill.cc: Test file of fill border with println_with_border.

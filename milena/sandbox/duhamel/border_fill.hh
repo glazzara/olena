@@ -80,8 +80,6 @@ namespace mln
       std::size_t nbrows = geom::max_row(ima) - geom::min_row(ima);
       std::size_t nbcols = geom::max_col(ima) - geom::min_col(ima);
 
-      mln_value(I) tmp;
-      tmp = v;
       point2d p = ima.bbox ().pmin ();
 
       // FIXME : REMOVE THIS LOOP BY MEMSET
