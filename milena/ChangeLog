@@ -1,3 +1,10 @@
+2007-09-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add mirroring for borders.
+
+	* border_mirror.cc: Test file for border mirroring.
+	* border_mirror.hh: Fix border mirroring.
+
 2007-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Improve pnm support.
