@@ -34,6 +34,8 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/inplace.hh>
+# include <mln/level/memcpy_.hh>
 
 
 namespace mln
@@ -64,16 +66,46 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename J>
-    void paste(const Image<I>& data_, Image<J>& destination_)
+    namespace impl
     {
-      const I& data  = exact(data_);
-      J& destination = exact(destination_);
-      mln_precondition(data.domain() <= destination.domain());
 
-      mln_piter(I) p(data.domain());
-      for_all(p)
-	destination(p) = data(p);
+      template <typename I, typename J>
+      void paste_(const Image<I>& data_, Image<J>& destination_)
+      {
+	const I& data  = exact(data_);
+	J& destination = exact(destination_);
+
+	mln_piter(I) p(data.domain());
+	for_all(p)
+	  destination(p) = data(p);
+      }
+
+      template <typename I, typename J>
+      void paste_(const Fast_Image<I>& data_, Fast_Image<J>& destination_)
+      {
+	const I& data  = exact(data_);
+	J& destination = exact(destination_);
+
+	typedef mln_point(I) P;
+	std::size_t n = data.bbox().len(P::dim - 1);
+
+	typename I::line_piter p(data.domain());
+	for_all(p)
+	  memcpy_(inplace(make::pixel(destination, p)),
+		  make::pixel(data, p),
+		  n);
+      }
+
+    } // end of namespace mln::level::impl
+
+
+    // Facade.
+
+    template <typename I, typename J>
+    void paste(const Image<I>& data, Image<J>& destination)
+    {
+      mln_precondition(exact(data).domain() <= exact(destination).domain());
+      impl::paste_(exact(data), exact(destination));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

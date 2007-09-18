@@ -1,5 +1,16 @@
 2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add level::paste for fast images and fix line_piter.
+
+	* tests/line_piter.cc: Fix doc.
+	(main): Start at non-zero point.
+	* mln/core/line_piter.hh (operator[]): Fix.
+	(next_): Fix.
+	* mln/level/paste.hh: Specialize for Fast_Image.
+	* tests/level_paste.cc: New.
+
+2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add mesh and factor some code.
 
 	New files.

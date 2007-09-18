@@ -118,7 +118,7 @@ namespace mln
   mln_coord(P)
   line_piter_<P>::operator[](unsigned i) const
   {
-    mln_invariant(p_[0] == 0);
+    mln_invariant(p_[dim - 1] == b_.pmin()[dim - 1]);
     assert(i < dim);
     return p_[i];
   }
@@ -148,7 +148,7 @@ namespace mln
   void
   line_piter_<P>::next_()
   {
-    for (int c = 1; c < dim; ++c)
+    for (int c = dim - 2; c >= 0; --c)
     {
       if (p_[c] != b_.pmax()[c])
       {
