@@ -35,7 +35,7 @@
 
 # include <vector>
 
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/internal/point_set_base.hh>
 # include <mln/accu/bbox.hh>
 
 
@@ -57,18 +57,9 @@ namespace mln
    * \todo Make it work with P being a Point_Site.
    */
   template <typename P>
-  class vec_p : public Point_Set< vec_p<P> >
+  class vec_p : public internal::point_set_base_< P, vec_p<P> >
   {
   public:
-
-    /// Point associated type.
-    typedef P point;
-
-    /// Dpoint associated type.
-    typedef mln_dpoint(P) dpoint;
-
-    /// Point_Site associated type.
-    typedef P psite;
 
     /// Forward Point_Iterator associated type.
     typedef vec_p_fwd_piter_<P> fwd_piter;

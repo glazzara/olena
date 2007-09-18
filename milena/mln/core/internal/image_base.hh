@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/grids.hh>
 
 
 namespace mln
@@ -82,6 +83,8 @@ namespace mln
 
     /*! \brief A base class for images.
      *
+     * Parameter \p S is a point set type.
+     *
      * \internal
      */
     template <typename S, typename E>
@@ -93,12 +96,15 @@ namespace mln
       /// Point_Set associated type.
       typedef S pset;
 
+
+      /// Mesh associated type.
+      typedef mln_mesh(S) mesh;
+
       /// Point_Site associated type.
       typedef mln_psite(S) psite;
 
       /// Point associated type.
       typedef mln_point(S) point;
-
 
       /// Dpoint associated type.
       typedef mln_dpoint(point) dpoint;

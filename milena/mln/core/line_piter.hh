@@ -33,7 +33,7 @@
  * \brief Definition of iterators on points by lines.
  */
 
-# include <mln/core/concept/point_iterator.hh>
+# include <mln/core/internal/point_iterator_base.hh>
 
 
 namespace mln
@@ -44,24 +44,9 @@ namespace mln
    * The parameter \c P is the type of points.
    */
   template <typename P>
-  class line_piter_ : public Point_Iterator< line_piter_<P> >
+  class line_piter_ : public internal::point_iterator_base_< P, line_piter_<P> >
   {
   public:
-
-    /// Space dimension.
-    enum { dim = P::dim };
-
-    /// Point_Site associated type.
-    typedef P psite;
-
-    /// Point associated type.
-    typedef P point;
-
-    /// Dpoint associated type.
-    typedef mln_dpoint(P) dpoint;
-
-    /// Coordinate associated type.
-    typedef mln_coord(P) coord;
 
     /*! \brief Constructor.
      *
@@ -76,7 +61,7 @@ namespace mln
     const P* pointer_() const;
 
     /// Give the i-th coordinate.
-    coord operator[](unsigned i) const;
+    mln_coord(P) operator[](unsigned i) const;
 
     /// Test the iterator validity.
     bool is_valid() const;

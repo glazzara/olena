@@ -33,7 +33,7 @@
  * \brief Definition of mln::dpoints_fwd_piter and mln::dpoints_bkd_piter.
  */
 
-# include <mln/core/concept/point_iterator.hh>
+# include <mln/core/internal/point_iterator_base.hh>
 # include <mln/core/concept/generalized_point.hh>
 
 
@@ -46,24 +46,9 @@ namespace mln
    * The parameter \c D is the type of delta-points.
    */
   template <typename D>
-  class dpoints_fwd_piter : public Point_Iterator< dpoints_fwd_piter<D> >
+  class dpoints_fwd_piter : public internal::point_iterator_base_< mln_point(D), dpoints_fwd_piter<D> >
   {
   public:
-
-    /// Space dimension.
-    enum { dim = D::dim };
-
-    /// Dpoint associated type.
-    typedef D           dpoint;
-
-    /// Point associated type.
-    typedef mln_point(D) point;
-
-    /// Point_Site associated type.
-    typedef point        psite;
-
-    /// Coordinate associated type.
-    typedef mln_coord(D) coord;
 
     /*! \brief Constructor.
      *
@@ -78,7 +63,7 @@ namespace mln
     operator mln_point(D) () const;
 
     /// Address of the point this iterator designates.
-    const point* pointer_() const;
+    const mln_point(D)* pointer_() const;
 
     /// Test the iterator validity.
     bool is_valid() const;
@@ -93,10 +78,10 @@ namespace mln
     void next_();
 
     /// Give the i-th coordinate.
-    coord operator[](unsigned i) const;
+    mln_coord(D) operator[](unsigned i) const;
 
     /// The point around which this iterator moves.
-    const point& center_point() const;
+    const mln_point(D)& center_point() const;
 
     /// Force this iterator to update its location to take into
     /// account that its center point may have moved. 
@@ -105,10 +90,10 @@ namespace mln
   protected:
 
     const std::vector<D>& dps_;
-    const point& p_ref_; // reference point (or "center point")
+    const mln_point(D)& p_ref_; // reference point (or "center point")
 
     unsigned i_;
-    point p_; // location of this iterator; p_ makes this iterator be
+    mln_point(D) p_; // location of this iterator; p_ makes this iterator be
 	      // itself a potential center point (Cf. the pointer_() method).
   };
 

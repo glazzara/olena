@@ -33,7 +33,7 @@
  * \brief Definition of iterators on points of boxes.
  */
 
-# include <mln/core/concept/point_iterator.hh>
+# include <mln/core/internal/point_iterator_base.hh>
 # include <mln/core/concept/box.hh>
 
 
@@ -47,24 +47,9 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_fwd_piter_ : public Point_Iterator< box_fwd_piter_<P> >
+  class box_fwd_piter_ : public internal::point_iterator_base_< P, box_fwd_piter_<P> >
   {
   public:
-
-    /// Space dimension.
-    enum { dim = P::dim };
-
-    /// Point_Site associated type.
-    typedef P psite;
-
-    /// Point associated type.
-    typedef P point;
-
-    /// Dpoint associated type.
-    typedef mln_dpoint(P) dpoint;
-
-    /// Coordinate associated type.
-    typedef mln_coord(P) coord;
 
     /*! \brief Constructor.
      *
@@ -79,7 +64,7 @@ namespace mln
     const P* pointer_() const;
 
     /// Give the i-th coordinate.
-    coord operator[](unsigned i) const;
+    mln_coord(P) operator[](unsigned i) const;
 
     /// Test the iterator validity.
     bool is_valid() const;
@@ -107,24 +92,9 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_bkd_piter_ : public Point_Iterator< box_bkd_piter_<P> >
+  class box_bkd_piter_ : public internal::point_iterator_base_< P, box_bkd_piter_<P> >
   {
   public:
-
-    /// Space dimension.
-    enum { dim = P::dim };
-
-    /// Point_Site associated type.
-    typedef P psite;
-
-    /// Point associated type.
-    typedef P point;
-
-    /// Dpoint associated type.
-    typedef mln_dpoint(P) dpoint;
-
-    /// Coordinate associated type.
-    typedef mln_coord(P) coord;
 
     /*! \brief Constructor.
      *
@@ -139,7 +109,7 @@ namespace mln
     const P* pointer_() const;
 
     /// Give the i-th coordinate.
-    coord operator[](unsigned i) const;
+    mln_coord(P) operator[](unsigned i) const;
 
     /// Test the iterator validity.
     bool is_valid() const;

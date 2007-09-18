@@ -33,7 +33,7 @@
  * \brief Definition of iterators on points of boxes.
  */
 
-# include <mln/core/concept/point_iterator.hh>
+# include <mln/core/internal/point_iterator_base.hh>
 # include <mln/core/concept/box.hh>
 
 
@@ -49,38 +49,21 @@ namespace mln
      * parameter E is the exact type.
      */
     template <typename Pi, typename E>
-    class piter_adaptor_ : public Point_Iterator<E>
+    class piter_adaptor_ : public internal::point_iterator_base_< mln_psite(Pi), E >
     {
     public:
 
-      /// Space dimension.
-      enum { dim = Pi::dim };
-
-      /// Point_Site associated type.
-      typedef mln_psite(Pi) psite;
-
-      /// Point associated type.
-      typedef mln_point(Pi) point;
-
-      /// Dpoint associated type.
-      typedef mln_dpoint(Pi) dpoint;
-
-      /// Coordinate associated type.
-      typedef mln_coord(Pi) coord;
-
-
       /// Constructor from a point iterator \p piter.
       piter_adaptor_(const Pi& piter);
-
 
       /// Convertion to point.
       operator mln_point(Pi) () const;
 
       /// Address of the point.
-      const point* pointer_() const;
+      const mln_point(Pi)* pointer_() const;
 
       /// Give the i-th coordinate.
-      coord operator[](unsigned i) const;
+      mln_coord(Pi) operator[](unsigned i) const;
 
       /// Test the iterator validity.
       bool is_valid() const;
@@ -103,7 +86,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
 
     template <typename Pi, typename E>
     piter_adaptor_<Pi,E>::piter_adaptor_(const Pi& piter)

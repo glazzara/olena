@@ -33,6 +33,7 @@
  */
 
 # include <mln/core/concept/object.hh>
+# include <mln/core/grids.hh>
 
 
 namespace mln

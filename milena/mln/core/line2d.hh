@@ -35,7 +35,7 @@
 
 # include <vector>
 
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/internal/point_set_base.hh>
 # include <mln/core/vec_p_piter.hh>
 # include <mln/core/box2d.hh>
 # include <mln/math/all.hh>
@@ -47,15 +47,9 @@ namespace mln
 
   /*! \brief 2D line point set class.
    */
-  class line2d : public Point_Set< line2d >
+  class line2d : public internal::point_set_base_< point2d, line2d >
   {
   public:
-
-    /// Point associated type.
-    typedef point2d point;
-
-    /// Point_Site associated type.
-    typedef point2d psite;
 
     /// Forward Point_Iterator associated type.
     typedef vec_p_fwd_piter_<point2d> fwd_piter;

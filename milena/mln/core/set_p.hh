@@ -33,7 +33,7 @@
  * \brief Definition of a point set class based on std::set.
  */
 
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/set_of.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/core/vec_p.hh>
@@ -50,18 +50,12 @@ namespace mln
    * \todo Test if \p P being a Point_Site is ok.
    */
   template <typename P>
-  class set_p : public Point_Set< set_p<P> >,
+  class set_p : public internal::point_set_base_< P, set_p<P> >,
 		private internal::set_of_<P>
   {
     typedef internal::set_of_<P> super_;
 
   public:
-
-    /// Point associated type.
-    typedef mln_point(P) point;
-
-    /// Point_Site associated type.
-    typedef P psite;
 
     /// Forward Point_Iterator associated type.
     typedef vec_p_fwd_piter_<P> fwd_piter;
@@ -91,7 +85,7 @@ namespace mln
     void clear();
 
     /// Give the exact bounding box.
-    const box_<point>& bbox() const;
+    const box_<mln_point(P)>& bbox() const;
 
   protected:
 

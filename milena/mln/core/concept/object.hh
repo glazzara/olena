@@ -39,6 +39,7 @@
 # include <mln/core/macros.hh>
 # include <mln/core/contract.hh>
 # include <mln/core/internal/fixme.hh>
+# include <mln/metal/is_a.hh>
 
 
 /*! \namespace mln

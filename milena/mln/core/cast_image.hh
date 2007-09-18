@@ -45,13 +45,14 @@ namespace mln
    *
    */
   template <typename T, typename I>
-  struct cast_image_ : public mln::internal::image_base_< mln_pset(I), cast_image_<T,I> >
+  class cast_image_ : public mln::internal::image_base_< mln_pset(I), cast_image_<T,I> >
   {
-    /// Point_Site associated type.
-    typedef mln_psite(I) psite;
+    typedef cast_image_<T,I> self_;
+    typedef mln::internal::image_base_<mln_pset(I), self_> super_;
+  public:
 
-    /// Point_Set associated type.
-    typedef mln_pset(I) pset;
+    typedef mln_psite(super_) psite;
+
 
     /// Value associated type.
     typedef T value;

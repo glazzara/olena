@@ -54,44 +54,40 @@ namespace mln
   struct box_ : public Box< box_<P> >,
 		public internal::box_impl_< P::dim, mln_coord(P), box_<P> >
   {
-    /*! \brief Point_Site associated type.
-     */
+    /// Mesh associated type.
+    typedef mln_mesh(P) mesh;
+
+    /// Point_Site associated type.
     typedef P psite;
 
-    /*! \brief Point associated type.
-     */
+    /// Point associated type.
     typedef P point;
+
+    /// Dpoint associated type.
+    typedef mln_dpoint(P) dpoint;
     
-    /*! \brief Forward Point_Iterator associated type.
-     */
+    /// Forward Point_Iterator associated type.
     typedef box_fwd_piter_<P> fwd_piter;
 
-    /*! \brief Backward Point_Iterator associated type.
-     */
+    /// Backward Point_Iterator associated type.
     typedef box_bkd_piter_<P> bkd_piter;
 
-    /*! \brief Minimum point.
-     */
+    /// Minimum point.
     P  pmin() const;
 
-    /*! \brief Reference to the minimum point.
-     */
+    /// Reference to the minimum point.
     P& pmin();
 
-    /*! \brief Maximum point.
-     */
+    /// Maximum point.
     P  pmax() const;
 
-    /*! \brief Reference to the maximum point.
-     */
+    /// Reference to the maximum point.
     P& pmax();
 
-    /*! \brief Constructor without argument.
-     */
+    /// Constructor without argument.
     box_();
 
-    /*! \brief Constructor of a box going from \p pmin to \p pmax.
-     */
+    /// Constructor of a box going from \p pmin to \p pmax.
     box_(const point& pmin, const point& pmax);
 
     /*! \brief Test if \p p belongs to the box. 

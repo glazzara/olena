@@ -34,8 +34,8 @@
  * (for internal use only).
  */
 
-# include <mln/core/concept/point_set.hh>
-# include <mln/core/concept/point_iterator.hh>
+# include <mln/core/internal/point_set_base.hh>
+# include <mln/core/internal/point_iterator_base.hh>
 # include <mln/core/internal/run_psite.hh>
 # include <mln/accu/bbox.hh>
 
@@ -59,19 +59,18 @@ namespace mln
      * Parameter \c P is the type of the image point.
      */
     template <typename P>
-    class run_pset_ : public Point_Set<run_pset_<P> >
+    class run_pset_ : public internal::point_set_base_< run_psite<P>, run_pset_<P> >
     {
     public:
-      typedef P point;
-      typedef internal::run_psite<point> psite;
-      typedef std::vector<std::pair<point, unsigned> > std_container;
+
+      typedef std::vector<std::pair<P, unsigned> > std_container;
       typedef run_fwd_piter_<P> fwd_piter;
       typedef run_bkd_piter_<P> bkd_piter;
 
 
       run_pset_();
       /// Test is \p p belongs to this point set.
-      bool has(const psite& p) const;
+      bool has(const run_psite<P>& p) const;
       /// Give the exact bounding box.
       const box_<P>& bbox() const;
       /// Give the number of points.
@@ -104,7 +103,7 @@ namespace mln
 
     template <typename P>
     bool
-    run_pset_<P>::has(const typename run_pset_<P>::psite& p) const
+    run_pset_<P>::has(const run_psite<P>& p) const
     {
       for (unsigned i = 0; i < con_.size(); ++i)
       {
@@ -132,7 +131,7 @@ namespace mln
     void
     run_pset_<P>::insert(const P& p, unsigned len)
     {
-      point run_pend;
+      P run_pend;
       typename std_container::value_type elt (p, len);
       con_.push_back(elt);
 
@@ -176,31 +175,25 @@ namespace mln
      * Parameter \c E is the exact type of the iterator
      */
     template <typename P, typename E>
-    class run_piter_ : public Point_Iterator<E>
+    class run_piter_ : public internal::point_iterator_base_< internal::run_psite<P>, E >
     {
     public:
       typedef typename run_pset_<P>::std_container std_container;
-      typedef P point;
-      typedef mln_dpoint(P) dpoint;
-      typedef mln_coord(P) coord;
-      typedef internal::run_psite<P> psite;
-
-      enum { dim = P::dim };
 
       /// Convertion into a point-site.
-      operator psite () const;
+      operator internal::run_psite<P> () const;
       /// Convertion into a point.
       operator P () const;
       /// Return a pointer of the current point.
       const P* pointer_() const;
       /// Access to the current point coordinates.
-      coord operator[](unsigned i) const;
+      mln_coord(P) operator[](unsigned i) const;
 
     protected:
       /// Current point.
       P p_;
       /// Current site.
-      psite site_;
+      internal::run_psite<P> site_;
       /// Point set container.
       const std_container& con_;
 
@@ -237,7 +230,7 @@ namespace mln
     }
 
     template <typename P, typename E>
-    typename run_piter_<P, E>::coord
+    mln_coord(P)
     run_piter_<P, E>::operator[] (unsigned i) const
     {
       mln_precondition(exact(this)->is_valid());

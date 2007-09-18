@@ -35,6 +35,7 @@
 
 # include <mln/core/concept/iterator.hh>
 # include <mln/core/concept/generalized_point.hh>
+# include <mln/core/concept/point_site.hh>
 
 
 namespace mln
@@ -69,6 +70,8 @@ namespace mln
   Point_Iterator<E>::Point_Iterator()
   {
     typedef mln_psite(E) psite;
+    mln::metal::is_a<psite, Point_Site>::check();
+
     psite (E::*m)() const = & E::operator psite;
     m = 0;
   }

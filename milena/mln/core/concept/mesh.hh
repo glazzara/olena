@@ -25,32 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_POINT3D_HH
-# define MLN_CORE_POINT3D_HH
+#ifndef MLN_CORE_CONCEPT_MESH_HH
+# define MLN_CORE_CONCEPT_MESH_HH
 
-/*! \file mln/core/point3d.hh
- *
- * \brief Definition of the mln::point3d alias and of its construction
- * routine.
+/*! \file mln/core/concept/mesh.hh
+ * \brief Definition of the concept of mln::Mesh.
  */
 
-# include <mln/core/point.hh>
+# include <mln/core/concept/object.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a point defined on the 3D square grid with
-   * integer coordinates.
+  /*! \brief Base class for implementation classes of meshes.
+   *
+   * \see mln::doc::Mesh for a complete documentation of this class
+   * contents.
    */
-  typedef point_<grid::cube, int> point3d;
+  template <typename E>
+  struct Mesh : public Object<E>
+  {
+    /*
+      typedef regular;
+      typedef aligned;
+      enum { dim }; // FIXME: of the underlying space (?)
+    */
 
+  protected:
+    Mesh();
+  };
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+  template <typename E>
+  Mesh<E>::Mesh()
+  {
+    // FIXME: Check for typedefs.
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
-# include <mln/make/point3d.hh>
-# include <mln/core/dpoint3d.hh>
-
-
-#endif // ! MLN_CORE_POINT3D_HH
+#endif // ! MLN_CORE_CONCEPT_MESH_HH

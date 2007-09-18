@@ -25,32 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_POINT3D_HH
-# define MLN_CORE_POINT3D_HH
+#ifndef MLN_CORE_CONCEPT_REGULAR_GRID_HH
+# define MLN_CORE_CONCEPT_REGULAR_GRID_HH
 
-/*! \file mln/core/point3d.hh
- *
- * \brief Definition of the mln::point3d alias and of its construction
- * routine.
+/*! \file mln/core/concept/regular_grid.hh
+ * \brief Definition of the concept of mln::Regular_Grid.
  */
 
-# include <mln/core/point.hh>
+# include <mln/core/concept/mesh.hh>
+# include <mln/metal/bool.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a point defined on the 3D square grid with
-   * integer coordinates.
-   */
-  typedef point_<grid::cube, int> point3d;
+  /// Base class for implementation classes of regular grids.
+  template <typename E>
+  struct Regular_Grid : public Mesh<E>
+  {
+    typedef metal::true_ regular;
+  protected:
+    Regular_Grid();
+  };
 
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+  template <typename E>
+  Regular_Grid<E>::Regular_Grid()
+  {
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
-# include <mln/make/point3d.hh>
-# include <mln/core/dpoint3d.hh>
-
-
-#endif // ! MLN_CORE_POINT3D_HH
+#endif // ! MLN_CORE_CONCEPT_REGULAR_GRID_HH

@@ -42,7 +42,7 @@ namespace mln
 {
 
   // fwd decl
-  template <unsigned n, typename C> struct point_;
+  template <typename M, typename C> struct point_;
 
 
   /*! \brief Generic delta-point class.
@@ -50,22 +50,23 @@ namespace mln
    * Parameters are \c n the dimension of the space and \c C the
    * coordinate type in this space.
    */
-  template <unsigned n, typename C>
-  struct dpoint_ : public Dpoint< dpoint_<n,C> >,
-		   public internal::mutable_coord_impl_< n, C, dpoint_<n,C> >
+  template <typename M, typename C>
+  struct dpoint_ : public Dpoint< dpoint_<M,C> >,
+		   public internal::mutable_coord_impl_< M::dim, C, dpoint_<M,C> >
   {
     /*! \var dim
      * \brief Dimension of the space.
      * \invariant dim > 0 
      */
-    enum { dim = n };
+    enum { dim = M::dim };
 
-    /*! \brief Point associated type.
-     */
-    typedef point_<n,C> point;
+    /// Mesh associated type.
+    typedef M mesh;
 
-    /*! \brief Coordinate associated type.
-     */
+    /// Point associated type.
+    typedef point_<M,C> point;
+
+    /// Coordinate associated type.
     typedef C coord;
 
     /*! \brief Read-only access to the \p i-th coordinate value.
@@ -80,74 +81,71 @@ namespace mln
      */
     C& operator[](unsigned i);
 
-    /*! \brief Constructor without argument.
-     */
+    /// Constructor without argument.
     dpoint_();
 
-    /*! \brief Constructor; coordinates are set by function \p f.
-     */
+    /// Constructor; coordinates are set by function \p f.
     template <typename F>
     dpoint_(const Function_i2v<F>& f);
 
-    /*! \brief Set all coordinates to the value \p c.
-     */
+    /// Set all coordinates to the value \p c.
     void set_all(C c);
 
     /// Null delta-point (all coordinates are 0).
-    static const dpoint_<n,C> zero;
+    static const dpoint_<M,C> zero;
 
     const C* coords_() const { return coord_; }
 
     /// Type of the array of coordinates.
-    typedef const C (&vec_t)[n];
+    typedef const C (&vec_t)[dim];
 
     /// Hook to coordinates.
     vec_t to_vec() const { return coord_; }
 
   protected:
-    C coord_[n];
+    C coord_[dim];
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <unsigned n, typename C>
-  C dpoint_<n,C>::operator[](unsigned i) const
+  template <typename M, typename C>
+  C dpoint_<M,C>::operator[](unsigned i) const
   {
-    assert(i < n);
+    assert(i < dim);
     return coord_[i];
   }
 
-  template <unsigned n, typename C>
-  C& dpoint_<n,C>::operator[](unsigned i)
+  template <typename M, typename C>
+  C& dpoint_<M,C>::operator[](unsigned i)
   {
-    assert(i < n);
+    assert(i < dim);
     return coord_[i];
   }
 
-  template <unsigned n, typename C>
-  dpoint_<n,C>::dpoint_()
+  template <typename M, typename C>
+  dpoint_<M,C>::dpoint_()
   {
   }
 
-  template <unsigned n, typename C>
+  template <typename M, typename C>
   template <typename F>
-  dpoint_<n,C>::dpoint_(const Function_i2v<F>& f_)
+  dpoint_<M,C>::dpoint_(const Function_i2v<F>& f_)
   {
     const F& f = exact(f_);
-    for (unsigned i = 0; i < n; ++i)
+    for (unsigned i = 0; i < dim; ++i)
       coord_[i] = f(i);
   }
 
-  template <unsigned n, typename C>
-  void dpoint_<n,C>::set_all(C c)
+  template <typename M, typename C>
+  void dpoint_<M,C>::set_all(C c)
   {
-    for (unsigned i = 0; i < n; ++i)
+    for (unsigned i = 0; i < dim; ++i)
       coord_[i] = c;
   }
 
-  template <unsigned n, typename C>
-  const dpoint_<n,C> dpoint_<n,C>::zero = all(0);
+  template <typename M, typename C>
+  const dpoint_<M,C> dpoint_<M,C>::zero = all(0);
 
 # endif // ! MLN_INCLUDE_ONLY
   

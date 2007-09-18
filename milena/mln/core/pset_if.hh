@@ -33,7 +33,7 @@
  * \brief Definition of the restriction of a point set w.r.t. a predicate.
  */
 
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/internal/point_set_base.hh>
 # include <mln/core/concept/function.hh>
 
 
@@ -65,15 +65,14 @@ namespace mln
    * from point to Boolean.
    */
   template <typename S, typename F>
-  struct pset_if : public Point_Set< pset_if<S,F> >
+  class pset_if : public internal::point_set_base_< mln_psite(S), pset_if<S,F> >
   {
-    /// Point_Site associated type.
-    typedef mln_psite(S) psite;
+    typedef pset_if<S,F> self_;
+    typedef internal::point_set_base_<mln_psite(S), self_> super_;
+  public:
 
-    /// Point associated type.
-    typedef mln_point(S) point;
+    typedef mln_psite(super_) psite;
 
-    
     /// Forward Point_Iterator associated type.
     typedef pset_if_fwd_piter_<S,F> fwd_piter;
 
@@ -89,7 +88,7 @@ namespace mln
     bool has(const psite& p) const;
 
     /// Give a bounding box of the subset. 
-    const box_<point>& bbox() const;
+    const box_<mln_point(S)>& bbox() const;
 
     /// Give the number of points of the subset.
     std::size_t npoints() const;

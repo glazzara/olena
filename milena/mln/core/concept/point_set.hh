@@ -49,6 +49,8 @@ namespace mln
   struct Point_Set : public Object<E>
   {
     /*
+      typedef mesh;
+
       typedef point;
       typedef psite;
 
@@ -125,6 +127,8 @@ namespace mln
   template <typename E>
   Point_Set<E>::Point_Set()
   {
+    typedef mln_mesh(E) mesh;
+
     typedef mln_point(E) point;
     typedef mln_psite(E) psite;
 

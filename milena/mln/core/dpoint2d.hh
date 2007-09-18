@@ -43,7 +43,7 @@ namespace mln
   /*! \brief Type alias for a delta-point defined on the 2D square
    * grid with integer coordinates.
    */
-  typedef dpoint_<2,int> dpoint2d;
+  typedef dpoint_<grid::square, int> dpoint2d;
 
 
 } // end of namespace mln

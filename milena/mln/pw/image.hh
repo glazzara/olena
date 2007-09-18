@@ -62,13 +62,14 @@ namespace mln
      *
      */
     template <typename F, typename S>
-    struct image : public internal::image_base_< S, image<F,S> >
+    class image : public internal::image_base_< S, image<F,S> >
     {
-      /// Point_Site associated type.
-      typedef mln_psite(S) psite;
+      typedef internal::image_base_< S, image<F,S> > super_;
+    public:
 
-      /// Point_Set associated type.
-      typedef S pset;
+      // From super class.
+      typedef mln_psite(super_) psite;
+
 
       /// Value associated type.
       typedef mln_result(F) value;

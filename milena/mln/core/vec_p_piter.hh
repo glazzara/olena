@@ -43,21 +43,8 @@ namespace mln
    *
    */
   template <typename P>
-  struct vec_p_fwd_piter_ : public Point_Iterator< vec_p_fwd_piter_<P> >
+  struct vec_p_fwd_piter_ : public internal::point_iterator_base_< P, vec_p_fwd_piter_<P> >
   {
-    enum { dim = P::dim };
-
-    /// Point_Site associated type.
-    typedef P psite;
-
-    /// Point associated type.
-    typedef P point;
-
-    /// Dpoint associated type.
-    typedef mln_dpoint(P) dpoint;
-
-    /// Coordinate associated type.
-    typedef mln_coord(P) coord;
 
     /// Coordinate associated type.
     template <typename S>
@@ -67,7 +54,7 @@ namespace mln
     const P* pointer_() const;
 
     /// Read-only access to the \p i-th coordinate.
-    coord operator[](unsigned i) const;
+    mln_coord(P) operator[](unsigned i) const;
 
     /// Test if the iterator is valid.
     bool is_valid() const;
@@ -96,21 +83,8 @@ namespace mln
    *
    */
   template <typename P>
-  struct vec_p_bkd_piter_ : public Point_Iterator< vec_p_bkd_piter_<P> >
+  struct vec_p_bkd_piter_ : public internal::point_iterator_base_< P, vec_p_bkd_piter_<P> >
   {
-    enum { dim = P::dim };
-
-    /// Point_Site associated type.
-    typedef P psite;
-
-    /// Point associated type.
-    typedef P point;
-
-    /// Dpoint associated type.
-    typedef mln_dpoint(P) dpoint;
-
-    /// Coordinate associated type.
-    typedef mln_coord(P) coord;
 
     /// Coordinate associated type.
     template <typename S>
@@ -120,7 +94,7 @@ namespace mln
     const P* pointer_() const;
 
     /// Read-only access to the \p i-th coordinate.
-    coord operator[](unsigned i) const;
+    mln_coord(P) operator[](unsigned i) const;
 
     /// Test if the iterator is valid.
     bool is_valid() const;

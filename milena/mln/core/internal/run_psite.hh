@@ -33,6 +33,9 @@
  * \brief Definition of class mln::internal::run_psite_ for internal use only
  */
 
+# include <mln/core/concept/point_site.hh>
+
+
 namespace mln
 {
 
@@ -44,9 +47,16 @@ namespace mln
      * Parameter \c P is the type of the image point.
      */
     template <typename P>
-    class run_psite
+    class run_psite : public Point_Site< run_psite<P> >
     {
     public:
+
+      typedef mln_mesh(P) mesh;
+      enum { dim = P::dim };
+      typedef P point;
+      typedef mln_dpoint(P) dpoint;
+      typedef mln_coord(P) coord;
+
       run_psite();
       run_psite(P point, unsigned index, unsigned pset_pos);
 
@@ -63,6 +73,9 @@ namespace mln
       unsigned index_() const;
       /// Return the position of this psite in the current range.
       unsigned& index_();
+
+      const P* pointer_() const;
+      mln_coord(P) operator[](unsigned i) const;
 
     protected:
       /// Start of the psite range.
@@ -136,6 +149,22 @@ namespace mln
     {
       return range_index_;
     }
+
+    template <typename P>
+    const P*
+    run_psite<P>::pointer_() const
+    {
+      return & point_;
+    }
+
+    template <typename P>
+    mln_coord(P)
+    run_psite<P>::operator[](unsigned i) const
+    {
+      mln_precondition(i < dim);
+      return point_[i];
+    }
+
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace internal

@@ -38,7 +38,7 @@
 # include <algorithm>
 # include <iterator>
 
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/internal/point_set_base.hh>
 # include <mln/core/vec_p_piter.hh>
 # include <mln/accu/bbox.hh>
 
@@ -63,15 +63,9 @@ namespace mln
    * a call to npoints() when this container is multiple.
    */
   template <typename P>
-  class queue_p : public Point_Set< queue_p<P> >
+  class queue_p : public internal::point_set_base_< P, queue_p<P> >
   {
   public:
-
-    /// Point associated type.
-    typedef P point;
-
-    /// Point_Site associated type.
-    typedef P psite;
 
     /// Forward Point_Iterator associated type.
     typedef vec_p_fwd_piter_<P> fwd_piter;

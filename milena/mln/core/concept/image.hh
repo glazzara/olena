@@ -33,7 +33,9 @@
  */
 
 # include <mln/core/concept/point_set.hh>
+# include <mln/core/concept/mesh.hh>
 # include <mln/core/trait/all.hh>
+# include <mln/metal/is_a.hh>
 
 
 namespace mln
@@ -49,6 +51,8 @@ namespace mln
   {
     /*
       // to be provided in concrete image classes:
+
+      typedef mesh;
 
       typedef value;
       typedef rvalue;
@@ -116,6 +120,9 @@ namespace mln
     m2 = 0;
 
     // to be provided in concrete image classes:
+
+    typedef mln_mesh(E) mesh;
+    metal::is_a<mesh, Mesh>::check(); // FIXME: Add other checks.
 
     typedef mln_value(E)  value;
     typedef mln_rvalue(E) rvalue;

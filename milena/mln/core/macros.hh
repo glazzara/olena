@@ -104,6 +104,13 @@
 # define mln_lvalue(T)     typename T::lvalue
 
 
+// m
+
+
+/// Shortcut to access the mesh type associated to T.
+# define mln_mesh(T)     typename T::mesh
+
+
 // p
 
 /// Shortcut to access the type of point iterator (piter) associated to T.

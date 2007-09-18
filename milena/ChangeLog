@@ -1,3 +1,51 @@
+2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add mesh and factor some code.
+
+	New files.
+
+	* mln/core/internal/point_iterator_base.hh: New.
+	* mln/core/internal/point_set_base.hh: New.
+	* mln/core/concept/mesh.hh: New.
+	* mln/core/concept/regular_grid.hh: New.
+	* mln/core/grids.hh: New.
+
+	Update to take into account the notion of mesh.
+
+	* doc/Doxyfile.in,
+	* mln/pw/image.hh,
+	* mln/core/dpoint1d.hh,
+	* mln/core/dpoint2d.hh,
+	* mln/core/dpoints_piter.hh,
+	* mln/core/dpoint3d.hh,
+	* mln/core/macros.hh,
+	* mln/core/box.hh,
+	* mln/core/point.hh,
+	* mln/core/internal/piter_adaptor.hh,
+	* mln/core/internal/run_pset.hh,
+	* mln/core/internal/run_psite.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/point1d.hh,
+	* mln/core/point2d.hh,
+	* mln/core/point3d.hh,
+	* mln/core/line_piter.hh,
+	* mln/core/vec_p_piter.hh,
+	* mln/core/line2d.hh,
+	* mln/core/box_piter.hh,
+	* mln/core/cast_image.hh,
+	* mln/core/queue_p.hh,
+	* mln/core/pset_if.hh,
+	* mln/core/vec_p.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/dpoint.hh,
+	* mln/core/concept/point_iterator.hh,
+	* mln/core/concept/generalized_point.hh,
+	* mln/core/concept/point_set.hh,
+	* mln/core/concept/object.hh,
+	* mln/core/dpoint.hh,
+	* mln/core/set_p.hh,
+	* mln/metal/is_a.hh: Update.
+
 2007-09-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix a bug in mirroring.

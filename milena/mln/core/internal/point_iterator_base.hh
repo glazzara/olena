@@ -25,32 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_POINT3D_HH
-# define MLN_CORE_POINT3D_HH
+#ifndef MLN_CORE_INTERNAL_POINT_ITERATOR_BASE_HH
+# define MLN_CORE_INTERNAL_POINT_ITERATOR_BASE_HH
 
-/*! \file mln/core/point3d.hh
+/*! \file mln/core/internal/point_iterator_base.hh
  *
- * \brief Definition of the mln::point3d alias and of its construction
- * routine.
+ * \brief Base class to factor code for point iterator classes.
  */
 
-# include <mln/core/point.hh>
+# include <mln/core/concept/point_iterator.hh>
+# include <mln/core/concept/point_site.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a point defined on the 3D square grid with
-   * integer coordinates.
-   */
-  typedef point_<grid::cube, int> point3d;
+  namespace internal
+  {
 
+
+    /*! \brief A base class for point iterators.
+     *
+     * Parameter \c P is a point site type.
+     *
+     * \internal
+     */
+    template <typename P, typename E>
+    struct point_iterator_base_ : public Point_Iterator<E>
+    {
+      /// Psite associated type.
+      typedef P psite;
+
+      /// Mesh associated type.
+      typedef mln_mesh(P)  mesh;
+
+      /// Dim value.
+      enum { dim = mesh::dim };
+
+      /// Point associated type.
+      typedef mln_point(P) point;
+
+      /// Dpoint associated type.
+      typedef mln_dpoint(P) dpoint;
+
+      /// Coord associated type.
+      typedef mln_coord(point) coord;
+
+    protected:
+      /// Constructor.
+      point_iterator_base_();
+    };
+
+
+#ifndef MLN_INCLUDE_ONLY
+
+    template <typename P, typename E>
+    point_iterator_base_<P, E>::point_iterator_base_()
+    {
+      mln::metal::is_a<P, Point_Site>::check();
+    }
+
+#endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace internal
 
 } // end of namespace mln
 
 
-# include <mln/make/point3d.hh>
-# include <mln/core/dpoint3d.hh>
-
-
-#endif // ! MLN_CORE_POINT3D_HH
+#endif // ! MLN_CORE_INTERNAL_POINT_ITERATOR_BASE_HH

@@ -25,32 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_POINT3D_HH
-# define MLN_CORE_POINT3D_HH
+#ifndef MLN_CORE_GRIDS_HH
+# define MLN_CORE_GRIDS_HH
 
-/*! \file mln/core/point3d.hh
+/*! \file mln/core/grids.hh
  *
- * \brief Definition of the mln::point3d alias and of its construction
- * routine.
+ * \brief This file defines some grid classes.
  */
 
-# include <mln/core/point.hh>
+# include <mln/core/concept/regular_grid.hh>
+# include <mln/metal/bool.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a point defined on the 3D square grid with
-   * integer coordinates.
-   */
-  typedef point_<grid::cube, int> point3d;
+  // Grids.
 
+  namespace grid
+  {
+
+    struct tick : public Regular_Grid< tick >
+    {
+      typedef metal::true_ aligned;
+      enum { dim = 1 };
+    };
+
+    struct square : public Regular_Grid< square >
+    {
+      typedef metal::true_ aligned;
+      enum { dim = 2 };
+    };
+
+    struct cube : public Regular_Grid< cube >
+    {
+      typedef metal::true_ aligned;
+      enum { dim = 3 };
+    };
+
+  } // end of namespace mln::grid
+
+
+  // Function: dim -> regular grid.
+
+  template <unsigned dim> struct regular_grid_from_dim_;
+
+  template <> struct regular_grid_from_dim_<1> { typedef grid::tick   ret; };
+  template <> struct regular_grid_from_dim_<2> { typedef grid::square ret; };
+  template <> struct regular_grid_from_dim_<3> { typedef grid::cube   ret; };
 
 } // end of namespace mln
 
 
-# include <mln/make/point3d.hh>
-# include <mln/core/dpoint3d.hh>
+# define mln_regular_grid_from_dim(N) typename mln::regular_grid_from_dim_< N >::ret
 
 
-#endif // ! MLN_CORE_POINT3D_HH
+#endif // ! MLN_CORE_GRIDS_HH

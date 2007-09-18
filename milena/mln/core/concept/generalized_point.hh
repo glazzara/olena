@@ -36,6 +36,7 @@
 # include <mln/metal/same_coord.hh>
 
 # include <mln/core/concept/object.hh>
+# include <mln/core/grids.hh>
 # include <mln/core/internal/force_exact.hh>
 
 
@@ -62,10 +63,11 @@ namespace mln
     /*
       enum { dim };
 
+      typedef mesh;
+
       typedef point;
       typedef dpoint;
       typedef coord;
-      typedef topo; // FIXME
 
       either Point
       or operator point() const;
@@ -205,14 +207,14 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-
   template <typename E>
   Generalized_Point<E>::Generalized_Point()
   {
     int dim = E::dim;
     mln_invariant(dim > 0);
     dim = 0;
-    typedef  mln_point(E)  point;
+    typedef mln_mesh(E)   mesh;
+    typedef mln_point(E)  point;
     typedef mln_dpoint(E) dpoint;
     typedef mln_coord(E)  coord;
     const point* (E::*m1)() const = & E::pointer_;
@@ -221,6 +223,7 @@ namespace mln
     m2 = 0;
   }
 
+  // Operators.
 
   template <typename Pl, typename Pr>
   bool operator==(const Generalized_Point<Pl>& lhs, const Generalized_Point<Pr>& rhs)
