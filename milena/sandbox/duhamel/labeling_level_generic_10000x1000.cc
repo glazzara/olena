@@ -37,7 +37,7 @@
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include "labeling_level.hh"
+#include <mln/labeling/level.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println_with_border.hh>
 
@@ -52,15 +52,12 @@ int main()
 
   unsigned border = 1;
 
-  image2d_b<value::int_u8> i1(3, 3, border);
-  debug::iota(i1);
-  i1[12] = i1[18] = 2;
-  debug::println_with_border(i1);
+  image2d_b<value::int_u8> i1(10000, 1000, border);
+   i1[10009] = i1[10010] = 2;
 
   unsigned n;
   image2d_b<value::int_u8> out(i1.domain(), border);
-  labeling_level_fast(i1, 2, c4(), out, n);
+  labeling::level(i1, 2, c4(), out, n);
 
-  std::cout << "n = " << n << std::endl;
-  debug::println(out);
+  mln_assertion (n == 1);
 }

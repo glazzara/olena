@@ -37,12 +37,13 @@
 # include <mln/core/internal/fixme.hh>
 # include <mln/level/memset_.hh>
 //# include <mln/core/line_piter.hh>
-#include <mln/geom/nrows.hh>
-#include <mln/geom/ncols.hh>
-#include <mln/core/image2d_b.hh>
-#include <mln/core/image2d_b.hh>
-#include <mln/core/pixel.hh>
-#include <mln/core/line_piter.hh>
+# include <mln/geom/nrows.hh>
+# include <mln/geom/ncols.hh>
+# include <mln/core/pixel.hh>
+# include <mln/core/line_piter.hh>
+# include <mln/core/inplace.hh>
+# include <mln/level/memcpy_.hh>
+# include <mln/core/point2d.hh>
 
 namespace mln
 {
@@ -72,7 +73,7 @@ namespace mln
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
       // FIX
-      typedef mln_point(I) point;
+      typedef mln_point(I) P;
       typedef mln_dpoint(I) delta_point;
 
       Fast_Image<I> im (ima);
@@ -80,14 +81,23 @@ namespace mln
       std::size_t border = ima.border ();
       std::size_t nbrows = geom::max_row(ima) - geom::min_row(ima);
       std::size_t nbcols = geom::max_col(ima) - geom::min_col(ima);
+      //      std::size_t n = ima.bbox().len(P::dim - 1);
 
       point2d p = ima.bbox ().pmin ();
 
       // FIXME : REMOVE THIS LOOP BY MEMSET
-
       std::size_t s = border * (2 * (border + 1) + nbcols);
       for (std::size_t i = 0; i < s; ++i)
 	const_cast<I&>(ima)[i] = v;
+
+      //      typename I::line_piter p(ima.domain());
+
+//       for (std::size_t i = 0; i < border; ++i, p = p.next ())
+// 	{
+// // 	  memset_(inplace(make::pixel(ima, p)),
+// // 		  v,
+// // 		  n);
+// 	}
 
       // ACCESS TO RIGHT UP CORNER
       s = nbcols + 1;

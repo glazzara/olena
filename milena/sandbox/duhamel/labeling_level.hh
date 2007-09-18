@@ -38,123 +38,152 @@
 # include <mln/debug/println.hh>
 # include <mln/core/window2d.hh>
 # include <mln/convert/to_window.hh>
+# include <mln/core/concept/dpoint.hh>
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/core/window.hh>
+# include <mln/pw/image.hh>
+# include <mln/pw/cst.hh>
+# include <mln/metal/is_a.hh>
+
 
 
 namespace mln
 {
 
-
-    template <typename F>
-    struct labeling_fast_try2
+  namespace convert
+  {
+    template <typename N>
+    window<mln_dpoint(N)> to_upper_window(const Neighborhood<N>& nbh_)
     {
-      F& f;
+      const N& nbh = exact(nbh_);
+      typedef mln_dpoint(N) D;
+      typedef mln_point(D) P;
+      window<D> win;
+      mln_niter(N) n(nbh, P::zero);
+      for_all(n)
+	// FIXME: pour Guillaume
+	if (n < P::zero)
+	  win.insert(n - P::zero);
+      return win;
+    }
 
-      typedef typename F::I I;
-      typedef typename F::N N;
-      typedef typename F::O O;
+  } // end of namespace convert
 
-      // aux:
-      mln_ch_value(O, unsigned) parent;
-
-      labeling_fast_try2(F& f)
-	: f(f),
-	  parent(f.output.domain(), f.input.border())
+  template <typename F>
+  struct labeling_fast_try2
+  {
+    F& f;
+    
+    typedef typename F::I I;
+    typedef typename F::N N;
+    typedef typename F::O O;
+    
+    // aux:
+    mln_ch_value(O, unsigned) parent;
+    
+    labeling_fast_try2(F& f)
+      : f(f),
+	parent(f.output.domain(), f.input.border())
+    {
+      run();
+    }
+    
+    void run()
+    {
+//       std::cout << "fast"
+// 		<< std::endl;
+      // init
       {
-	run();
+	f.nlabels = 0;
+	f.init();
       }
-
-      void run()
+      // first pass
       {
-	// init
-	{
-	  f.nlabels = 0;
-	  f.init();
-	}
-	// first pass
-	{
- 	  mln_bkd_pixter(const I) p(f.input);
- 	  mln_nixter(const I, N) n(p, f.nbh);
-
-	  for_all(p) if (f.handles(p))
-	    {
-	      make_set(p);
-	      for_all(n) if (n > p)
-		if (f.equiv(n, p))
-		  do_union(n, p);
-		else
-		  f.do_no_union(n, p);
-	    }
-	}
-
-	// second pass
-	{
- 	  mln_fwd_pixter(const I) p(f.input);
-	  for_all(p) if (f.handles(p))
-	    {
-	      if (is_root(p))
-		{
-		  if (f.labels(p))
-		    {
-		      if (f.nlabels == mln_max(mln_value(O)))
-			{
-			  f.status = false;
-			  return;
-			}
-		      f.output[p] = ++f.nlabels;
-		    }
-		}
-	      else
-		f.output[p] = f.output[parent[p]];
-	    }
-	  f.status = true;
-	}
-
-      } // end of run()
-
-      void make_set(unsigned p)
-      {
-	parent[p] = p;
-	f.init_attr(p);
-      }
-
-      bool is_root(unsigned p) const
-      {
-	return parent[p] == p;
-      }
-
-      unsigned find_root(unsigned x)
-      {
-	if (parent[x] == x)
-	  return x;
-	else
-	  return parent[x] = find_root(parent[x]);
-      }
-
-      void do_union(unsigned n, unsigned p)
-      {
-	unsigned r = find_root(n);
-	if (r != p)
+	typedef mln_point (I) P;
+	mln_bkd_pixter(const I) p(f.input);
+	mln_nixter(const I, N) n(p, f.nbh);
+	//	mln_qixter(const I, window<P>) n(p, convert::to_upper_window(f.nbh));
+	
+	for_all(p) if (f.handles(p))
 	  {
-	    parent[r] = p;
-	    f.merge_attr(r, p);
+	    make_set(p);
+	    for_all(n) if (n > p)
+	      if (f.equiv(n, p))
+		do_union(n, p);
+	      else
+		f.do_no_union(n, p);
 	  }
       }
-
-    };
-
-
-
+      
+      // second pass
+      {
+	mln_fwd_pixter(const I) p(f.input);
+	for_all(p) if (f.handles(p))
+	  {
+	    if (is_root(p))
+	      {
+		if (f.labels(p))
+		  {
+		    if (f.nlabels == mln_max(mln_value(O)))
+		      {
+			f.status = false;
+			return;
+		      }
+		    f.output[p] = ++f.nlabels;
+		  }
+	      }
+	    else
+	      f.output[p] = f.output[parent[p]];
+	  }
+	f.status = true;
+      }
+      
+    } // end of run()
+    
+    void make_set(unsigned p)
+    {
+      parent[p] = p;
+      f.init_attr(p);
+    }
+    
+    bool is_root(unsigned p) const
+    {
+      return parent[p] == p;
+    }
+    
+    unsigned find_root(unsigned x)
+    {
+      if (parent[x] == x)
+	return x;
+      else
+	return parent[x] = find_root(parent[x]);
+    }
+    
+    void do_union(unsigned n, unsigned p)
+    {
+      unsigned r = find_root(n);
+      if (r != p)
+	{
+	  parent[r] = p;
+	  f.merge_attr(r, p);
+	}
+    }
+    
+  };
+  
+  
+  
   template <typename I_, typename N_, typename O_>
   struct level_fast_t : mln::labeling::impl::base_fast_<I_,N_,O_>
   {
     typedef mln_point(I_) P;
-
+    
     // 	typedef mln_pset(I_) S;
     // 	const S& s;
-
+    
     void init()                            { mln::level::fill(this->output, 0); }
-    bool handles(unsigned p) const         { return input[p] == val; }
-    bool equiv(unsigned n, unsigned) const { return input[n] == val; }
+    bool handles(unsigned p) const         { return mln::labeling::impl::base_fast_<I_,N_,O_>::input[p] == val; }
+    bool equiv(unsigned n, unsigned) const { return mln::labeling::impl::base_fast_<I_,N_,O_>::input[n] == val; }
 
     const mln_value(I_)& val;
 

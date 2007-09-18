@@ -1,3 +1,15 @@
+2007-09-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add tests for labeling level.
+
+	* labeling_level_fast_10000x1000.cc: Test labeling::level with
+	fast version.
+	* labeling_level_generic_10000x1000.cc:  Test labeling::level with
+	generic version.
+	* labeling_level_fast.cc,
+	* labeling_level.hh,
+	* border_fill.hh: Update.
+
 2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fixes.
