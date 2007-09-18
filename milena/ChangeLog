@@ -1,5 +1,16 @@
 2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fixes.
+
+	* mln/core/internal/piter_adaptor.hh,
+	* mln/core/line_piter.hh,
+	* mln/core/vec_p_piter.hh: Import dim for g++-4.1.
+	* mln/level/paste.hh (paste_): Rename as...
+	(paste_pw_, paste_fast_): ...these.
+	(paste_): New with dynamic disjunction.
+
+2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add fast pixel iterators on neighbors.
 
 	* mln/core/internal/pixel_iterator_base.hh (boi_): Make it

@@ -70,7 +70,7 @@ namespace mln
     {
 
       template <typename I, typename J>
-      void paste_(const Image<I>& data_, Image<J>& destination_)
+      void paste_pw_(const Image<I>& data_, Image<J>& destination_)
       {
 	const I& data  = exact(data_);
 	J& destination = exact(destination_);
@@ -81,7 +81,7 @@ namespace mln
       }
 
       template <typename I, typename J>
-      void paste_(const Fast_Image<I>& data_, Fast_Image<J>& destination_)
+      void paste_fast_(const Fast_Image<I>& data_, Fast_Image<J>& destination_)
       {
 	const I& data  = exact(data_);
 	J& destination = exact(destination_);
@@ -94,6 +94,23 @@ namespace mln
 	  memcpy_(inplace(make::pixel(destination, p)),
 		  make::pixel(data, p),
 		  n);
+      }
+
+      // Disjunction.
+
+      template <typename I, typename J>
+      void paste_(const Image<I>& data, Image<J>& destination)
+      {
+	paste_pw_(data, destination);
+      }
+
+      template <typename I, typename J>
+      void paste_(const Fast_Image<I>& data, Fast_Image<J>& destination)
+      {
+	if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
+	  paste_fast_(data, destination);
+	else
+	  paste_pw_(data, destination);
       }
 
     } // end of namespace mln::level::impl

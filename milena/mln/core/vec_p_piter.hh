@@ -45,6 +45,12 @@ namespace mln
   template <typename P>
   struct vec_p_fwd_piter_ : public internal::point_iterator_base_< P, vec_p_fwd_piter_<P> >
   {
+    typedef vec_p_fwd_piter_<P> self_;
+    typedef internal::point_iterator_base_< P, self_ > super_;
+  public:
+    
+    // Make definitions from super class available.
+    enum { dim = super_::dim };
 
     /// Coordinate associated type.
     template <typename S>
@@ -85,6 +91,12 @@ namespace mln
   template <typename P>
   struct vec_p_bkd_piter_ : public internal::point_iterator_base_< P, vec_p_bkd_piter_<P> >
   {
+    typedef vec_p_bkd_piter_<P> self_;
+    typedef internal::point_iterator_base_< P, self_ > super_;
+  public:
+    
+    // Make definitions from super class available.
+    enum { dim = super_::dim };
 
     /// Coordinate associated type.
     template <typename S>

@@ -51,7 +51,11 @@ namespace mln
     template <typename Pi, typename E>
     class piter_adaptor_ : public internal::point_iterator_base_< mln_psite(Pi), E >
     {
+      typedef internal::point_iterator_base_< mln_psite(Pi), E > super_;
     public:
+    
+      // Make dim definition from super class available.
+      enum { dim = super_::dim };
 
       /// Constructor from a point iterator \p piter.
       piter_adaptor_(const Pi& piter);

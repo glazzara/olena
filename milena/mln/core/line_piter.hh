@@ -31,6 +31,8 @@
 /*! \file mln/core/line_piter.hh
  *
  * \brief Definition of iterators on points by lines.
+ *
+ * \todo Rename as box_line_piter.
  */
 
 # include <mln/core/internal/point_iterator_base.hh>
