@@ -41,21 +41,21 @@ using namespace mln;
 int
 main (void)
 {
-  image2d_b<value::int_u8> i1(5, 7);
+  image2d_b<value::int_u8> i1(10000, 1000);
 
   // Fill with randomized value.
-  for (unsigned int i = 0; i < i1.ncells (); ++i)
-    i1[i] = i;//(i * 4452) % 10;
-  std::cout << "before duplicate"
-	    << std::endl
-	    << std::endl;
-  debug::println_with_border(i1);
+//   for (unsigned int i = 0; i < i1.ncells (); ++i)
+//     i1[i] = i;//(i * 4452) % 10;
+//   std::cout << "before duplicate"
+// 	    << std::endl
+// 	    << std::endl;
+//   debug::println_with_border(i1);
 
-  border::duplicate (i1);
-  std::cout << "after duplicate"
-	    << std::endl
-	    << std::endl;
-  debug::println_with_border(i1);
+   border::duplicate (i1);
+//   std::cout << "after duplicate"
+// 	    << std::endl
+// 	    << std::endl;
+//   debug::println_with_border(i1);
 }
 
 

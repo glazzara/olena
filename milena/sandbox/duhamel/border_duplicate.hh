@@ -79,6 +79,7 @@ namespace mln
       std::size_t real_nbcols = (nbcols + 1) + 2 * border;
       std::size_t start = real_nbcols * border + border;
       std::size_t s = start;
+
       // duplicate top left corner
       for (std::size_t i = 0; i < border + 1; ++i)
 	for (std::size_t j = 0; j < border + 1; ++j)

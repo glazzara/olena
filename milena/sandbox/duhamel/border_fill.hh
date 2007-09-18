@@ -42,6 +42,7 @@
 #include <mln/core/image2d_b.hh>
 #include <mln/core/image2d_b.hh>
 #include <mln/core/pixel.hh>
+#include <mln/core/line_piter.hh>
 
 namespace mln
 {
@@ -83,11 +84,14 @@ namespace mln
       point2d p = ima.bbox ().pmin ();
 
       // FIXME : REMOVE THIS LOOP BY MEMSET
-      for (std::size_t i = 0; i < border * (2 * (border + 1) + nbcols); ++i)
+
+      std::size_t s = border * (2 * (border + 1) + nbcols);
+      for (std::size_t i = 0; i < s; ++i)
 	const_cast<I&>(ima)[i] = v;
 
       // ACCESS TO RIGHT UP CORNER
-      for (std::size_t i = 0; i < nbcols + 1; ++i)
+      s = nbcols + 1;
+      for (std::size_t i = 0; i < s; ++i)
 	p = p + right;
 
       // FILL BORDER

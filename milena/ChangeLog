@@ -1,3 +1,15 @@
+2007-09-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add labeling and update border.
+
+	* canvas_labeling.hh: Copy from mln/canvas/labeling.hh.
+	* labeling_level.hh: Specialize with fast image.
+
+	* border_duplicate.cc,
+	* border_duplicate.hh,
+	* border_fill.cc,
+	* border_fill.hh: Update.
+
 2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add level::paste for fast images and fix line_piter.

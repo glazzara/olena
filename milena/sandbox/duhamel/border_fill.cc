@@ -41,7 +41,7 @@ using namespace mln;
 int
 main (void)
 {
-  image2d_b<value::int_u8> i1(9, 7);
+  image2d_b<value::int_u8> i1(9, 6);
 
   border::fill (i1, 8);
   debug::println_with_border(i1);
