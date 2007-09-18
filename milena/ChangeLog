@@ -1,3 +1,9 @@
+2007-09-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix a bug in mirroring.
+
+	* border_mirror.hh: Fix.
+
 2007-09-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add mirroring for borders.

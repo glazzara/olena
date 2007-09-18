@@ -111,7 +111,7 @@ namespace mln
       // mirror left border
       s = start;
       for (std::size_t i = 0; i <= nbrows; ++i)
-	for (std::size_t j = 0; j <= border; ++j)
+	for (std::size_t j = 1; j <= border; ++j)
  	  const_cast<I&>(ima)[s + (i * real_nbcols) - j] = ima[s + (i * real_nbcols) + (j - 1)];
 
       // mirror right border
