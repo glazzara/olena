@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LABELING_LEVEL_HH
-# define MLN_LABELING_LEVEL_HH
+#ifndef SANDBOX_MLN_LABELING_LEVEL_HH
+# define SANDBOX_MLN_LABELING_LEVEL_HH
 
 /*! \file mln/labeling/level.hh
  *
@@ -35,113 +35,149 @@
  */
 
 # include <mln/labeling/base.hh>
-# include <mln/level/fill.hh>
+# include <mln/debug/println.hh>
+# include <mln/core/window2d.hh>
+# include <mln/convert/to_window.hh>
 
 
 namespace mln
 {
 
-  namespace labeling
+
+    template <typename F>
+    struct labeling_fast_try2
+    {
+      F& f;
+
+      typedef typename F::I I;
+      typedef typename F::N N;
+      typedef typename F::O O;
+
+      // aux:
+      mln_ch_value(O, unsigned) parent;
+
+      labeling_fast_try2(F& f)
+	: f(f),
+	  parent(f.output.domain(), f.input.border())
+      {
+	run();
+      }
+
+      void run()
+      {
+	// init
+	{
+	  f.nlabels = 0;
+	  f.init();
+	}
+	// first pass
+	{
+ 	  mln_bkd_pixter(const I) p(f.input);
+ 	  mln_nixter(const I, N) n(p, f.nbh);
+
+	  for_all(p) if (f.handles(p))
+	    {
+	      make_set(p);
+	      for_all(n) if (n > p)
+		if (f.equiv(n, p))
+		  do_union(n, p);
+		else
+		  f.do_no_union(n, p);
+	    }
+	}
+
+	// second pass
+	{
+ 	  mln_fwd_pixter(const I) p(f.input);
+	  for_all(p) if (f.handles(p))
+	    {
+	      if (is_root(p))
+		{
+		  if (f.labels(p))
+		    {
+		      if (f.nlabels == mln_max(mln_value(O)))
+			{
+			  f.status = false;
+			  return;
+			}
+		      f.output[p] = ++f.nlabels;
+		    }
+		}
+	      else
+		f.output[p] = f.output[parent[p]];
+	    }
+	  f.status = true;
+	}
+
+      } // end of run()
+
+      void make_set(unsigned p)
+      {
+	parent[p] = p;
+	f.init_attr(p);
+      }
+
+      bool is_root(unsigned p) const
+      {
+	return parent[p] == p;
+      }
+
+      unsigned find_root(unsigned x)
+      {
+	if (parent[x] == x)
+	  return x;
+	else
+	  return parent[x] = find_root(parent[x]);
+      }
+
+      void do_union(unsigned n, unsigned p)
+      {
+	unsigned r = find_root(n);
+	if (r != p)
+	  {
+	    parent[r] = p;
+	    f.merge_attr(r, p);
+	  }
+      }
+
+    };
+
+
+
+  template <typename I_, typename N_, typename O_>
+  struct level_fast_t : mln::labeling::impl::base_fast_<I_,N_,O_>
   {
+    typedef mln_point(I_) P;
 
-    /*! Connected component labeling of the image objects at a given
-     * level.
-     *
-     * \param[in]  input The input image.
-     * \param[in]  val   The level to consider for the labeling.
-     * \param[in]  nbh   The neighborhood.
-     * \param[out] output  The label image.
-     * \param[out] nlabels The number of labels.
-     *
-     * \return Succeed or not.
-     */
-    template <typename I, typename N, typename O>
-    bool level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-	       Image<O>& output, unsigned& nlabels);
+    // 	typedef mln_pset(I_) S;
+    // 	const S& s;
 
+    void init()                            { mln::level::fill(this->output, 0); }
+    bool handles(unsigned p) const         { return input[p] == val; }
+    bool equiv(unsigned n, unsigned) const { return input[n] == val; }
 
+    const mln_value(I_)& val;
 
-# ifndef MLN_INCLUDE_ONLY
-
-    namespace impl
-    {
-
-      // Functors.
-
-      template <typename I_, typename N_, typename O_>
-      struct level_t : base_<I_,N_,O_>
-      {
-	typedef mln_point(I_) P;
-
-	// requirements from mln::canvas::labeling:
-
-	typedef mln_pset(I_) S;
-	const S& s;
-
- 	void init()                            { mln::level::fill(this->output, 0); }
-	bool handles(const P& p) const         { return input(p) == val; }
- 	bool equiv(const P& n, const P&) const { return input(n) == val; }
- 
-	// end of requirements
-
-	const mln_value(I_)& val;
-
-	level_t(const I_& input, const mln_value(I_)& val, const N_& nbh, O_& output)
-	  : base_<I_,N_,O_>(input, nbh, output),
-	    s(input.domain()),
-	    val(val)
-	{}
-      };
-
-      // Routines.
-
-      template <typename I, typename N, typename O>
-      bool level_(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-		  Image<O>& output, unsigned& nlabels)
-      {
-	typedef impl::level_t<I,N,O> F;
-	F f(exact(input), val, exact(nbh), exact(output));
-	canvas::labeling<F> run(f);
-	nlabels = f.nlabels;
-	return f.status;
-      }
-
-      // FIXME: Add fast versions.
-
-      // FIXME (ADD)
-      //
-      template <typename I, typename N, typename O>
-      bool level_(const Fast_Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-		  Image<O>& output, unsigned& nlabels)
-      {
-	typedef impl::level_t<I,N,O> F;
-	F f(exact(input), val, exact(nbh), exact(output));
-	canvas::labeling_fast<F> run(f);
-	nlabels = f.nlabels;
-	return f.status;
-      }
-
-      //
-      //END FIXME (ADD)
-
-    } // end of namespace mln::labeling::impl
+    level_fast_t(const I_& input, const mln_value(I_)& val, const N_& nbh, O_& output)
+      : mln::labeling::impl::base_fast_<I_,N_,O_>(input, nbh, output),
+	// 	    s(input.domain()),
+	val(val)
+    {}
+  };
 
 
-    // Facade.
-
-    template <typename I, typename N, typename O>
-    bool level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-	       Image<O>& output, unsigned& nlabels)
-    {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      return impl::level_(exact(input), val, nbh, output, nlabels);
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::labeling
+  template <typename I, typename N, typename O>
+  bool labeling_level_fast(const Fast_Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
+			   Fast_Image<O>& output, unsigned& nlabels)
+  {
+    typedef level_fast_t<I,N,O> F;
+    F f(exact(input), val, exact(nbh), exact(output));
+    labeling_fast_try2<F> run(f);
+    nlabels = f.nlabels;
+    return f.status;
+  }
 
 } // end of namespace mln
 
 
-#endif // ! MLN_LABELING_LEVEL_HH
+#endif // ! SANDBOX_MLN_LABELING_LEVEL_HH

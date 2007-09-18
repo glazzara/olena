@@ -74,10 +74,46 @@ namespace mln
   };
 
 
-  // FIXME: bkd_pixter2d_b
+
+  template <typename I>
+  class bkd_pixter2d_b : public internal::pixel_iterator_base_< I, bkd_pixter2d_b<I> >
+  {
+    typedef internal::pixel_iterator_base_< I, bkd_pixter2d_b<I> > super_;
+
+  public:
+
+    /// Image type.
+    typedef I image;
+
+    /*! \brief Constructor.
+     *
+     * \param[in] image Image to iterate over its pixels.
+     */
+    bkd_pixter2d_b(I& image);
+
+    /// Go to the next pixel.
+    void next_();
+
+    void start();
+
+  private:
+
+    /// Twice the size of the image border.
+    unsigned border_x2_;
+
+    /// Row offset.
+    unsigned row_offset_;
+
+    /// Beginning of the current row.
+    mln_qlf_value(I)* bor_;
+  };
+
+
 
 
 #ifndef MLN_INCLUDE_ONLY
+
+  // Fwd.
 
   template <typename I>
   fwd_pixter2d_b<I>::fwd_pixter2d_b(I& image) :
@@ -99,6 +135,37 @@ namespace mln
       this->value_ptr_ += border_x2_;
       eor_ += row_offset_;
     }
+  }
+
+  // Bkd.
+
+  template <typename I>
+  bkd_pixter2d_b<I>::bkd_pixter2d_b(I& image) :
+    super_(image)
+  {
+    mln_precondition(image.has_data());
+    border_x2_ = 2 * image.border();
+    row_offset_ = geom::max_col(image) - geom::min_col(image) + 1 + border_x2_;
+    bor_ = & image.at(geom::max_row(image), geom::min_col(image)) - 1;
+  }
+
+  template <typename I>
+  void
+  bkd_pixter2d_b<I>::next_()
+  {
+    --this->value_ptr_;
+    if (this->value_ptr_ == bor_ && this->value_ptr_ != this->boi_)
+    {
+      this->value_ptr_ -= border_x2_;
+      bor_ -= row_offset_;
+    }
+  }
+
+  template <typename I>
+  void
+  bkd_pixter2d_b<I>::start()
+  {
+    this->value_ptr_ = this->eoi_ - 1;
   }
 
 #endif // ! MLN_INCLUDE_ONLY

@@ -508,7 +508,13 @@ namespace mln
     template <typename T>
     struct bkd_pixter< image2d_b<T> >
     {
-      typedef internal::fixme ret;
+      typedef bkd_pixter2d_b< image2d_b<T> > ret;
+    };
+
+    template <typename T>
+    struct bkd_pixter< const image2d_b<T> >
+    {
+      typedef bkd_pixter2d_b< const image2d_b<T> > ret;
     };
 
     // qixter
@@ -527,6 +533,26 @@ namespace mln
 
     template <typename T, typename W>
     struct bkd_qixter< image2d_b<T>, W >
+    {
+      typedef internal::fixme ret;
+    };
+
+    // nixter
+
+    template <typename T, typename N>
+    struct fwd_nixter< image2d_b<T>, N >
+    {
+      typedef dpoints_fwd_pixter< image2d_b<T> > ret;
+    };
+
+    template <typename T, typename N>
+    struct fwd_nixter< const image2d_b<T>, N >
+    {
+      typedef dpoints_fwd_pixter< const image2d_b<T> > ret;
+    };
+
+    template <typename T, typename N>
+    struct bkd_nixter< image2d_b<T>, N >
     {
       typedef internal::fixme ret;
     };

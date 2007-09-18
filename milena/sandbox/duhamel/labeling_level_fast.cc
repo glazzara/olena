@@ -37,7 +37,8 @@
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/labeling/foreground.hh>
+#include "labeling_level.hh"
+#include <mln/debug/iota.hh>
 #include <mln/debug/println_with_border.hh>
 
 #include "paste.hh"
@@ -49,18 +50,19 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d_b<value::int_u8> i1(3, 3);
-  image2d_b<value::int_u8> out (i1.domain ());
+  unsigned border = 1;
 
-  level::fill_opt2(i1, 8);
-
-  for (int i = 0; i < 81; ++i)
-    i1[i] = (i * 4452) % 255;
+  image2d_b<value::int_u8> i1(3, 3, border);
+  debug::iota(i1);
+  i1[12] = i1[18] = 2;
   debug::println_with_border(i1);
 
   unsigned n;
-  labeling::level(i1, true, c4(), out, n);
-  printf ("\nn=%u\n", n);
+  image2d_b<value::int_u8> out(i1.domain(), border);
+  labeling_level_fast(i1, 2, c4(), out, n);
+
+  std::cout << "n = " << n << std::endl;
+  debug::println(out);
 
 //   image2d_b<int_u8>
 //     lena = io::pgm::load("../../img/tiny.pgm"),

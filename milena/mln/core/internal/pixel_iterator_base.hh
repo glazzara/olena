@@ -86,16 +86,17 @@ namespace mln
     {
       mln_precondition(image.has_data());
       I& ima = this->image_;
-      boi_ = & ima( ima.domain().pmin() );
+      boi_ = & ima( ima.domain().pmin() ) - 1;
       eoi_ = & ima( ima.domain().pmax() ) + 1;
       invalidate();
     }
 
+    // FIXME: Remove cause dangerous when bkd!!!
     template <typename I, typename E>
     void
     pixel_iterator_base_<I, E>::start()
     {
-      this->value_ptr_ = boi_;
+      this->value_ptr_ = boi_ + 1;
     }
 
     template <typename I, typename E>
@@ -105,11 +106,12 @@ namespace mln
       this->value_ptr_ = eoi_;
     }
 
+    // FIXME: Remove casue not optimal!!!
     template <typename I, typename E>
     bool
     pixel_iterator_base_<I, E>::is_valid() const
     {
-      return this->value_ptr_ != eoi_;
+      return this->value_ptr_ != eoi_ && this->value_ptr_ != boi_;
     }
 
 #endif // ! MLN_INCLUDE_ONLY

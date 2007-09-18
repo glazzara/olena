@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/internal/set_of.hh>
+# include <mln/core/internal/dpoints_base.hh>
 # include <mln/core/dpoint.hh>
 
 
@@ -53,7 +53,7 @@ namespace mln
    */
   template <typename D>
   struct neighb_ : public Neighborhood< neighb_<D> >,
-		   public internal::set_of_<D>
+		   public internal::dpoints_base_<D, neighb_<D> >
   {
     /// Dpoint associated type.
     typedef D dpoint;

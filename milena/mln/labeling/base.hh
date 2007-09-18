@@ -50,6 +50,7 @@ namespace mln
     {
 
       /// Base class for labeling functors.
+
       template <typename I_, typename N_, typename O_>
       struct base_
       {
@@ -80,6 +81,40 @@ namespace mln
 	void do_no_union(const P&, const P&) {}
 	void init_attr(const P&)             {}
 	void merge_attr(const P&, const P&)  {}
+      };
+
+
+      /// Base class for labeling functors on fast images.
+
+      template <typename I_, typename N_, typename O_>
+      struct base_fast_
+      {
+	typedef I_ I;
+	typedef N_ N;
+	typedef O_ O;
+
+	const I& input;
+	const N& nbh;
+	O&       output;
+
+	mln_value(O_) nlabels;
+	bool status;
+
+	base_fast_(const I_& input, const N_& nbh, O_& output)
+	  : input(input),
+	    nbh(nbh),
+	    output(output)
+	{
+	}
+
+	// Defaults.
+
+	bool handles(unsigned) const         { return true;  }
+	bool labels(unsigned) const          { return true;  }
+ 	void init()                          {}
+	void do_no_union(unsigned, unsigned) {}
+	void init_attr(unsigned)             {}
+	void merge_attr(unsigned, unsigned)  {}
       };
 
     } // end of namespace mln::labeling::impl

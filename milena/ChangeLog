@@ -1,5 +1,23 @@
 2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add fast pixel iterators on neighbors.
+
+	* mln/core/internal/pixel_iterator_base.hh (boi_): Make it
+	before-the-beginning (reverse of past-the-end).
+	(start, is_valid): Update.	
+	* mln/core/line_piter.hh: Import super_::dim.
+	* mln/core/box_piter.hh: Likewise.
+	* mln/core/neighb.hh: Change inheritance to dpoints_base_.
+	* mln/core/image2d_b.hh (bkd_pixter): Fix missing.
+	(fwd_nixter, bkd_nixter): Likewise.
+	* mln/core/pixter2d_b.hh (bkd_pixter2d_b): New.
+	* mln/labeling/base.hh (base_fast_): New.
+	* sandbox/duhamel/labeling_level.hh,
+	* sandbox/duhamel/labeling_level_fast.cc,
+	* sandbox/duhamel/canvas_labeling.hh: Update.
+
+2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Make pixels convertible to offsets.
 
 	* mln/core/concept/generalized_pixel.hh

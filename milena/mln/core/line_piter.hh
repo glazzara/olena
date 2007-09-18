@@ -46,7 +46,12 @@ namespace mln
   template <typename P>
   class line_piter_ : public internal::point_iterator_base_< P, line_piter_<P> >
   {
+    typedef line_piter_<P> self_;
+    typedef internal::point_iterator_base_< P, self_ > super_;
   public:
+    
+    // Make definitions from super class available.
+    enum { dim = super_::dim };
 
     /*! \brief Constructor.
      *

@@ -78,17 +78,20 @@ namespace mln
 	{
  	  mln_fwd_pixter(const I) p(f.input); // p is a pixel
 
-	  W win = convert::to_window(f.nbh);
-	  mln_qixter(const I, W) q(f.input, win, p);
+// 	  W win = convert::to_window(f.nbh);
+// 	  mln_qixter(const I, W) q(f.input, win, p);
 
-	  for_all(p) // if (f.handles(p))
+// 	  mln_nixter(const I, N) n(f.input, f.nbh, p);
+
+	  for_all(p) if (f.handles(p))
 	    {
 	      make_set(p);
-	      for_all(q)
-		if (f.equiv(n, p))
-		  do_union(n, p);
-		else
-		  f.do_no_union(n, p);
+// 	      for_all(n)
+// 		if (f.deja_vu(n))
+// 		  if (f.equiv(n, p))
+// 		    do_union(n, p);
+// 		  else
+// 		    f.do_no_union(n, p);
 	    }
 	}
 
@@ -128,7 +131,7 @@ namespace mln
 	return parent[p] == p;
       }
 
-      point find_root(const unsigned& x)
+      unsigned find_root(const unsigned& x)
       {
 	if (parent[x] == x)
 	  return x;
@@ -138,7 +141,7 @@ namespace mln
 
       void do_union(const unsigned& n, const unsigned& p)
       {
-	point r = find_root(n);
+	unsigned r = find_root(n);
 	if (r != p)
 	  {
 	    parent[r] = p;
