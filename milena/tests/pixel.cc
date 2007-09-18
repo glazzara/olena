@@ -40,6 +40,8 @@ int main()
   using namespace mln;
 
   typedef image2d_b<int> I;
+
+  border::thickness = 0;
   I ima(3, 3);
 
   {
@@ -51,7 +53,9 @@ int main()
   {
     pixel<const I> pxl(ima, make::point2d(1, 1));
     ima.at(1, 1) = 51;
+    mln_assertion(unsigned(pxl) == 4);
     mln_assertion(pxl.val() == 51);
+
 
     // hopefully the code below does not compile:
     // pxl.val() = 0;

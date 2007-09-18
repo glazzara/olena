@@ -45,6 +45,117 @@ namespace mln
   namespace canvas
   {
 
+    // Fast version (version 2).
+
+    template <typename F>
+    struct labeling_fast_try2
+    {
+      F& f;
+
+      typedef typename F::I I;
+      typedef typename F::N N;
+      typedef typename F::O O;
+      typedef typename F::S S;
+
+      // aux:
+      mln_ch_value(O, unsigned) parent;
+
+      labeling(F& f)
+	: f(f),
+	  parent(f.output.domain())
+      {
+	run();
+      }
+
+      void run()
+      {
+	// init
+	{
+	  f.nlabels = 0;
+	  f.init();
+	}
+	// first pass
+	{
+ 	  mln_fwd_pixter(const I) p(f.input); // p is a pixel
+
+	  W win = convert::to_window(f.nbh);
+	  mln_qixter(const I, W) q(f.input, win, p);
+
+	  for_all(p) // if (f.handles(p))
+	    {
+	      make_set(p);
+	      for_all(q)
+		if (f.equiv(n, p))
+		  do_union(n, p);
+		else
+		  f.do_no_union(n, p);
+	    }
+	}
+
+// 	// second pass
+// 	{
+// 	  mln_bkd_piter(S) p(f.s);
+// 	  for_all(p) if (f.handles(p))
+// 	    {
+// 	      if (is_root(p))
+// 		{
+// 		  if (f.labels(p))
+// 		    {
+// 		      if (f.nlabels == mln_max(mln_value(O)))
+// 			{
+// 			  f.status = false;
+// 			  return;
+// 			}
+// 		      f.output(p) = ++f.nlabels;
+// 		    }
+// 		}
+// 	      else
+// 		f.output(p) = f.output(parent[p]);
+// 	    }
+// 	  f.status = true;
+// 	}
+
+      } // end of run()
+
+      void make_set(const unsigned& p)
+      {
+	parent[p] = p;
+	f.init_attr(p);
+      }
+
+      bool is_root(const unsigned& p) const
+      {
+	return parent[p] == p;
+      }
+
+      point find_root(const unsigned& x)
+      {
+	if (parent[x] == x)
+	  return x;
+	else
+	  return parent[x] = find_root(parent[x]);
+      }
+
+      void do_union(const unsigned& n, const unsigned& p)
+      {
+	point r = find_root(n);
+	if (r != p)
+	  {
+	    parent[r] = p;
+	    f.merge_attr(r, p);
+	  }
+      }
+
+    };
+
+
+
+
+
+
+
+
+
     // General version.
 
     template <typename F>
@@ -150,6 +261,21 @@ namespace mln
       }
 
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // FIXME: Fast version.

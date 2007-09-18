@@ -64,6 +64,13 @@ namespace mln
       image& ima() const;
       mln_qlf_value(image)** address_() const;
     */
+
+    operator unsigned() const // FIXME: Change to std::size_t
+    {
+      const E& it_ = internal::force_exact<E>(*this);
+      return & it_.val() - & it_.ima()[0];
+    }
+
   protected:
     Generalized_Pixel();
   };

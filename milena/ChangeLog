@@ -1,3 +1,13 @@
+2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make pixels convertible to offsets.
+
+	* mln/core/concept/generalized_pixel.hh
+	(operator unsigned): New.
+	* tests/pixel.cc: Update.
+	* sandbox/duhamel/canvas_labeling.hh
+	(labeling_fast_try2): New.
+
 2007-09-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add labeling and update border.
