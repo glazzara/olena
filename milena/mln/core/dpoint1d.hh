@@ -57,8 +57,11 @@ namespace mln
 {
 
   // FIXME: Doc!
-  const dpoint1d prev = make::dpoint1d( -1 );
-  const dpoint1d next = make::dpoint1d( +1 );
+  const dpoint1d before = make::dpoint1d( -1 );
+  const dpoint1d after = make::dpoint1d( +1 );
+
+  const dpoint1d ind_dec = before;
+  const dpoint1d ind_inc = after;
 
 } // end of namespace mln
 

@@ -1,5 +1,10 @@
 2007-09-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Replace next prev by before after.
+	* dpoint1d.hh: Replace.
+
+2007-09-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Replace and & or for g++-2.95.
 	* internal/tracked_ptr.hh: Replace.
 
