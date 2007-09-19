@@ -64,6 +64,9 @@ namespace mln
     typedef mln::value::set<value> vset;
 
 
+    /// Skeleton.
+    typedef interpolated< tag::image<I> > skeleton;
+
 
     /// Constructor.
     interpolated(I& ima);
@@ -90,13 +93,6 @@ namespace mln
       
     /// Give the set of values of the image.
     const vset& values() const;
-
-    /// Change value type.
-    template <typename U>     
-      struct change_value
-      {
-	typedef mln_ch_value(I, U) ret;
-      };
 
   protected:
     I& ima_;

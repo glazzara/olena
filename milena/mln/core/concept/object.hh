@@ -82,6 +82,7 @@ namespace mln
 
 # include <mln/core/exact.hh>
 # include <mln/core/ops.hh>
+# include <mln/trait/ch_value.hh>
 
 
 #endif // ! MLN_CORE_CONCEPT_OBJECT_HH

@@ -102,7 +102,7 @@ namespace mln
 
 
       /// Skeleton.
-      typedef stack_image< tag::unsigned_<n>, tag::image<I> > skeleton;
+      typedef stack_image< n, tag::image<I> > skeleton;
 
 
       /// Constructor.

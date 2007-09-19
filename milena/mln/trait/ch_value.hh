@@ -85,9 +85,9 @@ namespace mln
 	typedef M< P, V > ret;
       };
 
-      template < template <class, class> class M, unsigned n, typename I,
+      template < template <unsigned, class> class M, unsigned n, typename I,
 		 typename V >
-      struct ch_value_<  M< tag::unsigned_<n>, tag::image<I> >,  V  > // value::stack !
+      struct ch_value_<  M< n, tag::image<I> >,  V  > // For mln::value::stack_image<n,I> !
       {
 	typedef metal::vec<n, V> value;
 	typedef mln_ch_value(I, value) ret;

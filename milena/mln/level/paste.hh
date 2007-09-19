@@ -101,7 +101,7 @@ namespace mln
       template <typename I, typename J>
       void paste_(const Image<I>& data, Image<J>& destination)
       {
-	paste_pw_(data, destination);
+	paste_generic_(data, destination);
       }
 
       template <typename I, typename J>

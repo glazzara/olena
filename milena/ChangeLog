@@ -1,3 +1,22 @@
+2007-09-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fixes.
+
+	* mln/trait/ch_value.hh: Fix version with unsigned.
+	* mln/value/stack.hh: Update.
+	* mln/core/internal/tracked_ptr.hh: Comply with g++-2.95.
+	* mln/core/interpolated.hh (skeleton): New.
+	(change_value): Remove.
+	* mln/core/image2d_b.hh (init_with): New overload.
+	* mln/core/cast_image.hh: Fix typo.
+	* mln/core/macros.hh (ch_value): Move include...
+	* mln/core/concept/object.hh: ...here.
+	* mln/core/concept/image.hh: Fix include.
+	* mln/level/paste.hh: Fix.
+
+	* mln/metal/make/vec.hh: Remove; redundant with mln/make/vec.hh.
+	* tests/stack.cc: Update.
+
 2007-09-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix to_upper_window in convert.

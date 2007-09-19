@@ -205,8 +205,5 @@
 
 
 
-# include <mln/trait/ch_value.hh>
-
-
 
 #endif // ! MLN_CORE_MACROS_HH

@@ -36,7 +36,7 @@
 # include <mln/core/concept/mesh.hh>
 
 # include <mln/core/trait/all.hh> // FIXME: Move out of core!
-# include <mln/trait/ch_value.hh> // FIXME: Should be in all.hh!
+# include <mln/trait/concrete.hh> // FIXME: Should be in all.hh!
 
 # include <mln/metal/is_a.hh>
 

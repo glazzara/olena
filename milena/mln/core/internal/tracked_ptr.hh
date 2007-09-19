@@ -50,7 +50,7 @@ namespace mln
       operator bool() const;
 
       /// Negation (for arithmetical tests).
-      bool operator not() const;
+      bool operator !() const;
 
       /*! \brief Mimics the behavior of op-> for a pointer in the const case.
       **
@@ -102,10 +102,10 @@ namespace mln
 
     template <typename T>
     /// Negation (for arithmetical tests).
-    bool tracked_ptr<T>::operator not() const
+    bool tracked_ptr<T>::operator !() const
     {
       mln_invariant(run_());
-      return not bool(*this);
+      return ! bool(*this);
     }
 
     template <typename T>

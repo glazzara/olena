@@ -140,6 +140,15 @@ namespace mln
     void init_with(const box2d& b, unsigned bdr = border::thickness);
 
 
+    /// Initialize an empty image.
+    template <typename I>
+    void init_with(const Image<I>& other)
+    {
+      mln_precondition(data_ == 0);
+      data_ = new image2d_b_data<T>(other.domain().bbox()); // FIXME: border?
+    }
+
+
     /// Test if \p p is valid.
     bool owns_(const point2d& p) const;
 
