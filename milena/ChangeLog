@@ -1,3 +1,15 @@
+2007-09-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	add tracked pointer for images
+
+	* image2d_b.hh:
+	* image2d_b_data.hh: move image data into an imaage2d_b_data class,
+          then hold it with a tracked pointer to avoid useless data copy like
+          in olena
+
+	* internal/tracked_ptr.hh: tracked pointer class from olena. fix a bug
+          related to invariant_ call to optimize data access.
+
 2007-09-19  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Bug fixed on 3d building by array
