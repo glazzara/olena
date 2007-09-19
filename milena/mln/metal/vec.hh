@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_METAL_VEC_HH
-# define MLN_CORE_METAL_VEC_HH
+#ifndef MLN_METAL_VEC_HH
+# define MLN_METAL_VEC_HH
 
-# include <cstdarg>
+# include <iostream>
 
-# include <mln/core/concept/object.hh>
+# include <mln/core/contract.hh>
+# include <mln/metal/binary_arith_trait.hh>
+
+// FIXME: Document.
 
 
 namespace mln
@@ -39,92 +42,290 @@ namespace mln
   namespace metal
   {
 
-    // FIXME: Doc! + Change coord into comp.
-
-    template <unsigned n, typename T>
-    struct vec : public Object< vec<n,T> >
+    namespace internal
     {
-      enum { dim = n };
-      typedef T coord;
 
-      vec();
-      vec(T (&values)[n]);
+      template <unsigned n, typename T>
+      class vec_base_
+      {
+	protected:
+	  T data_[n];
+      };
 
-      T& operator[](unsigned i);
-      T  operator[](unsigned i) const;
-    
-    protected:
-      T coord_[n];
-    };
+      template <typename T>
+      class vec_base_ <1, T>
+      {
+	public:
+	  void set(const T& val0)
+	  {
+	    data_[0] = val0;
+	  }
+	protected:
+	  T data_[1];
+      };
+
+      template <typename T>
+      class vec_base_ <2, T>
+      {
+	public:
+	  void set(const T& val0, const T& val1)
+	  {
+	    data_[0] = val0;
+	    data_[1] = val1;
+	  }
+	protected:
+	  T data_[2];
+      };
+
+      template <typename T>
+      class vec_base_ <3, T>
+      {
+	public:
+	  void set(const T& val0, const T& val1, const T& val2)
+	  {
+	    data_[0] = val0;
+	    data_[1] = val1;
+	    data_[2] = val2;
+	  }
+	protected:
+	  T data_[3];
+      };
+
+      template <typename T>
+      class vec_base_ <4, T>
+      {
+	public:
+	  void set(const T& val0, const T& val1, const T& val2, const T& val3)
+	  {
+	    data_[0] = val0;
+	    data_[1] = val1;
+	    data_[2] = val2;
+	    data_[3] = val3;
+	  }
+	protected:
+	  T data_[4];
+      };
 
 
-    template <unsigned n, typename T>
-    std::ostream& operator<<(std::ostream& ostr, const vec<n,T>& v);
+    } // end of namespace mln::metal::internal
 
 
-    template <unsigned n, typename T>
-    bool operator==(const vec<n,T>& lhs, const vec<n,T>& rhs);
+
+  template <unsigned n, typename T>
+  class vec : public internal::vec_base_<n, T>
+  {
+    typedef internal::vec_base_<n,T> super;
+    using super::data_;
+
+  public:
+
+    typedef T value_type;
+    enum { dim = n };
+
+    vec()
+    {
+    }
+
+    template <typename U>
+    vec(const vec<n, U>& rhs)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = rhs[i];
+    }
+
+    template <typename U>
+    vec& operator=(const vec<n, U>& rhs)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = rhs[i];
+      return *this;
+    }
+
+    const T& operator[](unsigned i) const
+    {
+      mln_precondition(i < dim);
+      return data_[i];
+    }
+
+    T& operator[](unsigned i)
+    {
+      mln_precondition(i < dim);
+      return data_[i];
+    }
+
+    void set_all(const T& val)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = val;
+    }
+
+    unsigned size() const
+    {
+      return n;
+    }
+
+  };
 
 
 # ifndef MLN_INCLUDE_ONLY
- 
-    template <unsigned n, typename T>
-    vec<n,T>::vec()
-    {
-    }
 
-    template <unsigned n, typename T>
-    vec<n,T>::vec(T (&values)[n])
-    {
-      for (unsigned i = 0; i < n; ++i)
-	coord_[i] = values[i];
-    }
+  // eq
 
-    template <unsigned n, typename T>
-    T&
-    vec<n,T>::operator[](unsigned i)
-    {
-      mln_precondition(i < n);
-      return coord_[i];
-    }
+  template <unsigned n, typename T, typename U>
+  bool operator==(const vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    for (unsigned i = 0; i < n; ++i)
+      if (lhs[i] != rhs[i])
+	return false;
+    return true;
+  }
 
-    template <unsigned n, typename T>
-    T
-    vec<n,T>::operator[](unsigned i) const
-    {
-      mln_precondition(i < n);
-      return coord_[i];
-    }
+  template <unsigned n, typename T, typename U>
+  bool operator!=(const vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    return not (lhs == rhs);
+  }
 
-    // operators
 
-    template <unsigned n, typename T>
-    std::ostream& operator<<(std::ostream& ostr, const vec<n,T>& v)
-    {
-      ostr << "[ ";
-      for (unsigned i = 0; i < n; ++i)
-	ostr << v[i] << ' ';
-      return ostr << ']';
-    }
+  // +
 
-    template <unsigned n, typename T>
-    bool operator==(const vec<n,T>& lhs, const vec<n,T>& rhs)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	if (lhs[i] != rhs[i])
-	  return false;
-      return true;
-    }
+  template <unsigned n, typename T, typename U>
+  vec<n,T>&
+  operator+=(vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    for (unsigned i = 0; i < n; ++i)
+      lhs[i] += rhs[i];
+    return lhs;
+  }
 
-# endif // ! MLN_INCLUDE_ONLY
+  template <unsigned n, typename T, typename U>
+  vec<n, typename binary_arith_trait<T, U>::ret >
+  operator+(const vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    vec<n, typename binary_arith_trait<T, U>::ret> tmp;
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] = lhs[i] + rhs[i];
+    return tmp;
+  }
 
-  
+
+  // -
+
+  template <unsigned n, typename T, typename U>
+  vec<n,T>&
+  operator-=(vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    for (unsigned i = 0; i < n; ++i)
+      lhs[i] -= rhs[i];
+    return lhs;
+  }
+
+  template <unsigned n, typename T, typename U>
+  vec<n, typename binary_arith_trait<T, U>::ret>
+  operator-(const vec<n,T>& lhs, const vec<n,U>& rhs)
+  {
+    vec<n, typename binary_arith_trait<T, U>::ret> tmp;
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] = lhs[i] - rhs[i];
+    return tmp;
+  }
+
+  template <unsigned n, typename T>
+  vec<n, T>
+  operator-(const vec<n,T>& lhs)
+  {
+    vec<n, T> tmp;
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] = - lhs[i];
+    return tmp;
+  }
+
+
+  // *
+
+  template <unsigned n, typename T, typename S>
+  vec<n,T>&
+  operator*=(vec<n,T>& lhs, const S& scalar)
+  {
+    for (unsigned i = 0; i < n; ++i)
+      lhs[i] *= scalar;
+    return lhs;
+  }
+
+  template <unsigned n, typename T, typename S>
+  vec<n, typename binary_arith_trait<T, S>::ret>
+  operator*(const vec<n,T>& lhs, const S& scalar)
+  {
+    vec<n, typename binary_arith_trait<T, S>::ret> tmp;
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] = lhs[i] * scalar;
+    return tmp;
+  }
+
+
+  // /
+
+  template <unsigned n, typename T, typename S>
+  vec<n,T>&
+  operator/=(vec<n,T>& lhs, const S& scalar)
+  {
+    precondition(scalar != 0);
+    for (unsigned i = 0; i < n; ++i)
+      lhs[i] /= scalar;
+    return lhs;
+  }
+
+  template <unsigned n, typename T, typename S>
+  vec<n, typename binary_arith_trait<T, S>::ret>
+  operator/(const vec<n,T>& lhs, const S& scalar)
+  {
+    precondition(scalar != 0);
+    vec<n, typename binary_arith_trait<T, S>::ret> tmp;
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] = lhs[i] / scalar;
+    return tmp;
+  }
+
+
+  // <<
+
+  template <unsigned n, typename T>
+  std::ostream&
+  operator<<(std::ostream& ostr, const vec<n,T>& v)
+  {
+    ostr << '(';
+    for (unsigned i = 0; i < n; ++i)
+      ostr << v[i] << (i == n - 1 ? ")" : ", ");
+    return ostr;
+  }
+
+  template <unsigned n>
+  std::ostream&
+  operator<<(std::ostream& ostr, const vec<n,unsigned char>& v)
+  {
+    ostr << '(';
+    for (unsigned i = 0; i < n; ++i)
+      ostr << (unsigned int)(v[i]) << (i == n - 1 ? ")" : ", ");
+    return ostr;
+  }
+
+  template <unsigned n>
+  std::ostream&
+  operator<<(std::ostream& ostr, const vec<n,signed char>& v)
+  {
+    ostr << '(';
+    for (unsigned i = 0; i < n; ++i)
+      ostr << (signed int)(v[i]) << (i == n - 1 ? ")" : ", ");
+    return ostr;
+  }
+
+
+# endif // MLN_INCLUDE_ONLY
+
   } // end of namespace mln::metal
-  
+
 } // end of namespace mln
 
+# include <mln/make/vec.hh>
 
-# include <mln/metal/make/vec.hh>
-
-
-#endif // ! MLN_CORE_METAL_VEC_HH
+#endif // ! MLN_METAL_VEC_HH

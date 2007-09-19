@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,19 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_median.cc
- *
- * \brief Test on mln::median::median_dir.
- */
+#ifndef MLN_METAL_BINARY_ARITH_TRAIT_HH
+# define MLN_METAL_BINARY_ARITH_TRAIT_HH
 
-#include <vec.hh>
 
-int main()
-{
-  using namespace xtd;
+  template <typename T, typename U>
+  struct binary_arith_trait
+  {
+      typedef T ret;
+  };
 
-  vec<3,int> v_int = mk_vec(3,6,7);
-  vec<3,float> v_f = mk_vec(2.6, 1.9, 5.2);
 
-  std::cout << v_int + v_f << std::endl;
-}
+  template <>
+  struct binary_arith_trait<int, float>
+  {
+      typedef float ret;
+  };
+  template <>
+  struct binary_arith_trait<float, int>
+  {
+      typedef float ret;
+  };
+
+  template <>
+  struct binary_arith_trait<int, double>
+  {
+      typedef double ret;
+  };
+  template <>
+  struct binary_arith_trait<double, int>
+  {
+      typedef double ret;
+  };
+
+  template <>
+  struct binary_arith_trait<double, float>
+  {
+      typedef double ret;
+  };
+  template <>
+  struct binary_arith_trait<float, double>
+  {
+      typedef double ret;
+  };
+
+
+#endif // ! MLN_METAL_BINARY_ARITH_TRAIT_HH

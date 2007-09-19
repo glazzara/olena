@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,49 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TRAIT_BINARY_ARITH_HH
-# define MLN_CORE_TRAIT_BINARY_ARITH_HH
+/*! \file tests/level_median.cc
+ *
+ * \brief Test on mln::median::median_dir.
+ */
 
+#include <mln/metal/vec.hh>
 
-  template <typename T, typename U>
-  struct binary_arith
-  {
-      typedef T ret;
-  };
+int main()
+{
+  using namespace mln;
 
+  metal::vec<3,int> v_int = make::vec(3,6,7);
+  metal::vec<3,float> v_f = make::vec(2.6, 1.9, 5.2);
 
-  template <>
-  struct binary_arith<int, float>
-  {
-      typedef float ret;
-  };
-  template <>
-  struct binary_arith<float, int>
-  {
-      typedef float ret;
-  };
-
-  template <>
-  struct binary_arith<int, double>
-  {
-      typedef double ret;
-  };
-  template <>
-  struct binary_arith<double, int>
-  {
-      typedef double ret;
-  };
-
-  template <>
-  struct binary_arith<double, float>
-  {
-      typedef double ret;
-  };
-  template <>
-  struct binary_arith<float, double>
-  {
-      typedef double ret;
-  };
-
-
-#endif // ! MLN_CORE_TRAIT_BINARY_ARITH_HH
+  std::cout << v_int + v_f << std::endl;
+}

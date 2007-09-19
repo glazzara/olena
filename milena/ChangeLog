@@ -1,3 +1,15 @@
+2007-09-19  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add vector and interpolated image based on it.
+	* mln/core/interpolated.hh: Interpolated image.
+	* mln/make/vec.hh: Build a vector.
+	* sandbox/nivault/binary_arith.hh: Rename to...
+	* mln/metal/binary_arith_trait.hh: ...this, Promotion.
+	* mln/metal/vec.hh: Update.
+	* sandbox/nivault/tests/test.cc: Rename to ....
+	* tests/interpolated.cc: ...this.
+	* tests/metal_vec.cc: New.
+
 2007-09-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add tests for labeling level.
