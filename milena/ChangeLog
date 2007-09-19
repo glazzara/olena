@@ -1,5 +1,11 @@
 2007-09-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix to_upper_window in convert.
+
+	* labeling_level.hh: Update to_upper_window.
+
+2007-09-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix fill border in sandbox.
 
 	* border_fill.cc,

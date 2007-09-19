@@ -61,8 +61,7 @@ namespace mln
       window<D> win;
       mln_niter(N) n(nbh, P::zero);
       for_all(n)
-	// FIXME: pour Guillaume
-	if (n < P::zero)
+	if (n > P::zero)
 	  win.insert(n - P::zero);
       return win;
     }
@@ -101,8 +100,8 @@ namespace mln
       {
 	typedef mln_point (I) P;
 	mln_bkd_pixter(const I) p(f.input);
-	mln_nixter(const I, N) n(p, f.nbh);
-	//	mln_qixter(const I, window<P>) n(p, convert::to_upper_window(f.nbh));
+	//	mln_nixter(const I, N) n(p, f.nbh);
+	mln_qixter(const I, window<P>) n(p, convert::to_upper_window(f.nbh));
 	
 	for_all(p) if (f.handles(p))
 	  {
