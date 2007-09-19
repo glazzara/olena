@@ -48,28 +48,27 @@ namespace mln
      *
      * \param[in] values Array of Booleans.
      *
-     * \pre The array size, \c M, has to be an odd integer.
-     * \pre The array size, \c N, has to be the square of \c N.
+     * \pre The array size, \c M, has to be a cube of an odd integer.
      *
      * \return A 3D window.
      */
-    template <unsigned M, unsigned N>
-    mln::window3d window3d(bool (&values)[M][N]);
+    template <unsigned M>
+    mln::window3d window3d(bool (&values)[M]);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <unsigned M, unsigned N>
-    mln::window3d window3d(bool (&values)[M][N])
+    template <unsigned M>
+    mln::window3d window3d(bool (&values)[M])
     {
-      int h = M / 2;
-      mln_precondition((M % 2) == 1 && M * M == N);
+      int h = unsigned(std::pow(float(M), 1 / 3)) / 2;
+      mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == M);
       mln::window3d tmp;
       unsigned i = 0;
       for (int sli = - h; sli <= h; ++sli)
 	for (int row = - h; row <= h; ++row)
 	  for (int col = - h; col <= h; ++col)
-	    if (values[i / N][i++ % N])
+	    if (values[i++])
 	      tmp.insert(make::dpoint3d(sli, row, col));
       return tmp;
     }

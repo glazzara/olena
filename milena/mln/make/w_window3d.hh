@@ -38,6 +38,7 @@
 # include <mln/core/w_window.hh>
 # include <mln/core/dpoint3d.hh>
 
+#include <iostream>
 
 namespace mln
 {
@@ -49,30 +50,30 @@ namespace mln
      *
      * \param[in] weights Array.
      *
-     * \pre The array size, \c M, has to be an odd integer.
-     * \pre The array size, \c N, has to be the square of \c M.
+     * \pre The array size, \c M, has to be a cube of an odd integer.
      *
      * \return A 3D weighted window.
      */
-    template <typename W, unsigned M, unsigned N>
-    mln::w_window<mln::dpoint3d, W> w_window3d(W (&weights)[M][N]);
+    template <typename W, unsigned M>
+    mln::w_window<mln::dpoint3d, W> w_window3d(W (&weights)[M]);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename W, unsigned M, unsigned N>
+    template <typename W, unsigned M>
     mln::w_window<mln::dpoint3d, W>
-    w_window3d(W (&weights)[M][N])
+    w_window3d(W (&weights)[M])
     {
-      int h = M / 2;
-      mln_precondition(1 == (M % 2) && M * M == N);
+      int h = unsigned(std::pow(float(M), float(1. / 3))) / 2;
+      mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == M);
       mln::w_window<mln::dpoint3d, W> tmp;
       unsigned i = 0;
       for (int sli = - h; sli <= h; ++sli)
 	for (int row = - h; row <= h; ++row)
 	  for (int col = - h; col <= h; ++col)
 	  {
-	    const W& cur = weights[i / N][i % N];
+	    const W& cur = weights[i];
+
 	    if (cur != 0)
 	      tmp.insert(cur, make::dpoint3d(sli, row, col));
 	    i++;

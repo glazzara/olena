@@ -53,18 +53,20 @@ int main()
   using namespace mln;
 
   {
-    int ws[3][9] = {{-3, -2, -3,
-		     -2,  1, -2,
-		     -3, -2, -3},
-		    { 2,  0, -2,
-		      0,  0,  0,
-		      2,  0, -2},
-		    { 3,  2,  3,
-		      2, -1,  2,
-		      3,  2,  3}};
+    int ws[27] = {-3, -2, -3,
+		  -2,  1, -2,
+		  -3, -2, -3,
+		   2,  0, -2,
+		   0,  0,  0,
+		   2,  0, -2,
+		   3,  2,  3,
+		   2, -1,  2,
+		   3,  2,  3};
     w_window3d_int w_win = make::w_window3d(ws);
 
     image3d_b<int> ima = convert::to_image(w_win);
+    debug::println(ima);
+    std::cout << std::endl;
     w_window3d_int w_win_2 = convert::to_w_window(ima);
     mln_assertion(w_win_2 == w_win);
   }

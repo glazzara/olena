@@ -47,22 +47,22 @@ namespace mln
      *
      * \param[in] weights Array of integers.
      *
-     * \pre The array size, \c M, has to be an odd integer.
-     * \pre The array size, \c N, has to be the square of \c M.
+     * \pre The array size, \c M, has to be a cube of an odd integer.
      *
      * \return A 3D int-weighted window.
      */
-    template <unsigned M, unsigned N>
+    template <unsigned M>
     mln::w_window3d_int w_window3d_int(int (&weights)[M][N]);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <unsigned M, unsigned N>
+    template <unsigned M>
     mln::w_window3d_int
-    w_window3d_int(int (&weights)[M][N])
+    w_window3d_int(int (&weights)[M])
     {
-      mln_precondition(1 == (M % 2) && M * M == N);
+      int h = unsigned(std::pow(float(M), 1 / 3)) / 2;
+      mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == M);
       return make::w_window3d(weights);
     }
 

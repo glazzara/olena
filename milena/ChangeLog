@@ -1,5 +1,13 @@
 2007-09-19  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	Bug fixed on 3d building by array
+	* mln/make/w_window3d.hh: Fix.
+	* mln/make/w_window3d_int.hh: Fix.
+	* mln/make/window3d.hh: Fix.
+	* tests/w_window3d_int.cc: Update.
+
+2007-09-19  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Buf fixed on interpolated image.
 	* mln/core/interpolated.hh: Fix.
 
