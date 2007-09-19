@@ -55,7 +55,7 @@ namespace mln
     typedef mln_value(I) value;
 
     /// Return type of read-write access.
-    typedef mln_lvalue(I) lvalue;
+    typedef mln_lvalue(I) lvalue; // FIXME: Depends on lvalue presence in I.
 
     /// Return type of read-only access.
     typedef mln_rvalue(I) rvalue;
@@ -66,7 +66,7 @@ namespace mln
 
 
     /// Constructor.
-    interpolated(const Image<I>& ima);
+    interpolated(I& ima);
 
 
     /// Test if this image has been initialized.
@@ -79,14 +79,13 @@ namespace mln
     const mln_pset(I)& domain() const;
 
     /// Read-only access of pixel value at point site \p p.
-    mln_value(I) operator()(const psite& p) const;
+    mln_rvalue(I) operator()(const psite& p) const;
 
     /// Mutable access is only OK for reading (not writing).
-    mln_value(I) operator()(const psite& p);
+    mln_lvalue(I) operator()(const psite& p);
+
 
     mln_value(I) operator()(const mln::metal::vec<I::point::dim, float>& v) const;
-    
-    mln_value(I) operator()(const mln::metal::vec<I::point::dim, float>& v);
     
       
     /// Give the set of values of the image.
@@ -100,7 +99,7 @@ namespace mln
       };
 
   protected:
-    const I& ima_;
+    I& ima_;
   };
 
 
@@ -108,10 +107,10 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename I>
-  interpolated<I>::interpolated(const Image<I>& ima)
-    : ima_(exact(ima))
+  interpolated<I>::interpolated(I& ima)
+    : ima_(ima)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(ima.has_data());
   }
 
   template <typename I>
@@ -135,7 +134,7 @@ namespace mln
   }
 
   template <typename I>
-  mln_value(I)
+  mln_rvalue(I)
   interpolated<I>::operator()(const psite& p) const
   {
     mln_precondition(ima_.owns_(p));
@@ -143,7 +142,7 @@ namespace mln
   }
 
   template <typename I>
-  mln_value(I)
+  mln_lvalue(I)
   interpolated<I>::operator()(const psite& p)
   {
     return ima_(p);
@@ -157,18 +156,7 @@ namespace mln
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v[i]));
     mln_assertion(ima_.owns_(p));
-    return (ima_(p));
-  }
-
-  template <typename I>
-  mln_value(I)
-  interpolated<I>::operator()(const mln::metal::vec<I::point::dim, float>& v)
-  {
-    mln_point(I) p;
-    for (unsigned i = 0; i < I::point::dim; ++i)
-      p[i] = static_cast<int>(round(v[i]));
-    mln_assertion(ima_.owns_(p));
-    return (ima_(p));
+    return ima_(p);
   }
 
   template <typename I>

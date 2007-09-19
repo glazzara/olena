@@ -1,5 +1,10 @@
 2007-09-19  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	Buf fixed on interpolated image.
+	* mln/core/interpolated.hh: Fix.
+
+2007-09-19  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Add vector and interpolated image based on it.
 	* mln/core/interpolated.hh: Interpolated image.
 	* mln/make/vec.hh: Build a vector.
