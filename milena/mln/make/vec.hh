@@ -48,7 +48,7 @@ namespace mln
      * \return A 1D vector.
      */
     template <typename T>
-    mln::metal::vec<1, T> vec(const T& v_0);
+    metal::vec<1, T> vec(const T& v_0);
 
     /*! \brief Create an mln::metal::vec<2,T>.
      *
@@ -58,7 +58,7 @@ namespace mln
      * \return A 2D vector.
      */
     template <typename T>
-    mln::metal::vec<2, T> vec(const T& v_0, const T& v_1);
+    metal::vec<2, T> vec(const T& v_0, const T& v_1);
 
     /*! \brief Create an mln::metal::vec<3,T>.
      *
@@ -69,7 +69,7 @@ namespace mln
      * \return A 3D vector.
      */
     template <typename T>
-    mln::metal::vec<3, T> vec(const T& v_0, const T& v_1, const T& v_2);
+    metal::vec<3, T> vec(const T& v_0, const T& v_1, const T& v_2);
 
     /*! \brief Create an mln::metal::vec<4,T>.
      *
@@ -81,32 +81,32 @@ namespace mln
      * \return A 4D vector.
      */
     template <typename T>
-    mln::metal::vec<4, T> vec(const T& v_0, const T& v_1, const T& v_2, const T& v_3);
+    metal::vec<4, T> vec(const T& v_0, const T& v_1, const T& v_2, const T& v_3);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
-    mln::metal::vec<1, T> vec(const T& v_0)
+    metal::vec<1, T> vec(const T& v_0)
     {
-      mln::metal::vec<1, T> tmp;
+      metal::vec<1, T> tmp;
       tmp[0] = v_0;
       return tmp;
     }
 
     template <typename T>
-    mln::metal::vec<2, T> vec(const T& v_0, const T& v_1)
+    metal::vec<2, T> vec(const T& v_0, const T& v_1)
     {
-      mln::metal::vec<2, T> tmp;
+      metal::vec<2, T> tmp;
       tmp[0] = v_0;
       tmp[1] = v_1;
       return tmp;
     }
 
     template <typename T>
-    mln::metal::vec<3, T> vec(const T& v_0, const T& v_1, const T& v_2)
+    metal::vec<3, T> vec(const T& v_0, const T& v_1, const T& v_2)
     {
-      mln::metal::vec<3, T> tmp;
+      metal::vec<3, T> tmp;
       tmp[0] = v_0;
       tmp[1] = v_1;
       tmp[2] = v_2;
@@ -114,9 +114,9 @@ namespace mln
     }
 
     template <typename T>
-    mln::metal::vec<4, T> vec(const T& v_0, const T& v_1, const T& v_2, const T& v_3)
+    metal::vec<4, T> vec(const T& v_0, const T& v_1, const T& v_2, const T& v_3)
     {
-      mln::metal::vec<4, T> tmp;
+      metal::vec<4, T> tmp;
       tmp[0] = v_0;
       tmp[1] = v_1;
       tmp[2] = v_2;

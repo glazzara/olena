@@ -114,216 +114,246 @@ namespace mln
   template <unsigned n, typename T>
   class vec : public internal::vec_base_<n, T>
   {
-    typedef internal::vec_base_<n,T> super;
-    using super::data_;
+      typedef internal::vec_base_<n,T> super;
+      using super::data_;
 
-  public:
+    public:
 
-    typedef T value_type;
-    enum { dim = n };
+      typedef T value_type;
+      enum { dim = n };
+      
+      vec()
+      {
+      }
+      
+      vec(const vec<n, T>& rhs);
+      
+      template <typename U>
+      vec(const vec<n, U>& rhs);
+      
+      template <typename U>
+      vec& operator=(const vec<n, U>& rhs);
+      
+      const T& operator[](unsigned i) const;
+      
+      T& operator[](unsigned i);
 
-    vec()
-    {
-    }
+      void set_all(const T& val);
 
-    template <typename U>
-    vec(const vec<n, U>& rhs)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	data_[i] = rhs[i];
-    }
-
-    template <typename U>
-    vec& operator=(const vec<n, U>& rhs)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	data_[i] = rhs[i];
-      return *this;
-    }
-
-    const T& operator[](unsigned i) const
-    {
-      mln_precondition(i < dim);
-      return data_[i];
-    }
-
-    T& operator[](unsigned i)
-    {
-      mln_precondition(i < dim);
-      return data_[i];
-    }
-
-    void set_all(const T& val)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	data_[i] = val;
-    }
-
-    unsigned size() const
-    {
-      return n;
-    }
+      unsigned size() const;
 
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // eq
+    template <unsigned n, typename T>
+    vec<n,T>::vec(const vec<n,T>& rhs)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = rhs[i];
+    }
 
-  template <unsigned n, typename T, typename U>
-  bool operator==(const vec<n,T>& lhs, const vec<n,U>& rhs)
-  {
-    for (unsigned i = 0; i < n; ++i)
-      if (lhs[i] != rhs[i])
-	return false;
-    return true;
-  }
+    template <unsigned n, typename T>
+    template <typename U>
+    vec<n,T>::vec(const vec<n, U>& rhs)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = rhs[i];
+    }
 
-  template <unsigned n, typename T, typename U>
-  bool operator!=(const vec<n,T>& lhs, const vec<n,U>& rhs)
-  {
-    return not (lhs == rhs);
-  }
+    template <unsigned n, typename T>
+    template <typename U>
+    vec<n,T>& vec<n,T>::operator=(const vec<n, U>& rhs)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = rhs[i];
+      return *this;
+    }
 
+    template <unsigned n, typename T>
+    const T& vec<n,T>::operator[](unsigned i) const
+    {
+      mln_precondition(i < dim);
+      return data_[i];
+    }
 
-  // +
+    template <unsigned n, typename T>
+    T& vec<n,T>::operator[](unsigned i)
+    {
+      mln_precondition(i < dim);
+      return data_[i];
+    }
 
-  template <unsigned n, typename T, typename U>
-  vec<n,T>&
-  operator+=(vec<n,T>& lhs, const vec<n,U>& rhs)
-  {
-    for (unsigned i = 0; i < n; ++i)
-      lhs[i] += rhs[i];
-    return lhs;
-  }
+    template <unsigned n, typename T>
+    void vec<n,T>::set_all(const T& val)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = val;
+    }
 
-  template <unsigned n, typename T, typename U>
-  vec<n, typename binary_arith_trait<T, U>::ret >
-  operator+(const vec<n,T>& lhs, const vec<n,U>& rhs)
-  {
-    vec<n, typename binary_arith_trait<T, U>::ret> tmp;
-    for (unsigned i = 0; i < n; ++i)
-      tmp[i] = lhs[i] + rhs[i];
-    return tmp;
-  }
-
-
-  // -
-
-  template <unsigned n, typename T, typename U>
-  vec<n,T>&
-  operator-=(vec<n,T>& lhs, const vec<n,U>& rhs)
-  {
-    for (unsigned i = 0; i < n; ++i)
-      lhs[i] -= rhs[i];
-    return lhs;
-  }
-
-  template <unsigned n, typename T, typename U>
-  vec<n, typename binary_arith_trait<T, U>::ret>
-  operator-(const vec<n,T>& lhs, const vec<n,U>& rhs)
-  {
-    vec<n, typename binary_arith_trait<T, U>::ret> tmp;
-    for (unsigned i = 0; i < n; ++i)
-      tmp[i] = lhs[i] - rhs[i];
-    return tmp;
-  }
-
-  template <unsigned n, typename T>
-  vec<n, T>
-  operator-(const vec<n,T>& lhs)
-  {
-    vec<n, T> tmp;
-    for (unsigned i = 0; i < n; ++i)
-      tmp[i] = - lhs[i];
-    return tmp;
-  }
+    template <unsigned n, typename T>
+    unsigned vec<n,T>::size() const
+    {
+      return n;
+    }
 
 
-  // *
+    // eq
 
-  template <unsigned n, typename T, typename S>
-  vec<n,T>&
-  operator*=(vec<n,T>& lhs, const S& scalar)
-  {
-    for (unsigned i = 0; i < n; ++i)
-      lhs[i] *= scalar;
-    return lhs;
-  }
+    template <unsigned n, typename T, typename U>
+    bool operator==(const vec<n,T>& lhs, const vec<n,U>& rhs)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	if (lhs[i] != rhs[i])
+	  return false;
+      return true;
+    }
 
-  template <unsigned n, typename T, typename S>
-  vec<n, typename binary_arith_trait<T, S>::ret>
-  operator*(const vec<n,T>& lhs, const S& scalar)
-  {
-    vec<n, typename binary_arith_trait<T, S>::ret> tmp;
-    for (unsigned i = 0; i < n; ++i)
-      tmp[i] = lhs[i] * scalar;
-    return tmp;
-  }
+    template <unsigned n, typename T, typename U>
+    bool operator!=(const vec<n,T>& lhs, const vec<n,U>& rhs)
+    {
+      return not (lhs == rhs);
+    }
 
 
-  // /
+    // +
 
-  template <unsigned n, typename T, typename S>
-  vec<n,T>&
-  operator/=(vec<n,T>& lhs, const S& scalar)
-  {
-    precondition(scalar != 0);
-    for (unsigned i = 0; i < n; ++i)
-      lhs[i] /= scalar;
-    return lhs;
-  }
-
-  template <unsigned n, typename T, typename S>
-  vec<n, typename binary_arith_trait<T, S>::ret>
-  operator/(const vec<n,T>& lhs, const S& scalar)
-  {
-    precondition(scalar != 0);
-    vec<n, typename binary_arith_trait<T, S>::ret> tmp;
-    for (unsigned i = 0; i < n; ++i)
-      tmp[i] = lhs[i] / scalar;
-    return tmp;
-  }
-
-
-  // <<
-
-  template <unsigned n, typename T>
-  std::ostream&
-  operator<<(std::ostream& ostr, const vec<n,T>& v)
-  {
-    ostr << '(';
-    for (unsigned i = 0; i < n; ++i)
-      ostr << v[i] << (i == n - 1 ? ")" : ", ");
-    return ostr;
-  }
-
-  template <unsigned n>
-  std::ostream&
-  operator<<(std::ostream& ostr, const vec<n,unsigned char>& v)
-  {
-    ostr << '(';
-    for (unsigned i = 0; i < n; ++i)
-      ostr << (unsigned int)(v[i]) << (i == n - 1 ? ")" : ", ");
-    return ostr;
-  }
-
-  template <unsigned n>
-  std::ostream&
-  operator<<(std::ostream& ostr, const vec<n,signed char>& v)
-  {
-    ostr << '(';
-    for (unsigned i = 0; i < n; ++i)
-      ostr << (signed int)(v[i]) << (i == n - 1 ? ")" : ", ");
-    return ostr;
-  }
-
-
+    template <unsigned n, typename T, typename U>
+    vec<n,T>&
+    operator+=(vec<n,T>& lhs, const vec<n,U>& rhs)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	lhs[i] += rhs[i];
+      return lhs;
+    }
+    
+    template <unsigned n, typename T, typename U>
+    vec<n, typename binary_arith_trait<T,U>::ret >
+    operator+(const vec<n,T>& lhs, const vec<n,U>& rhs)
+    {
+      vec<n, typename binary_arith_trait<T,U>::ret> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp[i] = lhs[i] + rhs[i];
+      return tmp;
+    }
+    
+    
+    // -
+    
+    template <unsigned n, typename T, typename U>
+    vec<n,T>&
+    operator-=(vec<n,T>& lhs, const vec<n,U>& rhs)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	lhs[i] -= rhs[i];
+      return lhs;
+    }
+    
+    template <unsigned n, typename T, typename U>
+    vec<n, typename binary_arith_trait<T,U>::ret>
+    operator-(const vec<n,T>& lhs, const vec<n,U>& rhs)
+    {
+      vec<n, typename binary_arith_trait<T,U>::ret> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp[i] = lhs[i] - rhs[i];
+      return tmp;
+    }
+    
+    template <unsigned n, typename T>
+    vec<n, T>
+    operator-(const vec<n,T>& lhs)
+    {
+      vec<n, T> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp[i] = - lhs[i];
+      return tmp;
+    }
+    
+    
+    // *
+    
+    template <unsigned n, typename T, typename S>
+    vec<n,T>&
+    operator*=(vec<n,T>& lhs, const S& scalar)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	lhs[i] *= scalar;
+      return lhs;
+    }
+    
+    template <unsigned n, typename T, typename S>
+    vec<n, typename binary_arith_trait<T,S>::ret>
+    operator*(const vec<n,T>& lhs, const S& scalar)
+    {
+      vec<n, typename binary_arith_trait<T,S>::ret> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp[i] = lhs[i] * scalar;
+      return tmp;
+    }
+    
+    
+    // /
+    
+    template <unsigned n, typename T, typename S>
+    vec<n,T>&
+    operator/=(vec<n,T>& lhs, const S& scalar)
+    {
+      precondition(scalar != 0);
+      for (unsigned i = 0; i < n; ++i)
+	lhs[i] /= scalar;
+      return lhs;
+    }
+    
+    template <unsigned n, typename T, typename S>
+    vec<n, typename binary_arith_trait<T,S>::ret>
+    operator/(const vec<n,T>& lhs, const S& scalar)
+    {
+      precondition(scalar != 0);
+      vec<n, typename binary_arith_trait<T,S>::ret> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp[i] = lhs[i] / scalar;
+      return tmp;
+    }
+    
+    
+    // <<
+    
+    template <unsigned n, typename T>
+    std::ostream&
+    operator<<(std::ostream& ostr, const vec<n,T>& v)
+    {
+      ostr << '(';
+      for (unsigned i = 0; i < n; ++i)
+	ostr << v[i] << (i == n - 1 ? ")" : ", ");
+      return ostr;
+    }
+    
+    template <unsigned n>
+    std::ostream&
+    operator<<(std::ostream& ostr, const vec<n,unsigned char>& v)
+    {
+      ostr << '(';
+      for (unsigned i = 0; i < n; ++i)
+	ostr << (unsigned int)(v[i]) << (i == n - 1 ? ")" : ", ");
+      return ostr;
+    }
+    
+    template <unsigned n>
+    std::ostream&
+    operator<<(std::ostream& ostr, const vec<n,signed char>& v)
+    {
+      ostr << '(';
+      for (unsigned i = 0; i < n; ++i)
+	ostr << (signed int)(v[i]) << (i == n - 1 ? ")" : ", ");
+      return ostr;
+    }
+    
+    
 # endif // MLN_INCLUDE_ONLY
-
+    
   } // end of namespace mln::metal
-
+  
 } // end of namespace mln
 
 # include <mln/make/vec.hh>

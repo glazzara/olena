@@ -1,3 +1,12 @@
+2007-09-19  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add matrix handling and rewrite of vectors
+	* mln/make/mat.hh,
+	* mln/metal/mat.hh: Matrix handling.
+	* mln/make/vec.hh,
+	* mln/metal/vec.hh: Rewrite.
+	* tests/metal_mat.cc: New.
+
 2007-09-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fixes.
