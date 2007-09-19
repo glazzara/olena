@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BORDER_FILL_HH
-# define MLN_BORDER_FILL_HH
+#ifndef SANDBOX_MLN_BORDER_FILL_HH
+# define SANDBOX_MLN_BORDER_FILL_HH
 
 /*! \file mln/border/fill.hh
  *
@@ -35,15 +35,8 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/internal/fixme.hh>
-# include <mln/level/memset_.hh>
-//# include <mln/core/line_piter.hh>
-# include <mln/geom/nrows.hh>
-# include <mln/geom/ncols.hh>
-# include <mln/core/pixel.hh>
 # include <mln/core/line_piter.hh>
-# include <mln/core/inplace.hh>
-# include <mln/level/memcpy_.hh>
-# include <mln/core/point2d.hh>
+# include <mln/level/memset_.hh>
 
 namespace mln
 {
@@ -67,53 +60,226 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace impl
+    {
+      template <typename I>
+      void fill_1d_size_1_(const Fast_Image<I>& ima_, const mln_value(I)& v)
+      {
+	const I& ima = exact(ima_);
+	mln_precondition(ima.has_data());
+
+	typedef mln_point(I) P;
+	std::size_t border = ima.border ();
+	std::size_t len = exact(ima).bbox().len(P::dim - 1);
+
+	std::memset((void*)&ima[0],
+		    *(const int*)(&v), // violent cast
+		    border);
+
+	std::memset((void*)&ima[border + len],
+		    *(const int*)(&v), // violent cast
+		    border);
+      }
+
+      template <typename I>
+      void fill_1d_size_n_(const Fast_Image<I>& ima_, const mln_value(I)& v)
+      {
+	const I& ima = exact(ima_);
+	mln_precondition(ima.has_data());
+
+	typedef mln_point(I) P;
+	std::size_t border = ima.border ();
+	std::size_t len = exact(ima).bbox().len(P::dim - 1);
+	std::size_t i = 0;
+
+	for (; i < border; ++i)
+	  const_cast<I&>(ima)[i] = v;
+
+	std::size_t e = 2 * border + len;
+	for (i += len; i < e; ++i)
+	  const_cast<I&>(ima)[i] = v;
+      }
+
+      template <typename I>
+      void fill_2d_size_1_(const Fast_Image<I>& ima_, const mln_value(I)& v)
+      {
+	const I& ima = exact(ima_);
+	mln_precondition(ima.has_data());
+
+	typedef mln_point(I) P;
+
+	std::size_t border = ima.border ();
+	std::size_t border_2x = 2 * border;
+	std::size_t len = exact(ima).bbox().len(P::dim - 1);
+	std::size_t n = len + 2 * border;
+	std::size_t s = border * (n + 1);
+	std::size_t e = n;
+
+	for (int i = P::dim - 2; i >= 0; --i)
+	  e *= exact(ima).bbox().len(i) + 2 * border;
+
+	std::memset((void*)&ima[0],
+		    *(const int*)(&v), // violent cast
+		    s);
+
+	std::size_t end = e - ((border + 1) * n);
+	for (s += len; s < end; s += n)
+	  std::memset((void*)&ima[s],
+		      *(const int*)(&v), // violent cast
+		      border_2x);
+	
+	std::memset((void*)&ima[s],
+		    *(const int*)(&v), // violent cast
+		    e - s);
+      }
+
+      template <typename I>
+      void fill_2d_size_n_(const Fast_Image<I>& ima_, const mln_value(I)& v)
+      {
+	const I& ima = exact(ima_);
+	mln_precondition(ima.has_data());
+
+	typedef mln_point(I) P;
+
+	std::size_t border = ima.border ();
+	std::size_t border_2x = 2 * border;
+	std::size_t len = exact(ima).bbox().len(P::dim - 1);
+	std::size_t n = len + 2 * border;
+	std::size_t s = border * (n + 1);
+	std::size_t e = n;
+
+	for (int i = P::dim - 2; i >= 0; --i)
+	  e *= exact(ima).bbox().len(i) + 2 * border;
+
+	for (std::size_t i = 0; i < s; ++i)
+	  const_cast<I&>(ima)[i] = v;
+	  
+ 	std::size_t end = e - ((border + 1) * n);
+	for (s += len; s < end; s += len)
+	  for (std::size_t j = 0; j < border_2x; ++j, ++s)
+	    (const_cast<I&>(ima))[s] = v;
+	
+	for (std::size_t i = s; i < e; ++i)
+	  const_cast<I&>(ima)[i] = v;
+      }
+
+//       template <typename I>
+//       void fill_3d_size_n_(const Fast_Image<I>& ima_, const mln_value(I)& v)
+//       {
+// 	const I& ima = exact(ima_);
+// 	mln_precondition(ima.has_data());
+
+//  	typedef mln_point(I) P;
+
+// 	std::size_t border = ima.border ();
+//  	std::size_t border_2x = 2 * border;
+// 	std::size_t len_s = exact(ima).bbox().len(0);
+// 	std::size_t len_r = exact(ima).bbox().len(1);
+// 	std::size_t len_c = exact(ima).bbox().len(2);
+
+// 	//	std::size_t real_len_s = len_s + border_2x;
+// 	std::size_t real_len_r = len_r + border_2x;
+// 	std::size_t real_len_c = len_c + border_2x;
+
+// 	std::size_t face = real_len_r * real_len_c;
+
+// 	std::size_t cpt = 0;
+
+// 	for (std::size_t k = 0; k < border; ++k)
+// 	  for (std::size_t i = 0; i < face; ++i, ++cpt)
+// 	    const_cast<I&>(ima)[cpt] = v;
+
+//  	for (std::size_t k = 0; k < len_s; ++k)
+// 	  {
+// 	    std::size_t s = real_len_c * border + border;
+// 	    for (std::size_t i = 0; i < s; ++i, ++cpt)
+// 	      const_cast<I&>(ima)[cpt] = v;
+
+
+// 	    cpt += len_r;
+//  	    std::size_t end = cpt + len_r + len_c * len_r;
+
+// 	    for (; cpt < end; cpt += len_r)
+// 	      {
+// 		std::cout << "cpt = "
+// 			  << cpt
+// 			  << "end = "
+// 			  << end
+// 			  << std::endl;
+// 		for (std::size_t j = 0; j < border_2x; ++j, ++cpt)
+// 		  (const_cast<I&>(ima))[cpt] = v;
+// 	      }
+	    
+// 	    for (std::size_t i = 0; i < s; ++i, ++cpt)
+// 	      const_cast<I&>(ima)[cpt] = v;
+// 	  }
+
+// 	for (std::size_t k = 0; k < border; ++k)
+// 	  for (std::size_t i = 0; i < face; ++i, ++cpt)
+// 	    const_cast<I&>(ima)[cpt] = v;
+//       }
+
+      template <typename I>
+      void fill_size_1_(const Fast_Image<I>& ima_, const mln_value(I)& v)
+      {
+	typedef mln_point(I) P;
+	const I& ima = exact(ima_);
+ 	typedef mln_point(I) P;
+	typename I::line_piter pl(ima.domain());
+ 	std::size_t len_r = exact(ima).bbox().len(P::dim - 1);
+	std::size_t st = 0;
+
+	for_all (pl)
+	  {
+	    std::size_t end = ima.offset_at (pl);
+	    std::memset((void*)&ima[st],
+			*(const int*)(&v),
+			end - st);
+	    st = end + len_r;
+	  }
+	std::memset((void*)&ima[st],
+		    *(const int*)(&v),
+		    ima.ncells () - st);
+      }
+
+      template <typename I>
+      void fill_size_n_(const Fast_Image<I>& ima_, const mln_value(I)& v)
+      {
+	typedef mln_point(I) P;
+	const I& ima = exact(ima_);
+ 	typedef mln_point(I) P;
+	typename I::line_piter pl(ima.domain());
+ 	std::size_t len_r = exact(ima).bbox().len(P::dim - 1);
+	std::size_t st = 0;
+
+	for_all (pl)
+	  {
+	    std::size_t end = ima.offset_at (pl);
+	    for (std::size_t i = st; i < end; ++i)
+	      const_cast<I&>(ima)[i] = v;
+	    st = end + len_r;
+	  }
+	for (std::size_t i = st; i < ima.ncells (); ++i)
+	  const_cast<I&>(ima)[i] = v;
+      }
+    } // end of namespace mln::border::impl
+
+
+    // Facade.
+
     template <typename I>
     void fill(const Fast_Image<I>& ima_, const mln_value(I)& v)
     {
+      typedef mln_point(I) P;
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
-      // FIX
-      typedef mln_point(I) P;
-      typedef mln_dpoint(I) delta_point;
 
-      Fast_Image<I> im (ima);
-      //      internal::fixme();
-      std::size_t border = ima.border ();
-      std::size_t nbrows = geom::max_row(ima) - geom::min_row(ima);
-      std::size_t nbcols = geom::max_col(ima) - geom::min_col(ima);
-      //      std::size_t n = ima.bbox().len(P::dim - 1);
-
-      point2d p = ima.bbox ().pmin ();
-
-      // FIXME : REMOVE THIS LOOP BY MEMSET
-      std::size_t s = border * (2 * (border + 1) + nbcols);
-      for (std::size_t i = 0; i < s; ++i)
-	const_cast<I&>(ima)[i] = v;
-
-      //      typename I::line_piter p(ima.domain());
-
-//       for (std::size_t i = 0; i < border; ++i, p = p.next ())
-// 	{
-// // 	  memset_(inplace(make::pixel(ima, p)),
-// // 		  v,
-// // 		  n);
-// 	}
-
-      // ACCESS TO RIGHT UP CORNER
-      s = nbcols + 1;
-      for (std::size_t i = 0; i < s; ++i)
-	p = p + right;
-
-      // FILL BORDER
-      for (std::size_t i = 0; i < nbrows; ++i)
-	{
-	  level::memset_(const_cast<I&>(ima), p, v, 2 * border);
-	  p = p + down;
- 	}
-
-      // FILL THE BOTTOM OF BORDER
-      level::memset_(const_cast<I&>(ima), p, v, border * (2 * (border + 1) + nbcols));
-      // END FIX
+      if (!ima.border ())
+	return;
+      if (sizeof(mln_value(I)) == 1)
+	impl::fill_size_1_(ima_, v);
+      else
+	impl::fill_size_n_(ima_, v);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -123,4 +289,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_BORDER_FILL_HH
+#endif // ! SANDBOX_MLN_BORDER_FILL_HH

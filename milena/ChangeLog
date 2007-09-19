@@ -1,3 +1,10 @@
+2007-09-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix fill border in sandbox.
+
+	* border_fill.cc,
+	* border_fill.hh: Update.
+
 2007-09-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add the notion of concrete image associated type.
