@@ -1,5 +1,13 @@
 2007-09-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	add tracked pointer in image1d_b and image3d_b
+	* image1d_b.hh:
+	* image1d_b_data.hh:
+	* image3d_b.hh:
+	* image3d_b_data.hh: update image1d_b and image3d_b
+
+2007-09-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	add tracked pointer for images
 
 	* image2d_b.hh:

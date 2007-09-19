@@ -42,6 +42,9 @@
 
 # include <mln/core/line_piter.hh>
 
+# include <mln/core/internal/tracked_ptr.hh>
+# include <mln/core/image3d_b_data.hh>
+
 // FIXME:
 
 // # include <mln/core/pixter3d_b.hh>
@@ -190,16 +193,7 @@ namespace mln
 
   private:
 
-    T*  buffer_;
-    T***  array_;
-
-    box3d b_;  // theoretical box
-    unsigned bdr_;
-    box3d vb_; // virtual box, i.e., box including the virtual border
-
-    void update_vb_();
-    void allocate_();
-    void deallocate_();
+    tracked_ptr< image3d_b_data<T> > data_;
 
     typedef internal::image_base_< box3d, image3d_b<T> > super;
   };
@@ -212,16 +206,14 @@ namespace mln
 
   template <typename T>
   image3d_b<T>::image3d_b()
-    : buffer_(0),
-      array_ (0)
+    : data_(0)
   {
-    bdr_ = border::thickness; // default value in ctors.
+    data_->bdr_ = border::thickness; // default value in ctors.
   }
 
   template <typename T>
   image3d_b<T>::image3d_b(int nslis, int nrows, int ncols, unsigned bdr)
-    : buffer_(0),
-      array_ (0)
+    : data_(0)
   {
     init_with(nslis, nrows, ncols, bdr);
   }
@@ -231,15 +223,12 @@ namespace mln
   image3d_b<T>::init_with(int nslis, int nrows, int ncols, unsigned bdr)
   {
     mln_precondition(! this->has_data());
-    b_ = make::box3d(nslis, nrows, ncols);
-    bdr_ = bdr;
-    allocate_();
+    data_ = new image3d_b_data<T>(make::box3d(nslis, nrows, ncols), bdr);
   }
 
   template <typename T>
   image3d_b<T>::image3d_b(const box3d& b, unsigned bdr)
-    : buffer_(0),
-      array_ (0)
+    : data_(0)
   {
     init_with(b, bdr);
   }
@@ -249,21 +238,14 @@ namespace mln
   image3d_b<T>::init_with(const box3d& b, unsigned bdr)
   {
     mln_precondition(! this->has_data());
-    b_ = b;
-    bdr_ = bdr;
-    allocate_();
+    data_ = new image3d_b_data<T>(b, bdr);
   }
 
   template <typename T>
   image3d_b<T>::image3d_b(const image3d_b<T>& rhs)
     : super(rhs),
-      b_(rhs.domain()),
-      bdr_(rhs.border())
+      data_(rhs.data_)
   {
-    allocate_();
-    std::memcpy(this->buffer_,
-		rhs.buffer_,
-		ncells() * sizeof(T));
   }
 
   // assignment
@@ -275,14 +257,8 @@ namespace mln
     mln_precondition(rhs.has_data());
     if (& rhs == this)
       return *this;
-    if (this->has_data())
-      this->deallocate_();
-    this->b_ = rhs.domain();
-    this->bdr_ = rhs.border();
-    allocate_();
-    std::memcpy(this->buffer_,
-		rhs.buffer_,
-		ncells() * sizeof(T));
+
+    this->data_ = rhs.data_;
     return *this;
   }
 
@@ -292,7 +268,7 @@ namespace mln
   bool
   image3d_b<T>::has_data() const
   {
-    return buffer_ != 0 && array_ != 0;;
+    return data_ != 0;
   }
 
   template <typename T>
@@ -307,7 +283,7 @@ namespace mln
   image3d_b<T>::domain() const
   {
     mln_precondition(this->has_data());
-    return b_;
+    return data_->b_;
   }
 
   template <typename T>
@@ -315,7 +291,7 @@ namespace mln
   image3d_b<T>::border() const
   {
     mln_precondition(this->has_data());
-    return bdr_;
+    return data_->bdr_;
   }
 
   template <typename T>
@@ -323,7 +299,7 @@ namespace mln
   image3d_b<T>::ncells() const
   {
     mln_precondition(this->has_data());
-    return vb_.npoints();
+    return data_->vb_.npoints();
   }
 
   template <typename T>
@@ -331,7 +307,7 @@ namespace mln
   image3d_b<T>::owns_(const point3d& p) const
   {
     mln_precondition(this->has_data());
-    return vb_.has(p);
+    return data_->vb_.has(p);
   }
 
   template <typename T>
@@ -339,7 +315,7 @@ namespace mln
   image3d_b<T>::operator()(const point3d& p) const
   {
     mln_precondition(this->owns_(p));
-    return array_[p.sli()][p.row()][p.col()];
+    return data_->array_[p.sli()][p.row()][p.col()];
   }
 
   template <typename T>
@@ -347,7 +323,7 @@ namespace mln
   image3d_b<T>::operator()(const point3d& p)
   {
     mln_precondition(this->owns_(p));
-    return array_[p.sli()][p.row()][p.col()];
+    return data_->array_[p.sli()][p.row()][p.col()];
   }
 
   template <typename T>
@@ -355,7 +331,7 @@ namespace mln
   image3d_b<T>::operator[](unsigned o) const
   {
     mln_precondition(o < ncells());
-    return *(buffer_ + o);
+    return *(data_->buffer_ + o);
   }
 
   template <typename T>
@@ -363,7 +339,7 @@ namespace mln
   image3d_b<T>::operator[](unsigned o)
   {
     mln_precondition(o < ncells());
-    return *(buffer_ + o);
+    return *(data_->buffer_ + o);
   }
 
   template <typename T>
@@ -371,7 +347,7 @@ namespace mln
   image3d_b<T>::at(int sli, int row, int col) const
   {
     mln_precondition(this->owns_(make::point3d(sli, row, col)));
-    return array_[sli][row][col];
+    return data_->array_[sli][row][col];
   }
 
   template <typename T>
@@ -379,13 +355,12 @@ namespace mln
   image3d_b<T>::at(int sli, int row, int col)
   {
     mln_precondition(this->owns_(make::point3d(sli, row, col)));
-    return array_[sli][row][col];
+    return data_->array_[sli][row][col];
   }
 
   template <typename T>
   image3d_b<T>::~image3d_b()
   {
-    deallocate_();
   }
 
   template <typename T>
@@ -393,7 +368,7 @@ namespace mln
   image3d_b<T>::buffer() const
   {
     mln_precondition(this->has_data());
-    return buffer_;
+    return data_->buffer_;
   }
 
   template <typename T>
@@ -401,7 +376,7 @@ namespace mln
   image3d_b<T>::buffer()
   {
     mln_precondition(this->has_data());
-    return buffer_;
+    return data_->buffer_;
   }
 
   template <typename T>
@@ -418,76 +393,14 @@ namespace mln
   image3d_b<T>::point_at_offset(unsigned o) const
   {
     mln_precondition(o < ncells());
-    point3d p = make::point3d(o / (vb_.len(1) * vb_.len(2)) + vb_.min_sli(),
-			      (o % (vb_.len(1) * vb_.len(2))) / vb_.len(2) + vb_.min_row(),
-			      o % vb_.len(2) + vb_.min_col());
-    mln_postcondition(& this->operator()(p) == this->buffer_ + o);
+    point3d p = make::point3d(o / (data_->vb_.len(1) * data_->vb_.len(2)) + data_->vb_.min_sli(),
+			      (o % (data_->vb_.len(1) * data_->vb_.len(2))) / data_->vb_.len(2) + data_->vb_.min_row(),
+			      o % data_->vb_.len(2) + data_->vb_.min_col());
+    mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
     return p;
   }
 
 
-  // private
-
-  template <typename T>
-  void
-  image3d_b<T>::update_vb_()
-  {
-    vb_.pmin() = b_.pmin() - dpoint3d(all(bdr_));
-    vb_.pmax() = b_.pmax() + dpoint3d(all(bdr_));
-  }
-
-  template <typename T>
-  void
-  image3d_b<T>::allocate_()
-  {
-    update_vb_();
-    unsigned
-      ns = vb_.len(0),
-      nr = vb_.len(1),
-      nc = vb_.len(2);
-    buffer_ = new T[nr * nc * ns];
-    array_ = new T**[ns];
-    T* buf = buffer_ - vb_.pmin().col();
-    for (unsigned i = 0; i < ns; ++i)
-    {
-      T** tmp = new T*[nr];
-      array_[i] = tmp;
-      for (unsigned j = 0; j < nr; ++j)
-      {
-	array_[i][j] = buf;
-	buf += nc;
-      }
-      array_[i] -= vb_.pmin().row();
-    }
-    array_ -= vb_.pmin().sli();
-    mln_postcondition(vb_.len(0) == b_.len(0) + 2 * bdr_);
-  }
-
-  template <typename T>
-  void
-  image3d_b<T>::deallocate_()
-  {
-    if (buffer_)
-      {
-	delete[] buffer_;
-	buffer_ = 0;
-      }
-    for (typename point::coord i = vb_.pmin().sli(); i <= vb_.pmax().sli(); ++i)
-      {
-	if (array_[i])
-	  {
-	    array_[i] += vb_.pmin().row();
-	    delete[] array_[i];
-	    array_[i] = 0;
-	  }
-      }
-    if (array_)
-      {
-	array_ += vb_.pmin().sli();
-	delete[] array_;
-	array_ = 0;
-      }
-  }
 
 # endif // ! MLN_INCLUDE_ONLY
 
