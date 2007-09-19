@@ -1,5 +1,10 @@
 2007-09-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Replace and & or for g++-2.95.
+	* internal/tracked_ptr.hh: Replace.
+
+2007-09-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	add tracked pointer in image1d_b and image3d_b
 	* image1d_b.hh:
 	* image1d_b_data.hh:

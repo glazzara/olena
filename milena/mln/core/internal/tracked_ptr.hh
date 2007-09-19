@@ -29,7 +29,7 @@
 # define MLN_CORE_INTERNAL_TRACKED_PTR_HH
 
 # include <set>
-# include <ostream>
+# include <iostream>
 
 # include <mln/core/contract.hh>
 
@@ -176,7 +176,7 @@ namespace mln
     {
       mln_invariant(run_());
       mln_invariant(rhs.run_());
-      if (&rhs == this or rhs.ptr_ == ptr_)
+      if (&rhs == this || rhs.ptr_ == ptr_)
 	// no-op
 	return *this;
       clean_();
@@ -220,7 +220,7 @@ namespace mln
     {
       typedef std::set<tracked_ptr<T>*> holders_t;
 
-      mln_invariant((ptr_ and holders_) or (not ptr_ and not holders_));
+      mln_invariant((ptr_ && holders_) || (! ptr_ && ! holders_));
       if (ptr_ == 0)
 	return true;
       mln_invariant(holders_->size() > 0);
