@@ -53,6 +53,8 @@ int main()
   debug::iota(ima2);
   debug::println(ima2);
 
-  level::paste(ima, ima2);
+  level::paste(ima, ima2); // Fast version.
   debug::println(ima2);
+
+  level::impl::paste_generic_(ima, ima2); // Not so fast version...
 }

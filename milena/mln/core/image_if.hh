@@ -48,6 +48,11 @@ namespace mln
 						     image_if<I,F>,
 						     pset_if<mln_pset(I),F>  >
   {
+
+    /// Skeleton.
+    typedef image_if< tag::image<I>, tag::function<F> > skeleton;
+
+    
     /// Point_Set associated type.
     typedef pset_if<mln_pset(I), F> pset;
 
@@ -59,12 +64,6 @@ namespace mln
 
     /// Give the definition domain.
     const pset& domain() const;
-
-    template <typename T>
-    struct change_value
-    {
-      typedef image_if<mln_ch_value(I,T), F> ret;
-    };
 
     /// Const promotion via convertion.
     operator image_if<const I, F>() const;
@@ -87,6 +86,7 @@ namespace mln
     image_if<I, F> tmp(exact(ima), exact(f));
     return tmp;
   }
+
 
 
 # ifndef MLN_INCLUDE_ONLY

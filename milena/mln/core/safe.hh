@@ -42,18 +42,15 @@ namespace mln
     typedef internal::image_adaptor_< I, safe_image<I> > super_;
   public:
 
+    /// Skeleton.
+    typedef safe_image< tag::image<I> > skeleton;
+
     safe_image(I& ima, const mln_value(I)& default_value);
 
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
 
     typedef typename super_::lvalue lvalue;
     lvalue operator()(const mln_psite(I)& p);
-
-    template <typename U>
-    struct change_value
-    {
-      typedef safe_image<mln_ch_value(I, U)> ret;
-    };
 
     /// Const promotion via convertion.
     operator safe_image<const I>() const;

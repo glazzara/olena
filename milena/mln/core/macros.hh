@@ -184,18 +184,7 @@
 
 
 
-
-
-/*! \brief Shortcut to change the value type of an image type.
- *
- * \c I is an image type
- * \c T is the new value type
- */
-# define mln_ch_value(I, T) typename I ::template change_value< T >::ret
-
-
-
-// FIXME: Doc!
+// FIXME: Just include trait/all.hh !!!
 
 # define mln_fwd_pixter(I)  typename mln::trait::fwd_pixter< I >::ret
 # define mln_fwd_pixter_(I)          mln::trait::fwd_pixter< I >::ret
@@ -213,6 +202,10 @@
 # define mln_fwd_nixter(I, N) typename mln::trait::fwd_nixter< I, N >::ret
 # define mln_bkd_nixter(I, N) typename mln::trait::bkd_nixter< I, N >::ret
 # define mln_nixter(I, N) mln_fwd_nixter(I, N)
+
+
+
+# include <mln/trait/ch_value.hh>
 
 
 

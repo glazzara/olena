@@ -25,46 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d_b.cc
+/*! \file tests/trait_ch_value.cc
  *
- * \brief Tests on mln::image2d_b.
+ * \brief Tests on mln::trait::ch_value.
  */
 
-
-#include <iostream>
 #include <mln/core/image2d_b.hh>
-#include <mln/core/interpolated.hh>\
-
-#include <mln/metal/vec.hh>
-
-#include <mln/level/fill.hh>
-
-#include <mln/debug/println.hh>
-
+#include <mln/trait/ch_value.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  const unsigned nrows = 4;
-  const unsigned ncols = 4;
-  const unsigned border = 4;
-
-  image2d_b<float> f(nrows, ncols, border);
-  float tab[] = {1.,  3.,  5.,  7.,
-		 4.,  7.,  10., 13.,
-		 7.,  11., 15., 19.,
-		 10., 15., 20., 25.};
-  level::fill(f, tab);
-
-  interpolated< image2d_b<float> > inter(f);
-
-  metal::vec<2, float> v1 = make::vec(2.3, 0.6);
-  metal::vec<2, float> v2 = make::vec(3.2, 1.8);
-
-  debug::println(f);
-
-  std::cout << v1 << " : " << inter(v1) << std::endl;
-  std::cout << v2 << " : " << inter(v2) << std::endl;
+  typedef image2d_b<int> I;
+  trait::ch_value<I, bool>::ret ima;
 }

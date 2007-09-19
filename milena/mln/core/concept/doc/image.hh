@@ -63,6 +63,14 @@ namespace mln
       typedef void vset;
 
 
+
+      /*! \brief Associate type that describes how this type of image
+       * is constructed.
+       */
+      typedef void skeleton;
+
+
+
       /*! \brief Test if the image have been initialized.
        */
       bool has_data() const;
@@ -105,17 +113,6 @@ namespace mln
        * \return The value at \p p (assignable).
        */
       lvalue operator()(const psite& p);
-
-
-
-      /*! \brief Trait that gives the corresponding image type with
-	the value type changes to T.
-       */
-      template <typename T>
-      struct change_value
-      {
-        typedef ret;
-      };
 
 
 

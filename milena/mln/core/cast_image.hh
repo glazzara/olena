@@ -67,6 +67,10 @@ namespace mln
     typedef mln::value::set<T> vset;
 
 
+    /// Skeleton.
+    typedef cast_image< tag::value<T>, tag::image<I> > skeleton;
+
+
     /// Constructor.
     cast_image_(const Image<I>& ima);
 
@@ -88,13 +92,6 @@ namespace mln
 
     /// Give the set of values of the image.
     const vset& values() const;
-
-    /// Change value type.
-    template <typename U>
-      struct change_value
-      {
-	typedef mln_ch_value(I, U) ret;
-      };
 
   protected:
     const I& ima_;

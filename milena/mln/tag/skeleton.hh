@@ -25,46 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d_b.cc
+#ifndef MLN_CORE_TAG_SKELETON_HH
+# define MLN_CORE_TAG_SKELETON_HH
+
+/*! \file mln/core/tag/skeleton.hh
  *
- * \brief Tests on mln::image2d_b.
+ * \brief Definition of tags used in the skeleton types associated to
+ * image types.
  */
 
 
-#include <iostream>
-#include <mln/core/image2d_b.hh>
-#include <mln/core/interpolated.hh>\
-
-#include <mln/metal/vec.hh>
-
-#include <mln/level/fill.hh>
-
-#include <mln/debug/println.hh>
-
-
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  const unsigned nrows = 4;
-  const unsigned ncols = 4;
-  const unsigned border = 4;
+  namespace tag
+  {
 
-  image2d_b<float> f(nrows, ncols, border);
-  float tab[] = {1.,  3.,  5.,  7.,
-		 4.,  7.,  10., 13.,
-		 7.,  11., 15., 19.,
-		 10., 15., 20., 25.};
-  level::fill(f, tab);
+    // With param.
+    template <typename I> struct image { typedef I param; };
+    template <typename V> struct value { typedef V param; };
+    template <typename P> struct psite { typedef P param; };
+    template <typename S> struct pset  { typedef S param; };
+    template <typename D> struct data  { typedef D param; };
+    template <typename F> struct function { typedef F param; };
 
-  interpolated< image2d_b<float> > inter(f);
+    // With value.
+    template <unsigned u> struct unsigned_ { enum { value = u }; };
 
-  metal::vec<2, float> v1 = make::vec(2.3, 0.6);
-  metal::vec<2, float> v2 = make::vec(3.2, 1.8);
+  } // end of namespace mln::tag
 
-  debug::println(f);
+} // end of namespace mln
 
-  std::cout << v1 << " : " << inter(v1) << std::endl;
-  std::cout << v2 << " : " << inter(v2) << std::endl;
-}
+
+#endif // ! MLN_CORE_TAG_SKELETON_HH

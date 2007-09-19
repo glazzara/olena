@@ -34,7 +34,10 @@
 
 # include <mln/core/concept/point_set.hh>
 # include <mln/core/concept/mesh.hh>
-# include <mln/core/trait/all.hh>
+
+# include <mln/core/trait/all.hh> // FIXME: Move out of core!
+# include <mln/trait/ch_value.hh> // FIXME: Should be in all.hh!
+
 # include <mln/metal/is_a.hh>
 
 
@@ -68,11 +71,7 @@ namespace mln
       rvalue operator()(const psite& p) const;
       lvalue operator()(const psite& p);
 
-      template <typename T>
-      struct change_value
-      {
-        typedef ret;
-      };
+      typedef skeleton;
 
 
       // provided by internal::image_base_:
@@ -128,7 +127,7 @@ namespace mln
     typedef mln_rvalue(E) rvalue;
     typedef mln_lvalue(E) lvalue;
 
-    typedef mln_ch_value(E, value) change;
+    typedef typename E::skeleton skeleton;
 
     bool (E::*m3)() const = & E::has_data;
     m3 = 0;

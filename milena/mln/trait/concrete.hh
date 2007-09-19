@@ -25,46 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d_b.cc
+#ifndef MLN_TRAIT_CONCRETE_HH
+# define MLN_TRAIT_CONCRETE_HH
+
+/*! \file mln/core/trait/concrete.hh
  *
- * \brief Tests on mln::image2d_b.
+ * \brief Definition of the concrete image trait.
  */
 
-
-#include <iostream>
-#include <mln/core/image2d_b.hh>
-#include <mln/core/interpolated.hh>\
-
-#include <mln/metal/vec.hh>
-
-#include <mln/level/fill.hh>
-
-#include <mln/debug/println.hh>
+# include <mln/trait/ch_value.hh>
 
 
+# define mln_concrete(I)  typename mln::trait::concrete< I >::ret
 
-int main()
+
+namespace mln
 {
-  using namespace mln;
 
-  const unsigned nrows = 4;
-  const unsigned ncols = 4;
-  const unsigned border = 4;
+  namespace trait
+  {
 
-  image2d_b<float> f(nrows, ncols, border);
-  float tab[] = {1.,  3.,  5.,  7.,
-		 4.,  7.,  10., 13.,
-		 7.,  11., 15., 19.,
-		 10., 15., 20., 25.};
-  level::fill(f, tab);
+    template <typename I>
+    struct concrete
+    {
+      typedef typename I::value value;
+      typedef typename ch_value<I, value>::ret ret;
+    };
 
-  interpolated< image2d_b<float> > inter(f);
+  } // end of namespace mln::trait
 
-  metal::vec<2, float> v1 = make::vec(2.3, 0.6);
-  metal::vec<2, float> v2 = make::vec(3.2, 1.8);
+} // end of namespace mln
 
-  debug::println(f);
 
-  std::cout << v1 << " : " << inter(v1) << std::endl;
-  std::cout << v2 << " : " << inter(v2) << std::endl;
-}
+#endif // ! MLN_TRAIT_CONCRETE_HH

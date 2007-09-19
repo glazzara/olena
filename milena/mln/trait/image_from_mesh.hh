@@ -25,46 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d_b.cc
+#ifndef MLN_TRAIT_IMAGE_FROM_MESH_HH
+# define MLN_TRAIT_IMAGE_FROM_MESH_HH
+
+/*! \file mln/core/trait/image_from_mesh.hh
  *
- * \brief Tests on mln::image2d_b.
+ * \brief Definition of the "image from mesh" trait.
  */
 
+# include <mln/core/grids.hh>
 
-#include <iostream>
-#include <mln/core/image2d_b.hh>
-#include <mln/core/interpolated.hh>\
 
-#include <mln/metal/vec.hh>
-
-#include <mln/level/fill.hh>
-
-#include <mln/debug/println.hh>
+# define mln_image_from_mesh(I, V) typename mln::trait::image_from_mesh< I, V >::ret
 
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  const unsigned nrows = 4;
-  const unsigned ncols = 4;
-  const unsigned border = 4;
 
-  image2d_b<float> f(nrows, ncols, border);
-  float tab[] = {1.,  3.,  5.,  7.,
-		 4.,  7.,  10., 13.,
-		 7.,  11., 15., 19.,
-		 10., 15., 20., 25.};
-  level::fill(f, tab);
+  // Fwd decls.
+  template <typename T> struct image1d_b;
+  template <typename T> struct image2d_b;
+  template <typename T> struct image3d_b;
 
-  interpolated< image2d_b<float> > inter(f);
 
-  metal::vec<2, float> v1 = make::vec(2.3, 0.6);
-  metal::vec<2, float> v2 = make::vec(3.2, 1.8);
+  namespace trait
+  {
 
-  debug::println(f);
+    template <typename M, typename V> struct image_from_mesh;
 
-  std::cout << v1 << " : " << inter(v1) << std::endl;
-  std::cout << v2 << " : " << inter(v2) << std::endl;
-}
+    template <typename V>
+    struct image_from_mesh< grid::tick, V >
+    {
+      typedef image1d_b<V> ret;
+    };
+
+    template <typename V>
+    struct image_from_mesh< grid::square, V >
+    {
+      typedef image2d_b<V> ret;
+    };
+
+    template <typename V>
+    struct image_from_mesh< grid::cube, V >
+    {
+      typedef image3d_b<V> ret;
+    };
+
+
+  } // end of namespace mln::trait
+
+} // end of namespace mln
+
+
+#endif // ! MLN_TRAIT_IMAGE_FROM_MESH_HH

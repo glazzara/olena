@@ -1,3 +1,44 @@
+2007-09-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add the notion of concrete image associated type.
+
+	New material for the notion of concrete images.
+
+	* mln/trait: New.
+	* mln/trait/image_from_mesh.hh: New.
+	* mln/trait/concrete.hh: New.
+	* mln/core/macros.hh (mln_ch_value): Remove; now in...
+	* mln/trait/ch_value.hh: New.
+	* tests/trait_ch_value.cc: New.
+	* mln/tag: New directory.
+	* mln/tag/skeleton.hh: New.
+
+	Replace change_value by skeleton in images.
+
+	* mln/core/concept/image.hh,
+	* mln/core/concept/doc/image.hh (change_value): Remove.
+	(skeleton): New.
+	* mln/pw/image.hh,
+	* mln/core/decorated_image.hh,
+	* mln/core/image_if.hh,
+	* mln/core/rle_image.hh,
+	* mln/core/image2d_b.hh,
+	* mln/core/cast_image.hh,
+	* mln/core/safe.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/sparse_image.hh,
+	* mln/core/t_image.hh,
+	* mln/core/image1d_b.hh,
+	* mln/core/image3d_b.hh,
+	* mln/value/stack.hh: Update.
+
+	Misc.
+
+	* tests/interpolated.cc: Typo.
+	* mln/level/paste.hh (paste_pw_): Rename as...
+	(paste_generic_): ...this.
+	* tests/level_paste.cc: Update.
+
 2007-09-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Replace next prev by before after.

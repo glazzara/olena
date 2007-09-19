@@ -44,15 +44,12 @@ namespace mln
     typedef internal::image_adaptor_<I, sub_image<I,S>, S> super_;
   public:
 
+    /// Skeleton.
+    typedef sub_image< tag::image<I>, tag::pset<S> > skeleton;
+
     sub_image(I& ima, const S& pset);
 
     bool owns_(const mln_psite(I)& p) const;
-
-    template <typename U>
-    struct change_value
-    {
-      typedef internal::fixme ret;
-    };
 
     const S& domain() const;
 

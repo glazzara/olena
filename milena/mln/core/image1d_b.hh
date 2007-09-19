@@ -100,12 +100,10 @@ namespace mln
     /// Return type of read-write access.
     typedef T&       lvalue;
 
-    /// Change value type.
-    template <typename U>
-    struct change_value
-    {
-      typedef image1d_b<U> ret;
-    };
+
+    /// Skeleton.
+    typedef image1d_b< tag::value<T> > skeleton;
+
 
     /// Value_Set associated type.
     typedef mln::value::set<T> vset;

@@ -101,6 +101,10 @@ namespace mln
       typedef mln::value::set<value> vset;
 
 
+      /// Skeleton.
+      typedef stack_image< tag::unsigned_<n>, tag::image<I> > skeleton;
+
+
       /// Constructor.
       stack_image(const metal::vec<n,I*>& imas);
 
@@ -124,14 +128,6 @@ namespace mln
 
       /// Give the set of values of the image.
       const vset& values() const;
-
-      /// Change value type.
-      template <typename U>
-      struct change_value
-      {
-	typedef metal::vec<n,U> vec_n_U;
-	typedef mln_ch_value(I, vec_n_U) ret;
-      };
 
     protected:
       metal::vec<n,I*> imas_;

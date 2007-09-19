@@ -49,6 +49,8 @@ namespace mln
   template <typename I>
   struct t_image : public internal::image_adaptor_< I, t_image<I> >
   {
+    /// Skeleton.
+    typedef t_image< tag::image<I> > skeleton;
 
     /// Test if a pixel value is accessible at \p p.
     bool owns_(const mln_point(I)& p) const;
@@ -64,15 +66,6 @@ namespace mln
 
     /// Read-write access of pixel value at point site \p p.
     lvalue operator()(const mln_point(I)& p);
-
-
-    /// Change value type.
-    template <typename U>
-    struct change_value
-    {
-      typedef mln_ch_value(I, U) ret;
-    };
-
 
     /// Constructor.
     t_image(I& ima, unsigned c1, unsigned c2);

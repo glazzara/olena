@@ -67,6 +67,11 @@ namespace mln
       typedef internal::image_base_< S, image<F,S> > super_;
     public:
 
+
+      /// Skeleton.
+      typedef image< tag::function<F>, tag::pset<S> > skeleton;
+
+
       // From super class.
       typedef mln_psite(super_) psite;
 
@@ -105,13 +110,6 @@ namespace mln
 
       /// Give the set of values of the image.
       const vset& values() const;
-
-      /// Change value type. FIXME!
-      template <typename U>
-      struct change_value
-      {
-	typedef internal::fixme ret;
-      };
 
     protected:
       F f_;

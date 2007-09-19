@@ -77,16 +77,15 @@ namespace mln
     typedef mln::value::proxy<const self_> rvalue;
     typedef typename impl_::lvalue         lvalue;
 
+
+    /// Skeleton.
+    typedef decorated_image< tag::image<I>, tag::data<D> > skeleton;
+
+
     rvalue operator()(const mln_psite(I)& p) const;
     lvalue operator()(const mln_psite(I)& p);
 
     mln_value(I) read_(const mln_psite(I)& p) const;
-
-    template <typename V>
-    struct change_value
-    {
-      typedef decorated_image<mln_ch_value(I, V), D> ret;
-    };
 
     /// Const promotion via convertion.
     operator decorated_image<const I, D>() const;

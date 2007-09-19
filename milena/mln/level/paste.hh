@@ -70,7 +70,7 @@ namespace mln
     {
 
       template <typename I, typename J>
-      void paste_pw_(const Image<I>& data_, Image<J>& destination_)
+      void paste_generic_(const Image<I>& data_, Image<J>& destination_)
       {
 	const I& data  = exact(data_);
 	J& destination = exact(destination_);
@@ -110,7 +110,7 @@ namespace mln
 	if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
 	  paste_fast_(data, destination);
 	else
-	  paste_pw_(data, destination);
+	  paste_generic_(data, destination);
       }
 
     } // end of namespace mln::level::impl

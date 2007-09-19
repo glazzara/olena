@@ -58,6 +58,11 @@ namespace mln
     typedef internal::run_psite<P> psite;
     typedef mln::value::set<T> vset;
 
+    
+    /// Skeleton.
+    typedef sparse_image< tag::psite<P>, tag::value<T> > skeleton;
+
+
     sparse_image();
 
     /// Add a new range to the image.
@@ -75,12 +80,6 @@ namespace mln
     /// Give the set of values of the image.
     const vset& values() const;
 
-    /// Change value type.
-    template <typename U>
-    struct change_value
-    {
-      typedef sparse_image<P, U> ret;
-    };
   protected:
     /// Image values.
     std::vector< std::vector<value> > values_;
