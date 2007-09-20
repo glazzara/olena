@@ -42,7 +42,7 @@ int main()
 
   typedef image2d_b<int> I;
 
-  box2d b = make::box2d(1, 1);
+  box2d b = make::box2d(2, 2);
   image2d_b<int> ima5(b), ima1(b);
 
   point2d p = make::point2d(0, 0);
@@ -50,5 +50,15 @@ int main()
 
   value::stack(ima5, ima1)(p) = v;
   mln_assertion(value::stack(ima5, ima1)(p) == v);
+  mln_assertion(ima5(p) == 5 && ima1(p) == 1);
+
+  value::stack_image<2, image2d_b<int> > s1(value::stack(ima5, ima1));
+
+  value::stack_image<2, image2d_b<int> > s2;
+
+  p = make::point2d(1, 1);
+  s2 = s1;
+  s2(p) = v;
+  mln_assertion(s1(p) == v);
   mln_assertion(ima5(p) == 5 && ima1(p) == 1);
 }

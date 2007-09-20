@@ -35,6 +35,7 @@
 
 # include <mln/core/internal/image_base.hh>
 # include <mln/core/concept/function.hh>
+# include <mln/core/internal/tracked_ptr.hh>
 # include <mln/value/set.hh>
 
 
@@ -45,18 +46,38 @@ namespace mln
   namespace pw { template <typename F, typename S> struct image; }
 
 
-  
+
   /*! \brief FIXME
    *
    */
   template <typename F, typename S>
   pw::image<F,S>
+
   operator | (const Function_p2v<F>& f, const Point_Set<S>& ps);
 
 
 
   namespace pw
   {
+
+    /*! \brief data structure for pw::image
+     *
+     */
+    template <typename F, typename S>
+    struct image_data
+    {
+    public:
+      image_data(const Function_p2v<F>& f, const Point_Set<S>& ps);
+      F f_;
+      S pset_;
+    };
+
+    template <typename F, typename S>
+    image_data<F, S>::image_data(const Function_p2v<F>& f, const Point_Set<S>& ps)
+      : f_(exact(f)),
+	pset_(exact(ps))
+    {
+    }
 
     /*! \brief FIXME
      *
@@ -91,6 +112,7 @@ namespace mln
 
       /// Constructor.
       image(const Function_p2v<F>& f, const Point_Set<S>& ps);
+      image();
 
 
       /// Test if this image has been initialized.
@@ -112,12 +134,11 @@ namespace mln
       const vset& values() const;
 
     protected:
-      F f_;
-      S pset_;
+      tracked_ptr< image_data<F, S> > data_;
     };
 
   } // end of namespace mln::pw
-  
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -134,10 +155,14 @@ namespace mln
   {
 
     template <typename F, typename S>
-    image<F,S>::image(const Function_p2v<F>& f, const Point_Set<S>& ps)
-      : f_(exact(f)),
-	pset_(exact(ps))
+    image<F,S>::image()
     {
+    }
+
+    template <typename F, typename S>
+    image<F,S>::image(const Function_p2v<F>& f, const Point_Set<S>& ps)
+    {
+      data_ = new image_data<F, S>(f, ps);
     }
 
     template <typename F, typename S>
@@ -149,22 +174,22 @@ namespace mln
     template <typename F, typename S>
     bool image<F,S>::owns_(const psite& p) const
     {
-      return pset_.has(p);
+      return data_->pset_.has(p);
     }
 
     template <typename F, typename S>
     const S&
     image<F,S>::domain() const
     {
-      return pset_;
+      return data_->pset_;
     }
 
     template <typename F, typename S>
     mln_result(F)
       image<F,S>::operator()(const psite& p) const
     {
-      mln_precondition(pset_.has(p));
-      return f_(p);
+      mln_precondition(data_->pset_.has(p));
+      return data_->f_(p);
     }
 
     template <typename F, typename S>
@@ -182,7 +207,7 @@ namespace mln
     }
 
   } // end of namespace mln::pw
-  
+
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

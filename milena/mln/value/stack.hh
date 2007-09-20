@@ -34,6 +34,8 @@
  */
 
 # include <mln/core/internal/image_base.hh>
+# include <mln/core/internal/tracked_ptr.hh>
+
 # include <mln/metal/vec.hh>
 # include <mln/value/set.hh>
 # include <mln/value/proxy.hh>
@@ -76,6 +78,23 @@ namespace mln
     } // end of namespace mln::value::internal
 
 
+    /*! \brief data structure for stack_image
+     *
+     */
+    template <unsigned n, typename I>
+    struct stack_image_data
+    {
+    public:
+      stack_image_data(const metal::vec<n,I>& imas);
+      metal::vec<n,I> imas_;
+    };
+
+    template <unsigned n, typename I>
+    stack_image_data<n,I>::stack_image_data(const metal::vec<n,I>& imas)
+      : imas_(imas)
+    {
+    }
+
     /*! \brief FIXME
      *
      */
@@ -106,7 +125,8 @@ namespace mln
 
 
       /// Constructor.
-      stack_image(const metal::vec<n,I*>& imas);
+      stack_image(const metal::vec<n,I>& imas);
+      stack_image();
 
 
       /// Test if this image has been initialized.
@@ -130,7 +150,7 @@ namespace mln
       const vset& values() const;
 
     protected:
-      metal::vec<n,I*> imas_;
+      tracked_ptr< stack_image_data<n, I> > data_;
     };
 
 
@@ -138,7 +158,7 @@ namespace mln
     template <typename I>
     stack_image<2, const I>
     stack(const Image<I>& ima1, const Image<I>& ima2);
-  
+
 
     template <typename I>
     stack_image<2, I>
@@ -151,21 +171,25 @@ namespace mln
     // stack_image<n, I>
 
     template <unsigned n, typename I>
-    stack_image<n,I>::stack_image(const metal::vec<n,I*>& imas)
-      : imas_(imas)
+    stack_image<n,I>::stack_image()
     {
+    }
+
+    template <unsigned n, typename I>
+    stack_image<n,I>::stack_image(const metal::vec<n,I>& imas)
+    {
+      data_ = new stack_image_data<n,I>(imas);
       for (unsigned i = 0; i < n; ++i)
-	{
-	  mln_precondition(imas[i] != 0);
-	  mln_precondition(imas[i]->has_data());
-	}
+      {
+	mln_precondition(imas[i].has_data());
+      }
     }
 
     template <unsigned n, typename I>
     bool stack_image<n,I>::has_data() const
     {
       for (unsigned i = 0; i < n; ++i)
-	mln_invariant(imas_[i]->has_data());
+	mln_invariant(data_->imas_[i].has_data());
       return true;
     }
 
@@ -173,7 +197,7 @@ namespace mln
     bool stack_image<n,I>::owns_(const psite& p) const
     {
       for (unsigned i = 0; i < n; ++i)
-	if (! imas_[i]->owns_(p))
+	if (! data_->imas_[i].owns_(p))
 	  return false;
       return true;
     }
@@ -182,7 +206,7 @@ namespace mln
     const mln_pset(I)&
     stack_image<n,I>::domain() const
     {
-      return imas_[0]->domain();
+      return data_->imas_[0].domain();
     }
 
     template <unsigned n, typename I>
@@ -192,7 +216,7 @@ namespace mln
       mln_precondition(this->owns_(p));
       metal::vec<n, mln_value(I)> tmp;
       for (unsigned i = 0; i < n; ++i)
-	tmp[i] = imas_[i]->operator()(p);
+	tmp[i] = data_->imas_[i].operator()(p);
       return tmp;
     }
 
@@ -210,7 +234,7 @@ namespace mln
       mln_precondition(this->owns_(p));
       // FIXME!!!
       for (unsigned i = 0; i < n; ++i)
-	imas_[i]->operator()(p) = v[i];
+	data_->imas_[i].operator()(p) = v[i];
     }
 
     template <unsigned n, typename I>
@@ -226,7 +250,7 @@ namespace mln
     {
       return vset::the();
     }
-  
+
     // stack(..)
 
     template <typename I>
@@ -234,11 +258,10 @@ namespace mln
     stack(const Image<I>& ima1, const Image<I>& ima2)
     {
       mln_precondition(exact(ima1).domain() == exact(ima2).domain());
-      metal::vec<2, const I*> imas;
-      imas[0] = & exact(ima1);
-      imas[1] = & exact(ima2);
-      stack_image<2, const I> tmp(imas);
-      return tmp;
+      metal::vec<2, const I> imas;
+      imas[0] = exact(ima1);
+      imas[1] = exact(ima2);
+      return imas;
     }
 
     template <typename I>
@@ -246,11 +269,10 @@ namespace mln
     stack(Image<I>& ima1, Image<I>& ima2)
     {
       mln_precondition(exact(ima1).domain() == exact(ima2).domain());
-      metal::vec<2, I*> imas;
-      imas[0] = & exact(ima1);
-      imas[1] = & exact(ima2);
-      stack_image<2, I> tmp(imas);
-      return tmp;
+      metal::vec<2, I> imas;
+      imas[0] = exact(ima1);
+      imas[1] = exact(ima2);
+      return imas;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

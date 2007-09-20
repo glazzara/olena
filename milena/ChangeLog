@@ -1,3 +1,10 @@
+2007-09-20  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add track pointer for stack & pw images.
+	* mln/pw/image.hh: Add some tests.
+	* mln/value/stack.hh: Update pw::image class for memory managment.
+	* tests/stack.cc: Update stack_image class for memory managment.
+
 2007-09-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add test for border fill.
