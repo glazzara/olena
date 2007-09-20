@@ -31,9 +31,9 @@
  */
 
 #include "debug_print_3d_with_border.hh"
-#include "border_fill.hh"
+#include "border_duplicate.hh"
 #include <mln/core/image3d_b.hh>
-
+#include <mln/debug/iota.hh>
 
 using namespace mln;
 
@@ -41,11 +41,14 @@ int
 main (void)
 {
   std::cout << std::endl
-	    << "Test 3d size=2x3x1 with border=1 in int"
+	    << "Test 3d size=[(-7,-8,-6) .. (-5,-4,-1 )] border=1 in int"
 	    << std::endl
 	    << std::endl;
-  image3d_b<int> i3(2, 3, 1, 1);
-  border::fill (i3, 6);
-  debug::print_3d_with_border(i3);
+
+  box3d b(make::point3d(-7, -8, -6), make::point3d(-5, -4, -1));
+  image3d_b<int> ima(b, 1);
+  debug::iota (ima);
+  border::duplicate (ima);
+  debug::print_3d_with_border(ima);
   std::cout << std::endl;
 }

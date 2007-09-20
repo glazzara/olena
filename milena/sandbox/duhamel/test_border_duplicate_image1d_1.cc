@@ -25,15 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border_fill.cc
+/*! \file tests/test_border_duplicate_image1d_1.cc
  *
- * \brief Tests on mln::border::fill.
+ * \brief Tests on mln::border::duplicate.
  */
 
-#include "debug_print_3d_with_border.hh"
-#include "border_fill.hh"
-#include <mln/core/image3d_b.hh>
-
+#include "border_duplicate.hh"
+#include <mln/core/image1d_b.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/debug/println_with_border.hh>
+#include <mln/debug/iota.hh>
 
 using namespace mln;
 
@@ -41,11 +42,13 @@ int
 main (void)
 {
   std::cout << std::endl
-	    << "Test 3d size=2x3x1 with border=1 in int"
+	    << "Test 1d size=5 with border=3 in value::int_u8"
 	    << std::endl
 	    << std::endl;
-  image3d_b<int> i3(2, 3, 1, 1);
-  border::fill (i3, 6);
-  debug::print_3d_with_border(i3);
+  image1d_b<value::int_u8> ima(5);
+  debug::iota (ima);
+  border::duplicate (ima);
+  std::cout << std::endl;
+  debug::println_with_border(ima);
   std::cout << std::endl;
 }

@@ -30,10 +30,12 @@
  * \brief Tests on mln::border::fill.
  */
 
-#include "debug_print_3d_with_border.hh"
-#include "border_fill.hh"
-#include <mln/core/image3d_b.hh>
 
+#include "border_duplicate.hh"
+#include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/debug/println_with_border.hh>
+#include <mln/debug/iota.hh>
 
 using namespace mln;
 
@@ -41,11 +43,14 @@ int
 main (void)
 {
   std::cout << std::endl
-	    << "Test 3d size=2x3x1 with border=1 in int"
+	    << "Test 2d size=[(-6,-3) .. (-2,-1)] with border=3 in value::int_u8"
 	    << std::endl
 	    << std::endl;
-  image3d_b<int> i3(2, 3, 1, 1);
-  border::fill (i3, 6);
-  debug::print_3d_with_border(i3);
+
+  box2d b(make::point2d(-6, -3), make::point2d(-2, -1));
+  image2d_b<value::int_u8> ima(b, 3);
+  debug::iota (ima);
+  border::duplicate (ima);
+  debug::println_with_border(ima);
   std::cout << std::endl;
 }

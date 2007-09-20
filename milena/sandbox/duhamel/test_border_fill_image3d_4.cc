@@ -30,45 +30,10 @@
  * \brief Tests on mln::border::fill.
  */
 
+
+#include "debug_print_3d_with_border.hh"
 #include "border_fill.hh"
 #include <mln/core/image3d_b.hh>
-
-namespace mln
-{
-
-  namespace debug
-  {
-    template <typename I>
-    void print_3d_with_border (const Fast_Image<I>& input_)
-    {
-      const I& ima = exact(input_);
-      mln_precondition(ima.has_data());
-      
-      typedef mln_point(I) P;
-      
-      std::size_t len_s = exact(ima).bbox().len(P::dim - 3);
-      std::size_t len_r = exact(ima).bbox().len(P::dim - 1);
-      std::size_t len_c = exact(ima).bbox().len(P::dim - 2);
-      std::size_t border = ima.border ();
-      std::size_t real_len_s = len_s + 2 * border;
-      std::size_t real_len_r = len_r + 2 * border;
-      std::size_t real_len_c = len_c + 2 * border;
-    
-      for (std::size_t k = 0; k < real_len_s; ++k)
-	{
-	  for (std::size_t j = 0; j < real_len_c; ++j)
-	    {
-	      for (std::size_t i = 0; i < real_len_r; ++i)
-		std::cout << ima[k * (real_len_r * real_len_c) + j * real_len_r + i]
-			  << " ";
-	      std::cout << std::endl;
-	    }
-	  std::cout << std::endl;
-	}
-      std::cout << std::endl;
-    }
-  }
-}
 
 using namespace mln;
 
