@@ -1,3 +1,13 @@
+2007-09-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix duplicate border.
+
+	* border_duplicate.cc: Test for duplicate 3d.
+	* border_duplicate.hh: Fix for 1d and 3d.
+
+
+	* labeling_level_fast.cc: Update.
+
 2007-09-20  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add props for vector and matrix

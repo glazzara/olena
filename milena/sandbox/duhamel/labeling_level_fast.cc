@@ -31,6 +31,7 @@
  */
 
 #include <mln/core/image2d_b.hh>
+#include <mln/core/image1d_b.hh>
 #include <mln/core/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/pw/all.hh>
@@ -52,9 +53,10 @@ int main()
 
   unsigned border = 1;
 
-  image2d_b<value::int_u8> i1(3, 3, border);
+  image2d_b<value::int_u8> i1(5, 5, border);
   debug::iota(i1);
-  i1[12] = i1[18] = 2;
+  i1[10] = i1[17] = i1[18] = i1[25] = i1[26] = i1[22] = i1[29] = 2;
+   //  i1[5] = i1[6] = 2;
   debug::println_with_border(i1);
 
   unsigned n;
