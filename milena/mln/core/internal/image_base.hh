@@ -123,14 +123,14 @@ namespace mln
       /// Test if \p p belongs to the image domain.
       bool has(const psite& p) const;
 
+      // FIXME: Keep this default (owns_ is based on has)?
+      bool owns_(const psite& p) const;
+
       /// Give a bounding box of the image domain.
       const box_<point>& bbox() const;
 
       /// Give the number of points of the image domain.
       std::size_t npoints() const;
-
-
-      // FIXME: Add owns_(p) based on has(p)?
 
     protected:
       image_base_();
@@ -150,6 +150,14 @@ namespace mln
     {
       mln_precondition(exact(this)->has_data());
       return exact(this)->domain().has(p);
+    }
+
+    template <typename S, typename E>
+    bool
+    image_base_<S,E>::owns_(const psite& p) const
+    {
+      mln_precondition(exact(this)->has_data());
+      return exact(this)->has(p);
     }
 
     template <typename S, typename E>

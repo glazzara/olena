@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SUB_IMAGE_HH
 # define MLN_CORE_SUB_IMAGE_HH
 
-# include <mln/core/internal/image_adaptor.hh>
+# include <mln/core/internal/image_domain_morpher.hh>
 
 
 namespace mln
@@ -37,11 +37,8 @@ namespace mln
   // FIXME: Doc!
 
   template <typename I, typename S>
-  class sub_image : public internal::image_adaptor_< I,
-						     sub_image<I,S>,
-						     S >
+  class sub_image : public internal::image_domain_morpher_< I, S, sub_image<I,S> >
   {
-    typedef internal::image_adaptor_<I, sub_image<I,S>, S> super_;
   public:
 
     /// Skeleton.
@@ -49,14 +46,16 @@ namespace mln
 
     sub_image(I& ima, const S& pset);
 
-    bool owns_(const mln_psite(I)& p) const;
-
     const S& domain() const;
 
     /// Const promotion via convertion.
     operator sub_image<const I, S>() const;
 
+    mlc_const(I)* impl_delegatee_() const;
+    I* impl_delegatee_();
+
   protected:
+    I& ima_;
     const S& pset_;
   };
 
@@ -74,16 +73,9 @@ namespace mln
 
   template <typename I, typename S>
   sub_image<I,S>::sub_image(I& ima, const S& pset)
-    : super_(ima),
+    : ima_(ima),
       pset_(pset)
   {
-  }
-
-  template <typename I, typename S>
-  bool
-  sub_image<I,S>::owns_(const mln_psite(I)& p) const
-  {
-    return this->domain().has(p);
   }
 
   template <typename I, typename S>
@@ -98,6 +90,20 @@ namespace mln
   {
     sub_image<const I, S> tmp(this->adaptee_, this->pset_);
     return tmp;
+  }
+
+  template <typename I, typename S>
+  mlc_const(I)*
+  sub_image<I,S>::impl_delegatee_() const
+  {
+    return & ima_;
+  }
+
+  template <typename I, typename S>
+  I*
+  sub_image<I,S>::impl_delegatee_()
+  {
+    return & ima_;
   }
 
   // operator

@@ -33,7 +33,7 @@
  * \brief Definition of an image class FIXME
  */
 
-# include <mln/core/concept/image.hh>
+# include <mln/core/internal/image_value_morpher.hh>
 # include <mln/value/set.hh>
 # include <mln/value/cast.hh>
 
@@ -45,14 +45,9 @@ namespace mln
    *
    */
   template <typename T, typename I>
-  class cast_image_ : public mln::internal::image_base_< mln_pset(I), cast_image_<T,I> >
+  class cast_image_ : public internal::image_value_morpher_< I, cast_image_<T,I> >
   {
-    typedef cast_image_<T,I> self_;
-    typedef mln::internal::image_base_<mln_pset(I), self_> super_;
   public:
-
-    typedef mln_psite(super_) psite;
-
 
     /// Value associated type.
     typedef T value;
@@ -75,23 +70,17 @@ namespace mln
     cast_image_(const Image<I>& ima);
 
 
-    /// Test if this image has been initialized.
-    bool has_data() const;
-
-    /// Test if a pixel value is accessible at \p p.
-    bool owns_(const psite& p) const;
-
-    /// Give the definition domain.
-    const mln_pset(I)& domain() const;
-
     /// Read-only access of pixel value at point site \p p.
-    T operator()(const psite& p) const;
+    T operator()(const mln_psite(I)& p) const;
 
     /// Mutable access is only OK for reading (not writing).
-    T operator()(const psite& p);
+    T operator()(const mln_psite(I)& p);
 
     /// Give the set of values of the image.
     const vset& values() const;
+
+    /// Access to delegatee pointer.
+    const I* impl_delegatee_() const;
 
   protected:
     const I& ima_;
@@ -120,28 +109,8 @@ namespace mln
   }
 
   template <typename T, typename I>
-  bool cast_image_<T,I>::has_data() const
-  {
-    mln_invariant(ima_.has_data());
-    return true;
-  }
-
-  template <typename T, typename I>
-  bool cast_image_<T,I>::owns_(const psite& p) const
-  {
-    return ima_.owns_(p);
-  }
-
-  template <typename T, typename I>
-  const mln_pset(I)&
-  cast_image_<T,I>::domain() const
-  {
-    return ima_.domain();
-  }
-
-  template <typename T, typename I>
   T
-  cast_image_<T,I>::operator()(const psite& p) const
+  cast_image_<T,I>::operator()(const mln_psite(I)& p) const
   {
     mln_precondition(ima_.owns_(p));
     return mln::value::cast<T>( ima_(p) );
@@ -149,7 +118,7 @@ namespace mln
 
   template <typename T, typename I>
   T
-  cast_image_<T,I>::operator()(const psite& p)
+  cast_image_<T,I>::operator()(const mln_psite(I)& p)
   {
     return mln::value::cast<T>( ima_(p) );
   }
@@ -159,6 +128,13 @@ namespace mln
   cast_image_<T,I>::values() const
   {
     return vset::the();
+  }
+
+  template <typename T, typename I>
+  const I*
+  cast_image_<T,I>::impl_delegatee_() const
+  {
+    return & ima_;
   }
   
 # endif // ! MLN_INCLUDE_ONLY

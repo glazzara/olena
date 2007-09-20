@@ -145,7 +145,8 @@ namespace mln
     void init_with(const Image<I>& other)
     {
       mln_precondition(data_ == 0);
-      data_ = new image2d_b_data<T>(other.domain().bbox()); // FIXME: border?
+      mln_precondition(exact(other).has_data());
+      data_ = new image2d_b_data<T>(exact(other).bbox()); // FIXME: border?
     }
 
 

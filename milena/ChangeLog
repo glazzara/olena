@@ -1,3 +1,18 @@
+2007-09-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Change image base impl classes.
+
+	New intermediate classes.
+
+	* mln/core/internal/image_domain_morpher.hh: New.
+	* mln/core/internal/image_value_morpher.hh: New.
+	* mln/core/internal/image_morpher.hh: New.
+
+	* mln/core/internal/image_base.hh (owns_): New.
+	* mln/core/image2d_b.hh (init_with): Update.
+	* mln/core/cast_image.hh: Change inheritance.
+	* mln/core/sub_image.hh: Likewise.
+
 2007-09-20  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add track pointer for stack & pw images.
