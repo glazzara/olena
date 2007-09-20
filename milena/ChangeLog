@@ -1,5 +1,25 @@
 2007-09-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add test for border fill.
+
+	* test_border_fill_image1d_1.cc,
+	* test_border_fill_image1d_2.cc,
+	* test_border_fill_image1d_3.cc,
+	* test_border_fill_image1d_4.cc,
+	* test_border_fill_image1d_5.cc,
+	* test_border_fill_image2d_1.cc,
+	* test_border_fill_image2d_2.cc,
+	* test_border_fill_image2d_3.cc,
+	* test_border_fill_image2d_4.cc,
+	* test_border_fill_image3d_1.cc,
+	* test_border_fill_image3d_2.cc,
+	* test_border_fill_image3d_3.cc,
+	* test_border_fill_image3d_4.cc: New tests.
+
+	* border_fill.cc: Update.
+
+2007-09-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix duplicate border.
 
 	* border_duplicate.cc: Test for duplicate 3d.
