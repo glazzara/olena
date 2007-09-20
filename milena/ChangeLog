@@ -1,3 +1,9 @@
+2007-09-20  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add props for vector and matrix
+	* mln/make/vec.hh: The new constructor fill any vector.
+	* mln/value/props.hh: Update.
+
 2007-09-19  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add matrix handling and rewrite of vectors

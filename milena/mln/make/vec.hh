@@ -41,14 +41,15 @@ namespace mln
   namespace make
   {
 
-    /*! \brief Create an mln::metal::vec<1,T>.
+
+    /*! \brief Create an mln::metal::vec<n,T>.
      *
-     * \param[in] v_0 First coordinate.
+     * \param[in] v Value.
      *
-     * \return A 1D vector.
+     * \return A nD vector filled with \p v.
      */
-    template <typename T>
-    metal::vec<1, T> vec(const T& v_0);
+    template <unsigned n, typename T>
+    metal::vec<n, T> vec(const T& v);
 
     /*! \brief Create an mln::metal::vec<2,T>.
      *
@@ -86,11 +87,12 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename T>
-    metal::vec<1, T> vec(const T& v_0)
+    template <unsigned n, typename T>
+    metal::vec<n, T> vec(const T& v)
     {
-      metal::vec<1, T> tmp;
-      tmp[0] = v_0;
+      metal::vec<n, T> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp[i] = v;
       return tmp;
     }
 

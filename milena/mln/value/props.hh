@@ -41,6 +41,9 @@
 # include <mln/core/macros.hh>
 # include <mln/value/kind.hh>
 # include <mln/metal/bool.hh>
+# include <mln/metal/vec.hh>
+# include <mln/metal/mat.hh>
+# include <mln/metal/binary_arith_trait.hh>
 
 
 /// Get the minimum value of type \c T.
@@ -154,7 +157,7 @@ namespace mln
     {
       static const signed short min() { return -32768; }
       static const signed short max() { return  32767; }
-      static const std::size_t card_ = 655356;
+      static const std::size_t card_ = 65536;
       typedef data_kind kind;
       typedef float sum;
     };
@@ -222,6 +225,29 @@ namespace mln
       typedef data_kind kind;
       static const std::size_t card_ = 0;
       typedef double sum;
+    };
+
+    // records
+
+    template <>
+    template <unsigned n, typename T>
+    struct props<metal::vec<n,T> >
+    {
+	static const metal::vec<n,T> min() { return make::vec<n>(mln_min(T)); }
+	static const metal::vec<n,T> max() { return make::vec<n>(mln_max(T)); }
+	typedef data_kind kind;
+	static const std::size_t card_ = n * mln_card_(T);
+	typedef binary_arith_trait<float,T> sum;
+    };
+
+    template <unsigned n, unsigned m, typename T>
+    struct props<metal::mat<n,m,T> >
+    {
+	static const metal::mat<n,m,T> min() { return make::mat<n,m>(mln_min(T)); }
+	static const metal::mat<n,m,T> max() { return make::mat<n,m>(mln_max(T)); }
+	typedef data_kind kind;
+	static const std::size_t card_ = n * m * mln_card_(T);
+	typedef binary_arith_trait<float,T> sum;
     };
 
   } // end of namespace mln::value
