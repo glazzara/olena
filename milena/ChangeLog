@@ -1,5 +1,11 @@
 2007-09-21  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	A point can be considered as a metal::vec
+	* mln/core/point.hh: Update.
+	* tests/point2d.cc: (operator vec()).
+
+2007-09-21  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Add quaternion based on vector 4d
 	* mln/metal/vec.hh: Add sprod, vprod and normalize.
 	* mln/norm/l2.hh: New, Works on C-tabs and on metal::vec.

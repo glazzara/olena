@@ -30,6 +30,7 @@
  * \brief Tests on mln::point2d.
  */
 
+#include <iostream>
 #include <mln/core/point2d.hh>
 
 
@@ -56,4 +57,6 @@ int main()
   q.set_all(0);
   for (unsigned i = 0; i < p.dim; ++i)
     mln_assertion(q[i] == 0);
+
+  std::cout << 3.4 * metal::vec<2, int>(p) << std::endl;
 }

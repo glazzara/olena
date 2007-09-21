@@ -36,6 +36,7 @@
 # include <mln/core/concept/point.hh>
 # include <mln/core/internal/coord_impl.hh>
 # include <mln/fun/i2v/all.hh>
+# include <mln/metal/vec.hh>
 
 
 namespace mln
@@ -98,13 +99,13 @@ namespace mln
     point_<M,C>& operator+=(const dpoint& dp);
 
     /// Type of the array of coordinates.
-    typedef const C (&vec_t)[dim];
+    typedef metal::vec<dim, C> vec_t;
 
     /// Hook to coordinates.
-    vec_t to_vec() const { return coord_; }
+    operator metal::vec<dim, C>() const;
 
   protected:
-    C coord_[dim];
+    metal::vec<dim, C> coord_;
   };
 
 
@@ -156,6 +157,13 @@ namespace mln
       coord_[i] += dp[i];
     return *this;
   }
+
+  template <typename M, typename C>
+  point_<M,C>::operator metal::vec<dim, C>() const
+  {
+    return coord_;
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
   
