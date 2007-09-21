@@ -38,7 +38,7 @@
 # include <mln/debug/format.hh>
 
 # include <mln/core/box2d.hh>
-
+# include <mln/core/box3d.hh>
 
 namespace mln
 {
@@ -81,6 +81,34 @@ namespace mln
 	std::cout << std::endl;
       }
 
+      // 3D version
+      template <typename I>
+      void println_with_border(const box3d& b, const Fast_Image<I>& input_)
+      {
+	const I& ima = exact(input_);
+	typedef mln_point(I) P;
+
+	std::size_t len_s = b.len(P::dim - 3);
+	std::size_t len_r = b.len(P::dim - 2);
+	std::size_t len_c = b.len(P::dim - 1);
+	std::size_t border = ima.border ();
+	std::size_t real_len_s = len_s + 2 * border;
+	std::size_t real_len_r = len_r + 2 * border;
+	std::size_t real_len_c = len_c + 2 * border;
+    
+	for (std::size_t k = 0; k < real_len_s; ++k)
+	  {
+	    for (std::size_t j = 0; j < real_len_r; ++j)
+	      {
+		for (std::size_t i = 0; i < real_len_c; ++i)
+		  std::cout << format(ima[k * (real_len_r * real_len_c) + j * real_len_c + i])
+			    << ' ';
+		std::cout << std::endl;
+	      }
+	    std::cout << std::endl;
+	  }
+	std::cout << std::endl;
+      }
     } // end of namespace mln::debug::impl
 
 
