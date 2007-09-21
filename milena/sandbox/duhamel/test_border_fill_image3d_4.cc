@@ -31,9 +31,9 @@
  */
 
 
-#include "debug_print_3d_with_border.hh"
 #include "border_fill.hh"
 #include <mln/core/image3d_b.hh>
+#include <mln/debug/println_with_border.hh>
 
 using namespace mln;
 
@@ -48,6 +48,6 @@ main (void)
   box3d b(make::point3d(-7, -8, -6), make::point3d(-5, -4, -1));
   image3d_b<int> i4(b, 1);
   border::fill (i4, 2);
-  debug::print_3d_with_border(i4);
+  debug::println_with_border(i4);
   std::cout << std::endl;
 }

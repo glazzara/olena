@@ -98,15 +98,17 @@ namespace mln
       }
       // first pass
       {
-	typedef mln_point (I) P;
 	mln_bkd_pixter(const I) p(f.input);
 	//	mln_nixter(const I, N) n(p, f.nbh);
-	mln_qixter(const I, window<P>) n(p, convert::to_upper_window(f.nbh));
+
+	typedef window<mln_dpoint(I)> W;
+	W win = convert::to_upper_window(f.nbh);
+	mln_qixter(const I, W) n(p, win);
 	
 	for_all(p) if (f.handles(p))
 	  {
 	    make_set(p);
-	    for_all(n) if (n > p)
+	    for_all(n)
 	      if (f.equiv(n, p))
 		do_union(n, p);
 	      else
@@ -173,21 +175,21 @@ namespace mln
   
   
   template <typename I_, typename N_, typename O_>
-  struct level_fast_t : mln::labeling::impl::base_fast_<I_,N_,O_>
+  struct level_fast_t : labeling::impl::base_fast_<I_,N_,O_>
   {
     typedef mln_point(I_) P;
     
     // 	typedef mln_pset(I_) S;
     // 	const S& s;
     
-    void init()                            { mln::level::fill(this->output, 0); }
-    bool handles(unsigned p) const         { return mln::labeling::impl::base_fast_<I_,N_,O_>::input[p] == val; }
-    bool equiv(unsigned n, unsigned) const { return mln::labeling::impl::base_fast_<I_,N_,O_>::input[n] == val; }
+    void init()                            { level::fill(this->output, 0); }
+    bool handles(unsigned p) const         { return this->input[p] == val; }
+    bool equiv(unsigned n, unsigned) const { return this->input[n] == val; }
 
     const mln_value(I_)& val;
 
     level_fast_t(const I_& input, const mln_value(I_)& val, const N_& nbh, O_& output)
-      : mln::labeling::impl::base_fast_<I_,N_,O_>(input, nbh, output),
+      : labeling::impl::base_fast_<I_,N_,O_>(input, nbh, output),
 	// 	    s(input.domain()),
 	val(val)
     {}

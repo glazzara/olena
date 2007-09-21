@@ -30,10 +30,10 @@
  * \brief Tests on mln::border::fill.
  */
 
-#include "debug_print_3d_with_border.hh"
 #include "border_fill.hh"
 #include <mln/core/image3d_b.hh>
 #include <mln/value/int_u8.hh>
+#include <mln/debug/println_with_border.hh>
 
 using namespace mln;
 
@@ -48,6 +48,6 @@ main (void)
   box3d b(make::point3d(2, 6, 1), make::point3d(3, 8, 3));
   image3d_b<value::int_u8> i4(b, 1);
   border::fill (i4, 2);
-  debug::print_3d_with_border(i4);
+  debug::println_with_border(i4);
   std::cout << std::endl;
 }

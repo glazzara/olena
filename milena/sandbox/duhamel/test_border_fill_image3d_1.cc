@@ -30,7 +30,7 @@
  * \brief Tests on mln::border::fill.
  */
 
-#include "debug_print_3d_with_border.hh"
+#include <mln/debug/println_with_border.hh>
 #include "border_fill.hh"
 #include <mln/core/image3d_b.hh>
 #include <mln/value/int_u8.hh>
@@ -46,6 +46,6 @@ main (void)
 	    << std::endl;
   image3d_b<value::int_u8> i4(2, 3, 1, 2);
   border::fill (i4, 7);
-  debug::print_3d_with_border(i4);
+  debug::println_with_border(i4);
   std::cout << std::endl;
 }

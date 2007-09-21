@@ -1,5 +1,22 @@
 2007-09-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Update tests with new println.
+
+	* labeling_level.hh,
+	* labeling_level_fast_10000x1000.cc,
+	* labeling_level_generic_10000x1000.cc,
+	* test_border_duplicate_image3d_1.cc,
+	* test_border_duplicate_image3d_2.cc,
+	* test_border_duplicate_image3d_3.cc,
+	* test_border_duplicate_image3d_4.cc,
+	* test_border_fill_image3d_1.cc,
+	* test_border_fill_image3d_2.cc,
+	* test_border_fill_image3d_3.cc,
+	* test_border_fill_image3d_4.cc,
+	* test_debug_iota_3d.cc: Update.
+
+2007-09-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add println_with_border for 3d image.
 
 	* println_with_border.hh: Update 3d version.

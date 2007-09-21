@@ -52,8 +52,8 @@ int main()
 
   unsigned border = 1;
 
-  image2d_b<value::int_u8> i1(10000, 1000, border);
-   i1[10009] = i1[10010] = 2;
+  image2d_b<value::int_u8> i1(1000, 1000, border);
+   i1[1009] = i1[1010] = 2;
 
   unsigned n;
   image2d_b<value::int_u8> out(i1.domain(), border);

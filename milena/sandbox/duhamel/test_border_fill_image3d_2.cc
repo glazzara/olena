@@ -30,10 +30,9 @@
  * \brief Tests on mln::border::fill.
  */
 
-#include "debug_print_3d_with_border.hh"
-#include "border_fill.hh"
 #include <mln/core/image3d_b.hh>
-
+#include "border_fill.hh"
+#include <mln/debug/println_with_border.hh>
 
 using namespace mln;
 
@@ -46,6 +45,6 @@ main (void)
 	    << std::endl;
   image3d_b<int> i3(2, 3, 1, 1);
   border::fill (i3, 6);
-  debug::print_3d_with_border(i3);
+  debug::println_with_border(i3);
   std::cout << std::endl;
 }

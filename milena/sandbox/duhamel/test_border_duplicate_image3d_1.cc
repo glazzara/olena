@@ -30,11 +30,11 @@
  * \brief Tests on mln::border::fill.
  */
 
-#include "debug_print_3d_with_border.hh"
 #include "border_duplicate.hh"
 #include <mln/core/image3d_b.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/debug/iota.hh>
+#include <mln/debug/println_with_border.hh>
 
 using namespace mln;
 
@@ -48,6 +48,6 @@ main (void)
   image3d_b<value::int_u8> ima(2, 3, 1, 2);
   debug::iota (ima);
   border::duplicate (ima);
-  debug::print_3d_with_border(ima);
+  debug::println_with_border(ima);
   std::cout << std::endl;
 }

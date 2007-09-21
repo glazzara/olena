@@ -31,10 +31,11 @@
  */
 
 
-#include "debug_print_3d_with_border.hh"
+
 #include <mln/core/image3d_b.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/debug/iota.hh>
+#include <mln/debug/println_with_border.hh>
 
 using namespace mln;
 
@@ -42,9 +43,8 @@ int
 main (void)
 {
 
-  box3d b(make::point3d(2, 6, 1), make::point3d(3, 8, 3));
-  image3d_b<value::int_u8> ima(b, 1);
+  image3d_b<bool> ima(2,3,3,1);
   debug::iota (ima);
-  debug::print_3d_with_border(ima);
+  debug::println_with_border(ima);
 
 }
