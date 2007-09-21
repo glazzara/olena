@@ -1,5 +1,21 @@
 2007-09-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fixes and add impl::init_with_ for two image2d_b and sub_image.
+
+	* tests/core_clone.cc: New.
+	* mln/core/point.hh: Fix.
+	* mln/core/internal/image_base.hh (hook_data_): New.
+	* mln/core/internal/image_morpher.hh: Fix typo.
+	* mln/core/image2d_b.hh (init_with): Rename as...
+	(init_with_): ...this.
+	(init_with_): Inactivate version with image.
+	(init_with_): New in impl.
+	* mln/core/sub_image.hh (init_with_): New in impl.
+	Update ctors.
+	* mln/border/get.hh: Fix.
+
+2007-09-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update of clone and impl::init_with_ mechanism.
 
 	* mln/core/internal/image_base.hh (init_with_): New.

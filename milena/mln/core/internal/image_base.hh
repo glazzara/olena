@@ -171,6 +171,9 @@ namespace mln
       /// Copy constructor.
       image_base_(const image_base_& rhs);
 
+
+      const util::tracked_ptr< internal::data_<E> >& hook_data_() const { return data_; }
+
     protected:
       image_base_();
 

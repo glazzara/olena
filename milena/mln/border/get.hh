@@ -59,7 +59,7 @@ namespace mln
       template <typename I, typename S, typename E>
       unsigned get__(const mln::internal::image_morpher_<I,S,E>& ima)
       {
-	return border::get(ima.delegatee_());
+	return border::get(*ima.delegatee_());
       }
 
       template <typename S, typename E>

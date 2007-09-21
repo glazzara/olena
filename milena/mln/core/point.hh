@@ -102,7 +102,7 @@ namespace mln
     typedef metal::vec<dim, C> vec_t;
 
     /// Hook to coordinates.
-    operator metal::vec<dim, C>() const;
+    operator metal::vec<M::dim, C>() const;
 
   protected:
     metal::vec<dim, C> coord_;
@@ -159,7 +159,7 @@ namespace mln
   }
 
   template <typename M, typename C>
-  point_<M,C>::operator metal::vec<dim, C>() const
+  point_<M,C>::operator metal::vec<M::dim, C>() const
   {
     return coord_;
   }

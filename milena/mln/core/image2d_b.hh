@@ -150,18 +150,18 @@ namespace mln
 
 
     /// Initialize an empty image.
-    void init_with(const box2d& b, unsigned bdr = border::thickness);
+    void init_with_(const box2d& b, unsigned bdr = border::thickness);
 
 
-    /// Initialize an empty image.
-    template <typename I>
-    void init_with(const Image<I>& other) // FIXME: Remove this soon obsolete code!
-    {
-      mln_precondition(this->data_ == 0);
-      mln_precondition(exact(other).has_data());
-      this->data_ = new internal::data_< image2d_b<T> >(exact(other).bbox(),
-							exact(other).border());
-    }
+//     /// Initialize an empty image.
+//     template <typename I>
+//     void init_with_(const Image<I>& other) // FIXME: Remove this soon obsolete code!
+//     {
+//       mln_precondition(this->data_ == 0);
+//       mln_precondition(exact(other).has_data());
+//       this->data_ = new internal::data_< image2d_b<T> >(exact(other).bbox(),
+// 							exact(other).border());
+//     }
 
 
     /// Test if \p p is valid.
@@ -217,19 +217,30 @@ namespace mln
   namespace impl
   {
 
-    template <typename T, typename I>
-    void init_with_(image2d_b<T>& target, const I& model)
-    {
-      box2d b = model.domain();
-      unsigned bdr = border::get(model);
-      target = image2d_b<T>(b, bdr);
-    }
+    template <typename T, typename J>
+    void init_with_(image2d_b<T>& target, const J& model);
     
   } // end of namespace mln::impl
 
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+  // impl::init_with_
+
+  namespace impl
+  {
+
+    template <typename T, typename J>
+    void init_with_(image2d_b<T>& target, const J& model)
+    {
+      box2d b = model.bbox();
+      unsigned bdr = border::get(model);
+      target.init_with_(b, bdr);
+    }
+    
+  } // end of namespace mln::impl
 
 
   // internal::data_< image2d_b<T> >
@@ -312,18 +323,18 @@ namespace mln
   template <typename T>
   image2d_b<T>::image2d_b(int nrows, int ncols, unsigned bdr)
   {
-    init_with(make::box2d(nrows, ncols), bdr);
+    init_with_(make::box2d(nrows, ncols), bdr);
   }
 
   template <typename T>
   image2d_b<T>::image2d_b(const box2d& b, unsigned bdr)
   {
-    init_with(b, bdr);
+    init_with_(b, bdr);
   }
 
   template <typename T>
   void
-  image2d_b<T>::init_with(const box2d& b, unsigned bdr)
+  image2d_b<T>::init_with_(const box2d& b, unsigned bdr)
   {
     mln_precondition(! this->has_data());
     this->data_ = new internal::data_< image2d_b<T> >(b, bdr);

@@ -47,11 +47,12 @@ namespace mln
     {
       data_(I& ima, const S& pset);
 
-      I& ima_;
-      const S& pset_;
+      I ima_;
+      S pset_;
     };
 
   } // end of namespace mln::internal
+
 
 
 
@@ -69,12 +70,16 @@ namespace mln
     /// Constructor.
     sub_image(I& ima, const S& pset);
 
+    /// Initialization.
+    void init_with_(I& ima, const S& pset);
+
     /// Give the definition domain.
     const S& domain() const;
 
     /// Const promotion via convertion.
     operator sub_image<const I, S>() const;
   };
+
 
 
 
@@ -86,7 +91,34 @@ namespace mln
 
 
 
+  namespace impl
+  {
+
+    template <typename I, typename S, typename J>
+    void init_with_(sub_image<I,S>& target, const J& model);
+    
+  } // end of namespace mln::impl
+
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+  // impl::init_with_
+
+  namespace impl
+  {
+
+    template <typename I, typename S, typename J>
+    void init_with_(sub_image<I,S>& target, const J& model)
+    {
+      I ima;
+      init_with_(ima, model); // rec
+      S pset = model.domain();
+      target.init_with_(ima, pset);
+    }
+    
+  } // end of namespace mln::impl
+
 
   // internal::data_< sub_image<I,S> >
 
@@ -106,14 +138,22 @@ namespace mln
   // sub_image<I,S>
 
   template <typename I, typename S>
-  sub_image<I,S>::sub_image(I& ima, const S& pset)
+  sub_image<I,S>::sub_image()
   {
-    this->data_ = new internal::data_< sub_image<I,S> >(ima, pset);
   }
 
   template <typename I, typename S>
-  sub_image<I,S>::sub_image()
+  sub_image<I,S>::sub_image(I& ima, const S& pset)
   {
+    init_with_(ima, pset);
+  }
+
+  template <typename I, typename S>
+  void
+  sub_image<I,S>::init_with_(I& ima, const S& pset)
+  {
+    mln_precondition(! this->has_data());
+    this->data_ = new internal::data_< sub_image<I,S> >(ima, pset);
   }
 
   template <typename I, typename S>

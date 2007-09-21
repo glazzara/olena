@@ -110,7 +110,7 @@ namespace mln
     image_morpher_<I,S,E>::has_data() const
     {
       return
-	this->data != 0 &&
+	this->data_ != 0 &&
 	this->delegatee_() != 0 &&
 	this->delegatee_()->has_data();
     }
