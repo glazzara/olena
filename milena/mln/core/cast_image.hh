@@ -31,6 +31,8 @@
 /*! \file mln/core/cast_image.hh
  *
  * \brief Definition of an image class FIXME
+ *
+ * \todo Rename as cast_image (without '_')!
  */
 
 # include <mln/core/internal/image_value_morpher.hh>
@@ -41,14 +43,30 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename T, typename I> class cast_image_;
+
+
+  namespace internal
+  {
+
+    template <typename T, typename I>
+    struct data_< cast_image_<T,I> >
+    {
+      data_(const I& ima);
+      const I& ima_;
+    };
+
+  } // end of namespace mln::internal
+
+
+
   /*! \brief FIXME
    *
    */
   template <typename T, typename I>
-  class cast_image_ : public internal::image_value_morpher_< I, cast_image_<T,I> >
+  struct cast_image_ : public internal::image_value_morpher_< I, cast_image_<T,I> >
   {
-  public:
-
     /// Value associated type.
     typedef T value;
 
@@ -78,12 +96,6 @@ namespace mln
 
     /// Give the set of values of the image.
     const vset& values() const;
-
-    /// Access to delegatee pointer.
-    const I* impl_delegatee_() const;
-
-  protected:
-    const I& ima_;
   };
 
 
@@ -101,26 +113,43 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+  // internal::data_< cast_image_<T,I> >
+
+  namespace internal
+  {
+
+    template <typename T, typename I>
+    data_< cast_image_<T,I> >::data_(const I& ima)
+      : ima_(ima)
+    {
+    }
+
+  } // end of namespace mln::internal
+
+
+  // cast_image_<T,I>
+
   template <typename T, typename I>
   cast_image_<T,I>::cast_image_(const Image<I>& ima)
-    : ima_(exact(ima))
   {
     mln_precondition(exact(ima).has_data());
+    this->data_ = new internal::data_< cast_image_<T,I> >(exact(ima));
   }
 
   template <typename T, typename I>
   T
   cast_image_<T,I>::operator()(const mln_psite(I)& p) const
   {
-    mln_precondition(ima_.owns_(p));
-    return mln::value::cast<T>( ima_(p) );
+    mln_precondition(this->data_->ima_.owns_(p));
+    return mln::value::cast<T>( this->data_->ima_(p) );
   }
 
   template <typename T, typename I>
   T
   cast_image_<T,I>::operator()(const mln_psite(I)& p)
   {
-    return mln::value::cast<T>( ima_(p) );
+    return mln::value::cast<T>( this->data_->ima_(p) );
   }
 
   template <typename T, typename I>
@@ -128,13 +157,6 @@ namespace mln
   cast_image_<T,I>::values() const
   {
     return vset::the();
-  }
-
-  template <typename T, typename I>
-  const I*
-  cast_image_<T,I>::impl_delegatee_() const
-  {
-    return & ima_;
   }
   
 # endif // ! MLN_INCLUDE_ONLY

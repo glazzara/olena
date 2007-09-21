@@ -33,9 +33,8 @@
  * \brief Definition of an image class FIXME
  */
 
-# include <mln/core/internal/image_base.hh>
+# include <mln/core/internal/image_primary.hh>
 # include <mln/core/concept/function.hh>
-# include <mln/core/internal/tracked_ptr.hh>
 # include <mln/value/set.hh>
 
 
@@ -52,49 +51,37 @@ namespace mln
    */
   template <typename F, typename S>
   pw::image<F,S>
-
   operator | (const Function_p2v<F>& f, const Point_Set<S>& ps);
+
+
+
+  namespace internal
+  {
+
+    /// Data structure for mln::pw::image
+    template <typename F, typename S>
+    struct data_< mln::pw::image<F,S> >
+    {
+      data_(const F& f, const S& ps);
+      F f_;
+      S pset_;
+    };
+
+  } // end of namespace mln::internal
 
 
 
   namespace pw
   {
 
-    /*! \brief data structure for pw::image
-     *
-     */
-    template <typename F, typename S>
-    struct image_data
-    {
-    public:
-      image_data(const Function_p2v<F>& f, const Point_Set<S>& ps);
-      F f_;
-      S pset_;
-    };
-
-    template <typename F, typename S>
-    image_data<F, S>::image_data(const Function_p2v<F>& f, const Point_Set<S>& ps)
-      : f_(exact(f)),
-	pset_(exact(ps))
-    {
-    }
-
     /*! \brief FIXME
      *
      */
     template <typename F, typename S>
-    class image : public internal::image_base_< S, image<F,S> >
+    struct image : public internal::image_primary_< S, image<F,S> >
     {
-      typedef internal::image_base_< S, image<F,S> > super_;
-    public:
-
-
       /// Skeleton.
       typedef image< tag::function<F>, tag::pset<S> > skeleton;
-
-
-      // From super class.
-      typedef mln_psite(super_) psite;
 
 
       /// Value associated type.
@@ -110,31 +97,27 @@ namespace mln
       typedef mln::value::set<mln_result(F)> vset;
 
 
-      /// Constructor.
-      image(const Function_p2v<F>& f, const Point_Set<S>& ps);
+      /// Constructor without argument.
       image();
 
+      /// Constructor.
+      image(const Function_p2v<F>& f, const Point_Set<S>& ps);
 
-      /// Test if this image has been initialized.
-      bool has_data() const;
 
       /// Test if a pixel value is accessible at \p p.
-      bool owns_(const psite& p) const;
+      bool owns_(const mln_psite(S)& p) const;
 
       /// Give the definition domain.
       const S& domain() const;
 
       /// Read-only access of pixel value at point site \p p.
-      mln_result(F) operator()(const psite& p) const;
+      mln_result(F) operator()(const mln_psite(S)& p) const;
 
       /// Read-write access is present but disabled.
-      void operator()(const psite&);
+      void operator()(const mln_psite(S)&);
 
       /// Give the set of values of the image.
       const vset& values() const;
-
-    protected:
-      tracked_ptr< image_data<F, S> > data_;
     };
 
   } // end of namespace mln::pw
@@ -143,6 +126,8 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  // Operator.
+
   template <typename F, typename S>
   pw::image<F,S>
   operator | (const Function_p2v<F>& f, const Point_Set<S>& ps)
@@ -150,6 +135,22 @@ namespace mln
     pw::image<F,S> tmp(f, ps);
     return tmp;
   }
+
+  // internal::data_< pw::image<F,S> >
+
+  namespace internal
+  {
+
+    template <typename F, typename S>
+    data_< pw::image<F,S> >::data_(const F& f, const S& ps)
+      : f_(f),
+	pset_(ps)
+    {
+    }
+
+  }
+
+  // pw::image<F,S>
 
   namespace pw
   {
@@ -162,39 +163,33 @@ namespace mln
     template <typename F, typename S>
     image<F,S>::image(const Function_p2v<F>& f, const Point_Set<S>& ps)
     {
-      data_ = new image_data<F, S>(f, ps);
+      this->data_ = new internal::data_< pw::image<F,S> >(exact(f), exact(ps));
     }
 
     template <typename F, typename S>
-    bool image<F,S>::has_data() const
+    bool image<F,S>::owns_(const mln_psite(S)& p) const
     {
-      return true;
-    }
-
-    template <typename F, typename S>
-    bool image<F,S>::owns_(const psite& p) const
-    {
-      return data_->pset_.has(p);
+      return this->data_->pset_.has(p);
     }
 
     template <typename F, typename S>
     const S&
     image<F,S>::domain() const
     {
-      return data_->pset_;
+      return this->data_->pset_;
     }
 
     template <typename F, typename S>
     mln_result(F)
-      image<F,S>::operator()(const psite& p) const
+      image<F,S>::operator()(const mln_psite(S)& p) const
     {
-      mln_precondition(data_->pset_.has(p));
-      return data_->f_(p);
+      mln_precondition(this->data_->pset_.has(p));
+      return this->data_->f_(p);
     }
 
     template <typename F, typename S>
     void
-    image<F,S>::operator()(const psite&)
+    image<F,S>::operator()(const mln_psite(S)&)
     {
       mln_invariant(0); // FIXME: Turn into a compile-time error...
     }

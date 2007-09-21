@@ -34,29 +34,43 @@
 namespace mln
 {
 
+
+  // Fwd decl.
+  template <typename I, typename S> class sub_image;
+
+
+  namespace internal
+  {
+
+    template <typename I, typename S>
+    struct data_< sub_image<I,S> >
+    {
+      data_(I& ima, const S& pset);
+
+      I& ima_;
+      const S& pset_;
+    };
+
+  } // end of namespace mln::internal
+
+
+
   // FIXME: Doc!
 
   template <typename I, typename S>
-  class sub_image : public internal::image_domain_morpher_< I, S, sub_image<I,S> >
+  struct sub_image : public internal::image_domain_morpher_< I, S, sub_image<I,S> >
   {
-  public:
-
     /// Skeleton.
     typedef sub_image< tag::image<I>, tag::pset<S> > skeleton;
 
+    /// Constructor.
     sub_image(I& ima, const S& pset);
 
+    /// Give the definition domain.
     const S& domain() const;
 
     /// Const promotion via convertion.
     operator sub_image<const I, S>() const;
-
-    mlc_const(I)* impl_delegatee_() const;
-    I* impl_delegatee_();
-
-  protected:
-    I& ima_;
-    const S& pset_;
   };
 
 
@@ -71,42 +85,46 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  // internal::data_< sub_image<I,S> >
+
+  namespace internal
+  {
+
+    template <typename I, typename S>
+    data_< sub_image<I,S> >::data_(I& ima, const S& pset)
+      : ima_(ima),
+	pset_(pset)
+    {
+    }
+
+  } // end of namespace mln::internal
+
+
+  // sub_image<I,S>
+
   template <typename I, typename S>
   sub_image<I,S>::sub_image(I& ima, const S& pset)
-    : ima_(ima),
-      pset_(pset)
   {
+    this->data_ = new internal::data_< sub_image<I,S> >(ima, pset);
   }
 
   template <typename I, typename S>
   const S&
   sub_image<I,S>::domain() const
   {
-    return pset_;
+    return this->data_->pset_;
   }
 
   template <typename I, typename S>
   sub_image<I,S>::operator sub_image<const I, S>() const
   {
-    sub_image<const I, S> tmp(this->adaptee_, this->pset_);
+    sub_image<const I, S> tmp(this->data_->ima_,
+			      this->data_->pset_);
     return tmp;
   }
 
-  template <typename I, typename S>
-  mlc_const(I)*
-  sub_image<I,S>::impl_delegatee_() const
-  {
-    return & ima_;
-  }
 
-  template <typename I, typename S>
-  I*
-  sub_image<I,S>::impl_delegatee_()
-  {
-    return & ima_;
-  }
-
-  // operator
+  // Operators.
 
   template <typename I, typename S>
   sub_image<const I, S>

@@ -56,17 +56,21 @@ namespace mln
 
       typedef I delegatee;
 
-      /// Return the delegatee_ pointer.
+      /// Return the delegatee_ pointer; default code.
       mlc_const(I)* delegatee_() const;
 
-      /// Return the delegatee_ pointer (non-const version).
+      /// Return the delegatee_ pointer (non-const version); default code.
       I* delegatee_();
 
-      /// Convertion to the underlying (morphed) image.
-      operator I() const; // FIXME: Dangerous?
-
-      /// Default for has_data is "delegatee has data".
+      /* \brief Test if this image has been initialized; default impl.
+       *
+       * This default impl is stronger than the one inherited from
+       * image_base_.
+       */
       bool has_data() const;
+
+      /// Convertion to the underlying (morphed) image.
+      operator I() const; // FIXME: Very dangerous? Remove?
 
     protected:
       image_morpher_();
@@ -84,21 +88,20 @@ namespace mln
     mlc_const(I)*
     image_morpher_<I,S,E>::delegatee_() const
     {
-      return exact(this)->impl_delegatee_();
+      return this->data_ == 0 ? 0 : & this->data_->ima_;
     }
 
     template <typename I, typename S, typename E>
     I*
     image_morpher_<I,S,E>::delegatee_()
     {
-      return exact(this)->impl_delegatee_();
+      return this->data_ == 0 ? 0 : & this->data_->ima_;
     }
 
     template <typename I, typename S, typename E>
     image_morpher_<I,S,E>::operator I() const
     {
       mln_precondition(exact(this)->has_data());
-      mln_precondition(this->delegatee_() != 0); // FIXME: Redundant?
       return * this->delegatee_();
     }
 
@@ -106,8 +109,10 @@ namespace mln
     bool
     image_morpher_<I,S,E>::has_data() const
     {
-      mln_precondition(this->delegatee_() != 0); // FIXME: Redundant?
-      return this->delegatee_()->has_data();
+      return
+	this->data != 0 &&
+	this->delegatee_() != 0 &&
+	this->delegatee_()->has_data();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

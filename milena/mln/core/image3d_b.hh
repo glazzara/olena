@@ -33,7 +33,7 @@
  * \brief Definition of the basic mln::image3d_b class.
  */
 
-# include <mln/core/internal/image_base.hh>
+# include <mln/core/internal/image_primary.hh>
 # include <mln/core/box3d.hh>
 
 # include <mln/border/thickness.hh>
@@ -41,9 +41,6 @@
 # include <mln/fun/i2v/all.hh>
 
 # include <mln/core/line_piter.hh>
-
-# include <mln/core/internal/tracked_ptr.hh>
-# include <mln/core/image3d_b_data.hh>
 
 // FIXME:
 
@@ -64,10 +61,35 @@ namespace mln
     template <typename T>
     struct is_fast< image3d_b<T> >
     {
-	typedef metal::true_ ret;
+      typedef metal::true_ ret;
     };
 
   } // end of mln::trait
+
+
+  namespace internal
+  {
+
+    template <typename T>
+    struct data_< image3d_b<T> >
+    {
+      data_(const box3d& b, unsigned bdr);
+      ~data_();
+
+      T*  buffer_;
+      T*** array_;
+
+      box3d b_;  // theoretical box
+      unsigned bdr_;
+      box3d vb_; // virtual box, i.e., box including the virtual border
+
+      void update_vb_();
+      void allocate_();
+      void deallocate_();
+
+    };
+
+  } // end of namespace mln::internal
 
 
 
@@ -78,7 +100,7 @@ namespace mln
    * thickness around data.
    */
   template <typename T>
-  struct image3d_b : public internal::image_base_< box3d, image3d_b<T> >
+  struct image3d_b : public internal::image_primary_< box3d, image3d_b<T> >
   {
     // Warning: just to make effective types appear in Doxygen:
     typedef box3d   pset;
@@ -112,26 +134,14 @@ namespace mln
     /// Constructor without argument.
     image3d_b();
 
-    /// Constructor with the numbers of indexes and the
-    /// border thickness.
-    image3d_b(int nslis, int nrows, int ncols, unsigned bdr = border::thickness);
-
     /// Constructor with a box and the border thickness (default is
     /// 3).
     image3d_b(const box3d& b, unsigned bdr = border::thickness);
 
-    /// Copy constructor.
-    image3d_b(const image3d_b<T>& rhs);
+    /// Constructor with the numbers of indexes and the
+    /// border thickness.
+    image3d_b(int nslis, int nrows, int ncols, unsigned bdr = border::thickness);
 
-    /// Assignment operator.
-    image3d_b& operator=(const image3d_b<T>& rhs);
-
-    /// Destructor.
-    ~image3d_b();
-
-
-    /// Initialize an empty image.
-    void init_with(int nslis, int nrows, int ncols, unsigned bdr = border::thickness);
 
     /// Initialize an empty image.
     void init_with(const box3d& b, unsigned bdr = border::thickness);
@@ -139,9 +149,6 @@ namespace mln
 
     /// Test if \p p is valid.
     bool owns_(const point3d& p) const;
-
-    /// Test if this image has been initialized.
-    bool has_data() const;
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -187,48 +194,113 @@ namespace mln
 
     /// Give a hook to the value buffer.
     T* buffer();
-
-
-  private:
-
-    tracked_ptr< image3d_b_data<T> > data_;
-
-    typedef internal::image_base_< box3d, image3d_b<T> > super;
   };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // ctors
+  // internal::data_< image3d_b<T> >
+
+  namespace internal
+  {
+
+    template <typename T>
+    data_< image3d_b<T> >::data_(const box3d& b, unsigned bdr)
+      : buffer_(0),
+	array_ (0),
+	b_     (b),
+	bdr_   (bdr)
+    {
+      allocate_();
+    }
+
+    template <typename T>
+    data_< image3d_b<T> >::~data_()
+    {
+      deallocate_();
+    }
+
+    template <typename T>
+    void
+    data_< image3d_b<T> >::update_vb_()
+    {
+      vb_.pmin() = b_.pmin() - dpoint3d(all(bdr_));
+      vb_.pmax() = b_.pmax() + dpoint3d(all(bdr_));
+    }
+
+    template <typename T>
+    void
+    data_< image3d_b<T> >::allocate_()
+    {
+      update_vb_();
+      unsigned
+	ns = vb_.len(0),
+	nr = vb_.len(1),
+	nc = vb_.len(2);
+      buffer_ = new T[nr * nc * ns];
+      array_ = new T**[ns];
+      T* buf = buffer_ - vb_.pmin().col();
+      for (unsigned i = 0; i < ns; ++i)
+	{
+	  T** tmp = new T*[nr];
+	  array_[i] = tmp;
+	  for (unsigned j = 0; j < nr; ++j)
+	    {
+	      array_[i][j] = buf;
+	      buf += nc;
+	    }
+	  array_[i] -= vb_.pmin().row();
+	}
+      array_ -= vb_.pmin().sli();
+      mln_postcondition(vb_.len(0) == b_.len(0) + 2 * bdr_);
+    }
+
+    template <typename T>
+    void
+    data_< image3d_b<T> >::deallocate_()
+    {
+      if (buffer_)
+	{
+	  delete[] buffer_;
+	  buffer_ = 0;
+	}
+      for (typename point3d::coord i = vb_.pmin().sli(); i <= vb_.pmax().sli(); ++i)
+	{
+	  if (array_[i])
+	    {
+	      array_[i] += vb_.pmin().row();
+	      delete[] array_[i];
+	      array_[i] = 0;
+	    }
+	}
+      if (array_)
+	{
+	  array_ += vb_.pmin().sli();
+	  delete[] array_;
+	  array_ = 0;
+	}
+    }
+
+  } // end of namespace mln::internal
+
+  // image3d_b<T>
 
   template <typename T>
   image3d_b<T>::image3d_b()
-    : data_(0)
   {
-    data_->bdr_ = border::thickness; // default value in ctors.
-  }
-
-  template <typename T>
-  image3d_b<T>::image3d_b(int nslis, int nrows, int ncols, unsigned bdr)
-    : data_(0)
-  {
-    init_with(nslis, nrows, ncols, bdr);
-  }
-
-  template <typename T>
-  void
-  image3d_b<T>::init_with(int nslis, int nrows, int ncols, unsigned bdr)
-  {
-    mln_precondition(! this->has_data());
-    data_ = new image3d_b_data<T>(make::box3d(nslis, nrows, ncols), bdr);
   }
 
   template <typename T>
   image3d_b<T>::image3d_b(const box3d& b, unsigned bdr)
-    : data_(0)
   {
     init_with(b, bdr);
+  }
+
+  template <typename T>
+  image3d_b<T>::image3d_b(int nslis, int nrows, int ncols, unsigned bdr)
+  {
+    init_with(make::box3d(nslis, nrows, ncols), bdr);
   }
 
   template <typename T>
@@ -236,37 +308,7 @@ namespace mln
   image3d_b<T>::init_with(const box3d& b, unsigned bdr)
   {
     mln_precondition(! this->has_data());
-    data_ = new image3d_b_data<T>(b, bdr);
-  }
-
-  template <typename T>
-  image3d_b<T>::image3d_b(const image3d_b<T>& rhs)
-    : super(rhs),
-      data_(rhs.data_)
-  {
-  }
-
-  // assignment
-
-  template <typename T>
-  image3d_b<T>&
-  image3d_b<T>::operator=(const image3d_b<T>& rhs)
-  {
-    mln_precondition(rhs.has_data());
-    if (& rhs == this)
-      return *this;
-
-    this->data_ = rhs.data_;
-    return *this;
-  }
-
-  // methods
-
-  template <typename T>
-  bool
-  image3d_b<T>::has_data() const
-  {
-    return data_ != 0;
+    this->data_ = new internal::data_< image3d_b<T> >(b, bdr);
   }
 
   template <typename T>
@@ -357,11 +399,6 @@ namespace mln
   }
 
   template <typename T>
-  image3d_b<T>::~image3d_b()
-  {
-  }
-
-  template <typename T>
   const T*
   image3d_b<T>::buffer() const
   {
@@ -397,8 +434,6 @@ namespace mln
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
     return p;
   }
-
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

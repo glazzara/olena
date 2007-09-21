@@ -33,17 +33,13 @@
  * \brief Definition of the basic mln::image2d_b class.
  */
 
-# include <mln/core/internal/image_base.hh>
+# include <mln/core/internal/image_primary.hh>
 # include <mln/core/box2d.hh>
 
 # include <mln/border/thickness.hh>
 # include <mln/value/set.hh>
 # include <mln/fun/i2v/all.hh>
-
 # include <mln/core/line_piter.hh>
-
-# include <mln/core/internal/tracked_ptr.hh>
-# include <mln/core/image2d_b_data.hh>
 
 // FIXME:
 
@@ -56,6 +52,32 @@ namespace mln
 
   // Fwd decl.
   template <typename T> struct image2d_b;
+
+
+
+  namespace internal
+  {
+
+    template <typename T>
+    struct data_< image2d_b<T> >
+    {
+      data_(const box2d& b, unsigned bdr);
+      ~data_();
+      
+      T*  buffer_;
+      T** array_;
+      
+      box2d b_;  // theoretical box
+      unsigned bdr_;
+      box2d vb_; // virtual box, i.e., box including the virtual border
+
+      void update_vb_();
+      void allocate_();
+      void deallocate_();
+    };
+
+  } // end of namespace mln::internal
+
 
 
   namespace trait
@@ -78,7 +100,7 @@ namespace mln
    * thickness around data.
    */
   template <typename T>
-  struct image2d_b : public internal::image_base_< box2d, image2d_b<T> >
+  struct image2d_b : public internal::image_primary_< box2d, image2d_b<T> >
   {
     // Warning: just to make effective types appear in Doxygen:
     typedef box2d   pset;
@@ -142,19 +164,17 @@ namespace mln
 
     /// Initialize an empty image.
     template <typename I>
-    void init_with(const Image<I>& other)
+    void init_with(const Image<I>& other) // FIXME: Remove this soon obsolete code!
     {
-      mln_precondition(data_ == 0);
+      mln_precondition(this->data_ == 0);
       mln_precondition(exact(other).has_data());
-      data_ = new image2d_b_data<T>(exact(other).bbox()); // FIXME: border?
+      this->data_ = new internal::data_< image2d_b<T> >(exact(other).bbox(),
+							exact(other).border());
     }
 
 
     /// Test if \p p is valid.
     bool owns_(const point2d& p) const;
-
-    /// Test if this image has been initialized.
-    bool has_data() const;
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -204,8 +224,6 @@ namespace mln
 
   private:
 
-    tracked_ptr< image2d_b_data<T> > data_;
-
     typedef internal::image_base_< box2d, image2d_b<T> > super;
   };
 
@@ -213,17 +231,86 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // ctors
+
+  // internal::data_< image2d_b<T> >
+
+  namespace internal
+  {
+
+    template <typename T>
+    data_< image2d_b<T> >::data_(const box2d& b, unsigned bdr)
+      : buffer_(0),
+	array_ (0),
+	b_     (b),
+	bdr_   (bdr)
+    {
+      allocate_();
+    }
+
+    template <typename T>
+    data_< image2d_b<T> >::~data_()
+    {
+      deallocate_();
+    }
+
+    template <typename T>
+    void
+    data_< image2d_b<T> >::update_vb_()
+    {
+      vb_.pmin() = b_.pmin() - dpoint2d(all(bdr_));
+      vb_.pmax() = b_.pmax() + dpoint2d(all(bdr_));
+    }
+
+    template <typename T>
+    void
+    data_< image2d_b<T> >::allocate_()
+    {
+      update_vb_();
+      unsigned
+	nr = vb_.len(0),
+	nc = vb_.len(1);
+      buffer_ = new T[nr * nc];
+      array_ = new T*[nr];
+      T* buf = buffer_ - vb_.pmin().col();
+      for (unsigned i = 0; i < nr; ++i)
+	{
+	  array_[i] = buf;
+	  buf += nc;
+	}
+      array_ -= vb_.pmin().row();
+      mln_postcondition(vb_.len(0) == b_.len(0) + 2 * bdr_);
+      mln_postcondition(vb_.len(1) == b_.len(1) + 2 * bdr_);
+    }
+
+    template <typename T>
+    void
+    data_< image2d_b<T> >::deallocate_()
+    {
+      if (buffer_)
+	{
+	  delete[] buffer_;
+	  buffer_ = 0;
+	}
+      if (array_)
+	{
+	  array_ += vb_.pmin().row();
+	  delete[] array_;
+	  array_ = 0;
+	}
+    }
+
+  } // end of namespace mln::internal
+
+
+  // image2d_b<T>
 
   template <typename T>
   image2d_b<T>::image2d_b()
-    : data_(0)
   {
   }
 
   template <typename T>
   image2d_b<T>::image2d_b(int nrows, int ncols, unsigned bdr)
-    : data_(0)
   {
     init_with(nrows, ncols, bdr);
   }
@@ -233,7 +320,7 @@ namespace mln
   image2d_b<T>::init_with(int nrows, int ncols, unsigned bdr)
   {
     mln_precondition(! this->has_data());
-    data_ = new image2d_b_data<T>(make::box2d(nrows, ncols), bdr);
+    this->data_ = new internal::data_< image2d_b<T> >(make::box2d(nrows, ncols), bdr);
   }
 
   template <typename T>
@@ -247,13 +334,11 @@ namespace mln
   image2d_b<T>::init_with(const box2d& b, unsigned bdr)
   {
     mln_precondition(! this->has_data());
-    data_ = new image2d_b_data<T>(b, bdr);
+    this->data_ = new internal::data_< image2d_b<T> >(b, bdr);
   }
 
   template <typename T>
   image2d_b<T>::image2d_b(const image2d_b<T>& rhs)
-    : super(rhs),
-      data_(rhs.data_)
   {
   }
 
@@ -274,13 +359,6 @@ namespace mln
   // methods
 
   template <typename T>
-  bool
-  image2d_b<T>::has_data() const
-  {
-    return data_ != 0;
-  }
-
-  template <typename T>
   const typename image2d_b<T>::vset&
   image2d_b<T>::values() const
   {
@@ -292,7 +370,7 @@ namespace mln
   image2d_b<T>::domain() const
   {
     mln_precondition(this->has_data());
-    return data_->b_;
+    return this->data_->b_;
   }
 
   template <typename T>
@@ -300,7 +378,7 @@ namespace mln
   image2d_b<T>::border() const
   {
     mln_precondition(this->has_data());
-    return data_->bdr_;
+    return this->data_->bdr_;
   }
 
   template <typename T>
@@ -308,7 +386,7 @@ namespace mln
   image2d_b<T>::ncells() const
   {
     mln_precondition(this->has_data());
-    return data_->vb_.npoints();
+    return this->data_->vb_.npoints();
   }
 
   template <typename T>
@@ -316,7 +394,7 @@ namespace mln
   image2d_b<T>::owns_(const point2d& p) const
   {
     mln_precondition(this->has_data());
-    return data_->vb_.has(p);
+    return this->data_->vb_.has(p);
   }
 
   template <typename T>
@@ -324,7 +402,7 @@ namespace mln
   image2d_b<T>::operator()(const point2d& p) const
   {
     mln_precondition(this->owns_(p));
-    return data_->array_[p.row()][p.col()];
+    return this->data_->array_[p.row()][p.col()];
   }
 
   template <typename T>
@@ -332,7 +410,7 @@ namespace mln
   image2d_b<T>::operator()(const point2d& p)
   {
     mln_precondition(this->owns_(p));
-    return data_->array_[p.row()][p.col()];
+    return this->data_->array_[p.row()][p.col()];
   }
 
   template <typename T>
@@ -340,7 +418,7 @@ namespace mln
   image2d_b<T>::operator[](unsigned o) const
   {
     mln_precondition(o < ncells());
-    return *(data_->buffer_ + o);
+    return *(this->data_->buffer_ + o);
   }
 
   template <typename T>
@@ -348,7 +426,7 @@ namespace mln
   image2d_b<T>::operator[](unsigned o)
   {
     mln_precondition(o < ncells());
-    return *(data_->buffer_ + o);
+    return *(this->data_->buffer_ + o);
   }
 
   template <typename T>
@@ -356,7 +434,7 @@ namespace mln
   image2d_b<T>::at(int row, int col) const
   {
     mln_precondition(this->owns_(make::point2d(row, col)));
-    return data_->array_[row][col];
+    return this->data_->array_[row][col];
   }
 
   template <typename T>
@@ -364,7 +442,7 @@ namespace mln
   image2d_b<T>::at(int row, int col)
   {
     mln_precondition(this->owns_(make::point2d(row, col)));
-    return data_->array_[row][col];
+    return this->data_->array_[row][col];
   }
 
   template <typename T>
@@ -377,7 +455,7 @@ namespace mln
   image2d_b<T>::buffer() const
   {
     mln_precondition(this->has_data());
-    return data_->buffer_;
+    return this->data_->buffer_;
   }
 
   template <typename T>
@@ -385,7 +463,7 @@ namespace mln
   image2d_b<T>::buffer()
   {
     mln_precondition(this->has_data());
-    return data_->buffer_;
+    return this->data_->buffer_;
   }
 
   template <typename T>
@@ -393,7 +471,7 @@ namespace mln
   image2d_b<T>::offset(const dpoint2d& dp) const
   {
     mln_precondition(this->has_data());
-    int o = dp[0] * data_->vb_.len(1) + dp[1];
+    int o = dp[0] * this->data_->vb_.len(1) + dp[1];
     return o;
   }
 
@@ -402,8 +480,8 @@ namespace mln
   image2d_b<T>::point_at_offset(unsigned o) const
   {
     mln_precondition(o < ncells());
-    point2d p = make::point2d(o / data_->vb_.len(1) + data_->vb_.min_row(),
-			      o % data_->vb_.len(1) + data_->vb_.min_col());
+    point2d p = make::point2d(o / this->data_->vb_.len(1) + this->data_->vb_.min_row(),
+			      o % this->data_->vb_.len(1) + this->data_->vb_.min_col());
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
     return p;
   }

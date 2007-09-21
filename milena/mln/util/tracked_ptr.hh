@@ -25,8 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_TRACKED_PTR_HH
-# define MLN_CORE_INTERNAL_TRACKED_PTR_HH
+#ifndef MLN_UTIL_TRACKED_PTR_HH
+# define MLN_UTIL_TRACKED_PTR_HH
+
+/*! \file mln/util/tracked_ptr.hh
+ *
+ * \brief Definition of a smart pointer for shared data with tracking.
+ *
+ * \todo Split defs from decls.
+ */
 
 # include <set>
 # include <iostream>
@@ -34,8 +41,12 @@
 # include <mln/core/contract.hh>
 
 
+
 namespace mln
 {
+
+  namespace util
+  {
 
     template <typename T>
     struct tracked_ptr
@@ -273,9 +284,11 @@ namespace mln
     }
 
 
-# endif
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::util
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_TRACKED_PTR_HH
+#endif // ! MLN_UTIL_TRACKED_PTR_HH

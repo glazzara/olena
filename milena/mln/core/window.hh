@@ -41,6 +41,7 @@
 
 # include <mln/convert/to_dpoint.hh>
 # include <mln/geom/sym.hh>
+# include <mln/metal/is_a.hh>
 
 
 namespace mln
@@ -116,6 +117,7 @@ namespace mln
   template <typename D>
   window<D>::window()
   {
+    mln::metal::is_a<D, Dpoint>::check();
   }
 
   template <typename D>

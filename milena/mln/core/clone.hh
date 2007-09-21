@@ -25,71 +25,62 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_IMAGE_VALUE_MORPHER_HH
-# define MLN_CORE_INTERNAL_IMAGE_VALUE_MORPHER_HH
+#ifndef MLN_CORE_CLONE_HH
+# define MLN_CORE_CLONE_HH
 
-/*! \file mln/core/internal/image_value_morpher.hh
+/*! \file mln/core/clone.hh
  *
- * \brief Definition of a base class for image morphers w.r.t. value.
+ * \brief Clone an image, that is, get an effective copy.
  */
 
-# include <mln/core/internal/image_morpher.hh>
+# include <mln/core/concept/image.hh>
 
 
 namespace mln
 {
 
-  namespace internal
-  {
+  /*! Clone the image \p ima with the values of the image \p data.
+   *
+   * \param[in,out] ima The image to be cloneed.
+   * \param[in] data The image.
+   *
+   * \warning The definition domain of \p ima has to be included in
+   * the one of \p data.
+   *
+   * \pre \p ima.domain <= \p data.domain.
+   *
+   * \todo Use memcpy when possible.
+   */
+  template <typename I>
+  mln_concrete(I) clone(const Image<I>& ima);
 
-
-    /*! \brief A base class for image morphers w.r.t. value.
-     *
-     * Parameter \p S is a point set type.
-     *
-     * \internal
-     */
-    template <typename I, typename E>
-    class image_value_morpher_ : public image_morpher_<I, mln_pset(I), E>
-    {
-    public:
-
-      const mln_pset(I)& domain() const;
-      bool owns_(const mln_psite(I)& p) const;
-
-    protected:
-      image_value_morpher_();
-    };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename E>
-    image_value_morpher_<I,E>::image_value_morpher_()
-    {
-    }
+  namespace impl
+  {
 
-    template <typename I, typename E>
-    const mln_pset(I)&
-    image_value_morpher_<I,E>::domain() const
+    template <typename I>
+    void clone_(mln_concrete(I)& result, const Image<I>& ima)
     {
-      mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->domain();
-    }
+      std::cerr << "oops" << std::endl; // FIXME: Fake code.
+    }    
 
-    template <typename I, typename E>
-    bool
-    image_value_morpher_<I,E>::owns_(const mln_psite(I)& p) const
-    {
-      mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->owns_(p);
-    }
+  } // end of namespace mln::impl
+
+
+  template <typename I>
+  mln_concrete(I) clone(const Image<I>& ima)
+  {
+    mln_concrete(I) tmp;
+    impl::clone_(ima, tmp);
+    return tmp;
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::internal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_IMAGE_VALUE_MORPHER_HH
+#endif // ! MLN_CORE_CLONE_HH

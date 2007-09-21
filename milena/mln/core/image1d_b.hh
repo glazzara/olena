@@ -33,7 +33,7 @@
  * \brief Definition of the basic mln::image1d_b class.
  */
 
-# include <mln/core/internal/image_base.hh>
+# include <mln/core/internal/image_primary.hh>
 # include <mln/core/box1d.hh>
 
 # include <mln/border/thickness.hh>
@@ -41,9 +41,6 @@
 # include <mln/fun/i2v/all.hh>
 
 # include <mln/core/line_piter.hh>
-
-# include <mln/core/internal/tracked_ptr.hh>
-# include <mln/core/image1d_b_data.hh>
 
 // FIXME:
 
@@ -71,14 +68,40 @@ namespace mln
 
 
 
+  namespace internal
+  {
+
+    /// Data structure for mln::image1d_b<T>.
+    template <typename T>
+    struct data_< image1d_b<T> >
+    {
+      data_(const box1d& b, unsigned bdr);
+      ~data_();
+
+      T*  buffer_;
+      T* array_;
+
+      box1d b_;  // theoretical box
+      unsigned bdr_;
+      box1d vb_; // virtual box, i.e., box including the virtual border
+
+      void update_vb_();
+      void allocate_();
+      void deallocate_();
+    };
+
+  } // end of namespace mln::internal
+
+
+
   /*! \brief Basic 1D image class.
    *
    * The parameter \c T is the type of pixel values.  This image class
    * stores data in memory and has a virtual border with constant
-   * thickness around data.
+   * thickness before and after data.
    */
   template <typename T>
-  struct image1d_b : public internal::image_base_< box1d, image1d_b<T> >
+  struct image1d_b : public internal::image_primary_< box1d, image1d_b<T> >
   {
     // Warning: just to make effective types appear in Doxygen:
     typedef box1d   pset;
@@ -112,26 +135,13 @@ namespace mln
     /// Constructor without argument.
     image1d_b();
 
-    /// Constructor with the numbers of indexes and the
-    /// border thickness.
-    image1d_b(int ninds, unsigned bdr = border::thickness);
+    /// Constructor with the number of indices and the border
+    /// thickness.
+    image1d_b(unsigned ninds, unsigned bdr = border::thickness);
 
-    /// Constructor with a box and the border thickness (default is
-    /// 3).
+    /// Constructor with a box and the border thickness.
     image1d_b(const box1d& b, unsigned bdr = border::thickness);
 
-    /// Copy constructor.
-    image1d_b(const image1d_b<T>& rhs);
-
-    /// Assignment operator.
-    image1d_b& operator=(const image1d_b<T>& rhs);
-
-    /// Destructor.
-    ~image1d_b();
-
-
-    /// Initialize an empty image.
-    void init_with(int ninds, unsigned bdr = border::thickness);
 
     /// Initialize an empty image.
     void init_with(const box1d& b, unsigned bdr = border::thickness);
@@ -139,9 +149,6 @@ namespace mln
 
     /// Test if \p p is valid.
     bool owns_(const point1d& p) const;
-
-    /// Test if this image has been initialized.
-    bool has_data() const;
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -187,47 +194,85 @@ namespace mln
 
     /// Give a hook to the value buffer.
     T* buffer();
-
-
-  private:
-
-    tracked_ptr< image1d_b_data<T> > data_;
-
-    typedef internal::image_base_< box1d, image1d_b<T> > super;
   };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // ctors
+  // internal::data_< image1d_b<T> >
+
+  namespace internal
+  {
+
+    template <typename T>
+    data_< image1d_b<T> >::data_(const box1d& b, unsigned bdr)
+      : buffer_(0),
+	array_ (0),
+	b_     (b),
+	bdr_   (bdr)
+    {
+      allocate_();
+    }
+
+    template <typename T>
+    data_< image1d_b<T> >::~data_()
+    {
+      deallocate_();
+    }
+
+    template <typename T>
+    void
+    data_< image1d_b<T> >::update_vb_()
+    {
+      vb_.pmin() = b_.pmin() - dpoint1d(all(bdr_));
+      vb_.pmax() = b_.pmax() + dpoint1d(all(bdr_));
+    }
+
+    template <typename T>
+    void
+    data_< image1d_b<T> >::allocate_()
+    {
+      update_vb_();
+      unsigned
+	ni = vb_.len(0);
+      buffer_ = new T[ni];
+      array_ = buffer_ - vb_.pmin().ind();
+      mln_postcondition(vb_.len(0) == b_.len(0) + 2 * bdr_);
+    }
+
+    template <typename T>
+    void
+    data_< image1d_b<T> >::deallocate_()
+    {
+      if (buffer_)
+	{
+	  delete[] buffer_;
+	  buffer_ = 0;
+	}
+    }
+
+  } // end of namespace mln::internal
+
+
+  // image1d_b<T>
 
   template <typename T>
   image1d_b<T>::image1d_b()
-    : data_(0)
   {
-  }
-
-  template <typename T>
-  image1d_b<T>::image1d_b(int ninds, unsigned bdr)
-    : data_(0)
-  {
-    init_with(ninds, bdr);
-  }
-
-  template <typename T>
-  void
-  image1d_b<T>::init_with(int ninds, unsigned bdr)
-  {
-    mln_precondition(! this->has_data());
-    data_ = new image1d_b_data<T>(make::box1d(ninds), bdr);
   }
 
   template <typename T>
   image1d_b<T>::image1d_b(const box1d& b, unsigned bdr)
-    : data_(0)
   {
     init_with(b, bdr);
+  }
+
+  template <typename T>
+  image1d_b<T>::image1d_b(unsigned ninds, unsigned bdr)
+  {
+    mln_precondition(ninds != 0);
+    init_with(make::box1d(ninds), bdr);
   }
 
   template <typename T>
@@ -235,37 +280,7 @@ namespace mln
   image1d_b<T>::init_with(const box1d& b, unsigned bdr)
   {
     mln_precondition(! this->has_data());
-    data_ = new image1d_b_data<T>(b, bdr);
-  }
-
-  template <typename T>
-  image1d_b<T>::image1d_b(const image1d_b<T>& rhs)
-    : super(rhs),
-      data_(rhs.data_)
-  {
-  }
-
-  // assignment
-
-  template <typename T>
-  image1d_b<T>&
-  image1d_b<T>::operator=(const image1d_b<T>& rhs)
-  {
-    mln_precondition(rhs.has_data());
-    if (& rhs == this)
-      return *this;
-
-    this->data_ = rhs.data_;
-    return *this;
-  }
-
-  // methods
-
-  template <typename T>
-  bool
-  image1d_b<T>::has_data() const
-  {
-    return data_ != 0;
+    this->data_ = new internal::data_< image1d_b<T> >(b, bdr);
   }
 
   template <typename T>
@@ -280,7 +295,7 @@ namespace mln
   image1d_b<T>::domain() const
   {
     mln_precondition(this->has_data());
-    return data_->b_;
+    return this->data_->b_;
   }
 
   template <typename T>
@@ -288,7 +303,7 @@ namespace mln
   image1d_b<T>::border() const
   {
     mln_precondition(this->has_data());
-    return data_->bdr_;
+    return this->data_->bdr_;
   }
 
   template <typename T>
@@ -296,19 +311,15 @@ namespace mln
   image1d_b<T>::ncells() const
   {
     mln_precondition(this->has_data());
-    return data_->vb_.npoints();
+    return this->data_->vb_.npoints();
   }
 
   template <typename T>
   bool
   image1d_b<T>::owns_(const point1d& p) const
   {
-    if (! data_->vb_.has(p))
-      {
-	std::cout << " p = " <<  p << std::endl;
-      }
     mln_precondition(this->has_data());
-    return data_->vb_.has(p);
+    return this->data_->vb_.has(p);
   }
 
   template <typename T>
@@ -316,7 +327,7 @@ namespace mln
   image1d_b<T>::operator()(const point1d& p) const
   {
     mln_precondition(this->owns_(p));
-    return data_->array_[p.ind()];
+    return this->data_->array_[p.ind()];
   }
 
   template <typename T>
@@ -324,7 +335,7 @@ namespace mln
   image1d_b<T>::operator()(const point1d& p)
   {
     mln_precondition(this->owns_(p));
-    return data_->array_[p.ind()];
+    return this->data_->array_[p.ind()];
   }
 
   template <typename T>
@@ -332,7 +343,7 @@ namespace mln
   image1d_b<T>::operator[](unsigned o) const
   {
     mln_precondition(o < ncells());
-    return *(data_->buffer_ + o);
+    return *(this->data_->buffer_ + o);
   }
 
   template <typename T>
@@ -340,7 +351,7 @@ namespace mln
   image1d_b<T>::operator[](unsigned o)
   {
     mln_precondition(o < ncells());
-    return *(data_->buffer_ + o);
+    return *(this->data_->buffer_ + o);
   }
 
   template <typename T>
@@ -348,7 +359,7 @@ namespace mln
   image1d_b<T>::at(int ind) const
   {
     mln_precondition(this->owns_(make::point1d(ind)));
-    return data_->array_[ind];
+    return this->data_->array_[ind];
   }
 
   template <typename T>
@@ -356,12 +367,7 @@ namespace mln
   image1d_b<T>::at(int ind)
   {
     mln_precondition(this->owns_(make::point1d(ind)));
-    return data_->array_[ind];
-  }
-
-  template <typename T>
-  image1d_b<T>::~image1d_b()
-  {
+    return this->data_->array_[ind];
   }
 
   template <typename T>
@@ -369,7 +375,7 @@ namespace mln
   image1d_b<T>::buffer() const
   {
     mln_precondition(this->has_data());
-    return data_->buffer_;
+    return this->data_->buffer_;
   }
 
   template <typename T>
@@ -377,7 +383,7 @@ namespace mln
   image1d_b<T>::buffer()
   {
     mln_precondition(this->has_data());
-    return data_->buffer_;
+    return this->data_->buffer_;
   }
 
   template <typename T>
@@ -394,7 +400,7 @@ namespace mln
   image1d_b<T>::point_at_offset(unsigned o) const
   {
     mln_precondition(o < ncells());
-    point1d p = make::point1d(o + data_->vb_.min_ind());
+    point1d p = make::point1d(o + this->data_->vb_.min_ind());
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
     return p;
   }

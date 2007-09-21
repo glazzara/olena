@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_IMAGE_VALUE_MORPHER_HH
-# define MLN_CORE_INTERNAL_IMAGE_VALUE_MORPHER_HH
+#ifndef MLN_CORE_INTERNAL_IMAGE_PRIMARY_HH
+# define MLN_CORE_INTERNAL_IMAGE_PRIMARY_HH
 
-/*! \file mln/core/internal/image_value_morpher.hh
+/*! \file mln/core/internal/image_primary.hh
  *
- * \brief Definition of a base class for image morphers w.r.t. value.
+ * \brief Definition of a base class for primary images.
  */
 
-# include <mln/core/internal/image_morpher.hh>
+# include <mln/core/internal/image_base.hh>
 
 
 namespace mln
@@ -43,46 +43,23 @@ namespace mln
   {
 
 
-    /*! \brief A base class for image morphers w.r.t. value.
-     *
-     * Parameter \p S is a point set type.
+    /*! \brief A base class for primary images.
      *
      * \internal
      */
-    template <typename I, typename E>
-    class image_value_morpher_ : public image_morpher_<I, mln_pset(I), E>
+    template <typename S, typename E>
+    struct image_primary_ : public image_base_<S, E>
     {
-    public:
-
-      const mln_pset(I)& domain() const;
-      bool owns_(const mln_psite(I)& p) const;
-
     protected:
-      image_value_morpher_();
+      image_primary_();
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename E>
-    image_value_morpher_<I,E>::image_value_morpher_()
+    template <typename S, typename E>
+    image_primary_<S,E>::image_primary_()
     {
-    }
-
-    template <typename I, typename E>
-    const mln_pset(I)&
-    image_value_morpher_<I,E>::domain() const
-    {
-      mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->domain();
-    }
-
-    template <typename I, typename E>
-    bool
-    image_value_morpher_<I,E>::owns_(const mln_psite(I)& p) const
-    {
-      mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->owns_(p);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -92,4 +69,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_IMAGE_VALUE_MORPHER_HH
+#endif // ! MLN_CORE_INTERNAL_IMAGE_PRIMARY_HH

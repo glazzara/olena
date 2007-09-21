@@ -1,3 +1,36 @@
+2007-09-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make some image types share data.
+
+	New stuff.
+
+	* mln/core/internal/image_base.hh (data_): New.
+	* mln/core/internal/image_morpher.hh (has_data): New.
+	* mln/core/internal/image_primary.hh: New.
+	* mln/core/clone.hh: New.
+	* mln/core/window.hh: Add check.
+
+	Split client image structure and image data.
+
+	* mln/pw/image.hh,
+	* mln/core/cast_image.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/image1d_b.hh,
+	* mln/core/image2d_b.hh,
+	* mln/core/image3d_b.hh (data_): New.
+	Update.
+
+	Clean-up.
+
+	* mln/core/internal/tracked_ptr.hh: Rename as...
+	* mln/util/tracked_ptr.hh: ...this.
+	(util): Add.
+	* mln/core/internal/image_adaptor.hh,
+	* mln/core/internal/image_value_morpher.hh (has_data),
+	* mln/core/image1d_b_data.hh,
+	* mln/core/image2d_b_data.hh,
+	* mln/core/image3d_b_data.hh: Remove; obsolete.
+
 2007-09-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update tests with new println.

@@ -35,10 +35,26 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/grids.hh>
+# include <mln/util/tracked_ptr.hh>
 
 
 namespace mln
 {
+
+
+
+  namespace internal
+  {
+
+    /// Class of image internal data.
+    template <typename I>
+    struct data_;
+
+    // FIXME: Say more about it!
+
+  } // end of namespace mln::internal
+
+
 
   namespace internal
   {
@@ -132,8 +148,15 @@ namespace mln
       /// Give the number of points of the image domain.
       std::size_t npoints() const;
 
+      /// Test if this image has been initialized; default impl.
+      bool has_data() const;
+
+      // FIXME: Add void init_data(..);
+
     protected:
       image_base_();
+
+      util::tracked_ptr< internal::data_<E> > data_;
     };
 
 
@@ -142,6 +165,13 @@ namespace mln
     template <typename S, typename E>
     image_base_<S,E>::image_base_()
     {
+    }
+
+    template <typename S, typename E>
+    bool
+    image_base_<S,E>::has_data() const
+    {
+      return data_ != 0;
     }
 
     template <typename S, typename E>
