@@ -55,10 +55,21 @@ namespace mln
   } // end of namespace mln::internal
 
 
+  namespace impl
+  {
+
+    /// Declaration of the general image initialization routine.
+    template <typename I, typename J>
+    void init_with_(Image<I>& target, const Image<J>& model);
+
+    // FIXME: Say more about it!
+
+  } // end of namespace mln::impl
+
+
 
   namespace internal
   {
-
 
     /*! \brief Return the lvalue type when an image with type \c I is
      *  morphed.
@@ -153,11 +164,20 @@ namespace mln
 
       // FIXME: Add void init_data(..);
 
+
+      /// Assignment operator.
+      image_base_& operator=(const image_base_& rhs);
+
+      /// Copy constructor.
+      image_base_(const image_base_& rhs);
+
     protected:
       image_base_();
 
+      // Internal data, sharable by several images.
       util::tracked_ptr< internal::data_<E> > data_;
     };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -165,6 +185,24 @@ namespace mln
     template <typename S, typename E>
     image_base_<S,E>::image_base_()
     {
+    }
+
+    template <typename S, typename E>
+    image_base_<S,E>::image_base_(const image_base_& rhs)
+    {
+      mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
+      this->data_ = rhs.data_;
+    }
+
+    template <typename S, typename E>
+    image_base_<S,E>&
+    image_base_<S,E>::operator=(const image_base_<S,E>& rhs)
+    {
+      mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
+      if (& rhs == this) // || ! exact(rhs).has_data())
+	return *this;
+      this->data_ = rhs.data_;
+      return *this;
     }
 
     template <typename S, typename E>

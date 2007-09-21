@@ -25,47 +25,78 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CLONE_HH
-# define MLN_CORE_CLONE_HH
+#ifndef MLN_BORDER_GET_HH
+# define MLN_BORDER_GET_HH
 
-/*! \file mln/core/clone.hh
+/*! \file mln/border/get.hh
  *
- * \brief Clone an image, that is, get an effective copy.
+ * \brief FIXME.
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/level/fill.hh>
+# include <mln/core/internal/image_morpher.hh>
 
 
 namespace mln
 {
 
-  /*! Clone the image \p ima with the values of the image \p data.
-   *
-   * \param[in] ima The image to be cloneed.
-   * \result The clone.
-   *
-   * \pre ima.has_data
-   */
-  template <typename I>
-  mln_concrete(I) clone(const Image<I>& model);
+  namespace border
+  {
+
+    /*! Get the virtual (outer) border thickness of image \p ima.
+     *
+     * \param[in] ima The image.
+     * \result The border thickness (0 if there is no border).
+     */
+    template <typename I>
+    unsigned get(const Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename I>
-  mln_concrete(I) clone(const Image<I>& model)
-  {
-    // FIXME: Add a static check that mln_concrete(I) actually *is* concrete...
-    mln_concrete(I) tmp;
-    impl::init_with_(tmp, exact(model));
-    level::fill(tmp, model);
-    return tmp;
-  }
+    namespace impl
+    {
+
+      template <typename I, typename S, typename E>
+      unsigned get__(const mln::internal::image_morpher_<I,S,E>& ima)
+      {
+	return border::get(ima.delegatee_());
+      }
+
+      template <typename S, typename E>
+      unsigned get__(const mln::internal::image_base_<S,E>& ima)
+      {
+	return 0;
+      }
+
+      template <typename I>
+      unsigned get_(const Image<I>& ima)
+      {
+	return border::impl::get__(exact(ima));
+      }
+
+      template <typename I>
+      unsigned get_(const Fast_Image<I>& ima)
+      {
+	return exact(ima).border();
+      }
+
+    } // end of namespace mln::border::impl
+
+
+    // Facade.
+
+    template <typename I>
+    unsigned get(const Image<I>& ima)
+    {
+      mln_precondition(exact(ima).has_data());
+      return border::impl::get_(exact(ima));
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::border
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CLONE_HH
+#endif // ! MLN_BORDER_GET_HH

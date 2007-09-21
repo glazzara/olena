@@ -40,6 +40,8 @@
 # include <mln/value/set.hh>
 # include <mln/fun/i2v/all.hh>
 # include <mln/core/line_piter.hh>
+# include <mln/border/get.hh>
+# include <mln/debug/println.hh>
 
 // FIXME:
 
@@ -142,21 +144,10 @@ namespace mln
     /// 3).
     image2d_b(const box2d& b, unsigned bdr = border::thickness);
 
-    /// Copy constructor.
-    image2d_b(const image2d_b<T>& rhs);
 
-    /// Assignment operator.
-    image2d_b& operator=(const image2d_b<T>& rhs);
-
-    /// Destructor.
-    ~image2d_b();
-
-    /// detach data from an image (free it if nobody else hold it)
+    /// Detach data from an image (free it if nobody else hold it).
     void destroy();
 
-
-    /// Initialize an empty image.
-    void init_with(int nrows, int ncols, unsigned bdr = border::thickness);
 
     /// Initialize an empty image.
     void init_with(const box2d& b, unsigned bdr = border::thickness);
@@ -220,12 +211,21 @@ namespace mln
 
     /// Give a hook to the value buffer.
     T* buffer();
-
-
-  private:
-
-    typedef internal::image_base_< box2d, image2d_b<T> > super;
   };
+
+
+  namespace impl
+  {
+
+    template <typename T, typename I>
+    void init_with_(image2d_b<T>& target, const I& model)
+    {
+      box2d b = model.domain();
+      unsigned bdr = border::get(model);
+      target = image2d_b<T>(b, bdr);
+    }
+    
+  } // end of namespace mln::impl
 
 
 
@@ -312,15 +312,7 @@ namespace mln
   template <typename T>
   image2d_b<T>::image2d_b(int nrows, int ncols, unsigned bdr)
   {
-    init_with(nrows, ncols, bdr);
-  }
-
-  template <typename T>
-  void
-  image2d_b<T>::init_with(int nrows, int ncols, unsigned bdr)
-  {
-    mln_precondition(! this->has_data());
-    this->data_ = new internal::data_< image2d_b<T> >(make::box2d(nrows, ncols), bdr);
+    init_with(make::box2d(nrows, ncols), bdr);
   }
 
   template <typename T>
@@ -336,27 +328,6 @@ namespace mln
     mln_precondition(! this->has_data());
     this->data_ = new internal::data_< image2d_b<T> >(b, bdr);
   }
-
-  template <typename T>
-  image2d_b<T>::image2d_b(const image2d_b<T>& rhs)
-  {
-  }
-
-  // assignment
-
-  template <typename T>
-  image2d_b<T>&
-  image2d_b<T>::operator=(const image2d_b<T>& rhs)
-  {
-    mln_precondition(rhs.has_data());
-    if (& rhs == this)
-      return *this;
-
-    this->data_ = rhs.data_;
-    return *this;
-  }
-
-  // methods
 
   template <typename T>
   const typename image2d_b<T>::vset&
@@ -443,11 +414,6 @@ namespace mln
   {
     mln_precondition(this->owns_(make::point2d(row, col)));
     return this->data_->array_[row][col];
-  }
-
-  template <typename T>
-  image2d_b<T>::~image2d_b()
-  {
   }
 
   template <typename T>

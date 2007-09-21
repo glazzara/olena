@@ -1,3 +1,16 @@
+2007-09-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update of clone and impl::init_with_ mechanism.
+
+	* mln/core/internal/image_base.hh (init_with_): New.
+	(operator=, image_base_): New.
+	* mln/core/image2d_b.hh: Remove op=, dtor, and cpy ctor.
+	(init_with_): New overload.
+	(init_with): Remove overload with nrows-ncols.
+	* mln/core/sub_image.hh: New ctor.
+	* mln/core/clone.hh: Update.
+	* mln/border/get.hh: New.
+
 2007-09-21  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	A point can be considered as a metal::vec

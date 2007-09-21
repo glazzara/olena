@@ -63,6 +63,9 @@ namespace mln
     /// Skeleton.
     typedef sub_image< tag::image<I>, tag::pset<S> > skeleton;
 
+    /// Constructor without argument.
+    sub_image();
+
     /// Constructor.
     sub_image(I& ima, const S& pset);
 
@@ -106,6 +109,11 @@ namespace mln
   sub_image<I,S>::sub_image(I& ima, const S& pset)
   {
     this->data_ = new internal::data_< sub_image<I,S> >(ima, pset);
+  }
+
+  template <typename I, typename S>
+  sub_image<I,S>::sub_image()
+  {
   }
 
   template <typename I, typename S>
