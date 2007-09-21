@@ -28,7 +28,8 @@
 #ifndef MLN_CORE_DECORATED_IMAGE_HH
 # define MLN_CORE_DECORATED_IMAGE_HH
 
-# include <mln/core/internal/image_adaptor.hh>
+# include <mln/core/internal/image_base.hh>
+
 # include <mln/value/proxy.hh>
 
 
@@ -55,28 +56,42 @@ namespace mln
       typedef mln::value::proxy<const E> lvalue;
     };
 
-  } // end of namespace::internal
+    template <typename I, typename D>
+    struct data_< decorated_image<I,D> >
+    {
+      data_(I& ima, const D& deco);
+
+      I ima_;
+      D deco_;
+    };
+
+  } // end of namespace mln::internal
 
 
 
   // FIXME: Doc!
 
   template <typename I, typename D>
-  class decorated_image : public internal::image_adaptor_< I, decorated_image<I,D> >,
+  class decorated_image : public internal::image_base_< mln_pset(I), decorated_image<I,D> >,
 			  public internal::decorated_image_impl_< I, decorated_image<I,D> >
   {
     typedef decorated_image<I, D> self_;
-    typedef internal::image_adaptor_< I, self_ > super_;
     typedef internal::decorated_image_impl_< I, self_ > impl_;
+    typedef internal::image_base_< mln_pset(I), decorated_image<I,D> > super_;
   public:
 
+    /// Ctors
+    decorated_image();
     decorated_image(I& ima, const D& deco);
+    /// Dtor
     ~decorated_image();
 
     typedef mln_value(I)                    value;
     typedef mln::value::proxy<const self_> rvalue;
     typedef typename impl_::lvalue         lvalue;
 
+    /// Value_Set associated type.
+    typedef mln_vset(I) vset;
 
     /// Skeleton.
     typedef decorated_image< tag::image<I>, tag::data<D> > skeleton;
@@ -96,8 +111,14 @@ namespace mln
     /// Give the decoration.
     D& decoration();
 
-  protected:
-    D deco_;
+    /// FIXME : to put into a identity morpher
+    /// Give the definition domain.
+    const mln_pset(I)& domain() const;
+
+    /// Give the set of values.
+    const mln_vset(I)& values() const;
+
+    using super_::data_;
   };
 
 
@@ -114,13 +135,31 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  namespace internal
+  {
+
+    // internal::data_< decorated_image<I,S> >
+
+    template <typename I, typename D>
+    data_< decorated_image<I,D> >::data_(I& ima, const D& deco)
+      : ima_(ima),
+	deco_(deco)
+    {
+    }
+
+  } // end of namespace mln::internal
+
   // decorated_image<I,D>
 
   template <typename I, typename D>
-  decorated_image<I,D>::decorated_image(I& ima, const D& deco)
-    : super_(ima),
-      deco_(deco)
+  decorated_image<I,D>::decorated_image()
   {
+  }
+
+  template <typename I, typename D>
+  decorated_image<I,D>::decorated_image(I& ima, const D& deco)
+  {
+    this->data_ = new internal::data_< decorated_image<I,D> >(ima, deco);
   }
 
   template <typename I, typename D>
@@ -157,40 +196,57 @@ namespace mln
     decorated_image_impl_<I,E>::write_(const mln_psite(I)& p, const mln_value(I)& v)
     {
       E& ima = internal::force_exact<E>(*this);
-      ima.decoration().writing(ima.adaptee(), p, v);
-      ima.adaptee()(p) = v;
+      ima.decoration().writing(ima.data_->ima_, p, v);
+      ima.data_->ima_(p) = v;
     }
 
   } // end of namespace mln::internal
 
   template <typename I, typename D>
   mln_value(I)
-  decorated_image<I,D>::read_(const mln_psite(I)& p) const
+    decorated_image<I,D>::read_(const mln_psite(I)& p) const
   {
-    deco_.reading(this->adaptee_, p);
-    return this->adaptee_(p);
+    this->data_->deco_.reading(this->data_->ima_, p);
+    return this->data_->ima_(p);
   }
 
   template <typename I, typename D>
   decorated_image<I,D>::operator decorated_image<const I, D>() const
   {
-    decorated_image<const I, D> tmp(this->adaptee_, deco_);
+    decorated_image<const I, D> tmp(this->data_->ima_, this->data_->deco_);
     return tmp;
   }
+
 
   template <typename I, typename D>
   const D&
   decorated_image<I,D>::decoration() const
   {
-    return deco_;
+    return this->data_->deco_;
   }
 
   template <typename I, typename D>
   D&
   decorated_image<I,D>::decoration()
   {
-    return deco_;
+    return this->data_->deco_;
   }
+
+  template <typename I, typename D>
+  const mln_pset(I)&
+  decorated_image<I,D>::domain() const
+  {
+    mln_precondition(exact(this)->has_data());
+    return  this->data_->ima_.domain();
+  }
+
+  template <typename I, typename D>
+  const mln_vset(I)&
+  decorated_image<I,D>::values() const
+  {
+    return this->data_->ima_.values();
+  }
+
 
   // decorate
 

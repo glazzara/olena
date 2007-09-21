@@ -30,34 +30,56 @@
 
 /*! \file mln/core/image_if.hh
  *
- * \brief Definition of a base class for image adaptors.
+ * \brief Definition of a image_if image.
  */
 
-# include <mln/core/internal/image_adaptor.hh>
+# include <mln/core/internal/image_base.hh>
 # include <mln/core/pset_if.hh>
 
 
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename I, typename F> struct image_if;
+
+
+  namespace internal
+  {
+    template <typename I, typename F>
+    struct data_< image_if<I,F> >
+    {
+      data_(I& ima, const F& f);
+
+      pset_if<mln_pset(I), F> pset_;
+      F f_;
+      I ima_;
+    };
+
+  } // end of namespace mln::internal
+
+
   /*! \brief A base class for image adaptors.
    *
    */
   template <typename I, typename F>
-  struct image_if : public internal::image_adaptor_< I,
-						     image_if<I,F>,
-						     pset_if<mln_pset(I),F>  >
+  struct image_if : public internal::image_base_< pset_if<mln_pset(I), F>, image_if<I,F> >
   {
+
+    // Parent
+    typedef internal::image_base_< pset_if<mln_pset(I), F>, image_if<I,F> > super_;
 
     /// Skeleton.
     typedef image_if< tag::image<I>, tag::function<F> > skeleton;
 
-    
+
     /// Point_Set associated type.
     typedef pset_if<mln_pset(I), F> pset;
 
-    /// Constructor from an \p adaptee image.
-    image_if(I& adaptee, const F& f);
+    /// Constructor from an \p image.
+    image_if(I& ima, const F& f);
+
+    image_if();
 
     /// Test if a pixel value is accessible at \p p.
     bool owns_(const mln_psite(I)& p) const;
@@ -68,13 +90,35 @@ namespace mln
     /// Const promotion via convertion.
     operator image_if<const I, F>() const;
 
-  protected:
-
-    pset pset_;
-    F f_;
+    using super_::data_;
 
     typedef image_if<I,F> self_;
-    typedef internal::image_adaptor_< I, self_, pset > super_;
+
+    /// FIXME : to put into an identity morpher
+
+    /// Point_Site associated type.
+    typedef mln_point(I) point;
+    typedef mln_psite(pset) psite;
+
+    /// Value_Set associated type.
+    typedef mln_vset(I) vset;
+
+    /// Value associated type.
+    typedef mln_value(I)   value;
+
+    /// Return type of read-only access.
+    typedef mln_rvalue(I) rvalue;
+
+    typedef typename internal::morpher_lvalue_<I>::ret lvalue;
+
+    /// Read-only access of pixel value at point site \p p.
+    rvalue operator()(const psite& p) const;
+
+    /// Read-write access of pixel value at point site \p p.
+    lvalue operator()(const psite& p);
+
+    /// Give the set of values.
+    const vset& values() const;
   };
 
 
@@ -91,35 +135,76 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename I, typename F>
-  image_if<I,F>::image_if(I& adaptee, const F& f)
-    : super_(adaptee),
-      pset_(adaptee.domain() | f),
-      f_(f)
+  namespace internal
   {
+
+    // internal::data_< image_if<I,S> >
+
+    template <typename I, typename F>
+    data_< image_if<I,F> >::data_(I& ima, const F& f)
+      : ima_(ima),
+	pset_(ima.domain() | f),
+	f_(f)
+    {
+    }
+
+  } // end of namespace mln::internal
+
+  template <typename I, typename F>
+  image_if<I,F>::image_if()
+  {
+  }
+
+  template <typename I, typename F>
+  image_if<I,F>::image_if(I& ima, const F& f)
+  {
+    this->data_ = new internal::data_< image_if<I,F> >(ima, f);
   }
 
   template <typename I, typename F>
   bool
   image_if<I,F>::owns_(const mln_psite(I)& p) const
   {
-    return pset_.has(p);
+    return data_->pset_.has(p);
   }
 
   template <typename I, typename F>
   const pset_if<mln_pset(I), F>&
   image_if<I,F>::domain() const
   {
-    return pset_;
+    return data_->pset_;
   }
 
   template <typename I, typename F>
   image_if<I,F>::operator image_if<const I, F>() const
   {
-    image_if<const I, F> tmp(this->adaptee_, this->f_);
+    image_if<const I, F> tmp(this->data_->ima_, this->data_->f_);
     return tmp;
   }
 
+
+  template <typename I, typename F>
+  typename image_if<I,F>::rvalue
+  image_if<I,F>::operator()(const psite& p) const
+  {
+    mln_precondition(exact(this)->owns_(p));
+    return data_->ima_(p);
+  }
+
+  template <typename I, typename F>
+  typename image_if<I,F>::lvalue
+  image_if<I,F>::operator()(const psite& p)
+  {
+    mln_precondition(exact(this)->owns_(p));
+    return data_->ima_(p);
+  }
+
+  template <typename I, typename F>
+  const mln_vset(I)&
+  image_if<I,F>::values() const
+  {
+    return data_->ima_.values();
+  }
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

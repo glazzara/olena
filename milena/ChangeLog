@@ -1,3 +1,12 @@
+2007-09-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Remove image_adaptor inheritance
+	* mln/core/decorated_image.hh:
+	* mln/core/image_if.hh:
+	* mln/value/stack.hh: Change image_adpator inheritance to image_base.
+
+	* mln/core/image3d_b.hh: Add a using super_::data_
+
 2007-09-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fixes and add impl::init_with_ for two image2d_b and sub_image.

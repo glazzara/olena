@@ -113,6 +113,9 @@ namespace mln
     // End of warning.
 
 
+    /// Parent type
+    typedef internal::image_primary_< box3d, image3d_b<T> > parent;
+
     /// Value associated type.
     typedef T         value;
 
@@ -194,6 +197,9 @@ namespace mln
 
     /// Give a hook to the value buffer.
     T* buffer();
+
+    /// To use the track pointer inherited.
+    using parent::data_;
   };
 
 

@@ -34,7 +34,6 @@
  */
 
 # include <mln/core/internal/image_base.hh>
-# include <mln/core/internal/tracked_ptr.hh>
 
 # include <mln/metal/vec.hh>
 # include <mln/value/set.hh>
@@ -44,16 +43,31 @@
 namespace mln
 {
 
+  // Fwd decl.
+  namespace value { template <unsigned n, typename I> struct stack_image; }
+
+  namespace internal
+  {
+
+
+    /*! \brief data structure for stack_image
+     *
+     */
+    template <unsigned n, typename I>
+    struct data_< value::stack_image<n, I> >
+    {
+    public:
+      data_(const metal::vec<n,I>& imas);
+      metal::vec<n,I> imas_;
+    };
+
+  }
+
   namespace value
   {
 
-    // Fwd decl.
-    template <unsigned n, typename I> struct stack_image;
-
-
     namespace internal
     {
-
       template <unsigned n, typename I>
       struct helper_stack_image_lvalue_
       {
@@ -75,25 +89,9 @@ namespace mln
 	}
       };
 
+
     } // end of namespace mln::value::internal
 
-
-    /*! \brief data structure for stack_image
-     *
-     */
-    template <unsigned n, typename I>
-    struct stack_image_data
-    {
-    public:
-      stack_image_data(const metal::vec<n,I>& imas);
-      metal::vec<n,I> imas_;
-    };
-
-    template <unsigned n, typename I>
-    stack_image_data<n,I>::stack_image_data(const metal::vec<n,I>& imas)
-      : imas_(imas)
-    {
-    }
 
     /*! \brief FIXME
      *
@@ -101,6 +99,8 @@ namespace mln
     template <unsigned n, typename I>
     struct stack_image : public mln::internal::image_base_< mln_pset(I), stack_image<n,I> >
     {
+      typedef mln::internal::image_base_< mln_pset(I), stack_image<n,I> > parent;
+
       /// Point_Site associated type.
       typedef mln_psite(I) psite;
 
@@ -149,8 +149,7 @@ namespace mln
       /// Give the set of values of the image.
       const vset& values() const;
 
-    protected:
-      tracked_ptr< stack_image_data<n, I> > data_;
+      using parent::data_;
     };
 
 
@@ -164,10 +163,25 @@ namespace mln
     stack_image<2, I>
     stack(Image<I>& ima1, Image<I>& ima2);
 
-
+  } // end of namespace mln::value
 
 # ifndef MLN_INCLUDE_ONLY
 
+  namespace internal
+  {
+    // internal::data_< cast_image_<T,I> >
+
+    template <unsigned n, typename I>
+    data_< value::stack_image<n,I> >::data_(const metal::vec<n,I>& imas)
+      : imas_(imas)
+    {
+    }
+
+  } // end of namespace mln::internal
+
+
+  namespace value
+  {
     // stack_image<n, I>
 
     template <unsigned n, typename I>
@@ -178,7 +192,7 @@ namespace mln
     template <unsigned n, typename I>
     stack_image<n,I>::stack_image(const metal::vec<n,I>& imas)
     {
-      data_ = new stack_image_data<n,I>(imas);
+      data_ = new mln::internal::data_< stack_image<n, I> >(imas);
       for (unsigned i = 0; i < n; ++i)
       {
 	mln_precondition(imas[i].has_data());
