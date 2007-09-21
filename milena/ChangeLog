@@ -1,3 +1,12 @@
+2007-09-21  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add quaternion based on vector 4d
+	* mln/metal/vec.hh: Add sprod, vprod and normalize.
+	* mln/norm/l2.hh: New, Works on C-tabs and on metal::vec.
+	* mln/value/quat.hh: New.
+	* tests/norm_l2.cc: New.
+	* tests/value_quat.cc: New.
+
 2007-09-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make some image types share data.

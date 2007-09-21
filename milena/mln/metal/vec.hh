@@ -29,6 +29,7 @@
 # define MLN_METAL_VEC_HH
 
 # include <iostream>
+# include <cmath>
 
 # include <mln/core/contract.hh>
 # include <mln/metal/binary_arith_trait.hh>
@@ -114,7 +115,7 @@ namespace mln
   template <unsigned n, typename T>
   class vec : public internal::vec_base_<n, T>
   {
-      typedef internal::vec_base_<n,T> super;
+      typedef internal::vec_base_<n, T> super;
       using super::data_;
 
     public:
@@ -140,10 +141,84 @@ namespace mln
 
       void set_all(const T& val);
 
+      T sprod(const vec<n, T>& rhs) const;
+
       unsigned size() const;
 
+      const vec<n, T>& normalize();
   };
 
+    // eq
+
+    template <unsigned n, typename T, typename U>
+    bool operator==(const vec<n,T>& lhs, const vec<n,U>& rhs);
+
+    template <unsigned n, typename T, typename U>
+    bool operator!=(const vec<n,T>& lhs, const vec<n,U>& rhs);
+
+    // +
+
+    template <unsigned n, typename T, typename U>
+    vec<n,T>&
+    operator+=(vec<n,T>& lhs, const vec<n,U>& rhs);
+    
+    template <unsigned n, typename T, typename U>
+    vec<n, typename binary_arith_trait<T,U>::ret >
+    operator+(const vec<n,T>& lhs, const vec<n,U>& rhs);
+    
+    // -
+    
+    template <unsigned n, typename T, typename U>
+    vec<n,T>&
+    operator-=(vec<n,T>& lhs, const vec<n,U>& rhs);
+    
+    template <unsigned n, typename T, typename U>
+    vec<n, typename binary_arith_trait<T,U>::ret>
+    operator-(const vec<n,T>& lhs, const vec<n,U>& rhs);
+    
+    template <unsigned n, typename T>
+    vec<n, T>
+    operator-(const vec<n,T>& lhs);
+    
+    // *
+    
+    template <unsigned n, typename T, typename S>
+    vec<n,T>&
+    operator*=(vec<n,T>& lhs, const S& scalar);
+    
+    template <unsigned n, typename T, typename S>
+    vec<n, typename binary_arith_trait<T,S>::ret>
+    operator*(const S& scalar, const vec<n,T>& lhs);
+    
+    // /
+    
+    template <unsigned n, typename T, typename S>
+    vec<n,T>&
+    operator/=(vec<n,T>& lhs, const S& scalar);
+    
+    template <unsigned n, typename T, typename S>
+    vec<n, typename binary_arith_trait<T,S>::ret>
+    operator/(const vec<n,T>& lhs, const S& scalar);
+    
+    // <<
+    
+    template <unsigned n, typename T>
+    std::ostream&
+    operator<<(std::ostream& ostr, const vec<n,T>& v);
+
+    template <unsigned n>
+    std::ostream&
+    operator<<(std::ostream& ostr, const vec<n,unsigned char>& v);
+    
+    template <unsigned n>
+    std::ostream&
+    operator<<(std::ostream& ostr, const vec<n,signed char>& v);
+
+    // vprod
+
+    template <typename T, typename U>
+    vec<3, typename binary_arith_trait<T, U>::ret>
+    vprod(const vec<3, T>& lhs, const vec<3, U>& rhs);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -193,9 +268,31 @@ namespace mln
     }
 
     template <unsigned n, typename T>
+    T vec<n,T>::sprod(const vec<n, T>& rhs) const
+    {
+      T tmp = 0;
+
+      for (unsigned i = 0; i < n; ++i)
+	tmp += data_[i] * rhs.data_[i];
+      return tmp;
+    }
+
+    template <unsigned n, typename T>
     unsigned vec<n,T>::size() const
     {
       return n;
+    }
+
+    template <unsigned n, typename T>
+    const vec<n, T>& vec<n, T>::normalize()
+    {
+      float n_l2 = 0;
+      for (unsigned i = 0; i < n; ++i)
+	n_l2 += data_[i] * data_[i];
+      n_l2 = sqrt(n_l2);
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = T(data_[i] / n_l2);
+      return *this;
     }
 
 
@@ -284,7 +381,7 @@ namespace mln
     
     template <unsigned n, typename T, typename S>
     vec<n, typename binary_arith_trait<T,S>::ret>
-    operator*(const vec<n,T>& lhs, const S& scalar)
+    operator*(const S& scalar, const vec<n,T>& lhs)
     {
       vec<n, typename binary_arith_trait<T,S>::ret> tmp;
       for (unsigned i = 0; i < n; ++i)
@@ -299,7 +396,7 @@ namespace mln
     vec<n,T>&
     operator/=(vec<n,T>& lhs, const S& scalar)
     {
-      precondition(scalar != 0);
+      mln_precondition(scalar != 0);
       for (unsigned i = 0; i < n; ++i)
 	lhs[i] /= scalar;
       return lhs;
@@ -309,7 +406,7 @@ namespace mln
     vec<n, typename binary_arith_trait<T,S>::ret>
     operator/(const vec<n,T>& lhs, const S& scalar)
     {
-      precondition(scalar != 0);
+      mln_precondition(scalar != 0);
       vec<n, typename binary_arith_trait<T,S>::ret> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = lhs[i] / scalar;
@@ -348,6 +445,20 @@ namespace mln
 	ostr << (signed int)(v[i]) << (i == n - 1 ? ")" : ", ");
       return ostr;
     }
+
+    // vprod
+
+    template <typename T, typename U>
+    vec<3, typename binary_arith_trait<T, U>::ret>
+    vprod(const vec<3, T>& lhs, const vec<3, U>& rhs)
+    {
+      vec<3, typename binary_arith_trait<T, U>::ret> tmp;
+      tmp[0] = lhs[1] * rhs[2] - lhs[2] * rhs[1];
+      tmp[1] = lhs[2] * rhs[0] - lhs[0] * rhs[2];
+      tmp[2] = lhs[0] * rhs[1] - lhs[1] * rhs[0];
+      return tmp;
+    }
+
     
     
 # endif // MLN_INCLUDE_ONLY
