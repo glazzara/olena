@@ -1,3 +1,9 @@
+2007-09-24  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Rotation is always centered at 0 and should work in 3d.
+	* mln/fun/x2x/rotation.hh: Update.
+	* tests/fun_x2x_rotation.cc: Update.
+
 2007-09-24  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add graph in sandbox.

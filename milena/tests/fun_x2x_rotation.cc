@@ -48,11 +48,9 @@ int main()
   image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
   image2d_b<int_u8> out(lena.domain());
 
-  const float row = (float)(geom::max_row(lena) - geom::min_row(lena)) / 2;
-  const float col = (float)(geom::max_col(lena) - geom::min_col(lena)) / 2;
   interpolated<image2d_b<int_u8> > inter(lena);
 
-  fun::x2x::rotation<2,float> rot1(3.1416, make::vec(row,col));
+  fun::x2x::rotation<2,float> rot1(0.1);
 
   image2d_b<int_u8>::fwd_piter p(out.domain());
   

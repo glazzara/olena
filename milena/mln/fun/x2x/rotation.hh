@@ -60,18 +60,18 @@ namespace mln
 	  typedef rotation<n,C> invert;
 
 	  rotation();
-	  rotation(const float alpha, const metal::vec<n,C>& t);
+	  rotation(float alpha, unsigned dir = 2);
 
 	  result operator()(const metal::vec<n,C>& v) const;
 	  invert inv() const;
 
-	  void set_t(const metal::vec<n,C>& t);
-	  void set_alpha(const float alpha);
+	  void set_alpha(float alpha);
+	  void set_dir(unsigned dir);
 
 	protected:
 
 	  float alpha_;
-	  metal::vec<n,C> t_;
+	  unsigned dir_;
 	  metal::mat<n + 1,n + 1,C> m_;
       };
 
@@ -81,28 +81,31 @@ namespace mln
       template <unsigned n, typename C>
       rotation<n,C>::rotation()
       {
-	t_ = make::vec<n,C>(0);
 	m_ = metal::mat<n+1,n+1,C>::Id;
       }
 
       template <unsigned n, typename C>
-      rotation<n,C>::rotation(const float alpha, const metal::vec<n,C>& t)
+      rotation<n,C>::rotation(float alpha, unsigned dir)
 	:alpha_(alpha),
-	 t_(t)
+	 dir_(dir)
       {
 	const float cos_a = cos(alpha_);
 	const float sin_a = sin(alpha_);
-	const float c_1 = 1 - cos_a;
-	const float coord1 = c_1 * t[0] + sin_a * t[1];
-	const float coord2 = t[1] * c_1 - sin_a * t[0];
+	const metal::vec<4,float> vec = make::vec(cos_a, -sin_a, sin_a, cos_a);
 
 	m_ = metal::mat<n+1,n+1,C>::Id;
-	m_(0,2) = coord1;
-	m_(1,2) = coord2;
-	m_(0,0) = cos_a;
-	m_(0,1) = -sin_a;
-	m_(1,0) = sin_a;
-	m_(1,1) = cos_a;
+	unsigned k = 0;
+	for (unsigned i = 0; i <= n; ++i)
+	{
+	  if (i == dir)
+	    continue;
+	  for (unsigned j = 0; j <= n; ++j)
+	  {
+	    if (j == dir)
+	      continue;
+	    m_(i, j) = vec[k++];
+	  }
+	}
       }
 
       template <unsigned n, typename C>
@@ -127,23 +130,14 @@ namespace mln
       rotation<n,C>
       rotation<n,C>::inv() const
       {
-	typename rotation::invert res(-alpha_, t_);
+	typename rotation::invert res(-alpha_, dir_);
 
 	return res;
       }
 
       template <unsigned n, typename C>
       void
-      rotation<n,C>::set_t(const metal::vec<n,C>& t)
-      {
-	t_ = t;
-	for (unsigned i = 0; i < n; ++i)
-	  m_(i,n) = t_[i];
-      }
-
-      template <unsigned n, typename C>
-      void
-      rotation<n,C>::set_alpha(const float alpha)
+      rotation<n,C>::set_alpha(float alpha)
       {
 	const float cos_a = cos(alpha);
 	const float sin_a = sin(alpha);
@@ -156,6 +150,28 @@ namespace mln
 	m_(1,1) = cos_a;
       }
 
+      template <unsigned n, typename C>
+      void
+      rotation<n,C>::set_dir(unsigned dir)
+      {
+	const float cos_a = cos(alpha_);
+	const float sin_a = sin(alpha_);
+	const metal::vec<4,float> vec(cos_a, -sin_a, sin_a, cos_a);
+
+	m_ = metal::mat<n+1,n+1,C>::Id;
+	unsigned k = 0;
+	for (unsigned i = 0; i <= n; ++i)
+	{
+	  if (i == dir)
+	    continue;
+	  for (unsigned j = 0; j <= n; ++j)
+	  {
+	    if (j == dir)
+	      continue;
+	    m_(i, j) = vec[k++];
+	  }
+	}
+      }
 
 
 # endif // ! MLN_INCLUDE_ONLY
