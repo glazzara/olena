@@ -1,3 +1,13 @@
+2007-09-24  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add graph in sandbox.
+
+	* graph.hh: New.
+	* graph.hxx: New.
+
+	* main.cc: Update for graph.
+	* test_debug_iota_3d.cc: Update.
+
 2007-09-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Change images inheritance, and memory managment.

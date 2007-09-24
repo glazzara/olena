@@ -21,30 +21,58 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  This exception does not however invalidate any other
+// License.  
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border_fill.cc
- *
- * \brief Tests on mln::border::fill.
- */
+#ifndef MLN_GRAPH_HH
+# define MLN_GRAPH_HH
 
+# include <cstddef>
+# include <iostream>
+# include <vector>
+# include <map>
+# include <mln/core/concept/object.hh>
 
-
-#include <mln/core/image3d_b.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/debug/iota.hh>
-#include <mln/debug/println_with_border.hh>
-
-using namespace mln;
-
-int
-main (void)
+namespace mln
 {
+  namespace util
+  {
 
-  image3d_b<bool> ima(5,4,3,1);
-  debug::iota (ima);
-  debug::println_with_border(ima);
+    template<typename N, typename E = void>
+    class Graph
+    {
+    public:
+      typedef struct			s_node
+      {
+	std::vector<unsigned>		links;
+      }					s_node;
 
-}
+      typedef struct			s_edge
+      {
+	unsigned			node1;
+	unsigned			node2;
+      }					s_edge;
+
+      Graph () {}
+      Graph (unsigned nb_node, unsigned nb_link) :
+	nb_node_ (nb_node), nb_link_ (nb_link) {}
+      ~Graph () {}
+      void add_node ();
+      void add_edge (unsigned n1, unsigned n2);
+      void coherce ();
+      void print ();
+//       void coherence () const;
+    private:
+      unsigned nb_node_;
+      unsigned nb_link_;
+      std::vector<s_node*> nodes_;
+      std::vector<s_edge*> links_;
+    };
+
+  } // end of util  
+} // end of mln
+
+#include "graph.hxx"
+
+#endif // MLN_GRAPH_HH

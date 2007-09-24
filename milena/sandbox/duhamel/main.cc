@@ -1,54 +1,21 @@
-#include <mln/core/image2d_b.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/debug/println.hh>
-
-
-#include <mln/geom/nrows.hh>
-#include <mln/geom/ncols.hh>
-
-#include <mln/level/fill.hh>
-
-#include <mln/debug/println_with_border.hh>
-
-#include "paste.hh"
-#include "fill.hh"
-
-//#include "level.hh"
-//#include "labeling.hh"
-
-#include <mln/core/image2d_b.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/pw/all.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-#include <mln/labeling/foreground.hh>
-#include <mln/debug/println_with_border.hh>
-
+#include "graph.hh"
 
 using namespace mln;
 
-int main (void)
+int
+main (void)
 {
-  image2d_b<value::int_u8> i1(3, 3);
-//   Neighborhood<value::int_u8> nbh;
+  mln::util::Graph<void>		g (0,0);
 
-//   labeling::level (i1, 3, nbh,2);
-//   image2d_b<int> i2(3, 3);
-//   mln::sparse_image<mln::point2d, int> sparse;
-//   mln::sparse_image<mln::point2d, int> sparse2;
-//   mln::rle_image<mln::point2d, int> rle1;
-//   mln::rle_image<mln::point2d, int> rle2;
+  g.add_node ();
+  g.add_node ();
+  g.add_node ();
+  g.add_edge (0,1);
+  g.coherce ();
+  g.print ();
 
+//  image2d_b<int>		out (5, 5, 1);
 
-//   level::fill_opt2(i1, 8);
+  //  debug::println_with_border (out);
 
-//   debug::println_with_border(i1);
-
-//   level::paste(rle1, rle2);
-//   level::fill(sparse, 42);
-//   debug::println_with_border(i2);
-
-  return (0);
 }
