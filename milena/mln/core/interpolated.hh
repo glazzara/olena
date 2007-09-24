@@ -78,6 +78,9 @@ namespace mln
     /// Test if a pixel value is accessible at \p p.
     bool owns_(const psite& p) const;
 
+    /// Test if a pixel value is accessible at \p v.
+    bool owns_(const mln::metal::vec<I::point::dim, float>& v) const;
+
     /// Give the definition domain.
     const mln_pset(I)& domain() const;
 
@@ -119,6 +122,15 @@ namespace mln
   template <typename I>
   bool interpolated<I>::owns_(const psite& p) const
   {
+    return ima_.owns_(p);
+  }
+
+  template <typename I>
+  bool interpolated<I>::owns_(const mln::metal::vec<I::point::dim, float>& v) const
+  {
+    mln_point(I) p;
+    for (unsigned i = 0; i < I::point::dim; ++i)
+      p[i] = static_cast<int>(round(v[i]));
     return ima_.owns_(p);
   }
 

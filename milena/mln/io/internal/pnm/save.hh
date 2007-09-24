@@ -39,6 +39,7 @@
 # include <fstream>
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/point2d.hh>
 
 # include <mln/value/rgb.hh>
 # include <mln/value/rgb8.hh>
@@ -50,6 +51,7 @@
 # include <mln/io/internal/pnm/macros.hh>
 
 # include <mln/geom/size2d.hh>
+
 
 namespace mln
 {

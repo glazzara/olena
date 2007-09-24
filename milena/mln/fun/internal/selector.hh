@@ -34,10 +34,11 @@
  */
 
 # include <mln/core/concept/function.hh>
-# include <mln/core/concept/point.hh>
+# include <mln/core/concept/point_site.hh>
 # include <mln/metal/unqualif.hh>
 # include <mln/metal/if.hh>
 # include <mln/metal/is_a.hh>
+# include <mln/metal/vec.hh>
 
 
 namespace mln
@@ -66,7 +67,8 @@ namespace mln
 	  b_,
 	  i_,
 	  p_,
-	  v_
+	  v_,
+	  x_
 	};
 
       template <int arg, int res, typename E> struct helper_selector_;
@@ -80,6 +82,8 @@ namespace mln
       struct helper_selector_< b_, p_, E > { typedef Function_v2v<E> ret; };
       template <typename E>
       struct helper_selector_< b_, v_, E > { typedef Function_v2v<E> ret; };
+      template <typename E>
+      struct helper_selector_< b_, x_, E > { typedef Function_v2v<E> ret; };
 
       // i2* => i2v type
       template <typename E>
@@ -90,6 +94,8 @@ namespace mln
       struct helper_selector_< i_, p_, E > { typedef Function_i2v<E> ret; };
       template <typename E>
       struct helper_selector_< i_, v_, E > { typedef Function_i2v<E> ret; };
+      template <typename E>
+      struct helper_selector_< i_, x_, E > { typedef Function_i2v<E> ret; };
 
       // p2*
       template <typename E>
@@ -100,6 +106,8 @@ namespace mln
       struct helper_selector_< p_, p_, E > { typedef Function_p2p<E> ret; };
       template <typename E>
       struct helper_selector_< p_, v_, E > { typedef Function_p2v<E> ret; };
+      template <typename E>
+      struct helper_selector_< p_, x_, E > { typedef Function_p2v<E> ret; };
 
       // v2* => v2v type, except for v2b
       template <typename E>
@@ -110,7 +118,20 @@ namespace mln
       struct helper_selector_< v_, p_, E > { typedef Function_v2v<E> ret; };
       template <typename E>
       struct helper_selector_< v_, v_, E > { typedef Function_v2v<E> ret; };
+      template <typename E>
+      struct helper_selector_< v_, x_, E > { typedef Function_v2v<E> ret; };
 
+      // x2* => v2v type
+      template <typename E>
+      struct helper_selector_< x_, b_, E > { typedef Function_v2b<E> ret; };
+      template <typename E>
+      struct helper_selector_< x_, i_, E > { typedef Function_v2v<E> ret; };
+      template <typename E>
+      struct helper_selector_< x_, p_, E > { typedef Function_v2v<E> ret; };
+      template <typename E>
+      struct helper_selector_< x_, v_, E > { typedef Function_v2v<E> ret; };
+      template <typename E>
+      struct helper_selector_< x_, x_, E > { typedef Function_v2v<E> ret; };
 
       // tag_
 
@@ -128,10 +149,16 @@ namespace mln
 	enum { value = i_ };
       };
 
+      template <unsigned n, typename T>
+      struct tag_< metal::vec<n,T> >
+      {
+	enum { value = x_ };
+      };
+
       template <typename T>
       struct tag_
       {
-	enum { value = mlc_is_a(T, Point)::to_bool
+	enum { value = mlc_is_a(T, Point_Site)::to_bool
 	       ? p_
 	       : v_ };
       };

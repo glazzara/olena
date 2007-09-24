@@ -85,6 +85,9 @@ namespace mln
     /// Constructor without argument.
     point_();
 
+    /// Constructor with filling.
+    point_(C c);
+
     /// Constructor; coordinates are set by function \p f.
     template <typename F>
     point_(const Function_i2v<F>& f);
@@ -99,13 +102,13 @@ namespace mln
     point_<M,C>& operator+=(const dpoint& dp);
 
     /// Type of the array of coordinates.
-    typedef metal::vec<dim, C> vec_t;
+    typedef metal::vec<M::dim, C> vec_t;
 
     /// Hook to coordinates.
     operator metal::vec<M::dim, C>() const;
 
   protected:
-    metal::vec<dim, C> coord_;
+    metal::vec<M::dim, C> coord_;
   };
 
 
@@ -131,6 +134,12 @@ namespace mln
   }
 
   template <typename M, typename C>
+  point_<M,C>::point_(C c)
+  {
+    set_all(c);
+  }
+
+  template <typename M, typename C>
   template <typename F>
   point_<M,C>::point_(const Function_i2v<F>& f_)
   {
@@ -142,8 +151,7 @@ namespace mln
   template <typename M, typename C>
   void point_<M,C>::set_all(C c)
   {
-    for (unsigned i = 0; i < dim; ++i)
-      coord_[i] = c;
+    coord_.set_all(c);
   }
 
   template <typename M, typename C>

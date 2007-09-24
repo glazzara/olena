@@ -33,6 +33,8 @@
 # include <fstream>
 
 # include <mln/value/rgb.hh>
+# include <mln/geom/nrows.hh>
+# include <mln/geom/ncols.hh>
 
 namespace mln
 {

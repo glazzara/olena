@@ -1,3 +1,13 @@
+2007-09-24  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add test of rotation and fix.
+	* mln/core/interpolated.hh: Fix.
+	* mln/core/point.hh: Fix and add constructor for filling.
+	* mln/fun/internal/selector.hh: Add tag x for vectors.
+	* mln/io/internal/pnm/save.hh: Fix.
+	* mln/io/internal/pnm/save_header.hh: Fix.
+	* sandbox/nivault/rotation.cc: Experimentation on rotation.
+
 2007-09-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Remove image_adaptor inheritance
