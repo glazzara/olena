@@ -124,7 +124,7 @@ namespace mln
     // FIXME : ambiguity between empty constructor and constructor
     // which allocate data_
 
-    // this->data_ = new internal::data_< rle_image<I,T> >();
+    // this->data_ = new internal::data_< sparse_image<I,T> >();
   }
 
   template <typename P, typename T>
