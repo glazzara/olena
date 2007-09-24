@@ -32,23 +32,37 @@
 
 
 #include <iostream>
-#include <mln/fun/x2x/translation.hh>
-
+#include <mln/fun/x2x/rotation.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/core/interpolated.hh>
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  float
-    a = 2.3,
-    b = 0,
-    c = 2.9;
+  image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
+  image2d_b<int_u8> out(lena.domain());
 
-  metal::vec<3,float> vec1 = make::vec(a, b, c);
-  fun::x2x::translation<3,float> tr1(make::vec<3,float>(1.6));
+  const float row = (float)(geom::max_row(lena) - geom::min_row(lena)) / 2;
+  const float col = (float)(geom::max_col(lena) - geom::min_col(lena)) / 2;
+  interpolated<image2d_b<int_u8> > inter(lena);
 
-  std::cout << vec1 << std::endl;
-  std::cout << tr1(vec1) << std::endl;
-  std::cout << tr1.inv()(vec1) << std::endl;
+  fun::x2x::rotation<2,float> rot1(3.1416, make::vec(row,col));
+
+  image2d_b<int_u8>::fwd_piter p(out.domain());
+  
+  for_all(p)
+    {
+      metal::vec<2,float> v = rot1.inv()((point2d::vec_t)(point2d)p);
+      if (inter.owns_(v))
+	out(p) = inter(v);
+      else
+	out(p) = 255;
+    }
+  io::pgm::save(out, "out.pgm");
 }

@@ -74,6 +74,83 @@ namespace mln
 	T data_[n][m];
     };
 
+    // eq
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    bool
+    operator==(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    bool
+    operator!=(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
+
+    // +
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,T>&
+    operator+=(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    operator+(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
+
+    // -
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,T>&
+    operator-=(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    operator-(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
+
+    template <unsigned n, unsigned m, typename T>
+    mat<n,m,T>
+    operator-(const mat<n,m,T>& lhs);
+
+    // *
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,T>&
+    operator*=(mat<n,m,T>& lhs, const U& scalar);
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    operator*(mat<n,m,T>& lhs, const U& scalar);
+    
+    template <unsigned n, unsigned m, unsigned o, typename T, typename U>
+    mat<n,m,T>&
+    operator*=(mat<n,o,T>& lhs, mat<o,m,U>& rhs);
+
+    template <unsigned n, unsigned m, unsigned o, typename T, typename U>
+    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs);
+
+    // /
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,T>
+    operator/=(mat<n,m,T>& lhs, const U& scalar);
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    operator/(mat<n,m,T>& lhs, const U& scalar);
+
+    // <<
+    
+    template <unsigned n, unsigned m, typename T>
+    std::ostream&
+    operator<<(std::ostream& ostr, const mat<n,m,T>& v);
+    
+    template <unsigned n, unsigned m>
+    std::ostream&
+    operator<<(std::ostream& ostr, const mat<n,m,unsigned char>& v);
+    
+    template <unsigned n, unsigned m>
+    std::ostream&
+    operator<<(std::ostream& ostr, const mat<n,m,signed char>& v);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n, unsigned m, typename T>
@@ -246,7 +323,7 @@ namespace mln
     }
     template <unsigned n, unsigned m, unsigned o, typename T, typename U>
     mat<n,m,typename binary_arith_trait<T,U>::ret>
-    operator*(mat<n,o,T>& lhs, mat<o,m,U>& rhs)
+    operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs)
     {
       mat<n,m,typename binary_arith_trait<T,U>::ret> tmp;
       for (unsigned i = 0; i < n; ++i)
