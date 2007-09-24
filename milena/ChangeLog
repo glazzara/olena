@@ -1,5 +1,10 @@
 2007-09-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add image_identity_morpher.
+	* mln/core/internal/image_identity_morpher.hh: New.
+
+2007-09-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Change image_adaptor inheritance to morphers inheritance.
 
 	* mln/core/decorated_image.hh: Inherit from identity morpher.
