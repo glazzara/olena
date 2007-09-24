@@ -60,7 +60,7 @@ namespace mln
 
     /// Declaration of the general image initialization routine.
     template <typename I, typename J>
-    void init_with_(Image<I>& target, const Image<J>& model);
+    void init_(Image<I>& target, const Image<J>& model);
 
     // FIXME: Say more about it!
 

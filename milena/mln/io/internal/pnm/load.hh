@@ -208,7 +208,7 @@ namespace mln
 	    abort();
 	  }
 
-	  ima.init_with(nrows, ncols);
+	  ima.init_(make::box2d(nrows, ncols));
 	  if (type == type_)
 	    load_raw_2d(file, ima);
 	  else

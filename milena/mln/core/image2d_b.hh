@@ -151,7 +151,7 @@ namespace mln
 
 
     /// Initialize an empty image.
-    void init_with_(const box2d& b, unsigned bdr = border::thickness);
+    void init_(const box2d& b, unsigned bdr = border::thickness);
 
 
     /// Test if \p p is valid.
@@ -208,7 +208,7 @@ namespace mln
   {
 
     template <typename T, typename J>
-    void init_with_(image2d_b<T>& target, const J& model);
+    void init_(image2d_b<T>& target, const J& model);
     
   } // end of namespace mln::impl
 
@@ -217,17 +217,30 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-  // impl::init_with_
+  // impl::init_
 
   namespace impl
   {
 
+//     void init(tag::border, unsigned b, const image2d_b<T>& model)
+//     {
+//       b = model.border();
+//     }
+
     template <typename T, typename J>
-    void init_with_(image2d_b<T>& target, const J& model)
+    void init_(image2d_b<T>& target, const J& model)
     {
       box2d b = geom::bbox(model);
       unsigned bdr = border::get(model);
-      target.init_with_(b, bdr);
+
+      // FIXME
+
+//       box2d b;
+//       init(tag::bbox, b, model);
+//       unsigned bdr;
+//       init(tag::border, bdr, model);
+
+      target.init_(b, bdr);
     }
     
   } // end of namespace mln::impl
@@ -313,18 +326,18 @@ namespace mln
   template <typename T>
   image2d_b<T>::image2d_b(int nrows, int ncols, unsigned bdr)
   {
-    init_with_(make::box2d(nrows, ncols), bdr);
+    init_(make::box2d(nrows, ncols), bdr);
   }
 
   template <typename T>
   image2d_b<T>::image2d_b(const box2d& b, unsigned bdr)
   {
-    init_with_(b, bdr);
+    init_(b, bdr);
   }
 
   template <typename T>
   void
-  image2d_b<T>::init_with_(const box2d& b, unsigned bdr)
+  image2d_b<T>::init_(const box2d& b, unsigned bdr)
   {
     mln_precondition(! this->has_data());
     this->data_ = new internal::data_< image2d_b<T> >(b, bdr);

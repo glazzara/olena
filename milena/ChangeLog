@@ -1,5 +1,18 @@
 2007-09-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Rename init_with_ as init_.
+
+	* mln/core/internal/image_base.hh
+	(init_with_): Rename as...
+	(init_): ...this.
+
+	* mln/core/image2d_b.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/clone.hh,
+	* mln/io/internal/pnm/load.hh: Update.
+
+2007-09-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	introduce meta accumulators and better accumulators.
 
 	New material for accumulators.
