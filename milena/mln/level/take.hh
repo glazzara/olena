@@ -45,8 +45,8 @@ namespace mln
 
     /*! Make an accumulator take the values of the image \p input.
      *
-     * \param[in,out] a The accumulator.
      * \param[in] input The input image.
+     * \param[in,out] a The accumulator.
      *
      * This routine runs: \n
      *   for all p of \p input, \p a.take( \p input(p) ) \n
@@ -54,7 +54,7 @@ namespace mln
      * \warning This routine does not perform a.init().
      */
     template <typename A, typename I>
-    void take(Accumulator<A>& a, const Image<I>& input);
+    void take(const Image<I>& input, Accumulator<A>& a);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -63,7 +63,7 @@ namespace mln
     {
 
       template <typename A, typename I>
-      void take(A& a, const Image<I>& input_)
+      void take(const Image<I>& input_, A& a)
       {
 	const I& input = exact(input_);
 	mln_piter(I) p(input.domain());
@@ -72,7 +72,7 @@ namespace mln
       }
 
       template <typename A, typename I>
-      void take(A& a, const Fast_Image<I>& input_)
+      void take(const Fast_Image<I>& input_, A& a)
       {
 	const I& input = exact(input_);
 	mln_pixter(const I) pxl(input);
@@ -86,10 +86,10 @@ namespace mln
     // Facade.
 
     template <typename A, typename I>
-    void take(Accumulator<A>& a, const Image<I>& input)
+    void take(const Image<I>& input, Accumulator<A>& a)
     {
       mln_precondition(exact(input).has_data());
-      impl::take(exact(a), exact(input));
+      impl::take(exact(input), exact(a));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

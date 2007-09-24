@@ -34,7 +34,7 @@
  */
 
 # include <mln/accu/min_max.hh>
-# include <mln/level/take.hh>
+# include <mln/level/compute.hh>
 
 
 namespace mln
@@ -61,11 +61,10 @@ namespace mln
 		 mln_value(I)& min, mln_value(I)& max)
     {
       mln_precondition(exact(input).has_data());
-      accu::min_max<mln_value(I)> a;
-      a.init();
-      level::take(a, input);
-      min = a.min();
-      max = a.max();
+      typedef accu::min_max_<mln_value(I)> A;
+      mln_result(A) mm = level::compute<A>(input);
+      min = mm.first;
+      max = mm.second;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -51,6 +51,7 @@ namespace mln
     struct min_h : public Accumulator< min_h<S> >
     {
       typedef mln_value(S) value;
+      typedef value result;
 
       min_h(const Value_Set<S>& s);
       min_h();
@@ -63,7 +64,7 @@ namespace mln
 
       unsigned card() const { return h_.sum(); }
 
-      value to_value() const;
+      value to_result() const;
 
       const accu::histo<S>& histo() const;
 
@@ -213,7 +214,7 @@ namespace mln
 
     template <typename S>
     typename min_h<S>::value
-    min_h<S>::to_value() const
+    min_h<S>::to_result() const
     {
       if (! valid_)
 	update_();
@@ -230,7 +231,7 @@ namespace mln
     template <typename S>
     std::ostream& operator<<(std::ostream& ostr, const min_h<S>& m)
     {
-      return ostr << m.to_value();
+      return ostr << m.to_result();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

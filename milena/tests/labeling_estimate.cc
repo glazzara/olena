@@ -25,48 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_AREA_HH
-# define MLN_MORPHO_OPENING_AREA_HH
-
-/*! \file mln/morpho/opening_area.hh
+/*! \file tests/labeling_foreground.cc
  *
- * \brief Morphological area opening.
+ * \brief Test on mln::labeling::foreground.
  */
 
-# include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/count.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/neighb2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/pw/all.hh>
+
+#include <mln/io/pgm/load.hh>
+#include <mln/labeling/foreground.hh>
+#include <mln/labeling/estimate.hh>
+#include <mln/accu/count.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  namespace morpho
-  {
+  image2d_b<int_u8> lena = io::pgm::load("../img/tiny.pgm"),
+    out(lena.domain());
 
-    /*! Morphological area opening.
-     */
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output);
+  unsigned n;
+  labeling::foreground((pw::value(lena) > pw::cst(127)) | lena.domain(),
+		       c4(), out, n);
+  mln_assertion(n == 14);
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output)
-    {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::morpho
-
-} // end of namespace mln
-
-
-#endif // ! MLN_MORPHO_OPENING_AREA_HH
+  unsigned sum = 0;
+  for (int_u8 i = 0; i <= n; ++i)
+    sum += labeling::estimate< accu::count >(out, i);
+  // FIXME: use of pix so that (center, mean) etc.
+  mln_assertion(sum == lena.npoints());
+}

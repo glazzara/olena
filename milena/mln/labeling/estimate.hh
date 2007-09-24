@@ -25,48 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_AREA_HH
-# define MLN_MORPHO_OPENING_AREA_HH
+#ifndef MLN_LABELING_ESTIMATE_HH
+# define MLN_LABELING_ESTIMATE_HH
 
-/*! \file mln/morpho/opening_area.hh
+/*! \file mln/labeling/estimate.hh
  *
- * \brief Morphological area opening.
+ * \brief Compute the estimate pixel value.
  */
 
-# include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/count.hh>
+# include <mln/core/image_if.hh>
+# include <mln/accu/compute.hh>
 
 
 namespace mln
 {
 
-  namespace morpho
+  namespace labeling
   {
 
-    /*! Morphological area opening.
+    /*! \brief FIXME: Compute an estimate over the pixels of image \p
+     *  input with value \p val.
+     *
+     * \param[in] input The image.
+     * \result The estimate value.
      */
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output);
+    template <typename A, typename I>
+    mln_accu_with(A, util::pix<I>)::result
+    estimate(const Image<I>& input, const mln_value(I)& val);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output)
+    template <typename A, typename I>
+    mln_accu_with(A, util::pix<I>)::result
+    estimate(const Image<I>& input, const mln_value(I)& val)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
+      return accu::compute<A>(input | val);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::morpho
+  } // end of namespace mln::labeling
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_OPENING_AREA_HH
+#endif // ! MLN_LABELING_ESTIMATE_HH

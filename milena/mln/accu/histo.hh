@@ -31,6 +31,8 @@
 /*! \file mln/accu/histo.hh
  *
  * \brief Define a generic histogram accumulator class.
+ *
+ * \todo Use histo::data instead of std::vector!
  */
 
 # include <vector>
@@ -57,6 +59,7 @@ namespace mln
       histo();
 
       typedef mln_value(S) value;
+      typedef const std::vector<std::size_t>& result;
 
       void   take(const value& v);
       void   take(const histo<S>& other);
@@ -69,6 +72,7 @@ namespace mln
       std::size_t sum() const;
 
       const std::vector<std::size_t>& vect() const;
+      const std::vector<std::size_t>& to_result() const;
 
       const S& vset() const;
       
@@ -171,6 +175,13 @@ namespace mln
     template <typename S>
     const std::vector<std::size_t>&
     histo<S>::vect() const
+    {
+      return h_;
+    }
+
+    template <typename S>
+    const std::vector<std::size_t>&
+    histo<S>::to_result() const
     {
       return h_;
     }

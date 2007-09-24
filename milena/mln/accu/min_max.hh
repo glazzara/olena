@@ -31,12 +31,17 @@
 /*! \file mln/accu/min_max.hh
  *
  * \brief Define an accumulator that computes a min and a max.
+ *
+ * \todo A macro to create such accumulators.
  */
 
 # include <utility>
 
+# include <mln/accu/pair.hh>
 # include <mln/accu/min.hh>
 # include <mln/accu/max.hh>
+# include <mln/value/props.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln
@@ -45,99 +50,22 @@ namespace mln
   namespace accu
   {
 
-
     /*! Generic min and max accumulator class.
      *
      * The parameter \c V is the type of values.
      */
     template <typename V>
-    struct min_max : public Accumulator< min_max<V> >
+    struct min_max_ : public pair_< min_<V>, max_<V> >
     {
-      typedef V value;
-
-      min_max();
-
-      void take(const value& v);
-      void take(const min_max<V>& other);
-      void init();
-
-      V min() const;
-      V max() const;
-
-      std::pair<V,V> to_value() const;
-      void values(V& min, V& max) const;
-
-    protected:
-
-      accu::min<V> min_;
-      accu::max<V> max_;
     };
 
 
+    template <typename I> struct min_max_< util::pix<I> >;
 
-# ifndef MLN_INCLUDE_ONLY
 
-    template <typename V>
-    min_max<V>::min_max()
-    {
-      init();
-    }
+    // FIXME: Doc!
+    typedef pair<min,max> min_max;
 
-    template <typename V>
-    void
-    min_max<V>::init()
-    {
-      min_.init();
-      max_.init();
-    }
-
-    template <typename V>
-    void min_max<V>::take(const value& v)
-    {
-      min_.take(v);
-      max_.take(v);
-    }
-    
-    template <typename V>
-    void
-    min_max<V>::take(const min_max<V>& other)
-    {
-      min_.take(other.min_);
-      max_.take(other.max_);
-    }
-
-    template <typename V>
-    V
-    min_max<V>::min() const
-    {
-      return min_.to_value();
-    }
-
-    template <typename V>
-    V
-    min_max<V>::max() const
-    {
-      return max_.to_value();
-    }
-
-    template <typename V>
-    std::pair<V,V>
-    min_max<V>::to_value() const
-    {
-      std::pair<V,V> tmp(min_.to_value(),
-			 max_.to_value());
-      return tmp;
-    }
-
-    template <typename V>
-    void
-    min_max<V>::values(V& min, V& max) const
-    {
-      min = min_.to_value();
-      max = max_.to_value();
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::accu
 

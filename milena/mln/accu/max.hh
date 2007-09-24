@@ -33,8 +33,9 @@
  * \brief Define an accumulator that computes a max.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/core/concept/meta_accumulator.hh>
 # include <mln/value/props.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln
@@ -49,17 +50,19 @@ namespace mln
      * The parameter \c V is the type of values.
      */
     template <typename V>
-    struct max : public Accumulator< max<V> >
+    struct max_ : public Accumulator< max_<V> >
     {
       typedef V value;
+      typedef V result;
 
-      max();
+      max_();
 
-      void take(const value& v);
-      void take(const max<V>& other);
       void init();
+      void take_as_init(const value& v);
+      void take(const value& v);
+      void take(const max_<V>& other);
 
-      V to_value() const;
+      V to_result() const;
       
     protected:
 
@@ -67,18 +70,46 @@ namespace mln
     };
 
 
+    template <typename I> struct max_< util::pix<I> >;
+
+
+    // FIXME: Doc!
+    struct max : public Meta_Accumulator< max >
+    {
+      template <typename V>
+      struct with
+      {
+	typedef max_<V> ret;
+      };
+    };
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V>
-    max<V>::max()
+    max_<V>::max_()
     {
       init();
     }
 
     template <typename V>
     void
-    max<V>::take(const value& v)
+    max_<V>::init()
+    {
+      v_ = mln_min(V);
+    }
+
+    template <typename V>
+    void
+    max_<V>::take_as_init(const value& v)
+    {
+      v_ = v;
+    }
+
+    template <typename V>
+    void
+    max_<V>::take(const value& v)
     {
       if (v > v_)
 	v_ = v;
@@ -86,22 +117,15 @@ namespace mln
 
     template <typename V>
     void
-    max<V>::take(const max<V>& other)
+    max_<V>::take(const max_<V>& other)
     {
       if (other.v_ > v_)
 	v_ = other.v_;
     }
 
     template <typename V>
-    void
-    max<V>::init()
-    {
-      v_ = mln_min(V);
-    }
-
-    template <typename V>
     V
-    max<V>::to_value() const
+    max_<V>::to_result() const
     {
       return v_;
     }

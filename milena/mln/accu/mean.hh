@@ -31,6 +31,8 @@
 /*! \file mln/accu/mean.hh
  *
  * \brief Define an accumulator that computes a mean.
+ *
+ * \todo Use accu::pair just like in accu::min_max.
  */
 
 # include <mln/accu/count.hh>
@@ -55,44 +57,63 @@ namespace mln
     template <typename V,
 	      typename S = mln_sum(V),
 	      typename M = S>
-    struct mean : public Accumulator< mean<V,S,M> >
+    struct mean_ : public Accumulator< mean_<V,S,M> >
     {
       typedef V value;
+      typedef M result;
 
-      mean();
+      mean_();
 
       void init();
       void take(const value& v);
-      void take(const mean<V,S,M>& other);
+      void take(const mean_<V,S,M>& other);
 
-      M to_value() const;
+      M to_result() const;
 
     protected:
 
-      accu::count<V> count_;
-      accu::sum<V,S>   sum_;
+      accu::count_<V> count_;
+      accu::sum_<V,S>   sum_;
     };
 
+
+
+    template <typename I, typename S, typename M>
+    struct mean_< util::pix<I>, S,M >;
+
+
+
+    // FIXME: Doc!
+    struct mean : public Meta_Accumulator< mean >
+    {
+      template < typename V,
+		 typename S = mln_sum(V),
+		 typename M = S >
+      struct with
+      {
+	typedef mean_<V,S,M> ret;
+      };
+    };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V, typename S, typename M>
-    mean<V,S,M>::mean()
+    mean_<V,S,M>::mean_()
     {
       init();
     }
 
     template <typename V, typename S, typename M>
     void
-    mean<V,S,M>::init()
+    mean_<V,S,M>::init()
     {
       count_.init();
       sum_.init();
     }
 
     template <typename V, typename S, typename M>
-    void mean<V,S,M>::take(const value& v)
+    void mean_<V,S,M>::take(const value& v)
     {
       count_.take(v);
       sum_.take(v);
@@ -100,7 +121,7 @@ namespace mln
 
     template <typename V, typename S, typename M>
     void
-    mean<V,S,M>::take(const mean<V,S,M>& other)
+    mean_<V,S,M>::take(const mean_<V,S,M>& other)
     {
       count_.take(other.count_);
       sum_.take(other.sum_);
@@ -108,9 +129,9 @@ namespace mln
 
     template <typename V, typename S, typename M>
     M
-    mean<V,S,M>::to_value() const
+    mean_<V,S,M>::to_result() const
     {
-      return sum_.to_value() / count_.to_value();
+      return sum_.to_result() / count_.to_result();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

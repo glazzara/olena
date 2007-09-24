@@ -1,3 +1,81 @@
+2007-09-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	introduce meta accumulators and better accumulators.
+
+	New material for accumulators.
+
+	* tests/accu_nil.cc: New.
+	* tests/labeling_estimate.cc: New.
+	* tests/accu_min.cc: New.
+	* tests/accu_all.cc: New.
+	* mln/accu/nil.hh: New.
+	* mln/accu/take.hh: New.
+	* mln/accu/pair.hh: New.
+	* mln/accu/p.hh: New.
+	* mln/accu/v.hh: New.
+	* mln/accu/all.hh: New.
+	* mln/accu/compute.hh: New.
+	* mln/make/pix.hh: New.
+	* mln/labeling/estimate.hh: New.
+	* mln/util/ignore.hh: New.
+	* mln/util/eat.hh: New.
+
+	Renaming to disambiguate.
+
+	* mln/core/concept/accumulator.hh
+	(value, to_value): Rename as...
+	(result, to_result): ...these.
+
+	Introduce meta accumulators.
+
+	* mln/core/concept/meta_accumulator.hh: New.
+	* mln/accu/min.hh,
+	* mln/accu/max.hh,
+	* mln/accu/min_max.hh,
+	* mln/accu/count.hh,
+	* mln/accu/sum.hh,
+	* mln/accu/mean.hh (<name>): Rename accumulators as...
+	(<name_>): ...these.
+	(<name>): New meta accumulators.
+
+	Propagate updates.
+
+	* mln/accu/bbox.hh,
+	* mln/accu/histo.hh,
+	* mln/accu/max_h.hh,
+	* mln/accu/median_alt.hh,
+	* mln/accu/median.hh,
+	* mln/accu/min_h.hh,
+	* mln/estim/sum.hh,
+	* mln/estim/min_max.hh,
+	* mln/estim/mean.hh,
+	* mln/core/internal/run_pset.hh,
+	* mln/core/queue_p.hh,
+	* mln/core/vec_p.hh,
+	* mln/core/set_p.hh,
+	* mln/morpho/opening_attribute.hh,
+	* mln/morpho/opening_area.hh,
+	* mln/morpho/erosion_fast.hh,
+	* mln/morpho/dilation.hh,
+	* mln/morpho/erosion.hh,
+	* mln/morpho/dilation_fast.hh,
+	* mln/level/take.hh,
+	* mln/level/median.hh,
+	* mln/level/naive/median.hh,
+	* mln/level/fast_median.hh,
+	* mln/level/compute.hh,
+	* mln/canvas/morpho/algebraic_union_find.hh: Update.
+
+	Misc.
+
+	* tests/core_clone.cc: Augment.
+	* mln/geom/bbox.hh (bbox): New overload for Box.
+	* mln/core/image_if.hh: Add FIXMEs.
+	(operator |): New overloads.
+	* mln/core/image2d_b.hh: Remove dead code.
+	* mln/util/pix.hh (p_of): New.
+	Clean interface.
+
 2007-09-24  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add test of rotation and fix.

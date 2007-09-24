@@ -35,6 +35,7 @@
 
 # include <mln/core/internal/image_base.hh>
 # include <mln/core/pset_if.hh>
+# include <mln/pw/all.hh>
 
 
 namespace mln
@@ -54,6 +55,9 @@ namespace mln
       pset_if<mln_pset(I), F> pset_;
       F f_;
       I ima_;
+      // FIXME for matthieu: f_ is *also* in pset_; pb: redundancy!!!
+      // FIXME for matthieu: ctor arg list and attr list should be the *same*!
+      // FIXME for matthieu: do *not* change order of those lists elements!
     };
 
   } // end of namespace mln::internal
@@ -63,11 +67,17 @@ namespace mln
    *
    */
   template <typename I, typename F>
-  struct image_if : public internal::image_base_< pset_if<mln_pset(I), F>, image_if<I,F> >
+  struct image_if
+    : public internal::image_base_< pset_if<mln_pset(I), F>, image_if<I,F> >
+  // FIXME for matthieu: *not* image_base_ *but* image_domain_morpher_
   {
 
     // Parent
     typedef internal::image_base_< pset_if<mln_pset(I), F>, image_if<I,F> > super_;
+    // FIXME for matthieu: this should *not* be public!
+    // FIXME for matthieu: comments end with a '.'
+    // FIXME for matthieu: we do not say "parent" but "super".
+
 
     /// Skeleton.
     typedef image_if< tag::image<I>, tag::function<F> > skeleton;
@@ -76,9 +86,10 @@ namespace mln
     /// Point_Set associated type.
     typedef pset_if<mln_pset(I), F> pset;
 
-    /// Constructor from an \p image.
+    /// Constructor from an image \p ima and a predicate \p f.
     image_if(I& ima, const F& f);
 
+    /// Constructor without argument.
     image_if();
 
     /// Test if a pixel value is accessible at \p p.
@@ -91,10 +102,15 @@ namespace mln
     operator image_if<const I, F>() const;
 
     using super_::data_;
+    // FIXME for matthieu: this should *not* be public!
 
     typedef image_if<I,F> self_;
 
-    /// FIXME : to put into an identity morpher
+    // FIXME : to put into an identity morpher
+    // FIXME for matthieu: nope...
+
+
+    // FIXME for matthieu: most of those typedefs and methods are useless...
 
     /// Point_Site associated type.
     typedef mln_point(I) point;
@@ -123,13 +139,30 @@ namespace mln
 
 
 
+  // Operators.
+
   template <typename I, typename F>
   image_if<I, F>
-  operator | (Image<I>& ima, const Function_p2b<F>& f)
-  {
-    image_if<I, F> tmp(exact(ima), exact(f));
-    return tmp;
-  }
+  operator | (Image<I>& ima, const Function_p2b<F>& f);
+
+  template <typename I, typename F>
+  image_if<const I, F>
+  operator | (const Image<I>& ima, const Function_p2b<F>& f);
+
+  template <typename I>
+  image_if< I,
+	    fun::equal_p2b_expr_< pw::value_<I>,
+				  pw::cst_<mln_value(I)> > >
+  operator | (Image<I>& ima, const mln_value(I)& v);
+
+  template <typename I>
+  image_if< const I,
+	    fun::equal_p2b_expr_< pw::value_<I>,
+				  pw::cst_<mln_value(I)> > >
+  operator | (Image<I>& ima, const mln_value(I)& v);
+
+  // FIXME: Add the notion of "interval of values"...
+  // FIXME: so we can write:  ima | from_to(v1, v2)
 
 
 
@@ -149,6 +182,8 @@ namespace mln
     }
 
   } // end of namespace mln::internal
+
+  // image_if<I,F>
 
   template <typename I, typename F>
   image_if<I,F>::image_if()
@@ -205,6 +240,44 @@ namespace mln
   {
     return data_->ima_.values();
   }
+
+
+  // Operators.
+
+  template <typename I, typename F>
+  image_if<I, F>
+  operator | (Image<I>& ima, const Function_p2b<F>& f)
+  {
+    image_if<I, F> tmp(exact(ima), exact(f));
+    return tmp;
+  }
+
+  template <typename I, typename F>
+  image_if<const I, F>
+  operator | (const Image<I>& ima, const Function_p2b<F>& f)
+  {
+    image_if<const I, F> tmp(exact(ima), exact(f));
+    return tmp;
+  }
+
+  template <typename I>
+  image_if< I,
+	    fun::equal_p2b_expr_< pw::value_<I>,
+				  pw::cst_<mln_value(I)> > >
+  operator | (Image<I>& ima, const mln_value(I)& v)
+  {
+    return ima | (pw::value(ima) == pw::cst(v));
+  }
+
+  template <typename I>
+  image_if< const I,
+	    fun::equal_p2b_expr_< pw::value_<I>,
+				  pw::cst_<mln_value(I)> > >
+  operator | (const Image<I>& ima, const mln_value(I)& v)
+  {
+    return ima | (pw::value(ima) == pw::cst(v));
+  }
+
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

@@ -66,7 +66,7 @@ namespace mln
 	const W& win   = exact(win_);
 	O& output      = exact(output_);
 
-	accu::max<mln_value(I)> max;
+	accu::max_<mln_value(I)> max;
 
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);
@@ -75,7 +75,7 @@ namespace mln
 	    max.init();
 	    for_all(q) if (input.has(q))
 	      max.take(input(q));
-	    output(p) = max.to_value();
+	    output(p) = max.to_result();
 	  }
       }
 

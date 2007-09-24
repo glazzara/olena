@@ -25,17 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_MIN_HH
-# define MLN_ACCU_MIN_HH
+#ifndef MLN_ACCU_P_HH
+# define MLN_ACCU_P_HH
 
-/*! \file mln/accu/min.hh
+/*! \file mln/accu/p.hh
  *
- * \brief Define an accumulator that computes a min.
+ * \brief Define an accumulator that computes a min and a max.
  */
 
 # include <mln/core/concept/meta_accumulator.hh>
-# include <mln/value/props.hh>
-# include <mln/util/pix.hh>
+# include <mln/core/concept/accumulator.hh>
+# include <mln/metal/is_a.hh>
 
 
 namespace mln
@@ -45,86 +45,93 @@ namespace mln
   {
 
 
-    /*! Generic min accumulator class.
+    /*! Generic p of accumulators.
      *
      * The parameter \c V is the type of values.
      */
-    template <typename V>
-    struct min_ : public Accumulator< min_<V> >
+    template <typename A>
+    struct p_ : public Accumulator< p_<A> >
     {
-      typedef V value;
-      typedef V result;
+      typedef mln_value(A)  value;
+      typedef mln_result(A) result;
 
-      min_();
+
+      p_();
+      p_(const A& a);
 
       void init();
       void take_as_init(const value& v);
       void take(const value& v);
-      void take(const min_<V>& other);
+      void take(const p_<A>& other);
 
-      V to_result() const;
-      
+      result to_result() const;
+
     protected:
-
-      V v_;
+      A a_;
     };
 
 
-    template <typename I> struct min_< util::pix<I> >;
-
 
     // FIXME: Doc!
-    struct min : public Meta_Accumulator< min >
+    template <typename mA>
+    struct p : public Meta_Accumulator< p<mA> >
     {
       template <typename V>
       struct with
       {
-	typedef min_<V> ret;
+	typedef mln_accu_with(mA, mln_psite(V)) ret;
       };
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V>
-    min_<V>::min_()
+    template <typename A>
+    p_<A>::p_()
     {
       init();
     }
 
-    template <typename V>
+    template <typename A>
+    p_<A>::p_(const A& a)
+      : a_(a)
+    {
+      init();
+    }
+
+    template <typename A>
     void
-    min_<V>::init()
+    p_<A>::init()
     {
-      v_ = mln_max(V);
+      a_.init();
     }
 
-    template <typename V>
-    void min_<V>::take_as_init(const value& v)
+    template <typename A>
+    void
+    p_<A>::take_as_init(const value& v)
     {
-      v_ = v;
+      a_.take_as_init(v.p()); // FIXME: Generalize with "psite(v)".
     }
 
-    template <typename V>
-    void min_<V>::take(const value& v)
+    template <typename A>
+    void
+    p_<A>::take(const value& v)
     {
-      if (v < v_)
-	v_ = v;
+      a_.take(v.p());
     }
     
-    template <typename V>
+    template <typename A>
     void
-    min_<V>::take(const min_<V>& other)
+    p_<A>::take(const p_<A>& other)
     {
-      if (other.v_ < v_)
-	v_ = other.v_;
+      a_.take(other.a_);
     }
 
-    template <typename V>
-    V
-    min_<V>::to_result() const
+    template <typename A>
+    typename p_<A>::result
+    p_<A>::to_result() const
     {
-      return v_;
+      return a_.to_result();
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -134,4 +141,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_MIN_HH
+#endif // ! MLN_ACCU_P_HH

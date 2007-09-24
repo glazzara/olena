@@ -31,6 +31,8 @@
 /*! \file mln/estim/sum.hh
  *
  * \brief Compute the sum pixel value.
+ *
+ * \todo Sum works on level so move into mln/level; otherwise on pix then ambiguous.
  */
 
 # include <mln/accu/sum.hh>
@@ -67,15 +69,15 @@ namespace mln
     mln_sum(mln_value(I)) sum(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      return level::compute(input, accu::sum<mln_value(I)>()).to_value();
+      return level::compute<accu::sum>(input);
     }
 
     template <typename I, typename S>
     void sum(const Image<I>& input, S& result)
     {
       mln_precondition(exact(input).has_data());
-      result = level::compute(input,
-			      accu::sum<mln_value(I), S>()).to_value();
+      typedef accu::sum_<mln_value(I), S> A;
+      result = level::compute(input, A());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

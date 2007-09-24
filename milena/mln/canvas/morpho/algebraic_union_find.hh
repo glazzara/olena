@@ -119,7 +119,7 @@ namespace mln
 	void make_set(const point& p)
 	{
 	  parent(p) = p;
-	  data(p).take_as_init(util::pix(f.input, p));
+	  data(p).take_as_init(make::pix(f.input, p));
 	}
 
 	bool is_root(const point& p) const

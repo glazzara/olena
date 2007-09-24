@@ -25,48 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_AREA_HH
-# define MLN_MORPHO_OPENING_AREA_HH
+#ifndef MLN_ACCU_ALL_HH
+# define MLN_ACCU_ALL_HH
 
-/*! \file mln/morpho/opening_area.hh
+/*! \file mln/accu/all.hh
  *
- * \brief Morphological area opening.
+ * \brief File that includes all accumulator types.
+ *
+ * \todo Update accumulators s.a. count so that they are like min_/min.
+ *
+ * \todo Propagate those updates to mln/estim/.
  */
-
-# include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/count.hh>
 
 
 namespace mln
 {
 
-  namespace morpho
-  {
+  /*! Namespace of accumulators.
+   */
+  namespace accu {}
 
-    /*! Morphological area opening.
-     */
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output);
+}
 
 
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output)
-    {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::morpho
-
-} // end of namespace mln
+# include <mln/accu/bbox.hh>
+# include <mln/accu/count.hh>
+# include <mln/accu/histo.hh>
+# include <mln/accu/max.hh>
+# include <mln/accu/mean.hh>
+# include <mln/accu/median.hh>
+# include <mln/accu/min.hh>
+# include <mln/accu/min_h.hh>
+# include <mln/accu/min_max.hh>
+# include <mln/accu/nil.hh>
+# include <mln/accu/pair.hh>
+# include <mln/accu/sum.hh>
 
 
-#endif // ! MLN_MORPHO_OPENING_AREA_HH
+#endif // ! MLN_ACCU_ALL_HH

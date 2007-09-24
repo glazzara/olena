@@ -70,16 +70,15 @@ namespace mln
     mln_sum(mln_value(I)) mean(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      return level::compute(input,
-			    accu::mean<mln_value(I)>()).to_value();
+      return level::compute<accu::mean>(input);
     }
 
     template <typename S, typename I, typename M>
     void mean(const Image<I>& input, M& result)
     {
       mln_precondition(exact(input).has_data());
-      result = level::compute(input,
-			      accu::mean<mln_value(I), S, M>()).to_value();
+      typedef accu::mean_<mln_value(I), S, M> A;
+      result = level::compute(input, A());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

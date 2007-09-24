@@ -58,7 +58,7 @@ namespace mln
       void init();
 
       operator mln_value(S) () const;
-      value to_value() const;
+      value to_result() const;
 
       // FIXME: remove
       void debug__() const
@@ -256,7 +256,7 @@ namespace mln
 
     template <typename S>
     typename median_alt<S>::value
-    median_alt<S>::to_value() const
+    median_alt<S>::to_result() const
     {
       return v_;
     }
@@ -265,7 +265,7 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const median_alt<S>& m)
     {
       m.debug__();
-      return ostr << m.to_value();
+      return ostr << m.to_result();
     }
 
 

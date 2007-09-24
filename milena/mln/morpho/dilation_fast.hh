@@ -133,7 +133,7 @@ namespace mln
 	    max.untake(input(q_dm));
 	  for_all(q_dp) if (input.has(q_dp))
 	    max.take(input(q_dp));
-	  output(p) = max.to_value();
+	  output(p) = max.to_result();
 	}
 
 	void fwd()
@@ -142,7 +142,7 @@ namespace mln
 	    max.untake(input(q_fm));
 	  for_all(q_fp) if (input.has(q_fp))
 	    max.take(input(q_fp));
-	  output(p) = max.to_value();
+	  output(p) = max.to_result();
 	}
 
 	void bkd()
@@ -151,7 +151,7 @@ namespace mln
 	    max.untake(input(q_bm));
 	  for_all(q_bp) if (input.has(q_bp))
 	    max.take(input(q_bp));
-	  output(p) = max.to_value();
+	  output(p) = max.to_result();
 	}
 
       }; // end of dilation_fast_t

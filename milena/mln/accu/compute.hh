@@ -25,48 +25,77 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_AREA_HH
-# define MLN_MORPHO_OPENING_AREA_HH
+#ifndef MLN_ACCU_COMPUTE_HH
+# define MLN_ACCU_COMPUTE_HH
 
-/*! \file mln/morpho/opening_area.hh
+/*! \file mln/accu/compute.hh
  *
- * \brief Morphological area opening.
+ * \brief Make an accumulator compute image pixels.
  */
 
-# include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/count.hh>
+# include <mln/core/concept/meta_accumulator.hh>
+# include <mln/core/concept/accumulator.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/metal/is_a.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln
 {
 
-  namespace morpho
+  namespace accu
   {
 
-    /*! Morphological area opening.
+    /*! Make an accumulator compute the pixels of the image \p input.
+     *
+     * \param[in] input The input image.
+     *
+     * This routine runs: \n
+     *   FIXME
+     *
+     * \warning This routine does not perform a.init().
      */
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output);
+    template <typename A, typename I>
+    mln_result(A)
+    compute(const Image<I>& input);
+
+
+    // FIXME: Doc!
+    template <typename A, typename I>
+    mln_accu_with(A, util::pix<I>)::result
+    compute(const Image<I>& input);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output)
+    template <typename A, typename I>
+    mln_result(A)
+    compute(const Image<I>& input_)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
+      mlc_is_a(A, Accumulator)::check();
+      const I& input = exact(input_);
+      A a;
+      mln_piter(I) p(input.domain());
+      for_all(p)
+	a.take(make::pix(input, p));
+      return a.to_result();
+    }
+
+    template <typename A, typename I>
+    mln_accu_with(A, util::pix<I>)::result
+    compute(const Image<I>& input)
+    {
+      mlc_is_a(A, Meta_Accumulator)::check();
+      typedef mln_accu_with(A, util::pix<I>) A_;
+      return compute<A_>(input);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::morpho
+  } // end of namespace mln::accu
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_OPENING_AREA_HH
+#endif // ! MLN_ACCU_COMPUTE_HH

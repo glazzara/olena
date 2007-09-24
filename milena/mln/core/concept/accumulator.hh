@@ -31,6 +31,8 @@
 /*! \file mln/core/concept/accumulator.hh
  *
  * \brief Definition of the concept of mln::Accumulator.
+ *
+ * \todo Rename value as argument.
  */
 
 # include <mln/core/concept/object.hh>
@@ -52,9 +54,11 @@ namespace mln
   {
     /*
       typedef value;
+      typedef result;
       void init();
       void take(const value& v);
       void take(const E& other);
+      result to_result() const;
      */
 
     // Default impl.
@@ -66,32 +70,23 @@ namespace mln
   };
 
 
-  /*! \brief Merge two accumulators.
-   *
-   * The parameter \a E is the accumulator exact type.
-   *
-   * \param[in] lhs An accumulator.
-   * \param[in] rhs Another accumulator.
-   * \result A temporary accumulator.
-   *
-   * \see relates mln::Accumulator
-   */
-  template <typename E>
-  E merge(const Accumulator<E>& lhs, const Accumulator<E>& rhs);
-
 
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
   Accumulator<E>::Accumulator()
   {
-    typedef mln_value(E) value;
+    typedef mln_value(E)  value;
+    typedef mln_result(E) result;
+
     void (E::*m1)() = & E::init;
     m1 = 0;
     void (E::*m2)(const value&) = & E::take;
     m2 = 0;
     void (E::*m3)(const E&) = & E::take;
     m3 = 0;
+    result (E::*m4)() const = & E::to_result;
+    m4 = 0;
   }
 
   template <typename E>
@@ -101,14 +96,6 @@ namespace mln
   {
     exact(this)->init();
     exact(this)->take(t);
-  }
-
-  template <typename E>
-  E merge(const Accumulator<E>& lhs, const Accumulator<E>& rhs)
-  {
-    E tmp(exact(lhs));
-    tmp.take(exact(rhs));
-    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

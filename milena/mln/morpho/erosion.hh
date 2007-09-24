@@ -66,7 +66,7 @@ namespace mln
 	const W& win   = exact(win_);
 	O& output      = exact(output_);
 
-	accu::min<mln_value(I)> min;
+	accu::min_<mln_value(I)> min;
 
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);
@@ -75,7 +75,7 @@ namespace mln
 	    min.init();
 	    for_all(q) if (input.has(q))
 	      min.take(input(q));
-	    output(p) = min.to_value();
+	    output(p) = min.to_result();
 	  }
       }
 

@@ -25,48 +25,102 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_AREA_HH
-# define MLN_MORPHO_OPENING_AREA_HH
+#ifndef MLN_ACCU_NIL_HH
+# define MLN_ACCU_NIL_HH
 
-/*! \file mln/morpho/opening_area.hh
+/*! \file mln/accu/nil.hh
  *
- * \brief Morphological area opening.
+ * \brief Define an accumulator that does nothing.
+ *
+ * \todo A macro to generate the meta version. 
  */
 
-# include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/count.hh>
+# include <mln/core/concept/meta_accumulator.hh>
+# include <mln/core/concept/accumulator.hh>
+# include <mln/util/eat.hh>
+# include <mln/util/ignore.hh>
 
 
 namespace mln
 {
 
-  namespace morpho
+  namespace accu
   {
 
-    /*! Morphological area opening.
+    /*! Define an accumulator that does nothing.
      */
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output);
+    template <typename T>
+    struct nil_ : public Accumulator< nil_<T> >
+    {
+      typedef util::eat    value;
+      typedef util::ignore result;
+
+      nil_();
+
+      void init();
+      void take_as_init(const value&);
+      void take(const value&);
+      void take(const nil_<T>&);
+
+      util::ignore to_result() const;
+    };
+
+
+
+    // FIXME: Doc!
+    struct nil : public Meta_Accumulator< nil >
+    {
+      template <typename V>
+      struct with
+      {
+	typedef nil_<V> ret;
+      };
+    };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output)
+    template <typename T>
+    nil_<T>::nil_()
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
+    }
+
+    template <typename T>
+    void
+    nil_<T>::init()
+    {
+    }
+
+    template <typename T>
+    void
+    nil_<T>::take(const value&)
+    {
+    }
+
+    template <typename T>
+    void
+    nil_<T>::take_as_init(const value&)
+    {
+    }
+
+    template <typename T>
+    void
+    nil_<T>::take(const nil_<T>&)
+    {
+    }
+
+    template <typename T>
+    util::ignore
+    nil_<T>::to_result() const
+    {
+      return util::ignore();
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::morpho
+  } // end of namespace mln::accu
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_OPENING_AREA_HH
+#endif // ! MLN_ACCU_NIL_HH

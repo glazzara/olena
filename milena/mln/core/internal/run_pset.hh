@@ -117,7 +117,7 @@ namespace mln
     const box_<P>&
     run_pset_<P>::bbox() const
     {
-      return fb_.to_value();
+      return fb_.to_result();
     }
 
     template <typename P>

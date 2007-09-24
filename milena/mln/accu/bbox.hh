@@ -52,14 +52,16 @@ namespace mln
     struct bbox : public Accumulator< bbox<P> >
     {
       typedef P value;
+      typedef const box_<P>& result;
 
       bbox();
 
+      void init();
+      void take_as_init(const P& p);
       void take(const P& p);
       void take(const bbox<P>& other);
-      void init();
 
-      const box_<P>& to_value() const;
+      const box_<P>& to_result() const;
 
       bool is_valid() const;
 
@@ -77,6 +79,22 @@ namespace mln
     bbox<P>::bbox()
     {
       init();
+    }
+
+    template <typename P>
+    void
+    bbox<P>::init()
+    {
+      is_valid_ = false;
+    }
+
+    template <typename P>
+    void
+    bbox<P>::take_as_init(const P& p)
+    {
+      b_.pmin() = p;
+      b_.pmax() = p;
+      is_valid_ = true;
     }
 
     template <typename P>
@@ -122,15 +140,8 @@ namespace mln
     }
 
     template <typename P>
-    void
-    bbox<P>::init()
-    {
-      is_valid_ = false;
-    }
-
-    template <typename P>
     const box_<P>&
-    bbox<P>::to_value() const
+    bbox<P>::to_result() const
     {
       mln_precondition(is_valid_);
       return b_;

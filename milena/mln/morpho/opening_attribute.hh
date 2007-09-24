@@ -36,6 +36,7 @@
 # include <mln/morpho/includes.hh>
 # include <mln/canvas/morpho/algebraic_union_find.hh>
 # include <mln/level/sort_points.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln
@@ -70,7 +71,7 @@ namespace mln
 	typedef N_ N;
 	typedef O_ O;
 	typedef vec_p<P> S;
-	typedef util::pix_<I> pix_t;
+	typedef util::pix<I> pix_t;
       
 	const I& input;
 	const N& nbh;
@@ -86,7 +87,7 @@ namespace mln
 
 	bool is_active(const A& attr) const
 	{
-	  return attr.to_value() < lambda;
+	  return attr.to_result() < lambda;
 	}
 
 	void inactivate(A& attr)

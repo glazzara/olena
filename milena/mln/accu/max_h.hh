@@ -51,6 +51,7 @@ namespace mln
     struct max_h : public Accumulator< max_h<S> >
     {
       typedef mln_value(S) value;
+      typedef value result;
 
       max_h(const Value_Set<S>& s);
       max_h();
@@ -63,7 +64,7 @@ namespace mln
 
       unsigned card() const { return h_.sum(); }
 
-      value to_value() const;
+      value to_result() const;
 
       const accu::histo<S>& histo() const;
 
@@ -212,7 +213,7 @@ namespace mln
 
     template <typename S>
     typename max_h<S>::value
-    max_h<S>::to_value() const
+    max_h<S>::to_result() const
     {
       if (! valid_)
 	update_();
@@ -229,7 +230,7 @@ namespace mln
     template <typename S>
     std::ostream& operator<<(std::ostream& ostr, const max_h<S>& m)
     {
-      return ostr << m.to_value();
+      return ostr << m.to_result();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

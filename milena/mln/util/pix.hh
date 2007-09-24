@@ -39,35 +39,44 @@
 namespace mln
 {
 
+  namespace select
+  {
+
+    template <typename P>
+    struct p_of : P
+    {
+      operator typename P::psite() const
+      {
+	return this->p();
+      }
+    };
+    
+  }
+
   namespace util
   {
 
     /// Pix structure.
     template <typename I>
-    struct pix_
+    struct pix
     {
-      pix_(const Image<I>& ima, const mln_point(I)& p);
-      const I& ima() const;
-      const mln_point(I)& p() const;
-      operator mln_rvalue(I)() const;
+      typedef mln_psite(I) psite;
+      typedef mln_value(I) value;
+
+      pix(const Image<I>& ima, const mln_psite(I)& p);
+      const I&          ima() const;
+      const mln_psite(I)& p() const;
+      mln_rvalue(I)       v() const;
     private:
       const I& ima_;
-      const mln_point(I)& p_;
+      const mln_psite(I)& p_;
     };
     
 
-    /// Routine to construct a pix on the fly.
-    template <typename I>
-    pix_<I>
-    pix(const Image<I>& ima, const mln_point(I)& p);
-
-
 # ifndef MLN_INCLUDE_ONLY
 
-    // pix_<I>
-
     template <typename I>
-    pix_<I>::pix_(const Image<I>& ima, const mln_point(I)& p)
+    pix<I>::pix(const Image<I>& ima, const mln_psite(I)& p)
       : ima_(exact(ima)),
 	p_(p)
     {
@@ -75,32 +84,23 @@ namespace mln
 
     template <typename I>
     const I&
-    pix_<I>::ima() const
+    pix<I>::ima() const
     {
       return ima_;
     }
 
     template <typename I>
-    const mln_point(I)&
-    pix_<I>::p() const
+    const mln_psite(I)&
+    pix<I>::p() const
     {
       return p_;
     }
 
     template <typename I>
-    pix_<I>::operator mln_rvalue(I)() const
+    mln_rvalue(I)
+    pix<I>::v() const
     {
       return ima_(p_);
-    }
-
-    // pix
-
-    template <typename I>
-    pix_<I>
-    pix(const Image<I>& ima, const mln_point(I)& p)
-    {
-      pix_<I> tmp(ima, p);
-      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -108,6 +108,9 @@ namespace mln
   } // end of namespace mln::util
 
 } // end of namespace mln
+
+
+# include <mln/make/pix.hh>
 
 
 #endif // ! MLN_UTIL_PIX_HH

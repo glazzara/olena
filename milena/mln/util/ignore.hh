@@ -25,48 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_AREA_HH
-# define MLN_MORPHO_OPENING_AREA_HH
+#ifndef MLN_UTIL_IGNORE_HH
+# define MLN_UTIL_IGNORE_HH
 
-/*! \file mln/morpho/opening_area.hh
+/*! \file mln/util/ignore.hh
  *
- * \brief Morphological area opening.
+ * \brief Definition of an "ignorer" object.
  */
 
-# include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/count.hh>
+# include <mln/core/concept/object.hh>
 
 
 namespace mln
 {
 
-  namespace morpho
+  namespace util
   {
 
-    /*! Morphological area opening.
-     */
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output);
+    /// Ignore structure.
+    struct ignore
+    {
+      ignore();
 
+      template <typename T>
+      operator T() const;
+    };
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output)
+    // ignore
+
+    ignore::ignore()
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
+    }
+
+    template <typename T>
+    ignore::operator T() const
+    {
+      return T();
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::morpho
+  } // end of namespace mln::util
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_OPENING_AREA_HH
+#endif // ! MLN_UTIL_IGNORE_HH

@@ -35,7 +35,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/concept/box.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/geom/pmin_pmax.hh>
@@ -93,19 +93,37 @@ namespace mln
       return bbox(exact(w_win).win());
     }
 
-    template <typename S>
-    box_<mln_point(S)> bbox(const Point_Set<S>& pset_)
+
+    namespace impl
     {
-      const S& pset = exact(pset_);
-      mln_precondition(pset.npoints() != 0);
 
-      typedef mln_point(S) P;
-      std::pair<P, P> pp = geom::pmin_pmax(pset);
+      template <typename S>
+      box_<mln_point(S)> bbox_(const Point_Set<S>& pset_)
+      {
+	const S& pset = exact(pset_);
+	typedef mln_point(S) P;
+	std::pair<P, P> pp = geom::pmin_pmax(pset);
+	box_<P> tmp(pp.first, pp.second);
+	return tmp;
+      }
 
-      box_<P> tmp(pp.first, pp.second);
+      template <typename B>
+      box_<mln_point(B)> bbox_(const Box<B>& pset_)
+      {
+	return exact(pset_);
+      }
+
+    } // end of namespace mln::geom::impl
+
+    template <typename S>
+    box_<mln_point(S)> bbox(const Point_Set<S>& pset)
+    {
+      mln_precondition(exact(pset).npoints() != 0);
+      box_<mln_point(S)> tmp = impl::bbox_(exact(pset));
       // FIXME: mln_postcondition(tmp <= pset.bbox());
       return tmp;
     }
+
 
     template <typename I>
     box_<mln_point(I)> bbox(const Image<I>& ima_)

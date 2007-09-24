@@ -42,6 +42,7 @@
 # include <mln/core/line_piter.hh>
 # include <mln/border/get.hh>
 # include <mln/debug/println.hh>
+# include <mln/geom/bbox.hh>
 
 // FIXME:
 
@@ -153,17 +154,6 @@ namespace mln
     void init_with_(const box2d& b, unsigned bdr = border::thickness);
 
 
-//     /// Initialize an empty image.
-//     template <typename I>
-//     void init_with_(const Image<I>& other) // FIXME: Remove this soon obsolete code!
-//     {
-//       mln_precondition(this->data_ == 0);
-//       mln_precondition(exact(other).has_data());
-//       this->data_ = new internal::data_< image2d_b<T> >(exact(other).bbox(),
-// 							exact(other).border());
-//     }
-
-
     /// Test if \p p is valid.
     bool owns_(const point2d& p) const;
 
@@ -235,7 +225,7 @@ namespace mln
     template <typename T, typename J>
     void init_with_(image2d_b<T>& target, const J& model)
     {
-      box2d b = model.bbox();
+      box2d b = geom::bbox(model);
       unsigned bdr = border::get(model);
       target.init_with_(b, bdr);
     }

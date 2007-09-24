@@ -33,8 +33,9 @@
  * \brief Define an accumulator that computes a sum.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/core/concept/meta_accumulator.hh>
 # include <mln/value/props.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln
@@ -51,21 +52,37 @@ namespace mln
      * \c S is the summation type (property) of \c V.
      */
     template <typename V, typename S = mln_sum(V)>
-    struct sum : public Accumulator< sum<V,S> >
+    struct sum_ : public Accumulator< sum_<V,S> >
     {
       typedef V value;
+      typedef S result;
 
-      sum();
+      sum_();
 
       void init();
       void take(const value& v);
-      void take(const sum<V,S>& other);
+      void take(const sum_<V,S>& other);
 
-      S to_value() const;
+      S to_result() const;
       
     protected:
 
-      S sum_;
+      S s_;
+    };
+
+
+    template <typename I, typename S>
+    struct sum_< util::pix<I>, S >;
+
+
+    // FIXME: Doc!
+    struct sum : public Meta_Accumulator< sum >
+    {
+      template <typename V, typename S = mln_sum(V)>
+      struct with
+      {
+	typedef sum_<V, S> ret;
+      };
     };
 
 
@@ -73,36 +90,36 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V, typename S>
-    sum<V,S>::sum()
+    sum_<V,S>::sum_()
     {
       init();
     }
 
     template <typename V, typename S>
     void
-    sum<V,S>::init()
+    sum_<V,S>::init()
     {
-      sum_ = 0;
+      s_ = 0;
     }
 
     template <typename V, typename S>
-    void sum<V,S>::take(const value& v)
+    void sum_<V,S>::take(const value& v)
     {
-      sum_ += v;
+      s_ += v;
     }
 
     template <typename V, typename S>
     void
-    sum<V,S>::take(const sum<V,S>& other)
+    sum_<V,S>::take(const sum_<V,S>& other)
     {
-      sum_ += other.sum_;
+      s_ += other.s_;
     }
 
     template <typename V, typename S>
     S
-    sum<V,S>::to_value() const
+    sum_<V,S>::to_result() const
     {
-      return sum_;
+      return s_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -151,7 +151,7 @@ namespace mln
 	    med.untake(input(q_dm));
 	  for_all(q_dp) if (input.has(q_dp))
 	    med.take(input(q_dp));
-	  output(p) = med.to_value();
+	  output(p) = med.to_result();
 	}
 
 	void fwd()
@@ -160,7 +160,7 @@ namespace mln
 	    med.untake(input(q_fm));
 	  for_all(q_fp) if (input.has(q_fp))
 	    med.take(input(q_fp));
-	  output(p) = med.to_value();
+	  output(p) = med.to_result();
 	}
 
 	void bkd()
@@ -169,7 +169,7 @@ namespace mln
 	    med.untake(input(q_bm));
 	  for_all(q_bp) if (input.has(q_bp))
 	    med.take(input(q_bp));
-	  output(p) = med.to_value();
+	  output(p) = med.to_result();
 	}
 
       }; // end of median_t
@@ -243,7 +243,7 @@ namespace mln
 	      if (input.has(pt))
 		med.take(input(pt));
 	      if (output.has(p))
-		output(p) = med.to_value();
+		output(p) = med.to_result();
 	    }
 
 	  // middle columns (both take and untake)
@@ -255,7 +255,7 @@ namespace mln
 	      if (input.has(pu))
 		med.untake(input(pu));
 	      if (output.has(p))
-		output(p) = med.to_value();
+		output(p) = med.to_result();
 	    }
 
 	  // right columns (now just untake old points)
@@ -264,7 +264,7 @@ namespace mln
 	      if (input.has(pu))
 		med.untake(input(pu));
 	      if (output.has(p))
-		output(p) = med.to_value();
+		output(p) = med.to_result();
 	    }
 	}
 

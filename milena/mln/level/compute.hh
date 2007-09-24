@@ -33,7 +33,10 @@
  * \brief Compute an accumulator onto image pixel values.
  */
 
+# include <mln/core/concept/meta_accumulator.hh>
 # include <mln/level/take.hh>
+# include <mln/metal/is_a.hh>
+
 
 
 namespace mln
@@ -46,27 +49,51 @@ namespace mln
      *
      * \param[in] input The input image.
      * \param[in] a The accumulator.
-     * \return A resulting accumulator.
+     * \return The accumulator result.
      *
-     * This routine computes: \n
-     *   res = \p a \n
-     *   res.init() \n
-     *   level::take(res, \p input) \n
-     *   return res \n
+     * This routine runs: \n
+     *   tmp = \p a \n
+     *   tmp.init() \n
+     *   level::take(\p input, tmp) \n
+     *   return tmp.to_result() \n
      */
     template <typename I, typename A>
-    A compute(const Image<I>& input, const Accumulator<A>& a);
+    mln_result(A)
+    compute(const Image<I>& input, const Accumulator<A>& a);
+
+    template <typename A, typename I>
+    mln_accu_with(A, mln_value(I))::result
+    compute(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename A>
-    A compute(const Image<I>& input, const Accumulator<A>& a)
+    mln_result(A)
+    compute(const Image<I>& input, const Accumulator<A>& a_)
     {
-      A res = exact(a);
-      res.init();
-      level::take(res, input);
-      return res;
+      mln_precondition(exact(input).has_data());
+      A a = exact(a_); // Cpy.
+      a.init();
+      level::take(input, a);
+      return a.to_result();
+    }
+
+    template <typename A, typename I>
+    mln_result(A)
+    compute(const Image<I>& input)
+    {
+      mln_precondition(exact(input).has_data());
+      return level::compute(input, A());
+    }
+
+    template <typename A, typename I>
+    mln_accu_with(A, mln_value(I))::result
+    compute(const Image<I>& input)
+    {
+      mlc_is_a(A, Meta_Accumulator)::check();
+      return compute(input,
+		     mln_accu_with(A, mln_value(I))());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

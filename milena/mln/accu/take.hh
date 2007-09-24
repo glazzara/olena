@@ -25,48 +25,75 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_AREA_HH
-# define MLN_MORPHO_OPENING_AREA_HH
+#ifndef MLN_ACCU_TAKE_HH
+# define MLN_ACCU_TAKE_HH
 
-/*! \file mln/morpho/opening_area.hh
+/*! \file mln/accu/take.hh
  *
- * \brief Morphological area opening.
+ * \brief Make an accumulator take image pixels.
  */
 
-# include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/count.hh>
+# include <mln/core/concept/accumulator.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln
 {
 
-  namespace morpho
+  namespace accu
   {
 
-    /*! Morphological area opening.
+    /*! Make an accumulator take the pixels of the image \p input.
+     *
+     * \param[in] input The input image.
+     * \param[in,out] a The accumulator.
+     *
+     * This routine runs: \n
+     *   for all p of \p input, \p a.take( pix(\p input, p) ) \n
+     *
+     * \warning This routine does not perform a.init().
      */
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output);
+    template <typename A, typename I>
+    void take(const Image<I>& input, Accumulator<A>& a);
+
+
+    // FIXME: Overload for point sets.
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output)
+    namespace impl
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
+
+      template <typename A, typename I>
+      void take(const Image<I>& input_, A& a)
+      {
+	const I& input = exact(input_);
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  a.take(make::pix(input, p));
+      }
+
+      // FIXME: We need an impl for pixels of fast images.
+
+    } // end of namespace mln::accu::impl
+
+
+    // Facade.
+
+    template <typename A, typename I>
+    void take(const Image<I>& input, Accumulator<A>& a)
+    {
+      mln_precondition(exact(input).has_data());
+      impl::take(exact(input), exact(a));
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::morpho
+  } // end of namespace mln::accu
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_OPENING_AREA_HH
+#endif // ! MLN_ACCU_TAKE_HH

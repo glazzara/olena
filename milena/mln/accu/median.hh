@@ -51,6 +51,7 @@ namespace mln
     struct median : public Accumulator< median<S> >
     {
       typedef mln_value(S) value;
+      typedef value result;
 
       median(const Value_Set<S>& s);
       median();
@@ -62,7 +63,7 @@ namespace mln
 
       unsigned card() const { return h_.sum(); }
 
-      value to_value() const;
+      value to_result() const;
 
       const accu::histo<S>& histo() const;
 
@@ -223,7 +224,7 @@ namespace mln
 
     template <typename S>
     typename median<S>::value
-    median<S>::to_value() const
+    median<S>::to_result() const
     {
       if (! valid_)
 	update_();
@@ -240,7 +241,7 @@ namespace mln
     template <typename S>
     std::ostream& operator<<(std::ostream& ostr, const median<S>& m)
     {
-      return ostr << m.to_value();
+      return ostr << m.to_result();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

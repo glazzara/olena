@@ -133,7 +133,7 @@ namespace mln
 	    min.untake(input(q_dm));
 	  for_all(q_dp) if (input.has(q_dp))
 	    min.take(input(q_dp));
-	  output(p) = min.to_value();
+	  output(p) = min.to_result();
 	}
 
 	void fwd()
@@ -142,7 +142,7 @@ namespace mln
 	    min.untake(input(q_fm));
 	  for_all(q_fp) if (input.has(q_fp))
 	    min.take(input(q_fp));
-	  output(p) = min.to_value();
+	  output(p) = min.to_result();
 	}
 
 	void bkd()
@@ -151,7 +151,7 @@ namespace mln
 	    min.untake(input(q_bm));
 	  for_all(q_bp) if (input.has(q_bp))
 	    min.take(input(q_bp));
-	  output(p) = min.to_value();
+	  output(p) = min.to_result();
 	}
 
       }; // end of erosion_fast_t

@@ -175,7 +175,7 @@ namespace mln
     mln_precondition(npoints() != 0);
     if (bb_needs_update_)
       bb_update_();
-    return bb_.to_value();
+    return bb_.to_result();
   }
 
   template <typename P>

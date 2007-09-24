@@ -145,7 +145,7 @@ namespace mln
   set_p<P>::bbox() const
   {
     mln_precondition(npoints() != 0);
-    return bb_.to_value();
+    return bb_.to_result();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -25,48 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_AREA_HH
-# define MLN_MORPHO_OPENING_AREA_HH
+#ifndef MLN_MAKE_PIX_HH
+# define MLN_MAKE_PIX_HH
 
-/*! \file mln/morpho/opening_area.hh
+/*! \file mln/make/pix.hh
  *
- * \brief Morphological area opening.
+ * \brief Routine to construct an mln::util::pix.
  */
 
-# include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/count.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln
 {
 
-  namespace morpho
+  namespace make
   {
 
-    /*! Morphological area opening.
-     */
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output);
+    /// Create an mln::pix from an image \p ima and a psite \p p.
+    template <typename I>
+    mln::util::pix<I> pix(const Image<I>& ima, const mln_psite(I)& p);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output)
+    template <typename I>
+    mln::util::pix<I> pix(const Image<I>& ima, const mln_psite(I)& p)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
+      mln::util::pix<I> tmp(ima, p);
+      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::morpho
+  } // end of namespace mln::make
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_OPENING_AREA_HH
+#endif // ! MLN_MAKE_PIX_HH

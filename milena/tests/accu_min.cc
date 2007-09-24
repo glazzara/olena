@@ -25,48 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_AREA_HH
-# define MLN_MORPHO_OPENING_AREA_HH
-
-/*! \file mln/morpho/opening_area.hh
+/*! \file tests/accu_min.cc
  *
- * \brief Morphological area opening.
+ * \brief Tests on mln::accu::min.
  */
 
-# include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/count.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/debug/iota.hh>
+
+#include <mln/accu/nil.hh>
+#include <mln/accu/min.hh>
+#include <mln/accu/p.hh>
+#include <mln/accu/v.hh>
+#include <mln/accu/compute.hh>
+
+#include <mln/level/compute.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  image2d_b<int> ima(3, 3);
+  debug::iota(ima);
+  mln_assertion(level::compute< accu::min >(ima) == 1);
+  mln_assertion(level::compute< accu::min_<int> >(ima) == 1);
 
-  namespace morpho
-  {
+//   accu::compute< accu::nil >(ima); // No-op.
 
-    /*! Morphological area opening.
-     */
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output);
+//   accu::compute< accu::min >(ima);
 
+  std::cout << accu::compute< accu::val<accu::min> >(ima)
+	    << std::endl;
 
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output)
-    {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::morpho
-
-} // end of namespace mln
-
-
-#endif // ! MLN_MORPHO_OPENING_AREA_HH
+//   std::cout << accu::compute< accu::min >(ima)
+// 	    << std::endl;
+}

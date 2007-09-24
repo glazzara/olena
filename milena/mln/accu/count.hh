@@ -33,7 +33,7 @@
  * \brief Define an accumulator that counts.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/core/concept/meta_accumulator.hh>
 
 
 namespace mln
@@ -46,68 +46,78 @@ namespace mln
     /*! Generic counter accumulator class.
      */
     template <typename V>
-    struct count : public Accumulator< count<V> >
+    struct count_ : public Accumulator< count_<V> >
     {
       typedef V value;
       typedef std::size_t result; // FIXME: Up in Accumulator.
 
-      count();
+      count_();
 
       void init();
       void take(const value&);
-      void take(const count<V>& other);
+      void take(const count_<V>& other);
 
-      std::size_t to_value() const;
+      std::size_t to_result() const;
       void set_value(std::size_t c);
 
     protected:
 
-      std::size_t count_;
+      std::size_t count__;
     };
 
+
+    // FIXME: Doc!
+    struct count : public Meta_Accumulator< count >
+    {
+      template <typename V>
+      struct with
+      {
+	typedef count_<V> ret;
+      };
+    };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V>
-    count<V>::count()
+    count_<V>::count_()
     {
       init();
     }
 
     template <typename V>
     void
-    count<V>::init()
+    count_<V>::init()
     {
-      count_ = 0;
+      count__ = 0;
     }
 
     template <typename V>
     void
-    count<V>::take(const value&)
+    count_<V>::take(const value&)
     {
-      ++count_;
+      ++count__;
     }
 
     template <typename V>
     void
-    count<V>::take(const count<V>& other)
+    count_<V>::take(const count_<V>& other)
     {
-      count_ += other.count_;
+      count__ += other.count__;
     }
 
     template <typename V>
     std::size_t
-    count<V>::to_value() const
+    count_<V>::to_result() const
     {
-      return count_;
+      return count__;
     }
 
     template <typename V>
     void
-    count<V>::set_value(std::size_t c)
+    count_<V>::set_value(std::size_t c)
     {
-      count_ = c;
+      count__ = c;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

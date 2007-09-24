@@ -25,48 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_AREA_HH
-# define MLN_MORPHO_OPENING_AREA_HH
+#ifndef MLN_CORE_CONCEPT_META_ACCUMULATOR_HH
+# define MLN_CORE_CONCEPT_META_ACCUMULATOR_HH
 
-/*! \file mln/morpho/opening_area.hh
+/*! \file mln/core/concept/meta_accumulator.hh
  *
- * \brief Morphological area opening.
+ * \brief Definition of the concept of mln::Meta_Accumulator.
  */
 
-# include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/count.hh>
+# include <mln/core/concept/object.hh>
+# include <mln/core/concept/accumulator.hh>
+
+
+# define mln_accu_with(A, T) \
+typename A::template with< T >::ret
+
+
+# define mln_accu_result(A, T) \
+typename A::template with< T >::ret::result
+
 
 
 namespace mln
 {
 
-  namespace morpho
-  {
 
-    /*! Morphological area opening.
-     */
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output);
+  /*! \brief Base class for implementation of meta accumulators.
+   *
+   * The parameter \a E is the exact type.
+   *
+   * \see mln::doc::Meta_Accumulator for a complete documentation of
+   * this class contents.
+   */
+  template <typename E>
+  struct Meta_Accumulator : public Object<E>
+  {
+  protected:
+    Meta_Accumulator();
+  };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output)
-    {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
-    }
+  template <typename E>
+  Meta_Accumulator<E>::Meta_Accumulator()
+  {
+    // FIXME: Check "with" on E.
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_OPENING_AREA_HH
+#endif // ! MLN_CORE_CONCEPT_META_ACCUMULATOR_HH
