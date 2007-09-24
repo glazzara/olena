@@ -121,7 +121,7 @@ namespace mln
 
 
       /// Skeleton.
-      typedef stack_image< n, tag::image<I> > skeleton;
+      typedef stack_image< n, tag::image_<I> > skeleton;
 
 
       /// Constructor.

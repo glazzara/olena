@@ -65,7 +65,7 @@ namespace mln
 
 
     /// Skeleton.
-    typedef interpolated< tag::image<I> > skeleton;
+    typedef interpolated< tag::image_<I> > skeleton;
 
 
     /// Constructor.

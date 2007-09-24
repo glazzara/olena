@@ -40,7 +40,24 @@ int main()
 {
   using namespace mln;
 
-  image2d_b<int> ima(8, 8);
+  typedef image2d_b<int> I;
+  I ima(8, 8);
   // debug::println(ima | fun::p2b::chess);
   mln_assertion((ima | fun::p2b::chess).npoints() == 32);
+
+  {
+    typedef image_if<I, fun::p2b::chess_t> II;
+    II ima_ref = ima | fun::p2b::chess;
+    debug::println(ima_ref);
+    {
+      II ima_ref_;
+      ima_ref_ = ima_ref;
+      debug::println(ima_ref_);
+    }
+    {
+      II ima_;
+      init(ima_, ima_ref);
+      debug::println(ima_);
+    }
+  }
 }

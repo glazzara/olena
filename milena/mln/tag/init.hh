@@ -25,13 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TAG_SKELETON_HH
-# define MLN_CORE_TAG_SKELETON_HH
+#ifndef MLN_CORE_TAG_INIT_HH
+# define MLN_CORE_TAG_INIT_HH
 
-/*! \file mln/core/tag/skeleton.hh
+/*! \file mln/core/tag/init.hh
  *
- * \brief Definition of tags used in the skeleton types associated to
- * image types.
+ * \brief Definition of tags used in the mln::init mechanism.
  */
 
 
@@ -41,20 +40,15 @@ namespace mln
   namespace tag
   {
 
-    // With param.
-    template <typename I> struct image_ { typedef I param; };
-    template <typename V> struct value_ { typedef V param; };
-    template <typename P> struct psite_ { typedef P param; };
-    template <typename S> struct pset_  { typedef S param; };
-    template <typename D> struct data_  { typedef D param; };
-    template <typename F> struct function_ { typedef F param; };
-
-    // With value.
-    template <unsigned u> struct unsigned_ { enum { value = u }; };
+    struct image_t  {} image;
+    struct domain_t {} domain;
+    struct bbox_t   {} bbox;
+    struct border_t {} border;
+    struct function_t {} function;
 
   } // end of namespace mln::tag
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_TAG_SKELETON_HH
+#endif // ! MLN_CORE_TAG_INIT_HH

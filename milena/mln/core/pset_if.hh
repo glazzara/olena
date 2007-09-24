@@ -80,8 +80,11 @@ namespace mln
     typedef internal::fixme bkd_piter;
 
 
-    /// Constructor without argument.
+    /// Constructor with a point set \p pset and a predicate \p f.
     pset_if(const S& pset, const F& f);
+
+    /// Constructor without argument.
+    pset_if();
 
 
     /// Test if \p p belongs to the subset. 
@@ -99,9 +102,12 @@ namespace mln
     /// Test predicate on point site \p p.
     bool pred(const psite& p) const;
 
+    /// Give the predicate function.
+    const F& predicate() const;
+
   protected:
 
-    const S& pset_;
+    S pset_;
     F f_;
   };
 
@@ -154,6 +160,18 @@ namespace mln
     : pset_(pset),
       f_(f)
   {
+  }
+
+  template <typename S, typename F>
+  pset_if<S,F>::pset_if()
+  {
+  }
+
+  template <typename S, typename F>
+  const F&
+  pset_if<S,F>::predicate() const
+  {
+    return f_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

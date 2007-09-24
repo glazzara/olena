@@ -68,16 +68,8 @@ namespace mln
 							    pset_if<mln_pset(I),F>,
 							    image_if<I,F> >
   {
-
-
     /// Skeleton.
-    typedef image_if< tag::image<I>, tag::function<F> > skeleton;
-
-    /// Point_Site associated type.
-    typedef pset_if<mln_pset(I), F> pset;
-
-    /// Psite type.
-    typedef mln_psite(pset) psite;
+    typedef image_if< tag::image_<I>, tag::function_<F> > skeleton;
 
     /// Constructor from an image \p ima and a predicate \p f.
     image_if(I& ima, const F& f);
@@ -85,25 +77,20 @@ namespace mln
     /// Constructor without argument.
     image_if();
 
+    /// Initialization.
+    void init_(I& ima, const F& f);
+
+    /// Initialization.
+    void init_(I& ima, const pset_if<mln_pset(I), F>& pset);
+
     /// Test if a pixel value is accessible at \p p.
     bool owns_(const mln_psite(I)& p) const;
 
     /// Give the definition domain.
-    const pset& domain() const;
+    const pset_if<mln_pset(I), F>& domain() const;
 
     /// Const promotion via convertion.
     operator image_if<const I, F>() const;
-
-
-  protected:
-
-    /// Self type.
-    typedef image_if<I,F> self_;
-
-    /// Super type.
-    typedef internal::image_base_< pset_if<mln_pset(I), F>, image_if<I,F> > super_;
-
-    using super_::data_;
   };
 
 
@@ -137,10 +124,38 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  namespace internal
+  // impl::init_
+
+  namespace impl
   {
 
-    // internal::data_< image_if<I,S> >
+    template <typename I, typename F>
+    void init_(tag::function_t, F& f, const image_if<I,F>& model)
+    {
+      f = model.domain().predicate();
+    }
+
+    template <typename I, typename F, typename J>
+    void init_(tag::image_t, image_if<I,F>& target, const J& model)
+    {
+      I ima;
+      init_(tag::image, ima, model);
+      F f;
+      init_(tag::function, f, model);
+      target.init_(ima, f);
+      // Alternative code:
+      //   pset_if<mln_pset(I), F> pset;
+      //   init_(tag::domain, pset, model);
+      //   target.init_(ima, pset);
+    }
+
+  } // end of namespace mln::impl
+
+
+  // internal::data_< image_if<I,S> >
+
+  namespace internal
+  {
 
     template <typename I, typename F>
     data_< image_if<I,F> >::data_(I& ima, const F& f)
@@ -168,7 +183,23 @@ namespace mln
   template <typename I, typename F>
   image_if<I,F>::image_if(I& ima, const F& f)
   {
+    init_(ima, f);
+  }
+
+  template <typename I, typename F>
+  void
+  image_if<I,F>::init_(I& ima, const F& f)
+  {
+    mln_precondition(! this->has_data());
     this->data_ = new internal::data_< image_if<I,F> >(ima, f);
+  }
+
+  template <typename I, typename F>
+  void
+  image_if<I,F>::init_(I& ima, const pset_if<mln_pset(I), F>& pset)
+  {
+    mln_precondition(! this->has_data());
+    this->data_ = new internal::data_< image_if<I,F> >(ima, pset);
   }
 
   template <typename I, typename F>
@@ -182,16 +213,15 @@ namespace mln
   bool
   image_if<I,F>::owns_(const mln_psite(I)& p) const
   {
-    return data_->pset_.has(p);
+    return this->data_->pset_.has(p);
   }
 
   template <typename I, typename F>
   const pset_if<mln_pset(I), F>&
   image_if<I,F>::domain() const
   {
-    return data_->pset_;
+    return this->data_->pset_;
   }
-
 
 
 

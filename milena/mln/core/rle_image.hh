@@ -60,7 +60,7 @@ namespace mln
 
 
     /// Skeleton.
-    typedef rle_image< tag::psite<P>, tag::value<T> > skeleton;
+    typedef rle_image< tag::psite_<P>, tag::value_<T> > skeleton;
 
 
     rle_image();

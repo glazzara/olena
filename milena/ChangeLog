@@ -1,3 +1,64 @@
+2007-09-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment initialization mechanism.
+
+	New initialization mechanism.
+
+	* mln/core/init.hh: New.
+	* mln/tag/init.hh: New.
+	* mln/core/clone.hh: Update; now call init.
+	* mln/core/internal/image_base.hh (init_): Remove; obsolete.
+	Now in mln/core/init.hh.
+	* mln/core/internal/image_morpher.hh (init_): Inactivate.
+	(init_): New version so that priority is lowered and ambiguity
+	suppressed.
+
+	Update.
+
+	* mln/core/image_if.hh
+	(pset, psite, self_, super_, data_): Remove; obsolete.
+	(init_): Overload method.
+	(init_): New overload in impl::.
+	* mln/core/image1d_b.hh,
+	* mln/core/image2d_b.hh,
+	* mln/core/image3d_b.hh,
+	* mln/core/sub_image.hh (init_): New overload in impl::.
+	(init_with): Rename as...
+	(init_): ...these.
+
+	Renaming in skeleton tags.
+
+	* mln/tag/skeleton.hh (<name>): Rename as...
+	(<name>_): ...these.
+	* mln/trait/ch_value.hh,
+	* mln/pw/image.hh,
+	* mln/core/decorated_image.hh,
+	* mln/core/image_if.hh,
+	* mln/core/rle_image.hh,
+	* mln/core/interpolated.hh,
+	* mln/core/image2d_b.hh,
+	* mln/core/cast_image.hh,
+	* mln/core/safe.hh,
+	* mln/core/pset_if.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/sparse_image.hh,
+	* mln/core/t_image.hh,
+	* mln/core/image1d_b.hh,
+	* mln/core/image3d_b.hh,
+	* mln/value/props.hh,
+	* mln/value/stack.hh,
+	* tests/image2d_b.cc,
+	* tests/image_if.cc: Update.
+
+	Misc.
+
+	* mln/core/pset_if.hh (pset_f): New ctor.
+	(pset_): Unqualify.
+	(predicate): New.
+	* mln/metal/vec.hh (super_): Change to protected.
+	* mln/value/quat.hh (super_): New.
+	(data_): Make use Explicit.
+
 2007-09-24  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add translation.

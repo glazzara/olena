@@ -81,7 +81,7 @@ namespace mln
 
 
     /// Skeleton.
-    typedef cast_image_< tag::value<T>, tag::image<I> > skeleton;
+    typedef cast_image_< tag::value_<T>, tag::image_<I> > skeleton;
 
 
     /// Constructor.

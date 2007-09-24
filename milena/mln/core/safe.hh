@@ -43,7 +43,7 @@ namespace mln
   public:
 
     /// Skeleton.
-    typedef safe_image< tag::image<I> > skeleton;
+    typedef safe_image< tag::image_<I> > skeleton;
 
     safe_image(I& ima, const mln_value(I)& default_value);
 

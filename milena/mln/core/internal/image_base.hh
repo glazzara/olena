@@ -55,18 +55,6 @@ namespace mln
   } // end of namespace mln::internal
 
 
-  namespace impl
-  {
-
-    /// Declaration of the general image initialization routine.
-    template <typename I, typename J>
-    void init_(Image<I>& target, const Image<J>& model);
-
-    // FIXME: Say more about it!
-
-  } // end of namespace mln::impl
-
-
 
   namespace internal
   {
@@ -263,6 +251,9 @@ namespace mln
   } // end of namespace mln::internal
 
 } // end of namespace mln
+
+
+# include <mln/core/init.hh>
 
 
 #endif // ! MLN_CORE_INTERNAL_IMAGE_BASE_HH

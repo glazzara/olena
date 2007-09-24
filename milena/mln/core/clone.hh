@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/init.hh>
 # include <mln/level/fill.hh>
 
 
@@ -58,7 +59,7 @@ namespace mln
   {
     // FIXME: Add a static check that mln_concrete(I) actually *is* concrete...
     mln_concrete(I) tmp;
-    impl::init_(tmp, exact(model));
+    init(tmp, model);
     level::fill(tmp, model);
     return tmp;
   }

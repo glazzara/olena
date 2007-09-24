@@ -33,6 +33,8 @@
 #include <mln/core/image2d_b.hh>
 #include <mln/geom/size2d.hh>
 
+#include <mln/core/init.hh>
+
 
 int main()
 {

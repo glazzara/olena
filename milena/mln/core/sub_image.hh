@@ -62,7 +62,7 @@ namespace mln
   struct sub_image : public internal::image_domain_morpher_< I, S, sub_image<I,S> >
   {
     /// Skeleton.
-    typedef sub_image< tag::image<I>, tag::pset<S> > skeleton;
+    typedef sub_image< tag::image_<I>, tag::pset_<S> > skeleton;
 
     /// Constructor without argument.
     sub_image();
@@ -95,7 +95,7 @@ namespace mln
   {
 
     template <typename I, typename S, typename J>
-    void init_(sub_image<I,S>& target, const J& model);
+    void init_(tag::image_t, sub_image<I,S>& target, const J& model);
     
   } // end of namespace mln::impl
 
@@ -109,11 +109,12 @@ namespace mln
   {
 
     template <typename I, typename S, typename J>
-    void init_(sub_image<I,S>& target, const J& model)
+    void init_(tag::image_t, sub_image<I,S>& target, const J& model)
     {
       I ima;
-      init_(ima, model); // rec
-      S pset = model.domain();
+      init_(tag::image, ima, model);
+      S pset;
+      init_(tag::domain, pset, model);
       target.init_(ima, pset);
     }
     

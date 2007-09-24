@@ -42,61 +42,64 @@ namespace mln
 
     class quat : public metal::vec<4, float>
     {
-      public:
+      typedef metal::vec<4, float> super_;
+      using super_::data_;
 
-	// ctors
+    public:
 
-	quat();
-	quat(float s, float x, float y, float z);
+      // ctors
 
-	template <typename T>
-	quat(float s, const metal::vec<3,T>& v);
+      quat();
+      quat(float s, float x, float y, float z);
 
-	template <typename T>
-	quat(const metal::vec<4,T>& v);
+      template <typename T>
+      quat(float s, const metal::vec<3,T>& v);
 
-	// accessors/modifiers as a 'scalar+metal::vec<3>'
+      template <typename T>
+      quat(const metal::vec<4,T>& v);
 
-	float scal() const;
-	void set_scal(float s);
+      // accessors/modifiers as a 'scalar+metal::vec<3>'
 
-	metal::vec<3,float> vect() const;
-	void set_vect(float x, float y, float z);
-	template <typename T>
-	void set_vect(const metal::vec<3,T>& v);
+      float scal() const;
+      void set_scal(float s);
 
-	// multiplication
+      metal::vec<3,float> vect() const;
+      void set_vect(float x, float y, float z);
+      template <typename T>
+      void set_vect(const metal::vec<3,T>& v);
 
-	quat operator*(const quat& rhs) const;
+      // multiplication
 
-	// tests
+      quat operator*(const quat& rhs) const;
 
-	bool is_unit() const;
-	bool is_null() const;
+      // tests
 
-	// conjugate and invert
+      bool is_unit() const;
+      bool is_null() const;
 
-	quat conj() const;
-	quat inv() const;
+      // conjugate and invert
 
-	// transform into unit quaternion
+      quat conj() const;
+      quat inv() const;
 
-	quat& set_unit();
-	template <typename T>
-	void set_unit(float theta, const metal::vec<3,T>& uv);
+      // transform into unit quaternion
 
-	// only for unit quaternions described by theta and uv such as:
-	// q = ( cos(theta), sin(theta) * uv )
+      quat& set_unit();
+      template <typename T>
+      void set_unit(float theta, const metal::vec<3,T>& uv);
 
-	template <typename T>
-	quat(unsigned one, float theta, const metal::vec<3, T>& uv);
+      // only for unit quaternions described by theta and uv such as:
+      // q = ( cos(theta), sin(theta) * uv )
 
-	float theta() const;
-	void set_theta(float theta);
+      template <typename T>
+      quat(unsigned one, float theta, const metal::vec<3, T>& uv);
 
-	metal::vec<3, float> uvect() const;
-	template <typename T>
-	void set_uvect(const metal::vec<3,T>& uv);
+      float theta() const;
+      void set_theta(float theta);
+
+      metal::vec<3, float> uvect() const;
+      template <typename T>
+      void set_uvect(const metal::vec<3,T>& uv);
 
     };
 

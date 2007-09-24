@@ -49,62 +49,62 @@ namespace mln
       template <unsigned n, typename T>
       class vec_base_
       {
-	protected:
-	  T data_[n];
+      protected:
+	T data_[n];
       };
 
       template <typename T>
       class vec_base_ <1, T>
       {
-	public:
-	  void set(const T& val0)
-	  {
-	    data_[0] = val0;
-	  }
-	protected:
-	  T data_[1];
+      public:
+	void set(const T& val0)
+	{
+	  data_[0] = val0;
+	}
+      protected:
+	T data_[1];
       };
 
       template <typename T>
       class vec_base_ <2, T>
       {
-	public:
-	  void set(const T& val0, const T& val1)
-	  {
-	    data_[0] = val0;
-	    data_[1] = val1;
-	  }
-	protected:
-	  T data_[2];
+      public:
+	void set(const T& val0, const T& val1)
+	{
+	  data_[0] = val0;
+	  data_[1] = val1;
+	}
+      protected:
+	T data_[2];
       };
 
       template <typename T>
       class vec_base_ <3, T>
       {
-	public:
-	  void set(const T& val0, const T& val1, const T& val2)
-	  {
-	    data_[0] = val0;
-	    data_[1] = val1;
-	    data_[2] = val2;
-	  }
-	protected:
-	  T data_[3];
+      public:
+	void set(const T& val0, const T& val1, const T& val2)
+	{
+	  data_[0] = val0;
+	  data_[1] = val1;
+	  data_[2] = val2;
+	}
+      protected:
+	T data_[3];
       };
 
       template <typename T>
       class vec_base_ <4, T>
       {
-	public:
-	  void set(const T& val0, const T& val1, const T& val2, const T& val3)
-	  {
-	    data_[0] = val0;
-	    data_[1] = val1;
-	    data_[2] = val2;
-	    data_[3] = val3;
-	  }
-	protected:
-	  T data_[4];
+      public:
+	void set(const T& val0, const T& val1, const T& val2, const T& val3)
+	{
+	  data_[0] = val0;
+	  data_[1] = val1;
+	  data_[2] = val2;
+	  data_[3] = val3;
+	}
+      protected:
+	T data_[4];
       };
 
 
@@ -112,10 +112,12 @@ namespace mln
 
 
 
-  template <unsigned n, typename T>
-  class vec : public internal::vec_base_<n, T>
-  {
+    template <unsigned n, typename T>
+    class vec : public internal::vec_base_<n, T>
+    {
       typedef internal::vec_base_<n, T> super;
+
+    protected:
       using super::data_;
 
     public:
@@ -146,7 +148,7 @@ namespace mln
       unsigned size() const;
 
       const vec<n, T>& normalize();
-  };
+    };
 
     // eq
 

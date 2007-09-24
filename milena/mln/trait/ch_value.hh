@@ -59,35 +59,35 @@ namespace mln
 
       template < template <class> class M, typename I,
 		 typename V >
-      struct ch_value_<  M< tag::image<I> >,  V  >
+      struct ch_value_<  M< tag::image_<I> >,  V  >
       {
 	typedef M< mln_ch_value(I, V) > ret;
       };
 
       template < template <class> class M, typename T,
 		 typename V >
-      struct ch_value_<  M< tag::value<T> >,  V  >
+      struct ch_value_<  M< tag::value_<T> >,  V  >
       {
 	typedef M< V > ret;
       };
 
       template < template <class, class> class M, typename T, typename I,
 		 typename V >
-      struct ch_value_<  M< tag::value<T>, tag::image<I> >,  V  >
+      struct ch_value_<  M< tag::value_<T>, tag::image_<I> >,  V  >
       {
 	typedef mln_ch_value(I, V) ret;
       };
 
       template < template <class, class> class M, typename P, typename T,
 		 typename V >
-      struct ch_value_<  M< tag::psite<P>, tag::value<T> >,  V  >
+      struct ch_value_<  M< tag::psite_<P>, tag::value_<T> >,  V  >
       {
 	typedef M< P, V > ret;
       };
 
       template < template <unsigned, class> class M, unsigned n, typename I,
 		 typename V >
-      struct ch_value_<  M< n, tag::image<I> >,  V  > // For mln::value::stack_image<n,I> !
+      struct ch_value_<  M< n, tag::image_<I> >,  V  > // For mln::value::stack_image<n,I> !
       {
 	typedef metal::vec<n, V> value;
 	typedef mln_ch_value(I, value) ret;
@@ -95,14 +95,14 @@ namespace mln
 
       template < template <class, class> class M, typename I, typename S,
 		 typename V >
-      struct ch_value_<  M< tag::image<I>, tag::pset<S> >,  V  >
+      struct ch_value_<  M< tag::image_<I>, tag::pset_<S> >,  V  >
       {
 	typedef M< mln_ch_value(I, V), S > ret;
       };
 
       template < template <class, class> class M, typename F, typename S,
 		 typename V >
-      struct ch_value_<  M< tag::function<F>, tag::pset<S> >,  V  >
+      struct ch_value_<  M< tag::function_<F>, tag::pset_<S> >,  V  >
       {
 	typedef typename S::mesh mesh;
 	typedef typename image_from_mesh< mesh, V >::ret ret; // FIXME: from_psite instead? coord=int!?

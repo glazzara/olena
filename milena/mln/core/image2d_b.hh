@@ -40,9 +40,7 @@
 # include <mln/value/set.hh>
 # include <mln/fun/i2v/all.hh>
 # include <mln/core/line_piter.hh>
-# include <mln/border/get.hh>
-# include <mln/debug/println.hh>
-# include <mln/geom/bbox.hh>
+
 
 // FIXME:
 
@@ -127,7 +125,7 @@ namespace mln
 
 
     /// Skeleton.
-    typedef image2d_b< tag::value<T> > skeleton;
+    typedef image2d_b< tag::value_<T> > skeleton;
 
 
     /// Value_Set associated type.
@@ -144,6 +142,7 @@ namespace mln
     /// Constructor with a box and the border thickness (default is
     /// 3).
     image2d_b(const box2d& b, unsigned bdr = border::thickness);
+
 
     /// Initialize an empty image.
     void init_(const box2d& b, unsigned bdr = border::thickness);
@@ -203,7 +202,7 @@ namespace mln
   {
 
     template <typename T, typename J>
-    void init_(image2d_b<T>& target, const J& model);
+    void init_(tag::image_t, mln::image2d_b<T>& target, const J& model);
 
   } // end of namespace mln::impl
 
@@ -217,24 +216,19 @@ namespace mln
   namespace impl
   {
 
-//     void init(tag::border, unsigned b, const image2d_b<T>& model)
-//     {
-//       b = model.border();
-//     }
+    template <typename T>
+    void init_(tag::border_t, unsigned& b, const image2d_b<T>& model)
+    {
+      b = model.border();
+    }
 
     template <typename T, typename J>
-    void init_(image2d_b<T>& target, const J& model)
+    void init_(tag::image_t, image2d_b<T>& target, const J& model)
     {
-      box2d b = geom::bbox(model);
-      unsigned bdr = border::get(model);
-
-      // FIXME
-
-//       box2d b;
-//       init(tag::bbox, b, model);
-//       unsigned bdr;
-//       init(tag::border, bdr, model);
-
+      box2d b;
+      init_(tag::bbox, b, model);
+      unsigned bdr;
+      init_(tag::border, bdr, model);
       target.init_(b, bdr);
     }
 

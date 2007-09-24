@@ -50,7 +50,7 @@ namespace mln
   struct t_image : public internal::image_adaptor_< I, t_image<I> >
   {
     /// Skeleton.
-    typedef t_image< tag::image<I> > skeleton;
+    typedef t_image< tag::image_<I> > skeleton;
 
     /// Test if a pixel value is accessible at \p p.
     bool owns_(const mln_point(I)& p) const;

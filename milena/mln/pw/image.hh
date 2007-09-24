@@ -81,7 +81,7 @@ namespace mln
     struct image : public internal::image_primary_< S, image<F,S> >
     {
       /// Skeleton.
-      typedef image< tag::function<F>, tag::pset<S> > skeleton;
+      typedef image< tag::function_<F>, tag::pset_<S> > skeleton;
 
 
       /// Value associated type.

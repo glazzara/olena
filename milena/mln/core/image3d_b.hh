@@ -127,7 +127,7 @@ namespace mln
 
 
     /// Skeleton.
-    typedef image3d_b< tag::value<T> > skeleton;
+    typedef image3d_b< tag::value_<T> > skeleton;
 
 
     /// Value_Set associated type.
@@ -147,7 +147,7 @@ namespace mln
 
 
     /// Initialize an empty image.
-    void init_with(const box3d& b, unsigned bdr = border::thickness);
+    void init_(const box3d& b, unsigned bdr = border::thickness);
 
 
     /// Test if \p p is valid.
@@ -203,8 +203,41 @@ namespace mln
   };
 
 
+  namespace impl
+  {
+
+    template <typename T, typename J>
+    void init_(tag::image_t, mln::image3d_b<T>& target, const J& model);
+
+  } // end of namespace mln::impl
+
+
 
 # ifndef MLN_INCLUDE_ONLY
+
+  // impl::init_
+
+  namespace impl
+  {
+
+    template <typename T>
+    void init_(tag::border_t, unsigned& b, const image3d_b<T>& model)
+    {
+      b = model.border();
+    }
+
+    template <typename T, typename J>
+    void init_(tag::image_t, image3d_b<T>& target, const J& model)
+    {
+      box3d b;
+      init_(tag::bbox, b, model);
+      unsigned bdr;
+      init_(tag::border, bdr, model);
+      target.init_(b, bdr);
+    }
+
+  } // end of namespace mln::impl
+
 
   // internal::data_< image3d_b<T> >
 
@@ -300,18 +333,18 @@ namespace mln
   template <typename T>
   image3d_b<T>::image3d_b(const box3d& b, unsigned bdr)
   {
-    init_with(b, bdr);
+    init_(b, bdr);
   }
 
   template <typename T>
   image3d_b<T>::image3d_b(int nslis, int nrows, int ncols, unsigned bdr)
   {
-    init_with(make::box3d(nslis, nrows, ncols), bdr);
+    init_(make::box3d(nslis, nrows, ncols), bdr);
   }
 
   template <typename T>
   void
-  image3d_b<T>::init_with(const box3d& b, unsigned bdr)
+  image3d_b<T>::init_(const box3d& b, unsigned bdr)
   {
     mln_precondition(! this->has_data());
     this->data_ = new internal::data_< image3d_b<T> >(b, bdr);

@@ -229,7 +229,6 @@ namespace mln
 
     // records
 
-    template <>
     template <unsigned n, typename T>
     struct props<metal::vec<n,T> >
     {

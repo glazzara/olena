@@ -60,7 +60,7 @@ namespace mln
 
     
     /// Skeleton.
-    typedef sparse_image< tag::psite<P>, tag::value<T> > skeleton;
+    typedef sparse_image< tag::psite_<P>, tag::value_<T> > skeleton;
 
 
     sparse_image();

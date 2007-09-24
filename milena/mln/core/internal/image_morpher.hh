@@ -76,8 +76,35 @@ namespace mln
       image_morpher_();
     };
 
+  } // end of namespace mln::internal
+
+
+
+  namespace impl
+  {
+
+    // Default is delegation for morphers.
+
+//     template <typename Subject, typename T,
+// 	      typename I, typename S, typename E>
+//     void init_(Subject s, T& target,
+// 	       const internal::image_morpher_<I,S,E>& model);
+
+// FIXME: Lines above have been inactivated because they are either
+// prioritary or ambiguous.
+
+    template <typename Subject, typename T,
+	      typename J>
+    void init_(Subject s, T& target, const Image<J>& model);
+
+  } // end of namespace mln::impl
+
+
 
 # ifndef MLN_INCLUDE_ONLY
+
+  namespace internal
+  {
 
     template <typename I, typename S, typename E>
     image_morpher_<I,S,E>::image_morpher_()
@@ -115,9 +142,35 @@ namespace mln
 	this->delegatee_()->has_data();
     }
 
-# endif // ! MLN_INCLUDE_ONLY
-
   } // end of namespace mln::internal
+
+  namespace impl
+  {
+
+//     template <typename Subject, typename T,
+// 	      typename I, typename S, typename E>
+//     void init_(Subject s, T& target,
+// 	       const internal::image_morpher_<I,S,E>& model)
+//     {
+//       // FIXME: Precondition.
+//       init_(s, target, * model.delegatee_());
+//     }
+
+    template <typename Subject, typename T,
+	      typename J>
+    void init_(Subject s, T& target,
+	       const Image<J>& model_)
+    {
+      // FIXME: Precondition.
+      // FIXME: Properly check that J is an internal::image_morpher_.
+      const J& model = exact(model_);
+      init_(s, target, * model.delegatee_());
+    }
+
+  } // end of namespace mln::impl
+
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

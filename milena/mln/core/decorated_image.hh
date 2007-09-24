@@ -97,7 +97,7 @@ namespace mln
     typedef mln_vset(I) vset;
 
     /// Skeleton.
-    typedef decorated_image< tag::image<I>, tag::data<D> > skeleton;
+    typedef decorated_image< tag::image_<I>, tag::data_<D> > skeleton;
 
     mln_value(I) read_(const mln_psite(I)& p) const;
 
