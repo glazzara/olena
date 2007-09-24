@@ -50,20 +50,9 @@ namespace mln
      * Parameter \c E is the Exact type of the image.
      */
     template <typename P, typename E>
-    class run_image_ : public image_base_<run_pset_<P>, E>
+    class run_image_ : public internal::image_primary_< internal::run_pset_<P>, E >
     {
-    public:
-      typedef run_pset_<P> pset;
-      typedef mln_psite(pset) psite;
-
-      /// Give the definition domain.
-      const pset& domain() const;
-      /// Test if \p p is valid.
-      bool owns_(const psite& site) const;
     protected:
-      /// domain of the image
-      pset domain_;
-
       run_image_();
     };
 
@@ -74,19 +63,6 @@ namespace mln
     {
     }
 
-    template <typename P, typename E>
-    const typename run_image_<P, E>::pset&
-    run_image_<P, E>::domain() const
-    {
-      return domain_;
-    }
-
-    template <typename P, typename E>
-    bool
-    run_image_<P, E>::owns_(const typename run_image_<P, E>::psite& site) const
-    {
-      return domain_.has(site);
-    }
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace internal

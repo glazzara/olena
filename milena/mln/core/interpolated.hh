@@ -35,18 +35,34 @@
 
 # include <cmath>
 
-# include <mln/core/concept/image.hh>
+# include <mln/core/internal/image_identity_morpher.hh>
 # include <mln/metal/vec.hh>
 
 
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename I> struct interpolated;
+
+  namespace internal
+  {
+
+    template <typename I>
+    struct data_< interpolated<I> >
+    {
+      data_(I& ima);
+
+      I ima_;
+    };
+
+  } // end of namespace mln::internal
+
   /*! \brief FIXME
    *
    */
   template <typename I>
-  struct interpolated : public mln::internal::image_base_< mln_pset(I), interpolated<I> >
+  struct interpolated : public mln::internal::image_identity_morpher_< I, mln_pset(I), interpolated<I> >
   {
     /// Point_Site associated type.
     typedef mln_psite(I) psite;
@@ -68,8 +84,9 @@ namespace mln
     typedef interpolated< tag::image_<I> > skeleton;
 
 
-    /// Constructor.
+    /// Constructors.
     interpolated(I& ima);
+    interpolated();
 
 
     /// Test if this image has been initialized.
@@ -81,9 +98,6 @@ namespace mln
     /// Test if a pixel value is accessible at \p v.
     bool owns_(const mln::metal::vec<I::point::dim, float>& v) const;
 
-    /// Give the definition domain.
-    const mln_pset(I)& domain() const;
-
     /// Read-only access of pixel value at point site \p p.
     mln_rvalue(I) operator()(const psite& p) const;
 
@@ -92,37 +106,52 @@ namespace mln
 
 
     mln_value(I) operator()(const mln::metal::vec<I::point::dim, float>& v) const;
-    
-      
+
+
     /// Give the set of values of the image.
     const vset& values() const;
-
-  protected:
-    I& ima_;
   };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+  namespace internal
+  {
+
+    // internal::data_< interpolated<I,S> >
+
+    template <typename I>
+    data_< interpolated<I> >::data_(I& ima)
+      : ima_(ima)
+    {
+    }
+
+  } // end of namespace mln::internal
+
   template <typename I>
   interpolated<I>::interpolated(I& ima)
-    : ima_(ima)
   {
     mln_precondition(ima.has_data());
+    this->data_ = new internal::data_< interpolated<I> >(ima);
+  }
+
+  template <typename I>
+  interpolated<I>::interpolated()
+  {
   }
 
   template <typename I>
   bool interpolated<I>::has_data() const
   {
-    mln_invariant(ima_.has_data());
+    mln_invariant(this->data_->ima_.has_data());
     return true;
   }
 
   template <typename I>
   bool interpolated<I>::owns_(const psite& p) const
   {
-    return ima_.owns_(p);
+    return this->data_->ima_.owns_(p);
   }
 
   template <typename I>
@@ -131,29 +160,22 @@ namespace mln
     mln_point(I) p;
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v[i]));
-    return ima_.owns_(p);
-  }
-
-  template <typename I>
-  const mln_pset(I)&
-  interpolated<I>::domain() const
-  {
-    return ima_.domain();
+    return this->data_->ima_.owns_(p);
   }
 
   template <typename I>
   mln_rvalue(I)
   interpolated<I>::operator()(const psite& p) const
   {
-    mln_precondition(ima_.owns_(p));
-    return ima_(p);
+    mln_precondition(this->data_->ima_.owns_(p));
+    return this->data_->ima_(p);
   }
 
   template <typename I>
   mln_lvalue(I)
   interpolated<I>::operator()(const psite& p)
   {
-    return ima_(p);
+    return this->data_->ima_(p);
   }
 
   template <typename I>
@@ -163,8 +185,8 @@ namespace mln
     mln_point(I) p;
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v[i]));
-    mln_assertion(ima_.owns_(p));
-    return ima_(p);
+    mln_assertion(this->data_->ima_.owns_(p));
+    return this->data_->ima_(p);
   }
 
   template <typename I>
@@ -173,7 +195,7 @@ namespace mln
   {
     return vset::the();
   }
-  
+
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

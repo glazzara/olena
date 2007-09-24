@@ -76,15 +76,12 @@ namespace mln
     public internal::decorated_image_impl_< I, decorated_image<I,D> >,
     public internal::image_identity_morpher_< I, mln_pset(I), decorated_image<I,D> >
   {
+  public:
     typedef decorated_image<I, D> self_;
     typedef internal::decorated_image_impl_< I, self_ > impl_;
-    typedef internal::image_identity_morpher_< I, mln_pset(I), self_ > super_;
 
     /// Return type of read-write access.
     typedef typename internal::morpher_lvalue_<I>::ret lvalue;
-
-  public:
-
 
     /// Ctors
     decorated_image();
@@ -110,8 +107,6 @@ namespace mln
     /// Give the decoration.
     D& decoration();
 
-  protected:
-    using super_::data_;
   };
 
 

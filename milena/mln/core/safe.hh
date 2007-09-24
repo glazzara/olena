@@ -28,24 +28,43 @@
 #ifndef MLN_CORE_SAFE_HH
 # define MLN_CORE_SAFE_HH
 
-# include <mln/core/internal/image_adaptor.hh>
+# include <mln/core/internal/image_identity_morpher.hh>
 
 
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename I> struct safe_image;
+
+  namespace internal
+  {
+
+    template <typename I>
+    struct data_< safe_image<I> >
+    {
+      data_(I& ima, const mln_value(I)& default_value);
+
+      I ima_;
+      mln_value(I) default_value_;
+    };
+
+  } // end of namespace mln::internal
+
+
   // FIXME: Doc!
 
   template <typename I>
-  class safe_image : public internal::image_adaptor_< I, safe_image<I> >
+  class safe_image : public internal::image_identity_morpher_< I, mln_pset(I), safe_image<I> >
   {
-    typedef internal::image_adaptor_< I, safe_image<I> > super_;
+    typedef internal::image_identity_morpher_< I, mln_pset(I), safe_image<I> > super_;
   public:
 
     /// Skeleton.
     typedef safe_image< tag::image_<I> > skeleton;
 
     safe_image(I& ima, const mln_value(I)& default_value);
+    safe_image();
 
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
 
@@ -54,9 +73,6 @@ namespace mln
 
     /// Const promotion via convertion.
     operator safe_image<const I>() const;
-
-  protected:
-    mln_value(I) default_value_;
   };
 
 
@@ -73,12 +89,30 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  namespace internal
+  {
+
+    // internal::data_< safe_image<I,S> >
+
+    template <typename I>
+    data_< safe_image<I> >::data_(I& ima, const mln_value(I)& default_value)
+      : ima_(ima),
+	default_value_(default_value)
+    {
+    }
+
+  } // end of namespace mln::internal
+
   // safe_image<I>
 
   template <typename I>
   safe_image<I>::safe_image(I& ima, const mln_value(I)& default_value)
-    : super_(ima),
-      default_value_(default_value)
+  {
+    this->data_ = new internal::data_< safe_image<I> >(ima, default_value);
+  }
+
+  template <typename I>
+  safe_image<I>::safe_image()
   {
   }
 
@@ -87,8 +121,8 @@ namespace mln
   safe_image<I>::operator()(const mln_psite(I)& p) const
   {
     if (! this->owns_(p))
-      return default_value_;
-    return this->adaptee_(p);
+      return this->data_->default_value_;
+    return this->data_->ima_(p);
   }
 
   template <typename I>
@@ -97,15 +131,15 @@ namespace mln
   {
     static mln_value(I) forget_it_;
     if (! this->owns_(p))
-      // so default_value_ is returned but cannot be modified
-      return forget_it_ = default_value_;
-    return this->adaptee_(p);
+      // so data_->default_value_ is returned but cannot be modified
+      return forget_it_ = this->data_->default_value_;
+    return this->data_->ima_(p);
   }
 
   template <typename I>
   safe_image<I>::operator safe_image<const I>() const
   {
-    safe_image<const I> tmp(this->adaptee_, default_value_);
+    safe_image<const I> tmp(this->data_->ima_, this->data_->default_value_);
     return tmp;
   }
 

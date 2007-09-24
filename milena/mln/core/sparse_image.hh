@@ -34,12 +34,32 @@
  */
 
 # include <mln/core/internal/run_image.hh>
+# include <mln/core/internal/run_pset.hh>
 # include <mln/core/internal/run_psite.hh>
 # include <mln/value/set.hh>
 # include <vector>
 
 namespace mln
 {
+
+  // Fwd decl.
+  template <typename P, typename T> struct sparse_image;
+
+  namespace internal
+  {
+
+    template  <typename P, typename T>
+    struct data_< sparse_image<P,T> >
+    {
+      data_();
+
+      /// Image values.
+      std::vector< std::vector<T> > values_;
+      /// domain of the image
+      run_pset_<P> domain_;
+    };
+
+  } // end of namespace mln::internal
 
   /*! \brief Sparse image.
    *
@@ -57,8 +77,8 @@ namespace mln
     typedef const T rvalue;
     typedef internal::run_psite<P> psite;
     typedef mln::value::set<T> vset;
+    typedef internal::run_pset_<P> pset;
 
-    
     /// Skeleton.
     typedef sparse_image< tag::psite_<P>, tag::value_<T> > skeleton;
 
@@ -80,23 +100,38 @@ namespace mln
     /// Give the set of values of the image.
     const vset& values() const;
 
-  protected:
-    /// Image values.
-    std::vector< std::vector<value> > values_;
+    /// Give the definition domain.
+    const pset& domain() const;
   };
 
 # ifndef MLN_INCLUDE_ONLY
 
+  namespace internal
+  {
+
+    // internal::data_< sparse_image<I,S> >
+
+    template <typename P, typename T>
+    data_< sparse_image<P,T> >::data_()
+    {
+    }
+
+  } // end of namespace mln::internal
+
   template <typename P, typename T>
   sparse_image<P, T>::sparse_image()
   {
+    // FIXME : ambiguity between empty constructor and constructor
+    // which allocate data_
+
+    // this->data_ = new internal::data_< rle_image<I,T> >();
   }
 
   template <typename P, typename T>
   bool
   sparse_image<P, T>::has_data() const
   {
-    return values_.size() != 0;
+    return this->data_->values_.size() != 0;
   }
 
   template <typename P, typename T>
@@ -111,8 +146,8 @@ namespace mln
   sparse_image<P, T>::insert(const P& p, unsigned len,
 			     const std::vector<T>& value)
   {
-    this->domain_.insert(p, len);
-    values_.push_back(value);
+    this->data_->domain_.insert(p, len);
+    this->data_->values_.push_back(value);
   }
 
   template <typename P, typename T>
@@ -121,9 +156,9 @@ namespace mln
     (const typename sparse_image<P, T>::psite& site) const
   {
     mln_precondition(this->has_data() &&
-		     site.pset_pos_() < values_.size() &&
-      site.index_() < values_[site.pset_pos_()].size());
-    return values_[site.pset_pos_()][site.index_()];
+		     site.pset_pos_() < this->data_->values_.size() &&
+      site.index_() < this->data_->values_[site.pset_pos_()].size());
+    return this->data_->values_[site.pset_pos_()][site.index_()];
   }
 
   template <typename P, typename T>
@@ -132,9 +167,16 @@ namespace mln
     (const typename sparse_image<P,T>::psite& site)
   {
     mln_precondition(this->has_data() &&
-		     site.pset_pos_() < values_.size() &&
-		     site.index_() < values_[site.pset_pos_()].size());
-    return values_[site.pset_pos_()][site.index_()];
+		     site.pset_pos_() < this->data_->values_.size() &&
+		     site.index_() < this->data_->values_[site.pset_pos_()].size());
+    return this->data_->values_[site.pset_pos_()][site.index_()];
+  }
+
+  template <typename P, typename T>
+  const typename sparse_image<P, T>::pset&
+  sparse_image<P, T>::domain() const
+  {
+    return this->data_->domain_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

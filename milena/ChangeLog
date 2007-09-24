@@ -1,3 +1,22 @@
+2007-09-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Change images inheritance, and memory managment.
+
+	* mln/core/decorated_image.hh: Remove super_ typedef.
+	* mln/core/interpolated.hh: Inherit from identity morpher. Add memory
+          managment.
+
+	* mln/core/rle_image.hh,
+	* mln/core/sparse_image.hh,
+	* mln/core/internal/run_image.hh: Inherit from image_primary, move
+          domain_ attribute to the descendants classes rle_images and
+          sparse_image. Add memory managment to rle and sparse images.
+
+	* mln/core/safe.hh: Inherit from identity morpher. Add memory
+          managment.
+
+	* mln/value/stack.hh: Inherit from value morpher.
+
 2007-09-24  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add rotation and fix for translation.

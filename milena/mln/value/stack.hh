@@ -33,7 +33,7 @@
  * \brief Definition of an image class FIXME
  */
 
-# include <mln/core/internal/image_base.hh>
+# include <mln/core/internal/image_value_morpher.hh>
 
 # include <mln/metal/vec.hh>
 # include <mln/value/set.hh>
@@ -59,6 +59,7 @@ namespace mln
     public:
       data_(const metal::vec<n,I>& imas);
       metal::vec<n,I> imas_;
+      I& ima_;
     };
 
   }
@@ -97,10 +98,8 @@ namespace mln
      *
      */
     template <unsigned n, typename I>
-    struct stack_image : public mln::internal::image_base_< mln_pset(I), stack_image<n,I> >
+    struct stack_image : public mln::internal::image_value_morpher_< I, stack_image<n,I> >
     {
-      typedef mln::internal::image_base_< mln_pset(I), stack_image<n,I> > parent;
-
       /// Point_Site associated type.
       typedef mln_psite(I) psite;
 
@@ -132,12 +131,6 @@ namespace mln
       /// Test if this image has been initialized.
       bool has_data() const;
 
-      /// Test if a pixel value is accessible at \p p.
-      bool owns_(const psite& p) const;
-
-      /// Give the definition domain.
-      const mln_pset(I)& domain() const;
-
       /// Read-only access of pixel value at point site \p p.
       rvalue operator()(const psite& p) const;
       value read_(const psite& p) const;
@@ -148,8 +141,6 @@ namespace mln
 
       /// Give the set of values of the image.
       const vset& values() const;
-
-      using parent::data_;
     };
 
 
@@ -173,7 +164,8 @@ namespace mln
 
     template <unsigned n, typename I>
     data_< value::stack_image<n,I> >::data_(const metal::vec<n,I>& imas)
-      : imas_(imas)
+      : imas_(imas),
+	ima_(imas_[0])
     {
     }
 
@@ -192,7 +184,7 @@ namespace mln
     template <unsigned n, typename I>
     stack_image<n,I>::stack_image(const metal::vec<n,I>& imas)
     {
-      data_ = new mln::internal::data_< stack_image<n, I> >(imas);
+      this->data_ = new mln::internal::data_< stack_image<n, I> >(imas);
       for (unsigned i = 0; i < n; ++i)
       {
 	mln_precondition(imas[i].has_data());
@@ -203,24 +195,8 @@ namespace mln
     bool stack_image<n,I>::has_data() const
     {
       for (unsigned i = 0; i < n; ++i)
-	mln_invariant(data_->imas_[i].has_data());
+	mln_invariant(this->data_->imas_[i].has_data());
       return true;
-    }
-
-    template <unsigned n, typename I>
-    bool stack_image<n,I>::owns_(const psite& p) const
-    {
-      for (unsigned i = 0; i < n; ++i)
-	if (! data_->imas_[i].owns_(p))
-	  return false;
-      return true;
-    }
-
-    template <unsigned n, typename I>
-    const mln_pset(I)&
-    stack_image<n,I>::domain() const
-    {
-      return data_->imas_[0].domain();
     }
 
     template <unsigned n, typename I>
@@ -230,7 +206,7 @@ namespace mln
       mln_precondition(this->owns_(p));
       metal::vec<n, mln_value(I)> tmp;
       for (unsigned i = 0; i < n; ++i)
-	tmp[i] = data_->imas_[i].operator()(p);
+	tmp[i] = this->data_->imas_[i].operator()(p);
       return tmp;
     }
 
@@ -248,7 +224,7 @@ namespace mln
       mln_precondition(this->owns_(p));
       // FIXME!!!
       for (unsigned i = 0; i < n; ++i)
-	data_->imas_[i].operator()(p) = v[i];
+	this->data_->imas_[i].operator()(p) = v[i];
     }
 
     template <unsigned n, typename I>

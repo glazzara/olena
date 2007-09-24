@@ -34,12 +34,33 @@
  */
 
 # include <mln/core/internal/run_image.hh>
+# include <mln/core/internal/run_pset.hh>
 # include <mln/core/internal/run_psite.hh>
 # include <mln/value/set.hh>
 # include <vector>
 
 namespace mln
 {
+
+  // Fwd decl.
+  template <typename P, typename T> struct rle_image;
+
+  namespace internal
+  {
+
+    template <typename P, typename T>
+    struct data_< rle_image<P,T> >
+    {
+      data_();
+
+      /// Image values.
+      std::vector<T> values_;
+
+      /// domain of the image
+      run_pset_<P> domain_;
+    };
+
+  } // end of namespace mln::internal
 
   /*! \brief RLE image.
    *
@@ -57,6 +78,7 @@ namespace mln
     typedef const T rvalue;
     typedef internal::run_psite<P> psite;
     typedef mln::value::set<T> vset;
+    typedef internal::run_pset_<P> pset;
 
 
     /// Skeleton.
@@ -80,24 +102,40 @@ namespace mln
     /// Give the set of values of the image.
     const vset& values() const;
 
-  protected:
-    /// Image values.
-    std::vector<T> values_;
+    /// Give the definition domain.
+    const pset& domain() const;
+
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+  namespace internal
+  {
+
+    // internal::data_< rle_image<I,S> >
+
+    template <typename P, typename T>
+    data_< rle_image<P,T> >::data_()
+    {
+    }
+
+  } // end of namespace mln::internal
+
   template <typename P, typename T>
   rle_image<P, T>::rle_image()
   {
+    // FIXME : ambiguity between empty constructor and constructor
+    // which allocate data_
+
+    // this->data_ = new internal::data_< rle_image<I,T> >();
   }
 
   template <typename P, typename T>
   bool
   rle_image<P, T>::has_data() const
   {
-    return values_.size() != 0;
+    return this->data_->values_.size() != 0;
   }
 
   template <typename P, typename T>
@@ -111,8 +149,8 @@ namespace mln
   void
   rle_image<P, T>::insert(const P& p, unsigned len, T value)
   {
-    this->domain_.insert(p, len);
-    values_.push_back(value);
+    this->data_->domain_.insert(p, len);
+    this->data_->values_.push_back(value);
   }
 
   template <typename P, typename T>
@@ -121,8 +159,8 @@ namespace mln
     const
   {
     mln_precondition(this->has_data() &&
-		     site.pset_pos_() < values_.size());
-    return values_[site.pset_pos_()];
+		     site.pset_pos_() < this->data_->values_.size());
+    return this->data_->values_[site.pset_pos_()];
   }
 
   template <typename P, typename T>
@@ -130,9 +168,17 @@ namespace mln
   rle_image<P, T>::operator() (const typename rle_image<P, T>::psite& site)
   {
     mln_precondition(this->has_data() &&
-		     site.pset_pos_() < values_.size());
-    return values_[site.pset_pos_()];
+		     site.pset_pos_() < this->data_->values_.size());
+    return this->data_->values_[site.pset_pos_()];
   }
+
+  template <typename P, typename T>
+  const typename rle_image<P, T>::pset&
+  rle_image<P, T>::domain() const
+  {
+    return this->data_->domain_;
+  }
+
 # endif // ! MLN_INCLUDE_ONLY
 
 
