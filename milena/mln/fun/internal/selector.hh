@@ -56,6 +56,8 @@ namespace mln
       //         |                           |
       //         + -- Function_i2v           |
       //         |                           |
+      //         + -- Function_x2x           |
+      //         |                           |
       //         + -- Function_p2v           |
       //                |                    |
       //                + -- Function_p2b -- +

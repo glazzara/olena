@@ -48,6 +48,7 @@ namespace mln
 
 	typedef T value_type;
 	enum {N = n, M = m};
+	static const mat<n,m,T> Id;
 
 	mat()
 	{
@@ -67,11 +68,27 @@ namespace mln
 
 	unsigned size() const;
 
+	static mat identity();
+
       private:
 	T data_[n][m];
     };
 
 # ifndef MLN_INCLUDE_ONLY
+
+    template <unsigned n, unsigned m, typename T>
+    const mat<n,m,T> mat<n,m,T>::Id = mat<n,m,T>::identity();
+
+    template <unsigned n, unsigned m, typename T>
+    mat<n,m,T> mat<n,m,T>::identity()
+    {
+      mat<n,m,T> id;
+
+      for (unsigned i = 0; i < n; ++i)
+	for (unsigned j = 0; j < m; ++j)
+	  id.data_[i][j] = (i == j);
+      return id;
+    }
 
     template <unsigned n, unsigned m, typename T>
     template <typename U>

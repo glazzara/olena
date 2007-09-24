@@ -1,3 +1,13 @@
+2007-09-24  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add translation.
+	* mln/core/concept/function.hh: Add Function_x2x.
+	* mln/fun/internal/selector.hh: Add comment.
+	* mln/fun/x2x/translation.hh: New.
+	* mln/fun/x2x: New.
+	* mln/metal/mat.hh: Add identity.
+	* tests/fun_x2x_translation.cc: New.
+
 2007-09-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add image_identity_morpher.

@@ -138,6 +138,18 @@ namespace mln
   };
 
 
+  // Vector -> Vector.
+
+  /// Base class for implementation of function-objects from vector to
+  /// vector.
+  template <typename E>
+  struct Function_x2x : public Function_v2v<E>
+  {
+  protected:
+    Function_x2x();
+    Function_x2x(const Function_x2x&);
+  };
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -153,7 +165,7 @@ namespace mln
   {
   }
 
-  template <typename E>
+  template <typename E>  
   Function_v2v<E>::Function_v2v()
   {
   }
@@ -218,6 +230,17 @@ namespace mln
   template <typename E>
   Function_p2p<E>::Function_p2p(const Function_p2p<E>& rhs)
     : Function_p2v<E>(rhs)
+  {
+  }
+
+  template <typename E>
+  Function_x2x<E>::Function_x2x()
+  {
+  }
+
+  template <typename E>
+  Function_x2x<E>::Function_x2x(const Function_x2x<E>& rhs)
+    : Function_v2v<E>(rhs)
   {
   }
 
