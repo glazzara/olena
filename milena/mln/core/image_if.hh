@@ -33,7 +33,7 @@
  * \brief Definition of a image_if image.
  */
 
-# include <mln/core/internal/image_base.hh>
+# include <mln/core/internal/image_domain_morpher.hh>
 # include <mln/core/pset_if.hh>
 # include <mln/pw/all.hh>
 
@@ -51,13 +51,10 @@ namespace mln
     struct data_< image_if<I,F> >
     {
       data_(I& ima, const F& f);
+      data_(I& ima, const pset_if<mln_pset(I), F>& pset);
 
-      pset_if<mln_pset(I), F> pset_;
-      F f_;
       I ima_;
-      // FIXME for matthieu: f_ is *also* in pset_; pb: redundancy!!!
-      // FIXME for matthieu: ctor arg list and attr list should be the *same*!
-      // FIXME for matthieu: do *not* change order of those lists elements!
+      pset_if<mln_pset(I), F> pset_;
     };
 
   } // end of namespace mln::internal
@@ -67,24 +64,20 @@ namespace mln
    *
    */
   template <typename I, typename F>
-  struct image_if
-    : public internal::image_base_< pset_if<mln_pset(I), F>, image_if<I,F> >
-  // FIXME for matthieu: *not* image_base_ *but* image_domain_morpher_
+  struct image_if : public internal::image_domain_morpher_< I,
+							    pset_if<mln_pset(I),F>,
+							    image_if<I,F> >
   {
-
-    // Parent
-    typedef internal::image_base_< pset_if<mln_pset(I), F>, image_if<I,F> > super_;
-    // FIXME for matthieu: this should *not* be public!
-    // FIXME for matthieu: comments end with a '.'
-    // FIXME for matthieu: we do not say "parent" but "super".
 
 
     /// Skeleton.
     typedef image_if< tag::image<I>, tag::function<F> > skeleton;
 
-
-    /// Point_Set associated type.
+    /// Point_Site associated type.
     typedef pset_if<mln_pset(I), F> pset;
+
+    /// Psite type.
+    typedef mln_psite(pset) psite;
 
     /// Constructor from an image \p ima and a predicate \p f.
     image_if(I& ima, const F& f);
@@ -101,40 +94,16 @@ namespace mln
     /// Const promotion via convertion.
     operator image_if<const I, F>() const;
 
-    using super_::data_;
-    // FIXME for matthieu: this should *not* be public!
 
+  protected:
+
+    /// Self type.
     typedef image_if<I,F> self_;
 
-    // FIXME : to put into an identity morpher
-    // FIXME for matthieu: nope...
+    /// Super type.
+    typedef internal::image_base_< pset_if<mln_pset(I), F>, image_if<I,F> > super_;
 
-
-    // FIXME for matthieu: most of those typedefs and methods are useless...
-
-    /// Point_Site associated type.
-    typedef mln_point(I) point;
-    typedef mln_psite(pset) psite;
-
-    /// Value_Set associated type.
-    typedef mln_vset(I) vset;
-
-    /// Value associated type.
-    typedef mln_value(I)   value;
-
-    /// Return type of read-only access.
-    typedef mln_rvalue(I) rvalue;
-
-    typedef typename internal::morpher_lvalue_<I>::ret lvalue;
-
-    /// Read-only access of pixel value at point site \p p.
-    rvalue operator()(const psite& p) const;
-
-    /// Read-write access of pixel value at point site \p p.
-    lvalue operator()(const psite& p);
-
-    /// Give the set of values.
-    const vset& values() const;
+    using super_::data_;
   };
 
 
@@ -176,8 +145,14 @@ namespace mln
     template <typename I, typename F>
     data_< image_if<I,F> >::data_(I& ima, const F& f)
       : ima_(ima),
-	pset_(ima.domain() | f),
-	f_(f)
+	pset_(ima.domain() | f)
+    {
+    }
+
+    template <typename I, typename F>
+    data_< image_if<I,F> >::data_(I& ima, const pset_if<mln_pset(I), F>& pset)
+      : ima_(ima),
+	pset_(pset)
     {
     }
 
@@ -197,6 +172,13 @@ namespace mln
   }
 
   template <typename I, typename F>
+  image_if<I,F>::operator image_if<const I, F>() const
+  {
+    image_if<const I, F> tmp(this->data_->ima_, this->data_->pset_);
+    return tmp;
+  }
+
+  template <typename I, typename F>
   bool
   image_if<I,F>::owns_(const mln_psite(I)& p) const
   {
@@ -210,36 +192,7 @@ namespace mln
     return data_->pset_;
   }
 
-  template <typename I, typename F>
-  image_if<I,F>::operator image_if<const I, F>() const
-  {
-    image_if<const I, F> tmp(this->data_->ima_, this->data_->f_);
-    return tmp;
-  }
 
-
-  template <typename I, typename F>
-  typename image_if<I,F>::rvalue
-  image_if<I,F>::operator()(const psite& p) const
-  {
-    mln_precondition(exact(this)->owns_(p));
-    return data_->ima_(p);
-  }
-
-  template <typename I, typename F>
-  typename image_if<I,F>::lvalue
-  image_if<I,F>::operator()(const psite& p)
-  {
-    mln_precondition(exact(this)->owns_(p));
-    return data_->ima_(p);
-  }
-
-  template <typename I, typename F>
-  const mln_vset(I)&
-  image_if<I,F>::values() const
-  {
-    return data_->ima_.values();
-  }
 
 
   // Operators.

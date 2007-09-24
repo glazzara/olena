@@ -81,7 +81,7 @@ namespace mln
     {
       typedef mln_lvalue(I) ret;
     };
-    
+
     template <typename I>
     struct morpher_lvalue_< const I >
     {
@@ -171,6 +171,8 @@ namespace mln
       /// Copy constructor.
       image_base_(const image_base_& rhs);
 
+      /// Detach data from an image (free it if nobody else hold it).
+      void destroy();
 
       const util::tracked_ptr< internal::data_<E> >& hook_data_() const { return data_; }
 
@@ -192,6 +194,8 @@ namespace mln
 
     template <typename S, typename E>
     image_base_<S,E>::image_base_(const image_base_& rhs)
+      : select_image_concept_< typename trait::is_fast<E>::ret,
+			       E >()
     {
       mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
       this->data_ = rhs.data_;
@@ -244,7 +248,14 @@ namespace mln
     image_base_<S,E>::npoints() const
     {
       mln_precondition(exact(this)->has_data());
-      return exact(this)->domain().npoints();      
+      return exact(this)->domain().npoints();
+    }
+
+    template <typename S, typename E>
+    void
+    image_base_<S,E>::destroy()
+    {
+      data_.clean_();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

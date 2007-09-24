@@ -66,10 +66,10 @@ namespace mln
     {
       data_(const box2d& b, unsigned bdr);
       ~data_();
-      
+
       T*  buffer_;
       T** array_;
-      
+
       box2d b_;  // theoretical box
       unsigned bdr_;
       box2d vb_; // virtual box, i.e., box including the virtual border
@@ -145,11 +145,6 @@ namespace mln
     /// 3).
     image2d_b(const box2d& b, unsigned bdr = border::thickness);
 
-
-    /// Detach data from an image (free it if nobody else hold it).
-    void destroy();
-
-
     /// Initialize an empty image.
     void init_(const box2d& b, unsigned bdr = border::thickness);
 
@@ -209,7 +204,7 @@ namespace mln
 
     template <typename T, typename J>
     void init_(image2d_b<T>& target, const J& model);
-    
+
   } // end of namespace mln::impl
 
 
@@ -242,7 +237,7 @@ namespace mln
 
       target.init_(b, bdr);
     }
-    
+
   } // end of namespace mln::impl
 
 
@@ -287,10 +282,10 @@ namespace mln
       array_ = new T*[nr];
       T* buf = buffer_ - vb_.pmin().col();
       for (unsigned i = 0; i < nr; ++i)
-	{
-	  array_[i] = buf;
-	  buf += nc;
-	}
+      {
+	array_[i] = buf;
+	buf += nc;
+      }
       array_ -= vb_.pmin().row();
       mln_postcondition(vb_.len(0) == b_.len(0) + 2 * bdr_);
       mln_postcondition(vb_.len(1) == b_.len(1) + 2 * bdr_);
@@ -301,16 +296,16 @@ namespace mln
     data_< image2d_b<T> >::deallocate_()
     {
       if (buffer_)
-	{
-	  delete[] buffer_;
-	  buffer_ = 0;
-	}
+      {
+	delete[] buffer_;
+	buffer_ = 0;
+      }
       if (array_)
-	{
-	  array_ += vb_.pmin().row();
-	  delete[] array_;
-	  array_ = 0;
-	}
+      {
+	array_ += vb_.pmin().row();
+	delete[] array_;
+	array_ = 0;
+      }
     }
 
   } // end of namespace mln::internal
