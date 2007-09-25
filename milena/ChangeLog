@@ -1,5 +1,13 @@
 2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add mesh_p in sandbox.
+
+	* main.cc: Update.
+	* mesh_p.hh: New.
+	* mesh_psite.hh: New.
+
+2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update Graph.
 
 	* graph.hh,
