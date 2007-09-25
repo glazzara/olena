@@ -112,8 +112,25 @@ namespace mln
     bool about_equal(const T& f, const T& q);
     bool about_equal(const quat& p, const quat& q);
 
+    // Misc.
 
-    // meths and procs bodies...
+    bool interpol_ok(const quat& p, const quat& q, float h);
+
+    // Linear Quaternion Interpolation.
+
+    quat lerp(const quat& p, const quat& q, float h);
+
+    // Spherical Linear Quaternion Interpolation.
+
+    quat slerp(const quat& p, const quat& q, float h);
+
+    quat slerp_2(const quat& p, const quat& q, float h);
+
+    quat slerp_3(const quat& p, const quat& q, float h);
+
+    quat slerp_4(const quat& p, const quat& q, float h);
+
+    quat slerp_5(const quat& p, const quat& q, float h);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -336,6 +353,72 @@ namespace mln
     {
       return about_equal<float>(norm::l2(p - q), 0);
     }
+
+    // Misc.
+
+    bool interpol_ok(const quat& p, const quat& q, float h)
+    {
+      return
+	p.is_unit() &&
+	q.is_unit() &&
+	h >= 0 &&
+	h <= 1;
+    }
+
+
+    // Linear Quaternion Interpolation.
+
+    quat lerp(const quat& p, const quat& q, float h)
+    {
+      assert(interpol_ok(p, q, h));
+      return (1 - h) * p + h * q;
+    }
+
+
+    // Spherical Linear Quaternion Interpolation.
+
+    quat slerp(const quat& p, const quat& q, float h)
+    {
+      assert(interpol_ok(p, q, h));
+      float omega = acos(p.sprod(q));
+      return
+	about_equal(omega, 0.f) ?
+	lerp(p, q, h) :
+	quat((sin((1-h)*omega) * p + sin(h*omega) * q) / sin(omega));
+    }
+
+    quat slerp_2(const quat& p, const quat& q, float h)
+    {
+      assert(interpol_ok(p, q, h));
+      quat tmp = p * pow(p.conj() * q, h);
+      assert(about_equal(tmp, slerp(p, q, h)));
+      return tmp;
+    }
+
+    quat slerp_3(const quat& p, const quat& q, float h)
+    {
+      assert(interpol_ok(p, q, h));
+      quat tmp = pow(p * q.conj(), 1 - h) * q;
+      assert(about_equal(tmp, slerp(p, q, h)));
+      return tmp;
+    }
+
+    quat slerp_4(const quat& p, const quat& q, float h)
+    {
+      assert(interpol_ok(p, q, h));
+      quat tmp = pow(q * p.conj(), h) * p;
+      assert(about_equal(tmp, slerp(p, q, h)));
+      return tmp;
+    }
+
+    quat slerp_5(const quat& p, const quat& q, float h)
+    {
+      assert(interpol_ok(p, q, h));
+      quat tmp = q * pow(q.conj() * p, 1 - h);
+      assert(about_equal(tmp, slerp(p, q, h)));
+      return tmp;
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
