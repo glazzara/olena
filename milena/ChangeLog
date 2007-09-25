@@ -1,5 +1,17 @@
 2007-09-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Test a diamond inherance for image_identity
+
+	* sandbox/garrigues/image_identity/image_domain_morpher.hh: New.
+	* sandbox/garrigues/image_identity/image_identity.cc: New.
+	* sandbox/garrigues/image_identity/image_identity.hh: New.
+	* sandbox/garrigues/image_identity/image_value_morpher.hh: New.
+	* sandbox/garrigues/image_identity/interpolated.cc: New.
+	* sandbox/garrigues/image_identity/interpolated.hh: New.
+	* sandbox/garrigues/image_identity: New.
+
+2007-09-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Clean interpolated image class.
 
 	* mln/core/interpolated.hh: Remove useless methods because of
