@@ -35,7 +35,7 @@
 
 # include <cmath>
 
-# include <mln/core/internal/image_identity_morpher.hh>
+# include <mln/core/internal/image_identity.hh>
 # include <mln/metal/vec.hh>
 
 
@@ -62,7 +62,7 @@ namespace mln
    *
    */
   template <typename I>
-  struct interpolated : public mln::internal::image_identity_morpher_< I, mln_pset(I), interpolated<I> >
+  struct interpolated : public mln::internal::image_identity_< I, mln_pset(I), interpolated<I> >
   {
     /// Point_Site associated type.
     typedef mln_psite(I) psite;

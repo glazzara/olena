@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SAFE_HH
 # define MLN_CORE_SAFE_HH
 
-# include <mln/core/internal/image_identity_morpher.hh>
+# include <mln/core/internal/image_identity.hh>
 
 
 namespace mln
@@ -55,9 +55,9 @@ namespace mln
   // FIXME: Doc!
 
   template <typename I>
-  class safe_image : public internal::image_identity_morpher_< I, mln_pset(I), safe_image<I> >
+  class safe_image : public internal::image_identity_< I, mln_pset(I), safe_image<I> >
   {
-    typedef internal::image_identity_morpher_< I, mln_pset(I), safe_image<I> > super_;
+    typedef internal::image_identity_< I, mln_pset(I), safe_image<I> > super_;
   public:
 
     /// Skeleton.

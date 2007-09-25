@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_IMAGE_IDENTITY_MORPHER_HH
-# define MLN_CORE_INTERNAL_IMAGE_IDENTITY_MORPHER_HH
+#ifndef MLN_CORE_INTERNAL_IMAGE_IDENTITY_HH
+# define MLN_CORE_INTERNAL_IMAGE_IDENTITY_HH
 
-/*! \file mln/core/internal/image_identity_morpher.hh
+/*! \file mln/core/internal/image_identity.hh
  *
  * \brief Definition of a base class for image morphers w.r.t. identity.
  */
@@ -50,7 +50,7 @@ namespace mln
      * \internal
      */
     template <typename I, typename S, typename E>
-    class image_identity_morpher_ : public image_morpher_<I, S, E>
+    class image_identity_ : public image_morpher_<I, S, E>
     {
     public:
 
@@ -80,20 +80,20 @@ namespace mln
       bool owns_(const mln_psite(I)& p) const;
 
     protected:
-      image_identity_morpher_();
+      image_identity_();
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename S, typename E>
-    image_identity_morpher_<I,S,E>::image_identity_morpher_()
+    image_identity_<I,S,E>::image_identity_()
     {
     }
 
     template <typename I, typename S, typename E>
     const mln_vset(I)&
-    image_identity_morpher_<I,S,E>::values() const
+    image_identity_<I,S,E>::values() const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->values();
@@ -101,15 +101,15 @@ namespace mln
 
     template <typename I, typename S, typename E>
     mln_rvalue(I)
-    image_identity_morpher_<I,S,E>::operator()(const mln_psite(S)& p) const
+    image_identity_<I,S,E>::operator()(const mln_psite(S)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->operator()(p);
     }
 
     template <typename I, typename S, typename E>
-    typename image_identity_morpher_<I,S,E>::lvalue
-    image_identity_morpher_<I,S,E>::operator()(const mln_psite(S)& p)
+    typename image_identity_<I,S,E>::lvalue
+    image_identity_<I,S,E>::operator()(const mln_psite(S)& p)
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->operator()(p);
@@ -117,7 +117,7 @@ namespace mln
 
     template <typename I, typename S, typename E>
     const mln_pset(I)&
-    image_identity_morpher_<I,S,E>::domain() const
+    image_identity_<I,S,E>::domain() const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->domain();
@@ -125,7 +125,7 @@ namespace mln
 
     template <typename I, typename S, typename E>
     bool
-    image_identity_morpher_<I,S,E>::owns_(const mln_psite(I)& p) const
+    image_identity_<I,S,E>::owns_(const mln_psite(I)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->owns_(p);
@@ -137,4 +137,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_IMAGE_IDENTITY_MORPHER_HH
+#endif // ! MLN_CORE_INTERNAL_IMAGE_IDENTITY_HH

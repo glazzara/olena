@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_DECORATED_IMAGE_HH
 # define MLN_CORE_DECORATED_IMAGE_HH
 
-# include <mln/core/internal/image_identity_morpher.hh>
+# include <mln/core/internal/image_identity.hh>
 
 # include <mln/value/proxy.hh>
 
@@ -74,7 +74,7 @@ namespace mln
   template <typename I, typename D>
   struct decorated_image :
     public internal::decorated_image_impl_< I, decorated_image<I,D> >,
-    public internal::image_identity_morpher_< I, mln_pset(I), decorated_image<I,D> >
+    public internal::image_identity_< I, mln_pset(I), decorated_image<I,D> >
   {
   public:
     typedef decorated_image<I, D> self_;
