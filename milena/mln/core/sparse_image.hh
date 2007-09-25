@@ -121,10 +121,6 @@ namespace mln
   template <typename P, typename T>
   sparse_image<P, T>::sparse_image()
   {
-    // FIXME : ambiguity between empty constructor and constructor
-    // which allocate data_
-
-    // this->data_ = new internal::data_< sparse_image<I,T> >();
   }
 
   template <typename P, typename T>
@@ -146,6 +142,8 @@ namespace mln
   sparse_image<P, T>::insert(const P& p, unsigned len,
 			     const std::vector<T>& value)
   {
+    if (!this->has_data())
+      this->data_ = new internal::data_< sparse_image<P,T> >();
     this->data_->domain_.insert(p, len);
     this->data_->values_.push_back(value);
   }

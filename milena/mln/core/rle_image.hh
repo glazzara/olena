@@ -125,10 +125,6 @@ namespace mln
   template <typename P, typename T>
   rle_image<P, T>::rle_image()
   {
-    // FIXME : ambiguity between empty constructor and constructor
-    // which allocate data_
-
-    // this->data_ = new internal::data_< rle_image<I,T> >();
   }
 
   template <typename P, typename T>
@@ -149,6 +145,8 @@ namespace mln
   void
   rle_image<P, T>::insert(const P& p, unsigned len, T value)
   {
+    if (!this->has_data())
+      this->data_ = new internal::data_< rle_image<P,T> >();
     this->data_->domain_.insert(p, len);
     this->data_->values_.push_back(value);
   }

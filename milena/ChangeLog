@@ -1,3 +1,11 @@
+2007-09-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update memory managment for run_images.
+
+	* mln/core/rle_image.hh,
+	* mln/core/sparse_image.hh: Move the data allocation to the insert
+          method.
+
 2007-09-25  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add interpolation features for quaternions.
