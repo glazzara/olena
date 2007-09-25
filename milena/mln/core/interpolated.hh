@@ -64,6 +64,9 @@ namespace mln
   template <typename I>
   struct interpolated : public mln::internal::image_identity_< I, mln_pset(I), interpolated<I> >
   {
+
+    typedef mln::internal::image_identity_< I, mln_pset(I), interpolated<I> > super_;
+
     /// Point_Site associated type.
     typedef mln_psite(I) psite;
 
@@ -93,17 +96,14 @@ namespace mln
     bool has_data() const;
 
     /// Test if a pixel value is accessible at \p p.
-    bool owns_(const psite& p) const;
+    using super_::owns_;
 
     /// Test if a pixel value is accessible at \p v.
     bool owns_(const mln::metal::vec<I::point::dim, float>& v) const;
 
     /// Read-only access of pixel value at point site \p p.
-    mln_rvalue(I) operator()(const psite& p) const;
-
     /// Mutable access is only OK for reading (not writing).
-    mln_lvalue(I) operator()(const psite& p);
-
+    using super_::operator();
 
     mln_value(I) operator()(const mln::metal::vec<I::point::dim, float>& v) const;
 
@@ -149,33 +149,12 @@ namespace mln
   }
 
   template <typename I>
-  bool interpolated<I>::owns_(const psite& p) const
-  {
-    return this->data_->ima_.owns_(p);
-  }
-
-  template <typename I>
   bool interpolated<I>::owns_(const mln::metal::vec<I::point::dim, float>& v) const
   {
     mln_point(I) p;
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v[i]));
     return this->data_->ima_.owns_(p);
-  }
-
-  template <typename I>
-  mln_rvalue(I)
-  interpolated<I>::operator()(const psite& p) const
-  {
-    mln_precondition(this->data_->ima_.owns_(p));
-    return this->data_->ima_(p);
-  }
-
-  template <typename I>
-  mln_lvalue(I)
-  interpolated<I>::operator()(const psite& p)
-  {
-    return this->data_->ima_(p);
   }
 
   template <typename I>
@@ -189,6 +168,8 @@ namespace mln
     return this->data_->ima_(p);
   }
 
+  // FIXME : Should we remove this method? (and inherit it from
+  // identity morpher)
   template <typename I>
   const mln::value::set<mln_value(I) >&
   interpolated<I>::values() const

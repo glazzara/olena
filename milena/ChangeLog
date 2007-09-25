@@ -1,5 +1,12 @@
 2007-09-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Clean interpolated image class.
+
+	* mln/core/interpolated.hh: Remove useless methods because of
+          inherited methods from identity morpher.
+
+2007-09-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Rename image_identity morpher.
 
 	* mln/core/internal/image_identity_morpher.hh: Rename as...
