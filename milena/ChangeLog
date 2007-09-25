@@ -1,3 +1,8 @@
+2007-09-25  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add transformed meshes.
+	* mln/core/tr_mesh.hh: New.
+
 2007-09-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Update memory managment for run_images.
