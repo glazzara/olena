@@ -8,15 +8,17 @@ namespace mln
 
   namespace util
   {
-
     template<typename N, typename E>
     inline
     void
-    Graph<N, E>::add_node ()
+    Graph<N, E>::add_node (void)
     {
-      nodes_.push_back (new s_node);
+      struct s_node<N>* n = new struct s_node<N>;
+
+      nodes_.push_back (n);
       ++nb_node_;
     }
+
 
     template<typename N, typename E>
     inline
@@ -26,9 +28,9 @@ namespace mln
       mln_precondition(n1 < this->nb_node_);
       mln_precondition(n2 < this->nb_node_);
 
-      s_edge*		edge;
+      struct s_edge<E>*		edge;
 
-      edge = new s_edge;
+      edge = new struct s_edge<E>;
       edge->node1 = n1;
       edge->node2 = n2;
       links_.push_back (edge);
@@ -39,11 +41,11 @@ namespace mln
     template<typename N, typename E>
     inline
     void
-    Graph<N, E>::coherce ()
+    Graph<N, E>::coherence () const
     {
       mln_precondition(nodes_.size () == this->nb_node_);
       mln_precondition(links_.size () == this->nb_link_);
-      typename std::vector<s_node*>::const_iterator it = nodes_.begin ();
+      typename std::vector<struct s_node <N>*>::const_iterator it = nodes_.begin ();
       for (; it != nodes_.end (); ++it)
 	{
 	  typename std::vector<unsigned>::const_iterator it2 = (*it)->links.begin ();
@@ -51,7 +53,7 @@ namespace mln
 	    mln_precondition((*it2) < nb_node_);
 	}
 
-      typename std::vector<s_edge*>::const_iterator it3 = links_.begin ();
+      typename std::vector<struct s_edge<E>*>::const_iterator it3 = links_.begin ();
       for (; it3 != links_.end (); ++it3)
 	{
 	  mln_precondition((*it3)->node1 < nb_node_);
@@ -62,12 +64,12 @@ namespace mln
     template<typename N, typename E>
     inline
     void
-    Graph<N, E>::print ()
+    Graph<N, E>::print_debug () const
     {
       std::cout << "nodes :"
 		<< std::endl;
 
-      typename std::vector<s_node*>::const_iterator it = nodes_.begin ();
+      typename std::vector<struct s_node<N>*>::const_iterator it = nodes_.begin ();
       int i = 0;
       for (; it != nodes_.end (); ++it, ++i)
 	{
@@ -75,7 +77,7 @@ namespace mln
 		    << i
 		    << " nbh : ";
 	  typename std::vector<unsigned>::const_iterator it2 = (*it)->links.begin ();
-	  for (; it2 != (*it)->links.end (); ++it2, ++i)
+	  for (; it2 != (*it)->links.end (); ++it2)
 	    {
 	      std::cout << (*it2)
 			<< " ";

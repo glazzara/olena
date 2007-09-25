@@ -1,3 +1,11 @@
+2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update Graph.
+
+	* graph.hh,
+	* graph.hxx,
+	* main.cc: Update.
+
 2007-09-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Rename image_identity_morpher_ to image_identity_.

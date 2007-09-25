@@ -39,39 +39,60 @@ namespace mln
   namespace util
   {
 
+    template<typename T>
+    struct				s_node
+    {
+      T					data;
+      std::vector<unsigned>		links;
+    };
+
+    template<>
+    struct				s_node<void>
+    {
+      std::vector<unsigned>		links;
+    };
+
+    template<typename T>
+    struct				s_edge
+    {
+      T					data;
+      unsigned				node1;
+      unsigned				node2;
+    };
+
+    template<>
+    struct				s_edge <void>
+    {
+      unsigned				node1;
+      unsigned				node2;
+    };
+
     template<typename N, typename E = void>
     class Graph
     {
     public:
-      typedef struct			s_node
-      {
-	std::vector<unsigned>		links;
-      }					s_node;
-
-      typedef struct			s_edge
-      {
-	unsigned			node1;
-	unsigned			node2;
-      }					s_edge;
-
-      Graph () {}
+      Graph ()  :
+	nb_node_ (0), nb_link_ (0) {}
       Graph (unsigned nb_node, unsigned nb_link) :
 	nb_node_ (nb_node), nb_link_ (nb_link) {}
       ~Graph () {}
-      void add_node ();
+
+      //      void add_node (N& elt);
+      void add_node (void);
       void add_edge (unsigned n1, unsigned n2);
-      void coherce ();
-      void print ();
-//       void coherence () const;
+      void coherence () const;
+      void print_debug () const;
+
     private:
       unsigned nb_node_;
       unsigned nb_link_;
-      std::vector<s_node*> nodes_;
-      std::vector<s_edge*> links_;
+      std::vector<struct s_node<N>*> nodes_;
+      std::vector<struct s_edge<E>*> links_;
     };
 
   } // end of util  
 } // end of mln
+
 
 #include "graph.hxx"
 
