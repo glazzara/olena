@@ -1,3 +1,14 @@
+2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add draw mesh in sandbox.
+
+	* draw_mesh.hh: New.
+
+	* graph.hh,
+	* main.cc,
+	* mesh_p.hh,
+	* mesh_psite.hh: Update.
+
 2007-09-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Test a diamond inherance for image_identity

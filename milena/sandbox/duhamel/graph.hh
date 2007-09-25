@@ -83,7 +83,7 @@ namespace mln
       void coherence () const;
       void print_debug () const;
 
-    private:
+    public:
       unsigned nb_node_;
       unsigned nb_link_;
       std::vector<struct s_node<N>*> nodes_;

@@ -1,6 +1,10 @@
+#include <mln/core/image2d_b.hh>
+#include <mln/core/point2d.hh>
+#include <mln/debug/println.hh>
 #include "graph.hh"
 #include "mesh_p.hh"
 #include "mesh_psite.hh"
+#include "draw_mesh.hh"
 
 using namespace mln;
 
@@ -21,10 +25,17 @@ main (void)
   g.add_edge (0, 3);
 
   g.coherence ();
-  g.print_debug ();
+  //  g.print_debug ();
 
-  //  image2d_b<int>		out (2, 2, 1);
+  std::vector<point2d>		v;
+  v.push_back (make::point2d (1,2));
+  v.push_back (make::point2d (14,6));
+  v.push_back (make::point2d (1,15));
+  v.push_back (make::point2d (16,19));
+  image2d_b<int>		ima (20, 20, 1);
 
+  Mesh_p<point2d>		m(g, v);
 
-
+  draw::mesh (ima, m, 42, 1);
+  debug::println (ima);
 }
