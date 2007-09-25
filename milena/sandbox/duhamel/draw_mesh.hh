@@ -20,7 +20,25 @@ namespace mln
 	     point2d p2,
 	     mln_value(I) link_v)
     {
+      mln_dpoint(I) d = p1 - p2;
+      float e = 0.5;
 
+      if (!d[0])
+	return;
+      float e1 = (float)d[1] / (float)d[0];
+      std::cout << " " << d[1] << " " << d[0] << " "<<  e1 << std::endl;
+      float e2 = -1.0;
+      int y = p1[1];
+      for (int x = p1[0]; x < p2[0]; ++x)
+	{
+	  exact(ima)(make::point2d(x,y)) = link_v;
+	  e += e1;
+	  if (e >= 0.5)
+	    {
+	      ++y;
+	      e += e2;
+	    }
+	}
     }
 
     template <typename I, typename P>

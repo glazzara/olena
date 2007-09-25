@@ -1,5 +1,12 @@
 2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Update draw mesh.
+
+	* draw_mesh.hh,
+	* main.cc: Update.
+
+2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add draw mesh in sandbox.
 
 	* draw_mesh.hh: New.
