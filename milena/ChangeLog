@@ -1,3 +1,10 @@
+2007-09-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Rename image_identity morpher.
+
+	* mln/core/internal/image_identity_morpher.hh: Rename as...
+	* mln/core/internal/image_identity.hh: ...this.
+
 2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add mesh_p in sandbox.
