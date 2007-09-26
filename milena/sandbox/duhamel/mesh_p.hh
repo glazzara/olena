@@ -20,7 +20,7 @@ namespace mln
     }
     
     ~Mesh_p () {}
-    
+                                                
     util::Graph<void>	gr_;
     std::vector<P>	loc_;
     //      Mesh_psite<P>	psite;

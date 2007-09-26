@@ -1,3 +1,12 @@
+2007-09-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update mesh_image.
+
+	* draw_mesh.hh,
+	* main.cc,
+	* mesh_image.hh,
+	* mesh_p.hh: Update.
+
 2007-09-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add plain image. FIXME : doesn't compile because of a error in init (called by

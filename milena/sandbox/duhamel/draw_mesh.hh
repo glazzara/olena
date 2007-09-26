@@ -9,6 +9,7 @@
 //# include <mln/metal/is_a.hh>
 # include <mln/draw/line.hh>
 # include "mesh_p.hh"
+# include "mesh_image.hh"
 
 namespace mln
 {
@@ -219,7 +220,23 @@ namespace mln
  	exact(ima)(m.loc_[i]) = node_v;
     }
 
-  } // end of draw
+//     template <typename I,  typename P, typename V>
+//     void
+//     mesh(Image<I>& ima, const mesh_image<P, V>& mesh)
+//     {
+// //       level::fill(ima, 0);
+
+// //       for (unsigned i = 0; i < m.gr_.nb_link_; ++i)
+// // 	line (exact(ima),
+// // 	      m.loc_[m.gr_.links_[i]->node1],
+// // 	      m.loc_[m.gr_.links_[i]->node2],
+// // 	      1);
+
+// //       for (unsigned i = 0; i < m.gr_.nb_node_; ++i)
+// //  	exact(ima)(m.loc_[i]) = mesh.val_[i];
+//     }
+    
+   } // end of draw
 
 } // end of mln
 
