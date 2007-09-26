@@ -7,6 +7,7 @@
 //# include <mln/pw/cst.hh>
 # include <mln/level/fill.hh>
 //# include <mln/metal/is_a.hh>
+# include <mln/draw/line.hh>
 # include "mesh_p.hh"
 
 namespace mln
@@ -209,10 +210,10 @@ namespace mln
       level::fill(ima, 0);
 
       for (unsigned i = 0; i < m.gr_.nb_link_; ++i)
-	bresenham (exact(ima),
-		  m.loc_[m.gr_.links_[i]->node1],
-		  m.loc_[m.gr_.links_[i]->node2],
-		  link_v);
+	line (exact(ima),
+	      m.loc_[m.gr_.links_[i]->node1],
+	      m.loc_[m.gr_.links_[i]->node2],
+	      link_v);
 
       for (unsigned i = 0; i < m.gr_.nb_node_; ++i)
  	exact(ima)(m.loc_[i]) = node_v;
