@@ -1,3 +1,11 @@
+2007-09-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add plain image. FIXME : doesn't compile because of a error in init (called by
+	clone).
+
+	* mln/core/plain.hh: New.
+	* tests/plain.cc: New.
+
 2007-09-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add mesh_image.
