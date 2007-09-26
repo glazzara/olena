@@ -1,3 +1,9 @@
+2007-09-26  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add transformed images.
+	* mln/core/tr_image.hh: New.
+	* tests/tr_image.cc: New.
+
 2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update draw mesh.
