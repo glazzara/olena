@@ -21,22 +21,181 @@ namespace mln
 	     mln_value(I) link_v)
     {
       mln_dpoint(I) d = p1 - p2;
-      float e = 0.5;
 
+      std::cout << "dx = "
+		<< d[0]
+		<< std::endl
+		<< "dy = "
+		<< d[1]
+		<< std::endl;
       if (!d[0])
-	return;
-      float e1 = (float)d[1] / (float)d[0];
-      std::cout << " " << d[1] << " " << d[0] << " "<<  e1 << std::endl;
-      float e2 = -1.0;
-      int y = p1[1];
-      for (int x = p1[0]; x < p2[0]; ++x)
 	{
-	  exact(ima)(make::point2d(x,y)) = link_v;
-	  e += e1;
-	  if (e >= 0.5)
+	  if (d[1])
+	    if (d[1] > 0)
+	      for (int y = p1[1]; y > p2[1]; --y)
+		exact(ima)(make::point2d(p1[0],y)) = link_v;
+	    else
+	      for (int y = p1[1]; y < p2[1]; ++y)
+		exact(ima)(make::point2d(p1[0],y)) = link_v;
+	}
+      else // d[0] != 0
+	{
+	  if (!d[1])
+	    if (d[0] > 0)
+	      for (int x = p1[0]; x > p2[0]; --x)
+		exact(ima)(make::point2d(x, p1[1])) = link_v;
+	    else
+	      for (int x = p1[0]; x < p2[0]; ++x)
+		exact(ima)(make::point2d(x, p1[1])) = link_v;
+	  else // d[0] != 0 && d[1] != 0
 	    {
-	      ++y;
-	      e += e2;
+	      float e = 0;
+	      if (d[0] > 0)
+		{
+		  if (d[1] > 0)
+		    {
+		      if (d[0] < d[1])
+			{
+			  // 7eme octant
+			  int x = p1[0] - 1;
+			  e -= (float)d[1];
+			  for (int y = p1[1] - 1; y > p2[1]; --y)
+			    {
+			      exact(ima)(make::point2d(x,y)) = link_v;
+			      e += (float)d[0];
+			      if (e >= 0)
+				{
+				  x--;
+				  e -= (float)d[1];
+				}
+			    }
+			}
+		      else
+			{  
+			  // 8eme octant
+			  int y = p1[1] - 1;
+			  e -= (float)d[0];
+			  for (int x = p1[0] - 1; x > p2[0]; --x)
+			    {
+			      exact(ima)(make::point2d(x,y)) = link_v;
+			      e += (float)d[1];
+			      if (e > 0)
+				{
+				  y--;
+				  e -= (float)d[0];
+				}
+			    }
+			}
+		    }
+		  else // d[0] > 0 && d[1] < 0
+		    {
+		      if (d[0] < -d[1])
+			{
+			  // 2eme octant
+			  int x = p1[0];
+			  e += (float)d[1];
+			  for (int y = p1[1] + 1; y < p2[1]; ++y)
+			    {
+			      exact(ima)(make::point2d(x,y)) = link_v;
+			      e += (float)d[0];
+			      if (e >= 0)
+				{
+				  x--;
+				  e += (float)d[1];
+				}
+			    }
+			}
+		      else
+			{  
+			  // 1er octant
+			  int y = p1[1] + 1;
+			  e += (float)d[0];
+			  for (int x = p1[0] - 1; x > p2[0]; --x)
+			    {
+			      exact(ima)(make::point2d(x,y)) = link_v;
+			      e += (float)d[1];
+			      if (e <= 0)
+				{
+				  y++;
+				  e += (float)d[0];
+				}
+			    }
+			}
+		    }
+		}
+	      else // d[0] < 0
+		{
+		  if (d[1] > 0)
+		    {
+		      if (-d[0] < d[1])
+			{
+			  // 6eme octant
+			  int x = p1[0] + 1;
+			  e += (float)d[1];
+			  for (int y = p1[1] - 1; y > p2[1]; --y)
+			    {
+			      exact(ima)(make::point2d(x,y)) = link_v;
+			      e += (float)d[0];
+			      if (e < 0)
+				{
+				  x++;
+				  e += (float)d[1];
+				}
+			    }
+			}
+		      else
+			{
+			  // 5eme octant
+			  int y = p1[1] - 1;
+			  e -= (float)d[0];
+			  for (int x = p1[0] + 1; x < p2[0]; ++x)
+			    {
+			      exact(ima)(make::point2d(x,y)) = link_v;
+			      e -= (float)d[1];
+			      if (e < 0)
+				{
+				  y--;
+				  e -= (float)d[0];
+				}
+			    }
+			}
+		    }
+		  else // d[0] < 0 && d[1] < 0
+		    {
+		      if (-d[0] < -d[1])
+			{
+			  // 3eme octant
+			  int x = p1[0] + 1;
+			  e -= (float)d[1];
+			  for (int y = p1[1] + 1; y < p2[1]; ++y)
+			    {
+			      exact(ima)(make::point2d(x,y)) = link_v;
+			      e += (float)d[0];
+			      if (e < 0)
+				{
+				  x++;
+				  e -= (float)d[1];
+				}
+			    }
+			}
+		      else
+			{
+			  // 4eme octant
+			  int y = p1[1] + 1;
+			  e -= (float)d[0];
+			  for (int x = p1[0] + 1; x < p2[0]; ++x)
+			    {
+			      exact(ima)(make::point2d(x,y)) = link_v;
+			      e += (float)d[1];
+			      if (e <= 0)
+				{
+				  y++;
+				  e -= (float)d[0];
+				}
+			    }
+			}
+		    }
+		}
 	    }
 	}
     }

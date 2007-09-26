@@ -1,3 +1,11 @@
+2007-09-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update draw bresenham.
+
+	* draw_mesh.hh: Update.
+
+	* main.cc: Update.
+
 2007-09-26  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add transformed images.
