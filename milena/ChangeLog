@@ -1,3 +1,11 @@
+2007-09-27  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Somes fixes.
+	* mln/core/tr_image.hh: Add routines has.
+	* mln/fun/x2x/rotation.hh: Fix and factor some code.
+	* mln/metal/mat.hh: Fix operator*.
+	* tests/tr_image.cc: Update, test in 3d.
+
 2007-09-27  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix in plain image.

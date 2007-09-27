@@ -32,35 +32,37 @@
 
 
 #include <iostream>
-#include <mln/fun/x2x/translation.hh>
-#include <mln/core/image2d_b.hh>
+#include <mln/fun/x2x/rotation.hh>
+#include <mln/core/image3d_b.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
 #include <mln/core/tr_image.hh>
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
 
 int main()
 {
   using namespace mln;
   using value::int_u8;
 
-  image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
-  image2d_b<int_u8> out(lena.domain());
+  image3d_b<int_u8> in(3, 3, 3);
+  image3d_b<int_u8> out(in.domain());
 
-  fun::x2x::translation<2,float> rot1(make::vec(10., 10.));
+  debug::iota(in);
+  debug::println(in);
 
-  tr_image<fun::x2x::translation<2,float>, image2d_b<int_u8> > inter(lena, rot1);
+  fun::x2x::rotation<3,float> rot1(1.67, 0);
 
+  tr_image<fun::x2x::rotation<3,float>, image3d_b<int_u8> > inter(in, rot1);
 
-  image2d_b<int_u8>::fwd_piter p(out.domain());
+  image3d_b<int_u8>::fwd_piter p(out.domain());
   
   for_all(p)
     {
-      metal::vec<2,int> vec = (image2d_b<int_u8>::point)p;
-      if (inter.owns_(vec))
+      metal::vec<3,int> vec = (image3d_b<int_u8>::point)p;
+      if (inter.has(vec))
 	out(p) = inter(vec);
       else
 	out(p) = 255;
     }
-  io::pgm::save(out, "out.pgm");
+  debug::println(out);
 }

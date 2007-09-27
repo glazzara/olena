@@ -103,6 +103,11 @@ namespace mln
     /// Test if a pixel value is accessible at \p v.
     bool owns_(const mln::metal::vec<I::point::dim, float>& v) const;
 
+    using super_::has;
+
+    /// Test if a pixel value is belonging to image at \p v.
+    bool has(const mln::metal::vec<I::point::dim, float>& v) const;
+
     /// Read-only access of pixel value at point site \p p.
     /// Mutable access is only OK for reading (not writing).
     using super_::operator();
@@ -157,6 +162,16 @@ namespace mln
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));
     return this->data_->ima_.owns_(p);
+  }
+
+  template <typename T, typename I>
+  bool tr_image<T,I>::has(const metal::vec<I::point::dim, float>& v) const
+  {
+    mln_point(I) p;
+    metal::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
+    for (unsigned i = 0; i < I::point::dim; ++i)
+      p[i] = static_cast<int>(round(v2[i]));
+    return this->data_->ima_.domain().has(p);
   }
 
   template <typename T, typename I>

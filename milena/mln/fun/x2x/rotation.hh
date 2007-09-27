@@ -68,6 +68,8 @@ namespace mln
 	  void set_alpha(float alpha);
 	  void set_dir(unsigned dir);
 
+	  void update();
+
 	protected:
 
 	  float alpha_;
@@ -81,7 +83,7 @@ namespace mln
       template <unsigned n, typename C>
       rotation<n,C>::rotation()
       {
-	m_ = metal::mat<n+1,n+1,C>::Id;
+	m_ = metal::mat<n + 1,n + 1,C>::Id;
       }
 
       template <unsigned n, typename C>
@@ -89,23 +91,8 @@ namespace mln
 	:alpha_(alpha),
 	 dir_(dir)
       {
-	const float cos_a = cos(alpha_);
-	const float sin_a = sin(alpha_);
-	const metal::vec<4,float> vec = make::vec(cos_a, -sin_a, sin_a, cos_a);
-
-	m_ = metal::mat<n+1,n+1,C>::Id;
-	unsigned k = 0;
-	for (unsigned i = 0; i <= n; ++i)
-	{
-	  if (i == dir)
-	    continue;
-	  for (unsigned j = 0; j <= n; ++j)
-	  {
-	    if (j == dir)
-	      continue;
-	    m_(i, j) = vec[k++];
-	  }
-	}
+	mln_precondition(dir == 2 || n == 3);
+	update();
       }
 
       template <unsigned n, typename C>
@@ -139,39 +126,55 @@ namespace mln
       void
       rotation<n,C>::set_alpha(float alpha)
       {
-	const float cos_a = cos(alpha);
-	const float sin_a = sin(alpha);
-
 	alpha_ = alpha;
-
-	m_(0,0) = cos_a;
-	m_(0,1) = -sin_a;
-	m_(1,0) = sin_a;
-	m_(1,1) = cos_a;
+	update();
       }
 
       template <unsigned n, typename C>
       void
       rotation<n,C>::set_dir(unsigned dir)
       {
+	mln_precondition(dir == 2 || n == 3);
+	dir_ = dir;
+	update();
+      }
+
+      template <unsigned n, typename C>
+      void
+      rotation<n,C>::update()
+      {
 	const float cos_a = cos(alpha_);
 	const float sin_a = sin(alpha_);
-	const metal::vec<4,float> vec(cos_a, -sin_a, sin_a, cos_a);
+	const metal::vec<4,float> vec = make::vec(cos_a, -sin_a, sin_a, cos_a);
 
-	m_ = metal::mat<n+1,n+1,C>::Id;
+	m_ = metal::mat<n + 1,n + 1,C>::Id;
 	unsigned k = 0;
-	for (unsigned i = 0; i <= n; ++i)
+	for (unsigned i = 0; i < n; ++i)
 	{
-	  if (i == dir)
+	  if (i == dir_)
 	    continue;
-	  for (unsigned j = 0; j <= n; ++j)
+	  for (unsigned j = 0; j < n; ++j)
 	  {
-	    if (j == dir)
+	    if (j == dir_)
 	      continue;
 	    m_(i, j) = vec[k++];
 	  }
 	}
       }
+
+//       template <typename C> FIXME : template parameter should be swapped
+//       void
+//       rotation<2,C>::update()
+//       {
+// 	const float cos_a = cos(alpha_);
+// 	const float sin_a = sin(alpha_);
+
+// 	m_ = metal::mat<3,3,C>::Id;
+// 	m_(0, 0) = cos_a;
+// 	m_(0, 1) = -sin_a;
+// 	m_(1, 0) = sin_a;
+// 	m_(1, 1) = cos_a;
+//       }
 
 
 # endif // ! MLN_INCLUDE_ONLY

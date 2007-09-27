@@ -110,14 +110,6 @@ namespace mln
 
     // *
 
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,T>&
-    operator*=(mat<n,m,T>& lhs, const U& scalar);
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
-    operator*(mat<n,m,T>& lhs, const U& scalar);
-    
     template <unsigned n, unsigned m, unsigned o, typename T, typename U>
     mat<n,m,T>&
     operator*=(mat<n,o,T>& lhs, mat<o,m,U>& rhs);
@@ -126,6 +118,14 @@ namespace mln
     mat<n,m,typename binary_arith_trait<T,U>::ret>
     operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs);
 
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,T>&
+    operator*=(mat<n,m,T>& lhs, const U& scalar);
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    operator*(const U& scalar, mat<n,m,T>& lhs);
+    
     // /
 
     template <unsigned n, unsigned m, typename T, typename U>
@@ -294,26 +294,6 @@ namespace mln
 
     // *
 
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,T>&
-    operator*=(mat<n,m,T>& lhs, const U& scalar)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	for (unsigned j = 0; j < m; ++j)
-	  lhs(i, j) *= scalar;
-      return lhs;
-    }
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
-    operator*(mat<n,m,T>& lhs, const U& scalar)
-    {
-      mat<n,m,typename binary_arith_trait<T,U>::ret> tmp;
-      for (unsigned i = 0; i < n; ++i)
-	for (unsigned j = 0; j < m; ++j)
-	  tmp[i][j] = lhs(i, j) * scalar;
-      return tmp;
-    }
-    
     template <unsigned n, unsigned m, unsigned o, typename T, typename U>
     mat<n,m,T>&
     operator*=(mat<n,o,T>& lhs, mat<o,m,U>& rhs)
@@ -333,6 +313,26 @@ namespace mln
 	  for (unsigned k = 0; k < o; ++k)
 	    tmp(i, j) += lhs(i, k) * rhs(k, j);
 	}
+      return tmp;
+    }
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,T>&
+    operator*=(mat<n,m,T>& lhs, const U& scalar)
+    {
+      for (unsigned i = 0; i < n; ++i)
+	for (unsigned j = 0; j < m; ++j)
+	  lhs(i, j) *= scalar;
+      return lhs;
+    }
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    operator*(const U& scalar, mat<n,m,T>& lhs)
+    {
+      mat<n,m,typename binary_arith_trait<T,U>::ret> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	for (unsigned j = 0; j < m; ++j)
+	  tmp(i, j) = scalar * lhs(i, j);
       return tmp;
     }
 
