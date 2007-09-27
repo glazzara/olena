@@ -34,6 +34,7 @@
 #include <mln/core/plain.hh>
 
 #include <mln/value/int_u8.hh>
+#include <mln/level/compare.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -47,6 +48,27 @@ int main()
     plain< image2d_b<int_u8> >
       lena = io::pgm::load<int_u8>("../img/lena.pgm");
 
+    image2d_b<int_u8> ima;
+    image2d_b<int_u8> ima2;
+
+    ima = lena;
+
+    ima(make::point2d(0,0)) = 124;
+
+    mln_assertion(ima != lena);
+
+    ima2 = lena;
+    ima = lena;
+
+    mln_assertion(ima == ima2);
+
+    ima(make::point2d(0,0)) = 124;
+    mln_assertion(ima != ima2);
+
+    ima = ima2;
+
+    ima(make::point2d(0,0)) = 124;
+    mln_assertion(ima == ima2);
 
   }
 }

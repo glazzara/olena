@@ -53,7 +53,7 @@ namespace mln
     template <typename I>
     struct data_< plain<I> >
     {
-      data_(I& ima);
+      data_(const I& ima);
 
       I ima_;
     };
@@ -95,6 +95,9 @@ namespace mln
     /// Assignment operator.
     plain& operator=(const I& rhs);
 
+
+    /// Convertion into an I image
+    operator I () const;
   };
 
 
@@ -104,21 +107,20 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< plain<I,S> >
+    // internal::data_< plain<I> >
 
     template <typename I>
-    data_< plain<I> >::data_(I& ima)
-      : ima_(ima)
+    data_< plain<I> >::data_(const I& ima)
+      : ima_(clone(ima))
     {
     }
 
   } // end of namespace mln::internal
 
   template <typename I>
-  plain<I>::plain(const I& ima_)
+  plain<I>::plain(const I& ima)
   {
-    mln_precondition(ima_.has_data());
-    I ima = clone(ima_);
+    mln_precondition(ima.has_data());
     this->data_ = new internal::data_< plain<I> >(ima);
   }
 
@@ -126,9 +128,16 @@ namespace mln
   plain<I>&
   plain<I>::operator=(const I& rhs)
   {
+    mln_precondition(rhs.has_data());
     this->destroy();
-    this->data_ = new internal::data_< plain<I> >(clone(rhs));
+    this->data_ = new internal::data_< plain<I> >(rhs);
     return *this;
+  }
+
+  template <typename I>
+  plain<I>::operator I () const
+  {
+    return clone(this->data_->ima_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
