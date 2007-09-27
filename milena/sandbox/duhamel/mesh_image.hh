@@ -40,6 +40,7 @@
 # include "mesh_p.hh"
 # include "mesh_psite.hh"
 # include <vector>
+# include <mln/core/box2d.hh>
 
 namespace mln
 {
@@ -53,10 +54,11 @@ namespace mln
     template <typename P, typename V>
     struct data_< mesh_image<P, V> >
     {
-      data_(mesh_p<P>& ima, std::vector<V>& val_);
+      data_(mesh_p<P>& mesh, std::vector<V>& val);
 
-      mesh_p<P>		mesh_;
       std::vector<V>	val_;
+      mesh_p<P>		mesh_;
+      box2d		b_;
     };
 
   } // end of namespace mln::internal
@@ -68,7 +70,7 @@ namespace mln
   struct mesh_image  : public internal::image_primary_< box2d, mesh_image<P, V> >
   {
 
-    //    typedef mln::internal::image_primary_< box2d, mesh_image<P, V> > super_;
+    typedef mln::internal::image_base_< box2d, mesh_image<P, V> > super_;
 
     /// Point_Site associated type.
     typedef P psite;
@@ -77,7 +79,7 @@ namespace mln
     typedef V value;
 
     /// Return type of read-write access.
-    typedef V& lvalue; // FIXME: Depends on lvalue presence in I.
+    typedef V& lvalue;
 
     /// Return type of read-only access.
     typedef V rvalue;
@@ -97,21 +99,31 @@ namespace mln
     /// Test if this image has been initialized.
     bool has_data() const;
 
-//     /// Test if a pixel value is accessible at \p p
-//     using super_::owns_;
+    const box2d& domain() const;
+
+    /// Test if a pixel value is accessible at \p p
+    using super_::owns_;
 
     /// Test if a pixel value is accessible at \p v.
     bool owns_(const mln::metal::vec<P::dim, float>& v) const;
 
-//     /// Read-only access of pixel value at point site \p p.
-//     /// Mutable access is only OK for reading (not writing).
-//     using super_::operator();
+    /// Read-only access of pixel value at point site \p p.
+    rvalue operator()(const P& p) const;
+    
+    /// Read-write access of pixel value at point site \p p.
+    lvalue operator()(const P& p);
+
 
     V& operator()(const mln::metal::vec<P::dim, float>& v) const;
 
-//     /// Give the set of values of the image.
-//     const vset& values() const;
+    /// Give the set of values of the image.
+    const vset& values() const;
+
+    const std::vector<V>& data_values () const;
+
+    const mesh_p<P>& data_mesh () const;
 };
+
 
 
 
@@ -119,6 +131,7 @@ namespace mln
 
   namespace internal
   {
+
 
     template <typename P, typename V>
     data_< mesh_image<P, V> >::data_(mesh_p<P>& mesh, std::vector<V>& val)
@@ -149,6 +162,14 @@ namespace mln
   }
 
   template <typename P, typename V>
+  const box2d&
+  mesh_image<P, V>::domain() const
+  {
+    mln_precondition(this->has_data());
+    return this->data_->b_;
+  }
+
+  template <typename P, typename V>
   bool mesh_image<P, V>::owns_(const mln::metal::vec<P::dim, float>& v) const
   {
     for (unsigned i = 0; i < this->data_->val_.size(); ++i)
@@ -161,21 +182,56 @@ namespace mln
   V&
   mesh_image<P, V>::operator()(const mln::metal::vec<P::dim, float>& v) const
   {
+    // FIXME
     unsigned i = 0;
 //     for (i = 0; i < this->data_->val_.size(); ++i)
 //       if (this->data_->mesh_.loc_[i] == v)
 // 	break;
-    return this->data_->mesh_.gr.loc_[i];
+//     mln_invariant(i == this->data_->val_.size());
+    return this->data_->val_[i];
   }
 
-//   // FIXME : Should we remove this method? (and inherit it from
-//   // identity morpher)
-//   template <typename P, typename V>
-//   const vset &
-//   mesh_image<P, V>::values() const
-//   {
-//     return vset::the();
-//   }
+  template <typename P, typename V>
+  typename mesh_image<P, V>::rvalue
+  mesh_image<P, V>::operator()(const P& ) const
+  {
+    // FIXME
+    unsigned i = 0;
+    return this->data_->val_[i];
+  }
+    
+  template <typename P, typename V>
+  typename mesh_image<P, V>::lvalue
+  mesh_image<P, V>::operator()(const P& )
+  {
+    // FIXME
+    unsigned i = 0;
+    return this->data_->val_[i];
+  }
+
+
+  // FIXME : Should we remove this method? (and inherit it from
+  // identity morpher)
+  template <typename P, typename V>
+  const mln::value::set<V> &
+  mesh_image<P, V>::values() const
+  {
+    return vset::the();
+  }
+
+  template <typename P, typename V>
+  const std::vector<V>&
+  mesh_image<P, V>::data_values () const
+  {
+    return this->data_->val_;
+  }
+
+  template <typename P, typename V>
+  const mesh_p<P>&
+  mesh_image<P, V>::data_mesh () const
+  {
+    return this->data_->mesh_;
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 
