@@ -6,13 +6,14 @@
 #include "mesh_psite.hh"
 #include "draw_mesh.hh"
 #include "mesh_image.hh"
+#include <mln/core/interpolated.hh>
 
 using namespace mln;
 
 int
 main (void)
 {
-  util::Graph<void>		g;
+  util::graph<void>		g;
 
   g.add_node ();
   g.add_node ();
@@ -42,7 +43,7 @@ main (void)
 
   image2d_b<int>		ima (20, 20, 1);
 
-  Mesh_p<point2d>		m(g, v);
+  mesh_p<point2d>		m(g, v);
 
   draw::mesh (ima, m, 7, 1);
 
@@ -51,7 +52,8 @@ main (void)
   val.push_back (8);
   val.push_back (6);
 
-  //  mesh_image<point2d, int> im (m, val);
+  //  mesh_image<point2d, int>	im (m, val);
+
   //  draw::mesh (ima, im);
 
   debug::println (ima);

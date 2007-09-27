@@ -11,7 +11,7 @@ namespace mln
     template<typename N, typename E>
     inline
     void
-    Graph<N, E>::add_node (void)
+    graph<N, E>::add_node (void)
     {
       struct s_node<N>* n = new struct s_node<N>;
 
@@ -23,7 +23,7 @@ namespace mln
     template<typename N, typename E>
     inline
     void
-    Graph<N, E>::add_edge (unsigned n1, unsigned n2)
+    graph<N, E>::add_edge (unsigned n1, unsigned n2)
     {
       mln_precondition(n1 < this->nb_node_);
       mln_precondition(n2 < this->nb_node_);
@@ -36,12 +36,13 @@ namespace mln
       links_.push_back (edge);
       ++nb_link_;
       nodes_[n1]->links.push_back (n2);
+      nodes_[n2]->links.push_back (n1);
     }
 
     template<typename N, typename E>
     inline
     void
-    Graph<N, E>::coherence () const
+    graph<N, E>::coherence () const
     {
       mln_precondition(nodes_.size () == this->nb_node_);
       mln_precondition(links_.size () == this->nb_link_);
@@ -64,7 +65,7 @@ namespace mln
     template<typename N, typename E>
     inline
     void
-    Graph<N, E>::print_debug () const
+    graph<N, E>::print_debug () const
     {
       std::cout << "nodes :"
 		<< std::endl;

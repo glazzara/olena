@@ -204,7 +204,7 @@ namespace mln
 
     template <typename I, typename P>
     void
-    mesh(Image<I>& ima, const Mesh_p<P>& m,
+    mesh(Image<I>& ima, const mesh_p<P>& m,
 	 mln_value(I) node_v,
 	 mln_value(I) link_v)
     {

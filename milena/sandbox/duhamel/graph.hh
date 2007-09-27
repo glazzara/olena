@@ -68,14 +68,14 @@ namespace mln
     };
 
     template<typename N, typename E = void>
-    class Graph
+    class graph
     {
     public:
-      Graph ()  :
+      graph ()  :
 	nb_node_ (0), nb_link_ (0) {}
-      Graph (unsigned nb_node, unsigned nb_link) :
+      graph (unsigned nb_node, unsigned nb_link) :
 	nb_node_ (nb_node), nb_link_ (nb_link) {}
-      ~Graph () {}
+      ~graph () {}
 
       //      void add_node (N& elt);
       void add_node (void);

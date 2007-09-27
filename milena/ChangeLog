@@ -1,3 +1,15 @@
+2007-09-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update mesh_psite.
+
+	* draw_mesh.hh,
+	* graph.hh,
+	* graph.hxx,
+	* main.cc,
+	* mesh_image.hh,
+	* mesh_p.hh,
+	* mesh_psite.hh: Update.
+
 2007-09-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix init, init_, and clone.

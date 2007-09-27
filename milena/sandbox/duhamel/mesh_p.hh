@@ -7,23 +7,22 @@ namespace mln
 {
 
   template<typename P>
-  class Mesh_p
+  class mesh_p
   {
   public:
-    Mesh_p () {}
+    mesh_p () {}
     
-    Mesh_p (util::Graph<void>&	gr,
+    mesh_p (util::graph<void>&	gr,
 	    std::vector<P>&	loc)
       : gr_ (gr),
 	loc_ (loc)
     {
     }
     
-    ~Mesh_p () {}
+    ~mesh_p () {}
                                                 
-    util::Graph<void>	gr_;
+    util::graph<void>	gr_;
     std::vector<P>	loc_;
-    //      Mesh_psite<P>	psite;
   };
 } // end of mln
 
