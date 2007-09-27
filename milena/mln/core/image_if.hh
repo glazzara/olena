@@ -115,7 +115,7 @@ namespace mln
   image_if< const I,
 	    fun::equal_p2b_expr_< pw::value_<I>,
 				  pw::cst_<mln_value(I)> > >
-  operator | (Image<I>& ima, const mln_value(I)& v);
+  operator | (const Image<I>& ima, const mln_value(I)& v);
 
   // FIXME: Add the notion of "interval of values"...
   // FIXME: so we can write:  ima | from_to(v1, v2)

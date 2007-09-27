@@ -1,3 +1,18 @@
+2007-09-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix init, init_, and clone.
+
+	* tests/core_clone.cc: Acticate code.
+	* mln/core/image_if.hh (operator): Fix overload.
+	* mln/core/internal/image_base.hh: Typo.
+	* mln/core/internal/image_morpher.hh,
+	* mln/core/image2d_b.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/init.hh (init_): Move out of impl.
+	(init): Move...
+	* mln/core/concept/image.hh: ...here.
+	* tests/core_init.cc: New.
+
 2007-09-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update mesh_image.

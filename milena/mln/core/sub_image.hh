@@ -91,13 +91,8 @@ namespace mln
 
 
 
-  namespace impl
-  {
-
-    template <typename I, typename S, typename J>
-    void init_(tag::image_t, sub_image<I,S>& target, const J& model);
-    
-  } // end of namespace mln::impl
+  template <typename I, typename S, typename J>
+  void init_(tag::image_t, sub_image<I,S>& target, const J& model);
 
 
 
@@ -105,20 +100,15 @@ namespace mln
 
   // impl::init_
 
-  namespace impl
+  template <typename I, typename S, typename J>
+  void init_(tag::image_t, sub_image<I,S>& target, const J& model)
   {
-
-    template <typename I, typename S, typename J>
-    void init_(tag::image_t, sub_image<I,S>& target, const J& model)
-    {
-      I ima;
-      init_(tag::image, ima, model);
-      S pset;
-      init_(tag::domain, pset, model);
-      target.init_(ima, pset);
-    }
-    
-  } // end of namespace mln::impl
+    I ima;
+    init_(tag::image, ima, model);
+    S pset;
+    init_(tag::domain, pset, model);
+    target.init_(ima, pset);
+  }
 
 
   // internal::data_< sub_image<I,S> >

@@ -54,17 +54,17 @@ int main()
     debug::println(clone(ima | b));
   }
 
-//   {
-//     image2d_b<int> ima_ = clone(ima);
-//     std::cout << ima_.border() << std::endl;
-//     ima_(make::point2d(1,1)) = 51;
-//     debug::println(ima);
-//   }
+  {
+    image2d_b<int> ima_ = clone(ima);
+    std::cout << ima_.border() << std::endl;
+    ima_(make::point2d(1,1)) = 51;
+    debug::println(ima);
+  }
   
-//   {
-//     image2d_b<int> ima_( ima );
-//     ima_(make::point2d(1,1)) = 51;
-//     debug::println(ima);
-//   }
+  {
+    image2d_b<int> ima_( ima );
+    ima_(make::point2d(1,1)) = 51;
+    debug::println(ima);
+  }
 
 }

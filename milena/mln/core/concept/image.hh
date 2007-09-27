@@ -39,10 +39,14 @@
 # include <mln/trait/concrete.hh> // FIXME: Should be in all.hh!
 
 # include <mln/metal/is_a.hh>
+# include <mln/tag/init.hh>
+
 
 
 namespace mln
 {
+
+
 
   /*! \brief Base class for implementation of image classes.
    *
@@ -96,6 +100,19 @@ namespace mln
   };
 
 
+
+  /*! Initialize the image \p target with data extracted from image \p model.
+   *
+   * \param[in, out] target The image to be initialized.
+   * \param[in] model The image to provide data for the initialization.
+   *
+   * \pre (not target.has_data) and model.has_data
+   */
+  template <typename I, typename J>
+  void init(Image<I>& target, const Image<J>& model);
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
@@ -145,6 +162,18 @@ namespace mln
     const vset& (E::*m8)() const = & E::values;
     m8 = 0;
   }
+
+  template <typename I, typename J>
+  void init(Image<I>& target, const Image<J>& model)
+  {
+    mln_precondition(! exact(target).has_data());
+    mln_precondition(exact(model).has_data());
+
+    init_(tag::image, exact(target), exact(model));
+
+    mln_postcondition(exact(target).has_data());
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

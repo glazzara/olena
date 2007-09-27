@@ -25,75 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INIT_HH
-# define MLN_CORE_INIT_HH
-
-/*! \file mln/core/init.hh
+/*! \file tests/core_init.cc
  *
- * \brief Initialization of an image from another one.
+ * \brief Tests on mln::init.
  */
 
-# include <mln/tag/init.hh>
-# include <mln/geom/bbox.hh>
-# include <mln/border/get.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/sub_image.hh>
+#include <mln/debug/println.hh>
 
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
+  typedef image2d_b<int> I;
 
-  // Fwd decl.
-
-  template <typename Subject, typename T, typename M>
-  void init_(Subject, T& target, const Object<M>& model);
-
-  // Easy and final versions.
-
-  template <typename B, typename I>
-  void init_(tag::bbox_t, B& b, const Image<I>& ima);
-
-  template <typename I>
-  void init_(tag::border_t, unsigned& bdr, const Image<I>& ima);
-
-  template <typename I>
-  void init_(tag::domain_t, mln_pset(I)& pset, const Image<I>& ima);
-
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-
-  template <typename Subject, typename T, typename M>
-  void init_(Subject, T&, const Object<M>&)
+  I ref( make::box2d(3,3) );
+  box2d b = make::box2d(2,2);
+  
   {
-    struct ERROR err_; // FIXME: Explicit msg.
+    I ima;
+    init(ima, ref);
+    debug::println(ima);
+    mln_assertion(ima.border() == ref.border());
   }
 
-  // Easy impl.
-
-  template <typename B, typename I>
-  void init_(tag::bbox_t, B& b, const Image<I>& ima)
   {
-    b = geom::bbox(ima);
+    I ima_; // to init'd
+    sub_image<I, box2d> ima = ref | b;
+    init(ima_, ima);
+    debug::println(ima);
   }
 
-  template <typename I>
-  void init_(tag::border_t, unsigned& bdr, const Image<I>& ima)
   {
-    bdr = border::get(ima);
+    sub_image<I, box2d> ima;
+    init(ima, ref);
+    debug::println(ima);
   }
 
-  template <typename I>
-  void init_(tag::domain_t, mln_pset(I)& pset, const Image<I>& ima)
   {
-    pset = exact(ima).domain();
+    sub_image<I, box2d> ima;
+    init(ima, ref | b);
+    debug::println(ima);
   }
 
-
-# endif // ! MLN_INCLUDE_ONLY
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_INIT_HH
+}
