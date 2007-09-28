@@ -37,6 +37,7 @@
 # include <mln/core/internal/coord_impl.hh>
 # include <mln/fun/i2v/all.hh>
 # include <mln/metal/vec.hh>
+# include <mln/core/h_vec.hh>
 
 
 namespace mln

@@ -1,3 +1,9 @@
+2007-09-28  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix for compiling.
+
+	* mln/core/point.hh: Include h_vec.
+
 2007-09-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update mesh_image.
