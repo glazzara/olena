@@ -1,3 +1,9 @@
+2007-09-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add test for mesh image.
+
+	* mesh_image.cc: New test for mesh image.
+
 2007-09-28  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add traits for multiply and promotions.
