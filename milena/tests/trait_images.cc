@@ -25,36 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_KIND_HH
-# define MLN_VALUE_KIND_HH
-
-/*! \file mln/value/kind.hh
+/*! \file tests/trait_ch_value.cc
  *
- * \brief Define the set of kinds of value.
+ * \brief Tests on mln::trait::ch_value.
  */
 
+#include <mln/core/image2d_b.hh>
+#include <mln/core/sub_image.hh>
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
 
-  namespace value
-  {
+  typedef image2d_b<int> I;
 
-    // FIXME: Doc!
+  std::cout << "image2d_b: ";
+  mln::trait::print<I>(std::cout);
 
-    struct kind
-    {
-    };
-
-    struct gray_level_kind : kind {};
-    struct color_kind  : kind {};
-    struct label_kind  : kind {};
-    struct binary_kind : kind {};
-    struct data_kind   : kind {};
-
-  } // end of namespace mln::value
-
-} // end of namespace mln
-
-
-#endif // ! MLN_VALUE_KIND_HH
+  std::cout << std::endl
+	    << "sub_image< image2d_b >: ";
+  mln::trait::print< sub_image<I, box2d> >(std::cout);
+}

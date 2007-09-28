@@ -133,7 +133,7 @@ namespace mln
       static const std::size_t card_ = metal::pow<2, nbits>::value;
       static const rgb<n> max() { rgb<n> c(props< int_u<n> >::max); return c; }
       static const rgb<n> min() { const rgb<n> c(props< int_u<n> >::min()); return c; }
-      typedef color_kind kind;
+      typedef trait::kind::color kind;
       typedef float_x3_t sum;
       typedef uchar_x3_t interop;
     };

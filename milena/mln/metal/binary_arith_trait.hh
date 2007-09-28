@@ -43,8 +43,14 @@ namespace mln
     struct binary_arith_trait;
 
 
+    template <typename T>
+    struct binary_arith_trait< T, T >
+    {
+      typedef T ret;
+    };
+
     template <>
-    struct binary_arith_trait<int, float>
+    struct binary_arith_trait< int, float >
     {
       typedef float ret;
     };

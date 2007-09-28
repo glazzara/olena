@@ -25,54 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_METAL_BOOL_HH
-# define MLN_METAL_BOOL_HH
+#ifndef MLN_TRAIT_KIND_HH
+# define MLN_TRAIT_KIND_HH
 
-/*! \file mln/metal/bool.hh
+/*! \file mln/core/trait/kind.hh
  *
- * \brief Definition of a Boolean value type.
+ * \brief Kind of values in images.
  */
+
+# include <iostream>
+# include <string>
 
 
 namespace mln
 {
 
-  namespace metal
+  namespace trait
   {
 
-    // Fwd decls.
-    struct true_;
-    struct false_;
-
-
-
-    // FIXME: Doc!
-
-    template <bool b> struct bool_;
-
-    template <>
-    struct bool_< true >
+    struct kind
     {
-      typedef true_ type;
-      static const bool value = true;
-      enum { to_bool = true };
+      struct color { std::string str() const { return "kind::color"; } };
+      struct gray  { std::string str() const { return "kind::gray"; } };
+      struct label { std::string str() const { return "kind::label"; } };
+      struct logic  : label { std::string str() const { return "kind::logic"; } };
+      struct binary : logic { std::string str() const { return "kind::binary"; } };
+      struct data  { std::string str() const { return "kind::data"; } };
     };
 
-    template <>
-    struct bool_< false >
-    {
-      typedef false_ type;
-      static const bool value = false;
-      enum { to_bool = false };
-    };
-
-
-  } // end of namespace mln::metal
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-# include <mln/metal/bexpr.hh>
-
-
-#endif // ! MLN_METAL_BOOL_HH
+#endif // ! MLN_TRAIT_KIND_HH

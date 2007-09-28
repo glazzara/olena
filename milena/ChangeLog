@@ -1,3 +1,53 @@
+2007-09-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Start the image traits mechanism.
+
+	The big deal of image traits!
+
+	* mln/trait/images.hh: Add contents.
+	* mln/core/concept/image.hh: Include above file.
+	* tests/trait_images.cc: New.
+
+	The "data kind" trait is updated.
+
+	* mln/trait/kind.hh: New.
+	* mln/value/kind.hh: Remove; obsolete.
+	* mln/core/macros.hh (mln_value_kind): Move to...
+	* mln/value/props.hh: ...here.
+	(mln_kind): Remove; too ambiguous.
+	(<whatever>_kind): Update.
+	* mln/morpho/min.hh,
+	* mln/morpho/plus.hh,
+	* mln/morpho/minus.hh,
+	* mln/morpho/complementation.hh,
+	* mln/morpho/dilation.hh,
+	* mln/morpho/erosion.hh,
+	* mln/morpho/hit_or_miss.hh,
+	* mln/value/int_u_sat.hh,
+	* mln/value/rgb.hh,
+	* mln/value/rgb8_non_templated.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_u.hh,
+	* mln/value/label.hh: Update.
+
+	Then declare traits for a couple of classes.
+
+	* mln/core/image2d_b.hh,
+	* mln/core/sub_image.hh (image_): New trait.
+
+	Misc.
+
+	* mln/fun/x2x/translation.hh,
+	* mln/fun/x2x/rotation.hh: Change layout.
+	* mln/core/point.hh (point_to_): New in internal.
+	(operator vec): Use point_to_ to help g++-2.95.
+	* mln/metal/mat.hh (operator-): Fix sig.
+	(mult): New; just for the record.
+	Sort operators.
+	* mln/metal/bool.hh (to_bool): New; for completion.
+	* mln/metal/if.hh: Update.
+	* mln/metal/binary_arith_trait.hh: New overload.
+
 2007-09-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add test for mesh image.

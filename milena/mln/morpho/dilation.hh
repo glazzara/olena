@@ -112,7 +112,7 @@ namespace mln
       // Stage 2: dispatch w.r.t. the value kind.
 
       template <typename I, typename W, typename O>
-      void dilation_wrt_value(value::binary_kind, // binary => morphology on sets
+      void dilation_wrt_value(trait::kind::logic, // binary => morphology on sets
 			      const Image<I>& input, const Window<W>& win, Image<O>& output)
       {
 	return impl::dilation_on_set(exact(input), exact(win), output);
@@ -134,7 +134,7 @@ namespace mln
       template <typename I, typename W, typename O>
       void dilation_wrt_win(const Image<I>& input, const Window<W>& win, Image<O>& output)
       {
-	dilation_wrt_value(mln_value_kind(I)(), exact(input), exact(win), output);
+	dilation_wrt_value(mln_value_kind(mln_value(I))(), exact(input), exact(win), output);
 	//                   |
 	//                    -->  call stage 2: dispatch w.r.t. the value kind
       }

@@ -106,7 +106,7 @@ namespace mln
     {
       static const unsigned nbits = 24;
       static const std::size_t card_ = metal::pow<2, nbits>::value;
-      typedef color_kind kind;
+      typedef trait::kind::color kind;
       typedef float_x3_t sum;
       typedef uchar_x3_t interop;
     };

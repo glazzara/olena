@@ -118,7 +118,6 @@ namespace mln
       rotation<n,C>::inv() const
       {
 	typename rotation::invert res(-alpha_, dir_);
-
 	return res;
       }
 

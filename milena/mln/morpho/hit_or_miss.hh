@@ -115,7 +115,7 @@ namespace mln
       // On sets.
 
       template <typename I, typename Wh, typename Wm, typename O>
-      void hit_or_miss_(value::binary_kind, // binary => morphology on sets
+      void hit_or_miss_(trait::kind::logic, // binary => morphology on sets
 			const Image<I>& input,
 			const Window<Wh>& win_hit, const Window<Wm>& win_miss,
 			Image<O>& output)
@@ -190,7 +190,7 @@ namespace mln
 		     Image<O>& output)
     {
       impl::hit_or_miss_preconditions_(input, win_hit, win_miss, output);
-      impl::hit_or_miss_(mln_value_kind(I)(), input, win_hit, win_miss, output);
+      impl::hit_or_miss_(mln_value_kind(mln_value(I))(), input, win_hit, win_miss, output);
     }
 
     template <typename I, typename Wh, typename Wm, typename O>

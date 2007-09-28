@@ -48,6 +48,20 @@ namespace mln
   template <typename M, typename C> struct dpoint_;
 
 
+  namespace internal
+  {
+
+    template <typename M, typename C>
+    struct point_to_
+    {
+      typedef metal::vec<M::dim, C> metal_vec;
+      typedef h_vec<M::dim, C> h_vec;
+    };
+
+  } // end of namespace mln::internal
+
+
+
   /*! \brief Generic point class.
    *
    * Parameters are \c n the dimension of the space and \c C the
@@ -107,10 +121,10 @@ namespace mln
     typedef metal::vec<M::dim, C> vec_t;
 
     /// Hook to coordinates.
-    operator metal::vec<M::dim, C>() const;
+    operator typename internal::point_to_<M, C>::metal_vec () const;
 
     /// Hook to homogene coordinate.
-    operator h_vec<M::dim, C>() const;
+    operator typename internal::point_to_<M, C>::h_vec () const;
 
   protected:
     metal::vec<M::dim, C> coord_;
@@ -172,13 +186,13 @@ namespace mln
   }
 
   template <typename M, typename C>
-  point_<M,C>::operator metal::vec<M::dim, C>() const
+  point_<M,C>::operator typename internal::point_to_<M, C>::metal_vec () const
   {
     return coord_;
   }
 
   template <typename M, typename C>
-  point_<M,C>::operator h_vec<M::dim, C>() const
+  point_<M,C>::operator typename internal::point_to_<M, C>::h_vec () const
   {
     return coord_;
   }

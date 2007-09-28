@@ -71,7 +71,7 @@ namespace mln
      * FIXME: Doc!
      */
     template <typename Cond, typename Then, typename Else>
-    struct if_ : internal::helper_if_< Cond::value, Then, Else >
+    struct if_ : internal::helper_if_< Cond::to_bool, Then, Else >
     {
       // ret is inherited.
     };

@@ -160,9 +160,6 @@
 # define mln_value(T)      typename T::value
 # define mln_value_(T)     T::value
 
-/// Shortcut to the kind of values for an image with type \c I.
-# define mln_value_kind(I) typename mln::value::props< mln_value(I) >::kind
-
 /// Shortcut to test if the values of an image with type \c I are lowly quantifized.
 # define mln_is_value_lowq(I)  mln_is_lowq( mln_value(I) )
 

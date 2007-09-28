@@ -60,7 +60,7 @@ namespace mln
     {
 
       template <typename I, typename J, typename O>
-      void minus_(value::binary_kind, // binary => morphology on sets
+      void minus_(trait::kind::logic, // binary => morphology on sets
 		  const Image<I>& lhs, const Image<J>& rhs,
 		  Image<O>& output)
       {
@@ -85,7 +85,7 @@ namespace mln
     {
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
-      impl::minus_(mln_value_kind(I)(), exact(lhs), exact(rhs), output);
+      impl::minus_(mln_value_kind(mln_value(I))(), exact(lhs), exact(rhs), output);
     }
 
     template <typename I, typename J>

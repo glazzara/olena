@@ -53,23 +53,23 @@ namespace mln
       struct translation : public Function_x2x< translation<n,C> >
       {
 
-	  enum {dim = n};
+	enum {dim = n};
 
-	  typedef metal::vec<n,C> result;
-	  typedef translation<n,C> invert;
+	typedef metal::vec<n,C> result;
+	typedef translation<n,C> invert;
 
-	  translation();
-	  translation(const metal::vec<n,C>& t);
+	translation();
+	translation(const metal::vec<n,C>& t);
 
-	  result operator()(const metal::vec<n,C>& v) const;
-	  invert inv() const;
+	result operator()(const metal::vec<n,C>& v) const;
+	invert inv() const;
 
-	  void set_t(const metal::vec<n,C>& t);
+	void set_t(const metal::vec<n,C>& t);
 
-	protected:
+      protected:
 
-	  metal::vec<n,C> t_;
-	  metal::mat<n + 1,n + 1,C> m_;
+	metal::vec<n,C> t_;
+	metal::mat<n + 1,n + 1,C> m_;
       };
 
 

@@ -105,7 +105,7 @@ namespace mln
       static const int_s<n> max() { return metal::pow<2, n-1>::value - 1; }
       static const int_s<n> min() { return - max(); }
       static const unsigned nbits = n;
-      typedef data_kind kind;
+      typedef trait::kind::data kind;
       typedef float sum;
     };
 

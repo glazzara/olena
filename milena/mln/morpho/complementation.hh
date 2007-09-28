@@ -61,7 +61,7 @@ namespace mln
     {
 
       template <typename I, typename O>
-      void complementation_(value::binary_kind, // binary => morphology on sets
+      void complementation_(trait::kind::logic, // binary => morphology on sets
 			    const Image<I>& input,
 			    Image<O>& output)
       {
@@ -85,7 +85,7 @@ namespace mln
     void complementation(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::complementation_(mln_value_kind(I)(), exact(input), output);
+      impl::complementation_(mln_value_kind(mln_value(I))(), exact(input), output);
     }
 
     template <typename I>

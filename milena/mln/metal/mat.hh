@@ -75,15 +75,41 @@ namespace mln
       T data_[n][m];
     };
 
+  }
+
+
+  namespace trait
+  {
+    
+    template <typename L, typename R>
+    struct mult;
+
+
+    template <unsigned n, unsigned o, typename T,
+	      unsigned m, typename U>
+    struct mult< metal::mat<n,o,T>, metal::mat<o,m,U> >
+    {
+      typedef metal::mat< n, m, mlc_bin_arith(T,U) > ret;
+    };
+
+    template <unsigned n, unsigned m, typename T,
+	      typename U>
+    struct mult< metal::mat<n,m,T>, U >
+    {
+      typedef metal::mat< n, m, mlc_bin_arith(T,U) > ret;
+    };
+
+  }
+
+
+  namespace metal
+  {
+
     // eq
 
     template <unsigned n, unsigned m, typename T, typename U>
     bool
     operator==(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    bool
-    operator!=(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
 
     // +
 
@@ -103,39 +129,45 @@ namespace mln
 
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n,m,mlc_bin_arith(T,U)>
-    operator-(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
+    operator-(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
 
     template <unsigned n, unsigned m, typename T>
     mat<n,m,T>
     operator-(const mat<n,m,T>& lhs);
 
-    // *
+    // Operator *.
+
+    template <unsigned n, unsigned o, typename T,
+	      unsigned m, typename U>
+    mat<n,m,mlc_bin_arith(T,U)>
+    operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs);
+
+    template <unsigned n, unsigned m, typename T,
+	      typename U>
+    mat<n,m,mlc_bin_arith(T,U)>
+    operator*(const mat<n,m,T>& lhs, const U& rhs);
+
+    // *=
 
     template <unsigned n, unsigned m, unsigned o, typename T, typename U>
     mat<n,m,T>&
-    operator*=(mat<n,o,T>& lhs, mat<o,m,U>& rhs);
-
-    template <unsigned n, unsigned m, unsigned o, typename T, typename U>
-    mat<n,m,mlc_bin_arith(T,U)>
-    operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs);
+    operator*=(mat<n,o,T>& lhs, const mat<o,m,U>& rhs);
 
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n,m,T>&
     operator*=(mat<n,m,T>& lhs, const U& rhs);
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,mlc_bin_arith(T,U)>
-    operator*(const U& scalar, mat<n,m,T>& lhs);
     
-    // /
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,T>
-    operator/=(mat<n,m,T>& lhs, const U& scalar);
+    // Operator /.
 
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n,m,mlc_bin_arith(T,U)>
-    operator/(mat<n,m,T>& lhs, const U& scalar);
+    operator/(const mat<n,m,T>& lhs, const U& scalar);
+
+    // /=
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    mat<n,m,T>&
+    operator/=(mat<n,m,T>& lhs, const U& scalar);
 
     // <<
     
@@ -218,6 +250,7 @@ namespace mln
       return n * m;
     }
     
+
     // eq
 
     template <unsigned n, unsigned m, typename T, typename U>
@@ -231,14 +264,7 @@ namespace mln
       return true;
     }
 
-    template <unsigned n, unsigned m, typename T, typename U>
-    bool
-    operator!=(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
-    {
-      return not (lhs == rhs);
-    }
-
-    // +
+    // +=
 
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n,m,T>&
@@ -249,9 +275,12 @@ namespace mln
 	  lhs(i, j) += rhs(i, j);
       return lhs;
     }
+
+    // Operator +.
+
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n,m,mlc_bin_arith(T,U)>
-    operator+(mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
+    operator+(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
     {
       mat<n,m,mlc_bin_arith(T,U)> tmp;
       for (unsigned i = 0; i < n; ++i)
@@ -260,7 +289,7 @@ namespace mln
       return tmp;
     }
 
-    // -
+    // -=
 
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n,m,T>&
@@ -271,9 +300,12 @@ namespace mln
 	  lhs(i, j) -= rhs(i, j);
       return lhs;
     }
+
+    // Operators -.
+
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n,m,mlc_bin_arith(T,U)>
-    operator-(mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
+    operator-(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
     {
       mat<n,m,mlc_bin_arith(T,U)> tmp;
       for (unsigned i = 0; i < n; ++i)
@@ -284,12 +316,12 @@ namespace mln
 
     template <unsigned n, unsigned m, typename T>
     mat<n,m,T>
-    operator-(const mat<n,m,T>& lhs)
+    operator-(const mat<n,m,T>& rhs)
     {
       mat<n,m,T> tmp;
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; i < m; ++i)
-	  tmp(i, j) = - lhs(i, j);
+	  tmp(i, j) = - rhs(i, j);
       return tmp;
     }
 
@@ -297,9 +329,9 @@ namespace mln
 
     template <unsigned n, unsigned m, unsigned o, typename T, typename U>
     mat<n,m,T>&
-    operator*=(mat<n,o,T>& lhs, mat<o,m,U>& rhs)
+    operator*=(mat<n,o,T>& lhs, const mat<o,m,U>& rhs)
     {
-      lhs = lhs * rhs;
+      lhs = lhs * rhs; // FIXME: OK?
       return lhs;
     }
 
@@ -315,50 +347,38 @@ namespace mln
 
     // Operators *.
 
-    namespace internal
+    template <unsigned n, unsigned o, typename T,
+	      unsigned m, typename U>
+    mat<n,m,mlc_bin_arith(T,U)>
+    operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs)
     {
-
-      template <unsigned n, unsigned m, unsigned o, typename T, typename U>
-      mat<n,m,mlc_bin_arith(T,U)>
-      multiply_(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs)
-      {
-	mat<n,m,mlc_bin_arith(T,U)> tmp;
-	for (unsigned i = 0; i < n; ++i)
-	  for (unsigned j = 0; j < m; ++j)
-	    {
-	      tmp(i, j) = 0;
-	      for (unsigned k = 0; k < o; ++k)
-		tmp(i, j) += lhs(i, k) * rhs(k, j);
-	    }
-	return tmp;
-      }
-
-      template <unsigned n, unsigned m, typename T,
-		typename U>
-      mat<n,m,mlc_bin_arith(T,U)>
-      multiply_(mat<n,m,T>& lhs, const U& rhs)
-      {
-	mat<n,m,mlc_bin_arith(T,U)> tmp;
-	for (unsigned i = 0; i < n; ++i)
-	  for (unsigned j = 0; j < m; ++j)
-	    tmp(i, j) = lhs(i, j) * rhs;
-	return tmp;
-      }
-
-    } // end of namespace mln::metal::internal
+      mat<n,m,mlc_bin_arith(T,U)> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	for (unsigned j = 0; j < m; ++j)
+	  {
+	    tmp(i, j) = 0;
+	    for (unsigned k = 0; k < o; ++k)
+	      tmp(i, j) += lhs(i, k) * rhs(k, j);
+	  }
+      return tmp;
+    }
 
     template <unsigned n, unsigned m, typename T,
 	      typename U>
     mat<n,m,mlc_bin_arith(T,U)>
-    operator*(mat<n,m,T>& lhs, const U& rhs)
+    operator*(const mat<n,m,T>& lhs, const U& rhs)
     {
-      return internal::multiply_(lhs, rhs);
+      mat<n,m,mlc_bin_arith(T,U)> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	for (unsigned j = 0; j < m; ++j)
+	  tmp(i, j) = lhs(i, j) * rhs;
+      return tmp;
     }
 
     // /
 
     template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,T>
+    mat<n,m,T>&
     operator/=(mat<n,m,T>& lhs, const U& scalar)
     {
       for (unsigned i = 0; i < n; ++i)
@@ -367,9 +387,11 @@ namespace mln
       return lhs;
     }
 
+    // Operator /.
+
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n,m,mlc_bin_arith(T,U)>
-    operator/(mat<n,m,T>& lhs, const U& scalar)
+    operator/(const mat<n,m,T>& lhs, const U& scalar)
     {
       mat<n,m,mlc_bin_arith(T,U)> tmp;
       for (unsigned i = 0; i < n; ++i)
