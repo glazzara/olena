@@ -1,5 +1,11 @@
 2007-09-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add mesh.hh in mln/draw.
+
+	* mesh.hh: Draw a mesh_image into an image.
+
+2007-09-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add mesh_image in mln/core.
 
 	* mesh_image.hh: New class of image.
