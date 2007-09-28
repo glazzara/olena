@@ -96,6 +96,7 @@ namespace mln
       translation<n,C>::operator()(const metal::vec<n,C>& v) const
       {
 	typename translation::result res;
+	// FIXME: Why not "res = v + t_;"?
 	for (unsigned i = 0; i < n; ++i)
 	  res[i] = v[i] + t_[i];
 	return res;

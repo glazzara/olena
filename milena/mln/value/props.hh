@@ -236,7 +236,7 @@ namespace mln
 	static const metal::vec<n,T> max() { return make::vec<n>(mln_max(T)); }
 	typedef data_kind kind;
 	static const std::size_t card_ = n * mln_card_(T);
-	typedef binary_arith_trait<float,T> sum;
+	typedef mlc_bin_arith(float,T) sum;
     };
 
     template <unsigned n, unsigned m, typename T>
@@ -246,7 +246,7 @@ namespace mln
 	static const metal::mat<n,m,T> max() { return make::mat<n,m>(mln_max(T)); }
 	typedef data_kind kind;
 	static const std::size_t card_ = n * m * mln_card_(T);
-	typedef binary_arith_trait<float,T> sum;
+	typedef mlc_bin_arith(float,T) sum;
     };
 
   } // end of namespace mln::value

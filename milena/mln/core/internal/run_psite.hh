@@ -61,16 +61,22 @@ namespace mln
       run_psite(P point, unsigned index, unsigned pset_pos);
 
       operator P () const;
+
       /// Return the point at the start of the current run.
       P& range_start_();
+
       /// Return the point at the start of the current run.
       const P& range_start_() const;
+
       /// Return the position of this psite in the point set.
       unsigned pset_pos_() const;
+
       /// Return the position of this psite in the point set.
       unsigned& pset_pos_();
+
       /// Return the position of this psite in the current range.
       unsigned index_() const;
+
       /// Return the position of this psite in the current range.
       unsigned& index_();
 
@@ -78,10 +84,13 @@ namespace mln
       mln_coord(P) operator[](unsigned i) const;
 
     protected:
+
       /// Start of the psite range.
       P point_;
+
       /// Position in the psite range.
       unsigned range_index_;
+
       /// Position of the psite in the point set.
       unsigned pset_position_;
     };

@@ -34,6 +34,7 @@
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/exact.hh>
+# include <mln/metal/binary_arith_trait.hh>
 
 
 namespace mln
@@ -91,6 +92,16 @@ namespace mln
    */
   template <typename O1, typename O2>
   bool operator<=(const Object<O1>& lhs, const Object<O2>& rhs);
+
+
+  // FIXME: Doc!
+  template <typename O>
+  mlc_bin_arith(int, O)
+  operator*(int lhs, const Object<O>& rhs)
+  {
+    return exact(rhs) * lhs;
+  }
+
 
 
 # ifndef MLN_INCLUDE_ONLY

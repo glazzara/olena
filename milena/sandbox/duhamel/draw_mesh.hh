@@ -226,14 +226,14 @@ namespace mln
     {
       level::fill(ima, 0);
 
-      for (unsigned i = 0; i < mesh.data_mesh ().gr_.nb_link_; ++i)
+      for (unsigned i = 0; i < mesh.domain().gr_.nb_link_; ++i)
 	line (exact(ima),
-	      mesh.data_mesh ().loc_[mesh.data_mesh ().gr_.links_[i]->node1],
-	      mesh.data_mesh ().loc_[mesh.data_mesh ().gr_.links_[i]->node2],
+	      mesh.domain().loc_[mesh.domain().gr_.links_[i]->node1],
+	      mesh.domain().loc_[mesh.domain().gr_.links_[i]->node2],
 	      1);
 
-      for (unsigned i = 0; i < mesh.data_mesh ().gr_.nb_node_; ++i)
- 	exact(ima)(mesh.data_mesh ().loc_[i]) = mesh.data_values ()[i];
+      for (unsigned i = 0; i < mesh.domain().gr_.nb_node_; ++i)
+ 	exact(ima)(mesh.domain().loc_[i]) = mesh.data_values ()[i];
     }
     
    } // end of draw

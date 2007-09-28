@@ -1,3 +1,24 @@
+2007-09-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fixes.
+
+	* mln/trait/images.hh: New.
+	* mln/fun/x2x/translation.hh: Add a FIXME.
+	* mln/core/point.hh: Fix missing include.
+	* mln/core/internal/run_psite.hh: Typo.
+	* mln/core/ops.hh (operator*): New overload.
+	* mln/metal/mat.hh: Add inheritance.
+	(multiply_): New.
+	* mln/metal/binary_arith_trait.hh: Fix missing namespaces.
+	(mlc_bin_arith): New macro.
+	* mln/level/approx/median.hh: Add timer.
+	* mln/value/props.hh: Update.
+	* sandbox/duhamel/main_mesh_image.cc,
+	* sandbox/duhamel/mesh_image.hh,
+	* sandbox/duhamel/mesh_psite.hh,
+	* sandbox/duhamel/draw_mesh.hh,
+	* sandbox/duhamel/mesh_p.hh: Fix and update.
+
 2007-09-28  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix for compiling.

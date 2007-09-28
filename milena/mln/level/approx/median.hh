@@ -42,6 +42,8 @@
 # include <mln/core/win/diag2d.hh>
 # include <mln/core/win/backdiag2d.hh>
 
+#include <time.h>
+
 namespace mln
 {
 
@@ -114,13 +116,28 @@ namespace mln
 	  O
 	    tmp1(output.domain()),
 	    tmp2(output.domain());
+	  {
+	    clock_t c = clock();
+	    level::median(input, win::diag2d(len),  tmp1);
+	    std::cout << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
+	  }
+	  {
+	    clock_t c = clock();
+	    level::median(tmp1, win::backdiag2d(len),  tmp2);
+	    std::cout << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
+	  }
+	  {
+	    clock_t c = clock();
+	    level::median(tmp2, win::hline2d(len),  tmp1);
+	    std::cout << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
+	  }
+	  {
+	    clock_t c = clock();
+	    level::median(tmp1, win::vline2d(len),  output);
+	    std::cout << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
+	  }
 
-	  level::median(input, win::hline2d(len),  tmp1);
-	  level::median(tmp1, win::vline2d(len),  tmp2);
-	  level::median(tmp2, win::diag2d(len),  tmp1);
-	  level::median(tmp1, win::backdiag2d(len),  output);
-
-      }
+	}
 
       } // end of namespace mln::level::approx::impl
 

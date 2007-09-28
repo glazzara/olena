@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,59 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_METAL_BINARY_ARITH_TRAIT_HH
-# define MLN_METAL_BINARY_ARITH_TRAIT_HH
+#ifndef MLN_TRAIT_IMAGES_HH
+# define MLN_TRAIT_IMAGES_HH
 
-
-# define mlc_bin_arith(T, U) typename mln::metal::binary_arith_trait< T , U >::ret
-
+/*! \file mln/core/trait/images.hh
+ *
+ * \brief Forward declarations of all image types.
+ */
 
 
 namespace mln
 {
 
-  namespace metal
-  {
+  // Primitive types.
+  template <typename T> struct image1d_b;
+  template <typename T> struct image2d_b;
+  template <typename T> struct image3d_b;
+  namespace pw { template <typename F, typename S> struct image; }
+  template <typename P, typename T> class rle_image;
+  template <typename P, typename T> class sparse_image;
 
-    template <typename T, typename U>
-    struct binary_arith_trait;
-
-
-    template <>
-    struct binary_arith_trait<int, float>
-    {
-      typedef float ret;
-    };
-    template <>
-    struct binary_arith_trait<float, int>
-    {
-      typedef float ret;
-    };
-
-    template <>
-    struct binary_arith_trait<int, double>
-    {
-      typedef double ret;
-    };
-    template <>
-    struct binary_arith_trait<double, int>
-    {
-      typedef double ret;
-    };
-
-    template <>
-    struct binary_arith_trait<double, float>
-    {
-      typedef double ret;
-    };
-    template <>
-    struct binary_arith_trait<float, double>
-    {
-      typedef double ret;
-    };
-
-  } // end of namespace mln::metal
+  // Morphers.
+  template <typename I, typename F> struct image_if;
+  template <typename I, typename D> class decorated_image;
+  template <typename I, typename S> class sub_image;
+  template <typename I> struct t_image;
+  template <typename I> class safe_image;
+  template <typename T, typename I> class cast_image_;
+  namespace value { template <unsigned n, typename I> struct stack_image; }
 
 } // end of namespace mln
 
-#endif // ! MLN_METAL_BINARY_ARITH_TRAIT_HH
+
+#endif // ! MLN_TRAIT_IMAGES_HH

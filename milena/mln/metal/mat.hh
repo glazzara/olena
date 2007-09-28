@@ -30,6 +30,7 @@
 
 # include <iostream>
 
+# include <mln/core/concept/object.hh>
 # include <mln/core/contract.hh>
 # include <mln/metal/binary_arith_trait.hh>
 
@@ -42,36 +43,36 @@ namespace mln
   {
 
     template <unsigned n, unsigned m, typename T>
-    class mat
+    class mat : public Object< mat<n,m,T> >
     {
-      public:
+    public:
 
-	typedef T value_type;
-	enum {N = n, M = m};
-	static const mat<n,m,T> Id;
+      typedef T value_type;
+      enum {N = n, M = m};
+      static const mat<n,m,T> Id;
 
-	mat()
-	{
-	}
+      mat()
+      {
+      }
 
-	template <typename U>
-	mat(const mat<n,m,U>& rhs);
+      template <typename U>
+      mat(const mat<n,m,U>& rhs);
 
-	template <typename U>
-	mat& operator=(const mat<n,m,U>& rhs);
+      template <typename U>
+      mat& operator=(const mat<n,m,U>& rhs);
 
-	const T& operator()(unsigned i, unsigned j) const;
+      const T& operator()(unsigned i, unsigned j) const;
 
-	T& operator()(unsigned i, unsigned j);
+      T& operator()(unsigned i, unsigned j);
 
-	void set_all(const T& val);
+      void set_all(const T& val);
 
-	unsigned size() const;
+      unsigned size() const;
 
-	static mat identity();
+      static mat identity();
 
-      private:
-	T data_[n][m];
+    private:
+      T data_[n][m];
     };
 
     // eq
@@ -91,7 +92,7 @@ namespace mln
     operator+=(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
 
     template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    mat<n,m,mlc_bin_arith(T,U)>
     operator+(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
 
     // -
@@ -101,7 +102,7 @@ namespace mln
     operator-=(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
 
     template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    mat<n,m,mlc_bin_arith(T,U)>
     operator-(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
 
     template <unsigned n, unsigned m, typename T>
@@ -115,15 +116,15 @@ namespace mln
     operator*=(mat<n,o,T>& lhs, mat<o,m,U>& rhs);
 
     template <unsigned n, unsigned m, unsigned o, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    mat<n,m,mlc_bin_arith(T,U)>
     operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs);
 
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n,m,T>&
-    operator*=(mat<n,m,T>& lhs, const U& scalar);
+    operator*=(mat<n,m,T>& lhs, const U& rhs);
 
     template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    mat<n,m,mlc_bin_arith(T,U)>
     operator*(const U& scalar, mat<n,m,T>& lhs);
     
     // /
@@ -133,7 +134,7 @@ namespace mln
     operator/=(mat<n,m,T>& lhs, const U& scalar);
 
     template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    mat<n,m,mlc_bin_arith(T,U)>
     operator/(mat<n,m,T>& lhs, const U& scalar);
 
     // <<
@@ -249,10 +250,10 @@ namespace mln
       return lhs;
     }
     template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    mat<n,m,mlc_bin_arith(T,U)>
     operator+(mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
     {
-      mat<n,m,typename binary_arith_trait<T,U>::ret> tmp;
+      mat<n,m,mlc_bin_arith(T,U)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; j < m; ++j)
 	  tmp[i][j] = lhs(i, j) + rhs(i, j);
@@ -271,10 +272,10 @@ namespace mln
       return lhs;
     }
     template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    mat<n,m,mlc_bin_arith(T,U)>
     operator-(mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
     {
-      mat<n,m,typename binary_arith_trait<T,U>::ret> tmp;
+      mat<n,m,mlc_bin_arith(T,U)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; j < m; ++j)
 	  tmp(i, j) = lhs(i, j) - rhs(i, j);
@@ -292,7 +293,7 @@ namespace mln
       return tmp;
     }
 
-    // *
+    // *=
 
     template <unsigned n, unsigned m, unsigned o, typename T, typename U>
     mat<n,m,T>&
@@ -300,20 +301,6 @@ namespace mln
     {
       lhs = lhs * rhs;
       return lhs;
-    }
-    template <unsigned n, unsigned m, unsigned o, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
-    operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs)
-    {
-      mat<n,m,typename binary_arith_trait<T,U>::ret> tmp;
-      for (unsigned i = 0; i < n; ++i)
-	for (unsigned j = 0; j < m; ++j)
-	{
-	  tmp(i, j) = 0;
-	  for (unsigned k = 0; k < o; ++k)
-	    tmp(i, j) += lhs(i, k) * rhs(k, j);
-	}
-      return tmp;
     }
 
     template <unsigned n, unsigned m, typename T, typename U>
@@ -325,15 +312,47 @@ namespace mln
 	  lhs(i, j) *= scalar;
       return lhs;
     }
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
-    operator*(const U& scalar, mat<n,m,T>& lhs)
+
+    // Operators *.
+
+    namespace internal
     {
-      mat<n,m,typename binary_arith_trait<T,U>::ret> tmp;
-      for (unsigned i = 0; i < n; ++i)
-	for (unsigned j = 0; j < m; ++j)
-	  tmp(i, j) = scalar * lhs(i, j);
-      return tmp;
+
+      template <unsigned n, unsigned m, unsigned o, typename T, typename U>
+      mat<n,m,mlc_bin_arith(T,U)>
+      multiply_(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs)
+      {
+	mat<n,m,mlc_bin_arith(T,U)> tmp;
+	for (unsigned i = 0; i < n; ++i)
+	  for (unsigned j = 0; j < m; ++j)
+	    {
+	      tmp(i, j) = 0;
+	      for (unsigned k = 0; k < o; ++k)
+		tmp(i, j) += lhs(i, k) * rhs(k, j);
+	    }
+	return tmp;
+      }
+
+      template <unsigned n, unsigned m, typename T,
+		typename U>
+      mat<n,m,mlc_bin_arith(T,U)>
+      multiply_(mat<n,m,T>& lhs, const U& rhs)
+      {
+	mat<n,m,mlc_bin_arith(T,U)> tmp;
+	for (unsigned i = 0; i < n; ++i)
+	  for (unsigned j = 0; j < m; ++j)
+	    tmp(i, j) = lhs(i, j) * rhs;
+	return tmp;
+      }
+
+    } // end of namespace mln::metal::internal
+
+    template <unsigned n, unsigned m, typename T,
+	      typename U>
+    mat<n,m,mlc_bin_arith(T,U)>
+    operator*(mat<n,m,T>& lhs, const U& rhs)
+    {
+      return internal::multiply_(lhs, rhs);
     }
 
     // /
@@ -347,11 +366,12 @@ namespace mln
 	  lhs(i, j) /= scalar;
       return lhs;
     }
+
     template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,typename binary_arith_trait<T,U>::ret>
+    mat<n,m,mlc_bin_arith(T,U)>
     operator/(mat<n,m,T>& lhs, const U& scalar)
     {
-      mat<n,m,typename binary_arith_trait<T,U>::ret> tmp;
+      mat<n,m,mlc_bin_arith(T,U)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; j < m; ++j)
 	  tmp[i][j] = lhs(i, j) / scalar;
@@ -365,12 +385,12 @@ namespace mln
     operator<<(std::ostream& ostr, const mat<n,m,T>& v)
     {
       for (unsigned i = 0; i < n; ++i)
-      {
-	ostr << '(';
-	for (unsigned j = 0; j < m; ++j)
-	  ostr << v(i, j) << (j == m - 1 ? ")" : ", ");
-	ostr << std::endl;
-      }
+	{
+	  ostr << '(';
+	  for (unsigned j = 0; j < m; ++j)
+	    ostr << v(i, j) << (j == m - 1 ? ")" : ", ");
+	  ostr << std::endl;
+	}
       return ostr;
     }
     
@@ -379,12 +399,12 @@ namespace mln
     operator<<(std::ostream& ostr, const mat<n,m,unsigned char>& v)
     {
       for (unsigned i = 0; i < n; ++i)
-      {
-	ostr << '(';
-	for (unsigned j = 0; j < m; ++j)
-	  ostr << (unsigned int)(v[i][j]) << (j == m - 1 ? ")" : ", ");
-	ostr << std::endl;
-      }
+	{
+	  ostr << '(';
+	  for (unsigned j = 0; j < m; ++j)
+	    ostr << (unsigned int)(v[i][j]) << (j == m - 1 ? ")" : ", ");
+	  ostr << std::endl;
+	}
       return ostr;
     }
     
@@ -393,12 +413,12 @@ namespace mln
     operator<<(std::ostream& ostr, const mat<n,m,signed char>& v)
     {
       for (unsigned i = 0; i < n; ++i)
-      {
-	ostr << '(';
-	for (unsigned j = 0; j < m; ++j)
-	  ostr << (signed int)(v[i][j]) << (j == m - 1 ? ")" : ", ");
-	ostr << std::endl;
-      }
+	{
+	  ostr << '(';
+	  for (unsigned j = 0; j < m; ++j)
+	    ostr << (signed int)(v[i][j]) << (j == m - 1 ? ")" : ", ");
+	  ostr << std::endl;
+	}
       return ostr;
     }
 

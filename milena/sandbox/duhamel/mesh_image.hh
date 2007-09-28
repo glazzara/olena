@@ -67,13 +67,10 @@ namespace mln
    *
    */
   template <typename P, typename V>
-  struct mesh_image  : public internal::image_primary_< box2d, mesh_image<P, V> >
+  struct mesh_image  : public internal::image_primary_< mesh_p<P>, mesh_image<P, V> >
   {
 
-    typedef mln::internal::image_base_< box2d, mesh_image<P, V> > super_;
-
-    /// Point_Site associated type.
-    typedef P psite;
+    typedef mln::internal::image_base_< mesh_p<P>, mesh_image<P, V> > super_;
 
     /// Value associated type.
     typedef V value;
@@ -82,7 +79,7 @@ namespace mln
     typedef V& lvalue;
 
     /// Return type of read-only access.
-    typedef V rvalue;
+    typedef const V& rvalue;
 
     /// Value set associated type.
     typedef mln::value::set<value> vset;
@@ -95,33 +92,18 @@ namespace mln
     mesh_image(mesh_p<P>& mesh, std::vector<V>& val);
     mesh_image();
 
-
-    /// Test if this image has been initialized.
-    bool has_data() const;
-
-    const box2d& domain() const;
-
-    /// Test if a pixel value is accessible at \p p
-    using super_::owns_;
-
-    /// Test if a pixel value is accessible at \p v.
-    bool owns_(const mln::metal::vec<P::dim, float>& v) const;
-
     /// Read-only access of pixel value at point site \p p.
-    rvalue operator()(const P& p) const;
+    const V& operator()(const mesh_psite<P>& p) const;
     
     /// Read-write access of pixel value at point site \p p.
-    lvalue operator()(const P& p);
-
-
-    V& operator()(const mln::metal::vec<P::dim, float>& v) const;
+    V& operator()(const mesh_psite<P>& p);
 
     /// Give the set of values of the image.
     const vset& values() const;
 
     const std::vector<V>& data_values () const;
 
-    const mesh_p<P>& data_mesh () const;
+    const mesh_p<P>& domain() const;
 };
 
 
@@ -145,7 +127,6 @@ namespace mln
   template <typename P, typename V>
   mesh_image<P, V>::mesh_image(mesh_p<P>& mesh, std::vector<V>& val)
   {
-    //    mln_precondition(ima.has_data());
     this->data_ = new internal::data_< mesh_image<P, V> > (mesh, val);
   }
 
@@ -155,62 +136,25 @@ namespace mln
   }
 
   template <typename P, typename V>
-  bool mesh_image<P, V>::has_data() const
+  const V&
+  mesh_image<P, V>::operator()(const mesh_psite<P>& p) const
   {
-    mln_invariant(this->data_->val_.size() != 0);
-    return true;
-  }
-
-  template <typename P, typename V>
-  const box2d&
-  mesh_image<P, V>::domain() const
-  {
-    mln_precondition(this->has_data());
-    return this->data_->b_;
-  }
-
-  template <typename P, typename V>
-  bool mesh_image<P, V>::owns_(const mln::metal::vec<P::dim, float>& v) const
-  {
-    for (unsigned i = 0; i < this->data_->val_.size(); ++i)
-      if (this->data_->mesh_.loc_[i] == v)
-	return true;
-    return false;
-  }
-
-  template <typename P, typename V>
-  V&
-  mesh_image<P, V>::operator()(const mln::metal::vec<P::dim, float>& v) const
-  {
-    // FIXME
-    unsigned i = 0;
+    mln_precondition(p.m_ptr_ == & this->data_->mesh_);
+    mln_precondition(p.i_ < this->data_->val_.size());
 //     for (i = 0; i < this->data_->val_.size(); ++i)
 //       if (this->data_->mesh_.loc_[i] == v)
 // 	break;
 //     mln_invariant(i == this->data_->val_.size());
-    return this->data_->val_[i];
-  }
-
-  template <typename P, typename V>
-  typename mesh_image<P, V>::rvalue
-  mesh_image<P, V>::operator()(const P& ) const
-  {
-    // FIXME
-    unsigned i = 0;
-//     for (i = 0; i < this->data_->val_.size(); ++i)
-//       if (this->data_->mesh_.loc_[i] == v)
-// 	break;
-//     mln_invariant(i == this->data_->val_.size());
-    return this->data_->val_[i];
+    return this->data_->val_[p.i_];
   }
     
   template <typename P, typename V>
-  typename mesh_image<P, V>::lvalue
-  mesh_image<P, V>::operator()(const P& )
+  V&
+  mesh_image<P, V>::operator()(const mesh_psite<P>& p)
   {
-    // FIXME
-    unsigned i = 0;
-    return this->data_->val_[i];
+    mln_precondition(p.m_ptr_ == & this->data_->mesh_);
+    mln_precondition(p.i_ < this->data_->val_.size());
+    return this->data_->val_[p.i_];
   }
 
 
@@ -232,8 +176,9 @@ namespace mln
 
   template <typename P, typename V>
   const mesh_p<P>&
-  mesh_image<P, V>::data_mesh () const
+  mesh_image<P, V>::domain() const
   {
+    mln_precondition(this->has_data());
     return this->data_->mesh_;
   }
 
