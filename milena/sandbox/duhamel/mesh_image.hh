@@ -197,6 +197,10 @@ namespace mln
   {
     // FIXME
     unsigned i = 0;
+//     for (i = 0; i < this->data_->val_.size(); ++i)
+//       if (this->data_->mesh_.loc_[i] == v)
+// 	break;
+//     mln_invariant(i == this->data_->val_.size());
     return this->data_->val_[i];
   }
     

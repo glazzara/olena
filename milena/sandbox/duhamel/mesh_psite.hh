@@ -10,15 +10,16 @@ namespace mln
   {
   public:
     mesh_psite () {}
-    mesh_psite (unsigned i, mesh_p<P>* m_ptr) :
-    i_ (i),
-    m_ptr_ (m_ptr)
+    mesh_psite (unsigned i// , mesh_p<P> * m_ptr
+		) :
+    i_ (i)// ,
+//     m_ptr_ (m_ptr)
     {}
     ~mesh_psite()	{}
-    P to_point ()	{return m_ptr_->loc_[i_];}
+    //    P to_point ()	{return m_ptr_->loc_[i_];}
   private:
     unsigned		i_;
-    mesh_p<P>*		m_ptr_;
+    //    mesh_p<P>*		m_ptr_;
   };
 } // end of mln
 #endif // MLN_MESH_PSITE_HH

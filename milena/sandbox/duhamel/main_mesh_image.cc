@@ -45,8 +45,6 @@ main (void)
 
   mesh_p<point2d>		m(g, v);
 
-  draw::mesh (ima, m, 7, 1);
-
   std::vector<int> val;
 
   val.push_back (2);
@@ -56,9 +54,8 @@ main (void)
   val.push_back (6);
   val.push_back (7);
 
-  mesh_image<point2d, int>	im (m, val);
-
-  draw::mesh (ima, im);
+  mesh_image<point2d, int>	m_ima (m, val);
+  draw::mesh (ima, m_ima);
 
   debug::println (ima);
 }
