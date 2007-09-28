@@ -1,3 +1,11 @@
+2007-09-28  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add traits for multiply and promotions.
+
+	* mln/core/ops.hh: A + B -> B + A, Idem for *.
+	* mln/core/trait/mult.hh: New.
+	* mln/core/trait/promote.hh: New.
+
 2007-09-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add mesh.hh in mln/draw.

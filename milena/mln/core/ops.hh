@@ -94,6 +94,34 @@ namespace mln
   bool operator<=(const Object<O1>& lhs, const Object<O2>& rhs);
 
 
+  // Operator +.
+
+  // FIXME: Doc!
+  template <typename O>
+  mlc_bin_arith(int, O)
+  operator+(int lhs, const Object<O>& rhs)
+  {
+    return exact(rhs) + lhs;
+  }
+
+  // FIXME: Doc!
+  template <typename O>
+  mlc_bin_arith(float, O)
+  operator+(float lhs, const Object<O>& rhs)
+  {
+    return exact(rhs) + lhs;
+  }
+
+  // FIXME: Doc!
+  template <typename O>
+  mlc_bin_arith(double, O)
+  operator+(double lhs, const Object<O>& rhs)
+  {
+    return exact(rhs) + lhs;
+  }
+
+  // Operator *.
+
   // FIXME: Doc!
   template <typename O>
   mlc_bin_arith(int, O)
@@ -102,6 +130,21 @@ namespace mln
     return exact(rhs) * lhs;
   }
 
+  // FIXME: Doc!
+  template <typename O>
+  mlc_bin_arith(float, O)
+  operator*(float lhs, const Object<O>& rhs)
+  {
+    return exact(rhs) * lhs;
+  }
+
+  // FIXME: Doc!
+  template <typename O>
+  mlc_bin_arith(double, O)
+  operator*(double lhs, const Object<O>& rhs)
+  {
+    return exact(rhs) * lhs;
+  }
 
 
 # ifndef MLN_INCLUDE_ONLY
