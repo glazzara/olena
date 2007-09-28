@@ -98,7 +98,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // impl::init_
+  // init_
 
   template <typename I, typename S, typename J>
   void init_(tag::image_t, sub_image<I,S>& target, const J& model)

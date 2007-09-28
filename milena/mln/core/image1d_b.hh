@@ -196,42 +196,27 @@ namespace mln
     T* buffer();
   };
 
-
-  namespace impl
-  {
-
-    template <typename T, typename J>
-    void init_(tag::image_t, mln::image1d_b<T>& target, const J& model);
-
-  } // end of namespace mln::impl
-
-
+  template <typename T, typename J>
+  void init_(tag::image_t, mln::image1d_b<T>& target, const J& model);
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // impl::init_
-
-  namespace impl
+  // init_
+  template <typename T>
+  void init_(tag::border_t, unsigned& b, const image1d_b<T>& model)
   {
+    b = model.border();
+  }
 
-    template <typename T>
-    void init_(tag::border_t, unsigned& b, const image1d_b<T>& model)
-    {
-      b = model.border();
-    }
-
-    template <typename T, typename J>
-    void init_(tag::image_t, image1d_b<T>& target, const J& model)
-    {
-      box1d b;
-      init_(tag::bbox, b, model);
-      unsigned bdr;
-      init_(tag::border, bdr, model);
-      target.init_(b, bdr);
-    }
-
-  } // end of namespace mln::impl
-
+  template <typename T, typename J>
+  void init_(tag::image_t, image1d_b<T>& target, const J& model)
+  {
+    box1d b;
+    init_(tag::bbox, b, model);
+    unsigned bdr;
+    init_(tag::border, bdr, model);
+    target.init_(b, bdr);
+  }
 
   // internal::data_< image1d_b<T> >
 
@@ -279,10 +264,10 @@ namespace mln
     data_< image1d_b<T> >::deallocate_()
     {
       if (buffer_)
-	{
-	  delete[] buffer_;
-	  buffer_ = 0;
-	}
+      {
+	delete[] buffer_;
+	buffer_ = 0;
+      }
     }
 
   } // end of namespace mln::internal

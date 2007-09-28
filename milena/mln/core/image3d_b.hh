@@ -202,41 +202,30 @@ namespace mln
     using super_::data_;
   };
 
-
-  namespace impl
-  {
-
-    template <typename T, typename J>
-    void init_(tag::image_t, mln::image3d_b<T>& target, const J& model);
-
-  } // end of namespace mln::impl
+  template <typename T, typename J>
+  void init_(tag::image_t, mln::image3d_b<T>& target, const J& model);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // impl::init_
+  // init_
 
-  namespace impl
+  template <typename T>
+  void init_(tag::border_t, unsigned& b, const image3d_b<T>& model)
   {
+    b = model.border();
+  }
 
-    template <typename T>
-    void init_(tag::border_t, unsigned& b, const image3d_b<T>& model)
-    {
-      b = model.border();
-    }
-
-    template <typename T, typename J>
-    void init_(tag::image_t, image3d_b<T>& target, const J& model)
-    {
-      box3d b;
-      init_(tag::bbox, b, model);
-      unsigned bdr;
-      init_(tag::border, bdr, model);
-      target.init_(b, bdr);
-    }
-
-  } // end of namespace mln::impl
+  template <typename T, typename J>
+  void init_(tag::image_t, image3d_b<T>& target, const J& model)
+  {
+    box3d b;
+    init_(tag::bbox, b, model);
+    unsigned bdr;
+    init_(tag::border, bdr, model);
+    target.init_(b, bdr);
+  }
 
 
   // internal::data_< image3d_b<T> >
@@ -281,16 +270,16 @@ namespace mln
       array_ = new T**[ns];
       T* buf = buffer_ - vb_.pmin().col();
       for (unsigned i = 0; i < ns; ++i)
+      {
+	T** tmp = new T*[nr];
+	array_[i] = tmp;
+	for (unsigned j = 0; j < nr; ++j)
 	{
-	  T** tmp = new T*[nr];
-	  array_[i] = tmp;
-	  for (unsigned j = 0; j < nr; ++j)
-	    {
-	      array_[i][j] = buf;
-	      buf += nc;
-	    }
-	  array_[i] -= vb_.pmin().row();
+	  array_[i][j] = buf;
+	  buf += nc;
 	}
+	array_[i] -= vb_.pmin().row();
+      }
       array_ -= vb_.pmin().sli();
       mln_postcondition(vb_.len(0) == b_.len(0) + 2 * bdr_);
     }
@@ -300,25 +289,25 @@ namespace mln
     data_< image3d_b<T> >::deallocate_()
     {
       if (buffer_)
-	{
-	  delete[] buffer_;
-	  buffer_ = 0;
-	}
+      {
+	delete[] buffer_;
+	buffer_ = 0;
+      }
       for (typename point3d::coord i = vb_.pmin().sli(); i <= vb_.pmax().sli(); ++i)
+      {
+	if (array_[i])
 	{
-	  if (array_[i])
-	    {
-	      array_[i] += vb_.pmin().row();
-	      delete[] array_[i];
-	      array_[i] = 0;
-	    }
+	  array_[i] += vb_.pmin().row();
+	  delete[] array_[i];
+	  array_[i] = 0;
 	}
+      }
       if (array_)
-	{
-	  array_ += vb_.pmin().sli();
-	  delete[] array_;
-	  array_ = 0;
-	}
+      {
+	array_ += vb_.pmin().sli();
+	delete[] array_;
+	array_ = 0;
+      }
     }
 
   } // end of namespace mln::internal

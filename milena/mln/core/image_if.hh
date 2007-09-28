@@ -124,33 +124,27 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // impl::init_
+  // init_
 
-  namespace impl
+  template <typename I, typename F>
+  void init_(tag::function_t, F& f, const image_if<I,F>& model)
   {
+    f = model.domain().predicate();
+  }
 
-    template <typename I, typename F>
-    void init_(tag::function_t, F& f, const image_if<I,F>& model)
-    {
-      f = model.domain().predicate();
-    }
-
-    template <typename I, typename F, typename J>
-    void init_(tag::image_t, image_if<I,F>& target, const J& model)
-    {
-      I ima;
-      init_(tag::image, ima, model);
-      F f;
-      init_(tag::function, f, model);
-      target.init_(ima, f);
-      // Alternative code:
-      //   pset_if<mln_pset(I), F> pset;
-      //   init_(tag::domain, pset, model);
-      //   target.init_(ima, pset);
-    }
-
-  } // end of namespace mln::impl
-
+  template <typename I, typename F, typename J>
+  void init_(tag::image_t, image_if<I,F>& target, const J& model)
+  {
+    I ima;
+    init_(tag::image, ima, model);
+    F f;
+    init_(tag::function, f, model);
+    target.init_(ima, f);
+    // Alternative code:
+    //   pset_if<mln_pset(I), F> pset;
+    //   init_(tag::domain, pset, model);
+    //   target.init_(ima, pset);
+  }
 
   // internal::data_< image_if<I,S> >
 
