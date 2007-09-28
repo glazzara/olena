@@ -107,6 +107,9 @@ namespace mln
     /// Hook to coordinates.
     operator metal::vec<M::dim, C>() const;
 
+    /// Hook to homogene coordinate.
+    operator h_vec<M::dim, C>() const;
+
   protected:
     metal::vec<M::dim, C> coord_;
   };
@@ -171,6 +174,13 @@ namespace mln
   {
     return coord_;
   }
+
+  template <typename M, typename C>
+  point_<M,C>::operator h_vec<M::dim, C>() const
+  {
+    return coord_;
+  }
+
 
 
 # endif // ! MLN_INCLUDE_ONLY

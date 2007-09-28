@@ -1,3 +1,11 @@
+2007-09-28  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add homogen vector.
+
+	* mln/core/h_vec.hh: New.
+	* mln/core/point.hh: Know be casted as homogen vector.
+	* tests/h_vec.cc: New.
+
 2007-09-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Put init_ outside of namespace impl.
