@@ -1,5 +1,15 @@
 2007-09-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add mesh_image in mln/core.
+
+	* mesh_image.hh: New class of image.
+
+	* mesh_p.hh: New.
+	* mesh_p_piter.hh: New.
+	* mesh_psite.hh: New.
+
+2007-09-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add graph in mln/util.
 
 	* graph.hh: New.
