@@ -1,3 +1,9 @@
+2007-09-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add graph in mln/util.
+
+	* graph.hh: New.
+
 2007-09-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fixes.
