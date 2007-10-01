@@ -1,5 +1,11 @@
 2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix bug in mesh_image.
+
+	* mesh_image.hh: Update.
+
+2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add log file.
 
 	* log.txt: New.

@@ -100,6 +100,12 @@ namespace mln
     const std::vector<V>& data_values () const;
 
     const mesh_p<P>& domain() const;
+
+    /// Return the first node of the link at i from loc
+    const P& access_location_link_node1 (const unsigned& i) const;
+
+    /// Return the second node of the link at i from loc
+    const P& access_location_link_node2 (const unsigned& i) const;
 };
 
 
@@ -167,6 +173,20 @@ namespace mln
   {
     mln_precondition(this->has_data());
     return this->data_->mesh_;
+  }
+
+  template <typename P, typename V>
+  const P&
+  mesh_image<P, V>::access_location_link_node1 (const unsigned& i) const
+  {
+    return this->domain().loc_[this->domain().gr_.links_[i]->node1];
+  }
+
+  template <typename P, typename V>
+  const P&
+  mesh_image<P, V>::access_location_link_node2 (const unsigned& i) const
+  {
+    return this->domain().loc_[this->domain().gr_.links_[i]->node2];
   }
 
 # endif // ! MLN_INCLUDE_ONLY
