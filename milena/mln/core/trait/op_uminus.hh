@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,32 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TRAIT_ALL_HH
-# define MLN_CORE_TRAIT_ALL_HH
+#ifndef MLN_TRAIT_OP_UMINUS_HH
+# define MLN_TRAIT_OP_UMINUS_HH
 
-/*! \file mln/core/trait/all.hh
- *
- * \brief File that includes all traits.
- */
+
+# define mln_op_uminus(T) typename mln::trait::op_uminus< T >::ret
+
 
 
 namespace mln
 {
 
-  /*! Namespace for image traits.
-   */
-  namespace trait {}
+  namespace metal
+  {
 
-}
+    template <unsigned n, typename T>
+    class vec;
+
+    template <unsigned n, unsigned m, typename T>
+    class mat;
+
+  } // end of namespace mln::metal
+
+  namespace trait
+  {
+
+    template <typename T>
+    struct op_uminus
+    {
+      typedef T ret;
+    };
 
 
-# include <mln/core/trait/is_fast.hh>
-# include <mln/core/trait/pixter.hh>
-# include <mln/core/trait/op_mult.hh>
-# include <mln/core/trait/op_plus.hh>
-# include <mln/core/trait/op_minus.hh>
-# include <mln/core/trait/op_uminus.hh>
-# include <mln/core/trait/promote.hh>
+    template <>
+    struct op_uminus<unsigned>
+    {
+      typedef signed ret;
+    };
+
+    template <unsigned n, typename T>
+    struct op_uminus<metal::vec<n, T> >
+    {
+      typedef metal::vec<n, mln_op_uminus(T)> ret;
+    };
+
+    template <unsigned n, unsigned m, typename T>
+    struct op_uminus<metal::mat<n, m, T> >
+    {
+      typedef metal::mat<n, m, mln_op_uminus(T)> ret;
+    };
 
 
-#endif // ! MLN_CORE_TRAIT_ALL_HH
+  } // end of namespace mln::trait
+
+} // end of namespace mln
+
+#endif // ! MLN_TRAIT_OP_UMINUS_HH

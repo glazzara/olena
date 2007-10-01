@@ -25,11 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_MULT_HH
-# define MLN_TRAIT_MULT_HH
+#ifndef MLN_TRAIT_OP_PLUS_HH
+# define MLN_TRAIT_OP_PLUS_HH
 
 
-# define mln_mult(T, U) typename mln::trait::mult< T , U >::ret
+# define mln_op_plus(T, U) typename mln::trait::op_plus< T , U >::ret
 
 
 
@@ -51,72 +51,85 @@ namespace mln
   {
 
     template <typename T, typename U>
-    struct mult;
+    struct op_plus;
 
+
+    template <typename T>
+    struct op_plus<T, T>
+    {
+      typedef T ret;
+    };
 
     template <>
-    struct mult<int, float>
+    struct op_plus<int, float>
     {
       typedef float ret;
     };
     template <>
-    struct mult<float, int>
+    struct op_plus<float, int>
     {
       typedef float ret;
     };
 
     template <>
-    struct mult<int, double>
+    struct op_plus<int, double>
     {
       typedef double ret;
     };
     template <>
-    struct mult<double, int>
+    struct op_plus<double, int>
     {
       typedef double ret;
     };
 
     template <>
-    struct mult<double, float>
+    struct op_plus<double, float>
     {
       typedef double ret;
     };
     template <>
-    struct mult<float, double>
+    struct op_plus<float, double>
     {
       typedef double ret;
     };
 
     template <unsigned n, typename T, typename U>
-    struct mult<metal::vec<n, T>, U>
+    struct op_plus<metal::vec<n, T>, U>
     {
-      typedef metal::vec<n, mln_mult(T, U)> ret;
-    }
+      typedef metal::vec<n, mln_op_plus(T, U)> ret;
+    };
     template <typename U, unsigned n, typename T>
-    struct mult<U, metal::vec<n, T>>
+    struct op_plus<U, metal::vec<n, T> >
     {
-      typedef metal::vec<n, mln_mult(T, U)> ret;
-    }
+      typedef metal::vec<n, mln_op_plus(T, U)> ret;
+    };
+
+    template <unsigned n, typename T, typename U>
+    struct op_plus<metal::vec<n, T>, metal::vec<n, U> >
+    {
+      typedef metal::vec<n, mln_op_plus(T, U)> ret;
+    };
 
     template <unsigned n, unsigned m, typename T, typename U>
-    struct mult<metal::mat<n, m, T>, U>
+    struct op_plus<metal::mat<n, m, T>, U>
     {
-      typedef metal::mat<n, m, mln_mult(T, U)> ret;
-    }
-    template <typename U, unsigned n, unsigned m, typename T>
-    struct mult<U, metal::mat<n, m, T>>
-    {
-      typedef metal::mat<n, m, mln_mult(T, U)> ret;
-    }
-
-    template <unsigned n, unsigned o, typename T, unsigned m, typename U>
-    struct mult<metal::mat<n, o, T>, metal::mat<o, m, U> >
-    {
-      typedef metal::mat<n, m, mln_mult(T, U)> ret;
+      typedef metal::mat<n, m, mln_op_plus(T, U)> ret;
     };
+    template <typename U, unsigned n, unsigned m, typename T>
+    struct op_plus<U, metal::mat<n, m, T> >
+    {
+      typedef metal::mat<n, m, mln_op_plus(T, U)> ret;
+    };
+
+    template <unsigned n, unsigned m, typename T, typename U>
+    struct op_plus<metal::mat<n, m, T>, metal::mat<n, m, U> >
+    {
+      typedef metal::mat<n, m, mln_op_plus(T, U)> ret;
+    };
+
 
   } // end of namespace mln::trait
 
 } // end of namespace mln
 
-#endif // ! MLN_TRAIT_MULT_HH
+#endif // ! MLN_TRAIT_OP_PLUS_HH
