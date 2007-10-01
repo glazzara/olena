@@ -14,7 +14,7 @@
 
 namespace mln
 {
-  template <typename I, typename N, typename T>
+  template <typename I, typename N>
   mesh_p<point2d>*
   make_graph (Image<I>& ima_,
 	      const Neighborhood<N>& nbh)

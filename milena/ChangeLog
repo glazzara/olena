@@ -1,5 +1,15 @@
 2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add algorithm for extend labeling (slow 3min for this test).
+
+	* labeling_algo.cc: New.
+	* labeling_algo.hh: New.
+
+	Update.
+	* graph_labeling.hh: Update.
+
+2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix bug in mesh_image.
 
 	* mesh_image.hh: Update.
