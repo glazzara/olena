@@ -1,5 +1,10 @@
 2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add image toto.pbm in img.
+	* toto.pbm: New.
+
+2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Move border_fill and border_duplicate into mln/border.
 
 	* duplicate.hh: Update.
