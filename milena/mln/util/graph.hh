@@ -79,7 +79,7 @@ namespace mln
 
       void add_node (void);
       void add_edge (unsigned n1, unsigned n2);
-      void coherence () const;
+      void consistency () const;
       void print_debug () const;
       unsigned nb_node_;
       unsigned nb_link_;
@@ -128,7 +128,7 @@ namespace mln
 
     template<typename N, typename E>
     void
-    graph<N, E>::coherence () const
+    graph<N, E>::consistency () const
     {
       mln_precondition(nodes_.size () == this->nb_node_);
       mln_precondition(links_.size () == this->nb_link_);

@@ -1,3 +1,9 @@
+2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix graph.
+
+	* graph.hh: Change coherence in consistency.
+
 2007-10-01  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add trait for operators * + -.
