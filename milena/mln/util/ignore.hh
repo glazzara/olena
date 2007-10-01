@@ -43,7 +43,7 @@ namespace mln
   {
 
     /// Ignore structure.
-    struct ignore
+    struct ignore : public Object< ignore >
     {
       ignore();
 

@@ -30,6 +30,8 @@
 
 /*! \file mln/core/ops.hh
  * \brief Definitions of some operators.
+ *
+ * \todo Traits are in mln/trait/ not in mln/metal/!
  */
 
 # include <mln/core/concept/object.hh>

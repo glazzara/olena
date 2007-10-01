@@ -32,6 +32,9 @@
 # define mlc_bin_arith(T, U) typename mln::metal::binary_arith_trait< T , U >::ret
 
 
+// FIXME: Move in mln/trait/!
+
+
 
 namespace mln
 {

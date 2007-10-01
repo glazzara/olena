@@ -93,6 +93,29 @@ namespace mln
 
 
 
+  namespace trait
+  {
+
+    template <typename T>
+    struct image_< image3d_b<T> > : default_image_< T, image3d_b<T> >
+    {
+      typedef trait::category::primary category;
+
+      typedef trait::access::random   access;
+      typedef trait::space::three_d   space;
+      typedef trait::size::regular    size;
+      typedef trait::support::aligned support;
+
+      typedef trait::border::stored   border;
+      typedef trait::data::raw        data;
+      typedef trait::io::read_write   io;
+      typedef trait::speed::fastest   speed;
+    };
+
+  } // end of namespace mln::trait
+
+
+
   /*! \brief Basic 3D image class.
    *
    * The parameter \c T is the type of pixel values.  This image class

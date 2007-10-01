@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_median.cc
+/*! \file tests/metal_mat.cc
  *
- * \brief Test on mln::median::median_dir.
+ * \brief Test on mln::metal::mat.
  */
 
 #include <mln/metal/mat.hh>

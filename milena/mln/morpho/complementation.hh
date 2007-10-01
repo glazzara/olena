@@ -85,7 +85,7 @@ namespace mln
     void complementation(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::complementation_(mln_value_kind(mln_value(I))(), exact(input), output);
+      impl::complementation_(mln_trait_image_kind(I)(), exact(input), output);
     }
 
     template <typename I>

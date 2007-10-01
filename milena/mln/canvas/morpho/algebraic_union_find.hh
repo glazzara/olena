@@ -68,10 +68,7 @@ namespace mln
 	mln_ch_value(O, A)     data;
 
 	algebraic_union_find(F& f)
-	  : f(f),
-	    deja_vu(f.output.domain()),
-	    parent(f.output.domain()),
-	    data(f.output.domain())
+	  : f(f)
 	{
 	  run();
 	}
@@ -80,7 +77,10 @@ namespace mln
 	{
 	  // init
 	  {
+	    initialize(deja_vu, f.input);
 	    mln::level::fill(deja_vu, false);
+	    initialize(parent, f.input);
+	    initialize(data, f.input);
 	    f.init();
 	  }
 	  // first pass
@@ -119,7 +119,7 @@ namespace mln
 	void make_set(const point& p)
 	{
 	  parent(p) = p;
-	  data(p).take_as_init(make::pix(f.input, p));
+	  data(p).take_as_init(make::pix(f.input, p)); // FIXME: algebraic so p!
 	}
 
 	bool is_root(const point& p) const

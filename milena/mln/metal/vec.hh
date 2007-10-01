@@ -31,7 +31,7 @@
 # include <iostream>
 # include <cmath>
 
-# include <mln/core/contract.hh>
+# include <mln/core/concept/object.hh>
 # include <mln/metal/binary_arith_trait.hh>
 
 // FIXME: Document.
@@ -43,18 +43,22 @@ namespace mln
   namespace metal
   {
 
+    // Fwd decl.
+    template <unsigned n, typename T> class vec;
+
+
     namespace internal
     {
 
       template <unsigned n, typename T>
-      class vec_base_
+      class vec_base_ : public Object< vec<n,T> >
       {
       protected:
 	T data_[n];
       };
 
       template <typename T>
-      class vec_base_ <1, T>
+      class vec_base_ <1, T> : public Object< vec<1,T> >
       {
       public:
 	void set(const T& val0)
@@ -66,7 +70,7 @@ namespace mln
       };
 
       template <typename T>
-      class vec_base_ <2, T>
+      class vec_base_ <2, T> : public Object< vec<2,T> >
       {
       public:
 	void set(const T& val0, const T& val1)
@@ -79,7 +83,7 @@ namespace mln
       };
 
       template <typename T>
-      class vec_base_ <3, T>
+      class vec_base_ <3, T> : public Object< vec<3,T> >
       {
       public:
 	void set(const T& val0, const T& val1, const T& val2)
@@ -93,7 +97,7 @@ namespace mln
       };
 
       template <typename T>
-      class vec_base_ <4, T>
+      class vec_base_ <4, T> : public Object< vec<4,T> >
       {
       public:
 	void set(const T& val0, const T& val1, const T& val2, const T& val3)
@@ -115,10 +119,10 @@ namespace mln
     template <unsigned n, typename T>
     class vec : public internal::vec_base_<n, T>
     {
-      typedef internal::vec_base_<n, T> super;
+      typedef internal::vec_base_<n, T> super_;
 
     protected:
-      using super::data_;
+      using super_::data_;
 
     public:
 
@@ -222,10 +226,12 @@ namespace mln
     vec<3, typename binary_arith_trait<T, U>::ret>
     vprod(const vec<3, T>& lhs, const vec<3, U>& rhs);
 
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n, typename T>
     vec<n,T>::vec(const vec<n,T>& rhs)
+      : super_()
     {
       for (unsigned i = 0; i < n; ++i)
 	data_[i] = rhs[i];
@@ -234,6 +240,7 @@ namespace mln
     template <unsigned n, typename T>
     template <typename U>
     vec<n,T>::vec(const vec<n, U>& rhs)
+      : super_()
     {
       for (unsigned i = 0; i < n; ++i)
 	data_[i] = rhs[i];

@@ -121,7 +121,7 @@ namespace mln
 	    for_all(q_bot)
 	      med.take(q_bot.val());
 
-	    output(p) = med.to_result();
+	    output(p) = med;
 
 	    if (fwd)
 	      // browse line fwd
@@ -132,7 +132,7 @@ namespace mln
 		    med.untake(q_fm.val());
 		  for_all(q_fp)
 		    med.take(q_fp.val());
-		  output(p) = med.to_result();
+		  output(p) = med;
 		}
 	    else
 	      // browse line bkd
@@ -143,7 +143,7 @@ namespace mln
 		    med.untake(q_bm.val());
 		  for_all(q_bp)
 		    med.take(q_bp.val());
-		  output(p) = med.to_result();
+		  output(p) = med;
 		}
 	    // change browsing
 	    fwd = ! fwd;

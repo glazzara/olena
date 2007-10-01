@@ -134,7 +134,7 @@ namespace mln
       template <typename I, typename W, typename O>
       void dilation_wrt_win(const Image<I>& input, const Window<W>& win, Image<O>& output)
       {
-	dilation_wrt_value(mln_value_kind(mln_value(I))(), exact(input), exact(win), output);
+	dilation_wrt_value(mln_trait_image_kind(I)(), exact(input), exact(win), output);
 	//                   |
 	//                    -->  call stage 2: dispatch w.r.t. the value kind
       }

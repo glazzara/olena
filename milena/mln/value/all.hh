@@ -49,6 +49,8 @@ namespace mln
 # include <mln/value/props.hh>
 # include <mln/value/proxy.hh>
 
+# include <mln/value/interval.hh>
+
 
 // FIXME: that includes concept/image.hh!
 

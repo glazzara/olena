@@ -56,7 +56,7 @@ int main()
     }
     {
       II ima_;
-      init(ima_, ima_ref);
+      initialize(ima_, ima_ref);
       debug::println(ima_);
     }
   }

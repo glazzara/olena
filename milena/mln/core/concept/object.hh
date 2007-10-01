@@ -39,11 +39,14 @@
 # include <mln/core/macros.hh>
 # include <mln/core/contract.hh>
 # include <mln/core/internal/fixme.hh>
+# include <mln/trace/all.hh>
 # include <mln/metal/is_a.hh>
 
 
 /*! \namespace mln
  * \brief The namespace mln corresponds to the Milena (mini-Olena) project.
+ *
+ * FIXME: Re-write this description.
  *
  * The contents of mln mimics the contents of the olena project but
  * in a simplified way.  Some classes have the same name in both
@@ -63,6 +66,7 @@ namespace mln
   template <typename E>
   struct Object
   {
+    typedef E exact_t;
   protected:
     Object();
   };
@@ -81,8 +85,8 @@ namespace mln
 
 
 # include <mln/core/exact.hh>
-# include <mln/core/ops.hh>
-# include <mln/trait/ch_value.hh>
+# include <mln/metal/all.hh>
+# include <mln/core/ops.hh> // FIXME: Read FIXME in mln/metal/binary_arith_trait.hh!
 
 
 #endif // ! MLN_CORE_CONCEPT_OBJECT_HH

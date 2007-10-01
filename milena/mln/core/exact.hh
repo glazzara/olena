@@ -32,7 +32,7 @@
  * \brief Definition of the mln::exact downcast routines.
  */
 
-# include <mln/core/concept/object.hh>
+# include <mln/core/internal/exact.hh>
 
 
 namespace mln
@@ -51,49 +51,33 @@ namespace mln
    */ 
   /// \{
 
-  template <typename E>
-  E* exact(Object<E>* ptr);
+  template <typename T>
+  typename internal::exact_<T>::ret*
+  exact(T* ptr);
 
-  template <typename E>
-  const E* exact(const Object<E>* ptr);
-
-  template <typename E>
-  E& exact(Object<E>& ref);
-
-  template <typename E>
-  const E& exact(const Object<E>& ref);
+  template <typename T>
+  typename internal::exact_<T>::ret&
+  exact(T& ref);
 
   /// \}
-
-
 
 
 # ifndef MLN_INCLUDE_ONLY
 
   // exact
 
-  template <typename E>
-  E* exact(Object<E>* ptr)
+  template <typename T>
+  typename internal::exact_<T>::ret*
+  exact(T* ptr)
   {
-    return (E*)(void*)ptr;
+    return internal::exact_<T>::run(ptr);
   }
 
-  template <typename E>
-  const E* exact(const Object<E>* ptr)
+  template <typename T>
+  typename internal::exact_<T>::ret&
+  exact(T& ref)
   {
-    return (const E*)(const void*)ptr;
-  }
-
-  template <typename E>
-  E& exact(Object<E>& ref)
-  {
-    return *(E*)(void*)(&ref);
-  }
-
-  template <typename E>
-  const E& exact(const Object<E>& ref)
-  {
-    return *(const E*)(const void*)(&ref);
+    return *exact(&ref);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

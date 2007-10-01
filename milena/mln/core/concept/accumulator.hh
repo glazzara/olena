@@ -32,7 +32,7 @@
  *
  * \brief Definition of the concept of mln::Accumulator.
  *
- * \todo Rename value as argument.
+ * \todo Rename value as argument + Add a conversion op.
  */
 
 # include <mln/core/concept/object.hh>

@@ -35,6 +35,7 @@
 
 # include <mln/core/internal/image_base.hh>
 # include <mln/metal/const.hh>
+# include <mln/metal/is_const.hh>
 
 
 namespace mln

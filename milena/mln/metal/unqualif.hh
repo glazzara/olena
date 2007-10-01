@@ -34,6 +34,7 @@
 
 
 # define mlc_unqualif(T) typename mln::metal::unqualif< T >::ret
+# define mlc_unqualif_(T)         mln::metal::unqualif< T >::ret
 
 
 namespace mln
@@ -42,6 +43,8 @@ namespace mln
   namespace metal
   {
 
+    // FIXME: May be recursive!
+
     template <typename T>
     struct unqualif
     {
@@ -49,7 +52,7 @@ namespace mln
       typedef mlc_unconst(tmp1) tmp2;
       typedef mlc_unptr(tmp2)   ret;
     };
-
+    
   } // end of namespace mln::metal
 
 } // end of namespace mln

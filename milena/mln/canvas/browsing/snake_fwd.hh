@@ -33,6 +33,7 @@
  * \brief Browsing in a snake-way, forward.
  */
 
+# include <mln/core/concept/browsing.hh>
 # include <mln/core/dpoint2d.hh> // for "up"
 # include <mln/geom/size2d.hh>
 
@@ -62,14 +63,21 @@ namespace mln
        * } \n
        *
        */
-      template <typename F>
-      void snake_fwd(F& f);
+
+      struct snake_fwd_t : public Browsing< snake_fwd_t >
+      {
+	template <typename F>
+	void operator()(F& f) const;
+      }
+
+      snake_fwd;
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename F>
-      void snake_fwd(F& f)
+      void
+      snake_fwd_t::operator()(F& f) const
       {
 	mln_precondition(f.input.has_data());
 	int

@@ -30,6 +30,7 @@
 
 
 # define mlc_unconst(T) typename mln::metal::unconst< T >::ret
+# define mlc_unconst_(T)         mln::metal::unconst< T >::ret
 
 
 namespace mln
@@ -37,6 +38,8 @@ namespace mln
 
   namespace metal
   {
+
+    // FIXME: What about "const T *const"?
 
     template <typename T>
     struct unconst
@@ -48,6 +51,12 @@ namespace mln
     struct unconst< const T >
     {
       typedef T ret;
+    };
+
+    template <typename T>
+    struct unconst< const T& >
+    {
+      typedef T& ret;
     };
 
   } // end of namespace mln::metal

@@ -59,7 +59,7 @@ namespace mln
   {
     // FIXME: Add a static check that mln_concrete(I) actually *is* concrete...
     mln_concrete(I) tmp;
-    init(tmp, model);
+    initialize(tmp, model);
     level::fill(tmp, model);
     return tmp;
   }

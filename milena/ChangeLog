@@ -1,3 +1,139 @@
+2007-10-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	A lot of cleaning works.
+
+
+	Make the exact routines work with any data.
+
+	* mln/core/concept/object.hh (exact_t): New typedef.
+	* mln/core/internal/exact.hh: New.
+	* mln/core/exact.hh (exact): Update.
+	(exact): Remove overloads with const; useless.
+	* tests/core_exact.cc: New.
+
+
+	Rename init as initialize.
+
+	* mln/core/concept/image.hh (init): Rename as...
+	(initialize): ...this.
+	* tests/core_init.cc: Rename as...
+	* tests/core_initialize.cc: ...this.
+	Update.
+	* tests/image_if.cc,
+	* mln/core/clone.hh,
+	* mln/canvas/morpho/algebraic_union_find.hh,
+	* mln/canvas/labeling.hh: Update.
+
+
+	Augment and clean mln/metal.
+
+	* mln/metal/is_const.hh: New.
+	* mln/core/internal/image_morpher.hh: New include.
+	* mln/metal/goes_to.hh: New.
+	* mln/metal/converts_to.hh: New.
+	* mln/metal/is.hh: New.
+	* mln/metal/is_unqualif.hh: New.
+	* tests/metal_converts_to.cc: New.
+	* tests/metal_is.cc: New.
+	* tests/metal_unconst.cc: New.
+
+	* mln/metal/unqualif.hh: Add FIXME.
+	* mln/metal/unconst.hh: New overload.
+	Add FIXME.
+	* mln/metal/bool.hh (true_, false_): New aliases.
+	(eval, check): New in bool_<true>.
+	(eval, check_not): New in bool_<false>.
+	(to_bool): Remove.
+	* mln/metal/bexpr.hh (true_, false_): Remove; obsolete.
+	(mlc_not, mlc_and, mlc_or, mlc_xor): New.
+	* mln/metal/if.hh,
+	* mln/metal/all.hh,
+	* mln/metal/is_a.hh: Update.
+	* mln/fun/internal/selector.hh (tag_): Update.
+	* mln/value/props.hh (mln_is_lowq): Update.
+
+	* mln/metal/vec.hh: Fix missing inheritance.
+	Fix warning about missing cpy ctor.
+	* mln/metal/binary_arith_trait.hh: Add FIXME.
+	* tests/metal_vec.cc,
+	* tests/metal_mat.cc: Fix doc.
+
+
+	Start factoring the conversion op.
+
+	* mln/accu/internal: New directory.
+	* mln/accu/internal/base.hh: New.
+	* mln/core/concept/accumulator.hh: Augment todo entry.
+	* mln/accu/median.hh: Update inheritance.
+	* mln/level/fast_median.hh (to_result): Remove; useless.
+
+
+	Start trace mechanism.
+
+	* mln/trace: New directory.
+	* mln/trace/exiting.hh: New.
+	* mln/trace/quiet.hh: New.
+	* mln/trace/all.hh: New.
+	* mln/trace/entering.hh: New.
+	* tests/level_paste.cc: Add tracing calls.
+
+
+	Better browsing materials.
+
+	* mln/core/concept/browsing.hh: New.
+	* mln/canvas/browsing/fwd.hh: New.
+	* mln/canvas/browsing/snake_fwd.hh: Update.
+	* mln/fun/p2v/iota.hh: New.
+	* tests/canvas_browsing_fwd.cc: New.
+
+
+	Better and update image traits.
+
+	* mln/trait/images.hh: New bunch of macros.
+	(category): New.
+	(io): Add new flag types.
+	(default_image_, default_image_morpher_): Clean.
+	Fix comments.
+
+	* mln/core/image2d_b.hh (image_): Move at bof.
+	* mln/core/image1d_b.hh,
+	* mln/core/image3d_b.hh,
+	* mln/core/image_if.hh,
+	* mln/pw/image.hh (image_): New traits.
+	* mln/core/sub_image.hh: Update traits.
+
+	* mln/level/fill.hh (todo): Augment.
+	(fill): Check input writability.
+	* mln/level/paste.hh,
+	* mln/morpho/plus.hh,
+	* mln/morpho/min.hh,
+	* mln/morpho/minus.hh,
+	* mln/morpho/complementation.hh,
+	* mln/morpho/dilation.hh,
+	* mln/morpho/erosion.hh,
+	* mln/morpho/hit_or_miss.hh: Update with trait flags.
+	* tests/level_fill.cc: Add into comments an anti-test.
+	* tests/trait_images.cc: Update.
+
+
+	Introduce the notion of interval of values.
+
+	* mln/value/interval.hh: New.
+	* mln/value/all.hh: Update.
+	* mln/core/image_if.hh: New overload using interval.
+
+
+	Misc.
+
+	* mln/border/get.hh: Fix warning.
+	* mln/core/macros.hh (mln_result_): New.
+	* mln/core/ops.hh: New todo entry.
+	* mln/fun/ops.hh: Shorter names.
+	* mln/util/nil.hh: New.
+	* mln/util/ignore.hh,
+	* mln/util/eat.hh: Fix missing inheritance.
+	* TODO: Augment.
+
 2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix graph.

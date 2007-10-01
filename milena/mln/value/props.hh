@@ -66,7 +66,7 @@
 
 
 /// Test is the value type \c T is low quantized.
-# define mln_is_lowq(T) typename metal::bool_<( mln_card_(T) != 0 )>::type
+# define mln_is_lowq(T) typename metal::bool_<( mln_card_(T) != 0 )>
 
 
 /// Give the summation type for values of type \c T.

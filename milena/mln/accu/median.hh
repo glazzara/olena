@@ -33,7 +33,7 @@
  * \brief Define a generic median accumulator class.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
 
 
@@ -48,7 +48,7 @@ namespace mln
      * with type \c S.
      */
     template <typename S>
-    struct median : public Accumulator< median<S> >
+    struct median : public mln::accu::internal::base_< mln_value(S), median<S> >
     {
       typedef mln_value(S) value;
       typedef value result;

@@ -31,7 +31,10 @@
  */
 
 #include <mln/core/image2d_b.hh>
+
 #include <mln/core/sub_image.hh>
+#include <mln/core/image_if.hh>
+#include <mln/fun/p2b/chess.hh>
 
 
 int main()
@@ -46,4 +49,8 @@ int main()
   std::cout << std::endl
 	    << "sub_image< image2d_b >: ";
   mln::trait::print< sub_image<I, box2d> >(std::cout);
+
+  std::cout << std::endl
+	    << "image_if< image2d_b >: ";
+  mln::trait::print< image_if<I, fun::p2b::chess_t> >(std::cout);
 }

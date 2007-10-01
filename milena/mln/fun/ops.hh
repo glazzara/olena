@@ -122,12 +122,12 @@ namespace mln
 {
   // -> p2v
 
-  mln_decl_binary_expr_(p2v, p2b, equal, ==);
-  mln_decl_binary_expr_(p2v, p2b, not_equal, !=);
+  mln_decl_binary_expr_(p2v, p2b,  eq, ==);
+  mln_decl_binary_expr_(p2v, p2b, neq, !=);
 
   mln_decl_binary_expr_(p2v, p2b, less, <);
-  mln_decl_binary_expr_(p2v, p2b, less_or_equal, <=);
-  mln_decl_binary_expr_(p2v, p2b, greater_or_equal, >=);
+  mln_decl_binary_expr_(p2v, p2b, leq , <=);
+  mln_decl_binary_expr_(p2v, p2b, geq,  >=);
   mln_decl_binary_expr_(p2v, p2b, greater, >);
 
   mln_decl_binary_expr_(p2b, p2b, and, &&);
@@ -147,12 +147,12 @@ namespace mln
 
   // -> v2b
 
-  mln_decl_binary_expr_(v2v, v2b, equal, ==);
-  mln_decl_binary_expr_(v2v, v2b, not_equal, !=);
+  mln_decl_binary_expr_(v2v, v2b, eq,  ==);
+  mln_decl_binary_expr_(v2v, v2b, neq, !=);
 
   mln_decl_binary_expr_(v2v, v2b, less, <);
-  mln_decl_binary_expr_(v2v, v2b, less_or_equal, <=);
-  mln_decl_binary_expr_(v2v, v2b, greater_or_equal, >=);
+  mln_decl_binary_expr_(v2v, v2b, leq,  <=);
+  mln_decl_binary_expr_(v2v, v2b, geq,  >=);
   mln_decl_binary_expr_(v2v, v2b, greater, >);
 
   mln_decl_binary_expr_(v2b, v2b, and, &&);

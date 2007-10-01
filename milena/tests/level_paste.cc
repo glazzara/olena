@@ -53,6 +53,8 @@ int main()
   debug::iota(ima2);
   debug::println(ima2);
 
+  trace::quiet = false;
+
   level::paste(ima, ima2); // Fast version.
   debug::println(ima2);
 

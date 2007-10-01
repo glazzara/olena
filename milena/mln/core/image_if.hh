@@ -36,6 +36,7 @@
 # include <mln/core/internal/image_domain_morpher.hh>
 # include <mln/core/pset_if.hh>
 # include <mln/pw/all.hh>
+# include <mln/value/interval.hh>
 
 
 namespace mln
@@ -60,7 +61,36 @@ namespace mln
   } // end of namespace mln::internal
 
 
-  /*! \brief A base class for image adaptors.
+
+  namespace trait
+  {
+
+    template <typename I, typename F>
+    struct image_< image_if<I,F> > : default_image_morpher_< I, mln_value(I),
+							     image_if<I,F> >
+    {
+    private:
+      typedef mln_trait_image_data(I) I_data_;
+      typedef mlc_equal(I_data_, trait::data::linear) I_data_are_linear_;
+    public:
+
+      typedef trait::category::domain_morpher category;
+
+      typedef mlc_if( mlc_is_const(I),
+		      trait::io::read_only,        // I const => read_only
+		      mln_trait_image_io(I) ) io;  // otherwise like I
+
+      typedef mlc_if( I_data_are_linear_,
+		      trait::data::stored, // if linear then just stored
+		      I_data_ ) data;      // otherwise like I
+    };
+
+  } // end of namespace mln::trait
+
+
+
+
+  /*! \brief An image class FIXME.
    *
    */
   template <typename I, typename F>
@@ -95,7 +125,10 @@ namespace mln
 
 
 
+
   // Operators.
+
+  // Image | Function_p2b.
 
   template <typename I, typename F>
   image_if<I, F>
@@ -105,20 +138,37 @@ namespace mln
   image_if<const I, F>
   operator | (const Image<I>& ima, const Function_p2b<F>& f);
 
+  // Image | value.
+
   template <typename I>
   image_if< I,
-	    fun::equal_p2b_expr_< pw::value_<I>,
-				  pw::cst_<mln_value(I)> > >
+	    fun::eq_p2b_expr_< pw::value_<I>,
+			       pw::cst_<mln_value(I)> > >
   operator | (Image<I>& ima, const mln_value(I)& v);
 
   template <typename I>
   image_if< const I,
-	    fun::equal_p2b_expr_< pw::value_<I>,
-				  pw::cst_<mln_value(I)> > >
+	    fun::eq_p2b_expr_< pw::value_<I>,
+			       pw::cst_<mln_value(I)> > >
   operator | (const Image<I>& ima, const mln_value(I)& v);
 
-  // FIXME: Add the notion of "interval of values"...
-  // FIXME: so we can write:  ima | from_to(v1, v2)
+  // Image | [from, to].
+
+  template <typename I>
+  image_if< I,
+	    fun::and_p2b_expr_< fun::geq_p2b_expr_< pw::value_<I>,
+						    pw::cst_<mln_value(I)> >,
+				fun::leq_p2b_expr_< pw::value_<I>,
+						    pw::cst_<mln_value(I)> > > >
+  operator | (Image<I>& ima, const value::interval_<mln_value(I)>& vv);
+
+  template <typename I>
+  image_if< const I,
+	    fun::and_p2b_expr_< fun::geq_p2b_expr_< pw::value_<I>,
+						    pw::cst_<mln_value(I)> >,
+				fun::leq_p2b_expr_< pw::value_<I>,
+						    pw::cst_<mln_value(I)> > > >
+  operator | (const Image<I>& ima, const value::interval_<mln_value(I)>& vv);
 
 
 
@@ -239,8 +289,8 @@ namespace mln
 
   template <typename I>
   image_if< I,
-	    fun::equal_p2b_expr_< pw::value_<I>,
-				  pw::cst_<mln_value(I)> > >
+	    fun::eq_p2b_expr_< pw::value_<I>,
+			       pw::cst_<mln_value(I)> > >
   operator | (Image<I>& ima, const mln_value(I)& v)
   {
     return ima | (pw::value(ima) == pw::cst(v));
@@ -248,11 +298,35 @@ namespace mln
 
   template <typename I>
   image_if< const I,
-	    fun::equal_p2b_expr_< pw::value_<I>,
-				  pw::cst_<mln_value(I)> > >
+	    fun::eq_p2b_expr_< pw::value_<I>,
+			       pw::cst_<mln_value(I)> > >
   operator | (const Image<I>& ima, const mln_value(I)& v)
   {
     return ima | (pw::value(ima) == pw::cst(v));
+  }
+
+  template <typename I>
+  image_if< I,
+	    fun::and_p2b_expr_< fun::geq_p2b_expr_< pw::value_<I>,
+						    pw::cst_<mln_value(I)> >,
+				fun::leq_p2b_expr_< pw::value_<I>,
+						    pw::cst_<mln_value(I)> > > >
+  operator | (Image<I>& ima, const value::interval_<mln_value(I)>& vv)
+  {
+    return ima | ( (pw::value(ima) >= pw::cst(vv.from)) &&
+		   (pw::value(ima) <= pw::cst(vv.to)) );
+  }
+
+  template <typename I>
+  image_if< const I,
+	    fun::and_p2b_expr_< fun::geq_p2b_expr_< pw::value_<I>,
+						    pw::cst_<mln_value(I)> >,
+				fun::leq_p2b_expr_< pw::value_<I>,
+						    pw::cst_<mln_value(I)> > > >
+  operator | (const Image<I>& ima, const value::interval_<mln_value(I)>& vv)
+  {
+    return ima | ( (pw::value(ima) >= pw::cst(vv.from)) &&
+		   (pw::value(ima) <= pw::cst(vv.to)) );
   }
 
 # endif // ! MLN_INCLUDE_ONLY

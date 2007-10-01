@@ -32,7 +32,7 @@
  *
  * \brief Fill an image, that is, set pixel values.
  *
- * \todo Overload for fast images.
+ * \todo Re-organize this file contents + Overload for fast images.
  */
 
 # include <cstring>
@@ -157,6 +157,7 @@ namespace mln
     template <typename I>
     void fill(Image<I>& ima, const mln_value(I)& value)
     {
+      mlc_is(mln_trait_image_io(I), trait::io::write)::check(); // FIXME: Only the upcoming general facade!!! 
       mln_precondition(exact(ima).has_data());
       impl::fill_with_value(exact(ima), value);
     }

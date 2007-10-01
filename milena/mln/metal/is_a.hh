@@ -78,7 +78,7 @@ namespace mln
     template <typename T, template <class> class U>
     struct is_a : bool_<( sizeof( internal::helper_is_a_< T, U >::selector(internal::make_< T >::ptr()) )
 			  ==
-			  sizeof( internal::yes_ )  )>::type
+			  sizeof( internal::yes_ )  )>
     {};
     
 

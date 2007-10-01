@@ -42,15 +42,35 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/metal/bexpr.hh> // <- bool.hh
+# include <mln/metal/none.hh>
+
+# include <mln/metal/abort.hh>
+# include <mln/metal/bexpr.hh>
+# include <mln/metal/bool.hh>
 # include <mln/metal/equal.hh>
 # include <mln/metal/if.hh>
-# include <mln/metal/is_a.hh>
-# include <mln/metal/math.hh>
-# include <mln/metal/none.hh>
-# include <mln/metal/unqualif.hh> // <- unconst.hh, unptr.hh, unref.hh
-# include <mln/metal/vec.hh>
 
+# include <mln/metal/converts_to.hh>
+# include <mln/metal/is.hh>
+# include <mln/metal/is_a.hh>
+# include <mln/metal/goes_to.hh>
+
+# include <mln/metal/math.hh>
+
+# include <mln/metal/const.hh>
+# include <mln/metal/unconst.hh>
+# include <mln/metal/is_const.hh>
+
+# include <mln/metal/unptr.hh>
+# include <mln/metal/unref.hh>
+
+# include <mln/metal/unqualif.hh>
+# include <mln/metal/is_unqualif.hh>
+
+# include <mln/metal/vec.hh>
+# include <mln/metal/mat.hh>
+
+// FIXME: Remove the following includes below!
 # include <mln/metal/same_coord.hh>
 # include <mln/metal/same_point.hh>
 

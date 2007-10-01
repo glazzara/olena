@@ -160,7 +160,7 @@ namespace mln
       template <typename T>
       struct tag_
       {
-	enum { value = mlc_is_a(T, Point_Site)::to_bool
+	enum { value = mlc_is_a(T, Point_Site)::value
 	       ? p_
 	       : v_ };
       };

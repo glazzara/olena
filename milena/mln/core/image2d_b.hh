@@ -80,6 +80,28 @@ namespace mln
   } // end of namespace mln::internal
 
 
+  namespace trait
+  {
+
+    template <typename T>
+    struct image_< image2d_b<T> > : default_image_< T, image2d_b<T> >
+    {
+      typedef trait::category::primary category;
+
+      typedef trait::access::random   access;
+      typedef trait::space::two_d     space;
+      typedef trait::size::regular    size;
+      typedef trait::support::aligned support;
+
+      typedef trait::border::stored   border;
+      typedef trait::data::raw        data;
+      typedef trait::io::read_write   io;
+      typedef trait::speed::fastest   speed;
+    };
+
+  } // end of namespace mln::trait
+
+
 
   namespace trait
   {
@@ -207,25 +229,6 @@ namespace mln
   template <typename T, typename J>
   void init_(tag::image_t, mln::image2d_b<T>& target, const J& model);
 
-
-  namespace trait
-  {
-
-    template <typename T>
-    struct image_< image2d_b<T> > : default_image_< image2d_b<T> >
-    {
-      typedef trait::access::random   access;
-      typedef trait::space::two_d     space;
-      typedef trait::size::regular    size;
-      typedef trait::support::aligned support;
-
-      typedef trait::border::stored   border;
-      typedef trait::data::linear     data;
-      typedef trait::io::read_write   io;
-      typedef trait::speed::fastest   speed;
-    };
-
-  } // end of namespace mln::trait
 
 
 # ifndef MLN_INCLUDE_ONLY

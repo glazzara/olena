@@ -36,63 +36,41 @@
 # include <mln/metal/bool.hh>
 
 
+# define mlc_not( B )      mln::metal::not_< B >
+# define mlc_and( B1, B2 ) mln::metal::and_< B1, B2 >
+# define  mlc_or( B1, B2 ) mln::metal::or_ < B1, B2 >
+# define mlc_xor( B1, B2 ) mln::metal::xor_< B1, B2 >
+
 
 namespace mln
 {
 
   namespace metal
   {
-
-
-    /// "true" type.
-    struct true_
-    {
-      static void check();
-      typedef true_ eval;
-      enum { to_bool = true };
-    };
-
-
-    /// "false" type.
-    struct false_
-    {
-      typedef false_ eval;
-      enum { to_bool = false };
-    };
-
     
     /// Negate type.
     template <typename B>
-    struct not_ : bool_<( ! B::to_bool )>::type
+    struct not_ : bool_<( ! B::value )>
     {};
     
 
     /// And type.
     template <typename L, typename R>
-    struct and_ : bool_<( L::to_bool && R::to_bool )>::type
+    struct and_ : bool_<( L::value && R::value )>
     {};
     
 
     /// Or type.
     template <typename L, typename R>
-    struct or_ : bool_<( L::to_bool || R::to_bool )>::type
+    struct or_ : bool_<( L::value || R::value )>
     {};
     
 
     /// Xor type.
     template <typename L, typename R>
-    struct xor_ : bool_<( L::to_bool ^ R::to_bool )>::type
+    struct xor_ : bool_<( L::value ^ R::value )>
     {};
 
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    void true_::check()
-    {
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::metal
 

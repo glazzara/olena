@@ -1,6 +1,24 @@
 	-*- outline -*-
 
 
+* URGENT
+
+** accu
+
+*** héritage
+toutes les classes d'accu dérivent de base_ ; Cf. accu/median.hh
+virer l'op de convertion dans median_alt.hh
+ajouter le test de présence de l'op de convertion dans Accumulator
+m-a-j de la doc 
+est-ce les tests tournent ?
+
+*** value -> argument
+m-a-j
+tests ?
+
+
+
+
 * large changes
 
 introduce grids

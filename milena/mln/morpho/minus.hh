@@ -85,7 +85,7 @@ namespace mln
     {
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
-      impl::minus_(mln_value_kind(mln_value(I))(), exact(lhs), exact(rhs), output);
+      impl::minus_(mln_trait_image_kind(I)(), exact(lhs), exact(rhs), output);
     }
 
     template <typename I, typename J>

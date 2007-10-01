@@ -110,7 +110,7 @@ namespace mln
    * \pre (not target.has_data) and model.has_data
    */
   template <typename I, typename J>
-  void init(Image<I>& target, const Image<J>& model);
+  void initialize(Image<I>& target, const Image<J>& model);
 
 
 
@@ -165,7 +165,7 @@ namespace mln
   }
 
   template <typename I, typename J>
-  void init(Image<I>& target, const Image<J>& model)
+  void initialize(Image<I>& target, const Image<J>& model)
   {
     mln_precondition(! exact(target).has_data());
     mln_precondition(exact(model).has_data());

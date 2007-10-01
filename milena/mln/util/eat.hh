@@ -43,7 +43,7 @@ namespace mln
   {
 
     /// Eat structure.
-    struct eat
+    struct eat : public Object< eat >
     {
       eat();
 

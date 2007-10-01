@@ -31,6 +31,7 @@
  */
 
 #include <mln/core/image2d_b.hh>
+#include <mln/core/sub_image.hh>
 #include <mln/level/fill.hh>
 
 #include <mln/debug/println.hh>
@@ -59,5 +60,11 @@ int main()
     for (unsigned i = 0; i < 5; ++i)
       level::fill(ima, uc);
   }
+
+//   {
+//     // do *not* compile so that's great since ima is not mutable
+//     sub_image< const image2d_b<int>, box2d > ima;
+//     level::fill(ima, 0);
+//   }
 
 }

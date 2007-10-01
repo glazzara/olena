@@ -40,32 +40,44 @@ namespace mln
   namespace metal
   {
 
-    // Fwd decls.
-    struct true_;
-    struct false_;
-
-
-
-    // FIXME: Doc!
-
+    // Fwd decl.
     template <bool b> struct bool_;
 
+    /// "true" type.
     template <>
     struct bool_< true >
     {
-      typedef true_ type;
       static const bool value = true;
-      enum { to_bool = true };
+      typedef bool_<true> eval;
+      static void check();
     };
 
+    typedef bool_<true> true_;
+
+
+    /// "false" type.
     template <>
     struct bool_< false >
     {
-      typedef false_ type;
       static const bool value = false;
-      enum { to_bool = false };
+      typedef bool_<false> eval;
+      static void check_not();
     };
 
+    typedef bool_<false> false_;
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    void true_::check()
+    {
+    }
+
+    void false_::check_not()
+    {
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::metal
 

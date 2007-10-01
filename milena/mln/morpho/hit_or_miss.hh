@@ -190,7 +190,7 @@ namespace mln
 		     Image<O>& output)
     {
       impl::hit_or_miss_preconditions_(input, win_hit, win_miss, output);
-      impl::hit_or_miss_(mln_value_kind(mln_value(I))(), input, win_hit, win_miss, output);
+      impl::hit_or_miss_(mln_trait_image_kind(I)(), input, win_hit, win_miss, output);
     }
 
     template <typename I, typename Wh, typename Wm, typename O>

@@ -63,7 +63,7 @@ namespace mln
       }
 
       template <typename S, typename E>
-      unsigned get__(const mln::internal::image_base_<S,E>& ima)
+      unsigned get__(const mln::internal::image_base_<S,E>&)
       {
 	return 0;
       }

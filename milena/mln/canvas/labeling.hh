@@ -62,9 +62,7 @@ namespace mln
       mln_ch_value(O, point) parent;
 
       labeling(F& f)
-	: f(f),
-	  deja_vu(f.output.domain()),
-	  parent(f.output.domain())
+	: f(f)
       {
 	run();
       }
@@ -73,8 +71,10 @@ namespace mln
       {
 	// init
 	{
-	  f.nlabels = 0;
+	  initialize(deja_vu, f.input);
 	  mln::level::fill(deja_vu, false);
+	  initialize(parent, f.input);
+	  f.nlabels = 0;
 	  f.init();
 	}
 	// first pass

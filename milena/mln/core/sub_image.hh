@@ -55,6 +55,33 @@ namespace mln
 
 
 
+  namespace trait
+  {
+
+    template <typename I, typename S>
+    struct image_< sub_image<I,S> > : default_image_morpher_< I, mln_value(I),
+							      sub_image<I,S> >
+    {
+//     private:
+//       typedef mln_trait_image_data(I) I_data_;
+//       typedef mlc_equal(I_data_, trait::data::linear) I_data_are_linear_;
+//     public:
+
+      typedef trait::category::domain_morpher category;
+
+      typedef trait::border::none border;  // no more accessible border
+
+      typedef mln_trait_image_io_from_(I) io; // un-write when I const
+
+      typedef mln_trait_image_data_from_(I) data;
+//       typedef mlc_if( I_data_are_linear_,
+// 		      trait::data::stored, // if linear then just stored
+// 		      I_data_ ) data;      // otherwise like I
+    };
+
+  } // end of namespace mln::trait
+
+
 
   // FIXME: Doc!
 
@@ -94,26 +121,6 @@ namespace mln
   template <typename I, typename S, typename J>
   void init_(tag::image_t, sub_image<I,S>& target, const J& model);
 
-
-  namespace trait
-  {
-
-    template <typename I, typename S>
-    struct image_< sub_image<I,S> > : default_image_morpher_< sub_image<I,S> >
-    {
-    private:
-      typedef mln_trait_image_data(I) I_data_;
-      typedef mlc_equal(I_data_, trait::data::linear) I_data_are_linear_;
-    public:
-
-      typedef trait::border::none border;  // no more accessible border
-
-      typedef mlc_if( I_data_are_linear_,
-		      trait::data::stored, // if linear then just stored
-		      I_data_ ) data;      // otherwise like I
-    };
-
-  } // end of namespace mln::trait
 
 
 # ifndef MLN_INCLUDE_ONLY

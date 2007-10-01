@@ -25,50 +25,73 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core_init.cc
+#ifndef MLN_UTIL_NIL_HH
+# define MLN_UTIL_NIL_HH
+
+/*! \file mln/util/nil.hh
  *
- * \brief Tests on mln::init.
+ * \brief Definition of an "niler" object.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/debug/println.hh>
+# include <mln/core/concept/object.hh>
 
 
-
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  typedef image2d_b<int> I;
-
-  I ref( make::box2d(3,3) );
-  box2d b = make::box2d(2,2);
-  
+  namespace util
   {
-    I ima;
-    init(ima, ref);
-    debug::println(ima);
-    mln_assertion(ima.border() == ref.border());
-  }
 
-  {
-    I ima_; // to init'd
-    sub_image<I, box2d> ima = ref | b;
-    init(ima_, ima);
-    debug::println(ima);
-  }
+    /// Nil structure.
+    struct nil : public Object< nil >
+    {
+      nil();
 
-  {
-    sub_image<I, box2d> ima;
-    init(ima, ref);
-    debug::println(ima);
-  }
+      // Just like util::eat:
 
-  {
-    sub_image<I, box2d> ima;
-    init(ima, ref | b);
-    debug::println(ima);
-  }
+      template <typename T>
+      nil(const T&);
 
-}
+      template <typename T>
+      nil& operator=(const T&);
+
+      // Just like util::ignore:
+
+      template <typename T>
+      operator T() const;
+    };
+
+# ifndef MLN_INCLUDE_ONLY
+
+    // nil
+
+    nil::nil()
+    {
+    }
+
+    template <typename T>
+    nil::nil(const T&)
+    {
+    }
+
+    template <typename T>
+    nil&
+    nil::operator=(const T&)
+    {
+      return *this;
+    }
+
+    template <typename T>
+    nil::operator T() const
+    {
+      return T();
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::util
+
+} // end of namespace mln
+
+
+#endif // ! MLN_UTIL_NIL_HH

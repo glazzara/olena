@@ -36,6 +36,7 @@
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/value/set.hh>
+# include <mln/metal/unqualif.hh>
 
 
 namespace mln
@@ -69,6 +70,30 @@ namespace mln
 
   } // end of namespace mln::internal
 
+
+
+  namespace trait
+  {
+
+    // FIXME: the result type should *not* be qualified
+
+    template <typename F, typename S>
+    struct image_< pw::image<F,S> > : default_image_< mlc_unqualif(mln_result(F)),
+						      pw::image<F,S> >
+    {
+      typedef trait::category::primary category;
+
+      typedef trait::access::browsing access;
+      typedef trait::space::fixme     space;
+      typedef trait::size::regular    size;
+      typedef trait::support::fixme   support;
+
+      typedef trait::border::none     border;
+      typedef trait::data::computed   data;
+      typedef trait::io::read_only    io;
+    };
+
+  } // end of namespace mln::trait
 
 
   namespace pw
