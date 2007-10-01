@@ -390,7 +390,7 @@ namespace mln
     quat slerp_2(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
-      quat tmp = p * pow(p.conj() * q, h);
+      quat tmp = p * value::pow(p.conj() * q, h);
       assert(about_equal(tmp, slerp(p, q, h)));
       return tmp;
     }
@@ -398,7 +398,7 @@ namespace mln
     quat slerp_3(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
-      quat tmp = pow(p * q.conj(), 1 - h) * q;
+      quat tmp = value::pow(p * q.conj(), 1 - h) * q;
       assert(about_equal(tmp, slerp(p, q, h)));
       return tmp;
     }
@@ -406,7 +406,7 @@ namespace mln
     quat slerp_4(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
-      quat tmp = pow(q * p.conj(), h) * p;
+      quat tmp = value::pow(q * p.conj(), h) * p;
       assert(about_equal(tmp, slerp(p, q, h)));
       return tmp;
     }
@@ -414,7 +414,7 @@ namespace mln
     quat slerp_5(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
-      quat tmp = q * pow(q.conj() * p, 1 - h);
+      quat tmp = q * value::pow(q.conj() * p, 1 - h);
       assert(about_equal(tmp, slerp(p, q, h)));
       return tmp;
     }

@@ -1,3 +1,8 @@
+2007-10-01  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix conflit in call of pow.
+	* mln/value/quat.hh: Fix.
+
 2007-10-01  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add gray values.
