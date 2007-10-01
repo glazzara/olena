@@ -1,64 +1,38 @@
 #include <mln/core/image2d_b.hh>
-#include <mln/core/point2d.hh>
-#include <mln/debug/println.hh>
-#include "graph.hh"
-#include "mesh_p.hh"
-#include "mesh_psite.hh"
-#include "draw_mesh.hh"
-#include "mesh_image.hh"
-#include <mln/core/interpolated.hh>
+#include <mln/core/sub_image.hh>
+#include <mln/core/neighb2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/level/fill.hh>
+#include <mln/level/stretch.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/core/mesh_image.hh>
+# include <mln/labeling/base.hh>
+# include <mln/debug/println.hh>
+# include <mln/core/window2d.hh>
+# include <mln/convert/to_window.hh>
+# include <mln/core/concept/dpoint.hh>
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/core/window.hh>
+# include <mln/pw/image.hh>
+# include <mln/pw/cst.hh>
+# include <mln/metal/is_a.hh>
 
 using namespace mln;
 
+namespace mln
+{
+
+}
 int
 main (void)
 {
-  util::graph<void>		g;
+  image2d_b<int_u8> in = io::pbm::load("l.pgm");
+  util::graph<void> g;
 
-  g.add_node ();
-  g.add_node ();
-  g.add_node ();
-  g.add_node ();
-  g.add_node ();
-  g.add_node ();
-
-  g.add_edge (0, 1);
-  g.add_edge (1, 2);
-  g.add_edge (2, 3);
-  g.add_edge (1, 3);
-  g.add_edge (4, 5);
-  g.add_edge (1, 4);
-
-  g.coherence ();
-  //  g.print_debug ();
-
-  std::vector<point2d>		v;
-  v.push_back (make::point2d (1,1));
-  v.push_back (make::point2d (10,1));
-  v.push_back (make::point2d (19,2));
-  v.push_back (make::point2d (19,19));
-  v.push_back (make::point2d (10,10));
-  v.push_back (make::point2d (1,19));
+  mln_bkd_pixter(const image2d_b<int_u8>) p(ima.input);
 
 
-  image2d_b<int>		ima (20, 20, 1);
-
-  mesh_p<point2d>		m(g, v);
-
-  draw::mesh (ima, m, 7, 1);
-
-  std::vector<int> val;
-
-  val.push_back (2);
-  val.push_back (3);
-  val.push_back (4);
-  val.push_back (5);
-  val.push_back (6);
-  val.push_back (7);
-
-  mesh_image<point2d, int>	im (m, val);
-
-  draw::mesh (ima, im);
-
-  debug::println (ima);
 }

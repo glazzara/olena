@@ -2,14 +2,12 @@
 # define MLN_DRAW_MESH_HH
 
 # include <mln/pw/image.hh>
-#include <mln/core/image2d_b.hh>
+# include <mln/core/image2d_b.hh>
 # include <mln/core/point2d.hh>
-//# include <mln/pw/cst.hh>
 # include <mln/level/fill.hh>
-//# include <mln/metal/is_a.hh>
 # include <mln/draw/line.hh>
-# include "mesh_p.hh"
-# include "mesh_image.hh"
+# include <mln/core/mesh_p.hh>
+# include <mln/core/mesh_image.hh>
 
 namespace mln
 {

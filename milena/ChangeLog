@@ -1,3 +1,18 @@
+2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add graph_labeling in sandbox.
+	* graph_labeling.hh: New make_graph : convert a labeled image
+	into mesh_p.
+	* graph_labeling.cc: New test for graph labeling.
+	* graph_labeling2.cc: New test for graph labeling.
+
+	Update
+	* draw_mesh.hh,
+	* graph.hh,
+	* main.cc,
+	* main_mesh_image.cc,
+	* mesh_p.hh: Update.
+
 2007-10-01  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Rename dirbrowsing and improve it.

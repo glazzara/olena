@@ -1,11 +1,11 @@
 #include <mln/core/image2d_b.hh>
 #include <mln/core/point2d.hh>
 #include <mln/debug/println.hh>
-#include "graph.hh"
-#include "mesh_p.hh"
-#include "mesh_psite.hh"
-#include "draw_mesh.hh"
-#include "mesh_image.hh"
+#include <mln/util/graph.hh>
+#include <mln/core/mesh_p.hh>
+#include <mln/core/mesh_psite.hh>
+#include <mln/draw/mesh.hh>
+#include <mln/core/mesh_image.hh>
 #include <mln/core/interpolated.hh>
 
 using namespace mln;
@@ -29,7 +29,7 @@ main (void)
  g.add_edge (4, 5);
  g.add_edge (1, 4);
 
- g.coherence ();
+ g.consistency ();
  // g.print_debug ();
 
  std::vector<point2d> v;
