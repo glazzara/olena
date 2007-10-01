@@ -41,7 +41,7 @@
 # include <mln/set/diff.hh>
 
 # include <mln/canvas/browsing/snake_fwd.hh>
-# include <mln/canvas/dirbrowsing.hh>
+# include <mln/canvas/browsing/directional.hh>
 # include <mln/accu/median.hh>
 
 
@@ -176,11 +176,11 @@ namespace mln
 
 
 
-      template <typename I, typename O>
+      template <typename I_, typename O>
       struct median_dir_t
       {
-	typedef mln_point(I) point;
-	enum { dim = point::dim };
+	typedef I_ I;
+	enum { dim = I::point::dim };
 
 	// i/o
 	const I& input;
@@ -189,6 +189,7 @@ namespace mln
 	O& output;
 
 	// aux data
+	mln_point(I) p;
 	const mln_point(I)
 	  pmin, pmax;
 	const mln_coord(I)
@@ -204,6 +205,7 @@ namespace mln
 	    length(length),
 	    output(exact(output)),
 	    // aux data
+	    p(),
 	    pmin(input.domain().pmin()),
 	    pmax(input.domain().pmax()),
 	    pmin_dir(pmin[dir]),
@@ -218,10 +220,10 @@ namespace mln
 	{
 	}
 
-	void process(const mln_point(I)& p_)
+	void next()
 	{
 	  mln_point(I)
-	    p  = p_,
+	    p  = this->p,
 	    pt = p,
 	    pu = p;
 
@@ -268,6 +270,10 @@ namespace mln
 	    }
 	}
 
+	void final()
+	{
+	}
+
       }; // end of median_dir_t
 
 
@@ -276,7 +282,7 @@ namespace mln
       void median_dir_(const Image<I>& input, unsigned dir, unsigned length, O& output)
       {
 	median_dir_t<I,O> f(exact(input), dir, length, output);
-	canvas::dirbrowsing(f);
+	canvas::browsing::directional(f);
       }
 
 

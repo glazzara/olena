@@ -33,65 +33,85 @@
  * \brief Directional browsing of an image.
  */
 
+# include <mln/core/concept/browsing.hh>
+# include <mln/core/concept/image.hh>
+
 namespace mln
 {
 
   namespace canvas
   {
 
-    /*! FIXME : DOC
-     * F shall features : \n
-     * { \n
-     * --- as types: \n
-     *   point; \n
-     * --- as attributes: \n
-     *   dim; \n
-     *   dir; // and test dir < dim \n
-     *   input; \n
-     *   win; \n
-     * --- as methods: \n
-     *   void init(); \n
-     *   void process()
-     * } \n
-     *
-     */
-    template <typename F>
-    void dirbrowsing(F& f);
+    namespace browsing
+    {
+      
+      /*! FIXME : DOC
+       * F shall features : \n
+       * { \n
+       * --- as types: \n
+       *   I; \n
+       * --- as attributes: \n
+       *   dim; \n
+       *   dir; // and test dir < dim \n
+       *   input; \n
+       *   p; \n
+       * --- as methods: \n
+       *   void init(); \n
+       *   void next() \n
+       *   void final() \n
+       * } \n
+       *
+       */
+      struct directional_t : public Browsing< directional_t >
+      {
+	template <typename F>
+	void operator()(F& f) const;
+      }
+
+      directional;
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename F>
-    void dirbrowsing(F& f)
-    {
-      mln_point(F)
-	pmin = f.input.domain().pmin(),
-	pmax = f.input.domain().pmax();
-
-      mln_point(F::point) p = pmin;
-
-      f.init();
-
-      do
+      template <typename F>
+      void
+      directional_t::operator()(F& f) const
       {
-	f.process(p);
+	mln_precondition(f.dir < f.dim);
+	typedef typename F::I I;
 
-	for (int c = F::dim - 1; c >= 0; --c)
+	mln_point(I)
+	  pmin = f.input.domain().pmin(),
+	  pmax = f.input.domain().pmax();
+	
+	f.p = pmin;
+	
+	f.init();
+	
+	do
 	{
-	  if (c == int(f.dir))
-	    continue;
-	  if (p[c] != pmax[c])
+	  f.next();
+	  
+	  for (int c = F::dim - 1; c >= 0; --c)
 	  {
-	    ++p[c];
-	    break;
+	    if (c == int(f.dir))
+	      continue;
+	    if (f.p[c] != pmax[c])
+	    {
+	      ++f.p[c];
+	      break;
+	    }
+	    f.p[c] = pmin[c];
 	  }
-	  p[c] = pmin[c];
-	}
-      } while (p != pmin);
-    }
+	} while (f.p != pmin);
+
+	f.final();
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } //end of namespace mln::canvas
+    } // end of namespace mln::canvas::browsing
+
+  } // end of namespace mln::canvas
 
 } // end of namespace mln
 

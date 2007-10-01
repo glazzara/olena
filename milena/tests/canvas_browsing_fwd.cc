@@ -31,11 +31,14 @@
  */
 
 #include <mln/core/image2d_b.hh>
+#include <mln/core/image3d_b.hh>
 #include <mln/canvas/browsing/fwd.hh>
 #include <mln/canvas/browsing/snake_fwd.hh>
+#include <mln/canvas/browsing/directional.hh>
 #include <mln/fun/p2v/iota.hh>
 #include <mln/pw/image.hh>
 #include <mln/debug/println.hh>
+#include <mln/level/fill.hh>
 
 
 
@@ -46,13 +49,17 @@ template <typename I_, typename F>
 struct assign_browsing_functor
 {
   typedef I_ I;
+  enum { dim = I::point::dim };
+
 
   I input;
   F f;
+  int dir;
 
-  assign_browsing_functor(I& input, F f = F())
+  assign_browsing_functor(I& input, F f = F(), int dir_ = 0)
     : input(input),
-      f(f)
+      f(f),
+      dir(dir_)
   {}
 
   mln_psite(I) p;
@@ -74,13 +81,14 @@ namespace mln
   template <typename I, typename F, typename B>
   void my_test(Image<I>& ima_,
 	       const Function_p2v<F>& f_,
-	       const Browsing<B>& browse_)
+	       const Browsing<B>& browse_,
+	       int dir = 0)
   {
     I& ima = exact(ima_);
     const F& f = exact(f_);
     const B& browse = exact(browse_);
 
-    assign_browsing_functor<I, F> fun(ima, f);
+    assign_browsing_functor<I, F> fun(ima, f, dir);
     browse(fun);
   }
 
@@ -90,11 +98,16 @@ namespace mln
 int main()
 {
   using namespace mln;
-  image2d_b<unsigned> ima(3, 3);
+  image2d_b<unsigned> ima2(3, 3);
+  image3d_b<unsigned> ima3(3, 3, 3);
 
-  my_test(ima, fun::p2v::iota, canvas::browsing::fwd);
-  debug::println(ima);
+  my_test(ima2, fun::p2v::iota, canvas::browsing::fwd);
+  debug::println(ima2);
 
-  my_test(ima, fun::p2v::iota, canvas::browsing::snake_fwd);
-  debug::println(ima);
+  my_test(ima2, fun::p2v::iota, canvas::browsing::snake_fwd);
+  debug::println(ima2);
+
+  level::fill(ima3, 0);
+  my_test(ima3, fun::p2v::iota, canvas::browsing::directional, 1);
+  debug::println(ima3);
 }

@@ -1,3 +1,11 @@
+2007-10-01  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Rename dirbrowsing and improve it.
+	* mln/canvas/dirbrowsing.hh: Rename as ...
+	* mln/canvas/browsing/directional.hh: ...this.
+	* mln/level/median.hh: Update.
+	* tests/canvas_browsing_fwd.cc: Update.
+
 2007-10-01  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix gray and traits.
