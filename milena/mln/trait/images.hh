@@ -172,6 +172,9 @@ namespace mln
       struct vectorial : any { std::string str() const { return "value::vectorial"; } };
       struct structed  : any { std::string str() const { return "value::structed"; } };
       struct pointer   : any { std::string str() const { return "value::pointer"; } };
+
+      struct fixme // So FIXME!
+	: any { std::string str() const { return "space::fixme"; } };
     };
 
 

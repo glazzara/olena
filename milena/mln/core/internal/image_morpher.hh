@@ -161,7 +161,6 @@ namespace mln
 	      typename J>
     void init_(Subject s, T& target, const Image<J>& model_)
     {
-      std::cout << "deleg... ";
       // FIXME: Precondition.
       // FIXME: Properly check that J is an internal::image_morpher_.
       const J& model = exact(model_);

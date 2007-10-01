@@ -1,3 +1,13 @@
+2007-10-01  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fix gray and traits.
+
+	* mln/core/internal/image_morpher.hh: Remove debug.
+	* mln/pw/image.hh: Add value typedef to pw::image.
+	* mln/trait/images.hh: Fix.
+	* mln/value/gray.hh: Gray inherits now from Value.
+	* mln/value/graylevel.hh: Update data_kind typedef.
+
 2007-10-01  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix conflit in call of pow.

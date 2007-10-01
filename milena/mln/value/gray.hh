@@ -29,6 +29,8 @@
 # define MLN_VALUE_GRAY_HH
 
 # include <iostream>
+
+# include <mln/core/concept/value.hh>
 # include <mln/value/graylevel.hh>
 
 
@@ -45,10 +47,15 @@ namespace mln
     /// General gray-level class where n bits is not know at compile-time.
     /// This class is used for exchange between gray-level types purpose.
 
-    class gray // FIXME do we need a super class?
-    //: public mln::internal::graylevel_value_< gray >
+    class gray : public Value<gray>
     {
     public:
+
+      /// Encoding associated type.
+      typedef unsigned long enc;
+
+      /// Equivalent associated type.
+      typedef unsigned long equiv;
 
       /// Ctor.
       gray();

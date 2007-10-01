@@ -83,6 +83,8 @@ namespace mln
     {
       typedef trait::category::primary category;
 
+      typedef trait::value::fixme     value;
+
       typedef trait::access::browsing access;
       typedef trait::space::fixme     space;
       typedef trait::size::regular    size;
