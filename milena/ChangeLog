@@ -1,3 +1,14 @@
+2007-10-01  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add gray values.
+
+	* mln/value/gray.hh: General gray-level class where n bits is not know
+    	at compile-time.  This class is used for exchange between gray-level
+    	types purpose.
+
+	* mln/value/graylevel.hh: Graylevel class on n bits.
+	* tests/value_gray.cc: Some tests.
+
 2007-10-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	A lot of cleaning works.
