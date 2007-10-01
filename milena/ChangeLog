@@ -1,5 +1,12 @@
 2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Move border_fill and border_duplicate into mln/border.
+
+	* duplicate.hh: Update.
+	* fill.hh: Update.
+
+2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Move tests for border in tests.
 
 	Tests for border fill.
