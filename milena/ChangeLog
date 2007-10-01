@@ -1,3 +1,39 @@
+2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Move tests for border in tests.
+
+	Tests for border fill.
+	* border_fill: New.
+	* border_fill/test_border_fill_image1d_1.cc: New.
+	* border_fill/test_border_fill_image1d_2.cc: New.
+	* border_fill/test_border_fill_image1d_3.cc: New.
+	* border_fill/test_border_fill_image1d_4.cc: New.
+	* border_fill/test_border_fill_image1d_5.cc: New.
+	* border_fill/test_border_fill_image2d_1.cc: New.
+	* border_fill/test_border_fill_image2d_2.cc: New.
+	* border_fill/test_border_fill_image2d_3.cc: New.
+	* border_fill/test_border_fill_image2d_4.cc: New.
+	* border_fill/test_border_fill_image3d_1.cc: New.
+	* border_fill/test_border_fill_image3d_2.cc: New.
+	* border_fill/test_border_fill_image3d_3.cc: New.
+	* border_fill/test_border_fill_image3d_4.cc: New.
+
+	Tests for border duplicate.
+	* border_duplicate: New.
+	* border_duplicate/test_border_duplicate_image1d_1.cc: New.
+	* border_duplicate/test_border_duplicate_image1d_2.cc: New.
+	* border_duplicate/test_border_duplicate_image1d_3.cc: New.
+	* border_duplicate/test_border_duplicate_image1d_4.cc: New.
+	* border_duplicate/test_border_duplicate_image1d_5.cc: New.
+	* border_duplicate/test_border_duplicate_image2d_1.cc: New.
+	* border_duplicate/test_border_duplicate_image2d_2.cc: New.
+	* border_duplicate/test_border_duplicate_image2d_3.cc: New.
+	* border_duplicate/test_border_duplicate_image2d_4.cc: New.
+	* border_duplicate/test_border_duplicate_image3d_1.cc: New.
+	* border_duplicate/test_border_duplicate_image3d_2.cc: New.
+	* border_duplicate/test_border_duplicate_image3d_3.cc: New.
+	* border_duplicate/test_border_duplicate_image3d_4.cc: New.
+
 2007-10-01  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add Simon's abilities.
