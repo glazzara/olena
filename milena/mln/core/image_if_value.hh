@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_IMAGE_IF_HH
-# define MLN_CORE_IMAGE_IF_HH
+#ifndef MLN_CORE_IMAGE_IF_VALUE_HH
+# define MLN_CORE_IMAGE_IF_VALUE_HH
 
-/*! \file mln/core/image_if.hh
+/*! \file mln/core/image_if_value.hh
  *
- * \brief Definition of a image_if image.
+ * \brief Definition of a image_if_value image.
  */
 
 # include <mln/core/internal/image_if_base.hh>
@@ -42,73 +42,77 @@ namespace mln
    *
    */
   template <typename I, typename F>
-  struct image_if : public internal::image_if_base< I, F >
+  struct image_if_value : public internal::image_if_base< I, F >
   {
     /// Skeleton.
-    typedef image_if< tag::image_<I>, F > skeleton;
+    typedef image_if_value< tag::image_<I>, tag::function_<F> > skeleton;
 
     /// Constructor from an image \p ima and a predicate \p f.
-    image_if(I& ima, const F& f);
+    image_if_value(I& ima, const F& f);
 
     /// Constructor without argument.
-    image_if();
+    image_if_value();
 
     /// Const promotion via convertion.
-    operator image_if<const I, F>() const;
+    operator image_if_value<const I, F>() const;
   };
-
 
   // Operators.
 
-  // Image | Function_p2b.
+  // Image | value.
 
-  template <typename I, typename F>
-  image_if<I,F>
-  operator | (Image<I>& ima, const Function_p2b<F>& f);
+  template <typename I>
+  image_if_value< I,
+	    fun::eq_p2b_expr_< pw::value_<I>,
+			       pw::cst_<mln_value(I)> > >
+  operator | (Image<I>& ima, const mln_value(I)& v);
 
-  template <typename I, typename F>
-  image_if<const I,F>
-  operator | (const Image<I>& ima, const Function_p2b<F>& f);
-
+  template <typename I>
+  image_if_value< const I,
+	    fun::eq_p2b_expr_< pw::value_<I>,
+			       pw::cst_<mln_value(I)> > >
+  operator | (const Image<I>& ima, const mln_value(I)& v);
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // image_if<I,F>
+  // image_if_value<I,F>
 
   template <typename I, typename F>
-  image_if<I,F>::image_if()
+  image_if_value<I,F>::image_if_value()
   {
   }
 
   template <typename I, typename F>
-  image_if<I,F>::image_if(I& ima, const F& f)
+  image_if_value<I,F>::image_if_value(I& ima, const F& f)
   {
     this->init_(ima, f);
   }
 
   template <typename I, typename F>
-  image_if<I,F>::operator image_if<const I,F>() const
+  image_if_value<I,F>::operator image_if_value<const I, F>() const
   {
-    image_if<const I,F> tmp(this->data_->ima_, this->data_->pset_);
+    image_if_value<const I, F> tmp(this->data_->ima_, this->data_->pset_);
     return tmp;
   }
 
   // Operators.
 
-  template <typename I, typename F>
-  image_if<I,F>
-  operator | (Image<I>& ima, const Function_p2b<F>& f)
+  template <typename I>
+  image_if_value< I,
+	    fun::eq_p2b_expr_< pw::value_<I>,
+			       pw::cst_<mln_value(I)> > >
+  operator | (Image<I>& ima, const mln_value(I)& v)
   {
-    image_if<I,F> tmp(exact(ima), exact(f));
-    return tmp;
+    return ima | (pw::value(ima) == pw::cst(v));
   }
 
-  template <typename I, typename F>
-  image_if<const I, F>
-  operator | (const Image<I>& ima, const Function_p2b<F>& f)
+  template <typename I>
+  image_if_value< const I,
+	    fun::eq_p2b_expr_< pw::value_<I>,
+			       pw::cst_<mln_value(I)> > >
+  operator | (const Image<I>& ima, const mln_value(I)& v)
   {
-    image_if<const I, F> tmp(exact(ima), exact(f));
-    return tmp;
+    return ima | (pw::value(ima) == pw::cst(v));
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -116,4 +120,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_IMAGE_IF_HH
+#endif // ! MLN_CORE_IMAGE_IF_VALUE_HH

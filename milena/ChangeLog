@@ -1,3 +1,12 @@
+2007-10-02  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Refactoring of image_if.
+	* mln/core/image_if.hh: For functions.
+	* mln/core/image_if_interval.hh: New, for interval.
+	* mln/core/image_if_value.hh: New, for values.
+	* mln/core/internal/image_if_base.hh: Abstraction of image_if.
+	* mln/trait/images.hh: Update.
+
 2007-10-02  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	My log.

@@ -85,7 +85,7 @@ namespace mln
   template <typename P, typename T> class sparse_image;
 
   // Morphers.
-  template <typename I, typename F> struct image_if;
+  template <typename I, typename F> struct image_if_base;
   template <typename I, typename D> class decorated_image;
   template <typename I, typename S> class sub_image;
   template <typename I> struct t_image;
