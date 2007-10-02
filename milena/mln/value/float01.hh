@@ -1,0 +1,244 @@
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+// Boston, MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
+
+#ifndef MLN_VALUE_FLOAT01_HH
+# define MLN_VALUE_FLOAT01_HH
+
+# include <iostream>
+
+# include <mln/core/concept/value.hh>
+# include <mln/value/float01_.hh>
+
+
+
+namespace mln
+{
+
+  // Fwd decls.
+  namespace value
+  {
+    template <unsigned N> class float01_;
+    class float01;
+
+    /// General float01_ class where n bits is not know at compile-time.
+    /// This class is used for exchange between float01_ types purpose.
+
+    class float01 : public Value<float01>
+    {
+    public:
+
+      /// Encoding associated type.
+      typedef double enc;
+
+      /// Equivalent associated type.
+      typedef double equiv;
+
+      /// Ctor.
+      float01();
+
+      /// Ctor.
+      template <unsigned N>
+      float01(const float01_<N>& val);
+
+      /// Ctor.
+      float01(unsigned nbits, double val);
+
+      /// Access to std type.
+      double value() const;
+      unsigned long value_ind() const;
+
+      unsigned nbits() const;
+
+      void set_nbits(unsigned nbits);
+
+      float01 to_nbits(unsigned nbits) const;
+
+      template <unsigned N>
+      operator float01_<N>() const;
+
+    protected:
+      unsigned nbits_;
+      unsigned long val_;
+    };
+
+    std::ostream& operator<<(std::ostream& ostr, const float01& g);
+
+    bool operator==(const float01& lhs, const float01& rhs);
+    bool operator<(const float01& lhs, const float01& rhs);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    namespace internal
+    {
+
+      unsigned long two_pow_(unsigned n)
+      {
+	if (n == 0)
+	  return 1;
+	else
+	  return 2 * two_pow_(n - 1);
+      }
+
+      unsigned long two_pow_n_minus_1(unsigned n)
+      {
+	  return two_pow_(n) - 1;
+      }
+
+      template <unsigned n_dest>
+      unsigned long convert(unsigned n_src, unsigned long val)
+      {
+	if (n_dest == n_src)
+	  return val;
+	else
+	  if (n_dest > n_src)
+	    return val * two_pow_n_minus_1(n_dest) / two_pow_n_minus_1(n_src);
+	  else
+	    return val / two_pow_(n_src - n_dest);
+      }
+
+    } // end of mln::value::internal
+
+    // Float01.
+
+    float01::float01()
+      : nbits_(0)
+    {
+    }
+
+    template <unsigned n>
+    float01::float01(const float01_<n>& g)
+      : nbits_(n),
+	val_(g.value_ind())
+    {
+    }
+
+    float01::float01(unsigned nbits, double val)
+      : nbits_(nbits),
+	val_(unsigned(val * internal::two_pow_n_minus_1(nbits)))
+    {
+    }
+
+    double float01::value() const
+    {
+      mln_invariant(nbits_ != 0);
+      return val_ / internal::two_pow_n_minus_1(nbits_);
+    }
+
+    unsigned long float01::value_ind() const
+    {
+      mln_invariant(nbits_ != 0);
+      return val_;
+    }
+
+    unsigned float01::nbits() const
+    {
+      return nbits_;
+    }
+
+
+
+    void float01::set_nbits(unsigned nbits)
+    {
+      mln_precondition(nbits != 0);
+      mln_invariant(nbits_ != 0);
+      if (nbits == nbits_)
+	return;
+      if (nbits > nbits_)
+	{
+	  val_ *= internal::two_pow_n_minus_1(nbits);
+	  val_ /= internal::two_pow_n_minus_1(nbits_);
+	}
+      else // nbits < nbits_
+	{
+	  val_ /= internal::two_pow_(nbits_ - nbits);
+	}
+      nbits_ = nbits;
+    }
+
+
+    float01 float01::to_nbits(unsigned nbits) const
+    {
+      mln_precondition(nbits != 0);
+      mln_invariant(nbits_ != 0);
+      float01 tmp(*this);
+      tmp.set_nbits(nbits);
+      return tmp;
+    }
+
+
+    template <unsigned n>
+    float01::operator float01_<n>() const
+    {
+      mln_precondition(nbits_ != 0);
+      float01_<n> tmp;
+      tmp.set_ind(internal::convert<n>(nbits_, val_));
+      mln_assertion(tmp.value() < internal::two_pow_(n));
+      return tmp;
+    }
+
+    // operators
+
+    std::ostream& operator<<(std::ostream& ostr, const float01& g)
+    {
+      return ostr << g.value() << '/' << g.nbits() << "nbits";
+    }
+
+    bool operator==(const float01& lhs, const float01& rhs)
+    {
+      mln_precondition(lhs.nbits() != 0 and rhs.nbits() != 0);
+
+      if (rhs.nbits() == lhs.nbits())
+	return lhs.value_ind() == rhs.value_ind();
+
+      if (lhs.nbits() < rhs.nbits())
+	return lhs.value_ind() == rhs.to_nbits(lhs.nbits()).value_ind();
+      else
+      {
+	return lhs.to_nbits(rhs.nbits()).value_ind() == rhs.value_ind();
+      }
+    }
+
+    bool operator<(const float01& lhs, const float01& rhs)
+    {
+      mln_precondition(lhs.nbits() != 0 and rhs.nbits() != 0);
+      if (rhs.nbits() == lhs.nbits())
+	return lhs.value() < rhs.value();
+      if (lhs.nbits() > rhs.nbits())
+	return lhs.value() < rhs.to_nbits(lhs.nbits()).value();
+      else
+	return lhs.to_nbits(rhs.nbits()).value() < rhs.value();
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::value
+
+} // end of namespace mln
+
+
+#endif // ! MLN_VALUE_FLOAT01_HH

@@ -1,3 +1,14 @@
+2007-10-02  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add float01 values. float01_<n> type is used to represent quantified
+	float numbers in the range [0..1].
+
+	* mln/value/float01.hh: New.
+	* mln/value/float01_.hh: New.
+	* mln/value/float01_16.hh: New.
+	* mln/value/float01_8.hh: New.
+	* tests/value_float01.cc: New.
+
 2007-10-02  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add empty in queue_p.
