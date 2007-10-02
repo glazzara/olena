@@ -48,6 +48,8 @@ namespace mln
   template <typename E>
   struct Point_Set : public Object<E>
   {
+    typedef Point_Set<void> category;
+
     /*
       typedef mesh;
 

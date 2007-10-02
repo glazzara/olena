@@ -47,6 +47,8 @@ namespace mln
   template <typename E>
   struct Function : public Object<E>
   {
+    typedef Function<void> category;
+
     /*
       An operator() has to be provided.  Its signature depends
       on the particular function-object one considers.

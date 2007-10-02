@@ -49,6 +49,8 @@ namespace mln
   template <typename E>
   struct Weighted_Window : public Object<E>
   {
+    typedef Weighted_Window<void> category;
+
     /*
       typedef fwd_qiter;
       typedef bkd_piter;

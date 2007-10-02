@@ -63,7 +63,7 @@ namespace mln
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
-      internal::fixme();
+      mln::internal::fixme();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

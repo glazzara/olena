@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,82 +25,67 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_PROMOTE_HH
-# define MLN_TRAIT_PROMOTE_HH
+/*! \file tests/trait_op_plus.cc
+ *
+ * \brief Tests on mln::trait::op_plus.
+ */
 
-
-# define mln_promote(T, U) typename mln::trait::promote< T , U >::ret
-
+#include <mln/core/concept/image.hh>
+#include <mln/trait/op_plus.hh>
 
 
 namespace mln
 {
 
-  namespace metal
+
+  template <typename T>
+  struct my_image2d : Image< my_image2d<T> >
   {
+  };
 
-    template <unsigned n, typename T>
-    class vec;
-
-    template <unsigned n, unsigned m, typename T>
-    class mat;
-
-  } // end of namespace mln::metal
 
   namespace trait
   {
 
+    // int + float -> float
+
+    template <>
+    struct set_precise_binary_< op_plus, int, float >
+    {
+      typedef float ret;
+    };
+
+
+    // Image I + Image J -> bool (demo type!)
+
+    template <typename I, typename J>
+    struct set_binary_< op_plus, Image, I,  Image, J >
+    {
+      typedef bool ret;
+    };
+
+    // precise definition: my_image2d<T> + my_image2d<U> -> my_image2d<V> ('&' is to avoid compiling an empty class)
+
     template <typename T, typename U>
-    struct promote;
-
-
-    template <>
-    struct promote<int, float>
+    struct set_precise_binary_< op_plus, my_image2d<T>, my_image2d<U> >
     {
-      typedef float ret;
-    };
-    template <>
-    struct promote<float, int>
-    {
-      typedef float ret;
+      typedef mln_trait_op_plus(T, U) V; 
+      typedef my_image2d<V>& ret;
     };
 
-    template <>
-    struct promote<int, double>
-    {
-      typedef double ret;
-    };
-    template <>
-    struct promote<double, int>
-    {
-      typedef double ret;
-    };
+  }
+  
+}
 
-    template <>
-    struct promote<double, float>
-    {
-      typedef double ret;
-    };
-    template <>
-    struct promote<float, double>
-    {
-      typedef double ret;
-    };
-
-    template <unsigned n, typename T, typename U>
-    struct promote<metal::vec<n, T>, metal::vec<n, U> >
-    {
-      typedef metal::vec<n, mln_promote(T, U)> ret;
-    };
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    struct promote<metal::mat<n, m, T>, metal::mat<n, m, U> >
-    {
-      typedef metal::mat<n, m, mln_promote(T, U)> ret;
-    };
-
-  } // end of namespace mln::trait
-
-} // end of namespace mln
-
-#endif // ! MLN_TRAIT_PROMOTE_HH
+int main()
+{
+  using namespace mln;
+  {
+    mln_trait_op_plus_(int, float) tmp;
+    tmp = 5.1f;
+  }
+  {
+    my_image2d<float>* ptr;
+    mln_trait_op_plus_(my_image2d<int>, my_image2d<float>) tmp = *ptr;
+  }
+}

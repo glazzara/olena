@@ -192,8 +192,8 @@ namespace mln
       struct two_d    : any { std::string str() const { return "space::two_d"; } };
       struct three_d  : any { std::string str() const { return "space::three_d"; } };
 
-      struct fixme // So FIXME!
-	: any { std::string str() const { return "space::fixme"; } };
+      struct fixme_ // So FIXME!
+	: any { std::string str() const { return "space::fixme_"; } };
     };
 
     struct size
@@ -211,8 +211,8 @@ namespace mln
       struct aligned
 	: regular { std::string str() const { return "support::aligned"; } };
 
-      struct fixme // So FIXME!
-	: any { std::string str() const { return "support::fixme"; } };
+      struct fixme_ // So FIXME!
+	: any { std::string str() const { return "support::fixme_"; } };
     };
 
     struct border

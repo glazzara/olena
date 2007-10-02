@@ -77,7 +77,7 @@ namespace mln
     typedef pset_if_fwd_piter_<S,F> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef internal::fixme bkd_piter;
+    typedef mln::internal::fixme bkd_piter;
 
 
     /// Constructor with a point set \p pset and a predicate \p f.

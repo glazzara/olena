@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,32 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TRAIT_ALL_HH
-# define MLN_CORE_TRAIT_ALL_HH
+#ifndef MLN_TRAIT_OP_PLUS_HH
+# define MLN_TRAIT_OP_PLUS_HH
 
-/*! \file mln/core/trait/all.hh
- *
- * \brief File that includes all traits.
- */
+# include <mln/trait/promote.hh>
+
+
+# define mln_trait_op_plus(L, R)  typename mln::trait::op_plus< L , R >::ret
+# define mln_trait_op_plus_(L, R)          mln::trait::op_plus< L , R >::ret
+
 
 
 namespace mln
 {
 
-  /*! Namespace for image traits.
-   */
-  namespace trait {}
-
-}
+  namespace trait
+  {
 
 
-# include <mln/core/trait/is_fast.hh>
-# include <mln/core/trait/pixter.hh>
-# include <mln/core/trait/op_mult.hh>
-// FIXME # include <mln/core/trait/op_plus.hh>
-# include <mln/core/trait/op_minus.hh>
-# include <mln/core/trait/op_uminus.hh>
-// FIXME # include <mln/core/trait/promote.hh>
+    template <typename L, typename R>
+    struct op_plus : public solve_binary<op_plus, L, R>
+    {
+    };
 
 
-#endif // ! MLN_CORE_TRAIT_ALL_HH
+    /// Default definition of op_plus is given by the promote trait.
+    template <template <class> class Category_L, typename L,
+	      template <class> class Category_R, typename R>
+    struct set_binary_< op_plus, Category_L, L, Category_R, R >
+      :
+      public promote< L, R >
+    {
+    };
+
+
+  } // end of namespace mln::trait
+
+} // end of namespace mln
+
+
+#endif // ! MLN_TRAIT_OP_PLUS_HH

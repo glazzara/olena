@@ -25,32 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TRAIT_ALL_HH
-# define MLN_CORE_TRAIT_ALL_HH
+#ifndef MLN_CORE_CATEGORY_HH
+# define MLN_CORE_CATEGORY_HH
 
-/*! \file mln/core/trait/all.hh
- *
- * \brief File that includes all traits.
+/*! \file mln/core/category.hh
+ * \brief Definition of the category holder type.
  */
 
 
 namespace mln
 {
 
-  /*! Namespace for image traits.
-   */
-  namespace trait {}
-
-}
+  // FIXME: Doc!
 
 
-# include <mln/core/trait/is_fast.hh>
-# include <mln/core/trait/pixter.hh>
-# include <mln/core/trait/op_mult.hh>
-// FIXME # include <mln/core/trait/op_plus.hh>
-# include <mln/core/trait/op_minus.hh>
-# include <mln/core/trait/op_uminus.hh>
-// FIXME # include <mln/core/trait/promote.hh>
+  template <typename E>
+  struct Unknown;
 
 
-#endif // ! MLN_CORE_TRAIT_ALL_HH
+  template <typename T>
+  struct category
+  {
+    typedef typename T::category ret; // FIXME: if found or Unknown<void> => write a meta-program...
+  };
+
+
+  // The case of built-in types.
+
+  template <typename E>
+  struct Built_In;
+
+  template <> struct category< int >    { typedef Built_In<void> ret; };
+  template <> struct category< float >  { typedef Built_In<void> ret; };
+  template <> struct category< double > { typedef Built_In<void> ret; };
+  // FIXME: ...
+
+
+} // end of namespace mln
+
+
+#endif // ! MLN_CORE_CATEGORY_HH

@@ -1,3 +1,78 @@
+2007-10-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Improve the traits system.
+
+	Improve the trait system.
+
+	* mln/core/category.hh: New.
+	* mln/core/concept/image.hh,
+	* mln/core/concept/function.hh,
+	* mln/core/concept/meta_accumulator.hh,
+	* mln/core/concept/value_set.hh,
+	* mln/core/concept/weighted_window.hh,
+	* mln/core/concept/browsing.hh,
+	* mln/core/concept/dpoint.hh,
+	* mln/core/concept/point_set.hh,
+	* mln/core/concept/object.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/concept/value.hh,
+	* mln/core/concept/point_site.hh,
+	* mln/core/concept/accumulator.hh (category): New.
+	* mln/trait/solve.hh: New.
+	* mln/core/trait/op_plus.hh: Rename as...
+	* mln/trait/op_plus.hh: ...this.
+	Update.
+	* mln/core/trait/promote.hh: Rename as...
+	* mln/trait/promote.hh: ...this.
+	Update.
+	* mln/core/trait/all.hh: Update.
+	* mln/trait/all.hh: New.
+	* mln/trait/op_minus.hh: New.
+	* mln/trait/op_uminus.hh: New.
+	* mln/trait/op_times.hh: New.
+	* tests/trait_op_plus.cc: New.
+	* mln/metal/binary_arith_trait.hh: Remove; obsolete.
+	* mln/value/props.hh: Update.
+	(vec, mat): Move to the file they belong to.
+
+
+	Then use it.
+
+	* mln/core/ops.hh,
+	* mln/metal/mat.hh,
+	* mln/metal/vec.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_u.hh: Use traits.
+	Update.
+	* mln/arith/plus.hh: Add code to be activated.
+
+
+	Disambiguation.
+
+	* mln/trait/images.hh (fixme): Rename as...
+	(fixme_): ...this to avoid conflict with mln::internal::fixme.
+	* mln/pw/image.hh: Update.
+	* mln/border/mirror.hh,
+	* mln/border/resize.hh,
+	* mln/core/dpoints_piter.hh,
+	* mln/core/image1d_b.hh,
+	* mln/core/image2d_b.hh,
+	* mln/core/image3d_b.hh,
+	* mln/core/pset_if.hh,
+	* mln/core/pset_if_piter.hh: Fully name fixme.
+	* mln/border/fill.hh (fixme): Remove include.
+
+
+	Misc.
+
+	* mln/border/duplicate.hh: Fix typo.
+	* mln/metal/mat.hh (operator*=): Fix sig.
+	Fix params order.
+	* mln/value/rgb.hh (min, max): Remove, cause meaningless.
+	(operator-, operator+): Likewise.
+	(card_): Set to 0.
+
 2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add algorithm for extend labeling (slow 3min for this test).

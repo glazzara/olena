@@ -25,68 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_METAL_BINARY_ARITH_TRAIT_HH
-# define MLN_METAL_BINARY_ARITH_TRAIT_HH
-
-
-# define mlc_bin_arith(T, U) typename mln::metal::binary_arith_trait< T , U >::ret
-
-
-// FIXME: Move in mln/trait/!
-
+#ifndef MLN_TRAIT_ALL_HH
+# define MLN_TRAIT_ALL_HH
 
 
 namespace mln
 {
 
-  namespace metal
-  {
-
-    template <typename T, typename U>
-    struct binary_arith_trait;
-
-
-    template <typename T>
-    struct binary_arith_trait< T, T >
-    {
-      typedef T ret;
-    };
-
-    template <>
-    struct binary_arith_trait< int, float >
-    {
-      typedef float ret;
-    };
-    template <>
-    struct binary_arith_trait<float, int>
-    {
-      typedef float ret;
-    };
-
-    template <>
-    struct binary_arith_trait<int, double>
-    {
-      typedef double ret;
-    };
-    template <>
-    struct binary_arith_trait<double, int>
-    {
-      typedef double ret;
-    };
-
-    template <>
-    struct binary_arith_trait<double, float>
-    {
-      typedef double ret;
-    };
-    template <>
-    struct binary_arith_trait<float, double>
-    {
-      typedef double ret;
-    };
-
-  } // end of namespace mln::metal
+  // FIXME: Doc!
+  namespace trait
+  {}
 
 } // end of namespace mln
 
-#endif // ! MLN_METAL_BINARY_ARITH_TRAIT_HH
+
+# include <mln/trait/solve.hh>
+
+// promote
+# include <mln/trait/promote.hh>
+
+// arith
+# include <mln/trait/op_plus.hh>
+# include <mln/trait/op_times.hh>
+# include <mln/trait/op_minus.hh>
+# include <mln/trait/op_uminus.hh>
+
+
+
+#endif // ! MLN_TRAIT_ALL_HH

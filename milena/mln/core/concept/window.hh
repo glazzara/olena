@@ -48,6 +48,8 @@ namespace mln
   template <typename E>
   struct Window : public Object<E>
   {
+    typedef Window<void> category;
+
     /*
       typedef point;
       typedef dpoint;

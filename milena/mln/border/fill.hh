@@ -34,7 +34,6 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/internal/fixme.hh>
 
 
 namespace mln
@@ -115,7 +114,6 @@ namespace mln
       typedef mln_point(I) P;
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
-
       if (!ima.border ())
 	return;
       if (sizeof(mln_value(I)) == 1)

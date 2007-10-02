@@ -60,6 +60,7 @@ namespace mln
   template <typename E>
   struct Meta_Accumulator : public Object<E>
   {
+    typedef Meta_Accumulator<void> category;
   protected:
     Meta_Accumulator();
   };

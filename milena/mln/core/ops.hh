@@ -30,13 +30,13 @@
 
 /*! \file mln/core/ops.hh
  * \brief Definitions of some operators.
- *
- * \todo Traits are in mln/trait/ not in mln/metal/!
  */
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/exact.hh>
-# include <mln/metal/binary_arith_trait.hh>
+
+# include <mln/trait/op_plus.hh>
+# include <mln/trait/op_times.hh>
 
 
 namespace mln
@@ -100,7 +100,7 @@ namespace mln
 
   // FIXME: Doc!
   template <typename O>
-  mlc_bin_arith(int, O)
+  mln_trait_op_plus(O, int)
   operator+(int lhs, const Object<O>& rhs)
   {
     return exact(rhs) + lhs;
@@ -108,7 +108,7 @@ namespace mln
 
   // FIXME: Doc!
   template <typename O>
-  mlc_bin_arith(float, O)
+  mln_trait_op_plus(O, float)
   operator+(float lhs, const Object<O>& rhs)
   {
     return exact(rhs) + lhs;
@@ -116,7 +116,7 @@ namespace mln
 
   // FIXME: Doc!
   template <typename O>
-  mlc_bin_arith(double, O)
+  mln_trait_op_plus(O, double)
   operator+(double lhs, const Object<O>& rhs)
   {
     return exact(rhs) + lhs;
@@ -126,7 +126,7 @@ namespace mln
 
   // FIXME: Doc!
   template <typename O>
-  mlc_bin_arith(int, O)
+  mln_trait_op_times(O, int)
   operator*(int lhs, const Object<O>& rhs)
   {
     return exact(rhs) * lhs;
@@ -134,7 +134,7 @@ namespace mln
 
   // FIXME: Doc!
   template <typename O>
-  mlc_bin_arith(float, O)
+  mln_trait_op_times(O, float)
   operator*(float lhs, const Object<O>& rhs)
   {
     return exact(rhs) * lhs;
@@ -142,7 +142,7 @@ namespace mln
 
   // FIXME: Doc!
   template <typename O>
-  mlc_bin_arith(double, O)
+  mln_trait_op_times(O, double)
   operator*(double lhs, const Object<O>& rhs)
   {
     return exact(rhs) * lhs;

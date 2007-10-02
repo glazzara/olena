@@ -46,6 +46,8 @@ namespace mln
   template <typename E>
   struct Neighborhood : public Object<E>
   {
+    typedef Neighborhood<void> category;
+
     /*
       typedef niter;
       typedef fwd_niter;

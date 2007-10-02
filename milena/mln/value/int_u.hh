@@ -37,11 +37,50 @@
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/internal/encoding.hh>
 # include <mln/value/props.hh>
+# include <mln/trait/all.hh>
 # include <mln/debug/format.hh>
 
 
 namespace mln
 {
+
+  // Fwd decl.
+  namespace value { template <unsigned n> struct int_u; }
+
+
+  namespace trait
+  {
+
+    // promote
+
+    template <unsigned n>
+    struct set_precise_binary_< promote, mln::value::int_u<n>, int >
+    {
+      typedef int ret;
+    };
+
+    template <unsigned n>
+    struct set_precise_binary_< promote, int, mln::value::int_u<n> >
+    {
+      typedef int ret;
+    };
+
+    template <unsigned n>
+    struct set_precise_binary_< promote, mln::value::int_u<n>, float >
+    {
+      typedef float ret;
+    };
+
+    template <unsigned n>
+    struct set_precise_binary_< promote, float, mln::value::int_u<n> >
+    {
+      typedef float ret;
+    };
+
+    // FIXME: Is that all? (No!)
+
+  } // end of namespace mln::trait
+
 
   namespace value
   {

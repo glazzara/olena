@@ -36,7 +36,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/level/memset_.hh>
 # include <mln/core/line_piter.hh>
-#include <mln/core/pixel.hh>
+# include <mln/core/pixel.hh>
 
 
 namespace mln

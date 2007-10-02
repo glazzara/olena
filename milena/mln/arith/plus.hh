@@ -39,10 +39,25 @@
 
 # include <mln/pw/cst.hh>
 # include <mln/pw/image.hh>
+# include <mln/trait/op_plus.hh>
 
 
 namespace mln
 {
+
+
+//   namespace trait
+//   {
+
+//     template <typename L, typename R>
+//     struct op_plus< Image,L, Image,R >
+//     {
+//       typedef mln_trait_op_plus(mln_value(L), mln_value(R)) value;
+//       typedef mln_ch_value(L, value) ret;
+//     };
+
+//   } // end of namespace mln::trait
+
 
   namespace arith
   {
@@ -136,6 +151,7 @@ namespace mln
 
     // Facades.
 
+
     template <typename L, typename R, typename O>
     void plus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
     {
@@ -143,6 +159,17 @@ namespace mln
       mln_precondition(exact(output).domain() == exact(lhs).domain());
       impl::plus_(exact(lhs), exact(rhs), exact(output));
     }
+
+
+//     template <typename L, typename R>
+//     mln_trait_op_plus(L, R)
+//     plus(const Image<L>& lhs, const Image<R>& rhs)
+//     {
+//       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+//       mln_precondition(exact(output).domain() == exact(lhs).domain());
+//       impl::plus_(exact(lhs), exact(rhs), exact(output));
+//     }
+
 
     template <typename I, typename V, typename O>
     void plus_cst(const Image<I>& input, const V& val, Image<O>& output)

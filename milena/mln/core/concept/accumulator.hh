@@ -52,6 +52,8 @@ namespace mln
   template <typename E>
   struct Accumulator : public Object<E>
   {
+    typedef Accumulator<void> category;
+
     /*
       typedef value;
       typedef result;

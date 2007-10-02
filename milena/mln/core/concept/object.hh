@@ -67,6 +67,7 @@ namespace mln
   struct Object
   {
     typedef E exact_t;
+    typedef Object<void> category; // Default.
   protected:
     Object();
   };

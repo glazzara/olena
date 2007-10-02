@@ -46,6 +46,8 @@ namespace mln
   template <typename E>
   struct Value_Set : public Object<E>
   {
+    typedef Value_Set<void> category;
+
     /*
       typedef value;
       typedef fwd_viter;

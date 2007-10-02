@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,32 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TRAIT_ALL_HH
-# define MLN_CORE_TRAIT_ALL_HH
+#ifndef MLN_TRAIT_OP_UMINUS_HH
+# define MLN_TRAIT_OP_UMINUS_HH
 
-/*! \file mln/core/trait/all.hh
- *
- * \brief File that includes all traits.
- */
+# include <mln/trait/solve.hh>
+
+
+# define mln_trait_op_uminus(T)  typename mln::trait::op_uminus< T >::ret
+# define mln_trait_op_uminus_(T)          mln::trait::op_uminus< T >::ret
+
 
 
 namespace mln
 {
 
-  /*! Namespace for image traits.
-   */
-  namespace trait {}
-
-}
+  namespace trait
+  {
 
 
-# include <mln/core/trait/is_fast.hh>
-# include <mln/core/trait/pixter.hh>
-# include <mln/core/trait/op_mult.hh>
-// FIXME # include <mln/core/trait/op_plus.hh>
-# include <mln/core/trait/op_minus.hh>
-# include <mln/core/trait/op_uminus.hh>
-// FIXME # include <mln/core/trait/promote.hh>
+    template <typename T>
+    struct op_uminus : public solve_unary<op_uminus, T>
+    {
+    };
 
 
-#endif // ! MLN_CORE_TRAIT_ALL_HH
+    /// Default definition of op_uminus is the input type itself.
+    template <template <class> class Category, typename T>
+    struct set_unary_< op_uminus, Category, T >
+    {
+      typedef T ret;
+    };
+
+
+  } // end of namespace mln::trait
+
+} // end of namespace mln
+
+
+#endif // ! MLN_TRAIT_OP_UMINUS_HH

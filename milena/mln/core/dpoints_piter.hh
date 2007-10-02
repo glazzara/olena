@@ -100,7 +100,7 @@ namespace mln
 
   // FIXME:
   template <typename D>
-  class dpoints_bkd_piter : public internal::fixme
+  class dpoints_bkd_piter : public mln::internal::fixme
   {};
 
 

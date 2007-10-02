@@ -32,7 +32,9 @@
 # include <cmath>
 
 # include <mln/core/concept/object.hh>
-# include <mln/metal/binary_arith_trait.hh>
+# include <mln/trait/all.hh>
+# include <mln/value/props.hh>
+
 
 // FIXME: Document.
 
@@ -154,6 +156,79 @@ namespace mln
       const vec<n, T>& normalize();
     };
 
+  } // end of namespace mln::metal
+
+
+  namespace trait
+  {
+
+    // promote
+
+    template <unsigned n, typename T, typename U>
+    struct set_precise_binary_<promote, metal::vec<n, T>, metal::vec<n, U> >
+    {
+      typedef metal::vec<n, mln_trait_promote(T, U)> ret;
+    };
+
+
+    // vec + vec
+
+    template <unsigned n, typename T, typename U>
+    struct set_precise_binary_<op_plus, metal::vec<n, T>, metal::vec<n, U> >
+    {
+      typedef metal::vec<n, mln_trait_op_plus(T, U)> ret;
+    };
+
+    // FIXME: + vec !
+
+    // vec - vec
+
+    template <unsigned n, typename T, typename U>
+    struct set_precise_binary_<op_minus, metal::vec<n, T>, metal::vec<n, U> >
+    {
+      typedef metal::vec<n, mln_trait_op_minus(T, U)> ret;
+    };
+
+    // - vec
+
+    template <unsigned n, typename T>
+    struct set_precise_unary_<op_uminus, metal::vec<n, T> >
+    {
+      typedef metal::vec<n, mln_trait_op_uminus(T)> ret;
+    };
+
+    // vec * s
+
+    template <unsigned n, typename T, typename S>
+    struct set_precise_binary_<op_times, metal::vec<n, T>, S >
+    {
+      typedef metal::vec<n, mln_trait_op_times(T, S)> ret;
+    };
+
+    // FIXME: vec / s
+    
+  } // end of namespace mln::trait
+
+
+
+  namespace value
+  {
+
+    template <unsigned n, typename T>
+    struct props< metal::vec<n,T> >
+    {
+      typedef trait::kind::data kind;
+      static const std::size_t card_ = n * mln_card_(T);
+      typedef metal::vec<n, mln_value_sum(T)> sum;
+    };
+
+  } // end of namespace mln::value
+
+
+
+  namespace metal
+  {
+
     // eq
 
     template <unsigned n, typename T, typename U>
@@ -169,9 +244,9 @@ namespace mln
     operator+=(vec<n,T>& lhs, const vec<n,U>& rhs);
     
     template <unsigned n, typename T, typename U>
-    vec<n, typename binary_arith_trait<T,U>::ret >
+    vec<n, mln_trait_op_plus(T,U)>
     operator+(const vec<n,T>& lhs, const vec<n,U>& rhs);
-    
+
     // -
     
     template <unsigned n, typename T, typename U>
@@ -179,32 +254,32 @@ namespace mln
     operator-=(vec<n,T>& lhs, const vec<n,U>& rhs);
     
     template <unsigned n, typename T, typename U>
-    vec<n, typename binary_arith_trait<T,U>::ret>
+    vec<n, mln_trait_op_minus(T,U)>
     operator-(const vec<n,T>& lhs, const vec<n,U>& rhs);
     
     template <unsigned n, typename T>
-    vec<n, T>
+    vec<n, mln_trait_op_uminus(T)>
     operator-(const vec<n,T>& lhs);
     
     // *
     
     template <unsigned n, typename T, typename S>
     vec<n,T>&
-    operator*=(vec<n,T>& lhs, const S& scalar);
+    operator*=(vec<n,T>& lhs, const S& s);
     
     template <unsigned n, typename T, typename S>
-    vec<n, typename binary_arith_trait<T,S>::ret>
-    operator*(const S& scalar, const vec<n,T>& lhs);
+    vec<n, mln_trait_op_times(T,S)>
+    operator*(const vec<n,T>& lhs, const S& s);
     
     // /
     
     template <unsigned n, typename T, typename S>
     vec<n,T>&
-    operator/=(vec<n,T>& lhs, const S& scalar);
+    operator/=(vec<n,T>& lhs, const S& s);
     
     template <unsigned n, typename T, typename S>
-    vec<n, typename binary_arith_trait<T,S>::ret>
-    operator/(const vec<n,T>& lhs, const S& scalar);
+    vec<n, mln_trait_op_times(T,S)> // FIXME: Use div instead!
+    operator/(const vec<n,T>& lhs, const S& s);
     
     // <<
     
@@ -220,10 +295,10 @@ namespace mln
     std::ostream&
     operator<<(std::ostream& ostr, const vec<n,signed char>& v);
 
-    // vprod
+    // vprod // FIXME: Generalize...
 
     template <typename T, typename U>
-    vec<3, typename binary_arith_trait<T, U>::ret>
+    vec<3, mln_trait_op_times(T,U)> // FIXME: Sum of product...
     vprod(const vec<3, T>& lhs, const vec<3, U>& rhs);
 
 
@@ -335,10 +410,10 @@ namespace mln
     }
     
     template <unsigned n, typename T, typename U>
-    vec<n, typename binary_arith_trait<T,U>::ret >
+    vec<n, mln_trait_op_plus(T,U)>
     operator+(const vec<n,T>& lhs, const vec<n,U>& rhs)
     {
-      vec<n, typename binary_arith_trait<T,U>::ret> tmp;
+      vec<n, mln_trait_op_plus(T,U)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = lhs[i] + rhs[i];
       return tmp;
@@ -357,20 +432,20 @@ namespace mln
     }
     
     template <unsigned n, typename T, typename U>
-    vec<n, typename binary_arith_trait<T,U>::ret>
+    vec<n, mln_trait_op_minus(T,U)>
     operator-(const vec<n,T>& lhs, const vec<n,U>& rhs)
     {
-      vec<n, typename binary_arith_trait<T,U>::ret> tmp;
+      vec<n, mln_trait_op_minus(T,U)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = lhs[i] - rhs[i];
       return tmp;
     }
     
     template <unsigned n, typename T>
-    vec<n, T>
+    vec<n, mln_trait_op_uminus(T)>
     operator-(const vec<n,T>& lhs)
     {
-      vec<n, T> tmp;
+      vec<n, mln_trait_op_uminus(T)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = - lhs[i];
       return tmp;
@@ -381,20 +456,20 @@ namespace mln
     
     template <unsigned n, typename T, typename S>
     vec<n,T>&
-    operator*=(vec<n,T>& lhs, const S& scalar)
+    operator*=(vec<n,T>& lhs, const S& s)
     {
       for (unsigned i = 0; i < n; ++i)
-	lhs[i] *= scalar;
+	lhs[i] *= s;
       return lhs;
     }
     
     template <unsigned n, typename T, typename S>
-    vec<n, typename binary_arith_trait<T,S>::ret>
-    operator*(const S& scalar, const vec<n,T>& lhs)
+    vec<n, mln_trait_op_times(T,S)>
+    operator*(const vec<n,T>& lhs, const S& s)
     {
-      vec<n, typename binary_arith_trait<T,S>::ret> tmp;
+      vec<n, mln_trait_op_times(T,S)> tmp;
       for (unsigned i = 0; i < n; ++i)
-	tmp[i] = lhs[i] * scalar;
+	tmp[i] = lhs[i] * s;
       return tmp;
     }
     
@@ -403,22 +478,22 @@ namespace mln
     
     template <unsigned n, typename T, typename S>
     vec<n,T>&
-    operator/=(vec<n,T>& lhs, const S& scalar)
+    operator/=(vec<n,T>& lhs, const S& s)
     {
-      mln_precondition(scalar != 0);
+      mln_precondition(s != 0);
       for (unsigned i = 0; i < n; ++i)
-	lhs[i] /= scalar;
+	lhs[i] /= s;
       return lhs;
     }
     
     template <unsigned n, typename T, typename S>
-    vec<n, typename binary_arith_trait<T,S>::ret>
-    operator/(const vec<n,T>& lhs, const S& scalar)
+    vec<n, mln_trait_op_times(T,S)> // FIXME: Use div.
+    operator/(const vec<n,T>& lhs, const S& s)
     {
-      mln_precondition(scalar != 0);
-      vec<n, typename binary_arith_trait<T,S>::ret> tmp;
+      mln_precondition(s != 0);
+      vec<n, mln_trait_op_times(T,S)> tmp;
       for (unsigned i = 0; i < n; ++i)
-	tmp[i] = lhs[i] / scalar;
+	tmp[i] = lhs[i] / s;
       return tmp;
     }
     
@@ -458,10 +533,10 @@ namespace mln
     // vprod
 
     template <typename T, typename U>
-    vec<3, typename binary_arith_trait<T, U>::ret>
+    vec<3, T> // typename binary_arith_trait<T, U>::ret>
     vprod(const vec<3, T>& lhs, const vec<3, U>& rhs)
     {
-      vec<3, typename binary_arith_trait<T, U>::ret> tmp;
+      vec<3, T> tmp; // FIXME typename binary_arith_trait<T, U>::ret> tmp;
       tmp[0] = lhs[1] * rhs[2] - lhs[2] * rhs[1];
       tmp[1] = lhs[2] * rhs[0] - lhs[0] * rhs[2];
       tmp[2] = lhs[0] * rhs[1] - lhs[1] * rhs[0];

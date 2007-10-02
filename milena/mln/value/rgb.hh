@@ -95,19 +95,21 @@ namespace mln
 
       /// addition
       rgb<n> operator+(const rgb<n>& v) const;
-      rgb<n> operator+(const enc& i) const;
-      rgb<n> operator+(const size_t& i) const;
+      // FIXME: was:
+//       rgb<n> operator+(const enc& i) const;
+//       rgb<n> operator+(const size_t& i) const;
 
       /// substraction
       rgb<n> operator-(const rgb<n>& v) const;
-      rgb<n> operator-(const enc& i) const;
-      rgb<n> operator-(const size_t& i) const;
+      // FIXME: was:
+//       rgb<n> operator-(const enc& i) const;
+//       rgb<n> operator-(const size_t& i) const;
 
       /// multiplication
-      rgb<n> operator*(const enc& i) const;
+      rgb<n> operator*(const enc& i) const; // FIXME: Use int instead of enc...
 
       /// division
-      rgb<n> operator/(const enc& i) const;
+      rgb<n> operator/(const enc& i) const; // FIXME: Likewise!
 
       /// Self addition
       rgb<n>& operator+=(const rgb<n>& v);
@@ -126,16 +128,19 @@ namespace mln
       equiv c_;
     };
 
+
     template <unsigned n>
     struct props< rgb<n> >
     {
       static const unsigned nbits = 24;
-      static const std::size_t card_ = metal::pow<2, nbits>::value;
-      static const rgb<n> max() { rgb<n> c(props< int_u<n> >::max); return c; }
-      static const rgb<n> min() { const rgb<n> c(props< int_u<n> >::min()); return c; }
+      static const std::size_t card_ = 0; // FIXME: was: metal::pow<2, nbits>::value;
       typedef trait::kind::color kind;
       typedef float_x3_t sum;
       typedef uchar_x3_t interop;
+
+      // FIXME: was:
+//       static const rgb<n> max() { rgb<n> c(props< int_u<n> >::max); return c; }
+//       static const rgb<n> min() { const rgb<n> c(props< int_u<n> >::min()); return c; }
     };
 
 
@@ -225,23 +230,23 @@ namespace mln
       return res;
     }
 
-    template <unsigned n>
-    rgb<n>
-    rgb<n>::operator-(const size_t& i_) const
-    {
-      enc i(i_);
-      return (*this - i);
-    }
+//     template <unsigned n>
+//     rgb<n>
+//     rgb<n>::operator-(const size_t& i_) const
+//     {
+//       enc i(i_);
+//       return (*this - i);
+//     }
 
-    template <unsigned n>
-    rgb<n>
-    rgb<n>::operator-(const enc& i) const
-    {
-      rgb<n> res;
-      for (int j = 0; j < 3; j++)
-	res.c_[j] = this->c_[j] - i;
-      return res;
-    }
+//     template <unsigned n>
+//     rgb<n>
+//     rgb<n>::operator-(const enc& i) const
+//     {
+//       rgb<n> res;
+//       for (int j = 0; j < 3; j++)
+// 	res.c_[j] = this->c_[j] - i;
+//       return res;
+//     }
 
     template <unsigned n>
     rgb<n>
@@ -253,23 +258,23 @@ namespace mln
       return res;
     }
 
-    template <unsigned n>
-    rgb<n>
-    rgb<n>::operator+(const size_t& i_) const
-    {
-      enc i(i_);
-      return (*this + i);
-    }
+//     template <unsigned n>
+//     rgb<n>
+//     rgb<n>::operator+(const size_t& i_) const
+//     {
+//       enc i(i_);
+//       return (*this + i);
+//     }
 
-    template <unsigned n>
-    rgb<n>
-    rgb<n>::operator+(const enc& i) const
-    {
-      rgb<n> res;
-      for (int j = 0; j < 3; j++)
-	res.c_[j] = this->c_[j] + i;
-      return res;
-    }
+//     template <unsigned n>
+//     rgb<n>
+//     rgb<n>::operator+(const enc& i) const
+//     {
+//       rgb<n> res;
+//       for (int j = 0; j < 3; j++)
+// 	res.c_[j] = this->c_[j] + i;
+//       return res;
+//     }
 
     template <unsigned n>
     rgb<n>&

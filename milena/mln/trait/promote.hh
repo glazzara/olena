@@ -25,111 +25,79 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_PLUS_HH
-# define MLN_TRAIT_OP_PLUS_HH
+#ifndef MLN_TRAIT_PROMOTE_HH
+# define MLN_TRAIT_PROMOTE_HH
+
+# include <mln/trait/solve.hh>
 
 
-# define mln_op_plus(T, U) typename mln::trait::op_plus< T , U >::ret
+# define mln_trait_promote(T, U) typename mln::trait::promote< T , U >::ret
 
 
 
 namespace mln
 {
 
-  namespace metal
-  {
-
-    template <unsigned n, typename T>
-    class vec;
-
-    template <unsigned n, unsigned m, typename T>
-    class mat;
-
-  } // end of namespace mln::metal
-
   namespace trait
   {
 
+    /// Declaration of the "promote" trait.
     template <typename T, typename U>
-    struct op_plus;
+    struct promote : public solve_binary<promote, T, U>
+    {
+    };
 
 
-    template <typename T>
-    struct op_plus<T, T>
+    /// Default case when the same type is involved twice: return this
+    /// type.
+    template <template <class> class Category, typename T>
+    struct set_binary_< promote, Category, T, Category, T >
     {
       typedef T ret;
     };
 
+    
+    // Definitions for some built-ins.
+
     template <>
-    struct op_plus<int, float>
+    struct set_precise_binary_< promote, int, float >
     {
       typedef float ret;
     };
+
     template <>
-    struct op_plus<float, int>
+    struct set_precise_binary_< promote, float, int >
     {
       typedef float ret;
     };
 
     template <>
-    struct op_plus<int, double>
-    {
-      typedef double ret;
-    };
-    template <>
-    struct op_plus<double, int>
+    struct set_precise_binary_< promote, int, double >
     {
       typedef double ret;
     };
 
     template <>
-    struct op_plus<double, float>
+    struct set_precise_binary_< promote, double, int >
     {
       typedef double ret;
     };
+
     template <>
-    struct op_plus<float, double>
+    struct set_precise_binary_< promote, float, double >
     {
       typedef double ret;
     };
 
-    template <unsigned n, typename T, typename U>
-    struct op_plus<metal::vec<n, T>, U>
+    template <>
+    struct set_precise_binary_< promote, double, float >
     {
-      typedef metal::vec<n, mln_op_plus(T, U)> ret;
+      typedef double ret;
     };
-    template <typename U, unsigned n, typename T>
-    struct op_plus<U, metal::vec<n, T> >
-    {
-      typedef metal::vec<n, mln_op_plus(T, U)> ret;
-    };
-
-    template <unsigned n, typename T, typename U>
-    struct op_plus<metal::vec<n, T>, metal::vec<n, U> >
-    {
-      typedef metal::vec<n, mln_op_plus(T, U)> ret;
-    };
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    struct op_plus<metal::mat<n, m, T>, U>
-    {
-      typedef metal::mat<n, m, mln_op_plus(T, U)> ret;
-    };
-    template <typename U, unsigned n, unsigned m, typename T>
-    struct op_plus<U, metal::mat<n, m, T> >
-    {
-      typedef metal::mat<n, m, mln_op_plus(T, U)> ret;
-    };
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    struct op_plus<metal::mat<n, m, T>, metal::mat<n, m, U> >
-    {
-      typedef metal::mat<n, m, mln_op_plus(T, U)> ret;
-    };
-
 
   } // end of namespace mln::trait
 
 } // end of namespace mln
 
-#endif // ! MLN_TRAIT_OP_PLUS_HH
+
+#endif // ! MLN_TRAIT_PROMOTE_HH

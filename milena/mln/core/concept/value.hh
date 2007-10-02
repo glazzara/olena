@@ -46,6 +46,8 @@ namespace mln
   template <typename E>
   struct Value : public Object<E>
   {
+    typedef Value<void> category;
+
     /*
       typedef enc;   // encoding type
       typedef equiv; // equivalent type

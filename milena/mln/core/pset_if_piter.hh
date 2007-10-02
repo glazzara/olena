@@ -77,7 +77,8 @@ namespace mln
   // FIXME:
   template <typename S, typename F>
   class pset_if_bkd_piter_
-    : public internal::fixme
+    :
+    public mln::internal::fixme
   {};
 
 

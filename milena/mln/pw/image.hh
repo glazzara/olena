@@ -86,9 +86,9 @@ namespace mln
       typedef trait::value::fixme     value;
 
       typedef trait::access::browsing access;
-      typedef trait::space::fixme     space;
+      typedef trait::space::fixme_    space;
       typedef trait::size::regular    size;
-      typedef trait::support::fixme   support;
+      typedef trait::support::fixme_  support;
 
       typedef trait::border::none     border;
       typedef trait::data::computed   data;

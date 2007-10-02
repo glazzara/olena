@@ -53,6 +53,8 @@ namespace mln
   template <typename E>
   struct Dpoint : public Object<E>
   {
+    typedef Dpoint<void> category;
+
     /*
       typedef point;
       typedef coord;

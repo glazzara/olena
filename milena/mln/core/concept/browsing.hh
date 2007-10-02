@@ -46,6 +46,8 @@ namespace mln
   template <typename E>
   struct Browsing : public Object<E>
   {
+    typedef Browsing<void> category;
+
     void init();
     void final();
 

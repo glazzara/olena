@@ -57,6 +57,8 @@ namespace mln
   template <typename E>
   struct Image : public Object<E>
   {
+    typedef Image<void> category;
+
     /*
       // to be provided in concrete image classes:
 

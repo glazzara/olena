@@ -38,6 +38,11 @@
 namespace mln
 {
 
+  // Fwd decl (used in the "category" definition).
+  template <typename P> struct Point;
+
+
+
   /*! \brief Base class for implementation classes of the notion of
    *  "point site".
    *
@@ -64,6 +69,8 @@ namespace mln
   struct Point_Site : public Object<E>,
 		      public Generalized_Point<E>
   {
+    typedef Point<void> category; // FIXME: This is a hack!  Change the hierarchy...
+
     /*
     const point* pointer_() const
     {

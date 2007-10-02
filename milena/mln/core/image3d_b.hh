@@ -33,6 +33,7 @@
  * \brief Definition of the basic mln::image3d_b class.
  */
 
+# include <mln/core/internal/fixme.hh>
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/box3d.hh>
 
@@ -521,7 +522,7 @@ namespace mln
     template <typename T>
     struct bkd_pixter< image3d_b<T> >
     {
-      typedef internal::fixme ret;
+      typedef mln::internal::fixme ret;
     };
 
     // qixter
@@ -541,7 +542,7 @@ namespace mln
     template <typename T, typename W>
     struct bkd_qixter< image3d_b<T>, W >
     {
-      typedef internal::fixme ret;
+      typedef mln::internal::fixme ret;
     };
 
   } // end of namespace mln::trait

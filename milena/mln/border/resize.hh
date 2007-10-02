@@ -69,7 +69,7 @@ namespace mln
       mln_precondition(ima.has_data());
       if (ima.border() >= thickness)
 	return;
-      internal::fixme();
+      mln::internal::fixme();
       mln_postcondition(ima.border() >= thickness);
       return;
     }
