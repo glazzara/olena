@@ -533,7 +533,7 @@ namespace mln
     // vprod
 
     template <typename T, typename U>
-    vec<3, T> // typename binary_arith_trait<T, U>::ret>
+    vec<3, mln_trait_op_times(T,U)> // typename binary_arith_trait<T, U>::ret>
     vprod(const vec<3, T>& lhs, const vec<3, U>& rhs)
     {
       vec<3, T> tmp; // FIXME typename binary_arith_trait<T, U>::ret> tmp;

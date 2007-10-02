@@ -1,3 +1,8 @@
+2007-10-02  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix for compile.
+	* mln/metal/vec.hh: Fix definition of vprod to reflect declaration..
+
 2007-10-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Improve the traits system.
