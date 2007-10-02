@@ -99,7 +99,7 @@ namespace mln
     void
     sum_<V,S>::init()
     {
-      s_ = 0;
+      s_ = S::zero; // FIXME
     }
 
     template <typename V, typename S>

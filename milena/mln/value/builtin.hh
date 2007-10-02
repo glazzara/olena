@@ -48,9 +48,10 @@ namespace mln
     typedef Value<void> super; // Builtins belong to a sub-category of values.
   };
 
-  template <> struct category< int >    { typedef Built_In<void> ret; };
-  template <> struct category< float >  { typedef Built_In<void> ret; };
-  template <> struct category< double > { typedef Built_In<void> ret; };
+  template <> struct category< int >      { typedef Built_In<void> ret; };
+  template <> struct category< unsigned > { typedef Built_In<void> ret; };
+  template <> struct category< float >    { typedef Built_In<void> ret; };
+  template <> struct category< double >   { typedef Built_In<void> ret; };
   // FIXME: ...
 
 

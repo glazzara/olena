@@ -73,6 +73,7 @@ namespace mln
 
       for (unsigned i = 0; i < m.gr_.nb_node_; ++i)
  	exact(ima)(m.loc_[i]) = node_v;
+
     }
 
     template <typename I,  typename P, typename V>

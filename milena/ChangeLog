@@ -1,5 +1,17 @@
 2007-10-02  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix for accumulator from point to vec<2, float>.
+
+	* accu/sum.hh,
+	* core/point.hh,
+	* draw/mesh.hh,
+	* metal/vec.hh,
+	* trait/promote.hh,
+	* util/graph.hh,
+	* value/builtin.hh: Update.
+
+2007-10-02  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add lebeling algo in sandbox.
 
 	* labeling_algo.cc: Test file.

@@ -32,6 +32,8 @@
 # include <cstddef>
 # include <iostream>
 # include <vector>
+# include <list>
+# include <algorithm>
 
 /*! \file mln/util/graph.hh
  *
@@ -54,7 +56,7 @@ namespace mln
     template<>
     struct s_node<void>
     {
-      std::vector<unsigned> links;
+      std::list<unsigned> links;
     };
 
     template<typename T>
@@ -123,7 +125,6 @@ namespace mln
       links_.push_back (edge);
       ++nb_link_;
       nodes_[n1]->links.push_back (n2);
-      nodes_[n2]->links.push_back (n1);
     }
 
     template<typename N, typename E>
@@ -135,7 +136,7 @@ namespace mln
       typename std::vector<struct s_node <N>*>::const_iterator it = nodes_.begin ();
       for (; it != nodes_.end (); ++it)
 	{
-	  typename std::vector<unsigned>::const_iterator it2 = (*it)->links.begin ();
+	  typename std::list<unsigned>::const_iterator it2 = (*it)->links.begin ();
 	  for (; it2 != (*it)->links.end (); ++it2)
 	    mln_precondition((*it2) < nb_node_);
 	}
@@ -162,7 +163,7 @@ namespace mln
 	  std::cout << "node number = "
 		    << i
 		    << " nbh : ";
-	  typename std::vector<unsigned>::const_iterator it2 = (*it)->links.begin ();
+	  typename std::list<unsigned>::const_iterator it2 = (*it)->links.begin ();
 	  for (; it2 != (*it)->links.end (); ++it2)
 	    {
 	      std::cout << (*it2)

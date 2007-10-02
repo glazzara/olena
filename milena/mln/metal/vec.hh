@@ -34,6 +34,7 @@
 # include <mln/core/concept/object.hh>
 # include <mln/trait/all.hh>
 # include <mln/value/props.hh>
+# include <mln/fun/i2v/all.hh>
 
 
 // FIXME: Document.
@@ -154,6 +155,13 @@ namespace mln
       unsigned size() const;
 
       const vec<n, T>& normalize();
+
+      /// Constructor; coordinates are set by function \p f.
+      template <typename F>
+      vec(const Function_i2v<F>& f);
+
+      /// Zero value.
+      static const vec<n, T> zero;
     };
 
   } // end of namespace mln::metal
@@ -378,6 +386,19 @@ namespace mln
 	data_[i] = T(data_[i] / n_l2);
       return *this;
     }
+
+
+    template <unsigned n, typename T>
+    template <typename F>
+    vec<n, T>::vec(const Function_i2v<F>& f_)
+    {
+      const F& f = exact(f_);
+      for (unsigned i = 0; i < n; ++i)
+	data_[i] = f(i);
+    }
+
+    template <unsigned n, typename T>
+    const vec<n, T> vec<n, T>::zero = all(0);
 
 
     // eq

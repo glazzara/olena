@@ -88,6 +88,30 @@ namespace mln
     };
 
     template <>
+    struct set_precise_binary_< promote, float, unsigned >
+    {
+      typedef float ret;
+    };
+
+    template <>
+    struct set_precise_binary_< promote, unsigned, float >
+    {
+      typedef float ret;
+    };
+
+    template <>
+    struct set_precise_binary_< promote, unsigned, double >
+    {
+      typedef double ret;
+    };
+
+    template <>
+    struct set_precise_binary_< promote, double, unsigned >
+    {
+      typedef double ret;
+    };
+
+    template <>
     struct set_precise_binary_< promote, float, double >
     {
       typedef double ret;
