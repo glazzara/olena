@@ -38,6 +38,17 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Browsing;
+
+  // Browsing category flag type.
+  template <>
+  struct Browsing<void>
+  {
+    typedef Object<void> super;
+  };
+
+
   /*! \brief Base class for implementation classes that are browsings.
    *
    * \see mln::doc::Browsing for a complete documentation of this

@@ -34,90 +34,173 @@
  */
 
 # include <mln/core/internal/image_if_base.hh>
+# include <mln/metal/unconst.hh>
+
+
+# define  F      fun::eq_p2b_expr_< pw::value_<mlc_unconst(I)>, pw::cst_<mln_value(I)> >
+# define  Super  mln::internal::image_if_base_< I, F, image_if_value<I> >
+
 
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename I> struct image_if_value;
+
+
+  // internal::data_.
+
+  namespace internal
+  {
+
+    template <typename I>
+    struct data_< image_if_value<I> > : data_< Super >
+    {
+      data_(I& ima, const F& f);
+    };
+
+  } // end of namespace mln::internal
+
+
+  namespace trait
+  {
+
+    template <typename I>
+    struct image_< image_if_value<I> > : trait::image_< Super >
+    {
+    };
+    
+  } // end of namespace mln::trait
+
+
+
   /*! \brief An image class FIXME.
    *
    */
-  template <typename I, typename F>
-  struct image_if_value : public internal::image_if_base< I, F >
+  template <typename I>
+  struct image_if_value : public Super
   {
     /// Skeleton.
-    typedef image_if_value< tag::image_<I>, tag::function_<F> > skeleton;
+    typedef image_if_value< tag::image_<I> > skeleton;
 
-    /// Constructor from an image \p ima and a predicate \p f.
+    /// Natural constructor from an image \p ima and a value \p v.
+    image_if_value(I& ima, const mln_value(I)& v);
+
+    /// Ancestral constructor from an image \p ima and a function \p f.
     image_if_value(I& ima, const F& f);
 
     /// Constructor without argument.
     image_if_value();
 
-    /// Const promotion via convertion.
-    operator image_if_value<const I, F>() const;
+    // FIXME: Conversion below does *not* work automatically.
+    /// Const promotion via conversion.
+    operator image_if_value<const I> () const;
   };
+
+
+
+  // init_.
+
+  template <typename I>
+  void init_(tag::function_t, F& f, const image_if_value<I>& model)
+  {
+    f = model.domain().predicate();
+  }
+    
+  template <typename I, typename J>
+  void init_(tag::image_t, image_if_value<I>& target, const J& model)
+  {
+    I ima;
+    init_(tag::image, ima, exact(model));
+    F f;
+    init_(tag::function, f, exact(model));
+    target.init_(ima, f);
+  }
+
+
 
   // Operators.
 
   // Image | value.
 
   template <typename I>
-  image_if_value< I,
-	    fun::eq_p2b_expr_< pw::value_<I>,
-			       pw::cst_<mln_value(I)> > >
+  image_if_value<I>
   operator | (Image<I>& ima, const mln_value(I)& v);
 
   template <typename I>
-  image_if_value< const I,
-	    fun::eq_p2b_expr_< pw::value_<I>,
-			       pw::cst_<mln_value(I)> > >
+  image_if_value<const I>
   operator | (const Image<I>& ima, const mln_value(I)& v);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // image_if_value<I,F>
+  // image_if_value<I>
 
-  template <typename I, typename F>
-  image_if_value<I,F>::image_if_value()
+  template <typename I>
+  image_if_value<I>::image_if_value()
   {
   }
 
-  template <typename I, typename F>
-  image_if_value<I,F>::image_if_value(I& ima, const F& f)
+  template <typename I>
+  image_if_value<I>::image_if_value(I& ima, const F& f)
   {
     this->init_(ima, f);
   }
 
-  template <typename I, typename F>
-  image_if_value<I,F>::operator image_if_value<const I, F>() const
+  template <typename I>
+  image_if_value<I>::image_if_value(I& ima, const mln_value(I)& v)
   {
-    image_if_value<const I, F> tmp(this->data_->ima_, this->data_->pset_);
+    this->init_(ima, pw::value(ima) == pw::cst(v));
+  }
+
+  template <typename I>
+  image_if_value<I>::operator image_if_value<const I>() const
+  {
+    mln_precondition(this->has_data());
+    image_if_value<const I> tmp(this->data_->ima_,
+				this->data_->pset_.predicate);
     return tmp;
+  }
+
+  // internal::data_< image_if_value<I> >
+
+  namespace internal
+  {
+
+    template <typename I>
+    data_< image_if_value<I> >::data_(I& ima, const F& f)
+      : data_< Super >(ima, f)
+    {
+    }
+    
   }
 
   // Operators.
 
   template <typename I>
-  image_if_value< I,
-	    fun::eq_p2b_expr_< pw::value_<I>,
-			       pw::cst_<mln_value(I)> > >
+  image_if_value<I>
   operator | (Image<I>& ima, const mln_value(I)& v)
   {
-    return ima | (pw::value(ima) == pw::cst(v));
+    image_if_value<I> tmp(exact(ima), v);
+    return tmp;
   }
 
   template <typename I>
-  image_if_value< const I,
-	    fun::eq_p2b_expr_< pw::value_<I>,
-			       pw::cst_<mln_value(I)> > >
+  image_if_value<const I>
   operator | (const Image<I>& ima, const mln_value(I)& v)
   {
-    return ima | (pw::value(ima) == pw::cst(v));
+    image_if_value<const I> tmp(exact(ima), v);
+    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
+
+# undef Super
+# undef F
 
 
 #endif // ! MLN_CORE_IMAGE_IF_VALUE_HH

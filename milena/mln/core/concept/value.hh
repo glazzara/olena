@@ -38,6 +38,17 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Value;
+
+  // Value category flag type.
+  template <>
+  struct Value<void>
+  {
+    typedef Object<void> super;
+  };
+
+
   /*! \brief Base class for implementation classes of values.
    *
    * \see mln::doc::Value for a complete documentation of this class
@@ -96,6 +107,7 @@ namespace mln
 
 
 # include <mln/value/cast.hh>
+# include <mln/value/builtin.hh>
 
 
 #endif // ! MLN_CORE_CONCEPT_VALUE_HH

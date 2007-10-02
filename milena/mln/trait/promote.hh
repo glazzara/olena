@@ -38,6 +38,10 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Object;
+
+
   namespace trait
   {
 
@@ -50,8 +54,8 @@ namespace mln
 
     /// Default case when the same type is involved twice: return this
     /// type.
-    template <template <class> class Category, typename T>
-    struct set_binary_< promote, Category, T, Category, T >
+    template <typename T>
+    struct set_binary_< promote, Object, T, Object, T >
     {
       typedef T ret;
     };

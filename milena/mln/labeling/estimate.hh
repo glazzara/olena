@@ -33,7 +33,7 @@
  * \brief Compute the estimate pixel value.
  */
 
-# include <mln/core/image_if.hh>
+# include <mln/core/image_if_value.hh>
 # include <mln/accu/compute.hh>
 
 
@@ -60,6 +60,8 @@ namespace mln
     mln_accu_with(A, util::pix<I>)::result
     estimate(const Image<I>& input, const mln_value(I)& val)
     {
+//       void* v = (input | val);
+//       return 0;
       return accu::compute<A>(input | val);
     }
 

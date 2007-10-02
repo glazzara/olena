@@ -39,6 +39,16 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Function;
+
+  // Function category flag type.
+  template <>
+  struct Function<void>
+  {
+    typedef Object<void> super;
+  };
+
 
   /*! \brief Base class for implementation of function-objects.
    *

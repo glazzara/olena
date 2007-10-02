@@ -38,6 +38,17 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Neighborhood;
+
+  // Neighborhood category flag type.
+  template <>
+  struct Neighborhood<void>
+  {
+    typedef Object<void> super;
+  };
+
+
   /*! \brief Base class for implementation classes that are neighborhoods.
    *
    * \see mln::doc::Neighborhood for a complete documentation of this

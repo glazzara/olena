@@ -39,9 +39,12 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Object;
+
+
   namespace trait
   {
-
 
     template <typename T>
     struct op_uminus : public solve_unary<op_uminus, T>
@@ -50,8 +53,8 @@ namespace mln
 
 
     /// Default definition of op_uminus is the input type itself.
-    template <template <class> class Category, typename T>
-    struct set_unary_< op_uminus, Category, T >
+    template <typename T>
+    struct set_unary_< op_uminus, Object, T >
     {
       typedef T ret;
     };

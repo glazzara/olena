@@ -41,6 +41,16 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Accumulator;
+
+  // Accumulator category flag type.
+  template <>
+  struct Accumulator<void>
+  {
+    typedef Object<void> super;
+  };
+
 
   /*! \brief Base class for implementation of accumulators.
    *

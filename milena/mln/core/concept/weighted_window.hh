@@ -40,6 +40,17 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Weighted_Window;
+
+  // Weighted_Window category flag type.
+  template <>
+  struct Weighted_Window<void>
+  {
+    typedef Object<void> super;
+  };
+
+
   /*! \brief Base class for implementation classes that are
    *  weighted_windows.
    *

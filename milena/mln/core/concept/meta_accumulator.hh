@@ -49,6 +49,16 @@ typename A::template with< T >::ret::result
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Meta_Accumulator;
+
+  // Meta_Accumulator category flag type.
+  template <>
+  struct Meta_Accumulator<void>
+  {
+    typedef Object<void> super;
+  };
+
 
   /*! \brief Base class for implementation of meta accumulators.
    *

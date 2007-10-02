@@ -25,69 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/trait_op_plus.cc
+/*! \file tests/image_if_value.cc
  *
- * \brief Tests on mln::trait::op_plus.
+ * \brief Tests on mln::image_if_value.
  */
 
-#include <mln/core/concept/image.hh>
-#include <mln/trait/op_plus.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/image_if_value.hh>
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
 
-
-namespace mln
-{
-
-
-  template <typename T>
-  struct my_image2d : Image< my_image2d<T> >
-  {
-    void m() {}
-  };
-
-
-  namespace trait
-  {
-
-    // int + float -> float
-
-    template <>
-    struct set_precise_binary_< op_plus, int, float >
-    {
-      typedef float ret;
-    };
-
-
-    // Image I + Image J -> bool (demo type!)
-
-    template <typename I, typename J>
-    struct set_binary_< op_plus, Image, I,  Image, J >
-    {
-      typedef bool ret;
-    };
-
-    // precise definition: my_image2d<T> + my_image2d<U> -> my_image2d<V> ('&' is to avoid compiling an empty class)
-
-    template <typename T, typename U>
-    struct set_precise_binary_< op_plus, my_image2d<T>, my_image2d<U> >
-    {
-      typedef mln_trait_op_plus(T, U) V; 
-      typedef my_image2d<V>& ret;
-    };
-
-  }
-  
-}
 
 int main()
 {
   using namespace mln;
-  {
-    mln_trait_op_plus_(int, float) tmp;
-    tmp = 5.1f;
-  }
-  {
-    my_image2d<float>* ptr;
-    mln_trait_op_plus_(my_image2d<int>, my_image2d<float>) tmp = *ptr;
-    tmp.m();
-  }
+
+  typedef image2d_b<int> I;
+  I ima(3, 3);
+  debug::iota(ima);
+  debug::println(ima);
+  debug::println(ima | 5);
 }

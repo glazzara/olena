@@ -65,11 +65,10 @@ namespace mln
       typedef T ret;
     };
 
-    template <typename E, typename T>
-    yes_ exact_selector_(Object<E>*, T*);
+    template <typename E>
+    yes_ exact_selector_(Object<E>*);
 
-    template <typename T>
-    no_  exact_selector_(void*, T* t);
+    no_  exact_selector_(void*);
 
     template <typename E, typename T>
     E* exact_run_(Object<E>* t, T*);
@@ -80,7 +79,7 @@ namespace mln
     template <typename T>
     struct exact_
     {
-      enum { id = sizeof(exact_selector_(make_<T>::ptr(),make_<T>::ptr())) };
+      enum { id = sizeof(exact_selector_(make_<T>::ptr())) };
       typedef typename exact_ret_<id, T>::ret ret;
       static ret* run(T* t)
       {
@@ -91,7 +90,7 @@ namespace mln
     template <typename T>
     struct exact_<const T>
     {
-      enum { id = sizeof(exact_selector_(make_<T>::ptr(),make_<T>::ptr())) };
+      enum { id = sizeof(exact_selector_(make_<T>::ptr())) };
       typedef const typename exact_ret_<id, T>::ret ret;
       static ret* run(const T* t)
       {

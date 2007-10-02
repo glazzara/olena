@@ -37,6 +37,7 @@
 # include <iostream>
 
 # include <mln/core/macros.hh>
+# include <mln/core/category.hh>
 # include <mln/core/contract.hh>
 # include <mln/core/internal/fixme.hh>
 # include <mln/trace/all.hh>
@@ -58,6 +59,17 @@
  */
 namespace mln
 {
+
+  // Fwd decl.
+  template <typename E> struct Object;
+
+  // Object category flag type.
+  template <>
+  struct Object<void>
+  {
+    typedef Unknown<void> super;
+  };
+
 
   /*! \brief Base class for almost every class defined in milena.
    *

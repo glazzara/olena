@@ -43,22 +43,25 @@ namespace mln
   struct Unknown;
 
 
+  template <>
+  struct Unknown<void>
+  {
+    typedef Unknown<void> super;
+    // Unknown is used to terminate the meta-program that solves a
+    // call to a trait.  This meta-program can browse several branches
+    // at the same time---if the trait takes 2 types as arguments, the
+    // program runs over the trellis formed by the "couples of
+    // categories"--- and when the end of one branch is reached, we do
+    // not want the program to end; so it continues on that branch
+    // with the no-op "jump to the super type of Unknown"!
+  };
+
+
   template <typename T>
   struct category
   {
     typedef typename T::category ret; // FIXME: if found or Unknown<void> => write a meta-program...
   };
-
-
-  // The case of built-in types.
-
-  template <typename E>
-  struct Built_In;
-
-  template <> struct category< int >    { typedef Built_In<void> ret; };
-  template <> struct category< float >  { typedef Built_In<void> ret; };
-  template <> struct category< double > { typedef Built_In<void> ret; };
-  // FIXME: ...
 
 
 } // end of namespace mln

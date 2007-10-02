@@ -32,11 +32,22 @@
  * \brief Definition of the concept of mln::Value_Set.
  */
 
-# include <mln/core/concept/value_iterator.hh>
+# include <mln/core/concept/value_iterator.hh> // FIXME: Why not object.hh?
 
 
 namespace mln
 {
+
+  // Fwd decl.
+  template <typename E> struct Value_Set;
+
+  // Value_Set category flag type.
+  template <>
+  struct Value_Set<void>
+  {
+    typedef Object<void> super;
+  };
+
 
   /*! \brief Base class for implementation classes of sets of values.
    *

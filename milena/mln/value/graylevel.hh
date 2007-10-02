@@ -74,9 +74,6 @@ namespace mln
       /// Op encoding_t.
       operator enc() const;
 
-      /// Op graylevel.
-      operator graylevel() const;
-
       /// Op<.
       bool operator<(const graylevel<n>& rhs) const;
 
@@ -165,13 +162,6 @@ namespace mln
       mln_precondition(unsigned(val) <= mln_max(enc));
       this->val_ = val;
       return *this;
-    }
-
-    template <unsigned n>
-    graylevel<n>::operator graylevel() const
-    {
-      gray tmp(n, val_);
-      return tmp;
     }
 
     template <unsigned n>

@@ -52,10 +52,10 @@ namespace mln
     public:
 
       /// Encoding associated type.
-      typedef double enc;
+      typedef float enc;
 
       /// Equivalent associated type.
-      typedef double equiv;
+      typedef float equiv;
 
       /// Ctor.
       float01();
@@ -65,10 +65,10 @@ namespace mln
       float01(const float01_<N>& val);
 
       /// Ctor.
-      float01(unsigned nbits, double val);
+      float01(unsigned nbits, float val);
 
       /// Access to std type.
-      double value() const;
+      float value() const;
       unsigned long value_ind() const;
 
       unsigned nbits() const;
@@ -137,13 +137,13 @@ namespace mln
     {
     }
 
-    float01::float01(unsigned nbits, double val)
+    float01::float01(unsigned nbits, float val)
       : nbits_(nbits),
 	val_(unsigned(val * internal::two_pow_n_minus_1(nbits)))
     {
     }
 
-    double float01::value() const
+    float float01::value() const
     {
       mln_invariant(nbits_ != 0);
       return double(val_) / internal::two_pow_n_minus_1(nbits_);

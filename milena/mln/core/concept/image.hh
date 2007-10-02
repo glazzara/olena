@@ -48,6 +48,16 @@ namespace mln
 {
 
 
+  // Fwd decl.
+  template <typename E> struct Image;
+
+  // Image category flag type.
+  template <>
+  struct Image<void>
+  {
+    typedef Object<void> super;
+  };
+
 
   /*! \brief Base class for implementation of image classes.
    *

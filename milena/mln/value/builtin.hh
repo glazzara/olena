@@ -25,69 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/trait_op_plus.cc
- *
- * \brief Tests on mln::trait::op_plus.
- */
+#ifndef MLN_VALUE_BUILTIN_HH
+# define MLN_VALUE_BUILTIN_HH
 
-#include <mln/core/concept/image.hh>
-#include <mln/trait/op_plus.hh>
+/*! \file mln/value/builtin.hh
+ * \brief Some definitions about builtins.
+ */
 
 
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Value;
 
-  template <typename T>
-  struct my_image2d : Image< my_image2d<T> >
+
+  // The case of built-in types.
+
+  template <typename E>
+  struct Built_In
   {
-    void m() {}
+    typedef Value<void> super; // Builtins belong to a sub-category of values.
   };
 
-
-  namespace trait
-  {
-
-    // int + float -> float
-
-    template <>
-    struct set_precise_binary_< op_plus, int, float >
-    {
-      typedef float ret;
-    };
+  template <> struct category< int >    { typedef Built_In<void> ret; };
+  template <> struct category< float >  { typedef Built_In<void> ret; };
+  template <> struct category< double > { typedef Built_In<void> ret; };
+  // FIXME: ...
 
 
-    // Image I + Image J -> bool (demo type!)
+} // end of namespace mln
 
-    template <typename I, typename J>
-    struct set_binary_< op_plus, Image, I,  Image, J >
-    {
-      typedef bool ret;
-    };
 
-    // precise definition: my_image2d<T> + my_image2d<U> -> my_image2d<V> ('&' is to avoid compiling an empty class)
+# include <mln/core/concept/value.hh>
 
-    template <typename T, typename U>
-    struct set_precise_binary_< op_plus, my_image2d<T>, my_image2d<U> >
-    {
-      typedef mln_trait_op_plus(T, U) V; 
-      typedef my_image2d<V>& ret;
-    };
 
-  }
-  
-}
-
-int main()
-{
-  using namespace mln;
-  {
-    mln_trait_op_plus_(int, float) tmp;
-    tmp = 5.1f;
-  }
-  {
-    my_image2d<float>* ptr;
-    mln_trait_op_plus_(my_image2d<int>, my_image2d<float>) tmp = *ptr;
-    tmp.m();
-  }
-}
+#endif // ! MLN_VALUE_BUILTIN_HH

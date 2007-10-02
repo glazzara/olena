@@ -50,7 +50,7 @@ namespace mln
     /// General float01-level class on n bits.
     template <unsigned n>
     class float01_
-      : public internal::value_like_< double,
+      : public internal::value_like_< float,
 				      float01_<n> >
     {
     public:
@@ -62,25 +62,25 @@ namespace mln
       float01_();
 
       /// Ctor.
-      float01_(const double val);
+      float01_(const float val);
 
       /// Access to std type.
-      double value() const;
+      float value() const;
 
       void set_ind(unsigned long val);
 
       enc value_ind() const;
 
       /// Op encoding_t.
-      operator double() const;
+      operator float() const;
 
-      /// Op float01_.
-      operator float01_() const;
+      /// Op float01.
+      operator float01() const;
 
       /// Op<.
       bool operator<(const float01_<n>& rhs) const;
 
-      float01_<n>& operator=(const double val);
+      float01_<n>& operator=(const float val);
       /// Op==.
       // bool operator==(const float01_<n>& rhs) const;
 
@@ -134,7 +134,7 @@ namespace mln
     bool operator==(const float01_<n>& lhs, const float01_<n>& rhs);
 
     template <unsigned n>
-    bool approx_equal(const float01_<n>& lhs, const double f);
+    bool approx_equal(const float01_<n>& lhs, const float f);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -147,7 +147,7 @@ namespace mln
     }
 
     template <unsigned n>
-    float01_<n>::float01_(const double val)
+    float01_<n>::float01_(const float val)
       : val_( int(val * (mln_card_(float01_<n>) - 1)) )
     {
       mln_precondition(val >= 0);
@@ -155,10 +155,10 @@ namespace mln
     }
 
     template <unsigned n>
-    double
+    float
     float01_<n>::value() const
     {
-      return (double(val_) / (mln_card_(float01_<n>) - 1));
+      return (float(val_) / (mln_card_(float01_<n>) - 1));
     }
 
     template <unsigned n>
@@ -177,7 +177,7 @@ namespace mln
 
     template <unsigned n>
     float01_<n>&
-    float01_<n>::operator=(const double val)
+    float01_<n>::operator=(const float val)
     {
       mln_precondition(val >= 0);
       mln_precondition(val <= 1);
@@ -186,16 +186,16 @@ namespace mln
     }
 
     template <unsigned n>
-    float01_<n>::operator float01_() const
+    float01_<n>::operator float01() const
     {
       float01 tmp(n, val_);
       return tmp;
     }
 
     template <unsigned n>
-    float01_<n>::operator double() const
+    float01_<n>::operator float() const
     {
-      return double(val_) / (mln_card_(float01_<n>) - 1);
+      return float(val_) / (mln_card_(float01_<n>) - 1);
     }
 
     template <unsigned n>
@@ -223,7 +223,7 @@ namespace mln
     }
 
     template <unsigned n>
-    bool approx_equal(const float01_<n>& lhs, const double f)
+    bool approx_equal(const float01_<n>& lhs, const float f)
     {
       return float01(lhs) == float01_<n>(f);
     }

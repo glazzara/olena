@@ -39,6 +39,16 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Dpoint;
+
+  // Dpoint category flag type.
+  template <>
+  struct Dpoint<void>
+  {
+    typedef Object<void> super;
+  };
+
 
   /*! \brief Base class for implementation of delta-point classes.
    *

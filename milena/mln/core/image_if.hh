@@ -35,17 +35,51 @@
 
 # include <mln/core/internal/image_if_base.hh>
 
+
+# define  Super  mln::internal::image_if_base_< I, F, image_if<I,F> >
+
+
 namespace mln
 {
+
+  // Fwd decl.
+  template <typename I, typename F> struct image_if;
+
+
+  // internal::data_.
+
+  namespace internal
+  {
+
+    template <typename I, typename F>
+    struct data_< image_if<I,F> > : data_< Super >
+    {
+      data_(I& ima, const F& f);
+    };
+
+  } // end of namespace mln::internal
+
+
+  namespace trait
+  {
+
+    template <typename I, typename F>
+    struct image_< image_if<I,F> > : trait::image_< Super >
+    {
+    };
+    
+  } // end of namespace mln::trait
+
+
 
   /*! \brief An image class FIXME.
    *
    */
   template <typename I, typename F>
-  struct image_if : public internal::image_if_base< I, F >
+  struct image_if : public Super
   {
     /// Skeleton.
-    typedef image_if< tag::image_<I>, F > skeleton;
+    typedef image_if< tag::image_<I>, tag::function_<F> > skeleton;
 
     /// Constructor from an image \p ima and a predicate \p f.
     image_if(I& ima, const F& f);
@@ -56,6 +90,25 @@ namespace mln
     /// Const promotion via convertion.
     operator image_if<const I, F>() const;
   };
+
+
+  // init_.
+
+  template <typename I, typename F>
+  void init_(tag::function_t, F& f, const image_if<I,F>& model)
+  {
+    f = model.domain().predicate();
+  }
+    
+  template <typename I, typename F, typename J>
+  void init_(tag::image_t, image_if<I,F>& target, const J& model)
+  {
+    I ima;
+    init_(tag::image, ima, exact(model));
+    F f;
+    init_(tag::function, f, exact(model));
+    target.init_(ima, f);
+  }
 
 
   // Operators.
@@ -73,6 +126,19 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  // internal::data_
+
+  namespace internal
+  {
+
+    template <typename I, typename F>
+    data_< image_if<I,F> >::data_(I& ima, const F& f)
+      : data_< Super >(ima, f)
+    {
+    }
+
+  }
+
   // image_if<I,F>
 
   template <typename I, typename F>
@@ -89,7 +155,9 @@ namespace mln
   template <typename I, typename F>
   image_if<I,F>::operator image_if<const I,F>() const
   {
-    image_if<const I,F> tmp(this->data_->ima_, this->data_->pset_);
+    mln_precondition(this->has_data());
+    image_if<const I,F> tmp(this->data_->ima_,
+			    this->data_->pset_.predicate());
     return tmp;
   }
 
@@ -114,6 +182,9 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
+
+# undef Super
 
 
 #endif // ! MLN_CORE_IMAGE_IF_HH

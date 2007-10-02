@@ -34,6 +34,7 @@
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/exact.hh>
+# include <mln/value/builtin.hh>
 
 # include <mln/trait/op_plus.hh>
 # include <mln/trait/op_times.hh>

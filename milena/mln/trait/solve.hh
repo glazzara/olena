@@ -41,7 +41,11 @@ namespace mln
   {
 
 
+    /// Flag type for an undefined trait.
     struct undefined;
+
+    /// Flag type for a trait multiply undefined.
+    struct multiply_defined;
 
 
     // Unary case.
@@ -57,9 +61,40 @@ namespace mln
 
     template < template <class> class Name,
 	       template <class> class Category_T, typename T >
-    struct set_unary_
+    struct set_unary_;  // Fwd decl.
+
+
+    template < template <class> class Name,
+	       typename T >
+    struct set_unary_< Name, Unknown, T > // Blocker; top of inheritance.
     {
       typedef undefined ret;
+    };
+
+
+    namespace internal
+    {
+
+      template < template <class> class Name,
+		 typename Super_Category_T, typename T >
+      struct set_unary_super_;
+
+      template < template <class> class Name,
+		 template <class> class Super_Category_T, typename T >
+      struct set_unary_super_< Name, Super_Category_T<void>, T >
+	:
+	public set_unary_< Name, Super_Category_T, T >
+      {
+      };
+
+    } // end of namespace mln::trait::internal
+
+
+    template < template <class> class Name,
+	       template <class> class Category_T, typename T >
+    struct set_unary_ : internal::set_unary_super_< Name,
+						    typename Category_T<void>::super, T >
+    {
     };
     
 
@@ -103,15 +138,6 @@ namespace mln
 
 
     // Binary case.
-    
-
-    template < template <class, class> class Name,
-	       template <class> class Category_L, typename L,
-	       template <class> class Category_R, typename R >
-    struct set_binary_
-    {
-      typedef undefined ret;
-    };
 
 
     template < template <class, class> class Name,
@@ -120,6 +146,117 @@ namespace mln
     struct set_precise_binary_
     {
       typedef undefined ret;
+    };
+    
+
+    template < template <class, class> class Name,
+	       template <class> class Category_L, typename L,
+	       template <class> class Category_R, typename R >
+    struct set_binary_;  // Fwd decl.
+
+
+    template < template <class, class> class Name,
+	       typename L,
+	       template <class> class Category_R, typename R >
+    struct set_binary_< Name, Unknown, L, Category_R, R > // Left blocker.
+    {
+      typedef undefined ret;
+    };
+
+
+    template < template <class, class> class Name,
+	       template <class> class Category_L, typename L,
+	       typename R >
+    struct set_binary_< Name, Category_L, L, Unknown, R > // Right blocker.
+    {
+      typedef undefined ret;
+    };
+
+
+    template < template <class, class> class Name,
+	       typename L,
+	       typename R >
+    struct set_binary_< Name, Unknown, L, Unknown, R > // Blocker.
+    {
+      typedef undefined ret;
+    };
+
+
+    namespace internal
+    {
+
+      // Nota bene: Seq means "super or equal".
+      template < template <class, class> class Name,
+		 typename Seq_Category_L, typename L,
+		 typename Seq_Category_R, typename R >
+      struct set_binary_super_;
+
+      template < template <class, class> class Name,
+		 template <class> class Seq_Category_L, typename L,
+		 template <class> class Seq_Category_R, typename R >
+      struct set_binary_super_< Name,
+				Seq_Category_L<void>, L,
+				Seq_Category_R<void>, R >
+	:
+	public virtual set_binary_< Name,
+				    Seq_Category_L, L,
+				    Seq_Category_R, R >
+      {
+      };
+
+      template < typename L_ret, typename R_ret >
+      struct merge_binary_ret_
+      {
+	typedef multiply_defined ret;
+      };
+
+      template < typename LR_ret >
+      struct merge_binary_ret_< LR_ret, LR_ret >
+      {
+	typedef LR_ret ret;
+      };
+
+      template < typename L_ret >
+      struct merge_binary_ret_< L_ret, undefined >
+      {
+	typedef L_ret ret;
+      };
+
+      template < typename R_ret >
+      struct merge_binary_ret_< undefined, R_ret >
+      {
+	typedef R_ret ret;
+      };
+
+      template <>
+      struct merge_binary_ret_< undefined, undefined >
+      {
+	typedef undefined ret;
+      };
+
+    } // end of namespace mln::trait::internal
+
+
+    template < template <class, class> class Name,
+	       template <class> class Category_L, typename L,
+	       template <class> class Category_R, typename R >
+    struct set_binary_
+    {
+      // Construct a treillis in a static recursive way!
+
+      typedef typename internal::set_binary_super_< Name,
+						    typename Category_L<void>::super, L,
+						    Category_R<void>, R >::ret
+      L_ret;
+
+      typedef typename internal::set_binary_super_< Name,
+						    Category_L<void>, L,
+						    typename Category_R<void>::super, R >::ret
+      R_ret;
+
+      typedef typename internal::merge_binary_ret_< L_ret, R_ret >::ret ret;
+      // FIXME: Do we need to handle this search with a priority?
+      // FIXME: for a result can be found in both branches... 
     };
 
 

@@ -38,9 +38,18 @@
 namespace mln
 {
 
-  // Fwd decl (used in the "category" definition).
-  template <typename P> struct Point;
+  // FIXME: Hack is "Point" instead of "Points_Site"; change it!
 
+
+  // Fwd decl.
+  template <typename E> struct Point;
+
+  // Point_Site category flag type.
+  template <>
+  struct Point<void>
+  {
+    typedef Object<void> super;
+  };
 
 
   /*! \brief Base class for implementation classes of the notion of

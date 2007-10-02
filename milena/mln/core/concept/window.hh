@@ -39,6 +39,16 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Window;
+
+  // Window category flag type.
+  template <>
+  struct Window<void>
+  {
+    typedef Object<void> super;
+  };
+
 
   /*! \brief Base class for implementation classes that are windows.
    *

@@ -1,3 +1,61 @@
+2007-10-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make the trait solver rely on category inheritance.
+
+	Fix image_if related-classes.
+
+	* mln/core/image_if.hh,
+	* mln/core/internal/image_if_base.hh,
+	* mln/core/image_if_value.hh: Fix.
+	* mln/labeling/estimate.hh: Update.
+	* tests/image_if_value.cc: New.
+
+	Make float01[_] work on float!
+
+	* mln/value/float01_.hh,
+	* mln/value/float01.hh: Fix.
+
+
+	Enhance the trait solver mechanism; now it can rely
+	on category inheritance :-)
+
+	* mln/core/concept/image.hh,
+	* mln/core/concept/function.hh,
+	* mln/core/concept/meta_accumulator.hh,
+	* mln/core/concept/value_set.hh,
+	* mln/core/concept/weighted_window.hh,
+	* mln/core/concept/browsing.hh,
+	* mln/core/concept/dpoint.hh,
+	* mln/core/concept/object.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/concept/value.hh,
+	* mln/core/concept/point_site.hh,
+	* mln/core/concept/accumulator.hh: Specialize the category flag.
+	(super): New in those specializations.
+
+
+	Update.
+
+	* tests/trait_op_uminus.cc: New.
+	* tests/core_category.cc: New.
+	* tests/trait_op_plus.cc: Augment.
+	* mln/trait/op_plus.hh (set_binary_): Set category.
+	* mln/trait/promote.hh: Likewise.
+	* mln/trait/op_uminus.hh: Likewise.
+	* mln/trait/solve.hh: Augment.
+	* mln/trait/all.hh: Typo.
+	* mln/core/category.hh (Unknown<void>): New.
+	(Built_In): Move into...
+	* mln/value/builtin.hh: ...this new file.
+	* mln/core/ops.hh: Include builtin.hh.
+
+
+	Misc.
+
+	* mln/core/internal/exact.hh: Remove useless param.
+	* mln/value/graylevel.hh: Fix.
+
 2007-10-02  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Better tests on float01.
