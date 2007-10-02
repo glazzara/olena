@@ -1,3 +1,10 @@
+2007-10-02  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Better tests on float01.
+	* mln/value/float01.hh: Fix.
+	* mln/value/float01_.hh: Fix.
+	* tests/value_float01.cc: Update.
+
 2007-10-02  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Refactoring of image_if.

@@ -89,12 +89,32 @@ namespace mln
     };
 
 
+    namespace internal
+    {
+
+      template <unsigned n>
+      struct convert_< float01_<n> >
+      {
+	static float01_<n> value_at_index(std::size_t i)
+	{
+	  float01_<n> tmp;
+	  tmp.set_ind(i);
+	  return tmp;
+	}
+
+	static std::size_t index_of_value(const float01_<n>& v)
+	{
+	  return v.value_ind();
+	}
+      };
+    }
+
     template <unsigned n>
     struct props< float01_<n> >
     {
       static const std::size_t card_ = metal::pow<2, n>::value;
-      static const float01_<n> min() { return 0; }
-      static const float01_<n> max() { return 1; }
+      static const int min() { return 0; }
+      static const int max() { return 1; }
       static const unsigned nbits = n;
       typedef trait::kind::data kind;
       typedef float sum;

@@ -26,10 +26,27 @@
 // Public License.
 
 #include <iostream>
+
+#include <mln/core/image2d_b.hh>
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
+
 #include <mln/value/float01_8.hh>
 #include <mln/value/float01_16.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/level/transform.hh>
+
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+
+#include <mln/core/win/rectangle2d.hh>
+#include <mln/level/median.hh>
+#include <mln/level/compare.hh>
 
 
+using namespace mln;
+using namespace mln::value;
+using  mln::value::int_u8;
 
 float fi(int x) { return 0.5; }
 int ii(int x) { return 1; }
@@ -37,9 +54,35 @@ int ii(int x) { return 1; }
 float fd(double x) { return 0.5; }
 int id(double x) { return 1; }
 
+
+struct tofloat01 : mln::Function_v2v<tofloat01>
+{
+
+  typedef float01_<16> result;
+  result operator()(int_u8 v) const
+  {
+    result ret(double(v) / (mln_max(int_u8)));
+    //    std::cout << v << "-> "  << ret << std::endl;
+    return ret;
+  }
+};
+
+struct to8bits : mln::Function_v2v<to8bits>
+{
+
+  typedef int_u8 result;
+  result operator()(float01_<16> v) const
+  {
+    result ret = int(v.value() * 255);
+    //std::cout << v << "-> " << ret << std::endl;
+    return ret;
+  }
+};
+
 int main()
 {
-  using namespace mln::value;
+  win::rectangle2d rect(51, 51);
+  border::thickness = 52;
 
   float01_8  a(0.5);
   float01_16 b(0.5);
@@ -74,4 +117,29 @@ int main()
   std::cout << b << std::endl;
   b = 1;
   std::cout << b << std::endl;
+
+  {
+    std::cout << "convert" << std::endl;
+    image2d_b<int_u8>
+      lena = io::pgm::load<int_u8>("../img/lena.pgm"),
+      ref(lena.domain());
+
+    image2d_b<float01_16> out(lena.domain());
+    image2d_b<float01_16> tmp(lena.domain());
+
+    level::transform(lena, tofloat01(), tmp);
+
+    level::median(tmp, rect, out);
+    level::median(lena, rect, ref);
+
+
+    level::transform(out, to8bits(), lena);
+
+    io::pgm::save(lena, "out.pgm");
+    io::pgm::save(ref, "ref.pgm");
+    assert(lena == ref);
+    //debug::println(out);
+  }
+
+
 }

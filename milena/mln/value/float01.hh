@@ -146,7 +146,7 @@ namespace mln
     double float01::value() const
     {
       mln_invariant(nbits_ != 0);
-      return val_ / internal::two_pow_n_minus_1(nbits_);
+      return double(val_) / internal::two_pow_n_minus_1(nbits_);
     }
 
     unsigned long float01::value_ind() const
