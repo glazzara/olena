@@ -79,11 +79,17 @@ namespace mln
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
 
+    /// Test if queue is empty or not.
+    bool empty() const;
+
     /// Give the number of points.
     std::size_t npoints() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
+
+    /// Push force a point \p p in the queue.
+    queue_p<P>& push_force(const P& p);
 
     /// Push a point \p p in the queue.
     queue_p<P>& push(const P& p);
@@ -162,6 +168,13 @@ namespace mln
   }
 
   template <typename P>
+  bool
+  queue_p<P>::empty() const
+  {
+    return (q_.empty());
+  }
+
+  template <typename P>
   std::size_t
   queue_p<P>::npoints() const
   {
@@ -180,10 +193,8 @@ namespace mln
 
   template <typename P>
   queue_p<P>&
-  queue_p<P>::push(const P& p)
+  queue_p<P>::push_force(const P& p)
   {
-    mln_precondition(! has(p));
-    // FIXME: Our choice is "error if multiple insertions"
     q_.push_back(p);
     if (! vect_needs_update_)
       {
@@ -191,6 +202,15 @@ namespace mln
 	bb_needs_update_ = true;
       }
     return *this;
+  }
+
+  template <typename P>
+  queue_p<P>&
+  queue_p<P>::push(const P& p)
+  {
+    mln_precondition(! has(p));
+    // FIXME: Our choice is "error if multiple insertions"
+    return this->push_force(p);
   }
 
   template <typename P>

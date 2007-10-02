@@ -1,3 +1,10 @@
+2007-10-02  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add empty in queue_p.
+
+	Update.
+	* queue_p.hh: Add empty.
+
 2007-10-02  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix for compile.
