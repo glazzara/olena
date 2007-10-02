@@ -35,9 +35,13 @@
 # include <mln/core/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/level/fill.hh>
+# include <mln/level/saturate.hh>
+# include <mln/border/fill.hh>
 # include <mln/io/pbm/load.hh>
+# include <mln/io/pgm/save.hh>
 # include <mln/labeling/foreground.hh>
 # include <mln/debug/println.hh>
+# include <mln/debug/println_with_border.hh>
 # include "labeling_algo.hh"
 
 int main()
@@ -45,18 +49,34 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d_b<bool> in = io::pbm::load("../../img/toto.pbm");
+  //  image2d_b<bool> in = io::pbm::load("../../img/toto.pbm");
+  image2d_b<bool> in = io::pbm::load("toto.pbm");
+
   image2d_b<unsigned> lab(in.domain());
-  image2d_b<unsigned> out(in.domain());
+  image2d_b<unsigned> inte(in.domain());
+  image2d_b<int_u8> out(in.domain());
 
   unsigned n;
   labeling::foreground(in, c4(), lab, n);
-  std::cout << n << std::endl;
+  std::cout << "number of labels = " << n << std::endl;
+  std::vector<int_u8> vec;
 
   image2d_b<int> input(in.domain());
   level::fill(input, lab);
 
-  debug::println(lab | make::box2d(50, 30));
-  out = make_algo (lab, c4 ());
-  debug::println(out | make::box2d(50, 30));
+  inte = make_algo(lab, c4 ());
+  border::fill (inte, 0);
+
+  image2d_b<int_u8> inte2(inte.domain());
+
+  level::saturate(inte, 1, 255, inte2);
+  io::pgm::save(inte2, "inte.pgm");
+  debug::println_with_border(inte2);
+
+  mesh_p<point2d> m = make::graph_with_no_border(inte2, c4());
+  std::cout << "OK" << std::endl;
+  draw::mesh (out, m, 255, 128);
+
+  debug::println(out);
+  io::pgm::save(out, "out.pgm");
 }

@@ -1,3 +1,10 @@
+2007-10-02  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add lebeling algo in sandbox.
+
+	* labeling_algo.cc: Test file.
+	* labeling_algo.hh: Convert a binary image into mesh_image.
+
 2007-10-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make the trait solver rely on category inheritance.
