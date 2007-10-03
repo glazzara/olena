@@ -34,18 +34,62 @@
  */
 
 # include <mln/core/internal/image_if_base.hh>
+# include <mln/metal/unconst.hh>
+# include <mln/value/interval.hh>
+
+
+# define  F	 fun::and_p2b_expr_<					       \
+			fun::geq_p2b_expr_<				       \
+				pw::value_<I>,				       \
+				pw::cst_<mln_value(I)> >,		       \
+			fun::leq_p2b_expr_<				       \
+				pw::value_<I>,				       \
+				pw::cst_<mln_value(I)> > > >
+
+# define  Super  mln::internal::image_if_base_< I, F, image_if_interval<I> >
+
 
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename I> struct image_if_interval;
+
+
+  // internal::data_.
+
+  namespace internal
+  {
+
+    template <typename I>
+    struct data_< image_if_interval<I> > : data_< Super >
+    {
+	data_(I& ima, const F& f);
+    };
+
+  } // end of namespace mln::internal
+
+
+  namespace trait
+  {
+
+    template <typename I>
+    struct image_< image_if_interval<I> > : trait::image_< Super >
+    {
+    };
+
+  } // end of namespace mln::trait
+
+
+
   /*! \brief An image class FIXME.
    *
    */
-  template <typename I, typename F>
-  struct image_if_interval : public internal::image_if_base< I, F >
+  template <typename I>
+  struct image_if_interval : public Super
   {
     /// Skeleton.
-    typedef image_if_interval< tag::image_<I>, tag::function_<F> > skeleton;
+    typedef image_if_interval< tag::image_<I> > skeleton;
 
     /// Constructor from an image \p ima and a predicate \p f.
     image_if_interval(I& ima, const F& f);
@@ -54,7 +98,7 @@ namespace mln
     image_if_interval();
 
     /// Const promotion via convertion.
-    operator image_if_interval<const I, F>() const;
+    operator image_if_interval<const I>() const;
   };
 
   // Operators.
@@ -62,74 +106,74 @@ namespace mln
   // Image | [from, to].
 
   template <typename I>
-  image_if_interval< I,
-	    fun::and_p2b_expr_< fun::geq_p2b_expr_< pw::value_<I>,
-						    pw::cst_<mln_value(I)> >,
-				fun::leq_p2b_expr_< pw::value_<I>,
-						    pw::cst_<mln_value(I)> > > >
+  image_if_interval<I>
   operator | (Image<I>& ima, const value::interval_<mln_value(I)>& vv);
 
   template <typename I>
-  image_if_interval< const I,
-	    fun::and_p2b_expr_< fun::geq_p2b_expr_< pw::value_<I>,
-						    pw::cst_<mln_value(I)> >,
-				fun::leq_p2b_expr_< pw::value_<I>,
-						    pw::cst_<mln_value(I)> > > >
+  image_if_interval<const I>
   operator | (const Image<I>& ima, const value::interval_<mln_value(I)>& vv);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // image_if_interval<I,F>
+  // image_if_interval<I>
 
-  template <typename I, typename F>
-  image_if_interval<I,F>::image_if_interval()
+  template <typename I>
+  image_if_interval<I>::image_if_interval()
   {
   }
 
-  template <typename I, typename F>
-  image_if_interval<I,F>::image_if_interval(I& ima, const F& f)
+  template <typename I>
+  image_if_interval<I>::image_if_interval(I& ima, const F& f)
   {
     this->init_(ima, f);
   }
 
-  template <typename I, typename F>
-  image_if_interval<I,F>::operator image_if_interval<const I, F>() const
+  template <typename I>
+  image_if_interval<I>::operator image_if_interval<const I, F>() const
   {
-    image_if_interval<const I, F> tmp(this->data_->ima_, this->data_->pset_);
+    image_if_interval<const I> tmp(this->data_->ima_, this->data_->pset_);
     return tmp;
   }
+
+  // internal::data_< image_if_interval<I> >
+
+  namespace internal
+  {
+
+    template <typename I>
+    data_< image_if_value<I> >::data_(I& ima, const F& f)
+      : data_< Super >(ima, f)
+    {
+    }
+
+  } // end of namespace mln::internal
 
   // Operators.
 
   template <typename I>
-  image_if_interval< I,
-	    fun::and_p2b_expr_< fun::geq_p2b_expr_< pw::value_<I>,
-						    pw::cst_<mln_value(I)> >,
-				fun::leq_p2b_expr_< pw::value_<I>,
-						    pw::cst_<mln_value(I)> > > >
+  image_if_interval<I>
   operator | (Image<I>& ima, const value::interval_<mln_value(I)>& vv)
   {
-    return ima | ( (pw::value(ima) >= pw::cst(vv.from)) &&
-		   (pw::value(ima) <= pw::cst(vv.to)) );
+    image_if_interval<I> tmp(exact(ima), vv);
+    return tmp;
   }
 
   template <typename I>
-  image_if_interval< const I,
-	    fun::and_p2b_expr_< fun::geq_p2b_expr_< pw::value_<I>,
-						    pw::cst_<mln_value(I)> >,
-				fun::leq_p2b_expr_< pw::value_<I>,
-						    pw::cst_<mln_value(I)> > > >
+  image_if_interval<const I>
   operator | (const Image<I>& ima, const value::interval_<mln_value(I)>& vv)
   {
-    return ima | ( (pw::value(ima) >= pw::cst(vv.from)) &&
-		   (pw::value(ima) <= pw::cst(vv.to)) );
+    image_if_interval<const I> tmp(exact(ima), vv);
+    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
+
+# undef Super
+# undef F
 
 #endif // ! MLN_CORE_IMAGE_IF_INTERVAL_HH

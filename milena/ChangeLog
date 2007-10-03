@@ -1,3 +1,9 @@
+2007-10-03  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix image_if_interval. Does NOT compile yet !.
+	* mln/core/image_if_interval.hh: Update.
+	* tests/image_if_interval.cc: New.
+
 2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update labeling_algo.
