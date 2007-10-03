@@ -1,5 +1,11 @@
 2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add test for voronoi algorithm.
+
+	* labeling_algo.cc: New.
+
+2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add voronoi algorithm.
 
 	* voronoi.hh: New.
