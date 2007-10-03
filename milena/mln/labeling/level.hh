@@ -34,8 +34,10 @@
  * level.
  */
 
+# include <mln/core/concept/fast_image.hh>
 # include <mln/labeling/base.hh>
 # include <mln/level/fill.hh>
+
 
 
 namespace mln
@@ -59,6 +61,9 @@ namespace mln
     bool level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
 	       Image<O>& output, unsigned& nlabels);
 
+    template <typename I, typename N, typename O>
+    bool level_fast(const Fast_Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
+		    Fast_Image<O>& output, unsigned& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -108,6 +113,40 @@ namespace mln
 
       // FIXME: Add fast versions.
 
+      template <typename I_, typename N_, typename O_>
+      struct level_fast_t : labeling::impl::base_fast_<I_,N_,O_>
+      {
+	typedef mln_point(I_) P;
+	
+	// 	typedef mln_pset(I_) S;
+	// 	const S& s;
+	
+	void init()                            { level::fill(this->output, 0); }
+	bool handles(unsigned p) const         { return this->input[p] == val; }
+	bool equiv(unsigned n, unsigned) const { return this->input[n] == val; }
+	
+	const mln_value(I_)& val;
+	
+	level_fast_t(const I_& input, const mln_value(I_)& val, const N_& nbh, O_& output)
+	  : labeling::impl::base_fast_<I_,N_,O_>(input, nbh, output),
+	    // 	    s(input.domain()),
+	    val(val)
+	{}
+      };
+
+
+      template <typename I, typename N, typename O>
+      bool level_fast_(const Fast_Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
+		       Fast_Image<O>& output, unsigned& nlabels)
+      {
+	typedef level_fast_t<I,N,O> F;
+	F f(exact(input), val, exact(nbh), exact(output));
+	canvas::labeling_fast<F> run(f);
+	nlabels = f.nlabels;
+	return f.status;
+      }
+
+
     } // end of namespace mln::labeling::impl
 
 
@@ -119,6 +158,14 @@ namespace mln
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
       return impl::level_(exact(input), val, nbh, output, nlabels);
+    }
+
+    template <typename I, typename N, typename O>
+    bool level_fast(const Fast_Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
+		    Fast_Image<O>& output, unsigned& nlabels)
+    {
+      mln_precondition(exact(output).domain() == exact(input).domain());
+      return impl::level_fast_(exact(input), val, nbh, output, nlabels);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

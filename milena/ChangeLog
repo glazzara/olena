@@ -1,5 +1,13 @@
 2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add labeling_fast in mln.
+
+	* canvas/labeling.hh: New canvas for labeling fast.
+	* convert/to_window.hh: New function to_upper_window.
+	* labeling/level.hh: Add level_fast.
+
+2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add test for voronoi algorithm.
 
 	* labeling_algo.cc: New.

@@ -53,6 +53,10 @@ namespace mln
     template <typename N>
     window<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh);
 
+    /// Convert a neighborhood \p nbh into an upper window.
+    template <typename N>
+    window<mln_dpoint(N)> to_upper_window(const Neighborhood<N>& nbh);
+
     /// Convert a binary image \p ima into a window.
     template <typename I>
     window<mln_dpoint(I)> to_window(const Image<I>& ima);
@@ -77,9 +81,21 @@ namespace mln
       window<D> win;
       mln_niter(N) n(nbh, P::zero);
       for_all(n)
-// FIXME: pour Guillaume
-//     if (n < P::zero)
 	win.insert(n - P::zero);
+      return win;
+    }
+
+    template <typename N>
+    window<mln_dpoint(N)> to_upper_window(const Neighborhood<N>& nbh_)
+    {
+      const N& nbh = exact(nbh_);
+      typedef mln_dpoint(N) D;
+      typedef mln_point(D) P;
+      window<D> win;
+      mln_niter(N) n(nbh, P::zero);
+      for_all(n)
+	if (n > P::zero)
+	  win.insert(n - P::zero);
       return win;
     }
 

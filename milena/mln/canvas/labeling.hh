@@ -36,7 +36,7 @@
 
 # include <mln/level/fill.hh>
 # include <mln/level/sort_points.hh>
-
+# include <mln/convert/to_window.hh>
 
 namespace mln
 {
@@ -152,6 +152,111 @@ namespace mln
 
 
     // FIXME: Fast version.
+
+
+    template <typename F>
+    struct labeling_fast
+    {
+      F& f;
+      
+      typedef typename F::I I;
+      typedef typename F::N N;
+      typedef typename F::O O;
+      
+      // aux:
+      mln_ch_value(O, unsigned) parent;
+      
+      labeling_fast(F& f)
+	: f(f),
+	  parent(f.output.domain(), f.input.border())
+      {
+	run();
+      }
+      
+      void run()
+      {
+
+        // init
+	{
+	  f.nlabels = 0;
+	  f.init();
+	}
+
+	// first pass
+	{
+	  mln_bkd_pixter(const I) p(f.input);
+	  //	mln_nixter(const I, N) n(p, f.nbh);
+
+	  typedef window<mln_dpoint(I)> W;
+	  W win = mln::convert::to_upper_window(f.nbh);
+	  mln_qixter(const I, W) n(p, win);
+	  
+	  for_all(p) if (f.handles(p))
+	    {
+	      make_set(p);
+	      for_all(n)
+		if (f.equiv(n, p))
+		  do_union(n, p);
+		else
+		  f.do_no_union(n, p);
+	    }
+	}
+	
+	// second pass
+	{
+	  mln_fwd_pixter(const I) p(f.input);
+	  for_all(p) if (f.handles(p))
+	    {
+	      if (is_root(p))
+		{
+		  if (f.labels(p))
+		    {
+		      if (f.nlabels == mln_max(mln_value(O)))
+			{
+			  f.status = false;
+			  return;
+			}
+		      f.output[p] = ++f.nlabels;
+		    }
+		}
+	      else
+		f.output[p] = f.output[parent[p]];
+	    }
+	  f.status = true;
+	}
+	
+      } // end of run()
+      
+      void make_set(unsigned p)
+      {
+	parent[p] = p;
+	f.init_attr(p);
+      }
+      
+      bool is_root(unsigned p) const
+      {
+	return parent[p] == p;
+      }
+    
+      unsigned find_root(unsigned x)
+      {
+	if (parent[x] == x)
+	  return x;
+	else
+	  return parent[x] = find_root(parent[x]);
+      }
+    
+      void do_union(unsigned n, unsigned p)
+      {
+	unsigned r = find_root(n);
+	if (r != p)
+	  {
+	    parent[r] = p;
+	    f.merge_attr(r, p);
+	  }
+      }
+      
+    };
 
 
   } // end of namespace mln::canvas
