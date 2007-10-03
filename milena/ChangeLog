@@ -1,5 +1,10 @@
 2007-10-03  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	Fix image_if_interval, it works !.
+	* mln/core/image_if_interval.hh: Fix.
+
+2007-10-03  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Fix image_if_interval. Does NOT compile yet !.
 	* mln/core/image_if_interval.hh: Update.
 	* tests/image_if_interval.cc: New.

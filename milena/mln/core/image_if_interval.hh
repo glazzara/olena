@@ -44,7 +44,7 @@
 				pw::cst_<mln_value(I)> >,		       \
 			fun::leq_p2b_expr_<				       \
 				pw::value_<I>,				       \
-				pw::cst_<mln_value(I)> > > >
+				pw::cst_<mln_value(I)> > >
 
 # define  Super  mln::internal::image_if_base_< I, F, image_if_interval<I> >
 
@@ -94,6 +94,9 @@ namespace mln
     /// Constructor from an image \p ima and a predicate \p f.
     image_if_interval(I& ima, const F& f);
 
+    /// Natural constructor from an image \p ima and a interval of value \p vv.
+    image_if_interval(I& ima, const value::interval_<mln_value(I)>&);
+
     /// Constructor without argument.
     image_if_interval();
 
@@ -131,7 +134,14 @@ namespace mln
   }
 
   template <typename I>
-  image_if_interval<I>::operator image_if_interval<const I, F>() const
+  image_if_interval<I>::image_if_interval(I& ima, const value::interval_<mln_value(I)>& vv)
+  {
+    this->init_(ima, (pw::value(ima) >= pw::cst(vv.from))
+		&& (pw::value(ima) <= pw::cst(vv.to)));
+  }
+
+  template <typename I>
+  image_if_interval<I>::operator image_if_interval<const I>() const
   {
     image_if_interval<const I> tmp(this->data_->ima_, this->data_->pset_);
     return tmp;
@@ -143,7 +153,7 @@ namespace mln
   {
 
     template <typename I>
-    data_< image_if_value<I> >::data_(I& ima, const F& f)
+    data_< image_if_interval<I> >::data_(I& ima, const F& f)
       : data_< Super >(ima, f)
     {
     }
