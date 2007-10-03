@@ -31,13 +31,14 @@
  */
 
 #include <mln/value/int_u8.hh>
-
-
+#include <mln/value/int_u16.hh>
+#include <mln/value/float01_8.hh>
 
 int main()
 {
   using namespace mln;
   using value::int_u8;
+  using value::float01_8;
 
   {
     int_u8 i = 3;
@@ -47,10 +48,5 @@ int main()
 
     mln_assertion(-i == -2);
     mln_assertion(-3 * i == -6);
-  }
-
-  {
-    int_u8 i = 128;
-    std::cout << i + i << std::endl;
   }
 }

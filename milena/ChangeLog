@@ -1,3 +1,13 @@
+2007-10-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add tests and clean gray values.
+	* mln/value/gray.hh,
+	* mln/value/graylevel.hh: Clean useless operators.
+
+	* tests/value_gray.cc: Add tests.
+	* tests/value_int_u.cc: New, add tests.
+	* tests/value_int_u8.cc: Add tests.
+
 2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add queue_p_fast.

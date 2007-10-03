@@ -71,15 +71,10 @@ namespace mln
       /// Access to std type.
       enc value() const;
 
-      /// Op encoding_t.
-      operator enc() const;
-
       /// Op<.
       bool operator<(const graylevel<n>& rhs) const;
 
       graylevel<n>& operator=(const int val);
-      /// Op==.
-      // bool operator==(const graylevel<n>& rhs) const;
 
     protected:
       enc val_;
@@ -119,14 +114,6 @@ namespace mln
     template <unsigned n, unsigned m>
     gray operator-(const graylevel<n>& lhs, const graylevel<m>& rhs);
 
-    template <unsigned n>
-    gray operator*(int s, const graylevel<n>& rhs);
-
-    template <unsigned n>
-    gray operator*(const graylevel<n>& lhs, int s);
-
-    template <unsigned n>
-    gray operator/(const graylevel<n>& lhs, int s);
 
 
 
@@ -162,12 +149,6 @@ namespace mln
       mln_precondition(unsigned(val) <= mln_max(enc));
       this->val_ = val;
       return *this;
-    }
-
-    template <unsigned n>
-    graylevel<n>::operator typename graylevel<n>::enc() const
-    {
-      return val_;
     }
 
     template <unsigned n>

@@ -142,12 +142,11 @@ namespace mln
     template <unsigned N>
     gray operator/(const graylevel<N>& lhs, int s)
     {
+      std::cout << "div div " << s << std::endl;
       mln_precondition(s > 0);
       gray tmp(N, lhs.value() / s);
       return tmp;
     }
-
-
 
     // Gray.
 
@@ -337,15 +336,6 @@ namespace mln
       gray tmp(lhs.nbits(), lhs.value() / s);
       return tmp;
     }
-
-//     template <unsigned N>
-//     graylevel<N>&
-//     graylevel<N>::operator=(const gray& g)
-//     {
-//       mln_precondition(g.nbits() == N);
-//       assert(g.value() < internal::two_pow_(N));
-//       this->val = g.value(); // FIXME: Add static_cast.
-//     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
