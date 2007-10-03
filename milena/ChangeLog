@@ -1,3 +1,13 @@
+2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add color sub_image in sandbox.
+
+	* color_sub.cc: New.
+
+	Update
+	* labeling_algo.cc,
+	* labeling_level_fast.cc: Update.
+
 2007-10-03  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix image_if_interval, it works !.

@@ -25,44 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling_foreground.cc
+/*! \file tests/sub_image.cc
  *
- * \brief Test on mln::labeling::foreground.
+ * \brief Tests on mln::sub_image.
  */
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/image1d_b.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/sub_image.hh>
+#include <mln/core/inplace.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/pw/all.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/level/fill.hh>
+#include <mln/debug/println.hh>
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-#include <mln/labeling/level.hh>
+#include <mln/core/image2d_b.hh>
+#include <mln/core/point2d.hh>
+#include <mln/debug/println.hh>
+#include <mln/util/graph.hh>
+#include <mln/io/ppm/save.hh>
+#include <mln/fun/p2b/chess.hh>
+
+#include <mln/core/image_if_value.hh>
 #include <mln/debug/iota.hh>
-#include <mln/debug/println_with_border.hh>
 
-#include "paste.hh"
-#include "fill.hh"
+namespace mln
+{
+  template <typename I, typename J>
+  void
+  color (Image<I>& ima_, Image<J>& out_)
+  {
+    I& ima = exact (ima_);
+    J& out = exact (out_);
 
+    level::fill (out, value::rgb8(255, 0, 0));
+
+    {
+      mln_piter(I) p (ima.domain ());
+      for_all (p)
+	{
+	  out(p) = value::rgb8(ima(p));
+	}
+    }
+  }
+}
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  unsigned border = 1;
-
-  image2d_b<value::int_u8> i1(5, 5, border);
-  debug::iota(i1);
-  i1[10] = i1[17] = i1[18] = i1[25] = i1[26] = i1[22] = i1[29] = 2;
-   //  i1[5] = i1[6] = 2;
-  debug::println_with_border(i1);
-
-  unsigned n;
-  image2d_b<value::int_u8> out(i1.domain(), border);
-  labeling_level_fast(i1, 2, c4(), out, n);
-
-  std::cout << "n = " << n << std::endl;
+  image2d_b<value::int_u8> ima(3,3);
+  debug::iota(ima);
+  image2d_b<value::rgb8> out(ima.domain ().bbox ());
+  std::cout << ima.domain() << std::endl;
+  color(inplace (ima | 6), out);
+  io::ppm::save(out, "out.ppm");
   debug::println(out);
 }

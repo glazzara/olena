@@ -52,7 +52,7 @@ int main()
   using value::int_u8;
 
   //  image2d_b<bool> in = io::pbm::load("../../img/toto.pbm");
-  image2d_b<bool> in = io::pbm::load("../../img/toto.pbm");
+  image2d_b<bool> in = io::pbm::load("test.pbm");
 
   image2d_b<int_u8> lab(in.domain());
   image2d_b<int_u8> inte(in.domain());
