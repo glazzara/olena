@@ -89,11 +89,72 @@ namespace mln
 	      m[std::pair<V, V>(ima(p) - min, ima(n) - min)] = true;
 	}
       
-      for (unsigned i = min; i <= max; ++i)
+      for (unsigned i = 0; i < nb; ++i)
 	{
 	  gr.add_node ();
- 	  v[i - min] = make::point2d ((unsigned)tab_mean[i].to_result ()[0],
-				      (unsigned)tab_mean[i].to_result ()[1]);
+ 	  v[i] = make::point2d ((unsigned)tab_mean[i].to_result ()[0],
+				(unsigned)tab_mean[i].to_result ()[1]);
+	}
+
+      typename std::map<std::pair<V, V>, bool>::const_iterator it = m.begin ();
+      for (; it != m.end (); ++it)
+	gr.add_edge((*it).first.first, (*it).first.second);
+
+      mesh_p<P> res(gr, v);
+      return res;
+    }
+
+
+    template <typename I, typename N>
+    mesh_p<mln_psite(I)>
+    voronoi (Image<I>& ima_,
+	     Image<I>& orig_,
+	     const Neighborhood<N>& nbh)
+    {
+      typedef metal::vec<2,float> X;
+      typedef mln_value(I) V;
+      typedef mln_psite(I) P;
+
+      I& ima = exact(ima_);
+      I& orig = exact(orig_);
+      util::graph<void> gr;
+      V min, max;
+      estim::min_max (ima, min, max);
+      unsigned nb = max - min + 1;
+      std::vector<P> v(nb);
+      std::vector< accu::mean_< X > > tab_mean (nb);
+      std::map<std::pair<V, V>, bool> m;
+
+      {
+	mln_piter(I) p(orig.domain());
+
+	for_all(p)
+	  {
+	    if (orig(p) != 0)
+	      {
+		X x = mln_point(I)(p);
+		tab_mean[orig(p) - min].take(x);
+	      }
+	  }
+      }
+
+      {
+	mln_piter(I) p(ima.domain());
+	mln_niter(N) n(nbh, p);
+
+	for_all(p)
+	  {
+	    for_all (n) if (ima.has(n))
+	      if (ima(p) != ima(n))
+		m[std::pair<V, V>(ima(p) - min, ima(n) - min)] = true;
+	  }
+      }
+      
+      for (unsigned i = 0; i < nb; ++i)
+	{
+	  gr.add_node ();
+ 	  v[i] = make::point2d ((unsigned)tab_mean[i].to_result ()[0],
+				(unsigned)tab_mean[i].to_result ()[1]);
 	}
 
       typename std::map<std::pair<V, V>, bool>::const_iterator it = m.begin ();

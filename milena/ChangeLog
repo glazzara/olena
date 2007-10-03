@@ -1,3 +1,10 @@
+2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update labeling_algo.
+
+	* labeling_algo.cc,
+	* labeling_algo.hh: Update.
+
 2007-10-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add tests and clean gray values.
