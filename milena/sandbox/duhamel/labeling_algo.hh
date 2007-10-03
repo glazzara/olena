@@ -1,4 +1,5 @@
 # include <mln/core/queue_p.hh>
+# include "queue_p_fast.hh"
 # include <mln/core/clone.hh>
 # include <mln/debug/println.hh>
 
@@ -11,9 +12,6 @@
 #include <mln/debug/println.hh>
 #include <mln/util/graph.hh>
 #include <mln/core/mesh_p.hh>
-#include <mln/core/mesh_psite.hh>
-#include <mln/draw/mesh.hh>
-#include <mln/core/mesh_image.hh>
 #include <mln/accu/mean.hh>
 #include <mln/estim/min_max.hh>
 #include <algorithm> 
@@ -67,23 +65,18 @@ namespace mln
 			  const Neighborhood<N>& nbh)
     {
       typedef metal::vec<2,float> X;
-
       typedef mln_value(I) V;
       typedef mln_psite(I) P;
 
       I& ima = exact(ima_);
       util::graph<void> gr;
-
       V min, max;
       estim::min_max (ima, min, max);
       unsigned nb = max - min + 1;
       std::vector<P> v(nb);
-      std::vector< accu::mean_< metal::vec<2,float> > > tab_mean (nb);
-
-      std::cout << "nb = " << nb << std::endl;
-
+      std::vector< accu::mean_< X > > tab_mean (nb);
       std::map<std::pair<V, V>, bool> m;
-
+      
       mln_piter(I) p(ima.domain());
       mln_niter(N) n(nbh, p);
 
@@ -95,41 +88,21 @@ namespace mln
 	    if (ima(p) != ima(n))
 	      m[std::pair<V, V>(ima(p) - min, ima(n) - min)] = true;
 	}
-
-      std::cout << "center[0] = " << tab_mean[0].to_result() << std::endl;
-      std::cout << "center[1] = " << tab_mean[1].to_result() << std::endl;
-
-//       /// test
-//       v[0] = (make::point2d (0, 0));
-//       v[1] = (make::point2d (5, 1));
-//       v[2] = (make::point2d (9, 2));
-//       v[3] = (make::point2d (0, 6));
-//       v[4] = (make::point2d (6, 5));
-//       v[5] = (make::point2d (8, 7));
-
-
+      
       for (unsigned i = min; i <= max; ++i)
 	{
 	  gr.add_node ();
-// 	  std::cout << tab_mean[i].to_result ()[0]
-// 		    << std::endl;
- 	  v[i - min] = make::point2d ((unsigned)tab_mean[i].to_result ()[1], (unsigned)tab_mean[i].to_result ()[0]);
+ 	  v[i - min] = make::point2d ((unsigned)tab_mean[i].to_result ()[0],
+				      (unsigned)tab_mean[i].to_result ()[1]);
 	}
 
       typename std::map<std::pair<V, V>, bool>::const_iterator it = m.begin ();
       for (; it != m.end (); ++it)
-	{
-// 	  gr.print_debug ();
-// 	  std::cout << "t1 = " <<  (*it).first.first << std::endl
-// 		    << "t2 = " <<  (*it).first.second << std::endl
-// 		    << std::endl;
-
-	  gr.add_edge((*it).first.first, (*it).first.second);
-	}
+	gr.add_edge((*it).first.first, (*it).first.second);
 
       mesh_p<P> res(gr, v);
       return res;
-    }    
+    }
   } // end of mln::make
 
 
@@ -242,59 +215,26 @@ namespace mln
 		}
 	}
     }
+
+//     // Body: alternative version.
+//     {
+//       while (! q.empty())
+// 	{
+// 	  mln_psite(I) p = q.front();
+// 	  q.pop();
+// 	  if (out(p) != 0) // p has already been processed so ignore
+// 	    continue;
+
+// 	  mln_niter(N) n(nbh, p);
+// 	  for_all(n) if (ima.has(n))
+// 	    if (out(n) != 0)
+// 	      out(p) = out(n);
+// 	    else
+// 	      q.push_force(n); // n may already be in the queue,
+// 	                       // yet we then queue again this psite
+// 	}
+
     return out;
   }
-
-  template <typename I, typename N>
-  I
-  make_algo_debug2 (Image<I>& ima_,
-	     const Neighborhood<N>& nbh)
-  {
-    I& ima = exact(ima_);
-    I out = clone(ima_);
-    queue_p<mln_psite(I)> q;
-
-    // Init.
-    {
-      mln_piter(I) p(ima.domain());
-      mln_niter(N) n(nbh, p);
-
-      for_all(p) if (ima(p) == 0)
-	for_all(n) if (ima(n) != 0)
-	  {
-	    std::cout << "push : " << p << std::endl;
-	    q.push(p);
-	    break;
-	  }
-      std::cout << "init => q has " << q.npoints() << " points"
-		<< std::endl;
-    }
-
-
-    // Body.
-    {
-      while (! q.empty())
-	{
- 	  debug::println(out);
-	  mln_psite(I) p = q.front();
-	  std::cout << "pop : " << p << std::endl;
-	  q.pop();
-	  mln_invariant(ima(p) == 0);
-
-	  mln_niter(N) n(nbh, p);
-	  for_all(n) if (ima.has(n))
-	    if (out(n) != 0)
-	      out(p) = out(n);
-	    else
-	      if (! q.has(n))
-		{
-		  std::cout << "push : " << n << std::endl;
-		  q.push(n);
-		}
-	}
-    }
-    return out;
-  }
-
 
 } // end of mln

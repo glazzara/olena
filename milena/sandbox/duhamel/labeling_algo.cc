@@ -42,6 +42,7 @@
 # include <mln/labeling/foreground.hh>
 # include <mln/debug/println.hh>
 # include <mln/debug/println_with_border.hh>
+# include <mln/draw/mesh.hh>
 # include "labeling_algo.hh"
 
 int main()
@@ -69,14 +70,16 @@ int main()
 
   image2d_b<int_u8> inte2(inte.domain());
 
+  //  level::fill(inte2, inte);
+
   level::saturate(inte, 1, 255, inte2);
   io::pgm::save(inte2, "inte.pgm");
-  debug::println_with_border(inte2);
+  //  debug::println_with_border(inte2);
 
   mesh_p<point2d> m = make::graph_with_no_border(inte2, c4());
   std::cout << "OK" << std::endl;
   draw::mesh (out, m, 255, 128);
 
-  debug::println(out);
+  //  debug::println(out);
   io::pgm::save(out, "out.pgm");
 }

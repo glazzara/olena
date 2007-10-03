@@ -1,3 +1,13 @@
+2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add queue_p_fast.
+
+	* queue_p_fast.hh: New queue with vector.
+
+	Update
+	* labeling_algo.cc,
+	* labeling_algo.hh: Update.
+
 2007-10-02  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix for accumulator from point to vec<2, float>.
