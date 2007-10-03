@@ -1,5 +1,11 @@
 2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add test for fast labeling.
+
+	* labeling_level_fast.cc: New test.
+
+2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add labeling_fast in mln.
 
 	* canvas/labeling.hh: New canvas for labeling fast.
