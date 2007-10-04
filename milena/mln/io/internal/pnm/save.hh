@@ -93,7 +93,7 @@ namespace mln
 	  file.write((char*)(&c), sizeof(E));
 	}
 
-	// save data for (sizeof(int_u8) != 1) and non fast images
+	// save data for (sizeof(int_u8) != 1) and non fastest images
 	template <typename I>
 	void save_data_uncontiguous(std::ofstream& file,
 				    const Image< I >& ima_)
@@ -112,11 +112,11 @@ namespace mln
 	      write_value(file, ima(p));
 	}
 
-	// save data when (sizeof(int_u8) == 1) with fast images
+	// save data when (sizeof(int_u8) == 1) with fastest images
 	// (faster)
 	template <typename I>
 	void save_data_contiguous(std::ofstream& file,
-				  const Fast_Image<I>& ima_)
+				  const Fastest_Image<I>& ima_)
 	{
 	  const I& ima = exact(ima_);
 	  const int
@@ -130,10 +130,10 @@ namespace mln
 	}
 
 
-	// caller for fast images
+	// caller for fastest images
 	template <typename I>
 	void save_data(std::ofstream& file,
-		       const Fast_Image<I>& ima)
+		       const Fastest_Image<I>& ima)
 	{
 	  if (sizeof(value::int_u8) == 1)
 	    save_data_contiguous(file, ima);
@@ -141,7 +141,7 @@ namespace mln
 	    save_data_uncontiguous(file, ima);
 	}
 
-	// caller for non fast images
+	// caller for non fastest images
 	template <typename I>
 	void save_data(std::ofstream& file,
 		       const Image<I>& ima)

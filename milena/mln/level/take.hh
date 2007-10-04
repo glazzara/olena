@@ -72,7 +72,7 @@ namespace mln
       }
 
       template <typename A, typename I>
-      void take(const Fast_Image<I>& input_, A& a)
+      void take(const Fastest_Image<I>& input_, A& a)
       {
 	const I& input = exact(input_);
 	mln_pixter(const I) pxl(input);

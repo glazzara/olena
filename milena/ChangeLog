@@ -1,3 +1,70 @@
+2007-10-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fast is Fastest and speed trait is used in inheritance.
+
+	Fast actually is fastEST.
+
+	* mln/core/concept/fast_image.hh: Rename as...
+	* mln/core/concept/fastest_image.hh: ...this new file.
+	* mln/core/concept/doc/fast_image.hh: Rename as...
+	* mln/core/concept/doc/fastest_image.hh: ...this new file.
+	* mln/core/internal/image_base.hh: Use speed trait for
+	inheritance.
+	* mln/core/trait/is_fast.hh: Remove; obsolete.
+	* mln/core/trait/all.hh: Update.
+	* mln/histo/compute.hh,
+	* mln/debug/iota.hh,
+	* mln/debug/println_with_border.hh,
+	* mln/core/image2d_b.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/image1d_b.hh,
+	* mln/core/image3d_b.hh,
+	* mln/arith/plus.hh,
+	* mln/arith/min.hh,
+	* mln/arith/revert.hh,
+	* mln/arith/minus.hh,
+	* mln/level/take.hh,
+	* mln/level/assign.hh,
+	* mln/level/apply.hh,
+	* mln/level/fill.hh,
+	* mln/level/memcpy_.hh,
+	* mln/level/memset_.hh,
+	* mln/level/median.hh,
+	* mln/level/transform.hh,
+	* mln/linear/convolve.hh,
+	* mln/linear/local/convolve.hh,
+	* mln/accu/take.hh,
+	* mln/border/resize.hh,
+	* mln/border/fill.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/mirror.hh,
+	* mln/border/get.hh,
+	* mln/test/predicate.hh,
+	* mln/morpho/erosion_fast.hh,
+	* mln/morpho/dilation_fast.hh,
+	* mln/io/internal/pnm/save.hh,
+	* mln/logical/and.hh,
+	* mln/logical/and_not.hh,
+	* mln/logical/or.hh,
+	* mln/logical/not.hh,
+	* mln/labeling/level.hh,
+	* mln/labeling/base.hh: Update.
+	* tests/image2d_b.cc: Augment.
+
+
+	Only keep the generic impl in the main file.
+
+	* mln/level/paste.hh: Split file into this and...
+	* mln/level/paste.spe.hh: ...this new file.
+	(paste_generic_): Rename as...
+	(paste_): ...this and move in impl::generic.
+	* tests/level_paste.cc: Update.
+
+	Misc.
+
+	* tests/literal_zero.cc,
+	* mln/core/macros.hh: Clean.
+
 2007-10-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Rename x variables into t in accumulators.

@@ -36,6 +36,12 @@
 #include <mln/core/init.hh>
 
 
+template <typename I>
+void check_fastest(const mln::Fastest_Image<I>&)
+{
+}
+
+
 int main()
 {
   using namespace mln;
@@ -48,4 +54,6 @@ int main()
 
   mln_assertion(f.npoints() == geom::nrows(f) * geom::ncols(f));
   mln_assertion(f.ncells()  == (nrows + 2 * border) * (ncols + 2 * border));
+
+  check_fastest(f);
 }

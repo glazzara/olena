@@ -25,17 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_APPLY_HH
-# define MLN_LEVEL_APPLY_HH
+#ifndef MLN_LEVEL_PASTE_SPE_HH
+# define MLN_LEVEL_PASTE_SPE_HH
 
-/*! \file mln/level/apply.hh
+/*! \file mln/level/paste.spe.hh
  *
- * \brief Apply a function-object onto image pixel values.
+ * \brief Specializations for mln::level::paste.
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/function.hh>
+# include <mln/level/memcpy_.hh>
 
+
+
+# ifndef MLN_INCLUDE_ONLY
 
 namespace mln
 {
@@ -43,64 +45,64 @@ namespace mln
   namespace level
   {
 
-    /*! Apply a function-object to the image \p input.
-     *
-     * \param[in,out] input The input image.
-     * \param[in] f The function-object.
-     *
-     * This routine runs: \n
-     *   for all p of \p input, \p input(p) = \p f( \p input(p) ) \n
-     *
-     * This routine is equivalent to level::tranform(input, f, input)
-     * but it is faster since a single iterator is required.
-     *
-     * \todo Add versions for lowq images.
-     */
-    template <typename I, typename F>
-    void apply(Image<I>& input, const Function_v2v<F>& f);
-
-
-
-# ifndef MLN_INCLUDE_ONLY
-
     namespace impl
     {
 
-      template <typename I, typename F>
-      void apply_(Image<I>& input_, const F& f)
+
+      namespace generic
       {
-	I& input   = exact(input_);
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  input(p) = f(input(p));
+	template <typename I, typename J>
+	void paste_(const I& data, J& destination);
       }
 
-      template <typename I, typename F>
-      void apply_(Fastest_Image<I>& input_, const F& f)
+
+      template <typename I, typename J>
+      void paste_lines_(const I& data, J& destination)
       {
-	I& input   = exact(input_);
-	mln_pixter(I) pxl(input);
-	for_all(pxl)
-	  pxl.val() = f(pxl.val());
+	trace::entering("level::impl::paste_lines_");
+	typedef mln_point(I) P;
+	std::size_t n = data.bbox().len(P::dim - 1);
+	// FIXME: Works only for raw data images
+	// FIXME: For linear data images, we should get the len for each line...
+
+	typename I::line_piter p(data.domain()); // FIXME: Alias mln_line_piter!
+	for_all(p)
+	  memcpy_(inplace(make::pixel(destination, p)),
+		  make::pixel(data, p),
+		  n);
+	trace::exiting("level::impl::paste_lines_");
       }
+
+
+      // Disjunction.
+
+      // Remember: raw < linear < stored, computed.
+
+      template <typename I, typename J>
+      void paste_(mln::trait::data::any, const I& data,
+		  mln::trait::data::any, J& destination)
+      {
+	generic::paste_(data, destination);
+      }
+
+      template <typename I, typename J>
+      void paste_(mln::trait::data::raw, const I& data,
+		  mln::trait::data::raw, J& destination)
+      {
+	if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
+	  paste_lines_(data, destination);
+	else
+	  generic::paste_(data, destination);
+      }
+
 
     } // end of namespace mln::level::impl
-
-
-    // Facade.
-
-    template <typename I, typename F>
-    void apply(Image<I>& input, const Function_v2v<F>& f)
-    {
-      mln_precondition(exact(input).has_data());
-      impl::apply_(exact(input), exact(f));
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::level
 
 } // end of namespace mln
 
+# endif // ! MLN_INCLUDE_ONLY
 
-#endif // ! MLN_LEVEL_APPLY_HH
+
+#endif // ! MLN_LEVEL_PASTE_HH

@@ -53,7 +53,7 @@ namespace mln
      * \todo Implement it + optimize with memset if possible.
      */
     template <typename I>
-    void fill(const Fast_Image<I>& ima, const mln_value(I)& v);
+    void fill(const Fastest_Image<I>& ima, const mln_value(I)& v);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -61,7 +61,7 @@ namespace mln
     {
 
       template <typename I>
-      void fill_size_1_(const Fast_Image<I>& ima_, const mln_value(I)& v)
+      void fill_size_1_(const Fastest_Image<I>& ima_, const mln_value(I)& v)
       {
 	typedef mln_point(I) P;
 	const I& ima = exact(ima_);
@@ -84,7 +84,7 @@ namespace mln
       }
     
       template <typename I>
-      void fill_size_n_(const Fast_Image<I>& ima_, const mln_value(I)& v)
+      void fill_size_n_(const Fastest_Image<I>& ima_, const mln_value(I)& v)
       {
 	typedef mln_point(I) P;
 	const I& ima = exact(ima_);
@@ -108,7 +108,7 @@ namespace mln
     // Facade.
 
     template <typename I>
-    void fill(const Fast_Image<I>& ima_, const mln_value(I)& v)
+    void fill(const Fastest_Image<I>& ima_, const mln_value(I)& v)
     {
       trace::entering("border::fill");
       typedef mln_point(I) P;

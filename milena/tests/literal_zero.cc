@@ -31,7 +31,6 @@
  */
 
 #include <mln/literal/zero.hh>
-// #include <mln/core/concept/object.hh>
 
 
 int main()

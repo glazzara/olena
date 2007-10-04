@@ -35,7 +35,11 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/inplace.hh>
-# include <mln/level/memcpy_.hh>
+
+
+// Specializations are in:
+# include <mln/level/paste.spe.hh>
+
 
 
 namespace mln
@@ -64,56 +68,28 @@ namespace mln
     void paste(const Image<I>& data, Image<J>& destination);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
 
-      template <typename I, typename J>
-      void paste_generic_(const I& data, J& destination)
+      namespace generic
       {
-	trace::entering("level::impl::paste_generic_");
-	mln_piter(I) p(data.domain());
-	for_all(p)
-	  destination(p) = data(p);
-	trace::exiting("level::impl::paste_generic_");
-      }
 
-      template <typename I, typename J>
-      void paste_lines_(const I& data, J& destination)
-      {
-	trace::entering("level::impl::paste_lines_");
-	typedef mln_point(I) P;
-	std::size_t n = data.bbox().len(P::dim - 1);
-	// FIXME: Works only for raw data images
-	// FIXME: For linear data images, we should get the len for each line...
+	template <typename I, typename J>
+	void paste_(const I& data, J& destination)
+	{
+	  trace::entering("level::impl::generic::paste_");
 
-	typename I::line_piter p(data.domain()); // FIXME: Alias mln_line_piter!
-	for_all(p)
-	  memcpy_(inplace(make::pixel(destination, p)),
-		  make::pixel(data, p),
-		  n);
-	trace::exiting("level::impl::paste_lines_");
-      }
+	  mln_piter(I) p(data.domain());
+	  for_all(p)
+	    destination(p) = data(p);
 
-      // Disjunction.
+	  trace::exiting("level::impl::generic::paste_");
+	}
 
-      template <typename I, typename J>
-      void paste_(mln::trait::data::any, const I& data,
-		  mln::trait::data::any, J& destination)
-      {
-	paste_generic_(data, destination);
-      }
-
-      template <typename I, typename J>
-      void paste_(mln::trait::data::raw, const I& data,
-		  mln::trait::data::raw, J& destination)
-      {
-	if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
-	  paste_lines_(data, destination);
-	else
-	  paste_generic_(data, destination);
-      }
+      } // end of namespace mln::level::impl::generic
 
     } // end of namespace mln::level::impl
 
@@ -123,17 +99,17 @@ namespace mln
     template <typename I, typename J>
     void paste(const Image<I>& data_, Image<J>& destination_)
     {
-      trace::entering("level::paste");
-      mlc_is(mln_trait_image_io(J), trait::io::write)::check();
-      mlc_converts_to(mln_value(I), mln_value(J))::check();
-
       const I& data  = exact(data_);
       J& destination = exact(destination_);
+      trace::entering("level::paste");
+
+      mlc_is(mln_trait_image_io(J), trait::io::write)::check();
+      mlc_converts_to(mln_value(I), mln_value(J))::check();
       mln_precondition(data.domain() <= destination.domain());
       
-      // Remember: raw < linear < stored, computed.
       impl::paste_(mln_trait_image_data(I)(), data,
 		   mln_trait_image_data(J)(), destination);
+
       trace::exiting("level::paste");
     }
 
@@ -142,6 +118,7 @@ namespace mln
   } // end of namespace mln::level
 
 } // end of namespace mln
+
 
 
 #endif // ! MLN_LEVEL_PASTE_HH

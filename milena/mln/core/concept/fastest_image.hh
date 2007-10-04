@@ -25,11 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_FAST_IMAGE_HH
-# define MLN_CORE_CONCEPT_FAST_IMAGE_HH
+#ifndef MLN_CORE_CONCEPT_FASTEST_IMAGE_HH
+# define MLN_CORE_CONCEPT_FASTEST_IMAGE_HH
 
-/*! \file mln/core/concept/fast_image.hh
- * \brief Definition of the concept of mln::Fast_Image.
+/*! \file mln/core/concept/fastest_image.hh
+ * \brief Definition of the concept of mln::Fastest_Image.
  */
 
 # include <mln/core/concept/image.hh>
@@ -40,13 +40,13 @@
 namespace mln
 {
 
-  /*! \brief Base class for implementation of fast image classes.
+  /*! \brief Base class for implementation of fastest image classes.
    *
-   * \see mln::doc::Fast_Image for a complete documentation of this
+   * \see mln::doc::Fastest_Image for a complete documentation of this
    * class contents.
    */
   template <typename E>
-  struct Fast_Image : public Image<E>
+  struct Fastest_Image : public Image<E>
   {
     /*
       unsigned border();
@@ -78,7 +78,7 @@ namespace mln
     offset_at(const Generalized_Point<P>& p) const;
 
   protected:
-    Fast_Image();
+    Fastest_Image();
   };
 
 
@@ -87,7 +87,7 @@ namespace mln
   template <typename E>
   template <typename P>
   unsigned // FIXME: std::size_t?
-  Fast_Image<E>::offset_at(const Generalized_Point<P>& p_) const
+  Fastest_Image<E>::offset_at(const Generalized_Point<P>& p_) const
   {
     // FIXME: check that P is mln_point(E)
     const E* this_ = exact(this);
@@ -101,7 +101,7 @@ namespace mln
   }
 
   template <typename E>
-  Fast_Image<E>::Fast_Image()
+  Fastest_Image<E>::Fastest_Image()
   {
     typedef mln_point(E)   point;
     typedef mln_dpoint(E) dpoint;
@@ -142,4 +142,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_FAST_IMAGE_HH
+#endif // ! MLN_CORE_CONCEPT_FASTEST_IMAGE_HH

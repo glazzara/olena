@@ -57,13 +57,13 @@ namespace mln
      * \todo Implement it.
      */
     template <typename I>
-    void resize(const Fast_Image<I>& ima, unsigned thickness);
+    void resize(const Fastest_Image<I>& ima, unsigned thickness);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    void resize(const Fast_Image<I>& ima_, unsigned thickness)
+    void resize(const Fastest_Image<I>& ima_, unsigned thickness)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());

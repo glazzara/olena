@@ -75,7 +75,7 @@ namespace mln
 	  a.take(make::pix(input, p));
       }
 
-      // FIXME: We need an impl for pixels of fast images.
+      // FIXME: We need an impl for pixels of fastest images.
 
     } // end of namespace mln::accu::impl
 

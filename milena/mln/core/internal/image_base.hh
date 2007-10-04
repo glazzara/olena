@@ -36,6 +36,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/grids.hh>
 # include <mln/util/tracked_ptr.hh>
+# include <mln/metal/equal.hh>
 
 
 
@@ -77,16 +78,16 @@ namespace mln
     };
 
 
-    /*! \brief Selector for image inheritance (fast or regular).
+    /*! \brief Selector for image inheritance (fastest or not fastest).
      *
      * \internal
      */
-    template <typename Is_fast, typename E>
+    template <typename Is_fastest, typename E>
     struct select_image_concept_;
 
     template <typename E>
     struct select_image_concept_< metal::true_, E >
-      : public Fast_Image<E>
+      : public Fastest_Image<E>
     {};
 
     template <typename E>
@@ -105,7 +106,8 @@ namespace mln
     template <typename S, typename E>
     struct image_base_
 
-      : public select_image_concept_< typename trait::is_fast<E>::ret,
+      : public select_image_concept_< typename mlc_equal(mln_trait_image_speed(E),
+							 trait::speed::fastest)::eval,
 				      E >
     {
       /// Point_Set associated type.
@@ -169,6 +171,10 @@ namespace mln
 
       // Internal data, sharable by several images.
       util::tracked_ptr< internal::data_<E> > data_;
+
+      typedef select_image_concept_< typename mlc_equal(mln_trait_image_speed(E),
+							trait::speed::fastest)::eval,
+	                             E > super_;
     };
 
 
@@ -182,8 +188,7 @@ namespace mln
 
     template <typename S, typename E>
     image_base_<S,E>::image_base_(const image_base_& rhs)
-      : select_image_concept_< typename trait::is_fast<E>::ret,
-			       E >()
+      : super_()
     {
       mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
       this->data_ = rhs.data_;

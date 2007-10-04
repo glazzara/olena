@@ -83,7 +83,7 @@ namespace mln
       }
 
       template <typename I, typename O>
-      void not__(const Fast_Image<I>& input, Fast_Image<O>& output)
+      void not__(const Fastest_Image<I>& input, Fastest_Image<O>& output)
       {
 	mln_pixter(const I) ip(exact(input));
 	mln_pixter(O)       op(exact(output));

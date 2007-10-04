@@ -34,6 +34,13 @@
  */
 
 
+// a
+
+/// Shortcut to access the argument type associated to T.
+# define mln_argument(T)      typename T::argument
+# define mln_argument_(T)     T::argument
+
+
 // b
 
 /// Shortcut to access the bkd_niter type associated to T.
@@ -160,10 +167,6 @@
 /// Shortcut to access the value type associated to T.
 # define mln_value(T)      typename T::value
 # define mln_value_(T)     T::value
-
-/// Shortcut to access the argument type associated to T.
-# define mln_argument(T)      typename T::argument
-# define mln_argument_(T)     T::argument
 
 /// Shortcut to test if the values of an image with type \c I are lowly quantifized.
 # define mln_is_value_lowq(I)  mln_is_lowq( mln_value(I) )

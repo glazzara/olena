@@ -87,8 +87,8 @@ namespace mln
       }
 
       template <typename I, typename W, typename O>
-      void convolve_(const Fast_Image<I>& input_, const Weighted_Window<W>& w_win_,
-		     Fast_Image<O>& output_)
+      void convolve_(const Fastest_Image<I>& input_, const Weighted_Window<W>& w_win_,
+		     Fastest_Image<O>& output_)
       {
 	const I& input = exact(input_);
 	const W& w_win = exact(w_win_);

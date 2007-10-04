@@ -88,7 +88,7 @@ namespace mln
       }
 
       template <typename L, typename R, typename O>
-      void or__(const Fast_Image<L>& lhs, const Fast_Image<R>& rhs, Fast_Image<O>& output)
+      void or__(const Fastest_Image<L>& lhs, const Fastest_Image<R>& rhs, Fastest_Image<O>& output)
       {
 	mln_pixter(const L) lp(exact(lhs));
 	mln_pixter(const R) rp(exact(rhs));

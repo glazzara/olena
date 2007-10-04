@@ -58,5 +58,5 @@ int main()
   level::paste(ima, ima2); // Fast version.
   debug::println(ima2);
 
-  level::impl::paste_generic_(ima, ima2); // Not so fast version...
+  level::impl::generic::paste_(ima, ima2); // Not so fast version...
 }

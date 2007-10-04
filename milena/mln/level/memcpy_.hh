@@ -30,12 +30,12 @@
 
 /*! \file mln/level/memcpy_.hh
  *
- * \brief Same as std::memcpy but for fast images.
+ * \brief Same as std::memcpy but for fastest images.
  *
  * \todo Overload with images and points; Cf. memset_.
  */
 
-# include <mln/core/concept/fast_image.hh>
+# include <mln/core/concept/image.hh>
 # include <mln/core/pixel.hh>
 
 

@@ -75,7 +75,7 @@ namespace mln
       }
 
       template <typename I>
-      unsigned get_(const Fast_Image<I>& ima)
+      unsigned get_(const Fastest_Image<I>& ima)
       {
 	return exact(ima).border();
       }

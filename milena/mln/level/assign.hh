@@ -75,7 +75,7 @@ namespace mln
       }
 
       template <typename L, typename R>
-      void assign(Fast_Image<L>& target_, const Fast_Image<R>& data_)
+      void assign(Fastest_Image<L>& target_, const Fastest_Image<R>& data_)
       {
 	L& target = exact(target_);
 	const R& data = exact(data_);

@@ -65,7 +65,7 @@ namespace mln
       }
 
       template <typename I>
-      data<mln_vset(I)> compute(const Fast_Image<I>& input_)
+      data<mln_vset(I)> compute(const Fastest_Image<I>& input_)
       {
 	const I& input = exact(input_);
 	data<mln_vset(I)> h(input.values());

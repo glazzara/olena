@@ -55,7 +55,7 @@ namespace mln
      * \todo Implement it + optimize with memcpy if possible.
      */
     template <typename I>
-    void duplicate(const Fast_Image<I>& ima);
+    void duplicate(const Fastest_Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -64,7 +64,7 @@ namespace mln
     {
 
       template <typename I>
-      void duplicate_1d_(const Fast_Image<I>& ima_)
+      void duplicate_1d_(const Fastest_Image<I>& ima_)
       {
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
@@ -83,7 +83,7 @@ namespace mln
       }
 
       template <typename I>
-      void duplicate_2d_(const Fast_Image<I>& ima_)
+      void duplicate_2d_(const Fastest_Image<I>& ima_)
       {
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
@@ -122,7 +122,7 @@ namespace mln
       }
 
       template <typename I>
-      void duplicate_3d_(const Fast_Image<I>& ima_)
+      void duplicate_3d_(const Fastest_Image<I>& ima_)
       {
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
@@ -190,7 +190,7 @@ namespace mln
     // Facade.
     
     template <typename I>
-    void duplicate(const Fast_Image<I>& ima_)
+    void duplicate(const Fastest_Image<I>& ima_)
     {
       trace::entering("border::duplicate");
       typedef mln_point(I) P;

@@ -53,13 +53,13 @@ namespace mln
      * \todo Implement it + optimize with memset if possible.
      */
     template <typename I>
-    void mirror(const Fast_Image<I>& ima);
+    void mirror(const Fastest_Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    void mirror(const Fast_Image<I>& ima_)
+    void mirror(const Fastest_Image<I>& ima_)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());

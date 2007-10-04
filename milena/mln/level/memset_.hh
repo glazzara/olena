@@ -30,10 +30,10 @@
 
 /*! \file mln/level/memset_.hh
  *
- * \brief Same as std::memset but for fast images.
+ * \brief Same as std::memset but for fastest images.
  */
 
-# include <mln/core/concept/fast_image.hh>
+# include <mln/core/concept/image.hh>
 # include <mln/core/pixel.hh>
 
 
@@ -66,7 +66,7 @@ namespace mln
      * \pre \p input has to be initialized.  FIXME: More.
      */
     template <typename I>
-    void memset_(Fast_Image<I>& input, const mln_point(I)& p,
+    void memset_(Fastest_Image<I>& input, const mln_point(I)& p,
 		 const mln_value(I)& v, std::size_t n);
 
 
@@ -111,7 +111,7 @@ namespace mln
     }
 
     template <typename I>
-    void memset_(Fast_Image<I>& input_, const mln_point(I)& p,
+    void memset_(Fastest_Image<I>& input_, const mln_point(I)& p,
 		 const mln_value(I)& v, std::size_t n)
     {
       I& input = exact(input_);

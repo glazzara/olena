@@ -48,7 +48,7 @@ namespace mln
 
     /// Print the image \p input on the standard output.
     template <typename I>
-    void println_with_border(const Fast_Image<I>& input);
+    void println_with_border(const Fastest_Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -58,7 +58,7 @@ namespace mln
 
       // generic version
       template <typename S, typename I>
-      void println_with_border(const S&, const Fast_Image<I>& input_)
+      void println_with_border(const S&, const Fastest_Image<I>& input_)
       {
 	const I& input = exact(input_);
  	for (size_t i = 0; i < input.ncells(); i++)
@@ -68,7 +68,7 @@ namespace mln
 
       // 2D version
       template <typename I>
-      void println_with_border(const box2d& b, const Fast_Image<I>& input_)
+      void println_with_border(const box2d& b, const Fastest_Image<I>& input_)
       {
 	const I& input = exact(input_);
 	const std::size_t ncols = b.ncols() + 2 * input.border();
@@ -83,7 +83,7 @@ namespace mln
 
       // 3D version
       template <typename I>
-      void println_with_border(const box3d& b, const Fast_Image<I>& input_)
+      void println_with_border(const box3d& b, const Fastest_Image<I>& input_)
       {
 	const I& ima = exact(input_);
 	typedef mln_point(I) P;
@@ -115,7 +115,7 @@ namespace mln
 
     // facade
     template <typename I>
-    void println_with_border(const Fast_Image<I>& input)
+    void println_with_border(const Fastest_Image<I>& input)
     {
       impl::println_with_border(exact(input).bbox(), exact(input));
     }

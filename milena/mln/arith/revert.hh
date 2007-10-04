@@ -89,7 +89,7 @@ namespace mln
       }
 
       template <typename I, typename O>
-      void revert_(const Fast_Image<I>& input, Fast_Image<O>& output)
+      void revert_(const Fastest_Image<I>& input, Fastest_Image<O>& output)
       {
 	typedef mln_value(I) V;
 	mln_pixter(const I) ip(exact(input));

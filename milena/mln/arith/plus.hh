@@ -118,7 +118,7 @@ namespace mln
       }
 
       template <typename L, typename R, typename O>
-      void plus_(const Fast_Image<L>& lhs, const Fast_Image<R>& rhs, Fast_Image<O>& output)
+      void plus_(const Fastest_Image<L>& lhs, const Fastest_Image<R>& rhs, Fastest_Image<O>& output)
       {
 	mln_pixter(const L) lp(exact(lhs));
 	mln_pixter(const R) rp(exact(rhs));
@@ -138,7 +138,7 @@ namespace mln
       }
 
       template <typename L, typename R>
-      void plus_inplace_(Fast_Image<L>& lhs, const Fast_Image<R>& rhs)
+      void plus_inplace_(Fastest_Image<L>& lhs, const Fastest_Image<R>& rhs)
       {
 	mln_pixter(L) lp(exact(lhs));
 	mln_pixter(const R) rp(exact(rhs));

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/fast_image.hh
- * \brief This file documents the concept of mln::Fast_Image.
+/*! \file mln/core/concept/doc/fastest_image.hh
+ * \brief This file documents the concept of mln::Fastest_Image.
  */
 
 namespace mln
@@ -35,11 +35,11 @@ namespace mln
   namespace doc
   {
 
-    /*! \brief Documentation class for mln::Fast_Image.
-     * \see mln::Fast_Image
+    /*! \brief Documentation class for mln::Fastest_Image.
+     * \see mln::Fastest_Image
      */
     template <typename E>
-    struct Fast_Image : public Image<E>
+    struct Fastest_Image : public Image<E>
     {
 
       /*! \brief Give the border thickness.

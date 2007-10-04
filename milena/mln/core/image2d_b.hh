@@ -104,16 +104,16 @@ namespace mln
 
 
 
-  namespace trait
-  {
+//   namespace trait
+//   {
 
-    template <typename T>
-    struct is_fast< image2d_b<T> >
-    {
-      typedef metal::true_ ret;
-    };
+//     template <typename T>
+//     struct is_fast< image2d_b<T> >
+//     {
+//       typedef metal::true_ ret;
+//     };
 
-  } // end of mln::trait
+//   } // end of mln::trait
 
 
 

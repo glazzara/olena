@@ -80,7 +80,7 @@ namespace mln
       }
 
       template <typename I, typename F>
-      bool predicate_(const Fast_Image<I>& ima_, const F& f)
+      bool predicate_(const Fastest_Image<I>& ima_, const F& f)
       {
 	const I& ima = exact(ima_);
 	mln_pixter(const I) pxl(ima);

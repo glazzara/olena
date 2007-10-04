@@ -84,7 +84,7 @@ namespace mln
       };
 
 
-      /// Base class for labeling functors on fast images.
+      /// Base class for labeling functors on fastest images.
 
       template <typename I_, typename N_, typename O_>
       struct base_fast_

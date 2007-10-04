@@ -63,7 +63,7 @@ namespace mln
       }
 
       template <typename I>
-      void iota(Fast_Image<I>& input_)
+      void iota(Fastest_Image<I>& input_)
       {
 	unsigned i = 0;
 	I& input = exact(input_);

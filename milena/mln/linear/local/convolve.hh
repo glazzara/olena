@@ -103,7 +103,7 @@ namespace mln
 	}
 
 	template <typename I, typename P, typename W, typename R>
-	void convolve(const Fast_Image<I>&        input_,
+	void convolve(const Fastest_Image<I>&        input_,
 		      const Generalized_Point<P>& p_,
 		      const W&                    w_win,
 		      R& result)

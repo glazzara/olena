@@ -56,17 +56,6 @@ namespace mln
   template <typename T> struct image3d_b;
 
 
-  namespace trait
-  {
-
-    template <typename T>
-    struct is_fast< image3d_b<T> >
-    {
-      typedef metal::true_ ret;
-    };
-
-  } // end of mln::trait
-
 
   namespace internal
   {

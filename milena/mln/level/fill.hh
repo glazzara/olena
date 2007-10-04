@@ -32,7 +32,7 @@
  *
  * \brief Fill an image, that is, set pixel values.
  *
- * \todo Re-organize this file contents + Overload for fast images.
+ * \todo Re-organize this file contents + Overload for fastest images.
  */
 
 # include <cstring>
@@ -141,7 +141,7 @@ namespace mln
       }
 
       template <typename I>
-      void fill_with_value(Fast_Image<I>& ima_, const mln_value(I)& value)
+      void fill_with_value(Fastest_Image<I>& ima_, const mln_value(I)& value)
       {
 	I& ima = exact(ima_);
 	level::memset_(ima, ima.point_at_offset(0), value, ima.ncells());
