@@ -62,7 +62,7 @@ namespace mln
 	typedef R result;
 
 	operator result_() const;
-      
+
       protected:
 	base_();
       };

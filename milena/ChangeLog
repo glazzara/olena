@@ -1,3 +1,29 @@
+2007-10-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Rename typedef value by argument in accumulators.
+
+	* mln/accu/bbox.hh,
+	* mln/accu/count.hh,
+	* mln/accu/histo.hh,
+	* mln/accu/internal/base.hh,
+	* mln/accu/max.hh,
+	* mln/accu/max_h.hh,
+	* mln/accu/mean.hh,
+	* mln/accu/median.hh,
+	* mln/accu/median_alt.hh,
+	* mln/accu/min.hh,
+	* mln/accu/min_h.hh,
+	* mln/accu/nil.hh,
+	* mln/accu/p.hh,
+	* mln/accu/pair.hh,
+	* mln/accu/sum.hh,
+	* mln/accu/v.hh,
+	* mln/core/concept/accumulator.hh,
+	* mln/core/concept/doc/accumulator.hh,
+	* mln/core/grids.hh,
+	* mln/core/macros.hh: (typedef value) Rename as...
+	(typedef argument) ... this.
+
 2007-10-04  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add generic line.

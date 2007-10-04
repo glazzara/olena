@@ -41,8 +41,8 @@ namespace mln
     template <typename E>
     struct Accumulator
     {
-      /// The value type of elements to accumulate.
-      typedef void value;
+      /// The argument type of elements to accumulate.
+      typedef void argument;
 
       /// The value type to return.
       typedef void result_;
@@ -50,8 +50,8 @@ namespace mln
       /// Initialize the accumulator.
       void init();
 
-      /// Take into account a value \p v (an element).
-      void take(const value& v);
+      /// Take into account a argument \p x (an element).
+      void take(const argument& x);
 
       /// Take into account another accumulator \p other.
       void take(const E& other);

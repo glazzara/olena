@@ -57,6 +57,12 @@ namespace mln
       enum { dim = 2 };
     };
 
+    struct hexa : public Regular_Grid< hexa >
+    {
+      typedef metal::false_ aligned;
+      enum { dim = 2 };
+    };
+
     struct cube : public Regular_Grid< cube >
     {
       typedef metal::true_ aligned;

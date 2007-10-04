@@ -52,21 +52,21 @@ namespace mln
     template <typename V>
     struct max_ : public mln::accu::internal::base_< V , max_<V> >
     {
-      typedef V value;
+      typedef V argument;
       typedef V result;
 
       max_();
 
       void init();
-      void take_as_init(const value& v);
-      void take(const value& v);
+      void take_as_init(const argument& x);
+      void take(const argument& x);
       void take(const max_<V>& other);
 
       V to_result() const;
 
     protected:
 
-      V v_;
+      V x_;
     };
 
 
@@ -97,37 +97,37 @@ namespace mln
     void
     max_<V>::init()
     {
-      v_ = mln_min(V);
+      x_ = mln_min(V);
     }
 
     template <typename V>
     void
-    max_<V>::take_as_init(const value& v)
+    max_<V>::take_as_init(const argument& x)
     {
-      v_ = v;
+      x_ = x;
     }
 
     template <typename V>
     void
-    max_<V>::take(const value& v)
+    max_<V>::take(const argument& x)
     {
-      if (v > v_)
-	v_ = v;
+      if (x > x_)
+	x_ = x;
     }
 
     template <typename V>
     void
     max_<V>::take(const max_<V>& other)
     {
-      if (other.v_ > v_)
-	v_ = other.v_;
+      if (other.x_ > x_)
+	x_ = other.x_;
     }
 
     template <typename V>
     V
     max_<V>::to_result() const
     {
-      return v_;
+      return x_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

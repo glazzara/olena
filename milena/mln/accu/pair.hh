@@ -55,10 +55,10 @@ namespace mln
      *
      * \todo Check that, when V is not provided, A1 and A2 have the same value.
      */
-    template <typename A1, typename A2, typename V = mln_value(A1)>
+    template <typename A1, typename A2, typename V = mln_argument(A1)>
     struct pair_ : public mln::accu::internal::base_< std::pair< mlc_unqualif(mln_result(A1)) , mlc_unqualif(mln_result(A2)) > , pair_<A1,A2,V> >
     {
-      typedef V value;
+      typedef V argument;
 
       typedef mlc_unqualif(mln_result(A1))  result_1;
       typedef mlc_unqualif(mln_result(A2))  result_2;
@@ -68,8 +68,8 @@ namespace mln
       pair_(const A1& a1, const A2& a2);
 
       void init();
-      void take_as_init(const value& v);
-      void take(const value& v);
+      void take_as_init(const argument& x);
+      void take(const argument& x);
       void take(const pair_<A1,A2,V>& other);
 
       result to_result() const;
@@ -115,18 +115,18 @@ namespace mln
 
     template <typename A1, typename A2, typename V>
     void
-    pair_<A1,A2,V>::take_as_init(const value& v)
+    pair_<A1,A2,V>::take_as_init(const argument& x)
     {
-      a1_.take_as_init(v);
-      a2_.take_as_init(v);
+      a1_.take_as_init(x);
+      a2_.take_as_init(x);
     }
 
     template <typename A1, typename A2, typename V>
     void
-    pair_<A1,A2,V>::take(const value& v)
+    pair_<A1,A2,V>::take(const argument& x)
     {
-      a1_.take(v);
-      a2_.take(v);
+      a1_.take(x);
+      a2_.take(x);
     }
 
     template <typename A1, typename A2, typename V>

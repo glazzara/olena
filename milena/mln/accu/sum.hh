@@ -57,13 +57,13 @@ namespace mln
     template <typename V, typename S = mln_sum(V)>
     struct sum_ : public mln::accu::internal::base_< S, sum_<V,S> >
     {
-      typedef V value;
+      typedef V argument;
       typedef S result;
 
       sum_();
 
       void init();
-      void take(const value& v);
+      void take(const argument& x);
       void take(const sum_<V,S>& other);
 
       S to_result() const;
@@ -106,9 +106,9 @@ namespace mln
     }
 
     template <typename V, typename S>
-    void sum_<V,S>::take(const value& v)
+    void sum_<V,S>::take(const argument& x)
     {
-      s_ += v;
+      s_ += x;
     }
 
     template <typename V, typename S>

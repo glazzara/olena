@@ -65,10 +65,10 @@ namespace mln
     typedef Accumulator<void> category;
 
     /*
-      typedef value;
+      typedef argument;
       typedef result;
       void init();
-      void take(const value& v);
+      void take(const argument& x);
       void take(const E& other);
       result to_result() const;
       operator result_() const;
@@ -76,7 +76,7 @@ namespace mln
 
     // Default impl.
     template <typename T>
-    void take_as_init(const T& t); // 't' is either value or E.
+    void take_as_init(const T& t); // 't' is either argument or E.
 
   protected:
     Accumulator();
@@ -89,25 +89,25 @@ namespace mln
   template <typename E>
   Accumulator<E>::Accumulator()
   {
-    typedef mln_value(E)  value;
+    typedef mln_argument(E)  argument;
     typedef mln_result(E) result;
 
     void (E::*m1)() = & E::init;
     m1 = 0;
-    void (E::*m2)(const value&) = & E::take;
+    void (E::*m2)(const argument&) = & E::take;
     m2 = 0;
     void (E::*m3)(const E&) = & E::take;
     m3 = 0;
     result (E::*m4)() const = & E::to_result;
     m4 = 0;
-    result (E::*m5)() const = & E::operator result;
-    m5 = 0;
+//     result (E::*m5)() const = & E::operator result;
+//     m5 = 0;
   }
 
   template <typename E>
   template <typename T>
   void
-  Accumulator<E>::take_as_init(const T& t) // either value or E
+  Accumulator<E>::take_as_init(const T& t) // either argument or E
   {
     exact(this)->init();
     exact(this)->take(t);

@@ -51,7 +51,7 @@ namespace mln
     template <typename P>
     struct bbox : public mln::accu::internal::base_< const box_<P>& , bbox<P> >
     {
-      typedef P value;
+      typedef P argument;
       typedef const box_<P>& result;
 
       bbox();

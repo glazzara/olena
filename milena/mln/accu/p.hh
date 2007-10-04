@@ -53,7 +53,7 @@ namespace mln
     template <typename A>
     struct p_ : public mln::accu::internal::base_< mln_result(A) , p_<A> >
     {
-      typedef mln_value(A)  value;
+      typedef mln_value(A)  argument;
       typedef mln_result(A) result;
 
 
@@ -61,8 +61,8 @@ namespace mln
       p_(const A& a);
 
       void init();
-      void take_as_init(const value& v);
-      void take(const value& v);
+      void take_as_init(const argument& x);
+      void take(const argument& x);
       void take(const p_<A>& other);
 
       result to_result() const;
@@ -109,16 +109,16 @@ namespace mln
 
     template <typename A>
     void
-    p_<A>::take_as_init(const value& v)
+    p_<A>::take_as_init(const argument& x)
     {
-      a_.take_as_init(v.p()); // FIXME: Generalize with "psite(v)".
+      a_.take_as_init(x.p()); // FIXME: Generalize with "psite(x)".
     }
 
     template <typename A>
     void
-    p_<A>::take(const value& v)
+    p_<A>::take(const argument& x)
     {
-      a_.take(v.p());
+      a_.take(x.p());
     }
 
     template <typename A>

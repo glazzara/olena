@@ -50,20 +50,20 @@ namespace mln
     template <typename S>
     struct median : public mln::accu::internal::base_< mln_value(S), median<S> >
     {
-      typedef mln_value(S) value;
-      typedef value result;
+      typedef mln_value(S) argument;
+      typedef argument result;
 
       median(const Value_Set<S>& s);
       median();
 
       void init();
-      void   take(const value& v);
+      void   take(const argument& x);
       void   take(const median<S>& other);
-      void untake(const value& v);
+      void untake(const argument& x);
 
       unsigned card() const { return h_.sum(); }
 
-      value to_result() const;
+      argument to_result() const;
 
       const accu::histo<S>& histo() const;
 
@@ -76,7 +76,7 @@ namespace mln
 
       mutable bool valid_;
       mutable std::size_t i_; // the median index
-      mutable value v_;       // the median value
+      mutable argument x_;       // the median value
 
       // Auxiliary methods
       void update_() const;
@@ -105,13 +105,13 @@ namespace mln
 
     template <typename S>
     void
-    median<S>::take(const value& v)
+    median<S>::take(const argument& x)
     {
-      h_.take(v);
+      h_.take(x);
 
-      if (v < v_)
+      if (x < x_)
 	++sum_minus_;
-      else if (v > v_)
+      else if (x > x_)
 	++sum_plus_;
 
       if (valid_)
@@ -139,20 +139,20 @@ namespace mln
 
     template <typename S>
     void
-    median<S>::untake(const value& v)
+    median<S>::untake(const argument& x)
     {
-      mln_precondition(h_(v) != 0);
-      h_.untake(v);
+      mln_precondition(h_(x) != 0);
+      h_.untake(x);
 
-      if (v < v_)
+      if (x < x_)
 	--sum_minus_;
-      else if (v > v_)
+      else if (x > x_)
 	--sum_plus_;
 
       if (valid_)
 	valid_ = false;
     }
-    
+
     template <typename S>
     void
     median<S>::update_() const
@@ -191,7 +191,7 @@ namespace mln
 	  sum_minus_ -= h_[i_];
 	}
       while (2 * sum_minus_ > h_.sum());
-      v_ = s_[i_];
+      x_ = s_[i_];
     }
 
     template <typename S>
@@ -207,7 +207,7 @@ namespace mln
 	  sum_plus_ -= h_[i_];
 	}
       while (2 * sum_plus_ > h_.sum());
-      v_ = s_[i_];
+      x_ = s_[i_];
     }
 
     template <typename S>
@@ -217,18 +217,18 @@ namespace mln
       h_.init();
       sum_minus_ = 0;
       sum_plus_ = 0;
-      i_ = (mln_max(value) - mln_min(value)) / 2;
-      v_ = s_[i_];
+      i_ = (mln_max(argument) - mln_min(argument)) / 2;
+      x_ = s_[i_];
       valid_ = true;
     }
 
     template <typename S>
-    typename median<S>::value
+    typename median<S>::argument
     median<S>::to_result() const
     {
       if (! valid_)
 	update_();
-      return v_;
+      return x_;
     }
 
     template <typename S>

@@ -50,21 +50,21 @@ namespace mln
     template <typename S>
     struct min_h : public mln::accu::internal::base_< mln_value(S) , min_h<S> >
     {
-      typedef mln_value(S) value;
-      typedef value result;
+      typedef mln_value(S) argument;
+      typedef argument result;
 
       min_h(const Value_Set<S>& s);
       min_h();
 
       void init();
-      void   take(const value& v);
-      void   take_as_init(const value& v);
+      void   take(const argument& x);
+      void   take_as_init(const argument& x);
       void   take(const min_h<S>& other);
-      void untake(const value& v);
+      void untake(const argument& x);
 
       unsigned card() const { return h_.sum(); }
 
-      value to_result() const;
+      result to_result() const;
 
       const accu::histo<S>& histo() const;
 
@@ -76,7 +76,7 @@ namespace mln
       mutable std::size_t sum_;
       mutable bool valid_;
       mutable std::size_t i_; // the min index
-      mutable value v_;       // the min value
+      mutable argument x_;       // the min value
 
       // Auxiliary methods
       void update_() const;
@@ -105,15 +105,15 @@ namespace mln
 
     template <typename S>
     void
-    min_h<S>::take(const value& v)
+    min_h<S>::take(const argument& x)
     {
-      h_.take(v);
+      h_.take(x);
       if (h_.sum() == 1)
 	{
-	  this->take_as_init(v);
+	  this->take_as_init(x);
 	  return;
 	}
-      if (v < v_)
+      if (x < x_)
 	{
 	  ++sum_;
 	  valid_ = false;
@@ -134,23 +134,23 @@ namespace mln
 
     template <typename S>
     void
-    min_h<S>::untake(const value& v)
+    min_h<S>::untake(const argument& x)
     {
-      mln_precondition(h_(v) != 0);
-      h_.untake(v);
+      mln_precondition(h_(x) != 0);
+      h_.untake(x);
       if (h_.sum() == 0)
 	{
 	  init();
 	  return;
 	}
-      if (v < v_)
+      if (x < x_)
 	{
 	  mln_invariant(sum_ >= 1);
 	  --sum_;
 	  valid_ = false;
 	}
       else
-	if (v == v_ && h_[i_] == 0)
+	if (x == x_ && h_[i_] == 0)
 	  valid_ = false;
     }
 
@@ -177,7 +177,7 @@ namespace mln
 	    sum_ -= h_[i_];
 	}
       while (sum_ != 0);
-      v_ = s_[i_];
+      x_ = s_[i_];
     }
 
     template <typename S>
@@ -187,7 +187,7 @@ namespace mln
       do
 	++i_;
       while (h_[i_] == 0);
-      v_ = s_[i_];
+      x_ = s_[i_];
     }
 
     template <typename S>
@@ -196,29 +196,29 @@ namespace mln
     {
       h_.init();
       sum_ = 0;
-      i_ = mln_max(value);
-      v_ = s_[i_];
+      i_ = mln_max(argument);
+      x_ = s_[i_];
       valid_ = true;
     }
 
     template <typename S>
     void
-    min_h<S>::take_as_init(const value& v)
+    min_h<S>::take_as_init(const argument& x)
     {
-      h_.take(v);
+      h_.take(x);
       sum_ = 0;
-      i_ = s_.index_of(v);
-      v_ = v;
+      i_ = s_.index_of(x);
+      x_ = x;
       valid_ = true;
     }
 
     template <typename S>
-    typename min_h<S>::value
+    typename min_h<S>::argument
     min_h<S>::to_result() const
     {
       if (! valid_)
 	update_();
-      return v_;
+      return x_;
     }
 
     template <typename S>

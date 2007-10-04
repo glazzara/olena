@@ -58,15 +58,15 @@ namespace mln
       histo(const Value_Set<S>& s);
       histo();
 
-      typedef mln_value(S) value;
+      typedef mln_value(S) argument;
       typedef const std::vector<std::size_t>& result;
 
-      void   take(const value& v);
+      void   take(const argument& x);
       void   take(const histo<S>& other);
-      void untake(const value& v);
+      void untake(const argument& x);
       void init();
 
-      std::size_t operator()(const value& v) const;
+      std::size_t operator()(const argument& x) const;
       std::size_t operator[](std::size_t i) const;
       std::size_t nvalues() const;
       std::size_t sum() const;
@@ -110,9 +110,9 @@ namespace mln
 
     template <typename S>
     void
-    histo<S>::take(const value& v)
+    histo<S>::take(const argument& x)
     {
-      ++h_[s_.index_of(v)];
+      ++h_[s_.index_of(x)];
       ++sum_;
     }
 
@@ -127,11 +127,11 @@ namespace mln
 
     template <typename S>
     void
-    histo<S>::untake(const value& v)
+    histo<S>::untake(const argument& x)
     {
-      mln_precondition(h_[s_.index_of(v)] > 0);
+      mln_precondition(h_[s_.index_of(x)] > 0);
       mln_precondition(sum_ > 0);
-      --h_[s_.index_of(v)];
+      --h_[s_.index_of(x)];
       --sum_;
     }
 
@@ -145,9 +145,9 @@ namespace mln
 
     template <typename S>
     std::size_t
-    histo<S>::operator()(const value& v) const
+    histo<S>::operator()(const argument& x) const
     {
-      return h_[s_.index_of(v)];
+      return h_[s_.index_of(x)];
     }
 
     template <typename S>

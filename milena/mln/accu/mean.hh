@@ -60,13 +60,13 @@ namespace mln
 	      typename M = S>
     struct mean_ : public mln::accu::internal::base_< M , mean_<V,S,M> >
     {
-      typedef V value;
+      typedef V argument;
       typedef M result;
 
       mean_();
 
       void init();
-      void take(const value& v);
+      void take(const argument& x);
       void take(const mean_<V,S,M>& other);
 
       M to_result() const;
@@ -114,10 +114,10 @@ namespace mln
     }
 
     template <typename V, typename S, typename M>
-    void mean_<V,S,M>::take(const value& v)
+    void mean_<V,S,M>::take(const argument& x)
     {
-      count_.take(v);
-      sum_.take(v);
+      count_.take(x);
+      sum_.take(x);
     }
 
     template <typename V, typename S, typename M>

@@ -49,13 +49,13 @@ namespace mln
     template <typename V>
     struct count_ : public mln::accu::internal::base_< std::size_t , count_<V> >
     {
-      typedef V value;
+      typedef V argument;
       typedef std::size_t result; // FIXME: Up in Accumulator.
 
       count_();
 
       void init();
-      void take(const value&);
+      void take(const argument&);
       void take(const count_<V>& other);
 
       std::size_t to_result() const;
@@ -95,7 +95,7 @@ namespace mln
 
     template <typename V>
     void
-    count_<V>::take(const value&)
+    count_<V>::take(const argument&)
     {
       ++count__;
     }

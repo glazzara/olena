@@ -50,15 +50,15 @@ namespace mln
     template <typename A>
     struct val_ : public mln::accu::internal::base_< mln_result(A) , val_<A> >
     {
-      typedef mln_value(A)  value;
+      typedef mln_argument(A)  argument;
       typedef mln_result(A) result;
 
       val_();
       val_(const A& a);
 
       void init();
-      void take_as_init(const value& v);
-      void take(const value& v);
+      void take_as_init(const argument& x);
+      void take(const argument& x);
       void take(const val_<A>& other);
 
       template <typename I>
@@ -118,16 +118,16 @@ namespace mln
 
     template <typename A>
     void
-    val_<A>::take_as_init(const value& v)
+    val_<A>::take_as_init(const argument& x)
     {
-      a_.take_as_init(v);
+      a_.take_as_init(x);
     }
 
     template <typename A>
     void
-    val_<A>::take(const value& v)
+    val_<A>::take(const argument& x)
     {
-      a_.take(v);
+      a_.take(x);
     }
 
     template <typename A>

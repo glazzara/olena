@@ -50,21 +50,21 @@ namespace mln
     template <typename S>
     struct max_h : public mln::accu::internal::base_< mln_value(S) , max_h<S> >
     {
-      typedef mln_value(S) value;
-      typedef value result;
+      typedef mln_value(S) argument;
+      typedef argument result;
 
       max_h(const Value_Set<S>& s);
       max_h();
 
       void init();
-      void   take(const value& v);
-      void   take_as_init(const value& v);
+      void   take(const argument& x);
+      void   take_as_init(const argument& x);
       void   take(const max_h<S>& other);
-      void untake(const value& v);
+      void untake(const argument& x);
 
       unsigned card() const { return h_.sum(); }
 
-      value to_result() const;
+      argument to_result() const;
 
       const accu::histo<S>& histo() const;
 
@@ -76,7 +76,7 @@ namespace mln
       mutable std::size_t sum_;
       mutable bool valid_;
       mutable std::size_t i_; // the max index
-      mutable value v_;       // the max value
+      mutable argument x_;       // the max argument
 
       // Auxiliary methods
       void update_() const;
@@ -105,15 +105,15 @@ namespace mln
 
     template <typename S>
     void
-    max_h<S>::take(const value& v)
+    max_h<S>::take(const argument& x)
     {
-      h_.take(v);
+      h_.take(x);
       if (h_.sum() == 1)
 	{
-	  this->take_as_init(v);
+	  this->take_as_init(x);
 	  return;
 	}
-      if (v > v_)
+      if (x > x_)
 	{
 	  ++sum_;
 	  valid_ = false;
@@ -134,23 +134,23 @@ namespace mln
 
     template <typename S>
     void
-    max_h<S>::untake(const value& v)
+    max_h<S>::untake(const argument& x)
     {
-      mln_precondition(h_(v) != 0);
-      h_.untake(v);
+      mln_precondition(h_(x) != 0);
+      h_.untake(x);
       if (h_.sum() == 0)
 	{
 	  init();
 	  return;
 	}
-      if (v > v_)
+      if (x > x_)
 	{
 	  mln_invariant(sum_ >= 1);
 	  --sum_;
 	  valid_ = false;
 	}
       else
-	if (v == v_ && h_[i_] == 0)
+	if (x == x_ && h_[i_] == 0)
 	  valid_ = false;
     }
 
@@ -173,7 +173,7 @@ namespace mln
       do
 	--i_;
       while (h_[i_] == 0);
-      v_ = s_[i_];
+      x_ = s_[i_];
     }
 
     template <typename S>
@@ -186,7 +186,7 @@ namespace mln
 	if (h_[i_] != 0)
 	  sum_ -= h_[i_];
       } while (sum_ != 0);
-      v_ = s_[i_];
+      x_ = s_[i_];
     }
 
     template <typename S>
@@ -195,29 +195,29 @@ namespace mln
     {
       h_.init();
       sum_ = 0;
-      i_ = mln_min(value);
-      v_ = s_[i_];
+      i_ = mln_min(argument);
+      x_ = s_[i_];
       valid_ = true;
     }
 
     template <typename S>
     void
-    max_h<S>::take_as_init(const value& v)
+    max_h<S>::take_as_init(const argument& x)
     {
-      h_.take(v);
+      h_.take(x);
       sum_ = 0;
-      i_ = s_.index_of(v);
-      v_ = v;
+      i_ = s_.index_of(x);
+      x_ = x;
       valid_ = true;
     }
 
     template <typename S>
-    typename max_h<S>::value
+    typename max_h<S>::argument
     max_h<S>::to_result() const
     {
       if (! valid_)
 	update_();
-      return v_;
+      return x_;
     }
 
     template <typename S>

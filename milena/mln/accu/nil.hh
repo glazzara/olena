@@ -52,14 +52,14 @@ namespace mln
     template <typename T>
     struct nil_ : public mln::accu::internal::base_< util::ignore , nil_<T> >
     {
-      typedef util::eat    value;
+      typedef util::eat    argument;
       typedef util::ignore result;
 
       nil_();
 
       void init();
-      void take_as_init(const value&);
-      void take(const value&);
+      void take_as_init(const argument&);
+      void take(const argument&);
       void take(const nil_<T>&);
 
       util::ignore to_result() const;
@@ -93,13 +93,13 @@ namespace mln
 
     template <typename T>
     void
-    nil_<T>::take(const value&)
+    nil_<T>::take(const argument&)
     {
     }
 
     template <typename T>
     void
-    nil_<T>::take_as_init(const value&)
+    nil_<T>::take_as_init(const argument&)
     {
     }
 
