@@ -33,6 +33,7 @@
  * \brief Define FIXME
  */
 
+# include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
 
 
@@ -47,7 +48,7 @@ namespace mln
      * with type \c S.
      */
     template <typename S>
-    struct median_alt
+    struct median_alt :  : public mln::accu::internal::base_< mln_value(S), median_alt<S> >
     {
       typedef mln_value(S) value;
 
@@ -57,7 +58,6 @@ namespace mln
       void untake(const value& v);
       void init();
 
-      operator mln_value(S) () const;
       value to_result() const;
 
       // FIXME: remove
@@ -149,7 +149,7 @@ namespace mln
 	}
     }
 
-    
+
     template <typename S>
     void
     median_alt<S>::untake(const value& v)
@@ -246,12 +246,6 @@ namespace mln
       sum_plus_ = 0;
       i_ = (mln_max(value) - mln_min(value)) / 2;
       v_ = s_[i_];
-    }
-
-    template <typename S>
-    median_alt<S>::operator mln_value(S) () const
-    {
-      return v_;
     }
 
     template <typename S>

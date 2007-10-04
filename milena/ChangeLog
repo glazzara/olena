@@ -1,5 +1,15 @@
 2007-10-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Remove convertion method in median_alt.
+
+	* mln/accu/median_alt.hh: Move convertion method to the super class
+          accu::internal::base_
+
+	* mln/accu/nil.hh,
+	* mln/accu/p.hh: Clean old includes.
+
+2007-10-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Change accumulators inheritance.
 
 	* mln/accu/bbox.hh,

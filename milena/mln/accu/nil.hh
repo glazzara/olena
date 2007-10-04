@@ -36,7 +36,6 @@
  */
 
 # include <mln/core/concept/meta_accumulator.hh>
-# include <mln/core/concept/accumulator.hh>
 # include <mln/accu/internal/base.hh>
 # include <mln/util/eat.hh>
 # include <mln/util/ignore.hh>
