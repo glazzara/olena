@@ -75,7 +75,6 @@ namespace mln
     /// Fwd pass.
     {
       mln_fwd_piter (I) p (ima.domain ());
-      p = point;
       W win = convert::to_upper_window(nbh_);
       mln_qiter(W) n(win, p);
 

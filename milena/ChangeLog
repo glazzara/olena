@@ -1,5 +1,11 @@
 2007-10-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix chamfer.
+
+	* chamfer.cc: .
+
+2007-10-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add chamfer in sadbox.
 
 	* chamfer.cc: New.
