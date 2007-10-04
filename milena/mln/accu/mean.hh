@@ -35,6 +35,7 @@
  * \todo Use accu::pair just like in accu::min_max.
  */
 
+# include <mln/accu/internal/base.hh>
 # include <mln/accu/count.hh>
 # include <mln/accu/sum.hh>
 
@@ -57,7 +58,7 @@ namespace mln
     template <typename V,
 	      typename S = mln_sum(V),
 	      typename M = S>
-    struct mean_ : public Accumulator< mean_<V,S,M> >
+    struct mean_ : public mln::accu::internal::base_< M , mean_<V,S,M> >
     {
       typedef V value;
       typedef M result;

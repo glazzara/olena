@@ -32,11 +32,12 @@
  *
  * \brief Define an accumulator that does nothing.
  *
- * \todo A macro to generate the meta version. 
+ * \todo A macro to generate the meta version.
  */
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/core/concept/accumulator.hh>
+# include <mln/accu/internal/base.hh>
 # include <mln/util/eat.hh>
 # include <mln/util/ignore.hh>
 
@@ -50,7 +51,7 @@ namespace mln
     /*! Define an accumulator that does nothing.
      */
     template <typename T>
-    struct nil_ : public Accumulator< nil_<T> >
+    struct nil_ : public mln::accu::internal::base_< util::ignore , nil_<T> >
     {
       typedef util::eat    value;
       typedef util::ignore result;

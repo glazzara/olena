@@ -33,6 +33,7 @@
  * \brief Define an accumulator that counts.
  */
 
+# include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
 
 
@@ -46,7 +47,7 @@ namespace mln
     /*! Generic counter accumulator class.
      */
     template <typename V>
-    struct count_ : public Accumulator< count_<V> >
+    struct count_ : public mln::accu::internal::base_< std::size_t , count_<V> >
     {
       typedef V value;
       typedef std::size_t result; // FIXME: Up in Accumulator.

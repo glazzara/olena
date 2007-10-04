@@ -33,7 +33,7 @@
  * \brief Define a generic max accumulator class based on histogram.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
 
 
@@ -48,7 +48,7 @@ namespace mln
      * type \c S.
      */
     template <typename S>
-    struct max_h : public Accumulator< max_h<S> >
+    struct max_h : public mln::accu::internal::base_< mln_value(S) , max_h<S> >
     {
       typedef mln_value(S) value;
       typedef value result;

@@ -33,6 +33,7 @@
  * \brief Define an accumulator that computes a min.
  */
 
+# include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/value/props.hh>
 # include <mln/util/pix.hh>
@@ -50,7 +51,7 @@ namespace mln
      * The parameter \c V is the type of values.
      */
     template <typename V>
-    struct min_ : public Accumulator< min_<V> >
+    struct min_ : public mln::accu::internal::base_< V, min_<V> >
     {
       typedef V value;
       typedef V result;
@@ -63,7 +64,7 @@ namespace mln
       void take(const min_<V>& other);
 
       V to_result() const;
-      
+
     protected:
 
       V v_;
@@ -111,7 +112,7 @@ namespace mln
       if (v < v_)
 	v_ = v;
     }
-    
+
     template <typename V>
     void
     min_<V>::take(const min_<V>& other)

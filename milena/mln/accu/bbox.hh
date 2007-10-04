@@ -33,7 +33,7 @@
  * \brief Define an accumulator that computes a bbox.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/accu/internal/base.hh>
 # include <mln/core/box.hh>
 
 
@@ -49,7 +49,7 @@ namespace mln
      * The parameter \c P is the type of points.
      */
     template <typename P>
-    struct bbox : public Accumulator< bbox<P> >
+    struct bbox : public mln::accu::internal::base_< const box_<P>& , bbox<P> >
     {
       typedef P value;
       typedef const box_<P>& result;

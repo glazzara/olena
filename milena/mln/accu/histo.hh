@@ -39,7 +39,7 @@
 # include <algorithm>
 
 # include <mln/core/concept/value_set.hh>
-# include <mln/core/concept/accumulator.hh>
+# include <mln/accu/internal/base.hh>
 # include <mln/value/set.hh>
 
 
@@ -53,7 +53,7 @@ namespace mln
     /*! Generic histogram class over a value set with type \c S.
      */
     template <typename S>
-    struct histo : public Accumulator< histo<S> >
+    struct histo : public mln::accu::internal::base_< const std::vector<std::size_t>& , histo<S> >
     {
       histo(const Value_Set<S>& s);
       histo();
@@ -75,7 +75,7 @@ namespace mln
       const std::vector<std::size_t>& to_result() const;
 
       const S& vset() const;
-      
+
     protected:
 
       const S& s_;
@@ -157,7 +157,7 @@ namespace mln
       mln_precondition(i < s_.nvalues());
       return h_[i];
     }
-    
+
     template <typename S>
     std::size_t
     histo<S>::nvalues() const
@@ -185,7 +185,7 @@ namespace mln
     {
       return h_;
     }
-    
+
     template <typename S>
     const S&
     histo<S>::vset() const

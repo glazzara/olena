@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/meta_accumulator.hh>
-# include <mln/core/concept/accumulator.hh>
+# include <mln/accu/internal/base.hh>
 # include <mln/metal/is_a.hh>
 
 
@@ -48,7 +48,7 @@ namespace mln
     /*! Generic v of accumulators.
      */
     template <typename A>
-    struct val_ : public Accumulator< val_<A> >
+    struct val_ : public mln::accu::internal::base_< mln_result(A) , val_<A> >
     {
       typedef mln_value(A)  value;
       typedef mln_result(A) result;
@@ -129,7 +129,7 @@ namespace mln
     {
       a_.take(v);
     }
-    
+
     template <typename A>
     void
     val_<A>::take(const val_<A>& other)

@@ -36,6 +36,8 @@
 # include <utility>
 
 # include <mln/core/concept/meta_accumulator.hh>
+
+# include <mln/accu/internal/base.hh>
 # include <mln/metal/is_a.hh>
 # include <mln/metal/unqualif.hh>
 
@@ -54,7 +56,7 @@ namespace mln
      * \todo Check that, when V is not provided, A1 and A2 have the same value.
      */
     template <typename A1, typename A2, typename V = mln_value(A1)>
-    struct pair_ : public Accumulator< pair_<A1,A2,V> >
+    struct pair_ : public mln::accu::internal::base_< std::pair< mlc_unqualif(mln_result(A1)) , mlc_unqualif(mln_result(A2)) > , pair_<A1,A2,V> >
     {
       typedef V value;
 
@@ -126,7 +128,7 @@ namespace mln
       a1_.take(v);
       a2_.take(v);
     }
-    
+
     template <typename A1, typename A2, typename V>
     void
     pair_<A1,A2,V>::take(const pair_<A1,A2,V>& other)

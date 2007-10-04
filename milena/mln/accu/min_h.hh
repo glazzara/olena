@@ -33,7 +33,7 @@
  * \brief Define a generic min accumulator class based on histogram.
  */
 
-# include <mln/core/concept/accumulator.hh>
+# include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
 
 
@@ -48,7 +48,7 @@ namespace mln
      * type \c S.
      */
     template <typename S>
-    struct min_h : public Accumulator< min_h<S> >
+    struct min_h : public mln::accu::internal::base_< mln_value(S) , min_h<S> >
     {
       typedef mln_value(S) value;
       typedef value result;
@@ -153,7 +153,7 @@ namespace mln
 	if (v == v_ && h_[i_] == 0)
 	  valid_ = false;
     }
-    
+
     template <typename S>
     void
     min_h<S>::update_() const

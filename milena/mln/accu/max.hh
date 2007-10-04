@@ -50,7 +50,7 @@ namespace mln
      * The parameter \c V is the type of values.
      */
     template <typename V>
-    struct max_ : public Accumulator< max_<V> >
+    struct max_ : public mln::accu::internal::base_< V , max_<V> >
     {
       typedef V value;
       typedef V result;
@@ -63,7 +63,7 @@ namespace mln
       void take(const max_<V>& other);
 
       V to_result() const;
-      
+
     protected:
 
       V v_;

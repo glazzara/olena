@@ -34,6 +34,8 @@
  */
 
 # include <mln/core/concept/meta_accumulator.hh>
+
+# include <mln/accu/internal/base.hh>
 # include <mln/value/props.hh>
 # include <mln/util/pix.hh>
 # include <mln/literal/zero.hh>
@@ -53,7 +55,7 @@ namespace mln
      * \c S is the summation type (property) of \c V.
      */
     template <typename V, typename S = mln_sum(V)>
-    struct sum_ : public Accumulator< sum_<V,S> >
+    struct sum_ : public mln::accu::internal::base_< S, sum_<V,S> >
     {
       typedef V value;
       typedef S result;
@@ -65,7 +67,7 @@ namespace mln
       void take(const sum_<V,S>& other);
 
       S to_result() const;
-      
+
     protected:
 
       S s_;
