@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,59 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_UMINUS_HH
-# define MLN_TRAIT_OP_UMINUS_HH
+#ifndef MLN_LITERAL_ZERO_HH
+# define MLN_LITERAL_ZERO_HH
 
+/*! \file mln/literal/zero.hh
+ * \brief Definition of the literal of mln::zero.
+ *
+ * \todo Macro-ification of similar code (when no trivial conversion ops are involved).
+ */
 
-# define mln_op_uminus(T) typename mln::trait::op_uminus< T >::ret
-
+# include <mln/core/concept/literal.hh>
+# include <mln/metal/converts_to.hh>
 
 
 namespace mln
 {
 
-  namespace metal
+  namespace literal
   {
 
-    template <unsigned n, typename T>
-    class vec;
+    /// Type of literal zero.
+    struct zero_t : public Literal<zero_t>
+    {
+      // FIXME: (for the record) Add "friend class Literal<zero_t>;" and a protected ctor.
 
-    template <unsigned n, unsigned m, typename T>
-    class mat;
+      template <typename T>
+      operator T () const;
+    };
 
-  } // end of namespace mln::metal
 
-  namespace trait
-  {
+    /// Literal zero.
+    static zero_t zero = zero_t();
+
+
+# ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
-    struct op_uminus
+    zero_t::operator T () const
     {
-      typedef T ret;
-    };
+      mlc_converts_to(int, T)::check();
+      return 0;
+    }
 
+# endif // ! MLN_INCLUDE_ONLY
 
-    template <>
-    struct op_uminus<unsigned>
-    {
-      typedef signed ret;
-    };
-
-    template <unsigned n, typename T>
-    struct op_uminus<metal::vec<n, T> >
-    {
-      typedef metal::vec<n, mln_op_uminus(T)> ret;
-    };
-
-    template <unsigned n, unsigned m, typename T>
-    struct op_uminus<metal::mat<n, m, T> >
-    {
-      typedef metal::mat<n, m, mln_op_uminus(T)> ret;
-    };
-
-
-  } // end of namespace mln::trait
+  } // end of namespace mln::literal
 
 } // end of namespace mln
 
-#endif // ! MLN_TRAIT_OP_UMINUS_HH
+
+#endif // ! MLN_LITERAL_ZERO_HH

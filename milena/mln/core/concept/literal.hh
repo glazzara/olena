@@ -25,27 +25,67 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TRAIT_ALL_HH
-# define MLN_CORE_TRAIT_ALL_HH
+#ifndef MLN_CORE_CONCEPT_LITERAL_HH
+# define MLN_CORE_CONCEPT_LITERAL_HH
 
-/*! \file mln/core/trait/all.hh
- *
- * \brief File that includes all traits.
+/*! \file mln/core/concept/literal.hh
+ * \brief Definition of the concept of mln::literal.
  */
+
+# include <mln/core/concept/object.hh>
 
 
 namespace mln
 {
 
-  /*! Namespace for image traits.
+  // Fwd decl.
+  template <typename E> struct Literal;
+
+  // Literal category flag type.
+  template <>
+  struct Literal<void>
+  {
+    typedef Object<void> super;
+  };
+
+
+  /*! \brief Base class for implementation classes of literals.
+   *
+   * \see mln::doc::Literal for a complete documentation of this class
+   * contents.
    */
-  namespace trait {}
+  template <typename E>
+  struct Literal : public Object<E>
+  {
+    typedef Literal<void> category;
 
-}
+    static const E& the();
+
+  protected:
+    Literal();
+  };
 
 
-# include <mln/core/trait/is_fast.hh>
-# include <mln/core/trait/pixter.hh>
+
+# ifndef MLN_INCLUDE_ONLY
+
+  template <typename E>
+  Literal<E>::Literal()
+  {
+  }
+
+  template <typename E>
+  const E&
+  Literal<E>::the()
+  {
+    static E the_;
+    return the_;
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 
-#endif // ! MLN_CORE_TRAIT_ALL_HH
+} // end of namespace mln
+
+
+#endif // ! MLN_CORE_CONCEPT_LITERAL_HH

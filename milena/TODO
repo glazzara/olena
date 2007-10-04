@@ -1,7 +1,8 @@
 	-*- outline -*-
 
 
-* URGENT
+
+* mathieu
 
 ** accu
 
@@ -17,46 +18,61 @@ m-a-j
 tests ?
 
 
+* guillaume
+
+** chamfer
+
+Cf. vieilles versions
+algo avec front
 
 
-* large changes
+* simon
 
-introduce grids
+** lines
+
+ajouter win::line<Mesh, dir>
+hline2d et vline2d deviennent des aliases
+retoucher les routines avec {h,v}line en argument
 
 
-* adds-on
 
-** abstractions
+* theo
 
-Function_i2i
-Weighted_Window
+hiérarchie de concepts sous Value
+maj trait solver
+virer is_fast -> changer le meta-plug
+virer core/trait
 
-** types
+
+
+* misc
+
+** big change
+
+** add
+
+*** abstraction
+
+*** type
 
 value::proxy to dispatch read/write + the corresponding image type
 a mean_value object { sum; count } and operator+
 
-** extensions
+*** other
 
 in Fast_Image: memcpy and memset-like methods (?)
 .offset() into GenPixel
 built-in op objects -> reverse lhs/rhs
 
+** rename
 
-* renaming
-
-
-
-* clean-up
-
-select_function in fun::internal::selector_p2? etc.
 value::cast(something) -> mln::cast_image or mln::fun::casted<F> etc.
 
+** clean-up
 
-* processing routines
+select_function in fun::internal::selector_p2? etc.
+
+** processing routines
 
 reconstructions + their canvases
-fast versions of level::fill and level::paste
 sorting points w.r.t. their value (array of offsets, psites, points)
-arith::inplace_plus et al.
-linear:: for convolutions

@@ -25,27 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TRAIT_ALL_HH
-# define MLN_CORE_TRAIT_ALL_HH
-
-/*! \file mln/core/trait/all.hh
+/*! \file tests/literal_zero.cc
  *
- * \brief File that includes all traits.
+ * \brief Tests on mln::literal::zero.
  */
 
+#include <mln/literal/zero.hh>
+// #include <mln/core/concept/object.hh>
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
 
-  /*! Namespace for image traits.
-   */
-  namespace trait {}
+  unsigned char c;
+  c = literal::zero;
 
+  double d;
+  d = literal::zero;
 }
-
-
-# include <mln/core/trait/is_fast.hh>
-# include <mln/core/trait/pixter.hh>
-
-
-#endif // ! MLN_CORE_TRAIT_ALL_HH

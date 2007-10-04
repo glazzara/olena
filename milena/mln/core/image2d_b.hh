@@ -33,8 +33,8 @@
  * \brief Definition of the basic mln::image2d_b class.
  */
 
-# include <mln/core/internal/fixme.hh>
 # include <mln/core/internal/image_primary.hh>
+# include <mln/core/internal/fixme.hh>
 # include <mln/core/box2d.hh>
 
 # include <mln/border/thickness.hh>

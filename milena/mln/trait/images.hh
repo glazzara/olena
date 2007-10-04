@@ -39,7 +39,11 @@
 # include <string>
 
 # include <mln/value/props.hh>
-# include <mln/metal/all.hh>
+
+# include <mln/metal/bexpr.hh>
+# include <mln/metal/equal.hh>
+# include <mln/metal/if.hh>
+# include <mln/metal/is_const.hh>
 
 
 # define mln_trait_image_category(I) typename mln::trait::image_< I >::category

@@ -35,6 +35,7 @@
 # include <mln/trait/all.hh>
 # include <mln/value/props.hh>
 # include <mln/fun/i2v/all.hh>
+# include <mln/literal/zero.hh>
 
 
 // FIXME: Document.
@@ -132,9 +133,9 @@ namespace mln
       typedef T value_type;
       enum { dim = n };
       
-      vec()
-      {
-      }
+      vec();
+      
+      vec(mln::literal::zero_t);
       
       vec(const vec<n, T>& rhs);
       
@@ -311,6 +312,17 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    template <unsigned n, typename T>
+    vec<n,T>::vec()
+    {
+    }
+
+    template <unsigned n, typename T>
+    vec<n,T>::vec(mln::literal::zero_t)
+    {
+      this->set_all( mln::literal::zero );
+    }
 
     template <unsigned n, typename T>
     vec<n,T>::vec(const vec<n,T>& rhs)

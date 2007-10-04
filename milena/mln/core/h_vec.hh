@@ -44,16 +44,17 @@ namespace mln
   template <unsigned dim, typename T>
   struct h_vec : public metal::vec<dim + 1, T>
   {
-      h_vec()
-	: metal::vec<dim + 1, T>(make::vec<dim + 1, T>(0))
-      {
-	this->data_[dim] = 1;
-      }
+    h_vec()
+      : metal::vec<dim + 1, T>(make::vec<dim + 1, T>(0))
+    { // FIXME: Move in MLN_INCLUDE_ONLY
+      this->data_[dim] = 1;
+    }
 
-      h_vec(const metal::vec<dim, T>& x);
+    h_vec(const metal::vec<dim, T>& x);
 
-      operator metal::vec<dim, T>() const;
+    operator metal::vec<dim, T>() const;
   };
+
 
 # ifndef MLN_INCLUDE_ONLY
 

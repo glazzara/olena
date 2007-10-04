@@ -1,3 +1,42 @@
+2007-10-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Introduce the notion of literals.
+
+	Introduce literal zero.
+
+	* mln/core/concept/literal.hh: New.
+	* mln/literal: New directory.
+	* mln/literal/zero.hh: New.
+	* tests/literal_zero.cc: New.
+	* mln/accu/sum.hh: Update.
+	* mln/core/concept/object.hh: Include zero.
+	* mln/metal/vec.hh (vec): Split ctor.
+	(vec): Overload ctor for literal zero.
+
+
+	Minor update for traits.
+
+	* mln/trait/images.hh: Precise includes.
+	* mln/trait/ch_value.hh: Prefer fwd decl for vec.
+	* mln/trait/op_minus.hh,
+	* mln/trait/op_times.hh (set_binary_): Use category.
+	* mln/core/trait/op_minus.hh: Remove; obsolete.
+	* mln/core/trait/op_uminus.hh: Remove.
+	* mln/core/trait/all.hh: Update.
+
+
+	Misc.
+
+	* mln/core/dpoint1d.hh: Layout.
+	* mln/core/point.hh: Sort includes.
+	* mln/core/h_vec.hh (FIXME): New.
+	* mln/core/image2d_b.hh: Sort includes.
+	* mln/trace/exiting.hh,
+	* mln/trace/entering.hh: Fix missing include.
+	* tests/t_image.cc: Rename as...
+	* tests/t_image.cxx: ...this; deactivate.
+	* TODO: Update.
+
 2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add test for fast labeling.

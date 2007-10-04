@@ -34,6 +34,8 @@
  */
 
 # include <string>
+# include <iostream>
+
 # include <mln/trace/quiet.hh>
 
 

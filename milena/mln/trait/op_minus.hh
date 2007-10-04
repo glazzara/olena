@@ -50,9 +50,8 @@ namespace mln
 
 
     /// Default definition of op_minus is given by the promote trait.
-    template <template <class> class Category_L, typename L,
-	      template <class> class Category_R, typename R>
-    struct set_binary_< op_minus, Category_L, L, Category_R, R >
+    template <typename L, typename R>
+    struct set_binary_< op_minus, Object, L, Object, R >
       :
       public promote< L, R >
     {

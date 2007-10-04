@@ -35,7 +35,6 @@
 
 # include <mln/tag/skeleton.hh>
 # include <mln/trait/image_from_mesh.hh>
-# include <mln/metal/vec.hh>
 
 
 # define mln_ch_value(I, V) typename mln::trait::ch_value< I, V >::ret
@@ -44,6 +43,12 @@
 
 namespace mln
 {
+
+  // Fwd decl.
+  namespace metal { template <unsigned n, typename T> class vec; }
+
+
+
 
   namespace trait
   {
