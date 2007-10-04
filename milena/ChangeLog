@@ -1,3 +1,11 @@
+2007-10-04  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add generic line.
+	* mln/core/win/line.hh: New.
+	* mln/core/win/hline2d.hh,
+	* mln/core/win/vline2d.hh: Now inherit of line.
+	* tests/win_hline2d.cc: New.
+
 2007-10-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix chamfer.

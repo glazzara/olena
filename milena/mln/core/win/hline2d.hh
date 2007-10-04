@@ -33,10 +33,8 @@
  * \brief Definition of the mln::win::hline2d window.
  */
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint2d.hh>
-# include <mln/core/dpoints_piter.hh>
+# include <mln/core/win/line.hh>
+# include <mln/core/grids.hh>
 
 
 namespace mln
@@ -54,123 +52,14 @@ namespace mln
      *  o o x o o \n
      * is defined with length = 5.
      */
-    struct hline2d : public Window< hline2d >,
-		     public internal::dpoints_base_< dpoint2d, hline2d >
+    struct hline2d : public line<grid::square, 1, hline2d>
     {
-      /// Point associated type.
-      typedef point2d point;
-
-      /// Dpoint associated type.
-      typedef dpoint2d dpoint;
-
-      /*! \brief Point_Iterator type to browse a hline such as: "for each row
-       * (increasing), for each column (increasing)."
-       */
-      typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
-
-      /*! \brief Point_Iterator type to browse a hline such as: "for each row
-       * (decreasing), for each column (decreasing)."
-       */
-      typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
-
-      /*! \brief Same as fwd_qiter.
-       */
-      typedef fwd_qiter qiter;
-
-      /*! \brief Constructor.
-       *
-       * \param[in] length Length, thus width, of the horizontal line.
-       *
-       * \pre \p length is odd.
-       */
-      hline2d(unsigned length);
-
-      /*! \brief Test if the window is centered.
-       *
-       * \return True.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       *
-       * \return true.
-       */
-      bool is_symmetric() const;
-
-      /*! \brief Give the hline length, that is, its width.
-       */
-      unsigned length() const;
-
-      /*! \brief Give the maximum coordinate gap between the window
-       * center and a window point.
-       */
-      unsigned delta() const;
-
-      /// Apply a central symmetry to the target window.
-      hline2d& sym();
-
-    protected:
-      unsigned length_;
+      // Ctor.
+      hline2d(unsigned length)
+        : line<grid::square, 1, hline2d>(length)
+      {
+      }
     };
-
-
-    /*! \brief Print an horizontal 2D line window \p win into the output
-     *  stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] win An horizontal 2D line window.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::win::hline2d
-     */
-    std::ostream& operator<<(std::ostream& ostr, const hline2d& win);
-
- 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    hline2d::hline2d(unsigned length)
-      : length_(length)
-    {
-      mln_precondition(length % 2 == 1);
-      const int dcol = length / 2;
-      for (int col = - dcol; col <= dcol; ++col)
-	insert(make::dpoint2d(0, col));
-    }
-
-    bool hline2d::is_centered() const
-    {
-      return true;
-    }
-
-    bool hline2d::is_symmetric() const
-    {
-      return true;
-    }
-
-    unsigned hline2d::length() const
-    {
-      return length_;
-    }
-
-    unsigned hline2d::delta() const
-    {
-      return length_ / 2;
-    }
-
-    hline2d& hline2d::sym()
-    {
-      return *this;
-    }
-
-    std::ostream& operator<<(std::ostream& ostr, const hline2d& win)
-    {
-      ostr << "[line2d: length=" << win.length() << ']';
-      return ostr;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::win
 

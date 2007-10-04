@@ -25,48 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_VLINE2D_HH
-# define MLN_CORE_WIN_VLINE2D_HH
-
-/*! \file mln/core/win/vline2d.hh
+/*! \file tests/win_diag2d.cc
  *
- * \brief Definition of the mln::win::vline2d window.
+ * \brief Tests on mln::win::diag2d.
  */
 
-# include <mln/core/win/line.hh>
-# include <mln/core/grids.hh>
+#include <mln/core/win/hline2d.hh>
 
+#include <mln/convert/to_image.hh>
 
-namespace mln
+#include <mln/debug/println.hh>
+
+int main()
 {
+  using namespace mln;
 
-  namespace win
-  {
- 
-    /*! \brief Vertical line window defined on the 2D square grid.
-     *
-     * An vline2d is centered and symmetrical; so its width is 1 and
-     * its height (length) is odd.
-     *
-     * For instance: \n
-     *  o \n
-     *  x \n
-     *  o \n
-     * is defined with length = 5.
-     */
-    struct vline2d : public line<grid::square, 0, vline2d>
-    {
-	// Ctor.
-	vline2d(unsigned length)
-	  : line<grid::square, 0, vline2d>(length)
-	{
-	}
-    };
+  const unsigned l = 5;
+  win::hline2d hline(l);
 
-  } // end of namespace mln::win
+  debug::println(convert::to_image(hline));
+}
 
-} // end of namespace mln
-
-
-
-#endif // ! MLN_CORE_WIN_VLINE2D_HH
