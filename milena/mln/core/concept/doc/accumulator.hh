@@ -50,8 +50,8 @@ namespace mln
       /// Initialize the accumulator.
       void init();
 
-      /// Take into account a argument \p x (an element).
-      void take(const argument& x);
+      /// Take into account a argument \p t (an element).
+      void take(const argument& t);
 
       /// Take into account another accumulator \p other.
       void take(const E& other);

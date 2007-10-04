@@ -57,8 +57,8 @@ namespace mln
       val_(const A& a);
 
       void init();
-      void take_as_init(const argument& x);
-      void take(const argument& x);
+      void take_as_init(const argument& t);
+      void take(const argument& t);
       void take(const val_<A>& other);
 
       template <typename I>
@@ -118,16 +118,16 @@ namespace mln
 
     template <typename A>
     void
-    val_<A>::take_as_init(const argument& x)
+    val_<A>::take_as_init(const argument& t)
     {
-      a_.take_as_init(x);
+      a_.take_as_init(t);
     }
 
     template <typename A>
     void
-    val_<A>::take(const argument& x)
+    val_<A>::take(const argument& t)
     {
-      a_.take(x);
+      a_.take(t);
     }
 
     template <typename A>

@@ -50,21 +50,21 @@ namespace mln
 
     /*! Generic sum accumulator class.
      *
-     * Parameter \c V is the type of values that we sum.  Parameter \c
+     * Parameter \c T is the type of values that we sum.  Parameter \c
      * S is the type to store the value sum; the default type of
-     * \c S is the summation type (property) of \c V.
+     * \c S is the summation type (property) of \c T.
      */
-    template <typename V, typename S = mln_sum(V)>
-    struct sum_ : public mln::accu::internal::base_< S, sum_<V,S> >
+    template <typename T, typename S = mln_sum(T)>
+    struct sum_ : public mln::accu::internal::base_< S, sum_<T,S> >
     {
-      typedef V argument;
+      typedef T argument;
       typedef S result;
 
       sum_();
 
       void init();
-      void take(const argument& x);
-      void take(const sum_<V,S>& other);
+      void take(const argument& t);
+      void take(const sum_<T,S>& other);
 
       S to_result() const;
 
@@ -81,10 +81,10 @@ namespace mln
     // FIXME: Doc!
     struct sum : public Meta_Accumulator< sum >
     {
-      template <typename V, typename S = mln_sum(V)>
+      template <typename T, typename S = mln_sum(T)>
       struct with
       {
-	typedef sum_<V, S> ret;
+	typedef sum_<T, S> ret;
       };
     };
 
@@ -92,35 +92,35 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V, typename S>
-    sum_<V,S>::sum_()
+    template <typename T, typename S>
+    sum_<T,S>::sum_()
     {
       init();
     }
 
-    template <typename V, typename S>
+    template <typename T, typename S>
     void
-    sum_<V,S>::init()
+    sum_<T,S>::init()
     {
       s_ = literal::zero;
     }
 
-    template <typename V, typename S>
-    void sum_<V,S>::take(const argument& x)
+    template <typename T, typename S>
+    void sum_<T,S>::take(const argument& t)
     {
-      s_ += x;
+      s_ += t;
     }
 
-    template <typename V, typename S>
+    template <typename T, typename S>
     void
-    sum_<V,S>::take(const sum_<V,S>& other)
+    sum_<T,S>::take(const sum_<T,S>& other)
     {
       s_ += other.s_;
     }
 
-    template <typename V, typename S>
+    template <typename T, typename S>
     S
-    sum_<V,S>::to_result() const
+    sum_<T,S>::to_result() const
     {
       return s_;
     }

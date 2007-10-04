@@ -49,32 +49,32 @@ namespace mln
 
     /*! Generic mean accumulator class.
      *
-     * Parameter \c V is the type of values that we sum.  Parameter \c
+     * Parameter \c T is the type of values that we sum.  Parameter \c
      * S is the type to store the sum of values; the default type of
-     * \c S is the summation type (property) of \c V.  Parameter \c M
+     * \c S is the summation type (property) of \c T.  Parameter \c M
      * is the type of the mean value; the default type of \c M is \c
      * S.
      */
-    template <typename V,
-	      typename S = mln_sum(V),
+    template <typename T,
+	      typename S = mln_sum(T),
 	      typename M = S>
-    struct mean_ : public mln::accu::internal::base_< M , mean_<V,S,M> >
+    struct mean_ : public mln::accu::internal::base_< M , mean_<T,S,M> >
     {
-      typedef V argument;
+      typedef T argument;
       typedef M result;
 
       mean_();
 
       void init();
-      void take(const argument& x);
-      void take(const mean_<V,S,M>& other);
+      void take(const argument& t);
+      void take(const mean_<T,S,M>& other);
 
       M to_result() const;
 
     protected:
 
-      accu::count_<V> count_;
-      accu::sum_<V,S>   sum_;
+      accu::count_<T> count_;
+      accu::sum_<T,S>   sum_;
     };
 
 
@@ -87,50 +87,50 @@ namespace mln
     // FIXME: Doc!
     struct mean : public Meta_Accumulator< mean >
     {
-      template < typename V,
-		 typename S = mln_sum(V),
+      template < typename T,
+		 typename S = mln_sum(T),
 		 typename M = S >
       struct with
       {
-	typedef mean_<V,S,M> ret;
+	typedef mean_<T,S,M> ret;
       };
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V, typename S, typename M>
-    mean_<V,S,M>::mean_()
+    template <typename T, typename S, typename M>
+    mean_<T,S,M>::mean_()
     {
       init();
     }
 
-    template <typename V, typename S, typename M>
+    template <typename T, typename S, typename M>
     void
-    mean_<V,S,M>::init()
+    mean_<T,S,M>::init()
     {
       count_.init();
       sum_.init();
     }
 
-    template <typename V, typename S, typename M>
-    void mean_<V,S,M>::take(const argument& x)
+    template <typename T, typename S, typename M>
+    void mean_<T,S,M>::take(const argument& t)
     {
-      count_.take(x);
-      sum_.take(x);
+      count_.take(t);
+      sum_.take(t);
     }
 
-    template <typename V, typename S, typename M>
+    template <typename T, typename S, typename M>
     void
-    mean_<V,S,M>::take(const mean_<V,S,M>& other)
+    mean_<T,S,M>::take(const mean_<T,S,M>& other)
     {
       count_.take(other.count_);
       sum_.take(other.sum_);
     }
 
-    template <typename V, typename S, typename M>
+    template <typename T, typename S, typename M>
     M
-    mean_<V,S,M>::to_result() const
+    mean_<T,S,M>::to_result() const
     {
       return sum_.to_result() / count_.to_result();
     }

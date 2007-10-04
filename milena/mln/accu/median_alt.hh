@@ -54,8 +54,8 @@ namespace mln
 
       median_alt(const Value_Set<S>& s);
 
-      void   take(const argument& x);
-      void untake(const argument& x);
+      void   take(const argument& t);
+      void untake(const argument& t);
       void init();
 
       argument to_result() const;
@@ -64,7 +64,7 @@ namespace mln
       void debug__() const
       {
 	std::cout << "  i = " << i_
-		  << "  x = " << x_
+		  << "  t = " << t_
 		  << "  s = " << sum_minus_ << " ; " << h_[i_] << " ; " << sum_plus_ << " = " << h_.sum()
 		  << std::endl;
       }
@@ -77,7 +77,7 @@ namespace mln
       std::size_t sum_minus_, sum_plus_;
 
       std::size_t i_; // the median index
-      argument x_;       // the median argument
+      argument t_;       // the median argument
 
       // Auxiliary methods
       void go_minus_();
@@ -109,24 +109,24 @@ namespace mln
 
     template <typename S>
     void
-    median_alt<S>::take(const argument& x)
+    median_alt<S>::take(const argument& t)
     {
       // update h_
-      h_.take(x);
+      h_.take(t);
 
       // particular case:
       // current state was initialization
       if (h_[i_] == 0)
 	{
 	  // std::cout << "init!" << std::endl;
-	  i_ = s_.index_of(x);
-	  x_ = x;
+	  i_ = s_.index_of(t);
+	  t_ = t;
 	  return;
 	}
 
       // particular case:
       // the median does not change
-      if (x == x_)
+      if (t == t_)
 	{
 	  // std::cout << "no change!" << std::endl;
 	  return;
@@ -134,14 +134,14 @@ namespace mln
 
       // general case:
 
-      if (x < x_)
+      if (t < t_)
 	{
 	  ++sum_minus_;
 	  if (2 * sum_minus_ > h_.sum())
 	    go_minus_();
 	}
       else
-	// x > x_
+	// t > t_
 	{
 	  ++sum_plus_;
 	  if (2 * sum_plus_ > h_.sum())
@@ -152,12 +152,12 @@ namespace mln
 
     template <typename S>
     void
-    median_alt<S>::untake(const argument& x)
+    median_alt<S>::untake(const argument& t)
     {
-      mln_precondition(h_(x) != 0);
+      mln_precondition(h_(t) != 0);
 
       // update h_
-      h_.untake(x);
+      h_.untake(t);
 
       // particular case:
       // the only value has been removed
@@ -168,20 +168,20 @@ namespace mln
 	}
 
       // general case:
-      if (x < x_)
+      if (t < t_)
 	{
 	  --sum_minus_;
 	  if (2 * sum_plus_ > h_.sum())
 	    go_plus_();
 	}
-      else if (x > x_)
+      else if (t > t_)
 	{
 	  --sum_plus_;
 	  if (2 * sum_minus_ > h_.sum())
 	    go_minus_();
 	}
       else
-	// x == x_
+	// t == t_
 	{
 	  if (h_[i_] == 0)
 	    {
@@ -216,7 +216,7 @@ namespace mln
 	  sum_minus_ -= h_[i_];
 	}
       while (2 * sum_minus_ > h_.sum());
-      x_ = s_[i_];
+      t_ = s_[i_];
     }
 
 
@@ -233,7 +233,7 @@ namespace mln
 	  sum_plus_ -= h_[i_];
 	}
       while (2 * sum_plus_ > h_.sum());
-      x_ = s_[i_];
+      t_ = s_[i_];
     }
 
 
@@ -245,14 +245,14 @@ namespace mln
       sum_minus_ = 0;
       sum_plus_ = 0;
       i_ = (mln_max(argument) - mln_min(argument)) / 2;
-      x_ = s_[i_];
+      t_ = s_[i_];
     }
 
     template <typename S>
     typename median_alt<S>::argument
     median_alt<S>::to_result() const
     {
-      return x_;
+      return t_;
     }
 
     template <typename S>

@@ -68,7 +68,7 @@ namespace mln
       typedef argument;
       typedef result;
       void init();
-      void take(const argument& x);
+      void take(const argument& t);
       void take(const E& other);
       result to_result() const;
       operator result_() const;

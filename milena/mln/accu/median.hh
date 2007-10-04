@@ -57,9 +57,9 @@ namespace mln
       median();
 
       void init();
-      void   take(const argument& x);
+      void   take(const argument& t);
       void   take(const median<S>& other);
-      void untake(const argument& x);
+      void untake(const argument& t);
 
       unsigned card() const { return h_.sum(); }
 
@@ -76,7 +76,7 @@ namespace mln
 
       mutable bool valid_;
       mutable std::size_t i_; // the median index
-      mutable argument x_;       // the median value
+      mutable argument t_;       // the median value
 
       // Auxiliary methods
       void update_() const;
@@ -105,13 +105,13 @@ namespace mln
 
     template <typename S>
     void
-    median<S>::take(const argument& x)
+    median<S>::take(const argument& t)
     {
-      h_.take(x);
+      h_.take(t);
 
-      if (x < x_)
+      if (t < t_)
 	++sum_minus_;
-      else if (x > x_)
+      else if (t > t_)
 	++sum_plus_;
 
       if (valid_)
@@ -139,14 +139,14 @@ namespace mln
 
     template <typename S>
     void
-    median<S>::untake(const argument& x)
+    median<S>::untake(const argument& t)
     {
-      mln_precondition(h_(x) != 0);
-      h_.untake(x);
+      mln_precondition(h_(t) != 0);
+      h_.untake(t);
 
-      if (x < x_)
+      if (t < t_)
 	--sum_minus_;
-      else if (x > x_)
+      else if (t > t_)
 	--sum_plus_;
 
       if (valid_)
@@ -191,7 +191,7 @@ namespace mln
 	  sum_minus_ -= h_[i_];
 	}
       while (2 * sum_minus_ > h_.sum());
-      x_ = s_[i_];
+      t_ = s_[i_];
     }
 
     template <typename S>
@@ -207,7 +207,7 @@ namespace mln
 	  sum_plus_ -= h_[i_];
 	}
       while (2 * sum_plus_ > h_.sum());
-      x_ = s_[i_];
+      t_ = s_[i_];
     }
 
     template <typename S>
@@ -218,7 +218,7 @@ namespace mln
       sum_minus_ = 0;
       sum_plus_ = 0;
       i_ = (mln_max(argument) - mln_min(argument)) / 2;
-      x_ = s_[i_];
+      t_ = s_[i_];
       valid_ = true;
     }
 
@@ -228,7 +228,7 @@ namespace mln
     {
       if (! valid_)
 	update_();
-      return x_;
+      return t_;
     }
 
     template <typename S>

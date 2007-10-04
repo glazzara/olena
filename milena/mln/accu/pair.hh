@@ -51,14 +51,14 @@ namespace mln
 
     /*! Generic pair of accumulators.
      *
-     * The parameter \c V is the type of values.
+     * The parameter \c T is the type of values.
      *
-     * \todo Check that, when V is not provided, A1 and A2 have the same value.
+     * \todo Check that, when T is not provided, A1 and A2 have the same value.
      */
-    template <typename A1, typename A2, typename V = mln_argument(A1)>
-    struct pair_ : public mln::accu::internal::base_< std::pair< mlc_unqualif(mln_result(A1)) , mlc_unqualif(mln_result(A2)) > , pair_<A1,A2,V> >
+    template <typename A1, typename A2, typename T = mln_argument(A1)>
+    struct pair_ : public mln::accu::internal::base_< std::pair< mlc_unqualif(mln_result(A1)) , mlc_unqualif(mln_result(A2)) > , pair_<A1,A2,T> >
     {
-      typedef V argument;
+      typedef T argument;
 
       typedef mlc_unqualif(mln_result(A1))  result_1;
       typedef mlc_unqualif(mln_result(A2))  result_2;
@@ -68,9 +68,9 @@ namespace mln
       pair_(const A1& a1, const A2& a2);
 
       void init();
-      void take_as_init(const argument& x);
-      void take(const argument& x);
-      void take(const pair_<A1,A2,V>& other);
+      void take_as_init(const argument& t);
+      void take(const argument& t);
+      void take(const pair_<A1,A2,T>& other);
 
       result to_result() const;
       void get_result(result_1& r1, result_2& r2) const;
@@ -87,67 +87,67 @@ namespace mln
     template <typename A1, typename A2>
     struct pair : public Meta_Accumulator< pair<A1,A2> >
     {
-      template <typename V>
+      template <typename T>
       struct with
       {
-	typedef mln_accu_with(A1, V) A1_V;
-	typedef mln_accu_with(A2, V) A2_V;
-	typedef pair_<A1_V, A2_V, V> ret;
+	typedef mln_accu_with(A1, T) A1_T;
+	typedef mln_accu_with(A2, T) A2_T;
+	typedef pair_<A1_T, A2_T, T> ret;
       };
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename A1, typename A2, typename V>
-    pair_<A1,A2,V>::pair_()
+    template <typename A1, typename A2, typename T>
+    pair_<A1,A2,T>::pair_()
     {
       init();
     }
 
-    template <typename A1, typename A2, typename V>
+    template <typename A1, typename A2, typename T>
     void
-    pair_<A1,A2,V>::init()
+    pair_<A1,A2,T>::init()
     {
       a1_.init();
       a2_.init();
     }
 
-    template <typename A1, typename A2, typename V>
+    template <typename A1, typename A2, typename T>
     void
-    pair_<A1,A2,V>::take_as_init(const argument& x)
+    pair_<A1,A2,T>::take_as_init(const argument& t)
     {
-      a1_.take_as_init(x);
-      a2_.take_as_init(x);
+      a1_.take_as_init(t);
+      a2_.take_as_init(t);
     }
 
-    template <typename A1, typename A2, typename V>
+    template <typename A1, typename A2, typename T>
     void
-    pair_<A1,A2,V>::take(const argument& x)
+    pair_<A1,A2,T>::take(const argument& t)
     {
-      a1_.take(x);
-      a2_.take(x);
+      a1_.take(t);
+      a2_.take(t);
     }
 
-    template <typename A1, typename A2, typename V>
+    template <typename A1, typename A2, typename T>
     void
-    pair_<A1,A2,V>::take(const pair_<A1,A2,V>& other)
+    pair_<A1,A2,T>::take(const pair_<A1,A2,T>& other)
     {
       a1_.take(other.a1_);
       a2_.take(other.a2_);
     }
 
-    template <typename A1, typename A2, typename V>
-    typename pair_<A1,A2,V>::result
-    pair_<A1,A2,V>::to_result() const
+    template <typename A1, typename A2, typename T>
+    typename pair_<A1,A2,T>::result
+    pair_<A1,A2,T>::to_result() const
     {
       result tmp(a1_.to_result(), a2_.to_result());
       return tmp;
     }
 
-    template <typename A1, typename A2, typename V>
+    template <typename A1, typename A2, typename T>
     void
-    pair_<A1,A2,V>::get_result(result_1& r1,
+    pair_<A1,A2,T>::get_result(result_1& r1,
 			    result_2& r2) const
     {
       r1 = a1_.to_result();

@@ -61,8 +61,8 @@ namespace mln
       p_(const A& a);
 
       void init();
-      void take_as_init(const argument& x);
-      void take(const argument& x);
+      void take_as_init(const argument& t);
+      void take(const argument& t);
       void take(const p_<A>& other);
 
       result to_result() const;
@@ -109,16 +109,16 @@ namespace mln
 
     template <typename A>
     void
-    p_<A>::take_as_init(const argument& x)
+    p_<A>::take_as_init(const argument& t)
     {
-      a_.take_as_init(x.p()); // FIXME: Generalize with "psite(x)".
+      a_.take_as_init(t.p()); // FIXME: Generalize with "psite(t)".
     }
 
     template <typename A>
     void
-    p_<A>::take(const argument& x)
+    p_<A>::take(const argument& t)
     {
-      a_.take(x.p());
+      a_.take(t.p());
     }
 
     template <typename A>

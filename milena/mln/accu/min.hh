@@ -48,26 +48,26 @@ namespace mln
 
     /*! Generic min accumulator class.
      *
-     * The parameter \c V is the type of values.
+     * The parameter \c T is the type of values.
      */
-    template <typename V>
-    struct min_ : public mln::accu::internal::base_< V, min_<V> >
+    template <typename T>
+    struct min_ : public mln::accu::internal::base_< T, min_<T> >
     {
-      typedef V argument;
-      typedef V result;
+      typedef T argument;
+      typedef T result;
 
       min_();
 
       void init();
-      void take_as_init(const argument& x);
-      void take(const argument& x);
-      void take(const min_<V>& other);
+      void take_as_init(const argument& t);
+      void take(const argument& t);
+      void take(const min_<T>& other);
 
-      V to_result() const;
+      T to_result() const;
 
     protected:
 
-      V x_;
+      T t_;
     };
 
 
@@ -77,10 +77,10 @@ namespace mln
     // FIXME: Doc!
     struct min : public Meta_Accumulator< min >
     {
-      template <typename V>
+      template <typename T>
       struct with
       {
-	typedef min_<V> ret;
+	typedef min_<T> ret;
       };
     };
 
@@ -88,17 +88,17 @@ namespace mln
 
 //     // FIXME: Sample code.
 
-//     template <typename V>
-//     struct p_min_ : public p_< min_<V> >
+//     template <typename T>
+//     struct p_min_ : public p_< min_<T> >
 //     {
 //     };
 
 //     struct p_min : public Meta_Accumulator< p_min >
 //     {
-//       template <typename V>
+//       template <typename T>
 //       struct with
 //       {
-// 	typedef p_min_<V> ret;
+// 	typedef p_min_<T> ret;
 //       };
 //     };
 
@@ -106,45 +106,45 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V>
-    min_<V>::min_()
+    template <typename T>
+    min_<T>::min_()
     {
       init();
     }
 
-    template <typename V>
+    template <typename T>
     void
-    min_<V>::init()
+    min_<T>::init()
     {
-      x_ = mln_max(V);
+      t_ = mln_max(T);
     }
 
-    template <typename V>
-    void min_<V>::take_as_init(const argument& x)
+    template <typename T>
+    void min_<T>::take_as_init(const argument& t)
     {
-      x_ = x;
+      t_ = t;
     }
 
-    template <typename V>
-    void min_<V>::take(const argument& x)
+    template <typename T>
+    void min_<T>::take(const argument& t)
     {
-      if (x < x_)
-	x_ = x;
+      if (t < t_)
+	t_ = t;
     }
 
-    template <typename V>
+    template <typename T>
     void
-    min_<V>::take(const min_<V>& other)
+    min_<T>::take(const min_<T>& other)
     {
-      if (other.x_ < x_)
-	x_ = other.x_;
+      if (other.t_ < t_)
+	t_ = other.t_;
     }
 
-    template <typename V>
-    V
-    min_<V>::to_result() const
+    template <typename T>
+    T
+    min_<T>::to_result() const
     {
-      return x_;
+      return t_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

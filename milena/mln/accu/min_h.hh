@@ -57,10 +57,10 @@ namespace mln
       min_h();
 
       void init();
-      void   take(const argument& x);
-      void   take_as_init(const argument& x);
+      void   take(const argument& t);
+      void   take_as_init(const argument& t);
       void   take(const min_h<S>& other);
-      void untake(const argument& x);
+      void untake(const argument& t);
 
       unsigned card() const { return h_.sum(); }
 
@@ -76,7 +76,7 @@ namespace mln
       mutable std::size_t sum_;
       mutable bool valid_;
       mutable std::size_t i_; // the min index
-      mutable argument x_;       // the min value
+      mutable argument t_;       // the min value
 
       // Auxiliary methods
       void update_() const;
@@ -105,15 +105,15 @@ namespace mln
 
     template <typename S>
     void
-    min_h<S>::take(const argument& x)
+    min_h<S>::take(const argument& t)
     {
-      h_.take(x);
+      h_.take(t);
       if (h_.sum() == 1)
 	{
-	  this->take_as_init(x);
+	  this->take_as_init(t);
 	  return;
 	}
-      if (x < x_)
+      if (t < t_)
 	{
 	  ++sum_;
 	  valid_ = false;
@@ -134,23 +134,23 @@ namespace mln
 
     template <typename S>
     void
-    min_h<S>::untake(const argument& x)
+    min_h<S>::untake(const argument& t)
     {
-      mln_precondition(h_(x) != 0);
-      h_.untake(x);
+      mln_precondition(h_(t) != 0);
+      h_.untake(t);
       if (h_.sum() == 0)
 	{
 	  init();
 	  return;
 	}
-      if (x < x_)
+      if (t < t_)
 	{
 	  mln_invariant(sum_ >= 1);
 	  --sum_;
 	  valid_ = false;
 	}
       else
-	if (x == x_ && h_[i_] == 0)
+	if (t == t_ && h_[i_] == 0)
 	  valid_ = false;
     }
 
@@ -177,7 +177,7 @@ namespace mln
 	    sum_ -= h_[i_];
 	}
       while (sum_ != 0);
-      x_ = s_[i_];
+      t_ = s_[i_];
     }
 
     template <typename S>
@@ -187,7 +187,7 @@ namespace mln
       do
 	++i_;
       while (h_[i_] == 0);
-      x_ = s_[i_];
+      t_ = s_[i_];
     }
 
     template <typename S>
@@ -197,18 +197,18 @@ namespace mln
       h_.init();
       sum_ = 0;
       i_ = mln_max(argument);
-      x_ = s_[i_];
+      t_ = s_[i_];
       valid_ = true;
     }
 
     template <typename S>
     void
-    min_h<S>::take_as_init(const argument& x)
+    min_h<S>::take_as_init(const argument& t)
     {
-      h_.take(x);
+      h_.take(t);
       sum_ = 0;
-      i_ = s_.index_of(x);
-      x_ = x;
+      i_ = s_.index_of(t);
+      t_ = t;
       valid_ = true;
     }
 
@@ -218,7 +218,7 @@ namespace mln
     {
       if (! valid_)
 	update_();
-      return x_;
+      return t_;
     }
 
     template <typename S>

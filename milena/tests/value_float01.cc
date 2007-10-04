@@ -48,11 +48,11 @@ using namespace mln;
 using namespace mln::value;
 using  mln::value::int_u8;
 
-float fi(int x) { return 0.5; }
-int ii(int x) { return 1; }
+float fi(int) { return 0.5; }
+int ii(int) { return 1; }
 
-float fd(double x) { return 0.5; }
-int id(double x) { return 1; }
+float fd(double) { return 0.5; }
+int id(double) { return 1; }
 
 
 struct tofloat01 : mln::Function_v2v<tofloat01>

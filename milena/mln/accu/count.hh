@@ -46,17 +46,17 @@ namespace mln
 
     /*! Generic counter accumulator class.
      */
-    template <typename V>
-    struct count_ : public mln::accu::internal::base_< std::size_t , count_<V> >
+    template <typename T>
+    struct count_ : public mln::accu::internal::base_< std::size_t , count_<T> >
     {
-      typedef V argument;
+      typedef T argument;
       typedef std::size_t result; // FIXME: Up in Accumulator.
 
       count_();
 
       void init();
       void take(const argument&);
-      void take(const count_<V>& other);
+      void take(const count_<T>& other);
 
       std::size_t to_result() const;
       void set_value(std::size_t c);
@@ -70,53 +70,53 @@ namespace mln
     // FIXME: Doc!
     struct count : public Meta_Accumulator< count >
     {
-      template <typename V>
+      template <typename T>
       struct with
       {
-	typedef count_<V> ret;
+	typedef count_<T> ret;
       };
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V>
-    count_<V>::count_()
+    template <typename T>
+    count_<T>::count_()
     {
       init();
     }
 
-    template <typename V>
+    template <typename T>
     void
-    count_<V>::init()
+    count_<T>::init()
     {
       count__ = 0;
     }
 
-    template <typename V>
+    template <typename T>
     void
-    count_<V>::take(const argument&)
+    count_<T>::take(const argument&)
     {
       ++count__;
     }
 
-    template <typename V>
+    template <typename T>
     void
-    count_<V>::take(const count_<V>& other)
+    count_<T>::take(const count_<T>& other)
     {
       count__ += other.count__;
     }
 
-    template <typename V>
+    template <typename T>
     std::size_t
-    count_<V>::to_result() const
+    count_<T>::to_result() const
     {
       return count__;
     }
 
-    template <typename V>
+    template <typename T>
     void
-    count_<V>::set_value(std::size_t c)
+    count_<T>::set_value(std::size_t c)
     {
       count__ = c;
     }

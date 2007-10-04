@@ -47,26 +47,26 @@ namespace mln
 
     /*! Generic max accumulator class.
      *
-     * The parameter \c V is the type of values.
+     * The parameter \c T is the type of values.
      */
-    template <typename V>
-    struct max_ : public mln::accu::internal::base_< V , max_<V> >
+    template <typename T>
+    struct max_ : public mln::accu::internal::base_< T , max_<T> >
     {
-      typedef V argument;
-      typedef V result;
+      typedef T argument;
+      typedef T result;
 
       max_();
 
       void init();
-      void take_as_init(const argument& x);
-      void take(const argument& x);
-      void take(const max_<V>& other);
+      void take_as_init(const argument& t);
+      void take(const argument& t);
+      void take(const max_<T>& other);
 
-      V to_result() const;
+      T to_result() const;
 
     protected:
 
-      V x_;
+      T t_;
     };
 
 
@@ -76,10 +76,10 @@ namespace mln
     // FIXME: Doc!
     struct max : public Meta_Accumulator< max >
     {
-      template <typename V>
+      template <typename T>
       struct with
       {
-	typedef max_<V> ret;
+	typedef max_<T> ret;
       };
     };
 
@@ -87,47 +87,47 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V>
-    max_<V>::max_()
+    template <typename T>
+    max_<T>::max_()
     {
       init();
     }
 
-    template <typename V>
+    template <typename T>
     void
-    max_<V>::init()
+    max_<T>::init()
     {
-      x_ = mln_min(V);
+      t_ = mln_min(T);
     }
 
-    template <typename V>
+    template <typename T>
     void
-    max_<V>::take_as_init(const argument& x)
+    max_<T>::take_as_init(const argument& t)
     {
-      x_ = x;
+      t_ = t;
     }
 
-    template <typename V>
+    template <typename T>
     void
-    max_<V>::take(const argument& x)
+    max_<T>::take(const argument& t)
     {
-      if (x > x_)
-	x_ = x;
+      if (t > t_)
+	t_ = t;
     }
 
-    template <typename V>
+    template <typename T>
     void
-    max_<V>::take(const max_<V>& other)
+    max_<T>::take(const max_<T>& other)
     {
-      if (other.x_ > x_)
-	x_ = other.x_;
+      if (other.t_ > t_)
+	t_ = other.t_;
     }
 
-    template <typename V>
-    V
-    max_<V>::to_result() const
+    template <typename T>
+    T
+    max_<T>::to_result() const
     {
-      return x_;
+      return t_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
