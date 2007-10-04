@@ -1,5 +1,11 @@
 2007-10-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix chamfer.
+
+	* chamfer.hh: Update.
+
+2007-10-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update chamfer.
 
 	* chamfer.cc: Test for chamfer.

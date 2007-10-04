@@ -1,17 +1,17 @@
-#include <mln/core/image2d_b.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if_value.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/core/inplace.hh>
+# include <mln/core/image2d_b.hh>
+# include <mln/core/sub_image.hh>
+# include <mln/core/image_if_value.hh>
+# include <mln/core/neighb2d.hh>
+# include <mln/core/inplace.hh>
 
-#include <mln/value/int_u8.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/stretch.hh>
-#include <mln/io/pbm/load.hh>
-#include <mln/io/pgm/save.hh>
-#include <mln/io/pgm/save.hh>
-#include <mln/io/pgm/save.hh>
-#include <mln/core/mesh_image.hh>
+# include <mln/value/int_u8.hh>
+# include <mln/level/fill.hh>
+# include <mln/level/stretch.hh>
+# include <mln/io/pbm/load.hh>
+# include <mln/io/pgm/save.hh>
+# include <mln/io/pgm/save.hh>
+# include <mln/io/pgm/save.hh>
+# include <mln/core/mesh_image.hh>
 # include <mln/labeling/base.hh>
 # include <mln/debug/println.hh>
 # include <mln/core/window2d.hh>
@@ -27,6 +27,7 @@
 
 # include <mln/core/image_if_interval.hh>
 # include <mln/core/dpoint2d.hh>
+# include <math.h>
 
 namespace mln
 {
@@ -50,7 +51,7 @@ namespace mln
     {
       int ws[] = {   0, d21,   0, d21,   0,
          	   d21, d11, d10, d11, d21,
-		     0, d10,   0, d10,   0,
+		     0, d10,   0,   0,   0,
 	             0,   0,   0,   0,   0,
 		     0,   0,   0,   0,   0 };
 
@@ -72,9 +73,20 @@ namespace mln
     {
       float ws[] = {   0, d21,   0, d21,   0,
          	     d21, d11, d10, d11, d21,
-		       0, d10,   0, d10,   0,
+		       0, d10,   0,   0,   0,
 	               0,   0,   0,   0,   0,
   		       0,   0,   0,   0,   0 };
+
+      return (make::w_window2d(ws));
+    }
+
+    const w_window2d_float
+    mk_chamfer_exact()
+    {
+      float r2 = sqrt(2);
+      float ws[] = {  r2,   1,  r2,
+      	               1,   0,   0,
+		       0,   0,   0 };
 
       return (make::w_window2d(ws));
     }
