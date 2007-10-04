@@ -40,11 +40,7 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/labeling/level.hh>
 #include <mln/debug/iota.hh>
-#include <mln/debug/println_with_border.hh>
-
-#include "paste.hh"
-#include "fill.hh"
-
+#include <mln/debug/println.hh>
 
 int main()
 {
@@ -56,12 +52,11 @@ int main()
   image2d_b<value::int_u8> i1(5, 5, border);
   debug::iota(i1);
   i1[10] = i1[17] = i1[18] = i1[25] = i1[26] = i1[22] = i1[29] = 2;
-   //  i1[5] = i1[6] = 2;
-  debug::println_with_border(i1);
+  debug::println(i1);
 
   unsigned n;
   image2d_b<value::int_u8> out(i1.domain(), border);
-  labeling_level_fast(i1, 2, c4(), out, n);
+  labeling::level_fast(i1, 2, c4(), out, n);
 
   std::cout << "n = " << n << std::endl;
   debug::println(out);

@@ -1,3 +1,15 @@
+2007-10-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add chamfer in sadbox.
+
+	* chamfer.cc: New.
+
+
+	* color_sub.cc: .
+	* color_sub.hh: New : split ols version.
+	* labeling_algo.cc: .
+	* labeling_level_fast.cc: .
+
 2007-10-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Update doc of accus. Update Accumulator.

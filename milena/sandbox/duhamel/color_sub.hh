@@ -25,40 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/sub_image.cc
+/*! \file tests/sub_image.hh
  *
- * \brief Tests on mln::sub_image.
+ * \brief .
  */
 
+#include <mln/core/image_if_value.hh>
 #include <mln/core/image2d_b.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/inplace.hh>
-#include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/level/fill.hh>
-#include <mln/debug/println.hh>
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/point2d.hh>
-#include <mln/debug/println.hh>
-#include <mln/util/graph.hh>
-#include <mln/io/ppm/save.hh>
-#include <mln/fun/p2b/chess.hh>
-
-#include <mln/core/image_if_value.hh>
-#include <mln/debug/iota.hh>
-
-#include "color_sub.hh"
-
-int main()
+namespace mln
 {
-  using namespace mln;
+  template <typename I, typename J>
+  void
+  color (Image<I>& ima_ , Image<J>& out_)
+  {
+    I& ima = exact (ima_);
+    J& out = exact (out_);
+    //    image2d_b<value::rgb8> out(ima.domain ().bbox ());
 
-  image2d_b<value::int_u8> ima(3,3);
-  debug::iota(ima);
-  std::cout << ima.domain() << std::endl;
-  image2d_b<value::rgb8> out(ima.domain ().bbox ());
-  color(inplace (ima | 6), out);
-  io::ppm::save(out, "out.ppm");
-  debug::println(out);
+    level::fill (out, value::rgb8(255, 0, 0));
+
+    {
+      mln_piter(I) p (ima.domain ());
+
+      for_all (p)
+	{
+	  out(p) = value::rgb8(ima(p));
+	}
+    }
+    //    return out;
+  }
 }
