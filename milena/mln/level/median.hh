@@ -41,7 +41,7 @@
 # include <mln/set/diff.hh>
 
 # include <mln/canvas/browsing/snake_fwd.hh>
-# include <mln/canvas/browsing/directional.hh>
+# include <mln/canvas/browsing/dir_ricard51.hh>
 # include <mln/accu/median.hh>
 
 
@@ -190,11 +190,6 @@ namespace mln
 
 	// aux data
 	mln_point(I) p;
-	const mln_point(I)
-	  pmin, pmax;
-	const mln_coord(I)
-	  pmin_dir,      pmax_dir,
-	  pmin_dir_plus, pmax_dir_minus;
 	accu::median<mln_vset(I)> med;
 
 	// ctor
@@ -206,12 +201,6 @@ namespace mln
 	    output(exact(output)),
 	    // aux data
 	    p(),
-	    pmin(input.domain().pmin()),
-	    pmax(input.domain().pmax()),
-	    pmin_dir(pmin[dir]),
-	    pmax_dir(pmax[dir]),
-	    pmin_dir_plus (pmin[dir] + length / 2),
-	    pmax_dir_minus(pmax[dir] - length / 2),
 	    med(input.values())
 	{
 	}
@@ -220,54 +209,25 @@ namespace mln
 	{
 	}
 
+	void init_line()
+	{
+	  med.init();
+	}
+
+	void add_point(mln_point(I) pt)
+	{
+	  med.take(input(pt));
+	}
+
+	void remove_point(mln_point(I) pu)
+	{
+	  med.untake(input(pu));
+	}
+
 	void next()
 	{
-	  mln_point(I)
-	    p  = this->p,
-	    pt = p,
-	    pu = p;
-
-	  typedef mln_coord(I)& coord_ref;
-	  coord_ref
-	    ct = pt[dir],
-	    cu = pu[dir],
-	    p_dir = p[dir];
-
-	  // initialization (before first point of the row)
-	  med.init();
-	  for (ct = pmin_dir; ct < pmin_dir_plus; ++ct)
-	    if (input.has(pt))
-	      med.take(input(pt));
-
-	  // left columns (just take new points)
-	  for (p_dir = pmin_dir; p_dir <= pmin_dir_plus; ++p_dir, ++ct)
-	    {
-	      if (input.has(pt))
-		med.take(input(pt));
-	      if (output.has(p))
-		output(p) = med.to_result();
-	    }
-
-	  // middle columns (both take and untake)
-	  cu = pmin[dir];
-	  for (; p_dir <= pmax_dir_minus; ++cu, ++p_dir, ++ct)
-	    {
-	      if (input.has(pt))
-		med.take(input(pt));
-	      if (input.has(pu))
-		med.untake(input(pu));
-	      if (output.has(p))
-		output(p) = med.to_result();
-	    }
-
-	  // right columns (now just untake old points)
-	  for (; p_dir <= pmax_dir; ++cu, ++p_dir)
-	    {
-	      if (input.has(pu))
-		med.untake(input(pu));
-	      if (output.has(p))
-		output(p) = med.to_result();
-	    }
+	  if (output.has(p))
+	    output(p) = med.to_result();
 	}
 
 	void final()
@@ -282,7 +242,7 @@ namespace mln
       void median_dir_(const Image<I>& input, unsigned dir, unsigned length, O& output)
       {
 	median_dir_t<I,O> f(exact(input), dir, length, output);
-	canvas::browsing::directional(f);
+	canvas::browsing::dir_ricard51(f);
       }
 
 
@@ -330,11 +290,20 @@ namespace mln
     void median_dir(const Image<I>& input, unsigned dir, unsigned length,
 		    Image<O>& output)
     {
+      trace::entering("level::median_dir");
+
+      mlc_is(mln_trait_image_io(O), trait::io::write)::check();
+      mlc_is(mln_trait_image_support(I), trait::support::aligned)::check();
+      mlc_converts_to(mln_value(I), mln_value(O))::check();
+
       mln_precondition(exact(output).domain() == exact(input).domain());
       typedef mln_point(I) P;
       mln_precondition(dir < P::dim);
       mln_precondition(length % 2 == 1);
+
       impl::median_dir_(exact(input), dir, length, exact(output)); 
+
+      trace::exiting("level::median_dir");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

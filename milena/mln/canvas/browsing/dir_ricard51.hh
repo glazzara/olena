@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_DIRECTIONAL_HH
-# define MLN_CANVAS_DIRECTIONAL_HH
+#ifndef MLN_CANVAS_DIR_RICARD51_HH
+# define MLN_CANVAS_DIR_RICARD51_HH
 
-/*! \file mln/canvas/browsing/directional.hh
+/*! \file mln/canvas/dir_ricard51.hh
  *
- * \brief Directional browsing of an image.
+ * \brief Dir_Ricard51 browsing of an image.
  */
 
 # include <mln/core/concept/browsing.hh>
@@ -55,41 +55,96 @@ namespace mln
        *   dir; // and test dir < dim \n
        *   input; \n
        *   p; \n
+       *   length; \n
        * --- as methods: \n
        *   void init(); \n
-       *   void next() \n
-       *   void final() \n
+       *   void init_line(); \n
+       *   void add_point(p) \n
+       *   void remove_point(p) \n
+       *   void next(); \n
+       *   void final(); \n
        * } \n
        *
        */
-      struct directional_t : public Browsing< directional_t >
+      struct dir_ricard51_t : public Browsing< dir_ricard51_t >
       {
 	template <typename F>
 	void operator()(F& f) const;
       }
 
-      directional;
+      dir_ricard51;
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename F>
       void
-      directional_t::operator()(F& f) const
+      dir_ricard51_t::operator()(F& f) const
       {
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
-	mln_point(I)
+	const mln_point(I)
 	  pmin = f.input.domain().pmin(),
 	  pmax = f.input.domain().pmax();
+
+	const mln_coord(I)
+	  pmin_dir = pmin[f.dir],
+	  pmax_dir = pmax[f.dir],
+	  pmin_dir_plus_half_length = pmin_dir + f.length / 2,
+	  pmax_dir_minus_half_length = pmax_dir - f.length / 2;
+
+	mln_point(I) pt, pu;
 	
+	typedef mln_coord(I)& coord_ref;
+	coord_ref
+	  ct = pt[f.dir],
+	  cu = pu[f.dir],
+	  p_dir = f.p[f.dir];
+
 	f.p = pmin;
 	
 	f.init();
 	
 	do
 	{
-	  f.next();
+	  pt = f.p;
+	  pu = f.p;
+
+	  f.init_line();
+
+	  // initialization (before first point of the line)
+	  for (ct = pmin_dir; ct < pmin_dir_plus_half_length; ++ ct)
+	    if (f.input.has(pt))
+	      f.add_point(pt);
+
+	  // left columns (just take new points)
+	  for (p_dir = pmin_dir; p_dir <= pmin_dir_plus_half_length; ++p_dir, ++ct)
+	  {
+	    if (f.input.has(pt))
+	      f.add_point(pt);
+	    f.next();
+	  }
+
+	  // middle columns (both take and untake)
+	  cu = pmin_dir;
+	  for (; p_dir <= pmax_dir_minus_half_length; ++cu, ++p_dir, ++ct)
+	  {
+	    if (f.input.has(pt))
+	      f.add_point(pt);
+	    if (f.input.has(pu))
+	      f.remove_point(pu);
+	    f.next();
+	  }
+
+	  // right columns (now just untake old points)
+	  for (; p_dir <= pmax_dir; ++cu, ++p_dir)
+	  {
+	    if (f.input.has(pu))
+	      f.remove_point(pu);
+	    f.next();
+	  }
+
+	  p_dir = pmin_dir;
 	  
 	  for (int c = F::dim - 1; c >= 0; --c)
 	  {
@@ -115,4 +170,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CANVAS_DIRECTIONAL_HH
+#endif // ! MLN_CANVAS_DIR_RICARD51_HH

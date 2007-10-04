@@ -1,3 +1,11 @@
+2007-10-04  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add best canvas and make median_dir use it.
+	* mln/canvas/browsing/dir_ricard51.hh: New canvas.
+	* mln/canvas/browsing/directional.hh: Fix some names.
+	* mln/level/median.hh: Use new canvas.
+	* tests/level_median_dir.cc: New.
+
 2007-10-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Remove convertion method in median_alt.
