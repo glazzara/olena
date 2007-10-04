@@ -44,6 +44,9 @@ namespace mln
       /// The value type of elements to accumulate.
       typedef void value;
 
+      /// The value type to return.
+      typedef void result_;
+
       /// Initialize the accumulator.
       void init();
 
@@ -52,6 +55,10 @@ namespace mln
 
       /// Take into account another accumulator \p other.
       void take(const E& other);
+
+      /// Convert the accumulator into the result.
+      operator result_() const;
+
     };
 
   } // end of namespace mln::doc

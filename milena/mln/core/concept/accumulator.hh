@@ -71,6 +71,7 @@ namespace mln
       void take(const value& v);
       void take(const E& other);
       result to_result() const;
+      operator result_() const;
      */
 
     // Default impl.
@@ -99,6 +100,8 @@ namespace mln
     m3 = 0;
     result (E::*m4)() const = & E::to_result;
     m4 = 0;
+    result (E::*m5)() const = & E::operator result;
+    m5 = 0;
   }
 
   template <typename E>

@@ -1,3 +1,12 @@
+2007-10-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update doc of accus. Update Accumulator.
+
+	* mln/core/concept/accumulator.hh: Test if the convertion operator
+          exist.
+
+	* mln/core/concept/doc/accumulator.hh: Add operator result().
+
 2007-10-04  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add best canvas and make median_dir use it.
