@@ -57,8 +57,7 @@ int main()
   image2d_b<value::int_u8> ima(3,3);
   debug::iota(ima);
   std::cout << ima.domain() << std::endl;
-  image2d_b<value::rgb8> out(ima.domain ().bbox ());
-  color(inplace (ima | 6), out);
+  image2d_b<value::rgb8> out = color(inplace (ima | 6));
   io::ppm::save(out, "out.ppm");
   debug::println(out);
 }

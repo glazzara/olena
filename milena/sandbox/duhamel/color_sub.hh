@@ -37,24 +37,27 @@
 
 namespace mln
 {
-  template <typename I, typename J>
-  void
-  color (Image<I>& ima_ , Image<J>& out_)
+  template <typename I>
+  mln_ch_value (I, value::rgb8)
+  color (const Image<I>& input_)
   {
-    I& ima = exact (ima_);
-    J& out = exact (out_);
-    //    image2d_b<value::rgb8> out(ima.domain ().bbox ());
+    const I& input = exact (input_);
 
-    level::fill (out, value::rgb8(255, 0, 0));
+    mln_ch_value(I, value::rgb8) output;
+    initialize(output, input);
+
+    //    image2d_b<value::rgb8> output(ima.domain ().bbox ());
+
+    level::fill (output, value::rgb8(255, 0, 0));
 
     {
-      mln_piter(I) p (ima.domain ());
+      mln_piter(I) p (input.domain ());
 
       for_all (p)
 	{
-	  out(p) = value::rgb8(ima(p));
+	  output(p) = value::rgb8(input(p));
 	}
     }
-    //    return out;
+    return output;
   }
 }
