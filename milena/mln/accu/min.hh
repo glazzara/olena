@@ -85,6 +85,25 @@ namespace mln
     };
 
 
+
+//     // FIXME: Sample code.
+
+//     template <typename V>
+//     struct p_min_ : public p_< min_<V> >
+//     {
+//     };
+
+//     struct p_min : public Meta_Accumulator< p_min >
+//     {
+//       template <typename V>
+//       struct with
+//       {
+// 	typedef p_min_<V> ret;
+//       };
+//     };
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V>

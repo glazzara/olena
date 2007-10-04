@@ -1,3 +1,17 @@
+2007-10-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Handle multiple super-categories.
+
+	* mln/trait/solve.hh (super_category_): New to handle multiple
+	super-categories.
+	* tests/trait_super.cc: New.
+
+	* mln/core/w_window.hh (sym): Fix; my fault!
+	* mln/core/win/hline2d.hh: Add FIXME for Simon.
+	* mln/accu/min.hh: Add FIXME for Matthieu.
+	* mln/value/builtin.hh (Integer, Symbolic, Floating): New.
+	(category): Specialize for some builtins.
+
 2007-10-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Rename typedef value by argument in accumulators.

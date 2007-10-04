@@ -257,7 +257,7 @@ namespace mln
   {
     w_window<D,W> tmp;
     for (unsigned i = 0; i < this->ndpoints(); ++i)
-      tmp.insert(this->w(i), this->dp(i));
+      tmp.insert(this->w(i), - this->dp(i));
     *this = tmp;
     return *this;
   }

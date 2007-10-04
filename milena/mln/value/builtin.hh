@@ -43,15 +43,49 @@ namespace mln
   // The case of built-in types.
 
   template <typename E>
-  struct Built_In
+  struct Built_In;
+
+  template <>
+  struct Built_In<void>
   {
-    typedef Value<void> super; // Builtins belong to a sub-category of values.
+    typedef void* super; // Every builtin belongs to a sub-category of Value but we do not know which one.
   };
 
-  template <> struct category< int >      { typedef Built_In<void> ret; };
-  template <> struct category< unsigned > { typedef Built_In<void> ret; };
-  template <> struct category< float >    { typedef Built_In<void> ret; };
-  template <> struct category< double >   { typedef Built_In<void> ret; };
+
+  template <typename E> struct Symbolic;
+
+  template <>
+  struct Symbolic<void>
+  {
+    typedef Value<void> super;
+  };
+
+
+  template <typename E> struct Integer;
+
+  template <>
+  struct Integer<void>
+  {
+    typedef Value<void> super;
+  };
+
+
+  template <typename E> struct Floating;
+
+  template <>
+  struct Floating<void>
+  {
+    typedef Value<void> super;
+  };
+
+
+  template <> struct category< bool >     {  typedef Built_In<void> ret;  typedef Symbolic<void> super;  };
+
+  template <> struct category< int >      {  typedef Built_In<void> ret;  typedef Integer<void>  super;  };
+  template <> struct category< unsigned > {  typedef Built_In<void> ret;  typedef Integer<void>  super;  };
+
+  template <> struct category< float >    {  typedef Built_In<void> ret;  typedef Floating<void> super;  };
+  template <> struct category< double >   {  typedef Built_In<void> ret;  typedef Floating<void> super;  };
   // FIXME: ...
 
 

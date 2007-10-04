@@ -61,6 +61,20 @@ namespace mln
       }
     };
 
+    
+//     // FIXME for Simon
+
+//     // Was:
+//     struct hline2d : public Window< hline2d >,
+// 		     public internal::dpoints_base_< dpoint2d, hline2d >
+//     {};
+
+//     // Will be:
+//     template <typename M, unsigned i, typename C >
+//     struct line : public Window< line<M,i,C> >,
+// 		  public internal::dpoints_base_< dpoint_<M, C>, line<M,i,C> >
+//     {};
+
   } // end of namespace mln::win
 
 } // end of namespace mln

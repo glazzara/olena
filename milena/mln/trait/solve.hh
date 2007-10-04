@@ -87,13 +87,37 @@ namespace mln
       {
       };
 
+      
+      template < template <class> class Category, typename T,
+		 typename Super_Category >
+      struct super_category_;
+
+      template < template <class> class Category, typename T,
+		 template <class> class Super_Category >
+      struct super_category_< Category, T,
+			      Super_Category<void> >
+      {
+	typedef Super_Category<void> ret; // One super category: keep it.
+      };
+
+      template < template <class> class Category, typename T >
+      struct super_category_< Category, T,
+			      void* > // Meaning: several super categories exist, depending on T.
+      {
+	typedef typename mln::category< T >::super ret; // Specific call depending on T.
+      };
+
     } // end of namespace mln::trait::internal
 
 
     template < template <class> class Name,
 	       template <class> class Category_T, typename T >
-    struct set_unary_ : internal::set_unary_super_< Name,
-						    typename Category_T<void>::super, T >
+    struct set_unary_
+      :
+      internal::set_unary_super_< Name,
+				  typename internal::super_category_< Category_T, T,
+								      typename Category_T<void>::super >::ret,
+				  T >
     {
     };
     
@@ -122,6 +146,14 @@ namespace mln
       struct helper_solve_unary_< Name,
 				  Category_T<void>, T > : helper_choose_unary_< Name,
 										Category_T, T >
+      {
+      };
+
+      template < template <class> class Name,
+		 template <class> class Category_T, typename T >
+      struct helper_solve_unary_< Name,
+				  Category_T<void*>, T > : helper_choose_unary_< Name,
+										 Category_T, T >
       {
       };
 
@@ -245,13 +277,21 @@ namespace mln
       // Construct a treillis in a static recursive way!
 
       typedef typename internal::set_binary_super_< Name,
-						    typename Category_L<void>::super, L,
-						    Category_R<void>, R >::ret
+						    typename internal::super_category_< Category_L,
+											L,
+											typename Category_L<void>::super >::ret,
+						    L,
+						    Category_R<void>,
+						    R >::ret
       L_ret;
 
       typedef typename internal::set_binary_super_< Name,
-						    Category_L<void>, L,
-						    typename Category_R<void>::super, R >::ret
+						    Category_L<void>,
+						    L,
+						    typename internal::super_category_< Category_R,
+											R,
+											typename Category_R<void>::super >::ret,
+						    R >::ret
       R_ret;
 
       typedef typename internal::merge_binary_ret_< L_ret, R_ret >::ret ret;
