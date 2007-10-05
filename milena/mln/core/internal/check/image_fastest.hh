@@ -28,9 +28,12 @@
 #ifndef MLN_CORE_INTERNAL_CHECK_IMAGE_FASTEST_HH
 # define MLN_CORE_INTERNAL_CHECK_IMAGE_FASTEST_HH
 
-/*! \file mln/core/concept/fastest_image.hh
- * \brief Definition of the concept of mln::Fastest_Image.
+/*! \file mln/core/internal/check/image_fastest.hh
+ *
+ * \brief Class that statically checks the interface of fastest
+ * images.
  */
+
 
 
 namespace mln
@@ -43,13 +46,24 @@ namespace mln
     {
 
       /*! \brief FIXME
-       *
-       * \see mln::doc::Fastest_Image for a complete documentation of this
-       * class contents.
        */
       template < typename E, typename B = metal::true_ >
       struct image_fastest_
       {
+
+	/*! \brief Give the offset of the point \p p.
+	 *
+	 * \param[in] p A generalized point.
+	 *
+	 * \warning This method is final.
+	 *
+	 * \pre The image has to be initialized and to own the point \p p.
+	 * \post p == point_at_offset(result)
+	 */
+	template <typename P>
+	unsigned
+	offset_at(const Generalized_Point<P>& p) const;
+
       protected:
 	image_fastest_();
       };
@@ -99,6 +113,22 @@ namespace mln
 	m8 = 0;
 
 	// FIXME: how to check that qixter are defined when W is unknown!
+      }
+
+      template <typename E, typename B>
+      template <typename P>
+      unsigned // FIXME: std::size_t?
+      image_fastest_<E,B>::offset_at(const Generalized_Point<P>& p_) const
+      {
+	// FIXME: check that P is mln_point(E)
+	const E* this_ = & internal::force_exact<E>(*this);
+	const P& p = internal::force_exact<P>(p_);
+	mln_precondition(this_->has_data());
+	mln_precondition(this_->owns_(p));
+	
+	unsigned o = & this_->operator()(p) - this_->buffer();
+	mln_postcondition(p == this_->point_at_offset(o));
+	return o;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -57,17 +57,17 @@ namespace mln
      * \todo Implement it.
      */
     template <typename I>
-    void resize(const Fastest_Image<I>& ima, unsigned thickness);
+    void resize(const Image<I>& ima, unsigned thickness);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    void resize(const Fastest_Image<I>& ima_, unsigned thickness)
+    void resize(const Image<I>& ima_, unsigned thickness)
     {
+      mlc_is(mln_trait_image_speed(I), mln::trait::speed::fastest)::check();
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
-      mlc_is(mln_trait_image_speed(I), mln::trait::speed::fastest)::check();
       if (ima.border() >= thickness)
 	return;
       mln::internal::fixme();

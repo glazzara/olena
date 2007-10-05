@@ -98,9 +98,11 @@ namespace mln
       }
 
 
+      // FIXME: Handle the cases of fastest images.
+
 //       template <typename I, typename F, typename O>
 //       void transform(metal::true_, // low quantization
-// 		     const Fastest_Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
+// 		     const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
 //       {
 // 	const I& input  = exact(input_);
 // 	const F& f      = exact(f_);

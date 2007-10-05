@@ -196,7 +196,5 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/core/concept/fastest_image.hh>
-
 
 #endif // ! MLN_CORE_CONCEPT_IMAGE_HH

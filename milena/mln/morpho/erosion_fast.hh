@@ -32,7 +32,7 @@
  *
  * \brief Ero filtering of an image.
  *
- * \todo Add Fastest_Image versions.
+ * \todo Add fastest versions.
  */
 
 # include <mln/core/concept/image.hh>

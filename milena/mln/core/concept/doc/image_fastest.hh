@@ -25,9 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/fastest_image.hh
- * \brief This file documents the concept of mln::Fastest_Image.
+/*! \file mln/core/concept/doc/image_fastest.hh
+ *
+ * \brief This file documents the concept of images that have the
+ * speed property set to "fastest".
  */
+
 
 namespace mln
 {
@@ -35,8 +38,8 @@ namespace mln
   namespace doc
   {
 
-    /*! \brief Documentation class for mln::Fastest_Image.
-     * \see mln::Fastest_Image
+    /*! \brief Documentation class for the concept of images that have
+     * the speed property set to "fastest".
      */
     template <typename E>
     struct Fastest_Image : public Image<E>

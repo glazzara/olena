@@ -107,7 +107,25 @@ int main()
   my_test(ima2, fun::p2v::iota, canvas::browsing::snake_fwd);
   debug::println(ima2);
 
+
+  level::fill(ima2, 0);
+  my_test(ima2, fun::p2v::iota, canvas::browsing::directional, 0);
+  debug::println(ima2);
+
+  level::fill(ima2, 0);
+  my_test(ima2, fun::p2v::iota, canvas::browsing::directional, 1);
+  debug::println(ima2);
+
+
+  level::fill(ima3, 0);
+  my_test(ima3, fun::p2v::iota, canvas::browsing::directional, 0);
+  debug::println(ima3);
+
   level::fill(ima3, 0);
   my_test(ima3, fun::p2v::iota, canvas::browsing::directional, 1);
+  debug::println(ima3);
+
+  level::fill(ima3, 0);
+  my_test(ima3, fun::p2v::iota, canvas::browsing::directional, 2);
   debug::println(ima3);
 }

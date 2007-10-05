@@ -104,19 +104,6 @@ namespace mln
 
 
 
-//   namespace trait
-//   {
-
-//     template <typename T>
-//     struct is_fast< image2d_b<T> >
-//     {
-//       typedef metal::true_ ret;
-//     };
-
-//   } // end of mln::trait
-
-
-
   /*! \brief Basic 2D image class.
    *
    * The parameter \c T is the type of pixel values.  This image class

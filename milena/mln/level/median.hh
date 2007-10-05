@@ -32,7 +32,7 @@
  *
  * \brief Median filtering of an image.
  *
- * \todo Add Fastest_Image versions.
+ * \todo Add versions for fastest and semi-linear images.
  */
 
 # include <mln/core/concept/image.hh>

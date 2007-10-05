@@ -120,7 +120,7 @@ namespace mln
       }
 
       template <typename I>
-      void duplicate_3d_(const Fastest_Image<I>& ima_)
+      void duplicate_3d_(const Image<I>& ima_)
       {
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
@@ -188,22 +188,25 @@ namespace mln
     // Facade.
     
     template <typename I>
-    void duplicate(const Fastest_Image<I>& ima_)
+    void duplicate(const Image<I>& ima_)
     {
-      trace::entering("border::duplicate");
-      typedef mln_point(I) P;
-      const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
       mlc_is(mln_trait_image_speed(I), mln::trait::speed::fastest)::check();
+      const I& ima = exact(ima_);
+      typedef mln_point(I) P;
+      trace::entering("border::duplicate");
+
+      mln_precondition(ima.has_data());
 
       if (!ima.border ())
 	return;
+
       if (P::dim == 1)
 	impl::duplicate_1d_(ima);
       if (P::dim == 2)
 	impl::duplicate_2d_(ima);
       if (P::dim == 3)
 	impl::duplicate_3d_(ima);
+
       trace::exiting("border::duplicate");
     }
 

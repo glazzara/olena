@@ -1,3 +1,28 @@
+2007-10-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Get rid of the Fastest_Image concept class.
+
+	* mln/core/concept/fastest_image.hh: Remove.
+
+	* mln/core/internal/impl: New.
+	* mln/core/internal/image_base.hh (image_impled_): Remove;
+	merge with image_checked_.
+	* mln/core/internal/check/image_fastest.hh: Fix doc.
+	(offset_at): New; copy from the now removed concept class.
+	* mln/core/image2d_b.hh: Remove dead code.
+	* mln/core/concept/image.hh: Remove obsolete include.
+	* mln/core/concept/doc/fastest_image.hh: Rename as...
+	* mln/core/concept/doc/image_fastest.hh: ...this.
+	Update.
+	* mln/level/median.hh: Fix text.
+	* mln/level/transform.hh: Likewise.
+	* mln/border/resize.hh: Update sig.
+	* mln/border/duplicate.hh: Likewise.
+	* mln/morpho/erosion_fast.hh: Update text.
+	* mln/morpho/dilation_fast.hh: Likewise.
+	* tests/canvas_browsing_fwd.cc: Augment.
+	* tests/image2d_b.cc (check_fastest): Remove; obsolete.
+
 2007-10-05  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add test for chamfer.
