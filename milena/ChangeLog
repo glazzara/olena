@@ -1,3 +1,11 @@
+2007-10-05  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add canvas for chamfer.
+
+	* canvas/chamfer.hh: New canvas for chamfer.
+	* geom/chamfer.hh: New.
+	* make/win_chamfer.hh: New.
+
 2007-10-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Make a only one specialization for line (instead of hline and vline).
