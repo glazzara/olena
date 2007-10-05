@@ -1,5 +1,12 @@
 2007-10-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add float_f value.
+
+	* mln/value/float01_f.hh: New.
+	* tests/value_float01_f.cc: New.
+
+2007-10-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix in rgb.
 	* mln/value/rgb.hh: Fix.
 
