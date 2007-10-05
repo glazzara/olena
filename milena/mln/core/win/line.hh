@@ -45,12 +45,9 @@ namespace mln
   namespace win
   {
  
-    template <typename M, unsigned i, typename E>
-    struct line : public Window<E>,
-		  public internal::dpoints_base_
-      <dpoint_
-    <M, int>, point_
-       <M, int> >
+    template <typename M, unsigned i, typename C>
+    struct line : public Window< line<M,i,C> >,
+		  public internal::dpoints_base_<dpoint_<M, C>, point_<M, C> >
     {
       /// Point associated type.
       typedef point_<M, int> point;
@@ -97,7 +94,7 @@ namespace mln
       unsigned delta() const;
 
       /// Apply a central symmetry to the target window.
-      E& sym();
+      line<M,i,C>& sym();
 		
       protected:
 	unsigned length_;
@@ -114,16 +111,16 @@ namespace mln
      *
      * \relates mln::win::line
      */
-    template <typename M, unsigned i, typename E>
-    std::ostream& operator<<(std::ostream& ostr, const line<M,i,E>& win);
+    template <typename M, unsigned i, typename C>
+    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win);
 
  
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-    template <typename M, unsigned i, typename E>
-    line<M,i,E>::line(unsigned length)
+    template <typename M, unsigned i, typename C>
+    line<M,i,C>::line(unsigned length)
       : length_(length)
     {
       mln_precondition(i < M::dim);
@@ -137,38 +134,38 @@ namespace mln
       }
     }
 
-    template <typename M, unsigned i, typename E>
-    bool line<M,i,E>::is_centered() const
+    template <typename M, unsigned i, typename C>
+    bool line<M,i,C>::is_centered() const
     {
       return true;
     }
 
-    template <typename M, unsigned i, typename E>
-    bool line<M,i,E>::is_symmetric() const
+    template <typename M, unsigned i, typename C>
+    bool line<M,i,C>::is_symmetric() const
     {
       return true;
     }
 
-    template <typename M, unsigned i, typename E>
-    unsigned line<M,i,E>::length() const
+    template <typename M, unsigned i, typename C>
+    unsigned line<M,i,C>::length() const
     {
       return length_;
     }
 
-    template <typename M, unsigned i, typename E>
-    unsigned line<M,i,E>::delta() const
+    template <typename M, unsigned i, typename C>
+    unsigned line<M,i,C>::delta() const
     {
       return length_ / 2;
     }
 
-    template <typename M, unsigned i, typename E>
-    E& line<M,i,E>::sym()
+    template <typename M, unsigned i, typename C>
+    line<M,i,C>& line<M,i,C>::sym()
     {
-      return exact(*this);
+      return *this;
     }
 
-    template <typename M, unsigned i, typename E>
-    std::ostream& operator<<(std::ostream& ostr, const line<M,i,E>& win)
+    template <typename M, unsigned i, typename C>
+    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win)
     {
       ostr << "[line: length=" << win.length() << ']';
       return ostr;

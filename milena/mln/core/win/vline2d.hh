@@ -54,14 +54,7 @@ namespace mln
      *  o \n
      * is defined with length = 5.
      */
-    struct vline2d : public line<grid::square, 0, vline2d>
-    {
-	// Ctor.
-	vline2d(unsigned length)
-	  : line<grid::square, 0, vline2d>(length)
-	{
-	}
-    };
+    typedef line<grid::square, 1, int> vline2d;
 
   } // end of namespace mln::win
 

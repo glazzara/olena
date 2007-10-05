@@ -1,3 +1,10 @@
+2007-10-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix line system.
+	* mln/core/win/line.hh: Fix.
+	* mln/core/win/hline2d.hh,
+	* mln/core/win/vline2d.hh: Are now typedefs of line.
+
 2007-10-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fast is Fastest and speed trait is used in inheritance.
