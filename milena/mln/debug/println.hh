@@ -102,15 +102,15 @@ namespace mln
 	int& row = p.row();
 	int& col = p.col();
 	const int
-	  min_sli = b.min_sli(),
 	  max_row = b.max_row(),
+	  max_sli = b.max_sli(),
 	  max_col = b.max_col();
 
-	for (row = b.min_row(); row <= max_row; ++row)
+	for (sli = b.min_sli(); sli <= max_sli; ++sli)
 	{
-	  for (sli = b.max_sli(); sli >= min_sli; --sli)
+	  for (row = b.min_row(); row <= max_row; ++row)
 	  {
-	    for (int i = min_sli; i <= sli; ++i)
+	    for (int i = max_row; i >= row; --i)
 	      std::cout << ' ';
 	    for (col = b.min_col(); col <= max_col; ++col)
 	      if (input.has(p))
@@ -128,8 +128,8 @@ namespace mln
     } // end of namespace mln::debug::impl
 
 
+    // Facade.
 
-    // facade
     template <typename I>
     void println(const Image<I>& input)
     {

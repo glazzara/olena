@@ -1,3 +1,8 @@
+2007-10-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix println in 3d.
+	* mln/debug/println.hh: Fix.
+
 2007-10-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Get rid of the Fastest_Image concept class.
