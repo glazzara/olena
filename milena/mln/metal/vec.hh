@@ -130,23 +130,26 @@ namespace mln
 
     public:
 
+      typedef T equiv[n];
+      typedef T enc[n];
+
       typedef T value_type;
       enum { dim = n };
-      
+
       vec();
-      
+
       vec(mln::literal::zero_t);
-      
+
       vec(const vec<n, T>& rhs);
-      
+
       template <typename U>
       vec(const vec<n, U>& rhs);
-      
+
       template <typename U>
       vec& operator=(const vec<n, U>& rhs);
-      
+
       const T& operator[](unsigned i) const;
-      
+
       T& operator[](unsigned i);
 
       void set_all(const T& val);
@@ -215,7 +218,7 @@ namespace mln
     };
 
     // FIXME: vec / s
-    
+
   } // end of namespace mln::trait
 
 
@@ -251,47 +254,47 @@ namespace mln
     template <unsigned n, typename T, typename U>
     vec<n,T>&
     operator+=(vec<n,T>& lhs, const vec<n,U>& rhs);
-    
+
     template <unsigned n, typename T, typename U>
     vec<n, mln_trait_op_plus(T,U)>
     operator+(const vec<n,T>& lhs, const vec<n,U>& rhs);
 
     // -
-    
+
     template <unsigned n, typename T, typename U>
     vec<n,T>&
     operator-=(vec<n,T>& lhs, const vec<n,U>& rhs);
-    
+
     template <unsigned n, typename T, typename U>
     vec<n, mln_trait_op_minus(T,U)>
     operator-(const vec<n,T>& lhs, const vec<n,U>& rhs);
-    
+
     template <unsigned n, typename T>
     vec<n, mln_trait_op_uminus(T)>
     operator-(const vec<n,T>& lhs);
-    
+
     // *
-    
+
     template <unsigned n, typename T, typename S>
     vec<n,T>&
     operator*=(vec<n,T>& lhs, const S& s);
-    
+
     template <unsigned n, typename T, typename S>
     vec<n, mln_trait_op_times(T,S)>
     operator*(const vec<n,T>& lhs, const S& s);
-    
+
     // /
-    
+
     template <unsigned n, typename T, typename S>
     vec<n,T>&
     operator/=(vec<n,T>& lhs, const S& s);
-    
+
     template <unsigned n, typename T, typename S>
     vec<n, mln_trait_op_times(T,S)> // FIXME: Use div instead!
     operator/(const vec<n,T>& lhs, const S& s);
-    
+
     // <<
-    
+
     template <unsigned n, typename T>
     std::ostream&
     operator<<(std::ostream& ostr, const vec<n,T>& v);
@@ -299,7 +302,7 @@ namespace mln
     template <unsigned n>
     std::ostream&
     operator<<(std::ostream& ostr, const vec<n,unsigned char>& v);
-    
+
     template <unsigned n>
     std::ostream&
     operator<<(std::ostream& ostr, const vec<n,signed char>& v);
@@ -441,7 +444,7 @@ namespace mln
 	lhs[i] += rhs[i];
       return lhs;
     }
-    
+
     template <unsigned n, typename T, typename U>
     vec<n, mln_trait_op_plus(T,U)>
     operator+(const vec<n,T>& lhs, const vec<n,U>& rhs)
@@ -451,10 +454,10 @@ namespace mln
 	tmp[i] = lhs[i] + rhs[i];
       return tmp;
     }
-    
-    
+
+
     // -
-    
+
     template <unsigned n, typename T, typename U>
     vec<n,T>&
     operator-=(vec<n,T>& lhs, const vec<n,U>& rhs)
@@ -463,7 +466,7 @@ namespace mln
 	lhs[i] -= rhs[i];
       return lhs;
     }
-    
+
     template <unsigned n, typename T, typename U>
     vec<n, mln_trait_op_minus(T,U)>
     operator-(const vec<n,T>& lhs, const vec<n,U>& rhs)
@@ -473,7 +476,7 @@ namespace mln
 	tmp[i] = lhs[i] - rhs[i];
       return tmp;
     }
-    
+
     template <unsigned n, typename T>
     vec<n, mln_trait_op_uminus(T)>
     operator-(const vec<n,T>& lhs)
@@ -483,10 +486,10 @@ namespace mln
 	tmp[i] = - lhs[i];
       return tmp;
     }
-    
-    
+
+
     // *
-    
+
     template <unsigned n, typename T, typename S>
     vec<n,T>&
     operator*=(vec<n,T>& lhs, const S& s)
@@ -495,7 +498,7 @@ namespace mln
 	lhs[i] *= s;
       return lhs;
     }
-    
+
     template <unsigned n, typename T, typename S>
     vec<n, mln_trait_op_times(T,S)>
     operator*(const vec<n,T>& lhs, const S& s)
@@ -505,10 +508,10 @@ namespace mln
 	tmp[i] = lhs[i] * s;
       return tmp;
     }
-    
-    
+
+
     // /
-    
+
     template <unsigned n, typename T, typename S>
     vec<n,T>&
     operator/=(vec<n,T>& lhs, const S& s)
@@ -518,7 +521,7 @@ namespace mln
 	lhs[i] /= s;
       return lhs;
     }
-    
+
     template <unsigned n, typename T, typename S>
     vec<n, mln_trait_op_times(T,S)> // FIXME: Use div.
     operator/(const vec<n,T>& lhs, const S& s)
@@ -529,10 +532,10 @@ namespace mln
 	tmp[i] = lhs[i] / s;
       return tmp;
     }
-    
-    
+
+
     // <<
-    
+
     template <unsigned n, typename T>
     std::ostream&
     operator<<(std::ostream& ostr, const vec<n,T>& v)
@@ -542,7 +545,7 @@ namespace mln
 	ostr << v[i] << (i == n - 1 ? ")" : ", ");
       return ostr;
     }
-    
+
     template <unsigned n>
     std::ostream&
     operator<<(std::ostream& ostr, const vec<n,unsigned char>& v)
@@ -552,7 +555,7 @@ namespace mln
 	ostr << (unsigned int)(v[i]) << (i == n - 1 ? ")" : ", ");
       return ostr;
     }
-    
+
     template <unsigned n>
     std::ostream&
     operator<<(std::ostream& ostr, const vec<n,signed char>& v)
@@ -576,12 +579,12 @@ namespace mln
       return tmp;
     }
 
-    
-    
+
+
 # endif // MLN_INCLUDE_ONLY
-    
+
   } // end of namespace mln::metal
-  
+
 } // end of namespace mln
 
 # include <mln/make/vec.hh>

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_INTEGER_HH
-# define MLN_VALUE_INTEGER_HH
+#ifndef MLN_VALUE_CONCEPT_VALUE_INTEGER_HH
+# define MLN_VALUE_CONCEPT_VALUE_INTEGER_HH
 
 /*! \file mln/value/integer.hh
  *
@@ -65,4 +65,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_INTEGER_HH
+#endif // ! MLN_VALUE_CONCEPT_VALUE_INTEGER_HH

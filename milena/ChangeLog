@@ -1,3 +1,17 @@
+2007-10-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add scalar() to "scalarise" values.
+	* mln/metal/vec.hh: Add equiv and enc typedef.
+
+	* mln/value/concept/floating.hh,
+	* mln/value/concept/integer.hh,
+	* mln/value/concept/scalar.hh,
+	* mln/value/concept/structured.hh,
+	* mln/value/concept/symbolic.hh,
+	* mln/value/concept/vectorial.hh: Fix include order.
+
+	* mln/value/rgb.hh: Fix enc typedef.
+
 2007-10-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Prepare the 'fetch impl / check impl' image mechanism.

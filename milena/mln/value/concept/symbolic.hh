@@ -25,15 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_SYMBOLIC_HH
-# define MLN_VALUE_SYMBOLIC_HH
+#ifndef MLN_VALUE_CONCEPT_VALUE_SYMBOLIC_HH
+# define MLN_VALUE_CONCEPT_VALUE_SYMBOLIC_HH
 
 /*! \file mln/value/symbolic.hh
  *
  * \brief Define a generic class for symbolic values.
  */
-
-# include <mln/core/concept/value.hh>
 
 namespace mln
 {
@@ -70,5 +68,6 @@ namespace mln
 
 } // end of namespace mln
 
+# include <mln/core/concept/value.hh>
 
-#endif // ! MLN_VALUE_SYMBOLIC_HH
+#endif // ! MLN_VALUE_CONCEPT_VALUE_SYMBOLIC_HH

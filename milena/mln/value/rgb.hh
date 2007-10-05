@@ -59,7 +59,7 @@ namespace mln
     public:
 
       /// Encoding associated type.
-      typedef int_u<n> enc;
+      typedef int_u<n> enc[3];
 
       /// Equivalent associated type.
       typedef int_u<n> equiv[3];

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_FLOATING_HH
-# define MLN_VALUE_FLOATING_HH
+#ifndef MLN_VALUE_CONCEPT_VALUE_FLOATING_HH
+# define MLN_VALUE_CONCEPT_VALUE_FLOATING_HH
 
 /*! \file mln/value/floating.hh
  *
@@ -66,4 +66,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_FLOATING_HH
+#endif // ! MLN_VALUE_CONCEPT_VALUE_FLOATING_HH
