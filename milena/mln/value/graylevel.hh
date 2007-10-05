@@ -33,7 +33,7 @@
 # include <mln/metal/math.hh>
 # include <mln/metal/bexpr.hh>
 # include <mln/value/internal/value_like.hh>
-# include <mln/value/internal/integer.hh>
+# include <mln/value/concept/integer.hh>
 # include <mln/value/internal/encoding.hh>
 # include <mln/value/gray.hh>
 # include <mln/value/props.hh>
@@ -51,7 +51,7 @@ namespace mln
     /// General gray-level class on n bits.
     template <unsigned n>
     class graylevel
-      : public internal::Integer< graylevel<n> >,
+      : public Integer< graylevel<n> >,
 	public internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
 				      graylevel<n> >
     {

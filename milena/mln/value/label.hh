@@ -35,7 +35,7 @@
 
 # include <mln/metal/math.hh>
 # include <mln/value/internal/value_like.hh>
-# include <mln/value/internal/symbolic.hh>
+# include <mln/value/concept/symbolic.hh>
 # include <mln/value/internal/encoding.hh>
 # include <mln/value/props.hh>
 
@@ -53,7 +53,7 @@ namespace mln
      * The parameter \c n is the number of encoding bits.
      */
     template <unsigned n>
-    struct label : public internal::Symbolic< label<n> >
+    struct label : public Symbolic< label<n> >
     {
     public:
 

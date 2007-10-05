@@ -33,7 +33,7 @@
 # include <mln/metal/math.hh>
 # include <mln/metal/bexpr.hh>
 # include <mln/value/internal/value_like.hh>
-# include <mln/value/internal/floating.hh>
+# include <mln/value/concept/floating.hh>
 # include <mln/value/internal/encoding.hh>
 # include <mln/value/float01.hh>
 # include <mln/value/props.hh>
@@ -51,7 +51,7 @@ namespace mln
     /// General float01-level class on n bits.
     template <unsigned n>
     class float01_
-      : public internal::Floating< float01_<n> >,
+      : public Floating< float01_<n> >,
 	public internal::value_like_< float,
 				      float01_<n> >
     {

@@ -1,5 +1,40 @@
 2007-10-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Move value concepts into value/concept directory.
+
+	* mln/value/concept: New.
+
+	* mln/value/internal/floating.hh,
+	* mln/value/internal/scalar.hh,
+	* mln/value/internal/structured.hh,
+	* mln/value/internal/symbolic.hh,
+	* mln/value/internal/vectoriel.hh: Rename as ...
+
+	* mln/value/concept/floating.hh,
+	* mln/value/concept/integer.hh,
+	* mln/value/concept/scalar.hh,
+	* mln/value/concept/structured.hh,
+	* mln/value/concept/symbolic.hh,
+	* mln/value/concept/vectorial.hh: ... This.
+
+	Update value types inheritance and concept includes.
+
+	* mln/value/float01_.hh,
+	* mln/value/gray.hh,
+	* mln/value/graylevel.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_u.hh,
+	* mln/value/int_u_sat.hh,
+	* mln/value/label.hh,
+	* mln/value/quat.hh,
+	* mln/value/rgb.hh: Update.
+
+	Add a missing test for float01 values.
+
+	* tests/value_float01.hh: New.
+
+2007-10-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix on accumulators.
 
 	* mln/accu/min.hh,

@@ -35,7 +35,7 @@
 
 # include <mln/metal/math.hh>
 # include <mln/value/internal/value_like.hh>
-# include <mln/value/internal/integer.hh>
+# include <mln/value/concept/integer.hh>
 # include <mln/value/internal/encoding.hh>
 # include <mln/value/props.hh>
 # include <mln/trait/all.hh>
@@ -96,7 +96,7 @@ namespace mln
      */
     template <unsigned n>
     struct int_s
-      : public internal::Integer< int_s<n> >,
+      : public Integer< int_s<n> >,
 	public internal::value_like_< typename internal::encoding_signed_<n>::ret,
 				      int_s<n> >
     {

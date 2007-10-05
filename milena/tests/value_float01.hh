@@ -25,40 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_SCALAR_HH
-# define MLN_VALUE_SCALAR_HH
+#include <iostream>
+#include <mln/value/float01_8.hh>
+#include <mln/value/float01_16.hh>
 
-/*! \file mln/value/scalar.hh
- *
- * \brief Define a generic class for scalar values.
- */
-
-# include <mln/core/concept/value.hh>
-
-namespace mln
+int main()
 {
+  using namespace mln::value;
 
-  namespace trait
-  {
-    // FIXME
-  } // end of namespace mln::trait
+//   float01_8 a;
 
-  namespace value
-  {
+  std::cout << "a = "  << std::endl;
+  std::cout << "testsetestest\n"<< std::endl;
 
-    namespace internal
-    {
+//    gl8 a = white;
+//   gl16 b = white;
+//   assert((a == b) == true);
+//   gl8 c = (a + b) / 2;
+//   assert(c == white);
+//   c = a;
+//   assert(c == white);
 
-      template <typename E>
-      struct Scalar : public Value<E>
-      {
-      };
+//   c = (a * 2) / 2;
+//   assert(c == white);
 
-    } // end of namespace mln::value::internal
-
-  } // end of namespace mln::value
-
-} // end of namespace mln
-
-
-#endif // ! MLN_VALUE_SCALAR_HH
+  std::cout << "testsetestest\n"<< std::endl;
+}

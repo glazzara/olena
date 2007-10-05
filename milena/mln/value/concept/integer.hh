@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_STRUCTURED_HH
-# define MLN_VALUE_STRUCTURED_HH
+#ifndef MLN_VALUE_INTEGER_HH
+# define MLN_VALUE_INTEGER_HH
 
-/*! \file mln/value/structured.hh
+/*! \file mln/value/integer.hh
  *
- * \brief Define a generic class for structured values.
+ * \brief Define a generic class for integer values.
  */
 
-# include <mln/core/concept/value.hh>
+# include <mln/value/concept/scalar.hh>
 
 namespace mln
 {
@@ -46,21 +46,14 @@ namespace mln
   namespace value
   {
 
-
-    namespace internal
+    template <typename E>
+    struct Integer : public Scalar<E>
     {
-
-      template <typename E>
-      struct Structured : public Value<E>
-      {
-      };
-
-
-    } // end of namespace mln::value::internal
+    };
 
   } // end of namespace mln::value
 
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_STRUCTURED_HH
+#endif // ! MLN_VALUE_INTEGER_HH

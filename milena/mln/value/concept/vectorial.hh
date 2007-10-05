@@ -28,9 +28,9 @@
 #ifndef MLN_VALUE_VECTORIEL_HH
 # define MLN_VALUE_VECTORIEL_HH
 
-/*! \file mln/value/vectoriel.hh
+/*! \file mln/value/vectorial.hh
  *
- * \brief Define a generic class for vectoriel values.
+ * \brief Define a generic class for vectorial values.
  */
 
 # include <mln/core/concept/value.hh>
@@ -48,15 +48,10 @@ namespace mln
   namespace value
   {
 
-    namespace internal
+    template <typename E>
+    struct Vectorial : public Value<E>
     {
-
-      template <typename E>
-      struct Vectoriel : public Value<E>
-      {
-      };
-
-    } // end of namespace mln::value::internal
+    };
 
   } // end of namespace mln::value
 

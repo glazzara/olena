@@ -33,7 +33,7 @@
 # include <mln/metal/vec.hh>
 # include <mln/norm/l2.hh>
 # include <mln/value/props.hh>
-# include <mln/value/internal/vectoriel.hh>
+# include <mln/value/concept/vectorial.hh>
 
 namespace mln
 {
@@ -42,7 +42,7 @@ namespace mln
   {
 
     //FIXME doesn't compile
-    class quat :// public internal::Vectoriel< quat >,
+    class quat :// public Vectorial< quat >,
 		 public metal::vec<4, float>
     {
       typedef metal::vec<4, float> super_;

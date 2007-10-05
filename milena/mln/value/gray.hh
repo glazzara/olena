@@ -31,7 +31,7 @@
 # include <iostream>
 
 # include <mln/value/graylevel.hh>
-# include <mln/value/internal/integer.hh>
+# include <mln/value/concept/integer.hh>
 
 
 namespace mln
@@ -46,7 +46,7 @@ namespace mln
     /// General gray-level class where n bits is not know at compile-time.
     /// This class is used for exchange between gray-level types purpose.
 
-    class gray : public internal::Integer< gray >
+    class gray : public Integer< gray >
     {
     public:
 

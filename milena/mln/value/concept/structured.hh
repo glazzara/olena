@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_SYMBOLIC_HH
-# define MLN_VALUE_SYMBOLIC_HH
+#ifndef MLN_VALUE_STRUCTURED_HH
+# define MLN_VALUE_STRUCTURED_HH
 
-/*! \file mln/value/symbolic.hh
+/*! \file mln/value/structured.hh
  *
- * \brief Define a generic class for symbolic values.
+ * \brief Define a generic class for structured values.
  */
 
 # include <mln/core/concept/value.hh>
@@ -40,27 +40,20 @@ namespace mln
 
   namespace trait
   {
-
     // FIXME
-
   } // end of namespace mln::trait
 
   namespace value
   {
 
-    namespace internal
+    template <typename E>
+    struct Structured : public Value<E>
     {
-
-      template <typename E>
-      struct Symbolic : public Value<E>
-      {
-      };
-
-    } // end of namespace mln::value::internal
+    };
 
   } // end of namespace mln::value
 
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_SYMBOLIC_HH
+#endif // ! MLN_VALUE_STRUCTURED_HH
