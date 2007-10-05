@@ -37,7 +37,6 @@
 
 namespace mln
 {
-
   namespace trait
   {
     // FIXME
@@ -45,6 +44,16 @@ namespace mln
 
   namespace value
   {
+
+    // Fwd decl.
+    template <typename E> struct Integer;
+
+    // Category flag type.
+    template <>
+    struct Integer<void>
+    {
+      typedef Scalar<void> super;
+    };
 
     template <typename E>
     struct Integer : public Scalar<E>

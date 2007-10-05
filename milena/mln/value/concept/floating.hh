@@ -46,6 +46,16 @@ namespace mln
   namespace value
   {
 
+    // Fwd decl.
+    template <typename E> struct Floating;
+
+    // Category flag type.
+    template <>
+    struct Floating<void>
+    {
+      typedef Scalar<void> super;
+    };
+
     template <typename E>
     struct Floating : public Scalar<E>
     {

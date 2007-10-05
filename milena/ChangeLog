@@ -1,5 +1,19 @@
 2007-10-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add categories for value types.
+
+	* mln/value/builtin.hh: Remove tests.
+
+	* mln/value/concept/floating.hh,
+	* mln/value/concept/integer.hh,
+	* mln/value/concept/scalar.hh,
+	* mln/value/concept/structured.hh,
+	* mln/value/concept/symbolic.hh,
+	* mln/value/concept/vectorial.hh: Add categories for each of these
+          types (in namespace value).
+
+2007-10-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Move value concepts into value/concept directory.
 
 	* mln/value/concept: New.

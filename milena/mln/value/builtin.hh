@@ -32,6 +32,9 @@
  * \brief Some definitions about builtins.
  */
 
+# include <mln/value/concept/symbolic.hh>
+# include <mln/value/concept/integer.hh>
+# include <mln/value/concept/floating.hh>
 
 namespace mln
 {
@@ -42,50 +45,23 @@ namespace mln
 
   // The case of built-in types.
 
-  template <typename E>
-  struct Built_In;
+  // Fwd decl.
+  template <typename E> struct Built_In;
 
+  // Category flag type.
   template <>
   struct Built_In<void>
   {
     typedef void* super; // Every builtin belongs to a sub-category of Value but we do not know which one.
   };
 
+  template <> struct category< bool >     {  typedef Built_In<void> ret;  typedef value::Symbolic<void> super;  };
 
-  template <typename E> struct Symbolic;
+  template <> struct category< int >      {  typedef Built_In<void> ret;  typedef value::Integer<void>  super;  };
+  template <> struct category< unsigned > {  typedef Built_In<void> ret;  typedef value::Integer<void>  super;  };
 
-  template <>
-  struct Symbolic<void>
-  {
-    typedef Value<void> super;
-  };
-
-
-  template <typename E> struct Integer;
-
-  template <>
-  struct Integer<void>
-  {
-    typedef Value<void> super;
-  };
-
-
-  template <typename E> struct Floating;
-
-  template <>
-  struct Floating<void>
-  {
-    typedef Value<void> super;
-  };
-
-
-  template <> struct category< bool >     {  typedef Built_In<void> ret;  typedef Symbolic<void> super;  };
-
-  template <> struct category< int >      {  typedef Built_In<void> ret;  typedef Integer<void>  super;  };
-  template <> struct category< unsigned > {  typedef Built_In<void> ret;  typedef Integer<void>  super;  };
-
-  template <> struct category< float >    {  typedef Built_In<void> ret;  typedef Floating<void> super;  };
-  template <> struct category< double >   {  typedef Built_In<void> ret;  typedef Floating<void> super;  };
+  template <> struct category< float >    {  typedef Built_In<void> ret;  typedef value::Floating<void> super;  };
+  template <> struct category< double >   {  typedef Built_In<void> ret;  typedef value::Floating<void> super;  };
   // FIXME: ...
 
 

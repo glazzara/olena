@@ -38,6 +38,9 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Value;
+
   namespace trait
   {
     // FIXME
@@ -45,6 +48,17 @@ namespace mln
 
   namespace value
   {
+
+
+    // Fwd decl.
+    template <typename E> struct Structured;
+
+    // Category flag type.
+    template <>
+    struct Structured<void>
+    {
+      typedef Value<void> super;
+    };
 
     template <typename E>
     struct Structured : public Value<E>

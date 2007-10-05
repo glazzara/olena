@@ -38,6 +38,9 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename E> struct Value;
+
   namespace trait
   {
 
@@ -47,6 +50,16 @@ namespace mln
 
   namespace value
   {
+
+    // Fwd decl.
+    template <typename E> struct Symbolic;
+
+    // Category flag type.
+    template <>
+    struct Symbolic<void>
+    {
+      typedef Value<void> super;
+    };
 
     template <typename E>
     struct Symbolic : public Value<E>
