@@ -36,10 +36,13 @@
 # include <mln/core/concept/mesh.hh>
 
 # include <mln/core/trait/all.hh> // FIXME: Move out of core!
+# include <mln/core/macros.hh>
 # include <mln/trait/concrete.hh> // FIXME: Should be in all.hh!
 # include <mln/trait/images.hh>
 
 # include <mln/metal/is_a.hh>
+# include <mln/metal/equal.hh>
+
 # include <mln/tag/init.hh>
 
 

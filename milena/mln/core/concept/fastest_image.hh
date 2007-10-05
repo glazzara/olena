@@ -77,12 +77,12 @@ namespace mln
     unsigned
     offset_at(const Generalized_Point<P>& p) const;
 
-  protected:
-    Fastest_Image();
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  // FIXME: Move in internal/image/impl...
 
   template <typename E>
   template <typename P>
@@ -98,43 +98,6 @@ namespace mln
     unsigned o = & this_->operator()(p) - this_->buffer();
     mln_postcondition(p == this_->point_at_offset(o));
     return o;
-  }
-
-  template <typename E>
-  Fastest_Image<E>::Fastest_Image()
-  {
-    typedef mln_point(E)   point;
-    typedef mln_dpoint(E) dpoint;
-
-    typedef mln_fwd_pixter(E) fwd_pixter;
-    typedef mln_bkd_pixter(E) bkd_pixter;
-
-    int (E::*m1)(const dpoint&) const = & E::offset;
-    m1 = 0;
-    point (E::*m2)(unsigned) const = & E::point_at_offset;
-    m2 = 0;
-    unsigned (E::*m3)() const = & E::border;
-    m3 = 0;
-
-    typedef mln_value(E) value;
-
-    mln_qlf_value(E)* (E::*m4)() = & E::buffer;
-    m4 = 0;
-    const value* (E::*m5)() const = & E::buffer;
-    m5 = 0;
-
-    typedef mln_rvalue(E) rvalue;
-    typedef mln_lvalue(E) lvalue;
-
-    rvalue (E::*m6)(unsigned) const = & E::operator[];
-    m6 = 0;
-    lvalue (E::*m7)(unsigned) = & E::operator[];
-    m7 = 0;
-
-    std::size_t (E::*m8)() const = & E::ncells;
-    m8 = 0;
-
-    // FIXME: how to check that qixter are defined when W is unknown!
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,3 +1,19 @@
+2007-10-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Prepare the 'fetch impl / check impl' image mechanism.
+
+	* mln/core/internal/image_base.hh (image_checked_): New.
+	(image_impled_): New.
+	(image_base_): Change inheritance to image_impled_.
+	The plug to select_image_concept_---soon obsolete---is
+	now handled by image_checked_.
+	(super_): Remove.
+	* mln/core/internal/check: New directory.
+	* mln/core/internal/check/image_all.hh: New.
+	* mln/core/concept/fastest_image.hh: Move static checks into...
+	* mln/core/internal/check/image_fastest.hh: ...this new file.
+	* mln/core/concept/image.hh: Include extra metal files.
+
 2007-10-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Dispatch by speed traits (was Fastest_Image).

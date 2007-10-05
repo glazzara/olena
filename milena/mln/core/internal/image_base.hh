@@ -35,8 +35,8 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/grids.hh>
+# include <mln/core/internal/check/image_all.hh>
 # include <mln/util/tracked_ptr.hh>
-# include <mln/metal/equal.hh>
 
 
 
@@ -97,6 +97,29 @@ namespace mln
 
 
 
+    template <typename E>
+    struct image_checked_
+      :
+      public check::image_all_<E>,
+
+      // FIXME: first check impl w.r.t. properties, then:
+      public select_image_concept_< typename mlc_equal(mln_trait_image_speed(E),
+						       trait::speed::fastest)::eval,
+				    E > // FIXME: Change to Image<E>
+    {
+    };
+
+
+    template <typename E>
+    struct image_impled_
+      :
+      // FIXME: first fetch default impl w.r.t. properties, then:
+      image_checked_<E>
+    {
+    };
+
+
+
     /*! \brief A base class for images.
      *
      * Parameter \p S is a point set type.
@@ -105,10 +128,9 @@ namespace mln
      */
     template <typename S, typename E>
     struct image_base_
+      :
+      public image_impled_<E>
 
-      : public select_image_concept_< typename mlc_equal(mln_trait_image_speed(E),
-							 trait::speed::fastest)::eval,
-				      E >
     {
       /// Point_Set associated type.
       typedef S pset;
@@ -171,10 +193,6 @@ namespace mln
 
       // Internal data, sharable by several images.
       util::tracked_ptr< internal::data_<E> > data_;
-
-      typedef select_image_concept_< typename mlc_equal(mln_trait_image_speed(E),
-							trait::speed::fastest)::eval,
-	                             E > super_;
     };
 
 
@@ -188,7 +206,7 @@ namespace mln
 
     template <typename S, typename E>
     image_base_<S,E>::image_base_(const image_base_& rhs)
-      : super_()
+      : image_impled_<E>()
     {
       mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
       this->data_ = rhs.data_;
