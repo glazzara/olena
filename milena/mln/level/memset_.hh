@@ -66,7 +66,7 @@ namespace mln
      * \pre \p input has to be initialized.  FIXME: More.
      */
     template <typename I>
-    void memset_(Fastest_Image<I>& input, const mln_point(I)& p,
+    void memset_(I& input, const mln_point(I)& p,
 		 const mln_value(I)& v, std::size_t n);
 
 
@@ -111,10 +111,11 @@ namespace mln
     }
 
     template <typename I>
-    void memset_(Fastest_Image<I>& input_, const mln_point(I)& p,
+    void memset_(I& input, const mln_point(I)& p,
 		 const mln_value(I)& v, std::size_t n)
     {
-      I& input = exact(input_);
+      mlc_is(mln_trait_image_speed(I), trait::speed::fastest)::check();
+
       mln_precondition(input.has_data());
       mln_precondition(input.owns_(p));
       mln_precondition(input.offset_at(p) + n <= input.ncells());

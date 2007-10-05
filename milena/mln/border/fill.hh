@@ -53,7 +53,7 @@ namespace mln
      * \todo Implement it + optimize with memset if possible.
      */
     template <typename I>
-    void fill(const Fastest_Image<I>& ima, const mln_value(I)& v);
+    void fill(const Image<I>& ima, const mln_value(I)& v);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -61,15 +61,14 @@ namespace mln
     {
 
       template <typename I>
-      void fill_size_1_(const Fastest_Image<I>& ima_, const mln_value(I)& v)
+      void fill_size_1_(const I& ima, const mln_value(I)& v)
       {
 	typedef mln_point(I) P;
-	const I& ima = exact(ima_);
 	typedef mln_point(I) P;
 	typename I::line_piter pl(ima.domain());
-	std::size_t len_r = exact(ima).bbox().len(P::dim - 1);
+	std::size_t len_r = ima.bbox().len(P::dim - 1);
 	std::size_t st = 0;
-	
+
 	for_all (pl)
 	  {
 	    std::size_t end = ima.offset_at (pl);
@@ -82,17 +81,15 @@ namespace mln
 		    *(const int*)(&v),
 		    ima.ncells () - st);
       }
-    
+
       template <typename I>
-      void fill_size_n_(const Fastest_Image<I>& ima_, const mln_value(I)& v)
+      void fill_size_n_(const I& ima, const mln_value(I)& v)
       {
 	typedef mln_point(I) P;
-	const I& ima = exact(ima_);
-	typedef mln_point(I) P;
 	typename I::line_piter pl(ima.domain());
-	std::size_t len_r = exact(ima).bbox().len(P::dim - 1);
+	std::size_t len_r = ima.bbox().len(P::dim - 1);
 	std::size_t st = 0;
-	
+
 	for_all (pl)
 	  {
 	    std::size_t end = ima.offset_at (pl);
@@ -108,18 +105,20 @@ namespace mln
     // Facade.
 
     template <typename I>
-    void fill(const Fastest_Image<I>& ima_, const mln_value(I)& v)
+    void fill(const Image<I>& ima_, const mln_value(I)& v)
     {
       trace::entering("border::fill");
       typedef mln_point(I) P;
       const I& ima = exact(ima_);
+
+      mlc_is(mln_trait_image_speed(I), mln::trait::speed::fastest)::check();
       mln_precondition(ima.has_data());
       if (!ima.border ())
 	return;
       if (sizeof(mln_value(I)) == 1)
-	impl::fill_size_1_(ima_, v);
+	impl::fill_size_1_(ima, v);
       else
-	impl::fill_size_n_(ima_, v);
+	impl::fill_size_n_(ima, v);
       trace::exiting("border::fill");
     }
 

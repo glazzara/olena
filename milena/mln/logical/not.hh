@@ -73,20 +73,20 @@ namespace mln
     {
 
       template <typename I, typename O>
-      void not__(const Image<I>& input_, Image<O>& output_)
+      void not__(mln::trait::speed::any, const I& input,
+		 mln::trait::speed::any, O& output)
       {
-	const I& input = exact(input_);
-	O& output = exact(output_);
 	mln_piter(I) p(input.domain());
 	for_all(p)
 	  output(p) = ! input(p);
       }
 
       template <typename I, typename O>
-      void not__(const Fastest_Image<I>& input, Fastest_Image<O>& output)
+      void not__(mln::trait::speed::fastest, const I& input,
+		 mln::trait::speed::fastest, O& output)
       {
-	mln_pixter(const I) ip(exact(input));
-	mln_pixter(O)       op(exact(output));
+	mln_pixter(const I) ip(input);
+	mln_pixter(O)       op(output);
 	for_all_2(ip, op)
 	  op.val() = ! ip.val();
       }
@@ -100,14 +100,16 @@ namespace mln
     void not_(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::not__(exact(input), exact(output));
+      impl::not__(mln_trait_image_speed(I)(), exact(input),
+		  mln_trait_image_speed(O)(), exact(output));
     }
 
     template <typename I>
     void not_inplace(Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      impl::not__(exact(input), exact(input));
+      impl::not__(mln_trait_image_speed(I)(), exact(input),
+		  mln_trait_image_speed(I)(), exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

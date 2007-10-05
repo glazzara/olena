@@ -77,22 +77,23 @@ namespace mln
     {
 
       template <typename L, typename R, typename O>
-      void and_not_(const Image<L>& lhs_, const Image<R>& rhs_, Image<O>& output_)
+      void and_not_(mln::trait::speed::any, const L& lhs,
+		    mln::trait::speed::any, const R& rhs,
+		    mln::trait::speed::any, O& output)
       {
-	const L& lhs = exact(lhs_);
-	const R& rhs = exact(rhs_);
-	O& output = exact(output_);
 	mln_piter(L) p(lhs.domain());
 	for_all(p)
 	  output(p) = lhs(p) && ! rhs(p);
       }
 
       template <typename L, typename R, typename O>
-      void and_not_(const Fastest_Image<L>& lhs, const Fastest_Image<R>& rhs, Fastest_Image<O>& output)
+      void and_not_(mln::trait::speed::fastest, const L& lhs,
+		    mln::trait::speed::fastest, const R& rhs,
+		    mln::trait::speed::fastest, O& output)
       {
-	mln_pixter(const L) lp(exact(lhs));
-	mln_pixter(const R) rp(exact(rhs));
-	mln_pixter(O)       op(exact(output));
+	mln_pixter(const L) lp(lhs);
+	mln_pixter(const R) rp(rhs);
+	mln_pixter(O)       op(output);
 	for_all_3(lp, rp, op)
 	  op.val() = lp.val() && ! rp.val();
       }
@@ -107,14 +108,18 @@ namespace mln
     {
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
-      impl::and_not_(exact(lhs), exact(rhs), exact(output));
+      impl::and_not_(mln_trait_image_speed(L)(), exact(lhs),
+		     mln_trait_image_speed(R)(), exact(rhs),
+		     mln_trait_image_speed(O)(), exact(output));
     }
 
     template <typename L, typename R>
     void and_not_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
-      impl::and_not_(exact(lhs), exact(rhs), exact(lhs));
+      impl::and_not_(mln_trait_image_speed(L)(), exact(lhs),
+		     mln_trait_image_speed(R)(), exact(rhs),
+		     mln_trait_image_speed(L)(), exact(lhs));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

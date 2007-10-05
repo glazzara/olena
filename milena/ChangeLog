@@ -1,3 +1,38 @@
+2007-10-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Dispatch by speed traits (was Fastest_Image).
+	* mln/arith/min.hh,
+	* mln/arith/minus.hh,
+	* mln/arith/plus.hh,
+	* mln/arith/revert.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/fill.hh,
+	* mln/border/get.hh,
+	* mln/border/mirror.hh,
+	* mln/border/resize.hh,
+	* mln/debug/iota.hh,
+	* mln/debug/println_with_border.hh,
+	* mln/histo/compute.hh,
+	* mln/io/internal/pnm/save.hh,
+	* mln/labeling/level.hh,
+	* mln/level/apply.hh,
+	* mln/level/assign.hh,
+	* mln/level/fill.hh,
+	* mln/level/memset_.hh,
+	* mln/level/take.hh,
+	* mln/linear/convolve.hh,
+	* mln/linear/local/convolve.hh,
+	* mln/logical/and.hh,
+	* mln/logical/and_not.hh,
+	* mln/logical/not.hh,
+	* mln/logical/or.hh,
+	* mln/test/predicate.hh,
+	* tests/labeling_level_fast.cc: New dispatch system.
+
+	Fix (was identical as hline2d)
+
+	* mln/core/win/vline2d.hh: Fix.
+
 2007-10-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add categories for value types.

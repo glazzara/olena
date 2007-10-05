@@ -65,20 +65,18 @@ namespace mln
     {
 
       template <typename L, typename R>
-      void assign(Image<L>& target_, const Image<R>& data_)
+      void assign(mln::trait::speed::any, L& target,
+		  mln::trait::speed::any, const R& data)
       {
-	L& target = exact(target_);
-	const R& data = exact(data_);
 	mln_piter(L) p(target.domain());
 	for_all(p)
 	  target(p) = data(p);
       }
 
       template <typename L, typename R>
-      void assign(Fastest_Image<L>& target_, const Fastest_Image<R>& data_)
+      void assign(mln::trait::speed::fastest, L& target,
+		  mln::trait::speed::fastest, const R& data)
       {
-	L& target = exact(target_);
-	const R& data = exact(data_);
 	mln_pixter(L) lhs(target);
 	mln_pixter(const R) rhs(data);
 	for_all_2(lhs, rhs)
@@ -92,7 +90,8 @@ namespace mln
     void assign(Image<L>& target, const Image<R>& data)
     {
       mln_precondition(exact(data).domain() == exact(target).domain());
-      impl::assign(exact(target), exact(data));
+      impl::assign(mln_trait_image_speed(L)(), exact(target),
+		   mln_trait_image_speed(R)(), exact(data));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

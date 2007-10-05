@@ -54,9 +54,8 @@ namespace mln
     {
 
       template <typename I>
-      data<mln_vset(I)> compute(const Image<I>& input_)
+      data<mln_vset(I)> compute(mln::trait::speed::any, const I& input)
       {
-	const I& input = exact(input_);
 	data<mln_vset(I)> h(input.values());
 	mln_piter(I) p(input.domain());
 	for_all(p)
@@ -65,9 +64,8 @@ namespace mln
       }
 
       template <typename I>
-      data<mln_vset(I)> compute(const Fastest_Image<I>& input_)
+      data<mln_vset(I)> compute(mln::trait::speed::fastest, const I& input)
       {
-	const I& input = exact(input_);
 	data<mln_vset(I)> h(input.values());
 	mln_pixter(const I) p(input);
 	for_all(p)
@@ -82,7 +80,7 @@ namespace mln
     data<mln_vset(I)> compute(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      return impl::compute(exact(input));
+      return impl::compute(mln_trait_image_speed(I)(), exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

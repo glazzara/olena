@@ -69,15 +69,15 @@ namespace mln
       }
 
       template <typename I>
-      unsigned get_(const Image<I>& ima)
+      unsigned get_(mln::trait::speed::any, const I& ima)
       {
-	return border::impl::get__(exact(ima));
+	return border::impl::get__(ima);
       }
 
       template <typename I>
-      unsigned get_(const Fastest_Image<I>& ima)
+      unsigned get_(mln::trait::speed::fastest, const I& ima)
       {
-	return exact(ima).border();
+	return ima.border();
       }
 
     } // end of namespace mln::border::impl
@@ -89,7 +89,7 @@ namespace mln
     unsigned get(const Image<I>& ima)
     {
       mln_precondition(exact(ima).has_data());
-      return border::impl::get_(exact(ima));
+      return border::impl::get_(mln_trait_image_speed(I)(), exact(ima));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

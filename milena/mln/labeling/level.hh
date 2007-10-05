@@ -61,11 +61,6 @@ namespace mln
     bool level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
 	       Image<O>& output, unsigned& nlabels);
 
-    template <typename I, typename N, typename O>
-    bool level_fast(const Fastest_Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-		    Fastest_Image<O>& output, unsigned& nlabels);
-
-
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
@@ -101,11 +96,12 @@ namespace mln
       // Routines.
 
       template <typename I, typename N, typename O>
-      bool level_(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-		  Image<O>& output, unsigned& nlabels)
+      bool level_(mln::trait::speed::any, const I& input,
+		  const mln_value(I)& val, const Neighborhood<N>& nbh,
+		  mln::trait::speed::any, O& output, unsigned& nlabels)
       {
 	typedef impl::level_t<I,N,O> F;
-	F f(exact(input), val, exact(nbh), exact(output));
+	F f(input, val, exact(nbh), output);
 	canvas::labeling<F> run(f);
 	nlabels = f.nlabels;
 	return f.status;
@@ -136,19 +132,18 @@ namespace mln
 
 
       template <typename I, typename N, typename O>
-      bool level_fast_(const Fastest_Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-		       Fastest_Image<O>& output, unsigned& nlabels)
+      bool level_(mln::trait::speed::fastest, const I& input,
+		  const mln_value(I)& val, const Neighborhood<N>& nbh,
+		  mln::trait::speed::fastest, O& output, unsigned& nlabels)
       {
 	typedef level_fast_t<I,N,O> F;
-	F f(exact(input), val, exact(nbh), exact(output));
+	F f(input, val, exact(nbh), output);
 	canvas::labeling_fast<F> run(f);
 	nlabels = f.nlabels;
 	return f.status;
       }
 
-
     } // end of namespace mln::labeling::impl
-
 
     // Facade.
 
@@ -157,15 +152,10 @@ namespace mln
 	       Image<O>& output, unsigned& nlabels)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      return impl::level_(exact(input), val, nbh, output, nlabels);
-    }
-
-    template <typename I, typename N, typename O>
-    bool level_fast(const Fastest_Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-		    Fastest_Image<O>& output, unsigned& nlabels)
-    {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      return impl::level_fast_(exact(input), val, nbh, output, nlabels);
+      return impl::level_(mln_trait_image_speed(I)(), exact(input),
+			  val, nbh,
+			  mln_trait_image_speed(O)(), exact(output),
+			  nlabels);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -69,7 +69,7 @@ namespace mln
     {
 
       template <typename I, typename F>
-      bool predicate_(const Image<I>& ima_, const F& f)
+      bool predicate_(mln::trait::speed::any, const I& ima_, const F& f)
       {
 	const I& ima = exact(ima_);
 	mln_piter(I) p(ima.domain());
@@ -80,7 +80,7 @@ namespace mln
       }
 
       template <typename I, typename F>
-      bool predicate_(const Fastest_Image<I>& ima_, const F& f)
+      bool predicate_(mln::trait::speed::fastest, const I& ima_, const F& f)
       {
 	const I& ima = exact(ima_);
 	mln_pixter(const I) pxl(ima);
@@ -109,7 +109,8 @@ namespace mln
     bool predicate(const Image<I>& ima, const Function_v2b<F>& f)
     {
       mln_precondition(exact(ima).has_data());
-      return impl::predicate_(exact(ima), exact(f));
+      return impl::predicate_(mln_trait_image_speed(I)(), exact(ima),
+			      exact(f));
     }
 
     template <typename S, typename F>

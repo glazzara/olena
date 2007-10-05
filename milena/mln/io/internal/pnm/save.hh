@@ -65,91 +65,101 @@ namespace mln
       namespace pnm
       {
 
+	// FIXME: Doc.
+	template <typename I>
+	void save(const int type, const Image<I>& ima_, const std::string& filename);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
-	// write a rgb value into for uncontiguous datas
-	template <unsigned int n>
-	void write_value(std::ofstream& file,
-			 const value::rgb<n>& c)
+	namespace impl
 	{
-	  typedef typename value::rgb<n>::enc::enc E;
 
-	  E v = c.red().to_enc();
-	  file.write((char*)&v, sizeof(E));
-	  v = c.green().to_enc();
-	  file.write((char*)&v, sizeof(E));
-	  v = c.blue().to_enc();
-	  file.write((char*)&v, sizeof(E));
-	}
+	  // write a rgb value into for uncontiguous datas
+	  template <unsigned int n>
+	  void write_value(std::ofstream& file,
+			   const value::rgb<n>& c)
+	  {
+	    typedef typename value::rgb<n>::enc::enc E;
 
-	// write a scalar value into for uncontiguous datas
-	template <typename V>
-	void write_value(std::ofstream& file,
-			 V& v)
-	{
-	  typedef typename V::enc E;
+	    E v = c.red().to_enc();
+	    file.write((char*)&v, sizeof(E));
+	    v = c.green().to_enc();
+	    file.write((char*)&v, sizeof(E));
+	    v = c.blue().to_enc();
+	    file.write((char*)&v, sizeof(E));
+	  }
 
-	  E c = v.to_enc();
-	  file.write((char*)(&c), sizeof(E));
-	}
+	  // write a scalar value into for uncontiguous datas
+	  template <typename V>
+	  void write_value(std::ofstream& file,
+			   V& v)
+	  {
+	    typedef typename V::enc E;
 
-	// save data for (sizeof(int_u8) != 1) and non fastest images
-	template <typename I>
-	void save_data_uncontiguous(std::ofstream& file,
-				    const Image< I >& ima_)
-	{
-	  const I& ima = exact(ima_);
+	    E c = v.to_enc();
+	    file.write((char*)(&c), sizeof(E));
+	  }
 
-	  const int
-	    min_row = geom::min_row(ima),
-	    max_row = geom::max_row(ima),
-	    min_col = geom::min_col(ima),
-	    max_col = geom::max_col(ima);
+	  // save data for (sizeof(int_u8) != 1) and non fastest images
+	  template <typename I>
+	  void save_data_uncontiguous(std::ofstream& file,
+				      const I& ima)
+	  {
+	    const int
+	      min_row = geom::min_row(ima),
+	      max_row = geom::max_row(ima),
+	      min_col = geom::min_col(ima),
+	      max_col = geom::max_col(ima);
 
-	  point2d p;
-	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
-	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
-	      write_value(file, ima(p));
-	}
+	    point2d p;
+	    for (p.row() = min_row; p.row() <= max_row; ++p.row())
+	      for (p.col() = min_col; p.col() <= max_col; ++p.col())
+		write_value(file, ima(p));
+	  }
 
-	// save data when (sizeof(int_u8) == 1) with fastest images
-	// (faster)
-	template <typename I>
-	void save_data_contiguous(std::ofstream& file,
-				  const Fastest_Image<I>& ima_)
-	{
-	  const I& ima = exact(ima_);
-	  const int
-	    min_row = geom::min_row(ima),
-	    max_row = geom::max_row(ima);
-	  point2d p;
-	  p.col() = geom::min_col(ima);
-	  size_t len = geom::ncols(ima) * sizeof(mln_value(I));
-	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
-	    file.write((char*)(& ima(p)), len);
-	}
+	  // save data when (sizeof(int_u8) == 1) with fastest images
+	  // (faster)
+	  template <typename I>
+	  void save_data_contiguous(std::ofstream& file,
+				    const I& ima_)
+	  {
+	    const I& ima = exact(ima_);
+	    const int
+	      min_row = geom::min_row(ima),
+	      max_row = geom::max_row(ima);
+	    point2d p;
+	    p.col() = geom::min_col(ima);
+	    size_t len = geom::ncols(ima) * sizeof(mln_value(I));
+	    for (p.row() = min_row; p.row() <= max_row; ++p.row())
+	      file.write((char*)(& ima(p)), len);
+	  }
 
 
-	// caller for fastest images
-	template <typename I>
-	void save_data(std::ofstream& file,
-		       const Fastest_Image<I>& ima)
-	{
-	  if (sizeof(value::int_u8) == 1)
-	    save_data_contiguous(file, ima);
-	  else
+	  // caller for fastest images
+	  template <typename I>
+	  void save_data_(std::ofstream& file,
+			  mln::trait::speed::fastest, const I& ima)
+	  {
+	    if (sizeof(value::int_u8) == 1)
+	      save_data_contiguous(file, ima);
+	    else
+	      save_data_uncontiguous(file, ima);
+	  }
+
+	  // caller for non fastest images
+	  template <typename I>
+	  void save_data_(std::ofstream& file,
+			  mln::trait::speed::any, const I& ima)
+	  {
 	    save_data_uncontiguous(file, ima);
-	}
+	  }
 
-	// caller for non fastest images
-	template <typename I>
-	void save_data(std::ofstream& file,
-		       const Image<I>& ima)
-	{
-	  save_data_uncontiguous(file, ima);
-	}
+	} // end of namespace mln::io::internal::pnm::impl
 
-	// main function : save header and data
+
+	// Facades.
+
 	template <typename I>
 	void save(const int type, const Image<I>& ima_, const std::string& filename)
 	{
@@ -157,7 +167,8 @@ namespace mln
 	  std::ofstream file(filename.c_str());
 	  io::internal::pnm::save_header(type, ima, filename, file);
 
-	  save_data(file, ima);
+	  impl::save_data_(file,
+			   mln_trait_image_speed(I)(), ima);
 	}
 
 # endif // ! MLN_INCLUDE_ONLY

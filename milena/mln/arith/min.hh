@@ -76,31 +76,31 @@ namespace mln
     {
 
       template <typename L, typename R, typename O>
-      void min_(const Image<L>& lhs_, const Image<R>& rhs_, Image<O>& output_)
+      void min_(mln::trait::speed::any, const L& lhs,
+		mln::trait::speed::any, const R& rhs,
+		mln::trait::speed::any, O& output)
       {
-	const L& lhs = exact(lhs_);
-	const R& rhs = exact(rhs_);
-	O& output = exact(output_);
 	mln_piter(L) p(lhs.domain());
 	for_all(p)
 	  output(p) = lhs(p) < rhs(p) ? lhs(p) : rhs(p);
       }
 
       template <typename L, typename R, typename O>
-      void min_(const Fastest_Image<L>& lhs, const Fastest_Image<R>& rhs, Fastest_Image<O>& output)
+      void min_(mln::trait::speed::fastest, const L& lhs,
+		mln::trait::speed::fastest, const R& rhs,
+		mln::trait::speed::fastest, O& output)
       {
-	mln_pixter(const L) lp(exact(lhs));
-	mln_pixter(const R) rp(exact(rhs));
-	mln_pixter(O)       op(exact(output));
+	mln_pixter(const L) lp(lhs);
+	mln_pixter(const R) rp(rhs);
+	mln_pixter(O)       op(output);
 	for_all_3(lp, rp, op)
 	  op.val() = lp.val() < rp.val() ? lp.val() : rp.val();
       }
 
       template <typename L, typename R>
-      void min_inplace_(Image<L>& lhs_, const Image<R>& rhs_)
+      void min_inplace_(mln::trait::speed::any, L& lhs,
+			mln::trait::speed::any, const R& rhs)
       {
-	L& lhs = exact(lhs_);
-	const R& rhs = exact(rhs_);
 	mln_piter(R) p(rhs.domain());
 	for_all(p)
 	  if (rhs(p) < lhs(p))
@@ -108,10 +108,11 @@ namespace mln
       }
 
       template <typename L, typename R>
-      void min_inplace_(Fastest_Image<L>& lhs, const Fastest_Image<R>& rhs)
+      void min_inplace_(mln::trait::speed::fastest, L& lhs,
+			mln::trait::speed::fastest, const R& rhs)
       {
-	mln_pixter(L) lp(exact(lhs));
-	mln_pixter(const R) rp(exact(rhs));
+	mln_pixter(L) lp(lhs);
+	mln_pixter(const R) rp(rhs);
 	for_all_2(rp, lp)
 	  if (rp.val() < lp.val())
 	    lp.val() = rp.val();
@@ -127,14 +128,17 @@ namespace mln
     {
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
-      impl::min_(exact(lhs), exact(rhs), exact(output));
+      impl::min_(mln_trait_image_speed(L)(), exact(lhs),
+		 mln_trait_image_speed(R)(), exact(rhs),
+		 mln_trait_image_speed(O)(), exact(output));
     }
 
     template <typename L, typename R>
     void min_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
-      impl::min_inplace_(exact(lhs), exact(rhs));
+      impl::min_inplace_(mln_trait_image_speed(L)(), exact(lhs),
+			 mln_trait_image_speed(R)(), exact(rhs));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

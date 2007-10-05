@@ -53,20 +53,18 @@ namespace mln
     {
 
       template <typename I>
-      void iota(Image<I>& input_)
+      void iota(mln::trait::speed::any, I& input)
       {
 	unsigned i = 0;
-	I& input = exact(input_);
 	mln_piter(I) p(input.domain());
 	for_all(p)
 	  input(p) = ++i;
       }
 
       template <typename I>
-      void iota(Fastest_Image<I>& input_)
+      void iota(mln::trait::speed::fastest, I& input)
       {
 	unsigned i = 0;
-	I& input = exact(input_);
 	mln_pixter(I) p(input);
 	for_all(p)
 	  p.val() = ++i;
@@ -79,7 +77,7 @@ namespace mln
     void iota(Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      impl::iota(exact(input));
+      impl::iota(mln_trait_image_speed(I)(), exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

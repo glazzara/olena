@@ -67,18 +67,16 @@ namespace mln
     {
 
       template <typename I, typename F>
-      void apply_(Image<I>& input_, const F& f)
+      void apply_(mln::trait::speed::any, I& input, const F& f)
       {
-	I& input   = exact(input_);
 	mln_piter(I) p(input.domain());
 	for_all(p)
 	  input(p) = f(input(p));
       }
 
       template <typename I, typename F>
-      void apply_(Fastest_Image<I>& input_, const F& f)
+      void apply_(mln::trait::speed::fastest, I& input, const F& f)
       {
-	I& input   = exact(input_);
 	mln_pixter(I) pxl(input);
 	for_all(pxl)
 	  pxl.val() = f(pxl.val());
@@ -93,7 +91,8 @@ namespace mln
     void apply(Image<I>& input, const Function_v2v<F>& f)
     {
       mln_precondition(exact(input).has_data());
-      impl::apply_(exact(input), exact(f));
+      impl::apply_(mln_trait_image_speed(I)(), exact(input),
+		   exact(f));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

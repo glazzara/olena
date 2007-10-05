@@ -67,12 +67,11 @@ namespace mln
     {
 
       template <typename I, typename W, typename O>
-      void convolve_(const Image<I>& input_, const Weighted_Window<W>& w_win_,
-		     Image<O>& output_)
+      void convolve_(mln::trait::speed::any, const I& input,
+		     const Weighted_Window<W>& w_win_,
+		     mln::trait::speed::any, O& output)
       {
-	const I& input = exact(input_);
 	const W& w_win = exact(w_win_);
-	O& output = exact(output_);
 
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(w_win, p);
@@ -87,12 +86,11 @@ namespace mln
       }
 
       template <typename I, typename W, typename O>
-      void convolve_(const Fastest_Image<I>& input_, const Weighted_Window<W>& w_win_,
-		     Fastest_Image<O>& output_)
+      void convolve_(mln::trait::speed::fastest, const I& input,
+		     const Weighted_Window<W>& w_win_,
+		     mln::trait::speed::fastest, O& output)
       {
-	const I& input = exact(input_);
 	const W& w_win = exact(w_win_);
-	O& output = exact(output_);
 
 	border::resize(input, w_win.delta());
 	border::duplicate(input);
@@ -122,7 +120,9 @@ namespace mln
 		  Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::convolve_(exact(input), exact(w_win), exact(output));
+      impl::convolve_(mln_trait_image_speed(I)(), exact(input),
+		      exact(w_win),
+		      mln_trait_image_speed(O)(), exact(output));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

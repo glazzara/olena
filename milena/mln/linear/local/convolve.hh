@@ -87,12 +87,11 @@ namespace mln
       {
 
 	template <typename I, typename P, typename W, typename R>
-	void convolve(const Image<I>&             input_,
+	void convolve(mln::trait::speed::any, const I& input,
 		      const Generalized_Point<P>& p_,
 		      const W&                    w_win,
 		      R& result)
 	{
-	  const I& input = exact(input_);
 	  const P& p = internal::force_exact<P>(p_);
 
 	  R tmp = 0; // FIXME: zero?
@@ -103,12 +102,11 @@ namespace mln
 	}
 
 	template <typename I, typename P, typename W, typename R>
-	void convolve(const Fastest_Image<I>&        input_,
+	void convolve(mln::trait::speed::fastest, const I& input,
 		      const Generalized_Point<P>& p_,
 		      const W&                    w_win,
 		      R& result)
 	{
-	  const I& input = exact(input_);
 	  const P& p = internal::force_exact<P>(p_);
 
 	  mln_precondition(input.border() >= w_win.delta());
@@ -151,7 +149,8 @@ namespace mln
 		    R& result)
       {
 	mln_precondition(exact(input).has_data());
-	impl::convolve(exact(input), p, exact(w_win), result);
+	impl::convolve(mln_trait_image_speed(I)(), exact(input),
+		       p, exact(w_win), result);
       }
 
       template <typename P, typename W, typename R>

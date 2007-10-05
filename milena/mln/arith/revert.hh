@@ -78,10 +78,9 @@ namespace mln
     {
 
       template <typename I, typename O>
-      void revert_(const Image<I>& input_, Image<O>& output_)
+      void revert_(mln::trait::speed::any, const I& input,
+		   mln::trait::speed::any, O& output)
       {
-	const I& input = exact(input_);
-	O& output = exact(output_);
 	typedef mln_value(I) V;
 	mln_piter(I) p(input.domain());
 	for_all(p)
@@ -89,11 +88,12 @@ namespace mln
       }
 
       template <typename I, typename O>
-      void revert_(const Fastest_Image<I>& input, Fastest_Image<O>& output)
+      void revert_(mln::trait::speed::fastest, const I& input,
+		   mln::trait::speed::fastest, O& output)
       {
 	typedef mln_value(I) V;
-	mln_pixter(const I) ip(exact(input));
-	mln_pixter(O)       op(exact(output));
+	mln_pixter(const I) ip(input);
+	mln_pixter(O)       op(output);
 	for_all_2(ip, op)
 	  op.val() = mln_min(V) + (mln_max(V) - ip.val());
       }
@@ -107,14 +107,16 @@ namespace mln
     void revert(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::revert_(exact(input), exact(output));
+      impl::revert_(mln_trait_image_speed(I)(), exact(input),
+		    mln_trait_image_speed(O)(), exact(output));
     }
 
     template <typename I>
     void revert_inplace(Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      impl::revert_(exact(input), exact(input));
+      impl::revert_(mln_trait_image_speed(I)(), exact(input),
+		    mln_trait_image_speed(I)(), exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -52,9 +52,9 @@ namespace mln
      *  o \n
      *  x \n
      *  o \n
-     * is defined with length = 5.
+     * is defined with length = 3.
      */
-    typedef line<grid::square, 1, int> vline2d;
+    typedef line<grid::square, 0, int> vline2d;
 
   } // end of namespace mln::win
 

@@ -63,18 +63,16 @@ namespace mln
     {
 
       template <typename A, typename I>
-      void take(const Image<I>& input_, A& a)
+      void take(mln::trait::speed::any, const I& input, A& a)
       {
-	const I& input = exact(input_);
 	mln_piter(I) p(input.domain());
 	for_all(p)
 	  a.take(input(p));
       }
 
       template <typename A, typename I>
-      void take(const Fastest_Image<I>& input_, A& a)
+      void take(mln::trait::speed::fastest, const I& input, A& a)
       {
-	const I& input = exact(input_);
 	mln_pixter(const I) pxl(input);
 	for_all(pxl)
 	  a.take(pxl.val());
@@ -89,7 +87,8 @@ namespace mln
     void take(const Image<I>& input, Accumulator<A>& a)
     {
       mln_precondition(exact(input).has_data());
-      impl::take(exact(input), exact(a));
+      impl::take(mln_trait_image_speed(I)(), exact(input),
+		 exact(a));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

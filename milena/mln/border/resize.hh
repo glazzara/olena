@@ -67,6 +67,7 @@ namespace mln
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
+      mlc_is(mln_trait_image_speed(I), mln::trait::speed::fastest)::check();
       if (ima.border() >= thickness)
 	return;
       mln::internal::fixme();
