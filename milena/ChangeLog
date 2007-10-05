@@ -1,5 +1,11 @@
 2007-10-05  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add test for chamfer.
+
+	* chamfer.cc: Test for chamfer.
+
+2007-10-05  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add canvas for chamfer.
 
 	* canvas/chamfer.hh: New canvas for chamfer.
