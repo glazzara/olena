@@ -30,9 +30,8 @@
 
 # include <iostream>
 
-# include <mln/core/concept/value.hh>
 # include <mln/value/graylevel.hh>
-
+# include <mln/value/internal/integer.hh>
 
 
 namespace mln
@@ -47,7 +46,7 @@ namespace mln
     /// General gray-level class where n bits is not know at compile-time.
     /// This class is used for exchange between gray-level types purpose.
 
-    class gray : public Value<gray>
+    class gray : public internal::Integer< gray >
     {
     public:
 
@@ -142,7 +141,6 @@ namespace mln
     template <unsigned N>
     gray operator/(const graylevel<N>& lhs, int s)
     {
-      std::cout << "div div " << s << std::endl;
       mln_precondition(s > 0);
       gray tmp(N, lhs.value() / s);
       return tmp;

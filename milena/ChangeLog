@@ -1,3 +1,46 @@
+2007-10-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fix on accumulators.
+
+	* mln/accu/min.hh,
+	* mln/accu/p.hh: Fix.
+
+
+	New hierachy on value types in order to factorise the traits
+	declarations.
+
+				Value
+				  ^
+				  |
+			---------------------------
+			|       |        |        |
+		      Scalar Vectoriel Symbolic  Structured
+		        ^
+			|
+	             --------
+                     |      |
+		 Integer  Floating
+
+	* mln/value/internal/floating.hh: New.
+	* mln/value/internal/integer.hh: New.
+	* mln/value/internal/scalar.hh: New.
+	* mln/value/internal/structured.hh: New.
+	* mln/value/internal/symbolic.hh: New.
+	* mln/value/internal/value_like.hh,
+	* mln/value/internal/vectoriel.hh: New.
+
+	Update value types inheritance.
+
+	* mln/value/float01_.hh,
+	* mln/value/gray.hh,
+	* mln/value/graylevel.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_u.hh,
+	* mln/value/int_u_sat.hh,
+	* mln/value/label.hh,
+	* mln/value/quat.hh,
+	* mln/value/rgb.hh: Update.
+
 2007-10-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix line system.

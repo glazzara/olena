@@ -56,7 +56,7 @@ namespace mln
        * exact value type.
        */
       template <typename V, typename E>
-      struct value_like_ : public Value<E>
+      struct value_like_ // FIXME :Remove -> : public Value<E>
       {
 	/// Encoding associated type.
 	typedef V enc;
@@ -66,10 +66,10 @@ namespace mln
 
 	/// Convertion towards equivalent type.
 	operator V() const;
-	
+
 	/// Explicit convertion towards equivalent type.
 	V to_equiv() const;
-	
+
 	/// Explicit convertion towards encoding type.
 	V to_enc() const;
 

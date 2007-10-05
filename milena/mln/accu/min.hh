@@ -86,21 +86,6 @@ namespace mln
 
 
 
-//     // FIXME: Sample code.
-
-//     template <typename T>
-//     struct p_min_ : public p_< min_<T> >
-//     {
-//     };
-
-//     struct p_min : public Meta_Accumulator< p_min >
-//     {
-//       template <typename T>
-//       struct with
-//       {
-// 	typedef p_min_<T> ret;
-//       };
-//     };
 
 
 

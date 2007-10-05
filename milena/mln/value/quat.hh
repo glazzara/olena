@@ -33,6 +33,7 @@
 # include <mln/metal/vec.hh>
 # include <mln/norm/l2.hh>
 # include <mln/value/props.hh>
+# include <mln/value/internal/vectoriel.hh>
 
 namespace mln
 {
@@ -40,12 +41,20 @@ namespace mln
   namespace value
   {
 
-    class quat : public metal::vec<4, float>
+    //FIXME doesn't compile
+    class quat :// public internal::Vectoriel< quat >,
+		 public metal::vec<4, float>
     {
       typedef metal::vec<4, float> super_;
       using super_::data_;
 
     public:
+
+      /// Encoding associated type.
+      typedef float enc;
+
+      /// Equivalent associated type.
+      typedef float equiv[4];
 
       // ctors
 

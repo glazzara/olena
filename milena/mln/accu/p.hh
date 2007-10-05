@@ -53,7 +53,7 @@ namespace mln
     template <typename A>
     struct p_ : public mln::accu::internal::base_< mln_result(A) , p_<A> >
     {
-      typedef mln_value(A)  argument;
+      typedef mln_argument(A)  argument;
       typedef mln_result(A) result;
 
 

@@ -36,6 +36,7 @@
 # include <mln/metal/math.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/internal/encoding.hh>
+# include <mln/value/internal/integer.hh>
 # include <mln/value/props.hh>
 # include <mln/trait/all.hh>
 # include <mln/debug/format.hh>
@@ -92,7 +93,8 @@ namespace mln
      */
     template <unsigned n>
     struct int_u
-      : public internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
+      : public internal::Integer< int_u<n> >,
+	public internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
 				      int_u<n> >
     {
     protected:

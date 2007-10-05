@@ -36,6 +36,7 @@
 
 # include <mln/metal/math.hh>
 # include <mln/value/internal/value_like.hh>
+# include <mln/value/internal/integer.hh>
 # include <mln/value/internal/encoding.hh>
 # include <mln/value/props.hh>
 # include <mln/debug/format.hh>
@@ -54,17 +55,18 @@ namespace mln
      */
     template <unsigned n>
     struct int_u_sat
-      : public internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
+      : public internal::Integer< int_u_sat<n> >,
+	public internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
 				      int_u_sat<n> >
     {
     protected:
       typedef internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
-				     int_u_sat<n> > super;
+				     int_u_sat<n> > like;
 
     public:
 
       /// Encoding associated type.
-      typedef typename super::enc enc;
+      typedef typename like::enc enc;
 
       /// Constructor without argument.
       int_u_sat();

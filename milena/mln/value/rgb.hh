@@ -34,7 +34,7 @@
  * 8-bit encoded.
  */
 
-# include <mln/core/concept/value.hh>
+# include <mln/value/internal/structured.hh>
 # include <mln/value/int_u8.hh>
 
 
@@ -54,7 +54,7 @@ namespace mln
      * 8-bit encoded.
      */
     template <unsigned n>
-    struct rgb : public Value< rgb<n> >
+    struct rgb : public internal::Structured< rgb<n> >
     {
     public:
 
