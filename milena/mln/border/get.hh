@@ -69,13 +69,13 @@ namespace mln
       }
 
       template <typename I>
-      unsigned get_(mln::trait::speed::any, const I& ima)
+      unsigned get_(trait::image::speed::any, const I& ima)
       {
 	return border::impl::get__(ima);
       }
 
       template <typename I>
-      unsigned get_(mln::trait::speed::fastest, const I& ima)
+      unsigned get_(trait::image::speed::fastest, const I& ima)
       {
 	return ima.border();
       }

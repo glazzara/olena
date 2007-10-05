@@ -283,8 +283,8 @@ namespace mln
     {
       trace::entering("level::median_dir");
 
-      mlc_is(mln_trait_image_io(O), trait::io::write)::check();
-      mlc_is(mln_trait_image_support(I), trait::support::aligned)::check();
+      mlc_is(mln_trait_image_io(O), trait::image::io::write)::check();
+      mlc_is(mln_trait_image_support(I), trait::image::support::aligned)::check();
       mlc_converts_to(mln_value(I), mln_value(O))::check();
 
       mln_precondition(exact(output).domain() == exact(input).domain());

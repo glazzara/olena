@@ -150,7 +150,7 @@ namespace mln
     template <unsigned n, unsigned m, typename T>
     struct props< metal::mat<n,m,T> >
     {
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       static const std::size_t card_ = n * m * mln_card_(T);
       typedef metal::mat<n,m, mln_value_sum(T)> sum;
     };

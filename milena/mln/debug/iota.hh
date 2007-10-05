@@ -53,7 +53,7 @@ namespace mln
     {
 
       template <typename I>
-      void iota(mln::trait::speed::any, I& input)
+      void iota(trait::image::speed::any, I& input)
       {
 	unsigned i = 0;
 	mln_piter(I) p(input.domain());
@@ -62,7 +62,7 @@ namespace mln
       }
 
       template <typename I>
-      void iota(mln::trait::speed::fastest, I& input)
+      void iota(trait::image::speed::fastest, I& input)
       {
 	unsigned i = 0;
 	mln_pixter(I) p(input);

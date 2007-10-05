@@ -114,7 +114,7 @@ namespace mln
     void memset_(I& input, const mln_point(I)& p,
 		 const mln_value(I)& v, std::size_t n)
     {
-      mlc_is(mln_trait_image_speed(I), trait::speed::fastest)::check();
+      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
       mln_precondition(input.has_data());
       mln_precondition(input.owns_(p));

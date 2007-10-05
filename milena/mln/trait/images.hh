@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_IMAGES_HH
 # define MLN_TRAIT_IMAGES_HH
 
-/*! \file mln/core/trait/images.hh
+/*! \file mln/trait/images.hh
  *
  * \brief Forward declarations of all image types.
  *
@@ -38,6 +38,8 @@
 # include <iostream>
 # include <string>
 
+# include <mln/trait/undef.hh>
+# include <mln/trait/image/props.hh>
 # include <mln/value/props.hh>
 
 # include <mln/metal/bexpr.hh>
@@ -65,15 +67,15 @@
 
 // for io: I const => read_only, otherwise like I
 # define mln_trait_image_io_from_(I) \
-mlc_if( mlc_is_const(I), mln::trait::io::read_only, mln_trait_image_io(I) )
+mlc_if( mlc_is_const(I), mln::trait::image::io::read_only, mln_trait_image_io(I) )
 
 // for data: if raw or linear => stored, otherwise like I (i.e., either stored or computed)
-#define mln_trait_image_data_from_(I) typename					\
-mln::metal::if_< mln::metal::or_< mlc_equal( mln_trait_image_data(I),		\
-					     mln::trait::data::raw),		\
-                                  mlc_equal( mln_trait_image_data(I),		\
-					     mln::trait::data::linear) >,	\
-	         mln::trait::data::stored,					\
+#define mln_trait_image_data_from_(I) typename							\
+mln::metal::if_< mln::metal::or_< mlc_equal( mln_trait_image_data(I),				\
+					     mln::trait::image::data::raw),			\
+                                  mlc_equal( mln_trait_image_data(I),				\
+					     mln::trait::image::data::linear) >,		\
+	         mln::trait::image::data::stored,						\
                  mln_trait_image_data(I) >::ret
 
 
@@ -101,8 +103,6 @@ namespace mln
 
   namespace trait
   {
-
-    struct undef { std::string str() const { return "undef"; } };
 
 
     template <typename I>
@@ -137,141 +137,6 @@ namespace mln
     };
 
 
-
-    struct category
-    {
-      struct any {};
-      struct primary : any { std::string str() const { return "category::primary"; } };
-      struct morpher : any {};
-      struct domain_morpher
-	: morpher { std::string str() const { return "category::domain_morpher"; } };
-      struct value_morpher
-	: morpher { std::string str() const { return "category::value_morpher"; } };
-      struct identity_morpher
-	: morpher { std::string str() const { return "category::identity_morpher"; } };
-    };
-
-    struct data
-    {
-      struct any {};
-      struct computed : any  { std::string str() const { return "data::computed"; } };
-      struct stored   : any  { std::string str() const { return "data::stored"; } };
-      struct linear
-	: stored { std::string str() const { return "data::linear"; } };
-      struct raw
-	: linear { std::string str() const { return "data::raw"; } };
-    };
-
-    struct quant
-    {
-      struct any {};
-      struct low  : any { std::string str() const { return "quant::low"; } };
-      struct high : any { std::string str() const { return "quant::high"; } };
-    };
-
-    struct value
-    {
-      struct any {};
-      struct scalar    : any { std::string str() const { return "value::scalar"; } };
-      struct vectorial : any { std::string str() const { return "value::vectorial"; } };
-      struct structed  : any { std::string str() const { return "value::structed"; } };
-      struct pointer   : any { std::string str() const { return "value::pointer"; } };
-
-      struct fixme // So FIXME!
-	: any { std::string str() const { return "space::fixme"; } };
-    };
-
-
-    struct access
-    {
-      struct any {};
-      struct random   : any { std::string str() const { return "access::random"; } };
-      struct browsing : any { std::string str() const { return "access::browsing"; } };
-    };
-
-    struct space
-    {
-      struct any {};
-      struct one_d    : any { std::string str() const { return "space::one_d"; } };
-      struct two_d    : any { std::string str() const { return "space::two_d"; } };
-      struct three_d  : any { std::string str() const { return "space::three_d"; } };
-
-      struct fixme_ // So FIXME!
-	: any { std::string str() const { return "space::fixme_"; } };
-    };
-
-    struct size
-    {
-      struct any {};
-      struct huge     : any { std::string str() const { return "size::huge"; } };
-      struct regular  : any { std::string str() const { return "size::regular"; } };
-    };
-
-    struct support
-    {
-      struct any {};
-      struct irregular : any { std::string str() const { return "support::irregular"; } };
-      struct regular   : any { std::string str() const { return "support::regular"; } };
-      struct aligned
-	: regular { std::string str() const { return "support::aligned"; } };
-
-      struct fixme_ // So FIXME!
-	: any { std::string str() const { return "support::fixme_"; } };
-    };
-
-    struct border
-    {
-      struct any {};
-      struct none     : any { std::string str() const { return "border::none"; } };
-      struct stored   : any { std::string str() const { return "border::stored"; } };
-      struct computed : any { std::string str() const { return "border::computed"; } };
-    };
-
-    struct io
-    {
-      struct any {};
-      struct read  : virtual any {};
-      struct write : virtual any {};
-      struct read_only
-	: read        { std::string str() const { return "io::read_only"; } };
-      struct write_only
-	: write       { std::string str() const { return "io::write_only"; } };
-      struct read_write
-	: read, write { std::string str() const { return "io::read_write"; } };
-    };
-
-    struct speed
-    {
-      struct any {};
-      struct slow : any { std::string str() const { return "speed::slow"; } };
-      struct fast : any { std::string str() const { return "speed::fast"; } };
-      struct fastest
-	: fast { std::string str() const { return "speed::fastest"; } };
-    };
-
-
-
-    template <typename I>
-    void print(std::ostream& ostr)
-    {
-      typedef image_<I> the;
-      ostr << "{ "
-	   << typename the::category().str() << ", "
-	   << typename the::data().str() << ", "
-	   << typename the::kind().str() << ", "
-	   << typename the::quant().str() << ", "
-	   << typename the::value().str() << ", "
-	   << typename the::access().str() << ", "
-	   << typename the::space().str() << ", "
-	   << typename the::size().str() << ", "
-	   << typename the::support().str() << ", "
-	   << typename the::border().str() << ", "
-	   << typename the::io().str() << ", "
-	   << typename the::speed().str() << " }" << std::endl;
-    }
-
-
-
     template <typename T, typename I>
     struct default_image_ : undefined_image_<I>
     {
@@ -279,11 +144,13 @@ namespace mln
       typedef metal::bool_<( mln_value_card_(T) == 0 )> is_high_quant_;
     public:
       typedef mln_value_kind(T) kind;
-      typedef mlc_if( is_high_quant_, trait::quant::high, trait::quant::low ) quant;
+      typedef mlc_if( is_high_quant_,
+		      trait::image::quant::high,
+		      trait::image::quant::low ) quant;
       // FIXME: typedef undef value;  // scalar, vectorial, structed
 
       // speed is fast by default (neither "fastest" nor "slow")
-      typedef trait::speed::fast speed;
+      typedef trait::image::speed::fast speed;
     };
 
 
@@ -311,6 +178,9 @@ namespace mln
   } // end of namespace mln::trait
 
 } // end of namespace mln
+
+
+# include <mln/trait/image/print.hh>
 
 
 #endif // ! MLN_TRAIT_IMAGES_HH

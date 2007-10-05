@@ -25,55 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BORDER_MIRROR_HH
-# define MLN_BORDER_MIRROR_HH
+#ifndef MLN_TRAIT_VALUE_NATURE_HH
+# define MLN_TRAIT_VALUE_NATURE_HH
 
-/*! \file mln/border/mirror.hh
+/*! \file mln/trait/value/nature.hh
  *
- * \brief FIXME.
+ * \brief Nature of values (for use in images).
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/internal/fixme.hh>
+# include <string>
 
 
 namespace mln
 {
 
-  namespace border
+  namespace trait
   {
 
-    /*! Mirror the virtual (outer) border of image \p ima with the
-     *  (inner) level contents of this image.
-     *
-     * \param[in,out] ima The image whose border is to be mirrored.
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \todo Implement it + optimize with memset if possible.
-     */
-    template <typename I>
-    void mirror(const Image<I>& ima);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I>
-    void mirror(const Image<I>& ima_)
+    namespace value
     {
-      const I& ima = exact(ima_);
-      
-      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
-      
-      mln_precondition(ima.has_data());
-      mln::internal::fixme();
-    }
 
-# endif // ! MLN_INCLUDE_ONLY
+      struct nature
+      {
+	struct any                 { std::string name() const { return "nature::any"; } };
 
-  } // end of namespace mln::border
+	struct scalar     : any    { std::string name() const { return "nature::scalar"; } };
+	struct integer    : scalar { std::string name() const { return "nature::integer"; } };
+	struct floating   : scalar { std::string name() const { return "nature::floating"; } };
+
+	struct vectorial  : any    { std::string name() const { return "nature::vectorial"; } };
+	struct symbolic   : any    { std::string name() const { return "nature::symbolic"; } };
+	struct structured : any    { std::string name() const { return "nature::structured"; } };
+      };
+
+    } // end of namespace mln::trait::value
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-#endif // ! MLN_BORDER_MIRROR_HH
+#endif // ! MLN_TRAIT_VALUE_NATURE_HH

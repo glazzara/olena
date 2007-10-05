@@ -25,15 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_KIND_HH
-# define MLN_TRAIT_KIND_HH
+#ifndef MLN_TRAIT_UNDEF_HH
+# define MLN_TRAIT_UNDEF_HH
 
-/*! \file mln/core/trait/kind.hh
+/*! \file mln/trait/undef.hh
  *
- * \brief Kind of values in images.
+ * \brief Undefined flag type for a trait.
  */
 
-# include <iostream>
 # include <string>
 
 
@@ -43,19 +42,11 @@ namespace mln
   namespace trait
   {
 
-    struct kind
-    {
-      struct color { std::string str() const { return "kind::color"; } };
-      struct gray  { std::string str() const { return "kind::gray"; } };
-      struct label { std::string str() const { return "kind::label"; } };
-      struct logic  : label { std::string str() const { return "kind::logic"; } };
-      struct binary : logic { std::string str() const { return "kind::binary"; } };
-      struct data  { std::string str() const { return "kind::data"; } };
-    };
+    struct undef { std::string name() const { return "undef"; } };
 
   } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_KIND_HH
+#endif // ! MLN_TRAIT_UNDEF_HH

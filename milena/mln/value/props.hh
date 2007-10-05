@@ -40,7 +40,7 @@
 
 # include <mln/core/macros.hh>
 # include <mln/metal/bool.hh>
-# include <mln/trait/kind.hh>
+# include <mln/trait/value/kind.hh>
 
 
 /// Get the minimum value of type \c T.
@@ -85,7 +85,7 @@ namespace mln
     template <typename T>
     struct props
     {
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       static const std::size_t card_ = 0;
     };
 
@@ -117,7 +117,7 @@ namespace mln
       static const bool min() { return false; }
       static const bool max() { return true; }
       static const std::size_t card_ = 2;
-      typedef trait::kind::binary kind;
+      typedef trait::value::kind::binary kind;
     };
 
 
@@ -129,7 +129,7 @@ namespace mln
       static const unsigned char min() { return   0; }
       static const unsigned char max() { return 255; }
       static const std::size_t  card_ = 256;
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       typedef float sum;
     };
 
@@ -139,7 +139,7 @@ namespace mln
       static const signed char  min() { return -128; }
       static const signed char  max() { return  127; }
       static const std::size_t card_ =  256;
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       typedef float sum;
     };
 
@@ -149,7 +149,7 @@ namespace mln
       static const unsigned short min() { return     0; }
       static const unsigned short max() { return 65535; }
       static const std::size_t   card_ = 65536;
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       typedef float sum;
     };
 
@@ -159,7 +159,7 @@ namespace mln
       static const signed short min() { return -32768; }
       static const signed short max() { return  32767; }
       static const std::size_t card_ = 65536;
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       typedef float sum;
     };
 
@@ -168,7 +168,7 @@ namespace mln
     {
       static const unsigned int min() { return 0; }
       static const unsigned int max() { return UINT_MAX; }
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       static const std::size_t card_ = 0;
       typedef float sum;
     };
@@ -178,7 +178,7 @@ namespace mln
     {
       static const signed int  min() { return INT_MIN; }
       static const signed int  max() { return INT_MAX; }
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       static const std::size_t card_ = 0;
       typedef float sum;
     };
@@ -188,7 +188,7 @@ namespace mln
     {
       static const unsigned long int min() { return 0; }
       static const unsigned long int max() { return ULONG_MAX; }
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       static const std::size_t card_ = 0;
       typedef float sum;
     };
@@ -198,7 +198,7 @@ namespace mln
     {
       static const signed long int min() { return LONG_MIN; }
       static const signed long int max() { return LONG_MAX; }
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       static const std::size_t card_ = 0;
       typedef float sum;
     };
@@ -212,7 +212,7 @@ namespace mln
       static const float min() { return FLT_MIN; }
       static const float max() { return FLT_MAX; }
       static const float epsilon() { return 0.00001f; }
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       static const std::size_t card_ = 0;
       typedef float sum;
     };
@@ -223,7 +223,7 @@ namespace mln
       static const double min() { return DBL_MIN; }
       static const double max() { return DBL_MAX; }
       static const double epsilon() { return 0.0000001; }
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       static const std::size_t card_ = 0;
       typedef double sum;
     };

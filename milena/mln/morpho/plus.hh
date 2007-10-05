@@ -60,7 +60,7 @@ namespace mln
     {
 
       template <typename I, typename J, typename O>
-      void plus_(trait::kind::logic, // binary => morphology on sets
+      void plus_(trait::image::kind::logic, // binary => morphology on sets
 		 const Image<I>& lhs, const Image<J>& rhs,
 		 Image<O>& output)
       {

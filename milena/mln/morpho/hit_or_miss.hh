@@ -115,7 +115,7 @@ namespace mln
       // On sets.
 
       template <typename I, typename Wh, typename Wm, typename O>
-      void hit_or_miss_(trait::kind::logic, // binary => morphology on sets
+      void hit_or_miss_(trait::image::kind::logic, // binary => morphology on sets
 			const Image<I>& input,
 			const Window<Wh>& win_hit, const Window<Wm>& win_miss,
 			Image<O>& output)

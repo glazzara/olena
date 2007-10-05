@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_CH_VALUE_HH
 # define MLN_TRAIT_CH_VALUE_HH
 
-/*! \file mln/core/trait/ch_value.hh
+/*! \file mln/trait/ch_value.hh
  *
  * \brief Definition of the "change value" image trait.
  */

@@ -190,7 +190,7 @@ namespace mln
     template <typename I>
     void duplicate(const Image<I>& ima_)
     {
-      mlc_is(mln_trait_image_speed(I), mln::trait::speed::fastest)::check();
+      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
       const I& ima = exact(ima_);
       typedef mln_point(I) P;
       trace::entering("border::duplicate");

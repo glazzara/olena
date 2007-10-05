@@ -61,7 +61,7 @@ namespace mln
     {
 
       template <typename I, typename O>
-      void complementation_(trait::kind::logic, // binary => morphology on sets
+      void complementation_(trait::image::kind::logic, // binary => morphology on sets
 			    const Image<I>& input,
 			    Image<O>& output)
       {

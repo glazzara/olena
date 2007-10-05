@@ -118,7 +118,7 @@ namespace mln
       static const int min() { return 0; }
       static const int max() { return 1; }
       static const unsigned nbits = n;
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       typedef float sum;
       typedef float interop;
     };

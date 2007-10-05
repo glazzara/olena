@@ -63,7 +63,7 @@ namespace mln
     {
 
       template <typename A, typename I>
-      void take(mln::trait::speed::any, const I& input, A& a)
+      void take(trait::image::speed::any, const I& input, A& a)
       {
 	mln_piter(I) p(input.domain());
 	for_all(p)
@@ -71,7 +71,7 @@ namespace mln
       }
 
       template <typename A, typename I>
-      void take(mln::trait::speed::fastest, const I& input, A& a)
+      void take(trait::image::speed::fastest, const I& input, A& a)
       {
 	mln_pixter(const I) pxl(input);
 	for_all(pxl)

@@ -90,7 +90,7 @@ namespace mln
       static const graylevel<n> min() { return 0; }
       static const graylevel<n> max() { return card_ - 1; }
       static const unsigned nbits = n;
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       typedef float sum;
       typedef int interop;
     };

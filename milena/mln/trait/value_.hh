@@ -25,55 +25,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BORDER_MIRROR_HH
-# define MLN_BORDER_MIRROR_HH
+#ifndef MLN_TRAIT_VALUE__HH
+# define MLN_TRAIT_VALUE__HH
 
-/*! \file mln/border/mirror.hh
+/*! \file mln/trait/images.hh
  *
- * \brief FIXME.
+ * \brief Forward declarations of all image types.
+ *
+ * \todo Split this file into many.
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/internal/fixme.hh>
+# include <iostream>
+# include <string>
+
+# include <mln/trait/undef.hh>
+
+# include <mln/trait/value/nature.hh>
+# include <mln/trait/value/kind.hh>
+
+
+# define mln_trait_value_nature(I) typename mln::trait::value_< V >::nature
+# define mln_trait_value_kind(V)   typename mln::trait::value_< V >::kind
 
 
 namespace mln
 {
 
-  namespace border
+  namespace trait
   {
 
-    /*! Mirror the virtual (outer) border of image \p ima with the
-     *  (inner) level contents of this image.
-     *
-     * \param[in,out] ima The image whose border is to be mirrored.
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \todo Implement it + optimize with memset if possible.
-     */
-    template <typename I>
-    void mirror(const Image<I>& ima);
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I>
-    void mirror(const Image<I>& ima_)
+    template <typename V>
+    struct undefined_value_
     {
-      const I& ima = exact(ima_);
-      
-      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
-      
-      mln_precondition(ima.has_data());
-      mln::internal::fixme();
-    }
+      typedef undef nature;
+      typedef undef kind;
+    };
 
-# endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::border
+    template <typename V>
+    struct value_ : undefined_value_<V>
+    {
+    };
+
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-#endif // ! MLN_BORDER_MIRROR_HH
+# include <mln/trait/value/print.hh>
+
+
+#endif // ! MLN_TRAIT_VALUE__HH

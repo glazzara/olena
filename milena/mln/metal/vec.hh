@@ -229,7 +229,7 @@ namespace mln
     template <unsigned n, typename T>
     struct props< metal::vec<n,T> >
     {
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       static const std::size_t card_ = n * mln_card_(T);
       typedef metal::vec<n, mln_value_sum(T)> sum;
     };

@@ -25,55 +25,66 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BORDER_MIRROR_HH
-# define MLN_BORDER_MIRROR_HH
+#ifndef MLN_TRAIT_IMAGE_PRINT_HH
+# define MLN_TRAIT_IMAGE_PRINT_HH
 
-/*! \file mln/border/mirror.hh
+/*! \file mln/trait/image/print.hh
  *
- * \brief FIXME.
+ * \brief Print the collection of traits for an image type.
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/internal/fixme.hh>
+# include <iostream>
+# include <mln/trait/images.hh>
+# include <mln/metal/is_a.hh>
+
 
 
 namespace mln
 {
 
-  namespace border
+  // Fwd decl.
+  template <typename E> struct Image;
+
+
+  namespace trait
   {
 
-    /*! Mirror the virtual (outer) border of image \p ima with the
-     *  (inner) level contents of this image.
-     *
-     * \param[in,out] ima The image whose border is to be mirrored.
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \todo Implement it + optimize with memset if possible.
-     */
-    template <typename I>
-    void mirror(const Image<I>& ima);
+    namespace image
+    {
+
+      template <typename I>
+      void print(std::ostream& ostr);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I>
-    void mirror(const Image<I>& ima_)
-    {
-      const I& ima = exact(ima_);
-      
-      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
-      
-      mln_precondition(ima.has_data());
-      mln::internal::fixme();
-    }
+      template <typename I>
+      void print(std::ostream& ostr)
+      {
+	mlc_is_a(I, Image)::check();
+	typedef mln::trait::image_<I> the;
+	ostr << "{ "
+	     << typename the::category().name() << ", "
+	     << typename the::data()    .name() << ", "
+	     << typename the::kind()    .name() << ", "
+	     << typename the::quant()   .name() << ", "
+	     << typename the::value()   .name() << ", "
+	     << typename the::access()  .name() << ", "
+	     << typename the::space()   .name() << ", "
+	     << typename the::size()    .name() << ", "
+	     << typename the::support() .name() << ", "
+	     << typename the::border()  .name() << ", "
+	     << typename the::io()      .name() << ", "
+	     << typename the::speed()   .name() << " }" << std::endl;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::border
+    } // end of namespace mln::trait::image
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-#endif // ! MLN_BORDER_MIRROR_HH
+#endif // ! MLN_TRAIT_IMAGE_PRINT_HH

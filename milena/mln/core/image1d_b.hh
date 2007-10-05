@@ -88,17 +88,17 @@ namespace mln
     template <typename T>
     struct image_< image1d_b<T> > : default_image_< T, image1d_b<T> >
     {
-      typedef trait::category::primary category;
+      typedef trait::image::category::primary category;
 
-      typedef trait::access::random   access;
-      typedef trait::space::one_d     space;
-      typedef trait::size::regular    size;
-      typedef trait::support::aligned support;
+      typedef trait::image::access::random   access;
+      typedef trait::image::space::one_d     space;
+      typedef trait::image::size::regular    size;
+      typedef trait::image::support::aligned support;
 
-      typedef trait::border::stored   border;
-      typedef trait::data::raw        data;
-      typedef trait::io::read_write   io;
-      typedef trait::speed::fastest   speed;
+      typedef trait::image::border::stored   border;
+      typedef trait::image::data::raw        data;
+      typedef trait::image::io::read_write   io;
+      typedef trait::image::speed::fastest   speed;
     };
 
   } // end of namespace mln::trait

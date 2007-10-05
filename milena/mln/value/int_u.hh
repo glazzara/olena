@@ -80,6 +80,13 @@ namespace mln
 
     // FIXME: Is that all? (No!)
 
+    template <unsigned n>
+    struct value_< mln::value::int_u<n> >
+    {
+      typedef trait::value::nature::integer nature;
+      typedef trait::value::kind::data      kind;
+    };
+
   } // end of namespace mln::trait
 
 
@@ -142,7 +149,7 @@ namespace mln
       static const int_u<n> min() { return 0; }
       static const int_u<n> max() { return card_ - 1; }
       static const unsigned nbits = n;
-      typedef trait::kind::data kind;
+      typedef trait::value::kind::data kind;
       typedef float sum;
       typedef int interop;
     };

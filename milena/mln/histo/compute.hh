@@ -54,7 +54,7 @@ namespace mln
     {
 
       template <typename I>
-      data<mln_vset(I)> compute(mln::trait::speed::any, const I& input)
+      data<mln_vset(I)> compute(trait::image::speed::any, const I& input)
       {
 	data<mln_vset(I)> h(input.values());
 	mln_piter(I) p(input.domain());
@@ -64,7 +64,7 @@ namespace mln
       }
 
       template <typename I>
-      data<mln_vset(I)> compute(mln::trait::speed::fastest, const I& input)
+      data<mln_vset(I)> compute(trait::image::speed::fastest, const I& input)
       {
 	data<mln_vset(I)> h(input.values());
 	mln_pixter(const I) p(input);

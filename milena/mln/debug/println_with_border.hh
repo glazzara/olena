@@ -114,7 +114,7 @@ namespace mln
     template <typename I>
     void println_with_border(const Image<I>& input)
     {
-      mlc_is(mln_trait_image_speed(I), mln::trait::speed::fastest)::check();
+      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
       impl::println_with_border(exact(input).bbox(), exact(input));
     }

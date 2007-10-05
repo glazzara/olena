@@ -60,7 +60,7 @@ namespace mln
     {
 
       template <typename I, typename J, typename O>
-      void min_(trait::kind::logic, // binary => morphology on sets
+      void min_(trait::image::kind::logic, // binary => morphology on sets
 		const Image<I>& lhs, const Image<J>& rhs,
 		Image<O>& output)
       {
@@ -78,7 +78,7 @@ namespace mln
       // in place
 
       template <typename I, typename J>
-      void min_inplace_(trait::kind::logic, // binary => morphology on sets
+      void min_inplace_(trait::image::kind::logic, // binary => morphology on sets
 			Image<I>& lhs, const Image<J>& rhs)
       {
 	return logical::and_inplace(lhs, rhs);

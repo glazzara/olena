@@ -72,18 +72,18 @@ namespace mln
     {
     private:
       typedef mln_trait_image_data(I) I_data_;
-      typedef mlc_equal(I_data_, trait::data::linear) I_data_are_linear_;
+      typedef mlc_equal(I_data_, trait::image::data::linear) I_data_are_linear_;
     public:
 
-      typedef trait::category::domain_morpher category;
+      typedef trait::image::category::domain_morpher category;
 
       typedef mlc_if( mlc_is_const(I),
-		      trait::io::read_only,        // I const => read_only
+		      trait::image::io::read_only, // I const => read_only
 		      mln_trait_image_io(I) ) io;  // otherwise like I
 
       typedef mlc_if( I_data_are_linear_,
-		      trait::data::stored, // if linear then just stored
-		      I_data_ ) data;      // otherwise like I
+		      trait::image::data::stored, // if linear then just stored
+		      I_data_ ) data;             // otherwise like I
     };
     
   } // end of namespace mln::trait

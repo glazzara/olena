@@ -67,9 +67,9 @@ namespace mln
     {
 
       template <typename I, typename W, typename O>
-      void convolve_(mln::trait::speed::any, const I& input,
+      void convolve_(trait::image::speed::any, const I& input,
 		     const Weighted_Window<W>& w_win_,
-		     mln::trait::speed::any, O& output)
+		     trait::image::speed::any, O& output)
       {
 	const W& w_win = exact(w_win_);
 
@@ -86,9 +86,9 @@ namespace mln
       }
 
       template <typename I, typename W, typename O>
-      void convolve_(mln::trait::speed::fastest, const I& input,
+      void convolve_(trait::image::speed::fastest, const I& input,
 		     const Weighted_Window<W>& w_win_,
-		     mln::trait::speed::fastest, O& output)
+		     trait::image::speed::fastest, O& output)
       {
 	const W& w_win = exact(w_win_);
 

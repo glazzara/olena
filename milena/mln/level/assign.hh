@@ -65,8 +65,8 @@ namespace mln
     {
 
       template <typename L, typename R>
-      void assign(mln::trait::speed::any, L& target,
-		  mln::trait::speed::any, const R& data)
+      void assign(trait::image::speed::any, L& target,
+		  trait::image::speed::any, const R& data)
       {
 	mln_piter(L) p(target.domain());
 	for_all(p)
@@ -74,8 +74,8 @@ namespace mln
       }
 
       template <typename L, typename R>
-      void assign(mln::trait::speed::fastest, L& target,
-		  mln::trait::speed::fastest, const R& data)
+      void assign(trait::image::speed::fastest, L& target,
+		  trait::image::speed::fastest, const R& data)
       {
 	mln_pixter(L) lhs(target);
 	mln_pixter(const R) rhs(data);

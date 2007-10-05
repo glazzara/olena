@@ -78,8 +78,8 @@ namespace mln
     {
 
       template <typename I, typename O>
-      void revert_(mln::trait::speed::any, const I& input,
-		   mln::trait::speed::any, O& output)
+      void revert_(trait::image::speed::any, const I& input,
+		   trait::image::speed::any, O& output)
       {
 	typedef mln_value(I) V;
 	mln_piter(I) p(input.domain());
@@ -88,8 +88,8 @@ namespace mln
       }
 
       template <typename I, typename O>
-      void revert_(mln::trait::speed::fastest, const I& input,
-		   mln::trait::speed::fastest, O& output)
+      void revert_(trait::image::speed::fastest, const I& input,
+		   trait::image::speed::fastest, O& output)
       {
 	typedef mln_value(I) V;
 	mln_pixter(const I) ip(input);

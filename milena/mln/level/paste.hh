@@ -103,7 +103,7 @@ namespace mln
       J& destination = exact(destination_);
       trace::entering("level::paste");
 
-      mlc_is(mln_trait_image_io(J), trait::io::write)::check();
+      mlc_is(mln_trait_image_io(J), trait::image::io::write)::check();
       mlc_converts_to(mln_value(I), mln_value(J))::check();
       mln_precondition(data.domain() <= destination.domain());
       

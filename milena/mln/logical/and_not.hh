@@ -77,9 +77,9 @@ namespace mln
     {
 
       template <typename L, typename R, typename O>
-      void and_not_(mln::trait::speed::any, const L& lhs,
-		    mln::trait::speed::any, const R& rhs,
-		    mln::trait::speed::any, O& output)
+      void and_not_(trait::image::speed::any, const L& lhs,
+		    trait::image::speed::any, const R& rhs,
+		    trait::image::speed::any, O& output)
       {
 	mln_piter(L) p(lhs.domain());
 	for_all(p)
@@ -87,9 +87,9 @@ namespace mln
       }
 
       template <typename L, typename R, typename O>
-      void and_not_(mln::trait::speed::fastest, const L& lhs,
-		    mln::trait::speed::fastest, const R& rhs,
-		    mln::trait::speed::fastest, O& output)
+      void and_not_(trait::image::speed::fastest, const L& lhs,
+		    trait::image::speed::fastest, const R& rhs,
+		    trait::image::speed::fastest, O& output)
       {
 	mln_pixter(const L) lp(lhs);
 	mln_pixter(const R) rp(rhs);

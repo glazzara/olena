@@ -132,7 +132,7 @@ namespace mln
       // fill_with_value
 
       template <typename I>
-      void fill_with_value(mln::trait::speed::any, I& ima,
+      void fill_with_value(trait::image::speed::any, I& ima,
 			   const mln_value(I)& value)
       {
 	mln_piter(I) p(ima.domain());
@@ -141,7 +141,7 @@ namespace mln
       }
 
       template <typename I>
-      void fill_with_value(mln::trait::speed::fastest, I& ima,
+      void fill_with_value(trait::image::speed::fastest, I& ima,
 			   const mln_value(I)& value)
       {
 	level::memset_(ima, ima.point_at_offset(0), value, ima.ncells());
@@ -157,7 +157,7 @@ namespace mln
     template <typename I>
     void fill(Image<I>& ima, const mln_value(I)& value)
     {
-      mlc_is(mln_trait_image_io(I), trait::io::write)::check(); // FIXME: Only the upcoming general facade!!! 
+      mlc_is(mln_trait_image_io(I), trait::image::io::write)::check(); // FIXME: Only the upcoming general facade!!! 
       mln_precondition(exact(ima).has_data());
       impl::fill_with_value(mln_trait_image_speed(I)(), exact(ima),
 			    value);

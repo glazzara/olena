@@ -139,7 +139,7 @@ namespace mln
 	  // caller for fastest images
 	  template <typename I>
 	  void save_data_(std::ofstream& file,
-			  mln::trait::speed::fastest, const I& ima)
+			  trait::image::speed::fastest, const I& ima)
 	  {
 	    if (sizeof(value::int_u8) == 1)
 	      save_data_contiguous(file, ima);
@@ -150,7 +150,7 @@ namespace mln
 	  // caller for non fastest images
 	  template <typename I>
 	  void save_data_(std::ofstream& file,
-			  mln::trait::speed::any, const I& ima)
+			  trait::image::speed::any, const I& ima)
 	  {
 	    save_data_uncontiguous(file, ima);
 	  }

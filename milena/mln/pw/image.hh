@@ -81,18 +81,18 @@ namespace mln
     struct image_< pw::image<F,S> > : default_image_< mlc_unqualif(mln_result(F)),
 						      pw::image<F,S> >
     {
-      typedef trait::category::primary category;
+      typedef trait::image::category::primary category;
 
-      typedef trait::value::fixme     value;
+      typedef trait::image::value::fixme     value;
 
-      typedef trait::access::browsing access;
-      typedef trait::space::fixme_    space;
-      typedef trait::size::regular    size;
-      typedef trait::support::fixme_  support;
+      typedef trait::image::access::browsing access;
+      typedef trait::image::space::fixme_    space;
+      typedef trait::image::size::regular    size;
+      typedef trait::image::support::fixme_  support;
 
-      typedef trait::border::none     border;
-      typedef trait::data::computed   data;
-      typedef trait::io::read_only    io;
+      typedef trait::image::border::none     border;
+      typedef trait::image::data::computed   data;
+      typedef trait::image::io::read_only    io;
     };
 
   } // end of namespace mln::trait

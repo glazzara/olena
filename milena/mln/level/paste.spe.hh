@@ -79,15 +79,15 @@ namespace mln
       // Remember: raw < linear < stored, computed.
 
       template <typename I, typename J>
-      void paste_(mln::trait::data::any, const I& data,
-		  mln::trait::data::any, J& destination)
+      void paste_(trait::image::data::any, const I& data,
+		  trait::image::data::any, J& destination)
       {
 	generic::paste_(data, destination);
       }
 
       template <typename I, typename J>
-      void paste_(mln::trait::data::raw, const I& data,
-		  mln::trait::data::raw, J& destination)
+      void paste_(trait::image::data::raw, const I& data,
+		  trait::image::data::raw, J& destination)
       {
 	if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
 	  paste_lines_(data, destination);

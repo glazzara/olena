@@ -25,55 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BORDER_MIRROR_HH
-# define MLN_BORDER_MIRROR_HH
-
-/*! \file mln/border/mirror.hh
+/*! \file tests/trait_value.cc
  *
- * \brief FIXME.
+ * \brief Tests on mln::trait::ch_value.
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/internal/fixme.hh>
+#include <mln/value/int_u8.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace border
-  {
-
-    /*! Mirror the virtual (outer) border of image \p ima with the
-     *  (inner) level contents of this image.
-     *
-     * \param[in,out] ima The image whose border is to be mirrored.
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \todo Implement it + optimize with memset if possible.
-     */
-    template <typename I>
-    void mirror(const Image<I>& ima);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I>
-    void mirror(const Image<I>& ima_)
-    {
-      const I& ima = exact(ima_);
-      
-      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
-      
-      mln_precondition(ima.has_data());
-      mln::internal::fixme();
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::border
-
-} // end of namespace mln
-
-
-#endif // ! MLN_BORDER_MIRROR_HH
+  std::cout << "value::int_u8: ";
+  mln::trait::value::print< value::int_u8 >(std::cout);
+}

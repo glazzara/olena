@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_IMAGE_FROM_MESH_HH
 # define MLN_TRAIT_IMAGE_FROM_MESH_HH
 
-/*! \file mln/core/trait/image_from_mesh.hh
+/*! \file mln/trait/image_from_mesh.hh
  *
  * \brief Definition of the "image from mesh" trait.
  */

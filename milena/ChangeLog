@@ -1,3 +1,88 @@
+2007-10-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make trait naming and directories coherent.
+
+	* mln/trait/image_from_mesh.hh: .
+	* mln/trait/image: New directory.
+	* mln/trait/images.hh: Split contents into...
+	* mln/trait/image/props.hh,
+	* mln/trait/image/print.hh,
+	* mln/trait/undef.hh: these new files.
+	* mln/trait/kind.hh: Rename as...
+	* mln/trait/value/kind.hh: ...this.
+	Layout.
+	* mln/trait/value_.hh: New.
+	* mln/trait/value: New.
+	* mln/trait/value/print.hh: New.
+	* mln/trait/value/nature.hh: New.
+	* mln/value/int_u.hh (value_): Add trait.
+
+	* mln/histo/compute.hh,
+	* mln/debug/iota.hh,
+	* mln/debug/println_with_border.hh,
+	* mln/core/internal/image_if_base.hh,
+	* mln/core/internal/check/image_all.hh,
+	* mln/core/image2d_b.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/concept/value.hh,
+	* mln/core/image1d_b.hh,
+	* mln/core/image3d_b.hh,
+	* mln/metal/mat.hh,
+	* mln/metal/vec.hh,
+	* mln/arith/plus.hh,
+	* mln/arith/min.hh,
+	* mln/arith/revert.hh,
+	* mln/arith/minus.hh,
+	* mln/level/take.hh,
+	* mln/level/assign.hh,
+	* mln/level/apply.hh,
+	* mln/level/fill.hh,
+	* mln/level/memset_.hh,
+	* mln/level/median.hh,
+	* mln/level/paste.spe.hh,
+	* mln/level/paste.hh,
+	* mln/linear/convolve.hh,
+	* mln/linear/local/convolve.hh,
+	* mln/value/graylevel.hh,
+	* mln/value/float01_.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_u_sat.hh,
+	* mln/value/props.hh,
+	* mln/value/rgb.hh,
+	* mln/value/rgb8_non_templated.hh,
+	* mln/value/float01_f.hh,
+	* mln/value/label.hh,
+	* mln/border/resize.hh,
+	* mln/border/fill.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/mirror.hh,
+	* mln/border/get.hh,
+	* mln/test/predicate.hh,
+	* mln/pw/image.hh,
+	* mln/morpho/min.hh,
+	* mln/morpho/plus.hh,
+	* mln/morpho/minus.hh,
+	* mln/morpho/complementation.hh,
+	* mln/morpho/dilation.hh,
+	* mln/morpho/erosion.hh,
+	* mln/morpho/hit_or_miss.hh,
+	* mln/io/internal/pnm/save.hh,
+	* mln/logical/and.hh,
+	* mln/logical/and_not.hh,
+	* mln/logical/or.hh,
+	* mln/logical/not.hh,
+	* mln/labeling/level.hh: Update trait naming.
+
+	Misc.
+
+	* mln/trait/ch_value.hh,
+	* mln/trait/concrete.hh,
+	* tests/trait_images.cc: Fix doc text.
+	* tests/linear_sobel.cc: Rename as...
+	* tests/linear_sobel._cc: ...this; so deactivate for tests.
+	Update.
+	* tests/trait_value.cc: New.
+
 2007-10-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix println in 3d.

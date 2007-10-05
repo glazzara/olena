@@ -96,9 +96,9 @@ namespace mln
       // Routines.
 
       template <typename I, typename N, typename O>
-      bool level_(mln::trait::speed::any, const I& input,
+      bool level_(trait::image::speed::any, const I& input,
 		  const mln_value(I)& val, const Neighborhood<N>& nbh,
-		  mln::trait::speed::any, O& output, unsigned& nlabels)
+		  trait::image::speed::any, O& output, unsigned& nlabels)
       {
 	typedef impl::level_t<I,N,O> F;
 	F f(input, val, exact(nbh), output);
@@ -132,9 +132,9 @@ namespace mln
 
 
       template <typename I, typename N, typename O>
-      bool level_(mln::trait::speed::fastest, const I& input,
+      bool level_(trait::image::speed::fastest, const I& input,
 		  const mln_value(I)& val, const Neighborhood<N>& nbh,
-		  mln::trait::speed::fastest, O& output, unsigned& nlabels)
+		  trait::image::speed::fastest, O& output, unsigned& nlabels)
       {
 	typedef level_fast_t<I,N,O> F;
 	F f(input, val, exact(nbh), output);

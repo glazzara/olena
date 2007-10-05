@@ -25,55 +25,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BORDER_MIRROR_HH
-# define MLN_BORDER_MIRROR_HH
+#ifndef MLN_TRAIT_VALUE_KIND_HH
+# define MLN_TRAIT_VALUE_KIND_HH
 
-/*! \file mln/border/mirror.hh
+/*! \file mln/trait/value/kind.hh
  *
- * \brief FIXME.
+ * \brief Kind of values (for use in images).
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/internal/fixme.hh>
+# include <string>
 
 
 namespace mln
 {
 
-  namespace border
+  namespace trait
   {
 
-    /*! Mirror the virtual (outer) border of image \p ima with the
-     *  (inner) level contents of this image.
-     *
-     * \param[in,out] ima The image whose border is to be mirrored.
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \todo Implement it + optimize with memset if possible.
-     */
-    template <typename I>
-    void mirror(const Image<I>& ima);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I>
-    void mirror(const Image<I>& ima_)
+    namespace value
     {
-      const I& ima = exact(ima_);
-      
-      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
-      
-      mln_precondition(ima.has_data());
-      mln::internal::fixme();
-    }
 
-# endif // ! MLN_INCLUDE_ONLY
+      struct kind
+      {
+	struct any            { std::string name() const { return "kind::any"; } };
 
-  } // end of namespace mln::border
+	struct color  : any   { std::string name() const { return "kind::color"; } };
+	struct gray   : any   { std::string name() const { return "kind::gray"; } };
+
+	struct label  : any   { std::string name() const { return "kind::label"; } };
+	struct logic  : label { std::string name() const { return "kind::logic"; } };
+	struct binary : logic { std::string name() const { return "kind::binary"; } };
+
+	struct data   : any   { std::string name() const { return "kind::data"; } };
+      };
+
+    } // end of namespace mln::trait::kind
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-#endif // ! MLN_BORDER_MIRROR_HH
+#endif // ! MLN_TRAIT_VALUE_KIND_HH

@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/trait_ch_value.cc
+/*! \file tests/trait_images.cc
  *
- * \brief Tests on mln::trait::ch_value.
+ * \brief Tests on mln::trait::images.
  */
 
 #include <mln/core/image2d_b.hh>
@@ -44,13 +44,13 @@ int main()
   typedef image2d_b<int> I;
 
   std::cout << "image2d_b: ";
-  mln::trait::print<I>(std::cout);
+  mln::trait::image::print<I>(std::cout);
 
   std::cout << std::endl
 	    << "sub_image< image2d_b >: ";
-  mln::trait::print< sub_image<I, box2d> >(std::cout);
+  mln::trait::image::print< sub_image<I, box2d> >(std::cout);
 
   std::cout << std::endl
 	    << "image_if< image2d_b >: ";
-  mln::trait::print< image_if<I, fun::p2b::chess_t> >(std::cout);
+  mln::trait::image::print< image_if<I, fun::p2b::chess_t> >(std::cout);
 }

@@ -87,7 +87,7 @@ namespace mln
       {
 
 	template <typename I, typename P, typename W, typename R>
-	void convolve(mln::trait::speed::any, const I& input,
+	void convolve(trait::image::speed::any, const I& input,
 		      const Generalized_Point<P>& p_,
 		      const W&                    w_win,
 		      R& result)
@@ -102,7 +102,7 @@ namespace mln
 	}
 
 	template <typename I, typename P, typename W, typename R>
-	void convolve(mln::trait::speed::fastest, const I& input,
+	void convolve(trait::image::speed::fastest, const I& input,
 		      const Generalized_Point<P>& p_,
 		      const W&                    w_win,
 		      R& result)

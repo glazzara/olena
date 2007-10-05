@@ -67,9 +67,9 @@ namespace mln
 //       typedef mlc_equal(I_data_, trait::data::linear) I_data_are_linear_;
 //     public:
 
-      typedef trait::category::domain_morpher category;
+      typedef trait::image::category::domain_morpher category;
 
-      typedef trait::border::none border;  // no more accessible border
+      typedef trait::image::border::none border;  // no more accessible border
 
       typedef mln_trait_image_io_from_(I) io; // un-write when I const
 

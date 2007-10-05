@@ -133,7 +133,7 @@ namespace mln
       static const label<n> min; // = 0
       static const label<n> max; // = card_ - 1
       static const unsigned nbits = n;
-      typedef trait::kind::label kind;
+      typedef trait::value::kind::label kind;
     };
 
 

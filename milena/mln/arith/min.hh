@@ -76,9 +76,9 @@ namespace mln
     {
 
       template <typename L, typename R, typename O>
-      void min_(mln::trait::speed::any, const L& lhs,
-		mln::trait::speed::any, const R& rhs,
-		mln::trait::speed::any, O& output)
+      void min_(trait::image::speed::any, const L& lhs,
+		trait::image::speed::any, const R& rhs,
+		trait::image::speed::any, O& output)
       {
 	mln_piter(L) p(lhs.domain());
 	for_all(p)
@@ -86,9 +86,9 @@ namespace mln
       }
 
       template <typename L, typename R, typename O>
-      void min_(mln::trait::speed::fastest, const L& lhs,
-		mln::trait::speed::fastest, const R& rhs,
-		mln::trait::speed::fastest, O& output)
+      void min_(trait::image::speed::fastest, const L& lhs,
+		trait::image::speed::fastest, const R& rhs,
+		trait::image::speed::fastest, O& output)
       {
 	mln_pixter(const L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
@@ -98,8 +98,8 @@ namespace mln
       }
 
       template <typename L, typename R>
-      void min_inplace_(mln::trait::speed::any, L& lhs,
-			mln::trait::speed::any, const R& rhs)
+      void min_inplace_(trait::image::speed::any, L& lhs,
+			trait::image::speed::any, const R& rhs)
       {
 	mln_piter(R) p(rhs.domain());
 	for_all(p)
@@ -108,8 +108,8 @@ namespace mln
       }
 
       template <typename L, typename R>
-      void min_inplace_(mln::trait::speed::fastest, L& lhs,
-			mln::trait::speed::fastest, const R& rhs)
+      void min_inplace_(trait::image::speed::fastest, L& lhs,
+			trait::image::speed::fastest, const R& rhs)
       {
 	mln_pixter(L) lp(lhs);
 	mln_pixter(const R) rp(rhs);

@@ -111,7 +111,7 @@ namespace mln
       typedef mln_point(I) P;
       const I& ima = exact(ima_);
 
-      mlc_is(mln_trait_image_speed(I), mln::trait::speed::fastest)::check();
+      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
       mln_precondition(ima.has_data());
       if (!ima.border ())
 	return;
