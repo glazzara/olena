@@ -255,22 +255,13 @@ namespace mln
       }
 
 
-#  ifdef MLN_CORE_WIN_HLINE2D_HH
-      template <typename I, typename O>
-      void median_(const Image<I>& input, const win::hline2d& win, O& output)
+#  ifdef MLN_CORE_WIN_LINE_HH
+      template <typename I, typename M, unsigned i, typename C, typename O>
+      void median_(const Image<I>& input, const win::line<M,i,C>& win, O& output)
       {
-	median_dir(input, 1, win.length(), output); // FIXME: Make 1 explicit!
+	median_dir(input, i, win.length(), output); // FIXME: Make 1 explicit!
       }
 #  endif
-
-#  ifdef MLN_CORE_WIN_VLINE2D_HH
-      template <typename I, typename O>
-      void median_(const Image<I>& input, const win::vline2d& win, O& output)
-      {
-	median_dir(input, 0, win.length(), output);
-      }
-#  endif
-
 
     } // end of namespace mln::level::impl
 

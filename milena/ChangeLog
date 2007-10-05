@@ -1,3 +1,8 @@
+2007-10-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Make a only one specialization for line (instead of hline and vline).
+	* mln/level/median.hh: Update.
+
 2007-10-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add float_f value.
