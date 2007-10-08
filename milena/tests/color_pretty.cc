@@ -25,57 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/chamfer.cc
+/*! \file tests/sub_image.cc
  *
- * \brief Tests on all files in mln/geom/chamfer.hh .
+ * \brief Tests on mln::sub_image.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if_value.hh>
-#include <mln/core/inplace.hh>
+# include <mln/core/image2d_b.hh>
+# include <mln/io/pbm/load.hh>
+# include <mln/make/win_chamfer.hh>
+# include <mln/geom/chamfer.hh>
+# include <mln/value/rgb8.hh>
+# include <mln/core/sub_image.hh>
+# include <mln/core/image_if_value.hh>
+# include <mln/core/inplace.hh>
+# include <mln/core/w_window2d_int.hh>
+# include <mln/display/color_pretty.hh>
+# include <mln/io/ppm/save.hh>
 
-#include <mln/level/fill.hh>
-#include <mln/debug/println.hh>
-#include <mln/core/w_window2d_int.hh>
-#include <mln/core/w_window2d_float.hh>
-#include <mln/core/image_if_interval.hh>
-
-#include <mln/make/win_chamfer.hh>
-#include <mln/geom/chamfer.hh>
 
 int main()
 {
   using namespace mln;
+
   unsigned max = 51;
 
-  image2d_b<bool> ima(9, 9);
 
-  {
-    level::fill(ima, false);
-    ima.at(4,4) = true;
-    const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 0> ();
-    image2d_b<unsigned> out = geom::chamfer(ima, w_win, max);
-    debug::println(out | value::interval(0, 8));
-  }
+  image2d_b<bool> input = io::pbm::load("../img/toto.pbm");
 
-  {
-    level::fill(ima, false);
-    ima.at(4,4) = true;
-    const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 3> ();
-    image2d_b<unsigned> out = geom::chamfer(ima, w_win, max);
-    debug::println(out | value::interval(0, 8));
-  }
+  // Create a weighted windows :
+  // 0 2 0
+  // 2 p 2
+  // 0 2 0
+  const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 0> ();
 
-  {
-    level::fill(ima, false);
-    ima.at(4,4) = true;
-    const w_window2d_int& w_win = win_chamfer::mk_chamfer_5x5_int<4, 6, 9> ();
-    image2d_b<unsigned> out = geom::chamfer(ima, w_win, max);
-    image2d_b<unsigned>::fwd_piter p(out.domain());
-    for_all(p)
-      out(p) = out(p) / 2;
-    debug::println(out | value::interval(0, 8));
-  }
+  // Call chamfer for a distance image.
+  image2d_b<unsigned> tmp = geom::chamfer(input, w_win, max);
 
+  // Call color_pretty for sub_image.
+  image2d_b<value::rgb8> out = display::color_pretty(inplace (tmp | 4));
+
+  // Save output image from color in out.ppm.
+  io::ppm::save(out, "out.ppm");
+
+  std::cout << "out.ppm generate" << std::endl;
 }
