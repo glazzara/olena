@@ -40,6 +40,8 @@
 
 # include <mln/accu/min.hh>
 # include <mln/accu/max.hh>
+# include <mln/accu/min_h.hh>
+# include <mln/accu/max_h.hh>
 
 # include <mln/level/compare.hh>
 # include <mln/level/fill.hh>

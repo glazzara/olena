@@ -1,3 +1,10 @@
+2007-10-08  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Refactoring erosion with dispatch mecanism and tracing.
+	* mln/morpho/erosion.hh: Add fastest image version.
+	* mln/morpho/erosion.spe.hh: New.
+	* mln/morpho/includes.hh: Includes min_h and max_h.
+
 2007-10-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Update on hexa images, create value_interop test.
