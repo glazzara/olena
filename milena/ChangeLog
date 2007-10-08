@@ -1,3 +1,15 @@
+2007-10-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update color for image_if and subimage.
+
+	* color_sub.cc,
+	* color_sub.hh: Update, uncomment FIXME when level::paste ready.
+
+	Update chamfer.
+	* canvas_chamfer.hh: New.
+	* chamfer.cc,
+	* chamfer.hh: Update.
+
 2007-10-08  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix line for -O3 -DNDEBUG compilation.

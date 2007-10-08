@@ -54,10 +54,10 @@ int main()
 {
   using namespace mln;
 
-  image2d_b<value::int_u8> ima(3,3);
-  debug::iota(ima);
-  std::cout << ima.domain() << std::endl;
-  image2d_b<value::rgb8> out = color(inplace (ima | 6));
+
+  image2d_b<value::int_u8> ima(10,10);
+  debug::iota (ima);
+  image2d_b<value::rgb8> out = color(inplace (ima | 50));
   io::ppm::save(out, "out.ppm");
-  debug::println(out);
+  //  debug::println(out);
 }

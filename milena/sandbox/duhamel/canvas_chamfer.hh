@@ -25,40 +25,74 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file ?/sub_image.hh
+#ifndef MLN_CANVAS_CHAMFER_HH
+# define MLN_CANVAS_CHAMFER_HH
+
+/*! \file mln/canvas/chamfer.hh
  *
- * \brief .
+ * \brief Connected component chamfer of the object part in a binary
+ * image.
  */
-
-#include <mln/core/image_if_value.hh>
-#include <mln/core/image2d_b.hh>
-#include <mln/value/rgb8.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
-
-
-#include <mln/trait/image_from_mesh.hh>
 
 namespace mln
 {
-
-  template <typename I>
-  typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
-  color (const Image<I>& input_)
+  namespace canvas
   {
-    const I& input = exact (input_);
 
-    image2d_b<value::rgb8> output(input.domain().bbox());
-    level::fill(output, value::rgb8(255, 0, 0));
-
-//     /// FIXME by :
-//     level::paste(input, output);
+    template <typename F>
+    struct chamfer
     {
-      mln_piter(I) p(input.domain());
+      F& f;
 
-      for_all(p)
-	output(p) = value::rgb8(input(p));
-    }
-    return output;
-  }
-}
+      typedef typename F::I I;
+      typedef typename F::W W;
+      typedef mln_point(I) point;
+
+      chamfer(F& f)
+	: f(f)
+      {
+	run();
+      }
+
+      void run()
+      {
+	/// Init.
+	{
+	  f.init();
+	}
+	
+	/// Fwd pass.
+	{
+	  mln_fwd_piter(I) p(f.input.domain());
+	  mln_qiter(W) q(f.win, p);
+	  
+	  for_all(p) if (f.handles (p))
+	    for_all(q) if (f.input.has(q))
+	      if (f.output(q) != f.max
+		  && f.output(q) + q.w() < f.output(p))
+		f.output(p) = f.output(q) + q.w();
+	}
+	
+	/// Bkd pass.
+	{
+	  W w_win_b = geom::sym(f.win);
+	  
+	  mln_bkd_piter(I) p(f.input.domain());
+	  mln_qiter(W) q(w_win_b, p);
+	  
+	  for_all(p) if (f.handles (p))
+	    for_all(q) if (f.input.has(q))
+	      if (f.output(q) != f.max
+		  && f.output(q) + q.w() < f.output(p))
+		f.output(p) = f.output(q) + q.w();
+	  f.status = true;
+	}
+	
+      }    
+    };
+    
+  } // end of mln::canvas
+
+} // end of mln
+
+#endif // ! MLN_CANVAS_CHAMFER_HH

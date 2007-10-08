@@ -1,143 +1,126 @@
-# include <mln/core/image2d_b.hh>
-# include <mln/core/sub_image.hh>
-# include <mln/core/image_if_value.hh>
-# include <mln/core/neighb2d.hh>
-# include <mln/core/inplace.hh>
+// Copyright (C) 2007 EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+// Boston, MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
 
-# include <mln/value/int_u8.hh>
+#ifndef MLN_GEOM_CHAMFER_HH
+# define MLN_GEOM_CHAMFER_HH
+
+/*! \file mln/geom/chamfer.hh
+ *
+ * \brief Connected component chamfer of the image objects.
+ */
+
 # include <mln/level/fill.hh>
-# include <mln/level/stretch.hh>
-# include <mln/io/pbm/load.hh>
-# include <mln/io/pgm/save.hh>
-# include <mln/io/pgm/save.hh>
-# include <mln/io/pgm/save.hh>
-# include <mln/core/mesh_image.hh>
-# include <mln/labeling/base.hh>
-# include <mln/debug/println.hh>
-# include <mln/core/window2d.hh>
 # include <mln/core/w_window2d_int.hh>
 # include <mln/core/w_window2d_float.hh>
-# include <mln/convert/to_window.hh>
-# include <mln/core/concept/dpoint.hh>
-# include <mln/core/concept/neighborhood.hh>
-# include <mln/core/window.hh>
-# include <mln/pw/image.hh>
-# include <mln/pw/cst.hh>
-# include <mln/metal/is_a.hh>
 
-# include <mln/core/image_if_interval.hh>
-# include <mln/core/dpoint2d.hh>
-# include <math.h>
+# include "canvas_chamfer.hh"
 
 namespace mln
 {
-  namespace win_chamfer
+
+  namespace geom
   {
 
-    template<int d10, int d11>
-    const w_window2d_int
-    mk_chamfer_3x3_int()
-    {
-      int ws[] = { d11, d10, d11,
-	           d10,   0,   0,
-		     0,   0,   0 };
 
-      return (make::w_window2d(ws));
-    }
+    template <typename I, typename W>
+    mln_ch_value( I, unsigned )
+      chamfer(const Image<I>& input_, const W& w_win_,
+	      unsigned max = mln_max(unsigned));
+    
 
-    template<int d10, int d11, int d21>
-    const w_window2d_int
-    mk_chamfer_5x5_int()
-    {
-      int ws[] = {   0, d21,   0, d21,   0,
-         	   d21, d11, d10, d11, d21,
-		     0, d10,   0,   0,   0,
-	             0,   0,   0,   0,   0,
-		     0,   0,   0,   0,   0 };
+# ifndef MLN_INCLUDE_ONLY
 
-      return (make::w_window2d(ws));
-    }
-
-    const w_window2d_float
-    mk_chamfer_3x3_float(float d10, float d11)
-    {
-      float ws[] = { d11, d10, d11,
-      	             d10,   0,   0,
-		       0,   0,   0 };
-
-      return (make::w_window2d(ws));
-    }
-
-    const w_window2d_float
-    mk_chamfer_5x5_float(float d10, float d11, float d21)
-    {
-      float ws[] = {   0, d21,   0, d21,   0,
-         	     d21, d11, d10, d11, d21,
-		       0, d10,   0,   0,   0,
-	               0,   0,   0,   0,   0,
-  		       0,   0,   0,   0,   0 };
-
-      return (make::w_window2d(ws));
-    }
-
-    const w_window2d_float
-    mk_chamfer_exact()
-    {
-      float r2 = sqrt(2);
-      float ws[] = {  r2,   1,  r2,
-      	               1,   0,   0,
-		       0,   0,   0 };
-
-      return (make::w_window2d(ws));
-    }
-
-  } // end of mln::win_chamfer
-
-  template <typename I, typename W>
-  mln_ch_value(I, unsigned)
-  chamfer(const Image<I>& input_, const Weighted_Window<W>& w_win_,
-	  unsigned max = mln_max(unsigned))
-  {
-    const I& input = exact(input_);
-    const W& w_win = exact(w_win_);
-
-    mln_ch_value(I, unsigned) output;
-    initialize(output, input);
-
-    /// Init.
-    {
-      level::fill(inplace(output | (input | true).domain()),  0);
-      level::fill(inplace(output | (input | false).domain()), max);
-    }
-
-    /// Fwd pass.
-    {
-      mln_fwd_piter(I) p(input.domain());
-      mln_qiter(W) q(w_win, p);
-
-      for_all(p) if (input(p) == false)
-	for_all(q) if (input.has(q))
-	  if (output(q) != max
-	      && output(q) + q.w() < output(p))
-	    output(p) = output(q) + q.w();
-    }
-
-    /// Bkd pass.
+    namespace impl
     {
 
-      W w_win_b = geom::sym(w_win);
+      // Functors.
 
-      mln_bkd_piter(I) p(input.domain());
-      mln_qiter(W) q(w_win_b, p);
+      template <typename I_, typename W_>
+      struct chamfer_t
+      {
+	typedef I_ I;
+	typedef W_ W;
+	typedef mln_point(I_) P;
 
-      for_all(p) if (input(p) == false)
-	for_all(q) if (input.has(q))
-	  if (output(q) != max
-	      && output(q) + q.w() < output(p))
-	    output(p) = output(q) + q.w();
+	// requirements from mln::canvas::chamfer:
+
+	const I& input;
+	const W& win;
+
+	mln_ch_value(I_, unsigned) output;
+	bool status;
+	unsigned max;
+
+ 	void init()                            { initialize(output, exact(input));
+						 level::fill(inplace(output | (input | true).domain()),  0);
+						 level::fill(inplace(output | (input | false).domain()), max); }
+	bool handles(const P& p) const         { return input(p) == false; }
+
+	// end of requirements
+
+	chamfer_t(const I_& input, const W_& win, unsigned max)
+	  : input (input),
+	    win (win),
+	    max (max)
+	{}
+      };
+
+      // Routines.
+
+      template <typename I, typename W>
+      mln_ch_value(I, unsigned)
+	chamfer_(const Image<I>& input_, const W& w_win_,
+		 unsigned max = mln_max(unsigned))
+      {
+	typedef chamfer_t<I, W> F;
+
+	F f(exact(input_), exact(w_win_), max);
+	canvas::chamfer<F> run(f);
+	return f.output;
+      }
+
+    } // end of namespace mln::geom::impl
+
+#endif // !MLN_INCLUDE_ONLY
+
+
+    // Facade.
+
+    template <typename I, typename W>
+    mln_ch_value(I, unsigned)
+      chamfer(const Image<I>& input_, const W& w_win_,
+	      unsigned max = mln_max(unsigned))
+    {
+      return impl::chamfer_(exact (input_), exact(w_win_), max);
     }
 
-    return output;
-  }
 
-} // end of mln
+  } // end of namespace mln::geom
+
+}  // end of namespace mln
+
+#endif // !MLN_GEOM_CHAMFER_HH
