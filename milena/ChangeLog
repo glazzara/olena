@@ -1,3 +1,12 @@
+2007-10-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update on hexa images, create value_interop test.
+	* mln/core/hexa.hh,
+	* tests/hexa.cc: Update.
+
+	* tests/value_int_u.cc: Remove.
+	* tests/value_interop.cc: New.
+
 2007-10-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Clean-up value types.

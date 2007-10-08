@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_int_u8.cc
+/*! \file tests/value_interop.cc
  *
- * \brief Tests on mln::value::int_u8.
+ * \brief Tests interoperability on mln::value::*.
  */
 
 #include <mln/value/int_u8.hh>

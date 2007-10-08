@@ -34,6 +34,8 @@
 #include <mln/core/hexa.hh>
 
 #include <mln/value/int_u8.hh>
+#include <mln/trait/image/print.hh>
+
 
 int main()
 {
@@ -44,4 +46,15 @@ int main()
 
   I ima(3,3);
   hexa< I > h(ima);
+
+  trait::image::print(h, std::cout);
+
+
+  // FIXME : to put into debug::println
+  box_<point2d>::fwd_piter p(ima.box());
+
+  for_all(p)
+    {
+      p
+    }
 }

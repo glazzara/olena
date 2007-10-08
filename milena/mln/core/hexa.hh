@@ -73,7 +73,7 @@ namespace mln
 
       typedef trait::image::category::domain_morpher category;
 
-      typedef trait::image::border::none border;  // no more accessible border
+      typedef mln_trait_image_border(I) border;  // have a border only if I does.
 
       typedef mln_trait_image_io_from_(I) io; // un-write when I const
 
@@ -90,6 +90,21 @@ namespace mln
    *
    * The parameter \c I is the type of the base image.  This image class
    * which handles hexagonal grid.
+   *
+   * Ex :
+   *    -------------------
+   *  XX|  |  |  |  |  |  |XX
+   *    ---------------------
+   *    XX|  |  |  |  |  |  |XX
+   *    ---------------------
+   *  XX|  |  |  |  |  |  |XX
+   *    ---------------------
+   *    XX|  |  |  |  |  |  |XX
+   *    ---------------------
+   *  XX|  |  |  |  |  |  |XX
+   *    -------------------
+   *
+   *
    */
   template <typename I>
   struct hexa : public internal::image_domain_morpher_< I, mln_pset(I), hexa<I> >
