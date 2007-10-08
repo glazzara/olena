@@ -25,18 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_CONCEPT_VALUE_FLOATING_HH
-# define MLN_VALUE_CONCEPT_VALUE_FLOATING_HH
+#ifndef MLN_VALUE_CONCEPT_FLOATING_HH
+# define MLN_VALUE_CONCEPT_FLOATING_HH
 
-/*! \file mln/value/floating.hh
+/*! \file mln/value/concept/floating.hh
  *
  * \brief Define a generic class for float values.
  */
 
 # include <mln/value/concept/scalar.hh>
 
+
 namespace mln
 {
+
+  // Fwd decl.
+  namespace value
+  {
+    template <typename E> struct Floating;
+  }
 
   namespace trait
   {
@@ -45,9 +52,6 @@ namespace mln
 
   namespace value
   {
-
-    // Fwd decl.
-    template <typename E> struct Floating;
 
     // Category flag type.
     template <>
@@ -66,4 +70,7 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_CONCEPT_VALUE_FLOATING_HH
+# include <mln/value/concept/all.hh>
+
+
+#endif // ! MLN_VALUE_CONCEPT_FLOATING_HH

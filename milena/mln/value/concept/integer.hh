@@ -25,18 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_CONCEPT_VALUE_INTEGER_HH
-# define MLN_VALUE_CONCEPT_VALUE_INTEGER_HH
+#ifndef MLN_VALUE_CONCEPT_INTEGER_HH
+# define MLN_VALUE_CONCEPT_INTEGER_HH
 
-/*! \file mln/value/integer.hh
+/*! \file mln/value/concept/integer.hh
  *
  * \brief Define a generic class for integer values.
  */
 
 # include <mln/value/concept/scalar.hh>
 
+
 namespace mln
 {
+
+  // Fwd decl.
+  namespace value
+  {
+    template <typename E> struct Integer;
+  }
+
   namespace trait
   {
     // FIXME
@@ -44,9 +52,6 @@ namespace mln
 
   namespace value
   {
-
-    // Fwd decl.
-    template <typename E> struct Integer;
 
     // Category flag type.
     template <>
@@ -65,4 +70,7 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_CONCEPT_VALUE_INTEGER_HH
+# include <mln/value/concept/all.hh>
+
+
+#endif // ! MLN_VALUE_CONCEPT_INTEGER_HH

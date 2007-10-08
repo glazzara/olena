@@ -25,19 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_CONCEPT_VALUE_VECTORIEL_HH
-# define MLN_VALUE_CONCEPT_VALUE_VECTORIEL_HH
+#ifndef MLN_VALUE_CONCEPT_VECTORIAL_HH
+# define MLN_VALUE_CONCEPT_VECTORIAL_HH
 
-/*! \file mln/value/vectorial.hh
+/*! \file mln/value/concept/vectorial.hh
  *
  * \brief Define a generic class for vectorial values.
  */
+
+# include <mln/core/concept/value.hh>
+
 
 namespace mln
 {
 
   // Fwd decl.
-  template <typename E> struct Value;
+  namespace value
+  {
+    template <typename E> struct Vectorial;
+  }
 
   namespace trait
   {
@@ -45,6 +51,7 @@ namespace mln
     // FIXME
 
   } // end of namespace mln::trait
+
 
   namespace value
   {
@@ -68,6 +75,8 @@ namespace mln
 
 } // end of namespace mln
 
-# include <mln/core/concept/value.hh>
 
-#endif // ! MLN_VALUE_CONCEPT_VALUE_VECTORIEL_HH
+# include <mln/value/concept/all.hh>
+
+
+#endif // ! MLN_VALUE_CONCEPT_VECTORIAL_HH

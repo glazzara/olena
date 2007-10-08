@@ -25,57 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_CONCEPT_STRUCTURED_HH
-# define MLN_VALUE_CONCEPT_STRUCTURED_HH
-
-/*! \file mln/value/concept/structured.hh
+/*! \file tests/value_graylevel.cc
  *
- * \brief Define a generic class for structured values.
+ * \brief Tests on mln::value::graylevel.
  */
 
-# include <mln/core/concept/value.hh>
+#include <mln/value/graylevel.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln::value;
 
-  // Fwd decl.
-  namespace value
-  {
-    template <typename E> struct Structured;
-  }
+  gl8  a = white;
+  gl16 b = white;
+  mln_assertion(a == b);
 
+  gl8 c = (a + b) / 2;
+  mln_assertion(c == white);
+  
+  c = a;
+  mln_assertion(c == white);
 
-  namespace trait
-  {
-    // FIXME
-  } // end of namespace mln::trait
+  c = (a * 2) / 2;
+  mln_assertion(c == white);
 
-
-  namespace value
-  {
-
-    // Fwd decl.
-    template <typename E> struct Structured;
-
-    // Category flag type.
-    template <>
-    struct Structured<void>
-    {
-      typedef Value<void> super;
-    };
-
-    template <typename E>
-    struct Structured : public Value<E>
-    {
-    };
-
-  } // end of namespace mln::value
-
-} // end of namespace mln
-
-
-# include <mln/value/concept/all.hh>
-
-
-#endif // ! MLN_VALUE_CONCEPT_STRUCTURED_HH
+  c = c / 6;
+}

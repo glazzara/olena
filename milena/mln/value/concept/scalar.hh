@@ -25,19 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_CONCEPT_VALUE_SCALAR_HH
-# define MLN_VALUE_CONCEPT_VALUE_SCALAR_HH
+#ifndef MLN_VALUE_CONCEPT_SCALAR_HH
+# define MLN_VALUE_CONCEPT_SCALAR_HH
 
-/*! \file mln/value/scalar.hh
+/*! \file mln/value/concept/scalar.hh
  *
  * \brief Define a generic class for scalar values.
  */
 
+# include <mln/core/concept/value.hh>
+
+
 namespace mln
 {
 
-  // Fwd decl.
+  // Fwd decls.
   template <typename E> struct Value;
+  namespace value
+  {
+    template <typename E> struct Scalar;
+  }
 
   namespace trait
   {
@@ -66,6 +73,5 @@ namespace mln
 
 } // end of namespace mln
 
-# include <mln/core/concept/value.hh>
 
-#endif // ! MLN_VALUE_CONCEPT_VALUE_SCALAR_HH
+#endif // ! MLN_VALUE_CONCEPT_SCALAR_HH

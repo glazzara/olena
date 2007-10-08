@@ -34,6 +34,7 @@
 # include <mln/core/contract.hh>
 # include <mln/trait/all.hh>
 # include <mln/value/props.hh>
+# include <mln/value/concept/all.hh>
 
 
 // FIXME: Document.

@@ -99,6 +99,18 @@ namespace mln
 
   // Operator +.
 
+  // FIXME HERE
+
+//   namespace trait {
+
+//     template < typename L, typename R >
+//     struct set_binary_< op_plus, Built_In, L, Object, R >
+//     {
+//       typedef mln_trait_op_plus(R, L)
+//     };
+
+//   }
+
   // FIXME: Doc!
   template <typename O>
   mln_trait_op_plus(O, int)
@@ -122,6 +134,7 @@ namespace mln
   {
     return exact(rhs) + lhs;
   }
+
 
   // Operator *.
 

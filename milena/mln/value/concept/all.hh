@@ -25,22 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/value/graylevel.hh>
+#ifndef MLN_VALUE_CONCEPT_ALL_HH
+# define MLN_VALUE_CONCEPT_ALL_HH
 
-int main()
-{
-  using namespace mln::value;
+/*! \file mln/value/concept/all.hh
+ *
+ * \brief FIXME
+ */
 
-   gl8 a = white;
-  gl16 b = white;
-  assert((a == b) == true);
-  gl8 c = (a + b) / 2;
-  assert(c == white);
-  c = a;
-  assert(c == white);
+# include <mln/value/concept/integer.hh>
+# include <mln/value/concept/floating.hh>
+# include <mln/value/concept/vectorial.hh>
+# include <mln/value/concept/structured.hh>
+# include <mln/value/concept/symbolic.hh>
 
-  c = (a * 2) / 2;
-  assert(c == white);
 
-  c = c / 6;
-}
+#endif // ! MLN_VALUE_CONCEPT_ALL_HH

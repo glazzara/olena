@@ -25,19 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_CONCEPT_VALUE_SYMBOLIC_HH
-# define MLN_VALUE_CONCEPT_VALUE_SYMBOLIC_HH
+#ifndef MLN_VALUE_CONCEPT_SYMBOLIC_HH
+# define MLN_VALUE_CONCEPT_SYMBOLIC_HH
 
-/*! \file mln/value/symbolic.hh
+/*! \file mln/value/concept/symbolic.hh
  *
  * \brief Define a generic class for symbolic values.
  */
 
+# include <mln/core/concept/value.hh>
+
+
 namespace mln
 {
 
-  // Fwd decl.
+  // Fwd decls.
   template <typename E> struct Value;
+  namespace value
+  {
+    template <typename E> struct Symbolic;
+  }
 
   namespace trait
   {
@@ -68,6 +75,8 @@ namespace mln
 
 } // end of namespace mln
 
-# include <mln/core/concept/value.hh>
 
-#endif // ! MLN_VALUE_CONCEPT_VALUE_SYMBOLIC_HH
+# include <mln/value/concept/all.hh>
+
+
+#endif // ! MLN_VALUE_CONCEPT_SYMBOLIC_HH

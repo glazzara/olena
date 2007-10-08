@@ -25,57 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_CONCEPT_STRUCTURED_HH
-# define MLN_VALUE_CONCEPT_STRUCTURED_HH
-
-/*! \file mln/value/concept/structured.hh
+/*! \file tests/value_scalar.cc
  *
- * \brief Define a generic class for structured values.
+ * \brief Tests on mln::value::scalar.
  */
 
-# include <mln/core/concept/value.hh>
+#include <iostream>
+#include <mln/value/scalar.hh>
 
 
-namespace mln
+template <typename T>
+void foo(const T& t)
 {
-
-  // Fwd decl.
-  namespace value
-  {
-    template <typename E> struct Structured;
-  }
+  std::cout << mln::value::scalar(t) << std::endl;
+}
 
 
-  namespace trait
-  {
-    // FIXME
-  } // end of namespace mln::trait
+int main()
+{
+  using namespace mln;
 
-
-  namespace value
-  {
-
-    // Fwd decl.
-    template <typename E> struct Structured;
-
-    // Category flag type.
-    template <>
-    struct Structured<void>
-    {
-      typedef Value<void> super;
-    };
-
-    template <typename E>
-    struct Structured : public Value<E>
-    {
-    };
-
-  } // end of namespace mln::value
-
-} // end of namespace mln
-
-
-# include <mln/value/concept/all.hh>
-
-
-#endif // ! MLN_VALUE_CONCEPT_STRUCTURED_HH
+  int i = 51;
+  foo(i);
+  foo( value::scalar(i) );
+}

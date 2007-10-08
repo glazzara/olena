@@ -32,16 +32,19 @@
  * \brief Some definitions about builtins.
  */
 
-# include <mln/value/concept/symbolic.hh>
-# include <mln/value/concept/integer.hh>
-# include <mln/value/concept/floating.hh>
+# include <mln/core/category.hh>
+
 
 namespace mln
 {
 
   // Fwd decl.
   template <typename E> struct Value;
-
+  namespace value {
+    template <typename E> struct Symbolic;
+    template <typename E> struct Integer;
+    template <typename E> struct Floating;
+  }
 
   // The case of built-in types.
 
@@ -66,9 +69,6 @@ namespace mln
 
 
 } // end of namespace mln
-
-
-# include <mln/core/concept/value.hh>
 
 
 #endif // ! MLN_VALUE_BUILTIN_HH

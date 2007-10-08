@@ -36,6 +36,7 @@
 # include <mln/value/props.hh>
 # include <mln/fun/i2v/all.hh>
 # include <mln/literal/zero.hh>
+# include <mln/value/concept/all.hh>
 
 
 // FIXME: Document.

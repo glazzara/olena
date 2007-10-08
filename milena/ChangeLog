@@ -1,3 +1,29 @@
+2007-10-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix value concepts and related file inclusions.
+
+	* tests/value_scalar.cc: New.
+	* tests/value_gray.cc: Rename as...
+	* tests/value_graylevel.cc: ...this.
+	(assert): Change to...
+	(mln_assertion): ...this!
+	* tests/trait_op_plus.cc,
+	* mln/metal/mat.hh,
+	* mln/metal/vec.hh: Include value concepts.
+	* mln/trait/image/print.hh: (print). New overload.
+	* mln/trait/op: New directory; to be populated.
+	* mln/core/ops.hh: Remove dead code.
+	* mln/value/graylevel.hh: Layout.
+	* mln/value/scalar.hh: New.
+	* mln/value/builtin.hh: Replace includes by decls.
+	* mln/value/concept/symbolic.hh,
+	* mln/value/concept/floating.hh,
+	* mln/value/concept/integer.hh,
+	* mln/value/concept/structured.hh,
+	* mln/value/concept/scalar.hh,
+	* mln/value/concept/vectorial.hh: Fix.
+	* mln/value/concept/all.hh: New.
+
 2007-10-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update test for color.

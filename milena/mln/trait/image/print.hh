@@ -55,6 +55,9 @@ namespace mln
       template <typename I>
       void print(std::ostream& ostr);
 
+      template <typename I>
+      void print(const Image<I>& ima, std::ostream& ostr);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -76,6 +79,12 @@ namespace mln
 	     << typename the::border()  .name() << ", "
 	     << typename the::io()      .name() << ", "
 	     << typename the::speed()   .name() << " }" << std::endl;
+      }
+
+      template <typename I>
+      void print(const Image<I>&, std::ostream& ostr)
+      {
+	print<I>(ostr);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
