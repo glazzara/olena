@@ -137,7 +137,7 @@ int main()
 
     io::pgm::save(lena, "out.pgm");
     io::pgm::save(ref, "ref.pgm");
-    assert(lena == ref);
+    mln_assertion(lena == ref);
     //debug::println(out);
   }
 

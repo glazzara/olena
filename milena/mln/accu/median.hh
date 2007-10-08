@@ -217,7 +217,8 @@ namespace mln
       h_.init();
       sum_minus_ = 0;
       sum_plus_ = 0;
-      i_ = (mln_max(argument) - mln_min(argument)) / 2;
+      i_ = (s_.index_of(mln_max(argument))
+	    - s_.index_of(mln_min(argument))) / 2;
       t_ = s_[i_];
       valid_ = true;
     }

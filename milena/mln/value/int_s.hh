@@ -96,24 +96,22 @@ namespace mln
      */
     template <unsigned n>
     struct int_s
-      : public Integer< int_s<n> >,
-	public internal::value_like_< typename internal::encoding_signed_<n>::ret,
-				      int_s<n> >
+      :
+      public Integer< int_s<n> >,
+
+      public internal::value_like_< int,       // Equivalent.
+				    typename internal::encoding_signed_<n>::ret, // Enc.
+				    int,       // Interoperation.
+				    int_s<n> > // Exact.
     {
-    protected:
-      typedef internal::value_like_< typename internal::encoding_signed_<n>::ret,
-				     int_s<n> > super;
-
-    public:
-
-      /// Encoding associated type.
-      typedef typename super::enc enc;
-
       /// Constructor without argument.
       int_s();
 
       /// Constructor from an integer.
       int_s(int i);
+
+      /// Conversion to an integer.
+      operator int() const;
 
       /// Assignment from an integer.
       int_s<n>& operator=(int i);
@@ -166,11 +164,18 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const int_s<n>& i);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n>
     int_s<n>::int_s()
     {
+    }
+
+    template <unsigned n>
+    int_s<n>::operator int() const
+    {
+      return this->v_;
     }
 
     template <unsigned n>
@@ -180,7 +185,7 @@ namespace mln
       static const int min = - max;
       mln_precondition(i >= min);
       mln_precondition(i <= max);
-      this->v_ = enc(i);
+      this->v_ = i;
     }
 
     template <unsigned n>
@@ -206,8 +211,8 @@ namespace mln
     int_s<n>&
     int_s<n>::operator+=(int i)
     {
-      mln_precondition(long(this->v_) + i >= mln_min(enc));
-      mln_precondition(long(this->v_) + i <= mln_max(enc));
+      mln_precondition(long(this->v_) + i >= mln_min(int_s<n>));
+      mln_precondition(long(this->v_) + i <= mln_max(int_s<n>));
       this->v_ += i;
       return *this;
     }
@@ -216,8 +221,8 @@ namespace mln
     int_s<n>&
     int_s<n>::operator-=(int i)
     {
-      mln_precondition(long(this->v_) - i >= mln_min(enc));
-      mln_precondition(long(this->v_) - i <= mln_max(enc));
+      mln_precondition(long(this->v_) - i >= mln_min(int_s<n>));
+      mln_precondition(long(this->v_) - i <= mln_max(int_s<n>));
       this->v_ -= i;
       return *this;
     }

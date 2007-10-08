@@ -30,10 +30,9 @@
 
 int main()
 {
-  using typename mln::value::float01_f;
+  using mln::value::float01_f;
+
   float01_f x = 0.5;
-
   std::cout << x + 21.25 << std::endl;
-
   x = x + 34;
 }

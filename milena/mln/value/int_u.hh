@@ -100,24 +100,28 @@ namespace mln
      */
     template <unsigned n>
     struct int_u
-      : public Integer< int_u<n> >,
-	public internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
-				      int_u<n> >
+      :
+      public Integer< int_u<n> >,
+
+      public internal::value_like_< unsigned,    // Equivalent.
+				    typename internal::encoding_unsigned_<n>::ret, // Enc.
+				    int,         // Interoperation.
+				    int_u<n> >   // Exact.
     {
     protected:
-      typedef internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
-				     int_u<n> > super;
+      /// Encoding associated type.
+      typedef typename internal::encoding_unsigned_<n>::ret enc_;
 
     public:
-
-      /// Encoding associated type.
-      typedef typename super::enc enc;
 
       /// Constructor without argument.
       int_u();
 
       /// Constructor from an integer.
       int_u(int i);
+
+      /// Conversion to an integer.
+      operator int() const;
 
       /// Assignment from an integer.
       int_u<n>& operator=(int i);
@@ -134,6 +138,7 @@ namespace mln
       /// Self subtraction.
       int_u<n>& operator-=(int i);
     };
+
 
 
     // Safety.
@@ -178,8 +183,14 @@ namespace mln
     int_u<n>::int_u(int i)
     {
       mln_precondition(i >= 0);
-      mln_precondition(unsigned(i) <= mln_max(enc));
-      this->v_ = enc(i);
+      mln_precondition(unsigned(i) <= mln_max(enc_));
+      this->v_ = enc_(i);
+    }
+
+    template <unsigned n>
+    int_u<n>::operator int() const
+    {
+      return this->v_;
     }
 
     template <unsigned n>
@@ -187,7 +198,7 @@ namespace mln
     int_u<n>::operator=(int i)
     {
       mln_precondition(i >= 0);
-      mln_precondition(unsigned(i) <= mln_max(enc));
+      mln_precondition(unsigned(i) <= mln_max(enc_));
       this->v_ = i;
       return *this;
     }
@@ -197,7 +208,7 @@ namespace mln
     int_u<n>::operator+=(int i)
     {
       mln_precondition(long(this->v_) + i >= 0);
-      mln_precondition(long(this->v_) + i <= mln_max(enc));
+      mln_precondition(long(this->v_) + i <= mln_max(enc_));
       this->v_ += i;
       return *this;
     }
@@ -207,7 +218,7 @@ namespace mln
     int_u<n>::operator-=(int i)
     {
       mln_precondition(long(this->v_) - i >= 0);
-      mln_precondition(long(this->v_) - i <= mln_max(enc));
+      mln_precondition(long(this->v_) - i <= mln_max(enc_));
       this->v_ -= i;
       return *this;
     }

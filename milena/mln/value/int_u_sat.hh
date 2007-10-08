@@ -55,24 +55,22 @@ namespace mln
      */
     template <unsigned n>
     struct int_u_sat
-      : public Integer< int_u_sat<n> >,
-	public internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
-				      int_u_sat<n> >
+      :
+      public Integer< int_u_sat<n> >,
+
+      public internal::value_like_< int_u<n>,          // Equivalent.
+				    mln_enc(int_u<n>), // Encoding.
+				    int,               // Interoperation.
+				    int_u_sat<n> >     // Exact.
     {
-    protected:
-      typedef internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
-				     int_u_sat<n> > like;
-
-    public:
-
-      /// Encoding associated type.
-      typedef typename like::enc enc;
-
       /// Constructor without argument.
       int_u_sat();
 
       /// Constructor from an integer.
       int_u_sat(int i);
+
+      /// Conversion to an integer.
+      operator int() const;
 
       /// Assignment from an integer.
       int_u_sat<n>& operator=(int i);
@@ -133,11 +131,17 @@ namespace mln
     int_u_sat<n>::int_u_sat(int i)
     {
       if (i < 0)
-	this->v_ = enc(0);
-      else if (i > mln_max(enc))
-	this->v_ = mln_max(enc);
+	this->v_ = 0;
+      else if (i > mln_max(int_u_sat<n>))
+	this->v_ = mln_max(int_u_sat<n>);
       else
-	this->v_ = enc(i);
+	this->v_ = i;
+    }
+
+    template <unsigned n>
+    int_u_sat<n>::operator int() const
+    {
+      return this->v_;
     }
 
     template <unsigned n>
@@ -145,11 +149,11 @@ namespace mln
     int_u_sat<n>::operator=(int i)
     {
       if (i < 0)
-	this->v_ = enc(0);
-      else if (i > mln_max(enc))
-	this->v_ = mln_max(enc);
+	this->v_ = 0;
+      else if (i > mln_max(int_u_sat<n>))
+	this->v_ = mln_max(int_u_sat<n>);
       else
-	this->v_ = enc(i);
+	this->v_ = i;
       return *this;
     }
 

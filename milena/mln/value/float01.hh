@@ -29,6 +29,7 @@
 # define MLN_VALUE_FLOAT01_HH
 
 # include <iostream>
+# include <utility>
 
 # include <mln/core/concept/value.hh>
 # include <mln/value/float01_.hh>
@@ -38,21 +39,23 @@
 namespace mln
 {
 
-  // Fwd decls.
   namespace value
   {
-    template <unsigned N> class float01_;
+
+    // Fwd decl.
+    template <unsigned n> class float01_;
     class float01;
+
 
     /// General float01_ class where n bits is not know at compile-time.
     /// This class is used for exchange between float01_ types purpose.
 
-    class float01 : public Value<float01>
+    class float01 : public Floating<float01>
     {
     public:
 
       /// Encoding associated type.
-      typedef float enc;
+      typedef std::pair<unsigned, unsigned long> enc;
 
       /// Equivalent associated type.
       typedef float equiv;
@@ -61,8 +64,8 @@ namespace mln
       float01();
 
       /// Ctor.
-      template <unsigned N>
-      float01(const float01_<N>& val);
+      template <unsigned n>
+      float01(const float01_<n>& val);
 
       /// Ctor.
       float01(unsigned nbits, float val);
@@ -73,12 +76,13 @@ namespace mln
 
       unsigned nbits() const;
 
-      void set_nbits(unsigned nbits);
+      float01&     set_nbits(unsigned nbits);
+      const float01 to_nbits(unsigned nbits) const;
 
-      float01 to_nbits(unsigned nbits) const;
+      operator float() const;
 
-      template <unsigned N>
-      operator float01_<N>() const;
+//       template <unsigned n>
+//       operator float01_<n>() const;
 
     protected:
       unsigned nbits_;
@@ -89,6 +93,7 @@ namespace mln
 
     bool operator==(const float01& lhs, const float01& rhs);
     bool operator<(const float01& lhs, const float01& rhs);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -123,17 +128,18 @@ namespace mln
 
     } // end of mln::value::internal
 
+
     // Float01.
 
     float01::float01()
-      : nbits_(0)
+      : nbits_(0) // FIXME: Cost at run-time...
     {
     }
 
     template <unsigned n>
     float01::float01(const float01_<n>& g)
       : nbits_(n),
-	val_(g.value_ind())
+	val_(g.to_enc())
     {
     }
 
@@ -160,14 +166,13 @@ namespace mln
       return nbits_;
     }
 
-
-
-    void float01::set_nbits(unsigned nbits)
+    float01&
+    float01::set_nbits(unsigned nbits)
     {
       mln_precondition(nbits != 0);
       mln_invariant(nbits_ != 0);
       if (nbits == nbits_)
-	return;
+	return *this;
       if (nbits > nbits_)
 	{
 	  val_ *= internal::two_pow_n_minus_1(nbits);
@@ -178,10 +183,11 @@ namespace mln
 	  val_ /= internal::two_pow_(nbits_ - nbits);
 	}
       nbits_ = nbits;
+      return *this;
     }
 
-
-    float01 float01::to_nbits(unsigned nbits) const
+    const float01
+    float01::to_nbits(unsigned nbits) const
     {
       mln_precondition(nbits != 0);
       mln_invariant(nbits_ != 0);
@@ -190,18 +196,25 @@ namespace mln
       return tmp;
     }
 
-
-    template <unsigned n>
-    float01::operator float01_<n>() const
+    float01::operator float() const
     {
       mln_precondition(nbits_ != 0);
-      float01_<n> tmp;
-      tmp.set_ind(internal::convert<n>(nbits_, val_));
-      mln_assertion(tmp.value() < internal::two_pow_(n));
+      float tmp = float(val_) / internal::two_pow_n_minus_1(nbits_);
       return tmp;
     }
 
-    // operators
+//     template <unsigned n>
+//     float01::operator float01_<n>() const
+//     {
+//       mln_precondition(nbits_ != 0);
+//       float01_<n> tmp;
+//       tmp.set_ind(internal::convert<n>(nbits_, val_));
+//       mln_assertion(tmp.value() < internal::two_pow_(n));
+//       return tmp;
+//     }
+
+
+    // Operators.
 
     std::ostream& operator<<(std::ostream& ostr, const float01& g)
     {

@@ -36,6 +36,7 @@
  */
 
 # include <mln/core/concept/value.hh>
+# include <mln/core/internal/force_exact.hh>
 
 
 namespace mln
@@ -55,29 +56,32 @@ namespace mln
        * Parameters are \c V the equivalent value type and \c E the
        * exact value type.
        */
-      template <typename V, typename E>
+      template < typename V, // Equivalent.
+		 typename C, // Encoding.
+		 typename N, // Interoperation.
+		 typename E >
       struct value_like_ // FIXME :Remove -> : public Value<E>
       {
-	/// Encoding associated type.
-	typedef V enc;
-
 	/// Equivalent associated type.
 	typedef V equiv;
 
-	/// Convertion towards equivalent type.
-	operator V() const;
+	/// Encoding associated type.
+	typedef C enc;
+
+	/// Interoperation associated type.
+	typedef N interop;
 
 	/// Explicit convertion towards equivalent type.
 	V to_equiv() const;
 
 	/// Explicit convertion towards encoding type.
-	V to_enc() const;
+	C to_enc() const;
 
-	/// Assignment from equivalent type.
-	E& operator=(const V& v);
+	/// Explicit convertion towards interoperation type.
+	N to_interop() const;
 
       protected:
-	enc v_; /// The actual value.
+	enc v_; /// The encoding value.
       };
 
 
@@ -86,8 +90,8 @@ namespace mln
        *
        * \relates value_like_
        */
-      template <typename V, typename E>
-      bool operator==(const value_like_<V,E>& lhs, const value_like_<V,E>& rhs);
+      template <typename V, typename C, typename N, typename E>
+      bool operator==(const value_like_<V,C,N,E>& lhs, const value_like_<V,C,N,E>& rhs);
 
 
       /*! \brief General definition of the "less than" operator
@@ -95,52 +99,45 @@ namespace mln
        *
        * \relates value_like_
        */
-      template <typename V, typename E>
-      bool operator<(const value_like_<V,E>& lhs, const value_like_<V,E>& rhs);
+      template <typename V, typename C, typename N, typename E>
+      bool operator<(const value_like_<V,C,N,E>& lhs, const value_like_<V,C,N,E>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename V, typename E>
-      value_like_<V, E>::operator V() const
-      {
-	return v_;
-      }
-
-      template <typename V, typename E>
+      template <typename V, typename C, typename N, typename E>
       V
-      value_like_<V, E>::to_equiv() const
+      value_like_<V,C,N,E>::to_equiv() const
       {
 	return v_;
       }
 
-      template <typename V, typename E>
-      V
-      value_like_<V, E>::to_enc() const
+      template <typename V, typename C, typename N, typename E>
+      C
+      value_like_<V,C,N,E>::to_enc() const
       {
 	return v_;
       }
 
-      template <typename V, typename E>
-      E&
-      value_like_<V, E>::operator=(const V& v)
+      template <typename V, typename C, typename N, typename E>
+      N
+      value_like_<V,C,N,E>::to_interop() const
       {
-	v_ = v;
-	return exact(*this);
+	return mln::internal::force_exact<E>(*this).operator N();
       }
 
-      template <typename V, typename E>
-      bool operator==(const value_like_<V, E>& lhs,
-		      const value_like_<V, E>& rhs)
+      template <typename V, typename C, typename N, typename E>
+      bool operator==(const value_like_<V,C,N,E>& lhs,
+		      const value_like_<V,C,N,E>& rhs)
       {
-	return V(lhs) == V(rhs);
+	return lhs.to_interop() == rhs.to_interop();
       }
 
-      template <typename V, typename E>
-      bool operator<(const value_like_<V, E>& lhs,
-		     const value_like_<V, E>& rhs)
+      template <typename V, typename C, typename N, typename E>
+      bool operator<(const value_like_<V,C,N,E>& lhs,
+		     const value_like_<V,C,N,E>& rhs)
       {
-	return V(lhs) < V(rhs);
+	return lhs.to_interop() < rhs.to_interop();
       }
 
 # endif // ! MLN_INCLUDE_ONLY

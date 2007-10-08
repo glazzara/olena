@@ -34,9 +34,7 @@
 # include <mln/metal/math.hh>
 # include <mln/metal/bexpr.hh>
 
-# include <mln/value/internal/value_like.hh>
-# include <mln/value/concept/integer.hh>
-# include <mln/value/internal/encoding.hh>
+# include <mln/value/int_u.hh>
 # include <mln/value/gray.hh>
 # include <mln/value/props.hh>
 
@@ -53,36 +51,25 @@ namespace mln
 
     /// General gray-level class on n bits.
     template <unsigned n>
-    class graylevel
-      : public Integer< graylevel<n> >,
-	public internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
-				      graylevel<n> >
+    struct graylevel
+      :
+      public Integer< graylevel<n> >,
+      
+      public internal::value_like_< int_u<n>,          // Equivalent.
+				    mln_enc(int_u<n>), // Encoding.
+				    gray,              // Interoperation.
+				    graylevel<n> >     // Exact.
     {
-    protected:
-      typedef internal::value_like_< typename internal::encoding_unsigned_<n>::ret,
-				     graylevel<n> > like;
-
-    public:
-
-      /// Encoding associated type.
-      typedef typename like::enc enc;
-
       /// Ctor.
       graylevel();
 
       /// Ctor.
-      explicit graylevel(const int val);
+      explicit graylevel(int val);
 
       /// Access to std type.
-      enc value() const;
+      mln_enc(int_u<n>) value() const;
 
-      /// Op<.
-      bool operator<(const graylevel<n>& rhs) const;
-
-      graylevel<n>& operator=(const int val);
-
-    protected:
-      enc val_;
+      graylevel<n>& operator=(int val);
     };
 
 
@@ -132,34 +119,28 @@ namespace mln
     }
 
     template <unsigned n>
-    graylevel<n>::graylevel(const int val)
-      : val_(val)
+    graylevel<n>::graylevel(int val)
     {
       mln_precondition(val >= 0);
-      mln_precondition(unsigned(val) <= mln_max(enc));
+      mln_precondition(unsigned(val) <= mln_max(mln_enc(int_u<n>)));
+      this->v_ = val;
     }
 
     template <unsigned n>
-    typename graylevel<n>::enc
+    mln_enc(int_u<n>)
     graylevel<n>::value() const
     {
-      return val_;
+      return this->v_;
     }
 
     template <unsigned n>
     graylevel<n>&
-    graylevel<n>::operator=(const int val)
+    graylevel<n>::operator=(int val)
     {
       mln_precondition(val >= 0);
-      mln_precondition(unsigned(val) <= mln_max(enc));
-      this->val_ = val;
+      mln_precondition(unsigned(val) <= mln_max(mln_enc(int_u<n>)));
+      this->v_ = val;
       return *this;
-    }
-
-    template <unsigned n>
-    bool graylevel<n>::operator<(const graylevel<n>& rhs) const
-    {
-      return val_ < rhs.val_;
     }
 
     template <unsigned n>
@@ -174,7 +155,7 @@ namespace mln
       return gray(lhs) == gray(rhs);
     }
 
-# endif
+# endif // ! MLN_INCLUDE_ONLY
 
 
   } // end of namespace mln::value

@@ -40,6 +40,7 @@ int main()
   using value::int_u8;
   using value::float01_8;
 
+  std::cout << sizeof(float01_8) << std::endl;
   {
     int_u8 i = 3;
     i = 2;

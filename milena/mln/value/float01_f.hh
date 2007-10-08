@@ -40,22 +40,24 @@ namespace mln
   {
 
     /// Fwd decl.
-    class float01;
+    struct float01;
 
 
     /// General float01-level class on n bits.
-    class float01_f
-      : public Floating< float01_f >,
-	public internal::value_like_< float,
-				      float01_f >
-    {
-    public:
+    struct float01_f
+      :
+      public Floating< float01_f >,
 
+      public internal::value_like_< float,      // Equivalent.
+				    float,      // Encoding.
+				    float,      // Interoperation.
+				    float01_f > // Exact.
+    {
       /// Ctor.
       float01_f();
 
       /// Ctor.
-      float01_f(const float val);
+      float01_f(float val);
 
       /// Access to std type.
       float value() const;
@@ -64,12 +66,8 @@ namespace mln
       operator float() const;
 
       float01_f& operator=(const float val);
-      /// Op==.
-      // bool operator==(const float01_f& rhs) const;
-
-    protected:
-      float val_;
     };
+
 
     template <>
     struct props< float01_f >
@@ -83,47 +81,47 @@ namespace mln
       typedef float interop;
     };
 
+
 # ifndef MLN_INCLUDE_ONLY
 
     // Float01_F.
 
     float01_f::float01_f()
-      : val_(0)
     {
     }
 
-    float01_f::float01_f(const float val)
-      : val_(val)
+    float01_f::float01_f(float val)
     {
       mln_precondition(val >= 0);
       mln_precondition(val <= 1);
+      this->v_ = val;
     }
 
     float
     float01_f::value() const
     {
-      return (val_);
+      return this->v_;
     }
 
     float01_f&
-    float01_f::operator=(const float val)
+    float01_f::operator=(float val)
     {
       mln_precondition(val >= 0);
       mln_precondition(val <= 1);
-      this->val_ = val;
+      this->v_ = val;
       return *this;
     }
 
     float01_f::operator float() const
     {
-      return val_;
+      return this->v_;
     }
 
-# endif
-
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::value
 
 } // end of namespace mln
+
 
 #endif // ! MLN_CORE_VALUE_FLOAT01_F_HH

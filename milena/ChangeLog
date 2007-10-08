@@ -1,3 +1,26 @@
+2007-10-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Clean-up value types.
+
+	* tests/value_float01_bis.cc: New.
+	* tests/value_float01_f.cc: Layout.
+	* tests/value_float01.hh: Remove.
+	* tests/value_float01.cc: Use mln_assertion.
+	* tests/value_int_u8.cc: Check size of float01_8.
+	* mln/accu/median.hh (init): Fix.
+	* mln/value/internal/value_like.hh (V): Rename as...
+	(C): ...this.
+	(V, N): New parameters.
+	(operator): Remove auto conversion; too risky.
+	(to_interop): New.
+	* mln/value/graylevel.hh,
+	* mln/value/float01_.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_u.hh,
+	* mln/value/int_u_sat.hh,
+	* mln/value/float01.hh,
+	* mln/value/float01_f.hh: Update.
+
 2007-10-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Move color_sub from sandbox into color_pretty in a new folder : display.
