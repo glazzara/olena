@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_LINE_HH
-# define MLN_CORE_WIN_LINE_HH
+#ifndef MLN_CORE_WIN_DYN_LINE_HH
+# define MLN_CORE_WIN_DYN_LINE_HH
 
-/*! \file mln/core/win/line.hh
+/*! \file mln/core/win/dyn_line.hh
  *
- * \brief Definition of the mln::win::line window.
+ * \brief Definition of the mln::win::dyn_line window.
  */
 
 # include <mln/core/concept/window.hh>
@@ -45,9 +45,9 @@ namespace mln
   namespace win
   {
  
-    template <typename M, unsigned i, typename C>
-    struct line : public Window< line<M,i,C> >,
-		  public internal::dpoints_base_<dpoint_<M, C>, point_<M, C> >
+    template <typename M, typename C>
+    struct dyn_line : public Window< dyn_line<M,C> >,
+		      public internal::dpoints_base_<dpoint_<M, C>, point_<M, C> >
     {
       /// Point associated type.
       typedef point_<M, int> point;
@@ -55,10 +55,10 @@ namespace mln
       /// Dpoint associated type.
       typedef dpoint_<M, int> dpoint;
 
-      /// Point_Iterator type to browse a line forward
+      /// Point_Iterator type to browse a dyn_line forward
       typedef dpoints_fwd_piter<dpoint> fwd_qiter;
 
-      /// Point_Iterator type to browse a line backward
+      /// Point_Iterator type to browse a dyn_line backward
       typedef dpoints_bkd_piter<dpoint> bkd_qiter;
 
       /// Same as fwd_qiter
@@ -66,11 +66,11 @@ namespace mln
 
       /*! \brief Constructor.
        *
-       * \param[in] length Length of the line.
+       * \param[in] length Length of the dyn_line.
        *
        * \pre \p length is odd.
        */
-      line(unsigned length);
+      dyn_line(unsigned length, unsigned direction);
 
       /*! \brief Test if the window is centered.
        *
@@ -84,7 +84,7 @@ namespace mln
        */
       bool is_symmetric() const;
 	
-      /*! \brief Give the hline length, that is, its width.
+      /*! \brief Give the dyn_line length, that is, its width.
        */
       unsigned length() const;
 	
@@ -94,33 +94,33 @@ namespace mln
       unsigned delta() const;
 
       /// Apply a central symmetry to the target window.
-      line<M,i,C>& sym();
+      dyn_line<M,C>& sym();
 		
       protected:
 	unsigned length_;
     };
 
 
-    /*! \brief Print an line window \p win into the output
+    /*! \brief Print an dyn_line window \p win into the output
      *  stream \p ostr.
      *
      * \param[in,out] ostr An output stream.
-     * \param[in] win An line window.
+     * \param[in] win An dyn_line window.
      *
      * \return The modified output stream \p ostr.
      *
-     * \relates mln::win::line
+     * \relates mln::win::dyn_line
      */
-    template <typename M, unsigned i, typename C>
-    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win);
+    template <typename M, typename C>
+    std::ostream& operator<<(std::ostream& ostr, const dyn_line<M,C>& win);
 
  
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-    template <typename M, unsigned i, typename C>
-    line<M,i,C>::line(unsigned length)
+    template <typename M, typename C>
+    dyn_line<M,C>::dyn_line(unsigned length, unsigned i)
       : length_(length)
     {
       mln_precondition(i < M::dim);
@@ -135,40 +135,40 @@ namespace mln
       }
     }
 
-    template <typename M, unsigned i, typename C>
-    bool line<M,i,C>::is_centered() const
+    template <typename M, typename C>
+    bool dyn_line<M,C>::is_centered() const
     {
       return true;
     }
 
-    template <typename M, unsigned i, typename C>
-    bool line<M,i,C>::is_symmetric() const
+    template <typename M, typename C>
+    bool dyn_line<M,C>::is_symmetric() const
     {
       return true;
     }
 
-    template <typename M, unsigned i, typename C>
-    unsigned line<M,i,C>::length() const
+    template <typename M, typename C>
+    unsigned dyn_line<M,C>::length() const
     {
       return length_;
     }
 
-    template <typename M, unsigned i, typename C>
-    unsigned line<M,i,C>::delta() const
+    template <typename M, typename C>
+    unsigned dyn_line<M,C>::delta() const
     {
       return length_ / 2;
     }
 
-    template <typename M, unsigned i, typename C>
-    line<M,i,C>& line<M,i,C>::sym()
+    template <typename M, typename C>
+    dyn_line<M,C>& dyn_line<M,C>::sym()
     {
       return *this;
     }
 
-    template <typename M, unsigned i, typename C>
-    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win)
+    template <typename M, typename C>
+    std::ostream& operator<<(std::ostream& ostr, const dyn_line<M,C>& win)
     {
-      ostr << "[line: length=" << win.length() << ']';
+      ostr << "[dyn_line: length=" << win.length() << ']';
       return ostr;
     }
 
@@ -180,4 +180,4 @@ namespace mln
 
 
 
-#endif // ! MLN_CORE_WIN_LINE_HH
+#endif // ! MLN_CORE_WIN_DYN_LINE_HH
