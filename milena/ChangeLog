@@ -1,3 +1,16 @@
+2007-10-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add hexa images.
+
+	* mln/core/box2d_h.hh: New.
+	* mln/core/dpoint2d_h.hh: New.
+	* mln/core/hexa.hh: New.
+	* mln/core/point2d_h.hh: New.
+	* mln/make/box2d_h.hh: New.
+	* mln/make/dpoint2d_h.hh: New.
+	* mln/make/point2d_h.hh: New.
+	* tests/hexa.cc: New, Fixme : write more tests.
+
 2007-10-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix value concepts and related file inclusions.
