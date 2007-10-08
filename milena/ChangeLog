@@ -1,5 +1,11 @@
 2007-10-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Update test for color.
+
+	* color_sub.cc: Upadte.
+
+2007-10-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update color for image_if and subimage.
 
 	* color_sub.cc,

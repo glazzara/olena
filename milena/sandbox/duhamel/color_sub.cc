@@ -48,16 +48,33 @@
 #include <mln/core/image_if_value.hh>
 #include <mln/debug/iota.hh>
 
+
+#include <mln/core/image2d_b.hh>
+#include <mln/core/sub_image.hh>
+#include <mln/core/image_if_value.hh>
+#include <mln/core/inplace.hh>
+
+#include <mln/level/fill.hh>
+# include <mln/debug/println.hh>
+# include <mln/core/w_window2d_int.hh>
+# include <mln/core/w_window2d_float.hh>
+# include <mln/core/image_if_interval.hh>
+
+# include <mln/make/win_chamfer.hh>
+# include <mln/geom/chamfer.hh>
+# include <mln/io/pbm/load.hh>
+
 #include "color_sub.hh"
 
 int main()
 {
   using namespace mln;
 
-
-  image2d_b<value::int_u8> ima(10,10);
-  debug::iota (ima);
-  image2d_b<value::rgb8> out = color(inplace (ima | 50));
+  unsigned max = 51;
+  image2d_b<bool> input = io::pbm::load("../../img/toto.pbm");
+    const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 0> ();
+  image2d_b<unsigned> tmp = geom::chamfer(input, w_win, max);
+  image2d_b<value::rgb8> out = color(inplace (tmp | 4));
   io::ppm::save(out, "out.ppm");
-  //  debug::println(out);
+  std::cout << "out.ppm generate" << std::endl;
 }
