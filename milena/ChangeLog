@@ -1,5 +1,11 @@
 2007-10-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Move color_sub from sandbox into color_pretty in a new folder : display.
+	* display/color_pretty.hh: New.
+	* display: New folder for display.
+
+2007-10-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add test for color pretty.
 
 	* color_pretty.cc: New test for color pretty.
