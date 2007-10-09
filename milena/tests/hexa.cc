@@ -40,21 +40,20 @@
 int main()
 {
   using namespace mln;
-  using typename value::int_u8;
+  using value::int_u8;
 
   typedef image2d_b<int_u8> I;
 
   I ima(3,3);
-  hexa< I > h(ima);
+  hexa<I> h(ima);
 
   trait::image::print(h, std::cout);
 
 
   // FIXME : to put into debug::println
-  box_<point2d>::fwd_piter p(ima.box());
-
+  I::fwd_piter p(ima.domain());
   for_all(p)
     {
-      p
+      ;
     }
 }

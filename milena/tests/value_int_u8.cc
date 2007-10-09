@@ -40,14 +40,76 @@ int main()
   using value::int_u8;
   using value::float01_8;
 
-  std::cout << sizeof(float01_8) << std::endl;
-  {
-    int_u8 i = 3;
-    i = 2;
-    mln_assertion(i == 2);
-    mln_assertion(i != 3);
+  int_u8 i = 3, j;
 
-    mln_assertion(-i == -2);
-    mln_assertion(-3 * i == -6);
+  {
+//     int k = 1;
+//     i *= k;
+    i *= i;
+    mln_assertion(i == 9);
   }
+
+//   // Assignment.
+//   {
+//     i = 51;
+//     mln_assertion(i == 51);
+
+//     i = 51u;
+//     mln_assertion(i == 51);
+
+//     signed char c = 51;
+//     i = c;
+//     mln_assertion(i == 51);
+
+//     j = i;
+//     mln_assertion(j == 51);
+
+//     // Error at run-time as expected :-)
+//     // i = 256;
+//     // i = -1;
+//     // i = 255, ++i;
+//   }
+
+//   // Multiplication.
+//   {
+//     i *= 2;
+//     int k;  k *= i;
+
+//     unsigned char c = 0;
+//     i *= c;
+//     mln_assertion(i == 0);
+
+//     // Error at run-time as expected :-)
+//     // i = 128;
+//     // i *= 2;
+//   }
+
+
+//   {
+//     i = 3;
+//     mln_assertion(3.0f == i);
+//     mln_assertion(i != 2.99f);
+//   }
+
+//   {
+//     int j;
+//     j = -i;
+//     j = +i;
+//   }
+
+//   {
+//     i = 0;
+//     i += 1;
+//   }
+
+  //     mln_assertion(i == 2);
+  //     mln_assertion(i != 3);
+
+  //     mln_assertion(-i == -2);
+  //     mln_assertion(-3 * i == -6);
+
+  //     mln_assertion(j != i);
+  //     mln_assertion(j != 0);
+  //     mln_assertion(0 != j);
+  
 }

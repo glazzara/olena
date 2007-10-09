@@ -71,6 +71,83 @@ namespace mln
 
   } // end of namespace mln::value
 
+  
+
+  /// Pre-incrementation.
+  template <typename S>
+  S& operator++(value::Scalar<S>& rhs);
+
+
+  /// Pre-decrementation.
+  template <typename S>
+  S& operator--(value::Scalar<S>& rhs);
+
+
+
+  template <typename S>
+  S& operator*=(value::Scalar<S>& lhs, typename S::interop i);
+
+  template <typename S>
+  S& operator/=(value::Scalar<S>& lhs, typename S::interop i);
+
+  template <typename S>
+  S& operator+=(value::Scalar<S>& lhs, typename S::interop i);
+
+  template <typename S>
+  S& operator-=(value::Scalar<S>& lhs, typename S::interop i);
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+  template <typename S>
+  S& operator++(value::Scalar<S>& rhs)
+  {
+    exact(rhs) += 1; // FIXME: literal::one?
+    return exact(rhs);
+  }
+
+  template <typename S>
+  S& operator--(value::Scalar<S>& rhs)
+  {
+    exact(rhs) -= 1; // FIXME: literal::one?
+    return exact(rhs);
+  }
+
+  template <typename S>
+  S& operator*=(value::Scalar<S>& lhs_, typename S::interop i)
+  {
+    S& lhs = exact(lhs_);
+    lhs = lhs * i;
+    return lhs;
+  }
+
+  template <typename S>
+  S& operator/=(value::Scalar<S>& lhs_, typename S::interop i)
+  {
+    S& lhs = exact(lhs_);
+    lhs = lhs / i;
+    return lhs;
+  }
+
+  template <typename S>
+  S& operator+=(value::Scalar<S>& lhs_, typename S::interop i)
+  {
+    S& lhs = exact(lhs_);
+    lhs = lhs + i;
+    return lhs;
+  }
+
+  template <typename S>
+  S& operator-=(value::Scalar<S>& lhs_, typename S::interop i)
+  {
+    S& lhs = exact(lhs_);
+    lhs = lhs - i;
+    return lhs;
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
+
 } // end of namespace mln
 
 

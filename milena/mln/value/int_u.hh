@@ -131,12 +131,6 @@ namespace mln
 
       /// Unit value.
       static const int_u<n> one;
-
-      /// Self addition.
-      int_u<n>& operator+=(int i);
-
-      /// Self subtraction.
-      int_u<n>& operator-=(int i);
     };
 
 
@@ -200,26 +194,6 @@ namespace mln
       mln_precondition(i >= 0);
       mln_precondition(unsigned(i) <= mln_max(enc_));
       this->v_ = i;
-      return *this;
-    }
-
-    template <unsigned n>
-    int_u<n>&
-    int_u<n>::operator+=(int i)
-    {
-      mln_precondition(long(this->v_) + i >= 0);
-      mln_precondition(long(this->v_) + i <= mln_max(enc_));
-      this->v_ += i;
-      return *this;
-    }
-
-    template <unsigned n>
-    int_u<n>&
-    int_u<n>::operator-=(int i)
-    {
-      mln_precondition(long(this->v_) - i >= 0);
-      mln_precondition(long(this->v_) - i <= mln_max(enc_));
-      this->v_ -= i;
       return *this;
     }
 

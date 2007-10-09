@@ -97,6 +97,22 @@ namespace mln
   bool operator<=(const Object<O1>& lhs, const Object<O2>& rhs);
 
 
+  /* \brief Default definition of the post-incrementation operator.
+   *
+   * It relies on the definition of the pre-incrementation operator.
+   */
+  template <typename O>
+  O operator++(Object<O>& rhs, int);
+  
+
+  /* \brief Default definition of the post-decrementation operator.
+   *
+   * It relies on the definition of the pre-decrementation operator.
+   */
+  template <typename O>
+  O operator--(Object<O>& rhs, int);
+  
+
   // Operator +.
 
   // FIXME HERE
@@ -164,6 +180,22 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  template <typename O>
+  O operator++(Object<O>& rhs, int)
+  {
+    O tmp(exact(rhs)); // Copy.
+    ++exact(rhs);      // Pre-inc.
+    return tmp;
+  }
+  
+  template <typename O>
+  O operator--(Object<O>& rhs, int)
+  {
+    O tmp(exact(rhs)); // Copy.
+    --exact(rhs);      // Pre-dec.
+    return tmp;
+  }
 
   template <typename O1, typename O2>
   bool operator!=(const Object<O1>& lhs, const Object<O2>& rhs)

@@ -65,12 +65,6 @@ namespace mln
       typedef equiv; // equivalent type
     */
 
-    /// Pre-incrementation.
-    E& operator++();
-
-    /// Pre-decrementation.
-    E& operator--();
-
   protected:
     Value();
   };
@@ -84,22 +78,6 @@ namespace mln
   {
     typedef mln_enc(E) enc;
     typedef mln_equiv(E) equiv;
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator++()
-  {
-    exact(this)->operator+=(E::one);
-    return exact(*this);
-  }
-
-  template <typename E>
-  E&
-  Value<E>::operator--()
-  {
-    exact(this)->operator-=(E::one);
-    return exact(*this);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -124,12 +124,6 @@ namespace mln
 
       /// Unit value.
       static const int_s<n> one;
-
-      /// Self addition.
-      int_s<n>& operator+=(int i);
-
-      /// Self subtraction.
-      int_s<n>& operator-=(int i);
     };
 
 
@@ -205,26 +199,6 @@ namespace mln
     int_s<n>::operator-() const
     {
       return - this->v_;
-    }
-
-    template <unsigned n>
-    int_s<n>&
-    int_s<n>::operator+=(int i)
-    {
-      mln_precondition(long(this->v_) + i >= mln_min(int_s<n>));
-      mln_precondition(long(this->v_) + i <= mln_max(int_s<n>));
-      this->v_ += i;
-      return *this;
-    }
-
-    template <unsigned n>
-    int_s<n>&
-    int_s<n>::operator-=(int i)
-    {
-      mln_precondition(long(this->v_) - i >= mln_min(int_s<n>));
-      mln_precondition(long(this->v_) - i <= mln_max(int_s<n>));
-      this->v_ -= i;
-      return *this;
     }
 
     template <unsigned n>

@@ -45,10 +45,12 @@ namespace mln
     template <typename E> struct Integer;
   }
 
+
   namespace trait
   {
     // FIXME
   } // end of namespace mln::trait
+
 
   namespace value
   {

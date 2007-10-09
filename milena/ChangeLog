@@ -1,3 +1,21 @@
+2007-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Clean some operators on object and value types.
+
+	* tests/value_interop.cc (int_u<n>): Augment.
+	Deactivate some parts of code because they contain too few
+	tests to be relevant; they have to be augmented!
+	* tests/value_int_u8.cc: Augment.
+	* tests/hexa.cc: Fix; make it compile.
+	* mln/core/ops.hh (++, --): New operator default impls.
+	* mln/core/concept/value.hh (++, --): Move to...
+	* mln/value/concept/scalar.hh: ...here.
+	Those ops are only relevant for scalars.
+	* mln/value/int_s.hh,
+	* mln/value/int_u.hh (+=, -=): Move to...
+	* mln/value/concept/integer.hh: ...here.
+	Their definition is more general than just for int_*.
+
 2007-10-08  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Refactoring erosion with dispatch mecanism and tracing.
