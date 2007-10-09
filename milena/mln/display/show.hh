@@ -66,11 +66,21 @@ namespace mln
 	const I& input = exact (input_);
 	image2d<value::rgb8> out = display::color_pretty(input);
 
-	std::string tmp = tempnam (0, "ppm");
-	// Save output image from color in out.ppm.
-	io::ppm::save(out, tmp);
+//  	/// Save output image from color in temporary file.
+// 	std::string path_tmp = tempnam (0, "ppm");
 
-	std::string s = cmd + " " + tmp;
+	/// Use of mkstemp instead tempmap.
+	char *tmp = (char*)malloc (7 * sizeof (char));
+	for (int i = 0; i < 6; ++i)
+	  tmp[i] = 'X';
+	tmp[6] = 0;
+	if (mkstemp(tmp) == -1)
+	  return;
+
+	std::string t = tmp;
+	std::string path_tmp = "/tmp/" + t;
+ 	io::ppm::save(out, path_tmp);
+	std::string s = cmd + " " + path_tmp;
 	system (s.c_str ());
       }
 

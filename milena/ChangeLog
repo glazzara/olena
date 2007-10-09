@@ -1,5 +1,11 @@
 2007-10-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix warning in display::show.
+
+	* show.hh: Fix.
+
+2007-10-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add display::show for visualize temporary image.
 
 	* show.hh: Compile with warning by tempnam function.
