@@ -1,5 +1,13 @@
 2007-10-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	Add composed transformation. (Does not work !).
+	* mln/fun/x2x/bijective_tr.hh: Bijective transformation.
+	* mln/fun/x2x/composed.hh: Composed tranformation.
+	* mln/fun/x2x/rotation.hh: Update.
+	* mln/fun/x2x/translation.hh: Update.
+
+2007-10-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Refactoring : move mln/core/win to mln/win.
 	* mln/core/win/backdiag2d.hh,
 	* mln/core/win/cube3d.hh,

@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_X2X_TRANSLATION_HH
-# define MLN_FUN_X2X_TRANSLATION_HH
+#ifndef MLN_FUN_X2X_COMPOSED_HH
+# define MLN_FUN_X2X_COMPOSED_HH
 
-/*! \file mln/fun/x2x/translation.hh
+/*! \file mln/fun/x2x/composed.hh
  *
  * \brief FIXME.
  */
 
-# include <mln/fun/x2x/bijective_tr.hh>
+# include <mln/core/concept/function.hh>
 # include <mln/metal/vec.hh>
 # include <mln/metal/mat.hh>
 
@@ -47,79 +47,107 @@ namespace mln
     namespace x2x
     {
 
-      // FIXME: Doc!
+	// Fwd decl.
+      template <typename L, typename M>
+      struct composed;
 
-      template <unsigned n, typename C>
-      struct translation : public bijective_tr< translation<n,C> >
+      namespace internal
       {
 
-	enum {dim = n};
+	template <unsigned n, typename L, unsigned m, typename M, typename E>
+	struct helper_;
+
+	template <unsigned n, typename L, typename M, typename E>
+	struct helper_<n, Function_x2x<L>, n, Function_x2x<M> > : Function_x2x<E>
+	{
+	    enum {dim = n};
+	};
+
+	template <unsigned n, typename L, typename M, typename E>
+	struct helper_<n, bijective_tr<L>, n, bijective_tr<M> > : bijective_tr<E>
+	{
+	    enum {dim = n};
+	    typedef composed<M::invert,L::invert> invert;
+
+	    invert inv() const;
+	};
+      }
+
+      // FIXME: Doc!
+
+      template <typename L, typename M>
+      struct composed : public internal::helper_< L::dim, L, M::dim, M, composed<L,M> >
+      {
+
+	typedef internal::helper_< L::dim, L, M::dim, M, composed<L,M> > Super
+
+	enum {dim = Super::dim};
 
 	typedef metal::vec<n,C> result;
-	typedef translation<n,C> invert;
 
-	translation();
-	translation(const metal::vec<n,C>& t);
+	composed();
+	composed(const L& tr_l, const M& tr_m);
 
 	result operator()(const metal::vec<n,C>& v) const;
-	invert inv() const;
 
-	void set_t(const metal::vec<n,C>& t);
+	void set_first(const L& tr_l);
+	void set_second(const M& tr_m);
 
       protected:
 
-	metal::vec<n,C> t_;
+	L tr1_;
+	M tr2_;
 	metal::mat<n + 1,n + 1,C> m_;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <unsigned n, typename C>
-      translation<n,C>::translation()
+      template <typename L, typename M>
+      composed<L,M>::composed()
       {
 	t_ = make::vec<n,C>(0);
 	m_ = metal::mat<n+1,n+1,C>::Id;
       }
 
-      template <unsigned n, typename C>
-      translation<n,C>::translation(const metal::vec<n,C>& t)
-	:t_(t)
+      template <typename L, typename M>
+      composed<L,M>::composed(const L& tr_l, const M& tr_m)
+	:tr1_(tr_l),
+	 tr2_(tr_m)
       {
 	m_ = metal::mat<n+1,n+1,C>::Id;
-	for (unsigned i = 0; i < n; ++i)
-	  m_(i,n) = t_[i];
+	m_ = tr1_ * tr2_;
       }
 
-      template <unsigned n, typename C>
-      metal::vec<n,C>
-      translation<n,C>::operator()(const metal::vec<n,C>& v) const
+      template <typename L, typename M>
+      composed<L,M>::result
+      composed<L,M>::operator()(const metal::vec<n,C>& v) const
       {
-	typename translation::result res;
-	// FIXME: Why not "res = v + t_;"?
-	for (unsigned i = 0; i < n; ++i)
-	  res[i] = v[i] + t_[i];
-	return res;
+	return m_(v);
       }
 
-      template <unsigned n, typename C>
-      translation<n,C>
-      translation<n,C>::inv() const
+      template <typename L, typename M>
+      composed<L,M>::invert
+      composed<L,M>::inv() const
       {
-	typename translation::invert res(-t_);
+	typename composed::invert res(tr2_.inv(), tr1_.inv());
 
 	return res;
       }
 
-      template <unsigned n, typename C>
-      void
-      translation<n,C>::set_t(const metal::vec<n,C>& t)
+      template <typename L, typename M>
+      void 
+      composed<L,M>::set_first(const L& tr_l)
       {
-	t_ = t;
-	for (unsigned i = 0; i < n; ++i)
-	  m_(i,n) = t_[i];
+	tr1_ = tr_l;
       }
 
+      template <typename L, typename M>
+      void 
+      composed<L,M>::set_second(const M& tr_m)
+      {
+	tr2_ = tr_m;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
@@ -130,4 +158,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_X2X_TRANSLATION_HH
+#endif // ! MLN_FUN_X2X_COMPOSED_HH

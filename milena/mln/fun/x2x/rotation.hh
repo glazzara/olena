@@ -33,7 +33,7 @@
  * \brief FIXME.
  */
 
-# include <mln/core/concept/function.hh>
+# include <mln/fun/x2x/bijective_tr.hh>
 # include <mln/metal/vec.hh>
 # include <mln/metal/mat.hh>
 # include <cmath>
@@ -51,7 +51,7 @@ namespace mln
       // FIXME: Doc!
 
       template <unsigned n, typename C>
-      struct rotation : public Function_x2x< rotation<n,C> >
+      struct rotation : public bijective_tr< rotation<n,C> >
       {
 
 	  enum {dim = n};
