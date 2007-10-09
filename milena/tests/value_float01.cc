@@ -39,7 +39,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/core/win/rectangle2d.hh>
+#include <mln/win/rectangle2d.hh>
 #include <mln/level/median.hh>
 #include <mln/level/compare.hh>
 

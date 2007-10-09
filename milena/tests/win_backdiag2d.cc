@@ -30,7 +30,7 @@
  * \brief Tests on mln::win::backdiag2d.
  */
 
-#include <mln/core/win/backdiag2d.hh>
+#include <mln/win/backdiag2d.hh>
 
 #include <mln/convert/to_image.hh>
 

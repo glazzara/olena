@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/core/win/rectangle2d.hh>
+#include <mln/win/rectangle2d.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>

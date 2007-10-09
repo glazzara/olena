@@ -34,8 +34,8 @@
 #include <mln/core/point2d.hh>
 #include <mln/core/vec_p.hh>
 
-#include <mln/core/win/segment1d.hh>
-#include <mln/core/win/rectangle2d.hh>
+#include <mln/win/segment1d.hh>
+#include <mln/win/rectangle2d.hh>
 
 #include <mln/convert/to_vec_p.hh>
 

@@ -30,7 +30,7 @@
  * \brief Tests on mln::win::octagon2d.
  */
 
-#include <mln/core/win/octagon2d.hh>
+#include <mln/win/octagon2d.hh>
 
 #include <mln/convert/to_image.hh>
 

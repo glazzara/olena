@@ -1,3 +1,66 @@
+2007-10-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Refactoring : move mln/core/win to mln/win.
+	* mln/core/win/backdiag2d.hh,
+	* mln/core/win/cube3d.hh,
+	* mln/core/win/diag2d.hh,
+	* mln/core/win/disk2d.hh,
+	* mln/core/win/hline2d.hh,
+	* mln/core/win/line.hh,
+	* mln/core/win/octagon2d.hh,
+	* mln/core/win/rectangle2d.hh,
+	* mln/core/win/segment1d.hh,
+	* mln/core/win/vline2d.hh,
+	* mln/core/win: Rename as ...
+	* mln/win/backdiag2d.hh,
+	* mln/win/cube3d.hh,
+	* mln/win/diag2d.hh,
+	* mln/win/disk2d.hh,
+	* mln/win/hline2d.hh,
+	* mln/win/line.hh,
+	* mln/win/octagon2d.hh,
+	* mln/win/rectangle2d.hh,
+	* mln/win/segment1d.hh,
+	* mln/win/vline2d.hh,
+	* mln/win: ...this.
+
+
+	* mln/level/approx/median.hh,
+	* sandbox/nivault/dyn_line.hh,
+	* sandbox/nivault/median.hh,
+	* sandbox/nivault/tests/pouet.cc,
+	* tests/convert_to_vec_p.cc,
+	* tests/dpoints_pixter.cc,
+	* tests/io_pgm16.cc,
+	* tests/io_ppm16.cc,
+	* tests/io_ppm23.cc,
+	* tests/level_approx_median.cc,
+	* tests/level_median.cc,
+	* tests/level_median_fast.cc,
+	* tests/level_median_hline2d.cc,
+	* tests/level_naive_median.cc,
+	* tests/local_convolve.cc,
+	* tests/main.cc,
+	* tests/morpho_contrast.cc,
+	* tests/morpho_dilation.cc,
+	* tests/morpho_dilation_max_h.cc,
+	* tests/morpho_erosion.cc,
+	* tests/morpho_erosion_min_h.cc,
+	* tests/morpho_gradient.cc,
+	* tests/morpho_hit_or_miss.cc,
+	* tests/morpho_laplacian.cc,
+	* tests/morpho_thinning.cc,
+	* tests/value_float01.cc,
+	* tests/w_window1d_int.cc,
+	* tests/w_window2d_int.cc,
+	* tests/w_window3d_int.cc,
+	* tests/win_backdiag2d.cc,
+	* tests/win_diag2d.cc,
+	* tests/win_disk2d.cc,
+	* tests/win_hline2d.cc,
+	* tests/win_octagon2d.cc,
+	* tests/win_rectangle2d.cc: Update according to the refactoring.
+
 2007-10-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Cleaner version for display::show.

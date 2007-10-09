@@ -34,13 +34,13 @@
  */
 
 # include <mln/level/median.hh>
-# include <mln/core/win/rectangle2d.hh>
-# include <mln/core/win/disk2d.hh>
-# include <mln/core/win/octagon2d.hh>
-# include <mln/core/win/hline2d.hh>
-# include <mln/core/win/vline2d.hh>
-# include <mln/core/win/diag2d.hh>
-# include <mln/core/win/backdiag2d.hh>
+# include <mln/win/rectangle2d.hh>
+# include <mln/win/disk2d.hh>
+# include <mln/win/octagon2d.hh>
+# include <mln/win/hline2d.hh>
+# include <mln/win/vline2d.hh>
+# include <mln/win/diag2d.hh>
+# include <mln/win/backdiag2d.hh>
 
 #include <time.h>
 

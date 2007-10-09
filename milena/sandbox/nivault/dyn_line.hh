@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_WIN_DYN_LINE_HH
 # define MLN_CORE_WIN_DYN_LINE_HH
 
-/*! \file mln/core/win/dyn_line.hh
+/*! \file mln/win/dyn_line.hh
  *
  * \brief Definition of the mln::win::dyn_line window.
  */

@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_HLINE2D_HH
-# define MLN_CORE_WIN_HLINE2D_HH
+#ifndef MLN_CORE_WIN_VLINE2D_HH
+# define MLN_CORE_WIN_VLINE2D_HH
 
-/*! \file mln/core/win/hline2d.hh
+/*! \file mln/win/vline2d.hh
  *
- * \brief Definition of the mln::win::hline2d window.
+ * \brief Definition of the mln::win::vline2d window.
  */
 
-# include <mln/core/win/line.hh>
+# include <mln/win/line.hh>
 # include <mln/core/grids.hh>
 
 
@@ -43,16 +43,18 @@ namespace mln
   namespace win
   {
  
-    /*! \brief Horizontal line window defined on the 2D square grid.
+    /*! \brief Vertical line window defined on the 2D square grid.
      *
-     * An hline2d is centered and symmetrical; so its height is 1 and
-     * its width (length) is odd.
+     * An vline2d is centered and symmetrical; so its width is 1 and
+     * its height (length) is odd.
      *
      * For instance: \n
-     *  o o x o o \n
-     * is defined with length = 5.
+     *  o \n
+     *  x \n
+     *  o \n
+     * is defined with length = 3.
      */
-    typedef line<grid::square, 1, int> hline2d;
+    typedef line<grid::square, 0, int> vline2d;
 
   } // end of namespace mln::win
 
@@ -60,4 +62,4 @@ namespace mln
 
 
 
-#endif // ! MLN_CORE_WIN_HLINE2D_HH
+#endif // ! MLN_CORE_WIN_VLINE2D_HH

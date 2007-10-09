@@ -25,17 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_DIAG2D_HH
-# define MLN_CORE_WIN_DIAG2D_HH
+#ifndef MLN_CORE_WIN_LINE_HH
+# define MLN_CORE_WIN_LINE_HH
 
-/*! \file mln/core/win/diag2d.hh
+/*! \file mln/win/line.hh
  *
- * \brief Definition of the mln::win::diag2d window.
+ * \brief Definition of the mln::win::line window.
  */
 
 # include <mln/core/concept/window.hh>
 # include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint2d.hh>
+# include <mln/core/dpoint.hh>
 # include <mln/core/dpoints_piter.hh>
 
 
@@ -45,132 +45,130 @@ namespace mln
   namespace win
   {
  
-    /*! \brief Diagonal line window defined on the 2D square grid.
-     *
-     * An diag2d is centered and symmetrical.
-     * its width (length) is odd.
-     *
-     * For instance: \n
-     *          o \n
-     *        o   \n
-     *      x     \n
-     *    o       \n
-     *  o         \n
-     * is defined with length = 5.
-     */
-    struct diag2d : public Window< diag2d >,
-		    public internal::dpoints_base_< dpoint2d, diag2d >
+    template <typename M, unsigned i, typename C>
+    struct line : public Window< line<M,i,C> >,
+		  public internal::dpoints_base_<dpoint_<M, C>, point_<M, C> >
     {
       /// Point associated type.
-      typedef point2d point;
+      typedef point_<M, int> point;
 
       /// Dpoint associated type.
-      typedef dpoint2d dpoint;
+      typedef dpoint_<M, int> dpoint;
 
-      /*! \brief Point_Iterator type to browse a hline such as: "for each row
-       * (increasing), for each column (increasing)."
-       */
-      typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
+      /// Point_Iterator type to browse a line forward
+      typedef dpoints_fwd_piter<dpoint> fwd_qiter;
 
-      /*! \brief Point_Iterator type to browse a hline such as: "for each row
-       * (decreasing), for each column (decreasing)."
-       */
-      typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
+      /// Point_Iterator type to browse a line backward
+      typedef dpoints_bkd_piter<dpoint> bkd_qiter;
 
-      /*! \brief Same as fwd_qiter.
-       */
+      /// Same as fwd_qiter
       typedef fwd_qiter qiter;
 
       /*! \brief Constructor.
        *
-       * \param[in] length Length, thus width, of the diagonal line.
+       * \param[in] length Length of the line.
        *
        * \pre \p length is odd.
        */
-      diag2d(unsigned length);
+      line(unsigned length);
 
       /*! \brief Test if the window is centered.
        *
        * \return True.
        */
       bool is_centered() const;
-
+	
       /*! \brief Test if the window is symmetric.
        *
        * \return true.
        */
       bool is_symmetric() const;
-
-      /*! \brief Give the diagonal length, that is, its width.
+	
+      /*! \brief Give the hline length, that is, its width.
        */
       unsigned length() const;
-
+	
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
       unsigned delta() const;
 
       /// Apply a central symmetry to the target window.
-      diag2d& sym();
-
-    protected:
-      unsigned length_;
+      line<M,i,C>& sym();
+		
+      protected:
+	unsigned length_;
     };
 
 
-    /*! \brief Print an diagonal line window \p win into the output
+    /*! \brief Print an line window \p win into the output
      *  stream \p ostr.
      *
      * \param[in,out] ostr An output stream.
-     * \param[in] win A diagonal line window.
+     * \param[in] win An line window.
      *
      * \return The modified output stream \p ostr.
      *
-     * \relates mln::win::diag2d
+     * \relates mln::win::line
      */
-    std::ostream& operator<<(std::ostream& ostr, const diag2d& win);
+    template <typename M, unsigned i, typename C>
+    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win);
 
  
 
 # ifndef MLN_INCLUDE_ONLY
 
-    diag2d::diag2d(unsigned length)
+
+    template <typename M, unsigned i, typename C>
+    line<M,i,C>::line(unsigned length)
       : length_(length)
     {
+      mln_precondition(i < M::dim);
       mln_precondition(length % 2 == 1);
-      const int dcol = length / 2;
-      for (int col = - dcol; col <= dcol; ++col)
-	insert(make::dpoint2d(-col, col));
+      const int dc = length / 2;
+      for (int c = - dc; c <= dc; ++c)
+      {
+	dpoint n;
+	n.set_all(0);
+	n[i] = c;
+	this->insert(n);
+      }
     }
 
-    bool diag2d::is_centered() const
+    template <typename M, unsigned i, typename C>
+    bool line<M,i,C>::is_centered() const
     {
       return true;
     }
 
-    bool diag2d::is_symmetric() const
+    template <typename M, unsigned i, typename C>
+    bool line<M,i,C>::is_symmetric() const
     {
       return true;
     }
 
-    unsigned diag2d::length() const
+    template <typename M, unsigned i, typename C>
+    unsigned line<M,i,C>::length() const
     {
       return length_;
     }
 
-    unsigned diag2d::delta() const
+    template <typename M, unsigned i, typename C>
+    unsigned line<M,i,C>::delta() const
     {
       return length_ / 2;
     }
 
-    diag2d& diag2d::sym()
+    template <typename M, unsigned i, typename C>
+    line<M,i,C>& line<M,i,C>::sym()
     {
       return *this;
     }
 
-    std::ostream& operator<<(std::ostream& ostr, const diag2d& win)
+    template <typename M, unsigned i, typename C>
+    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win)
     {
-      ostr << "[diag 2d: length=" << win.length() << ']';
+      ostr << "[line: length=" << win.length() << ']';
       return ostr;
     }
 
@@ -182,4 +180,4 @@ namespace mln
 
 
 
-#endif // ! MLN_CORE_WIN_DIAG2D_HH
+#endif // ! MLN_CORE_WIN_LINE_HH

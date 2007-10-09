@@ -37,8 +37,8 @@
 # include <mln/geom/size2d.hh>
 
 # include <mln/core/window2d.hh>
-# include <mln/core/win/hline2d.hh>
-# include <mln/core/win/vline2d.hh>
+# include <mln/win/hline2d.hh>
+# include <mln/win/vline2d.hh>
 # include <mln/core/t_image.hh>
 # include <mln/core/dpoint.hh>
 

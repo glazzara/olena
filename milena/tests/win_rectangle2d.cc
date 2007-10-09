@@ -30,7 +30,7 @@
  * \brief Tests on mln::win::rectangle2d.
  */
 
-#include <mln/core/win/rectangle2d.hh>
+#include <mln/win/rectangle2d.hh>
 #include <mln/geom/sym.hh>
 
 

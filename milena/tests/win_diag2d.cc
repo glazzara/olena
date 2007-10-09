@@ -30,7 +30,7 @@
  * \brief Tests on mln::win::diag2d.
  */
 
-#include <mln/core/win/diag2d.hh>
+#include <mln/win/diag2d.hh>
 
 #include <mln/convert/to_image.hh>
 

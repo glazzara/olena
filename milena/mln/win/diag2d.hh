@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_RECTANGLE2D_HH
-# define MLN_CORE_WIN_RECTANGLE2D_HH
+#ifndef MLN_CORE_WIN_DIAG2D_HH
+# define MLN_CORE_WIN_DIAG2D_HH
 
-/*! \file mln/core/win/rectangle2d.hh
+/*! \file mln/win/diag2d.hh
  *
- * \brief Definition of the mln::win::rectangle2d window.
+ * \brief Definition of the mln::win::diag2d window.
  */
 
 # include <mln/core/concept/window.hh>
@@ -45,19 +45,21 @@ namespace mln
   namespace win
   {
  
-    /*! \brief Rectangular window defined on the 2D square grid.
+    /*! \brief Diagonal line window defined on the 2D square grid.
      *
-     * A rectangle2d is a 2D window with rectangular shape.  It is
-     * centered and symmetrical.
+     * An diag2d is centered and symmetrical.
+     * its width (length) is odd.
      *
      * For instance: \n
-     *  o o o o o \n
-     *  o o x o o \n
-     *  o o o o o \n
-     * is defined with height = 3 and width = 5.
+     *          o \n
+     *        o   \n
+     *      x     \n
+     *    o       \n
+     *  o         \n
+     * is defined with length = 5.
      */
-    struct rectangle2d : public Window< rectangle2d >,
-			 public internal::dpoints_base_< dpoint2d, rectangle2d >
+    struct diag2d : public Window< diag2d >,
+		    public internal::dpoints_base_< dpoint2d, diag2d >
     {
       /// Point associated type.
       typedef point2d point;
@@ -65,26 +67,27 @@ namespace mln
       /// Dpoint associated type.
       typedef dpoint2d dpoint;
 
-      /*! \brief Point_Iterator type to browse a rectangle such as: "for each row
+      /*! \brief Point_Iterator type to browse a hline such as: "for each row
        * (increasing), for each column (increasing)."
        */
       typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
 
-      /*! \brief Point_Iterator type to browse a rectangle such as: "for each row
+      /*! \brief Point_Iterator type to browse a hline such as: "for each row
        * (decreasing), for each column (decreasing)."
        */
       typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
 
+      /*! \brief Same as fwd_qiter.
+       */
+      typedef fwd_qiter qiter;
 
       /*! \brief Constructor.
        *
-       * \param[in] height sic
-       * \param[in] width sic
+       * \param[in] length Length, thus width, of the diagonal line.
        *
-       * \pre Height and width are odd.
+       * \pre \p length is odd.
        */
-      rectangle2d(unsigned height, unsigned width);
-
+      diag2d(unsigned length);
 
       /*! \brief Test if the window is centered.
        *
@@ -98,13 +101,9 @@ namespace mln
        */
       bool is_symmetric() const;
 
-      /*! \brief Give the rectangle height.
+      /*! \brief Give the diagonal length, that is, its width.
        */
-      unsigned height() const;
-
-      /*! \brief Give the rectangle width.
-       */
-      unsigned width() const;
+      unsigned length() const;
 
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
@@ -112,73 +111,66 @@ namespace mln
       unsigned delta() const;
 
       /// Apply a central symmetry to the target window.
-      rectangle2d& sym();
+      diag2d& sym();
 
     protected:
-      unsigned height_, width_;
+      unsigned length_;
     };
 
 
-    /*! \brief Print a rectangle window \p win into the output stream \p
-     *  ostr.
+    /*! \brief Print an diagonal line window \p win into the output
+     *  stream \p ostr.
      *
      * \param[in,out] ostr An output stream.
-     * \param[in] win A rectangle window.
+     * \param[in] win A diagonal line window.
      *
      * \return The modified output stream \p ostr.
      *
-     * \relates mln::win::rectangle2d
+     * \relates mln::win::diag2d
      */
-    std::ostream& operator<<(std::ostream& ostr, const rectangle2d& win);
+    std::ostream& operator<<(std::ostream& ostr, const diag2d& win);
 
  
 
 # ifndef MLN_INCLUDE_ONLY
 
-    rectangle2d::rectangle2d(unsigned height, unsigned width)
-      : height_(height),
-	width_(width)
+    diag2d::diag2d(unsigned length)
+      : length_(length)
     {
-      mln_precondition(height % 2 == 1 && width % 2 == 1);
-      const int drow = height / 2, dcol = width / 2;
-      for (int row = - drow; row <= drow; ++row)
-	for (int col = - dcol; col <= dcol; ++col)
-	  insert(make::dpoint2d(row, col));
+      mln_precondition(length % 2 == 1);
+      const int dcol = length / 2;
+      for (int col = - dcol; col <= dcol; ++col)
+	insert(make::dpoint2d(-col, col));
     }
 
-    bool rectangle2d::is_centered() const
+    bool diag2d::is_centered() const
     {
       return true;
     }
 
-    bool rectangle2d::is_symmetric() const
+    bool diag2d::is_symmetric() const
     {
       return true;
     }
 
-    unsigned rectangle2d::height() const
+    unsigned diag2d::length() const
     {
-      return height_;
+      return length_;
     }
 
-    unsigned rectangle2d::width() const
+    unsigned diag2d::delta() const
     {
-      return width_;
+      return length_ / 2;
     }
 
-    unsigned rectangle2d::delta() const
-    {
-      return width_ > height_ ? width_ / 2 : height_ / 2;
-    }
-
-    rectangle2d& rectangle2d::sym()
+    diag2d& diag2d::sym()
     {
       return *this;
     }
 
-    std::ostream& operator<<(std::ostream& ostr, const rectangle2d& win)
+    std::ostream& operator<<(std::ostream& ostr, const diag2d& win)
     {
-      ostr << "[rectangle2d: width=" << win.width() << ", height=" << win.height() << ']';
+      ostr << "[diag 2d: length=" << win.length() << ']';
       return ostr;
     }
 
@@ -190,9 +182,4 @@ namespace mln
 
 
 
-// when rectangle2d is involved, one surely also wants:
-# include <mln/core/win/hline2d.hh>
-# include <mln/core/win/vline2d.hh>
-
-
-#endif // ! MLN_CORE_WIN_RECTANGLE2D_HH
+#endif // ! MLN_CORE_WIN_DIAG2D_HH

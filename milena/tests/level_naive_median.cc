@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/core/win/rectangle2d.hh>
+#include <mln/win/rectangle2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>

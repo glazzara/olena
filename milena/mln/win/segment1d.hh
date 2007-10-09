@@ -25,17 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_LINE_HH
-# define MLN_CORE_WIN_LINE_HH
+#ifndef MLN_CORE_WIN_SEGMENT1D_HH
+# define MLN_CORE_WIN_SEGMENT1D_HH
 
-/*! \file mln/core/win/line.hh
+/*! \file mln/win/segment1d.hh
  *
- * \brief Definition of the mln::win::line window.
+ * \brief Definition of the mln::win::segment1d window.
  */
 
 # include <mln/core/concept/window.hh>
 # include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint.hh>
+# include <mln/core/dpoint1d.hh>
 # include <mln/core/dpoints_piter.hh>
 
 
@@ -44,131 +44,129 @@ namespace mln
 
   namespace win
   {
- 
-    template <typename M, unsigned i, typename C>
-    struct line : public Window< line<M,i,C> >,
-		  public internal::dpoints_base_<dpoint_<M, C>, point_<M, C> >
+
+    /*! \brief Segment window defined on the 1D grid.
+     *
+     * An segment1d is centered and symmetrical; so
+     * its height (length) is odd.
+     *
+     * For instance: \n
+     *  o x o \n
+     * is defined with length = 3.
+     */
+    struct segment1d : public Window< segment1d >,
+		     public internal::dpoints_base_< dpoint1d, segment1d >
     {
       /// Point associated type.
-      typedef point_<M, int> point;
+      typedef point1d point;
 
       /// Dpoint associated type.
-      typedef dpoint_<M, int> dpoint;
+      typedef dpoint1d dpoint;
 
-      /// Point_Iterator type to browse a line forward
-      typedef dpoints_fwd_piter<dpoint> fwd_qiter;
+      /*! \brief Point_Iterator type to browse a segment such as: "for each row
+       * (increasing), for each column (increasing)."
+       */
+      typedef dpoints_fwd_piter<dpoint1d> fwd_qiter;
 
-      /// Point_Iterator type to browse a line backward
-      typedef dpoints_bkd_piter<dpoint> bkd_qiter;
+      /*! \brief Point_Iterator type to browse a segment such as: "for each row
+       * (decreasing), for each column (decreasing)."
+       */
+      typedef dpoints_bkd_piter<dpoint1d> bkd_qiter;
 
-      /// Same as fwd_qiter
+      /*! \brief Same as fwd_qiter.
+       */
       typedef fwd_qiter qiter;
 
       /*! \brief Constructor.
        *
-       * \param[in] length Length of the line.
+       * \param[in] length Length, thus height, of the segment1d.
        *
        * \pre \p length is odd.
        */
-      line(unsigned length);
+      segment1d(unsigned length);
 
       /*! \brief Test if the window is centered.
        *
        * \return True.
        */
       bool is_centered() const;
-	
+
       /*! \brief Test if the window is symmetric.
        *
        * \return true.
        */
       bool is_symmetric() const;
-	
-      /*! \brief Give the hline length, that is, its width.
+
+      /*! \brief Give the segment length, that is, its height.
        */
       unsigned length() const;
-	
+
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
       unsigned delta() const;
 
       /// Apply a central symmetry to the target window.
-      line<M,i,C>& sym();
-		
-      protected:
-	unsigned length_;
+      segment1d& sym();
+
+    protected:
+      unsigned length_;
     };
 
 
-    /*! \brief Print an line window \p win into the output
+    /*! \brief Print a segment1D window \p win into the output
      *  stream \p ostr.
      *
      * \param[in,out] ostr An output stream.
-     * \param[in] win An line window.
+     * \param[in] win A segment1D window.
      *
      * \return The modified output stream \p ostr.
      *
-     * \relates mln::win::line
+     * \relates mln::win::segment1d
      */
-    template <typename M, unsigned i, typename C>
-    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win);
+    std::ostream& operator<<(std::ostream& ostr, const segment1d& win);
 
- 
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-    template <typename M, unsigned i, typename C>
-    line<M,i,C>::line(unsigned length)
+    segment1d::segment1d(unsigned length)
       : length_(length)
     {
-      mln_precondition(i < M::dim);
       mln_precondition(length % 2 == 1);
-      const int dc = length / 2;
-      for (int c = - dc; c <= dc; ++c)
-      {
-	dpoint n;
-	n.set_all(0);
-	n[i] = c;
-	this->insert(n);
-      }
+      const int dind = length / 2;
+      for (int ind = - dind; ind <= dind; ++ind)
+	insert(make::dpoint1d(ind));
     }
 
-    template <typename M, unsigned i, typename C>
-    bool line<M,i,C>::is_centered() const
+    bool segment1d::is_centered() const
     {
       return true;
     }
 
-    template <typename M, unsigned i, typename C>
-    bool line<M,i,C>::is_symmetric() const
+    bool segment1d::is_symmetric() const
     {
       return true;
     }
 
-    template <typename M, unsigned i, typename C>
-    unsigned line<M,i,C>::length() const
+    unsigned segment1d::length() const
     {
       return length_;
     }
 
-    template <typename M, unsigned i, typename C>
-    unsigned line<M,i,C>::delta() const
+    unsigned segment1d::delta() const
     {
       return length_ / 2;
     }
 
-    template <typename M, unsigned i, typename C>
-    line<M,i,C>& line<M,i,C>::sym()
+    segment1d& segment1d::sym()
     {
       return *this;
     }
 
-    template <typename M, unsigned i, typename C>
-    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win)
+    std::ostream& operator<<(std::ostream& ostr, const segment1d& win)
     {
-      ostr << "[line: length=" << win.length() << ']';
+      ostr << "[segment1d: length=" << win.length() << ']';
       return ostr;
     }
 
@@ -180,4 +178,4 @@ namespace mln
 
 
 
-#endif // ! MLN_CORE_WIN_LINE_HH
+#endif // ! MLN_CORE_WIN_SEGMENT1D_HH

@@ -32,7 +32,7 @@
 #include <mln/debug/println.hh>
 
 #include <mln/core/window2d.hh>
-#include <mln/core/win/rectangle2d.hh>
+#include <mln/win/rectangle2d.hh>
 
 #include <mln/core/neighb2d.hh>
 

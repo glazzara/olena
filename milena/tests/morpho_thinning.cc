@@ -33,7 +33,7 @@
 #include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/core/win/rectangle2d.hh>
+#include <mln/win/rectangle2d.hh>
 #include <mln/core/window2d.hh>
 
 #include <mln/io/pgm/load.hh>

@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_DISK2D_HH
-# define MLN_CORE_WIN_DISK2D_HH
+#ifndef MLN_CORE_WIN_OCTAGON2D_HH
+# define MLN_CORE_WIN_OCTAGON2D_HH
 
-/*! \file mln/core/win/disk2d.hh
+/*! \file mln/win/octagon2d.hh
  *
- * \brief Definition of the mln::win::disk2d window.
+ * \brief Definition of the mln::win::octagon2d window.
  */
 
 # include <mln/core/concept/window.hh>
@@ -45,13 +45,24 @@ namespace mln
   namespace win
   {
  
-    /*! \brief Disk window defined on the 2D square grid.
+    /*! \brief Octagon window defined on the 2D square grid.
      *
-     * An disk2d is centered and symmetrical.
+     * An octagon2d is centered and symmetrical.
+     * The length l of the octagon is such as l = 6*x + 1
+     * where 0 <= x.
      *
+     * For instance: \n
+     *     o o o \n
+     *   o o o o o \n
+     * o o o o o o o \n
+     * o o o x o o o \n
+     * o o o o o o o \n
+     *   o o o o o \n
+     *     o o o \n
+     * is defined with length = 7 (x = 0).
      */
-    struct disk2d : public Window< disk2d >,
-		    public internal::dpoints_base_< dpoint2d, disk2d >
+    struct octagon2d : public Window< octagon2d >,
+		       public internal::dpoints_base_< dpoint2d, octagon2d >
     {
       /// Point associated type.
       typedef point2d point;
@@ -75,10 +86,11 @@ namespace mln
 
       /*! \brief Constructor.
        *
-       * \param[in] length Length, thus diameter.
+       * \param[in] lenght Length, of the octagon.
        *
+       * \pre \p length is such as length = 6*x + 1 where x >= 0.
        */
-      disk2d(unsigned length);
+      octagon2d(unsigned length);
 
       /*! \brief Test if the window is centered.
        *
@@ -92,7 +104,7 @@ namespace mln
        */
       bool is_symmetric() const;
 
-      /*! \brief Give the disk length, that is, its width.
+      /*! \brief Give the octagon length, that is, its width.
        */
       unsigned length() const;
 
@@ -102,69 +114,87 @@ namespace mln
       unsigned delta() const;
 
       /// Apply a central symmetry to the target window.
-      disk2d& sym();
+      octagon2d& sym();
 
     protected:
       unsigned length_;
     };
 
 
-    /*! \brief Print an disk window \p win into the output
+    /*! \brief Print an octagon window \p win into the output
      *  stream \p ostr.
      *
      * \param[in,out] ostr An output stream.
-     * \param[in] win A disk window.
+     * \param[in] win An octagon window.
      *
      * \return The modified output stream \p ostr.
      *
-     * \relates mln::win::disk2d
+     * \relates mln::win::octagon2d
      */
-    std::ostream& operator<<(std::ostream& ostr, const disk2d& win);
+    std::ostream& operator<<(std::ostream& ostr, const octagon2d& win);
 
- 
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-    disk2d::disk2d(unsigned length)
+    octagon2d::octagon2d(unsigned length)
       : length_(length)
     {
-      mln_precondition(length % 2 == 1);
-      const int r = length / 2;
-      const int r2 = r * r;
-      for (int a = -r; a <= r; ++a)
-	for (int b = -r; b <= r; ++b)
-	  if (a * a + b * b <= r2)
-	    insert(make::dpoint2d(a, b));
+      mln_precondition(length % 6 == 1);
+      const int y = length / 6;
+      const int x = y * 2;
+      const int z = y + x;
+      insert(dpoint2d::zero);
+      for (int a = 1; a <= x; ++a)
+	for (int b = 0; b <= x; ++b)
+	{
+	  insert(make::dpoint2d(a, b));
+	  insert(make::dpoint2d(-b, a));
+	  insert(make::dpoint2d(b, -a));
+	  insert(make::dpoint2d(-a, -b));
+	}
+      for (int a = x + 1; a <= z; ++a)
+	for (int b = -2 * x + a; b <= 2 * x - a; ++b)
+	{
+	  insert(make::dpoint2d(a, b));
+	  insert(make::dpoint2d(a, -b));
+	  insert(make::dpoint2d(-a, b));
+	  insert(make::dpoint2d(-a, -b));
+	  insert(make::dpoint2d(b, a));
+	  insert(make::dpoint2d(b, -a));
+	  insert(make::dpoint2d(-b, a));
+	  insert(make::dpoint2d(-b, -a));
+	}
     }
 
-    bool disk2d::is_centered() const
+    bool octagon2d::is_centered() const
     {
       return true;
     }
 
-    bool disk2d::is_symmetric() const
+    bool octagon2d::is_symmetric() const
     {
       return true;
     }
 
-    unsigned disk2d::length() const
+    unsigned octagon2d::length() const
     {
       return length_;
     }
 
-    unsigned disk2d::delta() const
+    unsigned octagon2d::delta() const
     {
       return length_ / 2;
     }
 
-    disk2d& disk2d::sym()
+    octagon2d& octagon2d::sym()
     {
       return *this;
     }
 
-    std::ostream& operator<<(std::ostream& ostr, const disk2d& win)
+    std::ostream& operator<<(std::ostream& ostr, const octagon2d& win)
     {
-      ostr << "[disk2d: length=" << win.length() << ']';
+      ostr << "[octagon2d: length=" << win.length() << ']';
       return ostr;
     }
 
@@ -176,4 +206,10 @@ namespace mln
 
 
 
-#endif // ! MLN_CORE_WIN_DISK2D_HH
+// when rectangle2d is involved, one surely also wants:
+# include <mln/win/hline2d.hh>
+# include <mln/win/vline2d.hh>
+# include <mln/win/diag2d.hh>
+# include <mln/win/backdiag2d.hh>
+
+#endif // ! MLN_CORE_WIN_OCTAGON2D_HH

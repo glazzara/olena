@@ -25,17 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_CUBE3D_HH
-# define MLN_CORE_WIN_CUBE3D_HH
+#ifndef MLN_CORE_WIN_BACKDIAG2D_HH
+# define MLN_CORE_WIN_BACKDIAG2D_HH
 
-/*! \file mln/core/win/cube3d.hh
+/*! \file mln/win/backdiag2d.hh
  *
- * \brief Definition of the mln::win::cube3d window.
+ * \brief Definition of the mln::win::backdiag2d window.
  */
 
 # include <mln/core/concept/window.hh>
 # include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint3d.hh>
+# include <mln/core/dpoint2d.hh>
 # include <mln/core/dpoints_piter.hh>
 
 
@@ -44,44 +44,38 @@ namespace mln
 
   namespace win
   {
-
-    /*! \brief Cube window defined on the 3D grid.
+ 
+    /*! \brief Diagonal line window defined on the 2D square grid.
      *
-     * An cube3d is centered and symmetrical; so
-     * its height (length) is odd.
+     * An backdiag2d is centered and symmetrical.
+     * its width (length) is odd.
      *
      * For instance: \n
-     *   o o o \n
-     *  o o o \n
-     * o o o \n
-
-     *   o o o \n
-     *  o x o \n
-     * o o o \n
-
-     *   o o o \n
-     *  o o o \n
-     * o o o \n
-     * is defined with length = 3.
+     *  o         \n
+     *    o       \n
+     *      x     \n
+     *        o   \n
+     *          o \n
+     * is defined with length = 5.
      */
-    struct cube3d : public Window< cube3d >,
-		    public internal::dpoints_base_< dpoint3d, cube3d >
+    struct backdiag2d : public Window< backdiag2d >,
+			public internal::dpoints_base_< dpoint2d, backdiag2d >
     {
       /// Point associated type.
-      typedef point3d point;
+      typedef point2d point;
 
       /// Dpoint associated type.
-      typedef dpoint3d dpoint;
+      typedef dpoint2d dpoint;
 
-      /*! \brief Point_Iterator type to browse a cube such as: "for each row
+      /*! \brief Point_Iterator type to browse a hline such as: "for each row
        * (increasing), for each column (increasing)."
        */
-      typedef dpoints_fwd_piter<dpoint3d> fwd_qiter;
+      typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
 
-      /*! \brief Point_Iterator type to browse a cube such as: "for each row
+      /*! \brief Point_Iterator type to browse a hline such as: "for each row
        * (decreasing), for each column (decreasing)."
        */
-      typedef dpoints_bkd_piter<dpoint3d> bkd_qiter;
+      typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
 
       /*! \brief Same as fwd_qiter.
        */
@@ -89,11 +83,11 @@ namespace mln
 
       /*! \brief Constructor.
        *
-       * \param[in] length Length, thus height, of the cube3d.
+       * \param[in] length Length, thus width, of the diagonal line.
        *
        * \pre \p length is odd.
        */
-      cube3d(unsigned length);
+      backdiag2d(unsigned length);
 
       /*! \brief Test if the window is centered.
        *
@@ -107,7 +101,7 @@ namespace mln
        */
       bool is_symmetric() const;
 
-      /*! \brief Give the cube length, that is, its height.
+      /*! \brief Give the diagonal length, that is, its width.
        */
       unsigned length() const;
 
@@ -117,68 +111,66 @@ namespace mln
       unsigned delta() const;
 
       /// Apply a central symmetry to the target window.
-      cube3d& sym();
+      backdiag2d& sym();
 
     protected:
       unsigned length_;
     };
 
 
-    /*! \brief Print a cube3d window \p win into the output
+    /*! \brief Print an diagonal line window \p win into the output
      *  stream \p ostr.
      *
      * \param[in,out] ostr An output stream.
-     * \param[in] win A cube3d window.
+     * \param[in] win A diagonal line window.
      *
      * \return The modified output stream \p ostr.
      *
-     * \relates mln::win::cube3d
+     * \relates mln::win::backdiag2d
      */
-    std::ostream& operator<<(std::ostream& ostr, const cube3d& win);
+    std::ostream& operator<<(std::ostream& ostr, const backdiag2d& win);
 
-
+ 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    cube3d::cube3d(unsigned length)
+    backdiag2d::backdiag2d(unsigned length)
       : length_(length)
     {
       mln_precondition(length % 2 == 1);
-      const int dind = length / 2;
-      for (int sli = - dind; sli <= dind; ++sli)
-	for (int row = - dind; row <= dind; ++row)
-	  for (int col = - dind; col <= dind; ++col)
-	    insert(make::dpoint3d(sli, row, col));
+      const int dcol = length / 2;
+      for (int col = - dcol; col <= dcol; ++col)
+	insert(make::dpoint2d(col, col));
     }
 
-    bool cube3d::is_centered() const
+    bool backdiag2d::is_centered() const
     {
       return true;
     }
 
-    bool cube3d::is_symmetric() const
+    bool backdiag2d::is_symmetric() const
     {
       return true;
     }
 
-    unsigned cube3d::length() const
+    unsigned backdiag2d::length() const
     {
       return length_;
     }
 
-    unsigned cube3d::delta() const
+    unsigned backdiag2d::delta() const
     {
       return length_ / 2;
     }
 
-    cube3d& cube3d::sym()
+    backdiag2d& backdiag2d::sym()
     {
       return *this;
     }
 
-    std::ostream& operator<<(std::ostream& ostr, const cube3d& win)
+    std::ostream& operator<<(std::ostream& ostr, const backdiag2d& win)
     {
-      ostr << "[cube3d: length=" << win.length() << ']';
+      ostr << "[diag 2d: length=" << win.length() << ']';
       return ostr;
     }
 
@@ -190,4 +182,4 @@ namespace mln
 
 
 
-#endif // ! MLN_CORE_WIN_CUBE3D_HH
+#endif // ! MLN_CORE_WIN_BACKDIAG2D_HH

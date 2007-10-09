@@ -25,17 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_OCTAGON2D_HH
-# define MLN_CORE_WIN_OCTAGON2D_HH
+#ifndef MLN_CORE_WIN_CUBE3D_HH
+# define MLN_CORE_WIN_CUBE3D_HH
 
-/*! \file mln/core/win/octagon2d.hh
+/*! \file mln/win/cube3d.hh
  *
- * \brief Definition of the mln::win::octagon2d window.
+ * \brief Definition of the mln::win::cube3d window.
  */
 
 # include <mln/core/concept/window.hh>
 # include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint2d.hh>
+# include <mln/core/dpoint3d.hh>
 # include <mln/core/dpoints_piter.hh>
 
 
@@ -44,41 +44,44 @@ namespace mln
 
   namespace win
   {
- 
-    /*! \brief Octagon window defined on the 2D square grid.
+
+    /*! \brief Cube window defined on the 3D grid.
      *
-     * An octagon2d is centered and symmetrical.
-     * The length l of the octagon is such as l = 6*x + 1
-     * where 0 <= x.
+     * An cube3d is centered and symmetrical; so
+     * its height (length) is odd.
      *
      * For instance: \n
-     *     o o o \n
-     *   o o o o o \n
-     * o o o o o o o \n
-     * o o o x o o o \n
-     * o o o o o o o \n
-     *   o o o o o \n
-     *     o o o \n
-     * is defined with length = 7 (x = 0).
+     *   o o o \n
+     *  o o o \n
+     * o o o \n
+
+     *   o o o \n
+     *  o x o \n
+     * o o o \n
+
+     *   o o o \n
+     *  o o o \n
+     * o o o \n
+     * is defined with length = 3.
      */
-    struct octagon2d : public Window< octagon2d >,
-		       public internal::dpoints_base_< dpoint2d, octagon2d >
+    struct cube3d : public Window< cube3d >,
+		    public internal::dpoints_base_< dpoint3d, cube3d >
     {
       /// Point associated type.
-      typedef point2d point;
+      typedef point3d point;
 
       /// Dpoint associated type.
-      typedef dpoint2d dpoint;
+      typedef dpoint3d dpoint;
 
-      /*! \brief Point_Iterator type to browse a hline such as: "for each row
+      /*! \brief Point_Iterator type to browse a cube such as: "for each row
        * (increasing), for each column (increasing)."
        */
-      typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
+      typedef dpoints_fwd_piter<dpoint3d> fwd_qiter;
 
-      /*! \brief Point_Iterator type to browse a hline such as: "for each row
+      /*! \brief Point_Iterator type to browse a cube such as: "for each row
        * (decreasing), for each column (decreasing)."
        */
-      typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
+      typedef dpoints_bkd_piter<dpoint3d> bkd_qiter;
 
       /*! \brief Same as fwd_qiter.
        */
@@ -86,11 +89,11 @@ namespace mln
 
       /*! \brief Constructor.
        *
-       * \param[in] lenght Length, of the octagon.
+       * \param[in] length Length, thus height, of the cube3d.
        *
-       * \pre \p length is such as length = 6*x + 1 where x >= 0.
+       * \pre \p length is odd.
        */
-      octagon2d(unsigned length);
+      cube3d(unsigned length);
 
       /*! \brief Test if the window is centered.
        *
@@ -104,7 +107,7 @@ namespace mln
        */
       bool is_symmetric() const;
 
-      /*! \brief Give the octagon length, that is, its width.
+      /*! \brief Give the cube length, that is, its height.
        */
       unsigned length() const;
 
@@ -114,87 +117,68 @@ namespace mln
       unsigned delta() const;
 
       /// Apply a central symmetry to the target window.
-      octagon2d& sym();
+      cube3d& sym();
 
     protected:
       unsigned length_;
     };
 
 
-    /*! \brief Print an octagon window \p win into the output
+    /*! \brief Print a cube3d window \p win into the output
      *  stream \p ostr.
      *
      * \param[in,out] ostr An output stream.
-     * \param[in] win An octagon window.
+     * \param[in] win A cube3d window.
      *
      * \return The modified output stream \p ostr.
      *
-     * \relates mln::win::octagon2d
+     * \relates mln::win::cube3d
      */
-    std::ostream& operator<<(std::ostream& ostr, const octagon2d& win);
+    std::ostream& operator<<(std::ostream& ostr, const cube3d& win);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    octagon2d::octagon2d(unsigned length)
+    cube3d::cube3d(unsigned length)
       : length_(length)
     {
-      mln_precondition(length % 6 == 1);
-      const int y = length / 6;
-      const int x = y * 2;
-      const int z = y + x;
-      insert(dpoint2d::zero);
-      for (int a = 1; a <= x; ++a)
-	for (int b = 0; b <= x; ++b)
-	{
-	  insert(make::dpoint2d(a, b));
-	  insert(make::dpoint2d(-b, a));
-	  insert(make::dpoint2d(b, -a));
-	  insert(make::dpoint2d(-a, -b));
-	}
-      for (int a = x + 1; a <= z; ++a)
-	for (int b = -2 * x + a; b <= 2 * x - a; ++b)
-	{
-	  insert(make::dpoint2d(a, b));
-	  insert(make::dpoint2d(a, -b));
-	  insert(make::dpoint2d(-a, b));
-	  insert(make::dpoint2d(-a, -b));
-	  insert(make::dpoint2d(b, a));
-	  insert(make::dpoint2d(b, -a));
-	  insert(make::dpoint2d(-b, a));
-	  insert(make::dpoint2d(-b, -a));
-	}
+      mln_precondition(length % 2 == 1);
+      const int dind = length / 2;
+      for (int sli = - dind; sli <= dind; ++sli)
+	for (int row = - dind; row <= dind; ++row)
+	  for (int col = - dind; col <= dind; ++col)
+	    insert(make::dpoint3d(sli, row, col));
     }
 
-    bool octagon2d::is_centered() const
+    bool cube3d::is_centered() const
     {
       return true;
     }
 
-    bool octagon2d::is_symmetric() const
+    bool cube3d::is_symmetric() const
     {
       return true;
     }
 
-    unsigned octagon2d::length() const
+    unsigned cube3d::length() const
     {
       return length_;
     }
 
-    unsigned octagon2d::delta() const
+    unsigned cube3d::delta() const
     {
       return length_ / 2;
     }
 
-    octagon2d& octagon2d::sym()
+    cube3d& cube3d::sym()
     {
       return *this;
     }
 
-    std::ostream& operator<<(std::ostream& ostr, const octagon2d& win)
+    std::ostream& operator<<(std::ostream& ostr, const cube3d& win)
     {
-      ostr << "[octagon2d: length=" << win.length() << ']';
+      ostr << "[cube3d: length=" << win.length() << ']';
       return ostr;
     }
 
@@ -206,10 +190,4 @@ namespace mln
 
 
 
-// when rectangle2d is involved, one surely also wants:
-# include <mln/core/win/hline2d.hh>
-# include <mln/core/win/vline2d.hh>
-# include <mln/core/win/diag.hh>
-# include <mln/core/win/backdiag.hh>
-
-#endif // ! MLN_CORE_WIN_OCTAGON2D_HH
+#endif // ! MLN_CORE_WIN_CUBE3D_HH

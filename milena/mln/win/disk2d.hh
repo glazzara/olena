@@ -25,17 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_SEGMENT1D_HH
-# define MLN_CORE_WIN_SEGMENT1D_HH
+#ifndef MLN_CORE_WIN_DISK2D_HH
+# define MLN_CORE_WIN_DISK2D_HH
 
-/*! \file mln/core/win/segment1d.hh
+/*! \file mln/win/disk2d.hh
  *
- * \brief Definition of the mln::win::segment1d window.
+ * \brief Definition of the mln::win::disk2d window.
  */
 
 # include <mln/core/concept/window.hh>
 # include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/dpoint2d.hh>
 # include <mln/core/dpoints_piter.hh>
 
 
@@ -44,34 +44,30 @@ namespace mln
 
   namespace win
   {
-
-    /*! \brief Segment window defined on the 1D grid.
+ 
+    /*! \brief Disk window defined on the 2D square grid.
      *
-     * An segment1d is centered and symmetrical; so
-     * its height (length) is odd.
+     * An disk2d is centered and symmetrical.
      *
-     * For instance: \n
-     *  o x o \n
-     * is defined with length = 3.
      */
-    struct segment1d : public Window< segment1d >,
-		     public internal::dpoints_base_< dpoint1d, segment1d >
+    struct disk2d : public Window< disk2d >,
+		    public internal::dpoints_base_< dpoint2d, disk2d >
     {
       /// Point associated type.
-      typedef point1d point;
+      typedef point2d point;
 
       /// Dpoint associated type.
-      typedef dpoint1d dpoint;
+      typedef dpoint2d dpoint;
 
-      /*! \brief Point_Iterator type to browse a segment such as: "for each row
+      /*! \brief Point_Iterator type to browse a hline such as: "for each row
        * (increasing), for each column (increasing)."
        */
-      typedef dpoints_fwd_piter<dpoint1d> fwd_qiter;
+      typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
 
-      /*! \brief Point_Iterator type to browse a segment such as: "for each row
+      /*! \brief Point_Iterator type to browse a hline such as: "for each row
        * (decreasing), for each column (decreasing)."
        */
-      typedef dpoints_bkd_piter<dpoint1d> bkd_qiter;
+      typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
 
       /*! \brief Same as fwd_qiter.
        */
@@ -79,11 +75,10 @@ namespace mln
 
       /*! \brief Constructor.
        *
-       * \param[in] length Length, thus height, of the segment1d.
+       * \param[in] length Length, thus diameter.
        *
-       * \pre \p length is odd.
        */
-      segment1d(unsigned length);
+      disk2d(unsigned length);
 
       /*! \brief Test if the window is centered.
        *
@@ -97,7 +92,7 @@ namespace mln
        */
       bool is_symmetric() const;
 
-      /*! \brief Give the segment length, that is, its height.
+      /*! \brief Give the disk length, that is, its width.
        */
       unsigned length() const;
 
@@ -107,66 +102,69 @@ namespace mln
       unsigned delta() const;
 
       /// Apply a central symmetry to the target window.
-      segment1d& sym();
+      disk2d& sym();
 
     protected:
       unsigned length_;
     };
 
 
-    /*! \brief Print a segment1D window \p win into the output
+    /*! \brief Print an disk window \p win into the output
      *  stream \p ostr.
      *
      * \param[in,out] ostr An output stream.
-     * \param[in] win A segment1D window.
+     * \param[in] win A disk window.
      *
      * \return The modified output stream \p ostr.
      *
-     * \relates mln::win::segment1d
+     * \relates mln::win::disk2d
      */
-    std::ostream& operator<<(std::ostream& ostr, const segment1d& win);
+    std::ostream& operator<<(std::ostream& ostr, const disk2d& win);
 
-
+ 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    segment1d::segment1d(unsigned length)
+    disk2d::disk2d(unsigned length)
       : length_(length)
     {
       mln_precondition(length % 2 == 1);
-      const int dind = length / 2;
-      for (int ind = - dind; ind <= dind; ++ind)
-	insert(make::dpoint1d(ind));
+      const int r = length / 2;
+      const int r2 = r * r;
+      for (int a = -r; a <= r; ++a)
+	for (int b = -r; b <= r; ++b)
+	  if (a * a + b * b <= r2)
+	    insert(make::dpoint2d(a, b));
     }
 
-    bool segment1d::is_centered() const
+    bool disk2d::is_centered() const
     {
       return true;
     }
 
-    bool segment1d::is_symmetric() const
+    bool disk2d::is_symmetric() const
     {
       return true;
     }
 
-    unsigned segment1d::length() const
+    unsigned disk2d::length() const
     {
       return length_;
     }
 
-    unsigned segment1d::delta() const
+    unsigned disk2d::delta() const
     {
       return length_ / 2;
     }
 
-    segment1d& segment1d::sym()
+    disk2d& disk2d::sym()
     {
       return *this;
     }
 
-    std::ostream& operator<<(std::ostream& ostr, const segment1d& win)
+    std::ostream& operator<<(std::ostream& ostr, const disk2d& win)
     {
-      ostr << "[segment1d: length=" << win.length() << ']';
+      ostr << "[disk2d: length=" << win.length() << ']';
       return ostr;
     }
 
@@ -178,4 +176,4 @@ namespace mln
 
 
 
-#endif // ! MLN_CORE_WIN_SEGMENT1D_HH
+#endif // ! MLN_CORE_WIN_DISK2D_HH

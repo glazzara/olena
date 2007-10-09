@@ -1,7 +1,7 @@
 #include <mln/morpho/includes.hh>
 
-#include <mln/core/win/dyn_line.hh>
-#include <mln/core/win/hline2d.hh>
+#include <mln/win/dyn_line.hh>
+#include <mln/win/hline2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>

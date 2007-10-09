@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/w_window3d_int.hh>
-#include <mln/core/win/cube3d.hh>
+#include <mln/win/cube3d.hh>
 
 #include <mln/convert/to_image.hh>
 #include <mln/convert/to_w_window.hh>
