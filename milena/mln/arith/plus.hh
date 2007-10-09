@@ -39,7 +39,7 @@
 
 # include <mln/pw/cst.hh>
 # include <mln/pw/image.hh>
-# include <mln/trait/op_plus.hh>
+# include <mln/trait/op/plus.hh>
 
 
 namespace mln

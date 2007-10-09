@@ -25,38 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_UMINUS_HH
-# define MLN_TRAIT_OP_UMINUS_HH
+#ifndef MLN_TRAIT_OP_MINUS_HH
+# define MLN_TRAIT_OP_MINUS_HH
 
-# include <mln/trait/solve.hh>
+# include <mln/trait/promote.hh>
 
 
-# define mln_trait_op_uminus(T)  typename mln::trait::op_uminus< T >::ret
-# define mln_trait_op_uminus_(T)          mln::trait::op_uminus< T >::ret
+# define mln_trait_op_minus(L, R)  typename mln::trait::op::minus< L , R >::ret
+# define mln_trait_op_minus_(L, R)          mln::trait::op::minus< L , R >::ret
 
 
 
 namespace mln
 {
 
-  // Fwd decl.
-  template <typename E> struct Object;
-
-
   namespace trait
   {
 
-    template <typename T>
-    struct op_uminus : public solve_unary<op_uminus, T>
+    namespace op
     {
-    };
+
+      template <typename L, typename R>
+      struct minus : public solve_binary<minus, L, R>
+      {
+      };
+
+    } // end of namespace mln::trait::op
 
 
-    /// Default definition of op_uminus is the input type itself.
-    template <typename T>
-    struct set_unary_< op_uminus, Object, T >
+    /// Default definition of op::minus is given by the promote trait.
+    template <typename L, typename R>
+    struct set_binary_< op::minus, Object, L, Object, R >
+      :
+      public promote< L, R >
     {
-      typedef T ret;
     };
 
 
@@ -65,4 +67,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_OP_UMINUS_HH
+#endif // ! MLN_TRAIT_OP_MINUS_HH

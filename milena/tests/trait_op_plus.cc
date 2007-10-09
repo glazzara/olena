@@ -27,12 +27,12 @@
 
 /*! \file tests/trait_op_plus.cc
  *
- * \brief Tests on mln::trait::op_plus.
+ * \brief Tests on mln::trait::op::plus.
  */
 
 #include <mln/core/concept/image.hh>
 #include <mln/value/concept/all.hh>
-#include <mln/trait/op_plus.hh>
+#include <mln/trait/op/plus.hh>
 
 
 namespace mln
@@ -52,7 +52,7 @@ namespace mln
     // int + float -> float
 
     template <>
-    struct set_precise_binary_< op_plus, int, float >
+    struct set_precise_binary_< op::plus, int, float >
     {
       typedef float ret;
     };
@@ -61,7 +61,7 @@ namespace mln
     // Image I + Image J -> bool (demo type!)
 
     template <typename I, typename J>
-    struct set_binary_< op_plus, Image, I,  Image, J >
+    struct set_binary_< op::plus, Image, I,  Image, J >
     {
       typedef bool ret;
     };
@@ -69,7 +69,7 @@ namespace mln
     // precise definition: my_image2d<T> + my_image2d<U> -> my_image2d<V> ('&' is to avoid compiling an empty class)
 
     template <typename T, typename U>
-    struct set_precise_binary_< op_plus, my_image2d<T>, my_image2d<U> >
+    struct set_precise_binary_< op::plus, my_image2d<T>, my_image2d<U> >
     {
       typedef mln_trait_op_plus(T, U) V; 
       typedef my_image2d<V>& ret;

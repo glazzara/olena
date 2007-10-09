@@ -27,10 +27,10 @@
 
 /*! \file tests/trait_op_uminus.cc
  *
- * \brief Tests on mln::trait::op_uminus.
+ * \brief Tests on mln::trait::op::uminus.
  */
 
-#include <mln/trait/op_uminus.hh>
+#include <mln/trait/op/uminus.hh>
 #include <mln/core/concept/object.hh>
 
 
@@ -79,19 +79,19 @@ namespace mln
   {
 
 //     template <>
-//     struct set_precise_unary_< op_uminus, test >
+//     struct set_precise_unary_< op::uminus, test >
 //     {
 //       typedef bool ret;
 //     };
 
 //     template <typename T>
-//     struct set_unary_< op_uminus, Sub_Concept, T >
+//     struct set_unary_< op::uminus, Sub_Concept, T >
 //     {
 //       typedef int ret;
 //     };
 
 //     template <typename T>
-//     struct set_unary_< op_uminus, Top_Concept, T >
+//     struct set_unary_< op::uminus, Top_Concept, T >
 //     {
 //       typedef float ret;
 //     };

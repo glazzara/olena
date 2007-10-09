@@ -187,7 +187,7 @@ namespace mln
     // vec + vec
 
     template <unsigned n, typename T, typename U>
-    struct set_precise_binary_<op_plus, metal::vec<n, T>, metal::vec<n, U> >
+    struct set_precise_binary_<op::plus, metal::vec<n, T>, metal::vec<n, U> >
     {
       typedef metal::vec<n, mln_trait_op_plus(T, U)> ret;
     };
@@ -197,7 +197,7 @@ namespace mln
     // vec - vec
 
     template <unsigned n, typename T, typename U>
-    struct set_precise_binary_<op_minus, metal::vec<n, T>, metal::vec<n, U> >
+    struct set_precise_binary_<op::minus, metal::vec<n, T>, metal::vec<n, U> >
     {
       typedef metal::vec<n, mln_trait_op_minus(T, U)> ret;
     };
@@ -205,7 +205,7 @@ namespace mln
     // - vec
 
     template <unsigned n, typename T>
-    struct set_precise_unary_<op_uminus, metal::vec<n, T> >
+    struct set_precise_unary_<op::uminus, metal::vec<n, T> >
     {
       typedef metal::vec<n, mln_trait_op_uminus(T)> ret;
     };
@@ -213,7 +213,7 @@ namespace mln
     // vec * s
 
     template <unsigned n, typename T, typename S>
-    struct set_precise_binary_<op_times, metal::vec<n, T>, S >
+    struct set_precise_binary_<op::times, metal::vec<n, T>, S >
     {
       typedef metal::vec<n, mln_trait_op_times(T, S)> ret;
     };

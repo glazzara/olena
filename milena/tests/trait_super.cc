@@ -30,7 +30,7 @@
  * \brief Tests on mln::trait::solve.
  */
 
-#include <mln/trait/op_uminus.hh>
+#include <mln/trait/op/uminus.hh>
 #include <mln/core/concept/object.hh>
 #include <mln/value/int_u8.hh>
 
@@ -127,7 +127,7 @@ namespace mln
   {
 
     template <typename T>
-    struct set_unary_< op_uminus, my::Integer, T >
+    struct set_unary_< op::uminus, my::Integer, T >
     {
       typedef bool ret;
     };

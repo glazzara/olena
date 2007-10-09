@@ -99,7 +99,7 @@ namespace mln
 
     template <unsigned n, unsigned m, typename T,
 	      typename U>
-    struct set_precise_binary_<op_plus, metal::mat<n, m, T>, metal::mat<n, m, U> >
+    struct set_precise_binary_<op::plus, metal::mat<n, m, T>, metal::mat<n, m, U> >
     {
       typedef metal::mat<n, m, mln_trait_op_plus(T, U)> ret;
     };
@@ -110,7 +110,7 @@ namespace mln
 
     template <unsigned n, unsigned m, typename T,
 	      typename U>
-    struct set_precise_binary_<op_minus, metal::mat<n, m, T>, metal::mat<n, m, U> >
+    struct set_precise_binary_<op::minus, metal::mat<n, m, T>, metal::mat<n, m, U> >
     {
       typedef metal::mat<n, m, mln_trait_op_minus(T, U)> ret;
     };
@@ -118,7 +118,7 @@ namespace mln
     // - mat
 
     template <unsigned n, unsigned m, typename T>
-    struct set_precise_unary_<op_uminus, metal::mat<n, m, T> >
+    struct set_precise_unary_<op::uminus, metal::mat<n, m, T> >
     {
       typedef metal::mat<n, m, mln_trait_op_uminus(T)> ret;
     };
@@ -127,7 +127,7 @@ namespace mln
 
     template <unsigned n, unsigned o, typename T,
 	      unsigned m, typename U>
-    struct set_precise_binary_<op_times, metal::mat<n,o,T>, metal::mat<o,m,U> >
+    struct set_precise_binary_<op::times, metal::mat<n,o,T>, metal::mat<o,m,U> >
     {
       typedef metal::mat< n, m, mln_trait_op_times(T,U) > ret;
     };
@@ -136,7 +136,7 @@ namespace mln
 
     template <unsigned n, unsigned m, typename T,
 	      typename S>
-    struct set_precise_binary_<op_times, metal::mat<n,m,T>, S >
+    struct set_precise_binary_<op::times, metal::mat<n,m,T>, S >
     {
       typedef metal::mat< n, m, mln_trait_op_times(T,S) > ret;
     };

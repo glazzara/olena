@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,30 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_PW_ALL_HH
-# define MLN_PW_ALL_HH
+#ifndef MLN_TRAIT_OP_UMINUS_HH
+# define MLN_TRAIT_OP_UMINUS_HH
 
-/*! \file mln/pw/all.hh
- *
- * \brief File that includes all "point-wise" expression tools.
- */
+# include <mln/trait/solve.hh>
+
+
+# define mln_trait_op_uminus(T)  typename mln::trait::op::uminus< T >::ret
+# define mln_trait_op_uminus_(T)          mln::trait::op::uminus< T >::ret
+
 
 
 namespace mln
 {
 
-  /// Namespace of "point-wise" expression tools.
-  namespace pw {}
+  // Fwd decl.
+  template <typename E> struct Object;
+
+
+  namespace trait
+  {
+
+    namespace op
+    {
+
+      template <typename T>
+      struct uminus : public solve_unary<uminus, T>
+      {
+      };
+      
+    } // end of namespace mln::trait::op
+
+
+    /// Default definition of op::uminus is the input type itself.
+    template <typename T>
+    struct set_unary_< op::uminus, Object, T >
+    {
+      typedef T ret;
+    };
+
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-# include <mln/pw/value.hh>
-# include <mln/pw/cst.hh>
-# include <mln/pw/var.hh>
-# include <mln/pw/image.hh>
-
-# include <mln/fun/ops.hh>
-
-
-#endif // ! MLN_PW_ALL_HH
+#endif // ! MLN_TRAIT_OP_UMINUS_HH

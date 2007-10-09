@@ -32,24 +32,21 @@
 namespace mln
 {
 
-  // FIXME: Doc!
+  /// Namespace where traits are defined.
   namespace trait
   {}
 
 } // end of namespace mln
 
 
+// meta-program to solve a trait call
 # include <mln/trait/solve.hh>
 
 // promote
 # include <mln/trait/promote.hh>
 
-// arith
-# include <mln/trait/op_plus.hh>
-# include <mln/trait/op_times.hh>
-# include <mln/trait/op_minus.hh>
-# include <mln/trait/op_uminus.hh>
-
+// ops
+# include <mln/trait/op/all.hh>
 
 
 #endif // ! MLN_TRAIT_ALL_HH

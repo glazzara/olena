@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_MINUS_HH
-# define MLN_TRAIT_OP_MINUS_HH
+#ifndef MLN_TRAIT_OP_PLUS_HH
+# define MLN_TRAIT_OP_PLUS_HH
 
 # include <mln/trait/promote.hh>
 
 
-# define mln_trait_op_minus(L, R)  typename mln::trait::op_minus< L , R >::ret
-# define mln_trait_op_minus_(L, R)          mln::trait::op_minus< L , R >::ret
+# define mln_trait_op_plus(L, R)  typename mln::trait::op::plus< L , R >::ret
+# define mln_trait_op_plus_(L, R)          mln::trait::op::plus< L , R >::ret
 
 
 
@@ -42,16 +42,20 @@ namespace mln
   namespace trait
   {
 
-
-    template <typename L, typename R>
-    struct op_minus : public solve_binary<op_minus, L, R>
+    namespace op
     {
-    };
+
+      template <typename L, typename R>
+      struct plus : public solve_binary<plus, L, R>
+      {
+      };
+
+    } // end of namespace mln::trait::op
 
 
-    /// Default definition of op_minus is given by the promote trait.
-    template <typename L, typename R>
-    struct set_binary_< op_minus, Object, L, Object, R >
+    /// Default definition of op::plus is given by the promote trait.
+    template < typename L, typename R >
+    struct set_binary_< op::plus, Object, L, Object, R >
       :
       public promote< L, R >
     {
@@ -63,4 +67,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_OP_MINUS_HH
+#endif // ! MLN_TRAIT_OP_PLUS_HH

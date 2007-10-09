@@ -1,5 +1,30 @@
 2007-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Move op-related traits into trait::op:: to be consistent.
+
+	* mln/trait/op_plus.hh,
+	* mln/trait/op_minus.hh,
+	* mln/trait/op_uminus.hh,
+	* mln/trait/op_times.hh: Rename as...
+	* mln/trait/op/times.hh,
+	* mln/trait/op/plus.hh,
+	* mln/trait/op/minus.hh,
+	* mln/trait/op/uminus.hh: ...those.
+	(op_): Rename as...
+	(op::): ...those.
+	* mln/trait/op/all.hh: New.
+	* mln/trait/all.hh: Update; include op/all.hh.
+	* tests/trait_op_uminus.cc,
+	* tests/trait_super.cc,
+	* tests/trait_op_plus.cc,
+	* mln/core/ops.hh,
+	* mln/metal/mat.hh,
+	* mln/metal/vec.hh,
+	* mln/arith/plus.hh,
+	* mln/pw/all.hh: Update.
+
+2007-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Clean some operators on object and value types.
 
 	* tests/value_interop.cc (int_u<n>): Augment.

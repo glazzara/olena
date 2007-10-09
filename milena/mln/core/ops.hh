@@ -35,9 +35,7 @@
 # include <mln/core/concept/object.hh>
 # include <mln/core/exact.hh>
 # include <mln/value/builtin.hh>
-
-# include <mln/trait/op_plus.hh>
-# include <mln/trait/op_times.hh>
+# include <mln/trait/op/all.hh>
 
 
 namespace mln
@@ -120,7 +118,7 @@ namespace mln
 //   namespace trait {
 
 //     template < typename L, typename R >
-//     struct set_binary_< op_plus, Built_In, L, Object, R >
+//     struct set_binary_< op::plus, Built_In, L, Object, R >
 //     {
 //       typedef mln_trait_op_plus(R, L)
 //     };

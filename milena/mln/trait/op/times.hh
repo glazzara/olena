@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_PLUS_HH
-# define MLN_TRAIT_OP_PLUS_HH
+#ifndef MLN_TRAIT_OP_TIMES_HH
+# define MLN_TRAIT_OP_TIMES_HH
 
 # include <mln/trait/promote.hh>
 
 
-# define mln_trait_op_plus(L, R)  typename mln::trait::op_plus< L , R >::ret
-# define mln_trait_op_plus_(L, R)          mln::trait::op_plus< L , R >::ret
+# define mln_trait_op_times(L, R)  typename mln::trait::op::times< L , R >::ret
+# define mln_trait_op_times_(L, R)          mln::trait::op::times< L , R >::ret
 
 
 
@@ -42,16 +42,20 @@ namespace mln
   namespace trait
   {
 
-
-    template <typename L, typename R>
-    struct op_plus : public solve_binary<op_plus, L, R>
+    namespace op
     {
-    };
+
+      template <typename L, typename R>
+      struct times : public solve_binary<times, L, R>
+      {
+      };
+      
+    } // end of namespace mln::trait::op
 
 
-    /// Default definition of op_plus is given by the promote trait.
-    template < typename L, typename R >
-    struct set_binary_< op_plus, Object, L, Object, R >
+    /// Default definition of op::times is given by the promote trait.
+    template <typename L, typename R>
+    struct set_binary_< op::times, Object, L, Object, R >
       :
       public promote< L, R >
     {
@@ -63,4 +67,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_OP_PLUS_HH
+#endif // ! MLN_TRAIT_OP_TIMES_HH
