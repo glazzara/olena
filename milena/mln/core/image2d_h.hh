@@ -25,37 +25,62 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/hexa.cc
+#ifndef MLN_CORE_IMAGE2D_H_HH
+# define MLN_CORE_IMAGE2D_H_HH
+
+/*! \file mln/core/hexa_piter.hh
  *
- * \brief Tests on mln::hexa
+ * \brief Definition of iterators on points of pset_ifes.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/hexa.hh>
+# include <mln/core/image2d.hh>
+# include <mln/core/hexa.hh>
 
-#include <mln/value/int_u8.hh>
-#include <mln/trait/image/print.hh>
-#include <mln/debug/iota.hh>
+# include <mln/border/thickness.hh>
 
 
-int main()
+# include <mln/debug/println.hh>
+
+namespace mln
 {
-  using namespace mln;
-  using value::int_u8;
+  template <typename V>
+  struct image2d_h
+    : public hexa< image2d<V> >
+  {
+    //typedef hexa< image2d<V> > super_;
 
-  typedef image2d<int_u8> I;
+    /// Point site type
+    typedef point2d_h psite;
 
-  I ima(3,3);
-  hexa<I> h(ima);
-  debug::iota(ima);
-  trait::image::print(h, std::cout);
+    /// Constructor with the numbers of rows and columns
+    /// border thickness.
+    image2d_h(int nrows, int ncols, unsigned bdr = border::thickness);
+
+    //using super_::init_;
+  };
 
 
-  // FIXME : to put into debug::println
-  hexa<I>::fwd_piter p(h.domain());
+# ifndef MLN_INCLUDE_ONLY
 
-  for_all(p)
-    {
-      std::cout << p << "->" << h(p) << std::endl;
-    }
-}
+  template <typename V>
+  image2d_h<V>::image2d_h(int nrows, int ncols, unsigned bdr)
+  {
+    std::cout << "Image2d_h Ctor " << nrows  << " "
+	      << ncols / 2 + 1 << std::endl;
+
+    mln_assertion(ncols % 2 == 1);
+    image2d<V> ima(nrows,
+		   ncols / 2 + 1,
+		   bdr);
+
+    debug::println(ima);
+
+    this->init_(ima);
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+} // end of namespace mln
+
+
+#endif // ! MLN_CORE_IMAGE2D_H_HH

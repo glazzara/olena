@@ -56,8 +56,11 @@ namespace mln
 
       // generic version
       template <typename S, typename I>
-      void println(const S&, const Image<I>& input_)
+      void println(const S& b, const Image<I>& input_)
       {
+	void* tes = exact(input_);
+	void* a = b;
+
 	const I& input = exact(input_);
 	mln_piter(I) p(input.domain());
 	for_all(p)
@@ -91,6 +94,42 @@ namespace mln
       }
 
 # endif // MLN_CORE_BOX2D_HH
+
+# ifdef MLN_CORE_IMAGE2D_H_HH
+
+      // Hexa version
+      template <typename I>
+      void println(const box2d_h& b, const hexa<I>& input)
+      {
+	typename hexa<I>::fwd_piter p(input.domain());
+
+	int c = 1;
+	int r = 1;
+	int row_len = (b.max_col() - b.min_col()) / 2;
+
+	for_all(p)
+	  {
+	    //if (input.has(p))
+	    //std::cout << p << "     ";
+	    std::cout << format(input(p)) << "     ";
+	    //else
+	      //	      std::cout << "      ";
+
+	    if (c >= row_len)
+	    {
+	      std::cout << std::endl;
+	      if (r % 2)
+		std::cout << "   ";
+	      c = 0;
+	      r++;
+	    }
+	    c++;
+	  }
+	std::cout << std::endl;
+      }
+
+# endif // MLN_CORE_IMAGE2D_H_HH
+
 
 # ifdef MLN_CORE_BOX3D_HH
 

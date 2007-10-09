@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BOX2D_HH
-# define MLN_CORE_BOX2D_HH
+#ifndef MLN_CORE_BOX2D_H_HH
+# define MLN_CORE_BOX2D_H_HH
 
 /*! \file mln/core/box2d.hh
  *
@@ -35,19 +35,18 @@
  */
 
 # include <mln/core/box.hh>
+# include <mln/core/box2d.hh>
 # include <mln/core/point2d_h.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a box defined on the 2D square grid with
-   * integer coordinates.
+  /*! \brief FIXME
    *
-   * \see mln::win::rectangle2d.
    */
-  typedef box_<point2d_h> box2d_h;
 
+   typedef box_<point2d_h> box2d_h;
 
 } // end of namespace mln
 

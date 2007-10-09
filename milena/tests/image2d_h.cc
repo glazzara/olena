@@ -30,32 +30,36 @@
  * \brief Tests on mln::hexa
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/hexa.hh>
+#include <mln/core/image2d_h.hh>
 
-#include <mln/value/int_u8.hh>
+#include <mln/value/int_u16.hh>
 #include <mln/trait/image/print.hh>
 #include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
+  using value::int_u16;
 
-  typedef image2d<int_u8> I;
+  image2d_h<int_u16> h(2,7);
 
-  I ima(3,3);
-  hexa<I> h(ima);
-  debug::iota(ima);
+  debug::iota(h);
+
+  debug::println(h);
+
+//   image2d<int_u16> h(2,7);
+//   debug::println(h);
+
   trait::image::print(h, std::cout);
 
 
   // FIXME : to put into debug::println
-  hexa<I>::fwd_piter p(h.domain());
+  image2d_h<int_u16>::fwd_piter p(h.domain());
 
-  for_all(p)
-    {
-      std::cout << p << "->" << h(p) << std::endl;
-    }
+//   for_all(p)
+//     {
+//       std::cout << p << "->" << std::endl;
+//     }
 }

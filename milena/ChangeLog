@@ -1,3 +1,18 @@
+2007-10-09  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Improve hexagonal images. Fixme : doesn't work properly now.
+
+	* mln/debug/println.hh: Println for hexa images.
+
+	* mln/core/box2d_h.hh: Box with hexa points.
+	* mln/core/hexa.hh: Hexa image class declaration.
+
+	* tests/hexa.cc: Hexa test
+	* tests/image2d_h.cc: hexagonal image2d test.
+
+	* mln/core/hexa_piter.hh: Hexagonal iterator.
+	* mln/core/image2d_h.hh: Shortcut to hexa< image2d<V> >
+
 2007-10-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add translate image in sandbox.

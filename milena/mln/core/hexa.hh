@@ -37,6 +37,8 @@
 
 # include <mln/core/internal/image_domain_morpher.hh>
 # include <mln/core/point2d_h.hh>
+# include <mln/core/box2d_h.hh>
+# include <mln/core/hexa_piter.hh>
 
 
 namespace mln
@@ -51,9 +53,10 @@ namespace mln
     template <typename I>
     struct data_< hexa<I> >
     {
-      data_(I& ima);
+      data_(I& ima, box2d_h b);
 
       I ima_;
+      mln::box2d_h b_;
     };
 
   } // end of namespace mln::internal
@@ -92,22 +95,24 @@ namespace mln
    * which handles hexagonal grid.
    *
    * Ex :
-   *    -------------------
-   *  XX|  |  |  |  |  |  |XX
-   *    ---------------------
-   *    XX|  |  |  |  |  |  |XX
-   *    ---------------------
-   *  XX|  |  |  |  |  |  |XX
-   *    ---------------------
-   *    XX|  |  |  |  |  |  |XX
-   *    ---------------------
-   *  XX|  |  |  |  |  |  |XX
-   *    -------------------
+   *         1  3  5  7  9  11
+   *       0  2  4  6  8  10
+   *     -------------------
+   * 0 XX|  |  |  |  |  |  |XX
+   *     ---------------------
+   * 2   XX|  |  |  |  |  |  |XX
+   *     ---------------------
+   * 4 XX|  |  |  |  |  |  |XX
+   *     ---------------------
+   * 6   XX|  |  |  |  |  |  |XX
+   *     ---------------------
+   * 8 XX|  |  |  |  |  |  |XX
+   *     -------------------
    *
    *
    */
   template <typename I>
-  struct hexa : public internal::image_domain_morpher_< I, mln_pset(I), hexa<I> >
+  struct hexa : public internal::image_domain_morpher_< I, box2d_h, hexa<I> >
   {
     /// Skeleton.
     typedef hexa< tag::image_<I> > skeleton;
@@ -116,13 +121,22 @@ namespace mln
     typedef mln_value(I) value;
 
     /// Lvalue associated type.
-    typedef mln_value(I) lvalue;
+    typedef mln_lvalue(I) lvalue;
 
     /// Return type of read-only access.
     typedef mln_rvalue(I) rvalue;
 
     /// Point site type
     typedef point2d_h psite;
+
+    /// FIXME : should it be in box2d_h?
+    /// Forward Point_Iterator associated type.
+    typedef hexa_fwd_piter_<box2d> fwd_piter;
+
+    /// FIXME : should it be in box2d_h?
+    /// Backward Point_Iterator associated type.
+    /// typedef hexa_fwd_piter_<box2d> bkd_piter;
+
 
     /// Constructor without argument.
     hexa();
@@ -134,7 +148,7 @@ namespace mln
     void init_(I& ima);
 
     /// Give the definition domain.
-    const mln_pset(I)& domain() const;
+    const box2d_h& domain() const;
 
     /// Test if \p p belongs to the image domain.
     bool has(const psite& p) const;
@@ -144,7 +158,7 @@ namespace mln
     rvalue operator()(const point2d_h& p) const;
 
     /// Read-write access of pixel value at hexa point site \p p.
-    value operator()(const point2d_h& p);
+    lvalue operator()(const point2d_h& p);
   };
 
   template <typename I, typename J>
@@ -171,8 +185,9 @@ namespace mln
   {
 
     template <typename I>
-    data_< hexa<I> >::data_(I& ima)
-      : ima_(ima)
+    data_< hexa<I> >::data_(I& ima, box2d_h b)
+      : ima_(ima),
+	b_(b)
     {
     }
 
@@ -184,9 +199,11 @@ namespace mln
   hexa<I>::init_(I& ima)
   {
     mln_precondition(! this->has_data());
-    this->data_ = new internal::data_< hexa<I> >(ima);
+    box2d b_in = ima.bbox();
+    box2d_h b = make::box2d_h(b_in.pmin()[0], b_in.pmin()[1] * 2 - 1,
+			      b_in.pmax()[0], b_in.pmax()[1] * 2 - 1);
+    this->data_ = new internal::data_< hexa<I> >(ima, b);
   }
-
 
 
   template <typename I>
@@ -205,27 +222,31 @@ namespace mln
   typename hexa<I>::rvalue
   hexa<I>::operator()(const point2d_h& p) const
   {
+    mln_precondition(this->has_data());
     return this->data_->ima_(make::point2d(p[0] / 2, p[1] / 2));
   }
 
   template <typename I>
-  typename hexa<I>::value
+  typename hexa<I>::lvalue
   hexa<I>::operator()(const point2d_h& p)
   {
+    mln_precondition(this->has_data());
     return this->data_->ima_(make::point2d(p[0] / 2, p[1] / 2));
   }
 
   template <typename I>
-  const mln_pset(I)&
+  const box2d_h&
   hexa<I>::domain() const
   {
-    return this->data_->ima_.domain();
+    mln_precondition(this->has_data());
+    return this->data_->b_;
   }
 
   template <typename I>
   bool
   hexa<I>::has(const psite& p) const
   {
+    mln_precondition(this->has_data());
     return this->data_->ima_.has(make::point2d(p[0] / 2, p[1] / 2));
   }
 
