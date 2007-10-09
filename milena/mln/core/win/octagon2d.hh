@@ -206,4 +206,10 @@ namespace mln
 
 
 
+// when rectangle2d is involved, one surely also wants:
+# include <mln/core/win/hline2d.hh>
+# include <mln/core/win/vline2d.hh>
+# include <mln/core/win/diag.hh>
+# include <mln/core/win/backdiag.hh>
+
 #endif // ! MLN_CORE_WIN_OCTAGON2D_HH

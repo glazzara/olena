@@ -31,6 +31,33 @@
 /*! \file mln/morpho/erosion.spe.hh
  *
  * \brief Specialization for mln::morpho::erosion.
+ *
+ * Dispatch of erosion(input, win, output):
+ *
+ *  If win = rectangle
+ *    -> particular case
+ *  Else If win = octagon
+ *    -> particular case
+ *  Else
+ *    (If win is quite agglomerated (disjonction)
+ *       -> using incremental algorithm 
+ *     Else
+ *       -> using conventional algorithm)
+ *    If input value kind = logical
+ *      -> If image is Fast
+ *           -> particular case on sets
+ *         Else
+ *           -> general case on sets
+ *    Else
+ *      If input value are high quantified
+ *        -> using conventional accumulator
+ *      Else
+ *        -> using histogram based accumulator
+ *      If image is Fast
+ *        -> particular case on functions
+ *      Else
+ *        -> general case on functions
+ *    
  */
 
 # ifndef MLN_INCLUDE_ONLY
@@ -109,36 +136,28 @@ namespace mln
       void erosion_set_wrt_fast(trait::image::speed::any, const I& input,
 				const W& win, O& output)
       {
-	trace::entering("morpho::impl::erosion_set_wrt_fast");
 	generic::erosion_on_set(input, win, output);
-	trace::exiting("morpho::impl::erosion_set_wrt_fast");
       }
 
       template <typename I, typename W, typename O>
       void erosion_set_wrt_fast(trait::image::speed::fastest, const I& input,
 				const W& win, O& output)
       {
-	trace::entering("morpho::impl::erosion_set_wrt_fast");
 	impl::erosion_on_set_fast(input, win, output);
-	trace::exiting("morpho::impl::erosion_set_wrt_fast");
       }
 
       template <typename I, typename W, typename O, typename A>
       void erosion_fun_wrt_fast(trait::image::speed::any, const I& input,
 				const W& win, O& output, A& min)
       {
-	trace::entering("morpho::impl::erosion_fun_wrt_fast");
 	generic::erosion_on_function(input, win, output, min);
-	trace::exiting("morpho::impl::erosion_fun_wrt_fast");
       }
 
       template <typename I, typename W, typename O, typename A>
       void erosion_fun_wrt_fast(trait::image::speed::fastest, const I& input,
 				const W& win, O& output, A& min)
       {
-	trace::entering("morpho::impl::erosion_fun_wrt_fast");
 	impl::erosion_on_function_fast(input, win, output, min);
-	trace::exiting("morpho::impl::erosion_fun_wrt_fast");
       }
 
       //   ^
@@ -153,22 +172,18 @@ namespace mln
       void erosion_wrt_data(trait::image::quant::high, const I& input,
 			    const W& win, O& output)
       {
-	trace::entering("morpho::impl::erosion_wrt_data");
 	accu::min_<mln_value(I)> min;
 	impl::erosion_fun_wrt_fast(mln_trait_image_speed(I)(), input,
 				   win, output, min);
-	trace::exiting("morpho::impl::erosion_wrt_data");
       }
 
       template <typename I, typename W, typename O>
       void erosion_wrt_data(trait::image::quant::low, const I& input,
 			    const W& win, O& output)
       {
-	trace::entering("morpho::impl::erosion_wrt_data");
 	accu::min_h<mln_vset(I)> min;
 	impl::erosion_fun_wrt_fast(mln_trait_image_speed(I)(), input,
 				   win, output, min);
-	trace::exiting("morpho::impl::erosion_wrt_data");
       }
 
       //   ^
@@ -182,8 +197,6 @@ namespace mln
       template <typename I, typename W, typename O>
       void erosion_wrt_value(const I& input, const W& win, O& output)
       {
-	trace::entering("morpho::impl::erosion_wrt_value");
-
 	if (mlc_is(mln_trait_image_kind(I), trait::image::kind::logic)::value)
 	  impl::erosion_set_wrt_fast(mln_trait_image_speed(I)(), input,
 				     win, output);
@@ -194,7 +207,6 @@ namespace mln
 				 win, output);
 	//           |
 	//           `--> call stage 4: dispatch w.r.t. the data quantification
-	trace::exiting("morpho::impl::erosion_wrt_value");
       }
 
       //   ^
@@ -210,12 +222,10 @@ namespace mln
       template <typename I, typename W, typename O>
       void erosion_wrt_mor(const I& input, const W& win, O& output)
       {
-	trace::entering("morpho::impl::erosion_wrt_mor");
 	// FIXME : Choose the right algorithm between :
 	impl::erosion_wrt_value(input, win, output);
 	// and :
 	// impl::erosion_incr_wrt_value(input, win, output);
-	trace::exiting("morpho::impl::erosion_wrt_mor");
       }
 
       //   ^
@@ -231,7 +241,6 @@ namespace mln
       template <typename I, typename W, typename O>
       void erosion_wrt_win(const Image<I>& input_, const W& win_, Image<O>& output_)
       {
-	trace::entering("morpho::impl::erosion_wrt_win");
 	const I& input = exact(input_);
 	const W& win   = exact(win_);
 	O& output      = exact(output_);
@@ -239,7 +248,6 @@ namespace mln
 	impl::erosion_wrt_mor(input, win, output);
 	//                   |
 	//                   `-->  call stage 2: dispatch w.r.t. the data quantification
-	trace::exiting("morpho::impl::erosion_wrt_win");
       }
 
 #  ifdef MLN_CORE_WIN_RECTANGLE2D_HH
@@ -256,8 +264,6 @@ namespace mln
 
 
 #  ifdef MLN_CORE_WIN_OCTAGON2D_HH
-#   ifdef MLN_CORE_WIN_DIAG2D_HH
-#    ifdef MLN_CORE_WIN_BACKDIAG2D_HH
 
       template <typename I, typename O>
       void erosion_wrt_win(const Image<I>& input, const win::octagon2d& win, Image<O>& output)
@@ -272,8 +278,6 @@ namespace mln
 	morpho::erosion(temp1, win::backdiag2d(len),  output);
       }
 
-#    endif // MLN_CORE_WIN_BACKDIAG2D_HH
-#   endif // MLN_CORE_WIN_DIAG2D_HH
 #  endif // MLN_CORE_WIN_OCTAGON2D_HH
 
       //   ^

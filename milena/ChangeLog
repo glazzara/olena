@@ -1,3 +1,9 @@
+2007-10-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix erosion.spe and add comments.
+	* mln/core/win/octagon2d.hh: Include hline2d, vline2d and diags...
+	* mln/morpho/erosion.spe.hh: Document dispatch.
+
 2007-10-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix warning in display::show.
