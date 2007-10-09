@@ -1,3 +1,8 @@
+2007-10-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Cleaner version for display::show.
+	* show.hh: Fix.
+
 2007-10-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix erosion.spe and add comments.

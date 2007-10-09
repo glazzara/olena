@@ -70,15 +70,12 @@ namespace mln
 // 	std::string path_tmp = tempnam (0, "ppm");
 
 	/// Use of mkstemp instead tempmap.
-	char *tmp = (char*)malloc (7 * sizeof (char));
-	for (int i = 0; i < 6; ++i)
-	  tmp[i] = 'X';
-	tmp[6] = 0;
+	char *tmp = (char*)malloc (12 * sizeof (char));
+	strcpy(tmp, "/tmp/XXXXXX");
 	if (mkstemp(tmp) == -1)
 	  return;
+ 	std::string path_tmp = tmp;
 
-	std::string t = tmp;
-	std::string path_tmp = "/tmp/" + t;
  	io::ppm::save(out, path_tmp);
 	std::string s = cmd + " " + path_tmp;
 	system (s.c_str ());
