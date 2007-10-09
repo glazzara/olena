@@ -30,31 +30,21 @@
  * \brief Tests on mln::sub_image.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/inplace.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/value/rgb8.hh>
-#include <mln/level/fill.hh>
-#include <mln/debug/println.hh>
+# include <mln/core/image2d_b.hh>
+# include <mln/core/sub_image.hh>
+# include <mln/core/inplace.hh>
+# include <mln/value/int_u8.hh>
+# include <mln/value/rgb8.hh>
+# include <mln/level/fill.hh>
+# include <mln/debug/println.hh>
+# include <mln/core/image2d_b.hh>
+# include <mln/debug/println.hh>
+# include <mln/io/ppm/save.hh>
+# include <mln/core/image_if_value.hh>
+# include <mln/core/sub_image.hh>
+# include <mln/core/image_if_value.hh>
+# include <mln/core/inplace.hh>
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/point2d.hh>
-#include <mln/debug/println.hh>
-#include <mln/util/graph.hh>
-#include <mln/io/ppm/save.hh>
-#include <mln/fun/p2b/chess.hh>
-
-#include <mln/core/image_if_value.hh>
-#include <mln/debug/iota.hh>
-
-
-#include <mln/core/image2d_b.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if_value.hh>
-#include <mln/core/inplace.hh>
-
-#include <mln/level/fill.hh>
 # include <mln/debug/println.hh>
 # include <mln/core/w_window2d_int.hh>
 # include <mln/core/w_window2d_float.hh>
@@ -64,7 +54,7 @@
 # include <mln/geom/chamfer.hh>
 # include <mln/io/pbm/load.hh>
 
-#include "color_sub.hh"
+# include <mln/display/color_pretty.hh>
 
 int main()
 {
@@ -72,9 +62,9 @@ int main()
 
   unsigned max = 51;
   image2d_b<bool> input = io::pbm::load("../../img/toto.pbm");
-    const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 0> ();
+  const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 0> ();
   image2d_b<unsigned> tmp = geom::chamfer(input, w_win, max);
-  image2d_b<value::rgb8> out = color(inplace (tmp | 4));
+  image2d_b<value::rgb8> out = display::color_pretty(inplace (tmp | 4));
   io::ppm::save(out, "out.ppm");
   std::cout << "out.ppm generate" << std::endl;
 }

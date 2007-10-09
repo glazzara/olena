@@ -1,3 +1,12 @@
+2007-10-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add translate image in sandbox.
+
+	* translate_image.cc: New test for translate image.
+	* translate_image.hh: New image : translate image.
+
+	* color_sub.cc: Update.
+
 2007-10-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add composed transformation. (Does not work !).
