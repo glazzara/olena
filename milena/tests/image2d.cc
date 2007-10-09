@@ -25,27 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/ppm_load.cc
+/*! \file tests/image2d.cc
  *
- * \brief Test on mln::io::ppm::load.
+ * \brief Tests on mln::image2d.
  */
 
 #include <mln/core/image2d.hh>
+#include <mln/geom/size2d.hh>
 
-#include <mln/value/int_u8.hh>
+#include <mln/core/init.hh>
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
+
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  {
-    image2d<int_u8>
-      lena = io::pgm::load<int_u8>("../img/lena.pgm");
+  const unsigned nrows = 1;
+  const unsigned ncols = 66;
+  const unsigned border = 4;
 
-    io::pgm::save(lena, "out.pgm");
-  }
+  image2d<int> f(nrows, ncols, border);
+
+  mln_assertion(f.npoints() == geom::nrows(f) * geom::ncols(f));
+  mln_assertion(f.ncells()  == (nrows + 2 * border) * (ncols + 2 * border));
 }

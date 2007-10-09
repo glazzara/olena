@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d_b.cc
+/*! \file tests/image2d.cc
  *
- * \brief Tests on mln::image2d_b.
+ * \brief Tests on mln::image2d.
  */
 
 
 #include <iostream>
 #include <mln/fun/x2x/rotation.hh>
-#include <mln/core/image3d_b.hh>
+#include <mln/core/image3d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/core/tr_image.hh>
 #include <mln/debug/iota.hh>
@@ -44,21 +44,21 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image3d_b<int_u8> in(3, 3, 3);
-  image3d_b<int_u8> out(in.domain());
+  image3d<int_u8> in(3, 3, 3);
+  image3d<int_u8> out(in.domain());
 
   debug::iota(in);
   debug::println(in);
 
   fun::x2x::rotation<3,float> rot1(1.67, 0);
 
-  tr_image<fun::x2x::rotation<3,float>, image3d_b<int_u8> > inter(in, rot1);
+  tr_image<fun::x2x::rotation<3,float>, image3d<int_u8> > inter(in, rot1);
 
-  image3d_b<int_u8>::fwd_piter p(out.domain());
+  image3d<int_u8>::fwd_piter p(out.domain());
   
   for_all(p)
     {
-      metal::vec<3,int> vec = (image3d_b<int_u8>::point)p;
+      metal::vec<3,int> vec = (image3d<int_u8>::point)p;
       if (inter.has(vec))
 	out(p) = inter(vec);
       else

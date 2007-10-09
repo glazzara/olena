@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/window2d.hh>
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/convert/to_image.hh>
 #include <mln/debug/println.hh>
 
@@ -49,7 +49,7 @@ int main()
   w.insert(make::dpoint2d(-1,-1));
   w.insert(make::dpoint2d( 1, 1));
 
-  image2d_b<bool> ima = convert::to_image(w);
+  image2d<bool> ima = convert::to_image(w);
   debug::println(ima);
 
   mln_assertion(w.delta() == 1);

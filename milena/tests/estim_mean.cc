@@ -30,7 +30,7 @@
  * \brief Tests on mln::estim::mean.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/debug/iota.hh>
@@ -42,7 +42,7 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d_b<int_u8> ima(3, 3);
+  image2d<int_u8> ima(3, 3);
   debug::iota(ima);
   // 1 2 3
   // 4 5 6

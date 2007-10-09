@@ -30,8 +30,8 @@
  * \brief Test on mln::labeling::foreground.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/image1d_b.hh>
+#include <mln/core/image2d.hh>
+#include <mln/core/image1d.hh>
 #include <mln/core/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/pw/all.hh>
@@ -49,13 +49,13 @@ int main()
 
   unsigned border = 1;
 
-  image2d_b<value::int_u8> i1(5, 5, border);
+  image2d<value::int_u8> i1(5, 5, border);
   debug::iota(i1);
   i1[10] = i1[17] = i1[18] = i1[25] = i1[26] = i1[22] = i1[29] = 2;
   debug::println(i1);
 
   unsigned n;
-  image2d_b<value::int_u8> out(i1.domain(), border);
+  image2d<value::int_u8> out(i1.domain(), border);
   labeling::level(i1, 2, c4(), out, n);
 
   std::cout << "n = " << n << std::endl;

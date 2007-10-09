@@ -30,7 +30,7 @@
  * \brief Test on mln::morpho::laplacian.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/win/rectangle2d.hh>
 
 #include <mln/io/pgm/load.hh>
@@ -53,11 +53,11 @@ int main()
   win::rectangle2d rect(5, 5);
   border::thickness = 2;
 
-  image2d_b<int_u8> lena = io::pgm::load("../img/tiny.pgm");
-  image2d_b<int> lap(lena.domain());
+  image2d<int_u8> lena = io::pgm::load("../img/tiny.pgm");
+  image2d<int> lap(lena.domain());
   morpho::laplacian(lena, rect, lap);
 
-  image2d_b< value::int_u_sat<8> > out(lena.domain());
+  image2d< value::int_u_sat<8> > out(lena.domain());
   arith::plus_cst(lap, 128, out);
   io::pgm::save(out, "out.pgm");
 }

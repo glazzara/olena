@@ -30,8 +30,8 @@
  * \brief Test on mln::debug::println_with_border.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/image1d_b.hh>
+#include <mln/core/image2d.hh>
+#include <mln/core/image1d.hh>
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/debug/println_with_border.hh>
@@ -45,7 +45,7 @@ int main()
   border::thickness = 3;
 
   {
-    image2d_b<bool> msk(3, 3);
+    image2d<bool> msk(3, 3);
     msk.at(0, 0) = true;
     msk.at(1, 0) = true;
     msk.at(2, 0) = true;
@@ -63,7 +63,7 @@ int main()
   }
 
   {
-    image1d_b<bool> msk(3);
+    image1d<bool> msk(3);
     msk.at(0) = false;
     msk.at(1) = true;
     msk.at(2) = false;

@@ -30,7 +30,7 @@
  * \brief Test on mln::plain.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/plain.hh>
 
 #include <mln/value/int_u8.hh>
@@ -45,11 +45,11 @@ int main()
   using value::int_u8;
 
   {
-    plain< image2d_b<int_u8> >
+    plain< image2d<int_u8> >
       lena = io::pgm::load<int_u8>("../img/lena.pgm");
 
-    image2d_b<int_u8> ima;
-    image2d_b<int_u8> ima2;
+    image2d<int_u8> ima;
+    image2d<int_u8> ima2;
 
     ima = lena;
 

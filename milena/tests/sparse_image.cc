@@ -1,4 +1,4 @@
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/sparse_image.hh>
 #include <mln/core/sparse_encode.hh>
 #include <vector>
@@ -64,7 +64,7 @@ main()
   test(sparse.domain());
   test2(sparse);
 
-   mln::image2d_b<int> ima2d (1, 5);
+   mln::image2d<int> ima2d (1, 5);
 
    ima2d(mln::make::point2d(0, 4)) = 5;
    ima2d(mln::make::point2d(0, 3)) = 2;

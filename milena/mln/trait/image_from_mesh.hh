@@ -45,9 +45,9 @@ namespace mln
 
 
   // Fwd decls.
-  template <typename T> struct image1d_b;
-  template <typename T> struct image2d_b;
-  template <typename T> struct image3d_b;
+  template <typename T> struct image1d;
+  template <typename T> struct image2d;
+  template <typename T> struct image3d;
 
 
   namespace trait
@@ -58,19 +58,19 @@ namespace mln
     template <typename V>
     struct image_from_mesh< grid::tick, V >
     {
-      typedef image1d_b<V> ret;
+      typedef image1d<V> ret;
     };
 
     template <typename V>
     struct image_from_mesh< grid::square, V >
     {
-      typedef image2d_b<V> ret;
+      typedef image2d<V> ret;
     };
 
     template <typename V>
     struct image_from_mesh< grid::cube, V >
     {
-      typedef image3d_b<V> ret;
+      typedef image3d<V> ret;
     };
 
 

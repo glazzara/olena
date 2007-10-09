@@ -30,7 +30,7 @@
  * \brief Test on mln::linear::gaussian.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u_sat.hh>
 
@@ -47,12 +47,12 @@ int main()
 {
   using namespace mln;
 
-  image2d_b< value::int_u8 > lena = io::pgm::load("../img/lena.pgm");
+  image2d< value::int_u8 > lena = io::pgm::load("../img/lena.pgm");
 
-  image2d_b<float> tmp(lena.domain());
+  image2d<float> tmp(lena.domain());
   linear::gaussian(lena, 5.1f, tmp);
 
-  image2d_b< value::int_u_sat<8> > out(lena.domain());
+  image2d< value::int_u_sat<8> > out(lena.domain());
   level::transform(tmp, math::round<int>(), out);
   io::pgm::save(out, "out.pgm");
  }

@@ -30,7 +30,7 @@
  * \brief Test on mln::labeling::foreground.
  */
 
-# include <mln/core/image2d_b.hh>
+# include <mln/core/image2d.hh>
 # include <mln/core/sub_image.hh>
 # include <mln/core/neighb2d.hh>
 # include <mln/value/int_u8.hh>
@@ -50,25 +50,25 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d_b<bool> in = io::pbm::load("../img/toto.pbm");
+  image2d<bool> in = io::pbm::load("../img/toto.pbm");
 
-  image2d_b<int_u8> lab(in.domain());
-  image2d_b<int_u8> inte(in.domain());
-  image2d_b<int_u8> out(in.domain());
+  image2d<int_u8> lab(in.domain());
+  image2d<int_u8> inte(in.domain());
+  image2d<int_u8> out(in.domain());
 
   unsigned n;
   labeling::foreground(in, c8(), lab, n);
   std::cout << "number of labels = " << n << std::endl;
   std::vector<int_u8> vec;
 
-  image2d_b<int> input(in.domain());
+  image2d<int> input(in.domain());
   level::fill(input, lab);
   lab(make::point2d (0,0)) = 0;
 
   inte = geom::seeds2tiling(lab, c4 ());
   border::fill (inte, 0);
 
-  image2d_b<int_u8> inte2(inte.domain());
+  image2d<int_u8> inte2(inte.domain());
 
   level::stretch (inte, inte2);
 

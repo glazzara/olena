@@ -30,7 +30,7 @@
  * \brief Tests on mln::linear::convolve.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/io/pgm/load.hh>
@@ -50,7 +50,7 @@ int main()
 
   border::thickness = 2;
 
-  image2d_b<int_u8>
+  image2d<int_u8>
     lena = io::pgm::load("../img/lena.pgm"),
     out(lena.domain());
 
@@ -61,7 +61,7 @@ int main()
 		 .04, .04, .04, .04, .04 };
   w_window2d_float w = make::w_window2d(ws);
 
-  image2d_b<float> tmp(lena.domain());
+  image2d<float> tmp(lena.domain());
   linear::convolve(lena, w, tmp);
   level::transform(tmp, math::round<int_u8>(), out);
 

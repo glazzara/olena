@@ -30,7 +30,7 @@
  * \brief Tests on mln::clone.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/sub_image.hh>
 
 #include <mln/debug/iota.hh>
@@ -43,7 +43,7 @@
 int main()
 {
   using namespace mln;
-  image2d_b<int> ima(3, 3, 51);
+  image2d<int> ima(3, 3, 51);
   debug::iota(ima);
 
   {
@@ -55,14 +55,14 @@ int main()
   }
 
   {
-    image2d_b<int> ima_ = clone(ima);
+    image2d<int> ima_ = clone(ima);
     std::cout << ima_.border() << std::endl;
     ima_(make::point2d(1,1)) = 51;
     debug::println(ima);
   }
   
   {
-    image2d_b<int> ima_( ima );
+    image2d<int> ima_( ima );
     ima_(make::point2d(1,1)) = 51;
     debug::println(ima);
   }

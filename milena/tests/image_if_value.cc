@@ -30,7 +30,7 @@
  * \brief Tests on mln::image_if_value.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/image_if_value.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
@@ -40,7 +40,7 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
   I ima(3, 3);
   debug::iota(ima);
   debug::println(ima);

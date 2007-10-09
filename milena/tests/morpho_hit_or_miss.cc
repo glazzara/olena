@@ -30,7 +30,7 @@
  * \brief Test on mln::morpho::hit_or_miss.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/core/win/rectangle2d.hh>
@@ -75,7 +75,7 @@ int main()
 
   border::thickness = 2;
 
-  image2d_b<int_u8>
+  image2d<int_u8>
     pic = io::pgm::load("../img/picasso.pgm"),
     out(pic.domain());
 

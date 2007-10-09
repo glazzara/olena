@@ -30,7 +30,7 @@
  * \brief Test on mln::morpho::contrast.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/win/rectangle2d.hh>
 
 #include <mln/io/pgm/load.hh>
@@ -53,11 +53,11 @@ int main()
   win::rectangle2d rect(5, 5);
   border::thickness = 2;
 
-  image2d_b<int_u8>
+  image2d<int_u8>
     lena = io::pgm::load("../img/tiny.pgm"),
     out(lena.domain());
 
-  image2d_b< value::int_s<10> >
+  image2d< value::int_s<10> >
     in(lena.domain()),
     tmp(lena.domain());
 
@@ -70,7 +70,7 @@ int main()
   {
     // self-duality test: 
     morpho::complementation_inplace(in);
-    image2d_b< value::int_s<10> > tmp_(lena.domain());
+    image2d< value::int_s<10> > tmp_(lena.domain());
     morpho::contrast(in, rect, tmp_);
     morpho::complementation_inplace(tmp_);
     mln_assertion(tmp_ == tmp);

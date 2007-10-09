@@ -30,7 +30,7 @@
  * \brief Test on mln::dpoints_fwd_pixter.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/win/rectangle2d.hh>
 #include <mln/make/pixel.hh>
 
@@ -69,7 +69,7 @@ int main()
   using namespace mln;
 
   border::thickness = 1;
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
   I ima(5, 5);
 
   win::rectangle2d rect(3, 3);

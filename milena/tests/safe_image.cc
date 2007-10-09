@@ -30,7 +30,7 @@
  * \brief Tests on mln::safe_image.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/safe.hh>
 
 
@@ -38,7 +38,7 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
   I ima(1, 1);
   point2d
     in = make::point2d(0, 0),

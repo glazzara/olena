@@ -30,7 +30,7 @@
  * \brief Test on mln::level::median.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -46,7 +46,7 @@ int main()
 
   border::thickness = 7;
 
-  image2d_b<int_u8>
+  image2d<int_u8>
     lena = io::pgm::load("../img/lena.pgm"),
     out(lena.domain());
 

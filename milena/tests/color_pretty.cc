@@ -30,7 +30,7 @@
  * \brief Tests on mln::sub_image.
  */
 
-# include <mln/core/image2d_b.hh>
+# include <mln/core/image2d.hh>
 # include <mln/io/pbm/load.hh>
 # include <mln/make/win_chamfer.hh>
 # include <mln/geom/chamfer.hh>
@@ -50,7 +50,7 @@ int main()
   unsigned max = 51;
 
 
-  image2d_b<bool> input = io::pbm::load("../img/toto.pbm");
+  image2d<bool> input = io::pbm::load("../img/toto.pbm");
 
   // Create a weighted windows :
   // 0 2 0
@@ -59,10 +59,10 @@ int main()
   const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 0> ();
 
   // Call chamfer for a distance image.
-  image2d_b<unsigned> tmp = geom::chamfer(input, w_win, max);
+  image2d<unsigned> tmp = geom::chamfer(input, w_win, max);
 
   // Call color_pretty for sub_image.
-  image2d_b<value::rgb8> out = display::color_pretty(inplace (tmp | 4));
+  image2d<value::rgb8> out = display::color_pretty(inplace (tmp | 4));
 
   // Save output image from color in out.ppm.
   io::ppm::save(out, "out.ppm");

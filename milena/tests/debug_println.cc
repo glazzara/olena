@@ -30,7 +30,7 @@
  * \brief Test on mln::debug::println.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
 
@@ -40,7 +40,7 @@ using namespace mln;
 
 int main()
 {
-  image2d_b<bool> msk(3, 3);
+  image2d<bool> msk(3, 3);
   msk.at(1, 1) = true;
   debug::println(msk);
 }

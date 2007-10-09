@@ -38,7 +38,7 @@
 # include <fstream>
 # include <string>
 
-# include <mln/core/image2d_b.hh>
+# include <mln/core/image2d.hh>
 
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb.hh>
@@ -90,7 +90,7 @@ namespace mln
 	// used when (sizeof(int_u8) != 1)
 	template <typename V>
 	void load_raw_2d_uncontiguous(std::ifstream& file,
-				      image2d_b<V>& ima)
+				      image2d<V>& ima)
 	{
 	  const int
 	    min_row = geom::min_row(ima),
@@ -147,7 +147,7 @@ namespace mln
 
 	/// main function : load pnm format
 	template <typename V>
-	image2d_b<V> load(char type_, const std::string& filename)
+	image2d<V> load(char type_, const std::string& filename)
 	{
 	  std::ifstream file(filename.c_str());
 	  if (! file)
@@ -162,7 +162,7 @@ namespace mln
 	  read_header(type_ - 3, type_, file, type,
 		      nrows, ncols, maxval);
 
-	  image2d_b<V> ima(nrows, ncols);
+	  image2d<V> ima(nrows, ncols);
 	  if (type == type_)
 	    load_raw_2d(file, ima);
 	  else

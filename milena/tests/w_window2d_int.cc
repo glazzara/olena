@@ -56,7 +56,7 @@ int main()
 		 -1, 0, 1 };
     w_window2d_int w_win = make::w_window2d(ws);
 
-    image2d_b<int> ima = convert::to_image(w_win);
+    image2d<int> ima = convert::to_image(w_win);
     w_window2d_int w_win_2 = convert::to_w_window(ima);
     mln_assertion(w_win_2 == w_win);
   }
@@ -67,7 +67,7 @@ int main()
     //  -3 -2 -1  0 +1
     //  -2 -1  0 +1 +2 
     //  -1  0 +1 +2 +3 
-    image2d_b<int> ima = convert::to_image(w_win);
+    image2d<int> ima = convert::to_image(w_win);
     mln_assertion(estim::sum(ima) == 0);
   }
 

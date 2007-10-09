@@ -27,7 +27,7 @@
 
 #include <cmath>
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
 
@@ -53,7 +53,7 @@ int main()
   using namespace mln;
 
   const unsigned size = 1000;
-  image2d_b<value::int_u8> f(size, size);
+  image2d<value::int_u8> f(size, size);
   morpho::Rd(f, f, c8());
 }
 
@@ -72,7 +72,7 @@ int main()
 //   std::cout << c8() << std::endl;
 
 //     {
-//   image2d_b<int> ima(b);
+//   image2d<int> ima(b);
 //   level::fill(ima, 51);
 //   debug::println(ima);
 
@@ -86,12 +86,12 @@ int main()
 
 
 //   {
-//     image2d_b<int> ima(b);
+//     image2d<int> ima(b);
 //     level::fill(ima, cos_sin);
 //     debug::println(ima);
 
 //     std::cout << std::endl;
 
-//     image2d_b<int> ima2 = morpho::erosion(ima, win);
+//     image2d<int> ima2 = morpho::erosion(ima, win);
 //     debug::println(ima2);
 //   }

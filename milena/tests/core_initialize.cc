@@ -30,7 +30,7 @@
  * \brief Tests on mln::initialize.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/sub_image.hh>
 #include <mln/debug/println.hh>
 
@@ -40,7 +40,7 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
 
   I ref( make::box2d(3,3) );
   box2d b = make::box2d(2,2);

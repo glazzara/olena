@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixter2d_b.cc
+/*! \file tests/pixter2d.cc
  *
- * \brief Tests on mln::fwd_pixter2d_b.
+ * \brief Tests on mln::fwd_pixter2d.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 
 
 const unsigned size = 20;
@@ -86,7 +86,7 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
   I ima(size, size);
 
   test_fill(ima);

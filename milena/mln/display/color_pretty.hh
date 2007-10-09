@@ -36,7 +36,7 @@
 
 # include <mln/trait/image_from_mesh.hh>
 # include <mln/core/image_if_value.hh>
-# include <mln/core/image2d_b.hh>
+# include <mln/core/image2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/paste.hh>
@@ -63,7 +63,7 @@ namespace mln
       {
 	const I& input = exact (input_);
 	
-	image2d_b<value::rgb8> output(input.domain().bbox());
+	image2d<value::rgb8> output(input.domain().bbox());
 	level::fill(output, value::rgb8(255, 0, 0));
 
 // 	/// FIXME by :

@@ -33,7 +33,7 @@
 # include <fstream>
 # include <string>
 
-# include <mln/core/image2d_b.hh>
+# include <mln/core/image2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/io/fitsio.h>
 
@@ -59,7 +59,7 @@ namespace mln
 	return;
       }
 
-      image2d_b<float> load(const std::string& filename)
+      image2d<float> load(const std::string& filename)
       {
 	fitsfile *fptr;
 	int status,  nfound, anynull;
@@ -78,7 +78,7 @@ namespace mln
 	std::cout << "ncols : " << ncols
 		  << "nrows : " << nrows << std::endl;
 
-	image2d_b<float> output(nrows, ncols);
+	image2d<float> output(nrows, ncols);
 
 	nullval  = 0; // don't check null values
 

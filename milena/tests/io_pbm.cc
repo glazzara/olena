@@ -30,7 +30,7 @@
  * \brief Test on mln::io::pbm::load.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
@@ -39,9 +39,9 @@ int main()
 {
   using namespace mln;
 
-  image2d_b< bool >
+  image2d< bool >
     lena = io::pbm::load("../img/lena.pbm");
-  image2d_b<bool> out(lena.domain());
+  image2d<bool> out(lena.domain());
 
   //level::transform(lena, binarise(), out);
 

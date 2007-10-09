@@ -30,7 +30,7 @@
  * \brief Tests on mln::value::stack.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/value/stack.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
@@ -40,10 +40,10 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
 
   box2d b = make::box2d(2, 2);
-  image2d_b<int> ima5(b), ima1(b);
+  image2d<int> ima5(b), ima1(b);
 
   point2d p = make::point2d(0, 0);
   metal::vec<2, int> v = make::vec(5, 1);
@@ -52,9 +52,9 @@ int main()
   mln_assertion(value::stack(ima5, ima1)(p) == v);
   mln_assertion(ima5(p) == 5 && ima1(p) == 1);
 
-  value::stack_image<2, image2d_b<int> > s1(value::stack(ima5, ima1));
+  value::stack_image<2, image2d<int> > s1(value::stack(ima5, ima1));
 
-  value::stack_image<2, image2d_b<int> > s2;
+  value::stack_image<2, image2d<int> > s2;
 
   p = make::point2d(1, 1);
   s2 = s1;

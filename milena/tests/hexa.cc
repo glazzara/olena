@@ -30,7 +30,7 @@
  * \brief Tests on mln::hexa
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/hexa.hh>
 
 #include <mln/value/int_u8.hh>
@@ -42,7 +42,7 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  typedef image2d_b<int_u8> I;
+  typedef image2d<int_u8> I;
 
   I ima(3,3);
   hexa<I> h(ima);

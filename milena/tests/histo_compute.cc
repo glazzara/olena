@@ -32,7 +32,7 @@
 
 #include <iterator>
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_s.hh>
 
@@ -62,7 +62,7 @@ int main()
   }
 
   {
-    image2d_b<int_u8> ima(3, 3);
+    image2d<int_u8> ima(3, 3);
     debug::iota(ima);
     ima.at(0,0) = 2;
     debug::println(ima);
@@ -76,7 +76,7 @@ int main()
 
 //   {
 //     typedef value::int_s<5> int_s5;
-//     image2d_b<int_s5> ima(3, 3);
+//     image2d<int_s5> ima(3, 3);
 //     debug::iota(ima);
 //     ima.at(0,0) = 2;
 //     debug::println(ima);

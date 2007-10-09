@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::fill
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/level/fill.hh>
 #include <mln/level/paste.hh>
 
@@ -43,13 +43,13 @@ int main()
   using namespace mln;
 
   box2d b(make::point2d(1,2), make::point2d(2,4));
-  image2d_b<int> ima(b, 2);
+  image2d<int> ima(b, 2);
   debug::iota(ima);
   debug::println(ima);
 
 
   box2d b2(make::point2d(-1,-2), make::point2d(3,6));
-  image2d_b<int> ima2(b2, 0);
+  image2d<int> ima2(b2, 0);
   debug::iota(ima2);
   debug::println(ima2);
 

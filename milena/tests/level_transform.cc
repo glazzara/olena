@@ -32,7 +32,7 @@
 
 #include <cmath>
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/level/transform.hh>
 #include <mln/debug/iota.hh>
 
@@ -53,7 +53,7 @@ int main()
   using namespace mln;
 
   const unsigned size = 10000;
-  image2d_b<unsigned short>
+  image2d<unsigned short>
     ima(size, size);
 
   (std::cout << "iota... ").flush(); 

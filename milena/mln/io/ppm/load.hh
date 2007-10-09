@@ -33,7 +33,7 @@
 # include <fstream>
 # include <string>
 
-# include <mln/core/image2d_b.hh>
+# include <mln/core/image2d.hh>
 # include <mln/value/rgb8.hh>
 
 # include <mln/io/internal/pnm/load.hh>
@@ -47,12 +47,12 @@ namespace mln
     namespace ppm
     {
       template <typename V>
-      image2d_b<V> load(const std::string& filename)
+      image2d<V> load(const std::string& filename)
       {
 	return io::internal::pnm::load<V>(PPM, filename);
       }
 
-      image2d_b<value::rgb8> load(const std::string& filename)
+      image2d<value::rgb8> load(const std::string& filename)
       {
 	return load< value::rgb8 >(filename);
       }

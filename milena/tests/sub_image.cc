@@ -30,7 +30,7 @@
  * \brief Tests on mln::sub_image.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/sub_image.hh>
 #include <mln/core/inplace.hh>
 
@@ -42,7 +42,7 @@ int main()
 {
   using namespace mln;
 
-  image2d_b<int> ima(8, 8);
+  image2d<int> ima(8, 8);
   level::fill(ima, 0);
   debug::println(ima);
 

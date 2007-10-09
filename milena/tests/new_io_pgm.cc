@@ -30,7 +30,7 @@
  * \brief Test on mln::io::ppm::load.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u.hh>
@@ -46,7 +46,7 @@ int main()
   using value::rgb8;
 
   {
-    image2d_b< value::int_u<8> >
+    image2d< value::int_u<8> >
       lena;
     io::pgm::load(lena, "../img/lena.pgm");
 

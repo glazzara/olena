@@ -64,7 +64,7 @@ int main()
 		   3,  2,  3};
     w_window3d_int w_win = make::w_window3d(ws);
 
-    image3d_b<int> ima = convert::to_image(w_win);
+    image3d<int> ima = convert::to_image(w_win);
     debug::println(ima);
     std::cout << std::endl;
     w_window3d_int w_win_2 = convert::to_w_window(ima);
@@ -77,7 +77,7 @@ int main()
     //  -3 -2 -1  0 +1
     //  -2 -1  0 +1 +2
     //  -1  0 +1 +2 +3
-    image3d_b<int> ima = convert::to_image(w_win);
+    image3d<int> ima = convert::to_image(w_win);
     debug::println(ima);
     mln_assertion(estim::sum(ima) == 0);
   }

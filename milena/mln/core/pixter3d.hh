@@ -25,17 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_PIXTER1D_B_HH
-# define MLN_CORE_PIXTER1D_B_HH
+#ifndef MLN_CORE_PIXTER3D_B_HH
+# define MLN_CORE_PIXTER3D_B_HH
 
-/*! \file mln/core/pixter1d_b.hh
+/*! \file mln/core/pixter3d.hh
  *
- * \brief Pixel iterator class on a image 1d with border.
+ * \brief Pixel iterator class on a image 3d with border.
  */
 
 # include <mln/core/internal/pixel_iterator_base.hh>
-# include <mln/core/point1d.hh>
-# include <mln/geom/size1d.hh>
+# include <mln/core/point3d.hh>
+# include <mln/geom/size3d.hh>
 
 
 
@@ -43,9 +43,9 @@ namespace mln
 {
 
   template <typename I>
-  class fwd_pixter1d_b : public internal::pixel_iterator_base_< I, fwd_pixter1d_b<I> >
+  class fwd_pixter3d : public internal::pixel_iterator_base_< I, fwd_pixter3d<I> >
   {
-    typedef internal::pixel_iterator_base_< I, fwd_pixter1d_b<I> > super_;
+    typedef internal::pixel_iterator_base_< I, fwd_pixter3d<I> > super_;
 
   public:
 
@@ -56,35 +56,75 @@ namespace mln
      *
      * \param[in] image Image to iterate over its pixels.
      */
-    fwd_pixter1d_b(I& image);
+    fwd_pixter3d(I& image);
 
     /// Go to the next pixel.
     void next_();
 
+  private:
+
+    /// Twice the size of the image border.
+    unsigned border_x2_;
+
+    /// Row offset.
+    unsigned row_offset_;
+
+    /// End of the current row.
+    mln_qlf_value(I)* eor_;
+
+    ///Next Slide offset for row.
+    unsigned next_srow_offset_;
+
+    /// Next Slide offset.
+    unsigned next_sli_offset_;
+
+    /// Slide offset.
+    unsigned sli_offset_;
+
+    /// End of the current slide.
+    mln_qlf_value(I)* eos_;
   };
 
 
-  // FIXME: bkd_pixter1d_b
+  // FIXME: bkd_pixter3d
 
 
 #ifndef MLN_INCLUDE_ONLY
 
   template <typename I>
-  fwd_pixter1d_b<I>::fwd_pixter1d_b(I& image) :
+  fwd_pixter3d<I>::fwd_pixter3d(I& image) :
     super_(image)
   {
     mln_precondition(image.has_data());
+    border_x2_ = 2 * image.border();
+    row_offset_ = geom::max_col(image) - geom::min_col(image) + 1 + border_x2_;
+    eor_ = & image.at(geom::min_sli(image), geom::min_row(image), geom::max_col(image)) + 1;
+    next_sli_offset_ = 4 * image.border() * image.bbox().ncols() + 2 * image.border();
+    sli_offset_ = (image.bbox().ncols() + border_x2_) * (image.bbox().nrows() + border_x2_);
+    eos_ = & image.at(geom::min_sli(image), geom::max_row(image) + 1, geom::min_col(image));
+    next_srow_offset_ = (image.bbox().ncols() + border_x2_) * border_x2_;
   }
 
   template <typename I>
   void
-  fwd_pixter1d_b<I>::next_()
+  fwd_pixter3d<I>::next_()
   {
     ++this->value_ptr_;
+    if (this->value_ptr_ == eor_ && this->value_ptr_ != this->eoi_)
+    {
+      this->value_ptr_ += border_x2_;
+      eor_ += row_offset_;
+    }
+    if (this->value_ptr_ == eos_ && this->value_ptr_ != this->eoi_)
+    {
+      this->value_ptr_ += next_sli_offset_;
+      eos_ += sli_offset_;
+      eor_ += next_srow_offset_;
+    }
   }
 
 #endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
-#endif // ! MLN_CORE_PIXTER1D_B_HH
+#endif // ! MLN_CORE_PIXTER3D_B_HH

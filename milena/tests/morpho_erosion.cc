@@ -30,7 +30,7 @@
  * \brief Test on mln::morpho::erosion.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/win/rectangle2d.hh>
 #include <mln/core/win/octagon2d.hh>
 #include <mln/core/win/diag2d.hh>
@@ -60,17 +60,17 @@ int main()
   win::rectangle2d rec(21, 21);
   border::thickness = 66;
 
-  image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
+  image2d<int_u8> lena = io::pgm::load("../img/lena.pgm");
 
   { 
-    image2d_b<int_u8> out(lena.domain());
+    image2d<int_u8> out(lena.domain());
     morpho::erosion(lena, rec, out);
     io::pgm::save(out, "out1.pgm");
   }
 
   {
     win::octagon2d oct(31);
-    image2d_b<int_u8> out(lena.domain());
+    image2d<int_u8> out(lena.domain());
     morpho::erosion(lena, oct, out);
     io::pgm::save(out, "out2.pgm");
   }
@@ -79,19 +79,19 @@ int main()
 //     vec_p<point2d> vec = convert::to_vec_p(rec, point2d::zero);
 //     window2d win = convert::to_window(vec);
 
-//     image2d_b<int_u8> out(lena.domain());
+//     image2d<int_u8> out(lena.domain());
 //     level::ero(lena, win, out);
 //     morpho::erosion(lena, win, out);
 //     io::pgm::save(out, "out.pgm");
 //   }
 
 //   {
-//     image2d_b<bool> bin(lena.domain()), out(lena.domain());
+//     image2d<bool> bin(lena.domain()), out(lena.domain());
 //     level::fill(bin, pw::value(lena) > pw::cst(127));
 //     morpho::erosion(bin, rec, out);
 
-//     image2d_b<int_u8> test(lena.domain());
-//     image2d_b<int_u8>::fwd_piter p(lena.domain());
+//     image2d<int_u8> test(lena.domain());
+//     image2d<int_u8>::fwd_piter p(lena.domain());
 //     for_all(p)
 //       test(p) = out(p) ? 255 : 0;
 //     io::pgm::save(test, "test.pgm");

@@ -1,4 +1,4 @@
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/rle_image.hh>
 #include <mln/core/rle_encode.hh>
 
@@ -39,7 +39,7 @@ main()
 //   mln::debug::print(rle);
 //   std::cout << std::endl;
 
-  mln::image2d_b<int> ima2d (1, 5);
+  mln::image2d<int> ima2d (1, 5);
   ima2d(make::point2d(0, 4)) = 5;
 
 //   mln::debug::print(ima2d);

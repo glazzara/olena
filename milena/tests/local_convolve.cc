@@ -30,7 +30,7 @@
  * \brief Tests on mln::linear::local::convolve.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/core/w_window2d_int.hh>
@@ -51,7 +51,7 @@ int main()
   const unsigned size = 3;
   border::thickness = size - 1;
 
-  image2d_b<int_u8> ima(size, size);
+  image2d<int_u8> ima(size, size);
   debug::iota(ima);
 
   point2d p = make::point2d(1,1);
@@ -65,7 +65,7 @@ int main()
   }
 
   {
-    typedef image2d_b<int_u8> I;
+    typedef image2d<int_u8> I;
     linear::local::convolve(pixel<const I>(ima, p), w_win, res);
     linear::local::convolve(pixel<I>(ima, p), w_win, res);
   }

@@ -30,7 +30,7 @@
  * \brief Tests on mln::convert::to_image.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/window2d.hh>
 #include <mln/core/pset_if.hh>
 #include <mln/fun/p2b/chess.hh>
@@ -57,7 +57,7 @@ int main()
 	       0, 1, 0,   // < center point
 	       1, 0, 1 };
 
-  image2d_b<bool> ima_X = convert::to_image(box_3x3 | fun::p2b::chess);
+  image2d<bool> ima_X = convert::to_image(box_3x3 | fun::p2b::chess);
   window2d win_X = make::window2d(X);
   mln_assertion(convert::to_image(win_X) == ima_X);
 

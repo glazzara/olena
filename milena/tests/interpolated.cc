@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d_b.cc
+/*! \file tests/image2d.cc
  *
- * \brief Tests on mln::image2d_b.
+ * \brief Tests on mln::image2d.
  */
 
 
 #include <iostream>
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/interpolated.hh>\
 
 #include <mln/metal/vec.hh>
@@ -51,14 +51,14 @@ int main()
   const unsigned ncols = 4;
   const unsigned border = 4;
 
-  image2d_b<float> f(nrows, ncols, border);
+  image2d<float> f(nrows, ncols, border);
   float tab[] = {1.,  3.,  5.,  7.,
 		 4.,  7.,  10., 13.,
 		 7.,  11., 15., 19.,
 		 10., 15., 20., 25.};
   level::fill(f, tab);
 
-  interpolated< image2d_b<float> > inter(f);
+  interpolated< image2d<float> > inter(f);
 
   metal::vec<2, float> v1 = make::vec(2.3, 0.6);
   metal::vec<2, float> v2 = make::vec(3.2, 1.8);

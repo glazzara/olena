@@ -30,7 +30,7 @@
  * \brief Test on mln::fun::pw_value_.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/fun/ops.hh>
 #include <mln/pw/value.hh>
 #include <mln/pw/cst.hh>
@@ -40,7 +40,7 @@ int main()
 {
   using namespace mln;
 
-  image2d_b<int> ima(3, 3);
+  image2d<int> ima(3, 3);
   point2d p = make::point2d(1, 1);
   ima(p) = 51;
   mln_assertion( (pw::value(ima) == pw::cst(51))(p) == true );

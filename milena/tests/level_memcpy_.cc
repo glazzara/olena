@@ -32,7 +32,7 @@
  * \todo Make this test not dummy!
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/inplace.hh>
 #include <mln/debug/iota.hh>
 #include <mln/level/memcpy_.hh>
@@ -42,7 +42,7 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
   I ima(3, 3);
   debug::iota(ima);
 

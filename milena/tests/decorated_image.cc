@@ -30,7 +30,7 @@
  * \brief Tests on mln::decorated_image.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/decorated_image.hh>
 
 
@@ -54,7 +54,7 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
   I ima(1, 1);
   point2d p = make::point2d(0, 0);
 

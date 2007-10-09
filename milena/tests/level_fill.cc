@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::fill
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/sub_image.hh>
 #include <mln/level/fill.hh>
 
@@ -49,21 +49,21 @@ int main()
 
 //   {
 //     const unsigned size = 3;
-//     image2d_b<unsigned> ima(size, size);
+//     image2d<unsigned> ima(size, size);
 //     level::fill(ima, u);
 //     debug::println(ima);
 //   }
 
   {
     const unsigned size = 10000;
-    image2d_b<unsigned char> ima(size, size);
+    image2d<unsigned char> ima(size, size);
     for (unsigned i = 0; i < 5; ++i)
       level::fill(ima, uc);
   }
 
 //   {
 //     // do *not* compile so that's great since ima is not mutable
-//     sub_image< const image2d_b<int>, box2d > ima;
+//     sub_image< const image2d<int>, box2d > ima;
 //     level::fill(ima, 0);
 //   }
 

@@ -30,7 +30,7 @@
  * \brief Tests on mln::linear::sobel.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/saturate.hh>
 
@@ -48,11 +48,11 @@ int main()
 
   border::thickness = 1;
 
-  image2d_b<int_u8>
+  image2d<int_u8>
     lena = io::pgm::load("../img/lena.pgm"),
     out(lena.domain());
 
-  image2d_b<int> tmp(lena.domain());
+  image2d<int> tmp(lena.domain());
   linear::sobel(lena, tmp);
 
   level::saturate(tmp, out);

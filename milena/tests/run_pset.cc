@@ -30,7 +30,7 @@
  * \brief Test on mln::internal::run_pset_ and related tools.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/internal/run_pset.hh>
 
 

@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::assign.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/level/assign.hh>
 #include <mln/level/compare.hh>
 #include <mln/debug/iota.hh>
@@ -41,7 +41,7 @@ int main()
   using namespace mln;
 
   const unsigned size = 1000;
-  image2d_b<int> rhs(size, size), lhs(rhs.domain());
+  image2d<int> rhs(size, size), lhs(rhs.domain());
   debug::iota(rhs);
   level::assign(lhs, rhs);
   mln_assertion(lhs == rhs);

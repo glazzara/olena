@@ -25,24 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image1d_b.cc
+/*! \file tests/histo.cc
  *
- * \brief Tests on mln::image1d_b.
+ * \brief Tests on mln::accu::histo<S> and mln::histo::data<S>.
  */
 
-#include <mln/core/image1d_b.hh>
-#include <mln/geom/size1d.hh>
+#include <iterator>
 
+#include <mln/core/image2d.hh>
+#include <mln/core/image1d.hh>
+
+#include <mln/value/int_u8.hh>
+
+#include <mln/debug/iota.hh>
+#include <mln/accu/histo.hh>
+#include <mln/histo/compute.hh>
+
+#include <mln/debug/println.hh>
+
+#include <mln/convert/to_image.hh>
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  const unsigned ninds = 1;
-  const unsigned border = 4;
+  {
+    accu::histo< value::set<bool> > h;
 
-  image1d_b<int> f(ninds, border);
+    for (unsigned i = 0; i < 5; ++i)
+      h.take(false);
+    for (unsigned i = 0; i < 2; ++i)
+      h.take(true);
+    h.untake(true);
 
-  mln_assertion(f.npoints() == ninds);
-  mln_assertion(f.ncells()  == (ninds + 2 * border));
+    mln_assertion(h[0] * 10 + h[1] == 51);
+    mln_assertion(h(false) * 10 + h(true) == 51);
+  }
+
+  {
+    image2d<int_u8> ima(3, 3);
+    debug::iota(ima);
+    ima(make::point2d(0,1)) = 255;
+    debug::println(ima);
+    histo::data< value::set<int_u8> > h = histo::compute(ima);
+    std::cout << h << std::endl;
+
+    image1d<std::size_t> ima2 = convert::to_image(h);
+    debug::println(ima2);
+  }
 }

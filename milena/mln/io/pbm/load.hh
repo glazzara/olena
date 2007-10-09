@@ -33,7 +33,7 @@
 # include <fstream>
 # include <string>
 
-# include <mln/core/image2d_b.hh>
+# include <mln/core/image2d.hh>
 # include <mln/io/internal/pnm/load_header.hh>
 
 namespace mln
@@ -93,7 +93,7 @@ namespace mln
     } // end of namespace mln::io::internal
 
 
-    image2d_b<bool> load(const std::string& filename)
+    image2d<bool> load(const std::string& filename)
     {
       std::ifstream file(filename.c_str());
       if (! file)
@@ -106,7 +106,7 @@ namespace mln
       int nrows, ncols;
       io::internal::pnm::read_header('1', '4', file, type, nrows, ncols);
 
-      image2d_b<bool> ima(nrows, ncols);
+      image2d<bool> ima(nrows, ncols);
       if (type == '4')
 	internal::load_raw_2d(file, ima);
       else

@@ -30,7 +30,7 @@
  * \brief Tests on mln::pixel.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/pixel.hh>
 #include <mln/metal/equal.hh>
 
@@ -39,7 +39,7 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
 
   border::thickness = 0;
   I ima(3, 3);

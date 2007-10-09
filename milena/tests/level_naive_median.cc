@@ -30,7 +30,7 @@
  * \brief Test on mln::level::naive::median.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/win/rectangle2d.hh>
 
 #include <mln/io/pgm/load.hh>
@@ -49,7 +49,7 @@ int main()
   win::rectangle2d rec(51, 51);
   border::thickness = 52;
 
-  image2d_b<int_u8>
+  image2d<int_u8>
     lena = io::pgm::load("../img/lena.pgm"),
     out(lena.domain());
 

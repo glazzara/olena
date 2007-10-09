@@ -30,7 +30,7 @@
  * \brief Test on mln::morpho::opening_area.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/core/neighb2d.hh>
 
@@ -46,7 +46,7 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d_b<int_u8>
+  image2d<int_u8>
     lena = io::pgm::load("../img/lena.pgm"),
     out(lena.domain());
 

@@ -30,7 +30,7 @@
  * \brief Test on mln::level::approx::median.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/win/rectangle2d.hh>
 #include <mln/core/win/octagon2d.hh>
 
@@ -52,7 +52,7 @@ int main()
   win::octagon2d oct(13);
   border::thickness = 52;
 
-  image2d_b<int_u8>
+  image2d<int_u8>
     lena = io::pgm::load("../img/lena.pgm"),
     out(lena.domain());
 

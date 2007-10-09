@@ -30,7 +30,7 @@
  * \brief Tests on mln::linear::log.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/io/pgm/load.hh>
@@ -50,9 +50,9 @@ int main()
 
   border::thickness = 2;
 
-  image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
+  image2d<int_u8> lena = io::pgm::load("../img/lena.pgm");
 
-  image2d_b<int> tmp(lena.domain());
+  image2d<int> tmp(lena.domain());
   linear::LoG_5x5(lena, tmp);
   {
     int min, max;
@@ -60,7 +60,7 @@ int main()
     mln_assertion(min == -929 && max == 1458);
   }
 
-  image2d_b<int_u8> out(lena.domain());
+  image2d<int_u8> out(lena.domain());
   level::stretch(tmp, out);
   io::pgm::save(out, "out.pgm");
   {

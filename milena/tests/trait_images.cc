@@ -30,7 +30,7 @@
  * \brief Tests on mln::trait::images.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 
 #include <mln/core/sub_image.hh>
 #include <mln/core/image_if.hh>
@@ -41,16 +41,16 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
 
-  std::cout << "image2d_b: ";
+  std::cout << "image2d: ";
   mln::trait::image::print<I>(std::cout);
 
   std::cout << std::endl
-	    << "sub_image< image2d_b >: ";
+	    << "sub_image< image2d >: ";
   mln::trait::image::print< sub_image<I, box2d> >(std::cout);
 
   std::cout << std::endl
-	    << "image_if< image2d_b >: ";
+	    << "image_if< image2d >: ";
   mln::trait::image::print< image_if<I, fun::p2b::chess_t> >(std::cout);
 }

@@ -30,7 +30,7 @@
  * \brief Tests on mln::accu::min.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/debug/iota.hh>
 
 #include <mln/accu/nil.hh>
@@ -45,7 +45,7 @@
 int main()
 {
   using namespace mln;
-  image2d_b<int> ima(3, 3);
+  image2d<int> ima(3, 3);
   debug::iota(ima);
   mln_assertion(level::compute< accu::min >(ima) == 1);
   mln_assertion(level::compute< accu::min_<int> >(ima) == 1);

@@ -25,28 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d_b.cc
+/*! \file tests/image1d.cc
  *
- * \brief Tests on mln::image2d_b.
+ * \brief Tests on mln::image1d.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/geom/size2d.hh>
-
-#include <mln/core/init.hh>
-
+#include <mln/core/image1d.hh>
+#include <mln/geom/size1d.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  const unsigned nrows = 1;
-  const unsigned ncols = 66;
+  const unsigned ninds = 1;
   const unsigned border = 4;
 
-  image2d_b<int> f(nrows, ncols, border);
+  image1d<int> f(ninds, border);
 
-  mln_assertion(f.npoints() == geom::nrows(f) * geom::ncols(f));
-  mln_assertion(f.ncells()  == (nrows + 2 * border) * (ncols + 2 * border));
+  mln_assertion(f.npoints() == ninds);
+  mln_assertion(f.ncells()  == (ninds + 2 * border));
 }

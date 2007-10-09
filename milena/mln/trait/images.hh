@@ -83,9 +83,9 @@ namespace mln
 {
 
   // Primitive types.
-  template <typename T> struct image1d_b;
-  template <typename T> struct image2d_b;
-  template <typename T> struct image3d_b;
+  template <typename T> struct image1d;
+  template <typename T> struct image2d;
+  template <typename T> struct image3d;
   namespace pw { template <typename F, typename S> struct image; }
   template <typename P, typename T> class rle_image;
   template <typename P, typename T> class sparse_image;

@@ -30,7 +30,7 @@
  * \brief Test on mln::io::pbm::load for 23bits ppm
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/win/rectangle2d.hh>
 
 #include <mln/value/rgb8.hh>
@@ -76,15 +76,15 @@ int main()
   using namespace mln;
   using value::rgb8;
 
-  typedef image2d_b<rgb8> I;
+  typedef image2d<rgb8> I;
 
 
   // load a 8bits image A
-  image2d_b<rgb8>
+  image2d<rgb8>
     a = io::ppm::load<rgb8>("../img/lena.ppm");
-  image2d_b<rgb23> b(a.domain());
+  image2d<rgb23> b(a.domain());
 
-  image2d_b<rgb8>::fwd_piter  p(b.domain());
+  image2d<rgb8>::fwd_piter  p(b.domain());
 
   // save it as a 23bits ppm image B
   to23bits f;
@@ -93,9 +93,9 @@ int main()
   io::ppm::save(b, "out23.ppm");
 
   // reload B into C
-  image2d_b<rgb23>
+  image2d<rgb23>
     c = io::ppm::load<rgb23>("out23.ppm");
-  image2d_b<rgb8> d(a.domain());
+  image2d<rgb8> d(a.domain());
 
 
   // save C as a 8bits ppm image D

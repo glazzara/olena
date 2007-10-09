@@ -30,7 +30,7 @@
  * \brief Tests on mln::trait::ch_value.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/trait/ch_value.hh>
 
 
@@ -38,6 +38,6 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
   trait::ch_value<I, bool>::ret ima;
 }

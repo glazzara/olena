@@ -30,7 +30,7 @@
  * \brief Tests on mln::line_piter.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/line_piter.hh>
 
 int main()
@@ -39,9 +39,9 @@ int main()
 
   box2d b(make::point2d(1,2), make::point2d(5,8));
   const unsigned border = 2;
-  image2d_b<int> f(b, border);
+  image2d<int> f(b, border);
 
-  image2d_b<int>::line_piter p(f.domain());
+  image2d<int>::line_piter p(f.domain());
   for_all(p)
     std::cout << p <<std::endl;
 }

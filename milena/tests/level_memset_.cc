@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::memset_.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/geom/ncols.hh>
 #include <mln/level/fill.hh>
 #include <mln/level/memset_.hh>
@@ -40,7 +40,7 @@ int main()
 {
   using namespace mln;
 
-  image2d_b<int> ima(3, 3);
+  image2d<int> ima(3, 3);
   level::fill(ima, 0);
   int X = 9;
   level::memset_(ima, make::point2d(0,0),

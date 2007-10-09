@@ -27,7 +27,7 @@
 
 #include <iostream>
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
 
@@ -120,12 +120,12 @@ int main()
 
   {
     std::cout << "convert" << std::endl;
-    image2d_b<int_u8>
+    image2d<int_u8>
       lena = io::pgm::load<int_u8>("../img/lena.pgm"),
       ref(lena.domain());
 
-    image2d_b<float01_16> out(lena.domain());
-    image2d_b<float01_16> tmp(lena.domain());
+    image2d<float01_16> out(lena.domain());
+    image2d<float01_16> tmp(lena.domain());
 
     level::transform(lena, tofloat01(), tmp);
 

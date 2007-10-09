@@ -30,7 +30,7 @@
  * \brief Test on mln::io::pbm::load.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 
 #include <mln/value/int_u8.hh>
 
@@ -72,18 +72,18 @@ int main()
   using value::int_u;
   typedef value::int_u<27> int_u27;
 
-  image2d_b<int_u8>
+  image2d<int_u8>
     lena = io::pgm::load<int_u8>("../img/lena.pgm");
-  image2d_b<int_u27> out(lena.domain());
+  image2d<int_u27> out(lena.domain());
 
   level::transform(lena, to27bits(), out);
 
   io::pgm::save(out, "out27.pgm");
 
-  image2d_b<int_u27> lena2;
+  image2d<int_u27> lena2;
   io::pgm::load(lena2, "out27.pgm");
 
-  image2d_b<int_u8> out2(lena.domain());
+  image2d<int_u8> out2(lena.domain());
 
    level::transform(lena2, to8bits(), out2);
 

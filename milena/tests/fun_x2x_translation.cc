@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d_b.cc
+/*! \file tests/image2d.cc
  *
- * \brief Tests on mln::image2d_b.
+ * \brief Tests on mln::image2d.
  */
 
 

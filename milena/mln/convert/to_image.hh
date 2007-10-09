@@ -33,9 +33,9 @@
  * \brief Conversions to mln::Image.
  */
 
-# include <mln/core/image1d_b.hh>
-# include <mln/core/image2d_b.hh>
-# include <mln/core/image3d_b.hh>
+# include <mln/core/image1d.hh>
+# include <mln/core/image2d.hh>
+# include <mln/core/image3d.hh>
 
 # include <mln/core/concept/point_set.hh>
 # include <mln/core/concept/window.hh>
@@ -71,19 +71,19 @@ namespace mln
     template <typename V>
     struct helper_image_from_< 3, V >
     {
-      typedef image3d_b<V> ret;
+      typedef image3d<V> ret;
     };
 
     template <typename V>
     struct helper_image_from_< 2, V >
     {
-      typedef image2d_b<V> ret;
+      typedef image2d<V> ret;
     };
 
     template <typename V>
     struct helper_image_from_< 1, V >
     {
-      typedef image1d_b<V> ret;
+      typedef image1d<V> ret;
     };
 
   } // end of namespace mln::internal
@@ -119,9 +119,9 @@ namespace mln
     template <typename W>
     mln_image_from(W, mln_weight(W)) to_image(const Weighted_Window<W>& w_win);
 
-    /// Convert an histo \p h into an image1d_b<std::size_t>.
+    /// Convert an histo \p h into an image1d<std::size_t>.
     template <typename S>
-    image1d_b<std::size_t> to_image(const mln::histo::data<S>& h);
+    image1d<std::size_t> to_image(const mln::histo::data<S>& h);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -175,12 +175,12 @@ namespace mln
     }
 
     template <typename S>
-    image1d_b<std::size_t> to_image(const histo::data<S>& h)
+    image1d<std::size_t> to_image(const histo::data<S>& h)
     {
       mln_value(S)
 	v_min = h.vset()[0],
 	v_max = h.vset()[h.vset().nvalues() - 1];
-      image1d_b<std::size_t> ima(make::box1d(v_min, v_max));
+      image1d<std::size_t> ima(make::box1d(v_min, v_max));
       for(std::size_t i = 0; i < h.vset().nvalues(); ++i)
 	ima(make::point1d(i)) = h[i];
       return ima;

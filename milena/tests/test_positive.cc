@@ -30,7 +30,7 @@
  * \brief Tests on mln::test::positive.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/level/fill.hh>
 #include <mln/test/positive.hh>
 
@@ -52,7 +52,7 @@ void test_v2b(const mln::Function_v2b<F>&)
 int main()
 {
   using namespace mln;
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
 
   I ima(1,1);
   level::fill(ima, 0);

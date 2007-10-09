@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image3d_b.cc
+/*! \file tests/image3d.cc
  *
- * \brief Tests on mln::image3d_b.
+ * \brief Tests on mln::image3d.
  */
 
-#include <mln/core/image3d_b.hh>
+#include <mln/core/image3d.hh>
 #include <mln/geom/size3d.hh>
 
 
@@ -43,7 +43,7 @@ int main()
   const unsigned ncols = 5;
   const unsigned border = 4;
 
-  image3d_b<int> f(nslis, nrows, ncols, border);
+  image3d<int> f(nslis, nrows, ncols, border);
 
   mln_assertion(f.npoints() == geom::nslis(f) * geom::nrows(f) * geom::ncols(f));
   mln_assertion(f.ncells()  == ((nrows + 2 * border)

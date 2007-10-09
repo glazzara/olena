@@ -32,7 +32,7 @@
 
 #include <iterator>
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/sub_image.hh>
 #include <mln/core/inplace.hh>
 
@@ -50,17 +50,17 @@ int main()
   line2d l(b, e);
   mln_assertion(l.npoints() == 10);
 
-  image2d_b<bool> ima(10,10);
+  image2d<bool> ima(10,10);
   level::fill(ima, false);
   draw::line(ima, b, e, true);
 
-  image2d_b<bool> ima2(10,10);
+  image2d<bool> ima2(10,10);
   level::fill(ima2, false);
   level::paste(pw::cst(true) | l, ima2);
 
   mln_assertion(ima2 == ima);
 
-  image2d_b<bool> ima3(10,10);
+  image2d<bool> ima3(10,10);
   level::fill(ima3, false);
   level::fill(inplace(ima3 | l), true);
 

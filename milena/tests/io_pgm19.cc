@@ -30,7 +30,7 @@
  * \brief Test on mln::io::pbm::load.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 
 #include <mln/value/int_u8.hh>
 
@@ -74,17 +74,17 @@ int main()
 
   border::thickness = 52;
 
-  image2d_b<int_u8>
+  image2d<int_u8>
     lena = io::pgm::load<int_u8>("../img/lena.pgm");
-  image2d_b<int_u19> out(lena.domain());
+  image2d<int_u19> out(lena.domain());
 
   level::transform(lena, to19bits(), out);
 
   io::pgm::save(out, "out19.pgm");
 
-  image2d_b<int_u19>
+  image2d<int_u19>
     lena2 = io::pgm::load<int_u19>("out19.pgm");
-   image2d_b<int_u8> out2(lena.domain());
+   image2d<int_u8> out2(lena.domain());
 
    level::transform(lena2, to8bits(), out2);
 

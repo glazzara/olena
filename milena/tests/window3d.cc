@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/window3d.hh>
-#include <mln/core/image3d_b.hh>
+#include <mln/core/image3d.hh>
 #include <mln/convert/to_image.hh>
 #include <mln/debug/println.hh>
 
@@ -50,7 +50,7 @@ int main()
   w.insert(make::dpoint3d( 1,  1,  1));
   w.insert(make::dpoint3d( 0,  0,  2));
 
-  image3d_b<bool> ima = convert::to_image(w);
+  image3d<bool> ima = convert::to_image(w);
   debug::println(ima);
 
   mln_assertion(w.delta() == 2);

@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_PIXTER2D_B_HH
 # define MLN_CORE_PIXTER2D_B_HH
 
-/*! \file mln/core/pixter2d_b.hh
+/*! \file mln/core/pixter2d.hh
  *
  * \brief Pixel iterator class on a image 2d with border.
  */
@@ -43,9 +43,9 @@ namespace mln
 {
 
   template <typename I>
-  class fwd_pixter2d_b : public internal::pixel_iterator_base_< I, fwd_pixter2d_b<I> >
+  class fwd_pixter2d : public internal::pixel_iterator_base_< I, fwd_pixter2d<I> >
   {
-    typedef internal::pixel_iterator_base_< I, fwd_pixter2d_b<I> > super_;
+    typedef internal::pixel_iterator_base_< I, fwd_pixter2d<I> > super_;
 
   public:
 
@@ -56,7 +56,7 @@ namespace mln
      *
      * \param[in] image Image to iterate over its pixels.
      */
-    fwd_pixter2d_b(I& image);
+    fwd_pixter2d(I& image);
 
     /// Go to the next pixel.
     void next_();
@@ -76,9 +76,9 @@ namespace mln
 
 
   template <typename I>
-  class bkd_pixter2d_b : public internal::pixel_iterator_base_< I, bkd_pixter2d_b<I> >
+  class bkd_pixter2d : public internal::pixel_iterator_base_< I, bkd_pixter2d<I> >
   {
-    typedef internal::pixel_iterator_base_< I, bkd_pixter2d_b<I> > super_;
+    typedef internal::pixel_iterator_base_< I, bkd_pixter2d<I> > super_;
 
   public:
 
@@ -89,7 +89,7 @@ namespace mln
      *
      * \param[in] image Image to iterate over its pixels.
      */
-    bkd_pixter2d_b(I& image);
+    bkd_pixter2d(I& image);
 
     /// Go to the next pixel.
     void next_();
@@ -116,7 +116,7 @@ namespace mln
   // Fwd.
 
   template <typename I>
-  fwd_pixter2d_b<I>::fwd_pixter2d_b(I& image) :
+  fwd_pixter2d<I>::fwd_pixter2d(I& image) :
     super_(image)
   {
     mln_precondition(image.has_data());
@@ -127,7 +127,7 @@ namespace mln
 
   template <typename I>
   void
-  fwd_pixter2d_b<I>::next_()
+  fwd_pixter2d<I>::next_()
   {
     ++this->value_ptr_;
     if (this->value_ptr_ == eor_ && this->value_ptr_ != this->eoi_)
@@ -140,7 +140,7 @@ namespace mln
   // Bkd.
 
   template <typename I>
-  bkd_pixter2d_b<I>::bkd_pixter2d_b(I& image) :
+  bkd_pixter2d<I>::bkd_pixter2d(I& image) :
     super_(image)
   {
     mln_precondition(image.has_data());
@@ -151,7 +151,7 @@ namespace mln
 
   template <typename I>
   void
-  bkd_pixter2d_b<I>::next_()
+  bkd_pixter2d<I>::next_()
   {
     --this->value_ptr_;
     if (this->value_ptr_ == bor_ && this->value_ptr_ != this->boi_)
@@ -163,7 +163,7 @@ namespace mln
 
   template <typename I>
   void
-  bkd_pixter2d_b<I>::start()
+  bkd_pixter2d<I>::start()
   {
     this->value_ptr_ = this->eoi_ - 1;
   }

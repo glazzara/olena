@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d_b.cc
+/*! \file tests/image2d.cc
  *
- * \brief Tests on mln::image2d_b.
+ * \brief Tests on mln::image2d.
  */
 
 
 #include <iostream>
 #include <mln/fun/x2x/rotation.hh>
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -45,14 +45,14 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
-  image2d_b<int_u8> out(lena.domain());
+  image2d<int_u8> lena = io::pgm::load("../img/lena.pgm");
+  image2d<int_u8> out(lena.domain());
 
-  interpolated<image2d_b<int_u8> > inter(lena);
+  interpolated<image2d<int_u8> > inter(lena);
 
   fun::x2x::rotation<2,float> rot1(0.1);
 
-  image2d_b<int_u8>::fwd_piter p(out.domain());
+  image2d<int_u8>::fwd_piter p(out.domain());
   
   for_all(p)
     {

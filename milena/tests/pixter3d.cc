@@ -25,15 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixter1d_b.cc
+/*! \file tests/pixter3d.cc
  *
- * \brief Tests on mln::fwd_pixter1d_b.
+ * \brief Tests on mln::fwd_pixter3d.
  */
 
-#include <mln/core/image1d_b.hh>
+#include <mln/core/image3d.hh>
 
 
-const unsigned size = 20;
+const unsigned size = 5;
+const unsigned len = 125;
 const int v = 51;
 
 
@@ -47,7 +48,8 @@ void test_fill(I& ima)
       ++i;
       pxl.val() = v;
     }
-  mln_assertion(i == size);
+  std::cout << i << std::endl;
+  mln_assertion(i == len);
   mln_assertion(! pxl.is_valid());
 
   mln_piter(I) p(ima.domain());
@@ -86,8 +88,8 @@ int main()
 {
   using namespace mln;
 
-  typedef image1d_b<int> I;
-  I ima(size);
+  typedef image3d<int> I;
+  I ima(size, size, size);
 
   test_fill(ima);
   test_const(ima, ima);

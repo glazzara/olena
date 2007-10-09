@@ -30,7 +30,7 @@
  * \brief Tests on mln::mesh_image.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/point2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/util/graph.hh>
@@ -72,7 +72,7 @@ main (void)
  v.push_back (make::point2d (1,19));
 
 
- image2d_b<int> ima (20, 20, 1);
+ image2d<int> ima (20, 20, 1);
 
  mesh_p<point2d> m(g, v);
 

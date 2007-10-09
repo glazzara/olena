@@ -30,7 +30,7 @@
  * \brief Test on mln::morpho::erosion.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/win/rectangle2d.hh>
 #include <mln/core/window2d.hh>
 
@@ -52,13 +52,13 @@ int main()
   win::rectangle2d rec(21, 21);
   border::thickness = 66;
 
-  image2d_b<int_u8> lena = io::pgm::load("../img/lena.pgm");
+  image2d<int_u8> lena = io::pgm::load("../img/lena.pgm");
 
   {
     vec_p<point2d> vec = convert::to_vec_p(rec, point2d::zero);
     window2d win = convert::to_window(vec);
 
-    image2d_b<int_u8> out(lena.domain());
+    image2d<int_u8> out(lena.domain());
     morpho::erosion_fast(lena, win, out);
     io::pgm::save(out, "out.pgm");
   }

@@ -30,8 +30,8 @@
  * \brief Tests on mln::canvas::browsing::fwd.
  */
 
-#include <mln/core/image2d_b.hh>
-#include <mln/core/image3d_b.hh>
+#include <mln/core/image2d.hh>
+#include <mln/core/image3d.hh>
 #include <mln/canvas/browsing/fwd.hh>
 #include <mln/canvas/browsing/snake_fwd.hh>
 #include <mln/canvas/browsing/directional.hh>
@@ -98,8 +98,8 @@ namespace mln
 int main()
 {
   using namespace mln;
-  image2d_b<unsigned> ima2(3, 3);
-  image3d_b<unsigned> ima3(3, 3, 3);
+  image2d<unsigned> ima2(3, 3);
+  image3d<unsigned> ima3(3, 3, 3);
 
   my_test(ima2, fun::p2v::iota, canvas::browsing::fwd);
   debug::println(ima2);
