@@ -1,3 +1,8 @@
+2007-10-10  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix test on translate image.
+	* translate_image.cc: Clean test.
+
 2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Remove debug in println.

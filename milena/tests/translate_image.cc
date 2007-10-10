@@ -49,7 +49,7 @@ int main ()
 
   I ima (4, 2, 1);
   debug::iota (ima);
-  translate_image<I> tmp (ima, make::point2d (0,2) - make::point2d (0,0));
+  translate_image<I> tmp (ima, make::dpoint2d (0,2));
   std::cout << "orginal image domain : "
 	    << ima.domain ()
 	    << std::endl
