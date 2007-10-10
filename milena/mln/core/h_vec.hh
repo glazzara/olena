@@ -81,7 +81,7 @@ namespace mln
     mln_assertion(w != 0);
 
     metal::vec<d,C> tmp;
-    for (unsigned i = 0; i < n; ++i)
+    for (unsigned i = 0; i < d; ++i)
       tmp[i] = this->data_[i] / w;
     return tmp;
   }

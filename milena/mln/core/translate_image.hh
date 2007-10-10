@@ -54,7 +54,11 @@ namespace mln
       data_(I& ima, const mln_dpoint(I) dp);
 
       I			    ima_;
+
+      /// Real domain.
       box2d		    bb_;
+
+      /// Delta point of translation.
       const mln_dpoint(I)   dp_;
     };
 
@@ -82,8 +86,11 @@ namespace mln
 
 
 
-  /*! \brief FIXME
+  /*! \brief Translate image class.
    *
+   * The parameter \c I is the type of image.  This image class
+   * makes a translation of a delta point.
+   * 
    */
   template <typename I>
   struct translate_image : public mln::internal::image_identity_< I, mln_pset(I), translate_image<I> >
