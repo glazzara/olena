@@ -1,3 +1,8 @@
+2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Augment tests on int_u8.
+	* tests/value_int_u8.cc: Update.
+
 2007-10-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Points and dpoints can be easily constructed.

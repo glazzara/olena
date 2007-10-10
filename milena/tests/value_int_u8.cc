@@ -31,44 +31,122 @@
  */
 
 #include <mln/value/int_u8.hh>
-#include <mln/value/int_u16.hh>
-#include <mln/value/float01_8.hh>
+
+#define test_operator(T, OP, V1, V2)                    \
+                                                        \
+{							\
+    T i = V1;						\
+    T j = V2;						\
+							\
+    i = i OP j;						\
+    mln_assertion(i == (V1 OP V2));				\
+    mln_assertion(j == V2);					\
+							\
+    i OP##= i;						\
+    mln_assertion(i == (((V1 OP V2) OP (V1 OP V2))));	        \
+}
+
+#define test_interop(T1, T2, OP, V1, V2)                \
+                                                        \
+{							\
+    T1 i = V1;						\
+    T2 j = V2;						\
+							\
+    i = i OP j;						\
+    mln_assertion(i == (V1 OP V2));				\
+    mln_assertion(j == V2);					\
+							\
+    i OP##= i;						\
+    mln_assertion(i == (((V1 OP V2) OP (V1 OP V2))));	        \
+}
+
+
+// test_operator
 
 int main()
 {
   using namespace mln;
   using value::int_u8;
-  using value::float01_8;
 
   int_u8 i = 3, j;
 
+  // Assignment.
   {
-//     int k = 1;
-//     i *= k;
-    i *= i;
-    mln_assertion(i == 9);
+    i = 51;
+    mln_assertion(i == 51);
+
+    i = 51u;
+    mln_assertion(i == 51);
+
+    signed char c = 51;
+    i = c;
+    mln_assertion(i == 51);
+
+    j = i;
+    mln_assertion(j == 51);
+
+    // Error at run-time as expected :-)
+    // i = 256;
+    // i = -1;
+    // i = 255, ++i;
   }
 
-//   // Assignment.
-//   {
-//     i = 51;
-//     mln_assertion(i == 51);
+  // Addition.
+  {
+    test_operator(int_u8, +, 5, 1);
+    test_interop(int_u8, int,  +, 5, -1);
+    test_interop(int_u8, char,  +, 4, 2);
+    test_interop(int_u8, unsigned char,  +, 4, 2);
+  }
 
-//     i = 51u;
-//     mln_assertion(i == 51);
+  // Soustraction
+  {
+    test_operator(int_u8, -, 100, 5);
+    test_interop(int_u8, int,  -, 100, 5);
+    test_interop(int_u8, char,  -, 100, 5);
+    test_interop(int_u8, unsigned char,  -, 100, 5);
 
-//     signed char c = 51;
-//     i = c;
-//     mln_assertion(i == 51);
+    int_u8 c = 255;
+    c -= c;
 
-//     j = i;
-//     mln_assertion(j == 51);
+    mln_assertion(c == 0);
 
-//     // Error at run-time as expected :-)
-//     // i = 256;
-//     // i = -1;
-//     // i = 255, ++i;
-//   }
+  }
+
+  // Multiplication
+  {
+    test_operator(int_u8, *, 5, 1);
+    test_interop(int_u8, int,  *, 5, 1);
+    test_interop(int_u8, char,  *, 4, 2);
+    test_interop(int_u8, unsigned char,  *, 4, 2);
+
+    int_u8 c = 255;
+
+    c *= 0;
+    mln_assertion(c == 0);
+  }
+
+  // Division
+  {
+    test_operator(int_u8, /, 5, 1);
+    test_interop(int_u8, int,  /, 5, 1);
+    test_interop(int_u8, char,  /, 4, 2);
+    test_interop(int_u8, unsigned char,  /, 4, 2);
+
+    int_u8 c = 200;
+
+    c /= 1;
+    mln_assertion(c == 200);
+    c /= 2;
+    mln_assertion(c == 100);
+
+    int_u8 d = 2;
+    c /= 2;
+    mln_assertion(c == 50);
+
+  }
+
+}
 
 //   // Multiplication.
 //   {
@@ -111,5 +189,5 @@ int main()
   //     mln_assertion(j != i);
   //     mln_assertion(j != 0);
   //     mln_assertion(0 != j);
-  
-}
+
+//}
