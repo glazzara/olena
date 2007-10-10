@@ -76,11 +76,14 @@ namespace mln
 
       typedef trait::image::category::domain_morpher category;
 
+
       typedef mln_trait_image_border(I) border;  // have a border only if I does.
 
       typedef mln_trait_image_io_from_(I) io; // un-write when I const
 
       typedef mln_trait_image_data_from_(I) data;
+
+      typedef trait::image::support::regular support;
       //       typedef mlc_if( I_data_are_linear_,
       // 		      trait::data::stored, // if linear then just stored
       // 		      I_data_ ) data;      // otherwise like I

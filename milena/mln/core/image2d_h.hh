@@ -54,6 +54,18 @@ namespace mln
 
     /// Constructor with the numbers of rows and columns
     /// border thickness.
+    ///
+    /// image2d_h(3,6) will build this hexa image :
+    ///
+    ///        1   3   5
+    ///      0   2   4
+    ///    --------------
+    ///   0| x   x   x
+    ///    |
+    ///   2|   x   x   x
+    ///    |
+    ///   4| x   x   x
+
     image2d_h(int nrows, int ncols, unsigned bdr = border::thickness);
 
     //using super_::init_;
@@ -65,7 +77,9 @@ namespace mln
   template <typename V>
   image2d_h<V>::image2d_h(int nrows, int ncols, unsigned bdr)
   {
+    // numbers of cols can't be odd.
     mln_assertion(ncols % 2 == 0);
+
     image2d<V> ima(nrows,
 		   ncols / 2,
 		   bdr);

@@ -1,5 +1,14 @@
 2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix, doc in hexa images. Augment tests.
+
+	* mln/core/hexa.hh: Set support trait to regular.
+	* mln/core/image2d_h.hh: Add doc.
+
+	* tests/value_int_u8.cc: Augment.
+
+2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Augment tests on int_u8.
 	* tests/value_int_u8.cc: Update.
 
