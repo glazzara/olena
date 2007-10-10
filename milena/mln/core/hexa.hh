@@ -135,7 +135,7 @@ namespace mln
 
     /// FIXME : should it be in box2d_h?
     /// Backward Point_Iterator associated type.
-    /// typedef hexa_fwd_piter_<box2d> bkd_piter;
+    typedef hexa_bkd_piter_<box2d> bkd_piter;
 
 
     /// Constructor without argument.
@@ -200,8 +200,8 @@ namespace mln
   {
     mln_precondition(! this->has_data());
     box2d b_in = ima.bbox();
-    box2d_h b = make::box2d_h(b_in.pmin()[0], b_in.pmin()[1] * 2 - 1,
-			      b_in.pmax()[0], b_in.pmax()[1] * 2 - 1);
+    box2d_h b = make::box2d_h(b_in.pmin()[0] * 2, b_in.pmin()[1],
+			      b_in.pmax()[0] * 2, (b_in.pmax()[1] + 1) * 2 - 1);
     this->data_ = new internal::data_< hexa<I> >(ima, b);
   }
 
@@ -223,6 +223,7 @@ namespace mln
   hexa<I>::operator()(const point2d_h& p) const
   {
     mln_precondition(this->has_data());
+    mln_precondition(this->has(p));
     return this->data_->ima_(make::point2d(p[0] / 2, p[1] / 2));
   }
 
@@ -231,6 +232,7 @@ namespace mln
   hexa<I>::operator()(const point2d_h& p)
   {
     mln_precondition(this->has_data());
+    mln_precondition(this->has(p));
     return this->data_->ima_(make::point2d(p[0] / 2, p[1] / 2));
   }
 

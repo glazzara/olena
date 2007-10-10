@@ -56,7 +56,7 @@ namespace mln
 
       // generic version
       template <typename S, typename I>
-      void println(const S& b, const Image<I>& input_)
+      void println(const S&, const Image<I>& input_)
       {
 	const I& input = exact(input_);
 	mln_piter(I) p(input.domain());
@@ -79,14 +79,14 @@ namespace mln
 	  max_col = b.max_col();
 
 	for (row = b.min_row(); row <= max_row; ++row)
-	  {
-	    for (col = b.min_col(); col <= max_col; ++col)
-	      if (input.has(p))
-		std::cout << format( input(p) ) << ' ';
-	      else
-		std::cout << "  ";
-	    std::cout << std::endl;
-	  }
+	{
+	  for (col = b.min_col(); col <= max_col; ++col)
+	    if (input.has(p))
+	      std::cout << format( input(p) ) << ' ';
+	    else
+	      std::cout << "  ";
+	  std::cout << std::endl;
+	}
 	std::cout << std::endl;
       }
 
@@ -104,15 +104,12 @@ namespace mln
 	int r = 1;
 	int row_len = 1 + (b.max_col() - b.min_col()) / 2;
 
-// 	std::cout << "infos de ligne : " << b.min_col() << b.max_col() << std::endl;
-// 	std::cout << "largeur de ligne : " << row_len << std::endl;
 	for_all(p)
 	  {
-	    //if (input.has(p))
-	    //std::cout << p << "     ";
-	    std::cout << format(input(p)) << "     ";
-	    //else
-	      //	      std::cout << "      ";
+	    if (input.has(p))
+	      std::cout << format(input(p)) << "     ";
+	    else
+	      std::cout << "      ";
 
 	    if (c >= row_len)
 	    {

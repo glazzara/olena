@@ -65,15 +65,10 @@ namespace mln
   template <typename V>
   image2d_h<V>::image2d_h(int nrows, int ncols, unsigned bdr)
   {
-    std::cout << "Image2d_h Ctor " << nrows  << " "
-	      << ncols / 2 + 1 << std::endl;
-
-    mln_assertion(ncols % 2 == 1);
+    mln_assertion(ncols % 2 == 0);
     image2d<V> ima(nrows,
-		   ncols / 2 + 1,
+		   ncols / 2,
 		   bdr);
-
-    debug::println(ima);
 
     this->init_(ima);
   }

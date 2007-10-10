@@ -63,9 +63,6 @@ namespace mln
     hexa_fwd_piter_(const box2d& subset);
     hexa_fwd_piter_(const box2d_h& subset);
 
-    /// Dtor
-    ~hexa_fwd_piter_();
-
     /// Start an iteration.
     void start();
 
@@ -76,6 +73,9 @@ namespace mln
   private:
 
     point2d_h p_;
+
+    //adaptee's box2d.
+    box2d box_adaptee_;
   };
 
 
@@ -101,15 +101,16 @@ namespace mln
 
   template <typename S>
   hexa_fwd_piter_<S>::hexa_fwd_piter_(const box2d_h& b)
-    : super_(adaptee_(*new box2d(make::box2d(b.pmin()[0] / 2, b.pmin()[1] / 2,
-					     b.pmax()[0] / 2 + 1, b.pmax()[1] / 2 + 1))))
-  {
-  }
+    :
+    box_adaptee_(make::box2d(b.pmin()[0] / 2,
+			     b.pmin()[1] / 2,
 
-  template <typename S>
-  hexa_fwd_piter_<S>::~hexa_fwd_piter_()
-  {
-  }
+			     b.pmax()[0] / 2 + b.pmax()[0] % 2,
+			     b.pmax()[1] / 2)),
+    super_(adaptee_(box_adaptee_))
+
+ {
+ }
 
   template <typename S>
   void
@@ -127,7 +128,6 @@ namespace mln
     this->piter_.next();
     p_[0] = this->piter_[0] * 2;
     p_[1] = this->piter_[1] * 2 + this->piter_[0] % 2;
-    std::cout << "next :" << p_ << std::endl;
   }
 
   template <typename S>

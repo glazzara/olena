@@ -50,9 +50,7 @@ int main()
   debug::iota(ima);
   trait::image::print(h, std::cout);
 
-
-  // FIXME : to put into debug::println
-  hexa<I>::fwd_piter p(h.domain());
+  hexa<I>::fwd_piter p(ima.domain());
 
   for_all(p)
     {

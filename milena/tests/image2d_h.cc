@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/hexa.cc
+/*! \file tests/image2d_h.cc
  *
- * \brief Tests on mln::hexa
+ * \brief Tests on mln::image2d_h
  */
 
 #include <mln/core/image2d_h.hh>
@@ -43,23 +43,13 @@ int main()
   using namespace mln;
   using value::int_u16;
 
-  image2d_h<int_u16> h(2,7);
+  image2d_h<int_u16> h(50,50);
+
+  debug::println(h);
 
   debug::iota(h);
 
   debug::println(h);
 
-//   image2d<int_u16> h(2,7);
-//   debug::println(h);
-
   trait::image::print(h, std::cout);
-
-
-  // FIXME : to put into debug::println
-  image2d_h<int_u16>::fwd_piter p(h.domain());
-
-//   for_all(p)
-//     {
-//       std::cout << p << "->" << std::endl;
-//     }
 }

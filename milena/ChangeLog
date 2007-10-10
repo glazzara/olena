@@ -1,3 +1,14 @@
+2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Finalise hexagonal images.
+
+	* mln/core/hexa.hh,
+	* mln/core/hexa_piter.hh,
+	* mln/core/image2d_h.hh,
+	* mln/debug/println.hh,
+	* tests/hexa.cc,
+	* tests/image2d_h.cc: Fix.
+
 2007-10-10  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix test on translate image.
