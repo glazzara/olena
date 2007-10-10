@@ -71,7 +71,7 @@ namespace mln
 
   } // end of namespace mln::value
 
-  
+
 
   /// Pre-incrementation.
   template <typename S>
@@ -95,6 +95,9 @@ namespace mln
 
   template <typename S>
   S& operator-=(value::Scalar<S>& lhs, typename S::interop i);
+
+  template <typename S>
+  S& operator%=(value::Scalar<S>& lhs, typename S::interop i);
 
 
 
@@ -143,6 +146,15 @@ namespace mln
   {
     S& lhs = exact(lhs_);
     lhs = lhs - i;
+    return lhs;
+  }
+
+
+  template <typename S>
+  S& operator%=(value::Scalar<S>& lhs_, typename S::interop i)
+  {
+    S& lhs = exact(lhs_);
+    lhs = lhs % i;
     return lhs;
   }
 

@@ -39,11 +39,11 @@
     T j = V2;						\
 							\
     i = i OP j;						\
-    mln_assertion(i == (V1 OP V2));				\
-    mln_assertion(j == V2);					\
+    mln_assertion(i == (V1 OP V2));			\
+    mln_assertion(j == V2);				\
 							\
     i OP##= i;						\
-    mln_assertion(i == (((V1 OP V2) OP (V1 OP V2))));	        \
+    mln_assertion(i == (((V1 OP V2) OP (V1 OP V2))));	\
 }
 
 #define test_interop(T1, T2, OP, V1, V2)                \
@@ -53,11 +53,11 @@
     T2 j = V2;						\
 							\
     i = i OP j;						\
-    mln_assertion(i == (V1 OP V2));				\
-    mln_assertion(j == V2);					\
+    mln_assertion(i == (V1 OP V2));			\
+    mln_assertion(j == V2);				\
 							\
     i OP##= i;						\
-    mln_assertion(i == (((V1 OP V2) OP (V1 OP V2))));	        \
+    mln_assertion(i == (((V1 OP V2) OP (V1 OP V2))));	\
 }
 
 
@@ -95,12 +95,43 @@ int main()
     // i = 255, ++i;
   }
 
+
+  // Comparaison
+  {
+    int_u8 i = 42;
+    int_u8 j = 51;
+
+    mln_assertion(i < j);
+    mln_assertion(j > i);
+    mln_assertion(i < 12345);
+    mln_assertion(12345 > i);
+
+    mln_assertion(i != j);
+    mln_assertion(i == 42);
+    mln_assertion(42 == i);
+    mln_assertion(i != 69);
+    mln_assertion(69 != i);
+
+  }
+
   // Addition.
   {
     test_operator(int_u8, +, 5, 1);
     test_interop(int_u8, int,  +, 5, -1);
     test_interop(int_u8, char,  +, 4, 2);
     test_interop(int_u8, unsigned char,  +, 4, 2);
+
+    int_u8 i = 234;
+
+    i++;
+    mln_assertion(i == 235);
+
+    ++i;
+    mln_assertion(i == 236);
+
+    i = +i;
+    mln_assertion(i == 236);
+
   }
 
   // Soustraction
@@ -115,6 +146,15 @@ int main()
 
     mln_assertion(c == 0);
 
+    int_u8 i = 236;
+
+    i--;
+    mln_assertion(i == 235);
+
+    --i;
+    mln_assertion(i == 234);
+
+    mln_assertion(-i == -234);
   }
 
   // Multiplication
@@ -132,8 +172,8 @@ int main()
     i *= 2;
     int k;  k *= i;
 
-    unsigned char c = 0;
-    i *= c;
+    unsigned char d = 0;
+    i *= d;
     mln_assertion(i == 0);
 
     // Error at run-time as expected :-)
@@ -162,4 +202,12 @@ int main()
 
   }
 
+
+  // Modulo
+  {
+    test_operator(int_u8, %, 5, 10);
+    test_interop(int_u8, int,  %, 5, 10);
+    test_interop(int_u8, char,  %, 4, 20);
+    test_interop(int_u8, unsigned char,  %, 4, 20);
+  }
 }
