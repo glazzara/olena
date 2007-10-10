@@ -73,7 +73,7 @@ namespace mln
       /// Read-only access of pixel value at point site \p p.
       rvalue operator()(const mln_psite(S)& p) const;
 
-      /// Read-write access of pixel value at point site \p p.
+      /// Read and "write if possible" access of pixel value at point site \p p.
       lvalue operator()(const mln_psite(S)& p);
 
     protected:

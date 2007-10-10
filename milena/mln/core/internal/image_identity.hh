@@ -76,10 +76,13 @@ namespace mln
       /// Read-write access of pixel value at point site \p p.
       lvalue operator()(const mln_psite(S)& p);
 
+      // FIXME Matthieu: Doc!  Cf. core/concept/doc/image
       const mln_pset(I)& domain() const;
       bool owns_(const mln_psite(I)& p) const;
 
     protected:
+
+      /// Constructor.
       image_identity_();
     };
 

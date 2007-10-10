@@ -82,7 +82,6 @@ namespace mln
       typedef lvalue;
       typedef vset;
 
-      bool has_data() const;
       const vset& values() const;
 
       bool owns_(const psite& p) const;
@@ -109,6 +108,8 @@ namespace mln
       bool has(const psite& p) const;
       const box_<point>& bbox() const;
       std::size_t npoints() const;
+
+      bool has_data() const;
      */
 
   protected:

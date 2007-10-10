@@ -1,5 +1,20 @@
 2007-10-10  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Move translate image into mln/core and add comment on some files.
+
+	New image.
+	* translate_image.hh: New.
+
+	Comment
+	* concept/image.hh,
+	* internal/image_domain_morpher.hh,
+	* internal/image_identity.hh: New comment.
+
+
+	* point.hh: Add operator -= between point and dpoint.
+
+2007-10-10  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add test for translate image.
 	* translate_image.cc: New test.
 

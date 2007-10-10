@@ -117,6 +117,9 @@ namespace mln
     /// Shifting by \p dp.
     point_<M,C>& operator+=(const dpoint& dp);
 
+    /// Shifting by \p the inverse of dp.
+    point_<M,C>& operator-=(const dpoint& dp);
+
     /// Type of the array of coordinates.
     typedef metal::vec<M::dim, C> vec_t;
 
@@ -183,6 +186,15 @@ namespace mln
   {
     for (unsigned i = 0; i < dim; ++i)
       coord_[i] += dp[i];
+    return *this;
+  }
+
+  template <typename M, typename C>
+  point_<M,C>&
+  point_<M,C>::operator-=(const dpoint& dp)
+  {
+    for (unsigned i = 0; i < dim; ++i)
+      coord_[i] -= dp[i];
     return *this;
   }
 
