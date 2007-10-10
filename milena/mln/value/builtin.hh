@@ -29,10 +29,13 @@
 # define MLN_VALUE_BUILTIN_HH
 
 /*! \file mln/value/builtin.hh
+ *
  * \brief Some definitions about builtins.
  */
 
 # include <mln/core/category.hh>
+# include <mln/metal/int.hh>
+# include <mln/trait/value_.hh>
 
 
 namespace mln
@@ -67,6 +70,95 @@ namespace mln
   template <> struct category< double >   {  typedef Built_In<void> ret;  typedef value::Floating<void> super;  };
   // FIXME: ...
 
+
+  namespace trait
+  {
+
+    // Fwd decl.
+    template <typename V> struct value_;
+
+
+    // Bool.
+
+    template <>
+    struct value_< bool>
+    {
+      typedef metal::int_<1>          nbits;
+      typedef value::nature::symbolic nature;
+      typedef value::kind::binary     kind;
+      typedef value::quant::low       quant;
+      typedef metal::int_<2>          card;
+    };
+
+
+    // Integer.
+
+    template <>
+    struct value_< unsigned char > : value_integer_<8>
+    {
+    };
+
+    template <>
+    struct value_< signed char > : value_integer_<8>
+    {
+    };
+
+    template <>
+    struct value_< unsigned short > : value_integer_<16>
+    {
+    };
+
+    template <>
+    struct value_< signed short > : value_integer_<16>
+    {
+    };
+
+    template <>
+    struct value_< unsigned int > : value_integer_<8 * sizeof(unsigned int), 0>
+    {
+    };
+
+    template <>
+    struct value_< signed int > : value_integer_<8 * sizeof(signed int), 0>
+    {
+    };
+
+    template <>
+    struct value_< unsigned long int > : value_integer_<8 * sizeof(unsigned long), 0>
+    {
+    };
+
+    template <>
+    struct value_< signed long int > : value_integer_<8 * sizeof(signed long), 0>
+    {
+    };
+
+
+    // Floating.
+
+    template <>
+    struct value_< float >
+    {
+      typedef metal::int_<8*sizeof(float)> nbits;
+      typedef value::nature::floating      nature;
+      typedef value::kind::data            kind;
+      typedef metal::int_<0>               card;
+      typedef value::quant::high           quant;
+      typedef float                        sum;
+    };
+
+    template <>
+    struct value_< double >
+    {
+      typedef metal::int_<8*sizeof(double)> nbits;
+      typedef value::nature::floating       nature;
+      typedef value::kind::data             kind;
+      typedef metal::int_<0>                card;
+      typedef value::quant::high            quant;
+      typedef double                        sum;
+    };
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 

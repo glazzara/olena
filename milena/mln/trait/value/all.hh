@@ -25,39 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_METAL_MATH_HH
-# define MLN_METAL_MATH_HH
+#ifndef MLN_TRAIT_VALUE_ALL_HH
+# define MLN_TRAIT_VALUE_ALL_HH
 
-/*! \file mln/metal/math.hh
+/*! \file mln/trait/value/all.hh
  *
- * \brief Definition of some mathematical static functions.
+ * \brief FIXME
  */
 
 
 namespace mln
 {
 
-  namespace metal
+  namespace trait
   {
 
-    // pow<x, n>
+    /// FIXME: Doc!
+    namespace value {}
 
-    template <int x, unsigned n>
-    struct pow
-    {
-      enum { value = x * pow<x, n-1>::value };
-    };
-
-    template <int x>
-    struct pow< x, 0 >
-    {
-      enum { value = 1 };
-    };
-
-
-  } // end of namespace mln::metal
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-#endif // ! MLN_METAL_MATH_HH
+
+# include <mln/trait/undef.hh>
+# include <mln/trait/value/nature.hh>
+# include <mln/trait/value/kind.hh>
+# include <mln/trait/value/quant.hh>
+
+
+#endif // ! MLN_TRAIT_VALUE_ALL_HH

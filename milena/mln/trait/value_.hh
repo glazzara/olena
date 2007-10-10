@@ -28,24 +28,31 @@
 #ifndef MLN_TRAIT_VALUE__HH
 # define MLN_TRAIT_VALUE__HH
 
-/*! \file mln/trait/images.hh
+/*! \file mln/trait/value_.hh
  *
- * \brief Forward declarations of all image types.
- *
- * \todo Split this file into many.
+ * \brief Some base trait types for value types.
  */
 
 # include <iostream>
 # include <string>
 
-# include <mln/trait/undef.hh>
+# include <mln/metal/math/pow.hh>
+# include <mln/metal/if.hh>
 
-# include <mln/trait/value/nature.hh>
-# include <mln/trait/value/kind.hh>
+# include <mln/trait/value/all.hh>
 
 
-# define mln_trait_value_nature(I) typename mln::trait::value_< V >::nature
+# define mln_trait_value_nature(V) typename mln::trait::value_< V >::nature
 # define mln_trait_value_kind(V)   typename mln::trait::value_< V >::kind
+# define mln_trait_value_quant(V)  typename mln::trait::value_< V >::quant
+# define mln_trait_value_card(V)   typename mln::trait::value_< V >::card
+
+
+# define mln_value_quant_from_card(C)					\
+   mlc_if(mln::metal::bool_<( C::value > 65536 || C::value == 0 )>,	\
+	  mln::trait::value::quant::high,				\
+	  mln::trait::value::quant::low)
+
 
 
 namespace mln
@@ -55,17 +62,55 @@ namespace mln
   {
 
 
-    template <typename V>
     struct undefined_value_
     {
       typedef undef nature;
       typedef undef kind;
+      typedef undef quant;
+      typedef undef card;
+      typedef undef sum;
+      // FIXME: signed or not, with zero or not, centered or not, etc.
+    };
+
+
+    struct default_value_
+    {
+      typedef trait::value::nature::unknown nature;
+      typedef trait::value::kind::data      kind;
+      typedef trait::value::quant::high     quant;
+      typedef metal::int_<0>                card;
+      typedef undef                         sum;
     };
 
 
     template <typename V>
-    struct value_ : undefined_value_<V>
+    struct value_ : undefined_value_
     {
+    };
+
+
+    template <unsigned n_bits, int card_ = 1>
+    struct value_integer_
+    {
+      typedef metal::math::pow_int<2, n_bits> pow_;
+
+      typedef metal::int_<n_bits>             nbits;
+      typedef trait::value::nature::integer   nature;
+      typedef trait::value::kind::data        kind;
+      typedef metal::int_<pow_::value>        card;
+      typedef mln_value_quant_from_card(card) quant;
+      typedef float                           sum;
+    };
+
+    template <unsigned n_bits>
+    struct value_integer_< n_bits, 0 >
+    {
+      typedef metal::int_<n_bits>    nbits;
+      typedef trait::value::nature::integer nature;
+      typedef value::kind::data      kind;
+      typedef metal::int_<0>         card;
+      typedef value::quant::high     quant;
+      typedef float                  sum;
     };
 
 

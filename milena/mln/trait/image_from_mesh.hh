@@ -74,6 +74,11 @@ namespace mln
     };
 
 
+    // FIXME: Return other image types than imagend when size trait is not regular...
+
+    // FIXME: Add cases when the mesh is not a grid...
+
+
   } // end of namespace mln::trait
 
 } // end of namespace mln

@@ -33,6 +33,8 @@
  * \brief Definition of a Boolean value type.
  */
 
+# include <string>
+
 
 namespace mln
 {
@@ -43,6 +45,7 @@ namespace mln
     // Fwd decl.
     template <bool b> struct bool_;
 
+
     /// "true" type.
     template <>
     struct bool_< true >
@@ -50,6 +53,7 @@ namespace mln
       static const bool value = true;
       typedef bool_<true> eval;
       static void check();
+      std::string name() const { return "true"; }
     };
 
     typedef bool_<true> true_;
@@ -62,6 +66,7 @@ namespace mln
       static const bool value = false;
       typedef bool_<false> eval;
       static void check_not();
+      std::string name() const { return "false"; }
     };
 
     typedef bool_<false> false_;

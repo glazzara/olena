@@ -25,67 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_VALUE_PRINT_HH
-# define MLN_TRAIT_VALUE_PRINT_HH
-
-/*! \file mln/trait/values.hh
+/*! \file tests/metal_pow.cc
  *
- * \brief Print the collection of traits for an value type.
+ * \brief Test on mln::metal::math::pow.
  */
 
-# include <iostream>
-# include <mln/trait/value_.hh>
-# include <mln/metal/is_a.hh>
+#include <iostream>
+#include <mln/core/contract.hh>
+#include <mln/metal/math/pow.hh>
 
 
-
-namespace mln
+int main()
 {
+  using namespace mln;
+  using namespace mln::metal;
 
-  // Fwd decl.
-  template <typename E> struct Value;
+  int res = metal::math::pow_int<2,3>::value;
+  mln_assertion(res == 8);
 
-
-  namespace trait
-  {
-
-    namespace value
-    {
-
-      template <typename V>
-      void print(std::ostream& ostr);
-
-      template <typename V>
-      void print(const Value<V>& v, std::ostream& ostr);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename V>
-      void print(std::ostream& ostr)
-      {
-	mlc_is_a(V, Value)::check(); // FIXME: What about built-ins?
-	typedef mln::trait::value_<V> the;
-	ostr << "{ "
-	     << typename the::nature().name() << ", "
-	     << typename the::kind()  .name() << ", "
-	     << typename the::quant() .name() << ", "
-	     << typename the::card()  .name() << " }" << std::endl;
-      }
-
-      template <typename V>
-      void print(const Value<V>&, std::ostream& ostr)
-      {
-	print<V>(ostr);
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::trait::value
-
-  } // end of namespace mln::trait
-
-} // end of namespace mln
-
-
-#endif // ! MLN_TRAIT_VALUE_PRINT_HH
+  std::cout << metal::math::pow< int_<2>, int_<3> >::ret().name() << std::endl;
+}

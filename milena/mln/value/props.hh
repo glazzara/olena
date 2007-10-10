@@ -106,6 +106,13 @@ namespace mln
 	}
       };
 
+      template <typename T>
+      struct helper_quant_
+      {
+	static const std::size_t card = mln::value::props<T>::card_;
+	
+      };
+
     } // end of namespace mln::value::internal
 
 

@@ -33,7 +33,7 @@
  * \brief Define a generic class for signed integers.
  */
 
-# include <mln/metal/math.hh>
+# include <mln/metal/math/pow.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/concept/integer.hh>
 # include <mln/value/internal/encoding.hh>
@@ -137,8 +137,8 @@ namespace mln
     template <unsigned n>
     struct props< int_s<n> >
     {
-      static const std::size_t card_ = metal::pow<2, n>::value - 1;
-      static const int_s<n> max() { return metal::pow<2, n-1>::value - 1; }
+      static const std::size_t card_ = metal::math::pow_int<2, n>::value - 1;
+      static const int_s<n> max() { return metal::math::pow_int<2, n-1>::value - 1; }
       static const int_s<n> min() { return - max(); }
       static const unsigned nbits = n;
       typedef trait::value::kind::data kind;
@@ -175,7 +175,7 @@ namespace mln
     template <unsigned n>
     int_s<n>::int_s(int i)
     {
-      static const int max = metal::pow<2, n-1>::value - 1;
+      static const int max = metal::math::pow_int<2, n-1>::value - 1;
       static const int min = - max;
       mln_precondition(i >= min);
       mln_precondition(i <= max);
@@ -186,7 +186,7 @@ namespace mln
     int_s<n>&
     int_s<n>::operator=(int i)
     {
-      static const int max = metal::pow<2, n-1>::value - 1;
+      static const int max = metal::math::pow_int<2, n-1>::value - 1;
       static const int min = - max;
       mln_precondition(i >= min);
       mln_precondition(i <= max);

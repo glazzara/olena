@@ -33,7 +33,7 @@
  * \brief Define a generic class for labels.
  */
 
-# include <mln/metal/math.hh>
+# include <mln/metal/math/pow.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/concept/symbolic.hh>
 # include <mln/value/internal/encoding.hh>
@@ -129,7 +129,7 @@ namespace mln
     template <unsigned n>
     struct props< label<n> >
     {
-      static const std::size_t card_ = metal::pow<2, n>::value;
+      static const std::size_t card_ = metal::math::pow_int<2, n>::value;
       static const label<n> min; // = 0
       static const label<n> max; // = card_ - 1
       static const unsigned nbits = n;
@@ -222,7 +222,7 @@ namespace mln
 
     template <unsigned n>
     const label<n>
-    props< label<n> >::max = metal::pow<2, n>::value - 1;
+    props< label<n> >::max = metal::math::pow_int<2, n>::value - 1;
 
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const label<n>& i)

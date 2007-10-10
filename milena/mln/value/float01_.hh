@@ -30,7 +30,7 @@
 
 # include <iostream>
 # include <mln/core/contract.hh>
-# include <mln/metal/math.hh>
+# include <mln/metal/math/pow.hh>
 # include <mln/metal/bexpr.hh>
 
 # include <mln/value/int_u.hh>
@@ -101,7 +101,7 @@ namespace mln
     template <unsigned n>
     struct props< float01_<n> >
     {
-      static const std::size_t card_ = metal::pow<2, n>::value;
+      static const std::size_t card_ = metal::math::pow_int<2, n>::value;
       static const float min() { return 0.f; }
       static const float max() { return 1.f; }
       static const unsigned nbits = n;

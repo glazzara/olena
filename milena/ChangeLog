@@ -1,3 +1,52 @@
+2007-10-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Clean value traits.
+
+
+	Augment metal.
+
+	* mln/metal/int.hh: New.
+	* mln/metal/math: New directory.
+	(math): New namespace.
+	* mln/metal/math.hh: Rename as...
+	* mln/metal/math/pow.hh: ...this.
+	(pow): Move into math:: and rename as...
+	(pow_int): ...this.
+	(pow): New; work on metal::int_.
+	* mln/metal/math/all.hh: New.
+	* mln/metal/bool.hh (value): Strengthen type.
+	* mln/metal/all.hh: Update.
+	* mln/metal/is.hh (helper_is_): Change selector arg from &
+	to *; that allows for this tool to work on non-POD types.
+	* tests/metal_pow.cc: New.
+
+	Clean value traits.
+
+	* mln/trait/image_from_mesh.hh: Add FIXMEs.
+	* mln/trait/images.hh: Fix file doc.
+	* mln/trait/value_.hh: Augment.
+	* mln/trait/value/quant.hh: New.
+	* mln/trait/value/all.hh: New.
+	* mln/trait/value/print.hh: Update.
+	* mln/trait/value/nature.hh (unknown): New.
+	* mln/value/graylevel.hh,
+	* mln/value/float01_.hh,
+	* mln/value/builtin.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_u.hh,
+	* mln/value/int_u_sat.hh,
+	* mln/value/props.hh,
+	* mln/value/rgb.hh,
+	* mln/value/rgb8_non_templated.hh,
+	* mln/value/label.hh: Update.
+
+	Misc.
+
+	* mln/fun/x2x/bijective_tr.hh: Fix.
+	* mln/morpho/erosion.hh (erosion): New overload with output as
+	return.
+	* tests/morpho_erosion.cc: Update.
+
 2007-10-09  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Improve hexagonal images. Fixme : doesn't work properly now.

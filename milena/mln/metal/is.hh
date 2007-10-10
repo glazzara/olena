@@ -52,7 +52,7 @@ namespace mln
       template <typename T, typename U>
       struct helper_is_
       {
-	static yes_ selector(U&);
+	static yes_ selector(U*const);
 	static no_  selector(...);
       };
 
@@ -65,10 +65,11 @@ namespace mln
      * FIXME: Doc!
      */
     template <typename T, typename U>
-    struct is : bool_<( sizeof(internal::helper_is_<T, U>::selector(*internal::make_<T>::ptr()))
+    struct is : bool_<( sizeof(internal::helper_is_<T, U>::selector(internal::make_<T>::ptr()))
 			==
 			sizeof(internal::yes_) )>
-    {};
+    {
+    };
     
     template <typename T, typename U>
     struct is< T*, U* > : is<T, U>::eval

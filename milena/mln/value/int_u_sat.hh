@@ -34,7 +34,7 @@
  * behavior.
  */
 
-# include <mln/metal/math.hh>
+# include <mln/metal/math/pow.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/concept/integer.hh>
 # include <mln/value/internal/encoding.hh>
@@ -98,7 +98,7 @@ namespace mln
     template <unsigned n>
     struct props< int_u_sat<n> >
     {
-      static const std::size_t card_ = metal::pow<2, n>::value;
+      static const std::size_t card_ = metal::math::pow_int<2, n>::value;
       static const int_u_sat<n> min() { return 0; }
       static const int_u_sat<n> max() { return card_ - 1; }
       static const unsigned nbits = n;

@@ -25,67 +25,87 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_VALUE_PRINT_HH
-# define MLN_TRAIT_VALUE_PRINT_HH
+#ifndef MLN_METAL_MATH_POW_HH
+# define MLN_METAL_MATH_POW_HH
 
-/*! \file mln/trait/values.hh
+/*! \file mln/metal/math/pow.hh
  *
- * \brief Print the collection of traits for an value type.
+ * \brief Definition of some mathematical static functions.
  */
 
-# include <iostream>
-# include <mln/trait/value_.hh>
-# include <mln/metal/is_a.hh>
-
+# include <mln/metal/bool.hh>
+# include <mln/metal/int.hh>
 
 
 namespace mln
 {
 
-  // Fwd decl.
-  template <typename E> struct Value;
-
-
-  namespace trait
+  namespace metal
   {
 
-    namespace value
+    namespace math
     {
 
-      template <typename V>
-      void print(std::ostream& ostr);
+      // pow_int<x, n>
 
-      template <typename V>
-      void print(const Value<V>& v, std::ostream& ostr);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename V>
-      void print(std::ostream& ostr)
+      namespace impl
       {
-	mlc_is_a(V, Value)::check(); // FIXME: What about built-ins?
-	typedef mln::trait::value_<V> the;
-	ostr << "{ "
-	     << typename the::nature().name() << ", "
-	     << typename the::kind()  .name() << ", "
-	     << typename the::quant() .name() << ", "
-	     << typename the::card()  .name() << " }" << std::endl;
+
+	template <int x, int n>
+	struct pow_int_
+	{
+	  enum { value = x * pow_int_<x, n-1>::value };
+	};
+
+	template <int x>
+	struct pow_int_< x, 0 >
+	{
+	  enum { value = 1 };
+	};
+
+	template <>
+	struct pow_int_< 0, 0 >;
+      
+
+	// Entry.
+
+	template <int x, int n, bool b>
+	struct pow_int_if_ : pow_int_<x, n>
+	{
+	};
+
+	template <int x, int n>
+	struct pow_int_if_< x, n, false >
+	{
+	};
+
       }
 
-      template <typename V>
-      void print(const Value<V>&, std::ostream& ostr)
+      template <int x, int n>
+      struct pow_int : impl::pow_int_if_< x, n,
+					  (n >= 0 && ! (x == 0 && n == 0)) >
       {
-	print<V>(ostr);
-      }
+      };
 
-# endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::trait::value
+      // pow<X, N>
 
-  } // end of namespace mln::trait
+      template <typename X, typename N>
+      struct pow;
+
+      template <int x, int n>
+      struct pow< int_<x>, int_<n> > : pow_int<x, n>
+      {
+	typedef pow_int<x, n> super_;
+	typedef int_<super_::value> ret;
+      };
+
+
+    } // end of namespace mln::metal::math
+
+  } // end of namespace mln::metal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_VALUE_PRINT_HH
+#endif // ! MLN_METAL_MATH_POW_HH

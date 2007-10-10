@@ -56,6 +56,8 @@ namespace mln
 	struct vectorial  : any    { std::string name() const { return "nature::vectorial"; } };
 	struct symbolic   : any    { std::string name() const { return "nature::symbolic"; } };
 	struct structured : any    { std::string name() const { return "nature::structured"; } };
+
+	struct unknown    : any    { std::string name() const { return "nature::unknown"; } };
       };
 
     } // end of namespace mln::trait::value

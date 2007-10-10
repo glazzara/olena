@@ -55,8 +55,6 @@ namespace mln
 # include <mln/metal/is_a.hh>
 # include <mln/metal/goes_to.hh>
 
-# include <mln/metal/math.hh>
-
 # include <mln/metal/const.hh>
 # include <mln/metal/unconst.hh>
 # include <mln/metal/is_const.hh>
@@ -69,6 +67,8 @@ namespace mln
 
 # include <mln/metal/vec.hh>
 # include <mln/metal/mat.hh>
+
+# include <mln/metal/math/all.hh>
 
 // FIXME: Remove the following includes below!
 # include <mln/metal/same_coord.hh>

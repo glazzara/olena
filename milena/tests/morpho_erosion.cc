@@ -69,10 +69,9 @@ int main()
   }
 
   {
-    win::octagon2d oct(31);
-    image2d<int_u8> out(lena.domain());
-    morpho::erosion(lena, oct, out);
-    io::pgm::save(out, "out2.pgm");
+    io::pgm::save(morpho::erosion(lena,
+				  win::octagon2d(31)),
+ 		  "out2.pgm");
   }
 
 //   { 

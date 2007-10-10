@@ -25,26 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_VALUE_PRINT_HH
-# define MLN_TRAIT_VALUE_PRINT_HH
+#ifndef MLN_TRAIT_VALUE_QUANT_HH
+# define MLN_TRAIT_VALUE_QUANT_HH
 
-/*! \file mln/trait/values.hh
+/*! \file mln/trait/value/quant.hh
  *
- * \brief Print the collection of traits for an value type.
+ * \brief Quantification of values (for use in images).
  */
 
-# include <iostream>
-# include <mln/trait/value_.hh>
-# include <mln/metal/is_a.hh>
-
+# include <string>
 
 
 namespace mln
 {
-
-  // Fwd decl.
-  template <typename E> struct Value;
-
 
   namespace trait
   {
@@ -52,40 +45,18 @@ namespace mln
     namespace value
     {
 
-      template <typename V>
-      void print(std::ostream& ostr);
-
-      template <typename V>
-      void print(const Value<V>& v, std::ostream& ostr);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename V>
-      void print(std::ostream& ostr)
+      struct quant
       {
-	mlc_is_a(V, Value)::check(); // FIXME: What about built-ins?
-	typedef mln::trait::value_<V> the;
-	ostr << "{ "
-	     << typename the::nature().name() << ", "
-	     << typename the::kind()  .name() << ", "
-	     << typename the::quant() .name() << ", "
-	     << typename the::card()  .name() << " }" << std::endl;
-      }
+	struct any {};
+	struct low  : any { std::string name() const { return "quant::low"; } };
+	struct high : any { std::string name() const { return "quant::high"; } };
+      };
 
-      template <typename V>
-      void print(const Value<V>&, std::ostream& ostr)
-      {
-	print<V>(ostr);
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::trait::value
+    } // end of namespace mln::trait::quant
 
   } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_VALUE_PRINT_HH
+#endif // ! MLN_TRAIT_VALUE_QUANT_HH

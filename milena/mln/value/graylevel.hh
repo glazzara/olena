@@ -31,7 +31,7 @@
 # include <iostream>
 
 # include <mln/core/contract.hh>
-# include <mln/metal/math.hh>
+# include <mln/metal/math/pow.hh>
 # include <mln/metal/bexpr.hh>
 
 # include <mln/value/int_u.hh>
@@ -76,7 +76,7 @@ namespace mln
     template <unsigned n>
     struct props< graylevel<n> >
     {
-      static const std::size_t card_ = metal::pow<2, n>::value;
+      static const std::size_t card_ = metal::math::pow_int<2, n>::value;
       static const graylevel<n> min() { return 0; }
       static const graylevel<n> max() { return card_ - 1; }
       static const unsigned nbits = n;

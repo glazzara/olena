@@ -30,7 +30,7 @@
 
 /*! \file mln/trait/images.hh
  *
- * \brief Forward declarations of all image types.
+ * \brief Some base trait types for images.
  *
  * \todo Split this file into many.
  */

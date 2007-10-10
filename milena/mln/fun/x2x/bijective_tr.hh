@@ -52,11 +52,26 @@ namespace mln
       template <typename E>
       struct bijective_tr : public Function_x2x< E >
       {
-	  typedef E::result result;
-	  typedef E::invert invert;
-	  
+	/*
+	  typedef invert;
 	  invert inv() const;
+	*/
+      protected:
+	bijective_tr();
       };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename E>
+      bijective_tr<E>::bijective_tr()
+      {
+	typedef typename E::invert invert;
+	invert (E::*m)() const = & E::inv;
+	m = 0;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::fun::x2x
 

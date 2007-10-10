@@ -55,6 +55,12 @@ namespace mln
     void erosion(const Image<I>& input, const Window<W>& win, Image<O>& output);
 
 
+    // FIXME: Doc!
+    template <typename I, typename W>
+    mln_concrete(I)
+    erosion(const Image<I>& input, const Window<W>& win);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
@@ -108,7 +114,7 @@ namespace mln
 
 
 
-    // Facade.
+    // Facades.
 
     template <typename I, typename W, typename O>
     void erosion(const Image<I>& input, const Window<W>& win, Image<O>& output)
@@ -122,6 +128,16 @@ namespace mln
       if (exact(win).is_centered())
 	mln_postcondition(output <= input);
       trace::exiting("morpho::erosion");
+    }
+
+    template <typename I, typename W>
+    mln_concrete(I)
+    erosion(const Image<I>& input, const Window<W>& win)
+    {
+      mln_concrete(I) output;
+      initialize(output, input);
+      erosion(input, win, output);
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
