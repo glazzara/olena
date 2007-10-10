@@ -1,5 +1,10 @@
 2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Little fix.
+	* tests/hexa.cc: Fix compil.
+
+2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix, doc in hexa images. Augment tests.
 
 	* mln/core/hexa.hh: Set support trait to regular.

@@ -50,7 +50,7 @@ int main()
   debug::iota(ima);
   trait::image::print(h, std::cout);
 
-  hexa<I>::fwd_piter p(ima.domain());
+  hexa<I>::fwd_piter p(h.domain());
 
   for_all(p)
     {
