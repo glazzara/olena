@@ -33,11 +33,11 @@
  * \brief FIXME.
  */
 
-# include <mln/fun/x2x/bijective_tr.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/fun/internal/x2x_impl.hh>
 # include <mln/metal/vec.hh>
 # include <mln/metal/mat.hh>
 # include <cmath>
-
 
 namespace mln
 {
@@ -51,30 +51,29 @@ namespace mln
       // FIXME: Doc!
 
       template <unsigned n, typename C>
-      struct rotation : public bijective_tr< rotation<n,C> >
+      struct rotation
+	: internal::x2x_impl_< metal::vec<n,C>, rotation<n,C> >
+	, public Bijection_x2x< rotation<n,C> >
       {
+	typedef fun::internal::x2x_impl_< metal::vec<n,C>, rotation<n,C> > super_;
 
-	  enum {dim = n};
+	typedef rotation<n,C> invert;
+	invert inv() const;
 
-	  typedef metal::vec<n,C> result;
-	  typedef rotation<n,C> invert;
+        rotation();
+        rotation(float alpha, unsigned dir = 2);
 
-	  rotation();
-	  rotation(float alpha, unsigned dir = 2);
+        using super_::operator();
+        metal::vec<n,C> operator()(const metal::vec<n,C>& v) const;
 
-	  result operator()(const metal::vec<n,C>& v) const;
-	  invert inv() const;
+        void set_alpha(float alpha);
+        void set_dir(unsigned dir);
 
-	  void set_alpha(float alpha);
-	  void set_dir(unsigned dir);
+      protected:
+        void update();
 
-	  void update();
-
-	protected:
-
-	  float alpha_;
-	  unsigned dir_;
-	  metal::mat<n + 1,n + 1,C> m_;
+        float alpha_;
+        unsigned dir_;
       };
 
 
@@ -83,7 +82,9 @@ namespace mln
       template <unsigned n, typename C>
       rotation<n,C>::rotation()
       {
-	m_ = metal::mat<n + 1,n + 1,C>::Id;
+	alpha_ = 0;
+	dir_ = 2;
+	this->m_ = h_mat<n,C>::Id;
       }
 
       template <unsigned n, typename C>
@@ -92,6 +93,7 @@ namespace mln
 	 dir_(dir)
       {
 	mln_precondition(dir == 2 || n == 3);
+	this->m_ = h_mat<n,C>::Id;
 	update();
       }
 
@@ -106,7 +108,7 @@ namespace mln
 	for (unsigned i = 0; i < n; ++i)
 	  hmg(i,0) = v[i];
 	hmg(n,0) = 1;
-	tmp = m_ * hmg;
+	tmp = this->m_ * hmg;
 	mln_assertion(tmp(n,0) == 1);
 	for (unsigned i = 0; i < n; ++i)
 	  res[i] = tmp(i,0);
@@ -146,19 +148,15 @@ namespace mln
 	const float sin_a = sin(alpha_);
 	const metal::vec<4,float> vec = make::vec(cos_a, -sin_a, sin_a, cos_a);
 
-	m_ = metal::mat<n + 1,n + 1,C>::Id;
 	unsigned k = 0;
 	for (unsigned i = 0; i < n; ++i)
-	{
-	  if (i == dir_)
-	    continue;
 	  for (unsigned j = 0; j < n; ++j)
 	  {
-	    if (j == dir_)
-	      continue;
-	    m_(i, j) = vec[k++];
+	    if (j != this->dir_ && i != this->dir_)
+	      this->m_(i, j) = vec[k++];
+	    else
+	      this->m_(i, j) = (i == j);
 	  }
-	}
       }
 
 //       template <typename C> FIXME : template parameter should be swapped

@@ -34,8 +34,9 @@
  */
 
 # include <mln/core/concept/function.hh>
+# include <mln/fun/internal/x2x_impl.hh>
 # include <mln/metal/vec.hh>
-# include <mln/metal/mat.hh>
+# include <mln/core/h_mat.hh>
 
 
 namespace mln
@@ -47,27 +48,27 @@ namespace mln
     namespace x2x
     {
 
-	// Fwd decl.
-      template <typename L, typename M>
+      // Fwd decl.
+      template <typename F, typename G>
       struct composed;
 
       namespace internal
       {
 
-	template <unsigned n, typename L, unsigned m, typename M, typename E>
+	template <typename F, typename G, typename E>
 	struct helper_;
 
-	template <unsigned n, typename L, typename M, typename E>
-	struct helper_<n, Function_x2x<L>, n, Function_x2x<M> > : Function_x2x<E>
+	template <typename F, typename G, typename E>
+	struct helper_<Function_x2x<F>, Function_x2x<G>, E>
+	  : Function_x2x<E>
 	{
-	    enum {dim = n};
 	};
 
-	template <unsigned n, typename L, typename M, typename E>
-	struct helper_<n, bijective_tr<L>, n, bijective_tr<M> > : bijective_tr<E>
+	template <typename F, typename G, typename E>
+	struct helper_<Bijection_x2x<F>, Bijection_x2x<G>, E >
+	  : Bijection_x2x<E>
 	{
-	    enum {dim = n};
-	    typedef composed<M::invert,L::invert> invert;
+	    typedef composed<G::invert,F::invert> invert;
 
 	    invert inv() const;
 	};
@@ -75,78 +76,78 @@ namespace mln
 
       // FIXME: Doc!
 
-      template <typename L, typename M>
-      struct composed : public internal::helper_< L::dim, L, M::dim, M, composed<L,M> >
+      template <typename F, typename G>
+      struct composed
+	: internal::x2x_impl_<F::result, composed<F,G> >,
+	  public internal::helper_< F, G, composed<F,G> >,
+	  private typename metal::bool<(F::dim == G::dim)>::check_t,
+	  private typename metal::is<F::argument, G::result>::check_t
       {
 
-	typedef internal::helper_< L::dim, L, M::dim, M, composed<L,M> > Super
-
-	enum {dim = Super::dim};
-
-	typedef metal::vec<n,C> result;
+	typedef internal::x2x_impl_<F::result, composed<F,G> > super_
 
 	composed();
-	composed(const L& tr_l, const M& tr_m);
+	composed(const F& f, const G& g);
 
-	result operator()(const metal::vec<n,C>& v) const;
+	using super_:operator();
+	metal::vec<super_::dim,C> operator()(const metal::vec<super_::dim,C>& v) const;
 
-	void set_first(const L& tr_l);
-	void set_second(const M& tr_m);
+	void set_first(const F& f);
+	void set_second(const G& g);
 
       protected:
 
-	L tr1_;
-	M tr2_;
-	metal::mat<n + 1,n + 1,C> m_;
+	F f_;
+	G g_;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename L, typename M>
-      composed<L,M>::composed()
+      template <typename F, typename G>
+      composed<F,G>::composed()
       {
-	t_ = make::vec<n,C>(0);
-	m_ = metal::mat<n+1,n+1,C>::Id;
+	m_ = h_mat<n,C>::Id;
       }
 
-      template <typename L, typename M>
-      composed<L,M>::composed(const L& tr_l, const M& tr_m)
-	:tr1_(tr_l),
-	 tr2_(tr_m)
+      template <typename F, typename G>
+      composed<F,G>::composed(const F& f, const G& g)
+	:f_(f),
+	 g_(g)
       {
-	m_ = metal::mat<n+1,n+1,C>::Id;
-	m_ = tr1_ * tr2_;
+	m_ = f_.mat() * g_.mat();
       }
 
-      template <typename L, typename M>
-      composed<L,M>::result
-      composed<L,M>::operator()(const metal::vec<n,C>& v) const
+      template <typename F, typename G>
+      metal::vec<super_::dim,C>
+      composed<F,G>::operator()(const metal::vec<super_::dim,C>& v) const
       {
 	return m_(v);
       }
 
-      template <typename L, typename M>
-      composed<L,M>::invert
-      composed<L,M>::inv() const
+      template <typename F, typename G>
+      composed<F,G>::invert
+      composed<F,G>::inv() const
       {
 	typename composed::invert res(tr2_.inv(), tr1_.inv());
 
 	return res;
       }
 
-      template <typename L, typename M>
+      template <typename F, typename G>
       void 
-      composed<L,M>::set_first(const L& tr_l)
+      composed<F,G>::set_first(const F& f)
       {
-	tr1_ = tr_l;
+	f_ = f;
+	m_ = f_.mat() * g_.mat();	
       }
 
-      template <typename L, typename M>
+      template <typename F, typename G>
       void 
-      composed<L,M>::set_second(const M& tr_m)
+      composed<F,G>::set_second(const G& g)
       {
-	tr2_ = tr_m;
+	g_ = g;
+	m_ = f_.mat() * g_.mat();
       }
 
 # endif // ! MLN_INCLUDE_ONLY

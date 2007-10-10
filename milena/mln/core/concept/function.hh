@@ -162,6 +162,22 @@ namespace mln
     Function_x2x(const Function_x2x&);
   };
 
+  // Vector <-> Vector.
+
+  /// Base class for implementation of bijective function-objects from
+  /// vector to vector.
+  template <typename E>
+  struct Bijection_x2x : public Function_x2x< E >
+  {
+    /*
+      typedef invert;
+      invert inv() const;
+    */
+  protected:
+    Bijection_x2x();
+  };
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -254,6 +270,14 @@ namespace mln
   Function_x2x<E>::Function_x2x(const Function_x2x<E>& rhs)
     : Function_v2v<E>(rhs)
   {
+  }
+
+  template <typename E>
+  Bijection_x2x<E>::Bijection_x2x()
+  {
+    typedef typename E::invert invert;
+    invert (E::*m)() const = & E::inv;
+    m = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

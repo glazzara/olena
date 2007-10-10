@@ -33,6 +33,7 @@
 
 #include <iostream>
 #include <mln/fun/x2x/translation.hh>
+#include <mln/fun/i2v/all.hh>
 
 
 
@@ -46,7 +47,7 @@ int main()
     c = 2.9;
 
   metal::vec<3,float> vec1 = make::vec(a, b, c);
-  fun::x2x::translation<3,float> tr1(make::vec<3,float>(1.6));
+  fun::x2x::translation<3,float> tr1(make::vec<3, float>(all(1.6)));
 
   std::cout << vec1 << std::endl;
   std::cout << tr1(vec1) << std::endl;

@@ -25,76 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_INTERNAL_X2X_IMPL_HH
-# define MLN_FUN_INTERNAL_X2X_IMPL_HH
+#ifndef MLN_CORE_H_MAT_HH
+# define MLN_CORE_H_MAT_HH
 
-/*! \file mln/fun/internal/x2x_impl.hh
+/*! \file mln/core/h_mat.hh
  *
- * \brief Implementation class for every Function_x2x.
+ * \brief Definition of the mln::h_mat alias and of its
+ * construction routine.
  */
 
-# include <mln/core/concept/function.hh>
-# include <mln/core/h_mat.hh>
-# include <mln/core/h_vec.hh>
+# include <mln/metal/mat.hh>
 
 
 namespace mln
 {
 
-  namespace fun
+
+  template <unsigned dim, typename T>
+  struct h_mat : public metal::mat<dim+1, dim+1, T>
   {
+    h_mat();
 
-    namespace internal
-    {
-
-      template <typename V, typename E>
-      struct x2x_impl_
-      {
-	enum { dim = V::dim };
-
-	typedef V argument;
-	typedef V result;
-	typedef typename V::coord coord;
-	  typedef h_mat<dim, coord> matrix;
-
-	h_vec<dim, coord> operator()(const h_vec<dim, coord>& x) const
-	{
-	  return m_ * x;
-	}
-
-        const matrix& mat() const;
-
-      protected:
-	x2x_impl_();
-
-	matrix m_;
-      };
-
+    h_mat(const metal::mat<dim+1, dim+1, T>& x);
+  };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename V, typename E>
-      x2x_impl_<V,E>::x2x_impl_()
-      {
-      }
+  template <unsigned dim, typename T>
+  h_mat<dim,T>::h_mat()
+    : metal::mat<dim+1, dim+1, T>(metal::mat<dim+1, dim+1, T>::Id)
+  {
+  }
 
-
-      template <typename V, typename E>
-      const typename x2x_impl_<V,E>::matrix&
-      x2x_impl_<V,E>::mat() const
-      {
-	return m_;
-      }
-
+  template <unsigned dim, typename T>
+  h_mat<dim,T>::h_mat(const metal::mat<dim+1, dim+1, T>& x)
+    : metal::mat<dim+1, dim+1, T>(x)
+  {
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::fun::internal
-
-  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_INTERNAL_X2X_IMPL_HH
+
+#endif // ! MLN_CORE_H_MAT_HH

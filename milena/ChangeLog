@@ -1,3 +1,15 @@
+2007-10-10  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Update transformations.
+	* mln/core/concept/function.hh: Add bijective concept.
+	* mln/core/h_mat.hh: Add homogen matrix.
+	* mln/fun/internal/x2x_impl.hh,
+	* mln/fun/x2x/composed.hh,
+	* mln/fun/x2x/rotation.hh,
+	* mln/fun/x2x/translation.hh,
+	* mln/make/vec.hh,
+	* tests/fun_x2x_translation.cc: Update.
+
 2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add int_s16 test.

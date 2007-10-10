@@ -26,7 +26,7 @@
 // Public License.
 
 #ifndef MLN_MAKE_VEC_HH
-# define MLN_METAL_VEC_HH
+# define MLN_MAKE_VEC_HH
 
 /*! \file mln/make/vec.hh
  *
@@ -34,6 +34,7 @@
  */
 
 # include <mln/metal/vec.hh>
+# include <mln/core/concept/function.hh>
 
 namespace mln
 {
@@ -44,12 +45,21 @@ namespace mln
 
     /*! \brief Create an mln::metal::vec<n,T>.
      *
-     * \param[in] v Value.
+     * \param[in] f Function.
      *
-     * \return A nD vector filled with \p v.
+     * \return A nD vector filled with the function \p f .
      */
-    template <unsigned n, typename T>
-    metal::vec<n, T> vec(const T& v);
+    template <unsigned n, typename T, typename F>
+    metal::vec<n, T> vec(const Function_i2v<F>& f_);
+
+    /*! \brief Create an mln::metal::vec<n,T>.
+     *
+     * \param[in] v_0 First coordinate.
+     *
+     * \return A 1D vector.
+     */
+    template <typename T>
+    metal::vec<1, T> vec(const T& v_0);
 
     /*! \brief Create an mln::metal::vec<2,T>.
      *
@@ -87,12 +97,22 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <unsigned n, typename T>
-    metal::vec<n, T> vec(const T& v)
+    template <unsigned n, typename T, typename F>
+    metal::vec<n, T> vec(const Function_i2v<F>& f_)
     {
+      mlc_converts_to(mln_result(F), T)::check();
+      F f = exact(f_);
       metal::vec<n, T> tmp;
-      for (unsigned i = 0; i < n; ++i)
-	tmp[i] = v;
+      for (unsigned i; i < n; ++i)
+	tmp[i] = f(i);
+      return tmp;
+    }
+
+    template <typename T>
+    metal::vec<1, T> vec(const T& v_0)
+    {
+      metal::vec<1, T> tmp;
+      tmp[0] = v_0;
       return tmp;
     }
 

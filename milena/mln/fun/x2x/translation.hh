@@ -33,10 +33,11 @@
  * \brief FIXME.
  */
 
-# include <mln/fun/x2x/bijective_tr.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/fun/internal/x2x_impl.hh>
 # include <mln/metal/vec.hh>
-# include <mln/metal/mat.hh>
-
+# include <mln/core/h_mat.hh>
+# include <mln/fun/i2v/all.hh>
 
 namespace mln
 {
@@ -50,26 +51,27 @@ namespace mln
       // FIXME: Doc!
 
       template <unsigned n, typename C>
-      struct translation : public bijective_tr< translation<n,C> >
+      struct translation
+	: internal::x2x_impl_< metal::vec<n,C>, translation<n,C> >
+	, public Bijection_x2x< translation<n,C> >
       {
+	typedef fun::internal::x2x_impl_< metal::vec<n,C>, translation<n,C> > super_;
 
-	enum {dim = n};
-
-	typedef metal::vec<n,C> result;
 	typedef translation<n,C> invert;
+	invert inv() const;
 
 	translation();
 	translation(const metal::vec<n,C>& t);
 
-	result operator()(const metal::vec<n,C>& v) const;
-	invert inv() const;
+	using super_::operator();
+	metal::vec<n,C> operator()(const metal::vec<n,C>& v) const;
 
 	void set_t(const metal::vec<n,C>& t);
 
       protected:
+	void update();
 
 	metal::vec<n,C> t_;
-	metal::mat<n + 1,n + 1,C> m_;
       };
 
 
@@ -78,28 +80,23 @@ namespace mln
       template <unsigned n, typename C>
       translation<n,C>::translation()
       {
-	t_ = make::vec<n,C>(0);
-	m_ = metal::mat<n+1,n+1,C>::Id;
+	t_ = make::vec<n,C>(fun::i2v::all<C>(0));
+	this->m_ = h_mat<n,C>::Id;
       }
 
       template <unsigned n, typename C>
       translation<n,C>::translation(const metal::vec<n,C>& t)
 	:t_(t)
       {
-	m_ = metal::mat<n+1,n+1,C>::Id;
-	for (unsigned i = 0; i < n; ++i)
-	  m_(i,n) = t_[i];
+	this->m_ = h_mat<n,C>::Id;
+	this->update();
       }
 
       template <unsigned n, typename C>
       metal::vec<n,C>
       translation<n,C>::operator()(const metal::vec<n,C>& v) const
       {
-	typename translation::result res;
-	// FIXME: Why not "res = v + t_;"?
-	for (unsigned i = 0; i < n; ++i)
-	  res[i] = v[i] + t_[i];
-	return res;
+	return v + t_;
       }
 
       template <unsigned n, typename C>
@@ -115,11 +112,17 @@ namespace mln
       void
       translation<n,C>::set_t(const metal::vec<n,C>& t)
       {
-	t_ = t;
-	for (unsigned i = 0; i < n; ++i)
-	  m_(i,n) = t_[i];
+	this->t_ = t;
+	this->update();
       }
 
+      template <unsigned n, typename C>
+      void
+      translation<n,C>::update()
+      {
+	for (unsigned i = 0; i < n; ++i)
+	  this->m_(i,n) = this->t_[i];
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
