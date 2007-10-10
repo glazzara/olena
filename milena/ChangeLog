@@ -1,3 +1,9 @@
+2007-10-10  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add test for convert/to_tiles.hh.
+
+	* convert_to_tiles.cc: New test.
+
 2007-10-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	About nothing.
