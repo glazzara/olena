@@ -58,9 +58,6 @@ namespace mln
       template <typename S, typename I>
       void println(const S& b, const Image<I>& input_)
       {
-	void* tes = exact(input_);
-	void* a = b;
-
 	const I& input = exact(input_);
 	mln_piter(I) p(input.domain());
 	for_all(p)
@@ -105,8 +102,10 @@ namespace mln
 
 	int c = 1;
 	int r = 1;
-	int row_len = (b.max_col() - b.min_col()) / 2;
+	int row_len = 1 + (b.max_col() - b.min_col()) / 2;
 
+// 	std::cout << "infos de ligne : " << b.min_col() << b.max_col() << std::endl;
+// 	std::cout << "largeur de ligne : " << row_len << std::endl;
 	for_all(p)
 	  {
 	    //if (input.has(p))

@@ -1,3 +1,9 @@
+2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Remove debug in println.
+
+	* mln/debug/println.hh: Update.
+
 2007-10-10  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Move translate image into mln/core and add comment on some files.
