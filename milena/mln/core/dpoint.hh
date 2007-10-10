@@ -84,6 +84,13 @@ namespace mln
     /// Constructor without argument.
     dpoint_();
 
+    /// \{ Constructors with different numbers of argument w.r.t. the
+    /// dimension.
+    dpoint_(C ind);
+    dpoint_(C row, C col);
+    dpoint_(C sli, C row, C col);
+    /// \}
+
     /// Constructor; coordinates are set by function \p f.
     template <typename F>
     dpoint_(const Function_i2v<F>& f);
@@ -126,6 +133,30 @@ namespace mln
   template <typename M, typename C>
   dpoint_<M,C>::dpoint_()
   {
+  }
+
+  template <typename M, typename C>
+  dpoint_<M,C>::dpoint_(C ind)
+  {
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = ind;
+  }
+
+  template <typename M, typename C>
+  dpoint_<M,C>::dpoint_(C row, C col)
+  {
+    metal::bool_<(dim == 2)>::check();
+    coord_[0] = row;
+    coord_[1] = col;
+  }
+
+  template <typename M, typename C>
+  dpoint_<M,C>::dpoint_(C sli, C row, C col)
+  {
+    metal::bool_<(dim == 3)>::check();
+    coord_[0] = sli;
+    coord_[1] = row;
+    coord_[2] = col;
   }
 
   template <typename M, typename C>

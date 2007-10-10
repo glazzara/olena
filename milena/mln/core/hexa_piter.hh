@@ -60,7 +60,6 @@ namespace mln
   public:
 
     /// Constructor from a subset of points.
-    hexa_fwd_piter_(const box2d& subset);
     hexa_fwd_piter_(const box2d_h& subset);
 
     /// Start an iteration.
@@ -94,23 +93,15 @@ namespace mln
   // hexa_fwd_piter_<I>
 
   template <typename S>
-  hexa_fwd_piter_<S>::hexa_fwd_piter_(const box2d& b)
-    : super_(adaptee_(b))
-  {
-  }
-
-  template <typename S>
   hexa_fwd_piter_<S>::hexa_fwd_piter_(const box2d_h& b)
     :
-    box_adaptee_(make::box2d(b.pmin()[0] / 2,
-			     b.pmin()[1] / 2,
-
-			     b.pmax()[0] / 2 + b.pmax()[0] % 2,
-			     b.pmax()[1] / 2)),
     super_(adaptee_(box_adaptee_))
-
- {
- }
+  {
+    box_adaptee_ = make::box2d(b.pmin()[0] / 2,
+			       b.pmin()[1] / 2,
+			       b.pmax()[0] / 2 + b.pmax()[0] % 2,
+			       b.pmax()[1] / 2);
+  }
 
   template <typename S>
   void

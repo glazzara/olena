@@ -53,7 +53,7 @@ int main()
   mln_assertion(p.col() == 3 && p[2] == 3);
 
   // construction
-  q = make::point3d(5, 9, 3);
+  q = point3d(5, 9, 3);
   mln_assertion(p == q);
 
   q.set_all(0);

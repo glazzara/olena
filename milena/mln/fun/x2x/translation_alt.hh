@@ -34,7 +34,7 @@
  */
 
 # include <mln/fun/x2x/bijective_tr.hh>
-# include <mln/fun/internal/x2x_base.hh>
+# include <mln/fun/internal/x2x_impl.hh>
 
 
 namespace mln
@@ -52,21 +52,22 @@ namespace mln
       struct translation_alt
 	:
 
-	fun::internal::x2x_base_< metal::vec<n,C>, translation_alt<n,C> >
+	fun::internal::x2x_impl_< metal::vec<n,C>, translation_alt<n,C> >
 	,
-	Function_x2x< translation_alt<n,C> >
+	Bijection_x2x< translation_alt<n,C> >
 
 	// FIXME: Activate public bijective_tr< translation_alt<n,C> >
       {
 	typedef fun::internal::x2x_base_< metal::vec<n,C>, translation_alt<n,C> > super_;
-	// typedef translation_alt<n,C> invert;
-	// invert inv() const;
+
+// 	typedef translation_alt<n,C> invert;
+// 	invert inv() const;
 
 	translation_alt();
 	translation_alt(const metal::vec<n,C>& t);
 
 	using super_::operator();
-	result operator()(const metal::vec<n,C>& v) const;
+	metal::vec<n,C> operator()(const metal::vec<n,C>& v) const;
 
 	void set_t(const metal::vec<n,C>& t);
 

@@ -37,6 +37,7 @@
 # include <mln/core/internal/coord_impl.hh>
 # include <mln/fun/i2v/all.hh>
 
+# include <mln/metal/bool.hh>
 # include <mln/metal/vec.hh>
 # include <mln/core/h_vec.hh>
 
@@ -101,8 +102,12 @@ namespace mln
     /// Constructor without argument.
     point_();
 
-    /// Constructor with filling.
-    point_(C c);
+    /// \{ Constructors with different numbers of argument w.r.t. the
+    /// dimension.
+    point_(C ind);
+    point_(C row, C col);
+    point_(C sli, C row, C col);
+    /// \}
 
     /// Constructor; coordinates are set by function \p f.
     template <typename F>
@@ -157,9 +162,27 @@ namespace mln
   }
 
   template <typename M, typename C>
-  point_<M,C>::point_(C c)
+  point_<M,C>::point_(C ind)
   {
-    set_all(c);
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = ind;
+  }
+
+  template <typename M, typename C>
+  point_<M,C>::point_(C row, C col)
+  {
+    metal::bool_<(dim == 2)>::check();
+    coord_[0] = row;
+    coord_[1] = col;
+  }
+
+  template <typename M, typename C>
+  point_<M,C>::point_(C sli, C row, C col)
+  {
+    metal::bool_<(dim == 3)>::check();
+    coord_[0] = sli;
+    coord_[1] = row;
+    coord_[2] = col;
   }
 
   template <typename M, typename C>

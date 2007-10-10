@@ -47,7 +47,7 @@ int main()
   mln_assertion(p.ind() == 5 && p[0] == 5);
 
   // construction
-  q = make::point1d(5);
+  q = 5;
   mln_assertion(p == q);
 
   q.set_all(0);

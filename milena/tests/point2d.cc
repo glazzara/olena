@@ -53,6 +53,15 @@ int main()
   // construction
   q = make::point2d(5, 1);
   mln_assertion(p == q);
+  {
+    point2d q_;
+    q_ = point2d(5, 1);
+    mln_assertion(q_ == q);
+  }
+  {
+    point2d q_(5, 1);
+    mln_assertion(q_ == q);
+  }
   
   q.set_all(0);
   for (unsigned i = 0; i < p.dim; ++i)
