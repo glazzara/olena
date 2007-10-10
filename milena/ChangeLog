@@ -1,5 +1,11 @@
 2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add int_s16 test.
+	* mln/value/int_s16.hh: New, signed int on 16bits.
+	* tests/value_int_s16.cc: New, tests.
+
+2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Finalise an exhaustive int_u8 test.
 	* mln/value/concept/scalar.hh: (operator %=) New.
 	* tests/value_int_u8.cc: Add tests.
