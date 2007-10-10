@@ -1,5 +1,10 @@
 2007-10-10  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add convert/to_tiles.hh.
+	* to_tiles.hh: Create an image from vector of image.
+
+2007-10-10  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add test for convert/to_tiles.hh.
 
 	* convert_to_tiles.cc: New test.
