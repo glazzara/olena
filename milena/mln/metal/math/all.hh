@@ -50,6 +50,7 @@ namespace mln
 
 
 # include <mln/metal/math/pow.hh>
+# include <mln/metal/math/sqrt.hh>
 // ...
 
 

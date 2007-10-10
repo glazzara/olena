@@ -1,3 +1,20 @@
+2007-10-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	About nothing.
+
+	* mln/core/h_vec.hh: Clean-up.
+	(dim): New.
+	* mln/metal/vec.hh (value_type): Rename as...
+	(coord): ...this.
+	* mln/metal/mat.hh: Likewise.
+	(dim): New.
+	* mln/metal/math/pow.hh: Fix file doc.
+	* mln/metal/math/sqrt.hh: New.
+	* mln/metal/math/all.hh: Update.
+	* mln/fun/x2x/translation_alt.hh: New; just for the
+	record.
+	* mln/fun/internal/x2x_impl.hh: New.
+
 2007-10-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Finalise hexagonal images.

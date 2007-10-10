@@ -41,44 +41,54 @@ namespace mln
 {
 
 
-  template <unsigned dim, typename T>
-  struct h_vec : public metal::vec<dim + 1, T>
+  template <unsigned d, typename C>
+  struct h_vec : public metal::vec<d + 1, C>
   {
-    h_vec()
-      : metal::vec<dim + 1, T>(make::vec<dim + 1, T>(0))
-    { // FIXME: Move in MLN_INCLUDE_ONLY
-      this->data_[dim] = 1;
-    }
+    /// Dimension is the 'natural' one (3 for 3D), not the one of the vector (dim + 1).
+    enum { dim = d };
 
-    h_vec(const metal::vec<dim, T>& x);
+    /// Constructor without argument.
+    h_vec();
 
-    operator metal::vec<dim, T>() const;
+    /// Constructor from a metal::vec.
+    h_vec(const metal::vec<d,C>& x);
+    
+    /// Conversion to a metal::vec.
+    operator metal::vec<d,C>() const;
   };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <unsigned dim, typename T>
-  h_vec<dim,T>::h_vec(const metal::vec<dim, T>& x)
+  template <unsigned d, typename C>
+  h_vec<d,C>::h_vec()
   {
-    for (unsigned i = 0; i < dim; ++i)
-      this->data_[i] = x[i];
-    this->data_[dim] = 1;
   }
 
-  template <unsigned dim, typename T>
-  h_vec<dim,T>::operator metal::vec<dim,T>() const
+  template <unsigned d, typename C>
+  h_vec<d,C>::h_vec(const metal::vec<d,C>& x)
   {
-    metal::vec<dim,T> x;
-    for (unsigned i = 0; i < dim; ++i)
-      x[i] = this->data_[i] / this->data_[dim];
-    return x;
+    for (unsigned i = 0; i < d; ++i)
+      this->data_[i] = x[i];
+    this->data_[d] = 1; // FIXME: literal::one
+  }
+
+  template <unsigned d, typename C>
+  h_vec<d,C>::operator metal::vec<d,C>() const
+  {
+    const C w = this->data_[d];
+    mln_assertion(w != 0);
+
+    metal::vec<d,C> tmp;
+    for (unsigned i = 0; i < n; ++i)
+      tmp[i] = this->data_[i] / w;
+    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
-
 
 
 #endif // ! MLN_CORE_H_VEC_HH

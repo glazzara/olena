@@ -134,7 +134,7 @@ namespace mln
       typedef T equiv[n];
       typedef T enc[n];
 
-      typedef T value_type;
+      typedef T coord;
       enum { dim = n };
 
       vec();

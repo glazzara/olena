@@ -52,8 +52,11 @@ namespace mln
     {
     public:
 
-      typedef T value_type;
-      enum {N = n, M = m};
+      typedef T coord;
+      enum { N = n,
+	     M = m,
+             dim = n * m };
+      
       static const mat<n,m,T> Id;
 
       mat()

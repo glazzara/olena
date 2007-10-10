@@ -25,87 +25,64 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_METAL_MATH_POW_HH
-# define MLN_METAL_MATH_POW_HH
+#ifndef MLN_FUN_INTERNAL_X2X_IMPL_HH
+# define MLN_FUN_INTERNAL_X2X_IMPL_HH
 
-/*! \file mln/metal/math/pow.hh
+/*! \file mln/fun/internal/x2x_impl.hh
  *
- * \brief Definition of the 'power' static function.
+ * \brief Implementation class for every Function_x2x.
  */
 
-# include <mln/metal/bool.hh>
-# include <mln/metal/int.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/metal/mat.hh>
+# include <mln/core/h_vec.hh>
 
 
 namespace mln
 {
 
-  namespace metal
+  namespace fun
   {
 
-    namespace math
+    namespace internal
     {
 
-      // pow_int<x, n>
-
-      namespace impl
+      template <typename V, typename E>
+      struct x2x_impl_
       {
+	enum { dim = V::dim };
 
-	template <int x, int n>
-	struct pow_int_
+	typedef V argument;
+	typedef V result;
+	typedef typename V::coord coord;
+
+	h_vec<dim, coord> operator()(const h_vec<dim, coord>& x) const
 	{
-	  enum { value = x * pow_int_<x, n-1>::value };
-	};
+	  return m_ * x;
+	}
 
-	template <int x>
-	struct pow_int_< x, 0 >
-	{
-	  enum { value = 1 };
-	};
+      protected:
+	x2x_impl_();
 
-	template <>
-	struct pow_int_< 0, 0 >;
-      
+	metal::mat<dim+1, dim+1, coord> m_; // FIXME: Change mat into h_mat<dim, dim, coord>!
+      };
 
-	// Entry.
 
-	template <int x, int n, bool b>
-	struct pow_int_if_ : pow_int_<x, n>
-	{
-	};
 
-	template <int x, int n>
-	struct pow_int_if_< x, n, false >
-	{
-	};
+# ifndef MLN_INCLUDE_ONLY
 
+      template <typename V, typename E>
+      x2x_impl_<V,E>::x2x_impl_()
+      {
       }
 
-      template <int x, int n>
-      struct pow_int : impl::pow_int_if_< x, n,
-					  (n >= 0 && ! (x == 0 && n == 0)) >
-      {
-      };
+# endif // ! MLN_INCLUDE_ONLY
 
+    } // end of namespace mln::fun::internal
 
-      // pow<X, N>
-
-      template <typename X, typename N>
-      struct pow;
-
-      template <int x, int n>
-      struct pow< int_<x>, int_<n> > : pow_int<x, n>
-      {
-	typedef pow_int<x, n> super_;
-	typedef int_<super_::value> ret;
-      };
-
-
-    } // end of namespace mln::metal::math
-
-  } // end of namespace mln::metal
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_METAL_MATH_POW_HH
+#endif // ! MLN_FUN_INTERNAL_X2X_IMPL_HH

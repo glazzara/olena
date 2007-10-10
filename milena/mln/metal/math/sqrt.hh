@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_METAL_MATH_POW_HH
-# define MLN_METAL_MATH_POW_HH
+#ifndef MLN_METAL_MATH_SQRT_HH
+# define MLN_METAL_MATH_SQRT_HH
 
-/*! \file mln/metal/math/pow.hh
+/*! \file mln/metal/math/sqrt.hh
  *
- * \brief Definition of the 'power' static function.
+ * \brief Definition of the 'sqrt' static function.
  */
 
 # include <mln/metal/bool.hh>
@@ -46,57 +46,59 @@ namespace mln
     namespace math
     {
 
-      // pow_int<x, n>
+      // sqrt_int<x, n>
 
       namespace impl
       {
 
-	template <int x, int n>
-	struct pow_int_
+	template <int n, int lo = 1, int hi = n>
+	struct sqrt_int_
 	{
-	  enum { value = x * pow_int_<x, n-1>::value };
+	  enum { mid = (lo + hi + 1) / 2 };
+
+	  enum { value = n < mid * mid
+                         ? sqrt_int_<n, lo, mid-1>::value
+		         : sqrt_int_<n, mid, hi>::result };
 	};
 
-	template <int x>
-	struct pow_int_< x, 0 >
+	template<int n, int m>
+	struct sqrt_int_<n, m, m>
 	{
-	  enum { value = 1 };
+	  enum { value = m };
 	};
-
-	template <>
-	struct pow_int_< 0, 0 >;
-      
 
 	// Entry.
 
-	template <int x, int n, bool b>
-	struct pow_int_if_ : pow_int_<x, n>
+	template <int n, bool b>
+	struct sqrt_int_if_ : sqrt_int_<n>
+	{
+	  enum { value_ = sqrt_int_<n>::value,
+		 reminder_ = n - value_ * value_ };
+	  // FIXME: Check that reminder_ == 0.
+	};
+
+	template <int n>
+	struct sqrt_int_if_< n, false >
 	{
 	};
 
-	template <int x, int n>
-	struct pow_int_if_< x, n, false >
-	{
-	};
+      } // end of namespace mln::metal::math::impl
 
-      }
-
-      template <int x, int n>
-      struct pow_int : impl::pow_int_if_< x, n,
-					  (n >= 0 && ! (x == 0 && n == 0)) >
+      template <int n>
+      struct sqrt_int : impl::sqrt_int_if_< n, (n >= 0) >
       {
       };
 
 
-      // pow<X, N>
+      // sqrt<N>
 
       template <typename X, typename N>
-      struct pow;
+      struct sqrt;
 
-      template <int x, int n>
-      struct pow< int_<x>, int_<n> > : pow_int<x, n>
+      template <int n>
+      struct sqrt< int_<n> > : sqrt_int<n>
       {
-	typedef pow_int<x, n> super_;
+	typedef sqrt_int<n> super_;
 	typedef int_<super_::value> ret;
       };
 
@@ -108,4 +110,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_METAL_MATH_POW_HH
+#endif // ! MLN_METAL_MATH_SQRT_HH
