@@ -77,7 +77,9 @@ namespace mln
  	std::string path_tmp = tmp;
 
  	io::ppm::save(out, path_tmp);
-	std::string s = cmd + " " + path_tmp;
+
+
+	std::string s = cmd + " " + path_tmp + " &";
 	system (s.c_str ());
       }
 

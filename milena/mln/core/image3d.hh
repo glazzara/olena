@@ -334,29 +334,9 @@ namespace mln
     void
     data_< image3d<T> >::swap_(data_< image3d<T> >& other_)
     {
-
-      T* sw_buffer_ = this->buffer_;
-      this->buffer_ = other_.buffer_;
-      other_.buffer_ = sw_buffer_;
-
-      T*** sw_array_ = this->array_;
-      this->array_ = other_.array_;
-      other_.array_ = sw_array_;
-
-      unsigned sw_bdr_ = this->bdr_;
-      this->bdr_ = other_.bdr_;
-      other_.bdr_ = sw_bdr_;
-
-      /// box3d vb_ virtual box, i.e., box including the virtual border
-      box3d sw_vb_ = this->vb_;
-      this->vb_ = other_.vb_;
-      other_.vb_ = sw_vb_;
-
-      /// box3d b_ theoretical box
-      box3d sw_b_ = this->b_;
-      this->b_ = other_.b_;
-      other_.b_ = sw_b_;
-
+      data_< image3d<T> > self_ = *this;
+      *this = other_;
+      other_ = self_;
     }
 
     template <typename T>

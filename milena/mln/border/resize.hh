@@ -36,10 +36,10 @@
 # include <cstring>
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/image2d.hh>
 # include <mln/core/clone.hh>
 # include <mln/level/fill.hh>
-
+# include <mln/metal/is_not.hh>
+# include <mln/border/get.hh>
 
 namespace mln
 {
@@ -69,14 +69,24 @@ namespace mln
     namespace impl
     {
       template <typename I>
-      void resize_(const Image<I>& ima_, unsigned new_border)
+      void resize_(const I& ima_, trait::image::category::morpher,
+		   unsigned new_border)
       {
-	I& ima = const_cast<I&> (exact(ima_));
+	return resize ( *ima_.delegatee_(), new_border);
+      }
+
+
+      template <typename I>
+      void resize_(const I& ima_, trait::image::category::primary,
+		   unsigned new_border)
+      {
+	I& ima = const_cast<I&> (ima_);
 	I src = clone(ima);
 
 	ima.resize_(new_border);
 	level::fill(ima, src);
       }
+
 
     } // end of namespace mln::border::resize
 
@@ -85,13 +95,13 @@ namespace mln
     template <typename I>
     void resize(const Image<I>& ima_, unsigned thickness)
     {
-      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
+      mlc_is(mln_trait_image_border(I), trait::image::border::some)::check();
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
-      if (ima.border() >= thickness)
+      if (border::get(ima) >= thickness)
 	return;
-      impl::resize_(ima, thickness); 
-      mln_postcondition(ima.border() >= thickness);
+      impl::resize_(ima, mln_trait_image_category(I)(), thickness); 
+      mln_postcondition(border::get(ima) >= thickness);
       return;
     }
 

@@ -1,3 +1,16 @@
+2007-10-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update resize.
+
+	* border/resize.hh: Update for image_if and sub_image.
+
+	* core/image1d.hh,
+	* core/image3d.hh: (swap_) Update.
+
+
+	* core/translate_image.hh,
+	* display/show.hh: Update.
+
 2007-10-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix ambiguity in border property.

@@ -76,9 +76,18 @@ namespace mln
 
       typedef trait::image::category::domain_morpher category;
 
-      typedef mln_trait_image_io_from_(I) io;
+//       typedef mln_trait_image_access_from(I)   access;
+//       typedef mln_trait_image_space_from(I)    space;
+//       typedef mln_trait_image_size_from(I)     size;
+//       typedef mln_trait_image_support_from(I)  support;
 
-      typedef mln_trait_image_data_from_(I) data;
+//       typedef mln_trait_image_border_from(I)   border;
+      typedef mln_trait_image_data_from(I)     data;
+      typedef mln_trait_image_io_from(I)       io;
+//       typedef mln_trait_image_speed_from(I)    speed;
+
+//       typedef mln_trait_image_io_from_(I) io;
+//       typedef mln_trait_image_data_from_(I) data;
 
     };
 
