@@ -6,7 +6,7 @@
 #include <mln/border/fill.hh>
 #include <mln/debug/println_with_border.hh>
 #include <mln/debug/println.hh>
-#include "translate_image.hh"
+#include <mln/core/translate_image.hh>
 
 int main ()
 {
@@ -31,12 +31,13 @@ int main ()
   std::cout << "translated image :"
 	    << std::endl;
   debug::println (tmp);
-//   std::cout << std::endl;
-//   I out (4,4);
-//   level::paste(ima, out);
-//   level::paste(tmp, out);
-//   std::cout << "pasted image :"
-// 	    << std::endl;
-//   debug::println (out);
-//   std::cout << std::endl;
+
+  std::cout << std::endl;
+  I out (4,4);
+  level::paste(ima, out);
+  level::paste(tmp, out);
+  std::cout << "pasted image :"
+	    << std::endl;
+  debug::println (out);
+  std::cout << std::endl;
 }

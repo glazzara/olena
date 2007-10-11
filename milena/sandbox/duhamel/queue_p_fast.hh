@@ -124,7 +124,6 @@ namespace mln
     mutable accu::bbox<P> bb_;
     mutable bool bb_needs_update_;
     void bb_update_() const;
-
   };
 
 

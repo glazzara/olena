@@ -61,6 +61,27 @@ namespace mln
   } // end of namespace mln::internal
 
 
+
+  namespace trait
+  {
+
+    template <typename I>
+    struct image_< translate_image<I> > : default_image_morpher_< I, mln_value(I),
+								  translate_image<I> >
+    {
+
+      typedef trait::image::category::domain_morpher category;
+
+      typedef mln_trait_image_io_from_(I) io;
+
+      typedef mln_trait_image_data_from_(I) data;
+
+    };
+
+  } // end of namespace mln::trait
+
+
+
   /*! \brief FIXME
    *
    */
@@ -73,7 +94,6 @@ namespace mln
     /// Return type of read-write access.
     typedef typename internal::morpher_lvalue_<I>::ret lvalue;
 
-
     /// Skeleton.
     typedef translate_image< tag::image_<I> > skeleton;
 
@@ -84,7 +104,7 @@ namespace mln
     translate_image(I& ima, const mln_dpoint(I) dp);
     translate_image();
 
-    /// FIXME: Doc!
+    /// Return domain of translated_image.
     const box2d& domain() const;
 
     /// Test if a pixel value is accessible at \p p.

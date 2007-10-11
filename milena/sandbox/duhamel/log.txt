@@ -13,3 +13,12 @@
 - mesh_p / mesh_image
 - draw mesh
 - graph_labeling
+
+- show/display.
+
+- Add translate image class.
+- Add convert/to_tiles.
+
+- border/resize.
+
+- queue with priority.
