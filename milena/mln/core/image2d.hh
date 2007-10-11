@@ -59,7 +59,6 @@ namespace mln
 
   namespace internal
   {
-
     template <typename T>
     struct data_< image2d<T> >
     {
@@ -76,6 +75,8 @@ namespace mln
       void update_vb_();
       void allocate_();
       void deallocate_();
+      void swap_ (data_< image2d<T> >& other_);
+      void reallocate_(unsigned new_border);
     };
 
   } // end of namespace mln::internal
@@ -205,6 +206,13 @@ namespace mln
 
     /// Give a hook to the value buffer.
     T* buffer();
+
+
+
+
+    /// Resize image border with new_border.
+    void resize_(unsigned new_border);
+
   };
 
 
@@ -244,7 +252,6 @@ namespace mln
 
   namespace internal
   {
-
     template <typename T>
     data_< image2d<T> >::data_(const box2d& b, unsigned bdr)
       : buffer_(0),
@@ -306,6 +313,44 @@ namespace mln
 	  array_ = 0;
 	}
     }
+
+    template <typename T>
+    void
+    data_< image2d<T> >::swap_(data_< image2d<T> >& other_)
+    {
+
+      T* sw_buffer_ = this->buffer_;
+      this->buffer_ = other_.buffer_;
+      other_.buffer_ = sw_buffer_;
+
+      T** sw_array_ = this->array_;
+      this->array_ = other_.array_;
+      other_.array_ = sw_array_;
+
+      unsigned sw_bdr_ = this->bdr_;
+      this->bdr_ = other_.bdr_;
+      other_.bdr_ = sw_bdr_;
+
+      /// box2d vb_ virtual box, i.e., box including the virtual border
+      box2d sw_vb_ = this->vb_;
+      this->vb_ = other_.vb_;
+      other_.vb_ = sw_vb_;
+
+      /// box2d b_ theoretical box
+      box2d sw_b_ = this->b_;
+      this->b_ = other_.b_;
+      other_.b_ = sw_b_;
+
+    }
+
+    template <typename T>
+    void
+    data_< image2d<T> >::reallocate_(unsigned new_border)
+    {
+      data_< image2d<T> >& tmp = *(new data_< image2d<T> >(this->b_, new_border));
+      this->swap_(tmp);
+    }
+
 
   } // end of namespace mln::internal
 
@@ -458,6 +503,13 @@ namespace mln
 			      o % this->data_->vb_.len(1) + this->data_->vb_.min_col());
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
     return p;
+  }
+
+  template <typename T>
+  void
+  image2d<T>::resize_(unsigned new_border)
+  {
+    this->data_->reallocate_(new_border);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

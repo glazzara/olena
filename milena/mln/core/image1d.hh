@@ -76,6 +76,8 @@ namespace mln
       void update_vb_();
       void allocate_();
       void deallocate_();
+      void swap_ (data_< image1d<T> >& other_);
+      void reallocate_(unsigned new_border);
     };
 
   } // end of namespace mln::internal
@@ -205,6 +207,12 @@ namespace mln
 
     /// Give a hook to the value buffer.
     T* buffer();
+
+
+
+    /// Resize image border with new_border.
+    void resize_(unsigned new_border);
+
   };
 
   template <typename T, typename J>
@@ -279,6 +287,44 @@ namespace mln
 	delete[] buffer_;
 	buffer_ = 0;
       }
+    }
+
+
+    template <typename T>
+    void
+    data_< image1d<T> >::swap_(data_< image1d<T> >& other_)
+    {
+
+      T* sw_buffer_ = this->buffer_;
+      this->buffer_ = other_.buffer_;
+      other_.buffer_ = sw_buffer_;
+
+      T* sw_array_ = this->array_;
+      this->array_ = other_.array_;
+      other_.array_ = sw_array_;
+
+      unsigned sw_bdr_ = this->bdr_;
+      this->bdr_ = other_.bdr_;
+      other_.bdr_ = sw_bdr_;
+
+      /// box1d vb_ virtual box, i.e., box including the virtual border
+      box1d sw_vb_ = this->vb_;
+      this->vb_ = other_.vb_;
+      other_.vb_ = sw_vb_;
+
+      /// box1d b_ theoretical box
+      box1d sw_b_ = this->b_;
+      this->b_ = other_.b_;
+      other_.b_ = sw_b_;
+
+    }
+
+    template <typename T>
+    void
+    data_< image1d<T> >::reallocate_(unsigned new_border)
+    {
+      data_< image1d<T> >& tmp = *(new data_< image1d<T> >(this->b_, new_border));
+      this->swap_(tmp);
     }
 
   } // end of namespace mln::internal
@@ -432,6 +478,13 @@ namespace mln
     point1d p = make::point1d(o + this->data_->vb_.min_ind());
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
     return p;
+  }
+
+  template <typename T>
+  void
+  image1d<T>::resize_(unsigned new_border)
+  {
+    this->data_->reallocate_(new_border);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

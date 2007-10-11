@@ -1,5 +1,18 @@
 2007-10-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add border::resize and fix bug in println_with_border for 3d.
+
+	* border/resize.hh: Resize border.
+
+	* core/image1d.hh,
+	* core/image2d.hh,
+	* core/image3d.hh: Add reallocate for resize border.
+
+
+	* debug/println_with_border.hh: Fix bug.
+
+2007-10-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add tests for border::resize.
 
 	* border_resize_image1d_1.cc,

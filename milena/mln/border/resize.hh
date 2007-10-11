@@ -30,11 +30,15 @@
 
 /*! \file mln/border/resize.hh
  *
- * \brief FIXME.
+ * \brief Resize border.
  */
 
+# include <cstring>
+
 # include <mln/core/concept/image.hh>
-# include <mln/core/internal/fixme.hh>
+# include <mln/core/image2d.hh>
+# include <mln/core/clone.hh>
+# include <mln/level/fill.hh>
 
 
 namespace mln
@@ -62,6 +66,22 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace impl
+    {
+      template <typename I>
+      void resize_(const Image<I>& ima_, unsigned new_border)
+      {
+	I& ima = const_cast<I&> (exact(ima_));
+	I src = clone(ima);
+
+	ima.resize_(new_border);
+	level::fill(ima, src);
+      }
+
+    } // end of namespace mln::border::resize
+
+    /// Facade.
+
     template <typename I>
     void resize(const Image<I>& ima_, unsigned thickness)
     {
@@ -70,7 +90,7 @@ namespace mln
       mln_precondition(ima.has_data());
       if (ima.border() >= thickness)
 	return;
-      mln::internal::fixme();
+      impl::resize_(ima, thickness); 
       mln_postcondition(ima.border() >= thickness);
       return;
     }
