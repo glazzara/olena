@@ -29,6 +29,7 @@
 # define MLN_VALUE_GRAY_HH
 
 # include <iostream>
+# include <cmath>
 
 # include <mln/value/graylevel.hh>
 # include <mln/value/concept/integer.hh>
@@ -37,11 +38,14 @@
 namespace mln
 {
 
-  // Fwd decls.
+  /// \{ Fwd decls.
+  namespace literal { struct black_t; struct white_t; }
+  namespace value {    template <unsigned N> class graylevel; class gray; }
+  /// \}
+
+
   namespace value
   {
-    template <unsigned N> class graylevel;
-    class gray;
 
     /// General gray-level class where n bits is not know at compile-time.
     /// This class is used for exchange between gray-level types purpose.
@@ -56,8 +60,16 @@ namespace mln
       /// Equivalent associated type.
       typedef unsigned long equiv;
 
-      /// Ctor.
+      /// Constructor without argument.
       gray();
+
+      /// \{ Constructors/assignments with literals.
+      gray(const literal::white_t&);
+      gray& operator=(const literal::white_t&);
+      gray(const literal::black_t&);
+      gray& operator=(const literal::black_t&);
+      /// \}
+      
 
       /// Ctor.
       template <unsigned N>
@@ -149,6 +161,32 @@ namespace mln
       : nbits_(n),
 	val_(g.value())
     {
+    }
+
+    gray::gray(const literal::white_t&)
+      : nbits_(1),
+	val_(1)
+    {
+    }
+
+    gray& gray::operator=(const literal::white_t&)
+    {
+      // nbits_ is not modified so that precision does not change.
+      val_ = int(std::pow(2.f, float(nbits_))) - 1;
+      return *this;
+    }
+
+    gray::gray(const literal::black_t&)
+      : nbits_(1),
+	val_(0)
+    {
+    }
+
+    gray& gray::operator=(const literal::black_t&)
+    {
+      // nbits_ is not modified so that precision does not change.
+      val_ = 0;
+      return *this;
     }
 
     gray::gray(unsigned nbits, unsigned long val)

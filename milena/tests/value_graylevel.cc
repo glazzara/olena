@@ -45,27 +45,22 @@ int main()
   using  mln::literal::white;
   using  mln::literal::black;
 
-  gl8  a (white);
+  gl8  a = white;
   gl16 b = black;
-
-
   mln_assertion(a == b);
+  mln_assertion(a.value() != b.value());
 
   gl8 c = (a + b) / 2;
-
-  // FIXME cant't compare with literals.
   mln_assertion(c == white);
-
-  // FIXME can't compare with int
-  mln_assertion(c == 255);
+  mln_assertion(c.value() == 255);
 
   c = a;
-  // FIXME cant't compare with literals.
-  //mln_assertion(c == white);
+  mln_assertion(c == white);
 
   c = (a * 2) / 2;
-  // FIXME cant't compare with literals.
-  //mln_assertion(c == white);
+  mln_assertion(c == white);
 
   c = c / 6;
+
+  gray g = black;
 }

@@ -33,6 +33,7 @@
 # include <mln/core/contract.hh>
 # include <mln/metal/math/pow.hh>
 # include <mln/metal/bexpr.hh>
+# include <mln/literal/ops.hh>
 
 # include <mln/value/int_u.hh>
 # include <mln/value/gray.hh>

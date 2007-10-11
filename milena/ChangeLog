@@ -1,3 +1,12 @@
+2007-10-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update grays.
+
+	* tests/value_graylevel.cc: Activate tests.
+	* mln/value/graylevel.hh: Fix missing include.
+	* mln/value/gray.hh: Handle Literals.
+	* mln/value/builtin: New.
+
 2007-10-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add black and white literals.
