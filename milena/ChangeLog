@@ -1,3 +1,9 @@
+2007-10-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Try to reduce number of files in doc/html.
+
+	* doc/Doxyfile.in: Create_subdirs = YES.
+
 2007-10-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add queue with priority in sandbox.
