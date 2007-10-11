@@ -1,3 +1,10 @@
+2007-10-11  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Tests on composed transformations (does not work).
+	* mln/fun/internal/x2x_impl.hh: Update.
+	* mln/fun/x2x/composed.hh: Update.
+	* tests/fun_x2x_composed.cc: New.
+
 2007-10-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a new border computation mode and change image_if meaning.

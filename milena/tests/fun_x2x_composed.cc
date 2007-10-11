@@ -25,75 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_INTERNAL_X2X_IMPL_HH
-# define MLN_FUN_INTERNAL_X2X_IMPL_HH
-
-/*! \file mln/fun/internal/x2x_impl.hh
+/*! \file tests/image2d.cc
  *
- * \brief Implementation class for every Function_x2x.
+ * \brief Tests on mln::image2d.
  */
 
-# include <mln/core/concept/function.hh>
-# include <mln/core/h_mat.hh>
-# include <mln/core/h_vec.hh>
 
-namespace mln
+#include <iostream>
+#include <mln/fun/x2x/translation.hh>
+#include <mln/fun/x2x/rotation.hh>
+#include <mln/fun/x2x/composed.hh>
+#include <mln/fun/i2v/all.hh>
+
+
+
+int main()
 {
+  using namespace mln;
 
-  namespace fun
-  {
+  float
+    a = 2.3,
+    b = 0,
+    c = 2.9;
 
-    namespace internal
-    {
-
-      template <typename V, typename E>
-      struct x2x_impl_
-      {
-	enum { dim = V::dim };
-
-	typedef V argument;
-	typedef V result;
-	typedef typename V::coord coord;
-	  typedef h_mat<dim, coord> matrix;
-
-	h_vec<dim, coord> operator()(const h_vec<dim, coord>& x) const
-	{
-	  return m_ * x;
-	}
-
-        const matrix& mat() const;
-
-      protected:
-	x2x_impl_();
-
-	matrix m_;
-      };
-
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename V, typename E>
-      x2x_impl_<V,E>::x2x_impl_()
-      {
-      }
-
-
-      template <typename V, typename E>
-      const typename x2x_impl_<V,E>::matrix&
-      x2x_impl_<V,E>::mat() const
-      {
-	return m_;
-      }
-
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::fun::internal
-
-  } // end of namespace mln::fun
-
-} // end of namespace mln
-
-
-#endif // ! MLN_FUN_INTERNAL_X2X_IMPL_HH
+  metal::vec<3,float> vec1 = make::vec(a, b, c);
+  fun::x2x::translation<3,float> tr(all(1.6));
+  fun::x2x::rotation<3,float> rot(0.3, 1);
+  std::cout << vec1 << std::endl;
+  std::cout << compose(tr, rot)(vec1) << std::endl;
+  std::cout << compose(rot, tr)(vec1) << std::endl;
+}
