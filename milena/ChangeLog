@@ -1,5 +1,11 @@
 2007-10-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix bug in translate_image.
+
+	* translate_image.hh: Fix.
+
+2007-10-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add tests for border resize with image_if and sub_image.
 
 	* border_resize_image_if.cc,
