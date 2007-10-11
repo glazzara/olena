@@ -1,5 +1,11 @@
 2007-10-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add tests macros.
+
+	* tests/value_macros.hh: Macros to factorise tests.
+
+2007-10-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix graylevel. Tests on graylevel.
 
 	* mln/value/graylevel.hh: Re add operator=(int)
