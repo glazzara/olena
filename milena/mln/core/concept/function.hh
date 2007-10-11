@@ -39,8 +39,19 @@
 namespace mln
 {
 
-  // Fwd decl.
+  /// \{
+  /// Fwd decls.
   template <typename E> struct Function;
+  template <typename E> struct Function_v2v;
+  template <typename E> struct Function_i2v;
+  template <typename E> struct Function_p2v;
+  template <typename E> struct Function_v2b;
+  template <typename E> struct Function_p2b;
+  template <typename E> struct Function_p2p;
+  template <typename E> struct Function_x2x;
+  /// \}
+
+
 
   // Function category flag type.
   template <>
@@ -71,11 +82,15 @@ namespace mln
 
   // Value -> Value.
 
+  template <>
+  struct Function_v2v<void> { typedef Function<void> super; };
+
   /// Base class for implementation of function-objects from value to
   /// value.
   template <typename E>
   struct Function_v2v : public Function<E>
   {
+    typedef Function_v2v<void> category;
   protected:
     Function_v2v();
     Function_v2v(const Function_v2v&);
@@ -84,11 +99,15 @@ namespace mln
 
   // Index -> Value.
 
+  template <>
+  struct Function_i2v<void> { typedef Function_v2v<void> super; };
+
   /// Base class for implementation of function-objects from index to
   /// value.
   template <typename E>
   struct Function_i2v : public Function_v2v<E>
   {
+    typedef Function_i2v<void> category;
   protected:
     Function_i2v();
     Function_i2v(const Function_i2v&);
@@ -97,11 +116,15 @@ namespace mln
 
   // Point -> Value.
 
+  template <>
+  struct Function_p2v<void> { typedef Function_v2v<void> super; };
+
   /// Base class for implementation of function-objects from point to
   /// value.
   template <typename E>
   struct Function_p2v : public virtual Function_v2v<E>
   {
+    typedef Function_p2v<void> category;
   protected:
     Function_p2v();
     Function_p2v(const Function_p2v&);
@@ -110,11 +133,15 @@ namespace mln
 
   // Value -> bool.
 
+  template <>
+  struct Function_v2b<void> { typedef Function_v2v<void> super; };
+
   /// Base class for implementation of function-objects from value to
   /// bool.
   template <typename E>
   struct Function_v2b : public virtual Function_v2v<E>
   {
+    typedef Function_v2b<void> category;
     typedef bool result;
   protected:
     Function_v2b();
@@ -124,12 +151,16 @@ namespace mln
 
   // Point -> bool.
 
+  template <>
+  struct Function_p2b<void> { typedef Function_p2v<void> super; }; // FIXME
+
   /// Base class for implementation of function-objects from point to
   /// bool.
   template <typename E>
   struct Function_p2b : public Function_p2v<E>,
 			public Function_v2b<E>
   {
+    typedef Function_p2b<void> category;
     typedef bool result;
   protected:
     Function_p2b();
@@ -139,11 +170,15 @@ namespace mln
 
   // Point -> Point.
 
+  template <>
+  struct Function_p2p<void> { typedef Function_p2v<void> super; }; // FIXME
+
   /// Base class for implementation of function-objects from point to
   /// point.
   template <typename E>
   struct Function_p2p : public Function_p2v<E>
   {
+    typedef Function_p2p<void> category;
   protected:
     Function_p2p();
     Function_p2p(const Function_p2p&);
@@ -152,11 +187,15 @@ namespace mln
 
   // Vector -> Vector.
 
+  template <>
+  struct Function_x2x<void> { typedef Function_v2v<void> super; }; // FIXME
+
   /// Base class for implementation of function-objects from vector to
   /// vector.
   template <typename E>
   struct Function_x2x : public Function_v2v<E>
   {
+    typedef Function_x2x<void> category;
   protected:
     Function_x2x();
     Function_x2x(const Function_x2x&);

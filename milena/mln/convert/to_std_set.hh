@@ -59,9 +59,9 @@ namespace mln
       typedef mln_dpoint(W) D;
       typedef mln_point(D)  P;
       std::set<D> s;
-      mln_qiter(W) q(exact(win), P::zero);
+      mln_qiter(W) q(exact(win), P::origin);
       for_all(q)
-	s.insert(q - P::zero);
+	s.insert(q - P::origin);
       return s;
     }
 

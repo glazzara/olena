@@ -1,3 +1,55 @@
+2007-10-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update some classes with literals and precise int_u equiv.
+
+	* mln/literal/ops.hh: New.
+	* mln/literal/one.hh: New.
+	* mln/literal/all.hh: New.
+	* mln/value/int_u.hh: Update so that the equivalent type
+	really is 'unsigned'.
+	* mln/debug/all.hh: Clean-up.
+	* mln/core/point.hh,
+	* mln/core/window.hh,
+	* mln/core/neighb.hh,
+	* mln/core/dpoint.hh: New ctor overloads for coordinates.
+	* mln/core/ops.hh (operator+, operator*): New overloads for
+	unsigned.
+	(operator++, operator--): New FIXMEs.
+	* mln/core/concept/function.hh: New categories for sub-concepts
+	of Function.
+	* mln/core/concept/window.hh,
+	* mln/metal/vec.hh,
+	* mln/value/cast.hh,
+	* mln/value/internal/value_like.hh,
+	* mln/make/w_window.hh,
+	* mln/test/positive.hh,
+	* mln/convert/to_image.hh,
+	* mln/convert/to_std_set.hh,
+	* mln/convert/to_window.hh,
+	* mln/convert/to_dpoint.hh,
+	* mln/convert/to_w_window.hh,
+	* mln/geom/bbox.hh,
+	* mln/geom/shift.hh,
+	* mln/fun/v2v/saturate.hh,
+	* mln/win/octagon2d.hh,
+	* mln/morpho/hit_or_miss.hh,
+	* mln/norm/infty.hh,
+	* mln/norm/l2.hh,
+	* tests/window1d.cc,
+	* tests/morpho_dilation_max_h.cc,
+	* tests/morpho_erosion_min_h.cc,
+	* tests/dpoint2d.cc,
+	* tests/literal_zero.cc,
+	* tests/labeling_foreground.cc,
+	* tests/point1d.cc,
+	* tests/window2d.cc,
+	* tests/labeling_estimate.cc,
+	* tests/dpoint1d.cc,
+	* tests/dpoint3d.cc,
+	* tests/value_int_u8.cc,
+	* tests/point2d.cc: Update.
+	* TODO: Clear.
+
 2007-10-10  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Update transformations.

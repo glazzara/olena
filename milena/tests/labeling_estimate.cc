@@ -49,8 +49,9 @@ int main()
   image2d<int_u8> lena = io::pgm::load("../img/tiny.pgm"),
     out(lena.domain());
 
+  // FIXME: Below, 127u (instead of 127) is mandatory to avoid a warning...
   unsigned n;
-  labeling::foreground((pw::value(lena) > pw::cst(127)) | lena.domain(),
+  labeling::foreground((pw::value(lena) > pw::cst(127u)) | lena.domain(),
 		       c4(), out, n);
   mln_assertion(n == 14);
 

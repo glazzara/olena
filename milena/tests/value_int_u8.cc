@@ -154,7 +154,12 @@ int main()
     --i;
     mln_assertion(i == 234);
 
-    mln_assertion(-i == -234);
+    std::cout << (-i) << " FIXME Matthieu: add .f to literals  " << i << std::endl;
+    mln_assertion(-i == -234);   // FIXME: old version
+    mln_assertion(-i == -234.f); // FIXME: new better version
+
+    mln_assertion(i * -2 != 0.f);
+    std::cout << (i) << " " << (i * -2) << " " << (-2 * int(i)) << std::endl;
   }
 
   // Multiplication

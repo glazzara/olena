@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/function.hh>
+# include <mln/metal/converts_to.hh>
 # include <mln/value/props.hh>
 
 
@@ -86,11 +87,16 @@ namespace mln
       V
       saturate<V>::operator()(const W& w) const
       {
-	if (w < min_)
+	// FIXME: Below we need something more powerful that mlc_converts_to
+	// FIXME: for instance, with W=int_s<10u> and V=int_u<8u>, it does not
+	// FIXME: works cause the cast is not obvious...
+	// mlc_converts_to(W, V)::check();
+	V w_ = mln::value::cast<V>(w);
+	if (w_ < min_)
 	  return min_;
-	if (w > max_)
+	if (w_ > max_)
 	  return max_;
-	return mln::value::cast<V>(w);
+	return w_;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

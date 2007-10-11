@@ -25,47 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_DPOINT_HH
-# define MLN_CONVERT_TO_DPOINT_HH
+#ifndef MLN_LITERAL_ONE_HH
+# define MLN_LITERAL_ONE_HH
 
-/*! \file mln/convert/to_dpoint.hh
+/*! \file mln/literal/one.hh
  *
- * \brief Conversions to mln::Dpoint.
+ * \brief Definition of the literal of mln::one.
  */
 
-# include <mln/core/concept/generalized_point.hh>
+# include <mln/core/concept/literal.hh>
+# include <mln/metal/converts_to.hh>
 
 
 namespace mln
 {
 
-  namespace convert
+  namespace literal
   {
 
-    /// Convert a generalized point \p p into a delta-point.
-    template <typename P>
-    mln_dpoint(P) to_dpoint(const Generalized_Point<P>& p);
+    /// Type of literal one.
+    struct one_t : public Literal<one_t>
+    {
+      // FIXME: Cf. comments in literal/zero.hh.
+
+      template <typename T>
+      operator T () const;
+    };
+
+
+    /// Literal one.
+    static one_t one = one_t();
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename P>
-    mln_dpoint(P) to_dpoint(const Generalized_Point<P>& p_)
+    template <typename T>
+    one_t::operator T () const
     {
-      const P& p = internal::force_exact<P>(p_);
-      mln_dpoint(P) dp;
-      for (unsigned i = 0; i < P::dim; ++i)
-	dp[i] = p[i];
-      typedef mln_point(P) P_;
-      mln_postcondition(dp == p - P_::origin);
-      return dp;
+      mlc_converts_to(int, T)::check();
+      return 1;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::convert
+  } // end of namespace mln::literal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CONVERT_TO_DPOINT_HH
+#endif // ! MLN_LITERAL_ONE_HH

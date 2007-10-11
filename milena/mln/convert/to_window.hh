@@ -79,9 +79,9 @@ namespace mln
       typedef mln_dpoint(N) D;
       typedef mln_point(D) P;
       window<D> win;
-      mln_niter(N) n(nbh, P::zero);
+      mln_niter(N) n(nbh, P::origin);
       for_all(n)
-	win.insert(n - P::zero);
+	win.insert(n - P::origin);
       return win;
     }
 
@@ -92,10 +92,10 @@ namespace mln
       typedef mln_dpoint(N) D;
       typedef mln_point(D) P;
       window<D> win;
-      mln_niter(N) n(nbh, P::zero);
+      mln_niter(N) n(nbh, P::origin);
       for_all(n)
-	if (n > P::zero)
-	  win.insert(n - P::zero);
+	if (n > P::origin)
+	  win.insert(n - P::origin);
       return win;
     }
 
@@ -111,7 +111,7 @@ namespace mln
       mln_piter(I) p(ima.domain());
       for_all(p)
 	if (ima(p))
-	  win.insert(p - P::zero);
+	  win.insert(p - P::origin);
       return win;
     }
 

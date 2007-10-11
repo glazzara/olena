@@ -25,47 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_DPOINT_HH
-# define MLN_CONVERT_TO_DPOINT_HH
+#ifndef MLN_LITERAL_ALL_HH
+# define MLN_LITERAL_ALL_HH
 
-/*! \file mln/convert/to_dpoint.hh
+/*! \file mln/literal/all.hh
  *
- * \brief Conversions to mln::Dpoint.
+ * \brief File that includes all literals.
  */
-
-# include <mln/core/concept/generalized_point.hh>
-
 
 namespace mln
 {
 
-  namespace convert
-  {
+  /// Namespace of literals.
+  namespace literal {}
 
-    /// Convert a generalized point \p p into a delta-point.
-    template <typename P>
-    mln_dpoint(P) to_dpoint(const Generalized_Point<P>& p);
+}
 
 
-# ifndef MLN_INCLUDE_ONLY
+# include <mln/literal/zero.hh>
+# include <mln/literal/one.hh>
 
-    template <typename P>
-    mln_dpoint(P) to_dpoint(const Generalized_Point<P>& p_)
-    {
-      const P& p = internal::force_exact<P>(p_);
-      mln_dpoint(P) dp;
-      for (unsigned i = 0; i < P::dim; ++i)
-	dp[i] = p[i];
-      typedef mln_point(P) P_;
-      mln_postcondition(dp == p - P_::origin);
-      return dp;
-    }
+// FIXME: Add:
+// # include <mln/literal/white.hh>
+// # include <mln/literal/black.hh>
 
-# endif // ! MLN_INCLUDE_ONLY
+// # include <mln/literal/grays.hh>
+// # include <mln/literal/colors.hh>
 
-  } // end of namespace mln::convert
-
-} // end of namespace mln
+# include <mln/literal/ops.hh>
 
 
-#endif // ! MLN_CONVERT_TO_DPOINT_HH
+#endif // ! MLN_LITERAL_ALL_HH

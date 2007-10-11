@@ -69,9 +69,9 @@ namespace mln
       typedef mln_dpoint(W) D;
       typedef mln_point(D)  P;
       mln::w_window<D, mln_result(F)> w_win;
-      mln_qiter(W) q(win, P::zero);
+      mln_qiter(W) q(win, P::origin);
       for_all(q)
-	w_win.insert(wei(q), q - P::zero);
+	w_win.insert(wei(q), q - P::origin);
       return w_win;
     }
 

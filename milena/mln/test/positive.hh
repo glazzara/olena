@@ -36,6 +36,7 @@
 # include <mln/test/predicate.hh>
 # include <mln/pw/all.hh>
 # include <mln/fun/v2v/id.hh>
+# include <mln/literal/zero.hh>
 
 
 namespace mln
@@ -56,8 +57,12 @@ namespace mln
     {
       const I& input = exact(input_);
       mln_precondition(input.has_data());
+      // FIXME: Below the '>=' op should properly work with signed/unsigned without
+      // FIXME: warnings; so we really need to overload ops for functions when literals
+      // FIXME: are involved.
+      mln_value(I) zero_ = literal::zero;
       return test::predicate(input.domain(),
-			     pw::value(input) >= pw::cst(0));
+			     pw::value(input) >= pw::cst(zero_));
       // FIXME: test the version below.
 //       return test::predicate(input,
 // 			     fun::v2v::id<mln_value(I)>() >= pw::cst(0));

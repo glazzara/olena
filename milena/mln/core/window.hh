@@ -31,6 +31,9 @@
 /*! \file mln/core/window.hh
  *
  * \brief Definition of the generic window class mln::window.
+ *
+ * \todo Make naming coherent: we have window (without '_') but
+ * point_, neighb_, etc.
  */
 
 # include <mln/core/concept/window.hh>
@@ -89,6 +92,18 @@ namespace mln
     /// Insert a delta-point \p dp.
     window<D>& insert(const D& dp);
 
+    /// \{ Insertion of a delta-point with different numbers of
+    /// arguments (coordinates) w.r.t. the dimension.
+    window<D>& insert(const mln_coord(D)& dind); // For 1D.
+
+    window<D>& insert(const mln_coord(D)& drow,
+		      const mln_coord(D)& dcol); // For 2D.
+
+    window<D>& insert(const mln_coord(D)& dsli,
+		      const mln_coord(D)& drow,
+		      const mln_coord(D)& dcol); // For 3D.
+    /// \}
+
     /// Apply a central symmetry to the target window.
     window<D>& sym();
 
@@ -133,6 +148,33 @@ namespace mln
     mln_precondition(! has(dp));
     this->super_::insert(dp);
     return *this;
+  }
+
+  template <typename D>
+  window<D>&
+  window<D>::insert(const mln_coord(D)& dind)
+  {
+    D dp(dind);
+    mln_precondition(! has(dp));
+    return this->insert(dp);
+  }
+
+  template <typename D>
+  window<D>&
+  window<D>::insert(const mln_coord(D)& drow, const mln_coord(D)& dcol)
+  {
+    D dp(drow, dcol);
+    mln_precondition(! has(dp));
+    return this->insert(dp);
+  }
+
+  template <typename D>
+  window<D>&
+  window<D>::insert(const mln_coord(D)& dsli, const mln_coord(D)& drow, const mln_coord(D)& dcol)
+  {
+    D dp(dsli, drow, dcol);
+    mln_precondition(! has(dp));
+    return this->insert(dp);
   }
 
   template <typename D>

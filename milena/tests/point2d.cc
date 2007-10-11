@@ -32,6 +32,7 @@
 
 #include <iostream>
 #include <mln/core/point2d.hh>
+#include <mln/literal/all.hh>
 
 
 
@@ -61,6 +62,12 @@ int main()
   {
     point2d q_(5, 1);
     mln_assertion(q_ == q);
+  }
+  {
+    point2d O(0,0);
+    point2d O_ = literal::zero;
+    mln_assertion(O_ == O);
+    mln_assertion(O == literal::zero);
   }
   
   q.set_all(0);

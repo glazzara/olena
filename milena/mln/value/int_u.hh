@@ -46,8 +46,10 @@
 namespace mln
 {
 
-  // Fwd decl.
+  /// \{ Fwd decls.
   namespace value { template <unsigned n> struct int_u; }
+  namespace literal { struct zero_t; struct one_t; }
+  /// \}
 
 
   namespace trait
@@ -65,6 +67,18 @@ namespace mln
     struct set_precise_binary_< promote, int, mln::value::int_u<n> >
     {
       typedef int ret;
+    };
+
+    template <unsigned n>
+    struct set_precise_binary_< promote, mln::value::int_u<n>, unsigned >
+    {
+      typedef unsigned ret;
+    };
+
+    template <unsigned n>
+    struct set_precise_binary_< promote, unsigned, mln::value::int_u<n> >
+    {
+      typedef unsigned ret;
     };
 
     template <unsigned n>
@@ -119,8 +133,18 @@ namespace mln
       /// Constructor from an integer.
       int_u(int i);
 
-      /// Conversion to an integer.
-      operator int() const;
+      /// \{ Constructors/assignments with literals.
+      int_u(const literal::zero_t&);
+      int_u& operator=(const literal::zero_t&);
+      int_u(const literal::one_t&);
+      int_u& operator=(const literal::one_t&);
+      /// \}
+
+      /// Conversion to an unsigned integer.
+      operator unsigned() const;
+
+      /// Unary operator minus.
+      int operator-() const;
 
       /// Assignment from an integer.
       int_u<n>& operator=(int i);
@@ -181,9 +205,44 @@ namespace mln
     }
 
     template <unsigned n>
-    int_u<n>::operator int() const
+    int_u<n>::int_u(const literal::zero_t&)
+    {
+      this->v_ = 0;
+    }
+
+    template <unsigned n>
+    int_u<n>&
+    int_u<n>::operator=(const literal::zero_t&)
+    {
+      this->v_ = 0;
+      return *this;
+    }
+
+    template <unsigned n>
+    int_u<n>::int_u(const literal::one_t&)
+    {
+      this->v_ = 1;
+    }
+
+    template <unsigned n>
+    int_u<n>&
+    int_u<n>::operator=(const literal::one_t&)
+    {
+      this->v_ = 1;
+      return *this;
+    }
+
+    template <unsigned n>
+    int_u<n>::operator unsigned() const
     {
       return this->v_;
+    }
+
+    template <unsigned n>
+    int
+    int_u<n>::operator-() const
+    {
+      return - int(this->v_);
     }
 
     template <unsigned n>
@@ -205,7 +264,8 @@ namespace mln
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const int_u<n>& i)
     {
-      return ostr << debug::format(i.to_equiv());
+      // FIXME: This code could be factored for almost every Value<*>...
+      return ostr << debug::format(i.to_equiv()); // FIXME: is to_equiv OK?
     }
 
 # endif // ! MLN_INCLUDE_ONLY

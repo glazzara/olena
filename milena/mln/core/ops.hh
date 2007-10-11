@@ -41,6 +41,7 @@
 namespace mln
 {
 
+
   /*! \brief General definition of the "not equal to" operator.
    *
    * The "not equal to" operator is here defined for every milena
@@ -135,6 +136,14 @@ namespace mln
 
   // FIXME: Doc!
   template <typename O>
+  mln_trait_op_plus(O, unsigned)
+  operator+(unsigned lhs, const Object<O>& rhs)
+  {
+    return exact(rhs) + lhs;
+  }
+
+  // FIXME: Doc!
+  template <typename O>
   mln_trait_op_plus(O, float)
   operator+(float lhs, const Object<O>& rhs)
   {
@@ -151,6 +160,14 @@ namespace mln
 
 
   // Operator *.
+
+  // FIXME: Doc!
+  template <typename O>
+  mln_trait_op_times(O, unsigned)
+  operator*(unsigned lhs, const Object<O>& rhs)
+  {
+    return exact(rhs) * lhs;
+  }
 
   // FIXME: Doc!
   template <typename O>
@@ -177,6 +194,7 @@ namespace mln
   }
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename O>
@@ -184,6 +202,7 @@ namespace mln
   {
     O tmp(exact(rhs)); // Copy.
     ++exact(rhs);      // Pre-inc.
+    // FIXME: Activate: mln_postcondition(exact(rhs) == tmp + literal::one);
     return tmp;
   }
   
@@ -192,6 +211,7 @@ namespace mln
   {
     O tmp(exact(rhs)); // Copy.
     --exact(rhs);      // Pre-dec.
+    // FIXME: Activate: mln_postcondition(exact(rhs) == tmp - literal::one);
     return tmp;
   }
 

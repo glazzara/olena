@@ -57,6 +57,9 @@ namespace mln
     template <unsigned n, typename C>
     float l2_distance(const metal::vec<n,C>& vec1, const metal::vec<n,C>& vec2);
 
+    // FIXME: Replace float by mln_value_sum(C)...
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n, typename C>

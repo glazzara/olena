@@ -50,7 +50,7 @@ int main()
     out(lena.domain());
 
   unsigned n;
-  labeling::foreground((pw::value(lena) > pw::cst(127)) | lena.domain(),
+  labeling::foreground((pw::value(lena) > pw::cst(127u)) | lena.domain(),
 		       c4(), out, n);
   io::pgm::save(out, "out.pgm");
   mln_assertion(n == 14);

@@ -37,14 +37,16 @@
 namespace mln
 {
 
-  /*! Namespace of routines that help to debug.
-   */
+  /// Namespace of routines that help to debug.
   namespace debug {}
 
 }
 
 
+# include <mln/debug/format.hh>
+# include <mln/debug/iota.hh>
 # include <mln/debug/println.hh>
+# include <mln/debug/println_with_border.hh>
 
 
 #endif // ! MLN_DEBUG_ALL_HH

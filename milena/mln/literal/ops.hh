@@ -25,47 +25,65 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_DPOINT_HH
-# define MLN_CONVERT_TO_DPOINT_HH
+#ifndef MLN_LITERAL_OPS_HH
+# define MLN_LITERAL_OPS_HH
 
-/*! \file mln/convert/to_dpoint.hh
- *
- * \brief Conversions to mln::Dpoint.
+/*! \file mln/literal/ops.hh
+ * \brief Definitions of some operators.
  */
 
-# include <mln/core/concept/generalized_point.hh>
+# include <mln/core/concept/literal.hh>
+
 
 
 namespace mln
 {
 
-  namespace convert
-  {
+  template <typename O, typename L>
+  bool operator==(const Object<O>& lhs, const Literal<L>& rhs);
 
-    /// Convert a generalized point \p p into a delta-point.
-    template <typename P>
-    mln_dpoint(P) to_dpoint(const Generalized_Point<P>& p);
+  template <typename L, typename O>
+  bool operator==(const Literal<L>& lhs, const Object<O>& rhs);
+
+  template <typename L1, typename L2>
+  bool operator==(const Literal<L1>& lhs, const Literal<L2>& rhs);
+
+  template <typename L>
+  bool operator==(const Literal<L>& lhs, const Literal<L>& rhs);
+
+  // FIXME: Add other operators... 
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename P>
-    mln_dpoint(P) to_dpoint(const Generalized_Point<P>& p_)
-    {
-      const P& p = internal::force_exact<P>(p_);
-      mln_dpoint(P) dp;
-      for (unsigned i = 0; i < P::dim; ++i)
-	dp[i] = p[i];
-      typedef mln_point(P) P_;
-      mln_postcondition(dp == p - P_::origin);
-      return dp;
-    }
+  template <typename O, typename L>
+  bool operator==(const Object<O>& lhs, const Literal<L>& rhs)
+  {
+    return exact(lhs) == O(exact(rhs));
+  }
+
+  template <typename L, typename O>
+  bool operator==(const Literal<L>& lhs, const Object<O>& rhs)
+  {
+    return rhs == lhs;
+  }
+
+  template <typename L1, typename L2>
+  bool operator==(const Literal<L1>&, const Literal<L2>&)
+  {
+    return false;
+  }
+
+  template <typename L>
+  bool operator==(const Literal<L>&, const Literal<L>&)
+  {
+    return true;
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::convert
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CONVERT_TO_DPOINT_HH
+#endif // ! MLN_LITERAL_OPS_HH

@@ -48,8 +48,8 @@ int main()
   mln_assertion(dp == q - p);
   mln_assertion(q == p + dp);
 
-  const int (&vec)[2] = dp.to_vec();
-  mln_assertion(vec[0] == 3);
+  metal::vec<2, float> v = dp;
+  mln_assertion(v[0] / 2 == 1.5);
 
   p += dp;
   mln_assertion(q == p);  

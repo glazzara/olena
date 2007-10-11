@@ -34,6 +34,7 @@
  */
 
 # include <cmath>
+# include <mln/metal/vec.hh>
 
 
 namespace mln
@@ -42,9 +43,14 @@ namespace mln
   namespace norm
   {
 
-    /// Infinity-norm of a vector \p vec.
+    /// Infinity-norm of a vector \p v (being a C static array).
     template <unsigned n, typename C>
-    C infty(const C (&vec)[n]);
+    C infty(const C (&v)[n]);
+
+    /// Infinity-norm of a vector \p v (being a metal::vec).
+    template <unsigned n, typename C>
+    C infty(const metal::vec<n,C>& v);
+
 
     /// Infinity-norm distance between vectors \p v1 and \p v2.
     template <unsigned n, typename C>
@@ -54,12 +60,23 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n, typename C>
-    C infty(const C (&vec)[n])
+    C infty(const C (&v)[n])
     {
       C c = 0;
       for (unsigned i = 0; i < n; ++i)
-	if (std::abs(vec[i]) > c)
-	  c = std::abs(vec[i]);
+	if (std::abs(v[i]) > c)
+	  c = std::abs(v[i]);
+      return c;
+    }
+
+    template <unsigned n, typename C>
+    C infty(const metal::vec<n,C>& v)
+    {
+      // FIXME: Add a ctor to metal::vec...
+      C c = 0;
+      for (unsigned i = 0; i < n; ++i)
+	if (std::abs(v[i]) > c)
+	  c = std::abs(v[i]);
       return c;
     }
 

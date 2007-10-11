@@ -91,7 +91,19 @@ namespace mln
      * in the neighborhood definition; thus the client has not to
      * ensure the symmetry property; that is automatic.
      */
-    void insert(const D& dp);
+    neighb_<D>& insert(const D& dp);
+
+    /// \{ Insertion of a delta-point with different numbers of
+    /// arguments (coordinates) w.r.t. the dimension.
+    neighb_<D>& insert(const mln_coord(D)& dind); // For 1D.
+
+    neighb_<D>& insert(const mln_coord(D)& drow,
+		       const mln_coord(D)& dcol); // For 2D.
+
+    neighb_<D>& insert(const mln_coord(D)& dsli,
+		       const mln_coord(D)& drow,
+		       const mln_coord(D)& dcol); // For 3D.
+    /// \}
   };
  
 
@@ -103,14 +115,42 @@ namespace mln
   }
 
   template <typename D>
-  void
+  neighb_<D>&
   neighb_<D>::insert(const D& dp)
   {
+    mln_precondition(! has(dp));
     typedef internal::set_of_<D> super;
     this->super::insert( dp);
     this->super::insert(-dp);
+    return *this;
   }
 
+  template <typename D>
+  neighb_<D>&
+  neighb_<D>::insert(const mln_coord(D)& dind)
+  {
+    D dp(dind);
+    mln_precondition(! has(dp));
+    return this->insert(dp);
+  }
+
+  template <typename D>
+  neighb_<D>&
+  neighb_<D>::insert(const mln_coord(D)& drow, const mln_coord(D)& dcol)
+  {
+    D dp(drow, dcol);
+    mln_precondition(! has(dp));
+    return this->insert(dp);
+  }
+
+  template <typename D>
+  neighb_<D>&
+  neighb_<D>::insert(const mln_coord(D)& dsli, const mln_coord(D)& drow, const mln_coord(D)& dcol)
+  {
+    D dp(dsli, drow, dcol);
+    mln_precondition(! has(dp));
+    return this->insert(dp);
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

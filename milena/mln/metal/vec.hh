@@ -35,7 +35,6 @@
 # include <mln/trait/all.hh>
 # include <mln/value/props.hh>
 # include <mln/fun/i2v/all.hh>
-# include <mln/literal/zero.hh>
 # include <mln/value/concept/all.hh>
 
 
@@ -44,6 +43,10 @@
 
 namespace mln
 {
+
+  // Fwd decl.
+  namespace literal { struct zero_t; }
+
 
   namespace metal
   {
@@ -139,7 +142,7 @@ namespace mln
 
       vec();
 
-      vec(mln::literal::zero_t);
+      vec(const literal::zero_t&);
 
       vec(const vec<n, T>& rhs);
 
@@ -167,6 +170,9 @@ namespace mln
 
       /// Zero value.
       static const vec<n, T> zero;
+
+      /// Origin value.
+      static const vec<n, T> origin;
     };
 
   } // end of namespace mln::metal
@@ -323,9 +329,9 @@ namespace mln
     }
 
     template <unsigned n, typename T>
-    vec<n,T>::vec(mln::literal::zero_t)
+    vec<n,T>::vec(const literal::zero_t&)
     {
-      this->set_all( mln::literal::zero );
+      this->set_all(0);
     }
 
     template <unsigned n, typename T>
@@ -415,6 +421,9 @@ namespace mln
 
     template <unsigned n, typename T>
     const vec<n, T> vec<n, T>::zero = all(0);
+
+    template <unsigned n, typename T>
+    const vec<n, T> vec<n, T>::origin = all(0);
 
 
     // eq

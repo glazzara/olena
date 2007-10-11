@@ -55,7 +55,7 @@ int main()
   image2d<int_u8> lena = io::pgm::load("../img/lena.pgm");
 
   {
-    vec_p<point2d> vec = convert::to_vec_p(rec, point2d::zero);
+    vec_p<point2d> vec = convert::to_vec_p(rec, point2d::origin);
     window2d win = convert::to_window(vec);
 
     image2d<int_u8> out(lena.domain());

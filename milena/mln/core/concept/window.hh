@@ -123,8 +123,8 @@ namespace mln
     // FIXME: Same grid!
     typedef mln_point(Wl) P;
 
-    mln_fwd_qiter(Wl) ql(exact(lhs), P::zero);
-    mln_fwd_qiter(Wr) qr(exact(rhs), P::zero);
+    mln_fwd_qiter(Wl) ql(exact(lhs), P::origin);
+    mln_fwd_qiter(Wr) qr(exact(rhs), P::origin);
 
     for (ql.start(),      qr.start();
 	 ql.is_valid() && qr.is_valid();

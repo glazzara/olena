@@ -123,7 +123,7 @@ namespace mln
       N
       value_like_<V,C,N,E>::to_interop() const
       {
-	return mln::internal::force_exact<E>(*this).operator N();
+	return static_cast<N>(mln::internal::force_exact<E>(*this));
       }
 
       template <typename V, typename C, typename N, typename E>

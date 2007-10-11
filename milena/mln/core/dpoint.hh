@@ -36,13 +36,20 @@
 # include <mln/core/concept/dpoint.hh>
 # include <mln/core/internal/coord_impl.hh>
 # include <mln/fun/i2v/all.hh>
+# include <mln/metal/vec.hh>
+# include <mln/metal/converts_to.hh>
 
 
 namespace mln
 {
 
-  // fwd decl
+  /// \{ Fwd decls.
   template <typename M, typename C> struct point_;
+  namespace literal {
+    struct zero_t;
+    struct one_t;
+  }
+  /// \}
 
 
   /*! \brief Generic delta-point class.
@@ -84,11 +91,16 @@ namespace mln
     /// Constructor without argument.
     dpoint_();
 
-    /// \{ Constructors with different numbers of argument w.r.t. the
-    /// dimension.
+    /// \{ Constructors with different numbers of arguments
+    /// (coordinates) w.r.t. the dimension.
     dpoint_(C ind);
     dpoint_(C row, C col);
     dpoint_(C sli, C row, C col);
+    /// \}
+
+    /// \{ Constructors with literals.
+    dpoint_(const literal::zero_t&);
+    dpoint_(const literal::one_t&); // Works only in 1D.
     /// \}
 
     /// Constructor; coordinates are set by function \p f.
@@ -98,19 +110,18 @@ namespace mln
     /// Set all coordinates to the value \p c.
     void set_all(C c);
 
-    /// Null delta-point (all coordinates are 0).
+    /// Zero delta-point.
     static const dpoint_<M,C> zero;
 
-    const C* coords_() const { return coord_; }
+    /// Conversion towards a metal::vec.
+    template <typename Q>
+    operator metal::vec<M::dim, Q>() const;
 
-    /// Type of the array of coordinates.
-    typedef const C (&vec_t)[dim];
-
-    /// Hook to coordinates.
-    vec_t to_vec() const { return coord_; }
+    /// Explicit conversion.
+    metal::vec<M::dim, C> to_vec() const;
 
   protected:
-    C coord_[dim];
+    metal::vec<M::dim, C> coord_;
   };
 
 
@@ -160,9 +171,23 @@ namespace mln
   }
 
   template <typename M, typename C>
+  dpoint_<M,C>::dpoint_(const literal::zero_t&)
+  {
+    coord_.set_all(0);
+  }
+
+  template <typename M, typename C>
+  dpoint_<M,C>::dpoint_(const literal::one_t&)
+  {
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = 1;
+  }
+
+  template <typename M, typename C>
   template <typename F>
   dpoint_<M,C>::dpoint_(const Function_i2v<F>& f_)
   {
+    mlc_converts_to(mln_result(F), C)::check();
     const F& f = exact(f_);
     for (unsigned i = 0; i < dim; ++i)
       coord_[i] = f(i);
@@ -176,7 +201,23 @@ namespace mln
   }
 
   template <typename M, typename C>
-  const dpoint_<M,C> dpoint_<M,C>::zero = all(0);
+  const dpoint_<M,C>
+  dpoint_<M,C>::zero = all(0);
+
+  template <typename M, typename C>
+  template <typename Q>
+  dpoint_<M,C>::operator metal::vec<M::dim, Q> () const
+  {
+    return coord_;
+  }
+
+  template <typename M, typename C>
+  metal::vec<M::dim, C>
+  dpoint_<M,C>::to_vec() const
+  {
+    return coord_;
+  }
+    
 
 # endif // ! MLN_INCLUDE_ONLY
   

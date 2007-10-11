@@ -46,8 +46,10 @@ int main()
   mln_assertion(w.is_centered() == false);
   mln_assertion(w.is_symmetric() == true);
 
-  w.insert(make::dpoint1d(-1));
-  w.insert(make::dpoint1d( 1));
+  // w.insert(-1,0); // Do not compile as expected.
+
+  w.insert(-1);
+  w.insert( 1);
 
   image1d<bool> ima = convert::to_image(w);
   debug::println(ima);

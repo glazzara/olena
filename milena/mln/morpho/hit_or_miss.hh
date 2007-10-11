@@ -154,6 +154,9 @@ namespace mln
 					        && pw::value(dil_bg) < pw::value(input),
 					      pw::value(input) - pw::value(dil_bg),
 					      pw::cst(V::zero)));
+
+		// FIXME: Replace 'pw::cst(V::zero)' by 'pw::cst(V(literal::zero))'
+		// FIXME: and then by 'literal::zero'!
 	      }
 	    else if (exact(win_miss).is_centered())
 	      {

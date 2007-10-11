@@ -55,14 +55,11 @@ virer core/trait
 
 *** type
 
-value::proxy to dispatch read/write + the corresponding image type
-a mean_value object { sum; count } and operator+
+...
 
 *** other
 
-in Fast_Image: memcpy and memset-like methods (?)
-.offset() into GenPixel
-built-in op objects -> reverse lhs/rhs
+...
 
 ** rename
 
@@ -70,7 +67,7 @@ value::cast(something) -> mln::cast_image or mln::fun::casted<F> etc.
 
 ** clean-up
 
-select_function in fun::internal::selector_p2? etc.
+...
 
 ** processing routines
 

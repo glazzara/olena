@@ -61,7 +61,7 @@ namespace mln
       }
 
       template <typename T, typename S>
-      typename S::equiv
+      typename S::equiv // FIXME: Is-that equiv here?
       cast_(const T&, const Value<S>& src)
       {
 	return exact(src);

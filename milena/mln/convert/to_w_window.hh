@@ -62,7 +62,7 @@ namespace mln
       mln_piter(I) p(input.domain());
       for_all(p)
 	if (input(p) != 0)
-	  w_win.insert(input(p), p - P::zero);
+	  w_win.insert(input(p), p - P::origin);
       return w_win;
     }
 

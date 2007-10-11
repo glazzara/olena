@@ -57,7 +57,7 @@ namespace mln
     {
       typedef mln_point(W) P;
       window<mln_dpoint(W)> tmp;
-      mln_qiter(W) q(win, P::zero);
+      mln_qiter(W) q(win, P::origin);
       for_all(q)
 	tmp.insert(convert::to_dpoint(q) + dp);
       return tmp;

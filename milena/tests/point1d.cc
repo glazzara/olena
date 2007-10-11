@@ -43,6 +43,9 @@ int main()
   // assignment
 
   p[0] = 4;
+  metal::vec<1,int> v = p;
+  std::cout << v << std::endl;
+
   p.ind() += 1;
   mln_assertion(p.ind() == 5 && p[0] == 5);
 

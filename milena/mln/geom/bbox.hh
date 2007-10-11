@@ -80,7 +80,7 @@ namespace mln
       mln_precondition(! win.is_empty());
 
       typedef mln_point(W) P;
-      mln_qiter(W) q(win, P::zero);
+      mln_qiter(W) q(win, P::origin);
       std::pair<P, P> pp = geom::pmin_pmax(q);
 
       box_<P> tmp(pp.first, pp.second);

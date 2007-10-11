@@ -48,8 +48,9 @@ namespace mln
     /*! \brief Octagon window defined on the 2D square grid.
      *
      * An octagon2d is centered and symmetrical.
-     * The length l of the octagon is such as l = 6*x + 1
-     * where 0 <= x.
+     * 
+     * The length L of the octagon is such as L = 6 * l + 1
+     * where l >= 0.
      *
      * For instance: \n
      *     o o o \n
@@ -59,7 +60,7 @@ namespace mln
      * o o o o o o o \n
      *   o o o o o \n
      *     o o o \n
-     * is defined with length = 7 (x = 0).
+     * is defined with L = 7 (l = 1).
      */
     struct octagon2d : public Window< octagon2d >,
 		       public internal::dpoints_base_< dpoint2d, octagon2d >
@@ -144,26 +145,26 @@ namespace mln
       const int y = length / 6;
       const int x = y * 2;
       const int z = y + x;
-      insert(dpoint2d::zero);
+      insert(dpoint2d(0, 0));
       for (int a = 1; a <= x; ++a)
 	for (int b = 0; b <= x; ++b)
 	{
-	  insert(make::dpoint2d(a, b));
-	  insert(make::dpoint2d(-b, a));
-	  insert(make::dpoint2d(b, -a));
-	  insert(make::dpoint2d(-a, -b));
+	  insert(dpoint2d(a, b));
+	  insert(dpoint2d(-b, a));
+	  insert(dpoint2d(b, -a));
+	  insert(dpoint2d(-a, -b));
 	}
       for (int a = x + 1; a <= z; ++a)
 	for (int b = -2 * x + a; b <= 2 * x - a; ++b)
 	{
-	  insert(make::dpoint2d(a, b));
-	  insert(make::dpoint2d(a, -b));
-	  insert(make::dpoint2d(-a, b));
-	  insert(make::dpoint2d(-a, -b));
-	  insert(make::dpoint2d(b, a));
-	  insert(make::dpoint2d(b, -a));
-	  insert(make::dpoint2d(-b, a));
-	  insert(make::dpoint2d(-b, -a));
+	  insert(dpoint2d(a, b));
+	  insert(dpoint2d(a, -b));
+	  insert(dpoint2d(-a, b));
+	  insert(dpoint2d(-a, -b));
+	  insert(dpoint2d(b, a));
+	  insert(dpoint2d(b, -a));
+	  insert(dpoint2d(-b, a));
+	  insert(dpoint2d(-b, -a));
 	}
     }
 

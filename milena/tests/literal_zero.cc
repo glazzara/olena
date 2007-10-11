@@ -31,6 +31,9 @@
  */
 
 #include <mln/literal/zero.hh>
+#include <mln/literal/one.hh>
+#include <mln/literal/ops.hh>
+#include <mln/value/int_u8.hh>
 
 
 int main()
@@ -39,7 +42,15 @@ int main()
 
   unsigned char c;
   c = literal::zero;
+  mln_assertion(c == 0);
 
   double d;
   d = literal::zero;
+  mln_assertion(d == 0);
+
+  mln_assertion(literal::zero != literal::one);
+
+  value::int_u8 u(literal::zero), uu;
+  uu = literal::zero;
+  mln_assertion(u == 0);
 }

@@ -39,14 +39,20 @@
 
 # include <mln/metal/bool.hh>
 # include <mln/metal/vec.hh>
+# include <mln/metal/converts_to.hh>
 # include <mln/core/h_vec.hh>
 
 
 namespace mln
 {
 
-  // fwd decl
+  /// \{ Fwd decls.
   template <typename M, typename C> struct dpoint_;
+  namespace literal {
+    struct zero_t;
+    struct one_t;
+  }
+  /// \}
 
 
   namespace internal
@@ -102,11 +108,16 @@ namespace mln
     /// Constructor without argument.
     point_();
 
-    /// \{ Constructors with different numbers of argument w.r.t. the
-    /// dimension.
+    /// \{ Constructors with different numbers of arguments
+    /// (coordinates) w.r.t. the dimension.
     point_(C ind);
     point_(C row, C col);
     point_(C sli, C row, C col);
+    /// \}
+
+    /// \{ Constructors with literals.
+    point_(const literal::zero_t&);
+    point_(const literal::one_t&); // Works only in 1D.
     /// \}
 
     /// Constructor; coordinates are set by function \p f.
@@ -117,7 +128,7 @@ namespace mln
     void set_all(C c);
 
     /// Origin point (all coordinates are 0).
-    static const point_<M,C> zero;
+    static const point_<M,C> origin;
 
     /// Shifting by \p dp.
     point_<M,C>& operator+=(const dpoint& dp);
@@ -156,6 +167,8 @@ namespace mln
     return this->coord_[i];
   }
 
+  // Constructors.
+
   template <typename M, typename C>
   point_<M,C>::point_()
   {
@@ -189,9 +202,23 @@ namespace mln
   template <typename F>
   point_<M,C>::point_(const Function_i2v<F>& f_)
   {
+    mlc_converts_to(mln_result(F), C)::check();
     const F& f = exact(f_);
     for (unsigned i = 0; i < dim; ++i)
       coord_[i] = f(i);
+  }
+
+  template <typename M, typename C>
+  point_<M,C>::point_(const literal::zero_t&)
+  {
+    coord_.set_all(0);
+  }
+
+  template <typename M, typename C>
+  point_<M,C>::point_(const literal::one_t&)
+  {
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = 1;
   }
 
   template <typename M, typename C>
@@ -201,7 +228,7 @@ namespace mln
   }
 
   template <typename M, typename C>
-  const point_<M,C> point_<M,C>::zero = all(0);
+  const point_<M,C> point_<M,C>::origin = all(0);
 
   template <typename M, typename C>
   point_<M,C>&

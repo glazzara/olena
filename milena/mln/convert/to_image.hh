@@ -147,7 +147,7 @@ namespace mln
       box_<P> b = geom::bbox(win);
       mln_image_from(W, bool) ima(b);
       level::fill(ima, false);
-      mln_qiter(W) q(win, P::zero);
+      mln_qiter(W) q(win, P::origin);
       for_all(q)
 	ima(q) = true;
       return ima;
@@ -168,7 +168,7 @@ namespace mln
       typedef mln_point(W) P;
       box_<P> b = geom::bbox(w_win);
       mln_image_from(W, mln_weight(W)) ima(b);
-      mln_qiter(W) q(w_win, P::zero);
+      mln_qiter(W) q(w_win, P::origin);
       for_all(q)
 	ima(q) = q.w();
       return ima;
