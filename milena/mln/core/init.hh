@@ -35,7 +35,7 @@
 
 # include <mln/tag/init.hh>
 # include <mln/geom/bbox.hh>
-# include <mln/border/get.hh>
+# include <mln/border/find.hh>
 
 
 
@@ -81,7 +81,10 @@ namespace mln
   template <typename I>
   void init_(tag::border_t, unsigned& bdr, const Image<I>& ima)
   {
-    bdr = border::get(ima);
+    // 'Find' means that we want a value; this is not always the
+    // border thickness of 'ima', but it can be the thickness of
+    // a morphed / underlying image over which ima is constructed.
+    bdr = border::find(ima);
   }
 
   template <typename I>

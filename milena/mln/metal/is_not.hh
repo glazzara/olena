@@ -25,18 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_METAL_IS_HH
-# define MLN_CORE_METAL_IS_HH
+#ifndef MLN_CORE_METAL_IS_NOT_HH
+# define MLN_CORE_METAL_IS_NOT_HH
 
-/*! \file mln/metal/is.hh
+/*! \file mln/metal/is_not.hh
  *
- * \brief Definition of a type that means "is".
+ * \brief Definition of a type that means "is not".
  */
 
-# include <mln/metal/is_a.hh>
+# include <mln/metal/is.hh>
 
 
-# define mlc_is(T, U) mln::metal::is< T, U >
+# define mlc_is_not(T, U) mln::metal::is_not< T, U >
 
 
 
@@ -46,46 +46,18 @@ namespace mln
   namespace metal
   {
 
-    namespace internal
-    {
-
-      template <typename T, typename U>
-      struct helper_is_
-      {
-	static yes_ selector(U*const);
-	static no_  selector(...);
-      };
-
-    } // end of namespace mln::metal::internal
-
-
-
-    /*! \brief "is" check.
+    /*! \brief "is_not" check.
      *
      * FIXME: Doc!
      */
     template <typename T, typename U>
-    struct is : bool_<( sizeof(internal::helper_is_<T, U>::selector(internal::make_<T>::ptr()))
-			==
-			sizeof(internal::yes_) )>
+    struct is_not : not_< is<T, U> >::eval
     {
     };
-    
-    template <typename T, typename U>
-    struct is< T*, U* > : is<T, U>::eval
-    {};
-    
-    template <typename T, typename U>
-    struct is< T&, U& > : is<T, U>::eval
-    {};
-    
-    template <typename T, typename U>
-    struct is< T**, U** > : false_
-    {};
 
   } // end of namespace mln::metal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_METAL_IS_HH
+#endif // ! MLN_CORE_METAL_IS_NOT_HH

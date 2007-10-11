@@ -84,6 +84,8 @@ namespace mln
       typedef mlc_if( I_data_are_linear_,
 		      trait::image::data::stored, // if linear then just stored
 		      I_data_ ) data;             // otherwise like I
+
+      typedef mln_trait_image_border(I) border;
     };
     
   } // end of namespace mln::trait
@@ -104,6 +106,10 @@ namespace mln
       const pset_if<mln_pset(I), F>& domain() const;
 
       void init_(I& ima, const F& f);
+
+      /// Test if the image owns the point site \p p.
+      /// The result is the same than over the underlying image.
+      bool owns_(const mln_psite(I)& p) const; // Overload the def "owns_ -> has".
 
     protected:
 
@@ -155,6 +161,14 @@ namespace mln
     image_if_base_<I,F,E>::image_if_base_(I& ima, const F& f)
     {
       init_(ima, f);
+    }
+
+    template <typename I, typename F, typename E>
+    bool
+    image_if_base_<I,F,E>::owns_(const mln_psite(I)& p) const
+    {
+      mln_precondition(this->has_data());
+      return this->data_->ima_.owns_(p);
     }
     
     template <typename I, typename F, typename E>

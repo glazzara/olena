@@ -33,7 +33,7 @@
  * \brief FIXME.
  */
 
-# include <mln/core/internal/image_morpher.hh>
+# include <mln/border/find.hh>
 
 
 namespace mln
@@ -56,28 +56,26 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename S, typename E>
-      unsigned get__(const mln::internal::image_morpher_<I,S,E>& ima)
-      {
-	return border::get(*ima.delegatee_());
-      }
-
-      template <typename S, typename E>
-      unsigned get__(const mln::internal::image_base_<S,E>&)
-      {
-	return 0;
-      }
-
       template <typename I>
-      unsigned get_(trait::image::speed::any, const I& ima)
-      {
-	return border::impl::get__(ima);
-      }
-
-      template <typename I>
-      unsigned get_(trait::image::speed::fastest, const I& ima)
+      unsigned get_(trait::image::border::any, trait::image::category::primary,
+		    const I& ima)
       {
 	return ima.border();
+      }
+
+      template <typename I>
+      unsigned get_(trait::image::border::any, trait::image::category::morpher,
+		    const I& ima)
+      {
+	return border::get( *ima.delegatee_() );
+      }
+
+
+      template <typename I>
+      unsigned get_(trait::image::border::none, trait::image::category::any,
+		    const I& ima)
+      {
+	return 0;
       }
 
     } // end of namespace mln::border::impl
@@ -89,7 +87,8 @@ namespace mln
     unsigned get(const Image<I>& ima)
     {
       mln_precondition(exact(ima).has_data());
-      return border::impl::get_(mln_trait_image_speed(I)(), exact(ima));
+      return border::impl::get_(mln_trait_image_border(I)(), mln_trait_image_category(I)(),
+				exact(ima));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

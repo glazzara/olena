@@ -75,7 +75,7 @@ namespace mln
        */
       bool has_data() const;
 
-      /*! \brief Test if the image owns the poinst site \p p.
+      /*! \brief Test if the image owns the point site \p p.
        *
        * \return True if accessing the image value at \p p is
        * possible, that is, does not abort the execution.

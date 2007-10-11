@@ -25,67 +25,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_METAL_IS_HH
-# define MLN_CORE_METAL_IS_HH
-
-/*! \file mln/metal/is.hh
+/*! \file tests/border_get.cc
  *
- * \brief Definition of a type that means "is".
+ * \brief Tests on mln::border::get.
  */
 
-# include <mln/metal/is_a.hh>
+#include <mln/core/image2d.hh>
+#include <mln/core/sub_image.hh>
+#include <mln/core/image_if.hh>
+#include <mln/fun/p2b/chess.hh>
+
+#include <mln/border/get.hh>
+#include <mln/literal/origin.hh>
 
 
-# define mlc_is(T, U) mln::metal::is< T, U >
-
-
-
-namespace mln
+struct my_box2d : mln::Function_p2b< my_box2d >
 {
-
-  namespace metal
+  my_box2d(const mln::box2d& b)
+    : b_(b)
   {
-
-    namespace internal
-    {
-
-      template <typename T, typename U>
-      struct helper_is_
-      {
-	static yes_ selector(U*const);
-	static no_  selector(...);
-      };
-
-    } // end of namespace mln::metal::internal
+  }
+  mln::box2d b_;
+  bool operator()(const mln::point2d& p) const
+  {
+    return b_.has(p);
+  }
+};
 
 
 
-    /*! \brief "is" check.
-     *
-     * FIXME: Doc!
-     */
-    template <typename T, typename U>
-    struct is : bool_<( sizeof(internal::helper_is_<T, U>::selector(internal::make_<T>::ptr()))
-			==
-			sizeof(internal::yes_) )>
-    {
-    };
-    
-    template <typename T, typename U>
-    struct is< T*, U* > : is<T, U>::eval
-    {};
-    
-    template <typename T, typename U>
-    struct is< T&, U& > : is<T, U>::eval
-    {};
-    
-    template <typename T, typename U>
-    struct is< T**, U** > : false_
-    {};
+int main()
+{
+  using namespace mln;
 
-  } // end of namespace mln::metal
+  typedef image2d<int> I;
 
-} // end of namespace mln
+  box2d b(literal::origin, point2d(1,1));
+  I ima(3,3, 51);
 
+//   mln_assertion(border::get(ima) == 51);
+//   mln_assertion( ima.has(point2d(2,2)) == true );
 
-#endif // ! MLN_CORE_METAL_IS_HH
+//   sub_image<I, box2d> sub(ima, b);
+//   mln_assertion( sub.has  (point2d(2,2)) == false && 
+// 		 sub.owns_(point2d(2,2)) == false );
+//   mln_assertion(border::get(sub) == 0);
+
+  my_box2d f_b(b);
+  image_if<I, my_box2d> imaif(ima, f_b);
+  mln_assertion( imaif.has  (point2d(2,2)) == false && 
+		 imaif.owns_(point2d(2,2)) == true );
+  mln_assertion(border::get(imaif) == 51);
+  
+
+//   std::cout << std::endl
+// 	    << "image_if< image2d >: ";
+//   mln::trait::image::print< image_if<I, fun::p2b::chess_t> >(std::cout);
+}

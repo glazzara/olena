@@ -25,67 +25,78 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_METAL_IS_HH
-# define MLN_CORE_METAL_IS_HH
+#ifndef MLN_BORDER_FIND_HH
+# define MLN_BORDER_FIND_HH
 
-/*! \file mln/metal/is.hh
+/*! \file mln/border/find.hh
  *
- * \brief Definition of a type that means "is".
+ * \brief FIXME.
  */
 
-# include <mln/metal/is_a.hh>
-
-
-# define mlc_is(T, U) mln::metal::is< T, U >
-
+# include <mln/core/internal/image_morpher.hh>
 
 
 namespace mln
 {
 
-  namespace metal
+  namespace border
   {
 
-    namespace internal
-    {
-
-      template <typename T, typename U>
-      struct helper_is_
-      {
-	static yes_ selector(U*const);
-	static no_  selector(...);
-      };
-
-    } // end of namespace mln::metal::internal
-
-
-
-    /*! \brief "is" check.
+    /*! Find the virtual (outer) border thickness of image \p ima.
      *
-     * FIXME: Doc!
+     * \param[in] ima The image.
+     * \result The border thickness (0 if there is no border).
      */
-    template <typename T, typename U>
-    struct is : bool_<( sizeof(internal::helper_is_<T, U>::selector(internal::make_<T>::ptr()))
-			==
-			sizeof(internal::yes_) )>
-    {
-    };
-    
-    template <typename T, typename U>
-    struct is< T*, U* > : is<T, U>::eval
-    {};
-    
-    template <typename T, typename U>
-    struct is< T&, U& > : is<T, U>::eval
-    {};
-    
-    template <typename T, typename U>
-    struct is< T**, U** > : false_
-    {};
+    template <typename I>
+    unsigned find(const Image<I>& ima);
 
-  } // end of namespace mln::metal
+
+# ifndef MLN_INCLUDE_ONLY
+
+    namespace impl
+    {
+
+      template <typename I, typename S, typename E>
+      unsigned find__(const mln::internal::image_morpher_<I,S,E>& ima)
+      {
+	return border::find(*ima.delegatee_());
+      }
+
+      template <typename S, typename E>
+      unsigned find__(const mln::internal::image_base_<S,E>&)
+      {
+	return 0;
+      }
+
+      template <typename I>
+      unsigned find_(trait::image::speed::any, const I& ima)
+      {
+	return border::impl::find__(ima);
+      }
+
+      template <typename I>
+      unsigned find_(trait::image::speed::fastest, const I& ima)
+      {
+	return ima.border();
+      }
+
+    } // end of namespace mln::border::impl
+
+
+    // Facade.
+
+    template <typename I>
+    unsigned find(const Image<I>& ima)
+    {
+      mln_precondition(exact(ima).has_data());
+      return border::impl::find_(mln_trait_image_speed(I)(), exact(ima));
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::border
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_METAL_IS_HH
+#endif // ! MLN_BORDER_FIND_HH

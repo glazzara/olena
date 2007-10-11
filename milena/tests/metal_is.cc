@@ -31,6 +31,7 @@
  */
 
 #include <mln/metal/is.hh>
+#include <mln/metal/is_not.hh>
 
 
 
@@ -79,4 +80,8 @@ int main()
   metal::is<int, float>::check_not();
   metal::is<from_1, dest>::check_not();
   metal::is<from_2, dest>::check_not();
+
+  metal::is_not<int, float>::check();
+  metal::is_not<from_1, dest>::check();
+  metal::is_not<from_2, dest>::check();
 }

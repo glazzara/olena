@@ -1,3 +1,23 @@
+2007-10-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a new border computation mode and change image_if meaning.
+
+	* mln/metal/is.hh: Fix typo.
+	* mln/metal/is_not.hh: New.
+	* tests/metal_is.cc: Augment.
+	* mln/core/internal/image_if_base.hh: Change semantics; now
+	access to outside domain is OK.
+	(owns_): New.
+	(border): Explicit delegation to I in trait::.
+	* tests/trait_images.cc: Augment.
+	* tests/border_get.cc: New.
+	* mln/border/get.hh: .
+	* mln/border/find.hh: New.
+	* mln/core/init.hh (init_): Use border::find instead of
+	border::get.
+	* mln/core/concept/doc/image.hh: Fix type.
+	* mln/core/image2d.hh (swap_): Shorten code.
+
 2007-10-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add border::resize and fix bug in println_with_border for 3d.

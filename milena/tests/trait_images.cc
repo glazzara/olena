@@ -46,11 +46,17 @@ int main()
   std::cout << "image2d: ";
   mln::trait::image::print<I>(std::cout);
 
+  typedef sub_image<I, box2d> Isub;
   std::cout << std::endl
 	    << "sub_image< image2d >: ";
-  mln::trait::image::print< sub_image<I, box2d> >(std::cout);
+  mln::trait::image::print< Isub >(std::cout);
 
   std::cout << std::endl
 	    << "image_if< image2d >: ";
   mln::trait::image::print< image_if<I, fun::p2b::chess_t> >(std::cout);
+
+
+  std::cout << std::endl
+	    << "image_if< sub_image< image2d > >: ";
+  mln::trait::image::print< image_if<Isub, fun::p2b::chess_t> >(std::cout);
 }
