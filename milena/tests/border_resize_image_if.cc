@@ -25,43 +25,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/sub_image.cc
+/*! \file tests/border_resize_image_if.cc
  *
- * \brief Tests on mln::sub_image.
+ * \brief Tests on mln::border::resize.
  */
 
-# include <mln/core/image2d.hh>
-# include <mln/io/pbm/load.hh>
-# include <mln/make/win_chamfer.hh>
-# include <mln/geom/chamfer.hh>
-# include <mln/value/rgb8.hh>
-# include <mln/core/sub_image.hh>
-# include <mln/core/image_if_value.hh>
-# include <mln/core/inplace.hh>
-# include <mln/core/w_window2d_int.hh>
-# include <mln/display/show.hh>
-# include <mln/io/ppm/save.hh>
+#include <mln/core/image2d.hh>
+#include <mln/core/sub_image.hh>
+#include <mln/core/image_if.hh>
+#include <mln/fun/p2b/chess.hh>
+
+#include <mln/border/get.hh>
+#include <mln/literal/origin.hh>
+#include <mln/border/resize.hh>
+
+struct my_box2d : mln::Function_p2b< my_box2d >
+{
+  my_box2d(const mln::box2d& b)
+    : b_(b)
+  {
+  }
+  mln::box2d b_;
+  bool operator()(const mln::point2d& p) const
+  {
+    return b_.has(p);
+  }
+};
+
 
 
 int main()
 {
   using namespace mln;
 
-  unsigned max = 51;
+  typedef image2d<int> I;
+  unsigned border = 42;
+  unsigned new_border = 51;
+
+  box2d b(literal::origin, point2d(1,1));
+  I ima(3,3, border);
+
+  mln_assertion(border::get(ima) == border);
+  mln_assertion( ima.has(point2d(2,2)) == true );
+
+  my_box2d f_b(b);
+  image_if<I, my_box2d> imaif(ima, f_b);
+  mln_assertion( imaif.has  (point2d(2,2)) == false && 
+		 imaif.owns_(point2d(2,2)) == true );
 
 
-  image2d<bool> input = io::pbm::load("../img/toto.pbm");
-
-  // Create a weighted windows :
-  // 0 2 0
-  // 2 p 2
-  // 0 2 0
-  const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 0> ();
-
-  // Call chamfer for a distance image.
-  image2d<unsigned> tmp = geom::chamfer(input, w_win, max);
-
-  // Call color_pretty for sub_image.
-  for (unsigned i = 2; i < 22; i += 2)
-    display::show (inplace (tmp | i));
+  mln_assertion(border::get(imaif) == border);
+  border::resize (imaif, new_border);
+  mln_assertion(border::get(imaif) == new_border);
 }

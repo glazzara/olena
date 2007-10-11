@@ -1,5 +1,14 @@
 2007-10-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add tests for border resize with image_if and sub_image.
+
+	* border_resize_image_if.cc,
+	* border_resize_sub_image.cc: New test for border resize.
+
+	* show.cc: Update.
+
+2007-10-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update resize.
 
 	* border/resize.hh: Update for image_if and sub_image.
