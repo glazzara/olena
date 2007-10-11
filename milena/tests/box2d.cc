@@ -40,4 +40,7 @@ int main()
 
   box2d b = make::box2d(2, 3);
   mln_assertion(b.nrows() == 2);
+
+  box2d b_(2, 3);
+  mln_assertion(b == b_);
 }

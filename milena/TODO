@@ -1,47 +1,39 @@
 	-*- outline -*-
 
 
+* memo
 
-* mathieu
-
-** accu
-
-*** héritage
-toutes les classes d'accu dérivent de base_ ; Cf. accu/median.hh
-virer l'op de convertion dans median_alt.hh
-ajouter le test de présence de l'op de convertion dans Accumulator
-m-a-j de la doc 
-est-ce les tests tournent ?
-
-*** value -> argument
-m-a-j
-tests ?
-
-
-* guillaume
-
-** chamfer
-
-Cf. vieilles versions
-algo avec front
-
-
-* simon
-
-** lines
-
-ajouter win::line<Mesh, dir>
-hline2d et vline2d deviennent des aliases
-retoucher les routines avec {h,v}line en argument
+reprise de /work2/theo_temp/SVG_TEGUCIGALPA/prestations/swt/src
 
 
 
-* theo
+* URGENT
 
-hiérarchie de concepts sous Value
-maj trait solver
-virer is_fast -> changer le meta-plug
-virer core/trait
+categories for Function_*
+fun * Built_In
+fun * Scalar
+
+
+* this week
+
+** Guillaume
+
+...
+
+** Matthieu
+
+...
+
+** Simon
+
+h_mat
+...
+
+** Theo
+
+value::other (for use in labeling)
+...
+
 
 
 

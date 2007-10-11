@@ -67,7 +67,7 @@ namespace mln
       //       typedef undef support;  // irregular, aligned < regular
 
       //       // global
-      //       typedef undef border;   // none, stored, computed
+      //       typedef undef border;   // none, { stored, computed } < some
       //       typedef undef data;     // raw < linear < stored, computed
       //       typedef undef io;       // read_only < read, write_only < write, read_write < both read'n write
       //       typedef undef speed;    // slow, fast, or fastest
@@ -165,9 +165,10 @@ namespace mln
       struct border
       {
 	struct any {};
-	struct none     : any { std::string name() const { return "border::none"; } };
-	struct stored   : any { std::string name() const { return "border::stored"; } };
-	struct computed : any { std::string name() const { return "border::computed"; } };
+	struct none     : any  { std::string name() const { return "border::none"; } };
+	struct some     : any  { std::string name() const { return "border::some"; } };
+	struct stored   : some { std::string name() const { return "border::stored"; } };
+	struct computed : some { std::string name() const { return "border::computed"; } };
       };
 
       struct io

@@ -1,3 +1,18 @@
+2007-10-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix ambiguity in border property.
+
+	* mln/trait/image/props.hh (some): New in 'border'.
+	* mln/border/get.hh: Fix ambiguity.
+	* tests/core_clone.cc: Update.
+	* tests/box2d.cc: Augment.
+	* tests/border_get.cc: Augment.
+	* TODO: Clean.
+	* mln/trait/images.hh (image_): Handle const case.
+	* mln/core/box.hh: New ctors with lens.
+	* mln/metal/is_a.hh (is_a): New spe for const.
+	* mln/convert/to_tiles.hh: Rename vec as v_ima.
+
 2007-10-11  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Tests on composed transformations (does not work).

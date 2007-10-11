@@ -47,41 +47,41 @@ namespace mln
     /// FIXME : Run only for image2d
     /// Convert a vector of image2d into a tiled image with ratio.
     template <typename I>
-    I to_tiles (std::vector<I>& vec, float ratio);
+    I to_tiles(std::vector<I>& v_ima, float ratio);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
     I
-    to_tiles (std::vector<I>& vec, float ratio)
+    to_tiles(std::vector<I>& v_ima, float ratio)
     {
-      /// Test if vec is not empty.
-      mln_precondition(!vec.empty ());
+      // Test if v_ima is not empty.
+      mln_precondition(! v_ima.empty());
 
-      unsigned size  = vec.size ();
-      unsigned nrows = geom::nrows(vec[0]);
-      unsigned ncols = geom::ncols(vec[0]);
+      unsigned size  = v_ima.size();
+      unsigned nrows = geom::nrows(v_ima[0]);
+      unsigned ncols = geom::ncols(v_ima[0]);
 
-      /// Compute output size.
+      // Compute output size.
       int size_c = (int) ceil(sqrt(size * ratio));
       int size_r = (int) ceil(sqrt(size / ratio));
 
-      I output (size_r * nrows, size_c * ncols);
+      I output(size_r * nrows, size_c * ncols);
 
       for (unsigned i = 0; i < size; ++i)
 	{
 	  /// Check if current image has good dimension.
-	  mln_precondition(geom::nrows(vec[i]) == nrows);
-	  mln_precondition(geom::ncols(vec[i]) == ncols);
+	  mln_precondition(geom::nrows(v_ima[i]) == nrows);
+	  mln_precondition(geom::ncols(v_ima[i]) == ncols);
 
 	  /// Compute the delta point of translation.
 	  dpoint2d dp = make::dpoint2d(i / size_c * nrows, i % size_c * ncols);
 
 	  /// Convert current image in translate image with its delta point.
-	  translate_image<I> tr_ima (vec[i], dp);
+	  translate_image<I> tr_ima(v_ima[i], dp);
 
 	  /// Paste translated image into output.
-	  level::paste (tr_ima, output);
+	  level::paste(tr_ima, output);
 	}
 
       return output;

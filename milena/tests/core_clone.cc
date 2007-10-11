@@ -48,7 +48,7 @@ int main()
 
   {
     box2d b = make::box2d(2,2);
-    std::cout << border::get( clone(ima | b) ) << std::endl;
+    std::cout << border::find( clone(ima | b) ) << std::endl;
 
     debug::println(ima | b);
     debug::println(clone(ima | b));

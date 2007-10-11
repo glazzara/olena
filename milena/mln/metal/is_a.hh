@@ -81,6 +81,10 @@ namespace mln
 			  sizeof( internal::yes_ )  )>
     {};
     
+    template <typename T, template <class> class U>
+    struct is_a< const T, U > : is_a< T, U >::eval
+    {};
+    
 
   } // end of namespace mln::metal
 

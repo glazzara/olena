@@ -39,9 +39,9 @@
 #include <mln/literal/origin.hh>
 
 
-struct my_box2d : mln::Function_p2b< my_box2d >
+struct f_box2d_t : mln::Function_p2b< f_box2d_t >
 {
-  my_box2d(const mln::box2d& b)
+  f_box2d_t(const mln::box2d& b)
     : b_(b)
   {
   }
@@ -61,24 +61,22 @@ int main()
   typedef image2d<int> I;
 
   box2d b(literal::origin, point2d(1,1));
+  f_box2d_t f_b(b);
+
   I ima(3,3, 51);
 
-//   mln_assertion(border::get(ima) == 51);
-//   mln_assertion( ima.has(point2d(2,2)) == true );
+  mln_assertion(border::get(ima) == 51);
+  mln_assertion( ima.has(point2d(2,2)) == true );
 
-//   sub_image<I, box2d> sub(ima, b);
-//   mln_assertion( sub.has  (point2d(2,2)) == false && 
-// 		 sub.owns_(point2d(2,2)) == false );
-//   mln_assertion(border::get(sub) == 0);
+  sub_image<I, box2d> sub(ima, b);
+  mln_assertion( sub.has  (point2d(2,2)) == false && 
+		 sub.owns_(point2d(2,2)) == false );
+  mln_assertion(border::get(sub) == 0);
 
-  my_box2d f_b(b);
-  image_if<I, my_box2d> imaif(ima, f_b);
+  image_if<I, f_box2d_t> imaif(ima, f_b);
   mln_assertion( imaif.has  (point2d(2,2)) == false && 
 		 imaif.owns_(point2d(2,2)) == true );
   mln_assertion(border::get(imaif) == 51);
   
-
-//   std::cout << std::endl
-// 	    << "image_if< image2d >: ";
-//   mln::trait::image::print< image_if<I, fun::p2b::chess_t> >(std::cout);
+  mln_assertion(border::get( (ima | b) | f_b ) == 0);
 }

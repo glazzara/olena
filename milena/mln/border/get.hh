@@ -57,14 +57,14 @@ namespace mln
     {
 
       template <typename I>
-      unsigned get_(trait::image::border::any, trait::image::category::primary,
+      unsigned get_(trait::image::border::some, trait::image::category::primary,
 		    const I& ima)
       {
 	return ima.border();
       }
 
       template <typename I>
-      unsigned get_(trait::image::border::any, trait::image::category::morpher,
+      unsigned get_(trait::image::border::some, trait::image::category::morpher,
 		    const I& ima)
       {
 	return border::get( *ima.delegatee_() );
@@ -73,7 +73,7 @@ namespace mln
 
       template <typename I>
       unsigned get_(trait::image::border::none, trait::image::category::any,
-		    const I& ima)
+		    const I&)
       {
 	return 0;
       }

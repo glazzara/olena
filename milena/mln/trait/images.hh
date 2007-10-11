@@ -124,7 +124,7 @@ namespace mln
       typedef undef support;  // irregular, aligned < regular
 
       // global
-      typedef undef border;   // none, stored, computed
+      typedef undef border;   // none, { stored, computed } < some
       typedef undef data;     // raw < linear < stored, computed
       typedef undef io;       // read_only < read, write_only < write, read_write < both read'n write
       typedef undef speed;    // slow, fast, or fastest
@@ -134,6 +134,13 @@ namespace mln
     template <typename I>
     struct image_ : undefined_image_<I>
     {
+    };
+
+
+    template <typename I>
+    struct image_<const I> : image_<I>
+    {
+      // FIXME: TODO: io cannot contain "write"...
     };
 
 

@@ -36,6 +36,7 @@
 # include <mln/core/concept/box.hh>
 # include <mln/core/internal/box_impl.hh>
 # include <mln/core/point.hh>
+# include <mln/literal/origin.hh>
 
 
 namespace mln
@@ -54,6 +55,9 @@ namespace mln
   struct box_ : public Box< box_<P> >,
 		public internal::box_impl_< P::dim, mln_coord(P), box_<P> >
   {
+    /// Dimension.
+    enum { dim = P::dim };
+    
     /// Mesh associated type.
     typedef mln_mesh(P) mesh;
 
@@ -89,6 +93,13 @@ namespace mln
 
     /// Constructor of a box going from \p pmin to \p pmax.
     box_(const point& pmin, const point& pmax);
+
+    /// \{ Constructors with different numbers of arguments
+    /// (sizes) w.r.t. the dimension.
+    explicit box_(mln_coord(P) ninds);
+    box_(mln_coord(P) nrows, mln_coord(P) ncols);
+    box_(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols);
+    /// \}
 
     /*! \brief Test if \p p belongs to the box. 
      *
@@ -154,6 +165,31 @@ namespace mln
     : pmin_(pmin),
       pmax_(pmax)
   {
+   
+  }
+
+  template <typename P>
+  box_<P>::box_(mln_coord(P) ninds)
+  {
+    metal::bool_<(dim == 1)>::check();
+    pmin_ = literal::origin;
+    pmax_ = P(ninds - 1);
+  }
+
+  template <typename P>
+  box_<P>::box_(mln_coord(P) nrows, mln_coord(P) ncols)
+  {
+    metal::bool_<(dim == 2)>::check();
+    pmin_ = literal::origin;
+    pmax_ = P(nrows - 1, ncols - 1);
+  }
+
+  template <typename P>
+  box_<P>::box_(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols)
+  {
+    metal::bool_<(dim == 3)>::check();
+    pmin_ = literal::origin;
+    pmax_ = P(nslis - 1, nrows - 1, ncols - 1);
   }
 
   template <typename P>
