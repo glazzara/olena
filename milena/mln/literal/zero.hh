@@ -29,6 +29,7 @@
 # define MLN_LITERAL_ZERO_HH
 
 /*! \file mln/literal/zero.hh
+ *
  * \brief Definition of the literal of mln::zero.
  *
  * \todo Macro-ification of similar code (when no trivial conversion ops are involved).

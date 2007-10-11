@@ -98,9 +98,12 @@ namespace mln
     dpoint_(C sli, C row, C col);
     /// \}
 
-    /// \{ Constructors with literals.
+    /// \{ Constructors/assignments with literals.
     dpoint_(const literal::zero_t&);
-    dpoint_(const literal::one_t&); // Works only in 1D.
+    dpoint_<M,C>& operator=(const literal::zero_t&);
+    // Works only in 1D:
+    dpoint_(const literal::one_t&);
+    dpoint_<M,C>& operator=(const literal::one_t&);
     /// \}
 
     /// Constructor; coordinates are set by function \p f.
@@ -109,9 +112,6 @@ namespace mln
 
     /// Set all coordinates to the value \p c.
     void set_all(C c);
-
-    /// Zero delta-point.
-    static const dpoint_<M,C> zero;
 
     /// Conversion towards a metal::vec.
     template <typename Q>
@@ -177,10 +177,27 @@ namespace mln
   }
 
   template <typename M, typename C>
+  dpoint_<M,C>&
+  dpoint_<M,C>::operator=(const literal::zero_t&)
+  {
+    coord_.set_all(0);
+    return *this;
+  }
+
+  template <typename M, typename C>
   dpoint_<M,C>::dpoint_(const literal::one_t&)
   {
     metal::bool_<(dim == 1)>::check();
     coord_[0] = 1;
+  }
+
+  template <typename M, typename C>
+  dpoint_<M,C>&
+  dpoint_<M,C>::operator=(const literal::one_t&)
+  {
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = 1;
+    return *this;
   }
 
   template <typename M, typename C>
@@ -201,10 +218,6 @@ namespace mln
   }
 
   template <typename M, typename C>
-  const dpoint_<M,C>
-  dpoint_<M,C>::zero = all(0);
-
-  template <typename M, typename C>
   template <typename Q>
   dpoint_<M,C>::operator metal::vec<M::dim, Q> () const
   {
@@ -217,7 +230,6 @@ namespace mln
   {
     return coord_;
   }
-    
 
 # endif // ! MLN_INCLUDE_ONLY
   

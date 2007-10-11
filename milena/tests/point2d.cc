@@ -65,9 +65,9 @@ int main()
   }
   {
     point2d O(0,0);
-    point2d O_ = literal::zero;
+    point2d O_ = literal::origin;
     mln_assertion(O_ == O);
-    mln_assertion(O == literal::zero);
+    mln_assertion(O == literal::origin);
   }
   
   q.set_all(0);

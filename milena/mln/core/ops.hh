@@ -174,6 +174,8 @@ namespace mln
   mln_trait_op_times(O, int)
   operator*(int lhs, const Object<O>& rhs)
   {
+    // FIXME HERE: Activate: std::cout << "call(int * Object)" << std::endl;
+    // FIXME HERE: Change below to '* value::scalar(lhs)':
     return exact(rhs) * lhs;
   }
 

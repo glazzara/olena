@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/value.hh>
+# include <mln/literal/one.hh>
 
 
 namespace mln
@@ -106,14 +107,14 @@ namespace mln
   template <typename S>
   S& operator++(value::Scalar<S>& rhs)
   {
-    exact(rhs) += 1; // FIXME: literal::one?
+    exact(rhs) += S(literal::one);
     return exact(rhs);
   }
 
   template <typename S>
   S& operator--(value::Scalar<S>& rhs)
   {
-    exact(rhs) -= 1; // FIXME: literal::one?
+    exact(rhs) -= S(literal::one);
     return exact(rhs);
   }
 

@@ -25,58 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW_LINE_HH
-# define MLN_MAKE_W_WINDOW_LINE_HH
+#ifndef MLN_LITERAL_ORIGIN_HH
+# define MLN_LITERAL_ORIGIN_HH
 
-/*! \file mln/make/w_window_line.hh
+/*! \file mln/literal/origin.hh
  *
- * \brief Routine to create an horizontal mln::w_window.
+ * \brief Definition of the literal of mln::origin.
  */
 
-# include <mln/core/w_window.hh>
-# include <mln/literal/zero.hh>
+# include <mln/core/concept/literal.hh>
 
 
 namespace mln
 {
 
-  namespace make
+  namespace literal
   {
 
-    /*! \brief Create an horizontal centered and symmetrical
-     *  mln::w_window.
-     *
-     * The free parameter \c D is a type of delta-point. 
-     *
-     * \pre The window length \c L has to be odd.
-     *
-     * \return A window.
-     */
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L]);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L])
+    /// Type of literal origin.
+    struct origin_t : public Literal<origin_t>
     {
-      mln_precondition(L % 2 == 1);
-      mln::w_window<D,W> w_win;
-      D dp = literal::zero;
-      for (unsigned i = 0; i < L; ++i)
-	{
-	  dp[D::dim - 1] = i - L / 2;
-	  w_win.insert(w[i], dp);
-	}
-      return w_win;
-    }
+    };
 
-# endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::make
+    /// Literal origin.
+    static origin_t origin = origin_t();
+
+
+  } // end of namespace mln::literal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_W_WINDOW_LINE_HH
+#endif // ! MLN_LITERAL_ORIGIN_HH

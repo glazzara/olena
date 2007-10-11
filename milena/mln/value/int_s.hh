@@ -46,8 +46,10 @@ namespace mln
 {
 
 
-  // Fwd decl.
+  /// \{ Fwd decls.
   namespace value { template <unsigned n> struct int_s; }
+  namespace literal { struct zero_t; struct one_t; }
+  /// \}
 
 
 
@@ -109,6 +111,13 @@ namespace mln
 
       /// Constructor from an integer.
       int_s(int i);
+
+      /// \{ Constructors/assignments with literals.
+      int_s(const literal::zero_t&);
+      int_s& operator=(const literal::zero_t&);
+      int_s(const literal::one_t&);
+      int_s& operator=(const literal::one_t&);
+      /// \}
 
       /// Conversion to an integer.
       operator int() const;
@@ -191,6 +200,34 @@ namespace mln
       mln_precondition(i >= min);
       mln_precondition(i <= max);
       this->v_ = i;
+      return *this;
+    }
+
+    template <unsigned n>
+    int_s<n>::int_s(const literal::zero_t&)
+    {
+      this->v_ = 0;
+    }
+
+    template <unsigned n>
+    int_s<n>&
+    int_s<n>::operator=(const literal::zero_t&)
+    {
+      this->v_ = 0;
+      return *this;
+    }
+
+    template <unsigned n>
+    int_s<n>::int_s(const literal::one_t&)
+    {
+      this->v_ = 1;
+    }
+
+    template <unsigned n>
+    int_s<n>&
+    int_s<n>::operator=(const literal::one_t&)
+    {
+      this->v_ = 1;
       return *this;
     }
 

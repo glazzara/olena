@@ -38,6 +38,7 @@
 # include <mln/morpho/includes.hh>
 # include <mln/pw/all.hh>
 # include <mln/fun/p2v/ternary.hh>
+# include <mln/literal/zero.hh>
 
 
 namespace mln
@@ -153,7 +154,7 @@ namespace mln
 			    fun::p2v::ternary(pw::value(input) == pw::value(ero_fg)
 					        && pw::value(dil_bg) < pw::value(input),
 					      pw::value(input) - pw::value(dil_bg),
-					      pw::cst(V::zero)));
+					      pw::cst( V(literal::zero) )));
 
 		// FIXME: Replace 'pw::cst(V::zero)' by 'pw::cst(V(literal::zero))'
 		// FIXME: and then by 'literal::zero'!
@@ -167,10 +168,10 @@ namespace mln
 			    fun::p2v::ternary(pw::value(input) == pw::value(dil_fg)
 					        && pw::value(ero_bg) > pw::value(input),
 					      pw::value(ero_bg) - pw::value(input),
-					      pw::cst(V::zero)));
+					      pw::cst( V(literal::zero) )));
 	      }
 	    else
-	      level::fill(output, V::zero);
+	      level::fill(output, V(literal::zero));
 	  }
 	else // Unconstrained: UHMT.
 	  {
@@ -180,7 +181,7 @@ namespace mln
 	    level::fill(output,
 			fun::p2v::ternary(pw::value(dil) < pw::value(ero),
 					  pw::value(ero) - pw::value(dil),
-					  pw::cst(V::zero)));
+					  pw::cst( V(literal::zero) )));
 	  }
       }
 

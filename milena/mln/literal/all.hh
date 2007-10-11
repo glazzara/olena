@@ -45,6 +45,8 @@ namespace mln
 # include <mln/literal/zero.hh>
 # include <mln/literal/one.hh>
 
+# include <mln/literal/origin.hh>
+
 // FIXME: Add:
 // # include <mln/literal/white.hh>
 // # include <mln/literal/black.hh>

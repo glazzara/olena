@@ -51,6 +51,7 @@ namespace mln
   namespace literal {
     struct zero_t;
     struct one_t;
+    struct origin_t;
   }
   /// \}
 
@@ -115,9 +116,14 @@ namespace mln
     point_(C sli, C row, C col);
     /// \}
 
-    /// \{ Constructors with literals.
+    /// \{ Constructors/assignments with literals.
+    point_(const literal::origin_t&);
+    point_<M,C>& operator=(const literal::origin_t&);
+    // Works only in 1D:
     point_(const literal::zero_t&);
-    point_(const literal::one_t&); // Works only in 1D.
+    point_<M,C>& operator=(const literal::zero_t&);
+    point_(const literal::one_t&);
+    point_<M,C>& operator=(const literal::one_t&);
     /// \}
 
     /// Constructor; coordinates are set by function \p f.
@@ -209,9 +215,33 @@ namespace mln
   }
 
   template <typename M, typename C>
-  point_<M,C>::point_(const literal::zero_t&)
+  point_<M,C>::point_(const literal::origin_t&)
   {
     coord_.set_all(0);
+  }
+
+  template <typename M, typename C>
+  point_<M,C>&
+  point_<M,C>::operator=(const literal::origin_t&)
+  {
+    coord_.set_all(0);
+    return *this;
+  }
+
+  template <typename M, typename C>
+  point_<M,C>::point_(const literal::zero_t&)
+  {
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = 1;
+  }
+
+  template <typename M, typename C>
+  point_<M,C>&
+  point_<M,C>::operator=(const literal::zero_t&)
+  {
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = 1;
+    return *this;
   }
 
   template <typename M, typename C>
@@ -219,6 +249,15 @@ namespace mln
   {
     metal::bool_<(dim == 1)>::check();
     coord_[0] = 1;
+  }
+
+  template <typename M, typename C>
+  point_<M,C>&
+  point_<M,C>::operator=(const literal::one_t&)
+  {
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = 1;
+    return *this;
   }
 
   template <typename M, typename C>

@@ -148,12 +148,6 @@ namespace mln
 
       /// Assignment from an integer.
       int_u<n>& operator=(int i);
-
-      /// Zero value.
-      static const int_u<n> zero;
-
-      /// Unit value.
-      static const int_u<n> one;
     };
 
 
@@ -254,12 +248,6 @@ namespace mln
       this->v_ = i;
       return *this;
     }
-
-    template <unsigned n>
-    const int_u<n> int_u<n>::zero = 0;
-
-    template <unsigned n>
-    const int_u<n> int_u<n>::one = 1;
 
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const int_u<n>& i)

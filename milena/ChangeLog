@@ -1,3 +1,23 @@
+2007-10-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Use more literals.
+
+	* tests/value_int_u8.cc: Augment.
+	* mln/literal/origin.hh: New.
+	* tests/point2d.cc (zero): Replace by...
+	(origin): ...this.
+	* mln/core/point.hh,
+	* mln/core/dpoint.hh (operator=): Handle literals.
+	Update.
+	* mln/core/ops.hh: Add FIXMEs.
+	* mln/literal/all.hh: Update.
+	* mln/literal/zero.hh: Fix typo in doc.
+	* mln/value/int_s.hh: Handle literals.
+	* mln/value/int_u.hh (zero, one): Remove variables.
+	* mln/value/concept/scalar.hh, 
+	* mln/make/w_window_line.hh,
+	* mln/morpho/hit_or_miss.hh: Update with literals.
+
 2007-10-11  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add tests for mat and vec and h_mat and h_vec.

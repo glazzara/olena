@@ -159,7 +159,11 @@ int main()
     mln_assertion(-i == -234.f); // FIXME: new better version
 
     mln_assertion(i * -2 != 0.f);
-    std::cout << (i) << " " << (i * -2) << " " << (-2 * int(i)) << std::endl;
+    std::cout << (i) << " * -2 = "
+	      << (i * -2) << ' '
+	      << (-2 * i) << ' '
+	      << (-2 * int(i))
+	      << std::endl;
   }
 
   // Multiplication
