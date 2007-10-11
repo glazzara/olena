@@ -45,15 +45,6 @@ namespace mln
 
     /*! \brief Create an mln::metal::vec<n,T>.
      *
-     * \param[in] f Function.
-     *
-     * \return A nD vector filled with the function \p f .
-     */
-    template <unsigned n, typename T, typename F>
-    metal::vec<n, T> vec(const Function_i2v<F>& f_);
-
-    /*! \brief Create an mln::metal::vec<n,T>.
-     *
      * \param[in] v_0 First coordinate.
      *
      * \return A 1D vector.
@@ -96,17 +87,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-    template <unsigned n, typename T, typename F>
-    metal::vec<n, T> vec(const Function_i2v<F>& f_)
-    {
-      mlc_converts_to(mln_result(F), T)::check();
-      F f = exact(f_);
-      metal::vec<n, T> tmp;
-      for (unsigned i; i < n; ++i)
-	tmp[i] = f(i);
-      return tmp;
-    }
 
     template <typename T>
     metal::vec<1, T> vec(const T& v_0)

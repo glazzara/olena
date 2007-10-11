@@ -31,6 +31,7 @@
 # include <iostream>
 
 # include <mln/core/concept/object.hh>
+# include <mln/core/concept/function.hh>
 # include <mln/core/contract.hh>
 # include <mln/trait/all.hh>
 # include <mln/value/props.hh>
@@ -65,6 +66,10 @@ namespace mln
 
       template <typename U>
       mat(const mat<n,m,U>& rhs);
+
+      /// Constructor; coordinates are set by function \p f.
+      template <typename F>
+      mat(const Function_i2v<F>& f);
 
       template <typename U>
       mat& operator=(const mat<n,m,U>& rhs);
@@ -280,6 +285,17 @@ namespace mln
 	  data_[i][j] = rhs(i, j);
     }
     
+    template <unsigned n, unsigned m, typename T>
+    template <typename F>
+    mat<n,m,T>::mat(const Function_i2v<F>& f_)
+    {
+      mlc_converts_to(mln_result(F), T)::check();
+      const F& f = exact(f_);
+      for (unsigned i = 0; i < n; ++i)
+	for (unsigned j = 0; j < m; ++j)
+	  data_[i][j] = f(i * n + j);
+    }
+
     template <unsigned n, unsigned m, typename T>
     template <typename U>
     mat<n,m,T>&

@@ -32,8 +32,9 @@
 
 
 #include <iostream>
-#include <mln/fun/x2x/translation.hh>
 #include <mln/fun/i2v/all.hh>
+#include <mln/metal/vec.hh>
+#include <mln/core/h_vec.hh>
 
 
 
@@ -41,15 +42,23 @@ int main()
 {
   using namespace mln;
 
-  float
-    a = 2.3,
-    b = 0,
-    c = 2.9;
+  metal::vec<1,float> v1(all(4.));
+  metal::vec<2,float> v2 = make::vec(6., 2.8);
 
-  metal::vec<3,float> vec1 = make::vec(a, b, c);
-  fun::x2x::translation<3,float> tr1(all(1.6));
+  h_vec<1,float> hv1;
+  h_vec<2,float> hv2(v2);
+  h_vec<3,float> hv3(all(1.5));
 
-  std::cout << vec1 << std::endl;
-  std::cout << tr1(vec1) << std::endl;
-  std::cout << tr1.inv()(vec1) << std::endl;
+  hv3 += make::vec(0., 0., 0., 0.5);
+
+  metal::vec<3,float> v3 = hv3;
+  metal::vec<4,float> v4 = hv3;
+
+  std::cout << "v1 = " << v1 << ";" << std::endl;
+  std::cout << "v2 = " << v2 << ";" << std::endl;
+  std::cout << "v3 = " << v3 << ";" << std::endl;
+  std::cout << "v4 = " << v4 << ";" << std::endl;
+  std::cout << "hv1 = " << hv1 << ";" << std::endl;
+  std::cout << "hv2 = " << hv2 << ";" << std::endl;
+  std::cout << "hv3 = " << hv3 << ";" << std::endl;
 }

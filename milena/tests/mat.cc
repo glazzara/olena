@@ -32,8 +32,9 @@
 
 
 #include <iostream>
-#include <mln/fun/x2x/translation.hh>
 #include <mln/fun/i2v/all.hh>
+#include <mln/metal/mat.hh>
+#include <mln/core/h_mat.hh>
 
 
 
@@ -41,15 +42,19 @@ int main()
 {
   using namespace mln;
 
-  float
-    a = 2.3,
-    b = 0,
-    c = 2.9;
+  metal::mat<1,3,float> m1(all(4.));
+  metal::mat<2,2,float> m2 = metal::mat<2,2,float>::Id;
 
-  metal::vec<3,float> vec1 = make::vec(a, b, c);
-  fun::x2x::translation<3,float> tr1(all(1.6));
+  h_mat<1,float> hm1(m2);
+  h_mat<2,float> hm2;
+  h_mat<3,float> hm3(all(1.5));
 
-  std::cout << vec1 << std::endl;
-  std::cout << tr1(vec1) << std::endl;
-  std::cout << tr1.inv()(vec1) << std::endl;
+  metal::mat<4,4,float> m4 = hm3;
+
+  std::cout << "m1 = " << m1 << ";" << std::endl;
+  std::cout << "m2 = " << m2 << ";" << std::endl;
+  std::cout << "m4 = " << m4 << ";" << std::endl;
+  std::cout << "hm1 = " << hm1 << ";" << std::endl;
+  std::cout << "hm2 = " << hm2 << ";" << std::endl;
+  std::cout << "hm3 = " << hm3 << ";" << std::endl;
 }

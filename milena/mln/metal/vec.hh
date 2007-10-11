@@ -414,6 +414,7 @@ namespace mln
     template <typename F>
     vec<n, T>::vec(const Function_i2v<F>& f_)
     {
+      mlc_converts_to(mln_result(F), T)::check();
       const F& f = exact(f_);
       for (unsigned i = 0; i < n; ++i)
 	data_[i] = f(i);

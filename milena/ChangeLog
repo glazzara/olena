@@ -1,3 +1,13 @@
+2007-10-11  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add tests for mat and vec and h_mat and h_vec.
+	* tests/fun_x2x_translation.cc: Fix.
+	* mln/make/vec.hh,
+	* mln/metal/mat.hh,
+	* mln/metal/vec.hh: Update.
+	* tests/mat.cc: New.
+	* tests/vec.cc: New.
+
 2007-10-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update some classes with literals and precise int_u equiv.
