@@ -83,12 +83,6 @@ namespace mln
       unsigned long val_;
     };
 
-    /// White.
-    extern const gray white;
-
-    /// Black.
-    extern const gray black;
-
     std::ostream& operator<<(std::ostream& ostr, const gray& g);
 
     bool operator==(const gray& lhs, const gray& rhs);
@@ -106,9 +100,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-    const gray white = gray(1, 1);
-    const gray black = gray(1, 0);
 
     template <unsigned N, unsigned M>
     gray operator+(const graylevel<N>& lhs, const graylevel<M>& rhs)

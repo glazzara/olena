@@ -1,3 +1,14 @@
+2007-10-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add black and white literals.
+
+	* mln/core/concept/object.hh: Remove literals/zero.hh include
+	* mln/literal/black.hh: New.
+	* mln/literal/white.hh: New.
+	* mln/value/gray.hh: Remove old black and white variables.
+	* mln/value/graylevel.hh: Add cpy Ctor and assigment with literals.
+	* tests/value_graylevel.cc: Update.
+
 2007-10-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Use more literals.

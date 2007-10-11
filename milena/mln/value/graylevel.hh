@@ -42,19 +42,21 @@
 namespace mln
 {
 
+  /// Fwd decl.
+  namespace literal { struct black_t; struct white_t; }
+
   namespace value
   {
 
     /// Fwd decl.
     class gray;
 
-
     /// General gray-level class on n bits.
     template <unsigned n>
     struct graylevel
       :
       public Integer< graylevel<n> >,
-      
+
       public internal::value_like_< int_u<n>,          // Equivalent.
 				    mln_enc(int_u<n>), // Encoding.
 				    gray,              // Interoperation.
@@ -66,10 +68,21 @@ namespace mln
       /// Ctor.
       explicit graylevel(int val);
 
+      /// \{ Ctors with literals.
+      graylevel(const literal::black_t&);
+      graylevel(const literal::white_t&);
+      /// \}
+
       /// Access to std type.
       mln_enc(int_u<n>) value() const;
 
+      /// Assigment with int.
       graylevel<n>& operator=(int val);
+
+      /// \{ Assigment with literals.
+      graylevel<n>& operator=(const literal::white_t&);
+      graylevel<n>& operator=(const literal::black_t&);
+      /// \}
     };
 
 
@@ -126,6 +139,19 @@ namespace mln
       this->v_ = val;
     }
 
+
+    template <unsigned n>
+    graylevel<n>::graylevel(const literal::black_t&)
+    {
+      this->v_ = 0;
+    }
+
+    template <unsigned n>
+    graylevel<n>::graylevel(const literal::white_t&)
+    {
+      this->v_ = mln_max(mln_enc(int_u<n>));
+    }
+
     template <unsigned n>
     mln_enc(int_u<n>)
     graylevel<n>::value() const
@@ -135,11 +161,17 @@ namespace mln
 
     template <unsigned n>
     graylevel<n>&
-    graylevel<n>::operator=(int val)
+    graylevel<n>::operator=(const literal::black_t&)
     {
-      mln_precondition(val >= 0);
-      mln_precondition(unsigned(val) <= mln_max(mln_enc(int_u<n>)));
-      this->v_ = val;
+      this->v_ = 0;
+      return *this;
+    }
+
+    template <unsigned n>
+    graylevel<n>&
+    graylevel<n>::operator=(const literal::white_t&)
+    {
+      this->v_ = mln_max(mln_enc(int_u<n>));
       return *this;
     }
 

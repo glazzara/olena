@@ -25,47 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_graylevel.cc
+#ifndef MLN_LITERAL_BLACK_HH
+# define MLN_LITERAL_BLACK_HH
+
+/*! \file mln/literal/black.hh
+ * \brief Definition of the literal of mln::black.
  *
- * \brief Tests on mln::value::graylevel.
  */
 
+# include <mln/core/concept/literal.hh>
 
-#include <mln/literal/black.hh>
-
-#include <mln/literal/white.hh>
-
-#include <mln/value/graylevel.hh>
-
-
-int main()
+namespace mln
 {
-  using namespace mln::value;
 
-  using  mln::literal::white;
-  using  mln::literal::black;
+  namespace literal
+  {
 
-  gl8  a (white);
-  gl16 b = black;
+    /// Type of literal black.
+    struct black_t : public Literal<black_t>
+    {
+    };
 
 
-  mln_assertion(a == b);
+    /// Literal black.
+    static black_t black = black_t();
 
-  gl8 c = (a + b) / 2;
+  } // end of namespace mln::literal
 
-  // FIXME cant't compare with literals.
-  mln_assertion(c == white);
+} // end of namespace mln
 
-  // FIXME can't compare with int
-  mln_assertion(c == 255);
 
-  c = a;
-  // FIXME cant't compare with literals.
-  //mln_assertion(c == white);
-
-  c = (a * 2) / 2;
-  // FIXME cant't compare with literals.
-  //mln_assertion(c == white);
-
-  c = c / 6;
-}
+#endif // ! MLN_LITERAL_BLACK_HH

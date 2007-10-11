@@ -99,7 +99,7 @@ namespace mln
 
 
 # include <mln/core/exact.hh>
-# include <mln/literal/zero.hh>
+//# include <mln/literal/zero.hh>
 # include <mln/core/ops.hh> // FIXME: Read FIXME in mln/metal/binary_arith_trait.hh!
 
 
