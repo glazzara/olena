@@ -69,7 +69,7 @@ namespace mln
       gray(const literal::black_t&);
       gray& operator=(const literal::black_t&);
       /// \}
-      
+
 
       /// Ctor.
       template <unsigned N>

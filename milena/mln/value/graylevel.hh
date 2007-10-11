@@ -155,9 +155,19 @@ namespace mln
 
     template <unsigned n>
     mln_enc(int_u<n>)
-    graylevel<n>::value() const
+      graylevel<n>::value() const
     {
       return this->v_;
+    }
+
+    template <unsigned n>
+    graylevel<n>&
+    graylevel<n>::operator=(int val)
+    {
+      mln_precondition(val >= 0);
+      mln_precondition(unsigned(val) <= mln_max(mln_enc(int_u<n>)));
+      this->v_ = val;
+      return *this;
     }
 
     template <unsigned n>

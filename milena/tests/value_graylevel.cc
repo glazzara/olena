@@ -27,7 +27,9 @@
 
 /*! \file tests/value_graylevel.cc
  *
- * \brief Tests on mln::value::graylevel.
+ * \brief Tests on mln::value::graylevel. Tests operations between
+ * graylevel of different encodings.
+ *
  */
 
 
@@ -45,22 +47,144 @@ int main()
   using  mln::literal::white;
   using  mln::literal::black;
 
-  gl8  a = white;
-  gl16 b = black;
-  mln_assertion(a == b);
-  mln_assertion(a.value() != b.value());
+  // Literals
+  {
+    gl8  a = white;
+    gl16 b = white;
 
-  gl8 c = (a + b) / 2;
-  mln_assertion(c == white);
-  mln_assertion(c.value() == 255);
+    mln_assertion(a == b);
+    mln_assertion(a.value() == 255);
+    mln_assertion(b.value() == 65535);
 
-  c = a;
-  mln_assertion(c == white);
+    gl8 c = (white + white) / 2;
+    mln_assertion(c == white);
+    mln_assertion(c.value() == 255);
 
-  c = (a * 2) / 2;
-  mln_assertion(c == white);
+    a = black;
+    b = black;
 
-  c = c / 6;
+    mln_assertion(a == b);
+    mln_assertion(a.value() == 0);
+    mln_assertion(b.value() == 0);
 
-  gray g = black;
+    c = (black + black) / 2;
+    mln_assertion(c == black);
+    mln_assertion(c.value() == 0);
+  }
+
+  // Assigment
+  {
+    gl8 a;
+    gl8 b;
+
+    a = white;
+    mln_assertion(a == white);
+    mln_assertion(a.value() == 255);
+
+    a = 23;
+    mln_assertion(a != white);
+    mln_assertion(a != black);
+    mln_assertion(a.value() == 23);
+
+    b = 2;
+    mln_assertion(b != white);
+    mln_assertion(b != black);
+    mln_assertion(b.value() == 2);
+
+    a = b;
+    mln_assertion(a.value() == 2);
+
+    signed char c = 51;
+    a = c;
+    mln_assertion(a.value() == 51);
+
+    // bounds
+    a = 255;
+    mln_assertion(a.value() == 255);
+    a = 0;
+    mln_assertion(a.value() == 0);
+  }
+
+  // Addition
+  {
+    gl8 a;
+    gl16 b;
+
+    // gl8 <- gl8 + gl8
+    a = 42;
+    b = 16969;
+    a += a;
+    mln_assertion(a.value() == 84);
+
+    a = 42;
+    b = 16969;
+    a = a + a;
+    mln_assertion(a.value() == 84);
+
+    // gl8 <- gl8 + gl16
+    a = 42;
+    b = 16969;
+    a = a + b;
+    mln_assertion(a.value() == (42 + b.value() / 257) );
+    a = 42;
+    b = 16969;
+    a += b;
+    mln_assertion(a.value() == (42 + b.value() / 257) );
+
+
+    // gl16 <- gl8 + gl16
+    a = 42;
+    b = 16969;
+    b += a;
+    mln_assertion(b.value() == (42 * 257 + 16969) );
+
+    a = 42;
+    b = 16969;
+    b = a + b;
+    mln_assertion(b.value() == (42 * 257 + 16969) );
+
+    // misc
+    a = 255;
+    b = 0;
+    a = a + b;
+    mln_assertion(a.value() == 255);
+
+    a = 0;
+    b = 65535;
+    a = a + b;
+    mln_assertion(a.value() == 255);
+  }
+
+
+
+  // Not exhaustive
+
+  //   gl8  a = white;
+  //   gl16 b = white;
+  //   mln_assertion(a == b);
+  //   //  mln_assertion(-a == -b);
+
+  //   mln_assertion(a.value() != b.value());
+
+  //   {
+  //     gl8 c = (a + b) / 2;
+  //     mln_assertion(c == white);
+  //     mln_assertion(c.value() == 255);
+
+  //     c = a;
+  //     mln_assertion(c == white);
+
+  //     c = (a * 2) / 2;
+  //     mln_assertion(c == white);
+
+  //     c = c / 6;
+  //   }
+
+  //   {
+  //     gl8 c = (white + white) / 2;
+  //     mln_assertion(c == white);
+  //     mln_assertion(c.value() == 255);
+  //   }
+
+  //   gray g = black;
 }

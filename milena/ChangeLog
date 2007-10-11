@@ -1,5 +1,13 @@
 2007-10-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix graylevel. Tests on graylevel.
+
+	* mln/value/graylevel.hh: Re add operator=(int)
+	* tests/value_int_u8.cc: More tests.
+	* tests/value_graylevel.cc: Likewise. FIXME : to augment.
+
+2007-10-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Try to reduce number of files in doc/html.
 
 	* doc/Doxyfile.in: Create_subdirs = YES.

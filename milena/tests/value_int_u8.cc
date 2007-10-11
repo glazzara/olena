@@ -31,37 +31,7 @@
  */
 
 #include <mln/value/int_u8.hh>
-
-#define test_operator(T, OP, V1, V2)                    \
-                                                        \
-{							\
-    T i = V1;						\
-    T j = V2;						\
-							\
-    i = i OP j;						\
-    mln_assertion(i == (V1 OP V2));			\
-    mln_assertion(j == V2);				\
-							\
-    i OP##= i;						\
-    mln_assertion(i == (((V1 OP V2) OP (V1 OP V2))));	\
-}
-
-#define test_interop(T1, T2, OP, V1, V2)                \
-                                                        \
-{							\
-    T1 i = V1;						\
-    T2 j = V2;						\
-							\
-    i = i OP j;						\
-    mln_assertion(i == (V1 OP V2));			\
-    mln_assertion(j == V2);				\
-							\
-    i OP##= i;						\
-    mln_assertion(i == (((V1 OP V2) OP (V1 OP V2))));	\
-}
-
-
-// test_operator
+#include <tests/value_macros.hh>
 
 int main()
 {
@@ -73,21 +43,21 @@ int main()
   // Assignment.
   {
     i = 51;
-    mln_assertion(i == 51);
+    sym_compare_assert(i, ==, 51);
 
     i = 51u;
-    mln_assertion(i == 51);
+    sym_compare_assert(i, ==, 51);
 
     signed char c = 51;
     i = c;
-    mln_assertion(i == 51);
+    sym_compare_assert(i, ==, 51);
 
     j = i;
-    mln_assertion(j == 51);
+    sym_compare_assert(j, ==, 51);
 
     i = 3;
-    mln_assertion(3.0f == i);
-    mln_assertion(i != 2.99f);
+    sym_compare_assert(3.0f, ==, i);
+    sym_compare_assert(i, !=, 2.99f);
 
     // Error at run-time as expected :-)
     // i = 256;
@@ -101,16 +71,16 @@ int main()
     int_u8 i = 42;
     int_u8 j = 51;
 
-    mln_assertion(i < j);
-    mln_assertion(j > i);
-    mln_assertion(i < 12345);
-    mln_assertion(12345 > i);
+    asym_compare_assert(i, <, j);
+    asym_compare_assert(j, >, i);
+    asym_compare_assert(i, <, 12345.f);
+    asym_compare_assert(12345.f, >, i);
 
-    mln_assertion(i != j);
-    mln_assertion(i == 42);
-    mln_assertion(42 == i);
-    mln_assertion(i != 69);
-    mln_assertion(69 != i);
+    sym_compare_assert(i, !=, j);
+    sym_compare_assert(i, ==, 42.f);
+    sym_compare_assert(42.f, ==, i);
+    sym_compare_assert(i, !=, 69.f);
+    sym_compare_assert(69.f, !=, i);
 
   }
 
@@ -124,13 +94,13 @@ int main()
     int_u8 i = 234;
 
     i++;
-    mln_assertion(i == 235);
+    sym_compare_assert(i, ==, 235.f);
 
     ++i;
-    mln_assertion(i == 236);
+    sym_compare_assert(i, ==, 236.f);
 
     i = +i;
-    mln_assertion(i == 236);
+    sym_compare_assert(i, ==, 236.f);
 
   }
 
@@ -139,26 +109,24 @@ int main()
     test_operator(int_u8, -, 100, 5);
     test_interop(int_u8, int,  -, 100, 5);
     test_interop(int_u8, char,  -, 100, 5);
-    test_interop(int_u8, unsigned char,  -, 100, 5);
+    test_interop(int_u8, unsigned char,  -, 5, 5);
 
     int_u8 c = 255;
     c -= c;
 
-    mln_assertion(c == 0);
+    sym_compare_assert(c, ==, 0.f);
 
     int_u8 i = 236;
 
     i--;
-    mln_assertion(i == 235);
+    sym_compare_assert(i, ==, 235.f);
 
     --i;
-    mln_assertion(i == 234);
+    sym_compare_assert(i, ==, 234.f);
 
-    std::cout << (-i) << " FIXME Matthieu: add .f to literals  " << i << std::endl;
-    mln_assertion(-i == -234);   // FIXME: old version
-    mln_assertion(-i == -234.f); // FIXME: new better version
+    sym_compare_assert(-i, ==, -234.f);
 
-    mln_assertion(i * -2 != 0.f);
+    sym_compare_assert(i * -2, !=, 0.f);
     std::cout << (i) << " * -2 = "
 	      << (i * -2) << ' '
 	      << (-2 * i) << ' '
@@ -176,14 +144,14 @@ int main()
     int_u8 c = 255;
 
     c *= 0;
-    mln_assertion(c == 0);
+    sym_compare_assert(c, ==, 0.f);
 
     i *= 2;
     int k;  k *= i;
 
     unsigned char d = 0;
     i *= d;
-    mln_assertion(i == 0);
+    sym_compare_assert(i, ==, 0.f);
 
     // Error at run-time as expected :-)
     // i = 128;
@@ -201,13 +169,13 @@ int main()
     int_u8 c = 200;
 
     c /= 1;
-    mln_assertion(c == 200);
+    sym_compare_assert(c, ==, 200.f);
     c /= 2;
-    mln_assertion(c == 100);
+    sym_compare_assert(c, ==, 100.f);
 
     int_u8 d = 2;
     c /= 2;
-    mln_assertion(c == 50);
+    sym_compare_assert(c, ==, 50.f);
 
   }
 
