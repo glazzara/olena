@@ -1,3 +1,17 @@
+2007-10-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add tests for border::resize.
+
+	* border_resize_image1d_1.cc,
+	* border_resize_image1d_2.cc,
+	* border_resize_image1d_3.cc,
+	* border_resize_image2d_1.cc,
+	* border_resize_image2d_2.cc,
+	* border_resize_image2d_3.cc,
+	* border_resize_image3d_1.cc,
+	* border_resize_image3d_2.cc,
+	* border_resize_image3d_3.cc: New tests.
+
 2007-10-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update grays.
