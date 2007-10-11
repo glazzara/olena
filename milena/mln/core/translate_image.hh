@@ -73,20 +73,14 @@ namespace mln
     struct image_< translate_image<I> > : default_image_morpher_< I, mln_value(I),
 								  translate_image<I> >
     {
-
       typedef trait::image::category::domain_morpher category;
 
-//       typedef mln_trait_image_access(I)()   access;
-//       typedef mln_trait_image_space(I)()    space;
-//       typedef mln_trait_image_size(I)()     size;
-//       typedef mln_trait_image_support(I)()  support;
-
-//       typedef mln_trait_image_border(I)()   border;
-//       typedef mln_trait_image_data(I)()     data;
-//       typedef mln_trait_image_io(I)()       io;
-//       typedef mln_trait_image_speed(I)()    speed;
-
-      typedef mln_trait_image_io_from_(I) io;
+      typedef mln_trait_image_access(I)     access;
+      typedef mln_trait_image_space(I)      space;
+      typedef mln_trait_image_size(I)       size;
+      typedef mln_trait_image_support(I)    support;
+      typedef mln_trait_image_border(I)     border;
+      typedef mln_trait_image_io_from_(I)   io;
       typedef mln_trait_image_data_from_(I) data;
 
     };
