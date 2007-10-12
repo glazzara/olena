@@ -1,3 +1,10 @@
+2007-10-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Update composed transformation. (does not work).
+	* mln/core/macros.hh,
+	* mln/fun/x2x/composed.hh,
+	* mln/metal/bool.hh: Update.
+
 2007-10-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add tests macros.

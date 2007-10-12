@@ -103,6 +103,10 @@
 # define mln_image(T)      typename T::image
 # define mln_image_(T)              T::image
 
+/// Shortcut to access the invert type associated to T.
+# define mln_invert(T)	   typename T::invert
+# define mln_invert_(T)             T::invert
+
 
 // l
 

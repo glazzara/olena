@@ -50,6 +50,7 @@ namespace mln
     template <>
     struct bool_< true >
     {
+      typedef bool_<true> check_t;
       static const bool value = true;
       typedef bool_<true> eval;
       static void check();
@@ -63,6 +64,7 @@ namespace mln
     template <>
     struct bool_< false >
     {
+      typedef bool_<false> check_not_t;
       static const bool value = false;
       typedef bool_<false> eval;
       static void check_not();
