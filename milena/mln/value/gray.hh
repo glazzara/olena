@@ -71,9 +71,13 @@ namespace mln
       /// \}
 
 
-      /// Ctor.
-      template <unsigned N>
-      gray(const graylevel<N>& val);
+      /// \{ Constructors/assigments with graylevel.
+      template <unsigned n>
+      gray(const graylevel<n>& val);
+
+      template <unsigned n>
+      gray& operator=(const graylevel<n>& val);
+      /// \}
 
       /// Ctor.
       gray(unsigned nbits, unsigned long val);
@@ -167,6 +171,15 @@ namespace mln
       : nbits_(1),
 	val_(1)
     {
+    }
+
+
+    template <unsigned n>
+    gray& gray::operator=(const graylevel<n>& g)
+    {
+      nbits_ = n;
+      val_ = g.value();
+      return *this;
     }
 
     gray& gray::operator=(const literal::white_t&)

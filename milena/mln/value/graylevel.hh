@@ -74,11 +74,18 @@ namespace mln
       graylevel(const literal::white_t&);
       /// \}
 
+      /// Ctor with gray.
+      graylevel(const gray&);
+
+
       /// Access to std type.
       mln_enc(int_u<n>) value() const;
 
       /// Assigment with int.
       graylevel<n>& operator=(int val);
+
+      /// Assigment with gray.
+      graylevel<n>& operator=(const gray&);
 
       /// \{ Assigment with literals.
       graylevel<n>& operator=(const literal::white_t&);
@@ -120,6 +127,9 @@ namespace mln
     template <unsigned n, unsigned m>
     gray operator-(const graylevel<n>& lhs, const graylevel<m>& rhs);
 
+    template <unsigned n, unsigned m>
+    gray operator*(const graylevel<n>& lhs, const graylevel<m>& rhs);
+
 
 
 
@@ -140,6 +150,12 @@ namespace mln
       this->v_ = val;
     }
 
+    template <unsigned n>
+    graylevel<n>::graylevel(const gray& g)
+    {
+      gray tmp = g.to_nbits(n);
+      this->v_ = tmp.value();
+    }
 
     template <unsigned n>
     graylevel<n>::graylevel(const literal::black_t&)
@@ -167,6 +183,15 @@ namespace mln
       mln_precondition(val >= 0);
       mln_precondition(unsigned(val) <= mln_max(mln_enc(int_u<n>)));
       this->v_ = val;
+      return *this;
+    }
+
+    template <unsigned n>
+    graylevel<n>&
+    graylevel<n>::operator=(const gray& g)
+    {
+      gray tmp = g.to_nbits(n);
+      this->v_ = tmp.value();
       return *this;
     }
 

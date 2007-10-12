@@ -1,3 +1,11 @@
+2007-10-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Augment tests for gray values.
+
+	* mln/value/gray.hh: (operator=(graylevel<n>)) New.
+	* mln/value/graylevel.hh: Add constructors/assigments with gray.
+	* tests/value_graylevel.cc: Add tests.
+
 2007-10-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Slightly change vec, h_vec, mat to ease handling x2x transforms.
