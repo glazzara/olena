@@ -41,6 +41,18 @@
 namespace mln
 {
 
+  /// \{ Fwd decls.
+  namespace literal
+  {
+    struct black_t;
+    struct white_t;
+
+    struct red_t;
+    struct blue_t;
+    struct green_t;
+  }
+  /// \}
+
   namespace value
   {
 
@@ -80,6 +92,11 @@ namespace mln
       rgb<n>(equiv a);
       rgb<n>(enc r, enc g, enc b);
       rgb<n>(enc l);
+      rgb<n>(const literal::white_t&);
+      rgb<n>(const literal::black_t&);
+      rgb<n>(const literal::blue_t&);
+      rgb<n>(const literal::red_t&);
+      rgb<n>(const literal::green_t&);
       /// \}
 
       /// \{ Assignments.
@@ -89,14 +106,6 @@ namespace mln
 
       /// Zero value.
       static const rgb<n> zero;
-
-      /// \{ Colors.
-      static const rgb<n> black;
-      static const rgb<n> max_red;
-      static const rgb<n> max_green;
-      static const rgb<n> max_blue;
-      static const rgb<n> white;
-      /// \}
 
       /// addition
       rgb<n> operator+(const rgb<n>& v) const;
@@ -190,6 +199,46 @@ namespace mln
     }
 
     template <unsigned n>
+    rgb<n>::rgb(const literal::white_t&)
+    {
+      this->c_[0] = mln_max(enc);
+      this->c_[1] = mln_max(enc);
+      this->c_[2] = mln_max(enc);
+    }
+
+    template <unsigned n>
+    rgb<n>::rgb(const literal::black_t&)
+    {
+      this->c_[0] = 0;
+      this->c_[1] = 0;
+      this->c_[2] = 0;
+    }
+
+    template <unsigned n>
+    rgb<n>::rgb(const literal::red_t&)
+    {
+      this->c_[0] = mln_max(enc);
+      this->c_[1] = 0;
+      this->c_[2] = 0;
+    }
+
+    template <unsigned n>
+    rgb<n>::rgb(const literal::green_t&)
+    {
+      this->c_[0] = 0;
+      this->c_[1] = mln_max(enc);
+      this->c_[2] = 0;
+    }
+
+    template <unsigned n>
+    rgb<n>::rgb(const literal::blue_t&)
+    {
+      this->c_[0] = 0;
+      this->c_[1] = 0;
+      this->c_[2] = mln_max(enc);
+    }
+
+    template <unsigned n>
     rgb<n>&
     rgb<n>::operator=(const rgb<n>& v)
     {
@@ -208,22 +257,6 @@ namespace mln
 
     template <unsigned n>
     const rgb<n> rgb<n>::zero(0,0,0);
-
-    template <unsigned n>
-    const rgb<n> rgb<n>::black(0,0,0);
-
-    template <unsigned n>
-    const rgb<n> rgb<n>::max_red(mln_max(enc), 0, 0);
-
-    template <unsigned n>
-    const rgb<n> rgb<n>::max_green(0, mln_max(enc), 0);
-
-    template <unsigned n>
-    const rgb<n> rgb<n>::max_blue(0, 0, mln_max(enc));
-
-    template <unsigned n>
-    const rgb<n> rgb<n>::white(mln_max(enc), mln_max(enc), mln_max(enc));
-
 
     template <unsigned n>
     rgb<n>

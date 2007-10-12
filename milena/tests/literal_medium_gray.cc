@@ -25,46 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_rgb8.cc
+/*! \file tests/literal_medium_gray.cc
  *
- * \brief Tests on mln::value::rgb8.
+ * \brief Tests on mln::literal::medium_gray.
  */
 
-#include <mln/value/rgb8.hh>
+#include <mln/literal/grays.hh>
+#include <mln/value/graylevel.hh>
 
-#include <mln/literal/all.hh>
 
 int main()
 {
   using namespace mln;
-  using value::rgb8;
-  using value::rgb;
 
-  using literal::blue;
-  using literal::white;
+  using literal::medium_gray;
+  using value::gl8;
+  using value::gl16;
 
-  {
-    rgb8 v;
-    v.red() = 0;
-    v.green() = 1;
-    v.blue() = 2;
-    value::int_u8_x3_t t = {0,1,2};
-    rgb8 w( t );
+  gl8 a;
+  gl16 b;
 
-    std::cout << w << std::endl;
-    std::cout << v << std::endl;
+  a = medium_gray;
 
-    mln_assertion(w == w);
-    mln_assertion(w == v);
-    v.green () = 255;
-    std::cout << v << std::endl;
-    mln_assertion(v != w);
+  std::cout << int(a.value()) << std::endl;
 
-    rgb<20> b = blue;
-    std::cout << b << std::endl;
+  b = a;
+  std::cout << int(b.value()) << std::endl;
 
-    rgb<20> c = white;
-    std::cout << c << std::endl;
-
-  }
+  b = medium_gray;
+  std::cout << int(b.value()) << std::endl;
 }

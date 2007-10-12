@@ -47,12 +47,11 @@ namespace mln
 
 # include <mln/literal/origin.hh>
 
-// FIXME: Add:
-// # include <mln/literal/white.hh>
-// # include <mln/literal/black.hh>
+# include <mln/literal/white.hh>
+# include <mln/literal/black.hh>
 
-// # include <mln/literal/grays.hh>
-// # include <mln/literal/colors.hh>
+# include <mln/literal/grays.hh>
+# include <mln/literal/colors.hh>
 
 # include <mln/literal/ops.hh>
 

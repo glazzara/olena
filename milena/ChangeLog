@@ -1,3 +1,16 @@
+2007-10-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add some literals.
+
+	* mln/literal/all.hh: Add missing includes.
+	* mln/literal/colors.hh: New, red, green and blue literals.
+	* mln/literal/grays.hh: New, medium_gray.
+	* tests/literal_medium_gray.cc: New, a little test.
+	* tests/value_rgb8.cc: Update to use literals.
+
+	* mln/value/graylevel.hh,
+	* mln/value/rgb.hh: Constructors and assigments to handle literals.
+
 2007-10-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Delete a warning of g++-4.1.

@@ -48,8 +48,14 @@
 namespace mln
 {
 
-  /// Fwd decl.
-  namespace literal { struct black_t; struct white_t; }
+  /// \{ Fwd decls.
+  namespace literal
+  {
+    struct black_t;
+    struct medium_gray_t;
+    struct white_t;
+  }
+  /// \}
 
   namespace value
   {
@@ -76,6 +82,7 @@ namespace mln
 
       /// \{ Ctors with literals.
       graylevel(const literal::black_t&);
+      graylevel(const literal::medium_gray_t&);
       graylevel(const literal::white_t&);
       /// \}
 
@@ -93,6 +100,7 @@ namespace mln
 
       /// \{ Assigment with literals.
       graylevel<n>& operator=(const literal::white_t&);
+      graylevel<n>& operator=(const literal::medium_gray_t&);
       graylevel<n>& operator=(const literal::black_t&);
       /// \}
     };
@@ -168,6 +176,12 @@ namespace mln
     }
 
     template <unsigned n>
+    graylevel<n>::graylevel(const literal::medium_gray_t&)
+    {
+      this->v_ = metal::math::pow_int<2, n - 1>::value;
+    }
+
+    template <unsigned n>
     graylevel<n>::graylevel(const literal::white_t&)
     {
       this->v_ = mln_max(mln_enc(int_u<n>));
@@ -204,6 +218,14 @@ namespace mln
     graylevel<n>::operator=(const literal::black_t&)
     {
       this->v_ = 0;
+      return *this;
+    }
+
+    template <unsigned n>
+    graylevel<n>&
+    graylevel<n>::operator=(const literal::medium_gray_t&)
+    {
+      this->v_ = metal::math::pow_int<2, n - 1>::value;
       return *this;
     }
 

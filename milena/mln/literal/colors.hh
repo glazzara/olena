@@ -25,46 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_rgb8.cc
+#ifndef MLN_LITERAL_COLORS_HH
+# define MLN_LITERAL_COLORS_HH
+
+/*! \file mln/literal/colors.hh
+ * \brief Definition of the colors literal.
  *
- * \brief Tests on mln::value::rgb8.
  */
 
-#include <mln/value/rgb8.hh>
+# include <mln/core/concept/literal.hh>
 
-#include <mln/literal/all.hh>
-
-int main()
+namespace mln
 {
-  using namespace mln;
-  using value::rgb8;
-  using value::rgb;
 
-  using literal::blue;
-  using literal::white;
-
+  namespace literal
   {
-    rgb8 v;
-    v.red() = 0;
-    v.green() = 1;
-    v.blue() = 2;
-    value::int_u8_x3_t t = {0,1,2};
-    rgb8 w( t );
 
-    std::cout << w << std::endl;
-    std::cout << v << std::endl;
+    /// Type of literal blue.
+    struct blue_t : public Literal<blue_t>
+    {
+    };
 
-    mln_assertion(w == w);
-    mln_assertion(w == v);
-    v.green () = 255;
-    std::cout << v << std::endl;
-    mln_assertion(v != w);
+    /// Type of literal red.
+    struct red_t : public Literal<red_t>
+    {
+    };
 
-    rgb<20> b = blue;
-    std::cout << b << std::endl;
+    /// Type of literal green.
+    struct green_t : public Literal<green_t>
+    {
+    };
 
-    rgb<20> c = white;
-    std::cout << c << std::endl;
 
-  }
-}
+    /// Literal red.
+    static red_t red = red_t();
+
+    /// Literal green.
+    static green_t green = green_t();
+
+    /// Literal blue.
+    static blue_t blue = blue_t();
+
+  } // end of namespace mln::literal
+
+} // end of namespace mln
+
+// White and black are color too.
+# include <mln/literal/white.hh>
+# include <mln/literal/black.hh>
+
+#endif // ! MLN_LITERAL_COLORS_HH
