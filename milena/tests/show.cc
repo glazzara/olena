@@ -40,6 +40,8 @@
 # include <mln/core/inplace.hh>
 # include <mln/core/w_window2d_int.hh>
 # include <mln/display/show.hh>
+# include <mln/display/save.hh>
+# include <mln/display/color_pretty.hh>
 # include <mln/io/ppm/save.hh>
 
 
@@ -63,5 +65,9 @@ int main()
 
   // Call color_pretty for sub_image.
   for (unsigned i = 2; i < 22; i += 2)
-    display::show (inplace (tmp | i));
+    {
+      image_if_value<image2d<unsigned> > t = inplace (tmp | i);
+      display::save (t);
+      display::show (t, "xv");
+    }
 }

@@ -1,3 +1,11 @@
+2007-10-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Change concept of display show.
+
+	* mln/display/save.hh: New.
+	* mln/display/show.hh,
+	* tests/show.cc: Update.
+
 2007-10-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Augment tests for gray values.

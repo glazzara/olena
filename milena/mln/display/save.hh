@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DISPLAY_SHOW_HH
-# define MLN_DISPLAY_SHOW_HH
+#ifndef MLN_DISPLAY_SAVE_HH
+# define MLN_DISPLAY_SAVE_HH
 
-/*! \file mln/display/show.hh
+/*! \file mln/display/save.hh
  *
  * \brief Create a pretty image, which display its content
  *  with red value for non-defined point site.
@@ -37,9 +37,11 @@
 # include <mln/trait/image_from_mesh.hh>
 # include <mln/core/image_if_value.hh>
 # include <mln/core/image2d.hh>
-# include <mln/display/save.hh>
-
-# include <map>
+# include <mln/value/rgb8.hh>
+# include <mln/level/fill.hh>
+# include <mln/level/paste.hh>
+# include <mln/display/color_pretty.hh>
+# include <mln/io/ppm/save.hh>
 
 namespace mln
 {
@@ -47,40 +49,50 @@ namespace mln
   namespace display
   {
 
+    std::map<void*, std::string> map_saved_image_tmp_;
+
     template <typename I>
     void
-    show(const Image<I>& input_, std::string cmd = "xv");
+    save(const Image<I>& input_);
 
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
-
-      template <typename I>
-      void
-      show(const Image<I>& input_, std::string cmd)
-      {
-	const I& input = exact (input_);
-	
-	std::string s = cmd + " " + map_saved_image_tmp_[(void*)input.id_ ()] + " &";
-	system (s.c_str ());
-      }
+    template <typename I>
+    void
+    save(const Image<I>& input_)
+    {
+      const I& input = exact (input_);
+      image2d<value::rgb8> out = display::color_pretty(input);
+      
+      /// Use of mkstemp instead tempmap.
+      char *tmp = (char*)malloc (12 * sizeof (char));
+      strcpy(tmp, "/tmp/XXXXXX");
+      if (mkstemp(tmp) == -1)
+	return;
+      std::string path_tmp = tmp;
+      
+      io::ppm::save(out, path_tmp);
+      std::cout << input.id_ () << " = " << path_tmp << std::endl;
+      map_saved_image_tmp_[(void*)input.id_ ()] = path_tmp;
+    }
 
     } // end of namespace mln::display::impl
 
     /// Facade.
     template <typename I>
     void
-    show(const Image<I>& input_, std::string cmd = "xv")
+    save(const Image<I>& input_)
     {
-      return impl::show(input_, cmd);
+      return impl::save(input_);
     }
 
 # endif // !MLN_INCLUDE_ONLY
-    
+
   } // end of namespace mln::display
-  
+
 } // end of namespace mln
 
 
-#endif //  ! MLN_DISPLAY_SHOW_HH
+#endif //  ! MLN_DISPLAY_SAVE_HH
