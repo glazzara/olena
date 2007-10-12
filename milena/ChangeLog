@@ -1,3 +1,8 @@
+2007-10-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update queue_p_priority.
+	* queue_p_priority.hh: Update.
+
 2007-10-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Update composed transformation. (does not work).

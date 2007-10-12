@@ -64,7 +64,7 @@ namespace mln
    * a call to npoints() when this container is multiple.
    */
   template <typename P, typename T>
-  class queue_p_priority// : public internal::point_set_base_< P, queue_p_priority<P> >
+  class queue_p_priority : public internal::point_set_base_< P, queue_p_priority<P, T> >
   {
   public:
 
@@ -78,16 +78,16 @@ namespace mln
     queue_p_priority();
 
     /// Test is \p p belongs to this point set.
-    bool has(const P& p);
+    bool has(const P& p) const;
 
     /// Test if queue is empty or not.
-    bool empty();
+    bool empty() const;
 
     /// Give the number of points.
-    unsigned npoints();
+    unsigned npoints() const;
 
     /// Give the exact bounding box.
-    const box_<P>& bbox();
+    const box_<P>& bbox() const;
 
     /// Push force a point \p p in the queue.
     queue_p_priority<P, T>& push_force(const P& p, T prio = 0);
@@ -101,7 +101,7 @@ namespace mln
 
     /// Give the front point \p p of the queue; \p p is the least
     /// recently inserted point.
-    const P& front();
+    const P& front() const;
 
     /// Clear the queue.
     void clear();
@@ -110,7 +110,7 @@ namespace mln
     const std::vector<P>& vect() const;
 
     /// Return the \p i-th point.
-    const P& operator[](unsigned i);
+    const P& operator[](unsigned i) const;
 
   protected:
 
@@ -118,11 +118,11 @@ namespace mln
 
     mutable std::vector<P> vect_;
     mutable bool vect_needs_update_;
-    void vect_update_();
+    void vect_update_() const;
 
     mutable accu::bbox<P> bb_;
     mutable bool bb_needs_update_;
-    void bb_update_();
+    void bb_update_() const;
 
   };
 
@@ -133,11 +133,13 @@ namespace mln
   template <typename P, typename T>
   queue_p_priority<P, T>::queue_p_priority()
   {
+    vect_needs_update_ = false;
+    bb_needs_update_ = false;
   }
 
   template <typename P, typename T>
   void
-  queue_p_priority<P, T>::vect_update_()
+  queue_p_priority<P, T>::vect_update_() const
   {
     vect_.clear();
     vect_.reserve(npoints());
@@ -145,66 +147,66 @@ namespace mln
     typename std::map<T, queue_p<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
-      std::copy(q_[(*it).first].begin(), q_[(*it).first].end(),
+      std::copy((*it).second.begin(), (*it).second.end(),
 		std::back_inserter(vect_));
     vect_needs_update_ = false;
   }
 
   template <typename P, typename T>
   void
-  queue_p_priority<P, T>::bb_update_()
+  queue_p_priority<P, T>::bb_update_() const
   {
     bb_.init();
 
     typename std::map<T, queue_p<P> >::const_iterator it = q_.begin ();
     
     for (; it != q_.end (); ++it)
-      for (unsigned i = 0; i < q_[(*it).first].npoints (); ++i)
-	bb_.take(q_[(*it).first][i]);
+      for (unsigned i = 0; i < (*it).second.npoints (); ++i)
+	bb_.take((*it).second[i]);
   }
 
 
   template <typename P, typename T>
   bool
-  queue_p_priority<P, T>::has(const P& p)
+  queue_p_priority<P, T>::has(const P& p) const
   {
     typename std::map<T, queue_p<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
-      if (q_[(*it).first].has (p))
+      if ((*it).second.has (p))
 	return true;
     return false;
   }
 
   template <typename P, typename T>
   bool
-  queue_p_priority<P, T>::empty()
+  queue_p_priority<P, T>::empty() const
   {
     typename std::map<T, queue_p<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
-      if (!q_[(*it).first].empty ())
+      if (!(*it).second.empty ())
 	return false;
     return true;
   }
 
   template <typename P, typename T>
   unsigned
-  queue_p_priority<P, T>::npoints()
+  queue_p_priority<P, T>::npoints() const
   {
     unsigned res = 0;
 
     typename std::map<T, queue_p<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
-      if (!q_[(*it).first].empty ())
- 	res += q_[(*it).first].npoints();
+      if (!(*it).second.empty ())
+ 	res += (*it).second.npoints();
     return res;
   }
 
   template <typename P, typename T>
   const box_<P>&
-  queue_p_priority<P, T>::bbox()
+  queue_p_priority<P, T>::bbox() const
   {
     mln_precondition(npoints() != 0);
     if (bb_needs_update_)
@@ -235,11 +237,11 @@ namespace mln
   void
   queue_p_priority<P, T>::pop()
   {
-    typename std::map<T, queue_p<P> >::const_reverse_iterator it = q_.rbegin ();
+    typename std::map<T, queue_p<P> >::reverse_iterator it = q_.rbegin ();
 
     for (; it != q_.rend (); ++it)
-      if (!q_[(*it).first].empty ())
- 	return q_[(*it).first].pop ();
+      if (!(*it).second.empty ())
+ 	return (*it).second.pop ();
 
     if (! vect_needs_update_)
       {
@@ -250,26 +252,26 @@ namespace mln
 
   template <typename P, typename T>
   const P&
-  queue_p_priority<P, T>::front()
+  queue_p_priority<P, T>::front() const
   {
     mln_precondition(! q_.empty());
 
     typename std::map<T, queue_p<P> >::const_reverse_iterator it = q_.rbegin ();
 
     for (; it != q_.rend (); ++it)
-      if (!q_[(*it).first].empty ())
+      if (!(*it).second.empty ())
 	break;
-    return q_[(*it).first].front ();
+    return (*it).second.front ();
   }
 
   template <typename P, typename T>
   void
   queue_p_priority<P, T>::clear()
   {
-    typename std::map<T, queue_p<P> >::const_iterator it = q_.begin ();
+    typename std::map<T, queue_p<P> >::iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
-      q_[(*it).first].clear ();
+      (*it).second.clear ();
     q_.clear();
     vect_needs_update_ = false;
     bb_needs_update_ = false;
@@ -286,7 +288,7 @@ namespace mln
 
   template <typename P, typename T>
   const P&
-  queue_p_priority<P, T>::operator[](unsigned i)
+  queue_p_priority<P, T>::operator[](unsigned i) const
   {
     mln_precondition(i < npoints());
 
@@ -295,15 +297,15 @@ namespace mln
 
     for (; it != q_.end (); ++it)
       {
-	if (!q_[(*it).first].empty ())
-	  for (cpt = 0; cpt < q_[(*it).first].npoints (); ++cpt)
+	if (!(*it).second.empty ())
+	  for (cpt = 0; cpt < (*it).second.npoints (); ++cpt)
 	    {
 	      if (i == 0)
-		return q_[(*it).first][cpt];
+		return (*it).second[cpt];
 	      --i;
 	    }
       }
-    return q_[(*it).first][cpt];
+    return (*it).second[cpt];
   }
 
 # endif // ! MLN_INCLUDE_ONLY
