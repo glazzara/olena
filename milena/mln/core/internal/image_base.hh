@@ -156,6 +156,8 @@ namespace mln
 
       const util::tracked_ptr< internal::data_<E> >& hook_data_() const { return data_; }
 
+      const void* id_() const { return data_.ptr_; }
+
     protected:
       image_base_();
 

@@ -1,5 +1,15 @@
 2007-10-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add new kind of queue.
+
+	* queue_p_fast.hh,
+	* queue_p_fast_priority.hh,
+	* queue_p_priority.hh: New kind of queue.
+
+	* internal/image_base.hh: Add (id_).
+
+2007-10-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update queue_p_priority.
 	* queue_p_priority.hh: Update.
 
