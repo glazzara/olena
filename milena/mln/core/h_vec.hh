@@ -50,11 +50,11 @@ namespace mln
     /// Constructor without argument.
     h_vec();
 
-    /// Constructor from a metal::vec.
-    h_vec(const metal::vec<d,C>& x);
-    
-    /// Conversion to a metal::vec.
-    operator metal::vec<d,C>() const;
+    h_vec(const metal::vec<d+1, C>& other);
+    h_vec& operator=(const metal::vec<d+1, C>& rhs);
+
+    /// Back to the natural (non-homogeneous) space.
+    metal::vec<d,C> to_vec() const;
   };
 
 
@@ -67,15 +67,39 @@ namespace mln
   }
 
   template <unsigned d, typename C>
-  h_vec<d,C>::h_vec(const metal::vec<d,C>& x)
+  h_vec<d,C>::h_vec(const metal::vec<d+1, C>& other)
+    : metal::vec<d+1, C>(other)
   {
-    for (unsigned i = 0; i < d; ++i)
-      this->data_[i] = x[i];
-    this->data_[d] = 1; // FIXME: literal::one
   }
 
   template <unsigned d, typename C>
-  h_vec<d,C>::operator metal::vec<d,C>() const
+  h_vec<d,C>& h_vec<d,C>::operator=(const metal::vec<d+1, C>& rhs)
+  {
+    if (& rhs == this)
+      return *this;
+    this->metal::vec<d+1, C>::operator=(rhs);
+    return *this;
+  }
+
+  namespace metal
+  {
+
+    // Immersion of a vector in its homogeneous space.
+    template <unsigned n, typename T>
+    h_vec<n, T> vec<n,T>::to_h_vec() const
+    {
+      h_vec<n, T> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp[i] = this->data_[i];
+      tmp[n] = 1; // FIXME: literal::one
+      return tmp;
+    }
+
+  } // end of namespace mln::metal
+
+
+  template <unsigned d, typename C>
+  metal::vec<d,C> h_vec<d,C>::to_vec() const
   {
     const C w = this->data_[d];
     mln_assertion(w != 0);

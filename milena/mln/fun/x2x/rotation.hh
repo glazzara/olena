@@ -82,9 +82,9 @@ namespace mln
       template <unsigned n, typename C>
       rotation<n,C>::rotation()
       {
-	alpha_ = 0;
-	dir_ = 2;
-	this->m_ = h_mat<n,C>::Id;
+// 	alpha_ = 0;
+// 	dir_ = 2;
+// 	this->m_ = h_mat<n,C>::Id;
       }
 
       template <unsigned n, typename C>

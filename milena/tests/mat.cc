@@ -57,4 +57,11 @@ int main()
   std::cout << "hm1 = " << hm1 << ";" << std::endl;
   std::cout << "hm2 = " << hm2 << ";" << std::endl;
   std::cout << "hm3 = " << hm3 << ";" << std::endl;
+
+  {
+    h_mat<2,float> m, m2;
+    m = m2;
+    // FIXME: Test *many* => runs ok...
+  }
+
 }

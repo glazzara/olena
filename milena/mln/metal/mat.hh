@@ -36,6 +36,7 @@
 # include <mln/trait/all.hh>
 # include <mln/value/props.hh>
 # include <mln/value/concept/all.hh>
+# include <mln/metal/vec.hh>
 
 
 // FIXME: Document.
@@ -140,6 +141,16 @@ namespace mln
       typedef metal::mat< n, m, mln_trait_op_times(T,U) > ret;
     };
 
+    // mat * vec
+
+    template <unsigned n, unsigned m, typename T,
+	      typename U>
+    struct set_precise_binary_<op::times, metal::mat<n,m,T>, metal::vec<m,U> >
+    {
+      typedef mln_trait_op_times(T,U) TxU;
+      typedef metal::vec< m, mln_sum(TxU) > ret;
+    };
+
     // mat * s
 
     template <unsigned n, unsigned m, typename T,
@@ -214,10 +225,38 @@ namespace mln
     mat<n, m, mln_trait_op_times(T,U)>
     operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs); // mat * mat
 
+
+//     template <unsigned n, unsigned m, typename T,
+// 	      typename S>
+//     mat<n, m, mln_trait_op_times(T,S)>
+//     operator*(const mat<n,m,T>& lhs, const S& s); // mat * s
+
+
+    // FIXME: Simplification below of the general code above:
+
+    template <unsigned n, unsigned m, typename T>
+    mat<n, m, T>
+    operator*(const mat<n,m,T>& lhs, const T& s); // mat * s
+
+
     template <unsigned n, unsigned m, typename T,
-	      typename S>
-    mat<n, m, mln_trait_op_times(T,S)>
-    operator*(const mat<n,m,T>& lhs, const S& s); // mat * s
+	      typename U>
+    typename mln::trait::op::times< mat<n,m,T>, vec<m,U> >::ret
+    operator*(const mat<n,m,T>& lhs, const vec<m,U>& rhs) // mat * vec
+      // FIXME: Move below...
+    {
+      typedef mat<n,m,T> mat_t;
+      typedef vec<m,U>   vec_t;
+      mln_trait_op_times(mat_t, vec_t) tmp;
+      for (unsigned i = 0; i < n; ++i)
+	{
+	  mln_trait_op_times(T,U) sum = 0; // FIXME: Use literal::zero.
+	  for (unsigned j = 0; j < m; ++j)
+	    sum += lhs(i, j) * rhs[j];
+	  tmp[i] = sum;
+	}
+      return tmp;
+    }
 
     // *=
 
@@ -270,7 +309,7 @@ namespace mln
 	{
 	  for (unsigned i = 0; i < n; ++i)
 	    for (unsigned j = 0; j < m; ++j)
-	      id_.data_[i][j] = (i == j);
+	      id_(i, j) = (i == j);
 	  flower = false;
 	}
       return id_;
@@ -451,12 +490,18 @@ namespace mln
       return tmp;
     }
 
-    template <unsigned n, unsigned m, typename T,
-	      typename S>
-    mat<n,m, mln_trait_op_times(T,S)>
-    operator*(const mat<n,m,T>& lhs, const S& s)
+    template <unsigned n, unsigned m, typename T>
+    mat<n, m, T>
+    operator*(const mat<n,m,T>& lhs, const T& s) // mat * s
+
+      // FIXME: Read above.
+
+//     template <unsigned n, unsigned m, typename T,
+// 	      typename S>
+//     mat<n,m, mln_trait_op_times(T,S)>
+//     operator*(const mat<n,m,T>& lhs, const S& s)
     {
-      mat<n,m, mln_trait_op_times(T,S)> tmp;
+      mat<n,m, T> tmp;
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; j < m; ++j)
 	  tmp(i, j) = lhs(i, j) * s;

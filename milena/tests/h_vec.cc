@@ -45,6 +45,11 @@ void run_in_3d_h(const h_vec<3, int>&)
 }
 
 
+void foo(const mln::h_vec<3,float>&)
+{
+}
+
+
 int main()
 {
 
@@ -59,4 +64,10 @@ int main()
   run_in_3d(k);
   run_in_3d_h(k);
 
+  {
+    metal::vec<3,float> v;
+    h_vec<3,float> w(v);
+    w = v;
+    foo(v);
+  }
 }

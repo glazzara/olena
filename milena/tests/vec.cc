@@ -46,12 +46,13 @@ int main()
   metal::vec<2,float> v2 = make::vec(6., 2.8);
 
   h_vec<1,float> hv1;
-  h_vec<2,float> hv2(v2);
+  h_vec<2,float> hv2 = v2.to_h_vec(); // Immersion into homogeneous.
+
   h_vec<3,float> hv3(all(1.5));
 
   hv3 += make::vec(0., 0., 0., 0.5);
 
-  metal::vec<3,float> v3 = hv3;
+  metal::vec<3,float> v3 = hv3.to_vec(); // Back from homogeneous.
   metal::vec<4,float> v4 = hv3;
 
   std::cout << "v1 = " << v1 << ";" << std::endl;

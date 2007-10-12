@@ -52,8 +52,10 @@ namespace mln
 
       template <unsigned n, typename C>
       struct translation
+
 	: internal::x2x_impl_< metal::vec<n,C>, translation<n,C> >
-	, public Bijection_x2x< translation<n,C> >
+	,
+	  public Bijection_x2x< translation<n,C> >
       {
 	typedef fun::internal::x2x_impl_< metal::vec<n,C>, translation<n,C> > super_;
 
@@ -80,8 +82,8 @@ namespace mln
       template <unsigned n, typename C>
       translation<n,C>::translation()
       {
-	t_ = make::vec<n,C>(fun::i2v::all<C>(0));
-	this->m_ = h_mat<n,C>::Id;
+// 	t_ = make::vec<n,C>(fun::i2v::all<C>(0));
+// 	this->m_ = h_mat<n,C>::Id;
       }
 
       template <unsigned n, typename C>

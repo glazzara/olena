@@ -44,8 +44,10 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Fwd decls.
   namespace literal { struct zero_t; }
+  template <unsigned d, typename C> struct h_vec;
+
 
 
   namespace metal
@@ -151,6 +153,11 @@ namespace mln
 
       template <typename U>
       vec& operator=(const vec<n, U>& rhs);
+
+
+      // Immersion of the vector into its homogeneous space.
+      h_vec<n, T> to_h_vec() const;
+
 
       const T& operator[](unsigned i) const;
 

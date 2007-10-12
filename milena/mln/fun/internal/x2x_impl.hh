@@ -54,11 +54,11 @@ namespace mln
 	typedef V argument;
 	typedef V result;
 	typedef typename V::coord coord;
-	  typedef h_mat<dim, coord> matrix;
+	typedef h_mat<dim, coord> matrix;
 
-	h_vec<dim, coord> operator()(const h_vec<dim, coord>& x) const
+	V operator()(const V& x) const
 	{
-	  return m_ * x;
+	  return (m_ * x.to_h_vec()).to_vec();
 	}
 
         const matrix& mat() const;

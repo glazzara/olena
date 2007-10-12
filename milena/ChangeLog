@@ -1,3 +1,19 @@
+2007-10-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Slightly change vec, h_vec, mat to ease handling x2x transforms.
+
+	* mln/core/h_vec.hh (h_vec): New ctor overload for vec<d+1>.
+	(operator=): New overload for vec<d+1>.
+	* mln/metal/mat.hh (trait): New def for mat * vec.
+	(operator*): Strengthen scalar version to disambiguate. 
+	* mln/metal/vec.hh (to_h_vec): New method decl.
+	* mln/fun/x2x/translation.hh: Deactivate code in ctor w/o arg.
+	* mln/fun/x2x/rotation.hh: Likewise.
+	* mln/fun/internal/x2x_impl.hh (operator()): Update.
+	* tests/mat.cc: Augment.
+	* tests/h_vec.cc: Augment.
+	* tests/vec.cc: Update.
+
 2007-10-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add test for seed2tiling*.hh .
