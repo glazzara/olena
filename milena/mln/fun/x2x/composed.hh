@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/function.hh>
-# include <mln/fun/internal/x2x_impl.hh>
+# include <mln/fun/internal/x2x_linear_impl.hh>
 # include <mln/metal/vec.hh>
 # include <mln/metal/is.hh>
 # include <mln/metal/bexpr.hh>
@@ -56,16 +56,16 @@ namespace mln
       
       namespace internal
       {
-	template <unsigned n, typename F, typename G, typename E, bool is_bij>
+	template <typename F, typename G, typename E, bool is_bij>
 	struct helper_composed_;
 
 
-	template <unsigned n, typename F, typename G, typename E>
-	struct helper_composed_<n, F, G, E, true>
-	  : public fun::internal::x2x_impl_<mln_result(F), E >,
+	template <typename F, typename G, typename E>
+	struct helper_composed_< F, G, E, true>
+	  : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
 	    public Bijection_x2x<E>
 	{
-	  typedef fun::internal::x2x_impl_<typename F::result, E > super_;
+	  typedef fun::internal::x2x_linear_impl_<typename F::result, E > super_;
 	  
 	  using super_::dim;
 	  
@@ -73,28 +73,26 @@ namespace mln
 	  helper_composed_(const F& f, const G& g);
 
 	  using super_::operator();
-	  metal::vec<n,mln_result(F)>
-	  operator()(const metal::vec<n,mln_result(F)>& v) const;
 
 	  void set_first(const F& f);
 	  void set_second(const G& g);
+
+	  typedef composed<mln_invert(G),mln_invert(F)> invert;
+
+	  invert inv() const;
 
 	  protected:
 
 	  F f_;
 	  G g_;
-
-	  typedef composed<mln_invert(G),mln_invert(F)> invert;
-
-	  invert inv() const;
 	};
 
-	template <unsigned n, typename F, typename G, typename E>
-	struct helper_composed_<n, F, G, E, false>
-	  : public fun::internal::x2x_impl_<mln_result(F), E >,
+	template <typename F, typename G, typename E>
+	struct helper_composed_< F, G, E, false>
+	  : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
 	    public Function_x2x<E>
 	{
-	  typedef fun::internal::x2x_impl_<typename F::result, E > super_;
+	  typedef fun::internal::x2x_linear_impl_<typename F::result, E > super_;
 
 	  using super_::dim;
 
@@ -102,8 +100,6 @@ namespace mln
 	  helper_composed_(const F& f, const G& g);
 
 	  using super_::operator();
-	  metal::vec<n,mln_result(F)>
-	  operator()(const metal::vec<n,mln_result(F)>& v) const;
 
 	  void set_first(const F& f);
 	  void set_second(const G& g);
@@ -120,7 +116,7 @@ namespace mln
 
       template <typename F, typename G>
       struct composed
-	: public internal::helper_composed_<F::dim, F, G, composed<F,G>,
+	: public internal::helper_composed_<F, G, composed<F,G>,
 					    mlc_is(F, Bijection_x2x<F>)::value &&
 					    mlc_is(G, Bijection_x2x<G>)::value>,
 
@@ -132,7 +128,7 @@ namespace mln
 	composed() {}
 	
 	composed(const F& f, const G& g)
-	  : internal::helper_composed_<F::dim, F, G, composed<F,G>,
+	  : internal::helper_composed_<F, G, composed<F,G>,
 	  mlc_is(F, Bijection_x2x<F>)::value &&
 	  mlc_is(G, Bijection_x2x<G>)::value>(f, g)
 	  {
@@ -159,38 +155,38 @@ namespace mln
 
 	// Implementation of the bijective version.
 
-	template <unsigned n, typename F, typename G, typename E>
-	helper_composed_<n,F,G,E,true>::helper_composed_()
+	template <typename F, typename G, typename E>
+	helper_composed_<F,G,E,true>::helper_composed_()
 	{
-	  this->m_ = h_mat<dim,mln_result(F)>::Id;
 	}
 
-	template <unsigned n, typename F, typename G, typename E>
-	helper_composed_<n,F,G,E,true>::helper_composed_(const F& f, const G& g)
+	template <typename F, typename G, typename E>
+	helper_composed_<F,G,E,true>::helper_composed_(const F& f, const G& g)
 	  :f_(f),
 	   g_(g)
 	{
 	  this->m_ = f_.mat() * g_.mat();
 	}
 
-	template <unsigned n, typename F, typename G, typename E>
-	metal::vec<n, mln_result(F)>
-	helper_composed_<n,F,G,E,true>::operator()(const metal::vec<n, mln_result(F)>& v) const
+	template <typename F, typename G, typename E>
+	typename helper_composed_<F,G,E,true>::invert
+	helper_composed_<F,G,E,true>::inv() const
 	{
-	  return this->m_(v);
+	  return compose(g_.inv(), f_.inv());
 	}
+	
 
-	template <unsigned n, typename F, typename G, typename E>
+	template <typename F, typename G, typename E>
 	void
-	helper_composed_<n,F,G,E,true>::set_first(const F& f)
+	helper_composed_<F,G,E,true>::set_first(const F& f)
 	{
 	  this->f_ = f;
 	  this->m_ = this->f_.mat() * this->g_.mat();
 	}
 
-	template <unsigned n, typename F, typename G, typename E>
+	template <typename F, typename G, typename E>
 	void
-	helper_composed_<n,F,G,E,true>::set_second(const G& g)
+	helper_composed_<F,G,E,true>::set_second(const G& g)
 	{
 	  this->g_ = g;
 	  this->m_ = this->f_.mat() * this->g_.mat();
@@ -198,38 +194,30 @@ namespace mln
 
 	// Implementation of the non bijective version.
 
-	template <unsigned n, typename F, typename G, typename E>
-	helper_composed_<n,F,G,E,false>::helper_composed_()
+	template <typename F, typename G, typename E>
+	helper_composed_<F,G,E,false>::helper_composed_()
 	{
-	  this->m_ = h_mat<dim,mln_result(F)>::Id;
 	}
 
-	template <unsigned n, typename F, typename G, typename E>
-	helper_composed_<n,F,G,E,false>::helper_composed_(const F& f, const G& g)
+	template <typename F, typename G, typename E>
+	helper_composed_<F,G,E,false>::helper_composed_(const F& f, const G& g)
 	  :f_(f),
 	   g_(g)
 	{
 	  this->m_ = f_.mat() * g_.mat();
 	}
 
-	template <unsigned n, typename F, typename G, typename E>
-	metal::vec<n, mln_result(F)>
-	helper_composed_<n,F,G,E,false>::operator()(const metal::vec<n, mln_result(F)>& v) const
-	{
-	  return this->m_(v);
-	}
-
-	template <unsigned n, typename F, typename G, typename E>
+	template <typename F, typename G, typename E>
 	void
-	helper_composed_<n,F,G,E,false>::set_first(const F& f)
+	helper_composed_<F,G,E,false>::set_first(const F& f)
 	{
 	  this->f_ = f;
 	  this->m_ = this->f_.mat() * this->g_.mat();
 	}
 
-	template <unsigned n, typename F, typename G, typename E>
+	template <typename F, typename G, typename E>
 	void
-	helper_composed_<n,F,G,E,false>::set_second(const G& g)
+	helper_composed_<F,G,E,false>::set_second(const G& g)
 	{
 	  this->g_ = g;
 	  this->m_ = this->f_.mat() * this->g_.mat();

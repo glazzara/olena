@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/function.hh>
-# include <mln/fun/internal/x2x_impl.hh>
+# include <mln/fun/internal/x2x_linear_impl.hh>
 # include <mln/metal/vec.hh>
 # include <mln/core/h_mat.hh>
 # include <mln/fun/i2v/all.hh>
@@ -53,11 +53,11 @@ namespace mln
       template <unsigned n, typename C>
       struct translation
 
-	: internal::x2x_impl_< metal::vec<n,C>, translation<n,C> >
+	: internal::x2x_linear_impl_< metal::vec<n,C>, translation<n,C> >
 	,
 	  public Bijection_x2x< translation<n,C> >
       {
-	typedef fun::internal::x2x_impl_< metal::vec<n,C>, translation<n,C> > super_;
+	typedef fun::internal::x2x_linear_impl_< metal::vec<n,C>, translation<n,C> > super_;
 
 	typedef translation<n,C> invert;
 	invert inv() const;

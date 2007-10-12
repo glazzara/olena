@@ -54,11 +54,11 @@ int main()
 {
 
   metal::vec<3, int> x;
-  h_vec<3, int> w = x;
+  h_vec<3, int> w = x.to_h_vec();
 
   typedef h_vec<3, int> p3d;
   p3d p;
-  run_in_3d(p);
+  run_in_3d(p.to_vec());
 
   point3d k;
   run_in_3d(k);
@@ -66,8 +66,8 @@ int main()
 
   {
     metal::vec<3,float> v;
-    h_vec<3,float> w(v);
-    w = v;
-    foo(v);
+    h_vec<3,float> w(v.to_h_vec());
+    w = v.to_h_vec();
+    foo(v.to_h_vec());
   }
 }

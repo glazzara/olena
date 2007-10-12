@@ -305,7 +305,7 @@ namespace mln
   template <typename M, typename C>
   point_<M,C>::operator typename internal::point_to_<M, C>::h_vec () const
   {
-    return coord_;
+    return coord_.to_h_vec();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

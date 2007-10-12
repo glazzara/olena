@@ -51,7 +51,13 @@ int main()
   metal::vec<3,float> vec1 = make::vec(a, b, c);
   fun::x2x::translation<3,float> tr(all(1.6));
   fun::x2x::rotation<3,float> rot(0.3, 1);
-  std::cout << vec1 << std::endl;
-  std::cout << compose(tr, rot)(vec1) << std::endl;
-  std::cout << compose(rot, tr)(vec1) << std::endl;
+
+  std::cout << "vec : " << vec1 << std::endl;
+  std::cout << "tr(vec) : " << tr(vec1) << std::endl;
+  std::cout << "rot(vec) : " << rot(vec1) << std::endl;
+  std::cout << "tr(rot(vec)) : " << compose(tr, rot)(vec1) << std::endl;
+  std::cout << "rot(rot_1(vec)) : " << compose(rot, rot.inv())(vec1) << std::endl;
+  std::cout << "tr(rot(tr(vec))) : " << compose(tr, compose(rot, tr))(vec1) << std::endl;
+  std::cout << "(rototr_1)(rot(tr(vec)))) : "
+	    << compose(compose(rot, tr).inv(), compose(rot, tr))(vec1) << std::endl;
 }

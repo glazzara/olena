@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_INTERNAL_X2X_IMPL_HH
-# define MLN_FUN_INTERNAL_X2X_IMPL_HH
+#ifndef MLN_FUN_INTERNAL_X2X_LINEAR_IMPL_HH
+# define MLN_FUN_INTERNAL_X2X_LINEAR_IMPL_HH
 
-/*! \file mln/fun/internal/x2x_impl.hh
+/*! \file mln/fun/internal/x2x_linear_impl.hh
  *
- * \brief Implementation class for every Function_x2x.
+ * \brief Implementation class for every linear Function_x2x.
  */
 
 # include <mln/core/concept/function.hh>
@@ -47,7 +47,7 @@ namespace mln
     {
 
       template <typename V, typename E>
-      struct x2x_impl_
+      struct x2x_linear_impl_
       {
 	enum { dim = V::dim };
 
@@ -58,13 +58,14 @@ namespace mln
 
 	V operator()(const V& x) const
 	{
-	  return (m_ * x.to_h_vec()).to_vec();
+	  h_vec<dim, coord> tmp = m_ * x.to_h_vec();
+	  return tmp.to_vec();
 	}
 
         const matrix& mat() const;
 
       protected:
-	x2x_impl_();
+	x2x_linear_impl_();
 
 	matrix m_;
       };
@@ -74,14 +75,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V, typename E>
-      x2x_impl_<V,E>::x2x_impl_()
+      x2x_linear_impl_<V,E>::x2x_linear_impl_()
       {
       }
 
 
       template <typename V, typename E>
-      const typename x2x_impl_<V,E>::matrix&
-      x2x_impl_<V,E>::mat() const
+      const typename x2x_linear_impl_<V,E>::matrix&
+      x2x_linear_impl_<V,E>::mat() const
       {
 	return m_;
       }
@@ -96,4 +97,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_INTERNAL_X2X_IMPL_HH
+#endif // ! MLN_FUN_INTERNAL_X2X_LINEAR_IMPL_HH

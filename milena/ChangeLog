@@ -1,3 +1,16 @@
+2007-10-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix transformation. (it works !).
+	* tests/fun_x2x_composed.cc,
+	* tests/h_vec.cc,
+	* mln/fun/x2x/composed.hh,
+	* mln/fun/x2x/rotation.hh,
+	* mln/fun/x2x/translation.hh,
+	* mln/core/point.hh: Fix to respect homogeneous vector handling.
+	* mln/fun/internal/x2x_impl.hh: Rename as ...
+	* mln/fun/internal/x2x_linear_impl.hh: ...this
+	(operator()) : Take vec and return vec.
+
 2007-10-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Improve documentation in values.
