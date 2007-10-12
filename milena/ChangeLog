@@ -1,5 +1,10 @@
 2007-10-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add test for seed2tiling*.hh .
+	* seed2tiling.cc: New test for seed2tiling*.
+
+2007-10-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add seeds2tiling with distance priority (chamfer).
 	* seeds2tiling_with_chamfer.hh: New.
 
