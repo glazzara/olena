@@ -1,5 +1,15 @@
 2007-10-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add tests for queue.
+
+	* queue_p_fast.cc,
+	* queue_p_fast_priority.cc,
+	* queue_p_priority.cc: New tests.
+
+	* image2d.cc: Update test for (id_) in mln/core/internal.
+
+2007-10-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add new kind of queue.
 
 	* queue_p_fast.hh,

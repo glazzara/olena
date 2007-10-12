@@ -25,16 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d.cc
+/*! \file tests/queue_p.cc
  *
- * \brief Tests on mln::image2d.
+ * \brief Tests on mln::queue_p.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/geom/size2d.hh>
-
-#include <mln/core/init.hh>
-#include <mln/border/resize.hh>
+#include <mln/core/point2d.hh>
+#include <mln/core/queue_p_fast.hh>
 
 
 
@@ -42,21 +39,19 @@ int main()
 {
   using namespace mln;
 
-  const unsigned nrows = 1;
-  const unsigned ncols = 66;
-  const unsigned border = 4;
+  queue_p_fast<point2d> q;
+  q
+    .push(make::point2d(6, 9))
+    .push(make::point2d(5, 1))
+    .push(make::point2d(4, 2));
+  mln_assertion(q.npoints() == 3);
 
-  image2d<int> f(nrows, ncols, border);
+  std::cout << q.bbox() << std::endl;
+  std::cout << q << std::endl;
 
-  {
-    std::cout << f.id_() << std::endl;
-    image2d<int> g;
-    std::cout << g.id_() << std::endl;
-    g = f;
-    //    border::resize (g, 2);
-    std::cout << g.id_() << std::endl;
-  }
-
-  mln_assertion(f.npoints() == geom::nrows(f) * geom::ncols(f));
-  mln_assertion(f.ncells()  == (nrows + 2 * border) * (ncols + 2 * border));
+  q.pop();
+  mln_assertion(q.npoints() == 2);
+  point2d p = q.front();
+  mln_assertion(q.npoints() == 2);
+  mln_assertion(p == make::point2d(5, 1));
 }
