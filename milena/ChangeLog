@@ -1,5 +1,10 @@
 2007-10-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	Delete a warning of g++-4.1.
+	* mln/fun/internal/x2x_linear_impl.hh: Fix.
+
+2007-10-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Fix transformation. (it works !).
 	* tests/fun_x2x_composed.cc,
 	* tests/h_vec.cc,

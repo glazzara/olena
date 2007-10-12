@@ -49,7 +49,7 @@ namespace mln
       template <typename V, typename E>
       struct x2x_linear_impl_
       {
-	enum { dim = V::dim };
+        static const unsigned dim = V::dim; // To please g++ when comparing dim in metal bexpr.
 
 	typedef V argument;
 	typedef V result;
