@@ -30,7 +30,7 @@
 
 /*! \file mln/value/stack.hh
  *
- * \brief Definition of an image class FIXME
+ * \brief Definition of the stack image type.
  */
 
 # include <mln/core/internal/image_value_morpher.hh>
@@ -50,7 +50,7 @@ namespace mln
   {
 
 
-    /*! \brief data structure for stack_image
+    /*! \brief data structure for stack_image.
      *
      */
     template <unsigned n, typename I>
@@ -94,8 +94,16 @@ namespace mln
     } // end of namespace mln::value::internal
 
 
-    /*! \brief FIXME
+    /*! \brief stack image class. stack_image stores a
+     *  vector of n images of the same domain.
      *
+     * The parameter \c n is the number of images, \c I is the type of
+     * a stack element. Acces a value will compute a vector which
+     * contains n coordinates :
+     *                              [stack[0](p),
+     *                               stack[1](p),
+     *                               ... ,
+     *                               stack[n](p)]
      */
     template <unsigned n, typename I>
     struct stack_image : public mln::internal::image_value_morpher_< I, stack_image<n,I> >
@@ -144,7 +152,7 @@ namespace mln
     };
 
 
-
+    /// \{ Shortcut to build a stack with two images.
     template <typename I>
     stack_image<2, const I>
     stack(const Image<I>& ima1, const Image<I>& ima2);
@@ -153,6 +161,7 @@ namespace mln
     template <typename I>
     stack_image<2, I>
     stack(Image<I>& ima1, Image<I>& ima2);
+    /// \}
 
   } // end of namespace mln::value
 

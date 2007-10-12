@@ -50,7 +50,7 @@ namespace mln
     class float01;
 
 
-    /// General float01-level class on n bits.
+    /// General float01_ class on n bits.
     template <unsigned n>
     struct float01_
 
@@ -70,10 +70,13 @@ namespace mln
       /// Access to std type.
       float value() const;
 
+      /// Set value to the \p val th position in the quantized interval.
       void set_ind(unsigned long val);
 
+      /// Float convertion.
       operator float() const;
 
+      /// Float assigment.
       float01_<n>& operator=(float val);
     };
 

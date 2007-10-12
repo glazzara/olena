@@ -85,17 +85,24 @@ namespace mln
       /// Access to std type.
       unsigned long value() const;
 
+      /// Access to the encoding size.
       unsigned nbits() const;
 
+      /// Set the encoding size to nbits.
       void set_nbits(unsigned nbits);
 
+      /// Return an equivalent gray encoded on \p nbits bits.
       gray to_nbits(unsigned nbits) const;
 
+      /// Convertion.
       template <unsigned N>
       operator graylevel<N>() const;
 
     protected:
+      /// Encoding size.
       unsigned nbits_;
+
+      /// Value.
       unsigned long val_;
     };
 

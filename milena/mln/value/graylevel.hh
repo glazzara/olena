@@ -28,6 +28,11 @@
 #ifndef MLN_CORE_VALUE_GRAYLEVEL_HH
 # define MLN_CORE_VALUE_GRAYLEVEL_HH
 
+/*! \file mln/value/graylevel.hh
+ *
+ * \brief Definition of the mln::value::graylevel class.
+ */
+
 # include <iostream>
 
 # include <mln/core/contract.hh>
@@ -76,7 +81,6 @@ namespace mln
 
       /// Ctor with gray.
       graylevel(const gray&);
-
 
       /// Access to std type.
       mln_enc(int_u<n>) value() const;

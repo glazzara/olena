@@ -28,6 +28,11 @@
 #ifndef MLN_VALUE_SCALAR_HH
 # define MLN_VALUE_SCALAR_HH
 
+/*! \file mln/value/scalar.hh
+ *
+ * \brief Definition of the basic mln::value::scalar_ class.
+ */
+
 # include <mln/value/concept/scalar.hh>
 # include <mln/metal/is_a.hh>
 # include <mln/metal/if.hh>

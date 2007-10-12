@@ -31,7 +31,7 @@
 /*! \file mln/value/rgb8.hh
  *
  * \brief Color class for red-green-blue where every component is
- * 8-bit encoded.
+ * n-bit encoded.
  */
 
 # include <mln/value/concept/structured.hh>
@@ -51,7 +51,7 @@ namespace mln
 
 
     /*! \brief Color class for red-green-blue where every component is
-     * 8-bit encoded.
+     * n-bit encoded.
      */
     template <unsigned n>
     struct rgb : public Structured< rgb<n> >
@@ -64,6 +64,7 @@ namespace mln
       /// Equivalent associated type.
       typedef int_u<n> equiv[3];
 
+      /// \{ Acces to red/green/blue component.
       int_u<n>  red() const   { return c_[0]; }
       int_u<n>& red()         { return c_[0]; }
 
@@ -72,26 +73,30 @@ namespace mln
 
       int_u<n>  blue() const  { return c_[2]; }
       int_u<n>& blue()        { return c_[2]; }
+      /// \}
 
-      /// Ctors
+      /// \{ Ctors
       rgb<n>();
       rgb<n>(equiv a);
       rgb<n>(enc r, enc g, enc b);
       rgb<n>(enc l);
+      /// \}
 
-      /// assignments
+      /// \{ Assignments.
       rgb<n>& operator=(const rgb<n>& v);
       rgb<n>& operator=(const enc& i);
+      /// \}
 
       /// Zero value.
       static const rgb<n> zero;
 
-      /// Colors.
+      /// \{ Colors.
       static const rgb<n> black;
       static const rgb<n> max_red;
       static const rgb<n> max_green;
       static const rgb<n> max_blue;
       static const rgb<n> white;
+      /// \}
 
       /// addition
       rgb<n> operator+(const rgb<n>& v) const;

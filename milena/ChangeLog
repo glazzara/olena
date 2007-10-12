@@ -1,3 +1,16 @@
+2007-10-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Improve documentation in values.
+
+	* float01.hh,
+	* float01_.hh,
+	* float01_f.hh,
+	* gray.hh,
+	* graylevel.hh,
+	* rgb.hh,
+	* scalar.hh,
+	* stack.hh: Add documentation.
+
 2007-10-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Change concept of display show.

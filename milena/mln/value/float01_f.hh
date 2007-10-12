@@ -43,7 +43,7 @@ namespace mln
     struct float01;
 
 
-    /// General float01-level class on n bits.
+    /// General float01_f class on n bits.
     struct float01_f
       :
       public Floating< float01_f >,
@@ -65,6 +65,7 @@ namespace mln
       /// Op encoding_t.
       operator float() const;
 
+      /// Assigment with float.
       float01_f& operator=(const float val);
     };
 

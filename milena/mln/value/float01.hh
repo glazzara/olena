@@ -72,20 +72,31 @@ namespace mln
 
       /// Access to std type.
       float value() const;
+
+      /// Access to the position in the quantized interval.
       unsigned long value_ind() const;
 
+      /// Access to the encoding size.
       unsigned nbits() const;
 
+
+      /// Set the encoding size to nbits.
       float01&     set_nbits(unsigned nbits);
+
+      /// Return an equivalent gray encoded on \p nbits bits.
       const float01 to_nbits(unsigned nbits) const;
 
+      /// Convertion to float.
       operator float() const;
 
 //       template <unsigned n>
 //       operator float01_<n>() const;
 
     protected:
+      /// Encoding size.
       unsigned nbits_;
+
+      /// Value.
       unsigned long val_;
     };
 
