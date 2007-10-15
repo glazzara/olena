@@ -1,5 +1,10 @@
 2007-10-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add slow version of seed2tiling.
+	* slow_seed2tiling.cc: New.
+
+2007-10-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add norm l1.
 
 	* l1.hh: New norm l1.
