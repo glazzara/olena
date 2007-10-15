@@ -64,6 +64,7 @@
 
 # include <mln/norm/l2.hh>
 # include <mln/norm/l1.hh>
+# include <mln/norm/infty.hh>
 
 namespace mln
 {
@@ -87,9 +88,7 @@ namespace mln
 	  for_all(p2) if (input(p2) != 0)
 	    {
 	      mln_dpoint(I) dp = p1 - p2;
-	      float new_distance = norm::linfty<2, unsigned> (dp.to_vec ());
-	      std::cout << new_distance
-			<< std::endl;
+	      float new_distance = norm::l2<2, unsigned> (dp.to_vec ());
 	      if (new_distance < d)
 		{
 		  output(p1) = input(p2);
