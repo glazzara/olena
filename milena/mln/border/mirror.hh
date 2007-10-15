@@ -30,7 +30,8 @@
 
 /*! \file mln/border/mirror.hh
  *
- * \brief FIXME.
+ * \brief Define function that fills border using nearer pixels with a
+ * mirroring effect.
  */
 
 # include <mln/core/concept/image.hh>

@@ -30,8 +30,7 @@
 
 /*! \file mln/canvas/chamfer.hh
  *
- * \brief Connected component chamfer of the object part in a binary
- * image.
+ * \brief Apply chamfer algorithm to a binary image.
  */
 
 namespace mln

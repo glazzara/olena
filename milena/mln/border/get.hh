@@ -30,7 +30,7 @@
 
 /*! \file mln/border/get.hh
  *
- * \brief FIXME.
+ * \brief Define function that returns the real border thickness of image.
  */
 
 # include <mln/border/find.hh>

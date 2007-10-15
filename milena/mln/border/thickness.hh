@@ -30,7 +30,8 @@
 
 /*! \file mln/border/thickness.hh
  *
- * \brief FIXME.
+ * \brief Define the variable which specifies border thickness for
+ * image creation.
  */
 
 

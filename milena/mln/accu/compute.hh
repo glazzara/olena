@@ -30,7 +30,7 @@
 
 /*! \file mln/accu/compute.hh
  *
- * \brief Make an accumulator compute image pixels.
+ * \brief Define an accumulator that computes image pixels.
  */
 
 # include <mln/core/concept/meta_accumulator.hh>

@@ -30,7 +30,7 @@
 
 /*! \file mln/border/find.hh
  *
- * \brief FIXME.
+ * \brief Define function that searches the border thickness of image.
  */
 
 # include <mln/core/internal/image_morpher.hh>

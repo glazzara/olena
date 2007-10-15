@@ -30,7 +30,7 @@
 
 /*! \file mln/border/fill.hh
  *
- * \brief FIXME.
+ * \brief Define function that fills border using a given value.
  */
 
 # include <mln/core/concept/image.hh>

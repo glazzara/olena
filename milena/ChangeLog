@@ -1,5 +1,20 @@
 2007-10-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Update typo.
+	* accu/compute.hh,
+	* accu/median_alt.hh,
+	* accu/take.hh,
+	* border/duplicate.hh,
+	* border/fill.hh,
+	* border/find.hh,
+	* border/get.hh,
+	* border/mirror.hh,
+	* border/resize.hh,
+	* border/thickness.hh,
+	* canvas/chamfer.hh: Update typo.
+
+2007-10-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix slow_seed2tiling.
 	* slow_seed2tiling.cc: Fix for compiling.
 

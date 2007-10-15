@@ -30,7 +30,7 @@
 
 /*! \file mln/accu/take.hh
  *
- * \brief Make an accumulator take image pixels.
+ * \brief Define an accumulator that takes image pixels.
  */
 
 # include <mln/core/concept/accumulator.hh>

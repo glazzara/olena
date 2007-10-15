@@ -30,7 +30,7 @@
 
 /*! \file mln/border/duplicate.hh
  *
- * \brief FIXME.
+ * \brief Define function that fills border using nearest pixels.
  */
 
 # include <mln/core/concept/image.hh>

@@ -30,7 +30,8 @@
 
 /*! \file mln/border/resize.hh
  *
- * \brief Resize border.
+ * \brief Define a function that resizes the virtual border of an
+ * image.
  */
 
 # include <cstring>
