@@ -28,6 +28,11 @@
 #ifndef MLN_METAL_UNPTR_HH
 # define MLN_METAL_UNPTR_HH
 
+/*!
+ * \file  mln/metal/unptr.hh
+ *
+ * \brief FIXME.
+ */
 
 # define mlc_unptr(T) typename mln::metal::unptr< T >::ret
 

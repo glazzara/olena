@@ -28,6 +28,11 @@
 #ifndef MLN_VALUE_GRAY_HH
 # define MLN_VALUE_GRAY_HH
 
+/*! \file mln/value/gray.hh
+ *
+ * \brief FIXME.
+ */
+
 # include <iostream>
 # include <cmath>
 

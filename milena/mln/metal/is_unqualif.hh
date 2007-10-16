@@ -28,6 +28,12 @@
 #ifndef MLN_METAL_IS_UNQUALIF_HH
 # define MLN_METAL_IS_UNQUALIF_HH
 
+/*!
+ * \file  mln/metal/is_unqualif.hh
+ *
+ * \brief FIXME.
+ */
+
 # include <mln/metal/equal.hh>
 # include <mln/metal/unqualif.hh>
 

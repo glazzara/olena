@@ -28,6 +28,12 @@
 #ifndef MLN_METAL_UNQUALIF_HH
 # define MLN_METAL_UNQUALIF_HH
 
+/*!
+ * \file  mln/metal/unqualif.hh
+ *
+ * \brief FIXME.
+ */
+
 # include <mln/metal/unconst.hh>
 # include <mln/metal/unptr.hh>
 # include <mln/metal/unref.hh>

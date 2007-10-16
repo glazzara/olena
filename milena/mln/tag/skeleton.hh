@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TAG_SKELETON_HH
-# define MLN_CORE_TAG_SKELETON_HH
+#ifndef MLN_TAG_SKELETON_HH
+# define MLN_TAG_SKELETON_HH
 
-/*! \file mln/core/tag/skeleton.hh
+/*! \file mln/tag/skeleton.hh
  *
  * \brief Definition of tags used in the skeleton types associated to
  * image types.
@@ -57,4 +57,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_TAG_SKELETON_HH
+#endif // ! MLN_TAG_SKELETON_HH

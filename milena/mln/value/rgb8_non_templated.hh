@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_RGB8_HH
-# define MLN_VALUE_RGB8_HH
+#ifndef MLN_VALUE_RGB8_NON_TEMPLATED_HH
+# define MLN_VALUE_RGB8_NON_TEMPLATED_HH
 
-/*! \file mln/value/rgb8.hh
+/*! \file mln/value/rgb8_non_templated.hh
  *
  * \brief Color class for red-green-blue where every component is
  * 8-bit encoded.
@@ -188,4 +188,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_RGB8_HH
+#endif // ! MLN_VALUE_RGB8_NON_TEMPLATED_HH

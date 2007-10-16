@@ -30,7 +30,7 @@
 
 /*! \file mln/pw/image.hh
  *
- * \brief Definition of an image class FIXME
+ * \brief FIXME.
  */
 
 # include <mln/core/internal/image_primary.hh>

@@ -28,6 +28,12 @@
 #ifndef MLN_MORPHO_RD_HH
 # define MLN_MORPHO_RD_HH
 
+/*!
+ * \file  mln/morpho/Rd.hh
+ *
+ * \brief FIXME.
+ */
+
 # include <vector>
 
 # include <mln/core/concept/image.hh>

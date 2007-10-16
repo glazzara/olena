@@ -30,7 +30,7 @@
 
 /*! \file mln/norm/l2.hh
  *
- * \brief Define some infinity-norm related routines.
+ * \brief Define some l2-norm related routines.
  */
 
 # include <cmath>

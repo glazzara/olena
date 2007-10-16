@@ -28,6 +28,12 @@
 #ifndef MLN_METAL_VEC_HH
 # define MLN_METAL_VEC_HH
 
+/*!
+ * \file  mln/metal/vec.hh
+ *
+ * \brief Definition of a generic vector class.
+ */
+
 # include <iostream>
 # include <cmath>
 

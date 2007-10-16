@@ -28,6 +28,12 @@
 #ifndef MLN_METAL_UNCONST_HH
 # define MLN_METAL_UNCONST_HH
 
+/*!
+ * \file  mln/metal/unconst.hh
+ *
+ * \brief FIXME.
+ */
+
 
 # define mlc_unconst(T) typename mln::metal::unconst< T >::ret
 # define mlc_unconst_(T)         mln::metal::unconst< T >::ret

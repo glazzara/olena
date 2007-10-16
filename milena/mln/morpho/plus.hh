@@ -28,6 +28,13 @@
 #ifndef MLN_MORPHO_PLUS_HH
 # define MLN_MORPHO_PLUS_HH
 
+/*!
+ * \file  mln/morpho/plus.hh
+ *
+ * \brief Definition of a function that make a plus
+ * (logical or or arithmetical plus) of an image.
+ */
+
 # include <mln/level/compare.hh>
 # include <mln/logical/or.hh>
 # include <mln/arith/plus.hh>

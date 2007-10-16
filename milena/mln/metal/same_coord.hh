@@ -28,6 +28,12 @@
 #ifndef MLN_METAL_SAME_COORD_HH
 # define MLN_METAL_SAME_COORD_HH
 
+/*!
+ * \file  mln/metal/same_coord.hh
+ *
+ * \brief FIXME.
+ */
+
 # include <mln/metal/equal.hh>
 # include <mln/core/macros.hh>
 

@@ -28,7 +28,7 @@
 #ifndef MLN_VALUE_RGB_HH
 # define MLN_VALUE_RGB_HH
 
-/*! \file mln/value/rgb8.hh
+/*! \file mln/value/rgb.hh
  *
  * \brief Color class for red-green-blue where every component is
  * n-bit encoded.

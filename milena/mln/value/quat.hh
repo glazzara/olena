@@ -28,6 +28,11 @@
 #ifndef MLN_VALUE_QUAT_HH
 # define MLN_VALUE_QUAT_HH
 
+/*! \file mln/value/quat.hh
+ *
+ * \brief Define a class for quaternion values.
+ */
+
 # include <cmath>
 
 # include <mln/metal/vec.hh>

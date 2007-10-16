@@ -28,6 +28,12 @@
 #ifndef MLN_METAL_ABORT_HH
 # define MLN_METAL_ABORT_HH
 
+/*!
+ * \file  mln/metal/abort.hh
+ *
+ * \brief FIXME.
+ */
+
 # include <mln/metal/bool.hh>
 
 

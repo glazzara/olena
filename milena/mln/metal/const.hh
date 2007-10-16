@@ -28,6 +28,12 @@
 #ifndef MLN_METAL_CONST_HH
 # define MLN_METAL_CONST_HH
 
+/*!
+ * \file  mln/metal/const.hh
+ *
+ * \brief FIXME.
+ */
+
 
 # define mlc_const(T) typename mln::metal::const_< T >::ret
 

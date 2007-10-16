@@ -28,6 +28,11 @@
 #ifndef MLN_VALUE_FLOAT01_HH
 # define MLN_VALUE_FLOAT01_HH
 
+/*! \file mln/value/float01.hh
+ *
+ * \brief Define a generic class for float.
+ */
+
 # include <iostream>
 # include <utility>
 

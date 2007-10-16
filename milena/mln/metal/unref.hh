@@ -28,6 +28,11 @@
 #ifndef MLN_METAL_UNREF_HH
 # define MLN_METAL_UNREF_HH
 
+/*!
+ * \file  mln/metal/unref.hh
+ *
+ * \brief FIXME.
+ */
 
 # define mlc_unref(T) typename mln::metal::unref< T >::ret
 

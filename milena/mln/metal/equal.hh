@@ -28,6 +28,12 @@
 #ifndef MLN_METAL_EQUAL_HH
 # define MLN_METAL_EQUAL_HH
 
+/*!
+ * \file  mln/metal/equal.hh
+ *
+ * \brief FIXME.
+ */
+
 # include <mln/metal/bool.hh>
 
 

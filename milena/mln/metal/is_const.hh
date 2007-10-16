@@ -28,6 +28,12 @@
 #ifndef MLN_METAL_IS_CONST_HH
 # define MLN_METAL_IS_CONST_HH
 
+/*!
+ * \file  mln/metal/is_const.hh
+ *
+ * \brief FIXME.
+ */
+
 # include <mln/metal/bool.hh>
 
 

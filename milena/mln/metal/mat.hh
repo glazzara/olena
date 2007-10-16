@@ -28,6 +28,12 @@
 #ifndef MLN_METAL_MAT_HH
 # define MLN_METAL_MAT_HH
 
+/*!
+ * \file  mln/metal/mat.hh
+ *
+ * \brief Definition of a generic matrix class.
+ */
+
 # include <iostream>
 
 # include <mln/core/concept/object.hh>

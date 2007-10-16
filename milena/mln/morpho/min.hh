@@ -28,6 +28,13 @@
 #ifndef MLN_MORPHO_MIN_HH
 # define MLN_MORPHO_MIN_HH
 
+/*!
+ * \file  mln/morpho/min.hh
+ *
+ * \brief Definition of a function that make a min
+ * (logical and or arithmetical min) of an image.
+ */
+
 # include <mln/level/compare.hh>
 # include <mln/logical/and.hh>
 # include <mln/arith/min.hh>

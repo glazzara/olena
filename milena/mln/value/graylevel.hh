@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_VALUE_GRAYLEVEL_HH
-# define MLN_CORE_VALUE_GRAYLEVEL_HH
+#ifndef MLN_VALUE_GRAYLEVEL_HH
+# define MLN_VALUE_GRAYLEVEL_HH
 
 /*! \file mln/value/graylevel.hh
  *
@@ -256,4 +256,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CORE_VALUE_GRAYLEVEL_HH
+#endif // ! MLN_VALUE_GRAYLEVEL_HH

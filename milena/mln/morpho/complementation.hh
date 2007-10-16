@@ -28,6 +28,13 @@
 #ifndef MLN_MORPHO_COMPLEMENTATION_HH
 # define MLN_MORPHO_COMPLEMENTATION_HH
 
+/*!
+ * \file  mln/morpho/complementation.hh
+ *
+ * \brief Definition of a function that make a complementation
+ * (logical or arithmetical) of an image.
+ */
+
 # include <mln/level/compare.hh>
 # include <mln/logical/not.hh>
 # include <mln/arith/revert.hh>

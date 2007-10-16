@@ -25,8 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_VALUE_FLOAT01__HH
-# define MLN_CORE_VALUE_FLOAT01__HH
+#ifndef MLN_VALUE_FLOAT01__HH
+# define MLN_VALUE_FLOAT01__HH
+
+/*! \file mln/value/float01_.hh
+ *
+ * \brief FIXME.
+ */
 
 # include <iostream>
 # include <mln/core/contract.hh>
@@ -202,4 +207,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CORE_VALUE_FLOAT01__HH
+#endif // ! MLN_VALUE_FLOAT01__HH

@@ -1,3 +1,40 @@
+2007-10-16  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Update typo.
+
+	* mln/metal/abort.hh,
+	* mln/metal/const.hh,
+	* mln/metal/equal.hh,
+	* mln/metal/is_const.hh,
+	* mln/metal/is_unqualif.hh,
+	* mln/metal/mat.hh,
+	* mln/metal/same_coord.hh,
+	* mln/metal/same_point.hh,
+	* mln/metal/unconst.hh,
+	* mln/metal/unptr.hh,
+	* mln/metal/unqualif.hh,
+	* mln/metal/unref.hh,
+	* mln/metal/vec.hh,
+	* mln/morpho/Rd.hh,
+	* mln/morpho/complementation.hh,
+	* mln/morpho/min.hh,
+	* mln/morpho/minus.hh,
+	* mln/morpho/plus.hh,
+	* mln/norm/l1.hh,
+	* mln/norm/l2.hh,
+	* mln/pw/image.hh,
+	* mln/tag/init.hh,
+	* mln/tag/skeleton.hh,
+	* mln/value/float01.hh,
+	* mln/value/float01_.hh,
+	* mln/value/float01_f.hh,
+	* mln/value/gray.hh,
+	* mln/value/graylevel.hh,
+	* mln/value/internal/integer.hh,
+	* mln/value/quat.hh,
+	* mln/value/rgb.hh,
+	* mln/value/rgb8_non_templated.hh: Update typo.
+
 2007-10-16  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update typo.

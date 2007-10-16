@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TAG_INIT_HH
-# define MLN_CORE_TAG_INIT_HH
+#ifndef MLN_TAG_INIT_HH
+# define MLN_TAG_INIT_HH
 
-/*! \file mln/core/tag/init.hh
+/*! \file mln/tag/init.hh
  *
  * \brief Definition of tags used in the mln::init mechanism.
  */
@@ -51,4 +51,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_TAG_INIT_HH
+#endif // ! MLN_TAG_INIT_HH

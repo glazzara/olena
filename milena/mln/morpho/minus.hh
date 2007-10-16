@@ -28,6 +28,13 @@
 #ifndef MLN_MORPHO_MINUS_HH
 # define MLN_MORPHO_MINUS_HH
 
+/*!
+ * \file  mln/morpho/minus.hh
+ *
+ * \brief Definition of a function that make a minus (logical "and
+ * not" or arithmetical min) of an image.
+ */
+
 # include <mln/level/compare.hh>
 # include <mln/logical/and_not.hh>
 # include <mln/arith/minus.hh>
