@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/sub_image.cc
+/*! \file tests/color_pretty.cc
  *
- * \brief Tests on mln::sub_image.
+ * \brief Tests on mln::display::color::pretty.
  */
 
 # include <mln/core/image2d.hh>

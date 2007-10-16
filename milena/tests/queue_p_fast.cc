@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/queue_p.cc
+/*! \file tests/queue_p_fast.cc
  *
- * \brief Tests on mln::queue_p.
+ * \brief Tests on mln::queue_p_fast.
  */
 
 #include <mln/core/point2d.hh>

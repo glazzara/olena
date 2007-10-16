@@ -27,7 +27,7 @@
 
 /*! \file tests/labeling_foreground.cc
  *
- * \brief Test on mln::labeling::foreground.
+ * \brief Test on mln::labeling::level.
  */
 
 #include <mln/core/image2d.hh>

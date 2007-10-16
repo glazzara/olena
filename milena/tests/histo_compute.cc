@@ -27,7 +27,7 @@
 
 /*! \file tests/histo_compute.cc
  *
- * \brief Tests on mln::accu::histo<S> and mln::histo::data<S>.
+ * \brief Tests on mln::accu::histo and mln::histo::data.
  */
 
 #include <iterator>

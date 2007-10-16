@@ -27,7 +27,7 @@
 
 /*! \file tests/linear_log.cc
  *
- * \brief Tests on mln::linear::log.
+ * \brief Tests on mln::linear.
  */
 
 #include <mln/core/image2d.hh>

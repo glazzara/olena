@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border_fill.cc
+/*! \file tests/border_fill/test_border_fill_image2d_2.cc
  *
  * \brief Tests on mln::border::fill.
  */

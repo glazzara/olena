@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image_if_value.cc
+/*! \file tests/image_if_interval.cc
  *
- * \brief Tests on mln::image_if_value.
+ * \brief Tests on mln::image_if_interval.
  */
 
 #include <mln/core/image2d.hh>

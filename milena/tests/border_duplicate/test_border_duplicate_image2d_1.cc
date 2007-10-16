@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/test_border_duplicate_image2d_1.cc
+/*! \file tests/border_duplicate/test_border_duplicate_image2d_1.cc
  *
  * \brief Tests on mln::border::duplicate.
  */

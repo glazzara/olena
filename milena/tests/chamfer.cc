@@ -27,7 +27,7 @@
 
 /*! \file tests/chamfer.cc
  *
- * \brief Tests on all files in mln/geom/chamfer.hh .
+ * \brief Tests on mln::geom::chamfer.hh.
  */
 
 #include <mln/core/image2d.hh>

@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/ppm_load.cc
+/*! \file tests/io_pgm.cc
  *
- * \brief Test on mln::io::ppm::load.
+ * \brief Test on mln::io::pgm::load and mln::io::pgm::save.
  */
+
 
 #include <mln/core/image2d.hh>
 

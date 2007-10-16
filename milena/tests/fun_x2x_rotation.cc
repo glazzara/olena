@@ -27,7 +27,7 @@
 
 /*! \file tests/image2d.cc
  *
- * \brief Tests on mln::image2d.
+ * \brief Tests on mln::fun::x2x::rotation.
  */
 
 

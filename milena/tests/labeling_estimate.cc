@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling_foreground.cc
+/*! \file tests/labeling_estimate.cc
  *
- * \brief Test on mln::labeling::foreground.
+ * \brief Test on mln::labeling::estimate.
  */
 
 #include <mln/core/image2d.hh>

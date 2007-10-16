@@ -27,7 +27,7 @@
 
 /*! \file tests/seeds2tiling.cc
  *
- * \brief Test on mln::geom::seed2tiling*.hh.
+ * \brief Tests on mln::geom::seed2tiling.
  */
 
 

@@ -27,7 +27,7 @@
 
 /*! \file tests/metal_pow.cc
  *
- * \brief Test on mln::metal::math::pow.
+ * \brief Test on mln::metal::math.
  */
 
 #include <iostream>

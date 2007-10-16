@@ -25,6 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+/*!
+ * \file   test/main.cc
+ *
+ * \brief  Test on mln::morpho.
+ *
+ *
+ */
+
 #include <cmath>
 
 #include <mln/core/image2d.hh>

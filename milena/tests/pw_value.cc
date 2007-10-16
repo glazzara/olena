@@ -27,7 +27,7 @@
 
 /*! \file tests/pw_value.cc
  *
- * \brief Test on mln::fun::pw_value_.
+ * \brief Test on mln::pw::value_.
  */
 
 #include <mln/core/image2d.hh>

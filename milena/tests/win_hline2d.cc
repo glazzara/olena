@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win_diag2d.cc
+/*! \file tests/win_hline2d.cc
  *
- * \brief Tests on mln::win::diag2d.
+ * \brief Tests on mln::win::hline2d.
  */
 
 #include <mln/win/hline2d.hh>

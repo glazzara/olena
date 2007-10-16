@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_fill.cc
+/*! \file tests/level_paste.cc
  *
- * \brief Tests on mln::level::fill
+ * \brief Tests on mln::level::paste.
  */
 
 #include <mln/core/image2d.hh>

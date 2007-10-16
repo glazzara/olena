@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d.cc
+/*! \file tests/interpolated.cc
  *
- * \brief Tests on mln::image2d.
+ * \brief Tests on mln::interpolated.
  */
 
 
 #include <iostream>
 #include <mln/core/image2d.hh>
-#include <mln/core/interpolated.hh>\
+#include <mln/core/interpolated.hh>
 
 #include <mln/metal/vec.hh>
 

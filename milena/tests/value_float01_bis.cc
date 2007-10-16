@@ -25,6 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+/*! \file tests/value_float01_bis.cc
+ *
+ * \brief Tests on mln::value::float01.
+ */
+
 #include <iostream>
 #include <mln/value/float01_8.hh>
 #include <mln/value/float01_16.hh>
