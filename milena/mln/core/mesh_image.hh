@@ -30,7 +30,7 @@
 
 /*! \file mln/core/mesh_image.hh
  *
- * \brief Definition of an image class mesh_image.
+ * \brief Definition of an graph-based image.
  */
 
 # include <mln/core/internal/image_identity.hh>

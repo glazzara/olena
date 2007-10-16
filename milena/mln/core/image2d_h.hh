@@ -28,9 +28,10 @@
 #ifndef MLN_CORE_IMAGE2D_H_HH
 # define MLN_CORE_IMAGE2D_H_HH
 
-/*! \file mln/core/hexa_piter.hh
+/*! \file mln/core/image2d_h.hh
  *
- * \brief Definition of iterators on points of pset_ifes.
+ * \brief Definition of an alias for a 2d image based on an hexagonal
+ * mesh.
  */
 
 # include <mln/core/image2d.hh>

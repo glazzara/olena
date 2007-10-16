@@ -30,7 +30,8 @@
 
 /*! \file mln/core/cast_image.hh
  *
- * \brief Definition of an image class FIXME
+ * \brief Definition of an image morpher that make the user see the
+ * same image but with another data type.
  *
  * \todo Rename as cast_image (without '_')!
  */

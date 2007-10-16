@@ -30,7 +30,8 @@
 
 /*! \file mln/core/init.hh
  *
- * \brief Initialization of an image from another one.
+ * \brief Definition of function that initialize an image from another
+ * one.
  */
 
 # include <mln/tag/init.hh>

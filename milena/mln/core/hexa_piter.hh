@@ -30,7 +30,7 @@
 
 /*! \file mln/core/hexa_piter.hh
  *
- * \brief Definition of iterators on points of pset_ifes.
+ * \brief Definition of iterators on hexagonal points.
  */
 
 # include <mln/core/internal/piter_adaptor.hh>

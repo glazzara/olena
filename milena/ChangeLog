@@ -1,3 +1,29 @@
+2007-10-16  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Augment doc.
+	* mln/convert/to_rgb.hh,
+	* mln/core/cast_image.hh,
+	* mln/core/decorated_image.hh,
+	* mln/core/dpoints_piter.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/grids.hh,
+	* mln/core/h_mat.hh,
+	* mln/core/h_vec.hh,
+	* mln/core/hexa.hh,
+	* mln/core/hexa_piter.hh,
+	* mln/core/image2d_h.hh,
+	* mln/core/image_if.hh,
+	* mln/core/image_if_interval.hh,
+	* mln/core/image_if_value.hh,
+	* mln/core/init.hh,
+	* mln/core/inplace.hh,
+	* mln/core/interpolated.hh,
+	* mln/core/mesh_image.hh,
+	* mln/core/mesh_p.hh,
+	* mln/core/mesh_p_piter.hh,
+	* mln/core/mesh_psite.hh,
+	* mln/core/plain.hh: Augment.
+
 2007-10-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update typo.

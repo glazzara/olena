@@ -30,7 +30,8 @@
 
 /*! \file mln/core/image_if_interval.hh
  *
- * \brief Definition of a image_if_interval image.
+ * \brief Definition of a image which domain is restricted by a
+ * interval.
  */
 
 # include <mln/core/internal/image_if_base.hh>

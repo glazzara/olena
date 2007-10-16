@@ -30,7 +30,8 @@
 
 /*! \file mln/core/image_if.hh
  *
- * \brief Definition of a image_if image.
+ * \brief Definition of a image which domain is restricted by a
+ * function.
  */
 
 # include <mln/core/internal/image_if_base.hh>

@@ -30,7 +30,8 @@
 
 /*! \file mln/core/plain.hh
  *
- * \brief Definition of an image class FIXME
+ * \brief Definition of a morpher that prevent an image from sharing
+ * his data.
  */
 
 # include <cmath>

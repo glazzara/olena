@@ -32,6 +32,10 @@
 
 # include <mln/value/proxy.hh>
 
+/*! \file mln/core/decorated_image.hh
+ *
+ * \brief Definition of an image that can have additional features.
+ */
 
 namespace mln
 {

@@ -30,7 +30,8 @@
 
 /*! \file mln/core/interpolated.hh
  *
- * \brief Definition of an image class FIXME
+ * \brief Definition of a morpher that makes an image become readable
+ * with floating coordinates.
  */
 
 # include <cmath>

@@ -28,7 +28,7 @@
 #ifndef MLN_CONVERT_TO_RGB_HH
 # define MLN_CONVERT_TO_RGB_HH
 
-/*! \file mln/convert/to_window.hh
+/*! \file mln/convert/to_rgb.hh
  *
  * \brief Conversions to mln::value::rgb.
  */

@@ -33,7 +33,7 @@
 
 /*! \file mln/core/mesh_psite.hh
  *
- * \brief Definition of a graph.
+ * \brief Definition of point iterator on graph-based point set.
  */
 
 namespace mln

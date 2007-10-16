@@ -30,8 +30,7 @@
 
 /*! \file mln/core/h_mat.hh
  *
- * \brief Definition of the mln::h_mat alias and of its
- * construction routine.
+ * \brief Definition of a matrix with homogeneous coordinates.
  */
 
 # include <mln/metal/mat.hh>

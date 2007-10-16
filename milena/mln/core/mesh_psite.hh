@@ -30,7 +30,7 @@
 
 /*! \file mln/core/mesh_p.hh
  *
- * \brief Definition of mln::mesh_psite.
+ * \brief Definition of a graph-based point site.
  */
 
 namespace mln

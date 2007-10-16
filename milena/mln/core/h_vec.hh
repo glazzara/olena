@@ -30,8 +30,7 @@
 
 /*! \file mln/core/h_vec.hh
  *
- * \brief Definition of the mln::h_vec alias and of its
- * construction routine.
+ * \brief Definition of a vector with homogeneous coordinates.
  */
 
 # include <mln/metal/vec.hh>

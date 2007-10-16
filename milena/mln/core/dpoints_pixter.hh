@@ -30,8 +30,8 @@
 
 /*! \file mln/core/dpoints_pixter.hh
  *
- * \brief Definition of mln::dpoints_fwd_pixter and
- * mln::dpoints_bkd_pixter.
+ * \brief Definition of forward and backward mln::dpoint_ based
+ * iterators for pixels iterations.
  */
 
 # include <cassert>

@@ -30,7 +30,7 @@
 
 /*! \file mln/core/grids.hh
  *
- * \brief This file defines some grid classes.
+ * \brief Definition of some grid classes.
  */
 
 # include <mln/core/concept/regular_grid.hh>

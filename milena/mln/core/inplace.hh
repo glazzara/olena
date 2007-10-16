@@ -29,7 +29,9 @@
 # define MLN_CORE_INPLACE_HH
 
 /*! \file mln/core/inplace.hh
- * \brief Definition of the mln::inplace routine.
+ *
+ * \brief Definition of routine that make temporary objects become
+ * mutable.
  */
 
 # include <mln/core/exact.hh>

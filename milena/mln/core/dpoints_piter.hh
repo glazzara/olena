@@ -30,7 +30,8 @@
 
 /*! \file mln/core/dpoints_piter.hh
  *
- * \brief Definition of mln::dpoints_fwd_piter and mln::dpoints_bkd_piter.
+ * \brief Definition of forward and backward mln::dpoint_ based
+ * iterators.
  */
 
 # include <mln/core/internal/point_iterator_base.hh>

@@ -37,7 +37,7 @@
 
 /*! \file mln/core/mesh_p.hh
  *
- * \brief Definition of mln::mesh_p.
+ * \brief Definition of an point set based on graph.
  */
 
 namespace mln

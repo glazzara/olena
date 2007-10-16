@@ -32,7 +32,8 @@
 
 /*! \file mln/core/hexa.hh
  *
- * \brief Definition of the mln::hexa class.
+ * \brief Definition of a morpher that makes hexagonal the mesh of an
+ * image.
  */
 
 # include <mln/core/internal/image_domain_morpher.hh>
