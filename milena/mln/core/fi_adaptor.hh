@@ -29,15 +29,15 @@
 # define MLN_CORE_FI_ADAPTOR_HH
 
 
-/*! \file mln/core/image2d.hh
+/*! \file mln/core/fi_adaptor.hh
  *
- * \brief Definition of the fi_adaptor image class. This class aim
- * to use the fipImage class (Main FreeImagePlus class) thought one of
- * our class. Then we can pass image data as our algorithms and
+ * \brief Definition of the fi_adaptor image class. This class aims
+ * to use the fipImage class (Main FreeImagePlus class) through one of
+ * our class. Then we can pass image data as argument to our algorithms and
  * FreeImagePlus's ones.
  *
  * For compatibility reasons, images from FreeImage library which
- * doesn't take more than 7 are converted to 8 bits.
+ * doesn't take more than 7bits per pixel are converted to fill 8 bits per pixel.
  *
  *
  * COMPILATION:
@@ -64,19 +64,31 @@ namespace mln
     template <typename I>
     struct data_< fi_adaptor<I> >
     {
+      /// Constructor.
       data_();
+
+      /// Destructor.
       ~data_();
 
+      /// Adaptee image
       fipImage fi_ima_;
-      bool fi_ima_loaded;
 
+      /// Pointer to pixel buffer.
       mln_value(I)*  buffer_;
+
+      /// Pointer to an array of pointer on images lines.
       mln_value(I)** array_;
 
-      box2d b_;  // theoretical box
+      /// theoretical box
+      box2d b_;
 
+      /// Synchronise buffer_, array_ and b_ with actual adaptee image.
       void sync_with_adaptee_();
+
+      /// Desallocate allocated datas of this structure.
       void deallocate_();
+
+      /// Swap data between images.
       void swap_(data_< fi_adaptor<I> >& other_);
     };
 
@@ -105,6 +117,13 @@ namespace mln
 
   } // end of namespace mln::trait
 
+
+  /*! \brief fi_adaptor class.
+   *
+   * The parameter \c I is the type of image through milena will see
+   * the Freeimage's class. This class aims to load images using
+   * Freeimage library.
+   */
 
   template <typename I>
   struct fi_adaptor : public internal::image_primary_< box2d, fi_adaptor<I> >
@@ -224,10 +243,11 @@ namespace mln
     data_< fi_adaptor<I> >::sync_with_adaptee_()
     {
       mln_precondition(fi_ima_.isValid());
+      mln_precondition(fi_ima_.getBitsPerPixel() == 8 * sizeof(mln_value(I)));
+
       deallocate_();
       b_ = make::box2d(fi_ima_.getHeight(),
 		       fi_ima_.getWidth());
-
       unsigned
 	nr = fi_ima_.getHeight(),
 	nc = fi_ima_.getWidth();
@@ -306,6 +326,8 @@ namespace mln
   fi_adaptor<I>::operator()(const point2d& p) const
   {
     mln_precondition(this->owns_(p));
+
+    // Because Freeimage stores lena upside down.
     return this->data_->array_[this->domain().len(0) - 1 - p.row()][p.col()];
   }
 
@@ -314,6 +336,8 @@ namespace mln
   fi_adaptor<I>::operator()(const point2d& p)
   {
     mln_precondition(this->owns_(p));
+
+    // Because Freeimage stores lena upside down.
     return this->data_->array_[this->domain().len(0) - 1 - p.row()][p.col()];
   }
 
@@ -338,6 +362,8 @@ namespace mln
   fi_adaptor<I>::at(int row, int col) const
   {
     mln_precondition(this->owns_(make::point2d(row, col)));
+
+    // Because Freeimage stores lena upside down.
     return this->data_->array_[this->domain().len(0) - 1 - row][col];
   }
 
@@ -346,6 +372,8 @@ namespace mln
   fi_adaptor<I>::at(int row, int col)
   {
     mln_precondition(this->owns_(make::point2d(row, col)));
+
+    // Because Freeimage stores lena upside down.
     return this->data_->array_[this->domain().len(0) - 1 - row][col];
   }
 

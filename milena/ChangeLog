@@ -1,5 +1,11 @@
 2007-10-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix in fi_adaptor.
+	* mln/core/fi_adaptor.hh: Fix
+	* tests/fi_adaptor.cc: Fix
+
+2007-10-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add fi_adaptor class to interact with Free Image.
 
 	* mln/core/fi_adaptor.hh: The fi_adaptor class.

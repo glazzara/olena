@@ -35,6 +35,7 @@
 #include <mln/win/rectangle2d.hh>
 
 #include <mln/value/int_u8.hh>
+#include <mln/value/rgb8.hh>
 
 #include <mln/level/paste.hh>
 #include <mln/level/median.hh>
@@ -50,6 +51,7 @@ using namespace mln;
 int main()
 {
   using typename value::int_u8;
+  using typename value::rgb8;
 
 #ifdef FREEIMAGE_LIB
   //FIXME : is it necessary??
