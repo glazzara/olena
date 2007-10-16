@@ -30,7 +30,7 @@
 
 /*! \file mln/core/rle_image.hh
  *
- * \brief Definition of mln::rle_image
+ * \brief Definition of an image with rle encoding.
  */
 
 # include <mln/core/internal/run_image.hh>

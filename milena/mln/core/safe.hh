@@ -28,7 +28,17 @@
 #ifndef MLN_CORE_SAFE_HH
 # define MLN_CORE_SAFE_HH
 
+/*!
+ * \file   safe.hh
+ *
+ * \brief Definition of a morpher that makes image become accessible
+ * at undefined location.
+ *
+ */
+
+
 # include <mln/core/internal/image_identity.hh>
+
 
 
 namespace mln

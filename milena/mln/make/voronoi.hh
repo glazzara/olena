@@ -30,7 +30,7 @@
 
 /*! \file mln/make/voronoi.hh
  *
- * \brief Routine to construct an mln::make::voronoi.
+ * \brief Routine to construct a voronoi mln::mesh_p.
  */
 
 # include <vector>

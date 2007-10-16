@@ -30,8 +30,8 @@
 
 /*! \file mln/display/save.hh
  *
- * \brief Create a pretty image, which display its content
- *  with red value for non-defined point site.
+ * \brief Definition of function which saves an image on a temporary
+ * files.
  */
 
 # include <mln/trait/image_from_mesh.hh>

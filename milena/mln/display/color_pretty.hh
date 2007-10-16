@@ -31,7 +31,7 @@
 /*! \file mln/display/color_pretty.hh
  *
  * \brief Create a pretty image, which display its content
- *  with red value for non-defined point site.
+ *  with red value for undefined point site.
  */
 
 # include <mln/trait/image_from_mesh.hh>

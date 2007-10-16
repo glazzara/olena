@@ -64,22 +64,22 @@ namespace mln
   private:
 
     /// Twice the size of the image border.
-    unsigned border_x2_;
+    const unsigned border_x2_;
 
     /// Row offset.
-    unsigned row_offset_;
+    const unsigned row_offset_;
 
     /// End of the current row.
     mln_qlf_value(I)* eor_;
 
     ///Next Slide offset for row.
-    unsigned next_srow_offset_;
+    const unsigned next_srow_offset_;
 
     /// Next Slide offset.
-    unsigned next_sli_offset_;
+    const unsigned next_sli_offset_;
 
     /// Slide offset.
-    unsigned sli_offset_;
+    const unsigned sli_offset_;
 
     /// End of the current slide.
     mln_qlf_value(I)* eos_;
@@ -92,17 +92,17 @@ namespace mln
 #ifndef MLN_INCLUDE_ONLY
 
   template <typename I>
-  fwd_pixter3d<I>::fwd_pixter3d(I& image) :
-    super_(image)
+  fwd_pixter3d<I>::fwd_pixter3d(I& image)
+    : super_(image),
+      border_x2_ (2 * image.border()),
+      row_offset_ (image.bbox().ncols() + border_x2_),
+      eor_ (& image.at(geom::min_sli(image), geom::min_row(image), geom::max_col(image)) + 1),
+      next_srow_offset_ ((image.bbox().ncols() + border_x2_) * border_x2_ ),
+      next_sli_offset_ (row_offset_ * border_x2_),
+      sli_offset_ ((image.bbox().ncols() + border_x2_) * (image.bbox().nrows() + border_x2_)),
+      eos_ (& image.at(geom::min_sli(image), geom::max_row(image) + 1, geom::min_col(image)))
   {
     mln_precondition(image.has_data());
-    border_x2_ = 2 * image.border();
-    row_offset_ = geom::max_col(image) - geom::min_col(image) + 1 + border_x2_;
-    eor_ = & image.at(geom::min_sli(image), geom::min_row(image), geom::max_col(image)) + 1;
-    next_sli_offset_ = 4 * image.border() * image.bbox().ncols() + 2 * image.border();
-    sli_offset_ = (image.bbox().ncols() + border_x2_) * (image.bbox().nrows() + border_x2_);
-    eos_ = & image.at(geom::min_sli(image), geom::max_row(image) + 1, geom::min_col(image));
-    next_srow_offset_ = (image.bbox().ncols() + border_x2_) * border_x2_;
   }
 
   template <typename I>

@@ -30,8 +30,8 @@
 
 /*! \file mln/display/show.hh
  *
- * \brief Create a pretty image, which display its content
- *  with red value for non-defined point site.
+ * \brief Display the temporary image which has just been saved with
+ * given viewer (default xv).
  */
 
 # include <mln/trait/image_from_mesh.hh>

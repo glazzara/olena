@@ -1,3 +1,48 @@
+2007-10-16  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update typo.
+
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/internal/box_impl.hh,
+	* mln/core/internal/coord_impl.hh,
+	* mln/core/pixter3d.hh,
+	* mln/core/queue_p_fast.hh,
+	* mln/core/queue_p_fast_priority.hh,
+	* mln/core/queue_p_priority.hh,
+	* mln/core/rle_encode.hh,
+	* mln/core/rle_image.hh,
+	* mln/core/safe.hh,
+	* mln/core/sparse_encode.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/tr_image.hh,
+	* mln/core/tr_mesh.hh,
+	* mln/core/translate_image.hh,
+	* mln/debug/iota.hh,
+	* mln/debug/println_with_border.hh,
+	* mln/display/color_pretty.hh,
+	* mln/display/save.hh,
+	* mln/display/show.hh,
+	* mln/geom/seeds2tiling.hh,
+	* mln/geom/seeds2tiling_with_chamfer.hh,
+	* mln/geom/shift.hh,
+	* mln/io/fits/load.hh,
+	* mln/io/internal/abort.hh,
+	* mln/io/internal/pnm/load.hh,
+	* mln/io/internal/pnm/load_header.hh,
+	* mln/io/internal/pnm/save.hh,
+	* mln/io/internal/pnm/save_header.hh,
+	* mln/io/pbm/load.hh,
+	* mln/io/pbm/save.hh,
+	* mln/io/pfm/load.hh,
+	* mln/io/pfm/save.hh,
+	* mln/io/pgm/load.hh,
+	* mln/io/pgm/save.hh,
+	* mln/io/ppm/load.hh,
+	* mln/io/ppm/save.hh,
+	* mln/make/vec.hh,
+	* mln/make/voronoi.hh,
+	* mln/make/win_chamfer.hh: Update typo.
+
 2007-10-16  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Augment doc.

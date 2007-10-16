@@ -30,7 +30,7 @@
 
 /*! \file mln/core/rle_encode.hh
  *
- * \brief FIXME
+ * \brief Definintion of function which encodes an image in rle_image.
  */
 
 # include <mln/core/sparse_image.hh>

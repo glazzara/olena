@@ -30,7 +30,7 @@
 
 /*! \file mln/debug/iota.hh
  *
- * \brief FIXME
+ * \brief Fill an image with successive values.
  */
 
 # include <mln/core/concept/image.hh>

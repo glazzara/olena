@@ -30,7 +30,7 @@
 
 /*! \file mln/core/concept/generalized_pixel.hh
  *
- * \brief Definition of the concept of mln::Genpixel.
+ * \brief Definition of the concept of mln::Generalized_Pixel.
  */
 
 # include <mln/core/concept/object.hh>

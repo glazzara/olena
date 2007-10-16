@@ -29,6 +29,14 @@
 #ifndef MLN_IO_PGM_LOAD_HH
 # define MLN_IO_PGM_LOAD_HH
 
+/*!
+ * \file   mln/io/pgm/load.hh
+ *
+ * \brief Define a function which loads an image of kind pgm with
+ * given path.
+ *
+ */
+
 # include <iostream>
 # include <fstream>
 # include <string>

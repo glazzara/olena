@@ -30,7 +30,7 @@
 
 /*! \file mln/core/sparse_encode.hh
  *
- * \brief FIXME
+ * \brief FIXME.
  */
 
 # include <mln/core/sparse_image.hh>

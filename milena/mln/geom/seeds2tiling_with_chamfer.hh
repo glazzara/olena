@@ -30,7 +30,7 @@
 
 /*! \file mln/geom/seeds2tiling_with_chamfer.hh
  *
- * \brief .
+ * \brief FIXME.
  */
 
 # include <map> 

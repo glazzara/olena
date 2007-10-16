@@ -30,7 +30,8 @@
 
 /*! \file mln/geom/seeds2tiling.hh
  *
- * \brief .
+ *  \brief Definition of a function which takes a labeled image and
+ * returns an image which has blew up its labeled values.
  */
 
 # include <map> 

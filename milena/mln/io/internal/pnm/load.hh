@@ -26,12 +26,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PNM_LOAD_HH
-# define MLN_IO_PNM_LOAD_HH
+#ifndef MLN_IO_INTERNAL_PNM_LOAD_HH
+# define MLN_IO_INTERNAL_PNM_LOAD_HH
 
-/*! \file mln/io/internal/pnm/load.hh
+/*!
+ * \file mln/io/internal/pnm/load.hh
  *
- * \brief load a PNM 8/16bits image
+ * \brief Define a function which loads an image of kind PNM 8/16bits with
+ * given path.
  */
 
 # include <iostream>
@@ -228,4 +230,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_PNM_LOAD_HH
+#endif // ! MLN_IO_INTERNAL_PNM_LOAD_HH

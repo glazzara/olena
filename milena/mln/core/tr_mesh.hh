@@ -29,7 +29,9 @@
 # define MLN_CORE_TR_MESH_HH
 
 /*! \file mln/core/tr_mesh.hh
- * \brief Definition of mln::tr_mesh.
+ *
+ * \brief Definition of a mesh that is transformed by a given
+ * transformation.
  */
 
 # include <mln/core/concept/mesh.hh>

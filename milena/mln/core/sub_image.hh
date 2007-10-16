@@ -28,6 +28,14 @@
 #ifndef MLN_CORE_SUB_IMAGE_HH
 # define MLN_CORE_SUB_IMAGE_HH
 
+/*!
+ * \file   sub_image.hh
+ *
+ * \brief Definition of morpher that makes an image become restricted
+ * given by a point set.
+ *
+ */
+
 # include <mln/core/internal/image_domain_morpher.hh>
 
 

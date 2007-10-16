@@ -29,6 +29,14 @@
 #ifndef MLN_IO_PGM_SAVE_HH
 # define MLN_IO_PGM_SAVE_HH
 
+/*!
+ * \file   mln/io/pgm/save.hh
+ *
+ * \brief Define a function which saves an image of kind pgm into
+ * given path.
+ *
+ */
+
 # include <iostream>
 # include <fstream>
 

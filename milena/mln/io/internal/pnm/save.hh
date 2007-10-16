@@ -26,12 +26,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PNM_SAVE_HH
-# define MLN_IO_PNM_SAVE_HH
+#ifndef MLN_IO_INTERNAL_PNM_SAVE_HH
+# define MLN_IO_INTERNAL_PNM_SAVE_HH
 
-/*! \file mln/io/internal/pnm/save.hh
+/*!
+ * \file   mln/io/internal/pnm/save.hh
  *
- * \brief function to save PNM images,
+ * \brief Define a function which saves an image of kind PNM into
+ * given path.
  *
  */
 
@@ -175,11 +177,11 @@ namespace mln
 
       } // end of namespace mln::io::internal::pnm
 
-    } // end of namespace mln::internal
+    } // end of namespace mln::io::internal
 
   } // end of namespace mln::io
 
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_PNM_SAVE_HH
+#endif // ! MLN_IO_INTERNAL_PNM_SAVE_HH

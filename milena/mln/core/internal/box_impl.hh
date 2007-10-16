@@ -30,8 +30,6 @@
 
 /*! \file mln/core/internal/box_impl.hh
  *
- * \internal
- *
  * \brief Define some implementation classes to provide methods
  * related to classes having a bounding box.
  */

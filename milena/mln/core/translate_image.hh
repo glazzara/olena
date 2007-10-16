@@ -30,7 +30,7 @@
 
 /*! \file mln/core/translate_image.hh
  *
- * \brief Definition of a translated image.
+ * \brief Definition of an image which be translated by a delta point.
  */
 
 # include <cmath>

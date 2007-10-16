@@ -30,7 +30,8 @@
 
 /*! \file mln/core/queue_p_fast.hh
  *
- * \brief Definition of a point set class based on std::deque.
+ * \brief Definition of a point set class faster but needs more memory
+ * space.
  */
 
 # include <vector>

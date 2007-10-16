@@ -30,7 +30,7 @@
 
 /*! \file mln/geom/shift.hh
  *
- * \brief Shift.
+ * \brief Define a function which shifts a window with a delta-point.
  */
 
 # include <mln/core/window.hh>

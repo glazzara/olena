@@ -132,4 +132,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_METAL_VEC_HH
+#endif // ! MLN_MAKE_VEC_HH

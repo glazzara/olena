@@ -30,8 +30,8 @@
 
 /*! \file mln/core/queue_p_fast_priority.hh
  *
- * \brief Definition of a point set class based on std::deque
- *  and std::map.
+ * \brief Definition of a point set class based on queue_p_fast with
+ * priority features.
  */
 
 # include <vector>

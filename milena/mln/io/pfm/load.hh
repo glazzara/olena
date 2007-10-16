@@ -29,6 +29,14 @@
 #ifndef MLN_IO_PFM_LOAD_HH
 # define MLN_IO_PFM_LOAD_HH
 
+/*!
+ * \file   mln/io/pfm/load.hh
+ *
+ * \brief Define a function which loads an image of kind pfm with
+ * given path.
+ *
+ */
+
 // # include <iostream>
 // # include <fstream>
 // # include <string>

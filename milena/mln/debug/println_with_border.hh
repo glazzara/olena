@@ -30,7 +30,7 @@
 
 /*! \file mln/debug/println_with_border.hh
  *
- * \brief Print an image on the standard output.
+ * \brief Print an image on the standard output with its border.
  */
 
 # include <mln/core/concept/image.hh>

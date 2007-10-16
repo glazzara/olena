@@ -30,8 +30,6 @@
 
 /*! \file mln/core/internal/coord_impl.hh
  *
- * \internal
- *
  * \brief Define some implementation classes for generalized points.
  */
 
