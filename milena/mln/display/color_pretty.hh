@@ -56,13 +56,35 @@ namespace mln
 
     namespace impl
     {
+      template <typename V>
+      value::rgb8
+      color_value(V v)
+      {
+	//r = v * (mln_max(V) / mln_max(value::int_u8) );
+	return value::rgb8(v, v, v);
+      }
+
+      template <unsigned int n>
+      value::rgb8
+      color_value(value::rgb<n> v)
+      {
+	return v;
+      }
+
+      value::rgb8
+      color_value(bool b)
+      {
+	value::int_u8 r = b ? 255 : 0;
+	return value::rgb8(r, r, r);
+      }
+
 
       template <typename I>
       typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
       color_pretty(const Image<I>& input_)
       {
 	const I& input = exact (input_);
-	
+
 	image2d<value::rgb8> output(input.domain().bbox());
 	level::fill(output, value::rgb8(255, 0, 0));
 
@@ -70,9 +92,9 @@ namespace mln
 // 	level::paste(input, output);
 	{
 	  mln_piter(I) p(input.domain());
-	  
+
 	  for_all(p)
-	    output(p) = value::rgb8(input(p));
+	    output(p) = value::rgb8(color_value(input(p)));
 	}
 	return output;
       }

@@ -59,24 +59,25 @@ namespace mln
 
     namespace impl
     {
-    template <typename I>
-    void
-    save(const Image<I>& input_)
-    {
-      const I& input = exact (input_);
-      image2d<value::rgb8> out = display::color_pretty(input);
-      
-      /// Use of mkstemp instead tempmap.
-      char *tmp = (char*)malloc (12 * sizeof (char));
-      strcpy(tmp, "/tmp/XXXXXX");
-      if (mkstemp(tmp) == -1)
-	return;
-      std::string path_tmp = tmp;
-      
-      io::ppm::save(out, path_tmp);
-      std::cout << input.id_ () << " = " << path_tmp << std::endl;
-      map_saved_image_tmp_[(void*)input.id_ ()] = path_tmp;
-    }
+      template <typename I>
+      void
+      save(const Image<I>& input_)
+      {
+	const I& input = exact (input_);
+	image2d<value::rgb8> out = display::color_pretty(input);
+
+	/// Use of mkstemp instead tempmap.
+	char *tmp = (char*)malloc (12 * sizeof (char));
+	strcpy(tmp, "/tmp/XXXXXX");
+	if (mkstemp(tmp) == -1)
+	  return;
+	std::string path_tmp = tmp;
+
+	io::ppm::save(out, path_tmp);
+
+	std::cout << input.id_ () << " = " << path_tmp << std::endl;
+	map_saved_image_tmp_[(void*)input.id_ ()] = path_tmp;
+      }
 
     } // end of namespace mln::display::impl
 

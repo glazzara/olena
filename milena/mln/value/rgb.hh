@@ -91,7 +91,7 @@ namespace mln
       rgb<n>();
       rgb<n>(equiv a);
       rgb<n>(enc r, enc g, enc b);
-      rgb<n>(enc l);
+      //rgb<n>(enc l);
       rgb<n>(const literal::white_t&);
       rgb<n>(const literal::black_t&);
       rgb<n>(const literal::blue_t&);
@@ -190,13 +190,13 @@ namespace mln
       this->c_[2] = b;
     }
 
-    template <unsigned n>
-    rgb<n>::rgb(enc l)
-    {
-      this->c_[0] = l;
-      this->c_[1] = l;
-      this->c_[2] = l;
-    }
+//     template <unsigned n>
+//     rgb<n>::rgb(enc l)
+//     {
+//       this->c_[0] = l;
+//       this->c_[1] = l;
+//       this->c_[2] = l;
+//     }
 
     template <unsigned n>
     rgb<n>::rgb(const literal::white_t&)

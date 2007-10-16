@@ -1,3 +1,14 @@
+2007-10-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add fi_adaptor class to interact with Free Image.
+
+	* mln/core/fi_adaptor.hh: The fi_adaptor class.
+	* tests/fi_adaptor.cc: An example of use.
+
+	* mln/display/color_pretty.hh: Fix to color more values.
+	* mln/display/save.hh: Nothing
+	* mln/value/rgb.hh: Disable dangerous constructor.
+
 2007-10-16  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update typo for tests.
