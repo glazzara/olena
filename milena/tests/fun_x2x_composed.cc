@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image2d.cc
+/*! \file tests/fun_x2x_composed.cc
  *
  * \brief Tests on mln::fun::x2x::composed.
  */

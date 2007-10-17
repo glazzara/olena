@@ -28,7 +28,7 @@
 #ifndef MLN_CANVAS_DIR_RICARD51_HH
 # define MLN_CANVAS_DIR_RICARD51_HH
 
-/*! \file mln/canvas/dir_ricard51.hh
+/*! \file mln/canvas/browsing/dir_ricard51.hh
  *
  * \brief Dir_Ricard51 browsing of an image.
  */

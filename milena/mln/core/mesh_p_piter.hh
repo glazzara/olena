@@ -31,7 +31,7 @@
 # include <mln/core/internal/point_iterator_base.hh>
 # include <mln/core/mesh_p.hh>
 
-/*! \file mln/core/mesh_psite.hh
+/*! \file mln/core/mesh_p_piter.hh
  *
  * \brief Definition of point iterator on graph-based point set.
  */

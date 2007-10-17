@@ -28,6 +28,14 @@
 #ifndef MLN_TRAIT_SOLVE_HH
 # define MLN_TRAIT_SOLVE_HH
 
+/*!
+ * \file   mln/trait/solve.hh
+ *
+ * \brief  FIXME
+ *
+ *
+ */
+
 # include <mln/core/category.hh>
 # include <mln/metal/equal.hh>
 # include <mln/metal/if.hh>

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/mew_io_pgm.cc
+/*! \file tests/new_io_pgm.cc
  *
  * \brief Tests on Test on mln::io::ppm::load and mln::io::ppm::save.
  */

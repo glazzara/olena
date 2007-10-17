@@ -28,6 +28,14 @@
 #ifndef MLN_TRAIT_PROMOTE_HH
 # define MLN_TRAIT_PROMOTE_HH
 
+/*!
+ * \file   promote.hh
+ *
+ * \brief  FIXME
+ *
+ */
+
+
 # include <mln/trait/solve.hh>
 
 

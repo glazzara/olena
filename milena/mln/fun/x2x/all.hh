@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_X2X_ALL_HH
 # define MLN_FUN_X2X_ALL_HH
 
-/*! \file mln/fun_x2x/all.hh
+/*! \file mln/fun/x2x/all.hh
  *
  * \brief File that includes all functions from vector to vector.
  */

@@ -28,6 +28,13 @@
 #ifndef MLN_TRAIT_OP_ALL_HH
 # define MLN_TRAIT_OP_ALL_HH
 
+/*!
+ * \file   all.hh
+ *
+ * \brief  FIXME
+ *
+ */
+
 
 namespace mln
 {

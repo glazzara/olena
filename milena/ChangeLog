@@ -1,3 +1,34 @@
+2007-10-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update typo.
+	* mln/canvas/browsing/dir_ricard51.hh,
+	* mln/core/box2d_h.hh,
+	* mln/core/mesh_p_piter.hh,
+	* mln/core/trait/op_mult.hh,
+	* mln/fun/i2v/all.hh,
+	* mln/fun/p2v/all.hh,
+	* mln/fun/v2v/all.hh,
+	* mln/fun/x2x/all.hh,
+	* mln/level/approx/all.hh,
+	* mln/level/naive/all.hh,
+	* mln/trait/all.hh,
+	* mln/trait/op/all.hh,
+	* mln/trait/op/minus.hh,
+	* mln/trait/op/plus.hh,
+	* mln/trait/op/times.hh,
+	* mln/trait/op/uminus.hh,
+	* mln/trait/promote.hh,
+	* mln/trait/solve.hh,
+	* mln/trait/value/print.hh,
+	* tests/fun_x2x_composed.cc,
+	* tests/fun_x2x_rotation.cc,
+	* tests/fun_x2x_translation.cc,
+	* tests/histo_to_image1d.cc,
+	* tests/labeling_level_fast.cc,
+	* tests/main.cc,
+	* tests/new_io_pgm.cc,
+	* tests/seed2tiling.cc: Update typo.
+
 2007-10-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Update documentation.

@@ -28,6 +28,13 @@
 #ifndef MLN_TRAIT_OP_MULT_HH
 # define MLN_TRAIT_OP_MULT_HH
 
+/*!
+ * \file   mln/core/trait/op_mult.hh
+ *
+ * \brief  FIXME.
+ *
+ */
+
 
 # define mln_op_mult(T, U) typename mln::trait::op_mult< T , U >::ret
 

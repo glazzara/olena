@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_V2V_ALL_HH
 # define MLN_FUN_V2V_ALL_HH
 
-/*! \file mln/fun_v2v/all.hh
+/*! \file mln/fun/v2v/all.hh
  *
  * \brief File that includes all functions from value to value.
  */

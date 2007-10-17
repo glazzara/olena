@@ -28,6 +28,14 @@
 #ifndef MLN_TRAIT_OP_MINUS_HH
 # define MLN_TRAIT_OP_MINUS_HH
 
+/*!
+ * \file   mln/trait/op/minus.hh
+ *
+ * \brief  FIXME
+ *
+ */
+
+
 # include <mln/trait/promote.hh>
 
 

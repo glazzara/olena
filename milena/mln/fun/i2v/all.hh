@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_I2V_ALL_HH
 # define MLN_FUN_I2V_ALL_HH
 
-/*! \file mln/fun_i2v/all.hh
+/*! \file mln/fun/i2v/all.hh
  *
  * \brief File that includes all functions from index to value.
  */

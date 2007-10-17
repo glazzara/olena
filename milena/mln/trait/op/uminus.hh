@@ -28,6 +28,13 @@
 #ifndef MLN_TRAIT_OP_UMINUS_HH
 # define MLN_TRAIT_OP_UMINUS_HH
 
+/*!
+ * \file   mln/trait/op/uminus.hh
+ *
+ * \brief  FIXME
+ *
+ */
+
 # include <mln/trait/solve.hh>
 
 

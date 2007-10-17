@@ -26,7 +26,7 @@
 // Public License.
 
 /*!
- * \file   test/main.cc
+ * \file   tests/main.cc
  *
  * \brief  Test on mln::morpho.
  *

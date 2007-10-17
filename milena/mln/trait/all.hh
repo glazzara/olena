@@ -28,6 +28,13 @@
 #ifndef MLN_TRAIT_ALL_HH
 # define MLN_TRAIT_ALL_HH
 
+/*!
+ * \file   mln/trait/all.hh
+ * 
+ * \brief  Definition of all traits.
+ *
+ */
+
 
 namespace mln
 {
