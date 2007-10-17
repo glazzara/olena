@@ -1,5 +1,10 @@
 2007-10-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix namespace documentation.
+	* mln/io/all.hh: Fix.
+
+2007-10-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
         Fix namespaces documentation.
 
 	* mln/arith/all.hh: New,
