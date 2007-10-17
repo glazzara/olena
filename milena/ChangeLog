@@ -1,3 +1,17 @@
+2007-10-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update typo and win_chamfer.
+
+	Update win_chamfer.
+	* mln/make/win_chamfer.hh,
+	* tests/chamfer.cc,
+	* tests/color_pretty.cc,
+	* tests/seed2tiling.cc,
+	* tests/show.cc: Update win_chamfer.
+
+	Upudate typo.
+	* mln/value/internal/all.hh: New typo.
+
 2007-10-17  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Somes fixes due to a previous refactoring of mln::fun::i2v::all.

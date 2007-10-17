@@ -58,7 +58,7 @@ int main()
   // 0 2 0
   // 2 p 2
   // 0 2 0
-  const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 0> ();
+  const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2, 0> ();
 
   // Call chamfer for a distance image.
   image2d<unsigned> tmp = geom::chamfer(input, w_win, max);

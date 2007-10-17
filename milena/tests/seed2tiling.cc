@@ -75,7 +75,7 @@ int main(int argc, char** argv)
     image2d<int_u8> inte2(input.domain());
     image2d<int_u8> out(input.domain());
 
-    const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2,3> ();
+    const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2,3> ();
 
     unsigned n;
     labeling::foreground(input, c4(), lab, n);
