@@ -25,41 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_ALL_HH
-# define MLN_VALUE_ALL_HH
+#ifndef MLN_TEST_ALL_HH
+# define MLN_TEST_ALL_HH
 
-/*! \file mln/value/all.hh
+/*! \file mln/test/all.hh
  *
- * \brief File that includes all "value types"-related materials.
+ * \brief File that includes all test-related routines.
  */
 
 
 namespace mln
 {
 
-  /// Namespace of materials related to pixel value types.
-  namespace value
+  /// Namespace of image processing routines related to pixel tests.
+  namespace test
   {
-    /// Implementation namespace of value namespace.
+    /// Implementation namespace of test namespace.
     namespace impl {}
   }
 
 }
 
-
-# include <mln/value/aliases.hh>
-# include <mln/value/label.hh>
-# include <mln/value/props.hh>
-# include <mln/value/proxy.hh>
-
-# include <mln/value/interval.hh>
+# include <mln/test/positive.hh>
+# include <mln/test/predicate.hh>
 
 
-// FIXME: that includes concept/image.hh!
-
-// # include <mln/value/cast.hh>
-// # include <mln/value/stack.hh>
-
-
-
-#endif // ! MLN_VALUE_ALL_HH
+#endif // ! MLN_TEST_ALL_HH

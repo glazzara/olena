@@ -1,3 +1,11 @@
+2007-10-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update typo.
+	* mln/set/all.hh,
+	* mln/test/all.hh,
+	* mln/util/all.hh,
+	* mln/value/all.hh: Update Typo.
+
 2007-10-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix namespace documentation.

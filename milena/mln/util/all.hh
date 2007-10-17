@@ -25,41 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_ALL_HH
-# define MLN_VALUE_ALL_HH
+#ifndef MLN_UTIL_ALL_HH
+# define MLN_UTIL_ALL_HH
 
-/*! \file mln/value/all.hh
+/*! \file mln/util/all.hh
  *
- * \brief File that includes all "value types"-related materials.
+ * \brief File that includes all util-related routines.
  */
 
 
 namespace mln
 {
 
-  /// Namespace of materials related to pixel value types.
-  namespace value
-  {
-    /// Implementation namespace of value namespace.
-    namespace impl {}
-  }
+  /// Namespace of tools using for more complex algorithm.
+  namespace util {}
 
 }
 
+# include <mln/util/eat.hh>
+# include <mln/util/graph.hh>
+# include <mln/util/ignore.hh>
+# include <mln/util/nil.hh>
+# include <mln/util/pix.hh>
+# include <mln/util/tracked_ptr.hh>
 
-# include <mln/value/aliases.hh>
-# include <mln/value/label.hh>
-# include <mln/value/props.hh>
-# include <mln/value/proxy.hh>
-
-# include <mln/value/interval.hh>
-
-
-// FIXME: that includes concept/image.hh!
-
-// # include <mln/value/cast.hh>
-// # include <mln/value/stack.hh>
-
-
-
-#endif // ! MLN_VALUE_ALL_HH
+#endif // ! MLN_UTIL_ALL_HH
