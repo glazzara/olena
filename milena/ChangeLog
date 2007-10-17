@@ -1,3 +1,19 @@
+2007-10-17  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Somes fixes due to a previous refactoring of mln::fun::i2v::all.
+
+	* mln/core/image1d.hh,
+	* mln/core/image2d.hh,
+	* mln/core/image3d.hh,
+	* mln/core/internal/dpoints_base.hh,
+	* mln/core/point.hh,
+	* mln/metal/vec.hh,
+	* mln/morpho/all.hh,
+	* tests/fun_x2x_composed.cc,
+	* tests/fun_x2x_translation.cc,
+	* tests/mat.cc,
+	* tests/vec.cc: Fix.
+
 2007-10-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update typo.

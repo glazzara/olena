@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/internal/set_of.hh>
-# include <mln/fun/i2v/all.hh>
+# include <mln/fun/i2v/all_to.hh>
 # include <mln/norm/infty.hh>
 
 
@@ -103,7 +103,7 @@ namespace mln
     template <typename D, typename E>
     bool dpoints_base_<D,E>::is_centered() const
     {
-      static const D origin = all(0);
+      static const D origin = all_to(0);
       return this->super_::has(origin);
     }
 

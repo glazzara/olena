@@ -39,7 +39,7 @@
 
 # include <mln/border/thickness.hh>
 # include <mln/value/set.hh>
-# include <mln/fun/i2v/all.hh>
+# include <mln/fun/i2v/all_to.hh>
 # include <mln/core/line_piter.hh>
 
 
@@ -272,8 +272,8 @@ namespace mln
     void
     data_< image2d<T> >::update_vb_()
     {
-      vb_.pmin() = b_.pmin() - dpoint2d(all(bdr_));
-      vb_.pmax() = b_.pmax() + dpoint2d(all(bdr_));
+      vb_.pmin() = b_.pmin() - dpoint2d(all_to(bdr_));
+      vb_.pmax() = b_.pmax() + dpoint2d(all_to(bdr_));
     }
 
     template <typename T>

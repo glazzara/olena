@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/point.hh>
 # include <mln/core/internal/coord_impl.hh>
-# include <mln/fun/i2v/all.hh>
+# include <mln/fun/i2v/all_to.hh>
 
 # include <mln/metal/bool.hh>
 # include <mln/metal/vec.hh>
@@ -267,7 +267,7 @@ namespace mln
   }
 
   template <typename M, typename C>
-  const point_<M,C> point_<M,C>::origin = all(0);
+  const point_<M,C> point_<M,C>::origin = all_to(0);
 
   template <typename M, typename C>
   point_<M,C>&

@@ -32,7 +32,7 @@
 
 
 #include <iostream>
-#include <mln/fun/i2v/all.hh>
+#include <mln/fun/i2v/all_to.hh>
 #include <mln/metal/vec.hh>
 #include <mln/core/h_vec.hh>
 
@@ -42,13 +42,13 @@ int main()
 {
   using namespace mln;
 
-  metal::vec<1,float> v1(all(4.));
+  metal::vec<1,float> v1(all_to(4.));
   metal::vec<2,float> v2 = make::vec(6., 2.8);
 
   h_vec<1,float> hv1;
   h_vec<2,float> hv2 = v2.to_h_vec(); // Immersion into homogeneous.
 
-  h_vec<3,float> hv3(all(1.5));
+  h_vec<3,float> hv3(all_to(1.5));
 
   hv3 += make::vec(0., 0., 0., 0.5);
 

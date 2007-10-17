@@ -40,7 +40,7 @@
 # include <mln/core/concept/object.hh>
 # include <mln/trait/all.hh>
 # include <mln/value/props.hh>
-# include <mln/fun/i2v/all.hh>
+# include <mln/fun/i2v/all_to.hh>
 # include <mln/value/concept/all.hh>
 
 
@@ -434,10 +434,10 @@ namespace mln
     }
 
     template <unsigned n, typename T>
-    const vec<n, T> vec<n, T>::zero = all(0);
+    const vec<n, T> vec<n, T>::zero = all_to(0);
 
     template <unsigned n, typename T>
-    const vec<n, T> vec<n, T>::origin = all(0);
+    const vec<n, T> vec<n, T>::origin = all_to(0);
 
 
     // eq

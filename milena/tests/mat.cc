@@ -32,7 +32,7 @@
 
 
 #include <iostream>
-#include <mln/fun/i2v/all.hh>
+#include <mln/fun/i2v/all_to.hh>
 #include <mln/metal/mat.hh>
 #include <mln/core/h_mat.hh>
 
@@ -42,12 +42,12 @@ int main()
 {
   using namespace mln;
 
-  metal::mat<1,3,float> m1(all(4.));
+  metal::mat<1,3,float> m1(all_to(4.));
   metal::mat<2,2,float> m2 = metal::mat<2,2,float>::Id;
 
   h_mat<1,float> hm1(m2);
   h_mat<2,float> hm2;
-  h_mat<3,float> hm3(all(1.5));
+  h_mat<3,float> hm3(all_to(1.5));
 
   metal::mat<4,4,float> m4 = hm3;
 

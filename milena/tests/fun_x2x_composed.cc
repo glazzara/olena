@@ -35,7 +35,7 @@
 #include <mln/fun/x2x/translation.hh>
 #include <mln/fun/x2x/rotation.hh>
 #include <mln/fun/x2x/composed.hh>
-#include <mln/fun/i2v/all.hh>
+#include <mln/fun/i2v/all_to.hh>
 
 
 
@@ -49,7 +49,7 @@ int main()
     c = 2.9;
 
   metal::vec<3,float> vec1 = make::vec(a, b, c);
-  fun::x2x::translation<3,float> tr(all(1.6));
+  fun::x2x::translation<3,float> tr(all_to(1.6));
   fun::x2x::rotation<3,float> rot(0.3, 1);
 
   std::cout << "vec : " << vec1 << std::endl;
