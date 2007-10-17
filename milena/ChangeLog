@@ -1,3 +1,11 @@
+2007-10-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update typo.
+	* level/approx/all.hh,
+	* level/naive/all.hh,
+	* tag/all.hh,
+	* win/all.hh: New file for doc namespace.
+
 2007-10-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix in fi_adaptor.
