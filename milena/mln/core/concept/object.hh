@@ -67,7 +67,7 @@ namespace mln
   namespace internal
   {
     /// FIXME : doc
-    namespace check
+    namespace check {}
   }
 
   // Fwd decl.

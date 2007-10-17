@@ -42,8 +42,11 @@ namespace mln
   namespace level
   {
 
-    /// Namespace of image processing routines related to pixel levels
-    /// with approximation.
+    /*! \namespace approx
+     *
+     * \brief Namespace of image processing routines related to pixel
+     * levels with approximation.
+     */
     namespace approx
     {
       /// Implementation namespace of level::approx namespace.
