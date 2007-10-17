@@ -25,13 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_I2V_ALL_HH
-# define MLN_FUN_I2V_ALL_HH
+#ifndef MLN_FUN_ALL_TO_HH
+# define MLN_FUN_ALL_TO_HH
 
-/*! \file mln/fun_i2v/all.hh
+/*! \file mln/fun/i2v/all_to.hh
  *
- * \brief File that includes all functions from index to value.
+ * \brief FIXME.
  */
+
+# include <mln/core/concept/function.hh>
 
 
 namespace mln
@@ -40,17 +42,64 @@ namespace mln
   namespace fun
   {
 
-    /// Namespace of functions from index to value.
     namespace i2v
     {
-    }
+
+      template <typename T>
+      struct all_to : public Function_i2v< all_to<T> >
+      {
+	typedef T result;
+	all_to(T t);
+	template <typename U>
+	T operator()(const U&) const;
+      private:
+	T t_;
+      };
+
+    } // end of namespace mln::fun::i2v
+
+  } // end of namespace mln::fun
+
+  template <typename T>
+  fun::i2v::all_to<T> all_to(T t);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+  namespace fun
+  {
+
+    namespace i2v
+    {
+
+      template <typename T>
+      all_to<T>::all_to(T t)
+	: t_(t)
+      {
+      }
+
+      template <typename T>
+      template <typename U>
+      T
+      all_to<T>::operator()(const U&) const
+      {
+	return t_;
+      }
+
+    } // end of namespace mln::fun::i2v
+
+  } // end of namespace mln::fun
+
+  template <typename T>
+  fun::i2v::all_to<T> all_to(T t)
+  {
+    fun::i2v::all_to<T> tmp(t);
+    return tmp;
   }
 
-}
+# endif // ! MLN_INCLUDE_ONLY
+
+} // end of namespace mln
 
 
-# include <mln/fun/i2v/all_to.hh>
-
-
-
-#endif // ! MLN_FUN_I2V_ALL_HH
+#endif // ! MLN_FUN_ALL_TO_HH

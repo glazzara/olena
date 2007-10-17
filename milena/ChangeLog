@@ -1,3 +1,15 @@
+2007-10-17  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Update typo.
+
+	* mln/core/dpoint3d.hh: Rename constants.
+	* mln/fun/all.hh: New.
+	* mln/fun/i2v/all_to.hh: New.
+	* mln/fun/p2b/all.hh: New.
+	* mln/fun/p2v/all.hh: New.
+	* mln/fun/v2v/all.hh: New.
+	* mln/fun/x2x/all.hh: New.
+
 2007-10-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix namespace documentation.

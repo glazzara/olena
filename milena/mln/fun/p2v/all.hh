@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_I2V_ALL_HH
-# define MLN_FUN_I2V_ALL_HH
+#ifndef MLN_FUN_P2V_ALL_HH
+# define MLN_FUN_P2V_ALL_HH
 
-/*! \file mln/fun_i2v/all.hh
+/*! \file mln/fun_p2v/all.hh
  *
- * \brief File that includes all functions from index to value.
+ * \brief File that includes all functions from point to value.
  */
 
 
@@ -40,8 +40,8 @@ namespace mln
   namespace fun
   {
 
-    /// Namespace of functions from index to value.
-    namespace i2v
+    /// Namespace of functions from point to value.
+    namespace p2v
     {
     }
   }
@@ -49,8 +49,10 @@ namespace mln
 }
 
 
-# include <mln/fun/i2v/all_to.hh>
+# include <mln/fun/p2v/elifs.hh>
+# include <mln/fun/p2v/iota.hh>
+# include <mln/fun/p2v/ternary.hh>
 
 
 
-#endif // ! MLN_FUN_I2V_ALL_HH
+#endif // ! MLN_FUN_P2V_ALL_HH

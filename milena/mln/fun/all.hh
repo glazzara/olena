@@ -25,23 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_I2V_ALL_HH
-# define MLN_FUN_I2V_ALL_HH
+#ifndef MLN_FUN_ALL_HH
+# define MLN_FUN_ALL_HH
 
-/*! \file mln/fun_i2v/all.hh
+/*! \file mln/fun/all.hh
  *
- * \brief File that includes all functions from index to value.
+ * \brief File that includes all fun-related routines.
  */
 
 
 namespace mln
 {
 
+  /// Namespace of image processing routines related to pixel funs.
   namespace fun
   {
 
-    /// Namespace of functions from index to value.
-    namespace i2v
+    /// Internal namespace of functions.
+    namespace internal
     {
     }
   }
@@ -49,8 +50,14 @@ namespace mln
 }
 
 
-# include <mln/fun/i2v/all_to.hh>
+# include <mln/fun/c.hh>
+# include <mln/fun/ops.hh>
+# include <mln/fun/i2v/all.hh>
+# include <mln/fun/p2b/all.hh>
+# include <mln/fun/p2v/all.hh>
+# include <mln/fun/v2v/all.hh>
+# include <mln/fun/x2x/all.hh>
 
 
 
-#endif // ! MLN_FUN_I2V_ALL_HH
+#endif // ! MLN_FUN_ALL_HH
