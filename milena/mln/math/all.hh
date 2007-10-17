@@ -37,8 +37,7 @@
 namespace mln
 {
 
-  /*! Namespace of mathematical routines.
-   */
+  /// Namespace of mathematical routines.
   namespace math {}
 
 }

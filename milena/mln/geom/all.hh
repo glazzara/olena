@@ -25,64 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_GRIDS_HH
-# define MLN_CORE_GRIDS_HH
+#ifndef MLN_GEOM_ALL_HH
+# define MLN_GEOM_ALL_HH
 
-/*! \file mln/core/grids.hh
+/*! \file mln/geom/all.hh
  *
- * \brief Definition of some grid classes.
+ * \brief File that includes all geometry related things.
  */
-
-# include <mln/core/concept/regular_grid.hh>
-# include <mln/metal/bool.hh>
 
 
 namespace mln
 {
 
-  /// Namespace of grids definitions.
-  namespace grid
+  /// Namespace of all things related to geometry.
+  namespace geom
   {
+    /// Implementation namespace of geom namespace.
+    namespace impl {}
+  }
 
-    struct tick : public Regular_Grid< tick >
-    {
-      typedef metal::true_ aligned;
-      enum { dim = 1 };
-    };
+}
 
-    struct square : public Regular_Grid< square >
-    {
-      typedef metal::true_ aligned;
-      enum { dim = 2 };
-    };
-
-    struct hexa : public Regular_Grid< hexa >
-    {
-      typedef metal::false_ aligned;
-      enum { dim = 2 };
-    };
-
-    struct cube : public Regular_Grid< cube >
-    {
-      typedef metal::true_ aligned;
-      enum { dim = 3 };
-    };
-
-  } // end of namespace mln::grid
+# include <mln/geom/bbox.hh>
+# include <mln/geom/chamfer.hh>
+# include <mln/geom/pmin_pmax.hh>
+# include <mln/geom/seeds2tiling.hh>
+# include <mln/geom/seeds2tiling_with_chamfer.hh>
+# include <mln/geom/shift.hh>
+# include <mln/geom/size1d.hh>
+# include <mln/geom/size2d.hh>
+# include <mln/geom/size3d.hh>
+# include <mln/geom/sym.hh>
 
 
-  // Function: dim -> regular grid.
-
-  template <unsigned dim> struct regular_grid_from_dim_;
-
-  template <> struct regular_grid_from_dim_<1> { typedef grid::tick   ret; };
-  template <> struct regular_grid_from_dim_<2> { typedef grid::square ret; };
-  template <> struct regular_grid_from_dim_<3> { typedef grid::cube   ret; };
-
-} // end of namespace mln
-
-
-# define mln_regular_grid_from_dim(N) typename mln::regular_grid_from_dim_< N >::ret
-
-
-#endif // ! MLN_CORE_GRIDS_HH
+#endif // ! MLN_GEOM_ALL_HH

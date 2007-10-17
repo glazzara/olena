@@ -39,6 +39,7 @@
 namespace mln
 {
 
+  /// FIXME : doc
   namespace select
   {
 
@@ -50,7 +51,7 @@ namespace mln
 	return this->p();
       }
     };
-    
+
   }
 
   namespace util
@@ -71,7 +72,7 @@ namespace mln
       const I& ima_;
       const mln_psite(I)& p_;
     };
-    
+
 
 # ifndef MLN_INCLUDE_ONLY
 

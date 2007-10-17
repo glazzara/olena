@@ -25,64 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_GRIDS_HH
-# define MLN_CORE_GRIDS_HH
+#ifndef MLN_MAKE_ALL_HH
+# define MLN_MAKE_ALL_HH
 
-/*! \file mln/core/grids.hh
+/*! \file mln/make/all.hh
  *
- * \brief Definition of some grid classes.
+ * \brief File that includes all make routines.
  */
-
-# include <mln/core/concept/regular_grid.hh>
-# include <mln/metal/bool.hh>
 
 
 namespace mln
 {
 
-  /// Namespace of grids definitions.
-  namespace grid
-  {
+  /// Namespace of routines that help to make milena's objects.
+  namespace make {}
 
-    struct tick : public Regular_Grid< tick >
-    {
-      typedef metal::true_ aligned;
-      enum { dim = 1 };
-    };
+}
 
-    struct square : public Regular_Grid< square >
-    {
-      typedef metal::true_ aligned;
-      enum { dim = 2 };
-    };
+# include <mln/make/box1d.hh>
+# include <mln/make/box2d.hh>
+# include <mln/make/box2d_h.hh>
+# include <mln/make/box3d.hh>
+# include <mln/make/dpoint1d.hh>
+# include <mln/make/dpoint2d.hh>
+# include <mln/make/dpoint2d_h.hh>
+# include <mln/make/dpoint3d.hh>
+# include <mln/make/mat.hh>
+# include <mln/make/pixel.hh>
+# include <mln/make/pix.hh>
+# include <mln/make/point1d.hh>
+# include <mln/make/point2d.hh>
+# include <mln/make/point2d_h.hh>
+# include <mln/make/point3d.hh>
+# include <mln/make/vec.hh>
+# include <mln/make/voronoi.hh>
+# include <mln/make/win_chamfer.hh>
+# include <mln/make/window1d.hh>
+# include <mln/make/window2d.hh>
+# include <mln/make/window3d.hh>
+# include <mln/make/w_window1d.hh>
+# include <mln/make/w_window1d_int.hh>
+# include <mln/make/w_window2d.hh>
+# include <mln/make/w_window2d_int.hh>
+# include <mln/make/w_window3d.hh>
+# include <mln/make/w_window3d_int.hh>
+# include <mln/make/w_window.hh>
+# include <mln/make/w_window_line.hh>
 
-    struct hexa : public Regular_Grid< hexa >
-    {
-      typedef metal::false_ aligned;
-      enum { dim = 2 };
-    };
-
-    struct cube : public Regular_Grid< cube >
-    {
-      typedef metal::true_ aligned;
-      enum { dim = 3 };
-    };
-
-  } // end of namespace mln::grid
-
-
-  // Function: dim -> regular grid.
-
-  template <unsigned dim> struct regular_grid_from_dim_;
-
-  template <> struct regular_grid_from_dim_<1> { typedef grid::tick   ret; };
-  template <> struct regular_grid_from_dim_<2> { typedef grid::square ret; };
-  template <> struct regular_grid_from_dim_<3> { typedef grid::cube   ret; };
-
-} // end of namespace mln
-
-
-# define mln_regular_grid_from_dim(N) typename mln::regular_grid_from_dim_< N >::ret
-
-
-#endif // ! MLN_CORE_GRIDS_HH
+#endif // ! MLN_MAKE_ALL_HH

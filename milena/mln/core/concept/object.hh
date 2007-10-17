@@ -60,6 +60,15 @@
  */
 namespace mln
 {
+  /// Implementation namespace of mln namespace.
+  namespace impl {}
+
+  /// Internal namespace of mln namespace.
+  namespace internal
+  {
+    /// FIXME : doc
+    namespace check
+  }
 
   // Fwd decl.
   template <typename E> struct Object;

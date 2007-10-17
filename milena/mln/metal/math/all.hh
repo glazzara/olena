@@ -41,7 +41,11 @@ namespace mln
   {
 
     /// Namespace of static mathematical functions.
-    namespace math {}
+    namespace math
+    {
+      /// Implementation namespace of metal::math namespace.
+      namespace impl {}
+    }
 
   } // end of namespace mln::metal
 

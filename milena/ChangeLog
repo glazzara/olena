@@ -1,3 +1,20 @@
+2007-10-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fix namespace documentation.
+	* mln/geom/all.hh: New,
+	* mln/histo/all.hh: New,
+	* mln/labeling/all.hh: New,
+	* mln/norm/all.hh: New,
+	* mln/logical/all.hh: New,
+	* mln/make/all.hh: New, add missing all.hh.
+
+	* mln/core/concept/object.hh,
+	* mln/core/grids.hh,
+	* mln/math/all.hh,
+	* mln/metal/all.hh,
+	* mln/metal/math/all.hh,
+	* mln/util/pix.hh: Update.
+
 2007-10-17  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Update typo.
