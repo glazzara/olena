@@ -26,54 +26,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PPM_SAVE_HH
-# define MLN_IO_PPM_SAVE_HH
+#ifndef MLN_IO_PNM_MACROS_HH
+# define MLN_IO_PNM_MACROS_HH
 
-/*!
- * \file   mln/io/ppm/save.hh
+/*! \file mln/io/pnm/macros.hh
  *
- * \brief Define a function which saves an image of kind ppm into
- * given path.
- *
+ * \brief Definition of pnm formats macros.
  */
 
-# include <mln/core/concept/image.hh>
+/// Portable Pixel Map Format
+# define PPM		'6'
+# define PPM_ASCII	'3'
 
-# include <mln/metal/templated_by.hh>
+/// Portable Gray Map Format
+# define PGM		'5'
+# define PGM_ASCII	'2'
 
-# include <mln/io/pnm/save.hh>
+/// Portable Bit Map Format
+# define PBM		'4'
+# define PBM_ASCII	'1'
 
-namespace mln
-{
-
-  namespace io
-  {
-
-    namespace ppm
-    {
-
-      template <typename I>
-      void save(const Image<I>& ima, const std::string& filename);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename I>
-      void save(const Image<I>& ima, const std::string& filename)
-      {
-	mln::metal::templated_by<mln_value(I), value::rgb >::check();
-
-	//call the generic function for pnm files
-	io::pnm::save(PPM, exact(ima), filename);
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::ppm
-
-  } // end of namespace mln::io
-
-} // end of namespace mln
-
-
-#endif // ! MLN_IO_PPM_SAVE_HH
+#endif // ! MLN_IO_PNM_LOAD_HH

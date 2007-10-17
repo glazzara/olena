@@ -26,11 +26,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_INTERNAL_PNM_LOAD_HEADER_HH
-# define MLN_IO_INTERNAL_PNM_LOAD_HEADER_HH
+#ifndef MLN_IO_PNM_LOAD_HEADER_HH
+# define MLN_IO_PNM_LOAD_HEADER_HH
 
 /*!
- * \file  mln/io/internal/pnm/load_header.hh
+ * \file  mln/io/pnm/load_header.hh
  *
  * \brief Define a function which loads header for PNM image.
  *
@@ -45,9 +45,6 @@ namespace mln
 
   namespace io
   {
-
-    namespace internal
-    {
 
       namespace pnm
       {
@@ -128,13 +125,11 @@ namespace mln
 		      nrows, ncols, maxval);
 	}
 
-      } // end of namespace mln::io::internal::pnm
-
-    } // end of namespace mln::io::internal
+      } // end of namespace mln::io::pnm
 
   } // end of namespace mln::io
 
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_INTERNAL_PNM_LOAD_HEADER_HH
+#endif // ! MLN_IO_PNM_LOAD_HEADER_HH

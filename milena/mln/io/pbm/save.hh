@@ -44,7 +44,7 @@
 # include <mln/metal/equal.hh>
 # include <mln/metal/bexpr.hh>
 
-# include <mln/io/internal/pnm/save.hh>
+# include <mln/io/pnm/save.hh>
 
 
 namespace mln
@@ -78,7 +78,7 @@ namespace mln
 	  const I& ima = exact(ima_);
 	  std::ofstream file(filename.c_str());
 
-	  io::internal::pnm::save_header(PBM, ima, filename, file);
+	  io::pnm::save_header(PBM, ima, filename, file);
 
 	  const int
 	    min_row = geom::min_row(ima),

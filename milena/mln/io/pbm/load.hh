@@ -43,7 +43,7 @@
 # include <string>
 
 # include <mln/core/image2d.hh>
-# include <mln/io/internal/pnm/load_header.hh>
+# include <mln/io/pnm/load_header.hh>
 
 namespace mln
 {
@@ -113,7 +113,7 @@ namespace mln
       }
       char type;
       int nrows, ncols;
-      io::internal::pnm::read_header('1', '4', file, type, nrows, ncols);
+      io::pnm::read_header('1', '4', file, type, nrows, ncols);
 
       image2d<bool> ima(nrows, ncols);
       if (type == '4')

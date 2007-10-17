@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,54 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PPM_SAVE_HH
-# define MLN_IO_PPM_SAVE_HH
+#ifndef MLN_IO_PGM_ALL_HH
+# define MLN_IO_PGM_ALL_HH
 
-/*!
- * \file   mln/io/ppm/save.hh
+/*! \file mln/io/pgm/all.hh
  *
- * \brief Define a function which saves an image of kind ppm into
- * given path.
- *
+ * \brief File that includes all pgm io materials.
  */
 
-# include <mln/core/concept/image.hh>
-
-# include <mln/metal/templated_by.hh>
-
-# include <mln/io/pnm/save.hh>
 
 namespace mln
 {
 
   namespace io
   {
+    /// Namespace of pgm input/output handling.
+    namespace pgm {}
+  }
 
-    namespace ppm
-    {
+}
 
-      template <typename I>
-      void save(const Image<I>& ima, const std::string& filename);
+# include <mln/io/pgm/load.hh>
+# include <mln/io/pgm/save.hh>
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename I>
-      void save(const Image<I>& ima, const std::string& filename)
-      {
-	mln::metal::templated_by<mln_value(I), value::rgb >::check();
-
-	//call the generic function for pnm files
-	io::pnm::save(PPM, exact(ima), filename);
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::ppm
-
-  } // end of namespace mln::io
-
-} // end of namespace mln
-
-
-#endif // ! MLN_IO_PPM_SAVE_HH
+#endif // ! MLN_IO_PGM_ALL_HH

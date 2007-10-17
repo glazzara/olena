@@ -1,3 +1,59 @@
+2007-10-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+        Fix namespaces documentation.
+
+	* mln/arith/all.hh: New,
+	* mln/canvas/all.hh: New,
+	* mln/canvas/browsing/all.hh: New,
+	* mln/canvas/morpho/all.hh: New,
+	* mln/convert/all.hh: New,
+	* mln/display/all.hh: New,
+	* mln/draw/all.hh: New,
+	* mln/estim/all.hh: New,
+	* mln/io/abort.hh: New,
+	* mln/io/all.hh: New,
+	* mln/io/fits/all.hh: New,
+	* mln/io/pbm/all.hh: New,
+	* mln/io/ppm/all.hh: New,
+	* mln/io/pfm/all.hh: New,
+	* mln/io/pgm/all.hh: New,
+	* mln/io/pnm/all.hh: New, add missing all.hh files.
+
+	* mln/accu/all.hh,
+	* mln/border/all.hh,
+	* mln/core/image1d.hh,
+	* mln/debug/all.hh: Fix documentation.
+
+	Rename io/internal/pnm to io/pnm.
+
+	* mln/io/internal/abort.hh: Rename as...
+	* mln/io/abort.hh: ...this.
+	* mln/io/internal/pnm/load.hh: Rename as...
+	* mln/io/internal/pnm/load.hh: ...this.
+	* mln/io/internal/pnm/load_header.hh: Rename as...
+	* mln/io/internal/pnm/load_header.hh: ...this.
+	* mln/io/internal/pnm/macros.hh: Rename as...
+	* mln/io/internal/pnm/macros.hh: ...this.
+	* mln/io/internal/pnm/save.hh: Rename as...
+	* mln/io/internal/pnm/save.hh: ...this.
+	* mln/io/internal/pnm/save_header.hh: Rename as...
+	* mln/io/internal/pnm/save_header.hh: ...this.
+	* mln/io/internal/pnm: Rename as...
+	* mln/io/pnm: ...this.
+
+	* mln/io/pbm/load.hh,
+	* mln/io/pbm/save.hh,
+	* mln/io/pgm/load.hh,
+	* mln/io/pgm/save.hh,
+	* mln/io/pnm/load.hh,
+	* mln/io/pnm/load_header.hh,
+	* mln/io/pnm/macros.hh,
+	* mln/io/pnm/save.hh,
+	* mln/io/pnm/save_header.hh,
+	* mln/io/ppm/load.hh,
+	* mln/io/ppm/save.hh,
+	* mln/io/fits/load.hh: Update.
+
 2007-10-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update typo.

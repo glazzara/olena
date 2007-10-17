@@ -37,9 +37,12 @@
 namespace mln
 {
 
-  /*! Namespace of routines related to image virtual (outer) border.
-   */
-  namespace border {}
+  /// Namespace of routines related to image virtual (outer) border.
+  namespace border
+  {
+    /// Implementation namespace of border namespace.
+    namespace impl {}
+  }
 
 }
 

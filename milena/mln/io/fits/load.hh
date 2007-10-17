@@ -45,10 +45,6 @@
 # include <mln/value/int_u8.hh>
 # include <mln/io/fitsio.h>
 
-#include <iostream>
-#include <fstream>
-#include <string>
-
 namespace mln
 {
 

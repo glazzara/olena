@@ -1,5 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,24 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PNM_MACROS_HH
-# define MLN_IO_PNM_MACROS_HH
+#ifndef MLN_DRAW_ALL_HH
+# define MLN_DRAW_ALL_HH
 
-/*! \file mln/io/internal/pnm/macros.hh
+/*! \file mln/draw/all.hh
  *
- * \brief Definition of pnm formats macros.
+ * \brief File that includes all draw-related routines.
  */
 
-/// Portable Pixel Map Format
-# define PPM		'6'
-# define PPM_ASCII	'3'
 
-/// Portable Gray Map Format
-# define PGM		'5'
-# define PGM_ASCII	'2'
+namespace mln
+{
 
-/// Portable Bit Map Format
-# define PBM		'4'
-# define PBM_ASCII	'1'
+  /// Namespace of drawing routines.
+  namespace draw {}
 
-#endif // ! MLN_IO_PNM_LOAD_HH
+}
+
+# include <mln/draw/line.hh>
+# include <mln/draw/mesh.hh>
+
+#endif // ! MLN_DRAW_ALL_HH

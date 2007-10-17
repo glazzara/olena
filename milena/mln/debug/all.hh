@@ -38,10 +38,13 @@ namespace mln
 {
 
   /// Namespace of routines that help to debug.
-  namespace debug {}
+  namespace debug
+  {
+    /// Implementation namespace of debug namespace.
+    namespace impl {}
+  }
 
 }
-
 
 # include <mln/debug/format.hh>
 # include <mln/debug/iota.hh>

@@ -41,9 +41,14 @@
 namespace mln
 {
 
-  /*! Namespace of accumulators.
-   */
-  namespace accu {}
+  /// Namespace of accumulators.
+  namespace accu
+  {
+    /// Implementation namespace of accumulator namespace.
+    namespace impl {}
+    /// Internal namespace of accumulators.
+    namespace internal {}
+  }
 
 }
 

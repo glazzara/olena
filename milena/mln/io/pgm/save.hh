@@ -40,7 +40,7 @@
 # include <iostream>
 # include <fstream>
 
-# include <mln/io/internal/pnm/save.hh>
+# include <mln/io/pnm/save.hh>
 
 # include <mln/geom/size2d.hh>
 # include <mln/metal/templated_by.hh>
@@ -76,7 +76,7 @@ namespace mln
 	  mln::metal::templated_by<mln_value(I), value::int_u >,
 	  mln::metal::templated_by<mln_value(I), value::int_u_sat >
 	  >::check();
-	io::internal::pnm::save(PGM, exact(ima), filename);
+	io::pnm::save(PGM, exact(ima), filename);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

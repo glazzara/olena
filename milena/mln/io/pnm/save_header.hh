@@ -26,11 +26,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_INTERNAL_PNM_SAVE_HEADER_HH
-# define MLN_IO_INTERNAL_PNM_SAVE_HEADER_HH
+#ifndef MLN_IO_PNM_SAVE_HEADER_HH
+# define MLN_IO_PNM_SAVE_HEADER_HH
 
 /*!
- * \file   mln/io/internal/pnm/save_header.hh
+ * \file   mln/io/pnm/save_header.hh
  *
  * \brief  Define a function which saves header for PNM image.
  *
@@ -49,57 +49,52 @@ namespace mln
   namespace io
   {
 
-    namespace internal
-    {
-
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace pnm
+    namespace pnm
+    {
+
+      template <typename V>
+      void save_max_val(V&, std::ofstream& file)
       {
+	if (mln_max(V) > 1)
+	  file << mln_max(V) << std::endl;
+      }
 
-	template <typename V>
-	void save_max_val(V&, std::ofstream& file)
+      template <unsigned int n>
+      void save_max_val(value::rgb<n>&, std::ofstream& file)
+      {
+	typedef typename value::rgb<n>::enc E;
+	file << mln_max(E) << std::endl;
+      }
+
+      template <typename I>
+      void save_header(const char type,
+		       const I& ima, const std::string& filename,
+		       std::ofstream& file)
+      {
+	if (! file)
 	{
-	  if (mln_max(V) > 1)
-	    file << mln_max(V) << std::endl;
+	  std::cerr << "error: cannot open file '" << filename
+		    << "'!";
+	  abort();
 	}
+	file << "P" << type << std::endl;
+	file << "# milena" << std::endl;
+	file << geom::ncols(ima) << ' ' << geom::nrows(ima) << std::endl;
 
-	template <unsigned int n>
-	void save_max_val(value::rgb<n>&, std::ofstream& file)
-	{
-	  typedef typename value::rgb<n>::enc E;
-	  file << mln_max(E) << std::endl;
-	}
+	mln_value(I) i;
+	save_max_val(i, file);
+      }
 
-	template <typename I>
-	void save_header(const char type,
-			 const I& ima, const std::string& filename,
-			 std::ofstream& file)
-	{
-	  if (! file)
-	  {
-	    std::cerr << "error: cannot open file '" << filename
-		      << "'!";
-	    abort();
-	  }
-	  file << "P" << type << std::endl;
-	  file << "# milena" << std::endl;
-	  file << geom::ncols(ima) << ' ' << geom::nrows(ima) << std::endl;
-
-	  mln_value(I) i;
-	  save_max_val(i, file);
-	}
-
-      } // end of namespace mln::io::internal::pnm
+    } // end of namespace mln::io::pnm
 
 
 # endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::internal
 
   } // end of namespace mln::io
 
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_INTERNAL_PNM_SAVE_HEADER_HH
+#endif // ! MLN_IO_PNM_SAVE_HEADER_HH

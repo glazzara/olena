@@ -45,7 +45,7 @@
 
 # include <mln/value/int_u8.hh>
 
-# include <mln/io/internal/pnm/load.hh>
+# include <mln/io/pnm/load.hh>
 
 
 namespace mln
@@ -60,7 +60,7 @@ namespace mln
       template <typename V>
       image2d<V> load(const std::string& filename)
       {
-	return io::internal::pnm::load<V>(PGM, filename);
+	return io::pnm::load<V>(PGM, filename);
       }
 
       image2d<value::int_u8> load(const std::string& filename)
@@ -72,7 +72,7 @@ namespace mln
       void load(Image<I>& ima,
 	    const std::string& filename)
       {
-	io::internal::pnm::load<I>(PGM, ima, filename);
+	io::pnm::load<I>(PGM, ima, filename);
       }
     } // end of namespace mln::io::pgm
 
