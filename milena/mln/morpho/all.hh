@@ -25,39 +25,63 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_X2X_ALL_HH
-# define MLN_FUN_X2X_ALL_HH
+#ifndef MLN_MORPHO_ALL_HH
+# define MLN_MORPHO_ALL_HH
 
-/*! \file mln/fun_x2x/all.hh
+/*! \file mln/morpho/all.hh
  *
- * \brief File that includes all functions from vector to vector.
+ * \brief File that includes all morpho-related routines.
  */
 
 
 namespace mln
 {
 
-  namespace fun
+  /// Namespace of morphological image processing routines.
+  namespace morpho
   {
 
-    /// Namespace of functions from vector to vector.
-    namespace x2x
+    /// Namespace of morphological image processing routines
+    /// implementation details.
+    namespace impl
     {
 
-      /// Internal namespace of functions form vector to vector.
-      namespace internal
+      /// Namespace of morphological image processing routines generic
+      /// implementations.
+      namespace generic
       {
       }
+
     }
   }
 
 }
 
 
-# include <mln/fun/x2x/composed.hh>
-# include <mln/fun/x2x/rotation.hh>
-# include <mln/fun/x2x/translation.hh>
+# include <mln/morpho/closing.hh>
+# include <mln/morpho/complementation.hh>
+# include <mln/morpho/contrast.hh>
+# include <mln/morpho/dilation_fast.hh>
+# include <mln/morpho/dilation.hh>
+# include <mln/morpho/erosion_fast.hh>
+# include <mln/morpho/erosion.hh>
+# include <mln/morpho/gradient.hh>
+# include <mln/morpho/hit_or_miss.hh>
+# include <mln/morpho/includes.hh>
+# include <mln/morpho/laplacian.hh>
+# include <mln/morpho/min.hh>
+# include <mln/morpho/minus.hh>
+# include <mln/morpho/opening_area.hh>
+# include <mln/morpho/opening_attribute.hh>
+# include <mln/morpho/opening.hh>
+# include <mln/morpho/plus.hh>
+# include <mln/morpho/Rd.hh>
+# include <mln/morpho/thickening.hh>
+# include <mln/morpho/thick_miss.hh>
+# include <mln/morpho/thin_fit.hh>
+# include <mln/morpho/thinning.hh>
+# include <mln/morpho/top_hat.hh>
 
 
 
-#endif // ! MLN_FUN_X2X_ALL_HH
+#endif // ! MLN_MORPHO_ALL_HH

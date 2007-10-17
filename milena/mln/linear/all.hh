@@ -25,39 +25,48 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_X2X_ALL_HH
-# define MLN_FUN_X2X_ALL_HH
+#ifndef MLN_LINEAR_ALL_HH
+# define MLN_LINEAR_ALL_HH
 
-/*! \file mln/fun_x2x/all.hh
+/*! \file mln/linear/all.hh
  *
- * \brief File that includes all functions from vector to vector.
+ * \brief File that includes all linear image processing routines.
  */
 
 
 namespace mln
 {
 
-  namespace fun
+  /// Namespace of linear image processing routines.
+  namespace linear
   {
 
-    /// Namespace of functions from vector to vector.
-    namespace x2x
+    /// Namespace of linear image processing routines implementation details.
+    namespace impl
+    {
+    }
+
+    /// Specializations of local linear routines.
+    namespace local
     {
 
-      /// Internal namespace of functions form vector to vector.
-      namespace internal
+      /// Namespace of local linear routines implementation details.
+      namespace impl
       {
       }
+
     }
   }
 
 }
 
+# include <mln/linear/convolve.hh>
+# include <mln/linear/gaussian.hh>
+# include <mln/linear/lap.hh>
+# include <mln/linear/line_convolve.hh>
+# include <mln/linear/line_x2_convolve.hh>
+# include <mln/linear/log.hh>
+# include <mln/linear/sobel.hh>
+# include <mln/linear/local/convolve.hh>
 
-# include <mln/fun/x2x/composed.hh>
-# include <mln/fun/x2x/rotation.hh>
-# include <mln/fun/x2x/translation.hh>
-
-
-
-#endif // ! MLN_FUN_X2X_ALL_HH
+#endif // ! MLN_LINEAR_ALL_HH
