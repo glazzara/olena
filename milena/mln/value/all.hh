@@ -37,8 +37,7 @@
 namespace mln
 {
 
-  /*! Namespace of materials related to ixel value types.
-   */
+  /// Namespace of materials related to ixel value types.
   namespace value {}
 
 }

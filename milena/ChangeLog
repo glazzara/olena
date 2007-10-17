@@ -1,3 +1,13 @@
+2007-10-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update typo.
+
+	* mln/level/all.hh,
+	* mln/level/approx/all.hh,
+	* mln/level/naive/all.hh,
+	* mln/trace/all.hh,
+	* mln/value/all.hh: Update typo.
+
 2007-10-17  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Update typo.

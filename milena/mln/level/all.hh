@@ -37,16 +37,37 @@
 namespace mln
 {
 
-  /*! Namespace of image processing routines related to pixel levels.
-   */
-  namespace level {}
+  /// Namespace of image processing routines related to pixel levels.
+  namespace level
+  {
+    /// Implementation namespace of level namespace.
+    namespace impl {}
+  }
 
 }
 
-
-# include <mln/level/fill.hh>
+# include <mln/level/abs.hh>
+# include <mln/level/all.hh>
+# include <mln/level/apply.hh>
+# include <mln/level/approx/all.hh>
+# include <mln/level/assign.hh>
 # include <mln/level/compare.hh>
+# include <mln/level/compute.hh>
+# include <mln/level/fast_median.hh>
+# include <mln/level/fill.hh>
+# include <mln/level/median.hh>
+# include <mln/level/memcpy_.hh>
+# include <mln/level/memset_.hh>
+# include <mln/level/naive/all.hh>
 # include <mln/level/paste.hh>
+# include <mln/level/paste.spe.hh>
+# include <mln/level/saturate.hh>
+# include <mln/level/sort_points.hh>
+# include <mln/level/stretch.hh>
+# include <mln/level/take.hh>
+# include <mln/level/to_enc.hh>
+# include <mln/level/transform.hh>
+# include <mln/level/was.median.hh>
 
 
 

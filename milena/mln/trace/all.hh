@@ -37,8 +37,7 @@
 namespace mln
 {
 
-  /*! Namespace of routines related to the trace mechanism.
-   */
+  /// Namespace of routines related to the trace mechanism.
   namespace trace {}
 
 } // end of namespace mln
