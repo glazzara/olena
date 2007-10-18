@@ -1,3 +1,11 @@
+2007-10-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Starts with FLLT.
+
+	* mln/core/image_if.hh: Add fixme for theo.
+	* sandbox/garrigues/fllt.hh: Try to implement FLLT.
+	* sandbox/garrigues/test_fllt.cc: a test for FLLT.
+
 2007-10-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update typo and win_chamfer.

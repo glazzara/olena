@@ -32,6 +32,8 @@
  *
  * \brief Definition of a image which domain is restricted by a
  * function.
+ *
+ * \todo FIXME for theo : add image_if_great_than / less_than
  */
 
 # include <mln/core/internal/image_if_base.hh>
@@ -68,7 +70,7 @@ namespace mln
     struct image_< image_if<I,F> > : trait::image_< Super >
     {
     };
-    
+
   } // end of namespace mln::trait
 
 
@@ -100,7 +102,7 @@ namespace mln
   {
     f = model.domain().predicate();
   }
-    
+
   template <typename I, typename F, typename J>
   void init_(tag::image_t, image_if<I,F>& target, const J& model)
   {
