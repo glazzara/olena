@@ -168,20 +168,25 @@ namespace mln
 		set_p<P>& N,
 		V& gn)
   {
+    // Count the number of conected components of the border of R.
     image2d<int> tmp;
     unsigned n;
     labeling::level(convert::to_image(N), true, c8(), tmp, n);
 
-// 	         IF number of conected components of the border > 1
-// 	            follow each border to find which is the exterior border
-// 	            and which are the holes. Keep one pixel of each holes.
+    if (n > 1)
+      {
+//   IF number of conected components of the border > 1
+
+//       follow each border to find which is the exterior border
+//       and which are the holes. Keep one pixel of each holes.
 	      
-// 	            Remove from N border of holes.
-// 	            Recompute gn <- min u(x) x belongs to A
+//       Remove from N border of holes.
+//       Recompute gn <- min u(x) x belongs to A
+      }
 	      
-// 	               g <- gn
-// 	         A <- {x belongs to N / u(x) == g}
-// 	         N <- N\{x belongs to N / u(x) == g}
+//    g <- gn
+//    A <- {x belongs to N / u(x) == g}
+//    N <- N\{x belongs to N / u(x) == g}
 
   }
 
