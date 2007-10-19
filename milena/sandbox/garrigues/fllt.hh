@@ -40,6 +40,8 @@
 # include <mln/core/inplace.hh>
 # include <mln/core/neighb2d.hh>
 # include <mln/core/pset_if_piter.hh>
+# include <mln/core/sub_image.hh>
+# include <mln/core/image_if.hh>
 
 # include <mln/debug/println.hh>
 
@@ -48,7 +50,6 @@
 
 # include <mln/labeling/regional_minima.hh>
 
-# include <mln/core/image_if.hh>
 # include <mln/fun/ops.hh>
 # include <mln/pw/value.hh>
 # include <mln/pw/cst.hh>
@@ -100,16 +101,16 @@ namespace mln
     typedef point2d P;
     typedef image2d<V> I;
     typedef     mln::image_if<
-      mln::image2d<int>,
-      mln::fun::greater_p2b_expr_<mln::pw::value_<mln::image2d<int> >,
-                                  mln::pw::cst_<int> >
+      mln::image2d<V>,
+      mln::fun::greater_p2b_expr_<mln::pw::value_<mln::image2d<V> >,
+                                  mln::pw::cst_<V> >
       > I_IF;
 
 
     set_p<P> R, N, A;
     V g, gn;
     point2d x0;
-    image2d<int> min_locals(ima.domain());
+    image2d<V> min_locals(ima.domain());
     image2d<bool> tagged(ima.domain());
 
     unsigned nlabels;
@@ -151,16 +152,11 @@ namespace mln
 	  }
 
 	// gn <- min u(x) x belongs to N.
-	// FIXME : how can I do that?
-	//gn = level::compute<accu::min>(ima | N);
-	mln_piter(set_p<P>) qn(N);
-	accu::min_<V> min;
-	for_all(qn)
-	    min.take(ima(qn));
-	gn = min;
+	gn = level::compute<accu::min>(ima | N);
 
 	// R <- R union A
 	// tag the pixels of A.
+
 	for_all(qa)
 	  {
 	    R.insert(qa);
