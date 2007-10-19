@@ -103,7 +103,7 @@ namespace mln
     typedef     mln::image_if<
       mln::image2d<V>,
       mln::fun::greater_p2b_expr_<mln::pw::value_<mln::image2d<V> >,
-                                  mln::pw::cst_<V> >
+      mln::pw::cst_<V> >
       > I_IF;
 
 
@@ -147,8 +147,8 @@ namespace mln
 	  {
 	    mln_niter(neighb2d) n(c4(), qa);
 	    for_all (n)
- 		if (!R.has(n))
- 		  N.insert(n);
+	      if (!R.has(n))
+		N.insert(n);
 	  }
 
 	// gn <- min u(x) x belongs to N.
@@ -163,6 +163,38 @@ namespace mln
 	    tagged(qa) = true;
 	  }
 
+	// 4)
+
+	// IF g < gn
+	if (g < gn)
+	{
+	  //    IF number of conected components of the border > 1
+	  //       follow each border to find which is the exterior border
+	  //       and which are the holes. Keep one pixel of each holes.
+	  //
+	  //       Remove from N border of holes.
+	  //       Recompute gn <- min u(x) x belongs to A
+	  //
+	  //          g <- gn
+	  //    A <- {x belongs to N / u(x) == g}
+	  //    N <- N\{x belongs to N / u(x) == g}
+	  //    GO TO 3)
+	}
+
+	// IF g == gn
+	if (g == gn)
+	{
+	  //    A <- {x belongs to N / u(x) == g}
+	  //    N <- N\{x belongs to N / u(x) == g}
+	  //    GO TO 3)
+	}
+
+	// IF g > gn
+	if (g > gn)
+	{
+	  //    set the gray-level of the pixels of R to g.
+	  //    GO TO 1)
+	}
       }
   }
 
