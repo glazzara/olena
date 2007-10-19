@@ -1,3 +1,8 @@
+2007-10-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update fllt.
+	* fllt.hh: Update.
+
 2007-10-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Update fllt.
