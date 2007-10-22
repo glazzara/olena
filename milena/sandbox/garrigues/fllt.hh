@@ -152,7 +152,7 @@ namespace mln
       {
 	mln_niter(neighb2d) n(c4(), qa);
 	for_all (n)
-	  if (!R.has (n))
+	  if (ima.has(n) && !R.has (n))
 	    N.insert (n);
       }
 
@@ -228,7 +228,7 @@ namespace mln
     std::cout << "N :" << std::endl;
     if (N.npoints())
       debug::println(u | N);
-    
+
     std::cout << "exiting step 4_1" << std::endl;
   }
 
@@ -246,16 +246,16 @@ namespace mln
     A = set::uni(A, N | pw::value(u) == pw::cst(g));
 //    N <- N\{x belongs to N / u(x) == g}
     N = set::diff(N, N | pw::value(u) == pw::cst(g));
-    
+
     std::cout << "exiting step 4_2" << std::endl;
   }
 
   /// IF g > gn.
   template <typename V, typename P>
   void step4_3 (image2d<V>& u,
-		image2d<bool>& tagged,
-		set_p<P>& R,
-		V& g)
+		const image2d<bool>& tagged,
+		const set_p<P>& R,
+		const V& g)
   {
     std::cout << "entering step 4_3" << std::endl;
 
