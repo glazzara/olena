@@ -1,5 +1,12 @@
 2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Move abr in mln.
+
+	* mln/util/abr.hh: New.
+	* tests/abr.cc: New.
+
+2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix for handle non-const.
 
 	* abr.cc: Update.
