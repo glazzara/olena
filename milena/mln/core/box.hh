@@ -57,7 +57,7 @@ namespace mln
   {
     /// Dimension.
     enum { dim = P::dim };
-    
+
     /// Mesh associated type.
     typedef mln_mesh(P) mesh;
 
@@ -69,7 +69,7 @@ namespace mln
 
     /// Dpoint associated type.
     typedef mln_dpoint(P) dpoint;
-    
+
     /// Forward Point_Iterator associated type.
     typedef box_fwd_piter_<P> fwd_piter;
 
@@ -101,11 +101,17 @@ namespace mln
     box_(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols);
     /// \}
 
-    /*! \brief Test if \p p belongs to the box. 
+    /*! \brief Test if \p p belongs to the box.
      *
      * \param[in] p A point site.
      */
     bool has(const P& p) const;
+
+    /// Enlarge the box with a border \p b.
+    void enlarge(unsigned b);
+
+    /// Give a larger box.
+    box_<P> to_larger(unsigned b) const;
 
   protected:
     P pmin_, pmax_;
@@ -159,13 +165,13 @@ namespace mln
   box_<P>::box_()
   {
   }
-  
+
   template <typename P>
   box_<P>::box_(const point& pmin, const point& pmax)
     : pmin_(pmin),
       pmax_(pmax)
   {
-   
+
   }
 
   template <typename P>
@@ -200,6 +206,32 @@ namespace mln
       if (p[i] < pmin_[i] || p[i] > pmax_[i])
 	return false;
     return true;
+  }
+
+  template <typename P>
+  void
+  box_<P>::enlarge(unsigned b)
+  {
+    for (unsigned i = 0; i < P::dim; ++i)
+    {
+      pmin[i] -= b;
+      pmax[i] += b;
+    }
+  }
+
+
+  template <typename P>
+  box_<P>
+  box_<P>::to_larger(unsigned b) const
+  {
+    box_<P> tmp = *this;
+
+    for (unsigned i = 0; i < P::dim; ++i)
+    {
+      tmp.pmin[i] -= b;
+      tmp.pmax[i] += b;
+    }
+    return tmp;
   }
 
   template <typename P>
