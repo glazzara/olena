@@ -54,6 +54,16 @@ AC_ARG_VAR([CONCEPTCXX], [Concept C++ compiler])
 AC_CHECK_PROGS([CONCEPTCXX], [conceptg++ conceptc++])
 
 
+## -------------- ##
+## Dependencies.  ##
+## -------------- ##
+
+# FreeImage library.
+AC_CHECK_HEADERS([FreeImagePlus.h],
+  [AM_CONDITIONAL([FREE_IMAGE_PLUS], [true])])
+AC_CHECK_LIB([freeimageplus], [main])
+
+
 ## ------- ##
 ## Tests.  ##
 ## ------- ##
@@ -97,6 +107,7 @@ AC_CONFIG_FILES([
 ])
 # FIXME: Should be performed through oln.m4 macros.
 AC_CONFIG_FILES([
+  milena/tests/Makefile
   olena/tests/algorithms/Makefile
   olena/tests/check/Makefile
   olena/tests/check/defs
