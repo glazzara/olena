@@ -54,6 +54,7 @@
 
 # include <mln/set/uni.hh>
 # include <mln/set/diff.hh>
+# include <mln/set/inter.hh>
 
 # include <mln/labeling/regional_minima.hh>
 # include <mln/labeling/level.hh>
@@ -137,7 +138,7 @@ namespace mln
 
 
   template <typename V, typename P>
-  void step3 (const image2d<V>& ima,
+  void step3 (const image2d<V>& u,
 	      image2d<bool>& tagged,
 	      set_p<P>& A,
 	      set_p<P>& R,
@@ -147,27 +148,26 @@ namespace mln
     std::cout << "entering step 3" << std::endl;
     // N <- N union {x neighbor of a pixel in a\R}
     mln_piter(set_p<P>) qa(A);
-
     for_all(qa)
       {
 	mln_niter(neighb2d) n(c4(), qa);
 	for_all (n)
-	  if (ima.has(n) && !R.has (n))
+	  if (!R.has (n))
 	    N.insert (n);
       }
 
     std::cout << "A :" << std::endl;
     if (A.npoints())
-      debug::println(ima | A);
+      debug::println(u | A);
     std::cout << "N :" << std::endl;
     if (N.npoints())
-      debug::println(ima | N);
+      debug::println(u | N);
     std::cout << "R :" << std::endl;
     if (R.npoints())
-      debug::println(ima | R);
+      debug::println(u | R);
 
     // gn <- min u(x) x belongs to N.
-    gn = level::compute<accu::min>(ima | N);
+    gn = level::compute<accu::min>(u | set::inter(N, u.domain()));
 
     std::cout << std::endl << "gN = " << gn << std::endl;
     // R <- R union A
@@ -193,8 +193,8 @@ namespace mln
   {
     std::cout << "entering step 4_1" << std::endl;
     // Count the number of conected components of the border of R.
-    image2d<int>  tmp(u.domain());
-    image2d<bool> border_ima(u.domain());
+    image2d<int>  tmp(u.domain().to_larger(1));
+    image2d<bool> border_ima(u.domain().to_larger(1));
     level::fill(border_ima, false);
     level::fill(inplace(border_ima | N), true);
     unsigned n;
@@ -218,6 +218,7 @@ namespace mln
 
     g = gn;
 //    A <- {x belongs to N / u(x) == g}
+    A.clear();
     A = set::uni(A, N | pw::value(u) == pw::cst(g));
 //    N <- N\{x belongs to N / u(x) == g}
     N = set::diff(N, N | pw::value(u) == pw::cst(g));
@@ -246,6 +247,13 @@ namespace mln
     A = set::uni(A, N | pw::value(u) == pw::cst(g));
 //    N <- N\{x belongs to N / u(x) == g}
     N = set::diff(N, N | pw::value(u) == pw::cst(g));
+
+    std::cout << "A :" << std::endl;
+    if (A.npoints())
+      debug::println(u | A);
+    std::cout << "N :" << std::endl;
+    if (N.npoints())
+      debug::println(u | N);
 
     std::cout << "exiting step 4_2" << std::endl;
   }
@@ -316,7 +324,8 @@ namespace mln
 	  step2(A, R, N, x0);
 	  while (1)
 	    {
-	      step3(ima, tagged, A, R, N, gn);
+	      std::cout << "g = " << g << std::endl;
+	      step3(u, tagged, A, R, N, gn);
 	      /// step4.
 	      if (g < gn)
 		{
