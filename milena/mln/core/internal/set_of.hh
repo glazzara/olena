@@ -36,6 +36,7 @@
 # include <vector>
 # include <set>
 # include <iterator>
+# include <algorithm>
 
 # include <mln/core/internal/force_exact.hh>
 
@@ -77,6 +78,17 @@ namespace mln
        * \return The set itself after insertion.
        */
       set_of_<E>& insert(const E& elt);
+
+
+      /*! \brief Remove an element \p elt into the set.
+       *
+       * \param[in] elt The element to be inserted.
+       *
+       * If \p elt is already in the set, this method is a no-op.
+       *
+       * \return The set itself after suppression.
+       */
+      set_of_<E>& remove(const E& elt);
 
 
       /*! \brief Return the i-th element of the set.
@@ -193,7 +205,18 @@ namespace mln
     }
 
     template <typename E>
-    const E& 
+    set_of_<E>&
+    set_of_<E>::remove(const E& elt)
+    {
+      // FIXME : doesn't compile
+      std::remove(s_.begin(), s_.end(), elt);
+      if (needs_update_ == false)
+	needs_update_ = true;
+      return internal::force_exact< set_of_<E> >(*this);
+    }
+
+    template <typename E>
+    const E&
     set_of_<E>::element(unsigned i) const
     {
       assert(i < v_.size());

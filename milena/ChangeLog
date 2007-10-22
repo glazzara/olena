@@ -1,3 +1,11 @@
+2007-10-22  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Try to add remove to set_of, Update fllt.
+
+	* mln/core/internal/set_of.hh: (set_of::remove) New.
+	* mln/core/set_p.hh: (set_p::remove) New.
+	* sandbox/garrigues/fllt.hh: Update.
+
 2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update of abr.

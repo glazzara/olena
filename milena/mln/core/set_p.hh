@@ -78,6 +78,10 @@ namespace mln
     /// Insert a point \p p.
     set_p<P>& insert(const P& p);
 
+    // FIXME : doesn't compile
+    //     /// Remove a point \p p.
+    //     set_p<P>& remove(P& p);
+
     /// Return the \p i-th point.
     const P& operator[](unsigned i) const;
 
@@ -123,6 +127,18 @@ namespace mln
     bb_.take(p);
     return *this;
   }
+
+
+  // FIXME : finish it.
+  //   template <typename P>
+  //   set_p<P>&
+  //   set_p<P>::remove(P& p)
+  //   {
+  //     this->super_::remove(p);
+  //     // FIXME: need to rebuild bb_ ?
+  //     //bb_.untake(p);
+  //     return *this;
+  //   }
 
   template <typename P>
   const P&

@@ -26,8 +26,8 @@
 // Public License.
 
 
-#ifndef MLN_LEVEL_MEDIAN_HH
-# define MLN_LEVEL_MEDIAN_HH
+#ifndef MLN_FIXME_FLLT_HH
+# define MLN_FIXME_FLLT_HH
 
 /*! \file fllt.hh
  *
@@ -102,7 +102,7 @@ namespace mln
 
   template <typename V>
   void step1 (const image2d<V>& ima,
-	      point2d p, 
+	      point2d p,
 	      V& g,
 	      point2d& x0)
   {
@@ -144,7 +144,7 @@ namespace mln
     std::cout << "entering step 3" << std::endl;
     // N <- N union {x neighbor of a pixel in a\R}
     mln_piter(set_p<P>) qa(A);
-    
+
     for_all(qa)
       {
 	mln_niter(neighb2d) n(c4(), qa);
@@ -155,14 +155,14 @@ namespace mln
 
     std::cout << "N :" << std::endl;
     debug::println(ima | N);
-    
+
     // gn <- min u(x) x belongs to N.
     gn = level::compute<accu::min>(ima | N);
 
     std::cout << std::endl << "gN = " << gn << std::endl;
     // R <- R union A
     // tag the pixels of A.
-    
+
     for_all(qa)
       {
 	R.insert(qa);
@@ -196,16 +196,16 @@ namespace mln
 
     if (n > 1)
       {
-	
+
 //   IF number of conected components of the border > 1
 
 //       follow each border to find which is the exterior border
 //       and which are the holes. Keep one pixel of each holes.
-	      
-//       Remove from N border of holes.
+
+//       Remove from N border of holes???.
 //       Recompute gn <- min u(x) x belongs to A
       }
-	      
+
     g = gn;
 //    A <- {x belongs to N / u(x) == g}
     A.clear();
@@ -223,6 +223,7 @@ namespace mln
 		set_p<P>& N,
 		V& g)
   {
+    std::cout << "entering step 4_2" << std::endl;
 
     //    A <- {x belongs to N / u(x) == g}
     //    N <- N\{x belongs to N / u(x) == g}
@@ -240,14 +241,19 @@ namespace mln
 	    N.insert(p);
 	  }
       }
+
+    std::cout << "exiting step 4_2" << std::endl;
   }
 
   /// IF g > gn.
   template <typename V, typename P>
   void step4_3 (image2d<V>& u,
+		image2d<bool>& tagged,
 		set_p<P>& R,
 		V& g)
   {
+    std::cout << "entering step 4_3" << std::endl;
+
     //    set the gray-level of the pixels of R to g.
     mln_piter(set_p<P>) p(R);
     for_all(p)
@@ -255,6 +261,9 @@ namespace mln
 	mln_assertion (tagged(p));
 	u (p) = g;
       }
+
+    std::cout << "exiting step 4_3" << std::endl;
+
   }
 
 
@@ -288,7 +297,8 @@ namespace mln
 
     /// Algorithm.
     {
-      mln_piter(I_IF) p((min_locals | (pw::value(min_locals) > pw::cst(0))).domain());
+      I_IF min_locals_list(min_locals | (pw::value(min_locals) > pw::cst(0)));
+      mln_piter(I_IF) p(min_locals_list.domain());
       for_all(p)
 	{
 	  if (tagged(p))
@@ -297,7 +307,7 @@ namespace mln
 	  std::cout << "p = " << p << std::endl;
 
 	  step1(ima, p, g, x0);
-	  
+
 	  step2(A, R, N, x0);
 	  while (1)
 	    {
@@ -309,20 +319,19 @@ namespace mln
 		  // GO TO 3)
 		  continue;
 		}
-	      
-	      
+
+
 	      if (g == gn)
 		{
 		  step4_2(ima, A, N, g);
 		  // GO TO 3)
 		  continue;
 		}
-	      
-	      
+
+
 	      if (g > gn)
 		{
-		  /// FIXME ima -> u
-		  // 		  step4_3(u, R, g);
+		  step4_3(u, tagged, R, g);
  		  //    GO TO 1)
 		  break;
 		}
@@ -335,4 +344,4 @@ namespace mln
 
 
 
-#endif // ! MLN_LEVEL_MEDIAN_HH
+#endif // ! MLN_FIXME_FLLT_HH
