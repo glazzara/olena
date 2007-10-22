@@ -33,22 +33,27 @@
  */
 
 #include <mln/util/abr.hh>
+#include <mln/core/contract.hh>
 
 int main (void)
 {
   using namespace mln;
+
   unsigned elt1 = 1;
   unsigned elt2 = 2;
   unsigned elt3 = 3;
   unsigned elt4 = 4;
   unsigned elt5 = 5;
-  util::s_abr<unsigned> abr (elt1);
 
-  abr.add_son (elt2);
-  abr.add_son (elt3);
-  abr.print ();
-  util::s_abr<unsigned>* abr2 = abr.search (elt2);
-  abr2->add_son (elt4);
-  abr2->add_son (elt5);
-  abr.print ();
+  util::abr<unsigned> abr(elt1);
+  abr.add_child(elt2);
+  abr.add_child(elt3);
+  util::abr<unsigned>* abr2 = abr.search(elt2);
+  mln_assertion(abr2);
+  abr2->add_child(elt4);
+  abr2->add_child(elt5);
+  util::abr<unsigned>* abr3 = abr.search(elt4);
+  mln_assertion(abr3);
+  abr3 = abr2->search(elt1);
+  mln_assertion(!abr3);
 }

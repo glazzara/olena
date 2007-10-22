@@ -39,7 +39,6 @@
  *
  */
 
-
 namespace mln
 {
 
@@ -93,28 +92,6 @@ namespace mln
     }
 
     template <typename T>
-    void
-    s_abr<T>::print_rec (int n) const
-    {
-      std::cout << this->elt_ << std::endl;
-      typename std::list<s_abr<T>* >::const_iterator it = this->sons_.begin ();
-      for (; it != this->sons_.end (); ++it)
-	{
-	  for (int i = 0; i < n; ++i)
-	    std::cout << "  ";
-	  (**it).print_rec (n + 1);
-	}
-    }
-    
-    template <typename T>
-    void
-    s_abr<T>::print (void) const
-    {
-      this->print_rec(1);
-    }
-
-
-    template <typename T>
     int
     s_abr<T>::search_rec(s_abr<T>** res, T& elt)
     {
@@ -146,6 +123,27 @@ namespace mln
       std::cerr << elt << " not found" << std::endl;
       return 0;
     }
+
+//     template <typename T>
+//     void
+//     abr<T>::print_rec(int n) const
+//     {
+//       std::cout << this->elt_ << std::endl;
+//       typename std::vector<abr<T>* >::const_iterator it = this->child_.begin();
+//       for (; it != this->child_.end(); ++it)
+// 	{
+// 	  for (int i = 0; i < n; ++i)
+// 	    std::cout << "  ";
+// 	  (**it).print_rec(n + 1);
+// 	}
+//     }
+    
+//     template <typename T>
+//     void
+//     abr<T>::print(void) const
+//     {
+//       this->print_rec(1);
+//     }
 
 # endif // ! MLN_INCLUDE_ONLY
 

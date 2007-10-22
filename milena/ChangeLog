@@ -1,3 +1,13 @@
+2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update of abr.
+	
+	* mln/util/abr.hh: Update with better coding style.
+	* tests/abr.cc: Add assertion in this test.
+
+	Sandbox.
+	* sandbox/duhamel/abr.hh: Update.
+
 2007-10-22  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Update fllt.
