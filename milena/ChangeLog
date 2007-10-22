@@ -1,3 +1,9 @@
+2007-10-22  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Update fllt.
+
+	* sandbox/garrigues/fllt.hh: Update.
+
 2007-10-22  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix box resizing.

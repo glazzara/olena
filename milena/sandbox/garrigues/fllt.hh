@@ -40,13 +40,16 @@
 # include <mln/core/inplace.hh>
 # include <mln/core/neighb2d.hh>
 # include <mln/core/pset_if_piter.hh>
+# include <mln/core/pset_if.hh>
 # include <mln/core/sub_image.hh>
 # include <mln/core/image_if.hh>
+# include <mln/core/clone.hh>
 
 # include <mln/debug/println.hh>
 # include <mln/convert/to_image.hh>
 
 # include <mln/level/compute.hh>
+# include <mln/level/fill.hh>
 # include <mln/accu/min.hh>
 
 # include <mln/labeling/regional_minima.hh>
@@ -55,7 +58,6 @@
 # include <mln/fun/ops.hh>
 # include <mln/pw/value.hh>
 # include <mln/pw/cst.hh>
-# include <mln/fun/p2b/chess.hh>
 
 namespace mln
 {
@@ -104,10 +106,13 @@ namespace mln
 	      V& g,
 	      point2d& x0)
   {
+    std::cout << "entering step 1" << std::endl;
     // x0 <- a not tagged local mininum of ima.
     x0 = p;
     // g <- u(x0)
     g = ima(x0);
+    std::cout << "g = " << g << std::endl;
+    std::cout << "exiting step 1" << std::endl;
   }
 
   template <typename P>
@@ -116,6 +121,7 @@ namespace mln
 	      set_p<P>& N,
 	      point2d& x0)
   {
+    std::cout << "entering step 2" << std::endl;
     // A <- {x0}
     A.clear();
     A.insert(x0);
@@ -123,6 +129,7 @@ namespace mln
     R.clear();
     // N <- {}
     N.clear();
+    std::cout << "exiting step 2" << std::endl;
   }
 
 
@@ -134,6 +141,7 @@ namespace mln
 	      set_p<P>& N,
 	      V& gn)
   {
+    std::cout << "entering step 3" << std::endl;
     // N <- N union {x neighbor of a pixel in a\R}
     mln_piter(set_p<P>) qa(A);
     
@@ -144,10 +152,14 @@ namespace mln
 	  if (!R.has (n))
 	    N.insert (n);
       }
+
+    std::cout << "N :" << std::endl;
+    debug::println(ima | N);
     
     // gn <- min u(x) x belongs to N.
     gn = level::compute<accu::min>(ima | N);
-    
+
+    std::cout << std::endl << "gN = " << gn << std::endl;
     // R <- R union A
     // tag the pixels of A.
     
@@ -156,25 +168,35 @@ namespace mln
 	R.insert(qa);
 	tagged(qa) = true;
       }
+    std::cout << "exiting step 3" << std::endl;
   }
 
 
   /// IF g < gn.
   template <typename V, typename P>
-  void step4_1 (const image2d<V>& ima,
-		image2d<bool>& tagged,
+  void step4_1 (image2d<V>& u,
 		set_p<P>& A,
-		set_p<P>& R,
+// 		set_p<P>& R,
 		set_p<P>& N,
+		V& g,
 		V& gn)
   {
+    std::cout << "entering step 4_1" << std::endl;
     // Count the number of conected components of the border of R.
-    image2d<int> tmp;
+    image2d<int>  tmp(u.domain());
+    image2d<bool> border_ima(u.domain());
+    level::fill(border_ima, false);
+    level::fill(inplace(border_ima | N), true);
     unsigned n;
-    labeling::level(convert::to_image(N), true, c8(), tmp, n);
+    labeling::level(border_ima, true, c8(), tmp, n);
+
+//     debug::println(border_ima);
+    std::cout << "nb composantes :" << n << std::endl;
+    debug::println(tmp);
 
     if (n > 1)
       {
+	
 //   IF number of conected components of the border > 1
 
 //       follow each border to find which is the exterior border
@@ -184,10 +206,13 @@ namespace mln
 //       Recompute gn <- min u(x) x belongs to A
       }
 	      
-//    g <- gn
+    g = gn;
 //    A <- {x belongs to N / u(x) == g}
+    A.clear();
+//    A += N | (pw::value(u) == pw::cst(g));
 //    N <- N\{x belongs to N / u(x) == g}
 
+    std::cout << "exiting step 4_1" << std::endl;
   }
 
 
@@ -252,7 +277,7 @@ namespace mln
     V g, gn;
     point2d x0;
     image2d<V> min_locals(ima.domain());
-    //    image2d<V> u = clone(ima);
+    image2d<V> u = clone(ima);
     image2d<bool> tagged(ima.domain());
 
     unsigned nlabels;
@@ -269,7 +294,10 @@ namespace mln
 	  if (tagged(p))
 	    continue;
 
+	  std::cout << "p = " << p << std::endl;
+
 	  step1(ima, p, g, x0);
+	  
 	  step2(A, R, N, x0);
 	  while (1)
 	    {
@@ -277,7 +305,7 @@ namespace mln
 	      /// step4.
 	      if (g < gn)
 		{
-// 		  step4_1();
+		  step4_1(u, A, N, g, gn);
 		  // GO TO 3)
 		  continue;
 		}
@@ -294,7 +322,7 @@ namespace mln
 	      if (g > gn)
 		{
 		  /// FIXME ima -> u
-		  // 		  step4_3(ima, R, g);
+		  // 		  step4_3(u, R, g);
  		  //    GO TO 1)
 		  break;
 		}
