@@ -1,3 +1,12 @@
+2007-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Automate the tests in Milena.
+
+	* tests/fi_adaptor.cc: Remove useless preprocessor directives
+	on `FREEIMAGE_LIB'.
+	* tests/Makefile.am: New.
+	* Makefile.am (SUBDIRS): Add tests.
+
 2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add a structure of tree in sandbox.

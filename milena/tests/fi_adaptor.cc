@@ -53,10 +53,8 @@ int main()
   using typename value::int_u8;
   using typename value::rgb8;
 
-#ifdef FREEIMAGE_LIB
   //FIXME : is it necessary??
   FreeImage_Initialise();
-#endif // FREEIMAGE_LIB
 
   win::rectangle2d rect(51, 51);
 
@@ -74,8 +72,5 @@ int main()
   display::show (adaptor, "xv");
 
   // call this ONLY when linking with FreeImage as a static library
-#ifdef FREEIMAGE_LIB
   FreeImage_DeInitialise();
-#endif // FREEIMAGE_LIB
-
 }
