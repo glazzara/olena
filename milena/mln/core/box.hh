@@ -214,8 +214,8 @@ namespace mln
   {
     for (unsigned i = 0; i < P::dim; ++i)
     {
-      pmin[i] -= b;
-      pmax[i] += b;
+      pmin_[i] -= b;
+      pmax_[i] += b;
     }
   }
 
@@ -228,8 +228,8 @@ namespace mln
 
     for (unsigned i = 0; i < P::dim; ++i)
     {
-      tmp.pmin[i] -= b;
-      tmp.pmax[i] += b;
+      tmp.pmin_[i] -= b;
+      tmp.pmax_[i] += b;
     }
     return tmp;
   }

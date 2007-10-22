@@ -1,5 +1,11 @@
 2007-10-22  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix box resizing.
+	* mln/core/box.hh: Fix.
+	* tests/convert_to_image.cc: Update.
+
+2007-10-22  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Enlarge for boxes.
 	* mln/convert/to_image.hh: Update convert::to_image(pset).
 	* mln/core/box.hh: (box_<P>::to_larger) New,
