@@ -50,15 +50,15 @@ namespace mln
     struct s_abr
     {
       s_abr ();
-      s_abr (const T& elt);
+      s_abr (T& elt);
       
-      void add_son (const T& elt);
+      void add_son (T& elt);
       void print_rec (int n) const;
       void print (void) const;
-      int  search_rec(s_abr<T>** res, const T& elt);
-      s_abr<T>* search(const T& elt);
+      int  search_rec(s_abr<T>** res, T& elt);
+      s_abr<T>* search(T& elt);
 
-      const T&			elt_;
+      T&			elt_;
       s_abr<T>*			father_;
       std::list< s_abr<T>* >	sons_;
     };
@@ -74,7 +74,7 @@ namespace mln
     }
     
     template <typename T>
-    s_abr<T>::s_abr (const T& elt)
+    s_abr<T>::s_abr (T& elt)
       : elt_ (elt),
 	father_ (0)
     {
@@ -83,7 +83,7 @@ namespace mln
 
     template <typename T>
     void
-    s_abr<T>::add_son (const T& elt)
+    s_abr<T>::add_son (T& elt)
     {
 
       s_abr<T>* s = new s_abr<T> (elt);
@@ -116,7 +116,7 @@ namespace mln
 
     template <typename T>
     int
-    s_abr<T>::search_rec(s_abr<T>** res, const T& elt)
+    s_abr<T>::search_rec(s_abr<T>** res, T& elt)
     {
       if (elt == this->elt_)
 	{
@@ -137,7 +137,7 @@ namespace mln
     
     template <typename T>
     s_abr<T>*
-    s_abr<T>::search(const T& elt)
+    s_abr<T>::search(T& elt)
     {
       s_abr<T>* res = 0;
 

@@ -37,13 +37,18 @@
 int main (void)
 {
   using namespace mln;
-  util::s_abr<unsigned> abr (1);
+  unsigned elt1 = 1;
+  unsigned elt2 = 2;
+  unsigned elt3 = 3;
+  unsigned elt4 = 4;
+  unsigned elt5 = 5;
+  util::s_abr<unsigned> abr (elt1);
 
-  abr.add_son (2);
-  abr.add_son (3);
+  abr.add_son (elt2);
+  abr.add_son (elt3);
   abr.print ();
-  util::s_abr<unsigned>* abr2 = abr.search (2);
-  abr2->add_son (4);
-  abr2->add_son (5);
+  util::s_abr<unsigned>* abr2 = abr.search (elt2);
+  abr2->add_son (elt4);
+  abr2->add_son (elt5);
   abr.print ();
 }
