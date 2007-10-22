@@ -52,6 +52,9 @@
 # include <mln/level/fill.hh>
 # include <mln/accu/min.hh>
 
+# include <mln/set/uni.hh>
+# include <mln/set/diff.hh>
+
 # include <mln/labeling/regional_minima.hh>
 # include <mln/labeling/level.hh>
 
@@ -153,8 +156,15 @@ namespace mln
 	    N.insert (n);
       }
 
+    std::cout << "A :" << std::endl;
+    if (A.npoints())
+      debug::println(ima | A);
     std::cout << "N :" << std::endl;
-    debug::println(ima | N);
+    if (N.npoints())
+      debug::println(ima | N);
+    std::cout << "R :" << std::endl;
+    if (R.npoints())
+      debug::println(ima | R);
 
     // gn <- min u(x) x belongs to N.
     gn = level::compute<accu::min>(ima | N);
@@ -208,40 +218,35 @@ namespace mln
 
     g = gn;
 //    A <- {x belongs to N / u(x) == g}
-    A.clear();
-//    A += N | (pw::value(u) == pw::cst(g));
+    A = set::uni(A, N | pw::value(u) == pw::cst(g));
 //    N <- N\{x belongs to N / u(x) == g}
+    N = set::diff(N, N | pw::value(u) == pw::cst(g));
 
+    std::cout << "A :" << std::endl;
+    if (A.npoints())
+      debug::println(u | A);
+    std::cout << "N :" << std::endl;
+    if (N.npoints())
+      debug::println(u | N);
+    
     std::cout << "exiting step 4_1" << std::endl;
   }
 
 
   /// IF g == gn.
   template <typename V, typename P>
-  void step4_2 (const image2d<V>& ima,
+  void step4_2 (const image2d<V>& u,
 		set_p<P>& A,
 		set_p<P>& N,
 		V& g)
   {
     std::cout << "entering step 4_2" << std::endl;
 
-    //    A <- {x belongs to N / u(x) == g}
-    //    N <- N\{x belongs to N / u(x) == g}
-
-    set_p<P> N_tmp (N);
-
-    A.clear();
-    N.clear();
-    mln_piter(set_p<P>) p(N_tmp);
-    for_all(p)
-      {
-	if (ima (p) == g)
-	  {
-	    A.insert(p);
-	    N.insert(p);
-	  }
-      }
-
+//    A <- {x belongs to N / u(x) == g}
+    A = set::uni(A, N | pw::value(u) == pw::cst(g));
+//    N <- N\{x belongs to N / u(x) == g}
+    N = set::diff(N, N | pw::value(u) == pw::cst(g));
+    
     std::cout << "exiting step 4_2" << std::endl;
   }
 
@@ -323,7 +328,7 @@ namespace mln
 
 	      if (g == gn)
 		{
-		  step4_2(ima, A, N, g);
+		  step4_2(u, A, N, g);
 		  // GO TO 3)
 		  continue;
 		}

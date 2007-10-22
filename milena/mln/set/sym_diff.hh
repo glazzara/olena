@@ -35,6 +35,7 @@
 
 # include <mln/convert/to_std_set.hh>
 # include <mln/convert/to_window.hh>
+# include <mln/convert/to_set_p.hh>
 # include <mln/metal/equal.hh>
 
 
@@ -50,6 +51,10 @@ namespace mln
     window<mln_dpoint(Wl)>
     sym_diff(const Window<Wl>& lhs, const Window<Wr>& rhs);
 
+    /// Set theoretic symmetrical difference of \p lhs and \p rhs.
+    template <typename Wl, typename Wr>
+    set_p<mln_point(Wl)>
+    sym_diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -67,6 +72,22 @@ namespace mln
 				    sr.begin(), sr.end(),
 				    std::inserter(s, s.begin()));
       return convert::to_window(s);
+    }
+
+    template <typename Wl, typename Wr>
+    set_p<mln_point(Wl)>
+    sym_diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
+    {
+      mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
+      typedef mln_point(Wl) P;
+      std::set<P>
+	sl = convert::to_std_set(lhs),
+	sr = convert::to_std_set(rhs),
+	s;
+      std::set_symmetric_difference(sl.begin(), sl.end(),
+				    sr.begin(), sr.end(),
+				    std::inserter(s, s.begin()));
+      return convert::to_set_p(s);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

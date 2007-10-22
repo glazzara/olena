@@ -50,6 +50,9 @@ namespace mln
     template <typename W>
     std::set<mln_dpoint(W)> to_std_set(const Window<W>& win);
 
+    /// Convert a point set \p pset into a std::set of points.
+    template <typename W>
+    std::set<mln_point(W)> to_std_set(const Point_Set<W>& setp);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -65,6 +68,16 @@ namespace mln
       return s;
     }
 
+    template <typename W>
+    std::set<mln_point(W)> to_std_set(const Point_Set<W>& setp)
+    {
+      typedef mln_point(W) P;
+      std::set<P> s;
+      mln_piter(W) p(exact(setp));
+      for_all(p)
+	s.insert(p);
+      return s;
+    }
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::convert

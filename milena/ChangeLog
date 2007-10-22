@@ -1,3 +1,16 @@
+2007-10-22  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Update fllt and add conversion and set_p routines.
+	* mln/convert/to_set_p.hh: New.
+	* mln/convert/to_std_set.hh: Update.
+	* mln/core/concept/point_set.hh: Add todo.
+	* mln/set/diff.hh,
+	* mln/set/inter.hh,
+	* mln/set/sym_diff.hh: Work for mln::Point_Set.
+	* mln/set/union.hh: Like above and rename as...
+	* mln/set/uni.hh: ...this.
+	* sandbox/garrigues/fllt.hh: Update.
+
 2007-10-22  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Try to add remove to set_of, Update fllt.

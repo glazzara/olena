@@ -36,6 +36,7 @@
 
 # include <mln/convert/to_std_set.hh>
 # include <mln/convert/to_window.hh>
+# include <mln/convert/to_set_p.hh>
 # include <mln/metal/equal.hh>
 
 
@@ -54,6 +55,13 @@ namespace mln
     window<mln_dpoint(Wl)>
     inter(const Window<Wl>& lhs, const Window<Wr>& rhs);
 
+    /*! \brief Intersection between a couple of point sets.
+     *
+     * \relates mln::Point_Set
+     */
+    template <typename Wl, typename Wr>
+    set_p<mln_point(Wl)>
+    inter(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -71,6 +79,22 @@ namespace mln
 			    sr.begin(), sr.end(),
 			    std::inserter(s, s.begin()));
       return convert::to_window(s);
+    }
+
+    template <typename Wl, typename Wr>
+    set_p<mln_point(Wl)>
+    inter(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
+    {
+      mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
+      typedef mln_point(Wl) P;
+      std::set<P>
+	sl = convert::to_std_set(lhs),
+	sr = convert::to_std_set(rhs),
+	s;
+      std::set_intersection(sl.begin(), sl.end(),
+			    sr.begin(), sr.end(),
+			    std::inserter(s, s.begin()));
+      return convert::to_set_p(s);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

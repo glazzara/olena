@@ -25,16 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_SET_UNION_HH
-# define MLN_SET_UNION_HH
+#ifndef MLN_SET_UNI_HH
+# define MLN_SET_UNI_HH
 
-/*! \file mln/set/union.hh
+/*! \file mln/set/uni.hh
  *
  * \brief Several routines to compute the union of a couple of sets.
  */
 
 # include <mln/convert/to_std_set.hh>
 # include <mln/convert/to_window.hh>
+# include <mln/convert/to_set_p.hh>
 # include <mln/metal/equal.hh>
 
 
@@ -51,14 +52,22 @@ namespace mln
      */
     template <typename Wl, typename Wr>
     window<mln_dpoint(Wl)>
-    union(const Window<Wl>& lhs, const Window<Wr>& rhs);
+    uni(const Window<Wl>& lhs, const Window<Wr>& rhs);
+
+    /*! \brief Union of a couple of point sets.
+     *
+     * \relates mln::Point_Set
+     */
+    template <typename Wl, typename Wr>
+    set_p<mln_point(Wl)>
+    uni(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename Wl, typename Wr>
     window<mln_dpoint(Wl)>
-    union(const Window<Wl>& lhs, const Window<Wr>& rhs)
+    uni(const Window<Wl>& lhs, const Window<Wr>& rhs)
     {
       mln::metal::equal<mln_dpoint(Wl), mln_dpoint(Wr)>::check();
       typedef mln_dpoint(Wl) D;
@@ -72,6 +81,22 @@ namespace mln
       return convert::to_window(s);
     }
 
+    template <typename Wl, typename Wr>
+    set_p<mln_point(Wl)>
+    uni(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
+    {
+      mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
+      typedef mln_point(Wl) P;
+      std::set<P>
+	sl = convert::to_std_set(lhs),
+	sr = convert::to_std_set(rhs),
+	s;
+      std::set_union(sl.begin(), sl.end(),
+		     sr.begin(), sr.end(),
+		     std::inserter(s, s.begin()));
+      return convert::to_set_p(s);
+    }
+
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::set
@@ -79,4 +104,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_SET_UNION_HH
+#endif // ! MLN_SET_UNI_HH

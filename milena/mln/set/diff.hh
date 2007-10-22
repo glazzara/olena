@@ -32,10 +32,13 @@
  *
  * \brief Set theoretic difference (non-symmetrical) of a couple of
  * sets.
+ *
+ * \todo Add a diff(Point_Set& in_place, Function_p2b).
  */
 
 # include <mln/convert/to_std_set.hh>
 # include <mln/convert/to_window.hh>
+# include <mln/convert/to_set_p.hh>
 # include <mln/metal/equal.hh>
 
 
@@ -50,6 +53,11 @@ namespace mln
     template <typename Wl, typename Wr>
     window<mln_dpoint(Wl)>
     diff(const Window<Wl>& lhs, const Window<Wr>& rhs);
+
+    /// Set theoretic difference of \p lhs and \p rhs.
+    template <typename Wl, typename Wr>
+    set_p<mln_point(Wl)>
+    diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -68,6 +76,23 @@ namespace mln
 			  sr.begin(), sr.end(),
 			  std::inserter(s, s.begin()));
       return convert::to_window(s);
+    }
+
+    /// Set theoretic difference of \p lhs and \p rhs.
+    template <typename Wl, typename Wr>
+    set_p<mln_point(Wl)>
+    diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
+    {
+      mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
+      typedef mln_point(Wl) P;
+      std::set<P>
+	sl = convert::to_std_set(lhs),
+	sr = convert::to_std_set(rhs),
+	s;
+      std::set_difference(sl.begin(), sl.end(),
+			  sr.begin(), sr.end(),
+			  std::inserter(s, s.begin()));
+      return convert::to_set_p(s);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

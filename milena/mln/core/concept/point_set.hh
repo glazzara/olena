@@ -31,6 +31,9 @@
 /*! \file mln/core/concept/point_set.hh
  *
  * \brief Definition of the concept of mln::Point_Set.
+ *
+ * \todo Think about adding an 'insert' method (not os easy because of
+ * pset_if...)
  */
 
 # include <mln/core/concept/point.hh>
