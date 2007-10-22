@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_ABR_HH
 # define MLN_UTIL_ABR_HH
 
-# include <list>
+# include <vector>
 # include <iostream>
 
 /*!
@@ -60,7 +60,7 @@ namespace mln
 
       T&			elt_;
       s_abr<T>*			father_;
-      std::list< s_abr<T>* >	sons_;
+      std::vector< s_abr<T>* >	sons_;
     };
 
 
@@ -97,7 +97,7 @@ namespace mln
     s_abr<T>::print_rec (int n) const
     {
       std::cout << this->elt_ << std::endl;
-      typename std::list<s_abr<T>* >::const_iterator it = this->sons_.begin ();
+      typename std::vector<s_abr<T>* >::const_iterator it = this->sons_.begin ();
       for (; it != this->sons_.end (); ++it)
 	{
 	  for (int i = 0; i < n; ++i)
@@ -125,7 +125,7 @@ namespace mln
 	}
       else
 	{
-	  typename std::list<s_abr<T>* >::iterator it = this->sons_.begin ();
+	  typename std::vector<s_abr<T>* >::iterator it = this->sons_.begin ();
 	  for (; it != this->sons_.end (); ++it)
 	    {
 	      if ((**it).search_rec (res, elt))

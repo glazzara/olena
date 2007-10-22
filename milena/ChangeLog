@@ -1,5 +1,11 @@
 2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Replace list by vector.
+
+	* util/abr.hh: Update list into vector.
+
+2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Move abr in mln.
 
 	* mln/util/abr.hh: New.
