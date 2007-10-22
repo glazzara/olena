@@ -1,3 +1,10 @@
+2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add a structure of tree in sandbox.
+
+	* abr.cc: New test file for mln::util::abr.
+	* abr.hh: New structure for tree.
+
 2007-10-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update fllt.
