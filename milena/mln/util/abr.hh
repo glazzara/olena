@@ -49,13 +49,17 @@ namespace mln
       abr();
       abr(T& elt);
 
+      T& content();
+      const T& content() const;
       void add_child(T& elt);
+      void set_parent(abr<T>* parent);
+      abr<T>* get_parent();
       void print_rec(int n) const;
       void print(void) const;
       int  search_rec(abr<T>** res, T& elt);
       abr<T>* search(T& elt);
 
-      T& elt_;
+      T elt_;
       abr<T>* parent_;
       std::vector< abr<T>* > child_;
     };
@@ -65,8 +69,7 @@ namespace mln
 
     template <typename T>
     abr<T>::abr()
-      : elt_ (0),
-	parent_ (0)
+      : parent_ (0)
     {
     }
 
@@ -78,6 +81,20 @@ namespace mln
     }
 
     template <typename T>
+    const T&
+    abr<T>::content() const
+    {
+      return elt_;
+    }
+
+    template <typename T>
+    T&
+    abr<T>::content()
+    {
+      return elt_;
+    }
+
+    template <typename T>
     void
     abr<T>::add_child(T& elt)
     {
@@ -85,6 +102,23 @@ namespace mln
 
       s->parent_ = this;
       this->child_.push_back(s);
+    }
+
+    template <typename T>
+    void
+    abr<T>::set_parent(abr<T>* parent)
+    {
+      mln_assertion(parent != 0);
+      parent_ = parent;
+      parent->child_.push_back(this);
+    }
+
+
+    template <typename T>
+    abr<T>*
+    abr<T>::get_parent()
+    {
+      return parent_;
     }
 
     template <typename T>
