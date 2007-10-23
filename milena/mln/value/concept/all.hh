@@ -30,7 +30,7 @@
 
 /*! \file mln/value/concept/all.hh
  *
- * \brief FIXME
+ * \brief File that includes every sub-concept of the Value concept.
  */
 
 # include <mln/value/concept/integer.hh>
@@ -38,6 +38,7 @@
 # include <mln/value/concept/vectorial.hh>
 # include <mln/value/concept/structured.hh>
 # include <mln/value/concept/symbolic.hh>
+# include <mln/value/concept/data.hh>
 
 
 #endif // ! MLN_VALUE_CONCEPT_ALL_HH

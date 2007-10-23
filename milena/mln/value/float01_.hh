@@ -55,22 +55,25 @@ namespace mln
     class float01;
 
 
-    /// General float01_ class on n bits.
+    /// General class for the interval [0,1] of |R made discrete (quantized with n bits).
     template <unsigned n>
     struct float01_
 
       : public Floating< float01_<n> >,
 
-	public internal::value_like_< int_u<n>,          // Equivalent. // FIXME: Why not float01?
+	public internal::value_like_< float,             // Equivalent. // FIXME: Why not float01?
 				      mln_enc(int_u<n>), // Encoding.
 				      float,             // Interoperation.
 				      float01_<n> >      // Exact.
     {
-      /// Ctor.
+      /// Constructor without argument.
       float01_();
 
-      /// Ctor.
+      /// Constructor from a float.
       float01_(float val);
+
+      /// Assigment from a float.
+      float01_<n>& operator=(float val);
 
       /// Access to std type.
       float value() const;
@@ -78,11 +81,8 @@ namespace mln
       /// Set value to the \p val th position in the quantized interval.
       void set_ind(unsigned long val);
 
-      /// Float convertion.
+      /// Conversion to a float.
       operator float() const;
-
-      /// Float assigment.
-      float01_<n>& operator=(float val);
     };
 
 

@@ -35,87 +35,168 @@
 
 # include <cmath>
 
+# include <mln/value/ops.hh>
+
+# include <mln/value/concept/vectorial.hh>
+# include <mln/value/internal/value_like.hh>
+# include <mln/value/props.hh>
+
 # include <mln/metal/vec.hh>
 # include <mln/norm/l2.hh>
-# include <mln/value/props.hh>
-# include <mln/value/concept/vectorial.hh>
+
 
 namespace mln
 {
 
+  // Fwd decls.
+  namespace value { class quat; }
+  namespace literal { struct zero_t; struct one_t; }
+
+
+  namespace trait
+  {
+
+    // quat OP quat
+
+    template <>
+    struct set_precise_binary_< op::plus, mln::value::quat, mln::value::quat >
+    {
+      typedef mln::value::quat ret;
+    };
+
+    template <>
+    struct set_precise_binary_< op::minus, mln::value::quat, mln::value::quat >
+    {
+      typedef mln::value::quat ret;
+    };
+
+    template <>
+    struct set_precise_binary_< op::times, mln::value::quat, mln::value::quat >
+    {
+      typedef mln::value::quat ret;
+    };
+
+    // quat OP scalar
+
+    template < typename S >
+    struct set_precise_binary_< op::times, mln::value::quat, mln::value::scalar_<S> >
+    {
+      typedef mln::value::quat ret;
+    };
+
+    template < typename S >
+    struct set_precise_binary_< op::div, mln::value::quat, mln::value::scalar_<S> >
+    {
+      typedef mln::value::quat ret;
+    };
+
+  } // end of namespace mln::trait
+
+
+
   namespace value
   {
 
-    //FIXME doesn't compile
-    class quat :// public Vectorial< quat >,
-		 public metal::vec<4, float>
-    {
-      typedef metal::vec<4, float> super_;
-      using super_::data_;
+    // FIXME doesn't compile
 
+    class quat
+      :
+      public Vectorial< quat >
+      ,
+      public internal::value_like_< metal::vec<4, float>, // Equivalent.
+				    metal::vec<4, float>, // Encoding.
+				    metal::vec<4, float>, // Interoperation.
+				    quat >                // Exact.
+    {
     public:
 
-      /// Encoding associated type.
-      typedef float enc;
-
-      /// Equivalent associated type.
-      typedef float equiv[4];
-
-      // ctors
-
+      /// Constructor without argument.
       quat();
+
+      /// Constructor with components.
       quat(float s, float x, float y, float z);
 
-      template <typename T>
-      quat(float s, const metal::vec<3,T>& v);
+      /// Constructor from a scalar and a 3D vector.
+      quat(float s, const metal::vec<3,float>& v);
 
-      template <typename T>
-      quat(const metal::vec<4,T>& v);
 
-      // accessors/modifiers as a 'scalar+metal::vec<3>'
+      /// Constructor from a 4D vector.
+      quat(const metal::vec<4,float>& v);
 
-      float scal() const;
-      void set_scal(float s);
+      /// Assignment from a 4D vector.
+      quat& operator=(const metal::vec<4,float>& v);
 
-      metal::vec<3,float> vect() const;
-      void set_vect(float x, float y, float z);
-      template <typename T>
-      void set_vect(const metal::vec<3,T>& v);
 
-      // multiplication
+      /// \{ Constructors/assignments with literals zero and one.
+      quat(const literal::zero_t&);
+      quat& operator=(const literal::zero_t&);
+      quat(const literal::one_t&);
+      quat& operator=(const literal::one_t&);
+      /// \}
 
-      quat operator*(const quat& rhs) const;
 
-      // tests
+      /// Explicit conversion to a 4D metal::vec.
+      const metal::vec<4,float>& to_vec() const;
 
+
+      /// Give the scalar part.
+      float  s() const;
+
+      /// Access to the scalar part.
+      float& s();
+
+      const metal::vec<3,float>& v() const;
+      metal::vec<3,float>& v();
+
+      void set_v(float x, float y, float z);
+
+      /// Scalar product.
+      float sprod(const quat& rhs) const;
+
+      /// Test if it is a unit quaternion.
       bool is_unit() const;
+
+      /// Test if the quaternion is null.
       bool is_null() const;
 
-      // conjugate and invert
+      /// Test if it is a pure quaternion.
+      bool is_pure() const;
 
+      /// Give the conjugate.
       quat conj() const;
-      quat inv() const;
 
-      // transform into unit quaternion
+      /// Give the invert.
+      quat inv() const; // FIXME: Rename inv as invert. 
 
+      /// Transform into unit quaternion.
       quat& set_unit();
+
+      /// Transform into unit quaternion.
       template <typename T>
       void set_unit(float theta, const metal::vec<3,T>& uv);
 
       // only for unit quaternions described by theta and uv such as:
       // q = ( cos(theta), sin(theta) * uv )
 
-      template <typename T>
-      quat(unsigned one, float theta, const metal::vec<3, T>& uv);
+      quat(unsigned one, float theta, const metal::vec<3,float>& uv);
 
       float theta() const;
       void set_theta(float theta);
 
-      metal::vec<3, float> uvect() const;
-      template <typename T>
-      void set_uvect(const metal::vec<3,T>& uv);
-
+      metal::vec<3,float> uv() const;
+      void set_uv(const metal::vec<3,float>& uv);
     };
+
+
+    // Operators.
+
+    std::ostream& operator<<(std::ostream& ostr, const quat& q);
+
+    quat operator+(const quat& lhs, const quat& rhs);
+    quat operator-(const quat& lhs, const quat& rhs);
+    quat operator*(const quat& lhs, const quat& rhs);
+    template <typename S> quat operator*(const quat& lhs, const value::scalar_<S>& rhs);
+    template <typename S> quat operator/(const quat& lhs, const value::scalar_<S>& rhs);
 
     // overloaded math procs
 
@@ -126,13 +207,16 @@ namespace mln
     bool about_equal(const T& f, const T& q);
     bool about_equal(const quat& p, const quat& q);
 
+
     // Misc.
 
     bool interpol_ok(const quat& p, const quat& q, float h);
 
+
     // Linear Quaternion Interpolation.
 
     quat lerp(const quat& p, const quat& q, float h);
+
 
     // Spherical Linear Quaternion Interpolation.
 
@@ -146,10 +230,11 @@ namespace mln
 
     quat slerp_5(const quat& p, const quat& q, float h);
 
+
+
 # ifndef MLN_INCLUDE_ONLY
 
-    //ctors
-
+    // Constructors.
 
     quat::quat()
     {
@@ -157,120 +242,134 @@ namespace mln
 
     quat::quat(float s, float x, float y, float z)
     {
-      set_scal(s);
-      set_vect(x, y, z);
+      v_[0] = s;
+      set_v(x, y, z);
     }
 
-    template <typename T>
-    quat::quat(float s, const metal::vec<3,T>& v)
+    quat::quat(float s, const metal::vec<3,float>& v)
     {
-      set_scal(s);
-      set_vect(v);
+      v_[0] = s;
+      this->v() = v;
     }
 
-    template <typename T>
-    quat::quat(const metal::vec<4,T>& v)
-      : metal::vec<4,float>(v)
+    quat::quat(const metal::vec<4,float>& v)
     {
+      this->v_ = v;
     }
 
-
-    // accessors/modifiers as a 'scalar+vec<3>'
-
-
-    float quat::scal() const
+    quat&
+    quat::operator=(const metal::vec<4,float>& v)
     {
-      return data_[0];
+      this->v_ = v;
+      return *this;
     }
 
 
-    void quat::set_scal(float s)
+    // With literals.
+
+    quat::quat(const literal::zero_t&)
     {
-      data_[0] = s;
+      v_.set_all(0);
     }
 
-
-    metal::vec<3, float> quat::vect() const
+    quat&
+    quat::operator=(const literal::zero_t&)
     {
-      return make::vec(data_[1], data_[2], data_[3]);
+      v_.set_all(0);
+      return *this;
     }
 
-
-    void quat::set_vect(float x, float y, float z)
+    quat::quat(const literal::one_t&)
     {
-      data_[1] = x;
-      data_[2] = y;
-      data_[3] = z;
+      s() = 1;
+      v().set_all(0);
     }
 
-    template <typename T>
-    void quat::set_vect(const metal::vec<3,T>& v)
+    quat&
+    quat::operator=(const literal::one_t&)
     {
-      set_vect(v[0], v[1], v[2]);
+      s() = 1;
+      v().set_all(0);
+      return *this;
     }
 
 
-    // multiplication
-
-
-    quat quat::operator*(const quat& rhs) const
+    const metal::vec<4,float>&
+    quat::to_vec() const
     {
-      float
-	s1 = scal(),
-	s2 = rhs.scal();
-
-      metal::vec<3,float>
-	v1 = vect(),
-	v2 = rhs.vect();
-
-      return quat(s1 * s2 - v1.sprod(v2),
-		  metal::vprod(v1, v2)
-		  + s1 * v2 + s2 * v1);
+      return this->v_;
     }
 
+    float
+    quat::s() const
+    {
+      return this->v_[0];
+    }
 
-    // tests
+    float&
+    quat::s()
+    {
+      return this->v_[0];
+    }
 
+    const metal::vec<3, float>&
+    quat::v() const
+    {
+      return *(const metal::vec<3, float>*)(const void*)(& this->v_[1]);
+      // return make::vec(this->v_[1], this->v_[2], this->v_[3]);
+    }
+
+    metal::vec<3, float>&
+    quat::v()
+    {
+      return *(metal::vec<3, float>*)(void*)(& this->v_[1]);
+    }
+
+    void quat::set_v(float x, float y, float z)
+    {
+      this->v_[1] = x;
+      this->v_[2] = y;
+      this->v_[3] = z;
+    }
+
+    float
+    quat::sprod(const quat& rhs) const
+    {
+      return v_.sprod(rhs.to_vec());
+    }
 
     bool quat::is_unit() const
     {
-      return about_equal(norm::l2(*this), 1.f);
+      return about_equal(norm::l2(v_), 1.f);
     }
-
 
     bool quat::is_null() const
     {
-      return about_equal(norm::l2(*this), 0.f);
+      return about_equal(norm::l2(v_), 0.f);
     }
 
-
-    // conjugate and invert
-
+    bool quat::is_pure() const
+    {
+      return about_equal(v_[0], 0.f);
+    }
 
     quat quat::conj() const
     {
-      return quat(scal(), - vect());
+      return quat(s(), - v());
     }
-
 
     quat quat::inv() const
     {
       assert(! is_null());
-      float f = norm::l2(*this);
-
-      return conj() / (f * f);
+      float f = norm::l2(v_);
+      return conj().to_vec() / (f * f);
     }
-
-
-    // transform into unit quaternion
-
 
     quat& quat::set_unit()
     {
-      normalize();
+      v_.normalize();
       return *this;
     }
-
 
     template <typename T>
     void quat::set_unit(float theta, const metal::vec<3,T>& uv)
@@ -281,67 +380,106 @@ namespace mln
 		       && theta < pi + props<float>::epsilon());
       mln_precondition(about_equal(norm::l2(uv), 1.f));
 
-      data_[0] = cos(theta);
+      this->v_[0] = cos(theta);
       float sint = sin(theta);
-      data_[1] = uv[0] * sint;
-      data_[2] = uv[1] * sint;
-      data_[3] = uv[2] * sint;
+      this->v_[1] = uv[0] * sint;
+      this->v_[2] = uv[1] * sint;
+      this->v_[3] = uv[2] * sint;
     }
 
     // only for unit quaternions described by theta and uv such as:
     // q = ( cos(theta), sin(theta) * uv )
 
-
-    template <typename T>
-    quat::quat(unsigned one, float theta, const metal::vec<3,T>& uv)
+    quat::quat(unsigned one, float theta, const metal::vec<3,float>& uv)
     {
       mln_precondition(one == 1);
       set_unit(theta, uv);
     }
 
-
     float quat::theta() const
     {
       mln_precondition(is_unit());
-      return acos(scal());
+      return acos(s());
     }
-
 
     void quat::set_theta(float theta)
     {
       mln_precondition(is_unit());
-      set_unit(theta, uvect());
+      set_unit(theta, uv());
     }
 
-    metal::vec<3, float> quat::uvect() const
+    metal::vec<3, float> quat::uv() const
     {
       mln_precondition(is_unit());
-      metal::vec<3, float> v = vect();
-      return v.normalize();
+      metal::vec<3, float> w = v();
+      return w.normalize();
     }
 
-    template <typename T>
-    void quat::set_uvect(const metal::vec<3,T>& uv)
+    void quat::set_uv(const metal::vec<3,float>& uv)
     {
       mln_precondition(is_unit());
       set_unit(theta(), uv);
     }
 
 
-    // overloaded math procs
+    // Operators.
 
+    std::ostream& operator<<(std::ostream& ostr, const quat& q)
+    {
+      return ostr << q.to_vec();
+    }
+
+    quat operator+(const quat& lhs, const quat& rhs)
+    {
+      quat tmp(lhs.to_vec() + rhs.to_vec());
+      return tmp;
+    }
+
+    quat operator-(const quat& lhs, const quat& rhs)
+    {
+      quat tmp(lhs.to_vec() - rhs.to_vec());
+      return tmp;
+    }
+
+    quat operator*(const quat& lhs, const quat& rhs)
+    {
+      quat tmp(lhs.s() * rhs.s() - lhs.v().sprod(rhs.v()),
+	       metal::vprod(lhs.v(), rhs.v()) + lhs.s() * rhs.v() + rhs.s() * lhs.v());
+      return tmp;
+    }
+
+    template <typename S>
+    quat operator*(const quat& lhs, const value::scalar_<S>& rhs)
+    {
+      mlc_converts_to(S, float)::check();
+      quat tmp(lhs.to_vec() * float(rhs));
+      return tmp;
+    }
+
+    template <typename S>
+    quat operator/(const quat& lhs, const value::scalar_<S>& rhs_)
+    {
+      mlc_converts_to(S, float)::check();
+      float rhs = float(rhs_);
+      mln_precondition(rhs != 0.f);
+      quat tmp(lhs.to_vec() / rhs);
+      return tmp;
+    }
+
+
+    // overloaded math procs
 
     quat log(const quat& q)
     {
       mln_precondition(q.is_unit());
-      return quat(0.f, q.theta() * q.uvect());
+      return quat(0.f, q.theta() * q.uv());
     }
 
 
     quat exp(const quat& q)
     {
-      mln_precondition(about_equal(q.scal(), 0.f));
-      metal::vec<3, float> v = q.vect();
+      mln_precondition(about_equal(q.s(), 0.f));
+      metal::vec<3, float> v = q.v();
       float theta = norm::l2(v);
       mln_precondition(!about_equal(theta, 0.f));
       metal::vec<3, float> uv = v / theta;
@@ -365,7 +503,7 @@ namespace mln
 
     bool about_equal(const quat& p, const quat& q)
     {
-      return about_equal<float>(norm::l2(p - q), 0);
+      return about_equal<float>(norm::l2(p.to_vec() - q.to_vec()), 0);
     }
 
     // Misc.

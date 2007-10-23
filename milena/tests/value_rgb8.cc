@@ -31,8 +31,8 @@
  */
 
 #include <mln/value/rgb8.hh>
-
 #include <mln/literal/all.hh>
+
 
 int main()
 {
@@ -48,23 +48,24 @@ int main()
     v.red() = 0;
     v.green() = 1;
     v.blue() = 2;
-    value::int_u8_x3_t t = {0,1,2};
-    rgb8 w( t );
+    rgb8 c(0, 1, 2);
 
-    std::cout << w << std::endl;
+    std::cout << c << std::endl;
     std::cout << v << std::endl;
 
-    mln_assertion(w == w);
-    mln_assertion(w == v);
-    v.green () = 255;
+    mln_assertion(c == c);
+    mln_assertion(c == v);
+    v.green() = 255;
     std::cout << v << std::endl;
-    mln_assertion(v != w);
+
+    mln_assertion(v != c);
 
     rgb<20> b = blue;
     std::cout << b << std::endl;
 
-    rgb<20> c = white;
-    std::cout << c << std::endl;
+    rgb<20> w = white;
+    std::cout << w << std::endl;
 
+    mln_assertion(b != w);
   }
 }

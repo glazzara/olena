@@ -1,3 +1,131 @@
+2007-10-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update the trait system and some value types.
+
+
+	New files.
+
+	* mln/trait/promote.hh: Move built-in defs into...
+	* mln/value/builtin/promotions.hh: ...this new file.
+	Complete definitions.
+	* mln/trait/solve.hh: Update; now handle priorities in the
+	binary case.
+	* mln/trait/op/postdec.hh: New.
+	* mln/trait/op/div.hh: New.
+	* mln/trait/op/predec.hh: New.
+	* mln/trait/op/neq.hh: New.
+	* mln/trait/op/eq.hh: New.
+	* mln/trait/op/uplus.hh: New.
+	* mln/trait/op/mod.hh: New.
+	* mln/trait/op/postinc.hh: New.
+	* mln/trait/op/preinc.hh: New.
+	* mln/trait/op/all.hh: Update.
+	* mln/trait/op/times.hh,
+	* mln/trait/op/plus.hh,
+	* mln/trait/op/minus.hh,
+	* mln/trait/op/uminus.hh: Remove "default is promotion".
+	* mln/trait/value_.hh (value_integer_): Move into...
+	* mln/value/builtin/integers.hh: ...this new file.
+	* mln/value/concept/built_in.hh: New.
+	* mln/value/concept/data.hh: New.
+	* mln/value/equiv.hh: New.
+	* mln/value/builtin/ops.hh: New.
+	* mln/value/builtin/symbolics.hh: New.
+	* mln/value/builtin/floatings.hh: New.
+	* mln/value/builtin/all.hh: New.
+	* mln/value/ops.hh: New.
+	* tests/value_equiv.cc: New.
+
+	Propagate.
+
+	* mln/core/macros.hh (mln_equiv_): New.
+	* mln/core/point.hh (h_vec): Change operator into...
+	(to_h_vec): ...this new method.
+	* mln/core/category.hh: Typo.
+	* mln/core/ops.hh: Add traits.
+	(operator+, operator-): New unary ops.
+	(operator+=, -=, *=, /=, %=): New ops.
+	* mln/core/concept/object.hh: Include metal/ret.hh.
+	* mln/core/concept/value.hh (to_equiv): New in doc.
+	* mln/literal/ops.hh (operators): New.
+	* mln/metal/mat.hh: Remove unuseful include.
+	* mln/metal/ret.hh: New.
+	* mln/metal/math/pow.hh: Clean-up.
+	* mln/metal/math/max.hh: New.
+	* mln/metal/math/all.hh: Update.
+	* mln/metal/math/sqrt.hh: Clean-up.
+	* mln/metal/vec.hh: Add traits.
+	(operator!=, +=, -=): Remove; obsolete.
+	(operator=): New overload for literal zero.
+	(operator*): Change sig.
+	(operator<<): Merge both versions.
+	(vprod): Precise return type.
+	* mln/value/proxy.hh: Fix guard.
+	* mln/value/graylevel.hh: Add traits; add doc.
+	(operator==): Remove; obsolete.
+	(operator=): Update.
+	* mln/value/cast.hh: Typo.
+	* mln/value/gray.hh: Re-write.
+	(unsigned long): Turn into long so that we can have
+	temporary negative values.
+	* mln/value/rgb8.hh: Include int_u8.
+	* mln/value/float01_.hh: Change equiv from int_u to float.
+	* mln/value/scalar.hh (to_equiv): New.
+	(scalar): Make it generic.
+	* mln/value/builtin.hh: Remove.
+	* mln/value/quat.hh: Add traits.
+	(scal, vect): Rename as...
+	(s, v): ...these.
+	(operator): New.
+	Clean-up code.
+	* mln/value/int_s.hh (operator-): Remove; obsolete.
+	Remove traits; obsolete.
+	* mln/value/internal/value_like.hh: .
+	* mln/value/int_u.hh: Remove traits; obsolete.
+	(operator>>): New.
+	* mln/value/concept/symbolic.hh,
+	* mln/value/concept/floating.hh,
+	* mln/value/concept/structured.hh,
+	* mln/value/concept/scalar.hh,
+	* mln/value/concept/integer.hh,
+	* mln/value/concept/vectorial.hh (category): Fix missing.
+	* mln/value/concept/all.hh: Update.
+	* mln/value/concept/scalar.hh (operators): Remove; obsolete.
+	(operator++, --): New.
+	* mln/value/float01.hh: Change doc.
+	* mln/value/rgb.hh: Change inheritance from Structured to
+	Vectorial.
+	Inherit also from value_like_.
+	(red, green, blue): New mutable versions.
+	(operator>>): New.
+	(rgb): Remove ctors from scalars.
+	(operator+=, -=, ==): Remove; obsolete.
+	(operator+, -): Remove versions with scalars.
+	(operators): Move out of the class.
+	(operator/): Fix sig.
+	(buffer): Remove; useless.
+	(nbits): Fix.
+	Set equiv and interop to metal::vec.
+	* mln/value/float01_f.hh (operator=): New overload for float.
+	Add/fix doc.
+	* mln/convert/to_rgb.hh: Typo.
+	* mln/io/pnm/save_header.hh,
+	* mln/io/pnm/save.hh,
+	* mln/io/pnm/load.hh: Fix rgb read.
+	* img/lena.ppm: Fix; now we have colors!
+
+	* tests/value_quat.cc,
+	* tests/metal_vec.cc,
+	* tests/trait_op_uminus.cc,
+	* tests/border_resize_sub_image.cc,
+	* tests/rle_image.cc,
+	* tests/h_vec.cc,
+	* tests/io_ppm.cc,
+	* tests/value_rgb8.cc,
+	* tests/trait_op_plus.cc,
+	* tests/value_int_u8.cc,
+	* tests/value_graylevel.cc: Update.
+
 2007-10-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Rename abr into tree.

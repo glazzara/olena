@@ -106,24 +106,24 @@ int main()
   using namespace mln;
 
 //   {
-//     mln_trait_op_uminus_(test) tmp; // bool if precise
+//     mln_trait_op_uminus_(test) tmp; /* bool if precise */
 //     bool* b = &tmp;
 //     *b = true;
 //   }
 
 //   {
-//     mln_trait_op_uminus_(test) tmp; // int if no precise def and both sub and top defs
+//     mln_trait_op_uminus_(test) tmp; /* int if no precise def and both sub and top defs */
 //     void* v = tmp;
 //   }
 
 //   {
-//     mln_trait_op_uminus_(test) tmp; float if only top def
+//     mln_trait_op_uminus_(test) tmp; /* float if only top def */
 //     void* v = tmp;
 //   }
 
-  {
-    mln_trait_op_uminus_(test) tmp; // test if no def here (default is id, given for Object)
-    tmp.is_test();
-  }
+//   {
+//     mln_trait_op_uminus_(test) tmp; // test if no def here (default is id, given for Object)
+//     tmp.is_test();
+//   }
 
 }

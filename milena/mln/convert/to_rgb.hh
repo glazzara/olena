@@ -31,6 +31,8 @@
 /*! \file mln/convert/to_rgb.hh
  *
  * \brief Conversions to mln::value::rgb.
+ *
+ * \todo Re-write.
  */
 
 
@@ -41,6 +43,7 @@ namespace mln
   {
 
     using namespace value;
+
     /// Convert a int_u \p val into rgb value.
     template <unsigned int n>
     rgb<n> to_rgb(const int_u<n>& i);
@@ -50,6 +53,7 @@ namespace mln
 
     template <unsigned int n>
     const rgb<n>& to_rgb(const rgb<n>& i);
+
 
 # ifndef MLN_INCLUDE_ONLY
 

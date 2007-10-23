@@ -30,7 +30,7 @@
 
 /*! \file mln/value/concept/floating.hh
  *
- * \brief Define a generic class for float values.
+ * \brief Define a generic class for floating values.
  */
 
 # include <mln/value/concept/scalar.hh>
@@ -40,15 +40,15 @@ namespace mln
 {
 
   // Fwd decl.
-  namespace value
-  {
-    template <typename E> struct Floating;
-  }
+  namespace value { template <typename E> struct Floating; }
+
 
   namespace trait
   {
-    // FIXME
+    // FIXME...
+
   } // end of namespace mln::trait
+
 
   namespace value
   {
@@ -63,14 +63,12 @@ namespace mln
     template <typename E>
     struct Floating : public Scalar<E>
     {
+      typedef Floating<void> category;
     };
 
   } // end of namespace mln::value
 
 } // end of namespace mln
-
-
-# include <mln/value/concept/all.hh>
 
 
 #endif // ! MLN_VALUE_CONCEPT_FLOATING_HH

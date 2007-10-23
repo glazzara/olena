@@ -48,7 +48,7 @@ namespace mln
     struct float01;
 
 
-    /// General float01_f class on n bits.
+    /// Class for floating values restricted to the interval [0..1].
     struct float01_f
       :
       public Floating< float01_f >,
@@ -58,20 +58,20 @@ namespace mln
 				    float,      // Interoperation.
 				    float01_f > // Exact.
     {
-      /// Ctor.
+      /// Constructor without argument.
       float01_f();
 
-      /// Ctor.
+      /// Constructor from a float.
       float01_f(float val);
 
-      /// Access to std type.
+      /// Assignment from a float.
+      float01_f& operator=(const float val);
+
+      /// Access to float value.
       float value() const;
 
-      /// Op encoding_t.
+      /// Conversion to a float.
       operator float() const;
-
-      /// Assigment with float.
-      float01_f& operator=(const float val);
     };
 
 

@@ -35,6 +35,8 @@
 
 # include <iostream>
 
+# include <mln/value/ops.hh>
+
 # include <mln/core/contract.hh>
 # include <mln/metal/math/pow.hh>
 # include <mln/metal/bexpr.hh>
@@ -55,13 +57,97 @@ namespace mln
     struct medium_gray_t;
     struct white_t;
   }
+  namespace value
+  {
+    class gray;
+    template <unsigned n> struct graylevel;
+    struct float01_f;
+  }
   /// \}
+
+
+
+  namespace trait
+  {
+    // FIXME: Change into
+    // - for op::plus:  mln::value::graylevel<1 + (n > m ? n : m)>
+    // - for op::times: mln::value::graylevel<n + m>
+    // - ...
+
+    template < unsigned n, unsigned m >
+    struct set_precise_binary_< op::plus, mln::value::graylevel<n>, mln::value::graylevel<m> >
+    {
+      typedef mln::value::gray ret;
+    };
+
+    template < unsigned n, unsigned m >
+    struct set_precise_binary_< op::minus, mln::value::graylevel<n>, mln::value::graylevel<m> >
+    {
+      typedef mln::value::gray ret;
+    };
+
+    template < unsigned n, unsigned m >
+    struct set_precise_binary_< op::times, mln::value::graylevel<n>, mln::value::graylevel<m> >
+    {
+      typedef mln::value::gray ret;
+    };
+
+
+    template < unsigned n, typename I >
+    struct set_binary_< op::times,
+			mln::value::Integer, mln::value::graylevel<n>,
+			mln::value::Integer, I >
+    {
+      typedef mln::value::gray ret;
+    };
+
+    template < typename I, unsigned n >
+    struct set_binary_< op::times,
+			mln::value::Integer, I,
+			mln::value::Integer, mln::value::graylevel<n> >
+    {
+      typedef mln::value::gray ret;
+    };
+
+
+    template < unsigned n, typename F >
+    struct set_binary_< op::times,
+			mln::value::Integer,  mln::value::graylevel<n>,
+			mln::value::Floating, F >
+    {
+      typedef float ret;
+    };
+
+    template < typename F, unsigned n >
+    struct set_binary_< op::times,
+			mln::value::Floating, F,
+			mln::value::Integer,  mln::value::graylevel<n> >
+    {
+      typedef float ret;
+    };
+
+
+    template < unsigned n, typename S >
+    struct set_precise_binary_< op::times, mln::value::graylevel<n>, mln::value::scalar_<S> >
+    {
+      typedef mln_value_equiv(S) E;
+      typedef mlc_equal(E, float) is_float; // FIXME: Or double...
+      typedef mlc_if(is_float, float, mln::value::gray) ret;
+    };
+
+    template < unsigned n, typename S >
+    struct set_precise_binary_< op::div, mln::value::graylevel<n>, mln::value::scalar_<S> >
+    {
+      typedef mln_trait_op_times(mln::value::graylevel<n>,
+				 mln::value::scalar_<S>) ret;
+    };
+
+  } // end of namespace mln::trait
+
+
 
   namespace value
   {
-
-    /// Fwd decl.
-    class gray;
 
     /// General gray-level class on n bits.
     template <unsigned n>
@@ -74,35 +160,60 @@ namespace mln
 				    gray,              // Interoperation.
 				    graylevel<n> >     // Exact.
     {
-      /// Ctor.
+      /// Constructor without argument.
       graylevel();
 
-      /// Ctor.
-      explicit graylevel(int val);
 
-      /// \{ Ctors with literals.
+      /// Constructor from int.
+      graylevel(int val);
+
+      /// Assigment with int.
+      graylevel<n>& operator=(int val);
+
+
+      /// Constructor from gray.
+      graylevel(const gray& rhs);
+
+      /// Assigment with gray.
+      graylevel<n>& operator=(const gray& rhs);
+
+
+      /// Copy constructor.
+      graylevel(const graylevel<n>& rhs);
+
+      /// Assigment.
+      graylevel<n>& operator=(const graylevel<n>& rhs);
+
+
+      /// Constructor from any graylevel.
+      template <unsigned m>
+      graylevel(const graylevel<m>& rhs);
+
+      /// Assigment with any graylevel.
+      template <unsigned m>
+      graylevel<n>& operator=(const graylevel<m>& rhs);
+
+
+      /// Ctors with literals.
+      /// \{
       graylevel(const literal::black_t&);
       graylevel(const literal::medium_gray_t&);
       graylevel(const literal::white_t&);
       /// \}
 
-      /// Ctor with gray.
-      graylevel(const gray&);
-
-      /// Access to std type.
-      mln_enc(int_u<n>) value() const;
-
-      /// Assigment with int.
-      graylevel<n>& operator=(int val);
-
-      /// Assigment with gray.
-      graylevel<n>& operator=(const gray&);
-
-      /// \{ Assigment with literals.
+      /// Assigment with literals.
+      /// \{
       graylevel<n>& operator=(const literal::white_t&);
       graylevel<n>& operator=(const literal::medium_gray_t&);
       graylevel<n>& operator=(const literal::black_t&);
       /// \}
+
+
+      /// Access to std type.
+      unsigned value() const;
+
+      /// Conversion to float between 0 and 1.
+      float to_float() const;
     };
 
 
@@ -130,17 +241,38 @@ namespace mln
     typedef graylevel<32> gl32;
 
 
-    template <unsigned n, unsigned m>
-    bool operator==(const graylevel<n>& lhs, const graylevel<m>& rhs);
 
     template <unsigned n, unsigned m>
-    gray operator+(const graylevel<n>& lhs, const graylevel<m>& rhs);
+    gray
+    operator+(const graylevel<n>& lhs, const graylevel<m>& rhs);
 
     template <unsigned n, unsigned m>
-    gray operator-(const graylevel<n>& lhs, const graylevel<m>& rhs);
+    gray
+    operator-(const graylevel<n>& lhs, const graylevel<m>& rhs);
 
     template <unsigned n, unsigned m>
-    gray operator*(const graylevel<n>& lhs, const graylevel<m>& rhs);
+    gray
+    operator*(const graylevel<n>& lhs, const graylevel<m>& rhs);
+
+    // With Integer.
+
+    template <unsigned n, typename I>
+    gray
+    operator*(const graylevel<n>& lhs, const Integer<I>& rhs);
+
+    template <typename I, unsigned n>
+    gray
+    operator*(const Integer<I>& lhs, const graylevel<n>& rhs);
+
+    // With Floating.
+
+    template <unsigned n, typename F>
+    float
+    operator*(const graylevel<n>& lhs, const Floating<F>& rhs);
+
+    template <typename F, unsigned n>
+    float
+    operator*(const Floating<F>& lhs, const graylevel<n>& rhs);
 
 
 
@@ -149,10 +281,12 @@ namespace mln
 
     // Graylevel<n>.
 
+
     template <unsigned n>
     graylevel<n>::graylevel()
     {
     }
+
 
     template <unsigned n>
     graylevel<n>::graylevel(int val)
@@ -160,38 +294,6 @@ namespace mln
       mln_precondition(val >= 0);
       mln_precondition(unsigned(val) <= mln_max(mln_enc(int_u<n>)));
       this->v_ = val;
-    }
-
-    template <unsigned n>
-    graylevel<n>::graylevel(const gray& g)
-    {
-      gray tmp = g.to_nbits(n);
-      this->v_ = tmp.value();
-    }
-
-    template <unsigned n>
-    graylevel<n>::graylevel(const literal::black_t&)
-    {
-      this->v_ = 0;
-    }
-
-    template <unsigned n>
-    graylevel<n>::graylevel(const literal::medium_gray_t&)
-    {
-      this->v_ = metal::math::pow_int<2, n - 1>::value;
-    }
-
-    template <unsigned n>
-    graylevel<n>::graylevel(const literal::white_t&)
-    {
-      this->v_ = mln_max(mln_enc(int_u<n>));
-    }
-
-    template <unsigned n>
-    mln_enc(int_u<n>)
-      graylevel<n>::value() const
-    {
-      return this->v_;
     }
 
     template <unsigned n>
@@ -204,6 +306,14 @@ namespace mln
       return *this;
     }
 
+
+    template <unsigned n>
+    graylevel<n>::graylevel(const gray& g)
+    {
+      gray tmp = g.to_nbits(n);
+      this->v_ = tmp.value();
+    }
+
     template <unsigned n>
     graylevel<n>&
     graylevel<n>::operator=(const gray& g)
@@ -211,6 +321,43 @@ namespace mln
       gray tmp = g.to_nbits(n);
       this->v_ = tmp.value();
       return *this;
+    }
+
+    template <unsigned n>
+    graylevel<n>::graylevel(const graylevel<n>& rhs)
+    {
+      this->v_ = rhs.v_;
+    }
+
+    template <unsigned n>
+    graylevel<n>&
+    graylevel<n>::operator=(const graylevel<n>& rhs)
+    {
+      this->v_ = rhs.v_;
+      return *this;
+    }
+
+    template <unsigned n>
+    template <unsigned m>
+    graylevel<n>::graylevel(const graylevel<m>& rhs)
+    {
+      *this = gray(rhs).to_nbits(n);
+    }
+
+    template <unsigned n>
+    template <unsigned m>
+    graylevel<n>&
+    graylevel<n>::operator=(const graylevel<m>& rhs)
+    {
+      *this = gray(rhs).to_nbits(n);
+      return *this;
+    }
+
+
+    template <unsigned n>
+    graylevel<n>::graylevel(const literal::black_t&)
+    {
+      this->v_ = 0;
     }
 
     template <unsigned n>
@@ -222,11 +369,23 @@ namespace mln
     }
 
     template <unsigned n>
+    graylevel<n>::graylevel(const literal::medium_gray_t&)
+    {
+      this->v_ = metal::math::pow_int<2, n - 1>::value;
+    }
+
+    template <unsigned n>
     graylevel<n>&
     graylevel<n>::operator=(const literal::medium_gray_t&)
     {
       this->v_ = metal::math::pow_int<2, n - 1>::value;
       return *this;
+    }
+
+    template <unsigned n>
+    graylevel<n>::graylevel(const literal::white_t&)
+    {
+      this->v_ = mln_max(mln_enc(int_u<n>));
     }
 
     template <unsigned n>
@@ -237,20 +396,34 @@ namespace mln
       return *this;
     }
 
+
+    template <unsigned n>
+    unsigned
+    graylevel<n>::value() const
+    {
+      return this->v_;
+    }
+
+    template <unsigned n>
+    float
+    graylevel<n>::to_float() const
+    {
+      static const float denom = float(metal::math::pow_int<2, n>::value) - 1.f;
+      return float(this->v_) / denom;
+    }
+
+
+    // Operators.
+
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const graylevel<n>& g)
     {
-      return ostr << g.value();
+      return ostr << g.value() << "/gl" << n; // FIXME: Be more explicit!
     }
 
-    template <unsigned n, unsigned m>
-    bool operator==(const graylevel<n>& lhs, const graylevel<m>& rhs)
-    {
-      return gray(lhs) == gray(rhs);
-    }
+    // The remaining operators are in mln/value/gray.hh.
 
 # endif // ! MLN_INCLUDE_ONLY
-
 
   } // end of namespace mln::value
 

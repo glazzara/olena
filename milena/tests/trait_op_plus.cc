@@ -33,6 +33,7 @@
 #include <mln/core/concept/image.hh>
 #include <mln/value/concept/all.hh>
 #include <mln/trait/op/plus.hh>
+#include <mln/value/builtin/all.hh>
 
 
 namespace mln

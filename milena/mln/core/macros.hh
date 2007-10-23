@@ -78,6 +78,7 @@
 
 /// Shortcut to access the equivalent type associated to T.
 # define mln_equiv(T)      typename T::equiv
+# define mln_equiv_(T)              T::equiv
 
 
 // f

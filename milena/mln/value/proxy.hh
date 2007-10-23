@@ -332,4 +332,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_INT_U_HH
+#endif // ! MLN_VALUE_PROXY_HH

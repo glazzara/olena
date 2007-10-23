@@ -149,8 +149,8 @@ namespace mln
     operator typename internal::point_to_<M, C>::metal_vec () const;
     operator metal::vec<M::dim, float> () const;
 
-    /// Hook to homogene coordinate.
-    operator typename internal::point_to_<M, C>::h_vec () const;
+    /// Transform to point in homogene coordinate system.
+    h_vec<M::dim, C> to_h_vec() const;
 
   protected:
     metal::vec<M::dim, C> coord_;
@@ -303,9 +303,13 @@ namespace mln
   }
 
   template <typename M, typename C>
-  point_<M,C>::operator typename internal::point_to_<M, C>::h_vec () const
+  h_vec<M::dim, C> point_<M,C>::to_h_vec() const
   {
-    return coord_.to_h_vec();
+    h_vec<M::dim, C> tmp;
+    for (unsigned i = 0; i < dim; ++i)
+      tmp[i] = coord_[i];
+    tmp[M::dim] = 1;
+    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

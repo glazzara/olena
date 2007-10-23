@@ -34,8 +34,11 @@
  * n-bit encoded.
  */
 
-# include <mln/value/concept/structured.hh>
-# include <mln/value/int_u8.hh>
+# include <mln/value/ops.hh>
+
+# include <mln/value/concept/vectorial.hh>
+# include <mln/value/int_u.hh>
+# include <mln/metal/vec.hh>
 
 
 namespace mln
@@ -53,45 +56,47 @@ namespace mln
   }
   /// \}
 
+
   namespace value
   {
-
-
-    typedef int_u8 int_u8_x3_t[3];
-    typedef unsigned char uchar_x3_t[3];
-    typedef float float_x3_t[3];
-
 
     /*! \brief Color class for red-green-blue where every component is
      * n-bit encoded.
      */
     template <unsigned n>
-    struct rgb : public Structured< rgb<n> >
+    struct rgb
+      :
+      public Vectorial< rgb<n> >
+      ,
+      public internal::value_like_< metal::vec< 3, int_u<n> >, // Equivalent.
+				    metal::vec< 3, int_u<n> >, // Encoding.
+				    metal::vec< 3, int >,      // Interoperation.
+				    rgb<n> >                   // Exact.
     {
     public:
 
-      /// Encoding associated type.
-      typedef int_u<n> enc;
-
-      /// Equivalent associated type.
-      typedef int_u<n> equiv[3];
-
       /// \{ Acces to red/green/blue component.
-      int_u<n>  red() const   { return c_[0]; }
-      int_u<n>& red()         { return c_[0]; }
+      int_u<n>  red() const   { return this->v_[0]; }
+      int_u<n>& red()         { return this->v_[0]; }
 
-      int_u<n>  green() const { return c_[1]; }
-      int_u<n>& green()       { return c_[1]; }
+      int_u<n>  green() const { return this->v_[1]; }
+      int_u<n>& green()       { return this->v_[1]; }
 
-      int_u<n>  blue() const  { return c_[2]; }
-      int_u<n>& blue()        { return c_[2]; }
+      int_u<n>  blue() const  { return this->v_[2]; }
+      int_u<n>& blue()        { return this->v_[2]; }
       /// \}
 
-      /// \{ Ctors
+      /// Constructor without argument.
       rgb<n>();
-      rgb<n>(equiv a);
-      rgb<n>(enc r, enc g, enc b);
-      //rgb<n>(enc l);
+
+      /// Constructor from component values.
+      rgb<n>(int r, int g, int b);
+
+      /// Constructor from a metal::vec.
+      rgb<n>(const metal::vec<3, int>& rhs);
+      rgb<n>(const metal::vec<3, int_u<n> >& rhs);
+
+      /// \{ Constructors with literals.
       rgb<n>(const literal::white_t&);
       rgb<n>(const literal::black_t&);
       rgb<n>(const literal::blue_t&);
@@ -99,62 +104,39 @@ namespace mln
       rgb<n>(const literal::green_t&);
       /// \}
 
-      /// \{ Assignments.
-      rgb<n>& operator=(const rgb<n>& v);
-      rgb<n>& operator=(const enc& i);
-      /// \}
+      /// Assignment.
+      rgb<n>& operator=(const rgb<n>& rhs);
 
       /// Zero value.
       static const rgb<n> zero;
 
-      /// addition
-      rgb<n> operator+(const rgb<n>& v) const;
-      // FIXME: was:
-//       rgb<n> operator+(const enc& i) const;
-//       rgb<n> operator+(const size_t& i) const;
 
-      /// substraction
-      rgb<n> operator-(const rgb<n>& v) const;
-      // FIXME: was:
-//       rgb<n> operator-(const enc& i) const;
-//       rgb<n> operator-(const size_t& i) const;
+      // FIXME: Cannot work for i negative; move operators outside the class; add traits!
 
-      /// multiplication
-      rgb<n> operator*(const enc& i) const; // FIXME: Use int instead of enc...
 
-      /// division
-      rgb<n> operator/(const enc& i) const; // FIXME: Likewise!
+      /// Addition.
+      rgb<n> operator+(const rgb<n>& rhs) const;
 
-      /// Self addition
-      rgb<n>& operator+=(const rgb<n>& v);
+      /// Substraction.
+      rgb<n> operator-(const rgb<n>& rhs) const;
 
-      /// Self subtraction.
-      rgb<n>& operator-=(const rgb<n>& v);
+      /// Multiplication.
+      rgb<n> operator*(int i) const;
 
-      /// Comparaison.
-      bool operator==(const rgb<n>& v) const;
-      bool operator!=(const rgb<n>& v) const;
-
-      /// hook to coord's buffer
-      const enc* buffer() const;
-
-    private:
-      equiv c_;
+      /// Division.
+      rgb<n> operator/(int i) const;
     };
+
 
 
     template <unsigned n>
     struct props< rgb<n> >
     {
-      static const unsigned nbits = 24;
+      static const unsigned nbits = 3 * n;
       static const std::size_t card_ = 0; // FIXME: was: metal::math::pow_int<2, nbits>::value;
       typedef trait::value::kind::color kind;
-      typedef float_x3_t sum;
-      typedef uchar_x3_t interop;
-
-      // FIXME: was:
-//       static const rgb<n> max() { rgb<n> c(props< int_u<n> >::max); return c; }
-//       static const rgb<n> min() { const rgb<n> c(props< int_u<n> >::min()); return c; }
+      typedef metal::vec<3, float> sum;
+      typedef metal::vec<3, int>   interop;
     };
 
 
@@ -168,6 +150,9 @@ namespace mln
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const rgb<n>& c);
 
+    template <unsigned n>
+    std::istream& operator>>(std::istream& istr, rgb<n>& c);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -177,81 +162,78 @@ namespace mln
     }
 
     template <unsigned n>
-    rgb<n>::rgb(equiv a)
+    rgb<n>::rgb(const metal::vec<3, int>& v)
     {
-      std::memcpy(this->c_, a, 3 * sizeof(enc));
+      this->v_ = v;
     }
 
     template <unsigned n>
-    rgb<n>::rgb(enc r, enc g, enc b)
+    rgb<n>::rgb(const metal::vec<3, int_u<n> >& v)
     {
-      this->c_[0] = r;
-      this->c_[1] = g;
-      this->c_[2] = b;
+      this->v_ = v;
     }
 
-//     template <unsigned n>
-//     rgb<n>::rgb(enc l)
-//     {
-//       this->c_[0] = l;
-//       this->c_[1] = l;
-//       this->c_[2] = l;
-//     }
+    template <unsigned n>
+    rgb<n>::rgb(int r, int g, int b)
+    {
+      mln_precondition(r >= 0);
+      mln_precondition(g >= 0);
+      mln_precondition(b >= 0);
+      mln_precondition(unsigned(r) <= mln_max(int_u<n>));
+      mln_precondition(unsigned(g) <= mln_max(int_u<n>));
+      mln_precondition(unsigned(b) <= mln_max(int_u<n>));
+      this->v_[0] = r;
+      this->v_[1] = g;
+      this->v_[2] = b;
+    }
 
     template <unsigned n>
     rgb<n>::rgb(const literal::white_t&)
     {
-      this->c_[0] = mln_max(enc);
-      this->c_[1] = mln_max(enc);
-      this->c_[2] = mln_max(enc);
+      this->v_[0] = mln_max(int_u<n>);
+      this->v_[1] = mln_max(int_u<n>);
+      this->v_[2] = mln_max(int_u<n>);
     }
 
     template <unsigned n>
     rgb<n>::rgb(const literal::black_t&)
     {
-      this->c_[0] = 0;
-      this->c_[1] = 0;
-      this->c_[2] = 0;
+      this->v_[0] = 0;
+      this->v_[1] = 0;
+      this->v_[2] = 0;
     }
 
     template <unsigned n>
     rgb<n>::rgb(const literal::red_t&)
     {
-      this->c_[0] = mln_max(enc);
-      this->c_[1] = 0;
-      this->c_[2] = 0;
+      this->v_[0] = mln_max(int_u<n>);
+      this->v_[1] = 0;
+      this->v_[2] = 0;
     }
 
     template <unsigned n>
     rgb<n>::rgb(const literal::green_t&)
     {
-      this->c_[0] = 0;
-      this->c_[1] = mln_max(enc);
-      this->c_[2] = 0;
+      this->v_[0] = 0;
+      this->v_[1] = mln_max(int_u<n>);
+      this->v_[2] = 0;
     }
 
     template <unsigned n>
     rgb<n>::rgb(const literal::blue_t&)
     {
-      this->c_[0] = 0;
-      this->c_[1] = 0;
-      this->c_[2] = mln_max(enc);
+      this->v_[0] = 0;
+      this->v_[1] = 0;
+      this->v_[2] = mln_max(int_u<n>);
     }
 
     template <unsigned n>
     rgb<n>&
-    rgb<n>::operator=(const rgb<n>& v)
+    rgb<n>::operator=(const rgb<n>& rhs)
     {
-      std::memcpy(this->c_, v.c_, 3 * sizeof(enc));
-      return *this;
-    }
-
-    template <unsigned n>
-    rgb<n>&
-    rgb<n>::operator=(const enc& v)
-    {
-      for (int i = 0; i < 3; i++)
-	this->c_[i] = v;
+      if (& rhs == this)
+	return *this;
+      this->v_ = rhs.v_;
       return *this;
     }
 
@@ -260,130 +242,49 @@ namespace mln
 
     template <unsigned n>
     rgb<n>
-    rgb<n>::operator-(const rgb<n>& v) const
+    rgb<n>::operator-(const rgb<n>& rhs) const
     {
-      rgb<n> res;
-      for (int i = 0; i < 3; i++)
-	res.c_[i] = this->c_[i] - v.c_[i];
-      return res;
-    }
-
-//     template <unsigned n>
-//     rgb<n>
-//     rgb<n>::operator-(const size_t& i_) const
-//     {
-//       enc i(i_);
-//       return (*this - i);
-//     }
-
-//     template <unsigned n>
-//     rgb<n>
-//     rgb<n>::operator-(const enc& i) const
-//     {
-//       rgb<n> res;
-//       for (int j = 0; j < 3; j++)
-// 	res.c_[j] = this->c_[j] - i;
-//       return res;
-//     }
-
-    template <unsigned n>
-    rgb<n>
-    rgb<n>::operator+(const rgb<n>& v) const
-    {
-      rgb<n> res;
-      for (int i = 0; i < 3; i++)
-	res.c_[i] = this->c_[i] + v.c_[i];
-      return res;
-    }
-
-//     template <unsigned n>
-//     rgb<n>
-//     rgb<n>::operator+(const size_t& i_) const
-//     {
-//       enc i(i_);
-//       return (*this + i);
-//     }
-
-//     template <unsigned n>
-//     rgb<n>
-//     rgb<n>::operator+(const enc& i) const
-//     {
-//       rgb<n> res;
-//       for (int j = 0; j < 3; j++)
-// 	res.c_[j] = this->c_[j] + i;
-//       return res;
-//     }
-
-    template <unsigned n>
-    rgb<n>&
-    rgb<n>::operator+=(const rgb<n>& v)
-    {
-      for (int i = 0; i < 3; i++)
-	this->c_[i] += v.c_[i];
-      return *this;
-    }
-
-    template <unsigned n>
-    rgb<n>&
-    rgb<n>::operator-=(const rgb<n>& v)
-    {
-      for (int i = 0; i < 3; i++)
-	this->c_[i] += v.c_[i];
-      return *this;
+      rgb<n> tmp(this->v_ - rhs.v_);
+      return tmp;
     }
 
     template <unsigned n>
     rgb<n>
-    rgb<n>::operator*(const enc& i) const
+    rgb<n>::operator+(const rgb<n>& rhs) const
     {
-      rgb<n> res;
-      for (int j = 0; j < 3; j++)
-	res.c_[j] = this->c_[j] * i;
-      return res;
+      rgb<n> tmp(this->v_ + rhs.v_);
+      return tmp;
     }
 
     template <unsigned n>
     rgb<n>
-    rgb<n>::operator/(const enc& i) const
+    rgb<n>::operator*(int i) const
     {
-      rgb<n> res;
-      for (int j = 0; j < 3; j++)
-	res.c_[j] = this->c_[j] * i;
-      return res;
+      rgb<n> tmp(this->v_ * i);
+      return tmp;
     }
 
+    template <unsigned n>
+    rgb<n>
+    rgb<n>::operator/(int i) const
+    {
+      rgb<n> tmp(this->v_ / i);
+      return tmp;
+    }
 
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const rgb<n>& v)
     {
-      return ostr << "(R:" << debug::format(v.red())
-		  << ", G:" << debug::format(v.green())
-		  << ", B:" << debug::format(v.blue())
+      return ostr << "(r" << debug::format(v.red())
+		  << ", g" << debug::format(v.green())
+		  << ", b" << debug::format(v.blue())
 		  << ")";
     }
 
     template <unsigned n>
-    bool
-    rgb<n>::operator==(const rgb<n>& v) const
+    std::istream& operator>>(std::istream& istr, rgb<n>& c)
     {
-      return (this->green() == v.green() &&
-	      this->red() == v.red() &&
-	      this->blue() == v.blue());
-    }
-
-    template <unsigned n>
-    bool
-    rgb<n>::operator!=(const rgb<n>& v) const
-    {
-      return (!(*this == v));
-    }
-
-
-    template <unsigned n>
-    const int_u<n> *
-    rgb<n>::buffer() const
-    {
-      return c_;
+      return istr >> c.red() >> c.green() >> c.blue();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

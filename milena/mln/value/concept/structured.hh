@@ -40,23 +40,19 @@ namespace mln
 {
 
   // Fwd decl.
-  namespace value
-  {
-    template <typename E> struct Structured;
-  }
+  namespace value { template <typename E> struct Structured; }
 
 
   namespace trait
   {
-    // FIXME
+
+    // FIXME...
+
   } // end of namespace mln::trait
 
 
   namespace value
   {
-
-    // Fwd decl.
-    template <typename E> struct Structured;
 
     // Category flag type.
     template <>
@@ -68,14 +64,12 @@ namespace mln
     template <typename E>
     struct Structured : public Value<E>
     {
+      typedef Structured<void> category;
     };
 
   } // end of namespace mln::value
 
 } // end of namespace mln
-
-
-# include <mln/value/concept/all.hh>
 
 
 #endif // ! MLN_VALUE_CONCEPT_STRUCTURED_HH

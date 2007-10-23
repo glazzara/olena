@@ -94,10 +94,9 @@ namespace mln
       struct pow;
 
       template <int x, int n>
-      struct pow< int_<x>, int_<n> > : pow_int<x, n>
+      struct pow< int_<x>, int_<n> >
       {
-	typedef pow_int<x, n> super_;
-	typedef int_<super_::value> ret;
+	typedef int_< pow_int<x, n>::value > ret;
       };
 
 

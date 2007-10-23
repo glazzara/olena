@@ -49,9 +49,23 @@ namespace mln
 
 
 # include <mln/trait/op/plus.hh>
-# include <mln/trait/op/times.hh>
 # include <mln/trait/op/minus.hh>
+# include <mln/trait/op/times.hh>
+# include <mln/trait/op/div.hh>
+# include <mln/trait/op/mod.hh>
+
+# include <mln/trait/op/uplus.hh>
 # include <mln/trait/op/uminus.hh>
+
+# include <mln/trait/op/preinc.hh>
+# include <mln/trait/op/postinc.hh>
+# include <mln/trait/op/predec.hh>
+# include <mln/trait/op/postdec.hh>
+
+# include <mln/trait/op/eq.hh>
+# include <mln/trait/op/neq.hh>
+
+// FIXME: eq, less, ... + and, xor, ...
 
 
 #endif // ! MLN_TRAIT_OP_ALL_HH

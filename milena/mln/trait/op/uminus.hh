@@ -63,15 +63,6 @@ namespace mln
       
     } // end of namespace mln::trait::op
 
-
-    /// Default definition of op::uminus is the input type itself.
-    template <typename T>
-    struct set_unary_< op::uminus, Object, T >
-    {
-      typedef T ret;
-    };
-
-
   } // end of namespace mln::trait
 
 } // end of namespace mln

@@ -33,6 +33,8 @@
  * \brief Define a generic class for signed integers.
  */
 
+# include <mln/value/ops.hh>
+
 # include <mln/metal/math/pow.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/concept/integer.hh>
@@ -56,33 +58,10 @@ namespace mln
   namespace trait
   {
 
-    // promote
-
     template <unsigned n>
-    struct set_precise_binary_< promote, mln::value::int_s<n>, int >
+    struct value_< mln::value::int_s<n> > : mln::trait::value_integer_<n>
     {
-      typedef int ret;
     };
-
-    template <unsigned n>
-    struct set_precise_binary_< promote, int, mln::value::int_s<n> >
-    {
-      typedef int ret;
-    };
-
-    template <unsigned n>
-    struct set_precise_binary_< promote, mln::value::int_s<n>, float >
-    {
-      typedef float ret;
-    };
-
-    template <unsigned n>
-    struct set_precise_binary_< promote, float, mln::value::int_s<n> >
-    {
-      typedef float ret;
-    };
-
-    // FIXME: Is that all? (No!)
 
   } // end of namespace mln::trait
 
@@ -124,9 +103,6 @@ namespace mln
 
       /// Assignment from an integer.
       int_s<n>& operator=(int i);
-
-      /// Negation.
-      int_s<n> operator-() const;
 
       /// Zero value.
       static const int_s<n> zero;
@@ -229,13 +205,6 @@ namespace mln
     {
       this->v_ = 1;
       return *this;
-    }
-
-    template <unsigned n>
-    int_s<n>
-    int_s<n>::operator-() const
-    {
-      return - this->v_;
     }
 
     template <unsigned n>

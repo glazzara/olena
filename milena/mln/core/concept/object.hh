@@ -43,6 +43,7 @@
 # include <mln/trace/all.hh>
 # include <mln/metal/is_a.hh>
 # include <mln/metal/is.hh>
+# include <mln/metal/ret.hh>
 
 
 /*! \namespace mln
@@ -108,8 +109,7 @@ namespace mln
 
 
 # include <mln/core/exact.hh>
-//# include <mln/literal/zero.hh>
-# include <mln/core/ops.hh> // FIXME: Read FIXME in mln/metal/binary_arith_trait.hh!
+# include <mln/core/ops.hh>
 
 
 #endif // ! MLN_CORE_CONCEPT_OBJECT_HH

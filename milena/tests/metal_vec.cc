@@ -31,6 +31,8 @@
  */
 
 #include <mln/metal/vec.hh>
+#include <mln/value/int_u8.hh>
+
 
 int main()
 {
@@ -40,4 +42,12 @@ int main()
   metal::vec<3,float> v_f = make::vec(2.6, 1.9, 5.2);
 
   std::cout << v_int + v_f << std::endl;
+  std::cout << v_f / 3 << std::endl;
+
+  {
+//     value::int_u8 i = 3;
+//     std::cout << value::scalar(i) * v_f << std::endl;
+    // FIXME: Read FIXME in metal::vec::operator* and set up a test!
+  }
+
 }

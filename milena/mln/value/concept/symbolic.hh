@@ -39,25 +39,20 @@
 namespace mln
 {
 
-  // Fwd decls.
-  template <typename E> struct Value;
-  namespace value
-  {
-    template <typename E> struct Symbolic;
-  }
+  // Fwd decl.
+  namespace value { template <typename E> struct Symbolic; }
+
 
   namespace trait
   {
 
-    // FIXME
+    // FIXME...
 
   } // end of namespace mln::trait
 
+
   namespace value
   {
-
-    // Fwd decl.
-    template <typename E> struct Symbolic;
 
     // Category flag type.
     template <>
@@ -69,14 +64,12 @@ namespace mln
     template <typename E>
     struct Symbolic : public Value<E>
     {
+      typedef Symbolic<void> category;
     };
 
   } // end of namespace mln::value
 
 } // end of namespace mln
-
-
-# include <mln/value/concept/all.hh>
 
 
 #endif // ! MLN_VALUE_CONCEPT_SYMBOLIC_HH

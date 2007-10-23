@@ -63,6 +63,8 @@ namespace mln
     /*
       typedef enc;   // encoding type
       typedef equiv; // equivalent type
+
+      equiv to_equiv() const; // go to equivalent value
     */
 
   protected:
@@ -78,6 +80,9 @@ namespace mln
   {
     typedef mln_enc(E) enc;
     typedef mln_equiv(E) equiv;
+    // FIXME HERE
+//     equiv (E::*m)() const = & E::to_equiv;
+//     m = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -86,7 +91,6 @@ namespace mln
 
 
 # include <mln/value/cast.hh>
-# include <mln/value/builtin.hh>
 
 
 #endif // ! MLN_CORE_CONCEPT_VALUE_HH

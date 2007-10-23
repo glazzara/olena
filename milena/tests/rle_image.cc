@@ -29,7 +29,7 @@
  *
  * \brief Tests on mln::rle_image.
  */
-1
+
 #include <mln/core/image2d.hh>
 #include <mln/core/rle_image.hh>
 #include <mln/core/rle_encode.hh>

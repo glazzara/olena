@@ -33,6 +33,8 @@
  * \brief Define a generic class for unsigned integers.
  */
 
+# include <mln/value/ops.hh>
+
 # include <mln/metal/math/pow.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/internal/encoding.hh>
@@ -41,6 +43,7 @@
 # include <mln/trait/all.hh> // FIXME!
 # include <mln/trait/value_.hh>
 # include <mln/debug/format.hh>
+
 
 
 namespace mln
@@ -55,57 +58,17 @@ namespace mln
   namespace trait
   {
 
-    // promote
-
     template <unsigned n>
-    struct set_precise_binary_< promote, mln::value::int_u<n>, int >
-    {
-      typedef int ret;
-    };
-
-    template <unsigned n>
-    struct set_precise_binary_< promote, int, mln::value::int_u<n> >
-    {
-      typedef int ret;
-    };
-
-    template <unsigned n>
-    struct set_precise_binary_< promote, mln::value::int_u<n>, unsigned >
-    {
-      typedef unsigned ret;
-    };
-
-    template <unsigned n>
-    struct set_precise_binary_< promote, unsigned, mln::value::int_u<n> >
-    {
-      typedef unsigned ret;
-    };
-
-    template <unsigned n>
-    struct set_precise_binary_< promote, mln::value::int_u<n>, float >
-    {
-      typedef float ret;
-    };
-
-    template <unsigned n>
-    struct set_precise_binary_< promote, float, mln::value::int_u<n> >
-    {
-      typedef float ret;
-    };
-
-    // FIXME: Is that all? (No!)
-
-    template <unsigned n>
-    struct value_< mln::value::int_u<n> > : mln::trait::value_integer_<8>
+    struct value_< mln::value::int_u<n> > : mln::trait::value_integer_<n>
     {
     };
 
   } // end of namespace mln::trait
 
 
+
   namespace value
   {
-
 
     /*! \brief Unsigned integer value class.
      *
@@ -151,7 +114,6 @@ namespace mln
     };
 
 
-
     // Safety.
     template <> struct int_u<0>;
     template <> struct int_u<1>;
@@ -181,6 +143,11 @@ namespace mln
      */
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const int_u<n>& i);
+
+
+    // FIXME: Doc!
+    template <unsigned n>
+    std::istream& operator>>(std::istream& istr, int_u<n>& i);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -254,6 +221,12 @@ namespace mln
     {
       // FIXME: This code could be factored for almost every Value<*>...
       return ostr << debug::format(i.to_equiv()); // FIXME: is to_equiv OK?
+    }
+
+    template <unsigned n>
+    std::istream& operator>>(std::istream& istr, int_u<n>& i)
+    {
+      return istr >> i.handle_();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

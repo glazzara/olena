@@ -47,26 +47,26 @@ int main()
   std::cout << q2 << std::endl;
   std::cout << q3 << std::endl;
 
-  std::cout << q1.scal() << std::endl;
+  std::cout << q1.s() << std::endl;
 
-  q1.set_scal(2.6);
+  q1.s() = 2.6;
   std::cout << q1 << std::endl;
 
-  std::cout << q1.vect() << std::endl;
+  std::cout << q1.v() << std::endl;
 
-  q2.set_vect(make::vec(1.4, 5.9, 3.1));
+  q2.v() = make::vec(1.4, 5.9, 3.1);
   std::cout << q2 << std::endl;
 
   std::cout << q2 * q3 << std::endl;
 
-  mln_assertion(!q3.is_unit());
+  mln_assertion(! q3.is_unit());
   q3.set_unit();
   std::cout << q3 << std::endl;
   mln_assertion(q3.is_unit());
 
   std::cout << q2.conj() << std::endl;
   std::cout << q2.inv() << std::endl;
-  std::cout << norm::l2(q2) << ' ' << norm::l2(q2.inv()) << std::endl;
+  std::cout << norm::l2(q2.to_vec()) << ' ' << norm::l2(q2.inv().to_vec()) << std::endl;
   std::cout << q2.inv().inv() << std::endl;
 
 }

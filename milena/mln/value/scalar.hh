@@ -27,7 +27,7 @@
 
 #ifndef MLN_VALUE_SCALAR_HH
 # define MLN_VALUE_SCALAR_HH
-
+ 
 /*! \file mln/value/scalar.hh
  *
  * \brief Definition of the basic mln::value::scalar_ class.
@@ -36,7 +36,6 @@
 # include <mln/value/concept/scalar.hh>
 # include <mln/metal/is_a.hh>
 # include <mln/metal/if.hh>
-
 
 
 namespace mln
@@ -61,25 +60,28 @@ namespace mln
       scalar_();
 
       /// Ctor.
-      scalar_(const T& val);
+      explicit scalar_(const T& val);
 
-      /// Conversion.
+      /// Conversion.  FIXME: Is-it useful?
       operator T() const;
+
+      /// Access to the scalar value.
+      T to_equiv() const;
 
     protected:
       T val_; // FIXME: const&?
     };
 
-
-    template <typename T>
-    class scalar_< scalar_<T> >; // Safety.
+    template <typename T> class scalar_< scalar_<T> >; // Safety: this type should not exist!
 
 
-
+    /// Print a scalar \p s in an output stream \p ostr.
     template <typename T>
     std::ostream& operator<<(std::ostream& ostr, const scalar_<T>& s);
 
 
+
+    // Routine scalar(T) -> scalar_<T>.
 
     namespace internal
     {
@@ -98,6 +100,7 @@ namespace mln
     template <typename T>
     typename internal::helper_scalar_<T>::ret
     scalar(const T& s);  // FIXME: if T already is a scalar_...
+
 
 
 
@@ -122,12 +125,19 @@ namespace mln
       return val_;
     }
 
+    template <typename T>
+    T
+    scalar_<T>::to_equiv() const
+    {
+      return val_;
+    }
+
     // Operator.
 
     template <typename T>
     std::ostream& operator<<(std::ostream& ostr, const scalar_<T>& s)
     {
-      return ostr << T(s);
+      return ostr << s.to_equiv();
     }
 
     // Routine.
@@ -136,7 +146,8 @@ namespace mln
     typename internal::helper_scalar_<T>::ret
     scalar(const T& s)
     {
-      return s;
+      typename internal::helper_scalar_<T>::ret tmp(s);
+      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

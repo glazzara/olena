@@ -52,9 +52,8 @@ namespace mln
     class float01;
 
 
-    /// General float01_ class where n bits is not know at compile-time.
-    /// This class is used for exchange between float01_ types purpose.
-
+    /// Class for floating values restricted to the interval [0..1]
+    /// and discretized with n bits.
     class float01 : public Floating<float01>
     {
     public:

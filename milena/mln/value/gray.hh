@@ -49,6 +49,18 @@ namespace mln
   /// \}
 
 
+  namespace trait
+  {
+
+    template < template <class, class> class Name >
+    struct set_precise_binary_< Name, mln::value::gray, mln::value::gray >
+    {
+      typedef mln::value::gray ret;
+    };
+
+  } // end of namespace mln::trait
+
+
   namespace value
   {
 
@@ -60,18 +72,18 @@ namespace mln
     public:
 
       /// Encoding associated type.
-      typedef unsigned long enc;
+      typedef long enc;
 
       /// Equivalent associated type.
-      typedef unsigned long equiv;
+      typedef long equiv;
 
       /// Constructor without argument.
       gray();
 
       /// \{ Constructors/assignments with literals.
-      gray(const literal::white_t&);
+      explicit gray(const literal::white_t&);
       gray& operator=(const literal::white_t&);
-      gray(const literal::black_t&);
+      explicit gray(const literal::black_t&);
       gray& operator=(const literal::black_t&);
       /// \}
 
@@ -85,10 +97,10 @@ namespace mln
       /// \}
 
       /// Ctor.
-      gray(unsigned nbits, unsigned long val);
+      gray(unsigned nbits, long val);
 
       /// Access to std type.
-      unsigned long value() const;
+      long value() const;
 
       /// Access to the encoding size.
       unsigned nbits() const;
@@ -108,8 +120,11 @@ namespace mln
       unsigned nbits_;
 
       /// Value.
-      unsigned long val_;
+      long val_;
     };
+
+
+    // Operators.
 
     std::ostream& operator<<(std::ostream& ostr, const gray& g);
 
@@ -128,42 +143,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-    template <unsigned N, unsigned M>
-    gray operator+(const graylevel<N>& lhs, const graylevel<M>& rhs)
-    {
-      return gray(lhs) + gray(rhs);
-    }
-
-    template <unsigned N, unsigned M>
-    gray operator-(const graylevel<N>& lhs, const graylevel<M>& rhs)
-    {
-      return gray(lhs) - gray(rhs);
-    }
-
-    template <unsigned N>
-    gray operator*(int s, const graylevel<N>& rhs)
-    {
-      mln_precondition(s >= 0);
-      gray tmp(N, s * rhs.value());
-      return tmp;
-    }
-
-    template <unsigned N>
-    gray operator*(const graylevel<N>& lhs, int s)
-    {
-      mln_precondition(s >= 0);
-      gray tmp(N, lhs.value() * s);
-      return tmp;
-    }
-
-    template <unsigned N>
-    gray operator/(const graylevel<N>& lhs, int s)
-    {
-      mln_precondition(s > 0);
-      gray tmp(N, lhs.value() / s);
-      return tmp;
-    }
 
     // Gray.
 
@@ -214,13 +193,13 @@ namespace mln
       return *this;
     }
 
-    gray::gray(unsigned nbits, unsigned long val)
+    gray::gray(unsigned nbits, long val)
       : nbits_(nbits),
 	val_(val)
     {
     }
 
-    unsigned long gray::value() const
+    long gray::value() const
     {
       mln_invariant(nbits_ != 0);
       return val_;
@@ -234,7 +213,7 @@ namespace mln
     namespace internal
     {
 
-      unsigned long two_pow_(unsigned n)
+      long two_pow_(unsigned n)
       {
 	if (n == 0)
 	  return 1;
@@ -242,13 +221,13 @@ namespace mln
 	  return 2 * two_pow_(n - 1);
       }
 
-      unsigned long two_pow_n_minus_1(unsigned n)
+      long two_pow_n_minus_1(unsigned n)
       {
-	  return two_pow_(n) - 1;
+	return two_pow_(n) - 1;
       }
 
       template <unsigned n_dest>
-      unsigned long convert(unsigned n_src, unsigned long val)
+      long convert(unsigned n_src, long val)
       {
 	if (n_dest == n_src)
 	  return val;
@@ -301,11 +280,12 @@ namespace mln
       return tmp;
     }
 
-    // operators
+
+    // Operators.
 
     std::ostream& operator<<(std::ostream& ostr, const gray& g)
     {
-      return ostr << g.value() << '/' << g.nbits() << "nbits";
+      return ostr << g.value() << "g/" << g.nbits() << "bits";
     }
 
     bool operator==(const gray& lhs, const gray& rhs)
@@ -352,7 +332,7 @@ namespace mln
       mln_precondition(lhs.nbits() != 0 and rhs.nbits() != 0);
       if (lhs.nbits() > rhs.nbits())
 	{
-	  unsigned long l = rhs.to_nbits(lhs.nbits()).value();
+	  long l = rhs.to_nbits(lhs.nbits()).value();
 	  assert(lhs.value() >= l);
 	  gray tmp(lhs.nbits(),
 		   lhs.value() - l);
@@ -360,7 +340,7 @@ namespace mln
 	}
       else
 	{
-	  unsigned long l = lhs.to_nbits(rhs.nbits()).value();
+	  long l = lhs.to_nbits(rhs.nbits()).value();
 	  assert(l >= rhs.value());
 	  gray tmp(rhs.nbits(),
 		   l - rhs.value());
@@ -368,25 +348,158 @@ namespace mln
 	}
     }
 
+    gray operator*(const gray& lhs, const gray& rhs)
+    {
+      // FIXME: The formula below is wrong but we do not mind,
+      // the exact computation being too heavy for a such light
+      // operator.
+      gray tmp(lhs.nbits() + rhs.nbits(),
+	       (lhs.value() + 1) * (rhs.value() + 1) - 1);
+      return tmp;
+    }
+
     gray operator*(int s, const gray& rhs)
     {
-      mln_precondition(s >= 0);
       gray tmp(rhs.nbits(), rhs.value() * s);
       return tmp;
     }
 
     gray operator*(const gray& lhs, int s)
     {
-      mln_precondition(s >= 0);
       gray tmp(lhs.nbits(), lhs.value() * s);
       return tmp;
     }
 
     gray operator/(const gray& lhs, int s)
     {
-      mln_precondition(s > 0);
+      mln_precondition(s != 0);
       gray tmp(lhs.nbits(), lhs.value() / s);
       return tmp;
+    }
+
+
+    // Graylevel operators.
+
+    // Op gl + gl
+
+    template <unsigned n, unsigned m>
+    gray
+    operator+(const graylevel<n>& lhs, const graylevel<m>& rhs)
+    {
+      return gray(lhs) + gray(rhs);
+    }
+
+    // Op gl - gl
+
+    template <unsigned n, unsigned m>
+    gray
+    operator-(const graylevel<n>& lhs, const graylevel<m>& rhs)
+    {
+      return gray(lhs) - gray(rhs);
+    }
+
+    // Op gl * gl
+
+    template <unsigned n, unsigned m>
+    gray
+    operator*(const graylevel<n>& lhs, const graylevel<m>& rhs)
+    {
+      return gray(lhs) * gray(rhs);
+    }
+
+    // Op symm gl * Int
+
+    template <unsigned n, typename I>
+    gray
+    operator*(const graylevel<n>& lhs, const Integer<I>& rhs)
+    {
+      return gray(lhs) * int(exact(rhs));
+    }
+
+    template <typename I, unsigned n>
+    gray
+    operator*(const Integer<I>& lhs, const graylevel<n>& rhs)
+    {
+      return gray(rhs) * int(exact(lhs));
+    }
+
+    // Op symm gl * Float
+
+    template <unsigned n, typename F>
+    float
+    operator*(const graylevel<n>& lhs, const Floating<F>& rhs)
+    {
+      return lhs.to_float() * exact(rhs);
+    }
+
+    template <typename F, unsigned n>
+    float
+    operator*(const Floating<F>& lhs, const graylevel<n>& rhs)
+    {
+      return rhs.to_float() * exact(lhs);
+    }
+
+
+
+    // Op * scalar
+    
+    namespace internal
+    {
+
+      template <typename ret>
+      struct helper_gray_op_;
+
+      template <>
+      struct helper_gray_op_< gray >
+      {
+	template <unsigned n, typename S>
+	static gray times(const graylevel<n>& lhs, const scalar_<S>& rhs)
+	{
+	  gray tmp(n, lhs.value() * rhs.to_equiv());
+	  return tmp;
+	}
+	template <unsigned n, typename S>
+	static gray div(const graylevel<n>& lhs, const scalar_<S>& rhs)
+	{
+	  gray tmp(n, lhs.value() / rhs.to_equiv());
+	  return tmp;
+	}
+      };
+
+      template <>
+      struct helper_gray_op_< float >
+      {
+	template <unsigned n, typename S>
+	static float times(const graylevel<n>& lhs, const scalar_<S>& rhs)
+	{
+	  float tmp(lhs.to_float() * float(rhs.to_equiv()));
+	  return tmp;
+	}
+	template <unsigned n, typename S>
+	static float div(const graylevel<n>& lhs, const scalar_<S>& rhs)
+	{
+	  float tmp(lhs.to_float() / float(rhs.to_equiv()));
+	  return tmp;
+	}
+      };
+
+    } // end of namespace mln::value::internal
+
+    template <unsigned n, typename S>
+    mln_trait_op_times(graylevel<n>, scalar_<S>)
+      operator*(const graylevel<n>& lhs, const scalar_<S>& rhs)
+    {
+      typedef mln_trait_op_times(graylevel<n>, scalar_<S>) ret;
+      return internal::helper_gray_op_<ret>::times(lhs, rhs);
+    }
+
+    template <unsigned n, typename S>
+    mln_trait_op_div(graylevel<n>, scalar_<S>)
+      operator/(const graylevel<n>& lhs, const scalar_<S>& rhs)
+    {
+      mln_precondition(rhs.to_equiv() != 0);
+      typedef mln_trait_op_div(graylevel<n>, scalar_<S>) ret;
+      return internal::helper_gray_op_<ret>::div(lhs, rhs);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

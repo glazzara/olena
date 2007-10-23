@@ -187,4 +187,5 @@ int main()
     test_interop(int_u8, char,  %, 4, 20);
     test_interop(int_u8, unsigned char,  %, 4, 20);
   }
+
 }

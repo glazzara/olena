@@ -40,6 +40,7 @@
 
 
 # define mln_trait_promote(T, U) typename mln::trait::promote< T , U >::ret
+# define mln_trait_promote_(T, U)         mln::trait::promote< T , U >::ret
 
 
 
@@ -60,76 +61,15 @@ namespace mln
     };
 
 
-    /// Default case when the same type is involved twice: return this
-    /// type.
+    /// Default case when one type is involved twice: the promotion
+    /// type is the same as the input type (so actually there is no
+    /// promotion).
     template <typename T>
     struct set_binary_< promote, Object, T, Object, T >
     {
       typedef T ret;
     };
 
-    
-    // Definitions for some built-ins.
-
-    template <>
-    struct set_precise_binary_< promote, int, float >
-    {
-      typedef float ret;
-    };
-
-    template <>
-    struct set_precise_binary_< promote, float, int >
-    {
-      typedef float ret;
-    };
-
-    template <>
-    struct set_precise_binary_< promote, int, double >
-    {
-      typedef double ret;
-    };
-
-    template <>
-    struct set_precise_binary_< promote, double, int >
-    {
-      typedef double ret;
-    };
-
-    template <>
-    struct set_precise_binary_< promote, float, unsigned >
-    {
-      typedef float ret;
-    };
-
-    template <>
-    struct set_precise_binary_< promote, unsigned, float >
-    {
-      typedef float ret;
-    };
-
-    template <>
-    struct set_precise_binary_< promote, unsigned, double >
-    {
-      typedef double ret;
-    };
-
-    template <>
-    struct set_precise_binary_< promote, double, unsigned >
-    {
-      typedef double ret;
-    };
-
-    template <>
-    struct set_precise_binary_< promote, float, double >
-    {
-      typedef double ret;
-    };
-
-    template <>
-    struct set_precise_binary_< promote, double, float >
-    {
-      typedef double ret;
-    };
 
   } // end of namespace mln::trait
 

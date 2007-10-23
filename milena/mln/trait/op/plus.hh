@@ -60,16 +60,6 @@ namespace mln
 
     } // end of namespace mln::trait::op
 
-
-    /// Default definition of op::plus is given by the promote trait.
-    template < typename L, typename R >
-    struct set_binary_< op::plus, Object, L, Object, R >
-      :
-      public promote< L, R >
-    {
-    };
-
-
   } // end of namespace mln::trait
 
 } // end of namespace mln

@@ -75,10 +75,14 @@ namespace mln
 	V to_equiv() const;
 
 	/// Explicit convertion towards encoding type.
-	C to_enc() const;
+	const C& to_enc() const;
 
 	/// Explicit convertion towards interoperation type.
 	N to_interop() const;
+
+
+	// Handle to encoding value.
+	C& handle_() { return v_; }
 
       protected:
 	enc v_; /// The encoding value.
@@ -113,7 +117,7 @@ namespace mln
       }
 
       template <typename V, typename C, typename N, typename E>
-      C
+      const C&
       value_like_<V,C,N,E>::to_enc() const
       {
 	return v_;
@@ -130,14 +134,14 @@ namespace mln
       bool operator==(const value_like_<V,C,N,E>& lhs,
 		      const value_like_<V,C,N,E>& rhs)
       {
-	return lhs.to_interop() == rhs.to_interop();
+	return lhs.to_enc() == rhs.to_enc();
       }
 
       template <typename V, typename C, typename N, typename E>
       bool operator<(const value_like_<V,C,N,E>& lhs,
 		     const value_like_<V,C,N,E>& rhs)
       {
-	return lhs.to_interop() < rhs.to_interop();
+	return lhs.to_interop() < rhs.to_interop(); // FIXME HERE: Why interop?
       }
 
 # endif // ! MLN_INCLUDE_ONLY

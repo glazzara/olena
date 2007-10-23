@@ -79,7 +79,7 @@ namespace mln
 	void write_value(std::ofstream& file,
 			 const value::rgb<n>& c)
 	{
-	  typedef typename value::rgb<n>::enc::enc E;
+	  typedef typename value::int_u<n>::enc E;
 
 	  E v = c.red().to_enc();
 	  file.write((char*)&v, sizeof(E));

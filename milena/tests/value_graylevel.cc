@@ -32,12 +32,12 @@
  *
  */
 
+#include <mln/value/graylevel.hh>
+#include <mln/value/int_u8.hh>
 
 #include <mln/literal/black.hh>
-
 #include <mln/literal/white.hh>
 
-#include <mln/value/graylevel.hh>
 
 
 int main()
@@ -47,6 +47,9 @@ int main()
   using  mln::literal::white;
   using  mln::literal::black;
 
+  gl8   a = 255;
+  gl8 b = 255;
+
   // Constructions
   {
     gl8 x;
@@ -55,13 +58,17 @@ int main()
     gl8 b(12);
     mln_assertion(a == b);
 
-    gl16 c = 2335;
-    gl8 d = c;
+//     gl16 c = 2335;
+//     gl8 d = c;
+//     mln_assertion(c == d);
+
+    gl8 d = 250;
+    gl16 c = d;
     mln_assertion(c == d);
 
     gl8 e = gray(white);
     mln_assertion(e == white);
-
+ 
     gl8 f = 12;
     gl8 g = f;
     gl8 h(f);
@@ -72,8 +79,8 @@ int main()
 
   // Literals
   {
-    gl8  a = white;
-    gl16 b = white;
+    gl8  a(white);
+    gl16 b(white);
 
     mln_assertion(a == b);
     mln_assertion(a.value() == float(255));
@@ -102,9 +109,9 @@ int main()
     mln_assertion(a.value() == float(0));
     mln_assertion(b.value() == float(0));
 
-    c = (black + black) / 2;
-    mln_assertion(c == black);
-    mln_assertion(c.value() == float(0));
+//     c = (black + black) / 2;
+//     mln_assertion(c == black);
+//     mln_assertion(c.value() == float(0));
   }
 
   // Assigment
@@ -209,12 +216,12 @@ int main()
 
     a = b;
     std::cout << "a.value() = " << int(a.value()) << std::endl;
-    std::cout << "should be " << (b.value() / 257) << std::endl;
+    std::cout << "should be " << (b.value() / 256) << std::endl;
 
     a = 42;
     a = a - b;
-    std::cout << int(a.value()) << ":" <<  (42 - b.value() / 257) << std::endl;
-    mln_assertion(a.value() == float((42 - b.value() / 257) ));
+    std::cout << int(a.value()) << ":" <<  (42 - b.value() / 256) << std::endl;
+    mln_assertion(a.value() == float((42 - b.value() / 256) ));
     a = 42;
     b = 16969;
     a -= b;
@@ -273,8 +280,6 @@ int main()
     }
 
   }
-
-
 
   // Multiplication
   {
@@ -357,10 +362,11 @@ int main()
 
   }
 
+
   // Not exhaustive
 
-  //   gl8  a = white;
-  //   gl16 b = white;
+  //   gl8  a(white);
+  //   gl16 b(white);
   //   mln_assertion(a == b);
   //   //  mln_assertion(-a == -b);
 
@@ -386,5 +392,5 @@ int main()
   //     mln_assertion(c.value() == float(255));
   //   }
 
-  //   gray g = black;
+  //   gray g(black);
 }

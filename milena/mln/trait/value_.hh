@@ -36,6 +36,7 @@
 # include <iostream>
 # include <string>
 
+# include <mln/metal/int.hh>
 # include <mln/metal/math/pow.hh>
 # include <mln/metal/if.hh>
 
@@ -86,31 +87,6 @@ namespace mln
     template <typename V>
     struct value_ : undefined_value_
     {
-    };
-
-
-    template <unsigned n_bits, int card_ = 1>
-    struct value_integer_
-    {
-      typedef metal::math::pow_int<2, n_bits> pow_;
-
-      typedef metal::int_<n_bits>             nbits;
-      typedef trait::value::nature::integer   nature;
-      typedef trait::value::kind::data        kind;
-      typedef metal::int_<pow_::value>        card;
-      typedef mln_value_quant_from_card(card) quant;
-      typedef float                           sum;
-    };
-
-    template <unsigned n_bits>
-    struct value_integer_< n_bits, 0 >
-    {
-      typedef metal::int_<n_bits>    nbits;
-      typedef trait::value::nature::integer nature;
-      typedef value::kind::data      kind;
-      typedef metal::int_<0>         card;
-      typedef value::quant::high     quant;
-      typedef float                  sum;
     };
 
 

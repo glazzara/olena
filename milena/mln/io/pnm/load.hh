@@ -63,7 +63,7 @@ namespace mln
       void read_value(std::ifstream& file,
 		      value::rgb<n>& v)
       {
-	typedef typename value::rgb<n>::enc::enc E;
+	typedef typename value::int_u<n>::enc E;
 
 	E c;
 	file.read((char*)(&c), sizeof(E));
@@ -124,13 +124,7 @@ namespace mln
       {
 	mln_fwd_piter(I) p(ima.domain());
 	for_all(p)
-	  {
-	    unsigned value;
-	    file >> value;
-	    ima(p) = value;
-	    // FIXME: Test alt code below.
-	    // file >> ima(p);
-	  }
+	  file >> ima(p);
       }
 
       /// load_raw_2d.

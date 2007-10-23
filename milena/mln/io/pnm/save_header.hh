@@ -58,14 +58,14 @@ namespace mln
       void save_max_val(V&, std::ofstream& file)
       {
 	if (mln_max(V) > 1)
-	  file << mln_max(V) << std::endl;
+	  file << unsigned(mln_max(V)) << std::endl;
       }
 
       template <unsigned int n>
       void save_max_val(value::rgb<n>&, std::ofstream& file)
       {
-	typedef typename value::rgb<n>::enc E;
-	file << mln_max(E) << std::endl;
+	typedef typename value::int_u<n>::enc E;
+	file << unsigned(mln_max(E)) << std::endl;
       }
 
       template <typename I>

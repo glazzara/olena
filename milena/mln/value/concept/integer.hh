@@ -40,15 +40,14 @@ namespace mln
 {
 
   // Fwd decl.
-  namespace value
-  {
-    template <typename E> struct Integer;
-  }
+  namespace value { template <typename E> struct Integer; }
 
 
   namespace trait
   {
-    // FIXME
+
+    // FIXME...
+
   } // end of namespace mln::trait
 
 
@@ -65,14 +64,12 @@ namespace mln
     template <typename E>
     struct Integer : public Scalar<E>
     {
+      typedef Integer<void> category;
     };
 
   } // end of namespace mln::value
 
 } // end of namespace mln
-
-
-# include <mln/value/concept/all.hh>
 
 
 #endif // ! MLN_VALUE_CONCEPT_INTEGER_HH

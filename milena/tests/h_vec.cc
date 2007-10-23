@@ -62,7 +62,7 @@ int main()
 
   point3d k;
   run_in_3d(k);
-  run_in_3d_h(k);
+  run_in_3d_h(k.to_h_vec());
 
   {
     metal::vec<3,float> v;

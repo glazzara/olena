@@ -31,7 +31,6 @@
  */
 
 #include <mln/core/image2d.hh>
-
 #include <mln/value/rgb8.hh>
 
 #include <mln/io/ppm/load.hh>
@@ -44,11 +43,7 @@ int main()
 {
   using namespace mln;
   using value::rgb8;
-  using value::int_u8;
 
-    image2d<rgb8>
-      lena = io::ppm::load("../img/lena.ppm");
-
-    io::ppm::save(lena, "out.ppm");
-
+  image2d<rgb8> lena = io::ppm::load("../img/lena.ppm");
+  io::ppm::save(lena, "out.ppm");
 }

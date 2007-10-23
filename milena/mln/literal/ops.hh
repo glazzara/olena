@@ -33,52 +33,195 @@
  */
 
 # include <mln/core/concept/literal.hh>
+# include <mln/trait/all.hh>
+# include <mln/metal/equal.hh>
+# include <mln/metal/converts_to.hh>
 
 
 
 namespace mln
 {
 
+  // Arithmetical operators.
+
   template <typename O, typename L>
-  bool operator==(const Object<O>& lhs, const Literal<L>& rhs);
+  mln_trait_op_plus(O, O)
+  operator+(const Object<O>& lhs, const Literal<L>& rhs);
 
   template <typename L, typename O>
-  bool operator==(const Literal<L>& lhs, const Object<O>& rhs);
+  mln_trait_op_plus(O, O)
+  operator+(const Literal<L>& lhs, const Object<O>& rhs);
+
+  template <typename O, typename L>
+  mln_trait_op_minus(O, O)
+  operator-(const Object<O>& lhs, const Literal<L>& rhs);
+
+  template <typename L, typename O>
+  mln_trait_op_minus(O, O)
+  operator-(const Literal<L>& lhs, const Object<O>& rhs);
+
+  template <typename O, typename L>
+  mln_trait_op_times(O, O)
+  operator*(const Object<O>& lhs, const Literal<L>& rhs);
+
+  template <typename L, typename O>
+  mln_trait_op_times(O, O)
+  operator*(const Literal<L>& lhs, const Object<O>& rhs);
+
+  template <typename O, typename L>
+  mln_trait_op_div(O, O)
+  operator/(const Object<O>& lhs, const Literal<L>& rhs);
+
+  template <typename L, typename O>
+  mln_trait_op_div(O, O)
+  operator/(const Literal<L>& lhs, const Object<O>& rhs);
+
+  template <typename O, typename L>
+  mln_trait_op_mod(O, O)
+  operator%(const Object<O>& lhs, const Literal<L>& rhs);
+
+  template <typename L, typename O>
+  mln_trait_op_mod(O, O)
+  operator%(const Literal<L>& lhs, const Object<O>& rhs);
+
+
+  // Operator equal.
+
+  template <typename O, typename L>
+  mln_trait_op_eq(O, O)
+  operator==(const Object<O>& lhs, const Literal<L>& rhs);
+
+  template <typename L, typename O>
+  mln_trait_op_eq(O, O)
+  operator==(const Literal<L>& lhs, const Object<O>& rhs);
 
   template <typename L1, typename L2>
   bool operator==(const Literal<L1>& lhs, const Literal<L2>& rhs);
 
-  template <typename L>
-  bool operator==(const Literal<L>& lhs, const Literal<L>& rhs);
-
-  // FIXME: Add other operators... 
+  // FIXME: ... 
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+  // FIXME: Static assertion code de-activated because when O's ctor
+  // is explicit from literal the metal program does not compile...
+
+
+  // Op +
+
   template <typename O, typename L>
-  bool operator==(const Object<O>& lhs, const Literal<L>& rhs)
+  mln_trait_op_plus(O, O)
+  operator+(const Object<O>& lhs, const Literal<L>& rhs)
   {
+    // mlc_converts_to(L, O)::check();
+    return exact(lhs) + O(exact(rhs));
+  }
+
+  template <typename L, typename O>
+  mln_trait_op_plus(O, O)
+  operator+(const Literal<L>& lhs, const Object<O>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
+    return O(exact(lhs)) + exact(rhs);
+  }
+
+  // Op -
+
+  template <typename O, typename L>
+  mln_trait_op_minus(O, O)
+  operator-(const Object<O>& lhs, const Literal<L>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
+    return exact(lhs) - O(exact(rhs));
+  }
+
+  template <typename L, typename O>
+  mln_trait_op_minus(O, O)
+  operator-(const Literal<L>& lhs, const Object<O>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
+    return O(exact(lhs)) - exact(rhs);
+  }
+
+  // Op *
+
+  template <typename O, typename L>
+  mln_trait_op_times(O, O)
+  operator*(const Object<O>& lhs, const Literal<L>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
+    return exact(lhs) * O(exact(rhs));
+  }
+
+  template <typename L, typename O>
+  mln_trait_op_times(O, O)
+  operator*(const Literal<L>& lhs, const Object<O>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
+    return O(exact(lhs)) * exact(rhs);
+  }
+
+  // Op /
+
+  template <typename O, typename L>
+  mln_trait_op_div(O, O)
+  operator/(const Object<O>& lhs, const Literal<L>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
+    return exact(lhs) / O(exact(rhs));
+  }
+
+  template <typename L, typename O>
+  mln_trait_op_div(O, O)
+  operator/(const Literal<L>& lhs, const Object<O>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
+    return O(exact(lhs)) / exact(rhs);
+  }
+
+  // Op %
+
+  template <typename O, typename L>
+  mln_trait_op_mod(O, O)
+  operator%(const Object<O>& lhs, const Literal<L>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
+    return exact(lhs) % O(exact(rhs));
+  }
+
+  template <typename L, typename O>
+  mln_trait_op_mod(O, O)
+  operator%(const Literal<L>& lhs, const Object<O>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
+    return O(exact(lhs)) % exact(rhs);
+  }
+
+
+  // Op ==
+
+  template <typename O, typename L>
+  mln_trait_op_eq(O, O)
+  operator==(const Object<O>& lhs, const Literal<L>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
     return exact(lhs) == O(exact(rhs));
   }
 
   template <typename L, typename O>
-  bool operator==(const Literal<L>& lhs, const Object<O>& rhs)
+  mln_trait_op_eq(O, O)
+  operator==(const Literal<L>& lhs, const Object<O>& rhs)
   {
+    // mlc_converts_to(L, O)::check();
     return rhs == lhs;
   }
 
   template <typename L1, typename L2>
-  bool operator==(const Literal<L1>&, const Literal<L2>&)
+  bool
+  operator==(const Literal<L1>&, const Literal<L2>&)
   {
-    return false;
-  }
-
-  template <typename L>
-  bool operator==(const Literal<L>&, const Literal<L>&)
-  {
-    return true;
+    return mlc_equal(L1, L2)::value;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

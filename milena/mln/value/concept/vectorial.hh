@@ -40,24 +40,19 @@ namespace mln
 {
 
   // Fwd decl.
-  namespace value
-  {
-    template <typename E> struct Vectorial;
-  }
+  namespace value { template <typename E> struct Vectorial; }
+
 
   namespace trait
   {
 
-    // FIXME
+    // FIXME...
 
   } // end of namespace mln::trait
 
 
   namespace value
   {
-
-    // Fwd decl.
-    template <typename E> struct Vectorial;
 
     // Category flag type.
     template <>
@@ -74,9 +69,6 @@ namespace mln
   } // end of namespace mln::value
 
 } // end of namespace mln
-
-
-# include <mln/value/concept/all.hh>
 
 
 #endif // ! MLN_VALUE_CONCEPT_VECTORIAL_HH

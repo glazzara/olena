@@ -29,17 +29,70 @@
 # define MLN_CORE_OPS_HH
 
 /*! \file mln/core/ops.hh
- * \brief Definitions of some operators.
+ *
+ * \brief Definitions of some default implementations for operators.
+ *
+ * \todo Complete those definitions (...) + Overload for const (?)
  */
 
 # include <mln/core/concept/object.hh>
-# include <mln/core/exact.hh>
-# include <mln/value/builtin.hh>
+# include <mln/metal/converts_to.hh>
 # include <mln/trait/op/all.hh>
+
 
 
 namespace mln
 {
+
+  // Fwd decls.
+  namespace literal { struct zero_t; struct one_t; }
+
+
+  namespace trait
+  {
+
+    // For unary operators.
+
+
+    /// Default definition of op::uplus trait.
+    template <typename O>
+    struct set_unary_< op::uplus, Object,O > { typedef O ret; };
+
+    /// Default definition of op::uminus trait.
+    template <typename O>
+    struct set_unary_< op::uminus, Object,O > { typedef mln_trait_op_minus(O, O) ret; };
+
+    /// Default definition of op::preinc trait.
+    template <typename O>
+    struct set_unary_< op::preinc, Object,O > { typedef O& ret; };
+
+    /// Default definition of op::preinc trait.
+    template <typename O>
+    struct set_unary_< op::predec, Object,O > { typedef O& ret; };
+
+    /// Default definition of op::postinc trait.
+    template <typename O>
+    struct set_unary_< op::postinc, Object,O > { typedef O ret; };
+
+    /// Default definition of op::postinc trait.
+    template <typename O>
+    struct set_unary_< op::postdec, Object,O > { typedef O ret; };
+
+
+
+    // For binary operators.
+
+    template <typename O1, typename O2>
+    struct set_binary_< op::eq, Object,O1, Object,O2 >  { typedef bool ret; };
+
+    template <typename O1, typename O2>
+    struct set_binary_< op::neq, Object,O1, Object,O2 >  { typedef bool ret; };
+
+    // FIXME: Same for the other definitions below...
+
+
+  } // end of mln::trait
+
 
 
   /*! \brief General definition of the "not equal to" operator.
@@ -52,7 +105,8 @@ namespace mln
    * in milena when applying on a couple of mln::Object.
    */
   template <typename O1, typename O2>
-  bool operator!=(const Object<O1>& lhs, const Object<O2>& rhs);
+  mln_trait_op_neq(O1, O2)
+  operator!=(const Object<O1>& lhs, const Object<O2>& rhs);
 
 
   /*! \brief General definition of the "greater than" operator.
@@ -110,106 +164,204 @@ namespace mln
    */
   template <typename O>
   O operator--(Object<O>& rhs, int);
+
+
+  /* \brief Default definition of the pre-incrementation operator.
+   *
+   * It relies on "+ literal::one".
+   */
+  template <typename O>
+  O& operator++(Object<O>& rhs);
+
+
+  /* \brief Default definition of the pre-decrementation operator.
+   *
+   * It relies on "- literal::one".
+   */
+  template <typename O>
+  O& operator--(Object<O>& rhs);
   
 
-  // Operator +.
-
-  // FIXME HERE
-
-//   namespace trait {
-
-//     template < typename L, typename R >
-//     struct set_binary_< op::plus, Built_In, L, Object, R >
-//     {
-//       typedef mln_trait_op_plus(R, L)
-//     };
-
-//   }
-
-  // FIXME: Doc!
+  /* \brief Default definitions of the "unary plus" operator.
+   *
+   * \param[in] rhs An object
+   * \return A copy of \p rhs.
+   */
   template <typename O>
-  mln_trait_op_plus(O, int)
-  operator+(int lhs, const Object<O>& rhs)
-  {
-    return exact(rhs) + lhs;
-  }
+  O operator+(const Object<O>& rhs);
+    
 
-  // FIXME: Doc!
+  /* \brief Default definition of the "unary minus" operator.
+   *
+   * \param[in] rhs An object
+   * \return 0 - \p rhs.
+   *
+   * It relies on "O(literal::zero) - rhs".
+   */
   template <typename O>
-  mln_trait_op_plus(O, unsigned)
-  operator+(unsigned lhs, const Object<O>& rhs)
-  {
-    return exact(rhs) + lhs;
-  }
-
-  // FIXME: Doc!
-  template <typename O>
-  mln_trait_op_plus(O, float)
-  operator+(float lhs, const Object<O>& rhs)
-  {
-    return exact(rhs) + lhs;
-  }
-
-  // FIXME: Doc!
-  template <typename O>
-  mln_trait_op_plus(O, double)
-  operator+(double lhs, const Object<O>& rhs)
-  {
-    return exact(rhs) + lhs;
-  }
+  mln_trait_op_minus(O, O)
+  operator-(const Object<O>& rhs);
 
 
-  // Operator *.
+  /* \brief Default definition of the "plus equal" operator.
+   *
+   * \param[in,out] lhs The target object.
+   * \param[in] rhs The auxiliary object.
+   * \return The target object \p lhs once modified.
+   *
+   * It relies on "lhs = L(lhs) + rhs".
+   */
+  template <typename L, typename R>
+  L&
+  operator+=(Object<L>& lhs, const Object<R>& rhs);
 
-  // FIXME: Doc!
-  template <typename O>
-  mln_trait_op_times(O, unsigned)
-  operator*(unsigned lhs, const Object<O>& rhs)
-  {
-    return exact(rhs) * lhs;
-  }
 
-  // FIXME: Doc!
-  template <typename O>
-  mln_trait_op_times(O, int)
-  operator*(int lhs, const Object<O>& rhs)
-  {
-    // FIXME HERE: Activate: std::cout << "call(int * Object)" << std::endl;
-    // FIXME HERE: Change below to '* value::scalar(lhs)':
-    return exact(rhs) * lhs;
-  }
+  /* \brief Default definition of the "minus equal" operator.
+   *
+   * \param[in,out] lhs The target object.
+   * \param[in] rhs The auxiliary object.
+   * \return The target object \p lhs once modified.
+   *
+   * It relies on "lhs = L(lhs) - rhs".
+   */
+  template <typename L, typename R>
+  L&
+  operator-=(Object<L>& lhs, const Object<R>& rhs);
 
-  // FIXME: Doc!
-  template <typename O>
-  mln_trait_op_times(O, float)
-  operator*(float lhs, const Object<O>& rhs)
-  {
-    return exact(rhs) * lhs;
-  }
 
-  // FIXME: Doc!
-  template <typename O>
-  mln_trait_op_times(O, double)
-  operator*(double lhs, const Object<O>& rhs)
-  {
-    return exact(rhs) * lhs;
-  }
+  /* \brief Default definition of the "times equal" operator.
+   *
+   * \param[in,out] lhs The target object.
+   * \param[in] rhs The auxiliary object.
+   * \return The target object \p lhs once modified.
+   *
+   * It relies on "lhs = L(lhs) * rhs".
+   */
+  template <typename L, typename R>
+  L&
+  operator*=(Object<L>& lhs, const Object<R>& rhs);
 
+
+  /* \brief Default definition of the "div equal" operator.
+   *
+   * \param[in,out] lhs The target object.
+   * \param[in] rhs The auxiliary object.
+   * \return The target object \p lhs once modified.
+   *
+   * It relies on "lhs = L(lhs) / rhs".
+   */
+  template <typename L, typename R>
+  L&
+  operator/=(Object<L>& lhs, const Object<R>& rhs);
+
+
+  /* \brief Default definition of the "mod equal" operator.
+   *
+   * \param[in,out] lhs The target object.
+   * \param[in] rhs The auxiliary object.
+   * \return The target object \p lhs once modified.
+   *
+   * It relies on "lhs = L(lhs) % rhs".
+   */
+  template <typename L, typename R>
+  L&
+  operator%=(Object<L>& lhs, const Object<R>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+  // Plus equal.
+
+  template <typename L, typename R>
+  L&
+  operator+=(Object<L>& lhs, const Object<R>& rhs)
+  {
+    typedef mln_trait_op_plus(L, R) P;
+    mlc_converts_to(P, L)::check();
+    return exact(lhs) = exact(lhs) + exact(rhs);
+  }
+
+  // Minus equal.
+
+  template <typename L, typename R>
+  L&
+  operator-=(Object<L>& lhs, const Object<R>& rhs)
+  {
+    typedef mln_trait_op_minus(L, R) M;
+    mlc_converts_to(M, L)::check();
+    return exact(lhs) = exact(lhs) - exact(rhs);
+  }
+
+  // Times equal.
+
+  template <typename L, typename R>
+  L&
+  operator*=(Object<L>& lhs, const Object<R>& rhs)
+  {
+    typedef mln_trait_op_times(L, R) T;
+    mlc_converts_to(T, L)::check();
+    return exact(lhs) = exact(lhs) * exact(rhs);
+  }
+
+  // Div equal.
+
+  template <typename L, typename R>
+  L&
+  operator/=(Object<L>& lhs, const Object<R>& rhs)
+  {
+    typedef mln_trait_op_div(L, R) D;
+    mlc_converts_to(D, L)::check();
+    return exact(lhs) = exact(lhs) / exact(rhs);
+  }
+
+  // Mod equal.
+
+  template <typename L, typename R>
+  L&
+  operator%=(Object<L>& lhs, const Object<R>& rhs)
+  {
+    typedef mln_trait_op_mod(L, R) M;
+    mlc_converts_to(M, L)::check();
+    return exact(lhs) = exact(lhs) % exact(rhs);
+  }
+
+  // Unary plus.
+
   template <typename O>
-  O operator++(Object<O>& rhs, int)
+  O
+  operator+(const Object<O>& rhs)
+  {
+    return exact(rhs); // Cpy.
+  }
+
+  // Unary minus.
+
+  template <typename O>
+  mln_trait_op_minus(O, O)
+  operator-(const Object<O>& rhs)
+  {
+    mlc_converts_to(literal::zero_t, O)::check();
+    literal::zero_t* p_zero;
+    return O(*p_zero) - exact(rhs);
+  }
+
+  // Post-incrementation.
+
+  template <typename O>
+  O
+  operator++(Object<O>& rhs, int)
   {
     O tmp(exact(rhs)); // Copy.
     ++exact(rhs);      // Pre-inc.
     // FIXME: Activate: mln_postcondition(exact(rhs) == tmp + literal::one);
     return tmp;
   }
+
+  // Post-decrementation.
   
   template <typename O>
-  O operator--(Object<O>& rhs, int)
+  O
+  operator--(Object<O>& rhs, int)
   {
     O tmp(exact(rhs)); // Copy.
     --exact(rhs);      // Pre-dec.
@@ -217,8 +369,33 @@ namespace mln
     return tmp;
   }
 
+  // Pre-decrementation.
+
+  template <typename O>
+  O&
+  operator--(Object<O>& rhs)
+  {
+    literal::one_t* p_one;
+    exact(rhs) -= *p_one;
+    return exact(rhs);
+  }
+
+  // Pre-incrementation.
+
+  template <typename O>
+  O&
+  operator++(Object<O>& rhs)
+  {
+    literal::one_t* p_one;
+    exact(rhs) += *p_one;
+    return exact(rhs);
+  }
+
+  // Not equal to.
+
   template <typename O1, typename O2>
-  bool operator!=(const Object<O1>& lhs, const Object<O2>& rhs)
+  mln_trait_op_neq(O1, O2)
+  operator!=(const Object<O1>& lhs, const Object<O2>& rhs)
   {
     return ! (exact(lhs) == exact(rhs));
   }

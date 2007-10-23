@@ -70,9 +70,6 @@ int main()
   mln_assertion( sub.has  (point2d(2,2)) == false && 
 		 sub.owns_(point2d(2,2)) == false );
 
-
-
-
-  /// Cannot resize a subimage => compilation error.
-  border::resize (sub, new_border);
+  // A subimage has no border so it cannot be resized => we get a compilation error as expected.
+  // border::resize(sub, new_border);
 }

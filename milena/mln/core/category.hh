@@ -29,6 +29,7 @@
 # define MLN_CORE_CATEGORY_HH
 
 /*! \file mln/core/category.hh
+ *
  * \brief Definition of the category holder type.
  */
 

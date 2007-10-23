@@ -96,10 +96,9 @@ namespace mln
       struct sqrt;
 
       template <int n>
-      struct sqrt< int_<n> > : sqrt_int<n>
+      struct sqrt< int_<n> >
       {
-	typedef sqrt_int<n> super_;
-	typedef int_<super_::value> ret;
+	typedef int_< sqrt_int<n>::value > ret;
       };
 
 
