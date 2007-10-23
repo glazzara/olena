@@ -1,5 +1,10 @@
 2007-10-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add a function which transform a tree into an image in sandbox.
+	* abr_to_image.cc: New function abr_to_image.
+
+2007-10-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix display show and add color_pretty version for fllt.
 
 
