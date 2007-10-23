@@ -21,15 +21,15 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  
+// License.  This exception does not however invalidate any other
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
 /*!
  *  \file   tests/abr.cc
- *  
+ *
  *  \brief  test of mln::util::abr
- * 
+ *
  */
 
 #include <mln/util/abr.hh>

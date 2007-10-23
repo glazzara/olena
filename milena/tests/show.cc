@@ -41,6 +41,7 @@
 # include <mln/core/w_window2d_int.hh>
 # include <mln/display/show.hh>
 # include <mln/display/save.hh>
+# include <mln/display/remove.hh>
 # include <mln/display/color_pretty.hh>
 # include <mln/io/ppm/save.hh>
 
@@ -70,4 +71,5 @@ int main()
       display::save (t);
       display::show (t, "xv");
     }
+  display::remove ();
 }

@@ -41,6 +41,7 @@
 # include <mln/core/w_window2d_int.hh>
 # include <mln/display/color_pretty.hh>
 # include <mln/io/ppm/save.hh>
+# include <mln/core/set_p.hh>
 
 
 int main()
@@ -61,8 +62,49 @@ int main()
   // Call chamfer for a distance image.
   image2d<unsigned> tmp = geom::chamfer(input, w_win, max);
 
+  set_p<point2d > s1;
+  set_p<point2d > s2;
+  set_p<point2d > s3;
+
+
+//   typedef image_if_value<image2d<unsigned> > I;
+//   {
+//     I t = inplace (tmp | 4);
+//     mln_piter(image_if_value<image2d<unsigned> >) p (t.domain ());
+//     for_all (p)
+//       s1.insert (p);
+//   }
+
+//  {
+//     I tmp = inplace (tmp | 6);
+//     mln_point(I) p (tmp.domain ());
+//     for_all (p)
+//       s2.insert (p);
+//   }
+
+//   {
+//     I tmp = inplace (tmp | 8);
+//     mln_point(I) p (tmp.domain ());
+//     for_all (p)
+//       s3.insert (p);
+//   }
+
+//   for (int i = 0; i < 100; ++i)
+//     for (int j = 0; j < 100; ++j)
+//       s1.insert(point2d(i, j));
+
+  for (int i = 200; i < 300; ++i)
+    for (int j = 0; j < 100; ++j)
+      s2.insert(point2d(i, j));
+
+  for (int i = 0; i < 100; ++i)
+    for (int j = 200; j < 300; ++j)
+      s3.insert(point2d(i, j));
+
+
+
   // Call color_pretty for sub_image.
-  image2d<value::rgb8> out = display::color_pretty(inplace (tmp | 4));
+  image2d<value::rgb8> out = display::color_pretty_rgb(tmp, s1, s2, s3);
 
   // Save output image from color in out.ppm.
   io::ppm::save(out, "out.ppm");

@@ -40,7 +40,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/paste.hh>
-
+# include <mln/core/set_p.hh>
 
 namespace mln
 {
@@ -51,6 +51,13 @@ namespace mln
     template <typename I>
     typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
     color_pretty(const Image<I>& input_);
+
+    template <typename I>
+    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    color_pretty_rgb(const Image<I>& input_,
+		     const set_p<mln_point(I) >& s1_,
+		     const set_p<mln_point(I) >& s2_,
+		     const set_p<mln_point(I) >& s3_);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -88,8 +95,6 @@ namespace mln
 	image2d<value::rgb8> output(input.domain().bbox());
 	level::fill(output, value::rgb8(255, 0, 0));
 
-// 	/// FIXME by :
-// 	level::paste(input, output);
 	{
 	  mln_piter(I) p(input.domain());
 
@@ -99,6 +104,42 @@ namespace mln
 	return output;
       }
 
+      template <typename I>
+      typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+      color_pretty_rgb(const Image<I>& input_,
+		       const set_p<mln_point(I) >& s1_,
+		       const set_p<mln_point(I) >& s2_,
+		       const set_p<mln_point(I) >& s3_)
+      {
+	const I& input = exact (input_);
+
+	image2d<value::rgb8> output(input.domain().bbox());
+	level::fill(output, value::rgb8(0, 0, 0));
+
+	{
+	  mln_piter(set_p<mln_point(I) >) p(s1_);
+
+	  for_all(p)
+	    output(p).red() = 255;
+	}
+
+	{
+	  mln_piter(set_p<mln_point(I) >) p(s2_);
+
+	  for_all(p)
+	    output(p).green() = 255;
+	}
+
+	{
+	  mln_piter(set_p<mln_point(I) >) p(s3_);
+
+	  for_all(p)
+	    output(p).blue() = 255;
+	}
+	return output;
+      }
+
+
     } // end of namespace mln::display::impl
 
     /// Facade.
@@ -107,6 +148,16 @@ namespace mln
     color_pretty(const Image<I>& input_)
     {
       return impl::color_pretty(input_);
+    }
+
+    template <typename I>
+    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    color_pretty_rgb(const Image<I>& input_,
+		     const set_p<mln_point(I) >& s1_,
+		     const set_p<mln_point(I) >& s2_,
+		     const set_p<mln_point(I) >& s3_)
+    {
+      return impl::color_pretty_rgb(input_, s1_, s2_, s3_);
     }
 
 # endif // !MLN_INCLUDE_ONLY

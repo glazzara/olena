@@ -1,3 +1,20 @@
+2007-10-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix display show and add color_pretty version for fllt.
+
+
+	* mln/display/remove.hh: New function which removes all
+	created file from display::save.
+	* mln/display/show.hh: Update for previous function.
+	* tests/show.cc: Update test for display::remove.
+
+	* mln/display/color_pretty.hh: Add display::color_pretty_rgb for fllt,
+	this function take three v_set and color a new image by these point_set.
+	* tests/color_pretty.cc: Update test for display::color_pretty_rgb.
+
+	* mln/util/abr.hh,
+	* tests/abr.cc: Update typo.
+
 2007-10-22  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Update fllt.

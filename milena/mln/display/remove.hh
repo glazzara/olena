@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DISPLAY_SHOW_HH
-# define MLN_DISPLAY_SHOW_HH
+#ifndef MLN_DISPLAY_REMOVE_HH
+# define MLN_DISPLAY_REMOVE_HH
 
-/*! \file mln/display/show.hh
+/*! \file mln/display/remove.hh
  *
- * \brief Display the temporary image which has just been saved with
- * given viewer (default xv).
+ * \brief Remove all temporary files creat by display::save.
+ *
  */
 
 # include <mln/trait/image_from_mesh.hh>
@@ -47,35 +47,34 @@ namespace mln
   namespace display
   {
 
-    template <typename I>
     void
-    show(const Image<I>& input_, std::string cmd = "xv");
+    remove();
 
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
 
-      template <typename I>
       void
-      show(const Image<I>& input_, std::string cmd)
+      remove()
       {
-	const I& input = exact (input_);
 
-	std::string s = cmd + " " + map_saved_image_tmp_[(void*)input.id_ ()] + " &";
-	system (s.c_str ());
-	s = "sleep 3 && pkill " + cmd;
-	system (s.c_str ());
+	for (std::map<void*, std::string>::const_iterator it = map_saved_image_tmp_.begin ();
+	     it != map_saved_image_tmp_.end ();
+	     ++it)
+	  {
+	    std::string s = "rm -f " + (*it).second;
+	    system (s.c_str ());
+	  }
       }
 
     } // end of namespace mln::display::impl
 
     /// Facade.
-    template <typename I>
     void
-    show(const Image<I>& input_, std::string cmd = "xv")
+    remove()
     {
-      return impl::show(input_, cmd);
+      return impl::remove();
     }
 
 # endif // !MLN_INCLUDE_ONLY
@@ -85,4 +84,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif //  ! MLN_DISPLAY_SHOW_HH
+#endif //  ! MLN_DISPLAY_REMOVE_HH
