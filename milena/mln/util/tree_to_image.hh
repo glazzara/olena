@@ -25,18 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_ABR_TO_IMAGE_HH
-# define MLN_UTIL_ABR_TO_IMAGE_HH
+#ifndef MLN_UTIL_TREE_TO_IMAGE_HH
+# define MLN_UTIL_TREE_TO_IMAGE_HH
 
 /*!
- *  \file   mln/util/abr_to_image.hh
+ *  \file   mln/util/tree_to_image.hh
  *
  *  \brief Definition of function which transform a tree into an
  *  image.
  *
  */
 
-#include <mln/util/abr.hh>
+#include <mln/util/tree.hh>
 
 namespace mln
 {
@@ -46,39 +46,39 @@ namespace mln
 
     template <typename T, typename I>
     void
-    abr_to_image_rec(abr<T>& abr, Image<I>& output_, const mln_value(I) lvl);
+    tree_to_image_rec(tree<T>& tree, Image<I>& output_, const mln_value(I) lvl);
 
     template <typename T, typename I>
     void
-    abr_to_image (abr<T>& abr, Image<I>& output_);
+    tree_to_image (tree<T>& tree, Image<I>& output_);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T, typename I>
     void
-    abr_to_image_rec(abr<T>& abr, Image<I>& output_, const mln_value(I) lvl)
+    tree_to_image_rec(tree<T>& tree, Image<I>& output_, const mln_value(I) lvl)
     {
       I& output = exact(output_);
 
-      mln_piter(T) p(abr.elt_);
+      mln_piter(T) p(tree.elt_);
 
       for_all(p)
 	output(p) = lvl;
 
-       typename std::vector< util::abr<T>* >::const_iterator it = abr.child_.begin();
+      typename std::vector< util::tree<T>* >::const_iterator it = tree.child_.begin();
       for (;
-	   it != abr.child_.end();
+	   it != tree.child_.end();
 	   ++it)
- 	abr_to_image_rec((**it), output, lvl + 1);
+ 	tree_to_image_rec((**it), output, lvl + 1);
     }
 
 
     template <typename T, typename I>
     void
-    abr_to_image (abr<T>& abr, Image<I>& output_)
+    tree_to_image (tree<T>& tree, Image<I>& output_)
     {
       I& output = exact(output_);
-      abr_to_image_rec(abr, output, 1);
+      tree_to_image_rec(tree, output, 1);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -87,4 +87,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // !MLN_UTIL_ABR_TO_IMAGE_HH
+#endif // !MLN_UTIL_TREE_TO_IMAGE_HH

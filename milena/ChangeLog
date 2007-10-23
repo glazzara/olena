@@ -1,3 +1,16 @@
+2007-10-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Rename abr into tree.
+	* mln/util/abr.hh: Remove.
+	* mln/util/abr_to_image.hh: Remove.
+	* mln/util/tree.hh: New.
+	* mln/util/tree_to_image.hh: New.
+	* sandbox/garrigues/fllt.hh: .
+	* tests/abr.cc: Remove.
+	* tests/abr_to_image.cc: Remove.
+	* tests/tree.cc: New.
+	* tests/tree_to_image.cc: New.
+
 2007-10-23  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Update fllt.

@@ -26,13 +26,13 @@
 // Public License.
 
 /*!
- *  \file   tests/abr_to_image.cc
+ *  \file   tests/tree_to_image.cc
  *
- *  \brief  test of mln::util::abr_to_image
+ *  \brief  test of mln::util::tree_to_image
  *
  */
 
-#include <mln/util/abr.hh>
+#include <mln/util/tree.hh>
 #include <mln/core/contract.hh>
 #include <mln/core/image2d.hh>
 #include <mln/core/set_p.hh>
@@ -40,7 +40,7 @@
 #include <mln/level/stretch.hh>
 #include <mln/io/pgm/save.hh>
 #include <vector>
-#include <mln/util/abr_to_image.hh>
+#include <mln/util/tree_to_image.hh>
 
 int main (void)
 {
@@ -82,19 +82,19 @@ int main (void)
     for (int j = 50; j < 60; ++j)
       s6.insert(point2d(i, j));
 
-  util::abr<I> abr(s1);
-  abr.add_child(s2);
-  abr.add_child(s3);
+  util::tree<I> tree(s1);
+  tree.add_child(s2);
+  tree.add_child(s3);
 
-  util::abr<I>* abr2 = abr.search(s2);
-  mln_assertion(abr2);
-  abr2->add_child(s4);
-  abr2->add_child(s5);
-  util::abr<I>* abr3 = abr.search(s4);
-  mln_assertion(abr3);
-  abr3->add_child(s6);
+  util::tree<I>* tree2 = tree.search(s2);
+  mln_assertion(tree2);
+  tree2->add_child(s4);
+  tree2->add_child(s5);
+  util::tree<I>* tree3 = tree.search(s4);
+  mln_assertion(tree3);
+  tree3->add_child(s6);
 
-  util::abr_to_image(abr, output);
+  util::tree_to_image(tree, output);
 
   image2d<int_u8> out(output.domain());
 
@@ -105,6 +105,6 @@ int main (void)
   std::cout << "out.pgm generate"
 	    << std::endl;
 
-//   abr3 = abr2->search(s1);
-//   mln_assertion(!abr3);
+//   tree3 = tree2->search(s1);
+//   mln_assertion(!tree3);
 }

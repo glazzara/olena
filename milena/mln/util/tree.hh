@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_ABR_HH
-# define MLN_UTIL_ABR_HH
+#ifndef MLN_UTIL_TREE_HH
+# define MLN_UTIL_TREE_HH
 
 # include <vector>
 
 /*!
- * \file   mln/util/abr.hh
+ * \file   mln/util/tree.hh
  *
  * \brief  Definition of a generic general tree.
  *
@@ -44,37 +44,37 @@ namespace mln
   {
 
     template <typename T>
-    struct abr
+    struct tree
     {
-      abr();
-      abr(T& elt);
+      tree();
+      tree(T& elt);
 
       T& content();
       const T& content() const;
       void add_child(T& elt);
-      void set_parent(abr<T>* parent);
-      abr<T>* get_parent();
+      void set_parent(tree<T>* parent);
+      tree<T>* get_parent();
       void print_rec(int n) const;
       void print(void) const;
-      int  search_rec(abr<T>** res, T& elt);
-      abr<T>* search(T& elt);
+      int  search_rec(tree<T>** res, T& elt);
+      tree<T>* search(T& elt);
 
       T elt_;
-      abr<T>* parent_;
-      std::vector< abr<T>* > child_;
+      tree<T>* parent_;
+      std::vector< tree<T>* > child_;
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
-    abr<T>::abr()
+    tree<T>::tree()
       : parent_ (0)
     {
     }
 
     template <typename T>
-    abr<T>::abr(T& elt)
+    tree<T>::tree(T& elt)
       : elt_ (elt),
 	parent_ (0)
     {
@@ -82,23 +82,23 @@ namespace mln
 
     template <typename T>
     const T&
-    abr<T>::content() const
+    tree<T>::content() const
     {
       return elt_;
     }
 
     template <typename T>
     T&
-    abr<T>::content()
+    tree<T>::content()
     {
       return elt_;
     }
 
     template <typename T>
     void
-    abr<T>::add_child(T& elt)
+    tree<T>::add_child(T& elt)
     {
-      abr<T>* s = new abr<T>(elt);
+      tree<T>* s = new tree<T>(elt);
 
       s->parent_ = this;
       this->child_.push_back(s);
@@ -106,7 +106,7 @@ namespace mln
 
     template <typename T>
     void
-    abr<T>::set_parent(abr<T>* parent)
+    tree<T>::set_parent(tree<T>* parent)
     {
       mln_assertion(parent != 0);
       parent_ = parent;
@@ -115,15 +115,15 @@ namespace mln
 
 
     template <typename T>
-    abr<T>*
-    abr<T>::get_parent()
+    tree<T>*
+    tree<T>::get_parent()
     {
       return parent_;
     }
 
     template <typename T>
     int
-    abr<T>::search_rec(abr<T>** res, T& elt)
+    tree<T>::search_rec(tree<T>** res, T& elt)
     {
       if (elt == this->elt_)
 	{
@@ -132,7 +132,7 @@ namespace mln
 	}
       else
 	{
-	  for (typename std::vector<abr<T>* >::iterator it = this->child_.begin();
+	  for (typename std::vector<tree<T>* >::iterator it = this->child_.begin();
 	       it != this->child_.end(); ++it)
 	    {
 	      if ((**it).search_rec(res, elt))
@@ -143,10 +143,10 @@ namespace mln
     }
 
     template <typename T>
-    abr<T>*
-    abr<T>::search(T& elt)
+    tree<T>*
+    tree<T>::search(T& elt)
     {
-      abr<T>* res = 0;
+      tree<T>* res = 0;
 
       if (search_rec(&res, elt))
 	return res;
@@ -161,4 +161,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // !MLN_UTIL_ABR_HH
+#endif // !MLN_UTIL_TREE_HH

@@ -26,13 +26,13 @@
 // Public License.
 
 /*!
- *  \file   tests/abr.cc
+ *  \file   tests/tree.cc
  *
- *  \brief  test of mln::util::abr
+ *  \brief  test of mln::util::tree
  *
  */
 
-#include <mln/util/abr.hh>
+#include <mln/util/tree.hh>
 #include <mln/core/contract.hh>
 
 int main (void)
@@ -45,15 +45,15 @@ int main (void)
   unsigned elt4 = 4;
   unsigned elt5 = 5;
 
-  util::abr<unsigned> abr(elt1);
-  abr.add_child(elt2);
-  abr.add_child(elt3);
-  util::abr<unsigned>* abr2 = abr.search(elt2);
-  mln_assertion(abr2);
-  abr2->add_child(elt4);
-  abr2->add_child(elt5);
-  util::abr<unsigned>* abr3 = abr.search(elt4);
-  mln_assertion(abr3);
-  abr3 = abr2->search(elt1);
-  mln_assertion(!abr3);
+  util::tree<unsigned> tree(elt1);
+  tree.add_child(elt2);
+  tree.add_child(elt3);
+  util::tree<unsigned>* tree2 = tree.search(elt2);
+  mln_assertion(tree2);
+  tree2->add_child(elt4);
+  tree2->add_child(elt5);
+  util::tree<unsigned>* tree3 = tree.search(elt4);
+  mln_assertion(tree3);
+  tree3 = tree2->search(elt1);
+  mln_assertion(!tree3);
 }

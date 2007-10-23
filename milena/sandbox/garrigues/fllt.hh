@@ -57,7 +57,7 @@
 # include <mln/set/diff.hh>
 # include <mln/set/inter.hh>
 
-# include <mln/util/abr.hh>
+# include <mln/util/tree.hh>
 
 # include <mln/labeling/regional_minima.hh>
 # include <mln/labeling/level.hh>
@@ -78,7 +78,7 @@ namespace mln
       set_p<P> holes;
     };
 
-    # define fllt_node(P)  util::abr< fllt_node<P> >
+    # define fllt_node(P)  util::tree< fllt_node<P> >
 
 
     //   LOWER LEVEL SET : region = c4, border = c8
