@@ -51,15 +51,15 @@ namespace mln
 
     /// Convert a neighborhood \p nbh into a point set.
     template <typename N>
-    set_p<mln_point(N)> to_window(const Neighborhood<N>& nbh);
+    set_p<mln_point(N)> to_set_p(const Neighborhood<N>& nbh);
 
     /// Convert a binary image \p ima into a point set.
     template <typename I>
     set_p<mln_point(I)> to_set_p(const Image<I>& ima);
 
     /// Convert a Window \p win into a point set.
-    template <typename P>
-    set_p<P> to_set_p(const Window<mln_dpoint(P)> win);
+    template <typename W>
+    set_p<mln_point(W)> to_set_p(const Window<W>& win);
 
     /// Convert an std::set \p s of points into a point set.
     template <typename D>
@@ -77,7 +77,7 @@ namespace mln
       set_p<P> pset;
       mln_niter(N) n(nbh, P::origin);
       for_all(n)
-	pset.insert(n - P::origin);
+	pset.insert(n);
       return pset;
     }
 
@@ -93,18 +93,19 @@ namespace mln
       mln_piter(I) p(ima.domain());
       for_all(p)
 	if (ima(p))
-	  pset.insert(p - P::origin);
+	  pset.insert(p);
       return pset;
     }
 
-    template <typename P>
-    set_p<P> to_set_p(const Window<mln_dpoint(P)>& win)
+    template <typename W>
+    set_p<mln_point(W)> to_set_p(const Window<W>& win)
     {
-      typedef mln_dpoint(P) D;
+      typedef mln_dpoint(W) D;
+      typedef mln_point(W) P;
       set_p<P> pset;
-      mln_qiter(D) q(exact(win), P::origin);
+      mln_qiter(W) q(exact(win), P::origin);
       for_all(q)
-	pset.insert(q - P::origin);
+	pset.insert(q);
       return pset;
     }
 

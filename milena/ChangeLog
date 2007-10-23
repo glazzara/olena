@@ -1,3 +1,10 @@
+2007-10-23  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix convert_to_set_p and add tests.
+	* mln/convert/to_set_p.hh: Fix.
+	* tests/convert_to_set_p.cc: New.
+	* tests/convert_to_window.cc: New.
+
 2007-10-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add a function which transform a tree into an image in sandbox.
