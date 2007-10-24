@@ -179,7 +179,7 @@ namespace mln
       mln_piter(set_p<P>) qa(A);
       for_all(qa)
 	{
-	  mln_niter(neighb2d) n(F::region_neighb(), qa);
+	  mln_niter(neighb2d) n(F::reg_nbh(), qa);
 	  for_all (n)
 	    if (!R.has (n))
 	      N.insert (n);
@@ -257,7 +257,7 @@ namespace mln
       level::fill(border_ima, false);
       level::fill(inplace(border_ima | N), true);
       unsigned n;
-      labeling::level(border_ima, true, F::border_neighb(), tmp, n);
+      labeling::level(border_ima, true, F::bdr_nbh(), tmp, n);
 
       //     debug::println(border_ima);
       std::cout << "nb composantes :" << n << std::endl;
@@ -267,7 +267,7 @@ namespace mln
       {
 
 	//   IF number of conected components of the border > 1
-	for (int i = 2; i < n; i++)
+	for (int i = 2; i <= n; i++)
 	{
 	  //       follow each border to find which is the exterior border
 	  //       and which are the holes. Keep one pixel of each holes.
@@ -390,7 +390,7 @@ namespace mln
 
       // Get the locals extremums
       unsigned nlabels;
-      F::regional_extremum(ima, F::region_neighb(), min_locals, nlabels);
+      F::regional_extremum(ima, F::reg_nbh(), min_locals, nlabels);
 
       debug::println(min_locals);
       debug::println(min_locals | (pw::value(min_locals) > pw::cst(0)));
@@ -469,8 +469,8 @@ namespace mln
 
       typedef accu::min accu_for_gn;
 
-      static const neighb2d& border_neighb() { return c8(); }
-      static const neighb2d& region_neighb() { return c4(); }
+      static const neighb2d& bdr_nbh() { return c8(); }
+      static const neighb2d& reg_nbh() { return c4(); }
     };
 
 
@@ -497,8 +497,8 @@ namespace mln
       static const int inc = -1;
       typedef accu::max accu_for_gn;
 
-      static const neighb2d& border_neighb() { return c4(); }
-      static const neighb2d& region_neighb() { return c8(); }
+      static const neighb2d& bdr_nbh() { return c4(); }
+      static const neighb2d& reg_nbh() { return c8(); }
     };
 
     template <typename P>

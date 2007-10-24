@@ -1,3 +1,11 @@
+2007-10-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update fllt.
+
+	* sandbox/garrigues/fllt.hh: (border_neighb and region_neighb) Rename
+          as...
+	  (border_neighb and region_neighb) ...this.
+
 2007-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make metal vec and mat work with traits and scalars.
