@@ -34,20 +34,20 @@
 #include <mln/value/int_u8.hh>
 
 
+struct nu {};
+
 int main()
 {
   using namespace mln;
 
-  metal::vec<3,int> v_int = make::vec(3,6,7);
+  metal::vec<3,int> v_int = make::vec(3, 6, 7);
   metal::vec<3,float> v_f = make::vec(2.6, 1.9, 5.2);
 
-  std::cout << v_int + v_f << std::endl;
-  std::cout << v_f / 3 << std::endl;
+  mln_assertion((v_int + v_f) == ((v_f + v_int)));
+  mln_assertion((v_f / 3) == ((3 * v_f) / 9));
 
-  {
-//     value::int_u8 i = 3;
-//     std::cout << value::scalar(i) * v_f << std::endl;
-    // FIXME: Read FIXME in metal::vec::operator* and set up a test!
-  }
+  value::int_u8 i = 3;
+  mln_assertion((i * v_f) == (value::scalar(i) * v_f));
 
+  mln_assertion((literal::zero + v_f) == v_f);
 }

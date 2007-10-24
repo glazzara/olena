@@ -284,7 +284,7 @@ namespace mln
     struct set_unary_< Name,
 		       mln::value::Built_In, B >
     {
-      typedef B ret; // FIXME: Wrong!
+      typedef B ret; // FIXME: Wrong because some types are unsigned!
     };
 
 
@@ -363,7 +363,6 @@ namespace mln
     {
       typedef mln_trait_op_mod(mln::value::scalar_<B>, O) ret;
     };
-
 
   } // end of namespace mln::trait
 

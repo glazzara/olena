@@ -59,6 +59,12 @@ namespace mln
   {
 
     template <unsigned n>
+    struct set_precise_unary_< op::uminus, mln::value::int_u<n> >
+    {
+      typedef int ret;
+    };
+
+    template <unsigned n>
     struct value_< mln::value::int_u<n> > : mln::trait::value_integer_<n>
     {
     };

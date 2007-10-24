@@ -178,9 +178,8 @@ namespace mln
     void plus_cst(const Image<I>& input, const V& val, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::plus_(mln_trait_image_speed(I)(), exact(input),
-		  trait::image::speed::any(), pw::cst(val) | exact(input).domain(),
-		  mln_trait_image_speed(O)(), exact(output)); // Calls the previous version.
+      plus(input, pw::cst(val) | exact(input).domain(), output);
+      // Calls the previous version.
     }
 
     template <typename L, typename R>

@@ -37,9 +37,14 @@
 # include <mln/value/builtin/all.hh>
 # include <mln/value/concept/all.hh>
 # include <mln/value/equiv.hh>
+# include <mln/value/props.hh>
 # include <mln/literal/zero.hh>
 # include <mln/literal/one.hh>
+# include <mln/literal/ops.hh>
 # include <mln/metal/ret.hh>
+
+
+# define mln_sum_x(T, U) typename mln::value::props< mln_trait_op_times(T,U) >::sum
 
 
 
@@ -62,13 +67,44 @@ namespace mln
       typedef mln_trait_unary(Name, mln_value_equiv(V)) ret;
     };
 
-    // Binary traits for any Scalar type.
+
+    // Binary traits for any Scalar type...
 
     template < template <class, class> class Name,
 	       typename Vl, typename Vr >
     struct set_binary_< Name, mln::value::Scalar, Vl, mln::value::Scalar, Vr >
     {
       typedef mln_trait_binary(Name, mln_value_equiv(Vl), mln_value_equiv(Vr)) ret;
+    };
+
+    // ...and for the special case of a couple of value::scalar_.
+
+    template < template <class, class> class Name,
+	       typename Sl, typename Sr >
+    struct set_binary_< Name,
+			mln::value::Scalar, mln::value::scalar_<Sl>,
+			mln::value::Scalar, mln::value::scalar_<Sr> >
+    {
+      typedef mln_trait_binary(Name, mln_value_equiv(Sl), mln_value_equiv(Sr)) ret;
+    };
+
+
+    // Some binary traits for "scalar(s) OP obj" when OP commutes => "obj OP scalar(s)".
+
+    template < typename S, typename O >
+    struct set_binary_< op::plus,
+			mln::value::Scalar, mln::value::scalar_<S>,
+			mln::Object,        O >
+    {
+      typedef mln_trait_op_plus(O, mln::value::scalar_<S>) ret;
+    };
+
+    template < typename S, typename O >
+    struct set_binary_< op::times,
+			mln::value::Scalar, mln::value::scalar_<S>,
+			mln::Object,        O >
+    {
+      typedef mln_trait_op_times(O, mln::value::scalar_<S>) ret;
     };
 
   } // end of namespace mln::trait
@@ -97,6 +133,16 @@ namespace mln
     operator % (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs);
 
 
+
+  template <typename S, typename O>
+  mln_trait_op_plus(O, value::scalar_<S>)
+    operator + (const value::scalar_<S>& lhs, const Object<O>& rhs);
+
+  template <typename S, typename O>
+  mln_trait_op_times(O, value::scalar_<S>)
+    operator * (const value::scalar_<S>& lhs, const Object<O>& rhs);
+
+
   // Arithmetical unary operators.
 
   template <typename S>
@@ -110,6 +156,29 @@ namespace mln
 
   // FIXME: ...
 
+
+
+  // Case of value::scalar_ OP value::scalar_.
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_plus(Sl, Sr)
+    operator + (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs);
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_minus(Sl, Sr)
+    operator - (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs);
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_times(Sl, Sr)
+    operator * (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs);
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_div(Sl, Sr)
+    operator / (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs);
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_mod(Sl, Sr)
+    operator % (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs);
 
 
 
@@ -131,30 +200,84 @@ namespace mln
 
   template <typename Vl, typename Vr>
   mln_trait_op_times(Vl, Vr)
-    operator * (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
+  operator * (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
     return value::equiv(lhs) * value::equiv(rhs);
   }
 
   template <typename Vl, typename Vr>
   mln_trait_op_div(Vl, Vr)
-    operator / (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
+  operator / (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
     return value::equiv(lhs) / value::equiv(rhs);
   }
 
   template <typename Vl, typename Vr>
   mln_trait_op_mod(Vl, Vr)
-    operator % (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
+  operator % (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
     return value::equiv(lhs) % value::equiv(rhs);
   }
 
   template <typename S>
   mln_trait_op_uminus(S)
-    operator - (const value::scalar_<S>& rhs)
+  operator - (const value::scalar_<S>& rhs)
   {
     return - rhs.to_equiv();
+  }
+
+  template <typename S, typename O>
+  mln_trait_op_plus(O, value::scalar_<S>)
+  operator + (const value::scalar_<S>& lhs, const Object<O>& rhs)
+  {
+    return exact(rhs) + lhs;
+  }
+
+  template <typename S, typename O>
+  mln_trait_op_times(O, value::scalar_<S>)
+  operator * (const value::scalar_<S>& lhs, const Object<O>& rhs)
+  {
+    return exact(rhs) * lhs;
+  }
+
+  // ...
+
+
+  // With scalar_ OP scalar_.
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_plus(Sl, Sr)
+  operator + (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
+  {
+    return value::equiv(lhs) + value::equiv(rhs);
+  }
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_minus(Sl, Sr)
+  operator - (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
+  {
+    return value::equiv(lhs) - value::equiv(rhs);
+  }
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_times(Sl, Sr)
+  operator * (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
+  {
+    return value::equiv(lhs) * value::equiv(rhs);
+  }
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_div(Sl, Sr)
+  operator / (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
+  {
+    return value::equiv(lhs) / value::equiv(rhs);
+  }
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_mod(Sl, Sr)
+  operator % (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
+  {
+    return value::equiv(lhs) % value::equiv(rhs);
   }
 
   // ...

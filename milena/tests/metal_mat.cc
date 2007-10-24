@@ -31,23 +31,63 @@
  */
 
 #include <mln/metal/mat.hh>
+#include <mln/value/int_u8.hh>
+
 
 int main()
 {
   using namespace mln;
 
-  const int
-    tab1[18] = {3, 6, 5, 2, 4, 8,
-		5, 7, 4, 6, 9, 2,
-		2, 7, 1, 1, 5, 3},
-    tab2[6]  = {2, 5, 1, 0, 7, 2},
-    tab3[6]  = {3, 1, 6, 2, 1, 0};
+  // FIXME: A test should not print!
 
-  metal::mat<3,6,int> mat36   = make::mat<3,6,18>(tab1);
-  metal::mat<2,3,int> mat23_1 = make::mat<2,3,6>(tab2);
-  metal::mat<2,3,int> mat23_2 = make::mat<2,3,6>(tab3);
+  //   const int
+  //     tab1[18] = {3, 6, 5, 2, 4, 8,
+  // 		5, 7, 4, 6, 9, 2,
+  // 		2, 7, 1, 1, 5, 3},
+  //     tab2[6]  = {2, 5, 1, 0, 7, 2},
+  //     tab3[6]  = {3, 1, 6, 2, 1, 0};
 
-  metal::mat<2,3,float> mat23_3 = mat23_1 - mat23_2;
+  //   metal::mat<3,6,int> mat36   = make::mat<3,6,18>(tab1);
+  //   metal::mat<2,3,int> mat23_1 = make::mat<2,3,6>(tab2);
+  //   metal::mat<2,3,int> mat23_2 = make::mat<2,3,6>(tab3);
 
-  std::cout << mat23_3 << std::endl << mat23_3 * mat36 << std::endl;
+  //   metal::mat<2,3,float> mat23_3 = mat23_1 - mat23_2;
+
+  //   std::cout << mat23_3 << std::endl << mat23_3 * mat36 << std::endl;
+
+  using metal::vec;
+  vec<2,int> v = make::vec(5,1);
+
+  using metal::mat;
+  mat<2,2, vec<2,int> > mv;
+  mv.set_all(v);
+  // std::cout << mv << std::endl;
+
+  {
+    mat<2,2,float> tmp = mv * mv;
+    // std::cout << tmp << std::endl;
+    tmp(0,0) = 0;
+  }
+  {
+    vec<2, vec<2,float> > tmp = mv * v;
+    // std::cout << (mv * v) << std::endl;
+    tmp[0] = v;
+  }
+  {
+    mat<2,2,float> tmp = value::scalar(v) * mv;
+    // std::cout << (value::scalar(v) * mv) << std::endl;
+    tmp(0,0) = 0;
+  }
+  {
+    vec<2, mat<2,2, vec<2,float> > > tmp = v * value::scalar(mv);
+    // std::cout << (v * value::scalar(mv)) << std::endl;
+    tmp[0](0,0) = v;
+  }
+  {
+    value::int_u8 i = 0;
+    mat<2,2, vec<2,int> > tmp = mv * i;
+    // std::cout << mv * i << std::endl;
+    tmp(0,0) = v;
+  }
+
 }

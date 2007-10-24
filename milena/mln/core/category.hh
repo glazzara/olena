@@ -64,6 +64,11 @@ namespace mln
     typedef typename T::category ret; // FIXME: if found or Unknown<void> => write a meta-program...
   };
 
+  template <typename T>
+  struct category< const T >
+  {
+    typedef typename category<T>::ret ret;
+  };
 
 } // end of namespace mln
 

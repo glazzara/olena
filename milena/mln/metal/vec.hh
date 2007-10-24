@@ -177,8 +177,6 @@ namespace mln
 
       void set_all(const T& val);
 
-      T sprod(const vec<n, T>& rhs) const; // FIXME: Return is not T.
-
       unsigned size() const;
 
       const vec<n, T>& normalize();
@@ -222,6 +220,14 @@ namespace mln
       typedef metal::vec<n, V> ret;
     };
 
+    template < unsigned n, typename T,
+	       typename U >
+    struct set_precise_binary_< op::times,
+				metal::vec<n, T>, metal::vec<n, U> >
+    {
+      typedef mln_sum_x(T,U) ret;
+    };
+
     template < template <class, class> class Name,
 	       unsigned n, typename T,
 	       typename S >
@@ -232,8 +238,16 @@ namespace mln
       typedef metal::vec<n, V> ret;
     };
 
-    // FIXME: What about scalar * vec!!!
-
+    template < template<class, class> class Name,
+	       unsigned n, typename T,
+	       typename S >
+    struct set_binary_< Name,
+			mln::Object, metal::vec<n, T>,
+			mln::value::Scalar, S >
+    {
+      typedef mln_trait_binary(Name, T, S) V;
+      typedef metal::vec<n, V> ret;
+    };
 
   } // end of namespace mln::trait
 
@@ -274,17 +288,19 @@ namespace mln
     vec<n, mln_trait_op_minus(T,U)>
     operator-(const vec<n,T>& lhs, const vec<n,U>& rhs);
 
-//     template <unsigned n, typename T>
-//     vec<n, mln_trait_op_uminus(T)>
-//     operator-(const vec<n,T>& lhs);
+    // vec * vec
 
-    // *
+    template <unsigned n, typename T, typename U>
+    mln_sum_x(T,U)
+    operator*(const vec<n,T>& lhs, const vec<n,U>& rhs);
+
+    // vec * s
 
     template <unsigned n, typename T, typename S>
     vec<n, mln_trait_op_times(T, S)>
     operator*(const vec<n,T>& lhs, const mln::value::scalar_<S>& s);
 
-    // /
+    // vec / s
 
     template <unsigned n, typename T, typename S>
     vec<n, mln_trait_op_div(T, S)>
@@ -372,16 +388,6 @@ namespace mln
     }
 
     template <unsigned n, typename T>
-    T vec<n,T>::sprod(const vec<n, T>& rhs) const
-    {
-      T tmp = 0;
-
-      for (unsigned i = 0; i < n; ++i)
-	tmp += data_[i] * rhs.data_[i];
-      return tmp;
-    }
-
-    template <unsigned n, typename T>
     unsigned vec<n,T>::size() const
     {
       return n;
@@ -417,7 +423,8 @@ namespace mln
     const vec<n, T> vec<n, T>::origin = all_to(0);
 
 
-    // eq
+    // Operators.
+
 
     template <unsigned n, typename T, typename U>
     bool operator==(const vec<n,T>& lhs, const vec<n,U>& rhs)
@@ -428,7 +435,6 @@ namespace mln
       return true;
     }
 
-    // +
 
     template <unsigned n, typename T, typename U>
     vec<n, mln_trait_op_plus(T,U)>
@@ -440,8 +446,6 @@ namespace mln
       return tmp;
     }
 
-    // -
-
     template <unsigned n, typename T, typename U>
     vec<n, mln_trait_op_minus(T,U)>
     operator-(const vec<n,T>& lhs, const vec<n,U>& rhs)
@@ -452,7 +456,16 @@ namespace mln
       return tmp;
     }
 
-    // *
+    template <unsigned n, typename T, typename U>
+    mln_sum_x(T,U)
+    operator*(const vec<n,T>& lhs, const vec<n,U>& rhs)
+    {
+      mln_sum_x(T,U) tmp(literal::zero);
+      for (unsigned i = 0; i < n; ++i)
+	tmp += lhs[i] * rhs[i];
+      return tmp;
+    }
+
 
     template <unsigned n, typename T, typename S>
     vec<n, mln_trait_op_times(T, S)>
@@ -474,8 +487,6 @@ namespace mln
       return tmp;
     }
 
-    // /
-
     template <unsigned n, typename T, typename S>
     vec<n, mln_trait_op_div(T, S)>
     operator/(const vec<n,T>& lhs, const mln::value::scalar_<S>& s)
@@ -487,7 +498,6 @@ namespace mln
       return tmp;
     }
 
-    // <<
 
     template <unsigned n, typename T>
     std::ostream&

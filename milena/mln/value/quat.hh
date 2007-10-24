@@ -335,7 +335,7 @@ namespace mln
     float
     quat::sprod(const quat& rhs) const
     {
-      return v_.sprod(rhs.to_vec());
+      return v_ * rhs.to_vec();
     }
 
     bool quat::is_unit() const
@@ -443,7 +443,7 @@ namespace mln
 
     quat operator*(const quat& lhs, const quat& rhs)
     {
-      quat tmp(lhs.s() * rhs.s() - lhs.v().sprod(rhs.v()),
+      quat tmp(lhs.s() * rhs.s() - lhs.v() * rhs.v(),
 	       metal::vprod(lhs.v(), rhs.v()) + lhs.s() * rhs.v() + rhs.s() * lhs.v());
       return tmp;
     }

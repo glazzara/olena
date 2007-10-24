@@ -1,3 +1,27 @@
+2007-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make metal vec and mat work with traits and scalars.
+
+	* tests/metal_mat.cc: Inactivate "non" tests.
+	Augment.
+	* tests/metal_vec.cc: Augment.
+	* tests/value_int_u8.cc: Conform to style.
+	* mln/trait/op/eq.hh: Remove dead code.
+	* mln/core/category.hh: Add const version.
+	* mln/core/h_vec.hh: Add traits.
+	* mln/core/ops.hh: Handle const types in traits.
+	* mln/literal/ops.hh: Add traits.
+	* mln/metal/mat.hh: Fix.
+	* mln/metal/vec.hh (sprod): Replace by...
+	(operator*): ...this new operator.
+	* mln/arith/plus.hh (plus_cst): Simplify.
+	* mln/value/ops.hh: Add traits for scalar_.
+	* mln/value/quat.hh: Update.
+	* mln/value/int_u.hh (uminus): New trait.
+	* mln/value/int_u_sat.hh: Fix ctor.
+	* mln/value/builtin/ops.hh: Enhance FIXME txt.
+	* mln/morpho/includes.hh: Update.
+
 2007-10-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Update fllt.

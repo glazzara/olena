@@ -33,6 +33,7 @@
 #include <mln/value/int_u8.hh>
 #include <tests/value_macros.hh>
 
+
 int main()
 {
   using namespace mln;

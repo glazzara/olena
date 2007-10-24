@@ -39,6 +39,49 @@
 namespace mln
 {
 
+  // Fwd decl.
+  template <unsigned d, typename C> struct h_vec;
+
+
+
+  namespace trait
+  {
+
+    // For unary traits.
+
+    template < template <class> class Name,
+	       unsigned d, typename C >
+    struct set_precise_unary_< Name, h_vec<d, C> >
+    {
+      typedef mln_trait_unary(Name, C) V;
+      typedef h_vec<d, V> ret;
+    };
+
+    // For binary traits.
+
+    template < template <class, class> class Name,
+	       unsigned d, typename C,
+	       typename Q >
+    struct set_precise_binary_< Name,
+				h_vec<d, C>, h_vec<d, Q> >
+    {
+      typedef mln_trait_binary(Name, C, Q) V;
+      typedef h_vec<d, V> ret;
+    };
+
+    template < template <class, class> class Name,
+	       unsigned d, typename C,
+	       typename S >
+    struct set_precise_binary_< Name,
+				h_vec<d, C>, mln::value::scalar_<S> >
+    {
+      typedef mln_trait_binary(Name, C, S) V;
+      typedef h_vec<d, V> ret;
+    };
+
+  } // end of namespace mln::trait
+
+
 
   template <unsigned d, typename C>
   struct h_vec : public metal::vec<d + 1, C>

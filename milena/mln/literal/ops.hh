@@ -29,7 +29,9 @@
 # define MLN_LITERAL_OPS_HH
 
 /*! \file mln/literal/ops.hh
- * \brief Definitions of some operators.
+ *
+ * \brief Definitions of some operators where at least one literal is
+ * involved.
  */
 
 # include <mln/core/concept/literal.hh>
@@ -41,6 +43,39 @@
 
 namespace mln
 {
+
+
+  namespace trait
+  {
+
+    template < template <class, class> class Name,
+	       typename L, typename O >
+    struct set_binary_< Name, mln::Literal, L, mln::Object, O >
+    {
+      typedef mln_trait_binary(Name, O, O) ret;
+    };
+
+    template < template <class, class> class Name,
+	       typename O, typename L >
+    struct set_binary_< Name, mln::Object, O, mln::Literal, L >
+    {
+      typedef mln_trait_binary(Name, O, O) ret;
+    };
+
+    template < typename L1, typename L2 >
+    struct set_binary_< op::eq, mln::Literal, L1, mln::Literal, L2 >
+    {
+      typedef bool ret;
+    };
+
+    template < typename L1, typename L2 >
+    struct set_binary_< op::neq, mln::Literal, L1, mln::Literal, L2 >
+    {
+      typedef bool ret;
+    };
+
+  } // end of namespace mln::trait
+
 
   // Arithmetical operators.
 
@@ -214,7 +249,7 @@ namespace mln
   operator==(const Literal<L>& lhs, const Object<O>& rhs)
   {
     // mlc_converts_to(L, O)::check();
-    return rhs == lhs;
+    return O(exact(lhs)) == exact(rhs);
   }
 
   template <typename L1, typename L2>

@@ -38,6 +38,8 @@
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/neighborhood.hh>
 
+# include <mln/value/ops.hh>
+
 # include <mln/accu/min.hh>
 # include <mln/accu/max.hh>
 # include <mln/accu/min_h.hh>

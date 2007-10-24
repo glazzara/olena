@@ -91,6 +91,38 @@ namespace mln
     // FIXME: Same for the other definitions below...
 
 
+
+    // Case of "const" in types.
+
+    template< template <class> class Name,
+	      typename O >
+    struct set_precise_unary_< Name, const O >
+    {
+      typedef mln_trait_unary(Name, O) ret;
+    };
+
+    template< template <class,class> class Name,
+	      typename O1, typename O2 >
+    struct set_precise_binary_< Name, O1, const O2 >
+    {
+      typedef mln_trait_binary(Name, O1, O2) ret;
+    };
+
+    template< template <class,class> class Name,
+	      typename O1, typename O2 >
+    struct set_precise_binary_< Name, const O1, O2 >
+    {
+      typedef mln_trait_binary(Name, O1, O2) ret;
+    };
+
+    template< template <class,class> class Name,
+	      typename O1, typename O2 >
+    struct set_precise_binary_< Name, const O1, const O2 >
+    {
+      typedef mln_trait_binary(Name, O1, O2) ret;
+    };
+
+
   } // end of mln::trait
 
 

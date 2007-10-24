@@ -100,69 +100,66 @@ namespace mln
   namespace trait
   {
 
-    // promote
+    // Unarys.
 
-    template <unsigned n, unsigned m, typename T, typename U>
-    struct set_precise_binary_<promote, metal::mat<n,m, T>, metal::mat<n,m, U> >
+    template < template<class> class Name,
+	       unsigned n, unsigned m, typename T >
+    struct set_precise_unary_< Name, metal::mat<n,m,T> >
     {
-      typedef metal::mat<n,m, mln_trait_promote(T, U)> ret;
+      typedef metal::mat<n, m, mln_trait_unary(Name, T)> ret;
     };
 
+    // Default for binarys; works for (+), (-), comparisons, and promote.
 
-    // mat + mat
-
-    template <unsigned n, unsigned m, typename T,
-	      typename U>
-    struct set_precise_binary_<op::plus, metal::mat<n, m, T>, metal::mat<n, m, U> >
+    template < template<class, class> class Name,
+	       unsigned n, unsigned m, typename T, typename U>
+    struct set_precise_binary_< Name, metal::mat<n,m,T>, metal::mat<n,m,U> >
     {
-      typedef metal::mat<n, m, mln_trait_op_plus(T, U)> ret;
-    };
-
-    // FIXME: + mat
-
-    // mat - mat
-
-    template <unsigned n, unsigned m, typename T,
-	      typename U>
-    struct set_precise_binary_<op::minus, metal::mat<n, m, T>, metal::mat<n, m, U> >
-    {
-      typedef metal::mat<n, m, mln_trait_op_minus(T, U)> ret;
-    };
-
-    // - mat
-
-    template <unsigned n, unsigned m, typename T>
-    struct set_precise_unary_<op::uminus, metal::mat<n, m, T> >
-    {
-      typedef metal::mat<n, m, mln_trait_op_uminus(T)> ret;
+      typedef metal::mat<n, m, mln_trait_binary(Name, T, U)> ret;
     };
 
     // mat * mat
 
-    template <unsigned n, unsigned o, typename T,
-	      unsigned m, typename U>
-    struct set_precise_binary_<op::times, metal::mat<n,o,T>, metal::mat<o,m,U> >
+    template < unsigned n, unsigned o, typename T,
+	       unsigned m, typename U >
+    struct set_precise_binary_< op::times, metal::mat<n,o,T>, metal::mat<o,m,U> >
     {
-      typedef metal::mat< n, m, mln_trait_op_times(T,U) > ret;
+      typedef metal::mat<n, m, mln_sum_x(T, U)> ret;
+    };
+
+    template < unsigned n, typename T, typename U >
+    struct set_precise_binary_< op::times, metal::mat<n,n,T>, metal::mat<n,n,U> >
+    { // Disambiguate between both previous defs.
+      typedef metal::mat<n, n, mln_sum_x(T, U)> ret;
     };
 
     // mat * vec
 
-    template <unsigned n, unsigned m, typename T,
-	      typename U>
-    struct set_precise_binary_<op::times, metal::mat<n,m,T>, metal::vec<m,U> >
+    template < unsigned n, unsigned m, typename T,
+	       typename U >
+    struct set_precise_binary_< op::times, metal::mat<n,m,T>, metal::vec<m,U> >
     {
-      typedef mln_trait_op_times(T,U) TxU;
-      typedef metal::vec< m, mln_sum(TxU) > ret;
+      typedef metal::vec<n, mln_sum_x(T, U)> ret;
     };
 
     // mat * s
 
-    template <unsigned n, unsigned m, typename T,
-	      typename S>
-    struct set_precise_binary_<op::times, metal::mat<n,m,T>, S >
+    template < template<class, class> class Name,
+	       unsigned n, unsigned m, typename T,
+	       typename S >
+    struct set_precise_binary_< Name, metal::mat<n,m,T>, mln::value::scalar_<S> >
     {
-      typedef metal::mat< n, m, mln_trait_op_times(T,S) > ret;
+      typedef metal::mat<n, m, mln_trait_binary(Name, T, S)> ret;
+    };
+
+    template < template<class, class> class Name,
+	       unsigned n, unsigned m, typename T,
+	       typename S >
+    struct set_binary_< Name,
+			mln::Object, metal::mat<n,m,T>,
+			mln::value::Scalar, S >
+    {
+      typedef metal::mat<n, m, mln_trait_binary(Name, T, S)> ret;
     };
 
   } // end of namespace mln::trait
@@ -187,31 +184,19 @@ namespace mln
   namespace metal
   {
 
-    // eq
+    // ==
 
     template <unsigned n, unsigned m, typename T, typename U>
     bool
-    operator==(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
+    operator==(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
 
-    // +=
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,T>&
-    operator+=(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
-
-    // + (binary)
+    // +
 
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n, m, mln_trait_op_plus(T,U)>
     operator+(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
 
-    // -=
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,T>&
-    operator-=(mat<n,m,T>& lhs, const mat<n,m,U>& rhs);
-
-    // - (binary)
+    // -
 
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n, m, mln_trait_op_minus(T,U)>
@@ -223,81 +208,39 @@ namespace mln
     mat<n, m, mln_trait_op_uminus(T)>
     operator-(const mat<n,m,T>& lhs);
 
-    // Operator *.
+    // mat * mat
 
     template <unsigned n, unsigned o, typename T,
 	      unsigned m, typename U>
-    mat<n, m, mln_trait_op_times(T,U)>
-    operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs); // mat * mat
+    mat<n, m, mln_sum_x(T,U)>
+    operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs);
 
-
-//     template <unsigned n, unsigned m, typename T,
-// 	      typename S>
-//     mat<n, m, mln_trait_op_times(T,S)>
-//     operator*(const mat<n,m,T>& lhs, const S& s); // mat * s
-
-
-    // FIXME: Simplification below of the general code above:
-
-    template <unsigned n, unsigned m, typename T>
-    mat<n, m, T>
-    operator*(const mat<n,m,T>& lhs, const T& s); // mat * s
-
+    // mat * vec
 
     template <unsigned n, unsigned m, typename T,
 	      typename U>
-    typename mln::trait::op::times< mat<n,m,T>, vec<m,U> >::ret
-    operator*(const mat<n,m,T>& lhs, const vec<m,U>& rhs) // mat * vec
-      // FIXME: Move below...
-    {
-      typedef mat<n,m,T> mat_t;
-      typedef vec<m,U>   vec_t;
-      mln_trait_op_times(mat_t, vec_t) tmp;
-      for (unsigned i = 0; i < n; ++i)
-	{
-	  mln_trait_op_times(T,U) sum = 0; // FIXME: Use literal::zero.
-	  for (unsigned j = 0; j < m; ++j)
-	    sum += lhs(i, j) * rhs[j];
-	  tmp[i] = sum;
-	}
-      return tmp;
-    }
+    vec<n, mln_sum_x(T,U)>
+    operator*(const mat<n,m,T>& lhs, const vec<m,U>& rhs);
 
-    // *=
+    // mat * s
 
-    template <unsigned n, typename T, typename U>
-    mat<n,n,T>&
-    operator*=(mat<n,n,T>& lhs, const mat<n,n,U>& rhs);
+    template <unsigned n, unsigned m, typename T,
+	      typename S>
+    mat<n, m, mln_trait_op_times(T,S)>
+    operator*(const mat<n,m,T>& lhs, const value::scalar_<S>& s);
 
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,T>&
-    operator*=(mat<n,m,T>& lhs, const U& rhs);
-    
-    // Operator /.
+    // mat / s
 
     template <unsigned n, unsigned m, typename T, typename S>
-    mat<n, m, mln_trait_op_times(T,S)> // FIXME: times instead of div...
-    operator/(const mat<n,m,T>& lhs, const S& s);
-
-    // /=
-
-    template <unsigned n, unsigned m, typename T, typename S>
-    mat<n,m,T>&
-    operator/=(mat<n,m,T>& lhs, const S& s);
+    mat<n, m, mln_trait_op_div(T,S)>
+    operator/(const mat<n,m,T>& lhs, const value::scalar_<S>& s);
 
     // <<
     
     template <unsigned n, unsigned m, typename T>
     std::ostream&
     operator<<(std::ostream& ostr, const mat<n,m,T>& v);
-    
-    template <unsigned n, unsigned m>
-    std::ostream&
-    operator<<(std::ostream& ostr, const mat<n,m,unsigned char>& v);
-    
-    template <unsigned n, unsigned m>
-    std::ostream&
-    operator<<(std::ostream& ostr, const mat<n,m,signed char>& v);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -382,7 +325,8 @@ namespace mln
     }
     
 
-    // eq
+    // Operators.
+
 
     template <unsigned n, unsigned m, typename T, typename U>
     bool
@@ -395,20 +339,6 @@ namespace mln
       return true;
     }
 
-    // +=
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,T>&
-    operator+=(mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	for (unsigned j = 0; j < m; ++j)
-	  lhs(i, j) += rhs(i, j);
-      return lhs;
-    }
-
-    // Operator +.
-
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n, m, mln_trait_op_plus(T,U)>
     operator+(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
@@ -419,20 +349,6 @@ namespace mln
 	  tmp[i][j] = lhs(i, j) + rhs(i, j);
       return tmp;
     }
-
-    // -=
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,T>&
-    operator-=(mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	for (unsigned j = 0; j < m; ++j)
-	  lhs(i, j) -= rhs(i, j);
-      return lhs;
-    }
-
-    // Operators -.
 
     template <unsigned n, unsigned m, typename T, typename U>
     mat<n,m, mln_trait_op_minus(T,U)>
@@ -456,81 +372,55 @@ namespace mln
       return tmp;
     }
 
-    // *=
-
-    template <unsigned n, typename T, typename U>
-    mat<n,n,T>&
-    operator*=(mat<n,n,T>& lhs, const mat<n,n,U>& rhs)
-    {
-      // FIXME: Optimize!
-      lhs = lhs * rhs;
-      return lhs;
-    }
-
-    template <unsigned n, unsigned m, typename T, typename U>
-    mat<n,m,T>&
-    operator*=(mat<n,m,T>& lhs, const U& s)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	for (unsigned j = 0; j < m; ++j)
-	  lhs(i, j) *= s;
-      return lhs;
-    }
-
-    // Operators *.
-
     template <unsigned n, unsigned o, typename T,
 	      unsigned m, typename U>
-    mat<n,m, mln_trait_op_times(T,U)>
+    mat<n, m, mln_sum_x(T,U)>
     operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs)
     {
-      mat<n,m, mln_trait_op_times(T,U)> tmp;
+      mat<n,m, mln_sum_x(T,U)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; j < m; ++j)
 	  {
-	    tmp(i, j) = 0;
+	    tmp(i, j) = literal::zero;
 	    for (unsigned k = 0; k < o; ++k)
 	      tmp(i, j) += lhs(i, k) * rhs(k, j);
 	  }
       return tmp;
     }
 
-    template <unsigned n, unsigned m, typename T>
-    mat<n, m, T>
-    operator*(const mat<n,m,T>& lhs, const T& s) // mat * s
-
-      // FIXME: Read above.
-
-//     template <unsigned n, unsigned m, typename T,
-// 	      typename S>
-//     mat<n,m, mln_trait_op_times(T,S)>
-//     operator*(const mat<n,m,T>& lhs, const S& s)
+    template <unsigned n, unsigned m, typename T,
+	      typename U>
+    vec<n, mln_sum_x(T,U)>
+    operator*(const mat<n,m,T>& lhs, const vec<m,U>& rhs)
     {
-      mat<n,m, T> tmp;
+      vec<n, mln_sum_x(T,U)> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	{
+	  mln_sum_x(T,U) sum(literal::zero);
+	  for (unsigned j = 0; j < m; ++j)
+	    sum += lhs(i, j) * rhs[j];
+	  tmp[i] = sum;
+	}
+      return tmp;
+    }
+
+    template <unsigned n, unsigned m, typename T, typename S>
+    mat<n, m, mln_trait_op_times(T,S)>
+    operator*(const mat<n,m,T>& lhs, const value::scalar_<S>& s_)
+    {
+      S s = s_.to_equiv();
+      mat<n, m, mln_trait_op_times(T,S)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; j < m; ++j)
 	  tmp(i, j) = lhs(i, j) * s;
       return tmp;
     }
 
-    // /
-
     template <unsigned n, unsigned m, typename T, typename S>
-    mat<n,m,T>&
-    operator/=(mat<n,m,T>& lhs, const S& s)
+    mat<n,m, mln_trait_op_div(T,S)>
+    operator/(const mat<n,m,T>& lhs, const value::scalar_<S>& s_)
     {
-      for (unsigned i = 0; i < n; ++i)
-	for (unsigned j = 0; j < m; ++j)
-	  lhs(i, j) /= s;
-      return lhs;
-    }
-
-    // Operator /.
-
-    template <unsigned n, unsigned m, typename T, typename S>
-    mat<n,m, mln_trait_op_times(T,S)> // FIXME: Use div, not times!
-    operator/(const mat<n,m,T>& lhs, const S& s)
-    {
+      S s = s_.to_equiv();
       mat<n,m, mln_trait_op_times(T,S)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; j < m; ++j)
@@ -546,43 +436,13 @@ namespace mln
     {
       for (unsigned i = 0; i < n; ++i)
 	{
-	  ostr << '(';
+	  ostr << '[';
 	  for (unsigned j = 0; j < m; ++j)
-	    ostr << v(i, j) << (j == m - 1 ? ")" : ", ");
+	    ostr << debug::format(v(i, j)) << (j == m - 1 ? "]" : ", ");
 	  ostr << std::endl;
 	}
       return ostr;
     }
-    
-    template <unsigned n, unsigned m>
-    std::ostream&
-    operator<<(std::ostream& ostr, const mat<n,m,unsigned char>& v)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	{
-	  ostr << '(';
-	  for (unsigned j = 0; j < m; ++j)
-	    ostr << (unsigned int)(v[i][j]) << (j == m - 1 ? ")" : ", ");
-	  ostr << std::endl;
-	}
-      return ostr;
-    }
-    
-    template <unsigned n, unsigned m>
-    std::ostream&
-    operator<<(std::ostream& ostr, const mat<n,m,signed char>& v)
-    {
-      for (unsigned i = 0; i < n; ++i)
-	{
-	  ostr << '(';
-	  for (unsigned j = 0; j < m; ++j)
-	    ostr << (signed int)(v[i][j]) << (j == m - 1 ? ")" : ", ");
-	  ostr << std::endl;
-	}
-      return ostr;
-    }
-
-
 
 # endif // ! MLN_INCLUDE_ONLY
     

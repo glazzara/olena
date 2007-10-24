@@ -60,7 +60,7 @@ namespace mln
 
       public internal::value_like_< int_u<n>,          // Equivalent.
 				    mln_enc(int_u<n>), // Encoding.
-				    int,               // Interoperation.
+				    unsigned,          // Interoperation.
 				    int_u_sat<n> >     // Exact.
     {
       /// Constructor without argument.
@@ -130,10 +130,11 @@ namespace mln
     template <unsigned n>
     int_u_sat<n>::int_u_sat(int i)
     {
+      static const unsigned max_ = mln_max(int_u<n>);
       if (i < 0)
 	this->v_ = 0;
-      else if (i > mln_max(int_u_sat<n>))
-	this->v_ = mln_max(int_u_sat<n>);
+      else if (i > max_)
+	this->v_ = max_;
       else
 	this->v_ = i;
     }
@@ -148,10 +149,11 @@ namespace mln
     int_u_sat<n>&
     int_u_sat<n>::operator=(int i)
     {
+      static const unsigned max_ = mln_max(int_u<n>);
       if (i < 0)
 	this->v_ = 0;
-      else if (i > mln_max(int_u_sat<n>))
-	this->v_ = mln_max(int_u_sat<n>);
+      else if (i > max_)
+	this->v_ = max_;
       else
 	this->v_ = i;
       return *this;
