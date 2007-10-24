@@ -47,11 +47,16 @@
 # include <mln/core/a_point_of.hh>
 
 # include <mln/debug/println.hh>
+# include <mln/debug/println_with_border.hh>
+
 # include <mln/convert/to_image.hh>
+
+# include <mln/border/fill.hh>
 
 # include <mln/level/compute.hh>
 # include <mln/level/fill.hh>
 # include <mln/accu/min.hh>
+# include <mln/accu/max.hh>
 
 # include <mln/set/uni.hh>
 # include <mln/set/diff.hh>
@@ -60,6 +65,7 @@
 # include <mln/util/tree.hh>
 
 # include <mln/labeling/regional_minima.hh>
+# include <mln/labeling/regional_maxima.hh>
 # include <mln/labeling/level.hh>
 
 # include <mln/fun/ops.hh>
@@ -128,6 +134,7 @@ namespace mln
     {
       std::cout << "entering step 1" << std::endl;
       // x0 <- a not tagged local mininum of ima.
+      std::cout << std::endl << "x0 = " << p << std::endl;
       x0 = p;
       // g <- u(x0)
       g = ima(x0);
@@ -153,7 +160,7 @@ namespace mln
     }
 
 
-    template <typename V, typename P>
+    template <typename V, typename P, typename F>
     void step3 (const image2d<V>& u,
 		image2d<bool>& tagged,
 		set_p<P>& A,
@@ -166,17 +173,19 @@ namespace mln
 
       // Stop the algorithm.
       if (finished)
-      { gn = 0; return; }
+      { finished = false; gn -= 2 * F::inc; return; }
 
       // N <- N union {x neighbor of a pixel in a\R}
       mln_piter(set_p<P>) qa(A);
       for_all(qa)
 	{
-	  mln_niter(neighb2d) n(c4(), qa);
+	  mln_niter(neighb2d) n(F::region_neighb(), qa);
 	  for_all (n)
 	    if (!R.has (n))
 	      N.insert (n);
 	}
+
+      debug::println(u);
 
       std::cout << "A :" << std::endl;
       if (A.npoints())
@@ -190,11 +199,11 @@ namespace mln
 
       // gn <- min u(x) x belongs to N.
       if ((u | set::inter(N, u.domain())).npoints() > 0)
-	gn = level::compute<accu::min>(u | set::inter(N, u.domain()));
+	gn = level::compute< typename F::accu_for_gn >(u | set::inter(N, u.domain()));
       else
       {
 	finished = true;
- 	gn++;
+ 	gn += F::inc;
       }
       std::cout << std::endl << "gN = " << gn << std::endl;
       // R <- R union A
@@ -210,7 +219,7 @@ namespace mln
 
 
     /// IF g < gn.
-    template <typename V, typename P>
+    template <typename V, typename P, typename F>
     void step4_1 (image2d<V>& u,
 		  set_p<P>& A,
 		  set_p<P>& R,
@@ -225,7 +234,6 @@ namespace mln
 
       // Create a new conected component.
       // FIXME : we can make it faster.
-      //mln_piter(S) p(set::inter(N, u.domain()) | pw::value(u) == pw::cst(g));
       mln_piter(set_p<P>) p(R);
       current_region = new fllt_node(P)();
       for_all(p)
@@ -245,11 +253,11 @@ namespace mln
 
       // Count the number of conected components of the border of R.
       image2d<int>  tmp(u.domain().to_larger(1));
-      image2d<bool> border_ima(u.domain().to_larger(1));
+      image2d<bool> border_ima(tmp.domain());
       level::fill(border_ima, false);
       level::fill(inplace(border_ima | N), true);
       unsigned n;
-      labeling::level(border_ima, true, c8(), tmp, n);
+      labeling::level(border_ima, true, F::border_neighb(), tmp, n);
 
       //     debug::println(border_ima);
       std::cout << "nb composantes :" << n << std::endl;
@@ -307,21 +315,6 @@ namespace mln
       //    N <- N\{x belongs to N / u(x) == g}
       N = set::diff(N, N | pw::value(u) == pw::cst(g));
 
-//       // FIXME
-//       typedef mln::pset_if<
-// 	mln::set_p<mln::point_<mln::grid::square, int> >,
-// 	mln::fun::eq_p2b_expr_<mln::pw::value_<mln::image2d<int> >,
-// 	mln::pw::cst_<int> > > S;
-
-//       // Update the current region
-//       //mln_piter(S) p(set::inter(N, u.domain()) | pw::value(u) == pw::cst(g));
-//       mln_piter(set_p<P>) p(A);
-//       for_all(p)
-// 	{
-// 	  if (regions(p) == 0)
-// 	    regions(p) = current_region;
-// 	}
-
       std::cout << "A :" << std::endl;
       if (A.npoints())
 	debug::println(u | A);
@@ -354,12 +347,14 @@ namespace mln
     }
 
 
-    template <typename V>
-    void compute_level_set(const image2d<V>& ima)
+    template <typename V, typename F>
+    fllt_node(point2d)*
+    compute_level_set(const image2d<V>& ima)
     {
       typedef point2d P;
       typedef image2d<V> I;
-      // FIXME
+
+      // FIXME: not nice.
       typedef     mln::image_if<
 	mln::image2d<V>,
 	mln::fun::greater_p2b_expr_<mln::pw::value_<mln::image2d<V> >,
@@ -367,25 +362,42 @@ namespace mln
 	> I_IF;
 
 
+      // Declarations.
       set_p<P> R, N, A;
       V g, gn;
       point2d x0;
       image2d<V> min_locals(ima.domain());
       image2d<V> u = clone(ima);
-      image2d<bool> tagged(ima.domain());
+      border::fill(u, 0);
 
+      std::cout << "image U:" << std::endl;
+      debug::println_with_border(u);
+      image2d<bool> tagged(ima.domain());
       fllt_node(P)* current_region;
       image2d<fllt_node(P)*> regions(ima.domain());
-      level::fill(regions, 0);
 
+      // INIT
+      R.clear();
+      N.clear();
+      A.clear();
+      g=  0;
+      gn = 0;
+      current_region = 0;
+
+      level::fill(regions, 0);
+      level::fill(tagged, false);
+      level::fill(min_locals, 0);
+
+      // Get the locals extremums
       unsigned nlabels;
-      labeling::regional_minima(ima, c4(), min_locals, nlabels);
+      F::regional_extremum(ima, F::region_neighb(), min_locals, nlabels);
 
       debug::println(min_locals);
       debug::println(min_locals | (pw::value(min_locals) > pw::cst(0)));
 
       /// Algorithm.
       {
+	// For all locals extremums
 	I_IF min_locals_list(min_locals | (pw::value(min_locals) > pw::cst(0)));
 	mln_piter(I_IF) p(min_locals_list.domain());
 	for_all(p)
@@ -393,19 +405,16 @@ namespace mln
 	    if (tagged(p))
 	      continue;
 
-	    std::cout << "p = " << p << std::endl;
-
 	    step1(ima, p, g, x0);
-
 	    step2(A, R, N, x0);
 	    while (1)
 	    {
 	      std::cout << "g = " << g << std::endl;
-	      step3(u, tagged, A, R, N, gn);
+	      step3<V, P, F>(u, tagged, A, R, N, gn);
 	      /// step4.
-	      if (g < gn)
+	      if (F::compare(g, gn))
 	      {
-		step4_1(u, A, R, N, g, gn, current_region, regions);
+		step4_1<V, P, F>(u, A, R, N, g, gn, current_region, regions);
 		// GO TO 3)
 		continue;
 	      }
@@ -419,10 +428,10 @@ namespace mln
 	      }
 
 
-	      if (g > gn)
+	      if (!F::compare(g, gn))
 	      {
 		step4_3(u, tagged, R, g);
-		//    GO TO 1)
+		// GO TO 1)
 		break;
 	      }
 	    }
@@ -430,11 +439,89 @@ namespace mln
       } // end of Algorithm
       std::cout << "END OF ALGORITHM" << std::endl;
 
-
       debug::println(regions);
-      debug::println(ima | regions(make::point2d(-4,-1))->content().points);
+      //debug::println(ima | regions(make::point2d(-4,-1))->content().points);
+
+      return (current_region);
 
     } // end of compute_level_set
+
+    //   LOWER LEVEL SET : region = c4, border = c8
+    template <typename V>
+    struct lower
+    {
+      static bool
+      compare(const V& u, const V& v)
+      {
+	return u < v;
+      }
+
+      template <typename I, typename N, typename O>
+      static bool
+      regional_extremum(const Image<I>& input, const Neighborhood<N>& nbh,
+				    Image<O>& output, unsigned& nlabels)
+      {
+	return labeling::regional_minima(input, nbh,
+					 output, nlabels);
+      }
+
+      static const int inc = 1;
+
+      typedef accu::min accu_for_gn;
+
+      static const neighb2d& border_neighb() { return c8(); }
+      static const neighb2d& region_neighb() { return c4(); }
+    };
+
+
+
+    //   UPPER LEVEL SET : region = c8, border = c4
+    template <typename V>
+    struct upper
+    {
+      static bool
+      compare(const V& u, const V& v)
+      {
+	return u > v;
+      }
+
+      template <typename I, typename N, typename O>
+      static bool
+      regional_extremum(const Image<I>& input, const Neighborhood<N>& nbh,
+				    Image<O>& output, unsigned& nlabels)
+      {
+	return labeling::regional_maxima(input, nbh,
+					 output, nlabels);
+      }
+
+      static const int inc = -1;
+      typedef accu::max accu_for_gn;
+
+      static const neighb2d& border_neighb() { return c4(); }
+      static const neighb2d& region_neighb() { return c8(); }
+    };
+
+    template <typename P>
+    void find_shapes_of_holes(fllt_node(P)* lower,
+			      fllt_node(P)* upper)
+    {
+    }
+
+    template <typename V>
+    // Fixme : return type
+    void fllt(const image2d<V>& ima)
+    {
+      typedef point2d P;
+
+      fllt_node(P)* upper_tree;
+      fllt_node(P)* lower_tree;
+
+      lower_tree = compute_level_set<V, lower<V> >(ima);
+
+      upper_tree = compute_level_set<V, upper<V> >(ima);
+
+      find_shapes_of_holes(lower_tree, upper_tree);
+    }
 
   } // end of namespace mln::fllt
 

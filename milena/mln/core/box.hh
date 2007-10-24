@@ -224,7 +224,7 @@ namespace mln
   box_<P>
   box_<P>::to_larger(unsigned b) const
   {
-    box_<P> tmp = *this;
+    box_<P> tmp(*this);
 
     for (unsigned i = 0; i < P::dim; ++i)
     {
