@@ -1,3 +1,20 @@
+2007-10-24  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update fllt and fix tree.
+
+	Fix mln::util::tree.
+	* mln/util/tree.hh,
+	* mln/util/tree_to_image.hh,
+	* tests/tree.cc,
+	* tests/tree_to_image.cc: Update.
+
+	Update fllt.
+	* sandbox/garrigues/fllt.hh,
+	* sandbox/garrigues/test_fllt.cc: Update.
+
+	Update.
+	* mln/display/save.hh: Update.
+
 2007-10-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Update fllt.

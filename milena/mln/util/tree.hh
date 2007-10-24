@@ -44,37 +44,92 @@ namespace mln
   {
 
     template <typename T>
-    struct tree
+    struct node
     {
-      tree();
-      tree(T& elt);
+      node();
+      node(T& elt);
 
       T& content();
       const T& content() const;
       void add_child(T& elt);
-      void set_parent(tree<T>* parent);
-      tree<T>* get_parent();
+      void set_parent(node<T>* parent);
+      node<T>* get_parent();
       void print_rec(int n) const;
-      void print(void) const;
-      int  search_rec(tree<T>** res, T& elt);
-      tree<T>* search(T& elt);
+      void print() const;
+      int  search_rec(node<T>** res, T& elt);
+      node<T>* search(T& elt);
 
       T elt_;
-      tree<T>* parent_;
-      std::vector< tree<T>* > child_;
+      node<T>* parent_;
+      std::vector< node<T>* > child_;
     };
 
+    template <typename T>
+    struct tree
+    {
+      typedef node<T> node_t;
+      tree();
+      tree(node<T>* root);
+
+      tree<T>* tree_get(T& elt);
+      void add_tree_up (T& elt);
+      void add_tree_down (T& elt);
+
+      node<T>* root_;
+    };
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
     tree<T>::tree()
+      : root_ (0)
+    {
+    }
+
+    template <typename T>
+    tree<T>::tree(node<T>* root)
+      : root_ (root)
+    {
+      mln_assertion (root != 0);
+    }
+
+    template <typename T>
+    tree<T>*
+    tree<T>::tree_get(T& elt)
+    {
+      node<T>* n = root_->search(elt);
+      tree<T>* res = new tree (n);
+
+      return res;
+    }
+
+    template <typename T>
+    void
+    tree<T>::add_tree_up(T& elt)
+    {
+      node<T>* n = new node<T> (elt);
+      root_->parent_ = n;
+      n->child_.push_back (root_);
+      root_ = n;
+    }
+
+    template <typename T>
+    void
+    tree<T>::add_tree_down(T& elt)
+    {
+      node<T>* n = new node<T> (elt);
+      root_->child_.push_back (n);
+    }
+
+
+    template <typename T>
+    node<T>::node()
       : parent_ (0)
     {
     }
 
     template <typename T>
-    tree<T>::tree(T& elt)
+    node<T>::node(T& elt)
       : elt_ (elt),
 	parent_ (0)
     {
@@ -82,23 +137,23 @@ namespace mln
 
     template <typename T>
     const T&
-    tree<T>::content() const
+    node<T>::content() const
     {
       return elt_;
     }
 
     template <typename T>
     T&
-    tree<T>::content()
+    node<T>::content()
     {
       return elt_;
     }
 
     template <typename T>
     void
-    tree<T>::add_child(T& elt)
+    node<T>::add_child(T& elt)
     {
-      tree<T>* s = new tree<T>(elt);
+      node<T>* s = new node<T>(elt);
 
       s->parent_ = this;
       this->child_.push_back(s);
@@ -106,7 +161,7 @@ namespace mln
 
     template <typename T>
     void
-    tree<T>::set_parent(tree<T>* parent)
+    node<T>::set_parent(node<T>* parent)
     {
       mln_assertion(parent != 0);
       parent_ = parent;
@@ -115,15 +170,15 @@ namespace mln
 
 
     template <typename T>
-    tree<T>*
-    tree<T>::get_parent()
+    node<T>*
+    node<T>::get_parent()
     {
       return parent_;
     }
 
     template <typename T>
     int
-    tree<T>::search_rec(tree<T>** res, T& elt)
+    node<T>::search_rec(node<T>** res, T& elt)
     {
       if (elt == this->elt_)
 	{
@@ -132,7 +187,7 @@ namespace mln
 	}
       else
 	{
-	  for (typename std::vector<tree<T>* >::iterator it = this->child_.begin();
+	  for (typename std::vector<node<T>* >::iterator it = this->child_.begin();
 	       it != this->child_.end(); ++it)
 	    {
 	      if ((**it).search_rec(res, elt))
@@ -143,10 +198,10 @@ namespace mln
     }
 
     template <typename T>
-    tree<T>*
-    tree<T>::search(T& elt)
+    node<T>*
+    node<T>::search(T& elt)
     {
-      tree<T>* res = 0;
+      node<T>* res = 0;
 
       if (search_rec(&res, elt))
 	return res;

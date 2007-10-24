@@ -55,6 +55,10 @@ namespace mln
     void
     save(const Image<I>& input_);
 
+    template <typename I>
+    void
+    save_color(const Image<I>& input_);
+
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
@@ -79,6 +83,25 @@ namespace mln
 	map_saved_image_tmp_[(void*)input.id_ ()] = path_tmp;
       }
 
+      template <typename I>
+      void
+      save_color(const Image<I>& input_)
+      {
+	const I& input = exact (input_);
+
+	/// Use of mkstemp instead tempmap.
+	char *tmp = (char*)malloc (12 * sizeof (char));
+	strcpy(tmp, "/tmp/XXXXXX");
+	if (mkstemp(tmp) == -1)
+	  return;
+	std::string path_tmp = tmp;
+
+	io::ppm::save(input, path_tmp);
+
+	std::cout << input.id_ () << " = " << path_tmp << std::endl;
+	map_saved_image_tmp_[(void*)input.id_ ()] = path_tmp;
+      }
+
     } // end of namespace mln::display::impl
 
     /// Facade.
@@ -87,6 +110,13 @@ namespace mln
     save(const Image<I>& input_)
     {
       return impl::save(input_);
+    }
+
+    template <typename I>
+    void
+    save_color(const Image<I>& input_)
+    {
+      return impl::save_color(input_);
     }
 
 # endif // !MLN_INCLUDE_ONLY

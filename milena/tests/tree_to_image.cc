@@ -57,6 +57,7 @@ int main (void)
   I s4;
   I s5;
   I s6;
+  I s7;
 
   for (int i = 0; i < 100; ++i)
     for (int j = 0; j < 100; ++j)
@@ -82,17 +83,25 @@ int main (void)
     for (int j = 50; j < 60; ++j)
       s6.insert(point2d(i, j));
 
-  util::tree<I> tree(s1);
-  tree.add_child(s2);
-  tree.add_child(s3);
+  for (int i = 0; i < 300; ++i)
+    for (int j = 0; j < 200; ++j)
+      s7.insert(point2d(i, j));
 
-  util::tree<I>* tree2 = tree.search(s2);
-  mln_assertion(tree2);
-  tree2->add_child(s4);
-  tree2->add_child(s5);
-  util::tree<I>* tree3 = tree.search(s4);
-  mln_assertion(tree3);
-  tree3->add_child(s6);
+  util::node<I> node(s1);
+  node.add_child(s2);
+  node.add_child(s3);
+
+  util::node<I>* node2 = node.search(s2);
+  mln_assertion(node2);
+  node2->add_child(s4);
+  node2->add_child(s5);
+  util::node<I>* node3 = node.search(s4);
+  mln_assertion(node3);
+  node3->add_child(s6);
+
+  util::tree<I> tree (&node);
+
+  tree.add_tree_up(s7);
 
   util::tree_to_image(tree, output);
 

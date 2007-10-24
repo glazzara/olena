@@ -44,16 +44,22 @@ int main (void)
   unsigned elt3 = 3;
   unsigned elt4 = 4;
   unsigned elt5 = 5;
+  unsigned elt6= 42;
 
-  util::tree<unsigned> tree(elt1);
-  tree.add_child(elt2);
-  tree.add_child(elt3);
-  util::tree<unsigned>* tree2 = tree.search(elt2);
-  mln_assertion(tree2);
-  tree2->add_child(elt4);
-  tree2->add_child(elt5);
-  util::tree<unsigned>* tree3 = tree.search(elt4);
-  mln_assertion(tree3);
-  tree3 = tree2->search(elt1);
-  mln_assertion(!tree3);
+  util::node<unsigned> node(elt1);
+  node.add_child(elt2);
+  node.add_child(elt3);
+  util::node<unsigned>* node2 = node.search(elt2);
+  mln_assertion(node2);
+  node2->add_child(elt4);
+  node2->add_child(elt5);
+  util::node<unsigned>* node3 = node.search(elt4);
+  mln_assertion(node3);
+  node3 = node2->search(elt1);
+  mln_assertion(!node3);
+  util::tree<unsigned>* tre = new util::tree<unsigned>(&node);
+  mln_assertion(tre);
+  tre->add_tree_up(elt6);
+  util::tree<unsigned>* trees = tre->tree_get(elt5);
+  mln_assertion(trees);
 }

@@ -36,7 +36,8 @@
  *
  */
 
-#include <mln/util/tree.hh>
+# include <mln/util/tree.hh>
+# include <mln/core/set_p.hh>
 
 namespace mln
 {
@@ -46,7 +47,7 @@ namespace mln
 
     template <typename T, typename I>
     void
-    tree_to_image_rec(tree<T>& tree, Image<I>& output_, const mln_value(I) lvl);
+    tree_to_image_rec(node<T>* node, Image<I>& output_);
 
     template <typename T, typename I>
     void
@@ -56,20 +57,28 @@ namespace mln
 
     template <typename T, typename I>
     void
-    tree_to_image_rec(tree<T>& tree, Image<I>& output_, const mln_value(I) lvl)
+    tree_to_image_rec(node<T>* node, Image<I>& output_)
     {
       I& output = exact(output_);
 
-      mln_piter(T) p(tree.elt_);
+
+      mln_piter(set_p<point2d>) p(node->elt_.points);
 
       for_all(p)
-	output(p) = lvl;
+	{
+	  std::cout << p
+		    << std::endl;
+	  output(p) = node->elt_.value;
+	}
+      typename std::vector< util::node<T>* >::const_iterator it = node->child_.begin();
 
-      typename std::vector< util::tree<T>* >::const_iterator it = tree.child_.begin();
-      for (;
-	   it != tree.child_.end();
-	   ++it)
- 	tree_to_image_rec((**it), output, lvl + 1);
+      for (int i = 0;
+	   it != node->child_.end();
+	   ++it, ++i)
+	{
+	  if (*it)
+	    tree_to_image_rec((*it), output);
+	}
     }
 
 
@@ -78,7 +87,7 @@ namespace mln
     tree_to_image (tree<T>& tree, Image<I>& output_)
     {
       I& output = exact(output_);
-      tree_to_image_rec(tree, output, 1);
+      tree_to_image_rec(tree.root_, output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
