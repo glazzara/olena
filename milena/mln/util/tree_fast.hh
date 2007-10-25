@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_TREE_HH
-# define MLN_UTIL_TREE_HH
+#ifndef MLN_UTIL_TREE_FAST_HH
+# define MLN_UTIL_TREE_FAST_HH
 
 # include <vector>
 # include <mln/core/contract.hh>
@@ -34,7 +34,7 @@
 /*!
  * \file   mln/util/tree_fast.hh
  *
- * \brief  Definition of a fast generic general tree.
+ * \brief  Definition of a fast generic general fast tree.
  *
  */
 
@@ -45,10 +45,10 @@ namespace mln
   {
 
     template <typename T>
-    struct tree
+    struct tree_fast
     {
-      tree();
-      tree(T& elt);
+//       tree_fast();
+      tree_fast(T& elt);
 
       const unsigned size() const;
       bool has (T& elt) const;
@@ -65,13 +65,13 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename T>
-    tree<T>::tree()
-    {
-    }
+//     template <typename T>
+//     tree_fast<T>::tree_fast()
+//     {
+//     }
 
     template <typename T>
-    tree<T>::tree(T& elt)
+    tree_fast<T>::tree_fast(T& elt)
     {
       std::vector<unsigned> v;
       data_.push_back(elt);
@@ -82,7 +82,7 @@ namespace mln
 
     template <typename T>
     const unsigned
-    tree<T>::size() const
+    tree_fast<T>::size() const
     {
       return (data_.size ());
     }
@@ -90,7 +90,7 @@ namespace mln
 
     template <typename T>
     bool
-    tree<T>::has (T& elt) const
+    tree_fast<T>::has (T& elt) const
     {
       for (unsigned i = 0; i < data_.size (); ++i)
 	if (data_[i] == elt)
@@ -101,25 +101,26 @@ namespace mln
 
     template <typename T>
     unsigned
-    tree<T>::search (T& elt) const
+    tree_fast<T>::search (T& elt) const
     {
       for (unsigned i = 0; i < data_.size (); ++i)
 	if (data_[i] == elt)
 	  return i;
-
+      std::cerr << "BUGG !!!!"
+		<< std::endl;
       return (unsigned)(-1);
     }
 
     template <typename T>
     bool
-    tree<T>::is_root (unsigned i) const
+    tree_fast<T>::is_root (unsigned i) const
     {
       return (root_ == i);
     }
 
     template <typename T>
     void
-    tree<T>::add_child (unsigned i, T& elt)
+    tree_fast<T>::add_child (unsigned i, T& elt)
     {
       mln_assertion (i < data_.size ());
       std::vector<unsigned> v;
@@ -131,7 +132,7 @@ namespace mln
 
     template <typename T>
     void
-    tree<T>::add_parent (T& elt)
+    tree_fast<T>::add_parent (T& elt)
     {
       std::vector<unsigned> v;
       data_.push_back(elt);
@@ -153,4 +154,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // !MLN_UTIL_TREE_HH
+#endif // !MLN_UTIL_TREE_FAST_HH

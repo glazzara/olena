@@ -25,39 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef MLN_UTIL_TREE_FAST_TO_IMAGE_HH
+# define MLN_UTIL_TREE_FAST_TO_IMAGE_HH
+
 /*!
- *  \file   tests/tree_fast.cc
+ *  \file   mln/util/tree_fast_to_image.hh
  *
- *  \brief  test of mln::util::tree_fast
+ *  \brief Definition of function which transform a tree_fast into an
+ *  image.
  *
  */
 
-#include <mln/util/tree_fast.hh>
-#include <mln/core/contract.hh>
-#include <iostream>
+# include <mln/util/tree_fast.hh>
+# include <mln/core/set_p.hh>
+# include <list>
 
-int main (void)
+namespace mln
 {
-  using namespace mln;
 
-  unsigned elt1 = 1;
-  unsigned elt2 = 2;
-  unsigned elt3 = 3;
-  unsigned elt4 = 4;
-  unsigned elt5 = 5;
-  unsigned elt6= 42;
+  namespace util
+  {
 
-  util::tree_fast<unsigned> tree_fast(elt1);
-  mln_assertion(tree_fast.has (elt1));
-  tree_fast.add_child(tree_fast.search(elt1), elt2);
-  mln_assertion(tree_fast.has (elt2));
-  tree_fast.add_child(tree_fast.search(elt1), elt3);
-  mln_assertion(tree_fast.has (elt3));
-  tree_fast.add_child(tree_fast.search(elt2), elt4);
-  mln_assertion(tree_fast.has (elt4));
-  tree_fast.add_child(tree_fast.search(elt2), elt5);
-  mln_assertion(tree_fast.has (elt5));
-  tree_fast.add_parent(elt6);
-  mln_assertion(tree_fast.has (elt6));
-  mln_assertion(tree_fast.search(elt6) == tree_fast.root_);
-}
+    template <typename T, typename I>
+    void
+    tree_fast_to_image (tree_fast<T>& tree, Image<I>& output_);
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename T, typename I>
+    void
+    tree_fast_to_image (tree_fast<T>& tree, Image<I>& output_)
+    {
+      I& output = exact(output_);
+      std::list<unsigned> q;
+
+      q.push_back (tree.root_);
+      while (!(q.empty ()))
+	{
+	  unsigned current = q.front ();
+	  for (unsigned i = 0; i < tree.child_[current].size (); ++i)
+	    q.push_back (tree.child_[current][i]);
+
+	  mln_piter(set_p<point2d>) p(tree.data_[current].points);
+
+	  for_all(p)
+	    {
+	      output(p) = tree.data_[current].value;
+	    }
+	  q.pop_front ();
+	}
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::util
+
+} // end of namespace mln
+
+#endif // !MLN_UTIL_TREE_FAST_TO_IMAGE_HH

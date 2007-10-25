@@ -1,5 +1,15 @@
 2007-10-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add tree_fast_to_image.
+
+	* mln/util/tree_fast_to_image.hh: New function for tree_fast.
+	* tests/tree_fast_to_image.cc: New test for this function.
+
+	* mln/util/tree_fast.hh,
+	* tests/tree_fast.cc: Update.
+
+2007-10-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add a structure of tree based on vector.
 
 	* mln/util/tree_fast.hh: New structure of tree.
