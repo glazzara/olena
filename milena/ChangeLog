@@ -1,3 +1,10 @@
+2007-10-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add a structure of tree based on vector.
+
+	* mln/util/tree_fast.hh: New structure of tree.
+	* tests/tree_fast.cc: New test for fast_tree.
+
 2007-10-24  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update fllt and fix tree.
