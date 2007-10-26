@@ -65,8 +65,8 @@ namespace mln
     /// Convertion to point.
     operator P() const;
 
-    /// Address of the point.
-    const P* pointer_() const;
+    /// Reference to the corresponding point.
+    const P& to_point() const;
 
     /// Give the i-th coordinate.
     mln_coord(P) operator[](unsigned i) const;
@@ -115,8 +115,8 @@ namespace mln
     /// Convertion to point.
     operator P() const;
 
-    /// Address of the point.
-    const P* pointer_() const;
+    /// Reference to the corresponding point.
+    const P& to_point() const;
 
     /// Give the i-th coordinate.
     mln_coord(P) operator[](unsigned i) const;
@@ -162,10 +162,10 @@ namespace mln
   }
 
   template <typename P>
-  const P*
-  box_fwd_piter_<P>::pointer_() const
+  const P&
+  box_fwd_piter_<P>::to_point() const
   {
-    return & p_;
+    return p_;
   }
 
   template <typename P>
@@ -233,10 +233,10 @@ namespace mln
 
 
   template <typename P>
-  const P*
-  box_bkd_piter_<P>::pointer_() const
+  const P&
+  box_bkd_piter_<P>::to_point() const
   {
-    return & p_;
+    return p_;
   }
 
   template <typename P>

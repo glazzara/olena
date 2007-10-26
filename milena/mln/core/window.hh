@@ -37,7 +37,7 @@
  */
 
 # include <mln/core/concept/window.hh>
-# include <mln/core/concept/generalized_point.hh>
+# include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/dpoints_base.hh>
 # include <mln/core/dpoint.hh>
 # include <mln/core/box.hh>
@@ -132,7 +132,8 @@ namespace mln
   template <typename D>
   window<D>::window()
   {
-    mln::metal::is_a<D, Dpoint>::check();
+    // FIXME HERE: Was: mln::metal::is_a<D, Dpoint>::check();
+    mln::metal::is_a<D, Delta_Point_Site>::check();
   }
 
   template <typename D>

@@ -38,7 +38,7 @@
  * \todo Move out the ops.
  */
 
-# include <mln/core/concept/point.hh>
+# include <mln/core/concept/point_site.hh>
 # include <mln/core/concept/point_iterator.hh>
 
 

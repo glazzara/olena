@@ -45,6 +45,7 @@ namespace mln
   // Fwd decl.
   template <typename P, typename T> struct rle_image;
 
+
   namespace internal
   {
 
@@ -61,6 +62,8 @@ namespace mln
     };
 
   } // end of namespace mln::internal
+
+
 
   /*! \brief RLE image.
    *

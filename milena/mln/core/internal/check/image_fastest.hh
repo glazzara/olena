@@ -34,6 +34,7 @@
  * images.
  */
 
+# include <mln/core/internal/force_exact.hh>
 
 
 namespace mln
@@ -62,7 +63,7 @@ namespace mln
 	 */
 	template <typename P>
 	unsigned
-	offset_at(const Generalized_Point<P>& p) const;
+	offset_at(const Point_Site<P>& p) const;
 
       protected:
 	image_fastest_();
@@ -118,11 +119,11 @@ namespace mln
       template <typename E, typename B>
       template <typename P>
       unsigned // FIXME: std::size_t?
-      image_fastest_<E,B>::offset_at(const Generalized_Point<P>& p_) const
+      image_fastest_<E,B>::offset_at(const Point_Site<P>& p_) const
       {
 	// FIXME: check that P is mln_point(E)
 	const E* this_ = & internal::force_exact<E>(*this);
-	const P& p = internal::force_exact<P>(p_);
+	const P& p = exact(p_);
 	mln_precondition(this_->has_data());
 	mln_precondition(this_->owns_(p));
 	

@@ -35,7 +35,7 @@
 
 # include <set>
  
-# include <mln/core/concept/dpoint.hh>
+# include <mln/core/concept/delta_point_site.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/window.hh>
 # include <mln/pw/image.hh>
@@ -124,7 +124,8 @@ namespace mln
     template <typename D>
     window<D> to_window(const std::set<D>& s)
     {
-      mln::metal::is_a<D, Dpoint>::check();
+      // FIXME: Was: mln::metal::is_a<D, Dpoint>::check();
+      mln::metal::is_a<D, Delta_Point_Site>::check();
       window<D> win;
       for (typename std::set<D>::const_iterator i = s.begin();
 	   i != s.end(); ++i)

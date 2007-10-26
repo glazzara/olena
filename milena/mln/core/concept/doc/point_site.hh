@@ -25,8 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/generalized_point.hh
- * \brief This file documents the concept of mln::Generalized_Point.
+/*! \file mln/core/concept/doc/point_site.hh
+ *
+ * \brief This file documents the concept of mln::Point_Site.
  */
 
 namespace mln
@@ -35,18 +36,23 @@ namespace mln
   namespace doc
   {
 
-    /*! \brief Documentation class for mln::Generalized_Point.
+    /*! \brief Documentation class for mln::Point_Site.
      *
-     * \see mln::Generalized_Point
+     * \see mln::Point_Site
      */
     template <typename E>
-    struct Generalized_Point
+    struct Point_Site
     {
       /*! \var dim
        * \brief Dimension of the space.
        * \invariant dim > 0 
        */
       enum { dim };
+
+      /*! \brief Mesh associated type.
+       * \invariant This type has to derive from mln::Mesh.
+       */
+      typedef void mesh;
 
       /*! \brief Point associated type.
        * \invariant This type has to derive from mln::Point.
@@ -63,23 +69,13 @@ namespace mln
       typedef void coord;
 
 
-      // FIXME: typedef void topo;
-
-
-      /*! \brief Either \c E is a point or an convertion operator into
-       *  a point is defined.
-       *
-       * \return A point.
-       */
-      operator point() const;
-
-      /*! \brief Give a hook to the point address.
+      /*! \brief Give a reference to the corresponding point.
        *
        * This method allows for iterators to refer to a point.
        *
-       * \return A point address.
+       * \return A point constant reference.
        */
-      const point* pointer_() const;
+      const point& to_point() const;
 
       /*! \brief Read-only access to the \p i-th coordinate value.
        *

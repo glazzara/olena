@@ -80,13 +80,16 @@ namespace mln
       /// Return the position of this psite in the current range.
       unsigned& index_();
 
-      const P* pointer_() const;
+      /// Reference to the corresponding point.
+      const P& to_point() const;
+
+      /// Give the i-th coordinate of the corresponding point.
       mln_coord(P) operator[](unsigned i) const;
 
     protected:
 
       /// Start of the psite range.
-      P point_;
+      P point_; // FIXME: Rename as p_ (like everywhere else!)
 
       /// Position in the psite range.
       unsigned range_index_;
@@ -95,7 +98,9 @@ namespace mln
       unsigned pset_position_;
     };
 
+
 # ifndef MLN_INCLUDE_ONLY
+
     template <typename P>
     run_psite<P>::run_psite()
     {
@@ -160,10 +165,10 @@ namespace mln
     }
 
     template <typename P>
-    const P*
-    run_psite<P>::pointer_() const
+    const P&
+    run_psite<P>::to_point() const
     {
-      return & point_;
+      return point_;
     }
 
     template <typename P>

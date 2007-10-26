@@ -33,7 +33,7 @@
  * \brief Conversions to mln::Dpoint.
  */
 
-# include <mln/core/concept/generalized_point.hh>
+# include <mln/core/concept/point_site.hh>
 
 
 namespace mln
@@ -42,17 +42,19 @@ namespace mln
   namespace convert
   {
 
-    /// Convert a generalized point \p p into a delta-point.
+    /// Convert a point site \p p into a delta-point.
     template <typename P>
-    mln_dpoint(P) to_dpoint(const Generalized_Point<P>& p);
+    mln_dpoint(P) to_dpoint(const Point_Site<P>& p);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename P>
-    mln_dpoint(P) to_dpoint(const Generalized_Point<P>& p_)
+    mln_dpoint(P) to_dpoint(const Point_Site<P>& p_)
     {
-      const P& p = internal::force_exact<P>(p_);
+      const P& p = exact(p_);
+      // FIXME HERE: Add ctors from vec in point_ and dpoint_.
+      // FIXME HERE: Then change to "return mln_dpoint(P)(p.to_vec());"
       mln_dpoint(P) dp;
       for (unsigned i = 0; i < P::dim; ++i)
 	dp[i] = p[i];

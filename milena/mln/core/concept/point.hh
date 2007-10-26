@@ -34,10 +34,23 @@
  */
 
 # include <mln/core/concept/point_site.hh>
+# include <mln/core/concept/dpoint.hh>
 
 
 namespace mln
 {
+
+  // Fwd decl.
+  template <typename E> struct Point;
+
+
+  // Point category flag type.
+  template <>
+  struct Point<void>
+  {
+    typedef Point_Site<void> super;
+  };
+
 
   /*! \brief Base class for implementation of point classes.
    *
@@ -53,47 +66,43 @@ namespace mln
      */
     typedef P point;
 
-    /*! \brief The pointer is this point address.
+    /*! \brief It is a Point so it returns itself.
      */
-    const P* pointer_() const;
+    const P& to_point() const;
 
   protected:
     Point();
   };
 
 
-  /*! \brief Add a delta-point \p rhs to a point \p lhs.
+  /*! \brief Shift a point \p by a delta-point \p dp.
    *
-   * \param[in,out] lhs The targeted point.
-   * \param[in] rhs A delta-point.
+   * \param[in,out] p The targeted point.
+   * \param[in] dp A delta-point.
+   * \return A reference to the point \p p once translated by \p dp.
    *
-   * \pre The type of \p rhs has to be the Dpoint type associated with
-   * the type of \p lhs; otherwise this test does not compile.
-   *
-   * \return A reference to the point \p lhs once translated by \p
-   * rhs.
+   * \pre The type of \p dp has to be compatible with the type of \p
+   * p.
    *
    * \relates mln::Point
    */
-  template <typename P>
-  P& operator+=(Point<P>& lhs, const mln_dpoint(P)& rhs);
+  template <typename P, typename D>
+  P& operator+=(Point<P>& p, const Dpoint<D>& dp);
 
 
-  /*! \brief Remove a delta-point \p rhs to a point \p lhs.
+  /*! \brief Shift a point \p by the negate of a delta-point \p dp.
    *
-   * \param[in,out] lhs The targeted point.
-   * \param[in] rhs A delta-point.
+   * \param[in,out] p The targeted point.
+   * \param[in] dp A delta-point.
+   * \return A reference to the point \p p once translated by - \p dp.
    *
-   * \pre The type of \p rhs has to be the Dpoint type associated with
-   * the type of \p lhs; otherwise this test does not compile.
-   *
-   * \return A reference to the point \p lhs once translated by - \p
-   * rhs.
+   * \pre The type of \p dp has to be compatible with the type of \p
+   * p.
    *
    * \relates mln::Point
    */
-  template <typename P>
-  P& operator-=(Point<P>& lhs, const mln_dpoint(P)& rhs);
+  template <typename P, typename D>
+  P& operator-=(Point<P>& p, const Dpoint<D>& dp);
 
 
 
@@ -105,25 +114,32 @@ namespace mln
   }
 
   template <typename P>
-  const P* Point<P>::pointer_() const
+  const P&
+  Point<P>::to_point() const
   {
-    return exact(this);
+    return exact(*this);
   }
 
-  template <typename P>
-  P& operator+=(Point<P>& lhs, const mln_dpoint(P)& rhs)
+  template <typename P, typename D>
+  P& operator+=(Point<P>& p_, const Dpoint<D>& dp_)
   {
+    P& p = exact(p_);
+    const D& dp = exact(dp_);
+    // FIXME: Use to_vec()!
     for (unsigned i = 0; i < P::dim; ++i)
-      exact(lhs)[i] += rhs[i];
-    return lhs;
+      p[i] += dp[i];
+    return p;
   }
 
-  template <typename P>
-  P& operator-=(Point<P>& lhs, const mln_dpoint(P)& rhs)
+  template <typename P, typename D>
+  P& operator-=(Point<P>& p_, const Dpoint<D>& dp_)
   {
+    P& p = exact(p_);
+    const D& dp = exact(dp_);
+    // FIXME: Use to_vec()!
     for (unsigned i = 0; i < P::dim; ++i)
-      exact(lhs)[i] -= rhs[i];
-    return lhs;
+      p[i] -= dp[i];
+    return p;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

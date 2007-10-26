@@ -31,11 +31,12 @@
 /*! \file mln/core/concept/point_iterator.hh
  *
  * \brief Definition of the concept of mln::Point_Iterator.
+ *
+ * \todo Fix mln/core/concept/doc/point_iterator.hh
  */
 
-# include <mln/core/concept/iterator.hh>
-# include <mln/core/concept/generalized_point.hh>
 # include <mln/core/concept/point_site.hh>
+# include <mln/core/concept/iterator.hh> // To fetch the macros.
 
 
 namespace mln
@@ -51,20 +52,42 @@ namespace mln
    * contents.
    */
   template <typename E>
-  struct Point_Iterator : public Iterator<E>,
-			  public Generalized_Point<E>
+  struct Point_Iterator : public Point_Site<E>
   {
     /*
       typedef psite;
+      bool is_valid() const;
+      void invalidate();
+      void start();
+      void next_();
       operator psite() const;
-     */
+    */
+
+    /*! \brief Go to the next element.
+     *
+     * \warning This is a final method; iterator classes should not
+     * re-defined this method.  The actual "next" operation has to be
+     * defined through the \em next_ method.
+     *
+     * \pre The iterator is valid.
+     */ 
+    void next(); // final
 
   protected:
     Point_Iterator();
   };
 
 
+
 # ifndef MLN_INCLUDE_ONLY
+
+  template <typename E>
+  void
+  Point_Iterator<E>::next() // final
+  {
+    assert(exact(this)->is_valid());
+    exact(this)->next_();
+  }
 
   template <typename E>
   Point_Iterator<E>::Point_Iterator()
@@ -74,6 +97,15 @@ namespace mln
 
     psite (E::*m)() const = & E::operator psite;
     m = 0;
+
+    bool (E::*m1)() const = & E::is_valid;
+    m1 = 0;
+    void (E::*m2)() = & E::invalidate;
+    m2 = 0;
+    void (E::*m3)() = & E::start;
+    m3 = 0;
+    void (E::*m4)() = & E::next_;
+    m4 = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -54,8 +54,8 @@ namespace mln
 
     mesh_p_piter_(const mesh_p<P>& s);
 
-    /// Give a hook to the point address.
-    const P* pointer_() const;
+    /// Reference to the corresponding point.
+    const P& to_point() const;
 
     /// Read-only access to the \p i-th coordinate.
     mln_coord(P) operator[](unsigned i) const;
@@ -81,6 +81,8 @@ namespace mln
     P p_;
   };
 
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   template<typename P>
@@ -90,14 +92,12 @@ namespace mln
     invalidate();
   }
 
-
   template<typename P>
-  const P*
-  mesh_p_piter_<P>::pointer_() const
+  const P&
+  mesh_p_piter_<P>::to_point() const
   {
-    return & p_;
+    return p_;
   }
-
 
   template<typename P>
   mln_coord(P)
@@ -106,7 +106,6 @@ namespace mln
     return p_[i];
   }
 
-
   template<typename P>
   bool
   mesh_p_piter_<P>::is_valid() const
@@ -114,14 +113,12 @@ namespace mln
     return i_ != loc_.size();
   }
 
-
   template<typename P>
   void
   mesh_p_piter_<P>::invalidate()
   {
     i_ = loc_.size();
   }
-
 
   template<typename P>
   void 
@@ -131,7 +128,6 @@ namespace mln
     if (is_valid())
       p_ = loc_[i_];
   }
-  
 
   template<typename P>
   void 
@@ -141,7 +137,6 @@ namespace mln
     if (is_valid())
       p_ = loc_[i_];
   }
-  
 
   template<typename P>
   mesh_p_piter_<P>::operator P() const

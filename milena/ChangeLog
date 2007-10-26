@@ -1,3 +1,47 @@
+2007-10-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Get rid of Generalized_Point, replaced by Point_Site.
+
+	* mln/core/concept/point_iterator.hh: Change inheritance
+	from Iterator to Point_Site.
+	* mln/core/concept/doc/generalized_point.hh: Rename as...
+	* mln/core/concept/doc/point_site.hh: ...this; update.
+
+	Then update.
+
+	* tests/rle_image.cc: Add todo.
+	* mln/core/internal/point_iterator_base.hh
+	(operator[]): New.
+	* mln/core/rle_image.hh: Conform to style.
+	* mln/core/concept/generalized_point.hh: Remove.
+	* mln/core/concept/delta_point_site.hh: New.
+	* mln/core/concept/point.hh (Point<void>): New.
+	* mln/core/concept/dpoint.hh (Dpoint<void>): New.
+	(operator): Remove all; obsolete.
+	* mln/value/concept/built_in.hh: Add comment.
+	* mln/core/dpoints_piter.hh,
+	* mln/core/mesh_psite.hh,
+	* mln/core/window.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/mesh_p.hh,
+	* mln/core/internal/piter_adaptor.hh,
+	* mln/core/internal/run_pset.hh,
+	* mln/core/internal/run_psite.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/mesh_p_piter.hh,
+	* mln/core/line_piter.hh,
+	* mln/core/vec_p_piter.hh,
+	* mln/core/box_piter.hh,
+	* mln/core/concept/dpoint.hh,
+	* mln/core/concept/value_iterator.hh,
+	* mln/core/concept/point.hh,
+	* mln/core/concept/point_set.hh,
+	* mln/core/concept/point_site.hh,
+	* mln/linear/local/convolve.hh,
+	* mln/convert/to_window.hh,
+	* mln/convert/to_set_p.hh,
+	* mln/convert/to_dpoint.hh: Update.
+
 2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix warnings.

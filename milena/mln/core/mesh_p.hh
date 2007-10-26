@@ -28,7 +28,7 @@
 #ifndef MLN_MESH_P_HH
 # define MLN_MESH_P_HH
 
-# include <mln/core/concept/point.hh>
+# include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/graph.hh>

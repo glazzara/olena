@@ -63,8 +63,8 @@ namespace mln
       /// Convertion to point.
       operator mln_point(Pi) () const;
 
-      /// Address of the point.
-      const mln_point(Pi)* pointer_() const;
+      /// Reference to the corresponding point.
+      const mln_point(Pi)& to_point() const;
 
       /// Give the i-th coordinate.
       mln_coord(Pi) operator[](unsigned i) const;
@@ -105,10 +105,10 @@ namespace mln
     }
 
     template <typename Pi, typename E>
-    const mln_point(Pi)*
-    piter_adaptor_<Pi,E>::pointer_() const
+    const mln_point(Pi)&
+    piter_adaptor_<Pi,E>::to_point() const
     {
-      return piter_.pointer_();
+      return piter_.to_point();
     }
 
     template <typename Pi, typename E>

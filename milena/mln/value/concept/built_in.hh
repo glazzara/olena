@@ -42,7 +42,10 @@ namespace mln
   namespace value
   {
 
+    // Fwd decl.
     template <typename B> struct Built_In;
+
+
     // Category flag type.
     template <>
     struct Built_In<void> // No inheritance here since this category is special (on the side).

@@ -69,15 +69,19 @@ namespace mln
 
 
       run_pset_();
+
       /// Test is \p p belongs to this point set.
       bool has(const run_psite<P>& p) const;
+
       /// Give the exact bounding box.
       const box_<P>& bbox() const;
+
       /// Give the number of points.
       typename std::size_t npoints() const;
 
       /// Insert a range, start at point \p p wit len \p len.
       void insert(const P& p, unsigned len);
+
       /// Return the len of the range starting at point \p p.
       unsigned range_len_(const P& p) const;
 
@@ -85,10 +89,13 @@ namespace mln
       const std_container& con() const;
 
     protected:
+
       /// Number of points.
       typename std::size_t npoints_;
+
       /// Points container
       std_container con_;
+
       /// Exact bounding box.
       accu::bbox<P> fb_;
     };
@@ -182,18 +189,24 @@ namespace mln
 
       /// Convertion into a point-site.
       operator internal::run_psite<P> () const;
+
       /// Convertion into a point.
       operator P () const;
-      /// Return a pointer of the current point.
-      const P* pointer_() const;
+
+      /// Reference to the corresponding point.
+      const P& to_point() const;
+
       /// Access to the current point coordinates.
       mln_coord(P) operator[](unsigned i) const;
 
     protected:
+
       /// Current point.
       P p_;
+
       /// Current site.
       internal::run_psite<P> site_;
+
       /// Point set container.
       const std_container& con_;
 
@@ -222,11 +235,11 @@ namespace mln
     }
 
     template <typename P, typename E>
-    const P*
-    run_piter_<P, E>::pointer_() const
+    const P&
+    run_piter_<P, E>::to_point() const
     {
       mln_precondition(exact(this)->is_valid());
-      return &p_;
+      return p_;
     }
 
     template <typename P, typename E>
@@ -236,6 +249,7 @@ namespace mln
       mln_precondition(exact(this)->is_valid());
       return p_[i];
     }
+
 # endif // ! MLN_INCLUDE_ONLY
 
 
@@ -253,17 +267,24 @@ namespace mln
 
       /// Test the iterator validity.
       bool is_valid() const;
+
       /// Invalidate the iterator.
       void invalidate();
+
       /// Start an iteration.
       void start();
+
       /// Go to the next point.
       void next_();
+
     protected:
       typename super::std_container::const_iterator it_;
     };
 
+
+
 # ifndef MLN_INCLUDE_ONLY
+
     template <typename P>
     run_fwd_piter_<P>::run_fwd_piter_(const run_pset_<P>& pset) :
       super(pset)
@@ -318,6 +339,7 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
+
     /*! \brief Backward iterator on run_pset_ point set.
      *
      * Parameter \c P is the type of the point used in the point set.
@@ -332,17 +354,24 @@ namespace mln
 
       /// Test the iterator validity.
       bool is_valid() const;
+
       /// Invalidate the iterator.
       void invalidate();
+
       /// Start an iteration.
       void start();
+
       /// Go to the next point.
       void next_();
+
     protected:
       typename super::std_container::const_reverse_iterator it_;
     };
 
+
+
 # ifndef MLN_INCLUDE_ONLY
+
     template <typename P>
     run_bkd_piter_<P>::run_bkd_piter_(const run_pset_<P>& pset) :
       super(pset)

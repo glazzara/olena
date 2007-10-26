@@ -28,6 +28,8 @@
 /*! \file tests/rle_image.cc
  *
  * \brief Tests on mln::rle_image.
+ *
+ * \todo Trouble with ctor/init since there is no ctor with arg!
  */
 
 #include <mln/core/image2d.hh>

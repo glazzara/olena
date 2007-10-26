@@ -35,7 +35,7 @@
  */
 
 # include <mln/core/internal/point_iterator_base.hh>
-# include <mln/core/concept/generalized_point.hh>
+# include <mln/core/concept/point_site.hh>
 
 
 namespace mln
@@ -58,13 +58,13 @@ namespace mln
      */
     template <typename Dps, typename Pref>
     dpoints_fwd_piter(const Dps& dps, // FIXME: explicitly set_of_<D>?
-		      const Generalized_Point<Pref>& p_ref);
+		      const Point_Site<Pref>& p_ref);
 
     /// Convertion to point.
     operator mln_point(D) () const;
 
-    /// Address of the point this iterator designates.
-    const mln_point(D)* pointer_() const;
+    /// Reference to the corresponding point.
+    const mln_point(D)& to_point() const;
 
     /// Test the iterator validity.
     bool is_valid() const;
@@ -95,7 +95,7 @@ namespace mln
 
     unsigned i_;
     mln_point(D) p_; // location of this iterator; p_ makes this iterator be
-	      // itself a potential center point (Cf. the pointer_() method).
+	             // itself a potential center point.
   };
 
 
@@ -110,9 +110,9 @@ namespace mln
   template <typename D>
   template <typename Dps, typename Pref>
   dpoints_fwd_piter<D>::dpoints_fwd_piter(const Dps& dps,
-					  const Generalized_Point<Pref>& p_ref)
+					  const Point_Site<Pref>& p_ref)
     : dps_(exact(dps).vect()),
-      p_ref_(* internal::force_exact<Pref>(p_ref).pointer_())
+      p_ref_(exact(p_ref).to_point())
   {
     invalidate();
   }
@@ -125,10 +125,10 @@ namespace mln
   }
 
   template <typename D>
-  const mln_point(D)*
-  dpoints_fwd_piter<D>::pointer_() const
+  const mln_point(D)&
+  dpoints_fwd_piter<D>::to_point() const
   {
-    return & p_;
+    return p_;
   }
 
   template <typename D>

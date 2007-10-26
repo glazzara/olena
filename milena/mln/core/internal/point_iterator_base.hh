@@ -71,6 +71,9 @@ namespace mln
       /// Coord associated type.
       typedef mln_coord(point) coord;
 
+      // Access to the i-th coordinate.
+      coord operator[](unsigned i) const;
+
     protected:
       /// Constructor.
       point_iterator_base_();
@@ -83,6 +86,14 @@ namespace mln
     point_iterator_base_<P, E>::point_iterator_base_()
     {
       mln::metal::is_a<P, Point_Site>::check();
+    }
+
+    template <typename P, typename E>
+    typename point_iterator_base_<P, E>::coord
+    point_iterator_base_<P, E>::operator[](unsigned i) const
+    {
+      mln_precondition(i < dim);
+      return exact(*this).to_point()[i];
     }
 
 #endif // ! MLN_INCLUDE_ONLY

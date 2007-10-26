@@ -31,13 +31,19 @@
 /*! \file mln/core/mesh_p.hh
  *
  * \brief Definition of a graph-based point site.
+ *
+ * \todo Clean-up!
  */
+
 
 namespace mln
 {
 
+  // Fwd decl.
   template<typename P> class mesh_p;
 
+
+  // FIXME: Doc!
   template<typename P>
   struct mesh_psite : public Point_Site< mesh_psite<P> >
   {
@@ -48,12 +54,15 @@ namespace mln
     typedef mln_coord(P) coord;
 
     mesh_psite(unsigned i, mesh_p<P>* m_ptr);
-    P to_point() const;
+
     operator P() const;
-    const point* pointer_() const;
+
+    const point& to_point() const;
+
     coord operator[](unsigned i) const;
 
     unsigned i_;
+
     mesh_p<P>* m_ptr_;
   };
 
@@ -67,23 +76,16 @@ namespace mln
   }
 
   template<typename P>
-  P
-  mesh_psite<P>::to_point() const
-  {
-    return m_ptr_->loc_[i_];
-  }
-
-  template<typename P>
   mesh_psite<P>::operator P() const
   {
     return m_ptr_->loc_[i_];
   }
 
   template<typename P>
-  const P*
-  mesh_psite<P>::pointer_() const
+  const P&
+  mesh_psite<P>::to_point() const
   {
-    return 0;
+    return m_ptr_->loc_[i_];
   }
 
   template<typename P>

@@ -25,29 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_PSITE_HH
-# define MLN_CORE_CONCEPT_PSITE_HH
+#ifndef MLN_CORE_CONCEPT_POINT_SITE_HH
+# define MLN_CORE_CONCEPT_POINT_SITE_HH
 
 /*! \file mln/core/concept/point_site.hh
+ *
  * \brief Definition of the concept of mln::Point_Site.
  */
 
-# include <mln/core/concept/generalized_point.hh>
+# include <mln/core/concept/object.hh>
+# include <mln/core/concept/delta_point_site.hh>
+# include <mln/core/grids.hh>
+# include <mln/trait/all.hh>
+
 
 
 namespace mln
 {
 
-  // FIXME: Hack is "Point" instead of "Points_Site"; change it!
+  // Fwd decls.
+  template <typename E> struct Point_Site;
 
 
-  // Fwd decl.
-  template <typename E> struct Point;
+
+  namespace trait
+  {
+
+    template < typename P, typename D >
+    struct set_binary_< op::plus,
+			mln::Point_Site, P, mln::Delta_Point_Site, D >
+    {
+      typedef mln_point(P) ret;
+    };
+
+    template < typename P, typename D >
+    struct set_binary_< op::minus,
+			mln::Point_Site, P, mln::Delta_Point_Site, D >
+    {
+      typedef mln_point(P) ret;
+    };
+
+    template < typename L, typename R >
+    struct set_binary_< op::minus,
+			mln::Point_Site, L, mln::Point_Site, R >
+    {
+      typedef mln_dpoint(L) ret;
+    };
+
+  } // end of namespace mln::trait
 
 
-  /// Point_Site category flag type.
+
+
+  /// Point site category flag type.
   template <>
-  struct Point<void>
+  struct Point_Site<void>
   {
     typedef Object<void> super;
   };
@@ -58,13 +90,10 @@ namespace mln
    *
    * A point site ("psite" for short) is an object that allows an
    * efficient access to data associated with a point.  A point site
-   * is either a point or designates a point: regular points, deriving
-   * from mln::Point, are point sites, yet some point sites are not
-   * points.)  A point site has the behavior expected from every
-   * point; see mln::Generalized_Point.
+   * is either a point or designates a point.
    *
-   * When a point site is not a point, it is automatically convertible
-   * to the point it designates.
+   * When a point site is not really a point, it is automatically
+   * convertible to the point it designates.
    *
    *
    * Let us take the example of a 2D image encoded as an array of runs
@@ -76,16 +105,21 @@ namespace mln
    * proper point site is a pair (index of run, index within the run).
    */
   template <typename E>
-  struct Point_Site : public Object<E>,
-		      public Generalized_Point<E>
+  struct Point_Site : public Object<E>
   {
-    typedef Point<void> category; // FIXME: This is a hack!  Change the hierarchy...
+    typedef Point_Site<void> category;
 
     /*
-    const point* pointer_() const
-    {
-      return & (exact(this)->operator point());
-    }
+    enum { dim };
+    typedef mesh;
+
+    typedef point;
+    typedef dpoint;
+    typedef coord;
+
+    const point& to_point() const;
+
+    coord operator[](unsigned i) const;
     */
 
   protected:
@@ -93,11 +127,219 @@ namespace mln
   };
 
 
+  /*! \brief Equality comparison between a couple of point site \p lhs
+   *  and \p rhs.
+   *
+   * \param[in] lhs A first point site.
+   * \param[in] rhs A second point site.
+   *
+   * \pre Both \p lhs and \p rhs have to be defined on the same
+   * topology; otherwise this test does not compile.
+   *
+   * \return True if both point sites have the same
+   * coordinates, otherwise false.
+   *
+   * \relates mln::Point_Site
+   */
+  template <typename L, typename R>
+  bool operator==(const Point_Site<L>& lhs, const Point_Site<R>& rhs);
+
+
+  /*! \brief Ordering "less than" comparison between a couple of
+   *  point sites \p lhs and \p rhs.
+   *
+   * \param[in] lhs A first point site.
+   * \param[in] rhs A second point site.
+   *
+   * This test is based on a lexicographical ordering over coordinates.
+   *
+   * \warning In the general case this ordering relationship is \em
+   * not bound to the way of browsing a domain with a forward point
+   * iterator.
+   *
+   * \pre Both \p lhs and \p rhs have to be defined on the same
+   * topology; otherwise this test does not compile.
+   *
+   * \return True if \p lhs is before \p rhs in the sense of the
+   * coordinates lexicographic comparison, otherwise false.
+   *
+   * \relates mln::Point_Site
+   */
+  template <typename L, typename R>
+  bool operator<(const Point_Site<L>& lhs, const Point_Site<R>& rhs);
+
+
+  /*! \brief Difference between a couple of point site \p lhs and \p
+   *  rhs.
+   *
+   * \param[in] lhs A first point site.
+   * \param[in] rhs A second point site.
+   *
+   * \warning There is no type promotion in milena so the client
+   * has to make sure that both points are defined with the same
+   * type of coordinates.
+   *
+   * \pre Both \p lhs and \p rhs have to be defined on the same
+   * topology and with the same type of coordinates; otherwise this
+   * test does not compile.
+   *
+   * \post The result, \p dp, is such as \p lhs == \p rhs + \p dp. 
+   *
+   * \return A delta point (temporary object).
+   *
+   * \relates mln::Point_Site
+   * \see mln::Delta_Point_Site
+   */
+  template <typename L, typename R>
+  mln_dpoint(L)
+  operator-(const Point_Site<L>& lhs, const Point_Site<R>& rhs);
+
+
+  /*! \brief Add a delta-point \p rhs to a point site \p lhs.
+   *
+   * \param[in] p  A point site.
+   * \param[in] dp A delta-point.
+   *
+   * The type of \p dp has to compatible with the type of \p p.
+   *
+   * \return A point (temporary object).
+   *
+   * \relates mln::Point_Site
+   * \see mln::Delta_Point_Site
+   */
+  template <typename P, typename D>
+  mln_point(P)
+  operator+(const Point_Site<P>& p, const Delta_Point_Site<D>& dp);
+
+
+  /*! \brief Substract a delta-point \p rhs to a point site \p lhs.
+   *
+   * \param[in] p A point site.
+   * \param[in] dp A delta-point.
+   *
+   * The type of \p dp has to compatible with the type of \p p.
+   *
+   * \return A point (temporary object).
+   *
+   * \see mln::Dpoint
+   * \see mln::Delta_Point_Site
+   */
+  template <typename P, typename D>
+  mln_point(P)
+  operator-(const Point_Site<P>& p, const Delta_Point_Site<D>& dp);
+
+
+  /*! \brief Print a point site \p p into the output stream \p ostr.
+   *
+   * \param[in,out] ostr An output stream.
+   * \param[in] p A point site.
+   *
+   * \return The modified output stream \p ostr.
+   *
+   * \relates mln::Point_Site
+   */
+  template <typename P>
+  std::ostream& operator<<(std::ostream& ostr, const Point_Site<P>& p);
+
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
   Point_Site<E>::Point_Site()
   {
+    int dim = E::dim;
+    mln_invariant(dim > 0);
+    dim = 0;
+    typedef mln_mesh(E)   mesh;
+    typedef mln_point(E)  point;
+    typedef mln_dpoint(E) dpoint;
+    typedef mln_coord(E)  coord;
+    const point& (E::*m1)() const = & E::to_point;
+    m1 = 0;
+    coord (E::*m2)(unsigned i) const = & E::operator[];
+    m2 = 0;
+  }
+
+
+  // Operators.
+
+  template <typename L, typename R>
+  bool operator==(const Point_Site<L>& lhs_, const Point_Site<R>& rhs_)
+  {
+    mln::metal::bool_<(int(L::dim) == int(R::dim))>::check();
+    const L& lhs = exact(lhs_);
+    const R& rhs = exact(rhs_);
+    for (unsigned i = 0; i < L::dim; ++i)
+      if (lhs[i] != rhs[i])
+	return false;
+    return true;
+  }
+
+  template <typename L, typename R>
+  bool operator<(const Point_Site<L>& lhs_, const Point_Site<R>& rhs_)
+  {
+    mln::metal::bool_<(int(L::dim) == int(R::dim))>::check();
+    const L& lhs = exact(lhs_);
+    const R& rhs = exact(rhs_);
+    for (unsigned i = 0; i < L::dim; ++i)
+      {
+	if (lhs[i] == rhs[i])
+	  continue;
+	return lhs[i] < rhs[i];
+      }
+    return false;
+  }
+
+  template <typename L, typename R>
+  mln_dpoint(L) // FIXME: promote!
+  operator-(const Point_Site<L>& lhs_, const Point_Site<R>& rhs_)
+  {
+    mln::metal::bool_<(int(L::dim) == int(R::dim))>::check();
+    const L& lhs = exact(lhs_);
+    const R& rhs = exact(rhs_);
+    mln_dpoint(L) tmp;
+    for (unsigned i = 0; i < L::dim; ++i)
+      tmp[i] = lhs[i] - rhs[i];
+    mln_postcondition(rhs_ + tmp == lhs_);
+    return tmp;
+  }
+
+  template <typename P, typename D>
+  mln_point(P) // FIXME: promote!
+  operator+(const Point_Site<P>& p_, const Delta_Point_Site<D>& dp_)
+  {
+    mln::metal::bool_<(int(P::dim) == int(D::dim))>::check();
+    const P& p  = exact(p_);
+    const D& dp = exact(dp_);
+    mln_point(P) tmp;
+    for (unsigned i = 0; i < P::dim; ++i)
+      tmp[i] = p[i] + dp[i];
+    return tmp;
+  }
+
+  template <typename P, typename D>
+  mln_point(P) // FIXME: promote!
+  operator-(const Point_Site<P>& p_, const Delta_Point_Site<D>& dp_)
+  {
+    mln::metal::bool_<(int(P::dim) == int(D::dim))>::check();
+    const P& p  = exact(p_);
+    const D& dp = exact(dp_);
+    mln_point(P) tmp;
+    for (unsigned i = 0; i < P::dim; ++i)
+      tmp[i] = p[i] - dp[i];
+    return tmp;
+  }
+
+  template <typename P>
+  std::ostream& operator<<(std::ostream& ostr, const Point_Site<P>& p_)
+  {
+    const P& p = exact(p_);
+    ostr << '(';
+    for (unsigned i = 0; i < P::dim; ++i)
+	ostr << p[i] << (i == P::dim - 1 ? ')' : ',');
+    return ostr;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -105,4 +347,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_PSITE_HH
+#endif // ! MLN_CORE_CONCEPT_POINT_SITE_HH

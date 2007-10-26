@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/concept/generalized_point.hh>
+# include <mln/core/concept/point_site.hh>
 # include <mln/core/concept/generalized_pixel.hh>
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/metal/const.hh>
@@ -60,9 +60,9 @@ namespace mln
        * its symmetrization is handled by the client.
        */
       template <typename I, typename P, typename W, typename R>
-      void convolve(const Image<I>&             input,
-		    const Generalized_Point<P>& p,
-		    const Weighted_Window<W>&   w_win,
+      void convolve(const Image<I>&           input,
+		    const Point_Site<P>&      p,
+		    const Weighted_Window<W>& w_win,
 		    R& result);
 
 
@@ -88,11 +88,11 @@ namespace mln
 
 	template <typename I, typename P, typename W, typename R>
 	void convolve(trait::image::speed::any, const I& input,
-		      const Generalized_Point<P>& p_,
-		      const W&                    w_win,
+		      const Point_Site<P>& p_,
+		      const W&             w_win,
 		      R& result)
 	{
-	  const P& p = internal::force_exact<P>(p_);
+	  const P& p = exact(p_);
 
 	  R tmp = 0; // FIXME: zero?
 	  mln_qiter(W) q(w_win, p);
@@ -103,11 +103,11 @@ namespace mln
 
 	template <typename I, typename P, typename W, typename R>
 	void convolve(trait::image::speed::fastest, const I& input,
-		      const Generalized_Point<P>& p_,
-		      const W&                    w_win,
+		      const Point_Site<P>& p_,
+		      const W& w_win,
 		      R& result)
 	{
-	  const P& p = internal::force_exact<P>(p_);
+	  const P& p = exact(p_);
 
 	  mln_precondition(input.border() >= w_win.delta());
 
@@ -143,8 +143,8 @@ namespace mln
       // Facades.
 
       template <typename I, typename P, typename W, typename R>
-      void convolve(const Image<I>&             input,
-		    const Generalized_Point<P>& p,
+      void convolve(const Image<I>& input,
+		    const Point_Site<P>& p,
 		    const Weighted_Window<W>&   w_win,
 		    R& result)
       {

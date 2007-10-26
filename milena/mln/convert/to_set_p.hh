@@ -35,8 +35,8 @@
 
 # include <set>
  
-# include <mln/core/concept/dpoint.hh>
 # include <mln/core/concept/neighborhood.hh>
+# include <mln/core/concept/point_site.hh>
 # include <mln/core/set_p.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
@@ -112,7 +112,7 @@ namespace mln
     template <typename P>
     set_p<P> to_set_p(const std::set<P>& s)
     {
-      mln::metal::is_a<P, Point>::check();
+      mln::metal::is_a<P, Point_Site>::check();
       set_p<P> pset;
       for (typename std::set<P>::const_iterator i = s.begin();
 	   i != s.end(); ++i)

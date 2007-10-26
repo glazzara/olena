@@ -56,8 +56,8 @@ namespace mln
     template <typename S>
     vec_p_fwd_piter_(const Point_Set<S>& s);
 
-    /// Give a hook to the point address.
-    const P* pointer_() const;
+    /// Reference of the corresponding point.
+    const P& to_point() const;
 
     /// Read-only access to the \p i-th coordinate.
     mln_coord(P) operator[](unsigned i) const;
@@ -102,8 +102,8 @@ namespace mln
     template <typename S>
     vec_p_bkd_piter_(const Point_Set<S>& s);
 
-    /// Give a hook to the point address.
-    const P* pointer_() const;
+    /// Reference of the corresponding point.
+    const P& to_point() const;
 
     /// Read-only access to the \p i-th coordinate.
     mln_coord(P) operator[](unsigned i) const;
@@ -144,10 +144,10 @@ namespace mln
   }
 
   template <typename P>
-  const P*
-  vec_p_fwd_piter_<P>::pointer_() const
+  const P&
+  vec_p_fwd_piter_<P>::to_point() const
   {
-    return & p_;
+    return p_;
   }
 
   template <typename P>
@@ -210,10 +210,10 @@ namespace mln
   }
 
   template <typename P>
-  const P*
-  vec_p_bkd_piter_<P>::pointer_() const
+  const P&
+  vec_p_bkd_piter_<P>::to_point() const
   {
-    return & p_;
+    return p_;
   }
 
   template <typename P>

@@ -38,7 +38,7 @@
 # include <vector>
 
 # include <mln/core/concept/pixel_iterator.hh>
-# include <mln/core/concept/generalized_pixel.hh>
+# include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/pixel_impl.hh>
 
 
@@ -62,12 +62,12 @@ namespace mln
      *
      * \param[in] image Image subject to iteration.
      * \param[in] dps   Object that can provide a set of delta-points.
-     * \param[in] p_ref Center (generalized) point to iterate around.
+     * \param[in] p_ref Center point to iterate around.
      */
     template <typename Dps, typename Pref>
     dpoints_fwd_pixter(I& image,
 		       const Dps& dps,
-		       const Generalized_Point<Pref>& p_ref);
+		       const Point_Site<Pref>& p_ref);
 
     /*! \brief Constructor.
      *
@@ -129,11 +129,11 @@ namespace mln
   template <typename Dps, typename Pref>
   dpoints_fwd_pixter<I>::dpoints_fwd_pixter(I& image,
 					    const Dps& dps,
-					    const Generalized_Point<Pref>& p_ref)
+					    const Point_Site<Pref>& p_ref)
     : super_(image)
   {
     mln_precondition(image.has_data());
-    p_ref_ = internal::force_exact<Pref>(p_ref).pointer_();
+    p_ref_ = & exact(p_ref).to_point();
     value_ref_ = 0;
     init_(dps);
   }
