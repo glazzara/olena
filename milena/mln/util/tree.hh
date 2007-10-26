@@ -53,7 +53,7 @@ namespace mln
 
       T& content();
       const T& content() const;
-      void add_child(T& elt);
+      node<T>* add_child(T& elt);
       void set_parent(node<T>* parent);
       node<T>* get_parent();
       void print_rec(int n) const;
@@ -152,13 +152,14 @@ namespace mln
     }
 
     template <typename T>
-    void
+    node<T>*
     node<T>::add_child(T& elt)
     {
       node<T>* s = new node<T>(elt);
 
       s->parent_ = this;
       this->child_.push_back(s);
+      return s;
     }
 
     template <typename T>

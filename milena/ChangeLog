@@ -1,3 +1,14 @@
+2007-10-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update tree for tests.
+
+	* mln/util/tree.hh,
+	* mln/util/tree_fast.hh,
+	* mln/util/tree_to_image.hh,
+	* tests/tree.cc,
+	* tests/tree_fast_to_image.cc,
+	* tests/tree_to_image.cc: Update.
+
 2007-10-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add traits for comparison and logical operators.

@@ -49,15 +49,15 @@ namespace mln
     template <typename T>
     struct tree_fast
     {
-//       tree_fast();
+      tree_fast();
       tree_fast(T& elt);
 
       const unsigned size() const;
       bool has (T& elt) const;
       unsigned search (T& elt) const;
       bool is_root (unsigned i) const;
-      void add_child (unsigned i, T& elt);
-      void add_parent (T& elt);
+      unsigned add_child (unsigned i, T& elt);
+      unsigned add_parent (T& elt);
 
       std::vector<T> data_;
       std::vector<unsigned> parent_;
@@ -67,10 +67,10 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-//     template <typename T>
-//     tree_fast<T>::tree_fast()
-//     {
-//     }
+    template <typename T>
+    tree_fast<T>::tree_fast()
+    {
+    }
 
     template <typename T>
     tree_fast<T>::tree_fast(T& elt)
@@ -121,7 +121,7 @@ namespace mln
     }
 
     template <typename T>
-    void
+    unsigned
     tree_fast<T>::add_child (unsigned i, T& elt)
     {
       mln_assertion (i < data_.size ());
@@ -130,19 +130,21 @@ namespace mln
       parent_.push_back(i);
       child_.push_back(v);
       child_[i].push_back(data_.size () - 1);
+      return (data_.size () - 1);
     }
 
     template <typename T>
-    void
+    unsigned
     tree_fast<T>::add_parent (T& elt)
     {
-      std::vector<unsigned> v;
       data_.push_back(elt);
       parent_.push_back(data_.size () - 1);
+      std::vector<unsigned> v;
+      v.push_back (root_);
       child_.push_back(v);
-      child_[data_.size () - 1].push_back(root_);
       parent_[root_] = data_.size () - 1;
       root_ = data_.size () - 1;
+      return (data_.size () - 1);
     }
 
 

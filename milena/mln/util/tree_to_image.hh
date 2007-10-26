@@ -66,8 +66,6 @@ namespace mln
 
       for_all(p)
 	{
-	  std::cout << p
-		    << std::endl;
 	  output(p) = node->elt_.value;
 	}
       typename std::vector< util::node<T>* >::const_iterator it = node->child_.begin();

@@ -50,6 +50,21 @@ struct fllt_node
   mln::set_p<P> holes;
 };
 
+
+template <typename P, typename V>
+bool operator==(const mln::set_p<P>& lhs, const mln::set_p<P>& rhs)
+{
+  std::size_t n = lhs.npoints ();
+  mln::set_p<P> tmp;
+
+  if (n != rhs.npoints ())
+    return false;
+
+//   for (std::size_t i = 0; i < n; ++i)
+//     if ()
+
+}
+
 template <typename P, typename V>
 bool operator==(const struct fllt_node<P,V>& lhs, const struct fllt_node<P,V>& rhs)
 {
@@ -58,11 +73,11 @@ bool operator==(const struct fllt_node<P,V>& lhs, const struct fllt_node<P,V>& r
 
   /// FIXME
 
-//   if (lhs.points != rhs.points)
-//     return false;
+  if (!(lhs.points == rhs.points))
+    return false;
 
-//   if (lhs.holes != rhs.holes)
-//     return false;
+  if (!(lhs.holes == rhs.holes))
+    return false;
 
   return true;
 }
@@ -113,7 +128,7 @@ int main (void)
   s7.value = 10;
 
   util::tree_fast<T> tree(s1);
-  tree.add_child(tree.search(s1), s2);
+  tree.add_child(tree.root_, s2);
   tree.add_child(tree.search(s1), s3);
   tree.add_child(tree.search(s2), s4);
   tree.add_child(tree.search(s2), s5);

@@ -42,12 +42,21 @@
 #include <vector>
 #include <mln/util/tree_to_image.hh>
 
+template <typename P, typename V>
+struct fllt_node
+{
+  V	value;
+  mln::set_p<P> points;
+  mln::set_p<P> holes;
+};
+
+
 int main (void)
 {
   using namespace mln;
   using value::int_u8;
 
-  typedef set_p<point2d > I;
+  typedef fllt_node<point2d , int_u8>  I;
 
   image2d<int_u8> output (300, 300);
 
@@ -61,43 +70,44 @@ int main (void)
 
   for (int i = 0; i < 100; ++i)
     for (int j = 0; j < 100; ++j)
-      s1.insert(point2d(i, j));
-
+      s1.points.insert(point2d(i, j));
+  s1.value = 60;
   for (int i = 200; i < 300; ++i)
     for (int j = 0; j < 100; ++j)
-      s2.insert(point2d(i, j));
-
+      s2.points.insert(point2d(i, j));
+  s1.value = 100;
   for (int i = 0; i < 100; ++i)
     for (int j = 0; j < 100; ++j)
-      s3.insert(point2d(i, j));
-
+      s3.points.insert(point2d(i, j));
+  s3.value = 110;
   for (int i = 260; i < 290; ++i)
     for (int j = 0; j < 50; ++j)
-      s4.insert(point2d(i, j));
-
+      s4.points.insert(point2d(i, j));
+  s4.value = 170;
   for (int i = 200; i < 210; ++i)
     for (int j = 0; j < 50; ++j)
-      s5.insert(point2d(i, j));
-
+      s5.points.insert(point2d(i, j));
+  s5.value = 180;
   for (int i = 270; i < 280; ++i)
     for (int j = 50; j < 60; ++j)
-      s6.insert(point2d(i, j));
-
+      s6.points.insert(point2d(i, j));
+  s6.value = 210;
   for (int i = 0; i < 300; ++i)
     for (int j = 0; j < 200; ++j)
-      s7.insert(point2d(i, j));
+      s7.points.insert(point2d(i, j));
+  s7.value = 10;
 
   util::node<I> node(s1);
   node.add_child(s2);
   node.add_child(s3);
 
-  util::node<I>* node2 = node.search(s2);
-  mln_assertion(node2);
-  node2->add_child(s4);
-  node2->add_child(s5);
-  util::node<I>* node3 = node.search(s4);
-  mln_assertion(node3);
-  node3->add_child(s6);
+//   util::node<I>* node2 = node.search(s2);
+//   mln_assertion(node2);
+  node.add_child(s4);
+  node.add_child(s5);
+//   util::node<I>* node3 = node.search(s4);
+//   mln_assertion(node3);
+  node.add_child(s6);
 
   util::tree<I> tree (&node);
 
@@ -113,7 +123,4 @@ int main (void)
 
   std::cout << "out.pgm generate"
 	    << std::endl;
-
-//   tree3 = tree2->search(s1);
-//   mln_assertion(!tree3);
 }

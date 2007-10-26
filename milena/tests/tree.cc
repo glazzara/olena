@@ -47,9 +47,9 @@ int main (void)
   unsigned elt6= 42;
 
   util::node<unsigned> node(elt1);
-  node.add_child(elt2);
+  util::node<unsigned>* node2 =  node.add_child(elt2);
   node.add_child(elt3);
-  util::node<unsigned>* node2 = node.search(elt2);
+//   util::node<unsigned>* node2 = node.search(elt2);
   mln_assertion(node2);
   node2->add_child(elt4);
   node2->add_child(elt5);
