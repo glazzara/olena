@@ -1,3 +1,10 @@
+2007-10-26  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix on tree for compiling, and Fix in fllt.
+	* mln/util/tree.hh, 
+	* mln/util/tree_fast.hh,
+	* sandbox/garrigues/fllt.hh: Fix.
+
 2007-10-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Some more definitions of traits and ops.

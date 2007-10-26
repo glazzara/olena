@@ -30,6 +30,8 @@
 
 # include <vector>
 
+# include <mln/core/contract.hh>
+
 /*!
  * \file   mln/util/tree.hh
  *

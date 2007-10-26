@@ -29,6 +29,8 @@
 # define MLN_UTIL_TREE_FAST_HH
 
 # include <vector>
+# include <iostream>
+
 # include <mln/core/contract.hh>
 
 /*!

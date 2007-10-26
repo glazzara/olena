@@ -249,11 +249,9 @@ namespace mln
       current_region->content().value = g;
       for_all(p)
 	{
+	  current_region->content().points.insert(p);
 	  if (regions(p) == 0)
-	  {
-	    current_region->content().points.insert(p);
 	    regions(p) = current_region;
-	  }
 	  else
 	  {
 	    if (regions(p)->get_parent() == 0)
