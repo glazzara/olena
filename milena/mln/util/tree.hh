@@ -55,6 +55,7 @@ namespace mln
     {
     public:
 
+      typedef std::vector< node<T>* > children_t;
       /// \{ Constructors
       node();
       node(T elt);
@@ -66,15 +67,15 @@ namespace mln
       /// \}
 
       /// Access to the children
-      const std::vector< node<T>* >& children() const;
-      std::vector< node<T>* >& children();
+      const children_t& children() const;
+      children_t& children();
 
       /// Access to the parent node.
+      //node<T>*& parent();
       const node<T>* parent() const;
 
       node<T>* add_child(T elt);
       void set_parent(node<T>* parent);
-      node<T>* get_parent();
       void print_rec(int n) const;
       void print() const;
       int  search_rec(node<T>** res, T& elt);
@@ -96,6 +97,7 @@ namespace mln
       tree(node<T>* root);
 
       node<T>* root();
+      branch<T> main_branch();
       void add_tree_up (T& elt);
       void add_tree_down (T& elt);
 
@@ -142,12 +144,19 @@ namespace mln
     }
 
     template <typename T>
+    branch<T>
+    tree<T>::main_branch()
+    {
+      return branch<T>(*this, root());
+    }
+
+    template <typename T>
     void
     tree<T>::add_tree_up(T& elt)
     {
       node<T>* n = new node<T> (elt);
-      root_->parent_ = n;
-      n->child_.push_back (root_);
+      root_->set_parent(n);
+      n->children().push_back (root_);
       root_ = n;
     }
 
@@ -222,13 +231,19 @@ namespace mln
       parent->child_.push_back(this);
     }
 
-
     template <typename T>
-    node<T>*
-    node<T>::get_parent()
+    const node<T>*
+    node<T>::parent() const
     {
       return parent_;
     }
+
+//     template <typename T>
+//     node<T>*&
+//     node<T>::parent()
+//     {
+//       return parent_;
+//     }
 
     template <typename T>
     int

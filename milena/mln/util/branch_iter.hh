@@ -49,7 +49,7 @@ namespace mln
       branch_iter(branch<T> branch);
 
       /// Convertion to node.
-      operator node<T>&() const;
+      operator util::node<T>&() const;
 
       /// Test the iterator validity.
       bool is_valid() const;

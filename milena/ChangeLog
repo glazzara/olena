@@ -1,5 +1,12 @@
 2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix tree.
+	* mln/util/branch_iter.hh,
+	* mln/util/tree.hh,
+	* tests/tree.cc: Fix.
+
+2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix use of tree.
 	* mln/util/tree.hh,
 	* mln/util/tree_to_image.hh,
