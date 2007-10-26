@@ -46,9 +46,13 @@ namespace mln
 
 }
 
-# include <mln/arith/min.hh>
-# include <mln/arith/minus.hh>
+
 # include <mln/arith/plus.hh>
+# include <mln/arith/minus.hh>
+# include <mln/arith/times.hh>
+
+# include <mln/arith/min.hh>
 # include <mln/arith/revert.hh>
+
 
 #endif // ! MLN_ARITH_ALL_HH

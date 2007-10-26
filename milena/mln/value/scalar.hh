@@ -62,9 +62,6 @@ namespace mln
       /// Ctor.
       explicit scalar_(const T& val);
 
-      /// Conversion.  FIXME: Is-it useful?
-      operator T() const;
-
       /// Access to the scalar value.
       T to_equiv() const;
 
@@ -117,12 +114,6 @@ namespace mln
     scalar_<T>::scalar_(const T& val)
       : val_(val)
     {
-    }
-
-    template <typename T>
-    scalar_<T>::operator T() const
-    {
-      return val_;
     }
 
     template <typename T>

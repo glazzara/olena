@@ -259,6 +259,8 @@ namespace mln
     return mlc_equal(L1, L2)::value;
   }
 
+  // FIXME: Add less, etc.
+
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

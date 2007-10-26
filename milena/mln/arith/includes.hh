@@ -25,34 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/literal_zero.cc
+#ifndef MLN_ARITH_INCLUDES_HH
+# define MLN_ARITH_INCLUDES_HH
+
+/*! \file mln/arith/includes.hh
  *
- * \brief Tests on mln::literal::zero.
+ * \brief File that includes what is required by arith files.
  */
 
-#include <mln/literal/zero.hh>
-#include <mln/literal/one.hh>
-#include <mln/literal/ops.hh>
-#include <mln/value/int_u8.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/value/ops.hh>
+# include <mln/pw/cst.hh>
+# include <mln/pw/image.hh>
 
 
-
-int main()
-{
-  using namespace mln;
-
-  unsigned char c;
-  c = literal::zero;
-  mln_assertion(c == 0);
-
-  double d;
-  d = literal::zero;
-  mln_assertion(d == 0);
-
-  mln_assertion(literal::zero != literal::one);
-
-  value::int_u8 u(literal::zero), uu;
-  uu = literal::zero;
-
-  mln_assertion(u == 0 && 0 == u);
-}
+#endif // ! MLN_ARITH_INCLUDES_HH

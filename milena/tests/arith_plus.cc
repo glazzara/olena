@@ -25,15 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/literal_zero.cc
+/*! \file tests/arith_plus.cc
  *
- * \brief Tests on mln::literal::zero.
+ * \brief Tests on mln::image2d.
  */
 
-#include <mln/literal/zero.hh>
-#include <mln/literal/one.hh>
-#include <mln/literal/ops.hh>
+#include <mln/core/image2d.hh>
+#include <mln/core/clone.hh>
 #include <mln/value/int_u8.hh>
+
+#include <mln/arith/plus.hh>
+#include <mln/arith/times.hh>
+#include <mln/level/compare.hh>
+
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
 
 
 
@@ -41,18 +47,51 @@ int main()
 {
   using namespace mln;
 
-  unsigned char c;
-  c = literal::zero;
-  mln_assertion(c == 0);
+  {
+    image2d<int> ref(3,3);
+    debug::iota(ref);
 
-  double d;
-  d = literal::zero;
-  mln_assertion(d == 0);
+    image2d<int> ima_i = clone(ref);
+    ima_i += ima_i;
+    mln_assertion(ima_i == 2 * ref);
 
-  mln_assertion(literal::zero != literal::one);
+//     debug::println(ima_i);
+//     ima_i += 1;
+//     debug::println(ima_i);
 
-  value::int_u8 u(literal::zero), uu;
-  uu = literal::zero;
+//     debug::iota(ima_f);
+//     debug::println(ima_i + ima_f);
+  }
 
-  mln_assertion(u == 0 && 0 == u);
 }
+
+
+
+// Bench:
+
+//   {
+//     unsigned size = 5000;
+//     image2d<unsigned char> ima_uc(size, size);
+//     image2d<unsigned> ima_u;
+//     ima_u = 2u + ima_uc;
+//   }
+//   {
+//     unsigned size = 5000;
+//     image2d<value::int_u8> ima_uc(size, size);
+//     image2d<unsigned> ima_u;
+//     ima_u = 2u + ima_uc;
+//   }
+
+//   {
+//     unsigned size = 5000;
+//     image2d<unsigned char> ima_uc(size, size);
+//     image2d<unsigned> ima_u;
+//     ima_u = ima_uc + ima_uc;
+//   }
+//   {
+//     unsigned size = 5000;
+//     image2d<value::int_u8> ima_u8(size, size);
+//     image2d<unsigned> ima_u;
+//     ima_u = ima_u8 + ima_u8;
+//   }
+

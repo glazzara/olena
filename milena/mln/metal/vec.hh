@@ -466,7 +466,6 @@ namespace mln
       return tmp;
     }
 
-
     template <unsigned n, typename T, typename S>
     vec<n, mln_trait_op_times(T, S)>
     operator*(const vec<n,T>& lhs, const mln::value::scalar_<S>& s)
@@ -491,7 +490,7 @@ namespace mln
     vec<n, mln_trait_op_div(T, S)>
     operator/(const vec<n,T>& lhs, const mln::value::scalar_<S>& s)
     {
-      mln_precondition(s != 0);
+      mln_precondition(value::equiv(s) != literal::zero);
       vec<n, mln_trait_op_div(T, S)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = lhs[i] / s.to_equiv();

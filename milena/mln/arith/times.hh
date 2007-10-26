@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ARITH_PLUS_HH
-# define MLN_ARITH_PLUS_HH
+#ifndef MLN_ARITH_TIMES_HH
+# define MLN_ARITH_TIMES_HH
 
-/*! \file mln/arith/plus.hh
+/*! \file mln/arith/times.hh
  *
- * \brief Point-wise addition between images.
+ * \brief Point-wise multiplication between images.
  *
  * \todo Speedup; some versions are not optimal.
  */
@@ -46,16 +46,16 @@ namespace mln
   {
 
     template <typename L, typename R>
-    struct set_binary_< op::plus, Image, L, Image, R >
+    struct set_binary_< op::times, Image, L, Image, R >
     {
-      typedef mln_trait_op_plus(mln_value(L), mln_value(R)) value;
+      typedef mln_trait_op_times(mln_value(L), mln_value(R)) value;
       typedef mln_ch_value(L, value) ret;
     };
 
     template <typename I, typename S>
-    struct set_binary_< op::plus, Image, I, mln::value::Scalar, S >
+    struct set_binary_< op::times, Image, I, mln::value::Scalar, S >
     {
-      typedef mln_trait_op_plus(mln_value(I), S) value;
+      typedef mln_trait_op_times(mln_value(I), S) value;
       typedef mln_ch_value(I, value) ret;
     };
 
@@ -64,21 +64,21 @@ namespace mln
 
 
   template <typename L, typename R>
-  mln_trait_op_plus(L,R)
-  operator+(const Image<L>& lhs, const Image<R>& rhs);
+  mln_trait_op_times(L,R)
+  operator*(const Image<L>& lhs, const Image<R>& rhs);
 
   template <typename L, typename R>
   L&
-  operator+=(Image<L>& lhs, const Image<R>& rhs);
+  operator*=(Image<L>& lhs, const Image<R>& rhs);
 
 
   template <typename I, typename S>
-  mln_trait_op_plus(I,S)
-  operator+(const Image<I>& ima, const value::Scalar<S>& s);
+  mln_trait_op_times(I,S)
+  operator*(const Image<I>& ima, const value::Scalar<S>& s);
 
   template <typename I, typename S>
   I&
-  operator+=(Image<I>& ima, const value::Scalar<S>& s);
+  operator*=(Image<I>& ima, const value::Scalar<S>& s);
 
 
 
@@ -94,7 +94,7 @@ namespace mln
      * \pre \p output.domain == \p lhs.domain == \p rhs.domain
      */
     template <typename L, typename R, typename O>
-    void plus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
+    void times(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
 
 
     /*! Point-wise addition of the value \p val to image \p input.
@@ -106,7 +106,7 @@ namespace mln
      * \pre \p output.domain == \p input.domain
      */
     template <typename I, typename V, typename O>
-    void plus_cst(const Image<I>& input, const V& val, Image<O>& output);
+    void times_cst(const Image<I>& input, const V& val, Image<O>& output);
 
 
     /*! Point-wise addition of image \p rhs in image \p lhs.
@@ -116,12 +116,12 @@ namespace mln
      *
      * This addition performs: \n
      *   for all p of rhs.domain \n
-     *     lhs(p) += rhs(p)
+     *     lhs(p) *= rhs(p)
      *
      * \pre \p rhs.domain <= \p lhs.domain
      */
     template <typename L, typename R>
-    void plus_inplace(Image<L>& lhs, const Image<R>& rhs);
+    void times_inplace(Image<L>& lhs, const Image<R>& rhs);
 
 
   } // end of namespace mln::arith
@@ -133,43 +133,43 @@ namespace mln
 
 
   template <typename L, typename R>
-  mln_trait_op_plus(L,R)
-  operator+(const Image<L>& lhs, const Image<R>& rhs)
+  mln_trait_op_times(L,R)
+  operator*(const Image<L>& lhs, const Image<R>& rhs)
   {
     mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-    mln_trait_op_plus(L,R) tmp;
+    mln_trait_op_times(L,R) tmp;
     initialize(tmp, lhs);
-    arith::plus(lhs, rhs, tmp);
+    arith::times(lhs, rhs, tmp);
     return tmp;
   }
 
   template <typename L, typename R>
   L&
-  operator+=(Image<L>& lhs, const Image<R>& rhs)
+  operator*=(Image<L>& lhs, const Image<R>& rhs)
   {
     mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-    arith::plus_inplace(lhs, rhs);
+    arith::times_inplace(lhs, rhs);
     return exact(lhs);
   }
 
 
   template <typename I, typename S>
-  mln_trait_op_plus(I,S)
-  operator+(const Image<I>& ima, const value::Scalar<S>& s)
+  mln_trait_op_times(I,S)
+  operator*(const Image<I>& ima, const value::Scalar<S>& s)
   {
     mln_precondition(exact(ima).has_data());
-    mln_trait_op_plus(I,S) tmp;
+    mln_trait_op_times(I,S) tmp;
     initialize(tmp, ima);
-    arith::plus_cst(ima, exact(s), tmp);
+    arith::times_cst(ima, exact(s), tmp);
     return tmp;
   }
 
   template <typename I, typename S>
   I&
-  operator+=(Image<I>& ima, const value::Scalar<S>& s)
+  operator*=(Image<I>& ima, const value::Scalar<S>& s)
   {
     mln_precondition(exact(ima).has_data());
-    arith::plus_cst(ima, exact(s), ima);
+    arith::times_cst(ima, exact(s), ima);
     return exact(ima);
   }
 
@@ -182,17 +182,17 @@ namespace mln
     {
 
       template <typename L, typename R, typename O>
-      void plus_(trait::image::speed::any, const L& lhs,
+      void times_(trait::image::speed::any, const L& lhs,
 		 trait::image::speed::any, const R& rhs,
 		 trait::image::speed::any, O& output)
       {
 	mln_piter(L) p(lhs.domain());
 	for_all(p)
-	  output(p) = lhs(p) + rhs(p);
+	  output(p) = lhs(p) * rhs(p);
       }
 
       template <typename L, typename R, typename O>
-      void plus_(trait::image::speed::fastest, const L& lhs,
+      void times_(trait::image::speed::fastest, const L& lhs,
 		 trait::image::speed::fastest, const R& rhs,
 		 trait::image::speed::fastest, O& output)
       {
@@ -200,26 +200,26 @@ namespace mln
 	mln_pixter(const R) rp(rhs);
 	mln_pixter(O)       op(output);
 	for_all_3(lp, rp, op)
-	  op.val() = lp.val() + rp.val();
+	  op.val() = lp.val() * rp.val();
       }
 
       template <typename L, typename R>
-      void plus_inplace_(trait::image::speed::any, L& lhs,
+      void times_inplace_(trait::image::speed::any, L& lhs,
 			 trait::image::speed::any, const R& rhs)
       {
 	mln_piter(R) p(rhs.domain());
 	for_all(p)
-	  lhs(p) += rhs(p);
+	  lhs(p) *= rhs(p);
       }
 
       template <typename L, typename R>
-      void plus_inplace_(trait::image::speed::fastest, L& lhs,
+      void times_inplace_(trait::image::speed::fastest, L& lhs,
 			 trait::image::speed::fastest, const R& rhs)
       {
 	mln_pixter(L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
 	for_all_2(rp, lp)
-	  lp.val() += rp.val();
+	  lp.val() *= rp.val();
       }
 
     } // end of namespace mln::arith::impl
@@ -228,36 +228,36 @@ namespace mln
     // Facades.
 
     template <typename L, typename R, typename O>
-    void plus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
+    void times(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
     {
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
-      impl::plus_(mln_trait_image_speed(L)(), exact(lhs),
+      impl::times_(mln_trait_image_speed(L)(), exact(lhs),
 		  mln_trait_image_speed(R)(), exact(rhs),
 		  mln_trait_image_speed(O)(), exact(output));
     }
 
     template <typename I, typename V, typename O>
-    void plus_cst(const Image<I>& input, const V& val, Image<O>& output)
+    void times_cst(const Image<I>& input, const V& val, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      plus(input, pw::cst(val) | exact(input).domain(), output);
+      times(input, pw::cst(val) | exact(input).domain(), output);
       // Calls the previous version.
     }
 
     template <typename L, typename R>
-    void plus_inplace(Image<L>& lhs, const Image<R>& rhs)
+    void times_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
-      impl::plus_inplace_(mln_trait_image_speed(L)(), exact(lhs),
-			  mln_trait_image_speed(R)(), exact(rhs));
+      impl::times_inplace_(mln_trait_image_speed(L)(), exact(lhs),
+			   mln_trait_image_speed(R)(), exact(rhs));
     }
 
     template <typename I, typename V>
-    void plus_cst_inplace(Image<I>& input, const V& val)
+    void times_cst_inplace(Image<I>& input, const V& val)
     {
       mln_precondition(exact(input).has_data());
-      plus_inplace(input, pw::cst(val) | exact(input).domain());
+      times_inplace(input, pw::cst(val) | exact(input).domain());
       // Calls the previous version.
     }
 
@@ -268,4 +268,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_ARITH_PLUS_HH
+#endif // ! MLN_ARITH_TIMES_HH

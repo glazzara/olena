@@ -48,9 +48,11 @@
 #  endif // ! MLN_DEBUG_TRAITS
 
 
-# define mln_trait_unary(Name, T) typename mln::trait::solve_unary< Name, T >::ret
+# define mln_trait_unary(Name, T)  typename mln::trait::solve_unary< Name, T >::ret
+# define mln_trait_unary_(Name, T)          mln::trait::solve_unary< Name, T >::ret
 
-# define mln_trait_binary(Name, T1, T2) typename mln::trait::solve_binary< Name, T1, T2 >::ret
+# define mln_trait_binary(Name, T1, T2)  typename mln::trait::solve_binary< Name, T1, T2 >::ret
+# define mln_trait_binary_(Name, T1, T2)          mln::trait::solve_binary< Name, T1, T2 >::ret
 
 
 

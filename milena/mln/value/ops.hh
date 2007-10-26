@@ -89,6 +89,27 @@ namespace mln
     };
 
 
+    template < template <class, class> class Name,
+	       typename S, typename L >
+    struct set_binary_< Name,
+			mln::value::Scalar, S,
+			mln::Literal,       L >
+    {
+      typedef mln_value_equiv(S) S_;
+      typedef mln_trait_binary(Name, S_, S_) ret;
+    };
+
+    template < template <class, class> class Name,
+	       typename L, typename S >
+    struct set_binary_< Name,
+			mln::Literal,       L,
+			mln::value::Scalar, S >
+    {
+      typedef mln_value_equiv(S) S_;
+      typedef mln_trait_binary(Name, S_, S_) ret;
+    };
+
+
     // Some binary traits for "scalar(s) OP obj" when OP commutes => "obj OP scalar(s)".
 
     template < typename S, typename O >
@@ -281,6 +302,53 @@ namespace mln
   }
 
   // ...
+
+
+  template <typename Sl, typename Sr>
+  mln_trait_op_eq(Sl, Sr)
+  operator == (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
+  {
+    return value::equiv(lhs) == value::equiv(rhs);
+  }
+
+
+  // FIXME: Uncomment when less and leq are handled.
+
+//   template <typename Sl, typename Sr>
+//   mln_trait_op_less(Sl, Sr)
+//   operator < (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
+//   {
+//     return value::equiv(lhs) < value::equiv(rhs);
+//   }
+
+//   template <typename Sl, typename Sr>
+//   mln_trait_op_leq(Sl, Sr)
+//   operator <= (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
+//   {
+//     return value::equiv(lhs) <= value::equiv(rhs);
+//   }
+
+  // ...
+
+
+
+
+  template <typename O, typename L>
+  mln_trait_op_eq(O, O)
+  operator==(const value::scalar_<O>& lhs, const Literal<L>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
+    return exact(lhs) == mln_value_equiv(O)(exact(rhs));
+  }
+
+  template <typename L, typename O>
+  mln_trait_op_eq(O, O)
+  operator==(const Literal<L>& lhs, const value::scalar_<O>& rhs)
+  {
+    // mlc_converts_to(L, O)::check();
+    return mln_value_equiv(O)(exact(lhs)) == exact(rhs);
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

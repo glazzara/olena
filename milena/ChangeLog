@@ -1,3 +1,25 @@
+2007-10-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Some more definitions of traits and ops.
+
+	* tests/arith_plus.cc: New.
+	* tests/literal_zero.cc: Augment.
+	* mln/trait/solve.hh
+	(mln_trait_unary_, mln_trait_binary_): New macros.
+	* mln/literal/ops.hh: Add FIXME.
+	* mln/metal/vec.hh: Fix precondition.
+	* mln/arith/times.hh: New.
+	* mln/arith/plus.hh: Add traits.
+	(operator+, operator+=): New.
+	* mln/arith/includes.hh: New.
+	* mln/arith/all.hh: Sort includes.
+	* mln/value/ops.hh: New traits for Scalar OP Literal.
+	(operator==): New overloads.
+	* mln/value/scalar.hh (operator T): Remove; too dangerous.
+	* mln/value/quat.hh: Update.
+	* mln/value/equiv.hh (mln_value_equiv_): New macro.
+	* mln/value/builtin/ops.hh: Add material for cmp ops.
+
 2007-10-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add tree_fast_to_image.

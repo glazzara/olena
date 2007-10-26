@@ -452,7 +452,7 @@ namespace mln
     quat operator*(const quat& lhs, const value::scalar_<S>& rhs)
     {
       mlc_converts_to(S, float)::check();
-      quat tmp(lhs.to_vec() * float(rhs));
+      quat tmp(lhs.to_vec() * rhs.to_equiv());
       return tmp;
     }
 
@@ -460,7 +460,7 @@ namespace mln
     quat operator/(const quat& lhs, const value::scalar_<S>& rhs_)
     {
       mlc_converts_to(S, float)::check();
-      float rhs = float(rhs_);
+      float rhs = rhs_.to_equiv();
       mln_precondition(rhs != 0.f);
       quat tmp(lhs.to_vec() / rhs);
       return tmp;

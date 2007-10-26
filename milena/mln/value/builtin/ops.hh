@@ -112,6 +112,42 @@
 
 
 
+// Comparison.
+
+# define mln_internal_decl_op_cmp_(Symb, Name, Builtin)		\
+								\
+  template <typename O>						\
+  mln_trait_op_##Name (O, value::scalar_< Builtin >)		\
+  operator Symb (const Object<O>& lhs, const Builtin & rhs);	\
+								\
+  template <typename O>						\
+  mln_trait_op_##Name (value::scalar_< Builtin >, O)		\
+  operator Symb (const Builtin & lhs, const Object<O>& rhs);	\
+								\
+  struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
+# define mln_internal_def_op_cmp_(Symb, Name, Builtin)		\
+								\
+  template <typename O>						\
+  mln_trait_op_##Name (O, value::scalar_< Builtin >)		\
+  operator Symb (const Object<O>& lhs, const Builtin & rhs)	\
+  {								\
+    return exact(lhs) Symb value::scalar(rhs);			\
+  }								\
+								\
+  template <typename O>						\
+  mln_trait_op_##Name (value::scalar_< Builtin >, O)		\
+  operator Symb (const Builtin & lhs, const Object<O>& rhs)	\
+  {								\
+    return value::scalar(lhs) Symb exact(rhs);			\
+  }								\
+								\
+  struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
+
+
+
+
 
 # define mln_internal_op_obj_builtins_(De, Symb, Name)		\
 								\
@@ -206,7 +242,7 @@
   template <typename O>						\
   mln_trait_op_##Name (value::scalar_< Builtin >, O)		\
   operator Symb (const Builtin & lhs, const Object<O>& rhs)	\
-  {	std::cout << "hop" << std::endl;							\
+  {								\
     return value::scalar(lhs) / exact(rhs);			\
   }								\
 								\
@@ -229,6 +265,20 @@
   struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
 
 
+# define mln_internal_op_builtins_cmp_(De, Symb, Name)		\
+								\
+  mln_internal_##De##_op_cmp_(Symb, Name,   signed char);	\
+  mln_internal_##De##_op_cmp_(Symb, Name, unsigned char);	\
+  mln_internal_##De##_op_cmp_(Symb, Name,   signed short);	\
+  mln_internal_##De##_op_cmp_(Symb, Name, unsigned short);	\
+  mln_internal_##De##_op_cmp_(Symb, Name,   signed int);	\
+  mln_internal_##De##_op_cmp_(Symb, Name, unsigned int);	\
+  mln_internal_##De##_op_cmp_(Symb, Name,   signed long);	\
+  mln_internal_##De##_op_cmp_(Symb, Name, unsigned long);	\
+  mln_internal_##De##_op_cmp_(Symb, Name, float);		\
+  mln_internal_##De##_op_cmp_(Symb, Name, double);		\
+								\
+  struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
 
 // FIXME: What about pointers, arrays, bool, etc.
 
@@ -268,7 +318,7 @@ namespace mln
   namespace trait
   {
 
-    // A couple of builtins => promotion.
+    // A couple of builtins => promotion...
 
     mln_internal_set_builtin_trait_is_promotion_(op::plus);
     mln_internal_set_builtin_trait_is_promotion_(op::minus);
@@ -276,7 +326,14 @@ namespace mln
     mln_internal_set_builtin_trait_is_promotion_(op::div);
     mln_internal_set_builtin_trait_is_promotion_(op::mod);
 
-    // FIXME: other (such as plus_eq)...
+    // ...or for comparisons => bool.
+
+    mln_internal_set_builtin_trait_is_bool_(op::eq);
+    mln_internal_set_builtin_trait_is_bool_(op::neq);
+    // FIXME: ...
+
+    // FIXME: What about +=, etc.
+
 
 
     template< template <class> class Name,
@@ -386,6 +443,12 @@ namespace mln
   mln_internal_builtins_dvmd_obj_(decl, %, mod);
 
 
+  // Ops "bi CMP obj" and "bi CMP obj"
+  mln_internal_op_builtins_cmp_(decl, ==, eq);
+  mln_internal_op_builtins_cmp_(decl, !=, neq);
+  // FIXME: ...
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   mln_internal_op_obj_builtins_(def, +, plus);
@@ -404,6 +467,12 @@ namespace mln
   // Ops "bi / obj" and "bi % obj"
   mln_internal_builtins_dvmd_obj_(def, /, div);
   mln_internal_builtins_dvmd_obj_(def, %, mod);
+
+  // Ops "bi CMP obj" and "bi CMP obj"
+  mln_internal_op_builtins_cmp_(def, ==, eq);
+  mln_internal_op_builtins_cmp_(def, !=, neq);
+
+  // FIXME: Add less, etc.
 
 
 # endif // ! MLN_INCLUDE_ONLY

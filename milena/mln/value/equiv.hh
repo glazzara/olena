@@ -36,7 +36,8 @@
 # include <mln/core/concept/value.hh>
 
 
-# define mln_value_equiv(V) typename mln::value::internal::equiv_<V>::ret
+# define mln_value_equiv(V)  typename mln::value::internal::equiv_<V>::ret
+# define mln_value_equiv_(V)          mln::value::internal::equiv_<V>::ret
 
 
 
