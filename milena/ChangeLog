@@ -1,5 +1,12 @@
 2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Update fllt.
+
+	* mln/util/branch_iter.hh: (deepness) New.
+	* sandbox/garrigues/fllt.hh: More output. FIXME : optimize.
+
+2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Improve fllt. Add more tests.
 
 	* mln/set/is_subset_of.hh: New, Test if a point set is a subset of
