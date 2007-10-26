@@ -32,8 +32,10 @@
  *
  * \brief Definition of the concept of mln::Point_Set.
  *
- * \todo Think about adding an 'insert' method (not os easy because of
+ * \todo Think about adding an 'insert' method (not so easy because of
  * pset_if...)
+ *
+ * \todo Move out the ops.
  */
 
 # include <mln/core/concept/point.hh>
@@ -42,6 +44,18 @@
 
 namespace mln
 {
+
+  // Fwd decl.
+  template <typename E> struct Point_Set;
+
+
+  /// Point_Set category flag type.
+  template <>
+  struct Point_Set<void>
+  {
+    typedef Object<void> super;
+  };
+
 
   /*! \brief Base class for implementation classes of point sets.
    *
@@ -223,6 +237,9 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
+
+# include <mln/core/ops.hh>
 
 
 #endif // ! MLN_CORE_CONCEPT_POINT_SET_HH

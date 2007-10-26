@@ -65,7 +65,16 @@ namespace mln
 # include <mln/trait/op/eq.hh>
 # include <mln/trait/op/neq.hh>
 
-// FIXME: eq, less, ... + and, xor, ...
+# include <mln/trait/op/less.hh>
+# include <mln/trait/op/leq.hh>
+# include <mln/trait/op/geq.hh>
+# include <mln/trait/op/greater.hh>
+
+# include <mln/trait/op/and.hh>
+# include <mln/trait/op/or.hh>
+# include <mln/trait/op/xor.hh>
+
+# include <mln/trait/op/not.hh>
 
 
 #endif // ! MLN_TRAIT_OP_ALL_HH

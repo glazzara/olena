@@ -28,11 +28,9 @@
 #ifndef MLN_TRAIT_OP_UMINUS_HH
 # define MLN_TRAIT_OP_UMINUS_HH
 
-/*!
- * \file   mln/trait/op/uminus.hh
+/*! \file mln/trait/op/uminus.hh
  *
- * \brief  FIXME
- *
+ * \brief Declaration of the "unary minus" operator trait.
  */
 
 # include <mln/trait/solve.hh>
@@ -45,10 +43,6 @@
 
 namespace mln
 {
-
-  // Fwd decl.
-  template <typename E> struct Object;
-
 
   namespace trait
   {

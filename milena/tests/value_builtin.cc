@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_scalar.cc
+/*! \file tests/value_builtin.cc
  *
- * \brief Tests on mln::value::scalar.
+ * \brief Tests on mln::trait::op with a builtin.
  */
 
 #include <iostream>
@@ -36,29 +36,67 @@
 #include <mln/value/int_u8.hh>
 
 
-template <typename T>
-void foo(const T& t)
-{
-  std::cout << mln::value::scalar(t) << std::endl;
-}
-
 namespace mln
 {
   namespace trait
   {
-//     template <typename O1, typename O2>
-//     struct set_binary_< op::less, Object,O1, Object,O2 >  { typedef bool ret; };
 
-//     template < typename Vl, typename Vr >
-//     struct set_binary_< op::less, mln::value::Scalar, Vl, mln::value::Scalar, Vr >
+    namespace op
+    {
+
+      template <typename T>
+      struct test;
+
+      template <typename L, typename R>
+      struct test_2;
+
+    }
+
+    // unary
+
+    template < typename S >
+    struct set_unary_< op::test, mln::value::Scalar, S >
+    {
+      typedef double ret;
+    };
+
+//     template <typename I>
+//     struct set_unary_< op::test,
+// 		       mln::value::Integer, I >
 //     {
-//       typedef double ret;
+//       typedef float ret;
 //     };
 
-//     template <typename B, typename O>
-//     struct set_binary_< op::less,
-// 			mln::value::Integer, B,
-// 			mln::value::Scalar, O >
+//     template <typename I>
+//     struct set_unary_< op::test,
+// 		       mln::value::Built_In, I >
+//     {
+//       typedef bool ret;
+//     };
+
+
+    // binary
+
+    template < typename S1, typename S2 >
+    struct set_binary_< op::test_2,
+			mln::value::Scalar, S1,
+			mln::value::Scalar, S2 >
+    {
+      typedef double ret;
+    };
+
+//     template < typename I, typename S >
+//     struct set_binary_< op::test_2,
+// 			mln::value::Integer, I,
+// 			mln::value::Scalar,  S >
+//     {
+//       typedef float ret;
+//     };
+
+//     template < typename B, typename S >
+//     struct set_binary_< op::test_2,
+// 			mln::value::Built_In, B,
+// 			mln::value::Scalar,   S >
 //     {
 //       typedef bool ret;
 //     };
@@ -71,24 +109,12 @@ int main()
 {
   using namespace mln;
 
-//   int i = 51;
-//   foo(i);
-//   foo( value::scalar(i) );
-
-
   {
-    bool b;
-    value::int_u8 i, j;
-
-    b = 1 > value::scalar(j);
-
-    b = value::scalar(j) < value::scalar(j);
-
-//     mln_trait_op_less_(value::scalar_< value::int_u8 >, value::scalar_< value::int_u8 >) tmp;
-//     void* v = tmp;
-
-//     mln_trait_op_less_(int, value::scalar_< value::int_u8 >) tmp;
-//     void* v = tmp;
+    mln::trait::solve_binary< trait::op::test_2, int, value::scalar_< value::int_u8 > >::ret tmp;
+    double& d = tmp;
   }
-
+  {
+    mln::trait::solve_unary< trait::op::test, int >::ret tmp;
+    double& d = tmp;
+  }
 }

@@ -45,14 +45,14 @@
 namespace mln
 {
 
-  template <> struct category< unsigned char  > { typedef value::Built_In<void*> ret; typedef value::Integer<void> super; };
-  template <> struct category<   signed char  > { typedef value::Built_In<void*> ret; typedef value::Integer<void> super; };
-  template <> struct category< unsigned short > { typedef value::Built_In<void*> ret; typedef value::Integer<void> super; };
-  template <> struct category<   signed short > { typedef value::Built_In<void*> ret; typedef value::Integer<void> super; };
-  template <> struct category< unsigned int   > { typedef value::Built_In<void*> ret; typedef value::Integer<void> super; };
-  template <> struct category<   signed int   > { typedef value::Built_In<void*> ret; typedef value::Integer<void> super; };
-  template <> struct category< unsigned long  > { typedef value::Built_In<void*> ret; typedef value::Integer<void> super; };
-  template <> struct category<   signed long  > { typedef value::Built_In<void*> ret; typedef value::Integer<void> super; };
+  template <> struct category< unsigned char  > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
+  template <> struct category<   signed char  > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
+  template <> struct category< unsigned short > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
+  template <> struct category<   signed short > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
+  template <> struct category< unsigned int   > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
+  template <> struct category<   signed int   > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
+  template <> struct category< unsigned long  > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
+  template <> struct category<   signed long  > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
 
 
   namespace trait

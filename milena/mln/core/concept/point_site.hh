@@ -44,7 +44,8 @@ namespace mln
   // Fwd decl.
   template <typename E> struct Point;
 
-  // Point_Site category flag type.
+
+  /// Point_Site category flag type.
   template <>
   struct Point<void>
   {

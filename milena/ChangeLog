@@ -1,3 +1,49 @@
+2007-10-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add traits for comparison and logical operators.
+
+	* mln/trait/op/leq.hh: New.
+	* mln/trait/op/greater.hh: New.
+	* mln/trait/op/not.hh: New.
+	* mln/trait/op/and.hh: New.
+	* mln/trait/op/less.hh: New.
+	* mln/trait/op/xor.hh: New.
+	* mln/trait/op/geq.hh: New.
+	* mln/trait/op/or.hh: New.
+	* mln/trait/op/all.hh: Update.
+	* mln/trait/op/times.hh,
+	* mln/trait/op/div.hh,
+	* mln/trait/op/plus.hh,
+	* mln/trait/op/neq.hh,
+	* mln/trait/op/minus.hh,
+	* mln/trait/op/postdec.hh,
+	* mln/trait/op/predec.hh,
+	* mln/trait/op/eq.hh,
+	* mln/trait/op/uplus.hh,
+	* mln/trait/op/postinc.hh,
+	* mln/trait/op/mod.hh,
+	* mln/trait/op/uminus.hh,
+	* mln/trait/op/preinc.hh: Add file doc.
+	Remove obsolete fwd decl.
+	* mln/core/ops.hh: New trait defs for new ops.
+	* mln/core/concept/point_set.hh
+	(Point_Set<void>): New category.
+	* mln/core/concept/point_site.hh: Fix doc.
+	* mln/value/ops.hh: Remove dead code.
+	(opertor<): New overload for the couples "scalar_ and Literal".
+	* mln/value/gray.hh (enc, interop): Change from long to int.
+	* mln/value/concept/built_in.hh: Remove dead code.
+	(super): Fix to be compliant with solve.
+	* mln/value/builtin/integers.hh: Update.
+	* mln/value/concept/integer.hh: Fix doc.
+	* mln/value/builtin/ops.hh: New traits for op::uminus and
+	op::uplus.
+	Remove unary trait for builtin.
+	New traits for comparison and logical ops.
+	* mln/value/builtin/promotions.hh: Update.
+	* tests/value_scalar.cc: Augment.
+	* tests/value_builtin.cc: New.
+
 2007-10-26  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix on tree for compiling, and Fix in fllt.

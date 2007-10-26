@@ -318,6 +318,41 @@ namespace mln
   namespace trait
   {
 
+    // Unary traits.
+
+    template< typename B >
+    struct set_unary_< op::uplus,
+		       mln::value::Built_In, B >
+    {
+      typedef B ret;
+    };
+
+    template<>
+    struct set_precise_unary_< op::not_, bool >
+    {
+      typedef bool ret;
+    };
+
+    template<> struct set_precise_unary_< op::uminus,   signed char  > { typedef signed char ret; };
+    template<> struct set_precise_unary_< op::uminus, unsigned char  > { typedef int ret; };
+    template<> struct set_precise_unary_< op::uminus,   signed short > { typedef signed short ret; };
+    template<> struct set_precise_unary_< op::uminus, unsigned short > { typedef int ret; };
+    template<> struct set_precise_unary_< op::uminus,   signed int   > { typedef signed int ret; };
+
+    // Disabled cause no correct result can be obtained
+    // e.g., (- unsigned int) is an (unsigned int)!
+    template<> struct set_precise_unary_< op::uminus, unsigned int  > {};
+    template<> struct set_precise_unary_< op::uminus,   signed long > {};
+    template<> struct set_precise_unary_< op::uminus, unsigned long > {};
+    template<> struct set_precise_unary_< op::uminus,     bool      > {};
+
+    template<> struct set_precise_unary_< op::uminus, float  > { typedef float ret; };
+    template<> struct set_precise_unary_< op::uminus, double > { typedef double ret; };
+
+
+    // FIXME: Is that all?
+
+
     // A couple of builtins => promotion...
 
     mln_internal_set_builtin_trait_is_promotion_(op::plus);
@@ -326,23 +361,28 @@ namespace mln
     mln_internal_set_builtin_trait_is_promotion_(op::div);
     mln_internal_set_builtin_trait_is_promotion_(op::mod);
 
-    // ...or for comparisons => bool.
+    // For comparisons (such as "less-than"), we get bool.
 
     mln_internal_set_builtin_trait_is_bool_(op::eq);
     mln_internal_set_builtin_trait_is_bool_(op::neq);
-    // FIXME: ...
+
+    mln_internal_set_builtin_trait_is_bool_(op::less);
+    mln_internal_set_builtin_trait_is_bool_(op::leq);
+    mln_internal_set_builtin_trait_is_bool_(op::geq);
+    mln_internal_set_builtin_trait_is_bool_(op::greater);
+
+    mln_internal_set_builtin_trait_is_bool_(op::and_);
+    mln_internal_set_builtin_trait_is_bool_(op::or_);
+    mln_internal_set_builtin_trait_is_bool_(op::xor_);
+
+    // FIXME: We want to disable some ops; for instance "bool + int" and "int and int"...
+
+
+
 
     // FIXME: What about +=, etc.
 
 
-
-    template< template <class> class Name,
-	      typename B >
-    struct set_unary_< Name,
-		       mln::value::Built_In, B >
-    {
-      typedef B ret; // FIXME: Wrong because some types are unsigned!
-    };
 
 
     // Operators "Object OP Built_In" => "Object OP scalar_"
@@ -375,6 +415,12 @@ namespace mln
     struct set_binary_< op::mod,  mln::Object, O,  mln::value::Built_In, B >
     {
       typedef mln_trait_op_mod(O, mln::value::scalar_<B>) ret;
+    };
+
+    template <typename O, typename B>
+    struct set_binary_< op::less,  mln::Object, O,  mln::value::Built_In, B >
+    {
+      typedef mln_trait_op_less(O, mln::value::scalar_<B>) ret;
     };
 
 

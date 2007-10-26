@@ -31,6 +31,8 @@
 /*! \file mln/value/concept/integer.hh
  *
  * \brief Define a generic class for integer values.
+ *
+ * \todo Similar files needs to be cleaned-up.
  */
 
 # include <mln/value/concept/scalar.hh>
@@ -39,28 +41,22 @@
 namespace mln
 {
 
-  // Fwd decl.
-  namespace value { template <typename E> struct Integer; }
-
-
-  namespace trait
-  {
-
-    // FIXME...
-
-  } // end of namespace mln::trait
-
-
   namespace value
   {
 
-    // Category flag type.
+    // Fwd decl.
+    template <typename E> struct Integer;
+
+
+    /// Category flag type.
     template <>
     struct Integer<void>
     {
       typedef Scalar<void> super;
     };
 
+
+    /// Concept of integer.
     template <typename E>
     struct Integer : public Scalar<E>
     {

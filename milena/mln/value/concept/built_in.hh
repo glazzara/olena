@@ -39,17 +39,6 @@
 namespace mln
 {
 
-  // Fwd decl.
-  namespace value { template <typename E> struct Built_In; }
-
-
-  namespace trait
-  {
-    // FIXME...
-
-  } // end of namespace mln::trait
-
-
   namespace value
   {
 
@@ -58,8 +47,7 @@ namespace mln
     struct Built_In<void> // No inheritance here since this category is special (on the side).
     {
       // Every builtin belongs to a sub-category of Value but we do not know which one.
-      // FIXME HERE FIRST: was void* below
-      typedef Unknown<void> super;
+      typedef void* super;
     };
 
   } // end of namespace mln::value

@@ -28,6 +28,11 @@
 #ifndef MLN_TRAIT_OP_EQ_HH
 # define MLN_TRAIT_OP_EQ_HH
 
+/*! \file mln/trait/op/eq.hh
+ *
+ * \brief Declaration of the "binary equality" operator trait.
+ */
+
 # include <mln/trait/solve.hh>
 
 

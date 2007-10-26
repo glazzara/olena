@@ -68,28 +68,6 @@
   struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
 
 
-# define mln_internal_set_uminus_bi_(Builtin, Result)	\
-							\
-  template<>						\
-  struct set_precise_unary_< op::uminus, Builtin >	\
-  {							\
-    typedef Result ret;					\
-  };							\
-							\
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
-
-
-# define mln_internal_set_uplus_bi_(Builtin)		\
-							\
-  template<>						\
-  struct set_precise_unary_< op::uplus, Builtin >	\
-  {							\
-    typedef Builtin ret;				\
-  };							\
-							\
-  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
-
-
 
 namespace mln
 {
@@ -170,31 +148,6 @@ namespace mln
     mln_internal_set_promotion_auto_(  signed long,  double);
 
     mln_internal_set_promotion_auto_(   float,       double);
-
-
-    // Builtin unary traits.
-
-    mln_internal_set_uplus_bi_(unsigned char );
-    mln_internal_set_uplus_bi_(  signed char );
-    mln_internal_set_uplus_bi_(unsigned short);
-    mln_internal_set_uplus_bi_(  signed short);
-    mln_internal_set_uplus_bi_(unsigned int  );
-    mln_internal_set_uplus_bi_(  signed int  );
-    mln_internal_set_uplus_bi_(unsigned long );
-    mln_internal_set_uplus_bi_(  signed long );
-    mln_internal_set_uplus_bi_(        float );
-    mln_internal_set_uplus_bi_(       double );
-
-    mln_internal_set_uminus_bi_(unsigned char,  unsigned char);
-    mln_internal_set_uminus_bi_(  signed char,    signed char);
-    mln_internal_set_uminus_bi_(unsigned short, unsigned short);
-    mln_internal_set_uminus_bi_(  signed short,   signed short);
-    mln_internal_set_uminus_bi_(unsigned int,   unsigned int);
-    mln_internal_set_uminus_bi_(  signed int,     signed int);
-    mln_internal_set_uminus_bi_(unsigned long,  unsigned long);
-    mln_internal_set_uminus_bi_(  signed long,    signed long);
-    mln_internal_set_uminus_bi_(        float,     float);
-    mln_internal_set_uminus_bi_(       double,    double);
 
   } // end of namespace mln::trait
 

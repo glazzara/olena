@@ -72,10 +72,10 @@ namespace mln
     public:
 
       /// Encoding associated type.
-      typedef long enc;
+      typedef int enc;
 
       /// Equivalent associated type.
-      typedef long equiv;
+      typedef int equiv;
 
       /// Constructor without argument.
       gray();

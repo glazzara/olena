@@ -28,13 +28,10 @@
 #ifndef MLN_TRAIT_OP_TIMES_HH
 # define MLN_TRAIT_OP_TIMES_HH
 
-/*!
- * \file   mln/trait/op/times.hh
+/*! \file mln/trait/op/times.hh
  *
- * \brief  FIXME
- *
+ * \brief Declaration of the "binary multiplication" operator trait.
  */
-
 
 # include <mln/trait/promote.hh>
 

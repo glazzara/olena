@@ -28,13 +28,10 @@
 #ifndef MLN_TRAIT_OP_MINUS_HH
 # define MLN_TRAIT_OP_MINUS_HH
 
-/*!
- * \file   mln/trait/op/minus.hh
+/*! \file mln/trait/op/minus.hh
  *
- * \brief  FIXME
- *
+ * \brief Declaration of the "binary minus" operator trait.
  */
-
 
 # include <mln/trait/promote.hh>
 

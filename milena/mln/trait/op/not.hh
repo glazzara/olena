@@ -25,19 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_POSTDEC_HH
-# define MLN_TRAIT_OP_POSTDEC_HH
+#ifndef MLN_TRAIT_OP_NOT_HH
+# define MLN_TRAIT_OP_NOT_HH
 
-/*! \file mln/trait/op/postdec.hh
+/*! \file mln/trait/op/not.hh
  *
- * \brief Declaration of the "unary post-decrementation" operator trait.
+ * \brief Declaration of the "unary negation" operator trait.
  */
 
 # include <mln/trait/solve.hh>
 
 
-# define mln_trait_op_postdec(T)  typename mln::trait::op::postdec< T >::ret
-# define mln_trait_op_postdec_(T)          mln::trait::op::postdec< T >::ret
+# define mln_trait_op_not(T)  typename mln::trait::op::not_< T >::ret
+# define mln_trait_op_not_(T)          mln::trait::op::not_< T >::ret
 
 
 
@@ -51,7 +51,7 @@ namespace mln
     {
 
       template <typename T>
-      struct postdec : public solve_unary<postdec, T>
+      struct not_ : public solve_unary<not_, T>
       {
       };
       
@@ -62,4 +62,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_OP_POSTDEC_HH
+#endif // ! MLN_TRAIT_OP_NOT_HH

@@ -86,7 +86,37 @@ namespace mln
     struct set_binary_< op::eq, Object,O1, Object,O2 >  { typedef bool ret; };
 
     template <typename O1, typename O2>
-    struct set_binary_< op::neq, Object,O1, Object,O2 >  { typedef bool ret; };
+    struct set_binary_< op::neq, Object,O1, Object,O2 >
+    {
+      // O1 != O2  -->  ! (O1 == O2)
+      typedef mln_trait_op_eq(O1, O2) B_;
+      typedef mln_trait_op_not(B_) ret;
+    };
+
+    template <typename O1, typename O2>
+    struct set_binary_< op::less, Object,O1, Object,O2 >  { typedef bool ret; };
+
+    template <typename O1, typename O2>
+    struct set_binary_< op::leq, Object,O1, Object,O2 >
+    {
+      // O1 <= O2  -->  ! (O2 < 01)
+      typedef mln_trait_op_less(O2, O1) B_;
+      typedef mln_trait_op_not(B_) ret;
+    };
+
+    template <typename O1, typename O2>
+    struct set_binary_< op::geq, Object,O1, Object,O2 >
+    {
+      // O1 >= O2  -->  O2 <= O1
+      typedef mln_trait_op_leq(O2, O1) ret;
+    };
+
+    template <typename O1, typename O2>
+    struct set_binary_< op::greater, Object,O1, Object,O2 >
+    {
+      // O1 > O2  -->  O2 < O1
+      typedef mln_trait_op_less(O2, O1) ret;
+    };
 
     // FIXME: Same for the other definitions below...
 
@@ -138,7 +168,7 @@ namespace mln
    */
   template <typename O1, typename O2>
   mln_trait_op_neq(O1, O2)
-  operator!=(const Object<O1>& lhs, const Object<O2>& rhs);
+    operator!=(const Object<O1>& lhs, const Object<O2>& rhs);
 
 
   /*! \brief General definition of the "greater than" operator.
@@ -151,7 +181,8 @@ namespace mln
    * in milena when applying on a couple of mln::Object.
    */
   template <typename O1, typename O2>
-  bool operator>(const Object<O1>& lhs, const Object<O2>& rhs);
+  mln_trait_op_greater(O1, O2)
+    operator>(const Object<O1>& lhs, const Object<O2>& rhs);
 
 
   /*! \brief General definition of the "greater than or equal to"
@@ -165,7 +196,8 @@ namespace mln
    * in milena when applying on a couple of mln::Object.
    */
   template <typename O1, typename O2>
-  bool operator>=(const Object<O1>& lhs, const Object<O2>& rhs);
+  mln_trait_op_geq(O1, O2)
+    operator>=(const Object<O1>& lhs, const Object<O2>& rhs);
 
 
   /*! \brief Default definition of the "less than or equal to"
@@ -179,7 +211,8 @@ namespace mln
    * operator has to be re-defined.
    */
   template <typename O1, typename O2>
-  bool operator<=(const Object<O1>& lhs, const Object<O2>& rhs);
+  mln_trait_op_leq(O1, O2)
+    operator<=(const Object<O1>& lhs, const Object<O2>& rhs);
 
 
   /* \brief Default definition of the post-incrementation operator.
@@ -423,7 +456,7 @@ namespace mln
     return exact(rhs);
   }
 
-  // Not equal to.
+  // Comparisons.
 
   template <typename O1, typename O2>
   mln_trait_op_neq(O1, O2)
@@ -433,19 +466,22 @@ namespace mln
   }
 
   template <typename O1, typename O2>
-  bool operator>(const Object<O1>& lhs, const Object<O2>& rhs)
+  mln_trait_op_greater(O1, O2)
+    operator>(const Object<O1>& lhs, const Object<O2>& rhs)
   {
     return exact(rhs) < exact(lhs);
   }
 
   template <typename O1, typename O2>
-  bool operator>=(const Object<O1>& lhs, const Object<O2>& rhs)
+  mln_trait_op_geq(O1, O2)
+    operator>=(const Object<O1>& lhs, const Object<O2>& rhs)
   {
     return exact(rhs) <= exact(lhs);
   }
 
   template <typename O1, typename O2>
-  bool operator<=(const Object<O1>& lhs, const Object<O2>& rhs)
+  mln_trait_op_leq(O1, O2)
+    operator<=(const Object<O1>& lhs, const Object<O2>& rhs)
   {
     // if partial ordering, this operator should be re-defined!
     return ! (exact(rhs) < exact(lhs));

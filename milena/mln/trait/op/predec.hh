@@ -28,6 +28,11 @@
 #ifndef MLN_TRAIT_OP_PREDEC_HH
 # define MLN_TRAIT_OP_PREDEC_HH
 
+/*! \file mln/trait/op/predec.hh
+ *
+ * \brief Declaration of the "unary pre-decrementation" operator trait.
+ */
+
 # include <mln/trait/solve.hh>
 
 
@@ -38,10 +43,6 @@
 
 namespace mln
 {
-
-  // Fwd decl.
-  template <typename E> struct Object;
-
 
   namespace trait
   {

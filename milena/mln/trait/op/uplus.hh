@@ -28,6 +28,11 @@
 #ifndef MLN_TRAIT_OP_UPLUS_HH
 # define MLN_TRAIT_OP_UPLUS_HH
 
+/*! \file mln/trait/op/uplus.hh
+ *
+ * \brief Declaration of the "unary plus" operator trait.
+ */
+
 # include <mln/trait/solve.hh>
 
 
@@ -38,10 +43,6 @@
 
 namespace mln
 {
-
-  // Fwd decl.
-  template <typename E> struct Object;
-
 
   namespace trait
   {

@@ -28,13 +28,10 @@
 #ifndef MLN_TRAIT_OP_PLUS_HH
 # define MLN_TRAIT_OP_PLUS_HH
 
-/*!
- * \file   mln/trait/op/plus.hh
+/*! \file mln/trait/op/plus.hh
  *
- * \brief  FIXME
- *
+ * \brief Declaration of the "binary plus" operator trait.
  */
-
 
 # include <mln/trait/promote.hh>
 

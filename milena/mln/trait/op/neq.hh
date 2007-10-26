@@ -28,6 +28,11 @@
 #ifndef MLN_TRAIT_OP_NEQ_HH
 # define MLN_TRAIT_OP_NEQ_HH
 
+/*! \file mln/trait/op/neq.hh
+ *
+ * \brief Declaration of the "binary un-equality" operator trait.
+ */
+
 # include <mln/trait/solve.hh>
 
 

@@ -25,19 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_POSTDEC_HH
-# define MLN_TRAIT_OP_POSTDEC_HH
+#ifndef MLN_TRAIT_OP_GREATER_HH
+# define MLN_TRAIT_OP_GREATER_HH
 
-/*! \file mln/trait/op/postdec.hh
+/*! \file mln/trait/op/greater.hh
  *
- * \brief Declaration of the "unary post-decrementation" operator trait.
+ * \brief Declaration of the "binary greater" operator trait.
  */
 
 # include <mln/trait/solve.hh>
 
 
-# define mln_trait_op_postdec(T)  typename mln::trait::op::postdec< T >::ret
-# define mln_trait_op_postdec_(T)          mln::trait::op::postdec< T >::ret
+# define mln_trait_op_greater(L, R)  typename mln::trait::op::greater< L , R >::ret
+# define mln_trait_op_greater_(L, R)          mln::trait::op::greater< L , R >::ret
 
 
 
@@ -50,11 +50,11 @@ namespace mln
     namespace op
     {
 
-      template <typename T>
-      struct postdec : public solve_unary<postdec, T>
+      template <typename L, typename R>
+      struct greater : public solve_binary<greater, L, R>
       {
       };
-      
+
     } // end of namespace mln::trait::op
 
   } // end of namespace mln::trait
@@ -62,4 +62,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_OP_POSTDEC_HH
+#endif // ! MLN_TRAIT_OP_GREATER_HH
