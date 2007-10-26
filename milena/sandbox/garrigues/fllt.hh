@@ -61,8 +61,10 @@
 # include <mln/set/uni.hh>
 # include <mln/set/diff.hh>
 # include <mln/set/inter.hh>
+# include <mln/set/is_subset_of.hh>
 
 # include <mln/util/tree.hh>
+# include <mln/util/branch_iter.hh>
 
 # include <mln/labeling/regional_minima.hh>
 # include <mln/labeling/regional_maxima.hh>
@@ -84,15 +86,18 @@ namespace mln
   {
 
     template <typename P, typename V>
-    struct fllt_node
+    struct fllt_node_elt
     {
       V	value;
       set_p<P> points;
       set_p<P> holes;
     };
 
-    # define fllt_tree(P, V)  util::tree< fllt_node<P, V> >
-    # define fllt_node(P, V)  util::node< fllt_node<P, V> >
+    # define fllt_tree(P, V)  util::tree< fllt_node_elt<P, V> >
+    # define fllt_node(P, V)  util::node< fllt_node_elt<P, V> >
+    # define fllt_branch(P, V)  util::branch< fllt_node_elt<P, V> >
+    # define fllt_branch_iter(P, V)  util::branch_iter< fllt_node_elt<P, V> >
+
     //    # define fllt_node(P, V)  typename fllt_tree(P, V)::node_t
 
 
@@ -254,7 +259,7 @@ namespace mln
 	    regions(p) = current_region;
 	  else
 	  {
-	    if (regions(p)->get_parent() == 0)
+	    if (regions(p)->parent() == 0)
 	      regions(p)->set_parent(current_region);
 	  }
 	}
@@ -356,8 +361,9 @@ namespace mln
 
 
     template <typename V, typename F>
-    fllt_tree(point2d, V)*
-    compute_level_set(const image2d<V>& ima)
+    fllt_tree(point2d, V)&
+    compute_level_set(const image2d<V>& ima,
+		      image2d< fllt_node(point2d, V)* >& regions)
     {
       typedef point2d P;
       typedef image2d<V> I;
@@ -368,6 +374,9 @@ namespace mln
 	mln::fun::greater_p2b_expr_<mln::pw::value_<mln::image2d<V> >,
 	mln::pw::cst_<int> >
 	> I_IF;
+
+      // Check
+      mln_assertion(ima.domain() == regions.domain());
 
       // Declarations.
       set_p<P> R, N, A;
@@ -381,7 +390,6 @@ namespace mln
       //      debug::println_with_border(u);
       image2d<bool> tagged(ima.domain());
       fllt_node(P, V)* current_region;
-      image2d<fllt_node(P, V)*> regions(ima.domain());
 
       // INIT
       R.clear();
@@ -471,7 +479,7 @@ namespace mln
       //      debug::println(regions);
       //debug::println(ima | regions(make:defined reference to `mln::fllt::lower<mln::value::int_u<8u> >::inc':point2d(-4,-1))->elt().points);
 
-      return (&tree);
+      return (tree);
 
     } // end of compute_level_set
 
@@ -530,16 +538,71 @@ namespace mln
       static const neighb2d& reg_nbh() { return c8(); }
     };
 
-
-//     template <>
-//     void find_shape_of_holes(fllt_node(P, V)* lower,
-// 			     fllt_node(P, V)* upper)
-//     {
-//     }
+    template <typename P, typename V>
+    void
+    move_shape(fllt_node(P, V)& node,
+	       fllt_node(P, V)& hole,
+	       fllt_tree(P, V)& tree,
+	       const image2d<fllt_node(P, V)*>& other_reg)
+    {
+      fill_a_shape(hole, tree, other_reg);
+      node.elt().points = set::uni(hole.elt().points, node.elt().points);
+      node.add_child(&hole);
+    }
 
     template <typename P, typename V>
-    void merge_trees(fllt_node(P, V)* lower,
-		     fllt_node(P, V)* upper)
+    fllt_node(P, V)*
+    find_the_hole(fllt_node(P, V)& node,
+		  const P p,
+		  const image2d<fllt_node(P, V)*>& other_reg)
+    {
+      fllt_node(P, V)* s = other_reg(p);
+
+      mln_assertion(s);
+      while (s->parent() && (s->parent()->elt().value < node.elt().value))
+      {
+	mln_assertion(s);
+	s = s->parent();
+	mln_assertion(s);
+      }
+      return s;
+    }
+
+    template <typename P, typename V>
+    void
+    fill_a_shape(fllt_node(P, V)& node,
+		 fllt_tree(P, V)& tree,
+		 const image2d<fllt_node(P, V)*>& other_reg)
+    {
+      mln_piter(set_p<P>) p(node.elt().holes);
+	for_all(p)
+	  {
+	    bool h = true;
+	    fllt_node(P, V)* hole = find_the_hole(node, point2d(p), other_reg);
+	    typename fllt_node(P, V)::children_t::iterator it;
+	    for (it = node.children().begin();
+		 it != node.children().end();
+		 it++)
+	    {
+	      if (set::is_subset_of(hole->elt().points,
+				    (*it)->elt().points))
+	      {
+		h = false;
+		break;
+	      }
+	    }
+	    if (h)
+	      move_shape(node, *hole, tree, other_reg);
+
+	  }
+    }
+
+    template <typename P, typename V>
+    void
+    merge_trees(fllt_tree(P, V)& lower,
+		     fllt_tree(P, V)& upper,
+		     const image2d<fllt_node(P, V)*>& low_reg,
+		     const image2d<fllt_node(P, V)*>& upp_reg)
     {
 
       //   In order to merge the trees, we only have to find for each shape S
@@ -548,35 +611,64 @@ namespace mln
       //   put the shape of the hole H (and all its descendants) as child of
       //   the shape .
 
-      fllt_node(P, V)* it = lower;
-
-      if (lower->elt().holes.size() > 0)
-      {
-
-      }
-      // FIXME : add an method to tree to get the childen.
-      // FIXME : add an iterator to browse a tree.
-
-      mln_piter(set_p<P>) p(lower->child_);
+      fllt_branch_iter(P, V) p(lower.main_branch());
       for_all(p)
 	{
-	  merge_trees(lower, upper);
+ 	  fllt_node(P, V)& n(p);
+ 	  fill_a_shape(n, lower, upp_reg);
 	}
+//       fllt_branch_iter(P, V) q(upper.main_branch());
+//       for_all(q)
+// 	{
+//  	  fllt_node(P, V)& n(p);
+//  	  fill_a_shape(n, upper, low_reg);
+// 	}
     }
 
     template <typename V>
     // Fixme : return type
-    void fllt(const image2d<V>& ima)
+    void
+    fllt(const image2d<V>& ima)
     {
       typedef point2d P;
 
-      fllt_tree(P, V)* upper_tree;
-      fllt_tree(P, V)* lower_tree;
+      fllt_tree(P, V) upper_tree;
+      fllt_tree(P, V) lower_tree;
+      image2d<fllt_node(P, V)*> low_reg(ima.domain());
+      image2d<fllt_node(P, V)*> upp_reg(ima.domain());
 
-      lower_tree = compute_level_set<V, lower<V> >(ima);
-      upper_tree = compute_level_set<V, upper<V> >(ima);
+      lower_tree = compute_level_set<V, lower<V> >(ima, low_reg);
+      upper_tree = compute_level_set<V, upper<V> >(ima, upp_reg);
 
-      //merge_trees(lower_tree, upper_tree);
+      merge_trees(lower_tree, upper_tree, low_reg, upp_reg);
+
+
+
+      image2d<value::int_u8> output (ima.domain ());
+      util::tree_to_image (lower_tree, output);
+
+      if (output != ima)
+	{
+	  std::cerr << "BUG!!!" << std::endl;
+	  abort();
+	}
+
+      io::pgm::save(output, "out_final.pgm");
+      std::cout << "out_final.pgm generate"
+		<< std::endl;
+
+
+      fllt_branch_iter(P, V) p(lower_tree.main_branch());
+      for_all(p)
+	{
+	  std::cout << "region mere : " << (*p).parent() << std::endl;
+	  std::cout << "               ^" << std::endl;
+	  std::cout << "               |" << std::endl;
+	  std::cout << "region : " << &*p << std::endl;
+
+	  debug::println(ima | (*p).elt().points);
+	  std::cout << std::endl;
+	}
     }
 
   } // end of namespace mln::fllt

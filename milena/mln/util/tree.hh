@@ -71,10 +71,14 @@ namespace mln
       children_t& children();
 
       /// Access to the parent node.
+      node<T>* parent();
       //node<T>*& parent();
-      const node<T>* parent() const;
 
+      /// \{ Add a child to the node
       node<T>* add_child(T elt);
+      node<T>* add_child(node<T>* node);
+      /// \}
+
       void set_parent(node<T>* parent);
       void print_rec(int n) const;
       void print() const;
@@ -147,7 +151,7 @@ namespace mln
     branch<T>
     tree<T>::main_branch()
     {
-      return branch<T>(*this, root());
+      return branch<T>(*this, *root());
     }
 
     template <typename T>
@@ -222,6 +226,16 @@ namespace mln
       return s;
     }
 
+
+    template <typename T>
+    node<T>*
+    node<T>::add_child(node<T>* node)
+    {
+      node->parent_ = this;
+      this->children().push_back(node);
+      return node;
+    }
+
     template <typename T>
     void
     node<T>::set_parent(node<T>* parent)
@@ -232,8 +246,8 @@ namespace mln
     }
 
     template <typename T>
-    const node<T>*
-    node<T>::parent() const
+    node<T>*
+    node<T>::parent()
     {
       return parent_;
     }

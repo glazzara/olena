@@ -50,6 +50,7 @@ namespace mln
 
       /// Convertion to node.
       operator util::node<T>&() const;
+      util::node<T>& operator *();
 
       /// Test the iterator validity.
       bool is_valid() const;
@@ -94,6 +95,14 @@ namespace mln
     }
 
     template <typename T>
+    util::node<T>&
+    branch_iter<T>::operator*()
+    {
+      mln_assertion(n_);
+      return *n_;
+    }
+
+    template <typename T>
     bool
     branch_iter<T>::is_valid() const
     {
@@ -131,7 +140,6 @@ namespace mln
 	if (s_.top().first == s_.top().second)
 	  //if (*(s_.top().first) == 0)
 	{
-	  mln_assertion(n_);
 	  s_.pop();
 	  next();
 	  return;
@@ -140,6 +148,13 @@ namespace mln
 	{
 	  n_ = *(s_.top().first);
 	  s_.top().first++;
+
+	  if (!n_)
+	  {
+	    std::cout << "browsing warning : nul pointer" << std::endl;
+	    next();
+	    return;
+	  }
 
 	  mln_assertion(n_);
 	  if (n_->children().size() > 0)

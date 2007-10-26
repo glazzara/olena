@@ -1,3 +1,21 @@
+2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Improve fllt. Add more tests.
+
+	* mln/set/is_subset_of.hh: New, Test if a point set is a subset of
+          another.
+	* mln/util/branch_iter.hh: Update
+	* mln/util/tree.hh: (tree<T>::add_child(node<T>*)) New,
+	(tree<T>::main_branch()) New.
+	* sandbox/garrigues/fllt.hh: Improve fllt.
+	* sandbox/garrigues/test_fllt.cc: Update
+	* sandbox/garrigues/test_fllt2.cc,
+	* sandbox/garrigues/test_fllt3.cc,
+	* sandbox/garrigues/test_fllt4.cc,
+	* sandbox/garrigues/test_fllt5.cc,
+	* sandbox/garrigues/test_fllt_tiny.cc: New, differents cases of tests
+          for fllt.
+
 2007-10-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Get rid of Generalized_Point, replaced by Point_Site.
