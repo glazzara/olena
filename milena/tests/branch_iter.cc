@@ -25,72 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_TREE_TO_IMAGE_HH
-# define MLN_UTIL_TREE_TO_IMAGE_HH
-
 /*!
- *  \file   mln/util/tree_to_image.hh
+ *  \file   tests/branch_iter.cc
  *
- *  \brief Definition of function which transform a tree into an
- *  image.
+ *  \brief  test of mln::util::branch_iter
  *
  */
 
-# include <mln/util/tree.hh>
-# include <mln/core/set_p.hh>
+#include <mln/core/image2d.hh>
+#include <mln/util/tree.hh>
+#include <mln/util/branch_iter.hh>
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace util
-  {
+  util::node<int> n(11);
 
-    template <typename T, typename I>
-    void
-    tree_to_image_rec(node<T>* node, Image<I>& output_);
+  util::tree<int> t(&n);
 
-    template <typename T, typename I>
-    void
-    tree_to_image (tree<T>& tree, Image<I>& output_);
+  util::node<int>* f = n.add_child(42);
 
-# ifndef MLN_INCLUDE_ONLY
+  util::node<int>* g = f->add_child(421);
+  util::node<int>* h = f->add_child(422);
 
-    template <typename T, typename I>
-    void
-    tree_to_image_rec(node<T>* node, Image<I>& output_)
+  g->add_child(4211)->add_child(51)->add_child(52)->add_child(53)->add_child(54)->add_child(55);
+  g->add_child(4212);
+
+  f->add_child(4221);
+  f->add_child(4222);
+
+  n.add_child(43);
+
+  util::branch<int> b(t, n);
+
+  std::vector< util::node<int>* >::iterator it;
+  util::branch_iter<int> p(b);
+  for_all(p)
     {
-      I& output = exact(output_);
-
-
-      mln_piter(set_p<point2d>) p(node->elt_.points);
-
-      for_all(p)
-	output(p) = node->elt_.value;
-
-      typename std::vector< util::node<T>* >::const_iterator it = node->child_.begin();
-
-      for (int i = 0;
-	   it != node->child_.end();
-	   ++it, ++i)
-	{
-	  if (*it)
-	    tree_to_image_rec((*it), output);
-	}
+      std::cout << "parcour : " << util::node<int>(p).elt() << std::endl;
     }
-
-
-    template <typename T, typename I>
-    void
-    tree_to_image (tree<T>& tree, Image<I>& output_)
-    {
-      I& output = exact(output_);
-      tree_to_image_rec(tree.root_, output);
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::util
-
-} // end of namespace mln
-
-#endif // !MLN_UTIL_TREE_TO_IMAGE_HH
+}

@@ -246,10 +246,10 @@ namespace mln
       // FIXME : we can make it faster.
       mln_piter(set_p<P>) p(R);
       current_region = new fllt_node(P, V)();
-      current_region->content().value = g;
+      current_region->elt().value = g;
       for_all(p)
 	{
-	  current_region->content().points.insert(p);
+	  current_region->elt().points.insert(p);
 	  if (regions(p) == 0)
 	    regions(p) = current_region;
 	  else
@@ -281,7 +281,7 @@ namespace mln
 	  //       and which are the holes. Keep one pixel of each holes.
 
 	  // WARNING : We trust labeling::level to label the exterior border with 1.
-	  current_region->content().holes.insert(a_point_of(tmp | pw::value(tmp) == pw::cst(n)));
+	  current_region->elt().holes.insert(a_point_of(tmp | pw::value(tmp) == pw::cst(n)));
 
 	  //       FIXME : [optimisation] Remove from N border of holes???.
 	  //       Recompute gn <- min u(x) x belongs to A
@@ -443,7 +443,7 @@ namespace mln
 		break;
 	      }
 	    }
-	    //std::cout << "current_region = " << current_region << std::endl; 
+	    //std::cout << "current_region = " << current_region << std::endl;
 	  }
       } // end of Algorithm
       std::cout << "END OF ALGORITHM" << std::endl;
@@ -469,7 +469,7 @@ namespace mln
 
 
       //      debug::println(regions);
-      //debug::println(ima | regions(make:defined reference to `mln::fllt::lower<mln::value::int_u<8u> >::inc':point2d(-4,-1))->content().points);
+      //debug::println(ima | regions(make:defined reference to `mln::fllt::lower<mln::value::int_u<8u> >::inc':point2d(-4,-1))->elt().points);
 
       return (&tree);
 
@@ -530,10 +530,38 @@ namespace mln
       static const neighb2d& reg_nbh() { return c8(); }
     };
 
+
+//     template <>
+//     void find_shape_of_holes(fllt_node(P, V)* lower,
+// 			     fllt_node(P, V)* upper)
+//     {
+//     }
+
     template <typename P, typename V>
-    void find_shapes_of_holes(fllt_node(P, V)* lower,
-			      fllt_node(P, V)* upper)
+    void merge_trees(fllt_node(P, V)* lower,
+		     fllt_node(P, V)* upper)
     {
+
+      //   In order to merge the trees, we only have to find for each shape S
+      //   with a hole H in it whether one of its children has a hole H´
+      //   containing H. If it is the case, we do nothing. Otherwise, we
+      //   put the shape of the hole H (and all its descendants) as child of
+      //   the shape .
+
+      fllt_node(P, V)* it = lower;
+
+      if (lower->elt().holes.size() > 0)
+      {
+
+      }
+      // FIXME : add an method to tree to get the childen.
+      // FIXME : add an iterator to browse a tree.
+
+      mln_piter(set_p<P>) p(lower->child_);
+      for_all(p)
+	{
+	  merge_trees(lower, upper);
+	}
     }
 
     template <typename V>
@@ -546,10 +574,9 @@ namespace mln
       fllt_tree(P, V)* lower_tree;
 
       lower_tree = compute_level_set<V, lower<V> >(ima);
+      upper_tree = compute_level_set<V, upper<V> >(ima);
 
-      //      upper_tree = compute_level_set<V, upper<V> >(ima);
-
-      //find_shapes_of_holes(lower_tree, upper_tree);
+      merge_trees(lower_tree, upper_tree);
     }
 
   } // end of namespace mln::fllt

@@ -1,3 +1,13 @@
+2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add iterator for branches.
+	* mln/util/branch_iter.hh: To iterate on branch.
+	* mln/util/tree.hh: Add branch class, fix tree.
+	* mln/util/tree_to_image.hh: Fix.
+	* mln/value/concept/built_in.hh: Add a forward declaration.
+	* sandbox/garrigues/fllt.hh: Update.
+	* tests/branch_iter.cc: Test for branch_iter.
+
 2007-10-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update tree for tests.

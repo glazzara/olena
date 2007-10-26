@@ -45,15 +45,34 @@ namespace mln
   namespace util
   {
 
-    template <typename T>
-    struct node
-    {
-      node();
-      node(T& elt);
+    /// Fwd declarations.
+    template <typename T> class node;
+    template <typename T> class tree;
+    template <typename T> class branch;
 
-      T& content();
-      const T& content() const;
-      node<T>* add_child(T& elt);
+    template <typename T>
+    class node
+    {
+    public:
+
+      /// \{ Constructors
+      node();
+      node(T elt);
+      /// \}
+
+      /// \{ Acccess to the element.
+      T& elt();
+      const T& elt() const;
+      /// \}
+
+      /// Access to the children
+      const std::vector< node<T>* >& children() const;
+      std::vector< node<T>* >& children();
+
+      /// Access to the parent node.
+      const node<T>* parent() const;
+
+      node<T>* add_child(T elt);
       void set_parent(node<T>* parent);
       node<T>* get_parent();
       void print_rec(int n) const;
@@ -61,14 +80,17 @@ namespace mln
       int  search_rec(node<T>** res, T& elt);
       node<T>* search(T& elt);
 
+    private:
+      //FIXME tree<T>& tree_;
       T elt_;
       node<T>* parent_;
       std::vector< node<T>* > child_;
     };
 
     template <typename T>
-    struct tree
+    class tree
     {
+    public:
       typedef node<T> node_t;
       tree();
       tree(node<T>* root);
@@ -77,8 +99,25 @@ namespace mln
       void add_tree_up (T& elt);
       void add_tree_down (T& elt);
 
+    private:
       node<T>* root_;
     };
+
+
+    template <typename T>
+    class branch
+    {
+    public:
+      branch(tree<T>& tree, node<T>& apex);
+
+      node<T>& apex();
+      tree<T>& tree();
+
+    private:
+      node<T>& apex_;
+      util::tree<T>& tree_;
+    };
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -131,7 +170,7 @@ namespace mln
     }
 
     template <typename T>
-    node<T>::node(T& elt)
+    node<T>::node(T elt)
       : elt_ (elt),
 	parent_ (0)
     {
@@ -139,21 +178,36 @@ namespace mln
 
     template <typename T>
     const T&
-    node<T>::content() const
+    node<T>::elt() const
     {
       return elt_;
     }
 
     template <typename T>
     T&
-    node<T>::content()
+    node<T>::elt()
     {
       return elt_;
     }
 
+
+    template <typename T>
+    std::vector< node<T>* >&
+    node<T>::children()
+    {
+      return child_;
+    }
+
+    template <typename T>
+    const std::vector< node<T>* >&
+    node<T>::children() const
+    {
+      return child_;
+    }
+
     template <typename T>
     node<T>*
-    node<T>::add_child(T& elt)
+    node<T>::add_child(T elt)
     {
       node<T>* s = new node<T>(elt);
 
@@ -184,19 +238,19 @@ namespace mln
     node<T>::search_rec(node<T>** res, T& elt)
     {
       if (elt == this->elt_)
-	{
-	  *res = this;
-	  return 1;
-	}
+      {
+	*res = this;
+	return 1;
+      }
       else
+      {
+	for (typename std::vector<node<T>* >::iterator it = this->child_.begin();
+	     it != this->child_.end(); ++it)
 	{
-	  for (typename std::vector<node<T>* >::iterator it = this->child_.begin();
-	       it != this->child_.end(); ++it)
-	    {
-	      if ((**it).search_rec(res, elt))
-		return 1;
-	    }
+	  if ((**it).search_rec(res, elt))
+	    return 1;
 	}
+      }
       return 0;
     }
 
@@ -209,6 +263,30 @@ namespace mln
       if (search_rec(&res, elt))
 	return res;
       return 0;
+    }
+
+    // Branch methods
+    template <typename T>
+    branch<T>::branch(util::tree<T>& tree,
+		      util::node<T>& apex)
+      : tree_(tree),
+	apex_(apex)
+    {
+    }
+
+
+    template <typename T>
+    util::node<T>&
+    branch<T>::apex()
+    {
+      return apex_;
+    }
+
+    template <typename T>
+    util::tree<T>&
+    branch<T>::tree()
+    {
+      return tree_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
