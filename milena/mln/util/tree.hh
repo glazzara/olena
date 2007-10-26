@@ -95,7 +95,7 @@ namespace mln
       tree();
       tree(node<T>* root);
 
-      tree<T>* tree_get(T& elt);
+      node<T>* root();
       void add_tree_up (T& elt);
       void add_tree_down (T& elt);
 
@@ -135,13 +135,10 @@ namespace mln
     }
 
     template <typename T>
-    tree<T>*
-    tree<T>::tree_get(T& elt)
+    node<T>*
+    tree<T>::root()
     {
-      node<T>* n = root_->search(elt);
-      tree<T>* res = new tree (n);
-
-      return res;
+      return root_;
     }
 
     template <typename T>

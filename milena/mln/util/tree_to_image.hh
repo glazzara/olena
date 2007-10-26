@@ -62,15 +62,15 @@ namespace mln
       I& output = exact(output_);
 
 
-      mln_piter(set_p<point2d>) p(node->elt_.points);
+      mln_piter(set_p<point2d>) p(node->elt().points);
 
       for_all(p)
-	output(p) = node->elt_.value;
+	output(p) = node->elt().value;
 
-      typename std::vector< util::node<T>* >::const_iterator it = node->child_.begin();
+      typename std::vector< util::node<T>* >::const_iterator it = node->children().begin();
 
       for (int i = 0;
-	   it != node->child_.end();
+	   it != node->children().end();
 	   ++it, ++i)
 	{
 	  if (*it)
@@ -84,7 +84,7 @@ namespace mln
     tree_to_image (tree<T>& tree, Image<I>& output_)
     {
       I& output = exact(output_);
-      tree_to_image_rec(tree.root_, output);
+      tree_to_image_rec(tree.root(), output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

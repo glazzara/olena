@@ -576,7 +576,7 @@ namespace mln
       lower_tree = compute_level_set<V, lower<V> >(ima);
       upper_tree = compute_level_set<V, upper<V> >(ima);
 
-      merge_trees(lower_tree, upper_tree);
+      //merge_trees(lower_tree, upper_tree);
     }
 
   } // end of namespace mln::fllt
