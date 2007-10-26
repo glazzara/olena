@@ -116,8 +116,8 @@ namespace mln
       tree<T>& tree();
 
     private:
-      node<T>& apex_;
       util::tree<T>& tree_;
+      node<T>& apex_;
     };
 
 
