@@ -1,5 +1,11 @@
 2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix warnings in some tests.
+	* tests/border_resize_sub_image.cc,
+	* tests/branch_iter.cc: Fix.
+
+2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix tree.
 	* mln/util/branch_iter.hh,
 	* mln/util/tree.hh,

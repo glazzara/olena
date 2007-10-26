@@ -60,14 +60,14 @@ int main()
 
   typedef image2d<int> I;
   unsigned border = 42;
-  unsigned new_border = 51;
+  //unsigned new_border = 51;
 
   box2d b(literal::origin, point2d(1,1));
   I ima(3,3, border);
 
   mln_assertion(border::get(ima) == border);
   sub_image<I, box2d> sub(ima, b);
-  mln_assertion( sub.has  (point2d(2,2)) == false && 
+  mln_assertion( sub.has  (point2d(2,2)) == false &&
 		 sub.owns_(point2d(2,2)) == false );
 
   // A subimage has no border so it cannot be resized => we get a compilation error as expected.
