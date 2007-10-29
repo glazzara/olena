@@ -29,7 +29,7 @@
 # define MLN_UTIL_TREE_HH
 
 # include <vector>
-
+# include <iostream>
 # include <mln/core/contract.hh>
 
 /*!
@@ -82,6 +82,7 @@ namespace mln
       void set_parent(node<T>* parent);
       void print_rec(int n) const;
       void print() const;
+      bool check_consistency();
       int  search_rec(node<T>** res, T& elt);
       node<T>* search(T& elt);
 
@@ -102,6 +103,7 @@ namespace mln
 
       node<T>* root();
       branch<T> main_branch();
+      bool check_consistency();
       void add_tree_up (T& elt);
       void add_tree_down (T& elt);
 
@@ -172,6 +174,13 @@ namespace mln
       root_->child_.push_back (n);
     }
 
+
+    template <typename T>
+    bool
+    tree<T>::check_consistency()
+    {
+      return root()->check_consistency ();
+    }
 
     template <typename T>
     node<T>::node()
@@ -252,13 +261,6 @@ namespace mln
       return parent_;
     }
 
-//     template <typename T>
-//     node<T>*&
-//     node<T>::parent()
-//     {
-//       return parent_;
-//     }
-
     template <typename T>
     int
     node<T>::search_rec(node<T>** res, T& elt)
@@ -290,6 +292,23 @@ namespace mln
 	return res;
       return 0;
     }
+
+    template <typename T>
+    bool
+    node<T>::check_consistency()
+    {
+      for (typename std::vector<node<T>* >::iterator it = this->child_.begin();
+	   it != this->child_.end(); ++it)
+	{
+	  if ((**it).parent() != this)
+	    return false;
+
+	  if (!((**it).check_consistency()))
+	    return false;
+	}
+      return true;
+    }
+
 
     // Branch methods
     template <typename T>

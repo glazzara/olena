@@ -60,4 +60,5 @@ int main (void)
   util::tree<unsigned>* tre = new util::tree<unsigned>(&node);
   mln_assertion(tre);
   tre->add_tree_up(elt6);
+  mln_assertion (tre->check_consistency());
 }

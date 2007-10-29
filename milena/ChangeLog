@@ -1,3 +1,11 @@
+2007-10-29  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	New method to check consistency of tree.
+
+	* mln/util/tree.hh: Add new method which checks the
+	consistency of a tree.
+	* tests/tree.cc: Add this test at the end of file.
+
 2007-10-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/labeling: Rename as...
