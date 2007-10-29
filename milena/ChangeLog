@@ -1,3 +1,10 @@
+2007-10-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mln/labeling: Rename as...
+	* mln/labeling: ...this.
+	According to the Robert & Collins dictionary, `labelling' is
+	spelled with two l's.
+
 2007-10-29  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update test for fllt.

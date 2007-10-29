@@ -1,10 +1,3 @@
-2007-10-29  Roland Levillain  <roland@lrde.epita.fr>
-
-	* milena/mln/labeling: Rename as...
-	* milena/mln/labeling: ...this.
-	According to the Robert & Collins dictionary, `labelling' is
-	spelled with two l's.
-
 2007-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add support for the FreeImage library.
