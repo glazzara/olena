@@ -1,3 +1,10 @@
+2007-10-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revert the renaming of mln/labeling.
+
+	* mln/labelling: Rename as...
+	* mln/labeling: ...this.
+
 2007-10-29  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	New method to check consistency of tree.
