@@ -38,8 +38,8 @@
 #include <mln/geom/shift.hh>
 #include <mln/set/diff.hh>
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/io/pbm/save.hh>
 #include <mln/level/fill.hh>
 #include <mln/level/stretch.hh>
 
@@ -75,11 +75,13 @@ int main()
 
   border::thickness = 2;
 
-  image2d<int_u8>
-    pic = io::pgm::load("../img/picasso.pgm"),
-    out(pic.domain());
+  image2d<bool>
+    pic = io::pbm::load("../img/picasso.pbm"),
+    out = morpho::hit_or_miss(pic, win_hit, win_miss);
+  io::pbm::save(out, "out.pbm");
 
-  morpho::hit_or_miss(pic, win_hit, win_miss, out);
+  mln_postcondition(morpho::hit_or_miss(morpho::complementation(pic),
+					win_miss, win_hit) == out);
 
-  io::pgm::save(out, "out.pgm");
+  // FIXME: Do not work if the input image is pgm!
 }

@@ -41,6 +41,11 @@ int main()
 
   int_u8 i = 3, j;
 
+  {
+    int k = 0;
+    k += value::scalar(k);
+  }
+
   // Assignment.
   {
     i = 51;

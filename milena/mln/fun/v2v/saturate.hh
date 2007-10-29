@@ -87,16 +87,21 @@ namespace mln
       V
       saturate<V>::operator()(const W& w) const
       {
+	// FIXME: Check that W is a larger type than V; otherwise
+	// alt code.
+	static const W min_W = mln::value::cast<W>(min_);
+	static const W max_W = mln::value::cast<W>(max_);
+
 	// FIXME: Below we need something more powerful that mlc_converts_to
-	// FIXME: for instance, with W=int_s<10u> and V=int_u<8u>, it does not
-	// FIXME: works cause the cast is not obvious...
+	// for instance, with W=int_s<10u> and V=int_u<8u>, it does not
+	// works cause the cast is not obvious...
 	// mlc_converts_to(W, V)::check();
-	V w_ = mln::value::cast<V>(w);
-	if (w_ < min_)
+
+	if (w < min_W)
 	  return min_;
-	if (w_ > max_)
+	if (w > max_W)
 	  return max_;
-	return w_;
+	return mln::value::cast<W>(w);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -49,18 +49,18 @@ namespace mln
      *
      * This operator is Id - ope_B. 
      */
-    template <typename I, typename W, typename O>
-    void top_hat_white(const Image<I>& input, const Window<W>& win,
-		       Image<O>& output);
+    template <typename I, typename W>
+    mln_concrete(I)
+      top_hat_white(const Image<I>& input, const Window<W>& win);
 
 
     /*! Morphological black top-hat (for background / dark objects).
      *
      * This operator is clo_B - Id.
      */
-    template <typename I, typename W, typename O>
-    void top_hat_black(const Image<I>& input, const Window<W>& win,
-		       Image<O>& output);
+    template <typename I, typename W>
+    mln_concrete(I)
+      top_hat_black(const Image<I>& input, const Window<W>& win);
 
 
     /*! Morphological self-complementary top-hat.
@@ -70,62 +70,56 @@ namespace mln
      *   = (input - opening) + (closing - input) \n
      *   = closing - opening. \n
      */
-    template <typename I, typename W, typename O>
-    void top_hat_self_complementary(const Image<I>& input, const Window<W>& win,
-				    Image<O>& output);
+    template <typename I, typename W>
+    mln_concrete(I)
+      top_hat_self_complementary(const Image<I>& input, const Window<W>& win);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename W, typename O>
-    void top_hat_white(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
+    template <typename I, typename W>
+    mln_concrete(I) top_hat_white(const Image<I>& input, const Window<W>& win)
     {
-      const I& input = exact(input_);
-      const W& win = exact(win_);
-      O& output = exact(output_);
+      trace::entering("morpho::top_hat_white");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
 
-      mln_precondition(output.domain() == input.domain());
-      mln_precondition(! win.is_empty());
-
-      O temp(input.domain());
-      opening(input, win, temp); // temp = opening
-      morpho::minus(input, temp, output); // output = input - opening
+      mln_concrete(I) output = morpho::minus(input,
+					     opening(input, win));
 
       mln_postcondition(test::positive(output));
+      trace::exiting("morpho::top_hat_white");
+      return output;
     }
 
-    template <typename I, typename W, typename O>
-    void top_hat_black(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
+    template <typename I, typename W>
+    mln_concrete(I) top_hat_black(const Image<I>& input, const Window<W>& win)
     {
-      const I& input = exact(input_);
-      const W& win = exact(win_);
-      O& output = exact(output_);
+      trace::entering("morpho::top_hat_black");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
 
-      mln_precondition(output.domain() == input.domain());
-      mln_precondition(! win.is_empty());
-
-      closing(input, win, output); // output = closing
-      morpho::minus_inplace(output, input); // now output = closing - input
+      mln_concrete(I) output = morpho::minus(closing(input, win),
+					     input);
 
       mln_postcondition(test::positive(output));
+      trace::exiting("morpho::top_hat_black");
+      return output;
     }
 
-    template <typename I, typename W, typename O>
-    void top_hat_self_complementary(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
+    template <typename I, typename W>
+    mln_concrete(I) top_hat_self_complementary(const Image<I>& input, const Window<W>& win)
     {
-      const I& input = exact(input_);
-      const W& win = exact(win_);
-      O& output = exact(output_);
+      trace::entering("morpho::top_hat_self_complementary");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
 
-      mln_precondition(output.domain() == input.domain());
-      mln_precondition(! win.is_empty());
-
-      closing(input, win, output); // output = closing
-      O temp(input.domain());
-      opening(input, win, temp); // temp = opening
-      morpho::minus_inplace(output, temp); // now output = closing - opening
+      mln_concrete(I) output = morpho::minus(closing(input, win),
+					     opening(input, win));
 
       mln_postcondition(test::positive(output));
+      trace::exiting("morpho::top_hat_self_complementary");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

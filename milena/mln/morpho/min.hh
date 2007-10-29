@@ -49,9 +49,10 @@ namespace mln
     /*! Morphological min: either a logical "and" (if morpho on sets)
      *  or an arithmetical min (if morpho on functions).
      */
-    template <typename I, typename J, typename O>
-    void min(const Image<I>& lhs, const Image<J>& rhs,
-	     Image<O>& output);
+    template <typename I, typename J>
+    mln_concrete(I)
+      min(const Image<I>& lhs, const Image<J>& rhs);
+
 
     /*! Morphological min, inplace version: either a logical "and" (if
      *  morpho on sets) or an arithmetical min (if morpho on
@@ -66,36 +67,36 @@ namespace mln
     namespace impl
     {
 
+      // Binary => morphology on sets.
+
       template <typename I, typename J, typename O>
-      void min_(trait::image::kind::logic, // binary => morphology on sets
-		const Image<I>& lhs, const Image<J>& rhs,
-		Image<O>& output)
+      mln_concrete(I) min_(trait::image::kind::logic,
+			   const I& lhs, const J& rhs)
       {
-	return logical::and_(lhs, rhs, output);
+	return logical::and_(lhs, rhs);
       }
-
-      template <typename K, typename I, typename J, typename O>
-      void min_(K, // otherwise => morphology on functions
-		const Image<I>& lhs, const Image<J>& rhs,
-		Image<O>& output)
-      {
-	return arith::min(lhs, rhs, output);
-      }
-
-      // in place
 
       template <typename I, typename J>
-      void min_inplace_(trait::image::kind::logic, // binary => morphology on sets
-			Image<I>& lhs, const Image<J>& rhs)
+      void min_inplace_(trait::image::kind::logic,
+			I& lhs, const J& rhs)
       {
-	return logical::and_inplace(lhs, rhs);
+	logical::and_inplace(lhs, rhs);
       }
 
-      template <typename K, typename I, typename J>
-      void min_inplace_(K, // otherwise => morphology on functions
-			Image<I>& lhs, const Image<J>& rhs)
+      // Otherwise => morphology on functions.
+
+      template <typename I, typename J>
+      mln_concrete(I) min_(trait::image::kind::any,
+			   const I& lhs, const J& rhs)
       {
-	return arith::min_inplace(lhs, rhs);
+	return arith::min(lhs, rhs);
+      }
+
+      template <typename I, typename J>
+      void min_inplace_(trait::image::kind::any,
+			I& lhs, const J& rhs)
+      {
+	arith::min_inplace(lhs, rhs);
       }
 
     } // end of namespace mln::morpho::impl
@@ -103,19 +104,28 @@ namespace mln
 
     // Facades.
 
-    template <typename I, typename J, typename O>
-    void min(const Image<I>& lhs, const Image<J>& rhs, Image<O>& output)
+    template <typename I, typename J>
+    mln_concrete(I)
+      min(const Image<I>& lhs, const Image<J>& rhs)
     {
+      trace::entering("morpho::min");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      mln_precondition(exact(output).domain() == exact(lhs).domain());
-      impl::min_(mln_trait_image_kind(I)(), exact(lhs), exact(rhs), output);
+
+      mln_concrete(I) output = impl::min_(mln_trait_image_kind(I)(), exact(lhs), exact(rhs));
+
+      trace::exiting("morpho::min");
+      return output;
     }
 
     template <typename I, typename J>
     void min_inplace(Image<I>& lhs, const Image<J>& rhs)
     {
+      trace::entering("morpho::min_inplace");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
       impl::min_inplace_(mln_trait_image_kind(I)(), exact(lhs), exact(rhs));
+
+      trace::exiting("morpho::min_inplace_");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

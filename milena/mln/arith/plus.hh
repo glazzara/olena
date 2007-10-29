@@ -67,6 +67,7 @@ namespace mln
   mln_trait_op_plus(L,R)
   operator+(const Image<L>& lhs, const Image<R>& rhs);
 
+
   template <typename L, typename R>
   L&
   operator+=(Image<L>& lhs, const Image<R>& rhs);
@@ -75,6 +76,7 @@ namespace mln
   template <typename I, typename S>
   mln_trait_op_plus(I,S)
   operator+(const Image<I>& ima, const value::Scalar<S>& s);
+
 
   template <typename I, typename S>
   I&
@@ -89,39 +91,111 @@ namespace mln
      *
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
-     * \param[out] output The result image.
+     * \result The result image.
      *
-     * \pre \p output.domain == \p lhs.domain == \p rhs.domain
+     * \pre \p lhs.domain == \p rhs.domain
      */
-    template <typename L, typename R, typename O>
-    void plus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
+    template <typename L, typename R>
+    mln_trait_op_plus(L, R)
+      plus(const Image<L>& lhs, const Image<R>& rhs);
+
+
+    /*! Point-wise addition of images \p lhs and \p rhs.
+     *
+     * \param[in] lhs First operand image.
+     * \param[in] rhs Second operand image.
+     * \param[in] f   Function.
+     * \result The result image.
+     *
+     * \pre \p lhs.domain == \p rhs.domain
+     */
+    template <typename L, typename R, typename F>
+    mln_ch_value(L, mln_result(F))
+      plus(const Image<L>& lhs, const Image<R>& rhs, const Function_v2v<F>& f);
+
+
+    /*! Point-wise addition of images \p lhs and \p rhs.
+     *
+     * \param[in] lhs First operand image.
+     * \param[in] rhs Second operand image.
+     * \result The result image.
+     *
+     * The free parameter \c V sets the destination value type.
+     *
+     * \pre \p lhs.domain == \p rhs.domain
+     */
+    template <typename V, typename L, typename R>
+    mln_ch_value(L, V)
+      plus(const Image<L>& lhs, const Image<R>& rhs);
+
+
+    /*! Point-wise addition of image \p rhs in image \p lhs.
+     *
+     * \param[in,out] lhs First operand image (subject to addition).
+     * \param[in] rhs Second operand image (to be added to \p lhs).
+     *
+     * This addition performs: \n
+     *   for all p of rhs.domain \n
+     *     lhs(p) += rhs(p)
+     *
+     * \pre \p rhs.domain == \p lhs.domain
+     */
+    template <typename L, typename R>
+    void
+    plus_inplace(Image<L>& lhs, const Image<R>& rhs);
 
 
     /*! Point-wise addition of the value \p val to image \p input.
      *
      * \param[in] input The image.
      * \param[in] val The value.
-     * \param[out] output The result image.
+     * \result The result image.
      *
-     * \pre \p output.domain == \p input.domain
+     * \pre \p input.has_data
      */
-    template <typename I, typename V, typename O>
-    void plus_cst(const Image<I>& input, const V& val, Image<O>& output);
+    template <typename I, typename V>
+    mln_trait_op_plus(I, V)
+      plus_cst(const Image<I>& input, const V& val);
 
 
-    /*! Point-wise addition of image \p rhs in image \p lhs.
+    /*! Point-wise addition of the value \p val to image \p input.
      *
-     * \param[in] lhs First operand image (subject to addition).
-     * \param[in,out] rhs Second operand image (to be added to \p lhs).
+     * \param[in] input The image.
+     * \param[in] val The value.
+     * \param[in] f   Function.
+     * \result The result image.
      *
-     * This addition performs: \n
-     *   for all p of rhs.domain \n
-     *     lhs(p) += rhs(p)
-     *
-     * \pre \p rhs.domain <= \p lhs.domain
+     * \pre \p input.has_data
      */
-    template <typename L, typename R>
-    void plus_inplace(Image<L>& lhs, const Image<R>& rhs);
+    template <typename I, typename V, typename F>
+    mln_ch_value(I, mln_result(F))
+      plus_cst(const Image<I>& input, const V& val, const Function_v2v<F>& f);
+
+
+    /*! Point-wise addition of the value \p val to image \p input.
+     *
+     * \param[in] input The image.
+     * \param[in] val The value.
+     * \param[in] f   Function.
+     * \result The result image.
+     *
+     * \pre \p input.has_data
+     */
+    template <typename W, typename I, typename V>
+    mln_ch_value(I, W)
+      plus_cst(const Image<I>& input, const V& val);
+
+
+    /*! Point-wise addition of the value \p val to image \p input.
+     *
+     * \param[in,out] input The image.
+     * \param[in] val The value.
+     *
+     * \pre \p input.has_data
+     */
+    template <typename I, typename V>
+    I&
+    plus_cst_inplace(Image<I>& input, const V& val);
 
 
   } // end of namespace mln::arith
@@ -136,19 +210,25 @@ namespace mln
   mln_trait_op_plus(L,R)
   operator+(const Image<L>& lhs, const Image<R>& rhs)
   {
+    trace::entering("operator::plus");
     mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-    mln_trait_op_plus(L,R) tmp;
-    initialize(tmp, lhs);
-    arith::plus(lhs, rhs, tmp);
-    return tmp;
+
+    mln_trait_op_plus(L,R) output = arith::plus(lhs, rhs);
+
+    trace::exiting("operator::plus");
+    return output;
   }
 
   template <typename L, typename R>
   L&
   operator+=(Image<L>& lhs, const Image<R>& rhs)
   {
+    trace::entering("operator::plus_eq");
     mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
     arith::plus_inplace(lhs, rhs);
+
+    trace::exiting("operator::plus_eq");
     return exact(lhs);
   }
 
@@ -157,19 +237,25 @@ namespace mln
   mln_trait_op_plus(I,S)
   operator+(const Image<I>& ima, const value::Scalar<S>& s)
   {
+    trace::entering("operator::plus");
     mln_precondition(exact(ima).has_data());
-    mln_trait_op_plus(I,S) tmp;
-    initialize(tmp, ima);
-    arith::plus_cst(ima, exact(s), tmp);
-    return tmp;
+
+    mln_trait_op_plus(I,S) output = arith::plus_cst(ima, exact(s));
+
+    trace::exiting("operator::plus");
+    return output;
   }
 
   template <typename I, typename S>
   I&
   operator+=(Image<I>& ima, const value::Scalar<S>& s)
   {
+    trace::entering("operator::plus_eq");
     mln_precondition(exact(ima).has_data());
-    arith::plus_cst(ima, exact(s), ima);
+
+    arith::plus_cst_inplace(ima, exact(s));
+
+    trace::exiting("operator::plus_eq");
     return exact(ima);
   }
 
@@ -183,18 +269,25 @@ namespace mln
 
       template <typename L, typename R, typename O>
       void plus_(trait::image::speed::any, const L& lhs,
-		 trait::image::speed::any, const R& rhs,
-		 trait::image::speed::any, O& output)
+		 trait::image::speed::any, const R& rhs, O& output)
       {
 	mln_piter(L) p(lhs.domain());
 	for_all(p)
 	  output(p) = lhs(p) + rhs(p);
       }
 
+      template <typename L, typename R, typename F, typename O>
+      void plus_(trait::image::speed::any, const L& lhs,
+		 trait::image::speed::any, const R& rhs, const F& f, O& output)
+      {
+	mln_piter(L) p(lhs.domain());
+	for_all(p)
+	  output(p) = f(lhs(p) + rhs(p));
+      }
+
       template <typename L, typename R, typename O>
       void plus_(trait::image::speed::fastest, const L& lhs,
-		 trait::image::speed::fastest, const R& rhs,
-		 trait::image::speed::fastest, O& output)
+		 trait::image::speed::fastest, const R& rhs, O& output)
       {
 	mln_pixter(const L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
@@ -203,11 +296,22 @@ namespace mln
 	  op.val() = lp.val() + rp.val();
       }
 
+      template <typename L, typename R, typename F, typename O>
+      void plus_(trait::image::speed::fastest, const L& lhs,
+		 trait::image::speed::fastest, const R& rhs, const F& f, O& output)
+      {
+	mln_pixter(const L) lp(lhs);
+	mln_pixter(const R) rp(rhs);
+	mln_pixter(O)       op(output);
+	for_all_3(lp, rp, op)
+	  op.val() = f(lp.val() + rp.val());
+      }
+
       template <typename L, typename R>
       void plus_inplace_(trait::image::speed::any, L& lhs,
 			 trait::image::speed::any, const R& rhs)
       {
-	mln_piter(R) p(rhs.domain());
+	mln_piter(L) p(lhs.domain());
 	for_all(p)
 	  lhs(p) += rhs(p);
       }
@@ -218,7 +322,7 @@ namespace mln
       {
 	mln_pixter(L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
-	for_all_2(rp, lp)
+	for_all_2(lp, rp)
 	  lp.val() += rp.val();
       }
 
@@ -227,38 +331,133 @@ namespace mln
 
     // Facades.
 
-    template <typename L, typename R, typename O>
-    void plus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
-    {
-      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      mln_precondition(exact(output).domain() == exact(lhs).domain());
-      impl::plus_(mln_trait_image_speed(L)(), exact(lhs),
-		  mln_trait_image_speed(R)(), exact(rhs),
-		  mln_trait_image_speed(O)(), exact(output));
-    }
-
-    template <typename I, typename V, typename O>
-    void plus_cst(const Image<I>& input, const V& val, Image<O>& output)
-    {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      plus(input, pw::cst(val) | exact(input).domain(), output);
-      // Calls the previous version.
-    }
 
     template <typename L, typename R>
-    void plus_inplace(Image<L>& lhs, const Image<R>& rhs)
+    mln_trait_op_plus(L, R)
+      plus(const Image<L>& lhs, const Image<R>& rhs)
     {
-      mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
-      impl::plus_inplace_(mln_trait_image_speed(L)(), exact(lhs),
-			  mln_trait_image_speed(R)(), exact(rhs));
+      trace::entering("arith::plus");
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
+      mln_trait_op_plus(L, R) output;
+      initialize(output, lhs);
+      impl::plus_(mln_trait_image_speed(L)(), exact(lhs),
+		  mln_trait_image_speed(R)(), exact(rhs), output);
+
+      trace::exiting("arith::plus");
+      return output;
     }
 
-    template <typename I, typename V>
-    void plus_cst_inplace(Image<I>& input, const V& val)
+
+    template <typename L, typename R, typename F>
+    mln_ch_value(L, mln_result(F))
+      plus(const Image<L>& lhs, const Image<R>& rhs, const Function_v2v<F>& f)
     {
-      mln_precondition(exact(input).has_data());
-      plus_inplace(input, pw::cst(val) | exact(input).domain());
+      trace::entering("arith::plus");
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
+      mln_ch_value(L, mln_result(F)) output;
+      initialize(output, lhs);
+      impl::plus_(mln_trait_image_speed(L)(), exact(lhs),
+		  mln_trait_image_speed(R)(), exact(rhs), exact(f), output);
+
+      trace::exiting("arith::plus");
+      return output;
+    }
+
+
+    template <typename V, typename L, typename R>
+    mln_ch_value(L, V)
+      plus(const Image<L>& lhs, const Image<R>& rhs)
+    {
+      trace::entering("arith::plus");
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+      
       // Calls the previous version.
+      mln_ch_value(L, V) output = plus(lhs, rhs,
+				       mln::fun::v2v::cast<V>());
+
+      trace::exiting("arith::plus");
+      return output;
+    }
+
+
+    template <typename I, typename V>
+    mln_trait_op_plus(I, V)
+      plus_cst(const Image<I>& input, const V& val)
+    {
+      trace::entering("arith::plus_cst");
+      mln_precondition(exact(input).has_data());
+
+      // Calls the previous version.
+      mln_trait_op_plus(I, V) output = plus(input,
+					    pw::cst(val) | exact(input).domain());
+
+      trace::exiting("arith::plus_cst");
+      return output;
+    }
+
+
+    template <typename I, typename V, typename F>
+    mln_ch_value(I, mln_result(F))
+      plus_cst(const Image<I>& input, const V& val, const Function_v2v<F>& f)
+    {
+      trace::entering("arith::plus_cst");
+      mln_precondition(exact(input).has_data());
+
+      // Calls the previous version.
+      mln_ch_value(I, mln_result(F)) output = plus(input,
+						   pw::cst(val) | exact(input).domain(),
+						   f);
+
+      trace::exiting("arith::plus_cst");
+      return output;
+    }
+
+
+    template <typename W, typename I, typename V>
+    mln_ch_value(I, W)
+      plus_cst(const Image<I>& input, const V& val)
+    {
+      trace::entering("arith::plus_cst");
+      mln_precondition(exact(input).has_data());
+      
+      // Calls the previous version.
+      mln_ch_value(I, W) output = plus_cst(input, val,
+					   mln::fun::v2v::cast<W>());
+
+      trace::exiting("arith::plus_cst");
+      return output;
+    }
+
+
+    template <typename L, typename R>
+    void
+    plus_inplace(Image<L>& lhs, const Image<R>& rhs)
+    {
+      trace::entering("arith::plus_inplace");
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
+      impl::plus_inplace_(mln_trait_image_speed(L)(), exact(lhs),
+			  mln_trait_image_speed(R)(), exact(rhs));
+
+      trace::exiting("arith::plus_inplace");
+    }
+
+
+    template <typename I, typename V>
+    I&
+    plus_cst_inplace(Image<I>& input, const V& val)
+    {
+      trace::entering("arith::plus_cst_inplace");
+      mln_precondition(exact(input).has_data());
+
+      // Calls the previous version.
+      plus_inplace(input,
+		   pw::cst(val) | exact(input).domain());
+
+      trace::exiting("arith::plus_cst_inplace");
+      return exact(input);
     }
 
   } // end of namespace mln::arith

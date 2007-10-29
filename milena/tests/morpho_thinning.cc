@@ -36,7 +36,9 @@
 #include <mln/win/rectangle2d.hh>
 #include <mln/core/window2d.hh>
 
+#include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/load.hh>
+#include <mln/io/pbm/save.hh>
 #include <mln/io/pgm/save.hh>
 
 #include <mln/morpho/thinning.hh>
@@ -59,11 +61,14 @@ int main()
 
   border::thickness = 2;
 
-  image2d<int_u8>
-    pic = io::pgm::load("../img/picasso.pgm"),
-    out(pic.domain());
-
-  morpho::thinning(pic, win_fg, win_bg, out);
-
-  io::pgm::save(out, "out.pgm");
+  {
+    image2d<bool> pic = io::pbm::load("../img/picasso.pbm");
+    io::pbm::save( morpho::thinning(pic, win_fg, win_bg),
+		   "out.pbm" );
+  }
+//   {
+//     image2d<int_u8> pic = io::pgm::load("../img/picasso.pgm");
+//     io::pgm::save( morpho::thinning(pic, win_fg, win_bg),
+// 		   "out.pgm" );
+//   }
 }

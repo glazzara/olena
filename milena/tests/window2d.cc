@@ -34,6 +34,7 @@
 #include <mln/core/image2d.hh>
 #include <mln/convert/to_image.hh>
 #include <mln/debug/println.hh>
+#include <mln/logical/not.hh>
 
 
 
@@ -51,6 +52,7 @@ int main()
 
   image2d<bool> ima = convert::to_image(w);
   debug::println(ima);
+  debug::println(logical::not_(ima));
 
   mln_assertion(w.delta() == 1);
 }

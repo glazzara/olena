@@ -48,82 +48,73 @@ namespace mln
      *
      * This operator is d_B - e_B. 
      */
-    template <typename I, typename W, typename O>
-    void gradient(const Image<I>& input, const Window<W>& win,
-		  Image<O>& output);
+    template <typename I, typename W>
+    mln_concrete(I) gradient(const Image<I>& input, const Window<W>& win);
 
 
     /*! Morphological internal gradient.
      *
      * This operator is Id - e_B. 
      */
-    template <typename I, typename W, typename O>
-    void gradient_internal(const Image<I>& input, const Window<W>& win,
-			   Image<O>& output);
+    template <typename I, typename W>
+    mln_concrete(I) gradient_internal(const Image<I>& input, const Window<W>& win);
 
 
     /*! Morphological external gradient.
      *
      * This operator is d_B - Id. 
      */
-    template <typename I, typename W, typename O>
-    void gradient_external(const Image<I>& input, const Window<W>& win,
-			   Image<O>& output);
+    template <typename I, typename W>
+    mln_concrete(I) gradient_external(const Image<I>& input, const Window<W>& win);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename W, typename O>
-    void gradient(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
+    template <typename I, typename W>
+    mln_concrete(I) gradient(const Image<I>& input, const Window<W>& win)
     {
-      const I& input = exact(input_);
-      const W& win = exact(win_);
-      O& output = exact(output_);
+      trace::entering("morpho::gradient");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
 
-      mln_precondition(output.domain() == input.domain());
-      mln_precondition(! win.is_empty());
-
-      dilation(input, win, output); // output = dilation
-      O temp(input.domain());
-      erosion(input, win, temp); // temp = erosion
-      morpho::minus_inplace(output, temp); // now output = dilation - erosion
+      mln_concrete(I) output = morpho::minus(dilation(input, win),
+					     erosion(input, win));
 
       mln_postcondition(test::positive(output));
+      trace::exiting("morpho::gradient");
+      return output;
     }
 
-    template <typename I, typename W, typename O>
-    void gradient_internal(const Image<I>& input_, const Window<W>& win_,
-			   Image<O>& output_)
+
+    template <typename I, typename W>
+    mln_concrete(I) gradient_internal(const Image<I>& input, const Window<W>& win)
     {
-      const I& input = exact(input_);
-      const W& win = exact(win_);
-      O& output = exact(output_);
+      trace::entering("morpho::gradient_internal");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
 
-      mln_precondition(output.domain() == input.domain());
-      mln_precondition(! win.is_empty());
-
-      O temp(input.domain());
-      erosion(input, win, temp); // temp = erosion
-      morpho::minus(input, temp, output); // output = input - erosion
+      mln_concrete(I) output = morpho::minus(input,
+					     erosion(input, win));
 
       mln_postcondition(test::positive(output));
+      trace::exiting("morpho::gradient_internal");
+      return output;
     }
 
-    template <typename I, typename W, typename O>
-    void gradient_external(const Image<I>& input_, const Window<W>& win_,
-			   Image<O>& output_)
+
+    template <typename I, typename W>
+    mln_concrete(I) gradient_external(const Image<I>& input, const Window<W>& win)
     {
-      const I& input = exact(input_);
-      const W& win = exact(win_);
-      O& output = exact(output_);
+      trace::entering("morpho::gradient_external");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
 
-      mln_precondition(output.domain() == input.domain());
-      mln_precondition(! win.is_empty());
-
-      dilation(input, win, output); // output = dilation
-      morpho::minus_inplace(output, input); // now output = dilation - input
+      mln_concrete(I) output = morpho::minus(dilation(input, win),
+					     input);
 
       mln_postcondition(test::positive(output));
+      trace::exiting("morpho::gradient_external");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

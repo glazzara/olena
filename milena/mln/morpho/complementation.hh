@@ -50,8 +50,8 @@ namespace mln
      *  morpho on sets) or an arithmetical complementation (if morpho
      *  on functions).
      */
-    template <typename I, typename O>
-    void complementation(const Image<I>& input, Image<O>& output);
+    template <typename I>
+    mln_concrete(I) complementation(const Image<I>& input);
 
 
     /*! Morphological complementation, inplace version: either a
@@ -67,20 +67,41 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename O>
-      void complementation_(trait::image::kind::logic, // binary => morphology on sets
-			    const Image<I>& input,
-			    Image<O>& output)
+      // Binary => morphology on sets.
+
+      template <typename I>
+      mln_concrete(I)
+	complementation_(trait::image::kind::logic,
+			 const Image<I>& input)
       {
-	return logical::not_(input, output);
+	return logical::not_(input);
       }
 
-      template <typename K, typename I, typename O>
-      void complementation_(K, // otherwise => morphology on functions
-			    const Image<I>& input,
-			    Image<O>& output)
+      template <typename I>
+      void
+      complementation_inplace_(trait::image::kind::logic,
+			       Image<I>& input)
       {
-	return arith::revert(input, output);
+	logical::not_inplace(input);
+      }
+
+
+      // Otherwise => morphology on functions.
+
+      template <typename I>
+      mln_concrete(I)
+	complementation_(trait::image::kind::any,
+			 const Image<I>& input)
+      {
+	return arith::revert(input);
+      }
+
+      template <typename I>
+      void
+	complementation_inplace_(trait::image::kind::any,
+				 Image<I>& input)
+      {
+	arith::revert_inplace(input);
       }
 
     } // end of namespace mln::morpho::impl
@@ -88,18 +109,29 @@ namespace mln
 
     // Facades.
 
-    template <typename I, typename O>
-    void complementation(const Image<I>& input, Image<O>& output)
+    template <typename I>
+    mln_concrete(I) complementation(const Image<I>& input)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::complementation_(mln_trait_image_kind(I)(), exact(input), output);
+      trace::entering("morpho::complementation");
+      mln_precondition(exact(input).has_data());
+
+      mln_concrete(I) output = impl::complementation_(mln_trait_image_kind(I)(),
+						      input);
+
+      trace::exiting("morpho::complementation");
+      return output;
     }
 
     template <typename I>
     void complementation_inplace(Image<I>& input)
     {
+      trace::entering("morpho::complementation_inplace");
       mln_precondition(exact(input).has_data());
-      morpho::complementation(input, input); // Calls the previous version.
+
+      impl::complementation_inplace_(mln_trait_image_kind(I)(),
+				     input);
+
+      trace::exiting("morpho::complementation_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

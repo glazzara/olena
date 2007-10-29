@@ -44,4 +44,10 @@ int main()
   point2d p = make::point2d(1, 1);
   ima(p) = 51;
   mln_assertion( (pw::value(ima) == pw::cst(51))(p) == true );
+
+  {
+    image2d<float> imaf(3,3);
+    imaf(p) = 51;
+    mln_assertion(((pw::value(ima) + pw::value(imaf))(p) / 20) - 5.1 < 0.00001);
+  }
 }

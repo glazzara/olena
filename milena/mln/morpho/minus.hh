@@ -49,16 +49,16 @@ namespace mln
     /*! Morphological minus: either a logical "and not" (if morpho on
      *  sets) or an arithmetical minus (if morpho on functions).
      */
-    template <typename I, typename J, typename O>
-    void minus(const Image<I>& lhs, const Image<J>& rhs,
-	       Image<O>& output);
-
-    /*! Morphological minus, inplace version: either a logical "and
-     *  not" (if morpho on sets) or an arithmetical minus (if morpho
-     *  on functions).
-     */
     template <typename I, typename J>
-    void minus_inplace(Image<I>& lhs, const Image<J>& rhs);
+    mln_concrete(I) minus(const Image<I>& lhs, const Image<J>& rhs);
+
+
+//     /*! Morphological minus, inplace version: either a logical "and
+//      *  not" (if morpho on sets) or an arithmetical minus (if morpho
+//      *  on functions).
+//      */
+//     template <typename I, typename J>
+//     void minus_inplace(Image<I>& lhs, const Image<J>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -66,20 +66,22 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename J, typename O>
-      void minus_(trait::image::kind::logic, // binary => morphology on sets
-		  const Image<I>& lhs, const Image<J>& rhs,
-		  Image<O>& output)
+      // Binary => morphology on sets.
+
+      template <typename I, typename J>
+      mln_concrete(I) minus_(trait::image::kind::logic,
+			     const I& lhs, const J& rhs)
       {
-	return logical::and_not(lhs, rhs, output);
+	return logical::and_not(lhs, rhs);
       }
 
-      template <typename K, typename I, typename J, typename O>
-      void minus_(K, // otherwise => morphology on functions
-		  const Image<I>& lhs, const Image<J>& rhs,
-		  Image<O>& output)
+      // Otherwise => morphology on functions.
+
+      template <typename I, typename J>
+      mln_concrete(I) minus_(trait::image::kind::any,
+			     const I& lhs, const J& rhs)
       {
-	return arith::minus(lhs, rhs, output);
+	return arith::minus<mln_value(I)>(lhs, rhs);
       }
 
     } // end of namespace mln::morpho::impl
@@ -87,20 +89,26 @@ namespace mln
 
     // Facades.
 
-    template <typename I, typename J, typename O>
-    void minus(const Image<I>& lhs, const Image<J>& rhs, Image<O>& output)
+    template <typename I, typename J>
+    mln_concrete(I)
+      minus(const Image<I>& lhs, const Image<J>& rhs)
     {
+      trace::entering("morpho::minus");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      mln_precondition(exact(output).domain() == exact(lhs).domain());
-      impl::minus_(mln_trait_image_kind(I)(), exact(lhs), exact(rhs), output);
+
+      mln_concrete(I) output = impl::minus_(mln_trait_image_kind(I)(),
+					    exact(lhs), exact(rhs));
+
+      trace::exiting("morpho::minus");
+      return output;
     }
 
-    template <typename I, typename J>
-    void minus_inplace(Image<I>& lhs, const Image<J>& rhs)
-    {
-      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      morpho::minus(lhs, rhs, lhs); // Calls the previous version.
-    }
+//     template <typename I, typename J>
+//     void minus_inplace(Image<I>& lhs, const Image<J>& rhs)
+//     {
+//       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+//       morpho::minus(lhs, rhs, lhs); // Calls the previous version.
+//     }
 
 # endif // ! MLN_INCLUDE_ONLY
 

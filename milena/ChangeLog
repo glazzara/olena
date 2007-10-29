@@ -1,3 +1,67 @@
+2007-10-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update the form of routines so that images are returned.
+
+	* mln/fun/ops.hh: Add traits.
+	(mln_decl_binary_expr_): Replace <opname> by <opname>_ when
+	it is a language keyword.
+	(mln_decl_unary_expr_): Likewise.
+	* mln/core/image_if_interval.hh: Update.
+
+	Use the "image foo(..)" form instead of "foo(.., output)";
+	Insert tracing calls to routines.
+
+	* tests/morpho_hit_or_miss.cc: .
+	* tests/labeling_level_fast.cc: .
+	* tests/arith_plus.cc: .
+	* tests/morpho_gradient.cc: .
+	* tests/window2d.cc: .
+	* tests/value_int_s.cc: .
+	* tests/morpho_thinning.cc: .
+	* tests/morpho_laplacian.cc: .
+	* tests/value_int_u8.cc: .
+	* tests/morpho_contrast.cc: .
+	* tests/pw_value.cc: .
+	* mln/core/concept/image.hh: .
+	* mln/core/clone.hh: .
+	* mln/arith/plus.hh: .
+	* mln/arith/min.hh: .
+	* mln/arith/revert.hh: .
+	* mln/arith/minus.hh: .
+	* mln/convert/to_image.hh: .
+	* mln/morpho/thickening.hh: .
+	* mln/morpho/plus.hh: .
+	* mln/morpho/min.hh: .
+	* mln/morpho/laplacian.hh: .
+	* mln/morpho/minus.hh: .
+	* mln/morpho/gradient.hh: .
+	* mln/morpho/contrast.hh: .
+	* mln/morpho/thick_miss.hh: .
+	* mln/morpho/closing.hh: .
+	* mln/morpho/top_hat.hh: .
+	* mln/morpho/complementation.hh: .
+	* mln/morpho/opening.hh: .
+	* mln/morpho/dilation.hh: .
+	* mln/morpho/thin_fit.hh: .
+	* mln/morpho/includes.hh: .
+	* mln/morpho/thinning.hh: .
+	* mln/morpho/hit_or_miss.hh: .
+	* mln/logical/and.hh: .
+	* mln/logical/and_not.hh: .
+	* mln/logical/or.hh: .
+	* mln/logical/not.hh: .
+
+	Misc.
+
+	* mln/value/builtin/ops.hh: Add versions for builtin OP= object.
+	* mln/value/cast.hh (cast_): Update using value::equiv.
+	* mln/trait/op/minus.hh (mln_trait_op_minus_twice): New.
+	* mln/fun/cast.hh: New.
+	* mln/fun/v2v/cast.hh: New.
+	* mln/fun/v2v/all.hh: Update.
+	* mln/arith/includes.hh: Update.
+	* img/picasso.pbm: New.
+
 2007-10-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Revert the renaming of mln/labeling.

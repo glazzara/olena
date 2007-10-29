@@ -52,17 +52,23 @@ namespace mln
     /*! Point-wise reversion of image \p input.
      *
      * \param[in] input the input image.
-     * \param[out] output The result image.
+     * \result The result image.
      *
-     * \pre \p output.domain == \p input.domain
+     * \pre \p input.has_data
+     *
+     * It performs: \n
+     *   for all p of input.domain \n
+     *     output(p) = min + (max - input(p))
      */
-    template <typename I, typename O>
-    void revert(const Image<I>& input, Image<O>& output);
+    template <typename I>
+    mln_concrete(I) revert(const Image<I>& input);
 
 
     /*! Point-wise in-place reversion of image \p input.
      *
      * \param[in,out] input The target image.
+     *
+     * \pre \p input.has_data
      *
      * It performs: \n
      *   for all p of input.domain \n
@@ -78,8 +84,7 @@ namespace mln
     {
 
       template <typename I, typename O>
-      void revert_(trait::image::speed::any, const I& input,
-		   trait::image::speed::any, O& output)
+      void revert_(trait::image::speed::any, const I& input, O& output)
       {
 	typedef mln_value(I) V;
 	mln_piter(I) p(input.domain());
@@ -88,8 +93,7 @@ namespace mln
       }
 
       template <typename I, typename O>
-      void revert_(trait::image::speed::fastest, const I& input,
-		   trait::image::speed::fastest, O& output)
+      void revert_(trait::image::speed::fastest, const I& input, O& output)
       {
 	typedef mln_value(I) V;
 	mln_pixter(const I) ip(input);
@@ -103,20 +107,29 @@ namespace mln
 
     // Facades.
 
-    template <typename I, typename O>
-    void revert(const Image<I>& input, Image<O>& output)
+    template <typename I>
+    mln_concrete(I) revert(const Image<I>& input)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::revert_(mln_trait_image_speed(I)(), exact(input),
-		    mln_trait_image_speed(O)(), exact(output));
+      trace::entering("arith::revert");
+      mln_precondition(exact(input).has_data());
+
+      mln_concrete(I) output;
+      initialize(output, input);
+      impl::revert_(mln_trait_image_speed(I)(), exact(input), output);
+
+      trace::exiting("arith::revert");
+      return output;
     }
 
     template <typename I>
     void revert_inplace(Image<I>& input)
     {
+      trace::entering("arith::revert_inplace");
       mln_precondition(exact(input).has_data());
-      impl::revert_(mln_trait_image_speed(I)(), exact(input),
-		    mln_trait_image_speed(I)(), exact(input));
+
+      impl::revert_(mln_trait_image_speed(I)(), exact(input), exact(input));
+
+      trace::exiting("arith::revert_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

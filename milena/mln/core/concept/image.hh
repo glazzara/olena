@@ -183,12 +183,14 @@ namespace mln
   template <typename I, typename J>
   void initialize(Image<I>& target, const Image<J>& model)
   {
+    trace::entering("core::initialize");
     mln_precondition(! exact(target).has_data());
     mln_precondition(exact(model).has_data());
 
     init_(tag::image, exact(target), exact(model));
 
     mln_postcondition(exact(target).has_data());
+    trace::exiting("core::initialize");
   }
 
 

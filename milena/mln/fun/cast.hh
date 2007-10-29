@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,42 +25,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_MINUS_HH
-# define MLN_TRAIT_OP_MINUS_HH
+#ifndef MLN_FUN_CAST_HH
+# define MLN_FUN_CAST_HH
 
-/*! \file mln/trait/op/minus.hh
+/*! \file mln/fun/cast.hh
  *
- * \brief Declaration of the "binary minus" operator trait.
+ * \brief FIXME.
  */
 
-# include <mln/trait/promote.hh>
-
-
-# define mln_trait_op_minus(L, R)  typename mln::trait::op::minus< L , R >::ret
-# define mln_trait_op_minus_(L, R)          mln::trait::op::minus< L , R >::ret
-
-# define mln_trait_op_minus_twice(T)  mln_trait_op_minus(T, T)
+# include <mln/core/concept/function.hh>
 
 
 namespace mln
 {
 
-  namespace trait
+  namespace fun
   {
 
-    namespace op
+    // FIXME: Doc!
+    template <typename V, typename F>
+    struct cast_p2v_expr_ : public Function_p2v< cast_p2v_expr_<V,F> >
     {
+      typedef V result;
+      
+      cast_p2v_expr_(const F& f)
+	: f_(f)
+      {}
 
-      template <typename L, typename R>
-      struct minus : public solve_binary<minus, L, R>
+      template <typename P>
+      V operator()(const P& p) const
       {
-      };
+	return static_cast<V>(f_(p)); // FIXME: value::cast?
+      }
 
-    } // end of namespace mln::trait::op
+    protected:
+      const F f_;
+    };
 
-  } // end of namespace mln::trait
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename V, typename F>
+    cast_p2v_expr_<V, F>
+    cast(const Function_p2v<F>& f)
+    {
+      cast_p2v_expr_<V, F> tmp(exact(f));
+      return tmp;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_OP_MINUS_HH
+#endif // ! MLN_FUN_CAST_HH

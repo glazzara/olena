@@ -51,6 +51,10 @@ namespace mln
     template <typename I, typename W, typename O>
     void dilation(const Image<I>& input, const Window<W>& win, Image<O>& output);
 
+    template <typename I, typename W>
+    mln_concrete(I) dilation(const Image<I>& input, const Window<W>& win);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -192,6 +196,20 @@ namespace mln
 
       if (exact(win).is_centered())
 	mln_postcondition(output >= input);
+    }
+
+    template <typename I, typename W>
+    mln_concrete(I)
+    dilation(const Image<I>& input, const Window<W>& win)
+    {
+      trace::entering("morpho::dilation");
+
+      mln_concrete(I) output;
+      initialize(output, input);
+      dilation(input, win, output);
+
+      trace::exiting("morpho::dilation");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

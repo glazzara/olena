@@ -38,6 +38,7 @@
 # include <mln/morpho/includes.hh>
 # include <mln/pw/all.hh>
 # include <mln/fun/p2v/ternary.hh>
+# include <mln/fun/cast.hh>
 # include <mln/literal/zero.hh>
 
 
@@ -55,46 +56,51 @@ namespace mln
      *
      * This operator is HMT_(Bh,Bm) = e_Bh /\ (e_Bm o C). 
      */
-    template <typename I, typename Wh, typename Wm, typename O>
-    void hit_or_miss(const Image<I>& input,
-		     const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-		     Image<O>& output);
+    template <typename I, typename Wh, typename Wm>
+    mln_concrete(I)
+      hit_or_miss(const Image<I>& input,
+		  const Window<Wh>& win_hit, const Window<Wm>& win_miss);
+
 
     /*! Morphological hit-or-miss opening.
      *
      * This operator is HMTope_(Bh,Bm) = d_(-Bh) o HMT_(Bh,Bm).
      */
-    template <typename I, typename Wh, typename Wm, typename O>
-    void hit_or_miss_opening(const Image<I>& input,
-			     const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-			     Image<O>& output);
+    template <typename I, typename Wh, typename Wm>
+    mln_concrete(I)
+      hit_or_miss_opening(const Image<I>& input,
+			  const Window<Wh>& win_hit, const Window<Wm>& win_miss);
+
 
     /*! Morphological hit-or-miss opening of the background.
      *
      * This operator is HMTopeBG = HMTope_(Bm,Bh) o C = d_(-Bm) o HMT_(Bh,Bm).
      */
-    template <typename I, typename Wh, typename Wm, typename O>
-    void hit_or_miss_background_opening(const Image<I>& input,
-					const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-					Image<O>& output);
+    template <typename I, typename Wh, typename Wm>
+    mln_concrete(I)
+      hit_or_miss_background_opening(const Image<I>& input,
+				     const Window<Wh>& win_hit, const Window<Wm>& win_miss);
+
 
     /*! Morphological hit-or-miss closing.
      *
      * This operator is C o HMTope o C.
      */
-    template <typename I, typename Wh, typename Wm, typename O>
-    void hit_or_miss_closing(const Image<I>& input,
-			     const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-			     Image<O>& output);
+    template <typename I, typename Wh, typename Wm>
+    mln_concrete(I)
+      hit_or_miss_closing(const Image<I>& input,
+			  const Window<Wh>& win_hit, const Window<Wm>& win_miss);
+
 
     /*! Morphological hit-or-miss closing of the background.
      *
      * This operator is C o HMTopeBG o C.
      */
-    template <typename I, typename Wh, typename Wm, typename O>
-    void hit_or_miss_background_closing(const Image<I>& input,
-					const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-					Image<O>& output);
+    template <typename I, typename Wh, typename Wm>
+    mln_concrete(I)
+      hit_or_miss_background_closing(const Image<I>& input,
+				     const Window<Wh>& win_hit, const Window<Wm>& win_miss);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -102,164 +108,172 @@ namespace mln
     namespace impl
     {
 
+
       // Preconditions.
 
-      template <typename I, typename Wh, typename Wm, typename O>
+      template <typename I, typename Wh, typename Wm>
       void hit_or_miss_preconditions_(const Image<I>& input,
-				      const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-				      Image<O>& output)
+				      const Window<Wh>& win_hit, const Window<Wm>& win_miss)
       {
-	mln_precondition(exact(output).domain() == exact(input).domain());
+	mln_precondition(exact(input).has_data());
 	mln_precondition(set::inter(exact(win_hit), exact(win_miss)).is_empty());
       }
 
+
       // On sets.
 
-      template <typename I, typename Wh, typename Wm, typename O>
-      void hit_or_miss_(trait::image::kind::logic, // binary => morphology on sets
-			const Image<I>& input,
-			const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-			Image<O>& output)
+      template <typename I, typename Wh, typename Wm>
+      mln_concrete(I)
+	hit_or_miss_(trait::image::kind::logic,
+		     const I& input,
+		     const Wh& win_hit, const Wm& win_miss)
       {
-	erosion(input, win_hit, output); // output = ero(input)_hit
-
-	O temp_1(exact(input).domain());
-	complementation(input, temp_1); // temp1 = C(input)
-
-	O temp_2(exact(input).domain());
-	erosion(temp_1, win_miss, temp_2); // temp_2 = ero(C(input))_miss
-
-	logical::and_inplace(output, temp_2); // output = ero(input)_hit /\ ero(C(input))_miss
+	return logical::and_(erosion(input, win_hit),
+			     erosion(complementation(input), win_miss));
       }
+
 
       // On functions.
 
-      template <typename K,
-		typename I, typename Wh, typename Wm, typename O>
-      void hit_or_miss_(K, // otherwise => morphology on functions
-			const Image<I>& input,
-			const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-			Image<O>& output)
+      template <typename I, typename Wh, typename Wm>
+      mln_concrete(I)
+	  hit_or_miss_(trait::image::kind::any,
+		       const I& input,
+		       const Wh& win_hit, const Wm& win_miss)
       {
-	typedef mln_value(O)  V;
+	typedef mln_value(I) V;
+	mln_value(I) zero_V = literal::zero;
+
+	mln_concrete(I) output;
+	initialize(output, input);
 
 	if (constrained_hit_or_miss) // CHMT.
 	  {
-	    if (exact(win_hit).is_centered())
+	    if (win_hit.is_centered())
 	      {
-		O ero_fg(exact(input).domain()), dil_bg(exact(input).domain());
-		erosion(input, win_hit,  ero_fg);
-		dilation(input, win_miss, dil_bg);
+		mln_concrete(I)
+		  ero_fg = erosion(input, win_hit),
+		  dil_bg = dilation(input, win_miss);
 		level::fill(output,
 			    fun::p2v::ternary(pw::value(input) == pw::value(ero_fg)
 					        && pw::value(dil_bg) < pw::value(input),
-					      pw::value(input) - pw::value(dil_bg),
-					      pw::cst( V(literal::zero) )));
-
-		// FIXME: Replace 'pw::cst(V::zero)' by 'pw::cst(V(literal::zero))'
-		// FIXME: and then by 'literal::zero'!
+					      fun::cast<V>(pw::value(input) - pw::value(dil_bg)),
+					      pw::cst(zero_V)));
 	      }
-	    else if (exact(win_miss).is_centered())
+	    else if (win_miss.is_centered())
 	      {
-		O ero_bg(exact(input).domain()), dil_fg(exact(input).domain());
-		erosion(input, win_miss, ero_bg);
-		dilation(input, win_hit, dil_fg);
+		mln_concrete(I)
+		  ero_bg = erosion(input, win_miss),
+		  dil_fg = dilation(input, win_hit);
 		level::fill(output,
 			    fun::p2v::ternary(pw::value(input) == pw::value(dil_fg)
 					        && pw::value(ero_bg) > pw::value(input),
-					      pw::value(ero_bg) - pw::value(input),
-					      pw::cst( V(literal::zero) )));
+					      fun::cast<V>(pw::value(ero_bg) - pw::value(input)),
+					      pw::cst(zero_V)));
 	      }
 	    else
-	      level::fill(output, V(literal::zero));
+	      level::fill(output, zero_V);
 	  }
 	else // Unconstrained: UHMT.
 	  {
-	    O ero(exact(input).domain()), dil(exact(input).domain());
-	    erosion(input, win_hit, ero);
-	    dilation(input, win_miss, dil);
+	    mln_concrete(I)
+	      ero = erosion(input, win_hit),
+	      dil = dilation(input, win_miss);
 	    level::fill(output,
 			fun::p2v::ternary(pw::value(dil) < pw::value(ero),
-					  pw::value(ero) - pw::value(dil),
-					  pw::cst( V(literal::zero) )));
+					  fun::cast<V>(pw::value(ero) - pw::value(dil)),
+					  pw::cst(zero_V)));
 	  }
+
+	return output;
       }
+
 
     } // end of mln::morpho::impl
 
 
-    template <typename I, typename Wh, typename Wm, typename O>
-    void hit_or_miss(const Image<I>& input,
-		     const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-		     Image<O>& output)
+
+    template <typename I, typename Wh, typename Wm>
+    mln_concrete(I)
+      hit_or_miss(const Image<I>& input,
+		  const Window<Wh>& win_hit, const Window<Wm>& win_miss)
     {
-      impl::hit_or_miss_preconditions_(input, win_hit, win_miss, output);
-      impl::hit_or_miss_(mln_trait_image_kind(I)(), input, win_hit, win_miss, output);
+      trace::entering("morpho::hit_or_miss");
+      impl::hit_or_miss_preconditions_(input, win_hit, win_miss);
+
+      mln_concrete(I) output = impl::hit_or_miss_(mln_trait_image_kind(I)(),
+						  exact(input),
+						  exact(win_hit), exact(win_miss));
+
+      trace::exiting("morpho::hit_or_miss");
+      return output;
     }
 
-    template <typename I, typename Wh, typename Wm, typename O>
-    void hit_or_miss_opening(const Image<I>& input,
-			     const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-			     Image<O>& output)
-    {
-      impl::hit_or_miss_preconditions_(input, win_hit, win_miss, output);
 
-      O temp(exact(input).domain());
-      hit_or_miss(input, win_hit, win_miss, temp);
-      dilation(temp, geom::sym(win_hit), output);
+    template <typename I, typename Wh, typename Wm>
+    mln_concrete(I)
+      hit_or_miss_opening(const Image<I>& input,
+			  const Window<Wh>& win_hit, const Window<Wm>& win_miss)
+    {
+      trace::entering("morpho::hit_or_miss_opening");
+      impl::hit_or_miss_preconditions_(input, win_hit, win_miss);
+
+      mln_concrete(I) output = dilation( hit_or_miss(input, win_hit, win_miss),
+					 geom::sym(win_hit) );
+
+      trace::exiting("morpho::hit_or_miss_opening");
+      return output;
+    }
+
+
+    template <typename I, typename Wh, typename Wm>
+    mln_concrete(I)
+      hit_or_miss_background_opening(const Image<I>& input,
+				     const Window<Wh>& win_hit, const Window<Wm>& win_miss)
+    {
+      trace::entering("morpho::hit_or_miss_background_opening");
+      impl::hit_or_miss_preconditions_(input, win_hit, win_miss);
+
+      mln_concrete(I) output = hit_or_miss_opening(complementation(input), win_miss, win_hit);
+
+      mln_postcondition( dilation( hit_or_miss(input, win_hit, win_miss),
+				   geom::sym(win_miss) ) == output);
+      trace::exiting("morpho::hit_or_miss_background_opening");
+      return output;
+    }
+
+
+    template <typename I, typename Wh, typename Wm>
+    mln_concrete(I)
+      hit_or_miss_closing(const Image<I>& input,
+			  const Window<Wh>& win_hit, const Window<Wm>& win_miss)
+    {
+      trace::entering("morpho::hit_or_miss_closing");
+      impl::hit_or_miss_preconditions_(input, win_hit, win_miss);
+
+      mln_concrete(I) output = complementation( hit_or_miss_opening( complementation(input),
+								     win_hit, win_miss ) );
+
       // FIXME: Postcondition.
+      trace::exiting("morpho::hit_or_miss_closing");
+      return output;
     }
 
-    template <typename I, typename Wh, typename Wm, typename O>
-    void hit_or_miss_background_opening(const Image<I>& input,
-					const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-					Image<O>& output)
-    {
-      impl::hit_or_miss_preconditions_(input, win_hit, win_miss, output);
-      O temp(exact(input).domain());
-      complementation(input, temp);
-      hit_or_miss_opening(temp, win_miss, win_hit, output);
-#  ifndef NDEBUG
-      {
-	O temp(exact(input).domain());
-	hit_or_miss(input, win_hit, win_miss, temp);
-	O output_(exact(input).domain());
-	dilation(temp, geom::sym(win_miss), output_);
-	mln_postcondition(output_ == output);
-      }
-#  endif // ! NDEBUG
-    }
 
-    template <typename I, typename Wh, typename Wm, typename O>
-    void hit_or_miss_closing(const Image<I>& input,
-			     const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-			     Image<O>& output)
+    template <typename I, typename Wh, typename Wm>
+    mln_concrete(I)
+      hit_or_miss_background_closing(const Image<I>& input,
+				     const Window<Wh>& win_hit, const Window<Wm>& win_miss)
     {
-      impl::hit_or_miss_preconditions_(input, win_hit, win_miss, output);
-      I temp(input.domain());
-      complementation(input, temp);
-      hit_or_miss_opening(temp, win_hit, win_miss, output);
-      complementation_inplace(output);
-      // FIXME: Postcondition.
-    }
+      trace::entering("morpho::hit_or_miss_background_closing");
+      impl::hit_or_miss_preconditions_(input, win_hit, win_miss);
 
-    template <typename I, typename Wh, typename Wm, typename O>
-    void hit_or_miss_background_closing(const Image<I>& input,
-					const Window<Wh>& win_hit, const Window<Wm>& win_miss,
-					Image<O>& output)
-    {
-      impl::hit_or_miss_preconditions_(input, win_hit, win_miss, output);
-      hit_or_miss_closing(input, win_miss, win_hit, output);
-#  ifndef NDEBUG
-      {
-	O temp(exact(input).domain());
-	complementation(input, temp);
-	O output_(exact(input).domain());
-	hit_or_miss_background_opening(temp, win_hit, win_miss, output_);
-	complementation_inplace(output_);
-	mln_postcondition(output_ == output);
-      }
-#  endif // ! NDEBUG
+      mln_concrete(I) output = hit_or_miss_closing(input, win_miss, win_hit);
+
+      mln_postcondition( complementation( hit_or_miss_background_opening( complementation(input),
+									  win_hit, win_miss ) ) == output );
+      trace::exiting("morpho::hit_or_miss_background_closing");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

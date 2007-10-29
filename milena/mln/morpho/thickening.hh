@@ -47,26 +47,30 @@ namespace mln
      *
      * This operator is THICK_B = Id + HMT_B, where B = (Bfg, Bbg).
      */
-    template <typename I, typename Wfg, typename Wbg, typename O>
-    void thickening(const Image<I>& input,
-		    const Window<Wfg>& win_fg, const Window<Wbg>& win_bg,
-		    Image<O>& output);
+    template <typename I, typename Wfg, typename Wbg>
+    mln_concrete(I)
+      thickening(const Image<I>& input,
+		 const Window<Wfg>& win_fg, const Window<Wbg>& win_bg);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename Wfg, typename Wbg, typename O>
-    void thickening(const Image<I>& input,
-		  const Window<Wfg>& win_fg, const Window<Wbg>& win_bg,
-		  Image<O>& output)
+    template <typename I, typename Wfg, typename Wbg>
+    mln_concrete(I)
+      thickening(const Image<I>& input,
+		 const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("morpho::thickening");
+      mln_precondition(exact(input).has_data());
       mln_precondition(exact(win_bg).is_centered());
+      mln_precondition(! exact(win_fg).is_empty());
       mln_precondition(set::inter(exact(win_fg), exact(win_bg)).is_empty());
 
-      O temp(exact(input).domain());
-      hit_or_miss(input, win_fg, win_bg, temp);
-      morpho::plus(input, temp, output);
+      mln_concrete(I) output = morpho::plus( input,
+					     hit_or_miss(input, win_fg, win_bg) );
+
+      trace::exiting("morpho::thickening");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

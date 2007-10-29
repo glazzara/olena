@@ -41,9 +41,6 @@
 
 #include <mln/morpho/contrast.hh>
 
-#include <mln/level/fill.hh>
-#include <mln/level/saturate.hh>
-
 
 int main()
 {
@@ -53,27 +50,16 @@ int main()
   win::rectangle2d rect(5, 5);
   border::thickness = 2;
 
-  image2d<int_u8>
-    lena = io::pgm::load("../img/tiny.pgm"),
-    out(lena.domain());
-
-  image2d< value::int_s<10> >
-    in(lena.domain()),
-    tmp(lena.domain());
-
-  level::fill(in, lena);
-  morpho::contrast(in, rect, tmp);
-
-  level::saturate(tmp, out);
+  image2d<int_u8> lena = io::pgm::load("../img/tiny.pgm");
+  image2d<int_u8> out = morpho::contrast(lena, rect);
   io::pgm::save(out, "out.pgm");
 
   {
     // self-duality test: 
-    morpho::complementation_inplace(in);
-    image2d< value::int_s<10> > tmp_(lena.domain());
-    morpho::contrast(in, rect, tmp_);
-    morpho::complementation_inplace(tmp_);
-    mln_assertion(tmp_ == tmp);
+    image2d<int_u8> out_ = morpho::complementation( morpho::contrast( morpho::complementation(lena),
+								      rect )
+						    );
+    mln_assertion(out_ == out);
   }
 
 }

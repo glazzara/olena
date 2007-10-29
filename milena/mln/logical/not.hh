@@ -47,12 +47,12 @@ namespace mln
     /*! Point-wise "logical not" of image \p input.
      *
      * \param[in] input the input image.
-     * \param[out] output The result image.
+     * \result The result image.
      *
-     * \pre \p output.domain == \p input.domain
+     * \pre \p input.has_data
      */
-    template <typename I, typename O>
-    void not_(const Image<I>& input, Image<O>& output);
+    template <typename I>
+    mln_concrete(I) not_(const Image<I>& input);
 
 
     /*! Point-wise in-place "logical not" of image \p input.
@@ -73,8 +73,7 @@ namespace mln
     {
 
       template <typename I, typename O>
-      void not__(trait::image::speed::any, const I& input,
-		 trait::image::speed::any, O& output)
+      void not__(trait::image::speed::any, const I& input, O& output)
       {
 	mln_piter(I) p(input.domain());
 	for_all(p)
@@ -82,8 +81,7 @@ namespace mln
       }
 
       template <typename I, typename O>
-      void not__(trait::image::speed::fastest, const I& input,
-		 trait::image::speed::fastest, O& output)
+      void not__(trait::image::speed::fastest, const I& input, O& output)
       {
 	mln_pixter(const I) ip(input);
 	mln_pixter(O)       op(output);
@@ -96,20 +94,27 @@ namespace mln
 
     // Facades.
 
-    template <typename I, typename O>
-    void not_(const Image<I>& input, Image<O>& output)
+    template <typename I>
+    mln_concrete(I) not_(const Image<I>& input)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::not__(mln_trait_image_speed(I)(), exact(input),
-		  mln_trait_image_speed(O)(), exact(output));
+      trace::entering("logical::not");
+      mln_precondition(exact(input).has_data());
+
+      mln_concrete(I) output;
+      initialize(output, input);
+      impl::not__(mln_trait_image_speed(I)(), exact(input), output);
+      
+      trace::exiting("logical::not");
+      return output;
     }
 
     template <typename I>
     void not_inplace(Image<I>& input)
     {
+      trace::entering("logical::not_inplace");
       mln_precondition(exact(input).has_data());
-      impl::not__(mln_trait_image_speed(I)(), exact(input),
-		  mln_trait_image_speed(I)(), exact(input));
+      impl::not__(mln_trait_image_speed(I)(), exact(input), exact(input));
+      trace::exiting("logical::not_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

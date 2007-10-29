@@ -36,6 +36,8 @@
 # include <mln/morpho/hit_or_miss.hh>
 # include <mln/morpho/thickening.hh>
 
+#include <mln/io/pgm/save.hh>
+
 
 namespace mln
 {
@@ -48,37 +50,32 @@ namespace mln
      *
      * This operator is THIN_B = Id - HMT_B, where B = (Bfg, Bbg).
      */
-    template <typename I, typename Wfg, typename Wbg, typename O>
-    void thinning(const Image<I>& input,
-		  const Window<Wfg>& win_fg, const Window<Wbg>& win_bg,
-		  Image<O>& output);
+    template <typename I, typename Wfg, typename Wbg>
+    mln_concrete(I)
+      thinning(const Image<I>& input,
+	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename Wfg, typename Wbg, typename O>
-    void thinning(const Image<I>& input,
-		  const Window<Wfg>& win_fg, const Window<Wbg>& win_bg,
-		  Image<O>& output)
+    template <typename I, typename Wfg, typename Wbg>
+    mln_concrete(I)
+      thinning(const Image<I>& input,
+	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("morpho::thinning");
+      mln_precondition(exact(input).has_data());
       mln_precondition(exact(win_fg).is_centered());
+      mln_precondition(! exact(win_bg).is_empty());
       mln_precondition(set::inter(exact(win_fg), exact(win_bg)).is_empty());
 
-      O temp(exact(input).domain());
-      hit_or_miss(input, win_fg, win_bg, temp);
-      morpho::minus(input, temp, output);
-      // FIXME: Pass postcondition!
-#  ifndef NDEBUG
-      {
-	O temp(exact(input).domain());
-	complementation(input, temp);
-	O output_(exact(input).domain());
-	thickening(temp, win_bg, win_fg, output_);
-	complementation_inplace(output_);
-	mln_postcondition(output_ == output);
-      }
-#  endif // ! NDEBUG
+      mln_concrete(I) output = morpho::minus( input,
+					      hit_or_miss(input, win_fg, win_bg) );
+
+      mln_postcondition( complementation( thickening( complementation(input),
+						      win_bg, win_fg ) ) == output);
+      trace::exiting("morpho::thinning");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

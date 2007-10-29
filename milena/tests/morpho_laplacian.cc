@@ -57,7 +57,6 @@ int main()
   image2d<int> lap(lena.domain());
   morpho::laplacian(lena, rect, lap);
 
-  image2d< value::int_u_sat<8> > out(lena.domain());
-  arith::plus_cst(lap, 128, out);
-  io::pgm::save(out, "out.pgm");
+  io::pgm::save( arith::plus_cst< value::int_u_sat<8> >(lap, 128),
+		 "out.pgm" );
 }

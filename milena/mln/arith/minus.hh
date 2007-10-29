@@ -31,63 +31,249 @@
 /*! \file mln/arith/minus.hh
  *
  * \brief Point-wise substraction between images.
+ *
+ * \todo Speedup; some versions are not optimal.
  */
 
-# include <mln/core/concept/image.hh>
+# include <mln/arith/includes.hh>
 
 
 namespace mln
 {
 
+
+  namespace trait
+  {
+
+    template <typename L, typename R>
+    struct set_binary_< op::minus, Image, L, Image, R >
+    {
+      typedef mln_trait_op_minus(mln_value(L), mln_value(R)) value;
+      typedef mln_ch_value(L, value) ret;
+    };
+
+    template <typename I, typename S>
+    struct set_binary_< op::minus, Image, I, mln::value::Scalar, S >
+    {
+      typedef mln_trait_op_minus(mln_value(I), S) value;
+      typedef mln_ch_value(I, value) ret;
+    };
+
+  } // end of namespace mln::trait
+
+
+
+  template <typename L, typename R>
+  mln_trait_op_minus(L,R)
+  operator-(const Image<L>& lhs, const Image<R>& rhs);
+
+
+  template <typename L, typename R>
+  L&
+  operator-=(Image<L>& lhs, const Image<R>& rhs);
+
+
+  template <typename I, typename S>
+  mln_trait_op_minus(I,S)
+  operator-(const Image<I>& ima, const value::Scalar<S>& s);
+
+
+  template <typename I, typename S>
+  I&
+  operator-=(Image<I>& ima, const value::Scalar<S>& s);
+
+
+
   namespace arith
   {
 
-    /*! Point-wise substraction of images \p lhs and \p rhs.
+    /*! Point-wise addition of images \p lhs and \p rhs.
      *
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
-     * \param[out] output The result image.
+     * \result The result image.
      *
-     * \pre \p output.domain == \p lhs.domain == \p rhs.domain
+     * \pre \p lhs.domain == \p rhs.domain
      */
-    template <typename L, typename R, typename O>
-    void minus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
+    template <typename L, typename R>
+    mln_trait_op_minus(L, R)
+      minus(const Image<L>& lhs, const Image<R>& rhs);
 
 
-    /*! Point-wise substraction of image \p lhs in image \p rhs.
+    /*! Point-wise addition of images \p lhs and \p rhs.
      *
-     * \param[in,out] lhs First operand image (subject to substraction).
-     * \param[in] rhs Second operand image (to be substracted to \p lhs).
+     * \param[in] lhs First operand image.
+     * \param[in] rhs Second operand image.
+     * \param[in] f   Function.
+     * \result The result image.
      *
-     * This substraction performs: \n
+     * \pre \p lhs.domain == \p rhs.domain
+     */
+    template <typename L, typename R, typename F>
+    mln_ch_value(L, mln_result(F))
+      minus(const Image<L>& lhs, const Image<R>& rhs, const Function_v2v<F>& f);
+
+
+    /*! Point-wise addition of images \p lhs and \p rhs.
+     *
+     * \param[in] lhs First operand image.
+     * \param[in] rhs Second operand image.
+     * \result The result image.
+     *
+     * The free parameter \c V sets the destination value type.
+     *
+     * \pre \p lhs.domain == \p rhs.domain
+     */
+    template <typename V, typename L, typename R>
+    mln_ch_value(L, V)
+      minus(const Image<L>& lhs, const Image<R>& rhs);
+
+
+    /*! Point-wise addition of image \p rhs in image \p lhs.
+     *
+     * \param[in,out] lhs First operand image (subject to addition).
+     * \param[in] rhs Second operand image (to be added to \p lhs).
+     *
+     * This addition performs: \n
      *   for all p of rhs.domain \n
      *     lhs(p) -= rhs(p)
      *
-     * \pre \p rhs.domain <= \p lhs.domain
+     * \pre \p rhs.domain == \p lhs.domain
      */
     template <typename L, typename R>
-    void minus_inplace(Image<L>& lhs, const Image<R>& rhs);
+    void
+    minus_inplace(Image<L>& lhs, const Image<R>& rhs);
+
+
+    /*! Point-wise addition of the value \p val to image \p input.
+     *
+     * \param[in] input The image.
+     * \param[in] val The value.
+     * \result The result image.
+     *
+     * \pre \p input.has_data
+     */
+    template <typename I, typename V>
+    mln_trait_op_minus(I, V)
+      minus_cst(const Image<I>& input, const V& val);
+
+
+    /*! Point-wise addition of the value \p val to image \p input.
+     *
+     * \param[in] input The image.
+     * \param[in] val The value.
+     * \param[in] f   Function.
+     * \result The result image.
+     *
+     * \pre \p input.has_data
+     */
+    template <typename I, typename V, typename F>
+    mln_ch_value(I, mln_result(F))
+      minus_cst(const Image<I>& input, const V& val, const Function_v2v<F>& f);
+
+
+    /*! Point-wise addition of the value \p val to image \p input.
+     *
+     * \param[in,out] input The image.
+     * \param[in] val The value.
+     *
+     * \pre \p input.has_data
+     */
+    template <typename I, typename V>
+    I&
+    minus_cst_inplace(Image<I>& input, const V& val);
+
+
+  } // end of namespace mln::arith
+
+
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+  template <typename L, typename R>
+  mln_trait_op_minus(L,R)
+  operator-(const Image<L>& lhs, const Image<R>& rhs)
+  {
+    trace::entering("operator::minus");
+    mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
+    mln_trait_op_minus(L,R) output = arith::minus(lhs, rhs);
+
+    trace::exiting("operator::minus");
+    return output;
+  }
+
+  template <typename L, typename R>
+  L&
+  operator-=(Image<L>& lhs, const Image<R>& rhs)
+  {
+    trace::entering("operator::minus_eq");
+    mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
+    arith::minus_inplace(lhs, rhs);
+
+    trace::exiting("operator::minus_eq");
+    return exact(lhs);
+  }
+
+
+  template <typename I, typename S>
+  mln_trait_op_minus(I,S)
+  operator-(const Image<I>& ima, const value::Scalar<S>& s)
+  {
+    trace::entering("operator::minus");
+    mln_precondition(exact(ima).has_data());
+
+    mln_trait_op_minus(I,S) output = arith::minus_cst(ima, exact(s));
+
+    trace::exiting("operator::minus");
+    return output;
+  }
+
+  template <typename I, typename S>
+  I&
+  operator-=(Image<I>& ima, const value::Scalar<S>& s)
+  {
+    trace::entering("operator::minus_eq");
+    mln_precondition(exact(ima).has_data());
+
+    arith::minus_cst_inplace(ima, exact(s));
+
+    trace::exiting("operator::minus_eq");
+    return exact(ima);
+  }
+
+
+
+  namespace arith
+  {
 
     namespace impl
     {
 
       template <typename L, typename R, typename O>
       void minus_(trait::image::speed::any, const L& lhs,
-		  trait::image::speed::any, const R& rhs,
-		  trait::image::speed::any, O& output)
+		 trait::image::speed::any, const R& rhs, O& output)
       {
 	mln_piter(L) p(lhs.domain());
 	for_all(p)
 	  output(p) = lhs(p) - rhs(p);
       }
 
+      template <typename L, typename R, typename F, typename O>
+      void minus_(trait::image::speed::any, const L& lhs,
+		 trait::image::speed::any, const R& rhs, const F& f, O& output)
+      {
+	mln_piter(L) p(lhs.domain());
+	for_all(p)
+	  output(p) = f(lhs(p) - rhs(p));
+      }
+
       template <typename L, typename R, typename O>
       void minus_(trait::image::speed::fastest, const L& lhs,
-		  trait::image::speed::fastest, const R& rhs,
-		  trait::image::speed::fastest, O& output)
+		 trait::image::speed::fastest, const R& rhs, O& output)
       {
 	mln_pixter(const L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
@@ -96,22 +282,33 @@ namespace mln
 	  op.val() = lp.val() - rp.val();
       }
 
+      template <typename L, typename R, typename F, typename O>
+      void minus_(trait::image::speed::fastest, const L& lhs,
+		 trait::image::speed::fastest, const R& rhs, const F& f, O& output)
+      {
+	mln_pixter(const L) lp(lhs);
+	mln_pixter(const R) rp(rhs);
+	mln_pixter(O)       op(output);
+	for_all_3(lp, rp, op)
+	  op.val() = f(lp.val() - rp.val());
+      }
+
       template <typename L, typename R>
       void minus_inplace_(trait::image::speed::any, L& lhs,
-			  trait::image::speed::any, const R& rhs)
+			 trait::image::speed::any, const R& rhs)
       {
-	mln_piter(R) p(rhs.domain());
+	mln_piter(L) p(lhs.domain());
 	for_all(p)
 	  lhs(p) -= rhs(p);
       }
 
       template <typename L, typename R>
       void minus_inplace_(trait::image::speed::fastest, L& lhs,
-			  trait::image::speed::fastest, const R& rhs)
+			 trait::image::speed::fastest, const R& rhs)
       {
 	mln_pixter(L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
-	for_all_2(rp, lp)
+	for_all_2(lp, rp)
 	  lp.val() -= rp.val();
       }
 
@@ -120,27 +317,122 @@ namespace mln
 
     // Facades.
 
-    template <typename L, typename R, typename O>
-    void minus(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
-    {
-      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      mln_precondition(exact(output).domain() == exact(lhs).domain());
-      impl::minus_(mln_trait_image_speed(L)(), exact(lhs),
-		   mln_trait_image_speed(R)(), exact(rhs),
-		   mln_trait_image_speed(O)(), exact(output));
-    }
 
     template <typename L, typename R>
-    void minus_inplace(Image<L>& lhs, const Image<R>& rhs)
+    mln_trait_op_minus(L, R)
+      minus(const Image<L>& lhs, const Image<R>& rhs)
     {
-      mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
-      impl::minus_inplace_(mln_trait_image_speed(L)(), exact(lhs),
-			   mln_trait_image_speed(R)(), exact(rhs));
+      trace::entering("arith::minus");
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
+      mln_trait_op_minus(L, R) output;
+      initialize(output, lhs);
+      impl::minus_(mln_trait_image_speed(L)(), exact(lhs),
+		  mln_trait_image_speed(R)(), exact(rhs), output);
+
+      trace::exiting("arith::minus");
+      return output;
     }
 
-# endif // ! MLN_INCLUDE_ONLY
+
+    template <typename L, typename R, typename F>
+    mln_ch_value(L, mln_result(F))
+      minus(const Image<L>& lhs, const Image<R>& rhs, const Function_v2v<F>& f)
+    {
+      trace::entering("arith::minus");
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
+      mln_ch_value(L, mln_result(F)) output;
+      initialize(output, lhs);
+      impl::minus_(mln_trait_image_speed(L)(), exact(lhs),
+		   mln_trait_image_speed(R)(), exact(rhs), exact(f), output);
+
+      trace::exiting("arith::minus");
+      return output;
+    }
+
+
+    template <typename V, typename L, typename R>
+    mln_ch_value(L, V)
+      minus(const Image<L>& lhs, const Image<R>& rhs)
+    {
+      trace::entering("arith::minus");
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+      
+      // Calls the previous version.
+      mln_ch_value(L, V) output = minus(lhs, rhs,
+					mln::fun::v2v::cast<V>());
+
+      trace::exiting("arith::minus");
+      return output;
+    }
+
+
+    template <typename I, typename V>
+    mln_trait_op_minus(I, V)
+      minus_cst(const Image<I>& input, const V& val)
+    {
+      trace::entering("arith::minus_cst");
+      mln_precondition(exact(input).has_data());
+
+      // Calls the previous version.
+      mln_trait_op_minus(I, V) output = minus(input,
+					      pw::cst(val) | exact(input).domain());
+
+      trace::exiting("arith::minus_cst");
+      return output;
+    }
+
+
+    template <typename I, typename V, typename F>
+    mln_ch_value(I, mln_result(F))
+      minus_cst(const Image<I>& input, const V& val, const Function_v2v<F>& f)
+    {
+      trace::entering("arith::minus_cst");
+      mln_precondition(exact(input).has_data());
+
+      // Calls the previous version.
+      mln_ch_value(I, mln_result(F)) output = minus(input,
+						    pw::cst(val) | exact(input).domain(),
+						    f);
+
+      trace::exiting("arith::minus_cst");
+      return output;
+    }
+
+
+    template <typename L, typename R>
+    void
+    minus_inplace(Image<L>& lhs, const Image<R>& rhs)
+    {
+      trace::entering("arith::minus_inplace");
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
+      impl::minus_inplace_(mln_trait_image_speed(L)(), exact(lhs),
+			   mln_trait_image_speed(R)(), exact(rhs));
+
+      trace::exiting("arith::minus_inplace");
+    }
+
+
+    template <typename I, typename V>
+    I&
+    minus_cst_inplace(Image<I>& input, const V& val)
+    {
+      trace::entering("arith::minus_cst_inplace");
+      mln_precondition(exact(input).has_data());
+
+      // Calls the previous version.
+      minus_inplace(input,
+		    pw::cst(val) | exact(input).domain());
+
+      trace::exiting("arith::minus_cst_inplace");
+      return exact(input);
+    }
 
   } // end of namespace mln::arith
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

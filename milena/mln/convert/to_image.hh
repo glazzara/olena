@@ -124,6 +124,8 @@ namespace mln
     template <typename S>
     image1d<std::size_t> to_image(const mln::histo::data<S>& h);
 
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S>

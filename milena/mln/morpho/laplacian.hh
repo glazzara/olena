@@ -53,24 +53,42 @@ namespace mln
 		   Image<O>& output);
 
 
+    template <typename I, typename W>
+    mln_trait_op_minus_twice(mln_concrete(I))
+      laplacian(const Image<I>& input, const Window<W>& win);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename W, typename O>
     void laplacian(const Image<I>& input, const Window<W>& win, Image<O>& output)
     {
+      trace::entering("morpho::laplacian");
       mln_precondition(exact(output).domain() == exact(input).domain());
       mln_precondition(! exact(win).is_empty());
 
-      dilation(input, win, output); // output = dilation
-      morpho::minus_inplace(output, input); // now output = dilation - input
+      mln_concrete(I)
+	d_I = morpho::minus(dilation(input, win), input),
+	e_I = morpho::minus(input, erosion(input, win));
+      level::fill(output, d_I - e_I);
 
-      O temp(exact(input).domain());
-      {
-	O temp_(exact(input).domain());
-	erosion(input, win, temp_); // temp_ = erosion
-	morpho::minus(input, temp_, temp); // temp = input - erosion
-      }
-      morpho::minus_inplace(output, temp); // now output = (dilation - input) - (input - erosion)
+      trace::exiting("morpho::laplacian");
+    }
+
+    template <typename I, typename W>
+    mln_trait_op_minus_twice(mln_concrete(I))
+      laplacian(const Image<I>& input, const Window<W>& win)
+    {
+      trace::entering("morpho::laplacian");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
+
+      mln_trait_op_minus_twice(mln_concrete(I)) output;
+      initialize(output, input);
+      laplacian(input, win, output); // Calls previous version.
+
+      trace::exiting("morpho::laplacian");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

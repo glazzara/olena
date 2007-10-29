@@ -37,6 +37,7 @@
 # include <mln/value/ops.hh>
 # include <mln/pw/cst.hh>
 # include <mln/pw/image.hh>
+# include <mln/fun/v2v/cast.hh>
 
 
 #endif // ! MLN_ARITH_INCLUDES_HH

@@ -49,10 +49,8 @@ int main()
   win::rectangle2d rect(5, 5);
   border::thickness = 2;
 
-  image2d<int_u8>
-    lena = io::pgm::load("../img/tiny.pgm"),
-    out(lena.domain());
+  image2d<int_u8> lena = io::pgm::load("../img/tiny.pgm");
 
-  morpho::gradient(lena, rect, out);
-  io::pgm::save(out, "out.pgm");
+  io::pgm::save( morpho::gradient(lena, rect),
+		 "out.pgm" );
 }

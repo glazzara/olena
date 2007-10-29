@@ -49,16 +49,16 @@ namespace mln
     /*! Morphological plus: either a "logical or" (if morpho on sets)
      *  or an "arithmetical plus" (if morpho on functions).
      */
-    template <typename I, typename J, typename O>
-    void plus(const Image<I>& lhs, const Image<J>& rhs,
-	       Image<O>& output);
-
-    /*! Morphological plus, inplace version: either a "logical or" (if
-     *  morpho on sets) or an "arithmetical plus" (if morpho on
-     *  functions).
-     */
     template <typename I, typename J>
-    void plus_inplace(Image<I>& lhs, const Image<J>& rhs);
+    mln_concrete(I) plus(const Image<I>& lhs, const Image<J>& rhs);
+
+
+//     /*! Morphological plus, inplace version: either a "logical or" (if
+//      *  morpho on sets) or an "arithmetical plus" (if morpho on
+//      *  functions).
+//      */
+//     template <typename I, typename J>
+//     void plus_inplace(Image<I>& lhs, const Image<J>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -66,20 +66,22 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename J, typename O>
-      void plus_(trait::image::kind::logic, // binary => morphology on sets
-		 const Image<I>& lhs, const Image<J>& rhs,
-		 Image<O>& output)
+      // Binary => morphology on sets.
+
+      template <typename I, typename J>
+      mln_concrete(I) plus_(trait::image::kind::logic,
+			    const I& lhs, const J& rhs)
       {
-	return logical::or_(lhs, rhs, output);
+	return logical::or_(lhs, rhs);
       }
 
-      template <typename K, typename I, typename J, typename O>
-      void plus_(K, // otherwise => morphology on functions
-		 const Image<I>& lhs, const Image<J>& rhs,
-		 Image<O>& output)
+      // Otherwise => morphology on functions.
+
+      template <typename I, typename J>
+      mln_concrete(I) plus_(trait::image::kind::any,
+			    const I& lhs, const J& rhs)
       {
-	return arith::plus(lhs, rhs, output);
+	return arith::plus<mln_value(I)>(lhs, rhs);
       }
 
     } // end of namespace mln::morpho::impl
@@ -87,20 +89,25 @@ namespace mln
 
     // Facades.
 
-    template <typename I, typename J, typename O>
-    void plus(const Image<I>& lhs, const Image<J>& rhs, Image<O>& output)
+    template <typename I, typename J>
+    mln_concrete(I) plus(const Image<I>& lhs, const Image<J>& rhs)
     {
+      trace::entering("morpho::plus");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      mln_precondition(exact(output).domain() == exact(lhs).domain());
-      impl::plus_(mln_trait_image_kind(I)(), exact(lhs), exact(rhs), output);
+
+      mln_concrete(I) output = impl::plus_(mln_trait_image_kind(I)(),
+					   exact(lhs), exact(rhs));
+
+      trace::exiting("morpho::plus");
+      return output;
     }
 
-    template <typename I, typename J>
-    void plus_inplace(Image<I>& lhs, const Image<J>& rhs)
-    {
-      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      morpho::plus(lhs, rhs, lhs); // Calls the previous version.
-    }
+//     template <typename I, typename J>
+//     void plus_inplace(Image<I>& lhs, const Image<J>& rhs)
+//     {
+//       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+//       morpho::plus(lhs, rhs, lhs); // Calls the previous version.
+//     }
 
 # endif // ! MLN_INCLUDE_ONLY
 

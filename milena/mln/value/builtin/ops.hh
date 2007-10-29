@@ -185,7 +185,6 @@
 
 // Operator "Builtin minus Object" is a special case.
 
-
 # define mln_internal_decl_bi_minus_obj_(Builtin)		\
 								\
   template <typename O>						\
@@ -193,7 +192,6 @@
   operator - (const Builtin & lhs, const Object<O>& rhs);	\
 								\
   struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
-
 
 # define mln_internal_def_bi_minus_obj_(Builtin)		\
 								\
@@ -227,7 +225,6 @@
 
 // Operator "Builtin 'div or mod' Object" is a special case.
 
-
 # define mln_internal_decl_bi_dvmd_obj_(Symb, Name, Builtin)	\
 								\
   template <typename O>						\
@@ -235,7 +232,6 @@
   operator Symb (const Builtin & lhs, const Object<O>& rhs);	\
 								\
   struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
-
 
 # define mln_internal_def_bi_dvmd_obj_(Symb, Name, Builtin)	\
 								\
@@ -264,7 +260,6 @@
 								\
   struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
 
-
 # define mln_internal_op_builtins_cmp_(De, Symb, Name)		\
 								\
   mln_internal_##De##_op_cmp_(Symb, Name,   signed char);	\
@@ -279,6 +274,48 @@
   mln_internal_##De##_op_cmp_(Symb, Name, double);		\
 								\
   struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
+
+
+// Operator "Builtin Op= Object" is a special case.
+
+
+# define mln_internal_decl_bi_opeq_obj_(Symb, Builtin)		\
+								\
+  template <typename O>						\
+  Builtin &							\
+  operator Symb##= (Builtin & lhs, const Object<O>& rhs);	\
+								\
+  struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
+# define mln_internal_def_bi_opeq_obj_(Symb, Builtin)		\
+								\
+  template <typename O>						\
+  Builtin &							\
+  operator Symb##= (Builtin & lhs, const Object<O>& rhs)	\
+  {								\
+    lhs Symb##= exact(rhs).to_equiv();				\
+    return lhs;							\
+  }								\
+								\
+  struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+ 
+# define mln_internal_builtins_opeq_obj_(De, Symb)		\
+								\
+  mln_internal_##De##_bi_opeq_obj_(Symb,   signed char);	\
+  mln_internal_##De##_bi_opeq_obj_(Symb, unsigned char);	\
+  mln_internal_##De##_bi_opeq_obj_(Symb,   signed short);	\
+  mln_internal_##De##_bi_opeq_obj_(Symb, unsigned short);	\
+  mln_internal_##De##_bi_opeq_obj_(Symb,   signed int);		\
+  mln_internal_##De##_bi_opeq_obj_(Symb, unsigned int);		\
+  mln_internal_##De##_bi_opeq_obj_(Symb,   signed long);	\
+  mln_internal_##De##_bi_opeq_obj_(Symb, unsigned long);	\
+  mln_internal_##De##_bi_opeq_obj_(Symb, float);		\
+  mln_internal_##De##_bi_opeq_obj_(Symb, double);		\
+								\
+  struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
+
 
 // FIXME: What about pointers, arrays, bool, etc.
 
@@ -339,11 +376,10 @@ namespace mln
     template<> struct set_precise_unary_< op::uminus, unsigned short > { typedef int ret; };
     template<> struct set_precise_unary_< op::uminus,   signed int   > { typedef signed int ret; };
 
-    // Disabled cause no correct result can be obtained
-    // e.g., (- unsigned int) is an (unsigned int)!
-    template<> struct set_precise_unary_< op::uminus, unsigned int  > {};
-    template<> struct set_precise_unary_< op::uminus,   signed long > {};
-    template<> struct set_precise_unary_< op::uminus, unsigned long > {};
+    template<> struct set_precise_unary_< op::uminus, unsigned int  > { typedef signed int  ret; };
+    template<> struct set_precise_unary_< op::uminus,   signed long > { typedef signed long ret; };
+    template<> struct set_precise_unary_< op::uminus, unsigned long > { typedef signed long ret; };
+
     template<> struct set_precise_unary_< op::uminus,     bool      > {};
 
     template<> struct set_precise_unary_< op::uminus, float  > { typedef float ret; };
@@ -356,10 +392,19 @@ namespace mln
     // A couple of builtins => promotion...
 
     mln_internal_set_builtin_trait_is_promotion_(op::plus);
-    mln_internal_set_builtin_trait_is_promotion_(op::minus);
     mln_internal_set_builtin_trait_is_promotion_(op::times);
     mln_internal_set_builtin_trait_is_promotion_(op::div);
     mln_internal_set_builtin_trait_is_promotion_(op::mod);
+
+    // mln_internal_set_builtin_trait_is_promotion_(op::minus);
+
+    template <typename Bl, typename Br>
+    struct set_binary_< op::minus,
+			mln::value::Built_In, Bl,  mln::value::Built_In, Br >
+    {
+      typedef mln_trait_op_uminus(Br) minus_Br;
+      typedef mln_trait_promote(Bl, minus_Br) ret;
+    };
 
     // For comparisons (such as "less-than"), we get bool.
 
@@ -495,6 +540,15 @@ namespace mln
   // FIXME: ...
 
 
+  // Ops "bi Op= obj"
+  mln_internal_builtins_opeq_obj_(decl, +);
+  mln_internal_builtins_opeq_obj_(decl, -);
+  mln_internal_builtins_opeq_obj_(decl, *);
+  mln_internal_builtins_opeq_obj_(decl, /);
+  mln_internal_builtins_opeq_obj_(decl, %);
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   mln_internal_op_obj_builtins_(def, +, plus);
@@ -519,6 +573,14 @@ namespace mln
   mln_internal_op_builtins_cmp_(def, !=, neq);
 
   // FIXME: Add less, etc.
+
+
+  // Ops "bi Op= obj"
+  mln_internal_builtins_opeq_obj_(def, +);
+  mln_internal_builtins_opeq_obj_(def, -);
+  mln_internal_builtins_opeq_obj_(def, *);
+  mln_internal_builtins_opeq_obj_(def, /);
+  mln_internal_builtins_opeq_obj_(def, %);
 
 
 # endif // ! MLN_INCLUDE_ONLY

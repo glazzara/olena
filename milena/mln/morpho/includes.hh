@@ -45,11 +45,12 @@
 # include <mln/accu/min_h.hh>
 # include <mln/accu/max_h.hh>
 
+# include <mln/fun/v2v/saturate.hh>
+
 # include <mln/level/compare.hh>
 # include <mln/level/fill.hh>
 
 # include <mln/test/positive.hh>
-
 # include <mln/border/resize.hh>
 # include <mln/border/fill.hh>
 

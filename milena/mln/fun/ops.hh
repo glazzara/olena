@@ -35,6 +35,7 @@
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/selector.hh>
+# include <mln/trait/all.hh>
 
 
 
@@ -47,7 +48,8 @@
     struct Name##_##Out##_expr_							\
       : public Function_##Out < Name##_##Out##_expr_<L,R> >			\
     {										\
-      typedef mln_result(L) result;						\
+      typedef typename mln::trait::op:: Name < mln_result(L),			\
+					       mln_result(R) >::ret result;	\
 										\
       Name##_##Out##_expr_(const L& l, const R& r)				\
 	: l_(l), r_(r)								\
@@ -67,6 +69,18 @@
 										\
   }										\
 										\
+  namespace trait								\
+  {										\
+										\
+    template <typename L, typename R>						\
+    struct set_binary_< op::Name,						\
+			Function_##In, L,					\
+			Function_##In, R >					\
+    {										\
+      typedef fun::Name##_##Out##_expr_<L,R> ret;				\
+    };										\
+  }										\
+										\
   template <typename L, typename R>						\
   fun::Name##_##Out##_expr_<L,R>						\
   operator Symbol (const Function_##In<L>& lhs, const Function_##In<R>& rhs)	\
@@ -75,46 +89,56 @@
     return tmp;									\
   }										\
 										\
-  struct dummy
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
 
 
-# define mln_decl_unary_expr_(In, Out, Name, Symbol)		\
-								\
-  namespace fun							\
-  {								\
-								\
-    template <typename F>					\
-    struct Name##_##Out##_expr_					\
-      : public Function_##Out< Name##_##Out##_expr_<F> >	\
-    {								\
-      typedef mln_result(F) result;				\
-								\
-      Name##_##Out##_expr_(const F& f)				\
-	: f_(f)							\
-      {								\
-      }								\
-								\
-      template <typename P>					\
-      result operator()(const P& p) const			\
-      {								\
-	return Symbol f_(p);					\
-      }								\
-								\
-    protected:							\
-      const F f_;						\
-    };								\
-								\
-  }								\
-								\
-  template <typename F>						\
-  fun::Name##_##Out##_expr_<F>					\
-  operator Symbol (const Function_##In<F>& f)			\
-  {								\
-    fun::Name##_##Out##_expr_<F> tmp(exact(f));			\
-    return tmp;							\
-  }								\
-								\
-  struct dummy
+# define mln_decl_unary_expr_(In, Out, Name, Symbol)				\
+										\
+  namespace fun									\
+  {										\
+										\
+    template <typename F>							\
+    struct Name##_##Out##_expr_							\
+      : public Function_##Out< Name##_##Out##_expr_<F> >			\
+    {										\
+      typedef typename mln::trait::op:: Name < mln_result(F) >::ret result;	\
+										\
+      Name##_##Out##_expr_(const F& f)						\
+	: f_(f)									\
+      {										\
+      }										\
+										\
+      template <typename P>							\
+      result operator()(const P& p) const					\
+      {										\
+	return Symbol f_(p);							\
+      }										\
+										\
+    protected:									\
+      const F f_;								\
+    };										\
+										\
+  }										\
+										\
+  namespace trait								\
+  {										\
+    template <typename F>							\
+    struct set_unary_< op::Name,						\
+		       Function_##In, F >					\
+    {										\
+      typedef fun::Name##_##Out##_expr_<F> ret;					\
+    };										\
+  }										\
+										\
+  template <typename F>								\
+  fun::Name##_##Out##_expr_<F>							\
+  operator Symbol (const Function_##In<F>& f)					\
+  {										\
+    fun::Name##_##Out##_expr_<F> tmp(exact(f));					\
+    return tmp;									\
+  }										\
+										\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
 
 
 
@@ -130,11 +154,11 @@ namespace mln
   mln_decl_binary_expr_(p2v, p2b, geq,  >=);
   mln_decl_binary_expr_(p2v, p2b, greater, >);
 
-  mln_decl_binary_expr_(p2b, p2b, and, &&);
-  mln_decl_binary_expr_(p2b, p2b, or, ||);
-  mln_decl_binary_expr_(p2b, p2b, xor, ^);
+  mln_decl_binary_expr_(p2b, p2b, and_, &&);
+  mln_decl_binary_expr_(p2b, p2b, or_, ||);
+  mln_decl_binary_expr_(p2b, p2b, xor_, ^);
 
-  mln_decl_unary_expr_(p2b, p2b, not, !);
+  mln_decl_unary_expr_(p2b, p2b, not_, !);
 
   mln_decl_binary_expr_(p2v, p2v, plus, +);
   mln_decl_binary_expr_(p2v, p2v, minus, -);
@@ -155,11 +179,11 @@ namespace mln
   mln_decl_binary_expr_(v2v, v2b, geq,  >=);
   mln_decl_binary_expr_(v2v, v2b, greater, >);
 
-  mln_decl_binary_expr_(v2b, v2b, and, &&);
-  mln_decl_binary_expr_(v2b, v2b, or, ||);
-  mln_decl_binary_expr_(v2b, v2b, xor, ^);
+  mln_decl_binary_expr_(v2b, v2b, and_, &&);
+  mln_decl_binary_expr_(v2b, v2b, or_, ||);
+  mln_decl_binary_expr_(v2b, v2b, xor_, ^);
 
-  mln_decl_unary_expr_(v2b, v2b, not, !);
+  mln_decl_unary_expr_(v2b, v2b, not_, !);
 
 } // end of namespace mln
 

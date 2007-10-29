@@ -31,6 +31,7 @@
  */
 
 #include <mln/value/int_s.hh>
+#include <mln/value/int_u.hh>
 
 
 int main()
@@ -47,5 +48,4 @@ int main()
     mln_assertion(-i == -2);
     mln_assertion(-3 * i == -6);
   }
-
 }

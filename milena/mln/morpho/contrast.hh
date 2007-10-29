@@ -48,28 +48,25 @@ namespace mln
      *
      * This operator is Id + wth_B - bth_B. 
      */
-    template <typename I, typename W, typename O>
-    void contrast(const Image<I>& input, const Window<W>& win,
-		  Image<O>& output);
+    template <typename I, typename W>
+    mln_concrete(I) contrast(const Image<I>& input, const Window<W>& win);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename W, typename O>
-    void contrast(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
+    template <typename I, typename W>
+    mln_concrete(I) contrast(const Image<I>& input, const Window<W>& win)
     {
-      const I& input = exact(input_);
-      const W& win = exact(win_);
-      O& output = exact(output_);
+      trace::entering("morpho::contrast");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
 
-      mln_precondition(output.domain() == input.domain());
-      mln_precondition(! win.is_empty());
+      mln_concrete(I) output = arith::plus( input,
+					    top_hat_white(input, win) - top_hat_black(input, win),
+					    fun::v2v::saturate<mln_value(I)>() );
 
-      top_hat_white(input, win, output); // output = wth
-      morpho::plus_inplace(output, input); // now output = wth + input
-      O temp(input.domain());
-      top_hat_black(input, win, temp); // temp = bth
-      morpho::minus_inplace(output, temp); // now output = wth + input - bth
+      trace::exiting("morpho::contrast");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

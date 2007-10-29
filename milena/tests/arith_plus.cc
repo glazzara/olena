@@ -37,6 +37,7 @@
 #include <mln/arith/plus.hh>
 #include <mln/arith/times.hh>
 #include <mln/level/compare.hh>
+#include <mln/fun/v2v/cast.hh>
 
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
@@ -47,6 +48,8 @@ int main()
 {
   using namespace mln;
 
+  // trace::quiet = false;
+
   {
     image2d<int> ref(3,3);
     debug::iota(ref);
@@ -55,12 +58,16 @@ int main()
     ima_i += ima_i;
     mln_assertion(ima_i == 2 * ref);
 
-//     debug::println(ima_i);
-//     ima_i += 1;
-//     debug::println(ima_i);
+    debug::println(ima_i);
+    ima_i += 1;
+    debug::println(ima_i);
 
-//     debug::iota(ima_f);
-//     debug::println(ima_i + ima_f);
+    image2d<float> ima_f(3,3);
+    debug::iota(ima_f);
+    debug::println(ima_i + ima_f);
+
+    point2d p(0, 0);
+    std::cout << arith::plus<float>(ima_i, ima_i)(p) / 5 << std::endl;
   }
 
 }

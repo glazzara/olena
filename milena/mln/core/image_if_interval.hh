@@ -39,7 +39,7 @@
 # include <mln/value/interval.hh>
 
 
-# define  F	 fun::and_p2b_expr_<					       \
+# define  F	 fun::and__p2b_expr_<					       \
 			fun::geq_p2b_expr_<				       \
 				pw::value_<I>,				       \
 				pw::cst_<mln_value(I)> >,		       \

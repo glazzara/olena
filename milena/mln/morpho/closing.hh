@@ -46,27 +46,24 @@ namespace mln
      *
      * This operator is e_{-B} o d_B. 
      */
-    template <typename I, typename W, typename O>
-    void closing(const Image<I>& input, const Window<W>& win, Image<O>& output);
+    template <typename I, typename W>
+    mln_concrete(I) closing(const Image<I>& input, const Window<W>& win);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename W, typename O>
-    void closing(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
+    template <typename I, typename W>
+    mln_concrete(I) closing(const Image<I>& input, const Window<W>& win)
     {
-      const I& input = exact(input_);
-      const W& win = exact(win_);
-      O& output = exact(output_);
+      trace::entering("morpho::closing");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
 
-      mln_precondition(output.domain() == input.domain());
-      mln_precondition(! win.is_empty());
-
-      O temp(input.domain());
-      dilation(input, win, temp);
-      erosion(temp, geom::sym(win), output);
+      mln_concrete(I) output = erosion(dilation(input, win), geom::sym(win));
 
       mln_postcondition(output >= input);
+      trace::exiting("morpho::closing");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

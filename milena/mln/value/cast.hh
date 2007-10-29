@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/value.hh>
+# include <mln/value/equiv.hh>
 
 
 namespace mln
@@ -56,24 +57,34 @@ namespace mln
 
       template <typename S>
       const S&
-      cast_(const S& src, ...)
+      cast_(const void*, const S& src)
       {
 	return src;
       }
 
-      template <typename T, typename S>
-      typename S::equiv // FIXME: Is-that equiv here?
-      cast_(const T&, const Value<S>& src)
+      template <typename O, typename S>
+      const S&
+      cast_(const Object<O>*, const S& src)
       {
-	return exact(src);
+	return src;
+      }
+
+      template <typename V, typename S>
+      mln_value_equiv(S)
+      cast_(const Value<V>*, const S& src)
+      {
+	return mln::value::equiv(src);
       }
 
     } // end of namespace mln::value::internal
 
+
     template <typename Dest, typename Src>
     Dest cast(const Src& src)
     {
-      return internal::cast_(src, src);
+      // FIXME: Add static_cast<Dest>?
+      // FIXME: Add exact()?
+      return internal::cast_(&src, src);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

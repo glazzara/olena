@@ -46,12 +46,13 @@ namespace mln
      *
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
-     * \param[out] output The result image.
+     * \result The result image.
      *
-     * \pre \p output.domain == \p lhs.domain == \p rhs.domain
+     * \pre \p lhs.domain == \p rhs.domain
      */
-    template <typename L, typename R, typename O>
-    void min(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
+    template <typename L, typename R>
+    mln_concrete(L)
+      min(const Image<L>& lhs, const Image<R>& rhs);
 
 
     /*! Point-wise min of image \p lhs in image \p rhs.
@@ -59,12 +60,7 @@ namespace mln
      * \param[in,out] lhs First operand image.
      * \param[in] rhs Second operand image.
      *
-     * This substraction performs: \n
-     *   for all p of rhs.domain \n
-     *     if rhs(p) < lhs(p) \n
-     *       lhs(p) = rhs(p)
-     *
-     * \pre \p rhs.domain <= \p lhs.domain
+     * \pre \p rhs.domain == \p lhs.domain
      */
     template <typename L, typename R>
     void min_inplace(Image<L>& lhs, const Image<R>& rhs);
@@ -77,8 +73,7 @@ namespace mln
 
       template <typename L, typename R, typename O>
       void min_(trait::image::speed::any, const L& lhs,
-		trait::image::speed::any, const R& rhs,
-		trait::image::speed::any, O& output)
+		trait::image::speed::any, const R& rhs, O& output)
       {
 	mln_piter(L) p(lhs.domain());
 	for_all(p)
@@ -87,8 +82,7 @@ namespace mln
 
       template <typename L, typename R, typename O>
       void min_(trait::image::speed::fastest, const L& lhs,
-		trait::image::speed::fastest, const R& rhs,
-		trait::image::speed::fastest, O& output)
+		trait::image::speed::fastest, const R& rhs, O& output)
       {
 	mln_pixter(const L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
@@ -101,7 +95,7 @@ namespace mln
       void min_inplace_(trait::image::speed::any, L& lhs,
 			trait::image::speed::any, const R& rhs)
       {
-	mln_piter(R) p(rhs.domain());
+	mln_piter(L) p(lhs.domain());
 	for_all(p)
 	  if (rhs(p) < lhs(p))
 	    lhs(p) = rhs(p);
@@ -113,7 +107,7 @@ namespace mln
       {
 	mln_pixter(L) lp(lhs);
 	mln_pixter(const R) rp(rhs);
-	for_all_2(rp, lp)
+	for_all_2(lp, rp)
 	  if (rp.val() < lp.val())
 	    lp.val() = rp.val();
       }
@@ -123,22 +117,31 @@ namespace mln
 
     // Facades.
 
-    template <typename L, typename R, typename O>
-    void min(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
+    template <typename L, typename R>
+    mln_concrete(L) min(const Image<L>& lhs, const Image<R>& rhs)
     {
+      trace::entering("arith::min");
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      mln_precondition(exact(output).domain() == exact(lhs).domain());
+
+      mln_concrete(L) output;
+      initialize(output, lhs);
       impl::min_(mln_trait_image_speed(L)(), exact(lhs),
-		 mln_trait_image_speed(R)(), exact(rhs),
-		 mln_trait_image_speed(O)(), exact(output));
+		 mln_trait_image_speed(R)(), exact(rhs), output);
+
+      trace::exiting("arith::min");
+      return output;
     }
 
     template <typename L, typename R>
     void min_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
-      mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
+      trace::entering("arith::min_inplace");
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
       impl::min_inplace_(mln_trait_image_speed(L)(), exact(lhs),
 			 mln_trait_image_speed(R)(), exact(rhs));
+
+      trace::exiting("arith::min_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

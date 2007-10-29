@@ -50,6 +50,7 @@ namespace mln
 
 
 # include <mln/fun/v2v/abs.hh>
+# include <mln/fun/v2v/cast.hh>
 # include <mln/fun/v2v/enc.hh>
 # include <mln/fun/v2v/id.hh>
 # include <mln/fun/v2v/linear.hh>
