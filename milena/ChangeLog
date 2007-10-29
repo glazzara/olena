@@ -1,3 +1,9 @@
+2007-10-29  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update test for fllt.
+
+	* test_fllt.cc: Update.
+
 2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Update fllt.
