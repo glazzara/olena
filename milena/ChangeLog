@@ -1,3 +1,14 @@
+2007-10-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix fast level labeling.
+
+	* mln/border/resize.hh: Change the behavior so that
+	resizing is always effective.
+	* mln/canvas/labeling.hh (labeling_fast): Initialize
+	parent properly.
+	* mln/labeling/level.hh (level_): Resize border in the fast
+	version.
+
 2007-10-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update the form of routines so that images are returned.

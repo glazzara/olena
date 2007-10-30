@@ -37,6 +37,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/labeling/base.hh>
 # include <mln/level/fill.hh>
+# include <mln/border/resize.hh>
 
 
 
@@ -137,7 +138,12 @@ namespace mln
 		  trait::image::speed::fastest, O& output, unsigned& nlabels)
       {
 	typedef level_fast_t<I,N,O> F;
+
+	border::resize(input,  exact(nbh).delta());
+	border::resize(output, exact(nbh).delta());
+
 	F f(input, val, exact(nbh), output);
+
 	canvas::labeling_fast<F> run(f);
 	nlabels = f.nlabels;
 	return f.status;

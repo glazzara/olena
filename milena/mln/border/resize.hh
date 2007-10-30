@@ -99,11 +99,12 @@ namespace mln
       mlc_is(mln_trait_image_border(I), trait::image::border::some)::check();
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
-      if (border::get(ima) >= thickness)
-	return;
+
+      if (border::get(ima) == thickness)
+	return; // No-op.
+
       impl::resize_(ima, mln_trait_image_category(I)(), thickness); 
-      mln_postcondition(border::get(ima) >= thickness);
-      return;
+      mln_postcondition(border::get(ima) == thickness);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

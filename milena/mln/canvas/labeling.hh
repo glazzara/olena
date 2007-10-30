@@ -38,6 +38,7 @@
 # include <mln/level/sort_points.hh>
 # include <mln/convert/to_window.hh>
 
+
 namespace mln
 {
 
@@ -167,8 +168,7 @@ namespace mln
       mln_ch_value(O, unsigned) parent;
       
       labeling_fast(F& f)
-	: f(f),
-	  parent(f.output.domain(), f.input.border())
+	: f(f)
       {
 	run();
       }
@@ -178,6 +178,7 @@ namespace mln
 
         // init
 	{
+	  initialize(parent, f.input);
 	  f.nlabels = 0;
 	  f.init();
 	}
