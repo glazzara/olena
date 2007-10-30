@@ -30,12 +30,13 @@
 
 /*! \file mln/norm/l1.hh
  *
- *  \brief Define some l1-norm related routines.
+ *  \brief Define some L1-norm related routines.
  *  \see http://mathworld.wolfram.com/L1-Norm.html for more information.
  */
 
-# include <mln/metal/vec.hh>
 # include <mln/math/abs.hh>
+# include <mln/metal/vec.hh>
+
 
 namespace mln
 {
@@ -52,7 +53,7 @@ namespace mln
     mln_value_sum(C) l1(const metal::vec<n,C>& vec);
     /// \}
 
-    /// L1-norm distance between vectors \a v1 and \a v2.
+    /// L1-norm distance between vectors \a vec1 and \a vec2.
     /// \{
     template <unsigned n, typename C>
     mln_value_sum(C) l1_distance(const C (&vec1)[n], const C (&vec2)[n]);
@@ -68,33 +69,31 @@ namespace mln
     namespace impl
     {
       template <unsigned n, typename C, typename V>
-      mln_value_sum(C) l1_(const V& vec)
+      mln_value_sum(C)
+      l1_(const V& vec)
       {
-	mln_value_sum(C) c = 0;
+	mln_value_sum(C) m = 0;
 	for (unsigned i = 0; i < n; ++i)
-	  {
-	    mln_value_sum(C) v = vec[i];
-	    c += mln::math::abs (v);
-	  }
-	return c;
+	  m += mln::math::abs (vec[i]);
+	return m;
       }
 
       template <unsigned n, typename C, typename V>
-      mln_value_sum(C) l1_distance_(const V& vec1, const V& vec2)
+      mln_value_sum(C)
+      l1_distance_(const V& vec1, const V& vec2)
       {
 	mln_value_sum(C) d = 0;
 	for (unsigned i = 0; i < n; ++i)
-	  {
-	    mln_value_sum(C) v = vec1[i] - vec2[i];
-	    d += mln::math::abs (v);
-	  }
+	  d += mln::math::abs (vec1[i] - vec2[i]);
 	return d;
       }
 
     } // end of namespace mln::norm::impl
 
 
-    // Facades.
+    /*----------.
+    | Facades.  |
+    `----------*/
 
     template <unsigned n, typename C>
     mln_value_sum(C)

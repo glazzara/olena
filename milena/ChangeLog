@@ -1,5 +1,12 @@
 2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the L1-norm implementation.
+
+	* mln/norm/l1.hh (mln::norm::l1_distance): Fix documentation.
+	(mln::norm::l1_, mln::norm::l1_distance_): Avoid temporaries.
+
+2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove a useless specialization of mln::math::abs.
 
 	* mln/math/abs.hh (abs(const value::int_s<n>&)): Remove this
