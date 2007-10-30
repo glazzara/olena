@@ -1,3 +1,16 @@
+2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Refactor the L1-norm, and test it.
+
+	* mln/norm/l1.hh: Use type `mln_value_sum(C)' instead of `float'
+	to handle L1-norm values.
+	(mln::norm::impl::l1_, mln::norm::impl::l1_distance_): New.
+	Use to factor the implementations of...
+	(mln::norm::l1, mln::norm::l1_distance): ...these functions.
+	* tests/l1.cc: New test.
+	* tests/Makefile.am (check_PROGRAMS): Add l1.
+	(l1_SOURCES): New.
+
 2007-10-30  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add debug display tools for fllt.

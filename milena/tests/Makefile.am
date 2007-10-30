@@ -84,6 +84,7 @@ check_PROGRAMS =				\
   io_ppm23					\
   io_ppm					\
 						\
+  l1						\
   labeling_algo					\
   labeling_estimate				\
   labeling_foreground				\
@@ -270,6 +271,7 @@ io_ppm16_SOURCES = io_ppm16.cc
 io_ppm23_SOURCES = io_ppm23.cc
 io_ppm_SOURCES = io_ppm.cc
 
+l1_SOURCES = l1.cc
 labeling_algo_SOURCES = labeling_algo.cc
 labeling_estimate_SOURCES = labeling_estimate.cc
 labeling_foreground_SOURCES = labeling_foreground.cc
