@@ -580,5 +580,6 @@ namespace mln
 
 } // end of namespace mln
 
+# include <mln/make/image2d.hh>
 
 #endif // ! MLN_CORE_IMAGE2D_B_HH

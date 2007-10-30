@@ -1,3 +1,12 @@
+2007-10-30  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add make::image2d.
+
+	* mln/core/image2d.hh: Include make/image2d.hh at the end of the file.
+	* mln/make/image2d.hh: New, Add routine to make a image2d with a 2d
+          array
+	* tests/make_image2d.cc: New, tests on make::image2d.
+
 2007-10-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix fast level labeling.
