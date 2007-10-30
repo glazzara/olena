@@ -30,12 +30,12 @@
 
 /*! \file mln/math/abs.hh
  *
- * \brief Define abs routine.
+ *  \brief Define the absolute value (abs) routine.
  */
 
 # include <cmath>
-# include <mln/value/all.hh>
 
+# include <mln/value/all.hh>
 
 
 namespace mln
@@ -60,12 +60,6 @@ namespace mln
     value::int_u<n> abs(const value::int_u<n>& v)
     {
       return v;
-    }
-
-    template <unsigned n>
-    value::int_s<n> abs(const value::int_s<n>& v)
-    {
-      return std::abs(v.to_enc());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,5 +1,13 @@
 2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove a useless specialization of mln::math::abs.
+
+	* mln/math/abs.hh (abs(const value::int_s<n>&)): Remove this
+	specialization, as value::int_s shall handle the required
+	conversion automatically.
+
+2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/math/sqrt.hh: New.
 
 2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
