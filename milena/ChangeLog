@@ -1,5 +1,9 @@
 2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/math/sqrt.hh: New.
+
+2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/math/sqr.hh: New file.
 
 2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
