@@ -1,5 +1,18 @@
 2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Refactor the L2-norm, and test it.
+
+	* mln/norm/l2.hh: Use type `mln_value_sum(C)' instead of `float'
+	to handle L2-norm values.
+	(mln::norm::impl::l2_, mln::norm::impl::l2_distance_): New.
+	Use to factor the implementations of...
+	(mln::norm::l2, mln::norm::l2_distance): ...these functions.
+	* tests/l2.cc: New test.
+	* tests/Makefile.am (check_PROGRAMS): Add l2.
+	(l2_SOURCES): New.
+
+2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve the L1-norm implementation.
 
 	* mln/norm/l1.hh (mln::norm::l1_distance): Fix documentation.

@@ -30,12 +30,14 @@
 
 /*! \file mln/norm/l2.hh
  *
- * \brief Define some l2-norm related routines.
+ *  \brief Define some L2-norm related routines.
+ *  \see http://mathworld.wolfram.com/L2-Norm.html for more information.
  */
 
-# include <cmath>
-
+# include <mln/math/sqr.hh>
+# include <mln/math/sqrt.hh>
 # include <mln/metal/vec.hh>
+
 
 namespace mln
 {
@@ -43,65 +45,84 @@ namespace mln
   namespace norm
   {
 
-    /// Infinity-norm of a vector \p vec.
+    /// L2-norm of a vector \a vec.
+    /// \{
     template <unsigned n, typename C>
-    float l2(const C (&vec)[n]);
-
-    /// Infinity-norm distance between vectors \p v1 and \p v2.
-    template <unsigned n, typename C>
-    float l2_distance(const C (&v1)[n], const C (&v2)[n]);
+    mln_value_sum(C) l2(const C (&vec)[n]);
 
     template <unsigned n, typename C>
-    float l2(const metal::vec<n,C>& vec);
+    mln_value_sum(C) l2(const metal::vec<n,C>& vec);
+    /// \}
+
+    /// L2-norm distance between vectors \a vec1 and \p vec2.
+    /// \{
+    template <unsigned n, typename C>
+    mln_value_sum(C) l2_distance(const C (&vec1)[n], const C (&vec2)[n]);
 
     template <unsigned n, typename C>
-    float l2_distance(const metal::vec<n,C>& vec1, const metal::vec<n,C>& vec2);
-
-    // FIXME: Replace float by mln_value_sum(C)...
+    mln_value_sum(C) l2_distance(const metal::vec<n,C>& vec1,
+				 const metal::vec<n,C>& vec2);
+    /// \}
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <unsigned n, typename C>
-    float l2(const C (&vec)[n])
+    namespace impl
     {
-      C c = 0;
-      for (unsigned i = 0; i < n; ++i)
-	c += vec[i] * vec[i];
-      return sqrt(c);
-    }
-
-    template <unsigned n, typename C>
-    float l2_distance(const C (&v1)[n], const C (&v2)[n])
-    {
-      C d = 0;
-      for (unsigned i = 0; i < n; ++i)
+      
+      template <unsigned n, typename C, typename V>
+      mln_value_sum(C)
+      l2_(const V& vec)
       {
-	C dd = v1[i] - v2[i];
-	d += dd * dd;
+	mln_value_sum(C) m = 0;
+	for (unsigned i = 0; i < n; ++i)
+	  m += mln::math::sqr(vec[i]);
+	return mln::math::sqrt(m);
       }
-      return sqrt(d);
-    }
 
-    template <unsigned n, typename C>
-    float l2(const metal::vec<n,C>& vec)
-    {
-      C c = 0;
-      for (unsigned i = 0; i < n; ++i)
-	c += vec[i] * vec[i];
-      return sqrt(c);
-    }
-
-    template <unsigned n, typename C>
-    float l2(const metal::vec<n,C>& vec1, const metal::vec<n,C>& vec2)
-    {
-      C d = 0;
-      for (unsigned i = 0; i < n; ++i)
+      template <unsigned n, typename C, typename V>
+      mln_value_sum(C)
+      l2_distance_(const V& vec1, const V& vec2)
       {
-	C dd = vec1[i] - vec2[i];
-	d += dd * dd;
+	mln_value_sum(C) d = 0;
+	for (unsigned i = 0; i < n; ++i)
+	  d += mln::math::sqr(vec1[i] - vec2[i]);
+	return mln::math::sqrt(d);
       }
-      return sqrt(d);
+
+    } // end of namespace mln::norm::impl
+
+
+    /*----------.
+    | Facades.  |
+    `----------*/
+
+    template <unsigned n, typename C>
+    mln_value_sum(C)
+    l2(const C (&vec)[n])
+    {
+      return impl::l2_<n, C>(vec);
+    }
+
+    template <unsigned n, typename C>
+    mln_value_sum(C)
+    l2(const metal::vec<n,C>& vec)
+    {
+      return impl::l2_<n, C>(vec);
+    }
+
+    template <unsigned n, typename C>
+    mln_value_sum(C)
+    l2_distance(const C (&vec1)[n], const C (&vec2)[n])
+    {
+      return impl::l2_distance_<n, C>(vec1, vec2);
+    }
+
+    template <unsigned n, typename C>
+    mln_value_sum(C)
+    l2_distance(const metal::vec<n,C>& vec1, const metal::vec<n,C>& vec2)
+    {
+      return impl::l2_distance_<n, C>(vec1, vec2);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
