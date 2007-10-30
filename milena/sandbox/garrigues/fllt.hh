@@ -269,7 +269,16 @@ namespace mln
       static image2d<int>  tmp(u.domain().to_larger(1));
       static image2d<bool> border_ima(tmp.domain());
       level::fill(border_ima, false);
-      level::fill(inplace(border_ima | N), true);
+
+//       level::fill(inplace(border_ima | N), true);
+//       std::cout << "tmp border = " << tmp.border () << std::endl;
+//       std::cout << "ima border = " << border_ima.border () << std::endl;
+      mln_piter(set_p<P>) z(N);
+      for_all(z)
+	{
+	  mln_assertion(border_ima.owns_(z));
+	  border_ima(z) = true;
+	}
       unsigned n;
       labeling::level(border_ima, true, F::bdr_nbh(), tmp, n);
 
@@ -459,6 +468,7 @@ namespace mln
       fllt_tree(P, V)& tree = *new fllt_tree(P, V)(current_region);
       util::tree_to_image (tree, output);
 
+      util::display_tree(ima, tree);
 
 //       debug::println(output);
 //       std::cout << std::endl;
@@ -576,6 +586,7 @@ namespace mln
       mln_piter(set_p<P>) p(node.elt().holes);
       for_all(p)
 	{
+	  std::cout << "OK start loop" << std::endl;
 	  bool h = true;
 	  fllt_node(P, V)* hole = find_the_hole(node, point2d(p), other_reg);
 	  typename fllt_node(P, V)::children_t::iterator it;
@@ -584,14 +595,17 @@ namespace mln
 	       it++)
 	  {
 	    if (set::is_subset_of(hole->elt().points,
-				  (*it)->elt().points))
+ 				  (*it)->elt().points))
 	    {
 	      h = false;
 	      break;
 	    }
 	  }
 	  if (h)
-	    move_shape(node, *hole, tree, other_reg);
+	    {
+	      move_shape(node, *hole, tree, other_reg);
+	      std::cout << "OK" << std::endl;
+	    }
 
 	}
     }
@@ -615,6 +629,7 @@ namespace mln
 	{
  	  fllt_node(P, V)& n(p);
  	  fill_a_shape(n, lower, upp_reg);
+	  mln_assertion(n.check_consistency());
 	}
       //       fllt_branch_iter(P, V) q(upper.main_branch());
       //       for_all(q)
@@ -703,6 +718,7 @@ namespace mln
 	std::cerr << "BUG!!!" << std::endl;
 	abort();
       }
+
 
 //       io::pgm::save(output, "out_final.pgm");
 //       std::cout << "out_final.pgm generate"

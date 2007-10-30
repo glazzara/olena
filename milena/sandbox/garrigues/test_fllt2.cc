@@ -26,8 +26,8 @@ int main()
 		5,5,5,5,5,5,5,5,5};
 
   w_window2d_int w_win = make::w_window2d(ws);
- image2d<int> ima = convert::to_image(w_win);
-fllt::fllt(ima);
+  image2d<int> ima = convert::to_image(w_win);
+  fllt::fllt(ima);
 
 
 //    image2d<value::int_u8> ima = io::pgm::load("../../img/tiny.pgm");

@@ -1,3 +1,23 @@
+2007-10-30  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add debug display tools for fllt.
+
+	* mln/util/tree_to_image.hh: Add functions :
+	(display_set(const Image<J>& ima_, set_p<P>& s)) :
+	display set_p with ima_ domain into a binary image.
+	(display_tree_rec(const Image<J>& ima_, node<T>* node, int level))
+	Recursive function of ...
+	(display_tree(const Image<J>& ima_, tree<I>& tree))
+	... function which displays all nodes of tree with display_set,
+	it shows the actual state of tree (of kind fllt) in pritting
+	each set_p of node with a number which gives the level of the node.
+	It isn't generic at all, it's just viewing tools for debugging,
+	to fix later when fllt will be generic too.
+	Use it ...
+	* sandbox/garrigues/fllt.hh: ... here for a better view of the
+	situation and so for the debbuging.
+	* sandbox/garrigues/test_fllt.cc: Fix the beggining of loop (1 -> 0).
+
 2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Catch up with Olena's new way to handle FreeImagePlus.

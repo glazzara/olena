@@ -32,8 +32,8 @@ int main()
 //   fllt::fllt(ima);
 
 
-  for (int i = 1; i < 16; ++i)
-    for (int j = 1; j < 16; ++j)
+  for (int i = 0; i < 16; ++i)
+    for (int j = 0; j < 16; ++j)
       {
 	std::stringstream path;
 	path << "/lrde/tegucigalpa/theo/pub/mln_docs/lena_tiles/lena_" << i << "_" << j << ".pgm";

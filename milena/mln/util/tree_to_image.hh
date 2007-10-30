@@ -53,6 +53,18 @@ namespace mln
     void
     tree_to_image (tree<T>& tree, Image<I>& output_);
 
+    template <typename P, typename J>
+    void
+    display_set(const Image<J>& ima_, set_p<P>& s);
+
+    template <typename T, typename J>
+    void
+    display_tree_rec(const Image<J>& ima_, node<T>* node, int level);
+
+    template <typename I, typename J>
+    void
+    display_tree(const Image<J>& ima_, tree<I>& tree);
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T, typename I>
@@ -60,7 +72,6 @@ namespace mln
     tree_to_image_rec(node<T>* node, Image<I>& output_)
     {
       I& output = exact(output_);
-
 
       mln_piter(set_p<point2d>) p(node->elt().points);
 
@@ -78,13 +89,57 @@ namespace mln
 	}
     }
 
-
     template <typename T, typename I>
     void
     tree_to_image (tree<T>& tree, Image<I>& output_)
     {
       I& output = exact(output_);
       tree_to_image_rec(tree.root(), output);
+    }
+
+
+    template <typename P, typename J>
+    void
+    display_set(const Image<J>& ima_, set_p<P>& s)
+    {
+      const J& ima = exact(ima_);
+      image2d<bool> out (ima.bbox ());
+
+      level::fill(out, false);
+      mln_piter(set_p<P>) p (s);
+      for_all (p)
+	out(p) = true;
+      debug::println(out);
+    }
+
+
+    template <typename T, typename J>
+    void
+    display_tree_rec(const Image<J>& ima_, node<T>* node, int level)
+    {
+      const J& ima = exact(ima_);
+      std::cout << level << std::endl;
+      std::cout << std::endl;
+      display_set(ima, node->elt().points);
+      typename mln::util::node<T>::children_t::iterator it = node->children().begin();
+      for (;
+	   it != node->children().end(); ++it)
+	display_tree_rec(ima, (*it), level + 1);
+      std::cout << std::endl;
+      std::cout << std::endl;
+      std::cout << std::endl;
+      std::cout << std::endl;
+    }
+
+    template <typename I, typename J>
+    void
+    display_tree(const Image<J>& ima_, tree<I>& tree)
+    {
+      const J& ima = exact(ima_);
+      int level = 0;
+
+      mln_assertion(tree.root());
+      display_tree_rec(ima, tree.root(), level);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
