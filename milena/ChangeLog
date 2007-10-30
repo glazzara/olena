@@ -1,3 +1,15 @@
+2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Catch up with Olena's new way to handle FreeImagePlus.
+
+	* tests/Makefile.am: Add some white space to improve the
+	readability.
+	Adjust conditional; rename FREE_IMAGE_PLUS as FREEIMAGEPLUS.
+	(fi_adaptor_LDADD): Remove.
+	(fi_adaptor_CPPFLAGS, fi_adaptor_LDFLAGS): New.
+	* tests/fi_adaptor.cc (main): More comments/FIXMEs on the use of
+	FreeImagePlus.
+
 2007-10-30  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add make::image2d.

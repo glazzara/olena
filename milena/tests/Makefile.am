@@ -18,6 +18,7 @@ check_PROGRAMS =				\
   accu_all					\
   accu_min					\
   accu_nil					\
+						\
   border_get					\
   border_resize_image1d_1			\
   border_resize_image1d_2			\
@@ -33,6 +34,7 @@ check_PROGRAMS =				\
   box1d						\
   box2d						\
   box3d						\
+						\
   canvas_browsing_fwd				\
   cast_image					\
   chamfer					\
@@ -44,6 +46,7 @@ check_PROGRAMS =				\
   core_clone					\
   core_exact					\
   core_initialize				\
+						\
   debug_println					\
   debug_println_with_border			\
   decorated_image				\
@@ -51,15 +54,19 @@ check_PROGRAMS =				\
   dpoint2d					\
   dpoint3d					\
   dpoints_pixter				\
+						\
   estim_mean					\
+						\
   fi_adaptor					\
   fun_x2x_composed				\
   fun_x2x_rotation				\
   fun_x2x_translation				\
+						\
   hexa						\
   histo_compute					\
   histo_to_image1d				\
   h_vec						\
+						\
   image1d					\
   image2d					\
   image2d_h					\
@@ -76,6 +83,7 @@ check_PROGRAMS =				\
   io_ppm16					\
   io_ppm23					\
   io_ppm					\
+						\
   labeling_algo					\
   labeling_estimate				\
   labeling_foreground				\
@@ -104,6 +112,7 @@ check_PROGRAMS =				\
   literal_medium_gray				\
   literal_zero					\
   local_convolve				\
+						\
   main						\
   mat						\
   mesh_image					\
@@ -123,8 +132,10 @@ check_PROGRAMS =				\
   morpho_laplacian				\
   morpho_opening_area				\
   morpho_thinning				\
+						\
   new_io_pgm					\
   norm_l2					\
+						\
   pixel						\
   pixter1d					\
   pixter2d					\
@@ -136,12 +147,15 @@ check_PROGRAMS =				\
   pset_if					\
   pw_image					\
   pw_value					\
+						\
   queue_p					\
   queue_p_fast					\
   queue_p_fast_priority				\
   queue_p_priority				\
+						\
   rle_image					\
   run_pset					\
+						\
   safe_image					\
   seed2tiling					\
   set_p						\
@@ -149,6 +163,7 @@ check_PROGRAMS =				\
   sparse_image					\
   stack						\
   sub_image					\
+						\
   test_positive					\
   trait_ch_value				\
   trait_images					\
@@ -158,6 +173,7 @@ check_PROGRAMS =				\
   trait_value					\
   translate_image				\
   tr_image					\
+						\
   value_float01_bis				\
   value_float01					\
   value_float01_f				\
@@ -172,6 +188,7 @@ check_PROGRAMS =				\
   value_scalar					\
   value_set					\
   vec						\
+						\
   win_backdiag2d				\
   win_diag2d					\
   win_disk2d					\
@@ -188,6 +205,7 @@ check_PROGRAMS =				\
 accu_all_SOURCES = accu_all.cc
 accu_min_SOURCES = accu_min.cc
 accu_nil_SOURCES = accu_nil.cc
+
 border_get_SOURCES = border_get.cc
 border_resize_image1d_1_SOURCES = border_resize_image1d_1.cc
 border_resize_image1d_2_SOURCES = border_resize_image1d_2.cc
@@ -203,6 +221,7 @@ border_resize_sub_image_SOURCES = border_resize_sub_image.cc
 box1d_SOURCES = box1d.cc
 box2d_SOURCES = box2d.cc
 box3d_SOURCES = box3d.cc
+
 canvas_browsing_fwd_SOURCES = canvas_browsing_fwd.cc
 cast_image_SOURCES = cast_image.cc
 chamfer_SOURCES = chamfer.cc
@@ -214,6 +233,7 @@ core_category_SOURCES = core_category.cc
 core_clone_SOURCES = core_clone.cc
 core_exact_SOURCES = core_exact.cc
 core_initialize_SOURCES = core_initialize.cc
+
 debug_println_SOURCES = debug_println.cc
 debug_println_with_border_SOURCES = debug_println_with_border.cc
 decorated_image_SOURCES = decorated_image.cc
@@ -221,14 +241,18 @@ dpoint1d_SOURCES = dpoint1d.cc
 dpoint2d_SOURCES = dpoint2d.cc
 dpoint3d_SOURCES = dpoint3d.cc
 dpoints_pixter_SOURCES = dpoints_pixter.cc
+
 estim_mean_SOURCES = estim_mean.cc
+
 fun_x2x_composed_SOURCES = fun_x2x_composed.cc
 fun_x2x_rotation_SOURCES = fun_x2x_rotation.cc
 fun_x2x_translation_SOURCES = fun_x2x_translation.cc
+
 hexa_SOURCES = hexa.cc
 histo_compute_SOURCES = histo_compute.cc
 histo_to_image1d_SOURCES = histo_to_image1d.cc
 h_vec_SOURCES = h_vec.cc
+
 image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
 image2d_h_SOURCES = image2d_h.cc
@@ -245,6 +269,7 @@ io_pgm_SOURCES = io_pgm.cc
 io_ppm16_SOURCES = io_ppm16.cc
 io_ppm23_SOURCES = io_ppm23.cc
 io_ppm_SOURCES = io_ppm.cc
+
 labeling_algo_SOURCES = labeling_algo.cc
 labeling_estimate_SOURCES = labeling_estimate.cc
 labeling_foreground_SOURCES = labeling_foreground.cc
@@ -273,6 +298,7 @@ line_piter_SOURCES = line_piter.cc
 literal_medium_gray_SOURCES = literal_medium_gray.cc
 literal_zero_SOURCES = literal_zero.cc
 local_convolve_SOURCES = local_convolve.cc
+
 main_SOURCES = main.cc
 mat_SOURCES = mat.cc
 mesh_image_SOURCES = mesh_image.cc
@@ -292,8 +318,10 @@ morpho_hit_or_miss_SOURCES = morpho_hit_or_miss.cc
 morpho_laplacian_SOURCES = morpho_laplacian.cc
 morpho_opening_area_SOURCES = morpho_opening_area.cc
 morpho_thinning_SOURCES = morpho_thinning.cc
+
 new_io_pgm_SOURCES = new_io_pgm.cc
 norm_l2_SOURCES = norm_l2.cc
+
 pixel_SOURCES = pixel.cc
 pixter1d_SOURCES = pixter1d.cc
 pixter2d_SOURCES = pixter2d.cc
@@ -305,12 +333,15 @@ point3d_SOURCES = point3d.cc
 pset_if_SOURCES = pset_if.cc
 pw_image_SOURCES = pw_image.cc
 pw_value_SOURCES = pw_value.cc
+
 queue_p_SOURCES = queue_p.cc
 queue_p_fast_SOURCES = queue_p_fast.cc
 queue_p_fast_priority_SOURCES = queue_p_fast_priority.cc
 queue_p_priority_SOURCES = queue_p_priority.cc
+
 rle_image_SOURCES = rle_image.cc
 run_pset_SOURCES = run_pset.cc
+
 safe_image_SOURCES = safe_image.cc
 seed2tiling_SOURCES = seed2tiling.cc
 set_p_SOURCES = set_p.cc
@@ -318,6 +349,7 @@ show_SOURCES = show.cc
 sparse_image_SOURCES = sparse_image.cc
 stack_SOURCES = stack.cc
 sub_image_SOURCES = sub_image.cc
+
 test_positive_SOURCES = test_positive.cc
 trait_ch_value_SOURCES = trait_ch_value.cc
 trait_images_SOURCES = trait_images.cc
@@ -327,6 +359,7 @@ trait_super_SOURCES = trait_super.cc
 trait_value_SOURCES = trait_value.cc
 translate_image_SOURCES = translate_image.cc
 tr_image_SOURCES = tr_image.cc
+
 value_float01_bis_SOURCES = value_float01_bis.cc
 value_float01_SOURCES = value_float01.cc
 value_float01_f_SOURCES = value_float01_f.cc
@@ -341,6 +374,7 @@ value_rgb8_SOURCES = value_rgb8.cc
 value_scalar_SOURCES = value_scalar.cc
 value_set_SOURCES = value_set.cc
 vec_SOURCES = vec.cc
+
 win_backdiag2d_SOURCES = win_backdiag2d.cc
 win_diag2d_SOURCES = win_diag2d.cc
 win_disk2d_SOURCES = win_disk2d.cc
@@ -355,10 +389,11 @@ w_window2d_int_SOURCES = w_window2d_int.cc
 w_window3d_int_SOURCES = w_window3d_int.cc
 
 # Tests depending on the FreeImage library.
-if FREE_IMAGE_PLUS
+if FREEIMAGEPLUS
   check_PROGRAMS += fi_adaptor
   fi_adaptor_SOURCES = fi_adaptor.cc
-  fi_adaptor_LDADD = $(FREEIMAGELIB)
+  fi_adaptor_CPPFLAGS = $(AM_CPPFLAGS) $(FREEIMAGEPLUS_CPPFLAGS)
+  fi_adaptor_LDFLAGS = $(AM_LDFLAGS) $(FREEIMAGEPLUS_LDFLAGS)
 endif
 
 TESTS = $(check_PROGRAMS)

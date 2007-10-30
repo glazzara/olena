@@ -53,7 +53,7 @@ int main()
   using typename value::int_u8;
   using typename value::rgb8;
 
-  //FIXME : is it necessary??
+  // FIXME: Is this necessary?  See FreeImagePlus' documentation.
   FreeImage_Initialise();
 
   win::rectangle2d rect(51, 51);
@@ -71,6 +71,13 @@ int main()
   display::save (adaptor);
   display::show (adaptor, "xv");
 
-  // call this ONLY when linking with FreeImage as a static library
+  // FIXME: Likewise.
+  /* A comment here (probably coming from an example of FreeImagePlus'
+     documentation) used to say:
+
+       call this ONLY when linking with FreeImage as a static library
+
+     Check if this statement holds in our case.  Maybe we need to
+     involve Libtool in to handle FreeImagePlus properly.  */
   FreeImage_DeInitialise();
 }
