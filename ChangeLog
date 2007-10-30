@@ -1,3 +1,19 @@
+2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve support for the FreeImagePlus library.
+
+	* build-aux/freeimageplus.m4: New.
+	Provide the Autoconf macro OLN_WITH_FREEIMAGEPLUS.
+	Inspired by Olena 0.11's macros AC_WITH_CXX_ZLIB and
+	AC_WITH_CXX_FFTW.
+	Use this macro...
+	* configure.ac: ...here, instead of the previous ad hoc solution.
+	Rename the Automake conditional FREE_IMAGE_PLUS as FREEIMAGEPLUS,
+	and adjust it.
+	* Makefile.am (ACLOCAL_AMFLAGS): New.
+	Set it to `-I build-aux' to have aclocal visit
+	build-aux/freeimageplus.m4.
+
 2007-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add support for the FreeImage library.

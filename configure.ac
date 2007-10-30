@@ -59,9 +59,8 @@ AC_CHECK_PROGS([CONCEPTCXX], [conceptg++ conceptc++])
 ## -------------- ##
 
 # FreeImage library.
-AC_CHECK_HEADERS([FreeImagePlus.h],
-  [AM_CONDITIONAL([FREE_IMAGE_PLUS], [true])])
-AC_CHECK_LIB([freeimageplus], [main])
+OLN_WITH_FREEIMAGEPLUS
+AM_CONDITIONAL([FREEIMAGEPLUS], [test x$oln_have_freeimageplus = xyes])
 
 
 ## ------- ##
