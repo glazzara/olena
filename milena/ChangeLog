@@ -1,5 +1,9 @@
 2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/math/sqr.hh: New file.
+
+2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Refactor the L1-norm, and test it.
 
 	* mln/norm/l1.hh: Use type `mln_value_sum(C)' instead of `float'
