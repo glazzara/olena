@@ -107,6 +107,9 @@ AC_CONFIG_FILES([
 # FIXME: Should be performed through oln.m4 macros.
 AC_CONFIG_FILES([
   milena/tests/Makefile
+    milena/tests/norm/Makefile
+])
+AC_CONFIG_FILES([
   olena/tests/algorithms/Makefile
   olena/tests/check/Makefile
   olena/tests/check/defs

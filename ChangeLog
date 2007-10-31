@@ -1,3 +1,7 @@
+2007-10-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/tests/norm/Makefile.
+
 2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve support for the FreeImagePlus library.
