@@ -1,3 +1,12 @@
+2007-10-31  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add functon which display a binary image from a FLLT branch.
+
+	* mln/util/tree_to_image.hh:
+	(display_branch(const Image<J>& ima_, node<I>* node)) :
+	Take a node and compute its binary image from set_p of FLLT
+	and display this image.
+
 2007-10-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Start a tutorial.
