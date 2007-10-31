@@ -1,18 +1,8 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-## FIXME: Revamp (see Olena 0.11's test suite).
+include $(top_srcdir)/milena/tests/tests.mk
 
-AM_CPPFLAGS = -I$(top_srcdir)/milena
-
-# FIXME: Add
-#
-#   AM_CXXFLAGS = $(CXXFLAGS_STRICT) $(CXXFLAGS_DEBUG)
-#
-# when oln.m4 is available in the distribution, instead of using the
-# set-by-hand TESTS_CXXFLAGS.
-TESTS_CXXFLAGS = @TESTS_CXXFLAGS@
-AM_CXXFLAGS = $(TESTS_CXXFLAGS)
-
+SUBDIRS = norm
 
 check_PROGRAMS =				\
   accu_all					\

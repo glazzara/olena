@@ -1,5 +1,18 @@
 2007-10-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move norm-related tests to their own directory.
+
+	* tests/norm/: New directory.
+	* tests/l1.cc, tests/l2.cc, tests/linfty.cc: Move...
+	* tests/norm/l1.cc, tests/norm/l2.cc, tests/norm/linfty.cc:
+	...here.
+	* tests/tests.mk: ...here (new file).
+	* tests/Makefile.am: Move general purpose, test-related
+	variables...
+	* tests/norm/Makefile.am: New.
+
+2007-10-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Refactor the L-infinity-norm, and test it.
 
 	* mln/norm/infty.hh: Rename as...
