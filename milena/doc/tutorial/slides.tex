@@ -1,0 +1,550 @@
+% $Header: /cvsroot/latex-beamer/latex-beamer/examples/beamerexample1.tex,v 1.46 2004/10/07 20:53:07 tantau Exp $
+
+\documentclass{beamer}
+%\usepackage{beamerthemesplit}
+
+%\documentclass{article}
+%\usepackage[envcountsect]{beamerarticle}
+
+% Do NOT take this file as a template for your own talks. Use a file
+% in the directory solutions instead. They are much better suited.
+
+% Try the class options [notes], [notes=only], [trans], [handout],
+% [red], [compress], [draft] and see what happens!
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+% For a green structure color use:
+%\colorlet{structure}{green!50!black}
+
+ \mode<article> % only for the article version
+ {
+   \usepackage{fullpage}
+   \usepackage{myhyperref}
+ }
+
+
+ \mode<presentation>
+ {
+   \setbeamertemplate{background canvas}[vertical shading][bottom=red!10,top=blue!10]
+   \usetheme{Warsaw}
+   \usefonttheme[onlysmall]{structurebold}
+
+
+% Put the page number too.
+\defbeamertemplate*{footline}{infolines theme without institution}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1.125ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1.125ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1.125ex,right]{date 
+in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+
+}
+% end of mode presentation
+
+
+
+%\setbeamercolor{math text}{fg=green!50!black}
+%\setbeamercolor{normal text in math text}{parent=math text}
+
+\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+\usepackage{amsmath,amssymb}
+\usepackage[latin1]{inputenc}
+\usepackage{colortbl}
+\usepackage[english]{babel}
+
+%\usepackage{lmodern}
+%\usepackage[T1]{fontenc} 
+
+\usepackage{times}
+\usepackage{multicol}
+\usepackage{xspace}
+\usepackage{ulem}
+
+\usepackage{graphicx}
+\graphicspath{{./figs/}}
+
+\usepackage{listings}
+\lstloadlanguages{[ISO]C++}
+\lstset{language=[ISO]C++,
+  texcl=true,
+  columns=fullflexible,
+  basicstyle={\small\sffamily}, % normal footnote small scriptsize tiny
+  commentstyle=\itshape,
+  showstringspaces=false,
+  numberstyle=\tiny,
+%  morekeywords={where, auto, concept, concept_map, axiom, late_check, final, abstract},
+  morecomment=[s]{/*}{*/}
+}
+
+
+\setbeamercovered{dynamic}
+
+%
+% The following defintions are peculiar to this particular
+% presetation. They have nothing to do with the beamer class
+%
+
+\newcommand{\Lang}[1]{\operatorname{\text{\textsc{#1}}}}
+
+\newcommand{\Class}[1]{\operatorname{\mathchoice
+  {\text{\normalfont\small #1}}
+  {\text{\normalfont\small #1}}
+  {\text{\normalfont#1}}
+  {\text{\normalfont#1}}}}
+
+\newcommand{\DOF}{\Class{DOF}}
+\newcommand{\NOF}{\Class{NOF}}
+\newcommand{\DOFpoly}{\Class{DOF}_{\operatorname{poly}}}
+\newcommand{\NOFpoly}{\Class{NOF}_{\operatorname{poly}}}
+
+
+\newcommand{\Nat}{\mathbb{N}}
+\newcommand{\Set}[1]{\{#1\}}
+
+
+
+\title[Milena: A Tutorial]
+{Milena: A Tutorial}
+
+\author[Milena Team]{Milena Team}
+
+\institute[LRDE]{EPITA Research and Development Laboratory (LRDE)}
+
+\date[EPITA-LRDE 2007]{November 2007}
+
+\subject{}
+
+%\pgfdeclaremask{lrde}{lrde-logo-mask}
+%\pgfdeclareimage[mask=lrde,width=0.6cm]{lrde-logo}{lrde}
+%\pgfdeclareimage[width=0.6cm]{lrde-logo}{lrde}
+
+%\logo{\vbox{\hbox to 1cm{\hfil\pgfuseimage{lrde-logo}}}}
+\logo{}
+
+
+
+%###########################################################
+% NEW!
+%###########################################################
+
+\newcommand{\fal}{$\bullet$\xspace}
+\definecolor{darkgreen}{rgb}{0.1,0.7,0.1}
+
+%###########################################################
+% end of NEW!
+%###########################################################
+
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section<presentation>*{Outline}
+
+\begin{frame}
+  \frametitle{Outline}
+{\scriptsize
+  \tableofcontents[part=1,pausesections]
+}
+\end{frame}
+
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+{\scriptsize
+    \tableofcontents[current,currentsubsection]
+}
+  \end{frame}
+}
+
+\part<presentation>{Main Talk}
+
+
+
+
+% macros
+
+\newcommand{\oln}{\textsc{Olena}\xspace}
+\newcommand{\mln}{\textsc{Milena}\xspace}
+
+% end of macros
+
+
+
+%############################################################
+\section{Part 1: Introduction}
+
+
+
+%============================================================
+\subsection{What is \mln?}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{What is \oln?}
+
+  \oln is the name for
+  \begin{itemize}
+  \item the project of building some modern image processing tools
+  \item the platform, including
+    \begin{itemize}
+    \item a library
+    \item command line executables
+    \item some documentation
+    \item etc.
+    \end{itemize}
+  \end{itemize}
+  
+  \bigskip
+  
+  \begin{block}{\mln}
+    \mln is the C++ image processing\footnote{In the following, IP is
+      ``Image Processing'' for short.} library of \oln.
+  \end{block}
+  
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Yet Another Image Processing Library (YAIPL) ?}
+
+  \begin{block}{Yes!}
+    \begin{itemize}
+    \item Many libraries exist that can fulfill one's needs.
+    \item If you're happy with your favorite tool, we cannot force you
+      to change for \mln...
+    \item Though, you might have a look at \mln and being seduced!
+    \end{itemize}
+    
+  \end{block}
+ 
+  \bigskip
+
+  \begin{block}{No!}
+    \begin{itemize}
+    \item \mln is rather different that available libraries.
+    \item A lot of convenient data structures that \emph{really} helps
+      you in developing IP solutions.
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{A Short History of the \oln Project}
+
+  {\small
+    
+  \begin{itemize}
+  \item 2000: Start of the project.
+  \item From Nov. 2001 to April 2004: Evolution from version 0.1 to 0.10.\\
+    The level of genericity we expected from the lib was partially obtained...
+  \item February 2007: Update to conform modern C++ compilers = version 0.11.\\
+  \end{itemize}
+
+  \medskip
+
+  \textit{During 3 years we developed a prototype to experiment with
+    genericity and to try to meet our objectives.}
+
+  \medskip
+
+  \begin{itemize}
+  \item From June 2007 up to new: Re-writing of the library with a
+    programming paradigm that rocks.
+  \end{itemize}
+
+}%small
+
+\end{frame}
+
+
+
+%============================================================
+\subsection{Features of the \mln Library}
+
+%........................................................................
+\begin{frame}
+  \frametitle{Feature List}
+
+  \begin{itemize}
+  \item Generic...
+  \item Efficient so that one can process large images.
+  \item Quite as easy to use than a C or Java library.
+  \item Many tools to help writing readable algorithms in a concise way.
+  \item C++.
+  \end{itemize}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Genericity}
+
+  FIXME
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Efficiency}
+
+  FIXME
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Easy to Use}
+
+  FIXME
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Many Tools}
+
+  FIXME
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{C++}
+
+  FIXME
+
+\end{frame}
+
+
+
+
+%============================================================
+\subsection{Getting Started with \mln}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{What Is Needed}
+
+  \begin{itemize}
+  \item A C++ compiler (\texttt{g++-4} is great and fast).
+  \item A browser (e.g., \texttt{Firefox})
+  \item A pdf reader (e.g., \texttt{kpdf})
+  \item Either \texttt{unzip} or (\texttt{gzip} and \texttt{tar})
+  \item A directory to uncompress the \mln archive.
+  \end{itemize}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Installation}
+
+  \begin{enumerate}
+    \item Get a snapshot of \mln from the web\\
+      {\scriptsize \url{http://olena.lrde.epita.fr/}}
+    \item Uncompress the archive.
+    \item Have a look. % FIXME
+  \end{enumerate}
+
+  For instance:
+
+{\tiny
+\begin{verbatim}
+tegucigalpa% cd
+tegucigalpa% mkdir milena
+tegucigalpa% cd milena
+tegucigalpa% mv /tmp/milena-1.0-alpha.tar.gz .
+tegucigalpa% tar zxvf *
+tegucigalpa% ls doc
+tegucigalpa% ls mln
+\end{verbatim}
+}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{The Main Directories}
+
+  \begin{center}
+    \begin{tabular}{ll}
+      \texttt{doc}  & some documentation materials \\
+      \texttt{img}  & few tiny images to play with \\
+      \texttt{demo} & several examples of what can be done with \mln \\
+      \texttt{mln}  & the library \\
+    \end{tabular}
+  \end{center}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{\mln Documentation}
+
+FIXME
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{\mln Brief Overview of the Library Contents}
+
+  In \texttt{mln}:
+\smallskip
+
+{\scriptsize
+\hspace*{-5mm}
+    \begin{tabular}{|ll|ll|}
+      \hline
+\texttt{accu} & accumulator objects &
+\texttt{arith} & arithmetical operators \\
+\texttt{border} & routines about virtual border &
+\texttt{canvas} & canvases \\
+\texttt{convert} & conversions routines &
+\texttt{core} & the library core \\
+\texttt{debug} & debugging tools &
+\texttt{display} & display tools \\
+\texttt{draw} & drawing routines &
+\texttt{estim} & estimation operators \\
+\texttt{fun} & functions &
+\texttt{geom} & geometrical routines \\
+\texttt{histo} & histogram-related tools &
+\texttt{io} & input/output routines \\
+\texttt{labeling} & labeling algorithms &
+\texttt{level} & point-wise operators on levels \\
+\texttt{linear} & linear operators &
+\texttt{literal} & definitions of literals \\
+\texttt{logical} & logical operators &
+\texttt{make} & routines to make objects \\
+\texttt{math} & mathematical functions &
+\texttt{metal} & static hard-core (metallic) tools \\
+\texttt{morpho} & mathematical morphology &
+\texttt{norm} & norms and related distances \\
+\texttt{pw} & tools to point-wise expressions  &
+\texttt{set} & mathematical set routines \\
+\texttt{tag} & some tags &
+\texttt{test} & testing routines \\
+\texttt{trace} & tracing helpers &
+\texttt{trait} & definitions of traits \\
+\texttt{util} & miscellaneous utilities &
+\texttt{value} & types of values \\
+\texttt{win} & windows & & \\
+      \hline
+    \end{tabular}
+} % scriptsize
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Illustration}
+
+
+\begin{minipage}{0.5\linewidth}
+{\it Algorithm:}\\
+\smallskip
+{\tiny
+$\forall p \in \mathcal{D}(f), \;\; \mathit{oper}(f(p), \, c)$
+}
+
+\bigskip\medskip
+
+{\it Olena in 2007:}
+\smallskip
+\begin{lstlisting}[basicstyle={\tiny\sffamily}]
+template <typename O, typename I, typename T>
+void op(Image<I>& f, T c)
+{
+  O oper;
+  oln_piter(I) p(f.domain());
+  for_all(p)
+    oper(f(p), c);
+}
+
+\end{lstlisting}
+
+\end{minipage}
+  %
+  \hspace*{2mm}
+  % 
+\begin{minipage}{.45\linewidth}
+
+{\it Olena in 2000:}
+\smallskip
+\begin{lstlisting}[basicstyle={\tiny\sffamily}]
+template< typename O,
+          template< class U > class get_A = get_value,
+          typename P = Pred_true >
+struct op
+{
+  template< typename I > static
+  void on( I& f,
+           const get_A< I::value_type >::output_type& c,
+           P pred = P() )
+    {
+      O oper;
+      get_A< I::value_type > access;
+      I::iterator_type  iter( f );
+      for ( iter.first(); ! iter.isDone(); iter.next() )
+          if ( pred( access( iter() ) ) )
+            oper( access( iter() ), c );
+    }
+};
+\end{lstlisting}
+  
+\end{minipage}
+
+\end{frame}
+
+
+
+%############################################################
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% eval: (ispell-change-dictionary "american")
+%%% TeX-master: t
+
+% LocalWords: IP interoperability morphers Milena

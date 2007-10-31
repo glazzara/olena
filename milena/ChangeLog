@@ -1,3 +1,11 @@
+2007-10-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Start a tutorial.
+
+	* doc/tutorial: New directory.
+	* doc/tutorial/slides.tex: New.
+	* mln/value/internal/value_like.hh: Fix typos.
+
 2007-10-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Refactor the L2-norm, and test it.

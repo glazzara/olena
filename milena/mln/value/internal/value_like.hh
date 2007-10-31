@@ -71,13 +71,13 @@ namespace mln
 	/// Interoperation associated type.
 	typedef N interop;
 
-	/// Explicit convertion towards equivalent type.
+	/// Explicit conversion towards equivalent type.
 	V to_equiv() const;
 
-	/// Explicit convertion towards encoding type.
+	/// Explicit conversion towards encoding type.
 	const C& to_enc() const;
 
-	/// Explicit convertion towards interoperation type.
+	/// Explicit conversion towards interoperation type.
 	N to_interop() const;
 
 
