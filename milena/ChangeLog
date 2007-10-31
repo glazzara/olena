@@ -1,3 +1,21 @@
+2007-10-31  Roland Levillain  <roland@lrde.epita.fr>
+
+	Refactor the L-infinity-norm, and test it.
+
+	* mln/norm/infty.hh: Rename as...
+	* mln/norm/linfty.hh: ...this.
+	Use type `mln_value_sum(C)' instead of `float' to handle
+	L-infinity-norm values.
+	(mln::norm::impl::linfty_, mln::norm::impl::linfty_distance_): New.
+	Use to factor the implementations of...
+	(mln::norm::linfty, mln::norm::linfty_distance): ...these
+	functions.
+	(linfty_distance(const metal::vec<n,C>&, const metal::vec<n,C>&)):
+	New function.
+	* tests/linfty.cc: New test.
+	* tests/Makefile.am (check_PROGRAMS): Add linfty.
+	(linfty_SOURCES): New.
+
 2007-10-31  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add functon which display a binary image from a FLLT branch.
