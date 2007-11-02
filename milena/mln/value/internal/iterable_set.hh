@@ -97,7 +97,6 @@ namespace mln
       {
 	mln_precondition(i < nvalues());
 	return mln::value::internal::convert_<T>::value_at_index(i);
-	// FIXME: Was: mln_min(T) + i;
       }
 
       template <typename T, typename E>
@@ -105,14 +104,14 @@ namespace mln
       iterable_set<T,E>::index_of(const T& v) const
       {
 	return mln::value::internal::convert_<T>::index_of_value(v);
-	// FIXME: Was: v - mln_min(T);
       }
 
       template <typename T, typename E>
       std::size_t
       iterable_set<T,E>::nvalues() const
       {
-	return mln_card_(T);
+	typedef mln_trait_value_card(T) card_;
+	return card_::value;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

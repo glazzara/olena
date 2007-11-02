@@ -207,7 +207,7 @@ namespace mln
 
 
 
-// when rectangle2d is involved, one surely also wants:
+// When rectangle2d is involved, one surely also wants:
 # include <mln/win/hline2d.hh>
 # include <mln/win/vline2d.hh>
 # include <mln/win/diag2d.hh>

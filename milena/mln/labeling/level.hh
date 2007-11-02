@@ -38,6 +38,8 @@
 # include <mln/labeling/base.hh>
 # include <mln/level/fill.hh>
 # include <mln/border/resize.hh>
+# include <mln/border/fill.hh>
+# include <mln/value/other.hh>
 
 
 

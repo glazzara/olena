@@ -1,3 +1,16 @@
+2007-11-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix labeling fast version.
+
+	* doc/tutorial/slides.tex: Augment.
+	* mln/value/other.hh: New.
+	* mln/value/internal/iterable_set.hh (nvalues): Update;
+	replace mln_card_ by mln_trait_value_card.
+	* mln/win/rectangle2d.hh,
+	* mln/win/octagon2d.hh: Typo in doc.
+	* mln/canvas/labeling.hh,
+	* mln/labeling/level.hh: Fix fast version.
+
 2007-10-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move norm-related tests to their own directory.

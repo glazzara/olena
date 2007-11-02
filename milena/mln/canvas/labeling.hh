@@ -181,12 +181,14 @@ namespace mln
 	  initialize(parent, f.input);
 	  f.nlabels = 0;
 	  f.init();
+	  // make_set for all points:
+	  for (unsigned p = 0; p < parent.ncells(); ++p)
+	    parent[p] = p;
 	}
 
 	// first pass
 	{
 	  mln_bkd_pixter(const I) p(f.input);
-	  //	mln_nixter(const I, N) n(p, f.nbh);
 
 	  typedef window<mln_dpoint(I)> W;
 	  W win = mln::convert::to_upper_window(f.nbh);
@@ -194,7 +196,7 @@ namespace mln
 	  
 	  for_all(p) if (f.handles(p))
 	    {
-	      make_set(p);
+	      f.init_attr(p);
 	      for_all(n)
 		if (f.equiv(n, p))
 		  do_union(n, p);
@@ -227,12 +229,6 @@ namespace mln
 	}
 	
       } // end of run()
-      
-      void make_set(unsigned p)
-      {
-	parent[p] = p;
-	f.init_attr(p);
-      }
       
       bool is_root(unsigned p) const
       {
