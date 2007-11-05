@@ -1,5 +1,12 @@
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add box_bounds_piter_ to iterate on the bounds of a box2d.
+
+	* mln/core/box_piter.hh: (box_bounds_piter_) New, iterator to iterate
+          on the bounds of a box2d.
+
+2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add more tests for FLLT.
 
 	* sandbox/garrigues/test_fllt6.cc: New,
