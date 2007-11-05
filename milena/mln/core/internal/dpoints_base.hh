@@ -35,7 +35,7 @@
 
 # include <mln/core/internal/set_of.hh>
 # include <mln/fun/i2v/all_to.hh>
-# include <mln/norm/infty.hh>
+# include <mln/norm/linfty.hh>
 
 
 namespace mln
@@ -120,7 +120,7 @@ namespace mln
       const unsigned n = ndpoints();
       for (unsigned i = 0; i < n; ++i)
 	{
-	  unsigned dd = norm::infty(dp(i).to_vec());
+	  unsigned dd = norm::linfty(dp(i).to_vec());
 	  if (dd > d)
 	    d = dd;
 	}

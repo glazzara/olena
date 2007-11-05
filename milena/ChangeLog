@@ -1,3 +1,10 @@
+2007-11-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix deprecated named of mln::norm::infty.
+
+	* mln/core/internal/dpoints_base.hh,
+	* mln/norm/all.hh: Fix.
+
 2007-11-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix labeling fast version.

@@ -42,7 +42,7 @@ namespace mln
 
 }
 
-# include <mln/norm/infty.hh>
+# include <mln/norm/linfty.hh>
 # include <mln/norm/l1.hh>
 # include <mln/norm/l2.hh>
 
