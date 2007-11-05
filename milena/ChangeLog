@@ -1,5 +1,17 @@
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add more tests for FLLT.
+
+	* sandbox/garrigues/test_fllt6.cc: New,
+	* sandbox/garrigues/test_fllt7.cc: New,
+	* sandbox/garrigues/test_fllt8.cc: New,
+	* sandbox/garrigues/test_fllt9.cc: New,
+	* sandbox/garrigues/test_fllt_lena.cc: New,
+	* sandbox/garrigues/test_fllt_lena_tiles.cc: New, test FLLT with
+          differents 2d images.
+
+2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix compilation error in core/concept/box.hh.
 
 	* mln/core/concept/box.hh: Add parenthesis to remove an ambiguity at
