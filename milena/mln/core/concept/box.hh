@@ -191,7 +191,7 @@ namespace mln
     // FIXME: Same grid!
     const Bl& lhs = exact(lhs_);
     const Br& rhs = exact(rhs_);
-    return lhs <= rhs && ! lhs == rhs;
+    return lhs <= rhs && ! (lhs == rhs);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

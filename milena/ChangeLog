@@ -1,3 +1,10 @@
+2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fix compilation error in core/concept/box.hh.
+
+	* mln/core/concept/box.hh: Add parenthesis to remove an ambiguity at
+          the operator !.
+
 2007-11-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add the gimp plugin.
