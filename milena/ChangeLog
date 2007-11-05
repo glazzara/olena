@@ -1,3 +1,26 @@
+2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Choice a good root of the merged tree in FLLT.
+
+	* sandbox/garrigues/fllt2.hh: (merge_trees) Choose a good root between
+          the upper tree's one and the lower tree's one in order to keep the
+          good values of the input image.
+	  (fllt) add a second call to merge_trees to test the contrast
+	  invariant of the algorithm. FIXME : In some test, we get a segv when
+	  calling merge_trees swapping the upper_tree and lower_tree
+	  arguments. Add some debug too.
+
+	Fix a bug in add_child.
+
+	* mln/util/tree.hh: When we delete the node from the children of
+	its parent, we're searching (node), not (this).
+
+	Update include of test_fllt4
+
+	* sandbox/garrigues/test_fllt4.cc,
+	* sandbox/garrigues/test_fllt5.cc,
+	* sandbox/garrigues/test_fllt_lena_tiles.cc: Update.
+
 2007-11-05  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add method delete_node into tree.

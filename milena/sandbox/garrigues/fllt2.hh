@@ -262,9 +262,12 @@ namespace mln
 	current_region->elt().value = g;
 	for_all(p)
 	  {
-	    current_region->elt().points.insert(p);
+
 	    if (regions(p) == 0)
+	    {
+	      current_region->elt().points.insert(p);
 	      regions(p) = current_region;
+	    }
 	    else
 	    {
 	      if (regions(p)->parent() == 0)
@@ -664,14 +667,23 @@ namespace mln
 	  }
       }
 
+      fllt_tree(P, V)* main_tree = &lower;
+      fllt_tree(P, V)* other_tree = &upper;
+
+      if (lower.root()->elt().points.npoints() >= ima.domain().npoints())
+      {
+	main_tree = &upper;
+	other_tree = &lower;
+      }
 
       typename fllt_node(P, V)::children_t::iterator it;
-      for (it = upper.root()->children().begin();
-      	   it != upper.root()->children().end(); )
+      for (it = other_tree->root()->children().begin();
+      	   it != other_tree->root()->children().end(); )
       {
-      	lower.root()->add_child(*it);
+      	main_tree->root()->add_child(*it);
       }
-      mln_assertion(lower.check_consistency());
+      mln_assertion(main_tree->check_consistency());
+      return *main_tree;
     }
 
 
@@ -764,19 +776,19 @@ namespace mln
       draw_tree(ima, upper_tree);
 
       std::cout << "3/ Merge the two trees." << std::endl;
+
+      // FIXME : the algorithm is contrast invariant.
+      //         -> the both calls have to give the same result
+      //         -> check it.
+      // FIXME : call merge_tree one time will be enough.
       fllt_tree(P, V) result_tree = merge_trees(lower_tree, upper_tree, low_reg, upp_reg, ima);
+      fllt_tree(P, V) result_tree = merge_trees(upper_tree, lower_tree, upp_reg, low_reg, ima);
 
 
       std::cout << "4/ Generate outputs." << std::endl;
 
       image2d<value::int_u8> output (ima.domain ());
-      util::tree_to_image (lower_tree, output);
-
-//             if (output != ima)
-//             {
-//       	std::cerr << "BUG!!!" << std::endl;
-//       	abort();
-//             }
+      util::tree_to_image (result_tree, output);
 
 
       //       io::pgm::save(output, "out_final.pgm");
@@ -785,7 +797,17 @@ namespace mln
 
 
       //      util::display_tree(ima, lower_tree);
-      draw_tree(ima, lower_tree);
+      draw_tree(ima, result_tree);
+
+      debug::println(ima);
+      debug::println(output);
+
+            if (output != ima)
+            {
+      	std::cerr << "BUG!!!" << std::endl;
+      	abort();
+            }
+
       //       image2d<value::int_u8> viz(ima.domain());
       //       image2d<value::int_u8> viz2(ima.domain());
 

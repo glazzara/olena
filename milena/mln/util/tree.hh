@@ -29,6 +29,7 @@
 # define MLN_UTIL_TREE_HH
 
 # include <vector>
+# include <algorithm>
 # include <iostream>
 # include <algorithm>
 # include <mln/core/contract.hh>
@@ -245,11 +246,11 @@ namespace mln
 	{
 	  for (typename std::vector<util::node<T>* >::iterator it = node->parent()->children().begin();
 	       it != node->parent()->children().end(); ++it)
-	    if ((*it) == this)
-	      {
-		node->parent()->children().erase(it);
-		break;
-	      }
+	    if ((*it) == node)
+	    {
+	      node->parent()->children().erase(it);
+	      break;
+	    }
 	}
       node->parent_ = this;
       this->children().push_back(node);
@@ -348,13 +349,13 @@ namespace mln
     {
       for (typename std::vector<node<T>* >::iterator it = this->child_.begin();
 	   it != this->child_.end(); ++it)
-	{
-	  if ((**it).parent() != this)
-	    return false;
+      {
+	if ((**it).parent() != this)
+	  return false;
 
-	  if (!((**it).check_consistency()))
-	    return false;
-	}
+	if (!((**it).check_consistency()))
+	  return false;
+      }
       return true;
     }
 
