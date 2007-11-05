@@ -1,0 +1,7 @@
+autoscan-2.61: warning: missing AC_CHECK_HEADERS([libintl.h]) wanted by: 
+	src/plugin-intl.h:34
+autoscan-2.61: warning: missing AC_C_CONST wanted by: 
+	src/main.cc:49
+	src/main.cc:51
+	src/main.cc:92
+	src/main.cc:94
