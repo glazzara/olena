@@ -1,5 +1,13 @@
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix an bug in make::image2d.
+
+	* mln/make/image2d.hh: (for (unsigned row = 0; row <= R; ++row))
+          replaced by...
+	  (for (unsigned row = 0; row < R; ++row)) ...this.
+
+2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add box_bounds_piter_ to iterate on the bounds of a box2d.
 
 	* mln/core/box_piter.hh: (box_bounds_piter_) New, iterator to iterate

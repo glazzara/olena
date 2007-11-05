@@ -59,8 +59,8 @@ namespace mln
     image2d(V (&values)[R][C])
     {
       mln::image2d<V> tmp(R, C);
-      for (unsigned row = 0; row <= R; ++row)
-	for (unsigned col = 0; col <= C; ++col)
+      for (unsigned row = 0; row < R; ++row)
+	for (unsigned col = 0; col < C; ++col)
 	    tmp(make::point2d(row, col)) = values[row][col];
       return tmp;
     }
