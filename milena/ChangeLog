@@ -1,5 +1,12 @@
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Start a second version of merging trees in FLLT.
+
+	* sandbox/garrigues/fllt2.hh: New, looks like fllt.hh but differs in
+          merge trees. We keep the old file fllt.hh to avoid regression.
+
+2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix an bug in make::image2d.
 
 	* mln/make/image2d.hh: (for (unsigned row = 0; row <= R; ++row))
