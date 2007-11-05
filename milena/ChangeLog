@@ -1,3 +1,12 @@
+2007-11-05  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add method delete_node into tree.
+
+	* mln/util/tree.hh: Add method which delete a node in a tree
+	and add his child into the parent.
+
+	* tests/tree_delete_node.cc: New test for it.
+
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Remove dead code, Update the tests to use fllt2.hh.

@@ -30,6 +30,7 @@
 
 # include <vector>
 # include <iostream>
+# include <algorithm>
 # include <mln/core/contract.hh>
 
 /*!
@@ -80,8 +81,8 @@ namespace mln
       /// \}
 
       void set_parent(node<T>* parent);
-      void print_rec(int n) const;
-      void print() const;
+      node<T>* delete_node();
+      void print(int level);
       bool check_consistency();
       int  search_rec(node<T>** res, T& elt);
       node<T>* search(T& elt);
@@ -240,10 +241,58 @@ namespace mln
     node<T>*
     node<T>::add_child(node<T>* node)
     {
+      if (node->parent_)
+	{
+	  for (typename std::vector<util::node<T>* >::iterator it = node->parent()->children().begin();
+	       it != node->parent()->children().end(); ++it)
+	    if ((*it) == this)
+	      {
+		node->parent()->children().erase(it);
+		break;
+	      }
+	}
       node->parent_ = this;
       this->children().push_back(node);
       return node;
     }
+
+    template <typename T>
+    node<T>*
+    node<T>::delete_node()
+    {
+      mln_assertion(parent_ != 0);
+      node<T>* res = parent_;
+
+      typename std::vector<node<T>* >::iterator it = parent_->children().begin();
+      for (; it < parent_->children().end(); ++it)
+	if ((*it) == this)
+	  {
+	    parent_->children().erase(it);
+	    break;
+	  }
+
+      for (typename std::vector<node<T>* >::iterator it = this->child_.begin();
+	   it != this->child_.end(); ++it)
+	parent_->add_child(*it);
+      return (res);
+    }
+
+    template <typename T>
+    void
+    node<T>::print(int level)
+    {
+      std::cout << level << std::endl;
+
+      std::cout << " elt " << this->elt() << std::endl;
+
+
+      for (typename std::vector<node<T>* >::iterator it = this->child_.begin();
+	   it != this->child_.end(); ++it)
+	{
+	  (*it)->print(level + 1);
+	}
+    }
+
 
     template <typename T>
     void
