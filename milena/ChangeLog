@@ -1,5 +1,15 @@
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Remove dead code, Update the tests to use fllt2.hh.
+	* mln/util/branch_iter.hh: Remove dead code.
+	* sandbox/garrigues/test_fllt.cc,
+	* sandbox/garrigues/test_fllt2.cc,
+	* sandbox/garrigues/test_fllt3.cc,
+	* sandbox/garrigues/test_fllt_tiny.cc: likewise, Update include to
+          test fllt2.hh.
+
+2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Start a second version of merging trees in FLLT.
 
 	* sandbox/garrigues/fllt2.hh: New, looks like fllt.hh but differs in

@@ -42,6 +42,12 @@ namespace mln
 
   namespace util
   {
+
+    /*! \brief Basic 2D image class.
+     *
+     * The parameter \c T is the type of node's data. branch_iter is used to pre-order walk a branch.
+
+     */
     template <typename T>
     class branch_iter
     {
@@ -67,6 +73,7 @@ namespace mln
       /// Give how deep is the iterator in the branch.
       unsigned deepness() const;
     private:
+      /// The branch to iter.
       util::branch<T> branch_;
 
       typedef typename std::vector< util::node<T>* >::iterator child_iter;
@@ -75,8 +82,6 @@ namespace mln
       std::stack< iter_pair > s_;
 
       util::node<T>* n_;
-      unsigned deepness_;
-      unsigned futur_deepness_;
     };
 
 
@@ -110,8 +115,6 @@ namespace mln
     branch_iter<T>::deepness() const
     {
       mln_assertion(is_valid());
-      //return s_.size();
-
       unsigned i = 0;
       node<T>* p = n_;
       while (p)
@@ -120,7 +123,6 @@ namespace mln
 	i++;
       }
       return i;
-      //      return deepness_;
     }
 
     template <typename T>
@@ -142,13 +144,9 @@ namespace mln
     void
     branch_iter<T>::start()
     {
-      deepness_ = 0;
       s_.push(iter_pair(branch_.apex().children().begin(),
 			branch_.apex().children().end()));
       n_ = &branch_.apex();
-
-      //n_ = *(s_.top().first);
-      //s_.top().first++;
     }
 
     template <typename T>
@@ -160,26 +158,18 @@ namespace mln
       else
       {
 	if (s_.top().first == s_.top().second)
-	  //if (*(s_.top().first) == 0)
 	{
-	  deepness_ = futur_deepness_;
-	  //deepness_--;
-	  futur_deepness_ = deepness_;
-// 	  std::cout << "dec :" << deepness_ << std::endl;
 	  s_.pop();
 	  next();
 	  return;
 	}
 	else
 	{
-	  deepness_ = futur_deepness_;
-// 	  std::cout << "st :" << deepness_ << std::endl;
 	  n_ = *(s_.top().first);
 	  s_.top().first++;
 
 	  if (!n_)
 	  {
-// 	    std::cout << "browsing warning : nul pointer" << std::endl;
 	    next();
 	    return;
 	  }
@@ -187,7 +177,6 @@ namespace mln
 	  mln_assertion(n_);
 	  if (n_->children().size() > 0)
 	  {
-	    futur_deepness_ = deepness_ + 1;
 	    s_.push(iter_pair(n_->children().begin(),
 			      n_->children().end()));
 	  }
