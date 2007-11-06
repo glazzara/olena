@@ -252,7 +252,7 @@ in head/foot}%
 
   \begin{block}{No!}
     \begin{itemize}
-    \item \mln is rather different that available libraries.
+    \item \mln is rather different than available libraries.
     \item A lot of convenient data structures that \emph{really} helps
       you in developing IP solutions.
     \end{itemize}
@@ -310,7 +310,7 @@ $\forall p \in \mathcal{D}(f), \;\; f(p) = \mathit{h}(f(p))$
 \smallskip
 \begin{lstlisting}[basicstyle={\tiny\sffamily}]
 template <typename I, typename H>
-void oper(Image<I>& f_, const Function_v2v<H>& h_)
+void transform_inplace(Image<I>& f_, const Function_v2v<H>& h_)
 {
   I& f = exact(f);
   const H& h = exact(h_);
@@ -333,7 +333,7 @@ void oper(Image<I>& f_, const Function_v2v<H>& h_)
 template< typename H,
           template< class U > class get_A = get_value,
           typename P = Pred_true >
-struct oper
+struct transform_inplace
 {
   template< typename I > static
   void on( I& f,
@@ -389,7 +389,7 @@ struct oper
   \begin{itemize}
   \item Generic...
   \item Efficient so that one can process large images.
-  \item Quite as easy to use than a C or Java library.
+  \item Quite as easy to use as a C or Java library.
   \item Many tools to help writing readable algorithms in a concise way.
   \end{itemize}
 
@@ -435,7 +435,7 @@ struct oper
   \begin{block}{\mln is easy to use}
     \begin{itemize}
     \item Just slightly more difficult to use than a library in C or Java.
-    \item The user mainly write procedure calls.
+    \item The user mainly write routine calls.
     \end{itemize}
   \end{block}
 
@@ -703,7 +703,7 @@ tegucigalpa% ls mln
     an object.
 
     \begin{itemize}
-    \item it allows for initializing the state of this object
+    \item it allows initializing the state of this object
     \end{itemize}
   \end{block}
 
@@ -767,17 +767,20 @@ the row of this particular point.
 The previous example is just the \cpp equivalent of this C code:
 
 \begin{lstlisting}
+#include <stdio.h>
+
 struct point2d {
   int row, col;
 };
 
-int get_row(point2d p) {
+int get_row(struct point2d p) {
   return p.row;
 }
 
 int main() {
-  point2d p;
-  printf("%d", get_row(p));
+  struct point2d p;
+  printf("%d\n", get_row(p));
+  return 0;
 }
 \end{lstlisting}
 
@@ -793,21 +796,22 @@ modifying an object is performed through method calls:
 
 \begin{lstlisting}
 p.row() = 7; // method call
-std::cout << p.row() << std::endl; // now give 7
+std::cout << p.row() << std::endl; // now gives 7
 \end{lstlisting} % >>
 
 \smallskip
 
 the C equivalent of this method would be:
 \begin{lstlisting}
-void set_row(point2d* p, int r) {
+void set_row(struct point2d* p, int r) {
   assert(p != 0);
   p->row = r;
 }
 
 int main() {
-  point2d p;
+  struct point2d p;
   set_row(&p, 7);
+  return 0;
 }
 \end{lstlisting}
 
@@ -820,7 +824,7 @@ note that \code{p.row() = 7} looks more natural than \code{set\_row(\&p, 7)}.
 \begin{frame}[fragile]
   \frametitle{Modifying the State of an Object (2/2)}
 
-  accessing and modifying through method calls allow for some controls:
+  accessing and modifying through method calls allow some control:
   \begin{itemize}
   \item one cannot do everything with an object
   \item especially putting it in an invalid state
@@ -1111,7 +1115,8 @@ Now considering the entire program, with:
 int main() {
   rabbit r;
   feed(r); // first call
-  sheep s; feed(s); // another call
+  sheep s;
+  feed(s); // another call
 }
 \end{lstlisting}
 
@@ -1255,7 +1260,7 @@ public:
 
 Sample use:
 \begin{lstlisting}
-std:::cout << point2d::dim << std::endl; // gives 2
+std::cout << point2d::dim << std::endl; // gives 2
 point2d::coord c;  // \code{c} is an \code{int}
 \end{lstlisting}
 
@@ -1370,7 +1375,7 @@ This code is quite poor:
 \begin{itemize}
 \item it is redundant
   \begin{itemize}
-  \item tedious to write (copy-paste, many lines at end)
+  \item tedious to write (copy-paste, many lines at the end)
   \item thus error-prone
   \end{itemize}
   \smallskip
@@ -1385,7 +1390,7 @@ This code is quite poor:
   \end{itemize}
 \end{itemize}
 
-Though overload is great; think of \code{operator*}...
+Nevertheless overloading is great; think of \code{operator*}...
 
 \end{frame}
 
@@ -1404,14 +1409,14 @@ So this procedure definition looks like
 \begin{lstlisting}
 // ...
 T twice(T t) {
-  return t;
+  return 2 * t;
 }
 \end{lstlisting}
 except that we have to say first what \code{T} is:
 \begin{lstlisting}
 template <typename T>
 T twice(T t) {
-  return t;
+  return 2 * t;
 }
 \end{lstlisting}
 
@@ -1456,10 +1461,10 @@ In \lstinline@template <typename T> T twice(T t)@
 With
 \begin{lstlisting}
 int main() {
-  int i = 1, j;
-  j = twice(i); // Calls twice with \code{T} being \kw{int}
-  float pi = 3.14, two_pi;
-  two_pi = twice(pi); // Calls another ``version'' of twice with \code{T} being \kw{float}
+  int i = 1;
+  int j = twice(i); // Calls twice with \code{T} being \kw{int}
+  float pi = 3.14;
+  float two_pis = twice(pi); // Calls another ``version'' of twice with \code{T} being \kw{float}
 }
 \end{lstlisting}
 
@@ -1516,7 +1521,7 @@ $$
 f_a: \left\{
   \begin{array}{lll}
     \mathbb{R} &\rightarrow & \mathbb{R} \\
-    x & \leadsto & \cos(a x)
+    x & \mapsto & \cos(a x)
   \end{array}
 \right.
 $$
@@ -1620,7 +1625,7 @@ For instance
 point2d p(4, -1);
 dpoint2d dp(1, 2); // \code{dpoint} is ``delta-point'' for short
 std::cout << (p + dp) << std::endl; // gives (5, 1)
-\end{lstlisting}
+\end{lstlisting}% Please Emacs.  >>
 
 \end{frame}
 
@@ -1632,14 +1637,16 @@ std::cout << (p + dp) << std::endl; // gives (5, 1)
 Our objectives:
 
 \begin{itemize}
-\item write the \code{operator+} (resp. '-') routine corresponding to\\
+\item write the \code{operator+} (resp. '\code{-}') routine corresponding to\\
   \begin{center}
-    ``a \code{point2d} ~+~ a \code{dpoint2d} $~\rightarrow~$ a \code{point2d}''
+    ``a \code{point2d} ~+~ a \code{dpoint2d} $~\mapsto~$ a
+    \code{point2d}''
   \end{center}
   % 
 \item understand that we actually want:\\
   \begin{center}
-    ``any \code{point P} ~+~ a compatible \code{dpoint D} $~\rightarrow~$ a \code{point P}''
+    ``any \code{point P} ~+~ a compatible \code{dpoint D} $~\mapsto~$
+    a \code{point P}''
   \end{center}
   \scriptsize{for instance with \code{P} and \code{D} being
     respectively \code{point3d} and \code{dpoint3d}}
@@ -1958,12 +1965,14 @@ More generally:
 
   \begin{center}
   \begin{tabular}{lp{5mm}l}
-    the class && derives from \\
+    the class && derives from (``is a'') \\
     &&\\
     \lstinline@point2d@ && \lstinline@Point< point2d >@ \\
     \lstinline@point3d@ && \lstinline@Point< point3d >@ \\
     &&\\
     \lstinline@image2d<float>@ && \lstinline@Image< image2d<float> >@ \\
+    \lstinline@image3d<int>@ && \lstinline@Image< image3d<int> >@ \\
+    &&\\
     \lstinline@win::rectangle@ && \lstinline@Window< win::rectangle >@ \\
     &&\\
     \lstinline@box2d@ && \lstinline@Point_Set< box2d >@ \\
@@ -2023,7 +2032,7 @@ We have \code{dpoint2d}
 
 \begin{lstlisting}
 template <typename E>
-class Dpoint<E>
+class Dpoint
 {};
 
 class dpoint2d : public Dpoint< dpoint2d >
@@ -2085,7 +2094,8 @@ D operator+(const Dpoint<D>& dp1_, const Dpoint<D>& dp2_)
 \end{lstlisting}
 
 \begin{block}{Exact}
-  The ``\code{exact}'' routine allows for getting a variable with the exact type of an object.
+  The ``\code{exact}'' routine allows getting a variable with the
+  exact type of an object.
 \end{block}
 
 \end{frame}

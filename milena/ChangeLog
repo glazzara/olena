@@ -1,3 +1,9 @@
+2007-11-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Minor fixes on the First Part of the Milena Tutorial.
+
+	* doc/tutorial/slides.tex: Typos and aesthetic changes..
+
 2007-11-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Desactivate set_of::operator<<.
