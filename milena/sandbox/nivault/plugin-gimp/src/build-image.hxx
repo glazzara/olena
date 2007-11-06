@@ -25,7 +25,6 @@
  * authorization from the Author.
  */
 
-#include <sstream>
 #include "build-image.hh"
 
 typedef mln::image2d<mln::value::rgb8> I; 
@@ -66,45 +65,23 @@ gboolean draw_milena_image(GtkWidget* area,
 			   GdkEventExpose *event,
 			   gpointer data)
 {
-//   GimpDrawable* drawable = (GimpDrawable *)area->window;
-//   GimpPixelRgn region;
-//   std::stringstream ss;
-//   gimp_pixel_rgn_init(&region,
-// 		      drawable,
-// 		      0,
-// 		      0,
-// 		      drawable->width,
-// 		      drawable->height,
-// 		      FALSE,
-// 		      FALSE);  
-//   ss << region.bpp << std::endl;
-//   g_message(ss.str().c_str());
+  GimpDrawable* drawable = gimp_drawable_preview_get_drawable((GimpDrawablePreview *)area);
+  assert(drawable != NULL);
+  GimpPixelRgn region;
+  std::stringstream ss;
+  gimp_pixel_rgn_init(&region,
+		      drawable,
+		      0,
+		      0,
+		      drawable->width,
+		      drawable->height,
+		      FALSE,
+		      FALSE);  
 
-
-//   gimp_pixel_rgn_set_rect(&region,
-// 			  (const guchar *) ima.buffer(),
-// 			  0,
-// 			  0,
-// 			  drawable->width,
-// 			  drawable->height / 4);
-
-
-  mln_piter_(I) p(ima.domain());
-  assert(area->window);
-  GdkGC *cc = gdk_gc_new(area->window);
-  GdkColor col;
-
-  for_all(p)
-  {
-    mln::value::rgb8 rgb = ima(p);
-    col.red = 256 * rgb.red();
-    col.green = 256 * rgb.green();
-    col.blue = 256 * rgb.blue();
-    gdk_gc_set_rgb_fg_color(cc, &col);
-
-    gdk_draw_point(area->window,
-		   cc,
-		   p[1], p[0]);
-  }
-  g_object_unref (cc);
+  gimp_pixel_rgn_set_rect(&region,
+			  (const guchar *) ima.buffer(),
+			  0,
+			  0,
+			  drawable->width,
+			  drawable->height);
 }

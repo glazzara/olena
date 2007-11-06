@@ -54,10 +54,8 @@ dialog (gint32              image_ID,
   GtkWidget *main_vbox;
   GtkWidget *image_layout;
   GtkWidget *frame; 
-//   GtkWidget *scroll; 
-  
-  GtkAdjustment *hadjust = NULL;
-  GtkAdjustment *vadjust = NULL;
+//   GtkAdjustment *hadjust = NULL;
+//   GtkAdjustment *vadjust = NULL;
   GimpRGB color;
 
   gimp_ui_init (PLUGIN_NAME, TRUE);
@@ -78,27 +76,19 @@ dialog (gint32              image_ID,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
   gimp_rgb_set(&color, 0, 0, 0);
-  
-//   scroll = gtk_scrolled_window_new((GtkAdjustment *)hadjust,
-// 				   (GtkAdjustment *)vadjust);
 
-//   gtk_container_set_border_width (GTK_CONTAINER (scroll), 10);
-//   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
-// 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
-//   gtk_widget_show (scroll);
-
-
-  drawing_area = gtk_drawing_area_new();
+  drawing_area = gimp_drawable_preview_new(drawable, NULL);
   gtk_container_add (GTK_CONTAINER (frame), drawing_area);
+
+//** Not declared ?? **//
+//   gimp_scrolled_preview_set_policy((GimpScrolledPreview *)drawing_area,
+// 				   GTK_POLICY_ALWAYS,
+// 				   GTK_POLICY_ALWAYS);
+
   gtk_widget_set_size_request(drawing_area,
-			      mln::geom::ncols(get_ima()),
-			      mln::geom::nrows(get_ima()));
-  g_signal_connect (G_OBJECT (drawing_area),
-		    "expose_event",
-		    G_CALLBACK (draw_milena_image),
-		    G_OBJECT (NULL));
-//   gtk_scrolled_window_add_with_viewport (
-//     GTK_SCROLLED_WINDOW (scroll), drawing_area);
+			      500,
+			      500);
+  draw_milena_image(drawing_area, NULL, 0);
   gtk_widget_show (drawing_area);
 
   gtk_widget_show (main_vbox);

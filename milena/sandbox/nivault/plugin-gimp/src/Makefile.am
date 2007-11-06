@@ -18,7 +18,7 @@ AM_CPPFLAGS = \
 
 INCLUDES =\
 	-I$(top_srcdir)				\
-	-I../../olena/trunk/milena/		\
+	-I../../../../				\
 	@GIMP_CFLAGS@				\
 	-I$(includedir)
 
