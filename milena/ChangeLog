@@ -1,3 +1,11 @@
+2007-11-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add an iterator on branch.
+
+	* mln/util/branch_iter_ind.hh: New, this is a copy of
+	branch_iter, but this one can walk a tree in which we are push_backing
+	elements.
+
 2007-11-06  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add draft for imagegimp.
