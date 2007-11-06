@@ -64,7 +64,7 @@
 # include <mln/set/is_subset_of.hh>
 
 # include <mln/util/tree.hh>
-# include <mln/util/branch_iter.hh>
+# include <mln/util/branch_iter_ind.hh>
 
 # include <mln/labeling/regional_minima.hh>
 # include <mln/labeling/regional_maxima.hh>
@@ -807,11 +807,11 @@ namespace mln
 
       std::cout << "1/ Compute the lower level set." << std::endl;
       lower_tree = compute_level_set<V, lower<V> >(ima, low_reg);
-      //draw_tree(ima, lower_tree);
+      draw_tree(ima, lower_tree);
       std::cout << "2/ Compute the upper level set." << std::endl;
       upper_tree = compute_level_set<V, upper<V> >(ima, upp_reg);
 
-      //draw_tree(ima, upper_tree);
+      draw_tree(ima, upper_tree);
 
       std::cout << "3/ Merge the two trees." << std::endl;
 
@@ -838,7 +838,7 @@ namespace mln
 
 
       //      util::display_tree(ima, lower_tree);
-      //draw_tree(ima, result_tree);
+      draw_tree(ima, result_tree);
 
 //       debug::println(ima);
 //       debug::println(output);
