@@ -1,3 +1,9 @@
+2007-11-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add test for fllt from lena_0_1.
+	* sandbox/garrigues/test_flltb.cc: New test for fllt with
+	smaller domain from lena_0_1.
+
 2007-11-06  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add tests for FLLT.
