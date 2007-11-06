@@ -85,7 +85,7 @@ in head/foot}%
 \lstset{language=[ISO]C++,
   texcl=true,
   columns=fullflexible,
-  basicstyle={\small\sffamily}, % normal footnote small scriptsize tiny
+  basicstyle={\scriptsize\sffamily}, % normal footnote small scriptsize tiny
   commentstyle=\itshape,
   showstringspaces=false,
   numberstyle=\tiny,
@@ -120,8 +120,8 @@ in head/foot}%
 
 
 
-\title[Milena: A Tutorial]
-{Milena: A Tutorial}
+\title[Milena: A Tutorial---Part 1]
+{Milena: A Tutorial---Part 1}
 
 \author[Milena Team]{Milena Team}
 
@@ -146,6 +146,22 @@ in head/foot}%
 
 \newcommand{\fal}{$\bullet$\xspace}
 \definecolor{darkgreen}{rgb}{0.1,0.7,0.1}
+
+
+\newcommand{\cpp}{{C++}\xspace}
+
+\newcommand{\kw}[1]{{\color{blue}{\texttt{#1}}}\xspace}
+\newcommand{\code}[1]{{\scriptsize{\texttt{#1}}}\xspace}
+\newcommand{\var}[1]{\texttt{#1}\xspace}
+
+\newcommand{\struct}{\kw{struct}}
+
+\newcommand{\pointIId}{\code{point2d}}
+
+
+\newcommand{\oln}{\textsc{Olena}\xspace}
+\newcommand{\mln}{\textsc{Milena}\xspace}
+
 
 %###########################################################
 % end of NEW!
@@ -181,17 +197,9 @@ in head/foot}%
 
 
 
-% macros
-
-\newcommand{\oln}{\textsc{Olena}\xspace}
-\newcommand{\mln}{\textsc{Milena}\xspace}
-
-% end of macros
-
-
 
 %############################################################
-\section{Part 1: Introduction}
+\section{About \oln and \mln}
 
 
 
@@ -268,13 +276,13 @@ in head/foot}%
 
   \medskip
 
-  \textit{During 3 years we developed a prototype to experiment with
+  \textit{During those 3 years we developed a prototype to experiment with
     genericity and to try to meet our objectives.}
 
   \medskip
 
   \begin{itemize}
-  \item From June 2007 up to new: Re-writing of the library with a
+  \item From June 2007 up to now: Re-writing of the library with a
     programming paradigm that rocks.
   \end{itemize}
 
@@ -284,12 +292,99 @@ in head/foot}%
 
 
 
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Illustration of the Evolution}
+
+
+\begin{minipage}{0.5\linewidth}
+{\it Algorithm:}\\
+\smallskip
+{\tiny
+$\forall p \in \mathcal{D}(f), \;\; f(p) = \mathit{h}(f(p))$
+}
+
+\bigskip\medskip
+
+{\it In 2007:}
+\smallskip
+\begin{lstlisting}[basicstyle={\tiny\sffamily}]
+template <typename I, typename H>
+void oper(Image<I>& f_, const Function_v2v<H>& h_)
+{
+  I& f = exact(f);
+  const H& h = exact(h_);
+  mln_piter(I) p(f.domain());
+  for_all(p)
+    f(p) = h(f(p));
+}
+
+\end{lstlisting}
+
+\end{minipage}
+  %
+  \hspace*{2mm}
+  % 
+\begin{minipage}{.45\linewidth}
+
+{\it The same code in 2000:}
+\smallskip
+\begin{lstlisting}[basicstyle={\tiny\sffamily}]
+template< typename H,
+          template< class U > class get_A = get_value,
+          typename P = Pred_true >
+struct oper
+{
+  template< typename I > static
+  void on( I& f,
+           P pred = P() )
+    {
+      H h;
+      get_A< I::value_type > access;
+      I::iterator_type  iter( f );
+      for ( iter.first(); ! iter.isDone(); iter.next() )
+          if ( pred( access( iter() ) ) )
+            access( iter() ) = h( access( iter() ) );
+    }
+};
+\end{lstlisting}
+  
+\end{minipage}
+
+\end{frame}
+
+
+
 %============================================================
 \subsection{Features of the \mln Library}
 
+
+%........................................................................
+\begin{frame}%[<+->]
+  \frametitle{What's In a Library}
+
+  \begin{itemize}
+  \item algorithms:\\
+    procedures dedicated to image processing and pattern recognition
+    \smallskip
+    % 
+  \item data types for pixel values:\\
+    e.g., gray level types, color types
+    \smallskip
+    % 
+  \item data structures:\\
+    image types or point set types for instance
+    \smallskip
+    % 
+  \item auxiliary tools...
+  \end{itemize}
+
+\end{frame}
+
+
 %........................................................................
 \begin{frame}
-  \frametitle{Feature List}
+  \frametitle{\mln as a Feature List}
 
   \begin{itemize}
   \item Generic...
@@ -432,13 +527,13 @@ tegucigalpa% ls mln
 
 
 
-%........................................................................
-\begin{frame}
-  \frametitle{\mln Documentation}
+% %........................................................................
+% \begin{frame}
+%   \frametitle{\mln Documentation}
 
-FIXME
+% FIXME
 
-\end{frame}
+% \end{frame}
 
 
 
@@ -494,64 +589,1602 @@ FIXME
 
 
 
+
+%........................................................................
+\begin{frame}%[<+->]
+  \frametitle{Why Choosing \mln?}
+
+  \begin{itemize}
+  \item rather different...
+    \smallskip
+    % 
+  \item a strong potential
+    \smallskip
+    % 
+  \item you want to focus on what you do,\\
+    not on implementation details about how to do it
+    \smallskip
+    % 
+  \item you do not have found yet a library to easily process your
+    particular types of data
+  \end{itemize}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}%[<+->]
+  \frametitle{Dev status}
+
+  \begin{itemize}
+  \item alpha
+  \item some cleanings remain to be done
+  \item an intensive test phase is upcoming...
+  \item rough documentation (yet in progress)
+  \end{itemize}
+
+\end{frame}
+
+
+
+%############################################################"
+\section{A Short Tour of \cpp}
+
+%........................................................................
+\begin{frame}
+  \frametitle{The Running Example}
+
+  A class that represents:
+  \begin{itemize}
+  \item a discrete point of the 2D plane
+  \item a node of a square grid
+  \item a point of a ``classical'' 2D image 
+  \item basically a couple of integer coordinates
+  \item namely \pointIId
+  \end{itemize}
+
+\end{frame}
+
+
+%============================================================
+\subsection{Very Basic Notions}
+
+%........................................................................
+\begin{frame}
+  \frametitle{Class v. Object}
+
+  \begin{block}{Class}
+    A class is a type that describes at the same time both data and behavior.
+    \smallskip
+    % 
+
+    \begin{itemize}
+    \item the data are described by attributes\\
+      (equiv.) structure fields of a \struct
+      \smallskip
+      % 
+    \item the behavior is described by methods\\
+      (equiv.) procedures/functions attached to the class
+    \end{itemize}
+
+  \end{block}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Object v. Class}
+
+  \begin{block}{Object}
+    An object is an instance of a class.
+    \smallskip
+    % 
+
+    \begin{itemize}
+    \item the object data are a set of values: the state of the object
+      \smallskip
+      % 
+    \item the object behavior is what happens at run-time when a
+      method is called on that particular object
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Getting an Object}
+
+  \begin{block}{Constructor}
+    A constructor is a special method to instantiate a class / to get
+    an object.
+
+    \begin{itemize}
+    \item it allows for initializing the state of this object
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+
 %........................................................................
 \begin{frame}[fragile]
-  \frametitle{Illustration}
+  \frametitle{Example}
 
+  \begin{itemize}
+  \item \pointIId is a class
+  \item \var{p} is a variable that represents a point object
+  \item this variable designates one particular 2D point\\
+    at a given couple of coordinates: row and column.
+  \end{itemize}
 
-\begin{minipage}{0.5\linewidth}
-{\it Algorithm:}\\
 \smallskip
-{\tiny
-$\forall p \in \mathcal{D}(f), \;\; \mathit{oper}(f(p), \, c)$
+
+\begin{lstlisting}
+point2d p(5,1); // construction of an object
+std::cout << p << std::endl; // print this object on the std output
+\end{lstlisting} % >>
+
+gives: \code{(5,1)}
+
+meaning that \var{p} represents the point of the 2D grid located at
+row 5 and column 1.
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Accessing the State of an Object}
+
+  \begin{itemize}
+  \item data are usually protected / hidden from the user
+  \item reading and modifying them is performed through method calls
+  \end{itemize}
+
+\smallskip
+
+Here is a call to the method  \code{row()} defined in the \pointIId class:
+
+\begin{lstlisting}
+std::cout << p.row() << std::endl; // gives: 5
+\end{lstlisting} % >>
+
+\var{p} is the object targeted by the method call: we want to print
+the row of this particular point.
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Methods are just like C functions!}
+
+The previous example is just the \cpp equivalent of this C code:
+
+\begin{lstlisting}
+struct point2d {
+  int row, col;
+};
+
+int get_row(point2d p) {
+  return p.row;
 }
 
-\bigskip\medskip
-
-{\it Olena in 2007:}
-\smallskip
-\begin{lstlisting}[basicstyle={\tiny\sffamily}]
-template <typename O, typename I, typename T>
-void op(Image<I>& f, T c)
-{
-  O oper;
-  oln_piter(I) p(f.domain());
-  for_all(p)
-    oper(f(p), c);
+int main() {
+  point2d p;
+  printf("%d", get_row(p));
 }
-
 \end{lstlisting}
 
-\end{minipage}
-  %
-  \hspace*{2mm}
-  % 
-\begin{minipage}{.45\linewidth}
+\end{frame}
 
-{\it Olena in 2000:}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Modifying the State of an Object (1/2)}
+
+modifying an object is performed through method calls:
+
+\begin{lstlisting}
+p.row() = 7; // method call
+std::cout << p.row() << std::endl; // now give 7
+\end{lstlisting} % >>
+
 \smallskip
-\begin{lstlisting}[basicstyle={\tiny\sffamily}]
-template< typename O,
-          template< class U > class get_A = get_value,
-          typename P = Pred_true >
-struct op
-{
-  template< typename I > static
-  void on( I& f,
-           const get_A< I::value_type >::output_type& c,
-           P pred = P() )
-    {
-      O oper;
-      get_A< I::value_type > access;
-      I::iterator_type  iter( f );
-      for ( iter.first(); ! iter.isDone(); iter.next() )
-          if ( pred( access( iter() ) ) )
-            oper( access( iter() ), c );
-    }
+
+the C equivalent of this method would be:
+\begin{lstlisting}
+void set_row(point2d* p, int r) {
+  assert(p != 0);
+  p->row = r;
+}
+
+int main() {
+  point2d p;
+  set_row(&p, 7);
+}
+\end{lstlisting}
+
+note that \code{p.row() = 7} looks more natural than \code{set\_row(\&p, 7)}.
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Modifying the State of an Object (2/2)}
+
+  accessing and modifying through method calls allow for some controls:
+  \begin{itemize}
+  \item one cannot do everything with an object
+  \item especially putting it in an invalid state
+  \end{itemize}
+
+  \smallskip
+
+imagine that \var{ima} is a 3$\times$3 image (starting from (0,0))
+
+trying to access the image value at point \var{p}, like with:
+\begin{lstlisting}
+std::cout << ima(p) << std::endl; // remind that p is at a row 7...
+\end{lstlisting} % >>
+will hopefully produce an error at run-time!
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Operators}
+
+  In \cpp some operators can be re-defined to get a high
+  expressiveness in client code.
+
+  \begin{itemize}
+  \item ``\code{ima(p)}'' is a call to the parenthesis operator
+    defined as a method in every image class
+    \begin{itemize}
+    \item that's great, an image looks like a function from points to
+      values
+    \end{itemize}
+    \smallskip
+    % 
+  \item \code{2 * p} calls a multiplication operator defined as a
+    procedure (function):
+    \begin{itemize}
+    \item this way one can easily use arithmetics over points
+    \item the result is a 2D point which coordinates are twice those of \var{p}
+    \end{itemize}
+  \end{itemize}
+
+  Operators are very convenient!
+
+\end{frame}
+
+
+
+%============================================================
+\subsection{References}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Reference v. Pointer}
+
+  A reference looks like a pointer, yet:
+  \begin{itemize}
+  \item without the pointer notations
+    \begin{itemize}
+    \item no need to take the address (with \&) of an object
+    \item no pointer arithmetics
+    \item no $->$ in use
+    \end{itemize}
+  \item it \emph{always} designates the same object
+    \begin{itemize}
+    \item one can reuse a pointer and make it points elsewhere, that's
+      not the case for a reference
+    \item it is like a ``constant pointer''\\
+      ``\code{int*const}'', not ``\code{int*}''
+    \item it has to be initialized
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Example (1/2)}
+
+This C program:
+
+\begin{lstlisting}
+void set_row(point2d* p, int r) {
+  p->row = r;
+}
+// used with:
+point2d p;
+set_row(&p, 7);
+\end{lstlisting}
+
+\smallskip
+
+can be re-written as:
+\begin{lstlisting}
+void set_row(point2d& p, int r) {
+  p.row = r; // no ``$->$'' here
+}
+// used with:
+point2d p;
+set_row(p, 7);
+\end{lstlisting}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Example (1/2)}
+
+and this one:
+\begin{lstlisting}
+int get_row(point2d p) { // copy of a point at procedure call
+  return p.row;
+}
+\end{lstlisting}
+
+\smallskip
+
+is better written as:
+\begin{lstlisting}
+int get_row(const point2d& p) {
+  return p.row;
+}
+// used with:
+point2d p;
+int i = get_row(p);
+\end{lstlisting}
+which avoids the copy of a point at function call.
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{References rock!}
+
+Realize that with:
+\begin{lstlisting}
+class point2d {
+public:
+  int& row() { return row_; }
+  // ...
+private:
+  int row_, col_;
 };
 \end{lstlisting}
+
+one can write:
+\begin{lstlisting}
+point2d p;
+p.row() = 5;
+\end{lstlisting}
+
+so it really performs \code{p.row\_ = 5}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{A few Remarks}
+
+  \begin{itemize}
+  \item the attribute \code{row\_} of the class \code{point2d} is not
+    accessible from the user
+    \begin{itemize}
+    \item thanks to the keyword \kw{private}
+    \item writing \code{p.row\_} outside this class is not allowed (do
+      not compile)
+    \end{itemize}
+    \smallskip
+    % 
+  \item the method \code{row()} is accessible (keyword \kw{public})
+    \begin{itemize}
+    \item in the method body we have some room to add code
+    \item a simple access to data can performs some clever stuff that
+      you do not really have to know (neither want to)!
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+
+
+
+%============================================================
+\subsection{Inheritance}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{The ``Is-A'' Relationship}
+
+  \begin{block}{Inheritance}
+    The inheritance between classes maps the ``is-a'' relationship.
+  \end{block}
+
+For instance, since we can say that a rabbit is an animal:
+\begin{itemize}
+\item it is safe to make the \code{rabbit} class inherits from the
+  \code{animal} one
+\item we also say that:
+  \begin{itemize}
+  \item \code{rabbit} derives from \code{animal}
+  \item \code{animal} is a \emph{base} class for \code{rabbit}
+  \end{itemize}
+\end{itemize}
+
+In \cpp we write:
+\begin{lstlisting}
+class animal { ... };
+class rabbit : public animal { ... };
+\end{lstlisting}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Using the ``Is-A'' Relationship}
+
+  When one wants to have a procedure to feed an animal, one can write:
+
+\begin{lstlisting}
+void feed(animal& a) {
+  ...
+}
+\end{lstlisting}
+
+then the following use is valid 
+\begin{lstlisting}
+int main() {
+  rabbit r;
+  feed(r); // works fine since a rabbit ``is-an'' animal
+  ...
+}
+\end{lstlisting}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{One Object but Several Variables and Types (1/2)}
+
+Considering \emph{only} the \code{feed} routine:
+\begin{lstlisting}
+void feed(animal& a) {
+  ...
+}
+\end{lstlisting}
+
+\smallskip
+
+we can say that:
+\begin{itemize}
+\item the variable \code{a} can represent an object being of any type
+  deriving from \code{animal}
+\item it may be a \code{rabbit}
+  \begin{itemize}
+  \item yet we do not really know!
+  \item it might be a \code{sheep} instead...
+  \end{itemize}
+\end{itemize}
+
+\smallskip
+
+\begin{center}
+  This routine is \emph{general} since it can work on objects of
+  different types.
+\end{center}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{One Object but Several Variables and Types (2/2)}
+
+Now considering the entire program, with:
+\begin{lstlisting}
+int main() {
+  rabbit r;
+  feed(r); // first call
+  sheep s; feed(s); // another call
+}
+\end{lstlisting}
+
+\begin{itemize}
+\item the variable \code{r} represents an object which type is
+  precisely \code{rabbit}
+  \begin{center}
+    we say that it is the \emph{exact} type behind this variable
+  \end{center}
+  %
+\item for the first call to \code{feed}, we know that \code{a} represents a rabbit
+  \begin{center}
+    during this execution, the \emph{exact} type of \code{a} is \code{rabbit}
+  \end{center}
+\end{itemize}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Static type}
+
+  \begin{block}{Static type}
+    \begin{itemize}
+      \item A variable is declared with one type.
+      \item This type can be read in the code; it is known at compile-time.
+      \item For instance, in ``\lstinline@animal& a@'': \code{a} is an animal.
+    \end{itemize}
+    
+    The variable type is said to be the \emph{static} type.
+  \end{block}
   
-\end{minipage}
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Exact type}
+  
+  \begin{block}{Exact type}
+    \begin{itemize}
+    \item A variable represents an object.
+    \item Its static type can be a \textit{base} class (like in ``\lstinline@animal& a@'')
+    \item In that case
+      \begin{itemize}
+      \item at compile-time: there are many possible types of objects represented
+      \item at run-time: there is one object represented so just type.
+      \end{itemize}
+    \end{itemize}
+
+    At run-time, the type of the object behind a variable is said to
+    be the \emph{exact} type.
+  \end{block}
+  
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{A Clue to Understand \mln}
+
+  About ``classical'' object-orientation:
+
+  \begin{itemize}
+  \item abstractions (like \code{animal}) leads to poor
+    performance at run-time when involved in intensive scientific code.
+    %
+  \item it is due to the fact that the exact type is lost\\
+    (the \kw{virtual} keyword has an effective cost)
+  \end{itemize}
+  
+  \smallskip
+
+  The clue:
+
+  \begin{itemize}
+  \item genericity leads to dedicated code, thus it is efficient at run-time
+    %
+  \item though we really want abstractions!
+  \end{itemize}
+  
+
+\end{frame}
+
+
+
+%============================================================
+\subsection{What a Class Can Contain}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Methods and Attributes}
+
+\begin{lstlisting}
+class point2d {
+public:
+  point2d(int r, int c) { // constructor
+    row_ = r; col_ = col;
+  }
+  int& operator[](unsigned i) {
+    assert(i < 2);
+    return i == 0 ? row_ : col_;
+  }
+  int  row() const  { return row_; }
+  int& row()  { return row_; }
+  // ...
+private:
+  int row_, col_;
+}
+\end{lstlisting}
+
+Sample use:
+\begin{lstlisting}
+point2d p(5, 1);
+assert(p[0] == p.row());
+\end{lstlisting}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Values and Typedefs}
+
+
+\begin{lstlisting}
+class point2d
+{
+public:
+  enum { dim = 2 }
+  typedef int coord;
+  // ...
+}
+\end{lstlisting}
+
+Sample use:
+\begin{lstlisting}
+std:::cout << point2d::dim << std::endl; // gives 2
+point2d::coord c;  // \code{c} is an \code{int}
+\end{lstlisting}
+
+{\scriptsize
+At first glance, that seems weird to equip this class with \code{dim}
+and \code{coord} (but is is \emph{not}!)
+}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Associated Types}
+
+\begin{block}{Associated Type}
+  A typedef (type alias) defined in a class (e.g., \code{coord} in
+  \code{point2d}) is called an ``\emph{associated} type.''
+\end{block}
+
+\smallskip
+We have defined macros to access those types:
+\begin{itemize}
+\item given a type T, \code{mln\_something(T)} gives the associated
+  type \code{something} defined in \code{T}
+\item example of use: \code{mln\_coord(point2d)}
+\item we can see \code{mln\_coord} like a function that takes a type and returns a type
+\end{itemize}
+
+\smallskip
+
+\tiny{\code{mln\_something(T)} is for a \kw{template}d piece of
+  code,\\ whereas \code{mln\_something\_(T)} is for a
+  \emph{non}-\kw{template}d code}
+
+\end{frame}
+
+
+
+%############################################################"
+\section{Genericity in \cpp}
+
+
+%============================================================
+\subsection{Genericity for Routines}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{About Naming}
+
+  \begin{center}
+    \begin{tabular}{|c|c|}
+      \hline
+      we say & a C or \cpp user says \\
+      \hline \hline 
+      attribute & a field (C) or member (\cpp) \\
+      procedure & function \\
+      method & a member function \\
+      \hline 
+    \end{tabular}
+  \end{center}
+
+\smallskip
+
+In the following:
+\begin{block}{routine}
+  A \emph{routine} designates either a procedure (function) or a
+  method (a member function).
+\end{block}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{A rationale for Genericity}
+
+Suppose that you want a routine that computes twice the input:
+\begin{lstlisting}
+int twice(int i) { return 2 * i; }
+\end{lstlisting}
+
+Suppose now that you want the ``\code{twice}'' operation to work also
+with values of type \kw{float}.
+
+\begin{itemize}
+\item you can rely on \emph{overloading}
+\item that is the ability of defining several versions of a function
+  \begin{itemize}
+  \item having the \emph{same} name
+  \item but different signatures
+  \end{itemize}
+\end{itemize}
+
+Precisely, you write:
+\begin{lstlisting}
+int   twice(int   i) { return 2 * i; }
+float twice(float f) { return 2 * f; }
+\end{lstlisting}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Overloading is Limited}
+
+This code is quite poor:
+
+\begin{itemize}
+\item it is redundant
+  \begin{itemize}
+  \item tedious to write (copy-paste, many lines at end)
+  \item thus error-prone
+  \end{itemize}
+  \smallskip
+  % 
+\item it is still limited to \code{int} and \code{float}
+  \smallskip
+  % 
+\item so it is not re-usable!
+  \begin{itemize}
+  \item understand that ``\code{twice}'' should be able to work with
+    \pointIId too
+  \end{itemize}
+\end{itemize}
+
+Though overload is great; think of \code{operator*}...
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{We Want Genericity}
+
+Actually
+\begin{center}
+  for every type \code{T}, \code{twice} a value \code{t} of type
+  \code{T} returns \code{2 * t} which is of type \code{T}
+\end{center}
+
+So this procedure definition looks like
+\begin{lstlisting}
+// ...
+T twice(T t) {
+  return t;
+}
+\end{lstlisting}
+except that we have to say first what \code{T} is:
+\begin{lstlisting}
+template <typename T>
+T twice(T t) {
+  return t;
+}
+\end{lstlisting}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Syntax of Genericity}
+
+In \lstinline@template <typename T> T twice(T t)@
+%
+\begin{itemize}
+\item the declaration ``\code{<typename T>}'' is very similar to the
+  one of the procedure argument ``\code{(T t)}''
+%
+\item the nature of \code{t} is \code{T}, the nature of \code{T} is
+  \code{typename} (so designates a type)
+%
+\item the \cpp keyword introducing a generic piece of code is
+  \kw{template}
+  \begin{itemize}
+  \item it can be read as ``for all'' (the universal quantifier $\forall$)\\
+    so you read here: ``for all $<$type T$>$, we have...''
+  \item the definition (symbolized by ``...'') follows a classical
+    \cpp syntax
+  \end{itemize}
+%
+\item yet the major difference is that:
+  \begin{center}
+    \code{t} is valued at \emph{run-time}, whereas \code{T} is valued at compile-time
+  \end{center}
+\end{itemize}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Use of a Generic Procedure}
+
+With
+\begin{lstlisting}
+int main() {
+  int i = 1, j;
+  j = twice(i); // Calls twice with \code{T} being \kw{int}
+  float pi = 3.14, two_pi;
+  two_pi = twice(pi); // Calls another ``version'' of twice with \code{T} being \kw{float}
+}
+\end{lstlisting}
+
+
+Once this program is compiled
+\begin{itemize}
+\item two different versions of \code{twice} cohabits:
+  \begin{itemize}
+  \item \code{int   twice(int   t) { return 2 * t; }} and
+  \item \code{float twice(float t) { return 2 * t; }}
+  \end{itemize}
+\item so it is not so different than with overloading
+\end{itemize}
+
+except that:
+\begin{center}
+  this generic definition of \code{twice} is \emph{reusable}
+\end{center}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Generic Procedures and Reusability}
+
+Precisely
+\begin{itemize}
+\item the generic definition of a procedure is written once
+\item and is possibly usable in a large number of different versions
+\end{itemize}
+
+If the client wants to write this kind of use:
+\begin{lstlisting}
+point2d p(2,3), pp;
+pp = twice(p);
+std::cout << pp << std::endl; // writes (4,6)
+\end{lstlisting} % >>
+it also works!
+
+\end{frame}
+
+
+% HERE
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Exercise}
+
+Consider this mathematical parameterized function:
+$$
+\forall a \in \mathbb{Z}, \;
+f_a: \left\{
+  \begin{array}{lll}
+    \mathbb{R} &\rightarrow & \mathbb{R} \\
+    x & \leadsto & \cos(a x)
+  \end{array}
+\right.
+$$
+
+\begin{itemize}
+\item how can it be translated in \cpp?
+\item how can a call to such a function work?
+\end{itemize}
+
+\end{frame}
+
+
+
+%============================================================
+\subsection{Genericity for Classes}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{A First Generic Class}
+
+  We want to define a class to represent couples of values, whatever
+  their respective type is; it gives:
+
+\begin{lstlisting}
+template <typename T1, typename T2>
+struct pair {
+  T1 first;
+  T2 second;
+};
+\end{lstlisting}
+
+\smallskip
+
+A sample use is:
+\begin{lstlisting}
+pair<float, int> c;
+c.first = 3.14, c.second = 3; 
+\end{lstlisting}
+
+Another possible use is:
+\begin{lstlisting}
+pair<bool, point2d> c;
+c.first = true, c.second = p; 
+\end{lstlisting}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Exercise}
+
+Consider this:
+\begin{lstlisting}
+template <typename T1, typename T2>
+struct pair
+{
+  template <typename S>
+  void operator*=(S scalar)
+  {
+    first *= scalar;
+    second *= scalar;
+  }
+  T1 first;
+  T2 second;
+};
+\end{lstlisting}
+
+\smallskip
+
+\begin{itemize}
+\item explain what you see
+\item then write a program to use this class
+\end{itemize}
+
+\end{frame}
+
+
+
+
+%############################################################"
+\section{Understanding \mln}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Forewords (1/2)}
+
+We want some arithmetics over points:
+\begin{itemize}
+\item a ``delta-point'' is a difference between two points
+\item a point + (plus) a delta-point gives a point
+\item the addition (resp. subtraction) of a couple of delta-points gives a delta-point. 
+\end{itemize}
+
+\smallskip
+
+For instance
+\begin{lstlisting}
+point2d p(4, -1);
+dpoint2d dp(1, 2); // \code{dpoint} is ``delta-point'' for short
+std::cout << (p + dp) << std::endl; // gives (5, 1)
+\end{lstlisting}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Forewords (2/2)}
+
+Our objectives:
+
+\begin{itemize}
+\item write the \code{operator+} (resp. '-') routine corresponding to\\
+  \begin{center}
+    ``a \code{point2d} ~+~ a \code{dpoint2d} $~\rightarrow~$ a \code{point2d}''
+  \end{center}
+  % 
+\item understand that we actually want:\\
+  \begin{center}
+    ``any \code{point P} ~+~ a compatible \code{dpoint D} $~\rightarrow~$ a \code{point P}''
+  \end{center}
+  \scriptsize{for instance with \code{P} and \code{D} being
+    respectively \code{point3d} and \code{dpoint3d}}
+  %
+\item make different versions of operators cohabit...
+\end{itemize}
+
+\end{frame}
+
+
+
+%============================================================
+\subsection{First Attempts}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Overloading}
+
+\begin{lstlisting}
+point2d operator+(const point2d& p, const dpoint2d& dp)
+{
+  point2d q(p.row() + dp.row(), p.col() + dp.col());
+  return q;
+}
+point3d operator+(const point3d& p, const dpoint3d& dp)
+{
+  point3d q;
+  for (unsigned i = 0; i < 3; ++i) q[i] = p[i] + dp[i];
+  return q;
+}
+\end{lstlisting}
+
+What do you think of that?
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{A Solution with Genericity}
+
+\begin{lstlisting}
+template <typename P, typename D>
+P operator+(const P& p, const D& dp)
+{
+  P q;
+  for (unsigned i = 0; i < P::dim; ++i)
+    q[i] = p[i] + dp[i];
+  return q;
+}
+\end{lstlisting}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Continuing with Genericity}
+
+Now the subtraction:
+
+\begin{lstlisting}
+template <typename P>
+? operator-(const P& p1, const P& p2)
+{
+  ? dp;
+  for (unsigned i = 0; i < P::dim; ++i)
+    dp[i] = p1[i] - p2[i];
+  return dp;
+}
+\end{lstlisting}
+
+What shall we write instead of the question mark?
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Solution}
+
+\begin{lstlisting}
+template <typename P>
+mln_dpoint(P) operator-(const P& p1, const P& p2)
+{
+  mln_dpoint(P) dp;
+  for (unsigned i = 0; i < P::dim; ++i)
+    dp[i] = p1[i] - p2[i];
+  return dp;
+}
+\end{lstlisting}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Make Things Better}
+
+In the addition:
+
+\begin{lstlisting}
+template <typename P, typename D>
+P operator+(const P& p, const D& dp)
+{
+  P q;
+  // accessing the dimension is really useful:
+  for (unsigned i = 0; i < P::dim; ++i)
+    q[i] = p[i] + dp[i];
+  return q;
+}
+\end{lstlisting}
+
+How can we ensure that the delta-point type \code{D} really correspond
+to \code{P}?  {\scriptsize (we really do not want \code{P} and
+  \code{D} resp. being \code{point3d} and \code{dpoint2d}!)}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Solution}
+
+\begin{lstlisting}
+template <typename P>
+P operator+(const P& p, const mln_dpoint(P)& dp)
+{
+  ...
+}
+\end{lstlisting}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Cohabitation is Hard}
+
+Consider:
+
+\begin{lstlisting}
+template <typename D>
+D operator+(const D& dp1, const D& dp2) {
+  ... // addition of a couple of delta-points
+}
+
+template <typename I>
+I operator+(const I& ima1, const I& ima2) {
+  ... // addition of a couple of images
+}
+\end{lstlisting}
+
+What is the problem?  (Hint: read both signatures in natural language)
+
+\end{frame}
+
+
+
+%============================================================
+\subsection{\mln Programming Paradigm}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{``Classical'' Object-Orientation}
+
+In ``classical'' OO programming (OOP), we would write:
+\begin{lstlisting}
+Dpoint operator+(const Dpoint& dp1, const Dpoint& dp2) {
+  ... // addition of a couple of delta-points
+}
+
+Image operator+(const Image& ima1, const Image& ima2) {
+  ... // addition of a couple of images
+}
+\end{lstlisting}
+which is clearly not ambiguous (but slow at run-time...)
+
+where \code{Dpoint} and \code{Image} are abstract class.
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Between OOP and Genericity}
+
+Can we try to mix OOP and Generic Programming (GP)?
+
+\medskip
+
+That is, getting something between:
+
+\begin{lstlisting}
+Dpoint operator+(const Dpoint& dp1, const Dpoint& dp2) {
+  ...
+}
+\end{lstlisting}
+and
+\begin{lstlisting}
+template <typename D>
+D operator+(const D& dp1, const D& dp2) {
+  ...
+}
+\end{lstlisting}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{\mln Paradigm}
+
+Yes:
+
+\begin{lstlisting}
+template <typename D>
+D operator+(const Dpoint<D>& dp1, const Dpoint<D>& dp2) {
+  ...
+}
+\end{lstlisting}
+
+\begin{center}
+  here \code{dp1} is a delta-point (\code{Dpoint}) of type \code{D}
+\end{center}
+
+\medskip
+
+\begin{itemize}
+\item it is not ambiguous at compile-time
+\item it is efficient at run-time\\
+  \scriptsize{}
+\end{itemize}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Reading a \mln Signature of Routine}
+
+\begin{lstlisting}
+template <typename D>
+D operator+(const Dpoint<D>& dp1, const Dpoint<D>& dp2) {
+  ...
+}
+\end{lstlisting}
+
+\medskip
+
+\begin{center}
+  The \code{operator+} takes a couple of \code{Dpoint} of type
+  \code{D} and returns the same type.
+\end{center}
+
+\end{frame}
+
+
+
+%============================================================
+\subsection{How does it Work}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Reading Again}
+
+In \mln:
+\begin{center}
+  when we have something like ``\lstinline@Point<P>& p@'' \\
+  it means that \code{p} is actually a point of type \code{P}
+\end{center}
+
+For instance, if the type of \code{p} is \code{point2d}, then
+``another'' type for \code{p} is \lstinline@Point<point2d>@.
+
+\smallskip
+
+So
+\begin{itemize}
+\item in ``\lstinline@Point<P>& p@'', \code{P} is the \emph{exact} type of \code{p}
+\item a type of point \code{P} derives from the abstraction \lstinline@Point<P>@
+\end{itemize}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Conclusion}
+
+More generally:
+
+\begin{block}{Abstractions and Exact Types}
+  When a concrete class \code{T} is related to an abstraction named \code{Abstraction},
+  then \code{T} derives from \lstinline@Abstraction<T>@.
+
+  \smallskip
+
+  Every abstraction in \mln has exactly one parameter, which
+  represents its exact type.
+\end{block}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Examples}
+
+  \begin{center}
+  \begin{tabular}{lp{5mm}l}
+    the class && derives from \\
+    &&\\
+    \lstinline@point2d@ && \lstinline@Point< point2d >@ \\
+    \lstinline@point3d@ && \lstinline@Point< point3d >@ \\
+    &&\\
+    \lstinline@image2d<float>@ && \lstinline@Image< image2d<float> >@ \\
+    \lstinline@win::rectangle@ && \lstinline@Window< win::rectangle >@ \\
+    &&\\
+    \lstinline@box2d@ && \lstinline@Point_Set< box2d >@ \\
+  \end{tabular}
+  \end{center}
+
+\end{frame}
+
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Excerpts from \mln}
+
+\begin{lstlisting}
+namespace level
+{
+  template <typename I, typename J>
+  void paste(const Image<I>& data, Image<J>& destination);
+}
+\end{lstlisting}
+
+\smallskip
+
+\begin{lstlisting}
+namespace morpho
+{
+  template <typename I, typename W>
+  mln_concrete(I) erosion(const Image<I>& input, const Window<W>& win);
+}
+\end{lstlisting}
+
+\smallskip
+
+\begin{lstlisting}
+namespace convert
+{
+  template <typename S>
+  array_p<mln_point(S)> to_array_p(const Point_Set<S>& pset);
+}
+\end{lstlisting}
+
+\end{frame}
+
+
+
+%============================================================
+\subsection{From Abstractions to Exact Types}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{A Hierarchy}
+
+We have \code{dpoint2d}
+
+\begin{lstlisting}
+template <typename E>
+class Dpoint<E>
+{};
+
+class dpoint2d : public Dpoint< dpoint2d >
+{
+public:
+  int& operator[](unsigned i);
+  ...
+};
+\end{lstlisting}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{A Troubleshooting}
+
+This routine is almost (so \emph{not}) correct:
+\begin{lstlisting}
+template <typename D>
+D operator+(const Dpoint<D>& dp1, const Dpoint<D>& dp2)
+{
+  D dp;
+  for (unsigned i = 0; i < D::dim; ++i)
+    dp[i] = dp1[i] + dp2[i];
+    // above: \code{dp[i]} is OK
+    // but \code{dp1[i]} and \code{dp2[i]} do \emph{not} compile!
+  return dp;
+}
+\end{lstlisting}
+
+because the \code{operator[]}
+\begin{itemize}
+\item is defined in concrete classes like \code{dpoint2d}
+\item but \emph{not} in the abstract class
+  \lstinline@Dpoint<dpoint2d>@
+\end{itemize}
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{The \code{exact} Routine}
+
+This updated routine works fine:
+
+\begin{lstlisting}
+template <typename D>
+D operator+(const Dpoint<D>& dp1_, const Dpoint<D>& dp2_)
+{
+  const D& dp1 = exact(dp1_); // Cast to the exact type.
+  const D& dp2 = exact(dp2_);
+  D dp;
+  for (unsigned i = 0; i < D::dim; ++i) dp[i] = dp1[i] + dp2[i];
+  return dp;
+}
+\end{lstlisting}
+
+\begin{block}{Exact}
+  The ``\code{exact}'' routine allows for getting a variable with the exact type of an object.
+\end{block}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Remember about Genericity}
+
+When this routine is called with \code{dpoint2d} objects, then
+the compiled version is this one:
+
+\begin{lstlisting}
+dpoint2d operator+(const Dpoint<dpoint2d>& dp1_, const Dpoint<dpoint2d>& dp2_)
+\end{lstlisting}
+
+and its definition is finally:
+\begin{lstlisting}
+{
+  dpoint2d dp;
+  dp[0] = dp1[0] + dp2[0];
+  dp[1] = dp1[1] + dp2[1];
+  return dp;
+}
+\end{lstlisting}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}
+  \frametitle{Conclusion}
+
+This routine:
+  \smallskip
+  %
+
+\begin{itemize}
+\item is generic\\
+  \scriptsize{it works for any delta-point type}
+  \smallskip
+  %
+\item is fast
+  \scriptsize{you cannot get more efficient code}
+  \smallskip
+  %
+\item is user-friendly
+  \scriptsize{just write ``\code{dp1 + dp2}'' to add a couple of delta-points}
+\end{itemize}
+
+\end{frame}
+
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Exercise 1}
+
+Explain the code below:
+
+\begin{lstlisting}
+template <typename I>
+void set(const Image<I>& ima_, const mln_point(I)& p, const mln_value(I)& v)
+{
+  const I& ima = exact(ima_);
+  ima(p) = v;
+}
+\end{lstlisting}
+
+\smallskip
+
+What do have we in image classes?
+
+\end{frame}
+
+
+%........................................................................
+\begin{frame}[fragile]
+  \frametitle{Exercise 2}
+
+Explain the code below:
+
+\begin{lstlisting}
+template <typename I, typename H>
+void oper(Image<I>& f_, const Function_v2v<H>& h_)
+{
+  I& f = exact(f);
+  const H& h = exact(h_);
+  mln_piter(I) p(f.domain());
+  for_all(p)
+    f(p) = h(f(p));
+}
+\end{lstlisting}
+
+\smallskip
+
+What do have we in image classes?
 
 \end{frame}
 
@@ -565,4 +2198,5 @@ struct op
 %%% eval: (ispell-change-dictionary "american")
 %%% TeX-master: t
 
-% LocalWords: IP interoperability morphers Milena
+% LocalWords: IP interoperability morphers Milena dpoint mln const typename dp
+% LocalWords: int coord resp OOP GP OO namespace morpho pset

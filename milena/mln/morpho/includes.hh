@@ -51,8 +51,7 @@
 # include <mln/level/fill.hh>
 
 # include <mln/test/positive.hh>
-# include <mln/border/resize.hh>
-# include <mln/border/fill.hh>
+# include <mln/border/all.hh>
 
 # include <mln/geom/sym.hh>
 # include <mln/set/inter.hh>

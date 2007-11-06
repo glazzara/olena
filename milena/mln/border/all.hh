@@ -51,6 +51,8 @@ namespace mln
 # include <mln/border/fill.hh>
 # include <mln/border/mirror.hh>
 # include <mln/border/resize.hh>
+# include <mln/border/adjust.hh>
+# include <mln/border/equalize.hh>
 # include <mln/border/thickness.hh>
 
 

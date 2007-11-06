@@ -1,3 +1,22 @@
+2007-11-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment tutorial slides and start to clean erosion.
+
+	* doc/tutorial/slides.tex: Augment.
+	* mln/trait/ch_value.hh: Layout.
+	* mln/border/resize.hh (infty): Update.
+	* mln/border/adjust.hh: New.
+	* mln/border/equalize.hh: New.
+	* mln/border/all.hh: Update.
+	* mln/win/rectangle2d.hh (area): New.
+	* mln/win/octagon2d.hh (area): New.
+	* mln/morpho/erosion.spe.hh: De-activate some code.
+	Re-organize.
+	* mln/morpho/includes.hh: Update.
+	* mln/morpho/erosion.hh (erosion_on_set_): Fix.
+	Add the case when the window is not centered.
+	* tests/morpho_erosion.cc: Update.
+
 2007-11-06  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Improve plug-in display.

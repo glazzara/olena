@@ -31,7 +31,6 @@
 /*! \file mln/morpho/erosion.hh
  *
  * \brief Morphological erosion.
- *
  */
 
 # include <mln/morpho/includes.hh>
@@ -47,15 +46,7 @@ namespace mln
   {
 
     /*! Morphological erosion.
-     *
-     * \todo Overload erosion_wrt_win for hline and vline and for fast
-     * images.
      */
-    template <typename I, typename W, typename O>
-    void erosion(const Image<I>& input, const Window<W>& win, Image<O>& output);
-
-
-    // FIXME: Doc!
     template <typename I, typename W>
     mln_concrete(I)
     erosion(const Image<I>& input, const Window<W>& win);
@@ -66,15 +57,21 @@ namespace mln
     namespace impl
     {
 
-
       namespace generic
       {
+
 	// On function.
 
-	template <typename I, typename W, typename O, typename A>
-	void erosion_on_function(const I& input, const W& win, O& output, A& min)
+	template <typename I, typename W>
+	mln_concrete(I)
+        erosion_on_function_(const I& input, const W& win)
 	{
-	  trace::entering("morpho::impl::generic::erosion_on_function");
+	  trace::entering("morpho::impl::generic::erosion_on_function_");
+
+	  mln_concrete(I) output;
+	  initialize(output, input);
+
+	  accu::min_<mln_value(I)> min;
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
 	  for_all(p)
@@ -82,30 +79,53 @@ namespace mln
 	      min.init();
 	      for_all(q) if (input.has(q))
 		min.take(input(q));
-	      output(p) = min.to_result();
+	      output(p) = min;
 	    }
-	  trace::exiting("morpho::impl::generic::erosion_on_function");
+
+	  trace::exiting("morpho::impl::generic::erosion_on_function_");
+	  return output;
 	}
 
 	// On set.
 
-	template <typename I, typename W, typename O>
-	void erosion_on_set(const I& input, const W& win, O& output)
+	template <typename I, typename W>
+	mln_concrete(I)
+	erosion_on_set_(const I& input, const W& win)
 	{
-	  trace::entering("morpho::impl::generic::erosion_on_set");
-	  level::fill(output, input);
+	  trace::entering("morpho::impl::generic::erosion_on_set_");
 
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
-	  for_all(p)
-	    if (input(p))
-	      for_all(q) if (input.has(q))
-		if (! input(q))
+	  mln_concrete(I) output;
+
+	  if (win.is_centered())
+	    {
+	      output = clone(input);
+	      for_all(p)
+		if (input(p))
+		  for_all(q) if (input.has(q))
+		    if (! input(q))
+		      {
+			output(p) = false;
+			break;
+		      }
+	    }
+	  else
+	    {
+	      initialize(output, input);
+	      for_all(p)
 		{
-		  output(p) = false;
-		  break;
+		  for_all(q) if (input.has(q))
+		    if (! input(q))
+		      break;
+		  // If there was no break (so q is not valid) then
+		  // output(p) <- true; otherwise, output(p) <- false.
+		  output(p) = ! q.is_valid();
 		}
-	  trace::exiting("morpho::impl::generic::erosion_on_set");
+	    }
+
+	  trace::exiting("morpho::impl::generic::erosion_on_set_");
+	  return output;
 	}
 
       } // end of namespace mln::morpho::impl::generic
@@ -116,27 +136,19 @@ namespace mln
 
     // Facades.
 
-    template <typename I, typename W, typename O>
-    void erosion(const Image<I>& input, const Window<W>& win, Image<O>& output)
-    {
-      trace::entering("morpho::erosion");
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      mln_precondition(! exact(win).is_empty());
-
-      impl::erosion_wrt_win(input, exact(win), output);
-
-      if (exact(win).is_centered())
-	mln_postcondition(output <= input);
-      trace::exiting("morpho::erosion");
-    }
-
     template <typename I, typename W>
     mln_concrete(I)
     erosion(const Image<I>& input, const Window<W>& win)
     {
-      mln_concrete(I) output;
-      initialize(output, input);
-      erosion(input, win, output);
+      trace::entering("morpho::erosion");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
+
+      mln_concrete(I) output = impl::erosion_(exact(input), exact(win));
+
+      if (exact(win).is_centered())
+	mln_postcondition(output <= input);
+      trace::exiting("morpho::erosion");
       return output;
     }
 

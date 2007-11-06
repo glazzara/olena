@@ -25,20 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BORDER_RESIZE_HH
-# define MLN_BORDER_RESIZE_HH
+#ifndef MLN_BORDER_ADJUST_HH
+# define MLN_BORDER_ADJUST_HH
 
-/*! \file mln/border/resize.hh
+/*! \file mln/border/adjust.hh
  *
- * \brief Define a function that resizes the virtual border of an
- * image.
+ * \brief Define a function that adjusts the thickness of an image
+ * virtual border.
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/clone.hh>
-# include <mln/level/fill.hh>
-# include <mln/metal/is.hh>
-# include <mln/border/get.hh>
+# include <mln/border/resize.hh>
 
 
 namespace mln
@@ -47,66 +43,37 @@ namespace mln
   namespace border
   {
 
-    /*! Resize the virtual (outer) border of image \p ima to exactly
-     *  \p thickness.
+    /*! Adjust the virtual (outer) border of image \p ima so that its
+     *  size is at least \p min_thickness.
      *
-     * \param[in,out] ima The image whose border is to be resized.
-     * \param[in] thickness The expected border thickness.
+     * \param[in,out] ima The image whose border is to be adjusted.
+     * \param[in] min_thickness The expected border minimum thickness.
      *
      * \pre \p ima has to be initialized.
      *
-     * \warning If the image border already has the expected
-     * thickness, this routine is a no-op.
+     * \warning If the image border is already larger than \p
+     * min_thickness, this routine is a no-op.
      */
     template <typename I>
-    void resize(const Image<I>& ima, unsigned thickness);
+    void adjust(const Image<I>& ima, unsigned min_thickness);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
-    {
-
-      template <typename I>
-      void resize_(trait::image::category::morpher,
-		   const I& ima_, unsigned thickness)
-      {
-	return resize(*ima_.delegatee_(), thickness);
-      }
-
-      template <typename I>
-      void resize_(trait::image::category::primary,
-		   const I& ima_, unsigned thickness)
-      {
-	I& ima = const_cast<I&> (ima_);
-
-	mln_concrete(I) memo = clone(ima);
-	ima.resize_(thickness);
-	level::fill(ima, memo);
-      }
-
-    } // end of namespace mln::border::resize
-
-
-    /// Facade.
-
     template <typename I>
-    void resize(const Image<I>& ima_, unsigned thickness)
+    void adjust(const Image<I>& ima_, unsigned min_thickness)
     {
-      trace::entering("border::resize");
+      trace::entering("border::adjust");
       mlc_is(mln_trait_image_border(I), trait::image::border::some)::check();
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
 
-      if (border::get(ima) == thickness)
-	return; // No-op.
-      // Otherwise: do-it.
-      impl::resize_(mln_trait_image_category(I)(),
-		    ima, thickness); 
+      if (border::get(ima) < min_thickness)
+	border::resize(ima, min_thickness);
 
-      mln_postcondition(border::get(ima) == thickness);
-      trace::exiting("border::resize");
+      mln_postcondition(border::get(ima) >= min_thickness);
+      trace::exiting("border::adjust");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -116,4 +83,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_BORDER_RESIZE_HH
+#endif // ! MLN_BORDER_ADJUST_HH

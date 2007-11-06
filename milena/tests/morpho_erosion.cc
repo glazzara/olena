@@ -57,20 +57,36 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  win::rectangle2d rec(21, 21);
-  border::thickness = 66;
+  unsigned
+    l_oct = 11,  L_oct = 6 * l_oct + 1,
+    l_rec = 29,  L_rec = 2 * l_rec + 1;
+
+  //    l_
+  // oct rec  err
+  //  0   0    3
+  //  0   1    5
+  //  1   2   15
+  //  1   3    9
+  //  2   5   11
+  //  3   8    9
+  //  5  13   15
+  //  8  21   11
+  // 11  29    1
+  // 25  66   15
 
   image2d<int_u8> lena = io::pgm::load("../img/lena.pgm");
 
+  // trace::quiet = false;
+
   { 
-    image2d<int_u8> out(lena.domain());
-    morpho::erosion(lena, rec, out);
-    io::pgm::save(out, "out1.pgm");
+    win::rectangle2d rec(L_rec, L_rec);
+    io::pgm::save(morpho::erosion(lena, rec),
+		  "out1.pgm");
   }
 
   {
-    io::pgm::save(morpho::erosion(lena,
-				  win::octagon2d(31)),
+    win::octagon2d oct(L_oct);
+    io::pgm::save(morpho::erosion(lena, oct),
  		  "out2.pgm");
   }
 

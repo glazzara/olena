@@ -106,6 +106,10 @@ namespace mln
        */
       unsigned width() const;
 
+      /*! \brief Give the rectangle area.
+       */
+      unsigned area() const;
+
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
@@ -164,6 +168,11 @@ namespace mln
     unsigned rectangle2d::width() const
     {
       return width_;
+    }
+
+    unsigned rectangle2d::area() const
+    {
+      return width_ * height_;
     }
 
     unsigned rectangle2d::delta() const

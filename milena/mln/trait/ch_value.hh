@@ -62,18 +62,18 @@ namespace mln
 
       template <typename I, typename V> struct ch_value_; // Decl.
 
-      template < template <class> class M, typename I,
-		 typename V >
-      struct ch_value_<  M< tag::image_<I> >,  V  >
-      {
-	typedef M< mln_ch_value(I, V) > ret;
-      };
-
       template < template <class> class M, typename T,
 		 typename V >
       struct ch_value_<  M< tag::value_<T> >,  V  >
       {
 	typedef M< V > ret;
+      };
+
+      template < template <class> class M, typename I,
+		 typename V >
+      struct ch_value_<  M< tag::image_<I> >,  V  >
+      {
+	typedef M< mln_ch_value(I, V) > ret;
       };
 
       template < template <class, class> class M, typename T, typename I,

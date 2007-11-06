@@ -114,6 +114,10 @@ namespace mln
        */
       unsigned delta() const;
 
+      /*! \brief Give the area.
+       */
+      unsigned area() const;
+
       /// Apply a central symmetry to the target window.
       octagon2d& sym();
 
@@ -186,6 +190,12 @@ namespace mln
     unsigned octagon2d::delta() const
     {
       return length_ / 2;
+    }
+
+    unsigned octagon2d::area() const
+    {
+      unsigned l = (length_ - 1) / 6;
+      return l * (28 * l + 8) + 4;
     }
 
     octagon2d& octagon2d::sym()
