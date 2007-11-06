@@ -181,8 +181,9 @@ namespace mln
      *
      * \relates mln::internal::set_of_
      */
-    template <typename E>
-    std::ostream& operator<<(std::ostream& ostr, const set_of_<E>& s);
+    // FIXME : ambiguous with point_set operator <<
+    //     template <typename E>
+    //     std::ostream& operator<<(std::ostream& ostr, const set_of_<E>& s);
 
 
 
@@ -280,17 +281,18 @@ namespace mln
       needs_update_ = false;
     }
 
-    template <typename E>
-    std::ostream& operator<<(std::ostream& ostr,
-			     const set_of_<E>& s)
-    {
-      ostr << '[';
-      const unsigned n = s.nelements();
-      for (unsigned i = 0; i < n; ++i)
-	ostr << s.element(i)
-	     << (i == s.nelements() - 1 ? ']' : ',');
-      return ostr;
-    }
+    // FIXME : ambiguous with point_set operator <<
+    //     template <typename E>
+    //     std::ostream& operator<<(std::ostream& ostr,
+    // 			     const set_of_<E>& s)
+    //     {
+    //       ostr << '[';
+    //       const unsigned n = s.nelements();
+    //       for (unsigned i = 0; i < n; ++i)
+    // 	ostr << s.element(i)
+    // 	     << (i == s.nelements() - 1 ? ']' : ',');
+    //       return ostr;
+    //     }
 
 # endif // ! MLN_INCLUDE_ONLY
 

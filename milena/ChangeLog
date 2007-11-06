@@ -1,5 +1,13 @@
 2007-11-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Desactivate set_of::operator<<.
+
+	* mln/core/internal/set_of.hh: (operator<<) Desactivate due to
+	an ambiguity with Point_set::operator<<. QUESTION for theo : Can I
+	remove it?
+
+2007-11-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Reduce a test for FLLT.
 	* sandbox/garrigues/test_flltb.cc: Reduce a FLLT test to reveal a bug.
 
