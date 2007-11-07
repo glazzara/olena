@@ -1,3 +1,9 @@
+2007-11-07  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	New test for fllt debugging.
+
+	* test_fllt13.cc: New test file from lena_tiles_3_9.
+
 2007-11-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Minor fixes on the First Part of the Milena Tutorial.
