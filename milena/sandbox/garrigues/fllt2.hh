@@ -262,10 +262,11 @@ namespace mln
 	current_region->elt().value = g;
 	for_all(p)
 	  {
+	    current_region->elt().points.insert(p);
 
 	    if (regions(p) == 0)
 	    {
-	      current_region->elt().points.insert(p);
+	      //	      current_region->elt().points.insert(p);
 	      regions(p) = current_region;
 	    }
 	    else
@@ -479,7 +480,7 @@ namespace mln
       fllt_tree(P, V)& tree = *new fllt_tree(P, V)(current_region);
       util::tree_to_image (tree, output);
 
-//       util::display_tree(ima, tree);
+      //       util::display_tree(ima, tree);
 
       //       debug::println(output);
       //       std::cout << std::endl;
@@ -491,9 +492,9 @@ namespace mln
       // 	abort();
       //       }
 
-//       io::pgm::save(output, "out.pgm");
-//       std::cout << "out.pgm generate"
-// 		<< std::endl;
+      //       io::pgm::save(output, "out.pgm");
+      //       std::cout << "out.pgm generate"
+      // 		<< std::endl;
 
 
       //      debug::println(regions);
@@ -584,7 +585,7 @@ namespace mln
 	       const image2d<fllt_node(P, V)*>& other_reg)
     {
       // FIXME : debug to remove.
-      std::cout << "[move_shape] "<< &hole << " as son of "<< &node << std::endl;
+      //      std::cout << "[move_shape] "<< &hole << " as son of "<< &node << std::endl;
       //     node.elt().points = set::uni(hole.elt().points, node.elt().points);
       node.add_child(&hole);
       fill_a_shape<P,V,typename F::opposite>(hole, tree, hole_reg, other_reg);
@@ -599,15 +600,15 @@ namespace mln
       fllt_node(P, V)* s = other_reg(p);
       mln_assertion(s);
       while (s->parent() && F::opposite::compare(s->parent()->elt().value, node.elt().value))
-      //FIXME : Was while (s->parent() && (s->parent()->elt().value < node.elt().value))
+	//FIXME : Was while (s->parent() && (s->parent()->elt().value < node.elt().value))
       {
 	mln_assertion(s);
 	s = s->parent();
 	mln_assertion(s);
       }
-      std::cout << "[Find the hole] of " << p
-		<< " return " << s
-		<< std::endl;
+//       std::cout << "[Find the hole] of " << p
+// 		<< " return " << s
+// 		<< std::endl;
       return s;
     }
 
@@ -618,13 +619,13 @@ namespace mln
 		 const image2d<fllt_node(P, V)*>& node_reg,
 		 const image2d<fllt_node(P, V)*>& hole_reg)
     {
-      std::cout << "[Start fill_a_shape] " << &node << " "
-	/*<< node.elt().holes.npoints()
-	  << " holes." */<< std::endl;
+//       std::cout << "[Start fill_a_shape] " << &node << " "
+// 	/*<< node.elt().holes.npoints()
+// 	  << " holes." */<< std::endl;
 
       if (node.elt().holes.npoints() == 0)
       {
-	std::cout << "[End fill_a_shape]" << std::endl;
+	//std::cout << "[End fill_a_shape]" << std::endl;
 	return;
       }
       mln_piter(set_p<P>) p(node.elt().holes);
@@ -645,21 +646,28 @@ namespace mln
 	       it != node.children().end();
 	       it++)
 	  {
-	    if (set::is_subset_of(hole->elt().points,
- 				  (*it)->elt().points))
-	    {
-	      h = false;
+	    // Browse the hole of each child.
+	    mln_piter(set_p<P>) q((*it)->elt().holes);
+	    for_all(q)
+	      {
+		fllt_node(P, V)* child_hole = find_the_hole<P,V,F>((**it), point2d(q), hole_reg);
+		if (set::is_subset_of(hole->elt().points,
+				      child_hole->elt().points))
+		{
+		  h = false;
+		  break;
+		}
+
+	      }
+	    if (!h)
 	      break;
-	    }
 	  }
 	  if (h)
-	  {
 	    move_shape<P,V,F>(node, *hole, tree, hole_reg, node_reg);
-	  }
 	}
 
       node.elt().holes.clear();
-      std::cout << "[end fill_a_shape]" << std::endl;
+      //      std::cout << "[end fill_a_shape]" << std::endl;
     }
 
     template <typename P, typename V>
@@ -807,11 +815,11 @@ namespace mln
 
       std::cout << "1/ Compute the lower level set." << std::endl;
       lower_tree = compute_level_set<V, lower<V> >(ima, low_reg);
-      draw_tree(ima, lower_tree);
+      //draw_tree(ima, lower_tree);
       std::cout << "2/ Compute the upper level set." << std::endl;
       upper_tree = compute_level_set<V, upper<V> >(ima, upp_reg);
 
-      draw_tree(ima, upper_tree);
+      //draw_tree(ima, upper_tree);
 
       std::cout << "3/ Merge the two trees." << std::endl;
 
@@ -838,16 +846,16 @@ namespace mln
 
 
       //      util::display_tree(ima, lower_tree);
-      draw_tree(ima, result_tree);
+//       draw_tree(ima, result_tree);
 
-//       debug::println(ima);
-//       debug::println(output);
+      //       debug::println(ima);
+      //       debug::println(output);
 
-//       if (output != ima)
-//       {
-//       	std::cerr << "BUG!!!" << std::endl;
-//       	abort();
-//       }
+      //       if (output != ima)
+      //       {
+      //       	std::cerr << "BUG!!!" << std::endl;
+      //       	abort();
+      //       }
 
       image2d<value::int_u8> viz(ima.domain());
       //       image2d<value::int_u8> viz2(ima.domain());
@@ -859,7 +867,7 @@ namespace mln
       //       io::pgm::save(viz2, "fllt.pgm");
 
       visualize_bounds(viz, result_tree, 200);
-            //debug::println(viz);
+      //debug::println(viz);
       io::pgm::save(viz, "fllt_bounds_200.pgm");
 
       visualize_bounds(viz, result_tree, 100);
