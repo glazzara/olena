@@ -262,11 +262,11 @@ namespace mln
 	current_region->elt().value = g;
 	for_all(p)
 	  {
-	    current_region->elt().points.insert(p);
+ 	    current_region->elt().points.insert(p);
 
 	    if (regions(p) == 0)
 	    {
-	      //	      current_region->elt().points.insert(p);
+	      //current_region->elt().points.insert(p);
 	      regions(p) = current_region;
 	    }
 	    else
@@ -585,8 +585,8 @@ namespace mln
 	       const image2d<fllt_node(P, V)*>& other_reg)
     {
       // FIXME : debug to remove.
-      std::cout << "       [move_shape] "<< &hole << " as son of "<< &node << std::endl;
-      node.elt().points = set::uni(hole.elt().points, node.elt().points);
+      //      std::cout << "       [move_shape] "<< &hole << " as son of "<< &node << std::endl;
+      //node.elt().points = set::uni(hole.elt().points, node.elt().points);
       node.add_child(&hole);
       fill_a_shape<P,V,typename F::opposite>(hole, tree, hole_reg, other_reg);
     }
@@ -606,9 +606,10 @@ namespace mln
 	s = s->parent();
 	mln_assertion(s);
       }
-      std::cout << "   [Find the hole] of " << p
-		<< " return " << s
-		<< std::endl;
+//       std::cout << "   [Find the hole] of " << p
+// 		<< " from " << &node
+// 		<< " return " << s
+// 		<< std::endl;
       return s;
     }
 
@@ -619,13 +620,13 @@ namespace mln
 		 const image2d<fllt_node(P, V)*>& node_reg,
 		 const image2d<fllt_node(P, V)*>& hole_reg)
     {
-      std::cout << "[Start fill_a_shape] " << &node << " "
-		<< node.elt().holes.npoints()
-		<< " holes." << std::endl;
+//       std::cout << "[Start fill_a_shape] " << &node << " "
+// 		<< node.elt().holes.npoints()
+// 		<< " holes." << std::endl;
 
       if (node.elt().holes.npoints() == 0)
       {
-	std::cout << "[End fill_a_shape]" << std::endl;
+	//	std::cout << "[End fill_a_shape]" << std::endl;
 	return;
       }
       mln_piter(set_p<P>) p(node.elt().holes);
@@ -634,12 +635,12 @@ namespace mln
 	  bool h = true;
 
 	  fllt_node(P, V)* hole;
-	  // FIXME : To remove.
-	  // 	  if (node.elt().brighter)
-	  hole = find_the_hole<P,V,F>(node, point2d(p), hole_reg);
+	  if (node.elt().brighter == F::parent_is_brighter)
+	    hole = find_the_hole<P,V,F>(node, point2d(p), hole_reg);
+	  else
+	    hole = find_the_hole<P,V,typename F::opposite>(node, point2d(p), node_reg);
+
 	  mln_assertion(hole);
-	  // 	  else
-	  // 	    hole = find_the_hole(node, point2d(p), low_reg);
 
 	  typename fllt_node(P, V)::children_t::iterator it;
 	  for (it = node.children().begin();
@@ -653,6 +654,8 @@ namespace mln
 		fllt_node(P, V)* child_hole = find_the_hole<P,V,F>((**it), point2d(q), hole_reg);
 		if (set::is_subset_of(hole->elt().points,
 				      child_hole->elt().points))
+
+//		if (hole->elt().points < child_hole->elt().points)
 		{
 		  h = false;
 		  break;
@@ -667,7 +670,7 @@ namespace mln
 	}
 
       node.elt().holes.clear();
-      std::cout << "[end fill_a_shape]" << std::endl;
+      //      std::cout << "[end fill_a_shape]" << std::endl;
     }
 
     template <typename P, typename V>
@@ -815,11 +818,11 @@ namespace mln
 
       std::cout << "1/ Compute the lower level set." << std::endl;
       lower_tree = compute_level_set<V, lower<V> >(ima, low_reg);
-      draw_tree(ima, lower_tree);
+      //draw_tree(ima, lower_tree);
       std::cout << "2/ Compute the upper level set." << std::endl;
       upper_tree = compute_level_set<V, upper<V> >(ima, upp_reg);
 
-      draw_tree(ima, upper_tree);
+      //draw_tree(ima, upper_tree);
 
       std::cout << "3/ Merge the two trees." << std::endl;
 
@@ -846,7 +849,7 @@ namespace mln
 
 
       //      util::display_tree(ima, lower_tree);
-//       draw_tree(ima, result_tree);
+      //draw_tree(ima, result_tree);
 
       //       debug::println(ima);
       //       debug::println(output);
