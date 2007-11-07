@@ -42,6 +42,20 @@ namespace mln
 
   namespace util
   {
+    template<typename T>
+    struct bi_elt
+    {
+      typedef std::vector< util::node<T>* > child_list;
+
+      bi_elt(child_list* list)
+	: list_(list),
+	  previous_(0),
+	  pos_(-1) {}
+
+      child_list* list_;
+      util::node<T>* previous_;
+      int pos_;
+    };
 
     /*! \brief Basic 2D image class.
      *
@@ -76,11 +90,8 @@ namespace mln
       /// The branch to iter.
       util::branch<T> branch_;
 
-
-      typedef typename std::vector< util::node<T>* > child_list;
-      typedef std::pair< child_list*, int> iter_pair;
       /// Store child().begin() and child().end().
-      std::stack< iter_pair > s_;
+      std::stack< bi_elt<T> > s_;
 
       util::node<T>* n_;
     };
@@ -144,7 +155,7 @@ namespace mln
     void
     branch_iter<T>::start()
     {
-      s_.push(make_pair(&branch_.apex().children(), 0));
+      s_.push(bi_elt<T>(&branch_.apex().children()));
 
       n_ = &branch_.apex();
     }
@@ -160,7 +171,8 @@ namespace mln
 	invalidate();
       else
       {
-	if ((s_.top().first->size()) == s_.top().second)
+	s_.top().pos_++;
+	if (s_.top().list_->size() == s_.top().pos_)
 	{
 	  s_.pop();
 	  next();
@@ -168,8 +180,18 @@ namespace mln
 	}
 	else
 	{
-	  n_ = (*(s_.top().first))[s_.top().second];
-	  s_.top().second++;
+	  if (s_.top().previous_)
+	    mln_assertion(s_.top().previous_ == (*(s_.top().list_))[s_.top().pos_ - 1]);
+	    //	  if (s_.top().previous_ > 0)
+// 	  {
+// 	    if(previous_ == (*(s_.top().first))[s_.top().second - 1])
+// 	    {
+// 	      std::cout <<
+// 	    }
+// 	  }
+
+	  n_ = (*(s_.top().list_))[s_.top().pos_];
+	  s_.top().previous_ = n_;
 
 	  if (!n_)
 	  {
@@ -180,7 +202,7 @@ namespace mln
 	  mln_assertion(n_);
 	  if (n_->children().size() > 0)
 	  {
-	    s_.push(make_pair(&n_->children(), 0));
+	    s_.push(bi_elt<T>(&n_->children()));
 	  }
 	  return;
 	}
