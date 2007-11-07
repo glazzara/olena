@@ -1,5 +1,10 @@
 2007-11-07  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Update test_fllt15 smaller.
+	* test_fllt15.cc: Update.
+
+2007-11-07  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add new test for fllt debug.
 	* test_fllt15.cc: New test form lena_7_5.
 
