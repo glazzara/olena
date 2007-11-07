@@ -172,7 +172,7 @@ namespace mln
       else
       {
 	s_.top().pos_++;
-	if (s_.top().list_->size() == s_.top().pos_)
+	if (s_.top().list_->size() <= s_.top().pos_)
 	{
 	  s_.pop();
 	  next();
@@ -180,7 +180,7 @@ namespace mln
 	}
 	else
 	{
-	  if (s_.top().previous_)
+	  if (s_.top().previous_ != 0)
 	    mln_assertion(s_.top().previous_ == (*(s_.top().list_))[s_.top().pos_ - 1]);
 	    //	  if (s_.top().previous_ > 0)
 // 	  {
