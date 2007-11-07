@@ -307,7 +307,7 @@ namespace mln
 	    //       and which are the holes. Keep one pixel of each holes.
 
 	    // WARNING : We trust labeling::level to label the exterior border with 1.
-	    current_region->elt().holes.insert(a_point_of(tmp | pw::value(tmp) == pw::cst(n)));
+	    current_region->elt().holes.insert(a_point_of(tmp | pw::value(tmp) == pw::cst(i)));
 
 	    //       FIXME : [optimisation] Remove from N border of holes???.
 	    //       Recompute gn <- min u(x) x belongs to A
@@ -620,8 +620,8 @@ namespace mln
 		 const image2d<fllt_node(P, V)*>& hole_reg)
     {
       std::cout << "[Start fill_a_shape] " << &node << " "
-	/*<< node.elt().holes.npoints()
-	  << " holes." */<< std::endl;
+		<< node.elt().holes.npoints()
+		<< " holes." << std::endl;
 
       if (node.elt().holes.npoints() == 0)
       {
