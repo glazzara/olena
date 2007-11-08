@@ -1,3 +1,11 @@
+2007-11-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add an faster FLLT algorithm implementation.
+
+	* sandbox/garrigues/fllt_optimized.hh: New, same
+	implementation of FLLT algorithm, expect we avoid calling
+	labeling::level to determine the holes of a each shape.
+
 2007-11-07  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update test_fllt15 smaller.
