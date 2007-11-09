@@ -54,7 +54,7 @@ namespace mln
       /// {
       data_(GimpPixelRgn* rgn_);
 
-      data_(box2d* box);
+//       data_(box2d* box);
       /// }
       
       /// Destructor.
@@ -113,7 +113,7 @@ namespace mln
       typedef trait::image::size::regular    size;
       typedef trait::image::support::aligned support;
 
-      typedef trait::image::border::stored   border;
+      typedef trait::image::border::none     border;
       typedef trait::image::data::raw        data;
       typedef trait::image::io::read_write   io;
       typedef trait::image::speed::fast      speed;
@@ -198,26 +198,26 @@ namespace mln
     /// Read-write access to the image value located at point \p p.
     T& operator()(const point& p);
 
-    /// Read-only access to the image value located at offset \p o.
-    const T& operator[](unsigned o) const;
+//     /// Read-only access to the image value located at offset \p o.
+//     const T& operator[](unsigned o) const;
 
-    /// Read-write access to the image value located at offset \p o.
-    T& operator[](unsigned o);
+//     /// Read-write access to the image value located at offset \p o.
+//     T& operator[](unsigned o);
 
-    /// Read-only access to the image value located at (\p row, \p col).
-    const T& at(int row, int col) const;
+//     /// Read-only access to the image value located at (\p row, \p col).
+//     const T& at(int row, int col) const;
 
-    /// Read-write access to the image value located at (\p row, \p col).
-    T& at(int row, int col);
+//     /// Read-write access to the image value located at (\p row, \p col).
+//     T& at(int row, int col);
 
 
     /// Fast Image method
 
-    /// Give the offset corresponding to the delta-point \p dp.
-    int offset(const dpoint2d& dp) const;
+//     /// Give the offset corresponding to the delta-point \p dp.
+//     int offset(const dpoint2d& dp) const;
 
-    /// Give the point corresponding to the offset \p o.
-    point2d point_at_offset(unsigned o) const;
+//     /// Give the point corresponding to the offset \p o.
+//     point2d point_at_offset(unsigned o) const;
 
     /// Give a hook to the value buffer.
     const T* buffer() const;
@@ -225,10 +225,13 @@ namespace mln
     /// Give a hook to the value buffer.
     T* buffer();
 
-  private:
-      
-    /// GimpPixelRgn object.
-    GimpPixelRgn* region_;
+    /// Gimp Image method
+
+    /// Give a hook to the GimpPixelRgn.
+    GimpPixelRgn* gimp_region();
+
+    /// Give a hook to the GimpDrawable.
+    GimpDrawable* gimp_drawable();
   };
 
 
@@ -236,23 +239,23 @@ namespace mln
 
   namespace internal
   {
-    template <GimpImageType t>
-    data_< gimp_image<t> >::data_(box2d* box)
-      : selfcreated_(true),
-	b_(box)
-    {
-      GimpDrawable *gdraw = new GimpDrawable;
-      gimp_pixel_rgn_init(rgn_,
-			  gdraw,
-			  box->pmin()[1],
-			  box->pmin()[0],
-			  box->len(1),
-			  box->len(0),
-			  FALSE,
-			  FALSE);
-      buffer_ = rgn_->data;
-      allocate_();
-    }
+//     template <GimpImageType t>
+//     data_< gimp_image<t> >::data_(box2d* box)
+//       : selfcreated_(true),
+// 	b_(*box)
+//     {
+//       GimpDrawable *gdraw = new GimpDrawable;
+//       gimp_pixel_rgn_init(rgn_,
+// 			  gdraw,
+// 			  box->pmin()[1],
+// 			  box->pmin()[0],
+// 			  box->len(1),
+// 			  box->len(0),
+// 			  FALSE,
+// 			  FALSE);
+//       buffer_ = rgn_->data;
+//       allocate_();
+//     }
 
     template <GimpImageType t>
     data_< gimp_image<t> >::data_(GimpPixelRgn* rgn)
@@ -403,53 +406,57 @@ namespace mln
   const mln_value(gimp_image<t>)&
   gimp_image<t>::operator()(const point& p) const
   {
-     mln_precondition(this->owns_(p));
-     return this->data_->array_[p.row()][p.col()];
+    // mln_precondition(this->owns_(p));
+     // FIXME HERE value*) this->data_->rgn->data
+    static mln::value::rgb8 c(200,200,200);
+    return c; // this->data_->array_[p.row()][p.col()];
   }
 
   template <GimpImageType t>
   mln_value(gimp_image<t>)&
   gimp_image<t>::operator()(const point& p)
   {
-    mln_precondition(this->owns_(p));
-    return this->data_->array_[p.row()][p.col()];
+    // mln_precondition(this->owns_(p));
+    static mln::value::rgb8 c(0,0,0);
+    return c; // this->data_->array_[p.row()][p.col()];
+//     return this->data_->array_[p.row()][p.col()];
   }
 
   
-  template <GimpImageType t>
-  const mln_value(gimp_image<t>)&
-  gimp_image<t>::operator[](unsigned o) const
-  {
-    mln_precondition(o < ncells());
-    return *(this->data_->buffer_ + o);
-  }
+//   template <GimpImageType t>
+//   const mln_value(gimp_image<t>)&
+//   gimp_image<t>::operator[](unsigned o) const
+//   {
+//     mln_precondition(o < ncells());
+//     return *(this->data_->buffer_ + o);
+//   }
 
   
-  template <GimpImageType t>
-  mln_value(gimp_image<t>)&
-  gimp_image<t>::operator[](unsigned o)
-  {
-    mln_precondition(o < ncells());
-    return *(this->data_->buffer_ + o);
-  }
+//   template <GimpImageType t>
+//   mln_value(gimp_image<t>)&
+//   gimp_image<t>::operator[](unsigned o)
+//   {
+//     mln_precondition(o < ncells());
+//     return *(this->data_->buffer_ + o);
+//   }
 
   
-  template <GimpImageType t>
-  const mln_value(gimp_image<t>)&
-  gimp_image<t>::at(int row, int col) const
-  {
-    mln_precondition(this->owns_(make::point2d(row, col)));
-    return this->data_->array_[row][col];
-  }
+//   template <GimpImageType t>
+//   const mln_value(gimp_image<t>)&
+//   gimp_image<t>::at(int row, int col) const
+//   {
+//     mln_precondition(this->owns_(make::point2d(row, col)));
+//     return this->data_->array_[row][col];
+//   }
 
   
-  template <GimpImageType t>
-  mln_value(gimp_image<t>)&
-  gimp_image<t>::at(int row, int col)
-  {
-    mln_precondition(this->owns_(make::point2d(row, col)));
-    return this->data_->array_[row][col];
-  }
+//   template <GimpImageType t>
+//   mln_value(gimp_image<t>)&
+//   gimp_image<t>::at(int row, int col)
+//   {
+//     mln_precondition(this->owns_(make::point2d(row, col)));
+//     return this->data_->array_[row][col];
+//   }
 
   
   template <GimpImageType t>
@@ -470,25 +477,39 @@ namespace mln
   }
 
   
-  template <GimpImageType t>
-  int
-  gimp_image<t>::offset(const dpoint2d& dp) const
-  {
-    mln_precondition(this->has_data());
-    int o = dp[0] * this->data_->b_.len(1) + dp[1];
-    return o;
-  }
+//   template <GimpImageType t>
+//   int
+//   gimp_image<t>::offset(const dpoint2d& dp) const
+//   {
+//     mln_precondition(this->has_data());
+//     int o = dp[0] * this->data_->b_.len(1) + dp[1];
+//     return o;
+//   }
 
   
+//   template <GimpImageType t>
+//   point2d
+//   gimp_image<t>::point_at_offset(unsigned o) const
+//   {
+//     mln_precondition(o < ncells());
+//     point2d p = make::point2d(o / this->data_->b_.len(1) + this->data_->b_.min_row(),
+// 			      o % this->data_->b_.len(1) + this->data_->b_.min_col());
+//     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
+//     return p;
+//   }
+
   template <GimpImageType t>
-  point2d
-  gimp_image<t>::point_at_offset(unsigned o) const
+  GimpPixelRgn*
+  gimp_image<t>::gimp_region()
   {
-    mln_precondition(o < ncells());
-    point2d p = make::point2d(o / this->data_->b_.len(1) + this->data_->b_.min_row(),
-			      o % this->data_->b_.len(1) + this->data_->b_.min_col());
-    mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
-    return p;
+    return this->data_->rgn_;
+  }
+
+  template <GimpImageType t>
+  GimpDrawable*
+  gimp_image<t>::gimp_drawable()
+  {
+    return this->data_->rgn_->drawable;
   }
 
   

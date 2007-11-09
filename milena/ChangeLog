@@ -1,3 +1,11 @@
+2007-11-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Bad plugin for debugging a segfault.
+	* sandbox/nivault/plugin-gimp/src/build-image.hh,
+	* sandbox/nivault/plugin-gimp/src/build-image.hxx,
+	* sandbox/nivault/plugin-gimp/src/gimp-image.hh,
+	* sandbox/nivault/plugin-gimp/src/interface.hxx: Some code commented.
+
 2007-11-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Rename point set types after p_something.

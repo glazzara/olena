@@ -54,8 +54,6 @@ dialog (gint32              image_ID,
   GtkWidget *main_vbox;
   GtkWidget *image_layout;
   GtkWidget *frame; 
-//   GtkAdjustment *hadjust = NULL;
-//   GtkAdjustment *vadjust = NULL;
   GimpRGB color;
 
   gimp_ui_init (PLUGIN_NAME, TRUE);
@@ -80,15 +78,10 @@ dialog (gint32              image_ID,
   drawing_area = gimp_drawable_preview_new(drawable, NULL);
   gtk_container_add (GTK_CONTAINER (frame), drawing_area);
 
-//** Not declared ?? **//
-//   gimp_scrolled_preview_set_policy((GimpScrolledPreview *)drawing_area,
-// 				   GTK_POLICY_ALWAYS,
-// 				   GTK_POLICY_ALWAYS);
-
   gtk_widget_set_size_request(drawing_area,
 			      500,
 			      500);
-  draw_milena_image(drawing_area, NULL, 0);
+//  draw_milena_image(drawing_area, NULL, 0);
   gtk_widget_show (drawing_area);
 
   gtk_widget_show (main_vbox);

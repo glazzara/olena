@@ -32,10 +32,10 @@
 # include <libgimp/gimpui.h>
 
 # include <src/gimp-image.hh>
-
+# include <mln/level/fill.hh>
 // # include <mln/core/image2d.hh>
 // # include <mln/value/rgb8.hh>
-// # include <mln/literal/black.hh>
+# include <mln/literal/all.hh>
 // # include <mln/display/show.hh>
 // # include <mln/display/remove.hh>
 

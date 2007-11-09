@@ -40,23 +40,7 @@ void build_milena_image(GimpPixelRgn *region)
 {
   I tmp(region);
   ima = tmp;
-  mln_piter_(I) p(ima.domain());
-
-//   gimp_pixel_rgn_init(&region,
-// 		      drawable,
-// 		      0,
-// 		      0,
-// 		      drawable->width,
-// 		      drawable->height,
-// 		      FALSE,
-// 		      FALSE);
-  
-//   gimp_pixel_rgn_get_rect(&region,
-// 			  (guchar *) ima.buffer(),
-// 			  0,
-// 			  0,
-// 			  drawable->width,
-// 			  drawable->height);
+  mln::level::fill(ima, mln::literal::blue);
 }
 
 gboolean draw_milena_image(GtkWidget* area,
@@ -74,12 +58,12 @@ gboolean draw_milena_image(GtkWidget* area,
 		      drawable->width,
 		      drawable->height,
 		      FALSE,
-		      FALSE);  
+		      FALSE);
 
-  gimp_pixel_rgn_set_rect(&region,
-			  (const guchar *) ima.buffer(),
-			  0,
-			  0,
-			  drawable->width,
-			  drawable->height);
+//   gimp_pixel_rgn_set_rect(&region,
+// 			  (const guchar *) ima.buffer(),
+// 			  0,
+// 			  0,
+// 			  drawable->width,
+// 			  drawable->height);
 }
