@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_VEC_P_HH
 # define MLN_CORE_VEC_P_HH
 
-/*! \file mln/core/vec_p.hh
+/*! \file mln/core/p_array.hh
  *
  * \brief Definition of a point set class based on std::vector.
  */
@@ -43,8 +43,8 @@ namespace mln
 {
 
   // Fwd decls.
-  template <typename P> struct vec_p_fwd_piter_;
-  template <typename P> struct vec_p_bkd_piter_;
+  template <typename P> struct p_array_fwd_piter_;
+  template <typename P> struct p_array_bkd_piter_;
 
 
   /*! \brief Point set class based on std::vector.
@@ -57,21 +57,21 @@ namespace mln
    * \todo Make it work with P being a Point_Site.
    */
   template <typename P>
-  class vec_p : public internal::point_set_base_< P, vec_p<P> >
+  class p_array : public internal::point_set_base_< P, p_array<P> >
   {
   public:
 
     /// Forward Point_Iterator associated type.
-    typedef vec_p_fwd_piter_<P> fwd_piter;
+    typedef p_array_fwd_piter_<P> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef vec_p_bkd_piter_<P> bkd_piter;
+    typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
-    vec_p();
+    p_array();
 
     /// Constructor from a vector \p vect.
-    vec_p(const std::vector<P>& vect);
+    p_array(const std::vector<P>& vect);
 
     /// Reserve \p n cells.
     void reserve(std::size_t n);
@@ -86,7 +86,7 @@ namespace mln
     const box_<P>& bbox() const;
 
     /// Append a point \p p.
-    vec_p<P>& append(const P& p);
+    p_array<P>& append(const P& p);
 
     /// Clear this set.
     void clear();
@@ -115,13 +115,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
-  vec_p<P>::vec_p()
+  p_array<P>::p_array()
   {
     bb_needs_update_ = false;
   }
 
   template <typename P>
-  vec_p<P>::vec_p(const std::vector<P>& vect)
+  p_array<P>::p_array(const std::vector<P>& vect)
     : vect_(vect)
   {
     bb_needs_update_ = true;
@@ -129,21 +129,21 @@ namespace mln
 
   template <typename P>
   void
-  vec_p<P>::reserve(std::size_t n)
+  p_array<P>::reserve(std::size_t n)
   {
     vect_.reserve(n);
   }
 
   template <typename P>
   std::vector<P>&
-  vec_p<P>::hook_()
+  p_array<P>::hook_()
   {
     return vect_;
   }
 
   template <typename P>
   void
-  vec_p<P>::update_bb_() const
+  p_array<P>::update_bb_() const
   {
     bb_.init();
     for (unsigned i = 0; i < vect_.size(); ++i)
@@ -153,7 +153,7 @@ namespace mln
 
   template <typename P>
   bool
-  vec_p<P>::has(const P& p) const
+  p_array<P>::has(const P& p) const
   {
     for (unsigned i = 0; i < vect_.size(); ++i)
       if (vect_[i] == p)
@@ -163,14 +163,14 @@ namespace mln
 
   template <typename P>
   std::size_t
-  vec_p<P>::npoints() const
+  p_array<P>::npoints() const
   {
     return vect_.size();
   }
 
   template <typename P>
   const box_<P>&
-  vec_p<P>::bbox() const
+  p_array<P>::bbox() const
   {
     mln_precondition(npoints() != 0);
     if (bb_needs_update_)
@@ -179,8 +179,8 @@ namespace mln
   }
 
   template <typename P>
-  vec_p<P>&
-  vec_p<P>::append(const P& p)
+  p_array<P>&
+  p_array<P>::append(const P& p)
   {
     vect_.push_back(p);
     if (! bb_needs_update_)
@@ -190,7 +190,7 @@ namespace mln
 
   template <typename P>
   void
-  vec_p<P>::clear()
+  p_array<P>::clear()
   {
     vect_.clear();
     bb_needs_update_ = false;
@@ -198,14 +198,14 @@ namespace mln
 
   template <typename P>
   const std::vector<P>&
-  vec_p<P>::vect() const
+  p_array<P>::vect() const
   {
     return vect_;
   }
 
   template <typename P>
   const P&
-  vec_p<P>::operator[](unsigned i) const
+  p_array<P>::operator[](unsigned i) const
   {
     mln_precondition(i < npoints());
     return vect_[i];
@@ -216,7 +216,7 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/core/vec_p_piter.hh>
+# include <mln/core/p_array_piter.hh>
 
 
 #endif // ! MLN_CORE_VEC_P_HH

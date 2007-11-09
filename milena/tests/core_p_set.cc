@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/set_p.cc
+/*! \file tests/p_set.cc
  *
- * \brief Tests on mln::set_p.
+ * \brief Tests on mln::p_set.
  */
 
 #include <iterator>
 
 #include <mln/core/point2d.hh>
-#include <mln/core/set_p.hh>
+#include <mln/core/p_set.hh>
 
 
 
@@ -41,7 +41,7 @@ int main()
 {
   using namespace mln;
 
-  set_p<point2d> ps;
+  p_set<point2d> ps;
   ps
     .insert(make::point2d(6, 9))
     .insert(make::point2d(4, 2))

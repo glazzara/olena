@@ -1,3 +1,88 @@
+2007-11-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Rename point set types after p_something.
+
+	* mln/core/queue_p.hh: Rename as...
+	* mln/core/p_queue.hh: ...this.
+	* mln/core/queue_p_fast.hh: Rename as...
+	* mln/core/p_queue_fast.hh: ...this.
+	* mln/core/queue_p_fast_priority.hh: Rename as...
+	* mln/core/p_priority_queue_fast.hh: ...this.
+	* mln/core/vec_p_piter.hh: Rename as...
+	* mln/core/p_array_piter.hh: ...this.
+	* mln/core/queue_p_priority.hh: Rename as...
+	* mln/core/p_priority_queue.hh: ...this.
+	* mln/core/set_p.hh: Rename as...
+	* mln/core/p_set.hh: ...this.
+	* mln/core/vec_p.hh: Rename as...
+	* mln/core/p_array.hh: ...this.
+	* mln/convert/to_set_p.hh: Rename as...
+	* mln/convert/to_p_set.hh: ...this.
+	* mln/convert/to_vec_p.hh: Rename as...
+	* mln/convert/to_p_array.hh: ...this.
+	* tests/queue_p.cc: Rename as...
+	* tests/core_p_queue.cc: ...this.
+	* tests/set_p.cc: Rename as...
+	* tests/core_p_set.cc: ...this.
+	* tests/queue_p_priority.cc: Rename...
+	* tests/core_p_priority_queue.cc: ...this.
+	* tests/queue_p_fast.cc: Rename as...
+	* tests/core_p_queue_fast.cc: ...this.
+	* tests/queue_p_fast_priority.cc: Rename as...
+	* tests/core_p_priority_queue_fast.cc: ...this.
+	* tests/convert_to_set_p.cc: Rename as...
+	* tests/convert_to_p_set.cc: ...this.
+	* tests/convert_to_vec_p.cc: Rename as...
+	* tests/convert_to_p_array.cc: ...this.
+
+	* mln/core/p_queue.hh (queue_p): Rename as...
+	(p_queue): ...this.
+	* mln/core/p_queue_fast.hh (queue_p_fast): Rename as...
+	(p_queue_fast): ...this.
+	* mln/core/p_priority_queue_fast.hh
+	(queue_p_fast_priority): Rename as...
+	(p_priority_queue_fast): ...this.
+	* mln/core/p_array_piter.hh
+	(vec_p_fwd_piter, vec_p_bkd_piter): Rename as...
+	(p_array_fwd_piter, p_array_bkd_piter): ...these.
+	* mln/core/p_priority_queue.hh
+	(queue_p_priority): Rename as...
+	(p_priority_queue): ...this.
+	* mln/core/p_set.hh (set_p): Rename as...
+	(p_set): ...this.
+	* mln/core/p_array.hh (vec_p): Rename as...
+	(p_array): ...this.
+
+	* mln/core/line2d.hh,
+	* mln/level/sort_points.hh,
+	* mln/level/fill.hh,
+	* mln/value/rgb.hh,
+	* mln/convert/all.hh,
+	* mln/geom/seeds2tiling.hh,
+	* mln/geom/seeds2tiling_with_chamfer.hh,
+	* mln/set/inter.hh,
+	* mln/set/diff.hh,
+	* mln/set/uni.hh,
+	* mln/set/sym_diff.hh,
+	* mln/morpho/opening_attribute.hh,
+	* mln/morpho/erosion.spe.hh,
+	* mln/display/color_pretty.hh,
+	* mln/display/all.hh,
+	* mln/util/tree_to_image.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/labeling/regional_maxima.hh,
+	* tests/morpho_dilation_max_h.cc,
+	* tests/level_sort_points.cc,
+	* tests/morpho_erosion.cc,
+	* tests/morpho_erosion_min_h.cc,
+	* tests/trait_op_uminus.cc,
+	* tests/convert_to_window.cc,
+	* tests/tree_fast_to_image.cc,
+	* tests/tree_to_image.cc,
+	* tests/show.cc,
+	* tests/color_pretty.cc,
+	* tests/morpho_dilation.cc: Update.
+
 2007-11-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix bug for tree_to_image.

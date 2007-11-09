@@ -71,7 +71,7 @@ namespace mln
 	
 	// requirements from mln::canvas::labeling:
 
-	typedef vec_p<P> S;
+	typedef p_array<P> S;
 	S s;
 
  	void init()                              { mln::level::fill(this->output, 0);

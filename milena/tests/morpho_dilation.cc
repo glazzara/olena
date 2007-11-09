@@ -48,7 +48,7 @@
 #include <mln/pw/cst.hh>
 #include <mln/fun/ops.hh>
 
-#include <mln/convert/to_vec_p.hh>
+#include <mln/convert/to_p_array.hh>
 #include <mln/convert/to_window.hh>
 
 
@@ -76,7 +76,7 @@ int main()
   }
 
 //   { 
-//     vec_p<point2d> vec = convert::to_vec_p(rec, point2d::zero);
+//     p_array<point2d> vec = convert::to_p_array(rec, point2d::zero);
 //     window2d win = convert::to_window(vec);
 
 //     image2d<int_u8> out(lena.domain());

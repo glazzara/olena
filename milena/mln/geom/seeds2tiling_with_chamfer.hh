@@ -36,7 +36,7 @@
 # include <map> 
 
 
-# include <mln/core/queue_p_fast_priority.hh>
+# include <mln/core/p_priority_queue_fast.hh>
 # include <mln/core/clone.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
@@ -67,7 +67,7 @@ namespace mln
     I& ima = exact(ima_);
     image2d<unsigned> dist = geom::chamfer(ima, w_win, max);
     I out = clone(ima_);
-    queue_p_fast_priority<mln_psite(I), unsigned> q;
+    p_priority_queue_fast<mln_psite(I), unsigned> q;
 
     // Init.
     {

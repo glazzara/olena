@@ -38,7 +38,7 @@
 
 # include <mln/convert/to_std_set.hh>
 # include <mln/convert/to_window.hh>
-# include <mln/convert/to_set_p.hh>
+# include <mln/convert/to_p_set.hh>
 # include <mln/metal/equal.hh>
 
 
@@ -56,7 +56,7 @@ namespace mln
 
     /// Set theoretic difference of \p lhs and \p rhs.
     template <typename Wl, typename Wr>
-    set_p<mln_point(Wl)>
+    p_set<mln_point(Wl)>
     diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs);
 
 
@@ -80,7 +80,7 @@ namespace mln
 
     /// Set theoretic difference of \p lhs and \p rhs.
     template <typename Wl, typename Wr>
-    set_p<mln_point(Wl)>
+    p_set<mln_point(Wl)>
     diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
     {
       mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
@@ -92,7 +92,7 @@ namespace mln
       std::set_difference(sl.begin(), sl.end(),
 			  sr.begin(), sr.end(),
 			  std::inserter(s, s.begin()));
-      return convert::to_set_p(s);
+      return convert::to_p_set(s);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

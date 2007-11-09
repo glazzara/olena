@@ -25,33 +25,74 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/queue_p.cc
+/*! \file tests/p_priority_queue.cc
  *
- * \brief Tests on mln::queue_p.
+ * \brief Tests on mln::p_priority_queue.
  */
 
 #include <mln/core/point2d.hh>
-#include <mln/core/queue_p.hh>
+#include <mln/core/p_priority_queue.hh>
 
-
-
-int main()
+int main ()
 {
   using namespace mln;
 
-  queue_p<point2d> q;
-  q
-    .push(make::point2d(6, 9))
-    .push(make::point2d(5, 1))
-    .push(make::point2d(4, 2));
-  mln_assertion(q.npoints() == 3);
+  mln::p_priority_queue<point2d, unsigned> q;
+  point2d p1 (6, 9);
+  point2d p2 (5, 1);
+  point2d p3 (4, 2);
 
-  std::cout << q.bbox() << std::endl;
+  mln_assertion (q.empty ());
+
+  mln_assertion (q.npoints () == 0);
+
+  q.push_force (p3);
+  q.push_force (p1, 3);
+  q.push_force (p2, 5);
+
+  std::cout << q.bbox () << std::endl;
   std::cout << q << std::endl;
 
-  q.pop();
-  mln_assertion(q.npoints() == 2);
-  point2d p = q.front();
-  mln_assertion(q.npoints() == 2);
-  mln_assertion(p == make::point2d(5, 1));
+  mln_assertion (!q.empty ());
+
+  mln_assertion (q.has (p1));
+  mln_assertion (q.has (p2));
+  mln_assertion (q.has (p3));
+
+  mln_assertion (q.npoints () == 3);
+  mln_assertion (q.front () == p2);
+  q.pop ();
+
+  mln_assertion (q.has (p1));
+  mln_assertion (!q.has (p2));
+  mln_assertion (q.has (p3));
+
+  mln_assertion (q.npoints () == 2);
+  mln_assertion (q.front () == p1);
+  q.pop ();
+
+  mln_assertion (!q.has (p1));
+  mln_assertion (!q.has (p2));
+  mln_assertion (q.has (p3));
+
+  mln_assertion (q.npoints () == 1);
+  mln_assertion (q.front () == p3);
+  q.pop ();
+
+  mln_assertion (!q.has (p1));
+  mln_assertion (!q.has (p2));
+  mln_assertion (!q.has (p3));
+  mln_assertion (q.npoints () == 0);
+
+  mln_assertion (q.empty ());
+
+  q.push_force (p3);
+  q.push_force (p2, 5);
+  q.push_force (p1, 3);
+
+  mln_assertion (q[2] == p3);
+  mln_assertion (q[1] == p1);
+  mln_assertion (q[0] == p2);
+  q.clear ();
+  mln_assertion (q.empty ());
 }

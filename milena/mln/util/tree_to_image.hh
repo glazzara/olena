@@ -37,7 +37,7 @@
  */
 
 # include <mln/util/tree.hh>
-# include <mln/core/set_p.hh>
+# include <mln/core/p_set.hh>
 
 namespace mln
 {
@@ -51,7 +51,7 @@ namespace mln
 
     template <typename P, typename J>
     void
-    display_set(const Image<J>& ima_, set_p<P>& s);
+    display_set(const Image<J>& ima_, p_set<P>& s);
 
     template <typename I, typename J>
     void
@@ -69,7 +69,7 @@ namespace mln
     {
       I& output = exact(output_);
 
-      mln_piter(set_p<point2d>) p(node->elt().points);
+      mln_piter(p_set<point2d>) p(node->elt().points);
 
       for_all(p)
 	output(p) = node->elt().value;
@@ -96,13 +96,13 @@ namespace mln
 
     template <typename P, typename J>
     void
-    display_set(const Image<J>& ima_, set_p<P>& s)
+    display_set(const Image<J>& ima_, p_set<P>& s)
     {
       const J& ima = exact(ima_);
       image2d<bool> out (ima.bbox ());
 
       level::fill(out, false);
-      mln_piter(set_p<P>) p (s);
+      mln_piter(p_set<P>) p (s);
       for_all (p)
 	out(p) = true;
     }
@@ -144,7 +144,7 @@ namespace mln
       K& output = exact(output_);
       const J& ima = exact(ima_);
 
-      mln_piter(set_p<point2d>) p(node->elt().points);
+      mln_piter(p_set<point2d>) p(node->elt().points);
       for_all (p)
 	output(p) = true;
       typename mln::util::node<T>::children_t::iterator it = node->children().begin();

@@ -25,33 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/queue_p_fast.cc
+/*! \file tests/convert_to_p_array.cc
  *
- * \brief Tests on mln::queue_p_fast.
+ * \brief Tests on mln::convert::to_p_array.
  */
 
+#include <mln/core/point1d.hh>
 #include <mln/core/point2d.hh>
-#include <mln/core/queue_p_fast.hh>
+#include <mln/core/p_array.hh>
 
+#include <mln/win/segment1d.hh>
+#include <mln/win/rectangle2d.hh>
 
+#include <mln/convert/to_p_array.hh>
 
 int main()
 {
   using namespace mln;
 
-  queue_p_fast<point2d> q;
-  q
-    .push(make::point2d(6, 9))
-    .push(make::point2d(5, 1))
-    .push(make::point2d(4, 2));
-  mln_assertion(q.npoints() == 3);
+  typedef p_array<point1d> vec1d;
+  point1d p1 = make::point1d(6);
+  win::segment1d win1d(5);
+  vec1d v1(convert::to_p_array(win1d, p1));
 
-  std::cout << q.bbox() << std::endl;
-  std::cout << q << std::endl;
+  for (size_t i=0; i < v1.npoints(); i++)
+    std::cout << (v1[i]);
 
-  q.pop();
-  mln_assertion(q.npoints() == 2);
-  point2d p = q.front();
-  mln_assertion(q.npoints() == 2);
-  mln_assertion(p == make::point2d(5, 1));
+  std::cout << "\n";
+
+  typedef p_array<point2d> vec2d;
+  point2d p2 = make::point2d(10,10);
+  win::rectangle2d win2d(3, 3);
+  vec2d v2(convert::to_p_array(win2d, p2));
+
+  for (size_t i=0; i < v2.npoints(); i++)
+    std::cout << (v2[i]);
+
 }

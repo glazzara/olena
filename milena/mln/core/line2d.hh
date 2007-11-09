@@ -36,7 +36,7 @@
 # include <vector>
 
 # include <mln/core/internal/point_set_base.hh>
-# include <mln/core/vec_p_piter.hh>
+# include <mln/core/p_array_piter.hh>
 # include <mln/core/box2d.hh>
 # include <mln/math/all.hh>
 
@@ -52,10 +52,10 @@ namespace mln
   public:
 
     /// Forward Point_Iterator associated type.
-    typedef vec_p_fwd_piter_<point2d> fwd_piter;
+    typedef p_array_fwd_piter_<point2d> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef vec_p_bkd_piter_<point2d> bkd_piter;
+    typedef p_array_bkd_piter_<point2d> bkd_piter;
 
 
     /// Constructor from point \p beg to point \p end.

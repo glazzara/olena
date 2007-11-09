@@ -38,7 +38,7 @@
 # include <algorithm>
 
 # include <mln/core/concept/image.hh>
-# include <mln/convert/to_vec_p.hh>
+# include <mln/convert/to_p_array.hh>
 # include <mln/histo/compute.hh>
 
 
@@ -56,7 +56,7 @@ namespace mln
      * \pre \p input.has_data
      */
     template <typename I>
-    vec_p<mln_point(I)> sort_points_increasing(const Image<I>& input);
+    p_array<mln_point(I)> sort_points_increasing(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -106,17 +106,17 @@ namespace mln
       // increasing
 
       template <typename I>
-      vec_p<mln_point(I)>
+      p_array<mln_point(I)>
       sort_points_increasing_(metal::false_, const I& input) // general case
       {
-	vec_p<mln_point(I)> v = convert::to_vec_p(input.domain());
+	p_array<mln_point(I)> v = convert::to_p_array(input.domain());
 	std::sort(v.hook_().begin(), v.hook_().end(),
 		  value_point_less_<I>(input));		  
 	return v;
       }
 
       template <typename I>
-      vec_p<mln_point(I)>
+      p_array<mln_point(I)>
       sort_points_increasing_(metal::true_, const I& input) // low quantization
       {
 	typedef mln_vset(I) S;
@@ -138,7 +138,7 @@ namespace mln
 	for_all(p)
 	  vec[loc[vset.index_of(input(p))]++] = p;
 
-	vec_p<mln_point(I)> v;
+	p_array<mln_point(I)> v;
 	v.hook_() = vec;
 	return v;
       }
@@ -147,17 +147,17 @@ namespace mln
       // decreasing
 
       template <typename I>
-      vec_p<mln_point(I)>
+      p_array<mln_point(I)>
       sort_points_decreasing_(metal::false_, const I& input) // general case
       {
-	vec_p<mln_point(I)> v = convert::to_vec_p(input.domain());
+	p_array<mln_point(I)> v = convert::to_p_array(input.domain());
 	std::sort(v.hook_().begin(), v.hook_().end(),
 		  value_point_greater_<I>(input));		  
 	return v;
       }
 
       template <typename I>
-      vec_p<mln_point(I)>
+      p_array<mln_point(I)>
       sort_points_decreasing_(metal::true_, const I& input) // low quantization
       {
 	typedef mln_vset(I) S;
@@ -179,7 +179,7 @@ namespace mln
 	for_all(p)
 	  vec[loc[vset.index_of(input(p))]++] = p;
 
-	vec_p<mln_point(I)> v;
+	p_array<mln_point(I)> v;
 	v.hook_() = vec;
 	return v;
       }
@@ -191,7 +191,7 @@ namespace mln
     // Facades.
 
     template <typename I>
-    vec_p<mln_point(I)>
+    p_array<mln_point(I)>
     sort_points_increasing(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
@@ -199,7 +199,7 @@ namespace mln
     }
 
     template <typename I>
-    vec_p<mln_point(I)>
+    p_array<mln_point(I)>
     sort_points_decreasing(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());

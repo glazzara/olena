@@ -47,7 +47,7 @@ int main()
 
   image2d<int_u8> ima(3, 3);
   debug::iota(ima);
-  vec_p<point2d> vec;
+  p_array<point2d> vec;
   {
     vec = level::sort_points_increasing(ima);
     std::cout << vec << std::endl;

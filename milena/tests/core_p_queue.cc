@@ -25,64 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_VEC_P_HH
-# define MLN_CONVERT_TO_VEC_P_HH
-
-/*! \file mln/convert/to_vec_p.hh
+/*! \file tests/p_queue.cc
  *
- * \brief Conversions to mln::vec_p.
+ * \brief Tests on mln::p_queue.
  */
 
-# include <mln/core/vec_p.hh>
-# include <mln/core/concept/window.hh>
+#include <mln/core/point2d.hh>
+#include <mln/core/p_queue.hh>
 
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
 
-  namespace convert
-  {
+  p_queue<point2d> q;
+  q
+    .push(make::point2d(6, 9))
+    .push(make::point2d(5, 1))
+    .push(make::point2d(4, 2));
+  mln_assertion(q.npoints() == 3);
 
-    /// Convert a point set \p pset into a vec_p (point set vector).
-    template <typename S>
-    vec_p<mln_point(S)> to_vec_p(const Point_Set<S>& pset);
+  std::cout << q.bbox() << std::endl;
+  std::cout << q << std::endl;
 
-
-    /// Convert a window \p win centered at point \p p into a vec_p (point set vector).
-    template <typename W>
-    vec_p<mln_point(W)> to_vec_p(const Window<W>& win, const mln_point(W)& p);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename S>
-    vec_p<mln_point(S)> to_vec_p(const Point_Set<S>& pset_)
-    {
-      const S& pset = exact(pset_);
-      vec_p<mln_point(S)> v;
-      v.reserve(pset.npoints());
-      mln_fwd_piter(S) p(pset);
-      for_all(p)
-	v.append(p);
-      return v;
-    }
-
-    template <typename W>
-    vec_p<mln_point(W)> to_vec_p(const Window<W>& win, const mln_point(W)& p)
-    {
-      vec_p<mln_point(W)> v;
-      v.reserve(exact(win).ndpoints());
-      mln_qiter(W) q(win, p);
-      for_all(q)
-	v.append(q);
-      return v;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::convert
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CONVERT_TO_VEC_P_HH
+  q.pop();
+  mln_assertion(q.npoints() == 2);
+  point2d p = q.front();
+  mln_assertion(q.npoints() == 2);
+  mln_assertion(p == make::point2d(5, 1));
+}

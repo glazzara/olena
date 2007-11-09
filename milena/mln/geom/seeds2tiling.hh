@@ -36,7 +36,7 @@
 
 # include <map> 
 
-# include <mln/core/queue_p.hh>
+# include <mln/core/p_queue.hh>
 # include <mln/core/clone.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
@@ -61,7 +61,7 @@ namespace mln
   {
     I& ima = exact(ima_);
     I out = clone(ima_);
-    queue_p<mln_psite(I)> q;
+    p_queue<mln_psite(I)> q;
 
     // Init.
     {

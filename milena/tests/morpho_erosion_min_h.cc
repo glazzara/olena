@@ -40,7 +40,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/morpho/erosion_fast.hh>
 
-#include <mln/convert/to_vec_p.hh>
+#include <mln/convert/to_p_array.hh>
 #include <mln/convert/to_window.hh>
 
 
@@ -55,7 +55,7 @@ int main()
   image2d<int_u8> lena = io::pgm::load("../img/lena.pgm");
 
   {
-    vec_p<point2d> vec = convert::to_vec_p(rec, point2d::origin);
+    p_array<point2d> vec = convert::to_p_array(rec, point2d::origin);
     window2d win = convert::to_window(vec);
 
     image2d<int_u8> out(lena.domain());

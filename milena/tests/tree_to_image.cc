@@ -35,7 +35,7 @@
 #include <mln/util/tree.hh>
 #include <mln/core/contract.hh>
 #include <mln/core/image2d.hh>
-#include <mln/core/set_p.hh>
+#include <mln/core/p_set.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/stretch.hh>
 #include <mln/level/fill.hh>
@@ -48,8 +48,8 @@ template <typename P, typename V>
 struct fllt_node
 {
   V	value;
-  mln::set_p<P> points;
-  mln::set_p<P> holes;
+  mln::p_set<P> points;
+  mln::p_set<P> holes;
 };
 
 

@@ -46,7 +46,7 @@ namespace mln
 # include <mln/convert/to_rgb.hh>
 # include <mln/convert/to_std_set.hh>
 # include <mln/convert/to_tiles.hh>
-# include <mln/convert/to_vec_p.hh>
+# include <mln/convert/to_p_array.hh>
 # include <mln/convert/to_window.hh>
 # include <mln/convert/to_w_window.hh>
 

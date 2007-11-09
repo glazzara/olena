@@ -28,24 +28,24 @@
 #ifndef MLN_CORE_VEC_P_PITER_HH
 # define MLN_CORE_VEC_P_PITER_HH
 
-/*! \file mln/core/vec_p_piter.hh
+/*! \file mln/core/p_array_piter.hh
  *
- * \brief Definition of point iterators on mln::vec_p.
+ * \brief Definition of point iterators on mln::p_array.
  */
 
-# include <mln/core/vec_p.hh>
+# include <mln/core/p_array.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Forward iterator on points of a vec_p<P>.
+  /*! \brief Forward iterator on points of a p_array<P>.
    *
    */
   template <typename P>
-  struct vec_p_fwd_piter_ : public internal::point_iterator_base_< P, vec_p_fwd_piter_<P> >
+  struct p_array_fwd_piter_ : public internal::point_iterator_base_< P, p_array_fwd_piter_<P> >
   {
-    typedef vec_p_fwd_piter_<P> self_;
+    typedef p_array_fwd_piter_<P> self_;
     typedef internal::point_iterator_base_< P, self_ > super_;
   public:
     
@@ -54,7 +54,7 @@ namespace mln
 
     /// Coordinate associated type.
     template <typename S>
-    vec_p_fwd_piter_(const Point_Set<S>& s);
+    p_array_fwd_piter_(const Point_Set<S>& s);
 
     /// Reference of the corresponding point.
     const P& to_point() const;
@@ -85,13 +85,13 @@ namespace mln
 
 
 
-  /*! \brief Backward iterator on points of a vec_p<P>.
+  /*! \brief Backward iterator on points of a p_array<P>.
    *
    */
   template <typename P>
-  struct vec_p_bkd_piter_ : public internal::point_iterator_base_< P, vec_p_bkd_piter_<P> >
+  struct p_array_bkd_piter_ : public internal::point_iterator_base_< P, p_array_bkd_piter_<P> >
   {
-    typedef vec_p_bkd_piter_<P> self_;
+    typedef p_array_bkd_piter_<P> self_;
     typedef internal::point_iterator_base_< P, self_ > super_;
   public:
     
@@ -100,7 +100,7 @@ namespace mln
 
     /// Coordinate associated type.
     template <typename S>
-    vec_p_bkd_piter_(const Point_Set<S>& s);
+    p_array_bkd_piter_(const Point_Set<S>& s);
 
     /// Reference of the corresponding point.
     const P& to_point() const;
@@ -133,11 +133,11 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // vec_p_fwd_piter_<P>
+  // p_array_fwd_piter_<P>
 
   template <typename P>
   template <typename S>
-  vec_p_fwd_piter_<P>::vec_p_fwd_piter_(const Point_Set<S>& s)
+  p_array_fwd_piter_<P>::p_array_fwd_piter_(const Point_Set<S>& s)
     : vect_(exact(s).vect())
   {
     invalidate();
@@ -145,14 +145,14 @@ namespace mln
 
   template <typename P>
   const P&
-  vec_p_fwd_piter_<P>::to_point() const
+  p_array_fwd_piter_<P>::to_point() const
   {
     return p_;
   }
 
   template <typename P>
   mln_coord(P)
-  vec_p_fwd_piter_<P>::operator[](unsigned i) const
+  p_array_fwd_piter_<P>::operator[](unsigned i) const
   {
     mln_precondition(i < dim);
     mln_precondition(is_valid());
@@ -161,21 +161,21 @@ namespace mln
 
   template <typename P>
   bool
-  vec_p_fwd_piter_<P>::is_valid() const
+  p_array_fwd_piter_<P>::is_valid() const
   {
     return i_ < vect_.size();
   }
 
   template <typename P>
   void
-  vec_p_fwd_piter_<P>::invalidate()
+  p_array_fwd_piter_<P>::invalidate()
   {
     i_ = vect_.size();
   }
 
   template <typename P>
   void
-  vec_p_fwd_piter_<P>::start()
+  p_array_fwd_piter_<P>::start()
   {
     i_ = 0;
     if (is_valid())
@@ -184,7 +184,7 @@ namespace mln
 
   template <typename P>
   void
-  vec_p_fwd_piter_<P>::next_()
+  p_array_fwd_piter_<P>::next_()
   {
     ++i_;
     if (is_valid())
@@ -192,18 +192,18 @@ namespace mln
   }
 
   template <typename P>
-  vec_p_fwd_piter_<P>::operator P() const
+  p_array_fwd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());
     return p_;
   }
 
 
-  // vec_p_bkd_piter_<P>
+  // p_array_bkd_piter_<P>
 
   template <typename P>
   template <typename S>
-  vec_p_bkd_piter_<P>::vec_p_bkd_piter_(const Point_Set<S>& s)
+  p_array_bkd_piter_<P>::p_array_bkd_piter_(const Point_Set<S>& s)
     : vect_(exact(s).vect())
   {
     invalidate();
@@ -211,14 +211,14 @@ namespace mln
 
   template <typename P>
   const P&
-  vec_p_bkd_piter_<P>::to_point() const
+  p_array_bkd_piter_<P>::to_point() const
   {
     return p_;
   }
 
   template <typename P>
   mln_coord(P)
-  vec_p_bkd_piter_<P>::operator[](unsigned i) const
+  p_array_bkd_piter_<P>::operator[](unsigned i) const
   {
     mln_precondition(i < dim);
     mln_precondition(is_valid());
@@ -227,21 +227,21 @@ namespace mln
 
   template <typename P>
   bool
-  vec_p_bkd_piter_<P>::is_valid() const
+  p_array_bkd_piter_<P>::is_valid() const
   {
     return i_ >= 0;
   }
 
   template <typename P>
   void
-  vec_p_bkd_piter_<P>::invalidate()
+  p_array_bkd_piter_<P>::invalidate()
   {
     i_ = -1;
   }
 
   template <typename P>
   void
-  vec_p_bkd_piter_<P>::start()
+  p_array_bkd_piter_<P>::start()
   {
     i_ = vect_.size() - 1;
     if (is_valid())
@@ -250,7 +250,7 @@ namespace mln
 
   template <typename P>
   void
-  vec_p_bkd_piter_<P>::next_()
+  p_array_bkd_piter_<P>::next_()
   {
     --i_;
     if (is_valid())
@@ -258,7 +258,7 @@ namespace mln
   }
 
   template <typename P>
-  vec_p_bkd_piter_<P>::operator P() const
+  p_array_bkd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());
     return p_;

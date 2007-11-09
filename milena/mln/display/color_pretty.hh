@@ -40,7 +40,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/paste.hh>
-# include <mln/core/set_p.hh>
+# include <mln/core/p_set.hh>
 
 namespace mln
 {
@@ -55,9 +55,9 @@ namespace mln
     template <typename I>
     typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
     color_pretty_rgb(const Image<I>& input_,
-		     const set_p<mln_point(I) >& s1_,
-		     const set_p<mln_point(I) >& s2_,
-		     const set_p<mln_point(I) >& s3_);
+		     const p_set<mln_point(I) >& s1_,
+		     const p_set<mln_point(I) >& s2_,
+		     const p_set<mln_point(I) >& s3_);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -107,9 +107,9 @@ namespace mln
       template <typename I>
       typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
       color_pretty_rgb(const Image<I>& input_,
-		       const set_p<mln_point(I) >& s1_,
-		       const set_p<mln_point(I) >& s2_,
-		       const set_p<mln_point(I) >& s3_)
+		       const p_set<mln_point(I) >& s1_,
+		       const p_set<mln_point(I) >& s2_,
+		       const p_set<mln_point(I) >& s3_)
       {
 	const I& input = exact (input_);
 
@@ -117,21 +117,21 @@ namespace mln
 	level::fill(output, value::rgb8(0, 0, 0));
 
 	{
-	  mln_piter(set_p<mln_point(I) >) p(s1_);
+	  mln_piter(p_set<mln_point(I) >) p(s1_);
 
 	  for_all(p)
 	    output(p).red() = 255;
 	}
 
 	{
-	  mln_piter(set_p<mln_point(I) >) p(s2_);
+	  mln_piter(p_set<mln_point(I) >) p(s2_);
 
 	  for_all(p)
 	    output(p).green() = 255;
 	}
 
 	{
-	  mln_piter(set_p<mln_point(I) >) p(s3_);
+	  mln_piter(p_set<mln_point(I) >) p(s3_);
 
 	  for_all(p)
 	    output(p).blue() = 255;
@@ -153,9 +153,9 @@ namespace mln
     template <typename I>
     typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
     color_pretty_rgb(const Image<I>& input_,
-		     const set_p<mln_point(I) >& s1_,
-		     const set_p<mln_point(I) >& s2_,
-		     const set_p<mln_point(I) >& s3_)
+		     const p_set<mln_point(I) >& s1_,
+		     const p_set<mln_point(I) >& s2_,
+		     const p_set<mln_point(I) >& s3_)
     {
       return impl::color_pretty_rgb(input_, s1_, s2_, s3_);
     }

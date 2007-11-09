@@ -275,9 +275,9 @@ namespace mln
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const rgb<n>& v)
     {
-      return ostr << "(r" << debug::format(v.red())
-		  << ", g" << debug::format(v.green())
-		  << ", b" << debug::format(v.blue())
+      return ostr << "(" << debug::format(v.red())
+		  << ", " << debug::format(v.green())
+		  << ", " << debug::format(v.blue())
 		  << ")";
     }
 

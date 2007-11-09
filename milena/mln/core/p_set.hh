@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SET_P_HH
 # define MLN_CORE_SET_P_HH
 
-/*! \file mln/core/set_p.hh
+/*! \file mln/core/p_set.hh
  *
  * \brief Definition of a point set class based on std::set.
  */
@@ -36,7 +36,7 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/set_of.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/core/vec_p.hh>
+# include <mln/core/p_array.hh>
 
 
 namespace mln
@@ -50,7 +50,7 @@ namespace mln
    * \todo Test if \p P being a Point_Site is ok.
    */
   template <typename P>
-  class set_p : public internal::point_set_base_< P, set_p<P> >,
+  class p_set : public internal::point_set_base_< P, p_set<P> >,
 		private internal::set_of_<P>
   {
     typedef internal::set_of_<P> super_;
@@ -58,13 +58,13 @@ namespace mln
   public:
 
     /// Forward Point_Iterator associated type.
-    typedef vec_p_fwd_piter_<P> fwd_piter;
+    typedef p_array_fwd_piter_<P> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef vec_p_bkd_piter_<P> bkd_piter;
+    typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
-    set_p();
+    p_set();
 
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
@@ -76,11 +76,11 @@ namespace mln
     std::size_t npoints() const;
 
     /// Insert a point \p p.
-    set_p<P>& insert(const P& p);
+    p_set<P>& insert(const P& p);
 
     // FIXME : doesn't compile
     //     /// Remove a point \p p.
-    //     set_p<P>& remove(P& p);
+    //     p_set<P>& remove(P& p);
 
     /// Return the \p i-th point.
     const P& operator[](unsigned i) const;
@@ -101,27 +101,27 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
-  set_p<P>::set_p()
+  p_set<P>::p_set()
   {
   }
 
   template <typename P>
   bool
-  set_p<P>::has(const P& p) const
+  p_set<P>::has(const P& p) const
   {
     return this->super_::has(p);
   }
 
   template <typename P>
   std::size_t
-  set_p<P>::npoints() const
+  p_set<P>::npoints() const
   {
     return this->super_::nelements();
   }
 
   template <typename P>
-  set_p<P>&
-  set_p<P>::insert(const P& p)
+  p_set<P>&
+  p_set<P>::insert(const P& p)
   {
     this->super_::insert(p);
     bb_.take(p);
@@ -131,8 +131,8 @@ namespace mln
 
   // FIXME : finish it.
   //   template <typename P>
-  //   set_p<P>&
-  //   set_p<P>::remove(P& p)
+  //   p_set<P>&
+  //   p_set<P>::remove(P& p)
   //   {
   //     this->super_::remove(p);
   //     // FIXME: need to rebuild bb_ ?
@@ -142,7 +142,7 @@ namespace mln
 
   template <typename P>
   const P&
-  set_p<P>::operator[](unsigned i) const
+  p_set<P>::operator[](unsigned i) const
   {
     mln_precondition(i < npoints());
     return this->super_::element(i);
@@ -150,7 +150,7 @@ namespace mln
 
   template <typename P>
   void
-  set_p<P>::clear()
+  p_set<P>::clear()
   {
     this->super_::clear();
     bb_.init();
@@ -158,7 +158,7 @@ namespace mln
 
   template <typename P>
   const box_<mln_point(P)>&
-  set_p<P>::bbox() const
+  p_set<P>::bbox() const
   {
     mln_precondition(npoints() != 0);
     return bb_.to_result();

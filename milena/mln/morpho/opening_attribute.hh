@@ -70,7 +70,7 @@ namespace mln
 	typedef I_ I;
 	typedef N_ N;
 	typedef O_ O;
-	typedef vec_p<P> S;
+	typedef p_array<P> S;
 	typedef util::pix<I> pix_t;
       
 	const I& input;

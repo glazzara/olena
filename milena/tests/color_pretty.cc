@@ -41,7 +41,7 @@
 # include <mln/core/w_window2d_int.hh>
 # include <mln/display/color_pretty.hh>
 # include <mln/io/ppm/save.hh>
-# include <mln/core/set_p.hh>
+# include <mln/core/p_set.hh>
 
 
 int main()
@@ -62,9 +62,9 @@ int main()
   // Call chamfer for a distance image.
   image2d<unsigned> tmp = geom::chamfer(input, w_win, max);
 
-  set_p<point2d > s1;
-  set_p<point2d > s2;
-  set_p<point2d > s3;
+  p_set<point2d > s1;
+  p_set<point2d > s2;
+  p_set<point2d > s3;
 
 
 //   typedef image_if_value<image2d<unsigned> > I;

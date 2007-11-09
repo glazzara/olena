@@ -34,7 +34,7 @@
 
 #include <mln/core/contract.hh>
 #include <mln/core/image2d.hh>
-#include <mln/core/set_p.hh>
+#include <mln/core/p_set.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/stretch.hh>
 #include <mln/io/pgm/save.hh>
@@ -46,16 +46,16 @@ template <typename P, typename V>
 struct fllt_node
 {
   V	value;
-  mln::set_p<P> points;
-  mln::set_p<P> holes;
+  mln::p_set<P> points;
+  mln::p_set<P> holes;
 };
 
 
 template <typename P, typename V>
-bool operator==(const mln::set_p<P>& lhs, const mln::set_p<P>& rhs)
+bool operator==(const mln::p_set<P>& lhs, const mln::p_set<P>& rhs)
 {
   std::size_t n = lhs.npoints ();
-  mln::set_p<P> tmp;
+  mln::p_set<P> tmp;
 
   if (n != rhs.npoints ())
     return false;
@@ -87,7 +87,7 @@ int main (void)
   using namespace mln;
   using value::int_u8;
 
-  typedef set_p<point2d > I;
+  typedef p_set<point2d > I;
   typedef fllt_node<point2d, int_u8> T;
 
   T s1;

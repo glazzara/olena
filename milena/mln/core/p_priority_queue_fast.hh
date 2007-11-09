@@ -28,9 +28,9 @@
 #ifndef MLN_CORE_QUEUE_P_FAST_PRIORITY_HH
 # define MLN_CORE_QUEUE_P_FAST_PRIORITY_HH
 
-/*! \file mln/core/queue_p_fast_priority.hh
+/*! \file mln/core/p_priority_queue_fast.hh
  *
- * \brief Definition of a point set class based on queue_p_fast with
+ * \brief Definition of a point set class based on p_queue_fast with
  * priority features.
  */
 
@@ -41,16 +41,16 @@
 # include <iterator>
 
 # include <mln/core/internal/point_set_base.hh>
-# include <mln/core/vec_p_piter.hh>
+# include <mln/core/p_array_piter.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/core/queue_p_fast.hh>
+# include <mln/core/p_queue_fast.hh>
 
 namespace mln
 {
 
   // Fwd decls.
-  template <typename P> struct vec_p_fwd_piter_;
-  template <typename P> struct vec_p_bkd_piter_;
+  template <typename P> struct p_array_fwd_piter_;
+  template <typename P> struct p_array_bkd_piter_;
 
 
   /*! \brief Point queue class (based on std::deque).
@@ -65,18 +65,18 @@ namespace mln
    * a call to npoints() when this container is multiple.
    */
   template <typename P, typename T>
-  class queue_p_fast_priority : public internal::point_set_base_< P, queue_p_fast_priority<P, T> >
+  class p_priority_queue_fast : public internal::point_set_base_< P, p_priority_queue_fast<P, T> >
   {
   public:
 
     /// Forward Point_Iterator associated type.
-    typedef vec_p_fwd_piter_<P> fwd_piter;
+    typedef p_array_fwd_piter_<P> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef vec_p_bkd_piter_<P> bkd_piter;
+    typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
-    queue_p_fast_priority();
+    p_priority_queue_fast();
 
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
@@ -91,10 +91,10 @@ namespace mln
     const box_<P>& bbox() const;
 
     /// Push force a point \p p in the queue.
-    queue_p_fast_priority<P, T>& push_force(const P& p, T prio = 0);
+    p_priority_queue_fast<P, T>& push_force(const P& p, T prio = 0);
 
     /// Push a point \p p in the queue.
-    queue_p_fast_priority<P, T>& push(const P& p, T prio = 0);
+    p_priority_queue_fast<P, T>& push(const P& p, T prio = 0);
 
     /// Pop (remove) the front point \p p from the queue; \p p is the
     /// least recently inserted point.
@@ -115,7 +115,7 @@ namespace mln
 
   protected:
 
-    std::map<const T, queue_p_fast<P> > q_;
+    std::map<const T, p_queue_fast<P> > q_;
 
     mutable std::vector<P> vect_;
     mutable bool vect_needs_update_;
@@ -132,7 +132,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P, typename T>
-  queue_p_fast_priority<P, T>::queue_p_fast_priority()
+  p_priority_queue_fast<P, T>::p_priority_queue_fast()
   {
     vect_needs_update_ = false;
     bb_needs_update_ = false;
@@ -140,12 +140,12 @@ namespace mln
 
   template <typename P, typename T>
   void
-  queue_p_fast_priority<P, T>::vect_update_() const
+  p_priority_queue_fast<P, T>::vect_update_() const
   {
     vect_.clear();
     vect_.reserve(npoints());
 
-    typename std::map<T, queue_p_fast<P> >::const_iterator it = q_.begin ();
+    typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
       std::copy((*it).second.vect().begin(), (*it).second.vect().end(),
@@ -155,11 +155,11 @@ namespace mln
 
   template <typename P, typename T>
   void
-  queue_p_fast_priority<P, T>::bb_update_() const
+  p_priority_queue_fast<P, T>::bb_update_() const
   {
     bb_.init();
 
-    typename std::map<T, queue_p_fast<P> >::const_iterator it = q_.begin ();
+    typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
     
     for (; it != q_.end (); ++it)
       for (unsigned i = 0; i < (*it).second.npoints (); ++i)
@@ -170,9 +170,9 @@ namespace mln
 
   template <typename P, typename T>
   bool
-  queue_p_fast_priority<P, T>::has(const P& p) const
+  p_priority_queue_fast<P, T>::has(const P& p) const
   {
-    typename std::map<T, queue_p_fast<P> >::const_iterator it = q_.begin ();
+    typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
       if ((*it).second.has (p))
@@ -182,9 +182,9 @@ namespace mln
 
   template <typename P, typename T>
   bool
-  queue_p_fast_priority<P, T>::empty() const
+  p_priority_queue_fast<P, T>::empty() const
   {
-    typename std::map<T, queue_p_fast<P> >::const_iterator it = q_.begin ();
+    typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
       if (!(*it).second.empty ())
@@ -194,11 +194,11 @@ namespace mln
 
   template <typename P, typename T>
   unsigned
-  queue_p_fast_priority<P, T>::npoints() const
+  p_priority_queue_fast<P, T>::npoints() const
   {
     unsigned res = 0;
 
-    typename std::map<T, queue_p_fast<P> >::const_iterator it = q_.begin ();
+    typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
       if (!(*it).second.empty ())
@@ -208,7 +208,7 @@ namespace mln
 
   template <typename P, typename T>
   const box_<P>&
-  queue_p_fast_priority<P, T>::bbox() const
+  p_priority_queue_fast<P, T>::bbox() const
   {
     mln_precondition(npoints() != 0);
     if (bb_needs_update_)
@@ -217,8 +217,8 @@ namespace mln
   }
 
   template <typename P, typename T>
-  queue_p_fast_priority<P, T>&
-  queue_p_fast_priority<P, T>::push_force(const P& p, T prio)
+  p_priority_queue_fast<P, T>&
+  p_priority_queue_fast<P, T>::push_force(const P& p, T prio)
   {
     q_[prio].push_force (p);
     if (! vect_needs_update_)
@@ -230,8 +230,8 @@ namespace mln
   }
 
   template <typename P, typename T>
-  queue_p_fast_priority<P, T>&
-  queue_p_fast_priority<P, T>::push(const P& p, T prio)
+  p_priority_queue_fast<P, T>&
+  p_priority_queue_fast<P, T>::push(const P& p, T prio)
   {
     if (! has(p))
       return this->push_force(p, prio);
@@ -241,9 +241,9 @@ namespace mln
 
   template <typename P, typename T>
   void
-  queue_p_fast_priority<P, T>::pop()
+  p_priority_queue_fast<P, T>::pop()
   {
-    typename std::map<T, queue_p_fast<P> >::reverse_iterator it = q_.rbegin ();
+    typename std::map<T, p_queue_fast<P> >::reverse_iterator it = q_.rbegin ();
 
     for (; it != q_.rend (); ++it)
       if (!(*it).second.empty ())
@@ -258,11 +258,11 @@ namespace mln
 
   template <typename P, typename T>
   const P&
-  queue_p_fast_priority<P, T>::front() const
+  p_priority_queue_fast<P, T>::front() const
   {
     mln_precondition(! q_.empty());
 
-    typename std::map<T, queue_p_fast<P> >::const_reverse_iterator it = q_.rbegin ();
+    typename std::map<T, p_queue_fast<P> >::const_reverse_iterator it = q_.rbegin ();
 
     for (; it != q_.rend (); ++it)
       if (!(*it).second.empty ())
@@ -272,9 +272,9 @@ namespace mln
 
   template <typename P, typename T>
   void
-  queue_p_fast_priority<P, T>::clear()
+  p_priority_queue_fast<P, T>::clear()
   {
-    typename std::map<T, queue_p_fast<P> >::iterator it = q_.begin ();
+    typename std::map<T, p_queue_fast<P> >::iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
       (*it).second.clear ();
@@ -285,7 +285,7 @@ namespace mln
 
   template <typename P, typename T>
   const std::vector<P>&
-  queue_p_fast_priority<P, T>::vect() const
+  p_priority_queue_fast<P, T>::vect() const
   {
     if (vect_needs_update_)
       vect_update_();
@@ -294,11 +294,11 @@ namespace mln
 
   template <typename P, typename T>
   const P&
-  queue_p_fast_priority<P, T>::operator[](unsigned i) const
+  p_priority_queue_fast<P, T>::operator[](unsigned i) const
   {
     mln_precondition(i < npoints());
 
-    typename std::map<T, queue_p_fast<P> >::const_reverse_iterator it = q_.rbegin ();
+    typename std::map<T, p_queue_fast<P> >::const_reverse_iterator it = q_.rbegin ();
     unsigned cpt = 0;
 
     for (; it != q_.rend (); ++it)

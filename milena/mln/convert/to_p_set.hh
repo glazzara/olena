@@ -28,16 +28,16 @@
 #ifndef MLN_CONVERT_TO_SET_P_HH
 # define MLN_CONVERT_TO_SET_P_HH
 
-/*! \file mln/convert/to_set_p.hh
+/*! \file mln/convert/to_p_set.hh
  *
- * \brief Conversions to mln::set_p.
+ * \brief Conversions to mln::p_set.
  */
 
 # include <set>
  
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/concept/point_site.hh>
-# include <mln/core/set_p.hh>
+# include <mln/core/p_set.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
 # include <mln/metal/is_a.hh>
@@ -51,30 +51,30 @@ namespace mln
 
     /// Convert a neighborhood \p nbh into a point set.
     template <typename N>
-    set_p<mln_point(N)> to_set_p(const Neighborhood<N>& nbh);
+    p_set<mln_point(N)> to_p_set(const Neighborhood<N>& nbh);
 
     /// Convert a binary image \p ima into a point set.
     template <typename I>
-    set_p<mln_point(I)> to_set_p(const Image<I>& ima);
+    p_set<mln_point(I)> to_p_set(const Image<I>& ima);
 
     /// Convert a Window \p win into a point set.
     template <typename W>
-    set_p<mln_point(W)> to_set_p(const Window<W>& win);
+    p_set<mln_point(W)> to_p_set(const Window<W>& win);
 
     /// Convert an std::set \p s of points into a point set.
     template <typename D>
-    set_p<D> to_set_p(const std::set<D>& s);
+    p_set<D> to_p_set(const std::set<D>& s);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename N>
-    set_p<mln_point(N)> to_set_p(const Neighborhood<N>& nbh_)
+    p_set<mln_point(N)> to_p_set(const Neighborhood<N>& nbh_)
     {
       const N& nbh = exact(nbh_);
       typedef mln_dpoint(N) D;
       typedef mln_point(N) P;
-      set_p<P> pset;
+      p_set<P> pset;
       mln_niter(N) n(nbh, P::origin);
       for_all(n)
 	pset.insert(n);
@@ -82,14 +82,14 @@ namespace mln
     }
 
     template <typename I>
-    set_p<mln_point(I)> to_set_p(const Image<I>& ima_)
+    p_set<mln_point(I)> to_p_set(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
       // FIXME: Check that ima is binary!
       typedef mln_dpoint(I) D;
       typedef mln_point(I) P;
-      set_p<P> pset;
+      p_set<P> pset;
       mln_piter(I) p(ima.domain());
       for_all(p)
 	if (ima(p))
@@ -98,11 +98,11 @@ namespace mln
     }
 
     template <typename W>
-    set_p<mln_point(W)> to_set_p(const Window<W>& win)
+    p_set<mln_point(W)> to_p_set(const Window<W>& win)
     {
       typedef mln_dpoint(W) D;
       typedef mln_point(W) P;
-      set_p<P> pset;
+      p_set<P> pset;
       mln_qiter(W) q(exact(win), P::origin);
       for_all(q)
 	pset.insert(q);
@@ -110,10 +110,10 @@ namespace mln
     }
 
     template <typename P>
-    set_p<P> to_set_p(const std::set<P>& s)
+    p_set<P> to_p_set(const std::set<P>& s)
     {
       mln::metal::is_a<P, Point_Site>::check();
-      set_p<P> pset;
+      p_set<P> pset;
       for (typename std::set<P>::const_iterator i = s.begin();
 	   i != s.end(); ++i)
 	pset.insert(*i);

@@ -25,30 +25,64 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DISPLAY_ALL_HH
-# define MLN_DISPLAY_ALL_HH
+#ifndef MLN_CONVERT_TO_VEC_P_HH
+# define MLN_CONVERT_TO_VEC_P_HH
 
-/*! \file mln/display/all.hh
+/*! \file mln/convert/to_p_array.hh
  *
- * \brief File that includes all display routines.
+ * \brief Conversions to mln::p_array.
  */
+
+# include <mln/core/p_array.hh>
+# include <mln/core/concept/window.hh>
 
 
 namespace mln
 {
 
-  /// Namespace of routines that help to display images.
-  namespace display
+  namespace convert
   {
-    /// Implementation namespace of display namespace.
-    namespace impl {}
-  }
 
-}
+    /// Convert a point set \p pset into a p_array (point set vector).
+    template <typename S>
+    p_array<mln_point(S)> to_p_array(const Point_Set<S>& pset);
 
-# include <mln/display/color_pretty.hh>
-# include <mln/display/remove.hh>
-# include <mln/display/save.hh>
-# include <mln/display/show.hh>
 
-#endif // ! MLN_DISPLAY_ALL_HH
+    /// Convert a window \p win centered at point \p p into a p_array (point set vector).
+    template <typename W>
+    p_array<mln_point(W)> to_p_array(const Window<W>& win, const mln_point(W)& p);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename S>
+    p_array<mln_point(S)> to_p_array(const Point_Set<S>& pset_)
+    {
+      const S& pset = exact(pset_);
+      p_array<mln_point(S)> v;
+      v.reserve(pset.npoints());
+      mln_fwd_piter(S) p(pset);
+      for_all(p)
+	v.append(p);
+      return v;
+    }
+
+    template <typename W>
+    p_array<mln_point(W)> to_p_array(const Window<W>& win, const mln_point(W)& p)
+    {
+      p_array<mln_point(W)> v;
+      v.reserve(exact(win).ndpoints());
+      mln_qiter(W) q(win, p);
+      for_all(q)
+	v.append(q);
+      return v;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::convert
+
+} // end of namespace mln
+
+
+#endif // ! MLN_CONVERT_TO_VEC_P_HH

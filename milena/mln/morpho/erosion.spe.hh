@@ -162,12 +162,13 @@ namespace mln
 	O output;
 
 	mln_pixter(const I) p(input);
-	mln_pixter(O) p_out(output);
 	mln_qixter(const I, W) q(p, win);
 
 	if (win.is_centered())
 	  {
 	    output = clone(input);
+
+	    mln_pixter(O) p_out(output);
 	    for_all_2(p, p_out)
 	      if (p.val())
 		for_all(q)
@@ -182,6 +183,7 @@ namespace mln
 	    initialize(output, input);
 	    level::fill(output, input);
 
+	    mln_pixter(O) p_out(output);
 	    for_all_2(p, p_out)
 	      for_all(q)
 	      if (! q.val())

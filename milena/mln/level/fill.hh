@@ -39,6 +39,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
+# include <mln/core/inplace.hh>
 # include <mln/level/memset_.hh>
 
 
@@ -89,7 +90,10 @@ namespace mln
     template <typename I>
     void fill(Image<I>& ima,  mln_value(I) (*(&f))(const mln_point(I)& p));
 
+    template <typename I>
+    void fill_f(Image<I>& ima,  mln_value(I) (*f)(const mln_point(I)& p));
 
+    
     /*! Fill the image \p ima with the values given by the array \p arr.
      *
      * \param[in,out] ima The image to be filled.
@@ -181,8 +185,8 @@ namespace mln
     // with: value f(const point&)
 
     template <typename I>
-    void fill(Image<I>& ima_,
-	      mln_value(I) (*(&f))(const mln_point(I)& p))
+    void fill_f(Image<I>& ima_,
+		mln_value(I) (*f)(const mln_point(I)& p))
     {
       mln_precondition(f != 0);
       I& ima = exact(ima_);

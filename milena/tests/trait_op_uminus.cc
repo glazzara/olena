@@ -79,7 +79,7 @@ namespace mln
   {
 
 //     template <>
-//     struct set_precise_unary_< op::uminus, test >
+//     struct p_setrecise_unary_< op::uminus, test >
 //     {
 //       typedef bool ret;
 //     };

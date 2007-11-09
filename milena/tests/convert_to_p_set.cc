@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/convert_to_set_p.cc
+/*! \file tests/convert_to_p_set.cc
  *
- * \brief Tests on mln::convert::to_set_p.
+ * \brief Tests on mln::convert::to_p_set.
  */
 
 #include <mln/core/point2d.hh>
@@ -40,11 +40,11 @@
 
 #include <mln/level/fill.hh>
 
-#include <mln/convert/to_set_p.hh>
+#include <mln/convert/to_p_set.hh>
 
 using namespace mln;
 
-  void test(set_p<point2d> ref, set_p<point2d> cmp)
+  void test(p_set<point2d> ref, p_set<point2d> cmp)
   {
     mln_assertion(ref.npoints() == cmp.npoints());
     for (unsigned i = 0; i < ref.npoints(); ++i)
@@ -59,20 +59,20 @@ int main()
     c(-1,0),
     d(0,-1);
 
-  set_p<point2d> ref;
+  p_set<point2d> ref;
   ref.insert(a).insert(b).insert(c).insert(d);
   // Reference constructed.
 
   // Nbh :
   neighb2d nbh = c4();
-  set_p<point2d> test_nbh = convert::to_set_p(nbh);
+  p_set<point2d> test_nbh = convert::to_p_set(nbh);
   test(ref, test_nbh);
 
   // Image :
   image2d<bool> ima(make::box2d(-6, -6, 6, 6));
   level::fill(ima, false);
   level::fill(inplace(ima | ref), true);
-  set_p<point2d> test_ima = convert::to_set_p(ima);
+  p_set<point2d> test_ima = convert::to_p_set(ima);
   test(ref, test_ima);
 
   // Window :
@@ -82,7 +82,7 @@ int main()
     .insert(b - point2d::origin)
     .insert(c - point2d::origin)
     .insert(d - point2d::origin);
-  set_p<point2d> test_win = convert::to_set_p(win);
+  p_set<point2d> test_win = convert::to_p_set(win);
   test(ref, test_win);
 
   // std::set :
@@ -91,6 +91,6 @@ int main()
   set.insert(b);
   set.insert(c);
   set.insert(d);
-  set_p<point2d> test_set = convert::to_set_p(set);
+  p_set<point2d> test_set = convert::to_p_set(set);
   test(ref, test_set);
 }

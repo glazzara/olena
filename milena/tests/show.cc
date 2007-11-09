@@ -65,7 +65,7 @@ int main()
   image2d<unsigned> tmp = geom::chamfer(input, w_win, max);
 
   // Call color_pretty for sub_image.
-  for (unsigned i = 2; i < 22; i += 2)
+  for (unsigned i = 2; i < 6; i += 2)
     {
       image_if_value<image2d<unsigned> > t = inplace (tmp | i);
       display::save (t);
