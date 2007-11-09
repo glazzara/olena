@@ -31,13 +31,15 @@
 # include <libgimp/gimp.h>
 # include <libgimp/gimpui.h>
 
-# include <mln/core/image2d.hh>
-# include <mln/value/rgb8.hh>
-# include <mln/literal/black.hh>
-# include <mln/display/show.hh>
-# include <mln/display/remove.hh>
+# include <src/gimp-image.hh>
 
-void build_milena_image(GimpDrawable *drawable);
+// # include <mln/core/image2d.hh>
+// # include <mln/value/rgb8.hh>
+// # include <mln/literal/black.hh>
+// # include <mln/display/show.hh>
+// # include <mln/display/remove.hh>
+
+void build_milena_image(GimpPixelRgn *region);
 
 gboolean draw_milena_image(GtkWidget* area,
 			   GdkEventExpose *event,

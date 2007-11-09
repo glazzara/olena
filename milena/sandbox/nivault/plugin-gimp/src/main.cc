@@ -96,6 +96,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
+  GimpPixelRgn       region;
   gint32             image_ID;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
@@ -107,7 +108,16 @@ run (const gchar      *name,
   image_ID = param[1].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  build_milena_image(drawable);
+  gimp_pixel_rgn_init(&region,
+		      drawable,
+		      0,
+		      0,
+		      drawable->width,
+		      drawable->height,
+		      FALSE,
+		      FALSE);
+
+  build_milena_image(&region);
 
   if (strcmp (name, PROCEDURE_NAME) == 0)
   {

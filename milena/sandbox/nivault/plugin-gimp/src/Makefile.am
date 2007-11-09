@@ -5,6 +5,7 @@ bin_PROGRAMS = milena
 bindir = $(GIMP_LIBDIR)/plug-ins
 
 milena_SOURCES = \
+	gimp-image.hh	\
 	build-image.hh	\
 	build-image.hxx	\
 	main.cc		\

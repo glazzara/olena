@@ -27,7 +27,7 @@
 
 #include "build-image.hh"
 
-typedef mln::image2d<mln::value::rgb8> I; 
+typedef mln::gimp_image<GIMP_RGB_IMAGE> I;
 
 static I ima;
 
@@ -36,29 +36,27 @@ const I& get_ima()
   return ima;
 }
 
-void build_milena_image(GimpDrawable *drawable)
+void build_milena_image(GimpPixelRgn *region)
 {
-  I tmp(mln::make::box2d(0, 0, drawable->height - 1, drawable->width - 1), 0);
+  I tmp(region);
   ima = tmp;
   mln_piter_(I) p(ima.domain());
-  GimpRGB color;
-  GimpPixelRgn region;
 
-  gimp_pixel_rgn_init(&region,
-		      drawable,
-		      0,
-		      0,
-		      drawable->width,
-		      drawable->height,
-		      FALSE,
-		      FALSE);
+//   gimp_pixel_rgn_init(&region,
+// 		      drawable,
+// 		      0,
+// 		      0,
+// 		      drawable->width,
+// 		      drawable->height,
+// 		      FALSE,
+// 		      FALSE);
   
-  gimp_pixel_rgn_get_rect(&region,
-			  (guchar *) ima.buffer(),
-			  0,
-			  0,
-			  drawable->width,
-			  drawable->height);
+//   gimp_pixel_rgn_get_rect(&region,
+// 			  (guchar *) ima.buffer(),
+// 			  0,
+// 			  0,
+// 			  drawable->width,
+// 			  drawable->height);
 }
 
 gboolean draw_milena_image(GtkWidget* area,

@@ -1,3 +1,14 @@
+2007-11-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add gimp-image adapter and use it.
+	* sandbox/nivault/plugin-gimp/src/Makefile.am: Add gimp-image.hh.
+	* sandbox/nivault/plugin-gimp/src/imagegimp.hh: Rename as...
+	* sandbox/nivault/plugin-gimp/src/gimp-image.hh: ...this. Milena
+	image that encapsulate GimpPixelRgn.
+	* sandbox/nivault/plugin-gimp/src/build-image.hh,
+	* sandbox/nivault/plugin-gimp/src/build-image.hxx,
+	* sandbox/nivault/plugin-gimp/src/main.cc: Use gimp-image.
+
 2007-11-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add an faster FLLT algorithm implementation.
