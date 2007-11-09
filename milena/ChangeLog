@@ -1,5 +1,11 @@
 2007-11-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix bug for tree_to_image.
+	* mln/util/tree_to_image.hh: Remove println for debug.
+	* tests/tree_to_image.cc: Add includes.
+
+2007-11-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix bug.
 	* mln/core/clock_neighb2d.hh: Fix assertion bug.
 

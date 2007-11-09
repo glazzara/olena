@@ -105,7 +105,6 @@ namespace mln
       mln_piter(set_p<P>) p (s);
       for_all (p)
 	out(p) = true;
-      debug::println(out);
     }
 
 
@@ -164,7 +163,6 @@ namespace mln
       level::fill(output, false);
       mln_assertion(node);
       display_branch_rec(ima, node, output);
-      debug::println(output);
     }
 
 

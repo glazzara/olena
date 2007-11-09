@@ -38,9 +38,11 @@
 #include <mln/core/set_p.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/stretch.hh>
+#include <mln/level/fill.hh>
 #include <mln/io/pgm/save.hh>
 #include <vector>
 #include <mln/util/tree_to_image.hh>
+#include <mln/debug/println.hh>
 
 template <typename P, typename V>
 struct fllt_node
