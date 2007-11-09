@@ -1,3 +1,11 @@
+2007-11-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add clockwise neighborhood iterator.
+
+	* mln/core/clock_neighb.hh: New way to iterate on neighborhood.
+	* mln/core/clock_neighb2d.hh: New clock_neighb for 2d.
+	* tests/clock_neighb2d.cc: New test for that.
+
 2007-11-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add gimp-image adapter and use it.
