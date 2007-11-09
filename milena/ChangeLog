@@ -1,5 +1,10 @@
 2007-11-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix bug.
+	* mln/core/clock_neighb2d.hh: Fix assertion bug.
+
+2007-11-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add clockwise neighborhood iterator.
 
 	* mln/core/clock_neighb.hh: New way to iterate on neighborhood.

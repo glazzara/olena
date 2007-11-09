@@ -111,7 +111,7 @@ namespace mln
 	std::vector<dpoint2d>::const_iterator ite = v.begin ();
 	for (; (ite != v.end ()) && (dp != *ite); ++ite, ++begin)
 	  ;
-	mln_assertion (*ite != v.end ());
+	mln_assertion (ite != v.end ());
 	for (int i = begin; i < v.size(); ++i)
 	  it.append(v[i]);
 	for (int i = 0; i < begin; ++i)
