@@ -1,3 +1,12 @@
+2007-11-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add dpoints_bkd_piter.
+
+	* mln/core/clock_neighb.hh: Add typo and fix new header.
+	* mln/core/clock_neighb2d.hh: Fix warnings (int -> unsigned).
+	* mln/core/dpoints_piter.hh: Add bkf_iterator.
+	* tests/clock_neighb2d.cc: New test for this.
+
 2007-11-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Bad plugin for debugging a segfault.

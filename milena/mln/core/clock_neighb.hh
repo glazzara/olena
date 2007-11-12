@@ -36,7 +36,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/internal/dpoints_base.hh>
 # include <mln/core/dpoint.hh>
-# include <mln/core/vec_p.hh>
+# include <mln/core/p_array.hh>
 
 namespace mln
 {
@@ -67,6 +67,8 @@ namespace mln
 
     /*! \brief Point_Iterator type to browse the points of a generic
      * neighborhood w.r.t. the reverse ordering of delta-points.
+     *
+     * !!! Be careful the start delta point become the last now.
      */
     typedef dpoints_bkd_piter<D> bkd_niter;
 

@@ -99,10 +99,63 @@ namespace mln
   };
 
 
-  // FIXME:
+  /*! \brief A generic backward iterator on points of windows and of
+   *  neighborhoods.
+   *
+   * The parameter \c D is the type of delta-points.
+   */
   template <typename D>
-  class dpoints_bkd_piter : public mln::internal::fixme
-  {};
+  class dpoints_bkd_piter : public internal::point_iterator_base_< mln_point(D), dpoints_bkd_piter<D> >
+  {
+  public:
+
+    /*! \brief Constructor.
+     *
+     * \param[in] dps   Object that can provide an array of delta-points.
+     * \param[in] p_ref Center point to iterate around.
+     */
+    template <typename Dps, typename Pref>
+    dpoints_bkd_piter(const Dps& dps, // FIXME: explicitly set_of_<D>?
+		      const Point_Site<Pref>& p_ref);
+
+    /// Convertion to point.
+    operator mln_point(D) () const;
+
+    /// Reference to the corresponding point.
+    const mln_point(D)& to_point() const;
+
+    /// Test the iterator validity.
+    bool is_valid() const;
+
+    /// Invalidate the iterator.
+    void invalidate();
+
+    /// Start an iteration.
+    void start();
+
+    /// Go to the next point.
+    void next_();
+
+    /// Give the i-th coordinate.
+    mln_coord(D) operator[](unsigned i) const;
+
+    /// The point around which this iterator moves.
+    const mln_point(D)& center_point() const;
+
+    /// Force this iterator to update its location to take into
+    /// account that its center point may have moved. 
+    void update();
+
+  protected:
+
+    const std::vector<D>& dps_;
+    const mln_point(D)& p_ref_; // reference point (or "center point")
+
+    int i_;
+    mln_point(D) p_; // location of this iterator; p_ makes this iterator be
+	             // itself a potential center point.
+  };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -190,6 +243,95 @@ namespace mln
 
     return p_[i];
   }
+
+
+
+  template <typename D>
+  template <typename Dps, typename Pref>
+  dpoints_bkd_piter<D>::dpoints_bkd_piter(const Dps& dps,
+					  const Point_Site<Pref>& p_ref)
+    : dps_(exact(dps).vect()),
+      p_ref_(exact(p_ref).to_point())
+  {
+    invalidate();
+  }
+
+  template <typename D>
+  dpoints_bkd_piter<D>::operator mln_point(D) () const
+  {
+    mln_precondition(is_valid());
+    return p_;
+  }
+
+  template <typename D>
+  const mln_point(D)&
+  dpoints_bkd_piter<D>::to_point() const
+  {
+    return p_;
+  }
+
+  template <typename D>
+  bool
+  dpoints_bkd_piter<D>::is_valid() const
+  {
+    unsigned i = i_;
+
+    return i < dps_.size();
+  }
+
+  template <typename D>
+  void
+  dpoints_bkd_piter<D>::invalidate()
+  {
+    i_ = -1;
+  }
+
+  template <typename D>
+  void
+  dpoints_bkd_piter<D>::start()
+  {
+    i_ = dps_.size() - 1;
+    update();
+  }
+
+  template <typename D>
+  void
+  dpoints_bkd_piter<D>::next_()
+  {
+    --i_;
+    update();
+  }
+
+  template <typename D>
+  const mln_point(D)&
+  dpoints_bkd_piter<D>::center_point() const
+  {
+    return p_ref_;
+  }
+
+  template <typename D>
+  void
+  dpoints_bkd_piter<D>::update()
+  {
+    if (is_valid())
+      p_ = p_ref_ + dps_[i_];
+  }
+
+  template <typename D>
+  mln_coord(D)
+  dpoints_bkd_piter<D>::operator[](unsigned i) const
+  {
+    mln_precondition(is_valid());
+
+    // below we test that no update is required
+    // meaning that p_ref_ has not moved or that
+    // the user has explicitly called update()
+    mln_precondition(p_ref_ + dps_[i_] == p_);
+    // FIXME: Explain this issue in the class documentation...
+
+    return p_[i];
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

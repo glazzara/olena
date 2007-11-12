@@ -112,9 +112,9 @@ namespace mln
 	for (; (ite != v.end ()) && (dp != *ite); ++ite, ++begin)
 	  ;
 	mln_assertion (ite != v.end ());
-	for (int i = begin; i < v.size(); ++i)
+	for (unsigned i = begin; i < v.size(); ++i)
 	  it.append(v[i]);
-	for (int i = 0; i < begin; ++i)
+	for (unsigned i = 0; i < begin; ++i)
 	  it.append(v[i]);
 
 	flower = false;
@@ -144,9 +144,9 @@ namespace mln
 	for (; (ite != v.end ()) && (dp != *ite); ++ite, ++begin)
 	  ;
 	//	mln_assertion (*ite != v.end ());
-	for (int i = begin; i < v.size(); ++i)
+	for (unsigned i = begin; i < v.size(); ++i)
 	  it.append(v[i]);
-	for (int i = 0; i < begin; ++i)
+	for (unsigned i = 0; i < begin; ++i)
 	  it.append(v[i]);
 
 // 	flower = false;

@@ -32,17 +32,34 @@
 namespace mln
 {
   template <typename I, typename N>
-  void test(Image<I>& input_,
-	    const Neighborhood<N>& nbh)
+  void test_fwd(Image<I>& input_,
+		const Neighborhood<N>& nbh)
   {
     I& input = exact (input_);
     point2d	p (1,1);
     int		v = 1;
 
     mln_fwd_niter(N)   n (nbh, p);
-
     for_all (n)
       {
+	std::cout << n << std::endl;
+	input(n) = v++;
+      }
+
+  }
+
+  template <typename I, typename N>
+  void test_bkd(Image<I>& input_,
+		const Neighborhood<N>& nbh)
+  {
+    I& input = exact (input_);
+    point2d	p (1,1);
+    int		v = 1;
+
+    mln_bkd_niter(N)   n (nbh, p);
+    for_all (n)
+      {
+	std::cout << n << std::endl;
 	input(n) = v++;
       }
 
@@ -59,11 +76,17 @@ int main ()
   image2d<int>  ima(3,3);
   dpoint2d	dp (1,0);
 
-  test(ima, cc8(dp));
+  test_fwd(ima, cc4(dp));
   debug::println(ima);
+  test_bkd(ima, cc4(dp));
+  debug::println(ima);
+
 
   dpoint2d	dp2 (-1,-1);
 
-  test(ima, cc8(dp2));
+  test_fwd(ima, cc8(dp2));
   debug::println(ima);
+  test_bkd(ima, cc8(dp2));
+  debug::println(ima);
+
 }
