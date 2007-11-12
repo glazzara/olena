@@ -36,7 +36,7 @@
  */
 
 # include <mln/core/image2d.hh>
-# include <mln/core/set_p.hh>
+# include <mln/core/p_set.hh>
 # include <mln/core/inplace.hh>
 # include <mln/core/neighb2d.hh>
 # include <mln/core/pset_if_piter.hh>
@@ -89,8 +89,8 @@ namespace mln
     struct fllt_node_elt
     {
       V	value;
-      set_p<P> points;
-      set_p<P> holes;
+      p_set<P> points;
+      p_set<P> holes;
       /// Tell if his parent if brighter or not.  Nb : if the parent
       /// if brighter, the node come from the lower level set
       bool brighter;
@@ -161,9 +161,9 @@ namespace mln
     }
 
     template <typename P>
-    void step2 (set_p<P>& A,
-		set_p<P>& R,
-		set_p<P>& N,
+    void step2 (p_set<P>& A,
+		p_set<P>& R,
+		p_set<P>& N,
 		point2d& x0)
     {
       //std::cout << "entering step 2" << std::endl;
@@ -181,9 +181,9 @@ namespace mln
     template <typename V, typename P, typename F>
     void step3 (const image2d<V>& u,
 		image2d<bool>& tagged,
-		set_p<P>& A,
-		set_p<P>& R,
-		set_p<P>& N,
+		p_set<P>& A,
+		p_set<P>& R,
+		p_set<P>& N,
 		V& gn)
     {
       static bool finished = false;
@@ -194,7 +194,7 @@ namespace mln
       { finished = false; gn -= 2 * F::inc; return; }
 
       // N <- N union {x neighbor of a pixel in a\R}
-      mln_piter(set_p<P>) qa(A);
+      mln_piter(p_set<P>) qa(A);
       for_all(qa)
 	{
 	  mln_niter(neighb2d) n(F::reg_nbh(), qa);
@@ -239,9 +239,9 @@ namespace mln
     /// IF g < gn.
     template <typename V, typename P, typename F>
     void step4_1 (image2d<V>& u,
-		  set_p<P>& A,
-		  set_p<P>& R,
-		  set_p<P>& N,
+		  p_set<P>& A,
+		  p_set<P>& R,
+		  p_set<P>& N,
 		  V& g,
 		  V& gn,
 		  fllt_node(P, V)*& current_region,
@@ -256,7 +256,7 @@ namespace mln
 
       if ((R.bbox() < u.domain()) || (R.npoints() == u.domain().npoints()))
       {
-	mln_piter(set_p<P>) p(R);
+	mln_piter(p_set<P>) p(R);
 	current_region = new fllt_node(P, V)();
 	current_region->elt().brighter = F::parent_is_brighter;
 	current_region->elt().value = g;
@@ -285,7 +285,7 @@ namespace mln
 	//       level::fill(inplace(border_ima | N), true);
 	//       std::cout << "tmp border = " << tmp.border () << std::endl;
 	//       std::cout << "ima border = " << border_ima.border () << std::endl;
-	mln_piter(set_p<P>) z(N);
+	mln_piter(p_set<P>) z(N);
 	for_all(z)
 	  {
 	    mln_assertion(border_ima.owns_(z));
@@ -336,8 +336,8 @@ namespace mln
     /// IF g == gn.
     template <typename V, typename P>
     void step4_2 (const image2d<V>& u,
-		  set_p<P>& A,
-		  set_p<P>& N,
+		  p_set<P>& A,
+		  p_set<P>& N,
 		  V& g,
 		  fllt_node(P, V)* current_region,
 		  image2d<fllt_node(P, V)*>& regions
@@ -364,13 +364,13 @@ namespace mln
     template <typename V, typename P>
     void step4_3 (image2d<V>& u,
 		  const image2d<bool>& tagged,
-		  const set_p<P>& R,
+		  const p_set<P>& R,
 		  const V& g)
     {
       //std::cout << "entering step 4_3" << std::endl;
 
       //    set the gray-level of the pixels of R to g.
-      mln_piter(set_p<P>) p(R);
+      mln_piter(p_set<P>) p(R);
       for_all(p)
 	{
 	  mln_assertion (tagged(p));
@@ -401,7 +401,7 @@ namespace mln
       mln_assertion(ima.domain() == regions.domain());
 
       // Declarations.
-      set_p<P> R, N, A;
+      p_set<P> R, N, A;
       V g, gn;
       point2d x0;
       image2d<V> min_locals(ima.domain());
@@ -629,7 +629,7 @@ namespace mln
 	//	std::cout << "[End fill_a_shape]" << std::endl;
 	return;
       }
-      mln_piter(set_p<P>) p(node.elt().holes);
+      mln_piter(p_set<P>) p(node.elt().holes);
       for_all(p)
 	{
 	  bool h = true;
@@ -648,7 +648,7 @@ namespace mln
 	       it++)
 	  {
 	    // Browse the hole of each child.
-	    mln_piter(set_p<P>) q((*it)->elt().holes);
+	    mln_piter(p_set<P>) q((*it)->elt().holes);
 	    for_all(q)
 	      {
 		fllt_node(P, V)* child_hole = find_the_hole<P,V,F>((**it), point2d(q), hole_reg);
@@ -744,7 +744,7 @@ namespace mln
       for_all(p)
 	{
 	  //std::cout << (&*p) << ":" << p.deepness() << std::endl;
-	  mln_piter(set_p<point2d>) q((*p).elt().points);
+	  mln_piter(p_set<point2d>) q((*p).elt().points);
 	  for_all(q)
 	    {
 	      if (output(q) < p.deepness())
@@ -766,7 +766,7 @@ namespace mln
 	{
 	  if ((*p).elt().points.npoints() > limit)
 	  {
-	    mln_piter(set_p<point2d>) q((*p).elt().points);
+	    mln_piter(p_set<point2d>) q((*p).elt().points);
 	    for_all(q)
 	      {
 		mln_niter(neighb2d) n(c4(), q);

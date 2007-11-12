@@ -15,26 +15,17 @@ int main()
 
   using namespace mln;
 
-  int ws[81] = {2,2,2,2,2,2,2,2,2,
-		2,2,2,2,2,2,2,2,2,
-		2,1,1,1,1,1,1,1,2,
-		2,1,2,2,1,0,0,1,2,
-		2,1,2,2,1,0,0,1,2,
-		2,1,2,2,1,0,0,1,2,
-		2,1,1,1,1,1,1,1,2,
-		2,1,1,1,1,1,1,1,2,
-		2,2,2,2,2,2,2,2,2};
+  int vs[9][9] = { {2,2,2,2,2,2,2,2,2},
+		   {2,2,2,2,2,2,2,2,2},
+		   {2,1,1,1,1,1,1,1,2},
+		   {2,1,2,2,1,0,0,1,2},
+		   {2,1,2,2,1,0,0,1,2},
+		   {2,1,2,2,1,0,0,1,2},
+		   {2,1,1,1,1,1,1,1,2},
+		   {2,1,1,1,1,1,1,1,2},
+		   {2,2,2,2,2,2,2,2,2} };
 
-  w_window2d_int w_win = make::w_window2d(ws);
- image2d<int> ima = convert::to_image(w_win);
-fllt::fllt(ima);
+  image2d<int> ima(make::image2d(vs));
+  fllt::fllt(ima);
 
-
-//    image2d<value::int_u8> ima = io::pgm::load("../../img/tiny.pgm");
-
-//    image2d<int> ima_int(ima.domain());
-
-// level::fill(ima_int, ima);
-//   debug::println(ima);
-//   fllt::fllt(ima_int);
 }

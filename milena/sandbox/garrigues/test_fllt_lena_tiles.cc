@@ -1,4 +1,4 @@
-# include "fllt2.hh"
+# include "fllt_optimized.hh"
 # include <mln/core/image2d.hh>
 # include <mln/core/clone.hh>
 # include <mln/value/int_u8.hh>
@@ -26,7 +26,7 @@ int main()
       image2d<value::int_u8> ima = io::pgm::load(path.str());
       image2d<int> ima_int(ima.domain());
       level::fill(ima_int, ima);
-      debug::println(ima_int);
       fllt::fllt(ima_int);
     }
 }
+

@@ -1,3 +1,31 @@
+2007-11-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Clean and optimise FLLT.
+
+	* sandbox/garrigues/fllt_doc.hh: New, Notes for FLLT.
+	* sandbox/garrigues/fllt_merge.hh: New, merge algorithm.
+	* sandbox/garrigues/fllt_optimized.hh: Update.
+	* sandbox/garrigues/fllt_types.hh: New, types used in FLLT.
+	* sandbox/garrigues/level_set.hh: New, compute lower/upper level set
+          algorithm
+	* sandbox/garrigues/lower.hh: New, informations about how to compute
+          the lower level set.
+	* sandbox/garrigues/upper.hh: New, informations about how to compute
+          the lower level set.
+
+	* sandbox/garrigues/test_fllt12.cc: Cleaning, (fllt2.hh) replaced by...
+	(fllt_optimized.hh) ...this.
+	* sandbox/garrigues/test_fllt13.cc: Likewise.
+	* sandbox/garrigues/test_fllt2.cc: Likewise.
+	* sandbox/garrigues/test_fllt3.cc: Likewise.
+	* sandbox/garrigues/test_fllt_lena_tiles.cc: Likewise.
+
+	* mln/util/branch_iter_ind.hh: Check if the tree has not
+          been subject to updates which can invalidate the iterator.
+
+	* sandbox/garrigues/fllt2.hh: (set_p) replaced by...
+	{p_set} ...this.
+
 2007-11-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add tests for optimize fllt.

@@ -19,20 +19,11 @@ int main()
   using namespace mln;
   using typename value::int_u8;
 
-//   int vs[3][6] = { {0, 0, 0, 1, 1, 1},
-// 		   {0, 1, 0, 1, 0, 1},
-// 		   {0, 0, 0, 1, 1, 1} };
-
-
- int vs[4][5] = {
-   { 4, 4, 2, 2, 2},
-   { 4, 3, 1, 2, 2},
-   { 4, 1, 1, 4, 2},
-   { 4, 1, 1, 1, 2} };
+  int vs[4][5] = { {4, 4, 2, 2, 2},
+		   {4, 3, 1, 2, 2},
+		   {4, 1, 1, 4, 2},
+		   {4, 1, 1, 1, 2} };
 
   image2d<int> ima(make::image2d(vs));
-  image2d<int_u8> out(ima.domain());
-
-  level::fill(out, ima);
   fllt::fllt(ima);
 }
