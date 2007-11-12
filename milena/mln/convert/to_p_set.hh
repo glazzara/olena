@@ -40,6 +40,7 @@
 # include <mln/core/p_set.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
+# include <mln/metal/templated_by.hh>
 # include <mln/metal/is_a.hh>
 
 
@@ -62,8 +63,12 @@ namespace mln
     p_set<mln_point(W)> to_p_set(const Window<W>& win);
 
     /// Convert an std::set \p s of points into a point set.
-    template <typename D>
-    p_set<D> to_p_set(const std::set<D>& s);
+    template <typename P>
+    p_set<P> to_p_set(const std::set<P>& s);
+
+    /// Convert any point set \p ps into a 'mln::p_set' point set.
+    template <typename S>
+    p_set<mln_psite(S)> to_p_set(const Point_Set<S>& ps);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -86,7 +91,10 @@ namespace mln
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
+
       // FIXME: Check that ima is binary!
+//       mln::metal::templated_by<mln_value(I), bool >::check();
+
       typedef mln_dpoint(I) D;
       typedef mln_point(I) P;
       p_set<P> pset;
@@ -118,6 +126,18 @@ namespace mln
 	   i != s.end(); ++i)
 	pset.insert(*i);
       return pset;
+    }
+
+
+    template <typename S>
+    p_set<mln_psite(S)> to_p_set(const Point_Set<S>& ps_)
+    {
+      const S& ps = exact(ps_);
+      p_set<mln_psite(S)> tmp;
+      mln_piter(S) p(ps);
+      for_all(p)
+	tmp.insert(p);
+      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

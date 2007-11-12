@@ -1,3 +1,8 @@
+2007-11-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update convert::to_p_set.
+	* mln/convert/to_p_set.hh: Update.
+
 2007-11-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Clean and optimise FLLT.
