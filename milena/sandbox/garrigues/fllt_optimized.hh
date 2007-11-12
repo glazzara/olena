@@ -134,8 +134,8 @@ namespace mln
       image2d<value::int_u8> output (ima.domain());
       util::tree_to_image (tree, output);
 
-      util::display_tree(ima, tree);
-      draw_tree(ima, tree);
+//       util::display_tree(ima, tree);
+//       draw_tree(ima, tree);
 
       if (output != ima)
 	std::cerr << "Warning: input and output differ." << std::endl;

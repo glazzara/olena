@@ -147,24 +147,24 @@ namespace mln
       clock_neighb2d nbh = cc8(dp);
 
 
-      // FIXME : debug.
-      {
-	image2d<bool> d(make::box2d(-1, -1, 1, 1));
-	level::fill(d, 0);
-	mln_fwd_niter(clock_neighb2d)   n(nbh , p);
-	mln_fwd_niter(clock_neighb2d)   dn(nbh , make::point2d(0, 0));
-	for_all_2(n, dn)
-	  {
-	    d(dn) =
-	      env.shape(n);
-	  }
-	std::cout << "update cc lower : " << p << std::endl;
-	if (env.R.npoints())
-	  debug::println(env.u | env.R);
+//       // FIXME : debug.
+//       {
+// 	image2d<bool> d(make::box2d(-1, -1, 1, 1));
+// 	level::fill(d, 0);
+// 	mln_fwd_niter(clock_neighb2d)   n(nbh , p);
+// 	mln_fwd_niter(clock_neighb2d)   dn(nbh , make::point2d(0, 0));
+// 	for_all_2(n, dn)
+// 	  {
+// 	    d(dn) =
+// 	      env.shape(n);
+// 	  }
+// 	std::cout << "update cc lower : " << p << std::endl;
+// 	if (env.R.npoints())
+// 	  debug::println(env.u | env.R);
 
-	debug::println(d);
-      }
-      // END
+// 	debug::println(d);
+//       }
+//       // END
 
 
       mln_fwd_niter(clock_neighb2d)   n(nbh , p);
@@ -193,7 +193,7 @@ namespace mln
 	}
       env.n_cc += (res == 0 ? 0 : (res - 1));
 
-      std::cout << "=> " << (res == 0 ? 0 : (res - 1)) << std::endl;
+//       std::cout << "=> " << (res == 0 ? 0 : (res - 1)) << std::endl;
 
     }
 
@@ -353,10 +353,10 @@ namespace mln
 	unsigned n;
 	labeling::level(border_ima, true, F::bdr_nbh(), tmp, n);
 
-	std::cout << "labeling : " << n << std::endl;
-	std::cout << "nous : " << env.n_cc << std::endl;
-	if (env.R.npoints())
-	  debug::println(env.u | env.R);
+// 	std::cout << "labeling : " << n << std::endl;
+// 	std::cout << "nous : " << env.n_cc << std::endl;
+// 	if (env.R.npoints())
+// 	  debug::println(env.u | env.R);
 
 	if (n > 1)
 	{
@@ -378,8 +378,7 @@ namespace mln
       }
       env.g = env.gn;
       //    A <- {x belongs to N / u(x) == g}
-      env.A.clear();
-      env.A = set::uni(env.A, set::inter(env.N, env.u.domain()) | pw::value(env.u) == pw::cst(env.g));
+      env.A = convert::to_p_set(set::inter(env.N, env.u.domain()) | pw::value(env.u) == pw::cst(env.g));
       //    N <- N\{x belongs to N / u(x) == g}
       env.N = set::diff(env.N, set::inter(env.N, env.u.domain()) | pw::value(env.u) == pw::cst(env.g));
     }
@@ -390,7 +389,7 @@ namespace mln
     void step4_2 (ls_env<P, V>& env)
     {
       //    A <- {x belongs to N / u(x) == g}
-      env.A = set::uni(env.A, set::inter(env.N, env.u.domain()) | pw::value(env.u) == pw::cst(env.g));
+      env.A = convert::to_p_set(set::inter(env.N, env.u.domain()) | pw::value(env.u) == pw::cst(env.g));
       //    N <- N\{x belongs to N / u(x) == g}
       env.N = set::diff(env.N, set::inter(env.N, env.u.domain()) | pw::value(env.u) == pw::cst(env.g));
     }
@@ -480,9 +479,9 @@ namespace mln
 	  }
       } // end of Algorithm
 
-      image2d<value::int_u8> output (input.domain ());
+//       image2d<value::int_u8> output (input.domain ());
       fllt_tree(P, V)& tree = *new fllt_tree(P, V)(env.current_region);
-      util::tree_to_image (tree, output);
+//       util::tree_to_image (tree, output);
 
       return (tree);
 
