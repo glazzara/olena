@@ -107,6 +107,7 @@ run (const gchar      *name,
   run_mode = (GimpRunMode) param[0].data.d_int32;
   image_ID = param[1].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
+  gimp_image_undo_enable(image_ID);
 
   gimp_pixel_rgn_init(&region,
 		      drawable,

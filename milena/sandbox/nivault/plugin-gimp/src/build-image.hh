@@ -32,12 +32,16 @@
 # include <libgimp/gimpui.h>
 
 # include <src/gimp-image.hh>
+# include <mln/core/point2d.hh>
 # include <mln/level/fill.hh>
-// # include <mln/core/image2d.hh>
-// # include <mln/value/rgb8.hh>
+# include <mln/core/image2d.hh>
+# include <mln/value/rgb8.hh>
 # include <mln/literal/all.hh>
-// # include <mln/display/show.hh>
-// # include <mln/display/remove.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/level/transform.hh>
+# include <mln/border/resize.hh>
+
+# include <mln/io/ppm/save.hh>
 
 void build_milena_image(GimpPixelRgn *region);
 

@@ -1,3 +1,13 @@
+2007-11-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Plug-in gimp works and compute images.
+	* sandbox/nivault/plugin-gimp/src/build-image.hh,
+	* sandbox/nivault/plugin-gimp/src/build-image.hxx,
+	* sandbox/nivault/plugin-gimp/src/gimp-image.hh,
+	* sandbox/nivault/plugin-gimp/src/main.cc: Update.
+
+	* mln/level/transform.hh: Add the "out algo(in)" form.
+
 2007-11-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add new test for convert::to_p_set.

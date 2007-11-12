@@ -37,6 +37,10 @@
 # include <mln/value/set.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/core/line_piter.hh>
+# include <mln/literal/all.hh>
+
+# include <iostream>
+# include <sstream>
 
 namespace mln
 {
@@ -265,8 +269,8 @@ namespace mln
       mln_assertion(rgn != NULL);
       buffer_ = (typename gimp_image<t>::value*) rgn->data;
       b_ = make::box2d(rgn->y, rgn->x,
-		       rgn->y + rgn->h,
-		       rgn->x + rgn->w);
+		       rgn->y + rgn->h - 1,
+		       rgn->x + rgn->w - 1);
       allocate_();
     }
 
@@ -408,16 +412,23 @@ namespace mln
   {
     // mln_precondition(this->owns_(p));
      // FIXME HERE value*) this->data_->rgn->data
-    static mln::value::rgb8 c(200,200,200);
-    return c; // this->data_->array_[p.row()][p.col()];
-  }
+
+    static mln::value::rgb8 c;
+    gimp_pixel_rgn_get_pixel(this->data_->rgn_,
+			     (guchar *) &c,
+			     p[1], p[0]);
+    return c;
+ }
 
   template <GimpImageType t>
   mln_value(gimp_image<t>)&
   gimp_image<t>::operator()(const point& p)
   {
     // mln_precondition(this->owns_(p));
-    static mln::value::rgb8 c(0,0,0);
+    static mln::value::rgb8 c;
+    gimp_pixel_rgn_get_pixel(this->data_->rgn_,
+			     (guchar *) &c,
+			     p[1], p[0]);
     return c; // this->data_->array_[p.row()][p.col()];
 //     return this->data_->array_[p.row()][p.col()];
   }

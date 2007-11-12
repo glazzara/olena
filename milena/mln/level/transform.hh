@@ -64,6 +64,11 @@ namespace mln
     void transform(const Image<I>& input, const Function_v2v<F>& f, Image<O>& output);
 
 
+    template <typename I, typename F>
+    mln_ch_value(I, mln_result(F))
+      transform(const Image<I>& input, const Function_v2v<F>& f);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
@@ -128,6 +133,18 @@ namespace mln
       mln_precondition(exact(output).domain() >= exact(input).domain());
       impl::transform(mln_is_value_lowq(I)(),
 		      exact(input), exact(f), exact(output));
+    }
+
+
+    template <typename I, typename F>
+    mln_ch_value(I, mln_result(F))
+      transform(const Image<I>& input, const Function_v2v<F>& f)
+    {
+      mln_precondition(exact(input).has_data());
+      mln_ch_value(I, mln_result(F)) output;
+      initialize(output, input);
+      transform(input, f, output);
+      return output;
     }
 
 
