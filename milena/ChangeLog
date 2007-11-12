@@ -1,5 +1,10 @@
 2007-11-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add tests for optimize fllt.
+	* tests/clock_test.cc: New test for optimize fllt.
+
+2007-11-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add dpoints_bkd_piter.
 
 	* mln/core/clock_neighb.hh: Add typo and fix new header.
