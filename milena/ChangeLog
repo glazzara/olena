@@ -1,5 +1,10 @@
 2007-11-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add new test for convert::to_p_set.
+	* tests/core_pset_if.cc: New test for convert::to_p_set.
+
+2007-11-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update convert::to_p_set.
 	* mln/convert/to_p_set.hh: Update.
 
