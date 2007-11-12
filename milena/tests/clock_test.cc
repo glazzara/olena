@@ -88,7 +88,6 @@ namespace mln
 
 
     // just to get the last previous_is_false.
-    // FIXME replace it with bkd_niter.
     {
       mln_bkd_niter(clock_neighb2d)   b(nbh , p);
       b.start ();

@@ -110,7 +110,7 @@ namespace mln
       point2d x0;
 
       ls_env(const image2d<V>& input,
-		 image2d<fllt_node(P, V)*>& regions_)
+	     image2d<fllt_node(P, V)*>& regions_)
 	: input(input),
 	  regions(regions_),
 	  tagged(input.domain()),
@@ -146,6 +146,27 @@ namespace mln
       dpoint2d dp(-1,-1);
       clock_neighb2d nbh = cc8(dp);
 
+
+      // FIXME : debug.
+      {
+	image2d<bool> d(make::box2d(-1, -1, 1, 1));
+	level::fill(d, 0);
+	mln_fwd_niter(clock_neighb2d)   n(nbh , p);
+	mln_fwd_niter(clock_neighb2d)   dn(nbh , make::point2d(0, 0));
+	for_all_2(n, dn)
+	  {
+	    d(dn) =
+	      env.shape(n);
+	  }
+	std::cout << "update cc lower : " << p << std::endl;
+	if (env.R.npoints())
+	  debug::println(env.u | env.R);
+
+	debug::println(d);
+      }
+      // END
+
+
       mln_fwd_niter(clock_neighb2d)   n(nbh , p);
 
       // just to get the last previous_is_false.
@@ -171,6 +192,8 @@ namespace mln
 
 	}
       env.n_cc += (res == 0 ? 0 : (res - 1));
+
+      std::cout << "=> " << (res == 0 ? 0 : (res - 1)) << std::endl;
 
     }
 
@@ -238,6 +261,9 @@ namespace mln
       env.A.insert(env.x0);
       // R <- {}
       env.R.clear();
+      level::fill(env.shape, false);
+      border::fill(env.shape, true);
+      env.n_cc = 0;
       // N <- {}
       env.N.clear();
     }
@@ -276,6 +302,7 @@ namespace mln
       for_all(qa)
 	{
 	  env.R.insert(qa);
+	  env.shape(qa) = true;
 	  env.tagged(qa) = true;
 	  //Update the number of connected components.
 	  update_n_cc(typename F::tag(), env, qa);
@@ -325,6 +352,11 @@ namespace mln
 	  }
 	unsigned n;
 	labeling::level(border_ima, true, F::bdr_nbh(), tmp, n);
+
+	std::cout << "labeling : " << n << std::endl;
+	std::cout << "nous : " << env.n_cc << std::endl;
+	if (env.R.npoints())
+	  debug::println(env.u | env.R);
 
 	if (n > 1)
 	{
