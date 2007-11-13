@@ -1,3 +1,12 @@
+2007-11-13  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add function save and show for pratical using.
+
+	* mln/display/save_and_show.hh: New function which saves and
+	show an image.
+
+	* tests/save_and_show.cc: New test for that.
+
 2007-11-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix differences between documented arguments and function arguments.
