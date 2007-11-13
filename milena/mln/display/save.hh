@@ -79,7 +79,6 @@ namespace mln
 
 	io::ppm::save(out, path_tmp);
 
-	std::cout << input.id_ () << " = " << path_tmp << std::endl;
 	map_saved_image_tmp_[(void*)input.id_ ()] = path_tmp;
       }
 
@@ -98,7 +97,6 @@ namespace mln
 
 	io::ppm::save(input, path_tmp);
 
-	std::cout << input.id_ () << " = " << path_tmp << std::endl;
 	map_saved_image_tmp_[(void*)input.id_ ()] = path_tmp;
       }
 

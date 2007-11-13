@@ -1,3 +1,8 @@
+2007-11-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Remove debug in display/save.
+	* mln/display/save.hh: Remove debug.
+
 2007-11-13  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add fast priority queue with array.
