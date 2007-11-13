@@ -1,3 +1,20 @@
+2007-11-13  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix queue : rename empty in is_empty and add method pop_front.
+
+	Rename empty in is_empty and add method pop_front, which
+	return the front element and pop the queue.
+	* mln/core/p_priority_queue.hh,
+	* mln/core/p_priority_queue_fast.hh,
+	* mln/core/p_queue.hh,
+	* mln/core/p_queue_fast.hh: Update this modification.
+
+	Update with these modifications.
+	* mln/geom/seeds2tiling.hh,
+	* mln/geom/seeds2tiling_with_chamfer.hh,
+	* tests/core_p_priority_queue.cc,
+	* tests/core_p_priority_queue_fast.cc: Update.
+
 2007-11-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Plug-in gimp works and compute images.

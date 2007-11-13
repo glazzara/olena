@@ -81,7 +81,7 @@ namespace mln
     bool has(const P& p) const;
 
     /// Test if queue is empty or not.
-    bool empty() const;
+    bool is_empty() const;
 
     /// Give the number of points.
     std::size_t npoints() const;
@@ -102,6 +102,11 @@ namespace mln
     /// Give the front point \p p of the queue; \p p is the least
     /// recently inserted point.
     const P& front() const;
+
+    /// Pop (remove) the front point \p p from the queue; \p p is the
+    /// least recently inserted point and give the front point \p p of
+    /// the queue; \p p is the least recently inserted point.
+    const P& pop_front();
 
     /// Clear the queue.
     void clear();
@@ -173,7 +178,7 @@ namespace mln
 
   template <typename P>
   bool
-  p_queue_fast<P>::empty() const
+  p_queue_fast<P>::is_empty() const
   {
     return (this->begin_ == this->end_);
   }
@@ -236,9 +241,20 @@ namespace mln
   const P&
   p_queue_fast<P>::front() const
   {
-    mln_precondition(! this->empty());
+    mln_precondition(! this->is_empty());
     return q_[begin_];
   }
+
+  template <typename P>
+  const P&
+  p_queue_fast<P>::pop_front()
+  {
+    const P& res = this->front();
+
+    this->pop();
+    return res;
+  }
+
 
   template <typename P>
   void

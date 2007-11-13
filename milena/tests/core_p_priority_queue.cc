@@ -37,12 +37,12 @@ int main ()
 {
   using namespace mln;
 
-  mln::p_priority_queue<point2d, unsigned> q;
+  p_priority_queue<point2d, unsigned> q;
   point2d p1 (6, 9);
   point2d p2 (5, 1);
   point2d p3 (4, 2);
 
-  mln_assertion (q.empty ());
+  mln_assertion (q.is_empty ());
 
   mln_assertion (q.npoints () == 0);
 
@@ -53,7 +53,7 @@ int main ()
   std::cout << q.bbox () << std::endl;
   std::cout << q << std::endl;
 
-  mln_assertion (!q.empty ());
+  mln_assertion (!q.is_empty ());
 
   mln_assertion (q.has (p1));
   mln_assertion (q.has (p2));
@@ -84,7 +84,7 @@ int main ()
   mln_assertion (!q.has (p3));
   mln_assertion (q.npoints () == 0);
 
-  mln_assertion (q.empty ());
+  mln_assertion (q.is_empty ());
 
   q.push_force (p3);
   q.push_force (p2, 5);
@@ -94,5 +94,5 @@ int main ()
   mln_assertion (q[1] == p1);
   mln_assertion (q[0] == p2);
   q.clear ();
-  mln_assertion (q.empty ());
+  mln_assertion (q.is_empty ());
 }

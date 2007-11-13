@@ -78,7 +78,7 @@ namespace mln
 
 //     // Body.
 //     {
-//       while (! q.empty())
+//       while (! q.is_empty())
 // 	{
 // 	  mln_psite(I) p = q.front();
 // 	  q.pop();
@@ -96,7 +96,7 @@ namespace mln
 
     // Body: alternative version.
     {
-      while (! q.empty())
+      while (! q.is_empty())
 	{
 	  mln_psite(I) p = q.front();
 	  q.pop();

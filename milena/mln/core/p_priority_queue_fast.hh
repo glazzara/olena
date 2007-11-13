@@ -82,7 +82,7 @@ namespace mln
     bool has(const P& p) const;
 
     /// Test if queue is empty or not.
-    bool empty() const;
+    bool is_empty() const;
 
     /// Give the number of points.
     unsigned npoints() const;
@@ -103,6 +103,11 @@ namespace mln
     /// Give the front point \p p of the queue; \p p is the least
     /// recently inserted point.
     const P& front() const;
+
+    /// Pop (remove) the front point \p p from the queue; \p p is the
+    /// least recently inserted point and give the front point \p p of
+    /// the queue; \p p is the least recently inserted point.
+    const P& pop_front();
 
     /// Clear the queue.
     void clear();
@@ -182,12 +187,12 @@ namespace mln
 
   template <typename P, typename T>
   bool
-  p_priority_queue_fast<P, T>::empty() const
+  p_priority_queue_fast<P, T>::is_empty() const
   {
     typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
-      if (!(*it).second.empty ())
+      if (!(*it).second.is_empty ())
 	return false;
     return true;
   }
@@ -201,7 +206,7 @@ namespace mln
     typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
-      if (!(*it).second.empty ())
+      if (!(*it).second.is_empty ())
  	res += (*it).second.npoints();
     return res;
   }
@@ -246,7 +251,7 @@ namespace mln
     typename std::map<T, p_queue_fast<P> >::reverse_iterator it = q_.rbegin ();
 
     for (; it != q_.rend (); ++it)
-      if (!(*it).second.empty ())
+      if (!(*it).second.is_empty ())
  	return (*it).second.pop ();
 
     if (! vect_needs_update_)
@@ -265,9 +270,19 @@ namespace mln
     typename std::map<T, p_queue_fast<P> >::const_reverse_iterator it = q_.rbegin ();
 
     for (; it != q_.rend (); ++it)
-      if (!(*it).second.empty ())
+      if (!(*it).second.is_empty ())
 	break;
     return (*it).second.front ();
+  }
+
+  template <typename P, typename T>
+  const P&
+  p_priority_queue_fast<P, T>::pop_front()
+  {
+    const P& res = this->front();
+
+    this->pop();
+    return res;
   }
 
   template <typename P, typename T>
@@ -303,7 +318,7 @@ namespace mln
 
     for (; it != q_.rend (); ++it)
       {
-	if (!(*it).second.empty ())
+	if (!(*it).second.is_empty ())
 	  for (cpt = 0; cpt < (*it).second.npoints (); ++cpt)
 	    {
 	      if (i == 0)
