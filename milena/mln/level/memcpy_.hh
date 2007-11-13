@@ -49,7 +49,7 @@ namespace mln
      *  starting from pixel \p dest.
      *
      * \param[in,out] dest The destination pixel (to set values).
-     * \param[in] v The source pixel (to get values).
+     * \param[in] src The source pixel (to get values).
      * \param[in] n The number of pixels to copy.
      *
      * \pre FIXME: !
@@ -75,7 +75,7 @@ namespace mln
       mln_precondition(dest.ima().has_data());
       mln_precondition(src.ima().has_data());
       // FIXME: Add precondition about n.
-      
+
       if (n == 0)
 	{
 	  return; // no-op
@@ -86,7 +86,7 @@ namespace mln
 	  dest.val() = src.val(); // one assignment
 	  return;
 	}
-      
+
       if (sizeof(mln_value(Id)) == 1)
 	{
 	  std::memcpy((      void*)(& dest.val()), // violent casts

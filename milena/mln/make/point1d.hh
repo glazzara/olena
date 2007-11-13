@@ -44,8 +44,7 @@ namespace mln
 
     /*! \brief Create an mln::point1d.
      *
-     * \param[in] ind Ind coordinate.
-     * \param[in] col Column coordinate.
+     * \param[in] ind Index.
      *
      * \return A 1D point.
      */

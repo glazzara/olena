@@ -47,6 +47,7 @@ namespace mln
      *  input with value \p val.
      *
      * \param[in] input The image.
+     * \param[in] val value.
      * \result The estimate value.
      */
     template <typename A, typename I>

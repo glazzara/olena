@@ -44,7 +44,7 @@ namespace mln
 
     /*! \brief Create an image2d from an 2d array of values.
      *
-     * \param[in] 2d array.
+     * \param[in] values 2d array.
      *
      * \return A 2D image.
      */

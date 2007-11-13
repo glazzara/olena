@@ -44,11 +44,11 @@ namespace mln
 
   namespace win
   {
- 
+
     /*! \brief Octagon window defined on the 2D square grid.
      *
      * An octagon2d is centered and symmetrical.
-     * 
+     *
      * The length L of the octagon is such as L = 6 * l + 1
      * where l >= 0.
      *
@@ -87,7 +87,7 @@ namespace mln
 
       /*! \brief Constructor.
        *
-       * \param[in] lenght Length, of the octagon.
+       * \param[in] length Length, of the octagon.
        *
        * \pre \p length is such as length = 6*x + 1 where x >= 0.
        */

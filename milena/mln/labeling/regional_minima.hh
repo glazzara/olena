@@ -50,6 +50,7 @@ namespace mln
      * \param[in]  input The input image.
      * \param[in]  nbh The neighborhood to consider.
      * \param[out] output The label image.
+     * \param[out] nlabels The number of labels.
      *
      * \return The number of labels.
      */
@@ -68,7 +69,7 @@ namespace mln
       struct regional_minima_ : base_<I_,N_,O_>
       {
 	typedef mln_point(I_) P;
-	
+
 	// requirements from mln::canvas::labeling:
 
 	typedef p_array<P> S;

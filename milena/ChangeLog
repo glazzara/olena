@@ -1,5 +1,16 @@
 2007-11-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix differences between documented arguments and function arguments.
+	* mln/labeling/estimate.hh,
+	* mln/labeling/regional_maxima.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/level/memcpy_.hh,
+	* mln/make/image2d.hh,
+	* mln/make/point1d.hh,
+	* mln/win/octagon2d.hh: Fix.
+
+2007-11-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Exclude sandbox and *spe.hh from documentation.
 	* doc/Doxyfile.in: Set EXCLUDE and EXCLUDE_PATTERNS.
 
