@@ -29,7 +29,7 @@
 # define MLN_TRAIT_OP_ALL_HH
 
 /*!
- * \file   all.hh
+ * \file   mln/trait/op/all.hh
  *
  * \brief  FIXME
  *

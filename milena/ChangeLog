@@ -1,5 +1,42 @@
 2007-11-13  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	Fix doxygen expressions.
+	* mln/core/a_point_of.hh,
+	* mln/core/mesh_psite.hh,
+	* mln/core/p_priority_queue.hh,
+	* mln/fun/p2b/all.hh,
+	* mln/trait/op/all.hh,
+	* mln/trait/op/preinc.hh,
+	* mln/trait/value/print.hh,
+	* mln/util/branch_iter.hh,
+	* mln/util/branch_iter_ind.hh,
+	* mln/value/gray.hh,
+	* mln/value/graylevel.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_u.hh,
+	* mln/value/rgb.hh,
+	* sandbox/duhamel/color_sub.cc,
+	* sandbox/duhamel/labeling_algo.cc,
+	* sandbox/duhamel/labeling_level.hh,
+	* sandbox/duhamel/labeling_level_fast.cc,
+	* sandbox/duhamel/labeling_level_fast_10000x1000.cc,
+	* sandbox/duhamel/labeling_level_generic_10000x1000.cc,
+	* sandbox/garrigues/fllt2.hh,
+	* tests/convert_to_p_vec.cc,
+	* tests/core_p_priority_queue.cc,
+	* tests/core_p_priority_queue_fast.cc,
+	* tests/core_p_queue.cc,
+	* tests/core_p_queue_fast.cc,
+	* tests/core_p_set.cc,
+	* tests/core_pset_if.cc,
+	* tests/norm/l1.cc,
+	* tests/norm/l2.cc,
+	* tests/norm/linfty.cc,
+	* tests/pset_if.cc: Remove.
+	* tests/tree_fast_to_image.cc: Fix.
+
+2007-11-13  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Plugin gimp support the undo system.
 	* sandbox/nivault/plugin-gimp/src/build-image.hh,
 	* sandbox/nivault/plugin-gimp/src/build-image.hxx,

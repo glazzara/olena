@@ -25,8 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/l1.hh
-/// \brief Test the L1-norm.
+/*! \file tests/norm/l1.hh
+ *
+ * \brief Test the L1-norm.
+ */
 
 #include <cassert>
 

@@ -44,17 +44,17 @@
 namespace mln
 {
 
-  /// \{ Fwd decls.
   namespace literal
   {
+    /// \{ Fwd decls.
     struct black_t;
     struct white_t;
 
     struct red_t;
     struct blue_t;
     struct green_t;
+    /// \}
   }
-  /// \}
 
 
   namespace value

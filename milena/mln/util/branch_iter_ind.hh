@@ -25,17 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_BRANCH_ITER_HH
-# define MLN_UTIL_BRANCH_ITER_HH
+#ifndef MLN_UTIL_BRANCH_ITER_IND_HH
+# define MLN_UTIL_BRANCH_ITER_IND_HH
 
-# include <stack>
-# include <mln/util/tree.hh>
 /*!
- * \file   mln/util/branch.hh
+ * \file   mln/util/branch_iter_ind.hh
  *
  * \brief  Definition of a iterator on branch.
  *
  */
+
+# include <stack>
+# include <mln/util/tree.hh>
 
 namespace mln
 {
@@ -59,14 +60,14 @@ namespace mln
 
     /*! \brief Basic 2D image class.
      *
-     * The parameter \c T is the type of node's data. branch_iter is used to pre-order walk a branch.
+     * The parameter \c T is the type of node's data. branch_iter_ind is used to pre-order walk a branch.
 
      */
     template <typename T>
-    class branch_iter
+    class branch_iter_ind
     {
     public:
-      branch_iter(branch<T> branch);
+      branch_iter_ind(branch<T> branch);
 
       /// Convertion to node.
       operator util::node<T>&() const;
@@ -100,14 +101,14 @@ namespace mln
 
 
     template <typename T>
-    branch_iter<T>::branch_iter(branch<T> branch)
+    branch_iter_ind<T>::branch_iter_ind(branch<T> branch)
       : branch_(branch)
     {
       invalidate();
     }
 
     template <typename T>
-    branch_iter<T>::operator node<T>&() const
+    branch_iter_ind<T>::operator node<T>&() const
     {
       mln_assertion(n_);
       return *n_;
@@ -115,7 +116,7 @@ namespace mln
 
     template <typename T>
     util::node<T>&
-    branch_iter<T>::operator*()
+    branch_iter_ind<T>::operator*()
     {
       mln_assertion(n_);
       return *n_;
@@ -123,7 +124,7 @@ namespace mln
 
     template <typename T>
     unsigned
-    branch_iter<T>::deepness() const
+    branch_iter_ind<T>::deepness() const
     {
       mln_assertion(is_valid());
       unsigned i = 0;
@@ -138,14 +139,14 @@ namespace mln
 
     template <typename T>
     bool
-    branch_iter<T>::is_valid() const
+    branch_iter_ind<T>::is_valid() const
     {
       return n_ != 0;
     }
 
     template <typename T>
     void
-    branch_iter<T>::invalidate()
+    branch_iter_ind<T>::invalidate()
     {
       n_ = 0;
     }
@@ -153,7 +154,7 @@ namespace mln
 
     template <typename T>
     void
-    branch_iter<T>::start()
+    branch_iter_ind<T>::start()
     {
       s_.push(bi_elt<T>(&branch_.apex().children()));
 
@@ -162,7 +163,7 @@ namespace mln
 
     template <typename T>
     void
-    branch_iter<T>::next()
+    branch_iter_ind<T>::next()
     {
       // First : list of children.
       // Second : i;
@@ -218,4 +219,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // !MLN_UTIL_BRANCH_HH
+#endif // !MLN_UTIL_BRANCH_ITER_IND_HH

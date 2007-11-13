@@ -25,8 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/linfty.hh
-/// \brief Test the L-infinity-norm.
+/*! \file tests/norm/linfty.hh
+ *
+ * \brief Test the L-infinity-norm.
+ */
 
 #include <cmath>
 #include <cassert>

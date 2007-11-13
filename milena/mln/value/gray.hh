@@ -43,10 +43,21 @@
 namespace mln
 {
 
-  /// \{ Fwd decls.
-  namespace literal { struct black_t; struct white_t; }
-  namespace value {    template <unsigned N> class graylevel; class gray; }
-  /// \}
+  namespace literal
+  {
+    /// \{ Fwd decls.
+    struct black_t;
+    struct white_t;
+    /// \}
+  }
+
+  namespace value
+  {
+    /// \{ Fwd decls.
+    template <unsigned N> class graylevel;
+    class gray;
+    /// \}
+  }
 
 
   namespace trait

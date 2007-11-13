@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling_foreground.cc
+/*! \file sandbox/duhamel/labeling_level_fast_10000x1000.cc
  *
  * \brief Test on mln::labeling::foreground.
  */

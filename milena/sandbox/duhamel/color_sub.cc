@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/sub_image.cc
+/*! \file sandbox/duhamel/color_sub.cc
  *
- * \brief Tests on mln::sub_image.
+ * \brief Tests on mln::color_sub.
  */
 
 # include <mln/core/image2d_b.hh>

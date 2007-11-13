@@ -50,20 +50,22 @@
 namespace mln
 {
 
-  /// \{ Fwd decls.
   namespace literal
   {
+    /// \{ Fwd decls.
     struct black_t;
     struct medium_gray_t;
     struct white_t;
+    /// \}
   }
   namespace value
   {
+    /// \{ Fwd decls.
     class gray;
     template <unsigned n> struct graylevel;
     struct float01_f;
+    /// \}
   }
-  /// \}
 
 
 

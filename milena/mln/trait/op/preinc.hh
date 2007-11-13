@@ -28,7 +28,7 @@
 #ifndef MLN_TRAIT_OP_PREINC_HH
 # define MLN_TRAIT_OP_PREINC_HH
 
-/*! \file mln/trait/op/predec.hh
+/*! \file mln/trait/op/preinc.hh
  *
  * \brief Declaration of the "unary pre-decrementation" operator trait.
  */

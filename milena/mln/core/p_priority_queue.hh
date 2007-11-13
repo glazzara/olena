@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_QUEUE_P_PRIORITY_HH
-# define MLN_CORE_QUEUE_P_PRIORITY_HH
+#ifndef MLN_CORE_P_PRIORITY_QUEUE_HH
+# define MLN_CORE_P_PRIORITY_QUEUE_HH
 
 /*! \file mln/core/p_priority_queue.hh
  *
@@ -334,4 +334,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_QUEUE_P_PRIORITY_HH
+#endif // ! MLN_CORE_P_PRIORITY_QUEUE_HH

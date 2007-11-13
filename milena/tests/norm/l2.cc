@@ -25,8 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/l2.hh
-/// \brief Test the L2-norm.
+/*! \file tests/norm/l2.hh
+ *
+ * \brief Test the L2-norm.
+ */
 
 #include <cmath>
 #include <cassert>

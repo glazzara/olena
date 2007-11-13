@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/convert_to_vec_p.cc
+/*! \file tests/convert_to_p_vec.cc
  *
  * \brief Tests on mln::convert::to_vec_p.
  */

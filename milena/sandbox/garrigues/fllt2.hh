@@ -99,7 +99,7 @@ namespace mln
 # define fllt_tree(P, V)  util::tree< fllt_node_elt<P, V> >
 # define fllt_node(P, V)  util::node< fllt_node_elt<P, V> >
 # define fllt_branch(P, V)  util::branch< fllt_node_elt<P, V> >
-# define fllt_branch_iter(P, V)  util::branch_iter< fllt_node_elt<P, V> >
+# define fllt_branch_iter_ind(P, V)  util::branch_iter_ind< fllt_node_elt<P, V> >
 
     //    # define fllt_node(P, V)  typename fllt_tree(P, V)::node_t
 
@@ -690,7 +690,7 @@ namespace mln
       {
 	std::cout << "[Merge first tree]------------" << std::endl;
 
-	fllt_branch_iter(P, V) p(lower_tree.main_branch());
+	fllt_branch_iter_ind(P, V) p(lower_tree.main_branch());
 	for_all(p)
 	  {
 	    fllt_node(P, V)& n(p);
@@ -704,7 +704,7 @@ namespace mln
       {
 	std::cout << "[Merge second tree]------------" << std::endl;
 
-	fllt_branch_iter(P, V) p(upper_tree.main_branch());
+	fllt_branch_iter_ind(P, V) p(upper_tree.main_branch());
 	for_all(p)
 	  {
 	    fllt_node(P, V)& n(p);
@@ -739,7 +739,7 @@ namespace mln
     visualize_deepness(image2d<value::int_u8>& output,
 		       fllt_tree(P, V)& tree)
     {
-      fllt_branch_iter(P, V) p(tree.main_branch());
+      fllt_branch_iter_ind(P, V) p(tree.main_branch());
       level::fill(output, 0);
       for_all(p)
 	{
@@ -760,7 +760,7 @@ namespace mln
 		     fllt_tree(P, V)& tree,
 		     unsigned limit)
     {
-      fllt_branch_iter(P, V) p(tree.main_branch());
+      fllt_branch_iter_ind(P, V) p(tree.main_branch());
       level::fill(output, 255);
       for_all(p)
 	{
@@ -786,7 +786,7 @@ namespace mln
     draw_tree(const image2d<V>& ima,
 	      fllt_tree(P, V)& tree)
     {
-      fllt_branch_iter(P, V) p(tree.main_branch());
+      fllt_branch_iter_ind(P, V) p(tree.main_branch());
       for_all(p)
       	{
       	  std::cout << "region mere : " << (*p).parent() << std::endl;

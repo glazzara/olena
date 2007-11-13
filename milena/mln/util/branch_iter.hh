@@ -28,14 +28,15 @@
 #ifndef MLN_UTIL_BRANCH_ITER_HH
 # define MLN_UTIL_BRANCH_ITER_HH
 
-# include <stack>
-# include <mln/util/tree.hh>
 /*!
- * \file   mln/util/branch.hh
+ * \file   mln/util/branch_iter.hh
  *
  * \brief  Definition of a iterator on branch.
  *
  */
+
+# include <stack>
+# include <mln/util/tree.hh>
 
 namespace mln
 {

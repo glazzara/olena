@@ -28,7 +28,7 @@
 #ifndef SANDBOX_MLN_LABELING_LEVEL_HH
 # define SANDBOX_MLN_LABELING_LEVEL_HH
 
-/*! \file mln/labeling/level.hh
+/*! \file sandbox/duhamel/labeling_level.hh
  *
  * \brief Connected component labeling of the image objects at a given
  * level.

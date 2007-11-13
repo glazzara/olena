@@ -28,7 +28,7 @@
 #ifndef MLN_MESH_PSITE_HH
 # define MLN_MESH_PSITE_HH
 
-/*! \file mln/core/mesh_p.hh
+/*! \file mln/core/mesh_psite.hh
  *
  * \brief Definition of a graph-based point site.
  *

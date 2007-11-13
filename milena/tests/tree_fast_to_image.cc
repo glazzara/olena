@@ -26,9 +26,9 @@
 // Public License.
 
 /*!
- *  \file   tests/tree_to_image.cc
+ *  \file   tests/tree_fast_to_image.cc
  *
- *  \brief  test of mln::util::tree_to_image
+ *  \brief  test of mln::util::tree_fast_to_image
  *
  */
 

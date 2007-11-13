@@ -49,10 +49,20 @@
 namespace mln
 {
 
-  /// \{ Fwd decls.
-  namespace value { template <unsigned n> struct int_u; }
-  namespace literal { struct zero_t; struct one_t; }
-  /// \}
+  namespace value
+  {
+    /// \{ Fwd decls.
+    template <unsigned n> struct int_u;
+    /// \}
+  }
+  
+  namespace literal
+  {
+    /// \{ Fwd decls.
+    struct zero_t;
+    struct one_t;
+    /// \}
+  }
 
 
   namespace trait

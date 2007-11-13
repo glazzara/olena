@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_A_POINT_OF_HH
 # define MLN_CORE_A_POINT_OF_HH
 
-/*! \file mln/core/a_point_oft.hh
+/*! \file mln/core/a_point_of.hh
  *
  * \brief Give a point of an image.
  */
