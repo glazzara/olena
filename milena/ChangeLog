@@ -1,3 +1,13 @@
+2007-11-13  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add fast priority queue with array.
+
+	* mln/core/p_priority_queue_fast_with_array.hh:
+	 New kind of fast priority queue based on std::vector.
+
+	* tests/core_p_priority_queue_fast_with_array.cc:
+	 New test for that.
+
 2007-11-13  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix doxygen expressions.
