@@ -42,8 +42,8 @@
 	* tests/norm/l1.cc,
 	* tests/norm/l2.cc,
 	* tests/norm/linfty.cc,
-	* tests/pset_if.cc: Remove.
 	* tests/tree_fast_to_image.cc: Fix.
+	* tests/pset_if.cc: Remove.
 
 2007-11-13  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
