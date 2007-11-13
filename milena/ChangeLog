@@ -1,3 +1,10 @@
+2007-11-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	A better test for io::pbm.
+
+	* tests/io_pbm.cc: Take a pgm, binarise it, save it, read it, and
+          check we we get the same pbm.
+
 2007-11-13  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add function save and show for pratical using.
