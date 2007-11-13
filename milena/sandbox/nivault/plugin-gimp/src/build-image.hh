@@ -43,7 +43,8 @@
 
 # include <mln/io/ppm/save.hh>
 
-void build_milena_image(GimpPixelRgn *region);
+void build_milena_image(GimpPixelRgn *in,
+			GimpPixelRgn *out);
 
 gboolean draw_milena_image(GtkWidget* area,
 			   GdkEventExpose *event,

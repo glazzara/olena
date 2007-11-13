@@ -45,9 +45,10 @@ struct toto : mln::Function_v2v<toto>
   }
 };
 
-void build_milena_image(GimpPixelRgn *region)
+void build_milena_image(GimpPixelRgn *in,
+			GimpPixelRgn *out)
 {
-  I tmp(region);
+  I tmp(in);
 //   g_message(region->dirty ? "saaale" : "pas saaale");
 //   g_message(region->shadow ? "shadoooow" : "pas shadoooow");
   ima = tmp;
@@ -65,13 +66,15 @@ void build_milena_image(GimpPixelRgn *region)
   mln::level::transform(ima, fun, tmp2);
   mln::border::resize(tmp2, 0);
 
-  gimp_pixel_rgn_set_rect(region,
+  gimp_pixel_rgn_set_rect(out,
 			  (const guchar *) tmp2.buffer(),
 			  0,
 			  0,
-			  region->w,
-			  region->h);
-   gimp_displays_flush ();
+			  out->w,
+			  out->h);
+
+  gimp_drawable_flush (out->drawable);
+  gimp_drawable_merge_shadow (out->drawable->drawable_id, TRUE);
 }
 
 gboolean draw_milena_image(GtkWidget* area,

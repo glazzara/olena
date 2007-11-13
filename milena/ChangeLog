@@ -1,3 +1,11 @@
+2007-11-13  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Plugin gimp support the undo system.
+	* sandbox/nivault/plugin-gimp/src/build-image.hh,
+	* sandbox/nivault/plugin-gimp/src/build-image.hxx,
+	* sandbox/nivault/plugin-gimp/src/main.cc: Use two image for reading
+	and writing.
+
 2007-11-13  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix queue : rename empty in is_empty and add method pop_front.

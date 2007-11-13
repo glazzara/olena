@@ -96,8 +96,10 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpPixelRgn       region;
+  GimpPixelRgn       in, out;
   gint32             image_ID;
+  gint               x1, y1, x2, y2;
+  gint		     width, height;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
@@ -107,18 +109,16 @@ run (const gchar      *name,
   run_mode = (GimpRunMode) param[0].data.d_int32;
   image_ID = param[1].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-  gimp_image_undo_enable(image_ID);
 
-  gimp_pixel_rgn_init(&region,
-		      drawable,
-		      0,
-		      0,
-		      drawable->width,
-		      drawable->height,
-		      FALSE,
-		      FALSE);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  build_milena_image(&region);
+  width = drawable->width;
+  height = drawable->height;
+
+  gimp_pixel_rgn_init(&in, drawable, 0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init(&out, drawable, 0, 0, width, height, TRUE, TRUE);
+
+  build_milena_image(&in, & out);
 
   if (strcmp (name, PROCEDURE_NAME) == 0)
   {
@@ -142,6 +142,11 @@ run (const gchar      *name,
   {
     status = GIMP_PDB_CALLING_ERROR;
   }
+
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+
+  gimp_displays_flush ();
+  gimp_drawable_detach (drawable);
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
