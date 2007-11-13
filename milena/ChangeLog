@@ -1,5 +1,10 @@
 2007-11-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Exclude sandbox and *spe.hh from documentation.
+	* doc/Doxyfile.in: Set EXCLUDE and EXCLUDE_PATTERNS.
+
+2007-11-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Remove debug in display/save.
 	* mln/display/save.hh: Remove debug.
 
