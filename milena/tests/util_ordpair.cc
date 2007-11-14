@@ -25,54 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LABELING_BACKGROUND_HH
-# define MLN_LABELING_BACKGROUND_HH
-
-/*! \file mln/labeling/background.hh
+/*! \file util/ordpair.cc
  *
- * \brief Connected component labeling of the background in a binary
- * image.
+ * \brief Tests on mln::util::ordpair.
  */
 
-# include <mln/labeling/level.hh>
+#include <mln/core/point2d.hh>
+#include <mln/util/ordpair.hh>
 
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
 
-  namespace labeling
-  {
-
-    /*! Connected component labeling of the background in a binary
-     * image.
-     *
-     * \param[in]  input  The input image.
-     * \param[in]  nbh    The neighborhood to consider.
-     * \param[out] nlabels The number of labels.
-     * \return The label image.
-     */
-    template <typename I, typename N>
-    mln_ch_value(I, unsigned)
-    background(const Image<I>& input, const Neighborhood<N>& nbh,
-	       unsigned& nlabels);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I, typename N>
-    mln_ch_value(I, unsigned)
-    background(const Image<I>& input, const Neighborhood<N>& nbh,
-	       unsigned& nlabels)
-    {
-      mln_precondition(exact(input).has_data());
-      return labeling::level(input, false, nbh, nlabels);
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::labeling
-
-} // end of namespace mln
-
-
-#endif // ! MLN_LABELING_BACKGROUND_HH
+  point2d p1(5,6), p2(5,7);
+  std::cout << util::ordpair(p1, p2) << std::endl;
+}

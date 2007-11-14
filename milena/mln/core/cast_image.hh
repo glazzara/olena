@@ -62,6 +62,19 @@ namespace mln
 
 
 
+  namespace trait
+  {
+
+    template <typename T, typename I>
+    struct image_< cast_image_<T,I> > : default_image_morpher_< I, T, cast_image_<T,I> >
+    {
+      typedef trait::image::io::read_only io;
+    };
+    
+  } // end of namespace mln::trait
+
+
+
   /*! \brief FIXME
    *
    */

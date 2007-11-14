@@ -96,14 +96,17 @@ namespace mln
       template <typename T>
       struct convert_
       {
-	static T value_at_index(std::size_t i)
+	// FIXME: Check that we have a type T compatible with 'int'.
+
+	static T value_at_index(unsigned i)
 	{
-	  return mln_min(T) + i;
+	  return T( int(mln_min(T)) + int(i) );
 	}
-	static std::size_t index_of_value(const T& v)
+	static unsigned index_of_value(const T& v)
 	{
-	  return v - mln_min(T);
+	  return unsigned( int(v) - int(mln_min(T)) );
 	}
+
       };
 
       template <typename T>

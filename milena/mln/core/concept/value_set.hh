@@ -66,15 +66,19 @@ namespace mln
 
       bool has(const value& v) const;
 
-      value operator[](std::size_t i) const;
-      std::size_t index_of(const value& v) const;
+      value operator[](unsigned i) const;
+      unsigned index_of(const value& v) const;
 
-      std::size_t nvalues() const;
+      unsigned nvalues() const;
      */
 
   protected:
     Value_Set();
   };
+
+
+  template <typename E>
+  std::ostream& operator<<(std::ostream& ostr, const Value_Set<E>& vs);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -88,10 +92,20 @@ namespace mln
     
     bool (E::*m1)(const value&) const = & E::has;
     m1 = 0;
-    value (E::*m2)(std::size_t) const = & E::operator[];
+    value (E::*m2)(unsigned) const = & E::operator[];
     m2 = 0;
-    std::size_t (E::*m3)() const = & E::nvalues;
+    unsigned (E::*m3)() const = & E::nvalues;
     m3 = 0;
+  }
+
+  template <typename E>
+  std::ostream& operator<<(std::ostream& ostr, const Value_Set<E>& vs_)
+  {
+    const E& vs = exact(vs_);
+    ostr << "{ ";
+    for (unsigned i = 0; i < vs.nvalues(); ++i)
+      std::cout << vs[i] << ' ';
+    return ostr << '}';
   }
 
 # endif // ! MLN_INCLUDE_ONLY

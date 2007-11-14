@@ -67,8 +67,8 @@ namespace mln
       void init();
 
       std::size_t operator()(const argument& t) const;
-      std::size_t operator[](std::size_t i) const;
-      std::size_t nvalues() const;
+      std::size_t operator[](unsigned i) const;
+      unsigned    nvalues() const;
       std::size_t sum() const;
 
       const std::vector<std::size_t>& vect() const;
@@ -152,14 +152,14 @@ namespace mln
 
     template <typename S>
     std::size_t
-    histo<S>::operator[](std::size_t i) const
+    histo<S>::operator[](unsigned i) const
     {
       mln_precondition(i < s_.nvalues());
       return h_[i];
     }
 
     template <typename S>
-    std::size_t
+    unsigned
     histo<S>::nvalues() const
     {
       return s_.nvalues();

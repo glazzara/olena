@@ -149,12 +149,10 @@ int main ()
 		 a3,  1, a4,
 		 a5, a6, a7};
 
-    image2d<value::int_u8> out(ima.domain());
-    image2d<value::int_u8> out2(ima.domain());
 
     level::fill(ima, t);
 
-    labeling::level(ima, false, c8(), out, n);
+    image2d<unsigned> out = labeling::level(ima, false, c8(), n);
     tmp = testc4(ima, p);
     if (tmp != n)
       {
@@ -174,11 +172,11 @@ int main ()
 
     ///  0 before
     level::fill(ima, u);
-    labeling::level(ima, false, c4(), out, m);
+    out = labeling::level(ima, false, c4(), m);
 
     ///  1 after
     level::fill(ima, t);
-    labeling::level(ima, false, c4(), out2, n);
+    image2d<unsigned> out2 = labeling::level(ima, false, c4(), n);
 
     int diff = n - m;
     if (diff < 0)

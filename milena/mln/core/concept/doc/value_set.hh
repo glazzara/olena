@@ -63,15 +63,15 @@ namespace mln
 
       /*! \brief Give the number of values in this set.
        */
-      std::size_t nvalues() const;
+      unsigned nvalues() const;
 
       /*! \brief Give the \p i-th value of this set.
        */
-      value operator[](std::size_t i) const;
+      value operator[](unsigned i) const;
 
       /*! \brief Give the index of value \p v in this set.
        */
-      std::size_t index_of(const value& v) const;
+      unsigned index_of(const value& v) const;
     };
 
   } // end of namespace mln::doc

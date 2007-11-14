@@ -38,6 +38,9 @@
 
 # include <mln/core/concept/value.hh>
 # include <mln/value/float01_.hh>
+# include <mln/value/props.hh>
+# include <mln/trait/all.hh> // FIXME!
+# include <mln/trait/value_.hh>
 
 
 

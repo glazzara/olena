@@ -92,7 +92,7 @@ namespace mln
 	// write a scalar value into for uncontiguous datas
 	template <typename V>
 	void write_value(std::ofstream& file,
-			 V& v)
+			 const V& v)
 	{
 	  typedef typename V::enc E;
 
@@ -129,7 +129,7 @@ namespace mln
 	    max_row = geom::max_row(ima);
 	  point2d p;
 	  p.col() = geom::min_col(ima);
-	  size_t len = geom::ncols(ima) * sizeof(mln_value(I));
+	  std::size_t len = geom::ncols(ima) * sizeof(mln_value(I));
 	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	    file.write((char*)(& ima(p)), len);
 	}

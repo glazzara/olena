@@ -54,6 +54,4 @@ int main()
   std::copy(ps.vect().begin(), ps.vect().end(),
 	    std::ostream_iterator<point2d>(std::cout, " "));
   std::cout << std::endl;
-
-  
 }

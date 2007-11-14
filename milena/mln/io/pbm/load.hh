@@ -84,17 +84,20 @@ namespace mln
 	    max_row = geom::max_row(ima),
 	    min_col = geom::min_col(ima),
 	    max_col = geom::max_col(ima);
-
-	  unsigned char c;
-	  int i = 0;
+ 
+	  char c;
+	  int i;
 	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
-	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
 	    {
-	      if (i && (i % 8 == 0))
-		file.read((char*)(&c), 1);
-	      ima(p) = c & 128;
-	      c = c * 2;
-	      ++i;
+	      i = 0;
+	      for (p.col() = min_col; p.col() <= max_col; ++p.col())
+		{
+		  if (i % 8 == 0)
+		    file.read((char*)(&c), 1);
+		  ima(p) = c & 128;
+		  c *= 2;
+		  ++i;
+		}
 	    }
 	}
 

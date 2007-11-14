@@ -25,40 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/convert_to_p_vec.cc
+/*! \file tests/labeling_blob.cc
  *
- * \brief Tests on mln::convert::to_vec_p.
+ * \brief Test on mln::labeling::blob.
  */
 
-#include <mln/core/point1d.hh>
-#include <mln/core/point2d.hh>
-#include <mln/core/vec_p.hh>
+#include <mln/core/image2d.hh>
+#include <mln/core/cast_image.hh>
+#include <mln/core/neighb2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/pw/all.hh>
 
-#include <mln/win/segment1d.hh>
-#include <mln/win/rectangle2d.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/labeling/blobs.hh>
+#include <mln/level/transform.hh>
 
-#include <mln/convert/to_vec_p.hh>
+
+struct fold_t : public mln::Function_v2v< fold_t >
+{
+  typedef mln::value::int_u8 result;
+  result operator()(unsigned i) const { return i == 0 ? 0 : i % 255 + 1; }
+};
+
+
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  typedef vec_p<point1d> vec1d;
-  point1d p1 = make::point1d(6);
-  win::segment1d win1d(5);
-  vec1d v1(convert::to_vec_p(win1d, p1));
 
-  for (size_t i=0; i < v1.npoints(); i++)
-    std::cout << (v1[i]);
+  image2d<int_u8> lena = io::pgm::load("../img/tiny.pgm");
+  unsigned n;
+  io::pgm::save(cast_image<int_u8>( labeling::blobs((pw::value(lena) > pw::cst(127u)) | lena.domain(),
+						    c4(), n) ),
+		"out.pgm");
+  mln_assertion(n == 14);
 
-  std::cout << "\n";
-
-  typedef vec_p<point2d> vec2d;
-  point2d p2 = make::point2d(10,10);
-  win::rectangle2d win2d(3, 3);
-  vec2d v2(convert::to_vec_p(win2d, p2));
-
-  for (size_t i=0; i < v2.npoints(); i++)
-    std::cout << (v2[i]);
-
+//   image2d<int_u8>
+//     lena = io::pgm::load("../img/lena.pgm"),
+//     out;
+//   unsigned n;
+//   image2d<unsigned> labels = labeling::blobs((pw::value(lena) > pw::cst(127u)) | lena.domain(),
+// 					     c8(), n);
+//   mln_assertion(n == 528);
+//   io::pgm::save( level::transform(labels, fold_t()),
+// 		"out.pgm" );
 }

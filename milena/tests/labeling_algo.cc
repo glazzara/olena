@@ -52,31 +52,30 @@ int main()
 
   image2d<bool> in = io::pbm::load("../img/toto.pbm");
 
-  image2d<int_u8> lab(in.domain());
-  image2d<int_u8> inte(in.domain());
-  image2d<int_u8> out(in.domain());
 
   unsigned n;
-  labeling::foreground(in, c8(), lab, n);
+  image2d<unsigned> lab = labeling::foreground(in, c8(), n);
   std::cout << "number of labels = " << n << std::endl;
   std::vector<int_u8> vec;
 
   image2d<int> input(in.domain());
   level::fill(input, lab);
-  lab(make::point2d (0,0)) = 0;
+  lab.at(0,0) = 0;
 
-  inte = geom::seeds2tiling(lab, c4 ());
-  border::fill (inte, 0);
+  image2d<unsigned> inte = geom::seeds2tiling(lab, c4 ());
+  border::fill(inte, 0);
 
   image2d<int_u8> inte2(inte.domain());
 
-  level::stretch (inte, inte2);
+  level::stretch(inte, inte2);
 
   io::pgm::save(inte2, "inte.pgm");
 
   mesh_p<point2d> m = make::voronoi(inte, lab, c4());
   std::cout << "OK : generate inte.pgm and out.pgm" << std::endl;
-  draw::mesh (out, m, 255, 128);
+
+  image2d<int_u8> out(in.domain());
+  draw::mesh(out, m, 255, 128);
 
   io::pgm::save(out, "out.pgm");
 }

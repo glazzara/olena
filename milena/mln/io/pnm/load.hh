@@ -113,7 +113,7 @@ namespace mln
 	  min_row = geom::min_row(ima),
 	  max_row = geom::max_row(ima);
 
-	size_t len = geom::ncols(ima) * sizeof(V);
+	std::size_t len = geom::ncols(ima) * sizeof(V);
 	for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	  file.read((char*)(&ima(p)), len);
       }

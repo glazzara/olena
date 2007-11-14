@@ -96,11 +96,11 @@ namespace mln
       template <unsigned n>
       struct convert_< label<n> >
       {
-	static label<n> value_at_index(std::size_t i)
+	static label<n> value_at_index(unsigned i)
 	{
 	  return i;
 	}
-	static std::size_t index_of_value(const label<n>& v)
+	static unsigned index_of_value(const label<n>& v)
 	{
 	  return v.to_enc();
 	}

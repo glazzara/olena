@@ -46,13 +46,12 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> lena = io::pgm::load("../img/tiny.pgm"),
-    out(lena.domain());
+  image2d<int_u8> lena = io::pgm::load("../img/tiny.pgm");
 
   // FIXME: Below, 127u (instead of 127) is mandatory to avoid a warning...
   unsigned n;
-  labeling::foreground((pw::value(lena) > pw::cst(127u)) | lena.domain(),
-		       c4(), out, n);
+  image2d<unsigned> out = labeling::foreground((pw::value(lena) > pw::cst(127u)) | lena.domain(),
+					       c4(), n);
   mln_assertion(n == 14);
 
   unsigned sum = 0;

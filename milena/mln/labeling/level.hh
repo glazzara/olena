@@ -37,8 +37,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/labeling/base.hh>
 # include <mln/level/fill.hh>
-# include <mln/border/resize.hh>
-# include <mln/border/fill.hh>
+# include <mln/border/adjust.hh>
 # include <mln/value/other.hh>
 
 
@@ -55,14 +54,14 @@ namespace mln
      * \param[in]  input The input image.
      * \param[in]  val   The level to consider for the labeling.
      * \param[in]  nbh   The neighborhood.
-     * \param[out] output  The label image.
      * \param[out] nlabels The number of labels.
-     *
-     * \return Succeed or not.
+     * \return  The label image.
      */
-    template <typename I, typename N, typename O>
-    bool level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-	       Image<O>& output, unsigned& nlabels);
+    template <typename I, typename N>
+    mln_ch_value(I, unsigned)
+      level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
+	    unsigned& nlabels);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -98,16 +97,23 @@ namespace mln
 
       // Routines.
 
-      template <typename I, typename N, typename O>
-      bool level_(trait::image::speed::any, const I& input,
-		  const mln_value(I)& val, const Neighborhood<N>& nbh,
-		  trait::image::speed::any, O& output, unsigned& nlabels)
+      template <typename I, typename N>
+      mln_ch_value(I, unsigned)
+	level_(trait::image::speed::any, const I& input,
+	       const mln_value(I)& val, const Neighborhood<N>& nbh,
+	       unsigned& nlabels)
       {
+	typedef mln_ch_value(I, unsigned) O;
+	O output;
+	initialize(output, input);
+
 	typedef impl::level_t<I,N,O> F;
 	F f(input, val, exact(nbh), output);
 	canvas::labeling<F> run(f);
+
 	nlabels = f.nlabels;
-	return f.status;
+	// FIXME: Handle f.status
+	return output;
       }
 
       // FIXME: Add fast versions.
@@ -134,36 +140,42 @@ namespace mln
       };
 
 
-      template <typename I, typename N, typename O>
-      bool level_(trait::image::speed::fastest, const I& input,
-		  const mln_value(I)& val, const Neighborhood<N>& nbh,
-		  trait::image::speed::fastest, O& output, unsigned& nlabels)
+      template <typename I, typename N>
+      mln_ch_value(I, unsigned)
+	level_(trait::image::speed::fastest, const I& input,
+	       const mln_value(I)& val, const Neighborhood<N>& nbh,
+	       unsigned& nlabels)
       {
+	typedef mln_ch_value(I, unsigned) O;
 	typedef level_fast_t<I,N,O> F;
 
-	border::resize(input,  exact(nbh).delta());
-	border::resize(output, exact(nbh).delta());
+	border::adjust(input, exact(nbh).delta());
+	O output;
+	initialize(output, input);
+	mln_assertion(output.border() == input.border());
 
 	F f(input, val, exact(nbh), output);
-
 	canvas::labeling_fast<F> run(f);
+
+	// FIXME: Handle f.status
+
 	nlabels = f.nlabels;
-	return f.status;
+	return output;
       }
 
     } // end of namespace mln::labeling::impl
 
+
     // Facade.
 
-    template <typename I, typename N, typename O>
-    bool level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-	       Image<O>& output, unsigned& nlabels)
+    template <typename I, typename N>
+    mln_ch_value(I, unsigned)
+      level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
+	    unsigned& nlabels)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      mln_precondition(exact(input).has_data());
       return impl::level_(mln_trait_image_speed(I)(), exact(input),
-			  val, nbh,
-			  mln_trait_image_speed(O)(), exact(output),
-			  nlabels);
+			  val, nbh, nlabels);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

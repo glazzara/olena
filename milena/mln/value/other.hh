@@ -92,7 +92,7 @@ namespace mln
       {
 	const V& val = exact(val_);
 	value::set<V> s;
-	std::size_t i = s.index_of(val);
+	unsigned i = s.index_of(val);
 	mln_assertion(s.nvalues() >= 2);
 	return i == 0 ? s[1] : s[0];
       }

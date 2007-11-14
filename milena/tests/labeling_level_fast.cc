@@ -55,8 +55,7 @@ int main()
   debug::println(i1);
 
   unsigned n;
-  image2d<value::int_u8> out(i1.domain());
-  labeling::level(i1, 2, c4(), out, n);
+  image2d<unsigned> out = labeling::level(i1, 2, c4(), n);
 
   std::cout << "n = " << n << std::endl;
   debug::println(out);

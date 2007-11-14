@@ -1,3 +1,57 @@
+2007-11-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Change value index type is now 'unsigned'; several fixes.
+
+	Use "out foo(in)" instead of "void foo(in, out)".
+
+	* mln/labeling/level.hh: Do it.
+	* mln/labeling/foreground.hh: Do it.
+	* mln/labeling/background.hh: Do it.
+	* tests/labeling_algo.cc: Update.
+	* tests/labeling_level_fast.cc: Update.
+	* tests/labeling_foreground.cc: Update.
+	* tests/labeling_estimate.cc: Update.
+	* tests/clock_test.cc: Update.
+	* tests/seed2tiling.cc: Update.
+
+	Add another labeling algorithm for comparison purpose.
+
+	* mln/labeling/blobs.hh: New.
+	* tests/labeling_blobs.cc: New.
+
+	Change value index type from std::size_t to unsigned.
+
+	* mln/core/concept/value_set.hh: Do it.
+	* mln/core/concept/doc/value_set.hh: Update.
+	* mln/core/image2d.hh: Layout.
+	* mln/accu/histo.hh: Update.
+	* mln/value/other.hh: Update.
+	* mln/value/lut_vec.hh: Update.
+	* mln/value/float01_.hh: Update.
+	* mln/value/internal/iterable_set.hh: Update.
+	* mln/value/label.hh: Update.
+	* mln/convert/to_image.hh: Update.
+
+	Misc.
+
+	* tests/util_ordpair.cc: New.
+	* tests/core_p_set.cc: Layout.
+	* tests/convert_to_p_vec.cc: Remove; now obsolete
+	cause replaced by tests/convert_to_p_array.cc.
+	* tests/value_bool.cc: New.
+	* mln/core/cast_image.hh (trait): New specialization.
+	* mln/value/props.hh (value_at_index, index_of_value):
+	Update.
+	Explicitly compute with int/unsigned.
+	* mln/value/float01.hh: Fix missing includes.
+	* mln/convert/to_p_set.hh: Layout.
+	* mln/io/pnm/save.hh: Fix missing std::.
+	* mln/io/pnm/load.hh: Likewise.
+	* mln/io/pbm/load.hh: Fix.
+	* mln/util/tree_fast_to_image.hh (q): Rename as...
+	(l): ...this.
+	* mln/util/ordpair.hh: New.
+
 2007-11-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	A better test for io::pbm.

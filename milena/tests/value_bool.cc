@@ -25,54 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LABELING_BACKGROUND_HH
-# define MLN_LABELING_BACKGROUND_HH
-
-/*! \file mln/labeling/background.hh
+/*! \file tests/value_bool.cc
  *
- * \brief Connected component labeling of the background in a binary
- * image.
+ * \brief Tests on mln::value::set.
  */
 
-# include <mln/labeling/level.hh>
+#include <mln/value/props.hh>
+#include <mln/value/set.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace labeling
-  {
+  mln_assertion(mln::trait::value_<bool>::card::value == 2);
 
-    /*! Connected component labeling of the background in a binary
-     * image.
-     *
-     * \param[in]  input  The input image.
-     * \param[in]  nbh    The neighborhood to consider.
-     * \param[out] nlabels The number of labels.
-     * \return The label image.
-     */
-    template <typename I, typename N>
-    mln_ch_value(I, unsigned)
-    background(const Image<I>& input, const Neighborhood<N>& nbh,
-	       unsigned& nlabels);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I, typename N>
-    mln_ch_value(I, unsigned)
-    background(const Image<I>& input, const Neighborhood<N>& nbh,
-	       unsigned& nlabels)
-    {
-      mln_precondition(exact(input).has_data());
-      return labeling::level(input, false, nbh, nlabels);
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::labeling
-
-} // end of namespace mln
-
-
-#endif // ! MLN_LABELING_BACKGROUND_HH
+  value::set<bool> B;
+  std::cout << B << std::endl;
+}

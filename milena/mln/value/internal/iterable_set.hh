@@ -35,6 +35,8 @@
 
 # include <mln/core/concept/value_set.hh>
 # include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
+# include <mln/value/builtin/all.hh>
 
 
 namespace mln
@@ -71,13 +73,13 @@ namespace mln
 	bool has(const T& v) const;
 
 	/// Give the \p i-th value.
-	T operator[](std::size_t i) const;
+	T operator[](unsigned i) const;
 
 	/// Give the index of value \p v in this iterable_set.
-	std::size_t index_of(const T& v) const;
+	unsigned index_of(const T& v) const;
 
 	/// Give the number of values.
-	std::size_t nvalues() const;
+	unsigned nvalues() const;
       };
 
 
@@ -93,21 +95,21 @@ namespace mln
 
       template <typename T, typename E>
       T
-      iterable_set<T,E>::operator[](std::size_t i) const
+      iterable_set<T,E>::operator[](unsigned i) const
       {
 	mln_precondition(i < nvalues());
 	return mln::value::internal::convert_<T>::value_at_index(i);
       }
 
       template <typename T, typename E>
-      std::size_t
+      unsigned
       iterable_set<T,E>::index_of(const T& v) const
       {
 	return mln::value::internal::convert_<T>::index_of_value(v);
       }
 
       template <typename T, typename E>
-      std::size_t
+      unsigned
       iterable_set<T,E>::nvalues() const
       {
 	typedef mln_trait_value_card(T) card_;

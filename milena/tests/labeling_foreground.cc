@@ -34,10 +34,19 @@
 #include <mln/core/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/pw/all.hh>
+#include <mln/core/cast_image.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/labeling/foreground.hh>
+#include <mln/level/transform.hh>
+
+
+struct fold_t : public mln::Function_v2v< fold_t >
+{
+  typedef mln::value::int_u8 result;
+  result operator()(unsigned i) const { return i == 0 ? 0 : i % 255 + 1; }
+};
 
 
 int main()
@@ -45,13 +54,20 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8>
-    lena = io::pgm::load("../img/tiny.pgm"),
-    out(lena.domain());
-
+  image2d<int_u8> lena = io::pgm::load("../img/tiny.pgm");
   unsigned n;
-  labeling::foreground((pw::value(lena) > pw::cst(127u)) | lena.domain(),
-		       c4(), out, n);
-  io::pgm::save(out, "out.pgm");
+  io::pgm::save(cast_image<int_u8>( labeling::foreground((pw::value(lena) > pw::cst(127u)) | lena.domain(),
+							 c4(), n) ),
+		"out.pgm");
   mln_assertion(n == 14);
+
+//   image2d<int_u8>
+//     lena = io::pgm::load("../img/lena.pgm"),
+//     out;
+//   unsigned n;
+//   image2d<unsigned> labels = labeling::foreground((pw::value(lena) > pw::cst(127u)) | lena.domain(),
+// 						  c8(), n);
+//   mln_assertion(n == 528);
+//   io::pgm::save( level::transform(labels, fold_t()),
+// 		"out.pgm" );
 }

@@ -92,14 +92,14 @@ namespace mln
       template <unsigned n>
       struct convert_< float01_<n> >
       {
-	static float01_<n> value_at_index(std::size_t i)
+	static float01_<n> value_at_index(unsigned i)
 	{
 	  float01_<n> tmp;
 	  tmp.set_ind(i);
 	  return tmp;
 	}
 
-	static std::size_t index_of_value(const float01_<n>& v)
+	static unsigned index_of_value(const float01_<n>& v)
 	{
 	  return v.to_enc();
 	}

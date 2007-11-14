@@ -208,11 +208,8 @@ namespace mln
     T* buffer();
 
 
-
-
     /// Resize image border with new_border.
     void resize_(unsigned new_border);
-
   };
 
 

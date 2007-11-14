@@ -70,10 +70,10 @@ namespace mln
       typedef bkd_viter_< lut_vec<S,T> > bkd_viter;
 
       /// Give the \p i-th value.
-      T operator[](std::size_t i) const;
+      T operator[](unsigned i) const;
 
       /// Give the number of values.
-      std::size_t nvalues() const;
+      unsigned nvalues() const;
 
       // Apply the look-up-table.  FIXME: Doc!
       T operator()(const mln_value(S)& val) const;
@@ -82,7 +82,7 @@ namespace mln
       bool has(const value& v) const;
 
       /// Give the index of value \p v in this set.
-      std::size_t index_of(const value& v) const;
+      unsigned index_of(const value& v) const;
 
       /// Ctor. FIXME!
       template <typename F>
@@ -108,7 +108,7 @@ namespace mln
     }
 
     template <typename S, typename T>
-    std::size_t
+    unsigned
     lut_vec<S,T>::index_of(const T& v) const
     {
       mln_invariant(0); // FIXME
@@ -137,14 +137,14 @@ namespace mln
 
     template <typename S, typename T>
     T
-    lut_vec<S,T>::operator[](std::size_t i) const
+    lut_vec<S,T>::operator[](unsigned i) const
     {
       mln_precondition(i < nvalues());
       return vec_[i];
     }
 
     template <typename S, typename T>
-    std::size_t
+    unsigned
     lut_vec<S,T>::nvalues() const
     {
       return vec_.size();

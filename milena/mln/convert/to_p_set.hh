@@ -128,7 +128,6 @@ namespace mln
       return pset;
     }
 
-
     template <typename S>
     p_set<mln_psite(S)> to_p_set(const Point_Set<S>& ps_)
     {

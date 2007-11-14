@@ -37,7 +37,7 @@
  */
 
 # include <mln/util/tree_fast.hh>
-# include <mln/core/set_p.hh>
+# include <mln/core/p_set.hh>
 # include <list>
 
 namespace mln
@@ -48,31 +48,31 @@ namespace mln
 
     template <typename T, typename I>
     void
-    tree_fast_to_image (tree_fast<T>& tree, Image<I>& output_);
+    tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T, typename I>
     void
-    tree_fast_to_image (tree_fast<T>& tree, Image<I>& output_)
+    tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_)
     {
       I& output = exact(output_);
-      std::list<unsigned> q;
+      std::list<unsigned> l;
 
-      q.push_back (tree.root_);
-      while (!(q.empty ()))
+      l.push_back (tree.root_);
+      while (! l.empty())
 	{
-	  unsigned current = q.front ();
-	  for (unsigned i = 0; i < tree.child_[current].size (); ++i)
-	    q.push_back (tree.child_[current][i]);
+	  unsigned current = l.front();
+	  for (unsigned i = 0; i < tree.child_[current].size(); ++i)
+	    l.push_back(tree.child_[current][i]);
 
-	  mln_piter(set_p<point2d>) p(tree.data_[current].points);
+	  mln_piter(p_set<point2d>) p(tree.data_[current].points);
 
 	  for_all(p)
 	    {
 	      output(p) = tree.data_[current].value;
 	    }
-	  q.pop_front ();
+	  l.pop_front();
 	}
     }
 

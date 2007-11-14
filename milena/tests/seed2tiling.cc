@@ -69,29 +69,26 @@ int main(int argc, char** argv)
   image2d<bool> input = io::pbm::load(argv[1]);
 
   {
-
-    image2d<unsigned> lab(input.domain());
-    image2d<unsigned> inte(input.domain());
-    image2d<int_u8> inte2(input.domain());
-    image2d<int_u8> out(input.domain());
-
     const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2,3> ();
 
     unsigned n;
-    labeling::foreground(input, c4(), lab, n);
+    image2d<unsigned> lab = labeling::foreground(input, c4(), n);
     std::cout << "number of labels = " << n << std::endl;
 
 
-    inte = geom::seeds2tiling(lab, c4 ());
+    image2d<unsigned> inte = geom::seeds2tiling(lab, c4 ());
     border::fill (inte, 0);
-    level::stretch (inte, inte2);
+
+    image2d<int_u8> inte2(input.domain());
+    level::stretch(inte, inte2);
     io::pgm::save(inte2, "ima1.pgm");
 
     std::cout << "ima1 generate with seeds2tiling"
 	     << std::endl;
     inte = geom::seeds2tiling_with_chamfer(lab, w_win, max, c4 ());
-    border::fill (inte, 0);
-    level::stretch (inte, inte2);
+    border::fill(inte, 0);
+
+    level::stretch(inte, inte2);
 
     io::pgm::save(inte2, "ima2.pgm");
     std::cout << "ima2 generate with seeds2tiling_with_chamfer"

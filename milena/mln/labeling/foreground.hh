@@ -48,26 +48,24 @@ namespace mln
      *
      * \param[in]  input  The input image.
      * \param[in]  nbh    The neighborhood to consider.
-     * \param[out] output The label image.
      * \param[out] nlabels The number of labels.
-     *
-     * \return The number of labels.
+     * \return The label image.
      */
-    template <typename I, typename N, typename O>
-    bool foreground(const Image<I>& input, const Neighborhood<N>& nbh,
-		    Image<O>& output,
-		    unsigned& nlabels);
+    template <typename I, typename N>
+    mln_ch_value(I, unsigned)
+    foreground(const Image<I>& input, const Neighborhood<N>& nbh,
+	       unsigned& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
-    bool foreground(const Image<I>& input, const Neighborhood<N>& nbh,
-		    Image<O>& output,
-		    unsigned& nlabels)
+    template <typename I, typename N>
+    mln_ch_value(I, unsigned)
+    foreground(const Image<I>& input, const Neighborhood<N>& nbh,
+	       unsigned& nlabels)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      return labeling::level(input, true, nbh, output, nlabels);
+      mln_precondition(exact(input).has_data());
+      return labeling::level(input, true, nbh, nlabels);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
