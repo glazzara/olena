@@ -25,33 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/literal_medium_gray.cc
+/*! \file tests/literal/zero.cc
  *
- * \brief Tests on mln::literal::medium_gray.
+ * \brief Tests on mln::literal::zero.
  */
 
-#include <mln/literal/grays.hh>
-#include <mln/value/graylevel.hh>
+#include <mln/literal/zero.hh>
+#include <mln/literal/one.hh>
+#include <mln/literal/ops.hh>
+#include <mln/value/int_u8.hh>
+
 
 
 int main()
 {
   using namespace mln;
 
-  using literal::medium_gray;
-  using value::gl8;
-  using value::gl16;
+  unsigned char c;
+  c = literal::zero;
+  mln_assertion(c == 0);
 
-  gl8 a;
-  gl16 b;
+  double d;
+  d = literal::zero;
+  mln_assertion(d == 0);
 
-  a = medium_gray;
+  mln_assertion(literal::zero != literal::one);
 
-  std::cout << int(a.value()) << std::endl;
+  value::int_u8 u(literal::zero), uu;
+  uu = literal::zero;
 
-  b = a;
-  std::cout << int(b.value()) << std::endl;
-
-  b = medium_gray;
-  std::cout << int(b.value()) << std::endl;
+  mln_assertion(u == 0 && 0 == u);
 }

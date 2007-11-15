@@ -58,13 +58,21 @@ namespace mln
 
 
     /// Literal red.
-    static red_t red = red_t();
+    extern const red_t& red;
 
     /// Literal green.
-    static green_t green = green_t();
+    extern const green_t& green;
 
     /// Literal blue.
-    static blue_t blue = blue_t();
+    extern const blue_t& blue;
+
+# ifndef MLN_INCLUDE_ONLY
+
+    const red_t& red = red_t();
+    const green_t& green = green_t();
+    const blue_t& blue = blue_t();
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::literal
 

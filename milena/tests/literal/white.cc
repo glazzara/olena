@@ -25,43 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LITERAL_GRAYS_HH
-# define MLN_LITERAL_GRAYS_HH
-
-/*! \file mln/literal/grays.hh
- * \brief Definition of the colors literal.
+/*! \file tests/literal/white.cc
  *
+ * \brief Tests on mln::literal::white.
  */
 
-# include <mln/core/concept/literal.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/literal/white.hh>
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
+  using value::rgb8;
+  using literal::white;
 
-  namespace literal
   {
-
-    /// Type of literal grays.
-    struct medium_gray_t : public Literal<medium_gray_t>
-    {
-    };
-
-    /// Literal medium_gray.
-    extern const medium_gray_t& medium_gray;
+    rgb8 c(255, 255, 255);
 
 
-# ifndef MLN_INCLUDE_ONLY
+    c.green() = 254;
+    mln_assertion(c != white);
 
-    const medium_gray_t& medium_gray = medium_gray_t();
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::literal
-
-} // end of namespace mln
-
-// White and black are grays too.
-# include <mln/literal/white.hh>
-# include <mln/literal/black.hh>
-
-#endif // ! MLN_LITERAL_GRAYS_HH
+    c = white;
+    mln_assertion(c == white);
+  }
+}

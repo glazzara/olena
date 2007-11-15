@@ -47,9 +47,14 @@ namespace mln
     {
     };
 
-
     /// Literal origin.
-    static origin_t origin = origin_t();
+    extern const origin_t& origin;
+
+# ifndef MLN_INCLUDE_ONLY
+
+    const origin_t& origin = origin_t();
+
+# endif // ! MLN_INCLUDE_ONLY
 
 
   } // end of namespace mln::literal

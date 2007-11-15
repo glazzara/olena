@@ -1,5 +1,27 @@
 2007-11-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Review the mln/literal directory.
+
+	* mln/literal/black.hh,
+	* mln/literal/colors.hh,
+	* mln/literal/grays.hh,
+	* mln/literal/one.hh,
+	* mln/literal/origin.hh,
+	* mln/literal/white.hh,
+	* tests/literal/black.cc: Use extern const ref, not static. Move
+          impl. within MLN_INCLUDE_ONLY.
+
+	Move/add some unit tests.
+
+	* tests/literal/literal_medium_gray.cc: Rename as...
+	* tests/literal/medium_gray.cc: ...this.
+	* tests/literal/literal_zero.cc: Rename as...
+	* tests/literal/zero.cc: ...this.
+	* tests/literal/one.cc: New.
+	* tests/literal/white.cc: New.
+
+2007-11-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Move literals tests into tests/literal directory.
 
 	* tests/literal: New.

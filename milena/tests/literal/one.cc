@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/literal_zero.cc
+/*! \file tests/literal/one.cc
  *
- * \brief Tests on mln::literal::zero.
+ * \brief Tests on mln::literal::one.
  */
 
-#include <mln/literal/zero.hh>
 #include <mln/literal/one.hh>
+#include <mln/literal/zero.hh>
 #include <mln/literal/ops.hh>
 #include <mln/value/int_u8.hh>
 
@@ -42,17 +42,17 @@ int main()
   using namespace mln;
 
   unsigned char c;
-  c = literal::zero;
-  mln_assertion(c == 0);
+  c = literal::one;
+  mln_assertion(c == 1);
 
   double d;
-  d = literal::zero;
-  mln_assertion(d == 0);
+  d = literal::one;
+  mln_assertion(d == 1);
 
-  mln_assertion(literal::zero != literal::one);
+  mln_assertion(literal::one != literal::zero);
 
-  value::int_u8 u(literal::zero), uu;
-  uu = literal::zero;
+  value::int_u8 u(literal::one), uu;
+  uu = literal::one;
 
-  mln_assertion(u == 0 && 0 == u);
+  mln_assertion(u == 1 && 1 == u);
 }

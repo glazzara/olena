@@ -48,7 +48,14 @@ namespace mln
 
 
     /// Literal white.
-    static white_t white = white_t();
+    extern const white_t& white;
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    const white_t& white = white_t();
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::literal
 

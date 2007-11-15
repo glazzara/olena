@@ -25,43 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LITERAL_GRAYS_HH
-# define MLN_LITERAL_GRAYS_HH
-
-/*! \file mln/literal/grays.hh
- * \brief Definition of the colors literal.
+/*! \file tests/literal/medium_gray.cc
  *
+ * \brief Tests on mln::literal::medium_gray.
  */
 
-# include <mln/core/concept/literal.hh>
+#include <mln/literal/grays.hh>
+#include <mln/value/graylevel.hh>
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
 
-  namespace literal
-  {
+  using literal::medium_gray;
+  using value::gl8;
+  using value::gl16;
 
-    /// Type of literal grays.
-    struct medium_gray_t : public Literal<medium_gray_t>
-    {
-    };
+  gl8 a;
+  gl16 b;
 
-    /// Literal medium_gray.
-    extern const medium_gray_t& medium_gray;
+  a = medium_gray;
 
+  std::cout << int(a.value()) << std::endl;
 
-# ifndef MLN_INCLUDE_ONLY
+  b = a;
+  std::cout << int(b.value()) << std::endl;
 
-    const medium_gray_t& medium_gray = medium_gray_t();
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::literal
-
-} // end of namespace mln
-
-// White and black are grays too.
-# include <mln/literal/white.hh>
-# include <mln/literal/black.hh>
-
-#endif // ! MLN_LITERAL_GRAYS_HH
+  b = medium_gray;
+  std::cout << int(b.value()) << std::endl;
+}
