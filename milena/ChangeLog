@@ -1,3 +1,37 @@
+2007-11-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Move level test in level tests repertory.
+
+	* tests/level/abs.cc: New.
+	* tests/level/apply.cc: New.
+	* tests/level/approx: New.
+	* tests/level/approx_median.cc: New.
+	* tests/level/assign.cc: New.
+	* tests/level/fill.cc: New.
+	* tests/level/median.cc: New.
+	* tests/level/median_dir.cc: New.
+	* tests/level/median_fast.cc: New.
+	* tests/level/median_hline2d.cc: New.
+	* tests/level/memcpy_.cc: New.
+	* tests/level/memset_.cc: New.
+	* tests/level/naive/median.cc: New.
+	* tests/level/naive: New.
+	* tests/level/paste.cc: New.
+	* tests/level/transform.cc: New.
+	* tests/level: New.
+	* tests/level_approx_median.cc: Remove.
+	* tests/level_assign.cc: Remove.
+	* tests/level_fill.cc: Remove.
+	* tests/level_median.cc: Remove.
+	* tests/level_median_dir.cc: Remove.
+	* tests/level_median_fast.cc: Remove.
+	* tests/level_median_hline2d.cc: Remove.
+	* tests/level_memcpy_.cc: Remove.
+	* tests/level_memset_.cc: Remove.
+	* tests/level_naive_median.cc: Remove.
+	* tests/level_paste.cc: Remove.
+	* tests/level_transform.cc: Remove.
+
 2007-11-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Review the mln/literal directory.

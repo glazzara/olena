@@ -25,29 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_memset_.cc
+/*! \file tests/level/apply.cc
  *
- * \brief Tests on mln::level::memset_.
+ * \brief Tests on mln::level::apply.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/geom/ncols.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/memset_.hh>
+#include <mln/level/apply.hh>
+#include <mln/debug/iota.hh>
+#include <mln/fun/v2v/saturate.hh>
 
 
 int main()
 {
   using namespace mln;
 
+  const unsigned size = 1000;
   image2d<int> ima(3, 3);
-  level::fill(ima, 0);
-  int X = 9;
-  level::memset_(ima, make::point2d(0,0),
-		 X,
-		 geom::ncols(ima) + 2 * ima.border() + 1);
-  //                                                   ^
-  //                                                   |
-  mln_assertion(ima.at(1,0) == X); // <----------------+
-  mln_assertion(ima.at(1,1) != X);
+  int vs[3][3] = {
+    { 2, 2, 3 },
+    { 4, 5, 6 },
+    { 6, 6, 6 }
+  };
+
+  image2d<int> ref(make::image2d(vs));
+  debug::iota(ima);
+  level::apply(ima, fun::v2v::saturate<int>(2, 6));
+  box_fwd_piter_<point2d> p(ima.domain());
+  for_all(p)
+    mln_assertion(ima(p) == ref(p));
 }

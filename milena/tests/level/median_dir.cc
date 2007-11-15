@@ -25,46 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_fill.cc
+/*! \file tests/level/median_dir.cc
  *
- * \brief Tests on mln::level::fill
+ * \brief Test on mln::level::median.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/level/fill.hh>
 
-#include <mln/debug/println.hh>
-#include <mln/value/props.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+
+#include <mln/value/int_u8.hh>
+#include <mln/level/median.hh>
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
+  border::thickness = 7;
 
-  unsigned u = 300;
-  unsigned char uc = u;
-  mln_assertion(uc == 44);
+  image2d<int_u8>
+    lena = io::pgm::load("../img/lena.pgm"),
+    out(lena.domain());
 
-//   {
-//     const unsigned size = 3;
-//     image2d<unsigned> ima(size, size);
-//     level::fill(ima, u);
-//     debug::println(ima);
-//   }
-
-  {
-    const unsigned size = 10000;
-    image2d<unsigned char> ima(size, size);
-    for (unsigned i = 0; i < 5; ++i)
-      level::fill(ima, uc);
-  }
-
-//   {
-//     // do *not* compile so that's great since ima is not mutable
-//     sub_image< const image2d<int>, box2d > ima;
-//     level::fill(ima, 0);
-//   }
-
+  level::median_dir(lena, 1, 15, out);
+  io::pgm::save(out, "out.pgm");
 }

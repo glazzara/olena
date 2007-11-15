@@ -25,42 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_transform.cc
+/*! \file tests/level/median_hline2d.cc
  *
- * \brief Tests on mln::level::transform
+ * \brief Test on the hline2d version of mln::level::median.
  */
 
-#include <cmath>
-
 #include <mln/core/image2d.hh>
-#include <mln/level/transform.hh>
-#include <mln/debug/iota.hh>
+#include <mln/win/rectangle2d.hh>
 
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 
-struct mysqrt : mln::Function_v2v<mysqrt>
-{
-  typedef unsigned short result;
-  result operator()(unsigned short c) const
-  {
-    return result( std::sqrt(float(c)) );
-  }
-};
+#include <mln/value/int_u8.hh>
+#include <mln/level/median.hh>
+#include <mln/level/compare.hh>
+
 
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  const unsigned size = 10000;
-  image2d<unsigned short>
-    ima(size, size);
+  border::thickness = 0;
 
-  (std::cout << "iota... ").flush(); 
-  debug::iota(ima);
-  std::cout << "done" << std::endl;
+  image2d<int_u8>
+    lena = io::pgm::load("../img/lena.pgm"),
+    out(lena.domain()),
+    ref(lena.domain());
 
-  (std::cout << "transform... ").flush(); 
-  level::transform(ima, mysqrt(), ima);
-  std::cout << "done" << std::endl;
+  level::median(lena, win::rectangle2d(1, 101), ref);
+
+  level::median(lena, win::hline2d(101), out);
+  io::pgm::save(out, "out.pgm");
+
+  // FIXME: mln_assertion(out == ref);
 }

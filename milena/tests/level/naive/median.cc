@@ -25,24 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_assign.cc
+/*! \file tests/level/naive/median.cc
  *
- * \brief Tests on mln::level::assign.
+ * \brief Test on mln::level::naive::median.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/level/assign.hh>
-#include <mln/level/compare.hh>
-#include <mln/debug/iota.hh>
+#include <mln/win/rectangle2d.hh>
+
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+
+#include <mln/value/int_u8.hh>
+#include <mln/level/naive/median.hh>
+
+
+using namespace mln;
+using namespace mln::value;
 
 
 int main()
 {
-  using namespace mln;
+  win::rectangle2d rec(51, 51);
+  border::thickness = 52;
 
-  const unsigned size = 1000;
-  image2d<int> rhs(size, size), lhs(rhs.domain());
-  debug::iota(rhs);
-  level::assign(lhs, rhs);
-  mln_assertion(lhs == rhs);
+  image2d<int_u8>
+    lena = io::pgm::load("../img/lena.pgm"),
+    out(lena.domain());
+
+  level::naive::median(lena, rec, out);
+  io::pgm::save(out, "out.pgm");
 }

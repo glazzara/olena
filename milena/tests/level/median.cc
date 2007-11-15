@@ -25,38 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_paste.cc
+/*! \file tests/level/median.cc
  *
- * \brief Tests on mln::level::paste.
+ * \brief Test on mln::level::median.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
+#include <mln/win/rectangle2d.hh>
 
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+
+#include <mln/value/int_u8.hh>
+#include <mln/level/median.hh>
+
+
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  box2d b(make::point2d(1,2), make::point2d(2,4));
-  image2d<int> ima(b, 2);
-  debug::iota(ima);
-  debug::println(ima);
+  win::rectangle2d rect(51, 51);
+  border::thickness = 52;
 
+  image2d<int_u8>
+    lena = io::pgm::load("../img/lena.pgm"),
+    out(lena.domain());
 
-  box2d b2(make::point2d(-1,-2), make::point2d(3,6));
-  image2d<int> ima2(b2, 0);
-  debug::iota(ima2);
-  debug::println(ima2);
-
-  trace::quiet = false;
-
-  level::paste(ima, ima2); // Fast version.
-  debug::println(ima2);
-
-  level::impl::generic::paste_(ima, ima2); // Not so fast version...
+  level::median(lena, rect, out);
+  io::pgm::save(out, "out.pgm");
 }

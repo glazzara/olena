@@ -25,40 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_median_hline2d.cc
+/*! \file tests/level/memset_.cc
  *
- * \brief Test on the hline2d version of mln::level::median.
+ * \brief Tests on mln::level::memset_.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/win/rectangle2d.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/level/median.hh>
-#include <mln/level/compare.hh>
-
-
+#include <mln/geom/ncols.hh>
+#include <mln/level/fill.hh>
+#include <mln/level/memset_.hh>
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  border::thickness = 0;
-
-  image2d<int_u8>
-    lena = io::pgm::load("../img/lena.pgm"),
-    out(lena.domain()),
-    ref(lena.domain());
-
-  level::median(lena, win::rectangle2d(1, 101), ref);
-
-  level::median(lena, win::hline2d(101), out);
-  io::pgm::save(out, "out.pgm");
-
-  // FIXME: mln_assertion(out == ref);
+  image2d<int> ima(3, 3);
+  level::fill(ima, 0);
+  int X = 9;
+  level::memset_(ima, make::point2d(0,0),
+		 X,
+		 geom::ncols(ima) + 2 * ima.border() + 1);
+  //                                                   ^
+  //                                                   |
+  mln_assertion(ima.at(1,0) == X); // <----------------+
+  mln_assertion(ima.at(1,1) != X);
 }

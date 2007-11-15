@@ -25,19 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_median.cc
+/*! \file tests/level/approx/median.cc
  *
- * \brief Test on mln::level::median.
+ * \brief Test on mln::level::approx::median.
  */
 
 #include <mln/core/image2d.hh>
 #include <mln/win/rectangle2d.hh>
+#include <mln/win/octagon2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/level/median.hh>
+#include <mln/level/approx/median.hh>
 
 
 
@@ -48,12 +49,14 @@ int main()
   using value::int_u8;
 
   win::rectangle2d rect(51, 51);
+  win::octagon2d oct(13);
   border::thickness = 52;
 
   image2d<int_u8>
     lena = io::pgm::load("../img/lena.pgm"),
     out(lena.domain());
 
-  level::median(lena, rect, out);
+//  level::approx::median(lena, rect, out);
+  level::approx::median(lena, oct, out);
   io::pgm::save(out, "out.pgm");
 }

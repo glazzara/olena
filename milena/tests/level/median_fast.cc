@@ -25,18 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_median_dir.cc
+/*! \file tests/level/median_fast.cc
  *
- * \brief Test on mln::level::median.
+ * \brief Test on mln::level::fast_median.
  */
 
 #include <mln/core/image2d.hh>
+#include <mln/win/rectangle2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/level/median.hh>
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
+#include <mln/level/fast_median.hh>
+
+#include <mln/core/dpoints_pixter.hh>
+#include <mln/core/pixel.hh>
+
+
+namespace mln
+{
+
+  template <typename I, typename W>
+  void test(I& input, const W& win)
+  {
+    mln_point(I) p;
+    p.row() = p.col() = 1;
+
+    {
+      mln_qixter(I, W) qix(input, win, p);
+      for_all(qix)
+	std::cout << qix.val() << ' ';
+      std::cout << " :  " << qix.center_val() << std::endl;
+    }
+
+    {
+      pixel<I> pix(input, p);
+      mln_qixter(I, W) qix(input, win, pix);
+      for_all(qix)
+	std::cout << qix.val() << ' ';
+      std::cout << " :  " << qix.center_val() << std::endl;
+    }
+  }
+
+}
+
 
 
 int main()
@@ -44,12 +79,26 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  border::thickness = 7;
+//   {
+//     win::rectangle2d rect(3, 3);
+//     border::thickness = 4;
+//     image2d<int_u8> ima(3, 3);
+//     debug::iota(ima);
+//     debug::println(ima);
+//     test(ima, rect);
+//   }
 
-  image2d<int_u8>
-    lena = io::pgm::load("../img/lena.pgm"),
-    out(lena.domain());
 
-  level::median_dir(lena, 1, 15, out);
-  io::pgm::save(out, "out.pgm");
+  {
+    win::rectangle2d rect(51, 51);
+    border::thickness = 52;
+    
+    image2d<int_u8>
+      lena = io::pgm::load("../img/lena.pgm"),
+      out(lena.domain());
+    
+    level::fast_median(lena, rect, out);
+    io::pgm::save(out, "out.pgm");
+  }
+
 }

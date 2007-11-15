@@ -25,80 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_median_fast.cc
+/*! \file tests/level/transform.cc
  *
- * \brief Test on mln::level::fast_median.
+ * \brief Tests on mln::level::transform
  */
 
+#include <cmath>
+
 #include <mln/core/image2d.hh>
-#include <mln/win/rectangle2d.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
-#include <mln/value/int_u8.hh>
+#include <mln/level/transform.hh>
 #include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
-#include <mln/level/fast_median.hh>
-
-#include <mln/core/dpoints_pixter.hh>
-#include <mln/core/pixel.hh>
 
 
-namespace mln
+struct mysqrt : mln::Function_v2v<mysqrt>
 {
-
-  template <typename I, typename W>
-  void test(I& input, const W& win)
+  typedef unsigned short result;
+  result operator()(unsigned short c) const
   {
-    mln_point(I) p;
-    p.row() = p.col() = 1;
-
-    {
-      mln_qixter(I, W) qix(input, win, p);
-      for_all(qix)
-	std::cout << qix.val() << ' ';
-      std::cout << " :  " << qix.center_val() << std::endl;
-    }
-
-    {
-      pixel<I> pix(input, p);
-      mln_qixter(I, W) qix(input, win, pix);
-      for_all(qix)
-	std::cout << qix.val() << ' ';
-      std::cout << " :  " << qix.center_val() << std::endl;
-    }
+    return result( std::sqrt(float(c)) );
   }
-
-}
+};
 
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-//   {
-//     win::rectangle2d rect(3, 3);
-//     border::thickness = 4;
-//     image2d<int_u8> ima(3, 3);
-//     debug::iota(ima);
-//     debug::println(ima);
-//     test(ima, rect);
-//   }
+  const unsigned size = 10000;
+  image2d<unsigned short>
+    ima(size, size);
 
+  (std::cout << "iota... ").flush(); 
+  debug::iota(ima);
+  std::cout << "done" << std::endl;
 
-  {
-    win::rectangle2d rect(51, 51);
-    border::thickness = 52;
-    
-    image2d<int_u8>
-      lena = io::pgm::load("../img/lena.pgm"),
-      out(lena.domain());
-    
-    level::fast_median(lena, rect, out);
-    io::pgm::save(out, "out.pgm");
-  }
-
+  (std::cout << "transform... ").flush(); 
+  level::transform(ima, mysqrt(), ima);
+  std::cout << "done" << std::endl;
 }

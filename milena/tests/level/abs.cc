@@ -25,38 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_approx_median.cc
+/*! \file tests/level/abs.cc
  *
- * \brief Test on mln::level::approx::median.
+ * \brief Tests on mln::level::abs.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/win/rectangle2d.hh>
-#include <mln/win/octagon2d.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/level/approx/median.hh>
-
-
-
+# include <mln/core/image2d.hh>
+# include <mln/level/abs.hh>
 
 int main()
 {
+
   using namespace mln;
-  using value::int_u8;
 
-  win::rectangle2d rect(51, 51);
-  win::octagon2d oct(13);
-  border::thickness = 52;
+  typedef image2d<int>  I;
 
-  image2d<int_u8>
-    lena = io::pgm::load("../img/lena.pgm"),
-    out(lena.domain());
+  int vs[6][5] = {
 
-//  level::approx::median(lena, rect, out);
-  level::approx::median(lena, oct, out);
-  io::pgm::save(out, "out.pgm");
+    { -3, -3, -4, -4, -4 },
+    { -2, -1, -1, -1, -1 },
+    { -1, -4, -4, -4, -1 },
+    { -1, -4, -3, -4, -1 },
+    { -1, -4, -5, -3, -1 },
+    { -1, -1, -1, -1, -1 }
+
+  };
+
+  image2d<int> ima(make::image2d(vs));
+  image2d<int> out(ima.domain());
+  level::abs(ima, out);
+  box_fwd_piter_<point2d> p(ima.domain());
+  for_all (p)
+    mln_assertion (out(p) >= 0);
 }
