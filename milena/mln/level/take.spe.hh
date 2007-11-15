@@ -25,23 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_ASSIGN_HH
-# define MLN_LEVEL_ASSIGN_HH
+#ifndef MLN_LEVEL_TAKE_SPE_HH
+# define MLN_LEVEL_TAKE_SPE_HH
 
-/*! \file mln/level/assign.hh
+/*! \file mln/level/take.spe.hh
  *
- * \brief Assignment between a couple of images.
- *
- * \todo Assign should be a precondition then a call to level::fill.
+ * \brief Specializations for mln::level::take.
  */
 
+# include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
 
-
-// Specializations are in:
-# include <mln/level/assign.spe.hh>
-
-
+# ifndef MLN_INCLUDE_ONLY
 
 namespace mln
 {
@@ -49,64 +44,39 @@ namespace mln
   namespace level
   {
 
-    /*! Assignment of image \p target with image \p data.
-     *
-     * \param[out] target The image to be assigned.
-     * \param[in] data The auxiliary image.
-     *
-     * \pre target.domain = data.domain
-     *
-     * \todo Overload in impl:: for mixed (fast, non-fast).
-     *
-     * \todo Overload in impl:: for (fast, fast) if same value using memcpy.
-     */
-    template <typename L, typename R>
-    void assign(Image<L>& target, const Image<R>& data);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
     namespace impl
     {
 
       namespace generic
       {
-	template <typename L, typename R>
-	void assign_(L& target, const R& data)
-	{
-	  trace::entering("level::impl::generic::assign_");
+	template <typename A, typename I>
+	void take_(const I& input, A& a);
+      }
 
-	  mln_piter(L) p(target.domain());
-	  for_all(p)
-	    target(p) = data(p);
+      template <typename A, typename I>
+      void take_(trait::image::speed::any, const I& input, A& a)
+      {
+	generic::take_(input, a);
+      }
 
-	  trace::exiting("level::impl::generic::assign_");
-	}
+      template <typename A, typename I>
+      void take_(trait::image::speed::fastest, const I& input, A& a)
+      {
+	trace::entering("level::impl::take");
 
-      }  // end of namespace mln::level::impl::generic
+	mln_pixter(const I) pxl(input);
+	for_all(pxl)
+	  a.take(pxl.val());
+
+	trace::exiting("level::impl::take");
+      }
 
     } // end of namespace mln::level::impl
-
-
-    // Facade.
-
-    template <typename L, typename R>
-    void assign(Image<L>& target, const Image<R>& data)
-    {
-      trace::entering("level::assign");
-
-      mln_precondition(exact(data).domain() == exact(target).domain());
-      impl::assign_(mln_trait_image_speed(L)(), exact(target),
-		    mln_trait_image_speed(R)(), exact(data));
-
-      trace::exiting("level::assign");
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::level
 
 } // end of namespace mln
 
+# endif // ! MLN_INCLUDE_ONLY
 
-#endif // ! MLN_LEVEL_ASSIGN_HH
+#endif // ! MLN_LEVEL_TAKE_HH

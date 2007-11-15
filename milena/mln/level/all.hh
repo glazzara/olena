@@ -47,7 +47,6 @@ namespace mln
 }
 
 # include <mln/level/abs.hh>
-# include <mln/level/all.hh>
 # include <mln/level/apply.hh>
 # include <mln/level/approx/all.hh>
 # include <mln/level/assign.hh>

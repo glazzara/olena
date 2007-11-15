@@ -25,19 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_TAKE_HH
-# define MLN_LEVEL_TAKE_HH
+#ifndef MLN_LEVEL_FILL_SPE_HH
+# define MLN_LEVEL_FILL_SPE_HH
 
-/*! \file mln/level/take.hh
+/*! \file mln/level/fill.spe.hh
  *
- * \brief Make an accumulator take image pixel values.
+ * \brief Specializations for mln::level::fill.
+ *
  */
 
-# include <mln/core/concept/accumulator.hh>
-# include <mln/core/concept/image.hh>
+# include <cstring>
 
-// Specializations are in:
-# include <mln/level/take.spe.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/core/inplace.hh>
+# include <mln/level/memset_.hh>
+
+
+# ifndef MLN_INCLUDE_ONLY
 
 namespace mln
 {
@@ -45,63 +50,44 @@ namespace mln
   namespace level
   {
 
-    /*! Make an accumulator take the values of the image \p input.
-     *
-     * \param[in] input The input image.
-     * \param[in,out] a The accumulator.
-     *
-     * This routine runs: \n
-     *   for all p of \p input, \p a.take( \p input(p) ) \n
-     *
-     * \warning This routine does not perform a.init().
-     */
-    template <typename A, typename I>
-    void take(const Image<I>& input, Accumulator<A>& a);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
     namespace impl
     {
 
       namespace generic
       {
-	template <typename A, typename I>
-	void take_(const I& input, A& a)
-	{
-	  trace::entering("level::impl::generic::take");
+	template <typename I>
+	void fill_with_value(I& ima, const mln_value(I)& value);
+      }
 
-	  mln_piter(I) p(input.domain());
-	  for_all(p)
-	    a.take(input(p));
 
-	  trace::exiting("level::impl::generic::take");
-	}
+      // Disjunction.
 
-      } // end of namespace mln::level::impl::generic
+
+      template <typename I>
+      void fill_with_value(trait::image::speed::any, I& ima,
+			   const mln_value(I)& value)
+      {
+	generic::fill_with_value(ima, value);
+      }
+
+      template <typename I>
+      void fill_with_value(trait::image::speed::fastest, I& ima,
+			   const mln_value(I)& value)
+      {
+	trace::entering("level::impl::fill_with_value");
+
+	level::memset_(ima, ima.point_at_offset(0), value, ima.ncells());
+
+	trace::exiting("level::impl::fill_with_value");
+      }
+
 
     } // end of namespace mln::level::impl
-
-
-    // Facade.
-
-    template <typename A, typename I>
-    void take(const Image<I>& input, Accumulator<A>& a)
-    {
-      trace::entering("level::take");
-
-      mln_precondition(exact(input).has_data());
-      impl::take_(mln_trait_image_speed(I)(), exact(input),
-		  exact(a));
-
-      trace::exiting("level::take");
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::level
 
 } // end of namespace mln
 
+# endif // ! MLN_INCLUDE_ONLY
 
-#endif // ! MLN_LEVEL_TAKE_HH
+#endif // ! MLN_LEVEL_FILL_SPE_HH

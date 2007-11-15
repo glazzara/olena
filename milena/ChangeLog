@@ -1,5 +1,27 @@
 2007-11-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Update level and add specialization for algorithm.
+
+	* mln/level/assign.hh,
+	* mln/level/fill.hh,
+	* mln/level/take.hh,
+	* mln/level/apply.hh: Remove specialization stuff and add
+	generic namespace.
+
+	Specialization files
+	* mln/level/assign.spe.hh,
+	* mln/level/fill.spe.hh,
+	* mln/level/take.spe.hh,
+	* mln/level/apply.spe.hh: New file for specialization.
+
+	Update
+	* mln/level/abs.hh,
+	* mln/level/all.hh,
+	* mln/level/compare.hh,
+	* mln/level/sort_points.hh: Update.
+
+2007-11-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update tests/level.
 
 	* tests/level/fill.cc: Update.

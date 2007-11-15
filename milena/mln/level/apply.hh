@@ -36,6 +36,9 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
 
+// Specializations are in:
+# include <mln/level/apply.spe.hh>
+
 
 namespace mln
 {
@@ -66,21 +69,22 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename F>
-      void apply_(trait::image::speed::any, I& input, const F& f)
+      namespace generic
       {
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  input(p) = f(input(p));
-      }
 
-      template <typename I, typename F>
-      void apply_(trait::image::speed::fastest, I& input, const F& f)
-      {
-	mln_pixter(I) pxl(input);
-	for_all(pxl)
-	  pxl.val() = f(pxl.val());
-      }
+	template <typename I, typename F>
+	void apply_(I& input, const F& f)
+	{
+	  trace::entering("level::impl::generic::apply_");
+
+	  mln_piter(I) p(input.domain());
+	  for_all(p)
+	    input(p) = f(input(p));
+
+	  trace::exiting("level::impl::generic::apply_");
+	}
+
+      } // end of namespace mln::level::impl::generic
 
     } // end of namespace mln::level::impl
 
@@ -90,9 +94,13 @@ namespace mln
     template <typename I, typename F>
     void apply(Image<I>& input, const Function_v2v<F>& f)
     {
+      trace::entering("level::apply");
+
       mln_precondition(exact(input).has_data());
       impl::apply_(mln_trait_image_speed(I)(), exact(input),
 		   exact(f));
+
+      trace::exiting("level::apply");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

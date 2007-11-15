@@ -50,7 +50,7 @@ namespace mln
   template <typename L, typename R>
   bool operator == (const Image<L>& lhs, const Image<R>& rhs);
 
-  
+
   /*! Point-wise test if the pixel values of \p lhs are point-wise
    *  less than the pixel values of \p rhs.
    *
@@ -62,7 +62,7 @@ namespace mln
   template <typename L, typename R>
   bool operator < (const Image<L>& lhs, const Image<R>& rhs);
 
-  
+
   /*! Point-wise test if the pixel values of \p lhs are point-wise
    *  less than or equal to the pixel values of \p rhs.
    *
@@ -90,7 +90,7 @@ namespace mln
 	return false;
     return true;
   }
-  
+
   template <typename L, typename R>
   bool operator < (const Image<L>& lhs_, const Image<R>& rhs_)
   {
@@ -103,7 +103,7 @@ namespace mln
 	return false;
     return true;
   }
-  
+
   template <typename L, typename R> // required!
   bool operator <= (const Image<L>& lhs_, const Image<R>& rhs_)
   {

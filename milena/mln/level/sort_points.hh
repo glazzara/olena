@@ -111,7 +111,7 @@ namespace mln
       {
 	p_array<mln_point(I)> v = convert::to_p_array(input.domain());
 	std::sort(v.hook_().begin(), v.hook_().end(),
-		  value_point_less_<I>(input));		  
+		  value_point_less_<I>(input));
 	return v;
       }
 
@@ -129,7 +129,7 @@ namespace mln
 	// preparing output data
 	std::vector<unsigned> loc(vset.nvalues());
 	loc[0] = 0;
-	for (unsigned i = 1; i != n; ++i) 
+	for (unsigned i = 1; i != n; ++i)
 	  loc[i] = loc[i-1] + h[i-1];
 
 	// computing output data
@@ -152,7 +152,7 @@ namespace mln
       {
 	p_array<mln_point(I)> v = convert::to_p_array(input.domain());
 	std::sort(v.hook_().begin(), v.hook_().end(),
-		  value_point_greater_<I>(input));		  
+		  value_point_greater_<I>(input));
 	return v;
       }
 
@@ -170,7 +170,7 @@ namespace mln
 	// preparing output data
 	std::vector<unsigned> loc(vset.nvalues());
 	loc[n-1] = 0;
-	for (int i = n - 2; i >= 0; --i) 
+	for (int i = n - 2; i >= 0; --i)
 	  loc[i] = loc[i+1] + h[i+1];
 
 	// computing output data

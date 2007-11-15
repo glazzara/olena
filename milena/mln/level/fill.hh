@@ -43,6 +43,9 @@
 # include <mln/level/memset_.hh>
 
 
+// Specializations are in:
+# include <mln/level/fill.spe.hh>
+
 namespace mln
 {
 
@@ -132,25 +135,22 @@ namespace mln
     namespace impl
     {
 
-
-      // fill_with_value
-
-      template <typename I>
-      void fill_with_value(trait::image::speed::any, I& ima,
-			   const mln_value(I)& value)
+      namespace generic
       {
-	mln_piter(I) p(ima.domain());
-	for_all(p)
-	  ima(p) = value;
-      }
+	template <typename I>
+	void fill_with_value(trait::image::speed::any, I& ima,
+			     const mln_value(I)& value)
+	{
+	  trace::entering("level::impl::generic::fill_with_value");
 
-      template <typename I>
-      void fill_with_value(trait::image::speed::fastest, I& ima,
-			   const mln_value(I)& value)
-      {
-	level::memset_(ima, ima.point_at_offset(0), value, ima.ncells());
-      }
+	  mln_piter(I) p(ima.domain());
+	  for_all(p)
+	    ima(p) = value;
 
+	  trace::exiting("level::impl::generic::fill_with_value");
+	}
+
+      } // end if namespace mln::level::impl::generic
 
     } // end of namespace mln::level::impl
 
@@ -161,10 +161,14 @@ namespace mln
     template <typename I>
     void fill(Image<I>& ima, const mln_value(I)& value)
     {
+      trace::entering("level::fill");
+
       mlc_is(mln_trait_image_io(I), trait::image::io::write)::check(); // FIXME: Only the upcoming general facade!!! 
       mln_precondition(exact(ima).has_data());
       impl::fill_with_value(mln_trait_image_speed(I)(), exact(ima),
 			    value);
+
+      trace::exiting("level::fill");
     }
 
 
@@ -173,12 +177,16 @@ namespace mln
     template <typename I, typename F>
     void fill(Image<I>& ima_, const Function_p2v<F>& f_)
     {
+      trace::entering("level::fill");
+
       I& ima = exact(ima_);
       mln_precondition(ima.has_data());
       const F& f = exact(f_);
       mln_piter(I) p(ima.domain());
       for_all(p)
 	ima(p) = f(p);
+
+      trace::exiting("level::fill");
     }
 
 
@@ -188,12 +196,16 @@ namespace mln
     void fill_f(Image<I>& ima_,
 		mln_value(I) (*f)(const mln_point(I)& p))
     {
+      trace::entering("level::fill_f");
+
       mln_precondition(f != 0);
       I& ima = exact(ima_);
       mln_precondition(ima.has_data());
       mln_piter(I) p(ima.domain());
       for_all(p)
 	ima(p) = f(p);
+
+      trace::exiting("level::fill_f");
     }
 
 
@@ -202,6 +214,8 @@ namespace mln
     template <typename I, unsigned N>
     void fill(Image<I>& ima_, mln_value(I) (&arr)[N])
     {
+      trace::entering("level::fill");
+
       I& ima = exact(ima_);
       mln_precondition(ima.has_data());
       mln_precondition(N == ima.npoints());
@@ -209,6 +223,8 @@ namespace mln
       unsigned i = 0;
       for_all(p)
 	ima(p) = arr[i++];
+
+      trace::exiting("level::fill");
     }
 
 
@@ -217,6 +233,8 @@ namespace mln
     template <typename I, typename J>
     void fill(Image<I>& ima_, const Image<J>& data_)
     {
+      trace::entering("level::fill");
+
       I&        ima = exact(ima_);
       const J& data = exact(data_);
       mln_precondition(ima.domain() <= data.domain());
@@ -224,6 +242,8 @@ namespace mln
       mln_piter(I) p(ima.domain());
       for_all(p)
 	ima(p) = data(p);
+
+      trace::exiting("level::fill");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
