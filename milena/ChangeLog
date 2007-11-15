@@ -1,3 +1,20 @@
+2007-11-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Review the debug namespace.
+
+	* mln/debug/format.hh: Fix style.
+	* mln/debug/iota.hh: Move spezialisations to iota.spe.hh.
+	* mln/debug/iota.spe.hh: New, specializations of iota.
+
+	* mln/debug/println.hh: Move spezialisations to println.spe.hh.
+	* mln/debug/println.spe.hh: New, specializations of println.
+	* mln/debug/println_with_border.hh: Move spezialisations to
+          println_with_border.spe.hh.
+	* mln/debug/println_with_border.spe.hh: New, specializations of
+          println.
+
+	* tests/debug_iota.cc: New, add a test for iota.
+
 2007-11-15  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix the guard oh all headers.

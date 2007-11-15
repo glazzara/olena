@@ -25,13 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DEBUG_FORMAT_HH
-# define MLN_DEBUG_FORMAT_HH
+#ifndef MLN_DEBUG_IOTA_SPE_HH
+# define MLN_DEBUG_IOTA_SPE_HH
 
-/*! \file mln/debug/format.hh
+/*! \file mln/debug/iota.spe.hh
  *
- * \brief Routines that format a value to print it properly.
+ * \brief Specializations for mln::debug::iota.
  */
+
+# include <mln/core/concept/image.hh>
 
 
 namespace mln
@@ -40,57 +42,30 @@ namespace mln
   namespace debug
   {
 
-    /// Default version for formatting a value is a no-op.
-    template <typename T>
-    const T& format(const T& v);
-
-    /// Format a Boolean to print it nicely: "|" for true and "-" for
-    /// false.
-    char format(bool v);
-
-    /// Format a signed char to print it properly, i.e., like an
-    /// integer value.
-    signed short format(signed char v);
-
-    /// Format an unsigned char to print it properly, i.e., like an
-    /// integer value.
-    unsigned short format(unsigned char v);
-
-
-
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename T>
-    const T&
-    format(const T& v)
+    namespace impl
     {
-      return v;
-    }
 
-    char
-    format(bool v)
-    {
-      return v ? '|' : '-';
-    }
+      template <typename I>
+      void
+      iota(trait::image::speed::fastest, I& input)
+      {
+	unsigned i = 0;
+	mln_pixter(I) p(input);
+	for_all(p)
+	  // FIXME : remove the convertion when the bug will be
+	  // resolved.
+	  p.val() = ++i % int(mln_max(mln_value(I)));
+      }
 
-    signed short
-    format(signed char v)
-    {
-      return v;
-    }
-
-    unsigned short
-    format(unsigned char v)
-    {
-      return v;
-    }
+    } // end of namespace mln::debug::impl
 
 # endif // ! MLN_INCLUDE_ONLY
-
 
   } // end of namespace mln::debug
 
 } // end of namespace mln
 
 
-#endif // ! MLN_DEBUG_FORMAT_HH
+#endif // ! MLN_DEBUG_IOTA_SPE_HH

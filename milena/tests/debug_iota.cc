@@ -25,72 +25,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DEBUG_FORMAT_HH
-# define MLN_DEBUG_FORMAT_HH
-
-/*! \file mln/debug/format.hh
+/*! \file tests/debug_iota.cc
  *
- * \brief Routines that format a value to print it properly.
+ * \brief Tests on mln::debug::iota.
  */
 
+#include <mln/core/image2d.hh>
 
-namespace mln
+#include <mln/value/int_u8.hh>
+
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
+
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  namespace debug
-  {
+  image2d<int_u8> in(32, 32);
 
-    /// Default version for formatting a value is a no-op.
-    template <typename T>
-    const T& format(const T& v);
-
-    /// Format a Boolean to print it nicely: "|" for true and "-" for
-    /// false.
-    char format(bool v);
-
-    /// Format a signed char to print it properly, i.e., like an
-    /// integer value.
-    signed short format(signed char v);
-
-    /// Format an unsigned char to print it properly, i.e., like an
-    /// integer value.
-    unsigned short format(unsigned char v);
-
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename T>
-    const T&
-    format(const T& v)
-    {
-      return v;
-    }
-
-    char
-    format(bool v)
-    {
-      return v ? '|' : '-';
-    }
-
-    signed short
-    format(signed char v)
-    {
-      return v;
-    }
-
-    unsigned short
-    format(unsigned char v)
-    {
-      return v;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-
-  } // end of namespace mln::debug
-
-} // end of namespace mln
-
-
-#endif // ! MLN_DEBUG_FORMAT_HH
+  debug::iota(in);
+  debug::println(in);
+}

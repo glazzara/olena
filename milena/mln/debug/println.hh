@@ -37,6 +37,8 @@
 # include <mln/core/concept/window.hh>
 # include <mln/debug/format.hh>
 
+// Specializations are in:
+# include <mln/debug/println.spe.hh>
 
 namespace mln
 {
@@ -54,119 +56,25 @@ namespace mln
     namespace impl
     {
 
-      // generic version
+      // Generic version.
       template <typename S, typename I>
-      void println(const S&, const Image<I>& input_)
+      void
+      println(const S&, const Image<I>& input_)
       {
 	const I& input = exact(input_);
 	mln_piter(I) p(input.domain());
 	for_all(p)
-	  std::cout << format( input(p) ) << ' ';
+	  std::cout << format(input(p)) << ' ';
 	std::cout << std::endl;
       }
-
-# ifdef MLN_CORE_BOX2D_HH
-
-      // 2D version
-      template <typename I>
-      void println(const box2d& b, const I& input)
-      {
-	point2d p;
-	int& row = p.row();
-	int& col = p.col();
-	const int
-	  max_row = b.max_row(),
-	  max_col = b.max_col();
-
-	for (row = b.min_row(); row <= max_row; ++row)
-	{
-	  for (col = b.min_col(); col <= max_col; ++col)
-	    if (input.has(p))
-	      std::cout << format( input(p) ) << ' ';
-	    else
-	      std::cout << "  ";
-	  std::cout << std::endl;
-	}
-	std::cout << std::endl;
-      }
-
-# endif // MLN_CORE_BOX2D_HH
-
-# ifdef MLN_CORE_IMAGE2D_H_HH
-
-      // Hexa version
-      template <typename I>
-      void println(const box2d_h& b, const hexa<I>& input)
-      {
-	typename hexa<I>::fwd_piter p(input.domain());
-
-	int c = 1;
-	int r = 1;
-	int row_len = 1 + (b.max_col() - b.min_col()) / 2;
-
-	for_all(p)
-	  {
-	    if (input.has(p))
-	      std::cout << format(input(p)) << "     ";
-	    else
-	      std::cout << "      ";
-
-	    if (c >= row_len)
-	    {
-	      std::cout << std::endl;
-	      if (r % 2)
-		std::cout << "   ";
-	      c = 0;
-	      r++;
-	    }
-	    c++;
-	  }
-	std::cout << std::endl;
-      }
-
-# endif // MLN_CORE_IMAGE2D_H_HH
-
-
-# ifdef MLN_CORE_BOX3D_HH
-
-      template <typename I>
-      void println(const box3d& b, const I& input)
-      {
-	point3d p;
-	int& sli = p.sli();
-	int& row = p.row();
-	int& col = p.col();
-	const int
-	  max_row = b.max_row(),
-	  max_sli = b.max_sli(),
-	  max_col = b.max_col();
-
-	for (sli = b.min_sli(); sli <= max_sli; ++sli)
-	{
-	  for (row = b.min_row(); row <= max_row; ++row)
-	  {
-	    for (int i = max_row; i >= row; --i)
-	      std::cout << ' ';
-	    for (col = b.min_col(); col <= max_col; ++col)
-	      if (input.has(p))
-		std::cout << format( input(p) ) << ' ';
-	      else
-		std::cout << "  ";
-	    std::cout << std::endl;
-	  }
-	  std::cout << std::endl;
-	}
-      }
-
-# endif // MLN_CORE_BOX3D_HH
 
     } // end of namespace mln::debug::impl
 
 
     // Facade.
-
     template <typename I>
-    void println(const Image<I>& input)
+    void
+    println(const Image<I>& input)
     {
       impl::println(exact(input).bbox(), exact(input));
     }

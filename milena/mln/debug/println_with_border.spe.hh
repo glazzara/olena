@@ -25,19 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DEBUG_IOTA_HH
-# define MLN_DEBUG_IOTA_HH
+#ifndef MLN_DEBUG_PRINTLN_WITH_BORDER_SPE_HH
+# define MLN_DEBUG_PRINTLN_WITH_BORDER_SPE_HH
 
-/*! \file mln/debug/iota.hh
+/*! \file mln/debug/println_with_border_spe.hh
  *
- * \brief Fill an image with successive values.
+ * \brief  Specializations for mln::debug::println_with_border.
  */
 
 # include <mln/core/concept/image.hh>
-
-// Specializations are in:
-# include <mln/debug/iota.spe.hh>
-
+# include <mln/core/concept/window.hh>
+# include <mln/debug/format.hh>
 
 namespace mln
 {
@@ -45,44 +43,65 @@ namespace mln
   namespace debug
   {
 
-    /*! Fill the image \p input with successive values.
-     *
-     * \param[in,out] destination The image in which values are
-     * assigned.
-     */
-    template <typename I>
-    void iota(Image<I>& input);
-
-
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
 
+# ifdef MLN_CORE_BOX2D_HH
+
+      // 2D version.
       template <typename I>
       void
-      iota(trait::image::speed::any, I& input)
+      println_with_border(const box2d& b, const I& input)
       {
-	unsigned i = 0;
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  // FIXME : remove the convertion when the bug will be
-	  // resolved.
-	  input(p) = ++i % int(mln_max(mln_value(I)));
+	const std::size_t ncols = b.ncols() + 2 * input.border();
+ 	for (size_t i = 0; i < input.ncells(); i++)
+	{
+	  std::cout << format(input.buffer()[i]) << ' ';
+	  if (((i + 1) % ncols) == 0)
+	    std::cout << std::endl;
+	}
+	std::cout << std::endl;
+      }
+# endif // MLN_CORE_BOX2D_HH
+
+
+# ifdef MLN_CORE_BOX3D_HH
+
+      // 3D version.
+      template <typename I>
+      void
+      println_with_border(const box3d& b, const I& input)
+      {
+	typedef mln_point(I) P;
+
+	std::size_t len_s = b.len(P::dim - 3);
+	std::size_t len_r = b.len(P::dim - 2);
+	std::size_t len_c = b.len(P::dim - 1);
+
+	std::size_t border = input.border();
+	std::size_t real_len_s = len_s + 2 * border;
+	std::size_t real_len_c = len_c + 2 * border;
+	std::size_t real_len_r = len_r + 2 * border;
+
+	for (std::size_t k = 0; k < real_len_s; ++k)
+	  {
+	    for (std::size_t j = 0; j < real_len_r; ++j)
+	      {
+		for (std::size_t i = 0; i < real_len_c; ++i)
+		  std::cout << format(input[k * (real_len_r * real_len_c) + j * real_len_c + i])
+			    << ' ';
+		std::cout << std::endl;
+	      }
+	    std::cout << std::endl;
+	  }
+	std::cout << std::endl;
       }
 
+# endif // MLN_CORE_BOX3D_HH
+
     } // end of namespace mln::debug::impl
-
-
-    template <typename I>
-    void
-    iota(Image<I>& input)
-    {
-      trace::entering("debug::iota");
-      mln_precondition(exact(input).has_data());
-      impl::iota(mln_trait_image_speed(I)(), exact(input));
-      trace::exiting("debug::iota");
-    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
@@ -91,4 +110,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_DEBUG_IOTA_HH
+#endif // ! MLN_DEBUG_PRINTLN_WITH_BORDER_SPE_HH
