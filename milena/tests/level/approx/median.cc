@@ -25,52 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/fill.cc
+/*! \file tests/level/approx/median.cc
  *
- * \brief Tests on mln::level::fill
+ * \brief Test on mln::level::approx::median.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/level/fill.hh>
+#include <mln/win/rectangle2d.hh>
+#include <mln/win/octagon2d.hh>
 
-#include <mln/debug/println.hh>
-#include <mln/value/props.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+
+#include <mln/value/int_u8.hh>
+#include <mln/level/approx/median.hh>
+
+
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
+  win::rectangle2d rect(51, 51);
+  win::octagon2d oct(13);
+  border::thickness = 52;
 
-  unsigned u = 300;
-  unsigned char uc = u;
-  mln_assertion(uc == 44);
+  image2d<int_u8>
+    lena = io::pgm::load("../../../img/lena.pgm"),
+    out(lena.domain());
 
-  {
-    const unsigned size = 3;
-    image2d<unsigned> ima(size, size);
-    level::fill(ima, u);
-    box_fwd_piter_<point2d> p(ima.domain());
-    for_all (p)
-      mln_assertion (ima(p) == u);
-
-  }
-
-//   {
-//     const unsigned size = 10000;
-//     image2d<unsigned char> ima(size, size);
-//     for (unsigned i = 0; i < 5; ++i)
-//       level::fill(ima, uc);
-//     box_fwd_piter_<point2d> p(ima.domain());
-//     for_all (p)
-//       mln_assertion (ima(p) == uc);
-//   }
-
-//   {
-//     // do *not* compile so that's great since ima is not mutable
-//     sub_image< const image2d<int>, box2d > ima;
-//     level::fill(ima, 0);
-//   }
-
+//  level::approx::median(lena, rect, out);
+  level::approx::median(lena, oct, out);
+  io::pgm::save(out, "out.pgm");
 }

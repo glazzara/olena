@@ -25,38 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/approx/median.cc
+/*! \file tests/level/take.cc
  *
- * \brief Test on mln::level::approx::median.
+ * \brief Tests on mln::level::take.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/win/rectangle2d.hh>
-#include <mln/win/octagon2d.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/level/approx/median.hh>
-
-
+#include <mln/level/take.hh>
+#include <mln/level/compare.hh>
+#include <mln/debug/iota.hh>
+#include <mln/accu/min.hh>
+#include <mln/accu/max.hh>
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  win::rectangle2d rect(51, 51);
-  win::octagon2d oct(13);
-  border::thickness = 52;
+  const unsigned size = 200;
+  image2d<int> ima(size, size);
+  accu::min_<int> acu_min;
+  accu::max_<int> acu_max;
 
-  image2d<int_u8>
-    lena = io::pgm::load("../img/lena.pgm"),
-    out(lena.domain());
+  debug::iota(ima);
+  level::take(ima, acu_min);
+  level::take(ima, acu_max);
 
-//  level::approx::median(lena, rect, out);
-  level::approx::median(lena, oct, out);
-  io::pgm::save(out, "out.pgm");
+  mln_assertion(acu_min.to_result() == 1);
+  mln_assertion(acu_max.to_result() == 40000);
+
 }

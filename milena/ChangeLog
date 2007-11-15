@@ -1,3 +1,13 @@
+2007-11-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update tests/level.
+
+	* tests/level/fill.cc: Update.
+	* tests/level/take.cc: New simple test for level:take.
+
+	* tests/level/approx_median.cc: Rename this file into ...
+	* tests/level/approx/median.cc: ... this.
+
 2007-11-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Review the debug namespace.
