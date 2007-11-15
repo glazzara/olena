@@ -1,5 +1,15 @@
 2007-11-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Move literals tests into tests/literal directory.
+
+	* tests/literal: New.
+	* tests/literal_medium_gray.cc: Rename as...
+	* tests/literal/literal_medium_gray.cc: ...this.
+	* tests/literal_zero.cc: Rename as...
+	* tests/literal/literal_zero.cc: ...this.
+
+2007-11-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix a bug in io::pbm::save.
 
 	* mln/io/pbm/save.hh: Fix a shift of 1 pixel in the image
