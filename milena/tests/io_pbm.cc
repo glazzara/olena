@@ -42,6 +42,9 @@
 #include <mln/level/compare.hh>
 #include <mln/level/fill.hh>
 
+#include <mln/display/show.hh>
+#include <mln/display/save.hh>
+
 #include <mln/border/thickness.hh>
 
 int main()
@@ -49,27 +52,28 @@ int main()
   using namespace mln;
   using typename value::int_u8;
 
+  typedef image2d< bool > I;
+
   border::thickness = 0;
   image2d< int_u8 >
     lena = io::pgm::load("../img/lena.pgm");
 
 
-  image2d< bool > out(lena.domain());
+  I out(lena.domain());
   level::fill(out, pw::value(lena) > pw::cst(127));
   io::pbm::save(out, "out.pbm");
 
   {
-    image2d< bool >
-      lena = io::pbm::load("out.pbm");
+    I lena = io::pbm::load("out.pbm");
     image2d<bool> out(lena.domain());
 
-    io::pbm::save(lena, "out.pbm");
+    io::pbm::save(lena, "out2.pbm");
 
-    image2d< bool >
-      lena2 = io::pbm::load("out.pbm");
+    I lena2 = io::pbm::load("out2.pbm");
 
-    io::pbm::save(lena2, "out2.pbm");
+    io::pbm::save(lena2, "out3.pbm");
 
+    mln_assertion(lena.domain() == lena2.domain());
     mln_assertion(lena == lena2);
   }
 }

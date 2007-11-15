@@ -89,15 +89,20 @@ namespace mln
 
 	  unsigned char c = 0;
 	  int i = 0;
-	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
-	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
+
+	  mln_piter(I) it(ima.domain());
+	  for_all(it)
+	    {
+	      if (i && (i == 8))
 	      {
-		c += ima(p);
-		if (i && (i % 8 == 0))
-		  file.write((char*)(&c), 1);
-		c = c * 2;
-		++i;
+		file.write((char*)(&c), 1);
+		i = 0;
 	      }
+	      c = c * 2;
+	      c += ima(it);
+	      ++i;
+	    }
+	  file.write((char*)(&c), 1);
 	}
 
       } // end of namespace mln::io::impl

@@ -1,3 +1,11 @@
+2007-11-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fix a bug in io::pbm::save.
+
+	* mln/io/pbm/save.hh: Fix a shift of 1 pixel in the image
+	saved.
+	* tests/io_pbm.cc: Update the test to ouput more pbm images.
+
 2007-11-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix the initialization of mln::literal::zero.
