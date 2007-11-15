@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_VEC_P_HH
-# define MLN_CONVERT_TO_VEC_P_HH
+#ifndef MLN_CONVERT_TO_P_ARRAY_HH
+# define MLN_CONVERT_TO_P_ARRAY_HH
 
 /*! \file mln/convert/to_p_array.hh
  *
@@ -85,4 +85,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CONVERT_TO_VEC_P_HH
+#endif // ! MLN_CONVERT_TO_P_ARRAY_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_MEMCPY_HH
-# define MLN_LEVEL_MEMCPY_HH
+#ifndef MLN_LEVEL_MEMCPY__HH
+# define MLN_LEVEL_MEMCPY__HH
 
 /*! \file mln/level/memcpy_.hh
  *
@@ -109,4 +109,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_MEMCPY_HH
+#endif // ! MLN_LEVEL_MEMCPY__HH

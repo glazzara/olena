@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_LINE_HH
-# define MLN_CORE_WIN_LINE_HH
+#ifndef MLN_WIN_LINE_HH
+# define MLN_WIN_LINE_HH
 
 /*! \file mln/win/line.hh
  *
@@ -180,4 +180,4 @@ namespace mln
 
 
 
-#endif // ! MLN_CORE_WIN_LINE_HH
+#endif // ! MLN_WIN_LINE_HH

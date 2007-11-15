@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_METAL_IS_HH
-# define MLN_CORE_METAL_IS_HH
+#ifndef MLN_METAL_IS_HH
+# define MLN_METAL_IS_HH
 
 /*! \file mln/metal/is.hh
  *
@@ -88,4 +88,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_METAL_IS_HH
+#endif // ! MLN_METAL_IS_HH

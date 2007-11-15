@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MESH_PSITE_HH
-# define MLN_MESH_PSITE_HH
+#ifndef MLN_CORE_MESH_PSITE_HH
+# define MLN_CORE_MESH_PSITE_HH
 
 /*! \file mln/core/mesh_psite.hh
  *
@@ -100,4 +100,4 @@ namespace mln
 
 } // end of mln
 
-#endif // MLN_MESH_PSITE_HH
+#endif // MLN_CORE_MESH_PSITE_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_VEC_P_PITER_HH
-# define MLN_CORE_VEC_P_PITER_HH
+#ifndef MLN_CORE_P_ARRAY_PITER_HH
+# define MLN_CORE_P_ARRAY_PITER_HH
 
 /*! \file mln/core/p_array_piter.hh
  *
@@ -269,4 +269,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_VEC_P_PITER_HH
+#endif // ! MLN_CORE_P_ARRAY_PITER_HH

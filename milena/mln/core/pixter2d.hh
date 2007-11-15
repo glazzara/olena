@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_PIXTER2D_B_HH
-# define MLN_CORE_PIXTER2D_B_HH
+#ifndef MLN_CORE_PIXTER2D_HH
+# define MLN_CORE_PIXTER2D_HH
 
 /*! \file mln/core/pixter2d.hh
  *
@@ -172,4 +172,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CORE_PIXTER2D_B_HH
+#endif // ! MLN_CORE_PIXTER2D_HH

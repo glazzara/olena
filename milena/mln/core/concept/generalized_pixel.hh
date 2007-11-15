@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_GENPIXEL_HH
-# define MLN_CORE_CONCEPT_GENPIXEL_HH
+#ifndef MLN_CORE_CONCEPT_GENERALIZED_PIXEL_HH
+# define MLN_CORE_CONCEPT_GENERALIZED_PIXEL_HH
 
 /*! \file mln/core/concept/generalized_pixel.hh
  *
@@ -101,4 +101,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_GENPIXEL_HH
+#endif // ! MLN_CORE_CONCEPT_GENERALIZED_PIXEL_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MESH_P_HH
-# define MLN_MESH_P_HH
+#ifndef MLN_CORE_MESH_P_HH
+# define MLN_CORE_MESH_P_HH
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/point_set_base.hh>
@@ -116,4 +116,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_MESH_P_HH
+#endif // MLN_CORE_MESH_P_HH

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_PITER_HH
-# define MLN_CORE_CONCEPT_PITER_HH
+#ifndef MLN_CORE_CONCEPT_POINT_ITERATOR_HH
+# define MLN_CORE_CONCEPT_POINT_ITERATOR_HH
 
 /*! \file mln/core/concept/point_iterator.hh
  *
@@ -113,4 +113,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_PITER_HH
+#endif // ! MLN_CORE_CONCEPT_POINT_ITERATOR_HH

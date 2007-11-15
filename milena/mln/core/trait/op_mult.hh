@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_MULT_HH
-# define MLN_TRAIT_OP_MULT_HH
+#ifndef MLN_CORE_TRAIT_OP_MULT_HH
+# define MLN_CORE_TRAIT_OP_MULT_HH
 
 /*!
  * \file   mln/core/trait/op_mult.hh
@@ -145,4 +145,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_TRAIT_OP_MULT_HH
+#endif // ! MLN_CORE_TRAIT_OP_MULT_HH

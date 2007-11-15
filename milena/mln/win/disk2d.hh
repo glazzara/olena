@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_DISK2D_HH
-# define MLN_CORE_WIN_DISK2D_HH
+#ifndef MLN_WIN_DISK2D_HH
+# define MLN_WIN_DISK2D_HH
 
 /*! \file mln/win/disk2d.hh
  *
@@ -176,4 +176,4 @@ namespace mln
 
 
 
-#endif // ! MLN_CORE_WIN_DISK2D_HH
+#endif // ! MLN_WIN_DISK2D_HH

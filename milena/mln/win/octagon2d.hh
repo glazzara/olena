@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WIN_OCTAGON2D_HH
-# define MLN_CORE_WIN_OCTAGON2D_HH
+#ifndef MLN_WIN_OCTAGON2D_HH
+# define MLN_WIN_OCTAGON2D_HH
 
 /*! \file mln/win/octagon2d.hh
  *
@@ -223,4 +223,4 @@ namespace mln
 # include <mln/win/diag2d.hh>
 # include <mln/win/backdiag2d.hh>
 
-#endif // ! MLN_CORE_WIN_OCTAGON2D_HH
+#endif // ! MLN_WIN_OCTAGON2D_HH

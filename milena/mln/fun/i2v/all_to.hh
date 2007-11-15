@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_ALL_TO_HH
-# define MLN_FUN_ALL_TO_HH
+#ifndef MLN_FUN_I2V_ALL_TO_HH
+# define MLN_FUN_I2V_ALL_TO_HH
 
 /*! \file mln/fun/i2v/all_to.hh
  *
@@ -102,4 +102,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_ALL_TO_HH
+#endif // ! MLN_FUN_I2V_ALL_TO_HH

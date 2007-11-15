@@ -1,3 +1,51 @@
+2007-11-15  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix the guard oh all headers.
+
+	* mln/canvas/browsing/dir_ricard51.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/convert/to_p_array.hh,
+	* mln/convert/to_p_set.hh,
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/concept/point_iterator.hh,
+	* mln/core/concept/value_iterator.hh,
+	* mln/core/image1d.hh,
+	* mln/core/image2d.hh,
+	* mln/core/image3d.hh,
+	* mln/core/internal/image_if_base.hh,
+	* mln/core/mesh_p.hh,
+	* mln/core/mesh_psite.hh,
+	* mln/core/p_array.hh,
+	* mln/core/p_array_piter.hh,
+	* mln/core/p_priority_queue_fast.hh,
+	* mln/core/p_queue.hh,
+	* mln/core/p_queue_fast.hh,
+	* mln/core/p_set.hh,
+	* mln/core/pixter1d.hh,
+	* mln/core/pixter2d.hh,
+	* mln/core/pixter3d.hh,
+	* mln/core/trait/op_mult.hh,
+	* mln/fun/i2v/all_to.hh,
+	* mln/level/memcpy_.hh,
+	* mln/level/memset_.hh,
+	* mln/metal/converts_to.hh,
+	* mln/metal/goes_to.hh,
+	* mln/metal/if.hh,
+	* mln/metal/is.hh,
+	* mln/metal/is_a.hh,
+	* mln/metal/is_not.hh,
+	* mln/metal/none.hh,
+	* mln/win/backdiag2d.hh,
+	* mln/win/cube3d.hh,
+	* mln/win/diag2d.hh,
+	* mln/win/disk2d.hh,
+	* mln/win/hline2d.hh,
+	* mln/win/line.hh,
+	* mln/win/octagon2d.hh,
+	* mln/win/rectangle2d.hh,
+	* mln/win/segment1d.hh,
+	* mln/win/vline2d.hh: Fix.
+
 2007-11-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Move level test in level tests repertory.

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_SET_P_HH
-# define MLN_CORE_SET_P_HH
+#ifndef MLN_CORE_P_SET_HH
+# define MLN_CORE_P_SET_HH
 
 /*! \file mln/core/p_set.hh
  *
@@ -169,4 +169,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_SET_P_HH
+#endif // ! MLN_CORE_P_SET_HH

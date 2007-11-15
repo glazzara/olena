@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_MEMSET_HH
-# define MLN_LEVEL_MEMSET_HH
+#ifndef MLN_LEVEL_MEMSET__HH
+# define MLN_LEVEL_MEMSET__HH
 
 /*! \file mln/level/memset_.hh
  *
@@ -131,4 +131,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_MEMSET_HH
+#endif // ! MLN_LEVEL_MEMSET__HH

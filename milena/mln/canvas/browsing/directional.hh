@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_DIRECTIONAL_HH
-# define MLN_CANVAS_DIRECTIONAL_HH
+#ifndef MLN_CANVAS_BROWSING_DIRECTIONAL_HH
+# define MLN_CANVAS_BROWSING_DIRECTIONAL_HH
 
 /*! \file mln/canvas/browsing/directional.hh
  *
@@ -115,4 +115,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CANVAS_DIRECTIONAL_HH
+#endif // ! MLN_CANVAS_BROWSING_DIRECTIONAL_HH
