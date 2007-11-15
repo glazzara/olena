@@ -56,7 +56,7 @@ namespace mln
 
 
     /// Literal zero.
-    static zero_t zero = zero_t();
+    extern const zero_t& zero;
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -67,6 +67,8 @@ namespace mln
       mlc_converts_to(int, T)::check();
       return 0;
     }
+
+    const zero_t& zero = zero_t();
 
 # endif // ! MLN_INCLUDE_ONLY
 

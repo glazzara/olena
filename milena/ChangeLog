@@ -1,3 +1,11 @@
+2007-11-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix the initialization of mln::literal::zero.
+
+	* mln/literal/zero.hh (mln::literal::zero): s/static/extern const/.
+	Use a reference.
+	Move implementation within MLN_INCLUDE_ONLY.
+
 2007-11-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Change value index type is now 'unsigned'; several fixes.
