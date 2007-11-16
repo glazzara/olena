@@ -25,80 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/median_fast.cc
+/*! \file tests/border_duplicate/test_border_duplicate_image2d_1.cc
  *
- * \brief Test on mln::level::fast_median.
+ * \brief Tests on mln::border::duplicate.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/win/rectangle2d.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
-#include <mln/value/int_u8.hh>
 #include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
-#include <mln/level/fast_median.hh>
-
-#include <mln/core/dpoints_pixter.hh>
-#include <mln/core/pixel.hh>
+#include <mln/border/duplicate.hh>
 
 
-namespace mln
+using namespace mln;
+
+int
+main (void)
 {
+  image2d<int> ima(3, 3, 1);
 
-  template <typename I, typename W>
-  void test(I& input, const W& win)
-  {
-    mln_point(I) p;
-    p.row() = p.col() = 1;
+  debug::iota (ima);
+  border::duplicate (ima);
 
-    {
-      mln_qixter(I, W) qix(input, win, p);
-      for_all(qix)
-	std::cout << qix.val() << ' ';
-      std::cout << " :  " << qix.center_val() << std::endl;
-    }
-
-    {
-      pixel<I> pix(input, p);
-      mln_qixter(I, W) qix(input, win, pix);
-      for_all(qix)
-	std::cout << qix.val() << ' ';
-      std::cout << " :  " << qix.center_val() << std::endl;
-    }
-  }
+  mln_assertion(ima[ 0] == 1);
+  mln_assertion(ima[ 1] == 1);
+  mln_assertion(ima[ 2] == 2);
+  mln_assertion(ima[ 3] == 3);
+  mln_assertion(ima[ 4] == 3);
+  mln_assertion(ima[ 5] == 1);
+  mln_assertion(ima[ 6] == 1);
+  mln_assertion(ima[ 7] == 2);
+  mln_assertion(ima[ 8] == 3);
+  mln_assertion(ima[ 9] == 3);
+  mln_assertion(ima[10] == 4);
+  mln_assertion(ima[11] == 4);
+  mln_assertion(ima[12] == 5);
+  mln_assertion(ima[13] == 6);
+  mln_assertion(ima[14] == 6);
+  mln_assertion(ima[15] == 7);
+  mln_assertion(ima[16] == 7);
+  mln_assertion(ima[17] == 8);
+  mln_assertion(ima[18] == 9);
+  mln_assertion(ima[19] == 9);
+  mln_assertion(ima[20] == 7);
+  mln_assertion(ima[21] == 7);
+  mln_assertion(ima[22] == 8);
+  mln_assertion(ima[23] == 9);
+  mln_assertion(ima[24] == 9);
 
 }
 
-
-
-int main()
-{
-  using namespace mln;
-  using value::int_u8;
-
-//   {
-//     win::rectangle2d rect(3, 3);
-//     border::thickness = 4;
-//     image2d<int_u8> ima(3, 3);
-//     debug::iota(ima);
-//     debug::println(ima);
-//     test(ima, rect);
-//   }
-
-
-  {
-    win::rectangle2d rect(51, 51);
-    border::thickness = 52;
-    
-    image2d<int_u8>
-      lena = io::pgm::load("../../img/lena.pgm"),
-      out(lena.domain());
-    
-    level::fast_median(lena, rect, out);
-    io::pgm::save(out, "out.pgm");
-  }
-
-}

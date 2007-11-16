@@ -3,7 +3,8 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS = norm					\
-	  level
+	  level					\
+	  border
 
 check_PROGRAMS =				\
   accu_all					\

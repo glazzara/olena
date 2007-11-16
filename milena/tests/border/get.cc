@@ -69,14 +69,14 @@ int main()
   mln_assertion( ima.has(point2d(2,2)) == true );
 
   sub_image<I, box2d> sub(ima, b);
-  mln_assertion( sub.has  (point2d(2,2)) == false && 
+  mln_assertion( sub.has  (point2d(2,2)) == false &&
 		 sub.owns_(point2d(2,2)) == false );
   mln_assertion(border::get(sub) == 0);
 
   image_if<I, f_box2d_t> imaif(ima, f_b);
-  mln_assertion( imaif.has  (point2d(2,2)) == false && 
+  mln_assertion( imaif.has  (point2d(2,2)) == false &&
 		 imaif.owns_(point2d(2,2)) == true );
   mln_assertion(border::get(imaif) == 51);
-  
+
   mln_assertion(border::get( (ima | b) | f_b ) == 0);
 }

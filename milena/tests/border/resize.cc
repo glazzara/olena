@@ -25,40 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/median_hline2d.cc
+/*! \file tests/border_resize_image2d_1.cc
  *
- * \brief Test on the hline2d version of mln::level::median.
+ * \brief Tests on mln::border::resize.
  */
 
+
 #include <mln/core/image2d.hh>
-#include <mln/win/rectangle2d.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
+#include <mln/debug/iota.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/level/median.hh>
-#include <mln/level/compare.hh>
+#include <mln/border/resize.hh>
+#include <mln/debug/println_with_border.hh>
+#include <mln/border/fill.hh>
 
+using namespace mln;
 
-
-
-int main()
+int
+main (void)
 {
-  using namespace mln;
-  using value::int_u8;
+  unsigned border = 1;
+  unsigned new_border = 3;
 
-  border::thickness = 0;
+  std::cout << std::endl
+	    << "Test 2d resize"
+	    << std::endl
+	    << std::endl;
+  image2d<value::int_u8> ima(3, 2, border);
+  debug::iota(ima);
+  border::fill(ima, 8);
 
-  image2d<int_u8>
-    lena = io::pgm::load("../../img/lena.pgm"),
-    out(lena.domain()),
-    ref(lena.domain());
+  std::cout << "before resize ("
+	    << border
+	    << ")"
+	    << std::endl;
+  debug::println_with_border(ima);
+  std::cout << std::endl;
 
-  level::median(lena, win::rectangle2d(1, 101), ref);
 
-  level::median(lena, win::hline2d(101), out);
-  io::pgm::save(out, "out.pgm");
+  border::resize (ima, new_border);
+  std::cout << "after resize ("
+	    << new_border
+	    << ")"
+	    << std::endl;
+  debug::println_with_border(ima);
+  std::cout << std::endl;
 
-  // FIXME: mln_assertion(out == ref);
 }

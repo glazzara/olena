@@ -25,80 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/median_fast.cc
+/*! \file tests/border_fill/test_border_fill_image2d_1.cc
  *
- * \brief Test on mln::level::fast_median.
+ * \brief Tests on mln::border::fill.
  */
 
+#include <mln/border/fill.hh>
 #include <mln/core/image2d.hh>
-#include <mln/win/rectangle2d.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
 #include <mln/value/int_u8.hh>
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
-#include <mln/level/fast_median.hh>
+#include <mln/debug/println_with_border.hh>
 
-#include <mln/core/dpoints_pixter.hh>
-#include <mln/core/pixel.hh>
+using namespace mln;
 
 
-namespace mln
+int
+check(int size, int border)
 {
+  int w = size + 2 * border;
+  int ww = w *w;
 
-  template <typename I, typename W>
-  void test(I& input, const W& win)
-  {
-    mln_point(I) p;
-    p.row() = p.col() = 1;
-
-    {
-      mln_qixter(I, W) qix(input, win, p);
-      for_all(qix)
-	std::cout << qix.val() << ' ';
-      std::cout << " :  " << qix.center_val() << std::endl;
-    }
-
-    {
-      pixel<I> pix(input, p);
-      mln_qixter(I, W) qix(input, win, pix);
-      for_all(qix)
-	std::cout << qix.val() << ' ';
-      std::cout << " :  " << qix.center_val() << std::endl;
-    }
-  }
-
+  image2d<value::int_u8> ima(size, size, border);
+  border::fill (ima, 42);
+  for(int i = 0; i < ww; ++i)
+    if ((i / w < border) || (i / w > border + size))
+      mln_assertion (ima[i] == 42);
+    else
+      if ((i % w < border) &&
+	  (border + size <= i % w))
+	mln_assertion (ima[i] == 42);
 }
 
-
-
-int main()
+int
+main (void)
 {
-  using namespace mln;
-  using value::int_u8;
-
-//   {
-//     win::rectangle2d rect(3, 3);
-//     border::thickness = 4;
-//     image2d<int_u8> ima(3, 3);
-//     debug::iota(ima);
-//     debug::println(ima);
-//     test(ima, rect);
-//   }
-
-
-  {
-    win::rectangle2d rect(51, 51);
-    border::thickness = 52;
-    
-    image2d<int_u8>
-      lena = io::pgm::load("../../img/lena.pgm"),
-      out(lena.domain());
-    
-    level::fast_median(lena, rect, out);
-    io::pgm::save(out, "out.pgm");
-  }
-
+  for (int i = 1; i < 42; ++i)
+    for (int j = 1; j < 42; ++j)
+      check(i, j);
 }

@@ -1,3 +1,20 @@
+2007-11-16  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add border subdirectory in test and add/update test.
+
+	* tests/border: New subdirectory for border test.
+	* tests/Makefile.am: Add border subdirectory.
+
+	* tests/border/duplicate.cc: New test for duplicate.
+	* tests/border/fill.cc: New test for duplicate.
+	* tests/border_get.cc: Remove ...
+	* tests/border/get.cc: ... and replace here.
+	* tests/border/resize.cc: Move test for resize.
+
+	* tests/level/median_dir.cc,
+	* tests/level/median_fast.cc,
+	* tests/level/median_hline2d.cc: Fix path for image.
+
 2007-11-16  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Review the mln/canvas/browsing directory.
