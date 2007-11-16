@@ -1,5 +1,11 @@
 2007-11-16  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add Makefile.am for level test.
+
+	* tests/level/Makefile.am: New Makefile for level test.
+
+2007-11-16  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add simple tests for level.
 	* tests/level/compare.cc,
 	* tests/level/compute.cc,
