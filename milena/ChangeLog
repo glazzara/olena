@@ -1,3 +1,16 @@
+2007-11-16  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add simple tests for level.
+	* tests/level/compare.cc,
+	* tests/level/compute.cc,
+	* tests/level/saturate.cc,
+	* tests/level/sort_points.cc,
+	* tests/level/stretch.cc: New test for level.
+
+	* tests/level/median.cc,
+	* tests/level/paste.cc,
+	* tests/level/transform.cc: Upadate test.
+
 2007-11-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Review the mln/geom directory.

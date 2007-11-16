@@ -51,7 +51,7 @@ int main()
   border::thickness = 52;
 
   image2d<int_u8>
-    lena = io::pgm::load("../img/lena.pgm"),
+    lena = io::pgm::load("../../img/lena.pgm"),
     out(lena.domain());
 
   level::median(lena, rect, out);

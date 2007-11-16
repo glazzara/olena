@@ -25,32 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/paste.cc
+/*! \file tests/level/sort_points.cc
  *
- * \brief Tests on mln::level::paste.
+ * \brief Tests on mln::level::sort_points.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
-
 #include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
+#include <mln/level/sort_points.hh>
+#include <mln/core/p_array.hh>
 
 
-int main()
+int main ()
 {
   using namespace mln;
 
-  box2d b(make::point2d(1,2), make::point2d(2,4));
-  image2d<int> ima(b, 2);
-  debug::iota(ima);
+  image2d<int> ima(3, 3);
+  debug::iota (ima);
+  p_array<point2d> array_inc = level::sort_points_increasing(ima);
+  p_array<point2d> array_dec = level::sort_points_decreasing(ima);
 
-  box2d b2(make::point2d(-1,-2), make::point2d(3,6));
-  image2d<int> ima2(b2, 0);
-  debug::iota(ima2);
+  p_array<point2d> array_inc_ref;
+  p_array<point2d> array_dec_ref;
 
-  level::paste(ima, ima2); // Fast version.
+  for (int i = 0; i < 3; ++i)
+    for (int j = 0; j < 3; ++j)
+      array_inc_ref.append(point2d(i, j));
 
-  level::impl::generic::paste_(ima, ima2); // Not so fast version...
+  for (int i = 2; i >= 0; --i)
+    for (int j = 2; j >= 0; --j)
+      array_dec_ref.append(point2d(i, j));
+
+  mln_assertion(array_inc == array_inc_ref);
+  mln_assertion(array_dec == array_dec_ref);
 }

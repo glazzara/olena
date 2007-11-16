@@ -52,15 +52,23 @@ int main()
 {
   using namespace mln;
 
-  const unsigned size = 10000;
+  const unsigned size = 1000;
   image2d<unsigned short>
     ima(size, size);
+  image2d<unsigned short>
+    out(size, size);
 
-  (std::cout << "iota... ").flush(); 
+  (std::cout << "iota... ").flush();
   debug::iota(ima);
   std::cout << "done" << std::endl;
 
-  (std::cout << "transform... ").flush(); 
-  level::transform(ima, mysqrt(), ima);
+  (std::cout << "transform... ").flush();
+  level::transform(ima, mysqrt(), out);
+  std::cout << "done" << std::endl;
+
+  (std::cout << "checking... ").flush();
+  box_fwd_piter_<point2d> p(out.domain());
+  for_all(p)
+    mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
   std::cout << "done" << std::endl;
 }

@@ -25,32 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/paste.cc
+/*! \file tests/level/saturate.cc
  *
- * \brief Tests on mln::level::paste.
+ * \brief Tests on mln::level::saturate.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
 
+#include <mln/core/image2d.hh>
+#include <mln/level/saturate.hh>
 #include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  box2d b(make::point2d(1,2), make::point2d(2,4));
-  image2d<int> ima(b, 2);
+  const unsigned size = 1000;
+  image2d<int> ima(3, 3);
+  int vs[3][3] = {
+    { 2, 2, 3 },
+    { 4, 5, 6 },
+    { 6, 6, 6 }
+  };
+
+  image2d<int> ref(make::image2d(vs));
   debug::iota(ima);
-
-  box2d b2(make::point2d(-1,-2), make::point2d(3,6));
-  image2d<int> ima2(b2, 0);
-  debug::iota(ima2);
-
-  level::paste(ima, ima2); // Fast version.
-
-  level::impl::generic::paste_(ima, ima2); // Not so fast version...
+  level::saturate_inplace(ima, 2, 6);
+  box_fwd_piter_<point2d> p(ima.domain());
+  for_all(p)
+    mln_assertion(ima(p) == ref(p));
 }

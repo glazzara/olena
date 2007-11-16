@@ -25,32 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/paste.cc
+/*! \file tests/level/stretch.cc
  *
- * \brief Tests on mln::level::paste.
+ * \brief Tests on mln::level::stretch.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
 
+#include <mln/core/image2d.hh>
+#include <mln/level/stretch.hh>
 #include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
+#include <mln/value/int_u8.hh>
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  box2d b(make::point2d(1,2), make::point2d(2,4));
-  image2d<int> ima(b, 2);
-  debug::iota(ima);
+  int vs[3][3] = {
+    { 1000, 2000, 3000 },
+    { 1000, 2000, 3000 },
+    { 1000, 2000, 3000 }
+  };
+  image2d<int> ima(make::image2d(vs));
 
-  box2d b2(make::point2d(-1,-2), make::point2d(3,6));
-  image2d<int> ima2(b2, 0);
-  debug::iota(ima2);
+  image2d<int_u8> out(3, 3);
 
-  level::paste(ima, ima2); // Fast version.
+  int_u8 ws[3][3] = {
+    { 0, 127, 255 },
+    { 0, 127, 255 },
+    { 0, 127, 255 }
+  };
 
-  level::impl::generic::paste_(ima, ima2); // Not so fast version...
+  image2d<int_u8> ref(make::image2d(ws));
+  level::stretch(ima, out);
+  box_fwd_piter_<point2d> p(out.domain());
+  for_all(p)
+    mln_assertion(out(p) == ref(p));
 }

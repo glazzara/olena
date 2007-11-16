@@ -25,32 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/paste.cc
+/*! \file tests/level/compute.cc
  *
- * \brief Tests on mln::level::paste.
+ * \brief Tests on mln::level::compute.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
-
+#include <mln/level/compute.hh>
 #include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
+#include <mln/accu/min.hh>
+#include <mln/accu/max.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  box2d b(make::point2d(1,2), make::point2d(2,4));
-  image2d<int> ima(b, 2);
+  const unsigned size = 200;
+  image2d<int> ima(size, size);
+  accu::min_<int> acu_min;
+  accu::max_<int> acu_max;
   debug::iota(ima);
-
-  box2d b2(make::point2d(-1,-2), make::point2d(3,6));
-  image2d<int> ima2(b2, 0);
-  debug::iota(ima2);
-
-  level::paste(ima, ima2); // Fast version.
-
-  level::impl::generic::paste_(ima, ima2); // Not so fast version...
+  int min = level::compute(ima, acu_min);
+  int max = level::compute(ima, acu_max);
+  mln_assertion(min == 1);
+  mln_assertion(max == 40000);
 }
