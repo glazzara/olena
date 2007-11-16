@@ -20,7 +20,6 @@ check_PROGRAMS =				\
   sort_points					\
   stretch					\
   take						\
-  to_enc					\
   transform
 
 abs_SOURCES = abs.cc
@@ -40,7 +39,6 @@ saturate_SOURCES = saturate.cc
 sort_points_SOURCES = sort_points.cc
 stretch_SOURCES = stretch.cc
 take_SOURCES = take.cc
-to_enc_SOURCES = to_enc.cc
 transform_SOURCES = transform.cc
 
 TESTS = $(check_PROGRAMS)
