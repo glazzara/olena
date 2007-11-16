@@ -59,7 +59,7 @@ namespace mln
      * for all p of \p data, \p destination(p) = \p data(p).
      *
      * \warning The definition domain of \p data has to be included in
-     * the one of \p destination; so using mln::safe_image does not 
+     * the one of \p destination; so using mln::safe_image does not
      * make pasting outside the destination domain work.
      *
      * \pre \p data.domain <= \p destination.domain
@@ -106,7 +106,7 @@ namespace mln
       mlc_is(mln_trait_image_io(J), trait::image::io::write)::check();
       mlc_converts_to(mln_value(I), mln_value(J))::check();
       mln_precondition(data.domain() <= destination.domain());
-      
+
       impl::paste_(mln_trait_image_data(I)(), data,
 		   mln_trait_image_data(J)(), destination);
 

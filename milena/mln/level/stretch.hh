@@ -66,6 +66,8 @@ namespace mln
       void stretch(value::int_u<n>,
 		   const Image<I>& input, Image<O>& output)
       {
+	trace::entering("level::impl::stretch");
+
 	mln_value(I) min_, max_;
 	estim::min_max(input, min_, max_);
 	if (max_ == min_)
@@ -78,6 +80,8 @@ namespace mln
 	float b = (m * max - M * min) / (max - min);
 	fun::v2v::linear<float, float, int> f(a, b);
 	level::transform(input, f, output);
+
+	trace::exiting("level::impl::stretch");
       }
 
     } // end of namespace mln::level::impl
@@ -86,8 +90,12 @@ namespace mln
     template <typename I, typename O>
     void stretch(const Image<I>& input, Image<O>& output)
     {
+      trace::entering("level::stretch");
+
       mln_precondition(exact(output).domain() == exact(input).domain());
       impl::stretch(mln_value(O)(), input, output);
+
+      trace::exiting("level::stretch");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

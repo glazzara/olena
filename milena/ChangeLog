@@ -1,5 +1,22 @@
 2007-11-16  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add tracing for level algorithm and split specialization of level::transform.
+
+	* mln/level/compute.hh,
+	* mln/level/fill.hh,
+	* mln/level/median.hh,
+	* mln/level/paste.hh,
+	* mln/level/saturate.hh,
+	* mln/level/stretch.hh,
+	* mln/level/to_enc.hh,
+	* mln/level/was.median.hh: Add tracing for algorithm.
+
+	* mln/level/transform.hh: Remove specialization.
+	* mln/level/transform.spe.hh: New file for specialization for
+	transform.
+
+2007-11-16  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix Makefile for level test.
 	* tests/Makefile.am: Add subdir level.
 	* tests/level/Makefile.am: Remove one test.

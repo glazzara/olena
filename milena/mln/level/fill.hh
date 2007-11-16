@@ -96,7 +96,7 @@ namespace mln
     template <typename I>
     void fill_f(Image<I>& ima,  mln_value(I) (*f)(const mln_point(I)& p));
 
-    
+
     /*! Fill the image \p ima with the values given by the array \p arr.
      *
      * \param[in,out] ima The image to be filled.

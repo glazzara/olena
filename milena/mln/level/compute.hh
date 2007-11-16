@@ -72,10 +72,14 @@ namespace mln
     mln_result(A)
     compute(const Image<I>& input, const Accumulator<A>& a_)
     {
+      trace::entering("level::compute");
+
       mln_precondition(exact(input).has_data());
       A a = exact(a_); // Cpy.
       a.init();
       level::take(input, a);
+
+      trace::exiting("level::compute");
       return a.to_result();
     }
 

@@ -261,7 +261,7 @@ namespace mln
       {
 	median_dir(input, i, win.length(), output); // FIXME: Make 1 explicit!
       }
-#  endif
+#  endif // ! MLN_CORE_WIN_LINE_HH
 
     } // end of namespace mln::level::impl
 
@@ -273,8 +273,12 @@ namespace mln
     void median(const Image<I>& input, const Window<W>& win,
 		Image<O>& output)
     {
+      trace::entering("level::median");
+
       mln_assertion(exact(output).domain() == exact(input).domain());
-      impl::median_(exact(input), exact(win), exact(output)); 
+      impl::median_(exact(input), exact(win), exact(output));
+
+      trace::exiting("level::median");
     }
 
     template <typename I, typename O>

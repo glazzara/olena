@@ -42,6 +42,10 @@
 # include <mln/value/lut_vec.hh>
 
 
+// Specializations are in:
+# include <mln/level/transform.spe.hh>
+
+
 namespace mln
 {
 
@@ -74,65 +78,42 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename F, typename O>
-      void transform(metal::false_, // general case
-		     const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
+      namespace generic
       {
-	const I& input  = exact(input_);
-	const F& f      = exact(f_);
-	      O& output = exact(output_);
 
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  output(p) = f( input(p) );
-      }
+	template <typename I, typename F, typename O>
+	void transform_(const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
+	{
+	  trace::entering("level::impl::generic::transform");
 
+	  const I& input  = exact(input_);
+	  const F& f      = exact(f_);
+	  O& output = exact(output_);
 
-      template <typename I, typename F, typename O>
-      void transform(metal::true_, // low quantization
-		     const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
-      {
-	const I& input  = exact(input_);
-	const F& f      = exact(f_);
-	      O& output = exact(output_);
+	  mln_piter(I) p(input.domain());
+	  for_all(p)
+	    output(p) = f( input(p) );
 
-	value::lut_vec<mln_vset(I), mln_result(F)> lut(input.values(), f);
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  output(p) = lut(input(p));
-      }
+	  trace::exiting("level::impl::generic::transform");
+	}
 
-
-      // FIXME: Handle the cases of fastest images.
-
-//       template <typename I, typename F, typename O>
-//       void transform(metal::true_, // low quantization
-// 		     const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
-//       {
-// 	const I& input  = exact(input_);
-// 	const F& f      = exact(f_);
-// 	      O& output = exact(output_);
-
-// 	value::lut_vec<mln_vset(I), mln_result(F)> lut(input.values(), f);
-// 	mln_pixter(const I) pi(input); // FIXME
-// 	mln_pixter(O) po(output);
-// 	po.start();
-// 	for_all(pi)
-// 	  {
-// 	    po.val() = lut(pi.val());
-// 	    po.next();
-// 	  }
-//       }
+      } // end of namespace mln::level::impl::generic
 
     } // end of namespace mln::level::impl
 
 
+    // Facade.
+
     template <typename I, typename F, typename O>
     void transform(const Image<I>& input, const Function_v2v<F>& f, Image<O>& output)
     {
+      trace::entering("level::transform");
+
       mln_precondition(exact(output).domain() >= exact(input).domain());
-      impl::transform(mln_is_value_lowq(I)(),
-		      exact(input), exact(f), exact(output));
+      impl::transform_(mln_is_value_lowq(I)(),
+		       exact(input), exact(f), exact(output));
+
+      trace::exiting("level::transform");
     }
 
 
@@ -140,10 +121,14 @@ namespace mln
     mln_ch_value(I, mln_result(F))
       transform(const Image<I>& input, const Function_v2v<F>& f)
     {
+      trace::entering("level::transform");
+
       mln_precondition(exact(input).has_data());
       mln_ch_value(I, mln_result(F)) output;
       initialize(output, input);
-      transform(input, f, output);
+      transform_(input, f, output);
+
+      trace::exiting("level::transform");
       return output;
     }
 

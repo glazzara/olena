@@ -71,7 +71,7 @@ namespace mln
 	  q_fp(win_fwd_plus, p), q_fm(win_fwd_minus, p),
 	  q_bp(win_bkd_plus, p), q_bm(win_bkd_minus, p),
 	  q_top(win_top, p), q_bot(win_bot, p);
-	
+
 	accu::median<mln_vset(I)> med(input.values());
 
 	// initialization
@@ -162,7 +162,7 @@ namespace mln
 		med.take(input.at(row, ct));
 		output(p) = med;
 	      }
-	    
+
 	    // middle columns (both take and untake)
 	    cu = min_col;
 	    for (; col <= max_col - half; ++cu, ++col, ++ct)

@@ -87,9 +87,13 @@ namespace mln
     template <typename I, typename O>
     void saturate(const Image<I>& input, Image<O>& output)
     {
+      trace::entering("level::saturate");
+
       mln_precondition(exact(input).domain() == exact(output).domain());
       fun::v2v::saturate<mln_value(O)> f;
       level::transform(input, f, output);
+
+      trace::exiting("level::saturate");
     }
 
     template <typename I, typename O>
@@ -97,18 +101,26 @@ namespace mln
 		  const mln_value(O)& min, const mln_value(O)& max,
 		  Image<O>& output)
     {
+      trace::entering("level::saturate");
+
       mln_precondition(exact(input).domain() == exact(output).domain());
       fun::v2v::saturate<mln_value(O)> f(min, max);
       level::transform(input, f, output);
+
+      trace::exiting("level::saturate");
     }
 
     template <typename I>
     void saturate_inplace(Image<I>& input,
 			  const mln_value(I)& min, const mln_value(I)& max)
     {
+      trace::entering("level::saturate_inplace");
+
       mln_precondition(exact(input).has_data());
       fun::v2v::saturate<mln_value(I)> f(min, max);
       level::apply(input, f);
+
+      trace::exiting("level::saturate_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

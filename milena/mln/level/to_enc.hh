@@ -60,8 +60,12 @@ namespace mln
     template <typename I, typename O>
     void to_enc(const Image<I>& input, Image<O>& output)
     {
+      trace::entering("level::to_enc");
+
       mln_precondition(exact(output).domain() == exact(input).domain());
       level::transform(input, fun::v2v::enc< mln_value(I) >(), output);
+
+      trace::exiting("level::to_enc");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
