@@ -45,7 +45,20 @@ namespace mln
     namespace browsing
     {
       
-      /*! FIXME : DOC
+      /*!
+       * \brief Browsing in a certain direction.
+       *
+       * This canvas browse all the point of an image 'input' of type
+       * 'I' and of dimension 'dim' in the direction 'dir'.
+       *
+       * The functor should provide (In addition to 'input', 'I',
+       * 'dim' and 'dir') three methods :
+       *
+       *   - init() : Will be called at the beginning.
+       *   - next() : Will be called at each point 'p' (also provided by
+       *   the fonctor).
+       *   - final(): Will be called at the end.
+       *
        * F shall features : \n
        * { \n
        * --- as types: \n
@@ -57,8 +70,8 @@ namespace mln
        *   p; \n
        * --- as methods: \n
        *   void init(); \n
-       *   void next() \n
-       *   void final() \n
+       *   void next(); \n
+       *   void final(); \n
        * } \n
        *
        */
@@ -76,6 +89,7 @@ namespace mln
       void
       directional_t::operator()(F& f) const
       {
+	trace::entering("canvas::browsing::directional");
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
@@ -85,11 +99,15 @@ namespace mln
 	
 	f.p = pmin;
 	
+	trace::entering("canvas::browsing::directional::init");
 	f.init();
+	trace::exiting("canvas::browsing::directional::init");
 	
 	do
 	{
+	  trace::entering("canvas::browsing::directional::next");
 	  f.next();
+	  trace::exiting("canvas::browsing::directional::next");
 	  
 	  for (int c = F::dim - 1; c >= 0; --c)
 	  {
@@ -104,7 +122,10 @@ namespace mln
 	  }
 	} while (f.p != pmin);
 
+	trace::entering("canvas::browsing::directional::final");
 	f.final();
+	trace::exiting("canvas::browsing::directional::final");
+	trace::exiting("canvas::browsing::directional");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

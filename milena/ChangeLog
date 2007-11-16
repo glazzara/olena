@@ -1,3 +1,19 @@
+2007-11-16  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Review the mln/canvas/browsing directory.
+	* mln/canvas/browsing/dir_ricard51.hh: Rename as...
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh: ...this, Document.
+	* mln/canvas/browsing/directional.hh: Document.
+	* mln/canvas/browsing/fwd.hh: Document.
+	* mln/canvas/browsing/snake_fwd.hh: Document.
+	* tests/canvas/browsing/dir_struct_elt_incr_update.cc: New.
+	* tests/canvas/browsing/directional.cc: New.
+	* tests/canvas/browsing/fwd.cc: New.
+	* tests/canvas/browsing/snake_fwd.cc: New.
+	* tests/canvas/browsing: New.
+	* tests/canvas: New.
+	* tests/canvas_browsing_fwd.cc: Remove.
+
 2007-11-16  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add tracing for level algorithm and split specialization of level::transform.

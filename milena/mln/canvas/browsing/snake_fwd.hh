@@ -34,7 +34,6 @@
  */
 
 # include <mln/core/concept/browsing.hh>
-# include <mln/core/dpoint2d.hh> // for "up"
 # include <mln/geom/size2d.hh>
 
 
@@ -47,8 +46,29 @@ namespace mln
     namespace browsing
     {
 
-      /*! FIXME: Doc!
+      /*!
+       * \brief Browsing in a snake-way, forward.
        *
+       * This canvas browse all the point of an image 'input' like
+       * this :
+       *
+       *     ------->
+       *     <------'
+       *     '------>
+       *
+       * The fonctor should provide (In addition to 'input') four
+       * methods :
+       *
+       *   - init() : Will be called at the beginning.
+       *   - down() : Will be called after each moving down. (will
+       *   also be called once at the first point).
+       *   - fwd()  : Will be called after each moving right.
+       *   - bwd()  : Will ba called after each moving left.
+       *
+       * This methods should acces to the current working point 'p'
+       * also provided by the functor.
+       *
+       * Warning: This canvas works only on 2D.
        *
        * F shall feature: \n
        * { \n
@@ -73,49 +93,62 @@ namespace mln
       snake_fwd;
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename F>
       void
       snake_fwd_t::operator()(F& f) const
       {
+	// FIXME: Check the dimension (2D) or generalize.
+	trace::entering("canvas::browsing::snake_fwd");
 	mln_precondition(f.input.has_data());
 	int
 	  min_row = geom::min_row(f.input), max_row = geom::max_row(f.input),
 	  min_col = geom::min_col(f.input), max_col = geom::max_col(f.input);
 
 	// p
-	f.p = f.input.bbox().pmin() + up;
+	f.p = f.input.bbox().pmin();
 	int& row = f.p.row();
 	int& col = f.p.col();
 
 	// initialization
+	trace::entering("canvas::browsing::snake_fwd::init");
 	f.init();
+	trace::exiting("canvas::browsing::snake_fwd::init");
 
 	bool fwd = true;
 	for (row = min_row; row <= max_row; ++row)
+	  // FIXME: Add "if (f.input.has(p))"?
 	  {
 	    // go down
+	    trace::entering("canvas::browsing::snake_fwd::init");
 	    f.down();
+	    trace::exiting("canvas::browsing::snake_fwd::init");
 
 	    if (fwd)
 	      // browse line fwd
 	      while (col < max_col)
 		{
 		  ++col;
+		  trace::entering("canvas::browsing::snake_fwd::fwd");
 		  f.fwd();
+		  trace::exiting("canvas::browsing::snake_fwd::fwd");
 		}
 	    else
 	      // browse line bkd
 	      while (col > min_col)
 		{
 		  --col;
+		  trace::entering("canvas::browsing::snake_fwd");
 		  f.bkd();
+		  trace::exiting("canvas::browsing::snake_fwd");
 		}
 
 	    // change browsing
 	    fwd = ! fwd;
 	  }
+	trace::exiting("canvas::browsing::snake_fwd");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

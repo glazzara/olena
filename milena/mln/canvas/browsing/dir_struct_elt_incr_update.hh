@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_BROWSING_DIR_RICARD51_HH
-# define MLN_CANVAS_BROWSING_DIR_RICARD51_HH
+#ifndef MLN_CANVAS_BROWSING_DIR_STRUCT_ELT_INCR_UPDATE_HH
+# define MLN_CANVAS_BROWSING_DIR_STRUCT_ELT_INCR_UPDATE_HH
 
-/*! \file mln/canvas/browsing/dir_ricard51.hh
+/*! \file mln/canvas/browsing/dir_struct_elt_incr_update.hh
  *
- * \brief Dir_Ricard51 browsing of an image.
+ * \brief Directional browsing of an image with structuring element.
  */
 
 # include <mln/core/concept/browsing.hh>
@@ -45,7 +45,27 @@ namespace mln
     namespace browsing
     {
       
-      /*! FIXME : DOC
+      /*!
+       * \brief Browsing in a certain direction with a segment.
+       *
+       * This canvas browse all the point of an image 'input' of type
+       * 'I', of dimension 'dim' in the direction 'dir' with
+       * considering weigh the 'length' nearest points.
+       *
+       * The functor should provide (In addition to 'input', 'I',
+       * 'dim', 'dir' and 'length') six methods :
+       *
+       *   - init()         : Will be called at the beginning.
+       *   - init_line()    : Will be called at the beginning of each
+       *                      line.
+       *   - add_point(q)   : Will be called for taking the new point
+       *                      'q' into account.
+       *   - remove_point(q): Will be called for untaking the new point
+       *                      'q' into account.
+       *   - next()         : Will be called at each point 'p' (also
+       *                      provided by the functor).
+       *   - final()        : Will be called at the end.
+       *
        * F shall features : \n
        * { \n
        * --- as types: \n
@@ -59,27 +79,28 @@ namespace mln
        * --- as methods: \n
        *   void init(); \n
        *   void init_line(); \n
-       *   void add_point(p) \n
-       *   void remove_point(p) \n
+       *   void add_point(q) \n
+       *   void remove_point(q) \n
        *   void next(); \n
        *   void final(); \n
        * } \n
        *
        */
-      struct dir_ricard51_t : public Browsing< dir_ricard51_t >
+      struct dir_struct_elt_incr_update_t : public Browsing< dir_struct_elt_incr_update_t >
       {
 	template <typename F>
 	void operator()(F& f) const;
       }
 
-      dir_ricard51;
+      dir_struct_elt_incr_update;
 
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename F>
       void
-      dir_ricard51_t::operator()(F& f) const
+      dir_struct_elt_incr_update_t::operator()(F& f) const
       {
+	trace::entering("canvas::browsing::dir_struct_elt_incr_update");
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
@@ -103,26 +124,40 @@ namespace mln
 
 	f.p = pmin;
 	
+	trace::entering("canvas::browsing::dir_struct_elt_incr_update::init");
 	f.init();
+	trace::exiting("canvas::browsing::dir_struct_elt_incr_update::init");
 	
 	do
 	{
 	  pt = f.p;
 	  pu = f.p;
 
+	  trace::entering("canvas::browsing::dir_struct_elt_incr_update::init_line");
 	  f.init_line();
+	  trace::exiting("canvas::browsing::dir_struct_elt_incr_update::init_line");
 
 	  // initialization (before first point of the line)
 	  for (ct = pmin_dir; ct < pmin_dir_plus_half_length; ++ ct)
 	    if (f.input.has(pt))
+	    {
+	      trace::entering("canvas::browsing::dir_struct_elt_incr_update::add_point");
 	      f.add_point(pt);
+	      trace::exiting("canvas::browsing::dir_struct_elt_incr_update::add_point");
+	    }
 
 	  // left columns (just take new points)
 	  for (p_dir = pmin_dir; p_dir <= pmin_dir_plus_half_length; ++p_dir, ++ct)
 	  {
 	    if (f.input.has(pt))
+	    {
+	      trace::entering("canvas::browsing::dir_struct_elt_incr_update::add_point");
 	      f.add_point(pt);
+	      trace::exiting("canvas::browsing::dir_struct_elt_incr_update::add_point");
+	    }
+	    trace::entering("canvas::browsing::dir_struct_elt_incr_update::next");
 	    f.next();
+	    trace::exiting("canvas::browsing::dir_struct_elt_incr_update::next");
 	  }
 
 	  // middle columns (both take and untake)
@@ -130,18 +165,34 @@ namespace mln
 	  for (; p_dir <= pmax_dir_minus_half_length; ++cu, ++p_dir, ++ct)
 	  {
 	    if (f.input.has(pt))
+	    {
+	      trace::entering("canvas::browsing::dir_struct_elt_incr_update::add_point");
 	      f.add_point(pt);
+	      trace::exiting("canvas::browsing::dir_struct_elt_incr_update::add_point");
+	    }
 	    if (f.input.has(pu))
+	    {
+	      trace::entering("canvas::browsing::dir_struct_elt_incr_update::remove_point");
 	      f.remove_point(pu);
+	      trace::exiting("canvas::browsing::dir_struct_elt_incr_update::remove_point");
+	    }
+	    trace::entering("canvas::browsing::dir_struct_elt_incr_update::next");
 	    f.next();
+	    trace::exiting("canvas::browsing::dir_struct_elt_incr_update::next");
 	  }
 
 	  // right columns (now just untake old points)
 	  for (; p_dir <= pmax_dir; ++cu, ++p_dir)
 	  {
 	    if (f.input.has(pu))
+	    {
+	      trace::entering("canvas::browsing::dir_struct_elt_incr_update::remove_point");
 	      f.remove_point(pu);
+	      trace::exiting("canvas::browsing::dir_struct_elt_incr_update::remove_point");
+	    }
+	    trace::entering("canvas::browsing::dir_struct_elt_incr_update::next");
 	    f.next();
+	    trace::exiting("canvas::browsing::dir_struct_elt_incr_update::next");
 	  }
 
 	  p_dir = pmin_dir;
@@ -159,7 +210,10 @@ namespace mln
 	  }
 	} while (f.p != pmin);
 
+	trace::entering("canvas::browsing::dir_struct_elt_incr_update::final");
 	f.final();
+	trace::exiting("canvas::browsing::dir_struct_elt_incr_update::final");
+	trace::exiting("canvas::browsing::dir_struct_elt_incr_update");
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -170,4 +224,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CANVAS_BROWSING_DIR_RICARD51_HH
+#endif // ! MLN_CANVAS_BROWSING_DIR_STRUCT_ELT_INCR_UPDATE_HH

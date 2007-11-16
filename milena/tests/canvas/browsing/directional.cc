@@ -25,22 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/canvas_browsing_fwd.cc
+/*! \file tests/canvas/browsing/directional.cc
  *
- * \brief Tests on mln::canvas::browsing::fwd.
+ * \brief Tests on mln::canvas::browsing::directional.
  */
 
 #include <mln/core/image2d.hh>
 #include <mln/core/image3d.hh>
-#include <mln/canvas/browsing/fwd.hh>
-#include <mln/canvas/browsing/snake_fwd.hh>
 #include <mln/canvas/browsing/directional.hh>
 #include <mln/fun/p2v/iota.hh>
-#include <mln/pw/image.hh>
 #include <mln/debug/println.hh>
 #include <mln/level/fill.hh>
-
-
 
 // FIXME: Move code below into mln/canvas/browsing/iota.hh.
 
@@ -69,6 +64,7 @@ struct assign_browsing_functor
   void next()
   {
     input(p) = f(p);
+    mln_assertion(p[dir] == 0);
   }
   void fwd()  { next(); }
   void bkd()  { next(); }
@@ -100,13 +96,6 @@ int main()
   using namespace mln;
   image2d<unsigned> ima2(3, 3);
   image3d<unsigned> ima3(3, 3, 3);
-
-  my_test(ima2, fun::p2v::iota, canvas::browsing::fwd);
-  debug::println(ima2);
-
-  my_test(ima2, fun::p2v::iota, canvas::browsing::snake_fwd);
-  debug::println(ima2);
-
 
   level::fill(ima2, 0);
   my_test(ima2, fun::p2v::iota, canvas::browsing::directional, 0);

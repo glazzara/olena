@@ -30,7 +30,7 @@
 
 /*! \file mln/canvas/browsing/fwd.hh
  *
- * \brief Canvas for browsing forward.
+ * \brief Canvas for forward browsing.
  */
 
 # include <mln/core/concept/browsing.hh>
@@ -46,8 +46,18 @@ namespace mln
     namespace browsing
     {
 
-      /*! FIXME: Doc!
+      /*!
+       * \brief Canvas for forward browsing
        *
+       * This canvas browse all the points of an image 'input' of type
+       * 'I' from left to right and from top to bottom
+       *
+       * The fonctor should provide (In addition of 'I' and 'input')
+       * three methods :
+       *   - init() : Will be called at the beginning.
+       *   - next() : Will be called at each point 'p' (also provided by
+       * the functor).
+       *   - final(): Will be called at the end.
        *
        * F shall feature: \n
        * { \n
@@ -63,7 +73,6 @@ namespace mln
        * } \n
        *
        */
-
       struct fwd_t : public Browsing< fwd_t >
       {
 	template <typename F>
@@ -79,16 +88,24 @@ namespace mln
       void
       fwd_t::operator()(F& f) const
       {
+	trace::entering("canvas::browsing::fwd");
 	mln_precondition(f.input.has_data());
 	typedef typename F::I I;
 	mln_fwd_piter(I) p(f.input.domain());
+	trace::entering("canvas::browsing::fwd::init");
 	f.init();
+	trace::exiting("canvas::browsing::fwd::init");
 	for_all(p)
 	  {
 	    f.p = p;
+	trace::entering("canvas::browsing::fwd::next");
 	    f.next();
+	trace::exiting("canvas::browsing::fwd::next");
 	  }
+	trace::entering("canvas::browsing::fwd::final");
 	f.final();
+	trace::exiting("canvas::browsing::fwd::final");
+	trace::exiting("canvas::browsing::fwd");
       }
 
 # endif // ! MLN_INCLUDE_ONLY
