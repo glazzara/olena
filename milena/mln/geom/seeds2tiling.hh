@@ -30,11 +30,10 @@
 
 /*! \file mln/geom/seeds2tiling.hh
  *
- *  \brief Definition of a function which takes a labeled image and
- * returns an image which has blew up its labeled values.
+ *  \brief Convert a binary image with seeds into a labeled image.
  */
 
-# include <map> 
+# include <map>
 
 # include <mln/core/p_queue.hh>
 # include <mln/core/clone.hh>
@@ -76,25 +75,7 @@ namespace mln
 	  }
     }
 
-//     // Body.
-//     {
-//       while (! q.is_empty())
-// 	{
-// 	  mln_psite(I) p = q.front();
-// 	  q.pop();
-// 	  mln_invariant(ima(p) == 0);
-
-// 	  mln_niter(N) n(nbh, p);
-// 	  for_all(n) if (ima.has(n))
-// 	    if (out(n) != 0)
-// 	      out(p) = out(n);
-// 	    else
-// 	      if (! q.has(n))
-// 		q.push(n);
-// 	}
-//     }
-
-    // Body: alternative version.
+    // Body.
     {
       while (! q.is_empty())
 	{

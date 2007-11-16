@@ -30,10 +30,10 @@
 
 /*! \file mln/geom/seeds2tiling_with_chamfer.hh
  *
- * \brief FIXME.
+ * \brief seeds2tiling with chamfer method.
  */
 
-# include <map> 
+# include <map>
 
 
 # include <mln/core/p_priority_queue_fast.hh>

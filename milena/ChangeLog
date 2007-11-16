@@ -1,3 +1,31 @@
+2007-11-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Review the mln/geom directory.
+
+	* mln/geom/seeds2tiling.hh: Clean dead code, update doc. Fixme for
+          guillaume : Review the documentation.
+	* mln/geom/seeds2tiling_with_chamfer.hh: likewise.
+
+	Add unit tests.
+
+	* tests/geom/bbox.cc: New.
+	* tests/geom/max_col.cc: New.
+	* tests/geom/max_ind.cc: New.
+	* tests/geom/max_row.cc: New.
+	* tests/geom/max_sli.cc: New.
+	* tests/geom/min_col.cc: New.
+	* tests/geom/min_ind.cc: New.
+	* tests/geom/min_row.cc: New.
+	* tests/geom/min_sli.cc: New.
+	* tests/geom/ncols.cc: New.
+	* tests/geom/ninds.cc: New.
+	* tests/geom/nrows.cc: New.
+	* tests/geom/nslis.cc: New.
+	* tests/geom/pmin_pmax.cc: New.
+	* tests/geom/shift.cc: New.
+	* tests/geom/sym.cc: New.
+	* tests/geom: New.
+
 2007-11-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update level and add specialization for algorithm.
