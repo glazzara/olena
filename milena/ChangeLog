@@ -1,5 +1,31 @@
 2007-11-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Review arith subdirectory and add tests.
+
+	* mln/arith/min.hh,
+	* mln/arith/revert.hh,
+	* mln/arith/times.hh: Add tracing, and remove specializations.
+
+	* mln/arith/min.spe.hh,
+	* mln/arith/revert.spe.hh,
+	* mln/arith/times.spe.hh: New specializations file for arith
+	algorithms.
+
+	* tests/Makefile.am,
+	* tests/arith/Makefile.am: New Makefile for checking tests.
+
+
+	* tests/arith: New subdirectory for arith tests.
+
+	* tests/arith_plus.cc: Remove ...
+	* tests/arith/plus.cc: ... and replace here.
+
+	* tests/arith/minus.cc,
+	* tests/arith/revert.cc,
+	* tests/arith/times.cc: New tests for arith.
+
+2007-11-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update level tree test.
 	* tests/border/adjust.cc: New file to test adjsut.
 	* tests/border/find.cc: New.

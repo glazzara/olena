@@ -38,6 +38,9 @@
 # include <mln/arith/includes.hh>
 
 
+// Specializations are in:
+# include <mln/arith/times.spe.hh>
+
 namespace mln
 {
 
@@ -181,46 +184,34 @@ namespace mln
     namespace impl
     {
 
-      template <typename L, typename R, typename O>
-      void times_(trait::image::speed::any, const L& lhs,
-		 trait::image::speed::any, const R& rhs,
-		 trait::image::speed::any, O& output)
+      namespace generic
       {
-	mln_piter(L) p(lhs.domain());
-	for_all(p)
-	  output(p) = lhs(p) * rhs(p);
-      }
 
-      template <typename L, typename R, typename O>
-      void times_(trait::image::speed::fastest, const L& lhs,
-		 trait::image::speed::fastest, const R& rhs,
-		 trait::image::speed::fastest, O& output)
-      {
-	mln_pixter(const L) lp(lhs);
-	mln_pixter(const R) rp(rhs);
-	mln_pixter(O)       op(output);
-	for_all_3(lp, rp, op)
-	  op.val() = lp.val() * rp.val();
-      }
+	template <typename L, typename R, typename O>
+	void times_(const L& lhs, const R& rhs, O& output)
+	{
+	  trace::entering("arith::impl::generic::times_");
 
-      template <typename L, typename R>
-      void times_inplace_(trait::image::speed::any, L& lhs,
-			 trait::image::speed::any, const R& rhs)
-      {
-	mln_piter(R) p(rhs.domain());
-	for_all(p)
+	  mln_piter(L) p(lhs.domain());
+	  for_all(p)
+	    output(p) = lhs(p) * rhs(p);
+
+	  trace::exiting("arith::impl::generic::times_");
+	}
+
+	template <typename L, typename R>
+	void times_inplace_(L& lhs, const R& rhs)
+	{
+	  trace::entering("arith::impl::generic::times_inplace_");
+
+	  mln_piter(R) p(rhs.domain());
+	  for_all(p)
 	  lhs(p) *= rhs(p);
-      }
 
-      template <typename L, typename R>
-      void times_inplace_(trait::image::speed::fastest, L& lhs,
-			 trait::image::speed::fastest, const R& rhs)
-      {
-	mln_pixter(L) lp(lhs);
-	mln_pixter(const R) rp(rhs);
-	for_all_2(rp, lp)
-	  lp.val() *= rp.val();
-      }
+	  trace::exiting("arith::impl::generic::times_inplace_");
+	}
+
+      } // end of namespace mln::arith::impl::generic
 
     } // end of namespace mln::arith::impl
 

@@ -38,9 +38,12 @@
 # include <mln/core/concept/image.hh>
 # include <mln/value/props.hh>
 
+// Specializations are in:
+# include <mln/arith/revert.spe.hh>
+
+
 // FIXME: Rely instead on mln/fun/v2v/revert.hh.
 // FIXME: Revert on int value 0 does not give 0 (since min != - max; idem for float etc.)
-
 
 
 namespace mln
@@ -83,24 +86,23 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename O>
-      void revert_(trait::image::speed::any, const I& input, O& output)
+      namespace generic
       {
-	typedef mln_value(I) V;
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  output(p) = mln_min(V) + (mln_max(V) - input(p));
-      }
 
-      template <typename I, typename O>
-      void revert_(trait::image::speed::fastest, const I& input, O& output)
-      {
-	typedef mln_value(I) V;
-	mln_pixter(const I) ip(input);
-	mln_pixter(O)       op(output);
-	for_all_2(ip, op)
-	  op.val() = mln_min(V) + (mln_max(V) - ip.val());
-      }
+	template <typename I, typename O>
+	void revert_(const I& input, O& output)
+	{
+	  trace::entering("arith::impl::generic::revert_");
+
+	  typedef mln_value(I) V;
+	  mln_piter(I) p(input.domain());
+	  for_all(p)
+	    output(p) = mln_min(V) + (mln_max(V) - input(p));
+
+	  trace::exiting("arith::impl::generic::revert_");
+	}
+
+      } // end of namespace mln::arith::impl::generic
 
     } // end of namespace mln::arith::impl
 
