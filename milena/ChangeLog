@@ -1,3 +1,13 @@
+2007-11-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update level tree test.
+	* tests/border/adjust.cc: New file to test adjsut.
+	* tests/border/find.cc: New.
+
+	Update
+	* tests/border/get.cc,
+	* tests/border/resize.cc: Update these tests.
+
 2007-11-16  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add border subdirectory in test and add/update test.

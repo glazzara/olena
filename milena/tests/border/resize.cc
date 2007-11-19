@@ -32,11 +32,9 @@
 
 
 #include <mln/core/image2d.hh>
-#include <mln/debug/iota.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/border/resize.hh>
-#include <mln/debug/println_with_border.hh>
-#include <mln/border/fill.hh>
+#include <mln/border/get.hh>
 
 using namespace mln;
 
@@ -46,28 +44,10 @@ main (void)
   unsigned border = 1;
   unsigned new_border = 3;
 
-  std::cout << std::endl
-	    << "Test 2d resize"
-	    << std::endl
-	    << std::endl;
   image2d<value::int_u8> ima(3, 2, border);
-  debug::iota(ima);
-  border::fill(ima, 8);
-
-  std::cout << "before resize ("
-	    << border
-	    << ")"
-	    << std::endl;
-  debug::println_with_border(ima);
-  std::cout << std::endl;
-
-
+  mln_assertion(border::get(ima) == border);
   border::resize (ima, new_border);
-  std::cout << "after resize ("
-	    << new_border
-	    << ")"
-	    << std::endl;
-  debug::println_with_border(ima);
-  std::cout << std::endl;
-
+  mln_assertion(border::get(ima) == new_border);
+  border::resize (ima, border);
+  mln_assertion(border::get(ima) == border);
 }

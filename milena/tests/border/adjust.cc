@@ -25,34 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border/get.cc
+/*! \file tests/border/adjust.cc
  *
- * \brief Tests on mln::border::get.
+ * \brief Tests on mln::border::adjust.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if.hh>
-#include <mln/fun/p2b/chess.hh>
-
 #include <mln/border/get.hh>
-#include <mln/literal/origin.hh>
-
-
-struct f_box2d_t : mln::Function_p2b< f_box2d_t >
-{
-  f_box2d_t(const mln::box2d& b)
-    : b_(b)
-  {
-  }
-  mln::box2d b_;
-  bool operator()(const mln::point2d& p) const
-  {
-    return b_.has(p);
-  }
-};
-
-
+#include <mln/border/adjust.hh>
 
 int main()
 {
@@ -60,23 +40,9 @@ int main()
 
   typedef image2d<int> I;
 
-  box2d b(literal::origin, point2d(1,1));
-  f_box2d_t f_b(b);
-
   I ima(3,3, 51);
-
+  border::adjust(ima, 51);
   mln_assertion(border::get(ima) == 51);
-  mln_assertion( ima.has(point2d(2,2)) == true );
-
-  sub_image<I, box2d> sub(ima, b);
-  mln_assertion( sub.has  (point2d(2,2)) == false &&
-		 sub.owns_(point2d(2,2)) == false );
-  mln_assertion(border::get(sub) == 0);
-
-  image_if<I, f_box2d_t> imaif(ima, f_b);
-  mln_assertion( imaif.has  (point2d(2,2)) == false &&
-		 imaif.owns_(point2d(2,2)) == true );
-  mln_assertion(border::get(imaif) == 51);
-
-  mln_assertion(border::get( (ima | b) | f_b ) == 0);
+  border::adjust(ima, 2);
+  mln_assertion(border::get(ima) == 51);
 }
