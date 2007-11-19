@@ -37,6 +37,9 @@
 
 # include <mln/core/concept/image.hh>
 
+// Specializations are in:
+# include <mln/logical/and_not.spe.hh>
+
 
 namespace mln
 {
@@ -76,24 +79,19 @@ namespace mln
     namespace impl
     {
 
-      template <typename L, typename R, typename O>
-      void and_not_(trait::image::speed::any, const L& lhs,
-		    trait::image::speed::any, const R& rhs, O& output)
+      namespace generic
       {
-	mln_piter(L) p(lhs.domain());
-	for_all(p)
-	  output(p) = lhs(p) && ! rhs(p);
-      }
+	template <typename L, typename R, typename O>
+	void and_not_(const L& lhs, const R& rhs, O& output)
+	{
+	  trace::entering("logical::impl::generic::and_not_");
 
-      template <typename L, typename R, typename O>
-      void and_not_(trait::image::speed::fastest, const L& lhs,
-		    trait::image::speed::fastest, const R& rhs, O& output)
-      {
-	mln_pixter(const L) lp(lhs);
-	mln_pixter(const R) rp(rhs);
-	mln_pixter(O)       op(output);
-	for_all_3(lp, rp, op)
-	  op.val() = lp.val() && ! rp.val();
+	  mln_piter(L) p(lhs.domain());
+	  for_all(p)
+	    output(p) = lhs(p) && ! rhs(p);
+
+	  trace::exiting("logical::impl::generic::and_not_");
+	}
       }
 
     } // end of namespace mln::logical::impl
@@ -105,6 +103,7 @@ namespace mln
     mln_concrete(L) and_not(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::and_not");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_concrete(L) output;
@@ -120,6 +119,7 @@ namespace mln
     void and_not_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::and_not_inplace");
+
       mln_precondition(exact(rhs).domain() >= exact(lhs).domain());
 
       impl::and_not_(mln_trait_image_speed(L)(), exact(lhs),

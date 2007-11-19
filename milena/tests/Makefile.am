@@ -5,6 +5,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 SUBDIRS = norm					\
 	  level					\
 	  arith					\
+	  logical				\
 	  border
 
 check_PROGRAMS =				\

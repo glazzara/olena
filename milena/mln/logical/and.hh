@@ -37,6 +37,9 @@
 
 # include <mln/core/concept/image.hh>
 
+// Specializations are in:
+# include <mln/logical/and.spe.hh>
+
 
 namespace mln
 {
@@ -76,25 +79,22 @@ namespace mln
     namespace impl
     {
 
-      template <typename L, typename R, typename O>
-      void and__(trait::image::speed::any, const L& lhs,
-		 trait::image::speed::any, const R& rhs, O& output)
+      namespace generic
       {
-	mln_piter(L) p(lhs.domain());
-	for_all(p)
-	  output(p) = lhs(p) && rhs(p);
-      }
 
-      template <typename L, typename R, typename O>
-      void and__(trait::image::speed::fastest, const L& lhs,
-		 trait::image::speed::fastest, const R& rhs, O& output)
-      {
-	mln_pixter(const L) lp(lhs);
-	mln_pixter(const R) rp(rhs);
-	mln_pixter(O)       op(output);
-	for_all_3(lp, rp, op)
-	  op.val() = lp.val() && rp.val();
-      }
+	template <typename L, typename R, typename O>
+	void and__(const L& lhs, const R& rhs, O& output)
+	{
+	  trace::entering("logical::impl::generic::and__");
+
+	  mln_piter(L) p(lhs.domain());
+	  for_all(p)
+	    output(p) = lhs(p) && rhs(p);
+
+	  trace::exiting("logical::impl::generic::and__");
+	}
+
+      } // end of namespace mln::logical::impl::generic
 
     } // end of namespace mln::logical::impl
 

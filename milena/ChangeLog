@@ -1,5 +1,30 @@
 2007-11-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Review logical subdirectory and add tests.
+
+	Update
+	* mln/logical/and.hh,
+	* mln/logical/and_not.hh,
+	* mln/logical/not.hh,
+	* mln/logical/or.hh: Add tracing, generic namespace, remove
+	specializations and check typo.
+
+	* mln/logical/and.spe.hh,
+	* mln/logical/and_not.spe.hh,
+	* mln/logical/not.spe.hh,
+	* mln/logical/or.spe.hh: New specializations for logical.
+
+	Tests
+	* tests/Makefile.am: Add logical subdirectory.
+	* tests/logical: New subdirectory for logical checking.
+	* tests/logical/Makefile.am: Add test to check.
+	* tests/logical/and.cc,
+	* tests/logical/and_not.cc,
+	* tests/logical/not.cc,
+	* tests/logical/or.cc: New tests for logical.
+
+2007-11-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Review arith subdirectory and add tests.
 
 	* mln/arith/min.hh,

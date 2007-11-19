@@ -37,6 +37,9 @@
 
 # include <mln/core/concept/image.hh>
 
+// Specializations are in:
+# include <mln/logical/not.spe.hh>
+
 
 namespace mln
 {
@@ -72,21 +75,19 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename O>
-      void not__(trait::image::speed::any, const I& input, O& output)
+      namespace generic
       {
-	mln_piter(I) p(input.domain());
-	for_all(p)
-	  output(p) = ! input(p);
-      }
+	template <typename I, typename O>
+	void not__(const I& input, O& output)
+	{
+	  trace::entering("logical::impl::generic::not__");
 
-      template <typename I, typename O>
-      void not__(trait::image::speed::fastest, const I& input, O& output)
-      {
-	mln_pixter(const I) ip(input);
-	mln_pixter(O)       op(output);
-	for_all_2(ip, op)
-	  op.val() = ! ip.val();
+	  mln_piter(I) p(input.domain());
+	  for_all(p)
+	    output(p) = ! input(p);
+
+	  trace::exiting("logical::impl::generic::not__");
+	}
       }
 
     } // end of namespace mln::logical::impl
@@ -103,7 +104,7 @@ namespace mln
       mln_concrete(I) output;
       initialize(output, input);
       impl::not__(mln_trait_image_speed(I)(), exact(input), output);
-      
+
       trace::exiting("logical::not");
       return output;
     }
