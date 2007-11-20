@@ -64,6 +64,7 @@ struct assign_browsing_functor
   void next()
   {
     input(p) = f(p);
+    //FIXME: Try to make more relevant test.
     mln_assertion(p[dir] == 0);
   }
   void fwd()  { next(); }

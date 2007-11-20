@@ -47,8 +47,8 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  win::rectangle2d rect(51, 51);
-  border::thickness = 52;
+  win::rectangle2d rect(5, 5);
+  border::thickness = 6;
 
   image2d<int_u8>
     lena = io::pgm::load("../../img/lena.pgm"),

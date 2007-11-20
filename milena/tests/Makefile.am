@@ -7,7 +7,8 @@ SUBDIRS = norm					\
 	  arith					\
 	  logical				\
 	  draw					\
-	  border
+	  border				\
+	  canvas
 
 check_PROGRAMS =				\
   accu_all					\
@@ -29,12 +30,11 @@ check_PROGRAMS =				\
   box2d						\
   box3d						\
 						\
-  canvas_browsing_fwd				\
   cast_image					\
   chamfer					\
   convert_to_image				\
   convert_to_tiles				\
-  convert_to_vec_p				\
+  convert_to_p_array				\
   core_category					\
   core_clone					\
   core_exact					\
@@ -50,7 +50,6 @@ check_PROGRAMS =				\
 						\
   estim_mean					\
 						\
-  fi_adaptor					\
   fun_x2x_composed				\
   fun_x2x_rotation				\
   fun_x2x_translation				\
@@ -77,35 +76,18 @@ check_PROGRAMS =				\
   io_ppm23					\
   io_ppm					\
 						\
-  l1						\
-  l2						\
-  linfty					\
   labeling_algo					\
   labeling_estimate				\
   labeling_foreground				\
   labeling_level_fast				\
   labeling_regional_maxima			\
-  level_approx_median				\
-  level_assign					\
-  level_fill					\
-  level_median					\
-  level_median_dir				\
-  level_median_fast				\
-  level_median_hline2d				\
-  level_memcpy_					\
-  level_memset_					\
-  level_naive_median				\
-  level_paste					\
   level_sort_points				\
-  level_transform				\
   linear_convolve				\
   linear_gaussian				\
   linear_lap					\
   linear_log					\
   line_convolve					\
   line_piter					\
-  literal_medium_gray				\
-  literal_zero					\
   local_convolve				\
 						\
   main						\
@@ -138,26 +120,20 @@ check_PROGRAMS =				\
   point1d					\
   point2d					\
   point3d					\
-  pset_if					\
   pw_image					\
   pw_value					\
-						\
-  queue_p					\
-  queue_p_fast					\
-  queue_p_fast_priority				\
-  queue_p_priority				\
 						\
   rle_image					\
   run_pset					\
 						\
   safe_image					\
   seed2tiling					\
-  set_p						\
   sparse_image					\
   stack						\
   sub_image					\
 						\
   test_positive					\
+  tr_image					\
   trait_ch_value				\
   trait_images					\
   trait_op_plus					\
@@ -165,7 +141,6 @@ check_PROGRAMS =				\
   trait_super					\
   trait_value					\
   translate_image				\
-  tr_image					\
 						\
   value_float01_bis				\
   value_float01					\
@@ -214,12 +189,11 @@ box1d_SOURCES = box1d.cc
 box2d_SOURCES = box2d.cc
 box3d_SOURCES = box3d.cc
 
-canvas_browsing_fwd_SOURCES = canvas_browsing_fwd.cc
 cast_image_SOURCES = cast_image.cc
 chamfer_SOURCES = chamfer.cc
 convert_to_image_SOURCES = convert_to_image.cc
 convert_to_tiles_SOURCES = convert_to_tiles.cc
-convert_to_vec_p_SOURCES = convert_to_vec_p.cc
+convert_to_p_array_SOURCES = convert_to_p_array.cc
 core_category_SOURCES = core_category.cc
 core_clone_SOURCES = core_clone.cc
 core_exact_SOURCES = core_exact.cc
@@ -261,35 +235,18 @@ io_ppm16_SOURCES = io_ppm16.cc
 io_ppm23_SOURCES = io_ppm23.cc
 io_ppm_SOURCES = io_ppm.cc
 
-l1_SOURCES = l1.cc
-l2_SOURCES = l2.cc
-linfty_SOURCES = linfty.cc
 labeling_algo_SOURCES = labeling_algo.cc
 labeling_estimate_SOURCES = labeling_estimate.cc
 labeling_foreground_SOURCES = labeling_foreground.cc
 labeling_level_fast_SOURCES = labeling_level_fast.cc
 labeling_regional_maxima_SOURCES = labeling_regional_maxima.cc
-level_approx_median_SOURCES = level_approx_median.cc
-level_assign_SOURCES = level_assign.cc
-level_fill_SOURCES = level_fill.cc
-level_median_SOURCES = level_median.cc
-level_median_dir_SOURCES = level_median_dir.cc
-level_median_fast_SOURCES = level_median_fast.cc
-level_median_hline2d_SOURCES = level_median_hline2d.cc
-level_memcpy__SOURCES = level_memcpy_.cc
-level_memset__SOURCES = level_memset_.cc
-level_naive_median_SOURCES = level_naive_median.cc
-level_paste_SOURCES = level_paste.cc
 level_sort_points_SOURCES = level_sort_points.cc
-level_transform_SOURCES = level_transform.cc
 linear_convolve_SOURCES = linear_convolve.cc
 linear_gaussian_SOURCES = linear_gaussian.cc
 linear_lap_SOURCES = linear_lap.cc
 linear_log_SOURCES = linear_log.cc
 line_convolve_SOURCES = line_convolve.cc
 line_piter_SOURCES = line_piter.cc
-literal_medium_gray_SOURCES = literal_medium_gray.cc
-literal_zero_SOURCES = literal_zero.cc
 local_convolve_SOURCES = local_convolve.cc
 
 main_SOURCES = main.cc
@@ -322,14 +279,8 @@ plain_SOURCES = plain.cc
 point1d_SOURCES = point1d.cc
 point2d_SOURCES = point2d.cc
 point3d_SOURCES = point3d.cc
-pset_if_SOURCES = pset_if.cc
 pw_image_SOURCES = pw_image.cc
 pw_value_SOURCES = pw_value.cc
-
-queue_p_SOURCES = queue_p.cc
-queue_p_fast_SOURCES = queue_p_fast.cc
-queue_p_fast_priority_SOURCES = queue_p_fast_priority.cc
-queue_p_priority_SOURCES = queue_p_priority.cc
 
 rle_image_SOURCES = rle_image.cc
 run_pset_SOURCES = run_pset.cc
@@ -342,6 +293,7 @@ stack_SOURCES = stack.cc
 sub_image_SOURCES = sub_image.cc
 
 test_positive_SOURCES = test_positive.cc
+tr_image_SOURCES = tr_image.cc
 trait_ch_value_SOURCES = trait_ch_value.cc
 trait_images_SOURCES = trait_images.cc
 trait_op_plus_SOURCES = trait_op_plus.cc
@@ -349,7 +301,6 @@ trait_op_uminus_SOURCES = trait_op_uminus.cc
 trait_super_SOURCES = trait_super.cc
 trait_value_SOURCES = trait_value.cc
 translate_image_SOURCES = translate_image.cc
-tr_image_SOURCES = tr_image.cc
 
 value_float01_bis_SOURCES = value_float01_bis.cc
 value_float01_SOURCES = value_float01.cc

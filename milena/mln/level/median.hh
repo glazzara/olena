@@ -41,7 +41,7 @@
 # include <mln/set/diff.hh>
 
 # include <mln/canvas/browsing/snake_fwd.hh>
-# include <mln/canvas/browsing/dir_ricard51.hh>
+# include <mln/canvas/browsing/dir_struct_elt_incr_update.hh>
 # include <mln/accu/median.hh>
 
 
@@ -242,7 +242,7 @@ namespace mln
       void median_dir_(const Image<I>& input, unsigned dir, unsigned length, O& output)
       {
 	median_dir_t<I,O> f(exact(input), dir, length, output);
-	canvas::browsing::dir_ricard51(f);
+	canvas::browsing::dir_struct_elt_incr_update(f);
       }
 
 

@@ -108,6 +108,59 @@ AC_CONFIG_FILES([
 AC_CONFIG_FILES([
   milena/tests/Makefile
     milena/tests/norm/Makefile
+    milena/tests/geom/Makefile
+    milena/tests/literal/Makefile
+    milena/tests/level/Makefile
+      milena/tests/level/naive/Makefile
+      milena/tests/level/approx/Makefile
+    milena/tests/draw/Makefile
+    milena/tests/arith/Makefile
+    milena/tests/canvas/Makefile
+      milena/tests/canvas/browsing/Makefile
+      milena/tests/canvas/morpho/Makefile
+    milena/tests/math/Makefile
+    milena/tests/border/Makefile
+    milena/tests/logical/Makefile
+    milena/tests/trait/Makefile
+      milena/tests/trait/image/Makefile
+      milena/tests/trait/value/Makefile
+      milena/tests/trait/op/Makefile
+    milena/tests/histo/Makefile
+    milena/tests/tag/Makefile
+    milena/tests/debug/Makefile
+    milena/tests/metal/Makefile
+      milena/tests/metal/math/Makefile
+      milena/tests/metal/make/Makefile
+    milena/tests/accu/Makefile
+    milena/tests/linear/Makefile
+      milena/tests/linear/local/Makefile
+    milena/tests/value/Makefile
+      milena/tests/value/concept/Makefile
+      milena/tests/value/builtin/Makefile
+    milena/tests/make/Makefile
+    milena/tests/convert/Makefile
+    milena/tests/estim/Makefile
+    milena/tests/pw/Makefile
+    milena/tests/fun/Makefile
+      milena/tests/fun/i2v/Makefile
+      milena/tests/fun/x2x/Makefile
+      milena/tests/fun/p2b/Makefile
+      milena/tests/fun/p2v/Makefile
+      milena/tests/fun/v2v/Makefile
+    milena/tests/set/Makefile
+    milena/tests/win/Makefile
+    milena/tests/trace/Makefile
+    milena/tests/morpho/Makefile
+    milena/tests/io/Makefile
+      milena/tests/io/pfm/Makefile
+      milena/tests/io/pgm/Makefile
+      milena/tests/io/fits/Makefile
+      milena/tests/io/pnm/Makefile
+      milena/tests/io/ppm/Makefile
+      milena/tests/io/pbm/Makefile
+    milena/tests/util/Makefile
+    milena/tests/display/Makefile
+    milena/tests/labeling/Makefile
 ])
 AC_CONFIG_FILES([
   olena/tests/algorithms/Makefile
