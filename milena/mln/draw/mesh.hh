@@ -30,7 +30,7 @@
 
 /*! \file mln/draw/mesh.hh
  *
- * \brief Draw an image of type mesh_image into anothor kind of image.
+ * \brief Draw an image from type mesh_image.
  *
  */
 
@@ -45,12 +45,29 @@ namespace mln
   namespace draw
   {
 
+    /*! Draw an image \p ima from a mesh_p \p m, with value \p node_v
+     *  for nodes, value \p link_v for links and 0 for the background.
+     *
+     * \param[in,out] ima The image to be drawn.
+     * \param[in] m The mesh_p which contains nodes and links positions.
+     * \param[in] node_v The value to assign to pixels which contains nodes.
+     * \param[in] link_v The value to assign to pixels which contains links.
+     *
+     */
     template <typename I, typename P>
     void
     mesh(Image<I>& ima, const mesh_p<P>& m,
 	 mln_value(I) node_v,
 	 mln_value(I) link_v);
 
+    /*! Draw an image \p ima from a mesh_image \p mesh.
+     *  The background is filled to value 0.
+     *
+     * \param[in,out] ima The image to be drawn.
+     * \param[in] mesh The mesh_image which contains nodes, links
+     * positions and the values of it.
+     *
+     */
     template <typename I,  typename P, typename V>
     void
     mesh(Image<I>& ima, const mesh_image<P, V>& mesh);
@@ -93,7 +110,7 @@ namespace mln
     }
 
 # endif // ! MLN_INCLUDE_ONLY
-    
+
    } // end of draw
 
 } // end of mln

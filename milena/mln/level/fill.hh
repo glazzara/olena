@@ -138,8 +138,7 @@ namespace mln
       namespace generic
       {
 	template <typename I>
-	void fill_with_value(trait::image::speed::any, I& ima,
-			     const mln_value(I)& value)
+	void fill_with_value(I& ima, const mln_value(I)& value)
 	{
 	  trace::entering("level::impl::generic::fill_with_value");
 

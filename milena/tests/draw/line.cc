@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/line2d.cc
+/*! \file tests/draw/line.cc
  *
- * \brief Tests on mln::line2d.
+ * \brief Tests on mln::draw::line.
  */
 
 #include <iterator>

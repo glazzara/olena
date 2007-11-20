@@ -46,8 +46,19 @@ namespace mln
   namespace draw
   {
 
-    /// Draw a line at level \p v in image \p ima between the points
-    /// \p beg and \p end.
+    /*! Draw a line at level \p v in image \p ima between the points
+     *  \p beg and \p end.
+     *
+     * \param[in,out] ima The image to be drawn.
+     * \param[in] beg The start point to drawn line.
+     * \param[in] end The end point to drawn line.
+     * \param[in] v The value to assign to all drawn pixels.
+     *
+     * \pre \p ima has to be initialized.
+     * \pre \p ima has \p beg.
+     * \pre \p ima has \p end.
+     *
+     */
     template <typename I>
     void line(Image<I>& ima,
 	      const mln_point(I)& beg, const mln_point(I)& end,

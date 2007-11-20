@@ -6,6 +6,7 @@ SUBDIRS = norm					\
 	  level					\
 	  arith					\
 	  logical				\
+	  draw					\
 	  border
 
 check_PROGRAMS =				\

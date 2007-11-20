@@ -1,3 +1,23 @@
+2007-11-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Review draw, create tests subdirectory and fix bug in level.
+
+	Draw.
+	* mln/draw/line.hh
+	* mln/draw/mesh.hh: Fix doc and typo.
+
+	Tests.
+	* tests/Makefile.am: Update for draw.
+	* tests/draw: New subdirectory for draw tests.
+	* tests/draw/Makefile.am: New Makefile.am for draw.
+	* tests/line2d.cc: Remove ... .
+	* tests/draw/line.cc: and replace here and update test.
+	* tests/mesh_image.cc: Remove ... .
+	* tests/draw/mesh.cc: ... and replace here and update test.
+
+	Fix level bug.
+	* mln/level/fill.hh: Fix specialization bug.
+
 2007-11-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Review logical subdirectory and add tests.

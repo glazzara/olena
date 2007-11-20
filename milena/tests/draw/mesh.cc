@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/mesh_image.cc
+/*! \file tests/draw/mesh.cc
  *
- * \brief Tests on mln::mesh_image.
+ * \brief Tests on mln::draw::mesh.
  */
 
 #include <mln/core/image2d.hh>
@@ -38,59 +38,36 @@
 #include <mln/core/mesh_psite.hh>
 #include <mln/draw/mesh.hh>
 #include <mln/core/mesh_image.hh>
-
-using namespace mln;
+#include <mln/level/compare.hh>
 
 int
 main (void)
 {
- util::graph<void> g;
+  using namespace mln;
 
- g.add_node ();
- g.add_node ();
- g.add_node ();
- g.add_node ();
- g.add_node ();
- g.add_node ();
+  int vs[3][3] = {
+    {2, 0, 0},
+    {0, 1, 0},
+    {0, 0, 2}
+  };
 
- g.add_edge (0, 1);
- g.add_edge (1, 2);
- g.add_edge (2, 3);
- g.add_edge (1, 3);
- g.add_edge (4, 5);
- g.add_edge (1, 4);
+  image2d<int> ref (make::image2d(vs));
 
- g.consistency ();
- // g.print_debug ();
+  util::graph<void> g;
 
- std::vector<point2d> v;
- v.push_back (make::point2d (1,1));
- v.push_back (make::point2d (10,1));
- v.push_back (make::point2d (19,2));
- v.push_back (make::point2d (19,19));
- v.push_back (make::point2d (10,10));
- v.push_back (make::point2d (1,19));
+  g.add_node ();
+  g.add_node ();
+  g.add_edge (0, 1);
+  g.consistency ();
 
+  std::vector<point2d> v;
+  v.push_back (make::point2d (0,0));
+  v.push_back (make::point2d (2,2));
 
- image2d<int> ima (20, 20, 1);
+  mesh_p<point2d> m(g, v);
 
- mesh_p<point2d> m(g, v);
+  image2d<int> ima (3, 3);
+  draw::mesh (ima, m, 2, 1);
 
- draw::mesh (ima, m, 7, 1);
-
- std::vector<int> val;
-
- val.push_back (2);
- val.push_back (3);
- val.push_back (4);
- val.push_back (5);
- val.push_back (6);
- val.push_back (7);
-
- mesh_image<point2d, int> im (m, val);
-
- draw::mesh (ima, im);
- debug::println (ima);
-
- std::cout << im.domain() << std::endl;
+  mln_assertion (ima == ref);
 }
