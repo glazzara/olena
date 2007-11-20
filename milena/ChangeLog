@@ -1,5 +1,11 @@
 2007-11-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add Makefile.am in border.
+
+	* Makefile.am: New.
+
+2007-11-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add subdirectory draw in tests and fix tests/level.
 
 	* mln/display/all.hh: Add save_and_show.hh.
