@@ -40,7 +40,6 @@ int main()
 {
   using namespace mln;
 
-  const unsigned size = 1000;
   image2d<int> ima(3, 3);
   int vs[3][3] = {
     { 2, 2, 3 },

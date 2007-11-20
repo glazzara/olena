@@ -48,6 +48,7 @@ namespace mln
 
 # include <mln/display/color_pretty.hh>
 # include <mln/display/remove.hh>
+# include <mln/display/save_and_show.hh>
 # include <mln/display/save.hh>
 # include <mln/display/show.hh>
 

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/show.cc
+/*! \file tests/save_and_show.cc
  *
  * \brief Tests on mln::display::show.
  */
@@ -40,10 +40,8 @@
 # include <mln/core/inplace.hh>
 # include <mln/core/w_window2d_int.hh>
 # include <mln/display/show.hh>
-# include <mln/display/save.hh>
-# include <mln/display/remove.hh>
-# include <mln/display/color_pretty.hh>
 # include <mln/io/ppm/save.hh>
+# include <mln/display/save_and_show.hh>
 
 
 int main()
@@ -53,7 +51,7 @@ int main()
   unsigned max = 51;
 
 
-  image2d<bool> input = io::pbm::load("../img/toto.pbm");
+  image2d<bool> input = io::pbm::load("../../img/toto.pbm");
 
   // Create a weighted windows :
   // 0 2 0
@@ -68,8 +66,9 @@ int main()
   for (unsigned i = 2; i < 6; i += 2)
     {
       image_if_value<image2d<unsigned> > t = inplace (tmp | i);
-      display::save (t);
-      display::show (t, "xv");
+      display::save_and_show (t, "xv");
     }
-  display::remove ();
+
+//   image2d<value::rgb8> ima (100, 100);
+//   display::save_and_show (ima, "xv");
 }

@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/color_pretty.cc
+/*! \file tests/show.cc
  *
- * \brief Tests on mln::display::color::pretty.
+ * \brief Tests on mln::display::show.
  */
 
 # include <mln/core/image2d.hh>
@@ -39,9 +39,11 @@
 # include <mln/core/image_if_value.hh>
 # include <mln/core/inplace.hh>
 # include <mln/core/w_window2d_int.hh>
+# include <mln/display/show.hh>
+# include <mln/display/save.hh>
+# include <mln/display/remove.hh>
 # include <mln/display/color_pretty.hh>
 # include <mln/io/ppm/save.hh>
-# include <mln/core/p_set.hh>
 
 
 int main()
@@ -51,7 +53,7 @@ int main()
   unsigned max = 51;
 
 
-  image2d<bool> input = io::pbm::load("../img/toto.pbm");
+  image2d<bool> input = io::pbm::load("../../img/toto.pbm");
 
   // Create a weighted windows :
   // 0 2 0
@@ -62,52 +64,12 @@ int main()
   // Call chamfer for a distance image.
   image2d<unsigned> tmp = geom::chamfer(input, w_win, max);
 
-  p_set<point2d > s1;
-  p_set<point2d > s2;
-  p_set<point2d > s3;
-
-
-//   typedef image_if_value<image2d<unsigned> > I;
-//   {
-//     I t = inplace (tmp | 4);
-//     mln_piter(image_if_value<image2d<unsigned> >) p (t.domain ());
-//     for_all (p)
-//       s1.insert (p);
-//   }
-
-//  {
-//     I tmp = inplace (tmp | 6);
-//     mln_point(I) p (tmp.domain ());
-//     for_all (p)
-//       s2.insert (p);
-//   }
-
-//   {
-//     I tmp = inplace (tmp | 8);
-//     mln_point(I) p (tmp.domain ());
-//     for_all (p)
-//       s3.insert (p);
-//   }
-
-//   for (int i = 0; i < 100; ++i)
-//     for (int j = 0; j < 100; ++j)
-//       s1.insert(point2d(i, j));
-
-  for (int i = 200; i < 300; ++i)
-    for (int j = 0; j < 100; ++j)
-      s2.insert(point2d(i, j));
-
-  for (int i = 0; i < 100; ++i)
-    for (int j = 200; j < 300; ++j)
-      s3.insert(point2d(i, j));
-
-
-
   // Call color_pretty for sub_image.
-  image2d<value::rgb8> out = display::color_pretty_rgb(tmp, s1, s2, s3);
-
-  // Save output image from color in out.ppm.
-  io::ppm::save(out, "out.ppm");
-
-  std::cout << "out.ppm generate" << std::endl;
+  for (unsigned i = 2; i < 6; i += 2)
+    {
+      image_if_value<image2d<unsigned> > t = inplace (tmp | i);
+      display::save (t);
+      display::show (t, "xv");
+    }
+  display::remove ();
 }

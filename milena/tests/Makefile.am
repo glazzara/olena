@@ -14,7 +14,6 @@ check_PROGRAMS =				\
   accu_min					\
   accu_nil					\
 						\
-  border_get					\
   border_resize_image1d_1			\
   border_resize_image1d_2			\
   border_resize_image1d_3			\
@@ -33,7 +32,6 @@ check_PROGRAMS =				\
   canvas_browsing_fwd				\
   cast_image					\
   chamfer					\
-  color_pretty					\
   convert_to_image				\
   convert_to_tiles				\
   convert_to_vec_p				\
@@ -100,7 +98,6 @@ check_PROGRAMS =				\
   level_paste					\
   level_sort_points				\
   level_transform				\
-  line2d					\
   linear_convolve				\
   linear_gaussian				\
   linear_lap					\
@@ -113,7 +110,6 @@ check_PROGRAMS =				\
 						\
   main						\
   mat						\
-  mesh_image					\
   metal_converts_to				\
   metal_is					\
   metal_mat					\
@@ -157,7 +153,6 @@ check_PROGRAMS =				\
   safe_image					\
   seed2tiling					\
   set_p						\
-  show						\
   sparse_image					\
   stack						\
   sub_image					\
@@ -204,7 +199,6 @@ accu_all_SOURCES = accu_all.cc
 accu_min_SOURCES = accu_min.cc
 accu_nil_SOURCES = accu_nil.cc
 
-border_get_SOURCES = border_get.cc
 border_resize_image1d_1_SOURCES = border_resize_image1d_1.cc
 border_resize_image1d_2_SOURCES = border_resize_image1d_2.cc
 border_resize_image1d_3_SOURCES = border_resize_image1d_3.cc
@@ -223,7 +217,6 @@ box3d_SOURCES = box3d.cc
 canvas_browsing_fwd_SOURCES = canvas_browsing_fwd.cc
 cast_image_SOURCES = cast_image.cc
 chamfer_SOURCES = chamfer.cc
-color_pretty_SOURCES = color_pretty.cc
 convert_to_image_SOURCES = convert_to_image.cc
 convert_to_tiles_SOURCES = convert_to_tiles.cc
 convert_to_vec_p_SOURCES = convert_to_vec_p.cc
@@ -289,7 +282,6 @@ level_naive_median_SOURCES = level_naive_median.cc
 level_paste_SOURCES = level_paste.cc
 level_sort_points_SOURCES = level_sort_points.cc
 level_transform_SOURCES = level_transform.cc
-line2d_SOURCES = line2d.cc
 linear_convolve_SOURCES = linear_convolve.cc
 linear_gaussian_SOURCES = linear_gaussian.cc
 linear_lap_SOURCES = linear_lap.cc
@@ -302,7 +294,6 @@ local_convolve_SOURCES = local_convolve.cc
 
 main_SOURCES = main.cc
 mat_SOURCES = mat.cc
-mesh_image_SOURCES = mesh_image.cc
 metal_converts_to_SOURCES = metal_converts_to.cc
 metal_is_SOURCES = metal_is.cc
 metal_mat_SOURCES = metal_mat.cc
@@ -346,7 +337,6 @@ run_pset_SOURCES = run_pset.cc
 safe_image_SOURCES = safe_image.cc
 seed2tiling_SOURCES = seed2tiling.cc
 set_p_SOURCES = set_p.cc
-show_SOURCES = show.cc
 sparse_image_SOURCES = sparse_image.cc
 stack_SOURCES = stack.cc
 sub_image_SOURCES = sub_image.cc

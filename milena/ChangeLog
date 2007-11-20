@@ -1,5 +1,29 @@
 2007-11-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add subdirectory draw in tests and fix tests/level.
+
+	* mln/display/all.hh: Add save_and_show.hh.
+
+	* tests/Makefile.am: Update for display.
+	* tests/display: New subdirectory tests.
+	* tests/display/Makefile.am: New Makefile.am for draw.
+
+
+	* tests/show.cc: Remove ...
+	* tests/display/show.cc: ... and replace here.
+
+	* tests/color_pretty.cc: Remove ...
+	* tests/display/color_pretty.cc: ... and replace here.
+
+	* tests/save_and_show.cc: Remove ...
+	* tests/display/save_and_show.cc:  ... and replace here.
+
+
+	* tests/level/apply.cc,
+	* tests/level/saturate.cc: Fix warning.
+
+2007-11-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Review draw, create tests subdirectory and fix bug in level.
 
 	Draw.
