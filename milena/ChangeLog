@@ -1,5 +1,37 @@
 2007-11-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Remove border_* subdirectories.
+	* tests/border_duplicate/test_border_duplicate_image1d_1.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image1d_2.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image1d_3.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image1d_4.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image1d_5.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image2d_1.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image2d_2.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image2d_3.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image2d_4.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image3d_1.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image3d_2.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image3d_3.cc: Remove.
+	* tests/border_duplicate/test_border_duplicate_image3d_4.cc: Remove.
+	* tests/border_duplicate: Remove.
+	* tests/border_fill/test_border_fill_image1d_1.cc: Remove.
+	* tests/border_fill/test_border_fill_image1d_2.cc: Remove.
+	* tests/border_fill/test_border_fill_image1d_3.cc: Remove.
+	* tests/border_fill/test_border_fill_image1d_4.cc: Remove.
+	* tests/border_fill/test_border_fill_image1d_5.cc: Remove.
+	* tests/border_fill/test_border_fill_image2d_1.cc: Remove.
+	* tests/border_fill/test_border_fill_image2d_2.cc: Remove.
+	* tests/border_fill/test_border_fill_image2d_3.cc: Remove.
+	* tests/border_fill/test_border_fill_image2d_4.cc: Remove.
+	* tests/border_fill/test_border_fill_image3d_1.cc: Remove.
+	* tests/border_fill/test_border_fill_image3d_2.cc: Remove.
+	* tests/border_fill/test_border_fill_image3d_3.cc: Remove.
+	* tests/border_fill/test_border_fill_image3d_4.cc: Remove.
+	* tests/border_fill: Remove.
+
+2007-11-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add Makefile.am in border.
 
 	* Makefile.am: New.
