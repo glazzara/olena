@@ -1,3 +1,8 @@
+2007-11-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Little fix in test/Makefile.am.
+	* milena/tests/Makefile.am: Fix warning.
+
 2007-11-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Remove border_* subdirectories.

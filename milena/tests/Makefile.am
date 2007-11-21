@@ -287,7 +287,6 @@ run_pset_SOURCES = run_pset.cc
 
 safe_image_SOURCES = safe_image.cc
 seed2tiling_SOURCES = seed2tiling.cc
-set_p_SOURCES = set_p.cc
 sparse_image_SOURCES = sparse_image.cc
 stack_SOURCES = stack.cc
 sub_image_SOURCES = sub_image.cc
