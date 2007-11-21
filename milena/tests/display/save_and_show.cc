@@ -65,11 +65,11 @@ int main()
   for (unsigned i = 2; i < 6; i += 2)
     {
       image_if_value<image2d<unsigned> > t = inplace (tmp | i);
-      display::save_and_show (t, "xv", 1);
+      display::save_and_show (t, "display", 1);
     }
 
   /// FIXME: Uncomment this ASAP
 //   image2d<value::rgb8> ima (100, 100);
 //   level::fill(ima, value::rgb8 (0, 0, 255));
-//   display::save_and_show (ima, "xv", 1);
+//   display::save_and_show (ima, "display", 1);
 }

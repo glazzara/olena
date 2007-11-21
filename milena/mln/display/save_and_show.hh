@@ -49,7 +49,7 @@ namespace mln
      * \param[in] input_ the image to show.
      * \param[in] cmd The string which contains the programm of the
      * viewer which the user want to display with. By default its
-     * value is "xv".
+     * value is "display".
      * \param[in] time The number of second of
      * display, 0 display permanently. By default the value is 0.
      *
@@ -58,7 +58,7 @@ namespace mln
      */
     template <typename I>
     void
-    save_and_show(const Image<I>& input_, std::string cmd = "xv", int time = 0);
+    save_and_show(const Image<I>& input_, std::string cmd = "display", int time = 0);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -82,7 +82,7 @@ namespace mln
     /// Facade.
     template <typename I>
     void
-    save_and_show(const Image<I>& input_, std::string cmd = "xv", int time = 0)
+    save_and_show(const Image<I>& input_, std::string cmd = "display", int time = 0)
     {
       trace::entering("display::save_and_show");
 

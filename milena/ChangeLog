@@ -1,5 +1,15 @@
 2007-11-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Replace the default viewer by "display".
+
+	* mln/display/save_and_show.hh,
+	* mln/display/show.hh,
+	* tests/display/save_and_show.cc,
+	* tests/display/show.cc: Replace "xv" by "display" for the
+	default viewer.
+
+2007-11-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Review.
 
 	* mln/display/color_pretty.hh,

@@ -31,7 +31,7 @@
 /*! \file mln/display/show.hh
  *
  * \brief Display the temporary image which has just been saved with
- * given viewer (default xv).
+ * given viewer (default display).
  */
 
 # include <mln/trait/image_from_mesh.hh>
@@ -53,7 +53,7 @@ namespace mln
      * \param[in] input_ the image to show.
      * \param[in] cmd The string which contains the programm of the
      * viewer which the user want to display with. By default its
-     * value is "xv".
+     * value is "display".
      * \param[in] time The number of second of
      * display, 0 display permanently. By default the value is 0.
      *
@@ -62,7 +62,7 @@ namespace mln
      */
     template <typename I>
     void
-    show(const Image<I>& input_, std::string cmd = "xv", int time = 0);
+    show(const Image<I>& input_, std::string cmd = "display", int time = 0);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -114,7 +114,7 @@ namespace mln
     /// Facade.
     template <typename I>
     void
-    show(const Image<I>& input_, std::string cmd = "xv", int time = 0)
+    show(const Image<I>& input_, std::string cmd = "display", int time = 0)
     {
       trace::entering("display::show");
 
