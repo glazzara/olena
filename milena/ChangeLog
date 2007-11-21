@@ -32,6 +32,40 @@
 	* tests/win/cube3d.cc: New tests.
 	* tests/canvas/Makefile.am: Fix subdirs.
 
+2007-11-21  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Review win directory and add tests.
+	* mln/win/backdiag2d.hh,
+	* mln/win/cube3d.hh,
+	* mln/win/diag2d.hh,
+	* mln/win/disk2d.hh,
+	* mln/win/hline2d.hh,
+	* mln/win/line.hh,
+	* mln/win/octagon2d.hh,
+	* mln/win/rectangle2d.hh,
+	* mln/win/segment1d.hh,
+	* mln/win/vline2d.hh: Review.
+
+	* tests/Makefile.am,
+	* tests/win/Makefile.am: Update.
+
+	* tests/win_backdiag2d.cc,
+	* tests/win_diag2d.cc,
+	* tests/win_disk2d.cc,
+	* tests/win_hline2d.cc,
+	* tests/win_octagon2d.cc,
+	* tests/win_rectangle2d.cc: Rename as...
+	* tests/win/backdiag2d.cc,
+	* tests/win/diag2d.cc,
+	* tests/win/disk2d.cc,
+	* tests/win/hline2d.cc,
+	* tests/win/octagon2d.cc,
+	* tests/win/rectangle2d.cc: ...this.
+	* tests/win/segment1d.cc,
+	* tests/win/vline2d.cc,
+	* tests/win/cube3d.cc: New tests.
+	* tests/canvas/Makefile.am: Fix subdirs.
+
 2007-11-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Little fix in test/Makefile.am.
