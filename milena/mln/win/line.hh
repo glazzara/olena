@@ -45,6 +45,17 @@ namespace mln
   namespace win
   {
  
+    /*! \brief Generic line window defined on a given grid in the
+     *  given dimension.
+     *
+     * An line is centered and symmetric; so its length is odd.
+     *
+     * M is the given grid on which the line is defined, i is the
+     * given dimension of the line end C is the type of the
+     * coordinates.
+     *
+     * \see mln::win::hline2d for an exemple of his use.
+     */
     template <typename M, unsigned i, typename C>
     struct line : public Window< line<M,i,C> >,
 		  public internal::dpoints_base_<dpoint_<M, C>, point_<M, C> >

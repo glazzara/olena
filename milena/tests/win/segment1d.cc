@@ -25,12 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win_diag2d.cc
+/*! \file tests/win/segment1d.cc
  *
- * \brief Tests on mln::win::diag2d.
+ * \brief Tests on mln::win::segment1d.
  */
 
-#include <mln/win/diag2d.hh>
+#include <cmath>
+
+#include <mln/win/segment1d.hh>
 
 #include <mln/convert/to_image.hh>
 
@@ -41,8 +43,16 @@ int main()
   using namespace mln;
 
   const unsigned l = 5;
-  win::diag2d diag(l);
+  win::segment1d segm(l);
 
-  debug::println(convert::to_image(diag));
+  mln_assertion(segm.delta() == 2);
+
+  for (int x = -5; x <= 5; ++x)
+    {
+      mln_assertion((abs(x) <= 2) || !segm.has(dpoint1d(x)));
+      mln_assertion((abs(x) <= 2) == (segm.has(dpoint1d(x))));
+    }
+
+  debug::println(convert::to_image(segm));
 }
 

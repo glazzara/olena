@@ -25,12 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win_octagon2d.cc
+/*! \file tests/win/disk2d.cc
  *
- * \brief Tests on mln::win::octagon2d.
+ * \brief Tests on mln::win::disk2d.
  */
 
-#include <mln/win/octagon2d.hh>
+#include <cmath>
+
+#include <mln/win/disk2d.hh>
 
 #include <mln/convert/to_image.hh>
 
@@ -40,9 +42,19 @@ int main()
 {
   using namespace mln;
 
-  const unsigned l = 13;
-  win::octagon2d oct(l);
+  const unsigned l = 55;
+  const unsigned l2 = 27 * 27;
+  win::disk2d disk(l);
 
-  debug::println(convert::to_image(oct));
+  mln_assertion(disk.delta() == 27);
+
+  for (int x = -30; x <= 30; ++x)
+    for (int y = -30; y <= 30; ++y)
+    {
+      mln_assertion(((abs(x) <= 27) && (abs(y) <= 27)) || !disk.has(dpoint2d(y, x)));
+      mln_assertion(((x * x + y * y) <= l2) == (disk.has(dpoint2d(y, x))) || abs(x) > 27 || abs(y) > 27);
+    }
+
+  debug::println(convert::to_image(disk));
 }
 

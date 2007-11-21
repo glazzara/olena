@@ -45,7 +45,7 @@ namespace mln
  
     /*! \brief Vertical line window defined on the 2D square grid.
      *
-     * An vline2d is centered and symmetrical; so its width is 1 and
+     * An vline2d is centered and symmetric; so its width is 1 and
      * its height (length) is odd.
      *
      * For instance: \n

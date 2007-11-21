@@ -47,7 +47,7 @@ namespace mln
  
     /*! \brief Disk window defined on the 2D square grid.
      *
-     * An disk2d is centered and symmetrical.
+     * An disk2d is centered and symmetric.
      *
      */
     struct disk2d : public Window< disk2d >,

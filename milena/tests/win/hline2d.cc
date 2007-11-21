@@ -25,39 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WIN_HLINE2D_HH
-# define MLN_WIN_HLINE2D_HH
-
-/*! \file mln/win/hline2d.hh
+/*! \file tests/win/hline2d.cc
  *
- * \brief Definition of the mln::win::hline2d window.
+ * \brief Tests on mln::win::hline2d.
  */
 
-# include <mln/win/line.hh>
-# include <mln/core/grids.hh>
+#include <cmath>
 
+#include <mln/win/hline2d.hh>
 
-namespace mln
+#include <mln/convert/to_image.hh>
+
+#include <mln/debug/println.hh>
+
+int main()
 {
+  using namespace mln;
 
-  namespace win
-  {
- 
-    /*! \brief Horizontal line window defined on the 2D square grid.
-     *
-     * An hline2d is centered and symmetric; so its height is 1 and
-     * its width (length) is odd.
-     *
-     * For instance: \n
-     *  o o x o o \n
-     * is defined with length = 5.
-     */
-    typedef line<grid::square, 1, int> hline2d;
+  const unsigned l = 5;
+  win::hline2d hline(l);
 
-  } // end of namespace mln::win
+  mln_assertion(hline.delta() == 2);
 
-} // end of namespace mln
+  for (int x = -5; x <= 5; ++x)
+    for (int y = -5; y <= 5; ++y)
+    {
+      mln_assertion(((abs(x) <= 2) && (abs(y) <= 2)) || !hline.has(dpoint2d(x, y)));
+      mln_assertion((0 == y) == (hline.has(dpoint2d(y, x))) || abs(x) > 2 || abs(y) > 2);
+    }
 
+  debug::println(convert::to_image(hline));
+}
 
-
-#endif // ! MLN_WIN_HLINE2D_HH

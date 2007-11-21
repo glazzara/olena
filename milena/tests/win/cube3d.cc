@@ -25,12 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win_backdiag2d.cc
+/*! \file tests/win/cube3d.cc
  *
- * \brief Tests on mln::win::backdiag2d.
+ * \brief Tests on mln::win::cube3d.
  */
 
-#include <mln/win/backdiag2d.hh>
+#include <cmath>
+
+#include <mln/win/cube3d.hh>
 
 #include <mln/convert/to_image.hh>
 
@@ -40,9 +42,19 @@ int main()
 {
   using namespace mln;
 
-  const unsigned l = 9;
-  win::backdiag2d diag(l);
+  const unsigned l = 5;
+  win::cube3d cube(l);
 
-  debug::println(convert::to_image(diag));
+  mln_assertion(cube.delta() == 2);
+
+  for (int x = -5; x <= 5; ++x)
+    for (int y = -5; y <= 5; ++y)
+      for (int z = -5; z <= 5; ++z)
+      {
+	mln_assertion(((abs(x) <= 2) && (abs(y) <= 2) && (abs(z) <= 2)) || !cube.has(dpoint3d(z, y, x)));
+	mln_assertion((abs(x) <= 2 && abs(y) <= 2 && abs(z) <= 2) == (cube.has(dpoint3d(z, y, x))));
+      }
+
+  debug::println(convert::to_image(cube));
 }
 

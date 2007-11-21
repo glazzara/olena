@@ -48,7 +48,7 @@ namespace mln
     /*! \brief Rectangular window defined on the 2D square grid.
      *
      * A rectangle2d is a 2D window with rectangular shape.  It is
-     * centered and symmetrical.
+     * centered and symmetric.
      *
      * For instance: \n
      *  o o o o o \n
@@ -78,8 +78,8 @@ namespace mln
 
       /*! \brief Constructor.
        *
-       * \param[in] height sic
-       * \param[in] width sic
+       * \param[in] height Height of the rectangle2d.
+       * \param[in] width Width of the rectangle2d.
        *
        * \pre Height and width are odd.
        */

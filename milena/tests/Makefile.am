@@ -8,7 +8,8 @@ SUBDIRS = norm					\
 	  logical				\
 	  draw					\
 	  border				\
-	  canvas
+	  canvas				\
+	  win
 
 check_PROGRAMS =				\
   accu_all					\
@@ -157,15 +158,9 @@ check_PROGRAMS =				\
   value_set					\
   vec						\
 						\
-  win_backdiag2d				\
-  win_diag2d					\
-  win_disk2d					\
   window1d					\
   window2d					\
   window3d					\
-  win_hline2d					\
-  win_octagon2d					\
-  win_rectangle2d				\
   w_window1d_int				\
   w_window2d_int				\
   w_window3d_int
@@ -316,15 +311,9 @@ value_scalar_SOURCES = value_scalar.cc
 value_set_SOURCES = value_set.cc
 vec_SOURCES = vec.cc
 
-win_backdiag2d_SOURCES = win_backdiag2d.cc
-win_diag2d_SOURCES = win_diag2d.cc
-win_disk2d_SOURCES = win_disk2d.cc
 window1d_SOURCES = window1d.cc
 window2d_SOURCES = window2d.cc
 window3d_SOURCES = window3d.cc
-win_hline2d_SOURCES = win_hline2d.cc
-win_octagon2d_SOURCES = win_octagon2d.cc
-win_rectangle2d_SOURCES = win_rectangle2d.cc
 w_window1d_int_SOURCES = w_window1d_int.cc
 w_window2d_int_SOURCES = w_window2d_int.cc
 w_window3d_int_SOURCES = w_window3d_int.cc

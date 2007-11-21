@@ -47,7 +47,7 @@ namespace mln
 
     /*! \brief Octagon window defined on the 2D square grid.
      *
-     * An octagon2d is centered and symmetrical.
+     * An octagon2d is centered and symmetric.
      *
      * The length L of the octagon is such as L = 6 * l + 1
      * where l >= 0.

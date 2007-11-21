@@ -25,12 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win_disk2d.cc
+/*! \file tests/win/diag2d.cc
  *
- * \brief Tests on mln::win::disk2d.
+ * \brief Tests on mln::win::diag2d.
  */
 
-#include <mln/win/disk2d.hh>
+#include <cmath>
+
+#include <mln/win/diag2d.hh>
 
 #include <mln/convert/to_image.hh>
 
@@ -40,9 +42,25 @@ int main()
 {
   using namespace mln;
 
-  const unsigned l = 55;
-  win::disk2d disk(l);
+  const unsigned l = 5;
+  win::diag2d diag(l);
 
-  debug::println(convert::to_image(disk));
+  mln_assertion(diag.delta() == 2);
+
+  for (int x = -5; x <= 5; ++x)
+    for (int y = -5; y <= 5; ++y)
+    {
+      mln_assertion(((abs(x) <= 2) && (abs(y) <= 2)) || !diag.has(dpoint2d(y, x)));
+      std::cout << "x = "
+		<< x
+		<< ", y = "
+		<< y
+		<< " : "
+		<< ((diag.has(dpoint2d(x, y))) ? "VRAI" : "FAUX")
+		<< std::endl;
+      mln_assertion((x == -y) == (diag.has(dpoint2d(y, x))) || abs(x) > 2 || abs(y) > 2);
+    }
+
+  debug::println(convert::to_image(diag));
 }
 

@@ -25,12 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win_hline2d.cc
+/*! \file tests/win/rectangle2d.cc
  *
- * \brief Tests on mln::win::hline2d.
+ * \brief Tests on mln::win::rectangle2d.
  */
 
-#include <mln/win/hline2d.hh>
+#include <cmath>
+#include <mln/win/rectangle2d.hh>
+#include <mln/geom/sym.hh>
 
 #include <mln/convert/to_image.hh>
 
@@ -40,9 +42,22 @@ int main()
 {
   using namespace mln;
 
-  const unsigned l = 5;
-  win::hline2d hline(l);
+  const unsigned h = 3, w = 5;
+  win::rectangle2d rec(h, w);
 
-  debug::println(convert::to_image(hline));
+  mln_assertion(rec.is_centered());
+  mln_assertion(rec.is_symmetric());
+  mln_assertion(rec == geom::sym(rec));
+  mln_assertion(rec.ndpoints() == h * w);
+
+  mln_assertion(rec.delta() == 2);
+
+  for (int x = -5; x <= 5; ++x)
+    for (int y = -5; y <= 5; ++y)
+    {
+      mln_assertion((abs(y) <= 1 && abs(x) <= 2) == (rec.has(dpoint2d(y, x))));
+    }
+  
+  debug::println(convert::to_image(rec));
 }
 

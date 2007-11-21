@@ -25,26 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win_rectangle2d.cc
+/*! \file tests/win/octagon2d.cc
  *
- * \brief Tests on mln::win::rectangle2d.
+ * \brief Tests on mln::win::octagon2d.
  */
 
-#include <mln/win/rectangle2d.hh>
-#include <mln/geom/sym.hh>
+#include <cmath>
 
+#include <mln/win/octagon2d.hh>
 
+#include <mln/convert/to_image.hh>
+
+#include <mln/debug/println.hh>
 
 int main()
 {
   using namespace mln;
 
-  const unsigned h = 3, w = 5;
-  win::rectangle2d rec(h, w);
+  const unsigned l = 13;
+  win::octagon2d oct(l);
 
-  mln_assertion(rec.is_centered());
-  mln_assertion(rec.is_symmetric());
-  mln_assertion(rec == geom::sym(rec));
-  mln_assertion(rec.ndpoints() == h * w);
+  mln_assertion(oct.delta() == 6);
+
+  for (int x = -16; x <= 16; ++x)
+    for (int y = -16; y <= 16; ++y)
+    {
+      mln_assertion(((abs(x) <= 6) && (abs(y) <= 6)) || !oct.has(dpoint2d(y, x)));
+      mln_assertion((abs(x) + abs(y) <= l / 2 + l / 6) == (oct.has(dpoint2d(y, x))) || abs(x) > 2 || abs(y) > 2);
+    }
+
+  debug::println(convert::to_image(oct));
 }
 

@@ -47,7 +47,7 @@ namespace mln
  
     /*! \brief Diagonal line window defined on the 2D square grid.
      *
-     * An diag2d is centered and symmetrical.
+     * An diag2d is centered and symmetric.
      * its width (length) is odd.
      *
      * For instance: \n

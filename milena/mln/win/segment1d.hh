@@ -33,10 +33,8 @@
  * \brief Definition of the mln::win::segment1d window.
  */
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint1d.hh>
-# include <mln/core/dpoints_piter.hh>
+# include <mln/win/line.hh>
+# include <mln/core/grids.hh>
 
 
 namespace mln
@@ -47,130 +45,14 @@ namespace mln
 
     /*! \brief Segment window defined on the 1D grid.
      *
-     * An segment1d is centered and symmetrical; so
+     * An segment1d is centered and symmetric; so
      * its height (length) is odd.
      *
      * For instance: \n
      *  o x o \n
      * is defined with length = 3.
      */
-    struct segment1d : public Window< segment1d >,
-		     public internal::dpoints_base_< dpoint1d, segment1d >
-    {
-      /// Point associated type.
-      typedef point1d point;
-
-      /// Dpoint associated type.
-      typedef dpoint1d dpoint;
-
-      /*! \brief Point_Iterator type to browse a segment such as: "for each row
-       * (increasing), for each column (increasing)."
-       */
-      typedef dpoints_fwd_piter<dpoint1d> fwd_qiter;
-
-      /*! \brief Point_Iterator type to browse a segment such as: "for each row
-       * (decreasing), for each column (decreasing)."
-       */
-      typedef dpoints_bkd_piter<dpoint1d> bkd_qiter;
-
-      /*! \brief Same as fwd_qiter.
-       */
-      typedef fwd_qiter qiter;
-
-      /*! \brief Constructor.
-       *
-       * \param[in] length Length, thus height, of the segment1d.
-       *
-       * \pre \p length is odd.
-       */
-      segment1d(unsigned length);
-
-      /*! \brief Test if the window is centered.
-       *
-       * \return True.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       *
-       * \return true.
-       */
-      bool is_symmetric() const;
-
-      /*! \brief Give the segment length, that is, its height.
-       */
-      unsigned length() const;
-
-      /*! \brief Give the maximum coordinate gap between the window
-       * center and a window point.
-       */
-      unsigned delta() const;
-
-      /// Apply a central symmetry to the target window.
-      segment1d& sym();
-
-    protected:
-      unsigned length_;
-    };
-
-
-    /*! \brief Print a segment1D window \p win into the output
-     *  stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] win A segment1D window.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::win::segment1d
-     */
-    std::ostream& operator<<(std::ostream& ostr, const segment1d& win);
-
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    segment1d::segment1d(unsigned length)
-      : length_(length)
-    {
-      mln_precondition(length % 2 == 1);
-      const int dind = length / 2;
-      for (int ind = - dind; ind <= dind; ++ind)
-	insert(make::dpoint1d(ind));
-    }
-
-    bool segment1d::is_centered() const
-    {
-      return true;
-    }
-
-    bool segment1d::is_symmetric() const
-    {
-      return true;
-    }
-
-    unsigned segment1d::length() const
-    {
-      return length_;
-    }
-
-    unsigned segment1d::delta() const
-    {
-      return length_ / 2;
-    }
-
-    segment1d& segment1d::sym()
-    {
-      return *this;
-    }
-
-    std::ostream& operator<<(std::ostream& ostr, const segment1d& win)
-    {
-      ostr << "[segment1d: length=" << win.length() << ']';
-      return ostr;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
+    typedef line<grid::tick, 0, int> segment1d;
 
   } // end of namespace mln::win
 

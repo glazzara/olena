@@ -47,7 +47,7 @@ namespace mln
 
     /*! \brief Cube window defined on the 3D grid.
      *
-     * An cube3d is centered and symmetrical; so
+     * An cube3d is centered and symmetric; so
      * its height (length) is odd.
      *
      * For instance: \n
