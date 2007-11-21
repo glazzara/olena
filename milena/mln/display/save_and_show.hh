@@ -43,9 +43,22 @@ namespace mln
   namespace display
   {
 
+    /*! Save and show an image \p input_, which displays whith \p cmd
+     *  viewer in \p time seconds.
+     *
+     * \param[in] input_ the image to show.
+     * \param[in] cmd The string which contains the programm of the
+     * viewer which the user want to display with. By default its
+     * value is "xv".
+     * \param[in] time The number of second of
+     * display, 0 display permanently. By default the value is 0.
+     *
+     * \warning This routine doesn't erase the temporary created file.
+     *
+     */
     template <typename I>
     void
-    save_and_show(const Image<I>& input_, std::string cmd);
+    save_and_show(const Image<I>& input_, std::string cmd = "xv", int time = 0);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -53,21 +66,15 @@ namespace mln
     {
       template <typename I>
       void
-      save_and_show_(trait::value::kind::color,
-		     const Image<I>& input, std::string cmd)
+      save_and_show_(const Image<I>& input,
+		     std::string cmd, int time)
       {
-	save_color(input);
-	show(input, cmd);
-      }
+	trace::entering("display::impl::save_and_show_");
 
-      template <typename I>
-      void
-      save_and_show_(trait::value::kind::any,
-		     const Image<I>& input,
-		     std::string cmd)
-      {
-	save(input);
- 	show(input, cmd);
+	display::save(input);
+ 	show(input, cmd, time);
+
+	trace::exiting("display::impl::save_and_show_");
       }
 
     } // end of namespace mln::display::impl
@@ -75,10 +82,13 @@ namespace mln
     /// Facade.
     template <typename I>
     void
-    save_and_show(const Image<I>& input_, std::string cmd)
+    save_and_show(const Image<I>& input_, std::string cmd = "xv", int time = 0)
     {
-      impl::save_and_show_(mln_trait_value_kind(mln_value(I)) (),
-			   input_, cmd);
+      trace::entering("display::save_and_show");
+
+      impl::save_and_show_(input_, cmd, time);
+
+      trace::exiting("display::save_and_show");
     }
 
 # endif // !MLN_INCLUDE_ONLY

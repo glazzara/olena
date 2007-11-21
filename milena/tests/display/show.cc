@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/show.cc
+/*! \file tests/display/show.cc
  *
  * \brief Tests on mln::display::show.
  */
@@ -69,7 +69,15 @@ int main()
     {
       image_if_value<image2d<unsigned> > t = inplace (tmp | i);
       display::save (t);
-      display::show (t, "xv");
+      display::show (t, "xv", 1);
     }
+
+//   image2d<value::rgb8> color_image (16, 16);
+//   for (int i = 0; i < 16; ++i)
+//     for (int j = 0; j < 16; ++j)
+//       color_image(point2d(i, j)) = value::rgb8(0,0,255);
+//   display::save (color_image);
+//   display::show (color_image, "xv");
+
   display::remove ();
 }

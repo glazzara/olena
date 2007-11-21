@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/save_and_show.cc
+/*! \file tests/display/save_and_show.cc
  *
- * \brief Tests on mln::display::show.
+ * \brief Tests on mln::display::save_and_show.
  */
 
 # include <mln/core/image2d.hh>
@@ -42,14 +42,13 @@
 # include <mln/display/show.hh>
 # include <mln/io/ppm/save.hh>
 # include <mln/display/save_and_show.hh>
-
+# include <mln/level/fill.hh>
 
 int main()
 {
   using namespace mln;
 
   unsigned max = 51;
-
 
   image2d<bool> input = io::pbm::load("../../img/toto.pbm");
 
@@ -66,9 +65,11 @@ int main()
   for (unsigned i = 2; i < 6; i += 2)
     {
       image_if_value<image2d<unsigned> > t = inplace (tmp | i);
-      display::save_and_show (t, "xv");
+      display::save_and_show (t, "xv", 1);
     }
 
+  /// FIXME: Uncomment this ASAP
 //   image2d<value::rgb8> ima (100, 100);
-//   display::save_and_show (ima, "xv");
+//   level::fill(ima, value::rgb8 (0, 0, 255));
+//   display::save_and_show (ima, "xv", 1);
 }

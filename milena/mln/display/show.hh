@@ -47,9 +47,22 @@ namespace mln
   namespace display
   {
 
+    /*! Show an image \p input_ previously saved by display::save,
+     *  which displays whith \p cmd viewer in \p time seconds.
+     *
+     * \param[in] input_ the image to show.
+     * \param[in] cmd The string which contains the programm of the
+     * viewer which the user want to display with. By default its
+     * value is "xv".
+     * \param[in] time The number of second of
+     * display, 0 display permanently. By default the value is 0.
+     *
+     * \pre the image \p input_ is previously saved is map_saved_image_tmp_.
+     *
+     */
     template <typename I>
     void
-    show(const Image<I>& input_, std::string cmd = "xv");
+    show(const Image<I>& input_, std::string cmd = "xv", int time = 0);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -57,15 +70,43 @@ namespace mln
     {
 
       template <typename I>
-      void
-      show(const Image<I>& input_, std::string cmd)
+      bool
+      check_saved(const Image<I>& input_)
       {
-	const I& input = exact (input_);
+	const I& input = exact(input_);
 
-	std::string s = cmd + " " + map_saved_image_tmp_[(void*)input.id_ ()] + " &";
-	system (s.c_str ());
-	s = "sleep 3 && pkill " + cmd;
-	system (s.c_str ());
+	typename std::map<void*, std::string>::iterator it = map_saved_image_tmp_.begin();
+
+	for (; it != map_saved_image_tmp_.end(); ++it)
+	  if ((*it).first == input.id_())
+	    return true;
+	return false;
+      }
+
+      template <typename I>
+      void
+      show(const Image<I>& input_, std::string cmd, int time)
+      {
+	trace::entering("display::impl::show");
+
+	const I& input = exact(input_);
+
+	std::stringstream st;
+	if (time)
+	  {
+	    st << cmd << " " << map_saved_image_tmp_[(void*)input.id_()] << " &";
+	    system(st.str().c_str());
+	    st.str("");
+	    st << "sleep " << time << " && pkill " << cmd;
+	    system(st.str().c_str());
+	  }
+	else
+	  {
+	    st << cmd << " " << map_saved_image_tmp_[(void*)input.id_()];
+	    system(st.str().c_str());
+	  }
+
+	trace::exiting("display::impl::show");
       }
 
     } // end of namespace mln::display::impl
@@ -73,9 +114,14 @@ namespace mln
     /// Facade.
     template <typename I>
     void
-    show(const Image<I>& input_, std::string cmd = "xv")
+    show(const Image<I>& input_, std::string cmd = "xv", int time = 0)
     {
-      return impl::show(input_, cmd);
+      trace::entering("display::show");
+
+      mln_precondition(impl::check_saved(input_));
+      impl::show(input_, cmd, time);
+
+      trace::entering("display::show");
     }
 
 # endif // !MLN_INCLUDE_ONLY

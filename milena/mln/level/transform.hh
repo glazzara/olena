@@ -88,7 +88,7 @@ namespace mln
 
 	  const I& input  = exact(input_);
 	  const F& f      = exact(f_);
-	  O& output = exact(output_);
+		O& output = exact(output_);
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)

@@ -1,3 +1,21 @@
+2007-11-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Review.
+
+	* mln/display/color_pretty.hh,
+	* mln/display/remove.hh,
+	* mln/display/save.hh,
+	* mln/display/save_and_show.hh,
+	* mln/display/show.hh: Fix enhancement, add doc and tracing,
+	check typo.
+
+	* tests/display/color_pretty.cc,
+	* tests/display/save_and_show.cc,
+	* tests/display/show.cc: Tests for display routines.
+
+	Typo
+	* mln/level/transform.hh: Fix typo.
+
 2007-11-21  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Review win directory and add tests.

@@ -31,56 +31,63 @@
  */
 
 # include <mln/core/image2d.hh>
-# include <mln/io/pbm/load.hh>
-# include <mln/make/win_chamfer.hh>
-# include <mln/geom/chamfer.hh>
-# include <mln/value/rgb8.hh>
-# include <mln/core/sub_image.hh>
-# include <mln/core/image_if_value.hh>
-# include <mln/core/inplace.hh>
-# include <mln/core/w_window2d_int.hh>
-# include <mln/display/color_pretty.hh>
-# include <mln/io/ppm/save.hh>
+# include <mln/value/int_u8.hh>
+# include <mln/level/fill.hh>
 # include <mln/core/p_set.hh>
+# include <mln/core/sub_image.hh>
+# include <mln/core/inplace.hh>
+# include <mln/value/rgb8.hh>
+# include <mln/display/color_pretty.hh>
+# include <mln/level/compare.hh>
 
 
 int main()
 {
   using namespace mln;
+  using value::int_u8;
 
-  unsigned max = 51;
+  /// Test on color_pretty.
+  {
+    image2d<int_u8> ima (2, 2);
+    level::fill (ima, 51);
 
+    p_set<point2d > s;
+    s.insert(point2d(0, 0));
+    s.insert(point2d(1, 1));
 
-  image2d<bool> input = io::pbm::load("../../img/toto.pbm");
+    sub_image<image2d<int_u8>, p_set<point2d > > input = inplace(ima | s);
+    image2d<value::rgb8> out = display::color_pretty(input);
 
-  // Create a weighted windows :
-  // 0 2 0
-  // 2 p 2
-  // 0 2 0
-  const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2, 0> ();
+    value::rgb8 vs[2][2] = {
+      {value::rgb8(51, 51, 51), value::rgb8(255, 0, 0) },
+      {value::rgb8(255, 0, 0), value::rgb8(51, 51, 51)}
+    };
 
-  // Call chamfer for a distance image.
-  image2d<unsigned> tmp = geom::chamfer(input, w_win, max);
-
-  p_set<point2d > s1;
-  p_set<point2d > s2;
-  p_set<point2d > s3;
-
-  for (int i = 200; i < 300; ++i)
-    for (int j = 0; j < 100; ++j)
-      s2.insert(point2d(i, j));
-
-  for (int i = 0; i < 100; ++i)
-    for (int j = 200; j < 300; ++j)
-      s3.insert(point2d(i, j));
+    image2d<value::rgb8> ref (make::image2d(vs));
+    mln_assertion (ref == out);
+  }
 
 
+  /// Test on color_pretty_rgb.
+  {
+    image2d<value::rgb8> ima (2, 2);
 
-//   // Call color_pretty for sub_image.
-//   image2d<value::rgb8> out = display::color_pretty_rgb(tmp, s1, s2, s3);
+    p_set<point2d > s1;
+    p_set<point2d > s2;
+    p_set<point2d > s3;
 
-//   // Save output image from color in out.ppm.
-//   io::ppm::save(out, "out.ppm");
+    s1.insert(point2d(0, 0));
+    s2.insert(point2d(0, 1));
+    s3.insert(point2d(1, 0));
 
-//   std::cout << "out.ppm generate" << std::endl;
+    image2d<value::rgb8> out = display::color_pretty_rgb(ima, s1, s2, s3);
+
+    value::rgb8 vs[2][2] = {
+      {value::rgb8(255, 0, 0), value::rgb8(0, 255, 0) },
+      {value::rgb8(0, 0, 255), value::rgb8(0, 0, 0)}
+    };
+
+    image2d<value::rgb8> ref (make::image2d(vs));
+    mln_assertion (ref == out);
+  }
 }

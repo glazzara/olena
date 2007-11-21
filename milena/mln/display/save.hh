@@ -49,15 +49,20 @@ namespace mln
   namespace display
   {
 
+    /*! Map which stocks the location of the saved file by the id of
+     *  the image.
+     *
+     */
     std::map<void*, std::string> map_saved_image_tmp_;
 
+    /*! Save an image in a temporary file in ppm format.
+     *
+     * \param[in] input_ the image to save.
+     *
+     */
     template <typename I>
     void
     save(const Image<I>& input_);
-
-    template <typename I>
-    void
-    save_color(const Image<I>& input_);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -65,8 +70,10 @@ namespace mln
     {
       template <typename I>
       void
-      save(const Image<I>& input_)
+      save(trait::value::kind::any, const Image<I>& input_)
       {
+	trace::entering("display::impl::save");
+
 	const I& input = exact (input_);
 	image2d<value::rgb8> out = display::color_pretty(input);
 
@@ -80,12 +87,16 @@ namespace mln
 	io::ppm::save(out, path_tmp);
 
 	map_saved_image_tmp_[(void*)input.id_ ()] = path_tmp;
+
+	trace::exiting("display::impl::save");
       }
 
       template <typename I>
       void
-      save_color(const Image<I>& input_)
+      save(trait::value::kind::color, const Image<I>& input_)
       {
+	trace::entering("display::impl::save");
+
 	const I& input = exact (input_);
 
 	/// Use of mkstemp instead tempmap.
@@ -98,6 +109,8 @@ namespace mln
 	io::ppm::save(input, path_tmp);
 
 	map_saved_image_tmp_[(void*)input.id_ ()] = path_tmp;
+
+	trace::exiting("display::impl::save");
       }
 
     } // end of namespace mln::display::impl
@@ -107,14 +120,13 @@ namespace mln
     void
     save(const Image<I>& input_)
     {
-      return impl::save(input_);
-    }
+      trace::entering("display::save");
 
-    template <typename I>
-    void
-    save_color(const Image<I>& input_)
-    {
-      return impl::save_color(input_);
+      const I& input = exact(input_);
+      mln_precondition(input.has_data());
+      impl::save(mln_trait_value_kind(mln_value(I)) (), input);
+
+      trace::exiting("display::save");
     }
 
 # endif // !MLN_INCLUDE_ONLY
