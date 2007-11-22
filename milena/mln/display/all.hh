@@ -41,7 +41,13 @@ namespace mln
   namespace display
   {
     /// Implementation namespace of display namespace.
-    namespace impl {}
+    namespace impl {
+
+      /// Generic implementation namespace of display namespace.
+      namespace generic {}
+
+    }
+
   }
 
 }

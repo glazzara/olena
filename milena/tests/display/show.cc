@@ -72,12 +72,15 @@ int main()
       display::show (t, "display", 1);
     }
 
-//   image2d<value::rgb8> color_image (16, 16);
-//   for (int i = 0; i < 16; ++i)
-//     for (int j = 0; j < 16; ++j)
-//       color_image(point2d(i, j)) = value::rgb8(0,0,255);
-//   display::save (color_image);
-//   display::show (color_image, "display");
+  /// Test with color image.
+  {
+    image2d<value::rgb8> color_image (16, 16);
+    for (int i = 0; i < 16; ++i)
+      for (int j = 0; j < 16; ++j)
+	color_image(point2d(i, j)) = value::rgb8(0,0,255);
+    display::save (color_image);
+    display::show (color_image, "display", 1);
+  }
 
   display::remove ();
 }

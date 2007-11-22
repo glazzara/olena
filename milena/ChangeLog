@@ -1,5 +1,17 @@
 2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Subdirectory display ready for rereading.
+
+	* mln/display/all.hh,
+	* mln/display/color_pretty.hh,
+	* mln/display/remove.hh: Fix type and tracing.
+
+	Tests
+	* tests/display/save_and_show.cc,
+	* tests/display/show.cc: Update tests.
+
+2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix bug.
 
 	* mln/border/duplicate.hh: Fix bug (move a line upper).

@@ -51,8 +51,7 @@ namespace mln
      *  save.
      *
      */
-    void
-    remove();
+    void remove();
 
 # ifndef MLN_INCLUDE_ONLY
 

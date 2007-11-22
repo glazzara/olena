@@ -141,6 +141,8 @@ namespace mln
 		       const p_set<mln_point(I) >& s2_,
 		       const p_set<mln_point(I) >& s3_)
       {
+	trace::entering("display::impl::color_pretty_rgb");
+
 	const I& input = exact (input_);
 
 	image2d<value::rgb8> output(input.domain().bbox());
@@ -166,6 +168,8 @@ namespace mln
 	  for_all(p)
 	    output(p).blue() = 255;
 	}
+
+	trace::exiting("display::impl::color_pretty_rgb");
 	return output;
       }
 

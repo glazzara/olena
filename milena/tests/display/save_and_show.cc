@@ -68,8 +68,11 @@ int main()
       display::save_and_show (t, "display", 1);
     }
 
-  /// FIXME: Uncomment this ASAP
-//   image2d<value::rgb8> ima (100, 100);
-//   level::fill(ima, value::rgb8 (0, 0, 255));
-//   display::save_and_show (ima, "display", 1);
+  /// Test with color image.
+  {
+    image2d<value::rgb8> ima (100, 100);
+    level::fill(ima, value::rgb8 (0, 0, 255));
+    display::save_and_show (ima, "display", 1);
+  }
+
 }
