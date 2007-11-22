@@ -37,6 +37,11 @@
 # include <mln/metal/int.hh>
 
 
+# define mlc_pow(X, N)      typename mln::metal::math::pow< X, N >::ret
+# define mlc_pow_int(x, n)           mln::metal::math::pow_int< x, n >::value
+
+
+
 namespace mln
 {
 

@@ -69,7 +69,34 @@ namespace mln
       typedef mln::value::gray ret;
     };
 
+
+    // 'gray' as a value.
+
+    template <>
+    struct value_< mln::value::gray >
+    {
+    private:
+      typedef mln::value::gray self_;
+    public:
+
+      enum {
+	nbits = 8 * (sizeof(unsigned) + sizeof(long)),
+	card  = 0
+      };
+
+      typedef trait::value::nature::integer nature; // FIXME: Or scalar?
+      typedef trait::value::kind::gray      kind;
+      typedef trait::value::quant::high     quant;
+
+      static const self_ min();
+      static const self_ max();
+      static const self_ epsilon();
+
+      typedef self_ sum; // FIXME: OK?
+    };
+
   } // end of namespace mln::trait
+
 
 
   namespace value
@@ -131,7 +158,7 @@ namespace mln
       unsigned nbits_;
 
       /// Value.
-      long val_;
+      long val_; // FIXME: Why not int?
     };
 
 
@@ -151,9 +178,14 @@ namespace mln
     gray operator/(const gray& lhs, int s);
 
 
+  } // end of namespace mln::value
+
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  namespace value
+  {
 
     // Gray.
 
@@ -513,9 +545,38 @@ namespace mln
       return internal::helper_gray_op_<ret>::div(lhs, rhs);
     }
 
-# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::value
+
+
+
+  namespace trait
+  {
+
+    // 'gray' as a value.
+
+    const mln::value::gray
+    value_< mln::value::gray >::min()
+    {
+      return mln::value::gray(1, 0);
+    }
+
+    const mln::value::gray
+    value_< mln::value::gray >::max()
+    {
+      return mln::value::gray(1, 1);
+    }
+
+    const mln::value::gray
+    value_< mln::value::gray >::epsilon()
+    {
+      return mln::value::gray(1, 0); // Means '0'.
+    }
+
+  } // end of namespace mln::trait
+
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

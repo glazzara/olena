@@ -62,7 +62,7 @@ namespace mln
       }
 
       template <typename I, typename F, typename O>
-      void transform_(metal::false_, // general case
+      void transform_(mln::trait::image::quant::any, // general case
 		      const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
       {
 	generic::transform_(input_, f_, output_);
@@ -70,7 +70,7 @@ namespace mln
 
 
       template <typename I, typename F, typename O>
-      void transform_(metal::true_, // low quantization
+      void transform_(mln::trait::image::quant::low, // low quantization
 		      const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
       {
 	trace::entering("level::impl::transform");

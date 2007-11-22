@@ -27,53 +27,29 @@
 
 /*! \file tests/io_pbm.cc
  *
- * \brief Test on mln::io::pbm::load and mln::io::pbm::save.
+ * \brief Test on mln::io::pbm::.
  */
 
 #include <mln/core/image2d.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/pw/all.hh>
-
-#include <mln/io/pgm/load.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
 
-#include <mln/level/compare.hh>
-#include <mln/level/fill.hh>
-
-#include <mln/display/show.hh>
-#include <mln/display/save.hh>
-
-#include <mln/border/thickness.hh>
 
 int main()
 {
   using namespace mln;
-  using typename value::int_u8;
 
-  typedef image2d< bool > I;
-
-  border::thickness = 0;
-  image2d< int_u8 >
-    lena = io::pgm::load("../img/lena.pgm");
-
-
-  I out(lena.domain());
-  level::fill(out, pw::value(lena) > pw::cst(127));
-  io::pbm::save(out, "out.pbm");
-
-  {
-    I lena = io::pbm::load("out.pbm");
-    image2d<bool> out(lena.domain());
-
-    io::pbm::save(lena, "out2.pbm");
-
-    I lena2 = io::pbm::load("out2.pbm");
-
-    io::pbm::save(lena2, "out3.pbm");
-
-    mln_assertion(lena.domain() == lena2.domain());
-    mln_assertion(lena == lena2);
-  }
+  image2d<bool> pic = io::pbm::load("../img/picasso.pbm");
+  io::pbm::save(pic, "pic.pbm");
 }
+
+
+// sample binary image to test with xv, imview, and display
+// to bring into the fore the binary image bug with raw pbm.
+
+// | | | | - 
+// | | - - - 
+// | - - - - 
+// - - - - - 
+// - - - - - 
+// - - - - - 

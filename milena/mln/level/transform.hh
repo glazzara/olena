@@ -110,7 +110,7 @@ namespace mln
       trace::entering("level::transform");
 
       mln_precondition(exact(output).domain() >= exact(input).domain());
-      impl::transform_(mln_is_value_lowq(I)(),
+      impl::transform_(mln_trait_image_quant(I)(),
 		       exact(input), exact(f), exact(output));
 
       trace::exiting("level::transform");

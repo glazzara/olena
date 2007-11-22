@@ -30,7 +30,7 @@
  * \brief Tests on mln::value::set.
  */
 
-#include <mln/value/props.hh>
+#include <mln/trait/value_.hh>
 #include <mln/value/set.hh>
 
 
@@ -38,7 +38,7 @@ int main()
 {
   using namespace mln;
 
-  mln_assertion(mln::trait::value_<bool>::card::value == 2);
+  mln_assertion(mln_card(bool) == 2);
 
   value::set<bool> B;
   std::cout << B << std::endl;

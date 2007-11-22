@@ -70,7 +70,9 @@ namespace mln
 	     << typename the::nature().name() << ", "
 	     << typename the::kind()  .name() << ", "
 	     << typename the::quant() .name() << ", "
-	     << typename the::card()  .name() << " }" << std::endl;
+	     << "nbits=" << the::nbits        << ", "
+	     << "card="  << the::card         << ", "
+	     << " }" << std::endl;
       }
 
       template <typename V>

@@ -73,7 +73,7 @@ namespace mln
 	if (max_ == min_)
 	  return; // FIXME
 	float min = float(min_), max = float(max_);
-	const float epsilon = value::props<float>::epsilon();
+	const float epsilon = mln_epsilon(float);
  	float m = 0.0f - 0.5f + epsilon;
  	float M = mln_max(value::int_u<n>) + 0.5f - epsilon;
 	float a = (M - m) / (max - min);

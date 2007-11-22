@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/function.hh>
 # include <mln/metal/converts_to.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 
 
 namespace mln

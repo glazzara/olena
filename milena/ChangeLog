@@ -1,3 +1,100 @@
+2007-11-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Get rid of the former property mechanism for value types.
+
+	Start cleaning the histogram-related test.
+
+	* tests/histo_compute.cc: Rename as...
+	* tests/histo/compute.cc: ...this.
+	Activate the test with int_s<5>.
+	* tests/accu_all.cc: Inactivate tests on
+	"median< value::set<bool> >" and
+	"min_h< value::set<bool> >" since traits for bool are not
+	equiped with min() and max().
+	* tests/Makefile.am (SUBDIRS): Sort,
+	Add histo.
+	(histo_compute_SOURCES): Remove.
+	* tests/io_pbm.cc: Simplify.
+	* tests/histo/Makefile.am (check_PROGRAMS): New.
+	(compute_SOURCES, TESTS): New.
+
+	Preparing to get rid of former property mechanism for value types.
+
+	* mln/value/props.hh (mln_card_): Move...
+	* mln/trait/value_.hh: ...here and rename as...
+	(mln_card): ...this.
+	* mln/value/props.hh
+	(mln_value_sum, mln_value_kind, mln_value_card_): Remove.
+	(mln_is_lowq): Remove.
+	(mln_min, mln_max): Move...
+	* mln/trait/value_.hh: ...here.
+	* mln/trait/value_.hh (mln_trait_value_card): Rename as...
+	(mln_card): ...this.
+	(mln_value_quant_from_card): Rename as...
+	(mln_value_quant_from_): ...this.
+	(mln_value_card_from_): New macro.
+	(mln_nbits, mln_epsilon): New.
+	* mln/trait/value/nature.hh (matrix): New.
+
+	Now get rid of value "props".
+
+	* mln/value/props.hh: Remove.
+	(convert_): Move into...
+	* mln/value/internal/convert.hh: ...this new file.
+	(convert_<bool>): New specialization.
+
+	Propagate changes.
+
+	* tests/value_bool.cc,
+	* mln/trait/images.hh,
+	* mln/trait/value/print.hh,
+	* mln/core/macros.hh,
+	* mln/math/round_sat.hh,
+	* mln/metal/mat.hh,
+	* mln/metal/vec.hh,
+	* mln/arith/revert.hh,
+	* mln/arith/revert.spe.hh,
+	* mln/level/sort_points.hh,
+	* mln/level/transform.spe.hh,
+	* mln/level/transform.hh,
+	* mln/level/stretch.hh,
+	* mln/accu/min.hh,
+	* mln/accu/max.hh,
+	* mln/accu/min_max.hh,
+	* mln/accu/sum.hh,
+	* mln/value/proxy.hh,
+	* mln/value/graylevel.hh,
+	* mln/value/lut_vec.hh,
+	* mln/value/ops.hh,
+	* mln/value/gray.hh,
+	* mln/value/float01_.hh,
+	* mln/value/all.hh,
+	* mln/value/quat.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_u.hh,
+	* mln/value/int_u_sat.hh,
+	* mln/value/set.hh,
+	* mln/value/float01.hh,
+	* mln/value/builtin/symbolics.hh,
+	* mln/value/builtin/floatings.hh,
+	* mln/value/builtin/integers.hh,
+	* mln/value/rgb.hh,
+	* mln/value/float01_f.hh,
+	* mln/value/label.hh,
+	* mln/fun/v2v/saturate.hh,
+	* mln/morpho/Rd.hh,
+	* mln/norm/l1.hh,
+	* mln/norm/l2.hh: Update.
+
+	Misc.
+
+	* mln/metal/math/pow.hh (mlc_pow, mlc_pow_int): New macros.
+	* mln/value/internal/iterable_set.hh: .
+	* mln/io/pnm/save_header.hh (save_max_val): New specialization
+	for bool.
+	* mln/io/pnm/load.hh: Fix.
+	* mln/io/pbm/save.hh: Fix.
+
 2007-11-22  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Review the set directory and add tests.

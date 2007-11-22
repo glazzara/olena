@@ -46,9 +46,9 @@ int main()
   histo< value::set<bool> > h;
   max_<int> ma;
   mean_<int> me;
-  median< value::set<bool> > med;
+  // median< value::set<bool> > med; // FIXME: bool has no min so workaround!
   min_<int> mi;
-  min_h< value::set<bool> > mh;
+  // min_h< value::set<bool> > mh; // OK: do not work since bool has no min/max :)
   min_max_<int> mm;
   nil n;
   pair_< min_<int>, max_<int> > p;

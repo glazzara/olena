@@ -37,14 +37,16 @@
 # include <mln/value/builtin/all.hh>
 # include <mln/value/concept/all.hh>
 # include <mln/value/equiv.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 # include <mln/literal/zero.hh>
 # include <mln/literal/one.hh>
 # include <mln/literal/ops.hh>
 # include <mln/metal/ret.hh>
 
 
-# define mln_sum_x(T, U) typename mln::value::props< mln_trait_op_times(T,U) >::sum
+# define mln_trait_value_sum_x(T, U) typename mln::trait::value_< mln_trait_op_times(T,U) >::sum
+
+# define mln_sum_x(T, U) mln_trait_value_sum_x(T, U)
 
 
 

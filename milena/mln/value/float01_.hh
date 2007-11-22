@@ -40,20 +40,49 @@
 
 # include <mln/value/int_u.hh>
 # include <mln/value/concept/floating.hh>
+# include <mln/value/internal/convert.hh>
 # include <mln/value/float01.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 
 
 
 namespace mln
 {
 
-  namespace value
+  // Fwd decls.
+  namespace value {
+    class float01;
+    template <unsigned n> struct float01_;
+  }
+
+
+  namespace trait
   {
 
-    /// Fwd decl.
-    class float01;
+    template <unsigned n>
+    struct value_< mln::value::float01_<n> >
+    {
+      enum {
+	nbits = n,
+	card  = mln_value_card_from_(nbits)
+      };
 
+      typedef trait::value::nature::floating nature;
+      typedef trait::value::kind::data       kind;
+      typedef mln_value_quant_from_(card)    quant;
+
+      static const float min() { return 0.f; }
+      static const float max() { return 1.f; }
+      static const float epsilon() { return 0.f; }
+
+      typedef float sum;
+    };
+
+  } // end of namespace trait
+
+
+  namespace value
+  {
 
     /// General class for the interval [0,1] of |R made discrete (quantized with n bits).
     template <unsigned n>
@@ -106,18 +135,6 @@ namespace mln
       };
     }
 
-    template <unsigned n>
-    struct props< float01_<n> >
-    {
-      static const std::size_t card_ = metal::math::pow_int<2, n>::value;
-      static const float min() { return 0.f; }
-      static const float max() { return 1.f; }
-      static const unsigned nbits = n;
-      typedef trait::value::kind::data kind;
-      typedef float sum;
-      typedef float interop;
-    };
-
 
     /// Op<<.
     template <unsigned n>
@@ -146,14 +163,14 @@ namespace mln
     {
       mln_precondition(val >= 0);
       mln_precondition(val <= 1);
-      this->v_ = int(val * (mln_card_(float01_<n>) - 1)); // FIXME
+      this->v_ = int(val * (mln_card(float01_<n>) - 1)); // FIXME
     }
 
     template <unsigned n>
     float
     float01_<n>::value() const
     {
-      return float(this->v_) / (mln_card_(float01_<n>) - 1); // FIXME
+      return float(this->v_) / (mln_card(float01_<n>) - 1); // FIXME
     }
 
     template <unsigned n>
@@ -169,14 +186,14 @@ namespace mln
     {
       mln_precondition(val >= 0);
       mln_precondition(val <= 1);
-      this->v_ = int(val * (mln_card_(float01_<n>) - 1)); // FIXME
+      this->v_ = int(val * (mln_card(float01_<n>) - 1)); // FIXME
       return *this;
     }
 
     template <unsigned n>
     float01_<n>::operator float() const
     {
-      return float(this->v_) / (mln_card_(float01_<n>) - 1);
+      return float(this->v_) / (mln_card(float01_<n>) - 1);
     }
 
 

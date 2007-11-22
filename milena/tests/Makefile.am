@@ -2,15 +2,17 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-SUBDIRS = norm					\
-	  level					\
-	  arith					\
-	  logical				\
-	  draw					\
-	  border				\
-	  canvas				\
-	  win					\
-	  set
+SUBDIRS =					\
+  arith						\
+  border					\
+  canvas					\
+  draw						\
+  histo						\
+  level						\
+  logical					\
+  norm						\
+  set						\
+  win
 
 check_PROGRAMS =				\
   accu_all					\
@@ -57,7 +59,6 @@ check_PROGRAMS =				\
   fun_x2x_translation				\
 						\
   hexa						\
-  histo_compute					\
   histo_to_image1d				\
   h_vec						\
 						\
@@ -210,7 +211,6 @@ fun_x2x_rotation_SOURCES = fun_x2x_rotation.cc
 fun_x2x_translation_SOURCES = fun_x2x_translation.cc
 
 hexa_SOURCES = hexa.cc
-histo_compute_SOURCES = histo_compute.cc
 histo_to_image1d_SOURCES = histo_to_image1d.cc
 h_vec_SOURCES = h_vec.cc
 

@@ -39,7 +39,7 @@
 
 # include <mln/value/concept/vectorial.hh>
 # include <mln/value/internal/value_like.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 
 # include <mln/metal/vec.hh>
 # include <mln/norm/l2.hh>
@@ -89,6 +89,26 @@ namespace mln
     {
       typedef mln::value::quat ret;
     };
+
+
+    // 'quat' as a value.
+
+
+    template <>
+    struct value_< mln::value::quat >
+    {
+      typedef trait::value::nature::vectorial nature;
+      typedef trait::value::kind::data        kind;
+      typedef trait::value::quant::high       quant;
+
+      enum {
+	nbits = 4 * sizeof(float),
+	card  = 0
+      };
+
+      typedef mln::value::quat sum;
+    };
+    
 
   } // end of namespace mln::trait
 
@@ -376,8 +396,8 @@ namespace mln
     {
       static const float pi = 3.14159265358979323846;
 
-      mln_precondition(theta > - pi - props<float>::epsilon()
-		       && theta < pi + props<float>::epsilon());
+      mln_precondition(theta > - pi - mln_epsilon(float)
+		       && theta < pi + mln_epsilon(float));
       mln_precondition(about_equal(norm::l2(uv), 1.f));
 
       this->v_[0] = cos(theta);
@@ -496,9 +516,10 @@ namespace mln
     template <typename T>
     bool about_equal(const T& f, const T& q)
     {
+      // FIXME: Use abs!
       if (f > q)
-	return (f - q ) < props<T>::epsilon();
-      return (q - f) < props<T>::epsilon();
+	return (f - q ) < mln_epsilon(T);
+      return (q - f) < mln_epsilon(T);
     }
 
     bool about_equal(const quat& p, const quat& q)

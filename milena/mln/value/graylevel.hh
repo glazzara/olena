@@ -44,7 +44,7 @@
 
 # include <mln/value/int_u.hh>
 # include <mln/value/gray.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 
 
 namespace mln
@@ -144,6 +144,33 @@ namespace mln
 				 mln::value::scalar_<S>) ret;
     };
 
+
+    // 'graylevel<n>' as a value.
+
+    template <unsigned n>
+    struct value_< mln::value::graylevel<n> >
+    {
+    private:
+      typedef mln::value::graylevel<n> self_;
+    public:
+
+      enum {
+	nbits = n,
+	card  = mln_value_card_from_(n)
+      };
+
+      typedef trait::value::nature::integer nature; // FIXME: Or scalar?
+      typedef trait::value::kind::gray      kind;
+      typedef mln_value_quant_from_(card)   quant;
+
+      static const self_ min() { return 0; }
+      static const self_ max() { return card - 1; }
+      static const self_ epsilon() { return 0; }
+
+      typedef float sum;
+    };
+
+
   } // end of namespace mln::trait
 
 
@@ -218,18 +245,6 @@ namespace mln
       float to_float() const;
     };
 
-
-    template <unsigned n>
-    struct props< graylevel<n> >
-    {
-      static const std::size_t card_ = metal::math::pow_int<2, n>::value;
-      static const graylevel<n> min() { return 0; }
-      static const graylevel<n> max() { return card_ - 1; }
-      static const unsigned nbits = n;
-      typedef trait::value::kind::data kind;
-      typedef float sum;
-      typedef int interop;
-    };
 
 
     /// Op<<.

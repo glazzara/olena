@@ -37,7 +37,7 @@
 
 # include <mln/core/concept/value_set.hh>
 # include <mln/core/concept/function.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 
 
 namespace mln

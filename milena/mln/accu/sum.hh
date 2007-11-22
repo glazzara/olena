@@ -36,7 +36,7 @@
 # include <mln/core/concept/meta_accumulator.hh>
 
 # include <mln/accu/internal/base.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 # include <mln/util/pix.hh>
 # include <mln/literal/zero.hh>
 

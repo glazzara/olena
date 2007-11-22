@@ -34,9 +34,9 @@
  */
 
 # include <mln/core/concept/value_set.hh>
-# include <mln/value/props.hh>
 # include <mln/trait/value_.hh>
 # include <mln/value/builtin/all.hh>
+# include <mln/value/internal/convert.hh>
 
 
 namespace mln
@@ -112,8 +112,7 @@ namespace mln
       unsigned
       iterable_set<T,E>::nvalues() const
       {
-	typedef mln_trait_value_card(T) card_;
-	return card_::value;
+	return mln_card(T);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

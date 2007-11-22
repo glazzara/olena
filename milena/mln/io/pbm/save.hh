@@ -79,30 +79,31 @@ namespace mln
 	  std::ofstream file(filename.c_str());
 
 	  io::pnm::save_header(PBM, ima, filename, file);
-
-	  const int
-	    min_row = geom::min_row(ima),
-	    max_row = geom::max_row(ima),
-	    min_col = geom::min_col(ima),
-	    max_col = geom::max_col(ima);
-	  point2d p;
-
+	  
+	  int ncols = geom::ncols(ima);
+	  int col = 0;
+	  int stride = 0;
 	  unsigned char c = 0;
-	  int i = 0;
 
-	  mln_piter(I) it(ima.domain());
-	  for_all(it)
+	  mln_fwd_piter(I) p(ima.domain());
+	  for_all(p)
 	    {
-	      if (i && (i == 8))
-	      {
-		file.write((char*)(&c), 1);
-		i = 0;
-	      }
-	      c = c * 2;
-	      c += ima(it);
-	      ++i;
+	      c <<= 1;
+	      c += (ima(p) == true ? 1 : 0); // FIXME: Swap.
+	      if (++col >= ncols)
+		{
+		  c <<= (8 - stride - 1);
+		  file << c;
+		  c = col = stride = 0;
+		}
+	      else
+		if (++stride >= 8)
+		  {
+		    file << c;
+		    c = stride = 0;
+		  }
 	    }
-	  file.write((char*)(&c), 1);
+	  mln_postcondition(stride == 0);
 	}
 
       } // end of namespace mln::io::impl

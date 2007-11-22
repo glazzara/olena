@@ -34,18 +34,52 @@
  */
 
 # include <mln/metal/math/pow.hh>
-# include <mln/value/internal/value_like.hh>
 # include <mln/value/concept/symbolic.hh>
+# include <mln/value/internal/value_like.hh>
+# include <mln/value/internal/convert.hh>
 # include <mln/value/internal/encoding.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 
 
 namespace mln
 {
 
-  namespace value
+  // Fwd decl.
+  namespace value {
+    template <unsigned n> struct label;
+  }
+
+
+
+  namespace trait
   {
 
+    template <unsigned n>
+    struct value_< mln::value::label<n> >
+    {
+    private:
+      typedef mln::value::label<n> self_;
+    public:
+
+      enum {
+	nbits = n,
+	card  = mln_value_card_from_(n)
+      };
+
+      typedef trait::value::nature::symbolic nature;
+      typedef trait::value::kind::label      kind;
+      typedef mln_value_quant_from_(card)    quant;
+
+      static const self_ min() { return 0; }
+      static const self_ max() { return card - 1; }
+    };
+
+  } // end of namespace trait
+
+
+
+  namespace value
+  {
 
 
     /*! \brief Label value class.
@@ -125,23 +159,6 @@ namespace mln
 
 
 
-
-    template <unsigned n>
-    struct props< label<n> >
-    {
-      static const std::size_t card_ = metal::math::pow_int<2, n>::value;
-      static const label<n> min; // = 0
-      static const label<n> max; // = card_ - 1
-      static const unsigned nbits = n;
-      typedef trait::value::kind::label kind;
-    };
-
-
-
-
-
-
-
     /*! \brief Print a label \p l into the output stream \p ostr.
      *
      * \param[in,out] ostr An output stream.
@@ -215,14 +232,6 @@ namespace mln
     {
       return lhs.to_enc() < rhs.to_enc();
     }
-
-    template <unsigned n>
-    const label<n>
-    props< label<n> >::min = 0;
-
-    template <unsigned n>
-    const label<n>
-    props< label<n> >::max = metal::math::pow_int<2, n>::value - 1;
 
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const label<n>& i)

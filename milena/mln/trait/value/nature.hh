@@ -54,6 +54,7 @@ namespace mln
 	struct floating   : scalar { std::string name() const { return "nature::floating"; } };
 
 	struct vectorial  : any    { std::string name() const { return "nature::vectorial"; } };
+	struct matrix     : any    { std::string name() const { return "nature::matrix"; } };
 	struct symbolic   : any    { std::string name() const { return "nature::symbolic"; } };
 	struct structured : any    { std::string name() const { return "nature::structured"; } };
 

@@ -57,6 +57,34 @@ namespace mln
   }
 
 
+  // Fwd decl.
+  namespace value {
+    template <unsigned n> struct rgb;
+  }
+
+
+  namespace trait
+  {
+
+    template <unsigned n>
+    struct value_< mln::value::rgb<n> >
+    {
+      enum {
+	nbits = 3 * n,
+	card  = mln_value_card_from_(nbits)
+      };
+
+      typedef trait::value::nature::vectorial nature;
+      typedef trait::value::kind::color       kind;
+      typedef mln_value_quant_from_(card)     quant;
+
+      typedef metal::vec<3, float> sum;
+    };
+
+  } // end of namespace trait
+
+
+
   namespace value
   {
 
@@ -127,17 +155,6 @@ namespace mln
       rgb<n> operator/(int i) const;
     };
 
-
-
-    template <unsigned n>
-    struct props< rgb<n> >
-    {
-      static const unsigned nbits = 3 * n;
-      static const std::size_t card_ = 0; // FIXME: was: metal::math::pow_int<2, nbits>::value;
-      typedef trait::value::kind::color kind;
-      typedef metal::vec<3, float> sum;
-      typedef metal::vec<3, int>   interop;
-    };
 
 
     /*! \brief Print an rgb \p c into the output stream \p ostr.

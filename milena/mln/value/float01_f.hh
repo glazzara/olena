@@ -36,17 +36,48 @@
 # include <iostream>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/concept/floating.hh>
-# include <mln/value/props.hh>
+# include <mln/value/builtin/floatings.hh>
+# include <mln/trait/value_.hh>
+
 
 namespace mln
 {
 
-  namespace value
+  // Fwd decls.
+  namespace value {
+    struct float01;
+    struct float01_f;
+  }
+
+
+  namespace trait
   {
 
-    /// Fwd decl.
-    struct float01;
+    template <>
+    struct value_< mln::value::float01_f >
+    {
+      typedef trait::value::nature::floating nature;
+      typedef trait::value::kind::data       kind;
+      typedef trait::value::quant::high      quant;
 
+      enum {
+	nbits = 8 * sizeof(float),
+	card  = 0
+      };
+
+      static const float min() { return 0; }
+      static const float max() { return 1; }
+      static const float epsilon() { return mln_epsilon(float); }
+
+      typedef float sum;
+    };
+
+  } // end of namespace trait
+
+
+
+  namespace value
+  {
 
     /// Class for floating values restricted to the interval [0..1].
     struct float01_f
@@ -72,19 +103,6 @@ namespace mln
 
       /// Conversion to a float.
       operator float() const;
-    };
-
-
-    template <>
-    struct props< float01_f >
-    {
-      static const std::size_t card_ = 0;
-      static const float min() { return 0; }
-      static const float max() { return 1; }
-      //static const unsigned nbits = n;
-      typedef trait::value::kind::data kind;
-      typedef float sum;
-      typedef float interop;
     };
 
 

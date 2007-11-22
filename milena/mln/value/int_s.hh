@@ -39,7 +39,7 @@
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/concept/integer.hh>
 # include <mln/value/internal/encoding.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 # include <mln/trait/all.hh>
 # include <mln/debug/format.hh>
 
@@ -69,8 +69,26 @@ namespace mln
   {
 
     template <unsigned n>
-    struct value_< mln::value::int_s<n> > : mln::trait::value_integer_<n>
+    struct value_< mln::value::int_s<n> >
     {
+    private:
+      typedef mln::value::int_s<n> self_;
+    public:
+
+      enum {
+	nbits = n,
+	card  = mln_value_card_from_(n)
+      };
+
+      typedef trait::value::nature::integer nature;
+      typedef trait::value::kind::data      kind;
+      typedef mln_value_quant_from_(card)   quant;
+
+      static const self_ max() { return card / 2 - 1; }
+      static const self_ min() { return - max(); }
+      static const self_ epsilon() { return 0; }
+
+      typedef float sum;
     };
 
   } // end of namespace mln::trait
@@ -88,8 +106,10 @@ namespace mln
     template <unsigned n>
     struct int_s
       :
-      public Integer< int_s<n> >,
-
+      private metal::bool_<(n <= 32)>::check_t
+      ,
+      public Integer< int_s<n> >
+      ,
       public internal::value_like_< int,       // Equivalent.
 				    typename internal::encoding_signed_<n>::ret, // Enc.
 				    int,       // Interoperation.
@@ -126,19 +146,6 @@ namespace mln
     // Safety.
     template <> struct int_s<0>;
     template <> struct int_s<1>;
-
-
-
-    template <unsigned n>
-    struct props< int_s<n> >
-    {
-      static const std::size_t card_ = metal::math::pow_int<2, n>::value - 1;
-      static const int_s<n> max() { return metal::math::pow_int<2, n-1>::value - 1; }
-      static const int_s<n> min() { return - max(); }
-      static const unsigned nbits = n;
-      typedef trait::value::kind::data kind;
-      typedef float sum;
-    };
 
 
 

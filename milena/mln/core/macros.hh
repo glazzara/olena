@@ -173,9 +173,6 @@
 # define mln_value(T)      typename T::value
 # define mln_value_(T)     T::value
 
-/// Shortcut to test if the values of an image with type \c I are lowly quantifized.
-# define mln_is_value_lowq(I)  mln_is_lowq( mln_value(I) )
-
 /// Shortcut to access the type of value set (vset) associated to T.
 # define mln_vset(T)       typename T::vset
 

@@ -40,7 +40,7 @@
 # include <mln/core/concept/function.hh>
 # include <mln/core/contract.hh>
 # include <mln/trait/all.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 # include <mln/metal/vec.hh>
 
 
@@ -50,6 +50,35 @@
 
 namespace mln
 {
+
+
+  // Fwd decl.
+  namespace metal {
+    template <unsigned n, unsigned m, typename T> class mat;
+  }
+
+
+  namespace trait
+  {
+
+    template <unsigned n, unsigned m, typename T>
+    struct value_< metal::mat<n,m,T> >
+    {
+      typedef trait::value::nature::matrix nature;
+      typedef trait::value::kind::data     kind;
+
+      enum {
+	nbits = n * m * mln_nbits(T),
+	card  = n * m * mln_card(T)
+      };
+      typedef mln_value_quant_from_(card)  quant;
+
+      typedef metal::mat<n, m, mln_sum(T)> sum;
+    };
+
+  } // end of namespace mln::trait
+
+
 
   namespace metal
   {
@@ -163,21 +192,6 @@ namespace mln
     };
 
   } // end of namespace mln::trait
-
-
-
-  namespace value
-  {
-
-    template <unsigned n, unsigned m, typename T>
-    struct props< metal::mat<n,m,T> >
-    {
-      typedef trait::value::kind::data kind;
-      static const std::size_t card_ = n * m * mln_card_(T);
-      typedef metal::mat<n,m, mln_value_sum(T)> sum;
-    };
-
-  } // end of namespace mln::value
 
 
 

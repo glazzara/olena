@@ -40,7 +40,7 @@
 
 # include <mln/trait/undef.hh>
 # include <mln/trait/image/props.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 
 # include <mln/metal/bexpr.hh>
 # include <mln/metal/equal.hh>
@@ -148,9 +148,10 @@ namespace mln
     struct default_image_ : undefined_image_<I>
     {
     private:
-      typedef metal::bool_<( mln_value_card_(T) == 0 )> is_high_quant_;
+      typedef mlc_equal(mln_trait_value_quant(T),
+			trait::value::quant::high) is_high_quant_;
     public:
-      typedef mln_value_kind(T) kind;
+      typedef mln_trait_value_kind(T) kind;
       typedef mlc_if( is_high_quant_,
 		      trait::image::quant::high,
 		      trait::image::quant::low ) quant;

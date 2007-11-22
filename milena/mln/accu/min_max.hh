@@ -40,7 +40,7 @@
 # include <mln/accu/pair.hh>
 # include <mln/accu/min.hh>
 # include <mln/accu/max.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 # include <mln/util/pix.hh>
 
 

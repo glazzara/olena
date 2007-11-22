@@ -40,7 +40,7 @@
 # include <mln/core/concept/object.hh>
 
 # include <mln/trait/all.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 # include <mln/fun/i2v/all_to.hh>
 # include <mln/debug/format.hh>
 
@@ -54,17 +54,40 @@ namespace mln
 {
 
   // Fwd decls.
-  namespace literal { struct zero_t; }
+  namespace metal {
+    template <unsigned n, typename T> class vec;
+  }
+  namespace literal {
+    struct zero_t;
+  }
   template <unsigned d, typename C> struct h_vec;
+
+
+
+  namespace trait
+  {
+
+    template <unsigned n, typename T>
+    struct value_< mln::metal::vec<n,T> >
+    {
+      typedef trait::value::nature::vectorial nature;
+      typedef trait::value::kind::data        kind;
+
+      enum {
+	nbits = n * mln_nbits(T),
+	card  = n * mln_card(T)
+      };
+      typedef mln_value_quant_from_(card)     quant;
+
+      typedef metal::vec<n, mln_sum(T)> sum;
+    };
+
+  } // end of namespace mln::trait
 
 
 
   namespace metal
   {
-
-    // Fwd decl.
-    template <unsigned n, typename T> class vec;
-
 
     namespace internal
     {
@@ -250,21 +273,6 @@ namespace mln
     };
 
   } // end of namespace mln::trait
-
-
-
-  namespace value
-  {
-
-    template <unsigned n, typename T>
-    struct props< metal::vec<n,T> >
-    {
-      typedef trait::value::kind::data kind;
-      static const std::size_t card_ = n * mln_card_(T);
-      typedef metal::vec<n, mln_value_sum(T)> sum;
-    };
-
-  } // end of namespace mln::value
 
 
 

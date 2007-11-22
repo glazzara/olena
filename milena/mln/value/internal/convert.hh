@@ -25,15 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_SET_HH
-# define MLN_VALUE_SET_HH
+#ifndef MLN_VALUE_INTERNAL_CONVERT_HH
+# define MLN_VALUE_INTERNAL_CONVERT_HH
 
-/*! \file mln/value/set.hh
+/*! \file mln/value/internal/convert.hh
  *
- * \brief Define some basic sets of values from value types.
+ * \brief Define a conversion between an index and an iterable value.
  */
 
-# include <mln/value/internal/iterable_set.hh>
 # include <mln/trait/value_.hh>
 
 
@@ -46,51 +45,61 @@ namespace mln
     namespace internal
     {
 
-      template <typename T, typename E, bool is_lowq = false>
-      struct set_selector_ // no inheritance
-      {};
+      template <typename T>
+      struct convert_
+      {
+	// FIXME: Check that we have a type T compatible with 'int'.
 
-      template <typename T, typename E>
-      struct set_selector_< T, E, true > // lowq so iterable
-	:
-	public iterable_set< T, E >
-      {};
+	static T value_at_index(unsigned i);
+	static unsigned index_of_value(const T& v);
+      };
 
-    } // end of namespace mln::value::internal
-
-
-
-    /*! Class that defines the set of values of type \c T.
-     *
-     * This is the exhaustive set of values obtainable from type \c T.
-     */
-    template <typename T>
-    struct set : public internal::set_selector_< T, set<T>,
-						 mlc_equal( mln_trait_value_quant(T),
-							    mln::trait::value::quant::low )::value
-						 >
-    {
-      /// Return a singleton.
-      static const set<T>& the();
-    };
-
+      template <>
+      struct convert_<bool>
+      {
+	static bool value_at_index(unsigned i);
+	static unsigned index_of_value(bool v);
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename T>
-    const set<T>&
-    set<T>::the()
-    {
-      static set<T> the_;
-      return the_;
-    }
+      template <typename T>
+      T
+      convert_<T>::value_at_index(unsigned i)
+      {
+	return T( int(mln_min(T)) + int(i) );
+      }
+
+      template <typename T>
+      unsigned
+      convert_<T>::index_of_value(const T& v)
+      {
+	return unsigned( int(v) - int(mln_min(T)) );
+      }
+
+      // Case of 'bool'.
+
+      bool
+      convert_<bool>::value_at_index(unsigned i)
+      {
+	mln_precondition(i < 2);
+	return i == 1 ? true : false;
+      }
+
+      unsigned
+      convert_<bool>::index_of_value(bool v)
+      {
+	return v ? 1 : 0;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::value::internal
 
   } // end of namespace mln::value
 
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_SET_HH
+#endif // ! MLN_VALUE_INTERNAL_CONVERT_HH

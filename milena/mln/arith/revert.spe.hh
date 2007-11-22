@@ -35,7 +35,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 
 
 # ifndef MLN_INCLUDE_ONLY

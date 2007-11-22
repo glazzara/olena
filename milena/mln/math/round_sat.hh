@@ -36,7 +36,7 @@
 # include <cmath>
 
 # include <mln/core/concept/function.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 
 
 

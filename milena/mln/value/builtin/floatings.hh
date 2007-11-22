@@ -33,6 +33,8 @@
  * \brief Some definitions about built-in floating types.
  */
 
+# include <limits>
+
 # include <mln/value/concept/built_in.hh>
 # include <mln/value/concept/floating.hh>
 # include <mln/trait/value_.hh>
@@ -63,22 +65,62 @@ namespace mln
     template <>
     struct value_< float >
     {
-      typedef metal::int_<8*sizeof(float)> nbits;
-      typedef value::nature::floating      nature;
-      typedef value::kind::data            kind;
-      typedef metal::int_<0>               card;
-      typedef value::quant::high           quant;
+      enum {
+	nbits = 8 * sizeof(float),
+	card  = 0
+      };
+
+      typedef value::nature::floating nature;
+      typedef value::kind::data       kind;
+      typedef value::quant::high      quant;
+
+      static const float min()
+      {
+	static const float min_ = std::numeric_limits<float>::min();
+	return min_;
+      }
+      static const float max()
+      {
+	static const float max_ = std::numeric_limits<float>::max();
+	return max_;
+      }
+      static const float epsilon()
+      {
+	static const float epsilon_ = std::numeric_limits<float>::epsilon();
+	return epsilon_;
+      }
+
       typedef float                        sum;
     };
 
     template <>
     struct value_< double >
     {
-      typedef metal::int_<8*sizeof(double)> nbits;
-      typedef value::nature::floating       nature;
-      typedef value::kind::data             kind;
-      typedef metal::int_<0>                card;
-      typedef value::quant::high            quant;
+      enum {
+	nbits = 8 * sizeof(double),
+	card  = 0
+      };
+
+      typedef value::nature::floating nature;
+      typedef value::kind::data       kind;
+      typedef value::quant::high      quant;
+
+      static const double min()
+      {
+	static const double min_ = std::numeric_limits<double>::min();
+	return min_;
+      }
+      static const double max()
+      {
+	static const double max_ = std::numeric_limits<double>::max();
+	return max_;
+      }
+      static const double epsilon()
+      {
+	static const double epsilon_ = std::numeric_limits<double>::epsilon();
+	return epsilon_;
+      }
+
       typedef double                        sum;
     };
 

@@ -48,19 +48,19 @@ namespace mln
     /// L2-norm of a vector \a vec.
     /// \{
     template <unsigned n, typename C>
-    mln_value_sum(C) l2(const C (&vec)[n]);
+    mln_sum(C) l2(const C (&vec)[n]);
 
     template <unsigned n, typename C>
-    mln_value_sum(C) l2(const metal::vec<n,C>& vec);
+    mln_sum(C) l2(const metal::vec<n,C>& vec);
     /// \}
 
     /// L2-norm distance between vectors \a vec1 and \p vec2.
     /// \{
     template <unsigned n, typename C>
-    mln_value_sum(C) l2_distance(const C (&vec1)[n], const C (&vec2)[n]);
+    mln_sum(C) l2_distance(const C (&vec1)[n], const C (&vec2)[n]);
 
     template <unsigned n, typename C>
-    mln_value_sum(C) l2_distance(const metal::vec<n,C>& vec1,
+    mln_sum(C) l2_distance(const metal::vec<n,C>& vec1,
 				 const metal::vec<n,C>& vec2);
     /// \}
 
@@ -71,20 +71,20 @@ namespace mln
     {
       
       template <unsigned n, typename C, typename V>
-      mln_value_sum(C)
+      mln_sum(C)
       l2_(const V& vec)
       {
-	mln_value_sum(C) m = 0;
+	mln_sum(C) m = 0;
 	for (unsigned i = 0; i < n; ++i)
 	  m += mln::math::sqr(vec[i]);
 	return mln::math::sqrt(m);
       }
 
       template <unsigned n, typename C, typename V>
-      mln_value_sum(C)
+      mln_sum(C)
       l2_distance_(const V& vec1, const V& vec2)
       {
-	mln_value_sum(C) d = 0;
+	mln_sum(C) d = 0;
 	for (unsigned i = 0; i < n; ++i)
 	  d += mln::math::sqr(vec1[i] - vec2[i]);
 	return mln::math::sqrt(d);
@@ -98,28 +98,28 @@ namespace mln
     `----------*/
 
     template <unsigned n, typename C>
-    mln_value_sum(C)
+    mln_sum(C)
     l2(const C (&vec)[n])
     {
       return impl::l2_<n, C>(vec);
     }
 
     template <unsigned n, typename C>
-    mln_value_sum(C)
+    mln_sum(C)
     l2(const metal::vec<n,C>& vec)
     {
       return impl::l2_<n, C>(vec);
     }
 
     template <unsigned n, typename C>
-    mln_value_sum(C)
+    mln_sum(C)
     l2_distance(const C (&vec1)[n], const C (&vec2)[n])
     {
       return impl::l2_distance_<n, C>(vec1, vec2);
     }
 
     template <unsigned n, typename C>
-    mln_value_sum(C)
+    mln_sum(C)
     l2_distance(const metal::vec<n,C>& vec1, const metal::vec<n,C>& vec2)
     {
       return impl::l2_distance_<n, C>(vec1, vec2);

@@ -41,18 +41,37 @@
 # include <mln/metal/if.hh>
 
 # include <mln/trait/value/all.hh>
+# include <mln/metal/math/pow.hh>
 
 
 # define mln_trait_value_nature(V) typename mln::trait::value_< V >::nature
 # define mln_trait_value_kind(V)   typename mln::trait::value_< V >::kind
 # define mln_trait_value_quant(V)  typename mln::trait::value_< V >::quant
-# define mln_trait_value_card(V)   typename mln::trait::value_< V >::card
 
 
-# define mln_value_quant_from_card(C)					\
-   mlc_if(mln::metal::bool_<( C::value > 65536 || C::value == 0 )>,	\
-	  mln::trait::value::quant::high,				\
+# define mln_nbits(V)    mln::trait::value_< V >::nbits
+# define mln_card(V)     mln::trait::value_< V >::card
+# define mln_min(V)      mln::trait::value_< V >::min()
+# define mln_max(V)      mln::trait::value_< V >::max()
+# define mln_epsilon(V)  mln::trait::value_< V >::epsilon()
+
+
+/// Give the summation type for values of type \c T.
+# define mln_trait_value_sum(V)   typename mln::trait::value_< V >::sum
+# define mln_sum(V)  mln_trait_value_sum(V)
+
+
+
+# define mln_value_quant_from_(C)			\
+   mlc_if(mln::metal::bool_<( C > 65536 || C == 0 )>,	\
+	  mln::trait::value::quant::high,		\
 	  mln::trait::value::quant::low)
+
+# define mln_value_card_from_(N)		\
+   N <= 16					\
+   ? mlc_pow_int((N <= 16 ? 2 : 1),		\
+		 (N <= 16 ? N : 1))		\
+   : 0
 
 
 
@@ -68,24 +87,38 @@ namespace mln
       typedef undef nature;
       typedef undef kind;
       typedef undef quant;
-      typedef undef card;
+
+      /*
+       * enum {
+       *   nbits = ?,
+       *   card  = ?
+       * };
+       *
+       * static const E min();
+       * static const E max();
+       * static const E epsilon();
+       */
+
       typedef undef sum;
       // FIXME: signed or not, with zero or not, centered or not, etc.
     };
 
 
-    struct default_value_
+    struct default_value_ : undefined_value_
     {
+      enum {
+	nbits = 0,
+	card = 0
+      };
+
       typedef trait::value::nature::unknown nature;
       typedef trait::value::kind::data      kind;
       typedef trait::value::quant::high     quant;
-      typedef metal::int_<0>                card;
-      typedef undef                         sum;
     };
 
 
     template <typename V>
-    struct value_ : undefined_value_
+    struct value_ : default_value_
     {
     };
 

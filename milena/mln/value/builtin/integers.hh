@@ -33,6 +33,8 @@
  * \brief Some definitions about built-in integer types.
  */
 
+# include <limits>
+
 # include <mln/value/concept/built_in.hh>
 # include <mln/value/concept/integer.hh>
 # include <mln/trait/value_.hh>
@@ -63,43 +65,39 @@ namespace mln
     namespace internal
     {
 
-      template < bool small_n /* == true */, unsigned n_bits >
-      struct helper_card_
+      template <typename E>
+      struct value_integer_
       {
-	typedef metal::math::pow_int<2, n_bits> pow_;
-	typedef metal::int_<pow_::value> card;
-      };
+      private:
+	enum { n = 8 * sizeof(E) };
+      public:
 
-      template < unsigned n_bits >
-      struct helper_card_< false, n_bits >
-      {
-	typedef metal::int_<0> card;
+	enum {
+	  nbits = n,
+	  card  = mln_value_card_from_(n)
+	};
+
+	typedef trait::value::nature::integer nature;
+	typedef trait::value::kind::data      kind;
+	typedef mln_value_quant_from_(card) quant;
+
+	static const E min() { return std::numeric_limits<E>::min(); }
+	static const E max() { return std::numeric_limits<E>::max(); }
+
+	typedef float sum;
       };
 
     } // end of namespace mln::trait::internal
 
 
-    template <unsigned n_bits>
-    struct value_integer_
-    {
-      typedef typename internal::helper_card_<(n_bits <= 16), n_bits>::card card;
-
-      typedef metal::int_<n_bits>             nbits;
-      typedef trait::value::nature::integer   nature;
-      typedef trait::value::kind::data        kind;
-      typedef mln_value_quant_from_card(card) quant;
-      typedef float                           sum;
-    };
-
-
-    template <> struct value_< unsigned char  > : value_integer_< 8 * sizeof(unsigned char)  > {};
-    template <> struct value_<   signed char  > : value_integer_< 8 * sizeof(  signed char)  > {};
-    template <> struct value_< unsigned short > : value_integer_< 8 * sizeof(unsigned short) > {};
-    template <> struct value_<   signed short > : value_integer_< 8 * sizeof(  signed short) > {};
-    template <> struct value_< unsigned int   > : value_integer_< 8 * sizeof(unsigned int)   > {};
-    template <> struct value_<   signed int   > : value_integer_< 8 * sizeof(  signed int)   > {};
-    template <> struct value_< unsigned long  > : value_integer_< 8 * sizeof(unsigned long)  > {};
-    template <> struct value_<   signed long  > : value_integer_< 8 * sizeof(  signed long)  > {};
+    template <> struct value_< unsigned char  > : internal::value_integer_< unsigned char  > {};
+    template <> struct value_<   signed char  > : internal::value_integer_<   signed char  > {};
+    template <> struct value_< unsigned short > : internal::value_integer_< unsigned short > {};
+    template <> struct value_<   signed short > : internal::value_integer_<   signed short > {};
+    template <> struct value_< unsigned int   > : internal::value_integer_< unsigned int   > {};
+    template <> struct value_<   signed int   > : internal::value_integer_<   signed int   > {};
+    template <> struct value_< unsigned long  > : internal::value_integer_< unsigned long  > {};
+    template <> struct value_<   signed long  > : internal::value_integer_<   signed long  > {};
 
   } // end of namespace mln::trait
 

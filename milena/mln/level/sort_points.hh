@@ -107,7 +107,8 @@ namespace mln
 
       template <typename I>
       p_array<mln_point(I)>
-      sort_points_increasing_(metal::false_, const I& input) // general case
+      sort_points_increasing_(trait::image::quant::any, // general case
+			      const I& input)
       {
 	p_array<mln_point(I)> v = convert::to_p_array(input.domain());
 	std::sort(v.hook_().begin(), v.hook_().end(),
@@ -117,7 +118,8 @@ namespace mln
 
       template <typename I>
       p_array<mln_point(I)>
-      sort_points_increasing_(metal::true_, const I& input) // low quantization
+      sort_points_increasing_(trait::image::quant::low, // low quantization
+			      const I& input)
       {
 	typedef mln_vset(I) S;
 	const S& vset = input.values();
@@ -148,7 +150,8 @@ namespace mln
 
       template <typename I>
       p_array<mln_point(I)>
-      sort_points_decreasing_(metal::false_, const I& input) // general case
+      sort_points_decreasing_(trait::image::quant::any, // general case
+			      const I& input)
       {
 	p_array<mln_point(I)> v = convert::to_p_array(input.domain());
 	std::sort(v.hook_().begin(), v.hook_().end(),
@@ -158,7 +161,8 @@ namespace mln
 
       template <typename I>
       p_array<mln_point(I)>
-      sort_points_decreasing_(metal::true_, const I& input) // low quantization
+      sort_points_decreasing_(trait::image::quant::low, // low quantization
+			      const I& input)
       {
 	typedef mln_vset(I) S;
 	const S& vset = input.values();
@@ -195,7 +199,7 @@ namespace mln
     sort_points_increasing(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      return impl::sort_points_increasing_(mln_is_value_lowq(I)(), exact(input));
+      return impl::sort_points_increasing_(mln_trait_image_quant(I)(), exact(input));
     }
 
     template <typename I>
@@ -203,7 +207,7 @@ namespace mln
     sort_points_decreasing(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      return impl::sort_points_decreasing_(mln_is_value_lowq(I)(), exact(input));
+      return impl::sort_points_decreasing_(mln_trait_image_quant(I)(), exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

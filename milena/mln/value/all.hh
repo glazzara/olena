@@ -49,7 +49,7 @@ namespace mln
 
 # include <mln/value/aliases.hh>
 # include <mln/value/label.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 # include <mln/value/proxy.hh>
 
 # include <mln/value/interval.hh>

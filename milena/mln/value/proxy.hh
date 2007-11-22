@@ -34,16 +34,41 @@
  */
 
 # include <mln/core/concept/value.hh>
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 # include <mln/metal/unconst.hh>
 
 
 namespace mln
 {
 
-  namespace value
+  // Fwd decl.
+  namespace value {
+    template <typename I> class proxy;
+  }
+
+
+  namespace trait
   {
 
+    template <typename I>
+    struct value_< mln::value::proxy<I> >
+      :
+      value_< mln_value(I) >
+    {
+    };
+
+    template <typename I>
+    struct value_< mln::value::proxy<const I> >
+      :
+      value_< mln_value(I) >
+    {
+    };
+
+  } // end of namespace trait
+
+
+  namespace value
+  {
 
     /*! \brief Generic proxy class for an image pixel value.
      *
@@ -153,14 +178,6 @@ namespace mln
 
 
     // FIXME: Ops such as +=, etc.
-
-
-
-    template <typename I>
-    struct props< proxy<I> > : public props< mln_value(I) >
-    {
-      // Contents is inherited.
-    };
 
 
 

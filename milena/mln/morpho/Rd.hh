@@ -39,7 +39,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 
-# include <mln/value/props.hh>
+# include <mln/trait/value_.hh>
 
 # include <mln/level/fill.hh>
 # include <mln/level/compare.hh>

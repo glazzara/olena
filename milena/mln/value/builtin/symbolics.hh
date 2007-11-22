@@ -56,11 +56,14 @@ namespace mln
     template <>
     struct value_< bool>
     {
-      typedef metal::int_<1>          nbits;
       typedef value::nature::symbolic nature;
       typedef value::kind::binary     kind;
+
+      enum {
+	nbits = 1,
+	card  = 2
+      };
       typedef value::quant::low       quant;
-      typedef metal::int_<2>          card;
     };
 
   } // end of namespace mln::trait

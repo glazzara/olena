@@ -189,9 +189,9 @@ namespace mln
 	read_header(type_ - 3, type_, file, type,
 		    nrows, ncols, maxval);
 
-	if (value::props< mln_value(I) >::max() != maxval)
+	if (mln_max(mln_value(I)) != maxval)
 	{
-	  std::cerr << "max ref : " << value::props< mln_value(I) >::max()
+	  std::cerr << "max ref : " << mln_max(mln_value(I))
 		    << "max image : " << maxval
 		    << std::endl;
 
