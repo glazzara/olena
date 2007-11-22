@@ -239,7 +239,7 @@
   mln_trait_op_##Name (value::scalar_< Builtin >, O)		\
   operator Symb (const Builtin & lhs, const Object<O>& rhs)	\
   {								\
-    return value::scalar(lhs) / exact(rhs);			\
+    return value::scalar(lhs) Symb exact(rhs);			\
   }								\
 								\
   struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n

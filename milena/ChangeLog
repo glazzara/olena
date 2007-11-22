@@ -1,3 +1,10 @@
+2007-11-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix modulus definition involving builtin.
+
+	* mln/value/builtin/ops.hh
+	(mln_internal_def_bi_dvmd_obj_): Fix.
+
 2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Subdirectory draw ready for rereading.
