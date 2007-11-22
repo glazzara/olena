@@ -25,21 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_GEOM_SEEDS2TILING_HH
-# define MLN_GEOM_SEEDS2TILING_HH
+#ifndef MLN_GEOM_SEEDS2TILING_ROUNDNESS_HH
+# define MLN_GEOM_SEEDS2TILING_ROUNDNESS_HH
 
-/*! \file mln/geom/seeds2tiling.hh
+/*! \file mln/geom/seeds2tiling_roundness.hh
  *
- *  \brief Convert a binary image with seeds into a labeled image.
+ * \brief seeds2tiling with a method which makes tiles more roundness.
  */
 
 # include <map>
 
-# include <mln/core/p_queue.hh>
+
+# include <mln/core/p_priority_queue_fast.hh>
 # include <mln/core/clone.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
 # include <mln/metal/vec.hh>
+# include <mln/geom/chamfer.hh>
 
 
 namespace mln
@@ -47,17 +49,24 @@ namespace mln
   namespace geom
   {
 
-    /*! Take a labeled image \p ima_ with seeds and extend them
-     *  until creating tiles.
+
+    /*! Take a labeled image \p ima_ with seeds and extend them until
+     *  creating tiles nore roundness that the primary version.
      *
      * \param[in,out] ima The labeled image with seed.
+     * \param[in] win_w The weight window using by geom::chamfer to compute distance.
+     * \param[in] max Unsigned using by geom::chamfer to compute distance.
      * \param[in] nbh The neighborhood to use on this algorithm.
      *
      * \pre \p ima has to be initialized.
      *
      */
     template <typename I, typename N>
-    I seeds2tiling (Image<I>& ima_, const Neighborhood<N>& nbh);
+    I
+    seeds2tiling_roundness (Image<I>& ima_, const w_window2d_int& w_win, unsigned max,
+			    const Neighborhood<N>& nbh);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -66,29 +75,26 @@ namespace mln
 
       template <typename I, typename N>
       I
-      seeds2tiling (Image<I>& ima_,
-		    const Neighborhood<N>& nbh)
+      seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win, unsigned max,
+			     const Neighborhood<N>& nbh)
       {
-	trace::entering("geom::impl::seed2tiling");
+	trace::entering("geom::impl::seed2tiling_roundness");
 
 	I& ima = exact(ima_);
+	image2d<unsigned> dist = geom::chamfer(ima, w_win, max);
 	I out = clone(ima_);
-	p_queue<mln_psite(I)> q;
+	p_priority_queue_fast<mln_psite(I), unsigned> q;
 
 	// Init.
 	{
 	  mln_piter(I) p(ima.domain());
-	  mln_niter(N) n(nbh, p);
 
-	  for_all(p) if (ima(p) == 0)
-	    for_all(n) if (ima(n) != 0)
-	      {
-		q.push(p);
-		break;
-	      }
+	  for_all(p)
+	    q.push_force(p, max - dist(p));
 	}
 
-	// Body.
+
+	// Body: alternative version.
 	{
 	  while (! q.is_empty())
 	    {
@@ -96,18 +102,15 @@ namespace mln
 	      q.pop();
 	      if (out(p) != 0) // p has already been processed so ignore
 		continue;
-
 	      mln_niter(N) n(nbh, p);
+
 	      for_all(n) if (ima.has(n))
 		if (out(n) != 0)
 		  out(p) = out(n);
-		else
-		  q.push_force(n); // n may already be in the queue,
-				   // yet we then queue again this psite
 	    }
 	}
 
-	trace::exiting("geom::impl::seed2tiling");
+	trace::exiting("geom::impl::seed2tiling_roundness");
 	return out;
       }
 
@@ -116,16 +119,19 @@ namespace mln
 
     /// Facade
     template <typename I, typename N>
-    I seeds2tiling(Image<I>& ima_, const Neighborhood<N>& nbh)
+    I
+    seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win, unsigned max,
+			   const Neighborhood<N>& nbh)
     {
-      trace::entering("geom::seed2tiling");
+      trace::entering("geom::seed2tiling_roundness");
 
       mln_precondition(exact(ima_).has_data());
-      I output = impl::seeds2tiling(ima_, nbh);
+      I output = impl::seeds2tiling_roundness(ima_, w_win, max, nbh);
 
-      trace::exiting("geom::seed2tiling");
+      trace::exiting("geom::seed2tiling_roundness");
       return output;
     }
+
 
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -135,4 +141,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_GEOM_SEEDS2TILING_HH
+#endif // ! MLN_GEOM_SEEDS2TILING_ROUNDNESS_HH

@@ -44,7 +44,7 @@
 # include <mln/debug/println.hh>
 # include <mln/draw/mesh.hh>
 # include <mln/geom/seeds2tiling.hh>
-# include <mln/geom/seeds2tiling_with_chamfer.hh>
+# include <mln/geom/seeds2tiling_roundness.hh>
 # include <mln/make/voronoi.hh>
 
 #include <mln/core/image2d.hh>
@@ -85,14 +85,14 @@ int main(int argc, char** argv)
 
     std::cout << "ima1 generate with seeds2tiling"
 	     << std::endl;
-    inte = geom::seeds2tiling_with_chamfer(lab, w_win, max, c4 ());
+    inte = geom::seeds2tiling_roundness(lab, w_win, max, c4 ());
     border::fill(inte, 0);
 
     level::stretch(inte, inte2);
 
     io::pgm::save(inte2, "ima2.pgm");
-    std::cout << "ima2 generate with seeds2tiling_with_chamfer"
-	     << std::endl;
+    std::cout << "ima2 generate with seeds2tiling_roundness"
+	      << std::endl;
   }
 
 }

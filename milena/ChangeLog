@@ -1,3 +1,24 @@
+2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Review seeds2tiling and fix chamfer.
+
+	* mln/geom/seeds2tiling.hh: Add doc and tracing, fix typo and
+	update code.
+
+	* mln/geom/seeds2tiling_with_chamfer.hh: Remove ...
+	* mln/geom/seeds2tiling_roundness.hh: ... rename it and like
+	seeds2tiling.
+
+	* mln/geom/chamfer.hh,
+	* mln/canvas/chamfer.hh: Fix headers.
+
+
+	Tests
+	* tests/seed2tiling.cc: Update tests.
+	* tests/geom/seed2tiling.cc,
+	* tests/geom/seed2tiling_roundness.cc: New unit tests for these
+	algorithms.
+
 2007-11-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Get rid of the former property mechanism for value types.

@@ -36,7 +36,9 @@
 # include <mln/level/fill.hh>
 # include <mln/core/w_window2d_int.hh>
 # include <mln/core/w_window2d_float.hh>
-
+# include <mln/core/sub_image.hh>
+# include <mln/core/image_if_value.hh>
+# include <mln/core/inplace.hh>
 # include <mln/canvas/chamfer.hh>
 
 namespace mln
@@ -50,7 +52,7 @@ namespace mln
     mln_ch_value( I, unsigned )
       chamfer(const Image<I>& input_, const W& w_win_,
 	      unsigned max = mln_max(unsigned));
-    
+
 
 # ifndef MLN_INCLUDE_ONLY
 
