@@ -11,7 +11,7 @@ check_PROGRAMS =				\
 
 diff_SOURCES = diff.cc
 inter_SOURCES = inter.cc
-is_subset_SOURCES = is_subset.cc
+is_subset_of_SOURCES = is_subset.cc
 sym_diff_SOURCES = sym_diff.cc
 uni_SOURCES = uni.cc
 

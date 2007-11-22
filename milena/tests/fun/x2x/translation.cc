@@ -25,16 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/fun_x2x_composed.cc
+/*! \file tests/fun_x2x_translation.cc
  *
- * \brief Tests on mln::fun::x2x::composed.
+ * \brief Tests on mln::fun::x2x::translation.
  */
 
-
+#include <cmath>
 #include <iostream>
 #include <mln/fun/x2x/translation.hh>
-#include <mln/fun/x2x/rotation.hh>
-#include <mln/fun/x2x/composed.hh>
 #include <mln/fun/i2v/all_to.hh>
 
 
@@ -49,15 +47,13 @@ int main()
     c = 2.9;
 
   metal::vec<3,float> vec1 = make::vec(a, b, c);
-  fun::x2x::translation<3,float> tr(all_to(1.6));
-  fun::x2x::rotation<3,float> rot(0.3, 1);
+  fun::x2x::translation<3,float> tr1(all_to(1.6));
 
-  std::cout << "vec : " << vec1 << std::endl;
-  std::cout << "tr(vec) : " << tr(vec1) << std::endl;
-  std::cout << "rot(vec) : " << rot(vec1) << std::endl;
-  std::cout << "tr(rot(vec)) : " << compose(tr, rot)(vec1) << std::endl;
-  std::cout << "rot(rot_1(vec)) : " << compose(rot, rot.inv())(vec1) << std::endl;
-  std::cout << "tr(rot(tr(vec))) : " << compose(tr, compose(rot, tr))(vec1) << std::endl;
-  std::cout << "(rototr_1)(rot(tr(vec)))) : "
-	    << compose(compose(rot, tr).inv(), compose(rot, tr))(vec1) << std::endl;
+  std::cout << vec1 << std::endl;
+  std::cout << tr1(vec1) << std::endl;
+  std::cout << tr1.inv()(vec1) << std::endl;
+  mln_assertion(tr1(tr1.inv()(vec1)) == vec1);
+  mln_assertion(fabs(tr1(vec1)[0] - 3.9) <= 0.125 &&
+		fabs(tr1(vec1)[1] - 1.6) <= 0.125 &&
+		fabs(tr1(vec1)[2] - 4.5) <= 0.125);
 }

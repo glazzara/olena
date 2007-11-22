@@ -30,7 +30,7 @@
 
 /*! \file mln/fun/x2x/composed.hh
  *
- * \brief FIXME.
+ * \brief Definition of a composed transformation.
  */
 
 # include <mln/core/concept/function.hh>
@@ -112,8 +112,9 @@ namespace mln
 
       } // end of namespace mln::fun::x2x::internal
 
-      // FIXME: Doc!
-
+      /*! \brief Represent a composition of two transformations.
+       *
+       */
       template <typename F, typename G>
       struct composed
 	: public internal::helper_composed_<F, G, composed<F,G>,
@@ -136,9 +137,16 @@ namespace mln
       };
 
     } // end of namespace mln::fun::x2x
-
+    
   } // end of namespace mln::fun
 
+  /*! \brief Do a composition of two transformations
+   *
+   * \param[in] f The first transformation.
+   * \param[in] g The second transformation.
+   *
+   * \return The composed transformation fog.
+   */
   template <typename F, typename G>
   fun::x2x::composed<F,G> compose(F f, G g);
 
@@ -232,7 +240,9 @@ namespace mln
   template <typename F, typename G>
   fun::x2x::composed<F,G> compose(F f, G g)
   {
+    trace::entering("fun::x2x::compose");
     fun::x2x::composed<F,G> comp(f, g);
+    trace::exiting("fun::x2x::compose");
     return comp;
   }
 

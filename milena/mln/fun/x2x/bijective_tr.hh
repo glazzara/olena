@@ -30,7 +30,7 @@
 
 /*! \file mln/fun/x2x/bijective_tr.hh
  *
- * \brief FIXME.
+ * \brief Abstraction that describes a bijective transformation.
  */
 
 # include <mln/core/concept/function.hh>
@@ -47,8 +47,12 @@ namespace mln
     namespace x2x
     {
 
-      // FIXME: Doc!
-
+      /*! \brief Abstraction that describes a bijective transformation.
+       *
+       * All bijective transformation from vector to vector should
+       * should inherit this class.
+       *
+       */
       template <typename E>
       struct bijective_tr : public Function_x2x< E >
       {

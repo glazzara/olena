@@ -30,7 +30,7 @@
 
 /*! \file mln/fun/x2x/translation.hh
  *
- * \brief FIXME.
+ * \brief Define a translation function.
  */
 
 # include <mln/core/concept/function.hh>
@@ -48,8 +48,9 @@ namespace mln
     namespace x2x
     {
 
-      // FIXME: Doc!
-
+      /*! \brief Represent a translation function.
+       *
+       */
       template <unsigned n, typename C>
       struct translation
 
@@ -82,8 +83,6 @@ namespace mln
       template <unsigned n, typename C>
       translation<n,C>::translation()
       {
-// 	t_ = make::vec<n,C>(fun::i2v::all<C>(0));
-// 	this->m_ = h_mat<n,C>::Id;
       }
 
       template <unsigned n, typename C>

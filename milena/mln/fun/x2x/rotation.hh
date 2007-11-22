@@ -30,7 +30,7 @@
 
 /*! \file mln/fun/x2x/rotation.hh
  *
- * \brief FIXME.
+ * \brief Define a rotation function.
  */
 
 # include <mln/core/concept/function.hh>
@@ -48,8 +48,9 @@ namespace mln
     namespace x2x
     {
 
-      // FIXME: Doc!
-
+      /*! \brief Represent a rotation function.
+       *
+       */
       template <unsigned n, typename C>
       struct rotation
 	: internal::x2x_linear_impl_< metal::vec<n,C>, rotation<n,C> >
@@ -82,9 +83,6 @@ namespace mln
       template <unsigned n, typename C>
       rotation<n,C>::rotation()
       {
-// 	alpha_ = 0;
-// 	dir_ = 2;
-// 	this->m_ = h_mat<n,C>::Id;
       }
 
       template <unsigned n, typename C>
@@ -158,21 +156,6 @@ namespace mln
 	      this->m_(i, j) = (i == j);
 	  }
       }
-
-//       template <typename C> FIXME : template parameter should be swapped
-//       void
-//       rotation<2,C>::update()
-//       {
-// 	const float cos_a = cos(alpha_);
-// 	const float sin_a = sin(alpha_);
-
-// 	m_ = metal::mat<3,3,C>::Id;
-// 	m_(0, 0) = cos_a;
-// 	m_(0, 1) = -sin_a;
-// 	m_(1, 0) = sin_a;
-// 	m_(1, 1) = cos_a;
-//       }
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

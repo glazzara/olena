@@ -1,3 +1,21 @@
+2007-11-22  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Review the directory fun and add test.
+
+	* mln/fun/x2x/bijective_tr.hh,
+	* mln/fun/x2x/composed.hh,
+	* mln/fun/x2x/rotation.hh,
+	* mln/fun/x2x/translation.hh: Review.
+	* tests/fun/Makefile.am: Add tests.
+	* tests/fun/x2x/Makefile.am: Add tests.
+	* tests/fun_x2x_composed.cc,
+	* tests/fun_x2x_rotation.cc,
+	* tests/fun_x2x_translation.cc: Rename as...
+	* tests/fun/x2x/composed.cc,
+	* tests/fun/x2x/rotation.cc,
+	* tests/fun/x2x/translation.cc... this.
+	* tests/set/Makefile.am: Fix.
+
 2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Subdirectory display ready for rereading.

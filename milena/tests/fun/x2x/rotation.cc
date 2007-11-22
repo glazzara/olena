@@ -38,14 +38,14 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/core/interpolated.hh>
-
+#include <mln/make/vec.hh>
 
 int main()
 {
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> lena = io::pgm::load("../img/lena.pgm");
+  image2d<int_u8> lena = io::pgm::load("../../../img/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
   interpolated<image2d<int_u8> > inter(lena);
@@ -63,4 +63,10 @@ int main()
 	out(p) = 255;
     }
   io::pgm::save(out, "out.pgm");
+
+  fun::x2x::rotation<2,float> rot2(3.14116);
+  mln_assertion(fabs(rot2(make::vec(0.0, 1.0))[0] -
+		     make::vec(0.0, -1.0)[0]) <= 0.125);
+  mln_assertion(fabs(rot2(make::vec(0.0, 1.0))[1] -
+		     make::vec(0.0, -1.0)[1]) <= 0.125);
 }
