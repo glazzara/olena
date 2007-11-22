@@ -41,18 +41,24 @@ namespace mln
   namespace arith
   {
     /// Implementation namespace of arith namespace.
-    namespace impl {}
+    namespace impl {
+
+      /// Generic implementation namespace of arith namespace.
+      namespace generic {
+
+      }
+
+    }
+
   }
 
 }
 
-
-# include <mln/arith/plus.hh>
-# include <mln/arith/minus.hh>
-# include <mln/arith/times.hh>
-
 # include <mln/arith/min.hh>
+# include <mln/arith/minus.hh>
+# include <mln/arith/plus.hh>
 # include <mln/arith/revert.hh>
+# include <mln/arith/times.hh>
 
 
 #endif // ! MLN_ARITH_ALL_HH

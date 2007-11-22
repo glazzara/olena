@@ -1,5 +1,19 @@
 2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Subdirectory arith ready for rereading.
+
+	* mln/arith/all.hh,
+	* mln/arith/min.hh,
+	* mln/arith/min.spe.hh,
+	* mln/arith/minus.hh,
+	* mln/arith/plus.hh,
+	* mln/arith/times.hh: + fix tracing,
+	* mln/arith/revert.hh: Check typo.
+
+	* tests/arith/plus.cc: Update test for not display.
+
+2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Review seeds2tiling and fix chamfer.
 
 	* mln/geom/seeds2tiling.hh: Add doc and tracing, fix typo and

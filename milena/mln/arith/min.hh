@@ -127,8 +127,8 @@ namespace mln
     void min_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("arith::min_inplace");
-      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       impl::min_inplace_(mln_trait_image_speed(L)(), exact(lhs),
 			 mln_trait_image_speed(R)(), exact(rhs));
 

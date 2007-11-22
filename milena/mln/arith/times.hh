@@ -221,35 +221,51 @@ namespace mln
     template <typename L, typename R, typename O>
     void times(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
     {
+      trace::entering("arith::times");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
       mln_precondition(exact(output).domain() == exact(lhs).domain());
       impl::times_(mln_trait_image_speed(L)(), exact(lhs),
 		  mln_trait_image_speed(R)(), exact(rhs),
 		  mln_trait_image_speed(O)(), exact(output));
+
+      trace::exiting("arith::times");
     }
 
     template <typename I, typename V, typename O>
     void times_cst(const Image<I>& input, const V& val, Image<O>& output)
     {
+      trace::entering("arith::times_cst");
+
       mln_precondition(exact(output).domain() == exact(input).domain());
       times(input, pw::cst(val) | exact(input).domain(), output);
       // Calls the previous version.
+
+      trace::exiting("arith::times_cst");
     }
 
     template <typename L, typename R>
     void times_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
+      trace::entering("arith::times_inplace");
+
       mln_precondition(exact(rhs).domain() <= exact(lhs).domain());
       impl::times_inplace_(mln_trait_image_speed(L)(), exact(lhs),
 			   mln_trait_image_speed(R)(), exact(rhs));
+
+      trace::exiting("arith::times_inplace");
     }
 
     template <typename I, typename V>
     void times_cst_inplace(Image<I>& input, const V& val)
     {
+      trace::entering("arith::times_cst_inplace");
+
       mln_precondition(exact(input).has_data());
       times_inplace(input, pw::cst(val) | exact(input).domain());
       // Calls the previous version.
+
+      trace::exiting("arith::times_cst_inplace");
     }
 
   } // end of namespace mln::arith

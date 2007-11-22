@@ -113,6 +113,7 @@ namespace mln
     mln_concrete(I) revert(const Image<I>& input)
     {
       trace::entering("arith::revert");
+
       mln_precondition(exact(input).has_data());
 
       mln_concrete(I) output;
@@ -127,6 +128,7 @@ namespace mln
     void revert_inplace(Image<I>& input)
     {
       trace::entering("arith::revert_inplace");
+
       mln_precondition(exact(input).has_data());
 
       impl::revert_(mln_trait_image_speed(I)(), exact(input), exact(input));

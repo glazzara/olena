@@ -53,7 +53,6 @@ namespace mln
 
 	template <typename L, typename R>
 	void min_inplace_(L& lhs, const R& rhs);
-
       }
 
       template <typename L, typename R, typename O>

@@ -31,18 +31,9 @@
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/core/clone.hh>
-#include <mln/value/int_u8.hh>
-
-#include <mln/arith/plus.hh>
-#include <mln/arith/times.hh>
-#include <mln/level/compare.hh>
-#include <mln/fun/v2v/cast.hh>
-
 #include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
-
-
+#include <mln/arith/plus.hh>
+#include <mln/level/compare.hh>
 
 int main()
 {
@@ -51,26 +42,66 @@ int main()
   // trace::quiet = false;
 
   {
-    image2d<int> ref(3,3);
-    debug::iota(ref);
+    image2d<int> ima(3,3);
+    debug::iota(ima);
 
-    image2d<int> ima_i = clone(ref);
-    ima_i += ima_i;
-    mln_assertion(ima_i == 2 * ref);
+    int vs[3][3] = {
+      { 4,  5,  6},
+      { 7,  8,  9},
+      {10, 11, 12}
+    };
 
-    debug::println(ima_i);
-    ima_i += 1;
-    debug::println(ima_i);
+    ima += 2;
+    image2d<int> ref(make::image2d(vs));
 
-    image2d<float> ima_f(3,3);
-    debug::iota(ima_f);
-    debug::println(ima_i + ima_f);
-
-    point2d p(0, 0);
-    std::cout << arith::plus<float>(ima_i, ima_i)(p) / 5 << std::endl;
+    mln_assertion (ima + 1 == ref);
   }
 
 }
+
+
+
+// #include <mln/core/image2d.hh>
+// #include <mln/core/clone.hh>
+// #include <mln/value/int_u8.hh>
+
+// #include <mln/arith/plus.hh>
+// #include <mln/arith/times.hh>
+// #include <mln/level/compare.hh>
+// #include <mln/fun/v2v/cast.hh>
+
+// #include <mln/debug/iota.hh>
+// #include <mln/debug/println.hh>
+
+
+
+// int main()
+// {
+//   using namespace mln;
+
+//   // trace::quiet = false;
+
+//   {
+//     image2d<int> ref(3,3);
+//     debug::iota(ref);
+
+//     image2d<int> ima_i = clone(ref);
+//     ima_i += ima_i;
+//     mln_assertion(ima_i == 2 * ref);
+
+//     debug::println(ima_i);
+//     ima_i += 1;
+//     debug::println(ima_i);
+
+//     image2d<float> ima_f(3,3);
+//     debug::iota(ima_f);
+//     debug::println(ima_i + ima_f);
+
+//     point2d p(0, 0);
+//     std::cout << arith::plus<float>(ima_i, ima_i)(p) / 5 << std::endl;
+//   }
+
+// }
 
 
 

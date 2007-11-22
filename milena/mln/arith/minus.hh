@@ -197,8 +197,8 @@ namespace mln
   operator-(const Image<L>& lhs, const Image<R>& rhs)
   {
     trace::entering("operator::minus");
-    mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
+    mln_precondition(exact(rhs).domain() == exact(lhs).domain());
     mln_trait_op_minus(L,R) output = arith::minus(lhs, rhs);
 
     trace::exiting("operator::minus");
@@ -210,8 +210,8 @@ namespace mln
   operator-=(Image<L>& lhs, const Image<R>& rhs)
   {
     trace::entering("operator::minus_eq");
-    mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
+    mln_precondition(exact(rhs).domain() == exact(lhs).domain());
     arith::minus_inplace(lhs, rhs);
 
     trace::exiting("operator::minus_eq");
@@ -224,8 +224,8 @@ namespace mln
   operator-(const Image<I>& ima, const value::Scalar<S>& s)
   {
     trace::entering("operator::minus");
-    mln_precondition(exact(ima).has_data());
 
+    mln_precondition(exact(ima).has_data());
     mln_trait_op_minus(I,S) output = arith::minus_cst(ima, exact(s));
 
     trace::exiting("operator::minus");
@@ -237,8 +237,8 @@ namespace mln
   operator-=(Image<I>& ima, const value::Scalar<S>& s)
   {
     trace::entering("operator::minus_eq");
-    mln_precondition(exact(ima).has_data());
 
+    mln_precondition(exact(ima).has_data());
     arith::minus_cst_inplace(ima, exact(s));
 
     trace::exiting("operator::minus_eq");
@@ -323,6 +323,7 @@ namespace mln
       minus(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("arith::minus");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_trait_op_minus(L, R) output;
@@ -340,6 +341,7 @@ namespace mln
       minus(const Image<L>& lhs, const Image<R>& rhs, const Function_v2v<F>& f)
     {
       trace::entering("arith::minus");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_ch_value(L, mln_result(F)) output;
@@ -357,8 +359,9 @@ namespace mln
       minus(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("arith::minus");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      
+
       // Calls the previous version.
       mln_ch_value(L, V) output = minus(lhs, rhs,
 					mln::fun::v2v::cast<V>());
@@ -373,6 +376,7 @@ namespace mln
       minus_cst(const Image<I>& input, const V& val)
     {
       trace::entering("arith::minus_cst");
+
       mln_precondition(exact(input).has_data());
 
       // Calls the previous version.
@@ -389,6 +393,7 @@ namespace mln
       minus_cst(const Image<I>& input, const V& val, const Function_v2v<F>& f)
     {
       trace::entering("arith::minus_cst");
+
       mln_precondition(exact(input).has_data());
 
       // Calls the previous version.
@@ -406,6 +411,7 @@ namespace mln
     minus_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("arith::minus_inplace");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       impl::minus_inplace_(mln_trait_image_speed(L)(), exact(lhs),
@@ -420,6 +426,7 @@ namespace mln
     minus_cst_inplace(Image<I>& input, const V& val)
     {
       trace::entering("arith::minus_cst_inplace");
+
       mln_precondition(exact(input).has_data());
 
       // Calls the previous version.

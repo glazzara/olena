@@ -211,6 +211,7 @@ namespace mln
   operator+(const Image<L>& lhs, const Image<R>& rhs)
   {
     trace::entering("operator::plus");
+
     mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
     mln_trait_op_plus(L,R) output = arith::plus(lhs, rhs);
@@ -224,6 +225,7 @@ namespace mln
   operator+=(Image<L>& lhs, const Image<R>& rhs)
   {
     trace::entering("operator::plus_eq");
+
     mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
     arith::plus_inplace(lhs, rhs);
@@ -238,6 +240,7 @@ namespace mln
   operator+(const Image<I>& ima, const value::Scalar<S>& s)
   {
     trace::entering("operator::plus");
+
     mln_precondition(exact(ima).has_data());
 
     mln_trait_op_plus(I,S) output = arith::plus_cst(ima, exact(s));
@@ -251,6 +254,7 @@ namespace mln
   operator+=(Image<I>& ima, const value::Scalar<S>& s)
   {
     trace::entering("operator::plus_eq");
+
     mln_precondition(exact(ima).has_data());
 
     arith::plus_cst_inplace(ima, exact(s));
@@ -337,6 +341,7 @@ namespace mln
       plus(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("arith::plus");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_trait_op_plus(L, R) output;
@@ -354,6 +359,7 @@ namespace mln
       plus(const Image<L>& lhs, const Image<R>& rhs, const Function_v2v<F>& f)
     {
       trace::entering("arith::plus");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_ch_value(L, mln_result(F)) output;
@@ -371,8 +377,9 @@ namespace mln
       plus(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("arith::plus");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-      
+
       // Calls the previous version.
       mln_ch_value(L, V) output = plus(lhs, rhs,
 				       mln::fun::v2v::cast<V>());
@@ -387,6 +394,7 @@ namespace mln
       plus_cst(const Image<I>& input, const V& val)
     {
       trace::entering("arith::plus_cst");
+
       mln_precondition(exact(input).has_data());
 
       // Calls the previous version.
@@ -403,6 +411,7 @@ namespace mln
       plus_cst(const Image<I>& input, const V& val, const Function_v2v<F>& f)
     {
       trace::entering("arith::plus_cst");
+
       mln_precondition(exact(input).has_data());
 
       // Calls the previous version.
@@ -420,8 +429,9 @@ namespace mln
       plus_cst(const Image<I>& input, const V& val)
     {
       trace::entering("arith::plus_cst");
+
       mln_precondition(exact(input).has_data());
-      
+
       // Calls the previous version.
       mln_ch_value(I, W) output = plus_cst(input, val,
 					   mln::fun::v2v::cast<W>());
@@ -436,6 +446,7 @@ namespace mln
     plus_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("arith::plus_inplace");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       impl::plus_inplace_(mln_trait_image_speed(L)(), exact(lhs),
@@ -450,6 +461,7 @@ namespace mln
     plus_cst_inplace(Image<I>& input, const V& val)
     {
       trace::entering("arith::plus_cst_inplace");
+
       mln_precondition(exact(input).has_data());
 
       // Calls the previous version.
