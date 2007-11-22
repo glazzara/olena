@@ -28,6 +28,11 @@
 #ifndef MLN_SET_IS_SUBSET_OF_HH
 # define MLN_SET_IS_SUBSET_OF_HH
 
+/*! \file mln/set/is_subset_of.hh
+ *
+ * \brief Routine to test if a set is a subset of another.
+ */
+
 # include <mln/core/concept/point_set.hh>
 
 namespace mln
@@ -49,18 +54,26 @@ namespace mln
     bool
     is_subset_of(const Point_Set<Pl>& lhs_, const Point_Set<Pr>& rhs_)
     {
+      trace::entering("set::is_subset_of");
       Pl lhs = exact(lhs_);
       Pr rhs = exact(rhs_);
 
       if (lhs.npoints() > rhs.npoints())
+      {
+	trace::exiting("set::is_subset_of");
 	return false;
+      }
 
       mln_piter(Pl) p(lhs);
       for_all(p)
 	{
 	  if (!rhs.has(p))
+	  {
+	    trace::exiting("set::is_subset_of");
 	    return false;
+	  }
 	}
+      trace::exiting("set::is_subset_of");
       return true;
     }
 

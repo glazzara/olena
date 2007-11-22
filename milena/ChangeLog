@@ -1,3 +1,23 @@
+2007-11-22  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Review the set directory and add tests.
+	* mln/set/all.hh,
+	* mln/set/diff.hh,
+	* mln/set/inter.hh,
+	* mln/set/is_subset_of.hh,
+	* mln/set/sym_diff.hh,
+	* mln/set/uni.hh: Review.
+
+	* tests/Makefile.am,
+	* tests/set/Makefile.am,
+	* tests/set/diff.cc,
+	* tests/set/inter.cc,
+	* tests/set/is_subset_of.cc,
+	* tests/set/sym_diff.cc,
+	* tests/set/uni.cc: Add tests.
+
+	* mln/make/pix.hh: Doc.
+
 2007-11-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Replace the default viewer by "display".

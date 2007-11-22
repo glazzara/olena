@@ -44,6 +44,7 @@ namespace mln
 
 # include <mln/set/diff.hh>
 # include <mln/set/inter.hh>
+# include <mln/set/is_subset_of.hh>
 # include <mln/set/sym_diff.hh>
 # include <mln/set/union.hh>
 

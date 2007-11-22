@@ -49,12 +49,18 @@ namespace mln
   namespace set
   {
 
-    /// Set theoretic difference of \p lhs and \p rhs.
+    /*! \brief Set theoretic difference of \p lhs and \p rhs.
+     *
+     * \relates mln::Window
+     */
     template <typename Wl, typename Wr>
     window<mln_dpoint(Wl)>
     diff(const Window<Wl>& lhs, const Window<Wr>& rhs);
 
-    /// Set theoretic difference of \p lhs and \p rhs.
+    /*! \brief Set theoretic difference of \p lhs and \p rhs.
+     *
+     * \relates mln::Point_Set
+     */
     template <typename Wl, typename Wr>
     p_set<mln_point(Wl)>
     diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs);
@@ -66,6 +72,7 @@ namespace mln
     window<mln_dpoint(Wl)>
     diff(const Window<Wl>& lhs, const Window<Wr>& rhs)
     {
+      trace::entering("set::diff");
       mln::metal::equal<mln_dpoint(Wl), mln_dpoint(Wr)>::check();
       typedef mln_dpoint(Wl) D;
       std::set<D>
@@ -75,14 +82,15 @@ namespace mln
       std::set_difference(sl.begin(), sl.end(),
 			  sr.begin(), sr.end(),
 			  std::inserter(s, s.begin()));
+      trace::exiting("set::diff");
       return convert::to_window(s);
     }
 
-    /// Set theoretic difference of \p lhs and \p rhs.
     template <typename Wl, typename Wr>
     p_set<mln_point(Wl)>
     diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
     {
+      trace::entering("set::diff");
       mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
       typedef mln_point(Wl) P;
       std::set<P>
@@ -92,6 +100,7 @@ namespace mln
       std::set_difference(sl.begin(), sl.end(),
 			  sr.begin(), sr.end(),
 			  std::inserter(s, s.begin()));
+      trace::exiting("set::diff");
       return convert::to_p_set(s);
     }
 

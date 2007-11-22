@@ -9,7 +9,8 @@ SUBDIRS = norm					\
 	  draw					\
 	  border				\
 	  canvas				\
-	  win
+	  win					\
+	  set
 
 check_PROGRAMS =				\
   accu_all					\

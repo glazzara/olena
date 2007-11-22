@@ -42,7 +42,13 @@ namespace mln
   namespace make
   {
 
-    /// Create an mln::pix from an image \p ima and a psite \p p.
+    /*! \brief Create an mln::util::pix from an image \p ima and a psite \p p.
+     *
+     * \param[in] ima The input image.
+     * \param[in] p   The point site.
+     *
+     * \return An mln::util::pix.
+     */
     template <typename I>
     mln::util::pix<I> pix(const Image<I>& ima, const mln_psite(I)& p);
 

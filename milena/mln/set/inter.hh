@@ -69,6 +69,7 @@ namespace mln
     window<mln_dpoint(Wl)>
     inter(const Window<Wl>& lhs, const Window<Wr>& rhs)
     {
+      trace::entering("set::inter");
       mln::metal::equal<mln_dpoint(Wl), mln_dpoint(Wr)>::check();
       typedef mln_dpoint(Wl) D;
       std::set<D>
@@ -79,12 +80,14 @@ namespace mln
 			    sr.begin(), sr.end(),
 			    std::inserter(s, s.begin()));
       return convert::to_window(s);
+      trace::exiting("set::inter");
     }
 
     template <typename Wl, typename Wr>
     p_set<mln_point(Wl)>
     inter(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
     {
+      trace::entering("set::inter");
       mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
       typedef mln_point(Wl) P;
       std::set<P>
@@ -95,6 +98,7 @@ namespace mln
 			    sr.begin(), sr.end(),
 			    std::inserter(s, s.begin()));
       return convert::to_p_set(s);
+      trace::exiting("set::inter");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
