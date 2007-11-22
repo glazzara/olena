@@ -50,7 +50,8 @@ namespace mln
      * \param[in,out] ima2 The second image whose border is to be equalizeed.
      * \param[in] min_thickness The expected border minimum thickness of both images.
      *
-     * \pre \p ima has to be initialized.
+     * \pre \p ima1 has to be initialized.
+     * \pre \p ima2 has to be initialized.
      *
      * \warning If both image borders already have the same thickness
      * and if this thickness is larger than \p min_thickness, this
@@ -64,46 +65,67 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace impl
+    {
+
+      template <typename I, typename J>
+      void equalize_(const I& ima1, const J& ima2, unsigned min_thickness)
+      {
+	trace::entering("border::impl::equalize_");
+
+	unsigned b1 = border::get(ima1), b2 = border::get(ima2);
+
+	if (! (b1 == b2 && b2 >= min_thickness))
+	  // Something has to be done.
+	  {
+	    if (b1 < min_thickness && b2 < min_thickness)
+	      // Both images have to be border-resized.
+	      {
+		border::resize(ima1, min_thickness);
+		border::resize(ima2, min_thickness);
+	      }
+	    else
+	      // A single image has to be border-resized with
+	      // the other image thickness.
+	      if (b1 < min_thickness)
+		{
+		  mln_assertion(b2 >= min_thickness);
+		  border::resize(ima1, b2);
+		}
+	      else
+		{
+		  mln_assertion(b2 < min_thickness);
+		  mln_assertion(b1 >= min_thickness);
+		  border::resize(ima2, b1);
+		}
+	  }
+
+	trace::exiting("border::impl::equalize_");
+      }
+
+    } // end of namespace mln::border::impl
+
+
+    // Facade
+
     template <typename I, typename J>
     void equalize(const Image<I>& ima1_, const Image<J>& ima2_,
 		  unsigned min_thickness)
     {
       trace::entering("border::equalize");
+
       mlc_is(mln_trait_image_border(I), trait::image::border::some)::check();
       mlc_is(mln_trait_image_border(J), trait::image::border::some)::check();
       const I& ima1 = exact(ima1_);
       const J& ima2 = exact(ima2_);
       mln_precondition(ima1.has_data() && ima2.has_data());
 
-      unsigned b1 = border::get(ima1), b2 = border::get(ima2);
-      if (! (b1 == b2 && b2 >= min_thickness))
-	// Something has to be done.
-	{
-	  if (b1 < min_thickness && b2 < min_thickness)
-	    // Both images have to be border-resized.
-	    {
-	      border::resize(ima1, min_thickness);
-	      border::resize(ima2, min_thickness);
-	    }
-	  else
-	    // A single image has to be border-resized with
-	    // the other image thickness.
-	    if (b1 < min_thickness)
-	      {
-		mln_assertion(b2 >= min_thickness);
-		border::resize(ima1, b2);
-	      }
-	    else
-	      {
-		mln_assertion(b2 < min_thickness);
-		mln_assertion(b1 >= min_thickness);
-		border::resize(ima2, b1);
-	      }
-	}
+      impl::equalize_(ima1, ima2, min_thickness);
 
       mln_postcondition(border::get(ima1) == border::get(ima2) &&
 			border::get(ima1) >= min_thickness &&
 			border::get(ima2) >= min_thickness);
+
       trace::exiting("border::equalize");
     }
 

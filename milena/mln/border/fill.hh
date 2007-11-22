@@ -50,7 +50,7 @@ namespace mln
      *
      * \pre \p ima has to be initialized.
      *
-     * \todo Implement it + optimize with memset if possible.
+     * \todo Optimize with memset if possible.
      */
     template <typename I>
     void fill(const Image<I>& ima, const mln_value(I)& v);
@@ -63,6 +63,8 @@ namespace mln
       template <typename I>
       void fill_size_1_(const I& ima, const mln_value(I)& v)
       {
+	trace::entering("border::impl::fill_size_1_");
+
 	typedef mln_point(I) P;
 	typedef mln_point(I) P;
 	typename I::line_piter pl(ima.domain());
@@ -80,11 +82,15 @@ namespace mln
 	std::memset((void*)&ima[st],
 		    *(const int*)(&v),
 		    ima.ncells () - st);
+
+	trace::exiting("border::impl::fill_size_1_");
       }
 
       template <typename I>
       void fill_size_n_(const I& ima, const mln_value(I)& v)
       {
+	trace::entering("border::impl::fill_size_n_");
+
 	typedef mln_point(I) P;
 	typename I::line_piter pl(ima.domain());
 	std::size_t len_r = ima.bbox().len(P::dim - 1);
@@ -99,15 +105,19 @@ namespace mln
 	  }
 	for (std::size_t i = st; i < ima.ncells (); ++i)
 	  const_cast<I&>(ima)[i] = v;
+
+	trace::exiting("border::impl::fill_size_n_");
       }
 
     }
+
     // Facade.
 
     template <typename I>
     void fill(const Image<I>& ima_, const mln_value(I)& v)
     {
       trace::entering("border::fill");
+
       typedef mln_point(I) P;
       const I& ima = exact(ima_);
 
@@ -119,6 +129,7 @@ namespace mln
 	impl::fill_size_1_(ima, v);
       else
 	impl::fill_size_n_(ima, v);
+
       trace::exiting("border::fill");
     }
 

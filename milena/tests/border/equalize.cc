@@ -25,42 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BORDER_ALL_HH
-# define MLN_BORDER_ALL_HH
-
-/*! \file mln/border/all.hh
+/*! \file tests/border/equalize.cc
  *
- * \brief File that includes all border-related routines.
+ * \brief Tests on mln::border::equalize.
  */
 
+#include <mln/core/image2d.hh>
+#include <mln/border/get.hh>
+#include <mln/border/equalize.hh>
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of routines related to image virtual (outer) border.
-  namespace border
-  {
-    /// Implementation namespace of border namespace.
-    namespace impl {
-
-      /// Generic implementation namespace of border namespace.
-      namespace generic {}
-
-    }
-
-  }
-
+  image2d<int> ima1(3,3, 36);
+  image2d<int> ima2(3,3, 42);
+  border::equalize(ima1, ima2, 51);
+  mln_assertion(border::get(ima1) == 51);
+  mln_assertion(border::get(ima2) == 51);
 }
-
-# include <mln/border/adjust.hh>
-# include <mln/border/duplicate.hh>
-# include <mln/border/equalize.hh>
-# include <mln/border/fill.hh>
-# include <mln/border/find.hh>
-# include <mln/border/get.hh>
-# include <mln/border/mirror.hh>
-# include <mln/border/resize.hh>
-# include <mln/border/thickness.hh>
-
-
-#endif // ! MLN_BORDER_ALL_HH

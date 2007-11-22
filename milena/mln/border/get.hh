@@ -46,6 +46,9 @@ namespace mln
      *
      * \param[in] ima The image.
      * \result The border thickness (0 if there is no border).
+     *
+     * \pre \p ima has to be initialized.
+     *
      */
     template <typename I>
     unsigned get(const Image<I>& ima);
@@ -86,9 +89,14 @@ namespace mln
     template <typename I>
     unsigned get(const Image<I>& ima)
     {
+      trace::entering("border::get");
+
       mln_precondition(exact(ima).has_data());
-      return border::impl::get_(mln_trait_image_border(I)(), mln_trait_image_category(I)(),
-				exact(ima));
+      unsigned res = border::impl::get_(mln_trait_image_border(I)(), mln_trait_image_category(I)(),
+					exact(ima));
+
+      trace::exiting("border::get");
+      return res;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

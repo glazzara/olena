@@ -51,7 +51,7 @@ namespace mln
      *
      * \pre \p ima has to be initialized.
      *
-     * \todo Implement it + optimize with memset if possible.
+     * \todo Implement 1d and 3d version + optimize with memset if possible.
      */
     template <typename I>
     void mirror(const Image<I>& ima);
@@ -59,15 +59,110 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace impl
+    {
+
+      template <typename I>
+      void mirror_1d_(const I& ima)
+      {
+	mln::internal::fixme();
+      }
+
+      template <typename I>
+      void mirror_2d_(const I& ima)
+      {
+	trace::entering("border::impl::mirror_2d_");
+
+	std::size_t border = ima.border ();
+	std::size_t nbrows = geom::max_row(ima) - geom::min_row(ima);
+	std::size_t nbcols = geom::max_col(ima) - geom::min_col(ima);
+	std::size_t real_nbcols = (nbcols + 1) + 2 * border;
+	std::size_t start = real_nbcols * border + border;
+	std::size_t s = start;
+
+	// duplicate top left corner
+	for (std::size_t i = 0; i < border; ++i)
+	  for (std::size_t j = 0; j < border; ++j)
+	  const_cast<I&>(ima)[i * ((nbcols + 1) + 2 * border) + j] = ima[s];
+
+	// duplicate top left corner
+	s = start + nbcols;
+	for (std::size_t i = 0; i < border; ++i)
+	  for (std::size_t j = 1; j <= border; ++j)
+	    const_cast<I&>(ima)[i * ((nbcols + 1) + 2 * border) + (nbcols + border + j)] = ima[s];
+
+	// duplicate bottom left corner
+	s = start + (nbrows * real_nbcols);
+	for (std::size_t i = 1; i <= border; ++i)
+	  for (std::size_t j = 1; j <= border; ++j)
+	    const_cast<I&>(ima)[s - i + (j * (real_nbcols))] = ima[s];
+
+	// duplicate bottom right corner
+	s = start + (nbrows * real_nbcols) + nbcols;
+	for (std::size_t i = 1; i <= border; ++i)
+	  for (std::size_t j = 1; j <= border; ++j)
+	    const_cast<I&>(ima)[s + i + (j * real_nbcols)] = ima[s];
+
+	// mirror top border
+	s = start;
+	for (std::size_t i = 0; i <= nbcols; ++i)
+	  for (std::size_t j = 1; j <= border; ++j)
+	    const_cast<I&>(ima)[s + i - (j * real_nbcols)] = ima[s + i + ((j - 1)* real_nbcols)];
+
+	// mirror left border
+	s = start;
+	for (std::size_t i = 0; i <= nbrows; ++i)
+	  for (std::size_t j = 1; j <= border; ++j)
+ 	  const_cast<I&>(ima)[s + (i * real_nbcols) - j] = ima[s + (i * real_nbcols) + (j - 1)];
+
+	// mirror right border
+	s = start;
+	for (std::size_t i = 0; i <= nbrows; ++i)
+	  for (std::size_t j = 1; j <= border; ++j)
+	    const_cast<I&>(ima)[s + (i * real_nbcols + nbcols) + j] = ima[s + (i * real_nbcols + nbcols) - (j - 1)];
+
+	// mirror bottom border
+	s = start + (nbrows * real_nbcols);
+	for (std::size_t i = 0; i <= nbcols; ++i)
+	  for (std::size_t j = 1; j <= border; ++j)
+	    const_cast<I&>(ima)[s + i + (j * real_nbcols)] = ima[s + i - ((j - 1)* real_nbcols)];
+
+	trace::exiting("border::impl::mirror_2d_");
+      }
+
+      template <typename I>
+      void mirror_3d_(const I& ima)
+      {
+	mln::internal::fixme();
+      }
+
+
+    } // end of namespace mln::border::mirror
+
+
     template <typename I>
     void mirror(const Image<I>& ima_)
     {
+      trace::entering("border::mirror");
+
       const I& ima = exact(ima_);
-      
-      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
-      
+
       mln_precondition(ima.has_data());
-      mln::internal::fixme();
+      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
+
+      typedef mln_point(I) P;
+
+      if (!ima.border ())
+	return;
+
+      if (P::dim == 1)
+	impl::mirror_1d_(ima);
+      if (P::dim == 2)
+	impl::mirror_2d_(ima);
+      if (P::dim == 3)
+	impl::mirror_3d_(ima);
+
+      trace::exiting("border::mirror");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

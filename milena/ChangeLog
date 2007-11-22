@@ -1,3 +1,26 @@
+2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Subdirectory border ready for rereading.
+
+	* mln/border/all.hh: Update with all headers.
+
+	* mln/border/mirror.hh: Add 2d version.
+
+	* mln/border/adjust.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/equalize.hh,
+	* mln/border/fill.hh,
+	* mln/border/find.hh,
+	* mln/border/resize.hh,
+	* mln/border/get.hh: Check typo and tracing.
+
+	Tests
+
+	* tests/border/equalize.cc,
+	* tests/border/mirror.cc: New test for these algorithms.
+
+	* tests/border/Makefile.am: Add previous tests.
+
 2007-11-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix modulus definition involving builtin.

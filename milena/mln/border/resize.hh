@@ -95,6 +95,7 @@ namespace mln
     void resize(const Image<I>& ima_, unsigned thickness)
     {
       trace::entering("border::resize");
+
       mlc_is(mln_trait_image_border(I), trait::image::border::some)::check();
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
@@ -103,9 +104,10 @@ namespace mln
 	return; // No-op.
       // Otherwise: do-it.
       impl::resize_(mln_trait_image_category(I)(),
-		    ima, thickness); 
+		    ima, thickness);
 
       mln_postcondition(border::get(ima) == thickness);
+
       trace::exiting("border::resize");
     }
 

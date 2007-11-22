@@ -52,7 +52,7 @@ namespace mln
      *
      * \pre \p ima has to be initialized.
      *
-     * \todo Implement it + optimize with memcpy if possible.
+     * \todo Optimize with memcpy if possible.
      */
     template <typename I>
     void duplicate(const Image<I>& ima);
@@ -66,7 +66,7 @@ namespace mln
       template <typename I>
       void duplicate_1d_(const I& ima)
       {
-	mln_precondition(ima.has_data());
+	trace::entering("border::impl::duplicate_1d_");
 
 	typedef mln_point(I) P;
 	typename I::line_piter pl(ima.domain());
@@ -79,12 +79,14 @@ namespace mln
 	std::size_t st = border + len_c - 1;
 	for (std::size_t i = st + 1; i < ima.ncells (); ++i)
 	  const_cast<I&>(ima)[i] = ima[st];
+
+	trace::exiting("border::impl::duplicate_1d_");
       }
 
       template <typename I>
       void duplicate_2d_(const I& ima)
       {
-	mln_precondition(ima.has_data());
+	trace::entering("border::impl::duplicate_2d_");
 
 	typedef mln_point(I) P;
 	typename I::line_piter pl(ima.domain());
@@ -117,11 +119,15 @@ namespace mln
 	for (std::size_t k = 1; k <= border; ++k)
 	  for (std::size_t i = st; i < st + real_len_c; ++i)
 	    const_cast<I&>(ima)[k * real_len_c + i] = ima[i];
+
+	trace::exiting("border::impl::duplicate_2d_");
       }
 
       template <typename I>
       void duplicate_3d_(const Image<I>& ima_)
       {
+	trace::entering("border::impl::duplicate_3d_");
+
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
 
@@ -178,24 +184,25 @@ namespace mln
 	for (std::size_t k = 1; k <= border; ++k)
 	  for (std::size_t i = 0; i < face; ++i)
 	    const_cast<I&>(ima)[st + k * face + i] = ima[st + i];
+
+	trace::exiting("border::impl::duplicate_3d_");
       }
-
-
 
     } // end of namespace mln::border::impl
 
 
     // Facade.
-    
+
     template <typename I>
     void duplicate(const Image<I>& ima_)
     {
-      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
-      const I& ima = exact(ima_);
-      typedef mln_point(I) P;
       trace::entering("border::duplicate");
 
       mln_precondition(ima.has_data());
+
+      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
+      const I& ima = exact(ima_);
+      typedef mln_point(I) P;
 
       if (!ima.border ())
 	return;

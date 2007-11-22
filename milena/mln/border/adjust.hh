@@ -58,13 +58,13 @@ namespace mln
     void adjust(const Image<I>& ima, unsigned min_thickness);
 
 
-
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
     void adjust(const Image<I>& ima_, unsigned min_thickness)
     {
       trace::entering("border::adjust");
+
       mlc_is(mln_trait_image_border(I), trait::image::border::some)::check();
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
@@ -73,6 +73,7 @@ namespace mln
 	border::resize(ima, min_thickness);
 
       mln_postcondition(border::get(ima) >= min_thickness);
+
       trace::exiting("border::adjust");
     }
 
