@@ -37,6 +37,7 @@
 
 # include <mln/core/concept/image.hh>
 
+
 // Specializations are in:
 # include <mln/logical/and_not.spe.hh>
 

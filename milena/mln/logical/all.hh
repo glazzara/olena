@@ -41,7 +41,13 @@ namespace mln
   namespace logical
   {
     /// Implementation namespace of logical namespace.
-    namespace impl {}
+    namespace impl {
+
+      /// Generic implementation namespace of logical namespace.
+      namespace generic {}
+
+    }
+
   }
 
 }

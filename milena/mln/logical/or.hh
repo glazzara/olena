@@ -37,8 +37,10 @@
 
 # include <mln/core/concept/image.hh>
 
+
 // Specializations are in:
 # include <mln/logical/or.spe.hh>
+
 
 namespace mln
 {
@@ -102,6 +104,7 @@ namespace mln
     mln_concrete(L) or_(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::or_");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_concrete(L) output;
@@ -117,6 +120,7 @@ namespace mln
     void or_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::or_inplace");
+
       mln_precondition(exact(rhs).domain() >= exact(lhs).domain());
 
       impl::or__(mln_trait_image_speed(L)(), exact(lhs),

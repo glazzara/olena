@@ -37,6 +37,7 @@
 
 # include <mln/core/concept/image.hh>
 
+
 // Specializations are in:
 # include <mln/logical/not.spe.hh>
 
@@ -65,6 +66,8 @@ namespace mln
      * It performs: \n
      *   for all p of input.domain \n
      *     input(p) = not input(p)
+     *
+     * \pre \p input.has_data
      */
     template <typename I>
     void not_inplace(Image<I>& input);
@@ -99,6 +102,7 @@ namespace mln
     mln_concrete(I) not_(const Image<I>& input)
     {
       trace::entering("logical::not");
+
       mln_precondition(exact(input).has_data());
 
       mln_concrete(I) output;
@@ -113,8 +117,10 @@ namespace mln
     void not_inplace(Image<I>& input)
     {
       trace::entering("logical::not_inplace");
+
       mln_precondition(exact(input).has_data());
       impl::not__(mln_trait_image_speed(I)(), exact(input), exact(input));
+
       trace::exiting("logical::not_inplace");
     }
 

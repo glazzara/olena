@@ -37,6 +37,7 @@
 
 # include <mln/core/concept/image.hh>
 
+
 // Specializations are in:
 # include <mln/logical/and.spe.hh>
 
@@ -105,6 +106,7 @@ namespace mln
     mln_concrete(L) and_(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::and_");
+
       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
 
       mln_concrete(L) output;
@@ -120,6 +122,7 @@ namespace mln
     void and_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::and_inplace");
+
       mln_precondition(exact(rhs).domain() >= exact(lhs).domain());
 
       impl::and__(mln_trait_image_speed(L)(), exact(lhs),

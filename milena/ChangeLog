@@ -1,5 +1,15 @@
 2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Subdirectory logical ready for rereading.
+
+	* mln/logical/all.hh,
+	* mln/logical/and.hh,
+	* mln/logical/and_not.hh,
+	* mln/logical/not.hh,
+	* mln/logical/or.hh: Check typo.
+
+2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Subdirectory arith ready for rereading.
 
 	* mln/arith/all.hh,
