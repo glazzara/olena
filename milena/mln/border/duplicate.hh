@@ -198,10 +198,11 @@ namespace mln
     {
       trace::entering("border::duplicate");
 
+      const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
 
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
-      const I& ima = exact(ima_);
+
       typedef mln_point(I) P;
 
       if (!ima.border ())

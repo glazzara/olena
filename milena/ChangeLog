@@ -1,5 +1,11 @@
 2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix bug.
+
+	* mln/border/duplicate.hh: Fix bug (move a line upper).
+
+2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Subdirectory border ready for rereading.
 
 	* mln/border/all.hh: Update with all headers.
