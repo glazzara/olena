@@ -42,6 +42,7 @@
 
 namespace mln
 {
+
   namespace draw
   {
 
@@ -90,7 +91,6 @@ namespace mln
 
       for (unsigned i = 0; i < m.gr_.nb_node_; ++i)
  	exact(ima)(m.loc_[i]) = node_v;
-
     }
 
     template <typename I,  typename P, typename V>
@@ -111,8 +111,8 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-   } // end of draw
+   } // end of namespace mln::draw
 
-} // end of mln
+} // end of namespace mln
 
 #endif // MLN_MESH_PSITE_HH

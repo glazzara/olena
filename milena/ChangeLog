@@ -1,5 +1,11 @@
 2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Subdirectory draw ready for rereading.
+
+	* mln/draw/mesh.hh: Check typo.
+
+2007-11-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Subdirectory logical ready for rereading.
 
 	* mln/logical/all.hh,
