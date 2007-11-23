@@ -137,7 +137,6 @@ AC_CONFIG_FILES([
     milena/tests/value/Makefile
       milena/tests/value/concept/Makefile
       milena/tests/value/builtin/Makefile
-    milena/tests/make/Makefile
     milena/tests/convert/Makefile
     milena/tests/estim/Makefile
     milena/tests/pw/Makefile
