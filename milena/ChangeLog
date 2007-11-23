@@ -1,5 +1,12 @@
 2007-11-23  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	Remove useless tests on make.
+	* tests/make/Makefile.am: Remove.
+	* tests/make: Remove.
+	* tests/make_image2d.cc: Remove.
+
+2007-11-23  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Add documentation and make some better tests.
 	* mln/core/h_mat.hh,
 	* mln/core/h_vec.hh,
