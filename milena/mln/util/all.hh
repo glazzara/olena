@@ -42,11 +42,19 @@ namespace mln
 
 }
 
+# include <mln/util/branch_iter.hh>
+# include <mln/util/branch_iter_ind.hh>
 # include <mln/util/eat.hh>
 # include <mln/util/graph.hh>
 # include <mln/util/ignore.hh>
 # include <mln/util/nil.hh>
+# include <mln/util/ordpair.hh>
 # include <mln/util/pix.hh>
 # include <mln/util/tracked_ptr.hh>
+# include <mln/util/tree_fast.hh>
+# include <mln/util/tree_fast_to_image.hh>
+# include <mln/util/tree.hh>
+# include <mln/util/tree_to_fast.hh>
+# include <mln/util/tree_to_image.hh>
 
 #endif // ! MLN_UTIL_ALL_HH

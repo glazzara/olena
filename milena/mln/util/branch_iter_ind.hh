@@ -173,7 +173,7 @@ namespace mln
       else
       {
 	s_.top().pos_++;
-	if (s_.top().list_->size() == s_.top().pos_)
+	if (s_.top().list_->size() == (unsigned)s_.top().pos_)
 	{
 	  s_.pop();
 	  next();
@@ -181,16 +181,9 @@ namespace mln
 	}
 	else
 	{
-	  mln_assertion(s_.top().list_->size() > s_.top().pos_);
+	  mln_assertion(s_.top().list_->size() > (unsigned)s_.top().pos_);
 	  if (s_.top().previous_ != 0)
 	    mln_assertion(s_.top().previous_ == (*(s_.top().list_))[s_.top().pos_ - 1]);
-	    //	  if (s_.top().previous_ > 0)
-// 	  {
-// 	    if(previous_ == (*(s_.top().first))[s_.top().second - 1])
-// 	    {
-// 	      std::cout <<
-// 	    }
-// 	  }
 
 	  n_ = (*(s_.top().list_))[s_.top().pos_];
 	  s_.top().previous_ = n_;

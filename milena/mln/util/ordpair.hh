@@ -63,7 +63,7 @@ namespace mln
     template <typename T>
     bool operator<=(const ordpair_<T>& lhs, const ordpair_<T>& rhs);
 
-    
+
     template <typename T>
     std::ostream& operator<<(std::ostream& ostr, const ordpair_<T>& op);
 

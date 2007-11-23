@@ -1,5 +1,16 @@
 2007-11-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Update in mln::util.
+
+	* mln/util/all.hh: Add all headers.
+
+	* mln/util/branch_iter.hh,
+	* mln/util/branch_iter_ind.hh,
+	* mln/util/graph.hh,
+	* mln/util/ordpair.hh: Check typo.
+
+2007-11-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Clean util subdirectory tests.
 
 	* tests/util/Makefile.am: Update tests file.

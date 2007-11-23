@@ -21,7 +21,7 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  
+// License.
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
@@ -105,7 +105,7 @@ namespace mln
     graph<N, E>::add_node (void)
     {
       struct s_node<N>* n = new struct s_node<N>;
-      
+
       nodes_.push_back (n);
       ++nb_node_;
     }
@@ -176,7 +176,7 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of util  
+  } // end of util
 
 } // end of mln
 
