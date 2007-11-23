@@ -1,3 +1,26 @@
+2007-11-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Subdirectory display ready for rereading (except median).
+
+	Level review.
+	* mln/level/abs.hh,
+	* mln/level/all.hh,
+	* mln/level/memcpy_.hh,
+	* mln/level/memset_.hh,
+	* mln/level/paste.hh,
+	* mln/level/paste.spe.hh,
+	* mln/level/saturate.hh,
+	* mln/level/sort_points.hh,
+	* mln/level/take.hh: Review doc, add precondition and check typo.
+
+	Add metal::is_not_const.
+	* mln/metal/is_not_const.hh: New file for handling check in
+	memcpy and memset in level.
+	* mln/metal/all.hh: Add is_not_const header.
+
+	Add tests.
+	* tests/all.cc: New tests, which include all headers all.hh.
+
 2007-11-23  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Remove deprecated files and fix makefile.

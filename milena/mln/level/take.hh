@@ -53,6 +53,8 @@ namespace mln
      * This routine runs: \n
      *   for all p of \p input, \p a.take( \p input(p) ) \n
      *
+     * \pre \p input has to be initialized.
+     *
      * \warning This routine does not perform a.init().
      */
     template <typename A, typename I>

@@ -49,7 +49,7 @@ namespace mln
   {
 
     /*! Sort points the image \p input through a function \p f to set
-     *  the \p output image.
+     *  the \p output image in increasing way.
      *
      * \param[in] input The input image.
      *
@@ -57,6 +57,16 @@ namespace mln
      */
     template <typename I>
     p_array<mln_point(I)> sort_points_increasing(const Image<I>& input);
+
+    /*! Sort points the image \p input through a function \p f to set
+     *  the \p output image in decreasing way.
+     *
+     * \param[in] input The input image.
+     *
+     * \pre \p input.has_data
+     */
+    template <typename I>
+    p_array<mln_point(I)> sort_points_decreasing(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY

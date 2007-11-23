@@ -99,9 +99,10 @@ namespace mln
     template <typename I, typename J>
     void paste(const Image<I>& data_, Image<J>& destination_)
     {
+      trace::entering("level::paste");
+
       const I& data  = exact(data_);
       J& destination = exact(destination_);
-      trace::entering("level::paste");
 
       mlc_is(mln_trait_image_io(J), trait::image::io::write)::check();
       mlc_converts_to(mln_value(I), mln_value(J))::check();

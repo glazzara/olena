@@ -25,56 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_ALL_HH
-# define MLN_LEVEL_ALL_HH
+#ifndef MLN_METAL_IS_NOT_CONST_HH
+# define MLN_METAL_IS_NOT_CONST_HH
 
-/*! \file mln/level/all.hh
+/*!
+ * \file  mln/metal/is_not_const.hh
  *
- * \brief File that includes all level-related routines.
+ * \brief FIXME.
  */
+
+# include <mln/metal/bool.hh>
+
+
+# define mlc_is_not_const(T) mln::metal::is_not_const< T >
 
 
 namespace mln
 {
 
-  /// Namespace of image processing routines related to pixel levels.
-  namespace level
+  namespace metal
   {
 
-    /// Implementation namespace of level namespace.
-    namespace impl {
+    template <typename T>
+    struct is_not_const : true_
+    {};
 
-      /// Generic implementation namespace of level namespace.
-      namespace generic {}
+    template <typename T>
+    struct is_not_const< const T > : false_
+    {};
 
-    }
+    template <typename T>
+    struct is_not_const< const T& > : false_
+    {};
 
-  }
+    // FIXME: What about "T*const" and "const T*"?
 
-}
+  } // end of namespace mln::metal
 
-# include <mln/level/abs.hh>
-# include <mln/level/apply.hh>
-# include <mln/level/approx/all.hh>
-# include <mln/level/assign.hh>
-# include <mln/level/compare.hh>
-# include <mln/level/compute.hh>
-# include <mln/level/fast_median.hh>
-# include <mln/level/fill.hh>
-# include <mln/level/median.hh>
-# include <mln/level/memcpy_.hh>
-# include <mln/level/memset_.hh>
-# include <mln/level/naive/all.hh>
-# include <mln/level/paste.hh>
-# include <mln/level/paste.spe.hh>
-# include <mln/level/saturate.hh>
-# include <mln/level/sort_points.hh>
-# include <mln/level/stretch.hh>
-# include <mln/level/take.hh>
-# include <mln/level/to_enc.hh>
-# include <mln/level/transform.hh>
-# include <mln/level/was.median.hh>
+} // end of namespace mln
 
 
-
-#endif // ! MLN_LEVEL_ALL_HH
+#endif // ! MLN_METAL_IS_NOT_CONST_HH

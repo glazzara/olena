@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/pixel.hh>
-
+# include <mln/metal/is_not_const.hh>
 
 namespace mln
 {
@@ -49,7 +49,9 @@ namespace mln
      * \param[in] v The value to set pixels with.
      * \param[in] n The number of pixels to set.
      *
-     * \pre FIXME: !
+     * \pre \p pix image has to be initialized.
+     * \pre \p pix has to be on \p pix image domain.
+     * \pre \p pix + \p n has to be on \p pix image domain.
      */
     template <typename P>
     void memset_(Generalized_Pixel<P>& pix,
@@ -63,7 +65,9 @@ namespace mln
      * \param[in] v The value to set to points.
      * \param[in] n The number of points to set.
      *
-     * \pre \p input has to be initialized.  FIXME: More.
+     * \pre \p input image has to be initialized.
+     * \pre \p input has to own \p p.
+     * \pre \p p + \p n is <= \p input size.
      */
     template <typename I>
     void memset_(I& input, const mln_point(I)& p,
@@ -72,48 +76,71 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace impl
+    {
+
+      template <typename P>
+      void memset__(P& pix, const mln_value(P)& v, std::size_t n)
+      {
+	trace::entering("level::impl::memset_");
+
+	typedef mln_image(P) I;
+	if (n == 0)
+	  {
+	    return; // no-op
+	  }
+
+	if (n == 1)
+	  {
+	    pix.val() = v; // one assignment
+	    return;
+	  }
+
+	if (sizeof(mln_value(I)) == 1)
+	  {
+	    std::memset((void*)(& pix.val()),
+			*(const int*)(&v), // violent cast
+			n);
+	  }
+	else
+	  {
+	    mln_value(I)* ptr = & pix.val();
+	    for (std::size_t i = 0; i < n; ++i)
+	      *ptr++ = v;
+	  }
+
+	trace::exiting("level::impl::memset_");
+      }
+
+    } // end of namespace mln::level::impl
+
+
     template <typename P>
     void memset_(Generalized_Pixel<P>& pix_,
 		 const mln_value(P)& v, std::size_t n)
     {
+      trace::entering("level::memset_");
+
       typedef mln_image(P) I;
-      // FIXME: metal::is_not_const<I>::check();
-      
+      metal::is_not_const<I>::check();
+
       P& pix = internal::force_exact<P>(pix_);
       mln_precondition(pix.ima().has_data());
       mln_precondition(& pix.val() >= & pix.ima()[0]);
       mln_precondition(& pix.val() < & pix.ima()[0] + pix.ima().ncells());
       mln_precondition(& pix.val() + n <= & pix.ima()[0] + pix.ima().ncells());
-      
-      if (n == 0)
-	{
-	  return; // no-op
-	}
 
-      if (n == 1)
-	{
-	  pix.val() = v; // one assignment
-	  return;
-	}
-      
-      if (sizeof(mln_value(I)) == 1)
-	{
-	  std::memset((void*)(& pix.val()),
-		      *(const int*)(&v), // violent cast
-		      n);
-	}
-      else
-	{
-	  mln_value(I)* ptr = & pix.val();
-	  for (std::size_t i = 0; i < n; ++i)
-	    *ptr++ = v;
-	}
+      impl::memset__(pix, v, n);
+
+      trace::exiting("level::memset_");
     }
 
     template <typename I>
     void memset_(I& input, const mln_point(I)& p,
 		 const mln_value(I)& v, std::size_t n)
     {
+      trace::entering("level::memset_");
+
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
       mln_precondition(input.has_data());
@@ -121,7 +148,9 @@ namespace mln
       mln_precondition(input.offset_at(p) + n <= input.ncells());
 
       pixel<I> pix(input, p);
-      memset_(pix, v, n);
+      impl::memset__(pix, v, n);
+
+      trace::exiting("level::memset_");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -69,8 +69,10 @@ namespace mln
     void abs(const Image<I>& input, Image<O>& output)
     {
       trace::entering("level::abs");
+
       mln_precondition(exact(input).domain() == exact(output).domain());
       level::transform(input, fun::v2v::abs<mln_value(I)>(), output);
+
       trace::exiting("level::abs");
     }
 
@@ -78,8 +80,10 @@ namespace mln
     void abs_inplace(Image<I>& input)
     {
       trace::entering("level::abs_inplace");
+
       mln_precondition(exact(input).has_data());
       level::apply(input, fun::v2v::abs<mln_value(I)>());
+
       trace::exiting("level::abs_inplace");
     }
 

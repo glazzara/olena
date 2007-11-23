@@ -53,6 +53,9 @@ namespace mln
      * The saturation is based on the min and max values of the output
      * value type.  This assumes that the range of values in the input
      * image is larger than the one of the output image.
+     *
+     * \pre \p input and \p output have to own the same domain.
+     *
      */
     template <typename I, typename O>
     void saturate(const Image<I>& input, Image<O>& output);
@@ -64,6 +67,9 @@ namespace mln
      * \param[in] min The minimum output value.
      * \param[in] max The maximum output value.
      * \param[out] output The output image.
+     *
+     * \pre \p input and \p output have to own the same domain.
+     *
      */
     template <typename I, typename O>
     void saturate(const Image<I>& input,
@@ -75,7 +81,10 @@ namespace mln
      *
      * \param[in,out] input The input image.
      * \param[in] min The minimum output value.
-     * \param[in] max The maximum output value.
+     * \param[in] max The maximum output value
+     *
+     * \pre \p input has to be initialized.
+     *
      */
     template <typename I>
     void saturate_inplace(Image<I>& input,
@@ -90,6 +99,7 @@ namespace mln
       trace::entering("level::saturate");
 
       mln_precondition(exact(input).domain() == exact(output).domain());
+
       fun::v2v::saturate<mln_value(O)> f;
       level::transform(input, f, output);
 
@@ -104,6 +114,7 @@ namespace mln
       trace::entering("level::saturate");
 
       mln_precondition(exact(input).domain() == exact(output).domain());
+
       fun::v2v::saturate<mln_value(O)> f(min, max);
       level::transform(input, f, output);
 
@@ -117,6 +128,7 @@ namespace mln
       trace::entering("level::saturate_inplace");
 
       mln_precondition(exact(input).has_data());
+
       fun::v2v::saturate<mln_value(I)> f(min, max);
       level::apply(input, f);
 

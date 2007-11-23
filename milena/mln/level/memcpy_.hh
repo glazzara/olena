@@ -37,7 +37,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/pixel.hh>
-
+# include <mln/metal/is_not_const.hh>
 
 namespace mln
 {
@@ -52,7 +52,13 @@ namespace mln
      * \param[in] src The source pixel (to get values).
      * \param[in] n The number of pixels to copy.
      *
-     * \pre FIXME: !
+     * \pre \p src has to be initialized.
+     * \pre \p dest has to be initialized.
+     * \pre \p src and dest image values have to own the same sizeof.
+     * \pre \p dest pixel has to be on \p dest image domain.
+     * \pre \p src pixel has to be on \p src image domain.
+     * \pre \p dest + \p n has to be on \p dest image domain.
+     * \pre \p src + \p  n has to be on \p src image domain.
      */
     template <typename Pd, typename Ps>
     void memcpy_(Generalized_Pixel<Pd>& dest, const Generalized_Pixel<Ps>& src,
@@ -61,12 +67,55 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace impl
+    {
+
+      template <typename Pd, typename Ps>
+      void memcpy__(Pd& dest, const Ps& src, std::size_t n)
+      {
+	trace::entering("level::impl::memcpy__");
+
+	typedef mln_image(Pd) Id;
+	typedef mln_image(Ps) Is;
+
+	if (n == 0)
+	  {
+	    return; // no-op
+	  }
+
+	if (n == 1)
+	  {
+	    dest.val() = src.val(); // one assignment
+	    return;
+	  }
+
+	if (sizeof(mln_value(Id)) == 1)
+	  {
+	    std::memcpy((      void*)(& dest.val()), // violent casts
+			(const void*)(&  src.val()),
+			n);
+	  }
+	else
+	  {
+	    mln_value(Id)* p_d = & dest.val();
+	    const mln_value(Is)* p_s = & src.val();
+	    for (std::size_t i = 0; i < n; ++i)
+	      *p_d++ = *p_s++;
+	  }
+
+	trace::exiting("level::impl::memcpy__");
+      }
+
+    }
+
     template <typename Pd, typename Ps>
     void memcpy_(Generalized_Pixel<Pd>& dest_, const Generalized_Pixel<Ps>& src_,
 		 std::size_t n)
     {
+      trace::entering("level::memcpy_");
+
       typedef mln_image(Pd) Id;
-      // FIXME: metal::is_not_const<Id>::check();
+      metal::is_not_const<Id>::check();
       typedef mln_image(Ps) Is;
       Pd& dest = internal::force_exact<Pd>(dest_);
       Ps& src  = internal::force_exact<Ps>(src_);
@@ -74,32 +123,18 @@ namespace mln
       mln_precondition(sizeof(mln_value(Id)) == sizeof(mln_value(Is)));
       mln_precondition(dest.ima().has_data());
       mln_precondition(src.ima().has_data());
-      // FIXME: Add precondition about n.
 
-      if (n == 0)
-	{
-	  return; // no-op
-	}
+      mln_precondition(& dest.val() >= & dest.ima()[0]);
+      mln_precondition(& dest.val() < & dest.ima()[0] + dest.ima().ncells());
+      mln_precondition(& dest.val() + n <= & dest.ima()[0] + dest.ima().ncells());
 
-      if (n == 1)
-	{
-	  dest.val() = src.val(); // one assignment
-	  return;
-	}
+      mln_precondition(& src.val() >= & src.ima()[0]);
+      mln_precondition(& src.val() < & src.ima()[0] + src.ima().ncells());
+      mln_precondition(& src.val() + n <= & src.ima()[0] + src.ima().ncells());
 
-      if (sizeof(mln_value(Id)) == 1)
-	{
-	  std::memcpy((      void*)(& dest.val()), // violent casts
-		      (const void*)(&  src.val()),
-		      n);
-	}
-      else
-	{
-	  mln_value(Id)* p_d = & dest.val();
-	  const mln_value(Is)* p_s = & src.val();
-	  for (std::size_t i = 0; i < n; ++i)
-	    *p_d++ = *p_s++;
-	}
+      impl::memcpy__(dest, src, n);
+
+      trace::exiting("level::memcpy_");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -48,13 +48,11 @@ namespace mln
     namespace impl
     {
 
-
       namespace generic
       {
 	template <typename I, typename J>
 	void paste_(const I& data, J& destination);
       }
-
 
       template <typename I, typename J>
       void paste_lines_(const I& data, J& destination)

@@ -63,6 +63,7 @@ namespace mln
 # include <mln/metal/const.hh>
 # include <mln/metal/unconst.hh>
 # include <mln/metal/is_const.hh>
+# include <mln/metal/is_not_const.hh>
 
 # include <mln/metal/unptr.hh>
 # include <mln/metal/unref.hh>
