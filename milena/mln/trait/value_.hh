@@ -68,10 +68,10 @@
 	  mln::trait::value::quant::low)
 
 # define mln_value_card_from_(N)		\
-   N <= 16					\
+   (N <= 16					\
    ? mlc_pow_int((N <= 16 ? 2 : 1),		\
 		 (N <= 16 ? N : 1))		\
-   : 0
+   : 0)
 
 
 

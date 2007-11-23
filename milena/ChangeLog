@@ -1,3 +1,14 @@
+2007-11-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make subdirectory histo ready for rereading.
+
+	* tests/histo/compute.cc: Activate code.
+	Remove debug code.
+	* mln/trait/value_.hh (mln_value_card_from_): Fix macro.
+	* mln/histo/compute.hh: Split file contents with...
+	* mln/histo/compute.spe.hh: ...this new file.
+	* mln/value/int_s.hh (card, max): Fix definitions.
+
 2007-11-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix compile for fill level.

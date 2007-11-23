@@ -25,21 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_HISTO_COMPUTE_HH
-# define MLN_HISTO_COMPUTE_HH
+#ifndef MLN_HISTO_COMPUTE_SPE_HH
+# define MLN_HISTO_COMPUTE_SPE_HH
 
-/*! \file mln/histo/compute.hh
+/*! \file mln/histo/compute.spe.hh
  *
- * \brief Routine to compute an histogram.
+ * \brief Specializations of histogram computation.
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/histo/data.hh>
 
-
-// Specializations are in:
-# include <mln/histo/compute.spe.hh>
-
+# ifndef MLN_INCLUDE_ONLY
 
 namespace mln
 {
@@ -47,53 +42,40 @@ namespace mln
   namespace histo
   {
 
-    /// Compute the histogram of image \p input.
-    template <typename I>
-    data<mln_vset(I)> compute(const Image<I>& input);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
     namespace impl
     {
 
       namespace generic
       {
-
 	template <typename I>
-	data<mln_vset(I)> compute_(const I& input)
-	{
-	  data<mln_vset(I)> h(input.values());
-	  mln_piter(I) p(input.domain());
-	  for_all(p)
-	    ++h(input(p));
-	  return h;
-	}
+	data<mln_vset(I)> compute_(const I& input);
+      }
 
-      } // end of namespace mln::histo::impl::generic
+      template <typename I>
+      data<mln_vset(I)>
+      compute_(trait::image::speed::any, const I& input)
+      {
+	return generic::compute_(input);
+      }
+
+      template <typename I>
+      data<mln_vset(I)>
+      compute_(trait::image::speed::fastest, const I& input)
+      {
+	data<mln_vset(I)> h(input.values());
+	mln_pixter(const I) p(input);
+	for_all(p)
+	  ++h(p.val());
+	return h;
+      }
 
     } // end of namespace mln::histo::impl
-
-
-    template <typename I>
-    data<mln_vset(I)> compute(const Image<I>& input)
-    {
-      trace::entering("histo::compute");
-      mlc_equal(mln_trait_image_quant(I), mln::trait::image::quant::low)::check();
-      mln_precondition(exact(input).has_data());
-
-      data<mln_vset(I)> h = impl::compute_(mln_trait_image_speed(I)(),
-					   exact(input));
-
-      trace::exiting("histo::compute");
-      return h;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::histo
 
 } // end of namespace mln
 
+# endif // ! MLN_INCLUDE_ONLY
 
-#endif // ! MLN_HISTO_COMPUTE_HH
+
+#endif // ! MLN_HISTO_COMPUTE_SPE_HH

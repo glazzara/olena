@@ -77,14 +77,14 @@ namespace mln
 
       enum {
 	nbits = n,
-	card  = mln_value_card_from_(n)
+	card  = mln_value_card_from_(n) - 1
       };
 
       typedef trait::value::nature::integer nature;
       typedef trait::value::kind::data      kind;
       typedef mln_value_quant_from_(card)   quant;
 
-      static const self_ max() { return card / 2 - 1; }
+      static const self_ max() { return mln_value_card_from_(n) / 2 - 1; }
       static const self_ min() { return - max(); }
       static const self_ epsilon() { return 0; }
 
