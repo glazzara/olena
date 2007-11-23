@@ -34,7 +34,7 @@
  */
 
 # include <mln/metal/vec.hh>
-
+# include <mln/literal/one.hh>
 
 namespace mln
 {
@@ -82,7 +82,9 @@ namespace mln
   } // end of namespace mln::trait
 
 
-
+  /*! \brief N-Dimensional vector with homogeneous coordinates.
+   *
+   */
   template <unsigned d, typename C>
   struct h_vec : public metal::vec<d + 1, C>
   {
@@ -91,8 +93,9 @@ namespace mln
 
     /// Constructor without argument.
     h_vec();
-
+    /// Constructor with the underlying vector.
     h_vec(const metal::vec<d+1, C>& other);
+
     h_vec& operator=(const metal::vec<d+1, C>& rhs);
 
     /// Back to the natural (non-homogeneous) space.
@@ -133,7 +136,7 @@ namespace mln
       h_vec<n, T> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = this->data_[i];
-      tmp[n] = 1; // FIXME: literal::one
+      tmp[n] = literal::one;
       return tmp;
     }
 

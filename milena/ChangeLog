@@ -1,3 +1,20 @@
+2007-11-23  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add documentation and make some better tests.
+	* mln/core/h_mat.hh,
+	* mln/core/h_vec.hh,
+	* mln/core/image_if.hh,
+	* mln/core/image_if_interval.hh,
+	* mln/core/image_if_value.hh,
+	* mln/core/tr_image.hh,
+	* mln/core/tr_mesh.hh,
+	* mln/fun/x2x/composed.hh,
+	* mln/fun/x2x/rotation.hh,
+	* mln/fun/x2x/translation.hh: Add Documentation.
+	* tests/image_if_interval.cc,
+	* tests/image_if_value.cc,
+	* tests/line_piter.cc: Better tests.
+
 2007-11-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Subdirectory display ready for rereading (except median).

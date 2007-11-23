@@ -61,7 +61,8 @@ namespace mln
 
   } // end of namespace mln::internal
 
-  /*! \brief FIXME
+  /*! \brief Morpher that makes an image become transformed by a given
+   *  transformation.
    *
    */
   template <typename T, typename I>

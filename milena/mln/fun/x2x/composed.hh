@@ -60,6 +60,7 @@ namespace mln
 	struct helper_composed_;
 
 
+	/// Helper for describing a bijective composition.
 	template <typename F, typename G, typename E>
 	struct helper_composed_< F, G, E, true>
 	  : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
@@ -68,17 +69,22 @@ namespace mln
 	  typedef fun::internal::x2x_linear_impl_<typename F::result, E > super_;
 	  
 	  using super_::dim;
-	  
+
+	  /// Constructor without argument.
 	  helper_composed_();
+	  /// Constructor with the two transformation to be composed.
 	  helper_composed_(const F& f, const G& g);
 
 	  using super_::operator();
 
+	  /// Set the new first transformation.
 	  void set_first(const F& f);
+	  /// Set the new second transformation.
 	  void set_second(const G& g);
 
+	  /// Type of the inverse function.
 	  typedef composed<mln_invert(G),mln_invert(F)> invert;
-
+	  /// Return the inverse function.
 	  invert inv() const;
 
 	  protected:
@@ -87,6 +93,7 @@ namespace mln
 	  G g_;
 	};
 
+	/// Helper for describing a non bijective composition.
 	template <typename F, typename G, typename E>
 	struct helper_composed_< F, G, E, false>
 	  : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
@@ -96,12 +103,16 @@ namespace mln
 
 	  using super_::dim;
 
+	  /// Constructor without argument.
 	  helper_composed_();
+	  /// Constructor with the two transformation to be composed.
 	  helper_composed_(const F& f, const G& g);
 
 	  using super_::operator();
 
+	  /// Set the new first transformation.
 	  void set_first(const F& f);
+	  /// Set the new second transformation.
 	  void set_second(const G& g);
 
 	  protected:
@@ -126,8 +137,10 @@ namespace mln
 			       metal::is<mln_argument(F), mln_result(G)>
                              >::check_t
       {
+	/// Constructor without argument.
 	composed() {}
 	
+	/// Constructor with the two transformation to be composed.
 	composed(const F& f, const G& g)
 	  : internal::helper_composed_<F, G, composed<F,G>,
 	  mlc_is(F, Bijection_x2x<F>)::value &&

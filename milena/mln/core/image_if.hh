@@ -75,7 +75,7 @@ namespace mln
 
 
 
-  /*! \brief An image class FIXME.
+  /*! \brief Image which domain is restricted by a function.
    *
    */
   template <typename I, typename F>
@@ -118,6 +118,9 @@ namespace mln
 
   // Image | Function_p2b.
 
+  /// ima | f creates an image_if with the image ima and the function
+  /// f.
+  /// {{{
   template <typename I, typename F>
   image_if<I,F>
   operator | (Image<I>& ima, const Function_p2b<F>& f);
@@ -125,6 +128,7 @@ namespace mln
   template <typename I, typename F>
   image_if<const I,F>
   operator | (const Image<I>& ima, const Function_p2b<F>& f);
+  /// }}}
 
 
 # ifndef MLN_INCLUDE_ONLY

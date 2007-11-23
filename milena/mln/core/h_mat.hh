@@ -39,27 +39,35 @@
 namespace mln
 {
 
-
-  template <unsigned dim, typename T>
-  struct h_mat : public metal::mat<dim+1, dim+1, T>
+  /*! \brief N-Dimensional matrix with homogeneous coordinates.
+   *
+   */
+  template <unsigned d, typename T>
+  struct h_mat : public metal::mat<d+1, d+1, T>
   {
-    h_mat();
+    /// Dimension is the 'natural' one (3 for 3D), not the one of the vector (dim + 1)
+    enum { N = d,
+	   M = d,
+	   dim = d * d };
 
-    h_mat(const metal::mat<dim+1, dim+1, T>& x);
+    /// Constructor without argument.
+    h_mat();
+    /// Constructor with the underlying matrix.
+    h_mat(const metal::mat<d+1, d+1, T>& x);
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <unsigned dim, typename T>
-  h_mat<dim,T>::h_mat()
-    : metal::mat<dim+1, dim+1, T>(metal::mat<dim+1, dim+1, T>::Id)
+  template <unsigned d, typename T>
+  h_mat<d,T>::h_mat()
+    : metal::mat<d+1, d+1, T>(metal::mat<d+1, d+1, T>::Id)
   {
   }
 
-  template <unsigned dim, typename T>
-  h_mat<dim,T>::h_mat(const metal::mat<dim+1, dim+1, T>& x)
-    : metal::mat<dim+1, dim+1, T>(x)
+  template <unsigned d, typename T>
+  h_mat<d,T>::h_mat(const metal::mat<d+1, d+1, T>& x)
+    : metal::mat<d+1, d+1, T>(x)
   {
   }
 

@@ -47,6 +47,7 @@ namespace mln
   {
     typedef metal::false_ regular;
 
+    /// Constructor with the transformation.
     tr_mesh(const T& tr)
       : t_(tr)
       {

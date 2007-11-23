@@ -45,4 +45,11 @@ int main()
   debug::iota(ima);
   debug::println(ima);
   debug::println(ima | value::interval(4, 7) );
+
+  I::fwd_piter p(ima.domain());
+  for_all(p)
+  {
+    mln_assertion((ima(p) >= 4 && ima(p) <= 7) ==
+		  ((ima | value::interval(4, 7)).has(p)));
+  }
 }

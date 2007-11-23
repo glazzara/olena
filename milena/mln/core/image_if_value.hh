@@ -75,7 +75,7 @@ namespace mln
 
 
 
-  /*! \brief An image class FIXME.
+  /*! \brief Image which domain is restricted by a single value.
    *
    */
   template <typename I>
@@ -124,6 +124,9 @@ namespace mln
 
   // Image | value.
 
+  /// ima | v creates an image_if_value with the image ima and the
+  /// value v.
+  /// {{{
   template <typename I>
   image_if_value<I>
   operator | (Image<I>& ima, const mln_value(I)& v);
@@ -131,7 +134,7 @@ namespace mln
   template <typename I>
   image_if_value<const I>
   operator | (const Image<I>& ima, const mln_value(I)& v);
-
+  /// }}}
 
 
 # ifndef MLN_INCLUDE_ONLY

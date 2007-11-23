@@ -60,15 +60,21 @@ namespace mln
       {
 	typedef fun::internal::x2x_linear_impl_< metal::vec<n,C>, translation<n,C> > super_;
 
+	/// Type of the inverse function.
 	typedef translation<n,C> invert;
+	/// Return the inverse function.
 	invert inv() const;
 
+	/// Constructor without argument.
 	translation();
+	/// Constructor with the translation vector.
 	translation(const metal::vec<n,C>& t);
 
 	using super_::operator();
+	/// Perform the translation of the given vector
 	metal::vec<n,C> operator()(const metal::vec<n,C>& v) const;
 
+	/// Set a net translation vector.
 	void set_t(const metal::vec<n,C>& t);
 
       protected:

@@ -42,6 +42,10 @@ int main()
   image2d<int> f(b, border);
 
   image2d<int>::line_piter p(f.domain());
+  unsigned i = 1;
   for_all(p)
+  {
+    mln_assertion(p[1] == 0 && p[0] == i++);
     std::cout << p <<std::endl;
+  }
 }

@@ -58,16 +58,23 @@ namespace mln
       {
 	typedef fun::internal::x2x_linear_impl_< metal::vec<n,C>, rotation<n,C> > super_;
 
+	/// Type of the inverse function.
 	typedef rotation<n,C> invert;
+	/// Return the invere function.
 	invert inv() const;
 
+	/// Constructor without argument.
         rotation();
+	/// Constructor with grade alpha and a facultative direction (rotation axis).
         rotation(float alpha, unsigned dir = 2);
 
         using super_::operator();
+	/// Perform the rotation of the given vector.
         metal::vec<n,C> operator()(const metal::vec<n,C>& v) const;
 
+	/// Set a new grade alpha.
         void set_alpha(float alpha);
+	/// Set a new rotation axis.
         void set_dir(unsigned dir);
 
       protected:

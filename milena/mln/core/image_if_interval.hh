@@ -83,7 +83,7 @@ namespace mln
 
 
 
-  /*! \brief An image class FIXME.
+  /*! \brief Image which domain is restricted by an interval.
    *
    */
   template <typename I>
@@ -109,6 +109,9 @@ namespace mln
 
   // Image | [from, to].
 
+  /// ima | vv creates an image_if_interval with the image ima and the
+  /// interval vv.
+  /// {{{
   template <typename I>
   image_if_interval<I>
   operator | (Image<I>& ima, const value::interval_<mln_value(I)>& vv);
@@ -116,6 +119,7 @@ namespace mln
   template <typename I>
   image_if_interval<const I>
   operator | (const Image<I>& ima, const value::interval_<mln_value(I)>& vv);
+  /// }}}
 
 
 
@@ -162,6 +166,7 @@ namespace mln
   } // end of namespace mln::internal
 
   // Operators.
+
 
   template <typename I>
   image_if_interval<I>

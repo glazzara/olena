@@ -45,4 +45,11 @@ int main()
   debug::iota(ima);
   debug::println(ima);
   debug::println(ima | 5);
+
+  I::fwd_piter p(ima.domain());
+  for_all(p)
+  {
+    mln_assertion((ima(p) == 5) ==
+		  ((ima | 5).has(p)));
+  }
 }
