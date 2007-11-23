@@ -9,6 +9,6 @@ check_PROGRAMS =				\
 
 composed_SOURCES = composed.cc
 rotation_SOURCES = rotation.cc
-translation_SOURCES = translation_SOURCES
+translation_SOURCES = translation.cc
 
 TESTS = $(check_PROGRAMS)

@@ -1,3 +1,10 @@
+2007-11-23  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Remove deprecated files and fix makefile.
+	* mln/fun/x2x/bijective_tr.hh: Remove, was in function concept.
+	* mln/fun/x2x/translation_alt.hh: Remove, was in translation.hh.
+	* tests/fun/x2x/Makefile.am: Fix.
+
 2007-11-22  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Review the directory fun and add test.
