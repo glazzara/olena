@@ -1,3 +1,8 @@
+2007-11-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix compile for fill level.
+	* fill.cc: Remove mln/value/props.hh.
+
 2007-11-23  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Remove useless tests on make.

@@ -35,7 +35,7 @@
 #include <mln/level/fill.hh>
 
 #include <mln/debug/println.hh>
-#include <mln/value/props.hh>
+//#include <mln/value/props.hh>
 
 
 int main()
