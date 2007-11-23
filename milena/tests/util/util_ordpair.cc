@@ -25,39 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*!
- *  \file   tests/tree_fast.cc
+/*! \file util/ordpair.cc
  *
- *  \brief  test of mln::util::tree_fast
- *
+ * \brief Tests on mln::util::ordpair.
  */
 
-#include <mln/util/tree_fast.hh>
-#include <mln/core/contract.hh>
-#include <iostream>
+#include <mln/core/point2d.hh>
+#include <mln/util/ordpair.hh>
 
-int main (void)
+
+
+int main()
 {
   using namespace mln;
 
-  unsigned elt1 = 1;
-  unsigned elt2 = 2;
-  unsigned elt3 = 3;
-  unsigned elt4 = 4;
-  unsigned elt5 = 5;
-  unsigned elt6= 42;
+  point2d p1(5,6), p2(5,7), p3(4,2);
 
-  util::tree_fast<unsigned> tree_fast(elt1);
-  mln_assertion(tree_fast.has (elt1));
-  tree_fast.add_child(tree_fast.search(elt1), elt2);
-  mln_assertion(tree_fast.has (elt2));
-  tree_fast.add_child(tree_fast.search(elt1), elt3);
-  mln_assertion(tree_fast.has (elt3));
-  tree_fast.add_child(tree_fast.search(elt2), elt4);
-  mln_assertion(tree_fast.has (elt4));
-  tree_fast.add_child(tree_fast.search(elt2), elt5);
-  mln_assertion(tree_fast.has (elt5));
-  tree_fast.add_parent(elt6);
-  mln_assertion(tree_fast.has (elt6));
-  mln_assertion(tree_fast.search(elt6) == tree_fast.root_);
+  mln_assertion(util::ordpair (p2, p1) == util::ordpair (p1, p2));
+  mln_assertion(util::ordpair (p1, p3) <  util::ordpair (p1, p2));
+  mln_assertion(util::ordpair (p1, p2) <= util::ordpair (p1, p2));
+  mln_assertion(util::ordpair (p1, p3) <= util::ordpair (p1, p2));
 }

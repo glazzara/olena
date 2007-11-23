@@ -26,7 +26,7 @@
 // Public License.
 
 /*!
- *  \file   tests/branch_iter.cc
+ *  \file   tests/util/branch_iter.cc
  *
  *  \brief  test of mln::util::branch_iter
  *
@@ -41,28 +41,43 @@ int main()
   using namespace mln;
 
   util::node<int> n(11);
-
   util::tree<int> t(&n);
+  util::node<int>* f = n.add_child(21);
+  util::node<int>* g = f->add_child(31);
 
-  util::node<int>* f = n.add_child(42);
-
-  util::node<int>* g = f->add_child(421);
-  f->add_child(422);
-
-  g->add_child(4211)->add_child(51)->add_child(52)->add_child(53)->add_child(54)->add_child(55);
-  g->add_child(4212);
-
-  f->add_child(4221);
-  f->add_child(4222);
-
-  n.add_child(43);
+  f->add_child(32);
+  g->add_child(41)->add_child(51)->add_child(61)->add_child(71)->add_child(81)->add_child(91);
+  g->add_child(42);
+  f->add_child(33);
+  f->add_child(34);
+  n.add_child(22);
 
   util::branch<int> b(t, n);
 
   std::vector< util::node<int>* >::iterator it;
   util::branch_iter<int> p(b);
-  for_all(p)
+
+  int prev;
+  int current;
+  for(p.start(), prev = util::node<int>(p).elt(), p.next();
+      p.is_valid();
+      prev = util::node<int>(p).elt(), p.next())
     {
-      std::cout << "parcour : " << util::node<int>(p).elt() << std::endl;
+      current = util::node<int>(p).elt ();
+
+      // children
+      if (prev + 10 == current)
+	continue;
+
+      // brother
+      if (prev + 1 == current)
+	continue;
+
+      // parent
+      if (prev > current)
+	continue;
+
+      mln_assertion (false);
     }
+
 }

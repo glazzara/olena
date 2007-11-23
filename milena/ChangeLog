@@ -1,3 +1,38 @@
+2007-11-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update util tests subdirectory.
+
+	* tests/branch_iter.cc: Remove.
+	* tests/util/branch_iter.cc: New.
+
+	* tests/tree.cc: Remove.
+	* tests/util/tree.cc: New.
+
+	* tests/tree_delete_node.cc: Remove.
+	* tests/util/tree_delete_node.cc: New.
+
+	* tests/tree_fast.cc: Remove.
+	* tests/util/tree_fast.cc: New.
+
+	* tests/tree_fast_to_image.cc: Remove.
+	* tests/util/tree_fast_to_image.cc: New.
+
+	* tests/tree_to_image.cc: Remove.
+	* tests/util/tree_to_image.cc: New.
+
+	* tests/util_ordpair.cc: Remove.
+	* tests/util/util_ordpair.cc: New.
+
+	* tests/util/Makefile.am: Update somes tests.
+
+
+
+
+
+
+
+	* tests/level/fill.cc: Erase comment header.
+
 2007-11-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make subdirectory histo ready for rereading.

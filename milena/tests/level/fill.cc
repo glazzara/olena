@@ -34,10 +34,6 @@
 #include <mln/core/sub_image.hh>
 #include <mln/level/fill.hh>
 
-#include <mln/debug/println.hh>
-//#include <mln/value/props.hh>
-
-
 int main()
 {
   using namespace mln;
@@ -54,23 +50,6 @@ int main()
     box_fwd_piter_<point2d> p(ima.domain());
     for_all (p)
       mln_assertion (ima(p) == u);
-
   }
-
-//   {
-//     const unsigned size = 10000;
-//     image2d<unsigned char> ima(size, size);
-//     for (unsigned i = 0; i < 5; ++i)
-//       level::fill(ima, uc);
-//     box_fwd_piter_<point2d> p(ima.domain());
-//     for_all (p)
-//       mln_assertion (ima(p) == uc);
-//   }
-
-//   {
-//     // do *not* compile so that's great since ima is not mutable
-//     sub_image< const image2d<int>, box2d > ima;
-//     level::fill(ima, 0);
-//   }
 
 }

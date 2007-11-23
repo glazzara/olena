@@ -39,6 +39,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/level/stretch.hh>
 #include <mln/level/fill.hh>
+#include <mln/level/compare.hh>
 #include <mln/io/pgm/save.hh>
 #include <vector>
 #include <mln/util/tree_to_image.hh>
@@ -60,7 +61,7 @@ int main (void)
 
   typedef fllt_node<point2d , int_u8>  I;
 
-  image2d<int_u8> output (300, 300);
+  image2d<int_u8> output (16, 16);
 
   I s1;
   I s2;
@@ -70,59 +71,66 @@ int main (void)
   I s6;
   I s7;
 
-  for (int i = 0; i < 100; ++i)
-    for (int j = 0; j < 100; ++j)
+  for (int i = 0; i < 4; ++i)
+    for (int j = 0; j < 4; ++j)
       s1.points.insert(point2d(i, j));
   s1.value = 60;
-  for (int i = 200; i < 300; ++i)
-    for (int j = 0; j < 100; ++j)
+  for (int i = 8; i < 16; ++i)
+    for (int j = 0; j < 4; ++j)
       s2.points.insert(point2d(i, j));
   s1.value = 100;
-  for (int i = 0; i < 100; ++i)
-    for (int j = 0; j < 100; ++j)
+  for (int i = 0; i < 4; ++i)
+    for (int j = 0; j < 4; ++j)
       s3.points.insert(point2d(i, j));
   s3.value = 110;
-  for (int i = 260; i < 290; ++i)
-    for (int j = 0; j < 50; ++j)
+  for (int i = 10; i < 12; ++i)
+    for (int j = 0; j < 2; ++j)
       s4.points.insert(point2d(i, j));
   s4.value = 170;
-  for (int i = 200; i < 210; ++i)
-    for (int j = 0; j < 50; ++j)
+  for (int i = 8; i < 14; ++i)
+    for (int j = 0; j < 2; ++j)
       s5.points.insert(point2d(i, j));
   s5.value = 180;
-  for (int i = 270; i < 280; ++i)
-    for (int j = 50; j < 60; ++j)
+  for (int i = 13; i < 15; ++i)
+    for (int j = 2; j < 4; ++j)
       s6.points.insert(point2d(i, j));
   s6.value = 210;
-  for (int i = 0; i < 300; ++i)
-    for (int j = 0; j < 200; ++j)
+  for (int i = 0; i < 16; ++i)
+    for (int j = 0; j < 8; ++j)
       s7.points.insert(point2d(i, j));
   s7.value = 10;
 
   util::node<I> node(s1);
   node.add_child(s2);
   node.add_child(s3);
-
-//   util::node<I>* node2 = node.search(s2);
-//   mln_assertion(node2);
   node.add_child(s4);
   node.add_child(s5);
-//   util::node<I>* node3 = node.search(s4);
-//   mln_assertion(node3);
   node.add_child(s6);
-
   util::tree<I> tree (&node);
-
   tree.add_tree_up(s7);
-
   util::tree_to_image(tree, output);
 
-  image2d<int_u8> out(output.domain());
+  int_u8 vs[16][16] = {
 
-  level::stretch (output, out);
+    {110, 110, 110, 110, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {110, 110, 110, 110, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {110, 110, 110, 110, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {110, 110, 110, 110, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 10,  10,  10,  10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 10,  10,  10,  10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 10,  10,  10,  10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 10,  10,  10,  10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180,  16,  16, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180,  16,  16, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180,  16,  16, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180,  16,  16, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180,  16,  16, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180, 210, 210, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 16,  16, 210, 210, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 16,  16,  16,  16, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0}
 
-  io::pgm::save(out, "out.pgm");
+  };
 
-  std::cout << "out.pgm generate"
-	    << std::endl;
+  image2d<int_u8> ref (make::image2d(vs));
+  mln_assertion(ref == output);
 }

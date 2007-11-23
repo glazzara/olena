@@ -26,16 +26,15 @@
 // Public License.
 
 /*!
- *  \file   tests/tree.cc
+ *  \file   tests/util/tree.cc
  *
  *  \brief  test of mln::util::tree
  *
  */
 
 #include <mln/util/tree.hh>
-#include <mln/core/contract.hh>
 
-int main (void)
+int main ()
 {
   using namespace mln;
 
@@ -49,7 +48,6 @@ int main (void)
   util::node<unsigned> node(elt1);
   util::node<unsigned>* node2 =  node.add_child(elt2);
   node.add_child(elt3);
-//   util::node<unsigned>* node2 = node.search(elt2);
   mln_assertion(node2);
   node2->add_child(elt4);
   node2->add_child(elt5);
