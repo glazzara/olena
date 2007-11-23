@@ -26,44 +26,21 @@
 // Public License.
 
 /*!
- *  \file   tests/tree_delete_node.cc
+ *  \file   tests/util/eat.cc
  *
- *  \brief  test of mln::util::tree
+ *  \brief  test of mln::util::eat
  *
  */
 
-#include <mln/util/tree.hh>
-#include <mln/core/contract.hh>
+#include <mln/util/eat.hh>
 
-int main (void)
+int main ()
 {
   using namespace mln;
 
-  unsigned elt1 = 1;
-  unsigned elt2 = 2;
-  unsigned elt3 = 3;
-  unsigned elt4 = 4;
-  unsigned elt5 = 5;
-  unsigned elt6= 42;
+  int a = 42;
+  util::eat e(a);
 
-  util::node<unsigned> node(elt1);
-  util::node<unsigned>* node2 =  node.add_child(elt2);
-  node.add_child(elt3);
-//   util::node<unsigned>* node2 = node.search(elt2);
-  mln_assertion(node2);
-  node2->add_child(elt4);
-  node2->add_child(elt5);
-  util::node<unsigned>* node3 = node.search(elt4);
-  mln_assertion(node3);
-  node3 = node2->search(elt1);
-  mln_assertion(!node3);
-  util::tree<unsigned>* tre = new util::tree<unsigned>(&node);
-  mln_assertion(tre);
-  tre->add_tree_up(elt6);
-  mln_assertion (tre->check_consistency());
-  std::cout << "before delete" << std::endl;
-  node.print (0);
-  std::cout << "after delete" << std::endl;
-  node2->delete_node();
-  node.print (0);
+//   // FIXME
+//   mln_assertion(false);
 }

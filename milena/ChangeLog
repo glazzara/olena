@@ -1,5 +1,18 @@
 2007-11-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Clean util subdirectory tests.
+
+	* tests/util/Makefile.am: Update tests file.
+
+	* tests/util/branch_iter_ind.cc: New.
+	* tests/util/eat.cc: New.
+	* tests/util/graph.cc: New.
+	* tests/util/ordpair.cc: New.
+	* tests/util/tree_delete_node.cc: Remove.
+	* tests/util/util_ordpair.cc: Remove.
+
+2007-11-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update util tests subdirectory.
 
 	* tests/branch_iter.cc: Remove.
