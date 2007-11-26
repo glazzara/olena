@@ -33,6 +33,7 @@
  */
 
 #include <mln/util/graph.hh>
+#include <iostream>
 
 int main ()
 {

@@ -30,7 +30,7 @@
 
 # include <vector>
 # include <algorithm>
-# include <iostream>
+# include <ostream>
 # include <algorithm>
 # include <mln/core/contract.hh>
 
@@ -52,79 +52,229 @@ namespace mln
     template <typename T> class tree;
     template <typename T> class branch;
 
+
+    /*! \brief Class of generic node for tree.
+     *
+     */
     template <typename T>
     class node
     {
     public:
 
       typedef std::vector< node<T>* > children_t;
-      /// \{ Constructors
+
+      /*! \brief Constructor.
+       *
+       */
       node();
+
+      /*! \brief Constructor.
+       *
+       * \param[in] elt The element of node.
+       */
       node(T elt);
-      /// \}
 
-      /// \{ Acccess to the element.
+
+      /*! \brief The getter of the element.
+       *
+       * \return The element of the node.
+       */
       T& elt();
-      const T& elt() const;
-      /// \}
 
-      /// Access to the children
-      const children_t& children() const;
+      /*! \brief The const getter of the element.
+       *
+       * \return The element of the node in const.
+       */
+      const T& elt() const;
+
+
+      /*! \brief The getter of the children.
+       *
+       * \return The children of the node.
+       */
       children_t& children();
 
-      /// Access to the parent node.
+
+      /*! \brief The getter of the children.
+       *
+       * \return The children of the node in const.
+       */
+      const children_t& children() const;
+
+
+      /*! \brief The getter of the parent.
+       *
+       * \return The parent of the node.
+       */
       node<T>* parent();
-      //node<T>*& parent();
 
-      /// \{ Add a child to the node
+
+      /*! \brief Create a node with \p elt which become the child of
+       *  the current node.
+       *
+       * \param[in] elt The element of the new child to add.
+       *
+       * \return The new node created.
+       */
       node<T>* add_child(T elt);
-      node<T>* add_child(node<T>* node);
-      /// \}
 
+      /*! \brief Bind \p node to the current node and become its
+       *  child.
+       *
+       * \param[in] node The new child node.
+       *
+       * \return The child node.
+       */
+      node<T>* add_child(node<T>* node);
+
+      /*! \brief Bind \p node to the current node and become its
+       *  parent.
+       *
+       * \param[in] node The new parent node.
+       *
+       */
       void set_parent(node<T>* parent);
+
+      /*! \brief Delete the current node.
+       *
+       */
       node<T>* delete_node();
-      void print(int level);
+
+      /*! \brief Print on \p ostr the arborescence with the current
+       *  node as root.
+       *
+       * \param[in] ostr The output stream.
+       *
+       */
+      void print(std::ostream& ostr, int level = 0);
+
+      /*! \brief Check the consistency of the node.
+       *
+       *  \return true if no error, else false.
+       */
       bool check_consistency();
-      int  search_rec(node<T>** res, T& elt);
+
+
+      /*! \brief Search the node with value \p elt in the arborescence
+       *  of the current node.
+       *
+       *  \param[in] elt The value of the searched node.
+       *
+       *  \return If not found 0 else the node with \p elt value.
+       */
       node<T>* search(T& elt);
 
+      /// The using method for method search.
+      int  search_rec(node<T>** res, T& elt);
+
     private:
-      //FIXME tree<T>& tree_;
+
+      /// The value.
       T elt_;
+
+      /// The node parent.
       node<T>* parent_;
+
+      /// The children.
       std::vector< node<T>* > child_;
     };
 
+
+
+    /*! \brief Class of generic tree.
+     *
+     */
     template <typename T>
     class tree
     {
     public:
+
       typedef node<T> node_t;
+
+      /*! \brief Constructor.
+       *
+       */
       tree();
+
+      /*! \brief Constructor.
+       *
+       * \param[in] root The root of the tree.
+       */
       tree(node<T>* root);
 
+
+      /*! \brief The getter of the root.
+       *
+       * \return The root's node of the the current tree.
+       */
       node<T>* root();
+
+      /*! \brief Convert the tree into brach.
+       *
+       * \return The root's node of the the current tree.
+       */
       branch<T> main_branch();
+
+      /*! \brief Check the consistency of the tree.
+       *
+       *  \return true if no error, else false.
+       */
       bool check_consistency();
+
+
+      /*! \brief Bind a new tree upper the current.
+       *
+       *  \param[in] elt The new value of the new node of the new tree
+       *  add upper the current.
+       */
       void add_tree_up (T& elt);
+
+      /*! \brief Bind a new tree downer the current.
+       *
+       *  \param[in] elt The new value of the new node of the new tree
+       *  add downer the current.
+       */
       void add_tree_down (T& elt);
 
     private:
+
+      /// The root's node.
       node<T>* root_;
     };
 
 
+    /*! \brief Class of generic branch.
+     *
+     */
     template <typename T>
     class branch
     {
     public:
+
+      /*! \brief Constructor.
+       *
+       * \param[in] tree The tree of the branch.
+       * \param[in] apex The apex of the branch.
+       */
       branch(tree<T>& tree, node<T>& apex);
 
+      /*! \brief The getter of the appex.
+       *
+       *  \return The node appex of the current branch.
+       */
       node<T>& apex();
+
+      /*! \brief The getter of the tree.
+       *
+       *  \return The tree of the current branch.
+       */
       tree<T>& tree();
 
     private:
+      /// The tree of this branch.
       util::tree<T>& tree_;
+
+      /// The node apex of this branch.
       node<T>& apex_;
     };
 
@@ -280,11 +430,11 @@ namespace mln
 
     template <typename T>
     void
-    node<T>::print(int level)
+    node<T>::print(std::ostream& ostr, int level)
     {
-      std::cout << level << std::endl;
+      ostr << level << std::endl;
 
-      std::cout << " elt " << this->elt() << std::endl;
+      ostr << " elt " << this->elt() << std::endl;
 
 
       for (typename std::vector<node<T>* >::iterator it = this->child_.begin();

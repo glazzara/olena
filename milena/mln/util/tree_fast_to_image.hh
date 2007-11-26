@@ -46,34 +46,62 @@ namespace mln
   namespace util
   {
 
+    /*! Convert a tree_fast into an image.
+     *
+     * \param[in] tree The tree to convert.
+     * \param[out] output_ The image containing tree informations.
+     *
+     */
     template <typename T, typename I>
     void
     tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_);
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace impl
+    {
+
+      template <typename T, typename I>
+      void
+      tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_)
+      {
+	trace::entering("util::impl::tree_fast_to_image");
+
+	I& output = exact(output_);
+	std::list<unsigned> l;
+
+	l.push_back (tree.root_);
+	while (! l.empty())
+	  {
+	    unsigned current = l.front();
+	    for (unsigned i = 0; i < tree.child_[current].size(); ++i)
+	      l.push_back(tree.child_[current][i]);
+
+	    mln_piter(p_set<point2d>) p(tree.data_[current].points);
+
+	    for_all(p)
+	      {
+		output(p) = tree.data_[current].value;
+	      }
+	    l.pop_front();
+	  }
+
+	trace::exiting("util::impl::tree_fast_to_image");
+      }
+
+    } // end of mln::util::impl
+
+
+
     template <typename T, typename I>
     void
     tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_)
     {
-      I& output = exact(output_);
-      std::list<unsigned> l;
+      trace::entering("util::tree_fast_to_image");
 
-      l.push_back (tree.root_);
-      while (! l.empty())
-	{
-	  unsigned current = l.front();
-	  for (unsigned i = 0; i < tree.child_[current].size(); ++i)
-	    l.push_back(tree.child_[current][i]);
+      impl::tree_fast_to_image(tree, output_);
 
-	  mln_piter(p_set<point2d>) p(tree.data_[current].points);
-
-	  for_all(p)
-	    {
-	      output(p) = tree.data_[current].value;
-	    }
-	  l.pop_front();
-	}
+      trace::exiting("util::tree_fast_to_image");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

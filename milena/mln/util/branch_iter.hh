@@ -46,7 +46,8 @@ namespace mln
 
     /*! \brief Basic 2D image class.
      *
-     * The parameter \c T is the type of node's data. branch_iter is used to pre-order walk a branch.
+     * The parameter \c T is the type of node's data. branch_iter is
+     * used to pre-order walk a branch.
      *
      */
     template <typename T>

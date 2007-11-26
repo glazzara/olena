@@ -42,7 +42,9 @@ namespace mln
   namespace util
   {
 
-    /// Nil structure.
+    /*! \brief Nil structure.
+     *
+     */
     struct nil : public Object< nil >
     {
       nil();

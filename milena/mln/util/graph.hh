@@ -30,7 +30,7 @@
 
 # include <mln/core/concept/object.hh>
 # include <cstddef>
-# include <iostream>
+# include <ostream>
 # include <vector>
 # include <list>
 # include <algorithm>
@@ -46,6 +46,9 @@ namespace mln
   namespace util
   {
 
+    /*! \brief Structure of generic node.
+     *
+     */
     template<typename T>
     struct s_node
     {
@@ -53,12 +56,20 @@ namespace mln
       std::vector<unsigned> links;
     };
 
+
+    /*! \brief Structure of node with void parameter.
+     *
+     */
     template<>
     struct s_node<void>
     {
       std::list<unsigned> links;
     };
 
+
+    /*! \brief Structure of generic edge.
+     *
+     */
     template<typename T>
     struct s_edge
     {
@@ -67,6 +78,9 @@ namespace mln
       unsigned node2;
     };
 
+    /*! \brief Structure of edge with void parameter.
+     *
+     */
     template<>
     struct s_edge <void>
     {
@@ -74,18 +88,65 @@ namespace mln
       unsigned node2;
     };
 
+    /*! \brief Generic graph using s_node and s_edge.
+     *
+     */
     template<typename N, typename E = void>
     struct graph
     {
+      /*! \brief Constructor.
+       *
+       */
       graph ();
 
+      /*! \brief Add a void node.
+       *
+       */
       void add_node (void);
+
+
+      /*! \brief Add a void edge between \p n1 and \p n2.
+       *
+       * \param[in] n1 The first node to link.
+       * \param[in] n2 The second node to link.
+       *
+       * \pre n1 < nb_node_.
+       * \pre n2 < nb_node_.
+       *
+       */
       void add_edge (unsigned n1, unsigned n2);
+
+
+      /*! \brief Check the consistency of the graph.
+       *
+       * Check if all edge have their node in the graph.
+       *
+       * \pre nodes_.size () == nb_node_.
+       * \pre links_.size () == nb_link_.
+       *
+       */
       void consistency () const;
-      void print_debug () const;
+
+
+      /*! \brief Print on \p ostr the graph.
+       *
+       * \param[in] ostr The output stream.
+       *
+       */
+      void print_debug (std::ostream& ostr) const;
+
+
+
+      /// The nuber of nodes.
       unsigned nb_node_;
+
+      /// The nuber of links.
       unsigned nb_link_;
+
+      /// The vector where is stocked the pointers of nodes.
       std::vector<struct s_node<N>*> nodes_;
+
+      /// The vector where is stocked the pointers of links.
       std::vector<struct s_edge<E>*> links_;
     };
 
@@ -151,27 +212,23 @@ namespace mln
 
     template<typename N, typename E>
     void
-    graph<N, E>::print_debug () const
+    graph<N, E>::print_debug (std::ostream& ostr) const
     {
-      std::cout << "nodes :"
-		<< std::endl;
+      ostr << "nodes :"	<< std::endl;
 
       typename std::vector<struct s_node<N>*>::const_iterator it = nodes_.begin ();
       int i = 0;
       for (; it != nodes_.end (); ++it, ++i)
 	{
-	  std::cout << "node number = "
-		    << i
-		    << " nbh : ";
+	  ostr << "node number = " << i << " nbh : ";
 	  typename std::list<unsigned>::const_iterator it2 = (*it)->links.begin ();
 	  for (; it2 != (*it)->links.end (); ++it2)
 	    {
-	      std::cout << (*it2)
-			<< " ";
+	      ostr << (*it2) << " ";
 	    }
-	  std::cout << std::endl;
+	  ostr << std::endl;
 	}
-      std::cout << std::endl;
+      ostr << std::endl;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

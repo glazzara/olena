@@ -45,124 +45,172 @@ namespace mln
   namespace util
   {
 
+    /*! Convert a tree into an image.
+     *
+     * \param[in] tree The tree to convert.
+     * \param[out] output_ The image containing tree informations.
+     *
+     */
     template <typename T, typename I>
     void
     tree_to_image (tree<T>& tree, Image<I>& output_);
 
-    template <typename P, typename J>
-    void
-    display_set(const Image<J>& ima_, p_set<P>& s);
-
+    /*! Display a tree.
+     *
+     * \param[in] ima The domain of output image.
+     * \param[in] tree The tree to display.
+     *
+     */
     template <typename I, typename J>
     void
     display_tree(const Image<J>& ima_, tree<I>& tree);
 
+
+    /*! Display an arborescence from \p node.
+     *
+     * \param[in] ima The domain of output image.
+     * \param[in] node The root node to display.
+     *
+     */
     template <typename I, typename J>
     void
     display_branch(const Image<J>& ima_, node<I>* node);
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename T, typename I>
-    void
-    tree_to_image_rec(node<T>* node, Image<I>& output_)
+    namespace impl
     {
-      I& output = exact(output_);
 
-      mln_piter(p_set<point2d>) p(node->elt().points);
+      template <typename T, typename I>
+      void
+      tree_to_image_rec(node<T>* node, Image<I>& output_)
+      {
+	trace::entering("util::impl::tree_to_image_rec");
 
-      for_all(p)
-	output(p) = node->elt().value;
+	I& output = exact(output_);
 
-      typename std::vector< util::node<T>* >::const_iterator it = node->children().begin();
+	mln_piter(p_set<point2d>) p(node->elt().points);
 
-      for (int i = 0;
-	   it != node->children().end();
-	   ++it, ++i)
-	{
-	  if (*it)
-	    tree_to_image_rec((*it), output);
-	}
-    }
+	for_all(p)
+	  output(p) = node->elt().value;
+
+	typename std::vector< util::node<T>* >::const_iterator it = node->children().begin();
+
+	for (int i = 0;
+	     it != node->children().end();
+	     ++it, ++i)
+	  {
+	    if (*it)
+	      tree_to_image_rec((*it), output);
+	  }
+	trace::exiting("util::impl::tree_to_image_rec");
+      }
+
+      template <typename T, typename J>
+      void
+      display_tree_rec(const Image<J>& ima_, node<T>* node, int level)
+      {
+	trace::entering("util::impl::display_tree_rec");
+
+	const J& ima = exact(ima_);
+	display_set(ima, node->elt().points);
+	typename mln::util::node<T>::children_t::iterator it = node->children().begin();
+	for (;
+	     it != node->children().end(); ++it)
+	  display_tree_rec(ima, (*it), level + 1);
+
+	trace::exiting("util::impl::display_tree_rec");
+      }
+
+
+      template <typename T, typename J, typename K>
+      void
+      display_branch_rec(const Image<J>& ima_, node<T>* node, Image<K>& output_)
+      {
+	trace::entering("util::impl::display_branch_rec");
+
+	K& output = exact(output_);
+	const J& ima = exact(ima_);
+
+	mln_piter(p_set<point2d>) p(node->elt().points);
+	for_all (p)
+	  output(p) = true;
+	typename mln::util::node<T>::children_t::iterator it = node->children().begin();
+	for (;
+	     it != node->children().end(); ++it)
+	  display_branch_rec(ima, (*it), output);
+
+	trace::exiting("util::impl::display_branch_rec");
+      }
+
+
+      template <typename P, typename J>
+      void
+      display_set(const Image<J>& ima_, p_set<P>& s)
+      {
+	trace::entering("util::impl::display_set");
+
+	const J& ima = exact(ima_);
+	image2d<bool> out (ima.bbox ());
+
+	level::fill(out, false);
+	mln_piter(p_set<P>) p (s);
+	for_all (p)
+	  out(p) = true;
+
+	trace::exiting("util::impl::display_set");
+      }
+
+
+    } // end of namespace mln::util::impl
+
+
 
     template <typename T, typename I>
     void
     tree_to_image (tree<T>& tree, Image<I>& output_)
     {
+      trace::entering("util::tree_to_image");
+
       I& output = exact(output_);
-      tree_to_image_rec(tree.root(), output);
+      impl::tree_to_image_rec(tree.root(), output);
+
+      trace::exiting("util::tree_to_image");
     }
 
-
-    template <typename P, typename J>
-    void
-    display_set(const Image<J>& ima_, p_set<P>& s)
-    {
-      const J& ima = exact(ima_);
-      image2d<bool> out (ima.bbox ());
-
-      level::fill(out, false);
-      mln_piter(p_set<P>) p (s);
-      for_all (p)
-	out(p) = true;
-    }
-
-
-    template <typename T, typename J>
-    void
-    display_tree_rec(const Image<J>& ima_, node<T>* node, int level)
-    {
-      const J& ima = exact(ima_);
-      std::cout << level << std::endl;
-      std::cout << std::endl;
-      display_set(ima, node->elt().points);
-      typename mln::util::node<T>::children_t::iterator it = node->children().begin();
-      for (;
-	   it != node->children().end(); ++it)
-	display_tree_rec(ima, (*it), level + 1);
-      std::cout << std::endl;
-      std::cout << std::endl;
-      std::cout << std::endl;
-      std::cout << std::endl;
-    }
 
     template <typename I, typename J>
     void
     display_tree(const Image<J>& ima_, tree<I>& tree)
     {
+      trace::entering("util::display_tree");
+
+      mln_precondition(tree.root());
+
       const J& ima = exact(ima_);
       int level = 0;
 
-      mln_assertion(tree.root());
-      display_tree_rec(ima, tree.root(), level);
+      impl::display_tree_rec(ima, tree.root(), level);
+
+      trace::exiting("util::display_tree");
     }
 
-    template <typename T, typename J, typename K>
-    void
-    display_branch_rec(const Image<J>& ima_, node<T>* node, Image<K>& output_)
-    {
-      K& output = exact(output_);
-      const J& ima = exact(ima_);
-
-      mln_piter(p_set<point2d>) p(node->elt().points);
-      for_all (p)
-	output(p) = true;
-      typename mln::util::node<T>::children_t::iterator it = node->children().begin();
-      for (;
-	   it != node->children().end(); ++it)
-	display_branch_rec(ima, (*it), output);
-    }
 
     template <typename I, typename J>
     void
     display_branch(const Image<J>& ima_, node<I>* node)
     {
-      const J& ima = exact(ima_);
-      image2d<bool> output (ima.domain ());
+      trace::entering("util::display_branch");
 
-      level::fill(output, false);
       mln_assertion(node);
-      display_branch_rec(ima, node, output);
+
+      const J& ima = exact(ima_);
+
+      image2d<bool> output (ima.domain ());
+      level::fill(output, false);
+      impl::display_branch_rec(ima, node, output);
+
+      trace::exiting("util::display_branch");
     }
 
 

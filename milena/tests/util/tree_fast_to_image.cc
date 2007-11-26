@@ -26,21 +26,24 @@
 // Public License.
 
 /*!
- *  \file   tests/tree_fast_to_image.cc
+ *  \file   tests/util/tree_fast_to_image.cc
  *
  *  \brief  test of mln::util::tree_fast_to_image
  *
  */
 
+#include <mln/util/tree_fast.hh>
 #include <mln/core/contract.hh>
 #include <mln/core/image2d.hh>
 #include <mln/core/p_set.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/stretch.hh>
+#include <mln/level/fill.hh>
+#include <mln/level/compare.hh>
 #include <mln/io/pgm/save.hh>
 #include <vector>
 #include <mln/util/tree_fast_to_image.hh>
-#include <mln/util/tree_fast.hh>
+#include <mln/debug/println.hh>
 
 template <typename P, typename V>
 struct fllt_node
@@ -51,92 +54,83 @@ struct fllt_node
 };
 
 
-template <typename P, typename V>
-bool operator==(const mln::p_set<P>& lhs, const mln::p_set<P>& rhs)
-{
-  std::size_t n = lhs.npoints ();
-  mln::p_set<P> tmp;
-
-  if (n != rhs.npoints ())
-    return false;
-
-//   for (std::size_t i = 0; i < n; ++i)
-//     if ()
-
-}
-
-template <typename P, typename V>
-bool operator==(const struct fllt_node<P,V>& lhs, const struct fllt_node<P,V>& rhs)
-{
-  if (lhs.value != rhs.value)
-    return false;
-
-  /// FIXME
-
-  if (!(lhs.points == rhs.points))
-    return false;
-
-  if (!(lhs.holes == rhs.holes))
-    return false;
-
-  return true;
-}
-
 int main (void)
 {
   using namespace mln;
   using value::int_u8;
 
-  typedef p_set<point2d > I;
-  typedef fllt_node<point2d, int_u8> T;
+  typedef fllt_node<point2d , int_u8>  I;
 
-  T s1;
-  T s2;
-  T s3;
-  T s4;
-  T s5;
-  T s6;
-  T s7;
 
-  for (int i = 0; i < 100; ++i)
-    for (int j = 0; j < 100; ++j)
+  I s1;
+  I s2;
+  I s3;
+  I s4;
+  I s5;
+  I s6;
+  I s7;
+
+  for (int i = 0; i < 4; ++i)
+    for (int j = 0; j < 4; ++j)
       s1.points.insert(point2d(i, j));
   s1.value = 60;
-  for (int i = 200; i < 300; ++i)
-    for (int j = 0; j < 100; ++j)
+  for (int i = 8; i < 16; ++i)
+    for (int j = 0; j < 4; ++j)
       s2.points.insert(point2d(i, j));
-  s2.value = 100;
-  for (int i = 0; i < 100; ++i)
-    for (int j = 0; j < 100; ++j)
+  s1.value = 100;
+  for (int i = 0; i < 4; ++i)
+    for (int j = 0; j < 4; ++j)
       s3.points.insert(point2d(i, j));
   s3.value = 110;
-  for (int i = 260; i < 290; ++i)
-    for (int j = 0; j < 50; ++j)
+  for (int i = 10; i < 12; ++i)
+    for (int j = 0; j < 2; ++j)
       s4.points.insert(point2d(i, j));
   s4.value = 170;
-  for (int i = 200; i < 210; ++i)
-    for (int j = 0; j < 50; ++j)
+  for (int i = 8; i < 16; ++i)
+    for (int j = 0; j < 2; ++j)
       s5.points.insert(point2d(i, j));
   s5.value = 180;
-  for (int i = 270; i < 280; ++i)
-    for (int j = 50; j < 60; ++j)
+  for (int i = 8; i < 16; ++i)
+    for (int j = 2; j < 4; ++j)
       s6.points.insert(point2d(i, j));
   s6.value = 210;
-  for (int i = 0; i < 300; ++i)
-    for (int j = 0; j < 200; ++j)
+  for (int i = 0; i < 16; ++i)
+    for (int j = 0; j < 8; ++j)
       s7.points.insert(point2d(i, j));
   s7.value = 10;
 
-  util::tree_fast<T> tree(s1);
+  util::tree_fast<I> tree(s1);
   tree.add_child(tree.root_, s2);
-  tree.add_child(tree.search(s1), s3);
-  tree.add_child(tree.search(s2), s4);
-  tree.add_child(tree.search(s2), s5);
-  tree.add_child(tree.search(s4), s6);
+  tree.add_child(tree.root_, s3);
+  tree.add_child(tree.root_, s4);
+  tree.add_child(tree.root_, s5);
+  tree.add_child(tree.root_, s6);
   tree.add_parent(s7);
-  image2d<int_u8> out (300,300);
-  util::tree_fast_to_image(tree, out);
-  io::pgm::save(out, "out.pgm");
-  std::cout << "out.pgm generate"
-	    << std::endl;
+  image2d<int_u8> output (16, 16);
+  level::fill(output, 0);
+  util::tree_fast_to_image(tree, output);
+
+  int_u8 vs[16][16] = {
+
+    {110, 110, 110, 110, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {110, 110, 110, 110, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {110, 110, 110, 110, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {110, 110, 110, 110, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 10,  10,  10,  10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 10,  10,  10,  10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 10,  10,  10,  10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    { 10,  10,  10,  10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180, 210, 210, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180, 210, 210, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180, 210, 210, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180, 210, 210, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180, 210, 210, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180, 210, 210, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180, 210, 210, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
+    {180, 180, 210, 210, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0}
+
+  };
+
+  image2d<int_u8> ref (make::image2d(vs));
+  mln_assertion(ref == output);
 }

@@ -39,10 +39,12 @@
 namespace mln
 {
 
-  /// FIXME : doc
   namespace select
   {
 
+    /*! \brief Structure p_of.
+     *
+     */
     template <typename P>
     struct p_of : P
     {
@@ -57,19 +59,53 @@ namespace mln
   namespace util
   {
 
-    /// Pix structure.
+    /*! \brief Structure pix.
+     *
+     */
     template <typename I>
     struct pix
     {
+
+      /// Point_Site associated type.
       typedef mln_psite(I) psite;
+
+      /// Value associated type.
       typedef mln_value(I) value;
 
+      /*! \brief Constructor.
+       *
+       * \param[in] ima The image.
+       * \param[in] p The p_site.
+       */
       pix(const Image<I>& ima, const mln_psite(I)& p);
+
+      /*! \brief The getter of the image associate to pix structure.
+       *
+       * \return The image ima_.
+       *
+       */
       const I&          ima() const;
+
+      /*! \brief The getter of psite associate to pix structure.
+       *
+       * \return The psite p_.
+       *
+       */
       const mln_psite(I)& p() const;
+
+      /*! \brief The getter of value associate to pix structure.
+       *
+       * \return The value of pix.
+       *
+       */
       mln_rvalue(I)       v() const;
+
     private:
+
+      /// The image associate to pix.
       const I& ima_;
+
+      /// The psite associate to pix.
       const mln_psite(I)& p_;
     };
 

@@ -1,3 +1,28 @@
+2007-11-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Review util subdirectory.
+
+	* mln/util/branch_iter.hh,
+	* mln/util/branch_iter_ind.hh,
+	* mln/util/eat.hh,
+	* mln/util/graph.hh,
+	* mln/util/ignore.hh,
+	* mln/util/nil.hh,
+	* mln/util/pix.hh,
+	* mln/util/tree.hh,
+	* mln/util/tree_fast.hh,
+	* mln/util/tree_fast_to_image.hh,
+	* mln/util/tree_to_image.hh: Add doc, tracing, fix typo.
+
+
+	Tests
+	* tests/util/Makefile.am: Update tests.
+
+	* tests/util/tree_fast_to_image.cc: Fix this test.
+	* tests/util/graph.cc,
+	* tests/util/tree.cc,
+	* tests/util/tree_to_image.cc: Update.
+
 2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Moves the io's tests.

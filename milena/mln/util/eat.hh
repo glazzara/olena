@@ -42,7 +42,9 @@ namespace mln
   namespace util
   {
 
-    /// Eat structure.
+    /*! \brief Eat structure.
+     *
+     */
     struct eat : public Object< eat >
     {
       eat();

@@ -38,12 +38,12 @@ int main ()
 {
   using namespace mln;
 
-  unsigned elt1 = 1;
-  unsigned elt2 = 2;
-  unsigned elt3 = 3;
-  unsigned elt4 = 4;
-  unsigned elt5 = 5;
-  unsigned elt6= 42;
+  unsigned elt1 =  1;
+  unsigned elt2 =  2;
+  unsigned elt3 =  3;
+  unsigned elt4 =  4;
+  unsigned elt5 =  5;
+  unsigned elt6 = 42;
 
   util::node<unsigned> node(elt1);
   util::node<unsigned>* node2 =  node.add_child(elt2);

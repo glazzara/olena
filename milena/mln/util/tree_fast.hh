@@ -29,7 +29,6 @@
 # define MLN_UTIL_TREE_FAST_HH
 
 # include <vector>
-# include <iostream>
 
 # include <mln/core/contract.hh>
 
@@ -49,19 +48,70 @@ namespace mln
     template <typename T>
     struct tree_fast
     {
+      /*! \brief Constructor.
+       *
+       */
       tree_fast();
+
+      /*! \brief Constructor.
+       *
+       *  \param[in] elt The value of the root of the tree.
+       */
       tree_fast(T& elt);
 
+      /*! \brief Return the size of the tree.
+       *
+       *  \return the number of node of the tree.
+       */
       const unsigned size() const;
+
+
+      /*! \brief Check if the tree has \p elt.
+       *
+       *  \return true if it has it else false.
+       */
       bool has (T& elt) const;
+
+
+      /*! \brief Search the position of the node with \p elt.
+       *
+       *  \param[in] elt The value of the searched node.
+       *
+       *  \return the position of the node if it's found else UINT_MAX.
+       */
       unsigned search (T& elt) const;
+
+
+      /*! \brief Check if the node at position \p i is the root node.
+       *
+       *  \return true if it's the node root it else false.
+       */
       bool is_root (unsigned i) const;
+
+
+      /*! \brief Add a child with value \p elt to the \p i th node.
+       *
+       *  \return The position of the add child.
+       */
       unsigned add_child (unsigned i, T& elt);
+
+
+      /*! \brief Add a parent with value \p elt to this tree.
+       *
+       *  \return The position of the new root of this tree.
+       */
       unsigned add_parent (T& elt);
 
+      /// The vector of the value of all node of the tree.
       std::vector<T> data_;
+
+      /// The vector of the parent's position of all node of the tree.
       std::vector<unsigned> parent_;
+
+      /// The vector of the vector children position of all node of the tree.
       std::vector<std::vector<unsigned> > child_;
+
+      /// The position of the root in data_.
       unsigned root_;
     };
 
@@ -108,8 +158,9 @@ namespace mln
       for (unsigned i = 0; i < data_.size (); ++i)
 	if (data_[i] == elt)
 	  return i;
-      std::cerr << "BUGG !!!!"
-		<< std::endl;
+
+      /// Bug the search failed.
+      mln_assertion (false);
       return (unsigned)(-1);
     }
 

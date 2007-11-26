@@ -42,7 +42,9 @@ namespace mln
   namespace util
   {
 
-    /// Ignore structure.
+    /*! \brief Ignore structure.
+     *
+     */
     struct ignore : public Object< ignore >
     {
       ignore();

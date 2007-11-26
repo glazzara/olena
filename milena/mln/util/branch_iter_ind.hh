@@ -60,8 +60,9 @@ namespace mln
 
     /*! \brief Basic 2D image class.
      *
-     * The parameter \c T is the type of node's data. branch_iter_ind is used to pre-order walk a branch.
-
+     * The parameter \c T is the type of node's data. branch_iter_ind
+     * is used to pre-order walk a branch.
+     *
      */
     template <typename T>
     class branch_iter_ind
@@ -87,6 +88,7 @@ namespace mln
 
       /// Give how deep is the iterator in the branch.
       unsigned deepness() const;
+
     private:
       /// The branch to iter.
       util::branch<T> branch_;
