@@ -43,7 +43,7 @@
 
 # include <mln/core/image2d.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/io/fitsio.h>
+# include <fitsio.h>
 
 namespace mln
 {
@@ -78,9 +78,6 @@ namespace mln
 	  fits_exit(status);
 
 	const int ncols = naxes[0], nrows = naxes[1];
-
-	std::cout << "ncols : " << ncols
-		  << "nrows : " << nrows << std::endl;
 
 	image2d<float> output(nrows, ncols);
 

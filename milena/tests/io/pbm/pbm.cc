@@ -34,22 +34,27 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
 
+#include <mln/level/compare.hh>
+
 
 int main()
 {
   using namespace mln;
 
-  image2d<bool> pic = io::pbm::load("../img/picasso.pbm");
+  image2d<bool> pic = io::pbm::load("../../../img/picasso.pbm");
   io::pbm::save(pic, "pic.pbm");
+  image2d<bool> pic2 = io::pbm::load("pic.pbm");
+
+  mln_assertion(pic == pic2);
 }
 
 
 // sample binary image to test with xv, imview, and display
 // to bring into the fore the binary image bug with raw pbm.
 
-// | | | | - 
-// | | - - - 
-// | - - - - 
-// - - - - - 
-// - - - - - 
-// - - - - - 
+// | | | | -
+// | | - - -
+// | - - - -
+// - - - - -
+// - - - - -
+// - - - - -

@@ -38,6 +38,8 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
+#include <mln/level/compare.hh>
+
 int main()
 {
   using namespace mln;
@@ -45,18 +47,26 @@ int main()
 
   {
     image2d<int_u8>
-      lena = io::pgm::load<int_u8>("../img/lena.pgm");
+      lena = io::pgm::load<int_u8>("../../../img/lena.pgm");
 
     io::pgm::save(lena, "out.pgm");
+
+    image2d<int_u8>
+      lena2 = io::pgm::load<int_u8>("out.pgm");
+
+    mln_assertion(lena2 == lena);
   }
 
 
   {
     image2d< value::int_u<8> >
-      lena;
-    io::pgm::load(lena, "../img/lena.pgm");
+      lena, lena2;
+    io::pgm::load(lena, "../../../img/lena.pgm");
 
     io::pgm::save(lena, "out.pgm");
+
+    io::pgm::load(lena2, "out.pgm");
+    mln_assertion(lena2 == lena);
   }
 
 }

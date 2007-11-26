@@ -74,7 +74,7 @@ int main()
   typedef value::int_u<27> int_u27;
 
   image2d<int_u8>
-    lena = io::pgm::load<int_u8>("../img/lena.pgm");
+    lena = io::pgm::load<int_u8>("../../../img/lena.pgm");
   image2d<int_u27> out(lena.domain());
 
   level::transform(lena, to27bits(), out);

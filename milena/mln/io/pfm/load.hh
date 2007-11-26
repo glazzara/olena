@@ -110,7 +110,7 @@ namespace mln
 	  unsigned int
 	    ncols = geom::ncols(ima);
 
-	  for (p.row() = min_row; p.row() < max_row; ++p.row())
+	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	    file.read((char*)(&(ima(p))),
 		      sizeof(float) * ncols);
 

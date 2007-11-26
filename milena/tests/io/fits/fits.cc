@@ -30,7 +30,7 @@
  * \brief Test on mln::io::fits::load.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 
 #include <mln/level/compare.hh>
 #include <mln/debug/println.hh>
@@ -43,35 +43,21 @@ int main()
 {
   using namespace mln;
   {
-    image2d_b<float>
-      fits_in = io::fits::load("../../img/test.fits");
-
-    debug::println(fits_in);
+    image2d<float>
+      fits_in = io::fits::load("../../../img/test.fits");
 
     io::pfm::save(fits_in, "out.pfm");
 
-    image2d_b<float>
+    image2d<float>
       pfm = io::pfm::load("out.pfm");
+
+    mln_assertion(pfm == fits_in);
 
     io::pfm::save(fits_in, "out2.pfm");
 
-    image2d_b<float>
+    image2d<float>
       pfm2 = io::pfm::load("out2.pfm");
 
-    image2d_b<float>::fwd_piter  p(fits_in.domain());
-    for_all(p)
-      if (fits_in(p) != pfm(p))
-	std::cout << "at " << p
-		  << " ref :" << fits_in(p)
-		  << " pfm2 : " << pfm(p) << std::endl;
-
     mln_assertion(fits_in == pfm2);
-
-    //   }
-    //   {
-    //     image2d_b<int_u8>
-    //       lena = io::fits::load<int_u8>("../img/lena.fits");
-
-    //     io::fits::save(lena, "out.fits");
   }
 }

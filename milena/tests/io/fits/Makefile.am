@@ -3,7 +3,7 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-     fits					
+     fits
 
 fits_SOURCES = fits.cc
 

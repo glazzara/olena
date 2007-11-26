@@ -13,3 +13,4 @@ pgm19_SOURCES = pgm19.cc
 pgm27_SOURCES = pgm27.cc
 pgm_SOURCES = pgm.cc
 
+TESTS = $(check_PROGRAMS)

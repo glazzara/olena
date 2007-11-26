@@ -36,6 +36,8 @@
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
 
+#include <mln/level/compare.hh>
+
 
 
 
@@ -44,6 +46,8 @@ int main()
   using namespace mln;
   using value::rgb8;
 
-  image2d<rgb8> lena = io::ppm::load("../img/lena.ppm");
+  image2d<rgb8> lena = io::ppm::load("../../../img/lena.ppm");
   io::ppm::save(lena, "out.ppm");
+  image2d<rgb8> lena2 = io::ppm::load("out.ppm");
+  mln_assertion(lena2 == lena);
 }

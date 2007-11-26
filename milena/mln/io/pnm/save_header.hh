@@ -69,6 +69,7 @@ namespace mln
       void save_max_val(value::rgb<n>&, std::ofstream& file)
       {
 	typedef typename value::int_u<n>::enc E;
+
 	file << unsigned(mln_max(E)) << std::endl;
       }
 

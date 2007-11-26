@@ -1,3 +1,27 @@
+2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update io tests due to moves.
+
+	* mln/io/fits/load.hh: Remove debug.
+
+	* mln/io/pfm/load.hh,
+	* mln/io/pfm/save.hh: Fix a bug : the last line wasn't read/written.
+
+	* tests/io/fits/Makefile.am: Remove spaces.
+
+
+	* tests/io/pgm/Makefile.am: Add the variable TEST.
+	* tests/io/pbm/pbm.cc,
+	* tests/io/pgm/pgm.cc,
+	* tests/io/pgm/pgm16.cc,
+	* tests/io/pgm/pgm19.cc,
+	* tests/io/pgm/pgm27.cc,
+	* tests/io/ppm/Makefile.am,
+	* tests/io/ppm/ppm.cc: Update the path of the tests image
+
+	* tests/io/fits/io_fits.cc: Rename as...
+	* tests/io/fits/fits.cc: ...this.
+
 2007-11-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Review util subdirectory.

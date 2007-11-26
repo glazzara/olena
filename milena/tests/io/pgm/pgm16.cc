@@ -76,7 +76,7 @@ int main()
   border::thickness = 52;
 
   image2d<int_u8>
-    lena = io::pgm::load<int_u8>("../img/lena.pgm");
+    lena = io::pgm::load<int_u8>("../../../img/lena.pgm");
   image2d<int_u16> out(lena.domain());
 
   level::transform(lena, to16bits(), out);
