@@ -9,8 +9,7 @@ ordpair						\
 tree						\
 tree_fast					\
 tree_fast_to_image				\
-tree_to_image					\
-tree_fast_to_image
+tree_to_image
 
 
 branch_iter_SOURCES = branch_iter.cc
@@ -22,7 +21,6 @@ tree_SOURCES = tree.cc
 tree_fast_SOURCES = tree_fast.cc
 tree_fast_to_image_SOURCES = tree_to_image.cc
 tree_to_image_SOURCES = tree_to_image.cc
-tree_fast_to_image_SOURCES = tree_fast_to_image.cc
 
 TESTS = $(check_PROGRAMS)
 

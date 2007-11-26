@@ -7,12 +7,14 @@ SUBDIRS =					\
   accu						\
   border					\
   canvas					\
+  display					\
   draw						\
   histo						\
   level						\
   logical					\
   norm						\
   set						\
+  util						\
   win
 
 check_PROGRAMS =				\

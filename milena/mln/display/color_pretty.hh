@@ -206,8 +206,6 @@ namespace mln
     {
       trace::entering("display::color_pretty_rgb");
 
-      const I& input = exact(input_);
-
       image2d<value::rgb8> output = impl::color_pretty_rgb(input_, s1_, s2_, s3_);
 
       trace::exiting("display::color_pretty_rgb");

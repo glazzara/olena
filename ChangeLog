@@ -1,5 +1,12 @@
 2007-11-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix bugs.
+	* milena/mln/display/color_pretty.hh: Fix warning.
+	* milena/tests/Makefile.am: Add util and display directory.
+	* milena/tests/util/Makefile.am: Fix compile bug.
+
+2007-11-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix Makefile.am.
 
 	* milena/tests/Makefile.am,
