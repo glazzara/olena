@@ -1,3 +1,10 @@
+2007-11-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix Makefile.am.
+
+	* milena/tests/Makefile.am,
+	* milena/tests/io/fits/Makefile.am: Delete line of move test.
+
 2007-11-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move the Olena-NG components elsewhere.

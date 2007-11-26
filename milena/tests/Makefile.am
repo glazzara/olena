@@ -67,7 +67,6 @@ check_PROGRAMS =				\
   image_if_interval				\
   image_if_value				\
   interpolated					\
-  io_pbm					\
 						\
   labeling_algo					\
   labeling_estimate				\
