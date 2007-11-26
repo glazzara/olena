@@ -81,7 +81,7 @@ int main()
 
   // load a 8bits image A
   image2d<rgb8>
-    a = io::ppm::load<rgb8>("../img/lena.ppm");
+    a = io::ppm::load<rgb8>("../../../img/lena.ppm");
   image2d<rgb23> b(a.domain());
 
   image2d<rgb8>::fwd_piter  p(b.domain());

@@ -1,5 +1,17 @@
 2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix a bug in int_u.
+
+	* mln/value/int_u.hh: Replace argument type by (unsigned int)
+	when it was (int).
+	(value_integer_::max()) : Replace card - 1 by mln_max(enc_) to avoid
+	returning -1 for high quantized values.
+
+	* tests/io/ppm/ppm16.cc,
+	* tests/io/ppm/ppm23.cc: Update the path of the input image.
+
+2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Update io tests due to moves.
 
 	* mln/io/fits/load.hh: Remove debug.
