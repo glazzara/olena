@@ -1,3 +1,14 @@
+2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Move accu's tests into accu directory.
+
+	* tests/accu/all.cc: Rename as...
+	* tests/accu_all.cc: ...this.
+	* tests/accu/min.cc: Rename as...
+	* tests/accu_min.cc: ...this.
+	* tests/accu/nil.cc: Rename as...
+	* tests/accu_nil.cc: ...this.
+
 2007-11-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update in mln::util.

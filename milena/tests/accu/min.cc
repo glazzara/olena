@@ -25,22 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu_nil.cc
+/*! \file tests/accu/min.cc
  *
- * \brief Tests on mln::accu::nil.
+ * \brief Tests on mln::accu::min.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/value/int_u8.hh>
+#include <mln/debug/iota.hh>
 
 #include <mln/accu/nil.hh>
+#include <mln/accu/min.hh>
+#include <mln/accu/p.hh>
+#include <mln/accu/v.hh>
+#include <mln/accu/compute.hh>
+
 #include <mln/level/compute.hh>
 
 
 int main()
 {
   using namespace mln;
-  image2d<value::int_u8> ima(3, 3);
-  accu::nil a;
-  level::compute<accu::nil>(ima);
+  image2d<int> ima(3, 3);
+  debug::iota(ima);
+  mln_assertion(level::compute< accu::min >(ima) == 1);
+  mln_assertion(level::compute< accu::min_<int> >(ima) == 1);
+
+//   accu::compute< accu::nil >(ima); // No-op.
+
+//   accu::compute< accu::min >(ima);
+
+  std::cout << accu::compute< accu::val<accu::min> >(ima)
+	    << std::endl;
+
+//   std::cout << accu::compute< accu::min >(ima)
+// 	    << std::endl;
 }
