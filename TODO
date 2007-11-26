@@ -1,4 +1,4 @@
-See also the TODO in oln-proto-1.0 and oln-proto-stl-style.
+See also the TODOs in oln-proto-1.0 and oln-proto-stl-style.
 
 
 * Clean up
@@ -55,10 +55,8 @@ should be turned into these:
 appropriate than OLN_INCLUDE_ONLY.)
 
 
-** Update the address of the FSF in Copyright notices (write a script)
-
 ** Check dates for every copyright header
-Use the repository of Olena 0.10 (and previous) and Olena proto-1.0 to
+Use the repository of Olena 0.11 (and previous) and Olena proto-1.0 to
 find when files have been created and modified.  This task could be a
 part of the code review process.
 
@@ -71,7 +69,10 @@ of one or some of its components.
 The tests should print nothing on the stantard output, nor on the
 standard error.
 
-** Add the UPGRADING file from oln-0.10 and complete it
+** Add the UPGRADING file from Olena 0.11 and complete it
+N.B.: This file is generated.
+We might want to break the pseudo-compatibility with Olena 0.x, and
+get rid of UPGRADING.
 
 
 Local Variables:

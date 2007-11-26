@@ -1,3 +1,20 @@
+2007-11-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Move the Olena-NG components elsewhere.
+
+	* dynamic/,
+	* extended/,
+	* metalic/,
+	* olena/,
+	* static/:
+	Remove directories.
+	* configure.ac: Adjust.
+	* Makefile.am (SUBDIRS): Remove metalic, extended, static, olena
+	and dynamic.
+	* TODO: Remove irrelevant entries.
+	* NEWS: Add information on the 0.11 release.
+	More on the upcoming 1.0 release.
+
 2007-11-23  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Remove creation of makefile in tests/make.

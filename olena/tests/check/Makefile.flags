@@ -1,9 +1,0 @@
-## -*- Makefile -*-
-
-AM_CXXFLAGS =					\
-  $(CXXFLAGS_DEBUG) 				\
-  $(CXXFLAGS_STRICT_ERRORS) $(ZLIB_CXXFLAGS)
-AM_CPPFLAGS =					\
-  -I$(top_srcdir)/olena/tests/check		\
-  -I$(top_srcdir)/metalic/tests/check
-AM_LDFLAGS =

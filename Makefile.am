@@ -2,4 +2,4 @@
 
 ACLOCAL_AMFLAGS = -I build-aux
 
-SUBDIRS = build-aux metalic extended static milena olena dynamic
+SUBDIRS = build-aux milena

@@ -46,14 +46,6 @@ if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS"; then
 fi
 
 
-## ----------------------------- ##
-## Concept C++ compiler set up.  ##
-## ----------------------------- ##
-
-AC_ARG_VAR([CONCEPTCXX], [Concept C++ compiler])
-AC_CHECK_PROGS([CONCEPTCXX], [conceptg++ conceptc++])
-
-
 ## -------------- ##
 ## Dependencies.  ##
 ## -------------- ##
@@ -61,18 +53,6 @@ AC_CHECK_PROGS([CONCEPTCXX], [conceptg++ conceptc++])
 # FreeImage library.
 OLN_WITH_FREEIMAGEPLUS
 AM_CONDITIONAL([FREEIMAGEPLUS], [test x$oln_have_freeimageplus = xyes])
-
-
-## ------- ##
-## Tests.  ##
-## ------- ##
-
-AC_CONFIG_FILES([
-  metalic/tests/Makefile
-  extended/tests/Makefile
-  static/tests/Makefile
-  olena/tests/Makefile
-])
 
 
 ## --------------- ##
@@ -85,26 +65,16 @@ AM_CONFIG_HEADER([config.h])
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([
   Makefile
-    metalic/Makefile
-      metalic/mlc/Makefile
-    extended/Makefile
-      extended/xtd/Makefile
-    static/Makefile
-      static/stc/Makefile
-      static/samples/Makefile
-      static/samples/mini-oln/Makefile
-        static/samples/mini-oln/concept-c++/Makefile
-      static/samples/mini-std/Makefile
-        static/samples/mini-std/cpp/Makefile
-        static/samples/mini-std/cpp2/Makefile
     milena/Makefile
       milena/doc/Makefile
-    olena/Makefile
-      olena/oln/Makefile
-      olena/img/Makefile
-    dynamic/Makefile
 ])
-# FIXME: Should be performed through oln.m4 macros.
+
+
+## ------- ##
+## Tests.  ##
+## ------- ##
+
+# FIXME: Should be performed through oln.m4 macros?
 AC_CONFIG_FILES([
   milena/tests/Makefile
     milena/tests/norm/Makefile
@@ -161,17 +131,5 @@ AC_CONFIG_FILES([
     milena/tests/display/Makefile
     milena/tests/labeling/Makefile
 ])
-AC_CONFIG_FILES([
-  olena/tests/algorithms/Makefile
-  olena/tests/check/Makefile
-  olena/tests/check/defs
-  olena/tests/core/Makefile
-  olena/tests/io/Makefile
-  olena/tests/morphers/Makefile
-  olena/tests/sanity/Makefile
-  olena/tests/value/Makefile
-])
-AC_CONFIG_FILES([olena/tests/sanity/check],
-		[chmod +x olena/tests/sanity/check])
 
 AC_OUTPUT

@@ -1,6 +1,0 @@
-2006-09-14  Roland Levillain  <roland@lrde.epita.fr>
-
-	Equip Dynamic with a Makefile.
-
-	* Makefile.am: New file.
-
