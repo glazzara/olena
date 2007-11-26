@@ -1,5 +1,42 @@
 2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Moves the io's tests.
+	* tests/Makefile.am: Makefile update due to test moves.
+	* tests/io/Makefile.am: Likewise.
+	* tests/io/fits/Makefile.am: Likewise.
+	* tests/io/pbm/Makefile.am: Likewise.
+	* tests/io/pgm/Makefile.am: Likewise.
+	* tests/io/ppm/Makefile.am: Likewise.
+
+	* sandbox/garrigues/io_fits.cc: Remove.
+	* tests/io/fits/io_fits.cc: New.
+
+	* tests/io_pbm.cc: Rename as...
+	* tests/io/pbm/pbm.cc: ...this.
+	* tests/io_pgm.cc: Rename as...
+	* tests/io/pgm/pgm.cc: ...this.
+	* tests/io_pgm16.cc: Rename as...
+	* tests/io/pgm/pgm16.cc: ...this.
+	* tests/io_pgm19.cc: Rename as...
+	* tests/io/pgm/pgm19.cc: ...this.
+	* tests/io_pgm27.cc: Rename as...
+	* tests/io/pgm/pgm27.cc: ...this.
+	* tests/io_ppm.cc: Rename as...
+	* tests/io/ppm/ppm.cc: ...this.
+	* tests/io_ppm16.cc: Rename as...
+	* tests/io/ppm/ppm16.cc: ...this.
+	* tests/io_ppm23.cc: Rename as...
+	* tests/io/ppm/ppm23.cc: ...this.
+
+	* tests/new_io_pgm.cc: Remove, now into tests/io/pgm/pgm.cc.
+
+	Fix style and doc.
+
+	* mln/accu/compute.hh,
+	* mln/io/ppm/load.hh: Fix.
+
+2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	svn ignore .deps directories.
 
 2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>

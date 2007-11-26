@@ -62,7 +62,7 @@ namespace mln
 
       image2d<value::rgb8> load(const std::string& filename)
       {
-	return load< value::rgb8 >(filename);
+	return load<value::rgb8>(filename);
       }
 
       template <typename I>

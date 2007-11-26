@@ -51,7 +51,8 @@ namespace mln
      * \param[in] input The input image.
      *
      * This routine runs: \n
-     *   FIXME
+     *   a.take(make::pix(input, p));
+     *   on all pixels on the images.
      *
      * \warning This routine does not perform a.init().
      */

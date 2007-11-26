@@ -15,7 +15,7 @@ SUBDIRS =					\
   set						\
   win
 
-check_PROGRAMS =                               \
+check_PROGRAMS =				\
   border_resize_image1d_1			\
   border_resize_image1d_2			\
   border_resize_image1d_3			\
@@ -68,13 +68,6 @@ check_PROGRAMS =                               \
   image_if_value				\
   interpolated					\
   io_pbm					\
-  io_pgm16					\
-  io_pgm19					\
-  io_pgm27					\
-  io_pgm					\
-  io_ppm16					\
-  io_ppm23					\
-  io_ppm					\
 						\
   labeling_algo					\
   labeling_estimate				\
@@ -109,7 +102,6 @@ check_PROGRAMS =                               \
   morpho_opening_area				\
   morpho_thinning				\
 						\
-  new_io_pgm					\
   norm_l2					\
 						\
   pixel						\
@@ -215,14 +207,6 @@ image_if_SOURCES = image_if.cc
 image_if_interval_SOURCES = image_if_interval.cc
 image_if_value_SOURCES = image_if_value.cc
 interpolated_SOURCES = interpolated.cc
-io_pbm_SOURCES = io_pbm.cc
-io_pgm16_SOURCES = io_pgm16.cc
-io_pgm19_SOURCES = io_pgm19.cc
-io_pgm27_SOURCES = io_pgm27.cc
-io_pgm_SOURCES = io_pgm.cc
-io_ppm16_SOURCES = io_ppm16.cc
-io_ppm23_SOURCES = io_ppm23.cc
-io_ppm_SOURCES = io_ppm.cc
 
 labeling_algo_SOURCES = labeling_algo.cc
 labeling_estimate_SOURCES = labeling_estimate.cc
@@ -257,7 +241,6 @@ morpho_laplacian_SOURCES = morpho_laplacian.cc
 morpho_opening_area_SOURCES = morpho_opening_area.cc
 morpho_thinning_SOURCES = morpho_thinning.cc
 
-new_io_pgm_SOURCES = new_io_pgm.cc
 norm_l2_SOURCES = norm_l2.cc
 
 pixel_SOURCES = pixel.cc

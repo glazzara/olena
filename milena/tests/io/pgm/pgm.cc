@@ -49,4 +49,14 @@ int main()
 
     io::pgm::save(lena, "out.pgm");
   }
+
+
+  {
+    image2d< value::int_u<8> >
+      lena;
+    io::pgm::load(lena, "../img/lena.pgm");
+
+    io::pgm::save(lena, "out.pgm");
+  }
+
 }
