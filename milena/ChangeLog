@@ -1,5 +1,9 @@
 2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	svn ignore .deps directories.
+
+2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	svn ignore .deps directories. Update makefiles.
 	* milena/tests/Makefile.am: Move accu's checks...
 	* milena/tests/accu/Makefile.am: ...here.
