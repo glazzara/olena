@@ -4,6 +4,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS =					\
   arith						\
+  accu						\
   border					\
   canvas					\
   draw						\
@@ -14,11 +15,7 @@ SUBDIRS =					\
   set						\
   win
 
-check_PROGRAMS =				\
-  accu_all					\
-  accu_min					\
-  accu_nil					\
-						\
+check_PROGRAMS =                               \
   border_resize_image1d_1			\
   border_resize_image1d_2			\
   border_resize_image1d_3			\
@@ -166,10 +163,6 @@ check_PROGRAMS =				\
   w_window1d_int				\
   w_window2d_int				\
   w_window3d_int
-
-accu_all_SOURCES = accu_all.cc
-accu_min_SOURCES = accu_min.cc
-accu_nil_SOURCES = accu_nil.cc
 
 border_resize_image1d_1_SOURCES = border_resize_image1d_1.cc
 border_resize_image1d_2_SOURCES = border_resize_image1d_2.cc
