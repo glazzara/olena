@@ -1,5 +1,10 @@
 2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Remove all_headers.cc in util.
+	* milena/tests/util/Makefile.am: Remove all_headers tests.
+
+2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix bug in Makefile.am.
 
 	* milena/tests/arith/Makefile.am,

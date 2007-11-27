@@ -4,7 +4,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 
 check_PROGRAMS =				\
-  all_headers					\
   branch_iter					\
   branch_iter_ind				\
   eat						\
@@ -16,7 +15,6 @@ check_PROGRAMS =				\
   tree_to_image					\
   tree_to_fast
 
-all_headers_SOURCES = all_headers.cc
 branch_iter_SOURCES = branch_iter.cc
 branch_iter_ind_SOURCES = branch_iter_ind.cc
 eat_SOURCES = eat.cc
