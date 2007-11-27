@@ -27,50 +27,51 @@
 
 /*! \file tests/norm/linfty.hh
  *
- * \brief Test the L-infinity-norm.
+ *  \brief Test the L-infinity-norm.
  */
 
-#include <cmath>
-#include <cassert>
+#include <tests/norm/common.hh>
 
 #include <mln/metal/vec.hh>
 #include <mln/math/abs.hh>
 #include <mln/norm/linfty.hh>
 
-// FIXME: We should have a almost_equal function somewhere in Milena.
-static const float epsilon = 0.0001;
 
-using mln::metal::vec;
-using mln::norm::linfty;
-
-template <typename V>
-void check_linfty (const V& vec1, const V& vec2)
+namespace test
 {
-  assert (mln::math::abs(mln::norm::linfty(vec1) - mln::norm::linfty(vec2))
-	  < epsilon);
+  template <typename V, typename S>
+  void
+  check_linfty_norm_and_distance(const V& vec1, const V& vec2, const S& ref_val)
+  {
+    // Pointer on mln::norm::linfty.
+    typedef int (*linfty_t)(const V&);
+    linfty_t linfty = mln::norm::linfty;
+
+    test::check_norm(linfty, vec1, vec2);
+
+    // Pointer on mln::norm::linfty_distance.
+    typedef int (*linfty_distance_t)(const V&, const V&);
+    linfty_distance_t linfty_distance = mln::norm::linfty_distance;
+
+    test::check_distance(linfty_distance, vec1, vec2, ref_val);
+  }
 }
 
-template <typename V, typename S>
-void check_linfty_distance (const V& vec1, const V& vec2, const S& ref_val)
+int main()
 {
-  assert (mln::math::abs(mln::norm::linfty_distance(vec1, vec2) - ref_val)
-	  < epsilon);
-}
+  typedef mln::metal::vec<3, int> vec_t;
 
-int main ()
-{
-  vec<3, int> t; t.set (2, -2, 4);
-  vec<3, int> u; u.set (4,  1, 0);
+  // Reference value.
   float d = std::max(std::abs(4 - 2),
 		     std::max(std::abs(1 + 2),
 			      std::abs(0 - 4)));
 
-  check_linfty(t, u);
-  check_linfty_distance (t, u, d);
+  vec_t t, u;
+  t.set(2, -2, 4);
+  u.set(4,  1, 0);
+  test::check_linfty_norm_and_distance(t, u, d);
 
   int v[] = {2, -2, 4};
   int w[] = {4,  1, 0};
-
-  check_linfty(v, w);
-  check_linfty_distance (v, w, d);
+  test::check_linfty_norm_and_distance(v, w, d);
 }

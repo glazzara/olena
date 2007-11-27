@@ -7,8 +7,8 @@ check_PROGRAMS =				\
   l2						\
   linfty
 
-l1_SOURCES = l1.cc
-l2_SOURCES = l2.cc
-linfty_SOURCES = linfty.cc
+l1_SOURCES = l1.cc common.hh
+l2_SOURCES = l2.cc common.hh
+linfty_SOURCES = linfty.cc common.hh
 
 TESTS = $(check_PROGRAMS)

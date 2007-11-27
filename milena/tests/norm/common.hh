@@ -25,30 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/norm_l2.cc
- *
- * \brief Tests on mln::norm::l2.
- */
+#ifndef TESTS_NORM_COMMON_HH
+# define TESTS_NORM_COMMON_HH
 
-#include <iostream>
+#include <cassert>
 
-#include <mln/norm/l2.hh>
+#include <mln/math/abs.hh>
 
-#include <mln/metal/vec.hh>
+// FIXME: We should have a almost_equal function somewhere in Milena.
+static const float epsilon = 0.0001;
 
-int main()
+namespace test
 {
-  using namespace mln;
-  
-  int t1[] = {2, 6, -1, 2};
 
-  std::cout << norm::l2(t1) << std::endl;
+  template <typename Norm, typename V>
+  void
+  check_norm(const Norm norm, const V& vec1, const V& vec2)
+  {
+    assert(mln::math::abs(norm(vec1) - norm(vec2)) < epsilon);
+  }
 
-  int t2[] = {2, -6, -1, 2};
+  template <typename Distance, typename V, typename S>
+  void
+  check_distance (const Distance dist, const V& vec1, const V& vec2,
+		  const S& ref_val)
+  {
+    assert (mln::math::abs(dist(vec1, vec2) - ref_val) < epsilon);
+  }
 
-  std::cout << norm::l2_distance(t1, t2) << std::endl;
+} // End of namespace test.
 
-  metal::vec<4,float> v = make::vec(2, 6, -1, 2);
-
-  std::cout << norm::l2(v);
-}
+#endif // !TESTS_NORM_COMMON_HH

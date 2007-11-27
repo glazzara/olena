@@ -27,47 +27,50 @@
 
 /*! \file tests/norm/l1.hh
  *
- * \brief Test the L1-norm.
+ *  \brief Test the L1-norm.
  */
 
-#include <cassert>
+#include <tests/norm/common.hh>
 
 #include <mln/metal/vec.hh>
-#include <mln/math/abs.hh>
 #include <mln/norm/l1.hh>
 
-// FIXME: We should have a almost_equal function somewhere in Milena.
-static const float epsilon = 0.0001;
 
-using mln::metal::vec;
-using mln::norm::l1;
-
-template <typename V>
-void check_l1 (const V& vec1, const V& vec2)
+namespace test
 {
-  assert (mln::math::abs(mln::norm::l1(vec1) - mln::norm::l1(vec2))
-	  < epsilon);
+  template <typename V, typename S>
+  void
+  check_l1_norm_and_distance(const V& vec1, const V& vec2, const S& ref_val)
+  {
+    // Pointer on mln::norm::l1.
+    typedef mln_sum_(int) (*l1_t)(const V&);
+    l1_t l1 = mln::norm::l1;
+
+    test::check_norm(l1, vec1, vec2);
+
+    // Pointer on mln::norm::l1_distance.
+    typedef mln_sum_(int) (*l1_distance_t)(const V&, const V&);
+    l1_distance_t l1_distance = mln::norm::l1_distance;
+
+    test::check_distance(l1_distance, vec1, vec2, ref_val);
+  }
 }
 
-template <typename V, typename S>
-void check_l1_distance (const V& vec1, const V& vec2, const S& ref_val)
+int main()
 {
-  assert (mln::math::abs(mln::norm::l1_distance(vec1, vec2) - ref_val)
-	  < epsilon);
-}
+  typedef mln::metal::vec<3, int> vec_t;
 
-int main ()
-{
-  vec<3, int> t; t.set (1, -2, 3);
-  vec<3, int> u; u.set (5,  1, 0);
+  // Reference value.
   int d = (5 - 1) + (1 + 2) + 3;
 
-  check_l1(t, u);
-  check_l1_distance (t, u, d);
+  // Tests using mln::metal::vec.
+  vec_t t, u;
+  t.set(1, -2, 3);
+  u.set(5,  1, 0);
+  test::check_l1_norm_and_distance(t, u, d);
 
+  // Tests using plain arrays.
   int v[] = {1, -2, 3};
   int w[] = {5,  1, 0};
-
-  check_l1(v, w);
-  check_l1_distance (v, w, d);
+  test::check_l1_norm_and_distance(v, w, d);
 }

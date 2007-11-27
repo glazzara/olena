@@ -1,3 +1,18 @@
+2007-11-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve tests on norms.
+
+	* tests/norm/l1.cc, tests/norm/l2.cc, tests/norm/linfty.cc: Revamp
+	and factor common parts...
+	* tests/norm/common.hh: ...here (new file).
+	* tests/norm/Makefile.am (l1_SOURCES, l2_SOURCES, linfty_SOURCES):
+	Add common.hh.
+	* tests/norm_l2.cc: Remove.
+	* tests/Makefile.am (SUBDIRS): Add fun.
+	(check_PROGRAMS): Remove norm_l2.cc.
+	* mln/norm/l1.hh (l1_distance),
+	* mln/norm/l2.hh (l2_distance): Fix indentation.
+
 2007-11-27  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add an error of incompatible types in pnm loading.

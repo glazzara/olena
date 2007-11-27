@@ -9,6 +9,7 @@ SUBDIRS =					\
   canvas					\
   display					\
   draw						\
+  fun						\
   histo						\
   level						\
   logical					\
@@ -102,8 +103,6 @@ check_PROGRAMS =				\
   morpho_laplacian				\
   morpho_opening_area				\
   morpho_thinning				\
-						\
-  norm_l2					\
 						\
   pixel						\
   pixter1d					\

@@ -61,7 +61,7 @@ namespace mln
 
     template <unsigned n, typename C>
     mln_sum(C) l2_distance(const metal::vec<n,C>& vec1,
-				 const metal::vec<n,C>& vec2);
+			   const metal::vec<n,C>& vec2);
     /// \}
 
 
