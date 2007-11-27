@@ -27,10 +27,10 @@
 
 /*! \file tests/t_image.cc
  *
- * \brief Tests on mln::t_image.
+ *  \brief Tests on mln::t_image.
  */
 
-#include <mln/core/image2d_b.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/t_image.hh>
 
 #include <mln/debug/iota.hh>
@@ -41,12 +41,12 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d_b<int> I;
+  typedef image2d<int> I;
 
   I ima(2, 3);
   debug::iota(ima);
   debug::println(ima);
 
-  t_image<I> tima(ima, 0, 1);
-  debug::println(tima);
+  t_image<I> t_ima(ima, 0, 1);
+  debug::println(t_ima);
 }

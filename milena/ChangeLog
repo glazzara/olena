@@ -1,3 +1,29 @@
+2007-11-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Overhaul mln::t_image<I>.
+
+	* mln/core/t_image.hh (mln::internal::data_t< t_image<I> >): New.
+	(mln::t_image): Revamp.
+	Inherit from internal::image_morpher_< I, mln_pset(I), t_image<I> >.
+	(t_image<I>::super_): Adjust typedef.
+	(t_image<I>::psite, t_image<I>::value)
+	(t_image<I>::rvalue, t_image<I>::vset):
+	New properties.
+	(t_image<I>::lvalue): Fix properties.
+	(t_image<I>::t_image): Adjust for mln::internal::data_t< t_image<I> >.
+	Document ctor.
+	(t_image<I>::has_data, t_image<I>::values): New methods.
+	(t_image<I>::c1_, t_image<I>::c2_, t_image<I>::b_): Remove.
+	Superseded by data_::dim1_, data_::dim2_ and data_::box_.
+	(t_image<I>::exchange_coords_): New method.
+	Use it to redefine...
+	(t_image<I>::transpose_): ...this method.
+	Document.
+	(t_image<I>::owns_, t_image<I>::operator()): Adjust.
+	* tests/t_image.cxx: Rename as...
+	* tests/t_image.cc: ...this.
+	s/image2d_b/image2d/.
+
 2007-11-27  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	convert for graylevel.
