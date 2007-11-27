@@ -170,7 +170,6 @@ namespace mln
       typedef float sum;
     };
 
-
   } // end of namespace mln::trait
 
 
@@ -245,6 +244,20 @@ namespace mln
       float to_float() const;
     };
 
+
+
+    namespace internal
+    {
+
+      // convert for graylevel
+      template <unsigned n>
+      struct convert_< graylevel<n> >
+      {
+	static graylevel<n> value_at_index(unsigned i);
+	static unsigned index_of_value(graylevel<n> v);
+      };
+
+    } // end of namespace mln::value::internal
 
 
     /// Op<<.
@@ -429,6 +442,27 @@ namespace mln
       return float(this->v_) / denom;
     }
 
+
+
+    namespace internal
+    {
+
+      template <unsigned n>
+      graylevel<n>
+      convert_< graylevel<n> >::value_at_index(unsigned i)
+      {
+	mln_assertion(i <= mln_max(mln_equiv(graylevel<n>)));
+	return graylevel<n>(i);
+      }
+
+      template <unsigned n>
+      unsigned
+      convert_< graylevel<n> >::index_of_value(graylevel<n> v)
+      {
+	return v.value();
+      }
+
+    } // end of namespace mln::value::internal
 
     // Operators.
 

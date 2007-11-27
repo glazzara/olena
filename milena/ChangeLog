@@ -1,3 +1,10 @@
+2007-11-27  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	convert for graylevel.
+
+	* mln/value/graylevel.hh: the graylevel type wasn't compatible with
+          the generic convert in convert.hh because of a convertion to int.
+
 2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add convertion of a tree into tree_fast.
