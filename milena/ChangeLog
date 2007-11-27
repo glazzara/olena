@@ -1,3 +1,13 @@
+2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add convertion of a tree into tree_fast.
+
+	* mln/util/tree_to_fast.hh: Add convertion of tree into tree_fast.
+
+	Tests
+	* tests/util/tree_to_fast.cc: New tests for this.
+	* tests/util/Makefile.am: Update.
+
 2007-11-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/trait/value_.hh (mln_trait_value_sum_, mln_sum_): New

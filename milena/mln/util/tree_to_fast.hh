@@ -25,20 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_TREE_FAST_TO_IMAGE_HH
-# define MLN_UTIL_TREE_FAST_TO_IMAGE_HH
+#ifndef MLN_UTIL_TREE_TO_FAST_HH
+# define MLN_UTIL_TREE_TO_FAST_HH
 
 /*!
- *  \file   mln/util/tree_fast_to_image.hh
+ * \file   mln/util/tree_to_fast.hh
  *
- *  \brief Definition of function which transform a tree_fast into an
- *  image.
+ * \brief Definition of function which converts a tree into tree_fast.
  *
  */
 
+# include <mln/util/tree.hh>
 # include <mln/util/tree_fast.hh>
-# include <mln/core/p_set.hh>
-# include <list>
+# include <mln/trace/all.hh>
+
 
 namespace mln
 {
@@ -46,62 +46,57 @@ namespace mln
   namespace util
   {
 
-    /*! Convert a tree_fast into an image.
+
+    /*! Convert a tree into an tree_fast.
      *
-     * \param[in] tree The tree to convert.
-     * \param[out] output_ The image containing tree informations.
+     * \param[in] input The tree to convert.
+     *
+     * \return The tree_fast containing tree informations.
      *
      */
-    template <typename T, typename I>
-    void
-    tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_);
+    template<typename T>
+    tree_fast<T>
+    tree_to_fast(tree<T>& input);
+
 
 # ifndef MLN_INCLUDE_ONLY
+
 
     namespace impl
     {
 
-      template <typename T, typename I>
+      template<typename T>
       void
-      tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_)
+      tree_to_fast_(node<T>* input, tree_fast<T>& tree, unsigned p, unsigned& i)
       {
-	trace::entering("util::impl::tree_fast_to_image");
+	typename node<T>::children_t child = input->children ();
+	typename node<T>::children_t::iterator it = child.begin ();
 
-	I& output = exact(output_);
-	std::list<unsigned> l;
-
-	l.push_back (tree.root_);
-	while (! l.empty())
+	for (; it != child.end (); ++it)
 	  {
-	    unsigned current = l.front();
-	    for (unsigned i = 0; i < tree.child_[current].size(); ++i)
-	      l.push_back(tree.child_[current][i]);
-
-	    mln_piter(p_set<point2d>) p(tree.data_[current].points);
-
-	    for_all(p)
-	      {
-		output(p) = tree.data_[current].value;
-	      }
-	    l.pop_front();
+	    tree.add_child(p, (*it)->elt ());
+	    ++i;
+	    impl::tree_to_fast_((*it), tree, i, i);
 	  }
-
-	trace::exiting("util::impl::tree_fast_to_image");
       }
 
-    } // end of namespace mln::util::impl
+    }
 
+    /// Facade.
 
-
-    template <typename T, typename I>
-    void
-    tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_)
+    template<typename T>
+    tree_fast<T>
+    tree_to_fast(tree<T>& input)
     {
-      trace::entering("util::tree_fast_to_image");
+      trace::entering("util::tree_to_fast");
 
-      impl::tree_fast_to_image(tree, output_);
+      unsigned i = 0;
+      tree_fast<T> tree (input.root ()->elt ());
 
-      trace::exiting("util::tree_fast_to_image");
+      impl::tree_to_fast_(input.root (), tree, 0, i);
+
+      trace::exiting("util::tree_to_fast");
+      return tree;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -110,4 +105,6 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // !MLN_UTIL_TREE_FAST_TO_IMAGE_HH
+
+#endif // !MLN_UTIL_TREE_TO_FAST_HH
+

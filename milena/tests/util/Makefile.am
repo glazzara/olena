@@ -13,7 +13,8 @@ check_PROGRAMS =				\
   tree						\
   tree_fast					\
   tree_fast_to_image				\
-  tree_to_image
+  tree_to_image					\
+  tree_to_fast
 
 all_headers_SOURCES = all_headers.cc
 branch_iter_SOURCES = branch_iter.cc
@@ -25,5 +26,6 @@ tree_SOURCES = tree.cc
 tree_fast_SOURCES = tree_fast.cc
 tree_fast_to_image_SOURCES = tree_to_image.cc
 tree_to_image_SOURCES = tree_to_image.cc
+tree_to_fast_SOURCES = tree_to_fast.cc
 
 TESTS = $(check_PROGRAMS)
