@@ -1,5 +1,19 @@
 2007-11-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add norm functors.
+
+	* mln/fun/v2v/norm.hh: New.
+	Provide norm functors.
+	* mln/fun/all.hh: Fix namespace description.
+	* tests/fun/v2v/norm.cc: New.
+	* tests/fun/v2v/Makefile.am (check_PROGRAMS): New.
+	Add norm.
+	(norm_SOURCES): New.
+	(TESTS): New.
+	* tests/fun/Makefile.am (SUBDIRS): Add v2v.
+
+2007-11-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve tests on norms.
 
 	* tests/norm/l1.cc, tests/norm/l2.cc, tests/norm/linfty.cc: Revamp

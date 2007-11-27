@@ -25,39 +25,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_ALL_HH
-# define MLN_FUN_ALL_HH
-
-/*! \file mln/fun/all.hh
+/*! \file tests/norm/l1.hh
  *
- * \brief File that includes all fun-related routines.
+ *  \brief Test the norm functors.
  */
 
+#include <mln/metal/vec.hh>
+#include <mln/fun/v2v/norm.hh>
 
-namespace mln
+#include <tests/norm/common.hh>
+
+
+int main()
 {
+  typedef mln::metal::vec<3, int> vec_t;
 
-  /// Namespace of image processing routines related to functions.
-  namespace fun
+  // L1-norm.
   {
-
-    /// Internal namespace of functions.
-    namespace internal
-    {
-    }
+    vec_t t, u;
+    t.set (1, -2, 3);
+    u.set (5,  1, 0);
+    mln::fun::v2v::l1_norm<vec_t, float> l1;
+    test::check_norm(l1, t, u);
   }
 
+  // L2-norm.
+  {
+    vec_t t, u;
+    t.set (2, -2, 3);
+    u.set (4,  1, 0);
+    mln::fun::v2v::l2_norm<vec_t, float> l2;
+    test::check_norm(l2, t, u);
+  }
+
+  // L-infinity-norm.
+  {
+    vec_t t, u;
+    t.set (2, -2, 4);
+    u.set (4,  1, 0);
+    mln::fun::v2v::linfty_norm<vec_t, int> linfty;
+    test::check_norm(linfty, t, u);
+  }
 }
-
-
-# include <mln/fun/c.hh>
-# include <mln/fun/ops.hh>
-# include <mln/fun/i2v/all.hh>
-# include <mln/fun/p2b/all.hh>
-# include <mln/fun/p2v/all.hh>
-# include <mln/fun/v2v/all.hh>
-# include <mln/fun/x2x/all.hh>
-
-
-
-#endif // ! MLN_FUN_ALL_HH
