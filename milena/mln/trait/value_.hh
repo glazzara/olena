@@ -58,7 +58,9 @@
 
 /// Give the summation type for values of type \c T.
 # define mln_trait_value_sum(V)   typename mln::trait::value_< V >::sum
+# define mln_trait_value_sum_(V)           mln::trait::value_< V >::sum
 # define mln_sum(V)  mln_trait_value_sum(V)
+# define mln_sum_(V) mln_trait_value_sum_(V)
 
 
 
