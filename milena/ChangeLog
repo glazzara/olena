@@ -1,3 +1,33 @@
+2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add include all tests for some subdirectories.
+
+	* mln/border/mirror.hh: Add geom headers.
+	* mln/geom/all.hh: Fix chamfer header.
+	* mln/level/median.hh: Add good header.
+
+	Tests
+
+	* tests/arith/all_headers.cc,
+	* tests/border/all_headers.cc,
+	* tests/display/all_headers.cc,
+	* tests/draw/all_headers.cc,
+	* tests/level/all_headers.cc,
+	* tests/logical/all_headers.cc,
+	* tests/util/all_headers.cc: New tests which include only
+	all.hh for each subdirectory.
+
+
+	* tests/arith/Makefile.am,
+	* tests/border/Makefile.am,
+	* tests/draw/Makefile.am,
+	* tests/level/Makefile.am,
+	* tests/logical/Makefile.am,
+	* tests/util/Makefile.am: Update Makefile.am for this.
+
+
+	* tests/all.cc: Update.
+
 2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix a bug in int_u.

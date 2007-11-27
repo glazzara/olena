@@ -30,7 +30,7 @@
 
 /*! \file mln/core/internal/image_morpher.hh
  *
- * \brief Definition of a base class for image morphers.
+ *  \brief Definition of a base class for image morphers.
  */
 
 # include <mln/core/internal/image_base.hh>
@@ -48,7 +48,7 @@ namespace mln
      *
      * Parameter \c I is the underlying-morphed image type.
      *
-     * \internal
+     *  \internal
      */
     template <typename I, typename S, typename E>
     class image_morpher_ : public image_base_<S, E>

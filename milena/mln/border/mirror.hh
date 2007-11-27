@@ -36,6 +36,11 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/internal/fixme.hh>
+# include <mln/core/internal/fixme.hh>
+# include <mln/geom/min_row.hh>
+# include <mln/geom/max_row.hh>
+# include <mln/geom/min_col.hh>
+# include <mln/geom/max_col.hh>
 
 
 namespace mln

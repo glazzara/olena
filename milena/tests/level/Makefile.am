@@ -4,6 +4,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   abs						\
+  all_headers.cc				\
   apply						\
   assign					\
   compare					\
@@ -23,6 +24,7 @@ check_PROGRAMS =				\
   transform
 
 abs_SOURCES = abs.cc
+all_headers_SOURCES = all_headers.cc
 apply_SOURCES = apply.cc
 assign_SOURCES = assign.cc
 compare_SOURCES = compare.cc

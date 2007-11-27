@@ -3,9 +3,11 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
+  all_headers.cc				\
   line						\
   mesh
 
+all_headers_SOURCES = all_headers.cc
 line_SOURCES = line.cc
 mesh_SOURCES = mesh.cc
 

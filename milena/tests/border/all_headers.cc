@@ -25,37 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_GEOM_ALL_HH
-# define MLN_GEOM_ALL_HH
-
-/*! \file mln/geom/all.hh
+/*! \file tests/border/all_headers.cc
  *
- * \brief File that includes all geometry related things.
+ * \brief Tests on mln::border.
  */
 
+#include <mln/border/all.hh>
 
-namespace mln
+int main()
 {
-
-  /// Namespace of all things related to geometry.
-  namespace geom
-  {
-    /// Implementation namespace of geom namespace.
-    namespace impl {}
-  }
 
 }
 
-# include <mln/geom/bbox.hh>
-# include <mln/geom/chamfer.hh>
-# include <mln/geom/pmin_pmax.hh>
-# include <mln/geom/seeds2tiling.hh>
-# include <mln/geom/seeds2tiling_roundness.hh>
-# include <mln/geom/shift.hh>
-# include <mln/geom/size1d.hh>
-# include <mln/geom/size2d.hh>
-# include <mln/geom/size3d.hh>
-# include <mln/geom/sym.hh>
-
-
-#endif // ! MLN_GEOM_ALL_HH
