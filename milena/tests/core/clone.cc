@@ -25,16 +25,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core_category.cc
+/*! \file tests/core/clone.cc
  *
- * \brief Tests on mln::category.
+ *  \brief Tests on mln::clone.
  */
 
-#include <mln/core/category.hh>
+#include <mln/core/image2d.hh>
+#include <mln/core/sub_image.hh>
+
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
+
+#include <mln/core/clone.hh>
+
 
 
 int main()
 {
   using namespace mln;
+  image2d<int> ima(3, 3, 51);
+  debug::iota(ima);
+
+  {
+    box2d b = make::box2d(2,2);
+    std::cout << border::find( clone(ima | b) ) << std::endl;
+
+    debug::println(ima | b);
+    debug::println(clone(ima | b));
+  }
+
+  {
+    image2d<int> ima_ = clone(ima);
+    std::cout << ima_.border() << std::endl;
+    ima_(make::point2d(1,1)) = 51;
+    debug::println(ima);
+  }
+  
+  {
+    image2d<int> ima_( ima );
+    ima_(make::point2d(1,1)) = 51;
+    debug::println(ima);
+  }
 
 }

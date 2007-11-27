@@ -25,30 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core_exact.cc
+/*! \file tests/core/initialize.cc
  *
- * \brief Tests on mln::exact.
+ *  \brief Tests on mln::initialize.
  */
 
-#include <typeinfo>
-#include <mln/core/exact.hh>
+#include <mln/core/image2d.hh>
+#include <mln/core/sub_image.hh>
+#include <mln/debug/println.hh>
 
-
-struct test : mln::Object< test >
-{
-};
 
 
 int main()
 {
   using namespace mln;
 
-  test t;
-  std::cout << typeid(exact(t)).name() << std::endl;;
+  typedef image2d<int> I;
 
-  Object<test>& t_ = t;
-  std::cout << typeid(exact(t_)).name() << std::endl;;
+  I ref( make::box2d(3,3) );
+  box2d b = make::box2d(2,2);
+  
+  {
+    I ima;
+    initialize(ima, ref);
+    debug::println(ima);
+    mln_assertion(ima.border() == ref.border());
+  }
 
-  int i;
-  std::cout << typeid(exact(i)).name() << std::endl;;
+  {
+    I ima_; // to init'd
+    sub_image<I, box2d> ima = ref | b;
+    initialize(ima_, ima);
+    debug::println(ima);
+  }
+
+  {
+    sub_image<I, box2d> ima;
+    initialize(ima, ref);
+    debug::println(ima);
+  }
+
+  {
+    sub_image<I, box2d> ima;
+    initialize(ima, ref | b);
+    debug::println(ima);
+  }
+
 }

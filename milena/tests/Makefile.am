@@ -7,6 +7,7 @@ SUBDIRS =					\
   accu						\
   border					\
   canvas					\
+  core						\
   display					\
   draw						\
   fun						\
@@ -39,10 +40,6 @@ check_PROGRAMS =				\
   convert_to_image				\
   convert_to_tiles				\
   convert_to_p_array				\
-  core_category					\
-  core_clone					\
-  core_exact					\
-  core_initialize				\
 						\
   debug_println					\
   debug_println_with_border			\
@@ -176,10 +173,6 @@ chamfer_SOURCES = chamfer.cc
 convert_to_image_SOURCES = convert_to_image.cc
 convert_to_tiles_SOURCES = convert_to_tiles.cc
 convert_to_p_array_SOURCES = convert_to_p_array.cc
-core_category_SOURCES = core_category.cc
-core_clone_SOURCES = core_clone.cc
-core_exact_SOURCES = core_exact.cc
-core_initialize_SOURCES = core_initialize.cc
 
 debug_println_SOURCES = debug_println.cc
 debug_println_with_border_SOURCES = debug_println_with_border.cc
@@ -240,8 +233,6 @@ morpho_hit_or_miss_SOURCES = morpho_hit_or_miss.cc
 morpho_laplacian_SOURCES = morpho_laplacian.cc
 morpho_opening_area_SOURCES = morpho_opening_area.cc
 morpho_thinning_SOURCES = morpho_thinning.cc
-
-norm_l2_SOURCES = norm_l2.cc
 
 pixel_SOURCES = pixel.cc
 pixter1d_SOURCES = pixter1d.cc

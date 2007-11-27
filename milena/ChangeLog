@@ -1,5 +1,28 @@
 2007-11-27  Roland Levillain  <roland@lrde.epita.fr>
 
+	More core-related tests to tests/core/.
+
+	* tests/core/: New directory.
+	* tests/core_category.cc,
+	* tests/core_clone.cc,
+	* tests/core_exact.cc,
+	* tests/core_initialize.cc,
+	* tests/t_image.cc:
+	Move...
+	* tests/core/category.cc,
+	* tests/core/clone.cc,
+	* tests/core/exact.cc,
+	* tests/core/initialize.cc,
+	* tests/core/t_image.cc:
+	...here.
+	Adjust paths in documentation.
+	* tests/core/Makefile.am: New.
+	* tests/Makefile.am (SUBDIRS): Add core.
+	(check_PROGRAMS): Remove core_category, core_clone, core_exact and
+	core_initialize.
+
+2007-11-27  Roland Levillain  <roland@lrde.epita.fr>
+
 	Overhaul mln::t_image<I>.
 
 	* mln/core/t_image.hh (mln::internal::data_t< t_image<I> >): New.

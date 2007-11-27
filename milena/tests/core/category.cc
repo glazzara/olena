@@ -25,50 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core_initialize.cc
+/*! \file tests/core/category.cc
  *
- * \brief Tests on mln::initialize.
+ *  \brief Tests on mln::category.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/debug/println.hh>
+#include <mln/core/category.hh>
 
 
+// FIXME: Is this test actually complete? I.e., does it consist in a
+// simple file inclusion?  If so, state this here.  If not, complete
+// this test.
 
 int main()
 {
   using namespace mln;
-
-  typedef image2d<int> I;
-
-  I ref( make::box2d(3,3) );
-  box2d b = make::box2d(2,2);
-  
-  {
-    I ima;
-    initialize(ima, ref);
-    debug::println(ima);
-    mln_assertion(ima.border() == ref.border());
-  }
-
-  {
-    I ima_; // to init'd
-    sub_image<I, box2d> ima = ref | b;
-    initialize(ima_, ima);
-    debug::println(ima);
-  }
-
-  {
-    sub_image<I, box2d> ima;
-    initialize(ima, ref);
-    debug::println(ima);
-  }
-
-  {
-    sub_image<I, box2d> ima;
-    initialize(ima, ref | b);
-    debug::println(ima);
-  }
 
 }

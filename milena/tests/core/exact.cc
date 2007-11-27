@@ -25,46 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core_clone.cc
+/*! \file tests/core/exact.cc
  *
- * \brief Tests on mln::clone.
+ *  \brief Tests on mln::exact.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
+#include <typeinfo>
+#include <mln/core/exact.hh>
 
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
 
-#include <mln/core/clone.hh>
-
+struct test : mln::Object< test >
+{
+};
 
 
 int main()
 {
   using namespace mln;
-  image2d<int> ima(3, 3, 51);
-  debug::iota(ima);
 
-  {
-    box2d b = make::box2d(2,2);
-    std::cout << border::find( clone(ima | b) ) << std::endl;
+  test t;
+  std::cout << typeid(exact(t)).name() << std::endl;;
 
-    debug::println(ima | b);
-    debug::println(clone(ima | b));
-  }
+  Object<test>& t_ = t;
+  std::cout << typeid(exact(t_)).name() << std::endl;;
 
-  {
-    image2d<int> ima_ = clone(ima);
-    std::cout << ima_.border() << std::endl;
-    ima_(make::point2d(1,1)) = 51;
-    debug::println(ima);
-  }
-  
-  {
-    image2d<int> ima_( ima );
-    ima_(make::point2d(1,1)) = 51;
-    debug::println(ima);
-  }
-
+  int i;
+  std::cout << typeid(exact(i)).name() << std::endl;;
 }
