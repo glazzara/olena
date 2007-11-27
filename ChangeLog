@@ -1,3 +1,16 @@
+2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix bug in Makefile.am.
+
+	* milena/tests/arith/Makefile.am,
+	* milena/tests/border/Makefile.am,
+	* milena/tests/draw/Makefile.am,
+	* milena/tests/level/Makefile.am,
+	* milena/tests/logical/Makefile.am,
+	* milena/tests/util/Makefile.am: Fix.
+
+	* milena/tests/arith/all_headers.cc: Remove.
+
 2007-11-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix bugs.

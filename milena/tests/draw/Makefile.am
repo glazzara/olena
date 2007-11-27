@@ -3,7 +3,7 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  all_headers.cc				\
+  all_headers					\
   line						\
   mesh
 

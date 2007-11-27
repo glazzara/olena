@@ -4,7 +4,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   adjust					\
-  all_headers.cc				\
+  all_headers					\
   duplicate					\
   equalize					\
   fill						\

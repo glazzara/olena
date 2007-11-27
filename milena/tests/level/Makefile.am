@@ -4,7 +4,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   abs						\
-  all_headers.cc				\
+  all_headers					\
   apply						\
   assign					\
   compare					\
