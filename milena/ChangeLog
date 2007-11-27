@@ -1,3 +1,10 @@
+2007-11-27  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fixes in int_u.
+
+	* mln/value/int_u.hh: max() is now mlc_pow_int(2, n) - 1. and
+          (unsigned int) is back to (int) (cf my previous patch).
+
 2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add include all tests for some subdirectories.

@@ -93,8 +93,7 @@ namespace mln
       typedef mln_value_quant_from_(card)   quant;
 
       static const self_ min() { return 0; }
-      //FIXME : Is it too much or not? (the exact max is mlc_pow_int(2, n) )
-      static const self_ max() { return mln_max(enc_); }
+      static const self_ max() { return mlc_pow_int(2, n) - 1; }
       static const self_ epsilon() { return 0; }
 
       typedef float sum;
@@ -131,7 +130,7 @@ namespace mln
       int_u();
 
       /// Constructor from an integer.
-      int_u(unsigned int i);
+      int_u(int i);
 
       /// \{ Constructors/assignments with literals.
       int_u(const literal::zero_t&);
@@ -147,7 +146,7 @@ namespace mln
       int operator-() const;
 
       /// Assignment from an integer.
-      int_u<n>& operator=(unsigned int i);
+      int_u<n>& operator=(int i);
     };
 
 
@@ -181,7 +180,7 @@ namespace mln
     }
 
     template <unsigned n>
-    int_u<n>::int_u(unsigned int i)
+    int_u<n>::int_u(int i)
     {
       mln_precondition(i >= 0);
       mln_precondition(unsigned(i) <= mln_max(enc_));
@@ -231,7 +230,7 @@ namespace mln
 
     template <unsigned n>
     int_u<n>&
-    int_u<n>::operator=(unsigned int i)
+    int_u<n>::operator=(int i)
     {
       mln_precondition(i >= 0);
       mln_precondition(unsigned(i) <= mln_max(enc_));
