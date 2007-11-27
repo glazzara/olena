@@ -42,7 +42,7 @@
 #include <mln/level/transform.hh>
 
 
-  using namespace mln;
+using namespace mln;
 
 struct to16bits : mln::Function_v2v<to16bits>
 {
@@ -72,24 +72,36 @@ int main()
   using value::int_u8;
   using value::int_u16;
 
-  win::rectangle2d rect(51, 51);
-  border::thickness = 52;
+  {
+    win::rectangle2d rect(51, 51);
+    border::thickness = 52;
 
-  image2d<int_u8>
-    lena = io::pgm::load<int_u8>("../../../img/lena.pgm");
-  image2d<int_u16> out(lena.domain());
+    image2d<int_u8>
+      lena = io::pgm::load<int_u8>("../../../img/lena.pgm");
+    image2d<int_u16> out(lena.domain());
 
-  level::transform(lena, to16bits(), out);
+    level::transform(lena, to16bits(), out);
 
-  io::pgm::save(out, "out16.pgm");
+    io::pgm::save(out, "out16.pgm");
 
-  image2d<int_u16>
-    lena2 = io::pgm::load<int_u16>("out16.pgm");
-   image2d<int_u8> out2(lena.domain());
+    image2d<int_u16>
+      lena2 = io::pgm::load<int_u16>("out16.pgm");
+    image2d<int_u8> out2(lena.domain());
 
-   level::transform(lena2, to8bits(), out2);
+    level::transform(lena2, to8bits(), out2);
 
-   io::pgm::save(out2, "out8.pgm");
+    io::pgm::save(out2, "out8.pgm");
+  }
 
+
+  {
+    // Abort
+//     image2d< value::int_u<8> > a;
+//     io::pgm::load(a, "out16.pgm");
+
+    image2d< value::int_u<16> > b;
+    io::pgm::load(b, "out16.pgm");
+
+  }
 
 }

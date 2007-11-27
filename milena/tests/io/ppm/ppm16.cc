@@ -78,33 +78,43 @@ int main()
 
   typedef image2d<rgb8> I;
 
+  {
+    // load a 8bits image A
+    image2d<rgb8>
+      a = io::ppm::load<rgb8>("../../../img/lena.ppm");
+    image2d<rgb16> b(a.domain());
 
-  // load a 8bits image A
-  image2d<rgb8>
-    a = io::ppm::load<rgb8>("../../../img/lena.ppm");
-  image2d<rgb16> b(a.domain());
+    image2d<rgb8>::fwd_piter  p(b.domain());
 
-  image2d<rgb8>::fwd_piter  p(b.domain());
+    // save it as a 16bits ppm image B
+    to16bits f;
+    for_all(p)
+      b(p) = f(a(p));
+    io::ppm::save(b, "out16.ppm");
 
-  // save it as a 16bits ppm image B
-  to16bits f;
-  for_all(p)
-    b(p) = f(a(p));
-  io::ppm::save(b, "out16.ppm");
-
-  // reload B into C
-  image2d<rgb16>
-    c = io::ppm::load<rgb16>("out16.ppm");
-  image2d<rgb8> d(a.domain());
+    // reload B into C
+    image2d<rgb16>
+      c = io::ppm::load<rgb16>("out16.ppm");
+    image2d<rgb8> d(a.domain());
 
 
-  // save C as a 8bits ppm image D
-  to8bits g;
-  for_all(p)
-    d(p) = g(c(p));
-  io::ppm::save(d, "out8.ppm");
+    // save C as a 8bits ppm image D
+    to8bits g;
+    for_all(p)
+      d(p) = g(c(p));
+    io::ppm::save(d, "out8.ppm");
 
-  // D should equals A
-  mln_assertion(d == a);
+    // D should equals A
+    mln_assertion(d == a);
+  }
 
+  {
+    // Abort
+//     image2d<rgb8> a;
+//     io::ppm::load(a, "../../../img/lena_16.ppm");
+
+    image2d< value::rgb<16> > b;
+    io::ppm::load(b, "../../../img/lena_16.ppm");
+
+  }
 }

@@ -1,5 +1,19 @@
 2007-11-27  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix a bug in p(g|p)m load.
+
+	* mln/io/pnm/load.hh: (load(image&, filename)) now work on rgb images.
+	* mln/io/pnm/max_component.hh: Define a function which give the max of
+          the component of a value type.
+
+	* tests/io/pgm/pgm16.cc: Now test the other way to load an image
+          (load(image&, filename)).
+	* tests/io/ppm/ppm16.cc: likewise.
+
+	* img/lena_16.ppm: New, lena, ppm 16 bits.
+
+2007-11-27  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fixes in int_u.
 
 	* mln/value/int_u.hh: max() is now mlc_pow_int(2, n) - 1. and

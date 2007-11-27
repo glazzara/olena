@@ -46,6 +46,7 @@
 # include <mln/value/rgb.hh>
 
 # include <mln/io/pnm/load_header.hh>
+# include <mln/io/pnm/max_component.hh>
 # include <mln/io/pnm/macros.hh>
 
 namespace mln
@@ -189,14 +190,15 @@ namespace mln
 	read_header(type_ - 3, type_, file, type,
 		    nrows, ncols, maxval);
 
-	if (mln_max(mln_value(I)) != maxval)
+	if (max_component(mln_value(I)()) != maxval)
 	{
-	  std::cerr << "max ref : " << mln_max(mln_value(I))
-		    << "max image : " << maxval
-		    << std::endl;
-
 	  std::cerr << "error: file '" << filename
 		    << "' cannot be loaded into this type of image"
+		    << std::endl;
+
+	  std::cerr << "input image have " << maxval
+		    << " as maximum value while the destination's one is "
+		    << max_component(mln_value(I)()) << "."
 		    << std::endl;
 	  abort();
 	}
