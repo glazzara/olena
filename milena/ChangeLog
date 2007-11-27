@@ -52,7 +52,12 @@
 	convert for graylevel.
 
 	* mln/value/graylevel.hh: the graylevel type wasn't compatible with
-          the generic convert in convert.hh because of a convertion to int.
+	  the generic convert in convert.hh because of a convertion to int.
+
+2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Remove all_headers.cc in util.
+	* tests/util/Makefile.am: Remove all_headers tests.
 
 2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
@@ -103,8 +108,8 @@
 	Add an error of incompatible types in pnm loading.
 
 	* mln/io/pnm/load.hh: io::ppm::load<rgb8>("image16bits.ppm") now abort
-          because we can't store rgb 16 bits into rgb 8 bits (likewise for
-          pgm).
+	  because we can't store rgb 16 bits into rgb 8 bits (likewise for
+	  pgm).
 
 	* tests/io/ppm/ppm16.cc: Add some tests due to this update.
 
@@ -114,10 +119,10 @@
 
 	* mln/io/pnm/load.hh: (load(image&, filename)) now work on rgb images.
 	* mln/io/pnm/max_component.hh: Define a function which give the max of
-          the component of a value type.
+	  the component of a value type.
 
 	* tests/io/pgm/pgm16.cc: Now test the other way to load an image
-          (load(image&, filename)).
+	  (load(image&, filename)).
 	* tests/io/ppm/ppm16.cc: likewise.
 
 	* img/lena_16.ppm: New, lena, ppm 16 bits.
@@ -127,7 +132,20 @@
 	Fixes in int_u.
 
 	* mln/value/int_u.hh: max() is now mlc_pow_int(2, n) - 1. and
-          (unsigned int) is back to (int) (cf my previous patch).
+	  (unsigned int) is back to (int) (cf my previous patch).
+
+2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix bug in Makefile.am.
+
+	* tests/arith/Makefile.am,
+	* tests/border/Makefile.am,
+	* tests/draw/Makefile.am,
+	* tests/level/Makefile.am,
+	* tests/logical/Makefile.am,
+	* tests/util/Makefile.am: Fix.
+
+	* tests/arith/all_headers.cc: Remove.
 
 2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
@@ -197,6 +215,13 @@
 
 2007-11-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix bugs.
+	* mln/display/color_pretty.hh: Fix warning.
+	* tests/Makefile.am: Add util and display directory.
+	* tests/util/Makefile.am: Fix compile bug.
+
+2007-11-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Review util subdirectory.
 
 	* mln/util/branch_iter.hh,
@@ -219,6 +244,13 @@
 	* tests/util/graph.cc,
 	* tests/util/tree.cc,
 	* tests/util/tree_to_image.cc: Update.
+
+2007-11-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix Makefile.am.
+
+	* tests/Makefile.am,
+	* tests/io/fits/Makefile.am: Delete line of move test.
 
 2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -264,8 +296,8 @@
 2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	svn ignore .deps directories. Update makefiles.
-	* milena/tests/Makefile.am: Move accu's checks...
-	* milena/tests/accu/Makefile.am: ...here.
+	* tests/Makefile.am: Move accu's checks...
+	* tests/accu/Makefile.am: ...here.
 
 2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -706,7 +738,7 @@
 2007-11-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Little fix in test/Makefile.am.
-	* milena/tests/Makefile.am: Fix warning.
+	* tests/Makefile.am: Fix warning.
 
 2007-11-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
@@ -931,7 +963,7 @@
 	Review the mln/geom directory.
 
 	* mln/geom/seeds2tiling.hh: Clean dead code, update doc. Fixme for
-          guillaume : Review the documentation.
+	  guillaume : Review the documentation.
 	* mln/geom/seeds2tiling_with_chamfer.hh: likewise.
 
 	Add unit tests.
@@ -997,9 +1029,9 @@
 	* mln/debug/println.hh: Move spezialisations to println.spe.hh.
 	* mln/debug/println.spe.hh: New, specializations of println.
 	* mln/debug/println_with_border.hh: Move spezialisations to
-          println_with_border.spe.hh.
+	  println_with_border.spe.hh.
 	* mln/debug/println_with_border.spe.hh: New, specializations of
-          println.
+	  println.
 
 	* tests/debug_iota.cc: New, add a test for iota.
 
@@ -1096,7 +1128,7 @@
 	* mln/literal/origin.hh,
 	* mln/literal/white.hh,
 	* tests/literal/black.cc: Use extern const ref, not static. Move
-          impl. within MLN_INCLUDE_ONLY.
+	  impl. within MLN_INCLUDE_ONLY.
 
 	Move/add some unit tests.
 
@@ -1192,7 +1224,7 @@
 	A better test for io::pbm.
 
 	* tests/io_pbm.cc: Take a pgm, binarise it, save it, read it, and
-          check we we get the same pbm.
+	  check we we get the same pbm.
 
 2007-11-13  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
@@ -1325,11 +1357,11 @@
 	* sandbox/garrigues/fllt_optimized.hh: Update.
 	* sandbox/garrigues/fllt_types.hh: New, types used in FLLT.
 	* sandbox/garrigues/level_set.hh: New, compute lower/upper level set
-          algorithm
+	  algorithm
 	* sandbox/garrigues/lower.hh: New, informations about how to compute
-          the lower level set.
+	  the lower level set.
 	* sandbox/garrigues/upper.hh: New, informations about how to compute
-          the lower level set.
+	  the lower level set.
 
 	* sandbox/garrigues/test_fllt12.cc: Cleaning, (fllt2.hh) replaced by...
 	(fllt_optimized.hh) ...this.
@@ -1339,7 +1371,7 @@
 	* sandbox/garrigues/test_fllt_lena_tiles.cc: Likewise.
 
 	* mln/util/branch_iter_ind.hh: Check if the tree has not
-          been subject to updates which can invalidate the iterator.
+	  been subject to updates which can invalidate the iterator.
 
 	* sandbox/garrigues/fllt2.hh: (set_p) replaced by...
 	{p_set} ...this.
@@ -1618,8 +1650,8 @@
 	Choice a good root of the merged tree in FLLT.
 
 	* sandbox/garrigues/fllt2.hh: (merge_trees) Choose a good root between
-          the upper tree's one and the lower tree's one in order to keep the
-          good values of the input image.
+	  the upper tree's one and the lower tree's one in order to keep the
+	  good values of the input image.
 	  (fllt) add a second call to merge_trees to test the contrast
 	  invariant of the algorithm. FIXME : In some test, we get a segv when
 	  calling merge_trees swapping the upper_tree and lower_tree
@@ -1653,21 +1685,21 @@
 	* sandbox/garrigues/test_fllt2.cc,
 	* sandbox/garrigues/test_fllt3.cc,
 	* sandbox/garrigues/test_fllt_tiny.cc: likewise, Update include to
-          test fllt2.hh.
+	  test fllt2.hh.
 
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Start a second version of merging trees in FLLT.
 
 	* sandbox/garrigues/fllt2.hh: New, looks like fllt.hh but differs in
-          merge trees. We keep the old file fllt.hh to avoid regression.
+	  merge trees. We keep the old file fllt.hh to avoid regression.
 
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix an bug in make::image2d.
 
 	* mln/make/image2d.hh: (for (unsigned row = 0; row <= R; ++row))
-          replaced by...
+	  replaced by...
 	  (for (unsigned row = 0; row < R; ++row)) ...this.
 
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
@@ -1675,7 +1707,7 @@
 	Add box_bounds_piter_ to iterate on the bounds of a box2d.
 
 	* mln/core/box_piter.hh: (box_bounds_piter_) New, iterator to iterate
-          on the bounds of a box2d.
+	  on the bounds of a box2d.
 
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -1687,14 +1719,14 @@
 	* sandbox/garrigues/test_fllt9.cc: New,
 	* sandbox/garrigues/test_fllt_lena.cc: New,
 	* sandbox/garrigues/test_fllt_lena_tiles.cc: New, test FLLT with
-          differents 2d images.
+	  differents 2d images.
 
 2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix compilation error in core/concept/box.hh.
 
 	* mln/core/concept/box.hh: Add parenthesis to remove an ambiguity at
-          the operator !.
+	  the operator !.
 
 2007-11-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
@@ -1922,7 +1954,7 @@
 
 	* mln/core/image2d.hh: Include make/image2d.hh at the end of the file.
 	* mln/make/image2d.hh: New, Add routine to make a image2d with a 2d
-          array
+	  array
 	* tests/make_image2d.cc: New, tests on make::image2d.
 
 2007-10-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
@@ -2040,7 +2072,7 @@
 	Improve fllt. Add more tests.
 
 	* mln/set/is_subset_of.hh: New, Test if a point set is a subset of
-          another.
+	  another.
 	* mln/util/branch_iter.hh: Update
 	* mln/util/tree.hh: (tree<T>::add_child(node<T>*)) New,
 	(tree<T>::main_branch()) New.
@@ -2051,7 +2083,7 @@
 	* sandbox/garrigues/test_fllt4.cc,
 	* sandbox/garrigues/test_fllt5.cc,
 	* sandbox/garrigues/test_fllt_tiny.cc: New, differents cases of tests
-          for fllt.
+	  for fllt.
 
 2007-10-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -2192,7 +2224,7 @@
 2007-10-26  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix on tree for compiling, and Fix in fllt.
-	* mln/util/tree.hh, 
+	* mln/util/tree.hh,
 	* mln/util/tree_fast.hh,
 	* sandbox/garrigues/fllt.hh: Fix.
 
@@ -2257,7 +2289,7 @@
 	Update fllt.
 
 	* sandbox/garrigues/fllt.hh: (border_neighb and region_neighb) Rename
-          as...
+	  as...
 	  (border_neighb and region_neighb) ...this.
 
 2007-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
@@ -2517,7 +2549,7 @@
 2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update of abr.
-	
+
 	* mln/util/abr.hh: Update with better coding style.
 	* tests/abr.cc: Add assertion in this test.
 
@@ -2738,7 +2770,7 @@
 
 2007-10-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-        Fix namespaces documentation.
+	Fix namespaces documentation.
 
 	* mln/arith/all.hh: New,
 	* mln/canvas/all.hh: New,
@@ -3103,7 +3135,7 @@
 	* mln/core/h_vec.hh (h_vec): New ctor overload for vec<d+1>.
 	(operator=): New overload for vec<d+1>.
 	* mln/metal/mat.hh (trait): New def for mat * vec.
-	(operator*): Strengthen scalar version to disambiguate. 
+	(operator*): Strengthen scalar version to disambiguate.
 	* mln/metal/vec.hh (to_h_vec): New method decl.
 	* mln/fun/x2x/translation.hh: Deactivate code in ctor w/o arg.
 	* mln/fun/x2x/rotation.hh: Likewise.
@@ -3325,7 +3357,7 @@
 	* mln/literal/zero.hh: Fix typo in doc.
 	* mln/value/int_s.hh: Handle literals.
 	* mln/value/int_u.hh (zero, one): Remove variables.
-	* mln/value/concept/scalar.hh, 
+	* mln/value/concept/scalar.hh,
 	* mln/make/w_window_line.hh,
 	* mln/morpho/hit_or_miss.hh: Update with literals.
 
@@ -4215,7 +4247,7 @@
 	* mln/value/concept/structured.hh,
 	* mln/value/concept/symbolic.hh,
 	* mln/value/concept/vectorial.hh: Add categories for each of these
-          types (in namespace value).
+	  types (in namespace value).
 
 2007-10-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -4269,10 +4301,10 @@
 			---------------------------
 			|       |        |        |
 		      Scalar Vectoriel Symbolic  Structured
-		        ^
+			^
 			|
-	             --------
-                     |      |
+		     --------
+		     |      |
 		 Integer  Floating
 
 	* mln/value/internal/floating.hh: New.
@@ -4480,7 +4512,7 @@
 	Update doc of accus. Update Accumulator.
 
 	* mln/core/concept/accumulator.hh: Test if the convertion operator
-          exist.
+	  exist.
 
 	* mln/core/concept/doc/accumulator.hh: Add operator result().
 
@@ -4497,7 +4529,7 @@
 	Remove convertion method in median_alt.
 
 	* mln/accu/median_alt.hh: Move convertion method to the super class
-          accu::internal::base_
+	  accu::internal::base_
 
 	* mln/accu/nil.hh,
 	* mln/accu/p.hh: Clean old includes.
@@ -5381,7 +5413,7 @@
 	Clean interpolated image class.
 
 	* mln/core/interpolated.hh: Remove useless methods because of
-          inherited methods from identity morpher.
+	  inherited methods from identity morpher.
 
 2007-09-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -5426,7 +5458,7 @@
 
 	* mln/core/rle_image.hh,
 	* mln/core/sparse_image.hh: Move the data allocation to the insert
-          method.
+	  method.
 
 2007-09-25  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
@@ -5461,16 +5493,16 @@
 
 	* mln/core/decorated_image.hh: Remove super_ typedef.
 	* mln/core/interpolated.hh: Inherit from identity morpher. Add memory
-          managment.
+	  managment.
 
 	* mln/core/rle_image.hh,
 	* mln/core/sparse_image.hh,
 	* mln/core/internal/run_image.hh: Inherit from image_primary, move
-          domain_ attribute to the descendants classes rle_images and
-          sparse_image. Add memory managment to rle and sparse images.
+	  domain_ attribute to the descendants classes rle_images and
+	  sparse_image. Add memory managment to rle and sparse images.
 
 	* mln/core/safe.hh: Inherit from identity morpher. Add memory
-          managment.
+	  managment.
 
 	* mln/value/stack.hh: Inherit from value morpher.
 
@@ -5978,11 +6010,11 @@
 
 	* image2d_b.hh:
 	* image2d_b_data.hh: move image data into an imaage2d_b_data class,
-          then hold it with a tracked pointer to avoid useless data copy like
-          in olena
+	  then hold it with a tracked pointer to avoid useless data copy like
+	  in olena
 
 	* internal/tracked_ptr.hh: tracked pointer class from olena. fix a bug
-          related to invariant_ call to optimize data access.
+	  related to invariant_ call to optimize data access.
 
 2007-09-19  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
@@ -6038,7 +6070,7 @@
 
 	* mln/core/internal/pixel_iterator_base.hh (boi_): Make it
 	before-the-beginning (reverse of past-the-end).
-	(start, is_valid): Update.	
+	(start, is_valid): Update.
 	* mln/core/line_piter.hh: Import super_::dim.
 	* mln/core/box_piter.hh: Likewise.
 	* mln/core/neighb.hh: Change inheritance to dpoints_base_.
@@ -6149,20 +6181,20 @@
 	Improve pnm support.
 
 	* mln/io/fits/load.hh: start debug, only the first column of the image
-          is filled
+	  is filled
 
 	* mln/io/internal/pnm/load.hh: add a second funtion to load a function
-          load(ima, filename). Then we can check if ima is the right type to
-          load the image in the file filename.
+	  load(ima, filename). Then we can check if ima is the right type to
+	  load the image in the file filename.
 
 	* mln/io/internal/pnm/load_header.hh: update read_header to get the
-          maxvalue of the pnm header. We need it to check if max(mln_value(I))
-          == maxval
+	  maxvalue of the pnm header. We need it to check if max(mln_value(I))
+	  == maxval
 
 	* mln/io/internal/pnm/save.hh:
 	* mln/io/internal/pnm/save_header.hh: change save_header(type, maxval,
-          ima, filename, file) to save_header(type, maxval, ima, filename,
-          file)
+	  ima, filename, file) to save_header(type, maxval, ima, filename,
+	  file)
 
 	* mln/io/pbm/save.hh:
 	* mln/io/pgm/load.hh:
@@ -7150,7 +7182,7 @@
 	* mln/core/concept/generalized_pixel.hh,
 	* mln/core/internal/pixel_impl.hh (ima): New.
 	* mln/core/concept/doc/generalized_pixel.hh,
-	* mln/core/concept/doc/pixel_iterator.hh 
+	* mln/core/concept/doc/pixel_iterator.hh
 	* mln/core/concept/generalized_pixel.hh,
 	* mln/core/concept/pixel_iterator.hh,
 	* mln/core/dpoints_pixter.hh (ctor): Better sig.

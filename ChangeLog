@@ -2,38 +2,6 @@
 
 	* configure.ac: Configure milena/tests/core/Makefile.
 
-2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
-
-	Remove all_headers.cc in util.
-	* milena/tests/util/Makefile.am: Remove all_headers tests.
-
-2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
-
-	Fix bug in Makefile.am.
-
-	* milena/tests/arith/Makefile.am,
-	* milena/tests/border/Makefile.am,
-	* milena/tests/draw/Makefile.am,
-	* milena/tests/level/Makefile.am,
-	* milena/tests/logical/Makefile.am,
-	* milena/tests/util/Makefile.am: Fix.
-
-	* milena/tests/arith/all_headers.cc: Remove.
-
-2007-11-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
-
-	Fix bugs.
-	* milena/mln/display/color_pretty.hh: Fix warning.
-	* milena/tests/Makefile.am: Add util and display directory.
-	* milena/tests/util/Makefile.am: Fix compile bug.
-
-2007-11-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
-
-	Fix Makefile.am.
-
-	* milena/tests/Makefile.am,
-	* milena/tests/io/fits/Makefile.am: Delete line of move test.
-
 2007-11-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move the Olena-NG components elsewhere.
@@ -200,7 +168,7 @@
 	* Makefile.am (SUBDIRS): Add milena.
 	* milena/Makefile.am: New.
 	* milena/doc/Makefile.am, milena/doc/Doxyfile.in:
-	New files (copied from LRDE TC's project).	
+	New files (copied from LRDE TC's project).
 
 2007-06-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -337,7 +305,7 @@
 	* configure.ac: Declare CONCEPTCXX as a previous variable.
 	Look for a Concept C++ compiler, and store it in CONCEPTCXX.
 	Configure static/samples/Makefile,
-	static/samples/mini-oln/Makefile and 
+	static/samples/mini-oln/Makefile and
 	static/samples/mini-oln/concept-c.
 
 2006-10-31  Roland Levillain  <roland@lrde.epita.fr>
