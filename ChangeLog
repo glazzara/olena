@@ -1,3 +1,7 @@
+2007-11-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/tests/core/Makefile.
+
 2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Remove all_headers.cc in util.

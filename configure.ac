@@ -77,6 +77,7 @@ AC_CONFIG_FILES([
 # FIXME: Should be performed through oln.m4 macros?
 AC_CONFIG_FILES([
   milena/tests/Makefile
+    milena/tests/core/Makefile
     milena/tests/norm/Makefile
     milena/tests/geom/Makefile
     milena/tests/literal/Makefile
