@@ -117,4 +117,21 @@ int main()
     io::ppm::load(b, "../../../img/lena_16.ppm");
 
   }
+
+  {
+    //    Abort
+//     image2d< value::rgb<8> > a =
+//       io::ppm::load("../../../img/lena_16.ppm");
+
+    //    Abort
+//     image2d< value::rgb<16> > a =
+//       io::ppm::load< value::rgb<16> >("../../../img/lena.ppm");
+
+    image2d< value::rgb<16> > a =
+      io::ppm::load< value::rgb<16> >("../../../img/lena_16.ppm");
+
+    image2d< value::rgb<8> > b =
+      io::ppm::load< value::rgb<8> >("../../../img/lena.ppm");
+
+  }
 }

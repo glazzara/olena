@@ -156,6 +156,19 @@ namespace mln
 	read_header(type_ - 3, type_, file, type,
 		    nrows, ncols, maxval);
 
+	if (max_component(V()) != maxval)
+	{
+	  std::cerr << "error: file '" << filename
+		    << "' cannot be loaded into this type of image"
+		    << std::endl;
+
+	  std::cerr << "input image have " << maxval
+		    << " as maximum value while the destination's one is "
+		    << max_component(V()) << " (should be the same)."
+		    << std::endl;
+	  abort();
+	}
+
 	image2d<V> ima(nrows, ncols);
 	if (type == type_)
 	  load_raw_2d(file, ima);

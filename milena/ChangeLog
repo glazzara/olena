@@ -1,5 +1,15 @@
 2007-11-27  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add an error of incompatible types in pnm loading.
+
+	* mln/io/pnm/load.hh: io::ppm::load<rgb8>("image16bits.ppm") now abort
+          because we can't store rgb 16 bits into rgb 8 bits (likewise for
+          pgm).
+
+	* tests/io/ppm/ppm16.cc: Add some tests due to this update.
+
+2007-11-27  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix a bug in p(g|p)m load.
 
 	* mln/io/pnm/load.hh: (load(image&, filename)) now work on rgb images.
