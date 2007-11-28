@@ -54,9 +54,15 @@ namespace mln
     namespace pfm
     {
 
+      /*! Save a milena image as a pfm image.
+       *
+       * \param[in] ima The image to save.
+       * \param[in,out] filename the destination.
+       */
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename);
 
+# ifndef MLN_INCLUDE_ONLY
 
       namespace impl
       {
@@ -93,8 +99,6 @@ namespace mln
 	}
 
       } // end of  namespace mln::io::impl
-
-# ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename)

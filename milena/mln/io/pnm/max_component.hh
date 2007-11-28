@@ -44,8 +44,10 @@ namespace mln
 
     namespace pnm
     {
+      /// Give the maximum value which can be stored as a component
+      /// value type V.
       template <typename V>
-      unsigned int max_component();
+      unsigned int max_component(const V&);
 
 # ifndef MLN_INCLUDE_ONLY
 

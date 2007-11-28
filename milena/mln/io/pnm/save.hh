@@ -71,7 +71,6 @@ namespace mln
        * \param[in] ima_ The image to save.
        * \param[in,out] filename the destination.
        */
-
       template <typename I>
       void save(const int type, const Image<I>& ima_, const std::string& filename);
 

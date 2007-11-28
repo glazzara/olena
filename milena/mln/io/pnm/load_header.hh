@@ -49,6 +49,7 @@ namespace mln
       namespace pnm
       {
 
+# ifndef MLN_INCLUDE_ONLY
 
 	bool read_header(std::ifstream& istr,
 			 char& type,
@@ -124,6 +125,8 @@ namespace mln
 	  read_header(ascii, raw, istr, type,
 		      nrows, ncols, maxval);
 	}
+
+# endif // ! MLN_INCLUDE_ONLY
 
       } // end of namespace mln::io::pnm
 

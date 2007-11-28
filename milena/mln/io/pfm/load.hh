@@ -37,10 +37,6 @@
  *
  */
 
-// # include <iostream>
-// # include <fstream>
-// # include <string>
-
 # include <mln/core/image2d.hh>
 # include <mln/value/int_u8.hh>
 
@@ -53,6 +49,25 @@ namespace mln
 
     namespace pfm
     {
+
+      /*! Load a pfm image in a milena image.
+       *
+       * \param[out] ima A reference to the image2d<float> which will receive
+       * data.
+       * \param[in] filename The source.
+       */
+      void load(image2d<float>& ima,
+		const std::string& filename);
+
+      /*! Load a pfm image in a image2d<float>.
+       *
+       * \param[in] filename The image source.
+       *
+       * \return An image2d<float> which contains loaded data.
+       */
+      image2d<float> load(const std::string& filename);
+
+# ifndef MLN_INCLUDE_ONLY
 
       namespace internal
       {
@@ -135,6 +150,15 @@ namespace mln
 	internal::load_raw_2d(file, ima);
 	return ima;
       }
+
+
+      void load(image2d<float>& ima,
+		const std::string& filename)
+      {
+	ima = load(filename);
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::io::pfm
 

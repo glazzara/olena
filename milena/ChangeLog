@@ -1,3 +1,25 @@
+2007-11-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Review the mln/io directory.
+	* mln/io/abort.hh,
+	* mln/io/fits/load.hh,
+	* mln/io/pbm/load.hh,
+	* mln/io/pbm/save.hh,
+	* mln/io/pfm/load.hh,
+	* mln/io/pfm/save.hh,
+	* mln/io/pgm/load.hh,
+	* mln/io/pgm/save.hh,
+	* mln/io/pnm/load.hh,
+	* mln/io/pnm/load_header.hh,
+	* mln/io/pnm/max_component.hh,
+	* mln/io/pnm/save.hh,
+	* mln/io/pnm/save_header.hh,
+	* mln/io/ppm/load.hh,
+	* mln/io/ppm/save.hh,
+	* tests/io/ppm/ppm.cc: Add documentation, review the code, put
+          MLN_INCLUDE_ONLY gards, add missing function declaration (outside
+          MLN_INCLUDE_ONLY).
+
 2007-11-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add full test for border::get.

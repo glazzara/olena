@@ -63,6 +63,11 @@ namespace mln
     namespace pbm
     {
 
+      /*! Save a milena image as a pbm image.
+       *
+       * \param[in] ima The image to save.
+       * \param[in,out] filename the destination.
+       */
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename);
 
@@ -79,7 +84,7 @@ namespace mln
 	  std::ofstream file(filename.c_str());
 
 	  io::pnm::save_header(PBM, ima, filename, file);
-	  
+
 	  int ncols = geom::ncols(ima);
 	  int col = 0;
 	  int stride = 0;

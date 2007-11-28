@@ -46,8 +46,10 @@ int main()
   using namespace mln;
   using value::rgb8;
 
-  image2d<rgb8> lena = io::ppm::load("../../../img/lena.ppm");
+  image2d<rgb8> lena = io::ppm::load<rgb8>("../../../img/lena.ppm");
   io::ppm::save(lena, "out.ppm");
-  image2d<rgb8> lena2 = io::ppm::load("out.ppm");
+
+  image2d<rgb8> lena2;
+  io::ppm::load(lena2, "out.ppm");
   mln_assertion(lena2 == lena);
 }

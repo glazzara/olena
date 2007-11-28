@@ -39,6 +39,8 @@
 # include <iostream>
 # include <fstream>
 
+# include <mln/io/pnm/max_component.hh>
+
 # include <mln/value/rgb.hh>
 # include <mln/geom/nrows.hh>
 # include <mln/geom/ncols.hh>
@@ -57,19 +59,11 @@ namespace mln
       template <typename V>
       void save_max_val(V&, std::ofstream& file)
       {
-	file << mln_max(V) << std::endl;
+	file << max_component(V()) << std::endl;
       }
 
       void save_max_val(bool&, std::ofstream& file)
       {
-      }
-
-      template <unsigned int n>
-      void save_max_val(value::rgb<n>&, std::ofstream& file)
-      {
-	typedef typename value::int_u<n>::enc E;
-
-	file << unsigned(mln_max(E)) << std::endl;
       }
 
       template <typename I>

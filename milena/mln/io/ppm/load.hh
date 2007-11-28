@@ -54,15 +54,34 @@ namespace mln
 
     namespace ppm
     {
+
+      /*! Load a ppm image in a milena image.
+       *
+       * \param[out] ima A reference to the image which will receive
+       * data.
+       * \param[in] filename The source.
+       */
+      template <typename I>
+      void load(Image<I>& ima,
+		const std::string& filename);
+
+      /*! Load a ppm image in a milena image. To use this routine, you
+       *  should specialize the template whith the value type of the
+       *  image loaded. (ex : load<value::int_u8>("...") )
+       *
+       * \param[in] filename The image source.
+       *
+       * \return An image2d which contains loaded data.
+       */
+      template <typename V>
+      image2d<V> load(const std::string& filename);
+
+# ifndef MLN_INCLUDE_ONLY
+
       template <typename V>
       image2d<V> load(const std::string& filename)
       {
 	return io::pnm::load<V>(PPM, filename);
-      }
-
-      image2d<value::rgb8> load(const std::string& filename)
-      {
-	return load<value::rgb8>(filename);
       }
 
       template <typename I>
@@ -71,6 +90,8 @@ namespace mln
       {
 	io::pnm::load<I>(PPM, ima, filename);
       }
+
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::io::ppm
 

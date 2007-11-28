@@ -179,7 +179,7 @@ namespace mln
 
       }
 
-      /// a new function to load pnm files :
+      /// An other way to load pnm files :
       /// the destination is an argument to check if
       /// the type match the file to load.
       template <typename I>

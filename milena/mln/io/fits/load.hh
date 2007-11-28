@@ -51,8 +51,29 @@ namespace mln
   namespace io
   {
 
+
     namespace fits
     {
+
+      /*! Load a fits image in a milena image.
+       *
+       * \param[out] ima A reference to the image2d<float> which will receive
+       * data.
+       * \param[in] filename The source.
+       */
+      void load(image2d<float>& ima,
+		const std::string& filename);
+
+      /*! Load a fits image in a image2d<float>.
+       *
+       * \param[in] filename The image source.
+       *
+       * \return An image2d<float> which contains loaded data.
+       */
+      image2d<float> load(const std::string& filename);
+
+# ifndef MLN_INCLUDE_ONLY
+
       void fits_exit(int status)
       {
 	if (status)
@@ -103,6 +124,14 @@ namespace mln
 
 	return output;
       }
+
+      void load(image2d<float>& ima,
+		const std::string& filename)
+      {
+	ima = load(filename);
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::io::fits
 

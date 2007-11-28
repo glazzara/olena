@@ -44,12 +44,18 @@ namespace mln
 
     namespace internal
     {
+      /// The way to abort when an error occur in io processing.
+      void abort()
+
+# ifndef MLN_INCLUDE_ONLY
 
       void abort()
       {
-	std::cerr << " aborting." << std::endl;
+	std::cerr << "I/O error, aborting." << std::endl;
 	exit(0);
       }
+
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::io::internal
 

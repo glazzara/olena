@@ -63,6 +63,11 @@ namespace mln
     namespace pgm
     {
 
+      /*! Save a milena image as a pgm image.
+       *
+       * \param[in] ima The image to save.
+       * \param[in,out] filename the destination.
+       */
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename);
 

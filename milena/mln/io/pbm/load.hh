@@ -54,6 +54,26 @@ namespace mln
     namespace pbm
     {
 
+
+      /*! Load a pbm image in a milena image.
+       *
+       * \param[out] ima A reference to the image2d<bool> which will receive
+       * data.
+       * \param[in] filename The source.
+       */
+      void load(image2d<bool>& ima,
+		const std::string& filename);
+
+      /*! Load a pbm image in a image2d<float>.
+       *
+       * \param[in] filename The image source.
+       *
+       * \return An image2d<float> which contains loaded data.
+       */
+      image2d<bool> load(const std::string& filename);
+
+# ifndef MLN_INCLUDE_ONLY
+
       namespace internal
       {
 
@@ -84,53 +104,61 @@ namespace mln
 	    max_row = geom::max_row(ima),
 	    min_col = geom::min_col(ima),
 	    max_col = geom::max_col(ima);
- 
+
 	  char c;
 	  int i;
 	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
+	  {
+	    i = 0;
+	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
 	    {
-	      i = 0;
-	      for (p.col() = min_col; p.col() <= max_col; ++p.col())
-		{
-		  if (i % 8 == 0)
-		    file.read((char*)(&c), 1);
-		  ima(p) = c & 128;
-		  c *= 2;
-		  ++i;
-		}
+	      if (i % 8 == 0)
+		file.read((char*)(&c), 1);
+	      ima(p) = c & 128;
+	      c *= 2;
+	      ++i;
 	    }
+	  }
 	}
 
 
-    } // end of namespace mln::io::internal
+      } // end of namespace mln::io::internal
 
 
-    image2d<bool> load(const std::string& filename)
-    {
-      std::ifstream file(filename.c_str());
-      if (! file)
+      image2d<bool> load(const std::string& filename)
       {
-	std::cerr << "error: file '" << filename
-		  << "' not found!";
-	abort();
+	std::ifstream file(filename.c_str());
+	if (! file)
+	{
+	  std::cerr << "error: file '" << filename
+		    << "' not found!";
+	  abort();
+	}
+	char type;
+	int nrows, ncols;
+	io::pnm::read_header('1', '4', file, type, nrows, ncols);
+
+	image2d<bool> ima(nrows, ncols);
+	if (type == '4')
+	  internal::load_raw_2d(file, ima);
+	else
+	  if (type == '1')
+	    internal::load_ascii(file, ima);
+	return ima;
       }
-      char type;
-      int nrows, ncols;
-      io::pnm::read_header('1', '4', file, type, nrows, ncols);
-
-      image2d<bool> ima(nrows, ncols);
-      if (type == '4')
-	internal::load_raw_2d(file, ima);
-      else
-	if (type == '1')
-	  internal::load_ascii(file, ima);
-      return ima;
-    }
 
 
-  } // end of namespace mln::io::pbm
+      void load(image2d<bool>& ima,
+		const std::string& filename)
+      {
+	ima = load(filename);
+      }
 
-} // end of namespace mln::io
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::io::pbm
+
+  } // end of namespace mln::io
 
 } // end of namespace mln
 
