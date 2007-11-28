@@ -66,6 +66,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename Wl, typename Wr>
+    inline
     window<mln_dpoint(Wl)>
     uni(const Window<Wl>& lhs, const Window<Wr>& rhs)
     {
@@ -84,6 +85,7 @@ namespace mln
     }
 
     template <typename Wl, typename Wr>
+    inline
     p_set<mln_point(Wl)>
     uni(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
     {

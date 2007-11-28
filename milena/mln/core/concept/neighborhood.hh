@@ -76,6 +76,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Neighborhood<E>::Neighborhood()
   {
     typedef mln_niter(E) niter;

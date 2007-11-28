@@ -105,6 +105,7 @@ namespace mln
   }
 
   template <typename E>
+  inline
   Iterator<E>::Iterator()
   {
     bool (E::*m1)() const = & E::is_valid;

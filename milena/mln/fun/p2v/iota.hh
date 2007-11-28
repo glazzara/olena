@@ -66,24 +66,28 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+      inline
       iota_t::iota_t()
       {
 	reset();
       }
 
       template <typename P>
+      inline
       unsigned
       iota_t::operator()(const P&) const
       {
 	return ++i_;
       }
 
+      inline
       unsigned
       iota_t::value() const
       {
 	return i_;
       }
 
+      inline
       void
       iota_t::reset() const
       {

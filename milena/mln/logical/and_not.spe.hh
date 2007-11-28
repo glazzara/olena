@@ -56,6 +56,7 @@ namespace mln
 
 
       template <typename L, typename R, typename O>
+      inline
       void and_not_(trait::image::speed::any, const L& lhs,
 		    trait::image::speed::any, const R& rhs, O& output)
       {
@@ -63,6 +64,7 @@ namespace mln
       }
 
       template <typename L, typename R, typename O>
+      inline
       void and_not_(trait::image::speed::fastest, const L& lhs,
 		    trait::image::speed::fastest, const R& rhs, O& output)
       {

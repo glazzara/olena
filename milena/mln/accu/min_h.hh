@@ -88,6 +88,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S>
+    inline
     min_h<S>::min_h(const Value_Set<S>& s)
       : h_(s),
 	s_(h_.vset())
@@ -96,6 +97,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     min_h<S>::min_h()
       : h_(),
 	s_(h_.vset())
@@ -104,6 +106,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     min_h<S>::take(const argument& t)
     {
@@ -121,6 +124,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     min_h<S>::take(const min_h<S>& other)
     {
@@ -133,6 +137,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     min_h<S>::untake(const argument& t)
     {
@@ -155,6 +160,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     min_h<S>::update_() const
     {
@@ -167,6 +173,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     min_h<S>::go_minus_() const
     {
@@ -181,6 +188,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     min_h<S>::go_plus_() const
     {
@@ -191,6 +199,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     min_h<S>::init()
     {
@@ -202,6 +211,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     min_h<S>::take_as_init(const argument& t)
     {
@@ -213,6 +223,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     typename min_h<S>::argument
     min_h<S>::to_result() const
     {
@@ -222,6 +233,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     const accu::histo<S>&
     min_h<S>::histo() const
     {
@@ -229,6 +241,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const min_h<S>& m)
     {
       return ostr << m.to_result();

@@ -93,6 +93,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V, typename R>
+      inline
       R
       l1_norm<V, R>::operator()(const V& v) const
       {
@@ -100,6 +101,7 @@ namespace mln
       }
 
       template <typename V, typename R>
+      inline
       R
       l2_norm<V, R>::operator()(const V& v) const
       {
@@ -107,6 +109,7 @@ namespace mln
       }
 
       template <typename V, typename R>
+      inline
       R
       linfty_norm<V, R>::operator()(const V& v) const
       {

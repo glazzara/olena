@@ -60,24 +60,28 @@ namespace mln
     {
 
       template <typename I, typename S, typename E>
+      inline
       unsigned find__(const mln::internal::image_morpher_<I,S,E>& ima)
       {
 	return border::find(*ima.delegatee_());
       }
 
       template <typename S, typename E>
+      inline
       unsigned find__(const mln::internal::image_base_<S,E>&)
       {
 	return 0;
       }
 
       template <typename I>
+      inline
       unsigned find_(trait::image::speed::any, const I& ima)
       {
 	return border::impl::find__(ima);
       }
 
       template <typename I>
+      inline
       unsigned find_(trait::image::speed::fastest, const I& ima)
       {
 	return ima.border();
@@ -89,6 +93,7 @@ namespace mln
     // Facade.
 
     template <typename I>
+    inline
     unsigned find(const Image<I>& ima)
     {
       trace::entering("border::find");

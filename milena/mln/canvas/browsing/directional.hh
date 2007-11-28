@@ -86,6 +86,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename F>
+      inline
       void
       directional_t::operator()(F& f) const
       {

@@ -93,6 +93,7 @@ namespace mln
   // hexa_fwd_piter_<I>
 
   template <typename S>
+  inline
   hexa_fwd_piter_<S>::hexa_fwd_piter_(const box2d_h& b)
     :
     super_(adaptee_(box_adaptee_))
@@ -104,6 +105,7 @@ namespace mln
   }
 
   template <typename S>
+  inline
   void
   hexa_fwd_piter_<S>::start()
   {
@@ -113,6 +115,7 @@ namespace mln
   }
 
   template <typename S>
+  inline
   void
   hexa_fwd_piter_<S>::next_()
   {
@@ -122,6 +125,7 @@ namespace mln
   }
 
   template <typename S>
+  inline
   hexa_fwd_piter_<S>::operator point2d_h() const
   {
     return p_;

@@ -92,6 +92,7 @@ namespace mln
 #ifndef MLN_INCLUDE_ONLY
 
   template <typename I>
+  inline
   fwd_pixter3d<I>::fwd_pixter3d(I& image)
     : super_(image),
       border_x2_ (2 * image.border()),
@@ -106,6 +107,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   void
   fwd_pixter3d<I>::next_()
   {

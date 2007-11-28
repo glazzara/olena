@@ -55,6 +55,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename R, typename A>
+    inline
     fun::C<R(*)(A)> to_fun(R (*f_)(A))
     {
       fun::C<R(*)(A)> f(f_);
@@ -62,6 +63,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     pw::value_<I> to_fun(const Image<I>& ima)
     {
       return pw::value(ima);

@@ -90,11 +90,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename S, typename E>
+    inline
     image_identity_<I,S,E>::image_identity_()
     {
     }
 
     template <typename I, typename S, typename E>
+    inline
     const mln_vset(I)&
     image_identity_<I,S,E>::values() const
     {
@@ -103,6 +105,7 @@ namespace mln
     }
 
     template <typename I, typename S, typename E>
+    inline
     mln_rvalue(I)
     image_identity_<I,S,E>::operator()(const mln_psite(S)& p) const
     {
@@ -111,6 +114,7 @@ namespace mln
     }
 
     template <typename I, typename S, typename E>
+    inline
     typename image_identity_<I,S,E>::lvalue
     image_identity_<I,S,E>::operator()(const mln_psite(S)& p)
     {
@@ -119,6 +123,7 @@ namespace mln
     }
 
     template <typename I, typename S, typename E>
+    inline
     const mln_pset(I)&
     image_identity_<I,S,E>::domain() const
     {
@@ -127,6 +132,7 @@ namespace mln
     }
 
     template <typename I, typename S, typename E>
+    inline
     bool
     image_identity_<I,S,E>::owns_(const mln_psite(I)& p) const
     {

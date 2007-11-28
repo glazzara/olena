@@ -52,6 +52,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   E& inplace(const Object<E>& temp)
   {
     return const_cast<E&>( exact(temp) );

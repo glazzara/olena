@@ -313,12 +313,14 @@ namespace mln
 
 
     template <unsigned n>
+    inline
     graylevel<n>::graylevel()
     {
     }
 
 
     template <unsigned n>
+    inline
     graylevel<n>::graylevel(int val)
     {
       mln_precondition(val >= 0);
@@ -327,6 +329,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     graylevel<n>&
     graylevel<n>::operator=(int val)
     {
@@ -338,6 +341,7 @@ namespace mln
 
 
     template <unsigned n>
+    inline
     graylevel<n>::graylevel(const gray& g)
     {
       gray tmp = g.to_nbits(n);
@@ -345,6 +349,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     graylevel<n>&
     graylevel<n>::operator=(const gray& g)
     {
@@ -354,12 +359,14 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     graylevel<n>::graylevel(const graylevel<n>& rhs)
     {
       this->v_ = rhs.v_;
     }
 
     template <unsigned n>
+    inline
     graylevel<n>&
     graylevel<n>::operator=(const graylevel<n>& rhs)
     {
@@ -369,6 +376,7 @@ namespace mln
 
     template <unsigned n>
     template <unsigned m>
+    inline
     graylevel<n>::graylevel(const graylevel<m>& rhs)
     {
       *this = gray(rhs).to_nbits(n);
@@ -376,6 +384,7 @@ namespace mln
 
     template <unsigned n>
     template <unsigned m>
+    inline
     graylevel<n>&
     graylevel<n>::operator=(const graylevel<m>& rhs)
     {
@@ -385,12 +394,14 @@ namespace mln
 
 
     template <unsigned n>
+    inline
     graylevel<n>::graylevel(const literal::black_t&)
     {
       this->v_ = 0;
     }
 
     template <unsigned n>
+    inline
     graylevel<n>&
     graylevel<n>::operator=(const literal::black_t&)
     {
@@ -399,12 +410,14 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     graylevel<n>::graylevel(const literal::medium_gray_t&)
     {
       this->v_ = metal::math::pow_int<2, n - 1>::value;
     }
 
     template <unsigned n>
+    inline
     graylevel<n>&
     graylevel<n>::operator=(const literal::medium_gray_t&)
     {
@@ -413,12 +426,14 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     graylevel<n>::graylevel(const literal::white_t&)
     {
       this->v_ = mln_max(mln_enc(int_u<n>));
     }
 
     template <unsigned n>
+    inline
     graylevel<n>&
     graylevel<n>::operator=(const literal::white_t&)
     {
@@ -428,6 +443,7 @@ namespace mln
 
 
     template <unsigned n>
+    inline
     unsigned
     graylevel<n>::value() const
     {
@@ -435,6 +451,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     float
     graylevel<n>::to_float() const
     {
@@ -448,6 +465,7 @@ namespace mln
     {
 
       template <unsigned n>
+      inline
       graylevel<n>
       convert_< graylevel<n> >::value_at_index(unsigned i)
       {
@@ -456,6 +474,7 @@ namespace mln
       }
 
       template <unsigned n>
+      inline
       unsigned
       convert_< graylevel<n> >::index_of_value(graylevel<n> v)
       {
@@ -467,6 +486,7 @@ namespace mln
     // Operators.
 
     template <unsigned n>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const graylevel<n>& g)
     {
       return ostr << g.value() << "/gl" << n; // FIXME: Be more explicit!

@@ -81,6 +81,7 @@ namespace mln
 #ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename E>
+    inline
     pixel_iterator_base_<I, E>::pixel_iterator_base_(I& image)
       : super_(image)
     {
@@ -93,6 +94,7 @@ namespace mln
 
     // FIXME: Remove cause dangerous when bkd!!!
     template <typename I, typename E>
+    inline
     void
     pixel_iterator_base_<I, E>::start()
     {
@@ -100,6 +102,7 @@ namespace mln
     }
 
     template <typename I, typename E>
+    inline
     void
     pixel_iterator_base_<I, E>::invalidate()
     {
@@ -108,6 +111,7 @@ namespace mln
 
     // FIXME: Remove casue not optimal!!!
     template <typename I, typename E>
+    inline
     bool
     pixel_iterator_base_<I, E>::is_valid() const
     {

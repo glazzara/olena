@@ -162,6 +162,7 @@ namespace mln
 
   template <typename D>
   template <typename Dps, typename Pref>
+  inline
   dpoints_fwd_piter<D>::dpoints_fwd_piter(const Dps& dps,
 					  const Point_Site<Pref>& p_ref)
     : dps_(exact(dps).vect()),
@@ -171,6 +172,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   dpoints_fwd_piter<D>::operator mln_point(D) () const
   {
     mln_precondition(is_valid());
@@ -178,6 +180,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   const mln_point(D)&
   dpoints_fwd_piter<D>::to_point() const
   {
@@ -185,6 +188,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   bool
   dpoints_fwd_piter<D>::is_valid() const
   {
@@ -192,6 +196,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   void
   dpoints_fwd_piter<D>::invalidate()
   {
@@ -199,6 +204,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   void
   dpoints_fwd_piter<D>::start()
   {
@@ -207,6 +213,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   void
   dpoints_fwd_piter<D>::next_()
   {
@@ -215,6 +222,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   const mln_point(D)&
   dpoints_fwd_piter<D>::center_point() const
   {
@@ -222,6 +230,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   void
   dpoints_fwd_piter<D>::update()
   {
@@ -230,6 +239,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   mln_coord(D)
   dpoints_fwd_piter<D>::operator[](unsigned i) const
   {
@@ -248,6 +258,7 @@ namespace mln
 
   template <typename D>
   template <typename Dps, typename Pref>
+  inline
   dpoints_bkd_piter<D>::dpoints_bkd_piter(const Dps& dps,
 					  const Point_Site<Pref>& p_ref)
     : dps_(exact(dps).vect()),
@@ -257,6 +268,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   dpoints_bkd_piter<D>::operator mln_point(D) () const
   {
     mln_precondition(is_valid());
@@ -264,6 +276,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   const mln_point(D)&
   dpoints_bkd_piter<D>::to_point() const
   {
@@ -271,6 +284,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   bool
   dpoints_bkd_piter<D>::is_valid() const
   {
@@ -280,6 +294,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   void
   dpoints_bkd_piter<D>::invalidate()
   {
@@ -287,6 +302,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   void
   dpoints_bkd_piter<D>::start()
   {
@@ -295,6 +311,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   void
   dpoints_bkd_piter<D>::next_()
   {
@@ -303,6 +320,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   const mln_point(D)&
   dpoints_bkd_piter<D>::center_point() const
   {
@@ -310,6 +328,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   void
   dpoints_bkd_piter<D>::update()
   {
@@ -318,6 +337,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   mln_coord(D)
   dpoints_bkd_piter<D>::operator[](unsigned i) const
   {

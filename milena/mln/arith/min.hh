@@ -77,6 +77,7 @@ namespace mln
       namespace generic
       {
 	template <typename L, typename R, typename O>
+	inline
 	void min_(const L& lhs, const R& rhs, O& output)
 	{
 	  trace::entering("level::arith::generic::min_");
@@ -89,6 +90,7 @@ namespace mln
 	}
 
 	template <typename L, typename R>
+	inline
 	void min_inplace_(L& lhs, const R& rhs)
 	{
 	  trace::entering("level::arith::generic::min_inplace_");
@@ -109,6 +111,7 @@ namespace mln
     // Facades.
 
     template <typename L, typename R>
+    inline
     mln_concrete(L) min(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("arith::min");
@@ -124,6 +127,7 @@ namespace mln
     }
 
     template <typename L, typename R>
+    inline
     void min_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("arith::min_inplace");

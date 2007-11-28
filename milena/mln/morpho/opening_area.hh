@@ -53,6 +53,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename N, typename O>
+    inline
     void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
 		      Image<O>& output)
     {

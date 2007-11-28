@@ -59,6 +59,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  inline
   const neighb1d& c2()
   {
     static bool flower = true;

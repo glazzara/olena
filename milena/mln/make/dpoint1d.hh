@@ -53,6 +53,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     mln::dpoint1d dpoint1d(int ind)
     {
       mln::dpoint1d tmp;

@@ -58,6 +58,7 @@ namespace mln
     namespace impl
     {
 
+      inline
       void
       remove()
       {
@@ -77,6 +78,7 @@ namespace mln
     } // end of namespace mln::display::impl
 
     /// Facade.
+    inline
     void
     remove()
     {

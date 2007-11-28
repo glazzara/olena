@@ -164,17 +164,20 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n>
+    inline
     int_s<n>::int_s()
     {
     }
 
     template <unsigned n>
+    inline
     int_s<n>::operator int() const
     {
       return this->v_;
     }
 
     template <unsigned n>
+    inline
     int_s<n>::int_s(int i)
     {
       static const int max = metal::math::pow_int<2, n-1>::value - 1;
@@ -185,6 +188,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     int_s<n>&
     int_s<n>::operator=(int i)
     {
@@ -197,12 +201,14 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     int_s<n>::int_s(const literal::zero_t&)
     {
       this->v_ = 0;
     }
 
     template <unsigned n>
+    inline
     int_s<n>&
     int_s<n>::operator=(const literal::zero_t&)
     {
@@ -211,12 +217,14 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     int_s<n>::int_s(const literal::one_t&)
     {
       this->v_ = 1;
     }
 
     template <unsigned n>
+    inline
     int_s<n>&
     int_s<n>::operator=(const literal::one_t&)
     {
@@ -231,6 +239,7 @@ namespace mln
     const int_s<n> int_s<n>::one = 1;
 
     template <unsigned n>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const int_s<n>& i)
     {
       return ostr << debug::format(i.to_equiv());

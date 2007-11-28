@@ -127,18 +127,21 @@ namespace mln
   // Box<E>
 
   template <typename E>
+  inline
   const E& Box<E>::bbox() const
   {
     return exact(*this);
   }
 
   template <typename E>
+  inline
   unsigned Box<E>::len(unsigned i) const
   {
     return 1 + exact(this)->pmax()[i] - exact(this)->pmin()[i];
   }
 
   template <typename E>
+  inline
   Box<E>::Box()
   {
     typedef mln_point(E) point;
@@ -149,6 +152,7 @@ namespace mln
   }
 
   template <typename E>
+  inline
   std::size_t
   Box<E>::npoints() const
   {
@@ -163,6 +167,7 @@ namespace mln
   // operators
 
   template <typename Bl, typename Br>
+  inline
   bool operator==(const Box<Bl>& lhs_, const Box<Br>& rhs_)
   {
     // FIXME: Same grid!
@@ -172,6 +177,7 @@ namespace mln
   }
 
   template <typename Bl, typename Br>
+  inline
   bool operator<=(const Box<Bl>& lhs_, const Box<Br>& rhs_)
   {
     // FIXME: Same grid!
@@ -186,6 +192,7 @@ namespace mln
   }
 
   template <typename Bl, typename Br>
+  inline
   bool operator<(const Box<Bl>& lhs_, const Box<Br>& rhs_)
   {
     // FIXME: Same grid!

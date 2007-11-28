@@ -106,17 +106,20 @@ namespace mln
     // scalar_<T>.
 
     template <typename T>
+    inline
     scalar_<T>::scalar_()
     {
     }
 
     template <typename T>
+    inline
     scalar_<T>::scalar_(const T& val)
       : val_(val)
     {
     }
 
     template <typename T>
+    inline
     T
     scalar_<T>::to_equiv() const
     {
@@ -126,6 +129,7 @@ namespace mln
     // Operator.
 
     template <typename T>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const scalar_<T>& s)
     {
       return ostr << s.to_equiv();
@@ -134,6 +138,7 @@ namespace mln
     // Routine.
 
     template <typename T>
+    inline
     typename internal::helper_scalar_<T>::ret
     scalar(const T& s)
     {

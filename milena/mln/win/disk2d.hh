@@ -125,6 +125,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     disk2d::disk2d(unsigned length)
       : length_(length)
     {
@@ -137,31 +138,37 @@ namespace mln
 	    insert(make::dpoint2d(a, b));
     }
 
+    inline
     bool disk2d::is_centered() const
     {
       return true;
     }
 
+    inline
     bool disk2d::is_symmetric() const
     {
       return true;
     }
 
+    inline
     unsigned disk2d::length() const
     {
       return length_;
     }
 
+    inline
     unsigned disk2d::delta() const
     {
       return length_ / 2;
     }
 
+    inline
     disk2d& disk2d::sym()
     {
       return *this;
     }
 
+    inline
     std::ostream& operator<<(std::ostream& ostr, const disk2d& win)
     {
       ostr << "[disk2d: length=" << win.length() << ']';

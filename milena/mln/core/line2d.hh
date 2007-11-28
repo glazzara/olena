@@ -93,6 +93,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  inline
   line2d::line2d(const point2d& beg, const point2d& end)
     : beg_(beg),
       end_(end)
@@ -100,6 +101,7 @@ namespace mln
     compute_();
   }
 
+  inline
   void
   line2d::compute_()
   {
@@ -148,6 +150,7 @@ namespace mln
 			       math::max(beg_.col(), end_.col()));
   }
 
+  inline
   bool
   line2d::has(const point2d& p) const
   {
@@ -160,24 +163,28 @@ namespace mln
     return false;
   }
 
+  inline
   std::size_t
   line2d::npoints() const
   {
     return vect_.size();
   }
 
+  inline
   const box2d&
   line2d::bbox() const
   {
     return bb_;
   }
 
+  inline
   const std::vector<point2d>&
   line2d::vect() const
   {
     return vect_;
   }
 
+  inline
   const point2d&
   line2d::operator[](unsigned i) const
   {

@@ -60,6 +60,7 @@ namespace mln
     {
 
       template <typename I>
+      inline
       void
       iota(trait::image::speed::any, I& input)
       {
@@ -73,6 +74,7 @@ namespace mln
 
 
     template <typename I>
+    inline
     void
     iota(Image<I>& input)
     {

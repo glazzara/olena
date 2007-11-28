@@ -68,6 +68,7 @@ namespace mln
     template <typename I,
 	      typename W, unsigned Nr, unsigned Nc,
 	      typename O>
+    inline
     void line_x2_convolve(const Image<I>& input,
 			  W (&row_weights)[Nr], W (&col_weights)[Nc],
 			  Image<O>& output)

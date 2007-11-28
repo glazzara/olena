@@ -115,12 +115,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
+  inline
   p_array<P>::p_array()
   {
     bb_needs_update_ = false;
   }
 
   template <typename P>
+  inline
   p_array<P>::p_array(const std::vector<P>& vect)
     : vect_(vect)
   {
@@ -128,6 +130,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_array<P>::reserve(std::size_t n)
   {
@@ -135,6 +138,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   std::vector<P>&
   p_array<P>::hook_()
   {
@@ -142,6 +146,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_array<P>::update_bb_() const
   {
@@ -152,6 +157,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   p_array<P>::has(const P& p) const
   {
@@ -162,6 +168,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   std::size_t
   p_array<P>::npoints() const
   {
@@ -169,6 +176,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const box_<P>&
   p_array<P>::bbox() const
   {
@@ -179,6 +187,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   p_array<P>&
   p_array<P>::append(const P& p)
   {
@@ -189,6 +198,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_array<P>::clear()
   {
@@ -197,6 +207,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const std::vector<P>&
   p_array<P>::vect() const
   {
@@ -204,6 +215,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_array<P>::operator[](unsigned i) const
   {

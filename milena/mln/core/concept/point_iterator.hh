@@ -90,6 +90,7 @@ namespace mln
   }
 
   template <typename E>
+  inline
   Point_Iterator<E>::Point_Iterator()
   {
     typedef mln_psite(E) psite;

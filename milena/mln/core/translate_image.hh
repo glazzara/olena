@@ -138,6 +138,7 @@ namespace mln
     // internal::data_< translate_image<I,S> >
 
     template <typename I>
+    inline
     data_< translate_image<I> >::data_(I& ima, const mln_dpoint(I) dp)
       : ima_ (ima),
 	dp_ (dp)
@@ -155,6 +156,7 @@ namespace mln
   } // end of namespace mln::internal
 
   template <typename I>
+  inline
   translate_image<I>::translate_image(I& ima, const mln_dpoint(I) dp)
   {
     mln_precondition(ima.has_data());
@@ -162,11 +164,13 @@ namespace mln
   }
 
   template <typename I>
+  inline
   translate_image<I>::translate_image()
   {
   }
 
   template <typename I>
+  inline
   bool translate_image<I>::owns_(const mln_psite(I)& p) const
   {
     mln_point(I) np = p - this->data_->dp_;
@@ -174,6 +178,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   mln_rvalue(I)
   translate_image<I>::operator()(const mln_psite(I)& p) const
   {
@@ -184,6 +189,7 @@ namespace mln
 
 
   template <typename I>
+  inline
   typename translate_image<I>::lvalue
   translate_image<I>::operator()(const mln_psite(I)& p)
   {
@@ -193,6 +199,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   const box2d&
   translate_image<I>::domain() const
   {

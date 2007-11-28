@@ -70,11 +70,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Literal<E>::Literal()
   {
   }
 
   template <typename E>
+  inline
   const E&
   Literal<E>::the()
   {

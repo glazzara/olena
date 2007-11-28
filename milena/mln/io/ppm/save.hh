@@ -64,6 +64,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
+      inline
       void save(const Image<I>& ima, const std::string& filename)
       {
 	mln::metal::templated_by<mln_value(I), value::rgb >::check();

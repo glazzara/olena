@@ -87,11 +87,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <unsigned n, typename C>
+      inline
       translation<n,C>::translation()
       {
       }
 
       template <unsigned n, typename C>
+      inline
       translation<n,C>::translation(const metal::vec<n,C>& t)
 	:t_(t)
       {
@@ -100,6 +102,7 @@ namespace mln
       }
 
       template <unsigned n, typename C>
+      inline
       metal::vec<n,C>
       translation<n,C>::operator()(const metal::vec<n,C>& v) const
       {
@@ -107,6 +110,7 @@ namespace mln
       }
 
       template <unsigned n, typename C>
+      inline
       translation<n,C>
       translation<n,C>::inv() const
       {
@@ -116,6 +120,7 @@ namespace mln
       }
 
       template <unsigned n, typename C>
+      inline
       void
       translation<n,C>::set_t(const metal::vec<n,C>& t)
       {
@@ -124,6 +129,7 @@ namespace mln
       }
 
       template <unsigned n, typename C>
+      inline
       void
       translation<n,C>::update()
       {

@@ -62,6 +62,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V>
+      inline
       void print(std::ostream& ostr)
       {
 	mlc_is_a(V, Value)::check(); // FIXME: What about built-ins?
@@ -76,6 +77,7 @@ namespace mln
       }
 
       template <typename V>
+      inline
       void print(const Value<V>&, std::ostream& ostr)
       {
 	print<V>(ostr);

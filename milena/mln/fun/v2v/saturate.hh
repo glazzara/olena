@@ -68,6 +68,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V>
+      inline
       saturate<V>::saturate()
 	: min_(mln_min(V)),
 	  max_(mln_max(V))
@@ -75,6 +76,7 @@ namespace mln
       }
 
       template <typename V>
+      inline
       saturate<V>::saturate(const V& min, const V& max)
 	: min_(min),
 	  max_(max)
@@ -84,6 +86,7 @@ namespace mln
 
       template <typename V>
       template <typename W>
+      inline
       V
       saturate<V>::operator()(const W& w) const
       {

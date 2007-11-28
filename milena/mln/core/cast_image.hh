@@ -134,6 +134,7 @@ namespace mln
   {
 
     template <typename T, typename I>
+    inline
     data_< cast_image_<T,I> >::data_(const I& ima)
       : ima_(ima)
     {
@@ -145,6 +146,7 @@ namespace mln
   // cast_image_<T,I>
 
   template <typename T, typename I>
+  inline
   cast_image_<T,I>::cast_image_(const Image<I>& ima)
   {
     mln_precondition(exact(ima).has_data());
@@ -152,6 +154,7 @@ namespace mln
   }
 
   template <typename T, typename I>
+  inline
   T
   cast_image_<T,I>::operator()(const mln_psite(I)& p) const
   {
@@ -160,6 +163,7 @@ namespace mln
   }
 
   template <typename T, typename I>
+  inline
   T
   cast_image_<T,I>::operator()(const mln_psite(I)& p)
   {
@@ -167,6 +171,7 @@ namespace mln
   }
 
   template <typename T, typename I>
+  inline
   const mln::value::set<T>&
   cast_image_<T,I>::values() const
   {

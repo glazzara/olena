@@ -62,6 +62,7 @@ namespace mln
     {
 
       template <typename I>
+      inline
       std::vector<unsigned> compute_histo(const I& ima)
       {
 	std::vector<unsigned> h(256, 0);
@@ -72,6 +73,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       std::vector<mln_point(I)> histo_reverse_sort(const I& ima)
       {
 	std::vector<unsigned> h = compute_histo(ima);
@@ -108,6 +110,7 @@ namespace mln
 	mln_ch_value(I, point) parent;
 	std::vector<point> S;
 
+	inline
 	Rd(const I& f, const I& g, const N& nbh)
 	  : f(f), g(g), nbh(nbh),
 	    o(f.domain()),
@@ -150,16 +153,19 @@ namespace mln
 
 	}
   
+	inline
 	bool is_proc__(const point& n, const point& p) const
 	{
 	  return g(n) > g(p) || (g(n) == g(p) && n < p);
 	}
 
+	inline
 	void make_set(const point& p)
 	{
 	  parent(p) = p;
 	}
 
+	inline
 	point find_root(const point& x)
 	{
 	  if (parent(x) == x)
@@ -168,11 +174,13 @@ namespace mln
 	    return parent(x) = find_root(parent(x));
 	}
 
+	inline
 	bool equiv(const point& r, const point& p)
 	{
 	  return g(r) == g(p) || g(p) >= o(r);
 	}
 
+	inline
 	void do_union(const point& n, const point& p)
 	{
 	  point r = find_root(n);
@@ -197,6 +205,7 @@ namespace mln
     // facade
 
     template <typename I, typename N>
+    inline
     I Rd(const Image<I>& f, const Image<I>& g, const Neighborhood<N>& nbh)
     {
       assert(f <= g);

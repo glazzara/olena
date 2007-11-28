@@ -54,6 +54,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     mln::dpoint2d dpoint2d(int row, int col)
     {
       mln::dpoint2d tmp;

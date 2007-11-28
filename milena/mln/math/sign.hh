@@ -55,6 +55,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     sign_t sign(const T& v)
     {
       return v > 0 ? positive : (v < 0 ? negative : null);

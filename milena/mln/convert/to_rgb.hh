@@ -58,6 +58,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned int n>
+    inline
     rgb<n> to_rgb(const int_u<n>& i)
     {
       rgb<n> c(i, i, i);
@@ -65,12 +66,14 @@ namespace mln
     }
 
     template <unsigned int n>
+    inline
     rgb<n>& to_rgb(rgb<n>& i)
     {
       return i;
     }
 
     template <unsigned int n>
+    inline
     const rgb<n>& to_rgb(const rgb<n>& i)
     {
       return i;

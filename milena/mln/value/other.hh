@@ -63,6 +63,7 @@ namespace mln
 	return val + 1;
       }
 
+      inline
       bool
       other_(const void*, const bool& val)
       {
@@ -71,6 +72,7 @@ namespace mln
 
 
       template <typename V>
+      inline
       V
       other_(mln::trait::value::quant::high, const Value<V>& val_)
       {
@@ -79,6 +81,7 @@ namespace mln
       }
 
       template <typename V>
+      inline
       V
       other_(mln::trait::value::quant::high, const value::Scalar<V>& val_)
       {
@@ -87,6 +90,7 @@ namespace mln
       }
 
       template <typename V>
+      inline
       V
       other_(mln::trait::value::quant::low, const Value<V>& val_)
       {
@@ -98,6 +102,7 @@ namespace mln
       }
 
       template <typename V>
+      inline
       V
       other_(const Value<V>*, const V& val)
       {
@@ -108,6 +113,7 @@ namespace mln
 
 
     template <typename V>
+    inline
     V other(const V& val)
     {
       V tmp = internal::other_(&val, val);

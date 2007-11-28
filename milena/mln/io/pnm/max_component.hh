@@ -52,6 +52,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V>
+      inline
       unsigned int max_component(const V&)
       {
 	return mln_max(V);
@@ -60,6 +61,7 @@ namespace mln
 # ifdef MLN_VALUE_RGB_HH
 
       template <unsigned n>
+      inline
       unsigned int max_component(const mln::value::rgb<n>&)
       {
 	return mln_max( mln::value::int_u<n> );

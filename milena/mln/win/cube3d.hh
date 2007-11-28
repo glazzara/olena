@@ -140,6 +140,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     cube3d::cube3d(unsigned length)
       : length_(length)
     {
@@ -151,31 +152,37 @@ namespace mln
 	    insert(make::dpoint3d(sli, row, col));
     }
 
+    inline
     bool cube3d::is_centered() const
     {
       return true;
     }
 
+    inline
     bool cube3d::is_symmetric() const
     {
       return true;
     }
 
+    inline
     unsigned cube3d::length() const
     {
       return length_;
     }
 
+    inline
     unsigned cube3d::delta() const
     {
       return length_ / 2;
     }
 
+    inline
     cube3d& cube3d::sym()
     {
       return *this;
     }
 
+    inline
     std::ostream& operator<<(std::ostream& ostr, const cube3d& win)
     {
       ostr << "[cube3d: length=" << win.length() << ']';

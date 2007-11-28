@@ -200,6 +200,7 @@ namespace mln
   // box_fwd_piter_<P>
 
   template <typename P>
+  inline
   box_fwd_piter_<P>::box_fwd_piter_(const box_<P>& b)
     : b_(b)
   {
@@ -209,12 +210,14 @@ namespace mln
   }
 
   template <typename P>
+  inline
   box_fwd_piter_<P>::operator P() const
   {
     return p_;
   }
 
   template <typename P>
+  inline
   const P&
   box_fwd_piter_<P>::to_point() const
   {
@@ -222,6 +225,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   mln_coord(P)
   box_fwd_piter_<P>::operator[](unsigned i) const
   {
@@ -230,6 +234,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   box_fwd_piter_<P>::is_valid() const
   {
@@ -237,6 +242,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   box_fwd_piter_<P>::invalidate()
   {
@@ -244,6 +250,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   box_fwd_piter_<P>::start()
   {
@@ -251,6 +258,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   box_fwd_piter_<P>::next_()
   {
@@ -270,6 +278,7 @@ namespace mln
   // box_bkd_piter_<P>
 
   template <typename P>
+  inline
   box_bkd_piter_<P>::box_bkd_piter_(const box_<P>& b)
     : b_(b)
   {
@@ -279,6 +288,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   box_bkd_piter_<P>::operator P() const
   {
     return p_;
@@ -286,6 +296,7 @@ namespace mln
 
 
   template <typename P>
+  inline
   const P&
   box_bkd_piter_<P>::to_point() const
   {
@@ -293,6 +304,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   mln_coord(P)
   box_bkd_piter_<P>::operator[](unsigned i) const
   {
@@ -301,6 +313,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   box_bkd_piter_<P>::is_valid() const
   {
@@ -308,6 +321,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   box_bkd_piter_<P>::invalidate()
   {
@@ -315,6 +329,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   box_bkd_piter_<P>::start()
   {
@@ -322,6 +337,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   box_bkd_piter_<P>::next_()
   {
@@ -341,6 +357,7 @@ namespace mln
   // box_bounds_piter_<P>
 
   template <typename P>
+  inline
   box_bounds_piter_<P>::box_bounds_piter_(const box_<P>& b)
     : b_(b)
   {
@@ -350,12 +367,14 @@ namespace mln
   }
 
   template <typename P>
+  inline
   box_bounds_piter_<P>::operator P() const
   {
     return p_;
   }
 
   template <typename P>
+  inline
   const P&
   box_bounds_piter_<P>::to_point() const
   {
@@ -363,6 +382,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   mln_coord(P)
   box_bounds_piter_<P>::operator[](unsigned i) const
   {
@@ -371,6 +391,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   box_bounds_piter_<P>::is_valid() const
   {
@@ -378,6 +399,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   box_bounds_piter_<P>::invalidate()
   {
@@ -385,6 +407,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   box_bounds_piter_<P>::start()
   {
@@ -393,6 +416,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   box_bounds_piter_<P>::next_()
   {

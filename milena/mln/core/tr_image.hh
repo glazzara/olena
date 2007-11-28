@@ -130,6 +130,7 @@ namespace mln
     // internal::data_< tr_image<I,S> >
 
     template <typename T, typename I>
+    inline
     data_< tr_image<T,I> >::data_(I& ima, T& tr)
       : ima_(ima),
 	tr_(tr)
@@ -139,6 +140,7 @@ namespace mln
   } // end of namespace mln::internal
 
   template <typename T, typename I>
+  inline
   tr_image<T,I>::tr_image(I& ima, T& tr)
   {
     mln_precondition(ima.has_data());
@@ -146,11 +148,13 @@ namespace mln
   }
 
   template <typename T, typename I>
+  inline
   tr_image<T,I>::tr_image()
   {
   }
 
   template <typename T, typename I>
+  inline
   bool tr_image<T,I>::has_data() const
   {
     mln_invariant(this->data_->ima_.has_data());
@@ -158,6 +162,7 @@ namespace mln
   }
 
   template <typename T, typename I>
+  inline
   bool tr_image<T,I>::owns_(const metal::vec<I::point::dim, float>& v) const
   {
     mln_point(I) p;
@@ -168,6 +173,7 @@ namespace mln
   }
 
   template <typename T, typename I>
+  inline
   bool tr_image<T,I>::has(const metal::vec<I::point::dim, float>& v) const
   {
     mln_point(I) p;
@@ -178,6 +184,7 @@ namespace mln
   }
 
   template <typename T, typename I>
+  inline
   mln_value(I)
   tr_image<T,I>::operator()(const metal::vec<I::point::dim, float>& v) const
   {
@@ -190,6 +197,7 @@ namespace mln
   }
 
   template <typename T, typename I>
+  inline
   void
   tr_image<T,I>::set_tr(T& tr)
   {

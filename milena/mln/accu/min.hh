@@ -92,12 +92,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     min_<T>::min_()
     {
       init();
     }
 
     template <typename T>
+    inline
     void
     min_<T>::init()
     {
@@ -105,12 +107,14 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void min_<T>::take_as_init(const argument& t)
     {
       t_ = t;
     }
 
     template <typename T>
+    inline
     void min_<T>::take(const argument& t)
     {
       if (t < t_)
@@ -118,6 +122,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     min_<T>::take(const min_<T>& other)
     {
@@ -126,6 +131,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     T
     min_<T>::to_result() const
     {

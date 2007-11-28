@@ -49,6 +49,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     T sqrt(const T& v)
     {
       return std::sqrt(v);

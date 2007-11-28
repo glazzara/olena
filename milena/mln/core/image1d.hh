@@ -222,12 +222,14 @@ namespace mln
 
   // init_
   template <typename T>
+  inline
   void init_(tag::border_t, unsigned& b, const image1d<T>& model)
   {
     b = model.border();
   }
 
   template <typename T, typename J>
+  inline
   void init_(tag::image_t, image1d<T>& target, const J& model)
   {
     box1d b;
@@ -243,6 +245,7 @@ namespace mln
   {
 
     template <typename T>
+    inline
     data_< image1d<T> >::data_(const box1d& b, unsigned bdr)
       : buffer_(0),
 	array_ (0),
@@ -253,12 +256,14 @@ namespace mln
     }
 
     template <typename T>
+    inline
     data_< image1d<T> >::~data_()
     {
       deallocate_();
     }
 
     template <typename T>
+    inline
     void
     data_< image1d<T> >::update_vb_()
     {
@@ -267,6 +272,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     data_< image1d<T> >::allocate_()
     {
@@ -279,6 +285,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     data_< image1d<T> >::deallocate_()
     {
@@ -291,6 +298,7 @@ namespace mln
 
 
     template <typename T>
+    inline
     void
     data_< image1d<T> >::swap_(data_< image1d<T> >& other_)
     {
@@ -302,6 +310,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     data_< image1d<T> >::reallocate_(unsigned new_border)
     {
@@ -315,17 +324,20 @@ namespace mln
   // image1d<T>
 
   template <typename T>
+  inline
   image1d<T>::image1d()
   {
   }
 
   template <typename T>
+  inline
   image1d<T>::image1d(const box1d& b, unsigned bdr)
   {
     init_(b, bdr);
   }
 
   template <typename T>
+  inline
   image1d<T>::image1d(unsigned ninds, unsigned bdr)
   {
     mln_precondition(ninds != 0);
@@ -333,6 +345,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   void
   image1d<T>::init_(const box1d& b, unsigned bdr)
   {
@@ -341,6 +354,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   const typename image1d<T>::vset&
   image1d<T>::values() const
   {
@@ -348,6 +362,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   const box1d&
   image1d<T>::domain() const
   {
@@ -356,6 +371,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   unsigned
   image1d<T>::border() const
   {
@@ -364,6 +380,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   std::size_t
   image1d<T>::ncells() const
   {
@@ -372,6 +389,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   bool
   image1d<T>::owns_(const point1d& p) const
   {
@@ -380,6 +398,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   const T&
   image1d<T>::operator()(const point1d& p) const
   {
@@ -388,6 +407,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   T&
   image1d<T>::operator()(const point1d& p)
   {
@@ -396,6 +416,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   const T&
   image1d<T>::operator[](unsigned o) const
   {
@@ -404,6 +425,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   T&
   image1d<T>::operator[](unsigned o)
   {
@@ -412,6 +434,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   const T&
   image1d<T>::at(int ind) const
   {
@@ -420,6 +443,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   T&
   image1d<T>::at(int ind)
   {
@@ -428,6 +452,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   const T*
   image1d<T>::buffer() const
   {
@@ -436,6 +461,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   T*
   image1d<T>::buffer()
   {
@@ -444,6 +470,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   int
   image1d<T>::offset(const dpoint1d& dp) const
   {
@@ -453,6 +480,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   point1d
   image1d<T>::point_at_offset(unsigned o) const
   {
@@ -463,6 +491,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   void
   image1d<T>::resize_(unsigned new_border)
   {

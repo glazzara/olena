@@ -116,6 +116,7 @@ namespace mln
   // Fwd.
 
   template <typename I>
+  inline
   fwd_pixter2d<I>::fwd_pixter2d(I& image) :
     super_(image)
   {
@@ -126,6 +127,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   void
   fwd_pixter2d<I>::next_()
   {
@@ -140,6 +142,7 @@ namespace mln
   // Bkd.
 
   template <typename I>
+  inline
   bkd_pixter2d<I>::bkd_pixter2d(I& image) :
     super_(image)
   {
@@ -150,6 +153,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   void
   bkd_pixter2d<I>::next_()
   {
@@ -162,6 +166,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   void
   bkd_pixter2d<I>::start()
   {

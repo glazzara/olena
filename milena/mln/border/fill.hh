@@ -61,6 +61,7 @@ namespace mln
     {
 
       template <typename I>
+      inline
       void fill_size_1_(const I& ima, const mln_value(I)& v)
       {
 	trace::entering("border::impl::fill_size_1_");
@@ -87,6 +88,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       void fill_size_n_(const I& ima, const mln_value(I)& v)
       {
 	trace::entering("border::impl::fill_size_n_");
@@ -114,6 +116,7 @@ namespace mln
     // Facade.
 
     template <typename I>
+    inline
     void fill(const Image<I>& ima_, const mln_value(I)& v)
     {
       trace::entering("border::fill");

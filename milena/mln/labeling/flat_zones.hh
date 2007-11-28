@@ -74,10 +74,12 @@ namespace mln
 	mln_value(O) nlabels;
 	bool status;
 
+	inline
 	bool equiv(const P& n, const P&) const { return input(n) == input(p); }
 
 	// end of requirements
 
+	inline
 	flat_zones_(const I_& input, const N_& nbh, O_& output)
 	  : base_<I_,N_,O_>(input, nbh, output),
 	    s(input.domain())
@@ -90,6 +92,7 @@ namespace mln
     // Facade.
 
     template <typename I, typename N, typename O>
+    inline
     bool flat_zones(const Image<I>& input, const Neighborhood<N>& nbh,
 		    Image<O>& output,
 		    unsigned& nlabels)

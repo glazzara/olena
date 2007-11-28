@@ -61,6 +61,7 @@ namespace mln
       {
 
 	template <typename I>
+	inline
 	data<mln_vset(I)> compute_(const I& input)
 	{
 	  data<mln_vset(I)> h(input.values());
@@ -76,6 +77,7 @@ namespace mln
 
 
     template <typename I>
+    inline
     data<mln_vset(I)> compute(const Image<I>& input)
     {
       trace::entering("histo::compute");

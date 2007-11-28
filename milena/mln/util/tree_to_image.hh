@@ -82,6 +82,7 @@ namespace mln
     {
 
       template <typename T, typename I>
+      inline
       void
       tree_to_image_rec(node<T>* node, Image<I>& output_)
       {
@@ -107,6 +108,7 @@ namespace mln
       }
 
       template <typename T, typename J>
+      inline
       void
       display_tree_rec(const Image<J>& ima_, node<T>* node, int level)
       {
@@ -124,6 +126,7 @@ namespace mln
 
 
       template <typename T, typename J, typename K>
+      inline
       void
       display_branch_rec(const Image<J>& ima_, node<T>* node, Image<K>& output_)
       {
@@ -145,6 +148,7 @@ namespace mln
 
 
       template <typename P, typename J>
+      inline
       void
       display_set(const Image<J>& ima_, p_set<P>& s)
       {
@@ -167,6 +171,7 @@ namespace mln
 
 
     template <typename T, typename I>
+    inline
     void
     tree_to_image (tree<T>& tree, Image<I>& output_)
     {
@@ -180,6 +185,7 @@ namespace mln
 
 
     template <typename I, typename J>
+    inline
     void
     display_tree(const Image<J>& ima_, tree<I>& tree)
     {
@@ -197,6 +203,7 @@ namespace mln
 
 
     template <typename I, typename J>
+    inline
     void
     display_branch(const Image<J>& ima_, node<I>* node)
     {

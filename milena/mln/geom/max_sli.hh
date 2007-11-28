@@ -50,6 +50,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     mln_coord(I) max_sli(const Image<I>& ima)
     {
       mln_precondition(exact(ima).has_data());

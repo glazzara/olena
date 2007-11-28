@@ -51,6 +51,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+	inline
 	bool read_header(std::ifstream& istr,
 			 char& type,
 			 int& nrows, int& ncols,
@@ -99,6 +100,7 @@ namespace mln
 	  return false;
 	}
 
+	inline
 	void read_header(char ascii, char raw,
 			 std::ifstream& istr,
 			 char& type,
@@ -116,6 +118,7 @@ namespace mln
 	  }
 	}
 
+	inline
 	void read_header(char ascii, char raw,
 			 std::ifstream& istr,
 			 char& type,

@@ -101,11 +101,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
+  inline
   p_set<P>::p_set()
   {
   }
 
   template <typename P>
+  inline
   bool
   p_set<P>::has(const P& p) const
   {
@@ -113,6 +115,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   std::size_t
   p_set<P>::npoints() const
   {
@@ -120,6 +123,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   p_set<P>&
   p_set<P>::insert(const P& p)
   {
@@ -141,6 +145,7 @@ namespace mln
   //   }
 
   template <typename P>
+  inline
   const P&
   p_set<P>::operator[](unsigned i) const
   {
@@ -149,6 +154,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_set<P>::clear()
   {
@@ -157,6 +163,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const box_<mln_point(P)>&
   p_set<P>::bbox() const
   {

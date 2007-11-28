@@ -58,6 +58,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename W>
+    inline
     W sym(const Window<W>& win)
     {
       W tmp = exact(win);
@@ -65,6 +66,7 @@ namespace mln
     }
 
     template <typename W>
+    inline
     W sym(const Weighted_Window<W>& w_win)
     {
       W tmp = exact(w_win);

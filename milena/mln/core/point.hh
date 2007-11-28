@@ -160,6 +160,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename M, typename C>
+  inline
   C point_<M,C>::operator[](unsigned i) const
   {
     assert(i < dim);
@@ -167,6 +168,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   C& point_<M,C>::operator[](unsigned i)
   {
     assert(i < dim);
@@ -176,11 +178,13 @@ namespace mln
   // Constructors.
 
   template <typename M, typename C>
+  inline
   point_<M,C>::point_()
   {
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>::point_(C ind)
   {
     metal::bool_<(dim == 1)>::check();
@@ -188,6 +192,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>::point_(C row, C col)
   {
     metal::bool_<(dim == 2)>::check();
@@ -196,6 +201,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>::point_(C sli, C row, C col)
   {
     metal::bool_<(dim == 3)>::check();
@@ -206,6 +212,7 @@ namespace mln
 
   template <typename M, typename C>
   template <typename F>
+  inline
   point_<M,C>::point_(const Function_i2v<F>& f_)
   {
     mlc_converts_to(mln_result(F), C)::check();
@@ -215,12 +222,14 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>::point_(const literal::origin_t&)
   {
     coord_.set_all(0);
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>&
   point_<M,C>::operator=(const literal::origin_t&)
   {
@@ -229,6 +238,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>::point_(const literal::zero_t&)
   {
     metal::bool_<(dim == 1)>::check();
@@ -236,6 +246,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>&
   point_<M,C>::operator=(const literal::zero_t&)
   {
@@ -245,6 +256,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>::point_(const literal::one_t&)
   {
     metal::bool_<(dim == 1)>::check();
@@ -252,6 +264,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>&
   point_<M,C>::operator=(const literal::one_t&)
   {
@@ -261,6 +274,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   void point_<M,C>::set_all(C c)
   {
     coord_.set_all(c);
@@ -270,6 +284,7 @@ namespace mln
   const point_<M,C> point_<M,C>::origin = all_to(0);
 
   template <typename M, typename C>
+  inline
   point_<M,C>&
   point_<M,C>::operator+=(const dpoint& dp)
   {
@@ -279,6 +294,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>&
   point_<M,C>::operator-=(const dpoint& dp)
   {
@@ -288,12 +304,14 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>::operator typename internal::point_to_<M, C>::metal_vec () const
   {
     return coord_; // FIXME: Is-it OK?
   }
 
   template <typename M, typename C>
+  inline
   point_<M,C>::operator metal::vec<M::dim, float> () const
   {
     metal::vec<dim, float> tmp;
@@ -303,6 +321,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   h_vec<M::dim, C> point_<M,C>::to_h_vec() const
   {
     h_vec<M::dim, C> tmp;

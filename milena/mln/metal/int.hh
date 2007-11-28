@@ -55,6 +55,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <int i>
+    inline
     std::string int_<i>::name() const
     {
       std::ostringstream o;

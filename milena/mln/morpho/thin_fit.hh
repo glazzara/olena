@@ -56,6 +56,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename Wfg, typename Wbg>
+    inline
     mln_concrete(I)
       thin_fit(const Image<I>& input,
 	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)

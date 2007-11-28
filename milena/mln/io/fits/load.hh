@@ -74,6 +74,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+      inline
       void fits_exit(int status)
       {
 	if (status)
@@ -84,6 +85,7 @@ namespace mln
 	return;
       }
 
+      inline
       image2d<float> load(const std::string& filename)
       {
 	fitsfile *fptr;
@@ -125,6 +127,7 @@ namespace mln
 	return output;
       }
 
+      inline
       void load(image2d<float>& ima,
 		const std::string& filename)
       {

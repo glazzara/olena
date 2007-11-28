@@ -110,11 +110,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename D>
+  inline
   neighb_<D>::neighb_()
   {
   }
 
   template <typename D>
+  inline
   neighb_<D>&
   neighb_<D>::insert(const D& dp)
   {
@@ -126,6 +128,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   neighb_<D>&
   neighb_<D>::insert(const mln_coord(D)& dind)
   {
@@ -135,6 +138,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   neighb_<D>&
   neighb_<D>::insert(const mln_coord(D)& drow, const mln_coord(D)& dcol)
   {
@@ -144,6 +148,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   neighb_<D>&
   neighb_<D>::insert(const mln_coord(D)& dsli, const mln_coord(D)& drow, const mln_coord(D)& dcol)
   {

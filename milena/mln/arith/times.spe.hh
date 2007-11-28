@@ -59,6 +59,7 @@ namespace mln
       }
 
       template <typename L, typename R, typename O>
+      inline
       void times_(trait::image::speed::any, const L& lhs,
 		  trait::image::speed::any, const R& rhs,
 		  trait::image::speed::any, O& output)
@@ -67,6 +68,7 @@ namespace mln
       }
 
       template <typename L, typename R, typename O>
+      inline
       void times_(trait::image::speed::fastest, const L& lhs,
 		  trait::image::speed::fastest, const R& rhs,
 		  trait::image::speed::fastest, O& output)
@@ -83,6 +85,7 @@ namespace mln
       }
 
       template <typename L, typename R>
+      inline
       void times_inplace_(trait::image::speed::any, L& lhs,
 			  trait::image::speed::any, const R& rhs)
       {
@@ -90,6 +93,7 @@ namespace mln
       }
 
       template <typename L, typename R>
+      inline
       void times_inplace_(trait::image::speed::fastest, L& lhs,
 			  trait::image::speed::fastest, const R& rhs)
       {

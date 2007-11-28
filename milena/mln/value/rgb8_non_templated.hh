@@ -126,15 +126,18 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     // todo matthieu
+    inline
     rgb8::rgb8()
     {
     }
 
+    inline
     rgb8::rgb8(int_u8_x3_t a)
     {
       std::memcpy(this->c_, a, 3);
     }
 
+    inline
     rgb8&
     rgb8::operator=(rgb8& v)
     {
@@ -147,12 +150,14 @@ namespace mln
 //     const rgb8 rgb8::max_green = {0, mln_max(enc), 0};
 //     const rgb8 rgb8::max_blue  = {0, 0, mln_max(enc)};
 
+    inline
     rgb8&
     rgb8::operator+=(rgb8& v)
     {
       for (int i = 0; i < 3; i++)
 	this->c_[i] += v.c_[i];
     }
+    inline
     rgb8&
     rgb8::operator-=(rgb8& v)
     {
@@ -160,6 +165,7 @@ namespace mln
 	this->c_[i] += v.c_[i];
     }
 
+    inline
     std::ostream& operator<<(std::ostream& ostr, const rgb8& v)
     {
       return ostr << "(R:" << debug::format(v.red())
@@ -168,6 +174,7 @@ namespace mln
 		  << ")";
     }
 
+    inline
     bool
     rgb8::operator==(rgb8& v)
     {
@@ -176,6 +183,7 @@ namespace mln
 	      this->blue() == v.blue());
     }
 
+    inline
     bool
     rgb8::operator!=(rgb8& v)
     {

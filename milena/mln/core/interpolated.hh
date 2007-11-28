@@ -123,6 +123,7 @@ namespace mln
     // internal::data_< interpolated<I,S> >
 
     template <typename I>
+    inline
     data_< interpolated<I> >::data_(I& ima)
       : ima_(ima)
     {
@@ -131,6 +132,7 @@ namespace mln
   } // end of namespace mln::internal
 
   template <typename I>
+  inline
   interpolated<I>::interpolated(I& ima)
   {
     mln_precondition(ima.has_data());
@@ -138,11 +140,13 @@ namespace mln
   }
 
   template <typename I>
+  inline
   interpolated<I>::interpolated()
   {
   }
 
   template <typename I>
+  inline
   bool interpolated<I>::has_data() const
   {
     mln_invariant(this->data_->ima_.has_data());
@@ -150,6 +154,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   bool interpolated<I>::owns_(const mln::metal::vec<I::point::dim, float>& v) const
   {
     mln_point(I) p;
@@ -159,6 +164,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   mln_value(I)
   interpolated<I>::operator()(const mln::metal::vec<I::point::dim, float>& v) const
   {
@@ -172,6 +178,7 @@ namespace mln
   // FIXME : Should we remove this method? (and inherit it from
   // identity morpher)
   template <typename I>
+  inline
   const mln::value::set<mln_value(I) >&
   interpolated<I>::values() const
   {

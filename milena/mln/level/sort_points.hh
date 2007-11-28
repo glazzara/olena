@@ -81,11 +81,13 @@ namespace mln
       {
 	const I& ima_;
 
+	inline
 	value_point_less_(const I& ima)
 	  : ima_(ima)
 	{
 	}
 
+	inline
 	bool operator()(const mln_point(I)& lhs,
 			const mln_point(I)& rhs) const
 	{
@@ -99,11 +101,13 @@ namespace mln
       {
 	const I& ima_;
 
+	inline
 	value_point_greater_(const I& ima)
 	  : ima_(ima)
 	{
 	}
 
+	inline
 	bool operator()(const mln_point(I)& lhs,
 			const mln_point(I)& rhs) const
 	{
@@ -116,6 +120,7 @@ namespace mln
       // increasing
 
       template <typename I>
+      inline
       p_array<mln_point(I)>
       sort_points_increasing_(trait::image::quant::any, // general case
 			      const I& input)
@@ -127,6 +132,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       p_array<mln_point(I)>
       sort_points_increasing_(trait::image::quant::low, // low quantization
 			      const I& input)
@@ -159,6 +165,7 @@ namespace mln
       // decreasing
 
       template <typename I>
+      inline
       p_array<mln_point(I)>
       sort_points_decreasing_(trait::image::quant::any, // general case
 			      const I& input)
@@ -170,6 +177,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       p_array<mln_point(I)>
       sort_points_decreasing_(trait::image::quant::low, // low quantization
 			      const I& input)
@@ -205,6 +213,7 @@ namespace mln
     // Facades.
 
     template <typename I>
+    inline
     p_array<mln_point(I)>
     sort_points_increasing(const Image<I>& input)
     {
@@ -213,6 +222,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     p_array<mln_point(I)>
     sort_points_decreasing(const Image<I>& input)
     {

@@ -116,6 +116,7 @@ namespace mln
   namespace internal
   {
     template <typename P, typename V>
+    inline
     data_< mesh_image<P, V> >::data_(mesh_p<P>& mesh, std::vector<V>& val)
       : val_ (val),
 	mesh_ (mesh)
@@ -125,17 +126,20 @@ namespace mln
   } // end of namespace mln::internal
 
   template <typename P, typename V>
+  inline
   mesh_image<P, V>::mesh_image(mesh_p<P>& mesh, std::vector<V>& val)
   {
     this->data_ = new internal::data_< mesh_image<P, V> > (mesh, val);
   }
 
   template <typename P, typename V>
+  inline
   mesh_image<P, V>::mesh_image()
   {
   }
 
   template <typename P, typename V>
+  inline
   const V&
   mesh_image<P, V>::operator()(const mesh_psite<P>& p) const
   {
@@ -145,6 +149,7 @@ namespace mln
   }
     
   template <typename P, typename V>
+  inline
   V&
   mesh_image<P, V>::operator()(const mesh_psite<P>& p)
   {
@@ -154,6 +159,7 @@ namespace mln
   }
 
   template <typename P, typename V>
+  inline
   const mln::value::set<V> &
   mesh_image<P, V>::values() const
   {
@@ -161,6 +167,7 @@ namespace mln
   }
 
   template <typename P, typename V>
+  inline
   const std::vector<V>&
   mesh_image<P, V>::data_values () const
   {
@@ -168,6 +175,7 @@ namespace mln
   }
 
   template <typename P, typename V>
+  inline
   const mesh_p<P>&
   mesh_image<P, V>::domain() const
   {
@@ -176,6 +184,7 @@ namespace mln
   }
 
   template <typename P, typename V>
+  inline
   const P&
   mesh_image<P, V>::access_location_link_node1 (const unsigned& i) const
   {
@@ -183,6 +192,7 @@ namespace mln
   }
 
   template <typename P, typename V>
+  inline
   const P&
   mesh_image<P, V>::access_location_link_node2 (const unsigned& i) const
   {

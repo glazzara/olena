@@ -61,24 +61,28 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     const T&
     format(const T& v)
     {
       return v;
     }
 
+    inline
     char
     format(bool v)
     {
       return v ? '|' : '-';
     }
 
+    inline
     signed short
     format(signed char v)
     {
       return v;
     }
 
+    inline
     unsigned short
     format(unsigned char v)
     {

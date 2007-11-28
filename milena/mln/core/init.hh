@@ -66,6 +66,7 @@ namespace mln
 
 
   template <typename Subject, typename T, typename M>
+  inline
   void init_(Subject, T&, const Object<M>&)
   {
     struct ERROR err_; // FIXME: Explicit msg.
@@ -74,12 +75,14 @@ namespace mln
   // Easy impl.
 
   template <typename B, typename I>
+  inline
   void init_(tag::bbox_t, B& b, const Image<I>& ima)
   {
     b = geom::bbox(ima);
   }
 
   template <typename I>
+  inline
   void init_(tag::border_t, unsigned& bdr, const Image<I>& ima)
   {
     // 'Find' means that we want a value; this is not always the
@@ -89,6 +92,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   void init_(tag::domain_t, mln_pset(I)& pset, const Image<I>& ima)
   {
     pset = exact(ima).domain();

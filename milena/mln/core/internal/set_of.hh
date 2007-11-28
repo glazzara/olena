@@ -190,12 +190,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename E>
+    inline
     set_of_<E>::set_of_()
     {
       needs_update_ = false;
     }
 
     template <typename E>
+    inline
     set_of_<E>&
     set_of_<E>::insert(const E& elt)
     {
@@ -206,6 +208,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     set_of_<E>&
     set_of_<E>::remove(const E& elt)
     {
@@ -217,6 +220,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     const E&
     set_of_<E>::element(unsigned i) const
     {
@@ -227,6 +231,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     unsigned
     set_of_<E>::nelements() const
     {
@@ -236,6 +241,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     bool
     set_of_<E>::has(const E& elt) const
     {
@@ -243,6 +249,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     bool
     set_of_<E>::is_empty() const
     {
@@ -250,6 +257,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     void
     set_of_<E>::clear()
     {
@@ -260,6 +268,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     const std::vector<E>&
     set_of_<E>::vect() const
     {
@@ -269,6 +278,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     void
     set_of_<E>::update_() const
     {

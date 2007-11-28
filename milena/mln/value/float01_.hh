@@ -154,11 +154,13 @@ namespace mln
     // Float01_<n>.
 
     template <unsigned n>
+    inline
     float01_<n>::float01_()
     {
     }
 
     template <unsigned n>
+    inline
     float01_<n>::float01_(float val)
     {
       mln_precondition(val >= 0);
@@ -167,6 +169,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     float
     float01_<n>::value() const
     {
@@ -174,6 +177,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     void
     float01_<n>::set_ind(unsigned long val)
     {
@@ -181,6 +185,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     float01_<n>&
     float01_<n>::operator=(float val)
     {
@@ -191,6 +196,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     float01_<n>::operator float() const
     {
       return float(this->v_) / (mln_card(float01_<n>) - 1);
@@ -200,18 +206,21 @@ namespace mln
     // Operators.
 
     template <unsigned n>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const float01_<n>& f)
     {
       return ostr << f.value();
     }
 
     template <unsigned n, unsigned m>
+    inline
     bool approx_equal(const float01_<n>& lhs, const float01_<m>& rhs)
     {
       return float01(lhs) == float01(rhs);
     }
 
     template <unsigned n>
+    inline
     bool approx_equal(const float01_<n>& lhs, float f)
     {
       return float01(lhs) == float01_<n>(f);

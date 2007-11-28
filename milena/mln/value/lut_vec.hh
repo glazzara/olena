@@ -100,6 +100,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S, typename T>
+    inline
     bool
     lut_vec<S,T>::has(const T&) const
     {
@@ -108,6 +109,7 @@ namespace mln
     }
 
     template <typename S, typename T>
+    inline
     unsigned
     lut_vec<S,T>::index_of(const T& v) const
     {
@@ -117,6 +119,7 @@ namespace mln
 
     template <typename S, typename T>
     template <typename F>
+    inline
     lut_vec<S,T>::lut_vec(const S& vset, const Function_v2v<F>& f)
       : vset_(vset)
     {
@@ -128,6 +131,7 @@ namespace mln
     }
 
     template <typename S, typename T>
+    inline
     T
     lut_vec<S,T>::operator()(const mln_value(S)& val) const
     {
@@ -136,6 +140,7 @@ namespace mln
     }
 
     template <typename S, typename T>
+    inline
     T
     lut_vec<S,T>::operator[](unsigned i) const
     {
@@ -144,6 +149,7 @@ namespace mln
     }
 
     template <typename S, typename T>
+    inline
     unsigned
     lut_vec<S,T>::nvalues() const
     {

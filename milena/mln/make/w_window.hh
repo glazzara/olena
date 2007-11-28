@@ -60,6 +60,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename W, typename F>
+    inline
     mln::w_window<mln_dpoint(W), mln_result(F)> w_window(const Window<W>&       win_,
 							 const Function_p2v<F>& wei_)
     {

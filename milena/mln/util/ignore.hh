@@ -57,11 +57,13 @@ namespace mln
 
     // ignore
 
+    inline
     ignore::ignore()
     {
     }
 
     template <typename T>
+    inline
     ignore::operator T() const
     {
       return T();

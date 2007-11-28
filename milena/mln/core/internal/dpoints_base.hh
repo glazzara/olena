@@ -96,11 +96,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename D, typename E>
+    inline
     dpoints_base_<D,E>::dpoints_base_()
     {
     }
 
     template <typename D, typename E>
+    inline
     bool dpoints_base_<D,E>::is_centered() const
     {
       static const D origin = all_to(0);
@@ -108,12 +110,14 @@ namespace mln
     }
 
     template <typename D, typename E>
+    inline
     bool dpoints_base_<D,E>::is_empty() const
     {
       return this->super_::is_empty();
     }
 
     template <typename D, typename E>
+    inline
     unsigned dpoints_base_<D,E>::delta() const
     {
       unsigned d = 0;
@@ -128,6 +132,7 @@ namespace mln
     }
 
     template <typename D, typename E>
+    inline
     unsigned
     dpoints_base_<D,E>::ndpoints() const
     {
@@ -135,6 +140,7 @@ namespace mln
     }
 
     template <typename D, typename E>
+    inline
     const D&
     dpoints_base_<D,E>::dp(unsigned i) const
     {
@@ -143,6 +149,7 @@ namespace mln
     }
 
     template <typename D, typename E>
+    inline
     const std::vector<D>&
     dpoints_base_<D,E>::vect() const
     {
@@ -150,6 +157,7 @@ namespace mln
     }
 
     template <typename D, typename E>
+    inline
     bool
     dpoints_base_<D,E>::has(const D& dp) const
     {

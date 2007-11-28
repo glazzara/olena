@@ -139,6 +139,7 @@ namespace mln
   {
 
     template <typename I, typename F>
+    inline
     data_< image_if<I,F> >::data_(I& ima, const F& f)
       : data_< Super >(ima, f)
     {
@@ -149,17 +150,20 @@ namespace mln
   // image_if<I,F>
 
   template <typename I, typename F>
+  inline
   image_if<I,F>::image_if()
   {
   }
 
   template <typename I, typename F>
+  inline
   image_if<I,F>::image_if(I& ima, const F& f)
   {
     this->init_(ima, f);
   }
 
   template <typename I, typename F>
+  inline
   image_if<I,F>::operator image_if<const I,F>() const
   {
     mln_precondition(this->has_data());
@@ -171,6 +175,7 @@ namespace mln
   // Operators.
 
   template <typename I, typename F>
+  inline
   image_if<I,F>
   operator | (Image<I>& ima, const Function_p2b<F>& f)
   {
@@ -179,6 +184,7 @@ namespace mln
   }
 
   template <typename I, typename F>
+  inline
   image_if<const I, F>
   operator | (const Image<I>& ima, const Function_p2b<F>& f)
   {

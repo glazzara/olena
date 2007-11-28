@@ -118,11 +118,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     tree_fast<T>::tree_fast()
     {
     }
 
     template <typename T>
+    inline
     tree_fast<T>::tree_fast(T& elt)
     {
       std::vector<unsigned> v;
@@ -133,6 +135,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     const unsigned
     tree_fast<T>::size() const
     {
@@ -141,6 +144,7 @@ namespace mln
 
 
     template <typename T>
+    inline
     bool
     tree_fast<T>::has (T& elt) const
     {
@@ -152,6 +156,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     unsigned
     tree_fast<T>::search (T& elt) const
     {
@@ -165,6 +170,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     bool
     tree_fast<T>::is_root (unsigned i) const
     {
@@ -172,6 +178,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     unsigned
     tree_fast<T>::add_child (unsigned i, T& elt)
     {
@@ -185,6 +192,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     unsigned
     tree_fast<T>::add_parent (T& elt)
     {

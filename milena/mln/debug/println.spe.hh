@@ -53,6 +53,7 @@ namespace mln
 
       // 2D version.
       template <typename I>
+      inline
       void
       println(const box2d& b, const I& input)
       {

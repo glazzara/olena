@@ -68,6 +68,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     void line(Image<I>& ima,
 	      const mln_point(I)& beg, const mln_point(I)& end,
 	      const mln_value(I)& v)

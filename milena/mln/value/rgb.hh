@@ -174,23 +174,27 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n>
+    inline
     rgb<n>::rgb()
     {
     }
 
     template <unsigned n>
+    inline
     rgb<n>::rgb(const metal::vec<3, int>& v)
     {
       this->v_ = v;
     }
 
     template <unsigned n>
+    inline
     rgb<n>::rgb(const metal::vec<3, int_u<n> >& v)
     {
       this->v_ = v;
     }
 
     template <unsigned n>
+    inline
     rgb<n>::rgb(int r, int g, int b)
     {
       mln_precondition(r >= 0);
@@ -205,6 +209,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     rgb<n>::rgb(const literal::white_t&)
     {
       this->v_[0] = mln_max(int_u<n>);
@@ -213,6 +218,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     rgb<n>::rgb(const literal::black_t&)
     {
       this->v_[0] = 0;
@@ -221,6 +227,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     rgb<n>::rgb(const literal::red_t&)
     {
       this->v_[0] = mln_max(int_u<n>);
@@ -229,6 +236,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     rgb<n>::rgb(const literal::green_t&)
     {
       this->v_[0] = 0;
@@ -237,6 +245,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     rgb<n>::rgb(const literal::blue_t&)
     {
       this->v_[0] = 0;
@@ -245,6 +254,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     rgb<n>&
     rgb<n>::operator=(const rgb<n>& rhs)
     {
@@ -258,6 +268,7 @@ namespace mln
     const rgb<n> rgb<n>::zero(0,0,0);
 
     template <unsigned n>
+    inline
     rgb<n>
     rgb<n>::operator-(const rgb<n>& rhs) const
     {
@@ -266,6 +277,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     rgb<n>
     rgb<n>::operator+(const rgb<n>& rhs) const
     {
@@ -274,6 +286,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     rgb<n>
     rgb<n>::operator*(int i) const
     {
@@ -282,6 +295,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     rgb<n>
     rgb<n>::operator/(int i) const
     {
@@ -290,6 +304,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const rgb<n>& v)
     {
       return ostr << "(" << debug::format(v.red())
@@ -299,6 +314,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     std::istream& operator>>(std::istream& istr, rgb<n>& c)
     {
       return istr >> c.red() >> c.green() >> c.blue();

@@ -53,6 +53,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename I>
+  inline
   sparse_image<mln_point(I), mln_value(I)>
   sparse_encode(const Image<I>& input)
   {

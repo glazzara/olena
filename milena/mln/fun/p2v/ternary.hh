@@ -75,6 +75,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename P, typename T, typename F>
+      inline
       ternary_<P,T,F>::ternary_(const Function_p2b<P>& f_pred,
 				const Function_p2v<T>& f_true,
 				const Function_p2v<F>& f_false)
@@ -86,6 +87,7 @@ namespace mln
 
       template <typename P, typename T, typename F>
       template <typename Pt>
+      inline
       mln_result(T)
 	ternary_<P,T,F>::operator()(const Pt& p) const
       {
@@ -94,6 +96,7 @@ namespace mln
 
 
       template <typename P, typename T, typename F>
+      inline
       ternary_<P, T, F>
       ternary(const Function_p2b<P>& f_pred,
 	      const Function_p2v<T>& f_true,

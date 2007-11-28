@@ -247,6 +247,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Point_Site<E>::Point_Site()
   {
     int dim = E::dim;
@@ -266,6 +267,7 @@ namespace mln
   // Operators.
 
   template <typename L, typename R>
+  inline
   bool operator==(const Point_Site<L>& lhs_, const Point_Site<R>& rhs_)
   {
     mln::metal::bool_<(int(L::dim) == int(R::dim))>::check();
@@ -278,6 +280,7 @@ namespace mln
   }
 
   template <typename L, typename R>
+  inline
   bool operator<(const Point_Site<L>& lhs_, const Point_Site<R>& rhs_)
   {
     mln::metal::bool_<(int(L::dim) == int(R::dim))>::check();
@@ -293,6 +296,7 @@ namespace mln
   }
 
   template <typename L, typename R>
+  inline
   mln_dpoint(L) // FIXME: promote!
   operator-(const Point_Site<L>& lhs_, const Point_Site<R>& rhs_)
   {
@@ -307,6 +311,7 @@ namespace mln
   }
 
   template <typename P, typename D>
+  inline
   mln_point(P) // FIXME: promote!
   operator+(const Point_Site<P>& p_, const Delta_Point_Site<D>& dp_)
   {
@@ -320,6 +325,7 @@ namespace mln
   }
 
   template <typename P, typename D>
+  inline
   mln_point(P) // FIXME: promote!
   operator-(const Point_Site<P>& p_, const Delta_Point_Site<D>& dp_)
   {
@@ -333,6 +339,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   std::ostream& operator<<(std::ostream& ostr, const Point_Site<P>& p_)
   {
     const P& p = exact(p_);

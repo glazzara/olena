@@ -74,6 +74,7 @@ namespace mln
     {
 
       template <typename I, typename N>
+      inline
       I
       seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win, unsigned max,
 			     const Neighborhood<N>& nbh)
@@ -119,6 +120,7 @@ namespace mln
 
     /// Facade
     template <typename I, typename N>
+    inline
     I
     seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win, unsigned max,
 			   const Neighborhood<N>& nbh)

@@ -64,6 +64,7 @@ namespace mln
 
 
       template <typename I>
+      inline
       void fill_with_value(trait::image::speed::any, I& ima,
 			   const mln_value(I)& value)
       {
@@ -71,6 +72,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       void fill_with_value(trait::image::speed::fastest, I& ima,
 			   const mln_value(I)& value)
       {

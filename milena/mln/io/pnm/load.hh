@@ -61,6 +61,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
       //read a rgb value (sizeof(int_u8) != 1)
       template <unsigned int n>
+      inline
       void read_value(std::ifstream& file,
 		      value::rgb<n>& v)
       {
@@ -77,6 +78,7 @@ namespace mln
 
       //read a scalar value (sizeof(int_u8) != 1)
       template <class V>
+      inline
       void read_value(std::ifstream& file,
 		      V& v)
       {
@@ -89,6 +91,7 @@ namespace mln
 
       // used when (sizeof(int_u8) != 1)
       template <typename V>
+      inline
       void load_raw_2d_uncontiguous(std::ifstream& file,
 				    image2d<V>& ima)
       {
@@ -106,6 +109,7 @@ namespace mln
 
       // used in g++ > 2.95
       template <typename I>
+      inline
       void load_raw_2d_contiguous(std::ifstream& file, I& ima)
       {
 	point2d p = make::point2d(0, ima.domain().pmin().col());
@@ -121,6 +125,7 @@ namespace mln
 
       /// load_ascii.
       template <typename I>
+      inline
       void load_ascii(std::ifstream& file, I& ima)
       {
 	mln_fwd_piter(I) p(ima.domain());
@@ -131,6 +136,7 @@ namespace mln
       /// load_raw_2d.
       /// for all pnm 8/16 bits formats
       template <typename I>
+      inline
       void load_raw_2d(std::ifstream& file, I& ima)
       {
 	if (sizeof(value::int_u8) == 1)
@@ -141,6 +147,7 @@ namespace mln
 
       /// main function : load pnm format
       template <typename V>
+      inline
       image2d<V> load(char type_, const std::string& filename)
       {
 	std::ifstream file(filename.c_str());
@@ -183,6 +190,7 @@ namespace mln
       /// the destination is an argument to check if
       /// the type match the file to load.
       template <typename I>
+      inline
       void load(char type_,
 		Image<I>& ima_,
 		const std::string& filename)

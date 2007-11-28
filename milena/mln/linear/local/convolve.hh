@@ -87,6 +87,7 @@ namespace mln
       {
 
 	template <typename I, typename P, typename W, typename R>
+	inline
 	void convolve(trait::image::speed::any, const I& input,
 		      const Point_Site<P>& p_,
 		      const W&             w_win,
@@ -102,6 +103,7 @@ namespace mln
 	}
 
 	template <typename I, typename P, typename W, typename R>
+	inline
 	void convolve(trait::image::speed::fastest, const I& input,
 		      const Point_Site<P>& p_,
 		      const W& w_win,
@@ -120,6 +122,7 @@ namespace mln
 	}
 
 	template <typename P, typename W, typename R>
+	inline
 	void convolve(const Generalized_Pixel<P>& p_,
 		      const W&                    w_win,
 		      R& result)
@@ -143,6 +146,7 @@ namespace mln
       // Facades.
 
       template <typename I, typename P, typename W, typename R>
+      inline
       void convolve(const Image<I>& input,
 		    const Point_Site<P>& p,
 		    const Weighted_Window<W>&   w_win,
@@ -154,6 +158,7 @@ namespace mln
       }
 
       template <typename P, typename W, typename R>
+      inline
       void convolve(const Generalized_Pixel<P>& p,
 		    const Weighted_Window<W>&   w_win,
 		    R& result)

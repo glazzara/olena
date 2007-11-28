@@ -65,11 +65,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename E>
+    inline
     image_value_morpher_<I,E>::image_value_morpher_()
     {
     }
 
     template <typename I, typename E>
+    inline
     const mln_pset(I)&
     image_value_morpher_<I,E>::domain() const
     {
@@ -78,6 +80,7 @@ namespace mln
     }
 
     template <typename I, typename E>
+    inline
     bool
     image_value_morpher_<I,E>::owns_(const mln_psite(I)& p) const
     {

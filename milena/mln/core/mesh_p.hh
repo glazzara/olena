@@ -75,6 +75,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template<typename P>
+  inline
   mesh_p<P>::mesh_p (util::graph<void>& gr,
 		     std::vector<P>& loc)
     : gr_ (gr),
@@ -87,6 +88,7 @@ namespace mln
   }
 
   template<typename P>
+  inline
   std::size_t
   mesh_p<P>::npoints() const
   {
@@ -94,6 +96,7 @@ namespace mln
   }
   
   template<typename P>
+  inline
   const box_<P>&
   mesh_p<P>::bbox() const
   {
@@ -101,6 +104,7 @@ namespace mln
   }
 
   template<typename P>
+  inline
   bool
   mesh_p<P>::has(const psite& p) const
   {

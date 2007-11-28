@@ -128,6 +128,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename M, typename C>
+  inline
   C dpoint_<M,C>::operator[](unsigned i) const
   {
     assert(i < dim);
@@ -135,6 +136,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   C& dpoint_<M,C>::operator[](unsigned i)
   {
     assert(i < dim);
@@ -142,11 +144,13 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   dpoint_<M,C>::dpoint_()
   {
   }
 
   template <typename M, typename C>
+  inline
   dpoint_<M,C>::dpoint_(C ind)
   {
     metal::bool_<(dim == 1)>::check();
@@ -154,6 +158,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   dpoint_<M,C>::dpoint_(C row, C col)
   {
     metal::bool_<(dim == 2)>::check();
@@ -162,6 +167,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   dpoint_<M,C>::dpoint_(C sli, C row, C col)
   {
     metal::bool_<(dim == 3)>::check();
@@ -171,12 +177,14 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   dpoint_<M,C>::dpoint_(const literal::zero_t&)
   {
     coord_.set_all(0);
   }
 
   template <typename M, typename C>
+  inline
   dpoint_<M,C>&
   dpoint_<M,C>::operator=(const literal::zero_t&)
   {
@@ -185,6 +193,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   dpoint_<M,C>::dpoint_(const literal::one_t&)
   {
     metal::bool_<(dim == 1)>::check();
@@ -192,6 +201,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   dpoint_<M,C>&
   dpoint_<M,C>::operator=(const literal::one_t&)
   {
@@ -202,6 +212,7 @@ namespace mln
 
   template <typename M, typename C>
   template <typename F>
+  inline
   dpoint_<M,C>::dpoint_(const Function_i2v<F>& f_)
   {
     mlc_converts_to(mln_result(F), C)::check();
@@ -211,6 +222,7 @@ namespace mln
   }
 
   template <typename M, typename C>
+  inline
   void dpoint_<M,C>::set_all(C c)
   {
     for (unsigned i = 0; i < dim; ++i)
@@ -219,12 +231,14 @@ namespace mln
 
   template <typename M, typename C>
   template <typename Q>
+  inline
   dpoint_<M,C>::operator metal::vec<M::dim, Q> () const
   {
     return coord_;
   }
 
   template <typename M, typename C>
+  inline
   metal::vec<M::dim, C>
   dpoint_<M,C>::to_vec() const
   {

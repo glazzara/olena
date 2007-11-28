@@ -102,11 +102,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename P>
+    inline
     run_psite<P>::run_psite()
     {
     }
 
     template <typename P>
+    inline
     run_psite<P>::run_psite(P point, unsigned index, unsigned pset_pos) :
       point_(point),
       range_index_(index),
@@ -115,6 +117,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     run_psite<P>::operator P() const
     {
       P tmp = point_;
@@ -123,6 +126,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     const P&
     run_psite<P>::range_start_() const
     {
@@ -130,6 +134,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     P&
     run_psite<P>::range_start_()
     {
@@ -137,6 +142,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     unsigned
     run_psite<P>::pset_pos_() const
     {
@@ -144,6 +150,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     unsigned&
     run_psite<P>::pset_pos_()
     {
@@ -151,6 +158,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     unsigned
     run_psite<P>::index_() const
     {
@@ -158,6 +166,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     unsigned&
     run_psite<P>::index_()
     {
@@ -165,6 +174,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     const P&
     run_psite<P>::to_point() const
     {
@@ -172,6 +182,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     mln_coord(P)
     run_psite<P>::operator[](unsigned i) const
     {

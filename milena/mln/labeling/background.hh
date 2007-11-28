@@ -60,6 +60,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename N>
+    inline
     mln_ch_value(I, unsigned)
     background(const Image<I>& input, const Neighborhood<N>& nbh,
 	       unsigned& nlabels)

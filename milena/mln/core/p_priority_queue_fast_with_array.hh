@@ -137,6 +137,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P, typename T, unsigned S>
+  inline
   p_priority_queue_fast_with_array<P, T, S>::p_priority_queue_fast_with_array()
   {
     vect_needs_update_ = false;
@@ -149,6 +150,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   void
   p_priority_queue_fast_with_array<P, T, S>::vect_update_() const
   {
@@ -162,6 +164,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   void
   p_priority_queue_fast_with_array<P, T, S>::bb_update_() const
   {
@@ -175,6 +178,7 @@ namespace mln
 
 
   template <typename P, typename T, unsigned S>
+  inline
   bool
   p_priority_queue_fast_with_array<P, T, S>::has(const P& p) const
   {
@@ -185,6 +189,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   bool
   p_priority_queue_fast_with_array<P, T, S>::is_empty() const
   {
@@ -195,6 +200,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   unsigned
   p_priority_queue_fast_with_array<P, T, S>::npoints() const
   {
@@ -208,6 +214,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   const box_<P>&
   p_priority_queue_fast_with_array<P, T, S>::bbox() const
   {
@@ -218,6 +225,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   p_priority_queue_fast_with_array<P, T, S>&
   p_priority_queue_fast_with_array<P, T, S>::push_force(const P& p, T prio)
   {
@@ -232,6 +240,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   p_priority_queue_fast_with_array<P, T, S>&
   p_priority_queue_fast_with_array<P, T, S>::push(const P& p, T prio)
   {
@@ -242,6 +251,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   void
   p_priority_queue_fast_with_array<P, T, S>::pop()
   {
@@ -257,6 +267,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   const P&
   p_priority_queue_fast_with_array<P, T, S>::front() const
   {
@@ -269,6 +280,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   const P&
   p_priority_queue_fast_with_array<P, T, S>::pop_front()
   {
@@ -279,6 +291,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   void
   p_priority_queue_fast_with_array<P, T, S>::clear()
   {
@@ -290,6 +303,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   const std::vector<P>&
   p_priority_queue_fast_with_array<P, T, S>::vect() const
   {
@@ -299,6 +313,7 @@ namespace mln
   }
 
   template <typename P, typename T, unsigned S>
+  inline
   const P&
   p_priority_queue_fast_with_array<P, T, S>::operator[](unsigned n) const
   {

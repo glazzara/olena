@@ -64,6 +64,7 @@ namespace mln
     // Laplacian operators (Cf. Sonka et al., p. 81)
 
     template <typename I, typename O>
+    inline
     void lap_4(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
@@ -74,6 +75,7 @@ namespace mln
     }
 
     template <typename I, typename O>
+    inline
     void lap_8(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
@@ -84,6 +86,7 @@ namespace mln
     }
 
     template <typename I, typename O>
+    inline
     void lap_x(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
@@ -94,6 +97,7 @@ namespace mln
     }
 
     template <typename I, typename O>
+    inline
     void lap_o(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());

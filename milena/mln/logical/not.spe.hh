@@ -55,12 +55,14 @@ namespace mln
       }
 
       template <typename I, typename O>
+      inline
       void not__(trait::image::speed::any, const I& input, O& output)
       {
 	generic::not__(input, output);
       }
 
       template <typename I, typename O>
+      inline
       void not__(trait::image::speed::fastest, const I& input, O& output)
       {
 	trace::entering("logical::impl::not__");

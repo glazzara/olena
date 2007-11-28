@@ -55,6 +55,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename N>
+    inline
     mesh_p<mln_psite(I)>
     voronoi (Image<I>& ima_,
 	     Image<I>& orig_,

@@ -138,6 +138,7 @@ namespace mln
       namespace generic
       {
 	template <typename I>
+	inline
 	void fill_with_value(I& ima, const mln_value(I)& value)
 	{
 	  trace::entering("level::impl::generic::fill_with_value");
@@ -158,6 +159,7 @@ namespace mln
     // with: value
 
     template <typename I>
+    inline
     void fill(Image<I>& ima, const mln_value(I)& value)
     {
       trace::entering("level::fill");
@@ -174,6 +176,7 @@ namespace mln
     // with: Function_p2v<F>
 
     template <typename I, typename F>
+    inline
     void fill(Image<I>& ima_, const Function_p2v<F>& f_)
     {
       trace::entering("level::fill");
@@ -192,6 +195,7 @@ namespace mln
     // with: value f(const point&)
 
     template <typename I>
+    inline
     void fill_f(Image<I>& ima_,
 		mln_value(I) (*f)(const mln_point(I)& p))
     {
@@ -211,6 +215,7 @@ namespace mln
     // with: value arr[N]
 
     template <typename I, unsigned N>
+    inline
     void fill(Image<I>& ima_, mln_value(I) (&arr)[N])
     {
       trace::entering("level::fill");
@@ -230,6 +235,7 @@ namespace mln
     // with: Image<J>
 
     template <typename I, typename J>
+    inline
     void fill(Image<I>& ima_, const Image<J>& data_)
     {
       trace::entering("level::fill");

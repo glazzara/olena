@@ -53,6 +53,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     bool positive(const Image<I>& input_)
     {
       const I& input = exact(input_);

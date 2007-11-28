@@ -105,6 +105,7 @@ namespace mln
     // internal::data_< safe_image<I,S> >
 
     template <typename I>
+    inline
     data_< safe_image<I> >::data_(I& ima, const mln_value(I)& default_value)
       : ima_(ima),
 	default_value_(default_value)
@@ -116,17 +117,20 @@ namespace mln
   // safe_image<I>
 
   template <typename I>
+  inline
   safe_image<I>::safe_image(I& ima, const mln_value(I)& default_value)
   {
     this->data_ = new internal::data_< safe_image<I> >(ima, default_value);
   }
 
   template <typename I>
+  inline
   safe_image<I>::safe_image()
   {
   }
 
   template <typename I>
+  inline
   mln_rvalue(I)
   safe_image<I>::operator()(const mln_psite(I)& p) const
   {
@@ -136,6 +140,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   typename safe_image<I>::lvalue
   safe_image<I>::operator()(const mln_psite(I)& p)
   {
@@ -147,6 +152,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   safe_image<I>::operator safe_image<const I>() const
   {
     safe_image<const I> tmp(this->data_->ima_, this->data_->default_value_);
@@ -156,6 +162,7 @@ namespace mln
   // safe
 
   template <typename I>
+  inline
   safe_image<I> safe(Image<I>& ima,
 		     mln_value(I) default_value)
   {
@@ -164,6 +171,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   safe_image<const I> safe(const Image<I>& ima,
 			   mln_value(I) default_value)
   {

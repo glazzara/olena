@@ -129,6 +129,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S>
+    inline
     mln_image_from(S, bool) to_image(const Point_Set<S>& pset_, unsigned border)
     {
       const S& pset = exact(pset_);
@@ -141,6 +142,7 @@ namespace mln
     }
 
     template <typename W>
+    inline
     mln_image_from(W, bool) to_image(const Window<W>& win_)
     {
       const W& win = exact(win_);
@@ -157,12 +159,14 @@ namespace mln
     }
 
     template <typename N>
+    inline
     mln_image_from(N, bool) to_image(const Neighborhood<N>& nbh)
     {
       return to_image(convert::to_window(nbh));
     }
 
     template <typename W>
+    inline
     mln_image_from(W, mln_weight(W)) to_image(const Weighted_Window<W>& w_win_)
     {
       const W& w_win = exact(w_win_);
@@ -178,6 +182,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     image1d<std::size_t> to_image(const histo::data<S>& h)
     {
       mln_value(S)

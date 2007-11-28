@@ -59,6 +59,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned M>
+    inline
     mln::window1d window1d(bool (&values)[M])
     {
       int h = M / 2;

@@ -64,6 +64,7 @@ namespace mln
     {
 
       template <typename I>
+      inline
       void duplicate_1d_(const I& ima)
       {
 	trace::entering("border::impl::duplicate_1d_");
@@ -84,6 +85,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       void duplicate_2d_(const I& ima)
       {
 	trace::entering("border::impl::duplicate_2d_");
@@ -124,6 +126,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       void duplicate_3d_(const Image<I>& ima_)
       {
 	trace::entering("border::impl::duplicate_3d_");
@@ -194,6 +197,7 @@ namespace mln
     // Facade.
 
     template <typename I>
+    inline
     void duplicate(const Image<I>& ima_)
     {
       trace::entering("border::duplicate");

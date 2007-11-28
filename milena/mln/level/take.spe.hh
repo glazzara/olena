@@ -54,12 +54,14 @@ namespace mln
       }
 
       template <typename A, typename I>
+      inline
       void take_(trait::image::speed::any, const I& input, A& a)
       {
 	generic::take_(input, a);
       }
 
       template <typename A, typename I>
+      inline
       void take_(trait::image::speed::fastest, const I& input, A& a)
       {
 	trace::entering("level::impl::take");

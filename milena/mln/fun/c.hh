@@ -63,12 +63,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename R, typename A>
+    inline
     C<R(*)(A)>::C(R (*f)(A))
       : f_(f)
     {
     }
 
     template <typename R, typename A>
+    inline
     R
     C<R(*)(A)>::operator()(const mlc_unqualif(A)& a) const
     {

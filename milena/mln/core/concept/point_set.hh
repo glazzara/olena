@@ -144,6 +144,7 @@ namespace mln
   template <typename P> struct box_;
 
   template <typename E>
+  inline
   Point_Set<E>::Point_Set()
   {
     typedef mln_mesh(E) mesh;
@@ -167,6 +168,7 @@ namespace mln
 
 
   template <typename Sl, typename Sr>
+  inline
   bool operator==(const Point_Set<Sl>& lhs_, const Point_Set<Sr>& rhs_)
   {
     // FIXME: Same grid!
@@ -193,6 +195,7 @@ namespace mln
 
 
   template <typename Sl, typename Sr>
+  inline
   bool operator<=(const Point_Set<Sl>& lhs_, const Point_Set<Sr>& rhs_)
   {
     // FIXME: Same grid!
@@ -214,6 +217,7 @@ namespace mln
 
 
   template <typename Sl, typename Sr>
+  inline
   bool operator<(const Point_Set<Sl>& lhs_, const Point_Set<Sr>& rhs_)
   {
     // FIXME: Same grid!
@@ -224,6 +228,7 @@ namespace mln
 
 
   template <typename S>
+  inline
   std::ostream& operator<<(std::ostream& ostr, const Point_Set<S>& pset_)
   {
     const S& pset = exact(pset_);

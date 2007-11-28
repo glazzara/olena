@@ -55,6 +55,7 @@ namespace mln
   ** test if Point p1 and p2 are on the same line
   */
   template <typename P>
+  inline
   bool
   on_the_same_line(const P& p1, const P& p2)
   {
@@ -67,6 +68,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   rle_image<mln_point(I), mln_value(I)>
   rle_encode(const Image<I>& input)
   {

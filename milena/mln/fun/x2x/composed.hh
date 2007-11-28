@@ -177,11 +177,13 @@ namespace mln
 	// Implementation of the bijective version.
 
 	template <typename F, typename G, typename E>
+	inline
 	helper_composed_<F,G,E,true>::helper_composed_()
 	{
 	}
 
 	template <typename F, typename G, typename E>
+	inline
 	helper_composed_<F,G,E,true>::helper_composed_(const F& f, const G& g)
 	  :f_(f),
 	   g_(g)
@@ -190,6 +192,7 @@ namespace mln
 	}
 
 	template <typename F, typename G, typename E>
+	inline
 	typename helper_composed_<F,G,E,true>::invert
 	helper_composed_<F,G,E,true>::inv() const
 	{
@@ -198,6 +201,7 @@ namespace mln
 	
 
 	template <typename F, typename G, typename E>
+	inline
 	void
 	helper_composed_<F,G,E,true>::set_first(const F& f)
 	{
@@ -206,6 +210,7 @@ namespace mln
 	}
 
 	template <typename F, typename G, typename E>
+	inline
 	void
 	helper_composed_<F,G,E,true>::set_second(const G& g)
 	{
@@ -216,11 +221,13 @@ namespace mln
 	// Implementation of the non bijective version.
 
 	template <typename F, typename G, typename E>
+	inline
 	helper_composed_<F,G,E,false>::helper_composed_()
 	{
 	}
 
 	template <typename F, typename G, typename E>
+	inline
 	helper_composed_<F,G,E,false>::helper_composed_(const F& f, const G& g)
 	  :f_(f),
 	   g_(g)
@@ -229,6 +236,7 @@ namespace mln
 	}
 
 	template <typename F, typename G, typename E>
+	inline
 	void
 	helper_composed_<F,G,E,false>::set_first(const F& f)
 	{
@@ -237,6 +245,7 @@ namespace mln
 	}
 
 	template <typename F, typename G, typename E>
+	inline
 	void
 	helper_composed_<F,G,E,false>::set_second(const G& g)
 	{
@@ -251,6 +260,7 @@ namespace mln
   } // end of namespace mln::fun
 
   template <typename F, typename G>
+  inline
   fun::x2x::composed<F,G> compose(F f, G g)
   {
     trace::entering("fun::x2x::compose");

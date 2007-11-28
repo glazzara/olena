@@ -49,6 +49,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     void exiting(const std::string&)
     {
       if (quiet)

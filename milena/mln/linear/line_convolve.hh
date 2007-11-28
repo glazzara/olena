@@ -65,6 +65,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename W, unsigned N, typename O>
+    inline
     void line_convolve(const Image<I>& input, W (&weights)[N],
 		       Image<O>& output)
     {

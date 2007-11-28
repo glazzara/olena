@@ -86,6 +86,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template<typename P>
+  inline
   mesh_p_piter_<P>::mesh_p_piter_(const mesh_p<P>& s)
     : loc_(s.loc_)
   {
@@ -93,6 +94,7 @@ namespace mln
   }
 
   template<typename P>
+  inline
   const P&
   mesh_p_piter_<P>::to_point() const
   {
@@ -100,6 +102,7 @@ namespace mln
   }
 
   template<typename P>
+  inline
   mln_coord(P)
   mesh_p_piter_<P>::operator[](unsigned i) const
   {
@@ -107,6 +110,7 @@ namespace mln
   }
 
   template<typename P>
+  inline
   bool
   mesh_p_piter_<P>::is_valid() const
   {
@@ -114,6 +118,7 @@ namespace mln
   }
 
   template<typename P>
+  inline
   void
   mesh_p_piter_<P>::invalidate()
   {
@@ -121,6 +126,7 @@ namespace mln
   }
 
   template<typename P>
+  inline
   void 
   mesh_p_piter_<P>::start()
   {
@@ -130,6 +136,7 @@ namespace mln
   }
 
   template<typename P>
+  inline
   void 
   mesh_p_piter_<P>::next_()
   {
@@ -139,6 +146,7 @@ namespace mln
   }
 
   template<typename P>
+  inline
   mesh_p_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());

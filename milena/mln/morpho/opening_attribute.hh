@@ -80,16 +80,19 @@ namespace mln
 
 	const S s;
 
+	inline
 	void init()
 	{
 	  // FIXME: border::fill(input, mln_max(mln_value(I)));
 	}
 
+	inline
 	bool is_active(const A& attr) const
 	{
 	  return attr.to_result() < lambda;
 	}
 
+	inline
 	void inactivate(A& attr)
 	{
 	  attr.set_value(lambda);
@@ -97,6 +100,7 @@ namespace mln
       
 	// end of requirements
       
+	inline
 	opening_attribute_t(const I_& input, const N_& nbh, mln_result(A) lambda, O_& output)
 	  : input(input), nbh(nbh), lambda(lambda), output(output),
 	    s(level::sort_points_decreasing(input))
@@ -110,6 +114,7 @@ namespace mln
 
     template <typename A,
 	      typename I, typename N, typename O>
+    inline
     void opening_attribute(const Image<I>& input_,
 			   const Neighborhood<N>& nbh_, mln_result(A) lambda,
 			   Image<O>& output_)

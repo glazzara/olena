@@ -72,6 +72,7 @@ namespace mln
       namespace generic
       {
 	template <typename L, typename R>
+	inline
 	void assign_(L& target, const R& data)
 	{
 	  trace::entering("level::impl::generic::assign_");
@@ -91,6 +92,7 @@ namespace mln
     // Facade.
 
     template <typename L, typename R>
+    inline
     void assign(Image<L>& target, const Image<R>& data)
     {
       trace::entering("level::assign");

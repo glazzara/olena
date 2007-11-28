@@ -68,6 +68,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V, typename T, typename R>
+      inline
       linear<V,T,R>::linear(T a, T b)
 	: a(a),
 	  b(b)
@@ -75,6 +76,7 @@ namespace mln
       }
 
       template <typename V, typename T, typename R>
+      inline
       R
       linear<V,T,R>::operator()(const V& v) const
       {

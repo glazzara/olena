@@ -174,6 +174,7 @@ namespace mln
   // init_
 
   template <typename I, typename J>
+  inline
   void init_(tag::image_t, hexa<I>& target, const J& model)
   {
     I ima;
@@ -189,6 +190,7 @@ namespace mln
   {
 
     template <typename I>
+    inline
     data_< hexa<I> >::data_(I& ima, box2d_h b)
       : ima_(ima),
 	b_(b)
@@ -199,6 +201,7 @@ namespace mln
 
 
   template <typename I>
+  inline
   void
   hexa<I>::init_(I& ima)
   {
@@ -211,18 +214,21 @@ namespace mln
 
 
   template <typename I>
+  inline
   hexa<I>::hexa()
   {
   }
 
 
   template <typename I>
+  inline
   hexa<I>::hexa(I& ima)
   {
     this->init_(ima);
   }
 
   template <typename I>
+  inline
   typename hexa<I>::rvalue
   hexa<I>::operator()(const point2d_h& p) const
   {
@@ -232,6 +238,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   typename hexa<I>::lvalue
   hexa<I>::operator()(const point2d_h& p)
   {
@@ -241,6 +248,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   const box2d_h&
   hexa<I>::domain() const
   {
@@ -249,6 +257,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   bool
   hexa<I>::has(const psite& p) const
   {
@@ -258,6 +267,7 @@ namespace mln
 
 
   template <typename I>
+  inline
   bool
   hexa<I>::owns_(const psite& p) const
   {

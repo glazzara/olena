@@ -133,6 +133,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Image<E>::Image()
   {
     // provided by internal::image_base_:
@@ -181,6 +182,7 @@ namespace mln
   }
 
   template <typename I, typename J>
+  inline
   void initialize(Image<I>& target, const Image<J>& model)
   {
     trace::entering("core::initialize");

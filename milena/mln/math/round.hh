@@ -61,6 +61,7 @@ namespace mln
 
     template <typename R>
     template <typename T>
+    inline
     R round<R>::operator()(const T& v) const
     {
       return (long int)(v + 0.49999); // FIXME: !!!

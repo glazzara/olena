@@ -208,6 +208,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename Vl, typename Vr>
+  inline
   mln_trait_op_plus(Vl, Vr)
     operator + (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
@@ -215,6 +216,7 @@ namespace mln
   }
 
   template <typename Vl, typename Vr>
+  inline
   mln_trait_op_minus(Vl, Vr)
     operator - (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
@@ -222,6 +224,7 @@ namespace mln
   }
 
   template <typename Vl, typename Vr>
+  inline
   mln_trait_op_times(Vl, Vr)
   operator * (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
@@ -229,6 +232,7 @@ namespace mln
   }
 
   template <typename Vl, typename Vr>
+  inline
   mln_trait_op_div(Vl, Vr)
   operator / (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
@@ -236,6 +240,7 @@ namespace mln
   }
 
   template <typename Vl, typename Vr>
+  inline
   mln_trait_op_mod(Vl, Vr)
   operator % (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
@@ -243,6 +248,7 @@ namespace mln
   }
 
   template <typename S>
+  inline
   mln_trait_op_uminus(S)
   operator - (const value::scalar_<S>& rhs)
   {
@@ -250,6 +256,7 @@ namespace mln
   }
 
   template <typename S, typename O>
+  inline
   mln_trait_op_plus(O, value::scalar_<S>)
   operator + (const value::scalar_<S>& lhs, const Object<O>& rhs)
   {
@@ -257,6 +264,7 @@ namespace mln
   }
 
   template <typename S, typename O>
+  inline
   mln_trait_op_times(O, value::scalar_<S>)
   operator * (const value::scalar_<S>& lhs, const Object<O>& rhs)
   {
@@ -269,6 +277,7 @@ namespace mln
   // With scalar_ OP scalar_.
 
   template <typename Sl, typename Sr>
+  inline
   mln_trait_op_plus(Sl, Sr)
   operator + (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
   {
@@ -276,6 +285,7 @@ namespace mln
   }
 
   template <typename Sl, typename Sr>
+  inline
   mln_trait_op_minus(Sl, Sr)
   operator - (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
   {
@@ -283,6 +293,7 @@ namespace mln
   }
 
   template <typename Sl, typename Sr>
+  inline
   mln_trait_op_times(Sl, Sr)
   operator * (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
   {
@@ -290,6 +301,7 @@ namespace mln
   }
 
   template <typename Sl, typename Sr>
+  inline
   mln_trait_op_div(Sl, Sr)
   operator / (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
   {
@@ -297,6 +309,7 @@ namespace mln
   }
 
   template <typename Sl, typename Sr>
+  inline
   mln_trait_op_mod(Sl, Sr)
   operator % (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
   {
@@ -307,6 +320,7 @@ namespace mln
   // Operator ==.
 
   template <typename Sl, typename Sr>
+  inline
   mln_trait_op_eq(Sl, Sr)
   operator == (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
   {
@@ -314,6 +328,7 @@ namespace mln
   }
 
   template <typename O, typename L>
+  inline
   mln_trait_op_eq(O, O)
   operator==(const value::scalar_<O>& lhs, const Literal<L>& rhs)
   {
@@ -321,6 +336,7 @@ namespace mln
   }
 
   template <typename L, typename O>
+  inline
   mln_trait_op_eq(O, O)
   operator==(const Literal<L>& lhs, const value::scalar_<O>& rhs)
   {
@@ -331,6 +347,7 @@ namespace mln
   // Operator <.
 
   template <typename Sl, typename Sr>
+  inline
   mln_trait_op_less(Sl, Sr)
   operator < (const value::scalar_<Sl>& lhs, const value::scalar_<Sr>& rhs)
   {
@@ -338,6 +355,7 @@ namespace mln
   }
 
   template <typename O, typename L>
+  inline
   mln_trait_op_less(O, O)
   operator < (const value::scalar_<O>& lhs, const Literal<L>& rhs)
   {
@@ -345,6 +363,7 @@ namespace mln
   }
 
   template <typename L, typename O>
+  inline
   mln_trait_op_less(O, O)
   operator < (const Literal<L>& lhs, const value::scalar_<O>& rhs)
   {

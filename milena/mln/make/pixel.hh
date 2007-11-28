@@ -55,6 +55,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     mln::pixel<const I> pixel(const Image<I>& ima, const mln_point(I)& p)
     {
       mln::pixel<const I> tmp(exact(ima), p);
@@ -62,6 +63,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     mln::pixel<I> pixel(Image<I>& ima, const mln_point(I)& p)
     {
       mln::pixel<I> tmp(exact(ima), p);

@@ -56,6 +56,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S>
+    inline
     p_array<mln_point(S)> to_p_array(const Point_Set<S>& pset_)
     {
       const S& pset = exact(pset_);
@@ -68,6 +69,7 @@ namespace mln
     }
 
     template <typename W>
+    inline
     p_array<mln_point(W)> to_p_array(const Window<W>& win, const mln_point(W)& p)
     {
       p_array<mln_point(W)> v;

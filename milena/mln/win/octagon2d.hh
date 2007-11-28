@@ -142,6 +142,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     octagon2d::octagon2d(unsigned length)
       : length_(length)
     {
@@ -172,37 +173,44 @@ namespace mln
 	}
     }
 
+    inline
     bool octagon2d::is_centered() const
     {
       return true;
     }
 
+    inline
     bool octagon2d::is_symmetric() const
     {
       return true;
     }
 
+    inline
     unsigned octagon2d::length() const
     {
       return length_;
     }
 
+    inline
     unsigned octagon2d::delta() const
     {
       return length_ / 2;
     }
 
+    inline
     unsigned octagon2d::area() const
     {
       unsigned l = (length_ - 1) / 6;
       return l * (28 * l + 8) + 4;
     }
 
+    inline
     octagon2d& octagon2d::sym()
     {
       return *this;
     }
 
+    inline
     std::ostream& operator<<(std::ostream& ostr, const octagon2d& win)
     {
       ostr << "[octagon2d: length=" << win.length() << ']';

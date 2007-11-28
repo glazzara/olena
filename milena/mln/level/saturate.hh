@@ -94,6 +94,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename O>
+    inline
     void saturate(const Image<I>& input, Image<O>& output)
     {
       trace::entering("level::saturate");
@@ -107,6 +108,7 @@ namespace mln
     }
 
     template <typename I, typename O>
+    inline
     void saturate(const Image<I>& input,
 		  const mln_value(O)& min, const mln_value(O)& max,
 		  Image<O>& output)
@@ -122,6 +124,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     void saturate_inplace(Image<I>& input,
 			  const mln_value(I)& min, const mln_value(I)& max)
     {

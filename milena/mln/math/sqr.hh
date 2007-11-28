@@ -49,6 +49,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     T sqr(const T& v)
     {
       return v * v;

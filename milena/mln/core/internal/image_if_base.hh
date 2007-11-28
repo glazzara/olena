@@ -144,6 +144,7 @@ namespace mln
     // internal::data_< image_if_base_<I,S> >
 
     template <typename I, typename F, typename E>
+    inline
     data_< image_if_base_<I,F,E> >::data_(I& ima, const F& f)
       : ima_(ima),
 	pset_(ima.domain() | f)
@@ -153,17 +154,20 @@ namespace mln
     // image_if_base_<I,F,E>
     
     template <typename I, typename F, typename E>
+    inline
     image_if_base_<I,F,E>::image_if_base_()
     {
     }
     
     template <typename I, typename F, typename E>
+    inline
     image_if_base_<I,F,E>::image_if_base_(I& ima, const F& f)
     {
       init_(ima, f);
     }
 
     template <typename I, typename F, typename E>
+    inline
     bool
     image_if_base_<I,F,E>::owns_(const mln_psite(I)& p) const
     {
@@ -172,6 +176,7 @@ namespace mln
     }
     
     template <typename I, typename F, typename E>
+    inline
     void
     image_if_base_<I,F,E>::init_(I& ima, const F& f)
     {
@@ -180,6 +185,7 @@ namespace mln
     }
     
     template <typename I, typename F, typename E>
+    inline
     const pset_if<mln_pset(I), F>&
     image_if_base_<I,F,E>::domain() const
     {

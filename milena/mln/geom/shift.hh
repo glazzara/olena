@@ -52,6 +52,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename W>
+    inline
     window<mln_dpoint(W)>
     shift(const Window<W>& win, const mln_dpoint(W)& dp)
     {

@@ -72,12 +72,14 @@ namespace mln
       namespace internal
       {
 
+	inline
 	void abort()
 	{
 	  std::cerr << " aborting." << std::endl;
 	  exit(0);
 	}
 
+	inline
 	bool read_pfm_header(std::istream& file,
 			     int& nrows, int& ncols,
 			     bool test = false)
@@ -114,6 +116,7 @@ namespace mln
 
 	/// load_raw_2d.
 	template <typename I>
+	inline
 	void load_raw_2d(std::ifstream& file, I& ima)
 	{
 	  point2d p = make::point2d(0, 0);
@@ -134,6 +137,7 @@ namespace mln
 
       } // end of namespace mln::io::internal
 
+      inline
       image2d<float> load(const std::string& filename)
       {
 	std::ifstream file(filename.c_str());
@@ -152,6 +156,7 @@ namespace mln
       }
 
 
+      inline
       void load(image2d<float>& ima,
 		const std::string& filename)
       {

@@ -71,6 +71,7 @@ namespace mln
     {
       
       template <unsigned n, typename C, typename V>
+      inline
       mln_sum(C)
       l2_(const V& vec)
       {
@@ -81,6 +82,7 @@ namespace mln
       }
 
       template <unsigned n, typename C, typename V>
+      inline
       mln_sum(C)
       l2_distance_(const V& vec1, const V& vec2)
       {
@@ -98,6 +100,7 @@ namespace mln
     `----------*/
 
     template <unsigned n, typename C>
+    inline
     mln_sum(C)
     l2(const C (&vec)[n])
     {
@@ -105,6 +108,7 @@ namespace mln
     }
 
     template <unsigned n, typename C>
+    inline
     mln_sum(C)
     l2(const metal::vec<n,C>& vec)
     {
@@ -112,6 +116,7 @@ namespace mln
     }
 
     template <unsigned n, typename C>
+    inline
     mln_sum(C)
     l2_distance(const C (&vec1)[n], const C (&vec2)[n])
     {
@@ -119,6 +124,7 @@ namespace mln
     }
 
     template <unsigned n, typename C>
+    inline
     mln_sum(C)
     l2_distance(const metal::vec<n,C>& vec1, const metal::vec<n,C>& vec2)
     {

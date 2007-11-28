@@ -61,6 +61,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     void adjust(const Image<I>& ima_, unsigned min_thickness)
     {
       trace::entering("border::adjust");

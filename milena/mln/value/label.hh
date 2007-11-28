@@ -173,11 +173,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n>
+    inline
     label<n>::label()
     {
     }
 
     template <unsigned n>
+    inline
     label<n>::label(unsigned i)
     {
       mln_precondition(i <= mln_max(enc));
@@ -185,6 +187,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     label<n>&
     label<n>::operator=(unsigned i)
     {
@@ -194,6 +197,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     label<n>&
     label<n>::operator++()
     {
@@ -203,6 +207,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     label<n>&
     label<n>::operator--()
     {
@@ -215,6 +220,7 @@ namespace mln
     const label<n> label<n>::one = 1;
 
     template <unsigned n>
+    inline
     const mln_enc(label<n>)&
     label<n>::to_enc() const
     {
@@ -222,18 +228,21 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     bool operator==(const label<n>& lhs, const label<n>& rhs)
     {
       return lhs.to_enc() == rhs.to_enc();
     }
 
     template <unsigned n>
+    inline
     bool operator<(const label<n>& lhs, const label<n>& rhs)
     {
       return lhs.to_enc() < rhs.to_enc();
     }
 
     template <unsigned n>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const label<n>& i)
     {
       return ostr << i.to_enc();

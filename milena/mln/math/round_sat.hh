@@ -62,6 +62,7 @@ namespace mln
 
     template <typename R>
     template <typename T>
+    inline
     R round_sat_<R>::operator()(const T& v) const
     {
       long int l = (long int)(v + 0.49999); // FIXME: !!!

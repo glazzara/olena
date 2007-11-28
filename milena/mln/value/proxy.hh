@@ -197,6 +197,7 @@ namespace mln
     // proxy<I>
 
     template <typename I>
+    inline
     proxy<I>::proxy(I& ima, const mln_psite(I)& p)
       : ima_(ima),
 	p_(p)
@@ -204,6 +205,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     proxy<I>::~proxy()
     {
       mln_value(I) (I::*mr)(const mln_psite(I)&) const = & I::read_;
@@ -214,6 +216,7 @@ namespace mln
 
     template <typename I>
     template <typename V>
+    inline
     proxy<I>&
     proxy<I>::operator=(const V& v)
     {
@@ -222,6 +225,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     proxy<I>&
     proxy<I>::operator=(const proxy<I>& rhs)
     {
@@ -231,6 +235,7 @@ namespace mln
 
     template <typename I>
     template <typename II>
+    inline
     proxy<I>&
     proxy<I>::operator=(const proxy<II>& rhs)
     {
@@ -240,18 +245,21 @@ namespace mln
 
     template <typename I>
     template <typename V>
+    inline
     proxy<I>::operator V() const
     {
       return ima_.read_(p_);
     }
 
     template <typename I>
+    inline
     proxy<I>::operator mln_value(I)() const
     {
       return ima_.read_(p_);
     }
 
     template <typename I>
+    inline
     mln_value(I)
     proxy<I>::to_value() const
     {
@@ -261,6 +269,7 @@ namespace mln
     // proxy<const I>
 
     template <typename I>
+    inline
     proxy<const I>::proxy(const I& ima, const mln_psite(I)& p)
       : ima_(ima),
 	p_(p)
@@ -268,6 +277,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     proxy<const I>::~proxy()
     {
       mln_value(I) (I::*mr)(const mln_psite(I)&) const = & I::read_;
@@ -276,18 +286,21 @@ namespace mln
 
     template <typename I>
     template <typename V>
+    inline
     proxy<const I>::operator V() const
     {
       return ima_.read_(p_);
     }
 
     template <typename I>
+    inline
     proxy<const I>::operator mln_value(I)() const
     {
       return ima_.read_(p_);
     }
 
     template <typename I>
+    inline
     mln_value(I)
     proxy<const I>::to_value() const
     {
@@ -297,6 +310,7 @@ namespace mln
     // operator <<
 
     template <typename I>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const proxy<I>& x)
     {
       return ostr << x.to_value();
@@ -305,18 +319,21 @@ namespace mln
     // operator ==
 
     template <typename I>
+    inline
     bool operator==(const proxy<I>& lhs, const mln_value(I)& rhs)
     {
       return lhs.to_value() == rhs;
     }
 
     template <typename I>
+    inline
     bool operator==(const mln_value(I)& lhs, const proxy<I>& rhs)
     {
       return lhs == rhs.to_value();
     }
 
     template <typename I, typename J>
+    inline
     bool operator==(const proxy<I>& lhs, const proxy<J>& rhs)
     {
       return lhs.to_value() == rhs.to_value();
@@ -325,18 +342,21 @@ namespace mln
     // operator <
 
     template <typename I>
+    inline
     bool operator<(const proxy<I>& lhs, const mln_value(I)& rhs)
     {
       return lhs.to_value() < rhs;
     }
 
     template <typename I>
+    inline
     bool operator<(const mln_value(I)& lhs, const proxy<I>& rhs)
     {
       return lhs < rhs.to_value();
     }
 
     template <typename I, typename J>
+    inline
     bool operator<(const proxy<I>& lhs, const proxy<J>& rhs)
     {
       return lhs.to_value() < rhs.to_value();

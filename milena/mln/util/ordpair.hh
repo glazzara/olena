@@ -76,6 +76,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     ordpair_<T>::ordpair_(const T& t1, const T& t2)
     {
       if (t1 > t2)
@@ -92,12 +93,14 @@ namespace mln
     }
 
     template <typename T>
+    inline
     bool operator==(const ordpair_<T>& lhs, const ordpair_<T>& rhs)
     {
       return lhs.first == rhs.first && lhs.second == rhs.second;
     }
 
     template <typename T>
+    inline
     bool operator< (const ordpair_<T>& lhs, const ordpair_<T>& rhs)
     {
       return
@@ -106,6 +109,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     bool operator<=(const ordpair_<T>& lhs, const ordpair_<T>& rhs)
     {
       return
@@ -115,6 +119,7 @@ namespace mln
 
 
     template <typename T>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const ordpair_<T>& op)
     {
       return ostr << '(' << op.first << ',' << op.second << ')';
@@ -122,6 +127,7 @@ namespace mln
 
 
     template <typename T>
+    inline
     ordpair_<T>
     ordpair(const T& t1, const T& t2)
     {

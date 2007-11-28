@@ -79,6 +79,7 @@ namespace mln
 
 	/// load_ascii.
 	template <typename I>
+	inline
 	void load_ascii(std::ifstream& file, I& ima)
 	{
 	  mln_fwd_piter(I) p(ima.domain());
@@ -95,6 +96,7 @@ namespace mln
 
 	/// load_raw_2d.
 	template <typename I>
+	inline
 	void load_raw_2d(std::ifstream& file, I& ima)
 	{
 	  point2d p = make::point2d(0, ima.domain().pmin().col());
@@ -125,6 +127,7 @@ namespace mln
       } // end of namespace mln::io::internal
 
 
+      inline
       image2d<bool> load(const std::string& filename)
       {
 	std::ifstream file(filename.c_str());
@@ -148,6 +151,7 @@ namespace mln
       }
 
 
+      inline
       void load(image2d<bool>& ima,
 		const std::string& filename)
       {

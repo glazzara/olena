@@ -109,11 +109,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
+  inline
   Point<P>::Point()
   {
   }
 
   template <typename P>
+  inline
   const P&
   Point<P>::to_point() const
   {
@@ -121,6 +123,7 @@ namespace mln
   }
 
   template <typename P, typename D>
+  inline
   P& operator+=(Point<P>& p_, const Dpoint<D>& dp_)
   {
     P& p = exact(p_);
@@ -132,6 +135,7 @@ namespace mln
   }
 
   template <typename P, typename D>
+  inline
   P& operator-=(Point<P>& p_, const Dpoint<D>& dp_)
   {
     P& p = exact(p_);

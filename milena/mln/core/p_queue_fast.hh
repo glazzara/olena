@@ -137,6 +137,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
+  inline
   p_queue_fast<P>::p_queue_fast()
   {
     //    vect_needs_update_ = false;
@@ -146,6 +147,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_queue_fast<P>::vect_update_() const
   {
@@ -157,6 +159,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_queue_fast<P>::bb_update_() const
   {
@@ -167,6 +170,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   p_queue_fast<P>::has(const P& p) const
   {
@@ -177,6 +181,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   p_queue_fast<P>::is_empty() const
   {
@@ -184,6 +189,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   std::size_t
   p_queue_fast<P>::npoints() const
   {
@@ -192,6 +198,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const box_<P>&
   p_queue_fast<P>::bbox() const
   {
@@ -202,6 +209,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   p_queue_fast<P>&
   p_queue_fast<P>::push_force(const P& p)
   {
@@ -216,6 +224,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   p_queue_fast<P>&
   p_queue_fast<P>::push(const P& p)
   {
@@ -225,6 +234,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_queue_fast<P>::pop()
   {
@@ -238,6 +248,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_queue_fast<P>::front() const
   {
@@ -246,6 +257,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_queue_fast<P>::pop_front()
   {
@@ -257,6 +269,7 @@ namespace mln
 
 
   template <typename P>
+  inline
   void
   p_queue_fast<P>::clear()
   {
@@ -268,6 +281,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const std::vector<P>&
   p_queue_fast<P>::vect() const
   {
@@ -277,6 +291,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_queue_fast<P>::operator[](unsigned i) const
   {

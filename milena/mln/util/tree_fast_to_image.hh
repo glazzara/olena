@@ -62,6 +62,7 @@ namespace mln
     {
 
       template <typename T, typename I>
+      inline
       void
       tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_)
       {
@@ -94,6 +95,7 @@ namespace mln
 
 
     template <typename T, typename I>
+    inline
     void
     tree_fast_to_image(tree_fast<T>& tree, Image<I>& output_)
     {

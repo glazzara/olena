@@ -88,12 +88,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     max_<T>::max_()
     {
       init();
     }
 
     template <typename T>
+    inline
     void
     max_<T>::init()
     {
@@ -101,6 +103,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     max_<T>::take_as_init(const argument& t)
     {
@@ -108,6 +111,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     max_<T>::take(const argument& t)
     {
@@ -116,6 +120,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     max_<T>::take(const max_<T>& other)
     {
@@ -124,6 +129,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     T
     max_<T>::to_result() const
     {

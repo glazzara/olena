@@ -70,6 +70,7 @@ namespace mln
 #ifndef MLN_INCLUDE_ONLY
 
   template <typename I>
+  inline
   fwd_pixter1d<I>::fwd_pixter1d(I& image) :
     super_(image)
   {
@@ -77,6 +78,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   void
   fwd_pixter1d<I>::next_()
   {

@@ -131,6 +131,7 @@ namespace mln
 
 
     template <typename M, unsigned i, typename C>
+    inline
     line<M,i,C>::line(unsigned length)
       : length_(length)
     {
@@ -147,36 +148,42 @@ namespace mln
     }
 
     template <typename M, unsigned i, typename C>
+    inline
     bool line<M,i,C>::is_centered() const
     {
       return true;
     }
 
     template <typename M, unsigned i, typename C>
+    inline
     bool line<M,i,C>::is_symmetric() const
     {
       return true;
     }
 
     template <typename M, unsigned i, typename C>
+    inline
     unsigned line<M,i,C>::length() const
     {
       return length_;
     }
 
     template <typename M, unsigned i, typename C>
+    inline
     unsigned line<M,i,C>::delta() const
     {
       return length_ / 2;
     }
 
     template <typename M, unsigned i, typename C>
+    inline
     line<M,i,C>& line<M,i,C>::sym()
     {
       return *this;
     }
 
     template <typename M, unsigned i, typename C>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win)
     {
       ostr << "[line: length=" << win.length() << ']';

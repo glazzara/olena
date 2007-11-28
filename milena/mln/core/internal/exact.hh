@@ -102,12 +102,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename E, typename T>
+    inline
     E* exact_run_(Object<E>* t, T*)
     {
       return (E*)(void*)t;
     }
 
     template <typename T>
+    inline
     T* exact_run_(void*, T* t)
     {
       return t;

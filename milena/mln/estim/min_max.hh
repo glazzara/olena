@@ -57,6 +57,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     void min_max(const Image<I>& input,
 		 mln_value(I)& min, mln_value(I)& max)
     {

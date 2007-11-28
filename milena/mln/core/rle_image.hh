@@ -119,6 +119,7 @@ namespace mln
     // internal::data_< rle_image<I,S> >
 
     template <typename P, typename T>
+    inline
     data_< rle_image<P,T> >::data_()
     {
     }
@@ -126,11 +127,13 @@ namespace mln
   } // end of namespace mln::internal
 
   template <typename P, typename T>
+  inline
   rle_image<P, T>::rle_image()
   {
   }
 
   template <typename P, typename T>
+  inline
   bool
   rle_image<P, T>::has_data() const
   {
@@ -138,6 +141,7 @@ namespace mln
   }
 
   template <typename P, typename T>
+  inline
   const typename rle_image<P, T>::vset&
   rle_image<P, T>::values() const
   {
@@ -145,6 +149,7 @@ namespace mln
   }
 
   template <typename P, typename T>
+  inline
   void
   rle_image<P, T>::insert(const P& p, unsigned len, T value)
   {
@@ -155,6 +160,7 @@ namespace mln
   }
 
   template <typename P, typename T>
+  inline
   typename rle_image<P, T>::rvalue
   rle_image<P, T>::operator() (const typename rle_image<P, T>::psite& site)
     const
@@ -165,6 +171,7 @@ namespace mln
   }
 
   template <typename P, typename T>
+  inline
   typename rle_image<P, T>::lvalue
   rle_image<P, T>::operator() (const typename rle_image<P, T>::psite& site)
   {
@@ -174,6 +181,7 @@ namespace mln
   }
 
   template <typename P, typename T>
+  inline
   const typename rle_image<P, T>::pset&
   rle_image<P, T>::domain() const
   {

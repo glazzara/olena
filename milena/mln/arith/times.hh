@@ -136,6 +136,7 @@ namespace mln
 
 
   template <typename L, typename R>
+  inline
   mln_trait_op_times(L,R)
   operator*(const Image<L>& lhs, const Image<R>& rhs)
   {
@@ -147,6 +148,7 @@ namespace mln
   }
 
   template <typename L, typename R>
+  inline
   L&
   operator*=(Image<L>& lhs, const Image<R>& rhs)
   {
@@ -157,6 +159,7 @@ namespace mln
 
 
   template <typename I, typename S>
+  inline
   mln_trait_op_times(I,S)
   operator*(const Image<I>& ima, const value::Scalar<S>& s)
   {
@@ -168,6 +171,7 @@ namespace mln
   }
 
   template <typename I, typename S>
+  inline
   I&
   operator*=(Image<I>& ima, const value::Scalar<S>& s)
   {
@@ -188,6 +192,7 @@ namespace mln
       {
 
 	template <typename L, typename R, typename O>
+	inline
 	void times_(const L& lhs, const R& rhs, O& output)
 	{
 	  trace::entering("arith::impl::generic::times_");
@@ -200,6 +205,7 @@ namespace mln
 	}
 
 	template <typename L, typename R>
+	inline
 	void times_inplace_(L& lhs, const R& rhs)
 	{
 	  trace::entering("arith::impl::generic::times_inplace_");
@@ -219,6 +225,7 @@ namespace mln
     // Facades.
 
     template <typename L, typename R, typename O>
+    inline
     void times(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output)
     {
       trace::entering("arith::times");
@@ -233,6 +240,7 @@ namespace mln
     }
 
     template <typename I, typename V, typename O>
+    inline
     void times_cst(const Image<I>& input, const V& val, Image<O>& output)
     {
       trace::entering("arith::times_cst");
@@ -245,6 +253,7 @@ namespace mln
     }
 
     template <typename L, typename R>
+    inline
     void times_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("arith::times_inplace");
@@ -257,6 +266,7 @@ namespace mln
     }
 
     template <typename I, typename V>
+    inline
     void times_cst_inplace(Image<I>& input, const V& val)
     {
       trace::entering("arith::times_cst_inplace");

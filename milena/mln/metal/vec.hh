@@ -330,17 +330,20 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n, typename T>
+    inline
     vec<n,T>::vec()
     {
     }
 
     template <unsigned n, typename T>
+    inline
     vec<n,T>::vec(const literal::zero_t&)
     {
       this->set_all(0);
     }
 
     template <unsigned n, typename T>
+    inline
     vec<n,T>&
     vec<n,T>::operator=(const literal::zero_t&)
     {
@@ -349,6 +352,7 @@ namespace mln
     }
 
     template <unsigned n, typename T>
+    inline
     vec<n,T>::vec(const vec<n,T>& rhs)
       : super_()
     {
@@ -358,6 +362,7 @@ namespace mln
 
     template <unsigned n, typename T>
     template <typename U>
+    inline
     vec<n,T>::vec(const vec<n, U>& rhs)
       : super_()
     {
@@ -367,6 +372,7 @@ namespace mln
 
     template <unsigned n, typename T>
     template <typename U>
+    inline
     vec<n,T>& vec<n,T>::operator=(const vec<n, U>& rhs)
     {
       for (unsigned i = 0; i < n; ++i)
@@ -375,6 +381,7 @@ namespace mln
     }
 
     template <unsigned n, typename T>
+    inline
     const T& vec<n,T>::operator[](unsigned i) const
     {
       mln_precondition(i < dim);
@@ -382,6 +389,7 @@ namespace mln
     }
 
     template <unsigned n, typename T>
+    inline
     T& vec<n,T>::operator[](unsigned i)
     {
       mln_precondition(i < dim);
@@ -389,6 +397,7 @@ namespace mln
     }
 
     template <unsigned n, typename T>
+    inline
     void vec<n,T>::set_all(const T& val)
     {
       for (unsigned i = 0; i < n; ++i)
@@ -396,12 +405,14 @@ namespace mln
     }
 
     template <unsigned n, typename T>
+    inline
     unsigned vec<n,T>::size() const
     {
       return n;
     }
 
     template <unsigned n, typename T>
+    inline
     const vec<n, T>& vec<n, T>::normalize()
     {
       float n_l2 = 0;
@@ -415,6 +426,7 @@ namespace mln
 
     template <unsigned n, typename T>
     template <typename F>
+    inline
     vec<n, T>::vec(const Function_i2v<F>& f_)
     {
       mlc_converts_to(mln_result(F), T)::check();
@@ -435,6 +447,7 @@ namespace mln
 
 
     template <unsigned n, typename T, typename U>
+    inline
     bool operator==(const vec<n,T>& lhs, const vec<n,U>& rhs)
     {
       for (unsigned i = 0; i < n; ++i)
@@ -445,6 +458,7 @@ namespace mln
 
 
     template <unsigned n, typename T, typename U>
+    inline
     vec<n, mln_trait_op_plus(T,U)>
     operator+(const vec<n,T>& lhs, const vec<n,U>& rhs)
     {
@@ -455,6 +469,7 @@ namespace mln
     }
 
     template <unsigned n, typename T, typename U>
+    inline
     vec<n, mln_trait_op_minus(T,U)>
     operator-(const vec<n,T>& lhs, const vec<n,U>& rhs)
     {
@@ -465,6 +480,7 @@ namespace mln
     }
 
     template <unsigned n, typename T, typename U>
+    inline
     mln_sum_x(T,U)
     operator*(const vec<n,T>& lhs, const vec<n,U>& rhs)
     {
@@ -475,6 +491,7 @@ namespace mln
     }
 
     template <unsigned n, typename T, typename S>
+    inline
     vec<n, mln_trait_op_times(T, S)>
     operator*(const vec<n,T>& lhs, const mln::value::scalar_<S>& s)
     {
@@ -495,6 +512,7 @@ namespace mln
     }
 
     template <unsigned n, typename T, typename S>
+    inline
     vec<n, mln_trait_op_div(T, S)>
     operator/(const vec<n,T>& lhs, const mln::value::scalar_<S>& s)
     {
@@ -507,6 +525,7 @@ namespace mln
 
 
     template <unsigned n, typename T>
+    inline
     std::ostream&
     operator<<(std::ostream& ostr, const vec<n,T>& v)
     {
@@ -519,6 +538,7 @@ namespace mln
     // vprod
 
     template <typename T, typename U>
+    inline
     vec<3, mln_trait_op_times(T,U)> // FIXME: typename binary_arith_trait<T, U>::ret>
     vprod(const vec<3, T>& lhs, const vec<3, U>& rhs)
     {

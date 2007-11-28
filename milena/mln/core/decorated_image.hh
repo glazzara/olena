@@ -133,6 +133,7 @@ namespace mln
     // internal::data_< decorated_image<I,S> >
 
     template <typename I, typename D>
+    inline
     data_< decorated_image<I,D> >::data_(I& ima, const D& deco)
       : ima_(ima),
 	deco_(deco)
@@ -144,17 +145,20 @@ namespace mln
   // decorated_image<I,D>
 
   template <typename I, typename D>
+  inline
   decorated_image<I,D>::decorated_image()
   {
   }
 
   template <typename I, typename D>
+  inline
   decorated_image<I,D>::decorated_image(I& ima, const D& deco)
   {
     this->data_ = new internal::data_< decorated_image<I,D> >(ima, deco);
   }
 
   template <typename I, typename D>
+  inline
   decorated_image<I,D>::~decorated_image()
   {
     void (D::*mr)(const I&, const mln_psite(I)&) const = & D::reading;
@@ -168,6 +172,7 @@ namespace mln
   {
 
     template <typename I, typename E>
+    inline
     void
     decorated_image_impl_<I,E>::write_(const mln_psite(I)& p, const mln_value(I)& v)
     {
@@ -179,6 +184,7 @@ namespace mln
   } // end of namespace mln::internal
 
   template <typename I, typename D>
+  inline
   mln_value(I)
     decorated_image<I,D>::read_(const mln_psite(I)& p) const
   {
@@ -187,6 +193,7 @@ namespace mln
   }
 
   template <typename I, typename D>
+  inline
   decorated_image<I,D>::operator decorated_image<const I, D>() const
   {
     decorated_image<const I, D> tmp(this->data_->ima_, this->data_->deco_);
@@ -195,6 +202,7 @@ namespace mln
 
 
   template <typename I, typename D>
+  inline
   const D&
   decorated_image<I,D>::decoration() const
   {
@@ -202,6 +210,7 @@ namespace mln
   }
 
   template <typename I, typename D>
+  inline
   D&
   decorated_image<I,D>::decoration()
   {
@@ -211,6 +220,7 @@ namespace mln
   // decorate
 
   template <typename I, typename D>
+  inline
   decorated_image<I, D> decorate(Image<I>& ima,
 				 const D& decoration)
   {
@@ -219,6 +229,7 @@ namespace mln
   }
 
   template <typename I, typename D>
+  inline
   decorated_image<const I, D> decorate(const Image<I>& ima,
 				       const D& decoration)
   {

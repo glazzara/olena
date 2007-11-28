@@ -80,6 +80,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Meta_Accumulator<E>::Meta_Accumulator()
   {
     // FIXME: Check "with" on E.

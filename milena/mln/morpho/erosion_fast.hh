@@ -96,6 +96,7 @@ namespace mln
 
 	// ctor
 
+	inline
 	erosion_fast_t(const I& input_, const W& win_, O& output_)
 	  :
 	  // i/o
@@ -119,6 +120,7 @@ namespace mln
 
 	// parts
 
+	inline
 	void init()
 	{
 	  min.init();
@@ -127,6 +129,7 @@ namespace mln
 	    min.take(input(q));
 	}
 
+	inline
 	void down()
 	{
 	  for_all(q_dm) if (input.has(q_dm))
@@ -136,6 +139,7 @@ namespace mln
 	  output(p) = min.to_result();
 	}
 
+	inline
 	void fwd()
 	{
 	  for_all(q_fm) if (input.has(q_fm))
@@ -145,6 +149,7 @@ namespace mln
 	  output(p) = min.to_result();
 	}
 
+	inline
 	void bkd()
 	{
 	  for_all(q_bm) if (input.has(q_bm))
@@ -158,6 +163,7 @@ namespace mln
 
 
       template <typename I, typename W, typename O>
+      inline
       void erosion_fast_(const Image<I>& input, const Window<W>& win, O& output)
       {
 	// FIXME: resize border!
@@ -171,6 +177,7 @@ namespace mln
     // Facades.
 
     template <typename I, typename W, typename O>
+    inline
     void erosion_fast(const Image<I>& input, const Window<W>& win,
 		      Image<O>& output)
     {

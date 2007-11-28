@@ -59,6 +59,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+      inline
       bool
       chess_t::operator()(const point2d& p) const
       {

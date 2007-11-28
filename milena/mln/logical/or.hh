@@ -83,6 +83,7 @@ namespace mln
       namespace generic
       {
 	template <typename L, typename R, typename O>
+	inline
 	void or__(const L& lhs, const R& rhs, O& output)
 	{
 	  trace::entering("logical::impl::generic::or__");
@@ -101,6 +102,7 @@ namespace mln
     // Facades.
 
     template <typename L, typename R>
+    inline
     mln_concrete(L) or_(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::or_");
@@ -117,6 +119,7 @@ namespace mln
     }
 
     template <typename L, typename R>
+    inline
     void or_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::or_inplace");

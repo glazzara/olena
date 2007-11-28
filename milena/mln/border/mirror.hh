@@ -68,12 +68,14 @@ namespace mln
     {
 
       template <typename I>
+      inline
       void mirror_1d_(const I& ima)
       {
 	mln::internal::fixme();
       }
 
       template <typename I>
+      inline
       void mirror_2d_(const I& ima)
       {
 	trace::entering("border::impl::mirror_2d_");
@@ -136,6 +138,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       void mirror_3d_(const I& ima)
       {
 	mln::internal::fixme();
@@ -146,6 +149,7 @@ namespace mln
 
 
     template <typename I>
+    inline
     void mirror(const Image<I>& ima_)
     {
       trace::entering("border::mirror");

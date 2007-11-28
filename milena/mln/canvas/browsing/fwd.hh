@@ -85,6 +85,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename F>
+      inline
       void
       fwd_t::operator()(F& f) const
       {

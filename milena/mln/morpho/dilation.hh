@@ -64,6 +64,7 @@ namespace mln
       // On function.
 
       template <typename I, typename W, typename O>
+      inline
       void dilation_on_function(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
       {
 	const I& input = exact(input_);
@@ -86,6 +87,7 @@ namespace mln
       // On set.
 
       template <typename I, typename W, typename O>
+      inline
       void dilation_on_set(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
       {
 	const I& input = exact(input_);
@@ -116,6 +118,7 @@ namespace mln
       // Stage 2: dispatch w.r.t. the value kind.
 
       template <typename I, typename W, typename O>
+      inline
       void dilation_wrt_value(trait::image::kind::logic, // binary => morphology on sets
 			      const Image<I>& input, const Window<W>& win, Image<O>& output)
       {
@@ -123,6 +126,7 @@ namespace mln
       }
 
       template <typename K, typename I, typename W, typename O>
+      inline
       void dilation_wrt_value(K, // otherwise => morphology on functions
 			      const Image<I>& input, const Window<W>& win, Image<O>& output)
       {
@@ -136,6 +140,7 @@ namespace mln
       //   V
 
       template <typename I, typename W, typename O>
+      inline
       void dilation_wrt_win(const Image<I>& input, const Window<W>& win, Image<O>& output)
       {
 	dilation_wrt_value(mln_trait_image_kind(I)(), exact(input), exact(win), output);
@@ -146,6 +151,7 @@ namespace mln
 #  ifdef MLN_CORE_WIN_RECTANGLE2D_HH
 
       template <typename I, typename O>
+      inline
       void dilation_wrt_win(const Image<I>& input, const win::rectangle2d& win, Image<O>& output)
       {
 	O temp(exact(output).domain());

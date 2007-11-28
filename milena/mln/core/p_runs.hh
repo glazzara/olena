@@ -102,12 +102,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
   
   template <typename P>
+  inline
   p_runs_<P>::p_runs_() :
     npoints_(0)
   {
   }
   
   template <typename P>
+  inline
   bool
   p_runs_<P>::has(const internal::run_psite<P>& p) const
   {
@@ -120,6 +122,7 @@ namespace mln
   }
   
   template <typename P>
+  inline
   const box_<P>&
   p_runs_<P>::bbox() const
   {
@@ -127,6 +130,7 @@ namespace mln
   }
   
   template <typename P>
+  inline
   typename std::size_t
   p_runs_<P>::npoints() const
   {
@@ -134,6 +138,7 @@ namespace mln
   }
   
   template <typename P>
+  inline
   void
   p_runs_<P>::insert(const p_run<P>& pr)
   {
@@ -174,6 +179,7 @@ namespace mln
   }
   
   template <typename P>
+  inline
   unsigned
   p_runs_<P>::range_len_(const P& p) const
   {
@@ -190,6 +196,7 @@ namespace mln
   }
   
   template <typename P>
+  inline
   const typename p_runs_<P>::container&
   p_runs_<P>::con() const
   {

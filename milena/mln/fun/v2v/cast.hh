@@ -62,6 +62,7 @@ namespace mln
 
       template <typename V>
       template <typename W>
+      inline
       V
       cast<V>::operator()(const W& w) const
       {

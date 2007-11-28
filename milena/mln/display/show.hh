@@ -70,6 +70,7 @@ namespace mln
     {
 
       template <typename I>
+      inline
       bool
       check_saved(const Image<I>& input_)
       {
@@ -84,6 +85,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       void
       show(const Image<I>& input_, std::string cmd, int time)
       {
@@ -113,6 +115,7 @@ namespace mln
 
     /// Facade.
     template <typename I>
+    inline
     void
     show(const Image<I>& input_, std::string cmd = "display", int time = 0)
     {

@@ -110,6 +110,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V, typename C, typename N, typename E>
+      inline
       V
       value_like_<V,C,N,E>::to_equiv() const
       {
@@ -117,6 +118,7 @@ namespace mln
       }
 
       template <typename V, typename C, typename N, typename E>
+      inline
       const C&
       value_like_<V,C,N,E>::to_enc() const
       {
@@ -124,6 +126,7 @@ namespace mln
       }
 
       template <typename V, typename C, typename N, typename E>
+      inline
       N
       value_like_<V,C,N,E>::to_interop() const
       {
@@ -131,6 +134,7 @@ namespace mln
       }
 
       template <typename V, typename C, typename N, typename E>
+      inline
       bool operator==(const value_like_<V,C,N,E>& lhs,
 		      const value_like_<V,C,N,E>& rhs)
       {
@@ -138,6 +142,7 @@ namespace mln
       }
 
       template <typename V, typename C, typename N, typename E>
+      inline
       bool operator<(const value_like_<V,C,N,E>& lhs,
 		     const value_like_<V,C,N,E>& rhs)
       {

@@ -282,12 +282,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     tree<T>::tree()
       : root_ (0)
     {
     }
 
     template <typename T>
+    inline
     tree<T>::tree(node<T>* root)
       : root_ (root)
     {
@@ -295,6 +297,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     node<T>*
     tree<T>::root()
     {
@@ -302,6 +305,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     branch<T>
     tree<T>::main_branch()
     {
@@ -309,6 +313,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     tree<T>::add_tree_up(T& elt)
     {
@@ -319,6 +324,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     tree<T>::add_tree_down(T& elt)
     {
@@ -328,6 +334,7 @@ namespace mln
 
 
     template <typename T>
+    inline
     bool
     tree<T>::check_consistency()
     {
@@ -335,12 +342,14 @@ namespace mln
     }
 
     template <typename T>
+    inline
     node<T>::node()
       : parent_ (0)
     {
     }
 
     template <typename T>
+    inline
     node<T>::node(T elt)
       : elt_ (elt),
 	parent_ (0)
@@ -348,6 +357,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     const T&
     node<T>::elt() const
     {
@@ -355,6 +365,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     T&
     node<T>::elt()
     {
@@ -363,6 +374,7 @@ namespace mln
 
 
     template <typename T>
+    inline
     std::vector< node<T>* >&
     node<T>::children()
     {
@@ -370,6 +382,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     const std::vector< node<T>* >&
     node<T>::children() const
     {
@@ -377,6 +390,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     node<T>*
     node<T>::add_child(T elt)
     {
@@ -389,6 +403,7 @@ namespace mln
 
 
     template <typename T>
+    inline
     node<T>*
     node<T>::add_child(node<T>* node)
     {
@@ -408,6 +423,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     node<T>*
     node<T>::delete_node()
     {
@@ -429,6 +445,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     node<T>::print(std::ostream& ostr, int level)
     {
@@ -446,6 +463,7 @@ namespace mln
 
 
     template <typename T>
+    inline
     void
     node<T>::set_parent(node<T>* parent)
     {
@@ -455,6 +473,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     node<T>*
     node<T>::parent()
     {
@@ -462,6 +481,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     int
     node<T>::search_rec(node<T>** res, T& elt)
     {
@@ -483,6 +503,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     node<T>*
     node<T>::search(T& elt)
     {
@@ -494,6 +515,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     bool
     node<T>::check_consistency()
     {
@@ -512,6 +534,7 @@ namespace mln
 
     // Branch methods
     template <typename T>
+    inline
     branch<T>::branch(util::tree<T>& tree,
 		      util::node<T>& apex)
       : tree_(tree),
@@ -521,6 +544,7 @@ namespace mln
 
 
     template <typename T>
+    inline
     util::node<T>&
     branch<T>::apex()
     {
@@ -528,6 +552,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     util::tree<T>&
     branch<T>::tree()
     {

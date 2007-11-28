@@ -75,12 +75,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V, typename E>
+      inline
       x2x_linear_impl_<V,E>::x2x_linear_impl_()
       {
       }
 
 
       template <typename V, typename E>
+      inline
       const typename x2x_linear_impl_<V,E>::matrix&
       x2x_linear_impl_<V,E>::mat() const
       {

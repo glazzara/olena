@@ -71,6 +71,7 @@ namespace mln
     {
 
       template <typename Pd, typename Ps>
+      inline
       void memcpy__(Pd& dest, const Ps& src, std::size_t n)
       {
 	trace::entering("level::impl::memcpy__");
@@ -109,6 +110,7 @@ namespace mln
     }
 
     template <typename Pd, typename Ps>
+    inline
     void memcpy_(Generalized_Pixel<Pd>& dest_, const Generalized_Pixel<Ps>& src_,
 		 std::size_t n)
     {

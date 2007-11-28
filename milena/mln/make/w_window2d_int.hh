@@ -58,6 +58,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned M>
+    inline
     mln::w_window2d_int
     w_window2d_int(int (&weights)[M])
     {

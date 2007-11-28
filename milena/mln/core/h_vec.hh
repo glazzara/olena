@@ -107,17 +107,20 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <unsigned d, typename C>
+  inline
   h_vec<d,C>::h_vec()
   {
   }
 
   template <unsigned d, typename C>
+  inline
   h_vec<d,C>::h_vec(const metal::vec<d+1, C>& other)
     : metal::vec<d+1, C>(other)
   {
   }
 
   template <unsigned d, typename C>
+  inline
   h_vec<d,C>& h_vec<d,C>::operator=(const metal::vec<d+1, C>& rhs)
   {
     if (& rhs == this)
@@ -131,6 +134,7 @@ namespace mln
 
     // Immersion of a vector in its homogeneous space.
     template <unsigned n, typename T>
+    inline
     h_vec<n, T> vec<n,T>::to_h_vec() const
     {
       h_vec<n, T> tmp;
@@ -144,6 +148,7 @@ namespace mln
 
 
   template <unsigned d, typename C>
+  inline
   metal::vec<d,C> h_vec<d,C>::to_vec() const
   {
     const C w = this->data_[d];

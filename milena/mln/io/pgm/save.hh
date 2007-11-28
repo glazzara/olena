@@ -75,6 +75,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
+      inline
       void save(const Image<I>& ima, const std::string& filename)
       {
 	// FIXME : this is to restrictive. Check if I is compatible with PGM.

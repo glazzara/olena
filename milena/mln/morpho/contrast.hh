@@ -55,6 +55,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename W>
+    inline
     mln_concrete(I) contrast(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::contrast");

@@ -60,6 +60,7 @@ namespace mln
       template <typename T1, typename N1,
 		typename T2, typename N2,
 		typename O>
+      inline
       ternary_<T1, N1,
 	       ternary_<T2, N2, O> >
       elifs(const Function_p2b<T1>& f_if_1, const Function_p2v<N1>& f_then_1,

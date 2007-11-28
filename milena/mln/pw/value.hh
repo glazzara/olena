@@ -72,12 +72,14 @@ namespace mln
     // pw::value_<I>
 
     template <typename I>
+    inline
     value_<I>::value_(const I& ima)
       : ima_(ima)
     {
     }
 
     template <typename I>
+    inline
     mln_rvalue(I)
     value_<I>::operator()(const mln_psite(I)& p) const
     {
@@ -88,6 +90,7 @@ namespace mln
     // pw::value(ima)
      
     template <typename I>
+    inline
     value_<I>
     value(const Image<I>& ima)
     {

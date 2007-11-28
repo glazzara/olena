@@ -170,11 +170,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S, typename E>
+    inline
     image_base_<S,E>::image_base_()
     {
     }
 
     template <typename S, typename E>
+    inline
     image_base_<S,E>::image_base_(const image_base_& rhs)
       : image_checked_<E>()
     {
@@ -183,6 +185,7 @@ namespace mln
     }
 
     template <typename S, typename E>
+    inline
     image_base_<S,E>&
     image_base_<S,E>::operator=(const image_base_<S,E>& rhs)
     {
@@ -194,6 +197,7 @@ namespace mln
     }
 
     template <typename S, typename E>
+    inline
     bool
     image_base_<S,E>::has_data() const
     {
@@ -201,6 +205,7 @@ namespace mln
     }
 
     template <typename S, typename E>
+    inline
     bool
     image_base_<S,E>::has(const psite& p) const
     {
@@ -209,6 +214,7 @@ namespace mln
     }
 
     template <typename S, typename E>
+    inline
     bool
     image_base_<S,E>::owns_(const psite& p) const
     {
@@ -217,6 +223,7 @@ namespace mln
     }
 
     template <typename S, typename E>
+    inline
     const box_<mln_point(S)>&
     image_base_<S,E>::bbox() const
     {
@@ -225,6 +232,7 @@ namespace mln
     }
 
     template <typename S, typename E>
+    inline
     std::size_t
     image_base_<S,E>::npoints() const
     {
@@ -233,6 +241,7 @@ namespace mln
     }
 
     template <typename S, typename E>
+    inline
     void
     image_base_<S,E>::destroy()
     {

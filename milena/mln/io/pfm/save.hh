@@ -68,6 +68,7 @@ namespace mln
       {
 
 	template <typename I>
+	inline
 	void save_header_(const I& ima, const std::string& filename,
 			  std::ofstream& file)
 	{
@@ -76,6 +77,7 @@ namespace mln
 	}
 
 	template <typename I>
+	inline
 	void save_(const Image<I>& ima_, const std::string& filename)
 	{
 	  const I& ima = exact(ima_);
@@ -101,6 +103,7 @@ namespace mln
       } // end of  namespace mln::io::impl
 
       template <typename I>
+      inline
       void save(const Image<I>& ima, const std::string& filename)
       {
 	mln::metal::equal<mln_value(I), float >::check();

@@ -95,6 +95,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  inline
   const clock_neighb2d cc4(dpoint2d& dp)
   {
     static bool flower = true;
@@ -123,6 +124,7 @@ namespace mln
   }
 
 
+  inline
   const clock_neighb2d cc8(dpoint2d& dp)
   {
 //     static bool flower = true;

@@ -67,6 +67,7 @@ namespace mln
   // exact
 
   template <typename T>
+  inline
   typename internal::exact_<T>::ret*
   exact(T* ptr)
   {
@@ -74,6 +75,7 @@ namespace mln
   }
 
   template <typename T>
+  inline
   typename internal::exact_<T>::ret&
   exact(T& ref)
   {

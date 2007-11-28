@@ -56,6 +56,7 @@ namespace mln
     {
 
       template <typename S>
+      inline
       const S&
       cast_(const void*, const S& src)
       {
@@ -63,6 +64,7 @@ namespace mln
       }
 
       template <typename O, typename S>
+      inline
       const S&
       cast_(const Object<O>*, const S& src)
       {
@@ -70,6 +72,7 @@ namespace mln
       }
 
       template <typename V, typename S>
+      inline
       mln_value_equiv(S)
       cast_(const Value<V>*, const S& src)
       {
@@ -80,6 +83,7 @@ namespace mln
 
 
     template <typename Dest, typename Src>
+    inline
     Dest cast(const Src& src)
     {
       // FIXME: Add static_cast<Dest>?

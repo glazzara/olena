@@ -66,6 +66,7 @@ namespace mln
     {
 
       template<typename T>
+      inline
       void
       tree_to_fast_(node<T>* input, tree_fast<T>& tree, unsigned p, unsigned& i)
       {
@@ -85,6 +86,7 @@ namespace mln
     /// Facade.
 
     template<typename T>
+    inline
     tree_fast<T>
     tree_to_fast(tree<T>& input)
     {

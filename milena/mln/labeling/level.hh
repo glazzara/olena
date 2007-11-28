@@ -80,14 +80,18 @@ namespace mln
 	typedef mln_pset(I_) S;
 	const S& s;
 
+ 	inline
  	void init()                            { mln::level::fill(this->output, 0); } // FIXME: use literal::zero
+	inline
 	bool handles(const P& p) const         { return input(p) == val; }
+	inline
 	bool equiv(const P& n, const P&) const { return input(n) == val; }
 
 	// end of requirements
 
 	const mln_value(I_)& val;
 
+	inline
 	level_t(const I_& input, const mln_value(I_)& val, const N_& nbh, O_& output)
 	  : base_<I_,N_,O_>(input, nbh, output),
 	    s(input.domain()),
@@ -98,6 +102,7 @@ namespace mln
       // Routines.
 
       template <typename I, typename N>
+      inline
       mln_ch_value(I, unsigned)
 	level_(trait::image::speed::any, const I& input,
 	       const mln_value(I)& val, const Neighborhood<N>& nbh,
@@ -126,12 +131,16 @@ namespace mln
 	// 	typedef mln_pset(I_) S;
 	// 	const S& s;
 	
+	inline
 	void init()                            { mln::level::fill(this->output, 0); }
+	inline
 	bool handles(unsigned p) const         { return this->input[p] == val; }
+	inline
 	bool equiv(unsigned n, unsigned) const { return this->input[n] == val; }
 	
 	const mln_value(I_)& val;
 	
+	inline
 	level_fast_t(const I_& input, const mln_value(I_)& val, const N_& nbh, O_& output)
 	  : labeling::impl::base_fast_<I_,N_,O_>(input, nbh, output),
 	    // 	    s(input.domain()),
@@ -141,6 +150,7 @@ namespace mln
 
 
       template <typename I, typename N>
+      inline
       mln_ch_value(I, unsigned)
 	level_(trait::image::speed::fastest, const I& input,
 	       const mln_value(I)& val, const Neighborhood<N>& nbh,
@@ -169,6 +179,7 @@ namespace mln
     // Facade.
 
     template <typename I, typename N>
+    inline
     mln_ch_value(I, unsigned)
       level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
 	    unsigned& nlabels)

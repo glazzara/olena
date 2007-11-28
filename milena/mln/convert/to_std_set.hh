@@ -57,6 +57,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename W>
+    inline
     std::set<mln_dpoint(W)> to_std_set(const Window<W>& win)
     {
       typedef mln_dpoint(W) D;
@@ -69,6 +70,7 @@ namespace mln
     }
 
     template <typename W>
+    inline
     std::set<mln_point(W)> to_std_set(const Point_Set<W>& setp)
     {
       typedef mln_point(W) P;

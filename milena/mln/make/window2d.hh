@@ -59,6 +59,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned M>
+    inline
     mln::window2d window2d(bool (&values)[M])
     {
       int h = unsigned(std::sqrt(float(M))) / 2;

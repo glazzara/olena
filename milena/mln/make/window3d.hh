@@ -59,6 +59,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned M>
+    inline
     mln::window3d window3d(bool (&values)[M])
     {
       int h = unsigned(std::pow(float(M), 1 / 3)) / 2;

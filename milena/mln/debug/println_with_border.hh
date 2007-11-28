@@ -61,6 +61,7 @@ namespace mln
 
       // Generic version.
       template <typename S, typename I>
+      inline
       void
       println_with_border(const S&, const I& input)
       {
@@ -74,6 +75,7 @@ namespace mln
 
     // Facade.
     template <typename I>
+    inline
     void
     println_with_border(const Image<I>& input)
     {

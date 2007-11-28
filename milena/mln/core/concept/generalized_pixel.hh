@@ -79,6 +79,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Generalized_Pixel<E>::Generalized_Pixel()
   {
     typedef mln_value(E) value;

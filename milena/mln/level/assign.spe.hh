@@ -60,6 +60,7 @@ namespace mln
 
 
       template <typename L, typename R>
+      inline
       void assign_(trait::image::speed::any, L& target,
 		   trait::image::speed::any, const R& data)
       {
@@ -67,6 +68,7 @@ namespace mln
       }
 
       template <typename L, typename R>
+      inline
       void assign_(trait::image::speed::fastest, L& target,
 		   trait::image::speed::fastest, const R& data)
       {

@@ -66,6 +66,7 @@ namespace mln
 	mln_value(O_) nlabels;
 	bool status;
 
+	inline
 	base_(const I_& input, const N_& nbh, O_& output)
 	  : input(input),
 	    nbh(nbh),
@@ -75,11 +76,17 @@ namespace mln
 
 	// Defaults.
 
+	inline
 	bool handles(const P&) const         { return true;  }
+	inline
 	bool labels(const P&) const          { return true;  }
+ 	inline
  	void init()                          {}
+	inline
 	void do_no_union(const P&, const P&) {}
+	inline
 	void init_attr(const P&)             {}
+	inline
 	void merge_attr(const P&, const P&)  {}
       };
 
@@ -100,6 +107,7 @@ namespace mln
 	mln_value(O_) nlabels;
 	bool status;
 
+	inline
 	base_fast_(const I_& input, const N_& nbh, O_& output)
 	  : input(input),
 	    nbh(nbh),
@@ -109,11 +117,17 @@ namespace mln
 
 	// Defaults.
 
+	inline
 	bool handles(unsigned) const         { return true;  }
+	inline
 	bool labels(unsigned) const          { return true;  }
+ 	inline
  	void init()                          {}
+	inline
 	void do_no_union(unsigned, unsigned) {}
+	inline
 	void init_attr(unsigned)             {}
+	inline
 	void merge_attr(unsigned, unsigned)  {}
       };
 

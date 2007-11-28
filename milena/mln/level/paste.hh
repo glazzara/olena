@@ -78,6 +78,7 @@ namespace mln
       {
 
 	template <typename I, typename J>
+	inline
 	void paste_(const I& data, J& destination)
 	{
 	  trace::entering("level::impl::generic::paste_");
@@ -97,6 +98,7 @@ namespace mln
     // Facade.
 
     template <typename I, typename J>
+    inline
     void paste(const Image<I>& data_, Image<J>& destination_)
     {
       trace::entering("level::paste");

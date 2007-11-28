@@ -82,6 +82,7 @@ namespace mln
 
 	// write a rgb value into for uncontiguous datas
 	template <unsigned int n>
+	inline
 	void write_value(std::ofstream& file,
 			 const value::rgb<n>& c)
 	{
@@ -97,6 +98,7 @@ namespace mln
 
 	// write a scalar value into for uncontiguous datas
 	template <typename V>
+	inline
 	void write_value(std::ofstream& file,
 			 const V& v)
 	{
@@ -108,6 +110,7 @@ namespace mln
 
 	// save data for (sizeof(int_u8) != 1) and non fastest images
 	template <typename I>
+	inline
 	void save_data_uncontiguous(std::ofstream& file,
 				    const I& ima)
 	{
@@ -126,6 +129,7 @@ namespace mln
 	// save data when (sizeof(int_u8) == 1) with fastest images
 	// (faster)
 	template <typename I>
+	inline
 	void save_data_contiguous(std::ofstream& file,
 				  const I& ima_)
 	{
@@ -143,6 +147,7 @@ namespace mln
 
 	// caller for fastest images
 	template <typename I>
+	inline
 	void save_data_(std::ofstream& file,
 			trait::image::speed::fastest, const I& ima)
 	{
@@ -154,6 +159,7 @@ namespace mln
 
 	// caller for non fastest images
 	template <typename I>
+	inline
 	void save_data_(std::ofstream& file,
 			trait::image::speed::any, const I& ima)
 	{
@@ -166,6 +172,7 @@ namespace mln
 	// Facades.
 
       template <typename I>
+      inline
       void save(const int type, const Image<I>& ima_, const std::string& filename)
       {
 	const I& ima = exact(ima_);

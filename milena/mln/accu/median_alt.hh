@@ -99,6 +99,7 @@ namespace mln
 
 
     template <typename S>
+    inline
     median_alt<S>::median_alt(const Value_Set<S>& s)
       : h_(s),
 	s_(h_.vset())
@@ -108,6 +109,7 @@ namespace mln
 
 
     template <typename S>
+    inline
     void
     median_alt<S>::take(const argument& t)
     {
@@ -151,6 +153,7 @@ namespace mln
 
 
     template <typename S>
+    inline
     void
     median_alt<S>::untake(const argument& t)
     {
@@ -204,6 +207,7 @@ namespace mln
 
 
     template <typename S>
+    inline
     void
     median_alt<S>::go_minus_()
     {
@@ -221,6 +225,7 @@ namespace mln
 
 
     template <typename S>
+    inline
     void
     median_alt<S>::go_plus_()
     {
@@ -238,6 +243,7 @@ namespace mln
 
 
     template <typename S>
+    inline
     void
     median_alt<S>::init()
     {
@@ -249,6 +255,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     typename median_alt<S>::argument
     median_alt<S>::to_result() const
     {
@@ -256,6 +263,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const median_alt<S>& m)
     {
       m.debug__();

@@ -139,6 +139,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     rectangle2d::rectangle2d(unsigned height, unsigned width)
       : height_(height),
 	width_(width)
@@ -150,41 +151,49 @@ namespace mln
 	  insert(make::dpoint2d(row, col));
     }
 
+    inline
     bool rectangle2d::is_centered() const
     {
       return true;
     }
 
+    inline
     bool rectangle2d::is_symmetric() const
     {
       return true;
     }
 
+    inline
     unsigned rectangle2d::height() const
     {
       return height_;
     }
 
+    inline
     unsigned rectangle2d::width() const
     {
       return width_;
     }
 
+    inline
     unsigned rectangle2d::area() const
     {
       return width_ * height_;
     }
 
+    inline
     unsigned rectangle2d::delta() const
     {
       return width_ > height_ ? width_ / 2 : height_ / 2;
     }
 
+    inline
     rectangle2d& rectangle2d::sym()
     {
       return *this;
     }
 
+    inline
     std::ostream& operator<<(std::ostream& ostr, const rectangle2d& win)
     {
       ostr << "[rectangle2d: width=" << win.width() << ", height=" << win.height() << ']';

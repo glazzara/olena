@@ -69,6 +69,7 @@ namespace mln
     {
 
       template <typename I, typename J>
+      inline
       void equalize_(const I& ima1, const J& ima2, unsigned min_thickness)
       {
 	trace::entering("border::impl::equalize_");
@@ -109,6 +110,7 @@ namespace mln
     // Facade
 
     template <typename I, typename J>
+    inline
     void equalize(const Image<I>& ima1_, const Image<J>& ima2_,
 		  unsigned min_thickness)
     {

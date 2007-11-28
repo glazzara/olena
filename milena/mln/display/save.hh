@@ -69,6 +69,7 @@ namespace mln
     namespace impl
     {
       template <typename I>
+      inline
       void
       save(trait::value::kind::any, const Image<I>& input_)
       {
@@ -92,6 +93,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       void
       save(trait::value::kind::color, const Image<I>& input_)
       {
@@ -117,6 +119,7 @@ namespace mln
 
     /// Facade.
     template <typename I>
+    inline
     void
     save(const Image<I>& input_)
     {

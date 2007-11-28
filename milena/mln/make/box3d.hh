@@ -80,6 +80,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     mln::box3d box3d(unsigned nslis, unsigned nrows, unsigned ncols)
     {
       mln_precondition(nrows != 0 && ncols != 0 && nslis != 0);
@@ -88,6 +89,7 @@ namespace mln
       return tmp;
     }
 
+    inline
     mln::box3d box3d(int min_sli, int max_sli,
 		     int min_row, int max_row,
 		     int min_col, int max_col)

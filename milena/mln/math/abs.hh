@@ -51,12 +51,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     T abs(const T& v)
     {
       return std::abs(v);
     }
 
     template <unsigned n>
+    inline
     value::int_u<n> abs(const value::int_u<n>& v)
     {
       return v;

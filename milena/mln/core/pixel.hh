@@ -70,6 +70,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename I>
+  inline
   pixel<I>::pixel(I& image)
     : super(image)
   {
@@ -77,6 +78,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   pixel<I>::pixel(I& image, const mln_point(I)& p)
     : super(image)
   {
@@ -85,6 +87,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   void
   pixel<I>::change_to(const mln_point(I)& p)
   {
@@ -93,6 +96,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   bool
   pixel<I>::is_valid() const
   {

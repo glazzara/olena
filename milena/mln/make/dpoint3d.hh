@@ -55,6 +55,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     mln::dpoint3d dpoint3d(int sli, int row, int col)
     {
       mln::dpoint3d tmp;

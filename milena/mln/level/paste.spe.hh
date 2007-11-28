@@ -55,6 +55,7 @@ namespace mln
       }
 
       template <typename I, typename J>
+      inline
       void paste_lines_(const I& data, J& destination)
       {
 	trace::entering("level::impl::paste_lines_");
@@ -77,6 +78,7 @@ namespace mln
       // Remember: raw < linear < stored, computed.
 
       template <typename I, typename J>
+      inline
       void paste_(trait::image::data::any, const I& data,
 		  trait::image::data::any, J& destination)
       {
@@ -84,6 +86,7 @@ namespace mln
       }
 
       template <typename I, typename J>
+      inline
       void paste_(trait::image::data::raw, const I& data,
 		  trait::image::data::raw, J& destination)
       {

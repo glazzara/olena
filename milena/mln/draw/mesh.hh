@@ -76,6 +76,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename P>
+    inline
     void
     mesh(Image<I>& ima, const mesh_p<P>& m,
 	 mln_value(I) node_v,
@@ -94,6 +95,7 @@ namespace mln
     }
 
     template <typename I,  typename P, typename V>
+    inline
     void
     mesh(Image<I>& ima, const mesh_image<P, V>& mesh)
     {

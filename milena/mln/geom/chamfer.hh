@@ -77,13 +77,16 @@ namespace mln
 	bool status;
 	unsigned max;
 
+ 	inline
  	void init()                            { initialize(output, exact(input));
 						 level::fill(inplace(output | (input | true).domain()),  0);
 						 level::fill(inplace(output | (input | false).domain()), max); }
+	inline
 	bool handles(const P& p) const         { return input(p) == false; }
 
 	// end of requirements
 
+	inline
 	chamfer_t(const I_& input, const W_& win, unsigned max)
 	  : input (input),
 	    win (win),
@@ -94,6 +97,7 @@ namespace mln
       // Routines.
 
       template <typename I, typename W>
+      inline
       mln_ch_value(I, unsigned)
 	chamfer_(const Image<I>& input_, const W& w_win_,
 		 unsigned max = mln_max(unsigned))

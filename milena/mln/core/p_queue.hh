@@ -135,6 +135,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
+  inline
   p_queue<P>::p_queue()
   {
     vect_needs_update_ = false;
@@ -142,6 +143,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_queue<P>::vect_update_() const
   {
@@ -153,6 +155,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_queue<P>::bb_update_() const
   {
@@ -163,6 +166,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   p_queue<P>::has(const P& p) const
   {
@@ -173,6 +177,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   p_queue<P>::is_empty() const
   {
@@ -180,6 +185,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   std::size_t
   p_queue<P>::npoints() const
   {
@@ -187,6 +193,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const box_<P>&
   p_queue<P>::bbox() const
   {
@@ -197,6 +204,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   p_queue<P>&
   p_queue<P>::push_force(const P& p)
   {
@@ -210,6 +218,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   p_queue<P>&
   p_queue<P>::push(const P& p)
   {
@@ -219,6 +228,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_queue<P>::pop()
   {
@@ -231,6 +241,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_queue<P>::front() const
   {
@@ -239,6 +250,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_queue<P>::pop_front()
   {
@@ -249,6 +261,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_queue<P>::clear()
   {
@@ -259,6 +272,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const std::vector<P>&
   p_queue<P>::vect() const
   {
@@ -268,6 +282,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_queue<P>::operator[](unsigned i) const
   {

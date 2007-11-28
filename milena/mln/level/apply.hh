@@ -73,6 +73,7 @@ namespace mln
       {
 
 	template <typename I, typename F>
+	inline
 	void apply_(I& input, const F& f)
 	{
 	  trace::entering("level::impl::generic::apply_");
@@ -92,6 +93,7 @@ namespace mln
     // Facade.
 
     template <typename I, typename F>
+    inline
     void apply(Image<I>& input, const Function_v2v<F>& f)
     {
       trace::entering("level::apply");

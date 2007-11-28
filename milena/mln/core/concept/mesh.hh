@@ -61,6 +61,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Mesh<E>::Mesh()
   {
     // FIXME: Check for typedefs.

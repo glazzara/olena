@@ -53,6 +53,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n, unsigned m, unsigned N, typename T>
+    inline
     metal::mat<n,m,T> mat(const T tab[N])
     {
       mln_precondition(n * m == N);

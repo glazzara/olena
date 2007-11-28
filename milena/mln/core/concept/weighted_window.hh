@@ -110,6 +110,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Weighted_Window<E>::Weighted_Window()
   {
     typedef  mln_point(E)  point;

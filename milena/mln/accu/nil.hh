@@ -81,35 +81,41 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     nil_<T>::nil_()
     {
     }
 
     template <typename T>
+    inline
     void
     nil_<T>::init()
     {
     }
 
     template <typename T>
+    inline
     void
     nil_<T>::take(const argument&)
     {
     }
 
     template <typename T>
+    inline
     void
     nil_<T>::take_as_init(const argument&)
     {
     }
 
     template <typename T>
+    inline
     void
     nil_<T>::take(const nil_<T>&)
     {
     }
 
     template <typename T>
+    inline
     util::ignore
     nil_<T>::to_result() const
     {

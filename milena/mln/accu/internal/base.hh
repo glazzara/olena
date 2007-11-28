@@ -71,11 +71,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename R, typename E>
+      inline
       base_<R,E>::base_()
       {
       }
 
       template <typename R, typename E>
+      inline
       base_<R,E>::operator typename base_<R,E>::result_ () const
       {
 	return exact(this)->to_result();

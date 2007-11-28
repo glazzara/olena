@@ -79,12 +79,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V>
+      inline
       image2d<V> load(const std::string& filename)
       {
 	return io::pnm::load<V>(PPM, filename);
       }
 
       template <typename I>
+      inline
       void load(Image<I>& ima,
 		const std::string& filename)
       {

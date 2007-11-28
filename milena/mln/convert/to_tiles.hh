@@ -52,6 +52,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     I
     to_tiles(std::vector<I>& v_ima, float ratio)
     {

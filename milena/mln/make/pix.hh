@@ -56,6 +56,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     mln::util::pix<I> pix(const Image<I>& ima, const mln_psite(I)& p)
     {
       mln::util::pix<I> tmp(ima, p);

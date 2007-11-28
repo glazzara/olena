@@ -82,6 +82,7 @@ namespace mln
     // Versions with point iterator. 
 
     template <typename I>
+    inline
     void
     pmin_pmax(const Point_Iterator<I>& p_, mln_point(I)& pmin, mln_point(I)& pmax)
     {
@@ -103,6 +104,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     std::pair<mln_point(I), mln_point(I)>
     pmin_pmax(const Point_Iterator<I>& p)
     {
@@ -121,6 +123,7 @@ namespace mln
       // General case.
 
       template <typename S>
+      inline
       void
       pmin_pmax_(const Point_Set<S>& s, mln_point(S)& pmin, mln_point(S)& pmax)
       {
@@ -131,6 +134,7 @@ namespace mln
       // Box.
 
       template <typename B>
+      inline
       void
       pmin_pmax_(const Box<B>& b, mln_point(B)& pmin, mln_point(B)& pmax)
       {
@@ -142,6 +146,7 @@ namespace mln
 
 
     template <typename S>
+    inline
     void
     pmin_pmax(const Point_Set<S>& s, mln_point(S)& pmin, mln_point(S)& pmax)
     {
@@ -150,6 +155,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::pair<mln_point(S), mln_point(S)>
     pmin_pmax(const Point_Set<S>& s)
     {

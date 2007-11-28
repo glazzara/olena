@@ -76,6 +76,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename S>
+  inline
   S& operator++(value::Scalar<S>& rhs)
   {
     mlc_converts_to(literal::one_t, S)::check();
@@ -83,6 +84,7 @@ namespace mln
   }
 
   template <typename S>
+  inline
   S& operator--(value::Scalar<S>& rhs)
   {
     mlc_converts_to(literal::one_t, S)::check();

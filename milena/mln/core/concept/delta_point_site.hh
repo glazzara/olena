@@ -130,6 +130,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Delta_Point_Site<E>::Delta_Point_Site()
   {
     int dim = E::dim;
@@ -147,6 +148,7 @@ namespace mln
 
 
   template <typename D>
+  inline
   std::ostream& operator<<(std::ostream& ostr, const Delta_Point_Site<D>& dp_)
   {
     const D& dp = exact(dp_);
@@ -158,6 +160,7 @@ namespace mln
 
 
   template <typename L, typename R>
+  inline
   bool operator==(const Delta_Point_Site<L>& lhs_, const Delta_Point_Site<R>& rhs_)
   {
     mln::metal::bool_<(int(L::dim) == int(R::dim))>::check();
@@ -170,6 +173,7 @@ namespace mln
   }
 
   template <typename L, typename R>
+  inline
   bool operator<(const Delta_Point_Site<L>& lhs_, const Delta_Point_Site<R>& rhs_)
   {
     mln::metal::bool_<(int(L::dim) == int(R::dim))>::check();
@@ -185,6 +189,7 @@ namespace mln
   }
 
   template <typename L, typename R>
+  inline
   mln_dpoint(L) // FIXME: promote!
   operator+(const Delta_Point_Site<L>& lhs_, const Delta_Point_Site<R>& rhs_)
   {
@@ -198,6 +203,7 @@ namespace mln
   }
 
   template <typename L, typename R>
+  inline
   mln_dpoint(L) // FIXME: promote!
   operator-(const Delta_Point_Site<L>& lhs_, const Delta_Point_Site<R>& rhs_)
   {

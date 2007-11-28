@@ -51,6 +51,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     unsigned nslis(const Image<I>& ima)
     {
       mln_precondition(exact(ima).has_data());

@@ -67,6 +67,7 @@ namespace mln
     {
 
       template <typename I, typename W, typename O>
+      inline
       void convolve_(trait::image::speed::any, const I& input,
 		     const Weighted_Window<W>& w_win_,
 		     trait::image::speed::any, O& output)
@@ -86,6 +87,7 @@ namespace mln
       }
 
       template <typename I, typename W, typename O>
+      inline
       void convolve_(trait::image::speed::fastest, const I& input,
 		     const Weighted_Window<W>& w_win_,
 		     trait::image::speed::fastest, O& output)
@@ -116,6 +118,7 @@ namespace mln
     // Facade.
 
     template <typename I, typename W, typename O>
+    inline
     void convolve(const Image<I>& input, const Weighted_Window<W>& w_win,
 		  Image<O>& output)
     {

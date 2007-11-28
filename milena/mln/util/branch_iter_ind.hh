@@ -103,6 +103,7 @@ namespace mln
 
 
     template <typename T>
+    inline
     branch_iter_ind<T>::branch_iter_ind(branch<T> branch)
       : branch_(branch)
     {
@@ -110,6 +111,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     branch_iter_ind<T>::operator node<T>&() const
     {
       mln_assertion(n_);
@@ -117,6 +119,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     util::node<T>&
     branch_iter_ind<T>::operator*()
     {
@@ -125,6 +128,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     unsigned
     branch_iter_ind<T>::deepness() const
     {
@@ -140,6 +144,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     bool
     branch_iter_ind<T>::is_valid() const
     {
@@ -147,6 +152,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     branch_iter_ind<T>::invalidate()
     {
@@ -155,6 +161,7 @@ namespace mln
 
 
     template <typename T>
+    inline
     void
     branch_iter_ind<T>::start()
     {
@@ -164,6 +171,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     branch_iter_ind<T>::next()
     {

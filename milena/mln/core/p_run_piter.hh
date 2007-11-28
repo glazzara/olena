@@ -134,6 +134,7 @@ namespace mln
   // p_run_fwd_piter_<P>
 
   template <typename P>
+  inline
   p_run_fwd_piter_<P>::p_run_fwd_piter_(const p_run<P>& pr)
     : run_(pr)
   {
@@ -141,6 +142,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_run_fwd_piter_<P>::to_point() const
   {
@@ -149,6 +151,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   mln_coord(P)
   p_run_fwd_piter_<P>::operator[](unsigned i) const
   {
@@ -158,6 +161,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   p_run_fwd_piter_<P>::is_valid() const
   {
@@ -165,6 +169,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_run_fwd_piter_<P>::invalidate()
   {
@@ -172,6 +177,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_run_fwd_piter_<P>::start()
   {
@@ -180,6 +186,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_run_fwd_piter_<P>::next_()
   {
@@ -188,6 +195,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   p_run_fwd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());
@@ -198,6 +206,7 @@ namespace mln
   // p_run_bkd_piter_<P>
 
   template <typename P>
+  inline
   p_run_bkd_piter_<P>::p_run_bkd_piter_(const p_run<P>& pr)
     : run_(pr)
   {
@@ -205,6 +214,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_run_bkd_piter_<P>::to_point() const
   {
@@ -213,6 +223,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   mln_coord(P)
   p_run_bkd_piter_<P>::operator[](unsigned i) const
   {
@@ -222,6 +233,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   p_run_bkd_piter_<P>::is_valid() const
   {
@@ -229,6 +241,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_run_bkd_piter_<P>::invalidate()
   {
@@ -236,6 +249,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_run_bkd_piter_<P>::start()
   {
@@ -244,6 +258,7 @@ namespace mln
 }
 
   template <typename P>
+  inline
   void
   p_run_bkd_piter_<P>::next_()
   {
@@ -252,6 +267,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   p_run_bkd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());

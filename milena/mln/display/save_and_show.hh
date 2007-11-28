@@ -65,6 +65,7 @@ namespace mln
     namespace impl
     {
       template <typename I>
+      inline
       void
       save_and_show_(const Image<I>& input,
 		     std::string cmd, int time)
@@ -81,6 +82,7 @@ namespace mln
 
     /// Facade.
     template <typename I>
+    inline
     void
     save_and_show(const Image<I>& input_, std::string cmd = "display", int time = 0)
     {

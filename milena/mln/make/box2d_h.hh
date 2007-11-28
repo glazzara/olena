@@ -74,6 +74,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     mln::box2d_h box2d_h(unsigned nrows, unsigned ncols)
     {
       mln_precondition(nrows != 0 && ncols != 0);
@@ -82,6 +83,7 @@ namespace mln
       return tmp;
     }
 
+    inline
     mln::box2d_h box2d_h(int min_row, int min_col,
 			 int max_row, int max_col)
     {

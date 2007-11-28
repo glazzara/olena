@@ -72,6 +72,7 @@ namespace mln
     {
 
       template <unsigned n, typename C, typename V>
+      inline
       C linfty_(const V& vec)
       {
 	C m = 0;
@@ -87,6 +88,7 @@ namespace mln
       }
 
       template <unsigned n, typename C, typename V>
+      inline
       C linfty_distance_(const V& vec1, const V& vec2)
       {
 	C d = 0;
@@ -109,24 +111,28 @@ namespace mln
     `----------*/
 
     template <unsigned n, typename C>
+    inline
     C linfty(const C (&vec)[n])
     {
       return impl::linfty_<n, C>(vec);
     }
 
     template <unsigned n, typename C>
+    inline
     C linfty(const metal::vec<n,C>& vec)
     {
       return impl::linfty_<n, C>(vec);
     }
 
     template <unsigned n, typename C>
+    inline
     C linfty_distance(const C (&vec1)[n], const C (&vec2)[n])
     {
       return impl::linfty_distance_<n, C>(vec1, vec2);
     }
 
     template <unsigned n, typename C>
+    inline
     C linfty_distance(const metal::vec<n,C>& vec1,
 		      const metal::vec<n,C>& vec2)
     {

@@ -70,16 +70,19 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Browsing<E>::Browsing()
   {
   }
 
   template <typename E>
+  inline
   void Browsing<E>::init()
   {
   }
 
   template <typename E>
+  inline
   void Browsing<E>::final()
   {
   }

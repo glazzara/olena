@@ -75,18 +75,24 @@ namespace mln
 	typedef p_array<P> S;
 	S s;
 
+ 	inline
  	void init()                              { mln::level::fill(this->output, 0);
 	                                           level::fill(attr, true); }
+	inline
 	bool labels(const P& p) const            { return attr(p);  }
+	inline
 	bool equiv(const P& n, const P& p) const { return input(n) == input(p); }
+	inline
 	void do_no_union(const P& n, const P& p) { mln_invariant(input(n) < input(p));
 	                                           attr(p) = false; }
+	inline
 	void merge_attr(const P& r, const P& p)  { attr(p) = attr(p) && attr(r); }
 
 	// end of requirements
 
 	mln_ch_value(O_, bool) attr;
 
+	inline
 	regional_minima_(const I_& input, const N_& nbh, O_& output)
 	  : base_<I_,N_,O_>(input, nbh, output),
 	    s(level::sort_points_increasing(input)),
@@ -101,6 +107,7 @@ namespace mln
     // Facade.
 
     template <typename I, typename N, typename O>
+    inline
     bool regional_minima(const Image<I>& input, const Neighborhood<N>& nbh,
 			 Image<O>& output, unsigned& nlabels)
     {

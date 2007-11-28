@@ -67,6 +67,7 @@ namespace mln
     {
 
       template <typename A, typename I>
+      inline
       void take(const Image<I>& input_, A& a)
       {
 	const I& input = exact(input_);
@@ -83,6 +84,7 @@ namespace mln
     // Facade.
 
     template <typename A, typename I>
+    inline
     void take(const Image<I>& input, Accumulator<A>& a)
     {
       mln_precondition(exact(input).has_data());

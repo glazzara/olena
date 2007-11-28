@@ -127,6 +127,7 @@ namespace mln
 
   template <typename I>
   template <typename Dps, typename Pref>
+  inline
   dpoints_fwd_pixter<I>::dpoints_fwd_pixter(I& image,
 					    const Dps& dps,
 					    const Point_Site<Pref>& p_ref)
@@ -140,6 +141,7 @@ namespace mln
 
   template <typename I>
   template <typename Dps, typename Pref>
+  inline
   dpoints_fwd_pixter<I>::dpoints_fwd_pixter(const Generalized_Pixel<Pref>& pxl_ref_,
 					    const Dps& dps)
     : super_(internal::force_exact<Pref>(pxl_ref_).ima())
@@ -153,6 +155,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   const mln_value(I)&
   dpoints_fwd_pixter<I>::center_val() const
   {
@@ -165,6 +168,7 @@ namespace mln
 
   template <typename I>
   template <typename Dps>
+  inline
   void
   dpoints_fwd_pixter<I>::init_(const Dps& dps)
   {
@@ -179,6 +183,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   void
   dpoints_fwd_pixter<I>::update()
   {
@@ -192,6 +197,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   void
   dpoints_fwd_pixter<I>::start()
   {
@@ -200,6 +206,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   void
   dpoints_fwd_pixter<I>::next_()
   {
@@ -208,6 +215,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   bool
   dpoints_fwd_pixter<I>::is_valid() const
   {
@@ -215,6 +223,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   void
   dpoints_fwd_pixter<I>::invalidate()
   {

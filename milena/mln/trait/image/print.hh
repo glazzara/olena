@@ -62,6 +62,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
+      inline
       void print(std::ostream& ostr)
       {
 	mlc_is_a(I, Image)::check();
@@ -82,6 +83,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       void print(const Image<I>&, std::ostream& ostr)
       {
 	print<I>(ostr);

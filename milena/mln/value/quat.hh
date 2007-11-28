@@ -256,27 +256,32 @@ namespace mln
 
     // Constructors.
 
+    inline
     quat::quat()
     {
     }
 
+    inline
     quat::quat(float s, float x, float y, float z)
     {
       v_[0] = s;
       set_v(x, y, z);
     }
 
+    inline
     quat::quat(float s, const metal::vec<3,float>& v)
     {
       v_[0] = s;
       this->v() = v;
     }
 
+    inline
     quat::quat(const metal::vec<4,float>& v)
     {
       this->v_ = v;
     }
 
+    inline
     quat&
     quat::operator=(const metal::vec<4,float>& v)
     {
@@ -287,11 +292,13 @@ namespace mln
 
     // With literals.
 
+    inline
     quat::quat(const literal::zero_t&)
     {
       v_.set_all(0);
     }
 
+    inline
     quat&
     quat::operator=(const literal::zero_t&)
     {
@@ -299,12 +306,14 @@ namespace mln
       return *this;
     }
 
+    inline
     quat::quat(const literal::one_t&)
     {
       s() = 1;
       v().set_all(0);
     }
 
+    inline
     quat&
     quat::operator=(const literal::one_t&)
     {
@@ -314,24 +323,28 @@ namespace mln
     }
 
 
+    inline
     const metal::vec<4,float>&
     quat::to_vec() const
     {
       return this->v_;
     }
 
+    inline
     float
     quat::s() const
     {
       return this->v_[0];
     }
 
+    inline
     float&
     quat::s()
     {
       return this->v_[0];
     }
 
+    inline
     const metal::vec<3, float>&
     quat::v() const
     {
@@ -339,12 +352,14 @@ namespace mln
       // return make::vec(this->v_[1], this->v_[2], this->v_[3]);
     }
 
+    inline
     metal::vec<3, float>&
     quat::v()
     {
       return *(metal::vec<3, float>*)(void*)(& this->v_[1]);
     }
 
+    inline
     void quat::set_v(float x, float y, float z)
     {
       this->v_[1] = x;
@@ -352,32 +367,38 @@ namespace mln
       this->v_[3] = z;
     }
 
+    inline
     float
     quat::sprod(const quat& rhs) const
     {
       return v_ * rhs.to_vec();
     }
 
+    inline
     bool quat::is_unit() const
     {
       return about_equal(norm::l2(v_), 1.f);
     }
 
+    inline
     bool quat::is_null() const
     {
       return about_equal(norm::l2(v_), 0.f);
     }
 
+    inline
     bool quat::is_pure() const
     {
       return about_equal(v_[0], 0.f);
     }
 
+    inline
     quat quat::conj() const
     {
       return quat(s(), - v());
     }
 
+    inline
     quat quat::inv() const
     {
       assert(! is_null());
@@ -385,6 +406,7 @@ namespace mln
       return conj().to_vec() / (f * f);
     }
 
+    inline
     quat& quat::set_unit()
     {
       v_.normalize();
@@ -392,6 +414,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void quat::set_unit(float theta, const metal::vec<3,T>& uv)
     {
       static const float pi = 3.14159265358979323846;
@@ -410,24 +433,28 @@ namespace mln
     // only for unit quaternions described by theta and uv such as:
     // q = ( cos(theta), sin(theta) * uv )
 
+    inline
     quat::quat(unsigned one, float theta, const metal::vec<3,float>& uv)
     {
       mln_precondition(one == 1);
       set_unit(theta, uv);
     }
 
+    inline
     float quat::theta() const
     {
       mln_precondition(is_unit());
       return acos(s());
     }
 
+    inline
     void quat::set_theta(float theta)
     {
       mln_precondition(is_unit());
       set_unit(theta, uv());
     }
 
+    inline
     metal::vec<3, float> quat::uv() const
     {
       mln_precondition(is_unit());
@@ -435,6 +462,7 @@ namespace mln
       return w.normalize();
     }
 
+    inline
     void quat::set_uv(const metal::vec<3,float>& uv)
     {
       mln_precondition(is_unit());
@@ -444,23 +472,27 @@ namespace mln
 
     // Operators.
 
+    inline
     std::ostream& operator<<(std::ostream& ostr, const quat& q)
     {
       return ostr << q.to_vec();
     }
 
+    inline
     quat operator+(const quat& lhs, const quat& rhs)
     {
       quat tmp(lhs.to_vec() + rhs.to_vec());
       return tmp;
     }
 
+    inline
     quat operator-(const quat& lhs, const quat& rhs)
     {
       quat tmp(lhs.to_vec() - rhs.to_vec());
       return tmp;
     }
 
+    inline
     quat operator*(const quat& lhs, const quat& rhs)
     {
       quat tmp(lhs.s() * rhs.s() - lhs.v() * rhs.v(),
@@ -469,6 +501,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     quat operator*(const quat& lhs, const value::scalar_<S>& rhs)
     {
       mlc_converts_to(S, float)::check();
@@ -477,6 +510,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     quat operator/(const quat& lhs, const value::scalar_<S>& rhs_)
     {
       mlc_converts_to(S, float)::check();
@@ -489,6 +523,7 @@ namespace mln
 
     // overloaded math procs
 
+    inline
     quat log(const quat& q)
     {
       mln_precondition(q.is_unit());
@@ -496,6 +531,7 @@ namespace mln
     }
 
 
+    inline
     quat exp(const quat& q)
     {
       mln_precondition(about_equal(q.s(), 0.f));
@@ -507,6 +543,7 @@ namespace mln
     }
 
 
+    inline
     quat pow(const quat& q, double t)
     {
       mln_precondition(q.is_unit());
@@ -514,6 +551,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     bool about_equal(const T& f, const T& q)
     {
       // FIXME: Use abs!
@@ -522,6 +560,7 @@ namespace mln
       return (q - f) < mln_epsilon(T);
     }
 
+    inline
     bool about_equal(const quat& p, const quat& q)
     {
       return about_equal<float>(norm::l2(p.to_vec() - q.to_vec()), 0);
@@ -529,6 +568,7 @@ namespace mln
 
     // Misc.
 
+    inline
     bool interpol_ok(const quat& p, const quat& q, float h)
     {
       return
@@ -541,6 +581,7 @@ namespace mln
 
     // Linear Quaternion Interpolation.
 
+    inline
     quat lerp(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
@@ -550,6 +591,7 @@ namespace mln
 
     // Spherical Linear Quaternion Interpolation.
 
+    inline
     quat slerp(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
@@ -560,6 +602,7 @@ namespace mln
 	quat((sin((1-h)*omega) * p + sin(h*omega) * q) / sin(omega));
     }
 
+    inline
     quat slerp_2(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
@@ -568,6 +611,7 @@ namespace mln
       return tmp;
     }
 
+    inline
     quat slerp_3(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
@@ -576,6 +620,7 @@ namespace mln
       return tmp;
     }
 
+    inline
     quat slerp_4(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
@@ -584,6 +629,7 @@ namespace mln
       return tmp;
     }
 
+    inline
     quat slerp_5(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));

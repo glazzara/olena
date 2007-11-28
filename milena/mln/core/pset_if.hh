@@ -117,6 +117,7 @@ namespace mln
 
 
   template <typename S, typename F>
+  inline
   pset_if<S, F>
   operator | (const Point_Set<S>& pset, const Function_p2b<F>& f)
   {
@@ -128,6 +129,7 @@ namespace mln
   // pset_if<S,F>
 
   template <typename S, typename F>
+  inline
   bool
   pset_if<S,F>::has(const psite& p) const
   {
@@ -135,6 +137,7 @@ namespace mln
   }
 
   template <typename S, typename F>
+  inline
   const box_<mln_point(S)>&
   pset_if<S,F>::bbox() const
   {
@@ -142,6 +145,7 @@ namespace mln
   }
 
   template <typename S, typename F>
+  inline
   const S&
   pset_if<S,F>::overset() const
   {
@@ -149,6 +153,7 @@ namespace mln
   }
 
   template <typename S, typename F>
+  inline
   bool
   pset_if<S,F>::pred(const psite& p) const
   {
@@ -156,6 +161,7 @@ namespace mln
   }
   
   template <typename S, typename F>
+  inline
   pset_if<S,F>::pset_if(const S& pset, const F& f)
     : pset_(pset),
       f_(f)
@@ -163,11 +169,13 @@ namespace mln
   }
 
   template <typename S, typename F>
+  inline
   pset_if<S,F>::pset_if()
   {
   }
 
   template <typename S, typename F>
+  inline
   const F&
   pset_if<S,F>::predicate() const
   {

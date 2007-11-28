@@ -108,11 +108,13 @@ namespace mln
   {
 
     template <typename I, typename S, typename E>
+    inline
     image_morpher_<I,S,E>::image_morpher_()
     {
     }
 
     template <typename I, typename S, typename E>
+    inline
     mlc_const(I)*
     image_morpher_<I,S,E>::delegatee_() const
     {
@@ -120,6 +122,7 @@ namespace mln
     }
 
     template <typename I, typename S, typename E>
+    inline
     I*
     image_morpher_<I,S,E>::delegatee_()
     {
@@ -127,6 +130,7 @@ namespace mln
     }
 
     template <typename I, typename S, typename E>
+    inline
     image_morpher_<I,S,E>::operator I() const
     {
       mln_precondition(exact(this)->has_data());
@@ -134,6 +138,7 @@ namespace mln
     }
 
     template <typename I, typename S, typename E>
+    inline
     bool
     image_morpher_<I,S,E>::has_data() const
     {
@@ -159,6 +164,7 @@ namespace mln
 
     template <typename Subject, typename T,
 	      typename J>
+    inline
     void init_(Subject s, T& target, const Image<J>& model_)
     {
       // FIXME: Precondition.

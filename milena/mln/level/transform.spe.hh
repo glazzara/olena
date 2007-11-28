@@ -62,6 +62,7 @@ namespace mln
       }
 
       template <typename I, typename F, typename O>
+      inline
       void transform_(mln::trait::image::quant::any, // general case
 		      const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
       {
@@ -70,6 +71,7 @@ namespace mln
 
 
       template <typename I, typename F, typename O>
+      inline
       void transform_(mln::trait::image::quant::low, // low quantization
 		      const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
       {

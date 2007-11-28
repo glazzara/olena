@@ -84,6 +84,7 @@ namespace mln
       {
 
 	template <typename L, typename R, typename O>
+	inline
 	void and__(const L& lhs, const R& rhs, O& output)
 	{
 	  trace::entering("logical::impl::generic::and__");
@@ -103,6 +104,7 @@ namespace mln
     // Facades.
 
     template <typename L, typename R>
+    inline
     mln_concrete(L) and_(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::and_");
@@ -119,6 +121,7 @@ namespace mln
     }
 
     template <typename L, typename R>
+    inline
     void and_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::and_inplace");

@@ -91,6 +91,7 @@ namespace mln
     namespace impl
     {
       template <typename V>
+      inline
       value::rgb8
       color_value(V v)
       {
@@ -98,12 +99,14 @@ namespace mln
       }
 
       template <unsigned int n>
+      inline
       value::rgb8
       color_value(value::rgb<n> v)
       {
 	return v;
       }
 
+      inline
       value::rgb8
       color_value(bool b)
       {
@@ -113,6 +116,7 @@ namespace mln
 
 
       template <typename I>
+      inline
       typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
       color_pretty(const Image<I>& input_)
       {
@@ -135,6 +139,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
       color_pretty_rgb(const Image<I>& input_,
 		       const p_set<mln_point(I) >& s1_,
@@ -180,6 +185,7 @@ namespace mln
     /// Facade.
 
     template <typename I>
+    inline
     typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
     color_pretty(const Image<I>& input_)
     {
@@ -198,6 +204,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
     color_pretty_rgb(const Image<I>& input_,
 		     const p_set<mln_point(I) >& s1_,

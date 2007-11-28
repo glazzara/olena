@@ -338,6 +338,7 @@ namespace mln
   // Plus equal.
 
   template <typename L, typename R>
+  inline
   L&
   operator+=(Object<L>& lhs, const Object<R>& rhs)
   {
@@ -349,6 +350,7 @@ namespace mln
   // Minus equal.
 
   template <typename L, typename R>
+  inline
   L&
   operator-=(Object<L>& lhs, const Object<R>& rhs)
   {
@@ -360,6 +362,7 @@ namespace mln
   // Times equal.
 
   template <typename L, typename R>
+  inline
   L&
   operator*=(Object<L>& lhs, const Object<R>& rhs)
   {
@@ -371,6 +374,7 @@ namespace mln
   // Div equal.
 
   template <typename L, typename R>
+  inline
   L&
   operator/=(Object<L>& lhs, const Object<R>& rhs)
   {
@@ -382,6 +386,7 @@ namespace mln
   // Mod equal.
 
   template <typename L, typename R>
+  inline
   L&
   operator%=(Object<L>& lhs, const Object<R>& rhs)
   {
@@ -393,6 +398,7 @@ namespace mln
   // Unary plus.
 
   template <typename O>
+  inline
   O
   operator+(const Object<O>& rhs)
   {
@@ -402,6 +408,7 @@ namespace mln
   // Unary minus.
 
   template <typename O>
+  inline
   mln_trait_op_minus(O, O)
   operator-(const Object<O>& rhs)
   {
@@ -413,6 +420,7 @@ namespace mln
   // Post-incrementation.
 
   template <typename O>
+  inline
   O
   operator++(Object<O>& rhs, int)
   {
@@ -425,6 +433,7 @@ namespace mln
   // Post-decrementation.
   
   template <typename O>
+  inline
   O
   operator--(Object<O>& rhs, int)
   {
@@ -437,6 +446,7 @@ namespace mln
   // Pre-decrementation.
 
   template <typename O>
+  inline
   O&
   operator--(Object<O>& rhs)
   {
@@ -448,6 +458,7 @@ namespace mln
   // Pre-incrementation.
 
   template <typename O>
+  inline
   O&
   operator++(Object<O>& rhs)
   {
@@ -459,6 +470,7 @@ namespace mln
   // Comparisons.
 
   template <typename O1, typename O2>
+  inline
   mln_trait_op_neq(O1, O2)
   operator!=(const Object<O1>& lhs, const Object<O2>& rhs)
   {
@@ -466,6 +478,7 @@ namespace mln
   }
 
   template <typename O1, typename O2>
+  inline
   mln_trait_op_greater(O1, O2)
     operator>(const Object<O1>& lhs, const Object<O2>& rhs)
   {
@@ -473,6 +486,7 @@ namespace mln
   }
 
   template <typename O1, typename O2>
+  inline
   mln_trait_op_geq(O1, O2)
     operator>=(const Object<O1>& lhs, const Object<O2>& rhs)
   {
@@ -480,6 +494,7 @@ namespace mln
   }
 
   template <typename O1, typename O2>
+  inline
   mln_trait_op_leq(O1, O2)
     operator<=(const Object<O1>& lhs, const Object<O2>& rhs)
   {

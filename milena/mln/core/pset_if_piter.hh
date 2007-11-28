@@ -89,6 +89,7 @@ namespace mln
   // pset_if_fwd_piter_<S,F>
 
   template <typename S, typename F>
+  inline
   pset_if_fwd_piter_<S,F>::pset_if_fwd_piter_(const pset_if<S,F>& subset)
     : super_(adaptee_(subset.overset())),
       subset_(subset)
@@ -96,6 +97,7 @@ namespace mln
   }
 
   template <typename S, typename F>
+  inline
   void
   pset_if_fwd_piter_<S,F>::start()
   {
@@ -105,6 +107,7 @@ namespace mln
   }
 
   template <typename S, typename F>
+  inline
   void
   pset_if_fwd_piter_<S,F>::next_()
   {

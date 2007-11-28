@@ -81,12 +81,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     count_<T>::count_()
     {
       init();
     }
 
     template <typename T>
+    inline
     void
     count_<T>::init()
     {
@@ -94,6 +96,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     count_<T>::take(const argument&)
     {
@@ -101,6 +104,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     count_<T>::take(const count_<T>& other)
     {
@@ -108,6 +112,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     std::size_t
     count_<T>::to_result() const
     {
@@ -115,6 +120,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void
     count_<T>::set_value(std::size_t c)
     {

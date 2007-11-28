@@ -199,12 +199,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename E>
+    inline
     lazy_set_<E>::lazy_set_()
     {
       needs_update_ = false;
     }
 
     template <typename E>
+    inline
     lazy_set_<E>&
     lazy_set_<E>::insert(const E& elt)
     {
@@ -215,6 +217,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     lazy_set_<E>&
     lazy_set_<E>::remove(const E& elt)
     {
@@ -226,6 +229,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     const E&
     lazy_set_<E>::element(unsigned i) const
     {
@@ -236,6 +240,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     const E&
     lazy_set_<E>::operator[](unsigned i) const
     {
@@ -243,6 +248,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     unsigned
     lazy_set_<E>::nelements() const
     {
@@ -252,6 +258,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     bool
     lazy_set_<E>::has(const E& elt) const
     {
@@ -259,6 +266,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     bool
     lazy_set_<E>::is_empty() const
     {
@@ -266,6 +274,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     void
     lazy_set_<E>::clear()
     {
@@ -276,6 +285,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     const std::vector<E>&
     lazy_set_<E>::vect() const
     {
@@ -285,6 +295,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     void
     lazy_set_<E>::update_() const
     {

@@ -61,6 +61,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename W, typename O>
+    inline
     void laplacian(const Image<I>& input, const Window<W>& win, Image<O>& output)
     {
       trace::entering("morpho::laplacian");
@@ -76,6 +77,7 @@ namespace mln
     }
 
     template <typename I, typename W>
+    inline
     mln_trait_op_minus_twice(mln_concrete(I))
       laplacian(const Image<I>& input, const Window<W>& win)
     {

@@ -89,6 +89,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     metal::vec<1, T> vec(const T& v_0)
     {
       metal::vec<1, T> tmp;
@@ -97,6 +98,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     metal::vec<2, T> vec(const T& v_0, const T& v_1)
     {
       metal::vec<2, T> tmp;
@@ -106,6 +108,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     metal::vec<3, T> vec(const T& v_0, const T& v_1, const T& v_2)
     {
       metal::vec<3, T> tmp;
@@ -116,6 +119,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     metal::vec<4, T> vec(const T& v_0, const T& v_1, const T& v_2, const T& v_3)
     {
       metal::vec<4, T> tmp;

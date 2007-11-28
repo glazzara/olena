@@ -172,6 +172,7 @@ namespace mln
     // internal::data_< cast_image_<T,I> >
 
     template <unsigned n, typename I>
+    inline
     data_< value::stack_image<n,I> >::data_(const metal::vec<n,I>& imas)
       : imas_(imas),
 	ima_(imas_[0])
@@ -186,11 +187,13 @@ namespace mln
     // stack_image<n, I>
 
     template <unsigned n, typename I>
+    inline
     stack_image<n,I>::stack_image()
     {
     }
 
     template <unsigned n, typename I>
+    inline
     stack_image<n,I>::stack_image(const metal::vec<n,I>& imas)
     {
       this->data_ = new mln::internal::data_< stack_image<n, I> >(imas);
@@ -201,6 +204,7 @@ namespace mln
     }
 
     template <unsigned n, typename I>
+    inline
     bool stack_image<n,I>::has_data() const
     {
       for (unsigned i = 0; i < n; ++i)
@@ -209,6 +213,7 @@ namespace mln
     }
 
     template <unsigned n, typename I>
+    inline
     metal::vec<n, mln_value(I)>
     stack_image<n,I>::read_(const psite& p) const
     {
@@ -220,6 +225,7 @@ namespace mln
     }
 
     template <unsigned n, typename I>
+    inline
     metal::vec<n, mln_value(I)>
     stack_image<n,I>::operator()(const psite& p) const
     {
@@ -227,6 +233,7 @@ namespace mln
     }
 
     template <unsigned n, typename I>
+    inline
     void
     stack_image<n,I>::write_(const psite& p, const value& v)
     {
@@ -237,6 +244,7 @@ namespace mln
     }
 
     template <unsigned n, typename I>
+    inline
     typename stack_image<n,I>::lvalue
     stack_image<n,I>::operator()(const psite& p)
     {
@@ -244,6 +252,7 @@ namespace mln
     }
 
     template <unsigned n, typename I>
+    inline
     const mln::value::set< metal::vec<n, mln_value(I)> >&
     stack_image<n,I>::values() const
     {
@@ -253,6 +262,7 @@ namespace mln
     // stack(..)
 
     template <typename I>
+    inline
     stack_image<2, const I>
     stack(const Image<I>& ima1, const Image<I>& ima2)
     {
@@ -264,6 +274,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     stack_image<2, I>
     stack(Image<I>& ima1, Image<I>& ima2)
     {

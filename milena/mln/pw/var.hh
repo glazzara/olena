@@ -68,6 +68,7 @@ namespace mln
     // pw::var_<V>
 
     template <typename V>
+    inline
     var_<V>::var_(const V& v)
       : v_(v)
     {
@@ -75,6 +76,7 @@ namespace mln
 
     template <typename V>
     template <typename P>
+    inline
     const V&
     var_<V>::operator()(const P&) const
     {
@@ -84,6 +86,7 @@ namespace mln
     // pw::var(v)
 
     template <typename V>
+    inline
     var_<V> var(const V& v)
     {
       var_<V> tmp(v);

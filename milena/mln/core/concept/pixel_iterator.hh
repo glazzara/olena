@@ -67,6 +67,7 @@ namespace mln
 #ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Pixel_Iterator<E>::Pixel_Iterator()
   {
 //     typedef mln_lvalue(E) lvalue;

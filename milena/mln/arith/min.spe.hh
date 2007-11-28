@@ -56,6 +56,7 @@ namespace mln
       }
 
       template <typename L, typename R, typename O>
+      inline
       void min_(trait::image::speed::any, const L& lhs,
 		trait::image::speed::any, const R& rhs, O& output)
       {
@@ -64,6 +65,7 @@ namespace mln
 
 
       template <typename L, typename R, typename O>
+      inline
       void min_(trait::image::speed::fastest, const L& lhs,
 		trait::image::speed::fastest, const R& rhs, O& output)
       {
@@ -79,6 +81,7 @@ namespace mln
       }
 
       template <typename L, typename R>
+      inline
       void min_inplace_(trait::image::speed::any, L& lhs,
 			trait::image::speed::any, const R& rhs)
       {
@@ -86,6 +89,7 @@ namespace mln
       }
 
       template <typename L, typename R>
+      inline
       void min_inplace_(trait::image::speed::fastest, L& lhs,
 			trait::image::speed::fastest, const R& rhs)
       {

@@ -175,11 +175,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n>
+    inline
     int_u<n>::int_u()
     {
     }
 
     template <unsigned n>
+    inline
     int_u<n>::int_u(int i)
     {
       mln_precondition(i >= 0);
@@ -188,12 +190,14 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     int_u<n>::int_u(const literal::zero_t&)
     {
       this->v_ = 0;
     }
 
     template <unsigned n>
+    inline
     int_u<n>&
     int_u<n>::operator=(const literal::zero_t&)
     {
@@ -202,12 +206,14 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     int_u<n>::int_u(const literal::one_t&)
     {
       this->v_ = 1;
     }
 
     template <unsigned n>
+    inline
     int_u<n>&
     int_u<n>::operator=(const literal::one_t&)
     {
@@ -216,12 +222,14 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     int_u<n>::operator unsigned() const
     {
       return this->v_;
     }
 
     template <unsigned n>
+    inline
     int
     int_u<n>::operator-() const
     {
@@ -229,6 +237,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     int_u<n>&
     int_u<n>::operator=(int i)
     {
@@ -239,6 +248,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const int_u<n>& i)
     {
       // FIXME: This code could be factored for almost every Value<*>...
@@ -246,6 +256,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     std::istream& operator>>(std::istream& istr, int_u<n>& i)
     {
       return istr >> i.handle_();

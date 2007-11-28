@@ -65,6 +65,7 @@ namespace mln
     {
 
       template <typename I, typename N>
+      inline
       I
       seeds2tiling (Image<I>& ima_,
 		    const Neighborhood<N>& nbh)
@@ -116,6 +117,7 @@ namespace mln
 
     /// Facade
     template <typename I, typename N>
+    inline
     I seeds2tiling(Image<I>& ima_, const Neighborhood<N>& nbh)
     {
       trace::entering("geom::seed2tiling");

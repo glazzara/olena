@@ -67,6 +67,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V, typename F>
+    inline
     cast_p2v_expr_<V, F>
     cast(const Function_p2v<F>& f)
     {

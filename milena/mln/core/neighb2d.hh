@@ -95,6 +95,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  inline
   const neighb2d& c4()
   {
     static bool flower = true;
@@ -108,6 +109,7 @@ namespace mln
     return it;
   }
 
+  inline
   const neighb2d& c8()
   {
     static bool flower = true;
@@ -123,6 +125,7 @@ namespace mln
     return it;
   }
 
+  inline
   const neighb2d& c2_row()
   {
     static bool flower = true;
@@ -135,6 +138,7 @@ namespace mln
     return it;
   }
 
+  inline
   const neighb2d& c2_col()
   {
     static bool flower = true;

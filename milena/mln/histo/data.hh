@@ -79,6 +79,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S>
+    inline
     data<S>::data(const Value_Set<S>& s)
       : s_(exact(s)),
 	h_(s_.nvalues(), 0)
@@ -87,6 +88,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     data<S>::clear()
     {
@@ -94,6 +96,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::size_t
     data<S>::operator()(const value& v) const
     {
@@ -101,6 +104,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::size_t&
     data<S>::operator()(const value& v)
     {
@@ -108,6 +112,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     const S&
     data<S>::vset() const
     {
@@ -115,6 +120,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::size_t
     data<S>::operator[](unsigned i) const
     {
@@ -123,6 +129,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     const std::vector<std::size_t>&
     data<S>::vect() const
     {
@@ -130,6 +137,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const data<S>& h)
     {
       mln_viter(S) v(h.vset());

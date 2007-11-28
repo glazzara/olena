@@ -83,6 +83,7 @@ namespace mln
       namespace generic
       {
 	template <typename L, typename R, typename O>
+	inline
 	void and_not_(const L& lhs, const R& rhs, O& output)
 	{
 	  trace::entering("logical::impl::generic::and_not_");
@@ -101,6 +102,7 @@ namespace mln
     // Facades.
 
     template <typename L, typename R>
+    inline
     mln_concrete(L) and_not(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::and_not");
@@ -117,6 +119,7 @@ namespace mln
     }
 
     template <typename L, typename R>
+    inline
     void and_not_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::and_not_inplace");

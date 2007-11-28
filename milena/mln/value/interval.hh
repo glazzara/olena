@@ -65,6 +65,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     interval_<T>::interval_(const T& from, const T& to)
       : from(from),
 	to(to)
@@ -74,6 +75,7 @@ namespace mln
 
     template <typename T>
     template <typename U>
+    inline
     interval_<T>::operator interval_<U>() const
     {
       mln_invariant(from <= to);
@@ -83,6 +85,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     interval_<T>
     interval(const T& from, const T& to)
     {

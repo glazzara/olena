@@ -76,12 +76,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename P>
+    inline
     bbox<P>::bbox()
     {
       init();
     }
 
     template <typename P>
+    inline
     void
     bbox<P>::init()
     {
@@ -89,6 +91,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     void
     bbox<P>::take_as_init(const P& p)
     {
@@ -98,6 +101,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     void
     bbox<P>::take(const P& p)
     {
@@ -116,6 +120,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     void
     bbox<P>::take(const bbox<P>& other)
     {
@@ -140,6 +145,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     const box_<P>&
     bbox<P>::to_result() const
     {
@@ -148,6 +154,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     bool
     bbox<P>::is_valid() const
     {

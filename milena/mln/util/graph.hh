@@ -153,6 +153,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template<typename N, typename E>
+    inline
     graph<N, E>::graph ()
       : nb_node_ (0),
 	nb_link_ (0),
@@ -162,6 +163,7 @@ namespace mln
     }
 
     template<typename N, typename E>
+    inline
     void
     graph<N, E>::add_node (void)
     {
@@ -172,6 +174,7 @@ namespace mln
     }
 
     template<typename N, typename E>
+    inline
     void
     graph<N, E>::add_edge (unsigned n1, unsigned n2)
     {
@@ -189,6 +192,7 @@ namespace mln
     }
 
     template<typename N, typename E>
+    inline
     void
     graph<N, E>::consistency () const
     {
@@ -211,6 +215,7 @@ namespace mln
     }
 
     template<typename N, typename E>
+    inline
     void
     graph<N, E>::print_debug (std::ostream& ostr) const
     {

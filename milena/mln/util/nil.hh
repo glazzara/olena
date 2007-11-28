@@ -67,16 +67,19 @@ namespace mln
 
     // nil
 
+    inline
     nil::nil()
     {
     }
 
     template <typename T>
+    inline
     nil::nil(const T&)
     {
     }
 
     template <typename T>
+    inline
     nil&
     nil::operator=(const T&)
     {
@@ -84,6 +87,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     nil::operator T() const
     {
       return T();

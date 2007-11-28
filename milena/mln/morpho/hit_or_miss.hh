@@ -112,6 +112,7 @@ namespace mln
       // Preconditions.
 
       template <typename I, typename Wh, typename Wm>
+      inline
       void hit_or_miss_preconditions_(const Image<I>& input,
 				      const Window<Wh>& win_hit, const Window<Wm>& win_miss)
       {
@@ -123,6 +124,7 @@ namespace mln
       // On sets.
 
       template <typename I, typename Wh, typename Wm>
+      inline
       mln_concrete(I)
 	hit_or_miss_(trait::image::kind::logic,
 		     const I& input,
@@ -136,6 +138,7 @@ namespace mln
       // On functions.
 
       template <typename I, typename Wh, typename Wm>
+      inline
       mln_concrete(I)
 	  hit_or_miss_(trait::image::kind::any,
 		       const I& input,
@@ -194,6 +197,7 @@ namespace mln
 
 
     template <typename I, typename Wh, typename Wm>
+    inline
     mln_concrete(I)
       hit_or_miss(const Image<I>& input,
 		  const Window<Wh>& win_hit, const Window<Wm>& win_miss)
@@ -211,6 +215,7 @@ namespace mln
 
 
     template <typename I, typename Wh, typename Wm>
+    inline
     mln_concrete(I)
       hit_or_miss_opening(const Image<I>& input,
 			  const Window<Wh>& win_hit, const Window<Wm>& win_miss)
@@ -227,6 +232,7 @@ namespace mln
 
 
     template <typename I, typename Wh, typename Wm>
+    inline
     mln_concrete(I)
       hit_or_miss_background_opening(const Image<I>& input,
 				     const Window<Wh>& win_hit, const Window<Wm>& win_miss)
@@ -244,6 +250,7 @@ namespace mln
 
 
     template <typename I, typename Wh, typename Wm>
+    inline
     mln_concrete(I)
       hit_or_miss_closing(const Image<I>& input,
 			  const Window<Wh>& win_hit, const Window<Wm>& win_miss)
@@ -261,6 +268,7 @@ namespace mln
 
 
     template <typename I, typename Wh, typename Wm>
+    inline
     mln_concrete(I)
       hit_or_miss_background_closing(const Image<I>& input,
 				     const Window<Wh>& win_hit, const Window<Wm>& win_miss)

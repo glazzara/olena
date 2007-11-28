@@ -105,6 +105,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     tracked_ptr<T>::operator bool() const
     {
       mln_invariant(run_());
@@ -113,6 +114,7 @@ namespace mln
 
     template <typename T>
     /// Negation (for arithmetical tests).
+    inline
     bool tracked_ptr<T>::operator !() const
     {
       mln_invariant(run_());
@@ -124,6 +126,7 @@ namespace mln
     **
     ** \invariant Pointer proxy exists.
     */
+    inline
     const T*const tracked_ptr<T>::operator->() const
     {
       mln_invariant(run_());
@@ -136,6 +139,7 @@ namespace mln
     **
     ** \invariant Pointer proxy exists.
     */
+    inline
     T*const tracked_ptr<T>::operator->()
     {
       mln_invariant(run_());
@@ -145,6 +149,7 @@ namespace mln
 
     template <typename T>
     /// Ctor.
+    inline
     tracked_ptr<T>::tracked_ptr() :
       ptr_(0),
       holders_(0)
@@ -154,6 +159,7 @@ namespace mln
 
     template <typename T>
     /// Ctor.
+    inline
     tracked_ptr<T>::tracked_ptr(T* ptr) :
       ptr_(ptr)
     {
@@ -171,6 +177,7 @@ namespace mln
 
     template <typename T>
     /// Cpy ctor.
+    inline
     tracked_ptr<T>::tracked_ptr(const tracked_ptr<T>& rhs) :
       ptr_(rhs.ptr_),
       holders_(rhs.holders_)
@@ -183,6 +190,7 @@ namespace mln
 
     template <typename T>
     /// Assignment.
+    inline
     tracked_ptr<T>& tracked_ptr<T>::operator=(const tracked_ptr<T>& rhs)
     {
       mln_invariant(run_());
@@ -199,6 +207,7 @@ namespace mln
 
     template <typename T>
     /// Assignment.
+    inline
     tracked_ptr<T>& tracked_ptr<T>::operator=(T* ptr)
     {
       typedef std::set<tracked_ptr<T>*> holders_t;
@@ -221,12 +230,14 @@ namespace mln
 
     /// Dtor.
     template <typename T>
+    inline
     tracked_ptr<T>::~tracked_ptr()
     {
       clean_();
     }
 
     template <typename T>
+    inline
     bool tracked_ptr<T>::run_() const
     {
       typedef std::set<tracked_ptr<T>*> holders_t;
@@ -245,6 +256,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     void tracked_ptr<T>::clean_()
     {
       mln_invariant(run_());
@@ -264,6 +276,7 @@ namespace mln
     }
 
     template <typename T>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const tracked_ptr<T>& tp)
     {
       typedef std::set<tracked_ptr<T>*> holders_t;

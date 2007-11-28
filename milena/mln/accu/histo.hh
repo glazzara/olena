@@ -93,6 +93,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S>
+    inline
     histo<S>::histo(const Value_Set<S>& s)
       : s_(exact(s)),
 	h_(s_.nvalues(), 0),
@@ -101,6 +102,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     histo<S>::histo()
       : s_(S::the()),
 	h_(s_.nvalues(), 0),
@@ -109,6 +111,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     histo<S>::take(const argument& t)
     {
@@ -117,6 +120,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     histo<S>::take(const histo<S>& other)
     {
@@ -126,6 +130,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     histo<S>::untake(const argument& t)
     {
@@ -136,6 +141,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     histo<S>::init()
     {
@@ -144,6 +150,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::size_t
     histo<S>::operator()(const argument& t) const
     {
@@ -151,6 +158,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::size_t
     histo<S>::operator[](unsigned i) const
     {
@@ -159,6 +167,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     unsigned
     histo<S>::nvalues() const
     {
@@ -166,6 +175,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::size_t
     histo<S>::sum() const
     {
@@ -173,6 +183,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     const std::vector<std::size_t>&
     histo<S>::vect() const
     {
@@ -180,6 +191,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     const std::vector<std::size_t>&
     histo<S>::to_result() const
     {
@@ -187,6 +199,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     const S&
     histo<S>::vset() const
     {
@@ -194,6 +207,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const histo<S>& h)
     {
       mln_viter(S) v(h.vset());

@@ -52,6 +52,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       data<mln_vset(I)>
       compute_(trait::image::speed::any, const I& input)
       {
@@ -59,6 +60,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       data<mln_vset(I)>
       compute_(trait::image::speed::fastest, const I& input)
       {

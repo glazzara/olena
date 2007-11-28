@@ -77,6 +77,7 @@ namespace mln
     // Facade.
 
     template <typename I, typename N>
+    inline
     mln_ch_value(I, unsigned)
       blobs(const Image<I>& input_, const Neighborhood<N>& nbh_, unsigned& nlabels)
     {

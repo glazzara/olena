@@ -52,6 +52,7 @@ namespace mln
 
       // 2D version.
       template <typename I>
+      inline
       void
       println_with_border(const box2d& b, const I& input)
       {

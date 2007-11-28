@@ -110,10 +110,12 @@ namespace mln
 
     // Float01_F.
 
+    inline
     float01_f::float01_f()
     {
     }
 
+    inline
     float01_f::float01_f(float val)
     {
       mln_precondition(val >= 0);
@@ -121,12 +123,14 @@ namespace mln
       this->v_ = val;
     }
 
+    inline
     float
     float01_f::value() const
     {
       return this->v_;
     }
 
+    inline
     float01_f&
     float01_f::operator=(float val)
     {
@@ -136,6 +140,7 @@ namespace mln
       return *this;
     }
 
+    inline
     float01_f::operator float() const
     {
       return this->v_;

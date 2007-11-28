@@ -115,6 +115,7 @@ namespace mln
 
 	// ctor
 
+	inline
 	median_t(const I& input_, const W& win_, O& output_)
 	  :
 	  // i/o
@@ -138,6 +139,7 @@ namespace mln
 
 	// parts
 
+	inline
 	void init()
 	{
 	  med.init();
@@ -146,6 +148,7 @@ namespace mln
 	    med.take(input(q));
 	}
 
+	inline
 	void down()
 	{
 	  for_all(q_dm) if (input.has(q_dm))
@@ -155,6 +158,7 @@ namespace mln
 	  output(p) = med.to_result();
 	}
 
+	inline
 	void fwd()
 	{
 	  for_all(q_fm) if (input.has(q_fm))
@@ -164,6 +168,7 @@ namespace mln
 	  output(p) = med.to_result();
 	}
 
+	inline
 	void bkd()
 	{
 	  for_all(q_bm) if (input.has(q_bm))
@@ -194,6 +199,7 @@ namespace mln
 	accu::median<mln_vset(I)> med;
 
 	// ctor
+	inline
 	median_dir_t(const I& input, unsigned dir, unsigned length, O& output)
 	  : // i/o
 	    input(input),
@@ -206,31 +212,37 @@ namespace mln
 	{
 	}
 
+	inline
 	void init()
 	{
 	}
 
+	inline
 	void init_line()
 	{
 	  med.init();
 	}
 
+	inline
 	void add_point(mln_point(I) pt)
 	{
 	  med.take(input(pt));
 	}
 
+	inline
 	void remove_point(mln_point(I) pu)
 	{
 	  med.untake(input(pu));
 	}
 
+	inline
 	void next()
 	{
 	  if (output.has(p))
 	    output(p) = med.to_result();
 	}
 
+	inline
 	void final()
 	{
 	}
@@ -240,6 +252,7 @@ namespace mln
 
 
       template <typename I, typename O>
+      inline
       void median_dir_(const Image<I>& input, unsigned dir, unsigned length, O& output)
       {
 	median_dir_t<I,O> f(exact(input), dir, length, output);
@@ -248,6 +261,7 @@ namespace mln
 
 
       template <typename I, typename W, typename O>
+      inline
       void median_(const Image<I>& input, const Window<W>& win, O& output)
       {
 	// FIXME: resize border!
@@ -258,6 +272,7 @@ namespace mln
 
 #  ifdef MLN_CORE_WIN_LINE_HH
       template <typename I, typename M, unsigned i, typename C, typename O>
+      inline
       void median_(const Image<I>& input, const win::line<M,i,C>& win, O& output)
       {
 	median_dir(input, i, win.length(), output); // FIXME: Make 1 explicit!

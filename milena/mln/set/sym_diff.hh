@@ -65,6 +65,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename Wl, typename Wr>
+    inline
     window<mln_dpoint(Wl)>
     sym_diff(const Window<Wl>& lhs, const Window<Wr>& rhs)
     {
@@ -83,6 +84,7 @@ namespace mln
     }
 
     template <typename Wl, typename Wr>
+    inline
     p_set<mln_point(Wl)>
     sym_diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
     {

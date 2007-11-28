@@ -111,6 +111,7 @@ namespace mln
     // internal::data_< plain<I> >
 
     template <typename I>
+    inline
     data_< plain<I> >::data_(const I& ima)
       : ima_(clone(ima))
     {
@@ -119,6 +120,7 @@ namespace mln
   } // end of namespace mln::internal
 
   template <typename I>
+  inline
   plain<I>::plain(const I& ima)
   {
     mln_precondition(ima.has_data());
@@ -126,6 +128,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   plain<I>&
   plain<I>::operator=(const I& rhs)
   {
@@ -136,6 +139,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   plain<I>::operator I () const
   {
     return clone(this->data_->ima_);

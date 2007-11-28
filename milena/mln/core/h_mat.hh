@@ -60,12 +60,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <unsigned d, typename T>
+  inline
   h_mat<d,T>::h_mat()
     : metal::mat<d+1, d+1, T>(metal::mat<d+1, d+1, T>::Id)
   {
   }
 
   template <unsigned d, typename T>
+  inline
   h_mat<d,T>::h_mat(const metal::mat<d+1, d+1, T>& x)
     : metal::mat<d+1, d+1, T>(x)
   {

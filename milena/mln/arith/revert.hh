@@ -90,6 +90,7 @@ namespace mln
       {
 
 	template <typename I, typename O>
+	inline
 	void revert_(const I& input, O& output)
 	{
 	  trace::entering("arith::impl::generic::revert_");
@@ -110,6 +111,7 @@ namespace mln
     // Facades.
 
     template <typename I>
+    inline
     mln_concrete(I) revert(const Image<I>& input)
     {
       trace::entering("arith::revert");
@@ -125,6 +127,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     void revert_inplace(Image<I>& input)
     {
       trace::entering("arith::revert_inplace");

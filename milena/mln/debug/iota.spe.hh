@@ -48,6 +48,7 @@ namespace mln
     {
 
       template <typename I>
+      inline
       void
       iota(trait::image::speed::fastest, I& input)
       {

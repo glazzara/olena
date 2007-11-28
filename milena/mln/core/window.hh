@@ -130,6 +130,7 @@ namespace mln
   // window<D>
 
   template <typename D>
+  inline
   window<D>::window()
   {
     // FIXME HERE: Was: mln::metal::is_a<D, Dpoint>::check();
@@ -137,12 +138,14 @@ namespace mln
   }
 
   template <typename D>
+  inline
   bool window<D>::is_symmetric() const
   {
     return geom::sym(*this) == *this;
   }
 
   template <typename D>
+  inline
   window<D>&
   window<D>::insert(const D& dp)
   {
@@ -152,6 +155,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   window<D>&
   window<D>::insert(const mln_coord(D)& dind)
   {
@@ -161,6 +165,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   window<D>&
   window<D>::insert(const mln_coord(D)& drow, const mln_coord(D)& dcol)
   {
@@ -170,6 +175,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   window<D>&
   window<D>::insert(const mln_coord(D)& dsli, const mln_coord(D)& drow, const mln_coord(D)& dcol)
   {
@@ -179,6 +185,7 @@ namespace mln
   }
 
   template <typename D>
+  inline
   window<D>&
   window<D>::sym()
   {

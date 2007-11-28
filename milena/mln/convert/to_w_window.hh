@@ -51,6 +51,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     w_window<mln_dpoint(I), mln_value(I)> to_w_window(const Image<I>& input_)
     {
       const I& input = exact(input_);

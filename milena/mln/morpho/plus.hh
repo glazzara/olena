@@ -69,6 +69,7 @@ namespace mln
       // Binary => morphology on sets.
 
       template <typename I, typename J>
+      inline
       mln_concrete(I) plus_(trait::image::kind::logic,
 			    const I& lhs, const J& rhs)
       {
@@ -78,6 +79,7 @@ namespace mln
       // Otherwise => morphology on functions.
 
       template <typename I, typename J>
+      inline
       mln_concrete(I) plus_(trait::image::kind::any,
 			    const I& lhs, const J& rhs)
       {
@@ -90,6 +92,7 @@ namespace mln
     // Facades.
 
     template <typename I, typename J>
+    inline
     mln_concrete(I) plus(const Image<I>& lhs, const Image<J>& rhs)
     {
       trace::entering("morpho::plus");

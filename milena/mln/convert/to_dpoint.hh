@@ -50,6 +50,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename P>
+    inline
     mln_dpoint(P) to_dpoint(const Point_Site<P>& p_)
     {
       const P& p = exact(p_);

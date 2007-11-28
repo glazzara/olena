@@ -59,6 +59,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename D, typename W, unsigned L>
+    inline
     mln::w_window<D,W> w_window_line(W (&w)[L])
     {
       mln_precondition(L % 2 == 1);

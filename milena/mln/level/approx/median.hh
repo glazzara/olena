@@ -108,6 +108,7 @@ namespace mln
       {
 
 	template <typename I, typename O>
+	inline
 	void median_(const I& input, const unsigned length,
 		     O& output)
 	{
@@ -145,6 +146,7 @@ namespace mln
       // Facades.
 
       template <typename I, typename O>
+      inline
       void median(const Image<I>& input_, const win::rectangle2d& win,
 		  Image<O>& output_)
       {
@@ -158,6 +160,7 @@ namespace mln
       }
 
       template <typename I, typename O>
+      inline
       void median(const Image<I>& input, const win::disk2d& win,
 		  Image<O>& output)
       {
@@ -167,6 +170,7 @@ namespace mln
       }
 
       template <typename I, typename O>
+      inline
       void median(const Image<I>& input, const win::octagon2d& win,
 		  Image<O>& output)
       {

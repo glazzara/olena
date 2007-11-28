@@ -62,6 +62,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     zero_t::operator T () const
     {
       mlc_converts_to(int, T)::check();

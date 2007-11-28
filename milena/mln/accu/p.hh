@@ -88,12 +88,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename A>
+    inline
     p_<A>::p_()
     {
       init();
     }
 
     template <typename A>
+    inline
     p_<A>::p_(const A& a)
       : a_(a)
     {
@@ -101,6 +103,7 @@ namespace mln
     }
 
     template <typename A>
+    inline
     void
     p_<A>::init()
     {
@@ -108,6 +111,7 @@ namespace mln
     }
 
     template <typename A>
+    inline
     void
     p_<A>::take_as_init(const argument& t)
     {
@@ -115,6 +119,7 @@ namespace mln
     }
 
     template <typename A>
+    inline
     void
     p_<A>::take(const argument& t)
     {
@@ -122,6 +127,7 @@ namespace mln
     }
 
     template <typename A>
+    inline
     void
     p_<A>::take(const p_<A>& other)
     {
@@ -129,6 +135,7 @@ namespace mln
     }
 
     template <typename A>
+    inline
     typename p_<A>::result
     p_<A>::to_result() const
     {

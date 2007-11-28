@@ -73,6 +73,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename N>
+    inline
     window<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh_)
     {
       const N& nbh = exact(nbh_);
@@ -86,6 +87,7 @@ namespace mln
     }
 
     template <typename N>
+    inline
     window<mln_dpoint(N)> to_upper_window(const Neighborhood<N>& nbh_)
     {
       const N& nbh = exact(nbh_);
@@ -100,6 +102,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     window<mln_dpoint(I)> to_window(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
@@ -116,12 +119,14 @@ namespace mln
     }
 
     template <typename S>
+    inline
     window<mln_dpoint(S)> to_window(const Point_Set<S>& pset)
     {
       return to_window(pw::cst(true) | pset);
     }
 
     template <typename D>
+    inline
     window<D> to_window(const std::set<D>& s)
     {
       // FIXME: Was: mln::metal::is_a<D, Dpoint>::check();

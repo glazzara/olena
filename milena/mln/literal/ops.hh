@@ -146,6 +146,7 @@ namespace mln
   // Op +
 
   template <typename O, typename L>
+  inline
   mln_trait_op_plus(O, O)
   operator+(const Object<O>& lhs, const Literal<L>& rhs)
   {
@@ -154,6 +155,7 @@ namespace mln
   }
 
   template <typename L, typename O>
+  inline
   mln_trait_op_plus(O, O)
   operator+(const Literal<L>& lhs, const Object<O>& rhs)
   {
@@ -164,6 +166,7 @@ namespace mln
   // Op -
 
   template <typename O, typename L>
+  inline
   mln_trait_op_minus(O, O)
   operator-(const Object<O>& lhs, const Literal<L>& rhs)
   {
@@ -172,6 +175,7 @@ namespace mln
   }
 
   template <typename L, typename O>
+  inline
   mln_trait_op_minus(O, O)
   operator-(const Literal<L>& lhs, const Object<O>& rhs)
   {
@@ -182,6 +186,7 @@ namespace mln
   // Op *
 
   template <typename O, typename L>
+  inline
   mln_trait_op_times(O, O)
   operator*(const Object<O>& lhs, const Literal<L>& rhs)
   {
@@ -190,6 +195,7 @@ namespace mln
   }
 
   template <typename L, typename O>
+  inline
   mln_trait_op_times(O, O)
   operator*(const Literal<L>& lhs, const Object<O>& rhs)
   {
@@ -200,6 +206,7 @@ namespace mln
   // Op /
 
   template <typename O, typename L>
+  inline
   mln_trait_op_div(O, O)
   operator/(const Object<O>& lhs, const Literal<L>& rhs)
   {
@@ -208,6 +215,7 @@ namespace mln
   }
 
   template <typename L, typename O>
+  inline
   mln_trait_op_div(O, O)
   operator/(const Literal<L>& lhs, const Object<O>& rhs)
   {
@@ -218,6 +226,7 @@ namespace mln
   // Op %
 
   template <typename O, typename L>
+  inline
   mln_trait_op_mod(O, O)
   operator%(const Object<O>& lhs, const Literal<L>& rhs)
   {
@@ -226,6 +235,7 @@ namespace mln
   }
 
   template <typename L, typename O>
+  inline
   mln_trait_op_mod(O, O)
   operator%(const Literal<L>& lhs, const Object<O>& rhs)
   {
@@ -237,6 +247,7 @@ namespace mln
   // Op ==
 
   template <typename O, typename L>
+  inline
   mln_trait_op_eq(O, O)
   operator==(const Object<O>& lhs, const Literal<L>& rhs)
   {
@@ -245,6 +256,7 @@ namespace mln
   }
 
   template <typename L, typename O>
+  inline
   mln_trait_op_eq(O, O)
   operator==(const Literal<L>& lhs, const Object<O>& rhs)
   {
@@ -253,6 +265,7 @@ namespace mln
   }
 
   template <typename L1, typename L2>
+  inline
   bool
   operator==(const Literal<L1>&, const Literal<L2>&)
   {

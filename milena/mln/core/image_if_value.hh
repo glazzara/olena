@@ -142,23 +142,27 @@ namespace mln
   // image_if_value<I>
 
   template <typename I>
+  inline
   image_if_value<I>::image_if_value()
   {
   }
 
   template <typename I>
+  inline
   image_if_value<I>::image_if_value(I& ima, const F& f)
   {
     this->init_(ima, f);
   }
 
   template <typename I>
+  inline
   image_if_value<I>::image_if_value(I& ima, const mln_value(I)& v)
   {
     this->init_(ima, pw::value(ima) == pw::cst(v));
   }
 
   template <typename I>
+  inline
   image_if_value<I>::operator image_if_value<const I>() const
   {
     mln_precondition(this->has_data());
@@ -173,6 +177,7 @@ namespace mln
   {
 
     template <typename I>
+    inline
     data_< image_if_value<I> >::data_(I& ima, const F& f)
       : data_< Super >(ima, f)
     {
@@ -183,6 +188,7 @@ namespace mln
   // Operators.
 
   template <typename I>
+  inline
   image_if_value<I>
   operator | (Image<I>& ima, const mln_value(I)& v)
   {
@@ -191,6 +197,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   image_if_value<const I>
   operator | (const Image<I>& ima, const mln_value(I)& v)
   {

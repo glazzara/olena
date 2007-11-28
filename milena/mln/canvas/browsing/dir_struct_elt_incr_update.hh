@@ -97,6 +97,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename F>
+      inline
       void
       dir_struct_elt_incr_update_t::operator()(F& f) const
       {

@@ -69,6 +69,7 @@ namespace mln
     {
 
       template <typename I, typename F>
+      inline
       bool predicate_(trait::image::speed::any, const I& ima_, const F& f)
       {
 	const I& ima = exact(ima_);
@@ -80,6 +81,7 @@ namespace mln
       }
 
       template <typename I, typename F>
+      inline
       bool predicate_(trait::image::speed::fastest, const I& ima_, const F& f)
       {
 	const I& ima = exact(ima_);
@@ -91,6 +93,7 @@ namespace mln
       }
 
       template <typename S, typename F>
+      inline
       bool predicate_(const Point_Set<S>& pset, const F& f)
       {
 	mln_piter(S) p(exact(pset));
@@ -106,6 +109,7 @@ namespace mln
     // Facades.
 
     template <typename I, typename F>
+    inline
     bool predicate(const Image<I>& ima, const Function_v2b<F>& f)
     {
       mln_precondition(exact(ima).has_data());
@@ -114,6 +118,7 @@ namespace mln
     }
 
     template <typename S, typename F>
+    inline
     bool predicate(const Point_Set<S>& pset, const Function_p2b<F>& f)
     {
       return impl::predicate_(exact(pset), exact(f));

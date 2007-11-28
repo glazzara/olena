@@ -134,6 +134,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
+  inline
   P
   box_<P>::pmin() const
   {
@@ -141,6 +142,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   P&
   box_<P>::pmin()
   {
@@ -148,6 +150,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   P
   box_<P>::pmax() const
   {
@@ -155,6 +158,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   P&
   box_<P>::pmax()
   {
@@ -162,11 +166,13 @@ namespace mln
   }
 
   template <typename P>
+  inline
   box_<P>::box_()
   {
   }
 
   template <typename P>
+  inline
   box_<P>::box_(const point& pmin, const point& pmax)
     : pmin_(pmin),
       pmax_(pmax)
@@ -175,6 +181,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   box_<P>::box_(mln_coord(P) ninds)
   {
     metal::bool_<(dim == 1)>::check();
@@ -183,6 +190,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   box_<P>::box_(mln_coord(P) nrows, mln_coord(P) ncols)
   {
     metal::bool_<(dim == 2)>::check();
@@ -191,6 +199,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   box_<P>::box_(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols)
   {
     metal::bool_<(dim == 3)>::check();
@@ -199,6 +208,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   box_<P>::has(const P& p) const
   {
@@ -209,6 +219,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   box_<P>::enlarge(unsigned b)
   {
@@ -221,6 +232,7 @@ namespace mln
 
 
   template <typename P>
+  inline
   box_<P>
   box_<P>::to_larger(unsigned b) const
   {
@@ -235,6 +247,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   std::ostream& operator<<(std::ostream& ostr, const box_<P>& b)
   {
     return ostr << "[" << b.pmin() << ".." << b.pmax() << ']';

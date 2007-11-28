@@ -65,6 +65,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename T>
+      inline
       T
       convert_<T>::value_at_index(unsigned i)
       {
@@ -72,6 +73,7 @@ namespace mln
       }
 
       template <typename T>
+      inline
       unsigned
       convert_<T>::index_of_value(const T& v)
       {
@@ -80,6 +82,7 @@ namespace mln
 
       // Case of 'bool'.
 
+      inline
       bool
       convert_<bool>::value_at_index(unsigned i)
       {
@@ -87,6 +90,7 @@ namespace mln
 	return i == 1 ? true : false;
       }
 
+      inline
       unsigned
       convert_<bool>::index_of_value(bool v)
       {

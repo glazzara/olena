@@ -156,6 +156,7 @@ namespace mln
   // Operator.
 
   template <typename F, typename S>
+  inline
   pw::image<F,S>
   operator | (const Function_p2v<F>& f, const Point_Set<S>& ps)
   {
@@ -169,6 +170,7 @@ namespace mln
   {
 
     template <typename F, typename S>
+    inline
     data_< pw::image<F,S> >::data_(const F& f, const S& ps)
       : f_(f),
 	pset_(ps)
@@ -183,23 +185,27 @@ namespace mln
   {
 
     template <typename F, typename S>
+    inline
     image<F,S>::image()
     {
     }
 
     template <typename F, typename S>
+    inline
     image<F,S>::image(const Function_p2v<F>& f, const Point_Set<S>& ps)
     {
       this->data_ = new internal::data_< pw::image<F,S> >(exact(f), exact(ps));
     }
 
     template <typename F, typename S>
+    inline
     bool image<F,S>::owns_(const mln_psite(S)& p) const
     {
       return this->data_->pset_.has(p);
     }
 
     template <typename F, typename S>
+    inline
     const S&
     image<F,S>::domain() const
     {
@@ -207,6 +213,7 @@ namespace mln
     }
 
     template <typename F, typename S>
+    inline
     mln_result(F)
       image<F,S>::operator()(const mln_psite(S)& p) const
     {
@@ -215,6 +222,7 @@ namespace mln
     }
 
     template <typename F, typename S>
+    inline
     void
     image<F,S>::operator()(const mln_psite(S)&)
     {
@@ -222,6 +230,7 @@ namespace mln
     }
 
     template <typename F, typename S>
+    inline
     const mln::value::set<mln_result(F)>&
     image<F,S>::values() const
     {

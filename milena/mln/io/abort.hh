@@ -49,6 +49,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+      inline
       void abort()
       {
 	std::cerr << "I/O error, aborting." << std::endl;

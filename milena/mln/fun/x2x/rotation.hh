@@ -88,11 +88,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <unsigned n, typename C>
+      inline
       rotation<n,C>::rotation()
       {
       }
 
       template <unsigned n, typename C>
+      inline
       rotation<n,C>::rotation(float alpha, unsigned dir)
 	:alpha_(alpha),
 	 dir_(dir)
@@ -103,6 +105,7 @@ namespace mln
       }
 
       template <unsigned n, typename C>
+      inline
       metal::vec<n,C>
       rotation<n,C>::operator()(const metal::vec<n,C>& v) const
       {
@@ -121,6 +124,7 @@ namespace mln
       }
 
       template <unsigned n, typename C>
+      inline
       rotation<n,C>
       rotation<n,C>::inv() const
       {
@@ -129,6 +133,7 @@ namespace mln
       }
 
       template <unsigned n, typename C>
+      inline
       void
       rotation<n,C>::set_alpha(float alpha)
       {
@@ -137,6 +142,7 @@ namespace mln
       }
 
       template <unsigned n, typename C>
+      inline
       void
       rotation<n,C>::set_dir(unsigned dir)
       {
@@ -146,6 +152,7 @@ namespace mln
       }
 
       template <unsigned n, typename C>
+      inline
       void
       rotation<n,C>::update()
       {

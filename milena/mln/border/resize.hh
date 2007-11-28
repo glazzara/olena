@@ -69,6 +69,7 @@ namespace mln
     {
 
       template <typename I>
+      inline
       void resize_(trait::image::category::morpher,
 		   const I& ima_, unsigned thickness)
       {
@@ -76,6 +77,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       void resize_(trait::image::category::primary,
 		   const I& ima_, unsigned thickness)
       {
@@ -92,6 +94,7 @@ namespace mln
     /// Facade.
 
     template <typename I>
+    inline
     void resize(const Image<I>& ima_, unsigned thickness)
     {
       trace::entering("border::resize");

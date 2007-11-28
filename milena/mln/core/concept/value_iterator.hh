@@ -82,6 +82,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Value_Iterator<E>::Value_Iterator()
   {
     typedef mln_value(E) value;
@@ -90,6 +91,7 @@ namespace mln
   }
 
   template <typename E>
+  inline
   std::ostream& operator<<(std::ostream& ostr, const Value_Iterator<E>& v)
   {
     mln_precondition(exact(v).is_valid());

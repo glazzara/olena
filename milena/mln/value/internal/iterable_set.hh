@@ -87,6 +87,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename T, typename E>
+      inline
       bool
       iterable_set<T,E>::has(const T&) const
       {
@@ -94,6 +95,7 @@ namespace mln
       }
 
       template <typename T, typename E>
+      inline
       T
       iterable_set<T,E>::operator[](unsigned i) const
       {
@@ -102,6 +104,7 @@ namespace mln
       }
 
       template <typename T, typename E>
+      inline
       unsigned
       iterable_set<T,E>::index_of(const T& v) const
       {
@@ -109,6 +112,7 @@ namespace mln
       }
 
       template <typename T, typename E>
+      inline
       unsigned
       iterable_set<T,E>::nvalues() const
       {

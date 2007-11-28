@@ -128,17 +128,20 @@ namespace mln
   // image_if_interval<I>
 
   template <typename I>
+  inline
   image_if_interval<I>::image_if_interval()
   {
   }
 
   template <typename I>
+  inline
   image_if_interval<I>::image_if_interval(I& ima, const F& f)
   {
     this->init_(ima, f);
   }
 
   template <typename I>
+  inline
   image_if_interval<I>::image_if_interval(I& ima, const value::interval_<mln_value(I)>& vv)
   {
     this->init_(ima, (pw::value(ima) >= pw::cst(vv.from))
@@ -146,6 +149,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   image_if_interval<I>::operator image_if_interval<const I>() const
   {
     image_if_interval<const I> tmp(this->data_->ima_, this->data_->pset_);
@@ -158,6 +162,7 @@ namespace mln
   {
 
     template <typename I>
+    inline
     data_< image_if_interval<I> >::data_(I& ima, const F& f)
       : data_< Super >(ima, f)
     {
@@ -169,6 +174,7 @@ namespace mln
 
 
   template <typename I>
+  inline
   image_if_interval<I>
   operator | (Image<I>& ima, const value::interval_<mln_value(I)>& vv)
   {
@@ -177,6 +183,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   image_if_interval<const I>
   operator | (const Image<I>& ima, const value::interval_<mln_value(I)>& vv)
   {

@@ -152,6 +152,7 @@ namespace mln
 
   template <typename It, typename W>
   template <typename Ds, typename P>
+  inline
   with_w_<It,W>::with_w_(const Ds& ds,
 			 const P&  p)
     : It(ds, p),
@@ -160,6 +161,7 @@ namespace mln
   }
   
   template <typename It, typename W>
+  inline
   W
   with_w_<It,W>::w() const
   {
@@ -171,11 +173,13 @@ namespace mln
   // w_window<D,W>
 
   template <typename D, typename W>
+  inline
   w_window<D,W>::w_window()
   {
   }
 
   template <typename D, typename W>
+  inline
   const mln::window<D>&
   w_window<D,W>::win() const
   {
@@ -183,6 +187,7 @@ namespace mln
   }
 
   template <typename D, typename W>
+  inline
   const D&
   w_window<D,W>::dp(unsigned i) const
   {
@@ -192,6 +197,7 @@ namespace mln
   }
 
   template <typename D, typename W>
+  inline
   unsigned
   w_window<D,W>::ndpoints() const
   {
@@ -200,6 +206,7 @@ namespace mln
   }
 
   template <typename D, typename W>
+  inline
   const std::vector<D>&
   w_window<D,W>::vect() const
   {
@@ -207,6 +214,7 @@ namespace mln
   }
 
   template <typename D, typename W>
+  inline
   const std::vector<W>&
   w_window<D,W>::weights() const
   {
@@ -214,6 +222,7 @@ namespace mln
   }
 
   template <typename D, typename W>
+  inline
   W
   w_window<D,W>::w(unsigned i) const
   {
@@ -223,6 +232,7 @@ namespace mln
   }
 
   template <typename D, typename W>
+  inline
   w_window<D,W>&
   w_window<D,W>::insert(const W& w, const D& d)
   {
@@ -252,6 +262,7 @@ namespace mln
   }
 
   template <typename D, typename W>
+  inline
   w_window<D,W>&
   w_window<D,W>::sym()
   {
@@ -265,6 +276,7 @@ namespace mln
   // operators
 
   template <typename D, typename W>
+  inline
   std::ostream& operator<<(std::ostream& ostr, const w_window<D,W>& w_win)
   {
     ostr << '[';
@@ -274,6 +286,7 @@ namespace mln
   }
 
   template <typename D, typename Wl, typename Wr>
+  inline
   bool operator==(const w_window<D,Wl>& lhs, const w_window<D,Wr>& rhs)
   {
     if (lhs.ndpoints() != rhs.ndpoints())

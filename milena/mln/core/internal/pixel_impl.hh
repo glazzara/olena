@@ -148,6 +148,7 @@ namespace mln
     // pixel_impl_<I, E>
 
     template <typename I, typename E>
+    inline
     bool
     pixel_impl_<I, E>::is_valid_() const
     {
@@ -155,6 +156,7 @@ namespace mln
     }
 
     template <typename I, typename E>
+    inline
     pixel_impl_<I, E>::pixel_impl_(I& image) :
       image_(image),
       value_ptr_(0)
@@ -162,6 +164,7 @@ namespace mln
     }
 
     template <typename I, typename E>
+    inline
     mln_lvalue(I)
     pixel_impl_<I, E>::val()
     {
@@ -170,6 +173,7 @@ namespace mln
     }
 
     template <typename I, typename E>
+    inline
     mln_rvalue(I)
     pixel_impl_<I, E>::val() const
     {
@@ -178,6 +182,7 @@ namespace mln
     }
 
     template <typename I, typename E>
+    inline
     I&
     pixel_impl_<I, E>::ima() const
     {
@@ -186,6 +191,7 @@ namespace mln
     }
 
     template <typename I, typename E>
+    inline
     mln_value(I) **
     pixel_impl_<I, E>::address_() const
     {
@@ -196,6 +202,7 @@ namespace mln
     // pixel_impl_<const I, E>
 
     template <typename I, typename E>
+    inline
     bool
     pixel_impl_<const I, E>::is_valid_() const
     {
@@ -203,6 +210,7 @@ namespace mln
     }
 
     template <typename I, typename E>
+    inline
     pixel_impl_<const I, E>::pixel_impl_(const I& image) :
       image_(image),
       value_ptr_(0)
@@ -210,6 +218,7 @@ namespace mln
     }
 
     template <typename I, typename E>
+    inline
     mln_rvalue(I)
     pixel_impl_<const I, E>::val() const
     {
@@ -218,6 +227,7 @@ namespace mln
     }
 
     template <typename I, typename E>
+    inline
     const I&
     pixel_impl_<const I, E>::ima() const
     {
@@ -225,6 +235,7 @@ namespace mln
     }
 
     template <typename I, typename E>
+    inline
     const mln_value(I) **
     pixel_impl_<const I, E>::address_() const
     {

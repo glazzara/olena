@@ -55,6 +55,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V, unsigned R, unsigned C>
+    inline
     mln::image2d<V>
     image2d(V (&values)[R][C])
     {

@@ -47,6 +47,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename I>
+  inline
   mln_point(I) a_point_of(const Image<I>& ima_)
   {
     const I& ima = exact(ima_);

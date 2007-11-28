@@ -100,12 +100,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T, typename S, typename M>
+    inline
     mean_<T,S,M>::mean_()
     {
       init();
     }
 
     template <typename T, typename S, typename M>
+    inline
     void
     mean_<T,S,M>::init()
     {
@@ -114,6 +116,7 @@ namespace mln
     }
 
     template <typename T, typename S, typename M>
+    inline
     void mean_<T,S,M>::take(const argument& t)
     {
       count_.take(t);
@@ -121,6 +124,7 @@ namespace mln
     }
 
     template <typename T, typename S, typename M>
+    inline
     void
     mean_<T,S,M>::take(const mean_<T,S,M>& other)
     {
@@ -129,6 +133,7 @@ namespace mln
     }
 
     template <typename T, typename S, typename M>
+    inline
     M
     mean_<T,S,M>::to_result() const
     {

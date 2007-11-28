@@ -63,6 +63,7 @@ namespace mln
     // This is also a "mexican hat".
 
     template <typename I, typename O>
+    inline
     void LoG_5x5(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
@@ -77,6 +78,7 @@ namespace mln
     // LoG 7x7  (Cf. Russ, p. 250)
 
     template <typename I, typename O>
+    inline
     void LoG_7x7(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
@@ -93,6 +95,7 @@ namespace mln
     // LoG 13x13  (Cf. Russ, p. 250)
 
     template <typename I, typename O>
+    inline
     void LoG_13x13(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
@@ -116,6 +119,7 @@ namespace mln
     // LoG 17x17  (Cf. Sonka et al., pages 85-86)
 
     template <typename I, typename O>
+    inline
     void LoG_17x17(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());

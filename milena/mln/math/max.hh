@@ -47,6 +47,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     T max(const T& v1, const T& v2)
     {
       return v1 > v2 ? v1 : v2;

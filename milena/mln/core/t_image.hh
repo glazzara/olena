@@ -171,6 +171,7 @@ namespace mln
     // internal::data_< t_image<I,S> >
 
     template <typename I>
+    inline
     data_< t_image<I> >::data_(I& ima,
 			       unsigned dim1, unsigned dim2,
 			       mln::box_<mln_point(I)>& box)
@@ -184,6 +185,7 @@ namespace mln
 
 
   template <typename I>
+  inline
   t_image<I>::t_image(I& ima, unsigned dim1, unsigned dim2)
   {
     mln_precondition(ima.has_data());
@@ -198,6 +200,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   bool t_image<I>::has_data() const
   {
     mln_invariant(this->delegatee_()->has_data());
@@ -205,6 +208,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   bool
   t_image<I>::owns_(const mln_point(I)& p) const
   {
@@ -213,6 +217,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   mln_point(I)
   t_image<I>::transpose_(const mln_point(I)& p) const
   {
@@ -221,6 +226,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   mln_point(I)
   t_image<I>::exchange_coords_(const mln_point(I)& p,
 			       unsigned dim1, unsigned dim2) const
@@ -232,6 +238,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   const box_<mln_point(I)>&
   t_image<I>::domain() const
   {
@@ -240,6 +247,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   mln_rvalue(I)
   t_image<I>::operator()(const mln_point(I)& p) const
   {
@@ -248,6 +256,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   typename internal::morpher_lvalue_<I>::ret
   t_image<I>::operator()(const mln_point(I)& p)
   {
@@ -256,6 +265,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   const typename t_image<I>::vset&
   t_image<I>::values() const
   {
@@ -265,6 +275,7 @@ namespace mln
 
 
   template <typename I>
+  inline
   t_image<I>
   swap_coords(Image<I>& ima, unsigned dim1, unsigned dim2)
   {
@@ -276,6 +287,7 @@ namespace mln
   }
 
   template <typename I>
+  inline
   t_image<const I>
   swap_coords(const Image<I>& ima, unsigned dim1, unsigned dim2)
   {

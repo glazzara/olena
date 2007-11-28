@@ -71,6 +71,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename W>
+    inline
     mln_concrete(I) gradient(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::gradient");
@@ -87,6 +88,7 @@ namespace mln
 
 
     template <typename I, typename W>
+    inline
     mln_concrete(I) gradient_internal(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::gradient_internal");
@@ -103,6 +105,7 @@ namespace mln
 
 
     template <typename I, typename W>
+    inline
     mln_concrete(I) gradient_external(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::gradient_external");

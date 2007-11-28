@@ -134,6 +134,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     backdiag2d::backdiag2d(unsigned length)
       : length_(length)
     {
@@ -143,31 +144,37 @@ namespace mln
 	insert(make::dpoint2d(col, col));
     }
 
+    inline
     bool backdiag2d::is_centered() const
     {
       return true;
     }
 
+    inline
     bool backdiag2d::is_symmetric() const
     {
       return true;
     }
 
+    inline
     unsigned backdiag2d::length() const
     {
       return length_;
     }
 
+    inline
     unsigned backdiag2d::delta() const
     {
       return length_ / 2;
     }
 
+    inline
     backdiag2d& backdiag2d::sym()
     {
       return *this;
     }
 
+    inline
     std::ostream& operator<<(std::ostream& ostr, const backdiag2d& win)
     {
       ostr << "[diag 2d: length=" << win.length() << ']';

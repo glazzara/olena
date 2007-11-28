@@ -96,6 +96,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Window<E>::Window()
   {
     typedef  mln_point(E)  point;
@@ -118,6 +119,7 @@ namespace mln
   }
 
   template <typename Wl, typename Wr>
+  inline
   bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs)
   {
     // FIXME: Same grid!

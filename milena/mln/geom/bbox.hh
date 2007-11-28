@@ -74,6 +74,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename W>
+    inline
     box_<mln_point(W)> bbox(const Window<W>& win_)
     {
       const W& win = exact(win_);
@@ -88,6 +89,7 @@ namespace mln
     }
 
     template <typename W>
+    inline
     box_<mln_point(W)> bbox(const Weighted_Window<W>& w_win)
     {
       return bbox(exact(w_win).win());
@@ -98,6 +100,7 @@ namespace mln
     {
 
       template <typename S>
+      inline
       box_<mln_point(S)> bbox_(const Point_Set<S>& pset_)
       {
 	const S& pset = exact(pset_);
@@ -108,6 +111,7 @@ namespace mln
       }
 
       template <typename B>
+      inline
       box_<mln_point(B)> bbox_(const Box<B>& pset_)
       {
 	return exact(pset_);
@@ -116,6 +120,7 @@ namespace mln
     } // end of namespace mln::geom::impl
 
     template <typename S>
+    inline
     box_<mln_point(S)> bbox(const Point_Set<S>& pset)
     {
       mln_precondition(exact(pset).npoints() != 0);
@@ -126,6 +131,7 @@ namespace mln
 
 
     template <typename I>
+    inline
     box_<mln_point(I)> bbox(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);

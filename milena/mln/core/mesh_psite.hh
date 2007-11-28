@@ -69,6 +69,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template<typename P>
+  inline
   mesh_psite<P>::mesh_psite(unsigned i, mesh_p<P>* m_ptr)
     : i_(i) ,
       m_ptr_(m_ptr)
@@ -76,12 +77,14 @@ namespace mln
   }
 
   template<typename P>
+  inline
   mesh_psite<P>::operator P() const
   {
     return m_ptr_->loc_[i_];
   }
 
   template<typename P>
+  inline
   const P&
   mesh_psite<P>::to_point() const
   {
@@ -89,6 +92,7 @@ namespace mln
   }
 
   template<typename P>
+  inline
   mln_coord(P)
   mesh_psite<P>::operator[](unsigned i) const
   {

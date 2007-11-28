@@ -59,12 +59,14 @@ namespace mln
       // Disjunction.
 
       template <typename I, typename F>
+      inline
       void apply_(trait::image::speed::any, I& input, const F& f)
       {
 	generic::apply_(input, f);
       }
 
       template <typename I, typename F>
+      inline
       void apply_(trait::image::speed::fastest, I& input, const F& f)
       {
 	trace::entering("level::impl::apply_");

@@ -92,6 +92,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename Pi, typename E>
+    inline
     piter_adaptor_<Pi,E>::piter_adaptor_(const Pi& piter)
       : piter_(piter)
     {
@@ -99,12 +100,14 @@ namespace mln
     }
 
     template <typename Pi, typename E>
+    inline
     piter_adaptor_<Pi,E>::operator mln_point(Pi) () const
     {
       return piter_;
     }
 
     template <typename Pi, typename E>
+    inline
     const mln_point(Pi)&
     piter_adaptor_<Pi,E>::to_point() const
     {
@@ -112,6 +115,7 @@ namespace mln
     }
 
     template <typename Pi, typename E>
+    inline
     mln_coord(Pi)
     piter_adaptor_<Pi,E>::operator[](unsigned i) const
     {
@@ -120,6 +124,7 @@ namespace mln
     }
 
     template <typename Pi, typename E>
+    inline
     bool
     piter_adaptor_<Pi,E>::is_valid() const
     {
@@ -127,6 +132,7 @@ namespace mln
     }
 
     template <typename Pi, typename E>
+    inline
     void
     piter_adaptor_<Pi,E>::invalidate()
     {
@@ -134,6 +140,7 @@ namespace mln
     }
 
     template <typename Pi, typename E>
+    inline
     void
     piter_adaptor_<Pi,E>::start()
     {
@@ -141,6 +148,7 @@ namespace mln
     }
 
     template <typename Pi, typename E>
+    inline
     void
     piter_adaptor_<Pi,E>::next_()
     {

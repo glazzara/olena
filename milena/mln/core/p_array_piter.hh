@@ -137,6 +137,7 @@ namespace mln
 
   template <typename P>
   template <typename S>
+  inline
   p_array_fwd_piter_<P>::p_array_fwd_piter_(const Point_Set<S>& s)
     : vect_(exact(s).vect())
   {
@@ -144,6 +145,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_array_fwd_piter_<P>::to_point() const
   {
@@ -151,6 +153,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   mln_coord(P)
   p_array_fwd_piter_<P>::operator[](unsigned i) const
   {
@@ -160,6 +163,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   p_array_fwd_piter_<P>::is_valid() const
   {
@@ -167,6 +171,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_array_fwd_piter_<P>::invalidate()
   {
@@ -174,6 +179,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_array_fwd_piter_<P>::start()
   {
@@ -183,6 +189,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_array_fwd_piter_<P>::next_()
   {
@@ -192,6 +199,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   p_array_fwd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());
@@ -203,6 +211,7 @@ namespace mln
 
   template <typename P>
   template <typename S>
+  inline
   p_array_bkd_piter_<P>::p_array_bkd_piter_(const Point_Set<S>& s)
     : vect_(exact(s).vect())
   {
@@ -210,6 +219,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_array_bkd_piter_<P>::to_point() const
   {
@@ -217,6 +227,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   mln_coord(P)
   p_array_bkd_piter_<P>::operator[](unsigned i) const
   {
@@ -226,6 +237,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   p_array_bkd_piter_<P>::is_valid() const
   {
@@ -233,6 +245,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_array_bkd_piter_<P>::invalidate()
   {
@@ -240,6 +253,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_array_bkd_piter_<P>::start()
   {
@@ -249,6 +263,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_array_bkd_piter_<P>::next_()
   {
@@ -258,6 +273,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   p_array_bkd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());

@@ -221,67 +221,79 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Function<E>::Function()
   {
     typedef mln_result(E) result;
   }
 
   template <typename E>
+  inline
   Function<E>::Function(const Function<E>& rhs)
     : Object<E>(rhs)
   {
   }
 
   template <typename E>  
+  inline  
   Function_v2v<E>::Function_v2v()
   {
   }
 
   template <typename E>
+  inline
   Function_v2v<E>::Function_v2v(const Function_v2v<E>& rhs)
     : Function<E>(rhs)
   {
   }
 
   template <typename E>
+  inline
   Function_i2v<E>::Function_i2v()
   {
   }
 
   template <typename E>
+  inline
   Function_i2v<E>::Function_i2v(const Function_i2v<E>& rhs)
     : Function_v2v<E>(rhs)
   {
   }
 
   template <typename E>
+  inline
   Function_p2v<E>::Function_p2v()
   {
   }
 
   template <typename E>
+  inline
   Function_p2v<E>::Function_p2v(const Function_p2v<E>& rhs)
     : Function_v2v<E>(rhs)
   {
   }
 
   template <typename E>
+  inline
   Function_v2b<E>::Function_v2b()
   {
   }
 
   template <typename E>
+  inline
   Function_v2b<E>::Function_v2b(const Function_v2b<E>& rhs)
     : Function_v2v<E>(rhs)
   {
   }
 
   template <typename E>
+  inline
   Function_p2b<E>::Function_p2b()
   {
   }
 
   template <typename E>
+  inline
   Function_p2b<E>::Function_p2b(const Function_p2b<E>& rhs)
     : Function_v2v<E>(rhs),
       Function_p2v<E>(rhs),
@@ -290,28 +302,33 @@ namespace mln
   }
 
   template <typename E>
+  inline
   Function_p2p<E>::Function_p2p()
   {
   }
 
   template <typename E>
+  inline
   Function_p2p<E>::Function_p2p(const Function_p2p<E>& rhs)
     : Function_p2v<E>(rhs)
   {
   }
 
   template <typename E>
+  inline
   Function_x2x<E>::Function_x2x()
   {
   }
 
   template <typename E>
+  inline
   Function_x2x<E>::Function_x2x(const Function_x2x<E>& rhs)
     : Function_v2v<E>(rhs)
   {
   }
 
   template <typename E>
+  inline
   Bijection_x2x<E>::Bijection_x2x()
   {
     typedef typename E::invert invert;

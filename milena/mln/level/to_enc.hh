@@ -58,6 +58,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename O>
+    inline
     void to_enc(const Image<I>& input, Image<O>& output)
     {
       trace::entering("level::to_enc");

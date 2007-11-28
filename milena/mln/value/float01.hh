@@ -119,6 +119,7 @@ namespace mln
     namespace internal
     {
 
+      inline
       unsigned long two_pow_(unsigned n)
       {
 	if (n == 0)
@@ -127,12 +128,14 @@ namespace mln
 	  return 2 * two_pow_(n - 1);
       }
 
+      inline
       unsigned long two_pow_n_minus_1(unsigned n)
       {
 	  return two_pow_(n) - 1;
       }
 
       template <unsigned n_dest>
+      inline
       unsigned long convert(unsigned n_src, unsigned long val)
       {
 	if (n_dest == n_src)
@@ -155,35 +158,41 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     float01::float01(const float01_<n>& g)
       : nbits_(n),
 	val_(g.to_enc())
     {
     }
 
+    inline
     float01::float01(unsigned nbits, float val)
       : nbits_(nbits),
 	val_(unsigned(val * internal::two_pow_n_minus_1(nbits)))
     {
     }
 
+    inline
     float float01::value() const
     {
       mln_invariant(nbits_ != 0);
       return double(val_) / internal::two_pow_n_minus_1(nbits_);
     }
 
+    inline
     unsigned long float01::value_ind() const
     {
       mln_invariant(nbits_ != 0);
       return val_;
     }
 
+    inline
     unsigned float01::nbits() const
     {
       return nbits_;
     }
 
+    inline
     float01&
     float01::set_nbits(unsigned nbits)
     {
@@ -204,6 +213,7 @@ namespace mln
       return *this;
     }
 
+    inline
     const float01
     float01::to_nbits(unsigned nbits) const
     {
@@ -214,6 +224,7 @@ namespace mln
       return tmp;
     }
 
+    inline
     float01::operator float() const
     {
       mln_precondition(nbits_ != 0);
@@ -234,11 +245,13 @@ namespace mln
 
     // Operators.
 
+    inline
     std::ostream& operator<<(std::ostream& ostr, const float01& g)
     {
       return ostr << g.value() << '/' << g.nbits() << "nbits";
     }
 
+    inline
     bool operator==(const float01& lhs, const float01& rhs)
     {
       mln_precondition(lhs.nbits() != 0 and rhs.nbits() != 0);
@@ -254,6 +267,7 @@ namespace mln
       }
     }
 
+    inline
     bool operator<(const float01& lhs, const float01& rhs)
     {
       mln_precondition(lhs.nbits() != 0 and rhs.nbits() != 0);

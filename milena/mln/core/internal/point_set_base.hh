@@ -72,6 +72,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S, typename E>
+    inline
     point_set_base_<S,E>::point_set_base_()
     {
     }

@@ -60,6 +60,7 @@ namespace mln
     {
 
       template <typename I>
+      inline
       unsigned get_(trait::image::border::some, trait::image::category::primary,
 		    const I& ima)
       {
@@ -67,6 +68,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       unsigned get_(trait::image::border::some, trait::image::category::morpher,
 		    const I& ima)
       {
@@ -75,6 +77,7 @@ namespace mln
 
 
       template <typename I>
+      inline
       unsigned get_(trait::image::border::none, trait::image::category::any,
 		    const I&)
       {
@@ -87,6 +90,7 @@ namespace mln
     // Facade.
 
     template <typename I>
+    inline
     unsigned get(const Image<I>& ima)
     {
       trace::entering("border::get");

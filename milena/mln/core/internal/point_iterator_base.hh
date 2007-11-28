@@ -83,12 +83,14 @@ namespace mln
 #ifndef MLN_INCLUDE_ONLY
 
     template <typename P, typename E>
+    inline
     point_iterator_base_<P, E>::point_iterator_base_()
     {
       mln::metal::is_a<P, Point_Site>::check();
     }
 
     template <typename P, typename E>
+    inline
     typename point_iterator_base_<P, E>::coord
     point_iterator_base_<P, E>::operator[](unsigned i) const
     {

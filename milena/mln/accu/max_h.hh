@@ -88,6 +88,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S>
+    inline
     max_h<S>::max_h(const Value_Set<S>& s)
       : h_(s),
 	s_(h_.vset())
@@ -96,6 +97,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     max_h<S>::max_h()
       : h_(),
 	s_(h_.vset())
@@ -104,6 +106,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     max_h<S>::take(const argument& t)
     {
@@ -121,6 +124,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     max_h<S>::take(const max_h<S>& other)
     {
@@ -133,6 +137,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     max_h<S>::untake(const argument& t)
     {
@@ -155,6 +160,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     max_h<S>::update_() const
     {
@@ -167,6 +173,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     max_h<S>::go_minus_() const
     {
@@ -177,6 +184,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     max_h<S>::go_plus_() const
     {
@@ -190,6 +198,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     max_h<S>::init()
     {
@@ -201,6 +210,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     max_h<S>::take_as_init(const argument& t)
     {
@@ -212,6 +222,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     typename max_h<S>::argument
     max_h<S>::to_result() const
     {
@@ -221,6 +232,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     const accu::histo<S>&
     max_h<S>::histo() const
     {
@@ -228,6 +240,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const max_h<S>& m)
     {
       return ostr << m.to_result();

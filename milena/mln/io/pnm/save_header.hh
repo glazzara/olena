@@ -57,16 +57,19 @@ namespace mln
     {
 
       template <typename V>
+      inline
       void save_max_val(V&, std::ofstream& file)
       {
 	file << max_component(V()) << std::endl;
       }
 
+      inline
       void save_max_val(bool&, std::ofstream& file)
       {
       }
 
       template <typename I>
+      inline
       void save_header(const char type,
 		       const I& ima, const std::string& filename,
 		       std::ofstream& file)

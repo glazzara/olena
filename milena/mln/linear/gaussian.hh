@@ -74,6 +74,7 @@ namespace mln
 	float sumA, sumC;
       };
 
+      inline
       recursivefilter_coef_::recursivefilter_coef_(float a0, float a1,
 						   float b0, float b1,
 						   float c0, float c1,
@@ -146,6 +147,7 @@ namespace mln
 
 
       template <class WorkType, class I>
+      inline
       void
       recursivefilter_(I& ima,
 		       const recursivefilter_coef_& c,
@@ -245,6 +247,7 @@ namespace mln
 
 
       template <class I, class F>
+      inline
       void
       gaussian_(Image<I>& img_, const F& coef)
       {
@@ -270,6 +273,7 @@ namespace mln
 
 
       template <class I, class F, class O>
+      inline
       void
       gaussian_common_(const Image<I>& in,
 		       const F& coef,
@@ -294,6 +298,7 @@ namespace mln
     // Facade.
 
     template <class I, class O>
+    inline
     void
     gaussian(const Image<I>& input, float sigma,
 	     Image<O>& output)

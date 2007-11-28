@@ -80,6 +80,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename E, typename B>
+      inline
       image_fastest_<E,B>::image_fastest_()
       {
 	typedef mln_point(E)   point;
@@ -118,6 +119,7 @@ namespace mln
 
       template <typename E, typename B>
       template <typename P>
+      inline
       unsigned // FIXME: std::size_t?
       image_fastest_<E,B>::offset_at(const Point_Site<P>& p_) const
       {

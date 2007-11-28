@@ -134,6 +134,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     diag2d::diag2d(unsigned length)
       : length_(length)
     {
@@ -143,31 +144,37 @@ namespace mln
 	insert(make::dpoint2d(-col, col));
     }
 
+    inline
     bool diag2d::is_centered() const
     {
       return true;
     }
 
+    inline
     bool diag2d::is_symmetric() const
     {
       return true;
     }
 
+    inline
     unsigned diag2d::length() const
     {
       return length_;
     }
 
+    inline
     unsigned diag2d::delta() const
     {
       return length_ / 2;
     }
 
+    inline
     diag2d& diag2d::sym()
     {
       return *this;
     }
 
+    inline
     std::ostream& operator<<(std::ostream& ostr, const diag2d& win)
     {
       ostr << "[diag 2d: length=" << win.length() << ']';

@@ -73,6 +73,7 @@ namespace mln
       {
 
 	template <typename I, typename W, typename O>
+	inline
 	void median(const I& input, const W& win,
 		    O& output)
 	{
@@ -97,6 +98,7 @@ namespace mln
       // facade
 
       template <typename I, typename W, typename O>
+      inline
       void median(const Image<I>& input, const Window<W>& win,
 		  Image<O>& output)
       {

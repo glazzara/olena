@@ -70,6 +70,7 @@ namespace mln
       // Binary => morphology on sets.
 
       template <typename I>
+      inline
       mln_concrete(I)
 	complementation_(trait::image::kind::logic,
 			 const Image<I>& input)
@@ -78,6 +79,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       void
       complementation_inplace_(trait::image::kind::logic,
 			       Image<I>& input)
@@ -89,6 +91,7 @@ namespace mln
       // Otherwise => morphology on functions.
 
       template <typename I>
+      inline
       mln_concrete(I)
 	complementation_(trait::image::kind::any,
 			 const Image<I>& input)
@@ -97,6 +100,7 @@ namespace mln
       }
 
       template <typename I>
+      inline
       void
 	complementation_inplace_(trait::image::kind::any,
 				 Image<I>& input)
@@ -110,6 +114,7 @@ namespace mln
     // Facades.
 
     template <typename I>
+    inline
     mln_concrete(I) complementation(const Image<I>& input)
     {
       trace::entering("morpho::complementation");
@@ -123,6 +128,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     void complementation_inplace(Image<I>& input)
     {
       trace::entering("morpho::complementation_inplace");

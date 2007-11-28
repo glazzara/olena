@@ -76,6 +76,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename V>
+  inline
   image2d_h<V>::image2d_h(int nrows, int ncols, unsigned bdr)
   {
     // numbers of cols can't be odd.

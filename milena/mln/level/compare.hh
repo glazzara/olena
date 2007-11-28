@@ -79,6 +79,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename L, typename R>
+  inline
   bool operator == (const Image<L>& lhs_, const Image<R>& rhs_)
   {
     const L& lhs = exact(lhs_);
@@ -92,6 +93,7 @@ namespace mln
   }
 
   template <typename L, typename R>
+  inline
   bool operator < (const Image<L>& lhs_, const Image<R>& rhs_)
   {
     const L& lhs = exact(lhs_);
@@ -105,6 +107,7 @@ namespace mln
   }
 
   template <typename L, typename R> // required!
+  inline
   bool operator <= (const Image<L>& lhs_, const Image<R>& rhs_)
   {
     const L& lhs = exact(lhs_);

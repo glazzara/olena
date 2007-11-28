@@ -58,6 +58,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename A, typename I>
+    inline
     mln_accu_with(A, util::pix<I>)::result
     estimate(const Image<I>& input, const mln_value(I)& val)
     {

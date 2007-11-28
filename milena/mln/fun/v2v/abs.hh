@@ -59,6 +59,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename V>
+      inline
       V
       abs<V>::operator()(const V& v) const
       {

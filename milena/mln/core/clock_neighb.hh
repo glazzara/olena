@@ -106,11 +106,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename D>
+  inline
   clock_neighb_<D>::clock_neighb_()
   {
   }
 
   template <typename D>
+  inline
   clock_neighb_<D>&
   clock_neighb_<D>::append(const D& dp)
   {

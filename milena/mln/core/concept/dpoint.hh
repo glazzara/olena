@@ -79,11 +79,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Dpoint<E>::Dpoint()
   {
   }
 
   template <typename E>
+  inline
   const E&
   Dpoint<E>::to_dpoint() const
   {

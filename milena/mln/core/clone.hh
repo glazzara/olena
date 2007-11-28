@@ -55,6 +55,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename I>
+  inline
   mln_concrete(I) clone(const Image<I>& model)
   {
     // FIXME: Add a static check that mln_concrete(I) actually *is* concrete...

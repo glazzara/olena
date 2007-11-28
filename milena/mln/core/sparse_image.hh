@@ -112,6 +112,7 @@ namespace mln
     // internal::data_< sparse_image<I,S> >
 
     template <typename P, typename T>
+    inline
     data_< sparse_image<P,T> >::data_()
     {
     }
@@ -119,11 +120,13 @@ namespace mln
   } // end of namespace mln::internal
 
   template <typename P, typename T>
+  inline
   sparse_image<P, T>::sparse_image()
   {
   }
 
   template <typename P, typename T>
+  inline
   bool
   sparse_image<P, T>::has_data() const
   {
@@ -131,6 +134,7 @@ namespace mln
   }
 
   template <typename P, typename T>
+  inline
   const typename sparse_image<P, T>::vset&
   sparse_image<P, T>::values() const
   {
@@ -138,6 +142,7 @@ namespace mln
   }
 
   template <typename P, typename T>
+  inline
   void
   sparse_image<P, T>::insert(const P& p, unsigned len,
 			     const std::vector<T>& value)
@@ -149,6 +154,7 @@ namespace mln
   }
 
   template <typename P, typename T>
+  inline
   typename sparse_image<P, T>::rvalue
   sparse_image<P, T>::operator()
     (const typename sparse_image<P, T>::psite& site) const
@@ -160,6 +166,7 @@ namespace mln
   }
 
   template <typename P, typename T>
+  inline
   typename sparse_image<P, T>::lvalue
   sparse_image<P, T>::operator()
     (const typename sparse_image<P,T>::psite& site)
@@ -171,6 +178,7 @@ namespace mln
   }
 
   template <typename P, typename T>
+  inline
   const typename sparse_image<P, T>::pset&
   sparse_image<P, T>::domain() const
   {

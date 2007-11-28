@@ -136,6 +136,7 @@ namespace mln
   // init_
 
   template <typename I, typename S, typename J>
+  inline
   void init_(tag::image_t, sub_image<I,S>& target, const J& model)
   {
     I ima;
@@ -152,6 +153,7 @@ namespace mln
   {
 
     template <typename I, typename S>
+    inline
     data_< sub_image<I,S> >::data_(I& ima, const S& pset)
       : ima_(ima),
 	pset_(pset)
@@ -164,17 +166,20 @@ namespace mln
   // sub_image<I,S>
 
   template <typename I, typename S>
+  inline
   sub_image<I,S>::sub_image()
   {
   }
 
   template <typename I, typename S>
+  inline
   sub_image<I,S>::sub_image(I& ima, const S& pset)
   {
     init_(ima, pset);
   }
 
   template <typename I, typename S>
+  inline
   void
   sub_image<I,S>::init_(I& ima, const S& pset)
   {
@@ -183,6 +188,7 @@ namespace mln
   }
 
   template <typename I, typename S>
+  inline
   const S&
   sub_image<I,S>::domain() const
   {
@@ -190,6 +196,7 @@ namespace mln
   }
 
   template <typename I, typename S>
+  inline
   sub_image<I,S>::operator sub_image<const I, S>() const
   {
     sub_image<const I, S> tmp(this->data_->ima_,
@@ -201,6 +208,7 @@ namespace mln
   // Operators.
 
   template <typename I, typename S>
+  inline
   sub_image<const I, S>
   operator|(const Image<I>& ima, const Point_Set<S>& pset)
   {
@@ -209,6 +217,7 @@ namespace mln
   }
 
   template <typename I, typename S>
+  inline
   sub_image<I, S>
   operator|(Image<I>& ima, const Point_Set<S>& pset)
   {

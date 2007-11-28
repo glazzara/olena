@@ -63,6 +63,7 @@ namespace mln
 	// On function.
 
 	template <typename I, typename W>
+	inline
 	mln_concrete(I)
         erosion_on_function_(const I& input, const W& win)
 	{
@@ -89,6 +90,7 @@ namespace mln
 	// On set.
 
 	template <typename I, typename W>
+	inline
 	mln_concrete(I)
 	erosion_on_set_(const I& input, const W& win)
 	{
@@ -137,6 +139,7 @@ namespace mln
     // Facades.
 
     template <typename I, typename W>
+    inline
     mln_concrete(I)
     erosion(const Image<I>& input, const Window<W>& win)
     {

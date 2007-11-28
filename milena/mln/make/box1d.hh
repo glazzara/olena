@@ -70,6 +70,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     mln::box1d box1d(unsigned ninds)
     {
       mln_precondition(ninds != 0);
@@ -78,6 +79,7 @@ namespace mln
       return tmp;
     }
 
+    inline
     mln::box1d box1d(int min_ind, int max_ind)
     {
       mln_precondition(max_ind >= min_ind);

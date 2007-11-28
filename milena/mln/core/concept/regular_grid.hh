@@ -53,6 +53,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Regular_Grid<E>::Regular_Grid()
   {
   }

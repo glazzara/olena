@@ -193,6 +193,7 @@ namespace mln
 
 
   template <typename L, typename R>
+  inline
   mln_trait_op_minus(L,R)
   operator-(const Image<L>& lhs, const Image<R>& rhs)
   {
@@ -206,6 +207,7 @@ namespace mln
   }
 
   template <typename L, typename R>
+  inline
   L&
   operator-=(Image<L>& lhs, const Image<R>& rhs)
   {
@@ -220,6 +222,7 @@ namespace mln
 
 
   template <typename I, typename S>
+  inline
   mln_trait_op_minus(I,S)
   operator-(const Image<I>& ima, const value::Scalar<S>& s)
   {
@@ -233,6 +236,7 @@ namespace mln
   }
 
   template <typename I, typename S>
+  inline
   I&
   operator-=(Image<I>& ima, const value::Scalar<S>& s)
   {
@@ -254,6 +258,7 @@ namespace mln
     {
 
       template <typename L, typename R, typename O>
+      inline
       void minus_(trait::image::speed::any, const L& lhs,
 		 trait::image::speed::any, const R& rhs, O& output)
       {
@@ -263,6 +268,7 @@ namespace mln
       }
 
       template <typename L, typename R, typename F, typename O>
+      inline
       void minus_(trait::image::speed::any, const L& lhs,
 		 trait::image::speed::any, const R& rhs, const F& f, O& output)
       {
@@ -272,6 +278,7 @@ namespace mln
       }
 
       template <typename L, typename R, typename O>
+      inline
       void minus_(trait::image::speed::fastest, const L& lhs,
 		 trait::image::speed::fastest, const R& rhs, O& output)
       {
@@ -283,6 +290,7 @@ namespace mln
       }
 
       template <typename L, typename R, typename F, typename O>
+      inline
       void minus_(trait::image::speed::fastest, const L& lhs,
 		 trait::image::speed::fastest, const R& rhs, const F& f, O& output)
       {
@@ -294,6 +302,7 @@ namespace mln
       }
 
       template <typename L, typename R>
+      inline
       void minus_inplace_(trait::image::speed::any, L& lhs,
 			 trait::image::speed::any, const R& rhs)
       {
@@ -303,6 +312,7 @@ namespace mln
       }
 
       template <typename L, typename R>
+      inline
       void minus_inplace_(trait::image::speed::fastest, L& lhs,
 			 trait::image::speed::fastest, const R& rhs)
       {
@@ -319,6 +329,7 @@ namespace mln
 
 
     template <typename L, typename R>
+    inline
     mln_trait_op_minus(L, R)
       minus(const Image<L>& lhs, const Image<R>& rhs)
     {
@@ -337,6 +348,7 @@ namespace mln
 
 
     template <typename L, typename R, typename F>
+    inline
     mln_ch_value(L, mln_result(F))
       minus(const Image<L>& lhs, const Image<R>& rhs, const Function_v2v<F>& f)
     {
@@ -355,6 +367,7 @@ namespace mln
 
 
     template <typename V, typename L, typename R>
+    inline
     mln_ch_value(L, V)
       minus(const Image<L>& lhs, const Image<R>& rhs)
     {
@@ -372,6 +385,7 @@ namespace mln
 
 
     template <typename I, typename V>
+    inline
     mln_trait_op_minus(I, V)
       minus_cst(const Image<I>& input, const V& val)
     {
@@ -389,6 +403,7 @@ namespace mln
 
 
     template <typename I, typename V, typename F>
+    inline
     mln_ch_value(I, mln_result(F))
       minus_cst(const Image<I>& input, const V& val, const Function_v2v<F>& f)
     {
@@ -407,6 +422,7 @@ namespace mln
 
 
     template <typename L, typename R>
+    inline
     void
     minus_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
@@ -422,6 +438,7 @@ namespace mln
 
 
     template <typename I, typename V>
+    inline
     I&
     minus_cst_inplace(Image<I>& input, const V& val)
     {

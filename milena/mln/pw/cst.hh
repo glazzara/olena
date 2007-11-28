@@ -71,6 +71,7 @@ namespace mln
     // pw::cst_<T>
 
     template <typename T>
+    inline
     cst_<T>::cst_(const T& t)
       : t_(t)
     {
@@ -78,6 +79,7 @@ namespace mln
 
     template <typename T>
     template <typename P>
+    inline
     T
     cst_<T>::operator()(const P&) const
     {
@@ -87,6 +89,7 @@ namespace mln
     // pw::cst(t)
 
     template <typename T>
+    inline
     cst_<T> cst(const T& t)
     {
       cst_<T> tmp(t);

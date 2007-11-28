@@ -59,6 +59,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename P, typename E>
+    inline
     run_image_<P, E>::run_image_()
     {
     }

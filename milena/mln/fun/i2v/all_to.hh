@@ -73,6 +73,7 @@ namespace mln
     {
 
       template <typename T>
+      inline
       all_to<T>::all_to(T t)
 	: t_(t)
       {
@@ -80,6 +81,7 @@ namespace mln
 
       template <typename T>
       template <typename U>
+      inline
       T
       all_to<T>::operator()(const U&) const
       {
@@ -91,6 +93,7 @@ namespace mln
   } // end of namespace mln::fun
 
   template <typename T>
+  inline
   fun::i2v::all_to<T> all_to(T t)
   {
     fun::i2v::all_to<T> tmp(t);

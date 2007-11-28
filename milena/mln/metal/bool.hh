@@ -76,10 +76,12 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     void true_::check()
     {
     }
 
+    inline
     void false_::check_not()
     {
     }

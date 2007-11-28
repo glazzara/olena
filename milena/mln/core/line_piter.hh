@@ -94,6 +94,7 @@ namespace mln
   // line_piter_<P>
 
   template <typename P>
+  inline
   line_piter_<P>::line_piter_(const box_<P>& b)
     : b_(b)
   {
@@ -109,12 +110,14 @@ namespace mln
   }
 
   template <typename P>
+  inline
   line_piter_<P>::operator P() const
   {
     return p_;
   }
 
   template <typename P>
+  inline
   const P&
   line_piter_<P>::to_point() const
   {
@@ -122,6 +125,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   mln_coord(P)
   line_piter_<P>::operator[](unsigned i) const
   {
@@ -131,6 +135,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   line_piter_<P>::is_valid() const
   {
@@ -138,6 +143,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   line_piter_<P>::invalidate()
   {
@@ -145,6 +151,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   line_piter_<P>::start()
   {
@@ -152,6 +159,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   line_piter_<P>::next_()
   {

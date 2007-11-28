@@ -79,6 +79,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
+    inline
     const set<T>&
     set<T>::the()
     {

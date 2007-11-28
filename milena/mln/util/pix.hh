@@ -113,6 +113,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     pix<I>::pix(const Image<I>& ima, const mln_psite(I)& p)
       : ima_(exact(ima)),
 	p_(p)
@@ -120,6 +121,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     const I&
     pix<I>::ima() const
     {
@@ -127,6 +129,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     const mln_psite(I)&
     pix<I>::p() const
     {
@@ -134,6 +137,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     mln_rvalue(I)
     pix<I>::v() const
     {

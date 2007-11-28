@@ -100,12 +100,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename A1, typename A2, typename T>
+    inline
     pair_<A1,A2,T>::pair_()
     {
       init();
     }
 
     template <typename A1, typename A2, typename T>
+    inline
     void
     pair_<A1,A2,T>::init()
     {
@@ -114,6 +116,7 @@ namespace mln
     }
 
     template <typename A1, typename A2, typename T>
+    inline
     void
     pair_<A1,A2,T>::take_as_init(const argument& t)
     {
@@ -122,6 +125,7 @@ namespace mln
     }
 
     template <typename A1, typename A2, typename T>
+    inline
     void
     pair_<A1,A2,T>::take(const argument& t)
     {
@@ -130,6 +134,7 @@ namespace mln
     }
 
     template <typename A1, typename A2, typename T>
+    inline
     void
     pair_<A1,A2,T>::take(const pair_<A1,A2,T>& other)
     {
@@ -138,6 +143,7 @@ namespace mln
     }
 
     template <typename A1, typename A2, typename T>
+    inline
     typename pair_<A1,A2,T>::result
     pair_<A1,A2,T>::to_result() const
     {
@@ -146,6 +152,7 @@ namespace mln
     }
 
     template <typename A1, typename A2, typename T>
+    inline
     void
     pair_<A1,A2,T>::get_result(result_1& r1,
 			    result_2& r2) const

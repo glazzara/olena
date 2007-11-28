@@ -189,18 +189,21 @@ namespace mln
 
     // Gray.
 
+    inline
     gray::gray()
       : nbits_(0)
     {
     }
 
     template <unsigned n>
+    inline
     gray::gray(const graylevel<n>& g)
       : nbits_(n),
 	val_(g.value())
     {
     }
 
+    inline
     gray::gray(const literal::white_t&)
       : nbits_(1),
 	val_(1)
@@ -209,6 +212,7 @@ namespace mln
 
 
     template <unsigned n>
+    inline
     gray& gray::operator=(const graylevel<n>& g)
     {
       nbits_ = n;
@@ -216,6 +220,7 @@ namespace mln
       return *this;
     }
 
+    inline
     gray& gray::operator=(const literal::white_t&)
     {
       // nbits_ is not modified so that precision does not change.
@@ -223,12 +228,14 @@ namespace mln
       return *this;
     }
 
+    inline
     gray::gray(const literal::black_t&)
       : nbits_(1),
 	val_(0)
     {
     }
 
+    inline
     gray& gray::operator=(const literal::black_t&)
     {
       // nbits_ is not modified so that precision does not change.
@@ -236,18 +243,21 @@ namespace mln
       return *this;
     }
 
+    inline
     gray::gray(unsigned nbits, long val)
       : nbits_(nbits),
 	val_(val)
     {
     }
 
+    inline
     long gray::value() const
     {
       mln_invariant(nbits_ != 0);
       return val_;
     }
 
+    inline
     unsigned gray::nbits() const
     {
       return nbits_;
@@ -256,6 +266,7 @@ namespace mln
     namespace internal
     {
 
+      inline
       long two_pow_(unsigned n)
       {
 	if (n == 0)
@@ -264,12 +275,14 @@ namespace mln
 	  return 2 * two_pow_(n - 1);
       }
 
+      inline
       long two_pow_n_minus_1(unsigned n)
       {
 	return two_pow_(n) - 1;
       }
 
       template <unsigned n_dest>
+      inline
       long convert(unsigned n_src, long val)
       {
 	if (n_dest == n_src)
@@ -284,6 +297,7 @@ namespace mln
     } // end of mln::value::internal
 
 
+    inline
     void gray::set_nbits(unsigned nbits)
     {
       mln_precondition(nbits != 0);
@@ -303,6 +317,7 @@ namespace mln
     }
 
 
+    inline
     gray gray::to_nbits(unsigned nbits) const
     {
       mln_precondition(nbits != 0);
@@ -314,6 +329,7 @@ namespace mln
 
 
     template <unsigned n>
+    inline
     gray::operator graylevel<n>() const
     {
       mln_precondition(nbits_ != 0);
@@ -326,11 +342,13 @@ namespace mln
 
     // Operators.
 
+    inline
     std::ostream& operator<<(std::ostream& ostr, const gray& g)
     {
       return ostr << g.value() << "g/" << g.nbits() << "bits";
     }
 
+    inline
     bool operator==(const gray& lhs, const gray& rhs)
     {
       mln_precondition(lhs.nbits() != 0 and rhs.nbits() != 0);
@@ -342,6 +360,7 @@ namespace mln
 	return lhs.to_nbits(rhs.nbits()).value() == rhs.value();
     }
 
+    inline
     bool operator<(const gray& lhs, const gray& rhs)
     {
       mln_precondition(lhs.nbits() != 0 and rhs.nbits() != 0);
@@ -353,6 +372,7 @@ namespace mln
 	return lhs.to_nbits(rhs.nbits()).value() < rhs.value();
     }
 
+    inline
     gray operator+(const gray& lhs, const gray& rhs)
     {
       mln_precondition(lhs.nbits() != 0 and rhs.nbits() != 0);
@@ -370,6 +390,7 @@ namespace mln
 	}
     }
 
+    inline
     gray operator-(const gray& lhs, const gray& rhs)
     {
       mln_precondition(lhs.nbits() != 0 and rhs.nbits() != 0);
@@ -391,6 +412,7 @@ namespace mln
 	}
     }
 
+    inline
     gray operator*(const gray& lhs, const gray& rhs)
     {
       // FIXME: The formula below is wrong but we do not mind,
@@ -401,18 +423,21 @@ namespace mln
       return tmp;
     }
 
+    inline
     gray operator*(int s, const gray& rhs)
     {
       gray tmp(rhs.nbits(), rhs.value() * s);
       return tmp;
     }
 
+    inline
     gray operator*(const gray& lhs, int s)
     {
       gray tmp(lhs.nbits(), lhs.value() * s);
       return tmp;
     }
 
+    inline
     gray operator/(const gray& lhs, int s)
     {
       mln_precondition(s != 0);
@@ -426,6 +451,7 @@ namespace mln
     // Op gl + gl
 
     template <unsigned n, unsigned m>
+    inline
     gray
     operator+(const graylevel<n>& lhs, const graylevel<m>& rhs)
     {
@@ -435,6 +461,7 @@ namespace mln
     // Op gl - gl
 
     template <unsigned n, unsigned m>
+    inline
     gray
     operator-(const graylevel<n>& lhs, const graylevel<m>& rhs)
     {
@@ -444,6 +471,7 @@ namespace mln
     // Op gl * gl
 
     template <unsigned n, unsigned m>
+    inline
     gray
     operator*(const graylevel<n>& lhs, const graylevel<m>& rhs)
     {
@@ -453,6 +481,7 @@ namespace mln
     // Op symm gl * Int
 
     template <unsigned n, typename I>
+    inline
     gray
     operator*(const graylevel<n>& lhs, const Integer<I>& rhs)
     {
@@ -460,6 +489,7 @@ namespace mln
     }
 
     template <typename I, unsigned n>
+    inline
     gray
     operator*(const Integer<I>& lhs, const graylevel<n>& rhs)
     {
@@ -469,6 +499,7 @@ namespace mln
     // Op symm gl * Float
 
     template <unsigned n, typename F>
+    inline
     float
     operator*(const graylevel<n>& lhs, const Floating<F>& rhs)
     {
@@ -476,6 +507,7 @@ namespace mln
     }
 
     template <typename F, unsigned n>
+    inline
     float
     operator*(const Floating<F>& lhs, const graylevel<n>& rhs)
     {
@@ -496,12 +528,14 @@ namespace mln
       struct helper_gray_op_< gray >
       {
 	template <unsigned n, typename S>
+	inline
 	static gray times(const graylevel<n>& lhs, const scalar_<S>& rhs)
 	{
 	  gray tmp(n, lhs.value() * rhs.to_equiv());
 	  return tmp;
 	}
 	template <unsigned n, typename S>
+	inline
 	static gray div(const graylevel<n>& lhs, const scalar_<S>& rhs)
 	{
 	  gray tmp(n, lhs.value() / rhs.to_equiv());
@@ -513,12 +547,14 @@ namespace mln
       struct helper_gray_op_< float >
       {
 	template <unsigned n, typename S>
+	inline
 	static float times(const graylevel<n>& lhs, const scalar_<S>& rhs)
 	{
 	  float tmp(lhs.to_float() * float(rhs.to_equiv()));
 	  return tmp;
 	}
 	template <unsigned n, typename S>
+	inline
 	static float div(const graylevel<n>& lhs, const scalar_<S>& rhs)
 	{
 	  float tmp(lhs.to_float() / float(rhs.to_equiv()));
@@ -529,6 +565,7 @@ namespace mln
     } // end of namespace mln::value::internal
 
     template <unsigned n, typename S>
+    inline
     mln_trait_op_times(graylevel<n>, scalar_<S>)
       operator*(const graylevel<n>& lhs, const scalar_<S>& rhs)
     {
@@ -537,6 +574,7 @@ namespace mln
     }
 
     template <unsigned n, typename S>
+    inline
     mln_trait_op_div(graylevel<n>, scalar_<S>)
       operator/(const graylevel<n>& lhs, const scalar_<S>& rhs)
     {
@@ -555,18 +593,21 @@ namespace mln
 
     // 'gray' as a value.
 
+    inline
     const mln::value::gray
     value_< mln::value::gray >::min()
     {
       return mln::value::gray(1, 0);
     }
 
+    inline
     const mln::value::gray
     value_< mln::value::gray >::max()
     {
       return mln::value::gray(1, 1);
     }
 
+    inline
     const mln::value::gray
     value_< mln::value::gray >::epsilon()
     {

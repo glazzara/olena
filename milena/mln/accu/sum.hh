@@ -93,12 +93,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T, typename S>
+    inline
     sum_<T,S>::sum_()
     {
       init();
     }
 
     template <typename T, typename S>
+    inline
     void
     sum_<T,S>::init()
     {
@@ -106,12 +108,14 @@ namespace mln
     }
 
     template <typename T, typename S>
+    inline
     void sum_<T,S>::take(const argument& t)
     {
       s_ += t;
     }
 
     template <typename T, typename S>
+    inline
     void
     sum_<T,S>::take(const sum_<T,S>& other)
     {
@@ -119,6 +123,7 @@ namespace mln
     }
 
     template <typename T, typename S>
+    inline
     S
     sum_<T,S>::to_result() const
     {

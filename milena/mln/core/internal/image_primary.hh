@@ -58,6 +58,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S, typename E>
+    inline
     image_primary_<S,E>::image_primary_()
     {
     }

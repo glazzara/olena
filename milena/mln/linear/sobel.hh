@@ -76,6 +76,7 @@ namespace mln
     {
 
       template <typename I, typename O>
+      inline
       void sobel_h_(const Image<I>& input, Image<O>& output)
       {
 	int wrow[] = { -1, 0, 1 }, wcol[] = { 1,
@@ -85,6 +86,7 @@ namespace mln
       }
 
       template <typename I, typename O>
+      inline
       void sobel_v_(const Image<I>& input, Image<O>& output)
       {
 	int wrow[] = { 1, 2, 1 }, wcol[] = { -1,
@@ -94,6 +96,7 @@ namespace mln
       }
 
       template <typename I, typename O>
+      inline
       void sobel_(const Image<I>& input, Image<O>& output)
       {
 	// h
@@ -112,6 +115,7 @@ namespace mln
     // Facades.
 
     template <typename I, typename O>
+    inline
     void sobel_h(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
@@ -119,6 +123,7 @@ namespace mln
     }
 
     template <typename I, typename O>
+    inline
     void sobel_v(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
@@ -126,6 +131,7 @@ namespace mln
     }
 
     template <typename I, typename O>
+    inline
     void sobel(const Image<I>& input, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());

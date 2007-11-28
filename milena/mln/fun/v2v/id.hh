@@ -59,6 +59,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
       template <typename T>
+      inline
       T
       id<T>::operator()(const T& t) const
       {

@@ -118,12 +118,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
+  inline
   p_run<P>::p_run()
   {
     is_valid_ = false;
   }
 
   template <typename P>
+  inline
   p_run<P>::p_run(const P& start, std::size_t len)
     : p_(start),
       len_(len)
@@ -138,6 +140,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   p_run<P>::set_run(const P& start, std::size_t len)
   {
@@ -153,6 +156,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   p_run<P>::has(const P& p) const
   {
@@ -166,6 +170,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   std::size_t
   p_run<P>::npoints() const
   {
@@ -174,6 +179,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   std::size_t
   p_run<P>::length() const
   {
@@ -182,6 +188,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   P
   p_run<P>::operator[](unsigned i) const
   {
@@ -193,6 +200,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const P&
   p_run<P>::first() const
   {
@@ -200,6 +208,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   const box_<mln_point(P)>&
   p_run<P>::bbox() const
   {
@@ -209,6 +218,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   bool
   p_run<P>::operator<(const p_run<P>& rhs) const
   {

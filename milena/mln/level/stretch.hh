@@ -63,6 +63,7 @@ namespace mln
     {
 
       template <unsigned n, typename I, typename O>
+      inline
       void stretch(value::int_u<n>,
 		   const Image<I>& input, Image<O>& output)
       {
@@ -88,6 +89,7 @@ namespace mln
 
 
     template <typename I, typename O>
+    inline
     void stretch(const Image<I>& input, Image<O>& output)
     {
       trace::entering("level::stretch");

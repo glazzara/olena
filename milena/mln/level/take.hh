@@ -69,6 +69,7 @@ namespace mln
       namespace generic
       {
 	template <typename A, typename I>
+	inline
 	void take_(const I& input, A& a)
 	{
 	  trace::entering("level::impl::generic::take");
@@ -88,6 +89,7 @@ namespace mln
     // Facade.
 
     template <typename A, typename I>
+    inline
     void take(const Image<I>& input, Accumulator<A>& a)
     {
       trace::entering("level::take");

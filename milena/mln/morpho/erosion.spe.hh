@@ -96,6 +96,7 @@ namespace mln
 
 
       template <typename I, typename W>
+      inline
       mln_concrete(I)
 	erosion_iterative_(trait::image::kind::any,
 			   trait::image::speed::any,
@@ -106,6 +107,7 @@ namespace mln
 
 
       template <typename I, typename W>
+      inline
       mln_concrete(I)
 	erosion_iterative_(trait::image::kind::any,
 			   trait::image::speed::fastest,
@@ -139,6 +141,7 @@ namespace mln
 
 
       template <typename I, typename W>
+      inline
       mln_concrete(I)
 	erosion_iterative_(trait::image::kind::logic,
 			   trait::image::speed::any,
@@ -149,6 +152,7 @@ namespace mln
 
 
       template <typename I, typename W>
+      inline
       mln_concrete(I)
 	erosion_iterative_(trait::image::kind::logic,
 			   trait::image::speed::fastest,
@@ -198,6 +202,7 @@ namespace mln
       // Facade.
 
       template <typename I, typename W>
+      inline
       mln_concrete(I)
       erosion_iterative_(const I& input, const W& win)
       {
@@ -322,6 +327,7 @@ namespace mln
 
 
       template <typename I, typename W>
+      inline
       mln_concrete(I)
 	erosion_(const I& input, const W& win)
       {
@@ -331,6 +337,7 @@ namespace mln
 
 
       template <typename I>
+      inline
       mln_concrete(I)
 	erosion_(const I& input, const win::rectangle2d& win)
       {
@@ -346,6 +353,7 @@ namespace mln
 
 
       template <typename I>
+      inline
       mln_concrete(I)
 	erosion_(const I& input, const win::octagon2d& win)
       {

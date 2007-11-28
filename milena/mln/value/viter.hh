@@ -123,6 +123,7 @@ namespace mln
     // fwd_viter_<S>
 
     template <typename S>
+    inline
     fwd_viter_<S>::fwd_viter_(const Value_Set<S>& s)
       : s_(exact(s))
     {
@@ -130,6 +131,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     fwd_viter_<S>::operator mln_value(S) () const
     {
       mln_precondition(is_valid());
@@ -137,6 +139,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     bool
     fwd_viter_<S>::is_valid() const
     {
@@ -144,6 +147,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     fwd_viter_<S>::invalidate()
     {
@@ -151,6 +155,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     fwd_viter_<S>::start()
     {
@@ -158,6 +163,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     fwd_viter_<S>::next_()
     {
@@ -168,6 +174,7 @@ namespace mln
     // bkd_viter_<S>
 
     template <typename S>
+    inline
     bkd_viter_<S>::bkd_viter_(const Value_Set<S>& s)
       : s_(exact(s))
     {
@@ -175,6 +182,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     bkd_viter_<S>::operator mln_value(S) () const
     {
       mln_precondition(is_valid());
@@ -182,6 +190,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     bool
     bkd_viter_<S>::is_valid() const
     {
@@ -189,6 +198,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     bkd_viter_<S>::invalidate()
     {
@@ -196,6 +206,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     bkd_viter_<S>::start()
     {
@@ -203,6 +214,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     void
     bkd_viter_<S>::next_()
     {

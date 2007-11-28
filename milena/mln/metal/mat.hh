@@ -263,6 +263,7 @@ namespace mln
     const mat<n,m,T> mat<n,m,T>::Id = mat<n,m,T>::identity();
 
     template <unsigned n, unsigned m, typename T>
+    inline
     mat<n,m,T> mat<n,m,T>::identity()
     {
       static mat<n,m,T> id_;
@@ -279,6 +280,7 @@ namespace mln
 
     template <unsigned n, unsigned m, typename T>
     template <typename U>
+    inline
     mat<n,m,T>::mat(const mat<n,m,U>& rhs)
     {
       for (unsigned i = 0; i < n; ++i)
@@ -288,6 +290,7 @@ namespace mln
     
     template <unsigned n, unsigned m, typename T>
     template <typename F>
+    inline
     mat<n,m,T>::mat(const Function_i2v<F>& f_)
     {
       mlc_converts_to(mln_result(F), T)::check();
@@ -299,6 +302,7 @@ namespace mln
 
     template <unsigned n, unsigned m, typename T>
     template <typename U>
+    inline
     mat<n,m,T>&
     mat<n,m,T>::operator=(const mat<n,m,U>& rhs)
     {
@@ -309,6 +313,7 @@ namespace mln
     }
     
     template <unsigned n, unsigned m, typename T>
+    inline
     const T&
     mat<n,m,T>::operator()(unsigned i, unsigned j) const
     {
@@ -317,6 +322,7 @@ namespace mln
     }
     
     template <unsigned n, unsigned m, typename T>
+    inline
     T&
     mat<n,m,T>::operator()(unsigned i, unsigned j)
     {
@@ -325,6 +331,7 @@ namespace mln
     }
     
     template <unsigned n, unsigned m, typename T>
+    inline
     void mat<n,m,T>::set_all(const T& val)
     {
       for (unsigned i = 0; i < n; ++i)
@@ -333,6 +340,7 @@ namespace mln
     }
     
     template <unsigned n, unsigned m, typename T>
+    inline
     unsigned mat<n,m,T>::size() const
     {
       return n * m;
@@ -343,6 +351,7 @@ namespace mln
 
 
     template <unsigned n, unsigned m, typename T, typename U>
+    inline
     bool
     operator==(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
     {
@@ -354,6 +363,7 @@ namespace mln
     }
 
     template <unsigned n, unsigned m, typename T, typename U>
+    inline
     mat<n, m, mln_trait_op_plus(T,U)>
     operator+(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
     {
@@ -365,6 +375,7 @@ namespace mln
     }
 
     template <unsigned n, unsigned m, typename T, typename U>
+    inline
     mat<n,m, mln_trait_op_minus(T,U)>
     operator-(const mat<n,m,T>& lhs, const mat<n,m,U>& rhs)
     {
@@ -376,6 +387,7 @@ namespace mln
     }
 
     template <unsigned n, unsigned m, typename T>
+    inline
     mat<n,m, mln_trait_op_uminus(T)>
     operator-(const mat<n,m,T>& rhs)
     {
@@ -388,6 +400,7 @@ namespace mln
 
     template <unsigned n, unsigned o, typename T,
 	      unsigned m, typename U>
+    inline
     mat<n, m, mln_sum_x(T,U)>
     operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs)
     {
@@ -404,6 +417,7 @@ namespace mln
 
     template <unsigned n, unsigned m, typename T,
 	      typename U>
+    inline
     vec<n, mln_sum_x(T,U)>
     operator*(const mat<n,m,T>& lhs, const vec<m,U>& rhs)
     {
@@ -419,6 +433,7 @@ namespace mln
     }
 
     template <unsigned n, unsigned m, typename T, typename S>
+    inline
     mat<n, m, mln_trait_op_times(T,S)>
     operator*(const mat<n,m,T>& lhs, const value::scalar_<S>& s_)
     {
@@ -431,6 +446,7 @@ namespace mln
     }
 
     template <unsigned n, unsigned m, typename T, typename S>
+    inline
     mat<n,m, mln_trait_op_div(T,S)>
     operator/(const mat<n,m,T>& lhs, const value::scalar_<S>& s_)
     {
@@ -445,6 +461,7 @@ namespace mln
     // <<
     
     template <unsigned n, unsigned m, typename T>
+    inline
     std::ostream&
     operator<<(std::ostream& ostr, const mat<n,m,T>& v)
     {

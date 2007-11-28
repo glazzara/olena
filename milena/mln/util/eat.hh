@@ -60,16 +60,19 @@ namespace mln
 
     // eat
 
+    inline
     eat::eat()
     {
     }
 
     template <typename T>
+    inline
     eat::eat(const T&)
     {
     }
 
     template <typename T>
+    inline
     eat&
     eat::operator=(const T&)
     {

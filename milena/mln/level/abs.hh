@@ -66,6 +66,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename O>
+    inline
     void abs(const Image<I>& input, Image<O>& output)
     {
       trace::entering("level::abs");
@@ -77,6 +78,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     void abs_inplace(Image<I>& input)
     {
       trace::entering("level::abs_inplace");

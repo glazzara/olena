@@ -60,6 +60,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename W, unsigned M>
+    inline
     mln::w_window<mln::dpoint2d, W>
     w_window2d(W (&weights)[M])
     {

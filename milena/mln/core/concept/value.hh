@@ -76,6 +76,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Value<E>::Value()
   {
     typedef mln_enc(E) enc;

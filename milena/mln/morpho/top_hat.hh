@@ -78,6 +78,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename W>
+    inline
     mln_concrete(I) top_hat_white(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::top_hat_white");
@@ -93,6 +94,7 @@ namespace mln
     }
 
     template <typename I, typename W>
+    inline
     mln_concrete(I) top_hat_black(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::top_hat_black");
@@ -108,6 +110,7 @@ namespace mln
     }
 
     template <typename I, typename W>
+    inline
     mln_concrete(I) top_hat_self_complementary(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::top_hat_self_complementary");

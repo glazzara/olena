@@ -80,6 +80,7 @@ namespace mln
     {
 
       template <typename P>
+      inline
       void memset__(P& pix, const mln_value(P)& v, std::size_t n)
       {
 	trace::entering("level::impl::memset_");
@@ -116,6 +117,7 @@ namespace mln
 
 
     template <typename P>
+    inline
     void memset_(Generalized_Pixel<P>& pix_,
 		 const mln_value(P)& v, std::size_t n)
     {
@@ -136,6 +138,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     void memset_(I& input, const mln_point(I)& p,
 		 const mln_value(I)& v, std::size_t n)
     {

@@ -85,6 +85,7 @@ namespace mln
 
 
       template <typename V, typename T>
+      inline
       const typename internal::equiv_<V>::ret&
       run_equiv_(const Value<V>* v, const T*)
       {
@@ -92,6 +93,7 @@ namespace mln
       }
 
       template <typename V>
+      inline
       const V&
       run_equiv_(const void*, const V* v)
       {
@@ -99,6 +101,7 @@ namespace mln
       }
 
       template <typename V>
+      inline
       const typename internal::equiv_<V>::ret&
       run_equiv_(const V& v)
       {
@@ -130,6 +133,7 @@ namespace mln
 	enum { id = sizeof(equiv_selector_(make_<T>::ptr())) };
 	typedef typename equiv_ret_<id, T>::ret ret;
 
+	inline
 	static ret run(const T& t)
 	{
 	  return ret::run(t);
@@ -141,6 +145,7 @@ namespace mln
 
 
     template <typename V>
+    inline
     typename internal::equiv_<V>::ret
     equiv(const mln::Value<V>& v)
     {

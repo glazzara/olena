@@ -74,6 +74,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename N>
+    inline
     p_set<mln_point(N)> to_p_set(const Neighborhood<N>& nbh_)
     {
       const N& nbh = exact(nbh_);
@@ -87,6 +88,7 @@ namespace mln
     }
 
     template <typename I>
+    inline
     p_set<mln_point(I)> to_p_set(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
@@ -106,6 +108,7 @@ namespace mln
     }
 
     template <typename W>
+    inline
     p_set<mln_point(W)> to_p_set(const Window<W>& win)
     {
       typedef mln_dpoint(W) D;
@@ -118,6 +121,7 @@ namespace mln
     }
 
     template <typename P>
+    inline
     p_set<P> to_p_set(const std::set<P>& s)
     {
       mln::metal::is_a<P, Point_Site>::check();
@@ -129,6 +133,7 @@ namespace mln
     }
 
     template <typename S>
+    inline
     p_set<mln_psite(S)> to_p_set(const Point_Set<S>& ps_)
     {
       const S& ps = exact(ps_);

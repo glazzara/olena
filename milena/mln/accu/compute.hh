@@ -71,6 +71,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename A, typename I>
+    inline
     mln_result(A)
     compute(const Image<I>& input_)
     {
@@ -84,6 +85,7 @@ namespace mln
     }
 
     template <typename A, typename I>
+    inline
     mln_accu_with(A, util::pix<I>)::result
     compute(const Image<I>& input)
     {

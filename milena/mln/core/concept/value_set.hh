@@ -84,6 +84,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Value_Set<E>::Value_Set()
   {
     typedef mln_value(E) value;
@@ -99,6 +100,7 @@ namespace mln
   }
 
   template <typename E>
+  inline
   std::ostream& operator<<(std::ostream& ostr, const Value_Set<E>& vs_)
   {
     const E& vs = exact(vs_);

@@ -66,6 +66,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
+    inline
     mln_sum(mln_value(I)) sum(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
@@ -73,6 +74,7 @@ namespace mln
     }
 
     template <typename I, typename S>
+    inline
     void sum(const Image<I>& input, S& result)
     {
       mln_precondition(exact(input).has_data());

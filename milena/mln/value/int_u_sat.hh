@@ -123,11 +123,13 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n>
+    inline
     int_u_sat<n>::int_u_sat()
     {
     }
 
     template <unsigned n>
+    inline
     int_u_sat<n>::int_u_sat(int i)
     {
       static const unsigned max_ = mln_max(int_u<n>);
@@ -140,12 +142,14 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     int_u_sat<n>::operator int() const
     {
       return this->v_;
     }
 
     template <unsigned n>
+    inline
     int_u_sat<n>&
     int_u_sat<n>::operator=(int i)
     {
@@ -160,6 +164,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     int_u_sat<n>&
     int_u_sat<n>::operator+=(int i)
     {
@@ -169,6 +174,7 @@ namespace mln
     }
 
     template <unsigned n>
+    inline
     int_u_sat<n>&
     int_u_sat<n>::operator-=(int i)
     {
@@ -184,6 +190,7 @@ namespace mln
     const int_u_sat<n> int_u_sat<n>::one = 1;
 
     template <unsigned n>
+    inline
     std::ostream& operator<<(std::ostream& ostr, const int_u_sat<n>& i)
     {
       return ostr << debug::format(i.to_equiv());
