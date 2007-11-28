@@ -243,7 +243,7 @@ in head/foot}%
     \item Many libraries exist that can fulfill one's needs.
     \item If you're happy with your favorite tool, we cannot force you
       to change for \mln...
-    \item Though, you might have a look at \mln and being seduced!
+    \item Though, you might have a look at \mln and be seduced!
     \end{itemize}
     
   \end{block}
@@ -253,7 +253,7 @@ in head/foot}%
   \begin{block}{No!}
     \begin{itemize}
     \item \mln is rather different than available libraries.
-    \item A lot of convenient data structures that \emph{really} helps
+    \item A lot of convenient data structures that \emph{really} help
       you in developing IP solutions.
     \end{itemize}
   \end{block}
@@ -310,7 +310,8 @@ $\forall p \in \mathcal{D}(f), \;\; f(p) = \mathit{h}(f(p))$
 \smallskip
 \begin{lstlisting}[basicstyle={\tiny\sffamily}]
 template <typename I, typename H>
-void transform_inplace(Image<I>& f_, const Function_v2v<H>& h_)
+void transform_inplace(Image<I>& f_,
+                       const Function_v2v<H>& h_)
 {
   I& f = exact(f);
   const H& h = exact(h_);
@@ -389,7 +390,7 @@ struct transform_inplace
   \begin{itemize}
   \item Generic...
   \item Efficient so that one can process large images.
-  \item Quite as easy to use as a C or Java library.
+  \item Almost as easy to use as a C or Java library.
   \item Many tools to help writing readable algorithms in a concise way.
   \end{itemize}
 
@@ -552,7 +553,7 @@ tegucigalpa% ls mln
 \texttt{arith} & arithmetical operators \\
 \texttt{border} & routines about virtual border &
 \texttt{canvas} & canvases \\
-\texttt{convert} & conversions routines &
+\texttt{convert} & conversion routines &
 \texttt{core} & the library core \\
 \texttt{debug} & debugging tools &
 \texttt{display} & display tools \\
@@ -605,7 +606,7 @@ tegucigalpa% ls mln
     not on implementation details about how to do it
     \smallskip
     % 
-  \item you do not have found yet a library to easily process your
+  \item you have not yet found a library to easily process your
     particular types of data
   \end{itemize}
 
@@ -824,9 +825,9 @@ note that \code{p.row() = 7} looks more natural than \code{set\_row(\&p, 7)}.
 \begin{frame}[fragile]
   \frametitle{Modifying the State of an Object (2/2)}
 
-  accessing and modifying through method calls allow some control:
+  accessing and modifying through method calls allow for some control:
   \begin{itemize}
-  \item one cannot do everything with an object
+  \item one cannot do anything with an object
   \item especially putting it in an invalid state
   \end{itemize}
 
@@ -888,7 +889,7 @@ will hopefully produce an error at run-time!
     \begin{itemize}
     \item no need to take the address (with \&) of an object
     \item no pointer arithmetics
-    \item no $->$ in use
+    \item no $->$ to access members
     \end{itemize}
   \item it \emph{always} designates the same object
     \begin{itemize}
@@ -995,7 +996,7 @@ so it really performs \code{p.row\_ = 5}
     accessible from the user
     \begin{itemize}
     \item thanks to the keyword \kw{private}
-    \item writing \code{p.row\_} outside this class is not allowed (do
+    \item writing \code{p.row\_} outside this class is not allowed (does
       not compile)
     \end{itemize}
     \smallskip
@@ -1003,7 +1004,7 @@ so it really performs \code{p.row\_ = 5}
   \item the method \code{row()} is accessible (keyword \kw{public})
     \begin{itemize}
     \item in the method body we have some room to add code
-    \item a simple access to data can performs some clever stuff that
+    \item a simple access to data can perform some clever stuff that
       you do not really have to know (neither want to)!
     \end{itemize}
   \end{itemize}
@@ -1121,7 +1122,7 @@ int main() {
 \end{lstlisting}
 
 \begin{itemize}
-\item the variable \code{r} represents an object which type is
+\item the variable \code{r} represents an object whose type
   precisely \code{rabbit}
   \begin{center}
     we say that it is the \emph{exact} type behind this variable
@@ -1165,7 +1166,7 @@ int main() {
     \item In that case
       \begin{itemize}
       \item at compile-time: there are many possible types of objects represented
-      \item at run-time: there is one object represented so just type.
+      \item at run-time: there is one object represented so just one type.
       \end{itemize}
     \end{itemize}
 
@@ -1184,7 +1185,7 @@ int main() {
   About ``classical'' object-orientation:
 
   \begin{itemize}
-  \item abstractions (like \code{animal}) leads to poor
+  \item abstractions (like \code{animal}) lead to poor
     performance at run-time when involved in intensive scientific code.
     %
   \item it is due to the fact that the exact type is lost\\
@@ -1340,7 +1341,7 @@ In the following:
 \begin{frame}[fragile]
   \frametitle{A rationale for Genericity}
 
-Suppose that you want a routine that computes twice the input:
+Suppose that you want a routine that computes twice its input:
 \begin{lstlisting}
 int twice(int i) { return 2 * i; }
 \end{lstlisting}
@@ -1434,7 +1435,7 @@ In \lstinline@template <typename T> T twice(T t)@
   one of the procedure argument ``\code{(T t)}''
 %
 \item the nature of \code{t} is \code{T}, the nature of \code{T} is
-  \code{typename} (so designates a type)
+  \code{typename} (so it designates a type)
 %
 \item the \cpp keyword introducing a generic piece of code is
   \kw{template}
@@ -1476,7 +1477,7 @@ Once this program is compiled
   \item \code{int   twice(int   t) { return 2 * t; }} and
   \item \code{float twice(float t) { return 2 * t; }}
   \end{itemize}
-\item so it is not so different than with overloading
+\item so it is not so different than overloading
 \end{itemize}
 
 except that:
@@ -1762,7 +1763,7 @@ P operator+(const P& p, const D& dp)
 }
 \end{lstlisting}
 
-How can we ensure that the delta-point type \code{D} really correspond
+How can we ensure that the delta-point type \code{D} really corresponds
 to \code{P}?  {\scriptsize (we really do not want \code{P} and
   \code{D} resp. being \code{point3d} and \code{dpoint2d}!)}
 
@@ -1803,7 +1804,7 @@ I operator+(const I& ima1, const I& ima2) {
 }
 \end{lstlisting}
 
-What is the problem?  (Hint: read both signatures in natural language)
+What is the problem?  (Hint: read both signatures out loud)
 
 \end{frame}
 
@@ -1829,7 +1830,7 @@ Image operator+(const Image& ima1, const Image& ima2) {
 \end{lstlisting}
 which is clearly not ambiguous (but slow at run-time...)
 
-where \code{Dpoint} and \code{Image} are abstract class.
+where \code{Dpoint} and \code{Image} are abstract classes.
 
 \end{frame}
 
@@ -2140,11 +2141,11 @@ This routine:
   \scriptsize{it works for any delta-point type}
   \smallskip
   %
-\item is fast
+\item is fast,
   \scriptsize{you cannot get more efficient code}
   \smallskip
   %
-\item is user-friendly
+\item is user-friendly,
   \scriptsize{just write ``\code{dp1 + dp2}'' to add a couple of delta-points}
 \end{itemize}
 
