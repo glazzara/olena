@@ -1,3 +1,9 @@
+2007-11-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add full test for border::get.
+
+	* tests/border/get_full.cc: New full test.
+
 2007-11-28  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Rename run_pset.
