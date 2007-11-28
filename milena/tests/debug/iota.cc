@@ -35,15 +35,23 @@
 #include <mln/value/int_u8.hh>
 
 #include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
+#include <mln/level/compare.hh>
 
 int main()
 {
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> in(32, 32);
+  {
+    int vs[4][4] = { {1, 2, 3, 4},
+		     {5, 6, 7, 8},
+		     {9, 10,11,12},
+		     {13,14,15,16} };
 
-  debug::iota(in);
-  debug::println(in);
+    image2d<int> ref = make::image2d(vs);
+    image2d<int> ima(4, 4);
+
+    debug::iota(ima);
+    mln_assertion(ima == ref);
+  }
 }

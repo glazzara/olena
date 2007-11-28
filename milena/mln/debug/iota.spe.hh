@@ -54,9 +54,7 @@ namespace mln
 	unsigned i = 0;
 	mln_pixter(I) p(input);
 	for_all(p)
-	  // FIXME : remove the convertion when the bug will be
-	  // resolved.
-	  p.val() = ++i % int(mln_max(mln_value(I)));
+	  p.val() = ++i % mln_max(mln_value(I));
       }
 
     } // end of namespace mln::debug::impl

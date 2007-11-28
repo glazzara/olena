@@ -66,9 +66,7 @@ namespace mln
 	unsigned i = 0;
 	mln_piter(I) p(input.domain());
 	for_all(p)
-	  // FIXME : remove the convertion when the bug will be
-	  // resolved.
-	  input(p) = ++i % int(mln_max(mln_value(I)));
+	  input(p) = ++i % mln_max(mln_value(I));
       }
 
     } // end of namespace mln::debug::impl

@@ -1,5 +1,22 @@
 2007-11-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Review debug directory.
+
+	* mln/debug/iota.hh: Resolve a fixme due to a resolved bug (in
+          operator %)
+	* mln/debug/iota.spe.hh: likewise
+	* tests/Makefile.am: Move debug tests...
+	* tests/debug/Makefile.am: ...here
+
+	* tests/debug_iota.cc: Rename as...
+	* tests/debug/iota.cc: ...this.
+	* tests/debug_println.cc: Rename as...
+	* tests/debug/println.cc: ...this.
+	* tests/debug_println_with_border.cc: Rename as...
+	* tests/debug/println_with_border.cc: ...this.
+
+2007-11-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	make save pgm work on graylevels. document pnm::save.
 
 	* mln/io/pgm/save.hh: Disable type checking in pgm::save to allow to

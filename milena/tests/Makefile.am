@@ -9,6 +9,7 @@ SUBDIRS =					\
   canvas					\
   core						\
   display					\
+  debug						\
   draw						\
   fun						\
   histo						\
