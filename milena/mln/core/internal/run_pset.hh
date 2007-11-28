@@ -37,9 +37,10 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/point_iterator_base.hh>
 # include <mln/core/internal/run_psite.hh>
+# include <mln/core/p_run.hh>
 # include <mln/accu/bbox.hh>
+# include <mln/util/lazy_set.hh>
 
-# include <vector>
 # include <utility>
 
 
@@ -63,7 +64,7 @@ namespace mln
     {
     public:
 
-      typedef std::vector<std::pair<P, unsigned> > std_container;
+      typedef util::lazy_set_<p_run<P> > container;
       typedef run_fwd_piter_<P> fwd_piter;
       typedef run_bkd_piter_<P> bkd_piter;
 
@@ -80,13 +81,13 @@ namespace mln
       typename std::size_t npoints() const;
 
       /// Insert a range, start at point \p p wit len \p len.
-      void insert(const P& p, unsigned len);
+      void insert(const p_run<P>& pr);
 
       /// Return the len of the range starting at point \p p.
       unsigned range_len_(const P& p) const;
 
       /// Return the container of the pset (internal use only).
-      const std_container& con() const;
+      const container& con() const;
 
     protected:
 
@@ -94,7 +95,7 @@ namespace mln
       typename std::size_t npoints_;
 
       /// Points container
-      std_container con_;
+      container con_;
 
       /// Exact bounding box.
       accu::bbox<P> fb_;
@@ -112,9 +113,9 @@ namespace mln
     bool
     run_pset_<P>::has(const run_psite<P>& p) const
     {
-      for (unsigned i = 0; i < con_.size(); ++i)
+      for (unsigned i = 0; i < con_.nelements(); ++i)
       {
-	if (con_[i].first == p.range_start_()  && con_[i].second > p.index_())
+	if (con_[i].first() == p.range_start_()  && con_[i].length() > p.index_())
 	  return true;
       }
       return false;
@@ -136,19 +137,42 @@ namespace mln
 
     template <typename P>
     void
-    run_pset_<P>::insert(const P& p, unsigned len)
+    run_pset_<P>::insert(const p_run<P>& pr)
     {
-      P run_pend;
-      typename std_container::value_type elt (p, len);
-      con_.push_back(elt);
+      typename std::vector<p_run<P> >::const_iterator iter = con_.vect().begin();
+      while (iter != con_.vect().end() && iter->first() < pr.first())
+	++iter;
+
+      if (iter != con_.vect().begin())
+      {
+	typename std::vector<p_run<P> >::const_iterator prec = iter;
+	--prec;
+	bool equal = true;
+	for (int i = P::dim - 2; i >= 0; --i)
+	  if (!(equal = equal && (prec->first()[i] == pr.first()[i])))
+	    break;
+	if (equal)
+	  mln_assertion(prec->first()[P::dim - 1] + (signed)prec->length()
+			< pr.first()[P::dim - 1]);
+      }
+
+      if (iter != con_.vect().end())
+      {
+	bool equal = true;
+	for (int i = P::dim - 2; i >= 0; --i)
+	  if (!(equal = equal && ((*iter).first()[i] == pr.first()[i])))
+	    break;
+	if (equal)
+	  mln_assertion(pr.first()[P::dim - 1] + (signed)pr.length()
+			< iter->first()[P::dim - 1]);
+      }
+      con_.insert(pr);
 
       // update box
-      fb_.take(p);
-      run_pend = p;
-      run_pend[0] += len - 1;
-      fb_.take(run_pend);
+      fb_.take(pr.bbox().pmin());
+      fb_.take(pr.bbox().pmax());
       // update size
-      npoints_ += len;
+      npoints_ += pr.npoints();
     }
 
     template <typename P>
@@ -168,7 +192,7 @@ namespace mln
     }
 
     template <typename P>
-    const typename run_pset_<P>::std_container&
+    const typename run_pset_<P>::container&
     run_pset_<P>::con() const
     {
       return con_;

@@ -1,3 +1,13 @@
+2007-11-28  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add run-based utilities.
+	* mln/core/internal/run_pset.hh: Point set based on many runs.
+	* mln/core/p_array_piter.hh: Add FIXME.
+	* mln/core/p_run.hh: New, Point set based on a run.
+	* mln/core/p_run_piter.hh: New.
+	* mln/util/lazy_set.hh: New, lazy vector of sorted elements.
+	* tests/run_pset.cc: Update.
+
 2007-11-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Review debug directory.

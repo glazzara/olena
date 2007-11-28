@@ -25,27 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_ARRAY_PITER_HH
-# define MLN_CORE_P_ARRAY_PITER_HH
+#ifndef MLN_CORE_P_RUN_PITER_HH
+# define MLN_CORE_P_RUN_PITER_HH
 
-/*! \file mln/core/p_array_piter.hh
+/*! \file mln/core/p_run_piter.hh
  *
- * \brief Definition of point iterators on mln::p_array.
+ * \brief Definition of point iterators on mln::p_run.
  */
 
-# include <mln/core/p_array.hh>
+# include <mln/core/p_run.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Forward iterator on points of a p_array<P>.
+  /*! \brief Forward iterator on points of a p_run<P>.
    *
    */
   template <typename P>
-  struct p_array_fwd_piter_ : public internal::point_iterator_base_< P, p_array_fwd_piter_<P> >
+  struct p_run_fwd_piter_ : public internal::point_iterator_base_< P, p_run_fwd_piter_<P> >
   {
-    typedef p_array_fwd_piter_<P> self_;
+    typedef p_run_fwd_piter_<P> self_;
     typedef internal::point_iterator_base_< P, self_ > super_;
   public:
     
@@ -53,8 +53,7 @@ namespace mln
     enum { dim = super_::dim };
 
     /// Coordinate associated type.
-    template <typename S>
-    p_array_fwd_piter_(const Point_Set<S>& s);
+    p_run_fwd_piter_(const p_run<P>& pr);
 
     /// Reference of the corresponding point.
     const P& to_point() const;
@@ -78,20 +77,20 @@ namespace mln
     operator P() const;
 
   protected:
-    const std::vector<P>& vect_;
-    unsigned i_; // FIXME: Why it's unsigned in fwd iterator and signed in the bkd one ?
+    const p_run<P>& run_;
+    bool is_valid_;
     P p_;
   };
 
 
 
-  /*! \brief Backward iterator on points of a p_array<P>.
+  /*! \brief Backward iterator on points of a p_run<P>.
    *
    */
   template <typename P>
-  struct p_array_bkd_piter_ : public internal::point_iterator_base_< P, p_array_bkd_piter_<P> >
+  struct p_run_bkd_piter_ : public internal::point_iterator_base_< P, p_run_bkd_piter_<P> >
   {
-    typedef p_array_bkd_piter_<P> self_;
+    typedef p_run_bkd_piter_<P> self_;
     typedef internal::point_iterator_base_< P, self_ > super_;
   public:
     
@@ -99,8 +98,7 @@ namespace mln
     enum { dim = super_::dim };
 
     /// Coordinate associated type.
-    template <typename S>
-    p_array_bkd_piter_(const Point_Set<S>& s);
+    p_run_bkd_piter_(const p_run<P>& pr);
 
     /// Reference of the corresponding point.
     const P& to_point() const;
@@ -124,8 +122,8 @@ namespace mln
     operator P() const;
 
   protected:
-    const std::vector<P>& vect_;
-    int i_;
+    const p_run<P>& run_;
+    bool is_valid_;
     P p_;
   };
 
@@ -133,26 +131,26 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // p_array_fwd_piter_<P>
+  // p_run_fwd_piter_<P>
 
   template <typename P>
-  template <typename S>
-  p_array_fwd_piter_<P>::p_array_fwd_piter_(const Point_Set<S>& s)
-    : vect_(exact(s).vect())
+  p_run_fwd_piter_<P>::p_run_fwd_piter_(const p_run<P>& pr)
+    : run_(pr)
   {
     invalidate();
   }
 
   template <typename P>
   const P&
-  p_array_fwd_piter_<P>::to_point() const
+  p_run_fwd_piter_<P>::to_point() const
   {
+    mln_precondition(is_valid());
     return p_;
   }
 
   template <typename P>
   mln_coord(P)
-  p_array_fwd_piter_<P>::operator[](unsigned i) const
+  p_run_fwd_piter_<P>::operator[](unsigned i) const
   {
     mln_precondition(i < dim);
     mln_precondition(is_valid());
@@ -161,64 +159,62 @@ namespace mln
 
   template <typename P>
   bool
-  p_array_fwd_piter_<P>::is_valid() const
+  p_run_fwd_piter_<P>::is_valid() const
   {
-    return i_ < vect_.size();
+    return is_valid_;
   }
 
   template <typename P>
   void
-  p_array_fwd_piter_<P>::invalidate()
+  p_run_fwd_piter_<P>::invalidate()
   {
-    i_ = vect_.size();
+    is_valid_ = false;
   }
 
   template <typename P>
   void
-  p_array_fwd_piter_<P>::start()
+  p_run_fwd_piter_<P>::start()
   {
-    i_ = 0;
-    if (is_valid())
-      p_ = vect_[i_];
+    p_ = run_.first();
+    is_valid_ = true;
   }
 
   template <typename P>
   void
-  p_array_fwd_piter_<P>::next_()
+  p_run_fwd_piter_<P>::next_()
   {
-    ++i_;
-    if (is_valid())
-      p_ = vect_[i_];
+    p_[dim - 1]++;
+    is_valid_ = p_[dim - 1] - run_.first()[dim - 1] < (signed)run_.length();
   }
 
   template <typename P>
-  p_array_fwd_piter_<P>::operator P() const
+  p_run_fwd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());
     return p_;
   }
 
 
-  // p_array_bkd_piter_<P>
+  // p_run_bkd_piter_<P>
 
   template <typename P>
-  template <typename S>
-  p_array_bkd_piter_<P>::p_array_bkd_piter_(const Point_Set<S>& s)
-    : vect_(exact(s).vect())
+  p_run_bkd_piter_<P>::p_run_bkd_piter_(const p_run<P>& pr)
+    : run_(pr)
   {
     invalidate();
   }
 
   template <typename P>
   const P&
-  p_array_bkd_piter_<P>::to_point() const
+  p_run_bkd_piter_<P>::to_point() const
   {
+    mln_precondition(is_valid());
     return p_;
   }
 
   template <typename P>
   mln_coord(P)
-  p_array_bkd_piter_<P>::operator[](unsigned i) const
+  p_run_bkd_piter_<P>::operator[](unsigned i) const
   {
     mln_precondition(i < dim);
     mln_precondition(is_valid());
@@ -227,38 +223,36 @@ namespace mln
 
   template <typename P>
   bool
-  p_array_bkd_piter_<P>::is_valid() const
+  p_run_bkd_piter_<P>::is_valid() const
   {
-    return i_ >= 0;
+    return is_valid;
   }
 
   template <typename P>
   void
-  p_array_bkd_piter_<P>::invalidate()
+  p_run_bkd_piter_<P>::invalidate()
   {
-    i_ = -1;
+    is_valid_ = false;
   }
 
   template <typename P>
   void
-  p_array_bkd_piter_<P>::start()
+  p_run_bkd_piter_<P>::start()
   {
-    i_ = vect_.size() - 1;
-    if (is_valid())
-      p_ = vect_[i_];
-  }
+    p_ = run_[run_.length() - 1];
+    is_valid_ = true;
+}
 
   template <typename P>
   void
-  p_array_bkd_piter_<P>::next_()
+  p_run_bkd_piter_<P>::next_()
   {
-    --i_;
-    if (is_valid())
-      p_ = vect_[i_];
+    p_[dim - 1]++;
+    is_valid_ = p_[dim - 1] - run_.first()[dim - 1] >= 0;
   }
 
   template <typename P>
-  p_array_bkd_piter_<P>::operator P() const
+  p_run_bkd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());
     return p_;
@@ -269,4 +263,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_ARRAY_PITER_HH
+#endif // ! MLN_CORE_P_RUN_PITER_HH

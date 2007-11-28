@@ -63,17 +63,18 @@ int main()
   // Pset test
   internal::run_pset_<point2d> ps;
 
-  ps.insert(p, 7);
+  ps.insert(p_run<point2d>(p, 7));
   mln_assertion(ps.npoints() == 7);
 
-  ps.insert(q, 42);
+  ps.insert(p_run<point2d>(q, 42));
   mln_assertion(ps.npoints() == 49);
 
   mln_assertion(ps.has(site));
   mln_assertion(!ps.has(site2));
 
-  ps.insert(r, 14);
+  ps.insert(p_run<point2d>(r, 14));
   mln_assertion(!ps.has(site2));
 
+  ps.insert(p_run<point2d>(make::point2d(17,40), 6));
   // parc(ps);
 }
