@@ -42,8 +42,6 @@ check_PROGRAMS =				\
   convert_to_tiles				\
   convert_to_p_array				\
 						\
-  debug_println					\
-  debug_println_with_border			\
   decorated_image				\
   dpoint1d					\
   dpoint2d					\
