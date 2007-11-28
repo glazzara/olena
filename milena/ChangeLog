@@ -1,3 +1,13 @@
+2007-11-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add full tests for border.
+	* tests/border/adjust_full.cc,
+	* tests/border/duplicate_full.cc,
+	* tests/border/fill_full.cc,
+	* tests/border/mirror_full.cc: New full tests.
+
+	* tests/border/duplicate.cc: Fix Doxygen comment.
+
 2007-11-28  Benoit Sigoure  <tsuna@lrde.epita.fr>
 
 	Fix various typos.

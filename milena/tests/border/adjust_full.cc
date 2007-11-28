@@ -25,51 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border/duplicate.cc
+/*! \file tests/border/adjust_full.cc
  *
- * \brief Tests on mln::border::duplicate.
+ * \brief Tests on mln::border::adjust.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/debug/iota.hh>
-#include <mln/border/duplicate.hh>
+#include <mln/border/get.hh>
+#include <mln/border/adjust.hh>
 
-
-using namespace mln;
-
-int
-main (void)
+int main()
 {
-  image2d<int> ima(3, 3, 1);
+  using namespace mln;
 
-  debug::iota (ima);
-  border::duplicate (ima);
+  typedef image2d<int> I;
 
-  mln_assertion(ima[ 0] == 1);
-  mln_assertion(ima[ 1] == 1);
-  mln_assertion(ima[ 2] == 2);
-  mln_assertion(ima[ 3] == 3);
-  mln_assertion(ima[ 4] == 3);
-  mln_assertion(ima[ 5] == 1);
-  mln_assertion(ima[ 6] == 1);
-  mln_assertion(ima[ 7] == 2);
-  mln_assertion(ima[ 8] == 3);
-  mln_assertion(ima[ 9] == 3);
-  mln_assertion(ima[10] == 4);
-  mln_assertion(ima[11] == 4);
-  mln_assertion(ima[12] == 5);
-  mln_assertion(ima[13] == 6);
-  mln_assertion(ima[14] == 6);
-  mln_assertion(ima[15] == 7);
-  mln_assertion(ima[16] == 7);
-  mln_assertion(ima[17] == 8);
-  mln_assertion(ima[18] == 9);
-  mln_assertion(ima[19] == 9);
-  mln_assertion(ima[20] == 7);
-  mln_assertion(ima[21] == 7);
-  mln_assertion(ima[22] == 8);
-  mln_assertion(ima[23] == 9);
-  mln_assertion(ima[24] == 9);
+  I ima(3, 3, 2);
+  border::adjust(ima, 3);
+  mln_assertion(border::get(ima) == 3);
 
+  border::adjust(ima, 5);
+  mln_assertion(border::get(ima) == 5);
+
+  border::adjust(ima, 1);
+  mln_assertion(border::get(ima) == 5);
+
+  border::adjust(ima, 4);
+  mln_assertion(border::get(ima) == 5);
+
+  border::adjust(ima, 42);
+  mln_assertion(border::get(ima) == 42);
+
+  border::adjust(ima, 51);
+  mln_assertion(border::get(ima) == 51);
+
+  border::adjust(ima, 2);
+  mln_assertion(border::get(ima) == 51);
 }
-
