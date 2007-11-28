@@ -64,7 +64,14 @@ namespace mln
     namespace pnm
     {
 
-      // FIXME: Doc.
+      /*! Save a milena image as a pnm image.
+       *
+       * \param[in] type The type of the image to save (can be PPM,
+       * PGM, PBM).
+       * \param[in] ima_ The image to save.
+       * \param[in,out] filename the destination.
+       */
+
       template <typename I>
       void save(const int type, const Image<I>& ima_, const std::string& filename);
 

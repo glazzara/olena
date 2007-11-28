@@ -57,8 +57,7 @@ namespace mln
       template <typename V>
       void save_max_val(V&, std::ofstream& file)
       {
-	if (mln_max(V) > 1)
-	  file << unsigned(mln_max(V)) << std::endl;
+	file << mln_max(V) << std::endl;
       }
 
       void save_max_val(bool&, std::ofstream& file)

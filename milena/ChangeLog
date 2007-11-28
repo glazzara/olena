@@ -1,3 +1,13 @@
+2007-11-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	make save pgm work on graylevels. document pnm::save.
+
+	* mln/io/pgm/save.hh: Disable type checking in pgm::save to allow to
+          save graylevel images.
+
+	* mln/io/pnm/save.hh: Documentation.
+	* mln/io/pnm/save_header.hh: graylevel compatibility.
+
 2007-11-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	More core-related tests to tests/core/.
