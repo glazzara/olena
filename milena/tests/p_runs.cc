@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/run_pset.cc
+/*! \file tests/p_runs.cc
  *
- * \brief Test on mln::internal::run_pset_ and related tools.
+ * \brief Test on mln::internal::p_runs_ and related tools.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/core/internal/run_pset.hh>
+#include <mln/core/p_runs.hh>
 
 
 template <typename Pset>
@@ -61,7 +61,7 @@ int main()
   internal::run_psite<point2d>  site2(r, 40, 0);
 
   // Pset test
-  internal::run_pset_<point2d> ps;
+  p_runs_<point2d> ps;
 
   ps.insert(p_run<point2d>(p, 7));
   mln_assertion(ps.npoints() == 7);

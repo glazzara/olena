@@ -173,8 +173,6 @@ convert_to_image_SOURCES = convert_to_image.cc
 convert_to_tiles_SOURCES = convert_to_tiles.cc
 convert_to_p_array_SOURCES = convert_to_p_array.cc
 
-debug_println_SOURCES = debug_println.cc
-debug_println_with_border_SOURCES = debug_println_with_border.cc
 decorated_image_SOURCES = decorated_image.cc
 dpoint1d_SOURCES = dpoint1d.cc
 dpoint2d_SOURCES = dpoint2d.cc

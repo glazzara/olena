@@ -1,3 +1,16 @@
+2007-11-28  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Rename run_pset.
+
+	* mln/core/internal/run_pset.hh: Rename as...
+	* mln/core/p_runs.hh: ...this.
+	* tests/run_pset.cc: Rename as...
+	* tests/p_runs.cc: ...this.
+
+	Remove two sources entry.
+	
+	* tests/Makefile.am: Fix.
+
 2007-11-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add full tests for border.
