@@ -1,5 +1,13 @@
 2007-11-29  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add full tests for arith.
+	* tests/arith/minus_full.cc,
+	* tests/arith/plus_full.cc,
+	* tests/arith/revert_full.cc,
+	* tests/arith/times_full.cc: New full tests.
+
+2007-11-29  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add full tests for border.
 	* tests/border/equalize_full.cc,
 	* tests/border/find_full.cc,
