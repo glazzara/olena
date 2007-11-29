@@ -50,8 +50,9 @@ int main()
 
   border::thickness = 0;
 
+  image2d<int_u8> lena;
+  io::pgm::load(lena, "../../img/lena.pgm");
   image2d<int_u8>
-    lena = io::pgm::load("../../img/lena.pgm"),
     out(lena.domain()),
     ref(lena.domain());
 

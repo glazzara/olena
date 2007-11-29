@@ -45,7 +45,8 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> lena = io::pgm::load("../../../img/lena.pgm");
+  image2d<int_u8> lena;
+  io::pgm::load(lena, "../../../img/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
   interpolated<image2d<int_u8> > inter(lena);

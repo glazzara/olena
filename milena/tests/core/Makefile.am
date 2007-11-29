@@ -7,12 +7,14 @@ check_PROGRAMS =				\
   clone						\
   exact						\
   initialize					\
+  p_runs					\
   t_image
 
 category_SOURCES = category.cc
 clone_SOURCES = clone.cc
 exact_SOURCES = exact.cc
 initialize_SOURCES = initialize.cc
+p_runs_SOURCES = p_runs.cc
 t_image_SOURCES = t_image.cc
 
 TESTS = $(check_PROGRAMS)

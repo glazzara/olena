@@ -1,5 +1,17 @@
 2007-11-29  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	.
+	* tests/p_runs.cc: Renama as...
+	* tests/core/p_runs.cc: ...this
+	* tests/core/Makefile.am: Add test.
+	* tests/fun/x2x/rotation.cc,
+	* tests/level/median.cc,
+	* tests/level/median_dir.cc,
+	* tests/level/median_fast.cc,
+	* tests/level/median_hline2d.cc: Fix load call.
+
+2007-11-29  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Iteration on runs_psite works.
 	* mln/core/internal/run_psite.hh: Rename as...
 	* mln/core/runs_psite.hh: ...this.

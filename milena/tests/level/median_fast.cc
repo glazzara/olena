@@ -93,9 +93,9 @@ int main()
     win::rectangle2d rect(51, 51);
     border::thickness = 52;
     
-    image2d<int_u8>
-      lena = io::pgm::load("../../img/lena.pgm"),
-      out(lena.domain());
+    image2d<int_u8> lena;
+    io::pgm::load(lena, "../../img/lena.pgm");
+    image2d<int_u8>  out(lena.domain());
     
     level::fast_median(lena, rect, out);
     io::pgm::save(out, "out.pgm");

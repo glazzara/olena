@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/p_runs.cc
+/*! \file tests/core/p_runs.cc
  *
- * \brief Test on mln::internal::p_runs_ and related tools.
+ * \brief Test on mln::p_runs_ and related tools.
  */
 
 #include <mln/core/image2d.hh>
