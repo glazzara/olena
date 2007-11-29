@@ -25,29 +25,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border/resize.cc
+/*! \file tests/border/equalize_full.cc
  *
- * \brief Tests on mln::border::resize.
+ * \brief Tests on mln::border::equalize.
  */
 
-
+#include <mln/core/image1d.hh>
 #include <mln/core/image2d.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/border/resize.hh>
+#include <mln/core/image3d.hh>
 #include <mln/border/get.hh>
+#include <mln/border/equalize.hh>
 
-using namespace mln;
-
-int
-main (void)
+int main()
 {
-  unsigned border = 1;
-  unsigned new_border = 3;
+  using namespace mln;
+  unsigned sli = 5;
+  unsigned row = 10;
+  unsigned col = 20;
+  unsigned border1 = 42;
+  unsigned border2 = 36;
+  unsigned new_border = 51;
 
-  image2d<value::int_u8> ima(3, 2, border);
-  mln_assertion(border::get(ima) == border);
-  border::resize (ima, new_border);
-  mln_assertion(border::get(ima) == new_border);
-  border::resize (ima, border);
-  mln_assertion(border::get(ima) == border);
+
+
+  {
+    typedef image1d<int> I;
+    (std::cerr << "Tests border::equalize in 1d ... ").flush ();
+    I ima1(col, border1);
+    I ima2(col, border2);
+    border::equalize(ima1, ima2, new_border);
+    mln_assertion(border::get(ima1) == new_border);
+    mln_assertion(border::get(ima2) == new_border);
+    std::cerr << "OK" << std::endl;
+  }
+
+  {
+    typedef image2d<int> I;
+    (std::cerr << "Tests border::equalize in 2d ... ").flush ();
+    I ima1(row, col, border1);
+    I ima2(row, col, border2);
+    border::equalize(ima1, ima2, new_border);
+    mln_assertion(border::get(ima1) == new_border);
+    mln_assertion(border::get(ima2) == new_border);
+    std::cerr << "OK" << std::endl;
+  }
+
+  {
+    typedef image3d<int> I;
+    (std::cerr << "Tests border::equalize in 3d ... ").flush ();
+    I ima1(sli, row, col, border1);
+    I ima2(sli, row, col, border2);
+    border::equalize(ima1, ima2, new_border);
+    mln_assertion(border::get(ima1) == new_border);
+    mln_assertion(border::get(ima2) == new_border);
+    std::cerr << "OK" << std::endl;
+  }
+
 }

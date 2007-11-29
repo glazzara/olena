@@ -1,3 +1,12 @@
+2007-11-29  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add full tests for border.
+	* tests/border/equalize_full.cc,
+	* tests/border/find_full.cc,
+	* tests/border/resize_full.cc: New full tests.
+
+	* tests/border/resize.cc: Fix typo.
+
 2007-11-29  Benoit Sigoure  <tsuna@lrde.epita.fr>
 
 	Replace exported global variables with static ones.
