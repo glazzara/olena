@@ -48,14 +48,8 @@ namespace mln
 
 
     /// Literal black.
-    extern const black_t& black;
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    const black_t& black = black_t();
-
-# endif // ! MLN_INCLUDE_ONLY
+    // FIXME: Make this a proper global (issue #43).
+    static const black_t black = black_t();
 
   } // end of namespace mln::literal
 

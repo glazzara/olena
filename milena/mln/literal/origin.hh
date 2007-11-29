@@ -48,14 +48,8 @@ namespace mln
     };
 
     /// Literal origin.
-    extern const origin_t& origin;
-
-# ifndef MLN_INCLUDE_ONLY
-
-    const origin_t& origin = origin_t();
-
-# endif // ! MLN_INCLUDE_ONLY
-
+    // FIXME: Make this a proper global (issue #43).
+    static const origin_t origin = origin_t();
 
   } // end of namespace mln::literal
 

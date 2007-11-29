@@ -58,21 +58,16 @@ namespace mln
 
 
     /// Literal red.
-    extern const red_t& red;
+    // FIXME: Make this a proper global (issue #43).
+    static const red_t red = red_t();
 
     /// Literal green.
-    extern const green_t& green;
+    // FIXME: Make this a proper global (issue #43).
+    static const green_t green = green_t();
 
     /// Literal blue.
-    extern const blue_t& blue;
-
-# ifndef MLN_INCLUDE_ONLY
-
-    const red_t& red = red_t();
-    const green_t& green = green_t();
-    const blue_t& blue = blue_t();
-
-# endif // ! MLN_INCLUDE_ONLY
+    // FIXME: Make this a proper global (issue #43).
+    static const blue_t blue = blue_t();
 
   } // end of namespace mln::literal
 

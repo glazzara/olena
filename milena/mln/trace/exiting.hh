@@ -59,7 +59,7 @@ namespace mln
 	std::cout << "  ";
       std::cout << "}" << std::endl;
     }
-    
+
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::trace

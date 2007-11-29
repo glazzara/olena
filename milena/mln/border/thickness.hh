@@ -41,7 +41,8 @@ namespace mln
   namespace border
   {
 
-    unsigned thickness = 3;
+    // FIXME: Make this a proper global (issue #43).
+    static unsigned thickness = 3;
 
   } // end of namespace mln::border
 

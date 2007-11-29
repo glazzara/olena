@@ -1,3 +1,19 @@
+2007-11-29  Benoit Sigoure  <tsuna@lrde.epita.fr>
+
+	Replace exported global variables with static ones.
+	This allows for separate compilation.
+	* milena/mln/border/thickness.hh,
+	* milena/mln/literal/black.hh,
+	* milena/mln/literal/colors.hh,
+	* milena/mln/literal/grays.hh,
+	* milena/mln/literal/one.hh,
+	* milena/mln/literal/origin.hh,
+	* milena/mln/literal/white.hh,
+	* milena/mln/literal/zero.hh,
+	* milena/mln/tag/init.hh: Here.
+	* milena/mln/trace/entering.hh: Add a missing `inline'.
+	* milena/mln/trace/exiting.hh: Kill trailing whitespaces.
+
 2007-11-28  Benoit Sigoure  <tsuna@lrde.epita.fr>
 
 	Add the missing inline keywords.

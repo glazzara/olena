@@ -47,14 +47,8 @@ namespace mln
     };
 
     /// Literal medium_gray.
-    extern const medium_gray_t& medium_gray;
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    const medium_gray_t& medium_gray = medium_gray_t();
-
-# endif // ! MLN_INCLUDE_ONLY
+    // FIXME: Make this a proper global (issue #43).
+    static const medium_gray_t medium_gray = medium_gray_t();
 
   } // end of namespace mln::literal
 

@@ -40,11 +40,18 @@ namespace mln
   namespace tag
   {
 
-    struct image_t  {} image;
-    struct domain_t {} domain;
-    struct bbox_t   {} bbox;
-    struct border_t {} border;
-    struct function_t {} function;
+    struct image_t  {};
+    struct domain_t {};
+    struct bbox_t   {};
+    struct border_t {};
+    struct function_t {};
+
+    // FIXME: Make these proper globals (issue #43).
+    static const image_t    image = image_t();
+    static const domain_t   domain = domain_t();
+    static const bbox_t     bbox = bbox_t();
+    static const border_t   border = border_t();
+    static const function_t function = function_t();
 
   } // end of namespace mln::tag
 

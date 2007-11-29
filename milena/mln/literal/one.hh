@@ -54,7 +54,8 @@ namespace mln
 
 
     /// Literal one.
-    extern const one_t& one;
+    // FIXME: Make this a proper global (issue #43).
+    static const one_t one = one_t();
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -66,8 +67,6 @@ namespace mln
       mlc_converts_to(int, T)::check();
       return 1;
     }
-
-    const one_t& one = one_t();
 
 # endif // ! MLN_INCLUDE_ONLY
 

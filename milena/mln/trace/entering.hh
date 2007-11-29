@@ -49,6 +49,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    inline
     void entering(const std::string& scope)
     {
       if (quiet)
@@ -58,7 +59,7 @@ namespace mln
       std::cout << scope << " {" << std::endl;
       ++tab;
     }
-    
+
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::trace
