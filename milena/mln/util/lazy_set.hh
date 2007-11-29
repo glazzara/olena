@@ -252,9 +252,7 @@ namespace mln
     unsigned
     lazy_set_<E>::nelements() const
     {
-      if (needs_update_)
-	update_();
-      return v_.size();
+      return s_.size();
     }
 
     template <typename E>

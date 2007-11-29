@@ -1,3 +1,14 @@
+2007-11-29  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Iteration on runs_psite works.
+	* mln/core/internal/run_psite.hh: Rename as...
+	* mln/core/runs_psite.hh: ...this.
+	* mln/core/macros.hh: Add macros without typename.
+	* mln/core/p_run_piter.hh,
+	* mln/core/p_runs.hh,
+	* mln/util/lazy_set.hh: Fix.
+	* tests/p_runs.cc: Add test for iterations.
+
 2007-11-29  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add full tests for arith.

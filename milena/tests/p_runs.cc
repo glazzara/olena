@@ -57,8 +57,8 @@ int main()
   r = make::point2d(50, 76);
 
   // Psite declaration
-  internal::run_psite<point2d>  site(p, 5, 0);
-  internal::run_psite<point2d>  site2(r, 40, 0);
+  runs_psite<point2d>  site(p, 5, 0);
+  runs_psite<point2d>  site2(r, 40, 0);
 
   // Pset test
   p_runs_<point2d> ps;
@@ -66,15 +66,26 @@ int main()
   ps.insert(p_run<point2d>(p, 7));
   mln_assertion(ps.npoints() == 7);
 
-  ps.insert(p_run<point2d>(q, 42));
-  mln_assertion(ps.npoints() == 49);
+  ps.insert(p_run<point2d>(q, 5));
+  mln_assertion(ps.npoints() == 12);
 
   mln_assertion(ps.has(site));
   mln_assertion(!ps.has(site2));
 
-  ps.insert(p_run<point2d>(r, 14));
+  ps.insert(p_run<point2d>(r, 2));
   mln_assertion(!ps.has(site2));
 
   ps.insert(p_run<point2d>(make::point2d(17,40), 6));
+  mln_fwd_piter_(p_runs_<point2d>) ppf(ps);
+  for_all(ppf)
+  {
+    std::cout << ppf << std::endl;
+  }
+  std::cout << std::endl;
+  mln_bkd_piter_(p_runs_<point2d>) ppb(ps);
+  for_all(ppb)
+  {
+    std::cout << ppb << std::endl;
+  }
   // parc(ps);
 }

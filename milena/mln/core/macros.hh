@@ -45,36 +45,44 @@
 
 /// Shortcut to access the bkd_niter type associated to T.
 # define mln_bkd_niter(T)  typename T::bkd_niter
+# define mln_bkd_niter_(T)          T::bkd_niter
 
 /// Shortcut to access the bkd_piter type associated to T.
 # define mln_bkd_piter(T)  typename T::bkd_piter
+# define mln_bkd_piter_(T)          T::bkd_piter
 
 /// Shortcut to access the bkd_qiter type associated to T.
 # define mln_bkd_qiter(T)  typename T::bkd_qiter
+# define mln_bkd_qiter_(T)          T::bkd_qiter
 
 /// Shortcut to access the bkd_viter type associated to T.
 # define mln_bkd_viter(T)  typename T::bkd_viter
+# define mln_bkd_viter_(T)          T::bkd_viter
 
 /// Shortcut to access the box type associated to T.
 # define mln_box(T)        typename T::box
+# define mln_box_(T)                T::box
 
 
 // c
 
 /// Shortcut to access the coord type associated to T.
 # define mln_coord(T)      typename T::coord
+# define mln_coord_(T)              T::coord
 
 
 // d
 
 /// Shortcut to access the dpoint type associated to T.
 # define mln_dpoint(T)     typename T::dpoint
+# define mln_dpoint_(T)             T::dpoint
 
 
 // e
 
 /// Shortcut to access the encoding type associated to T.
 # define mln_enc(T)        typename T::enc
+# define mln_enc_(T)                T::enc
 
 /// Shortcut to access the equivalent type associated to T.
 # define mln_equiv(T)      typename T::equiv
@@ -85,18 +93,19 @@
 
 /// Shortcut to access the fwd_niter type associated to T.
 # define mln_fwd_niter(T)  typename T::fwd_niter
+# define mln_fwd_niter_(T)          T::fwd_niter
 
 /// Shortcut to access the fwd_piter type associated to T.
 # define mln_fwd_piter(T)  typename T::fwd_piter
-
-/// Shortcut to access the bkd_piter type associated to T.
-# define mln_bkd_piter(T)  typename T::bkd_piter
+# define mln_fwd_piter_(T)          T::fwd_piter
 
 /// Shortcut to access the fwd_qiter type associated to T.
 # define mln_fwd_qiter(T)  typename T::fwd_qiter
+# define mln_fwd_qiter_(T)          T::fwd_qiter
 
 /// Shortcut to access the fwd_viter type associated to T.
 # define mln_fwd_viter(T)  typename T::fwd_viter
+# define mln_fwd_viter_(T)          T::fwd_viter
 
 // i
 
@@ -114,6 +123,7 @@
 
 /// Shortcut to access the lvalue type associated to T.
 # define mln_lvalue(T)     typename T::lvalue
+# define mln_lvalue_(T)             T::lvalue
 
 
 // m
@@ -121,6 +131,7 @@
 
 /// Shortcut to access the mesh type associated to T.
 # define mln_mesh(T)     typename T::mesh
+# define mln_mesh_(T)             T::mesh
 
 
 // p
@@ -131,30 +142,37 @@
 
 /// Shortcut to access the type of point by line iterator (line_piter) associated to T.
 # define mln_line_piter(T) typename T::line_piter
+# define mln_line_piter_(T)         T::line_piter
 
 /// Shortcut to access the type of point set (pset) associated to T.
 # define mln_pset(T)       typename T::pset
+# define mln_pset_(T)               T::pset
 
 /// Shortcut to access the type of point site (psite) associated to T.
 # define mln_psite(T)      typename T::psite
+# define mln_psite_(T)              T::psite
 
 /// Shortcut to access the point type associated to T.
 # define mln_point(T)      typename T::point
+# define mln_point_(T)              T::point
 
 
 // q
 
 /// Shortcut to access the qualified (const or mutable) value type associated to T.
 # define mln_qlf_value(T)      typename mln::trait::qlf_value< T >::ret
+# define mln_qlf_value_(T)              mln::trait::qlf_value< T >::ret
 
 /// Shortcut to access the qiter type associated to T.
 # define mln_qiter(T)      typename T::fwd_qiter
+# define mln_qiter_(T)              T::fwd_qiter
 
 
 // n
 
 /// Shortcut to access the niter type associated to T.
 # define mln_niter(T)      typename T::fwd_niter
+# define mln_niter_(T)              T::fwd_niter
 
 
 // r
@@ -165,28 +183,33 @@
 
 /// Shortcut to access the rvalue type associated to T.
 # define mln_rvalue(T)     typename T::rvalue
+# define mln_rvalue_(T)             T::rvalue
 
 
 // v
 
 /// Shortcut to access the value type associated to T.
 # define mln_value(T)      typename T::value
-# define mln_value_(T)     T::value
+# define mln_value_(T)              T::value
 
 /// Shortcut to access the type of value set (vset) associated to T.
 # define mln_vset(T)       typename T::vset
+# define mln_vset_(T)               T::vset
 
 /// Shortcut to access the viter type associated to T.
 # define mln_viter(T)      typename T::fwd_viter
+# define mln_viter_(T)              T::fwd_viter
 
 
 // w
 
 /// Shortcut to access the weight type associated to T.
 # define mln_weight(T)     typename T::weight
+# define mln_weight_(T)             T::weight
 
 /// Shortcut to access the window type associated to T.
 # define mln_window(T)     typename T::window
+# define mln_window_(T)             T::window
 
 
 

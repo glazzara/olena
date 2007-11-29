@@ -36,7 +36,7 @@
 
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/point_iterator_base.hh>
-# include <mln/core/internal/run_psite.hh>
+# include <mln/core/runs_psite.hh>
 # include <mln/core/p_run.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/lazy_set.hh>
@@ -51,67 +51,73 @@ namespace mln
   // Forward declaration
   template <typename P> struct p_runs_fwd_piter_;
   template <typename P> struct p_runs_bkd_piter_;
-  
-  
+
+
   /*! \brief p_runs_ class represent a point set used in run_image_ class.
    *
    * Parameter \c P is the type of the image point.
    */
   template <typename P>
-  class p_runs_ : public internal::point_set_base_< internal::run_psite<P>, p_runs_<P> >
+  class p_runs_ : public internal::point_set_base_< runs_psite<P>, p_runs_<P> >
   {
   public:
-    
-    typedef util::lazy_set_<p_run<P> > container;
+
+//     typedef util::lazy_set_<p_run<P> > container;
     typedef p_runs_fwd_piter_<P> fwd_piter;
     typedef p_runs_bkd_piter_<P> bkd_piter;
-    
-    
+
+    /// Constructor without arguments.
     p_runs_();
-    
+
     /// Test is \p p belongs to this point set.
-    bool has(const internal::run_psite<P>& p) const;
-    
+    bool has(const runs_psite<P>& p) const;
+
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
-    
+
     /// Give the number of points.
     typename std::size_t npoints() const;
-    
+
     /// Insert a range, start at point \p p wit len \p len.
     void insert(const p_run<P>& pr);
-    
+
+    /// Return the number of runs.
+    unsigned nruns() const;
+
     /// Return the len of the range starting at point \p p.
     unsigned range_len_(const P& p) const;
-    
-    /// Return the container of the pset (internal use only).
-    const container& con() const;
-    
+
+    /// Return the i-th run of the list of runs
+    const p_run<P>& operator[](unsigned i) const;
+
+//     /// Return the container of the pset (internal use only).
+//     const container& con() const;
+
   protected:
-    
+
     /// Number of points.
     typename std::size_t npoints_;
-    
+
     /// Points container
-    container con_;
-    
+    util::lazy_set_<p_run<P> > con_;
+
     /// Exact bounding box.
     accu::bbox<P> fb_;
   };
-  
+
 # ifndef MLN_INCLUDE_ONLY
-  
+
   template <typename P>
   inline
   p_runs_<P>::p_runs_() :
     npoints_(0)
   {
   }
-  
+
   template <typename P>
   inline
   bool
-  p_runs_<P>::has(const internal::run_psite<P>& p) const
+  p_runs_<P>::has(const runs_psite<P>& p) const
   {
     for (unsigned i = 0; i < con_.nelements(); ++i)
     {
@@ -120,7 +126,7 @@ namespace mln
     }
     return false;
   }
-  
+
   template <typename P>
   inline
   const box_<P>&
@@ -128,7 +134,7 @@ namespace mln
   {
     return fb_.to_result();
   }
-  
+
   template <typename P>
   inline
   typename std::size_t
@@ -136,7 +142,7 @@ namespace mln
   {
     return npoints_;
   }
-  
+
   template <typename P>
   inline
   void
@@ -145,7 +151,7 @@ namespace mln
     typename std::vector<p_run<P> >::const_iterator iter = con_.vect().begin();
     while (iter != con_.vect().end() && iter->first() < pr.first())
       ++iter;
-    
+
     if (iter != con_.vect().begin())
     {
       typename std::vector<p_run<P> >::const_iterator prec = iter;
@@ -158,7 +164,7 @@ namespace mln
 	mln_assertion(prec->first()[P::dim - 1] + (signed)prec->length()
 		      < pr.first()[P::dim - 1]);
     }
-    
+
     if (iter != con_.vect().end())
     {
       bool equal = true;
@@ -170,14 +176,22 @@ namespace mln
 		      < iter->first()[P::dim - 1]);
     }
     con_.insert(pr);
-    
+
     // update box
     fb_.take(pr.bbox().pmin());
     fb_.take(pr.bbox().pmax());
     // update size
     npoints_ += pr.npoints();
   }
-  
+
+  template <typename P>
+  inline
+  unsigned
+  p_runs_<P>::nruns() const
+  {
+    return con_.nelements();
+  }
+
   template <typename P>
   inline
   unsigned
@@ -189,99 +203,106 @@ namespace mln
       if (con_[i].first == p)
 	return con_[i].second;
     }
-    mln_assertion(i < con.size());
-    
+    mln_assertion(i < con_.size());
+
     //Hack
     return (con_[i].second);
   }
-  
+
   template <typename P>
   inline
-  const typename p_runs_<P>::container&
-  p_runs_<P>::con() const
+  const p_run<P>&
+  p_runs_<P>::operator[](unsigned i) const
   {
-    return con_;
+    return con_[i];
   }
-  
+
+//   template <typename P>
+//   const typename p_runs_<P>::container&
+//   p_runs_<P>::con() const
+//   {
+//     return con_;
+//   }
+
 # endif // ! MLN_INCLUDE_ONLY
-  
+
   /*! \brief Factorization class for p_runs_iterator_.
    *
    * Parameter \c P is the type of the point used in the point set.
    * Parameter \c E is the exact type of the iterator
    */
   template <typename P, typename E>
-  class p_runs_piter_ : public internal::point_iterator_base_< internal::run_psite<P>, E >
+  class p_runs_piter_ : public internal::point_iterator_base_< runs_psite<P>, E >
   {
   public:
-    typedef typename p_runs_<P>::std_container std_container;
-    
+
     /// Convertion into a point-site.
-    operator internal::run_psite<P> () const;
-    
+    operator runs_psite<P> () const;
+
     /// Convertion into a point.
     operator P () const;
-    
+
     /// Reference to the corresponding point.
     const P& to_point() const;
-    
+
     /// Access to the current point coordinates.
     mln_coord(P) operator[](unsigned i) const;
-    
+
   protected:
-    
+
     /// Current point.
     P p_;
-    
-    /// Current site.
-    internal::run_psite<P> site_;
-    
+
     /// Point set container.
-    const std_container& con_;
-    
+    const p_runs_<P>& con_;
+
     p_runs_piter_(const p_runs_<P>& pset);
   };
-  
-  
+
+
 # ifndef MLN_INCLUDE_ONLY
-  
+
   template <typename P, typename E>
+  inline
   p_runs_piter_<P, E>::p_runs_piter_(const p_runs_<P>& pset) :
-    con_(pset.con())
+    con_(pset)
   {
   }
-  
+
   template <typename P, typename E>
-  p_runs_piter_<P, E>::operator internal::run_psite<P> () const
+  p_runs_piter_<P, E>::operator runs_psite<P> () const
   {
-    return site_;
+    return runs_psite<P>(con_, p_);
   }
-  
+
   template <typename P, typename E>
+  inline
   p_runs_piter_<P, E>::operator P () const
   {
-    return p_;
+    return this->to_point();
   }
-  
+
   template <typename P, typename E>
+  inline
   const P&
   p_runs_piter_<P, E>::to_point() const
   {
     mln_precondition(exact(this)->is_valid());
     return p_;
   }
-  
+
   template <typename P, typename E>
+  inline
   mln_coord(P)
   p_runs_piter_<P, E>::operator[] (unsigned i) const
   {
     mln_precondition(exact(this)->is_valid());
     return p_[i];
   }
-  
+
 # endif // ! MLN_INCLUDE_ONLY
-  
-  
+
+
   /*! \brief Forward iterator on p_runs_ point set.
    *
    * Parameter \c P is the type of the point used in the point set.
@@ -291,84 +312,104 @@ namespace mln
   {
     typedef p_runs_piter_<P, p_runs_fwd_piter_<P> > super;
   public:
-    
+
     p_runs_fwd_piter_(const p_runs_<P>& pset);
-    
+
     /// Test the iterator validity.
     bool is_valid() const;
-    
+
     /// Invalidate the iterator.
     void invalidate();
-    
+
     /// Start an iteration.
     void start();
-    
+
     /// Go to the next point.
     void next_();
-    
+
   protected:
-    typename super::std_container::const_iterator it_;
+
+    unsigned i_;
+
+    p_run_fwd_piter_<P> it_;
   };
-  
-  
-  
+
+
 # ifndef MLN_INCLUDE_ONLY
-  
+
   template <typename P>
+  inline
   p_runs_fwd_piter_<P>::p_runs_fwd_piter_(const p_runs_<P>& pset) :
     super(pset)
   {
-    it_ = this->con_.end();
-    this->site_.pset_pos_() = this->con_.size();
+    invalidate();
   }
-  
+
   template <typename P>
+  inline
   bool
   p_runs_fwd_piter_<P>::is_valid() const
   {
-    return it_ != this->con_.end();
+    return i_ < this->con_.nruns();
   }
-  
+
   template <typename P>
+  inline
   void
   p_runs_fwd_piter_<P>::invalidate()
   {
-    it_ = this->con_.end();
-    this->site_.pset_pos_() = this->con_.size();
+    i_ = this->con_.nruns();
   }
-  
+
   template <typename P>
+  inline
   void
   p_runs_fwd_piter_<P>::start()
   {
-    it_ = this->con_.begin();
-    this->site_.range_start_() = it_->first;
-    this->site_.index_() = 0;
-    this->site_.pset_pos_() = 0;
-    this->p_ = it_->first;
+    i_ = 0;
+    it_.assign_run(this->con_[i_]);
+    it_.start();
+    this->p_ = it_;
   }
-  
+
   template <typename P>
+  inline
   void
   p_runs_fwd_piter_<P>::next_()
   {
     mln_precondition(this->is_valid());
-    ++(this->site_.index_());
-    
-    if (this->site_.index_() >= it_->second)
+    it_.next();
+    if (!it_.is_valid())
     {
-      ++it_;
-      ++this->site_.pset_pos_();
-      this->site_.range_start_() = it_->first;
-      this->site_.index_() = 0;
+      ++i_;
+      if (is_valid())
+      {
+	it_.assign_run(this->con_[i_]);
+	it_.start();
+      }
+      else
+	return;
     }
-    this->p_ = this->site_.range_start_();
-    this->p_[0] += this->site_.index_();
+    this->p_ = it_;
+
+
+//     mln_precondition(this->is_valid());
+//     ++(this->site_.index_());
+
+//     if (this->site_.index_() >= it_->second)
+//     {
+//       ++it_;
+//       ++this->site_.pset_pos_();
+//       this->site_.range_start_() = it_->first;
+//       this->site_.index_() = 0;
+//     }
+//     this->p_ = this->site_.range_start_();
+//     this->p_[0] += this->site_.index_();
   }
-  
+
 # endif // ! MLN_INCLUDE_ONLY
-  
-  
+
+
   /*! \brief Backward iterator on p_runs_ point set.
    *
    * Parameter \c P is the type of the point used in the point set.
@@ -378,82 +419,88 @@ namespace mln
   {
     typedef p_runs_piter_<P, p_runs_bkd_piter_<P> > super;
   public:
-    
+
     p_runs_bkd_piter_(const p_runs_<P>& pset);
-    
+
     /// Test the iterator validity.
     bool is_valid() const;
-    
+
     /// Invalidate the iterator.
     void invalidate();
-    
+
     /// Start an iteration.
     void start();
-    
+
     /// Go to the next point.
     void next_();
-    
+
   protected:
-    typename super::std_container::const_reverse_iterator it_;
-  };
-  
-  
-  
+
+    unsigned i_;
+
+    p_run_bkd_piter_<P> it_;
+};
+
+
+
 # ifndef MLN_INCLUDE_ONLY
-  
+
   template <typename P>
+  inline
   p_runs_bkd_piter_<P>::p_runs_bkd_piter_(const p_runs_<P>& pset) :
     super(pset)
   {
-    it_ = this->con_.rend();
-    this->site_.pset_pos_() = this->con_.size();
+    invalidate();
   }
-  
+
   template <typename P>
+  inline
   bool
   p_runs_bkd_piter_<P>::is_valid() const
   {
-    return it_ != this->con_.rend();
+    return i_ < this->con_.nruns();
   }
-  
+
   template <typename P>
+  inline
   void
   p_runs_bkd_piter_<P>::invalidate()
   {
-    it_ = this->con_.rend();
-    this->site_.pset_pos_() = this->con_.size();
+    i_ = this->con_.nruns();
   }
-  
+
   template <typename P>
+  inline
   void
   p_runs_bkd_piter_<P>::start()
   {
-    it_ = this->con_.rbegin();
-    this->site_.range_start_() = it_->first;
-    this->site_.index_() = it_->second - 1;
-    this->site_.pset_pos_() = this->con_.size() - 1;
-    this->p_ = this->site_.range_start_();
-    this->p_[0] += this->site_.index_();
+    i_ = this->con_.nruns() - 1;
+    it_.assign_run(this->con_[i_]);
+    it_.start();
+    this->p_ = it_;
   }
-  
+
   template <typename P>
+  inline
   void
   p_runs_bkd_piter_<P>::next_()
   {
     mln_precondition(this->is_valid());
-    --(this->site_.index_());
-    
-    if (this->site_.index_() + 1 == 0)
+    it_.next();
+    if (!it_.is_valid())
     {
-      ++it_;
-      --this->site_.pset_pos_();
-      this->site_.range_start_() = it_->first;
-      this->site_.index_() = this->it_->second - 1;
+      --i_;
+      if (is_valid())
+      {
+	it_.assign_run(this->con_[i_]);
+	it_.start();
+      }
+      else
+	return;
     }
-    this->p_ = this->site_.range_start_();
-    this->p_[0] += this->site_.index_();
+    this->p_ = it_;
   }
-  
+
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

@@ -52,8 +52,14 @@ namespace mln
     // Make definitions from super class available.
     enum { dim = super_::dim };
 
+    /// Constructor without arguments.
+    p_run_fwd_piter_();
+
     /// Coordinate associated type.
     p_run_fwd_piter_(const p_run<P>& pr);
+
+    /// Assign a new run to iterate.
+    void assign_run(const p_run<P>& pr);
 
     /// Reference of the corresponding point.
     const P& to_point() const;
@@ -77,7 +83,7 @@ namespace mln
     operator P() const;
 
   protected:
-    const p_run<P>& run_;
+    const p_run<P>* run_;
     bool is_valid_;
     P p_;
   };
@@ -97,8 +103,14 @@ namespace mln
     // Make definitions from super class available.
     enum { dim = super_::dim };
 
+    /// Constructor without arguments.
+    p_run_bkd_piter_();
+
     /// Coordinate associated type.
     p_run_bkd_piter_(const p_run<P>& pr);
+
+    /// Assign a new run to iterate.
+    void assign_run(const p_run<P>& pr);
 
     /// Reference of the corresponding point.
     const P& to_point() const;
@@ -122,7 +134,7 @@ namespace mln
     operator P() const;
 
   protected:
-    const p_run<P>& run_;
+    const p_run<P>* run_;
     bool is_valid_;
     P p_;
   };
@@ -135,9 +147,25 @@ namespace mln
 
   template <typename P>
   inline
-  p_run_fwd_piter_<P>::p_run_fwd_piter_(const p_run<P>& pr)
-    : run_(pr)
+  p_run_fwd_piter_<P>::p_run_fwd_piter_()
+    : run_ (0)
   {
+  }
+
+  template <typename P>
+  inline
+  p_run_fwd_piter_<P>::p_run_fwd_piter_(const p_run<P>& pr)
+    : run_(&pr)
+  {
+    invalidate();
+  }
+
+  template <typename P>
+  inline
+  void
+  p_run_fwd_piter_<P>::assign_run(const p_run<P>& pr)
+  {
+    run_ = &pr;
     invalidate();
   }
 
@@ -181,7 +209,7 @@ namespace mln
   void
   p_run_fwd_piter_<P>::start()
   {
-    p_ = run_.first();
+    p_ = run_->first();
     is_valid_ = true;
   }
 
@@ -191,7 +219,7 @@ namespace mln
   p_run_fwd_piter_<P>::next_()
   {
     p_[dim - 1]++;
-    is_valid_ = p_[dim - 1] - run_.first()[dim - 1] < (signed)run_.length();
+    is_valid_ = p_[dim - 1] - run_->first()[dim - 1] < (signed)run_->length();
   }
 
   template <typename P>
@@ -207,9 +235,25 @@ namespace mln
 
   template <typename P>
   inline
-  p_run_bkd_piter_<P>::p_run_bkd_piter_(const p_run<P>& pr)
-    : run_(pr)
+  p_run_bkd_piter_<P>::p_run_bkd_piter_()
+    : run_ (0)
   {
+  }
+
+  template <typename P>
+  inline
+  p_run_bkd_piter_<P>::p_run_bkd_piter_(const p_run<P>& pr)
+    : run_(&pr)
+  {
+    invalidate();
+  }
+
+  template <typename P>
+  inline
+  void
+  p_run_bkd_piter_<P>::assign_run(const p_run<P>& pr)
+  {
+    run_ = &pr;
     invalidate();
   }
 
@@ -237,7 +281,7 @@ namespace mln
   bool
   p_run_bkd_piter_<P>::is_valid() const
   {
-    return is_valid;
+    return is_valid_;
   }
 
   template <typename P>
@@ -253,7 +297,7 @@ namespace mln
   void
   p_run_bkd_piter_<P>::start()
   {
-    p_ = run_[run_.length() - 1];
+    p_ = (*run_)[run_->length() - 1];
     is_valid_ = true;
 }
 
@@ -262,8 +306,8 @@ namespace mln
   void
   p_run_bkd_piter_<P>::next_()
   {
-    p_[dim - 1]++;
-    is_valid_ = p_[dim - 1] - run_.first()[dim - 1] >= 0;
+    p_[dim - 1]--;
+    is_valid_ = p_[dim - 1] - run_->first()[dim - 1] >= 0;
   }
 
   template <typename P>
