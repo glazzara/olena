@@ -1,3 +1,11 @@
+2007-11-30  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add full tests for logical subdirectory.
+	* tests/logical/and_full.cc,
+	* tests/logical/and_not_full.cc,
+	* tests/logical/not_full.cc,
+	* tests/logical/or_full.cc: New full tests for logical.
+
 2007-11-29  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Move a test and fix some others.
