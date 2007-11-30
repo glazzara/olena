@@ -1,7 +1,7 @@
 2007-11-29  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
-	.
-	* tests/p_runs.cc: Renama as...
+	Move a test and fix some others.
+	* tests/p_runs.cc: Rename as...
 	* tests/core/p_runs.cc: ...this
 	* tests/core/Makefile.am: Add test.
 	* tests/fun/x2x/rotation.cc,
