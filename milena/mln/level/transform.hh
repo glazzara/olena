@@ -129,7 +129,7 @@ namespace mln
       mln_precondition(exact(input).has_data());
       mln_ch_value(I, mln_result(F)) output;
       initialize(output, input);
-      transform_(input, f, output);
+      transform(input, f, output);
 
       trace::exiting("level::transform");
       return output;

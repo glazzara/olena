@@ -33,8 +33,7 @@
  * \brief Definintion of function which encodes an image in rle_image.
  */
 
-# include <mln/core/sparse_image.hh>
-# include <vector>
+# include <mln/core/rle_image.hh>
 
 namespace mln
 {
@@ -48,7 +47,7 @@ namespace mln
   */
   template <typename I>
   rle_image<mln_point(I), mln_value(I)>
-  rle_encode(const Image<I>& input);
+  rle_encode(const Image<I>& input, bool ignore_zero = true);
 
 # ifndef MLN_INCLUDE_ONLY
   /*!
@@ -59,10 +58,10 @@ namespace mln
   bool
   on_the_same_line(const P& p1, const P& p2)
   {
-    unsigned dim = P::dim;
+    const unsigned dim = P::dim;
     bool same_line = true;
 
-    for (int n = dim - 1; same_line and n > 0; --n)
+    for (unsigned n = 0; same_line && n < dim - 1; ++n)
       same_line = (p1[n] == p2[n]);
     return same_line;
   }
@@ -70,38 +69,36 @@ namespace mln
   template <typename I>
   inline
   rle_image<mln_point(I), mln_value(I)>
-  rle_encode(const Image<I>& input)
+  rle_encode(const Image<I>& input, bool ignore_zero)
   {
+    typedef mln_point(I) P;
+
     rle_image<mln_point(I), mln_value(I)> output;
+    const I& ima = exact(input);
     mln_piter(I) p (exact(input).domain());
-    unsigned len = 1;
-    /// range point start
+    unsigned len = 0;
     mln_point(I) rstart;
-    /// range value
     mln_value(I) rvalue;
 
-    p.start();
-    if (!p.is_valid())
-      return output;
-
-    rstart = p;
-    rvalue = exact(input)(p);
-    p.next_();
-    while (p.is_valid())
-    {
-      if (rvalue == exact(input)(p) and
-	  on_the_same_line(rstart, mln_point(I)(p)))
-	++len;
-      else
+    for_all(p)
+      if (!ignore_zero || ima(p) != literal::zero || len)
       {
-	output.insert(rstart, len, rvalue);
-	len = 1;
-	rstart = p;
-	rvalue = exact(input)(p);
+	if (len == 0)
+	{
+	  ++len;
+	  rstart = p;
+	  rvalue = ima(p);
+	}
+	else
+	  if (rvalue == ima(p)
+	      && on_the_same_line(rstart, mln_point(I)(p)))
+	    ++len;
+	  else
+	  {
+	    output.insert(p_run<P>(rstart, len), rvalue);
+	    len = 0;
+	  }
       }
-      p.next_();
-    }
-    output.insert(rstart, len, rvalue);
     return output;
   }
 

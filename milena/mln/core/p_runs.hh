@@ -90,6 +90,9 @@ namespace mln
     /// Return the i-th run of the list of runs
     const p_run<P>& operator[](unsigned i) const;
 
+    /// Return the size of the data in memory.
+    unsigned size_mem() const;
+
 //     /// Return the container of the pset (internal use only).
 //     const container& con() const;
 
@@ -162,7 +165,7 @@ namespace mln
 	  break;
       if (equal)
 	mln_assertion(prec->first()[P::dim - 1] + (signed)prec->length()
-		      < pr.first()[P::dim - 1]);
+		      <= pr.first()[P::dim - 1]);
     }
 
     if (iter != con_.vect().end())
@@ -173,7 +176,7 @@ namespace mln
 	  break;
       if (equal)
 	mln_assertion(pr.first()[P::dim - 1] + (signed)pr.length()
-		      < iter->first()[P::dim - 1]);
+		      <= iter->first()[P::dim - 1]);
     }
     con_.insert(pr);
 
@@ -215,6 +218,14 @@ namespace mln
   p_runs_<P>::operator[](unsigned i) const
   {
     return con_[i];
+  }
+
+  template <typename P>
+  inline
+  unsigned
+  p_runs_<P>::size_mem() const
+  {
+    return nruns() * 2 * (sizeof(P) + sizeof(unsigned));
   }
 
 //   template <typename P>

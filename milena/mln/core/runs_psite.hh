@@ -89,7 +89,7 @@ namespace mln
   protected:
 
     /// Start of the psite range.
-    P p_; // FIXME: Rename as p_ (like everywhere else!)
+    P p_;
 
     /// Position in the psite range.
     unsigned range_index_;
@@ -106,11 +106,11 @@ namespace mln
   runs_psite<P>::runs_psite(const p_runs_<P>& pr, const P& p)
   {
     unsigned i = 0;
-    while (i < pr.nruns() && p < pr[i].first())
+    while (i < pr.nruns() && p >= pr[i].first())
       ++i;
     mln_assertion(i != 0);
 
-    range_index_ = p[P::dim - 1] - pr[i].first()[P::dim - 1];
+    range_index_ = p[P::dim - 1] - pr[i - 1].first()[P::dim - 1];
       
     mln_assertion(pr[i - 1].npoints() > range_index_);
 

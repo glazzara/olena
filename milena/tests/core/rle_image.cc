@@ -25,62 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_RUN_IMAGE_HH
-# define MLN_CORE_INTERNAL_RUN_IMAGE_HH
-
-/*! \file mln/core/internal/run_image.hh
+/*! \file tests/labeling/blobs.cc
  *
- * \brief Definition of mln::internal::run_image_ class for internal use only
+ * \brief Test on mln::labeling::blobs.
  */
 
-# include <mln/core/internal/image_primary.hh>
-# include <mln/core/p_runs.hh>
-# include <mln/core/runs_psite.hh>
+#include <mln/core/image2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/pw/all.hh>
+#include <mln/core/neighb2d.hh>
 
-namespace mln
+#include <mln/labeling/blobs.hh>
+#include <mln/level/transform.hh>
+#include <mln/level/paste.hh>
+#include <mln/level/compare.hh>
+#include <mln/io/pgm/save.hh>
+
+#include <mln/core/rle_encode.hh>
+
+struct fold_t : public mln::Function_v2v< fold_t >
 {
-
-  namespace internal
-  {
-
-    /*! \brief Factorization class for run_image.
-     *
-     * Parameter \c T is the type of the image value.
-     * Parameter \c P is the type of the image point.
-     * Parameter \c E is the Exact type of the image.
-     */
-    template <typename T, typename P, typename E>
-    class run_image_ : public internal::image_primary_< p_runs_<P>, E >
-    {
-    protected:
-      run_image_();
-
-    public:
-      float compression() const;
-    };
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename T, typename P, typename E>
-    inline
-    run_image_<T, P, E>::run_image_()
-    {
-    }
-
-    template <typename T, typename P, typename E>
-    inline
-    float
-    run_image_<T, P, E>::compression() const
-    {
-      return float(exact(this)->data_->size_mem()) /
-	float (sizeof(T) * exact(this)->data_->domain_->bbox().npoints());
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace internal
-
-} // end of namespace mln
+  typedef mln::value::int_u8 result;
+  result operator()(unsigned i) const { return i == 0 ? 0 : (i - 1) % 255 + 1; }
+};
 
 
-#endif // ! MLN_CORE_INTERNAL_RUN_IMAGE_HH
+
+int main()
+{
+  using namespace mln;
+  using value::int_u8;
+
+  image2d<int_u8> lena;
+  io::pgm::load(lena, "../../img/tiny.pgm");
+  image2d<int_u8> cmp(lena.domain());
+
+  unsigned n;
+  image2d<unsigned> labels = labeling::blobs((pw::value(lena) > pw::cst(172u)) | lena.domain(),
+					     c4(), n);
+  std::cout << n << std::endl;
+
+  rle_image<point2d, int_u8> rle = rle_encode(level::transform(labels, fold_t()));
+
+  level::fill(cmp, literal::zero);
+  level::paste(rle, cmp);
+
+  mln_assertion(cmp == level::transform(labels, fold_t()));
+}

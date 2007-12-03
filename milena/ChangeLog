@@ -1,3 +1,18 @@
+2007-12-03  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Creation of rle_image and test.
+
+	* mln/core/internal/run_image.hh: Factorize compression code.
+	* mln/core/p_runs.hh: Fix and add size_mem().
+	* mln/core/rle_encode.hh: Rewrite algo and add feature for taking
+	zero into account or not.
+	* mln/core/rle_image.hh: Add traits and Fixes.
+	* mln/core/runs_psite.hh: Fix and remove a FIXME.
+	* mln/level/transform.hh: Fix call of transform.
+	* mln/util/lazy_set.hh: Fix and add Doc.
+	* tests/core/Makefile.am: Add test.
+	* tests/core/rle_image.cc: New.
+
 2007-11-30  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add full tests for logical subdirectory.

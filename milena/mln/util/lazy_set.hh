@@ -171,7 +171,7 @@ namespace mln
 
       /*! \brief Update \a v_ from \a s_.
        *
-       * FIXME: explain.
+       * Make the vector contains the same element than the sorted set..
        */
       void update_() const;
 
@@ -233,7 +233,7 @@ namespace mln
     const E&
     lazy_set_<E>::element(unsigned i) const
     {
-      assert(i < v_.size());
+      assert(i < s_.size());
       if (needs_update_)
 	update_();
       return v_[i];

@@ -34,8 +34,8 @@
  */
 
 # include <mln/core/internal/run_image.hh>
-# include <mln/core/internal/run_pset.hh>
-# include <mln/core/internal/run_psite.hh>
+# include <mln/core/p_runs.hh>
+# include <mln/core/runs_psite.hh>
 # include <mln/value/set.hh>
 # include <vector>
 
@@ -58,11 +58,36 @@ namespace mln
       std::vector<T> values_;
 
       /// domain of the image
-      run_pset_<P> domain_;
+      p_runs_<P> domain_;
+
+      /// Return the size of the data in memory.
+      unsigned size_mem() const;
     };
 
   } // end of namespace mln::internal
 
+
+  namespace trait
+  {
+
+    template <typename P, typename T>
+    struct image_< rle_image<P,T> > : default_image_< T, rle_image<P,T> >
+    {
+      typedef trait::image::category::primary category;
+
+      typedef trait::image::access::browsing   access;
+      // FIXME: Put the right dimension.
+      typedef trait::image::space::two_d     space;
+      typedef trait::image::size::regular    size;
+      typedef trait::image::support::aligned support;
+
+      typedef trait::image::border::none     border;
+      typedef trait::image::data::linear     data;
+      typedef trait::image::io::read_only    io;
+      typedef trait::image::speed::slow      speed;
+    };
+
+  } // end of namespace mln::trait
 
 
   /*! \brief RLE image.
@@ -73,15 +98,15 @@ namespace mln
    * This image is not point wise accessible.
    */
   template <typename P, typename T>
-  class rle_image : public internal::run_image_< P, rle_image<P, T> >
+  class rle_image : public internal::run_image_< T, P, rle_image<P, T> >
   {
   public:
     typedef T value;
     typedef T& lvalue;
     typedef const T rvalue;
-    typedef internal::run_psite<P> psite;
+    typedef runs_psite<P> psite;
     typedef mln::value::set<T> vset;
-    typedef internal::run_pset_<P> pset;
+    typedef p_runs_<P> pset;
 
 
     /// Skeleton.
@@ -91,7 +116,7 @@ namespace mln
     rle_image();
 
     /// Add a new range to the image.
-    void insert(const P& p, unsigned len, T value);
+    void insert(const p_run<P>& pr, T value);
 
     /// Read-only access to the image value located at point \p p.
     rvalue operator() (const psite& site) const;
@@ -124,12 +149,21 @@ namespace mln
     {
     }
 
+    template <typename P, typename T>
+    inline
+    unsigned
+    data_< rle_image<P,T> >::size_mem() const
+    {
+      return sizeof(T) * values_.size() + domain_.size_mem();
+    }
+
   } // end of namespace mln::internal
 
   template <typename P, typename T>
   inline
   rle_image<P, T>::rle_image()
   {
+    this->data_ = new internal::data_< rle_image<P,T> >();
   }
 
   template <typename P, typename T>
@@ -151,11 +185,13 @@ namespace mln
   template <typename P, typename T>
   inline
   void
-  rle_image<P, T>::insert(const P& p, unsigned len, T value)
+  rle_image<P, T>::insert(const p_run<P>& pr, T value)
   {
     if (!this->has_data())
       this->data_ = new internal::data_< rle_image<P,T> >();
-    this->data_->domain_.insert(p, len);
+    mln_assertion(this->data_->values_.size() == 0 ||
+		  pr.first() > this->data_->domain_[this->data_->domain_.nruns() - 1].first());
+    this->data_->domain_.insert(pr);
     this->data_->values_.push_back(value);
   }
 
