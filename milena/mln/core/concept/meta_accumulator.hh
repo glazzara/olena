@@ -40,9 +40,16 @@
 # define mln_accu_with(A, T) \
 typename A::template with< T >::ret
 
+# define mln_accu_with_(A, T) \
+A::with< T >::ret
+
 
 # define mln_accu_result(A, T) \
 typename A::template with< T >::ret::result
+
+
+# define mln_accu_result_(A, T) \
+A::with< T >::ret::result
 
 
 

@@ -1,5 +1,12 @@
 2007-12-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Complete the macros in Meta Accumlator.
+
+	* mln/core/concept/meta_accumulator.hh: (mln_accu_with_,
+          mln_accu_result_) New.
+
+2007-12-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add tests for mln/accu.
 
 	* tests/accu/bbox.cc: New.
