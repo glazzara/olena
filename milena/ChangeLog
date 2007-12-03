@@ -1,3 +1,10 @@
+2007-12-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fix warnings in io.
+
+	* mln/io/abort.hh: Fix a compile error.
+	* mln/io/pnm/save_header.hh: Fix a 'unused parameter.' warning.
+
 2007-12-03  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Creation of rle_image and test.

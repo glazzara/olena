@@ -45,7 +45,7 @@ namespace mln
     namespace internal
     {
       /// The way to abort when an error occur in io processing.
-      void abort()
+      void abort();
 
 # ifndef MLN_INCLUDE_ONLY
 

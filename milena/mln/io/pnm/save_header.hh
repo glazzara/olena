@@ -64,7 +64,7 @@ namespace mln
       }
 
       inline
-      void save_max_val(bool&, std::ofstream& file)
+      void save_max_val(bool&, std::ofstream&)
       {
       }
 
