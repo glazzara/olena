@@ -1,5 +1,21 @@
 2007-12-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add tests for mln/accu.
+
+	* tests/accu/bbox.cc: New.
+	* tests/accu/compute.cc: New.
+	* tests/accu/count.cc: New.
+	* tests/accu/histo.cc: New.
+	* tests/accu/max.cc: New.
+	* tests/accu/max_h.cc: New.
+	* tests/accu/mean.cc: New.
+	* tests/accu/median.cc: New.
+	* tests/accu/min_h.cc: New.
+	* tests/accu/min_max.cc: New.
+	* tests/accu/pair.cc: New.
+
+2007-12-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Review the mln/geom directory.
 	* mln/geom/bbox.hh: Active a precondition.
 	* mln/geom/chamfer.hh: Add documentation.
