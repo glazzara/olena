@@ -47,7 +47,7 @@ namespace mln
   namespace geom
   {
 
-
+    /// Apply chamfer algorithm to a binary image.
     template <typename I, typename W>
     mln_ch_value( I, unsigned )
       chamfer(const Image<I>& input_, const W& w_win_,

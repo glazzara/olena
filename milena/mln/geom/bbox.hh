@@ -35,6 +35,7 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/concept/point_set.hh>
 # include <mln/core/concept/box.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/weighted_window.hh>
@@ -125,7 +126,7 @@ namespace mln
     {
       mln_precondition(exact(pset).npoints() != 0);
       box_<mln_point(S)> tmp = impl::bbox_(exact(pset));
-      // FIXME: mln_postcondition(tmp <= pset.bbox());
+      mln_postcondition(tmp <= exact(pset).bbox());
       return tmp;
     }
 

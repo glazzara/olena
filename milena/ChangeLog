@@ -1,5 +1,11 @@
 2007-12-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Review the mln/geom directory.
+	* mln/geom/bbox.hh: Active a precondition.
+	* mln/geom/chamfer.hh: Add documentation.
+
+2007-12-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix warnings in io.
 
 	* mln/io/abort.hh: Fix a compile error.
