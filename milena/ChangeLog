@@ -1,3 +1,15 @@
+2007-12-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fix Makefiles.
+
+	* tests/Makefile.am: Add geom directory.
+	* tests/accu/Makefile.am: Add new tests to the makefile.
+	* tests/geom/Makefile.am: Likewise.
+
+	* tests/accu/min.cc: Remove debug.
+	* tests/accu/pair.cc: Finish the test.
+	* tests/fi_adaptor.cc: Add documentation.
+
 2007-12-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	New full tests for level subdirectory.

@@ -12,6 +12,7 @@ SUBDIRS =					\
   debug						\
   draw						\
   fun						\
+  geom						\
   histo						\
   level						\
   logical					\
@@ -289,6 +290,7 @@ if FREEIMAGEPLUS
   fi_adaptor_SOURCES = fi_adaptor.cc
   fi_adaptor_CPPFLAGS = $(AM_CPPFLAGS) $(FREEIMAGEPLUS_CPPFLAGS)
   fi_adaptor_LDFLAGS = $(AM_LDFLAGS) $(FREEIMAGEPLUS_LDFLAGS)
+
 endif
 
 TESTS = $(check_PROGRAMS)

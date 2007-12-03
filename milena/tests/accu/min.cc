@@ -54,8 +54,7 @@ int main()
 
 //   accu::compute< accu::min >(ima);
 
-  std::cout << accu::compute< accu::val<accu::min> >(ima)
-	    << std::endl;
+  mln_assertion(accu::compute< accu::val<accu::min> >(ima) == 1);
 
 //   std::cout << accu::compute< accu::min >(ima)
 // 	    << std::endl;

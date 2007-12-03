@@ -48,36 +48,48 @@
 
 using namespace mln;
 
+using namespace mln::value;
+
 int main()
 {
   using typename value::int_u8;
   using typename value::rgb8;
 
-  // FIXME: Is this necessary?  See FreeImagePlus' documentation.
-  FreeImage_Initialise();
+  {
+    // FIXME:
+    // Under Linux or under any *nix OS (i.e. under Unix or MacOSX), you need to call
+    // FreeImage_Initialise at the beginning of your main function and you need to call
+    // FreeImage_DeInitialise at the end of this main function (this is not needed when
+    // using FreeImage as a .SO).
 
-  win::rectangle2d rect(51, 51);
+    //FreeImage_Initialise();
 
-  fi_adaptor< image2d<int_u8> > adaptor;
+    win::rectangle2d rect(51, 51);
 
-  adaptor.load("../img/lena.pgm");
+    fi_adaptor< image2d< int_u<8> > > adaptor;
 
-  image2d<int_u8> ima(adaptor.domain());
+    adaptor.load("../img/lena.pgm");
+    display::save (adaptor);
+    display::show (adaptor, "xv");
 
-  level::median(adaptor, rect, ima);
+    image2d<int_u8> ima(adaptor.domain());
 
-  level::paste(ima, adaptor);
+    level::median(adaptor, rect, ima);
 
-  display::save (adaptor);
-  display::show (adaptor, "xv");
+    level::paste(ima, adaptor);
 
-  // FIXME: Likewise.
-  /* A comment here (probably coming from an example of FreeImagePlus'
-     documentation) used to say:
+    display::save (adaptor);
+    display::show (adaptor, "xv");
 
-       call this ONLY when linking with FreeImage as a static library
+    // FIXME: Likewise.
+    /*
+       Check if this statement holds in our case.  Maybe we need to
+       involve Libtool in to handle FreeImagePlus properly.  */
+    //FreeImage_DeInitialise();
+  }
 
-     Check if this statement holds in our case.  Maybe we need to
-     involve Libtool in to handle FreeImagePlus properly.  */
-  FreeImage_DeInitialise();
+  {
+
+  }
+
 }

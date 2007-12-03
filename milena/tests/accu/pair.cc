@@ -33,6 +33,8 @@
 #include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 
+#include <mln/accu/pair.hh>
+#include <mln/accu/max.hh>
 #include <mln/accu/mean.hh>
 
 int main()
@@ -40,7 +42,7 @@ int main()
   using namespace mln;
 
   {
-    accu::pair_<accu::mean<int>, accu::max<int> > mean;
+    accu::pair_<accu::mean_<int>, accu::max_<int> > mean;
 
     mean.take(10);
     mean.take(9);
@@ -54,16 +56,7 @@ int main()
     mean.take(1);
     mean.take(0);
 
-    mln_assertion(mean.to_result() == 5);
-  }
-
-  {
-    mln_accu_with_(accu::mean, int) mean;
-
-    mean.take(10);
-    mean.take(8);
-    mean.take(0);
-
-    mln_assertion(mean.to_result() == 6);
+    mln_assertion(mean.to_result().first == 5);
+    mln_assertion(mean.to_result().second == 10);
   }
 }
