@@ -1,3 +1,14 @@
+2007-12-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	New full tests for level subdirectory.
+
+	New tests.
+	* tests/level/abs_full.cc,
+	* tests/level/fill_full.cc: New full tests for level.
+
+	Update.
+ 	* tests/level/fill.cc: Remove useless header.
+
 2007-12-03  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Generate mono_rle_image and add his test.

@@ -31,7 +31,6 @@
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
 #include <mln/level/fill.hh>
 
 int main()
