@@ -8,6 +8,7 @@ check_PROGRAMS =				\
   exact						\
   initialize					\
   mono_rle_image				\
+  obased_rle_image				\
   p_runs					\
   rle_image					\
   t_image
@@ -17,6 +18,7 @@ clone_SOURCES = clone.cc
 exact_SOURCES = exact.cc
 initialize_SOURCES = initialize.cc
 mono_rle_image_SOURCES = mono_rle_image.cc
+obased_rle_image_SOURCES = obased_rle_image.cc
 p_runs_SOURCES = p_runs.cc
 rle_image_SOURCES = rle_image.cc
 t_image_SOURCES = t_image.cc

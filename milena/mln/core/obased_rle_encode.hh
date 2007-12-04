@@ -25,29 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_RLE_ENCODE_HH
-# define MLN_CORE_RLE_ENCODE_HH
+#ifndef MLN_CORE_OBASED_RLE_ENCODE_HH
+# define MLN_CORE_OBASED_RLE_ENCODE_HH
 
-/*! \file mln/core/rle_encode.hh
+/*! \file mln/core/obased_rle_encode.hh
  *
- * \brief Definintion of function which encodes an image in rle_image.
+ * \brief Definintion of function which encodes an image in obased_rle_image.
  */
 
-# include <mln/core/rle_image.hh>
+# include <mln/core/obased_rle_image.hh>
 
 namespace mln
 {
 
   /*!
-  ** encode an image class to a rle_image
+  ** encode an image class to a obased_rle_image
   **
   ** @param input has to respect the Image concept
   **
-  ** @return rle_image
+  ** @return obased_rle_image
   */
   template <typename I>
-  rle_image<mln_point(I), mln_value(I)>
-  rle_encode(const Image<I>& input, bool ignore_zero = true);
+  obased_rle_image<mln_point(I), mln_value(I)>
+  obased_rle_encode(const Image<I>& input, bool ignore_zero = true);
 
 # ifndef MLN_INCLUDE_ONLY
   /*!
@@ -68,18 +68,25 @@ namespace mln
 
   template <typename I>
   inline
-  rle_image<mln_point(I), mln_value(I)>
-  rle_encode(const Image<I>& input, bool ignore_zero)
+  obased_rle_image<mln_point(I), mln_value(I)>
+  obased_rle_encode(const Image<I>& input, bool ignore_zero)
   {
     typedef mln_point(I) P;
 
-    rle_image<mln_point(I), mln_value(I)> output;
     const I& ima = exact(input);
     mln_piter(I) p (exact(input).domain());
     unsigned len = 0;
     mln_point(I) rstart;
     mln_value(I) rvalue;
+    std::set< mln_value(I) > sv;
 
+    for_all(p)
+    {
+      if (!ignore_zero || ima(p) != literal::zero)
+	sv.insert(ima(p));
+    }
+
+    obased_rle_image<mln_point(I), mln_value(I)> output(sv);
     for_all(p)
       if (!ignore_zero || ima(p) != literal::zero || len)
       {
@@ -110,4 +117,4 @@ namespace mln
 
 }
 
-#endif // ! MLN_CORE_RLE_ENCODE_HH
+#endif // ! MLN_CORE_OBASED_RLE_ENCODE_HH

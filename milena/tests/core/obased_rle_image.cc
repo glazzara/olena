@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/mono_rle_iimage.cc
+/*! \file tests/core/obased_rle_image.cc
  *
- * \brief Test on mln::labeling::blobs.
+ * \brief Test on mln::obased_rle_image.hh.
  */
 
 #include <mln/core/image2d.hh>
@@ -42,7 +42,7 @@
 #include <mln/level/compare.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/core/mono_rle_encode.hh>
+#include <mln/core/obased_rle_encode.hh>
 
 struct fold_t : public mln::Function_v2v< fold_t >
 {
@@ -50,11 +50,7 @@ struct fold_t : public mln::Function_v2v< fold_t >
   result operator()(unsigned i) const { return i == 0 ? 0 : (i - 1) % 255 + 1; }
 };
 
-struct only_two_t : public mln::Function_v2v< only_two_t >
-{
-  typedef mln::value::int_u8 result;
-  result operator()(unsigned i) const { return i == 2 ? 2 : 0; }
-};
+
 
 int main()
 {
@@ -66,15 +62,17 @@ int main()
   image2d<int_u8> cmp(lena.domain());
 
   unsigned n;
-  image2d<unsigned> labels = labeling::blobs((pw::value(lena) > pw::cst(172u)) | lena.domain(),
+  image2d<unsigned>
+    labels = labeling::blobs((pw::value(lena) > pw::cst(172u)) | lena.domain(),
 					     c4(), n);
 
-  mono_rle_image<point2d, int_u8> rle = mono_rle_encode(level::transform(labels, fold_t()), 2);
+  obased_rle_image<point2d, int_u8>
+    rle = obased_rle_encode(level::transform(labels, fold_t()));
 
   std::cout << n << ", compression :" << rle.compression() << std::endl;
 
   level::fill(cmp, literal::zero);
   level::paste(rle, cmp);
 
-  mln_assertion(cmp == level::transform(labels, only_two_t()));
+  mln_assertion(cmp == level::transform(labels, fold_t()));
 }

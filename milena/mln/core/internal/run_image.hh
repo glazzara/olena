@@ -73,7 +73,7 @@ namespace mln
     run_image_<T, P, E>::compression() const
     {
       return float(exact(this)->data_->size_mem()) /
-	float (sizeof(T) * exact(this)->data_->domain_->bbox().npoints());
+	float (sizeof(T) * exact(this)->data_->domain_.bbox().npoints());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

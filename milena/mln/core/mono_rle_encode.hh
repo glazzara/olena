@@ -94,7 +94,11 @@ namespace mln
 	  else
 	  {
 	    output.insert(p_run<P>(rstart, len));
-	    len = 0;
+	    if ((len = (!ignore_zero || ima(p) != literal::zero)))
+	    {
+	      rstart = p;
+	      rvalue = ima(p);
+	    }
 	  }
       }
     return output;

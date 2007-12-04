@@ -1,3 +1,16 @@
+2007-12-04  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add object based rle image and his test.
+	* mln/core/obased_rle_encode.hh: New.
+	* mln/core/obased_rle_image.hh: New.
+	* tests/core/Makefile.am: Add following test.
+	* tests/core/obased_rle_image.cc: New.
+	* mln/core/internal/run_image.hh: Fix compression routine.
+	* mln/core/mono_rle_encode.hh: Fix.
+	* mln/core/rle_encode.hh: Fix.
+	* tests/core/mono_rle_image.cc,
+	* tests/core/rle_image.cc: Display compression.
+
 2007-12-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Complete rgb_full test.

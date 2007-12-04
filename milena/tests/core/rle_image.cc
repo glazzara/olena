@@ -64,9 +64,10 @@ int main()
   unsigned n;
   image2d<unsigned> labels = labeling::blobs((pw::value(lena) > pw::cst(172u)) | lena.domain(),
 					     c4(), n);
-  std::cout << n << std::endl;
 
   rle_image<point2d, int_u8> rle = rle_encode(level::transform(labels, fold_t()));
+
+  std::cout << n << ", compression :" << rle.compression() << std::endl;
 
   level::fill(cmp, literal::zero);
   level::paste(rle, cmp);
