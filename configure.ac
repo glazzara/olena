@@ -54,6 +54,10 @@ fi
 OLN_WITH_FREEIMAGEPLUS
 AM_CONDITIONAL([FREEIMAGEPLUS], [test x$oln_have_freeimageplus = xyes])
 
+# Cfitsio library.
+OLN_WITH_CFITSIO
+AM_CONDITIONAL([CFITSIO], [test x$oln_have_cfitsio = xyes])
+
 
 ## --------------- ##
 ## Configuration.  ##
