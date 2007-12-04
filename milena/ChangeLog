@@ -1,3 +1,9 @@
+2007-12-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update fits Makefile.
+	* tests/io/fits/Makefile.am: Compile the fits test only when
+	CFITSIO is available (thanks to cfitsio.m4).
+
 2007-12-04  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add object based rle image and his test.
