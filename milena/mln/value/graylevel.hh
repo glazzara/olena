@@ -248,6 +248,8 @@ namespace mln
 
     namespace internal
     {
+      // Fwd decl;
+      template <typename T> struct convert_;
 
       // convert for graylevel
       template <unsigned n>
