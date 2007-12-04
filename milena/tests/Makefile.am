@@ -19,6 +19,7 @@ SUBDIRS =					\
   norm						\
   set						\
   util						\
+  value						\
   win
 
 check_PROGRAMS =				\
@@ -131,19 +132,6 @@ check_PROGRAMS =				\
   trait_value					\
   translate_image				\
 						\
-  value_float01_bis				\
-  value_float01					\
-  value_float01_f				\
-  value_graylevel				\
-  value_interop					\
-  value_int_s16					\
-  value_int_s					\
-  value_int_u8					\
-  value_label					\
-  value_quat					\
-  value_rgb8					\
-  value_scalar					\
-  value_set					\
   vec						\
 						\
   window1d					\
@@ -262,19 +250,6 @@ trait_super_SOURCES = trait_super.cc
 trait_value_SOURCES = trait_value.cc
 translate_image_SOURCES = translate_image.cc
 
-value_float01_bis_SOURCES = value_float01_bis.cc
-value_float01_SOURCES = value_float01.cc
-value_float01_f_SOURCES = value_float01_f.cc
-value_graylevel_SOURCES = value_graylevel.cc
-value_interop_SOURCES = value_interop.cc
-value_int_s16_SOURCES = value_int_s16.cc
-value_int_s_SOURCES = value_int_s.cc
-value_int_u8_SOURCES = value_int_u8.cc
-value_label_SOURCES = value_label.cc
-value_quat_SOURCES = value_quat.cc
-value_rgb8_SOURCES = value_rgb8.cc
-value_scalar_SOURCES = value_scalar.cc
-value_set_SOURCES = value_set.cc
 vec_SOURCES = vec.cc
 
 window1d_SOURCES = window1d.cc
