@@ -1,5 +1,16 @@
 2007-12-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Work on values.
+	* mln/value/rgb.hh: (rgb<n>(const metal::vec<3, unsigned>& rhs)) New.
+	* tests/value/Makefile.am: Add rgb_full test.
+	* tests/value/int_u8.cc: Update include.
+	* tests/value_macros.hh: Rename as...
+	* tests/value/macros.hh: ...this.
+	* tests/value/rgb_full.cc: Test all operator of rgb, an interop
+	with int and int_u8.
+
+2007-12-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Move the tests of mln/value.
 	* tests/Makefile.am: Move the value tests...
 	* tests/value/Makefile.am: ...here.

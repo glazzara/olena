@@ -122,6 +122,7 @@ namespace mln
 
       /// Constructor from a metal::vec.
       rgb<n>(const metal::vec<3, int>& rhs);
+      rgb<n>(const metal::vec<3, unsigned>& rhs);
       rgb<n>(const metal::vec<3, int_u<n> >& rhs);
 
       /// \{ Constructors with literals.
@@ -182,6 +183,13 @@ namespace mln
     template <unsigned n>
     inline
     rgb<n>::rgb(const metal::vec<3, int>& v)
+    {
+      this->v_ = v;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const metal::vec<3, unsigned>& v)
     {
       this->v_ = v;
     }

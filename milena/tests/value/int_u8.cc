@@ -31,7 +31,7 @@
  */
 
 #include <mln/value/int_u8.hh>
-#include <tests/value_macros.hh>
+#include <tests/value/macros.hh>
 
 
 int main()

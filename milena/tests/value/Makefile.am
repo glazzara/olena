@@ -24,6 +24,9 @@ check_PROGRAMS =				\
   scalar					\
   set
 
+check_full_PROGRAMS =				\
+  rgb_full
+
 bool_SOURCES = bool.cc
 builtin_SOURCES = builtin.cc
 equiv_SOURCES = equiv.cc
@@ -41,4 +44,7 @@ rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc
 
+rgb_full_SOURCES = rgb_full.cc
+
 TESTS = $(check_PROGRAMS)
+TESTS_FULL = $(check_full_PROGRAMS)
