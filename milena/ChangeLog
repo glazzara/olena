@@ -1,3 +1,10 @@
+2007-12-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	New full tests for level.
+	* tests/level/assign_full.cc,
+	* tests/level/compare_full.cc,
+	* tests/level/compute_full.cc: New full tests.
+
 2007-12-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix compile in graylevel.
