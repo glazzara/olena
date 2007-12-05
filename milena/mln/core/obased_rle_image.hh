@@ -62,6 +62,9 @@ namespace mln
       std::vector< accu::bbox<P> > bbox_;
 
       /// Value of Objects.
+      std::vector<T> v_obj_;
+
+      /// Image values.
       std::vector<T> values_;
 
       /// domain of the image
@@ -163,7 +166,7 @@ namespace mln
 	bbox_(values.size())
     {
       std::copy(values.begin(), values.end(),
-		std::back_inserter(this->values_));
+		std::back_inserter(this->v_obj_));
     }
 
     template <typename P, typename T>
@@ -173,7 +176,7 @@ namespace mln
     {
       return domain_.size_mem()	+ bbox_.size()
 	* (sizeof(T) + sizeof(box_<P>) + sizeof(std::vector<unsigned>))
-	+ sizeof(unsigned) * domain_.nruns();
+	+ (sizeof(unsigned) + sizeof(T)) * domain_.nruns();
     }
 
   } // end of namespace mln::internal
@@ -206,14 +209,15 @@ namespace mln
   void
   obased_rle_image<P, T>::insert(const p_run<P>& pr, T value)
   {
-    mln_assertion(this->data_->values_.size() == 0 || this->data_->domain_.nruns() == 0 ||
+    mln_assertion(this->data_->v_obj_.size() == 0 || this->data_->domain_.nruns() == 0 ||
 		  pr.first() > this->data_->domain_[this->data_->domain_.nruns() - 1].first());
     this->data_->domain_.insert(pr);
+    this->data_->values_.push_back(value);
     unsigned i;
-    for (i = 0; i < this->data_->values_.size()
-	   && this->data_->values_[i] != value; ++i)
+    for (i = 0; i < this->data_->v_obj_.size()
+	   && this->data_->v_obj_[i] != value; ++i)
       ;
-    mln_assertion(i != this->data_->values_.size());
+    mln_assertion(i != this->data_->v_obj_.size());
     this->data_->obj_[i].push_back(this->data_->domain_.nruns() - 1);
     this->data_->bbox_[i].take(pr.bbox().pmin());
     this->data_->bbox_[i].take(pr.bbox().pmax());
@@ -227,15 +231,7 @@ namespace mln
   {
     mln_precondition(this->has_data() &&
 		     site.pset_pos_() < this->data_->domain_.nruns());
-    for (unsigned i = 0; i < this->data_->obj_.size(); ++i)
-    {
-      for (typename std::vector<unsigned>::const_iterator it = this->data_->obj_[i].begin();
-	   it != this->data_->obj_[i].end(); it++)
-	if (*it == site.pset_pos_())
-	  return this->data_->values_[i];
-    }
-    mln_assertion(false);
-    return this->data_->values_[0];
+    return this->data_->values_[site.pset_pos_()];
   }
 
   template <typename P, typename T>
@@ -245,15 +241,7 @@ namespace mln
   {
     mln_precondition(this->has_data() &&
 		     site.pset_pos_() < this->data_->domain_.nruns());
-    for (unsigned i = 0; i < this->data_->obj_.size(); ++i)
-    {
-      for (typename std::vector<unsigned>::const_iterator it = this->data_->obj_[i].begin();
-	   it != this->data_->obj_[i].end(); it++)
-	if (*it == site.pset_pos_())
-	  return this->data_->values_[i];
-    }
-    mln_assertion(false);
-    return this->data_->values_[0];
+    return this->data_->values_[site.pset_pos_()];
   }
 
   template <typename P, typename T>

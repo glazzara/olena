@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_MONO_RLE_IMAGE_HH
-# define MLN_CORE_MONO_RLE_IMAGE_HH
+#ifndef MLN_CORE_MONO_OBASED_RLE_IMAGE_HH
+# define MLN_CORE_MONO_OBASED_RLE_IMAGE_HH
 
-/*! \file mln/core/mono_rle_image.hh
+/*! \file mln/core/mono_obased_rle_image.hh
  *
  * \brief Definition of an image with rle encoding.
  */
@@ -36,26 +36,31 @@
 # include <mln/core/internal/run_image.hh>
 # include <mln/core/p_runs.hh>
 # include <mln/core/runs_psite.hh>
+# include <mln/core/box.hh>
 # include <mln/value/set.hh>
+# include <mln/core/mono_rle_image.hh>
 # include <vector>
 
 namespace mln
 {
 
   // Fwd decl.
-  template <typename P, typename T> struct mono_rle_image;
+  template <typename P, typename T> struct mono_obased_rle_image;
 
 
   namespace internal
   {
 
     template <typename P, typename T>
-    struct data_< mono_rle_image<P,T> >
+    struct data_< mono_obased_rle_image<P,T> >
     {
-      data_(const T& val);
+      data_(const std::set<T>& values);
+
+      /// Objects.
+      std::vector< mono_rle_image<P, T> > ima_;
 
       /// Image value.
-      T value_;
+      std::vector<T> values_;
 
       /// domain of the image
       p_runs_<P> domain_;
@@ -71,7 +76,7 @@ namespace mln
   {
 
     template <typename P, typename T>
-    struct image_< mono_rle_image<P,T> > : default_image_< T, mono_rle_image<P,T> >
+    struct image_< mono_obased_rle_image<P,T> > : default_image_< T, mono_obased_rle_image<P,T> >
     {
       typedef trait::image::category::primary category;
 
@@ -90,16 +95,15 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /*! \brief Mono RLE image.
+  /*! \brief RLE image.
    *
-   * RLE image with only one colour.
    *
    * Parameter \c P is the type of the image points.
    * Parameter \c T is the type of the pixel values.
    * This image is not point wise accessible.
    */
   template <typename P, typename T>
-  class mono_rle_image : public internal::run_image_< T, P, mono_rle_image<P, T> >
+  class mono_obased_rle_image : public internal::run_image_< T, P, mono_obased_rle_image<P, T> >
   {
   public:
     typedef T value;
@@ -111,13 +115,13 @@ namespace mln
 
 
     /// Skeleton.
-    typedef mono_rle_image< tag::psite_<P>, tag::value_<T> > skeleton;
+    typedef mono_obased_rle_image< tag::psite_<P>, tag::value_<T> > skeleton;
 
 
-    mono_rle_image(const T& val);
+    mono_obased_rle_image(const std::set<T>& values);
 
     /// Add a new range to the image.
-    void insert(const p_run<P>& pr);
+    void insert(const p_run<P>& pr, T value);
 
     /// Read-only access to the image value located at point \p p.
     rvalue operator() (const psite& site) const;
@@ -128,14 +132,14 @@ namespace mln
     /// Test if this image has been initialized.
     bool has_data() const;
 
-    /// Give the uniq value of the image.
-    rvalue get_value() const;
-
     /// Give the set of values of the image.
     const vset& values() const;
 
     /// Give the definition domain.
     const pset& domain() const;
+
+    /// Give the index vector of the i-th object.
+    const mono_rle_image<P, T>& object(unsigned i) const;
 
   };
 
@@ -145,44 +149,44 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< mono_rle_image<I,S> >
+    // internal::data_< mono_obased_rle_image<P,T> >
 
     template <typename P, typename T>
     inline
-    data_< mono_rle_image<P,T> >::data_(const T& val)
-      : value_(val)
+    data_< mono_obased_rle_image<P,T> >::data_(const std::set<T>& values)
+      : ima_(values.begin(), values.end())
     {
     }
 
     template <typename P, typename T>
     inline
     unsigned
-    data_< mono_rle_image<P,T> >::size_mem() const
+    data_< mono_obased_rle_image<P,T> >::size_mem() const
     {
-      return sizeof(T) + domain_.size_mem();
+      return domain_.size_mem() * 2 + sizeof(T) * (values_.size() + ima_.size());
     }
 
   } // end of namespace mln::internal
 
   template <typename P, typename T>
   inline
-  mono_rle_image<P, T>::mono_rle_image(const T& val)
+  mono_obased_rle_image<P, T>::mono_obased_rle_image(const std::set<T>& values)
   {
-    this->data_ = new internal::data_< mono_rle_image<P,T> >(val);
+    this->data_ = new internal::data_< mono_obased_rle_image<P,T> >(values);
   }
 
   template <typename P, typename T>
   inline
   bool
-  mono_rle_image<P, T>::has_data() const
+  mono_obased_rle_image<P, T>::has_data() const
   {
-    return true;
+    return this->data_->ima_.size() != 0;
   }
 
   template <typename P, typename T>
   inline
-  const typename mono_rle_image<P, T>::vset&
-  mono_rle_image<P, T>::values() const
+  const typename mono_obased_rle_image<P, T>::vset&
+  mono_obased_rle_image<P, T>::values() const
   {
     return vset::the();
   }
@@ -190,46 +194,56 @@ namespace mln
   template <typename P, typename T>
   inline
   void
-  mono_rle_image<P, T>::insert(const p_run<P>& pr)
+  mono_obased_rle_image<P, T>::insert(const p_run<P>& pr, T value)
   {
-    if (this->data_->domain_.nruns() != 0)
-      mln_assertion(pr.first() > this->data_->domain_[this->data_->domain_.nruns() - 1].first());
+    mln_assertion(this->data_->values_.size() == 0 || this->data_->domain_.nruns() == 0 ||
+		  pr.first() > this->data_->domain_[this->data_->domain_.nruns() - 1].first());
     this->data_->domain_.insert(pr);
+    this->data_->values_.push_back(value);
+    unsigned i;
+    for (i = 0; i < this->data_->ima_.size()
+	   && this->data_->ima_[i].get_value() != value; ++i)
+      ;
+    mln_assertion(i != this->data_->ima_.size());
+    this->data_->ima_[i].insert(pr);
   }
 
   template <typename P, typename T>
   inline
-  typename mono_rle_image<P, T>::rvalue
-  mono_rle_image<P, T>::operator() (const typename mono_rle_image<P, T>::psite& site)
+  typename mono_obased_rle_image<P, T>::rvalue
+  mono_obased_rle_image<P, T>::operator() (const typename mono_obased_rle_image<P, T>::psite& site)
     const
   {
-    mln_precondition(site.pset_pos_() < this->data_->domain_.nruns());
-    return this->data_->value_;
+    mln_precondition(this->has_data() &&
+		     site.pset_pos_() < this->data_->domain_.nruns());
+    return this->data_->values_[site.pset_pos_()];
   }
 
   template <typename P, typename T>
   inline
-  typename mono_rle_image<P, T>::rvalue
-  mono_rle_image<P, T>::get_value() const
+  typename mono_obased_rle_image<P, T>::lvalue
+  mono_obased_rle_image<P, T>::operator() (const typename mono_obased_rle_image<P, T>::psite& site)
   {
-    return this->data_->value_;
+    mln_precondition(this->has_data() &&
+		     site.pset_pos_() < this->data_->domain_.nruns());
+    return this->data_->values_[site.pset_pos_()];
   }
 
   template <typename P, typename T>
   inline
-  typename mono_rle_image<P, T>::lvalue
-  mono_rle_image<P, T>::operator() (const typename mono_rle_image<P, T>::psite& site)
-  {
-    mln_precondition(site.pset_pos_() < this->data_->domain_.nruns());
-    return this->data_->value_;
-  }
-
-  template <typename P, typename T>
-  inline
-  const typename mono_rle_image<P, T>::pset&
-  mono_rle_image<P, T>::domain() const
+  const typename mono_obased_rle_image<P, T>::pset&
+  mono_obased_rle_image<P, T>::domain() const
   {
     return this->data_->domain_;
+  }
+
+  template <typename P, typename T>
+  inline
+  const mono_rle_image<P, T>&
+  mono_obased_rle_image<P, T>::object(unsigned i) const
+  {
+    mln_assertion(i < this->data_->ima_.size());
+    return this->data_->ima_[i];
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -238,4 +252,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_MONO_RLE_IMAGE_HH
+#endif // ! MLN_CORE_MONO_OBASED_RLE_IMAGE_HH

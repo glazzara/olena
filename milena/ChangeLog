@@ -1,3 +1,15 @@
+2007-12-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add mono object based rle image and add test.
+	* mln/core/mono_obased_rle_encode.hh: New.
+	* mln/core/mono_obased_rle_image.hh: New.
+	* mln/core/mono_rle_encode.hh: Fix.
+	* mln/core/mono_rle_image.hh: Add get_value() method.
+	* mln/core/obased_rle_image.hh: Add vector of value for easier
+        acces to the image.
+	* tests/core/Makefile.am: Add test.
+	* tests/core/mono_obased_rle_image.cc: New.
+
 2007-12-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	New full tests for level.
