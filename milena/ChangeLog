@@ -1,3 +1,17 @@
+2007-12-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add new full tests for level subdirectory.
+
+	* tests/level/apply_full.cc,
+	* tests/level/paste_full.cc,
+	* tests/level/saturate_full.cc,
+	* tests/level/sort_points_full.cc,
+	* tests/level/stretch_full.cc,
+	* tests/level/transform_full.cc: New full tests for level.
+
+	* mln/fun/v2v/saturate.hh: Fix bug but need to review.
+	* mln/level/paste.spe.hh: Add comment.
+
 2007-12-06  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add sparse image and test.

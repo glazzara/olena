@@ -65,6 +65,7 @@ namespace mln
 	// FIXME: For linear data images, we should get the len for each line...
 
 	typename I::line_piter p(data.domain()); // FIXME: Alias mln_line_piter!
+	//	mln_line_piter(I) p(data.domain());
 	for_all(p)
 	  memcpy_(inplace(make::pixel(destination, p)),
 		  make::pixel(data, p),

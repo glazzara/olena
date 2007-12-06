@@ -62,6 +62,7 @@ namespace mln
 
       protected:
 	V min_, max_;
+	bool needs_update_;
       };
 
 
@@ -73,6 +74,7 @@ namespace mln
 	: min_(mln_min(V)),
 	  max_(mln_max(V))
       {
+	needs_update_ = true;
       }
 
       template <typename V>
@@ -82,6 +84,7 @@ namespace mln
 	  max_(max)
       {
 	mln_precondition(max > min);
+	needs_update_ = true;
       }
 
       template <typename V>
@@ -92,8 +95,15 @@ namespace mln
       {
 	// FIXME: Check that W is a larger type than V; otherwise
 	// alt code.
-	static const W min_W = mln::value::cast<W>(min_);
-	static const W max_W = mln::value::cast<W>(max_);
+
+	static W min_W, max_W;
+	if (needs_update_)
+	  {
+	    min_W = mln::value::cast<W>(min_);
+	    max_W = mln::value::cast<W>(max_);
+	    // FIXME
+// 	    needs_update_ = false;
+	  }
 
 	// FIXME: Below we need something more powerful that mlc_converts_to
 	// for instance, with W=int_s<10u> and V=int_u<8u>, it does not
