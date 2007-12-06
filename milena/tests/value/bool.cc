@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_bool.cc
+/*! \file tests/value/bool.cc
  *
  * \brief Tests on mln::value::set.
  */

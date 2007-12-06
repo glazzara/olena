@@ -1,3 +1,26 @@
+2007-12-06  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fix doxygen header of value tests.
+	* bool.cc,
+	* builtin.cc,
+	* equiv.cc,
+	* float01.cc,
+	* float01_bis.cc,
+	* float01_f.cc,
+	* int_s.cc,
+	* int_s16.cc,
+	* int_u8.cc,
+	* interop.cc,
+	* label.cc,
+	* quat.cc,
+	* rgb8.cc,
+	* rgb_full.cc,
+	* scalar.cc,
+	* set.cc: Fix doxygen headers.
+	* Makefile.am: Disable check_full_PROGRAMS to pass ./bootstrap.
+	* graylevel.cc: Rename as...
+	* graylevel_full.cc: ...this.
+
 2007-12-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add new full tests for level subdirectory.

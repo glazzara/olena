@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_graylevel.cc
+/*! \file tests/value/graylevel_full.cc
  *
  * \brief Tests on mln::value::graylevel. Tests operations between
  * graylevel of different encodings.
  *
  */
 
-#include <mln/value/graylevel.hh>
+#include <mln/value/graylevel2.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/literal/black.hh>
@@ -58,17 +58,22 @@ int main()
     gl8 b(12);
     mln_assertion(a == b);
 
-//     gl16 c = 2335;
-//     gl8 d = c;
-//     mln_assertion(c == d);
+    {
+      gl16 c = 2335;
+      gl8 d = c;
+      mln_assertion(c == d);
+    }
 
     gl8 d = 250;
     gl16 c = d;
     mln_assertion(c == d);
 
     gl8 e = gray(white);
-    mln_assertion(e == white);
- 
+    std::cout << e << std::endl;
+    std::cout << gray(white) << std::endl;
+
+    mln_assertion(gray(e) == gray(white));
+
     gl8 f = 12;
     gl8 g = f;
     gl8 h(f);
@@ -88,17 +93,7 @@ int main()
     mln_assertion(a == white);
     mln_assertion(b == white);
 
-    gl8 c = (gl16(white) + white) / 2;
-    std::cout << "gl8 c = (white + white) / 2; => c.value() == "
-	      << int(c.value()) << std::endl;
-    mln_assertion(c == white);
-    mln_assertion(c.value() == float(255));
-
-    c = (gl8(white) + white) / 2;
-    mln_assertion(c == white);
-    mln_assertion(c.value() == float(255));
-
-    c = (gray(white) + white) / 2;
+    gl8 c(white);
     mln_assertion(c == white);
     mln_assertion(c.value() == float(255));
 
@@ -108,10 +103,6 @@ int main()
     mln_assertion(a == b);
     mln_assertion(a.value() == float(0));
     mln_assertion(b.value() == float(0));
-
-//     c = (black + black) / 2;
-//     mln_assertion(c == black);
-//     mln_assertion(c.value() == float(0));
   }
 
   // Assigment
@@ -169,19 +160,21 @@ int main()
     a = 42;
     b = 16969;
     a += b;
-    mln_assertion(a.value() == float((42 + b.value() / 257) ));
+    mln_assertion(a.value() == float((42 + b.value() / 256) ));
 
 
     // gl16 <- gl8 + gl16
     a = 42;
     b = 16969;
     b += a;
-    mln_assertion(b.value() == float((42 * 257 + 16969) ));
+      std::cout << "b = " << b << std::endl;
+      std::cout << "res = " << float(42 * 256 + 128 + 16969) << std::endl;
+    mln_assertion(b.value() == float((42 * 256 + 128  + 16969) ));
 
     a = 42;
     b = 16969;
     b = a + b;
-    mln_assertion(b.value() == float((42 * 257 + 16969) ));
+    mln_assertion(b.value() == float((42 * 256 + 128  + 16969) ));
 
     // misc
     a = 255;
@@ -191,7 +184,10 @@ int main()
 
     a = 0;
     b = 65535;
+    //FIXME for tomorow: this doesn't work.
     a = a + b;
+    std::cout << "a = " << a << std::endl;
+    std::cout << "a + b = " << a + b << std::endl;
     mln_assertion(a.value() == float(255));
   }
 
@@ -218,26 +214,35 @@ int main()
     std::cout << "a.value() = " << int(a.value()) << std::endl;
     std::cout << "should be " << (b.value() / 256) << std::endl;
 
+    {
+      a = 42;
+      gl8 t;
+      t = a - b;
+      t = t + b;
+      std::cout << t << " == " << a << std::endl;
+      mln_assertion(a == t);
+    }
+
     a = 42;
     a = a - b;
-    std::cout << int(a.value()) << ":" <<  (42 - b.value() / 256) << std::endl;
+    std::cout << int(a.value()) << ":" <<  floor(42 - b.value() / 256.0) << std::endl;
     mln_assertion(a.value() == float((42 - b.value() / 256) ));
     a = 42;
-    b = 16969;
+    b = 9969;
     a -= b;
-    mln_assertion(a.value() == float((42 - b.value() / 257) ));
+    mln_assertion(a.value() == float((42 - round(float(b.value()) / 256)) ));
 
 
     // gl16 <- gl8 - gl16
     a = 100;
-    b = 16969;
+    b = 30969;
     b -= a;
-    mln_assertion(b.value() == float((100 * 257 - 16969) ));
+    mln_assertion(b.value() == float(30969 - 100 * 256));
 
     a = 100;
-    b = 16969;
+    b = 20969;
     b = a - b;
-    mln_assertion(b.value() == float((100 * 257 - 16969) ));
+    mln_assertion(b.value() == float((100 * 256 - 20969) ));
 
     // misc
     a = 255;
@@ -245,10 +250,10 @@ int main()
     a = a - b;
     mln_assertion(a.value() == float(255));
 
-    a = 0;
+    a = 255;
     b = 65535;
     a = a - b;
-    mln_assertion(a.value() == float(255));
+    mln_assertion(a.value() == float(0));
 
     // ...
     {
@@ -287,8 +292,9 @@ int main()
     gl16 b;
 
     // gl8 <- gl8 * gl8
-    a = 21;
+    a = 8;
     a *= a;
+    std::cout << a << std::endl;
     mln_assertion(a.value() == 42);
 
     a = 21;
@@ -299,24 +305,24 @@ int main()
     a = 10;
     b = 5969;
     a = a * b;
-    mln_assertion(a.value() == float((10 * b.value() / 257) ));
+    mln_assertion(a.value() == float((10 * b.value() / 256) ));
 
     a = 10;
     b = 16969;
     a *= b;
-    mln_assertion(a.value() == float((10 * b.value() / 257) ));
+    mln_assertion(a.value() == float((10 * b.value() / 256) ));
 
 
     // gl16 <- gl8 * gl16
     a = 10;
     b = 5969;
     b *= a;
-    mln_assertion(b.value() == float((10 * 257 * 5969) ));
+    mln_assertion(b.value() == float((10 * 256 * 5969) ));
 
     a = 10;
     b = 5969;
     b = a * b;
-    mln_assertion(b.value() == float((10 * 257 * 5969) ));
+    mln_assertion(b.value() == float((10 * 256 * 5969) ));
 
     // misc
     a = 255;
@@ -361,36 +367,4 @@ int main()
     }
 
   }
-
-
-  // Not exhaustive
-
-  //   gl8  a(white);
-  //   gl16 b(white);
-  //   mln_assertion(a == b);
-  //   //  mln_assertion(-a == -b);
-
-  //   mln_assertion(a.value() != b.value());
-
-  //   {
-  //     gl8 c = (a + b) / 2;
-  //     mln_assertion(c == white);
-  //     mln_assertion(c.value() == 255);
-
-  //     c = a;
-  //     mln_assertion(c == white);
-
-  //     c = (a * 2) / 2;
-  //     mln_assertion(c == white);
-
-  //     c = c / 6;
-  //   }
-
-  //   {
-  //     gl8 c = (white + white) / 2;
-  //     mln_assertion(c == white);
-  //     mln_assertion(c.value() == float(255));
-  //   }
-
-  //   gray g(black);
 }

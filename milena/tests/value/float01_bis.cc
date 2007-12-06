@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_float01_bis.cc
+/*! \file tests/value/float01_bis.cc
  *
  * \brief Tests on mln::value::float01.
  */
@@ -38,21 +38,16 @@ int main()
 {
   using namespace mln::value;
 
-//   float01_8 a;
+  float01_8 a;
 
-  std::cout << "a = "  << std::endl;
-  std::cout << "testsetestest\n"<< std::endl;
+  gl8 a = white;
+  gl16 b = white;
+  assert((a == b) == true);
+  gl8 c = (a + b) / 2;
+  assert(c == white);
+  c = a;
+  assert(c == white);
 
-//    gl8 a = white;
-//   gl16 b = white;
-//   assert((a == b) == true);
-//   gl8 c = (a + b) / 2;
-//   assert(c == white);
-//   c = a;
-//   assert(c == white);
-
-//   c = (a * 2) / 2;
-//   assert(c == white);
-
-  std::cout << "testsetestest\n"<< std::endl;
+  c = (a * 2) / 2;
+  assert(c == white);
 }

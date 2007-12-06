@@ -24,8 +24,9 @@ check_PROGRAMS =				\
   scalar					\
   set
 
-check_full_PROGRAMS =				\
-  rgb_full
+# FIXME: activate when make check_full will work.
+# check_full_PROGRAMS =				\
+#   rgb_full
 
 bool_SOURCES = bool.cc
 builtin_SOURCES = builtin.cc
@@ -44,7 +45,9 @@ rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc
 
-rgb_full_SOURCES = rgb_full.cc
+# FIXME: activate when make check_full will work.
+# rgb_full_SOURCES = rgb_full.cc
 
 TESTS = $(check_PROGRAMS)
-TESTS_FULL = $(check_full_PROGRAMS)
+# FIXME: activate when make check_full will work.
+# TESTS_FULL = $(check_full_PROGRAMS)

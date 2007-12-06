@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_float01_f.cc
+/*! \file tests/value/float01_f.cc
  *
  * \brief Tests on mln::value::float01_f.
  */

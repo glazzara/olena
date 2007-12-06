@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_label.cc
+/*! \file tests/value/label.cc
  *
  * \brief Tests on mln::value::label.
  */
@@ -45,5 +45,5 @@ int main()
   label<8> l = 50;
   ++l;
   mln_assertion(l == l);
-  mln_assertion(i == l.to_enc());  
+  mln_assertion(i == l.to_enc());
 }

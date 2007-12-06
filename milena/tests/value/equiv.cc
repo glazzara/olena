@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_equiv.cc
+/*! \file tests/value/equiv.cc
  *
  * \brief Tests on mln::value::equiv.
  *

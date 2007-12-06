@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_rgb.cc
+/*! \file tests/value/rgb.cc
  *
  * \brief Tests on mln::value::rgb.
  */
@@ -55,6 +55,7 @@
       V1.green() OP V2 ,			\
       V1.blue() OP V2				\
     )
+
 // Interop between 2 rgbs.
 #define test_interop(T1, T2, OP, V1, V2)			\
 {								\

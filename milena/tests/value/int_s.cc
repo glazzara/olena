@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value_int_s.cc
+/*! \file tests/value/int_s.cc
  *
  * \brief Tests on mln::value::int_s.
  */
