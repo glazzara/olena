@@ -34,6 +34,10 @@
  * mirroring effect.
  */
 
+# include <mln/core/image1d.hh>
+# include <mln/core/image2d.hh>
+# include <mln/core/image3d.hh>
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/internal/fixme.hh>
 # include <mln/core/internal/fixme.hh>
@@ -41,7 +45,7 @@
 # include <mln/geom/max_row.hh>
 # include <mln/geom/min_col.hh>
 # include <mln/geom/max_col.hh>
-
+# include <mln/geom/ninds.hh>
 
 namespace mln
 {
@@ -56,7 +60,7 @@ namespace mln
      *
      * \pre \p ima has to be initialized.
      *
-     * \todo Implement 1d and 3d version + optimize with memset if possible.
+     * \todo Implement 3d version + optimize with memset if possible.
      */
     template <typename I>
     void mirror(const Image<I>& ima);
@@ -69,16 +73,51 @@ namespace mln
 
       template <typename I>
       inline
-      void mirror_1d_(const I& ima)
+      void mirror_(const box1d&, const I& ima)
       {
-	mln::internal::fixme();
+	trace::entering("border::impl::mirror_");
+
+ 	std::size_t border = ima.border ();
+ 	std::size_t nbinds = geom::ninds(ima);
+	std::size_t min;
+
+	if (border > nbinds)
+	  min = nbinds;
+	else
+	  min = border;
+
+	/// left border
+	{
+	  std::size_t i = 0;
+	  for (; i < min; ++i)
+	    const_cast<I&>(ima)[border - 1 - i] = ima(point1d(i));
+
+	  for (; i < border; ++i)
+	    const_cast<I&>(ima)[border - 1 - i] = ima(point1d(min - 1));
+	}
+
+	/// right border
+	{
+	  std::size_t i = 0,
+	              j = nbinds - 1;
+	  for (;
+	       i < min;
+	       ++i, --j)
+	    const_cast<I&>(ima)[border + nbinds + i] = ima(point1d(j));
+	  ++j;
+	  for (;
+	       i < border;
+	       ++i)
+	    const_cast<I&>(ima)[border + nbinds + i] = ima(point1d(j));
+	}
+	trace::exiting("border::impl::mirror_");
       }
 
       template <typename I>
       inline
-      void mirror_2d_(const I& ima)
+      void mirror_(const box2d&, const I& ima)
       {
-	trace::entering("border::impl::mirror_2d_");
+	trace::entering("border::impl::mirror_");
 
 	std::size_t border = ima.border ();
 	std::size_t nbrows = geom::max_row(ima) - geom::min_row(ima);
@@ -87,24 +126,24 @@ namespace mln
 	std::size_t start = real_nbcols * border + border;
 	std::size_t s = start;
 
-	// duplicate top left corner
+	// mirror top left corner
 	for (std::size_t i = 0; i < border; ++i)
 	  for (std::size_t j = 0; j < border; ++j)
 	  const_cast<I&>(ima)[i * ((nbcols + 1) + 2 * border) + j] = ima[s];
 
-	// duplicate top left corner
+	// mirror top left corner
 	s = start + nbcols;
 	for (std::size_t i = 0; i < border; ++i)
 	  for (std::size_t j = 1; j <= border; ++j)
 	    const_cast<I&>(ima)[i * ((nbcols + 1) + 2 * border) + (nbcols + border + j)] = ima[s];
 
-	// duplicate bottom left corner
+	// mirror bottom left corner
 	s = start + (nbrows * real_nbcols);
 	for (std::size_t i = 1; i <= border; ++i)
 	  for (std::size_t j = 1; j <= border; ++j)
 	    const_cast<I&>(ima)[s - i + (j * (real_nbcols))] = ima[s];
 
-	// duplicate bottom right corner
+	// mirror bottom right corner
 	s = start + (nbrows * real_nbcols) + nbcols;
 	for (std::size_t i = 1; i <= border; ++i)
 	  for (std::size_t j = 1; j <= border; ++j)
@@ -134,18 +173,18 @@ namespace mln
 	  for (std::size_t j = 1; j <= border; ++j)
 	    const_cast<I&>(ima)[s + i + (j * real_nbcols)] = ima[s + i - ((j - 1)* real_nbcols)];
 
-	trace::exiting("border::impl::mirror_2d_");
+	trace::exiting("border::impl::mirror_");
       }
 
       template <typename I>
       inline
-      void mirror_3d_(const I& ima)
+      void mirror_(const box3d&, const I& ima)
       {
 	mln::internal::fixme();
       }
 
 
-    } // end of namespace mln::border::mirror
+    } // end of namespace mln::border::impl
 
 
     template <typename I>
@@ -164,12 +203,7 @@ namespace mln
       if (!ima.border ())
 	return;
 
-      if (P::dim == 1)
-	impl::mirror_1d_(ima);
-      if (P::dim == 2)
-	impl::mirror_2d_(ima);
-      if (P::dim == 3)
-	impl::mirror_3d_(ima);
+      impl::mirror_(ima.bbox(), ima);
 
       trace::exiting("border::mirror");
     }

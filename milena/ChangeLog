@@ -1,3 +1,13 @@
+2007-12-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add 1d version for border::mirror.
+
+	* mln/border/mirror.hh: Add 1d version for this algorithm.
+
+	Update tests
+	* tests/border/mirror.cc,
+	* tests/border/mirror_full.cc: Fix typo and add test for this.
+
 2007-12-06  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix doxygen header of value tests.

@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border/duplicate_full.cc
+/*! \file tests/border/mirror_full.cc
  *
- * \brief Tests on mln::border::duplicate.
+ * \brief Tests on mln::border::mirror.
  */
 
 #include <mln/core/image1d.hh>

@@ -25,20 +25,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border_duplicate/test_border_duplicate_image2d_1.cc
+/*! \file tests/border/mirror.cc
  *
- * \brief Tests on mln::border::duplicate.
+ * \brief Tests on mln::border::mirror.
  */
 
+#include <mln/core/image1d.hh>
 #include <mln/core/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/border/mirror.hh>
+
+#include <mln/debug/println_with_border.hh>
 
 using namespace mln;
 
 int
 main (void)
 {
+  {
+    image1d<int> im(2, 3);
+    debug::iota(im);
+    border::mirror(im);
+    mln_assertion(im[0] == 2);
+    mln_assertion(im[1] == 2);
+    mln_assertion(im[2] == 1);
+    mln_assertion(im[3] == 1);
+    mln_assertion(im[4] == 2);
+    mln_assertion(im[5] == 2);
+    mln_assertion(im[6] == 1);
+    mln_assertion(im[7] == 1);
+  }
+
+
   image2d<int> ima(2, 3, 2);
 
   debug::iota(ima);
