@@ -12,6 +12,7 @@ check_PROGRAMS =				\
   obased_rle_image				\
   p_runs					\
   rle_image					\
+  sparse_image					\
   t_image
 
 category_SOURCES = category.cc
@@ -23,6 +24,7 @@ mono_rle_image_SOURCES = mono_rle_image.cc
 obased_rle_image_SOURCES = obased_rle_image.cc
 p_runs_SOURCES = p_runs.cc
 rle_image_SOURCES = rle_image.cc
+sparse_image_SOURCES = sparse_image.cc
 t_image_SOURCES = t_image.cc
 
 TESTS = $(check_PROGRAMS)

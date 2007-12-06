@@ -30,71 +30,88 @@
 
 /*! \file mln/core/sparse_encode.hh
  *
- * \brief FIXME.
+ * \brief Definintion of function which encodes an image in sparse_image.
  */
 
 # include <mln/core/sparse_image.hh>
-# include <vector>
 
 namespace mln
 {
 
   /*!
-  ** encode a generic image to a sparse image format
+  ** encode an image class to a sparse_image
   **
-  ** @param input an Image
+  ** @param input has to respect the Image concept
   **
-  ** @return a sparse image
+  ** @return sparse_image
   */
   template <typename I>
   sparse_image<mln_point(I), mln_value(I)>
-  sparse_encode(const Image<I>& input);
+  sparse_encode(const Image<I>& input, bool ignore_zero = true);
 
 # ifndef MLN_INCLUDE_ONLY
+  /*!
+  ** test if Point p1 and p2 are on the same line
+  */
+  template <typename P>
+  inline
+  bool
+  on_the_same_line(const P& p1, const P& p2, int len)
+  {
+    const unsigned dim = P::dim;
+    bool same_line = true;
+
+    for (unsigned n = 0; same_line && n < dim - 1; ++n)
+      same_line = (p1[n] == p2[n]);
+    return same_line && p1[dim - 1] + len == p2[dim - 1];
+  }
 
   template <typename I>
   inline
   sparse_image<mln_point(I), mln_value(I)>
-  sparse_encode(const Image<I>& input)
+  sparse_encode(const Image<I>& input, bool ignore_zero)
   {
+    typedef mln_point(I) P;
+
     sparse_image<mln_point(I), mln_value(I)> output;
-    mln_piter(I) p(exact(input).domain());
-    unsigned len = 1;
-    // old point first dim coordinate
-    typename I::coord old = 1;
-    // range pointstart
+    const I& ima = exact(input);
+    mln_piter(I) p (exact(input).domain());
+    unsigned len = 0;
     mln_point(I) rstart;
-    // range value
-    std::vector<mln_value(I)> values;
+    std::vector< mln_value(I) > rvalue;
+    rvalue.clear();
 
-    p.start();
-    if (not p.is_valid())
-      return output;
-
-    rstart = p;
-
-    old = p[0];
-    values.push_back(exact(input)(p));
-    p.next_();
-    while (p.is_valid())
-    {
-      if (p[0] - 1 == old)
+    for_all(p)
+      if (!ignore_zero || ima(p) != literal::zero || len)
       {
-	++len;
-	values.push_back(exact(input)(p));
+	if (len == 0)
+	{
+	  ++len;
+	  rstart = p;
+	  std::cout << "New run " << p << ": *";
+	  rvalue.push_back(ima(p));
+	}
+	else
+	  if ((!ignore_zero || ima(p) != literal::zero) &&
+	      on_the_same_line(rstart, mln_point(I)(p), len))
+	  {
+	    std::cout << "*";
+	    ++len;
+	    rvalue.push_back(ima(p));
+	  }
+	  else
+	  {
+	    std::cout << std::endl;
+	    output.insert(p_run<P>(rstart, len), rvalue);
+	    rvalue.clear();
+	    if ((len = (!ignore_zero || ima(p) != literal::zero)))
+	    {
+	      rstart = p;
+	      std::cout << "New run " << p << ": ";
+	      rvalue.push_back(ima(p));
+	    }
+	  }
       }
-      else
-      {
-	output.insert(rstart, len, values);
-	rstart = p;
-	len = 1;
-	values.clear();
-	values.push_back(exact(input)(p));
-      }
-      old = p[0];
-      p.next_();
-    }
-    output.insert(rstart, len, values);
     return output;
   }
 

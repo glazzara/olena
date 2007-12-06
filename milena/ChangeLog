@@ -1,3 +1,11 @@
+2007-12-06  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add sparse image and test.
+	* mln/core/sparse_encode.hh: Rewrite.
+	* mln/core/sparse_image.hh: Rewrite.
+	* tests/core/Makefile.am: Add test.
+	* tests/core/sparse_image.cc: New.
+
 2007-12-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add mono object based rle image and add test.
