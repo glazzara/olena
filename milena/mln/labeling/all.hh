@@ -47,7 +47,7 @@ namespace mln
 }
 
 # include <mln/labeling/background.hh>
-# include <mln/labeling/base.hh>
+# include <mln/labeling/blobs.hh>
 # include <mln/labeling/estimate.hh>
 # include <mln/labeling/flat_zones.hh>
 # include <mln/labeling/foreground.hh>

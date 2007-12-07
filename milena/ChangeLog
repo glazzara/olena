@@ -1,3 +1,51 @@
+2007-12-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Clean up 'labeling' and fix pbm i/o.
+
+	* doc/examples: New directory.
+	* tests/labeling_blobs.cc: Rename as...
+	* tests/labeling/blobs.cc: ...this.
+	* tests/labeling_algo.cc: Rename as...
+	* doc/examples/labeling_algo.cc: ...this.
+	* tests/labeling_level_fast.cc: Rename as...
+	* tests/labeling/level.cc: ...this.
+	* tests/labeling_regional_maxima.cc: Rename as...
+	* tests/labeling/regional_maxima.cc: ...this.
+	* tests/labeling_foreground.cc: Rename as...
+	* tests/labeling/foreground.cc: ...this.
+	* tests/labeling_estimate.cc: Remove; meaningless.
+	* mln/labeling/estimate.hh: Rename as...
+	* sandbox/geraud/estimate.hh: ...this.
+	* tests/labeling/background.cc: New.
+	* tests/labeling/flat_zones.cc: New.
+	* tests/labeling/regional_minima.cc: New.
+	* tests/labeling/Makefile.am: Update.
+
+	* mln/canvas/labeling.hh,
+	* mln/labeling/blobs.hh,
+	* mln/labeling/flat_zones.hh,
+	* mln/labeling/level.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/labeling/foreground.hh,
+	* mln/labeling/regional_maxima.hh,
+	* mln/labeling/background.hh: Clean up.
+	* mln/labeling/all.hh: Update.
+	* mln/labeling/base.hh: Remove.
+	* mln/labeling/level.spe.hh: New.
+
+	* tests/value/rgb8.cc: Add comment.
+	* mln/trait/value/kind.hh: Add comment about tags' hierarchy.
+	* mln/core/internal/set_of.hh (element): Fix precondition.
+	* mln/value/rgb.hh (operator metal::vec): New; experimental.
+	* mln/fun/v2v/saturate.hh: Uncomment.
+	* mln/io/pbm/save.hh (save_),
+	* mln/io/pbm/load.hh (load_ascii, load_raw_2d): Swap 0 and 1.
+
+	* img/tiny.pgm: Rename as...
+	* img/small.pgm: ...this.
+	* img/tiny.pgm: New 16x16 lena reduction.
+	* img/README: New.
+
 2007-12-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add 1d version for border::mirror.

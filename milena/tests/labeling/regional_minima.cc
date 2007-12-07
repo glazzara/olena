@@ -25,22 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling_level_fast.cc
+/*! \file tests/labeling/regional_minima.cc
  *
- * \brief Test on mln::labeling::level.
+ * \brief Test on mln::labeling::regional_minima.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/core/image1d.hh>
-#include <mln/core/neighb2d.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/pw/all.hh>
-
+#include <mln/core/neighb2d.hh>
 #include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-#include <mln/labeling/level.hh>
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
+#include <mln/pw/all.hh>
+#include <mln/labeling/regional_minima.hh>
 
 
 int main()
@@ -48,15 +43,10 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d<value::int_u8> i1(5, 5);
-  debug::iota(i1);
-  i1(point2d(0, 2)) = i1(point2d(1, 2)) = i1(point2d(1, 3)) = i1(point2d(2, 3)) = i1(point2d(2, 4)) = 2;
-  i1(point2d(2, 0)) = i1(point2d(3, 0)) = 2;
-  debug::println(i1);
+  image2d<int_u8> lena = io::pgm::load<int_u8>("../../img/tiny.pgm");
 
   unsigned n;
-  image2d<unsigned> out = labeling::level(i1, 2, c4(), n);
-
-  std::cout << "n = " << n << std::endl;
-  debug::println(out);
+  labeling::regional_minima((pw::cst(255) - pw::value(lena)) | lena.domain(),
+			    c4(), n);
+  mln_assertion(n == 25);
 }

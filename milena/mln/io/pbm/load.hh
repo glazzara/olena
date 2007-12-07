@@ -87,7 +87,8 @@ namespace mln
 	    {
 	      unsigned value;
 	      file >> value;
-	      ima(p) = value;
+	      mln_assertion(value == 0 || value == 1);
+	      ima(p) = (value == 0); // In pbm, '0' means 'white' so 'object', thus 'true'!
 	      // FIXME: Test alt code below.
 	      // file >> ima(p);
 	    }
@@ -113,13 +114,13 @@ namespace mln
 	  {
 	    i = 0;
 	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
-	    {
-	      if (i % 8 == 0)
-		file.read((char*)(&c), 1);
-	      ima(p) = c & 128;
-	      c *= 2;
-	      ++i;
-	    }
+	      {
+		if (i % 8 == 0)
+		  file.read((char*)(&c), 1);
+		ima(p) = !(c & 128);
+		c *= 2;
+		++i;
+	      }
 	  }
 	}
 

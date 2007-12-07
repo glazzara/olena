@@ -125,6 +125,8 @@ namespace mln
       rgb<n>(const metal::vec<3, unsigned>& rhs);
       rgb<n>(const metal::vec<3, int_u<n> >& rhs);
 
+      operator metal::vec<3, float>() const { return this->v_; }
+
       /// \{ Constructors with literals.
       rgb<n>(const literal::white_t&);
       rgb<n>(const literal::black_t&);

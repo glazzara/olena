@@ -25,22 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LABELING_LEVEL_HH
-# define MLN_LABELING_LEVEL_HH
+#ifndef MLN_LABELING_LEVEL_SPE_HH
+# define MLN_LABELING_LEVEL_SPE_HH
 
-/*! \file mln/labeling/level.hh
+/*! \file mln/labeling/level.spe.hh
  *
- * \brief Connected component labeling of the image objects at a given
- * level.
+ * \brief Specialization for mln::labeling::level.
  */
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/neighborhood.hh>
-# include <mln/canvas/labeling.hh>
-# include <mln/level/fill.hh>
-
-// The 'fastest' specialization is in:
-# include <mln/labeling/level.spe.hh>
+# include <mln/border/adjust.hh>
+# include <mln/border/fill.hh>
+# include <mln/value/other.hh>
 
 
 
@@ -65,19 +60,30 @@ namespace mln
 	    L& nlabels);
 
 
-
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
 
-      // Generic functor.
+      // Fwd decl of the Generic version.
+
+      namespace generic
+      {
+
+	template <typename I, typename N, typename L>
+	mln_ch_value(I, L)
+	  level_(const I& input, const mln_value(I)& val, const N& nbh,
+		 L& nlabels);
+
+      } // end of namespace mln::labeling::impl::generic
+
+
+
+      // Fastest functor.
 
       template <typename I_, typename N_, typename L_>
-      struct level_functor
+      struct level_fastest_functor
       {
-	typedef mln_psite(I_) P;
-
 	// requirements from mln::canvas::labeling:
 
 	typedef I_ I;
@@ -89,20 +95,20 @@ namespace mln
 	const N& nbh;
         const S& s;
 
-	bool handles(const P& p) const         { return input(p) == val; }
-	bool equiv(const P& n, const P&) const { return input(n) == val; }
+	bool handles(unsigned p) const         { return input[p] == val; }
+	bool equiv(unsigned n, unsigned) const { return input[n] == val; }
 
  	void init()                          {}
-	bool labels(const P&) const          { return true;  }
-	void do_no_union(const P&, const P&) {}
-	void init_attr(const P&)             {}
-	void merge_attr(const P&, const P&)  {}
+	bool labels(unsigned) const          { return true;  }
+	void do_no_union(unsigned, unsigned) {}
+	void init_attr(unsigned)             {}
+	void merge_attr(unsigned, unsigned)  {}
 
 	// end of requirements
 
 	const mln_value(I_)& val;
 
-	level_functor(const I_& input, const mln_value(I_)& val, const N_& nbh)
+	level_fastest_functor(const I_& input, const mln_value(I_)& val, const N_& nbh)
 	  : input(input),
 	    nbh(nbh),
 	    s(input.domain()),
@@ -111,52 +117,53 @@ namespace mln
       };
 
 
-      // Generic implementation.
+      // Fastest routine.
 
-      namespace generic
+      template <typename I, typename N, typename L>
+      mln_ch_value(I, L)
+	level_fastest_(const I& input, const mln_value(I)& val, const N& nbh,
+		       L& nlabels)
       {
+	trace::entering("labeling::impl::level_fastest_");
 
-	template <typename I, typename N, typename L>
-	mln_ch_value(I, L)
-	  level_(const I& input, const mln_value(I)& val, const N& nbh,
-		 L& nlabels)
-	{
-	  trace::entering("labeling::impl::generic::level_");
+	border::adjust(input, nbh.delta());
+	border::fill(input, value::other(val));
 
-	  typedef level_functor<I,N,L> F;
-	  F f(input, val, nbh);
-	  canvas::labeling<F> run(f);
-	  
-	  nlabels = run.nlabels;
-	  // FIXME: Handle run.status
+	typedef level_fastest_functor<I,N,L> F;
+	F f(input, val, nbh);
+	canvas::labeling_fastest<F> run(f);
 
-	  trace::exiting("labeling::impl::generic::level_");
-	  return run.output;
-	}
+	nlabels = run.nlabels;
+	// FIXME: Handle run.status
 
-      } // end of namespace mln::labeling::impl::generic
+	trace::exiting("labeling::impl::level_fastest_");
+	return run.output;
+      }
+
+
+      // Disjunction between "fastest" and "not fastest".
+
+      template <typename I, typename N, typename L>
+      mln_ch_value(I, L)
+	level_(trait::image::speed::any,
+	       const I& input, const mln_value(I)& val, const N& nbh,
+	       L& nlabels)
+      {
+	return generic::level_(input, val, nbh, nlabels);
+      }
+
+      template <typename I, typename N, typename L>
+      mln_ch_value(I, L)
+	level_(trait::image::speed::fastest,
+	       const I& input, const mln_value(I)& val, const N& nbh,
+	       L& nlabels)
+      {
+	return level_fastest_(input, val, nbh, nlabels);
+      }
 
 
     } // end of namespace mln::labeling::impl
 
-
-
-    // Facade.
-
-    template <typename I, typename N, typename L>
-    mln_ch_value(I, L)
-      level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-	    L& nlabels)
-    {
-      trace::entering("labeling::level");
-      mln_precondition(exact(input).has_data());
-
-      mln_ch_value(I, L) output = impl::level_(mln_trait_image_speed(I)(),
-					       exact(input), val, exact(nbh), nlabels);
-
-      trace::exiting("labeling::level");
-      return output;
-    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
@@ -165,4 +172,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LABELING_LEVEL_HH
+#endif // ! MLN_LABELING_LEVEL_SPE_HH

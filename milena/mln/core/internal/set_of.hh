@@ -224,9 +224,9 @@ namespace mln
     const E&
     set_of_<E>::element(unsigned i) const
     {
-      assert(i < v_.size());
       if (needs_update_)
 	update_();
+      mln_precondition(i < v_.size());
       return v_[i];
     }
 

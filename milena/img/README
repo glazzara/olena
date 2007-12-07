@@ -1,0 +1,8 @@
+	-*- outline -*-
+
+* tiny.pgm
+
+lena 16x16, graylevel / 8bit
+
+it was obtained by running the command:
+convert -geometry 3.125% lena.pgm tiny.pgm 

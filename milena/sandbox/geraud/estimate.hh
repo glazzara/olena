@@ -33,8 +33,13 @@
  * \brief Compute the estimate pixel value.
  */
 
-# include <mln/core/image_if_value.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/canvas/labeling.hh>
+
 # include <mln/accu/compute.hh>
+// # include <mln/core/image_if_value.hh>
+
 
 
 namespace mln
@@ -43,28 +48,36 @@ namespace mln
   namespace labeling
   {
 
-    /*! \brief FIXME: Compute an estimate over the pixels of image \p
-     *  input with value \p val.
+    /*! \brief Label a binary image and compute some estimations over
+     *  the components.
      *
      * \param[in] input The image.
-     * \param[in] val value.
-     * \result The estimate value.
+     *
+     * The free parameter \c A is a type of accumulator.
+     *
+     * FIXME: Not yet impled.
      */
     template <typename A, typename I>
-    mln_accu_with(A, util::pix<I>)::result
-    estimate(const Image<I>& input, const mln_value(I)& val);
+    void
+    estimate(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename A, typename I>
-    inline
-    mln_accu_with(A, util::pix<I>)::result
-    estimate(const Image<I>& input, const mln_value(I)& val)
+    void
+    estimate(const Image<I>& input)
     {
-//       void* v = (input | val);
-//       return 0;
-      return accu::compute<A>(input | val);
+      trace::entering("labeling::estimate");
+      mlc_equal(mln_trait_image_kind(I), mln::trait::image::kind::binary)::check();
+      mln_precondition(exact(input).has_data());
+
+      std::cerr << "Sorry: mln::labeling::estimate is not yet implemented!" << std::endl;
+
+      // FIXME: Was:
+      // mln_accu_with(A, util::pix<I>)::result res = accu::compute<A>(input | val);
+
+      trace::exiting("labeling::estimate");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

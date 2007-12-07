@@ -95,7 +95,7 @@ namespace mln
 	  for_all(p)
 	    {
 	      c <<= 1;
-	      c += (ima(p) == true ? 1 : 0); // FIXME: Swap.
+	      c += (ima(p) == true ? 0 : 1); // In pbm, '0' means 'white' so 'object', thus 'true'!
 	      if (++col >= ncols)
 		{
 		  c <<= (8 - stride - 1);

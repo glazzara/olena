@@ -25,20 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling_estimate.cc
+/*! \file tests/labeling/level.cc
  *
- * \brief Test on mln::labeling::estimate.
+ * \brief Test on mln::labeling::level.
  */
 
 #include <mln/core/image2d.hh>
 #include <mln/core/neighb2d.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/pw/all.hh>
-
 #include <mln/io/pgm/load.hh>
-#include <mln/labeling/foreground.hh>
-#include <mln/labeling/estimate.hh>
+
 #include <mln/accu/count.hh>
+#include <mln/accu/compute.hh>
+#include <mln/labeling/level.hh>
+#include <mln/level/paste.hh>
+#include <mln/pw/all.hh>
+#include <mln/core/image_if.hh>
+
+#include <mln/debug/println.hh>
 
 
 int main()
@@ -46,17 +50,15 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> lena = io::pgm::load("../img/tiny.pgm");
+  image2d<int_u8> lena = io::pgm::load<int_u8>("../../img/tiny.pgm");
+  image2d<bool> lvl(lena.domain());
 
-  // FIXME: Below, 127u (instead of 127) is mandatory to avoid a warning...
-  unsigned n;
-  image2d<unsigned> out = labeling::foreground((pw::value(lena) > pw::cst(127u)) | lena.domain(),
-					       c4(), n);
-  mln_assertion(n == 14);
-
-  unsigned sum = 0;
-  for (int_u8 i = 0; i <= n; ++i)
-    sum += labeling::estimate< accu::count >(out, i);
-  // FIXME: use of pix so that (center, mean) etc.
-  mln_assertion(sum == lena.npoints());
+  unsigned n, npixels = 0;
+  for (unsigned l = 0; l <= 255; ++l)
+    {
+      image2d<unsigned> labels = labeling::level(lena, l, c4(), n);
+      unsigned npix = accu::compute< accu::count >(labels | (pw::value(labels) != pw::cst(0)));
+      npixels += npix;
+    }
+  mln_assertion(npixels == lena.npoints());
 }

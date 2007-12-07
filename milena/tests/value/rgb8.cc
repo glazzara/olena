@@ -50,6 +50,11 @@ int main()
     v.blue() = 2;
     rgb8 c(0, 1, 2);
 
+    // FIXME: Do not compile because we lack ops!
+    // mln_sum_(rgb8) sum;
+    // sum + c;
+    // c = c + c;
+
     std::cout << c << std::endl;
     std::cout << v << std::endl;
 

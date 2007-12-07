@@ -25,28 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling_foreground.cc
+/*! \file tests/labeling/flat_zones.cc
  *
- * \brief Test on mln::labeling::foreground.
+ * \brief Test on mln::labeling::flat_zones.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/core/neighb2d.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/pw/all.hh>
-#include <mln/core/cast_image.hh>
-
 #include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-#include <mln/labeling/foreground.hh>
-#include <mln/level/transform.hh>
+#include <mln/core/neighb2d.hh>
+#include <mln/labeling/flat_zones.hh>
 
-
-struct fold_t : public mln::Function_v2v< fold_t >
-{
-  typedef mln::value::int_u8 result;
-  result operator()(unsigned i) const { return i == 0 ? 0 : i % 255 + 1; }
-};
+#include <mln/labeling/blobs.hh>
+#include <mln/pw/all.hh>
 
 
 int main()
@@ -54,20 +45,21 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> lena = io::pgm::load("../img/tiny.pgm");
-  unsigned n;
-  io::pgm::save(cast_image<int_u8>( labeling::foreground((pw::value(lena) > pw::cst(127u)) | lena.domain(),
-							 c4(), n) ),
-		"out.pgm");
-  mln_assertion(n == 14);
+  image2d<int_u8> lena = io::pgm::load<int_u8>("../../img/tiny.pgm");
 
-//   image2d<int_u8>
-//     lena = io::pgm::load("../img/lena.pgm"),
-//     out;
-//   unsigned n;
-//   image2d<unsigned> labels = labeling::foreground((pw::value(lena) > pw::cst(127u)) | lena.domain(),
-// 						  c8(), n);
-//   mln_assertion(n == 528);
-//   io::pgm::save( level::transform(labels, fold_t()),
-// 		"out.pgm" );
+  unsigned n;
+  image2d<unsigned> labels = labeling::flat_zones(lena, c4(), n);
+  mln_assertion(n == 247);
+
+  {
+    unsigned n_ = 0;
+    for (unsigned i = 0; i <= 255; ++i)
+      {
+	unsigned n_i;
+	labeling::blobs((pw::value(lena) == pw::cst(i)) | lena.domain(),
+			c4(), n_i);
+	n_ += n_i;
+      }
+    mln_assertion(n_ == n);
+  }
 }

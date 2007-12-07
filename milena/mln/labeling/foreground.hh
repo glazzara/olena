@@ -46,10 +46,17 @@ namespace mln
     /*! Connected component labeling of the object part in a binary
      * image.
      *
-     * \param[in]  input  The input image.
-     * \param[in]  nbh    The neighborhood to consider.
+     * \param[in]  input   The input image.
+     * \param[in]  nbh     The neighborhood to consider.
      * \param[out] nlabels The number of labels.
      * \return The label image.
+     *
+     * \pre The input image has to be binary (checked at compile-time).
+     *
+     * This routine actually calls mln::labeling::level with the level
+     * value set to \c true.
+     *
+     * \see mln::labeling::level
      */
     template <typename I, typename N>
     mln_ch_value(I, unsigned)
@@ -65,8 +72,14 @@ namespace mln
     foreground(const Image<I>& input, const Neighborhood<N>& nbh,
 	       unsigned& nlabels)
     {
+      trace::entering("labeling::foreground");
+      mlc_equal(mln_trait_image_kind(I), mln::trait::image::kind::binary)::check();
       mln_precondition(exact(input).has_data());
-      return labeling::level(input, true, nbh, nlabels);
+
+      mln_ch_value(I, unsigned) output = labeling::level(input, true, nbh, nlabels);
+
+      trace::exiting("labeling::foreground");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

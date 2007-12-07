@@ -34,7 +34,10 @@
  * image.
  */
 
-# include <mln/labeling/base.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/canvas/labeling.hh>
+# include <mln/level/fill.hh>
 # include <mln/level/sort_points.hh>
 
 
@@ -47,16 +50,16 @@ namespace mln
     /*! Connected component labeling of the regional minima of an
      * image.
      *
-     * \param[in]  input The input image.
-     * \param[in]  nbh The neighborhood to consider.
-     * \param[out] output The label image.
-     * \param[out] nlabels The number of labels.
+     * \param[in]  input   The input image.
+     * \param[in]  nbh     The neighborhood to consider.
+     * \param[out] nlabels The number of labeled regions.
+     * \return The label image.
      *
-     * \return The number of labels.
      */
-    template <typename I, typename N, typename O>
-    bool regional_minima(const Image<I>& input, const Neighborhood<N>& nbh,
-			 Image<O>& output, unsigned& nlabels);
+    template <typename I, typename N, typename L>
+    mln_ch_value(I, L)
+      regional_minima(const Image<I>& input, const Neighborhood<N>& nbh,
+		      L& nlabels);
 
 
 
@@ -65,58 +68,92 @@ namespace mln
     namespace impl
     {
 
-      template <typename I_, typename N_, typename O_>
-      struct regional_minima_ : base_<I_,N_,O_>
+      // Generic functor.
+
+      template <typename I_, typename N_, typename L_>
+      struct regional_minima_functor
       {
-	typedef mln_point(I_) P;
+	typedef mln_psite(I_) P;
 
 	// requirements from mln::canvas::labeling:
 
+	typedef I_ I;
+	typedef N_ N;
+	typedef L_ L;
 	typedef p_array<P> S;
+
+	const I& input;
+	const N& nbh;
 	S s;
 
- 	inline
- 	void init()                              { mln::level::fill(this->output, 0);
-	                                           level::fill(attr, true); }
-	inline
-	bool labels(const P& p) const            { return attr(p);  }
-	inline
+ 	void init()                              { level::fill(attr, true); }
+	bool handles(const P&) const             { return true; }
+	bool labels(const P& p) const            { return attr(p); }
 	bool equiv(const P& n, const P& p) const { return input(n) == input(p); }
-	inline
 	void do_no_union(const P& n, const P& p) { mln_invariant(input(n) < input(p));
 	                                           attr(p) = false; }
-	inline
+	void init_attr(const P&)                 {}
 	void merge_attr(const P& r, const P& p)  { attr(p) = attr(p) && attr(r); }
 
 	// end of requirements
 
-	mln_ch_value(O_, bool) attr;
+	mln_ch_value(I, bool) attr;
 
-	inline
-	regional_minima_(const I_& input, const N_& nbh, O_& output)
-	  : base_<I_,N_,O_>(input, nbh, output),
-	    s(level::sort_points_increasing(input)),
-	    attr(output.domain())
+	regional_minima_functor(const I_& input, const N_& nbh)
+	  : input(input),
+	    nbh(nbh),
+	    s(level::sort_points_increasing(input)), // FIXME: sort_psites_increasing
+	    attr(input.domain())
 	{
 	}
       };
 
+
+      // Generic implementation.
+
+      namespace generic
+      {
+
+	template <typename I, typename N, typename L>
+	mln_ch_value(I, L)
+	  regional_minima_(const I& input, const N& nbh,
+			   L& nlabels)
+	{
+	  trace::entering("labeling::impl::generic::regional_minima_");
+
+	  typedef impl::regional_minima_functor<I,N,L> F;
+	  F f(input, nbh);
+	  canvas::labeling<F> run(f);
+	  nlabels = run.nlabels;
+
+	  trace::exiting("labeling::impl::generic::regional_minima_");
+	  return run.output;
+	}
+
+      } // end of namespace mln::labeling::impl::generic
+
+
     } // end of namespace mln::labeling::impl
+
 
 
     // Facade.
 
-    template <typename I, typename N, typename O>
-    inline
-    bool regional_minima(const Image<I>& input, const Neighborhood<N>& nbh,
-			 Image<O>& output, unsigned& nlabels)
+    template <typename I, typename N, typename L>
+    mln_ch_value(I, L)
+      regional_minima(const Image<I>& input_, const Neighborhood<N>& nbh_,
+		      L& nlabels)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef impl::regional_minima_<I,N,O> F;
-      F f(exact(input), exact(nbh), exact(output));
-      canvas::labeling<F> run(f);
-      nlabels = f.nlabels;
-      return f.status;
+      trace::entering("labeling::regional_minima");
+      const I& input = exact(input_);
+      const N& nbh = exact(nbh_);
+      mln_precondition(input.has_data());
+
+      // Calls the only (generic) impl.
+      mln_ch_value(I, L) output = impl::generic::regional_minima_(input, nbh, nlabels);
+
+      trace::exiting("labeling::regional_minima");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

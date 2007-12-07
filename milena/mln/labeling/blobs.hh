@@ -30,8 +30,8 @@
 
 /*! \file mln/labeling/blobs.hh
  *
- * \brief Connected component labeling of the image objects at a given
- * blobs.
+ * \brief Connected component labeling of the binary objects of a binary
+ *  image using a queue-based algorithm.
  */
 
 # include <mln/core/concept/image.hh>
@@ -55,6 +55,8 @@ namespace mln
      * \param[out] nlabels The number of labels.
      * \return  The label image.
      *
+     * \pre The input image has to be binary (checked at compile-time).
+     *
      * A fast queue is used so that the algorithm is not recursive and
      * can handle large binary objects (blobs).
      */
@@ -69,7 +71,63 @@ namespace mln
     namespace impl
     {
 
-      // ...
+      namespace generic
+      {
+	
+	template <typename I, typename N>
+	mln_ch_value(I, unsigned)
+	  blobs_(const I& input, const N& nbh, unsigned& nlabels)
+	{
+	  typedef mln_psite(I) P;
+
+	  P cur;
+	  mln_niter(N) n(nbh, cur);
+	  p_queue_fast<P> qu;
+
+	  // Initialization.
+	  nlabels = 0;
+	  mln_ch_value(I, unsigned) output;
+	  initialize(output, input);
+	  level::fill(output, 0);
+
+	  // Loop.
+	  mln_piter(I) p(input.domain());
+	  for_all(p)
+	    if (input(p) && ! output(p)) // Object point, not labeled yet.
+	      {
+		// Label this point component.
+		++nlabels;
+		mln_invariant(qu.is_empty());
+		qu.push(p);
+		output(p) = nlabels;
+		do
+		  {
+		    cur = qu.front();
+		    qu.pop();
+		    for_all(n) if (input.has(n))
+		      if (input(n) && ! output(n))
+			{
+			  mln_invariant(! qu.has(n));
+			  qu.push(n);
+			  output(n) = nlabels;
+			}
+		  }
+		while (! qu.is_empty());
+	      }
+      
+	  return output;
+	}
+	
+      } // end of namespace mln::labeling::impl::generic
+
+
+      template <typename I, typename N>
+      mln_ch_value(I, unsigned)
+	blobs_(const I& input, const N& nbh, unsigned& nlabels)
+      {
+	// The only implementation is the generic one.
+	return generic::blobs_(input, nbh, nlabels);
+      }
 
     } // end of namespace mln::labeling::impl
 
@@ -81,47 +139,15 @@ namespace mln
     mln_ch_value(I, unsigned)
       blobs(const Image<I>& input_, const Neighborhood<N>& nbh_, unsigned& nlabels)
     {
+      trace::entering("labeling::blobs");
+      mlc_equal(mln_trait_image_kind(I), mln::trait::image::kind::binary)::check();
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
       mln_precondition(input.has_data());
 
-      typedef mln_psite(I) P;
+      mln_ch_value(I, unsigned) output = impl::blobs_(input, nbh, nlabels);
 
-      P cur;
-      mln_niter(N) n(nbh, cur);
-      p_queue_fast<P> qu;
-
-      // Initialization.
-      nlabels = 0;
-      mln_ch_value(I, unsigned) output;
-      initialize(output, input);
-      level::fill(output, 0);
-
-      // Loop.
-      mln_piter(I) p(input.domain());
-      for_all(p)
-	if (input(p) && ! output(p)) // Object point, not labeled yet.
-	  {
-	    // Label this point component.
-	    ++nlabels;
-	    mln_invariant(qu.is_empty());
-	    qu.push(p);
-	    output(p) = nlabels;
-	    do
-	      {
-		cur = qu.front();
-		qu.pop();
-		for_all(n) if (input.has(n))
-		  if (input(n) && ! output(n))
-		    {
-		      mln_invariant(! qu.has(n));
-		      qu.push(n);
-		      output(n) = nlabels;
-		    }
-	      }
-	    while (! qu.is_empty());
-	  }
-      
+      trace::exiting("labeling::blobs");
       return output;
     }
 

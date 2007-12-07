@@ -25,33 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling_regional_maxima.cc
+/*! \file tests/labeling/background.cc
  *
- * \brief Test on mln::labeling::regional_maxima.
+ * \brief Test on mln::labeling::background.
  */
 
 #include <mln/core/image2d.hh>
+#include <mln/io/pbm/load.hh>
 #include <mln/core/neighb2d.hh>
-#include <mln/value/int_u8.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
-#include <mln/labeling/regional_maxima.hh>
+#include <mln/labeling/background.hh>
+#include <mln/logical/not.hh>
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  image2d<int_u8>
-    lena = io::pgm::load("../img/lena.pgm"),
-    out(lena.domain());
-
+  image2d<bool> pic = io::pbm::load("../../img/picasso.pbm");
   unsigned n;
-  labeling::regional_maxima(lena, c4(), out, n);
-  mln_assertion(n == 255);
-
-  io::pgm::save(out, "out.pgm");
+  labeling::background(logical::not_(pic), c4(), n);
+  mln_assertion(n == 33);
 }

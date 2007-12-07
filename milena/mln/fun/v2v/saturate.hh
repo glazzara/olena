@@ -102,7 +102,7 @@ namespace mln
 	    min_W = mln::value::cast<W>(min_);
 	    max_W = mln::value::cast<W>(max_);
 	    // FIXME
-// 	    needs_update_ = false;
+ 	    needs_update_ = false;
 	  }
 
 	// FIXME: Below we need something more powerful that mlc_converts_to

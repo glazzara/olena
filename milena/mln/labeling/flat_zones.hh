@@ -33,7 +33,9 @@
  * \brief Connected component labeling of the flat zones of an image.
  */
 
-# include <mln/labeling/base.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/canvas/labeling.hh>
 
 
 namespace mln
@@ -44,17 +46,16 @@ namespace mln
 
     /*! Connected component labeling of the flat zones of an image.
      *
-     * \param[in]  input  The input image.
-     * \param[in]  nbh    The neighborhood to consider.
-     * \param[out] output The label image.
+     * \param[in]  input   The input image.
+     * \param[in]  nbh     The neighborhood to consider.
      * \param[out] nlabels The number of labels.
-     *
-     * \return The number of labels.
+     * \return The label image.
      */
-    template <typename I, typename N, typename O>
-    bool flat_zones(const Image<I>& input, const Neighborhood<N>& nbh,
-		    Image<O>& output,
-		    unsigned& nlabels);
+    template <typename I, typename N, typename L>
+    mln_ch_value(I, L)
+      flat_zones(const Image<I>& input, const Neighborhood<N>& nbh,
+		 L& nlabels);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -62,47 +63,87 @@ namespace mln
     namespace impl
     {
 
-      template <typename I_, typename N_, typename O_>
-      struct flat_zones_ : base_<I_,N_,O_>
+      // Flat zone functor for the labeling canvas.
+
+      template <typename I_, typename N_, typename L_>
+      struct flat_zones_functor
       {
-	typedef mln_point(I_) P;
+	typedef mln_psite(I_) P;
 
 	// requirements from mln::canvas::labeling:
 
-	typedef mln_pset(I_) S;
-	const S& s;
-	mln_value(O) nlabels;
-	bool status;
+	typedef I_ I;
+	typedef N_ N;
+	typedef L_ L;
+        typedef mln_pset(I) S;
 
-	inline
-	bool equiv(const P& n, const P&) const { return input(n) == input(p); }
+	const I& input;
+	const N& nbh;
+        const S& s;
+
+	bool handles(const P&) const             { return true; }
+	bool equiv(const P& n, const P& p) const { return input(n) == input(p); }
+
+ 	void init()                          {}
+	bool labels(const P&) const          { return true;  }
+	void do_no_union(const P&, const P&) {}
+	void init_attr(const P&)             {}
+	void merge_attr(const P&, const P&)  {}
 
 	// end of requirements
 
-	inline
-	flat_zones_(const I_& input, const N_& nbh, O_& output)
-	  : base_<I_,N_,O_>(input, nbh, output),
+	flat_zones_functor(const I_& input, const N_& nbh)
+	  : input(input),
+	    nbh(nbh),
 	    s(input.domain())
 	{}
       };
 
+
+      // Generic implementation.
+
+      namespace generic
+      {
+
+	template <typename I, typename N, typename L>
+	mln_ch_value(I, L)
+	  flat_zones_(const I& input, const N& nbh, L& nlabels)
+	{
+	  trace::entering("labeling::impl::generic::flat_zones_");
+
+	  typedef flat_zones_functor<I,N,L> F;
+	  F f(input, nbh);
+	  canvas::labeling<F> run(f);
+	  nlabels = run.nlabels;
+
+	  trace::exiting("labeling::impl::generic::flat_zones_");
+	  return run.output;
+	}
+
+      } // end of namespace mln::labeling::impl::generic
+
+
     } // end of namespace mln::labeling::impl
+
 
 
     // Facade.
 
-    template <typename I, typename N, typename O>
-    inline
-    bool flat_zones(const Image<I>& input, const Neighborhood<N>& nbh,
-		    Image<O>& output,
-		    unsigned& nlabels)
+    template <typename I, typename N, typename L>
+    mln_ch_value(I, L)
+      flat_zones(const Image<I>& input_, const Neighborhood<N>& nbh_,
+		 L& nlabels)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef impl::flat_zones_<I,N,O> F;
-      F f(exact(input), exact(nbh), exact(output));
-      canvas::labeling<F> run(f);
-      nlabels = f.nlabels;
-      return f.status;
+      trace::entering("labeling::flat_zones");
+      const I& input = exact(input_);
+      const N& nbh = exact(nbh_);
+      mln_precondition(input.has_data());
+
+      // Calls the only (generic) impl.
+      mln_ch_value(I, L) output = impl::generic::flat_zones_(input, nbh, nlabels);
+
+      trace::exiting("labeling::flat_zones");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

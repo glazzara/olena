@@ -25,52 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_VALUE_KIND_HH
-# define MLN_TRAIT_VALUE_KIND_HH
-
-/*! \file mln/trait/value/kind.hh
+/*! \file tests/labeling/blobs.cc
  *
- * \brief Kind of values (for use in images).
+ * \brief Test on mln::labeling::blobs.
  */
 
-# include <string>
+#include <mln/core/image2d.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/core/neighb2d.hh>
+#include <mln/labeling/blobs.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace trait
-  {
-
-    namespace value
-    {
-
-      struct kind
-      {
-	struct any            { std::string name() const { return "kind::any"; } };
-
-	struct color  : any   { std::string name() const { return "kind::color"; } };
-	struct gray   : any   { std::string name() const { return "kind::gray"; } };
-
-	struct label  : any   { std::string name() const { return "kind::label"; } };
-	struct logic  : label { std::string name() const { return "kind::logic"; } };
-	struct binary : logic { std::string name() const { return "kind::binary"; } };
-
-	// FIXME: Why not?
-	// label       logic
-	//   \         /     \
-	//    \   nary_logic   \
-	//     \     /   \       \
-	//     binary   ternary  fuzzy
-
-	struct data   : any   { std::string name() const { return "kind::data"; } };
-      };
-
-    } // end of namespace mln::trait::kind
-
-  } // end of namespace mln::trait
-
-} // end of namespace mln
-
-
-#endif // ! MLN_TRAIT_VALUE_KIND_HH
+  image2d<bool> pic = io::pbm::load("../../img/picasso.pbm");
+  unsigned n;
+  labeling::blobs(pic, c4(), n);
+  mln_assertion(n == 33);
+}

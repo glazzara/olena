@@ -34,9 +34,9 @@
  * image.
  */
 
+# include <mln/core/concept/image.hh>
 # include <mln/level/fill.hh>
-# include <mln/level/sort_points.hh>
-# include <mln/convert/to_window.hh>
+# include <mln/convert/to_window.hh> // FIXME: to_upper_window
 
 
 namespace mln
@@ -50,76 +50,94 @@ namespace mln
     template <typename F>
     struct labeling
     {
+      // Functor.
       F& f;
 
       typedef typename F::I I;
       typedef typename F::N N;
-      typedef typename F::O O;
+      typedef typename F::L L;
       typedef typename F::S S;
-      typedef mln_point(I) point;
 
-      // aux:
-      mln_ch_value(O, bool)  deja_vu;
-      mln_ch_value(O, point) parent;
+      // Local type.
+      typedef mln_psite(I) point;
 
+      // Auxiliary data.
+      mln_ch_value(I, bool)  deja_vu;
+      mln_ch_value(I, point) parent;
+
+      // Output.
+      mln_ch_value(I, L) output;
+      L nlabels;
+      bool status;
+
+      // Ctor.
       labeling(F& f)
 	: f(f)
       {
-	run();
+	trace::entering("canvas::labeling");
+
+	init();
+	f.init(); // Client initialization.
+	pass_1();
+	pass_2();
+
+	trace::exiting("canvas::labeling");
       }
 
-      void run()
+
+      void init()
       {
-	// init
-	{
-	  initialize(deja_vu, f.input);
-	  mln::level::fill(deja_vu, false);
-	  initialize(parent, f.input);
-	  f.nlabels = 0;
-	  f.init();
-	}
-	// first pass
-	{
-	  mln_fwd_piter(S) p(f.s);
-	  mln_niter(N) n(f.nbh, p);
-	  for_all(p) if (f.handles(p))
-	    {
-	      make_set(p);
-	      for_all(n)
-		if (f.input.has(n) && deja_vu(n))
-		  if (f.equiv(n, p))
-		    do_union(n, p);
-		  else
-		    f.do_no_union(n, p);
-	      deja_vu(p) = true;
-	    }
-	}
+	initialize(deja_vu, f.input);
+	mln::level::fill(deja_vu, false);
+	initialize(parent, f.input);
+	initialize(output, f.input);
+	mln::level::fill(output, 0); // FIXME: Use literal::zero. 
+	nlabels = 0;
+      }
 
-	// second pass
-	{
-	  mln_bkd_piter(S) p(f.s);
-	  for_all(p) if (f.handles(p))
-	    {
-	      if (is_root(p))
-		{
-		  if (f.labels(p))
-		    {
-		      if (f.nlabels == mln_max(mln_value(O)))
-			{
-			  f.status = false;
-			  return;
-			}
-		      f.output(p) = ++f.nlabels;
-		    }
-		}
-	      else
-		f.output(p) = f.output(parent(p));
-	    }
-	  f.status = true;
-	}
+      void pass_1()
+      {
+	mln_fwd_piter(S) p(f.s);
+	mln_niter(N) n(f.nbh, p);
+	for_all(p) if (f.handles(p))
+	  {
+	    make_set(p);
+	    for_all(n)
+	      if (f.input.has(n) && deja_vu(n))
+		if (f.equiv(n, p))
+		  do_union(n, p);
+		else
+		  f.do_no_union(n, p);
+	    deja_vu(p) = true;
+	  }
+      }
 
-      } // end of run()
+      void pass_2()
+      {
+	mln_bkd_piter(S) p(f.s);
+	for_all(p) if (f.handles(p))
+	  {
+	    if (is_root(p))
+	      {
+		if (f.labels(p))
+		  {
+		    if (nlabels == mln_max(L))
+		      {
+			status = false;
+			return;
+		      }
+		    output(p) = ++nlabels;
+		  }
+	      }
+	    else
+	      output(p) = output(parent(p));
+	  }
+	status = true;
+      }
 
+
+      // Auxiliary methods.
+      
       void make_set(const point& p)
       {
 	parent(p) = p;
@@ -152,84 +170,96 @@ namespace mln
     };
 
 
-    // FIXME: Fast version.
 
 
     template <typename F>
-    struct labeling_fast
+    struct labeling_fastest
     {
+      // Functor.
       F& f;
       
       typedef typename F::I I;
       typedef typename F::N N;
-      typedef typename F::O O;
+      typedef typename F::L L;
       
-      // aux:
-      mln_ch_value(O, unsigned) parent;
-      
-      labeling_fast(F& f)
+      // Auxiliary data.
+      mln_ch_value(I, unsigned) parent;
+
+      // Output.
+      mln_ch_value(I, L) output;
+      L nlabels;
+      bool status;
+
+      // Ctor.
+      labeling_fastest(F& f)
 	: f(f)
       {
-	run();
+	trace::entering("canvas::labeling_fastest");
+
+	init();
+	f.init(); // Client initialization.
+	pass_1();
+	pass_2();
+
+	trace::exiting("canvas::labeling_fastest");
+      }
+
+      
+      void init()
+      {
+	initialize(parent, f.input);
+	for (unsigned p = 0; p < parent.ncells(); ++p)
+	  parent[p] = p; // make_set
+	initialize(output, f.input);
+	mln::level::fill(output, 0); // FIXME: Use literal::zero. 
+	nlabels = 0;
+      }
+
+      void pass_1()
+      {
+	mln_bkd_pixter(const I) p(f.input);
+
+	typedef window<mln_dpoint(I)> W;
+	W win = mln::convert::to_upper_window(f.nbh);
+	mln_qixter(const I, W) n(p, win);
+	  
+	for_all(p) if (f.handles(p))
+	  {
+	    f.init_attr(p);
+	    for_all(n)
+	      if (f.equiv(n, p))
+		do_union(n, p);
+	      else
+		f.do_no_union(n, p);
+	  }
       }
       
-      void run()
+      void pass_2()
       {
+	mln_fwd_pixter(const I) p(f.input);
 
-        // init
-	{
-	  initialize(parent, f.input);
-	  f.nlabels = 0;
-	  f.init();
-	  // make_set for all points:
-	  for (unsigned p = 0; p < parent.ncells(); ++p)
-	    parent[p] = p;
-	}
+	for_all(p) if (f.handles(p))
+	  {
+	    if (is_root(p))
+	      {
+		if (f.labels(p))
+		  {
+		    if (nlabels == mln_max(L))
+		      {
+			status = false;
+			return;
+		      }
+		    output[p] = ++nlabels;
+		  }
+	      }
+	    else
+	      output[p] = output[parent[p]];
+	  }
+	status = true;
+      }
 
-	// first pass
-	{
-	  mln_bkd_pixter(const I) p(f.input);
+      // Auxiliary methods.
 
-	  typedef window<mln_dpoint(I)> W;
-	  W win = mln::convert::to_upper_window(f.nbh);
-	  mln_qixter(const I, W) n(p, win);
-	  
-	  for_all(p) if (f.handles(p))
-	    {
-	      f.init_attr(p);
-	      for_all(n)
-		if (f.equiv(n, p))
-		  do_union(n, p);
-		else
-		  f.do_no_union(n, p);
-	    }
-	}
-	
-	// second pass
-	{
-	  mln_fwd_pixter(const I) p(f.input);
-	  for_all(p) if (f.handles(p))
-	    {
-	      if (is_root(p))
-		{
-		  if (f.labels(p))
-		    {
-		      if (f.nlabels == mln_max(mln_value(O)))
-			{
-			  f.status = false;
-			  return;
-			}
-		      f.output[p] = ++f.nlabels;
-		    }
-		}
-	      else
-		f.output[p] = f.output[parent[p]];
-	    }
-	  f.status = true;
-	}
-	
-      } // end of run()
-      
       bool is_root(unsigned p) const
       {
 	return parent[p] == p;
