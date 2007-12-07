@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border_fill/test_border_fill_image2d_1.cc
+/*! \file tests/border/fill_full.cc
  *
  * \brief Tests on mln::border::fill.
  */
@@ -133,14 +133,16 @@ main (void)
 {
   int limits = 10;
 
+  std::cerr << "Tests border::fill:" << std::endl;
+
   {
-    std::cerr << "Tests border::fill on int:" << std::endl;
+    std::cerr << "  on int:" << std::endl;
 
     typedef int T;
     T value = (T) -1;
     T v = 42;
 
-    (std::cerr << "in 1d ... ").flush ();
+    (std::cerr << "    in 1d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -149,7 +151,7 @@ main (void)
     std::cerr << "OK" << std::endl;
 
 
-    (std::cerr << "in 2d ... ").flush ();
+    (std::cerr << "    in 2d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -160,13 +162,13 @@ main (void)
   }
 
   {
-    std::cerr << "Tests border::fill on unsigned:" << std::endl;
+    std::cerr << "  on unsigned:" << std::endl;
 
     typedef unsigned T;
     T value = (T) -1;
     T v = 42;
 
-    (std::cerr << "in 1d ... ").flush ();
+    (std::cerr << "    in 1d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -175,7 +177,7 @@ main (void)
     std::cerr << "OK" << std::endl;
 
 
-    (std::cerr << "in 2d ... ").flush ();
+    (std::cerr << "    in 2d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -186,13 +188,13 @@ main (void)
   }
 
   {
-    std::cerr << "Tests border::fill on int_u8 ... " << std::endl;
+    std::cerr << "  on int_u8:" << std::endl;
 
     typedef value::int_u8 T;
     T value = 255;
     T v = 42;
 
-    (std::cerr << "in 1d ... ").flush ();
+    (std::cerr << "    in 1d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -201,7 +203,7 @@ main (void)
     std::cerr << "OK" << std::endl;
 
 
-    (std::cerr << "in 2d ... ").flush ();
+    (std::cerr << "    in 2d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -212,13 +214,13 @@ main (void)
   }
 
   {
-    std::cerr << "Tests border::fill on int_u16 ... "  << std::endl;
+    std::cerr << "  on int_u16:"  << std::endl;
 
     typedef value::int_u16 T;
     T value = 65535;
     T v = 42;
 
-    (std::cerr << "in 1d ... ").flush ();
+    (std::cerr << "    in 1d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -227,7 +229,7 @@ main (void)
     std::cerr << "OK" << std::endl;
 
 
-    (std::cerr << "in 2d ... ").flush ();
+    (std::cerr << "    in 2d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -238,13 +240,13 @@ main (void)
   }
 
   {
-    std::cerr << "Tests border::fill on int_s8 ... " << std::endl;
+    std::cerr << "  on int_s8:" << std::endl;
 
     typedef value::int_s8 T;
     T value = 127;
     T v = 42;
 
-    (std::cerr << "in 1d ... ").flush ();
+    (std::cerr << "    in 1d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -253,7 +255,7 @@ main (void)
     std::cerr << "OK" << std::endl;
 
 
-    (std::cerr << "in 2d ... ").flush ();
+    (std::cerr << "    in 2d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -264,13 +266,13 @@ main (void)
   }
 
   {
-    std::cerr << "Tests border::fill on int_s16 ... "  << std::endl;
+    std::cerr << "  on int_s16:"  << std::endl;
 
     typedef value::int_s16 T;
     T value = 32767;
     T v = 42;
 
-    (std::cerr << "in 1d ... ").flush ();
+    (std::cerr << "    in 1d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -279,7 +281,7 @@ main (void)
     std::cerr << "OK" << std::endl;
 
 
-    (std::cerr << "in 2d ... ").flush ();
+    (std::cerr << "    in 2d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -290,13 +292,13 @@ main (void)
   }
 
   {
-    std::cerr << "Tests border::fill on rgb8 ... "  << std::endl;
+    std::cerr << "  on rgb8:"  << std::endl;
 
     typedef value::rgb8 T;
     T value = T(255, 255, 255);
     T v = T(42, 0, 0);
 
-    (std::cerr << "in 1d ... ").flush ();
+    (std::cerr << "    in 1d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -305,7 +307,7 @@ main (void)
     std::cerr << "OK" << std::endl;
 
 
-    (std::cerr << "in 2d ... ").flush ();
+    (std::cerr << "    in 2d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -316,13 +318,13 @@ main (void)
   }
 
   {
-    std::cerr << "Tests border::fill on rgb16:" << std::endl;
+    std::cerr << "  on rgb16:" << std::endl;
 
     typedef value::rgb16 T;
     T value = T(65535, 65535, 65535);
     T v = T(42, 0, 0);
 
-    (std::cerr << "in 1d ... ").flush ();
+    (std::cerr << "    in 1d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -331,7 +333,7 @@ main (void)
     std::cerr << "OK" << std::endl;
 
 
-    (std::cerr << "in 2d ... ").flush ();
+    (std::cerr << "    in 2d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -343,13 +345,13 @@ main (void)
 
 
   {
-    std::cerr << "Tests border::fill on float01_8:" << std::endl;
+    std::cerr << "  on float01_8:" << std::endl;
 
     typedef value::float01_8 T;
     T value = T(0.9999);
     T v = T(0.111);
 
-    (std::cerr << "in 1d ... ").flush ();
+    (std::cerr << "    in 1d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -358,7 +360,7 @@ main (void)
     std::cerr << "OK" << std::endl;
 
 
-    (std::cerr << "in 2d ... ").flush ();
+    (std::cerr << "    in 2d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -369,13 +371,13 @@ main (void)
   }
 
   {
-    std::cerr << "Tests border::fill on float01_16:" << std::endl;
+    std::cerr << "  on float01_16:" << std::endl;
 
     typedef value::float01_16 T;
     T value = T(0.9999);
     T v = T(0.111);
 
-    (std::cerr << "in 1d ... ").flush ();
+    (std::cerr << "    in 1d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -384,7 +386,7 @@ main (void)
     std::cerr << "OK" << std::endl;
 
 
-    (std::cerr << "in 2d ... ").flush ();
+    (std::cerr << "    in 2d ... ").flush ();
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)

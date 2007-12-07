@@ -27,7 +27,7 @@
 
 /*! \file tests/logical/and_not_full.cc
  *
- * \brief Tests on mln::logical::and.
+ * \brief Tests on mln::logical::and_not.
  */
 
 #include <mln/core/image1d.hh>

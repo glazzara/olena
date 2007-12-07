@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/color_pretty.cc
+/*! \file tests/display/color_pretty.cc
  *
  * \brief Tests on mln::display::color::pretty.
  */

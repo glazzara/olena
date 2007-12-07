@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/abs.cc
+/*! \file tests/level/abs_full.cc
  *
  * \brief Tests on mln::level::abs.
  */

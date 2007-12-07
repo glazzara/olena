@@ -30,142 +30,192 @@
  * \brief Tests on mln::border::duplicate.
  */
 
+#include <mln/core/image1d.hh>
 #include <mln/core/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/border/duplicate.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_s8.hh>
 
+namespace mln
+{
 
-using namespace mln;
+  template <typename T>
+  void chck1d(int cols, int border, T ref[])
+  {
+    int c = cols + 2 * border;
+
+    image1d<T> ima(cols, border);
+    debug::iota(ima);
+    border::duplicate(ima);
+
+    for (int i = 0; i < c; ++i)
+      mln_assertion(ima[i] == ref[i]);
+  }
+
+  template <typename T>
+  void chck2d(int rows, int cols, int border, T ref[])
+  {
+    int r = rows + 2 * border;
+    int c = cols + 2 * border;
+
+    image2d<T> ima(rows, cols, border);
+    debug::iota(ima);
+    border::duplicate(ima);
+
+    for (int i = 0; i < c * r; ++i)
+      mln_assertion(ima[i] == ref[i]);
+  }
+
+}
+
 
 int
-main (void)
+main(void)
 {
-  {
-    (std::cerr << "Test border::mirror on int with border = 3 ... ").flush ();
+  using namespace mln;
 
-    typedef int T;
-    int border = 3;
-    int row = 4;
-    int col = 5;
-
-    int r = row + 2 * border;
-    int c = col + 2 * border;
-
-    image2d<T> ima(row, col, border);
-    debug::iota (ima);
-    border::duplicate (ima);
-
-    T vs[110] =
-      {
-	1,  1,  1,  1,  2,  3,  4,  5,  5,  5,  5,
-	1,  1,  1,  1,  2,  3,  4,  5,  5,  5,  5,
-	1,  1,  1,  1,  2,  3,  4,  5,  5,  5,  5,
-	1,  1,  1,  1,  2,  3,  4,  5,  5,  5,  5,
-	6,  6,  6,  6,  7,  8,  9,  10, 10, 10, 10,
-	11, 11, 11, 11, 12, 13, 14, 15, 15, 15, 15,
-	16, 16, 16, 16, 17, 18, 19, 20, 20, 20, 20,
-	16, 16, 16, 16, 17, 18, 19, 20, 20, 20, 20,
-	16, 16, 16, 16, 17, 18, 19, 20, 20, 20, 20,
-	16, 16, 16, 16, 17, 18, 19, 20, 20, 20, 20
-      };
-
-    for (int i = 0; i < c * r; ++i)
-      mln_assertion(ima[i] == vs[i]);
-    std::cerr << "OK" << std::endl;
-  }
+  std::cerr << "Tests border::duplicate:" << std::endl;
 
   {
-    (std::cerr << "Test border::mirror on int_u8 with border = 2 ... ").flush ();
+    std::cerr << "  in 1d :" << std::endl;
 
-    typedef value::int_u8 T;
-    int border = 2;
-    int row = 4;
-    int col = 5;
+    {
+      (std::cerr << "    on int_u8 with border = 3 ... ").flush ();
 
-    int r = row + 2 * border;
-    int c = col + 2 * border;
+      typedef value::int_u8 T;
+      int border = 3;
+      int cols = 2;
+      T ref[8] = {1, 1, 1, 1, 2, 2, 2, 2};
 
-    image2d<T> ima(row, col, border);
-    debug::iota (ima);
-    border::duplicate (ima);
+      chck1d(cols, border, ref);
+      std::cerr << "OK" << std::endl;
+    }
 
-    T vs[72] =
-      {
-	 1,  1,  1,  2,  3,  4,  5,  5,  5,
-	 1,  1,  1,  2,  3,  4,  5,  5,  5,
-	 1,  1,  1,  2,  3,  4,  5,  5,  5,
-	 6,  6,  6,  7,  8,  9,  10, 10, 10,
-	 11, 11, 11, 12, 13, 14, 15, 15, 15,
-	 16, 16, 16, 17, 18, 19, 20, 20, 20,
-	 16, 16, 16, 17, 18, 19, 20, 20, 20,
-	 16, 16, 16, 17, 18, 19, 20, 20, 20
-      };
+    {
+      (std::cerr << "    on    int with border = 2 ... ").flush ();
 
-    for (int i = 0; i < c * r; ++i)
-      mln_assertion(ima[i] == vs[i]);
-    std::cerr << "OK" << std::endl;
-  }
+      typedef int T;
+      int border = 2;
+      int cols = 3;
+      T ref[7] = {1, 1, 1, 2, 3, 3, 3};
 
-  {
-    (std::cerr << "Test border::mirror on int_s8 with border = 1 ... ").flush ();
+      chck1d(cols, border, ref);
+      std::cerr << "OK" << std::endl;
+    }
 
-    typedef value::int_s8 T;
-    int border = 1;
-    int row = 4;
-    int col = 5;
+    {
+      (std::cerr << "    on int_s8 with border = 1 ... ").flush ();
 
-    int r = row + 2 * border;
-    int c = col + 2 * border;
+      typedef value::int_s8 T;
+      int border = 1;
+      int cols = 2;
+      T ref[4] = {1, 1, 2, 2};
 
-    image2d<T> ima(row, col, border);
-    debug::iota (ima);
-    border::duplicate (ima);
+      chck1d(cols, border, ref);
+      std::cerr << "OK" << std::endl;
+    }
 
-    T vs[49] =
-      {
-	1,  1,  2,  3,  4,  5,  5,
-	1,  1,  2,  3,  4,  5,  5,
-	6,  6,  7,  8,  9,  10, 10,
-	11, 11, 12, 13, 14, 15, 15,
-	16, 16, 17, 18, 19, 20, 20,
-	16, 16, 17, 18, 19, 20, 20
-      };
+    {
+      (std::cerr << "    on    int with border = 0 ... ").flush ();
+      typedef int T;
+      int border = 0;
+      int cols = 4;
+      T ref[4] = {1, 2, 3, 4};
 
-    for (int i = 0; i < c * r; ++i)
-      mln_assertion(ima[i] == vs[i]);
-    std::cerr << "OK" << std::endl;
-  }
+      chck1d(cols, border, ref);
+      std::cerr << "OK" << std::endl;
+    }
+  } // end of 1d
 
 
   {
-    (std::cerr << "Test border::mirror on int with border = 0 ... ").flush ();
+    std::cerr << "  in 2d :" << std::endl;
 
-    typedef int T;
-    int border = 0;
-    int row = 4;
-    int col = 5;
+    {
+      (std::cerr << "    on    int with border = 3 ... ").flush ();
+      typedef int T;
+      int border = 3;
+      int rows = 4;
+      int cols = 5;
+      T ref[110] =
+	{
+	  1,  1,  1,  1,  2,  3,  4,  5,  5,  5,  5,
+	  1,  1,  1,  1,  2,  3,  4,  5,  5,  5,  5,
+	  1,  1,  1,  1,  2,  3,  4,  5,  5,  5,  5,
+	  1,  1,  1,  1,  2,  3,  4,  5,  5,  5,  5,
+	  6,  6,  6,  6,  7,  8,  9,  10, 10, 10, 10,
+	  11, 11, 11, 11, 12, 13, 14, 15, 15, 15, 15,
+	  16, 16, 16, 16, 17, 18, 19, 20, 20, 20, 20,
+	  16, 16, 16, 16, 17, 18, 19, 20, 20, 20, 20,
+	  16, 16, 16, 16, 17, 18, 19, 20, 20, 20, 20,
+	  16, 16, 16, 16, 17, 18, 19, 20, 20, 20, 20
+	};
 
-    int r = row + 2 * border;
-    int c = col + 2 * border;
+      chck2d(rows, cols, border, ref);
+      std::cerr << "OK" << std::endl;
+    }
 
-    image2d<T> ima(row, col, border);
-    debug::iota (ima);
-    border::duplicate (ima);
+    {
+      (std::cerr << "    on int_u8 with border = 3 ... ").flush ();
+      typedef value::int_u8 T;
+      int border = 2;
+      int rows = 4;
+      int cols = 5;
+      T ref[72] =
+	{
+	  1,  1,  1,  2,  3,  4,  5,  5,  5,
+	  1,  1,  1,  2,  3,  4,  5,  5,  5,
+	  1,  1,  1,  2,  3,  4,  5,  5,  5,
+	  6,  6,  6,  7,  8,  9,  10, 10, 10,
+	  11, 11, 11, 12, 13, 14, 15, 15, 15,
+	  16, 16, 16, 17, 18, 19, 20, 20, 20,
+	  16, 16, 16, 17, 18, 19, 20, 20, 20,
+	  16, 16, 16, 17, 18, 19, 20, 20, 20
+	};
 
-    T vs[20] =
-      {
-	1,  2,  3,  4,  5,
-	6,  7,  8,  9,  10,
-	11, 12, 13, 14, 15,
-	16, 17, 18, 19, 20
-      };
+      chck2d(rows, cols, border, ref);
+      std::cerr << "OK" << std::endl;
+    }
 
-    for (int i = 0; i < c * r; ++i)
-      mln_assertion(ima[i] == vs[i]);
-    std::cerr << "OK" << std::endl;
-  }
+    {
+      (std::cerr << "    on int_s8 with border = 1 ... ").flush ();
+      typedef value::int_s8 T;
+      int border = 1;
+      int rows = 4;
+      int cols = 5;
+      T ref[49] =
+	{
+	  1,  1,  2,  3,  4,  5,  5,
+	  1,  1,  2,  3,  4,  5,  5,
+	  6,  6,  7,  8,  9,  10, 10,
+	  11, 11, 12, 13, 14, 15, 15,
+	  16, 16, 17, 18, 19, 20, 20,
+	  16, 16, 17, 18, 19, 20, 20
+	};
 
+      chck2d(rows, cols, border, ref);
+      std::cerr << "OK" << std::endl;
+    }
+
+    {
+      (std::cerr << "    on    int with border = 0 ... ").flush ();
+      typedef int T;
+      int border = 0;
+      int rows = 4;
+      int cols = 5;
+      T ref[20] =
+	{
+	  1,  2,  3,  4,  5,
+	  6,  7,  8,  9,  10,
+	  11, 12, 13, 14, 15,
+	  16, 17, 18, 19, 20
+	};
+
+      chck2d(rows, cols, border, ref);
+      std::cerr << "OK" << std::endl;
+    }
+
+  } // end of 2d
 
 }

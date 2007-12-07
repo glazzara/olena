@@ -56,13 +56,14 @@ namespace mln
 	struct logic  : label { std::string name() const { return "kind::logic"; } };
 	struct binary : logic { std::string name() const { return "kind::binary"; } };
 
+	/*
 	// FIXME: Why not?
 	// label       logic
-	//   \         /     \
-	//    \   nary_logic   \
-	//     \     /   \       \
+	//   \         /     \  
+	//    \   nary_logic   \  
+	//     \     /   \       \  
 	//     binary   ternary  fuzzy
-
+	*/
 	struct data   : any   { std::string name() const { return "kind::data"; } };
       };
 

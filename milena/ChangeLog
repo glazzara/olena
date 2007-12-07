@@ -1,3 +1,20 @@
+2007-12-07  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update tests for level and border and fix typo.
+
+	* tests/border/duplicate_full.cc,
+	* tests/border/fill.cc,
+	* tests/border/fill_full.cc,
+	* tests/border/mirror_full.cc: Update 1d version.
+
+	* tests/display/color_pretty.cc,
+	* tests/level/abs_full.cc,
+	* tests/level/sort_points_full.cc,
+	* tests/logical/and_not_full.cc,
+	* tests/logical/not_full.cc: Update and fix typo.
+
+	* mln/trait/value/kind.hh: Fix typo.
+
 2007-12-07  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	The set of a lazy_set can be cleared.

@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/logical/and_full.cc
+/*! \file tests/logical/not_full.cc
  *
- * \brief Tests on mln::logical::and.
+ * \brief Tests on mln::logical::not.
  */
 
 #include <mln/core/image1d.hh>
