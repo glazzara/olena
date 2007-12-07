@@ -72,6 +72,9 @@ namespace mln
 
       /// Return the size of the data in memory.
       unsigned size_mem() const;
+
+      /// Finalize the domain (internal use).
+      void finalize();
     };
 
   } // end of namespace mln::internal
@@ -177,6 +180,14 @@ namespace mln
       return domain_.size_mem()	+ bbox_.size()
 	* (sizeof(T) + sizeof(box_<P>) + sizeof(std::vector<unsigned>))
 	+ (sizeof(unsigned) + sizeof(T)) * domain_.nruns();
+    }
+
+    template <typename P, typename T>
+    inline
+    void
+    data_< obased_rle_image<P,T> >::finalize()
+    {
+      domain_.finalize();
     }
 
   } // end of namespace mln::internal

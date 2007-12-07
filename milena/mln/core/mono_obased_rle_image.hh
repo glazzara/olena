@@ -67,6 +67,9 @@ namespace mln
 
       /// Return the size of the data in memory.
       unsigned size_mem() const;
+
+      /// Finalize the domain (internal use).
+      void finalize();
     };
 
   } // end of namespace mln::internal
@@ -164,6 +167,17 @@ namespace mln
     data_< mono_obased_rle_image<P,T> >::size_mem() const
     {
       return domain_.size_mem() * 2 + sizeof(T) * (values_.size() + ima_.size());
+    }
+
+    template <typename P, typename T>
+    inline
+    void
+    data_< mono_obased_rle_image<P,T> >::finalize()
+    {
+      domain_.finalize();
+      for (typename std::vector< mono_rle_image<P, T> >::iterator it = ima_.begin();
+	   it != ima_.end(); ++it)
+	it->finalize();
     }
 
   } // end of namespace mln::internal

@@ -39,6 +39,7 @@
 # include <algorithm>
 
 # include <mln/core/internal/force_exact.hh>
+# include <mln/core/contract.hh>
 
 
 namespace mln
@@ -136,6 +137,8 @@ namespace mln
        *
        * All elements contained in the set are destroyed so the set is
        * emptied.
+       * The lazy set can be cleared even if it is in const mode
+       * and then it is set in non-const mode.
        *
        * \post is_empty() == true
        */
@@ -152,6 +155,21 @@ namespace mln
 
       /// Constructor without arguments.
       lazy_set_();
+
+      /*! \brief Set the mode of the lazy_set
+       *
+       * The lazy set can have two modes :
+       * - const : The lazy set is as light as a vector but you cannot
+       *    modify it
+       * - non-const : The lazy set use a std::set to have lazy manipulation
+       *
+       * \param[in] mode True for const mode, false for non-const.
+       *
+       */
+      void set_const_mode(bool mode);
+
+      /// Get the mode of the lazy set.
+      bool get_mode() const;
 
     private:
 
@@ -177,6 +195,9 @@ namespace mln
 
       /// Tell if \a v_ needs to be updated.
       mutable bool needs_update_;
+
+      /// Tell what the lazy set mode is.
+      bool mode_;
     };
 
 
@@ -203,6 +224,7 @@ namespace mln
     lazy_set_<E>::lazy_set_()
     {
       needs_update_ = false;
+      mode_ = false;
     }
 
     template <typename E>
@@ -210,6 +232,7 @@ namespace mln
     lazy_set_<E>&
     lazy_set_<E>::insert(const E& elt)
     {
+      mln_assertion(!mode_);
       s_.insert(elt);
       if (needs_update_ == false)
 	needs_update_ = true;
@@ -221,6 +244,7 @@ namespace mln
     lazy_set_<E>&
     lazy_set_<E>::remove(const E& elt)
     {
+      mln_assertion(!mode_);
       // FIXME : doesn't compile
       std::remove(s_.begin(), s_.end(), elt);
       if (needs_update_ == false)
@@ -233,9 +257,11 @@ namespace mln
     const E&
     lazy_set_<E>::element(unsigned i) const
     {
-      assert(i < s_.size());
-      if (needs_update_)
-	update_();
+      assert((!mode_ && i < s_.size())
+	     || i < v_.size());
+      if (!mode_)
+	if (needs_update_)
+	  update_();
       return v_[i];
     }
 
@@ -252,7 +278,10 @@ namespace mln
     unsigned
     lazy_set_<E>::nelements() const
     {
-      return s_.size();
+      if (!mode_)
+	return s_.size();
+      else
+	return v_.size();
     }
 
     template <typename E>
@@ -260,7 +289,10 @@ namespace mln
     bool
     lazy_set_<E>::has(const E& elt) const
     {
-      return s_.find(elt) != s_.end();
+      if (!mode_)
+	return s_.find(elt) != s_.end();
+      else
+	return v_.find(elt) != v_.end();
     }
 
     template <typename E>
@@ -279,6 +311,7 @@ namespace mln
       v_.clear();
       s_.clear();
       needs_update_ = false;
+      mode_ = false;
       mln_postcondition(is_empty());
     }
 
@@ -287,9 +320,43 @@ namespace mln
     const std::vector<E>&
     lazy_set_<E>::vect() const
     {
-      if (needs_update_)
-	update_();
+      if (!mode_)
+	if (needs_update_)
+	  update_();
       return v_;
+    }
+
+    template <typename E>
+    inline
+    void
+    lazy_set_<E>::set_const_mode(bool mode)
+    {
+      if (mode != mode_)
+      {
+	if (mode)
+	{
+	  if (needs_update_)
+	    update_();
+	  s_.clear();
+	}
+	else
+	{
+	  mln_assertion(s_.size() == 0);
+	  for (typename std::vector<E>::iterator it = v_.begin();
+	       it != v_.end(); it++)
+	    s_.insert(*it);
+	  needs_update_ = false;
+	}
+	mode_ = mode;
+      }
+    }
+
+    template <typename E>
+    inline
+    bool
+    lazy_set_<E>::get_mode() const
+    {
+      return mode_;
     }
 
     template <typename E>
@@ -297,7 +364,7 @@ namespace mln
     void
     lazy_set_<E>::update_() const
     {
-      mln_precondition(needs_update_);
+      mln_precondition(needs_update_ && !mode_);
       v_.clear();
       std::copy(s_.begin(), s_.end(), std::back_inserter(v_));
       // no s_.clear() here:

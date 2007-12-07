@@ -56,7 +56,22 @@ namespace mln
       run_image_();
 
     public:
+      /*! \brief Give the rate of compression.
+       *
+       * Give the rate of space gained by coding an image in this
+       * format.  A rate of 1 means there is no compression. Less than
+       * 1 means we have gained space.
+       *
+       * \return The rate of compression.
+       */
       float compression() const;
+
+      /*! \brief Finalize the construction.
+       *
+       *  For internal use, this method has to be called to have
+       *  actually an lighter image. So it improves compression.
+       */
+      void finalize();
     };
 
 # ifndef MLN_INCLUDE_ONLY
@@ -72,8 +87,27 @@ namespace mln
     float
     run_image_<T, P, E>::compression() const
     {
+      std::cout << float(exact(this)->data_->size_mem())
+		<< " / ( "
+		<< float (sizeof(T))
+		<< " * "
+		<< float (exact(this)->data_->domain_.bbox().npoints())
+		<< " )"
+		<< std::endl;
+      std::cout << exact(this)->data_->domain_.bbox().pmin()
+		<< " "
+		<< exact(this)->data_->domain_.bbox().pmax()
+		<< std::endl;
       return float(exact(this)->data_->size_mem()) /
 	float (sizeof(T) * exact(this)->data_->domain_.bbox().npoints());
+    }
+
+    template <typename T, typename P, typename E>
+    inline
+    void
+    run_image_<T, P, E>::finalize()
+    {
+      exact(this)->data_->finalize();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

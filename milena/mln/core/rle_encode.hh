@@ -103,6 +103,7 @@ namespace mln
 	    }
 	  }
       }
+    output.finalize();
     return output;
   }
 

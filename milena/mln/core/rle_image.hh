@@ -62,6 +62,9 @@ namespace mln
 
       /// Return the size of the data in memory.
       unsigned size_mem() const;
+
+      /// Finalize the domain (internal use).
+      void finalize();
     };
 
   } // end of namespace mln::internal
@@ -155,6 +158,14 @@ namespace mln
     data_< rle_image<P,T> >::size_mem() const
     {
       return sizeof(T) * values_.size() + domain_.size_mem();
+    }
+
+    template <typename P, typename T>
+    inline
+    void
+    data_< rle_image<P,T> >::finalize()
+    {
+      domain_.finalize();
     }
 
   } // end of namespace mln::internal

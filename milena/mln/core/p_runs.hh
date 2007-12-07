@@ -93,6 +93,9 @@ namespace mln
     /// Return the size of the data in memory.
     unsigned size_mem() const;
 
+    /// Finalize the lazy_set (internal use)
+    void finalize();
+
 //     /// Return the container of the pset (internal use only).
 //     const container& con() const;
 
@@ -225,8 +228,20 @@ namespace mln
   unsigned
   p_runs_<P>::size_mem() const
   {
-    return nruns() * 2 * (sizeof(P) + sizeof(unsigned));
+    if (con_.get_mode())
+      return nruns() * (sizeof(P) + sizeof(unsigned));
+    else
+      return 2 * nruns() * (sizeof(P) + sizeof(unsigned));
   }
+
+  template <typename P>
+  inline
+  void
+  p_runs_<P>::finalize()
+  {
+    con_.set_const_mode(true);
+  }
+
 
 //   template <typename P>
 //   const typename p_runs_<P>::container&

@@ -98,6 +98,7 @@ namespace mln
 	      rstart = p;
 	  }
       }
+    output.finalize();
     return output;
   }
 

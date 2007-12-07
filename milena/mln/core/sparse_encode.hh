@@ -88,30 +88,27 @@ namespace mln
 	{
 	  ++len;
 	  rstart = p;
-	  std::cout << "New run " << p << ": *";
 	  rvalue.push_back(ima(p));
 	}
 	else
 	  if ((!ignore_zero || ima(p) != literal::zero) &&
 	      on_the_same_line(rstart, mln_point(I)(p), len))
 	  {
-	    std::cout << "*";
 	    ++len;
 	    rvalue.push_back(ima(p));
 	  }
 	  else
 	  {
-	    std::cout << std::endl;
 	    output.insert(p_run<P>(rstart, len), rvalue);
 	    rvalue.clear();
 	    if ((len = (!ignore_zero || ima(p) != literal::zero)))
 	    {
 	      rstart = p;
-	      std::cout << "New run " << p << ": ";
 	      rvalue.push_back(ima(p));
 	    }
 	  }
       }
+    output.finalize();
     return output;
   }
 
