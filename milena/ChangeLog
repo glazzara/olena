@@ -1,3 +1,17 @@
+2007-12-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	.
+
+	* mln/core/internal/run_image.hh: Add `has' and `point_at'
+        method.
+	* mln/core/mono_obased_rle_image.hh,
+	* mln/core/mono_rle_image.hh,
+	* mln/core/obased_rle_image.hh,
+	* mln/core/p_runs.hh,
+	* mln/core/rle_image.hh,
+	* mln/core/sparse_image.hh: Use the new methods above.
+	* tests/core/p_runs.cc: Fix test.
+
 2007-12-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add labeling in tests.

@@ -212,8 +212,7 @@ namespace mln
   rle_image<P, T>::operator() (const typename rle_image<P, T>::psite& site)
     const
   {
-    mln_precondition(this->has_data() &&
-		     site.p_of_run() < this->data_->values_.size());
+    mln_precondition(this->has(site));
     return this->data_->values_[site.p_of_run()];
   }
 
@@ -222,8 +221,7 @@ namespace mln
   typename rle_image<P, T>::lvalue
   rle_image<P, T>::operator() (const typename rle_image<P, T>::psite& site)
   {
-    mln_precondition(this->has_data() &&
-		     site.p_of_run() < this->data_->values_.size());
+    mln_precondition(this->has(site));
     return this->data_->values_[site.p_of_run()];
   }
 

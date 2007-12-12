@@ -212,9 +212,7 @@ namespace mln
   sparse_image<P, T>::operator() (const typename sparse_image<P, T>::psite& site)
     const
   {
-    mln_precondition(this->has_data());
-    mln_precondition(site.p_of_run() < this->data_->values_.size());
-    mln_precondition(site.p_in_run() < this->data_->values_[site.p_of_run()].size());
+    mln_precondition(this->has(site));
     return this->data_->values_[site.p_of_run()][site.p_in_run()];
   }
 
@@ -223,9 +221,7 @@ namespace mln
   typename sparse_image<P, T>::lvalue
   sparse_image<P, T>::operator() (const typename sparse_image<P, T>::psite& site)
   {
-    mln_precondition(this->has_data() &&
-		     site.p_of_run() < this->data_->values_.size() &&
-		     site.p_in_run() < this->data_->values_[site.p_of_run()].size());
+    mln_precondition(this->has(site));
     return this->data_->values_[site.p_of_run()][site.p_in_run()];
   }
 

@@ -58,6 +58,7 @@ int main()
 
   // Pset test
   p_runs_<point2d> ps;
+  p_runs_<point2d> ps2;
 
   ps.insert(p_run<point2d>(p, 7));
   mln_assertion(ps.npoints() == 7);
@@ -71,10 +72,10 @@ int main()
 
   // Psite declaration
   runs_psite<point2d>  site(ps, 5, 0);
-  runs_psite<point2d>  site2(ps, 6, 1);
+  runs_psite<point2d>  site2(ps, 5, 1);
 
   mln_assertion(ps.has(site));
-  mln_assertion(!ps.has(site2));
+  mln_assertion(!ps2.has(site2));
 
 
   parc(ps);

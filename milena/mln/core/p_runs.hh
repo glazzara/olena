@@ -70,7 +70,7 @@ namespace mln
     p_runs_();
 
     /// Test is \p p belongs to this point set.
-    bool has(const runs_psite<P>& p) const;
+    bool has(const runs_psite<P>& ps) const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -123,14 +123,13 @@ namespace mln
   template <typename P>
   inline
   bool
-  p_runs_<P>::has(const runs_psite<P>& p) const
+  p_runs_<P>::has(const runs_psite<P>& ps) const
   {
-    for (unsigned i = 0; i < con_.nelements(); ++i)
-    {
-      if (con_[i].first() == p.range_start_() && con_[i].length() > p.p_in_run())
-	return true;
-    }
-    return false;
+    if (ps.p_of_run() < nruns()
+	&& ps.p_in_run() < con_[ps.p_of_run()].length())
+      return (ps == con_[ps.p_of_run()][ps.p_in_run()]);
+    else
+      return false;
   }
 
   template <typename P>

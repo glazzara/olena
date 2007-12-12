@@ -67,10 +67,25 @@ namespace mln
 
       /*! \brief Finalize the construction.
        *
-       *  For internal use, this method has to be called to have
-       *  actually an lighter image. So it improves compression.
+       * For internal use, this method has to be called to have
+       * actually an lighter image. So it improves compression.
        */
       void finalize();
+
+      /*! \brief Give the point represented by the point-site.
+       *
+       * Use the coordinate of the psite to see what point it corresponds
+       * with the domain of the image.
+       *
+       * \return The corresponding point.
+       */
+      P point_at(const runs_psite<P>& ps) const;
+
+      /*! \brief Tell if the image has the given point site.
+       *
+       * \return True if the image has the point site, else false.
+       */
+      bool has(const runs_psite<P>& ps) const;
     };
 
 # ifndef MLN_INCLUDE_ONLY
@@ -96,6 +111,31 @@ namespace mln
     run_image_<T, P, E>::finalize()
     {
       exact(this)->data_->finalize();
+    }
+
+    template <typename T, typename P, typename E>
+    inline
+    P
+    run_image_<T, P, E>::point_at(const runs_psite<P>& ps) const
+    {
+      const E* ima = exact(this);
+      mln_precondition(ps.p_of_run() < ima->data_->domain_.nruns());
+      mln_precondition(ps.p_in_run() < ima->data_->domain_[ps.p_of_run()].length());
+      return ima->data_->domain_[ps.p_of_run()][ps.p_in_run()];
+    }
+
+    template <typename T, typename P, typename E>
+    inline
+    bool
+    run_image_<T, P, E>::has(const runs_psite<P>& ps) const
+    {
+      const E* ima = exact(this);
+      if (!ima->has_data())
+	return false;
+      else
+	return (ps.p_of_run() < ima->data_->domain_.nruns()
+		&& ps.p_in_run() < ima->data_->domain_[ps.p_of_run()].length()
+		&& ima->data_->domain_[ps.p_of_run()][ps.p_in_run()] == ps);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
