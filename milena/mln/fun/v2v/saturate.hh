@@ -62,7 +62,7 @@ namespace mln
 
       protected:
 	V min_, max_;
-	bool needs_update_;
+	mutable bool needs_update_;
       };
 
 
@@ -101,7 +101,6 @@ namespace mln
 	  {
 	    min_W = mln::value::cast<W>(min_);
 	    max_W = mln::value::cast<W>(max_);
-	    // FIXME
  	    needs_update_ = false;
 	  }
 

@@ -1,5 +1,10 @@
 2007-12-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Fix bug for saturate.
+	* mln/fun/v2v/saturate.hh: Fix needs_update in mutable.
+
+2007-12-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add generation of user documentation.
 
 	Update creation of documentation.
