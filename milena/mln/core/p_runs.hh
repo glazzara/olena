@@ -127,7 +127,7 @@ namespace mln
   {
     for (unsigned i = 0; i < con_.nelements(); ++i)
     {
-      if (con_[i].first() == p.range_start_()  && con_[i].length() > p.index_())
+      if (con_[i].first() == p.range_start_() && con_[i].length() > p.p_in_run())
 	return true;
     }
     return false;
@@ -262,9 +262,6 @@ namespace mln
   {
   public:
 
-    /// Convertion into a point-site.
-    operator runs_psite<P> () const;
-
     /// Convertion into a point.
     operator P () const;
 
@@ -293,12 +290,6 @@ namespace mln
   p_runs_piter_<P, E>::p_runs_piter_(const p_runs_<P>& pset) :
     con_(pset)
   {
-  }
-
-  template <typename P, typename E>
-  p_runs_piter_<P, E>::operator runs_psite<P> () const
-  {
-    return runs_psite<P>(con_, p_);
   }
 
   template <typename P, typename E>
@@ -352,6 +343,9 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+
+    /// Convertion into a point-site.
+    operator runs_psite<P> () const;
 
   protected:
 
@@ -417,20 +411,12 @@ namespace mln
 	return;
     }
     this->p_ = it_;
+  }
 
-
-//     mln_precondition(this->is_valid());
-//     ++(this->site_.index_());
-
-//     if (this->site_.index_() >= it_->second)
-//     {
-//       ++it_;
-//       ++this->site_.pset_pos_();
-//       this->site_.range_start_() = it_->first;
-//       this->site_.index_() = 0;
-//     }
-//     this->p_ = this->site_.range_start_();
-//     this->p_[0] += this->site_.index_();
+  template <typename P>
+  p_runs_fwd_piter_<P>::operator runs_psite<P> () const
+  {
+    return runs_psite<P>(this->con_, it_.ind(), i_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -459,6 +445,9 @@ namespace mln
 
     /// Go to the next point.
     void next_();
+
+    /// Convertion into a point-site.
+    operator runs_psite<P> () const;
 
   protected:
 
@@ -525,6 +514,12 @@ namespace mln
 	return;
     }
     this->p_ = it_;
+  }
+
+  template <typename P>
+  p_runs_bkd_piter_<P>::operator runs_psite<P> () const
+  {
+    return runs_psite<P>(this->con_, it_.ind(), i_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

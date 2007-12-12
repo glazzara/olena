@@ -79,12 +79,16 @@ namespace mln
     /// Go to the next point.
     void next_();
 
+    /// Get the index of the point in the run.
+    unsigned ind() const;
+
     /// Convert the iterator into a point.
     operator P() const;
 
   protected:
     const p_run<P>* run_;
     bool is_valid_;
+    unsigned i_;
     P p_;
   };
 
@@ -130,12 +134,16 @@ namespace mln
     /// Go to the next point.
     void next_();
 
+    /// Get the index of the point in the run.
+    unsigned ind() const;
+
     /// Convert the iterator into a point.
     operator P() const;
 
   protected:
     const p_run<P>* run_;
     bool is_valid_;
+    unsigned i_;
     P p_;
   };
 
@@ -148,16 +156,17 @@ namespace mln
   template <typename P>
   inline
   p_run_fwd_piter_<P>::p_run_fwd_piter_()
-    : run_ (0)
+    : run_ (0),
+      is_valid_(false)
   {
   }
 
   template <typename P>
   inline
   p_run_fwd_piter_<P>::p_run_fwd_piter_(const p_run<P>& pr)
-    : run_(&pr)
+    : run_(&pr),
+      is_valid_(false)
   {
-    invalidate();
   }
 
   template <typename P>
@@ -166,7 +175,7 @@ namespace mln
   p_run_fwd_piter_<P>::assign_run(const p_run<P>& pr)
   {
     run_ = &pr;
-    invalidate();
+    is_valid_ = false;
   }
 
   template <typename P>
@@ -175,6 +184,7 @@ namespace mln
   p_run_fwd_piter_<P>::to_point() const
   {
     mln_precondition(is_valid());
+    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
     return p_;
   }
 
@@ -185,6 +195,7 @@ namespace mln
   {
     mln_precondition(i < dim);
     mln_precondition(is_valid());
+    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
     return p_[i];
   }
 
@@ -210,6 +221,7 @@ namespace mln
   p_run_fwd_piter_<P>::start()
   {
     p_ = run_->first();
+    i_ = 0;
     is_valid_ = true;
   }
 
@@ -218,8 +230,19 @@ namespace mln
   void
   p_run_fwd_piter_<P>::next_()
   {
+    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
     p_[dim - 1]++;
+    ++i_;
     is_valid_ = p_[dim - 1] - run_->first()[dim - 1] < (signed)run_->length();
+  }
+
+  template <typename P>
+  inline
+  unsigned
+  p_run_fwd_piter_<P>::ind() const
+  {
+    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
+    return i_;
   }
 
   template <typename P>
@@ -227,6 +250,7 @@ namespace mln
   p_run_fwd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());
+    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
     return p_;
   }
 
@@ -243,9 +267,9 @@ namespace mln
   template <typename P>
   inline
   p_run_bkd_piter_<P>::p_run_bkd_piter_(const p_run<P>& pr)
-    : run_(&pr)
+    : run_(&pr),
+      is_valid_(false)
   {
-    invalidate();
   }
 
   template <typename P>
@@ -254,7 +278,7 @@ namespace mln
   p_run_bkd_piter_<P>::assign_run(const p_run<P>& pr)
   {
     run_ = &pr;
-    invalidate();
+    is_valid_ = false;
   }
 
   template <typename P>
@@ -263,6 +287,7 @@ namespace mln
   p_run_bkd_piter_<P>::to_point() const
   {
     mln_precondition(is_valid());
+    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
     return p_;
   }
 
@@ -273,6 +298,7 @@ namespace mln
   {
     mln_precondition(i < dim);
     mln_precondition(is_valid());
+    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
     return p_[i];
   }
 
@@ -298,6 +324,7 @@ namespace mln
   p_run_bkd_piter_<P>::start()
   {
     p_ = (*run_)[run_->length() - 1];
+    i_ = run_->length() - 1;
     is_valid_ = true;
 }
 
@@ -306,8 +333,19 @@ namespace mln
   void
   p_run_bkd_piter_<P>::next_()
   {
+    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
     p_[dim - 1]--;
+    --i_;
     is_valid_ = p_[dim - 1] - run_->first()[dim - 1] >= 0;
+  }
+
+  template <typename P>
+  inline
+  unsigned
+  p_run_bkd_piter_<P>::ind() const
+  {
+    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
+    return i_;
   }
 
   template <typename P>
@@ -315,6 +353,7 @@ namespace mln
   p_run_bkd_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());
+    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
     return p_;
   }
 

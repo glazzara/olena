@@ -58,7 +58,7 @@ int main()
   using value::int_u8;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../../img/tiny.pgm");
+  io::pgm::load(lena, "../../img/small.pgm");
   image2d<int_u8> cmp(lena.domain());
 
   unsigned n;

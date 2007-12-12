@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/point_site.hh>
+# include <mln/core/p_runs.hh>
 
 
 namespace mln
@@ -56,9 +57,7 @@ namespace mln
     typedef mln_dpoint(P) dpoint;
     typedef mln_coord(P) coord;
 
-    runs_psite();
-    runs_psite(const p_runs_<P>& pr, const P& p);
-    runs_psite(P point, unsigned index, unsigned pset_pos);
+    runs_psite(const p_runs_<P>& pr, unsigned in_run, unsigned of_run);
 
     operator P () const;
 
@@ -69,16 +68,16 @@ namespace mln
     const P& range_start_() const;
 
     /// Return the position of this psite in the point set.
-    unsigned pset_pos_() const;
+    unsigned p_of_run() const;
 
     /// Return the position of this psite in the point set.
-    unsigned& pset_pos_();
+    unsigned& p_of_run();
 
     /// Return the position of this psite in the current range.
-    unsigned index_() const;
+    unsigned p_in_run() const;
 
     /// Return the position of this psite in the current range.
-    unsigned& index_();
+    unsigned& p_in_run();
 
     /// Reference to the corresponding point.
     const P& to_point() const;
@@ -89,13 +88,13 @@ namespace mln
   protected:
 
     /// Start of the psite range.
-    P p_;
+    const p_runs_<P>& pr_;
 
     /// Position in the psite range.
-    unsigned range_index_;
+    unsigned p_in_run_;
 
     /// Position of the psite in the point set.
-    unsigned pset_position_;
+    unsigned p_of_run_;
   };
 
 
@@ -103,37 +102,20 @@ namespace mln
 
   template <typename P>
   inline
-  runs_psite<P>::runs_psite(const p_runs_<P>& pr, const P& p)
+  runs_psite<P>::runs_psite(const p_runs_<P>& pr, unsigned in_run, unsigned of_run)
+    : pr_(pr),
+      p_in_run_(in_run),
+      p_of_run_(of_run)
   {
-    unsigned i = 0;
-    while (i < pr.nruns() && p >= pr[i].first())
-      ++i;
-    mln_assertion(i != 0);
-
-    range_index_ = p[P::dim - 1] - pr[i - 1].first()[P::dim - 1];
-      
-    mln_assertion(pr[i - 1].npoints() > range_index_);
-
-    pset_position_ = i - 1;
-    p_ = pr[pset_position_].first();
-  }
-
-  template <typename P>
-  inline
-  runs_psite<P>::runs_psite(P point, unsigned index, unsigned pset_pos) :
-    p_(point),
-    range_index_(index),
-    pset_position_(pset_pos)
-  {
+    mln_precondition(of_run < pr.nruns());
+    mln_precondition(in_run < pr[of_run].length());
   }
 
   template <typename P>
   inline
   runs_psite<P>::operator P() const
   {
-    P p = p_;
-    p[dim - 1] += range_index_;
-    return p;
+    return pr_[p_of_run_][p_in_run_];
   }
 
   template <typename P>
@@ -141,7 +123,7 @@ namespace mln
   const P&
   runs_psite<P>::range_start_() const
   {
-    return p_;
+    return pr_[p_of_run_].first();
   }
 
   template <typename P>
@@ -149,39 +131,39 @@ namespace mln
   P&
   runs_psite<P>::range_start_()
   {
-    return p_;
+    return pr_[p_of_run_].first();
   }
 
   template <typename P>
   inline
   unsigned
-  runs_psite<P>::pset_pos_() const
+  runs_psite<P>::p_of_run() const
   {
-    return pset_position_;
+    return p_of_run_;
   }
 
   template <typename P>
   inline
   unsigned&
-  runs_psite<P>::pset_pos_()
+  runs_psite<P>::p_of_run()
   {
-    return pset_position_;
+    return p_of_run_;
   }
 
   template <typename P>
   inline
   unsigned
-  runs_psite<P>::index_() const
+  runs_psite<P>::p_in_run() const
   {
-    return range_index_;
+    return p_in_run_;
   }
 
   template <typename P>
   inline
   unsigned&
-  runs_psite<P>::index_()
+  runs_psite<P>::p_in_run()
   {
-    return range_index_;
+    return p_in_run_;
   }
 
   template <typename P>
@@ -189,8 +171,7 @@ namespace mln
   const P&
   runs_psite<P>::to_point() const
   {
-    static P p = p_;
-    p[dim - 1] += range_index_;
+    static P p = pr_[p_of_run_][p_in_run_];
     return p;
   }
 
@@ -200,10 +181,7 @@ namespace mln
   runs_psite<P>::operator[](unsigned i) const
   {
     mln_precondition(i < dim);
-    if (i == dim - 1)
-      return p_[i] + range_index_;
-    else
-      return p_[i];
+    return pr_[p_of_run_][p_in_run_][i];
   }
 
 # endif // ! MLN_INCLUDE_ONLY

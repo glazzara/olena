@@ -87,17 +87,6 @@ namespace mln
     float
     run_image_<T, P, E>::compression() const
     {
-      std::cout << float(exact(this)->data_->size_mem())
-		<< " / ( "
-		<< float (sizeof(T))
-		<< " * "
-		<< float (exact(this)->data_->domain_.bbox().npoints())
-		<< " )"
-		<< std::endl;
-      std::cout << exact(this)->data_->domain_.bbox().pmin()
-		<< " "
-		<< exact(this)->data_->domain_.bbox().pmax()
-		<< std::endl;
       return float(exact(this)->data_->size_mem()) /
 	float (sizeof(T) * exact(this)->data_->domain_.bbox().npoints());
     }

@@ -214,7 +214,7 @@ namespace mln
   mono_rle_image<P, T>::operator() (const typename mono_rle_image<P, T>::psite& site)
     const
   {
-    mln_precondition(site.pset_pos_() < this->data_->domain_.nruns());
+    mln_precondition(site.p_of_run() < this->data_->domain_.nruns());
     return this->data_->value_;
   }
 
@@ -231,7 +231,7 @@ namespace mln
   typename mono_rle_image<P, T>::lvalue
   mono_rle_image<P, T>::operator() (const typename mono_rle_image<P, T>::psite& site)
   {
-    mln_precondition(site.pset_pos_() < this->data_->domain_.nruns());
+    mln_precondition(site.p_of_run() < this->data_->domain_.nruns());
     return this->data_->value_;
   }
 

@@ -241,8 +241,8 @@ namespace mln
     const
   {
     mln_precondition(this->has_data() &&
-		     site.pset_pos_() < this->data_->domain_.nruns());
-    return this->data_->values_[site.pset_pos_()];
+		     site.p_of_run() < this->data_->domain_.nruns());
+    return this->data_->values_[site.p_of_run()];
   }
 
   template <typename P, typename T>
@@ -251,8 +251,8 @@ namespace mln
   obased_rle_image<P, T>::operator() (const typename obased_rle_image<P, T>::psite& site)
   {
     mln_precondition(this->has_data() &&
-		     site.pset_pos_() < this->data_->domain_.nruns());
-    return this->data_->values_[site.pset_pos_()];
+		     site.p_of_run() < this->data_->domain_.nruns());
+    return this->data_->values_[site.p_of_run()];
   }
 
   template <typename P, typename T>

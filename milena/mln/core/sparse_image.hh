@@ -213,9 +213,9 @@ namespace mln
     const
   {
     mln_precondition(this->has_data());
-    mln_precondition(site.pset_pos_() < this->data_->values_.size());
-    mln_precondition(site.index_() < this->data_->values_[site.pset_pos_()].size());
-    return this->data_->values_[site.pset_pos_()][site.index_()];
+    mln_precondition(site.p_of_run() < this->data_->values_.size());
+    mln_precondition(site.p_in_run() < this->data_->values_[site.p_of_run()].size());
+    return this->data_->values_[site.p_of_run()][site.p_in_run()];
   }
 
   template <typename P, typename T>
@@ -224,9 +224,9 @@ namespace mln
   sparse_image<P, T>::operator() (const typename sparse_image<P, T>::psite& site)
   {
     mln_precondition(this->has_data() &&
-		     site.pset_pos_() < this->data_->values_.size() &&
-		     site.index_() < this->data_->values_[site.pset_pos_()].size());
-    return this->data_->values_[site.pset_pos_()][site.index_()];
+		     site.p_of_run() < this->data_->values_.size() &&
+		     site.p_in_run() < this->data_->values_[site.p_of_run()].size());
+    return this->data_->values_[site.p_of_run()][site.p_in_run()];
   }
 
   template <typename P, typename T>
