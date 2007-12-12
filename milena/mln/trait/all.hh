@@ -30,7 +30,7 @@
 
 /*!
  * \file   mln/trait/all.hh
- * 
+ *
  * \brief  Definition of all traits.
  *
  */
@@ -41,7 +41,18 @@ namespace mln
 
   /// Namespace where traits are defined.
   namespace trait
-  {}
+  {
+
+    /// \internal Image namespace of trait namespace.
+    namespace image {}
+
+    /// \internal Implementation namespace of trait namespace.
+    namespace impl {}
+
+    /// \internal Internal namespace of trait namespace.
+    namespace internal {}
+
+  }
 
 } // end of namespace mln
 

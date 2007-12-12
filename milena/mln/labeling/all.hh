@@ -41,7 +41,13 @@ namespace mln
   namespace labeling
   {
     /// \internal Implementation namespace of labeling namespace.
-    namespace impl {}
+    namespace impl {
+
+      /// \internal Generic implementation namespace of labeling namespace.
+      namespace generic {}
+
+    }
+
   }
 
 }

@@ -38,7 +38,12 @@ namespace mln
 {
 
   /// Namespace of norms.
-  namespace norm {}
+  namespace norm {
+
+    /// \internal Implementation namespace of norm namespace.
+    namespace impl {}
+
+  }
 
 }
 

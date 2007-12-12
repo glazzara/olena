@@ -39,6 +39,7 @@
 namespace mln
 {
 
+  /// \brief Select namespace (FIXME doc).
   namespace select
   {
 

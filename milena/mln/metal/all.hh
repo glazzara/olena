@@ -42,6 +42,9 @@ namespace mln
     /// \internal Implementation namespace of metal namespace.
     namespace impl {}
 
+    /// \internal Internal namespace of metal namespace.
+    namespace internal {}
+
   }
 
 } // end of namespace mln

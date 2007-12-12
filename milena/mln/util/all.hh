@@ -38,7 +38,12 @@ namespace mln
 {
 
   /// Namespace of tools using for more complex algorithm.
-  namespace util {}
+  namespace util {
+
+    /// \internal Implementation namespace of util namespace.
+    namespace impl {}
+
+  }
 
 }
 

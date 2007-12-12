@@ -44,7 +44,7 @@ namespace mln
 
     /*! Morphological closing.
      *
-     * This operator is e_{-B} o d_B. 
+     * This operator is e_{-B} o d_B.
      */
     template <typename I, typename W>
     mln_concrete(I) closing(const Image<I>& input, const Window<W>& win);

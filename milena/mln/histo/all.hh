@@ -41,7 +41,13 @@ namespace mln
   namespace histo
   {
     /// \internal Implementation namespace of histo namespace.
-    namespace impl {}
+    namespace impl {
+
+      /// \internal Generic implementation namespace of histo namespace.
+      namespace generic {}
+
+    }
+
   }
 
 }

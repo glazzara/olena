@@ -1,3 +1,17 @@
+2007-12-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update documentation for internal namespace.
+	
+	* mln/histo/all.hh,
+	* mln/labeling/all.hh,
+	* mln/metal/all.hh,
+	* mln/morpho/all.hh,
+	* mln/morpho/closing.hh,
+	* mln/norm/all.hh,
+	* mln/trait/all.hh,
+	* mln/util/all.hh,
+	* mln/util/pix.hh: Update doc for internal namespace.
+
 2007-12-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	.
