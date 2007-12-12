@@ -1,5 +1,18 @@
 2007-12-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add traits for rgb. Fix the test rgb_full.
+	* mln/value/rgb.hh: Add traits :
+		rgb<n> + rgb<n>  -> rgb<n>
+		rgb<n> - rgb<n>  -> rgb<n>
+		rgb<n> * scalar_ -> rgb<n>
+		rgb<n> / scalar_ -> rgb<n>
+		rgb<n> * int_u   -> rgb<n>
+		rgb<n> / int_u   -> rgb<n>
+	* tests/value/rgb_full.cc: Fix the macro test_interop_sc, add a
+	FIXME for operators *,/ on (rgb<n>, float).
+
+2007-12-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	gl16 and gl8 headers.
 	* mln/value/gl8.hh: New, Definition of a graylevel 8 bits.
 	* mln/value/gl16.hh: New, Definition of a graylevel 16 bits.

@@ -65,6 +65,65 @@ namespace mln
 
   namespace trait
   {
+    template < unsigned n >
+    struct set_precise_binary_< op::plus, mln::value::rgb<n>, mln::value::rgb<n> >
+    {
+      typedef mln::value::rgb<n> ret;
+    };
+
+    template < unsigned n >
+    struct set_precise_binary_< op::minus, mln::value::rgb<n>, mln::value::rgb<n> >
+    {
+      typedef mln::value::rgb<n> ret;
+    };
+
+    template < unsigned n, typename S >
+    struct set_precise_binary_< op::times, mln::value::rgb<n>, mln::value::scalar_<S> >
+    {
+      typedef mln::value::rgb<n> ret;
+    };
+
+    template < unsigned n, typename S >
+    struct set_precise_binary_< op::div, mln::value::rgb<n>, mln::value::scalar_<S> >
+    {
+      typedef mln::value::rgb<n> ret;
+    };
+
+
+    // FIXME : Is there any way more generic? a way to factor
+    //  set_precise_binary_< op::div, mln::value::rgb<n>, mln::value::scalar_<S> >
+    //  and
+    //  set_precise_binary_< op::div, mln::value::rgb<n>, mln::value::int_u<m> >
+    //  as for op::times.
+
+    template < unsigned n, unsigned m >
+    struct set_precise_binary_< op::times, mln::value::rgb<n>, mln::value::int_u<m> >
+    {
+      typedef mln::value::rgb<n> ret;
+    };
+
+    template < unsigned n, unsigned m >
+    struct set_precise_binary_< op::div, mln::value::rgb<n>, mln::value::int_u<m> >
+    {
+      typedef mln::value::rgb<n> ret;
+    };
+
+
+//     template < unsigned n, typename I >
+//     struct set_binary_< op::times,
+// 			mln::value::Vectorial, mln::value::rgb<n>,
+// 			mln::value::Integer, I >
+//     {
+//       typedef mln::value::rgb<n> ret;
+//     };
+
+//     template < unsigned n, typename S >
+//     struct set_binary_< op::times,
+// 			mln::value::Scalar, S,
+// 			mln::value::Vectorial, mln::value::rgb<n> >
+//     {
+//       typedef mln::value::rgb<n> ret;
+//     };
 
     template <unsigned n>
     struct value_< mln::value::rgb<n> >
@@ -140,22 +199,6 @@ namespace mln
 
       /// Zero value.
       static const rgb<n> zero;
-
-
-      // FIXME: Cannot work for i negative; move operators outside the class; add traits!
-
-
-      /// Addition.
-      rgb<n> operator+(const rgb<n>& rhs) const;
-
-      /// Substraction.
-      rgb<n> operator-(const rgb<n>& rhs) const;
-
-      /// Multiplication.
-      rgb<n> operator*(int i) const;
-
-      /// Division.
-      rgb<n> operator/(int i) const;
     };
 
 
@@ -173,6 +216,35 @@ namespace mln
     template <unsigned n>
     std::istream& operator>>(std::istream& istr, rgb<n>& c);
 
+
+    // FIXME: Cannot work for i negative; add traits!
+
+    /// Addition.
+    template <unsigned n>
+    rgb<n>
+    operator+(const rgb<n>& lhs, const rgb<n>& rhs);
+
+    /// Substraction.
+    template <unsigned n>
+    rgb<n>
+    operator-(const rgb<n>& lhs, const rgb<n>& rhs);
+
+    /// Multiplication.
+    template <unsigned n, typename S>
+    inline
+    rgb<n>
+    operator*(const rgb<n>& lhs, const mln::value::scalar_<S>& s);
+
+    template <unsigned n, typename S>
+    inline
+    rgb<n>
+    operator*(const rgb<n>& lhs, const mln::value::scalar_<S>& s);
+
+    /// Division.
+    template <unsigned n, typename S>
+    inline
+    rgb<n>
+    operator/(const rgb<n>& lhs, const mln::value::scalar_<S>& s);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -280,38 +352,56 @@ namespace mln
     template <unsigned n>
     inline
     rgb<n>
-    rgb<n>::operator-(const rgb<n>& rhs) const
+    operator-(const rgb<n>& lhs, const rgb<n>& rhs)
     {
-      rgb<n> tmp(this->v_ - rhs.v_);
+      rgb<n> tmp(lhs.to_equiv() - rhs.to_equiv());
       return tmp;
     }
 
     template <unsigned n>
     inline
     rgb<n>
-    rgb<n>::operator+(const rgb<n>& rhs) const
+    operator+(const rgb<n>& lhs, const rgb<n>& rhs)
     {
-      rgb<n> tmp(this->v_ + rhs.v_);
+      rgb<n> tmp(lhs.to_equiv() + rhs.to_equiv());
       return tmp;
     }
 
-    template <unsigned n>
+//     template <unsigned n>
+//     inline
+//     rgb<n>
+//     operator*(const rgb<n>& lhs, int i)
+//     {
+//       rgb<n> tmp(lhs.to_equiv() * i);
+//       return tmp;
+//     }
+
+    template <unsigned n, typename S>
     inline
     rgb<n>
-    rgb<n>::operator*(int i) const
+    operator*(const rgb<n>& lhs, const mln::value::scalar_<S>& s)
     {
-      rgb<n> tmp(this->v_ * i);
+      rgb<n> tmp(lhs.to_equiv() * s.to_equiv());
       return tmp;
     }
 
-    template <unsigned n>
+    template <unsigned n, typename S>
     inline
     rgb<n>
-    rgb<n>::operator/(int i) const
+    operator/(const rgb<n>& lhs, const mln::value::scalar_<S>& s)
     {
-      rgb<n> tmp(this->v_ / i);
+      rgb<n> tmp(lhs.to_equiv() / s.to_equiv());
       return tmp;
     }
+
+//     template <unsigned n>
+//     inline
+//     rgb<n>
+//     operator/(const rgb<n>& lhs, int i)
+//     {
+//       rgb<n> tmp(lhs.to_equiv() / i);
+//       return tmp;
+//     }
 
     template <unsigned n>
     inline
