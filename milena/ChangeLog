@@ -14,7 +14,7 @@
 
 2007-12-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
-	.
+	Add `has' and `point_at' method for all run based image.
 
 	* mln/core/internal/run_image.hh: Add `has' and `point_at'
         method.
