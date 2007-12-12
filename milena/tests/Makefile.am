@@ -14,6 +14,7 @@ SUBDIRS =					\
   fun						\
   geom						\
   histo						\
+  labeling					\
   level						\
   logical					\
   norm						\
@@ -69,11 +70,6 @@ check_PROGRAMS =				\
   image_if_value				\
   interpolated					\
 						\
-  labeling_algo					\
-  labeling_estimate				\
-  labeling_foreground				\
-  labeling_level_fast				\
-  labeling_regional_maxima			\
   level_sort_points				\
   linear_convolve				\
   linear_gaussian				\
@@ -187,11 +183,6 @@ image_if_interval_SOURCES = image_if_interval.cc
 image_if_value_SOURCES = image_if_value.cc
 interpolated_SOURCES = interpolated.cc
 
-labeling_algo_SOURCES = labeling_algo.cc
-labeling_estimate_SOURCES = labeling_estimate.cc
-labeling_foreground_SOURCES = labeling_foreground.cc
-labeling_level_fast_SOURCES = labeling_level_fast.cc
-labeling_regional_maxima_SOURCES = labeling_regional_maxima.cc
 level_sort_points_SOURCES = level_sort_points.cc
 linear_convolve_SOURCES = linear_convolve.cc
 linear_gaussian_SOURCES = linear_gaussian.cc

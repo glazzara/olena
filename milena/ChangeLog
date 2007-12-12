@@ -1,3 +1,10 @@
+2007-12-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add labeling in tests.
+
+	* tests/Makefile.am (SUBDIRS): Add labeling.
+	* img/tiny.pgm: New.
+
 2007-12-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix bug for saturate.
