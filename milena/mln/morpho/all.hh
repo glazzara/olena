@@ -41,19 +41,13 @@ namespace mln
   namespace morpho
   {
 
-    /*! \namespace impl
-     *
-     *  \brief Namespace of morphological image processing routines
-     *  implementation details.
-     */
+    /// \internal Namespace of morphological image processing routines
+    /// implementation details.
     namespace impl
     {
 
-      /*! \namespace generic
-       *
-       *  \brief Namespace of morphological image processing routines
-       *  generic implementations.
-       */
+      /// \internal Namespace of morphological image processing routines
+      /// generic implementations.
       namespace generic
       {
       }

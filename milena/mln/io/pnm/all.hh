@@ -42,7 +42,7 @@ namespace mln
     /// Namespace of pnm input/output handling.
     namespace pnm
     {
-      /// Namespace of pnm's implementation details.
+      /// \internal  Namespace of pnm's implementation details.
       namespace impl {}
     }
   }

@@ -40,7 +40,7 @@ namespace mln
   /// Namespace of image processing routines related to pixel tests.
   namespace test
   {
-    /// Implementation namespace of test namespace.
+    /// \internal Implementation namespace of test namespace.
     namespace impl {}
   }
 

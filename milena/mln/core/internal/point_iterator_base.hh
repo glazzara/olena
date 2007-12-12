@@ -44,11 +44,9 @@ namespace mln
   {
 
 
-    /*! \brief A base class for point iterators.
-     *
+    /*! \internal A base class for point iterators.
      * Parameter \c P is a point site type.
      *
-     * \internal
      */
     template <typename P, typename E>
     struct point_iterator_base_ : public Point_Iterator<E>

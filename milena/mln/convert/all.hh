@@ -36,7 +36,7 @@
 
 namespace mln
 {
-  /// Namespace of convertion routines.
+  /// \internal Namespace of convertion routines.
   namespace convert {}
 }
 

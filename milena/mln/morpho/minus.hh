@@ -53,14 +53,6 @@ namespace mln
     mln_concrete(I) minus(const Image<I>& lhs, const Image<J>& rhs);
 
 
-//     /*! Morphological minus, inplace version: either a logical "and
-//      *  not" (if morpho on sets) or an arithmetical minus (if morpho
-//      *  on functions).
-//      */
-//     template <typename I, typename J>
-//     void minus_inplace(Image<I>& lhs, const Image<J>& rhs);
-
-
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
@@ -105,13 +97,6 @@ namespace mln
       trace::exiting("morpho::minus");
       return output;
     }
-
-//     template <typename I, typename J>
-//     void minus_inplace(Image<I>& lhs, const Image<J>& rhs)
-//     {
-//       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-//       morpho::minus(lhs, rhs, lhs); // Calls the previous version.
-//     }
 
 # endif // ! MLN_INCLUDE_ONLY
 

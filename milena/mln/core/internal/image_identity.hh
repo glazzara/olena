@@ -43,11 +43,9 @@ namespace mln
   {
 
 
-    /*! \brief A base class for image morphers w.r.t. identity.
-     *
+    /*! \internal A base class for image morphers w.r.t. identity.
      * Parameter \p S is a point set type.
      *
-     * \internal
      */
     template <typename I, typename S, typename E>
     class image_identity_ : public image_morpher_<I, S, E>

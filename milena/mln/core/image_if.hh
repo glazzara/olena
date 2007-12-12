@@ -49,7 +49,7 @@ namespace mln
   template <typename I, typename F> struct image_if;
 
 
-  // internal::data_.
+  /// \internal internal::data_.
 
   namespace internal
   {
@@ -120,20 +120,20 @@ namespace mln
 
   /// ima | f creates an image_if with the image ima and the function
   /// f.
-  /// {{{
   template <typename I, typename F>
   image_if<I,F>
   operator | (Image<I>& ima, const Function_p2b<F>& f);
 
+  /// ima | f creates an image_if with the image ima and the function
+  /// f.
   template <typename I, typename F>
   image_if<const I,F>
   operator | (const Image<I>& ima, const Function_p2b<F>& f);
-  /// }}}
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // internal::data_
+  /// \internal internal::data_
 
   namespace internal
   {

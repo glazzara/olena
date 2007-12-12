@@ -44,9 +44,9 @@ namespace mln
   /// Namespace of accumulators.
   namespace accu
   {
-    /// Implementation namespace of accumulator namespace.
+    /// \internal Implementation namespace of accumulator namespace.
     namespace impl {}
-    /// Internal namespace of accumulators.
+    /// \internal Internal namespace of accumulators.
     namespace internal {}
   }
 

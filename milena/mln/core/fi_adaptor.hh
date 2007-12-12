@@ -61,6 +61,7 @@ namespace mln
 
   namespace internal
   {
+    /// \internal
     template <typename I>
     struct data_< fi_adaptor<I> >
     {

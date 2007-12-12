@@ -40,8 +40,10 @@ namespace mln
   namespace value
   {
 
+    /// \internal
     namespace internal
     {
+
 
       template <unsigned n> struct encoding_unsigned_;
 

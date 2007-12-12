@@ -40,7 +40,7 @@ namespace mln
   /// Namespace of materials related to pixel value types.
   namespace value
   {
-    /// Implementation namespace of value namespace.
+    /// \internal Implementation namespace of value namespace.
     namespace impl {}
   }
 

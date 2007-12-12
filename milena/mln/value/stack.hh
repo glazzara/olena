@@ -50,7 +50,7 @@ namespace mln
   {
 
 
-    /*! \brief data structure for stack_image.
+    /*! \internal data structure for stack_image.
      *
      */
     template <unsigned n, typename I>

@@ -40,7 +40,7 @@ namespace mln
   /// Namespace of histograms.
   namespace histo
   {
-    /// Implementation namespace of histo namespace.
+    /// \internal Implementation namespace of histo namespace.
     namespace impl {}
   }
 

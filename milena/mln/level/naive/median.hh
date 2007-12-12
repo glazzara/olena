@@ -91,7 +91,7 @@ namespace mln
 	}
 
 
-      } // end of namespace mln::level::impl
+      } // end of namespace mln::level::naive::impl
 
 
 
@@ -102,7 +102,7 @@ namespace mln
       void median(const Image<I>& input, const Window<W>& win,
 		  Image<O>& output)
       {
-	impl::median(exact(input), exact(win), exact(output)); 
+	impl::median(exact(input), exact(win), exact(output));
       }
 
 # endif // ! MLN_INCLUDE_ONLY

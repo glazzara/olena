@@ -57,8 +57,7 @@ namespace mln
   template <typename I> struct image_if_interval;
 
 
-  // internal::data_.
-
+  /// \internal internal::data_.
   namespace internal
   {
 
@@ -111,15 +110,15 @@ namespace mln
 
   /// ima | vv creates an image_if_interval with the image ima and the
   /// interval vv.
-  /// {{{
   template <typename I>
   image_if_interval<I>
   operator | (Image<I>& ima, const value::interval_<mln_value(I)>& vv);
 
+  /// ima | vv creates an image_if_interval with the image ima and the
+  /// interval vv.
   template <typename I>
   image_if_interval<const I>
   operator | (const Image<I>& ima, const value::interval_<mln_value(I)>& vv);
-  /// }}}
 
 
 

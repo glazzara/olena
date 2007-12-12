@@ -40,10 +40,10 @@ namespace mln
   /// Namespace of routines that help to display images.
   namespace display
   {
-    /// Implementation namespace of display namespace.
+    /// \internal Implementation namespace of display namespace.
     namespace impl {
 
-      /// Generic implementation namespace of display namespace.
+      /// \internal Generic implementation namespace of display namespace.
       namespace generic {}
 
     }

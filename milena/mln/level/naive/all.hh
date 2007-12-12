@@ -42,11 +42,11 @@ namespace mln
   namespace level
   {
 
-    /// Namespace of image processing routines related to pixel levels
+    /// \brief Namespace of image processing routines related to pixel levels
     /// with naive approach.
     namespace naive
     {
-      /// Implementation namespace of level::naive namespace.
+      /// \internal Implementation namespace of level::naive namespace.
       namespace impl {}
     }
 

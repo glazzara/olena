@@ -43,8 +43,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \brief A base class for point iterator adaptors.
-     *
+    /*! \internal A base class for point iterator adaptors.
      * Parameter \c Pi is the type of the point iterator adaptee;
      * parameter E is the exact type.
      */
@@ -53,7 +52,7 @@ namespace mln
     {
       typedef internal::point_iterator_base_< mln_psite(Pi), E > super_;
     public:
-    
+
       // Make dim definition from super class available.
       enum { dim = super_::dim };
 
@@ -80,7 +79,7 @@ namespace mln
 
       /// Go to the next point.
       void next_();
-    
+
     protected:
 
       Pi piter_; // own copy

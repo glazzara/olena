@@ -44,7 +44,7 @@ namespace mln
     namespace x2x
     {
 
-      /// Internal namespace of functions form vector to vector.
+      /// \internal Internal namespace of functions form vector to vector.
       namespace internal
       {
       }

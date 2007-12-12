@@ -43,9 +43,8 @@ namespace mln
   {
 
 
-    /*! \brief A base class for primary images.
+    /*! \internal A base class for primary images.
      *
-     * \internal
      */
     template <typename S, typename E>
     struct image_primary_ : public image_base_<S, E>

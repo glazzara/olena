@@ -63,7 +63,7 @@ namespace mln
   {
     /*! \var dim
      * \brief Dimension of the space.
-     * \invariant dim > 0 
+     * \invariant dim > 0
      */
     enum { dim = M::dim };
 
@@ -246,7 +246,7 @@ namespace mln
   }
 
 # endif // ! MLN_INCLUDE_ONLY
-  
+
 } // end of namespace mln
 
 

@@ -47,6 +47,7 @@ namespace mln
   namespace internal
   {
 
+    /// \internal
     template <typename I, typename E>
     struct decorated_image_impl_
     {
@@ -54,12 +55,14 @@ namespace mln
       void write_(const mln_psite(I)& p, const mln_value(I)& v);
     };
 
+    /// \internal
     template <typename I, typename E>
     struct decorated_image_impl_< const I, E >
     {
       typedef mln::value::proxy<const E> lvalue;
     };
 
+    /// \internal
     template <typename I, typename D>
     struct data_< decorated_image<I,D> >
     {
@@ -130,8 +133,7 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< decorated_image<I,S> >
-
+    // \internal internal::data_< decorated_image<I,S> >
     template <typename I, typename D>
     inline
     data_< decorated_image<I,D> >::data_(I& ima, const D& deco)
@@ -170,7 +172,7 @@ namespace mln
 
   namespace internal
   {
-
+    /// \internal
     template <typename I, typename E>
     inline
     void

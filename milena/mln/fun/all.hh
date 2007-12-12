@@ -41,7 +41,7 @@ namespace mln
   namespace fun
   {
 
-    /// Internal namespace of functions.
+    /// \internal Internal namespace of functions.
     namespace internal
     {
     }

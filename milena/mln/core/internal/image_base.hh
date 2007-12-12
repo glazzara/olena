@@ -48,11 +48,11 @@ namespace mln
   namespace internal
   {
 
-    /// Class of image internal data.
+    /// \internal Class of image internal data.
+    /// FIXME: Say more about it!
+
     template <typename I>
     struct data_;
-
-    // FIXME: Say more about it!
 
   } // end of namespace mln::internal
 
@@ -61,10 +61,9 @@ namespace mln
   namespace internal
   {
 
-    /*! \brief Return the lvalue type when an image with type \c I is
+    /*! \internal Return the lvalue type when an image with type \c I is
      *  morphed.
      *
-     * \internal
      */
     template <typename I>
     struct morpher_lvalue_
@@ -88,11 +87,9 @@ namespace mln
     };
 
 
-    /*! \brief A base class for images.
+    /*! \internal A base class for images.
+     *  Parameter \p S is a point set type.
      *
-     * Parameter \p S is a point set type.
-     *
-     * \internal
      */
     template <typename S, typename E>
     struct image_base_

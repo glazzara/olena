@@ -43,11 +43,9 @@ namespace mln
   {
 
 
-    /*! \brief A base class for image morphers w.r.t. value.
-     *
+    /*! \internal A base class for image morphers w.r.t. value.
      * Parameter \p S is a point set type.
      *
-     * \internal
      */
     template <typename I, typename E>
     class image_value_morpher_ : public image_morpher_<I, mln_pset(I), E>

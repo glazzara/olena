@@ -59,7 +59,7 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for mln::pw::image
+    /// \internal Data structure for mln::pw::image
     template <typename F, typename S>
     struct data_< mln::pw::image<F,S> >
     {

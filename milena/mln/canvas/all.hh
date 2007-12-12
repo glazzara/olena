@@ -40,7 +40,7 @@ namespace mln
   /// Namespace of canvas.
   namespace canvas
   {
-    /// Implementation namespace of canvas namespace.
+    /// \internal Implementation namespace of canvas namespace.
     namespace impl {}
   }
 

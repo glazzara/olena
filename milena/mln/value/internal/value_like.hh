@@ -48,13 +48,9 @@ namespace mln
     namespace internal
     {
 
-      /*! \brief Base class for value classes defined over another
-       *  type.
-       *
-       * \internal
-       *
-       * Parameters are \c V the equivalent value type and \c E the
-       * exact value type.
+      /*! \internal Base class for value classes defined over another
+       *  type. Parameters are \c V the equivalent value type and
+       *  \c E the exact value type.
        */
       template < typename V, // Equivalent.
 		 typename C, // Encoding.
@@ -89,19 +85,17 @@ namespace mln
       };
 
 
-      /*! \brief General definition of the "equal to" operator between
+      /*! \internal General definition of the "equal to" operator between
        * value-like types.
        *
-       * \relates value_like_
        */
       template <typename V, typename C, typename N, typename E>
       bool operator==(const value_like_<V,C,N,E>& lhs, const value_like_<V,C,N,E>& rhs);
 
 
-      /*! \brief General definition of the "less than" operator
+      /*! \internal General definition of the "less than" operator
        *  between value-like types.
        *
-       * \relates value_like_
        */
       template <typename V, typename C, typename N, typename E>
       bool operator<(const value_like_<V,C,N,E>& lhs, const value_like_<V,C,N,E>& rhs);

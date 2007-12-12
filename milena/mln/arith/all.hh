@@ -40,10 +40,10 @@ namespace mln
   /// Namespace of arithmetic.
   namespace arith
   {
-    /// Implementation namespace of arith namespace.
+    /// \internal Implementation namespace of arith namespace.
     namespace impl {
 
-      /// Generic implementation namespace of arith namespace.
+      /// \internal Generic implementation namespace of arith namespace.
       namespace generic {
 
       }

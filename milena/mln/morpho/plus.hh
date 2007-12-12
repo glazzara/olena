@@ -53,14 +53,6 @@ namespace mln
     mln_concrete(I) plus(const Image<I>& lhs, const Image<J>& rhs);
 
 
-//     /*! Morphological plus, inplace version: either a "logical or" (if
-//      *  morpho on sets) or an "arithmetical plus" (if morpho on
-//      *  functions).
-//      */
-//     template <typename I, typename J>
-//     void plus_inplace(Image<I>& lhs, const Image<J>& rhs);
-
-
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
@@ -104,13 +96,6 @@ namespace mln
       trace::exiting("morpho::plus");
       return output;
     }
-
-//     template <typename I, typename J>
-//     void plus_inplace(Image<I>& lhs, const Image<J>& rhs)
-//     {
-//       mln_precondition(exact(rhs).domain() == exact(lhs).domain());
-//       morpho::plus(lhs, rhs, lhs); // Calls the previous version.
-//     }
 
 # endif // ! MLN_INCLUDE_ONLY
 

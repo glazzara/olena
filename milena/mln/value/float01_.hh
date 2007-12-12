@@ -118,6 +118,7 @@ namespace mln
     namespace internal
     {
 
+      /// \internal
       template <unsigned n>
       struct convert_< float01_<n> >
       {

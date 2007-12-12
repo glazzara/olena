@@ -40,7 +40,7 @@ namespace mln
   /// Namespace of all things related to geometry.
   namespace geom
   {
-    /// Implementation namespace of geom namespace.
+    /// \internal Implementation namespace of geom namespace.
     namespace impl {}
   }
 

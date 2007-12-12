@@ -56,9 +56,10 @@ namespace mln
   template <typename T> struct image2d;
 
 
-
   namespace internal
   {
+
+    /// \internal
     template <typename T>
     struct data_< image2d<T> >
     {

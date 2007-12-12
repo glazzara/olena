@@ -45,7 +45,7 @@ namespace mln
   {
 
 
-    /*! \brief A base class for pixel iterators. 
+    /*! \internal A base class for pixel iterators.
      *
      */
     template <typename I, typename E>
@@ -53,7 +53,7 @@ namespace mln
 				 public internal::pixel_impl_<I, E>
     {
       typedef internal::pixel_impl_<I, E> super_;
- 
+
     public:
 
       /// Start an iteration.

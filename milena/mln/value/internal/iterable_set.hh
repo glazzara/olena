@@ -53,8 +53,7 @@ namespace mln
     namespace internal
     {
 
-      /*! Class that defines the set of values of type \c T.
-       *
+      /*! \internal Class that defines the set of values of type \c T.
        * This is the exhaustive iterable_set of values obtainable from type \c T.
        */
       template <typename T, typename E>

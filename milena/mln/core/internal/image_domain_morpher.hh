@@ -43,11 +43,9 @@ namespace mln
   {
 
 
-    /*! \brief A base class for image morphers w.r.t. domain.
-     *
+    /*! \internal A base class for image morphers w.r.t. domain.
      * Parameter \p S is a point set type.
      *
-     * \internal
      */
     template <typename I, typename S, typename E>
     class image_domain_morpher_ : public image_morpher_<I, S, E>

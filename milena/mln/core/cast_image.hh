@@ -50,7 +50,7 @@ namespace mln
 
   namespace internal
   {
-
+    /// \internal
     template <typename T, typename I>
     struct data_< cast_image_<T,I> >
     {
@@ -70,7 +70,7 @@ namespace mln
     {
       typedef trait::image::io::read_only io;
     };
-    
+
   } // end of namespace mln::trait
 
 
@@ -122,7 +122,7 @@ namespace mln
     cast_image_<T,I> tmp(ima);
     return tmp;
   }
-  
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -177,7 +177,7 @@ namespace mln
   {
     return vset::the();
   }
-  
+
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

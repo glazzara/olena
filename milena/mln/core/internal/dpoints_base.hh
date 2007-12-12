@@ -43,9 +43,9 @@ namespace mln
 
   namespace internal
   {
- 
 
-    /*! \brief FIXME.
+    /*! \internal FIXME.
+     *
      */
     template <typename D, typename E>
     class dpoints_base_ : protected internal::set_of_<D>

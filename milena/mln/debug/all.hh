@@ -40,7 +40,7 @@ namespace mln
   /// Namespace of routines that help to debug.
   namespace debug
   {
-    /// Implementation namespace of debug namespace.
+    /// \internal Implementation namespace of debug namespace.
     namespace impl {}
   }
 

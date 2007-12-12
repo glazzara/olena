@@ -32,7 +32,6 @@
  *
  * \brief Definition of a violent cast for internal use only.
  *
- * \internal
  */
 
 
@@ -43,17 +42,13 @@ namespace mln
   namespace internal
   {
 
-    /*! \brief Violent cast.
-     *
-     * \internal
-     *
-     * This cast is an alternative to the mln::exact cast.  It is used
-     * for objects than do not derive from mln::Object.
-     *
-     * \warning Do not to use this cast!   
-     *
-     * \see mln::exact
-     */ 
+    /*! \internal Violent cast.
+     * This cast is an alternative to the mln::exact cast.
+     * It is used for objects than do not derive from
+     * mln::Object.
+     * Warning Do not to use this cast!
+     * see mln::exact
+     */
     template <typename E, typename T>
     E& force_exact(const T& ref)
     {

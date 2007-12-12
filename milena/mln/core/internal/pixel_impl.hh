@@ -43,10 +43,9 @@ namespace mln
   namespace internal
   {
 
-    /*! \brief Implementation class to equip generalized pixel
+    /*! \internal Implementation class to equip generalized pixel
      *  classes based on mutable images.
      *
-     * \internal
      */
     template <typename I, typename E>
     class pixel_impl_
@@ -96,10 +95,9 @@ namespace mln
     };
 
 
-    /*! \brief Implementation class to equip generalized pixel
+    /*! \internal Implementation class to equip generalized pixel
      *  classes based on constant images.
      *
-     * \internal
      */
     template <typename I, typename E>
     class pixel_impl_< const I, E >

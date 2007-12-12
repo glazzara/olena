@@ -42,20 +42,20 @@
 namespace mln
 {
 
-  
+
   namespace internal
   {
 
-    // Fwd decl.
+    // \internal Fwd decl.
     template <typename I, typename F, typename E> struct image_if_base_;
 
-    // data_.
+    // \internal data_.
 
     template <typename I, typename F, typename E>
     struct data_< image_if_base_<I,F,E> >
     {
       data_(I& ima, const F& f);
-	
+
       I ima_;
       pset_if<mln_pset(I), F> pset_;
     };
@@ -63,7 +63,7 @@ namespace mln
   } // end of namespace mln::internal
 
 
-  
+
   namespace trait
   {
 
@@ -87,21 +87,21 @@ namespace mln
 
       typedef mln_trait_image_border(I) border;
     };
-    
+
   } // end of namespace mln::trait
 
 
-  
+
   namespace internal
   {
-    
-    /*! \brief An base image class for image_if_'something.
+
+    /*! \internal An base image class for image_if_'something.
      *
      */
     template <typename I, typename F, typename E>
     struct image_if_base_ : public internal::image_domain_morpher_< I, pset_if<mln_pset(I),F>, E >
     {
-      
+
       /// Give the definition domain.
       const pset_if<mln_pset(I), F>& domain() const;
 
@@ -115,22 +115,22 @@ namespace mln
 
       /// Constructor from an image \p ima and a predicate \p f.
       image_if_base_(I& ima, const F& f);
-      
+
       /// Constructor without argument.
       image_if_base_();
     };
-    
-    
+
+
 # ifndef MLN_INCLUDE_ONLY
-    
-//     // init_
-    
+
+//     // \internal init_
+
 //     template <typename I, typename F, typename E>
 //     void init_(tag::function_t, F& f, const image_if_base_<I,F,E>& model)
 //     {
 //       f = model.domain().predicate();
 //     }
-    
+
 //     template <typename I, typename F, typename E, typename J>
 //     void init_(tag::image_t, image_if_base_<I,F,E>& target, const J& model)
 //     {
@@ -140,8 +140,8 @@ namespace mln
 //       init_(tag::function, f, exact(model));
 //       target.init_(ima, f);
 //     }
-    
-    // internal::data_< image_if_base_<I,S> >
+
+    // \internal internal::data_< image_if_base_<I,S> >
 
     template <typename I, typename F, typename E>
     inline
@@ -150,15 +150,15 @@ namespace mln
 	pset_(ima.domain() | f)
     {
     }
-    
-    // image_if_base_<I,F,E>
-    
+
+    // \internal image_if_base_<I,F,E>
+
     template <typename I, typename F, typename E>
     inline
     image_if_base_<I,F,E>::image_if_base_()
     {
     }
-    
+
     template <typename I, typename F, typename E>
     inline
     image_if_base_<I,F,E>::image_if_base_(I& ima, const F& f)
@@ -174,7 +174,7 @@ namespace mln
       mln_precondition(this->has_data());
       return this->data_->ima_.owns_(p);
     }
-    
+
     template <typename I, typename F, typename E>
     inline
     void
@@ -183,7 +183,7 @@ namespace mln
       mln_precondition(! this->has_data());
       this->data_ = new internal::data_<E>(ima, f);
     }
-    
+
     template <typename I, typename F, typename E>
     inline
     const pset_if<mln_pset(I), F>&
@@ -191,12 +191,12 @@ namespace mln
     {
       return this->data_->pset_;
     }
-    
+
 # endif // ! MLN_INCLUDE_ONLY
-  
+
   } // end of namespace mln::internal
-  
+
 } // end of namespace mln
-  
-  
+
+
 #endif // ! MLN_CORE_INTERNAL_IMAGE_IF_BASE_HH

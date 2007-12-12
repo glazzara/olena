@@ -44,17 +44,17 @@ namespace mln
   namespace internal
   {
 
-    /*! Namespace of all image-related internal checks.
+    /*! \internal Namespace of all image-related internal checks.
      */
     namespace check
     {
 
+      /// \internal
       template <typename E>
       struct image_all_
 	:
 	public image_fastest_< E, typename mlc_equal(mln_trait_image_speed(E),
 						     trait::image::speed::fastest)::eval >
-        // , ...
       {
       };
 

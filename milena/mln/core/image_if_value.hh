@@ -49,7 +49,7 @@ namespace mln
   template <typename I> struct image_if_value;
 
 
-  // internal::data_.
+  /// \internal internal::data_.
 
   namespace internal
   {
@@ -70,7 +70,7 @@ namespace mln
     struct image_< image_if_value<I> > : trait::image_< Super >
     {
     };
-    
+
   } // end of namespace mln::trait
 
 
@@ -107,7 +107,7 @@ namespace mln
   {
     f = model.domain().predicate();
   }
-    
+
   template <typename I, typename J>
   void init_(tag::image_t, image_if_value<I>& target, const J& model)
   {
@@ -126,15 +126,15 @@ namespace mln
 
   /// ima | v creates an image_if_value with the image ima and the
   /// value v.
-  /// {{{
   template <typename I>
   image_if_value<I>
   operator | (Image<I>& ima, const mln_value(I)& v);
 
+  /// ima | v creates an image_if_value with the image ima and the
+  /// value v.
   template <typename I>
   image_if_value<const I>
   operator | (const Image<I>& ima, const mln_value(I)& v);
-  /// }}}
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -182,7 +182,7 @@ namespace mln
       : data_< Super >(ima, f)
     {
     }
-    
+
   }
 
   // Operators.

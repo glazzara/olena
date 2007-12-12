@@ -61,13 +61,13 @@
  */
 namespace mln
 {
-  /// Implementation namespace of mln namespace.
+  /// \internal Implementation namespace of mln namespace.
   namespace impl {}
 
-  /// Internal namespace of mln namespace.
+  /// \internal Internal namespace of mln namespace.
   namespace internal
   {
-    /// FIXME : doc
+    /// \internal FIXME : doc
     namespace check {}
   }
 

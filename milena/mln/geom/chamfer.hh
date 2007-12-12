@@ -59,7 +59,7 @@ namespace mln
     namespace impl
     {
 
-      // Functors.
+      // \internal Functors.
 
       template <typename I_, typename W_>
       struct chamfer_t
@@ -94,7 +94,7 @@ namespace mln
 	{}
       };
 
-      // Routines.
+      /// \internal Routines.
 
       template <typename I, typename W>
       inline

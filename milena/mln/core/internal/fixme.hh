@@ -40,10 +40,9 @@ namespace mln
   namespace internal
   {
 
-    /*! \brief A FIXME class to make explicit in code that a type is
+    /*! \internal A FIXME class to make explicit in code that a type is
      *  not yet implemented.
      *
-     * \internal
      */
     struct fixme
     {};
