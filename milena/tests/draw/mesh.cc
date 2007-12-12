@@ -27,8 +27,14 @@
 
 /*! \file tests/draw/mesh.cc
  *
- * \brief Tests on mln::draw::mesh.
+ *  \brief Tests on mln::draw::mesh.
+ *
+ *  Build a graph, convert it to an image, and compare it with a
+ *  reference images.
  */
+
+#include <vector>
+#include <utility>
 
 #include <mln/core/image2d.hh>
 #include <mln/core/point2d.hh>
@@ -40,34 +46,99 @@
 #include <mln/core/mesh_image.hh>
 #include <mln/level/compare.hh>
 
-int
-main (void)
+
+/// Set of 2-D points.
+typedef std::vector< mln::point2d > points_type;
+/// Set of edges expressed using the identifiers of their adjecent nodes.
+typedef std::vector< std::pair<int,int> > edges_type;
+
+using namespace mln;
+
+// FIXME: We might want to extract NROWS and NCOLS from REF instead of
+// getting them from the caller.
+void
+test (points_type& points, const edges_type& edges,
+      unsigned nrows, unsigned ncols, const mln::image2d<int>& ref)
 {
-  using namespace mln;
-
-  int vs[3][3] = {
-    {2, 0, 0},
-    {0, 1, 0},
-    {0, 0, 2}
-  };
-
-  image2d<int> ref (make::image2d(vs));
-
+  // Graph.
   util::graph<void> g;
-
-  g.add_node ();
-  g.add_node ();
-  g.add_edge (0, 1);
+  // Populate the graph with nodes.
+  for (unsigned i = 0; i < points.size(); ++i)
+    g.add_node ();
+  // Populate the graph with edges.
+  for (edges_type::const_iterator i = edges.begin(); i != edges.end(); ++i)
+    g.add_edge (i->first, i->second);
+  // Check its consistency.
   g.consistency ();
 
-  std::vector<point2d> v;
-  v.push_back (make::point2d (0,0));
-  v.push_back (make::point2d (2,2));
+  mln::mesh_p<point2d> m(g, points);
 
-  mesh_p<point2d> m(g, v);
-
-  image2d<int> ima (3, 3);
+  image2d<int> ima(nrows, ncols);
+  // FIXME: `draw::mesh' is not a good name.  This function doesn't
+  // actually draw the mesh; it *converts* it to a printable image.
   draw::mesh (ima, m, 2, 1);
-
   mln_assertion (ima == ref);
+}
+
+int
+main ()
+{
+  /*---------.
+  | Test 1.  |
+  `---------*/
+
+  {
+    // Reference image.
+    int vs[3][3] = {
+      {2, 0, 0},
+      {0, 1, 0},
+      {0, 0, 2}
+    };
+    image2d<int> ref (make::image2d(vs));
+
+    // Points associated to nodes.
+    points_type points;
+    points.push_back (make::point2d (0,0)); // Point associated to node 0.
+    points.push_back (make::point2d (2,2)); // Point associated to node 1.
+
+    // Edges.
+    edges_type edges;
+    edges.push_back (std::make_pair (0, 1));
+
+    test (points, edges, 3, 3, ref);
+  }
+
+
+  /*---------.
+  | Test 2.  |
+  `---------*/
+
+  {
+    int vs[5][5] = {
+      {2, 0, 0, 0, 2},
+      {0, 1, 0, 1, 1},
+      {0, 0, 2, 0, 1},
+      {0, 0, 0, 1, 1},
+      {0, 0, 0, 2, 2},
+    };
+    image2d<int> ref (make::image2d(vs));
+
+    // Points associated to nodes.
+    points_type points;
+    points.push_back (make::point2d (0,0)); // Point associated to node 0.
+    points.push_back (make::point2d (2,2)); // Point associated to node 1.
+    points.push_back (make::point2d (0,4)); // Point associated to node 2.
+    points.push_back (make::point2d (4,3)); // Point associated to node 3.
+    points.push_back (make::point2d (4,4)); // Point associated to node 4.
+
+    // Edges.
+    edges_type edges;
+    edges.push_back (std::make_pair (0, 1));
+    edges.push_back (std::make_pair (1, 2));
+    edges.push_back (std::make_pair (1, 3));
+    edges.push_back (std::make_pair (3, 4));
+    edges.push_back (std::make_pair (4, 2));
+
+    test (points, edges, 5, 5, ref);
+  }
 }

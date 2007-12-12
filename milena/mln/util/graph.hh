@@ -40,6 +40,9 @@
  * \brief Definition of a graph.
  */
 
+// FIXME: Rename `s_node' to `node'.
+// FIXME: Rename `s_edge' to `edge'.
+// FIXME: Rename `links' to `edges'.
 
 namespace mln
 {
@@ -53,6 +56,7 @@ namespace mln
     struct s_node
     {
       T data;
+      // FIXME: Rename to `out_edges'.
       std::vector<unsigned> links;
     };
 
@@ -63,6 +67,7 @@ namespace mln
     template<>
     struct s_node<void>
     {
+      // FIXME: Rename to `out_edges'.
       std::list<unsigned> links;
     };
 
@@ -88,21 +93,21 @@ namespace mln
       unsigned node2;
     };
 
-    /*! \brief Generic graph using s_node and s_edge.
-     *
-     */
+    /// \brief Generic graph structure using s_node and s_edge.
+    /* FIXME: We don't mention anywhere whether this graph structure
+       handles directed or undirected graphs!  */
     template<typename N, typename E = void>
     struct graph
     {
-      /*! \brief Constructor.
-       *
-       */
+      /// The type of the set of nodes.
+      typedef std::vector< s_node<N>* > nodes;
+      /// The type of the set of edges.
+      typedef std::vector< s_edge<E>* > edges;
+
       graph ();
 
-      /*! \brief Add a void node.
-       *
-       */
-      void add_node (void);
+      /*! \brief Add a void node.  */
+      void add_node ();
 
 
       /*! \brief Add a void edge between \p n1 and \p n2.
@@ -112,7 +117,6 @@ namespace mln
        *
        * \pre n1 < nb_node_.
        * \pre n2 < nb_node_.
-       *
        */
       void add_edge (unsigned n1, unsigned n2);
 
@@ -123,7 +127,6 @@ namespace mln
        *
        * \pre nodes_.size () == nb_node_.
        * \pre links_.size () == nb_link_.
-       *
        */
       void consistency () const;
 
@@ -131,7 +134,6 @@ namespace mln
       /*! \brief Print on \p ostr the graph.
        *
        * \param[in] ostr The output stream.
-       *
        */
       void print_debug (std::ostream& ostr) const;
 
@@ -144,11 +146,12 @@ namespace mln
       unsigned nb_link_;
 
       /// The vector where is stocked the pointers of nodes.
-      std::vector<struct s_node<N>*> nodes_;
+      nodes nodes_;
 
       /// The vector where is stocked the pointers of links.
-      std::vector<struct s_edge<E>*> links_;
+      edges links_;
     };
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -165,7 +168,7 @@ namespace mln
     template<typename N, typename E>
     inline
     void
-    graph<N, E>::add_node (void)
+    graph<N, E>::add_node ()
     {
       struct s_node<N>* n = new struct s_node<N>;
 
@@ -183,7 +186,7 @@ namespace mln
 
       struct s_edge<E>* edge;
 
-      edge = new struct s_edge<E>;
+      edge = new s_edge<E>;
       edge->node1 = n1;
       edge->node2 = n2;
       links_.push_back (edge);

@@ -198,6 +198,47 @@ namespace mln
 
   } // end of namespace mln::trait
 
+
+
+  // FIXME: To be moved elsewhere?
+
+  /// Compute the image::space trait from a point type.
+  /// \{
+
+  // Fwd decl. (used by trait::image::space_from_point).
+  template <typename M, typename C> struct point_;
+  typedef point_<grid::tick, int> point1d;
+  typedef point_<grid::square, int> point2d;
+  typedef point_<grid::cube, int> point3d;
+
+  namespace trait
+  {
+    namespace image
+    {
+
+      /// Function mapping a point type to the corresponding space trait.
+      /// \{
+      template <typename P>
+      struct space_from_point
+      { typedef undef ret; };
+
+      template <>
+      struct space_from_point<point1d>
+      { typedef trait::image::space::one_d ret; };
+
+      template <>
+      struct space_from_point<point2d>
+      { typedef trait::image::space::two_d ret; };
+
+      template <>
+      struct space_from_point<point3d>
+      { typedef trait::image::space::three_d ret; };
+      /// \}
+
+    } // end of namespace mln::trait::image
+
+  } // end of namespace mln::trait
+
 } // end of namespace mln
 
 

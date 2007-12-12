@@ -1,3 +1,57 @@
+2007-12-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	More on general-purpose graph-based images, improperly called
+	mesh-based images.
+
+	* mln/util/graph.hh: Migrate C-styled constructs to C++ ones.
+	(graph::nodes, graph::edges): New typedefs.
+	Use them...
+	(nodes_, edges_): ...here.
+	* mln/core/mesh_p.hh (graph): New typedef.
+	Use it...
+	(gr_): ...here.
+	Aesthetic changes.
+	* mln/core/mesh_psite.hh
+	(m_ptr_): Turn this non-const pointer on mesh_p<P> into...
+	(mesh_): ...a const reference on mesh_p<P>.
+	(mesh_psite::mesh_psite(unsigned, mesh_p<P>*)): Adjust ctor
+	and swap the arguments of this ctor to get...
+	(mesh_psite::mesh_psite(const mesh_p<P>&, unsigned)): ...this much
+	natural signature.
+	(mesh_psite::mesh_psite(const self_& rhs)): New copy ctor.
+	(operator= (const self_& rhs)): New assignment operator.
+	* mln/core/mesh_p_piter.hh: Adjust forward declarations.
+	(psite, point): New typedefs.
+	(update_, to_psite, operator psite): New methods.
+	(loc_): Remove attribute.
+	(psite_set_, psite_): New attributes.
+	(mesh_p_piter_::mesh_p_piter_): Adjust ctor.
+	(is_valid invalidate, start, next_): Adjust methods.
+	* mln/core/mesh_image.hh (mln::trait::image_< mesh_image<P, V> >):
+	New traits.
+	(operator()(const mesh_psite<P>& p) const)
+	(operator()(const mesh_psite<P>& p)):
+	Catch up with the new interface of mln::mesh_psite.
+	* mln/trait/image/props.hh (mln::trait::image::space_from_point):
+	New function on types mapping points types to the corresponding
+	images space trait.
+	* mln/core/mesh_elt_window.hh,
+	* mln/core/mesh_window_piter.hh:
+	New files.
+	* mln/draw/mesh.hh,
+	* mln/trait/images.hh:
+	Add a FIXME.
+	* mln/core/box_piter.hh,
+	* tests/value/Makefile.am:
+	Typos.
+	* tests/core/mesh_image.cc: New tests
+	* tests/core/mesh_elt_window.cc: New file.
+	* tests/core/Makefile.am (check_PROGRAMS): Add mesh_elt_window and
+	mesh_image.
+	(mesh_elt_window_SOURCES, mesh_image_SOURCES): New.
+	* tests/draw/mesh.cc: Revamp this test.
+	* TODO: Update.
+
 2007-12-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Replace the point in run_psite by the p_runs reference.

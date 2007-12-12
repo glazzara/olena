@@ -75,6 +75,9 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    // FIXME: Add assertions on the size of the image: it must be big
+    // enough to hold the reprensentation of the graph.
+
     template <typename I, typename P>
     inline
     void

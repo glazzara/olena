@@ -30,6 +30,7 @@
 
 # include <mln/core/internal/point_iterator_base.hh>
 # include <mln/core/mesh_p.hh>
+# include <mln/core/mesh_psite.hh>
 
 /*! \file mln/core/mesh_p_piter.hh
  *
@@ -38,8 +39,12 @@
 
 namespace mln
 {
+  // Fwd decls.
+  template<typename P> class mesh_p;
+  template<typename P> class mesh_psite;
 
-  template<typename P> class mesh_p_piter_;
+
+  // FIXME: Why `mesh_p_piter_' and not `mesh_p_piter' (without `_')?
 
   template<typename P>
   class mesh_p_piter_ : public internal::point_iterator_base_< P, mesh_p_piter_<P> >
@@ -51,11 +56,10 @@ namespace mln
     
     // Make definitions from super class available.
     enum { dim = super_::dim };
+    typedef mesh_psite<P> psite;
+    typedef P point;
 
-    mesh_p_piter_(const mesh_p<P>& s);
-
-    /// Reference to the corresponding point.
-    const P& to_point() const;
+    mesh_p_piter_(const mesh_p<P>& psite_set);
 
     /// Read-only access to the \p i-th coordinate.
     mln_coord(P) operator[](unsigned i) const;
@@ -72,13 +76,26 @@ namespace mln
     /// Go to the next point.
     void next_();
 
+    /// Update the internal data of the iterator.
+    void update_();
+
+    /// Reference to the corresponding point.
+    const point& to_point () const;
+
+    /// Reference to the corresponding point site.
+    const psite& to_psite () const;
+
     /// Convert the iterator into a point.
-    operator P() const;
+    operator point() const;
+
+    /// Convert the iterator into a mesh psite.
+    operator psite() const;
 
   protected:
-    const std::vector<P>& loc_;
+    const mesh_p<P>& psite_set_;
     unsigned i_;
     P p_;
+    psite psite_;
   };
 
 
@@ -87,18 +104,14 @@ namespace mln
 
   template<typename P>
   inline
-  mesh_p_piter_<P>::mesh_p_piter_(const mesh_p<P>& s)
-    : loc_(s.loc_)
+  mesh_p_piter_<P>::mesh_p_piter_(const mesh_p<P>& psite_set)
+    : psite_set_(psite_set),
+      p_(),
+      // Initialize psite_ to a dummy value.
+      psite_(psite_set, psite_set_.loc_.size())
   {
+    // Invalidate i_.
     invalidate();
-  }
-
-  template<typename P>
-  inline
-  const P&
-  mesh_p_piter_<P>::to_point() const
-  {
-    return p_;
   }
 
   template<typename P>
@@ -114,7 +127,7 @@ namespace mln
   bool
   mesh_p_piter_<P>::is_valid() const
   {
-    return i_ != loc_.size();
+    return i_ != psite_set_.loc_.size();
   }
 
   template<typename P>
@@ -122,7 +135,7 @@ namespace mln
   void
   mesh_p_piter_<P>::invalidate()
   {
-    i_ = loc_.size();
+    i_ = psite_set_.loc_.size();
   }
 
   template<typename P>
@@ -132,7 +145,7 @@ namespace mln
   {
     i_ = 0;
     if (is_valid())
-      p_ = loc_[i_];
+      update_();
   }
 
   template<typename P>
@@ -142,7 +155,36 @@ namespace mln
   {
     ++i_;
     if (is_valid())
-      p_ = loc_[i_];
+      update_();
+  }
+
+  template<typename P>
+  inline
+  void
+  mesh_p_piter_<P>::update_()
+  {
+    // Update p_.
+    p_ = psite_set_.loc_[i_];
+    // Update psite_.
+    psite_ = mesh_psite<P>(psite_set_, i_);
+  }
+
+  template<typename P>
+  inline
+  const P&
+  mesh_p_piter_<P>::to_point() const
+  {
+    mln_precondition(is_valid());
+    return p_;
+  }
+
+  template<typename P>
+  inline
+  const mesh_psite<P>&
+  mesh_p_piter_<P>::to_psite() const
+  {
+    mln_precondition(is_valid());
+    return psite_;
   }
 
   template<typename P>
@@ -151,6 +193,14 @@ namespace mln
   {
     mln_precondition(is_valid());
     return p_;
+  }
+
+  template<typename P>
+  inline
+  mesh_p_piter_<P>::operator mesh_psite<P>() const
+  {
+    mln_precondition(is_valid());
+    return psite_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

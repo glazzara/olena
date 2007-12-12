@@ -100,10 +100,8 @@ namespace mln
   namespace value { template <unsigned n, typename I> struct stack_image; }
 
 
-
   namespace trait
   {
-
 
     template <typename I>
     struct undefined_image_
@@ -119,6 +117,7 @@ namespace mln
 
       // related to I::pset
       typedef undef access;   // random, browsing
+      // FIXME: Wouldn't it be nicer to use metal::int_<DIM>?
       typedef undef space;    // one_d, two_d, three_d
       typedef undef size;     // huge or regular
       typedef undef support;  // irregular, aligned < regular

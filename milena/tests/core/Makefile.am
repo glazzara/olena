@@ -7,6 +7,8 @@ check_PROGRAMS =				\
   clone						\
   exact						\
   initialize					\
+  mesh_elt_window				\
+  mesh_image					\
   mono_obased_rle_image				\
   mono_rle_image				\
   obased_rle_image				\
@@ -19,6 +21,8 @@ category_SOURCES = category.cc
 clone_SOURCES = clone.cc
 exact_SOURCES = exact.cc
 initialize_SOURCES = initialize.cc
+mesh_elt_window_SOURCES = mesh_elt_window.cc
+mesh_image_SOURCES = mesh_image.cc
 mono_obased_rle_image_SOURCES = mono_obased_rle_image.cc
 mono_rle_image_SOURCES = mono_rle_image.cc
 obased_rle_image_SOURCES = obased_rle_image.cc

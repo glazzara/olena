@@ -35,6 +35,9 @@
 # include <mln/core/mesh_psite.hh>
 # include <mln/core/mesh_p_piter.hh>
 
+// FIXME: Rename as mesh_p_set?  We shall definitely write a coding
+// style somewhere.
+
 /*! \file mln/core/mesh_p.hh
  *
  * \brief Definition of an point set based on graph.
@@ -48,8 +51,10 @@ namespace mln
   template<typename P>
   struct mesh_p : public internal::point_set_base_< P, mesh_p<P> >
   {
-    mesh_p (util::graph<void>& gr,
-	    std::vector<P>& loc);
+    typedef util::graph<void> graph;
+
+    /// Construct a mesh psite set from a graph and an array of locations.
+    mesh_p (graph& gr, std::vector<P>& loc);
 
     /// Point_Site associated type.
     typedef mesh_psite<P> psite;
@@ -67,8 +72,9 @@ namespace mln
 
     bool has(const psite& p) const;
                                                 
-    util::graph<void>	gr_;
-    std::vector<P>	loc_;
+    graph gr_;
+    std::vector<P> loc_;
+    // FIXME: (Roland) Is it really useful/needed?
     box_<P> bb_;
   };
 
@@ -76,8 +82,7 @@ namespace mln
 
   template<typename P>
   inline
-  mesh_p<P>::mesh_p (util::graph<void>& gr,
-		     std::vector<P>& loc)
+  mesh_p<P>::mesh_p (util::graph<void>& gr, std::vector<P>& loc)
     : gr_ (gr),
       loc_ (loc)
   {

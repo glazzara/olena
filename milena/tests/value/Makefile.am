@@ -2,6 +2,10 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+## FIXME: To be added to milena/tests/tests.mk.
+full-check: check
+## ...
+
 SUBDIRS =					\
   concept					\
   builtin
@@ -24,7 +28,7 @@ check_PROGRAMS =				\
   scalar					\
   set
 
-# FIXME: activate when make check_full will work.
+# FIXME: Enable when make check_full works.
 # check_full_PROGRAMS =				\
 #   rgb_full
 
@@ -45,9 +49,9 @@ rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc
 
-# FIXME: activate when make check_full will work.
+# FIXME: Enable when make check_full works.
 # rgb_full_SOURCES = rgb_full.cc
 
 TESTS = $(check_PROGRAMS)
-# FIXME: activate when make check_full will work.
+# FIXME: Enable when make check_full works.
 # TESTS_FULL = $(check_full_PROGRAMS)

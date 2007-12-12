@@ -30,13 +30,16 @@
 
 /*! \file mln/core/mesh_image.hh
  *
- * \brief Definition of an graph-based image.
+ *  \brief Definition of a graph-based image.
  */
 
-# include <mln/core/internal/image_identity.hh>
+# include <mln/trait/images.hh>
+
+# include <mln/core/internal/image_primary.hh>
 # include <mln/metal/vec.hh>
 # include <mln/core/mesh_p.hh>
 # include <mln/core/mesh_psite.hh>
+# include <mln/value/set.hh>
 # include <vector>
 
 namespace mln
@@ -59,11 +62,36 @@ namespace mln
 
   } // end of namespace mln::internal
 
+
+  namespace trait
+  {
+
+    template <typename P, typename V>
+    struct image_< mesh_image<P, V> > : default_image_< V, mesh_image<P, V> >
+    {
+      typedef trait::image::category::primary category;
+
+      // FIXME: Is that right?
+      typedef trait::image::access::random                    access;
+      typedef typename trait::image::space_from_point<P>::ret space;
+      typedef trait::image::size::regular                     size;
+      typedef trait::image::support::irregular                support;
+
+      typedef trait::image::border::none                      border;
+      typedef trait::image::data::stored                      data;
+      typedef trait::image::io::read_write                    io;
+      // FIXME: Is that right?
+      typedef trait::image::speed::fast                       speed;
+    };
+
+  } // end of namespace mln::trait
+
   /*! \brief FIXME
    *
    */
   template <typename P, typename V>
-  struct mesh_image  : public internal::image_primary_< mesh_p<P>, mesh_image<P, V> >
+  struct mesh_image :
+    public internal::image_primary_< mesh_p<P>, mesh_image<P, V> >
   {
 
     typedef mln::internal::image_base_< mesh_p<P>, mesh_image<P, V> > super_;
@@ -143,7 +171,7 @@ namespace mln
   const V&
   mesh_image<P, V>::operator()(const mesh_psite<P>& p) const
   {
-    mln_precondition(p.m_ptr_ == & this->data_->mesh_);
+    mln_precondition(&p.mesh_ == &this->data_->mesh_);
     mln_precondition(p.i_ < this->data_->val_.size());
     return this->data_->val_[p.i_];
   }
@@ -153,7 +181,7 @@ namespace mln
   V&
   mesh_image<P, V>::operator()(const mesh_psite<P>& p)
   {
-    mln_precondition(p.m_ptr_ == & this->data_->mesh_);
+    mln_precondition(&p.mesh_ == &this->data_->mesh_);
     mln_precondition(p.i_ < this->data_->val_.size());
     return this->data_->val_[p.i_];
   }

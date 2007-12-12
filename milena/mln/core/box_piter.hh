@@ -62,7 +62,7 @@ namespace mln
      */
     box_fwd_piter_(const box_<P>& b);
 
-    /// Convertion to point.
+    /// Conversion to point.
     operator P() const;
 
     /// Reference to the corresponding point.
@@ -112,7 +112,7 @@ namespace mln
      */
     box_bkd_piter_(const box_<P>& b);
 
-    /// Convertion to point.
+    /// Conversion to point.
     operator P() const;
 
     /// Reference to the corresponding point.
@@ -164,7 +164,7 @@ namespace mln
      */
     box_bounds_piter_(const box_<P>& b);
 
-    /// Convertion to point.
+    /// Conversion to point.
     operator P() const;
 
     /// Reference to the corresponding point.

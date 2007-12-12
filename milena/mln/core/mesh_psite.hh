@@ -35,6 +35,8 @@
  * \todo Clean-up!
  */
 
+# include <mln/core/mesh_p.hh>
+
 
 namespace mln
 {
@@ -44,43 +46,73 @@ namespace mln
 
 
   // FIXME: Doc!
+  // FIXME: Fix access to member.
   template<typename P>
-  struct mesh_psite : public Point_Site< mesh_psite<P> >
+  class mesh_psite : public Point_Site< mesh_psite<P> >
   {
+    typedef mesh_psite<P> self_;
+
+  public:
     typedef mln_mesh(P) mesh;
     enum { dim = P::dim };
     typedef P point;
     typedef mln_dpoint(P) dpoint;
     typedef mln_coord(P) coord;
 
-    mesh_psite(unsigned i, mesh_p<P>* m_ptr);
+    /// Construction and assignment.
+    /// \{
+    mesh_psite(const mesh_p<P>& mesh_, unsigned i);
+    mesh_psite(const self_& rhs);
+    self_& operator= (const self_& rhs);
+    /// \}
 
     operator P() const;
-
     const point& to_point() const;
-
     coord operator[](unsigned i) const;
 
+    // FIXME: These shouldn't be public.
+    const mesh_p<P>& mesh_;
     unsigned i_;
-
-    mesh_p<P>* m_ptr_;
   };
 
 # ifndef MLN_INCLUDE_ONLY
 
   template<typename P>
   inline
-  mesh_psite<P>::mesh_psite(unsigned i, mesh_p<P>* m_ptr)
-    : i_(i) ,
-      m_ptr_(m_ptr)
+  mesh_psite<P>::mesh_psite(const mesh_p<P>& mesh, unsigned i)
+    : mesh_(mesh),
+      i_(i)
   {
+  }
+
+  template<typename P>
+  inline
+  mesh_psite<P>::mesh_psite(const mesh_psite<P>& rhs)
+    : mesh_(rhs.mesh_),
+      i_(rhs.i_)
+  {
+  }
+
+  template<typename P>
+  inline
+  mesh_psite<P>&
+  mesh_psite<P>::operator= (const mesh_psite<P>& rhs)
+  {
+    if (&rhs == this)
+      return *this;
+    // FIXME: Could we get rid of this cast?
+    const_cast< mesh_p<P>& >(mesh_) = rhs.mesh_;
+    i_ = rhs.i_;
+    return *this;
   }
 
   template<typename P>
   inline
   mesh_psite<P>::operator P() const
   {
-    return m_ptr_->loc_[i_];
+    // FIXME: This is quite unsafe: we should check that i_ is a valid
+    // index before dereferencing loc_ to ensure clear error messages.
+    return mesh_.loc_[i_];
   }
 
   template<typename P>
@@ -88,7 +120,9 @@ namespace mln
   const P&
   mesh_psite<P>::to_point() const
   {
-    return m_ptr_->loc_[i_];
+    // FIXME: This is quite unsafe: we should check that i_ is a valid
+    // index before dereferencing loc_ to ensure clear error messages.
+    return mesh_.loc_[i_];
   }
 
   template<typename P>
