@@ -1,3 +1,9 @@
+2007-12-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	gl16 and gl8 headers.
+	* mln/value/gl8.hh: New, Definition of a graylevel 8 bits.
+	* mln/value/gl16.hh: New, Definition of a graylevel 16 bits.
+
 2007-12-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	More on general-purpose graph-based images, improperly called
