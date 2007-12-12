@@ -1,5 +1,15 @@
 2007-12-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Clean handle of generation of documentation.
+
+	* doc/Makefile.am: New handle of generation of documentation,
+	Doxyfile_user and Doxyfile_internal files are the template for
+	Doxygen. They are generated from Doxygen.in
+
+	* doc/Doxyfile_user.in: Remove (useless now).
+
+2007-12-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update documentation for internal namespace.
 	
 	* mln/histo/all.hh,
