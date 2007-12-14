@@ -93,7 +93,7 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /*! \brief Mono RLE image.
+  /*! \brief Monochrome RLE image.
    *
    * RLE image with only one colour.
    *
@@ -123,10 +123,10 @@ namespace mln
     void insert(const p_run<P>& pr);
 
     /// Read-only access to the image value located at point \p p.
-    rvalue operator() (const psite& site) const;
+    rvalue operator() (const runs_psite<P>& site) const;
 
     /// Read-write access to the image value located at point \p p.
-    lvalue operator() (const psite& site);
+    lvalue operator() (const runs_psite<P>& site);
 
     /// Test if this image has been initialized.
     bool has_data() const;
@@ -211,7 +211,7 @@ namespace mln
   template <typename P, typename T>
   inline
   typename mono_rle_image<P, T>::rvalue
-  mono_rle_image<P, T>::operator() (const typename mono_rle_image<P, T>::psite& site) const
+  mono_rle_image<P, T>::operator() (const runs_psite<P>& site) const
   {
     mln_precondition(this->has(site));
     return this->data_->value_;
@@ -220,7 +220,7 @@ namespace mln
   template <typename P, typename T>
   inline
   typename mono_rle_image<P, T>::lvalue
-  mono_rle_image<P, T>::operator() (const typename mono_rle_image<P, T>::psite& site)
+  mono_rle_image<P, T>::operator() (const runs_psite<P>& site)
   {
     mln_precondition(this->has(site));
     return this->data_->value_;

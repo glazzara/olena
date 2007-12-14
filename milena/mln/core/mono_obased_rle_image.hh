@@ -98,7 +98,7 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /*! \brief RLE image.
+  /*! \brief RLE image with objects based on mln::mono_rle_image.
    *
    *
    * Parameter \c P is the type of the image points.
@@ -127,10 +127,10 @@ namespace mln
     void insert(const p_run<P>& pr, T value);
 
     /// Read-only access to the image value located at point \p p.
-    rvalue operator() (const psite& site) const;
+    const T operator()(const runs_psite<P>& site) const;
 
     /// Read-write access to the image value located at point \p p.
-    lvalue operator() (const psite& site);
+    T& operator()(const runs_psite<P>& site);
 
     /// Test if this image has been initialized.
     bool has_data() const;
@@ -224,9 +224,8 @@ namespace mln
 
   template <typename P, typename T>
   inline
-  typename mono_obased_rle_image<P, T>::rvalue
-  mono_obased_rle_image<P, T>::operator() (const typename mono_obased_rle_image<P, T>::psite& site)
-    const
+  const T
+  mono_obased_rle_image<P, T>::operator() (const runs_psite<P>& site) const
   {
     mln_precondition(this->has(site));
     return this->data_->values_[site.p_of_run()];
@@ -234,8 +233,8 @@ namespace mln
 
   template <typename P, typename T>
   inline
-  typename mono_obased_rle_image<P, T>::lvalue
-  mono_obased_rle_image<P, T>::operator() (const typename mono_obased_rle_image<P, T>::psite& site)
+  T&
+  mono_obased_rle_image<P, T>::operator() (const runs_psite<P>& site)
   {
     mln_precondition(this->has(site));
     return this->data_->values_[site.p_of_run()];

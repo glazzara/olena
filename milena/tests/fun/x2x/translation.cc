@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/fun_x2x_translation.cc
+/*! \file tests/fun/x2x/translation.cc
  *
  * \brief Tests on mln::fun::x2x::translation.
  */

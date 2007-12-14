@@ -1,3 +1,23 @@
+2007-12-14  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix typo.
+	* mln/core/interpolated.hh,
+	* mln/core/mono_obased_rle_encode.hh,
+	* mln/core/mono_obased_rle_image.hh,
+	* mln/core/mono_rle_encode.hh,
+	* mln/core/mono_rle_image.hh,
+	* mln/core/obased_rle_encode.hh,
+	* mln/core/obased_rle_image.hh,
+	* mln/core/rle_encode.hh,
+	* mln/core/rle_image.hh,
+	* mln/core/sparse_encode.hh,
+	* mln/core/sparse_image.hh,
+	* mln/util/lazy_set.hh,
+	* tests/core/mono_rle_image.cc,
+	* tests/fun/x2x/composed.cc,
+	* tests/fun/x2x/rotation.cc,
+	* tests/fun/x2x/translation.cc: Fix.
+
 2007-12-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Clean handle of generation of documentation.

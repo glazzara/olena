@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/mono_rle_iimage.cc
+/*! \file tests/core/mono_rle_image.cc
  *
  * \brief Test on mln::labeling::blobs.
  */

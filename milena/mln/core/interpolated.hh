@@ -59,7 +59,7 @@ namespace mln
 
   } // end of namespace mln::internal
 
-  /*! \brief FIXME
+  /*! \brief Morpher that makes underlaying image being accessed with floating coordinate.
    *
    */
   template <typename I>

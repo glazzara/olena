@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_LAZY_SET_HH
 # define MLN_UTIL_LAZY_SET_HH
 
-/*! \file mln/core/internal/lazy_set.hh
+/*! \file mln/util/lazy_set.hh
  *
  * \brief Definition of mln::lazy_set_ for internal use only.
  */
@@ -199,22 +199,6 @@ namespace mln
       /// Tell what the lazy set mode is.
       bool mode_;
     };
-
-
-    /*! \brief Print a set \p s into the output stream \p
-     *  ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] s A set.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::internal::lazy_set_
-     */
-    // FIXME : ambiguous with point_set operator <<
-    //     template <typename E>
-    //     std::ostream& operator<<(std::ostream& ostr, const lazy_set_<E>& s);
-
 
 
 # ifndef MLN_INCLUDE_ONLY

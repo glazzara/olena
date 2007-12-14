@@ -122,10 +122,10 @@ namespace mln
     void insert(const p_run<P>& pr, T value);
 
     /// Read-only access to the image value located at point \p p.
-    rvalue operator() (const psite& site) const;
+    rvalue operator() (const runs_psite<P>& site) const;
 
     /// Read-write access to the image value located at point \p p.
-    lvalue operator() (const psite& site);
+    lvalue operator() (const runs_psite<P>& site);
 
     /// Test if this image has been initialized.
     bool has_data() const;
@@ -209,7 +209,7 @@ namespace mln
   template <typename P, typename T>
   inline
   typename rle_image<P, T>::rvalue
-  rle_image<P, T>::operator() (const typename rle_image<P, T>::psite& site)
+  rle_image<P, T>::operator() (const runs_psite<P>& site)
     const
   {
     mln_precondition(this->has(site));
@@ -219,7 +219,7 @@ namespace mln
   template <typename P, typename T>
   inline
   typename rle_image<P, T>::lvalue
-  rle_image<P, T>::operator() (const typename rle_image<P, T>::psite& site)
+  rle_image<P, T>::operator() (const runs_psite<P>& site)
   {
     mln_precondition(this->has(site));
     return this->data_->values_[site.p_of_run()];

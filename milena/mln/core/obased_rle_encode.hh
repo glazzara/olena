@@ -42,6 +42,7 @@ namespace mln
   ** encode an image class to a obased_rle_image
   **
   ** @param input has to respect the Image concept
+  ** @param ignore_zero says if zero has to be considered as a valid value
   **
   ** @return obased_rle_image
   */

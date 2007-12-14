@@ -39,11 +39,12 @@ namespace mln
 {
 
   /*!
-  ** encode an image class to a mono_obased_rle_image
+  ** Encode an image class to a mono_obased_rle_image.
   **
   ** @param input has to respect the Image concept
+  ** @param ignore_zero says if zero has to be considered as a valid value
   **
-  ** @return mono_obased_rle_image
+  ** @return mono_obased_rle_image.
   */
   template <typename I>
   mono_obased_rle_image<mln_point(I), mln_value(I)>

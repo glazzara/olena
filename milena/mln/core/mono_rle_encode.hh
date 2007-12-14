@@ -42,6 +42,7 @@ namespace mln
   ** encode an image class to a mono_rle_image
   **
   ** @param input has to respect the Image concept
+  ** @param val specify the value which has to be considered
   **
   ** @return mono_rle_image
   */
