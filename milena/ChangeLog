@@ -1,3 +1,8 @@
+2007-12-17  Benoit Sigoure  <tsuna@lrde.epita.fr>
+
+	Add a missing include.
+	* milena/mln/accu/max.hh: Here.
+
 2007-12-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Review chamfer and labeling in canvas.
