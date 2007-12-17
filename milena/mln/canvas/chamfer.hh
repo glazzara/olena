@@ -38,57 +38,74 @@ namespace mln
   namespace canvas
   {
 
+    /*!
+     * \brief Compute chamfer distance.
+     *
+     */
     template <typename F>
     struct chamfer
     {
-      F& f;
-
       typedef typename F::I I;
       typedef typename F::W W;
       typedef mln_point(I) point;
 
-      chamfer(F& f)
-	: f(f)
-      {
-	run();
-      }
+      F& f;
 
-      void run()
-      {
-	/// Init.
-	{
-	  f.init();
-	}
+      chamfer(F& f);
 
-	/// Fwd pass.
-	{
-	  mln_fwd_piter(I) p(f.input.domain());
-	  mln_qiter(W) q(f.win, p);
-
-	  for_all(p) if (f.handles (p))
-	    for_all(q) if (f.input.has(q))
-	      if (f.output(q) != f.max
-		  && f.output(q) + q.w() < f.output(p))
-		f.output(p) = f.output(q) + q.w();
-	}
-
-	/// Bkd pass.
-	{
-	  W w_win_b = geom::sym(f.win);
-
-	  mln_bkd_piter(I) p(f.input.domain());
-	  mln_qiter(W) q(w_win_b, p);
-
-	  for_all(p) if (f.handles (p))
-	    for_all(q) if (f.input.has(q))
-	      if (f.output(q) != f.max
-		  && f.output(q) + q.w() < f.output(p))
-		f.output(p) = f.output(q) + q.w();
-	  f.status = true;
-	}
-
-      }
+      void run();
     };
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template<typename F>
+    inline
+    chamfer<F>::chamfer(F& f)
+      : f(f)
+    {
+      run();
+    }
+
+    template<typename F>
+    inline
+    void
+    chamfer<F>::run()
+    {
+
+      /// Init.
+      {
+	f.init();
+      }
+
+      /// Fwd pass.
+      {
+	mln_fwd_piter(I) p(f.input.domain());
+	mln_qiter(W) q(f.win, p);
+
+	for_all(p) if (f.handles (p))
+	  for_all(q) if (f.input.has(q))
+	    if (f.output(q) != f.max
+		&& f.output(q) + q.w() < f.output(p))
+	      f.output(p) = f.output(q) + q.w();
+      }
+
+      /// Bkd pass.
+      {
+	W w_win_b = geom::sym(f.win);
+
+	mln_bkd_piter(I) p(f.input.domain());
+	mln_qiter(W) q(w_win_b, p);
+
+	for_all(p) if (f.handles (p))
+	  for_all(q) if (f.input.has(q))
+	    if (f.output(q) != f.max
+		&& f.output(q) + q.w() < f.output(p))
+	      f.output(p) = f.output(q) + q.w();
+	f.status = true;
+      }
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of mln::canvas
 

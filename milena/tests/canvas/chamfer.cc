@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/chamfer.cc
+/*! \file tests/canvas/chamfer.cc
  *
- * \brief Tests on mln::geom::chamfer.hh.
+ * \brief Tests on mln::geom::chamfer.
  */
 
 #include <mln/core/image2d.hh>
@@ -43,6 +43,8 @@
 
 #include <mln/make/win_chamfer.hh>
 #include <mln/geom/chamfer.hh>
+#include <mln/level/compare.hh>
+
 
 int main()
 {
@@ -56,7 +58,21 @@ int main()
     ima.at(4,4) = true;
     const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2, 0> ();
     image2d<unsigned> out = geom::chamfer(ima, w_win, max);
-    debug::println(out | value::interval(0, 8));
+    unsigned r[9][9] =
+      {
+	{16, 14, 12, 10,  8, 10, 12, 14, 16},
+	{14, 12, 10,  8,  6,  8, 10, 12, 14},
+	{12, 10,  8,  6,  4,  6,  8, 10, 12},
+	{10,  8,  6,  4,  2,  4,  6,  8, 10},
+	{ 8,  6,  4,  2,  0,  2,  4,  6,  8},
+	{10,  8,  6,  4,  2,  4,  6,  8, 10},
+	{12, 10,  8,  6,  4,  6,  8, 10, 12},
+	{14, 12, 10,  8,  6,  8, 10, 12, 14},
+	{16, 14, 12, 10,  8, 10, 12, 14, 16}
+      };
+
+    image2d<unsigned> ref (make::image2d(r));
+    mln_assertion (out == ref);
   }
 
   {
@@ -64,7 +80,22 @@ int main()
     ima.at(4,4) = true;
     const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2, 3> ();
     image2d<unsigned> out = geom::chamfer(ima, w_win, max);
-    debug::println(out | value::interval(0, 8));
+
+    unsigned r[9][9] =
+      {
+	{12, 11, 10, 9, 8, 9, 10, 11, 12},
+	{11,  9,  8, 7, 6, 7,  8,  9, 11},
+	{10,  8,  6, 5, 4, 5,  6,  8, 10},
+	{ 9,  7,  5, 3, 2, 3,  5,  7,  9},
+	{ 8,  6,  4, 2, 0, 2,  4,  6,  8},
+	{ 9,  7,  5, 3, 2, 3,  5,  7,  9},
+	{10,  8,  6, 5, 4, 5,  6,  8, 10},
+	{11,  9,  8, 7, 6, 7,  8,  9, 11},
+	{12, 11, 10, 9, 8, 9, 10, 11, 12}
+      };
+
+    image2d<unsigned> ref (make::image2d(r));
+    mln_assertion (out == ref);
   }
 
   {
@@ -75,7 +106,23 @@ int main()
     image2d<unsigned>::fwd_piter p(out.domain());
     for_all(p)
       out(p) = out(p) / 2;
-    debug::println(out | value::interval(0, 8));
+
+    unsigned r[9][9] =
+      {
+	{12, 10, 9, 8, 8, 8, 9, 10, 12},
+	{10,  9, 7, 6, 6, 6, 7,  9, 10},
+	{ 9,  7, 6, 4, 4, 4, 6,  7,  9},
+	{ 8,  6, 4, 3, 2, 3, 4,  6,  8},
+	{ 8,  6, 4, 2, 0, 2, 4,  6,  8},
+	{ 8,  6, 4, 3, 2, 3, 4,  6,  8},
+	{ 9,  7, 6, 4, 4, 4, 6,  7,  9},
+	{10,  9, 7, 6, 6, 6, 7,  9, 10},
+	{12, 10, 9, 8, 8, 8, 9, 10, 12}
+      };
+
+    image2d<unsigned> ref (make::image2d(r));
+    mln_assertion (out == ref);
+
   }
 
 }

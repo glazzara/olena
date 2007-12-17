@@ -1,5 +1,16 @@
 2007-12-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Review chamfer and labeling in canvas.
+	* mln/canvas/chamfer.hh,
+	* mln/canvas/labeling.hh: Review this files split declaration and
+	implementation, fix typo.
+
+	Tests.
+	* tests/chamfer.cc: Remove ...
+	* tests/canvas/chamfer.cc: ... replace it and modify tests.
+
+2007-12-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Add main page for Doxygen documentation.
 
 	* mln/convert/all.hh,
