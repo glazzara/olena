@@ -46,6 +46,84 @@
 # include <mln/metal/ret.hh>
 
 
+/*! \mainpage Documentation of milena
+ *
+ * \section intro_sec Introduction
+ *
+ * This is the documentation of milena.
+ *
+ * \section tools_subsec Tools required.
+ * FIXME.
+ *
+ * \section mln_sec Overview of milena.
+ *
+ * <UL>
+ * <LI> \ref mln
+ * <LI> \ref mln::accu
+ * <LI> \ref mln::arith
+ * <LI> \ref mln::border
+ * <LI> \ref mln::canvas
+ * <LI> \ref mln::convert
+ * <LI> \ref mln::debug
+ * <LI> \ref mln::display
+ * <LI> \ref mln::draw
+ * <LI> \ref mln::estim
+ * <LI> \ref mln::fun
+ * <LI> \ref mln::geom
+ * <LI> \ref mln::histo
+ * <LI> \ref mln::io
+ * <LI> \ref mln::labeling
+ * <LI> \ref mln::level
+ * <LI> \ref mln::linear
+ * <LI> \ref mln::literal
+ * <LI> \ref mln::logical
+ * <LI> \ref mln::make
+ * <LI> \ref mln::math
+ * <LI> \ref mln::metal
+ * <LI> \ref mln::morpho
+ * <LI> \ref mln::norm
+ * <LI> \ref mln::pw
+ * <LI> \ref mln::set
+ * <LI> \ref mln::tag
+ * <LI> \ref mln::test
+ * <LI> \ref mln::trace
+ * <LI> \ref mln::trait
+ * <LI> \ref mln::util
+ * <LI> \ref mln::value
+ * <LI> \ref mln::win
+ *
+ * \section copyright Copyright and License.
+ *  Copyright (C) 2007 EPITA Research and Development Laboratory
+ *
+ *  This file is part of the Olena Library.  This library is free
+ *  software; you can redistribute it and/or modify it under the terms
+ *  of the GNU General Public License version 2 as published by the
+ *  Free Software Foundation.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this library; see the file COPYING.  If not, write to
+ *  the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+ *  Boston, MA 02111-1307, USA.
+ *
+ *  As a special exception, you may use this file as part of a free
+ *  software library without restriction.  Specifically, if other
+ *  files instantiate templates or use macros or inline functions from
+ *  this file, or you compile this file and link it with other files
+ *  to produce an executable, this file does not by itself cause the
+ *  resulting executable to be covered by the GNU General Public
+ *  License.  This exception does not however invalidate any other
+ *  reasons why the executable file might be covered by the GNU
+ *  General Public License.
+ *
+ */
+
+
+
 /*! \namespace mln
  * \brief The namespace mln corresponds to the Milena (mini-Olena) project.
  *

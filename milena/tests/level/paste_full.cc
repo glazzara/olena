@@ -142,6 +142,7 @@ namespace mln
       chck(input, output);
     }
 
+    /// FIXME : Uncomment this when it will be possible
 //     {
 //       image1d<I> in (cols);
 //       image_if<image1d<I>, f_box1d_t> input(in, f_b1);
@@ -173,6 +174,7 @@ namespace mln
       chck(input, output);
     }
 
+    /// FIXME : Uncomment this when it will be possible
 //     {
 //       image2d<I> in (rows, cols);
 //       image_if<image2d<I>, f_box2d_t> input(in, f_b2);
@@ -204,6 +206,7 @@ namespace mln
       chck(input, output);
     }
 
+    /// FIXME : Uncomment this when it will be possible
 //     {
 //       image3d<I> in (slis, rows, cols);
 //       image_if<image3d<I>, f_box3d_t> input(in, f_b3);

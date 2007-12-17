@@ -1,3 +1,13 @@
+2007-12-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add main page for Doxygen documentation.
+
+	* mln/convert/all.hh,
+	* mln/level/all.hh,
+	* mln/level/paste.hh,
+	* tests/level/paste_full.cc: Fix typo.
+	* mln/core/concept/object.hh: Add main page for Doxygen.
+
 2007-12-14  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix typo.

@@ -31,6 +31,7 @@
 /*! \file mln/level/all.hh
  *
  * \brief File that includes all level-related routines.
+ *
  */
 
 
@@ -66,7 +67,6 @@ namespace mln
 # include <mln/level/memset_.hh>
 # include <mln/level/naive/all.hh>
 # include <mln/level/paste.hh>
-# include <mln/level/paste.spe.hh>
 # include <mln/level/saturate.hh>
 # include <mln/level/sort_points.hh>
 # include <mln/level/stretch.hh>

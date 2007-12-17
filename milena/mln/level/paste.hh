@@ -31,6 +31,7 @@
 /*! \file mln/level/paste.hh
  *
  * \brief Paste the contents of an image into another one.
+ *
  */
 
 # include <mln/core/concept/image.hh>
@@ -48,7 +49,8 @@ namespace mln
   namespace level
   {
 
-    /*! Paste the contents of image \p data into the image \p
+    /*!
+     *  \brief Paste the contents of image \p data into the image \p
      *  destination.
      *
      * \param[in] data The input image providing pixels values.
