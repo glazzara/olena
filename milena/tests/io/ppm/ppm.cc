@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/io_ppm.cc
+/*! \file tests/io/ppm/ppm.cc
  *
  * \brief Test on mln::io::ppm::load and mln::io::ppm::save.
  */

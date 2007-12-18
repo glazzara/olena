@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/fits_load.cc
+/*! \file tests/io/fits/fits.cc
  *
  * \brief Test on mln::io::fits::load.
  */

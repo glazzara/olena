@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/mesh_elt_window.cc
+/*! \file tests/core/mesh_elt_window.cc
  *
  *  \brief Tests on mln::win::mesh_elt_window.
  */

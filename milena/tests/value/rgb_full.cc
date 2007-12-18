@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value/rgb.cc
+/*! \file tests/value/rgb_full.cc
  *
  * \brief Tests on mln::value::rgb.
  */

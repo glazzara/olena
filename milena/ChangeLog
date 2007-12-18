@@ -1,3 +1,48 @@
+2007-12-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Review queue in core and fix some warnings in tests directory.
+	Review queue files.
+	* mln/core/p_priority_queue.hh,
+	* mln/core/p_priority_queue_fast.hh,
+	* mln/core/p_priority_queue_fast_with_array.hh,
+	* mln/core/p_queue_fast.hh: Review queue.
+
+	Update tests.
+	* tests/core/mesh_elt_window.cc,
+	* tests/core/mesh_image.cc,
+	* tests/debug/iota.cc,
+	* tests/debug/println.cc,
+	* tests/debug/println_with_border.cc,
+	* tests/io/fits/fits.cc,
+	* tests/io/pbm/pbm.cc,
+	* tests/io/pgm/pgm.cc,
+	* tests/io/pgm/pgm16.cc,
+	* tests/io/pgm/pgm19.cc,
+	* tests/io/pgm/pgm27.cc,
+	* tests/io/ppm/ppm.cc,
+	* tests/io/ppm/ppm16.cc,
+	* tests/io/ppm/ppm23.cc,
+	* tests/norm/l1.cc,
+	* tests/norm/l2.cc,
+	* tests/norm/linfty.cc,
+	* tests/value/macros.hh,
+	* tests/value/rgb_full.cc,
+	* tests/core/t_image.cc: Fix doxygen warnings.
+
+	Move tests.
+	* tests/core_p_priority_queue.cc: Remove ...
+	* tests/core/p_priority_queue.cc: ... replace here.
+	* tests/core_p_priority_queue_fast.cc: Remove ...
+	* tests/core/p_priority_queue_fast.cc: ... replace here.
+	* tests/core_p_priority_queue_fast_with_array.cc: Remove ...
+	* tests/core/p_priority_queue_fast_with_array.cc: ... replace here.
+	* tests/core_p_queue.cc: Remove ...
+	* tests/core/p_queue.cc: ... replace here.
+	* tests/core_p_queue_fast.cc: Remove ...
+	* tests/core/p_queue_fast.cc: ... replace here.
+	* tests/canvas/Makefile.am,
+	* tests/core/Makefile.am: Update Makefile for these tests.
+
 2007-12-17  Benoit Sigoure  <tsuna@lrde.epita.fr>
 
 	Add a missing include.

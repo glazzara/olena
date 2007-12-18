@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core_p_queue_fast.cc
+/*! \file tests/core/p_queue.cc
  *
- * \brief Tests on mln::p_queue_fast.
+ * \brief Tests on mln::p_queue.
  */
 
 #include <mln/core/point2d.hh>
-#include <mln/core/p_queue_fast.hh>
+#include <mln/core/p_queue.hh>
 
 
 
@@ -39,7 +39,7 @@ int main()
 {
   using namespace mln;
 
-  p_queue_fast<point2d> q;
+  p_queue<point2d> q;
   q
     .push(make::point2d(6, 9))
     .push(make::point2d(5, 1))

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/debug_iota.cc
+/*! \file tests/debug/iota.cc
  *
  * \brief Tests on mln::debug::iota.
  */

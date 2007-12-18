@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/p_priority_queue_fast_with_array.cc
+/*! \file tests/core/p_priority_queue_fast_with_array.cc
  *
  * \brief Tests on mln::p_priority_queue_fast_with_array.
  */

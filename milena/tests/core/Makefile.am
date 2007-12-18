@@ -15,7 +15,12 @@ check_PROGRAMS =				\
   p_runs					\
   rle_image					\
   sparse_image					\
-  t_image
+  t_image					\
+  p_priority_queue				\
+  p_priority_queue_fast				\
+  p_priority_queue_fast_with_array		\
+  p_queue					\
+  p_queue_fast
 
 category_SOURCES = category.cc
 clone_SOURCES = clone.cc
@@ -30,5 +35,12 @@ p_runs_SOURCES = p_runs.cc
 rle_image_SOURCES = rle_image.cc
 sparse_image_SOURCES = sparse_image.cc
 t_image_SOURCES = t_image.cc
+p_priority_queue_SOURCES = p_priority_queue.cc
+p_priority_queue_fast_SOURCES = p_priority_queue_fast.cc
+p_priority_queue_fast_with_array_SOURCES = p_priority_queue_fast.cc
+p_queue_SOURCES = p_priority_queue_fast.cc
+p_queue_fast_SOURCES = p_priority_queue_fast.cc
+
+
 
 TESTS = $(check_PROGRAMS)

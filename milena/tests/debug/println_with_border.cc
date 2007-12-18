@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/debug_println_with_border.cc
+/*! \file tests/debug/println_with_border.cc
  *
  * \brief Test on mln::debug::println_with_border.
  */

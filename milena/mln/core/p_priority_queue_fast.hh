@@ -53,13 +53,11 @@ namespace mln
   template <typename P> struct p_array_bkd_piter_;
 
 
-  /*! \brief Point queue class (based on std::deque).
+  /*! \brief Point fast queue class (based on std::map and p_queue_fast).
    *
    * This is a mathematical set of points (unique insertion).
    *
    * \todo Make it work with P being a Point_Site.
-   * \todo Add a parameter flag to choose another policy for "push"
-   * (i.e., no-op if multiple or allow multiple insertions).
    *
    * \warning We have some troubles with point set comparison based on
    * a call to npoints() when this container is multiple.
@@ -168,7 +166,7 @@ namespace mln
     bb_.init();
 
     typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
-    
+
     for (; it != q_.end (); ++it)
       for (unsigned i = 0; i < (*it).second.npoints (); ++i)
 	bb_.take((*it).second[i]);

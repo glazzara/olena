@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/mesh_image.cc
+/*! \file tests/core/mesh_image.cc
  *
  *  \brief Tests on mln::mesh_image.
  */

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/norm/linfty.hh
+/*! \file tests/norm/linfty.cc
  *
  *  \brief Test the L-infinity-norm.
  */
