@@ -21,7 +21,7 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  
+// License.
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
@@ -45,8 +45,11 @@ namespace mln
   template<typename P> class mesh_p;
 
 
-  // FIXME: Doc!
-  // FIXME: Fix access to member.
+  /*!
+   * \brief Point site associate to mesh_image.
+   *
+   * \todo Fix access to member.
+   */
   template<typename P>
   class mesh_psite : public Point_Site< mesh_psite<P> >
   {

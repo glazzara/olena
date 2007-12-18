@@ -45,7 +45,7 @@ namespace mln
   namespace util
   {
 
-    /*! Convert a tree into an image.
+    /*! \brief Convert a tree into an image.
      *
      * \param[in] tree The tree to convert.
      * \param[out] output_ The image containing tree informations.
@@ -57,7 +57,7 @@ namespace mln
 
     /*! Display a tree.
      *
-     * \param[in] ima The domain of output image.
+     * \param[in] ima_ The domain of output image.
      * \param[in] tree The tree to display.
      *
      */
@@ -68,7 +68,7 @@ namespace mln
 
     /*! Display an arborescence from \p node.
      *
-     * \param[in] ima The domain of output image.
+     * \param[in] ima_ The domain of output image.
      * \param[in] node The root node to display.
      *
      */

@@ -130,7 +130,7 @@ namespace mln
       /*! \brief Bind \p node to the current node and become its
        *  parent.
        *
-       * \param[in] node The new parent node.
+       * \param[in] parent The new parent node.
        *
        */
       void set_parent(node<T>* parent);
@@ -144,6 +144,7 @@ namespace mln
        *  node as root.
        *
        * \param[in] ostr The output stream.
+       * \param[in] level The deep level
        *
        */
       void print(std::ostream& ostr, int level = 0);

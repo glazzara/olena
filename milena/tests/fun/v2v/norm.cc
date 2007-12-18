@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/norm/l1.hh
+/*! \file tests/fun/v2v/norm.cc
  *
  *  \brief Test the norm functors.
  */

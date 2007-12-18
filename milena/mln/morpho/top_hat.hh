@@ -47,7 +47,7 @@ namespace mln
 
     /*! Morphological white top-hat (for object / light objects).
      *
-     * This operator is Id - ope_B. 
+     * This operator is Id - ope_B.
      */
     template <typename I, typename W>
     mln_concrete(I)

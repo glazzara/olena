@@ -47,7 +47,7 @@ namespace mln
 
     /*! Fill the image \p input with successive values.
      *
-     * \param[in,out] destination The image in which values are
+     * \param[in,out] input The image in which values are
      * assigned.
      */
     template <typename I>

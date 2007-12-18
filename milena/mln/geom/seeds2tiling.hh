@@ -50,10 +50,10 @@ namespace mln
     /*! Take a labeled image \p ima_ with seeds and extend them
      *  until creating tiles.
      *
-     * \param[in,out] ima The labeled image with seed.
+     * \param[in,out] ima_ The labeled image with seed.
      * \param[in] nbh The neighborhood to use on this algorithm.
      *
-     * \pre \p ima has to be initialized.
+     * \pre \p ima_ has to be initialized.
      *
      */
     template <typename I, typename N>

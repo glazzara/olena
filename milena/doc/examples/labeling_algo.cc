@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling_algo.cc
+/*! \file doc/examples/labeling_algo.cc
  *
  * \brief Test on mln::geom::seeds2tiling.
  */

@@ -86,7 +86,7 @@ namespace mln
 
   } // end of namespace mln::trait
 
-  /*! \brief FIXME
+  /*! \brief Kind of image based on graph structure.
    *
    */
   template <typename P, typename V>
@@ -118,7 +118,7 @@ namespace mln
 
     /// Read-only access of pixel value at point site \p p.
     const V& operator()(const mesh_psite<P>& p) const;
-    
+
     /// Read-write access of pixel value at point site \p p.
     V& operator()(const mesh_psite<P>& p);
 
@@ -175,7 +175,7 @@ namespace mln
     mln_precondition(p.i_ < this->data_->val_.size());
     return this->data_->val_[p.i_];
   }
-    
+
   template <typename P, typename V>
   inline
   V&

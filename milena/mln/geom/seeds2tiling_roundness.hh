@@ -53,12 +53,12 @@ namespace mln
     /*! Take a labeled image \p ima_ with seeds and extend them until
      *  creating tiles nore roundness that the primary version.
      *
-     * \param[in,out] ima The labeled image with seed.
+     * \param[in,out] ima_ The labeled image with seed.
      * \param[in] win_w The weight window using by geom::chamfer to compute distance.
      * \param[in] max Unsigned using by geom::chamfer to compute distance.
      * \param[in] nbh The neighborhood to use on this algorithm.
      *
-     * \pre \p ima has to be initialized.
+     * \pre \p ima_ has to be initialized.
      *
      */
     template <typename I, typename N>

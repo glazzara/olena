@@ -1,5 +1,21 @@
 2007-12-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Reduce warnings for Doxygen.
+
+	* doc/examples/labeling_algo.cc,
+	* mln/core/mesh_image.hh,
+	* mln/core/mesh_psite.hh,
+	* mln/debug/iota.hh,
+	* mln/geom/seeds2tiling.hh,
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/morpho/top_hat.hh,
+	* mln/pw/image.hh,
+	* mln/util/tree.hh,
+	* mln/util/tree_to_image.hh,
+	* tests/fun/v2v/norm.cc: Fix some Doxygen warnings for these files.
+
+2007-12-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Review queue in core and fix some warnings in tests directory.
 	Review queue files.
 	* mln/core/p_priority_queue.hh,

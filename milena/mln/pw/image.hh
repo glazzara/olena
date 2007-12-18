@@ -168,7 +168,7 @@ namespace mln
 
   namespace internal
   {
-
+    /// \internal
     template <typename F, typename S>
     inline
     data_< pw::image<F,S> >::data_(const F& f, const S& ps)
