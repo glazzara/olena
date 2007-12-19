@@ -45,8 +45,11 @@
 
 
 # define mln_trait_value_nature(V) typename mln::trait::value_< V >::nature
+# define mln_trait_value_nature_(V)         mln::trait::value_< V >::nature
 # define mln_trait_value_kind(V)   typename mln::trait::value_< V >::kind
+# define mln_trait_value_kind_(V)           mln::trait::value_< V >::kind
 # define mln_trait_value_quant(V)  typename mln::trait::value_< V >::quant
+# define mln_trait_value_quant_(V)          mln::trait::value_< V >::quant
 
 
 # define mln_nbits(V)    mln::trait::value_< V >::nbits

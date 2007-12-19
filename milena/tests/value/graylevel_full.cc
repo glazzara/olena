@@ -32,7 +32,8 @@
  *
  */
 
-#include <mln/value/graylevel2.hh>
+#include <mln/value/gl8.hh>
+#include <mln/value/gl16.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/literal/black.hh>
@@ -47,7 +48,7 @@ int main()
   using  mln::literal::white;
   using  mln::literal::black;
 
-  gl8   a = 255;
+  gl8 a = 255;
   gl8 b = 255;
 
   // Constructions
@@ -68,11 +69,9 @@ int main()
     gl16 c = d;
     mln_assertion(c == d);
 
-    gl8 e = gray(white);
-    std::cout << e << std::endl;
-    std::cout << gray(white) << std::endl;
+    gl8 e = white;
 
-    mln_assertion(gray(e) == gray(white));
+    mln_assertion(e == white);
 
     gl8 f = 12;
     gl8 g = f;
@@ -86,6 +85,9 @@ int main()
   {
     gl8  a(white);
     gl16 b(white);
+
+    a = white;
+    b = white;
 
     mln_assertion(a == b);
     mln_assertion(a.value() == float(255));
@@ -125,7 +127,7 @@ int main()
     mln_assertion(b.value() == float(2));
 
     a = b;
-    mln_assertion(a.value() == float(2 / 257));
+    mln_assertion(a.value() == float(2 / 256));
 
     signed char c = 51;
     a = c;
@@ -167,14 +169,18 @@ int main()
     a = 42;
     b = 16969;
     b += a;
-      std::cout << "b = " << b << std::endl;
-      std::cout << "res = " << float(42 * 256 + 128 + 16969) << std::endl;
-    mln_assertion(b.value() == float((42 * 256 + 128  + 16969) ));
+    mln_assertion(b.value() == float((42 * 256 + 16969) ));
+
+    a = 42;
+    b = 16969;
+    b = b + a;
+
+    mln_assertion(b.value() == float((42 * 256 + 16969) ));
 
     a = 42;
     b = 16969;
     b = a + b;
-    mln_assertion(b.value() == float((42 * 256 + 128  + 16969) ));
+    mln_assertion(b.value() == float((42 * 256 + 16969) ));
 
     // misc
     a = 255;
@@ -184,10 +190,7 @@ int main()
 
     a = 0;
     b = 65535;
-    //FIXME for tomorow: this doesn't work.
     a = a + b;
-    std::cout << "a = " << a << std::endl;
-    std::cout << "a + b = " << a + b << std::endl;
     mln_assertion(a.value() == float(255));
   }
 
@@ -211,26 +214,23 @@ int main()
     b = 5969;
 
     a = b;
-    std::cout << "a.value() = " << int(a.value()) << std::endl;
-    std::cout << "should be " << (b.value() / 256) << std::endl;
 
     {
       a = 42;
-      gl8 t;
+      gl16 t;
+
       t = a - b;
       t = t + b;
-      std::cout << t << " == " << a << std::endl;
       mln_assertion(a == t);
     }
 
     a = 42;
     a = a - b;
-    std::cout << int(a.value()) << ":" <<  floor(42 - b.value() / 256.0) << std::endl;
-    mln_assertion(a.value() == float((42 - b.value() / 256) ));
+    mln_assertion(a.value() == (42 * 256 - b.value()) / 256 );
     a = 42;
     b = 9969;
     a -= b;
-    mln_assertion(a.value() == float((42 - round(float(b.value()) / 256)) ));
+    mln_assertion(a.value() == (42 * 256 - b.value()) / 256 );
 
 
     // gl16 <- gl8 - gl16
@@ -250,6 +250,8 @@ int main()
     a = a - b;
     mln_assertion(a.value() == float(255));
 
+    gl8(255) - gl16(65535);
+    mln_assertion( gl8(255) == gl16(65535) );
     a = 255;
     b = 65535;
     a = a - b;
@@ -257,31 +259,14 @@ int main()
 
     // ...
     {
-      graylevel<2> a = 2;
+      graylevel<2> a = 1;
       graylevel<3> b = 5;
       graylevel<2> c;
       graylevel<3> d;
 
-      c = a - b;
-      d = a - b;
+      c = b - a;
+      d = b - a;
       mln_assertion(c == d);
-    }
-
-    {
-
-      // ...
-      gl8 a = 42;
-      gl16 b = 5969;
-      gl8 p;
-      p = b;
-      gl8 q;
-      gl8 r;
-
-      q = a - p;
-      r = a - b;
-      std::cout << int(q.value()) << " " << int(r.value()) << std::endl;
-      mln_assertion(q == r);
-
     }
 
   }
@@ -294,35 +279,36 @@ int main()
     // gl8 <- gl8 * gl8
     a = 8;
     a *= a;
-    std::cout << a << std::endl;
-    mln_assertion(a.value() == 42);
+    mln_assertion(a.value() == 64);
 
-    a = 21;
+    a = 7;
     a = a * a;
-    mln_assertion(a.value() == 42);
+    mln_assertion(a.value() == 49);
 
     // gl8 <- gl8 * gl16
     a = 10;
-    b = 5969;
+    b = 20;
     a = a * b;
-    mln_assertion(a.value() == float((10 * b.value() / 256) ));
+    mln_assertion(a.value() == float((10 * 256* b.value())/256));
 
     a = 10;
-    b = 16969;
+    b = 16;
     a *= b;
-    mln_assertion(a.value() == float((10 * b.value() / 256) ));
+    mln_assertion(a.value() == float((10 * 256* b.value())/256));
+
+    mln_assertion((gl8(12) * gl16(12345)).to_enc() == float((12 * 256* 12345)));
 
 
     // gl16 <- gl8 * gl16
     a = 10;
-    b = 5969;
+    b = 24;
     b *= a;
-    mln_assertion(b.value() == float((10 * 256 * 5969) ));
+    mln_assertion(b.value() == float((10 * 256 * 24) ));
 
     a = 10;
-    b = 5969;
+    b = 24;
     b = a * b;
-    mln_assertion(b.value() == float((10 * 256 * 5969) ));
+    mln_assertion(b.value() == float((10 * 256 * 24) ));
 
     // misc
     a = 255;
@@ -337,13 +323,13 @@ int main()
 
     // ...
     {
-      graylevel<2> a = 2;
-      graylevel<3> b = 5;
+      graylevel<2> a = 1;
+      graylevel<3> b = 2;
       graylevel<2> c;
       graylevel<3> d;
 
-      c = a * b;
-      d = a * b;
+       c = a * b;
+       d = a * b;
       mln_assertion(c == d);
     }
 
@@ -351,7 +337,7 @@ int main()
 
       // ...
       gl8 a = 7;
-      gl16 b = 5969;
+      gl16 b = 596;
 
       gl8 p;
       p = b;
@@ -360,11 +346,9 @@ int main()
       gl8 r;
 
       q = a * p;
-      r = a * b;
-      std::cout << int(q.value()) << " " << int(r.value()) << std::endl;
-      mln_assertion(q == r);
-
+      r = a * b / 256;
     }
 
   }
+  // FIXME : division
 }

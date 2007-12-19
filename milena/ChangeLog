@@ -1,3 +1,34 @@
+2007-12-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Rewrite graylevel types.
+
+	* mln/value/gray.hh: Rename as...
+	* mln/value/internal/gray_.hh: ...this. Gray_<n> is a graylevel
+	encoded on n bits. It can represent value greater than pow(2, n).
+	* mln/value/internal/gray_f.hh: New, gray_f is a graylevel encoded on
+	a float. It can represent value greater than 1.
+	* mln/value/glf.hh: New, alias to graylevel_f.
+	* mln/value/graylevel.hh: graylevel<n> is a graylevel encoded on n
+	bits. its interoperability type is gray_<n>.
+	* mln/value/graylevel_f.hh: New. graylevel_f is a graylevel encoded on
+	a float01_f.
+	* tests/value/graylevel.cc: Unit tests on graylevel.
+	* tests/value/graylevel_f.cc: Unit tests on graylevel_f.
+	* tests/value/graylevel_f_full.cc: Full tests on graylevel_f.
+	* tests/value/graylevel_full.cc: Full tests on graylevel.
+
+	Misc.
+
+	* mln/trait/value_.hh: (mln_trait_value_nature_) New,
+	(mln_trait_value_quant_) new,
+	(mln_trait_value_kind_) new.
+	* mln/metal/math/max.hh: (mlc_max) New,
+	(mlc_max_int) new.
+	* tests/arith/revert_full.cc: Add a test on int_u8.
+	* mln/accu/count.hh: Add a fixme to add an take without argument.
+	* mln/core/fi_adaptor.hh: Disable a precondition because it doesn't
+	work on rgb values.
+
 2007-12-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add briefs to fill out user documentation.

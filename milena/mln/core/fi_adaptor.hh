@@ -244,7 +244,7 @@ namespace mln
     data_< fi_adaptor<I> >::sync_with_adaptee_()
     {
       mln_precondition(fi_ima_.isValid());
-      mln_precondition(fi_ima_.getBitsPerPixel() == 8 * sizeof(mln_value(I)));
+      //FIXME: doesnt work for rgb: mln_precondition(fi_ima_.getBitsPerPixel() == 8 * sizeof(mln_value(I)));
 
       deallocate_();
       b_ = make::box2d(fi_ima_.getHeight(),

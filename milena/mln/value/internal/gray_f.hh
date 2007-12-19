@@ -1,0 +1,273 @@
+// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+// Boston, MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
+
+#ifndef MLN_VALUE_INTERNAL_GRAY_F_HH
+# define MLN_VALUE_INTERNAL_GRAY_F_HH
+
+/*! \file mln/value/internal/gray_f.hh
+ *
+ * \brief Definition of the mln::value::gray_f class.
+ */
+
+# include <iostream>
+
+# include <mln/value/ops.hh>
+
+# include <mln/core/contract.hh>
+# include <mln/metal/math/pow.hh>
+# include <mln/math/two_pow.hh>
+# include <mln/metal/bexpr.hh>
+# include <mln/literal/ops.hh>
+
+# include <mln/value/float01_f.hh>
+# include <mln/value/gray.hh>
+# include <mln/trait/value_.hh>
+
+
+namespace mln
+{
+
+  namespace literal
+  {
+    /// \{ Fwd decls.
+    struct black_t;
+    struct medium_gray_t;
+    struct white_t;
+    /// \}
+  }
+  namespace value
+  {
+    /// \{ Fwd decls.
+    class gray;
+    struct gray_f;
+    struct float01_f;
+    /// \}
+  }
+
+
+
+  namespace trait
+  {
+
+
+    template < template <class, class> class Name>
+    struct set_precise_binary_< Name, mln::value::gray_f, mln::value::gray_f >
+    {
+      typedef mln::value::gray_f ret;
+    };
+
+    struct set_precise_binary_< op::greater, mln::value::gray_f, mln::value::gray_f >
+    {
+      typedef bool ret;
+    };
+
+    struct set_precise_binary_< op::eq, mln::value::gray_f, mln::value::gray_f >
+    {
+      typedef bool ret;
+    };
+
+    // Nessecary??
+//     template <typename F>
+//     struct set_binary_< op::eq,
+// 			mln::value::Floating,  mln::value::gray_f,
+// 			mln::value::Floating, F >
+//     {
+//       typedef bool ret;
+//     };
+
+    /// Forward declaration.
+    template <typename T> struct value_;
+
+    // 'gray_f' as a value.
+    template <>
+    struct value_<mln::value::gray_f>
+    {
+    private:
+      typedef mln::value::gray_f self_;
+      typedef float equiv_;
+
+    public:
+
+      enum {
+	nbits = mln_nbits(equiv_),
+	card  = 0
+      };
+
+      typedef trait::value::nature::floating nature;
+      typedef trait::value::kind::gray       kind;
+      typedef mln_trait_value_quant_(equiv_)   quant;
+
+      static const equiv_ min() { return 0; }
+      static const equiv_ max() { return 1; }
+      static const equiv_ epsilon() { return mln_epsilon(equiv_); }
+
+      typedef float sum;
+    };
+
+  } // end of namespace mln::trait
+
+
+
+  namespace value
+  {
+
+    namespace internal
+    {
+
+      /// \internal General gray-level class on n bits.
+      struct gray_f
+	:
+	public Floating< gray_f >,
+
+	public internal::value_like_< float,     // Equivalent.
+				      float,     // Encoding.
+				      gray_f,    // Interoperation.
+				      gray_f >   // Exact.
+      {
+	/// Constructor without argument.
+	gray_f();
+
+	/// \{ Constructors/assigments with gray_f.
+	gray_f(const gray_f& rhs);
+	gray_f& operator=(const gray_f& rhs);
+	/// \}
+
+	/// \{ Constructors/assigments with float.
+	gray_f(float val);
+	gray_f& operator=(float val);
+	/// \}
+
+	/// \{ Constructors/assigments with graylevel_f.
+	gray_f(const graylevel_f& val);
+	gray_f& operator=(const graylevel_f& val);
+	/// \}
+
+	/// Convertion to graylevel<n>
+	template <unsigned m>
+	operator graylevel<m>() const;
+
+	/// Convertion to graylevel_f
+	operator graylevel_f() const;
+
+	/// Access to std type.
+	float value() const;
+      };
+
+      // Operators.
+
+      /// \internal Op<<.
+      std::ostream& operator<<(std::ostream& ostr, const gray_f& g);
+
+# ifndef MLN_INCLUDE_ONLY
+
+      // gray_f.
+
+      inline
+      gray_f::gray_f()
+      {
+      }
+
+      inline
+      gray_f::gray_f(const gray_f& g)
+	: v_(g.v_)
+      {
+      }
+
+      inline
+      gray_f&
+      gray_f::operator=(const gray_f& g)
+      {
+	this->v_ = g.v_;
+	return *this;
+      }
+
+      inline
+      gray_f::gray_f(float val)
+      {
+	this->v_ = val;
+      }
+
+      inline
+      gray_f&
+      gray_f::operator=(float val)
+      {
+	this->v_ = val;
+	return *this;
+      }
+
+      inline
+      gray_f&
+      gray_f::gray_f(const graylevel_f& rhs)
+	: v_(rhs.v_)
+      {
+      }
+
+      inline
+      gray_f&
+      gray_f::gray_f& operator=(const graylevel_f& rhs)
+      {
+	this->v_ = rhs.v_;
+	return *this;
+      }
+
+      template <unsigned m>
+      inline
+      gray_f::operator graylevel<m>() const
+      {
+	return graylevel<m>(round(this->v_ * (mlc_pow_int(2, m) - 1)));
+      }
+
+      inline
+      gray_f::operator graylevel_f() const
+      {
+	return graylevel_f(this->v_);
+      }
+
+      inline
+      float
+      gray_f::value() const
+      {
+	return this->v_;
+      }
+
+      // Operators.
+
+      inline
+      std::ostream& operator<<(std::ostream& ostr, const gray_f& g)
+      {
+	return ostr << g.value() << "/gl_f"; // FIXME: Be more explicit!
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::value::internal
+
+  } // end of namespace mln::value
+
+} // end of namespace mln
+
+#endif // ! MLN_VALUE_GRAY_F_HH

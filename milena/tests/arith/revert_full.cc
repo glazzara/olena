@@ -266,6 +266,8 @@ int main()
   chk<value::int_s8>();
   std::cerr << "on int_s16:" << std::endl;
   chk<value::int_s16>();
+  std::cerr << "on int_u8:" << std::endl;
+  chk<value::int_u8>();
   std::cerr << "on unsigned:" << std::endl;
   chk<unsigned>();
 }

@@ -25,55 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_METAL_MATH_MAX_HH
-# define MLN_METAL_MATH_MAX_HH
-
-/*! \file mln/metal/math/max.hh
+/*! \file tests/value/graylevel_f.cc
  *
- * \brief Definition of the 'max' static function.
+ * \brief Tests on mln::value::graylevel_f.
  */
 
-# include <mln/metal/bool.hh>
-# include <mln/metal/int.hh>
+#include <mln/value/graylevel.hh>
+#include <mln/value/glf.hh>
+#include <mln/literal/all.hh>
 
-# define mlc_max(X, Y)      typename mln::metal::math::max< X, Y >::ret
-# define mlc_max_int(x, y)           mln::metal::math::max_int< x, y >::value
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::glf;
 
-  namespace metal
+  using literal::black;
+  using literal::medium_gray;
+  using literal::white;
+
+
+  // Literals.
   {
+    glf a = medium_gray;
+    glf b = medium_gray;
+    //a == 0.5f;
+    mln_assertion(0.5f == a.to_enc());
+    //a == b;
+    mln_assertion(b == a);
 
-    namespace math
-    {
-
-      // max_int<x, y>
-
-      template <int x, int y>
-      struct max_int
-      {
-	enum { value = (x > y ? x : y) };
-      };
-
-
-      // max<X, Y>
-
-      template <typename X, typename Y>
-      struct max;
-
-      template <int x, int y>
-      struct max< int_<x>, int_<y> >
-      {
-	typedef int_< max_int<x, y>::value > ret;
-      };
-
-
-    } // end of namespace mln::metal::math
-
-  } // end of namespace mln::metal
-
-} // end of namespace mln
-
-
-#endif // ! MLN_METAL_MATH_MAX_HH
+    a *= 2;
+    mln_assertion(a == white);
+    mln_assertion(a.to_enc() == 1.f);
+  }
+}

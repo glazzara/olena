@@ -58,6 +58,7 @@ namespace mln
       count_();
 
       void init();
+      // FIXME : should we add a take() without argument?
       void take(const argument&);
       void take(const count_<T>& other);
 
