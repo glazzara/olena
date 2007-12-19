@@ -46,7 +46,7 @@ namespace mln
   {
 
 
-    /*! Generic max accumulator class.
+    /*! \brief Generic max accumulator class.
      *
      * The parameter \c T is the type of values.
      */
@@ -74,7 +74,9 @@ namespace mln
     template <typename I> struct max_< util::pix<I> >;
 
 
-    // FIXME: Doc!
+    /*!
+     * \brief Meta accumulator for max.
+     */
     struct max : public Meta_Accumulator< max >
     {
       template <typename T>

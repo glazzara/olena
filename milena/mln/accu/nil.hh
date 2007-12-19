@@ -47,7 +47,8 @@ namespace mln
   namespace accu
   {
 
-    /*! Define an accumulator that does nothing.
+    /*!
+     * \brief Define an accumulator that does nothing.
      */
     template <typename T>
     struct nil_ : public mln::accu::internal::base_< util::ignore , nil_<T> >
@@ -66,8 +67,9 @@ namespace mln
     };
 
 
-
-    // FIXME: Doc!
+    /*!
+     * \brief Meta accumulator for nil.
+     */
     struct nil : public Meta_Accumulator< nil >
     {
       template <typename V>

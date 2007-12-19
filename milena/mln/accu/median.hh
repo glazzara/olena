@@ -44,8 +44,8 @@ namespace mln
   {
 
 
-    /*! Generic median function based on histogram over a value set
-     * with type \c S.
+    /*! \brief Generic median function based on histogram over a value
+     * set with type \c S.
      */
     template <typename S>
     struct median : public mln::accu::internal::base_< mln_value(S), median<S> >

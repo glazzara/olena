@@ -44,7 +44,7 @@ namespace mln
   {
 
 
-    /*! Generic bbox accumulator class.
+    /*! \brief Generic bbox accumulator class.
      *
      * The parameter \c P is the type of points.
      */

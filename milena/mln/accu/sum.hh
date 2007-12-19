@@ -48,7 +48,7 @@ namespace mln
   {
 
 
-    /*! Generic sum accumulator class.
+    /*! \brief Generic sum accumulator class.
      *
      * Parameter \c T is the type of values that we sum.  Parameter \c
      * S is the type to store the value sum; the default type of
@@ -78,7 +78,9 @@ namespace mln
     struct sum_< util::pix<I>, S >;
 
 
-    // FIXME: Doc!
+    /*!
+     * \brief Meta accumulator for sum.
+     */
     struct sum : public Meta_Accumulator< sum >
     {
       template <typename T, typename S = mln_sum(T)>

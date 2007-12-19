@@ -44,7 +44,10 @@ namespace mln
   {
 
 
-    /*! Generic counter accumulator class.
+    /*!
+     * \brief Generic counter accumulator class.
+     *
+     * The parameter \a T is the type to be count.
      */
     template <typename T>
     struct count_ : public mln::accu::internal::base_< std::size_t , count_<T> >
@@ -67,7 +70,9 @@ namespace mln
     };
 
 
-    // FIXME: Doc!
+    /*!
+     * \brief Meta accumulator for count.
+     */
     struct count : public Meta_Accumulator< count >
     {
       template <typename T>

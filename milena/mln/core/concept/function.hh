@@ -41,6 +41,7 @@ namespace mln
 
   /// \{
   /// Fwd decls.
+
   template <typename E> struct Function;
   template <typename E> struct Function_v2v;
   template <typename E> struct Function_i2v;
@@ -85,8 +86,12 @@ namespace mln
   template <>
   struct Function_v2v<void> { typedef Function<void> super; };
 
-  /// Base class for implementation of function-objects from value to
-  /// value.
+  /*!
+   * \brief Base class for implementation of function-objects from
+   * value to value.
+   *
+   * The parameter \a E is the exact type.
+   */
   template <typename E>
   struct Function_v2v : public Function<E>
   {
@@ -102,8 +107,13 @@ namespace mln
   template <>
   struct Function_i2v<void> { typedef Function_v2v<void> super; };
 
-  /// Base class for implementation of function-objects from index to
-  /// value.
+
+  /*!
+   * \brief Base class for implementation of function-objects from
+   * index to value.
+   *
+   * The parameter \a E is the exact type.
+   */
   template <typename E>
   struct Function_i2v : public Function_v2v<E>
   {
@@ -119,8 +129,12 @@ namespace mln
   template <>
   struct Function_p2v<void> { typedef Function_v2v<void> super; };
 
-  /// Base class for implementation of function-objects from point to
-  /// value.
+  /*!
+   * \brief Base class for implementation of function-objects from point to
+   *  value.
+   *
+   * The parameter \a E is the exact type.
+   */
   template <typename E>
   struct Function_p2v : public virtual Function_v2v<E>
   {
@@ -136,8 +150,12 @@ namespace mln
   template <>
   struct Function_v2b<void> { typedef Function_v2v<void> super; };
 
-  /// Base class for implementation of function-objects from value to
-  /// bool.
+  /*!
+   * \brief Base class for implementation of function-objects from value to
+   * bool.
+   *
+   * The parameter \a E is the exact type.
+   */
   template <typename E>
   struct Function_v2b : public virtual Function_v2v<E>
   {
@@ -154,8 +172,12 @@ namespace mln
   template <>
   struct Function_p2b<void> { typedef Function_p2v<void> super; }; // FIXME
 
-  /// Base class for implementation of function-objects from point to
-  /// bool.
+  /*!
+   * \brief Base class for implementation of function-objects from point to
+   * bool.
+   *
+   * The parameter \a E is the exact type.
+   */
   template <typename E>
   struct Function_p2b : public Function_p2v<E>,
 			public Function_v2b<E>
@@ -173,8 +195,12 @@ namespace mln
   template <>
   struct Function_p2p<void> { typedef Function_p2v<void> super; }; // FIXME
 
-  /// Base class for implementation of function-objects from point to
-  /// point.
+  /*!
+   * \brief Base class for implementation of function-objects from point to
+   * point.
+   *
+   * The parameter \a E is the exact type.
+   */
   template <typename E>
   struct Function_p2p : public Function_p2v<E>
   {
@@ -190,8 +216,12 @@ namespace mln
   template <>
   struct Function_x2x<void> { typedef Function_v2v<void> super; }; // FIXME
 
-  /// Base class for implementation of function-objects from vector to
-  /// vector.
+  /*!
+   * \brief Base class for implementation of function-objects from vector to
+   * vector.
+   *
+   * The parameter \a E is the exact type.
+   */
   template <typename E>
   struct Function_x2x : public Function_v2v<E>
   {
@@ -203,8 +233,12 @@ namespace mln
 
   // Vector <-> Vector.
 
-  /// Base class for implementation of bijective function-objects from
-  /// vector to vector.
+  /*!
+   * \brief Base class for implementation of bijective function-objects from
+   *  vector to vector.
+   *
+   * The parameter \a E is the exact type.
+   */
   template <typename E>
   struct Bijection_x2x : public Function_x2x< E >
   {
@@ -234,8 +268,8 @@ namespace mln
   {
   }
 
-  template <typename E>  
-  inline  
+  template <typename E>
+  inline
   Function_v2v<E>::Function_v2v()
   {
   }

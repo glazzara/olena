@@ -44,8 +44,8 @@ namespace mln
   {
 
 
-    /*! Generic min function based on histogram over a value set with
-     * type \c S.
+    /*! \brief Generic min function based on histogram over a value
+     * set with type \c S.
      */
     template <typename S>
     struct min_h : public mln::accu::internal::base_< mln_value(S) , min_h<S> >

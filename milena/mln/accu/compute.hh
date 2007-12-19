@@ -46,7 +46,7 @@ namespace mln
   namespace accu
   {
 
-    /*! Make an accumulator compute the pixels of the image \p input.
+    /*! \brief Make an accumulator compute the pixels of the image \p input.
      *
      * \param[in] input The input image.
      *
@@ -61,7 +61,16 @@ namespace mln
     compute(const Image<I>& input);
 
 
-    // FIXME: Doc!
+    /*! \brief Make an accumulator compute the pixels of the image \p input.
+     *
+     * \param[in] input The input image.
+     *
+     * This routine runs: \n
+     *   a.take(make::pix(input, p));
+     *   on all pixels on the images.
+     *
+     * \warning This routine does not perform a.init().
+     */
     template <typename A, typename I>
     mln_accu_with(A, util::pix<I>)::result
     compute(const Image<I>& input);

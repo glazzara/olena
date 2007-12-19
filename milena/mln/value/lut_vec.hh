@@ -51,7 +51,7 @@ namespace mln
     template <typename S> struct bkd_viter_;
 
 
-    /*! Class that defines FIXME
+    /*! \brief Class that defines FIXME
      *
      * \warning This is a multi-set!!!
      * FIXME

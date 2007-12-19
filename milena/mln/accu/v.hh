@@ -45,7 +45,8 @@ namespace mln
   {
 
 
-    /*! Generic v of accumulators.
+    /*!
+     * \brief Generic val of accumulators.
      */
     template <typename A>
     struct val_ : public mln::accu::internal::base_< mln_result(A) , val_<A> >
@@ -80,8 +81,9 @@ namespace mln
     };
 
 
-
-    // FIXME: Doc!
+    /*!
+     * \brief Meta accumulator for val.
+     */
     template <typename mA>
     struct val : public Meta_Accumulator< val<mA> >
     {

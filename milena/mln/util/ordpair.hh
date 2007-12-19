@@ -42,9 +42,12 @@ namespace mln
   namespace util
   {
 
-    /// Ordered pair structure s.a. this->first <= this->second;
-    /// ordered pairs are partially ordered using lexicographical
-    /// ordering.
+    /*!
+     * \brief  Ordered pair structure s.a. this->first <= this->second;
+     * ordered pairs are partially ordered using lexicographical
+     * ordering.
+     *
+     */
     template <typename T>
     struct ordpair_ : public mln::Object< ordpair_<T> >
     {

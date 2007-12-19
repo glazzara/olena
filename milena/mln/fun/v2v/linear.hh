@@ -45,13 +45,12 @@ namespace mln
     namespace v2v
     {
 
-      /*! Linear function.
-       *
+      /*!
+       *\brief Linear function.
        * f(v) = a * v + b.
-       *
        * \c V is the type of input values; \c T is the type used to
        * compute the result; \c R is the result type.
-       * 
+       *
        * By defaut, \c T is \c V and \c R is \c T.
        */
       template <typename V, typename T = V, typename R = T>

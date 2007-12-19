@@ -44,7 +44,7 @@ namespace mln
   {
 
 
-    /*! Generic max function based on histogram over a value set with
+    /*! \brief Generic max function based on histogram over a value set with
      * type \c S.
      */
     template <typename S>

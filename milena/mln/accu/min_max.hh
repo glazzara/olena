@@ -50,7 +50,7 @@ namespace mln
   namespace accu
   {
 
-    /*! Generic min and max accumulator class.
+    /*! \brief Generic min and max accumulator class.
      *
      * The parameter \c V is the type of values.
      */

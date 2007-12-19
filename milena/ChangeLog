@@ -1,3 +1,36 @@
+2007-12-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add briefs to fill out user documentation.
+
+	* mln/accu/bbox.hh,
+	* mln/accu/compute.hh,
+	* mln/accu/count.hh,
+	* mln/accu/histo.hh,
+	* mln/accu/max.hh,
+	* mln/accu/max_h.hh,
+	* mln/accu/mean.hh,
+	* mln/accu/median.hh,
+	* mln/accu/median_alt.hh,
+	* mln/accu/min.hh,
+	* mln/accu/min_h.hh,
+	* mln/accu/min_max.hh,
+	* mln/accu/nil.hh,
+	* mln/accu/p.hh,
+	* mln/accu/pair.hh,
+	* mln/accu/sum.hh,
+	* mln/accu/take.hh,
+	* mln/accu/v.hh,
+	* mln/core/concept/function.hh,
+	* mln/core/mesh_window_piter.hh,
+	* mln/fun/v2v/linear.hh,
+	* mln/trait/promote.hh,
+	* mln/util/ordpair.hh,
+	* mln/value/lut_vec.hh,
+	* mln/value/set.hh: Fix briefs of structures/classes of these files.
+
+	* doc/Makefile.am: Remove the generation of the TODO list in user
+	documentation.
+
 2007-12-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Reduce warnings for Doxygen.

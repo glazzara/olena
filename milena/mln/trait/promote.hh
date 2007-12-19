@@ -61,9 +61,11 @@ namespace mln
     };
 
 
-    /// Default case when one type is involved twice: the promotion
-    /// type is the same as the input type (so actually there is no
-    /// promotion).
+    /*!
+     * \brief Default case when one type is involved twice: the
+     * promotion type is the same as the input type (so actually there
+     * is no promotion).
+     */
     template <typename T>
     struct set_binary_< promote, Object, T, Object, T >
     {

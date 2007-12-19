@@ -44,7 +44,7 @@ namespace mln
   namespace accu
   {
 
-    /*! Make an accumulator take the pixels of the image \p input.
+    /*! \brief Make an accumulator take the pixels of the image \p input.
      *
      * \param[in] input The input image.
      * \param[in,out] a The accumulator.

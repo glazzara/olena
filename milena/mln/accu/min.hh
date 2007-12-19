@@ -46,7 +46,7 @@ namespace mln
   {
 
 
-    /*! Generic min accumulator class.
+    /*! \brief Generic min accumulator class.
      *
      * The parameter \c T is the type of values.
      */
@@ -74,7 +74,9 @@ namespace mln
     template <typename I> struct min_< util::pix<I> >;
 
 
-    // FIXME: Doc!
+    /*!
+     * \brief Meta accumulator for min.
+     */
     struct min : public Meta_Accumulator< min >
     {
       template <typename T>

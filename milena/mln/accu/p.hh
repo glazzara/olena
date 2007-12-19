@@ -46,7 +46,8 @@ namespace mln
   {
 
 
-    /*! Generic p of accumulators.
+    /*!
+     * \brief Generic p of accumulators.
      *
      * The parameter \c V is the type of values.
      */
@@ -72,8 +73,9 @@ namespace mln
     };
 
 
-
-    // FIXME: Doc!
+    /*!
+     * \brief Meta accumulator for p.
+     */
     template <typename mA>
     struct p : public Meta_Accumulator< p<mA> >
     {

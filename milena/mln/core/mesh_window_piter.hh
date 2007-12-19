@@ -28,9 +28,12 @@
 #ifndef MLN_CORE_MESH_WINDOW_PITER_HH
 # define MLN_CORE_MESH_WINDOW_PITER_HH
 
-// FIXME: Doc.
-
-// FIXME: Shall we rename `piter' as `qiter'?
+/*!
+ * \file   mln/core/mesh_window_piter.hh
+ *
+ * \brief  Definition of point iterator of mesh window.
+ *
+ */
 
 # include <mln/core/concept/point_iterator.hh>
 # include <mln/core/mesh_p.hh>

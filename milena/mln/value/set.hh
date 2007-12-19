@@ -46,10 +46,12 @@ namespace mln
     namespace internal
     {
 
+      /// \internal
       template <typename T, typename E, bool is_lowq = false>
       struct set_selector_ // no inheritance
       {};
 
+      /// \internal
       template <typename T, typename E>
       struct set_selector_< T, E, true > // lowq so iterable
 	:
@@ -60,7 +62,7 @@ namespace mln
 
 
 
-    /*! Class that defines the set of values of type \c T.
+    /*! \brief Class that defines the set of values of type \c T.
      *
      * This is the exhaustive set of values obtainable from type \c T.
      */

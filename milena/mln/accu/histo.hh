@@ -50,7 +50,8 @@ namespace mln
   {
 
 
-    /*! Generic histogram class over a value set with type \c S.
+    /*!
+     * \brief Generic histogram class over a value set with type \c S.
      */
     template <typename S>
     struct histo : public mln::accu::internal::base_< const std::vector<std::size_t>& , histo<S> >
@@ -82,7 +83,6 @@ namespace mln
       std::vector<std::size_t> h_;
       std::size_t sum_;
     };
-
 
     template <typename S>
     std::ostream& operator<<(std::ostream& ostr, const histo<S>& h);

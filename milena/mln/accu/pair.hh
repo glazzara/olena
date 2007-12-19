@@ -49,7 +49,7 @@ namespace mln
   {
 
 
-    /*! Generic pair of accumulators.
+    /*! \brief Generic pair of accumulators.
      *
      * The parameter \c T is the type of values.
      *
@@ -81,9 +81,9 @@ namespace mln
       A2 a2_;
     };
 
-
-
-    // FIXME: Doc!
+    /*!
+     * \brief Meta accumulator for pair.
+     */
     template <typename A1, typename A2>
     struct pair : public Meta_Accumulator< pair<A1,A2> >
     {
