@@ -33,6 +33,9 @@
  * \brief Apply chamfer algorithm to a binary image.
  */
 
+# include <mln/core/internal/image_morpher.hh>
+# include <mln/geom/sym.hh>
+
 namespace mln
 {
   namespace canvas

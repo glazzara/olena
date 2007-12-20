@@ -1,3 +1,8 @@
+2007-12-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add include in mln/canvas/chamfer.hh.
+	* mln/canvas/chamfer.hh: Add includes.
+
 2007-12-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Rewrite graylevel types.
