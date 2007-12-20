@@ -35,7 +35,7 @@
  */
 
 # include <mln/core/concept/mesh.hh>
-# include <mln/core/bool.hh>
+# include <mln/metal/bool.hh>
 
 
 namespace mln

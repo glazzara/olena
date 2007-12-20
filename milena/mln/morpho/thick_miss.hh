@@ -49,8 +49,8 @@ namespace mln
      */
     template <typename I, typename Wfg, typename Wbg>
     mln_concrete(I)
-      thick_miss(const Image<I>& input,
-		 const Window<Wfg>& win_fg, const Window<Wbg>& win_bg);
+    thick_miss(const Image<I>& input,
+	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -58,12 +58,12 @@ namespace mln
     template <typename I, typename Wfg, typename Wbg>
     inline
     mln_concrete(I)
-      thick_miss(const Image<I>& input,
-		 const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
+    thick_miss(const Image<I>& input,
+	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
     {
       trace::entering("morpho::thick_miss");
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      mln_precondition(exact(win_miss).is_centered());
+      // FIXME: Fix the following line (win_miss ??)
+//       mln_precondition(exact(win_miss).is_centered());
       mln_precondition(set::inter(exact(win_fg), exact(win_bg)).is_empty());
 
       mln_concrete(I)

@@ -33,6 +33,10 @@
  * \brief Specializations for mln::debug::iota.
  */
 
+# ifndef MLN_DEBUG_IOTA_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_DEBUG_IOTA_HH
+
 # include <mln/core/concept/image.hh>
 
 

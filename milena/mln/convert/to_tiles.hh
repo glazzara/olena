@@ -38,6 +38,8 @@
 # include <mln/geom/nrows.hh>
 # include <mln/geom/ncols.hh>
 
+# include <vector>
+
 namespace mln
 {
 

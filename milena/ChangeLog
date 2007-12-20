@@ -1,3 +1,62 @@
+2007-12-20  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Some fixes for unit/sanity tests.
+	* mln/accu/median_alt.hh,
+	* mln/accu/v.hh,
+	* mln/arith/min.spe.hh,
+	* mln/arith/revert.spe.hh,
+	* mln/arith/times.spe.hh,
+	* mln/convert/to_rgb.hh,
+	* mln/convert/to_tiles.hh,
+	* mln/convert/to_w_window.hh,
+	* mln/core/dpoints_piter.hh,
+	* mln/core/hexa_piter.hh,
+	* mln/core/interpolated.hh,
+	* mln/core/line_piter.hh,
+	* mln/core/p_runs.hh,
+	* mln/core/runs_psite.hh,
+	* mln/core/t_image.hh,
+	* mln/core/tr_image.hh,
+	* mln/core/tr_mesh.hh,
+	* mln/core/translate_image.hh,
+	* mln/debug/iota.spe.hh,
+	* mln/debug/println.spe.hh,
+	* mln/debug/println_with_border.spe.hh,
+	* mln/fun/v2v/saturate.hh,
+	* mln/geom/seeds2tiling.hh,
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/histo/compute.spe.hh,
+	* mln/io/abort.hh,
+	* mln/io/pfm/load.hh,
+	* mln/io/pfm/save.hh,
+	* mln/io/pnm/max_component.hh,
+	* mln/labeling/level.spe.hh,
+	* mln/level/apply.spe.hh,
+	* mln/level/approx/median.hh,
+	* mln/level/assign.spe.hh,
+	* mln/level/fast_median.hh,
+	* mln/level/fill.spe.hh,
+	* mln/level/paste.spe.hh,
+	* mln/level/take.spe.hh,
+	* mln/level/transform.spe.hh,
+	* mln/level/was.median.hh,
+	* mln/linear/gaussian.hh,
+	* mln/logical/and.spe.hh,
+	* mln/logical/and_not.spe.hh,
+	* mln/logical/not.spe.hh,
+	* mln/logical/or.spe.hh,
+	* mln/morpho/dilation_fast.hh,
+	* mln/morpho/erosion.spe.hh,
+	* mln/morpho/erosion_fast.hh,
+	* mln/morpho/thick_miss.hh,
+	* mln/trait/image/props.hh,
+	* mln/util/tree_fast_to_image.hh,
+	* mln/util/tree_to_image.hh,
+	* tests/level/approx/median.cc: Fix
+
+	* tests/h_vec.cc: Rename as...
+	* tests/core/h_vec.cc: ...this.
+
 2007-12-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add include in mln/canvas/chamfer.hh.

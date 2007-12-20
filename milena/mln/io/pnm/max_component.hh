@@ -36,6 +36,9 @@
  * value type.
  */
 
+# include <mln/value/rgb.hh>
+# include <mln/value/int_u.hh>
+
 namespace mln
 {
 

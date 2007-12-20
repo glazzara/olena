@@ -34,6 +34,7 @@
  */
 
 # include <string>
+# include <mln/trait/undef.hh>
 # include <mln/trait/value/kind.hh>
 
 
@@ -206,9 +207,18 @@ namespace mln
   /// \{
 
   // Fwd decl. (used by trait::image::space_from_point).
+  namespace grid
+  {
+    struct tick;
+    struct square;
+    struct hexa;
+    struct cube;
+  }
+
   template <typename M, typename C> struct point_;
   typedef point_<grid::tick, int> point1d;
   typedef point_<grid::square, int> point2d;
+  typedef point_<grid::hexa, int> point2d_h;
   typedef point_<grid::cube, int> point3d;
 
   namespace trait

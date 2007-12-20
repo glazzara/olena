@@ -34,6 +34,10 @@
  *
  */
 
+# ifndef MLN_LEVEL_TRANSFORM_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_LEVEL_TRANSFORM_HH
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
 

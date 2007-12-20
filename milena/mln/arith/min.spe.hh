@@ -33,6 +33,10 @@
  * \brief Specializations for mln::arith::min.
  */
 
+# ifndef MLN_ARITH_MIN_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_ARITH_MIN_HH
+
 # include <mln/core/concept/image.hh>
 
 # ifndef MLN_INCLUDE_ONLY

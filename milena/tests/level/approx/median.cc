@@ -52,9 +52,10 @@ int main()
   win::octagon2d oct(13);
   border::thickness = 52;
 
-  image2d<int_u8>
-    lena = io::pgm::load("../../../img/lena.pgm"),
-    out(lena.domain());
+  image2d<int_u8> lena;
+
+  io::pgm::load(lena, "../../../img/lena.pgm");
+  image2d<int_u8> out(lena.domain());
 
 //  level::approx::median(lena, rect, out);
   level::approx::median(lena, oct, out);

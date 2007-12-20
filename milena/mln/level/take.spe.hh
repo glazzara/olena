@@ -33,6 +33,10 @@
  * \brief Specializations for mln::level::take.
  */
 
+# ifndef MLN_LEVEL_TAKE_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_LEVEL_TAKE_HH
+
 # include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
 

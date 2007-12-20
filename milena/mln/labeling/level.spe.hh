@@ -33,6 +33,10 @@
  * \brief Specialization for mln::labeling::level.
  */
 
+# ifndef MLN_LABELING_LEVEL_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_LABELING_LEVEL_HH
+
 # include <mln/border/adjust.hh>
 # include <mln/border/fill.hh>
 # include <mln/value/other.hh>

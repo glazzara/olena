@@ -37,6 +37,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/level/paste.hh>
 
+# include <vector>
 
 
 namespace mln

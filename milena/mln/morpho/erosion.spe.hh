@@ -28,6 +28,10 @@
 #ifndef MLN_MORPHO_EROSION_SPE_HH
 # define MLN_MORPHO_EROSION_SPE_HH
 
+# ifndef MLN_MORPHO_EROSION_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_MORPHO_EROSION_HH
+
 # include <mln/win/octagon2d.hh>
 # include <mln/win/rectangle2d.hh>
 

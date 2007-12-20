@@ -33,6 +33,10 @@
  * \brief Specializations for mln::level::apply.
  */
 
+# ifndef MLN_LEVEL_APPLY_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_LEVEL_APPLY_HH
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
 

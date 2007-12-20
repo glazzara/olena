@@ -38,7 +38,7 @@
 
 # include <mln/core/internal/image_identity.hh>
 # include <mln/metal/vec.hh>
-
+# include <mln/value/set.hh>
 
 namespace mln
 {

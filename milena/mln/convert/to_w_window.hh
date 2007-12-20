@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/window.hh>
+# include <mln/core/w_window.hh>
 
 
 namespace mln

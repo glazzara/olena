@@ -37,6 +37,7 @@
 
 # include <mln/core/internal/image_identity.hh>
 # include <mln/core/box2d.hh>
+# include <mln/core/line_piter.hh>
 
 
 namespace mln

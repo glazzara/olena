@@ -36,6 +36,7 @@
  *
  */
 
+# include <mln/core/concept/image.hh>
 # include <mln/util/tree_fast.hh>
 # include <mln/core/p_set.hh>
 # include <list>

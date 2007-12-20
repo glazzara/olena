@@ -34,6 +34,7 @@
  * iterators.
  */
 
+# include <vector>
 # include <mln/core/internal/point_iterator_base.hh>
 # include <mln/core/concept/point_site.hh>
 

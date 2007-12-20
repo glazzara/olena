@@ -52,7 +52,6 @@ namespace mln
   template <typename P> struct p_runs_fwd_piter_;
   template <typename P> struct p_runs_bkd_piter_;
 
-
   /*! \brief p_runs_ class represent a point set used in run_image_ class.
    *
    * Parameter \c P is the type of the image point.

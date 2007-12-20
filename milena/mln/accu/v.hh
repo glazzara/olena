@@ -36,6 +36,7 @@
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
 # include <mln/metal/is_a.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln

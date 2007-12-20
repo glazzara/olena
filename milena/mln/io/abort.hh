@@ -36,6 +36,8 @@
  *
  */
 
+# include <iostream>
+
 namespace mln
 {
 

@@ -34,7 +34,6 @@
  */
 
 # include <mln/core/concept/point_site.hh>
-# include <mln/core/p_runs.hh>
 
 
 namespace mln
@@ -188,5 +187,6 @@ namespace mln
 
 } // end of namespace mln
 
+# include <mln/core/p_runs.hh>
 
 #endif // ! MLN_CORE_INTERNAL_RUNS_PSITE_HH

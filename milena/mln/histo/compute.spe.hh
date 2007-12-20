@@ -33,6 +33,10 @@
  * \brief Specializations of histogram computation.
  */
 
+# ifndef MLN_HISTO_COMPUTE_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_HISTO_COMPUTE_HH
+
 
 # ifndef MLN_INCLUDE_ONLY
 

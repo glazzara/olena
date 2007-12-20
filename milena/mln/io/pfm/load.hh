@@ -37,6 +37,9 @@
  *
  */
 
+# include <iostream>
+# include <fstream>
+
 # include <mln/core/image2d.hh>
 # include <mln/value/int_u8.hh>
 

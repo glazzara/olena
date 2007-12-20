@@ -35,6 +35,7 @@
  * \todo Re-write.
  */
 
+# include <mln/value/rgb.hh>
 
 namespace mln
 {

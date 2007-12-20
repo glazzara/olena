@@ -33,6 +33,8 @@
  * \brief Obsolete routines for median filtering.
  */
 
+# include <mln/geom/shift.hh>
+# include <mln/core/window2d.hh>
 
 namespace mln
 {

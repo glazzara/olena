@@ -34,6 +34,10 @@
  *
  */
 
+# ifndef MLN_LEVEL_FILL_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_LEVEL_FILL_HH
+
 # include <cstring>
 
 # include <mln/core/concept/image.hh>

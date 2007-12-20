@@ -120,22 +120,22 @@ namespace mln
 	  {
 	    clock_t c = clock();
 	    level::median(input, win::diag2d(len),  tmp1);
-	    std::cout << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
+	    std::cout << "diag " << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
 	  }
 	  {
 	    clock_t c = clock();
 	    level::median(tmp1, win::backdiag2d(len),  tmp2);
-	    std::cout << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
+	    std::cout << "back " << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
 	  }
 	  {
 	    clock_t c = clock();
 	    level::median(tmp2, win::hline2d(len),  tmp1);
-	    std::cout << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
+	    std::cout << "hlin " << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
 	  }
 	  {
 	    clock_t c = clock();
 	    level::median(tmp1, win::vline2d(len),  output);
-	    std::cout << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
+	    std::cout << "vlin " << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
 	  }
 
 	}

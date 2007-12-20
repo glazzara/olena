@@ -33,6 +33,10 @@
  * \brief  Specializations for mln::debug::println.
  */
 
+# ifndef MLN_DEBUG_PRINTLN_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_DEBUG_PRINTLN_HH
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/debug/format.hh>

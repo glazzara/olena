@@ -36,7 +36,7 @@
  */
 
 # include <mln/core/internal/point_iterator_base.hh>
-
+# include <mln/core/box.hh>
 
 namespace mln
 {

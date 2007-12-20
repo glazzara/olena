@@ -34,8 +34,11 @@
  *
  */
 
-# include <mln/core/concept/image.hh>
+# ifndef MLN_LOGICAL_AND_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_LOGICAL_AND_HH
 
+# include <mln/core/concept/image.hh>
 
 # ifndef MLN_INCLUDE_ONLY
 

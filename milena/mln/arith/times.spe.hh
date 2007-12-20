@@ -34,6 +34,10 @@
  *
  */
 
+# ifndef MLN_ARITH_TIMES_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_ARITH_TIMES_HH
+
 # include <mln/arith/includes.hh>
 
 

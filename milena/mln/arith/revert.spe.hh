@@ -34,6 +34,10 @@
  *
  */
 
+# ifndef MLN_ARITH_REVERT_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_ARITH_REVERT_HH
+
 # include <mln/core/concept/image.hh>
 # include <mln/trait/value_.hh>
 

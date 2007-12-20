@@ -33,6 +33,10 @@
  * \brief Specializations for mln::level::paste.
  */
 
+# ifndef MLN_LEVEL_PASTE_HH
+#  error "Forbidden inclusion of *.spe.hh"
+# endif // ! MLN_LEVEL_PASTE_HH
+
 # include <mln/level/memcpy_.hh>
 
 
