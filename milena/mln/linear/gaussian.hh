@@ -35,10 +35,13 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/point2d.hh>
 # include <mln/level/paste.hh>
+# include <mln/geom/ncols.hh>
+# include <mln/geom/nrows.hh>
 
 # include <vector>
-
+# include <cmath>
 
 namespace mln
 {

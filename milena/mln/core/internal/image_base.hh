@@ -252,7 +252,4 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/core/init.hh>
-
-
 #endif // ! MLN_CORE_INTERNAL_IMAGE_BASE_HH

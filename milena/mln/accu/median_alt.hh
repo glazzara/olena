@@ -71,7 +71,7 @@ namespace mln
 
     protected:
 
-      histo_on_set<S> h_;
+      histo<S> h_;
       const S& s_; // derived from h_
 
       std::size_t sum_minus_, sum_plus_;

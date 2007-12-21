@@ -117,19 +117,6 @@ namespace mln
   };
 
 
-
-  /*! Initialize the image \p target with data extracted from image \p model.
-   *
-   * \param[in, out] target The image to be initialized.
-   * \param[in] model The image to provide data for the initialization.
-   *
-   * \pre (not target.has_data) and model.has_data
-   */
-  template <typename I, typename J>
-  void initialize(Image<I>& target, const Image<J>& model);
-
-
-
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
@@ -181,25 +168,10 @@ namespace mln
     m8 = 0;
   }
 
-  template <typename I, typename J>
-  inline
-  void initialize(Image<I>& target, const Image<J>& model)
-  {
-    trace::entering("core::initialize");
-    mln_precondition(! exact(target).has_data());
-    mln_precondition(exact(model).has_data());
-
-    init_(tag::image, exact(target), exact(model));
-
-    mln_postcondition(exact(target).has_data());
-    trace::exiting("core::initialize");
-  }
-
-
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
-
+# include <mln/core/initialize.hh>
 
 #endif // ! MLN_CORE_CONCEPT_IMAGE_HH

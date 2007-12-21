@@ -35,6 +35,13 @@
 
 # include <mln/geom/shift.hh>
 # include <mln/core/window2d.hh>
+# include <mln/geom/min_col.hh>
+# include <mln/geom/max_col.hh>
+# include <mln/geom/max_row.hh>
+# include <mln/geom/min_row.hh>
+# include <mln/set/diff.hh>
+# include <mln/accu/median.hh>
+# include <mln/win/hline2d.hh>
 
 namespace mln
 {

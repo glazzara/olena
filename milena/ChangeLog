@@ -1,3 +1,14 @@
+2007-12-21  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix for unit tests and moving initialize.
+	* mln/accu/median_alt.hh,
+	* mln/core/image2d.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/level/was.median.hh,
+	* mln/linear/gaussian.hh: Fix.
+	* mln/core/concept/image.hh: Move initialize...
+	* mln/core/initialize.hh: New. ...here.
+
 2007-12-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Clean internal namespace in core.
