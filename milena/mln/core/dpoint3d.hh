@@ -56,13 +56,20 @@ namespace mln
 namespace mln
 {
 
-  // FIXME: Doc!
+  /*!
+   * \brief Definition of a shortcut for delta point in 3d.
+   * \{
+   */
   const dpoint3d sagittal_dec = make::dpoint3d( 0,  0, -1);
   const dpoint3d sagittal_inc = make::dpoint3d( 0,  0, +1);
   const dpoint3d axial_dec    = make::dpoint3d( 0, -1,  0);
   const dpoint3d axial_inc    = make::dpoint3d( 0, +1,  0);
   const dpoint3d coronal_dec  = make::dpoint3d(-1,  0,  0);
   const dpoint3d coronal_inc  = make::dpoint3d(+1,  0,  0);
+
+  /*!
+   * \}
+   */
 
 } // end of namespace mln
 

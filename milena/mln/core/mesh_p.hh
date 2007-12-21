@@ -21,7 +21,7 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  
+// License.
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
@@ -49,7 +49,7 @@ namespace mln
   template<typename P> class mesh_p_piter_;
 
   template<typename P>
-  struct mesh_p : public internal::point_set_base_< P, mesh_p<P> >
+  struct mesh_p : public internal::point_set_base_< mesh_psite<P>, mesh_p<P> >
   {
     typedef util::graph<void> graph;
 
@@ -58,7 +58,7 @@ namespace mln
 
     /// Point_Site associated type.
     typedef mesh_psite<P> psite;
-    
+
     /// Forward Point_Iterator associated type.
     typedef mesh_p_piter_<P> fwd_piter;
 
@@ -71,7 +71,7 @@ namespace mln
     const box_<P>& bbox() const;
 
     bool has(const psite& p) const;
-                                                
+
     graph gr_;
     std::vector<P> loc_;
     // FIXME: (Roland) Is it really useful/needed?
@@ -99,7 +99,7 @@ namespace mln
   {
     return this->gr_.nb_node_;
   }
-  
+
   template<typename P>
   inline
   const box_<P>&

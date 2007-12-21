@@ -56,11 +56,18 @@ namespace mln
 namespace mln
 {
 
-  // FIXME: Doc!
+  /*!
+   * \brief Definition of a shortcut for delta point in 2d.
+   * \{
+   */
   const dpoint2d up    = make::dpoint2d( -1,  0 );
   const dpoint2d down  = make::dpoint2d( +1,  0 );
   const dpoint2d left  = make::dpoint2d(  0, -1 );
   const dpoint2d right = make::dpoint2d(  0, +1 );
+
+  /*!
+   * \}
+   */
 
 } // end of namespace mln
 

@@ -49,6 +49,7 @@ namespace mln
   namespace internal
   {
 
+    /// \internal Data structure for \c mln::translate_image<I>.
     template <typename I>
     struct data_< translate_image<I> >
     {

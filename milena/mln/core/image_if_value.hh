@@ -49,11 +49,9 @@ namespace mln
   template <typename I> struct image_if_value;
 
 
-  /// \internal internal::data_.
-
   namespace internal
   {
-
+    /// \internal Data structure for \c mln::image_if_value<I>.
     template <typename I>
     struct data_< image_if_value<I> > : data_< Super >
     {

@@ -39,7 +39,9 @@
 namespace mln
 {
 
-  /// Give a point of an image.
+  /*!
+   * \brief Give a point of an image.
+   */
   template <typename I>
   mln_point(I) a_point_of(const Image<I>& ima);
 

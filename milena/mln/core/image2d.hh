@@ -59,7 +59,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal
+    /// \internal Data structure for \c mln::image2d<T>.
     template <typename T>
     struct data_< image2d<T> >
     {

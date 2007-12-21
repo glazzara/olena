@@ -86,7 +86,7 @@ namespace mln
     const mln_point(D)& center_point() const;
 
     /// Force this iterator to update its location to take into
-    /// account that its center point may have moved. 
+    /// account that its center point may have moved.
     void update();
 
   protected:
@@ -144,7 +144,7 @@ namespace mln
     const mln_point(D)& center_point() const;
 
     /// Force this iterator to update its location to take into
-    /// account that its center point may have moved. 
+    /// account that its center point may have moved.
     void update();
 
   protected:

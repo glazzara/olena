@@ -54,7 +54,7 @@ namespace mln
 
   /*! \brief Generic delta-point class.
    *
-   * Parameters are \c n the dimension of the space and \c C the
+   * Parameters are \c M the dimension of the space and \c C the
    * coordinate type in this space.
    */
   template <typename M, typename C>

@@ -49,11 +49,10 @@ namespace mln
   template <typename I, typename F> struct image_if;
 
 
-  /// \internal internal::data_.
-
   namespace internal
   {
 
+    /// \internal Data structure for \c mln::image_if<I,F>.
     template <typename I, typename F>
     struct data_< image_if<I,F> > : data_< Super >
     {

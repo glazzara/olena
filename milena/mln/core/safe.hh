@@ -50,6 +50,7 @@ namespace mln
   namespace internal
   {
 
+    /// \internal Data structure for \c mln::safe_image<I>.
     template <typename I>
     struct data_< safe_image<I> >
     {

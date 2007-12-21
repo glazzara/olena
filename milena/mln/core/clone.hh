@@ -41,7 +41,8 @@
 namespace mln
 {
 
-  /*! Clone the image \p ima with the values of the image \p data.
+  /*! \brief Clone the image \p ima with the values of the image \p
+   *  data.
    *
    * \param[in] ima The image to be cloneed.
    * \result The clone.

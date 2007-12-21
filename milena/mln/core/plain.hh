@@ -51,6 +51,7 @@ namespace mln
   namespace internal
   {
 
+    /// \internal Data structure for \c mln::plain<I>.
     template <typename I>
     struct data_< plain<I> >
     {

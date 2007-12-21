@@ -91,7 +91,7 @@ namespace mln
     bool is_valid() const;
 
     /// Force this iterator to update its location to take into
-    /// account that its center point may have moved. 
+    /// account that its center point may have moved.
     void update();
 
     /// The value around which this iterator moves.
@@ -175,7 +175,7 @@ namespace mln
     for (unsigned i = 0; i < dps.ndpoints(); ++i)
       offset_.push_back(this->image_.offset(dps.dp(i)));
     // offset_[0] is absolute
-    // other offsets are relative: 
+    // other offsets are relative:
     if (dps.ndpoints() > 1)
       for (unsigned i = dps.ndpoints() - 1; i > 0; --i)
 	offset_[i] -= offset_[i - 1];
@@ -211,7 +211,7 @@ namespace mln
   dpoints_fwd_pixter<I>::next_()
   {
     ++i_;
-    this->value_ptr_ += offset_[i_];    
+    this->value_ptr_ += offset_[i_];
   }
 
   template <typename I>

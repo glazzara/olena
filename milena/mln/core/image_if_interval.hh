@@ -57,10 +57,10 @@ namespace mln
   template <typename I> struct image_if_interval;
 
 
-  /// \internal internal::data_.
   namespace internal
   {
 
+    /// \internal Data structure for \c mln::image_if_interval<I>.
     template <typename I>
     struct data_< image_if_interval<I> > : data_< Super >
     {

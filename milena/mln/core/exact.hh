@@ -39,7 +39,7 @@ namespace mln
 {
 
   /*! \brief Exact cast routine for mln objects.
-   * 
+   *
    * This set of routines can be used to downcast an object towards
    * its exact type.  The only argument, respectively \p ptr or \p
    * ref, should be an mln::Object.
@@ -48,7 +48,7 @@ namespace mln
    *
    * \return The return follows the nature of the argument (either a
    * pointer or a reference, const or not).
-   */ 
+   */
   /// \{
 
   template <typename T>

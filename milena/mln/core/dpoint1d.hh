@@ -56,12 +56,19 @@ namespace mln
 namespace mln
 {
 
-  // FIXME: Doc!
+  /*!
+   * \brief Definition of a shortcut for delta point in 1d.
+   * \{
+   */
+
   const dpoint1d before = make::dpoint1d( -1 );
   const dpoint1d after  = make::dpoint1d( +1 );
 
   const dpoint1d ind_dec = before;
   const dpoint1d ind_inc = after;
+
+  /*! \}
+   */
 
 } // end of namespace mln
 

@@ -50,7 +50,7 @@ namespace mln
 
   namespace internal
   {
-
+    /// \internal Data structure for \c mln::hexa<I>.
     template <typename I>
     struct data_< hexa<I> >
     {

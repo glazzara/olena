@@ -51,6 +51,7 @@ namespace mln
   namespace internal
   {
 
+    /// \internal Data structure for \c mln::mesh_image<P,V>.
     template <typename P, typename V>
     struct data_< mesh_image<P, V> >
     {

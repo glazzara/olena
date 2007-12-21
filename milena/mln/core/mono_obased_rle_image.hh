@@ -51,6 +51,7 @@ namespace mln
   namespace internal
   {
 
+    /// \internal Data structure for \c mln::mono_obased_rle_image<P,T>.
     template <typename P, typename T>
     struct data_< mono_obased_rle_image<P,T> >
     {

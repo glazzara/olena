@@ -1,3 +1,41 @@
+2007-12-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Clean internal namespace in core.
+
+	* mln/core/a_point_of.hh,
+	* mln/core/cast_image.hh,
+	* mln/core/clone.hh,
+	* mln/core/decorated_image.hh,
+	* mln/core/dpoint.hh,
+	* mln/core/dpoint1d.hh,
+	* mln/core/dpoint2d.hh,
+	* mln/core/dpoint3d.hh,
+	* mln/core/dpoints_piter.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/exact.hh,
+	* mln/core/fi_adaptor.hh,
+	* mln/core/hexa.hh,
+	* mln/core/image2d.hh,
+	* mln/core/image3d.hh,
+	* mln/core/image_if.hh,
+	* mln/core/image_if_interval.hh,
+	* mln/core/image_if_value.hh,
+	* mln/core/interpolated.hh,
+	* mln/core/mesh_image.hh,
+	* mln/core/mesh_p.hh,
+	* mln/core/mono_obased_rle_image.hh,
+	* mln/core/mono_rle_image.hh,
+	* mln/core/obased_rle_image.hh,
+	* mln/core/plain.hh,
+	* mln/core/rle_image.hh,
+	* mln/core/safe.hh,
+	* mln/core/sparse_image.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/t_image.hh,
+	* mln/core/tr_image.hh,
+	* mln/core/translate_image.hh: Clean and fix in internal namespace
+	Doxygen comments.
+
 2007-12-20  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Some fixes for unit/sanity tests.

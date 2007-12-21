@@ -62,7 +62,7 @@ namespace mln
       typedef mln::value::proxy<const E> lvalue;
     };
 
-    /// \internal
+    /// \internal Data structure for \c mln::decorated_image<I,D>.
     template <typename I, typename D>
     struct data_< decorated_image<I,D> >
     {
@@ -76,8 +76,10 @@ namespace mln
 
 
 
-  // FIXME: Doc!
-
+  /*!
+   * \brief Class of decorated image : FIXME Doc
+   *
+   */
   template <typename I, typename D>
   struct decorated_image :
     public internal::decorated_image_impl_< I, decorated_image<I,D> >,
@@ -133,7 +135,7 @@ namespace mln
   namespace internal
   {
 
-    // \internal internal::data_< decorated_image<I,S> >
+    /// \internal internal::data_< decorated_image<I,S> >
     template <typename I, typename D>
     inline
     data_< decorated_image<I,D> >::data_(I& ima, const D& deco)

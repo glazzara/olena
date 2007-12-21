@@ -49,6 +49,7 @@ namespace mln
   namespace internal
   {
 
+    /// \internal Data structure for \c mln::interpolated<I>.
     template <typename I>
     struct data_< interpolated<I> >
     {

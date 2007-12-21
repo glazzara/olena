@@ -50,7 +50,7 @@ namespace mln
 
   namespace internal
   {
-    /// \internal
+    /// \internal Data structure for \c mln::cast_image_<T,I>.
     template <typename T, typename I>
     struct data_< cast_image_<T,I> >
     {
@@ -75,7 +75,8 @@ namespace mln
 
 
 
-  /*! \brief FIXME
+  /*! \brief Class of image morpher which takes an image to change its
+   *  data type.
    *
    */
   template <typename T, typename I>
