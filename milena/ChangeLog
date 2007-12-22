@@ -1,5 +1,50 @@
 2007-12-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move mathematical morphology-related tests into tests/morpho.
+
+	* tests/Makefile.am (SUBDIRS): Add morpho.
+	(morpho_contrast, morpho_dilation, morpho_dilation_max_h)
+	(morpho_erosion, morpho_erosion_min_h, morpho_gradient)
+	(morpho_hit_or_miss, morpho_laplacian, morpho_opening_area)
+	(morpho_thinning):
+	Remove.
+	(morpho_contrast_SOURCES, morpho_dilation_SOURCES)
+	(morpho_dilation_max_h_SOURCES, morpho_erosion_SOURCES)
+	(morpho_erosion_min_h_SOURCES, morpho_gradient_SOURCES)
+	(morpho_hit_or_miss_SOURCES, morpho_laplacian_SOURCES)
+	(morpho_opening_area_SOURCES, morpho_thinning_SOURCES):
+	Remove.
+	* tests/morpho/Makefile.am (check_PROGRAMS): New.
+	(contrast_SOURCES, dilation_SOURCES, dilation_max_h_SOURCES)
+	(erosion_SOURCES, erosion_min_h_SOURCES, gradient_SOURCES)
+	(hit_or_miss_SOURCES, laplacian_SOURCES, opening_area_SOURCES)
+	(thinning_SOURCES): New.
+	(TESTS): New.
+	* tests/morpho/contrast.cc,
+	* tests/morpho/dilation.cc,
+	* tests/morpho/dilation_max_h.cc,
+	* tests/morpho/erosion.cc,
+	* tests/morpho/erosion_min_h.cc,
+	* tests/morpho/gradient.cc,
+	* tests/morpho/hit_or_miss.cc,
+	* tests/morpho/laplacian.cc,
+	* tests/morpho/opening_area.cc,
+	* tests/morpho/thinning.cc:
+	Rename and move as...
+	* tests/morpho_contrast.cc,
+	* tests/morpho_dilation.cc,
+	* tests/morpho_dilation_max_h.cc,
+	* tests/morpho_erosion.cc,
+	* tests/morpho_erosion_min_h.cc,
+	* tests/morpho_gradient.cc,
+	* tests/morpho_hit_or_miss.cc,
+	* tests/morpho_laplacian.cc,
+	* tests/morpho_opening_area.cc,
+	* tests/morpho_thinning.cc:
+	...these.
+
+2007-12-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix mln::mesh_image.
 
 	* mln/core/mesh_image.hh

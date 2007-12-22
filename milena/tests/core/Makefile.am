@@ -41,6 +41,4 @@ p_priority_queue_fast_with_array_SOURCES = p_priority_queue_fast.cc
 p_queue_SOURCES = p_priority_queue_fast.cc
 p_queue_fast_SOURCES = p_priority_queue_fast.cc
 
-
-
 TESTS = $(check_PROGRAMS)

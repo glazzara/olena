@@ -17,6 +17,7 @@ SUBDIRS =					\
   labeling					\
   level						\
   logical					\
+  morpho					\
   norm						\
   set						\
   util						\
@@ -87,16 +88,6 @@ check_PROGRAMS =				\
   metal_pow					\
   metal_unconst					\
   metal_vec					\
-  morpho_contrast				\
-  morpho_dilation				\
-  morpho_dilation_max_h				\
-  morpho_erosion				\
-  morpho_erosion_min_h				\
-  morpho_gradient				\
-  morpho_hit_or_miss				\
-  morpho_laplacian				\
-  morpho_opening_area				\
-  morpho_thinning				\
 						\
   pixel						\
   pixter1d					\
@@ -200,16 +191,6 @@ metal_mat_SOURCES = metal_mat.cc
 metal_pow_SOURCES = metal_pow.cc
 metal_unconst_SOURCES = metal_unconst.cc
 metal_vec_SOURCES = metal_vec.cc
-morpho_contrast_SOURCES = morpho_contrast.cc
-morpho_dilation_SOURCES = morpho_dilation.cc
-morpho_dilation_max_h_SOURCES = morpho_dilation_max_h.cc
-morpho_erosion_SOURCES = morpho_erosion.cc
-morpho_erosion_min_h_SOURCES = morpho_erosion_min_h.cc
-morpho_gradient_SOURCES = morpho_gradient.cc
-morpho_hit_or_miss_SOURCES = morpho_hit_or_miss.cc
-morpho_laplacian_SOURCES = morpho_laplacian.cc
-morpho_opening_area_SOURCES = morpho_opening_area.cc
-morpho_thinning_SOURCES = morpho_thinning.cc
 
 pixel_SOURCES = pixel.cc
 pixter1d_SOURCES = pixter1d.cc
