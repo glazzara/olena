@@ -45,6 +45,10 @@ namespace mln
 
   namespace draw
   {
+    /* FIXME: `draw::mesh' is not a good name.  These functions do not
+       actually draw the mesh/mesh_image; it *converts* it to a
+       printable image.  These functions should be put elsewhere
+       (e.g., in debug::).  */
 
     /*! Draw an image \p ima from a mesh_p \p m, with value \p node_v
      *  for nodes, value \p link_v for links and 0 for the background.
@@ -66,16 +70,21 @@ namespace mln
      *
      * \param[in,out] ima The image to be drawn.
      * \param[in] mesh The mesh_image which contains nodes, links
-     * positions and the values of it.
+     *                 positions and the values of it.
+     * \param[in] link_v The value to assign to pixels which contains links,
+     *                   defaulting to 1.
      *
      */
+    // FIXME: The type of the last argument cannot always been
+    // constructed from `int'!  We should remove this last argument.
     template <typename I,  typename P, typename V>
     void
-    mesh(Image<I>& ima, const mesh_image<P, V>& mesh);
+    mesh(Image<I>& ima, const mesh_image<P, V>& mesh,
+	 mln_value(I) link_v = 1);
 
 # ifndef MLN_INCLUDE_ONLY
 
-    // FIXME: Add assertions on the size of the image: it must be big
+    // FIXME: Add assertions on the size of the image: it must be large
     // enough to hold the reprensentation of the graph.
 
     template <typename I, typename P>
@@ -100,7 +109,8 @@ namespace mln
     template <typename I,  typename P, typename V>
     inline
     void
-    mesh(Image<I>& ima, const mesh_image<P, V>& mesh)
+    mesh(Image<I>& ima, const mesh_image<P, V>& mesh,
+	 mln_value(I) link_v)
     {
       level::fill(ima, 0);
 
@@ -108,7 +118,7 @@ namespace mln
 	line (exact(ima),
 	      mesh.access_location_link_node1 (i),
 	      mesh.access_location_link_node2 (i),
-	      1);
+	      link_v);
 
       for (unsigned i = 0; i < mesh.domain().gr_.nb_node_; ++i)
  	exact(ima)(mesh.domain().loc_[i]) = mesh.data_values ()[i];

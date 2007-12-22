@@ -174,7 +174,17 @@ namespace mln
   const P&
   mesh_p_piter_<P>::to_point() const
   {
-    mln_precondition(is_valid());
+    /* We don't check whether the iterator is valid before returning
+       the value using
+
+         mln_precondition(is_valid());
+
+       since this method may be called *before* the iterator is
+       actually initialized.  This is the case for instance when this
+       point iterator (say, P) is used to initialize another iterator
+       on window or neighborhood (say, Q); most of the time, for_all()
+       is responsible for the initialization of P, but it takes place
+       *after* the creation of Q.  */
     return p_;
   }
 
@@ -183,7 +193,17 @@ namespace mln
   const mesh_psite<P>&
   mesh_p_piter_<P>::to_psite() const
   {
-    mln_precondition(is_valid());
+    /* We don't check whether the iterator is valid before returning
+       the value using
+
+         mln_precondition(is_valid());
+
+       since this method may be called *before* the iterator is
+       actually initialized.  This is the case for instance when this
+       point iterator (say, P) is used to initialize another iterator
+       on window or neighborhood (say, Q); most of the time, for_all()
+       is responsible for the initialization of P, but it takes place
+       *after* the creation of Q.  */
     return psite_;
   }
 

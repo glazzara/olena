@@ -1,3 +1,27 @@
+2007-12-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix mln::mesh_image.
+
+	* mln/core/mesh_image.hh
+	(internal::data_< mesh_image<P, V> >::mesh_): Turn this attribute
+	into a reference to mesh_p<P>.
+	(init_(tag::image_t, mesh_image<P, V>&, const mesh_image<P, V>&)):
+	New specialization for mesh_image.
+	(mesh_image<P, V>::init_): New method.
+	Use it...
+	(mesh_image<P, V>::mesh_image): ...in this ctor.
+	* mln/core/mesh_p_piter.hh (mesh_p_piter_<P>::to_point)
+	(mesh_p_piter_<P>::to_psite): Don't check the validity of the
+	iterator, as it is incompatible with the current convention on the
+	use of window/neighborhood iterators.
+	* mln/core/mesh_p.hh: Add a FIXME.
+	* mln/draw/mesh.hh
+	(draw::mesh(Image<I>&, const mesh_image<P, V>&, mln_value(I))):
+	Add a third argument to choose the value used to print edges.
+	* tests/core/mesh_image.cc: Adjust.
+	Perform dilation and erosion on graph-based images (i.e.,
+	mesh_image objects).
+
 2007-12-21  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Fix for unit tests and moving initialize.

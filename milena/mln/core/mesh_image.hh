@@ -57,8 +57,8 @@ namespace mln
     {
       data_(mesh_p<P>& mesh, std::vector<V>& val);
 
-      std::vector<V>	val_;
-      mesh_p<P>		mesh_;
+      std::vector<V> val_;
+      mesh_p<P>& mesh_;
     };
 
   } // end of namespace mln::internal
@@ -117,6 +117,9 @@ namespace mln
     mesh_image(mesh_p<P>& mesh, std::vector<V>& val);
     mesh_image();
 
+    /// Initialize an empty image.
+    void init_(mesh_p<P>& mesh, std::vector<V>& val);
+
     /// Read-only access of pixel value at point site \p p.
     const V& operator()(const mesh_psite<P>& p) const;
 
@@ -126,6 +129,7 @@ namespace mln
     /// Give the set of values of the image.
     const vset& values() const;
 
+    // FIXME: Keep this name?
     const std::vector<V>& data_values () const;
 
     const mesh_p<P>& domain() const;
@@ -137,10 +141,38 @@ namespace mln
     const P& access_location_link_node2 (const unsigned& i) const;
 };
 
-
+  // Fwd decl.
+  template <typename P, typename V>
+  void init_(tag::image_t,
+	     mesh_image<P, V>& target, const mesh_image<P, V>& model);
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  /*-----------------.
+  | Initialization.  |
+  `-----------------*/
+
+  template <typename P, typename V>
+  inline
+  void init_(tag::image_t,
+	     mesh_image<P, V>& target, const mesh_image<P, V>& model)
+  {
+    /* FIXME: Unfortunately, we cannot simply use 
+
+         target.init_(model.domain(), model.data_values ());
+
+       here, since domain() and data_values() return const data, and
+       init_ expects non mutable data.  These constness problems exist
+       also in mesh_psite (see uses of const_cast<>).  Hence the
+       inelegant use of const_cast<>'s.  */
+    target.init_(const_cast<mesh_p<P>&> (model.domain()),
+		 const_cast<std::vector<V>&> (model.data_values ()));
+  }
+
+  /*-------.
+  | Data.  |
+  `-------*/
 
   namespace internal
   {
@@ -154,11 +186,15 @@ namespace mln
 
   } // end of namespace mln::internal
 
+  /*---------------.
+  | Construction.  |
+  `---------------*/
+
   template <typename P, typename V>
   inline
   mesh_image<P, V>::mesh_image(mesh_p<P>& mesh, std::vector<V>& val)
   {
-    this->data_ = new internal::data_< mesh_image<P, V> > (mesh, val);
+    init_(mesh, val);
   }
 
   template <typename P, typename V>
@@ -166,6 +202,23 @@ namespace mln
   mesh_image<P, V>::mesh_image()
   {
   }
+
+  template <typename P, typename V>
+  inline
+  void
+  mesh_image<P, V>::init_(mesh_p<P>& mesh, std::vector<V>& val)
+  {
+    /* FIXME: We leak memory here: calling init_ twice loses the
+       previous content pointed by data_.
+
+       We should definitely write down formal guidelines on
+       initializaion and memory management in general!  */
+    this->data_ = new internal::data_< mesh_image<P, V> > (mesh, val);
+  }
+
+  /*---------------.
+  | Manipulation.  |
+  `---------------*/
 
   template <typename P, typename V>
   inline

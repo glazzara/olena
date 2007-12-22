@@ -75,6 +75,9 @@ namespace mln
     graph gr_;
     std::vector<P> loc_;
     // FIXME: (Roland) Is it really useful/needed?
+    /* 2007-12-19: It seems so, since mesh_image must implement a method
+       named bbox().  Now the question is: should each image type have a
+       bounding box?  */
     box_<P> bb_;
   };
 

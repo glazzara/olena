@@ -25,10 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/mesh_image.cc
- *
- *  \brief Tests on mln::mesh_image.
- */
+/// \file tests/core/mesh_image.cc
+/// \brief Tests on mln::mesh_image.
 
 #include <vector>
 
@@ -37,6 +35,9 @@
 #include <mln/core/mesh_elt_window.hh>
 #include <mln/core/mesh_window_piter.hh>
 
+#include <mln/morpho/dilation.hh>
+
+#include <mln/draw/mesh.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
 
@@ -86,8 +87,31 @@ int main()
   ima_t ima(mesh, values);
   // Initialize values.
   debug::iota(ima);
-  // The printed result does not show the graph, only the values.
-  debug::println(ima);
+  // Print the image.
+  /* FIXME: Unfortunately, displaying mesh images is not easy right
+     now (2007-12-19).  We could use 
+
+       debug::println(ima);
+
+     but there's not specialization working for mesh_image; the one
+     selected by the compiler is based on a 2-D bbox, and expects the
+     interface of mesh_image to work with points (not psites).
+     Moreover, this iplementation only shows *values*, not the graph
+     itslef.
+ 
+     An alternative is to use draw::mesh (which, again, is misnamed),
+     but it doesn't show the values, only the nodes and edges of the
+     graph.
+
+     The current solution is a mix between draw::mesh and hand-made
+     iterations.  */
+  image2d<int> ima_rep(ima.bbox());
+  // We use the value 9 in draw::mesh instead of the default (which is
+  // 1) to represent edges to distinguish it from nodes holding a
+  // value of 1.
+  draw::mesh (ima_rep, ima, 9);
+  debug::println (ima_rep);
+
 
   /*------------.
   | Iterators.  |
@@ -99,11 +123,11 @@ int main()
     std::cout << "ima (" << p << ") = " << ima(p) << std::endl;
 
   // Manual iterations over the neighborhoods of each point site of IMA.
+  /* FIXME: In fact, this class should be named
+     `mesh_elt_neighborhood' (there's no such thing as an elementary
+     window on a mesh/graph!).  */
   typedef mesh_elt_window<point2d> win_t;
   win_t win;
-  // Reinitialize P, otherwise Q will trigger an assertion about P
-  // being unable to convert to a valid mesh_piter object.
-  p.start();
   mln_qiter_(win_t) q(win, p);
   for_all (p)
   {
@@ -111,5 +135,17 @@ int main()
 	      << "including the site itself:" << std::endl;
     for_all (q)
       std::cout << "  " << q << " (level = " << ima(q) << ")" << std::endl;
-  } 
+  }
+
+  /*-------------------------.
+  | Processing mesh images.  |
+  `-------------------------*/
+
+  mesh_image<point2d, int> ima_dil = morpho::dilation(ima, win);
+  draw::mesh(ima_rep, ima_dil, 9);
+  debug::println(ima_rep);
+
+  mesh_image<point2d, int> ima_ero = morpho::erosion(ima, win);
+  draw::mesh(ima_rep, ima_ero, 9);
+  debug::println(ima_rep);
 }
