@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -80,8 +80,8 @@ namespace mln
       std::set_intersection(sl.begin(), sl.end(),
 			    sr.begin(), sr.end(),
 			    std::inserter(s, s.begin()));
-      return convert::to_window(s);
       trace::exiting("set::inter");
+      return convert::to_window(s);
     }
 
     template <typename Wl, typename Wr>
@@ -99,8 +99,8 @@ namespace mln
       std::set_intersection(sl.begin(), sl.end(),
 			    sr.begin(), sr.end(),
 			    std::inserter(s, s.begin()));
-      return convert::to_p_set(s);
       trace::exiting("set::inter");
+      return convert::to_p_set(s);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

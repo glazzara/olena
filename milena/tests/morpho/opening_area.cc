@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,9 +46,9 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8>
-    lena = io::pgm::load("../img/lena.pgm"),
-    out(lena.domain());
+  image2d<int_u8> lena;
+  io::pgm::load(lena, "../img/lena.pgm");
+  image2d<int_u8> out(lena.domain());
 
   morpho::opening_area(lena, c4(), 510, out);
   io::pgm::save(out, "out.pgm");

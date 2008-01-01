@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -53,9 +53,10 @@ int main()
   win::rectangle2d rect(5, 5);
   border::thickness = 2;
 
-  image2d<int_u8> lena = io::pgm::load("../img/tiny.pgm");
-  image2d<int> lap(lena.domain());
-  morpho::laplacian(lena, rect, lap);
+  image2d<int_u8> tiny;
+  io::pgm::load(tiny, "../img/tiny.pgm");
+  image2d<int> lap(tiny.domain());
+  morpho::laplacian(tiny, rect, lap);
 
   io::pgm::save( arith::plus_cst< value::int_u_sat<8> >(lap, 128),
 		 "out.pgm" );

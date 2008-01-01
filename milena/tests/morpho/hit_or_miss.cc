@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -75,9 +75,9 @@ int main()
 
   border::thickness = 2;
 
-  image2d<bool>
-    pic = io::pbm::load("../img/picasso.pbm"),
-    out = morpho::hit_or_miss(pic, win_hit, win_miss);
+  image2d<bool> pic;
+  io::pbm::load(pic, "../img/picasso.pbm");
+  image2d<bool> out = morpho::hit_or_miss(pic, win_hit, win_miss);
   io::pbm::save(out, "out.pbm");
 
   mln_postcondition(morpho::hit_or_miss(morpho::complementation(pic),

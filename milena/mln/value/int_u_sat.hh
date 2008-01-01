@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,6 +47,35 @@ namespace mln
 
   namespace value
   {
+    // Fwd decls.
+    template <unsigned n> struct int_u_sat;
+  }
+
+  namespace trait
+  {
+
+    template <unsigned n>
+    struct value_< mln::value::int_u_sat<n> >
+    {
+      // FIXME: Overhaul these traits (see other value traits).
+      static const std::size_t card = metal::math::pow_int<2, n>::value;
+      static const mln::value::int_u_sat<n> min() { return 0; }
+      static const mln::value::int_u_sat<n> max() { return card - 1; }
+      static const unsigned nbits = n;
+
+      typedef trait::value::nature::integer nature;
+      typedef trait::value::kind::data kind;
+      // FIXME: Is that right?
+      typedef mln_value_quant_from_(card) quant;
+
+      typedef float sum;
+    };
+    
+  } // end of namespace mln::trait
+
+
+  namespace value
+  {
 
 
     /*! \brief Unsigned integer value class with saturation behavior.
@@ -90,23 +119,9 @@ namespace mln
 
 
     // Safety.
+    // FIXME: We shouldn't have to do that.
     template <> struct int_u_sat<0>;
     template <> struct int_u_sat<1>;
-
-
-
-    template <unsigned n>
-    struct props< int_u_sat<n> >
-    {
-      static const std::size_t card_ = metal::math::pow_int<2, n>::value;
-      static const int_u_sat<n> min() { return 0; }
-      static const int_u_sat<n> max() { return card_ - 1; }
-      static const unsigned nbits = n;
-      typedef trait::value::kind::data kind;
-      typedef float sum;
-    };
-
-
 
     /*! \brief Print a saturated unsigned integer \p i into the output
      *  stream \p ostr.
@@ -135,6 +150,9 @@ namespace mln
       static const unsigned max_ = mln_max(int_u<n>);
       if (i < 0)
 	this->v_ = 0;
+      // FIXME: This comparison triggers a warning between signed and
+      // unsigned values from the compiler.  If it is valid, use a
+      // cast and leave a comment about it.
       else if (i > max_)
 	this->v_ = max_;
       else

@@ -51,17 +51,15 @@ namespace mln
 
   namespace value
   {
-    /// \{ Fwd decls.
+    // Fwd decls.
     template <unsigned n> struct int_u;
-    /// \}
   }
 
   namespace literal
   {
-    /// \{ Fwd decls.
+    // Fwd decls.
     struct zero_t;
     struct one_t;
-    /// \}
   }
 
 

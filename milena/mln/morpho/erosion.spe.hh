@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -178,10 +178,14 @@ namespace mln
 
 	    mln_pixter(O) p_out(output);
 	    for_all_2(p, p_out)
+	      // Consider P only if its value is `true' (the erosion
+	      // is anti-extensive).
 	      if (p.val())
 		for_all(q)
 		  if (! q.val())
 		    {
+		      // Assign `false' to the value of P_OUT as soon
+		      // as a `false' value is found in its vicinity.
 		      p_out.val() = false;
 		      break;
 		    }
@@ -194,9 +198,16 @@ namespace mln
 	    mln_pixter(O) p_out(output);
 	    for_all_2(p, p_out)
 	      for_all(q)
-	      if (! q.val())
-		break;
-	    p_out.val() = ! q.is_valid();
+	      {
+		// Stop as soon as a `false' value is found the
+		// window.
+		if (! q.val())
+		  break;
+		// If a `false' value was not found, then Q is now
+		// invalid (past the end of the window), and vice
+		// versa.  Use this information to assign P_OUT.
+		p_out.val() = ! q.is_valid();
+	      }
 	  }
 
 	trace::exiting("morpho::impl::erosion_iterative_(kind::logic, speed::fastest)");

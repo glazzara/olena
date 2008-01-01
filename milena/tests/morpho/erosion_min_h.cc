@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -52,7 +52,8 @@ int main()
   win::rectangle2d rec(21, 21);
   border::thickness = 66;
 
-  image2d<int_u8> lena = io::pgm::load("../img/lena.pgm");
+  image2d<int_u8> lena;
+  io::pgm::load(lena, "../img/lena.pgm");
 
   {
     p_array<point2d> vec = convert::to_p_array(rec, point2d::origin);
