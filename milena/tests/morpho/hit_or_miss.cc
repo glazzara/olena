@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho_hit_or_miss.cc
+/*! \file tests/morpho/hit_or_miss.cc
  *
  * \brief Test on mln::morpho::hit_or_miss.
  */
@@ -76,7 +76,7 @@ int main()
   border::thickness = 2;
 
   image2d<bool> pic;
-  io::pbm::load(pic, "../img/picasso.pbm");
+  io::pbm::load(pic, "../../img/picasso.pbm");
   image2d<bool> out = morpho::hit_or_miss(pic, win_hit, win_miss);
   io::pbm::save(out, "out.pbm");
 

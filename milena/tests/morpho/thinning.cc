@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho_thinning.cc
+/*! \file tests/morpho/thinning.cc
  *
  * \brief Test on mln::morpho::thinning.
  */
@@ -63,7 +63,7 @@ int main()
 
   {
     image2d<bool> pic;
-    io::pbm::load(pic, "../img/picasso.pbm");
+    io::pbm::load(pic, "../../img/picasso.pbm");
     io::pbm::save(morpho::thinning(pic, win_fg, win_bg), "out.pbm" );
   }
 //   {

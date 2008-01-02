@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho_erosion.cc
+/*! \file tests/morpho/erosion.cc
  *
  * \brief Test on mln::morpho::erosion.
  */
@@ -75,7 +75,7 @@ int main()
   // 25  66   15
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../img/lena.pgm");
+  io::pgm::load(lena, "../../img/lena.pgm");
 
   // trace::quiet = false;
 

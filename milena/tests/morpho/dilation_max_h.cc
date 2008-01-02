@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho_dilation_max_h.cc
+/*! \file tests/morpho/dilation_max_h.cc
  *
  * \brief Test on mln::morpho::dilatation_fast.
  */
@@ -53,7 +53,7 @@ int main()
   border::thickness = 66;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../img/lena.pgm");
+  io::pgm::load(lena, "../../img/lena.pgm");
 
   {
     p_array<point2d> vec = convert::to_p_array(rec, point2d::origin);

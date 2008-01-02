@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho_dilation.cc
+/*! \file tests/morpho/dilation.cc
  *
  * \brief Test on mln::morpho::dilation.
  */
@@ -61,7 +61,7 @@ int main()
   border::thickness = 66;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../img/lena.pgm");
+  io::pgm::load(lena, "../../img/lena.pgm");
 
 //   { 
 //     image2d<int_u8> out(lena.domain());

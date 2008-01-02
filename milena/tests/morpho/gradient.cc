@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho_gradient.cc
+/*! \file tests/morpho/gradient.cc
  *
  * \brief Test on mln::morpho::gradient.
  */
@@ -50,7 +50,7 @@ int main()
   border::thickness = 2;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../img/tiny.pgm");
+  io::pgm::load(lena, "../../img/tiny.pgm");
 
   io::pgm::save( morpho::gradient(lena, rect),
 		 "out.pgm" );

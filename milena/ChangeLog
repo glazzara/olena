@@ -1,3 +1,19 @@
+2008-01-02  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix and update morpho and util tests.
+	* tests/util/tree_fast_to_image.cc,
+	* tests/util/tree_to_image.cc,
+	* tests/morpho/contrast.cc,
+	* tests/morpho/dilation.cc,
+	* tests/morpho/dilation_max_h.cc,
+	* tests/morpho/erosion.cc,
+	* tests/morpho/erosion_min_h.cc,
+	* tests/morpho/gradient.cc,
+	* tests/morpho/hit_or_miss.cc,
+	* tests/morpho/laplacian.cc,
+	* tests/morpho/opening_area.cc,
+	* tests/morpho/thinning.cc: Fix path of images and update brief.
+
 2007-12-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move mathematical morphology-related tests into tests/morpho.

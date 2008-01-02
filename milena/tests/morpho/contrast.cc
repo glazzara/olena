@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho_contrast.cc
+/*! \file tests/morpho/contrast.cc
  *
  * \brief Test on mln::morpho::contrast.
  */
@@ -51,7 +51,7 @@ int main()
   border::thickness = 2;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../img/lena.pgm");
+  io::pgm::load(lena, "../../img/lena.pgm");
   image2d<int_u8> out = morpho::contrast(lena, rect);
   io::pgm::save(out, "out.pgm");
 

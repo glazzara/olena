@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho_laplacian.cc
+/*! \file tests/morpho/laplacian.cc
  *
  * \brief Test on mln::morpho::laplacian.
  */
@@ -54,7 +54,7 @@ int main()
   border::thickness = 2;
 
   image2d<int_u8> tiny;
-  io::pgm::load(tiny, "../img/tiny.pgm");
+  io::pgm::load(tiny, "../../img/tiny.pgm");
   image2d<int> lap(tiny.domain());
   morpho::laplacian(tiny, rect, lap);
 

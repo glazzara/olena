@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho_opening_area.cc
+/*! \file tests/morpho/opening_area.cc
  *
  * \brief Test on mln::morpho::opening_area.
  */
@@ -47,7 +47,7 @@ int main()
   using value::int_u8;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../img/lena.pgm");
+  io::pgm::load(lena, "../../img/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
   morpho::opening_area(lena, c4(), 510, out);
