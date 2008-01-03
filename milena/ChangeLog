@@ -1,3 +1,26 @@
+2008-01-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Improve operators on graylevels.
+	* mln/core/exact.hh:  (mln_exact(T)) New.
+	* mln/trait/op/times.hh: Try to display an explicit error when
+	calling mln_trait_op_times with types not exact.
+
+	* mln/value/internal/gray_.hh,
+	* mln/value/internal/gray_f.hh,
+	* mln/value/graylevel.hh,
+
+	* mln/value/graylevel_f.hh: Review and complete the allowed and
+	forbidden operators, resolve includes recursion.
+
+	* tests/value/graylevel.cc: Add some tests to test if times and
+	div compile well.
+
+	* tests/value/graylevel_full.cc: Disable some tests to isolate
+	some bugs.
+
+	* tests/value/int_u8.cc: Add a test for div between int_u8 and
+	float.
+
 2008-01-02  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix and update morpho and util tests.

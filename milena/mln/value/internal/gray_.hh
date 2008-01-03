@@ -40,8 +40,8 @@
 # include <mln/metal/math/max.hh>
 # include <mln/metal/math/pow.hh>
 
-# include <mln/value/graylevel.hh>
-# include <mln/value/graylevel_f.hh>
+//# include <mln/value/graylevel.hh>
+//# include <mln/value/graylevel_f.hh>
 # include <mln/value/concept/integer.hh>
 
 
@@ -61,7 +61,11 @@ namespace mln
     /// \{ Fwd decls.
     template <unsigned N> class graylevel;
     class graylevel_f;
-    namespace internal { template <unsigned n> class gray_; }
+    namespace internal
+    {
+      template <unsigned n> class gray_;
+      class gray_f;
+    }
     /// \}
   }
 
@@ -173,7 +177,7 @@ namespace mln
 	operator graylevel<m>() const;
 
 	/// Convertion to graylevel_f.
-// 	operator graylevel_f() const;
+ 	operator graylevel_f() const;
       };
 
 
@@ -302,6 +306,15 @@ namespace mln
 	graylevel<m> tmp(convert<n, m>(this->v_));
 	mln_assertion(tmp.value() < std::pow(2.f, int(m)));
 	return tmp;
+      }
+
+
+      template <unsigned n>
+      inline
+      gray_<n>::operator graylevel_f() const
+      {
+	static const float denom = float(metal::math::pow_int<2, n>::value) - 1.f;
+	return graylevel_f(float(this->v_) / denom);
       }
 
 
@@ -464,6 +477,25 @@ namespace mln
       return internal::gray_<n>(lhs) + internal::gray_<m>(rhs);
     }
 
+    // Op gl + Another type
+    template <unsigned n, typename I>
+    inline
+    void
+    operator+(const graylevel<n>& lhs, const I& i)
+    {
+      typename graylevel<n>::wrong_use_of_graylevel___Please_use_the__to_enc__method a;
+    }
+
+
+    // Op  Another type + gl
+    template <unsigned n, typename I>
+    inline
+    void
+    operator+(const I& i, const graylevel<n>& rhs)
+    {
+      typename graylevel<n>::wrong_use_of_graylevel___Please_use_the__to_enc__method a;
+    }
+
     // Op gl - gl
 
     template <unsigned n, unsigned m>
@@ -472,6 +504,25 @@ namespace mln
       operator-(const graylevel<n>& lhs, const graylevel<m>& rhs)
     {
       return internal::gray_<n>(lhs) - internal::gray_<m>(rhs);
+    }
+
+    // Op gl - Another type
+    template <unsigned n, typename I>
+    inline
+    void
+    operator-(const graylevel<n>& lhs, const I& i)
+    {
+      typename graylevel<n>::wrong_use_of_graylevel___Please_use_the__to_enc__method a;
+    }
+
+
+    // Op  Another type - gl
+    template <unsigned n, typename I>
+    inline
+    void
+    operator-(const I& i, const graylevel<n>& rhs)
+    {
+      typename graylevel<n>::wrong_use_of_graylevel___Please_use_the__to_enc__method a;
     }
 
     // Op gl * gl
@@ -484,11 +535,11 @@ namespace mln
       return internal::gray_<n>(lhs) * internal::gray_<m>(rhs);
     }
 
-    // Op symm gl * Int
+    // Op symm gl * Integer
 
     template <unsigned n, typename I>
     inline
-    mln_trait_op_times(graylevel<n>, Integer<I>)
+    internal::gray_<n>
       operator*(const graylevel<n>& lhs, const Integer<I>& rhs)
     {
       return internal::gray_<n>(lhs) * int(exact(rhs));
@@ -496,30 +547,62 @@ namespace mln
 
     template <typename I, unsigned n>
     inline
-    mln_trait_op_times(Integer<I>, graylevel<n>)
+    mln_trait_op_times(I, graylevel<n>)
       operator*(const Integer<I>& lhs, const graylevel<n>& rhs)
     {
       return internal::gray_<n>(rhs) * int(exact(lhs));
     }
 
-    // Op symm gl * Float
+    // Op symm gl * Floating
 
     template <unsigned n, typename F>
     inline
-    mln_trait_op_times(graylevel<n>, Floating<F>)
+    mln_trait_op_times(graylevel<n>, F)
       operator*(const graylevel<n>& lhs, const Floating<F>& rhs)
     {
-      return lhs.to_float() * exact(rhs);
+      return lhs.to_float() * float(exact(rhs));
     }
 
     template <typename F, unsigned n>
     inline
-    mln_trait_op_times(Floating<F>, graylevel<n>)
+    mln_trait_op_times(F, graylevel<n>)
       operator*(const Floating<F>& lhs, const graylevel<n>& rhs)
     {
-      return rhs.to_float() * exact(lhs);
+      return rhs.to_float() * float(exact(lhs));
     }
 
+    // Op * Builtin
+
+    template <unsigned n, typename T>
+    mln_trait_op_times(graylevel<n>, T)
+      operator*(const graylevel<n>& lhs, const T& rhs)
+    {
+      return lhs * scalar_<T>(rhs);
+    }
+
+    template <unsigned n, typename T>
+    mln_trait_op_times(graylevel<n>, T)
+      operator*(const T& lhs, const graylevel<n>& rhs)
+    {
+      return rhs * scalar_<T>(lhs);
+    }
+
+
+    // Op / Builtin
+
+    /// \{ Fwd decls.
+    namespace internal
+    {
+      class gray_f;
+    }
+    /// \}
+
+    template <unsigned n, typename T>
+    mln::value::internal::gray_f
+    operator/(const graylevel<n>& lhs, const T& rhs)
+    {
+      return lhs / scalar_<T>(rhs);
+    }
 
 
     // Op * scalar
@@ -534,42 +617,66 @@ namespace mln
       struct helper_gray__op_< gray_<n> >
       {
 	template <unsigned m, typename S>
-	inline
-	static gray_<n> times(const graylevel<m>& lhs, const scalar_<S>& rhs)
+	inline static
+	mln_trait_op_times(graylevel<m>, scalar_<S>)
+	times(const graylevel<m>& lhs, const scalar_<S>& rhs)
 	{
-	  gray_<n> tmp(lhs.value() * rhs.to_equiv());
+	  typedef mln_trait_op_times(graylevel<m>, scalar_<S>) ret;
+	  ret tmp(typename ret::equiv
+		  (lhs.value() * typename ret::equiv(rhs.to_equiv())));
 	  return tmp;
 	}
+
+// 	template <unsigned m, typename S>
+// 	inline static
+// 	mln_trait_op_times(graylevel<m>, scalar_<S>)
+// 	times(const graylevel<m>& lhs, const scalar_<S>& rhs)
+// 	{
+// 	  typedef mln_trait_op_times(graylevel<m>, scalar_<S>) ret;
+// 	  ret tmp(lhs.value() * rhs.to_equiv());
+// 	  return tmp;
+// 	}
+
+
 	template <unsigned m, typename S>
-	inline
-	static gray_<n> div(const graylevel<m>& lhs, const scalar_<S>& rhs)
+	inline static
+	mln_trait_op_times(graylevel<m>, scalar_<S>)
+	div(const graylevel<m>& lhs, const scalar_<S>& rhs)
 	{
-	  gray_<n> tmp(lhs.value() / rhs.to_equiv());
+	  typedef mln_trait_op_times(graylevel<m>, scalar_<S>) ret;
+	  ret tmp(typename ret::equiv
+		  (lhs.value() / typename ret::equiv(rhs.to_equiv())));
 	  return tmp;
 	}
       };
 
       template <>
-      struct helper_gray__op_< float >
+      struct helper_gray__op_< gray_f >
       {
 	template <unsigned n, typename S>
-	inline
-	static float times(const graylevel<n>& lhs, const scalar_<S>& rhs)
+	inline static
+	mln_trait_op_times(graylevel<n>, scalar_<S>)
+	  times(const graylevel<n>& lhs, const scalar_<S>& rhs)
 	{
-	  float tmp(lhs.to_float() * float(rhs.to_equiv()));
+	  typedef mln_trait_op_times(graylevel<n>, scalar_<S>) ret;
+	  ret tmp(lhs.to_float() * typename ret::equiv(rhs.to_equiv()));
 	  return tmp;
 	}
 	template <unsigned n, typename S>
-	inline
-	static float div(const graylevel<n>& lhs, const scalar_<S>& rhs)
+	inline static
+	mln_trait_op_div(graylevel<n>, scalar_<S>)
+	  div(const graylevel<n>& lhs, const scalar_<S>& rhs)
 	{
-	  float tmp(lhs.to_float() / float(rhs.to_equiv()));
+	  typedef mln_trait_op_div(graylevel<n>, scalar_<S>) ret;
+	  ret tmp(typename ret::equiv
+		  (lhs.to_float() / typename ret::equiv(rhs.to_equiv())));
 	  return tmp;
 	}
       };
 
     } // end of namespace mln::value::internal
 
+    // Op graylevel<n> * scalar_<S>
     template <unsigned n, typename S>
     inline
     mln_trait_op_times(graylevel<n>, scalar_<S>)
@@ -579,6 +686,7 @@ namespace mln
       return internal::helper_gray__op_<ret>::times(lhs, rhs);
     }
 
+    // Op graylevel<n> / scalar_<S>
     template <unsigned n, typename S>
     inline
     mln_trait_op_div(graylevel<n>, scalar_<S>)
@@ -589,7 +697,7 @@ namespace mln
       return internal::helper_gray__op_<ret>::div(lhs, rhs);
     }
 
-  } // end of namespace mln::value
+  } //end of namespace mln::value
 
 
 

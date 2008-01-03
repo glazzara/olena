@@ -39,12 +39,11 @@
 
 # include <mln/core/contract.hh>
 # include <mln/metal/math/pow.hh>
-# include <mln/math/two_pow.hh>
 # include <mln/metal/bexpr.hh>
 # include <mln/literal/ops.hh>
 
 # include <mln/value/float01_f.hh>
-# include <mln/value/gray.hh>
+//# include <mln/value/internal/gray_.hh>
 # include <mln/trait/value_.hh>
 
 
@@ -80,11 +79,13 @@ namespace mln
       typedef mln::value::gray_f ret;
     };
 
+    template <>
     struct set_precise_binary_< op::greater, mln::value::gray_f, mln::value::gray_f >
     {
       typedef bool ret;
     };
 
+    template <>
     struct set_precise_binary_< op::eq, mln::value::gray_f, mln::value::gray_f >
     {
       typedef bool ret;
@@ -182,6 +183,7 @@ namespace mln
       /// \internal Op<<.
       std::ostream& operator<<(std::ostream& ostr, const gray_f& g);
 
+
 # ifndef MLN_INCLUDE_ONLY
 
       // gray_f.
@@ -193,8 +195,8 @@ namespace mln
 
       inline
       gray_f::gray_f(const gray_f& g)
-	: v_(g.v_)
       {
+	this->v_ = g.v_;
       }
 
       inline
@@ -220,17 +222,16 @@ namespace mln
       }
 
       inline
-      gray_f&
       gray_f::gray_f(const graylevel_f& rhs)
-	: v_(rhs.v_)
       {
+	this->v_ = rhs.value();
       }
 
       inline
       gray_f&
-      gray_f::gray_f& operator=(const graylevel_f& rhs)
+      gray_f::operator=(const graylevel_f& rhs)
       {
-	this->v_ = rhs.v_;
+	this->v_ = rhs.value();
 	return *this;
       }
 
@@ -238,7 +239,7 @@ namespace mln
       inline
       gray_f::operator graylevel<m>() const
       {
-	return graylevel<m>(round(this->v_ * (mlc_pow_int(2, m) - 1)));
+	return graylevel<m>(int(round(this->v_ * (mlc_pow_int(2, m) - 1))));
       }
 
       inline
@@ -265,6 +266,145 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::value::internal
+
+
+    // Graylevel_F operators.
+
+    // Op glf == Int
+
+    template <typename I>
+    inline
+    bool
+    operator==(const Integer<I>& lhs, const graylevel_f& rhs)
+    {
+      return rhs.value() == exact(lhs);
+    }
+
+    // Op glf == glf
+    inline
+    bool
+    operator==(const graylevel_f& lhs, const graylevel_f& rhs)
+    {
+      return rhs.value() == lhs.value();
+    }
+
+    // Op glf + glf
+    inline
+    mln_trait_op_plus_(graylevel_f, graylevel_f)
+      operator+(const graylevel_f& lhs, const graylevel_f& rhs)
+    {
+      return lhs.value() + rhs.value();
+    }
+
+    // Op glf + Integer
+    template <typename I>
+    inline
+    graylevel_f
+    operator+(const graylevel_f& lhs, const Integer<I>& i)
+    {
+      typename I::graylevel_f_plus_int_is_undefined__Please_use_the__to_enc__method a;
+    }
+
+//     // Op glf + Float
+//     template <typename I>
+//     inline
+//     graylevel_f
+//     operator+(const graylevel_f& lhs, const Floating<I>& i)
+//     {
+//       typename I::graylevel_f_plus_float_is_undefined__Please_use_the__to_enc__method a;
+//     }
+
+    // Op glf - glf
+
+    inline
+    mln_trait_op_minus_(graylevel_f, graylevel_f)
+      operator-(const graylevel_f& lhs, const graylevel_f& rhs)
+    {
+      return lhs.value() - rhs.value();
+    }
+
+    // Op glf - Integer
+    template <typename I>
+    inline
+    graylevel_f
+    operator-(const graylevel_f& lhs, const Integer<I>& i)
+    {
+      typename I::graylevel_f_minus_int_is_undefined__Please_use_the__to_enc__method a;
+    }
+
+    // Op glf - Float
+    template <typename I>
+    inline
+    graylevel_f
+    operator-(const graylevel_f& lhs, const Floating<I>& i)
+    {
+      typename I::graylevel_f_minus_float_is_undefined__Please_use_the__to_enc__method a;
+    }
+
+    // Op glf * glf
+    inline
+    mln_trait_op_times_(graylevel_f, graylevel_f)
+      operator*(const graylevel_f& lhs, const graylevel_f& rhs)
+    {
+      return lhs.value() * rhs.value();
+    }
+
+    // Op symm glf * Int
+
+    template <typename I>
+    inline
+    mln_trait_op_times(graylevel_f, I)
+      operator*(const graylevel_f& lhs, const Integer<I>& rhs)
+    {
+      return lhs.value() * int(exact(rhs));
+    }
+
+    template <typename I>
+    inline
+    mln_trait_op_times(I, graylevel_f)
+      operator*(const Integer<I>& lhs, const graylevel_f& rhs)
+    {
+      return rhs.value() * int(exact(lhs));
+    }
+
+    // Op symm glf * Float
+
+    template <typename F>
+    inline
+    mln_trait_op_times(graylevel_f, F)
+      operator*(const graylevel_f& lhs, const Floating<F>& rhs)
+    {
+      return lhs.value() * exact(rhs);
+    }
+
+    template <typename F>
+    inline
+    mln_trait_op_times(F, graylevel_f)
+      operator*(const Floating<F>& lhs, const graylevel_f& rhs)
+    {
+      return rhs.value() * exact(lhs);
+    }
+
+
+
+    // Op * scalar
+    template <typename S>
+    inline
+    mln_trait_op_times(graylevel_f, S)
+      operator*(const graylevel_f& lhs, const scalar_<S>& rhs)
+    {
+      return lhs.value() * rhs;
+    }
+
+    // Op / scalar
+    template <typename S>
+    inline
+    mln_trait_op_div(graylevel_f, S)
+      operator/(const graylevel_f& lhs, const scalar_<S>& rhs)
+    {
+      mln_precondition(rhs.to_equiv() != 0);
+      return lhs.value() / rhs;
+    }
 
   } // end of namespace mln::value
 

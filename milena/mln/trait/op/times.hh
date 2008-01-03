@@ -50,11 +50,22 @@ namespace mln
     namespace op
     {
 
+
       template <typename L, typename R>
       struct times : public solve_binary<times, L, R>
       {
       };
-      
+
+
+      // FIXME: Try to make the code below compile.
+
+//       template <typename L, typename R>
+//       struct times : mlc_equal< mln_exact(R), R >::check_t
+//       {
+// 	typedef solve_binary<mln::trait::op::times, L, R> solve_t;
+// 	typedef typename solve_t::ret ret;
+//       };
+
     } // end of namespace mln::trait::op
 
   } // end of namespace mln::trait

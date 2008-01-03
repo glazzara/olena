@@ -34,10 +34,26 @@
 
 #include <mln/value/gl8.hh>
 #include <mln/value/gl16.hh>
+#include <mln/value/glf.hh>
+
 #include <mln/value/int_u8.hh>
+#include <mln/value/float01_f.hh>
+#include <mln/value/float01_.hh>
+
 
 #include <mln/literal/black.hh>
 #include <mln/literal/white.hh>
+
+
+
+// FIXME : make a more explicit error message.
+// template <typename T>
+// void foo()
+// {
+//   typedef mln::value::gl8 g;
+// //   mln_trait_op_times(int, mln::value::Integer<g>) tmp;
+//   mln_trait_op_times(int, mln::value::Integer<g>) tmp;
+// }
 
 
 
@@ -47,6 +63,9 @@ int main()
 
   using  mln::literal::white;
   using  mln::literal::black;
+
+
+  // FIXME :  make all the test pass.
 
   gl8  a(white);
   gl8  b(white);
@@ -60,14 +79,53 @@ int main()
 
     gl8 c = a + b;
   }
+
   {
     gl8 a(white);
     gl8 b(white);
     gl8 c;
-    c = (a + b) / 2;
 
-    mln_assertion(c == white);
-    mln_assertion(c.value() == 255);
+    // gl8 * int
+    a * 2;
+    2 * a;
+
+
+    // gl8 * double
+    a * 2.0;
+    2.0 * a;
+
+    // gl8 * bool
+    a * false;
+    false * a;
+
+    // gl8 * Integer
+    a * int_u8(23);
+    int_u8(23) * a;
+
+    // gl8 * Floating
+    a * float01_f(.23);
+    float01_f(.23) * a;
+
+    float01_<16>(.23) * a;
+    a * float01_<16>(.23);
+
+
+    // gl8 / int
+    a / 1.5;
+
+    // gl8 / double
+    mln_assertion(a / 2.0 == glf(0.5));
+
+    // gl8 / bool
+    mln_assertion(a / true == a);
+
+    // gl8 / Integer
+    a / int_u8(23);
+
+    // gl8 / Floating
+    a / float01_f(.23);
+    a / float01_<16>(.23);
+
 
     c = a;
     mln_assertion(c == white);
@@ -76,7 +134,7 @@ int main()
     mln_assertion(c == white);
 
     c = c / 6;
-  }
+   }
 
   {
     gl8 c = white;

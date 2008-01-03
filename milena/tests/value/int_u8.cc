@@ -183,6 +183,7 @@ int main()
     c /= 2;
     sym_compare_assert(c, ==, 50.f);
 
+    d /= 2.4f;
   }
 
 

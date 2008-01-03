@@ -43,7 +43,7 @@
 # include <mln/literal/ops.hh>
 
 # include <mln/value/float01_f.hh>
-# include <mln/value/internal/gray_.hh>
+//# include <mln/value/internal/gray_f.hh>
 # include <mln/trait/value_.hh>
 
 
@@ -74,23 +74,103 @@ namespace mln
   {
 
 
-    template < template <class, class> class Name>
-    struct set_precise_binary_< Name, mln::value::graylevel_f, mln::value::graylevel_f >
+    //     template < template <class, class> class Name>
+    //     struct set_precise_binary_< Name, mln::value::graylevel_f, mln::value::graylevel_f >
+    //     {
+    //       typedef mln::value::internal::gray_f ret;
+    //     };
+
+
+    //     template < template <class, class> class Name, unsigned n>
+    //     struct set_precise_binary_< Name, mln::value::graylevel_f, mln::value::graylevel<n> >
+    //     {
+    //       typedef mln::value::internal::gray_f ret;
+    //     };
+
+    //     template <>
+    //     struct set_precise_binary_< op::greater, mln::value::graylevel_f, mln::value::graylevel_f >
+    //     {
+    //       typedef bool ret;
+    //     };
+
+    //     template <>
+    //     struct set_precise_binary_< op::eq, mln::value::graylevel_f, mln::value::graylevel_f >
+    //     {
+    //       typedef bool ret;
+    //     };
+
+
+    //
+    template <>
+    struct set_precise_binary_< op::plus, mln::value::graylevel_f, mln::value::graylevel_f >
     {
       typedef mln::value::internal::gray_f ret;
     };
 
     template <>
-    struct set_precise_binary_< op::greater, mln::value::graylevel_f, mln::value::graylevel_f >
+    struct set_precise_binary_< op::minus, mln::value::graylevel_f, mln::value::graylevel_f >
     {
-      typedef bool ret;
+      typedef mln::value::internal::gray_f ret;
     };
 
     template <>
-    struct set_precise_binary_< op::eq, mln::value::graylevel_f, mln::value::graylevel_f >
+    struct set_precise_binary_< op::times, mln::value::graylevel_f, mln::value::graylevel_f >
     {
-      typedef bool ret;
+      typedef mln::value::internal::gray_f ret;
     };
+
+    template <>
+    struct set_precise_binary_< op::div, mln::value::graylevel_f, mln::value::graylevel_f >
+    {
+      typedef mln::value::internal::gray_f ret;
+    };
+
+    template < typename I >
+    struct set_binary_< op::times,
+			mln::value::Integer, mln::value::graylevel_f,
+			mln::value::Integer, I >
+    {
+      typedef mln::value::internal::gray_f ret;
+    };
+
+    template < typename I >
+    struct set_binary_< op::times,
+			mln::value::Integer, I,
+			mln::value::Integer, mln::value::graylevel_f >
+    {
+      typedef mln::value::internal::gray_f ret;
+    };
+
+
+    template < typename F >
+    struct set_binary_< op::times,
+			mln::value::Integer,  mln::value::graylevel_f,
+			mln::value::Floating, F >
+    {
+      typedef mln::value::internal::gray_f ret;
+    };
+
+    template < typename F >
+    struct set_binary_< op::times,
+			mln::value::Floating, F,
+			mln::value::Integer,  mln::value::graylevel_f >
+    {
+      typedef mln::value::internal::gray_f ret;
+    };
+
+
+    template < typename S >
+    struct set_precise_binary_< op::times, mln::value::graylevel_f, mln::value::scalar_<S> >
+    {
+      typedef mln::value::internal::gray_f ret;
+    };
+
+    template < typename S >
+    struct set_precise_binary_< op::div, mln::value::graylevel_f, mln::value::scalar_<S> >
+    {
+      typedef mln::value::internal::gray_f ret;
+    };
+
 
     /// Forward declaration.
     template <typename T> struct value_;
@@ -153,10 +233,10 @@ namespace mln
 
       /// Constructor from graylevel.
       template <unsigned n>
-      graylevel_f(const graylevel<n>& rhs);
+	graylevel_f(const graylevel<n>& rhs);
       /// Assigment with graylevel.
       template <unsigned n>
-      graylevel_f& operator=(const graylevel<n>& rhs);
+	graylevel_f& operator=(const graylevel<n>& rhs);
 
       /// Ctors with literals.
       /// \{
@@ -180,120 +260,214 @@ namespace mln
     // Operators.
 
     /// Op<<.
-  std::ostream& operator<<(std::ostream& ostr, const graylevel_f& g);
+    std::ostream& operator<<(std::ostream& ostr, const graylevel_f& g);
+
+    // graylevel_f + graylevel_f
+    mln_trait_op_plus_(graylevel_f, graylevel_f)
+      operator+(const graylevel_f& lhs, const graylevel_f& rhs);
+
+    // graylevel_f + Integer<I> (doesn't compile)
+    template <typename I>
+    graylevel_f
+    operator+(const graylevel_f& lhs, const Integer<I>& i);
+
+    // graylevel_f + Floating<I> (doesn't compile)
+    template <typename I>
+    graylevel_f
+    operator+(const graylevel_f& lhs, const Floating<I>& i);
+
+    // graylevel_f - graylevel_f
+    mln_trait_op_minus_(graylevel_f, graylevel_f)
+      operator-(const graylevel_f& lhs, const graylevel_f& rhs);
+
+    // graylevel_f - Integer<I> (doesn't compile)
+    template <typename I>
+    graylevel_f
+    operator-(const graylevel_f& lhs, const Integer<I>& i);
+
+    // graylevel_f - Floating<I> (doesn't compile)
+    template <typename I>
+    graylevel_f
+    operator-(const graylevel_f& lhs, const Floating<I>& i);
+
+    // graylevel_f * graylevel_f
+    mln_trait_op_times_(graylevel_f, graylevel_f)
+      operator*(const graylevel_f& lhs, const graylevel_f& rhs);
+
+    // With Integer.
+
+    // graylevel_f * Integer<I>
+    template <typename I>
+    mln_trait_op_times(graylevel_f, I)
+      operator*(const graylevel_f& lhs, const Integer<I>& rhs);
+
+    // Integer<I> * graylevel_f
+    template <typename I>
+    mln_trait_op_times(I, graylevel_f)
+      operator*(const Integer<I>& lhs, const graylevel_f& rhs);
+
+    // graylevel_f / Integer<I>
+    template <typename I>
+    mln_trait_op_div(graylevel_f, I)
+      operator/(const graylevel_f& lhs, const Integer<I>& rhs);
+
+    // Integer<I> / graylevel_f
+    template <typename I>
+    mln_trait_op_div(I, graylevel_f)
+      operator/(const Integer<I>& lhs, const graylevel_f& rhs);
+
+    // With Floating.
+
+    // graylevel_f * Floating<F>
+    template <typename F>
+    mln_trait_op_times(graylevel_f, F)
+      operator*(const graylevel_f& lhs, const Floating<F>& rhs);
+
+    // Floating<F>, graylevel_f
+    template <typename F>
+    mln_trait_op_times(F, graylevel_f)
+      operator*(const Floating<F>& lhs, const graylevel_f& rhs);
+
+
+    // graylevel_f / Floating<F>
+    template <typename F>
+    mln_trait_op_div(graylevel_f, F)
+      operator/(const graylevel_f& lhs, const Floating<F>& rhs);
+
+    // Floating<F> / graylevel_f
+    template <typename F>
+    mln_trait_op_div(F, graylevel_f)
+      operator/(const Floating<F>& lhs, const graylevel_f& rhs);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // graylevel_f.
+    // graylevel_f.
 
-  inline
-  graylevel_f::graylevel_f()
-  {
-  }
+    inline
+    graylevel_f::graylevel_f()
+    {
+    }
 
 
-  inline
-  graylevel_f::graylevel_f(float val)
-  {
-    this->v_ = val;
-  }
+    inline
+    graylevel_f::graylevel_f(float val)
+    {
+      mln_precondition(val >= 0);
+      mln_precondition(val <= 1);
+      this->v_ = val;
+    }
 
-  inline
-  graylevel_f&
-  graylevel_f::operator=(float val)
-  {
-    this->v_ = val;
-    return *this;
-  }
+    inline
+    graylevel_f&
+    graylevel_f::operator=(float val)
+    {
+      mln_precondition(val >= 0);
+      mln_precondition(val <= 1);
+      this->v_ = val;
+      return *this;
+    }
 
-  template <unsigned n>
-  graylevel_f::graylevel_f(const graylevel<n>& rhs)
-  {
-    this->v_ = rhs.to_float();
-  }
+    template <unsigned n>
+    graylevel_f::graylevel_f(const graylevel<n>& rhs)
+    {
+      mln_precondition(rhs.to_float() >= 0);
+      mln_precondition(rhs.to_float() <= 1);
+      this->v_ = rhs.to_float();
+    }
 
-  template <unsigned n>
-  graylevel_f&
-  graylevel_f::operator=(const graylevel<n>& rhs)
-  {
-    this->v_ = rhs.to_float();
-  }
+    template <unsigned n>
+    graylevel_f&
+    graylevel_f::operator=(const graylevel<n>& rhs)
+    {
+      mln_precondition(rhs.to_float() >= 0);
+      mln_precondition(rhs.to_float() <= 1);
+      this->v_ = rhs.to_float();
+    }
 
-  inline
-  graylevel_f::graylevel_f(const graylevel_f& rhs)
-  {
-    this->v_ = rhs.v_;
-  }
+    inline
+    graylevel_f::graylevel_f(const graylevel_f& rhs)
+    {
+      mln_precondition(rhs.v_ >= 0);
+      mln_precondition(rhs.v_ <= 1);
+      this->v_ = rhs.v_;
+    }
 
-  inline
-  graylevel_f&
-  graylevel_f::operator=(const graylevel_f& rhs)
-  {
-    this->v_ = rhs.v_;
-    return *this;
-  }
+    inline
+    graylevel_f&
+    graylevel_f::operator=(const graylevel_f& rhs)
+    {
+      mln_precondition(rhs.v_ >= 0);
+      mln_precondition(rhs.v_ <= 1);
+      this->v_ = rhs.v_;
+      return *this;
+    }
 
-  inline
-  graylevel_f::graylevel_f(const literal::black_t&)
-  {
-    this->v_ = 0.0f;
-  }
+    inline
+    graylevel_f::graylevel_f(const literal::black_t&)
+    {
+      this->v_ = 0.0f;
+    }
 
-  inline
-  graylevel_f&
-  graylevel_f::operator=(const literal::black_t&)
-  {
-    this->v_ = 0.0f;
-    return *this;
-  }
+    inline
+    graylevel_f&
+    graylevel_f::operator=(const literal::black_t&)
+    {
+      this->v_ = 0.0f;
+      return *this;
+    }
 
-  inline
-  graylevel_f::graylevel_f(const literal::medium_gray_t&)
-  {
-    this->v_ = 0.5f;
-  }
+    inline
+    graylevel_f::graylevel_f(const literal::medium_gray_t&)
+    {
+      this->v_ = 0.5f;
+    }
 
-  inline
-  graylevel_f&
-  graylevel_f::operator=(const literal::medium_gray_t&)
-  {
-    this->v_ = 0.5f;
-    return *this;
-  }
+    inline
+    graylevel_f&
+    graylevel_f::operator=(const literal::medium_gray_t&)
+    {
+      this->v_ = 0.5f;
+      return *this;
+    }
 
-  inline
-  graylevel_f::graylevel_f(const literal::white_t&)
-  {
-    this->v_ = 1.0f;
-  }
+    inline
+    graylevel_f::graylevel_f(const literal::white_t&)
+    {
+      this->v_ = 1.0f;
+    }
 
-  inline
-  graylevel_f&
-  graylevel_f::operator=(const literal::white_t&)
-  {
-    this->v_ = 1.0f;
-    return *this;
-  }
+    inline
+    graylevel_f&
+    graylevel_f::operator=(const literal::white_t&)
+    {
+      this->v_ = 1.0f;
+      return *this;
+    }
 
-  inline
-  float
-  graylevel_f::value() const
-  {
-    return this->v_;
-  }
+    inline
+    float
+    graylevel_f::value() const
+    {
+      return this->v_;
+    }
 
     // Operators.
 
-  inline
-  std::ostream& operator<<(std::ostream& ostr, const graylevel_f& g)
-  {
-    return ostr << g.value() << "/gl_f"; // FIXME: Be more explicit!
-  }
+    inline
+    std::ostream& operator<<(std::ostream& ostr, const graylevel_f& g)
+    {
+      return ostr << g.value() << "/gl_f"; // FIXME: Be more explicit!
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-} // end of namespace mln::value
+  } // end of namespace mln::value
 
-  } // end of namespace mln
+} // end of namespace mln
+
+
+#include <mln/value/internal/gray_f.hh>
+#include <mln/value/internal/gray_.hh>
 
 #endif // ! MLN_VALUE_GRAYLEVEL_F_HH
