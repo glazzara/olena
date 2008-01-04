@@ -40,8 +40,6 @@
 # include <mln/metal/math/max.hh>
 # include <mln/metal/math/pow.hh>
 
-//# include <mln/value/graylevel.hh>
-//# include <mln/value/graylevel_f.hh>
 # include <mln/value/concept/integer.hh>
 
 
@@ -178,6 +176,7 @@ namespace mln
 
 	/// Convertion to graylevel_f.
  	operator graylevel_f() const;
+
       };
 
 
@@ -316,7 +315,6 @@ namespace mln
 	static const float denom = float(metal::math::pow_int<2, n>::value) - 1.f;
 	return graylevel_f(float(this->v_) / denom);
       }
-
 
       // Operators.
 
@@ -626,17 +624,6 @@ namespace mln
 		  (lhs.value() * typename ret::equiv(rhs.to_equiv())));
 	  return tmp;
 	}
-
-// 	template <unsigned m, typename S>
-// 	inline static
-// 	mln_trait_op_times(graylevel<m>, scalar_<S>)
-// 	times(const graylevel<m>& lhs, const scalar_<S>& rhs)
-// 	{
-// 	  typedef mln_trait_op_times(graylevel<m>, scalar_<S>) ret;
-// 	  ret tmp(lhs.value() * rhs.to_equiv());
-// 	  return tmp;
-// 	}
-
 
 	template <unsigned m, typename S>
 	inline static

@@ -102,8 +102,6 @@ namespace mln
     struct set_precise_binary_< op::div, mln::value::graylevel<n>, mln::value::graylevel<m> >
     {
       typedef mln::value::internal::gray_f ret;
-      // FIXME : Was...
-      //typedef mln::value::internal::gray_< mlc_max_int(m, n) > ret;
     };
 
     template < unsigned n, typename I >
@@ -151,8 +149,6 @@ namespace mln
     template < unsigned n, typename S >
     struct set_precise_binary_< op::div, mln::value::graylevel<n>, mln::value::scalar_<S> >
     {
-      //   typedef mln_trait_op_times(mln::value::graylevel<n>,
-      // 			     mln::value::scalar_<S>) ret;
       typedef mln::value::internal::gray_f ret;
     };
 
@@ -201,49 +197,61 @@ namespace mln
     //
 
     //     |--------------------------------------------|
-    //     | +  ||  gl  |  glf  |gray_i |  int  | float |
+    //     | +  ||  gl  |  glf  |gray_n |  int  | float |
     //     |============================================|
-    //     |gl  ||gray_i|gray_f |gray_i |   X   |   X   |
+    //     |gl  ||gray_n|gray_f |gray_n |   X   |   X   |
     //     |--------------------------------------------|
     //     |glf ||      |gray_f |gray_f |   X   |   X   |
     //     |--------------------------------------------|
-    //     |gray||              |gray_i |   X   |   X   |
+    //     |gray||              |gray_n |   X   |   X   |
     //     |--------------------------------------------|
 
     //     |--------------------------------------------|
-    //     | -  ||  gl  |  glf  |gray_i |  int  | float |
+    //     | -  ||  gl  |  glf  |gray_n |  int  | float |
     //     |============================================|
-    //     |gl  ||gray_i|gray_f |gray_i |   X   |   X   |
+    //     |gl  ||gray_n|gray_f |gray_n |   X   |   X   |
     //     |--------------------------------------------|
     //     |glf ||      |gray_f |gray_f |   X   |   X   |
     //     |--------------------------------------------|
-    //     |gray||              |gray_i |   X   |   X   |
+    //     |gray||              |gray_n |   X   |   X   |
     //     |--------------------------------------------|
 
     //     |--------------------------------------------|
-    //     | *  ||  gl  |  glf  |gray_i |  int  | float |
+    //     | *  ||  gl  |  glf  |gray_n |  int  | float |
     //     |============================================|
-    //     |gl  ||gray_i|gray_f |gray_i |gray_i |gray_f |
+    //     |gl  ||gray_n|gray_f |gray_n |gray_n |gray_f |
     //     |--------------------------------------------|
     //     |glf ||      |gray_f |gray_f |gray_f |gray_f |
     //     |--------------------------------------------|
-    //     |gray||              |gray_i |gray_i |gray_f |
+    //     |gray||              |gray_n |gray_n |gray_f |
     //     |--------------------------------------------|
 
     //     |--------------------------------------------|
-    //     | /  ||  gl  |  glf  |gray_i |  int  | float |
+    //     | /  ||  gl  |  glf  |gray_n |  int  | float |
     //     |============================================|
-    //     |gl  ||gray_i|gray_f |gray_i |gray_i |gray_i |
+    //     |gl  ||gray_f|gray_f |gray_n |gray_f |gray_f |
     //     |--------------------------------------------|
     //     |glf ||      |gray_f |gray_f |gray_f |gray_f |
     //     |--------------------------------------------|
-    //     |gray||              |gray_i |gray_i |gray_f |
+    //     |gray||              |gray_f |gray_f |gray_f |
     //     |--------------------------------------------|
 
-    /// Valid convertions :
-    //     glf  -> gl (round)
-    //     gl   -> gray_i
-    //    gray_i-> gl
+//     Valid Convertions are :
+
+//     gray_f -> gray_<n>
+//     gray_f -> graylevel<n>
+//     gray_f -> graylevel_f
+
+//     gray_<n> -> gray_f
+//     gray_<n> -> graylevel<n>
+//     gray_<n> -> graylevel_f
+
+//     graylevel_f -> gray_f
+//     graylevel_f -> graylevel<n>
+
+//     graylevel_<n> -> gray_<n>
+//     graylevel_<n> -> graylevel_f<n>
+
 
     template <unsigned n>
     struct graylevel
@@ -268,31 +276,12 @@ namespace mln
       /// Assigment with int.
       graylevel<n>& operator=(int val);
 
-      /// Constructor from graylevel_f.
-      graylevel(const graylevel_f& rhs);
-      /// Assigment with graylevel_f.
-      graylevel<n>& operator=(const graylevel_f& rhs);
-
       /// Constructor from any graylevel.
       template <unsigned m>
 	graylevel(const graylevel<m>& rhs);
       /// Assigment with any graylevel.
       template <unsigned m>
 	graylevel<n>& operator=(const graylevel<m>& rhs);
-
-      /// Constructor from internal::gray_f.
-      graylevel(const internal::gray_f& rhs);
-      /// Assigment with internal::gray_f.
-      graylevel<n>& operator=(const internal::gray_f& rhs);
-
-
-      /// Constructor from internal::gray_f.
-      template <unsigned m>
-      graylevel(const internal::gray_<m>& rhs);
-      /// Assigment with internal::gray_f.
-      template <unsigned m>
-      graylevel<n>& operator=(const internal::gray_<m>& rhs);
-
 
       /// Ctors with literals.
       /// \{
@@ -550,23 +539,6 @@ namespace mln
     graylevel<n>::operator=(const literal::white_t&)
     {
       this->v_ = mln_max(mln_enc(int_u<n>));
-      return *this;
-    }
-
-    template <unsigned n>
-
-    inline
-    graylevel<n>::graylevel(const graylevel_f& rhs)
-    {
-      this->v_ = int(round(rhs.value() * (mlc_pow_int(2, n) - 1)));
-    }
-
-    template <unsigned n>
-    inline
-    graylevel<n>&
-    graylevel<n>::operator=(const graylevel_f& rhs)
-    {
-      *this = internal::gray_f(rhs);
       return *this;
     }
 

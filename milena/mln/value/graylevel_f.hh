@@ -43,7 +43,6 @@
 # include <mln/literal/ops.hh>
 
 # include <mln/value/float01_f.hh>
-//# include <mln/value/internal/gray_f.hh>
 # include <mln/trait/value_.hh>
 
 
@@ -73,36 +72,19 @@ namespace mln
   namespace trait
   {
 
-
-    //     template < template <class, class> class Name>
-    //     struct set_precise_binary_< Name, mln::value::graylevel_f, mln::value::graylevel_f >
-    //     {
-    //       typedef mln::value::internal::gray_f ret;
-    //     };
-
-
-    //     template < template <class, class> class Name, unsigned n>
-    //     struct set_precise_binary_< Name, mln::value::graylevel_f, mln::value::graylevel<n> >
-    //     {
-    //       typedef mln::value::internal::gray_f ret;
-    //     };
-
-    //     template <>
-    //     struct set_precise_binary_< op::greater, mln::value::graylevel_f, mln::value::graylevel_f >
-    //     {
-    //       typedef bool ret;
-    //     };
-
-    //     template <>
-    //     struct set_precise_binary_< op::eq, mln::value::graylevel_f, mln::value::graylevel_f >
-    //     {
-    //       typedef bool ret;
-    //     };
-
-
-    //
     template <>
     struct set_precise_binary_< op::plus, mln::value::graylevel_f, mln::value::graylevel_f >
+    {
+      typedef mln::value::internal::gray_f ret;
+    };
+
+    template <unsigned n>
+    struct set_precise_binary_< op::plus, mln::value::graylevel_f, mln::value::graylevel<n> >
+    {
+      typedef mln::value::internal::gray_f ret;
+    };
+    template <unsigned n>
+    struct set_precise_binary_< op::plus, mln::value::graylevel<n>, mln::value::graylevel_f  >
     {
       typedef mln::value::internal::gray_f ret;
     };
@@ -252,6 +234,10 @@ namespace mln
       graylevel_f& operator=(const literal::white_t&);
       /// \}
 
+      /// Convertion to graylevel<n>
+      template <unsigned n>
+	operator graylevel<n>() const;
+
       /// Access to std type.
       float value() const;
     };
@@ -266,33 +252,41 @@ namespace mln
     mln_trait_op_plus_(graylevel_f, graylevel_f)
       operator+(const graylevel_f& lhs, const graylevel_f& rhs);
 
-    // graylevel_f + Integer<I> (doesn't compile)
-    template <typename I>
-    graylevel_f
-    operator+(const graylevel_f& lhs, const Integer<I>& i);
 
-    // graylevel_f + Floating<I> (doesn't compile)
-    template <typename I>
-    graylevel_f
-    operator+(const graylevel_f& lhs, const Floating<I>& i);
+    // graylevel_f + graylevel<n>
+    template <unsigned n>
+    mln_trait_op_plus(graylevel_f, graylevel<n>)
+      operator+(const graylevel_f& lhs, const graylevel<n>& rhs);
+    // graylevel<n> + graylevel_f
+    template <unsigned n>
+    mln_trait_op_plus(graylevel_f, graylevel<n>)
+      operator+(const graylevel<n>& lhs, const graylevel_f& rhs);
 
     // graylevel_f - graylevel_f
     mln_trait_op_minus_(graylevel_f, graylevel_f)
       operator-(const graylevel_f& lhs, const graylevel_f& rhs);
 
-    // graylevel_f - Integer<I> (doesn't compile)
-    template <typename I>
-    graylevel_f
-    operator-(const graylevel_f& lhs, const Integer<I>& i);
-
-    // graylevel_f - Floating<I> (doesn't compile)
-    template <typename I>
-    graylevel_f
-    operator-(const graylevel_f& lhs, const Floating<I>& i);
-
     // graylevel_f * graylevel_f
     mln_trait_op_times_(graylevel_f, graylevel_f)
       operator*(const graylevel_f& lhs, const graylevel_f& rhs);
+
+
+    // With Builtins
+
+    // graylevel_f * T
+    template <unsigned n, typename T>
+    mln_trait_op_times(graylevel_f, T)
+      operator*(const graylevel_f& lhs, const T& rhs);
+
+    // T * graylevel_f
+    template <unsigned n, typename T>
+    mln_trait_op_times(graylevel_f, T)
+      operator*(const T& lhs, const graylevel_f& rhs);
+
+    // graylevel_f / T
+    template <unsigned n, typename T>
+    internal::gray_f
+      operator/(const graylevel_f& lhs, const T& rhs);
 
     // With Integer.
 
@@ -383,6 +377,7 @@ namespace mln
       mln_precondition(rhs.to_float() >= 0);
       mln_precondition(rhs.to_float() <= 1);
       this->v_ = rhs.to_float();
+      return *this;
     }
 
     inline
@@ -443,6 +438,13 @@ namespace mln
     {
       this->v_ = 1.0f;
       return *this;
+    }
+
+    template <unsigned n>
+    inline
+    graylevel_f::operator graylevel<n>() const
+    {
+      return graylevel<n>(internal::gray_f(*this));
     }
 
     inline

@@ -43,7 +43,6 @@
 # include <mln/literal/ops.hh>
 
 # include <mln/value/float01_f.hh>
-//# include <mln/value/internal/gray_.hh>
 # include <mln/trait/value_.hh>
 
 
@@ -61,8 +60,12 @@ namespace mln
   namespace value
   {
     /// \{ Fwd decls.
-    class gray;
-    struct gray_f;
+    namespace internal
+    {
+      template <unsigned n> class gray_;
+      class gray_f;
+    }
+
     struct float01_f;
     /// \}
   }
@@ -74,19 +77,19 @@ namespace mln
 
 
     template < template <class, class> class Name>
-    struct set_precise_binary_< Name, mln::value::gray_f, mln::value::gray_f >
+    struct set_precise_binary_< Name, mln::value::internal::gray_f, mln::value::internal::gray_f >
     {
-      typedef mln::value::gray_f ret;
+      typedef mln::value::internal::gray_f ret;
     };
 
     template <>
-    struct set_precise_binary_< op::greater, mln::value::gray_f, mln::value::gray_f >
+    struct set_precise_binary_< op::greater, mln::value::internal::gray_f, mln::value::internal::gray_f >
     {
       typedef bool ret;
     };
 
     template <>
-    struct set_precise_binary_< op::eq, mln::value::gray_f, mln::value::gray_f >
+    struct set_precise_binary_< op::eq, mln::value::internal::gray_f, mln::value::internal::gray_f >
     {
       typedef bool ret;
     };
@@ -94,7 +97,7 @@ namespace mln
     // Nessecary??
 //     template <typename F>
 //     struct set_binary_< op::eq,
-// 			mln::value::Floating,  mln::value::gray_f,
+// 			mln::value::Floating,  mln::value::internal::gray_f,
 // 			mln::value::Floating, F >
 //     {
 //       typedef bool ret;
@@ -105,10 +108,10 @@ namespace mln
 
     // 'gray_f' as a value.
     template <>
-    struct value_<mln::value::gray_f>
+    struct value_<mln::value::internal::gray_f>
     {
     private:
-      typedef mln::value::gray_f self_;
+      typedef mln::value::internal::gray_f self_;
       typedef float equiv_;
 
     public:
@@ -157,6 +160,13 @@ namespace mln
 	gray_f& operator=(const gray_f& rhs);
 	/// \}
 
+	/// \{ Constructors/assigments with gray_<n>.
+	template <unsigned n>
+	gray_f(const gray_<n>& rhs);
+	template <unsigned n>
+	gray_f& operator=(const gray_<n>& rhs);
+	/// \}
+
 	/// \{ Constructors/assigments with float.
 	gray_f(float val);
 	gray_f& operator=(float val);
@@ -170,6 +180,10 @@ namespace mln
 	/// Convertion to graylevel<n>
 	template <unsigned m>
 	operator graylevel<m>() const;
+
+	/// Convertion to gray_<n>
+	template <unsigned m>
+	operator gray_<m>() const;
 
 	/// Convertion to graylevel_f
 	operator graylevel_f() const;
@@ -207,6 +221,22 @@ namespace mln
 	return *this;
       }
 
+      template <unsigned n>
+      gray_f::gray_f(const gray_<n>& rhs)
+      {
+	static const float denom = float(metal::math::pow_int<2, n>::value) - 1.f;
+	this->v_ = float(rhs.value()) / denom;
+      }
+
+      template <unsigned n>
+      gray_f&
+      gray_f::operator=(const gray_<n>& rhs)
+      {
+	static const float denom = float(metal::math::pow_int<2, n>::value) - 1.f;
+	this->v_ = float(rhs.value()) / denom;
+	return *this;
+      }
+
       inline
       gray_f::gray_f(float val)
       {
@@ -240,6 +270,14 @@ namespace mln
       gray_f::operator graylevel<m>() const
       {
 	return graylevel<m>(int(round(this->v_ * (mlc_pow_int(2, m) - 1))));
+      }
+
+
+      template <unsigned m>
+      inline
+      gray_f::operator gray_<m>() const
+      {
+	return gray_<m>(int(round(this->v_ * (mlc_pow_int(2, m) - 1))));
       }
 
       inline
@@ -296,23 +334,63 @@ namespace mln
       return lhs.value() + rhs.value();
     }
 
-    // Op glf + Integer
-    template <typename I>
+    // Op glf + gl<n>
+    template <unsigned n>
     inline
-    graylevel_f
-    operator+(const graylevel_f& lhs, const Integer<I>& i)
+     mln_trait_op_plus(graylevel_f, graylevel<n>)
+      operator+(const graylevel_f& lhs, const graylevel<n>& rhs)
     {
-      typename I::graylevel_f_plus_int_is_undefined__Please_use_the__to_enc__method a;
+      return lhs.value() + graylevel_f(rhs).value();
     }
 
-//     // Op glf + Float
-//     template <typename I>
-//     inline
-//     graylevel_f
-//     operator+(const graylevel_f& lhs, const Floating<I>& i)
-//     {
-//       typename I::graylevel_f_plus_float_is_undefined__Please_use_the__to_enc__method a;
-//     }
+    // Op gl<n> + glf
+    template <unsigned n>
+    inline
+     mln_trait_op_plus(graylevel_f, graylevel<n>)
+      operator+(const graylevel<n>& lhs, const graylevel_f& rhs)
+    {
+      return rhs.value() + graylevel_f(lhs).value();
+    }
+
+
+    // Op glf + Another type
+    template <typename I>
+    inline
+    void
+    operator+(const graylevel_f& lhs, const I& i)
+    {
+      typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
+    }
+
+
+    // Op  Another type + glf
+    template <typename I>
+    inline
+    void
+    operator+(const I& i, const graylevel_f& rhs)
+    {
+      typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
+    }
+
+
+    // Op glf - Another type
+    template <typename I>
+    inline
+    void
+    operator-(const graylevel_f& lhs, const I& i)
+    {
+      typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
+    }
+
+
+    // Op  Another type - glf
+    template <typename I>
+    inline
+    void
+    operator-(const I& i, const graylevel_f& rhs)
+    {
+      typename Object<I>::wrong_use_of_graylevel_f___Please_use_the__to_enc__method a;
+    }
 
     // Op glf - glf
 
@@ -321,24 +399,6 @@ namespace mln
       operator-(const graylevel_f& lhs, const graylevel_f& rhs)
     {
       return lhs.value() - rhs.value();
-    }
-
-    // Op glf - Integer
-    template <typename I>
-    inline
-    graylevel_f
-    operator-(const graylevel_f& lhs, const Integer<I>& i)
-    {
-      typename I::graylevel_f_minus_int_is_undefined__Please_use_the__to_enc__method a;
-    }
-
-    // Op glf - Float
-    template <typename I>
-    inline
-    graylevel_f
-    operator-(const graylevel_f& lhs, const Floating<I>& i)
-    {
-      typename I::graylevel_f_minus_float_is_undefined__Please_use_the__to_enc__method a;
     }
 
     // Op glf * glf

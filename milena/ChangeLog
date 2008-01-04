@@ -1,3 +1,19 @@
+2008-01-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fix convertions between the 4 graylevels types.
+
+	* mln/value/graylevel.hh,
+	* mln/value/graylevel_f.hh,
+	* mln/value/internal/gray_.hh,
+	* mln/value/internal/gray_f.hh: All these convertion now work:
+	gray_f -> gray_<n>, gray_f -> graylevel<n>, gray_f -> graylevel_f,
+	gray_<n> -> gray_f, gray_<n> -> graylevel<n>, gray_<n> ->
+	graylevel_f, graylevel_f -> gray_f, graylevel_f -> graylevel<n>,
+	graylevel_<n> -> gray_<n>, graylevel_<n> -> graylevel_f<n>.
+
+
+	* tests/value/graylevel.cc: Add more tests for convertions.
+
 2008-01-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Improve operators on graylevels.
