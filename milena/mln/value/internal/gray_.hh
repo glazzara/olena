@@ -103,7 +103,7 @@ namespace mln
 	card  = 0
       };
 
-      typedef trait::value::nature::integer nature; // FIXME: Or scalar?
+      typedef trait::value::nature::integer nature; // FIXME: Or scalar?.
       typedef trait::value::kind::gray      kind;
       typedef trait::value::quant::high     quant;
 
@@ -111,7 +111,7 @@ namespace mln
       static const self_ max();
       static const self_ epsilon();
 
-      typedef self_ sum; // FIXME: OK?
+      typedef self_ sum; // FIXME: OK?.
     };
 
   } // end of namespace mln::trait
@@ -445,7 +445,7 @@ namespace mln
 
     // Graylevel operators.
 
-    // Op gl == Int
+    // Op gl == Int.
 
     template <typename I, unsigned n>
     inline
@@ -455,7 +455,7 @@ namespace mln
       return rhs.value() == exact(lhs);
     }
 
-    // Op gl == gl
+    // Op gl == gl.
 
     template <unsigned n, unsigned m>
     inline
@@ -465,7 +465,7 @@ namespace mln
       return internal::gray_<n>(rhs) == internal::gray_<m>(lhs);
     }
 
-    // Op gl + gl
+    // Op gl + gl.
 
     template <unsigned n, unsigned m>
     inline
@@ -475,7 +475,7 @@ namespace mln
       return internal::gray_<n>(lhs) + internal::gray_<m>(rhs);
     }
 
-    // Op gl + Another type
+    // Op gl + Another type.
     template <unsigned n, typename I>
     inline
     void
@@ -485,7 +485,7 @@ namespace mln
     }
 
 
-    // Op  Another type + gl
+    // Op  Another type + gl.
     template <unsigned n, typename I>
     inline
     void
@@ -494,8 +494,7 @@ namespace mln
       typename graylevel<n>::wrong_use_of_graylevel___Please_use_the__to_enc__method a;
     }
 
-    // Op gl - gl
-
+    // Op gl - gl.
     template <unsigned n, unsigned m>
     inline
     mln_trait_op_minus(graylevel<n>, graylevel<m>)
@@ -504,7 +503,7 @@ namespace mln
       return internal::gray_<n>(lhs) - internal::gray_<m>(rhs);
     }
 
-    // Op gl - Another type
+    // Op gl - Another type.
     template <unsigned n, typename I>
     inline
     void
@@ -514,7 +513,7 @@ namespace mln
     }
 
 
-    // Op  Another type - gl
+    // Op  Another type - gl.
     template <unsigned n, typename I>
     inline
     void
@@ -523,8 +522,7 @@ namespace mln
       typename graylevel<n>::wrong_use_of_graylevel___Please_use_the__to_enc__method a;
     }
 
-    // Op gl * gl
-
+    // Op gl * gl.
     template <unsigned n, unsigned m>
     inline
     mln_trait_op_times(graylevel<n>, graylevel<m>)
@@ -533,8 +531,7 @@ namespace mln
       return internal::gray_<n>(lhs) * internal::gray_<m>(rhs);
     }
 
-    // Op symm gl * Integer
-
+    // Op symm gl * Integer.
     template <unsigned n, typename I>
     inline
     internal::gray_<n>
@@ -551,8 +548,7 @@ namespace mln
       return internal::gray_<n>(rhs) * int(exact(lhs));
     }
 
-    // Op symm gl * Floating
-
+    // Op symm gl * Floating.
     template <unsigned n, typename F>
     inline
     mln_trait_op_times(graylevel<n>, F)
@@ -569,8 +565,7 @@ namespace mln
       return rhs.to_float() * float(exact(lhs));
     }
 
-    // Op * Builtin
-
+    // Op * Builtin.
     template <unsigned n, typename T>
     mln_trait_op_times(graylevel<n>, T)
       operator*(const graylevel<n>& lhs, const T& rhs)
@@ -586,8 +581,7 @@ namespace mln
     }
 
 
-    // Op / Builtin
-
+    // Op / Builtin.
     /// \{ Fwd decls.
     namespace internal
     {
@@ -603,8 +597,7 @@ namespace mln
     }
 
 
-    // Op * scalar
-
+    // Op * scalar.
     namespace internal
     {
 
@@ -663,7 +656,7 @@ namespace mln
 
     } // end of namespace mln::value::internal
 
-    // Op graylevel<n> * scalar_<S>
+    // Op graylevel<n> * scalar_<S>.
     template <unsigned n, typename S>
     inline
     mln_trait_op_times(graylevel<n>, scalar_<S>)
@@ -673,7 +666,7 @@ namespace mln
       return internal::helper_gray__op_<ret>::times(lhs, rhs);
     }
 
-    // Op graylevel<n> / scalar_<S>
+    // Op graylevel<n> / scalar_<S>.
     template <unsigned n, typename S>
     inline
     mln_trait_op_div(graylevel<n>, scalar_<S>)
