@@ -209,6 +209,7 @@ namespace mln
 
       inline
       gray_f::gray_f(const gray_f& g)
+	: Floating<gray_f>()
       {
 	this->v_ = g.v_;
       }

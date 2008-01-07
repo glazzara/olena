@@ -47,11 +47,11 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  win::rectangle2d rect(5, 5);
-  border::thickness = 2;
+  win::rectangle2d rect(3, 3);
+  border::thickness = 1;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../../img/lena.pgm");
+  io::pgm::load(lena, "../../img/tiny.pgm");
   image2d<int_u8> out = morpho::contrast(lena, rect);
   io::pgm::save(out, "out.pgm");
 

@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/value_iterator.hh>
-
+# include <mln/core/concept/value_set.hh>
 
 
 namespace mln

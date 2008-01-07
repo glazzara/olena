@@ -52,7 +52,7 @@ namespace mln
      * \return A 3D int-weighted window.
      */
     template <unsigned M>
-    mln::w_window3d_int w_window3d_int(int (&weights)[M][N]);
+    mln::w_window3d_int w_window3d_int(int (&weights)[M]);
 
 
 # ifndef MLN_INCLUDE_ONLY

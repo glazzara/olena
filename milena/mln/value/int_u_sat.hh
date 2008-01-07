@@ -38,6 +38,7 @@
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/concept/integer.hh>
 # include <mln/value/internal/encoding.hh>
+# include <mln/value/int_u.hh>
 # include <mln/trait/value_.hh>
 # include <mln/debug/format.hh>
 

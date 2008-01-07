@@ -37,7 +37,7 @@
 # include <utility>
 
 # include <mln/core/concept/value.hh>
-# include <mln/value/float01_.hh>
+# include <mln/value/concept/floating.hh>
 # include <mln/trait/value_.hh>
 # include <mln/trait/all.hh> // FIXME!
 # include <mln/trait/value_.hh>
@@ -285,5 +285,6 @@ namespace mln
 
 } // end of namespace mln
 
+# include <mln/value/float01_.hh>
 
 #endif // ! MLN_VALUE_FLOAT01_HH

@@ -91,7 +91,7 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/value/cast.hh>
+//# include <mln/value/cast.hh>
 
 
 #endif // ! MLN_CORE_CONCEPT_VALUE_HH

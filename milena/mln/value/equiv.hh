@@ -159,5 +159,6 @@ namespace mln
 
 } // end of namespace mln
 
+# include <mln/value/cast.hh>
 
 #endif // ! MLN_VALUE_EQUIV_HH

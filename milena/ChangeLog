@@ -1,3 +1,21 @@
+2008-01-07  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Some fixes for unit-tests.
+
+	* mln/convert/to_p_set.hh,
+	* mln/core/concept/value.hh,
+	* mln/make/voronoi.hh,
+	* mln/make/w_window3d_int.hh,
+	* mln/util/tree_to_image.hh,
+	* mln/value/equiv.hh,
+	* mln/value/float01.hh,
+	* mln/value/graylevel_f.hh,
+	* mln/value/int_u_sat.hh,
+	* mln/value/internal/gray_f.hh,
+	* mln/value/viter.hh: Fix headers.
+	* tests/morpho/contrast.cc: Simplify test.
+	* mln/value/rgb8_non_templated.hh: Remove deprecated.
+
 2008-01-07  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add resize function for fast 2d image in mln::geom.

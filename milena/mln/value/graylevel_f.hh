@@ -381,9 +381,8 @@ namespace mln
 
     inline
     graylevel_f::graylevel_f(const graylevel_f& rhs)
+      : Floating<graylevel_f>()
     {
-      mln_precondition(rhs.v_ >= 0);
-      mln_precondition(rhs.v_ <= 1);
       this->v_ = rhs.v_;
     }
 

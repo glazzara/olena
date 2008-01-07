@@ -36,6 +36,7 @@
 # include <vector>
 # include <map>
 
+# include <mln/core/concept/neighborhood.hh>
 # include <mln/core/mesh_p.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>

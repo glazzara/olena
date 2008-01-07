@@ -36,6 +36,7 @@
 # include <set>
  
 # include <mln/core/concept/neighborhood.hh>
+# include <mln/core/concept/window.hh>
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/p_set.hh>
 # include <mln/pw/image.hh>
