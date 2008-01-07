@@ -1,18 +1,18 @@
 2008-01-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-	Fix convertions between the 4 graylevels types.
+	Fix conversions between the 4 graylevels types.
 
 	* mln/value/graylevel.hh,
 	* mln/value/graylevel_f.hh,
 	* mln/value/internal/gray_.hh,
-	* mln/value/internal/gray_f.hh: All these convertion now work:
+	* mln/value/internal/gray_f.hh: Make all these conversion work:
 	gray_f -> gray_<n>, gray_f -> graylevel<n>, gray_f -> graylevel_f,
 	gray_<n> -> gray_f, gray_<n> -> graylevel<n>, gray_<n> ->
 	graylevel_f, graylevel_f -> gray_f, graylevel_f -> graylevel<n>,
 	graylevel_<n> -> gray_<n>, graylevel_<n> -> graylevel_f<n>.
 
 
-	* tests/value/graylevel.cc: Add more tests for convertions.
+	* tests/value/graylevel.cc: Add more tests for conversions.
 
 2008-01-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -419,7 +419,7 @@
 2007-12-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update documentation for internal namespace.
-	
+
 	* mln/histo/all.hh,
 	* mln/labeling/all.hh,
 	* mln/metal/all.hh,
@@ -1482,7 +1482,7 @@
 	* tests/p_runs.cc: ...this.
 
 	Remove two sources entry.
-	
+
 	* tests/Makefile.am: Fix.
 
 2007-11-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
@@ -1591,7 +1591,7 @@
 	convert for graylevel.
 
 	* mln/value/graylevel.hh: the graylevel type wasn't compatible with
-	  the generic convert in convert.hh because of a convertion to int.
+	  the generic convert in convert.hh because of a conversion to int.
 
 2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
@@ -1600,9 +1600,9 @@
 
 2007-11-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
-	Add convertion of a tree into tree_fast.
+	Add conversion of a tree into tree_fast.
 
-	* mln/util/tree_to_fast.hh: Add convertion of tree into tree_fast.
+	* mln/util/tree_to_fast.hh: Add conversion of tree into tree_fast.
 
 	Tests
 	* tests/util/tree_to_fast.cc: New tests for this.
@@ -6050,7 +6050,7 @@
 
 	Update doc of accus. Update Accumulator.
 
-	* mln/core/concept/accumulator.hh: Test if the convertion operator
+	* mln/core/concept/accumulator.hh: Test if the conversion operator
 	  exist.
 
 	* mln/core/concept/doc/accumulator.hh: Add operator result().
@@ -6065,9 +6065,9 @@
 
 2007-10-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-	Remove convertion method in median_alt.
+	Remove conversion method in median_alt.
 
-	* mln/accu/median_alt.hh: Move convertion method to the super class
+	* mln/accu/median_alt.hh: Move conversion method to the super class
 	  accu::internal::base_
 
 	* mln/accu/nil.hh,
@@ -8284,7 +8284,7 @@
 
 2007-09-06  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
 
-	add convertion from histo to image1d
+	add conversion from histo to image1d
 	* mln/convert/to_image.hh: add the function
 	* tests/histo_to_image1d_b.cc: a test
 
@@ -8296,7 +8296,7 @@
 2007-09-06  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
 
 	add to_vec_p(win, p_center)
-	* mln/convert/to_vec_p.hh: add the convertion function
+	* mln/convert/to_vec_p.hh: add the conversion function
 	* sandbox/garrigues/TODO: .
 	* tests/to_vec_p.cc: New. 1d and 2d test
 

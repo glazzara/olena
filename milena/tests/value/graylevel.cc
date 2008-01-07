@@ -56,7 +56,7 @@
 // }
 
 
-#define test_convertion(T1, T2, VAL)		\
+#define test_conversion(T1, T2, VAL)		\
 {						\
   T1(T2(VAL));					\
   T1 test = T2(VAL);				\
@@ -136,18 +136,18 @@ int main()
   }
 
   {
-    // Convertions.
+    // Conversions.
 
-    test_convertion(gl8, gray_<8>, 255);
-    test_convertion(gl8, gray_f, 0.4);
-    test_convertion(gl8, glf, 0.4);
+    test_conversion(gl8, gray_<8>, 255);
+    test_conversion(gl8, gray_f, 0.4);
+    test_conversion(gl8, glf, 0.4);
 
-    test_convertion(glf, gray_<8>, 255);
-    test_convertion(glf, gray_f, 0.4);
-    test_convertion(glf, gl8, 142);
+    test_conversion(glf, gray_<8>, 255);
+    test_conversion(glf, gray_f, 0.4);
+    test_conversion(glf, gl8, 142);
 
-    test_convertion(gray_f, gray_<8>, 4);
-    test_convertion(glf, gray_f, 0.4);
+    test_conversion(gray_f, gray_<8>, 4);
+    test_conversion(glf, gray_f, 0.4);
   }
 
   {

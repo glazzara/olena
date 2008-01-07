@@ -94,7 +94,7 @@ namespace mln
       typedef bool ret;
     };
 
-    // Nessecary??
+    // Necessary??
 //     template <typename F>
 //     struct set_binary_< op::eq,
 // 			mln::value::Floating,  mln::value::internal::gray_f,

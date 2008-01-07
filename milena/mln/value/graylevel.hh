@@ -166,7 +166,7 @@ namespace mln
 	card  = mln_value_card_from_(n)
       };
 
-      typedef trait::value::nature::integer nature; // FIXME: Or scalar?
+      typedef trait::value::nature::integer nature; // FIXME: Or scalar?.
       typedef trait::value::kind::gray      kind;
       typedef mln_value_quant_from_(card)   quant;
 
@@ -236,7 +236,7 @@ namespace mln
     //     |gray||              |gray_f |gray_f |gray_f |
     //     |--------------------------------------------|
 
-//     Valid Convertions are :
+    //     Valid Convertions are :
 
 //     gray_f -> gray_<n>
 //     gray_f -> graylevel<n>
@@ -313,7 +313,7 @@ namespace mln
       // \internal Fwd decl;
       template <typename T> struct convert_;
 
-      // \internal convert for graylevel
+      // \internal convert for graylevel.
       template <unsigned n>
       struct convert_< graylevel<n> >
       {
@@ -328,100 +328,100 @@ namespace mln
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const graylevel<n>& g);
 
-    // graylevel<n> + graylevel<m>
+    // graylevel<n> + graylevel<m>.
     template <unsigned n, unsigned m>
     mln_trait_op_plus(graylevel<n>, graylevel<m>)
       operator+(const graylevel<n>& lhs, const graylevel<m>& rhs);
 
-    // graylevel<n> + Another type (doesn't compile)
+    // graylevel<n> + Another type (doesn't compile).
     template <unsigned n, typename I>
     void
     operator+(const graylevel<n>& lhs, const I& i);
 
-    // graylevel<n> + Another type (doesn't compile)
+    // graylevel<n> + Another type (doesn't compile).
     template <unsigned n, typename I>
     void
     operator+(const I& i, const graylevel<n>& rhs);
 
-    // graylevel<n> - graylevel<m>
+    // graylevel<n> - graylevel<m>.
     template <unsigned n, unsigned m>
     mln_trait_op_minus(graylevel<n>, graylevel<m>)
       operator-(const graylevel<n>& lhs, const graylevel<m>& rhs);
 
-    // graylevel<n> - Another type (doesn't compile)
+    // graylevel<n> - Another type (doesn't compile).
     template <unsigned n, typename I>
     void
     operator-(const graylevel<n>& lhs, const I& i);
 
-    // graylevel<n> - Another type (doesn't compile)
+    // graylevel<n> - Another type (doesn't compile).
     template <unsigned n, typename I>
     void
     operator-(const I& i, const graylevel<n>& rhs);
 
-    // graylevel<n> * graylevel<m>
+    // graylevel<n> * graylevel<m>.
     template <unsigned n, unsigned m>
     mln_trait_op_times(graylevel<n>, graylevel<m>)
       operator*(const graylevel<n>& lhs, const graylevel<m>& rhs);
 
-    // With Builtins
+    // With Builtins.
 
-    // graylevel<n> * T
+    // graylevel<n> * T.
     template <unsigned n, typename T>
     mln_trait_op_times(graylevel<n>, T)
       operator*(const graylevel<n>& lhs, const T& rhs);
 
-    // T * graylevel<n>
+    // T * graylevel<n>.
     template <unsigned n, typename T>
     mln_trait_op_times(graylevel<n>, T)
       operator*(const T& lhs, const graylevel<n>& rhs);
 
-    // graylevel<n> / T
+    // graylevel<n> / T.
     template <unsigned n, typename T>
     internal::gray_f
-    //mln_trait_op_div(graylevel<n>, T)
+    //mln_trait_op_div(graylevel<n>, T).
       operator/(const graylevel<n>& lhs, const T& rhs);
 
     // With Integer.
 
-    // graylevel<n> * Integer<I>
+    // graylevel<n> * Integer<I>.
     template <unsigned n, typename I>
     mln_trait_op_times(graylevel<n>, I)
       operator*(const graylevel<n>& lhs, const Integer<I>& rhs);
 
-    // Integer<I> * graylevel<n>
+    // Integer<I> * graylevel<n>.
     template <typename I, unsigned n>
     mln_trait_op_times(I, graylevel<n>)
       operator*(const Integer<I>& lhs, const graylevel<n>& rhs);
 
-    // graylevel<n> / Integer<I>
+    // graylevel<n> / Integer<I>.
     template <unsigned n, typename I>
     mln_trait_op_div(graylevel<n>, I)
       operator/(const graylevel<n>& lhs, const Integer<I>& rhs);
 
-    // Integer<I> / graylevel<n>
+    // Integer<I> / graylevel<n>.
     template <typename I, unsigned n>
     mln_trait_op_div(I, graylevel<n>)
       operator/(const Integer<I>& lhs, const graylevel<n>& rhs);
 
     // With Floating.
 
-    // graylevel<n> * Floating<F>
+    // graylevel<n> * Floating<F>.
     template <unsigned n, typename F>
     mln_trait_op_times(graylevel<n>, F)
       operator*(const graylevel<n>& lhs, const Floating<F>& rhs);
 
-    // Floating<F>, graylevel<n>
+    // Floating<F>, graylevel<n>.
     template <typename F, unsigned n>
     mln_trait_op_times(F, graylevel<n>)
       operator*(const Floating<F>& lhs, const graylevel<n>& rhs);
 
 
-    // graylevel<n> / Floating<F>
+    // graylevel<n> / Floating<F>.
     template <unsigned n, typename F>
     mln_trait_op_div(graylevel<n>, F)
       operator/(const graylevel<n>& lhs, const Floating<F>& rhs);
 
-    // Floating<F> / graylevel<n>
+    // Floating<F> / graylevel<n>.
     template <typename F, unsigned n>
     mln_trait_op_div(F, graylevel<n>)
       operator/(const Floating<F>& lhs, const graylevel<n>& rhs);
