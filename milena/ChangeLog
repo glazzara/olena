@@ -1,3 +1,13 @@
+2008-01-07  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add resize function for fast 2d image in mln::geom.
+
+	* mln/geom/resize.hh: New function for resize fast iamge.
+	* tests/geom/resize.cc: Test this function.
+	* tests/geom/Makefile.am: And add this test in the Makefile.
+
+	* mln/core/concept/object.hh: Update copyright.
+
 2008-01-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix conversions between the 4 graylevels types.
