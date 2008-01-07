@@ -53,14 +53,15 @@ namespace mln
   namespace trait
   {
 
-
-    template <typename I, typename V> struct ch_value; // Fwd decl.
+    // Fwd decl.
+    template <typename I, typename V> struct ch_value;
 
 
     namespace impl
     {
 
-      template <typename I, typename V> struct ch_value_; // Decl.
+      // Decl.
+      template <typename I, typename V> struct ch_value_;
 
       template < template <class> class M, typename T,
 		 typename V >
@@ -90,12 +91,22 @@ namespace mln
 	typedef M< P, V > ret;
       };
 
+      // For mln::value::stack_image<n,I>.
       template < template <unsigned, class> class M, unsigned n, typename I,
 		 typename V >
-      struct ch_value_<  M< n, tag::image_<I> >,  V  > // For mln::value::stack_image<n,I> !
+      struct ch_value_<  M< n, tag::image_<I> >,  V  >
       {
-	typedef metal::vec<n, V> value;
-	typedef mln_ch_value(I, value) ret;
+	/* FIXME: The code used to read
+
+	     typedef metal::vec<n, V> value;
+	     typedef mln_ch_value(I, value) ret;
+
+	   here.  But this is wrong IMHO (Roland).  Changing the value
+	   type of a stack image (in fact, a vectorial image) shall
+	   alter the *value type* of the image, not the type of the
+	   *components* of the vector.  Hence the current definition.
+	 */
+	typedef mln_ch_value(I, V) ret;
       };
 
       template < template <class, class> class M, typename I, typename S,
@@ -110,7 +121,8 @@ namespace mln
       struct ch_value_<  M< tag::function_<F>, tag::pset_<S> >,  V  >
       {
 	typedef typename S::mesh mesh;
-	typedef typename image_from_mesh< mesh, V >::ret ret; // FIXME: from_psite instead? coord=int!?
+	// FIXME: from_psite instead? coord=int!?
+	typedef typename image_from_mesh< mesh, V >::ret ret;
       };
 
     } // end of namespace mln::trait::impl

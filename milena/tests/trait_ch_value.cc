@@ -30,8 +30,10 @@
  * \brief Tests on mln::trait::ch_value.
  */
 
-#include <mln/core/image2d.hh>
 #include <mln/trait/ch_value.hh>
+
+#include <mln/core/image2d.hh>
+#include <mln/value/stack.hh>
 
 
 int main()
@@ -39,5 +41,15 @@ int main()
   using namespace mln;
 
   typedef image2d<int> I;
-  trait::ch_value<I, bool>::ret ima;
+  typedef trait::ch_value<I, bool>::ret J;
+  J ima1;
+
+  // Stack image.
+  typedef value::stack_image<3, I> K;
+  typedef trait::ch_value<K, float>::ret L;
+  L ima2;
+  mlc_equal(L, image2d<float>)::check();
+
+  // FIXME: Exercize more image types.
+  // ...
 }
