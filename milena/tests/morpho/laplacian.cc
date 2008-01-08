@@ -43,6 +43,8 @@
 
 #include <mln/morpho/laplacian.hh>
 
+#include "tests/data.hh"
+
 
 
 int main()
@@ -54,7 +56,7 @@ int main()
   border::thickness = 2;
 
   image2d<int_u8> tiny;
-  io::pgm::load(tiny, "../../img/tiny.pgm");
+  io::pgm::load(tiny, MLN_IMG_DIR "/tiny.pgm");
   image2d<int> lap(tiny.domain());
   morpho::laplacian(tiny, rect, lap);
 

@@ -39,6 +39,8 @@
 
 #include <mln/morpho/opening_area.hh>
 
+#include "tests/data.hh"
+
 
 
 int main()
@@ -47,7 +49,7 @@ int main()
   using value::int_u8;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../../img/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
   morpho::opening_area(lena, c4(), 510, out);

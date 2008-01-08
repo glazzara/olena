@@ -43,6 +43,8 @@
 #include <mln/convert/to_p_array.hh>
 #include <mln/convert/to_window.hh>
 
+#include "tests/data.hh"
+
 
 int main()
 {
@@ -53,7 +55,7 @@ int main()
   border::thickness = 66;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../../img/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
   {
     p_array<point2d> vec = convert::to_p_array(rec, point2d::origin);

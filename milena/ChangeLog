@@ -1,5 +1,25 @@
 2008-01-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have morpho tests using input images be independent of the
+	location of the build tree w.r.t. the source tree by removing
+	hard-coded paths.
+
+	* tests/data.hh.in: New.
+	* tests/morpho/contrast.cc,
+	* tests/morpho/dilation.cc,
+	* tests/morpho/dilation_max_h.cc,
+	* tests/morpho/erosion.cc,
+	* tests/morpho/erosion_min_h.cc,
+	* tests/morpho/gradient.cc,
+	* tests/morpho/hit_or_miss.cc,
+	* tests/morpho/laplacian.cc,
+	* tests/morpho/opening_area.cc,
+	* tests/morpho/thinning.cc: Use tests/data.hh to get the path to
+	the img/ directory.
+	* tests/tests.mk (AM_CPPFLAGS): Add -I$(top_builddir)/milena.
+
+2008-01-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	* tests/trait_ch_value.cc: Typo in comment.
 	Reported by Alexandre Duret-Lutz.
 

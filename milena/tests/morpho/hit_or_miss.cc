@@ -45,6 +45,8 @@
 
 #include <mln/morpho/hit_or_miss.hh>
 
+#include "tests/data.hh"
+
 
 int main()
 {
@@ -76,8 +78,13 @@ int main()
   border::thickness = 2;
 
   image2d<bool> pic;
-  io::pbm::load(pic, "../../img/picasso.pbm");
+  io::pbm::load(pic, MLN_IMG_DIR "/picasso.pbm");
   image2d<bool> out = morpho::hit_or_miss(pic, win_hit, win_miss);
+  // FIXME: We shall handle out images as well as input images.
+  // Currently, output images are named `out.*', and each test
+  // overwrites the product(s) of the previous one.  Moreover, nothing
+  // is cleaned upon `make clean', which will probably bother `make
+  // distcheck'.
   io::pbm::save(out, "out.pbm");
 
   mln_postcondition(morpho::hit_or_miss(morpho::complementation(pic),

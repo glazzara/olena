@@ -39,6 +39,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/morpho/gradient.hh>
 
+#include "tests/data.hh"
 
 
 int main()
@@ -50,7 +51,7 @@ int main()
   border::thickness = 2;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../../img/tiny.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
 
   io::pgm::save( morpho::gradient(lena, rect),
 		 "out.pgm" );

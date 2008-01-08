@@ -41,6 +41,8 @@
 
 #include <mln/morpho/contrast.hh>
 
+#include "tests/data.hh"
+
 
 int main()
 {
@@ -51,7 +53,7 @@ int main()
   border::thickness = 1;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../../img/tiny.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
   image2d<int_u8> out = morpho::contrast(lena, rect);
   io::pgm::save(out, "out.pgm");
 

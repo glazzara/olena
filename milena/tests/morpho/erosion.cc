@@ -51,6 +51,8 @@
 #include <mln/convert/to_p_array.hh>
 #include <mln/convert/to_window.hh>
 
+#include "tests/data.hh"
+
 
 int main()
 {
@@ -75,7 +77,7 @@ int main()
   // 25  66   15
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../../img/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
   // trace::quiet = false;
 
