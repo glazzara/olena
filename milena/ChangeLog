@@ -90,6 +90,35 @@
 	* tests/morpho/opening_area.cc,
 	* tests/morpho/thinning.cc: Fix path of images and update brief.
 
+2008-01-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the tests in tests/morpho.
+
+	* mln/morpho/erosion.spe.hh
+	(erosion_iterative_(kind::logic, speed::fastest, const I&, const W&)):
+	Fix the assignment of the out pixter in the case of a non-centered
+	window.
+	* mln/value/int_u_sat.hh (mln::value::props< int_u_sat<n> >):
+	Remove.
+	Superseded by...
+	(mln::trait::value_< mln::value::int_u_sat<n> >): ...this (new
+	specialization).
+	* mln/set/inter.hh (mln::set::inter): Fix uses of the tracing
+	mechanism.
+	* mln/value/int_u.hh: Don't use Doxygen comments to announce
+	forward declarations.
+	* tests/morpho/contrast.cc,
+	* tests/morpho/dilation.cc, 
+	* tests/morpho/dilation_max_h.cc, 
+	* tests/morpho/erosion.cc,
+	* tests/morpho/erosion_min_h.cc, 
+	* tests/morpho/gradient.cc, 
+	* tests/morpho/hit_or_miss.cc, 
+	* tests/morpho/laplacian.cc, 
+	* tests/morpho/opening_area.cc, 
+	* tests/morpho/thinning.cc: 
+	Catch up with the new I/O interface of Milena.
+
 2007-12-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move mathematical morphology-related tests into tests/morpho.
