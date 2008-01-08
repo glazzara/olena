@@ -64,7 +64,7 @@ namespace mln
 
     level::stretch(input, output);
 
-    // FIXME : How test that?
+    // FIXME: How to test that?
   }
 
   template <typename I, typename J>

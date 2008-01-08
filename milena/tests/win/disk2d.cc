@@ -51,8 +51,11 @@ int main()
   for (int x = -30; x <= 30; ++x)
     for (int y = -30; y <= 30; ++y)
     {
-      mln_assertion(((abs(x) <= 27) && (abs(y) <= 27)) || !disk.has(dpoint2d(y, x)));
-      mln_assertion(((x * x + y * y) <= l2) == (disk.has(dpoint2d(y, x))) || abs(x) > 27 || abs(y) > 27);
+      mln_assertion(((abs(x) <= 27) && (abs(y) <= 27)) ||
+		    !disk.has(dpoint2d(y, x)));
+      mln_assertion(((x * x + y * y) <= l2) == (disk.has(dpoint2d(y, x))) ||
+		    abs(x) > 27 ||
+		    abs(y) > 27);
     }
 
   debug::println(convert::to_image(disk));

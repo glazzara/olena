@@ -78,6 +78,7 @@ namespace mln
   namespace trait
   {
 
+    // FIXME: Dead code?
 //     template <>
 //     struct p_setrecise_unary_< op::uminus, test >
 //     {
@@ -104,6 +105,8 @@ namespace mln
 int main()
 {
   using namespace mln;
+
+    // FIXME: Dead code?
 
 //   {
 //     mln_trait_op_uminus_(test) tmp; /* bool if precise */

@@ -89,7 +89,7 @@ namespace my
     void is_test() {}
   };
 
-
+  // FIXME: Dead code?
 //   template <typename I>
 //   void foo(const Integer<I>&)
 //   {

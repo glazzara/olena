@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,13 +39,15 @@
 #include <mln/labeling/blobs.hh>
 #include <mln/pw/all.hh>
 
+#include "tests/data.hh"
+
 
 int main()
 {
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> lena = io::pgm::load<int_u8>("../../img/tiny.pgm");
+  image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/tiny.pgm");
 
   unsigned n;
   image2d<unsigned> labels = labeling::flat_zones(lena, c4(), n);

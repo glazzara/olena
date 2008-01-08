@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,6 +42,8 @@
 #include <mln/border/thickness.hh>
 #include <mln/linear/line_convolve.hh>
 
+#include "tests/data.hh"
+
 
 int main()
 {
@@ -51,7 +53,7 @@ int main()
   border::thickness = 4;
 
   image2d<int_u8>
-    lena = io::pgm::load("../img/lena.pgm"),
+    lena = io::pgm::load(MLN_IMG_DIR "/lena.pgm"),
     out(lena.domain());
 
   image2d<float> tmp(lena.domain());

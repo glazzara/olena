@@ -49,9 +49,9 @@ int main()
   {
     glf a = medium_gray;
     glf b = medium_gray;
-    //a == 0.5f;
+    // a == 0.5f;
     mln_assertion(0.5f == a.to_enc());
-    //a == b;
+    // a == b;
     mln_assertion(b == a);
 
     a *= 2;

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,7 +38,7 @@
 
 #include <mln/level/compare.hh>
 
-
+#include "tests/data.hh"
 
 
 int main()
@@ -46,7 +46,7 @@ int main()
   using namespace mln;
   using value::rgb8;
 
-  image2d<rgb8> lena = io::ppm::load<rgb8>("../../../img/lena.ppm");
+  image2d<rgb8> lena = io::ppm::load<rgb8>(MLN_IMG_DIR "/lena.ppm");
   io::ppm::save(lena, "out.ppm");
 
   image2d<rgb8> lena2;

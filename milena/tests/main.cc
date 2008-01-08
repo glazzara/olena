@@ -25,6 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+// FIXME: Rename (and possibly move) this file.
+
 /*!
  * \file   tests/main.cc
  *

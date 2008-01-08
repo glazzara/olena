@@ -80,7 +80,7 @@ int main()
     mln_assertion(f == g);
     mln_assertion(h == g);
 
-  // FIXME : make the following tests compile.
+  // FIXME: Make the following tests compile.
     {
       // With gray_f.
       //gl8 a = mln::value::internal::gray_f(12.5);

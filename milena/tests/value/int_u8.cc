@@ -65,6 +65,7 @@ int main()
     sym_compare_assert(3.0f, ==, i);
     sym_compare_assert(i, !=, 2.99f);
 
+    // FIXME: Is this an incorrect behavior or what?
     // Error at run-time as expected :-)
     // i = 256;
     // i = -1;
@@ -159,6 +160,7 @@ int main()
     i *= d;
     sym_compare_assert(i, ==, 0.f);
 
+    // FIXME: Is this an incorrect behavior or what?
     // Error at run-time as expected :-)
     // i = 128;
     // i *= 2;

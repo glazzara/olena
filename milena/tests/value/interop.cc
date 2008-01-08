@@ -52,7 +52,7 @@ int main()
 
   using value::int_s8;
 
-
+  // FIXME: Dead code?
 //   {
 //     // Operations on int_u<n>
 //     int_u8 i = 128;

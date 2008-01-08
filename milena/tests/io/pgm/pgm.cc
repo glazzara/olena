@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,33 +40,29 @@
 
 #include <mln/level/compare.hh>
 
+#include "tests/data.hh"
+
+
 int main()
 {
   using namespace mln;
   using value::int_u8;
 
   {
-    image2d<int_u8>
-      lena = io::pgm::load<int_u8>("../../../img/lena.pgm");
-
+    image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/lena.pgm");
     io::pgm::save(lena, "out.pgm");
 
-    image2d<int_u8>
-      lena2 = io::pgm::load<int_u8>("out.pgm");
-
+    image2d<int_u8> lena2 = io::pgm::load<int_u8>("out.pgm");
     mln_assertion(lena2 == lena);
   }
 
-
   {
-    image2d< value::int_u<8> >
-      lena, lena2;
-    io::pgm::load(lena, "../../../img/lena.pgm");
+    image2d< value::int_u<8> > lena, lena2;
+    io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
     io::pgm::save(lena, "out.pgm");
 
     io::pgm::load(lena2, "out.pgm");
     mln_assertion(lena2 == lena);
   }
-
 }

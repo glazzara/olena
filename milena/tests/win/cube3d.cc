@@ -51,8 +51,10 @@ int main()
     for (int y = -5; y <= 5; ++y)
       for (int z = -5; z <= 5; ++z)
       {
-	mln_assertion(((abs(x) <= 2) && (abs(y) <= 2) && (abs(z) <= 2)) || !cube.has(dpoint3d(z, y, x)));
-	mln_assertion((abs(x) <= 2 && abs(y) <= 2 && abs(z) <= 2) == (cube.has(dpoint3d(z, y, x))));
+	mln_assertion(((abs(x) <= 2) && (abs(y) <= 2) && (abs(z) <= 2)) ||
+		      !cube.has(dpoint3d(z, y, x)));
+	mln_assertion((abs(x) <= 2 && abs(y) <= 2 && abs(z) <= 2) ==
+		      (cube.has(dpoint3d(z, y, x))));
       }
 
   debug::println(convert::to_image(cube));

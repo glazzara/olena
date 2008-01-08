@@ -89,6 +89,7 @@ int main()
     mln_assertion(3.0f == i);
     mln_assertion(i != 2.99f);
 
+    // FIXME: Is this an incorrect behavior or what?
     // Error at run-time as expected :-)
     // i = 256;
     // i = -1;
@@ -176,6 +177,7 @@ int main()
     i *= d;
     mln_assertion(i == 0);
 
+    // FIXME: Is this an incorrect behavior or what?
     // Error at run-time as expected :-)
     // i = 128;
     // i *= 2;

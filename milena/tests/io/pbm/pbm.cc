@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,12 +36,14 @@
 
 #include <mln/level/compare.hh>
 
+#include "tests/data.hh"
+
 
 int main()
 {
   using namespace mln;
 
-  image2d<bool> pic = io::pbm::load("../../../img/picasso.pbm");
+  image2d<bool> pic = io::pbm::load(MLN_IMG_DIR "/picasso.pbm");
   io::pbm::save(pic, "pic.pbm");
   image2d<bool> pic2 = io::pbm::load("pic.pbm");
 

@@ -59,6 +59,7 @@ int main()
   using namespace mln;
 
   test<bool>();
+  // FIXME: Dead code?
 //   test<unsigned char>();
 //   test<unsigned short>();
 //   test<value::int_u8>();

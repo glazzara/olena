@@ -66,7 +66,8 @@ int main()
 
   std::cout << q2.conj() << std::endl;
   std::cout << q2.inv() << std::endl;
-  std::cout << norm::l2(q2.to_vec()) << ' ' << norm::l2(q2.inv().to_vec()) << std::endl;
+  std::cout << norm::l2(q2.to_vec()) << ' '<< norm::l2(q2.inv().to_vec())
+	    << std::endl;
   std::cout << q2.inv().inv() << std::endl;
 
 }

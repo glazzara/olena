@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,7 +39,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/level/median.hh>
 
-
+#include "tests/data.hh"
 
 
 int main()
@@ -51,7 +51,7 @@ int main()
   border::thickness = 6;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../../img/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
   level::median(lena, rect, out);

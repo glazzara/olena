@@ -46,7 +46,8 @@ int main()
   mln_assertion(w.is_centered() == false);
   mln_assertion(w.is_symmetric() == true);
 
-  // w.insert(-1,0); // Do not compile as expected.
+  // FIXME: Does not compile as expected.
+  // w.insert(-1,0);
 
   w.insert(-1);
   w.insert( 1);

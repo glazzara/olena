@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,12 +44,14 @@
 
 #include <mln/core/mono_obased_rle_encode.hh>
 
+#include "tests/data.hh"
+
+
 struct fold_t : public mln::Function_v2v< fold_t >
 {
   typedef mln::value::int_u8 result;
   result operator()(unsigned i) const { return i == 0 ? 0 : (i - 1) % 255 + 1; }
 };
-
 
 
 int main()
@@ -58,18 +60,18 @@ int main()
   using value::int_u8;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../../img/small.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/small.pgm");
   image2d<int_u8> cmp(lena.domain());
 
   unsigned n;
-  image2d<unsigned>
-    labels = labeling::blobs((pw::value(lena) > pw::cst(172u)) | lena.domain(),
-					     c4(), n);
+  image2d<unsigned> labels =
+    labeling::blobs((pw::value(lena) > pw::cst(172u)) | lena.domain(),
+		    c4(), n);
 
-  mono_obased_rle_image<point2d, int_u8>
-    rle = mono_obased_rle_encode(level::transform(labels, fold_t()));
+  mono_obased_rle_image<point2d, int_u8> rle =
+    mono_obased_rle_encode(level::transform(labels, fold_t()));
 
-  std::cout << n << ", compression :" << rle.compression() << std::endl;
+  std::cout << n << ", compression ratio: " << rle.compression() << std::endl;
 
   level::fill(cmp, literal::zero);
   level::paste(rle, cmp);

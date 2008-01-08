@@ -46,7 +46,8 @@ int main()
   util::node<int>* g = f->add_child(31);
 
   f->add_child(32);
-  g->add_child(41)->add_child(51)->add_child(61)->add_child(71)->add_child(81)->add_child(91);
+  g->add_child(41)->add_child(51)->add_child(61)->add_child(71)
+    ->add_child(81)->add_child(91);
   g->add_child(42);
   f->add_child(33);
   f->add_child(34);

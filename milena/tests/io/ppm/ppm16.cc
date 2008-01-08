@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,6 +41,8 @@
 
 #include <mln/level/compare.hh>
 
+#include "tests/data.hh"
+
 
 using namespace mln;
 
@@ -79,26 +81,24 @@ int main()
   typedef image2d<rgb8> I;
 
   {
-    // load a 8bits image A
-    image2d<rgb8>
-      a = io::ppm::load<rgb8>("../../../img/lena.ppm");
+    // load a 8-bit image A
+    image2d<rgb8> a = io::ppm::load<rgb8>(MLN_IMG_DIR "/lena.ppm");
     image2d<rgb16> b(a.domain());
 
     image2d<rgb8>::fwd_piter  p(b.domain());
 
-    // save it as a 16bits ppm image B
+    // save it as a 16-bit ppm image B
     to16bits f;
     for_all(p)
       b(p) = f(a(p));
     io::ppm::save(b, "out16.ppm");
 
     // reload B into C
-    image2d<rgb16>
-      c = io::ppm::load<rgb16>("out16.ppm");
+    image2d<rgb16> c = io::ppm::load<rgb16>("out16.ppm");
     image2d<rgb8> d(a.domain());
 
 
-    // save C as a 8bits ppm image D
+    // save C as a 8-bit ppm image D
     to8bits g;
     for_all(p)
       d(p) = g(c(p));
@@ -111,27 +111,26 @@ int main()
   {
     // Abort
 //     image2d<rgb8> a;
-//     io::ppm::load(a, "../../../img/lena_16.ppm");
+//     io::ppm::load(a, MLN_IMG_DIR "/lena_16.ppm");
 
     image2d< value::rgb<16> > b;
-    io::ppm::load(b, "../../../img/lena_16.ppm");
+    io::ppm::load(b, MLN_IMG_DIR "/lena_16.ppm");
 
   }
 
   {
     //    Abort
 //     image2d< value::rgb<8> > a =
-//       io::ppm::load("../../../img/lena_16.ppm");
+//       io::ppm::load(MLN_IMG_DIR "/lena_16.ppm");
 
     //    Abort
 //     image2d< value::rgb<16> > a =
-//       io::ppm::load< value::rgb<16> >("../../../img/lena.ppm");
+//       io::ppm::load< value::rgb<16> >(MLN_IMG_DIR "/lena.ppm");
 
     image2d< value::rgb<16> > a =
-      io::ppm::load< value::rgb<16> >("../../../img/lena_16.ppm");
+      io::ppm::load< value::rgb<16> >(MLN_IMG_DIR "/lena_16.ppm");
 
     image2d< value::rgb<8> > b =
-      io::ppm::load< value::rgb<8> >("../../../img/lena.ppm");
-
+      io::ppm::load< value::rgb<8> >(MLN_IMG_DIR "/lena.ppm");
   }
 }

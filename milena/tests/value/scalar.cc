@@ -46,6 +46,7 @@ namespace mln
 {
   namespace trait
   {
+    // FIXME: Dead code?
 //     template <typename O1, typename O2>
 //     struct set_binary_< op::less, Object,O1, Object,O2 >  { typedef bool ret; };
 
@@ -71,6 +72,7 @@ int main()
 {
   using namespace mln;
 
+  // FIXME: Dead code?
 //   int i = 51;
 //   foo(i);
 //   foo( value::scalar(i) );
@@ -84,6 +86,7 @@ int main()
 
     b = value::scalar(j) < value::scalar(j);
 
+  // FIXME: Dead code?
 //     mln_trait_op_less_(value::scalar_< value::int_u8 >, value::scalar_< value::int_u8 >) tmp;
 //     void* v = tmp;
 

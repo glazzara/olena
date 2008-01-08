@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,25 +39,20 @@
 #include <mln/io/pfm/save.hh>
 #include <mln/io/pfm/load.hh>
 
+#include "tests/data.hh"
+
 int main()
 {
   using namespace mln;
   {
-    image2d<float>
-      fits_in = io::fits::load("../../../img/test.fits");
+    image2d<float> fits_in = io::fits::load(MLN_IMG_DIR "/test.fits");
 
     io::pfm::save(fits_in, "out.pfm");
-
-    image2d<float>
-      pfm = io::pfm::load("out.pfm");
-
+    image2d<float> pfm = io::pfm::load("out.pfm");
     mln_assertion(pfm == fits_in);
 
     io::pfm::save(fits_in, "out2.pfm");
-
-    image2d<float>
-      pfm2 = io::pfm::load("out2.pfm");
-
+    image2d<float> pfm2 = io::pfm::load("out2.pfm");
     mln_assertion(fits_in == pfm2);
   }
 }

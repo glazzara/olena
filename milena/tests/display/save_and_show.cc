@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,19 +30,22 @@
  * \brief Tests on mln::display::save_and_show.
  */
 
-# include <mln/core/image2d.hh>
-# include <mln/io/pbm/load.hh>
-# include <mln/make/win_chamfer.hh>
-# include <mln/geom/chamfer.hh>
-# include <mln/value/rgb8.hh>
-# include <mln/core/sub_image.hh>
-# include <mln/core/image_if_value.hh>
-# include <mln/core/inplace.hh>
-# include <mln/core/w_window2d_int.hh>
-# include <mln/display/show.hh>
-# include <mln/io/ppm/save.hh>
-# include <mln/display/save_and_show.hh>
-# include <mln/level/fill.hh>
+#include <mln/core/image2d.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/make/win_chamfer.hh>
+#include <mln/geom/chamfer.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/core/sub_image.hh>
+#include <mln/core/image_if_value.hh>
+#include <mln/core/inplace.hh>
+#include <mln/core/w_window2d_int.hh>
+#include <mln/display/show.hh>
+#include <mln/io/ppm/save.hh>
+#include <mln/display/save_and_show.hh>
+#include <mln/level/fill.hh>
+
+#include "tests/data.hh"
+
 
 int main()
 {
@@ -50,7 +53,7 @@ int main()
 
   unsigned max = 51;
 
-  image2d<bool> input = io::pbm::load("../../img/toto.pbm");
+  image2d<bool> input = io::pbm::load(MLN_IMG_DIR "/toto.pbm");
 
   // Create a weighted windows :
   // 0 2 0

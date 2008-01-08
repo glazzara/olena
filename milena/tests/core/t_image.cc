@@ -36,7 +36,6 @@
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
 
-
 int main()
 {
   using namespace mln;
@@ -49,4 +48,7 @@ int main()
 
   t_image<I> t_ima(ima, 0, 1);
   debug::println(t_ima);
+
+  // FIXME: Enrich this test (exercise more features and write
+  // assertions).
 }

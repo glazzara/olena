@@ -56,12 +56,12 @@ int main()
   using typename value::rgb8;
 
   {
-    // FIXME:
-    // Under Linux or under any *nix OS (i.e. under Unix or MacOSX), you need to call
-    // FreeImage_Initialise at the beginning of your main function and you need to call
-    // FreeImage_DeInitialise at the end of this main function (this is not needed when
-    // using FreeImage as a .SO).
-
+    /* FIXME: Under GNU/Linux or under any *nix OS (i.e. under Unix or
+       Mac OS X), you need to call FreeImage_Initialise at the
+       beginning of your main function and you need to call
+       FreeImage_DeInitialise at the end of this main function (this
+       is not needed when using FreeImage as a shared library
+       (*.so)).  */
     //FreeImage_Initialise();
 
     win::rectangle2d rect(51, 51);
@@ -82,8 +82,7 @@ int main()
     display::show (adaptor, "xv");
 
     // FIXME: Likewise.
-    /*
-       Check if this statement holds in our case.  Maybe we need to
+    /* Check if this statement holds in our case.  Maybe we need to
        involve Libtool in to handle FreeImagePlus properly.  */
     //FreeImage_DeInitialise();
   }

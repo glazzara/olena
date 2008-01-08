@@ -50,8 +50,11 @@ int main()
   for (int x = -5; x <= 5; ++x)
     for (int y = -5; y <= 5; ++y)
     {
-      mln_assertion(((abs(x) <= 4) && (abs(y) <= 4)) || !diag.has(dpoint2d(y, x)));
-      mln_assertion((x == y) == (diag.has(dpoint2d(y, x))) || abs(x) > 4 || abs(y) > 4);
+      mln_assertion(((abs(x) <= 4) && (abs(y) <= 4)) ||
+		    !diag.has(dpoint2d(y, x)));
+      mln_assertion((x == y) == (diag.has(dpoint2d(y, x))) ||
+		    abs(x) > 4 ||
+		    abs(y) > 4);
     }
 
   debug::println(convert::to_image(diag));

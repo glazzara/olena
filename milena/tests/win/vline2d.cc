@@ -50,8 +50,11 @@ int main()
   for (int x = -5; x <= 5; ++x)
     for (int y = -5; y <= 5; ++y)
     {
-      mln_assertion(((abs(x) <= 2) && (abs(y) <= 2)) || !vline.has(dpoint2d(x, y)));
-      mln_assertion((0 == x) == (vline.has(dpoint2d(y, x))) || abs(x) > 2 || abs(y) > 2);
+      mln_assertion(((abs(x) <= 2) && (abs(y) <= 2)) ||
+		    !vline.has(dpoint2d(x, y)));
+      mln_assertion((0 == x) == (vline.has(dpoint2d(y, x))) ||
+		    abs(x) > 2 ||
+		    abs(y) > 2);
     }
 
   debug::println(convert::to_image(vline));

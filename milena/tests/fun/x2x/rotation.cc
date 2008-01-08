@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,6 @@
  * \brief Tests on mln::fun::x2x::rotation.
  */
 
-
 #include <iostream>
 #include <mln/fun/x2x/rotation.hh>
 #include <mln/core/image2d.hh>
@@ -40,13 +39,16 @@
 #include <mln/core/interpolated.hh>
 #include <mln/make/vec.hh>
 
+#include "tests/data.hh"
+
+
 int main()
 {
   using namespace mln;
   using value::int_u8;
 
   image2d<int_u8> lena;
-  io::pgm::load(lena, "../../../img/lena.pgm");
+  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
   interpolated<image2d<int_u8> > inter(lena);

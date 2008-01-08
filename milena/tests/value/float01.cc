@@ -79,6 +79,7 @@ struct to8bits : mln::Function_v2v<to8bits>
   result operator()(float01_<16> v) const
   {
     result ret = int(v.value() * 255);
+    // FIXME: Dead code.
     //std::cout << v << "-> " << ret << std::endl;
     return ret;
   }
@@ -143,6 +144,7 @@ int main()
     io::pgm::save(lena, "out.pgm");
     io::pgm::save(ref, "ref.pgm");
     mln_assertion(lena == ref);
+    // FIXME: Dead code.
     //debug::println(out);
   }
 

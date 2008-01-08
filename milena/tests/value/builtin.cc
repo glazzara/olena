@@ -60,6 +60,7 @@ namespace mln
       typedef double ret;
     };
 
+    // FIXME: Dead code?
 //     template <typename I>
 //     struct set_unary_< op::test,
 // 		       mln::value::Integer, I >
@@ -85,6 +86,7 @@ namespace mln
       typedef double ret;
     };
 
+    // FIXME: Dead code?
 //     template < typename I, typename S >
 //     struct set_binary_< op::test_2,
 // 			mln::value::Integer, I,

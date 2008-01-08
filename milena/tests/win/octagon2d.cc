@@ -50,8 +50,12 @@ int main()
   for (int x = -16; x <= 16; ++x)
     for (int y = -16; y <= 16; ++y)
     {
-      mln_assertion(((abs(x) <= 6) && (abs(y) <= 6)) || !oct.has(dpoint2d(y, x)));
-      mln_assertion((abs(x) + abs(y) <= l / 2 + l / 6) == (oct.has(dpoint2d(y, x))) || abs(x) > 2 || abs(y) > 2);
+      mln_assertion(((abs(x) <= 6) && (abs(y) <= 6)) ||
+		    !oct.has(dpoint2d(y, x)));
+      mln_assertion((abs(x) + abs(y) <= l / 2 + l / 6) ==
+		    (oct.has(dpoint2d(y, x))) ||
+		    abs(x) > 2 ||
+		    abs(y) > 2);
     }
 
   debug::println(convert::to_image(oct));

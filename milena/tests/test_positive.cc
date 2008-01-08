@@ -59,6 +59,7 @@ int main()
 
   test_v2b(fun::v2v::id<mln_value_(I)>() >= pw::cst(0));
 
+  // FIXME: Dead code?
   // test2(fun::v2v::id<mln_value_(I)>() >= pw::cst(0));
   // test::positive(ima);
 }

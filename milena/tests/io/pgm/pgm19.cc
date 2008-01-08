@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,8 +40,10 @@
 #include <mln/level/transform.hh>
 #include <mln/level/compare.hh>
 
+#include "tests/data.hh"
 
-  using namespace mln;
+
+using namespace mln;
 
 struct to19bits : mln::Function_v2v<to19bits>
 {
@@ -65,6 +67,7 @@ struct to8bits : mln::Function_v2v<to8bits>
   }
 };
 
+
 int main()
 {
   using namespace mln;
@@ -74,22 +77,16 @@ int main()
 
   border::thickness = 52;
 
-  image2d<int_u8>
-    lena = io::pgm::load<int_u8>("../../../img/lena.pgm");
+  image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/lena.pgm");
   image2d<int_u19> out(lena.domain());
 
   level::transform(lena, to19bits(), out);
-
   io::pgm::save(out, "out19.pgm");
 
-  image2d<int_u19>
-    lena2 = io::pgm::load<int_u19>("out19.pgm");
-   image2d<int_u8> out2(lena.domain());
+  image2d<int_u19> lena2 = io::pgm::load<int_u19>("out19.pgm");
 
-   level::transform(lena2, to8bits(), out2);
-
-   io::pgm::save(out2, "out8.pgm");
-
-   assert(out2 == lena);
-
+  image2d<int_u8> out2(lena.domain());
+  level::transform(lena2, to8bits(), out2);
+  io::pgm::save(out2, "out8.pgm");
+  assert(out2 == lena);
 }

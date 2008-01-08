@@ -56,10 +56,13 @@ int main()
   std::cout << "tr(vec) : " << tr(vec1) << std::endl;
   std::cout << "rot(vec) : " << rot(vec1) << std::endl;
   std::cout << "tr(rot(vec)) : " << compose(tr, rot)(vec1) << std::endl;
-  std::cout << "rot(rot_1(vec)) : " << compose(rot, rot.inv())(vec1) << std::endl;
-  std::cout << "tr(rot(tr(vec))) : " << compose(tr, compose(rot, tr))(vec1) << std::endl;
+  std::cout << "rot(rot_1(vec)) : " << compose(rot, rot.inv())(vec1)
+	    << std::endl;
+  std::cout << "tr(rot(tr(vec))) : " << compose(tr, compose(rot, tr))(vec1)
+	    << std::endl;
   std::cout << "(rototr_1)(rot(tr(vec)))) : "
-	    << compose(compose(rot, tr).inv(), compose(rot, tr))(vec1) << std::endl;
+	    << compose(compose(rot, tr).inv(), compose(rot, tr))(vec1)
+	    << std::endl;
   mln_assertion(fabs(compose(rot, tr)(vec1)[0] - rot(tr(vec1))[0]) <= 0.125);
   mln_assertion(fabs(compose(rot, tr)(vec1)[1] - rot(tr(vec1))[1]) <= 0.125);
   mln_assertion(fabs(compose(rot, tr)(vec1)[2] - rot(tr(vec1))[2]) <= 0.125);

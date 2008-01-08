@@ -55,11 +55,15 @@
 #include <mln/core/w_window2d_int.hh>
 #include <mln/make/win_chamfer.hh>
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
+  // FIXME: A test should not be interactive.  Maybe this program
+  // should be moved elsewehere.
   if (argc < 2)
     {
-      std::cerr << "missing argument : specify the location of the binary image (*.pbm)" << std::endl;
+      std::cerr << "missing argument: "
+		<< "specify the location of the binary image (*.pbm)"
+		<< std::endl;
       return 1;
     }
   using namespace mln;

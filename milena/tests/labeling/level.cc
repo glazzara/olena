@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,20 +44,23 @@
 
 #include <mln/debug/println.hh>
 
+#include "tests/data.hh"
+
 
 int main()
 {
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> lena = io::pgm::load<int_u8>("../../img/tiny.pgm");
+  image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/tiny.pgm");
   image2d<bool> lvl(lena.domain());
 
   unsigned n, npixels = 0;
   for (unsigned l = 0; l <= 255; ++l)
     {
       image2d<unsigned> labels = labeling::level(lena, l, c4(), n);
-      unsigned npix = accu::compute< accu::count >(labels | (pw::value(labels) != pw::cst(0)));
+      unsigned npix =
+	accu::compute<accu::count>(labels | (pw::value(labels) != pw::cst(0)));
       npixels += npix;
     }
   mln_assertion(npixels == lena.npoints());

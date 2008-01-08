@@ -67,7 +67,8 @@ namespace mln
       typedef bool ret;
     };
 
-    // precise definition: my_image2d<T> + my_image2d<U> -> my_image2d<V> ('&' is to avoid compiling an empty class)
+    // precise definition: my_image2d<T> + my_image2d<U> -> my_image2d<V>
+    // ('&' is to avoid compiling an empty class)
 
     template <typename T, typename U>
     struct set_precise_binary_< op::plus, my_image2d<T>, my_image2d<U> >

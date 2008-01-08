@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,6 +44,8 @@
 #include <mln/core/dpoints_pixter.hh>
 #include <mln/core/pixel.hh>
 
+#include "tests/data.hh"
+
 
 namespace mln
 {
@@ -79,6 +81,7 @@ int main()
   using namespace mln;
   using value::int_u8;
 
+  // FIXME: Dead code.
 //   {
 //     win::rectangle2d rect(3, 3);
 //     border::thickness = 4;
@@ -94,7 +97,7 @@ int main()
     border::thickness = 52;
     
     image2d<int_u8> lena;
-    io::pgm::load(lena, "../../img/lena.pgm");
+    io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
     image2d<int_u8>  out(lena.domain());
     
     level::fast_median(lena, rect, out);

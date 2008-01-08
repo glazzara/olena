@@ -46,7 +46,7 @@
 
 
 
-// FIXME : make a more explicit error message.
+// FIXME: Give a more explicit error message.
 // template <typename T>
 // void foo()
 // {
@@ -72,7 +72,7 @@ int main()
   using  mln::literal::black;
 
 
-  // FIXME :  make all the test pass.
+  // FIXME: Make all the test pass.
 
   gl8  a(white);
   gl8  b(white);
@@ -151,7 +151,7 @@ int main()
   }
 
   {
-    // FIXME : comparaison with literals doesn't work
+    // FIXME: comparison with literals doesn't work
 //     c = a;
 //     mln_assertion(c == white);
 

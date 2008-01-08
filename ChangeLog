@@ -1,5 +1,68 @@
 2008-01-08  Roland Levillain  <roland@lrde.epita.fr>
 
+	Get rid of hard-coded paths to input images in remaining tests.
+
+	* milena/tests/core/mono_obased_rle_image.cc,
+	* milena/tests/core/mono_rle_image.cc,
+	* milena/tests/core/obased_rle_image.cc,
+	* milena/tests/core/rle_image.cc,
+	* milena/tests/core/sparse_image.cc,
+	* milena/tests/display/save_and_show.cc,
+	* milena/tests/display/show.cc,
+	* milena/tests/fun/x2x/rotation.cc,
+	* milena/tests/io/fits/fits.cc,
+	* milena/tests/io/pbm/pbm.cc,
+	* milena/tests/io/pgm/pgm.cc,
+	* milena/tests/io/pgm/pgm16.cc,
+	* milena/tests/io/pgm/pgm19.cc,
+	* milena/tests/io/pgm/pgm27.cc,
+	* milena/tests/io/ppm/ppm.cc,
+	* milena/tests/io/ppm/ppm16.cc,
+	* milena/tests/io/ppm/ppm23.cc,
+	* milena/tests/labeling/background.cc,
+	* milena/tests/labeling/blobs.cc,
+	* milena/tests/labeling/flat_zones.cc,
+	* milena/tests/labeling/foreground.cc,
+	* milena/tests/labeling/level.cc,
+	* milena/tests/labeling/regional_maxima.cc,
+	* milena/tests/labeling/regional_minima.cc,
+	* milena/tests/level/approx/median.cc,
+	* milena/tests/level/median.cc,
+	* milena/tests/level/median_dir.cc,
+	* milena/tests/level/median_fast.cc,
+	* milena/tests/level/median_hline2d.cc,
+	* milena/tests/level/naive/median.cc,
+	* milena/tests/line_convolve.cc,
+	* milena/tests/linear_convolve.cc,
+	* milena/tests/linear_gaussian.cc,
+	* milena/tests/linear_lap.cc,
+	* milena/tests/linear_log.cc,
+	* milena/tests/plain.cc:
+	Use tests/data.hh to get the path to the img/ directory.
+	* milena/tests/level/Makefile.am (SUBDIRS): New.
+	Add approx and naive.
+	* milena/tests/level/approx/Makefile.am
+	(check_PROGRAMS, median_SOURCES, TESTS): New.
+	* milena/tests/level/naive/Makefile.am: Likewise.
+
+	* milena/tests/fi_adaptor.cc,
+	* milena/tests/fun/x2x/composed.cc,
+	* milena/tests/seed2tiling.cc,
+	* milena/tests/trait_op_plus.cc,
+	* milena/tests/util/branch_iter.cc,
+	* milena/tests/util/branch_iter_ind.cc,
+	* milena/tests/value/quat.cc,
+	* milena/tests/win/backdiag2d.cc,
+	* milena/tests/win/cube3d.cc,
+	* milena/tests/win/diag2d.cc,
+	* milena/tests/win/disk2d.cc,
+	* milena/tests/win/hline2d.cc,
+	* milena/tests/win/octagon2d.cc,
+	* milena/tests/win/vline2d.cc:
+	Wrap long lines.
+
+2008-01-08  Roland Levillain  <roland@lrde.epita.fr>
+
 	* configure.ac: Configure milena/tests/data.hh.
 
 2007-12-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
