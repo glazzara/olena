@@ -78,7 +78,10 @@ AC_CONFIG_FILES([
 ## Tests.  ##
 ## ------- ##
 
-# FIXME: Should be performed through oln.m4 macros?
+# 
+AC_CONFIG_FILES([milena/tests/data.hh])
+
+# FIXME: Should be performed through oln.m4 macros, as we did in Olena 0.11?
 AC_CONFIG_FILES([
   milena/tests/Makefile
     milena/tests/core/Makefile

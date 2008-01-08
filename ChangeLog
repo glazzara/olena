@@ -1,3 +1,7 @@
+2008-01-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/tests/data.hh.
+
 2007-12-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Improve support for the cfitsio library.
