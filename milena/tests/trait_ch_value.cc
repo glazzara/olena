@@ -50,6 +50,6 @@ int main()
   L ima2;
   mlc_equal(L, image2d<float>)::check();
 
-  // FIXME: Exercize more image types.
+  // FIXME: Exercise more image types.
   // ...
 }

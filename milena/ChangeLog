@@ -1,3 +1,8 @@
+2008-01-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	* tests/trait_ch_value.cc: Typo in comment.
+	Reported by Alexandre Duret-Lutz.
+
 2008-01-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix mln_ch_value w.r.t. stack_image.
