@@ -1,3 +1,66 @@
+2008-01-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Get rid of hard-coded paths to input images in remaining tests.
+
+	* tests/core/mono_obased_rle_image.cc,
+	* tests/core/mono_rle_image.cc,
+	* tests/core/obased_rle_image.cc,
+	* tests/core/rle_image.cc,
+	* tests/core/sparse_image.cc,
+	* tests/display/save_and_show.cc,
+	* tests/display/show.cc,
+	* tests/fun/x2x/rotation.cc,
+	* tests/io/fits/fits.cc,
+	* tests/io/pbm/pbm.cc,
+	* tests/io/pgm/pgm.cc,
+	* tests/io/pgm/pgm16.cc,
+	* tests/io/pgm/pgm19.cc,
+	* tests/io/pgm/pgm27.cc,
+	* tests/io/ppm/ppm.cc,
+	* tests/io/ppm/ppm16.cc,
+	* tests/io/ppm/ppm23.cc,
+	* tests/labeling/background.cc,
+	* tests/labeling/blobs.cc,
+	* tests/labeling/flat_zones.cc,
+	* tests/labeling/foreground.cc,
+	* tests/labeling/level.cc,
+	* tests/labeling/regional_maxima.cc,
+	* tests/labeling/regional_minima.cc,
+	* tests/level/approx/median.cc,
+	* tests/level/median.cc,
+	* tests/level/median_dir.cc,
+	* tests/level/median_fast.cc,
+	* tests/level/median_hline2d.cc,
+	* tests/level/naive/median.cc,
+	* tests/line_convolve.cc,
+	* tests/linear_convolve.cc,
+	* tests/linear_gaussian.cc,
+	* tests/linear_lap.cc,
+	* tests/linear_log.cc,
+	* tests/plain.cc:
+	Use tests/data.hh to get the path to the img/ directory.
+	* tests/level/Makefile.am (SUBDIRS): New.
+	Add approx and naive.
+	* tests/level/approx/Makefile.am
+	(check_PROGRAMS, median_SOURCES, TESTS): New.
+	* tests/level/naive/Makefile.am: Likewise.
+
+	* tests/fi_adaptor.cc,
+	* tests/fun/x2x/composed.cc,
+	* tests/seed2tiling.cc,
+	* tests/trait_op_plus.cc,
+	* tests/util/branch_iter.cc,
+	* tests/util/branch_iter_ind.cc,
+	* tests/value/quat.cc,
+	* tests/win/backdiag2d.cc,
+	* tests/win/cube3d.cc,
+	* tests/win/diag2d.cc,
+	* tests/win/disk2d.cc,
+	* tests/win/hline2d.cc,
+	* tests/win/octagon2d.cc,
+	* tests/win/vline2d.cc:
+	Wrap long lines.
+
 2008-01-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* mln/core/concept/point.hh: Add operator/ between points and scalars.
