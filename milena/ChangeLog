@@ -1,3 +1,9 @@
+2008-01-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add file for example of character extraction.
+
+	* sandbox/nivault/extract_character.cc: New example.
+
 2008-01-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have morpho tests using input images be independent of the
