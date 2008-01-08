@@ -35,6 +35,7 @@
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/concept/dpoint.hh>
+# include <mln/value/concept/scalar.hh>
 
 
 namespace mln
@@ -104,7 +105,18 @@ namespace mln
   template <typename P, typename D>
   P& operator-=(Point<P>& p, const Dpoint<D>& dp);
 
+  /*! \brief Divise a point \p by a scalar \p s.
+   *
+   * \param[in,out] p The targeted point.
+   * \param[in] dp A scalar.
+   * \return A reference to the point \p p once divised by \p s.
+   *
+   * \relates mln::Point
+   */
+  template <typename P, typename D>
+  P& operator/(Point<P>& p, const value::Scalar<D>& dp);
 
+  // FIXME : add operators and traits?
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -143,6 +155,19 @@ namespace mln
     // FIXME: Use to_vec()!
     for (unsigned i = 0; i < P::dim; ++i)
       p[i] -= dp[i];
+    return p;
+  }
+
+
+  template <typename P, typename D>
+  inline
+  P&
+  operator/(Point<P>& p_, const value::Scalar<D>& s_)
+  {
+    P& p = exact(p_);
+    const D& s = exact(s_);
+    for (unsigned i = 0; i < P::dim; ++i)
+      p[i] /= s;
     return p;
   }
 

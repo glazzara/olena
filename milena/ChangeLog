@@ -1,3 +1,7 @@
+2008-01-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* mln/core/concept/point.hh: Add operator/ between points and scalars.
+
 2008-01-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add file for example of character extraction.
