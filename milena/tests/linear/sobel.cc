@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,12 +33,17 @@
 #include <mln/core/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/saturate.hh>
+#include <mln/level/stretch.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
 #include <mln/border/thickness.hh>
 #include <mln/linear/sobel.hh>
+
+#include <mln/debug/println.hh>
+
+#include "tests/data.hh"
 
 
 int main()
@@ -48,13 +53,22 @@ int main()
 
   border::thickness = 1;
 
-  image2d<int_u8>
-    lena = io::pgm::load("../img/lena.pgm"),
-    out(lena.domain());
+  image2d<int_u8> input;
+  io::pgm::load(input, MLN_IMG_DIR "/tiny.pgm");
 
-  image2d<int> tmp(lena.domain());
-  linear::sobel(lena, tmp);
+  // Create unused objects, for test purpose.
+  linear::sobel_h(input);
+  linear::sobel_v(input);
+  linear::sobel(input);
 
-  level::saturate(tmp, out);
-  io::pgm::save(out, "out.pgm");
+  linear::sobel_norm(input);
+
+  image2d<float> result = linear::sobel_norm(input);
+  image2d<int_u8> output (result.domain());
+  level::stretch (result, output);
+  debug::println (output);
+
+  image2d<int_u8> output_sat (output.domain());
+  level::saturate(output, output_sat);
+  io::pgm::save(output_sat, "out.pgm");
 }

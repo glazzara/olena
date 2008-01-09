@@ -1,5 +1,29 @@
 2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the computations of the Sobel gradients and norm(s).
+
+	* mln/linear/sobel.hh (mln_gradient_component, mln_gradient):
+	New macros.
+	(mlc_internal_ensure_is_scalar): New local (workaround) macro.
+	(mln::linear::sobel_v, mln::linear::sobel_h, mln::linear::sobel):
+	Revamp these functions.
+	Catch up with the current calling conventions (output passed as
+	returned value).
+	(mln::linear::impl_::sobel_v_, mln::linear::impl_::sobel_h_)
+	(mln::linear::impl_::sobel_):
+	Likewise.
+	(mln::linear::sobel_norm, mln::linear::impl::sobel_norm_):
+	New functions.
+	* tests/linear_sobel._cc: Rename as...
+	* tests/linear/sobel.cc: ...this.
+	Use MLN_IMG_DIR from tests/data.hh to get the path to the img/
+	directory.
+	Revamp this test.
+	* tests/linear/Makefile.am (check_PROGRAMS, sobel_SOURCES, TESTS):
+	New.
+
+2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Solve infinite recursive calls in linear::impl::convolve_.
 
 	* mln/linear/convolve.hh
