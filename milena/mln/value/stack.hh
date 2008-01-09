@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -93,7 +93,44 @@ namespace mln
 
     } // end of namespace mln::value::internal
 
+  } // end of namespace mln::value
 
+
+  namespace trait
+  {
+
+    template <unsigned n, typename I>
+    struct image_< mln::value::stack_image<n, I> >
+      : default_image_morpher_< I,
+				metal::vec<n, mln_value(I)>,
+				mln::value::stack_image<n, I> >
+    {
+      // FIXME: We shall carefully define the missing required traits
+      // here.
+      typedef trait::image::category::value_morpher category;
+
+      typedef trait::image::value::vectorial value;
+      /* FIXME: Setting the speed trait of a stack_image to `fast' is
+         a bad approximation.
+
+	 The value cannot reasonnably be `fastest', as several images
+         in different memory locations are involved in a stack image.
+         So we cannot just rely on the speed trait of I.
+         Nevertheless, we cannot guarantee that a stack_image will be
+         a least `fast': think of a stack_image over a ``slow''
+         image_type (e.g., an image whose values are computed).  That
+         image would retain the `slow' value of the speed trait.
+
+         In conclusion, this value of the speed trait should be
+         computed too.  */
+      typedef trait::image::speed::fast      speed;
+    };
+
+  } // end of namespace mln::trait
+
+
+  namespace value
+  {
     /*! \brief stack image class. stack_image stores a
      *  vector of n images of the same domain.
      *

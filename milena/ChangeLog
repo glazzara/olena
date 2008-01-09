@@ -1,5 +1,13 @@
 2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add image traits for mln::value::stack_image.
+
+	* mln/value/stack.hh
+	(mln::trait::image_< mln::value::stack_image<n, I> >):
+	New specialization.
+
+2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the definition of static abortion.
 
 	* mln/metal/abort.hh (mln::metal::abort): Rename as...
