@@ -39,6 +39,9 @@
 # include <mln/metal/vec.hh>
 
 
+// FIXME: Use mln_sum_x (to be renamed as mln_sum_product) instead of
+// mln_sum.
+
 namespace mln
 {
 

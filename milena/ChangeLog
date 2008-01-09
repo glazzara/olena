@@ -1,5 +1,19 @@
 2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Documentation and aesthetic changes.
+
+	* mln/core/trait/qlf_value.hh,
+	* mln/core/internal/image_value_morpher.hh,
+	* mln/fun/c.hh,
+	* mln/metal/is_a.hh:
+	More Doxygen documentation.
+	* mln/level/transform.hh,
+	* mln/core/tr_image.hh,
+	* mln/value/ops.hh:
+	Wrap long lines.
+
+2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the computations of the Sobel gradients and norm(s).
 
 	* mln/linear/sobel.hh (mln_gradient_component, mln_gradient):

@@ -35,6 +35,8 @@
  *  \see mln/norm/.
  */
 
+// FIXME: Move to mln/fun/x2v/?
+
 # include <mln/core/concept/function.hh>
 # include <mln/trait/value_.hh>
 

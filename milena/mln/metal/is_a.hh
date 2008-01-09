@@ -30,13 +30,21 @@
 
 /*! \file mln/metal/is_a.hh
  *
- * \brief Definition of a type that means "is_a".
+ *  \brief Definition of a type that means "is_a".
  */
 
 # include <mln/metal/bool.hh>
 
 
-# define mlc_is_a(T, U) mln::metal::is_a< T, U >
+/// \brief Expand to a "metalic" boolean expression stating whether \a
+/// T is a subclass of \a U or not.
+///
+/// In the current implementation, \a U must be template class with
+/// exactly one, non template parameter.
+///
+/// This macro is the recommended user interface of the "is_a"
+/// facility.
+# define mlc_is_a(T, U) mln::metal::is_a<T, U>
 
 
 

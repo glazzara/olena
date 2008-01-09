@@ -30,8 +30,8 @@
 
 /*! \file mln/core/tr_image.hh
  *
- * \brief Definition of a morpher that makes an image become
- * transformed by a given transformation.
+ *  \brief Definition of the morpher mln::tr_image presenting an image
+ *  through a (bijective) transformation.
  *
  */
 
@@ -68,11 +68,13 @@ namespace mln
    *
    */
   template <typename T, typename I>
-  struct tr_image : public mln::internal::image_identity_< I, mln_pset(I), tr_image<T,I> >
+  struct tr_image :
+    public mln::internal::image_identity_< I, mln_pset(I), tr_image<T,I> >
   {
 
     /// Super type.
-    typedef mln::internal::image_identity_< I, mln_pset(I), tr_image<T,I> > super_;
+    typedef
+    mln::internal::image_identity_< I, mln_pset(I), tr_image<T,I> > super_;
 
     /// Point_Site associated type.
     typedef mln_psite(I) psite;
@@ -96,6 +98,12 @@ namespace mln
 
     /// Constructors.
     tr_image(I& ima, T& tr);
+    /* FIXME: What's the purpose of this ctor?  AFAIK, morphers
+       objects (and images in general) cannot have their structure /
+       core data altered after they're built.  Here, there's a
+       (partial) exception: this morpher provides set_tr(), but has no
+       set_ima().  I (Roland) don't see the point in keeping this ctor
+       if we do not provide set_ima().  */
     tr_image();
 
 

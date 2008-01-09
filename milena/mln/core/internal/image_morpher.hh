@@ -55,9 +55,13 @@ namespace mln
 
       typedef I delegatee;
 
+      /* FIXME: Change the interface of this method: return a reference
+         instead of a pointer.  */
       /// Return the delegatee_ pointer; default code.
       mlc_const(I)* delegatee_() const;
 
+      /* FIXME: Change the interface of this method: return a reference
+         instead of a pointer.  */
       /// Return the delegatee_ pointer (non-const version); default code.
       I* delegatee_();
 

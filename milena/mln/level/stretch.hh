@@ -62,6 +62,7 @@ namespace mln
     namespace impl
     {
 
+      // FIXME: The first argument seems to have no effect.
       template <unsigned n, typename I, typename O>
       inline
       void stretch(value::int_u<n>,

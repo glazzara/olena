@@ -65,12 +65,13 @@ namespace mln
      * \pre \p output.domain >= \p input.domain
      */
     template <typename I, typename F, typename O>
-    void transform(const Image<I>& input, const Function_v2v<F>& f, Image<O>& output);
+    void transform(const Image<I>& input, const Function_v2v<F>& f,
+		   Image<O>& output);
 
 
     template <typename I, typename F>
     mln_ch_value(I, mln_result(F))
-      transform(const Image<I>& input, const Function_v2v<F>& f);
+    transform(const Image<I>& input, const Function_v2v<F>& f);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -83,7 +84,8 @@ namespace mln
 
 	template <typename I, typename F, typename O>
 	inline
-	void transform_(const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
+	void transform_(const Image<I>& input_, const Function_v2v<F>& f_,
+			Image<O>& output_)
 	{
 	  trace::entering("level::impl::generic::transform");
 
@@ -107,7 +109,8 @@ namespace mln
 
     template <typename I, typename F, typename O>
     inline
-    void transform(const Image<I>& input, const Function_v2v<F>& f, Image<O>& output)
+    void transform(const Image<I>& input, const Function_v2v<F>& f,
+		   Image<O>& output)
     {
       trace::entering("level::transform");
 
@@ -122,7 +125,7 @@ namespace mln
     template <typename I, typename F>
     inline
     mln_ch_value(I, mln_result(F))
-      transform(const Image<I>& input, const Function_v2v<F>& f)
+    transform(const Image<I>& input, const Function_v2v<F>& f)
     {
       trace::entering("level::transform");
 
