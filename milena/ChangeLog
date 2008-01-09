@@ -1,5 +1,9 @@
 2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/linear/sobel.hh: Fix dates in copyright header.
+
+2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Documentation and aesthetic changes.
 
 	* mln/core/trait/qlf_value.hh,
