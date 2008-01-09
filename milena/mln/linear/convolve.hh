@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -65,12 +65,72 @@ namespace mln
 
     namespace impl
     {
+      /* FIXME: We must clean up the interface of
+	 mln::linear::impl::convolve_:
+
+	 - either allow certain patterns of speed traits (e.g.,
+	   any/any, fastest/fastest, fastest/any, etc.).  In this
+	   case, the generic version should abort at compile time;
+
+	 - or accept all combinations (which is the current case), and
+           default to the slowest one (presumably any/any).
+       */
+
+      // Fwd decl.
+      template <typename I, typename W, typename O>
+      inline
+      void convolve_(const I& input,
+		     const Weighted_Window<W>& w_win_,
+		     O& output);
+
+      /// Default version, delegating to the generic version.
+      template <typename Speed_I, typename I, typename W,
+		typename Speed_O, typename O>
+      inline
+      void convolve_(Speed_I, const I& input,
+		     const Weighted_Window<W>& w_win_,
+		     Speed_O, O& output)
+      {
+	/* Don't delegate using such a call:
+
+	   \code
+	   impl::convolve_(trait::image::speed::any(), input,
+			   w_win_,
+			   trait::image::speed::any(), output);
+	   \endcode
+
+	   since it would end up with infinite recursion.  The reason
+	   is that the compiler would select this function (in which
+	   you read this very comment), instead of the next one (with
+	   input and output speed traits set to `any'), to resolve the
+	   call.  This is because C++ overloading rules favor the
+	   generic function over the more specialized one.  And we
+	   cannot use explicit partial specialization, since it just
+	   doesn't exist for functions.
+
+	   Hence the chosen solution: create and call another
+	   overloading for mln::linear::impl::convolve_, with no
+	   unnatural selection behavior.  */
+	impl::convolve_(input, w_win_, output);
+      }
 
       template <typename I, typename W, typename O>
       inline
       void convolve_(trait::image::speed::any, const I& input,
 		     const Weighted_Window<W>& w_win_,
 		     trait::image::speed::any, O& output)
+      {
+	// Delegate the call to the generic version.
+	impl::convolve_(input, w_win_, output);
+      }
+
+      /// A factored implementation of the most generic version of
+      ///  mln::linear::impl::convolve_.
+      template <typename I, typename W, typename O>
+      inline
+      void convolve_(const I& input,
+		     const Weighted_Window<W>& w_win_,
+		     O& output)
       {
 	const W& w_win = exact(w_win_);
 

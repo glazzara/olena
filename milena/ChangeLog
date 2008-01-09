@@ -1,5 +1,19 @@
 2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Solve infinite recursive calls in linear::impl::convolve_.
+
+	* mln/linear/convolve.hh
+	(convolve_(any, const I&, const Weighted_Window<W>&, any, O&)):
+	Move the body of this function...
+	(convolve_(const I&, const Weighted_Window<W>&, O&)):
+	...here (new function).
+	Use it to factor...
+	(convolve_(Speed_I, const I&, const Weighted_Window<W>&, Speed_O, O&))
+	(convolve_(any, const I&, const Weighted_Window<W>&, any, O&)):
+	...the implementations of these functions.
+
+2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add image traits for mln::value::stack_image.
 
 	* mln/value/stack.hh
