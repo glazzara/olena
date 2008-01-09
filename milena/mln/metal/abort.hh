@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_METAL_ABORT_HH
 # define MLN_METAL_ABORT_HH
 
-/*!
- * \file  mln/metal/abort.hh
+/*! \file  mln/metal/abort.hh
  *
- * \brief FIXME.
+ *  \brief FIXME: Document.
  */
 
 # include <mln/metal/bool.hh>
@@ -44,9 +43,8 @@ namespace mln
   {
 
     template <typename T>
-    struct abort : false_
+    struct abort_ : false_
     {};
-
 
   } // end of namespace mln::metal
 

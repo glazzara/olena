@@ -1,3 +1,11 @@
+2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the definition of static abortion.
+
+	* mln/metal/abort.hh (mln::metal::abort): Rename as...
+	(mln::metal::abort_): ...this, to avoid name clashes with the
+	homonym (standard) macro.
+
 2008-01-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update extract character.
