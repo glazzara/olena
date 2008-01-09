@@ -30,6 +30,7 @@
 # include <mln/core/image2d.hh>
 # include <mln/io/pbm/load.hh>
 # include <mln/io/pgm/save.hh>
+# include <mln/io/ppm/save.hh>
 # include <mln/debug/println.hh>
 # include <mln/logical/not.hh>
 # include <mln/logical/or.hh>
@@ -61,6 +62,12 @@
 # include <mln/draw/mesh.hh>
 
 # include <mln/level/stretch.hh>
+
+# include <mln/core/image_if_value.hh>
+# include <mln/core/sub_image.hh>
+# include <mln/level/paste.hh>
+# include <mln/literal/all.hh>
+# include <mln/value/rgb8.hh>
 
 using namespace mln;
 
@@ -114,15 +121,63 @@ main(int argc, char** argv)
     vec_card[label_image(p)].take (p);
   }
 
-//   for (unsigned i = 0; i <= nb_labels; ++i)
-//     {
-//       if (vec_card[i].to_result () > 200)
-// 	;
-//       std::cout << i << " = " << vec_card[i].to_result () << std::endl;
-//       std::cout << i << " = " << vec_bbox[i].to_result () << std::endl;
-//     }
+  I_LABEL text_ima (label_image.domain());
 
-//   std::cout << path_output << " generated" << std::endl;
+  for (unsigned i = 0; i <= nb_labels; ++i)
+    {
+      float ratio = 0;
+      unsigned rows = vec_bbox[i].to_result().nrows();
+      unsigned cols = vec_bbox[i].to_result().ncols();
+      unsigned size = rows * cols;
+      unsigned card = vec_card[i].to_result();
+
+//       if (rows < cols)
+// 	ratio = cols / rows;
+//       else
+// 	ratio = rows / cols;
+
+//       if (ratio > 3)
+// 	continue;
+
+//       if (vec_card[i].to_result () /*rows * cols*/ < 200)
+
+//       if (size / card < 0.3)
+// 	continue;
+
+//       if (((float)card / (float)size) > 0.7)
+// 	continue;
+
+//       if (((float)card / (float)size) < 0.3)
+// 	continue;
+
+
+      if (cols < 5)
+	continue;
+
+      if (cols > 20)
+	continue;
+
+
+	{
+	  typedef sub_image<I_LABEL, box2d> I_SUB;
+	  typedef image_if_value<I_SUB> I_VAL;
+
+	  I_SUB sub_ima = (label_image | vec_bbox[i].to_result());
+	  I_VAL val_ima = (sub_ima | i);
+
+	  mln_piter_(I_VAL) p(val_ima.domain());
+
+	  for_all (p)
+	    text_ima(p) = val_ima(p);
+
+// 	  /// Hack
+//  	  level::paste (val_ima, text_ima);
+	}
+    }
+
+
+
+
 
 
   /// Generation of the graph.
@@ -132,10 +187,43 @@ main(int argc, char** argv)
 //   I_LABEL gr_image (label_image.domain ());
 //   draw::mesh(gr_image, m, 255, 128);
 
-//   image2d<int_u8> out (label_image.domain ());
-//   level::stretch (zi_image, out);
+  I ref = io::pbm::load ("ref_text.pbm");
+  image2d<value::rgb8> mask (ref.domain());
+  mln_piter_(I_LABEL) p_out (text_ima.domain ());
 
-//   io::pgm::save(out, "out.pgm");
+  unsigned cpt = 0;
+  unsigned ok = 0;
+
+  for_all (p_out)
+    {
+      if (text_ima(p_out))
+	if (ref(p_out))
+	  mask(p_out) = literal::red;
+	else
+	  {
+	    mask(p_out) = literal::white;
+	    ++ok;
+	  }
+      else
+	if (ref(p_out))
+	  {
+	    ++ok;
+	    mask(p_out) = literal::black;
+	  }
+	else
+	  mask(p_out) = literal::green;
+      ++cpt;
+    }
+
+  std::cout << "Reussite : " << (float)ok / (float)cpt * 100 << "% ("
+	    << ok << "/" << cpt << ")." << std::endl;
+
+  image2d<int_u8> out (label_image.domain ());
+  level::stretch (text_ima, out);
+  io::pgm::save(mask, "rgb.ppm");
+  io::pgm::save(out, "out.pgm");
+
+  std::cout << path_output << " generated" << std::endl;
 
 }
 

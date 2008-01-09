@@ -1,6 +1,11 @@
 2008-01-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update extract character.
+	* sandbox/nivault/extract_character.cc: Update.
+
+2008-01-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update extract character.
 
 	* sandbox/nivault/extract_character.cc: Update.
 
