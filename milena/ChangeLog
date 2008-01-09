@@ -1,3 +1,9 @@
+2008-01-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update extract character.
+
+	* sandbox/nivault/extract_character.cc: Update.
+
 2008-01-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Get rid of hard-coded paths to input images in remaining tests.
