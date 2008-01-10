@@ -60,7 +60,7 @@ int main()
     {
       image2d<unsigned> labels = labeling::level(lena, l, c4(), n);
       unsigned npix =
-	accu::compute<accu::count>(labels | (pw::value(labels) != pw::cst(0)));
+	accu::compute<accu::count>(labels | (pw::value(labels) != pw::cst(0u)));
       npixels += npix;
     }
   mln_assertion(npixels == lena.npoints());

@@ -34,8 +34,14 @@
 #include <mln/value/float01_8.hh>
 #include <mln/value/float01_16.hh>
 
+
 int main()
 {
+  /* FIXME: The contents of this test seens to have nothing to do with
+     floats.  I (Roland) suspect a copy-and-paste error here.  Either
+     rename the test or turn it into an actual test on floats or get
+     rid of it. */
+#if 0
   using namespace mln::value;
 
   float01_8 a;
@@ -50,4 +56,5 @@ int main()
 
   c = (a * 2) / 2;
   assert(c == white);
+#endif
 }

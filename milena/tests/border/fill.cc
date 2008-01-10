@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,7 +38,7 @@
 using namespace mln;
 
 
-int
+void
 check(int size, int border)
 {
   int w = size + 2 * border;
@@ -48,11 +48,11 @@ check(int size, int border)
   border::fill (ima, 42);
   for(int i = 0; i < ww; ++i)
     if ((i / w < border) || (i / w > border + size))
-      mln_assertion (ima[i] == 42);
+      mln_assertion (ima[i] == 42u);
     else
       if ((i % w < border) &&
 	  (border + size <= i % w))
-	mln_assertion (ima[i] == 42);
+	mln_assertion (ima[i] == 42u);
 }
 
 int

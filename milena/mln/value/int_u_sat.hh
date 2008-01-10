@@ -151,10 +151,9 @@ namespace mln
       static const unsigned max_ = mln_max(int_u<n>);
       if (i < 0)
 	this->v_ = 0;
-      // FIXME: This comparison triggers a warning between signed and
-      // unsigned values from the compiler.  If it is valid, use a
-      // cast and leave a comment about it.
-      else if (i > max_)
+      // Explicitly cast I to unsigned to avoid a warning between
+      // signed and unsigned values from the compiler.
+      else if (static_cast<unsigned>(i) > max_)
 	this->v_ = max_;
       else
 	this->v_ = i;
@@ -175,7 +174,9 @@ namespace mln
       static const unsigned max_ = mln_max(int_u<n>);
       if (i < 0)
 	this->v_ = 0;
-      else if (i > max_)
+      // Explicitly cast I to unsigned to avoid a warning between
+      // signed and unsigned values from the compiler.
+      else if (static_cast<unsigned>(i) > max_)
 	this->v_ = max_;
       else
 	this->v_ = i;

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,6 +37,7 @@
 #include <mln/value/glf.hh>
 
 #include <mln/value/int_u8.hh>
+#include <mln/value/int_s8.hh>
 #include <mln/value/float01_f.hh>
 #include <mln/value/float01_.hh>
 
@@ -127,12 +128,20 @@ int main()
     mln_assertion(a / true == a);
 
     // gl8 / Integer
+    /* FIXME: The compiler emits a warning about a comparison between
+       signed and unsigned for the first line, but not for the second.
+       This behavior is strange, since
+
+         a * int_u(23);
+
+       triggers no warning.  See whether traits and conversions are
+       handled symmetrically for `*' and `/'.  */
     a / int_u8(23);
+    a / int_s8(23);
 
     // gl8 / Floating
     a / float01_f(.23);
     a / float01_<16>(.23);
-
   }
 
   {

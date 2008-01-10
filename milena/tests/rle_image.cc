@@ -32,6 +32,13 @@
  * \todo Trouble with ctor/init since there is no ctor with arg!
  */
 
+
+// FIXME: There's already a test named rle_image.cc in tests/core.  It
+// seems to be pretty old material, not in sync with the current
+// version of rle_image for a long time.  Disable it before asking for
+// its deletion.
+
+
 #include <mln/core/image2d.hh>
 #include <mln/core/rle_image.hh>
 #include <mln/core/rle_encode.hh>
@@ -55,6 +62,9 @@ void test(const Pset& my_set)
 int
 main()
 {
+  // FIXME: Disabled (cf. supra).
+#if 0
+
   mln::point2d p, q, r;
   r = make::point2d(0, 1);
   q = make::point2d(2, 2);
@@ -90,4 +100,6 @@ main()
 //   std::cout << std::endl;
 
   return 0;
+
+#endif
 }

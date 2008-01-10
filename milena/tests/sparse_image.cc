@@ -29,6 +29,14 @@
  *
  * \brief Tests on mln::sparse_image.
  */
+
+
+// FIXME: There's already a test named sparse_image.cc in tests/core.
+// It seems to be pretty old material, not in sync with the current
+// version of sparse_image for a long time.  Disable it before asking
+// for its deletion.
+
+
 #include <mln/core/image2d.hh>
 #include <mln/core/sparse_image.hh>
 #include <mln/core/sparse_encode.hh>
@@ -70,6 +78,9 @@ void test2(I& ima)
 int
 main()
 {
+  // FIXME: Disabled (cf. supra).
+#if 0
+
   mln::point2d p, q, r;
   p = mln::make::point2d(0, 1);
   q = mln::make::point2d(3, 0);
@@ -109,4 +120,6 @@ main()
 //   std::cout << std::endl;
 
   return 0;
+
+#endif
 }

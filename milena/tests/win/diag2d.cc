@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -57,7 +57,7 @@ int main()
 		<< ", y = "
 		<< y
 		<< " : "
-		<< ((diag.has(dpoint2d(x, y))) ? "VRAI" : "FAUX")
+		<< ((diag.has(dpoint2d(x, y))) ? "True" : "False")
 		<< std::endl;
       mln_assertion((x == -y) ==
 		    (diag.has(dpoint2d(y, x))) || abs(x) > 2 || abs(y) > 2);

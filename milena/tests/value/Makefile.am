@@ -12,7 +12,6 @@ SUBDIRS =					\
 
 check_PROGRAMS =				\
   bool						\
-  builtin					\
   equiv						\
   float01_bis					\
   float01					\
@@ -33,7 +32,6 @@ check_PROGRAMS =				\
 #   rgb_full
 
 bool_SOURCES = bool.cc
-builtin_SOURCES = builtin.cc
 equiv_SOURCES = equiv.cc
 float01_bis_SOURCES = float01_bis.cc
 float01_SOURCES = float01.cc

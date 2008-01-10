@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -52,7 +52,7 @@ int main()
     {
       mln_assertion(((abs(x) <= 6) && (abs(y) <= 6)) ||
 		    !oct.has(dpoint2d(y, x)));
-      mln_assertion((abs(x) + abs(y) <= l / 2 + l / 6) ==
+      mln_assertion((abs(x) + abs(y) <= static_cast<int>(l / 2 + l / 6)) ==
 		    (oct.has(dpoint2d(y, x))) ||
 		    abs(x) > 2 ||
 		    abs(y) > 2);

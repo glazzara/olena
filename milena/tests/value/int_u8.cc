@@ -49,6 +49,7 @@ int main()
   // Assignment.
   {
     i = 51;
+    // FIXME: Triggers a warning about signed vs unsigned comparison.
     sym_compare_assert(i, ==, 51);
 
     i = 51u;
@@ -185,6 +186,7 @@ int main()
     c /= 2;
     sym_compare_assert(c, ==, 50.f);
 
+    // FIXME: Triggers a warning about signed vs unsigned comparison.
     d /= 2.4f;
   }
 

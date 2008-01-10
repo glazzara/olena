@@ -24,6 +24,9 @@ SUBDIRS =					\
   value						\
   win
 
+# FIXME: rle_image.cc and sparse_image.cc are probably garbage now
+# (superseded by core/rle_image.cc and core/sparse_image.cc).  Ask
+# Simon whether we can remove them.
 check_PROGRAMS =				\
   border_resize_image1d_1			\
   border_resize_image1d_2			\
@@ -41,7 +44,6 @@ check_PROGRAMS =				\
   box3d						\
 						\
   cast_image					\
-  chamfer					\
   convert_to_image				\
   convert_to_tiles				\
   convert_to_p_array				\
@@ -54,13 +56,8 @@ check_PROGRAMS =				\
 						\
   estim_mean					\
 						\
-  fun_x2x_composed				\
-  fun_x2x_rotation				\
-  fun_x2x_translation				\
-						\
   hexa						\
   histo_to_image1d				\
-  h_vec						\
 						\
   image1d					\
   image2d					\
@@ -101,7 +98,6 @@ check_PROGRAMS =				\
   pw_value					\
 						\
   rle_image					\
-  run_pset					\
 						\
   safe_image					\
   seed2tiling					\
@@ -144,7 +140,6 @@ box2d_SOURCES = box2d.cc
 box3d_SOURCES = box3d.cc
 
 cast_image_SOURCES = cast_image.cc
-chamfer_SOURCES = chamfer.cc
 convert_to_image_SOURCES = convert_to_image.cc
 convert_to_tiles_SOURCES = convert_to_tiles.cc
 convert_to_p_array_SOURCES = convert_to_p_array.cc
@@ -157,13 +152,8 @@ dpoints_pixter_SOURCES = dpoints_pixter.cc
 
 estim_mean_SOURCES = estim_mean.cc
 
-fun_x2x_composed_SOURCES = fun_x2x_composed.cc
-fun_x2x_rotation_SOURCES = fun_x2x_rotation.cc
-fun_x2x_translation_SOURCES = fun_x2x_translation.cc
-
 hexa_SOURCES = hexa.cc
 histo_to_image1d_SOURCES = histo_to_image1d.cc
-h_vec_SOURCES = h_vec.cc
 
 image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
@@ -204,7 +194,6 @@ pw_image_SOURCES = pw_image.cc
 pw_value_SOURCES = pw_value.cc
 
 rle_image_SOURCES = rle_image.cc
-run_pset_SOURCES = run_pset.cc
 
 safe_image_SOURCES = safe_image.cc
 seed2tiling_SOURCES = seed2tiling.cc

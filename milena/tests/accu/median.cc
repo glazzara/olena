@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -54,7 +54,7 @@ int main()
     med.take(1);
     med.take(0);
 
-    mln_assertion(med.to_result() == 5);
+    mln_assertion(med.to_result() == 5u);
   }
 
   {
@@ -64,6 +64,6 @@ int main()
     med.take(7);
     med.take(0);
 
-    mln_assertion(med.to_result() == 7);
+    mln_assertion(med.to_result() == 7u);
   }
 }

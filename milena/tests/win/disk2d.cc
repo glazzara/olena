@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -53,7 +53,8 @@ int main()
     {
       mln_assertion(((abs(x) <= 27) && (abs(y) <= 27)) ||
 		    !disk.has(dpoint2d(y, x)));
-      mln_assertion(((x * x + y * y) <= l2) == (disk.has(dpoint2d(y, x))) ||
+      mln_assertion(((x * x + y * y) <= static_cast<int>(l2)) ==
+		    (disk.has(dpoint2d(y, x))) ||
 		    abs(x) > 27 ||
 		    abs(y) > 27);
     }

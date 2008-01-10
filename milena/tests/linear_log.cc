@@ -71,6 +71,6 @@ int main()
   {
     int_u8 min, max;
     estim::min_max(out, min, max);
-    mln_assertion(min == 0 && max == 255);
+    mln_assertion(min == 0u && max == 255u);
   }
 }

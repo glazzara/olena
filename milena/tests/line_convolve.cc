@@ -52,9 +52,9 @@ int main()
 
   border::thickness = 4;
 
-  image2d<int_u8>
-    lena = io::pgm::load(MLN_IMG_DIR "/lena.pgm"),
-    out(lena.domain());
+  image2d<int_u8> lena;
+  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  image2d<int_u8> out(lena.domain());
 
   image2d<float> tmp(lena.domain());
   float ws[] = { .11, .11, .11, .11, .11, .11, .11, .11, .11 };

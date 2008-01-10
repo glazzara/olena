@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,7 +42,7 @@ int main()
   image2d<int> f(b, border);
 
   image2d<int>::line_piter p(f.domain());
-  unsigned i = 1;
+  int i = 1;
   for_all(p)
   {
     mln_assertion(p[1] == 0 && p[0] == i++);

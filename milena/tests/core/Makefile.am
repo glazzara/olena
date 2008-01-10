@@ -6,6 +6,7 @@ check_PROGRAMS =				\
   category					\
   clone						\
   exact						\
+  h_vec						\
   initialize					\
   mesh_elt_window				\
   mesh_image					\
@@ -25,6 +26,7 @@ check_PROGRAMS =				\
 category_SOURCES = category.cc
 clone_SOURCES = clone.cc
 exact_SOURCES = exact.cc
+h_vec_SOURCES = h_vec.cc
 initialize_SOURCES = initialize.cc
 mesh_elt_window_SOURCES = mesh_elt_window.cc
 mesh_image_SOURCES = mesh_image.cc

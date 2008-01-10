@@ -1,3 +1,46 @@
+2008-01-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix some tests and get rid of many warnings.
+
+	* mln/value/int_u_sat.hh (int_u_sat<n>::int_u_sat(int))
+	(int_u_sat<n>::operator=(int))
+	* tests/accu/max_h.cc,
+	* tests/accu/median.cc,
+	* tests/accu/min_h.cc,
+	* tests/labeling/level.cc,
+	* tests/line_piter.cc,
+	* tests/linear_log.cc,
+	* tests/win/disk2d.cc,
+	* tests/win/octagon2d.cc: Pacify the compiler w.r.t. comparisons
+	between signed and unsigned values.
+	* tests/border/fill.cc: Likewise.
+	(check): Fix the return type of this function.
+	* tests/win/diag2d.cc: Use English in messages, not French.
+	* tests/value/graylevel.cc: Test the division of a gl8 value by an
+	int_s8 value.
+	* tests/line_convolve.cc: Adjust the call to mln::io::load to
+	match the current interface.
+	* tests/value/float01_bis.cc,
+	* tests/sparse_image.cc,
+	* tests/rle_image.cc
+	Disable these tests.
+	* tests/Makefile.am (check_PROGRAMS): Remove chamfer,
+	fun_x2x_composed, fun_x2x_rotation, fun_x2x_translation, h_vec and
+	run_pset.
+	(chamfer_SOURCES, fun_x2x_composed_SOURCES)
+	(fun_x2x_rotation_SOURCES, fun_x2x_translation_SOURCES)
+	(run_pset_SOURCES): Remove.
+	(h_vec_SOURCES): Move...
+	* tests/core/Makefile.am: ...here.
+	(check_PROGRAMS): Add h_vec.
+	* tests/value/builtin.cc: Move...
+	* tests/value/builtin/builtin.cc: ...here.
+	Pacify the compiler w.r.t. unused variables.
+	* tests/value/Makefile.am (check_PROGRAMS): Remove builtin.
+	(builtin_SOURCES): Move...
+	* tests/value/builtin/Makefile.am: ...here.
+	(check_PROGRAMS, TESTS): New.
+
 2008-01-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/linear/sobel.hh: Fix dates in copyright header.
