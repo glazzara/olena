@@ -1,3 +1,10 @@
+2008-01-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up configure.ac.
+
+	* configure.ac: Sort the list of configured Makefiles from
+	milena/tests/ alphabetically.
+
 2008-01-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/tests/data.hh.
