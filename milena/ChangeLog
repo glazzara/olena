@@ -1,5 +1,11 @@
 2008-01-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Add extract array example.
+
+	* sandbox/duhamel/extract_array.cc: New example of extract array.
+
+2008-01-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update and clean extract character example.
 	* sandbox/nivault/extract_character.cc: Clean and update.
 
