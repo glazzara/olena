@@ -78,6 +78,9 @@ main(int argc, char** argv)
 
   typedef image2d<bool> I;
   typedef image2d<unsigned> I_LABEL;
+  typedef image2d<value::rgb8> O;
+
+  typedef point2d P;
   if (argc != 3)
     {
       std::cerr << "Usage : " << argv[0]
@@ -88,7 +91,8 @@ main(int argc, char** argv)
   std::string path_input = argv[1];
   std::string path_output = argv[2];
 
-  image2d<bool> input = io::pbm::load (path_input);
+  I input = io::pbm::load (path_input);
+  O output (input.domain ());
 
   /// Inversion video.
   morpho::complementation_inplace(input);
@@ -96,12 +100,12 @@ main(int argc, char** argv)
 
   /// FIXME : Some code was deleted here :-) (Remove noise)
 //   win::disk2d win (2);
-//   I output = morpho::closing(input, win);
+//   input2 = morpho::dilation(input, win);
 //   io::pbm::save (output, path_output);
 
 /// Labeling.
   unsigned nb_labels;
-  I_LABEL label_image = labeling::blobs(input, c4(), nb_labels);
+  I_LABEL label_image = labeling::blobs(input, c8(), nb_labels);
   std::cout << "nb_labels = " << nb_labels << std::endl;
 
 
@@ -116,6 +120,8 @@ main(int argc, char** argv)
   mln_piter_(I_LABEL) p (label_image.domain ());
   for_all (p)
   {
+    if (input(p))
+      output(p) = literal::white;
 //     vec_mean[label_image(p)].take (p);
     vec_bbox[label_image(p)].take (p);
     vec_card[label_image(p)].take (p);
@@ -131,6 +137,13 @@ main(int argc, char** argv)
       unsigned size = rows * cols;
       unsigned card = vec_card[i].to_result();
 
+      /// Remove noise.
+      if ((rows < 5) && (cols < 5))
+	continue;
+
+
+      /// Evaluation of kind of data (character or not).
+      {
 //       if (rows < cols)
 // 	ratio = cols / rows;
 //       else
@@ -150,13 +163,22 @@ main(int argc, char** argv)
 //       if (((float)card / (float)size) < 0.3)
 // 	continue;
 
+//       if (cols > 20)
+// 	continue;
 
-      if (cols < 5)
+      if (cols < 10)
+	continue;
+      }
+
+
+      float min = 0.2;
+      float max = 0.7;
+
+      if (card < size * min)
 	continue;
 
-      if (cols > 20)
+      if (card > size * max)
 	continue;
-
 
 	{
 	  typedef sub_image<I_LABEL, box2d> I_SUB;
@@ -179,51 +201,97 @@ main(int argc, char** argv)
 
 
 
-
   /// Generation of the graph.
-//   I_LABEL zi_image = geom::seeds2tiling(label_image, c4 ());
-//   mesh_p<point2d> m = make::voronoi(label_image, zi_image, c4());
+  I_LABEL zi_image = geom::seeds2tiling(text_ima, c4 ());
+  mesh_p<point2d> m = make::voronoi(zi_image, text_ima, c4());
 
-//   I_LABEL gr_image (label_image.domain ());
-//   draw::mesh(gr_image, m, 255, 128);
+  I_LABEL gr_image (label_image.domain ());
+  I_LABEL gr_image2 (label_image.domain ());
+  draw::mesh(gr_image, m, 255, 128);
+  draw::mesh(gr_image2, m, 255, 0);
+  win::disk2d win (30);
+  I_LABEL pr = morpho::dilation(gr_image2, win);
+  I bool_ima (label_image.domain ());
+  level::paste(pr, bool_ima);
 
-  I ref = io::pbm::load ("ref_text.pbm");
-  image2d<value::rgb8> mask (ref.domain());
-  mln_piter_(I_LABEL) p_out (text_ima.domain ());
 
-  unsigned cpt = 0;
-  unsigned ok = 0;
 
-  for_all (p_out)
+  /// Labeling2.
+  unsigned nb_labels2;
+  I_LABEL label_image2 = labeling::blobs(bool_ima, c8(), nb_labels2);
+  std::cout << "nb_labels = " << nb_labels2 << std::endl;
+  std::vector< accu::bbox  <point2d> > vec_bbox2 (nb_labels2 + 1);
+
+  mln_piter_(I_LABEL) pl (label_image.domain ());
+  for_all (pl)
+  {
+    vec_bbox2[label_image2(pl)].take (pl);
+  }
+
+  for (unsigned i = 0; i <= nb_labels2; ++i)
     {
-      if (text_ima(p_out))
-	if (ref(p_out))
-	  mask(p_out) = literal::red;
-	else
-	  {
-	    mask(p_out) = literal::white;
-	    ++ok;
-	  }
-      else
-	if (ref(p_out))
-	  {
-	    ++ok;
-	    mask(p_out) = literal::black;
-	  }
-	else
-	  mask(p_out) = literal::green;
-      ++cpt;
+      P pmin = vec_bbox2[i].to_result().pmin();
+      P pmax = vec_bbox2[i].to_result().pmax();
+
+      point2d p1 (pmin[0], pmin[1]);
+      point2d p2 (pmax[0], pmin[1]);
+      point2d p3 (pmin[0], pmax[1]);
+      point2d p4 (pmax[0], pmax[1]);
+
+      draw::line (output, p1, p2, literal::red);
+      draw::line (output, p2, p4, literal::red);
+      draw::line (output, p4, p3, literal::red);
+      draw::line (output, p3, p1, literal::red);
     }
 
-  std::cout << "Reussite : " << (float)ok / (float)cpt * 100 << "% ("
-	    << ok << "/" << cpt << ")." << std::endl;
 
-  image2d<int_u8> out (label_image.domain ());
-  level::stretch (text_ima, out);
-  io::pgm::save(mask, "rgb.ppm");
-  io::pgm::save(out, "out.pgm");
+  io::ppm::save(output, "rgb.ppm");
 
-  std::cout << path_output << " generated" << std::endl;
+//   image2d<int_u8> process (label_image.domain ());
+//   level::stretch (label_image2, process);
+//   io::pgm::save(process, "process.pgm");
+
+// //   I ref = io::pbm::load ("ref_text.pbm");
+// //   image2d<value::rgb8> mask (ref.domain());
+// //   mln_piter_(I_LABEL) p_out (text_ima.domain ());
+
+// //   unsigned cpt = 0;
+// //   unsigned ok = 0;
+
+// //   for_all (p_out)
+// //     {
+// //       if (text_ima(p_out))
+// // 	if (ref(p_out))
+// // 	  mask(p_out) = literal::red;
+// // 	else
+// // 	  {
+// // 	    mask(p_out) = literal::white;
+// // 	    ++ok;
+// // 	  }
+// //       else
+// // 	if (ref(p_out))
+// // 	  {
+// // 	    ++ok;
+// // 	    mask(p_out) = literal::black;
+// // 	  }
+// // 	else
+// // 	  mask(p_out) = literal::green;
+// //       ++cpt;
+// //     }
+// //   io::ppm::save(mask, "rgb.ppm");
+// //   std::cout << "Reussite : " << (float)ok / (float)cpt * 100 << "% ("
+// // 	    << ok << "/" << cpt << ")." << std::endl;
+
+//   image2d<int_u8> out (label_image.domain ());
+
+
+//   level::stretch (zi_image, out);
+//   io::pgm::save(out, "out.text_area.approx.pgm");
+
+//   level::stretch (gr_image, out);
+//   io::pgm::save(out, "out.text_graph.pgm");
+
+//   std::cout << path_output << " generated" << std::endl;
 
 }
 

@@ -1,3 +1,9 @@
+2008-01-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update example character extraction.
+
+	* sandbox/nivault/extract_character.cc: Update.
+
 2008-01-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix some tests and get rid of many warnings.
