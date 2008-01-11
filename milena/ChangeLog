@@ -1,5 +1,10 @@
 2008-01-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Update and clean extract character example.
+	* sandbox/nivault/extract_character.cc: Clean and update.
+
+2008-01-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update example character extraction.
 
 	* sandbox/nivault/extract_character.cc: Update.
