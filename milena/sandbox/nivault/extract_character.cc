@@ -68,6 +68,7 @@
 # include <mln/level/paste.hh>
 # include <mln/literal/all.hh>
 # include <mln/value/rgb8.hh>
+# include <mln/morpho/opening_area.hh>
 
 using namespace mln;
 
@@ -272,10 +273,18 @@ main(int argc, char** argv)
   /// Inversion video.
   morpho::complementation_inplace(input);
 
+  /// Clean input image (remove noise with area opening)
+  image2d<bool> input2 (input.domain());
+  morpho::opening_area(input, c4(), 5, input2);
+
+//   image2d<int_u8> process (input.domain ());
+//   level::stretch (output_2, process);
+//   io::pgm::save(process, "process.pgm");
+
 
   /// Labeling the input image.
   unsigned nb_labels;
-  I_LABEL label_image = labeling::blobs(input, c8(), nb_labels);
+  I_LABEL label_image = labeling::blobs(input2, c8(), nb_labels);
   std::cout << "nb_labels = " << nb_labels << std::endl;
 
   /// Extraction of informations in the image (BoundingBox, Cardinality, ... ).
@@ -376,11 +385,6 @@ main(int argc, char** argv)
   /// Save the output image (input image + bounding box text in red).
   io::ppm::save(output, path_output + ".ppm");
   std::cout << path_output + ".ppm" << " generated" << std::endl;
-
-
-//   image2d<int_u8> process (label_image.domain ());
-//   level::stretch (label_image2, process);
-//   io::pgm::save(process, "process.pgm");
 
 }
 

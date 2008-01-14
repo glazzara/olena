@@ -1,5 +1,12 @@
 2008-01-14  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Clean input image for extract character.
+
+	* sandbox/nivault/extract_character.cc: Remove noise on input
+	image.
+
+2008-01-14  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Update extract character.
 	* sandbox/nivault/extract_character.cc:  The lines of text have a
 	green bbox in out.ppm.
