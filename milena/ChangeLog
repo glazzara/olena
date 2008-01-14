@@ -1,3 +1,10 @@
+2008-01-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Begin a process to extract arrays.
+	* sandbox/garrigues/factures/array_global.cc: New.
+	* sandbox/garrigues/factures/facture.pgm: An receipt image.
+	* sandbox/garrigues/factures: New.
+
 2008-01-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove outdated tests on rle_image and sparse_image.
