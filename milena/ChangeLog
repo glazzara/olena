@@ -1,3 +1,13 @@
+2008-01-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Speed up execution times of tests on the median operators.
+
+	* tests/tests.mk (LONG_TESTS_CXXFLAGS): New.
+	Set to -O3.
+	* tests/level/approx/Makefile.am, tests/level/naive/Makefile.am
+	(median_CXXFLAGS): New.
+	Set to $(LONG_TESTS_CXXFLAGS).
+
 2008-01-14  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Clean input image for extract character.
