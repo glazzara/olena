@@ -1,5 +1,16 @@
 2008-01-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove outdated tests on rle_image and sparse_image.
+
+	* tests/sparse_image.cc,
+	* tests/rle_image.cc:
+	Remove.
+	* tests/Makefile.am (check_PROGRAMS): Remove rle_image and
+	sparse_image.
+	(rle_image_SOURCES, sparse_image_SOURCES): Remove.
+
+2008-01-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Speed up execution times of tests on the median operators.
 
 	* tests/tests.mk (LONG_TESTS_CXXFLAGS): New.

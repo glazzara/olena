@@ -24,9 +24,6 @@ SUBDIRS =					\
   value						\
   win
 
-# FIXME: rle_image.cc and sparse_image.cc are probably garbage now
-# (superseded by core/rle_image.cc and core/sparse_image.cc).  Ask
-# Simon whether we can remove them.
 check_PROGRAMS =				\
   border_resize_image1d_1			\
   border_resize_image1d_2			\
@@ -97,11 +94,8 @@ check_PROGRAMS =				\
   pw_image					\
   pw_value					\
 						\
-  rle_image					\
-						\
   safe_image					\
   seed2tiling					\
-  sparse_image					\
   stack						\
   sub_image					\
 						\
@@ -193,11 +187,8 @@ point3d_SOURCES = point3d.cc
 pw_image_SOURCES = pw_image.cc
 pw_value_SOURCES = pw_value.cc
 
-rle_image_SOURCES = rle_image.cc
-
 safe_image_SOURCES = safe_image.cc
 seed2tiling_SOURCES = seed2tiling.cc
-sparse_image_SOURCES = sparse_image.cc
 stack_SOURCES = stack.cc
 sub_image_SOURCES = sub_image.cc
 
@@ -226,7 +217,6 @@ if FREEIMAGEPLUS
   fi_adaptor_SOURCES = fi_adaptor.cc
   fi_adaptor_CPPFLAGS = $(AM_CPPFLAGS) $(FREEIMAGEPLUS_CPPFLAGS)
   fi_adaptor_LDFLAGS = $(AM_LDFLAGS) $(FREEIMAGEPLUS_LDFLAGS)
-
 endif
 
 TESTS = $(check_PROGRAMS)
