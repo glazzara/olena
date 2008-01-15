@@ -1,5 +1,11 @@
 2008-01-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
+	Update extract_character.
+
+	* sandbox/nivault/extract_character.cc: Update.
+
+2008-01-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
 	Fix bug in dilation.
 
 	* mln/morpho/dilation.hh: Fix bug for binary image.

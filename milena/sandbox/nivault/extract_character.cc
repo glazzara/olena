@@ -69,6 +69,7 @@
 # include <mln/literal/all.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/morpho/opening_area.hh>
+# include <mln/draw/box.hh>
 
 using namespace mln;
 
@@ -80,8 +81,11 @@ is_character(box2d box, unsigned cardinality)
   unsigned size = rows * cols;
 //   float ratio = (float) (rows * cols) / cardinality;
 
-  /// Remove noise.
+  // Remove noise.
   if ((rows < 5) && (cols < 5))
+    return true;
+
+  if (cardinality < 30)
     return true;
 
 //   if (rows < cols)
@@ -106,9 +110,6 @@ is_character(box2d box, unsigned cardinality)
 //   if (cols > 20)
 //     return true;
 
-//   if (cols < 10)
-//     return true;
-
   float min = 0.2;
   float max = 0.7;
 
@@ -118,45 +119,25 @@ is_character(box2d box, unsigned cardinality)
   if (cardinality > size * max)
     return true;
 
+  if (rows > 30)
+    return true;
+
   return false;
-}
-
-template <typename I>
-void
-draw_bbox(I& image, box2d box, value::rgb8 val)
-{
-  point2d pmin = box.pmin();
-  point2d pmax = box.pmax();
-
-  point2d p1 (pmin[0], pmin[1]);
-  point2d p2 (pmax[0], pmin[1]);
-  point2d p3 (pmin[0], pmax[1]);
-  point2d p4 (pmax[0], pmax[1]);
-
-  draw::line (image, p1, p2, val);
-  draw::line (image, p2, p4, val);
-  draw::line (image, p4, p3, val);
-  draw::line (image, p3, p1, val);
 }
 
 template <typename I, typename O>
 void
 extract_lines(I& text_image, O& output,
-	      std::vector< accu::bbox  <point2d> >& v_bbox)
+	      std::vector< accu::bbox  <point2d> >& v_bbox,
+	      int limits)
 {
   typedef image2d<unsigned> I_LABEL;
-
-  typedef std::list< accu::bbox  <point2d> > L;
-
-  L list_lines;
-
   I image = clone(text_image);
 
   point2d start = text_image.domain().pmin ();
   point2d end = text_image.domain().pmax ();
-  int limits = 50;
 
-  for (int r = start[0]; r < end[0]; ++r)
+  for (int r = start[0]; r < end[0]; r += 10)
     {
       for (int c = start[1]; c < end[1]; ++c)
 	{
@@ -173,6 +154,8 @@ extract_lines(I& text_image, O& output,
  		    unsigned value = image(point2d(r, i));
 		    if (value != 0)
 		      {
+			draw::box (output, v_bbox[value].to_result(), literal::blue);
+
 			typedef sub_image<I_LABEL, box2d> I_SUB;
 			typedef image_if_value<I_SUB> I_VAL;
 
@@ -194,15 +177,8 @@ extract_lines(I& text_image, O& output,
 	      }
 	  }
 	  if (ok)
-	    list_lines.push_back(accu);
+	    draw::box (output, accu.to_result(), literal::green);
 	}
-    }
-
-  L::const_iterator it = list_lines.begin();
-  for (; it != list_lines.end(); ++it)
-    {
-      box2d b = (*it).to_result ();
-      draw_bbox (output, b, literal::green);
     }
 }
 
@@ -248,6 +224,7 @@ check_with_ref(I& image, std::string path_ref, std::string path_output)
 int
 main(int argc, char** argv)
 {
+//   trace::quiet = false;
   using value::int_u8;
   using value::rgb8;
 
@@ -269,24 +246,15 @@ main(int argc, char** argv)
   I input = io::pbm::load (path_input);
   O output (input.domain ());
 
-  /// Inversion video.
+  // Inversion video.
   morpho::complementation_inplace(input);
 
-  /// Clean input image (remove noise with area opening)
-  image2d<bool> input2 (input.domain());
-  morpho::opening_area(input, c4(), 5, input2);
-
-//   image2d<int_u8> process (input.domain ());
-//   level::stretch (output_2, process);
-//   io::pgm::save(process, "process.pgm");
-
-
-  /// Labeling the input image.
+  // Labeling the input image.
   unsigned nb_labels;
-  I_LABEL label_image = labeling::blobs(input2, c8(), nb_labels);
+  I_LABEL label_image = labeling::blobs(input, c8(), nb_labels);
   std::cout << "nb_labels = " << nb_labels << std::endl;
 
-  /// Extraction of informations in the image (BoundingBox, Cardinality, ... ).
+  // Extraction of informations in the image (BoundingBox, Cardinality, ... ).
   std::vector< accu::bbox  <point2d> > vec_bbox (nb_labels + 1);
   std::vector< accu::count_<point2d> > vec_card (nb_labels + 1);
 
@@ -299,15 +267,15 @@ main(int argc, char** argv)
     vec_card[label_image(p)].take (p);
   }
 
-  /// Generation of the text image (text_image).
+  // Generation of the text image (text_image).
   I_LABEL text_image (label_image.domain());
   for (unsigned i = 0; i <= nb_labels; ++i)
     {
-      /// Evaluation of kind of data (character or not).
+      // Evaluation of kind of data (character or not).
       if (is_character(vec_bbox[i].to_result(), vec_card[i].to_result()))
 	continue;
 
-      /// Copy text in an image (text_image).
+      // Copy text in an image (text_image).
       {
 	typedef sub_image<I_LABEL, box2d> I_SUB;
 	typedef image_if_value<I_SUB> I_VAL;
@@ -318,71 +286,74 @@ main(int argc, char** argv)
 	mln_piter_(I_VAL) p(val_image.domain());
 
 
-	/// Hack : problem with traits in image_if.
+	// Hack : problem with traits in image_if.
 	for_all (p)
 	  text_image(p) = val_image(p);
 
- 	/// Here is the good way to do the previous action.
-//  	  level::paste (val_ima, text_image
+ 	// Here is the good way to do the previous action.
+//  	  level::paste (val_ima, text_image);
       }
     }
 
 
-  /// Extraction of lines.
-  extract_lines(text_image, output, vec_bbox);
+  // Extraction of lines.
+  extract_lines(text_image, output, vec_bbox, 50);
 
 
-  /// Generation of the graph from text image.
-  I_LABEL zi_image = geom::seeds2tiling(text_image, c4 ());
-  mesh_p<point2d> m = make::voronoi(zi_image, text_image, c4());
-  I_LABEL gr_image (label_image.domain ());
-  I_LABEL gr_image2 (label_image.domain ());
-  draw::mesh(gr_image, m, 255, 128);
-  draw::mesh(gr_image2, m, 255, 0);
+//   // Generation of the graph from text image.
+//   I_LABEL zi_image = geom::seeds2tiling(text_image, c4 ());
+//   mesh_p<point2d> m = make::voronoi(zi_image, text_image, c4());
+//   I_LABEL gr_image (label_image.domain ());
+//   draw::mesh(gr_image, m, 255, 128);
+//   I_LABEL gr_image2 (label_image.domain ());
+//   draw::mesh(gr_image2, m, 255, 0);
 
 
-  /// Dilation of node of the graph.
-  win::disk2d win (30);
-  I_LABEL pr = morpho::dilation(gr_image2, win);
-  I bool_ima (label_image.domain ());
-  level::paste(pr, bool_ima);
+//   // Dilation of node of the graph.
+//   win::disk2d win (20);
+//   I_LABEL pr = morpho::dilation(gr_image2, win);
+//   I bool_ima (label_image.domain ());
+//   level::paste(pr, bool_ima);
 
-  /// Labeling the dilated image.
-  unsigned nb_dilated_node_labels;
-  I_LABEL label_image2 = labeling::blobs(bool_ima, c8(), nb_dilated_node_labels);
-  std::cout << "nb_dilated_node_labels = " << nb_dilated_node_labels << std::endl;
-  std::vector< accu::bbox  <point2d> > vec_bbox2 (nb_dilated_node_labels + 1);
+//   // Labeling the dilated image.
+//   unsigned nb_dilated_node_labels;
+//   I_LABEL label_image2 = labeling::blobs(bool_ima, c8(), nb_dilated_node_labels);
+//   std::cout << "nb_dilated_node_labels = " << nb_dilated_node_labels << std::endl;
+//   std::vector< accu::bbox  <point2d> > vec_bbox2 (nb_dilated_node_labels + 1);
 
-  /// Extract area of text.
-  mln_piter_(I_LABEL) pl (label_image.domain ());
-  for_all (pl)
-    vec_bbox2[label_image2(pl)].take (pl);
+//   // Extract area of text.
+//   mln_piter_(I_LABEL) pl (label_image.domain ());
+//   for_all (pl)
+//     vec_bbox2[label_image2(pl)].take (pl);
 
 
-  /// Draw the bounding box of area of text in output.
-  for (unsigned i = 0; i <= nb_dilated_node_labels; ++i)
-    draw_bbox(output, vec_bbox2[i].to_result(), literal::red);
+//   // Draw the bounding box of area of text in output.
+//   for (unsigned i = 0; i <= nb_dilated_node_labels; ++i)
+//     draw::box(output, vec_bbox2[i].to_result(), literal::red);
 
-  image2d<int_u8> out (label_image.domain ());
+//   image2d<int_u8> out (label_image.domain ());
 
-  /// Save the influence area of the node of the graphe (seed2tiling result).
-  level::stretch (zi_image, out);
-  io::pgm::save(out, path_output + ".text_area.approx.pgm");
-  std::cout << path_output + ".text_area.approx.pgm" << " generated" << std::endl;
+//   // Save the influence area of the node of the graphe (seed2tiling result).
+//   level::stretch (zi_image, out);
+//   io::pgm::save(out, path_output + ".text_area.approx.pgm");
+//   std::cout << path_output + ".text_area.approx.pgm" << " generated" << std::endl;
 
-  /// Save the graph of the text.
-  level::stretch (gr_image, out);
-  io::pgm::save(out, path_output + ".text_graph.pgm");
-  std::cout << path_output + ".text_graph.pgm" << " generated" << std::endl;
+//   // Save the graph of the text.
+//   level::stretch (gr_image, out);
+//   io::pgm::save(out, path_output + ".text_graph.pgm");
+//   std::cout << path_output + ".text_graph.pgm" << " generated" << std::endl;
 
-  /// Save the graph of the text.
-  level::stretch (text_image, out);
-  io::pgm::save(out, path_output + ".text.pgm");
-  std::cout << path_output + ".text.pgm" << " generated" << std::endl;
+//   // Save the graph of the text.
+//   level::stretch (text_image, out);
+//   io::pgm::save(out, path_output + ".text.pgm");
+//   std::cout << path_output + ".text.pgm" << " generated" << std::endl;
 
-  /// Save the output image (input image + bounding box text in red).
+  // Save the output image (input image + bounding box text in red).
   io::ppm::save(output, path_output + ".ppm");
   std::cout << path_output + ".ppm" << " generated" << std::endl;
 
+//   image2d<int_u8> process (input.domain ());
+//   level::stretch (output_2, process);
+//   io::pgm::save(process, "process.pgm");
 }
 
