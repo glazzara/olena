@@ -1,3 +1,10 @@
+2008-01-15  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add util::lemmings.
+	* mln/util/lemmings.hh: New.
+	* tests/util/Makefile.am: Add the following test.
+	* tests/util/lemmings.cc: New.
+
 2008-01-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* mln/draw/box.hh: New, Add a routine to draw a box.

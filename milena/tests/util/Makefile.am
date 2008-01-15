@@ -9,6 +9,7 @@ check_PROGRAMS =				\
   eat						\
   graph						\
   lazy_set					\
+  lemmings					\
   ordpair					\
   tree						\
   tree_fast					\
@@ -21,6 +22,7 @@ branch_iter_ind_SOURCES = branch_iter_ind.cc
 eat_SOURCES = eat.cc
 graph_SOURCES = graph.cc
 lazy_set_SOURCES = lazy_set.cc
+lemmings_SOURCES = lemmings.cc
 ordpair_SOURCES = ordpair.cc
 tree_SOURCES = tree.cc
 tree_fast_SOURCES = tree_fast.cc
