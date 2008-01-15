@@ -1,3 +1,9 @@
+2008-01-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix bug in dilation.
+
+	* mln/morpho/dilation.hh: Fix bug for binary image.
+
 2008-01-15  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add processing pipeline for recognize scores.

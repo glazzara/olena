@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -125,9 +125,9 @@ namespace mln
 	return impl::dilation_on_set(exact(input), exact(win), output);
       }
 
-      template <typename K, typename I, typename W, typename O>
+      template <typename I, typename W, typename O>
       inline
-      void dilation_wrt_value(K, // otherwise => morphology on functions
+      void dilation_wrt_value(trait::image::kind::any, // otherwise => morphology on functions
 			      const Image<I>& input, const Window<W>& win, Image<O>& output)
       {
 	return impl::dilation_on_function(exact(input), exact(win), output);
