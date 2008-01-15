@@ -1,3 +1,8 @@
+2008-01-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix bug in extract_character.
+	* sandbox/nivault/extract_character.cc: Fix.
+
 2008-01-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Begin a process to extract arrays.
