@@ -1,3 +1,8 @@
+2008-01-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* ChangeLog: Fix my previous patch.
+	* mln/draw/box.hh: Fix licence.
+
 2008-01-15  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Add util::lemmings.
@@ -7,7 +12,7 @@
 
 2008-01-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
-	* mln/draw/box.hh: New, Add a routine to draw a box.
+	* mln/draw/box.hh: New; add a routine to draw a box.
 
 2008-01-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
@@ -406,15 +411,15 @@
 	* mln/value/int_u.hh: Don't use Doxygen comments to announce
 	forward declarations.
 	* tests/morpho/contrast.cc,
-	* tests/morpho/dilation.cc, 
-	* tests/morpho/dilation_max_h.cc, 
+	* tests/morpho/dilation.cc,
+	* tests/morpho/dilation_max_h.cc,
 	* tests/morpho/erosion.cc,
-	* tests/morpho/erosion_min_h.cc, 
-	* tests/morpho/gradient.cc, 
-	* tests/morpho/hit_or_miss.cc, 
-	* tests/morpho/laplacian.cc, 
-	* tests/morpho/opening_area.cc, 
-	* tests/morpho/thinning.cc: 
+	* tests/morpho/erosion_min_h.cc,
+	* tests/morpho/gradient.cc,
+	* tests/morpho/hit_or_miss.cc,
+	* tests/morpho/laplacian.cc,
+	* tests/morpho/opening_area.cc,
+	* tests/morpho/thinning.cc:
 	Catch up with the new I/O interface of Milena.
 
 2007-12-22  Roland Levillain  <roland@lrde.epita.fr>
