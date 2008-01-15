@@ -1,3 +1,7 @@
+2008-01-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* mln/draw/box.hh: New, Add a routine to draw a box.
+
 2008-01-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Fix bug in extract_character.
