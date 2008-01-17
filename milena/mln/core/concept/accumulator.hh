@@ -82,6 +82,9 @@ namespace mln
     Accumulator();
   };
 
+  template <typename E>
+  std::ostream&
+  operator<<(std::ostream& ostr, const Accumulator<E>& accu);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -112,6 +115,14 @@ namespace mln
   {
     exact(this)->init();
     exact(this)->take(t);
+  }
+
+  template <typename E>
+  inline
+  std::ostream&
+  operator<<(std::ostream& ostr, const Accumulator<E>& accu)
+  {
+    return ostr << exact(accu).to_result();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

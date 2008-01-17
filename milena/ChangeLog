@@ -1,3 +1,9 @@
+2008-01-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* mln/core/concept/accumulator.hh: (operator<<) New.
+	* sandbox/garrigues/factures/array_global.cc: Remove.
+	* sandbox/garrigues/factures/facture.pgm: Remove.
+
 2008-01-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Update graph.
