@@ -101,7 +101,7 @@ namespace mln
       resize_2d_(const I& input, const float ratio)
       {
 	trace::entering("mln::geom::impl::resize_2d_");
-	typedef mln_value(I) V;
+	typedef mln_sum(mln_value(I)) V;
 
 	std::size_t rows = input.bbox().len(0);
 	std::size_t cols = input.bbox().len(1);
