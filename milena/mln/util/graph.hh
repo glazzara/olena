@@ -34,6 +34,7 @@
 # include <vector>
 # include <list>
 # include <algorithm>
+# include <mln/util/ordpair.hh>
 
 /*! \file mln/util/graph.hh
  *
@@ -78,9 +79,10 @@ namespace mln
     template<typename T>
     struct s_edge
     {
+      s_edge() : pair_node_ (0, 0) {}
+
       T	data;
-      unsigned node1;
-      unsigned node2;
+      ordpair_<unsigned> pair_node_;
     };
 
     /*! \brief Structure of edge with void parameter.
@@ -89,9 +91,13 @@ namespace mln
     template<>
     struct s_edge <void>
     {
-      unsigned node1;
-      unsigned node2;
+      s_edge() : pair_node_ (0, 0) {}
+      ordpair_<unsigned> pair_node_;
     };
+
+    bool operator==(const struct s_edge <void>& lhs, const struct s_edge <void>& rhs);
+
+    bool operator< (const struct s_edge <void>& lhs, const struct s_edge <void>& rhs);
 
     /// \brief Generic graph structure using s_node and s_edge.
     /* FIXME: We don't mention anywhere whether this graph structure
@@ -104,7 +110,11 @@ namespace mln
       /// The type of the set of edges.
       typedef std::vector< s_edge<E>* > edges;
 
+      /// Constructor.
       graph ();
+
+      /// Destructor.
+      ~graph();
 
       /*! \brief Add a void node.  */
       void add_node ();
@@ -155,6 +165,18 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    bool
+    operator==(const struct s_edge <void>& lhs, const struct s_edge <void>& rhs)
+    {
+      return lhs.pair_node_ == rhs.pair_node_;
+    }
+
+    bool
+    operator< (const struct s_edge <void>& lhs, const struct s_edge <void>& rhs)
+    {
+      return lhs.pair_node_ < rhs.pair_node_;
+    }
+
     template<typename N, typename E>
     inline
     graph<N, E>::graph ()
@@ -162,6 +184,12 @@ namespace mln
 	nb_link_ (0),
 	nodes_ (0),
 	links_ (0)
+    {
+    }
+
+    template<typename N, typename E>
+    inline
+    graph<N, E>::~graph ()
     {
     }
 
@@ -187,11 +215,16 @@ namespace mln
       struct s_edge<E>* edge;
 
       edge = new s_edge<E>;
-      edge->node1 = n1;
-      edge->node2 = n2;
-      links_.push_back (edge);
-      ++nb_link_;
-      nodes_[n1]->links.push_back (n2);
+      edge->pair_node_.first = n1;
+      edge->pair_node_.second = n2;
+      if (links_.end () == std::find(links_.begin(), links_.end(), edge))
+	delete edge;
+      else
+	{
+	  links_.push_back (edge);
+	  ++nb_link_;
+	  nodes_[n1]->links.push_back (n2);
+	}
     }
 
     template<typename N, typename E>
@@ -212,8 +245,8 @@ namespace mln
       typename std::vector<struct s_edge<E>*>::const_iterator it3 = links_.begin ();
       for (; it3 != links_.end (); ++it3)
 	{
-	  mln_precondition((*it3)->node1 < nb_node_);
-	  mln_precondition((*it3)->node2 < nb_node_);
+	  mln_precondition((*it3)->pair_node_.first < nb_node_);
+	  mln_precondition((*it3)->pair_node_.second < nb_node_);
 	}
     }
 

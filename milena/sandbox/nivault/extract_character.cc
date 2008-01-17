@@ -154,6 +154,7 @@ extract_lines(I& text_image, O& output,
  		    unsigned value = image(point2d(r, i));
 		    if (value != 0)
 		      {
+			/// to_result ?
 			draw::box (output, v_bbox[value].to_result(), literal::blue);
 
 			typedef sub_image<I_LABEL, box2d> I_SUB;
@@ -331,7 +332,7 @@ main(int argc, char** argv)
 //   for (unsigned i = 0; i <= nb_dilated_node_labels; ++i)
 //     draw::box(output, vec_bbox2[i].to_result(), literal::red);
 
-//   image2d<int_u8> out (label_image.domain ());
+  image2d<int_u8> out (label_image.domain ());
 
 //   // Save the influence area of the node of the graphe (seed2tiling result).
 //   level::stretch (zi_image, out);
@@ -343,10 +344,10 @@ main(int argc, char** argv)
 //   io::pgm::save(out, path_output + ".text_graph.pgm");
 //   std::cout << path_output + ".text_graph.pgm" << " generated" << std::endl;
 
-//   // Save the graph of the text.
-//   level::stretch (text_image, out);
-//   io::pgm::save(out, path_output + ".text.pgm");
-//   std::cout << path_output + ".text.pgm" << " generated" << std::endl;
+  // Save the the text image.
+  level::stretch (text_image, out);
+  io::pgm::save(out, path_output + ".text.pgm");
+  std::cout << path_output + ".text.pgm" << " generated" << std::endl;
 
   // Save the output image (input image + bounding box text in red).
   io::ppm::save(output, path_output + ".ppm");

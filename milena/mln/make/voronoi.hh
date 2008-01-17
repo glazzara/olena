@@ -47,6 +47,16 @@ namespace mln
   namespace make
   {
 
+    /*!
+     *  \brief Apply Voronoi algorithm on \p ima_ with the original
+     *  image \p orig_ for node computing with neighborhood \p nbh.
+     *
+     * \param[in] ima_ The labeling image.
+     * \param[in] orig_ The original image.
+     * \param[in] nbh The neighborhood for computing algorithm.
+     *
+     * \return The computed graph.
+     */
     template <typename I, typename N>
     mesh_p<mln_psite(I)>
     voronoi (Image<I>& ima_,
@@ -102,7 +112,7 @@ namespace mln
 		m[std::pair<V, V>(ima(p) - min, ima(n) - min)] = true;
 	  }
       }
-      
+
       /// Compute the center of label.
       for (unsigned i = 0; i < nb; ++i)
 	{
