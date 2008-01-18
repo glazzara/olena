@@ -49,14 +49,12 @@ namespace mln
     template <typename I>
     struct lemmings_ : public Object< lemmings_<I> >
     {
-      lemmings_(const Image<I>& ima, const mln_pset(I)& domain,
-		const mln_point(I)& pt, const mln_dpoint(I)& dpt,
-		const mln_value(I)& val);
+      lemmings_(const Image<I>& ima, const mln_point(I)& pt,
+		const mln_dpoint(I)& dpt, const mln_value(I)& val);
 
       mln_point(I) operator()();
 
       const I& ima_;
-      const mln_pset(I)& domain_;
       mln_point(I) pt_;
       const mln_dpoint(I)& dpt_;
       const mln_value(I)& val_;
@@ -77,9 +75,8 @@ namespace mln
     */
     template <typename I>
     mln_point(I)
-    lemmings(const Image<I>& ima, const mln_pset(I)& domain,
-	     const mln_point(I)& pt, const mln_dpoint(I)& dpt,
-	     const mln_value(I)& val);
+    lemmings(const Image<I>& ima, const mln_point(I)& pt,
+	     const mln_dpoint(I)& dpt, const mln_value(I)& val);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -87,34 +84,30 @@ namespace mln
 
     template <typename I>
     inline
-    lemmings_<I>::lemmings_(const Image<I>& ima, const mln_pset(I)& domain,
-			    const mln_point(I)& pt, const mln_dpoint(I)& dpt,
-			    const mln_value(I)& val)
+    lemmings_<I>::lemmings_(const Image<I>& ima, const mln_point(I)& pt,
+			    const mln_dpoint(I)& dpt, const mln_value(I)& val)
       : ima_(exact(ima)),
-	domain_(domain),
 	pt_(pt),
 	dpt_(dpt),
 	val_(val)
     {
-      mln_precondition(set::is_subset_of(domain, ima_.domain()));
     }
 
     template <typename I>
     mln_point(I)
     lemmings_<I>::operator()()
     {
-      while (domain_.has(pt_) && ima_(pt_) == val_)
+      while (ima_.domain().has(pt_) && ima_(pt_) == val_)
 	pt_ += dpt_;
       return pt_;
     }
 
     template <typename I>
     mln_point(I)
-    lemmings(const Image<I>& ima, const mln_pset(I)& domain,
-	     const mln_point(I)& pt, const mln_dpoint(I)& dpt,
-	     const mln_value(I)& val)
+    lemmings(const Image<I>& ima, const mln_point(I)& pt,
+	     const mln_dpoint(I)& dpt, const mln_value(I)& val)
     {
-      lemmings_<I> lm(ima, domain, pt, dpt, val);
+      lemmings_<I> lm(ima, pt, dpt, val);
       return lm();
     }
 

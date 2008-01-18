@@ -60,11 +60,11 @@ int main ()
   mln_value_(I) vl4 = ima(pt4);
   mln_value_(I) vl5 = ima(pt5);
 
-  mln_point_(I) ptl1 = util::lemmings(ima, ima.domain(), pt1, right, vl1);
-  mln_point_(I) ptl2 = util::lemmings(ima, ima.domain(), pt2, down, vl2);
-  mln_point_(I) ptl3 = util::lemmings(ima, ima.domain(), pt3, left, vl3);
-  mln_point_(I) ptl4 = util::lemmings(ima, ima.domain(), pt4, up, vl4);
-  mln_point_(I) ptl5 = util::lemmings(ima, ima.domain(), pt5, up, vl5);
+  mln_point_(I) ptl1 = util::lemmings(ima, pt1, right, vl1);
+  mln_point_(I) ptl2 = util::lemmings(ima, pt2, down, vl2);
+  mln_point_(I) ptl3 = util::lemmings(ima, pt3, left, vl3);
+  mln_point_(I) ptl4 = util::lemmings(ima, pt4, up, vl4);
+  mln_point_(I) ptl5 = util::lemmings(ima, pt5, up, vl5);
 
   mln_assertion(ptl1 == point2d(1, 2));
   mln_assertion(ptl2 == point2d(2, 2));

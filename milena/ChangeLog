@@ -1,5 +1,12 @@
 2008-01-18  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
+	Modify lemmings utilisation.
+	* mln/util/lemmings.hh: The lemmings use the image domain
+	and don't ask another domain definition.
+	* tests/util/lemmings.cc: Update tests.
+
+2008-01-18  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
 	Update processing of scores.
 
 	* sandbox/nivault/extract_score.cc: Update, processing and
