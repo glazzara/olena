@@ -1,3 +1,10 @@
+2008-01-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add tools for display in random color a labeled image.
+	* mln/draw/label.hh: New function which creates a color image from
+	a labeled image.
+	* tests/draw/label.cc: New test for that.
+
 2008-01-18  Simon Nivault  <simon.nivault@lrde.epita.fr>
 
 	Modify lemmings utilisation.
