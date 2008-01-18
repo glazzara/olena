@@ -1,3 +1,12 @@
+2008-01-18  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Update processing of scores.
+
+	* sandbox/nivault/extract_score.cc: Update, processing and
+	labelling of big connected components, closing for highlight
+	notes and getting of an horizontal projection of image for
+	highlight lines.
+
 2008-01-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* mln/core/concept/accumulator.hh: (operator<<) New.
