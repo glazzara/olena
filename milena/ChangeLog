@@ -1,3 +1,10 @@
+2008-01-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add accu::rank.
+	* mln/accu/rank.hh: New, accumulator for the rank filters.
+	* mln/accu/rank_bool.hh: New. Specialisation of accu::rank<bool>.
+	* tests/accu/rank.cc: New.
+
 2008-01-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
 	Add tools for display in random color a labeled image.
