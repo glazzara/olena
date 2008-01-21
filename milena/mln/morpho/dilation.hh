@@ -99,9 +99,9 @@ namespace mln
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);
 	for_all(p)
-	  if (input(p))
+	  if (!input(p))
 	    for_all(q) if (input.has(q))
-	      if (! input(q))
+	      if (input(q))
 		{
 		  output(p) = true;
 		  break;

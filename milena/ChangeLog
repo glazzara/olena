@@ -1,5 +1,9 @@
 2008-01-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	* mln/morpho/dilation.hh: Make dilation works on binary images.
+
+2008-01-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add rank filter.
 	* mln/morpho/rank_filter.hh: New, the rank filter.
 	* mln/accu/rank.hh: clear the accu in init(), do a ratio to get the
