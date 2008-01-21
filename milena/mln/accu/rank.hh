@@ -114,6 +114,7 @@ namespace mln
     void
     rank_<T>::init()
     {
+      elts_.clear();
     }
 
     template <typename T>
@@ -148,9 +149,14 @@ namespace mln
     T
     rank_<T>::to_result() const
     {
-      mln_assertion(n_ == elts_.size());
+      // Fixme : Call to inplace to unconst (*this).
       inplace(*this).sort();
-      return elts_[k_];
+
+      if (n_ == elts_.size())
+	return elts_[k_];
+      else
+	// FIXME : This alternative is used to handle images edges.
+	return elts_[(elts_.size() * k_) / n_];
     }
 
     template <typename T>

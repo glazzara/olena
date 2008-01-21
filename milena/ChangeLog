@@ -1,5 +1,15 @@
 2008-01-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add rank filter.
+	* mln/morpho/rank_filter.hh: New, the rank filter.
+	* mln/accu/rank.hh: clear the accu in init(), do a ratio to get the
+	result when the accumulator is not full.
+	* mln/morpho/includes.hh: Add rank.hh include.
+	* tests/morpho/rank_filter.cc: New, tests, compare with erosion and
+	dilatation.
+
+2008-01-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add accu::rank.
 	* mln/accu/rank.hh: New, accumulator for the rank filters.
 	* mln/accu/rank_bool.hh: New. Specialisation of accu::rank<bool>.

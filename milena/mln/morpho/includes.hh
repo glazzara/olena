@@ -44,6 +44,7 @@
 # include <mln/accu/max.hh>
 # include <mln/accu/min_h.hh>
 # include <mln/accu/max_h.hh>
+# include <mln/accu/rank.hh>
 
 # include <mln/fun/v2v/saturate.hh>
 
