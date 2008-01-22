@@ -139,7 +139,7 @@ namespace mln
   {
     // FIXME: This is inefficient.  The graph structure should be able
     // to produce the set of adjacent nodes fast.  Boost Graphs
-    // probably provides adequates structures to get fecth these
+    // probably provides adequates structures to fetch these
     // neighbors in constant time.
     do
       ++i_;

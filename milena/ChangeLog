@@ -1,3 +1,12 @@
+2008-01-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Miscellaneous fixes.
+
+	* mln/accu/rank_bool.hh (mln::accu::rank_<bool>::rank_): Reorder
+	the elements of the initialization list to match the order of the
+	members.
+	* mln/core/mesh_window_piter.hh: Typo in comment.
+
 2008-01-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* mln/morpho/dilation.hh: Make dilation works on binary images.

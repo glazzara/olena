@@ -77,9 +77,9 @@ namespace mln
 
     inline
     rank_<bool>::rank_(unsigned k, unsigned n)
-      : k_(k),
-	n_(n),
-	nfalse_(0)
+      : nfalse_(0),
+	k_(k),
+	n_(n)
     {
       mln_assertion(k_ < n_);
       init();
