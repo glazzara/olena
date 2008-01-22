@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,13 +47,18 @@ namespace mln
   namespace labeling
   {
 
+    /* FIXME: The neighborhood shall not be passed as argument, but
+       bound to the input image.  We can also optionnaly provide a
+       version of this function for regular-grid-based images where
+       the neighborhood is replaced by a (user-provided) window.  */
+
     /*! Connected component labeling of the binary objects of a binary
      *  image.
      *
-     * \param[in]  input The input image.
-     * \param[in]  nbh   The neighborhood.
-     * \param[out] nlabels The number of labels.
-     * \return  The label image.
+     * \param[in]  input    The input image.
+     * \param[in]  nbh      The neighborhood.
+     * \param[out] nlabels  The number of labels.
+     * \return              The label image.
      *
      * \pre The input image has to be binary (checked at compile-time).
      *
@@ -62,8 +67,8 @@ namespace mln
      */
     template <typename I, typename N>
     mln_ch_value(I, unsigned)
-      blobs(const Image<I>& input, const Neighborhood<N>& nbh, unsigned& nlabels);
-
+    blobs(const Image<I>& input, const Neighborhood<N>& nbh,
+	  unsigned& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -137,10 +142,12 @@ namespace mln
     template <typename I, typename N>
     inline
     mln_ch_value(I, unsigned)
-      blobs(const Image<I>& input_, const Neighborhood<N>& nbh_, unsigned& nlabels)
+    blobs(const Image<I>& input_, const Neighborhood<N>& nbh_,
+	  unsigned& nlabels)
     {
       trace::entering("labeling::blobs");
-      mlc_equal(mln_trait_image_kind(I), mln::trait::image::kind::binary)::check();
+      mlc_equal(mln_trait_image_kind(I),
+		mln::trait::image::kind::binary)::check();
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
       mln_precondition(input.has_data());

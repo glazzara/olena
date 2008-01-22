@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,13 +47,18 @@ namespace mln
   namespace labeling
   {
 
+    /* FIXME: The neighborhood shall not be passed as argument, but
+       bound to the input image.  We can also optionnaly provide a
+       version of this function for regular-grid-based images where
+       the neighborhood is replaced by a (user-provided) window.  */
+
     /*! Connected component labeling of the regional maxima of an
      * image.
      *
-     * \param[in]  input   The input image.
-     * \param[in]  nbh     The neighborhood to consider.
-     * \param[out] nlabels The number of labeled regions.
-     * \return The label image.
+     * \param[in]  input    The input image.
+     * \param[in]  nbh      The neighborhood to consider.
+     * \param[out] nlabels  The number of labeled regions.
+     * \return              The label image.
      *
      */
     template <typename I, typename N, typename L>
@@ -89,11 +94,14 @@ namespace mln
  	void init()                              { level::fill(attr, true); }
 	bool handles(const P&) const             { return true; }
 	bool labels(const P& p) const            { return attr(p); }
-	bool equiv(const P& n, const P& p) const { return input(n) == input(p); }
-	void do_no_union(const P& n, const P& p) { mln_invariant(input(n) > input(p));
+	bool equiv(const P& n, const P& p) const { return input(n) ==
+                                                          input(p); }
+	void do_no_union(const P& n, const P& p) { mln_invariant(input(n) >
+								 input(p));
 	                                           attr(p) = false; }
 	void init_attr(const P&)                 {}
-	void merge_attr(const P& r, const P& p)  { attr(p) = attr(p) && attr(r); }
+	void merge_attr(const P& r, const P& p)  { attr(p) = attr(p) &&
+	                                           attr(r); }
 
 	// end of requirements
 
@@ -102,7 +110,8 @@ namespace mln
 	regional_maxima_functor(const I_& input, const N_& nbh)
 	  : input(input),
 	    nbh(nbh),
-	    s(level::sort_points_decreasing(input)), // FIXME: sort_psites_decreasing
+	    s(level::sort_points_decreasing(input)), // FIXME:
+	                                             // sort_psites_decreasing
 	    attr(input.domain())
 	{
 	}
@@ -116,8 +125,8 @@ namespace mln
 
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
-	  regional_maxima_(const I& input, const N& nbh,
-			   L& nlabels)
+	regional_maxima_(const I& input, const N& nbh,
+			 L& nlabels)
 	{
 	  trace::entering("labeling::impl::generic::regional_maxima_");
 
@@ -150,7 +159,8 @@ namespace mln
       mln_precondition(input.has_data());
 
       // Calls the only (generic) impl.
-      mln_ch_value(I, L) output = impl::generic::regional_maxima_(input, nbh, nlabels);
+      mln_ch_value(I, L) output =
+	impl::generic::regional_maxima_(input, nbh, nlabels);
 
       trace::exiting("labeling::regional_maxima");
       return output;

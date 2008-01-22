@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,17 +44,21 @@ namespace mln
   namespace labeling
   {
 
+    /* FIXME: The neighborhood shall not be passed as argument, but
+       bound to the input image.  We can also optionnaly provide a
+       version of this function for regular-grid-based images where
+       the neighborhood is replaced by a (user-provided) window.  */
+
     /*! Connected component labeling of the flat zones of an image.
      *
-     * \param[in]  input   The input image.
-     * \param[in]  nbh     The neighborhood to consider.
-     * \param[out] nlabels The number of labels.
-     * \return The label image.
+     * \param[in]  input    The input image.
+     * \param[in]  nbh      The neighborhood to consider.
+     * \param[out] nlabels  The number of labels.
+     * \return              The label image.
      */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
-      flat_zones(const Image<I>& input, const Neighborhood<N>& nbh,
-		 L& nlabels);
+    flat_zones(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels);
 
 
 
@@ -82,7 +86,8 @@ namespace mln
         const S& s;
 
 	bool handles(const P&) const             { return true; }
-	bool equiv(const P& n, const P& p) const { return input(n) == input(p); }
+	bool equiv(const P& n, const P& p) const { return input(n) ==
+                                                          input(p); }
 
  	void init()                          {}
 	bool labels(const P&) const          { return true;  }
@@ -107,7 +112,7 @@ namespace mln
 
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
-	  flat_zones_(const I& input, const N& nbh, L& nlabels)
+	flat_zones_(const I& input, const N& nbh, L& nlabels)
 	{
 	  trace::entering("labeling::impl::generic::flat_zones_");
 
@@ -131,8 +136,8 @@ namespace mln
 
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
-      flat_zones(const Image<I>& input_, const Neighborhood<N>& nbh_,
-		 L& nlabels)
+    flat_zones(const Image<I>& input_, const Neighborhood<N>& nbh_,
+	       L& nlabels)
     {
       trace::entering("labeling::flat_zones");
       const I& input = exact(input_);
@@ -140,7 +145,8 @@ namespace mln
       mln_precondition(input.has_data());
 
       // Calls the only (generic) impl.
-      mln_ch_value(I, L) output = impl::generic::flat_zones_(input, nbh, nlabels);
+      mln_ch_value(I, L) output =
+	impl::generic::flat_zones_(input, nbh, nlabels);
 
       trace::exiting("labeling::flat_zones");
       return output;

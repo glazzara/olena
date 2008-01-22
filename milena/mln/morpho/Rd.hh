@@ -28,6 +28,9 @@
 #ifndef MLN_MORPHO_RD_HH
 # define MLN_MORPHO_RD_HH
 
+// FIXME: This file, as well its functions and classes, shall not
+// contain capital letters.
+
 /*!
  * \file  mln/morpho/Rd.hh
  *
@@ -51,6 +54,11 @@ namespace mln
 
   namespace morpho
   {
+
+    /* FIXME: The neighborhood shall not be passed as argument, but
+       bound to the input image.  We can also optionnaly provide a
+       version of this function for regular-grid-based images where
+       the neighborhood is replaced by a (user-provided) window.  */
 
     template <typename I, typename N>
     I Rd(const Image<I>& f, const Image<I>& g, const Neighborhood<N>& nbh);

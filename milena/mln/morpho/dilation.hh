@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,16 +43,47 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological dilation.
-     *
-     * \todo Overload dilation_wrt_win for hline and vline and for fast
-     * images.
-     */
-    template <typename I, typename W, typename O>
-    void dilation(const Image<I>& input, const Window<W>& win, Image<O>& output);
+    /// Morphological dilation using the neighborhood bound to an image.
+    ///
+    /// \{
 
+    /// Perform a morphological dilation of \a input using its
+    /// neighborhood and store the result into \a output.
+    ///
+    /// \pre \a input must be an image with a neighborhood.
+    /* FIXME: Do we want to keep this version?  */
+    template <typename I, typename O>
+    void
+    dilation(const Image<I>& input, Image<O>& output);
+
+    /// Perform a morphological dilation of \a input using its
+    /// neighborhood and return the result.
+    ///
+    /// \pre \a input must be an image with a neighborhood.
+    template <typename I>
+    mln_concrete(I)
+    dilation(const Image<I>& input);
+    /// \}
+
+    /// Morphological dilation using windows.
+    ///
+    /// \todo Overload dilation_wrt_win for hline and vline and for fast
+    /// images.
+    ///
+    /// \{
+    /// Perform a morphological dilation of \a input using \a win and
+    /// store the result into \a output.
+    /* FIXME: Do we want to keep this version?  */
+    template <typename I, typename W, typename O>
+    void
+    dilation(const Image<I>& input, const Window<W>& win, Image<O>& output);
+
+    /// Perform a morphological dilation of \a input using \a win and
+    /// return the result.
     template <typename I, typename W>
-    mln_concrete(I) dilation(const Image<I>& input, const Window<W>& win);
+    mln_concrete(I)
+    dilation(const Image<I>& input, const Window<W>& win);
+    /// \}
 
 
 
@@ -61,11 +92,42 @@ namespace mln
     namespace impl
     {
 
+      /*---------------------.
+      | Neighborhood-based.  |
+      `---------------------*/
+
+      /* FIXME: We might want to move this function into the body of
+	 the facade (see at the bottom of the file.  */
+      // Sole case.  Convert the neighborhood into a window, and
+      // delegate to the window-based implementation.
+      template <typename I, typename N, typename O>
+      inline
+      void dilation_wrt_nbh(const Image<I>& input,
+			    const Neighborhood<N>& nbh,
+			    Image<O>& output)
+      {
+	/* FIXME: The following comment applies to every algorithm
+	   having a neighborhood and a window flavor: move it
+	   elsewhere.
+
+	   We solely depend on the neighborhood-to-window conversion
+	   here.  This means the conversion should be smart enough to
+	   produce a working window, even in the case of a non
+	   dpoint-set-based neighborhood.  */
+	dilation_wrt_win(input, to_window(nbh), output);
+      }
+
+
+      /*---------------.
+      | Window-based.  |
+      `---------------*/
+
       // On function.
 
       template <typename I, typename W, typename O>
       inline
-      void dilation_on_function(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
+      void dilation_on_function(const Image<I>& input_, const Window<W>& win_,
+				Image<O>& output_)
       {
 	const I& input = exact(input_);
 	const W& win   = exact(win_);
@@ -88,7 +150,8 @@ namespace mln
 
       template <typename I, typename W, typename O>
       inline
-      void dilation_on_set(const Image<I>& input_, const Window<W>& win_, Image<O>& output_)
+      void dilation_on_set(const Image<I>& input_, const Window<W>& win_,
+			   Image<O>& output_)
       {
 	const I& input = exact(input_);
 	const W& win   = exact(win_);
@@ -108,51 +171,83 @@ namespace mln
 		}
       }
 
+      // FIXME: Seems to be duplicate code!
+
+//       /// Stage 1: dispatch w.r.t. the window type.
+//       /// \{
+
+//       /// Default case.
+//       template <typename I, typename W, typename O>
+//       inline
+//       void dilation_wrt_win(const Image<I>& input, const Window<W>& win,
+// 			    Image<O>& output)
+//       {
+// 	// Perform stage 2: dispatch w.r.t. the value kind.
+// 	dilation_wrt_value(mln_trait_image_kind(I)(), exact(input),
+// 			   exact(win), output);
+//       }
 
       // ...
 
 
-      // FIXME: Stage 3: dispatch w.r.t. fast property
+      // ------------- //
+      // Dispatchers.  //
+      // ------------- //
+
+      // FIXME: Stage 3: dispatch w.r.t. speed property.
+      // ...
 
 
-      // Stage 2: dispatch w.r.t. the value kind.
-
+      /// Stage 2: dispatch w.r.t. the value kind.
+      /// \{
+      
+      /// Binary =>  morphology on sets.
       template <typename I, typename W, typename O>
       inline
-      void dilation_wrt_value(trait::image::kind::logic, // binary => morphology on sets
-			      const Image<I>& input, const Window<W>& win, Image<O>& output)
+      void dilation_wrt_value(trait::image::kind::logic,
+			      const Image<I>& input, const Window<W>& win,
+			      Image<O>& output)
       {
 	return impl::dilation_on_set(exact(input), exact(win), output);
       }
 
+      /// Otherwise => morphology on functions.
       template <typename I, typename W, typename O>
       inline
-      void dilation_wrt_value(trait::image::kind::any, // otherwise => morphology on functions
-			      const Image<I>& input, const Window<W>& win, Image<O>& output)
+      void dilation_wrt_value(trait::image::kind::any,
+			      const Image<I>& input, const Window<W>& win,
+			      Image<O>& output)
       {
 	return impl::dilation_on_function(exact(input), exact(win), output);
       }
 
+      // End of stage 2.
+
+      /// \}
 
 
-      // Stage 1: dispatch w.r.t. the window type.
-      //   |
-      //   V
 
+      /// Stage 1: dispatch w.r.t. the window type.
+      /// \{
+
+      /// Default case.
       template <typename I, typename W, typename O>
       inline
-      void dilation_wrt_win(const Image<I>& input, const Window<W>& win, Image<O>& output)
+      void dilation_wrt_win(const Image<I>& input, const Window<W>& win,
+			    Image<O>& output)
       {
-	dilation_wrt_value(mln_trait_image_kind(I)(), exact(input), exact(win), output);
-	//                   |
-	//                    -->  call stage 2: dispatch w.r.t. the value kind
+	// Perform stage 2: dispatch w.r.t. the value kind.
+	dilation_wrt_value(mln_trait_image_kind(I)(), exact(input),
+			   exact(win), output);
       }
 
 #  ifdef MLN_CORE_WIN_RECTANGLE2D_HH
 
+      /// Rectangle window.
       template <typename I, typename O>
       inline
-      void dilation_wrt_win(const Image<I>& input, const win::rectangle2d& win, Image<O>& output)
+      void dilation_wrt_win(const Image<I>& input, const win::rectangle2d& win,
+			    Image<O>& output)
       {
 	O temp(exact(output).domain());
 	morpho::dilation(input, win::hline2d(win.width()),  temp);
@@ -166,8 +261,10 @@ namespace mln
 #   ifdef MLN_CORE_WIN_DIAG2D_HH
 #    ifdef MLN_CORE_WIN_BACKDIAG2D_HH
 
+      /// Octagon window.
       template <typename I, typename O>
-      void dilation_wrt_win(const Image<I>& input, const win::octagon2d& win, Image<O>& output)
+      void dilation_wrt_win(const Image<I>& input, const win::octagon2d& win,
+			    Image<O>& output)
       {
 	const unsigned len = win.length() / 3 + 1;
 
@@ -183,18 +280,72 @@ namespace mln
 #   endif // MLN_CORE_WIN_DIAG2D_HH
 #  endif // MLN_CORE_WIN_OCTAGON2D_HH
 
-      //   ^
-      //   |
-      // end of stage1 (dispatch w.r.t. the window type)
+      // End of stage 1.
+
+      /// \}
 
     } // end of namespace mln::morpho::impl
 
 
-    // Facade.
+    /*----------.
+    | Facades.  |
+    `----------*/
+
+    // ------------------------------------------------ //
+    // Facades for neighborhood-based implementations.  //
+    // ------------------------------------------------ //
+
+    template <typename I, typename O>
+    void
+    dilation(const Image<I>& input, Image<O>& output)
+    {
+      trace::entering("morpho::dilation");
+
+      mln_precondition(exact(output).domain() == exact(input).domain());
+
+      // Ensure the image has a `neighb' typedef.
+      typedef mln_neighb(I) neighb;
+
+      // FIXME: Encapsulate this in a class + a macro.
+      // FIXME: Do we have better concept checking tools?
+      {
+	// Ensure the image has a `neighb' method.
+	neighb (I::*m)() const = &I::neighb;
+	m = 0;
+
+	// FIXME: Do we need to check for more?
+      }
+
+      impl::dilation_wrt_nbh(input, output);
+
+      trace::exiting("morpho::dilation");
+    }
+
+    template <typename I>
+    mln_concrete(I)
+    dilation(const Image<I>& input)
+    {
+      trace::entering("morpho::dilation");
+
+      mln_concrete(I) output;
+      initialize(output, input);
+      dilation(input, output);
+
+      trace::exiting("morpho::dilation");
+      return output;
+    }
+
+
+    // ------------------------------------------ //
+    // Facades for window-based implementations.  //
+    // ------------------------------------------ //
 
     template <typename I, typename W, typename O>
-    void dilation(const Image<I>& input, const Window<W>& win, Image<O>& output)
+    void
+    dilation(const Image<I>& input, const Window<W>& win, Image<O>& output)
     {
+      trace::entering("morpho::dilation");
+
       mln_precondition(exact(output).domain() == exact(input).domain());
       mln_precondition(! exact(win).is_empty());
 
@@ -202,6 +353,8 @@ namespace mln
 
       if (exact(win).is_centered())
 	mln_postcondition(output >= input);
+
+      trace::exiting("morpho::dilation");
     }
 
     template <typename I, typename W>

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,12 +45,16 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological area opening.
-     */
+    /* FIXME: The neighborhood shall not be passed as argument, but
+       bound to the input image.  We can also optionnaly provide a
+       version of this function for regular-grid-based images where
+       the neighborhood is replaced by a (user-provided) window.  */
+
+    /// Morphological attribute opening.
     template <typename A,
 	      typename I, typename N, typename O>
-    void opening_attribute(const Image<I>& input, const Neighborhood<N>& nbh, mln_result(A) lambda,
-			   Image<O>& output);
+    void opening_attribute(const Image<I>& input, const Neighborhood<N>& nbh,
+			   mln_result(A) lambda, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -101,7 +105,8 @@ namespace mln
 	// end of requirements
       
 	inline
-	opening_attribute_t(const I_& input, const N_& nbh, mln_result(A) lambda, O_& output)
+	opening_attribute_t(const I_& input, const N_& nbh,
+			    mln_result(A) lambda, O_& output)
 	  : input(input), nbh(nbh), lambda(lambda), output(output),
 	    s(level::sort_points_decreasing(input))
 	{

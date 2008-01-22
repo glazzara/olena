@@ -59,24 +59,34 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  win::rectangle2d rec(21, 21);
   border::thickness = 66;
+
+  // FIXME: Maybe we should split all these tests cases into severals
+  // files.  Sure it's a pain to create, but we want to be able to
+  // choose the granularity of the executed test suite (fast,
+  // comprehensive, etc.).
 
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-//   { 
-//     image2d<int_u8> out(lena.domain());
-//     morpho::dilation(lena, rec, out);
-//     io::pgm::save(out, "out1.pgm");
-//   }
+  { 
+    // FIXME: This struct. elt. is far too big for a routinely run
+    // test; either use a smaller one or qualify this test as
+    // ``long''.
+    win::rectangle2d rec(21, 21);
+    image2d<int_u8> out(lena.domain());
+    morpho::dilation(lena, rec, out);
+    io::pgm::save(out, "out1.pgm");
+  }
 
   {
-    win::octagon2d oct(31);
+    win::octagon2d oct(6);
     image2d<int_u8> out(lena.domain());
     morpho::dilation(lena, oct, out);
     io::pgm::save(out, "out2.pgm");
   }
+
+  // FIXME: Add tests using neighborhoods, too.
 
 //   { 
 //     p_array<point2d> vec = convert::to_p_array(rec, point2d::zero);

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,19 +43,23 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological area opening.
-     */
+    /* FIXME: The neighborhood shall not be passed as argument, but
+       bound to the input image.  We can also optionnaly provide a
+       version of this function for regular-grid-based images where
+       the neighborhood is replaced by a (user-provided) window.  */
+
+    /// Morphological area opening.
     template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output);
+    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh,
+		      std::size_t lambda, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename N, typename O>
     inline
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda,
-		      Image<O>& output)
+    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh,
+		      std::size_t lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
       typedef util::pix<I> pix_t;

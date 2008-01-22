@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,6 +43,11 @@ namespace mln
   namespace labeling
   {
 
+    /* FIXME: The neighborhood shall not be passed as argument, but
+       bound to the input image.  We can also optionnaly provide a
+       version of this function for regular-grid-based images where
+       the neighborhood is replaced by a (user-provided) window.  */
+
     /*! Connected component labeling of the background part in a
      * binary image.
      *
@@ -73,10 +78,12 @@ namespace mln
 	       unsigned& nlabels)
     {
       trace::entering("labeling::background");
-      mlc_equal(mln_trait_image_kind(I), mln::trait::image::kind::binary)::check();
+      mlc_equal(mln_trait_image_kind(I),
+		mln::trait::image::kind::binary)::check();
       mln_precondition(exact(input).has_data());
 
-      mln_ch_value(I, unsigned) output = labeling::level(input, false, nbh, nlabels);
+      mln_ch_value(I, unsigned) output =
+	labeling::level(input, false, nbh, nlabels);
 
       trace::exiting("labeling::background");
       return output;

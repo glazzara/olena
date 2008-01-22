@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -49,19 +49,24 @@ namespace mln
   namespace labeling
   {
 
+    /* FIXME: The neighborhood shall not be passed as argument, but
+       bound to the input image.  We can also optionnaly provide a
+       version of this function for regular-grid-based images where
+       the neighborhood is replaced by a (user-provided) window.  */
+
     /*! Connected component labeling of the image objects at a given
      * level.
      *
-     * \param[in]  input The input image.
-     * \param[in]  val   The level to consider for the labeling.
-     * \param[in]  nbh   The neighborhood.
-     * \param[out] nlabels The number of labels.
-     * \return  The label image.
+     * \param[in]  input    The input image.
+     * \param[in]  val      The level to consider for the labeling.
+     * \param[in]  nbh      The neighborhood.
+     * \param[out] nlabels  The number of labels.
+     * \return              The label image.
      */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
-      level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
-	    L& nlabels);
+    level(const Image<I>& input, const mln_value(I)& val,
+	  const Neighborhood<N>& nbh, L& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -112,7 +117,8 @@ namespace mln
 
 	const mln_value(I_)& val;
 
-	level_fastest_functor(const I_& input, const mln_value(I_)& val, const N_& nbh)
+	level_fastest_functor(const I_& input, const mln_value(I_)& val,
+			      const N_& nbh)
 	  : input(input),
 	    nbh(nbh),
 	    s(input.domain()),

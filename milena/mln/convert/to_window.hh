@@ -72,6 +72,15 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    /* FIXME: According to milena/core/concepts/README, windows are
+       not necessarily based on a set of dpoints.  So the current
+       algorithm won't work on non dpoint-set-based windows.  In the
+       general case (of windows not being a set of dpoints), the
+       window resulting from this conversion (as well as the iterators
+       based on such windows!) should depend on the initial
+       neighborhood (i.e., delegate the actual iteration to the
+       aggregated neighborhood).  When this is fixed, document this in
+       depth in milena/core/concepts/README.  */
     template <typename N>
     inline
     window<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh_)
@@ -86,6 +95,7 @@ namespace mln
       return win;
     }
 
+    // FIXME: Same remark as for to_window(const Neighborhood<N>&)
     template <typename N>
     inline
     window<mln_dpoint(N)> to_upper_window(const Neighborhood<N>& nbh_)
@@ -101,6 +111,7 @@ namespace mln
       return win;
     }
 
+    // FIXME: Same remark as for to_window(const Neighborhood<N>&)
     template <typename I>
     inline
     window<mln_dpoint(I)> to_window(const Image<I>& ima_)

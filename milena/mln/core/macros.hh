@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -128,10 +128,16 @@
 
 // m
 
-
 /// Shortcut to access the mesh type associated to T.
 # define mln_mesh(T)     typename T::mesh
 # define mln_mesh_(T)             T::mesh
+
+
+// n
+
+/// Shortcut to access the neighborhood type associated to T.
+# define mln_neighb(T)     typename T::neighb
+# define mln_neighb_(T)             T::neighb
 
 
 // p

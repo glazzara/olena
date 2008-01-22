@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -50,22 +50,28 @@ namespace mln
   namespace geom
   {
 
+    /* FIXME: The neighborhood shall not be passed as argument, but
+       bound to the input image.  We can also optionnaly provide a
+       version of this function for regular-grid-based images where
+       the neighborhood is replaced by a (user-provided) window.  */
 
     /*! Take a labeled image \p ima_ with seeds and extend them until
-     *  creating tiles nore roundness that the primary version.
+     *  creating tiles rounder than the primary version.
      *
-     * \param[in,out] ima_ The labeled image with seed.
-     * \param[in] win_w The weight window using by geom::chamfer to compute distance.
-     * \param[in] max Unsigned using by geom::chamfer to compute distance.
-     * \param[in] nbh The neighborhood to use on this algorithm.
+     * \param[in,out] ima_   The labeled image with seed.
+     * \param[in]     win_w  The weight window using by geom::chamfer to
+     *                       compute distance.
+     * \param[in]     max    Unsigned using by geom::chamfer to compute
+     *                       the distance.
+     * \param[in]     nbh    The neighborhood to use on this algorithm.
      *
      * \pre \p ima_ has to be initialized.
      *
      */
     template <typename I, typename N>
     I
-    seeds2tiling_roundness (Image<I>& ima_, const w_window2d_int& w_win, unsigned max,
-			    const Neighborhood<N>& nbh);
+    seeds2tiling_roundness (Image<I>& ima_, const w_window2d_int& w_win,
+			    unsigned max, const Neighborhood<N>& nbh);
 
 
 
@@ -77,8 +83,8 @@ namespace mln
       template <typename I, typename N>
       inline
       I
-      seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win, unsigned max,
-			     const Neighborhood<N>& nbh)
+      seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win,
+			     unsigned max, const Neighborhood<N>& nbh)
       {
 	trace::entering("geom::impl::seed2tiling_roundness");
 
@@ -123,8 +129,8 @@ namespace mln
     template <typename I, typename N>
     inline
     I
-    seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win, unsigned max,
-			   const Neighborhood<N>& nbh)
+    seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win,
+			   unsigned max, const Neighborhood<N>& nbh)
     {
       trace::entering("geom::seed2tiling_roundness");
 

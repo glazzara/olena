@@ -65,5 +65,6 @@
 # include <mln/morpho/minus.hh>
 # include <mln/morpho/plus.hh>
 
+# include <mln/convert/to_window.hh>
 
 #endif // ! MLN_MORPHO_INCLUDES_HH

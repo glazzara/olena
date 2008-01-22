@@ -1,5 +1,40 @@
 2008-01-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Start to mark out and clean up bad usages of neighborhoods.
+
+	* mln/trait/neighborhood.hh: New.
+	Traits for neighborhoods.
+	* mln/core/macros.hh (mln_neighb, mln_neighb_): New macros.
+	* mln/convert/to_window.hh,
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/labeling/background.hh,
+	* mln/labeling/blobs.hh,
+	* mln/labeling/flat_zones.hh,
+	* mln/labeling/foreground.hh,
+	* mln/labeling/level.hh,
+	* mln/labeling/level.spe.hh,
+	* mln/labeling/regional_maxima.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/make/voronoi.hh,
+	* mln/morpho/Rd.hh,
+	* mln/morpho/opening_area.hh,
+	* mln/morpho/opening_attribute.hh:
+	Add a few remarks and FIXMEs.
+	Fix some typos.
+	* mln/morpho/includes.hh: Include mln/convert/to_window.hh.
+	* mln/morpho/dilation.hh: Add more documentation.
+	Wrap long lines.
+	(dilation(const Image<I>& input))
+	(dilation(const Image<I>&, Image<O>&))
+	(impl::dilation_wrt_nbh(const Image<I>&, const Neighborhood<N>&,
+	Image<O>&)): New functions.
+	(dilation(const Image<I>&, const Window<W>&, Image<O>&)): Add
+	tracing guards.
+	* tests/morpho/dilation.cc: Re-enable more test cases.
+	Use a smaller octagon structuring element to speed up the test.
+
+2008-01-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Start a small documentation/reminder on Milena's concepts.
 
 	* mln/core/concept/README: New.
