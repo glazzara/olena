@@ -1,5 +1,11 @@
 2008-01-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Start a small documentation/reminder on Milena's concepts.
+
+	* mln/core/concept/README: New.
+
+2008-01-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Miscellaneous fixes.
 
 	* mln/accu/rank_bool.hh (mln::accu::rank_<bool>::rank_): Reorder

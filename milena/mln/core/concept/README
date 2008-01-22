@@ -1,0 +1,67 @@
+Milena Concepts
+
+FIXME: It'd be better to turn this file into a Doxygen documentation.
+In fact, the best place where to put this documentation is in the
+concept files themselves, but we'd like a kind of centralized summary
+too.  An index would be nice.
+
+* Image
+Images are functions mapping point sites from a given domain (point
+site set) to a value.
+
+* Point Site
+[...]
+The most general point site is linked to a domain, and cannot be used
+with another domain.
+
+* Point
+A point is a point site, belonging to a domain (point set) compatible
+with several images.  Thus, points can be used with different images.
+
+* Point Site Set
+FIXME: Is there a difference between a point site set and a point set?
+
+* Point Set
+Also called psite.
+
+* Point Site Iterator
+Also called psite iterator.
+
+* Point Iterator
+Also called piter.
+
+* Grid
+
+* Graph
+
+* Window
+A function mapping a point site to a set of point sites.  The term
+``window'' is both used to name the function and the (mapped) set of
+point site (image in the mathematical sense). There are no additionnal
+requirement on the structure of set of the mapped point sites.
+
+* Neighborhood
+A function mapping a point site to a set of point sites.  The term
+``neighborhood'' is both used to name the function and the (mapped)
+set of point site (image in the mathematical sense). The neighborhood
+relationship must be symmetric: if B is in the neighborhood of A, then
+A must be in the neighborhood of B.  Neighborhoods are attached to
+images: an algorithm working on the neighborhood of an image shall get
+the neighborhood from the input image(s), not from an extra argument
+passed to the algorithm.
+
+* Window Iterator
+Also called qiter.
+
+* Neighborhood Iterator
+Also called niter.
+(FIXME: Do they actually exist in Milena?  The current trend in Milena
+is to convert neighborhoods to windows in implementations, hence only
+window iterators are used.)
+
+
+
+Local Variables:
+mode: outline
+ispell-local-dictionary: "american"
+End:
