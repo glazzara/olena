@@ -31,25 +31,73 @@
  */
 
 #include <mln/accu/rank.hh>
+#include <mln/value/int_u8.hh>
 
-int main()
+using namespace mln;
+
+template <typename A>
+void fill(Accumulator<A>& accu_)
 {
-  using namespace mln;
-
-  accu::rank_<int> accu(3, 5);
-
+  A& accu = exact(accu_);
+  accu.take(2);
   accu.take(3);
   accu.take(1);
   accu.take(4);
   accu.take(5);
+  accu.take(5);
   accu.take(2);
-  mln_assertion(accu.to_result() == 4);
+  accu.take(5);
+}
 
-  accu::rank_<bool> accu_bool(1, 5);
-  accu_bool.take(true);
-  accu_bool.take(true);
-  accu_bool.take(true);
-  accu_bool.take(true);
-  accu_bool.take(false);
-  mln_assertion(accu_bool == true);
+int main()
+{
+  {
+    accu::rank_<value::int_u8> accu(0, 8);
+    fill(accu);
+    mln_assertion(accu.to_result() == 1);
+  }
+  {
+    accu::rank_<value::int_u8> accu(1, 8);
+    fill(accu);
+    mln_assertion(accu.to_result() == 2);
+  }
+  {
+    accu::rank_<value::int_u8> accu(2, 8);
+    fill(accu);
+    mln_assertion(accu.to_result() == 2);
+  }
+  {
+    accu::rank_<value::int_u8> accu(3, 8);
+    fill(accu);
+    mln_assertion(accu.to_result() == 3);
+  }
+  {
+    accu::rank_<value::int_u8> accu(4, 8);
+    fill(accu);
+    mln_assertion(accu.to_result() == 4);
+  }
+  {
+    accu::rank_<value::int_u8> accu(5, 8);
+    fill(accu);
+    mln_assertion(accu.to_result() == 5);
+  }
+  {
+    accu::rank_<value::int_u8> accu(6, 8);
+    fill(accu);
+    mln_assertion(accu.to_result() == 5);
+  }
+  {
+    accu::rank_<value::int_u8> accu(7, 8);
+    fill(accu);
+    mln_assertion(accu.to_result() == 5);
+  }
+  {
+    accu::rank_<bool> accu_bool(1, 5);
+    accu_bool.take(true);
+    accu_bool.take(true);
+    accu_bool.take(true);
+    accu_bool.take(true);
+    accu_bool.take(false);
+    mln_assertion(accu_bool == true);
+  }
 }

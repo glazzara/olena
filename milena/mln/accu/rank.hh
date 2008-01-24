@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,17 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_MEDIAN_HH
-# define MLN_ACCU_MEDIAN_HH
+#ifndef MLN_ACCU_RANK_HH
+# define MLN_ACCU_RANK_HH
 
-/*! \file mln/accu/median.hh
+/*! \file mln/accu/rank.hh
  *
- * \brief Define a generic median accumulator class.
+ * \brief Define an rank accumulator.
  */
 
+# include <vector>
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
-
+# include <mln/core/concept/meta_accumulator.hh>
+# include <mln/trait/value_.hh>
+# include <mln/util/pix.hh>
+# include <mln/core/inplace.hh>
 
 namespace mln
 {
@@ -44,30 +48,33 @@ namespace mln
   {
 
 
-    /*! \brief Generic median function based on histogram over a value
-     * set with type \c S.
+    /*! \brief Generic rank accumulator class.
+     *
+     * The parameter \c T is the type of values.
      */
-    template <typename S>
-    struct median : public mln::accu::internal::base_< mln_value(S), median<S> >
+    template <typename T>
+    struct rank_ : public mln::accu::internal::base_< T, rank_<T> >
     {
-      typedef mln_value(S) argument;
-      typedef argument result;
+      typedef T argument;
+      typedef T result;
+      typedef mln::value::set<T> S;
 
-      median(const Value_Set<S>& s);
-      median();
+      rank_(unsigned k, unsigned n, const Value_Set<S>& s);
+      rank_(unsigned k, unsigned n);
 
-      void init();
+      void   init();
       void   take(const argument& t);
-      void   take(const median<S>& other);
+      void   take(const rank_<T>& other);
       void untake(const argument& t);
 
       unsigned card() const { return h_.sum(); }
 
-      argument to_result() const;
-
-      const accu::histo<S>& histo() const;
+      T to_result() const;
 
     protected:
+
+      unsigned k_; // 0 <= k_ < n
+      unsigned n_;
 
       mutable accu::histo<S> h_;
       const S& s_; // derived from h_
@@ -85,30 +92,56 @@ namespace mln
     };
 
 
+    template <typename I> struct rank_< util::pix<I> >;
+
+
+    /*!
+     * \brief Meta accumulator for rank.
+     */
+    struct rank : public Meta_Accumulator< rank >
+    {
+      template <typename T>
+      struct with
+      {
+	typedef rank_<T> ret;
+      };
+    };
+
+
+
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S>
+    template <typename T>
     inline
-    median<S>::median(const Value_Set<S>& s)
-      : h_(s),
+    rank_<T>::rank_(unsigned k, unsigned n)
+      : k_(k),
+	n_(n),
+	h_(),
 	s_(h_.vset())
     {
+      mln_assertion(k_ < n_);
       init();
     }
 
-    template <typename S>
+
+    template <typename T>
     inline
-    median<S>::median()
-      : h_(),
+    rank_<T>::rank_(unsigned k, unsigned n, const Value_Set<mln::value::set<T> >& s)
+      : k_(k),
+	n_(n),
+	h_(s),
 	s_(h_.vset())
     {
+      mln_assertion(k_ < n_);
       init();
     }
 
-    template <typename S>
+    template <typename T>
     inline
-    void
-    median<S>::take(const argument& t)
+    void rank_<T>::take(const argument& t)
     {
       h_.take(t);
 
@@ -121,10 +154,10 @@ namespace mln
 	valid_ = false;
     }
 
-    template <typename S>
+    template <typename T>
     inline
     void
-    median<S>::take(const median<S>& other)
+    rank_<T>::take(const rank_<T>& other)
     {
       // h_
       h_.take(other.h_);
@@ -141,10 +174,11 @@ namespace mln
 	valid_ = false;
     }
 
-    template <typename S>
+
+    template <typename T>
     inline
     void
-    median<S>::untake(const argument& t)
+    rank_<T>::untake(const argument& t)
     {
       mln_precondition(h_(t) != 0);
       h_.untake(t);
@@ -158,20 +192,20 @@ namespace mln
 	valid_ = false;
     }
 
-    template <typename S>
+    template <typename T>
     inline
     void
-    median<S>::update_() const
+    rank_<T>::update_() const
     {
       valid_ = true;
 
       if (h_.sum() == 0)
 	return;
 
-      if (2 * sum_minus_ > h_.sum())
+      if (sum_minus_ > k_)
 	go_minus_();
       else
-	if (2 * sum_plus_ > h_.sum())
+	if ((sum_minus_ + h_[i_]) < k_)
 	  go_plus_();
       else
 	if (h_[i_] == 0)
@@ -184,10 +218,10 @@ namespace mln
 	  }
     }
 
-    template <typename S>
+    template <typename T>
     inline
     void
-    median<S>::go_minus_() const
+    rank_<T>::go_minus_() const
     {
       do
 	{
@@ -197,14 +231,14 @@ namespace mln
 	  while (h_[i_] == 0);
 	  sum_minus_ -= h_[i_];
 	}
-      while (2 * sum_minus_ > h_.sum());
+      while (sum_minus_ > k_);
       t_ = s_[i_];
     }
 
-    template <typename S>
+    template <typename T>
     inline
     void
-    median<S>::go_plus_() const
+    rank_<T>::go_plus_() const
     {
       do
 	{
@@ -214,14 +248,14 @@ namespace mln
 	  while (h_[i_] == 0);
 	  sum_plus_ -= h_[i_];
 	}
-      while (2 * sum_plus_ > h_.sum());
+      while ((sum_minus_ + h_[i_]) < k_);
       t_ = s_[i_];
     }
 
-    template <typename S>
+    template <typename T>
     inline
     void
-    median<S>::init()
+    rank_<T>::init()
     {
       h_.init();
       sum_minus_ = 0;
@@ -232,22 +266,14 @@ namespace mln
       valid_ = true;
     }
 
-    template <typename S>
+    template <typename T>
     inline
-    typename median<S>::argument
-    median<S>::to_result() const
+    T
+    rank_<T>::to_result() const
     {
       if (! valid_)
 	update_();
       return t_;
-    }
-
-    template <typename S>
-    inline
-    const accu::histo<S>&
-    median<S>::histo() const
-    {
-      return h_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -256,5 +282,6 @@ namespace mln
 
 } // end of namespace mln
 
+#include <mln/accu/rank_bool.hh>
 
-#endif // ! MLN_ACCU_MEDIAN_HH
+#endif // ! MLN_ACCU_RANK_HH

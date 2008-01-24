@@ -1,3 +1,15 @@
+2008-01-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Optimize accu::rank, fixes on accus.
+	* mln/accu/rank.hh: New. A faster version of accu::rank based on
+	histo.
+	* mln/accu/rank_bool.hh: Init nfalse to 0 in init().
+	* mln/accu/rank_naive.hh: Rename as...
+	* mln/accu/rank_high_quant.hh: ...this.
+	* mln/accu/median.hh: Remove duplicated operator<< (Already in
+	concept/accumulator).
+	* tests/accu/rank.cc: Test each rank of an accumulator.
+
 2008-01-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Start to mark out and clean up bad usages of neighborhoods.

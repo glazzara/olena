@@ -90,6 +90,7 @@ namespace mln
     void
     rank_<bool>::init()
     {
+      nfalse_ = 0;
     }
 
 
