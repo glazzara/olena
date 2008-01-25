@@ -1,5 +1,9 @@
 2008-01-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	* tests/level/replace.cc: Fix licence in replace.cc.
+
+2008-01-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add a replace routine.
 	* mln/level/replace.hh: New, the routine replace a value by another
 	one in an image.
