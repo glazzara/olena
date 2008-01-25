@@ -113,7 +113,6 @@ AC_CONFIG_FILES([
       milena/tests/io/pgm/Makefile
       milena/tests/io/pnm/Makefile
       milena/tests/io/ppm/Makefile
-    milena/tests/norm/Makefile
     milena/tests/labeling/Makefile
     milena/tests/level/Makefile
       milena/tests/level/approx/Makefile
@@ -127,6 +126,8 @@ AC_CONFIG_FILES([
       milena/tests/metal/make/Makefile
       milena/tests/metal/math/Makefile
     milena/tests/morpho/Makefile
+    milena/tests/neighb/Makefile
+    milena/tests/norm/Makefile
     milena/tests/pw/Makefile
     milena/tests/set/Makefile
     milena/tests/tag/Makefile
