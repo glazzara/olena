@@ -252,7 +252,7 @@ namespace mln
   t_image<I>::operator()(const mln_point(I)& p) const
   {
     mln_precondition(this->owns_(p));
-    return this->data_->ima_(transpose_(p));
+    return (*this->delegatee_())(transpose_(p));
   }
 
   template <typename I>
@@ -261,7 +261,7 @@ namespace mln
   t_image<I>::operator()(const mln_point(I)& p)
   {
     mln_precondition(this->owns_(p));
-    return this->data_->ima_(transpose_(p));
+    return (*this->delegatee_())(transpose_(p));
   }
 
   template <typename I>

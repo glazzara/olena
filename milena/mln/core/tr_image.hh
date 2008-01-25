@@ -167,7 +167,7 @@ namespace mln
   inline
   bool tr_image<T,I>::has_data() const
   {
-    mln_invariant(this->data_->ima_.has_data());
+    mln_invariant(this->delegatee_()->has_data());
     return true;
   }
 
@@ -179,7 +179,7 @@ namespace mln
     metal::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));
-    return this->data_->ima_.owns_(p);
+    return this->delegatee_().owns_(p);
   }
 
   template <typename T, typename I>
@@ -190,7 +190,7 @@ namespace mln
     metal::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));
-    return this->data_->ima_.domain().has(p);
+    return this->delegatee_()->domain().has(p);
   }
 
   template <typename T, typename I>
@@ -202,8 +202,8 @@ namespace mln
     metal::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));
-    mln_assertion(this->data_->ima_.owns_(p));
-    return this->data_->ima_(p);
+    mln_assertion(this->delegatee_()->owns_(p));
+    return (*this->delegatee_())(p);
   }
 
   template <typename T, typename I>

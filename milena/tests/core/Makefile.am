@@ -17,6 +17,7 @@ check_PROGRAMS =				\
   rle_image					\
   sparse_image					\
   t_image					\
+  tr_image					\
   p_priority_queue				\
   p_priority_queue_fast				\
   p_priority_queue_fast_with_array		\
@@ -37,6 +38,7 @@ p_runs_SOURCES = p_runs.cc
 rle_image_SOURCES = rle_image.cc
 sparse_image_SOURCES = sparse_image.cc
 t_image_SOURCES = t_image.cc
+tr_image_SOURCES = tr_image.cc
 p_priority_queue_SOURCES = p_priority_queue.cc
 p_priority_queue_fast_SOURCES = p_priority_queue_fast.cc
 p_priority_queue_fast_with_array_SOURCES = p_priority_queue_fast.cc

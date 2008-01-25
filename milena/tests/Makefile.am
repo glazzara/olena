@@ -101,7 +101,6 @@ check_PROGRAMS =				\
   sub_image					\
 						\
   test_positive					\
-  tr_image					\
   trait_ch_value				\
   trait_images					\
   trait_op_plus					\
@@ -194,7 +193,6 @@ stack_SOURCES = stack.cc
 sub_image_SOURCES = sub_image.cc
 
 test_positive_SOURCES = test_positive.cc
-tr_image_SOURCES = tr_image.cc
 trait_ch_value_SOURCES = trait_ch_value.cc
 trait_images_SOURCES = trait_images.cc
 trait_op_plus_SOURCES = trait_op_plus.cc

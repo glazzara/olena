@@ -1,5 +1,20 @@
 2008-01-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use delegations explicitly in the t_image and tr_image morphers.
+
+	* mln/core/tr_image.hh (tr_image<T,I>::has_data)
+	(mln::tr_image<T,I>::owns_, tr_image<T,I>::has)
+	(mln::tr_image<T,I>::operator()): Simplify using this->delegatee_().
+	* mln/core/t_image.hh (mln::t_image<I>::operator()): Likewise.
+	* tests/tr_image.cc: Move...
+	* tests/core/tr_image.cc: ...here.
+	* tests/Makefile.am (check_PROGRAMS): Remove tr_image.
+	(tr_image_SOURCES): Move...
+	* tests/core/Makefile.am: ...here.
+	(check_PROGRAMS): Add tr_image.
+
+2008-01-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust the morphological dilation w.r.t. a neighborhood.
 
 	* mln/morpho/includes.hh: Include mln/metal/has_neighborhood.hh.
