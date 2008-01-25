@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,37 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TAG_SKELETON_HH
-# define MLN_TAG_SKELETON_HH
-
-/*! \file mln/tag/skeleton.hh
+/*! \file tests/neighb/image.cc
  *
- * \brief Definition of tags used in the skeleton types associated to
- * image types.
+ * \brief Tests on mln::neighb::image.
  */
 
+#include <mln/neighb/image.hh>
+#include <mln/core/image2d.hh>
+#include <mln/core/neighb2d.hh>
+#include <mln/metal/has_neighborhood.hh>
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
 
-  namespace tag
-  {
+  typedef image2d<int> ima_t;
+  typedef neighb2d nbh_t;
 
-    // With param.
-    template <typename I> struct image_    { typedef I param; };
-    template <typename V> struct value_    { typedef V param; };
-    template <typename P> struct psite_    { typedef P param; };
-    template <typename S> struct pset_     { typedef S param; };
-    template <typename D> struct data_     { typedef D param; };
-    template <typename F> struct function_ { typedef F param; };
-    template <typename N> struct neighb_   { typedef N param; };
+  typedef neighb::image<ima_t, nbh_t> ima_with_nbh_t;
 
-    // With value.
-    template <unsigned u> struct unsigned_ { enum { value = u }; };
+  metal::has_neighborhood<ima_with_nbh_t>::check();
 
-  } // end of namespace mln::tag
+  ima_t ima (make::box2d(5, 5));
 
-} // end of namespace mln
+  // Explicit construction.
+  ima_with_nbh_t ima1 (ima, c4());
+  neighb::get(ima1);
 
-
-#endif // ! MLN_TAG_SKELETON_HH
+  // Construction using operator+.
+  ima_with_nbh_t ima2 = ima + c4();
+  neighb::get(ima2);
+}

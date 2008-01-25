@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,37 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TAG_SKELETON_HH
-# define MLN_TAG_SKELETON_HH
+#ifndef MLN_METAL_HAS_NEIGHBORHOOD_HH
+# define MLN_METAL_HAS_NEIGHBORHOOD_HH
 
-/*! \file mln/tag/skeleton.hh
- *
- * \brief Definition of tags used in the skeleton types associated to
- * image types.
- */
-
+# include <mln/neighb/get.hh>
 
 namespace mln
 {
 
-  namespace tag
+  namespace metal
   {
 
-    // With param.
-    template <typename I> struct image_    { typedef I param; };
-    template <typename V> struct value_    { typedef V param; };
-    template <typename P> struct psite_    { typedef P param; };
-    template <typename S> struct pset_     { typedef S param; };
-    template <typename D> struct data_     { typedef D param; };
-    template <typename F> struct function_ { typedef F param; };
-    template <typename N> struct neighb_   { typedef N param; };
+    template <typename I>
+    struct has_neighborhood
+    {
+      static void check()
+      {
+	// Ensure the image has a `neighb' property.
+	typedef mln_neighb(I) neighb;
+      }
+    };
 
-    // With value.
-    template <unsigned u> struct unsigned_ { enum { value = u }; };
-
-  } // end of namespace mln::tag
+  } // end of namespace mln::metal
 
 } // end of namespace mln
 
-
-#endif // ! MLN_TAG_SKELETON_HH
+#endif // ! MLN_METAL_HAS_NEIGHBORHOOD_HH

@@ -1,5 +1,24 @@
 2008-01-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a morpher adding a neighborhood to an image.
+
+	* mln/neighb/image.hh: New.
+	Provide a morpher adding a neighborhood to an image.
+	* mln/neighb/get.hh: New.
+	Get the neighborhood from an image with neighborhood.
+	* mln/metal/has_neighborhood.hh: New.
+	Provide a static assertion `has_neighborhood' for images.
+	* mln/tag/skeleton.hh (mln::tag::neighb_): New tag.
+	* mln/trait/ch_value.hh
+	(trait::impl::ch_value_< M< tag::image_<I>, tag::neighb_<N> >, V >):
+	New specialization for mln::neighb::image<I, N>.
+	* tests/Makefile.am (SUBDIRS): Add neighb.
+	* tests/neighb/Makefile.am: New.
+	* tests/neighb/image.cc: New.
+	Exercize mln/neighb/images.cc and mln/neighb/get.cc.
+
+2008-01-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a `neighb' trait for images.
 
 	* mln/trait/images.hh (mln_trait_image_neighb): New macro.

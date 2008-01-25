@@ -18,6 +18,7 @@ SUBDIRS =					\
   level						\
   logical					\
   morpho					\
+  neighb					\
   norm						\
   set						\
   util						\

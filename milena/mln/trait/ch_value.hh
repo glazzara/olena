@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -107,6 +107,14 @@ namespace mln
 	   *components* of the vector.  Hence the current definition.
 	 */
 	typedef mln_ch_value(I, V) ret;
+      };
+
+      // For mln::neighb::image<I, N>.
+      template < template <class, class> class M, typename I, typename N,
+		 typename V >
+      struct ch_value_<  M< tag::image_<I>, tag::neighb_<N> >,  V  >
+      {
+	typedef M < mln_ch_value(I, V), N > ret;
       };
 
       template < template <class, class> class M, typename I, typename S,
