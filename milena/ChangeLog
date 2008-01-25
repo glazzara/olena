@@ -1,3 +1,10 @@
+2008-01-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add a replace routine.
+	* mln/level/replace.hh: New, the routine replace a value by another
+	one in an image.
+	* tests/level/replace.cc: New, a little test.
+
 2008-01-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Optimize accu::rank, fixes on accus.
