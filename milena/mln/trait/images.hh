@@ -60,6 +60,7 @@
 # define mln_trait_image_support(I)  typename mln::trait::image_< I >::support
 
 # define mln_trait_image_border(I)   typename mln::trait::image_< I >::border
+# define mln_trait_image_neighb(I)   typename mln::trait::image_< I >::neighb
 # define mln_trait_image_data(I)     typename mln::trait::image_< I >::data
 # define mln_trait_image_io(I)       typename mln::trait::image_< I >::io
 # define mln_trait_image_speed(I)    typename mln::trait::image_< I >::speed
@@ -124,6 +125,7 @@ namespace mln
 
       // global
       typedef undef border;   // none, { stored, computed } < some
+      typedef undef neighb;   // none, some
       typedef undef data;     // raw < linear < stored, computed
       typedef undef io;       // read_only < read, write_only < write, read_write < both read'n write
       typedef undef speed;    // slow, fast, or fastest
@@ -158,6 +160,9 @@ namespace mln
 
       // speed is fast by default (neither "fastest" nor "slow")
       typedef trait::image::speed::fast speed;
+
+      // neighb is absent by default.
+      typedef trait::image::neighb::none neighb;
     };
 
 
@@ -177,6 +182,7 @@ namespace mln
 
       // mostly global-related => delegation
       typedef typename image_<D>::border border;
+      typedef typename image_<D>::neighb neighb;
       typedef typename image_<D>::data   data;
       typedef typename image_<D>::io     io;
     };

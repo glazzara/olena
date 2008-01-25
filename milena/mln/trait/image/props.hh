@@ -69,6 +69,7 @@ namespace mln
 
       //       // global
       //       typedef undef border;   // none, { stored, computed } < some
+      //       typedef undef neighb;   // none, some
       //       typedef undef data;     // raw < linear < stored, computed
       //       typedef undef io;       // read_only < read, write_only < write, read_write < both read'n write
       //       typedef undef speed;    // slow, fast, or fastest
@@ -170,6 +171,13 @@ namespace mln
 	struct some     : any  { std::string name() const { return "border::some"; } };
 	struct stored   : some { std::string name() const { return "border::stored"; } };
 	struct computed : some { std::string name() const { return "border::computed"; } };
+      };
+
+      struct neighb
+      {
+	struct any {};
+	struct none     : any  { std::string name() const { return "neighb::none"; } };
+	struct some     : any  { std::string name() const { return "neighb::some"; } };
       };
 
       struct io

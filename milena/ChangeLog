@@ -1,3 +1,19 @@
+2008-01-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a `neighb' trait for images.
+
+	* mln/trait/images.hh (mln_trait_image_neighb): New macro.
+	(mln::trait::undefined_image_::neighb)
+	(mln::trait::default_image_::neighb)
+	(mln::trait::default_image_morpher_::neighb):
+	New typedefs.
+	* mln/trait/image/props.hh
+	(mln::trait::image::neighb)
+	(mln::trait::image::neighb::any)
+	(mln::trait::image::neighb::none)
+	(mln::trait::image::neighb::some):
+	New structs.
+
 2008-01-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* tests/level/replace.cc: Fix licence in replace.cc.
