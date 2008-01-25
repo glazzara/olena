@@ -1,5 +1,17 @@
 2008-01-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Miscellaneous corrections in documentation and aesthetics changes.
+
+	* mln/core/macros.hh: Use Doxygen delimiters to document pairs of
+	macros.
+	* mln/value/stack.hh: Wrap long lines.
+	Fix Doxygen comments.
+	* mln/border/get.hh: Fix header inclusions.
+	Fix Doxygen comments.
+	* tests/stack.cc: Don't include unnecessary files.
+
+2008-01-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use delegations explicitly in the t_image and tr_image morphers.
 
 	* mln/core/tr_image.hh (tr_image<T,I>::has_data)

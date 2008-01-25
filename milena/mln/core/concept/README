@@ -5,6 +5,8 @@ In fact, the best place where to put this documentation is in the
 concept files themselves, but we'd like a kind of centralized summary
 too.  An index would be nice.
 
+See what Doxygen's \page provides.
+
 * Image
 Images are functions mapping point sites from a given domain (point
 site set) to a value.

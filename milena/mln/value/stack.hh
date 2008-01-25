@@ -131,8 +131,10 @@ namespace mln
 
   namespace value
   {
-    /*! \brief stack image class. stack_image stores a
-     *  vector of n images of the same domain.
+    /*! \brief Stack image class.
+     *
+     * mln::value::stack_image stores a vector of n images of the same
+     * domain.
      *
      * The parameter \c n is the number of images, \c I is the type of
      * a stack element. Acces a value will compute a vector which
@@ -143,7 +145,8 @@ namespace mln
      *                               stack[n](p)]
      */
     template <unsigned n, typename I>
-    struct stack_image : public mln::internal::image_value_morpher_< I, stack_image<n,I> >
+    struct stack_image
+      : public mln::internal::image_value_morpher_< I, stack_image<n,I> >
     {
       /// Point_Site associated type.
       typedef mln_psite(I) psite;
@@ -168,9 +171,11 @@ namespace mln
       typedef stack_image< n, tag::image_<I> > skeleton;
 
 
-      /// Constructor.
+      /// Constructors.
+      /// \{
       stack_image(const metal::vec<n,I>& imas);
       stack_image();
+      /// \}
 
 
       /// Test if this image has been initialized.

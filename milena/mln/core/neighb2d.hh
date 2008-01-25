@@ -98,6 +98,8 @@ namespace mln
   inline
   const neighb2d& c4()
   {
+    // FIXME: `flower' is probably not a canonical name to state
+    // whether the neighborhood is initialized or not. :)
     static bool flower = true;
     static neighb2d it;
     if (flower)

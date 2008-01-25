@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,7 +33,7 @@
  * \brief Define function that returns the real border thickness of image.
  */
 
-# include <mln/border/find.hh>
+# include <mln/trait/images.hh>
 
 
 namespace mln
@@ -42,13 +42,12 @@ namespace mln
   namespace border
   {
 
-    /*! Get the virtual (outer) border thickness of image \p ima.
+    /*! Get the virtual (outer) border thickness of image \a ima.
      *
      * \param[in] ima The image.
-     * \result The border thickness (0 if there is no border).
+     * \result    The border thickness (0 if there is no border).
      *
-     * \pre \p ima has to be initialized.
-     *
+     * \pre \a ima has to be initialized.
      */
     template <typename I>
     unsigned get(const Image<I>& ima);
