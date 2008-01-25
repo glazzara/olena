@@ -1,5 +1,16 @@
 2008-01-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust the morphological dilation w.r.t. a neighborhood.
+
+	* mln/morpho/includes.hh: Include mln/metal/has_neighborhood.hh.
+	* mln/morpho/dilation.hh: Remove dead code.
+	(dilation(const Image<I>&, Image<O>&)): Update preconditions.
+	Fix delegation to mln::morpho::impl::dilation_wrt_nbh.
+	* tests/morpho/dilation.cc: Peform tests using neighborhoods.
+	Use smaller structural elemements to speed up tests.
+
+2008-01-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a morpher adding a neighborhood to an image.
 
 	* mln/neighb/image.hh: New.

@@ -92,32 +92,6 @@ namespace mln
     namespace impl
     {
 
-      /*---------------------.
-      | Neighborhood-based.  |
-      `---------------------*/
-
-      /* FIXME: We might want to move this function into the body of
-	 the facade (see at the bottom of the file.  */
-      // Sole case.  Convert the neighborhood into a window, and
-      // delegate to the window-based implementation.
-      template <typename I, typename N, typename O>
-      inline
-      void dilation_wrt_nbh(const Image<I>& input,
-			    const Neighborhood<N>& nbh,
-			    Image<O>& output)
-      {
-	/* FIXME: The following comment applies to every algorithm
-	   having a neighborhood and a window flavor: move it
-	   elsewhere.
-
-	   We solely depend on the neighborhood-to-window conversion
-	   here.  This means the conversion should be smart enough to
-	   produce a working window, even in the case of a non
-	   dpoint-set-based neighborhood.  */
-	dilation_wrt_win(input, to_window(nbh), output);
-      }
-
-
       /*---------------.
       | Window-based.  |
       `---------------*/
@@ -170,24 +144,6 @@ namespace mln
 		  break;
 		}
       }
-
-      // FIXME: Seems to be duplicate code!
-
-//       /// Stage 1: dispatch w.r.t. the window type.
-//       /// \{
-
-//       /// Default case.
-//       template <typename I, typename W, typename O>
-//       inline
-//       void dilation_wrt_win(const Image<I>& input, const Window<W>& win,
-// 			    Image<O>& output)
-//       {
-// 	// Perform stage 2: dispatch w.r.t. the value kind.
-// 	dilation_wrt_value(mln_trait_image_kind(I)(), exact(input),
-// 			   exact(win), output);
-//       }
-
-      // ...
 
 
       // ------------- //
@@ -284,6 +240,31 @@ namespace mln
 
       /// \}
 
+
+      /*---------------------.
+      | Neighborhood-based.  |
+      `---------------------*/
+
+      /* FIXME: We might want to move this function into the body of
+	 the facade (see at the bottom of the file.  */
+      // Sole case.  Convert the neighborhood into a window, and
+      // delegate to the window-based implementation.
+      template <typename I, typename N, typename O>
+      inline
+      void dilation_wrt_nbh(const Image<I>& input, const Neighborhood<N>& nbh,
+			    Image<O>& output)
+      {
+	/* FIXME: The following comment applies to every algorithm
+	   having a neighborhood and a window flavor: move it
+	   elsewhere.
+
+	   We solely depend on the neighborhood-to-window conversion
+	   here.  This means the conversion should be smart enough to
+	   produce a working window, even in the case of a non
+	   dpoint-set-based neighborhood.  */
+	dilation_wrt_win(input, convert::to_window(nbh), output);
+      }
+
     } // end of namespace mln::morpho::impl
 
 
@@ -301,22 +282,13 @@ namespace mln
     {
       trace::entering("morpho::dilation");
 
+      metal::has_neighborhood<I>::check();
+
       mln_precondition(exact(output).domain() == exact(input).domain());
 
-      // Ensure the image has a `neighb' typedef.
-      typedef mln_neighb(I) neighb;
+     typedef mln_neighb(I) neighb;
 
-      // FIXME: Encapsulate this in a class + a macro.
-      // FIXME: Do we have better concept checking tools?
-      {
-	// Ensure the image has a `neighb' method.
-	neighb (I::*m)() const = &I::neighb;
-	m = 0;
-
-	// FIXME: Do we need to check for more?
-      }
-
-      impl::dilation_wrt_nbh(input, output);
+      impl::dilation_wrt_nbh(input, exact(input).neighborhood(), output);
 
       trace::exiting("morpho::dilation");
     }

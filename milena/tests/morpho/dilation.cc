@@ -51,6 +51,9 @@
 #include <mln/convert/to_p_array.hh>
 #include <mln/convert/to_window.hh>
 
+#include <mln/core/neighb2d.hh>
+#include <mln/neighb/image.hh>
+
 #include "tests/data.hh"
 
 
@@ -70,23 +73,30 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
   { 
-    // FIXME: This struct. elt. is far too big for a routinely run
-    // test; either use a smaller one or qualify this test as
-    // ``long''.
-    win::rectangle2d rec(21, 21);
+    win::rectangle2d rec(5, 3);
     image2d<int_u8> out(lena.domain());
     morpho::dilation(lena, rec, out);
     io::pgm::save(out, "out1.pgm");
   }
 
   {
-    win::octagon2d oct(6);
+    win::octagon2d oct(7);
     image2d<int_u8> out(lena.domain());
     morpho::dilation(lena, oct, out);
     io::pgm::save(out, "out2.pgm");
   }
 
-  // FIXME: Add tests using neighborhoods, too.
+  {
+    image2d<int_u8> out(lena.domain());
+    morpho::dilation(lena + c4(), out);
+    io::pgm::save(out, "out3.pgm");
+  }
+
+  {
+    image2d<int_u8> out(lena.domain());
+    morpho::dilation(lena + c8(), out);
+    io::pgm::save(out, "out4.pgm");
+  }
 
 //   { 
 //     p_array<point2d> vec = convert::to_p_array(rec, point2d::zero);
@@ -95,7 +105,7 @@ int main()
 //     image2d<int_u8> out(lena.domain());
 //     level::ero(lena, win, out);
 //     morpho::dilation(lena, win, out);
-//     io::pgm::save(out, "out.pgm");
+//     io::pgm::save(out, "out5.pgm");
 //   }
 
 //   {
@@ -107,7 +117,7 @@ int main()
 //     image2d<int_u8>::fwd_piter p(lena.domain());
 //     for_all(p)
 //       test(p) = out(p) ? 255 : 0;
-//     io::pgm::save(test, "test.pgm");
+//     io::pgm::save(test, "out6.pgm");
 //   }
 
 }

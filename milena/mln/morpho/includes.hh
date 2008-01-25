@@ -38,6 +38,8 @@
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/neighborhood.hh>
 
+# include <mln/metal/has_neighborhood.hh>
+
 # include <mln/value/ops.hh>
 
 # include <mln/accu/min.hh>
