@@ -16,7 +16,8 @@ min						\
 min_h						\
 min_max						\
 nil						\
-pair
+pair						\
+tuple
 
 all_SOURCES = all.cc
 bbox_SOURCES = bbox.cc
@@ -32,5 +33,6 @@ min_h_SOURCES = min_h.cc
 min_max_SOURCES = min_max.cc
 nil_SOURCES = nil.cc
 pair_SOURCES = pair.cc
+tuple_SOURCES = tuple.cc
 
 TESTS = $(check_PROGRAMS)

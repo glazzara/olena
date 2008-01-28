@@ -63,6 +63,7 @@
 # include <mln/draw/mesh.hh>
 
 # include <mln/level/stretch.hh>
+# include <mln/level/threshold.hh>
 # include <mln/linear/gaussian.hh>
 
 # include <mln/core/image_if_value.hh>
@@ -128,6 +129,16 @@ IB to_binary(IU8 in, mln_value_(IU8) val)
   return score_b;
 }
 
+void label_and_stat(IB& ima)
+{
+  unsigned nlabels;
+  IU labelled(ima.domain());
+
+  labelled = labeling::blobs(ima, c4(), nlabels);
+
+  
+}
+
 IU8 projection(IB ima, int coord)
 {
   box2d smb = ima.domain();
@@ -155,7 +166,6 @@ IU8 projection(IB ima, int coord)
 int
 main(int argc, char** argv)
 {
-
   if (argc != 3)
     {
       std::cerr << "Usage : " << argv[0]
@@ -177,10 +187,14 @@ main(int argc, char** argv)
     
 //     IU8 histo_col_blur(histo_col.domain());
 //     linear::gaussian(histo_col, 5, histo_col_blur);
-//     level::stretch(histo_col_blur, histo_col_blur);
-
-//     io::pgm::save(histo_col, "histo_col.pgm");
 //     io::pgm::save(histo_col_blur, "histo_col_blur.pgm");
+
+//     level::stretch(histo_col, histo_col);
+//     io::pgm::save(histo_col, "histo_col.pgm");
+//     IB histo_col_b(histo_col.domain());
+//     histo_col_b = level::threshold(histo_col, mln_value_(IU8)(175));
+
+//     io::pbm::save(histo_col_b, "histo_col_b.pbm");
 //   }
 
 //   { // Labelling des grosses composant connexes pour étiqueter les differentes portées.
@@ -194,18 +208,20 @@ main(int argc, char** argv)
 //     io::pgm::save(labeled, "labeled.pgm");
 //   }
 
-//   { // fermeture avec un disk et un element vertial pour reperer les notes.
-//     IB closed1 = morpho::closing(score_b, win::vline2d(5));
-//     IB closed2 = morpho::closing(score_b, win::disk2d(5));
-//     morpho::opening_area(closed1, c4(), 20, closed1);
-//     morpho::opening_area(closed2, c4(), 15, closed2);
-//     io::pbm::save(closed1, "closed1.pbm");
-//     io::pbm::save(closed2, "closed2.pbm");
-//   }
+  { // fermeture avec un disk et un element vertial pour reperer les notes.
+    IB closed1 = morpho::opening(score_b, win::vline2d(5));
+    IB closed2 = morpho::opening(score_b, win::disk2d(5));
+    morpho::opening_area(closed1, c4(), 20, closed1);
+    morpho::opening_area(closed2, c4(), 15, closed2);
+    io::pbm::save(closed1, "closed1.pbm");
+
+    label_and_stat(closed2);
+    io::pbm::save(closed2, "closed2.pbm");
+  }
 
   { // Fermeture avec un element struturant en horizontale pour obtenir les lignes de portée.
-    IB hclosed = morpho::closing(score_b, win::hline2d(73));
-    io::pbm::save(hclosed, "hclosed.pbm");
+//     IB hclosed = morpho::closing(score_b, win::hline2d(73));
+//     io::pbm::save(hclosed, "hclosed.pbm");
   }
 }
 

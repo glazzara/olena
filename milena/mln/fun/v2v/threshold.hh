@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,37 +25,66 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_CONCRETE_HH
-# define MLN_TRAIT_CONCRETE_HH
+#ifndef MLN_FUN_V2V_THRESHOLD_HH
+# define MLN_FUN_V2V_THRESHOLD_HH
 
-/*! \file mln/trait/concrete.hh
+/*! \file mln/fun/v2v/threshold.hh
  *
- * \brief Definition of the concrete image trait.
+ * \brief FIXME.
  */
 
-# include <mln/trait/ch_value.hh>
-
-
-# define mln_concrete(I)  typename mln::trait::concrete< I >::ret
-# define mln_concrete_ch_value(I, V) mln_ch_value(mln_concrete(I), V)
+# include <mln/core/concept/function.hh>
 
 
 namespace mln
 {
 
-  namespace trait
+  namespace fun
   {
 
-    template <typename I>
-    struct concrete
+    namespace v2v
     {
-      typedef typename I::value value;
-      typedef typename ch_value<I, value>::ret ret;
-    };
 
-  } // end of namespace mln::trait
+      /*!
+       *\brief Threshold function.
+       * f(v) = (v >= threshold).
+       *
+       */
+      template <typename V>
+      struct threshold : public Function_v2v< threshold<V> >
+      {
+	typedef bool result;
+	bool operator()(const V& v) const;
+
+	threshold(const V& a);
+	V a;
+      };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename V>
+      inline
+      threshold<V>::threshold(const V& a)
+	: a(a)
+      {
+      }
+
+      template <typename V>
+      inline
+      bool
+      threshold<V>::operator()(const V& v) const
+      {
+	return (v >= a);
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::v2v
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_CONCRETE_HH
+#endif // ! MLN_FUN_V2V_THRESHOLD_HH

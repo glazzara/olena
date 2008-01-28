@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,37 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_CONCRETE_HH
-# define MLN_TRAIT_CONCRETE_HH
-
-/*! \file mln/trait/concrete.hh
+/*! \file tests/accu/tuple.cc
  *
- * \brief Definition of the concrete image trait.
+ * \brief Tests on mln::accu::tuple.
  */
 
-# include <mln/trait/ch_value.hh>
+#include <iostream>
+
+#include <mln/value/builtin/integers.hh>
+
+#include <mln/accu/tuple.hh>
+
+#include <mln/accu/count.hh>
+#include <mln/accu/max.hh>
+#include <mln/accu/min.hh>
+#include <mln/accu/mean.hh>
 
 
-# define mln_concrete(I)  typename mln::trait::concrete< I >::ret
-# define mln_concrete_ch_value(I, V) mln_ch_value(mln_concrete(I), V)
-
-
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace trait
-  {
+  typedef accu::tuple_<int, 4, accu::count_<int>, accu::max_<int>, accu::min_<int>, accu::mean_<int> > teratuple;
 
-    template <typename I>
-    struct concrete
-    {
-      typedef typename I::value value;
-      typedef typename ch_value<I, value>::ret ret;
-    };
+  teratuple tuple1;  
+  teratuple tuple2;
 
-  } // end of namespace mln::trait
+  int i1 = 7;
+  int i2 = 1;
+  int i3 = 12;
+  int i4 = -5;
+  int i5 = -7;
+  int i6 = 14;
 
-} // end of namespace mln
+  tuple1.take_as_init(i1);
+  tuple1.take(i2);
+  tuple1.take(i3);
+  tuple1.take(i4);
 
+  tuple2.take_as_init(i5);
+  tuple2.take(i6);
 
-#endif // ! MLN_TRAIT_CONCRETE_HH
+  tuple1.take(tuple2);
+  boost::tuple<unsigned, int, int, float> res1 = tuple1.to_result();
+
+  mln_assertion(6 == res1.get<0>());
+  mln_assertion(14 == res1.get<1>());
+  mln_assertion(-7 == res1.get<2>());
+  mln_assertion(res1.get<3>() - 3.66 < 0.1);
+}

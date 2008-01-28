@@ -1,3 +1,20 @@
+2008-01-28  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add thresholding and a generalisation of accu::pair.
+
+	Add features for thresholding an image.
+
+	* mln/fun/v2v/threshold.hh: New.
+	* mln/level/threshold.hh: New.
+
+	* mln/trait/concrete.hh: Add mln_concrete_ch_value.
+	* mln/accu/tuple.hh: New.
+	* tests/accu/Makefile.am: Add the following test.
+	* tests/accu/tuple.cc: New.
+
+	* mln/accu/median.hh: Add FIXME.
+	* sandbox/nivault/extract_score.cc: Begin stats.
+
 2008-01-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add directories to store reports.
