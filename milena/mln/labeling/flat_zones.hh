@@ -45,14 +45,12 @@ namespace mln
   {
 
     /* FIXME: The neighborhood shall not be passed as argument, but
-       bound to the input image.  We can also optionnaly provide a
-       version of this function for regular-grid-based images where
-       the neighborhood is replaced by a (user-provided) window.  */
+       bound to the input image.  */
 
     /*! Connected component labeling of the flat zones of an image.
      *
      * \param[in]  input    The input image.
-     * \param[in]  nbh      The neighborhood to consider.
+     * \param[in]  nbh      The connexity of the flat zones.
      * \param[out] nlabels  The number of labels.
      * \return              The label image.
      */

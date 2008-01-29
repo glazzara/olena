@@ -48,15 +48,13 @@ namespace mln
   {
 
     /* FIXME: The neighborhood shall not be passed as argument, but
-       bound to the input image.  We can also optionnaly provide a
-       version of this function for regular-grid-based images where
-       the neighborhood is replaced by a (user-provided) window.  */
+       bound to the input image.  */
 
     /*! Connected component labeling of the binary objects of a binary
      *  image.
      *
      * \param[in]  input    The input image.
-     * \param[in]  nbh      The neighborhood.
+     * \param[in]  nbh      The connexity of the objects.
      * \param[out] nlabels  The number of labels.
      * \return              The label image.
      *

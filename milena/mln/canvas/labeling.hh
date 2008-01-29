@@ -36,7 +36,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/level/fill.hh>
-# include <mln/convert/to_window.hh> // FIXME: to_upper_window
+# include <mln/convert/to_upper_window.hh>
 
 
 namespace mln

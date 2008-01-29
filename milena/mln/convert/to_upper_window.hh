@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,22 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_WINDOW_HH
-# define MLN_CONVERT_TO_WINDOW_HH
+#ifndef MLN_CONVERT_TO_UPPER_WINDOW_HH
+# define MLN_CONVERT_TO_UPPER_WINDOW_HH
 
-/*! \file mln/convert/to_window.hh
+/*! \file mln/convert/to_upper_window.hh
  *
- * \brief Conversions to mln::window.
+ * \brief Conversions to upper mln::window.
  */
 
-# include <set>
- 
 # include <mln/core/concept/delta_point_site.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/window.hh>
-# include <mln/pw/image.hh>
-# include <mln/pw/cst.hh>
-# include <mln/metal/is_a.hh>
 
 
 namespace mln
@@ -49,21 +44,13 @@ namespace mln
   namespace convert
   {
 
-    /// Convert a neighborhood \p nbh into a window.
+    /// Convert a window \p nbh into an upper window.
+    template <typename W>
+    window<mln_dpoint(W)> to_upper_window(const Window<W>& win);
+
+    /// Convert a neighborhood \p nbh into an upper window.
     template <typename N>
-    window<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh);
-
-    /// Convert a binary image \p ima into a window.
-    template <typename I>
-    window<mln_dpoint(I)> to_window(const Image<I>& ima);
-
-    /// Convert a point set \p pset into a window.
-    template <typename S>
-    window<mln_dpoint(S)> to_window(const Point_Set<S>& pset);
-
-    /// Convert an std::set \p s of delta-points into a window.
-    template <typename D>
-    window<D> to_window(const std::set<D>& s);
+    window<mln_dpoint(N)> to_upper_window(const Neighborhood<N>& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -77,9 +64,24 @@ namespace mln
        neighborhood (i.e., delegate the actual iteration to the
        aggregated neighborhood).  When this is fixed, document this in
        depth in milena/core/concepts/README.  */
+    template <typename W>
+    inline
+    window<mln_dpoint(W)> to_upper_window(const Window<W>& win_)
+    {
+      const W& input_win = exact(win_);
+      typedef mln_dpoint(W) D;
+      typedef mln_point(D) P;
+      window<D> win;
+      mln_qiter(W) q(input_win, P::origin);
+      for_all(q)
+	if (q > P::origin)
+	  win.insert(q - P::origin);
+      return win;
+    }
+
     template <typename N>
     inline
-    window<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh_)
+    window<mln_dpoint(N)> to_upper_window(const Neighborhood<N>& nbh_)
     {
       const N& nbh = exact(nbh_);
       typedef mln_dpoint(N) D;
@@ -87,45 +89,8 @@ namespace mln
       window<D> win;
       mln_niter(N) n(nbh, P::origin);
       for_all(n)
-	win.insert(n - P::origin);
-      return win;
-    }
-
-    // FIXME: Same remark as for to_window(const Neighborhood<N>&)
-    template <typename I>
-    inline
-    window<mln_dpoint(I)> to_window(const Image<I>& ima_)
-    {
-      const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
-      // FIXME: Check that ima is binary!
-      typedef mln_dpoint(I) D;
-      typedef mln_point(D) P;
-      window<D> win;
-      mln_piter(I) p(ima.domain());
-      for_all(p)
-	if (ima(p))
-	  win.insert(p - P::origin);
-      return win;
-    }
-
-    template <typename S>
-    inline
-    window<mln_dpoint(S)> to_window(const Point_Set<S>& pset)
-    {
-      return to_window(pw::cst(true) | pset);
-    }
-
-    template <typename D>
-    inline
-    window<D> to_window(const std::set<D>& s)
-    {
-      // FIXME: Was: mln::metal::is_a<D, Dpoint>::check();
-      mln::metal::is_a<D, Delta_Point_Site>::check();
-      window<D> win;
-      for (typename std::set<D>::const_iterator i = s.begin();
-	   i != s.end(); ++i)
-	win.insert(*i);
+	if (n > P::origin)
+	  win.insert(n - P::origin);
       return win;
     }
 

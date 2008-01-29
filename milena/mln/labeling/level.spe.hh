@@ -50,16 +50,14 @@ namespace mln
   {
 
     /* FIXME: The neighborhood shall not be passed as argument, but
-       bound to the input image.  We can also optionnaly provide a
-       version of this function for regular-grid-based images where
-       the neighborhood is replaced by a (user-provided) window.  */
+       bound to the input image.  */
 
     /*! Connected component labeling of the image objects at a given
      * level.
      *
      * \param[in]  input    The input image.
      * \param[in]  val      The level to consider for the labeling.
-     * \param[in]  nbh      The neighborhood.
+     * \param[in]  nbh      The connexity of the level components.
      * \param[out] nlabels  The number of labels.
      * \return              The label image.
      */
