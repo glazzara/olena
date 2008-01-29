@@ -1,5 +1,16 @@
 2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add Meyer's Watershed Transform algorithm.
+
+	* mln/util/greater_point.hh: New.
+	A ``greater than'' functor comparing points w.r.t. the
+	values they refer to in an image.
+	* mln/morpho/meyer_wst.hh: New.
+	Meyer's Watershed Transform algorithm.
+	* tests/morpho/meyer_wst.cc: New tests.
+
+2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a computation of the extrema level components.
 
 	* mln/morpho/extrema_components.hh: New.
