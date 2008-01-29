@@ -3,6 +3,7 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
+  closing_area					\
   contrast					\
   dilation					\
   dilation_max_h				\
@@ -16,6 +17,7 @@ check_PROGRAMS =				\
   opening_area					\
   thinning
 
+closing_area_SOURCES = closing_area.cc
 contrast_SOURCES = contrast.cc
 dilation_SOURCES = dilation.cc
 dilation_max_h_SOURCES = dilation_max_h.cc

@@ -1,5 +1,17 @@
 2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add an area closing filter.
+
+	* mln/morpho/closing_attribute.hh: New.
+	Dual of mln/morpho/opening_attribute.hh
+	* mln/morpho/closing_area.hh: New.
+	Dual of mln/morpho/opening_area.hh
+	* tests/morpho/closing_area.cc: New test.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Add closing_area.
+	(closing_area_SOURCES): New.
+
+2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add Meyer's Watershed Transform algorithm.
 
 	* mln/util/greater_point.hh: New.
