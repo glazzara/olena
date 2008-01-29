@@ -11,6 +11,7 @@ check_PROGRAMS =				\
   gradient					\
   hit_or_miss					\
   laplacian					\
+  level_components				\
   opening_area					\
   thinning
 
@@ -22,6 +23,7 @@ erosion_min_h_SOURCES = erosion_min_h.cc
 gradient_SOURCES = gradient.cc
 hit_or_miss_SOURCES = hit_or_miss.cc
 laplacian_SOURCES = laplacian.cc
+level_components_SOURCES = level_components.cc
 opening_area_SOURCES = opening_area.cc
 thinning_SOURCES = thinning.cc
 
