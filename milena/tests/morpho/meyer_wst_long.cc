@@ -30,18 +30,26 @@
 
 #include <iostream>
 
+#include <mln/core/image_if.hh>
 #include <mln/core/image2d.hh>
 #include <mln/core/window2d.hh>
 #include <mln/core/neighb2d.hh>
 
 #include <mln/convert/to_window.hh>
+#include <mln/level/stretch.hh>
 
 #include <mln/value/int_u8.hh>
+#include <mln/value/int_u16.hh>
 
+#include <mln/morpho/closing_area.hh>
 #include <mln/morpho/meyer_wst.hh>
 
+#include <mln/pw/cst.hh>
+#include <mln/pw/value.hh>
+
+#include <mln/display/color_pretty.hh>
 #include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
+#include <mln/io/ppm/save.hh>
 
 #include "tests/data.hh"
 
@@ -50,15 +58,25 @@ int main()
 {
   using namespace mln;
   using value::int_u8;
+  using value::int_u16;
 
   image2d<int_u8> input;
-  io::pgm::load(input, MLN_IMG_DIR "/squares.pgm");
+  io::pgm::load(input, MLN_IMG_DIR "/lena.pgm");
 
-  typedef int_u8 output_val;
+  // Simplify the input image.
+  image2d<int_u8> work(input.domain());
+  morpho::closing_area(input, c4(), 200, work);
+
+  // Perform a Watershed Transform.
+  typedef int_u16 wst_val;
   unsigned nbasins;
   // FIXME: Do we really need to use a neighborood to express a 4-c window?
-  image2d<int_u8> output =
-    morpho::meyer_wst<output_val>(input, convert::to_window(c4()), nbasins);
+  image2d<wst_val> ws =
+    morpho::meyer_wst<wst_val>(work, convert::to_window(c4()), nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
-  io::pgm::save(output, "out.pgm");
+
+  // Save the image in color.
+  image2d<value::rgb8> input_plus_ws =
+    display::color_pretty(input | (pw::value(ws) != pw::cst(0)));
+  io::ppm::save(input_plus_ws, "out.ppm");
 }

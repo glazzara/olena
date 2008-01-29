@@ -1,5 +1,16 @@
 2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	More tests on Meyer's WST.
+
+	* tests/morpho/meyer_wst_long.cc: New test.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Add meyer_wst and
+	meyer_wst_long.
+	(meyer_wst_SOURCES)
+	(meyer_wst_long_SOURCES, meyer_wst_long_CXXFLAGS):
+	New.
+
+2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add an area closing filter.
 
 	* mln/morpho/closing_attribute.hh: New.
