@@ -35,14 +35,16 @@
 #include <mln/core/window2d.hh>
 #include <mln/core/neighb2d.hh>
 
-#include <mln/convert/to_window.hh>
 #include <mln/level/stretch.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>
 
+#include <mln/morpho/gradient.hh>
 #include <mln/morpho/closing_area.hh>
 #include <mln/morpho/meyer_wst.hh>
+
+#include <mln/convert/to_window.hh>
 
 #include <mln/pw/cst.hh>
 #include <mln/pw/value.hh>
@@ -63,16 +65,17 @@ int main()
   image2d<int_u8> input;
   io::pgm::load(input, MLN_IMG_DIR "/lena.pgm");
 
+  image2d<int_u8> gradient =
+    morpho::gradient (input, convert::to_window(c4()));
+
   // Simplify the input image.
   image2d<int_u8> work(input.domain());
-  morpho::closing_area(input, c4(), 200, work);
+  morpho::closing_area(gradient, c4(), 200, work);
 
   // Perform a Watershed Transform.
   typedef int_u16 wst_val;
-  unsigned nbasins;
-  // FIXME: Do we really need to use a neighborood to express a 4-c window?
-  image2d<wst_val> ws =
-    morpho::meyer_wst<wst_val>(work, convert::to_window(c4()), nbasins);
+  wst_val nbasins;
+  image2d<wst_val> ws = morpho::meyer_wst(work, c4(), nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
   // Save the image in color.

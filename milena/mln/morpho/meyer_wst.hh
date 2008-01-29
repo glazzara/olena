@@ -45,7 +45,8 @@
 
 # include <mln/util/greater_point.hh>
 # include <mln/morpho/includes.hh>
-# include <mln/morpho/extrema_components.hh>
+# include <mln/labeling/regional_minima.hh>
+
 
 
 namespace mln
@@ -61,34 +62,58 @@ namespace mln
        processing it.  Then, add a reference to
        mln/morpho/lower_completion.hh.  */
 
-    /* FIXME: More doc.  */
+    /** \brief Meyer's Watershed Transform (WST) algorithm.
 
-    /// Meyer's Watershed Transform (WST) algorithm.
-    template <typename DestValue, typename I, typename W>
-    mln_ch_value(I, DestValue)
-    meyer_wst(const Image<I>& input, const Window<W>& win, unsigned& nbasins);
+	\param[in]  input   The input image.
+	\param[in]  nbh     The connexity of markers.
+	\param[out] nbasins The number of basins.
 
-    /// Meyer's Watershed Transform (WST) algorithm, with no count of
-    /// basins.
-    template <typename DestValue, typename I, typename W>
-    mln_ch_value(I, DestValue)
-    meyer_wst(const Image<I>& input, const Window<W>& win);
+	\li \p L is the type of labels, used to number the watershed
+	itself (with the minimal value), and the basins.
+	\li \p I is the exact type of the input image.
+	\li \p N is the exact type of the neighborhood used to express
+	\a input's connexity.  */
+    template <typename L, typename I, typename N>
+    mln_ch_value(I, L)
+    meyer_wst(const Image<I>& input, const Neighborhood<N>& nbh,
+	      L& nbasins);
+
+    /** \brief Meyer's Watershed Transform (WST) algorithm, with no
+        count of basins.
+
+	\param[in]  input   The input image.
+	\param[in]  nbh     The connexity of markers.
+
+	\li \p L is the type of labels, used to number the watershed
+	itself (with the minimal value), and the basins.
+	\li \p I is the exact type of the input image.
+	\li \p N is the exact type of the neighborhood used to express
+	\a input's connexity.
+
+	Note that the first parameter, \p L, is not automatically
+	valued from the type of the actual argument during implicit
+	instantiation: you have to explicitly pass this parameter at
+	call sites.  */
+    template <typename L, typename I, typename N>
+    mln_ch_value(I, L)
+    meyer_wst(const Image<I>& input, const Neighborhood<N>& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename DestValue, typename I, typename W>
-    mln_ch_value(I, DestValue)
-    meyer_wst(const Image<I>& input, const Window<W>& win, unsigned& nbasins)
+    template <typename L, typename I, typename N>
+    mln_ch_value(I, L)
+    meyer_wst(const Image<I>& input, const Neighborhood<N>& nbh,
+	      L& nbasins)
     {
       /* FIXME: Ensure the input image has scalar values.  */
 
-      typedef DestValue marker;
+      typedef L marker;
       const marker unmarked = mln_min(marker);
 
       // Initialize the output with the markers (minima components).
       mln_ch_value(I, marker) markers =
-	minima_components<marker>(input, win, nbasins);
+	labeling::regional_minima (input, nbh, nbasins);
 
       // Ordered queue.
       typedef mln_point(I) point;
@@ -101,11 +126,11 @@ namespace mln
       // hierarchical queue, with a priority level corresponding to
       // the grey level input(P).
       mln_piter(I) p(markers.domain());
-      mln_qiter(W) q(win, p);
+      mln_niter(N) n(nbh, p);
       for_all (p)
 	if (markers(p) == unmarked)
-	  for_all(q)
-	    if (markers.has(q) && markers(q) != unmarked)
+	  for_all(n)
+	    if (markers.has(n) && markers(n) != unmarked)
 	      {
 		queue.push(p);
 		break;
@@ -122,16 +147,16 @@ namespace mln
 	  marker adjacent_marker = unmarked;
 	  // Has P a single adjacent marker?
 	  bool single_adjacent_marker_p = true;
-	  mln_qiter(W) q(win, p);
-	  for_all(q)
-	    if (markers.has(q) && markers(q) != unmarked)
+	  mln_niter(N) n(nbh, p);
+	  for_all(n)
+	    if (markers.has(n) && markers(n) != unmarked)
 	      if (adjacent_marker == unmarked)
 		{
-		  adjacent_marker = markers(q);
+		  adjacent_marker = markers(n);
 		  single_adjacent_marker_p = true;
 		}
 	      else
-		if (adjacent_marker != markers(q))
+		if (adjacent_marker != markers(n))
 		  {
 		    single_adjacent_marker_p = false;
 		    break;
@@ -143,20 +168,20 @@ namespace mln
 	  if (single_adjacent_marker_p)
 	    {
 	      markers(p) = adjacent_marker;
-	      for_all(q)
-		if (markers.has(q) && markers(q) == unmarked)
-		  queue.push(q);
+	      for_all(n)
+		if (markers.has(n) && markers(n) == unmarked)
+		  queue.push(n);
 	    }
 	}
       return markers;
     }
 
-    template <typename DestValue, typename I, typename W>
-    mln_ch_value(I, DestValue)
-    meyer_wst(const Image<I>& input, const Window<W>& win)
+    template <typename L, typename I, typename N>
+    mln_ch_value(I, L)
+    meyer_wst(const Image<I>& input, const Neighborhood<N>& nbh)
     {
-      unsigned nbasins;
-      return meyer_wst<DestValue>(input, nbasins);
+      L nbasins;
+      return meyer_wst<L>(input, nbh, nbasins);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -34,8 +34,6 @@
 #include <mln/core/window2d.hh>
 #include <mln/core/neighb2d.hh>
 
-#include <mln/convert/to_window.hh>
-
 #include <mln/value/int_u8.hh>
 
 #include <mln/morpho/meyer_wst.hh>
@@ -54,11 +52,9 @@ int main()
   image2d<int_u8> input;
   io::pgm::load(input, MLN_IMG_DIR "/squares.pgm");
 
-  typedef int_u8 output_val;
-  unsigned nbasins;
-  // FIXME: Do we really need to use a neighborood to express a 4-c window?
-  image2d<int_u8> output =
-    morpho::meyer_wst<output_val>(input, convert::to_window(c4()), nbasins);
+  typedef int_u8 wst_val;
+  wst_val nbasins;
+  image2d<int_u8> output = morpho::meyer_wst(input, c4(), nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
   io::pgm::save(output, "out.pgm");
 }

@@ -1,5 +1,17 @@
 2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Convert Meyer's WST implementation to neighborhood-based.
+
+	* mln/morpho/meyer_wst.hh: Use neighborhoods instead of windows to
+	express the connexity of the markers.
+	Use mln::labeling::regional_minima instead of
+	mln::morpho::minima_components.
+	* tests/morpho/meyer_wst.cc,
+	* tests/morpho/meyer_wst_long.cc:
+	Adjust tests.
+
+2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Move convert::to_upper_window into its own file.
 
 	* mln/convert/to_window.hh
