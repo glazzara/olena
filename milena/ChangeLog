@@ -1,5 +1,16 @@
 2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a computation of the extrema level components.
+
+	* mln/morpho/extrema_components.hh: New.
+	Imported from Olena proto-1.0.
+	* tests/morpho/extrema_components.cc: New test.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Add extrema_components.
+	(extrema_components_SOURCES): New.
+	* img/squares.pgm, img/squares-lc.pgm: New images.
+
+2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a computation of the level components.
 
 	* mln/morpho/level_components.hh: New.

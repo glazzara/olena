@@ -8,6 +8,7 @@ check_PROGRAMS =				\
   dilation_max_h				\
   erosion					\
   erosion_min_h					\
+  extrema_components				\
   gradient					\
   hit_or_miss					\
   laplacian					\
@@ -20,6 +21,7 @@ dilation_SOURCES = dilation.cc
 dilation_max_h_SOURCES = dilation_max_h.cc
 erosion_SOURCES = erosion.cc
 erosion_min_h_SOURCES = erosion_min_h.cc
+extrema_components_SOURCES = extrema_components.cc
 gradient_SOURCES = gradient.cc
 hit_or_miss_SOURCES = hit_or_miss.cc
 laplacian_SOURCES = laplacian.cc
