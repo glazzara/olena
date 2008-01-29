@@ -1,5 +1,11 @@
 2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a memo file on Boost features used in Milena.
+
+	* README.BOOST: New.
+
+2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Convert Meyer's WST implementation to neighborhood-based.
 
 	* mln/morpho/meyer_wst.hh: Use neighborhoods instead of windows to
