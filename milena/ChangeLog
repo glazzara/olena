@@ -1,3 +1,17 @@
+2008-01-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove morpho::level_components and morpho::extrema_components.
+
+	* mln/morpho/extrema_components.hh,
+	* mln/morpho/level_components.hh:
+	Remove.
+	* tests/morpho/extrema_components.cc,
+	* tests/morpho/level_components.cc:
+	Remove test.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Remove
+	extrema_components and level_components_SOURCES.
+	(extrema_components_SOURCES, level_components_SOURCES): Remove.
+
 2008-01-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a memo file on Boost features used in Milena.

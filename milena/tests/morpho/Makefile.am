@@ -9,11 +9,9 @@ check_PROGRAMS =				\
   dilation_max_h				\
   erosion					\
   erosion_min_h					\
-  extrema_components				\
   gradient					\
   hit_or_miss					\
   laplacian					\
-  level_components				\
   meyer_wst					\
   meyer_wst_long				\
   opening_area					\
@@ -27,9 +25,6 @@ erosion_min_h_SOURCES = erosion_min_h.cc
 
 opening_area_SOURCES = opening_area.cc
 closing_area_SOURCES = closing_area.cc
-
-level_components_SOURCES = level_components.cc
-extrema_components_SOURCES = extrema_components.cc
 
 contrast_SOURCES = contrast.cc
 gradient_SOURCES = gradient.cc
