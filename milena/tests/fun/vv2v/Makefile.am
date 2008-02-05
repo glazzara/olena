@@ -2,4 +2,11 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-SUBDIRS = i2v p2b p2v v2v vv2v x2x
+check_PROGRAMS =				\
+  max						\
+  min
+
+max_SOURCES = max.cc
+min_SOURCES = min.cc
+
+TESTS = $(check_PROGRAMS)

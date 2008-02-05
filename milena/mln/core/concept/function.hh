@@ -39,9 +39,7 @@
 namespace mln
 {
 
-  /// \{
-  /// Fwd decls.
-
+  // Fwd decls.
   template <typename E> struct Function;
   template <typename E> struct Function_v2v;
   template <typename E> struct Function_i2v;
@@ -50,11 +48,11 @@ namespace mln
   template <typename E> struct Function_p2b;
   template <typename E> struct Function_p2p;
   template <typename E> struct Function_x2x;
-  /// \}
+
+  template <typename E> struct Function_vv2v;
 
 
-
-  // Function category flag type.
+  /// Function category flag type.
   template <>
   struct Function<void>
   {
@@ -81,7 +79,9 @@ namespace mln
   };
 
 
-  // Value -> Value.
+  /*-----------------.
+  | Value -> Value.  |
+  `-----------------*/
 
   template <>
   struct Function_v2v<void> { typedef Function<void> super; };
@@ -102,11 +102,12 @@ namespace mln
   };
 
 
-  // Index -> Value.
+  /*-----------------.
+  | Index -> Value.  |
+  `-----------------*/
 
   template <>
   struct Function_i2v<void> { typedef Function_v2v<void> super; };
-
 
   /*!
    * \brief Base class for implementation of function-objects from
@@ -124,7 +125,9 @@ namespace mln
   };
 
 
-  // Point -> Value.
+  /*-----------------.
+  | Point -> Value.  |
+  `-----------------*/
 
   template <>
   struct Function_p2v<void> { typedef Function_v2v<void> super; };
@@ -145,7 +148,9 @@ namespace mln
   };
 
 
-  // Value -> bool.
+  /*----------------.
+  | Value -> bool.  |
+  `----------------*/
 
   template <>
   struct Function_v2b<void> { typedef Function_v2v<void> super; };
@@ -167,7 +172,9 @@ namespace mln
   };
 
 
-  // Point -> bool.
+  /*----------------.
+  | Point -> bool.  |
+  `----------------*/
 
   template <>
   struct Function_p2b<void> { typedef Function_p2v<void> super; }; // FIXME
@@ -190,7 +197,9 @@ namespace mln
   };
 
 
-  // Point -> Point.
+  /*-----------------.
+  | Point -> Point.  |
+  `-----------------*/
 
   template <>
   struct Function_p2p<void> { typedef Function_p2v<void> super; }; // FIXME
@@ -211,7 +220,9 @@ namespace mln
   };
 
 
-  // Vector -> Vector.
+  /*-------------------.
+  | Vector -> Vector.  |
+  `-------------------*/
 
   template <>
   struct Function_x2x<void> { typedef Function_v2v<void> super; }; // FIXME
@@ -231,7 +242,10 @@ namespace mln
     Function_x2x(const Function_x2x&);
   };
 
-  // Vector <-> Vector.
+
+  /*--------------------.
+  | Vector <-> Vector.  |
+  `--------------------*/
 
   /*!
    * \brief Base class for implementation of bijective function-objects from
@@ -250,6 +264,28 @@ namespace mln
     Bijection_x2x();
   };
 
+
+  /*------------------------.
+  | Value, Value -> Value.  |
+  `------------------------*/
+
+  template <>
+  struct Function_vv2v<void> { typedef Function<void> super; };
+
+  /*!
+   * \brief Base class for implementation of function-objects from
+   * a couple of values to a value.
+   *
+   * The parameter \a E is the exact type.
+   */
+  template <typename E>
+  struct Function_vv2v : public Function<E>
+  {
+    typedef Function_vv2v<void> category;
+  protected:
+    Function_vv2v();
+    Function_vv2v(const Function_vv2v&);
+  };
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -368,6 +404,19 @@ namespace mln
     typedef typename E::invert invert;
     invert (E::*m)() const = & E::inv;
     m = 0;
+  }
+
+  template <typename E>
+  inline
+  Function_vv2v<E>::Function_vv2v()
+  {
+  }
+
+  template <typename E>
+  inline
+  Function_vv2v<E>::Function_vv2v(const Function_vv2v<E>& rhs)
+    : Function<E>(rhs)
+  {
   }
 
 # endif // ! MLN_INCLUDE_ONLY

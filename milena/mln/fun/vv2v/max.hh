@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,34 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef TESTS_NORM_COMMON_HH
-# define TESTS_NORM_COMMON_HH
+#ifndef MLN_FUN_VV2V_MAX_HH
+# define MLN_FUN_VV2V_MAX_HH
 
-#include <cassert>
+/// \file mln/fun/vv2v/max.hh
+/// \brief Computing the maximum of two values using a functor.
 
-#include <mln/math/abs.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/math/max.hh>
 
-// FIXME: We should have a almost_equal function somewhere in Milena.
-static const float epsilon = 0.0001;
 
-namespace test
+namespace mln
 {
 
-  template <typename Norm, typename V>
-  void
-  check_norm(const Norm norm, const V& vec1, const V& vec2)
+  namespace fun
   {
-    assert(mln::math::abs(norm(vec1) - norm(vec2)) < epsilon);
-  }
 
-  template <typename Distance, typename V, typename S>
-  void
-  check_distance (const Distance dist, const V& vec1, const V& vec2,
-		  const S& ref_val)
-  {
-    assert(mln::math::abs(dist(vec1, vec2) - ref_val) < epsilon);
-  }
+    namespace vv2v
+    {
 
-} // End of namespace test.
+      // FIXME: Doc.
 
-#endif // !TESTS_NORM_COMMON_HH
+      /// \brief A functor computing the maximum of two values.
+      template <typename V>
+      struct max : public Function_vv2v< max<V> >
+      {
+	typedef V result;
+	V operator()(const V& v1, const V& v2) const;
+      };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename V>
+      inline
+      V
+      max<V>::operator()(const V& v1, const V& v2) const
+      {
+	return mln::math::max(v1, v2);
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::vv2v
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+
+#endif // ! MLN_FUN_VV2V_MAX_HH

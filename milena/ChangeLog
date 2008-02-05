@@ -1,3 +1,14 @@
+2008-02-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add functors max and min.
+
+	* mln/core/concept/function.hh (mln::Function_vv2v): New.
+	* mln/fun/vv2v/max.hh, mln/fun/vv2v/min.hh: New.
+	* tests/fun/vv2v/max.cc, tests/fun/vv2v/min.cc: New tests.
+	* tests/fun/vv2v/Makefile.am: New.
+	* tests/fun/Makefile.am (SUBDIRS): Add i2v, p2b, p2v and vv2v.
+	* tests/norm/common.hh: Adjust coding style.
+
 2008-02-05  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	Added personal folder and color files in sandbox.
