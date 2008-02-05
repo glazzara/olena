@@ -1,3 +1,5 @@
+# FIXME: To be overhauled! (See ticket #134).
+
 DOXYGEN = doxygen
 
 .PHONY: doc user-doc internal-doc html html_user
@@ -10,10 +12,10 @@ user-doc: html_user
 
 
 html-local: Doxyfile
-	$(DOXYGEN) $(srcdir)/Doxyfile_internal
+	$(DOXYGEN) Doxyfile_internal
 
-html_user:: Doxyfile
-	$(DOXYGEN) $(srcdir)/Doxyfile_user
+html_user: Doxyfile
+	$(DOXYGEN) Doxyfile_user
 
 
 edit = sed -e "s|@ID@|$$Id|" 					\
@@ -22,6 +24,10 @@ edit = sed -e "s|@ID@|$$Id|" 					\
 	   -e 's,@top_builddir\@,$(top_builddir),g' 		\
 	   -e 's,@top_srcdir\@,$(top_srcdir),g'
 
+# FIXME: This is not good.  We should set these parameters for both
+# documentation (internal and user) using @VARIABLES@.  Don't generate
+# Doxyfile_user from Doxyfile_internal!  Both should be a product
+# derived from a single source, Doxyfile.in.
 edit_user = sed -e 's,OUTPUT_DIRECTORY       = ./internal/,OUTPUT_DIRECTORY       = ./user/,g' 		\
 		-e 's,EXTRACT_ALL            = YES,EXTRACT_ALL            = NO,g'			\
 		-e 's,EXTRACT_PRIVATE        = YES,EXTRACT_PRIVATE        = NO,g'			\
@@ -44,10 +50,10 @@ CLEANFILES = Doxyfile_internal \
 # configure, because the former is way faster than the latter.
 # Moreover, this file is updated whenever ChangeLog is touched: using
 # sed instead of configure saves us a lot of time.
-Doxyfile: $(top_srcdir)/ChangeLog $(srcdir)/Doxyfile.in
-	   Id=`grep '^\$$Id' $(top_srcdir)/ChangeLog`; 			\
-	   $(edit) $(srcdir)/Doxyfile.in >Doxyfile_internal; 		\
-	   $(edit_user) $(srcdir)/Doxyfile_internal >Doxyfile_user
+Doxyfile: $(top_srcdir)/milena/ChangeLog $(srcdir)/Doxyfile.in
+	   Id=`grep '^\$$Id' $(top_srcdir)/milena/ChangeLog`;	\
+	   $(edit) $(srcdir)/Doxyfile.in >Doxyfile_internal &&	\
+	   $(edit_user) Doxyfile_internal >Doxyfile_user
 
 clean-local:
 	rm -rf internal user
