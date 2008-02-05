@@ -5,10 +5,10 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   all_headers					\
   line						\
-  mesh
+  graph
 
 all_headers_SOURCES = all_headers.cc
 line_SOURCES = line.cc
-mesh_SOURCES = mesh.cc
+graph_SOURCES = graph.cc
 
 TESTS = $(check_PROGRAMS)

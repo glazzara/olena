@@ -79,7 +79,9 @@ namespace mln
     template<typename T>
     struct s_edge
     {
-      s_edge() : pair_node_ (0, 0) {}
+      s_edge()
+	: pair_node_ (0, 0)
+      {}
 
       T	data;
       ordpair_<unsigned> pair_node_;
@@ -95,9 +97,11 @@ namespace mln
       ordpair_<unsigned> pair_node_;
     };
 
-    bool operator==(const struct s_edge <void>& lhs, const struct s_edge <void>& rhs);
+    bool operator==(const struct s_edge <void>& lhs,
+		    const struct s_edge <void>& rhs);
 
-    bool operator< (const struct s_edge <void>& lhs, const struct s_edge <void>& rhs);
+    bool operator< (const struct s_edge <void>& lhs,
+		    const struct s_edge <void>& rhs);
 
     /// \brief Generic graph structure using s_node and s_edge.
     /* FIXME: We don't mention anywhere whether this graph structure
@@ -105,6 +109,10 @@ namespace mln
     template<typename N, typename E = void>
     struct graph
     {
+      /* FIXME: Do we really want handle edges and nodes through
+	 pointers?  In my (Roland) opinion, this is just a drawback,
+	 here.  */
+
       /// The type of the set of nodes.
       typedef std::vector< s_node<N>* > nodes;
       /// The type of the set of edges.
@@ -217,12 +225,20 @@ namespace mln
       edge = new s_edge<E>;
       edge->pair_node_.first = n1;
       edge->pair_node_.second = n2;
-      if (links_.end () == std::find(links_.begin(), links_.end(), edge))
-	delete edge;
+      // Does this edge already exist in the graph?
+      if (std::find(links_.begin(), links_.end(), edge) != links_.end ())
+	{
+	  delete edge;
+	  edge = 0;
+	}
       else
 	{
 	  links_.push_back (edge);
 	  ++nb_link_;
+	  /* FIXME: In fact, we should store adjaceny information in
+	     *both* nodes.  Change this globally later, and mention
+	     that the graph is undirected in the documentation.  And
+	     don't forget to update clients!  */
 	  nodes_[n1]->links.push_back (n2);
 	}
     }
@@ -234,15 +250,18 @@ namespace mln
     {
       mln_precondition(nodes_.size () == this->nb_node_);
       mln_precondition(links_.size () == this->nb_link_);
-      typename std::vector<struct s_node <N>*>::const_iterator it = nodes_.begin ();
+      typename std::vector<struct s_node <N>*>::const_iterator it =
+	nodes_.begin ();
       for (; it != nodes_.end (); ++it)
 	{
-	  typename std::list<unsigned>::const_iterator it2 = (*it)->links.begin ();
+	  typename std::list<unsigned>::const_iterator it2 = 
+	    (*it)->links.begin ();
 	  for (; it2 != (*it)->links.end (); ++it2)
 	    mln_precondition((*it2) < nb_node_);
 	}
 
-      typename std::vector<struct s_edge<E>*>::const_iterator it3 = links_.begin ();
+      typename std::vector<struct s_edge<E>*>::const_iterator it3 =
+	links_.begin ();
       for (; it3 != links_.end (); ++it3)
 	{
 	  mln_precondition((*it3)->pair_node_.first < nb_node_);
@@ -257,7 +276,8 @@ namespace mln
     {
       ostr << "nodes :"	<< std::endl;
 
-      typename std::vector<struct s_node<N>*>::const_iterator it = nodes_.begin ();
+      typename std::vector<struct s_node<N>*>::const_iterator it =
+	nodes_.begin ();
       int i = 0;
       for (; it != nodes_.end (); ++it, ++i)
 	{

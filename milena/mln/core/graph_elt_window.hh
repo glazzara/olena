@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,39 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WIN_MESH_ELT_WINDOW_HH
-# define MLN_WIN_MESH_ELT_WINDOW_HH
+#ifndef MLN_WIN_GRAPH_ELT_WINDOW_HH
+# define MLN_WIN_GRAPH_ELT_WINDOW_HH
 
-/*! \file mln/core/mesh_elt_window.hh
+/*! \file mln/core/graph_elt_window.hh
  *
- *  \brief Definition of the elementary neighborhood (wrongly
- *  -- but purposefully -- named "window" here, for consistency
- *  reasons) on a mesh (a graph, in fact).
+ *  \brief Definition of the elementary ``window'' on a graph.
  *
  *  \todo Make naming coherent: we have window (without '_') but
  *  point_, neighb_, etc.
  */
 
 # include <mln/core/concept/window.hh>
-# include <mln/core/mesh_psite.hh>
-# include <mln/core/mesh_window_piter.hh>
+# include <mln/core/graph_psite.hh>
+# include <mln/core/graph_window_piter.hh>
 
 
 namespace mln
 {
   // Fwd decls.
-  template <typename P> class mesh_window_fwd_piter;
-  template <typename P> class mesh_window_bkd_piter;
+  template <typename P> class graph_window_fwd_piter;
+  template <typename P> class graph_window_bkd_piter;
 
 
-  /*! \brief Elementary window on mesh class.
+  /*! \brief Elementary window on graph class.
    *
    *  FIXME: Doc.
    */
   template <typename P>
-  class mesh_elt_window : public Window< mesh_elt_window<P> >
+  class graph_elt_window : public Window< graph_elt_window<P> >
   {
-    typedef mesh_elt_window<P> self_;
+    typedef graph_elt_window<P> self_;
 
   public:
     /// Associated types.
@@ -66,98 +64,102 @@ namespace mln
     // FIXME: Is this right, if we consider that this window stores
     // psites, not points?
     typedef P point;
-      
-    // FIXME: This is a dummy value.  This is yet another evidence
-    // that mesh_elt_window shall not be a Window, and therefore be
-    // renamed as mesh_elt_neighb, or better: elt_graph_neighb.
+
+    // FIXME: This is a dummy value.
     typedef void dpoint;
 
     /*! \brief Point_Iterator type to browse the points of a generic window
      * w.r.t. the ordering of delta-points.
      */
-    typedef mesh_window_fwd_piter<P> fwd_qiter;
+    typedef graph_window_fwd_piter<P> fwd_qiter;
 
     /*! \brief Point_Iterator type to browse the points of a generic window
      * w.r.t. the reverse ordering of delta-points.
      */
-    typedef mesh_window_bkd_piter<P> bkd_qiter;
+    typedef graph_window_bkd_piter<P> bkd_qiter;
 
     /// The default qiter type.
     typedef fwd_qiter qiter;
     /// \}
 
-    /// Construct an elementary mesh window centered on \a psite.
-    mesh_elt_window(/*const mesh_psite<P>& psite*/);
+    /// Construct an elementary graph window.
+    graph_elt_window();
 
-    // FIXME: The following methods make no sense for a
-    // general-purpose neighborhood.  Anyway, we provide
-    // implementations for them for this first draft of graph
-    // neighborhood.
+    /// Is the window is empty?
     bool is_empty() const;
+
+    /// Is the window centered?
     bool is_centered() const;
+
+    /// Is the window symmetric?
+    // FIXME: We should defin this more precisely.
     bool is_symmetric() const;
+
+    /// Return the maximum coordinate gap between the window center
+    /// and a window point.
+    /* FIXME: This method returns a dummy value (0), since the delta
+       of a window on a graph
+
+       1. is not constant (graph nodes are not necessarily aligned on
+          a regular grid);
+
+       2. depends on the underlying graph, too.
+
+       It raises another question: should delta() be part of the
+       concept ``Window''?  */
     unsigned delta() const;
+
+    /// Apply a central symmetry to the target window.
     self_& sym();
-
-    //     protected:
-    //       const mesh_psite<P>& psite_;
   };
-
-
-  // FIXME: Add an operator<< on ostreams ?
 
 
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
   inline
-  mesh_elt_window<P>::mesh_elt_window(/*const mesh_psite<P>& psite*/)
-  //       : psite_(psite)
+  graph_elt_window<P>::graph_elt_window()
   {
   }
 
   template <typename P>
   inline
   bool
-  mesh_elt_window<P>::is_empty() const
+  graph_elt_window<P>::is_empty() const
   {
-    // FIXME: Dummy value.
     return false;
   }
 
   template <typename P>
   inline
   bool
-  mesh_elt_window<P>::is_centered() const
+  graph_elt_window<P>::is_centered() const
   {
-    // FIXME: Dummy value.
     return false;
   }
 
   template <typename P>
   inline
   bool
-  mesh_elt_window<P>::is_symmetric() const
+  graph_elt_window<P>::is_symmetric() const
   {
-    // FIXME: Dummy value.
-    return false;
+    return true;
   }
 
   template <typename P>
   inline
   unsigned
-  mesh_elt_window<P>::delta() const
+  graph_elt_window<P>::delta() const
   {
-    // FIXME: Dummy value.
+    // Dummy value (see the interface of the method above).
     return 0;
   }
 
   template <typename P>
   inline
-  mesh_elt_window<P>&
-  mesh_elt_window<P>::sym()
+  graph_elt_window<P>&
+  graph_elt_window<P>::sym()
   {
-    // FIXME: Dummy value.
     return *this;
   }
 
@@ -166,4 +168,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_WIN_MESH_ELT_WINDOW_HH
+#endif // ! MLN_WIN_GRAPH_ELT_WINDOW_HH

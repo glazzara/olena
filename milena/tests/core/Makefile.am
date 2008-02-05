@@ -8,8 +8,8 @@ check_PROGRAMS =				\
   exact						\
   h_vec						\
   initialize					\
-  mesh_elt_window				\
-  mesh_image					\
+  graph_elt_window				\
+  graph_image					\
   mono_obased_rle_image				\
   mono_rle_image				\
   obased_rle_image				\
@@ -29,8 +29,8 @@ clone_SOURCES = clone.cc
 exact_SOURCES = exact.cc
 h_vec_SOURCES = h_vec.cc
 initialize_SOURCES = initialize.cc
-mesh_elt_window_SOURCES = mesh_elt_window.cc
-mesh_image_SOURCES = mesh_image.cc
+graph_elt_window_SOURCES = graph_elt_window.cc
+graph_image_SOURCES = graph_image.cc
 mono_obased_rle_image_SOURCES = mono_obased_rle_image.cc
 mono_rle_image_SOURCES = mono_rle_image.cc
 obased_rle_image_SOURCES = obased_rle_image.cc

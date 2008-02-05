@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/mesh_elt_window.cc
+/*! \file tests/core/graph_elt_window.cc
  *
- *  \brief Tests on mln::win::mesh_elt_window.
+ *  \brief Tests on mln::win::graph_elt_window.
  */
 
 #include <vector>
 
 #include <mln/core/point2d.hh>
-#include <mln/core/mesh_elt_window.hh>
+#include <mln/core/graph_elt_window.hh>
 
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
@@ -70,13 +70,13 @@ int main()
   g.add_edge(4, 2);
 
   /*------------------.
-  | Mesh and window.  |
+  | Graph and window.  |
   `------------------*/
 
-  // Mesh psite set.
-  mesh_p<p_t> mesh(g, points);
-  // Mesh point site.
-  mesh_psite<p_t> psite(mesh, 0);
-  // ``Sliding'' window (in fact, neighborhood) of a psite of MESH.
-  mesh_elt_window<p_t> win;
+  // Graph psite set.
+  p_graph<p_t> pg(g, points);
+  // Graph point site.
+  graph_psite<p_t> psite(pg, 0);
+  // ``Sliding'' window (in fact, neighborhood) of a psite of PG.
+  graph_elt_window<p_t> win;
 }

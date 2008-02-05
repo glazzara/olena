@@ -1,5 +1,52 @@
 2008-02-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename (and clean up a bit) graph-related classes.
+
+	* mln/util/graph.hh (add_edge): Fix the update of the list of
+	edges.
+	* mln/core/mesh_image.hh,
+	* mln/core/mesh_p.hh,
+	* mln/core/mesh_p_piter.hh,
+	* mln/core/mesh_psite.hh,
+	* mln/core/mesh_elt_window.hh,
+	* mln/core/mesh_window_piter.hh:
+	Rename as...
+	* mln/core/graph_image.hh,
+	* mln/core/p_graph.hh,
+	* mln/core/p_graph_piter.hh,
+	* mln/core/graph_psite.hh,
+	* mln/core/graph_elt_window.hh,
+	* mln/core/graph_window_piter.hh:
+	...these.
+	(mesh_image, mesh_p, mesh_p_piter_, mesh_psite)
+	(mesh_elt_window, mesh_window_fwd_piter):
+	Rename as...
+	(graph_image, p_graph, p_graph_piter_, graph_psite)
+	(graph_elt_window, graph_window_fwd_piter):
+	...these.
+	* mln/draw/mesh.hh:
+	Adjust.
+	Rename as...
+	* mln/draw/graph.hh: ...these.
+	(mesh(Image<I>&, const mesh_p<P>&, mln_value(I), mln_value(I)))
+	(mesh(Image<I>&, const mesh_image<P, V>&, mln_value(I))):
+	Rename as...
+	(graph(Image<I>&, const p_graph<P>&, mln_value(I), mln_value(I)))
+	(graph(Image<I>&, const graph_image<P, V>&, mln_value(I))):
+	...these.
+	* tests/core/mesh_elt_window.cc,
+	* tests/core/mesh_image.cc,
+	* tests/draw/mesh.cc:
+	Adjust.
+	Rename those tests as...
+	* tests/core/graph_elt_window.cc,
+	* tests/core/graph_image.cc,
+	* tests/draw/graph.cc:
+	...these.
+	* tests/core/Makefile.am, tests/draw/Makefile.am: Adjust names.
+
+2008-02-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix mesh_image w.r.t. the recently updated interface of graphs.
 
 	* mln/core/mesh_image.hh:

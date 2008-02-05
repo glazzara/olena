@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/draw/mesh.cc
+/*! \file tests/draw/graph.cc
  *
- *  \brief Tests on mln::draw::mesh.
+ *  \brief Tests on mln::draw::graph.
  *
  *  Build a graph, convert it to an image, and compare it with a
  *  reference images.
@@ -40,10 +40,10 @@
 #include <mln/core/point2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/util/graph.hh>
-#include <mln/core/mesh_p.hh>
-#include <mln/core/mesh_psite.hh>
-#include <mln/draw/mesh.hh>
-#include <mln/core/mesh_image.hh>
+#include <mln/core/p_graph.hh>
+#include <mln/core/graph_psite.hh>
+#include <mln/draw/graph.hh>
+#include <mln/core/graph_image.hh>
 #include <mln/level/compare.hh>
 
 
@@ -71,12 +71,10 @@ test (points_type& points, const edges_type& edges,
   // Check its consistency.
   g.consistency ();
 
-  mln::mesh_p<point2d> m(g, points);
+  mln::p_graph<point2d> pg(g, points);
 
   image2d<int> ima(nrows, ncols);
-  // FIXME: `draw::mesh' is not a good name.  This function doesn't
-  // actually draw the mesh; it *converts* it to a printable image.
-  draw::mesh (ima, m, 2, 1);
+  draw::graph (ima, pg, 2, 1);
   mln_assertion (ima == ref);
 }
 

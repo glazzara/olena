@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_MESH_P_PITER_HH
-# define MLN_CORE_MESH_P_PITER_HH
+#ifndef MLN_CORE_P_GRAPH_PITER_HH
+# define MLN_CORE_P_GRAPH_PITER_HH
 
 # include <mln/core/internal/point_iterator_base.hh>
-# include <mln/core/mesh_p.hh>
-# include <mln/core/mesh_psite.hh>
+# include <mln/core/p_graph.hh>
+# include <mln/core/graph_psite.hh>
 
-/*! \file mln/core/mesh_p_piter.hh
+/*! \file mln/core/p_graph_piter.hh
  *
  * \brief Definition of point iterator on graph-based point set.
  */
@@ -40,26 +40,27 @@
 namespace mln
 {
   // Fwd decls.
-  template<typename P> class mesh_p;
-  template<typename P> class mesh_psite;
+  template<typename P> class p_graph;
+  template<typename P> class graph_psite;
 
 
-  // FIXME: Why `mesh_p_piter_' and not `mesh_p_piter' (without `_')?
+  // FIXME: Why `p_graph_piter_' and not `p_graph_piter' (without `_')?
 
   template<typename P>
-  class mesh_p_piter_ : public internal::point_iterator_base_< P, mesh_p_piter_<P> >
+  class p_graph_piter_
+    : public internal::point_iterator_base_< P, p_graph_piter_<P> >
   {
-    typedef mesh_p_piter_<P> self_;
+    typedef p_graph_piter_<P> self_;
     typedef internal::point_iterator_base_< P, self_ > super_;
 
   public:
     
     // Make definitions from super class available.
     enum { dim = super_::dim };
-    typedef mesh_psite<P> psite;
+    typedef graph_psite<P> psite;
     typedef P point;
 
-    mesh_p_piter_(const mesh_p<P>& psite_set);
+    p_graph_piter_(const p_graph<P>& psite_set);
 
     /// Read-only access to the \p i-th coordinate.
     mln_coord(P) operator[](unsigned i) const;
@@ -88,11 +89,11 @@ namespace mln
     /// Convert the iterator into a point.
     operator point() const;
 
-    /// Convert the iterator into a mesh psite.
+    /// Convert the iterator into a graph psite.
     operator psite() const;
 
   protected:
-    const mesh_p<P>& psite_set_;
+    const p_graph<P>& psite_set_;
     unsigned i_;
     P p_;
     psite psite_;
@@ -104,7 +105,7 @@ namespace mln
 
   template<typename P>
   inline
-  mesh_p_piter_<P>::mesh_p_piter_(const mesh_p<P>& psite_set)
+  p_graph_piter_<P>::p_graph_piter_(const p_graph<P>& psite_set)
     : psite_set_(psite_set),
       p_(),
       // Initialize psite_ to a dummy value.
@@ -117,7 +118,7 @@ namespace mln
   template<typename P>
   inline
   mln_coord(P)
-  mesh_p_piter_<P>::operator[](unsigned i) const
+  p_graph_piter_<P>::operator[](unsigned i) const
   {
     return p_[i];
   }
@@ -125,7 +126,7 @@ namespace mln
   template<typename P>
   inline
   bool
-  mesh_p_piter_<P>::is_valid() const
+  p_graph_piter_<P>::is_valid() const
   {
     return i_ != psite_set_.loc_.size();
   }
@@ -133,7 +134,7 @@ namespace mln
   template<typename P>
   inline
   void
-  mesh_p_piter_<P>::invalidate()
+  p_graph_piter_<P>::invalidate()
   {
     i_ = psite_set_.loc_.size();
   }
@@ -141,7 +142,7 @@ namespace mln
   template<typename P>
   inline
   void 
-  mesh_p_piter_<P>::start()
+  p_graph_piter_<P>::start()
   {
     i_ = 0;
     if (is_valid())
@@ -151,7 +152,7 @@ namespace mln
   template<typename P>
   inline
   void 
-  mesh_p_piter_<P>::next_()
+  p_graph_piter_<P>::next_()
   {
     ++i_;
     if (is_valid())
@@ -161,18 +162,18 @@ namespace mln
   template<typename P>
   inline
   void
-  mesh_p_piter_<P>::update_()
+  p_graph_piter_<P>::update_()
   {
     // Update p_.
     p_ = psite_set_.loc_[i_];
     // Update psite_.
-    psite_ = mesh_psite<P>(psite_set_, i_);
+    psite_ = graph_psite<P>(psite_set_, i_);
   }
 
   template<typename P>
   inline
   const P&
-  mesh_p_piter_<P>::to_point() const
+  p_graph_piter_<P>::to_point() const
   {
     /* We don't check whether the iterator is valid before returning
        the value using
@@ -190,8 +191,8 @@ namespace mln
 
   template<typename P>
   inline
-  const mesh_psite<P>&
-  mesh_p_piter_<P>::to_psite() const
+  const graph_psite<P>&
+  p_graph_piter_<P>::to_psite() const
   {
     /* We don't check whether the iterator is valid before returning
        the value using
@@ -209,7 +210,7 @@ namespace mln
 
   template<typename P>
   inline
-  mesh_p_piter_<P>::operator P() const
+  p_graph_piter_<P>::operator P() const
   {
     mln_precondition(is_valid());
     return p_;
@@ -217,7 +218,7 @@ namespace mln
 
   template<typename P>
   inline
-  mesh_p_piter_<P>::operator mesh_psite<P>() const
+  p_graph_piter_<P>::operator graph_psite<P>() const
   {
     mln_precondition(is_valid());
     return psite_;
@@ -228,4 +229,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_MESH_P_PITER_HH
+#endif // MLN_P_GRAPH_PITER_HH

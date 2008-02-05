@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_MESH_IMAGE_HH
-# define MLN_CORE_MESH_IMAGE_HH
+#ifndef MLN_CORE_GRAPH_IMAGE_HH
+# define MLN_CORE_GRAPH_IMAGE_HH
 
-/*! \file mln/core/mesh_image.hh
+/*! \file mln/core/graph_image.hh
  *
  *  \brief Definition of a graph-based image.
  */
@@ -37,8 +37,8 @@
 
 # include <mln/core/internal/image_primary.hh>
 # include <mln/metal/vec.hh>
-# include <mln/core/mesh_p.hh>
-# include <mln/core/mesh_psite.hh>
+# include <mln/core/p_graph.hh>
+# include <mln/core/graph_psite.hh>
 # include <mln/value/set.hh>
 # include <vector>
 
@@ -46,19 +46,19 @@ namespace mln
 {
 
   // Fwd decl.
-  template <typename P, typename V> struct mesh_image;
+  template <typename P, typename V> struct graph_image;
 
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::mesh_image<P,V>.
+    /// \internal Data structure for \c mln::graph_image<P,V>.
     template <typename P, typename V>
-    struct data_< mesh_image<P, V> >
+    struct data_< graph_image<P, V> >
     {
-      data_(mesh_p<P>& mesh, std::vector<V>& val);
+      data_(p_graph<P>& g, std::vector<V>& val);
 
       std::vector<V> val_;
-      mesh_p<P>& mesh_;
+      p_graph<P>& pg_;
     };
 
   } // end of namespace mln::internal
@@ -68,7 +68,7 @@ namespace mln
   {
 
     template <typename P, typename V>
-    struct image_< mesh_image<P, V> > : default_image_< V, mesh_image<P, V> >
+    struct image_< graph_image<P, V> > : default_image_< V, graph_image<P, V> >
     {
       typedef trait::image::category::primary category;
 
@@ -91,11 +91,11 @@ namespace mln
    *
    */
   template <typename P, typename V>
-  struct mesh_image :
-    public internal::image_primary_< mesh_p<P>, mesh_image<P, V> >
+  struct graph_image :
+    public internal::image_primary_< p_graph<P>, graph_image<P, V> >
   {
 
-    typedef mln::internal::image_base_< mesh_p<P>, mesh_image<P, V> > super_;
+    typedef mln::internal::image_base_< p_graph<P>, graph_image<P, V> > super_;
 
     /// Value associated type.
     typedef V value;
@@ -111,20 +111,20 @@ namespace mln
 
 
     /// Skeleton.
-    typedef mesh_image< tag::psite_<P>, tag::value_<V> > skeleton;
+    typedef graph_image< tag::psite_<P>, tag::value_<V> > skeleton;
 
     /// Constructors.
-    mesh_image(mesh_p<P>& mesh, std::vector<V>& val);
-    mesh_image();
+    graph_image(p_graph<P>& g, std::vector<V>& val);
+    graph_image();
 
     /// Initialize an empty image.
-    void init_(mesh_p<P>& mesh, std::vector<V>& val);
+    void init_(p_graph<P>& g, std::vector<V>& val);
 
     /// Read-only access of pixel value at point site \p p.
-    const V& operator()(const mesh_psite<P>& p) const;
+    const V& operator()(const graph_psite<P>& p) const;
 
     /// Read-write access of pixel value at point site \p p.
-    V& operator()(const mesh_psite<P>& p);
+    V& operator()(const graph_psite<P>& p);
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -132,7 +132,7 @@ namespace mln
     // FIXME: Keep this name?
     const std::vector<V>& data_values () const;
 
-    const mesh_p<P>& domain() const;
+    const p_graph<P>& domain() const;
 
     /// Return the first node of the link at i from loc
     const P& access_location_link_node1 (const unsigned& i) const;
@@ -144,7 +144,7 @@ namespace mln
   // Fwd decl.
   template <typename P, typename V>
   void init_(tag::image_t,
-	     mesh_image<P, V>& target, const mesh_image<P, V>& model);
+	     graph_image<P, V>& target, const graph_image<P, V>& model);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -156,7 +156,7 @@ namespace mln
   template <typename P, typename V>
   inline
   void init_(tag::image_t,
-	     mesh_image<P, V>& target, const mesh_image<P, V>& model)
+	     graph_image<P, V>& target, const graph_image<P, V>& model)
   {
     /* FIXME: Unfortunately, we cannot simply use 
 
@@ -164,9 +164,9 @@ namespace mln
 
        here, since domain() and data_values() return const data, and
        init_ expects non mutable data.  These constness problems exist
-       also in mesh_psite (see uses of const_cast<>).  Hence the
+       also in graph_psite (see uses of const_cast<>).  Hence the
        inelegant use of const_cast<>'s.  */
-    target.init_(const_cast<mesh_p<P>&> (model.domain()),
+    target.init_(const_cast<p_graph<P>&> (model.domain()),
 		 const_cast<std::vector<V>&> (model.data_values ()));
   }
 
@@ -178,9 +178,9 @@ namespace mln
   {
     template <typename P, typename V>
     inline
-    data_< mesh_image<P, V> >::data_(mesh_p<P>& mesh, std::vector<V>& val)
+    data_< graph_image<P, V> >::data_(p_graph<P>& g, std::vector<V>& val)
       : val_ (val),
-	mesh_ (mesh)
+	pg_ (g)
     {
     }
 
@@ -192,28 +192,28 @@ namespace mln
 
   template <typename P, typename V>
   inline
-  mesh_image<P, V>::mesh_image(mesh_p<P>& mesh, std::vector<V>& val)
+  graph_image<P, V>::graph_image(p_graph<P>& g, std::vector<V>& val)
   {
-    init_(mesh, val);
+    init_(g, val);
   }
 
   template <typename P, typename V>
   inline
-  mesh_image<P, V>::mesh_image()
+  graph_image<P, V>::graph_image()
   {
   }
 
   template <typename P, typename V>
   inline
   void
-  mesh_image<P, V>::init_(mesh_p<P>& mesh, std::vector<V>& val)
+  graph_image<P, V>::init_(p_graph<P>& g, std::vector<V>& val)
   {
     /* FIXME: We leak memory here: calling init_ twice loses the
        previous content pointed by data_.
 
        We should definitely write down formal guidelines on
        initialization and memory management in general!  */
-    this->data_ = new internal::data_< mesh_image<P, V> > (mesh, val);
+    this->data_ = new internal::data_< graph_image<P, V> > (g, val);
   }
 
   /*---------------.
@@ -223,9 +223,9 @@ namespace mln
   template <typename P, typename V>
   inline
   const V&
-  mesh_image<P, V>::operator()(const mesh_psite<P>& p) const
+  graph_image<P, V>::operator()(const graph_psite<P>& p) const
   {
-    mln_precondition(&p.mesh_ == &this->data_->mesh_);
+    mln_precondition(&p.pg_ == &this->data_->pg_);
     mln_precondition(p.i_ < this->data_->val_.size());
     return this->data_->val_[p.i_];
   }
@@ -233,9 +233,9 @@ namespace mln
   template <typename P, typename V>
   inline
   V&
-  mesh_image<P, V>::operator()(const mesh_psite<P>& p)
+  graph_image<P, V>::operator()(const graph_psite<P>& p)
   {
-    mln_precondition(&p.mesh_ == &this->data_->mesh_);
+    mln_precondition(&p.pg_ == &this->data_->pg_);
     mln_precondition(p.i_ < this->data_->val_.size());
     return this->data_->val_[p.i_];
   }
@@ -243,7 +243,7 @@ namespace mln
   template <typename P, typename V>
   inline
   const mln::value::set<V> &
-  mesh_image<P, V>::values() const
+  graph_image<P, V>::values() const
   {
     return vset::the();
   }
@@ -251,24 +251,24 @@ namespace mln
   template <typename P, typename V>
   inline
   const std::vector<V>&
-  mesh_image<P, V>::data_values () const
+  graph_image<P, V>::data_values () const
   {
     return this->data_->val_;
   }
 
   template <typename P, typename V>
   inline
-  const mesh_p<P>&
-  mesh_image<P, V>::domain() const
+  const p_graph<P>&
+  graph_image<P, V>::domain() const
   {
     mln_precondition(this->has_data());
-    return this->data_->mesh_;
+    return this->data_->pg_;
   }
 
   template <typename P, typename V>
   inline
   const P&
-  mesh_image<P, V>::access_location_link_node1 (const unsigned& i) const
+  graph_image<P, V>::access_location_link_node1 (const unsigned& i) const
   {
     // FIXME: This is ugly!  Too much implementation details are shown here.
     return this->domain().loc_[this->domain().gr_.links_[i]->pair_node_.first];
@@ -277,7 +277,7 @@ namespace mln
   template <typename P, typename V>
   inline
   const P&
-  mesh_image<P, V>::access_location_link_node2 (const unsigned& i) const
+  graph_image<P, V>::access_location_link_node2 (const unsigned& i) const
   {
     // FIXME: This is ugly!  Too much implementation details are shown here.
     return this->domain().loc_[this->domain().gr_.links_[i]->pair_node_.second];
@@ -288,4 +288,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_MESH_IMAGE_HH
+#endif // ! MLN_CORE_GRAPH_IMAGE_HH

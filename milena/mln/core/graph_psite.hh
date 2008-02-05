@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,35 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_MESH_PSITE_HH
-# define MLN_CORE_MESH_PSITE_HH
+#ifndef MLN_CORE_GRAPH_PSITE_HH
+# define MLN_CORE_GRAPH_PSITE_HH
 
-/*! \file mln/core/mesh_psite.hh
+/*! \file mln/core/graph_psite.hh
  *
  * \brief Definition of a graph-based point site.
  *
  * \todo Clean-up!
  */
 
-# include <mln/core/mesh_p.hh>
+# include <mln/core/p_graph.hh>
 
 
 namespace mln
 {
 
   // Fwd decl.
-  template<typename P> class mesh_p;
+  template<typename P> class p_graph;
 
 
   /*!
-   * \brief Point site associate to mesh_image.
+   * \brief Point site associate to graph_image.
    *
    * \todo Fix access to member.
    */
   template<typename P>
-  class mesh_psite : public Point_Site< mesh_psite<P> >
+  class graph_psite : public Point_Site< graph_psite<P> >
   {
-    typedef mesh_psite<P> self_;
+    typedef graph_psite<P> self_;
 
   public:
     typedef mln_mesh(P) mesh;
@@ -64,8 +64,8 @@ namespace mln
 
     /// Construction and assignment.
     /// \{
-    mesh_psite(const mesh_p<P>& mesh_, unsigned i);
-    mesh_psite(const self_& rhs);
+    graph_psite(const p_graph<P>& pg_, unsigned i);
+    graph_psite(const self_& rhs);
     self_& operator= (const self_& rhs);
     /// \}
 
@@ -74,7 +74,7 @@ namespace mln
     coord operator[](unsigned i) const;
 
     // FIXME: These shouldn't be public.
-    const mesh_p<P>& mesh_;
+    const p_graph<P>& pg_;
     unsigned i_;
   };
 
@@ -82,56 +82,56 @@ namespace mln
 
   template<typename P>
   inline
-  mesh_psite<P>::mesh_psite(const mesh_p<P>& mesh, unsigned i)
-    : mesh_(mesh),
+  graph_psite<P>::graph_psite(const p_graph<P>& g, unsigned i)
+    : pg_(g),
       i_(i)
   {
   }
 
   template<typename P>
   inline
-  mesh_psite<P>::mesh_psite(const mesh_psite<P>& rhs)
-    : mesh_(rhs.mesh_),
+  graph_psite<P>::graph_psite(const graph_psite<P>& rhs)
+    : pg_(rhs.pg_),
       i_(rhs.i_)
   {
   }
 
   template<typename P>
   inline
-  mesh_psite<P>&
-  mesh_psite<P>::operator= (const mesh_psite<P>& rhs)
+  graph_psite<P>&
+  graph_psite<P>::operator= (const graph_psite<P>& rhs)
   {
     if (&rhs == this)
       return *this;
     // FIXME: Could we get rid of this cast?
-    const_cast< mesh_p<P>& >(mesh_) = rhs.mesh_;
+    const_cast< p_graph<P>& >(pg_) = rhs.pg_;
     i_ = rhs.i_;
     return *this;
   }
 
   template<typename P>
   inline
-  mesh_psite<P>::operator P() const
+  graph_psite<P>::operator P() const
   {
     // FIXME: This is quite unsafe: we should check that i_ is a valid
     // index before dereferencing loc_ to ensure clear error messages.
-    return mesh_.loc_[i_];
+    return pg_.loc_[i_];
   }
 
   template<typename P>
   inline
   const P&
-  mesh_psite<P>::to_point() const
+  graph_psite<P>::to_point() const
   {
     // FIXME: This is quite unsafe: we should check that i_ is a valid
     // index before dereferencing loc_ to ensure clear error messages.
-    return mesh_.loc_[i_];
+    return pg_.loc_[i_];
   }
 
   template<typename P>
   inline
   mln_coord(P)
-  mesh_psite<P>::operator[](unsigned i) const
+  graph_psite<P>::operator[](unsigned i) const
   {
     return to_point()[i];
   }
@@ -141,4 +141,4 @@ namespace mln
 
 } // end of mln
 
-#endif // MLN_CORE_MESH_PSITE_HH
+#endif // MLN_CORE_GRAPH_PSITE_HH

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,47 +25,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_MESH_P_HH
-# define MLN_CORE_MESH_P_HH
+#ifndef MLN_CORE_GRAPH_P_HH
+# define MLN_CORE_GRAPH_P_HH
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/graph.hh>
-# include <mln/core/mesh_psite.hh>
-# include <mln/core/mesh_p_piter.hh>
+# include <mln/core/graph_psite.hh>
+# include <mln/core/p_graph_piter.hh>
 
-// FIXME: Rename as mesh_p_set?  We shall definitely write a coding
-// style somewhere.
-
-/*! \file mln/core/mesh_p.hh
- *
- * \brief Definition of an point set based on graph.
- */
+/// \file mln/core/p_graph.hh
+/// \brief Definition of a point set based on graph.
 
 namespace mln
 {
 
-  template<typename P> class mesh_p_piter_;
+  template<typename P> class p_graph_piter_;
 
   template<typename P>
-  struct mesh_p : public internal::point_set_base_< mesh_psite<P>, mesh_p<P> >
+  struct p_graph : public internal::point_set_base_< graph_psite<P>, p_graph<P> >
   {
     typedef util::graph<void> graph;
 
-    /// Construct a mesh psite set from a graph and an array of locations.
-    mesh_p (graph& gr, std::vector<P>& loc);
+    /// Construct a graph psite set from a graph and an array of locations.
+    p_graph (graph& gr, std::vector<P>& loc);
 
     /// Point_Site associated type.
-    typedef mesh_psite<P> psite;
+    typedef graph_psite<P> psite;
 
     /// Forward Point_Iterator associated type.
-    typedef mesh_p_piter_<P> fwd_piter;
+    typedef p_graph_piter_<P> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef mesh_p_piter_<P> bkd_piter; // FIXME
+    typedef p_graph_piter_<P> bkd_piter;
 
+    /// Return The number of points (i.e., nodes) in the graph.
     std::size_t npoints() const;
+
+    /// Return The number of lines (i.e., edges) in the graph.
+    std::size_t nlines() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -75,7 +74,7 @@ namespace mln
     graph gr_;
     std::vector<P> loc_;
     // FIXME: (Roland) Is it really useful/needed?
-    /* 2007-12-19: It seems so, since mesh_image must implement a method
+    /* 2007-12-19: It seems so, since graph_image must implement a method
        named bbox().  Now the question is: should each image type have a
        bounding box?  */
     box_<P> bb_;
@@ -85,7 +84,7 @@ namespace mln
 
   template<typename P>
   inline
-  mesh_p<P>::mesh_p (util::graph<void>& gr, std::vector<P>& loc)
+  p_graph<P>::p_graph (util::graph<void>& gr, std::vector<P>& loc)
     : gr_ (gr),
       loc_ (loc)
   {
@@ -98,15 +97,23 @@ namespace mln
   template<typename P>
   inline
   std::size_t
-  mesh_p<P>::npoints() const
+  p_graph<P>::npoints() const
   {
     return this->gr_.nb_node_;
   }
 
   template<typename P>
   inline
+  std::size_t
+  p_graph<P>::nlines() const
+  {
+    return this->gr_.nb_link_;
+  }
+
+  template<typename P>
+  inline
   const box_<P>&
-  mesh_p<P>::bbox() const
+  p_graph<P>::bbox() const
   {
     return bb_;
   }
@@ -114,7 +121,7 @@ namespace mln
   template<typename P>
   inline
   bool
-  mesh_p<P>::has(const psite& p) const
+  p_graph<P>::has(const psite& p) const
   {
     for (unsigned i = 0; i < loc_.size(); ++i)
       if (loc_[i] == p)
@@ -128,4 +135,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_CORE_MESH_P_HH
+#endif // MLN_CORE_P_GRAPH_HH

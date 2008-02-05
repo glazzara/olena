@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,19 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/mesh_image.cc
-/// \brief Tests on mln::mesh_image.
+/// \file tests/core/graph_image.cc
+/// \brief Tests on mln::graph_image.
 
 #include <vector>
 
 #include <mln/core/point2d.hh>
-#include <mln/core/mesh_image.hh>
-#include <mln/core/mesh_elt_window.hh>
-#include <mln/core/mesh_window_piter.hh>
+#include <mln/core/graph_image.hh>
+#include <mln/core/graph_elt_window.hh>
+#include <mln/core/graph_window_piter.hh>
 
 #include <mln/morpho/dilation.hh>
 
-#include <mln/draw/mesh.hh>
+#include <mln/draw/graph.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
 
@@ -71,45 +71,45 @@ int main()
   g.add_edge(4, 2);
 
   /*-------.
-  | Mesh.  |
+  | Graph.  |
   `-------*/
 
-  mesh_p<point2d> mesh(g, points);
+  p_graph<point2d> pg(g, points);
 
   /*-------------.
-  | Mesh image.  |
+  | Graph image.  |
   `-------------*/
 
   // Values ("empty" vector).
   std::vector<int> values(5);
-  // Mesh image.
-  typedef mesh_image<point2d, int> ima_t;
-  ima_t ima(mesh, values);
+  // Graph image.
+  typedef graph_image<point2d, int> ima_t;
+  ima_t ima(pg, values);
   // Initialize values.
   debug::iota(ima);
   // Print the image.
-  /* FIXME: Unfortunately, displaying mesh images is not easy right
-     now (2007-12-19).  We could use 
+  /* FIXME: Unfortunately, displaying graph images is not easy right
+     now (2008-02-05).  We could use 
 
        debug::println(ima);
 
-     but there's not specialization working for mesh_image; the one
+     but there's not specialization working for graph_image; the one
      selected by the compiler is based on a 2-D bbox, and expects the
-     interface of mesh_image to work with points (not psites).
-     Moreover, this iplementation only shows *values*, not the graph
+     interface of graph_image to work with points (not psites).
+     Moreover, this implementation only shows *values*, not the graph
      itslef.
  
-     An alternative is to use draw::mesh (which, again, is misnamed),
+     An alternative is to use draw::graph (which, again, is misnamed),
      but it doesn't show the values, only the nodes and edges of the
      graph.
 
-     The current solution is a mix between draw::mesh and hand-made
+     The current solution is a mix between draw::graph and hand-made
      iterations.  */
   image2d<int> ima_rep(ima.bbox());
-  // We use the value 9 in draw::mesh instead of the default (which is
+  // We use the value 9 in draw::graph instead of the default (which is
   // 1) to represent edges to distinguish it from nodes holding a
   // value of 1.
-  draw::mesh (ima_rep, ima, 9);
+  draw::graph (ima_rep, ima, 9);
   debug::println (ima_rep);
 
 
@@ -123,10 +123,7 @@ int main()
     std::cout << "ima (" << p << ") = " << ima(p) << std::endl;
 
   // Manual iterations over the neighborhoods of each point site of IMA.
-  /* FIXME: In fact, this class should be named
-     `mesh_elt_neighborhood' (there's no such thing as an elementary
-     window on a mesh/graph!).  */
-  typedef mesh_elt_window<point2d> win_t;
+  typedef graph_elt_window<point2d> win_t;
   win_t win;
   mln_qiter_(win_t) q(win, p);
   for_all (p)
@@ -136,16 +133,17 @@ int main()
     for_all (q)
       std::cout << "  " << q << " (level = " << ima(q) << ")" << std::endl;
   }
+  std::cout << std::endl;
 
   /*-------------------------.
-  | Processing mesh images.  |
+  | Processing graph images.  |
   `-------------------------*/
 
-  mesh_image<point2d, int> ima_dil = morpho::dilation(ima, win);
-  draw::mesh(ima_rep, ima_dil, 9);
+  graph_image<point2d, int> ima_dil = morpho::dilation(ima, win);
+  draw::graph(ima_rep, ima_dil, 9);
   debug::println(ima_rep);
 
-  mesh_image<point2d, int> ima_ero = morpho::erosion(ima, win);
-  draw::mesh(ima_rep, ima_ero, 9);
+  graph_image<point2d, int> ima_ero = morpho::erosion(ima, win);
+  draw::graph(ima_rep, ima_ero, 9);
   debug::println(ima_rep);
 }
