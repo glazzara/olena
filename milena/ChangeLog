@@ -1,3 +1,39 @@
+2008-02-05  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Added personal folder and color files in sandbox.
+	* sandbox/vigouroux/color.hh: New.
+	* sandbox/vigouroux/color/color.hh: New.
+	* sandbox/vigouroux/color/hsi.hh: New.
+	* sandbox/vigouroux/color/hsl.hh: New.
+	* sandbox/vigouroux/color/hsv.hh: New.
+	* sandbox/vigouroux/color/nrgb.hh: New.
+	* sandbox/vigouroux/color/rgb.hh: New.
+	* sandbox/vigouroux/color/xyz.hh: New.
+	* sandbox/vigouroux/color/yiq.hh: New.
+	* sandbox/vigouroux/color/yuv.hh: New.
+	* sandbox/vigouroux/color: New.
+	* sandbox/vigouroux/convert/abstract/colorconv.hh: New.
+	* sandbox/vigouroux/convert/abstract/conversion.hh: New.
+	* sandbox/vigouroux/convert/abstract: New.
+	* sandbox/vigouroux/convert/basics.hh: New.
+	* sandbox/vigouroux/convert/bound.hh: New.
+	* sandbox/vigouroux/convert/cast.hh: New.
+	* sandbox/vigouroux/convert/conversion.hh: New.
+	* sandbox/vigouroux/convert/conversion_ng_se.hh: New.
+	* sandbox/vigouroux/convert/force.hh: New.
+	* sandbox/vigouroux/convert/nrgbxyz.hh: New.
+	* sandbox/vigouroux/convert/rgbhsi.hh: New.
+	* sandbox/vigouroux/convert/rgbhsl.hh: New.
+	* sandbox/vigouroux/convert/rgbhsv.hh: New.
+	* sandbox/vigouroux/convert/rgbnrgb.hh: New.
+	* sandbox/vigouroux/convert/rgbxyz.hh: New.
+	* sandbox/vigouroux/convert/rgbyiq.hh: New.
+	* sandbox/vigouroux/convert/rgbyuv.hh: New.
+	* sandbox/vigouroux/convert/stretch.hh: New.
+	* sandbox/vigouroux/convert/value_to_point.hh: New.
+	* sandbox/vigouroux/convert: New folder.
+	* sandbox/vigouroux: New folder.
+
 2008-02-05  Michel Pellegrin  <pellegrin@lrde.epita.fr>
 
 	Add my personnal folder in sandbox.
