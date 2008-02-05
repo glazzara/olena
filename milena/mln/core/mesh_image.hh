@@ -212,7 +212,7 @@ namespace mln
        previous content pointed by data_.
 
        We should definitely write down formal guidelines on
-       initializaion and memory management in general!  */
+       initialization and memory management in general!  */
     this->data_ = new internal::data_< mesh_image<P, V> > (mesh, val);
   }
 
@@ -270,7 +270,8 @@ namespace mln
   const P&
   mesh_image<P, V>::access_location_link_node1 (const unsigned& i) const
   {
-    return this->domain().loc_[this->domain().gr_.links_[i]->node1];
+    // FIXME: This is ugly!  Too much implementation details are shown here.
+    return this->domain().loc_[this->domain().gr_.links_[i]->pair_node_.first];
   }
 
   template <typename P, typename V>
@@ -278,7 +279,8 @@ namespace mln
   const P&
   mesh_image<P, V>::access_location_link_node2 (const unsigned& i) const
   {
-    return this->domain().loc_[this->domain().gr_.links_[i]->node2];
+    // FIXME: This is ugly!  Too much implementation details are shown here.
+    return this->domain().loc_[this->domain().gr_.links_[i]->pair_node_.second];
   }
 
 # endif // ! MLN_INCLUDE_ONLY

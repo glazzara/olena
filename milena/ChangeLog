@@ -1,5 +1,14 @@
 2008-02-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix mesh_image w.r.t. the recently updated interface of graphs.
+
+	* mln/core/mesh_image.hh:
+	(mesh_image<P, V>::access_location_link_node1 (const unsigned&))
+	(mesh_image<P, V>::access_location_link_node2 (const unsigned&)):
+	Catch up with the new interface of mln::util::s_edge.
+
+2008-02-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have the documentation compile again with parallel builds.
 
 	* doc/Makefile.am (html-local, html_user): Fix paths.
