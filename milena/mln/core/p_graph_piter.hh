@@ -60,7 +60,7 @@ namespace mln
     typedef graph_psite<P> psite;
     typedef P point;
 
-    p_graph_piter_(const p_graph<P>& psite_set);
+    p_graph_piter_(const p_graph<P>& pg);
 
     /// Read-only access to the \p i-th coordinate.
     mln_coord(P) operator[](unsigned i) const;
@@ -93,7 +93,7 @@ namespace mln
     operator psite() const;
 
   protected:
-    const p_graph<P>& psite_set_;
+    const p_graph<P>& pg_;
     unsigned i_;
     P p_;
     psite psite_;
@@ -105,11 +105,11 @@ namespace mln
 
   template<typename P>
   inline
-  p_graph_piter_<P>::p_graph_piter_(const p_graph<P>& psite_set)
-    : psite_set_(psite_set),
+  p_graph_piter_<P>::p_graph_piter_(const p_graph<P>& pg)
+    : pg_(pg),
       p_(),
       // Initialize psite_ to a dummy value.
-      psite_(psite_set, psite_set_.loc_.size())
+      psite_(pg, pg_.npoints())
   {
     // Invalidate i_.
     invalidate();
@@ -128,7 +128,7 @@ namespace mln
   bool
   p_graph_piter_<P>::is_valid() const
   {
-    return i_ != psite_set_.loc_.size();
+    return i_ < pg_.npoints();
   }
 
   template<typename P>
@@ -136,7 +136,7 @@ namespace mln
   void
   p_graph_piter_<P>::invalidate()
   {
-    i_ = psite_set_.loc_.size();
+    i_ = pg_.npoints();
   }
 
   template<typename P>
@@ -165,9 +165,9 @@ namespace mln
   p_graph_piter_<P>::update_()
   {
     // Update p_.
-    p_ = psite_set_.loc_[i_];
+    p_ = pg_.gr_.node_data(i_);
     // Update psite_.
-    psite_ = graph_psite<P>(psite_set_, i_);
+    psite_ = graph_psite<P>(pg_, i_);
   }
 
   template<typename P>

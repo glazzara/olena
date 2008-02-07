@@ -44,12 +44,13 @@ namespace mln
   template<typename P> class p_graph_piter_;
 
   template<typename P>
-  struct p_graph : public internal::point_set_base_< graph_psite<P>, p_graph<P> >
+  struct p_graph
+    : public internal::point_set_base_< graph_psite<P>, p_graph<P> >
   {
-    typedef util::graph<void> graph;
+    typedef util::graph<P> graph;
 
-    /// Construct a graph psite set from a graph and an array of locations.
-    p_graph (graph& gr, std::vector<P>& loc);
+    /// Construct a graph psite set from a graph of points.
+    p_graph (graph& gr);
 
     /// Point_Site associated type.
     typedef graph_psite<P> psite;
@@ -71,8 +72,8 @@ namespace mln
 
     bool has(const psite& p) const;
 
+    // FIXME: Should be private.
     graph gr_;
-    std::vector<P> loc_;
     // FIXME: (Roland) Is it really useful/needed?
     /* 2007-12-19: It seems so, since graph_image must implement a method
        named bbox().  Now the question is: should each image type have a
@@ -84,22 +85,25 @@ namespace mln
 
   template<typename P>
   inline
-  p_graph<P>::p_graph (util::graph<void>& gr, std::vector<P>& loc)
-    : gr_ (gr),
-      loc_ (loc)
+  p_graph<P>::p_graph (util::graph<P>& gr)
+    : gr_ (gr)
   {
+    // FIXME: Warning: if the underlying graph is updated later, this
+    // won't be taken into account by this p_graph!
     accu::bbox<P> a;
-    for (unsigned i = 0; i < loc.size(); ++i)
-      a.take(loc[i]);
+    for (unsigned i = 0; i < npoints(); ++i)
+      a.take(gr_.node_data(i));
     bb_ = a.to_result();
   }
 
+  // FIXME: Rename to npsites?  In fact, this depends on the
+  // interface expected from models of Point_Sets.
   template<typename P>
   inline
   std::size_t
   p_graph<P>::npoints() const
   {
-    return this->gr_.nb_node_;
+    return this->gr_.nnodes();
   }
 
   template<typename P>
@@ -107,7 +111,7 @@ namespace mln
   std::size_t
   p_graph<P>::nlines() const
   {
-    return this->gr_.nb_link_;
+    return this->gr_.nedges();
   }
 
   template<typename P>
@@ -123,12 +127,15 @@ namespace mln
   bool
   p_graph<P>::has(const psite& p) const
   {
-    for (unsigned i = 0; i < loc_.size(); ++i)
-      if (loc_[i] == p)
+    // FIXME: util::graph (or util::internal::graph_base) should
+    // provide the iteration facility (iterators, find, etc.)
+    const typename graph::nodes_t& nodes = gr_.nodes();
+    for (typename graph::nodes_t::const_iterator n = nodes.begin();
+	 n != nodes.end(); ++n)
+      if ((*n)->data == p)
 	return true;
     return false;
   }
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

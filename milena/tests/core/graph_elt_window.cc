@@ -58,10 +58,10 @@ int main()
   points.push_back(make::point2d(4,4)); // Point associated to node 4.
 
   // Edges.
-  mln::util::graph<void> g;
+  mln::util::graph<p_t> g;
   // Populate the graph with nodes.
   for (unsigned i = 0; i < points.size(); ++i)
-    g.add_node ();
+    g.add_node (points[i]);
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -74,7 +74,7 @@ int main()
   `------------------*/
 
   // Graph psite set.
-  p_graph<p_t> pg(g, points);
+  p_graph<p_t> pg(g);
   // Graph point site.
   graph_psite<p_t> psite(pg, 0);
   // ``Sliding'' window (in fact, neighborhood) of a psite of PG.

@@ -28,12 +28,8 @@
 #ifndef MLN_CORE_GRAPH_PSITE_HH
 # define MLN_CORE_GRAPH_PSITE_HH
 
-/*! \file mln/core/graph_psite.hh
- *
- * \brief Definition of a graph-based point site.
- *
- * \todo Clean-up!
- */
+/// \file mln/core/graph_psite.hh
+/// \brief Definition of a graph-based point site.
 
 # include <mln/core/p_graph.hh>
 
@@ -45,11 +41,7 @@ namespace mln
   template<typename P> class p_graph;
 
 
-  /*!
-   * \brief Point site associate to graph_image.
-   *
-   * \todo Fix access to member.
-   */
+  /// \brief Point site associated to a mln::graph_image.
   template<typename P>
   class graph_psite : public Point_Site< graph_psite<P> >
   {
@@ -64,27 +56,37 @@ namespace mln
 
     /// Construction and assignment.
     /// \{
-    graph_psite(const p_graph<P>& pg_, unsigned i);
+    graph_psite(const p_graph<P>& pg_, unsigned id);
     graph_psite(const self_& rhs);
     self_& operator= (const self_& rhs);
     /// \}
 
+    /// Access to point/psite.
+    /// \{
     operator P() const;
     const point& to_point() const;
-    coord operator[](unsigned i) const;
+    coord operator[](unsigned id) const;
+    /// \}
 
-    // FIXME: These shouldn't be public.
+    /// Return the mln::p_graph this point site belongs to.
+    const p_graph<P>& pg() const;
+    /// Return the node id of this point site.
+    util::node_id id() const;
+
+  private:
     const p_graph<P>& pg_;
-    unsigned i_;
+    util::node_id id_;
   };
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
   template<typename P>
   inline
-  graph_psite<P>::graph_psite(const p_graph<P>& g, unsigned i)
+  graph_psite<P>::graph_psite(const p_graph<P>& g, util::node_id id)
     : pg_(g),
-      i_(i)
+      id_(id)
   {
   }
 
@@ -92,7 +94,7 @@ namespace mln
   inline
   graph_psite<P>::graph_psite(const graph_psite<P>& rhs)
     : pg_(rhs.pg_),
-      i_(rhs.i_)
+      id_(rhs.id_)
   {
   }
 
@@ -105,7 +107,7 @@ namespace mln
       return *this;
     // FIXME: Could we get rid of this cast?
     const_cast< p_graph<P>& >(pg_) = rhs.pg_;
-    i_ = rhs.i_;
+    id_ = rhs.id_;
     return *this;
   }
 
@@ -113,9 +115,7 @@ namespace mln
   inline
   graph_psite<P>::operator P() const
   {
-    // FIXME: This is quite unsafe: we should check that i_ is a valid
-    // index before dereferencing loc_ to ensure clear error messages.
-    return pg_.loc_[i_];
+    return pg_.gr_.node_data(id_);
   }
 
   template<typename P>
@@ -123,17 +123,31 @@ namespace mln
   const P&
   graph_psite<P>::to_point() const
   {
-    // FIXME: This is quite unsafe: we should check that i_ is a valid
-    // index before dereferencing loc_ to ensure clear error messages.
-    return pg_.loc_[i_];
+    return pg_.gr_.node_data(id_);
   }
 
   template<typename P>
   inline
   mln_coord(P)
-  graph_psite<P>::operator[](unsigned i) const
+  graph_psite<P>::operator[](util::node_id id) const
   {
-    return to_point()[i];
+    return to_point()[id];
+  }
+
+  template<typename P>
+  inline
+  const p_graph<P>&
+  graph_psite<P>::pg() const
+  {
+    return pg_;
+  }
+
+  template<typename P>
+  inline
+  util::node_id
+  graph_psite<P>::id() const
+  {
+    return id_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

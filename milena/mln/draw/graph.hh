@@ -92,16 +92,19 @@ namespace mln
     graph(Image<I>& ima, const p_graph<P>& pg,
 	  mln_value(I) node_v, mln_value(I) link_v)
     {
+      // Draw the background.
       level::fill(ima, 0);
-
-      for (unsigned i = 0; i < pg.nlines(); ++i)
+      // Draw the lines (edges).
+      for (size_t l = 0; l < pg.nlines(); ++l)
 	line (exact(ima),
-	      pg.loc_[pg.gr_.links_[i]->pair_node_.first],
-	      pg.loc_[pg.gr_.links_[i]->pair_node_.second],
+	      // FIXME: Too low-level.  See similar remarks
+	      // in mln/core/graph_image.hh
+	      pg.gr_.node_data(pg.gr_.edge(l).n1()),
+	      pg.gr_.node_data(pg.gr_.edge(l).n2()),
 	      link_v);
-
-      for (unsigned i = 0; i < pg.npoints(); ++i)
- 	exact(ima)(pg.loc_[i]) = node_v;
+      // Draw the points (nodes).
+      for (size_t p = 0; p < pg.npoints(); ++p)
+ 	exact(ima)(pg.gr_.node_data(p)) = node_v;
     }
 
     template <typename I,  typename P, typename V>
@@ -110,16 +113,14 @@ namespace mln
     graph(Image<I>& ima, const graph_image<P, V>& gi,
 	  mln_value(I) link_v)
     {
+      // Draw the background.
       level::fill(ima, 0);
-
-      for (unsigned i = 0; i < gi.domain().nlines(); ++i)
-	line (exact(ima),
-	      gi.access_location_link_node1 (i),
-	      gi.access_location_link_node2 (i),
-	      link_v);
-
-      for (unsigned i = 0; i < gi.domain().npoints(); ++i)
- 	exact(ima)(gi.domain().loc_[i]) = gi.data_values ()[i];
+      // Draw the lines (edges).
+      for (size_t l = 0; l < gi.domain().nlines(); ++l)
+	line (exact(ima), gi.node1(l), gi.node2(l), link_v);
+      // Draw the points (nodes).
+      for (size_t p = 0; p < gi.domain().npoints(); ++p)
+ 	exact(ima)(gi.domain().gr_.node_data(p)) = gi.data_values()[p];
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -59,10 +59,10 @@ int main()
   points.push_back(make::point2d(4,4)); // Point associated to node 4.
 
   // Edges.
-  util::graph<void> g;
+  util::graph<point2d> g;
   // Populate the graph with nodes.
   for (unsigned i = 0; i < points.size(); ++i)
-    g.add_node ();
+    g.add_node (points[i]);
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -74,7 +74,7 @@ int main()
   | Graph.  |
   `-------*/
 
-  p_graph<point2d> pg(g, points);
+  p_graph<point2d> pg(g);
 
   /*-------------.
   | Graph image.  |

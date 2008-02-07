@@ -1,5 +1,62 @@
 2008-02-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Catch up with the new interface of mln::util::graph and improve
+	graph-based entities.
+
+	* mln/core/p_graph.hh: Store points associated to nodes in the
+	graph itself, not in an separate array.
+	(p_graph<P>::graph): Set this typedef from `util::graph<void>' to
+	`util::graph<P>'.
+	(p_graph<P>::loc_): Remove.
+	(p_graph<P>::graph): Adjust ctor.
+	(p_graph<P>::npoints, p_graph<P>::nlines, p_graph<P>::has):
+	Use the new interface of mln::util::graph.
+	* mln/core/graph_psite.hh (graph_psite<P>::i_): Rename as
+	(graph_psite<P>::id_): ...this.
+	Make it a private argument.
+	(graph_psite<P>::pg_): Likewise.
+	(graph_psite<P>::id, graph_psite<P>::pg): New accessors.
+	Adjust users.
+	* mln/core/graph_image.hh
+	(graph_image<P, V>::access_location_link_node1)
+	(graph_image<P, V>::access_location_link_node2):
+	Rename as...
+	(graph_image<P, V>::node1)
+	(graph_image<P, V>::node2):
+	...these.
+	Use the new interface of mln::util::graph.
+	(graph_image<P, V>::operator())
+	Use the new interface of mln::graph_psite.
+	* mln/core/graph_window_piter.hh (graph_window_fwd_piter<P>::i_):
+	Rename as...
+	(graph_window_fwd_piter<P>::id_): ...this.
+	Set its to type from `unsigned' to `util::node_id'.
+	Adjust users.
+	(graph_window_fwd_piter<P>::is_valid)
+	(graph_window_fwd_piter<P>::invalidate)
+	(graph_window_fwd_piter<P>::adjacent_or_equal_to_p_ref_)
+	(graph_window_fwd_piter<P>::to_point)
+	(graph_window_fwd_piter<P>::operator graph_psite<P>):
+	Use the new interface of mln::util::graph.
+	* mln/core/p_graph_piter.hh (p_graph_piter_<P>::psite_set_):
+	Rename as...
+	(p_graph_piter_<P>::pg_): ...this.
+	Use the new interface of mln::p_graph.
+	(p_graph_piter_<P>::is_valid)
+	(p_graph_piter_<P>::invalidate)
+	(p_graph_piter_<P>::update_):
+	Likewise.
+	* mln/draw/graph.hh (draw::graph): Update to the new
+	interfaces of mln::util::graph and mln::p_graph.
+	* mln/draw/all.hh: Adjust and complete the list of included
+	headers.
+	* tests/core/graph_elt_window.cc,
+	* tests/core/graph_image.cc,
+	* tests/draw/graph.cc:
+	Update tests.
+
+2008-02-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Ovherhaul undirected graphs.
 
 	* mln/util/graph.hh (util::node, util::edge, util::graph): Move...

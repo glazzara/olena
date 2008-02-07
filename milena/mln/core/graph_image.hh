@@ -134,11 +134,12 @@ namespace mln
 
     const p_graph<P>& domain() const;
 
-    /// Return the first node of the link at i from loc
-    const P& access_location_link_node1 (const unsigned& i) const;
-
-    /// Return the second node of the link at i from loc
-    const P& access_location_link_node2 (const unsigned& i) const;
+    /// Return the point of the first node adjacent to the edge with
+    /// id \a e.
+    const P& node1(const util::edge_id& e) const;
+    /// Return the point of the second node adjacent to the edge with
+    /// id \a e.
+    const P& node2(const util::edge_id& e) const;
 };
 
   // Fwd decl.
@@ -225,9 +226,9 @@ namespace mln
   const V&
   graph_image<P, V>::operator()(const graph_psite<P>& p) const
   {
-    mln_precondition(&p.pg_ == &this->data_->pg_);
-    mln_precondition(p.i_ < this->data_->val_.size());
-    return this->data_->val_[p.i_];
+    mln_precondition(&p.pg() == &this->data_->pg_);
+    mln_precondition(p.id() < this->data_->val_.size());
+    return this->data_->val_[p.id()];
   }
 
   template <typename P, typename V>
@@ -235,9 +236,9 @@ namespace mln
   V&
   graph_image<P, V>::operator()(const graph_psite<P>& p)
   {
-    mln_precondition(&p.pg_ == &this->data_->pg_);
-    mln_precondition(p.i_ < this->data_->val_.size());
-    return this->data_->val_[p.i_];
+    mln_precondition(&p.pg() == &this->data_->pg_);
+    mln_precondition(p.id() < this->data_->val_.size());
+    return this->data_->val_[p.id()];
   }
 
   template <typename P, typename V>
@@ -268,19 +269,23 @@ namespace mln
   template <typename P, typename V>
   inline
   const P&
-  graph_image<P, V>::access_location_link_node1 (const unsigned& i) const
+  graph_image<P, V>::node1(const util::edge_id& e) const
   {
-    // FIXME: This is ugly!  Too much implementation details are shown here.
-    return this->domain().loc_[this->domain().gr_.links_[i]->pair_node_.first];
+    // FIXME: Improve the interface of graph to avoid these low-level
+    // manipulations.
+    util::node_id n1 = this->domain().gr_.edge(e).n1();
+    return this->domain().gr_.node_data(n1);
   }
 
   template <typename P, typename V>
   inline
   const P&
-  graph_image<P, V>::access_location_link_node2 (const unsigned& i) const
+  graph_image<P, V>::node2(const util::edge_id& e) const
   {
-    // FIXME: This is ugly!  Too much implementation details are shown here.
-    return this->domain().loc_[this->domain().gr_.links_[i]->pair_node_.second];
+    // FIXME: Improve the interface of graph to avoid these low-level
+    // manipulations.
+    util::node_id n2 = this->domain().gr_.edge(e).n2();
+    return this->domain().gr_.node_data(n2);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
