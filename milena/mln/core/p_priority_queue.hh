@@ -83,7 +83,7 @@ namespace mln
     bool is_empty() const;
 
     /// Give the number of points.
-    unsigned npoints() const;
+    size_t npoints() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -202,7 +202,7 @@ namespace mln
 
   template <typename P, typename T>
   inline
-  unsigned
+  size_t
   p_priority_queue<P, T>::npoints() const
   {
     unsigned res = 0;
