@@ -20,6 +20,7 @@ SUBDIRS =					\
   morpho					\
   neighb					\
   norm						\
+  pw						\
   set						\
   util						\
   value						\
@@ -92,8 +93,6 @@ check_PROGRAMS =				\
   point1d					\
   point2d					\
   point3d					\
-  pw_image					\
-  pw_value					\
 						\
   safe_image					\
   seed2tiling					\
@@ -184,8 +183,6 @@ plain_SOURCES = plain.cc
 point1d_SOURCES = point1d.cc
 point2d_SOURCES = point2d.cc
 point3d_SOURCES = point3d.cc
-pw_image_SOURCES = pw_image.cc
-pw_value_SOURCES = pw_value.cc
 
 safe_image_SOURCES = safe_image.cc
 seed2tiling_SOURCES = seed2tiling.cc

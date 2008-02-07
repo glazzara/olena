@@ -1,3 +1,17 @@
+2008-02-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update tests on pw material.
+
+	* tests/pw_image.cc: Rename as...
+	* tests/pw/image.cc: ...this.
+	* tests/pw_value.cc: Rename as...
+	* tests/pw/value.cc: ...this.
+	* tests/pw/Makefile.am (check_PROGRAMS): Update.
+	(image_SOURCES, value_SOURCES): New.
+	* tests/Makefile.am (SUBDIRS): Add pw.
+	(pw_image_SOURCES, pw_value_SOURCES): Remove.
+	* mln/pw/all.hh: Update.
+
 2008-02-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add functors max and min.

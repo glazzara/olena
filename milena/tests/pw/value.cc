@@ -25,15 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pw_value.cc
+/*! \file tests/pw/value.cc
  *
  * \brief Test on mln::pw::value_.
  */
 
 #include <mln/core/image2d.hh>
-#include <mln/fun/ops.hh>
-#include <mln/pw/value.hh>
-#include <mln/pw/cst.hh>
+#include <mln/level/fill.hh>
+#include <mln/pw/all.hh>
 
 
 int main()
@@ -41,13 +40,16 @@ int main()
   using namespace mln;
 
   image2d<int> ima(3, 3);
-  point2d p = make::point2d(1, 1);
+  level::fill(ima, 0);
+
+  point2d p(1, 1);
   ima(p) = 51;
   mln_assertion( (pw::value(ima) == pw::cst(51))(p) == true );
 
-  {
-    image2d<float> imaf(3,3);
-    imaf(p) = 51;
-    mln_assertion(((pw::value(ima) + pw::value(imaf))(p) / 20) - 5.1 < 0.00001);
-  }
+//   {
+//     image2d<float> imaf(3,3);
+//     imaf(p) = 51;
+//     mln_assertion(((pw::value(ima) + pw::value(imaf))(p) / 20) - 5.1 < 0.00001);
+//   }
+
 }

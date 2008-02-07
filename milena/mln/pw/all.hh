@@ -43,11 +43,13 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/pw/value.hh>
 # include <mln/pw/cst.hh>
-# include <mln/pw/var.hh>
 # include <mln/pw/image.hh>
+# include <mln/pw/value.hh>
+# include <mln/pw/var.hh>
 
+
+// Extra include so that we can use operators in point-wise expressions.
 # include <mln/fun/ops.hh>
 
 

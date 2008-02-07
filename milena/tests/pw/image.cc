@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pw_image.cc
+/*! \file tests/pw/image.cc
  *
  * \brief Tests on mln::pw::image.
  */
