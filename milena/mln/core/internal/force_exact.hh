@@ -44,7 +44,7 @@ namespace mln
 
     /*! \internal Violent cast.
      * This cast is an alternative to the mln::exact cast.
-     * It is used for objects than do not derive from
+     * It is used for objects that do not derive from
      * mln::Object.
      * Warning Do not to use this cast!
      * see mln::exact
