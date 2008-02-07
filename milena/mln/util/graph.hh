@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,274 +28,278 @@
 #ifndef MLN_UTIL_GRAPH_HH
 # define MLN_UTIL_GRAPH_HH
 
-# include <mln/core/concept/object.hh>
-# include <cstddef>
-# include <ostream>
-# include <vector>
-# include <list>
-# include <algorithm>
-# include <mln/util/ordpair.hh>
+/// \file mln/util/graph.hh
+/// \brief Definitions of undirected graphs.
 
-/*! \file mln/util/graph.hh
- *
- * \brief Definition of a graph.
- */
+# include <mln/util/internal/graph_base.hh>
 
-// FIXME: Rename `s_node' to `node'.
-// FIXME: Rename `s_edge' to `edge'.
-// FIXME: Rename `links' to `edges'.
+
+// FIXME: More doc!
+
 
 namespace mln
 {
+
   namespace util
   {
+    /*-----------.
+    | Fwd decl.  |
+    `-----------*/
 
-    /*! \brief Structure of generic node.
-     *
-     */
-    template<typename T>
-    struct s_node
+    /// \brief Undirected graph.
+    template<typename N = void, typename E = void>
+    class graph;
+
+    /*--------------------.
+    | graph<void, void>.  |
+    `--------------------*/
+
+    /// Specialization for undirected graphs with no data on nodes nor
+    /// on edges.
+    template <>
+    class graph<void, void> : public internal::graph_base<void, void>
     {
-      T data;
-      // FIXME: Rename to `out_edges'.
-      std::vector<unsigned> links;
+    public:
+      /// The super class.
+      typedef internal::graph_base<void, void> super;
+
+      // FIXME: We should return the id of the newly created node.
+      /// \brief Add a node.
+      void add_node();
+      // FIXME: We should return the id of the newly created edge.
+      /// \brief Add an edge between nodes with ids \p n1 and \p n2.
+      void add_edge(node_id n1, node_id n2);
     };
 
+    /*-----------------.
+    | graph<N, void>.  |
+    `-----------------*/
 
-    /*! \brief Structure of node with void parameter.
-     *
-     */
-    template<>
-    struct s_node<void>
+    /// Specialization for undirected graphs with data on nodes.
+    template <typename N>
+    class graph<N, void> : public internal::graph_base<N, void>
     {
-      // FIXME: Rename to `out_edges'.
-      std::list<unsigned> links;
+    public:
+      /// The super class.
+      typedef internal::graph_base<N, void> super;
+
+      // FIXME: We should return the id of the newly created node.
+      /// \brief Add a node.
+      void add_node(const N& data);
+      // FIXME: We should return the id of the newly created edge.
+      /// \brief Add an edge between nodes with ids \p n1 and \p n2.
+      void add_edge(node_id n1, node_id n2);
+
+      /// Return the data associated to node with id \a n.
+      /// \{
+      N& node_data(node_id n);
+      const N& node_data(node_id n) const;
+      /// \}
     };
 
+    /*--------------.
+    | graph<N, E>.  |
+    `--------------*/
 
-    /*! \brief Structure of generic edge.
-     *
-     */
-    template<typename T>
-    struct s_edge
+    /// Specialization for undirected graphs with data on nodes and
+    /// edges.
+    template <typename N, typename E>
+    class graph : public internal::graph_base<N, E>
     {
-      s_edge()
-	: pair_node_ (0, 0)
-      {}
+    public:
+      /// The super class.
+      typedef internal::graph_base<N, E> super;
 
-      T	data;
-      ordpair_<unsigned> pair_node_;
+      // FIXME: We should return the id of the newly created node.
+      /// \brief Add a node.
+      void add_node(const N& data);
+      /// \brief Add an edge between nodes with ids \p n1 and \p n2.
+      // FIXME: We should return the id of the newly created edge.
+      void add_edge(node_id n1, node_id n2, const E& data);
+
+      /// Return the data associated to node with id \a n.
+      /// \{
+      N& node_data(node_id n);
+      const N& node_data(node_id n) const;
+      /// \}
+
+      /// Return the data associated to the edge with id \a e.
+      /// \{
+      E& edge_data(edge_id e);
+      const E& edge_data(edge_id e) const;
+      /// \}
+
+      /// Return the data associated to the edge between nodes with
+      /// ids \a n1 and \a n2.
+      /// \{
+      E& edge_data(node_id n1, node_id n2);
+      const E& edge_data(node_id n1, node_id n2) const;
+      /// \}
     };
 
-    /*! \brief Structure of edge with void parameter.
-     *
-     */
-    template<>
-    struct s_edge <void>
-    {
-      s_edge() : pair_node_ (0, 0) {}
-      ordpair_<unsigned> pair_node_;
-    };
-
-    bool operator==(const struct s_edge <void>& lhs,
-		    const struct s_edge <void>& rhs);
-
-    bool operator< (const struct s_edge <void>& lhs,
-		    const struct s_edge <void>& rhs);
-
-    /// \brief Generic graph structure using s_node and s_edge.
-    /* FIXME: We don't mention anywhere whether this graph structure
-       handles directed or undirected graphs!  */
-    template<typename N, typename E = void>
-    struct graph
-    {
-      /* FIXME: Do we really want handle edges and nodes through
-	 pointers?  In my (Roland) opinion, this is just a drawback,
-	 here.  */
-
-      /// The type of the set of nodes.
-      typedef std::vector< s_node<N>* > nodes;
-      /// The type of the set of edges.
-      typedef std::vector< s_edge<E>* > edges;
-
-      /// Constructor.
-      graph ();
-
-      /// Destructor.
-      ~graph();
-
-      /*! \brief Add a void node.  */
-      void add_node ();
-
-
-      /*! \brief Add a void edge between \p n1 and \p n2.
-       *
-       * \param[in] n1 The first node to link.
-       * \param[in] n2 The second node to link.
-       *
-       * \pre n1 < nb_node_.
-       * \pre n2 < nb_node_.
-       */
-      void add_edge (unsigned n1, unsigned n2);
-
-
-      /*! \brief Check the consistency of the graph.
-       *
-       * Check if all edge have their node in the graph.
-       *
-       * \pre nodes_.size () == nb_node_.
-       * \pre links_.size () == nb_link_.
-       */
-      void consistency () const;
-
-
-      /*! \brief Print on \p ostr the graph.
-       *
-       * \param[in] ostr The output stream.
-       */
-      void print_debug (std::ostream& ostr) const;
-
-
-
-      /// The nuber of nodes.
-      unsigned nb_node_;
-
-      /// The nuber of links.
-      unsigned nb_link_;
-
-      /// The vector where is stocked the pointers of nodes.
-      nodes nodes_;
-
-      /// The vector where is stocked the pointers of links.
-      edges links_;
-    };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    bool
-    operator==(const struct s_edge <void>& lhs, const struct s_edge <void>& rhs)
+    /*--------------------.
+    | graph<void, void>.  |
+    `--------------------*/
+
+    /* Note that ddefinition of members from fully specialized
+       template classes are not preceded by `template<>'.  */
+    inline
+    void
+    graph<void, void>::add_node()
     {
-      return lhs.pair_node_ == rhs.pair_node_;
+      super::add_node_(new util::node<void>);
     }
 
-    bool
-    operator< (const struct s_edge <void>& lhs, const struct s_edge <void>& rhs)
+    /* Note that ddefinition of members from fully specialized
+       template classes are not preceded by `template<>'.  */
+    inline
+    void
+    graph<void, void>::add_edge(node_id n1, node_id n2)
     {
-      return lhs.pair_node_ < rhs.pair_node_;
+      super::add_edge_(new util::edge<void>(n1, n2));
     }
+
+    /*-----------------.
+    | graph<N, void>.  |
+    `-----------------*/
+
+    template<typename N>
+    inline
+    void
+    graph<N, void>::add_node(const N& data)
+    {
+      super::add_node_(new util::node<N>(data));
+    }
+
+    template<typename N>
+    inline
+    void
+    graph<N, void>::add_edge(node_id n1, node_id n2)
+    {
+      mln_assertion(n1 < this->nnodes());
+      mln_assertion(n2 < this->nnodes());
+      super::add_edge_(new util::edge<void>(n1, n2));
+    }
+
+    template <class N>
+    inline
+    N&
+    graph<N, void>::node_data(node_id n)
+    {
+      mln_assertion(n < this->nnodes());
+      return this->nodes_[n]->data;
+    }
+
+    template<typename N>
+    inline
+    const N&
+    graph<N, void>::node_data(node_id n) const
+    {
+      mln_assertion(n < this->nnodes());
+      return this->nodes_[n]->data;
+    }
+      
+
+    /*--------------.
+    | graph<N, E>.  |
+    `--------------*/
 
     template<typename N, typename E>
     inline
-    graph<N, E>::graph ()
-      : nb_node_ (0),
-	nb_link_ (0),
-	nodes_ (0),
-	links_ (0)
+    void
+    graph<N, E>::add_node(const N& data)
     {
-    }
-
-    template<typename N, typename E>
-    inline
-    graph<N, E>::~graph ()
-    {
+      super::add_node_(new util::node<N>(data));
     }
 
     template<typename N, typename E>
     inline
     void
-    graph<N, E>::add_node ()
+    graph<N, E>::add_edge(node_id n1, node_id n2, const E& data)
     {
-      struct s_node<N>* n = new struct s_node<N>;
-
-      nodes_.push_back (n);
-      ++nb_node_;
+      mln_assertion(n1 < this->nnodes());
+      mln_assertion(n2 < this->nnodes());
+      super::add_edge_(new util::edge<E>(n1, n2, data));
     }
 
     template<typename N, typename E>
     inline
-    void
-    graph<N, E>::add_edge (unsigned n1, unsigned n2)
+    N&
+    graph<N, E>::node_data(node_id n)
     {
-      mln_precondition(n1 < this->nb_node_);
-      mln_precondition(n2 < this->nb_node_);
-
-      struct s_edge<E>* edge;
-
-      edge = new s_edge<E>;
-      edge->pair_node_.first = n1;
-      edge->pair_node_.second = n2;
-      // Does this edge already exist in the graph?
-      if (std::find(links_.begin(), links_.end(), edge) != links_.end ())
-	{
-	  delete edge;
-	  edge = 0;
-	}
-      else
-	{
-	  links_.push_back (edge);
-	  ++nb_link_;
-	  /* FIXME: In fact, we should store adjaceny information in
-	     *both* nodes.  Change this globally later, and mention
-	     that the graph is undirected in the documentation.  And
-	     don't forget to update clients!  */
-	  nodes_[n1]->links.push_back (n2);
-	}
+      mln_assertion(n < this->nnodes());
+      return this->nodes_[n]->data;
     }
 
     template<typename N, typename E>
     inline
-    void
-    graph<N, E>::consistency () const
+    const N&
+    graph<N, E>::node_data(node_id n) const
     {
-      mln_precondition(nodes_.size () == this->nb_node_);
-      mln_precondition(links_.size () == this->nb_link_);
-      typename std::vector<struct s_node <N>*>::const_iterator it =
-	nodes_.begin ();
-      for (; it != nodes_.end (); ++it)
-	{
-	  typename std::list<unsigned>::const_iterator it2 = 
-	    (*it)->links.begin ();
-	  for (; it2 != (*it)->links.end (); ++it2)
-	    mln_precondition((*it2) < nb_node_);
-	}
-
-      typename std::vector<struct s_edge<E>*>::const_iterator it3 =
-	links_.begin ();
-      for (; it3 != links_.end (); ++it3)
-	{
-	  mln_precondition((*it3)->pair_node_.first < nb_node_);
-	  mln_precondition((*it3)->pair_node_.second < nb_node_);
-	}
+      mln_assertion(n < this->nnodes());
+      return this->nodes_[n]->data;
     }
 
     template<typename N, typename E>
     inline
-    void
-    graph<N, E>::print_debug (std::ostream& ostr) const
+    E&
+    graph<N, E>::edge_data(edge_id e)
     {
-      ostr << "nodes :"	<< std::endl;
+      mln_assertion(e < this->nedges());
+      return this->edges_[e]->data;
+    }
 
-      typename std::vector<struct s_node<N>*>::const_iterator it =
-	nodes_.begin ();
-      int i = 0;
-      for (; it != nodes_.end (); ++it, ++i)
-	{
-	  ostr << "node number = " << i << " nbh : ";
-	  typename std::list<unsigned>::const_iterator it2 = (*it)->links.begin ();
-	  for (; it2 != (*it)->links.end (); ++it2)
-	    {
-	      ostr << (*it2) << " ";
-	    }
-	  ostr << std::endl;
-	}
-      ostr << std::endl;
+    template<typename N, typename E>
+    inline
+    const E&
+    graph<N, E>::edge_data(edge_id e) const
+    {
+      mln_assertion(e < this->nedges());
+      return this->edges_[e]->data;
+    }
+
+    template<typename N, typename E>
+    inline
+    E&
+    graph<N, E>::edge_data(node_id n1, node_id n2)
+    {
+      mln_assertion(n1 < this->nnodes());
+      mln_assertion(n2 < this->nnodes());
+      ordpair_<node_id> node_pair (n1, n2);
+      std::vector<edge_id>& edges_ids = this->nodes_[n1]->edges;
+      for (std::vector<edge_id>::iterator e = edges_ids.begin();
+	   e != edges_ids.end(); ++e)
+	  if (this->edges_[*e] == node_pair)
+	    return this->edges_[*e]->data;
+      // If no edge between N1 and N2 was found, abort.
+      abort();
+    }
+
+    template<typename N, typename E>
+    inline
+    const E&
+    graph<N, E>::edge_data(node_id n1, node_id n2) const
+    {
+      mln_assertion(n1 < this->nnodes());
+      mln_assertion(n2 < this->nnodes());
+      ordpair_<node_id> node_pair (n1, n2);
+      const std::vector<edge_id>& edges_ids = this->nodes_[n1]->edges;
+      for (std::vector<edge_id>::const_iterator e = edges_ids.begin();
+	   e != edges_ids.end(); ++e)
+	  if (this->edges_[*e] == node_pair)
+	    return this->edges_[*e]->data;
+      // If no edge between N1 and N2 was found, abort.
+      abort();
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of util
+  } // end of namespace mln::util
 
-} // end of mln
+} // end of namespace mln
 
-#endif // MLN_GRAPH_HH
+#endif // ! MLN_UTIL_GRAPH_HH

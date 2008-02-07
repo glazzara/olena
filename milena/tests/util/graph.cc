@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*!
- *  \file   tests/util/graph.cc
- *
- *  \brief  test of mln::util::graph
- *
- */
+/// \file   tests/util/graph.cc
+/// \brief  test of mln::util::graph
 
 #include <mln/util/graph.hh>
 #include <iostream>
@@ -55,5 +51,4 @@ int main ()
   g.add_edge (1, 0);
   g.add_edge (5, 3);
   g.add_edge (2, 1);
-  g.consistency ();
 }

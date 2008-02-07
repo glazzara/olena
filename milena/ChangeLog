@@ -1,5 +1,24 @@
 2008-02-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Ovherhaul undirected graphs.
+
+	* mln/util/graph.hh (util::node, util::edge, util::graph): Move...
+	* mln/util/internal/graph_base.hh: ...here (new file).
+	(node_id, edge_id): New.
+	(util::graph): Rename as...
+	(util::internal::graph_base): ...this.
+	Factor the common implementations of undirected graphs.
+	(util::internal::consistency): Remove.
+	(util::internal::nb_node_, util::internal::nb_link_): Remove.
+	* mln/util/graph.hh: Include mln/util/internal/graph_base.hh.
+	(util::graph<N, E>): New class, inheriting from
+	util::internal::graph_base.
+	(util::graph<N, void>, util::graph<void, void>):
+	New specializations.
+	* tests/util/graph.cc: Adjust.
+
+2008-02-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have priority queues of points catch up with the interface of
 	Point_Set.
 
