@@ -1,8 +1,3 @@
-2008-02-07  Maxime van Noppen  <yabo@lrde.epita.fr>
-
-	Fix typo.
-	* milena/mln/core/internal/force_exact.hh: Here.
-
 2008-01-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/tests/neighb/Makefile.
