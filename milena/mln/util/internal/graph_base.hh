@@ -44,6 +44,12 @@ namespace mln
 
   namespace util
   {
+    /* FIXME: We should create actual types for node_id and edge_id,
+       (not just typedefs), at least to prevent the user from using a
+       node_id where an edge_id is expected (and vice versa).
+       Conversion to and from unsigned would still be useful, but it
+       might be safer to turn them into explicit ones.  */
+
     /// \bref The type used to identify nodes.
     ///
     /// Used internally as a key to manipulate nodes.

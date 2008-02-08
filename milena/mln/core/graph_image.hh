@@ -28,10 +28,8 @@
 #ifndef MLN_CORE_GRAPH_IMAGE_HH
 # define MLN_CORE_GRAPH_IMAGE_HH
 
-/*! \file mln/core/graph_image.hh
- *
- *  \brief Definition of a graph-based image.
- */
+/// \file mln/core/graph_image.hh
+/// \brief Definition of a graph-based image.
 
 # include <mln/trait/images.hh>
 

@@ -77,20 +77,29 @@ namespace mln
 
     void next_();
     bool adjacent_or_equal_to_p_ref_() const;
+    /// Update the internal data of the iterator.
+    void update_();
 
-    // FIXME: In fact, this method should be named `to_psite', since
-    // it returns a mln::graph_psite<P> object, not a P object.
     const point& to_point() const;
-    operator psite () const;
+
+    const psite& to_psite() const;
+
+    operator point() const;
+
+    operator psite() const;
+
     /// Return the \a i th coordinate of the (iterated) point.
     coord operator[](unsigned i) const;
 
   private:
-    /// The ``central'' point of the window.
+    /// The ``central'' psite of the window.
     const psite& p_ref_;
-
     /// An internal iterator on the set of nodes of the underlying graph.
     util::node_id id_;
+    // The psite corresponding to this iterator.
+    psite psite_;
+    // The point corresponding to this iterator.
+    point p_;
   };
 
   // FIXME: Implement graph_window_bkd_piter.
@@ -101,15 +110,20 @@ namespace mln
   // FIXME: Currently, argument win is ignored.
   template <typename P>
   template <typename W, typename Pref>
+  inline
   graph_window_fwd_piter<P>::graph_window_fwd_piter(const W& /* win */,
 						    const Point_Site<Pref>& p_ref)
-    : p_ref_(exact(p_ref).to_psite())
+    : p_ref_(exact(p_ref).to_psite()),
+      // Initialize psite_ to a dummy value.
+      psite_(p_ref_.pg(), p_ref_.pg().npoints()),
+      p_()
   {
     // Invalidate id_.
     invalidate();
   }
 
   template <typename P>
+  inline
   bool
   graph_window_fwd_piter<P>::is_valid() const
   {
@@ -120,6 +134,7 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   graph_window_fwd_piter<P>::invalidate()
   {
@@ -127,15 +142,22 @@ namespace mln
   }
 
   template <typename P>
+  inline
   void
   graph_window_fwd_piter<P>::start()
   {
     id_ = 0;
     if (!adjacent_or_equal_to_p_ref_())
       next_();
+    /* FIXME: This is redundant with the end of next_(), but we might
+       change the implementation of start_() when we'll fix it later,
+       and no longer use next_().  */
+    if (is_valid())
+      update_();
   }
 
   template <typename P>
+  inline
   void
   graph_window_fwd_piter<P>::next_()
   {
@@ -144,13 +166,17 @@ namespace mln
        probably provides adequates structures to fetch these
        neighbors in constant time.  */
     /* FIXME: Moreover, the behavior of next shall depend on the
-       window, which is not the case now!  */
+       window, which is not the case now!  (Currently, next_() behaves
+       as win was always an elementary window.) */
     do
       ++id_;
     while (is_valid() && !adjacent_or_equal_to_p_ref_());
+    if (is_valid())
+      update_();
   }
 
   template <typename P>
+  inline
   bool
   graph_window_fwd_piter<P>::adjacent_or_equal_to_p_ref_() const
   {
@@ -180,16 +206,46 @@ namespace mln
   }
 
   template <typename P>
-  const P&
-  graph_window_fwd_piter<P>::to_point() const
+  inline
+  void
+  graph_window_fwd_piter<P>::update_()
   {
-    return p_ref_.pg().gr_.node_data(id_);
+    // Update psite_.
+    psite_ = graph_psite<P>(p_ref_.pg(), id_);
+    // Update p_.
+    p_ = p_ref_.pg().gr_.node_data(id_);
   }
 
   template <typename P>
-  graph_window_fwd_piter<P>::operator graph_psite<P> () const
+  inline
+  const P&
+  graph_window_fwd_piter<P>::to_point() const
   {
-    return graph_psite<P>(p_ref_.pg(), id_);
+    return p_;
+  }
+
+  template <typename P>
+  inline
+  const graph_psite<P>&
+  graph_window_fwd_piter<P>::to_psite() const
+  {
+    return psite_;
+  }
+
+  template <typename P>
+  inline
+  graph_window_fwd_piter<P>::operator P() const
+  {
+    mln_precondition(is_valid());
+    return p_;
+  }
+
+  template <typename P>
+  inline
+  graph_window_fwd_piter<P>::operator graph_psite<P>() const
+  {
+    mln_precondition(is_valid());
+    return psite_;
   }
 
   template <typename P>
@@ -198,7 +254,7 @@ namespace mln
   graph_window_fwd_piter<P>::operator[](unsigned i) const
   {
     assert(i < dim);
-    return to_point()[i];
+    return p_[i];
   }
 
 # endif // ! MLN_INCLUDE_ONLY

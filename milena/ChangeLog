@@ -1,3 +1,42 @@
+2008-02-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revamp iterators on windows on graphs.
+
+	* mln/core/graph_window_piter.hh: Add missing inline `keywords' on
+	methods.
+	(graph_window_fwd_piter<P>::psite_)
+	(graph_window_fwd_piter<P>::p_):
+	New attributes.
+	(graph_window_fwd_piter<P>::graph_window_fwd_piter): Adjust ctor.
+	(graph_window_fwd_piter<P>::update_): New method.
+	Use it...
+	(graph_window_fwd_piter<P>::start)
+	(graph_window_fwd_piter<P>::next_)
+	...here
+	(graph_window_fwd_piter<P>::to_psite)
+	(graph_window_fwd_piter<P>::operator point):
+	New methods.
+	(graph_window_fwd_piter<P>::to_psite)
+	(graph_window_fwd_piter<P>::operator psite)
+	(graph_window_fwd_piter<P>::operator[]):
+	Adjust.
+	* mln/core/p_graph.hh (p_graph<P>::has): Rewrite this method using
+	a much simpler and faster approach.
+	* mln/core/p_graph_piter.hh
+	(p_graph_piter_<P>::i_): Rename as...
+	(p_graph_piter_<P>::id_): ...this.
+	(p_graph_piter_<P>::p_graph_piter_): Adjust ctor.
+	(p_graph_piter_<P>::is_valid)
+	(p_graph_piter_<P>::invalidate)
+	(p_graph_piter_<P>::start)
+	(p_graph_piter_<P>::next_)
+	(p_graph_piter_<P>::update_):
+	Adjust.
+	* mln/core/graph_psite.hh: More doc.
+	* mln/core/graph_elt_window.hh: Fix header guards.
+	* mln/core/graph_image.hh: Aesthetic changes.
+	* mln/util/internal/graph_base.hh: More FIXME.
+
 2008-02-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Catch up with the new interface of mln::util::graph and improve

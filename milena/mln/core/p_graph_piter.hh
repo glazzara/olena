@@ -93,10 +93,14 @@ namespace mln
     operator psite() const;
 
   protected:
+    // The p_graph this point site belongs to.
     const p_graph<P>& pg_;
-    unsigned i_;
-    P p_;
+    // The id of the node this psite is pointing towards.
+    unsigned id_;
+    // The psite corresponding to this iterator.
     psite psite_;
+    // The point corresponding to this iterator.
+    point p_;
   };
 
 
@@ -107,11 +111,11 @@ namespace mln
   inline
   p_graph_piter_<P>::p_graph_piter_(const p_graph<P>& pg)
     : pg_(pg),
-      p_(),
       // Initialize psite_ to a dummy value.
-      psite_(pg, pg_.npoints())
+      psite_(pg, pg_.npoints()),
+      p_()
   {
-    // Invalidate i_.
+    // Invalidate id_.
     invalidate();
   }
 
@@ -128,7 +132,7 @@ namespace mln
   bool
   p_graph_piter_<P>::is_valid() const
   {
-    return i_ < pg_.npoints();
+    return id_ < pg_.npoints();
   }
 
   template<typename P>
@@ -136,7 +140,7 @@ namespace mln
   void
   p_graph_piter_<P>::invalidate()
   {
-    i_ = pg_.npoints();
+    id_ = pg_.npoints();
   }
 
   template<typename P>
@@ -144,7 +148,7 @@ namespace mln
   void 
   p_graph_piter_<P>::start()
   {
-    i_ = 0;
+    id_ = 0;
     if (is_valid())
       update_();
   }
@@ -154,7 +158,7 @@ namespace mln
   void 
   p_graph_piter_<P>::next_()
   {
-    ++i_;
+    ++id_;
     if (is_valid())
       update_();
   }
@@ -164,10 +168,10 @@ namespace mln
   void
   p_graph_piter_<P>::update_()
   {
-    // Update p_.
-    p_ = pg_.gr_.node_data(i_);
     // Update psite_.
-    psite_ = graph_psite<P>(pg_, i_);
+    psite_ = graph_psite<P>(pg_, id_);
+    // Update p_.
+    p_ = pg_.gr_.node_data(id_);
   }
 
   template<typename P>

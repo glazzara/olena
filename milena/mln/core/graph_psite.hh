@@ -68,13 +68,15 @@ namespace mln
     coord operator[](unsigned id) const;
     /// \}
 
-    /// Return the mln::p_graph this point site belongs to.
+    /// Return the p_graph this point site belongs to.
     const p_graph<P>& pg() const;
     /// Return the node id of this point site.
     util::node_id id() const;
 
   private:
-    const p_graph<P>& pg_;
+    // The p_graph this point site belongs to.
+   const p_graph<P>& pg_;
+    // The id of the node this psite is pointing towards.
     util::node_id id_;
   };
 

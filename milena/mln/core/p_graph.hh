@@ -127,14 +127,11 @@ namespace mln
   bool
   p_graph<P>::has(const psite& p) const
   {
-    // FIXME: util::graph (or util::internal::graph_base) should
-    // provide the iteration facility (iterators, find, etc.)
-    const typename graph::nodes_t& nodes = gr_.nodes();
-    for (typename graph::nodes_t::const_iterator n = nodes.begin();
-	 n != nodes.end(); ++n)
-      if ((*n)->data == p)
-	return true;
-    return false;
+    return
+      // Check whether P is compatible with this psite set.
+      (&p.pg() == this) &&
+      // Check that the node id of P belongs to the range of valid node ids.
+      (p.id() < gr_.nnodes());
   }
 
 # endif // ! MLN_INCLUDE_ONLY

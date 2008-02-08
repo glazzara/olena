@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WIN_GRAPH_ELT_WINDOW_HH
-# define MLN_WIN_GRAPH_ELT_WINDOW_HH
+#ifndef MLN_CORE_GRAPH_ELT_WINDOW_HH
+# define MLN_CORE_GRAPH_ELT_WINDOW_HH
 
 /*! \file mln/core/graph_elt_window.hh
  *
@@ -168,4 +168,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_WIN_GRAPH_ELT_WINDOW_HH
+#endif // ! MLN_CORE_GRAPH_ELT_WINDOW_HH
