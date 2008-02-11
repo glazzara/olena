@@ -1,5 +1,26 @@
 2008-02-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add the required entities to express line graph-based images.
+
+	* mln/core/point_pair.hh: New.
+	Used to represent the ``points'' of line graph-based images.
+	* mln/core/line_graph_elt_window.hh,
+	* mln/core/line_graph_image.hh,
+	* mln/core/line_graph_psite.hh,
+	* mln/core/line_graph_window_piter.hh,
+	* mln/core/p_line_graph.hh,
+	* mln/core/p_line_graph_piter.hh:
+	New.
+	Entities involved in line graph-based images.
+	* tests/core/line_graph_elt_window.cc,
+	* tests/core/line_graph_image.cc:
+	New tests.
+	* tests/core/Makefile.am: Reorder the lists of tests.
+	(check_PROGRAMS): Add line_graph_elt_window and line_graph_image.
+	(line_graph_elt_window_SOURCES, line_graph_image_SOURCES): New.
+
+2008-02-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Initialize the last component of h_vec's to 1 in default ctor. .
 
 	* mln/core/h_vec.hh (h_vec<d,C>::h_vec): Initialize the last
