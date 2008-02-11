@@ -96,9 +96,9 @@ namespace mln
     const psite& p_ref_;
     /// An internal iterator on the set of nodes of the underlying graph.
     util::node_id id_;
-    // The psite corresponding to this iterator.
+    /// The psite corresponding to this iterator.
     psite psite_;
-    // The point corresponding to this iterator.
+    /// The point corresponding to this iterator.
     point p_;
   };
 

@@ -1,5 +1,18 @@
 2008-02-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Typos and aesthetic changes in documentation of graph-related
+	entities.
+
+	* mln/core/p_graph_piter.hh,
+	* mln/core/graph_window_piter.hh,
+	* tests/core/graph_elt_window.cc:
+	Fix Doxygen comments.
+	* mln/core/graph_psite.hh: Likewise.
+	(graph_psite<P>::operator[]): s/util::node_id/unsigned/.
+	s/id/i/.
+
+2008-02-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add the required entities to express line graph-based images.
 
 	* mln/core/point_pair.hh: New.

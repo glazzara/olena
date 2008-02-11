@@ -74,9 +74,9 @@ namespace mln
     util::node_id id() const;
 
   private:
-    // The p_graph this point site belongs to.
+    /// The p_graph this point site belongs to.
    const p_graph<P>& pg_;
-    // The id of the node this psite is pointing towards.
+    /// The id of the node this psite is pointing towards.
     util::node_id id_;
   };
 
@@ -131,9 +131,9 @@ namespace mln
   template<typename P>
   inline
   mln_coord(P)
-  graph_psite<P>::operator[](util::node_id id) const
+  graph_psite<P>::operator[](unsigned i) const
   {
-    return to_point()[id];
+    return to_point()[i];
   }
 
   template<typename P>

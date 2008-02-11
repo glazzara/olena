@@ -93,13 +93,13 @@ namespace mln
     operator psite() const;
 
   protected:
-    // The p_graph this point site belongs to.
+    /// The p_graph this point site belongs to.
     const p_graph<P>& pg_;
-    // The id of the node this psite is pointing towards.
+    /// The id of the node this psite is pointing towards.
     unsigned id_;
-    // The psite corresponding to this iterator.
+    /// The psite corresponding to this iterator.
     psite psite_;
-    // The point corresponding to this iterator.
+    /// The point corresponding to this iterator.
     point p_;
   };
 

@@ -27,7 +27,7 @@
 
 /*! \file tests/core/graph_elt_window.cc
  *
- *  \brief Tests on mln::win::graph_elt_window.
+ *  \brief Tests on mln::graph_elt_window.
  */
 
 #include <vector>
@@ -77,6 +77,6 @@ int main()
   p_graph<p_t> pg(g);
   // Graph point site.
   graph_psite<p_t> psite(pg, 0);
-  // ``Sliding'' window (in fact, neighborhood) of a psite of PG.
+  // ``Sliding'' window of a psite of PG.
   graph_elt_window<p_t> win;
 }
