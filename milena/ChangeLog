@@ -1,3 +1,9 @@
+2008-02-11  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Fix documentation.
+
+	* mln/util/graph.hh, mln/util/internal/graph_base.hh: fix documentation
+
 2008-02-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Revamp iterators on windows on graphs.

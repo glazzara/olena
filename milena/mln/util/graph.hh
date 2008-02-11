@@ -202,7 +202,7 @@ namespace mln
       mln_assertion(n < this->nnodes());
       return this->nodes_[n]->data;
     }
-      
+
 
     /*--------------.
     | graph<N, E>.  |

@@ -50,12 +50,12 @@ namespace mln
        Conversion to and from unsigned would still be useful, but it
        might be safer to turn them into explicit ones.  */
 
-    /// \bref The type used to identify nodes.
+    /// \brief The type used to identify nodes.
     ///
     /// Used internally as a key to manipulate nodes.
     typedef unsigned node_id;
 
-    /// \bref The type used to identify edges.
+    /// \brief The type used to identify edges.
     ///
     /// Used internally as a key to manipulate edges.
     typedef unsigned edge_id;
@@ -82,7 +82,7 @@ namespace mln
     template<>
     struct node<void>
     {
-      std::list<node_id> edges;
+      std::list<edge_id> edges;
     };
 
 
@@ -183,7 +183,7 @@ namespace mln
 	edges_t& edges ();
 	const edges_t& edges () const;
 	/// \}
-      
+
 	/// \brief Return the number of nodes in the graph.
 	size_t nnodes() const;
 	/// \brief Return the number of edges in the graph.
