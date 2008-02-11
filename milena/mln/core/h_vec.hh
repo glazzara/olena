@@ -110,6 +110,11 @@ namespace mln
   inline
   h_vec<d,C>::h_vec()
   {
+    /* Safety measure: set the last component to the unit (1).  This
+       way, converting an unitialized h_vec to a vector won't trigger
+       division-by-zero errors if this last component were randomly
+       initialized to 0.  */
+    this->data_[d] = literal::one;
   }
 
   template <unsigned d, typename C>

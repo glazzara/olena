@@ -1,3 +1,11 @@
+2008-02-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Initialize the last component of h_vec's to 1 in default ctor. .
+
+	* mln/core/h_vec.hh (h_vec<d,C>::h_vec): Initialize the last
+	component to the unit (1) to prevent unitialized vectors from
+	triggering division-by-zero errors.
+
 2008-02-11  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Fix documentation.
