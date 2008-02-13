@@ -1,3 +1,14 @@
+2008-02-13  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	color structures.
+	* my_cmy.hh: CMY struct.
+	* my_hsi.hh: HSI struct.
+	* my_yuv.hh: YUV struct.
+	* rgb_to_cmy.hh: transform equations.
+	* rgb_to_hsi.hh: transform equations.
+	* rgb_to_yuv.hh: transform equations.
+	* tests.cc: New test.
+
 2008-02-13  Michel Pellegrin  <pellegrin@lrde.epita.fr>
 
 	Commit of personnal work in my sandbox.
