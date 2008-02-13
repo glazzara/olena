@@ -1,5 +1,16 @@
 2008-02-13  Michel Pellegrin  <pellegrin@lrde.epita.fr>
 
+	Commit of personnal work in my sandbox.
+	* sandbox/pellegrin/Makefile: New.
+	* sandbox/pellegrin/first_test.cc: New.
+	* sandbox/pellegrin/set/Makefile: New.
+	* sandbox/pellegrin/set/multi_set.hh: New.
+	* sandbox/pellegrin/set/test_set.cc: New.
+	* sandbox/pellegrin/set/uni_set.hh: New.
+	* sandbox/pellegrin/set: New.
+
+2008-02-13  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
 	Fix Doxygen comment.
 	* mln/core/internal/set_of.hh: here.
 
