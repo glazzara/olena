@@ -1,3 +1,8 @@
+2008-02-13  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
+	Fix Doxygen comment.
+	* mln/core/internal/set_of.hh: here.
+
 2008-02-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Typos and aesthetic changes in documentation of graph-related

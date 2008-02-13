@@ -76,9 +76,9 @@ namespace mln
 
       /*! \brief Remove an element \p elt into the set.
        *
-       * \param[in] elt The element to be inserted.
+       * \param[in] elt The element to be deleted.
        *
-       * If \p elt is already in the set, this method is a no-op.
+       * If \p elt is not in the set, this method is a no-op.
        *
        * \return The set itself after suppression.
        */
