@@ -58,10 +58,14 @@ namespace mln
     /// \{
     graph_psite(const p_graph<P>& pg_, unsigned id);
     graph_psite(const self_& rhs);
+    /// \pre This psite must have the same graph point set as \a rhs.
     self_& operator= (const self_& rhs);
     /// \}
 
-    /// Access to point/psite.
+    /// Access to psite.
+    const self_& to_psite() const;
+
+    /// Access to point.
     /// \{
     operator P() const;
     const point& to_point() const;
@@ -107,9 +111,18 @@ namespace mln
   {
     if (&rhs == this)
       return *this;
-    // FIXME: Could we get rid of this cast?
-    const_cast< p_graph<P>& >(pg_) = rhs.pg_;
+    // Assigning a psite from a graph point set to a psite from
+    // another graph point set is meaningless.
+    mln_assertion(&pg_ == &rhs.pg_);
     id_ = rhs.id_;
+    return *this;
+  }
+
+  template<typename P>
+  inline
+  const graph_psite<P>&
+  graph_psite<P>::to_psite() const
+  {
     return *this;
   }
 

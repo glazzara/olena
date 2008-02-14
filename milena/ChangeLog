@@ -1,5 +1,15 @@
 2008-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the robustness of psites on graphs.
+
+	* mln/core/graph_psite.hh, mln/core/line_graph_psite.hh
+	(to_psite): New method.
+	(operator=): Don't copy the point set from the argument.  Instead,
+	ensure that that point set in compatible with the point set of the
+	psite.
+
+2008-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add neighborhoods and corresponding piters for graph-based images.
 
 	* mln/core/graph_elt_neighborhood.hh,

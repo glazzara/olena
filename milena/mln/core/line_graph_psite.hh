@@ -62,10 +62,14 @@ namespace mln
     /// \{
     line_graph_psite(const p_line_graph<P>& plg_, unsigned id);
     line_graph_psite(const self_& rhs);
+    /// \pre This psite must have the same graph point set as \a rhs.
     self_& operator= (const self_& rhs);
     /// \}
 
-    /// Access to point/psite.
+    /// Access to psite.
+    const self_& to_psite() const;
+
+    /// Access to point.
     /// \{
     operator point() const;
     const point& to_point() const;
@@ -142,8 +146,9 @@ namespace mln
   {
     if (&rhs == this)
       return *this;
-    // FIXME: Could we get rid of this cast?
-    const_cast< p_line_graph<P>& >(plg_) = rhs.plg_;
+    // Assigning a psite from a line graph point set to a psite from
+    // another line graph point set is meaningless.
+    mln_assertion(&plg_ == &rhs.plg_);
     id_ = rhs.id_;
     update_();
     return *this;
@@ -163,6 +168,14 @@ namespace mln
   line_graph_psite<P>::is_valid_() const
   {
     return id_ < plg_.gr_.nedges();
+  }
+
+  template<typename P>
+  inline
+  const line_graph_psite<P>&
+  line_graph_psite<P>::to_psite() const
+  {
+    return *this;
   }
 
   template<typename P>
