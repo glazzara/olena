@@ -1,5 +1,12 @@
 2008-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise mln::line_graph_image more.
+
+	* tests/core/line_graph_image.cc: Perform additional morphological
+	tests (erosion and dilation on a line graph-based image).
+
+2008-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have Meyer's Watershed Transform work on line graph-based images.
 
 	* mln/morpho/extrema_components.hh,

@@ -118,6 +118,23 @@ int main()
   }
   std::cout << std::endl;
 
+  /*-------------------------.
+  | Processing graph images.  |
+  `-------------------------*/
+
+  line_graph_image<point2d, int> ima_dil = morpho::dilation(ima, win);
+  // Manual iteration over the domain of IMA_DIL.
+  mln_piter_(ima_t) p_dil(ima_dil.domain());
+  for_all (p_dil)
+    std::cout << "ima_dil (" << p_dil << ") = " << ima_dil(p_dil) << std::endl;
+  std::cout << std::endl;
+
+  line_graph_image<point2d, int> ima_ero = morpho::erosion(ima, win);
+  // Manual iteration over the domain of IMA_ERO.
+  mln_piter_(ima_t) p_ero(ima_ero.domain());
+  for_all (p_ero)
+    std::cout << "ima_ero (" << p_ero << ") = " << ima_ero(p_ero) << std::endl;
+
 
 //   /* FIXME: When implementing convert::to_line_graph_image, don't
 //      forget to give a second argument defaulting to something like
