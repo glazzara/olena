@@ -13,7 +13,7 @@ int main()
 {
   using namespace mln;
 
-  struct value::yuv	yuv(4, 4, 4);
+  struct value::yuv<8>	yuv(4, 4, 4);
   std::cout << yuv.y() << std::endl;
   std::cout << yuv.u() << std::endl;
   std::cout << yuv.v() << std::endl; 

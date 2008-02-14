@@ -1,11 +1,11 @@
-#ifndef MLN_VALUE_YUV_HH
-# define MLN_VALUE_YUV_HH
+#ifndef MLN_VALUE_CMY_HH
+# define MLN_VALUE_CMY_HH
 
 namespace mln
 {
   namespace value
   {
-//     template <unsigned n>
+    template <unsigned n>
     struct cmy
     {
     public:
@@ -43,14 +43,14 @@ namespace mln
       double y_;
     };
 
-//     template <unsigned n>
+    template <unsigned n>
     inline
     yuv::cmy()
       :c_(0), m_(0), y_(0)
     {
     }
 
-//     template <unsigned n>
+    template <unsigned n>
     inline
     cmy::cmy(double c, double m, double y)
     {
@@ -64,4 +64,4 @@ namespace mln
   }
 }
 
-#endif // ! MLN_VALUE_YUV_HH
+#endif // ! MLN_VALUE_CMY_HH

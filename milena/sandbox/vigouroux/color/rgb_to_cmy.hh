@@ -5,6 +5,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/display/save_and_show.hh>
 #include <mln/level/fill.hh>
+#include <mln/value/int_u.hh>
 
 #include "my_cmy.hh"
 
@@ -12,7 +13,7 @@ namespace mln {
   namespace convert {
     struct f_rgb_to_cmy
     {
-      struct value::cmy
+      struct value::cmy<8>
       doit(const struct value::rgb<8> rgb) const
       {
 	struct value::cmy cmy;
@@ -30,11 +31,14 @@ namespace mln {
       struct value::rgb<8>
       doit(const struct value::cmy cmy) const
       {
-	struct value::rgb<8> rgb;
+	int red;
+	int green;
+	int blue;
 
-	rgb.red() = 1 - cmy.c();
-	rgb.green() = 1 - cmy.m();
-	rgb.blue() = 1 - cmy.y();
+	red = int(1 - cmy.c());
+	green = int(1 - cmy.m());
+	blue = int(1 - cmy.y());
+	struct value::rgb<8> rgb(red, green, blue);
 	
 	return (rgb);
       }

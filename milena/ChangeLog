@@ -1,3 +1,12 @@
+2008-02-14  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Corrections on color structures.
+	* color/my_cmy.hh: corrections.
+	* color/my_hsi.hh: corrections.
+	* color/rgb_to_cmy.hh: corrections.
+	* color/rgb_to_yuv.hh: corrections.
+	* color/tests.cc: corrections.
+
 2008-02-13  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	color structures.

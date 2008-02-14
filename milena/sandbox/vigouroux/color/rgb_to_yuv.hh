@@ -5,6 +5,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/display/save_and_show.hh>
 #include <mln/level/fill.hh>
+#include <mln/value/int_u.hh>
 
 #include "my_yuv.hh"
 
@@ -30,12 +31,16 @@ namespace mln {
       struct value::rgb<8>
       doit(const struct value::yuv<8> yuv) const
       {
-	struct value::rgb<8> rgb;
+	int r;
+	int g;
+	int b;
 
-	rgb.red(yuv.y() + 1.13983 * yuv.v());
-	rgb.green(yuv.y() - 0.39465 * yuv.u() - 0.58060 * yuv.v());
-	rgb.blue(yuv.y() + 2.03211 * yuv.u());
-	
+	r = int(yuv.y() + 1.13983 * yuv.v());
+	g = int(yuv.y() - 0.39465 * yuv.u() - 0.58060 * yuv.v());
+	b = int(yuv.y() + 2.03211 * yuv.u());
+
+	struct value::rgb<8> rgb(r, g, b); 
+
 	return (rgb);
       }
     };
