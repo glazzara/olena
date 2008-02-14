@@ -12,6 +12,7 @@ check_PROGRAMS =				\
   graph_image					\
   line_graph_elt_window				\
   line_graph_image				\
+  line_graph_image_wst				\
   mono_obased_rle_image				\
   mono_rle_image				\
   obased_rle_image				\
@@ -35,6 +36,7 @@ graph_elt_window_SOURCES = graph_elt_window.cc
 graph_image_SOURCES = graph_image.cc
 line_graph_elt_window_SOURCES = line_graph_elt_window.cc
 line_graph_image_SOURCES = line_graph_image.cc
+line_graph_image_wst_SOURCES = line_graph_image_wst.cc
 mono_obased_rle_image_SOURCES = mono_obased_rle_image.cc
 mono_rle_image_SOURCES = mono_rle_image.cc
 obased_rle_image_SOURCES = obased_rle_image.cc

@@ -1,5 +1,25 @@
 2008-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have Meyer's Watershed Transform work on line graph-based images.
+
+	* mln/morpho/extrema_components.hh,
+	* mln/morpho/level_components.hh:
+	New.
+	Ressurect and adjust those files from a revision 1700, since
+	mln::labeling::regional_minima (needed by Meyer's WST) doesn't
+	work (yet) on image which are not point-wise accessible.
+	* mln/util/greater_psite.hh: New.	
+	Clone and modified from mln/util/greater_point.hh.
+	* mln/morpho/meyer_wst.hh (morpho::meyer_wst): s/point/psite/.
+	Use morpho::minima_components instead of level::regional_minima,
+	since the latter doesn't work on non point-wise accessible images.
+	* tests/core/line_graph_image_wst.cc: New test.
+	* tests/core/Makefile.am (check_PROGRAMS): Add
+	line_graph_image_wst.
+	(line_graph_image_wst_SOURCES): New.
+
+2008-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve the construction of graph-based images.
 
 	* mln/core/graph_image.hh

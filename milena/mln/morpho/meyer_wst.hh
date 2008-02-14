@@ -43,9 +43,11 @@
 
 # include <mln/trait/ch_value.hh>
 
-# include <mln/util/greater_point.hh>
+# include <mln/util/greater_psite.hh>
 # include <mln/morpho/includes.hh>
-# include <mln/labeling/regional_minima.hh>
+// FIXME: See below.
+// # include <mln/labeling/regional_minima.hh>
+# include <mln/morpho/extrema_components.hh>
 
 
 
@@ -112,15 +114,23 @@ namespace mln
       const marker unmarked = mln_min(marker);
 
       // Initialize the output with the markers (minima components).
+      /* FIXME: labeling::regional_minima doesn't work on non
+	 point-accessible images!  We temporarily reuse the old
+	 morpho::minima_components routine to work-around this
+	 limitation.  As soon as labeling::regional_minima work, get rid of
+	 - mln/morpho/level_components.hh, and
+	 - mln/morpho/extrema_components.hh.  */
+//    mln_ch_value(I, marker) markers =
+// 	labeling::regional_minima (input, nbh, nbasins);
       mln_ch_value(I, marker) markers =
-	labeling::regional_minima (input, nbh, nbasins);
+	minima_components(input, convert::to_window(nbh), nbasins); 
 
       // Ordered queue.
-      typedef mln_point(I) point;
+      typedef mln_psite(I) psite;
       typedef
-	std::priority_queue< point, std::vector<point>, util::greater_point<I> >
+	std::priority_queue< psite, std::vector<psite>, util::greater_psite<I> >
 	ordered_queue_type;
-      ordered_queue_type queue(util::make_greater_point(input));
+      ordered_queue_type queue(util::make_greater_psite(input));
 
       // Insert every neighbor P of every marked area in a
       // hierarchical queue, with a priority level corresponding to
@@ -136,12 +146,12 @@ namespace mln
 		break;
 	      }
 
-      /* Until the queue is empty, extract a point P from the
+      /* Until the queue is empty, extract a psite P from the
          hierarchical queue, at the highest priority level, that is,
          the lowest level.  */
       while (!queue.empty())
 	{
-	  point p = queue.top();
+	  psite p = queue.top();
 	  queue.pop();
 	  // Last seen marker adjacent to P.
 	  marker adjacent_marker = unmarked;
@@ -161,7 +171,7 @@ namespace mln
 		    single_adjacent_marker_p = false;
 		    break;
 		  }
-	  /* If the neighborhood of P contains only points with the
+	  /* If the neighborhood of P contains only psites with the
 	     same label, then P is marked with this label, and its
 	     neighbors that are not yet marked are put into the
 	     hierarchical queue.  */
