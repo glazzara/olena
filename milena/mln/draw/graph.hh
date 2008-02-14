@@ -120,7 +120,7 @@ namespace mln
 	line (exact(ima), gi.node1(l), gi.node2(l), link_v);
       // Draw the points (nodes).
       for (size_t p = 0; p < gi.domain().npoints(); ++p)
- 	exact(ima)(gi.domain().gr_.node_data(p)) = gi.data_values()[p];
+ 	exact(ima)(gi.domain().gr_.node_data(p)) = gi.node_values()[p];
     }
 
 # endif // ! MLN_INCLUDE_ONLY

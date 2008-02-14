@@ -1,5 +1,32 @@
 2008-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the construction of graph-based images.
+
+	* mln/core/graph_image.hh
+	(internal::data_< graph_image<P,V> >::pg_): Make it const.
+	(internal::data_< graph_image<P,V> >::data_): Adjust ctor.
+	(graph_image<P,V>::data_values): Rename as...
+	(graph_image<P,V>::node_values): ...this.
+	(graph_image<P,V>::graph_image(const p_graph<P>&, const std::vector<V>&)
+	(graph_image<P,V>::init_(const p_graph<P>&, const std::vector<V>&):
+	Adjust.
+	(graph_image<P,V>::graph_image(const p_graph<P>&)): New ctor.
+	* mln/draw/graph.hh
+	(draw::graph(Image<I>&, const graph_image<P,V>&, mln_value(I))):
+	Adjust.
+	* mln/core/line_graph_image.hh
+	(internal::data_< line_graph_image<P,V> >::pg_): Make it const.
+	(internal::data_< line_graph_image<P,V> >::data_): Adjust ctor.
+	(line_graph_image<P,V>::data_values): Rename as...
+	(line_graph_image<P,V>::node_values): ...this.
+	(line_graph_image<P,V>::edge_values): New accessor.
+	(line_graph_image(const p_graph<P>&, const std::vector<V>&)
+	(init_(const p_graph<P>&, const std::vector<V>&):
+	Adjust.
+	(line_graph_image(const p_graph<P>&)): New ctor.
+
+2008-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve the robustness of psites on graphs.
 
 	* mln/core/graph_psite.hh, mln/core/line_graph_psite.hh

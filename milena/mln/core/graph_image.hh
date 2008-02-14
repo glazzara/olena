@@ -53,10 +53,15 @@ namespace mln
     template <typename P, typename V>
     struct data_< graph_image<P, V> >
     {
-      data_(p_graph<P>& g, std::vector<V>& val);
+      data_(const p_graph<P>& g, const std::vector<V>& val);
 
       std::vector<V> val_;
-      p_graph<P>& pg_;
+      /* The graph point set is handled by address, so that we can
+         check the compatibility of images w.r.t. to their point
+         sites.  We could use a safer (and more complex) facility to
+         ensure (memory) equality of line graph point sets, but using
+         addresses is simple and efficient enough for the moment.  */
+      const p_graph<P>& pg_;
     };
 
   } // end of namespace mln::internal
@@ -112,11 +117,14 @@ namespace mln
     typedef graph_image< tag::psite_<P>, tag::value_<V> > skeleton;
 
     /// Constructors.
-    graph_image(p_graph<P>& g, std::vector<V>& val);
+    /// \{
     graph_image();
+    graph_image(const p_graph<P>& g);
+    graph_image(const p_graph<P>& g, const std::vector<V>& val);
+    /// \}
 
     /// Initialize an empty image.
-    void init_(p_graph<P>& g, std::vector<V>& val);
+    void init_(const p_graph<P>& g, const std::vector<V>& val);
 
     /// Read-only access of pixel value at point site \p p.
     const V& operator()(const graph_psite<P>& p) const;
@@ -124,13 +132,19 @@ namespace mln
     /// Read-write access of pixel value at point site \p p.
     V& operator()(const graph_psite<P>& p);
 
-    /// Give the set of values of the image.
+    /// Accessors.
+    /// \{
+    /// Return the domain of psites od the image.
+    const p_graph<P>& domain() const;
+    /// Return the domain of values of the image.
     const vset& values() const;
 
-    // FIXME: Keep this name?
-    const std::vector<V>& data_values () const;
+    /// Return the array of values associated to the nodes.
+    const std::vector<V>& node_values() const;
+    /// \}
 
-    const p_graph<P>& domain() const;
+    /* FIXME: Do we want to provide these two methods? (at least, in
+       the interface of the class?  */
 
     /// Return the point of the first node adjacent to the edge with
     /// id \a e.
@@ -157,16 +171,7 @@ namespace mln
   void init_(tag::image_t,
 	     graph_image<P, V>& target, const graph_image<P, V>& model)
   {
-    /* FIXME: Unfortunately, we cannot simply use 
-
-         target.init_(model.domain(), model.data_values ());
-
-       here, since domain() and data_values() return const data, and
-       init_ expects non mutable data.  These constness problems exist
-       also in graph_psite (see uses of const_cast<>).  Hence the
-       inelegant use of const_cast<>'s.  */
-    target.init_(const_cast<p_graph<P>&> (model.domain()),
-		 const_cast<std::vector<V>&> (model.data_values ()));
+    target.init_(model.domain(), model.node_values ());
   }
 
   /*-------.
@@ -177,7 +182,8 @@ namespace mln
   {
     template <typename P, typename V>
     inline
-    data_< graph_image<P, V> >::data_(p_graph<P>& g, std::vector<V>& val)
+    data_< graph_image<P, V> >::data_(const p_graph<P>& g,
+				      const std::vector<V>& val)
       : val_ (val),
 	pg_ (g)
     {
@@ -191,21 +197,28 @@ namespace mln
 
   template <typename P, typename V>
   inline
-  graph_image<P, V>::graph_image(p_graph<P>& g, std::vector<V>& val)
-  {
-    init_(g, val);
-  }
-
-  template <typename P, typename V>
-  inline
   graph_image<P, V>::graph_image()
   {
   }
 
   template <typename P, typename V>
   inline
+  graph_image<P, V>::graph_image(const p_graph<P>& g)
+  {
+    init_(g, std::vector<V>(g.npoints()));
+  }
+
+  template <typename P, typename V>
+  inline
+  graph_image<P, V>::graph_image(const p_graph<P>& g, const std::vector<V>& val)
+  {
+    init_(g, val);
+  }
+
+  template <typename P, typename V>
+  inline
   void
-  graph_image<P, V>::init_(p_graph<P>& g, std::vector<V>& val)
+  graph_image<P, V>::init_(const p_graph<P>& g, const std::vector<V>& val)
   {
     /* FIXME: We leak memory here: calling init_ twice loses the
        previous content pointed by data_.
@@ -250,7 +263,7 @@ namespace mln
   template <typename P, typename V>
   inline
   const std::vector<V>&
-  graph_image<P, V>::data_values () const
+  graph_image<P, V>::node_values() const
   {
     return this->data_->val_;
   }

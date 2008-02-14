@@ -67,12 +67,17 @@ namespace mln
     template <typename P, typename V>
     struct data_< line_graph_image<P, V> >
     {
-      data_(p_line_graph<P>& g,
-	    std::vector<V>& node_val, std::vector<V>& edge_val);
+      data_(const p_line_graph<P>& g,
+	    const std::vector<V>& node_val, const std::vector<V>& edge_val);
 
       std::vector<V> node_val_;
       std::vector<V> edge_val_;
-      p_line_graph<P>& plg_;
+      /* The line graph point set is handled by address, so that we
+         can check the compatibility of images w.r.t. to their point
+         sites.  We could use a safer (and more complex) facility to
+         ensure (memory) equality of line graph point sets, but using
+         addresses is simple and efficient enough for the moment.  */
+      const p_line_graph<P>& plg_;
     };
 
   } // end of namespace mln::internal
@@ -130,13 +135,18 @@ namespace mln
     typedef line_graph_image< tag::psite_<P>, tag::value_<V> > skeleton;
 
     /// Constructors.
-    line_graph_image(p_line_graph<P>& g,
-		     std::vector<V>& node_val, std::vector<V>& edge_val);
+    /// \{
     line_graph_image();
+    line_graph_image(const p_line_graph<P>& g);
+    line_graph_image(const p_line_graph<P>& g,
+		     const std::vector<V>& node_val,
+		     const std::vector<V>& edge_val);
+    /// \}
 
     /// Initialize an empty image.
-    void init_(p_line_graph<P>& g,
-	       std::vector<V>& node_val, std::vector<V>& edge_val);
+    void init_(const p_line_graph<P>& g,
+	       const std::vector<V>& node_val,
+	       const std::vector<V>& edge_val);
 
     /// Read-only access of pixel value at point site \p p.
     const V& operator()(const line_graph_psite<P>& p) const;
@@ -144,15 +154,21 @@ namespace mln
     /// Read-write access of pixel value at point site \p p.
     V& operator()(const line_graph_psite<P>& p);
 
-    /// Give the set of values of the image.
+    /// Accessors.
+    /// \{
+    /// Return the domain of psites od the image.
+    const p_line_graph<P>& domain() const;
+    /// Return the domain of values of the image.
     const vset& values() const;
 
-    // FIXME: Keep this name?
-    const std::vector<V>& data_values() const;
+    /// Return the array of values associated to the edges.
+    const std::vector<V>& edge_values() const;
+    /// Return the array of values associated to the nodes.
+    const std::vector<V>& node_values() const;
+    /// \}
 
-    const p_line_graph<P>& domain() const;
-
-    // FIXME: Do we want to provide these two methods?
+    /* FIXME: Do we want to provide these two methods? (at least, in
+       the interface of the class?  */
 
     /// Return the point of the first node adjacent to the edge with
     /// id \a e.
@@ -181,16 +197,7 @@ namespace mln
 	     line_graph_image<P, V>& target,
 	     const line_graph_image<P, V>& model)
   {
-    /* FIXME: Unfortunately, we cannot simply use 
-
-         target.init_(model.domain(), model.data_values());
-
-       here, since domain() and data_values() return const data, and
-       init_ expects non mutable data.  These constness problems exist
-       also in line_graph_psite (see uses of const_cast<>).  Hence the
-       inelegant use of const_cast<>'s.  */
-    target.init_(const_cast<p_line_graph<P>&>(model.domain()),
-		 const_cast<std::vector<V>&>(model.data_values()));
+    target.init_(model.domain(), model.node_values(), model.edge_values());
   }
 
   /*-------.
@@ -201,9 +208,9 @@ namespace mln
   {
     template <typename P, typename V>
     inline
-    data_< line_graph_image<P, V> >::data_(p_line_graph<P>& g,
-					   std::vector<V>& node_val,
-					   std::vector<V>& edge_val)
+    data_< line_graph_image<P, V> >::data_(const p_line_graph<P>& g,
+					   const std::vector<V>& node_val,
+					   const std::vector<V>& edge_val)
       : node_val_(node_val),
 	edge_val_(edge_val),
 	plg_(g)
@@ -218,25 +225,32 @@ namespace mln
 
   template <typename P, typename V>
   inline
-  line_graph_image<P, V>::line_graph_image(p_line_graph<P>& g,
-					   std::vector<V>& node_val,
-					   std::vector<V>& edge_val) 
- {
-   init_(g, node_val, edge_val);
-  }
-
-  template <typename P, typename V>
-  inline
   line_graph_image<P, V>::line_graph_image()
   {
   }
 
   template <typename P, typename V>
   inline
+  line_graph_image<P, V>::line_graph_image(const p_line_graph<P>& g)
+  {
+    init_(g, std::vector<V>(g.npoints()), std::vector<V>(g.nlines()));
+  }
+
+  template <typename P, typename V>
+  inline
+  line_graph_image<P, V>::line_graph_image(const p_line_graph<P>& g,
+					   const std::vector<V>& node_val,
+					   const std::vector<V>& edge_val) 
+  {
+    init_(g, node_val, edge_val);
+  }
+
+  template <typename P, typename V>
+  inline
   void
-  line_graph_image<P, V>::init_(p_line_graph<P>& g,
-				std::vector<V>& node_val,
-				std::vector<V>& edge_val)
+  line_graph_image<P, V>::init_(const p_line_graph<P>& g,
+				const std::vector<V>& node_val,
+				const std::vector<V>& edge_val)
   {
     /* FIXME: We leak memory here: calling init_ twice loses the
        previous content pointed by data_.
@@ -282,9 +296,17 @@ namespace mln
   template <typename P, typename V>
   inline
   const std::vector<V>&
-  line_graph_image<P, V>::data_values() const
+  line_graph_image<P, V>::edge_values() const
   {
     return this->data_->edge_val_;
+  }
+
+  template <typename P, typename V>
+  inline
+  const std::vector<V>&
+  line_graph_image<P, V>::node_values() const
+  {
+    return this->data_->node_val_;
   }
 
   template <typename P, typename V>
