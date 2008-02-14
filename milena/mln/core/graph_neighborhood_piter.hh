@@ -25,11 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_GRAPH_WINDOW_PITER_HH
-# define MLN_CORE_GRAPH_WINDOW_PITER_HH
+#ifndef MLN_CORE_GRAPH_NEIGHBORHOOD_PITER_HH
+# define MLN_CORE_GRAPH_NEIGHBORHOOD_PITER_HH
 
-/// \file   mln/core/graph_window_piter.hh
-/// \brief  Definition of a point iterator on a graph window.
+/// \file   mln/core/graph_neighborhood_piter.hh
+/// \brief  Definition of a point iterator on a graph neighborhood.
 
 /* FIXME: Factor those classes:
 
@@ -62,15 +62,15 @@ namespace mln
   template <typename P> class graph_psite;
 
 
-  /*----------------------------.
-  | graph_window_fwd_piter<P>.  |
-  `----------------------------*/
+  /*----------------------------------.
+  | graph_neighborhood_fwd_piter<P>.  |
+  `----------------------------------*/
 
   template <typename P>
-  class graph_window_fwd_piter :
-    public Point_Iterator< graph_window_fwd_piter<P> > // or Iterator<...>?
+  class graph_neighborhood_fwd_piter :
+    public Point_Iterator< graph_neighborhood_fwd_piter<P> > // or Iterator<...>?
   {
-    typedef graph_window_fwd_piter<P> self_;
+    typedef graph_neighborhood_fwd_piter<P> self_;
     typedef Point_Iterator< self_ > super_;
 
   public:
@@ -86,8 +86,8 @@ namespace mln
     typedef mln_coord(P) coord;
 
   public:
-    template <typename W, typename Pref>
-    graph_window_fwd_piter(const W& win, const Point_Site<Pref>& p_ref);
+    template <typename N, typename Pref>
+    graph_neighborhood_fwd_piter(const N& nbh, const Point_Site<Pref>& p_ref);
 
     bool is_valid() const;
     void invalidate();
@@ -110,7 +110,7 @@ namespace mln
     coord operator[](unsigned i) const;
 
   private:
-    /// The ``central'' psite of the window.
+    /// The ``central'' psite of the neighborhood.
     const psite& p_ref_;
     /// An internal iterator on the set of nodes of the underlying graph.
     util::node_id id_;
@@ -120,19 +120,19 @@ namespace mln
     point p_;
   };
 
-  /*----------------------------.
-  | graph_window_bkd_piter<P>.  |
-  `----------------------------*/
+  /*----------------------------------.
+  | graph_neighborhood_bkd_piter<P>.  |
+  `----------------------------------*/
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // FIXME: Currently, argument win is ignored.
+  // FIXME: Currently, argument nbh is ignored.
   template <typename P>
-  template <typename W, typename Pref>
+  template <typename N, typename Pref>
   inline
-  graph_window_fwd_piter<P>::graph_window_fwd_piter(const W& /* win */,
-						    const Point_Site<Pref>& p_ref)
+  graph_neighborhood_fwd_piter<P>::graph_neighborhood_fwd_piter(const N& /* nbh */,
+								const Point_Site<Pref>& p_ref)
     : p_ref_(exact(p_ref).to_psite()),
       // Initialize psite_ to a dummy value.
       psite_(p_ref_.pg(), p_ref_.pg().npoints()),
@@ -145,7 +145,7 @@ namespace mln
   template <typename P>
   inline
   bool
-  graph_window_fwd_piter<P>::is_valid() const
+  graph_neighborhood_fwd_piter<P>::is_valid() const
   {
     // FIXME: We depend too much on the implementation of util::graph
     // here.  The util::graph should provide the service to abstract
@@ -156,7 +156,7 @@ namespace mln
   template <typename P>
   inline
   void
-  graph_window_fwd_piter<P>::invalidate()
+  graph_neighborhood_fwd_piter<P>::invalidate()
   {
     id_ = p_ref_.pg().gr_.nnodes();
   }
@@ -164,7 +164,7 @@ namespace mln
   template <typename P>
   inline
   void
-  graph_window_fwd_piter<P>::start()
+  graph_neighborhood_fwd_piter<P>::start()
   {
     id_ = 0;
     if (!adjacent_or_equal_to_p_ref_())
@@ -179,15 +179,15 @@ namespace mln
   template <typename P>
   inline
   void
-  graph_window_fwd_piter<P>::next_()
+  graph_neighborhood_fwd_piter<P>::next_()
   {
     /* FIXME: This is inefficient.  The graph structure should be able
        to produce the set of adjacent nodes fast.  Boost Graphs
        probably provides adequates structures to fetch these
        neighbors in constant time.  */
     /* FIXME: Moreover, the behavior of next shall depend on the
-       window, which is not the case now!  (Currently, next_() behaves
-       as win was always an elementary window.) */
+       neighborhood, which is not the case now!  (Currently, next_() behaves
+       as nbh was always an elementary neighborhood.) */
     do
       ++id_;
     while (is_valid() && !adjacent_or_equal_to_p_ref_());
@@ -198,7 +198,7 @@ namespace mln
   template <typename P>
   inline
   bool
-  graph_window_fwd_piter<P>::adjacent_or_equal_to_p_ref_() const
+  graph_neighborhood_fwd_piter<P>::adjacent_or_equal_to_p_ref_() const
   {
     // FIXME: Likewise, this is inefficient.
 
@@ -228,7 +228,7 @@ namespace mln
   template <typename P>
   inline
   void
-  graph_window_fwd_piter<P>::update_()
+  graph_neighborhood_fwd_piter<P>::update_()
   {
     // Update psite_.
     psite_ = graph_psite<P>(p_ref_.pg(), id_);
@@ -239,7 +239,7 @@ namespace mln
   template <typename P>
   inline
   const P&
-  graph_window_fwd_piter<P>::to_point() const
+  graph_neighborhood_fwd_piter<P>::to_point() const
   {
     return p_;
   }
@@ -247,14 +247,14 @@ namespace mln
   template <typename P>
   inline
   const graph_psite<P>&
-  graph_window_fwd_piter<P>::to_psite() const
+  graph_neighborhood_fwd_piter<P>::to_psite() const
   {
     return psite_;
   }
 
   template <typename P>
   inline
-  graph_window_fwd_piter<P>::operator P() const
+  graph_neighborhood_fwd_piter<P>::operator P() const
   {
     mln_precondition(is_valid());
     return p_;
@@ -262,7 +262,7 @@ namespace mln
 
   template <typename P>
   inline
-  graph_window_fwd_piter<P>::operator graph_psite<P>() const
+  graph_neighborhood_fwd_piter<P>::operator graph_psite<P>() const
   {
     mln_precondition(is_valid());
     return psite_;
@@ -271,7 +271,7 @@ namespace mln
   template <typename P>
   inline
   mln_coord(P)
-  graph_window_fwd_piter<P>::operator[](unsigned i) const
+  graph_neighborhood_fwd_piter<P>::operator[](unsigned i) const
   {
     assert(i < dim);
     return p_[i];
@@ -281,4 +281,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CORE_GRAPH_WINDOW_PITER_HH
+#endif // ! MLN_CORE_GRAPH_NEIGHBORHOOD_PITER_HH

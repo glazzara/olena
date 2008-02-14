@@ -48,9 +48,12 @@ namespace mln
     p_array<mln_point(S)> to_p_array(const Point_Set<S>& pset);
 
 
-    /// Convert a window \p win centered at point \p p into a p_array (point set vector).
+    /// Convert a window \p win centered at point \p p into a p_array
+    /// (point set vector).
     template <typename W>
-    p_array<mln_point(W)> to_p_array(const Window<W>& win, const mln_point(W)& p);
+    p_array<mln_point(W)> to_p_array(const Window<W>& win,
+				     const mln_point(W)& p);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -70,7 +73,8 @@ namespace mln
 
     template <typename W>
     inline
-    p_array<mln_point(W)> to_p_array(const Window<W>& win, const mln_point(W)& p)
+    p_array<mln_point(W)> to_p_array(const Window<W>& win,
+				     const mln_point(W)& p)
     {
       p_array<mln_point(W)> v;
       v.reserve(exact(win).ndpoints());

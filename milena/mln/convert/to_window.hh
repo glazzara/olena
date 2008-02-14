@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,16 +42,34 @@
 # include <mln/pw/cst.hh>
 # include <mln/metal/is_a.hh>
 
+# include <mln/core/line_graph_elt_neighborhood.hh>
+# include <mln/core/line_graph_elt_window.hh>
+
 
 namespace mln
 {
 
   namespace convert
   {
+    // Return type trait of neighborhood-to-window conversions.
+
+    /* FIXME: This trait should probably be moved elsewhere.  And/or
+       it could encapsulate the conversion function, too. */
+
+    // Default case.
+    template <typename N>
+    struct nbh_to_win_trait
+    { typedef window<mln_dpoint(N)> ret; };
+
+    // Case of line_graph_elt_neighborhood<P>.
+    template <typename P>
+    struct nbh_to_win_trait< line_graph_elt_neighborhood<P> >
+    { typedef line_graph_elt_window<P> ret; };
+
 
     /// Convert a neighborhood \p nbh into a window.
     template <typename N>
-    window<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh);
+    typename nbh_to_win_trait<N>::ret to_window(const Neighborhood<N>& nbh);
 
     /// Convert a binary image \p ima into a window.
     template <typename I>
@@ -68,6 +86,50 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    /*-------------------------------------.
+    | Neighborhood-to-window conversions.  |
+    `-------------------------------------*/
+
+    namespace impl
+    {
+
+      template <typename N>
+      inline
+      window<mln_dpoint(N)> to_window(const N& nbh_)
+      {
+	const N& nbh = exact(nbh_);
+	typedef mln_dpoint(N) D;
+	typedef mln_point(D) P;
+	window<D> win;
+	mln_niter(N) n(nbh, P::origin);
+	for_all(n)
+	  win.insert(n - P::origin);
+	return win;
+      }
+
+      template <typename P>
+      inline
+      line_graph_elt_window<P>
+      to_window(const line_graph_elt_neighborhood<P>& /* nbh_ */ )
+      {
+	return line_graph_elt_window<P>();
+      }
+      
+    } // end of namepace mln::convert::impl
+
+
+    // Facade.
+    template <typename N>
+    inline
+    typename nbh_to_win_trait<N>::ret to_window(const Neighborhood<N>& nbh)
+    {
+      return impl::to_window(exact(nbh));
+    }
+
+    /*------------------------------.
+    | Image-to-window conversions.  |
+    `------------------------------*/
+
     /* FIXME: According to milena/core/concepts/README, windows are
        not necessarily based on a set of dpoints.  So the current
        algorithm won't work on non dpoint-set-based windows.  In the
@@ -77,21 +139,6 @@ namespace mln
        neighborhood (i.e., delegate the actual iteration to the
        aggregated neighborhood).  When this is fixed, document this in
        depth in milena/core/concepts/README.  */
-    template <typename N>
-    inline
-    window<mln_dpoint(N)> to_window(const Neighborhood<N>& nbh_)
-    {
-      const N& nbh = exact(nbh_);
-      typedef mln_dpoint(N) D;
-      typedef mln_point(D) P;
-      window<D> win;
-      mln_niter(N) n(nbh, P::origin);
-      for_all(n)
-	win.insert(n - P::origin);
-      return win;
-    }
-
-    // FIXME: Same remark as for to_window(const Neighborhood<N>&)
     template <typename I>
     inline
     window<mln_dpoint(I)> to_window(const Image<I>& ima_)
@@ -109,12 +156,20 @@ namespace mln
       return win;
     }
 
+    /*----------------------------------.
+    | Point set-to-window conversions.  |
+    `----------------------------------*/
+
     template <typename S>
     inline
     window<mln_dpoint(S)> to_window(const Point_Set<S>& pset)
     {
       return to_window(pw::cst(true) | pset);
     }
+
+    /*---------------------------------.
+    | std::set-to-window conversions.  |
+    `---------------------------------*/
 
     template <typename D>
     inline

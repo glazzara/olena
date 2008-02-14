@@ -1,3 +1,26 @@
+2008-02-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add neighborhoods and corresponding piters for graph-based images.
+
+	* mln/core/graph_elt_neighborhood.hh,
+	* mln/core/graph_neighborhood_piter.hh,
+	* mln/core/line_graph_elt_neighborhood.hh,
+	* mln/core/line_graph_neighborhood_piter.hh:
+	New.
+	* mln/core/graph_elt_window.hh,
+	* mln/core/graph_window_piter.hh,
+	* mln/core/line_graph_elt_window.hh,
+	* mln/core/line_graph_window_piter.hh:
+	More FIXME.
+	* mln/convert/to_window.hh (convert::nbh_to_win_trait):
+	New trait.
+	(convert::to_window(const Neighborhood<N>&)): Turn this into a
+	facade dispatching to...
+	(convert::impl::to_window(const N&))
+	(convert::impl::to_window(const line_graph_elt_neighborhood<P>&)):
+	...these (new) implementations.
+	* mln/convert/to_p_array.hh: Wrap long lines.
+
 2008-02-14  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	First work on naive dt.

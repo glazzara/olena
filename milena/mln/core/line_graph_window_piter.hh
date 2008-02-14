@@ -31,6 +31,20 @@
 /// \file   mln/core/line_graph_window_piter.hh
 /// \brief  Definition of a point iterator on a line_graph window.
 
+/* FIXME: Factor those classes:
+
+   - mln::graph_window_fwd_piter
+   - mln::graph_neighborhood_fwd_piter
+   - mln::line_graph_window_fwd_piter
+   - mln::line_graph_neighborhood_fwd_piter.
+
+   and later (when they get implemented):
+
+   - mln::graph_window_bkd_piter
+   - mln::graph_neighborhood_bkd_piter
+   - mln::line_graph_window_bkd_piter
+   - mln::line_graph_neighborhood_bkd_piter.  */
+
 # include <mln/core/concept/point_iterator.hh>
 # include <mln/core/p_line_graph.hh>
 # include <mln/core/line_graph_psite.hh>

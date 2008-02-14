@@ -36,6 +36,12 @@
  *  point_, neighb_, etc.
  */
 
+/* FIXME: Factor those classes:
+   - mln::graph_elt_window
+   - mln::graph_elt_neighborhood
+   - mln::line_graph_elt_window
+   - mln::line_graph_elt_neighborhood.  */
+
 # include <mln/core/concept/window.hh>
 # include <mln/core/graph_psite.hh>
 # include <mln/core/graph_window_piter.hh>
