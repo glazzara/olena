@@ -1,3 +1,9 @@
+2008-02-14  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	First work on naive dt.
+	* sandbox/folio/dt_naive.cc: Test file, in progress
+	* sandbox/folio/dt_naive.hh: Algorithm
+
 2008-02-14  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	Corrections on color structures.
