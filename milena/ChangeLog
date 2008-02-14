@@ -1,3 +1,11 @@
+2008-02-14  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	corrections for compilation.
+	* my_cmy.hh: .
+	* rgb_to_cmy.hh: .
+	* rgb_to_hsi.hh: .
+	* tests.cc: .
+
 2008-02-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Exercise mln::line_graph_image more.

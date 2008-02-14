@@ -16,7 +16,7 @@ namespace mln {
       struct value::cmy<8>
       doit(const struct value::rgb<8> rgb) const
       {
-	struct value::cmy cmy;
+	struct value::cmy<8> cmy;
 	
 	cmy.c(1 - rgb.red());
 	cmy.m(1 - rgb.green());
@@ -29,7 +29,7 @@ namespace mln {
     struct f_cmy_to_rgb
     {
       struct value::rgb<8>
-      doit(const struct value::cmy cmy) const
+      doit(const struct value::cmy<8> cmy) const
       {
 	int red;
 	int green;

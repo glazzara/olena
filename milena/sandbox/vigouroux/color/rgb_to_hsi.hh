@@ -12,14 +12,14 @@ namespace mln {
   namespace convert {
     struct f_rgb_to_hsi
     {
-      struct value::hsi
+      struct value::hsi<8>
       doit(const struct value::rgb<8> rgb) const
       {
-	struct value::hsi hsi;
+	struct value::hsi<8> hsi;
 	
-	hsi.h(0.299 * rgb.red() + 0.587 * rgb.green() + 0.114 * rgb.blue());
-	hsi.s(0.436 * (rgb.blue() - yuv.y()) / (1 - 0.114));
-	hsi.i(0.615 * (rgb.red() - yuv.y()) / (1 - 0.299));
+	hsi.h(0);  // not yet implemented
+	hsi.s(0);  // not yet implemented
+	hsi.i(0);  // not yet implemented
 
 	return (hsi);
       }
@@ -28,13 +28,13 @@ namespace mln {
     struct f_hsi_to_rgb
     {
       struct value::rgb<8>
-      doit(const struct value::hsi hsi) const
+      doit(const struct value::hsi<8> hsi) const
       {
 	struct value::rgb<8> rgb;
 
-	rgb.red() = yuv.y() + 1.13983 * yuv.v();
-	rgb.green() = yuv.y() - 0.39465 * yuv.u() - 0.58060 * yuv.v();
-	rgb.blue() = yuv.y() + 2.03211 * yuv.u();
+	rgb.red() = 0;		// not yet implemented
+	rgb.green() = 0;	// not yet implemented
+	rgb.blue() = 0;		// not yet implemented
 	
 	return (rgb);
       }

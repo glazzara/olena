@@ -45,14 +45,14 @@ namespace mln
 
     template <unsigned n>
     inline
-    yuv::cmy()
+    cmy<n>::cmy()
       :c_(0), m_(0), y_(0)
     {
     }
 
     template <unsigned n>
     inline
-    cmy::cmy(double c, double m, double y)
+    cmy<n>::cmy(double c, double m, double y)
     {
       mln_precondition(c >= 0);
       mln_precondition(m >= 0);

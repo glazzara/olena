@@ -9,6 +9,12 @@
 #include "rgb_to_yuv.hh"
 #include "my_yuv.hh"
 
+#include "rgb_to_cmy.hh"
+#include "my_cmy.hh"
+
+#include "rgb_to_hsi.hh"
+#include "my_hsi.hh"
+
 int main()
 {
   using namespace mln;
