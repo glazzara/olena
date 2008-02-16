@@ -184,11 +184,15 @@ namespace mln
       rgb<n>(const metal::vec<3, unsigned>& rhs);
       rgb<n>(const metal::vec<3, int_u<n> >& rhs);
 
+      // Conversion to the interoperation type.
+      operator metal::vec<3, int>() const   { return this->v_; }
+      // Conversion to the sum type.
       operator metal::vec<3, float>() const { return this->v_; }
 
       /// \{ Constructors with literals.
       rgb<n>(const literal::white_t&);
       rgb<n>(const literal::black_t&);
+
       rgb<n>(const literal::blue_t&);
       rgb<n>(const literal::red_t&);
       rgb<n>(const literal::green_t&);
@@ -217,36 +221,69 @@ namespace mln
     std::istream& operator>>(std::istream& istr, rgb<n>& c);
 
 
-    // FIXME: Cannot work for i negative; add traits!
+    /* FIXME: We should not need to define these operators, thanks to
+       Milena's global operator resolution mechanism based on
+       mln::Object.  See what prevent us to use this mechanism.  */
+
+    /* FIXME: Cannot work for i negative; add traits! (2008-02-16,
+       Roland: What does this comment mean?)  */
 
     /// Addition.
+    /// {
     template <unsigned n>
-    rgb<n>
+    typename rgb<n>::interop
     operator+(const rgb<n>& lhs, const rgb<n>& rhs);
 
-    /// Substraction.
     template <unsigned n>
-    rgb<n>
+    typename rgb<n>::interop
+    operator+(const typename rgb<n>::interop& lhs, const rgb<n>& rhs);
+
+    template <unsigned n>
+    typename rgb<n>::interop
+    operator+(const rgb<n>& lhs, const typename rgb<n>::interop& rhs);
+    /// \}
+
+    /// Subtraction.
+    /// \{
+    template <unsigned n>
+    typename rgb<n>::interop
     operator-(const rgb<n>& lhs, const rgb<n>& rhs);
 
-    /// Multiplication.
+    template <unsigned n>
+    typename rgb<n>::interop
+    operator-(const typename rgb<n>::interop& lhs, const rgb<n>& rhs);
+
+    template <unsigned n>
+    typename rgb<n>::interop
+    operator-(const rgb<n>& lhs, const typename rgb<n>::interop& rhs);
+    /// \}
+
+    /// Product.
+    /// \{
     template <unsigned n, typename S>
     inline
-    rgb<n>
+    typename rgb<n>::interop
     operator*(const rgb<n>& lhs, const mln::value::scalar_<S>& s);
 
     template <unsigned n, typename S>
     inline
-    rgb<n>
-    operator*(const rgb<n>& lhs, const mln::value::scalar_<S>& s);
+    typename rgb<n>::interop
+    operator*(const mln::value::scalar_<S>& s, const rgb<n>& lhs);
+    /// \}
 
     /// Division.
+    /// \{
     template <unsigned n, typename S>
     inline
-    rgb<n>
+    typename rgb<n>::interop
     operator/(const rgb<n>& lhs, const mln::value::scalar_<S>& s);
+    /// \}
 
 # ifndef MLN_INCLUDE_ONLY
+
+    /*---------------.
+    | Construction.  |
+    `---------------*/
 
     template <unsigned n>
     inline
@@ -349,59 +386,90 @@ namespace mln
     template <unsigned n>
     const rgb<n> rgb<n>::zero(0,0,0);
 
-    template <unsigned n>
-    inline
-    rgb<n>
-    operator-(const rgb<n>& lhs, const rgb<n>& rhs)
-    {
-      rgb<n> tmp(lhs.to_equiv() - rhs.to_equiv());
-      return tmp;
-    }
+    /*------------.
+    | Operators.  |
+    `------------*/
 
     template <unsigned n>
     inline
-    rgb<n>
+    typename rgb<n>::interop
     operator+(const rgb<n>& lhs, const rgb<n>& rhs)
     {
-      rgb<n> tmp(lhs.to_equiv() + rhs.to_equiv());
+      typename rgb<n>::interop tmp(lhs.to_interop() + rhs.to_interop());
       return tmp;
     }
 
-//     template <unsigned n>
-//     inline
-//     rgb<n>
-//     operator*(const rgb<n>& lhs, int i)
-//     {
-//       rgb<n> tmp(lhs.to_equiv() * i);
-//       return tmp;
-//     }
+    template <unsigned n>
+    inline
+    typename rgb<n>::interop
+    operator+(const rgb<n>& lhs, const typename rgb<n>::interop& rhs)
+    {
+      typename rgb<n>::interop tmp(lhs.to_interop() + rhs);
+      return tmp;
+    }
+
+    template <unsigned n>
+    inline
+    typename rgb<n>::interop
+    operator+(const typename rgb<n>::interop& lhs, const rgb<n>& rhs)
+    {
+      typename rgb<n>::interop tmp(lhs + rhs.to_interop());
+      return tmp;
+    }
+
+    template <unsigned n>
+    inline
+    typename rgb<n>::interop
+    operator-(const rgb<n>& lhs, const rgb<n>& rhs)
+    {
+      typename rgb<n>::interop tmp(lhs.to_interop() - rhs.to_interop());
+      return tmp;
+    }
+
+    template <unsigned n>
+    inline
+    typename rgb<n>::interop
+    operator-(const rgb<n>& lhs, const typename rgb<n>::interop& rhs)
+    {
+      typename rgb<n>::interop tmp(lhs.to_interop() - rhs);
+      return tmp;
+    }
+
+    template <unsigned n>
+    inline
+    typename rgb<n>::interop
+    operator-(const typename rgb<n>::interop& lhs, const rgb<n>& rhs)
+    {
+      typename rgb<n>::interop tmp(lhs - rhs.to_interop());
+      return tmp;
+    }
 
     template <unsigned n, typename S>
     inline
-    rgb<n>
+    typename rgb<n>::interop
     operator*(const rgb<n>& lhs, const mln::value::scalar_<S>& s)
     {
-      rgb<n> tmp(lhs.to_equiv() * s.to_equiv());
+      typename rgb<n>::interop tmp(lhs.to_interop() * s.to_equiv());
       return tmp;
     }
 
     template <unsigned n, typename S>
     inline
-    rgb<n>
-    operator/(const rgb<n>& lhs, const mln::value::scalar_<S>& s)
+    typename rgb<n>::interop
+    operator*(const mln::value::scalar_<S>& s, const rgb<n>& lhs)
     {
-      rgb<n> tmp(lhs.to_equiv() / s.to_equiv());
+      typename rgb<n>::interop tmp(s.to_equiv() * lhs.to_interop());
       return tmp;
     }
 
-//     template <unsigned n>
-//     inline
-//     rgb<n>
-//     operator/(const rgb<n>& lhs, int i)
-//     {
-//       rgb<n> tmp(lhs.to_equiv() / i);
-//       return tmp;
-//     }
+    template <unsigned n, typename S>
+    inline
+    typename rgb<n>::interop
+    operator/(const rgb<n>& lhs, const mln::value::scalar_<S>& s)
+    {
+      typename rgb<n>::interop tmp(lhs.to_interop() / s.to_equiv());
+      return tmp;
+    }
 
     template <unsigned n>
     inline

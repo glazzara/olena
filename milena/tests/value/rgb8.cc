@@ -50,16 +50,28 @@ int main()
     v.blue() = 2;
     rgb8 c(0, 1, 2);
 
-    // FIXME: Does not compile because we lack ops!
-    // mln_sum_(rgb8) sum;
-    // sum + c;
-    // c = c + c;
+    // Exercise some operators.
+    rgb8 c1(200,100,0);
+    rgb8 c2(100,200,50);
+    c1 + c2;
+    c1 - c2;
+    /* FIXME: Doesn't work.  Calls an operator* triggering an overflow
+       error.  We have to check where `interop' types should be used
+       instead of `equiv' types to avoid such a behavior.  */
+//     3 * c1;
+//     c1 * 3;
+    c1 / 5;
+
+    mln_sum_(rgb8) sum = literal::zero;
+    sum = sum + c;
+    c = c + c;
 
     std::cout << c << std::endl;
     std::cout << v << std::endl;
+    std::cout << sum << std::endl;
 
     mln_assertion(c == c);
-    mln_assertion(c == v);
+    mln_assertion(c == 2 * v);
     v.green() = 255;
     std::cout << v << std::endl;
 

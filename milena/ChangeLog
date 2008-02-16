@@ -1,3 +1,23 @@
+2008-02-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have mln::rgb's operators work better.
+
+	* mln/value/rgb.hh (rgb<n>::operator metal::vec<3, int>): New
+	conversion operator.
+	(operator+(const rgb<n>&, const rgb<n>&))
+	(operator-(const rgb<n>&, const rgb<n>&))
+	(operator*(const rgb<n>&, const mln::value::scalar_<S>&))
+	(operator/(const rgb<n>&, const mln::value::scalar_<S>&)):
+	Use mln::rgb's interop type instead of mln::rgb directly.
+	(operator+(const typename rgb<n>::interop&, const rgb<n>&))
+	(operator+(const rgb<n>&, const typename rgb<n>::interop&))
+	(operator-(const typename rgb<n>::interop&, const rgb<n>&))
+	(operator-(const rgb<n>&, const typename rgb<n>::interop&))
+	(operator*(const mln::value::scalar_<S>&, const rgb<n>&)):
+	New operators.
+	Remove dead code.
+	* tests/value/rgb8.cc: Exercise more operators.
+
 2008-02-14  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	corrections for compilation.
