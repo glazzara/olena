@@ -35,6 +35,10 @@
 
 #include <mln/value/int_u8.hh>
 #include <mln/level/compare.hh>
+#include <mln/level/fill.hh>
+
+
+#include <mln/debug/println.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -74,4 +78,33 @@ int main()
     mln_assertion(ima == ima2);
 
   }
+
+  {
+    image2d<int_u8> lena(12,12);
+    level::fill(lena, 42);
+
+    point2d p1(0,0);
+    point2d p2(5,4);
+
+    image2d< image2d<int_u8> > ima(2,2);
+    level::fill(ima, lena);
+    // The 4 pixels of ima share the same data (holded by lena).
+    // Then this update will affect the 4 pixels of ima.
+    ima(p1)(p2) = 0;
+    // ima(0,0)(p2) == ima(0,1)(p2) == ima(1,0)(p2) == ima(1,1)(p2) == 0
+
+    image2d< plain< image2d<int_u8> > > ima_plain(2,2);
+    level::fill(ima_plain, plain< image2d<int_u8> >(lena));
+    // The 4 pixels of ima_plain are instances of plain<
+    // image2d<int_u8> >.  So each of them hold their own data. Then
+    // this update will affect just one pixel at the coordinate 0,0 of
+    // ima_plain.
+    ima_plain(p1)(p2) = 0;
+    // ima_plain(0,0)(p2) == 0
+    // ima_plain(0,1)(p2) == 0
+    // ima_plain(1,0)(p2) == 0
+    // ima_plain(1,1)(p2) == 0
+
+  }
+
 }

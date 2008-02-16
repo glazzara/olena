@@ -1,3 +1,10 @@
+2008-02-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add a constructor to plain image type.
+	* mln/core/plain.hh: (plain<I>::plain()) New.
+	* tests/decorated_image.cc: Add a todo, this test doesn't work
+	* tests/plain.cc: Explain the use of plain image.
+
 2008-02-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a test applying a full WST-based segmentation chain on a line

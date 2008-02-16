@@ -89,6 +89,7 @@ namespace mln
 
     /// Constructors.
     plain(const I& ima);
+    plain();
 
     /// Read-only access of pixel value at point site \p p.
     /// Mutable access is only OK for reading (not writing).
@@ -126,6 +127,13 @@ namespace mln
   {
     mln_precondition(ima.has_data());
     this->data_ = new internal::data_< plain<I> >(ima);
+  }
+
+
+  template <typename I>
+  inline
+  plain<I>::plain()
+  {
   }
 
   template <typename I>

@@ -28,6 +28,7 @@
 /*! \file tests/decorated_image.cc
  *
  * \brief Tests on mln::decorated_image.
+ * \todo Make this test work.
  */
 
 #include <mln/core/image2d.hh>
