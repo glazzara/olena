@@ -1,5 +1,20 @@
 2008-02-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a test applying a full WST-based segmentation chain on a line
+	graph.
+
+	* tests/core/lena_line_graph_image_wst.cc: New test.
+	* tests/core/graph_image_wst.cc: Fix Doxygen header.
+	* tests/core/Makefile.am (check_PROGRAMS): Add
+	lena_line_graph_image_wst.
+	(lena_line_graph_image_wst_SOURCES)
+	(lena_line_graph_image_wst_CXXFLAGS):
+	New.
+	* tests/morpho/Makefile.am (meyer_wst_long_CXXFLAGS): Append
+	-ggdb.
+
+2008-02-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have mln::rgb's operators work better.
 
 	* mln/value/rgb.hh (rgb<n>::operator metal::vec<3, int>): New

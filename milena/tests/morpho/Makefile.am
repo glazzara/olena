@@ -35,6 +35,6 @@ thinning_SOURCES = thinning.cc
 meyer_wst_SOURCES = meyer_wst.cc
 # FIXME: We should isolate this test, as it takes a long time.
 meyer_wst_long_SOURCES = meyer_wst_long.cc
-meyer_wst_long_CXXFLAGS = -O3
+meyer_wst_long_CXXFLAGS = -O3 -ggdb
 
 TESTS = $(check_PROGRAMS)
