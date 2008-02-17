@@ -1,3 +1,12 @@
+2008-02-17  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	New structures.
+	* my_hsl.hh: New.
+	* my_hsv.hh: New.
+	* my_xyz.hh: New.
+	* my_yiq.hh: New.
+	* rgb_to_hsi.hh: .
+
 2008-02-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add a constructor to plain image type.

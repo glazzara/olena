@@ -16,10 +16,15 @@ namespace mln {
       doit(const struct value::rgb<8> rgb) const
       {
 	struct value::hsi<8> hsi;
-	
-	hsi.h(0);  // not yet implemented
-	hsi.s(0);  // not yet implemented
-	hsi.i(0);  // not yet implemented
+	double alpha;
+	double beta;
+
+	alpha = rgb.red() - 1 / 2 * (rgb.green() + rgb.blue());
+	beta = sqrt(3) / 2 * (rgb.green() - rgb.blue());
+
+	hsi.h(atan2(beta / alpha));
+	hsi.s(sqrt(alpha * alpha  + beta * beta));
+	hsi.i((rgb.red() + rgb.green() + rgb.blue()) / 3);
 
 	return (hsi);
       }
