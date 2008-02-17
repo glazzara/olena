@@ -25,86 +25,65 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_THRESHOLD_HH
-# define MLN_LEVEL_THRESHOLD_HH
+#ifndef MLN_BINARIZATION_THRESHOLDING_HH
+# define MLN_BINARIZATION_THRESHOLDING_HH
 
-/*! \file mln/level/threshold.hh
+/*! \file mln/binarization/thresholding.hh
  *
  * \brief Threshold the contents of an image into another binary one.
  */
 
-# include <mln/estim/min_max.hh>
-# include <mln/value/int_u.hh>
-# include <mln/fun/v2v/threshold.hh>
-# include <mln/level/transform.hh>
+# include <mln/binarization/binarization.hh>
+# include <mln/fun/v2b/threshold.hh>
 
 
 namespace mln
 {
 
-  namespace level
+  namespace binarization
   {
 
-    /*! Threshold the values of \p input so that they can be stored in
+    /*! Thresholds the values of \p input so that they can be stored in
      *  the \p output binary image.
      *
      * \param[in] input The input image.
      * \param[in] threshold The threshold.
      *
-     * If the input value is greater or equal than the threshold, the
-     * result we be TRUE, else FALSE.
+     * If input(p) is greater or equal than the threshold, the
+     * value in the output image in the same point will be TRUE, else FALSE.
      *
      */
     template <typename I>
     mln_concrete_ch_value(I, bool)
-    threshold(const Image<I>& input, const mln_value(I) threshold);
+    thresholding(const Image<I>& input, const mln_value(I) threshold);
 
-
+    
 # ifndef MLN_INCLUDE_ONLY
-
-    namespace impl
-    {
-
-      template <typename I>
-      inline
-      mln_concrete_ch_value(I, bool)
-      threshold(const I& input, const mln_value(I) threshold)
-      {
-	trace::entering("level::impl::threshold");
-	mln_concrete_ch_value(I, bool) output(input.domain());
-
-	fun::v2v::threshold< mln_value(I) > f(threshold);
-	level::transform(input, f, output);
-
-	trace::exiting("level::impl::threshold");
-	return output;
-      }
-
-    } // end of namespace mln::level::impl
-
 
     template <typename I>
     inline
     mln_concrete_ch_value(I, bool)
-    threshold(const Image<I>& input, const mln_value(I) threshold)
+    thresholding(const Image<I>& input, const mln_value(I) threshold)
     {
-      trace::entering("level::threshold");
+      trace::entering("binarization::thresholding");
       mln_precondition(exact(input).has_data());
       mlc_is(mln_trait_value_nature(mln_value(I)),
 	     trait::value::nature::scalar)::check();
 
       mln_concrete_ch_value(I, bool) output(exact(input).domain());
-      output = impl::threshold(exact(input), threshold);
-
-      trace::exiting("level::threshold");
+      
+      fun::v2b::threshold< mln_value(I) > f(threshold);
+      output = binarization::binarization(exact(input), f);
+     
+      trace::exiting("binarization::thresholding");
       return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::level
+  } // end of namespace mln::binarization
 
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_THRESHOLD_HH
+#endif // ! MLN_BINARIZATION_THRESHOLDING_HH

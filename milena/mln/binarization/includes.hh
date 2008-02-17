@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,34 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/gradient.cc
+#ifndef MLN_BINARIZATION_INCLUDES_HH
+# define MLN_BINARIZATION_INCLUDES_HH
+
+/*! \file mln/binarization/includes.hh
  *
- * \brief Test on mln::morpho::gradient.
+ * \brief Basic list of includes for all files in mln/binarization/.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/win/rectangle2d.hh>
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/window.hh>
+# include <mln/core/concept/neighborhood.hh>
 
-#include <mln/value/int_u8.hh>
-#include <mln/morpho/gradient.hh>
+# include <mln/metal/has_neighborhood.hh>
 
-#include "tests/data.hh"
-
-
-int main()
-{
-  using namespace mln;
-  using value::int_u8;
-
-  win::rectangle2d rect(5, 5);
-  border::thickness = 2;
-
-  image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
-
-  io::pgm::save( morpho::gradient(lena, rect),
-                 "out.pgm" );
-}
+#endif // ! MLN_BINARIZATION_INCLUDES_HH

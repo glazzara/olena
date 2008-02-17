@@ -1,3 +1,20 @@
+2008-02-17  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Binarization.
+
+	* mln/level/threshold.hh: Remove.
+	* mln/fun/v2b: New directory : value to bool function.
+	* mln/fun/v2b/threshold.hh: value to bool threshold.
+	* mln/fun/v2v/threshold.hh: Remove.
+	* mln/binarization: New directory.
+	* mln/binarization/includes.hh: include for binarization.
+	* mln/binarization/binarization.hh: generic binarization (v2b for now).
+	* mln/binarization/thresholding.hh: thresholding.
+	* mln/io/pnm/save.hh: Comments for dummy (me) users who try to save binary as pgm.
+
+	* tests/binarization: New test directory.
+	* tests/binarization/thresholding.cc: New test file.
+
 2008-02-17  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	New structures.

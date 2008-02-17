@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,66 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_V2V_THRESHOLD_HH
-# define MLN_FUN_V2V_THRESHOLD_HH
-
-/*! \file mln/fun/v2v/threshold.hh
+/*! \file tests/binarization/thresholding.cc
  *
- * \brief FIXME.
+ * \brief Test on mln::binarization::thresholding
  */
 
-# include <mln/core/concept/function.hh>
 
+#include <mln/core/image2d.hh>
+#include <mln/binarization/thresholding.hh>
+#include <mln/level/all.hh>
 
-namespace mln
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pbm/save.hh>
+
+//#include "tests/data.hh"
+
+int main(int argc, char **)
 {
+  using namespace mln;
+  using value::int_u8;
+ 
+  typedef image2d<int_u8> I;
+  
+  I lena;
+  io::pgm::load(lena, "../../img/lena.pgm");
 
-  namespace fun
-  {
-
-    namespace v2v
-    {
-
-      /*!
-       *\brief Threshold function.
-       * f(v) = (v >= threshold).
-       *
-       */
-      template <typename V>
-      struct threshold : public Function_v2v< threshold<V> >
-      {
-	typedef bool result;
-	bool operator()(const V& v) const;
-
-	threshold(const V& a);
-	V a;
-      };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename V>
-      inline
-      threshold<V>::threshold(const V& a)
-	: a(a)
-      {
-      }
-
-      template <typename V>
-      inline
-      bool
-      threshold<V>::operator()(const V& v) const
-      {
-	return (v >= a);
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::fun::v2v
-
-  } // end of namespace mln::fun
-
-} // end of namespace mln
-
-
-#endif // ! MLN_FUN_V2V_THRESHOLD_HH
+  io::pbm::save(binarization::thresholding(lena, argc), "out1.pgm");
+}

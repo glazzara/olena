@@ -102,6 +102,8 @@ namespace mln
 	void write_value(std::ofstream& file,
 			 const V& v)
 	{
+          // if V is not a struct you are probably trying to write binary images
+          // use pbm files for binary images
 	  typedef typename V::enc E;
 
 	  E c = v.to_enc();

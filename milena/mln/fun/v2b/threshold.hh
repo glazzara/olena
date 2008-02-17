@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,34 +25,66 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/gradient.cc
+#ifndef MLN_FUN_V2B_THRESHOLD_HH
+# define MLN_FUN_V2B_THRESHOLD_HH
+
+/*! \file mln/fun/v2b/threshold.hh
  *
- * \brief Test on mln::morpho::gradient.
+ * \brief FIXME.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/win/rectangle2d.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/morpho/gradient.hh>
-
-#include "tests/data.hh"
+# include <mln/core/concept/function.hh>
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
-  using value::int_u8;
 
-  win::rectangle2d rect(5, 5);
-  border::thickness = 2;
+  namespace fun
+  {
 
-  image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
+    namespace v2b
+    {
 
-  io::pgm::save( morpho::gradient(lena, rect),
-                 "out.pgm" );
-}
+      /*!
+       *\brief Threshold function.
+       * f(v) = (v >= threshold).
+       *
+       */
+      template <typename V>
+      struct threshold : public Function_v2b< threshold<V> >
+      {
+	typedef bool result;
+	bool operator()(const V& v) const;
+
+	threshold(const V& a);
+	V a;
+      };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename V>
+      inline
+      threshold<V>::threshold(const V& a)
+	: a(a)
+      {
+      }
+
+      template <typename V>
+      inline
+      bool
+      threshold<V>::operator()(const V& v) const
+      {
+	return (v >= a);
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::v2b
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+
+#endif // ! MLN_FUN_V2B_THRESHOLD_HH
