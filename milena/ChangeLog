@@ -1,3 +1,19 @@
+2008-02-18  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
+	Work on conditional inheritance done.
+	* sandbox/pellegrin/cond_inheritance: Folder containing my work.
+	* sandbox/pellegrin/cond_inheritance/Makefile: Compile the test.
+	* sandbox/pellegrin/cond_inheritance/concept: New.
+	* sandbox/pellegrin/cond_inheritance/concept/point_set.hh: New.
+	* sandbox/pellegrin/cond_inheritance/internal: New.
+	* sandbox/pellegrin/cond_inheritance/internal/multi_set.hh: New.
+	* sandbox/pellegrin/cond_inheritance/internal/point_set_base.hh: New.
+	* sandbox/pellegrin/cond_inheritance/internal/uni_set.hh: New.
+	* sandbox/pellegrin/cond_inheritance/p_array.hh: Definition of a
+	  p_array.
+	* sandbox/pellegrin/cond_inheritance/p_set.hh: Definition of a p_set.
+	* sandbox/pellegrin/cond_inheritance/test_cond_inherit.cc: Test file.
+
 2008-02-17  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Binarization.
