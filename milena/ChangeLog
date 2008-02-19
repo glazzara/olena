@@ -1,5 +1,10 @@
 2008-02-19  Etienne FOLIO  <folio@lrde.epita.fr>
 
+	Dmap naive algorithm from Theo.
+	* sandbox/folio/dmap.cc: Dmap naive algorithm.
+
+2008-02-19  Etienne FOLIO  <folio@lrde.epita.fr>
+
 	Conditionnal heritage exercice.
 	* sandbox/folio/heritage_conditionnel.cc: Test file.
 	* sandbox/folio/heritage_conditionnel.hh: Exercice implementation.
