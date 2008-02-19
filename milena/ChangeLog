@@ -1,3 +1,9 @@
+2008-02-19  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Conditionnal heritage exercice.
+	* sandbox/folio/heritage_conditionnel.cc: Test file.
+	* sandbox/folio/heritage_conditionnel.hh: Exercice implementation.
+
 2008-02-19  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	Corrections.
