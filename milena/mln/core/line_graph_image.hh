@@ -191,6 +191,10 @@ namespace mln
   | Initialization.  |
   `-----------------*/
 
+  /* FIXME: We should check the expected behavior of init_ here.  As
+     far as I (Roland) can recall, it was not meant to initialize
+     data/values.  We should probably just create vectors of values of
+     the same size, not copy the values. */
   template <typename P, typename V>
   inline
   void init_(tag::image_t,

@@ -10,7 +10,6 @@ check_PROGRAMS =				\
   initialize					\
   graph_elt_window				\
   graph_image					\
-  lena_line_graph_image_wst			\
   line_graph_elt_window				\
   line_graph_image				\
   line_graph_image_wst				\
@@ -51,9 +50,5 @@ rle_image_SOURCES = rle_image.cc
 sparse_image_SOURCES = sparse_image.cc
 t_image_SOURCES = t_image.cc
 tr_image_SOURCES = tr_image.cc
-
-# FIXME: We should isolate this test, as it takes a long time.
-lena_line_graph_image_wst_SOURCES = lena_line_graph_image_wst.cc
-lena_line_graph_image_wst_CXXFLAGS = -O3 -ggdb
 
 TESTS = $(check_PROGRAMS)

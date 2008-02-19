@@ -1,3 +1,32 @@
+2008-02-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a new test on WST-based segmentation on a line graph image.
+
+	* tests/core/lena_line_graph_image_wst.cc: Rename and move...
+	* tests/morpho/lena_line_graph_image_wst1.cc: ...here.
+	Add more documentation.
+	Remove dead code.
+	* tests/morpho/lena_line_graph_image_wst2.cc: New test.
+	Based on tests/morpho/lena_line_graph_image_wst1.cc.
+	* tests/core/Makefile.am (check_PROGRAMS): Remove
+	lena_line_graph_image_wst.
+	(lena_line_graph_image_wst_SOURCES)
+	(lena_line_graph_image_wst_CXXFLAGS):
+	Remove.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Add
+	lena_line_graph_image_wst1 and lena_line_graph_image_wst2.
+	(CXXFLAGS_SPEED): New.
+	Use it...
+	(meyer_wst_long_CXXFLAGS): ...here.
+	(lena_line_graph_image_wst1_SOURCES)
+	(lena_line_graph_image_wst1_CXXFLAGS)
+	(lena_line_graph_image_wst2_SOURCES)
+	(lena_line_graph_image_wst2_CXXFLAGS):
+	New.
+	* mln/core/line_graph_image.hh: More FIXME.
+	* tests/morpho/hit_or_miss.cc, tests/morpho/meyer_wst_long.cc:
+	Remove unnecessary #include's.
+
 2008-02-18  Michel Pellegrin  <pellegrin@lrde.epita.fr>
 
 	Work on conditional inheritance done.

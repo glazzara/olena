@@ -35,8 +35,6 @@
 #include <mln/core/window2d.hh>
 #include <mln/core/neighb2d.hh>
 
-#include <mln/level/stretch.hh>
-
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>
 

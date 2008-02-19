@@ -25,8 +25,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/line_graph_image.cc
-/// \brief Tests on the Watershed Transform on a mln::line_graph_image.
+/* FIXME: We should factor as much things as possible between
+   tests/core/lena_line_graph_image_wst1.cc and
+   tests/core/lena_line_graph_image_wst2.cc, starting from conversion
+   routines.  */
+
+/** \file tests/core/lena_line_graph_image_wst1.cc
+    \brief Tests on the Watershed Transform (WST) on a mln::line_graph_image.
+   
+    The scenario is as follows:
+    \li load a 2-D, gray-level image from a PGM file;
+    \li compute a morphological gradient of this image;
+    \li simplify the image to reduce the number of local minima;
+    \li convert this 2-D image into a line graph-based one, where values
+        on edges are computed as the maxmimum of the values on the nodes
+	adjacent to the edge;
+    \li perform a WST on the line graph image;
+    \li create an 2-D, color output image with height and width double
+        the size the original one, and copy the data of the input image
+	in it, interpolating inter-pixel points;
+    \li print the watershed on lines into that same image, and save it.  */
 
 #include <vector>
 
@@ -44,7 +62,6 @@
 #include <mln/morpho/meyer_wst.hh>
 
 #include <mln/value/int_u8.hh>
-// #include <mln/value/int_u16.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/literal/black.hh>
 #include <mln/literal/colors.hh>
@@ -63,7 +80,6 @@ int main()
 {
   using namespace mln;
   using value::int_u8;
-//   using value::int_u16;
   using value::rgb8;
 
   /*--------.
@@ -72,7 +88,6 @@ int main()
 
   typedef int_u8 input_val_t;
   image2d<input_val_t> input;
-//   io::pgm::load(input, MLN_IMG_DIR "/small.pgm");
   io::pgm::load(input, MLN_IMG_DIR "/tiny.pgm");
 
   /* FIXME: Don't compute a gradient on the image2d input.  Instead,
@@ -85,7 +100,6 @@ int main()
 
   // Simplify the input image.
   image2d<input_val_t> work(input.domain());
-//   morpho::closing_area(gradient, c4(), 50, work);
   morpho::closing_area(gradient, c4(), 10, work);
 
   /*-------------.
@@ -128,7 +142,6 @@ int main()
     if (work.has(q))
       {
 	g.add_edge(points[p], points[q]);
-	// FIXME: Keep this valuation function?
 	edge_values.push_back(math::max(work(p), work(q)));
       }
 
@@ -183,7 +196,6 @@ int main()
   }
   // Interpolate missing points in OUTPUT.
   mln_piter_(output_t) p_out(output.domain());
-//   mln_niter_(neighb2d) n_out(c4(), p_out);
   for_all(p_out)
   {
     // Process points on even rows and odd columns
