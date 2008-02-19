@@ -1,3 +1,12 @@
+2008-02-19  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Corrections.
+	* rgb_to_hsi.hh: Correction.
+	* rgb_to_hsl.hh: New.
+	* rgb_to_hsv.hh: New.
+	* rgb_to_xyz.hh: New.
+	* rgb_to_yiq.hh: New.
+
 2008-02-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a new test on WST-based segmentation on a line graph image.

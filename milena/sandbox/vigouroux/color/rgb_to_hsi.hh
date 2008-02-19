@@ -16,15 +16,19 @@ namespace mln {
       doit(const struct value::rgb<8> rgb) const
       {
 	struct value::hsi<8> hsi;
-	double alpha;
-	double beta;
+	double sqrt3_3 = sqrt(3) / 3;
+	double inv_sqrt6 = 1 / sqrt(6);
+	double inv_sqrt2 = 1 / sqrt(2);
 
-	alpha = rgb.red() - 1 / 2 * (rgb.green() + rgb.blue());
-	beta = sqrt(3) / 2 * (rgb.green() - rgb.blue());
+	double alpha = inv_sqrt2 * rgb.green() - inv_sqrt2 * rgb.blue();
+	double beta = 2 * inv_sqrt6 * rgb.red() - inv_sqrt6 * rgb.green() - inv_sqrt6 * rgb.blue();
 
-	hsi.h(atan2(beta / alpha));
-	hsi.s(sqrt(alpha * alpha  + beta * beta));
-	hsi.i((rgb.red() + rgb.green() + rgb.blue()) / 3);
+	hsi.h(atan2(beta, alpha) / 3.1415 * 180.0);
+	if (hsi.h() < 0)
+	  hsi.h(hsi.h() + 360.0);
+	mln_precondition(hsi.h() >= 0);
+	hsi.s(sqrt(alpha * alpha + beta * beta));
+	hsi.i(sqrt3_3 * rgb.red() + sqrt3_3 * rgb.green() + sqrt3_3 * rgb.blue());
 
 	return (hsi);
       }
@@ -35,11 +39,23 @@ namespace mln {
       struct value::rgb<8>
       doit(const struct value::hsi<8> hsi) const
       {
-	struct value::rgb<8> rgb;
+	int r;
+	int g;
+	int b;
 
-	rgb.red() = 0;		// not yet implemented
-	rgb.green() = 0;	// not yet implemented
-	rgb.blue() = 0;		// not yet implemented
+	double sqrt3_3 = sqrt(3) / 3;
+	double inv_sqrt6 = 1 / sqrt(6);
+	double inv_sqrt2 = 1 / sqrt(2);
+
+	double h = hsi.h() / 180.0 * 3.1415;
+	double alpha = hsi.s() * cos(h);
+	double beta = hsi.s() * sin(h);
+
+	r = int(sqrt3_3 * hsi.i() + 2 * inv_sqrt6 * beta);
+	g = int(sqrt3_3 * hsi.i() + inv_sqrt2 * alpha - inv_sqrt6 * beta);
+	b = int(sqrt3_3 * hsi.i() - inv_sqrt2 * alpha - inv_sqrt6 * beta);
+
+	struct value::rgb<8> rgb(r, g, b); 
 	
 	return (rgb);
       }
