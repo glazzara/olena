@@ -1,3 +1,14 @@
+2008-02-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have `make all' behave as expected in tests/accu/.
+
+	* tests/accu/all.cc: Rename as...
+	* tests/accu/all_accus.cc: ...this, so that this test is not
+	confused with Make's `all' target.
+	Adjust.
+	Wrap long lines.
+	* tests/accu/Makefile.am: Adjust.
+
 2008-02-19  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Dmap naive algorithm from Theo.

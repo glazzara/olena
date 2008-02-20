@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/all.cc
- *
- * \brief Tests on all files in mln/accu.
- */
+/// \file tests/accu/all_accus.cc
+/// \brief Tests on all_accus files in mln/accu.
 
 #include <mln/accu/all.hh>
 #include <mln/core/point2d.hh>
@@ -40,7 +38,6 @@ int main()
   using namespace mln;
   using namespace mln::accu;
 
-
   bbox<point2d> b;
   count_<int> c;
   histo< value::set<bool> > h;
@@ -48,7 +45,8 @@ int main()
   mean_<int> me;
   // median< value::set<bool> > med; // FIXME: bool has no min so workaround!
   min_<int> mi;
-  // min_h< value::set<bool> > mh; // OK: do not work since bool has no min/max :)
+  // min_h< value::set<bool> > mh;   // OK: do not work since bool has
+                                     // no min/max :)
   min_max_<int> mm;
   nil n;
   pair_< min_<int>, max_<int> > p;

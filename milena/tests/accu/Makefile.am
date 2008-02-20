@@ -3,23 +3,23 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-all						\
-bbox						\
-compute						\
-count						\
-histo						\
-max						\
-max_h						\
-mean						\
-median						\
-min						\
-min_h						\
-min_max						\
-nil						\
-pair						\
-tuple
+  all_accus					\
+  bbox						\
+  compute					\
+  count						\
+  histo						\
+  max						\
+  max_h						\
+  mean						\
+  median					\
+  min						\
+  min_h						\
+  min_max					\
+  nil						\
+  pair						\
+  tuple
 
-all_SOURCES = all.cc
+all_accus_SOURCES = all_accus.cc
 bbox_SOURCES = bbox.cc
 compute_SOURCES = compute.cc
 count_SOURCES = count.cc
