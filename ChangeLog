@@ -1,3 +1,9 @@
+2008-02-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update the list of Makefiles to be configured.
+
+	* configure.ac: Configure milena/tests/fun/vv2v/Makefile.
+
 2008-01-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/tests/neighb/Makefile.

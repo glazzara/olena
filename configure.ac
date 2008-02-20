@@ -103,6 +103,7 @@ AC_CONFIG_FILES([
       milena/tests/fun/p2b/Makefile
       milena/tests/fun/p2v/Makefile
       milena/tests/fun/v2v/Makefile
+      milena/tests/fun/vv2v/Makefile
       milena/tests/fun/x2x/Makefile
     milena/tests/geom/Makefile
     milena/tests/histo/Makefile
