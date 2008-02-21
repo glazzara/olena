@@ -11,6 +11,7 @@
 	(line_graph_image<P,V>::operator()(const line_graph_psite<P>&))
 	(line_graph_image<P,V>::operator()(const line_graph_psite<P>&) const):
 	...these operators.
+	Suggested by Alexandre Duret-Lutz.
 	* mln/morpho/level_components.hh (morpho::level_components):
 	Remove the kludge: actually use an image of `bool' instead of an
 	image of `int' to tick the processed points.
