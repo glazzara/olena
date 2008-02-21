@@ -1,5 +1,19 @@
 2008-02-21  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have graph_image<P,V> work with V = bool as well.
+
+	* mln/core/graph_image.hh
+	(graph_image<P,V>::lvalue, graph_image<P,V>::rvalue):
+	Redefine using std::vector's associated types `reference' and
+	`const_reference', so as to be able to form references on the
+	elements of the image when its value type is `bool'.
+	Use these associated types as return types for...
+	(graph_image<P,V>::operator()(const graph_psite<P>&))
+	(graph_image<P,V>::operator()(const graph_psite<P>&) const):
+	...these operators.
+
+2008-02-21  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have line_graph_image<P,V> work with V = bool.
 
 	* mln/core/line_graph_image.hh
