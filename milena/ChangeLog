@@ -1,3 +1,9 @@
+2008-02-21  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Chamfer DT algorithm.
+	* sandbox/folio/chamfer_dt.cc: Chamfer DT algorithm (with test).
+	* sandbox/folio/dmap.cc: Unsignificative modification.
+
 2008-02-21  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have graph_image<P,V> work with V = bool as well.

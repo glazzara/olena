@@ -4,7 +4,6 @@
 #include <mln/debug/println.hh>
 #include <mln/accu/min.hh>
 #include <mln/norm/l2.hh>
-// #include <mln/literal/zero.hh>
 
 namespace mln
 {
