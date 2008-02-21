@@ -99,17 +99,7 @@ namespace mln {
       const W& win = exact(win_);
 
       mln_ch_value(I, DestValue) labels(input.domain());
-      /* FIXME: Yet another KLUDGE, this time required by the
-	 specialization std::vector<bool>, which prevents forming
-	 (mutable) reference to any of its elements.  This creates
-	 errors later with images using std::vector<bool> to store
-	 their data (e.g., line_graph_image<P, V>).
-
-	 Alas, we cannot prevent the compiler to use this
-	 specialization.  Our workaround is simply... to use integers
-	 instead of booleans.  */
-//       mln_ch_value(I, bool) processed(input.domain());
-      mln_ch_value(I, int) processed(input.domain());
+      mln_ch_value(I, bool) processed(input.domain());
       level::fill (processed, false);
 
       DestValue cur_label = mln_min(DestValue);

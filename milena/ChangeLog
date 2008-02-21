@@ -1,3 +1,20 @@
+2008-02-21  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have line_graph_image<P,V> work with V = bool.
+
+	* mln/core/line_graph_image.hh
+	(line_graph_image<P,V>::lvalue, line_graph_image<P,V>::rvalue):
+	Redefine using std::vector's associated types `reference' and
+	`const_reference', so as to be able to form references on the
+	elements of the image when its value type is `bool'.
+	Use these associated types as return types for...
+	(line_graph_image<P,V>::operator()(const line_graph_psite<P>&))
+	(line_graph_image<P,V>::operator()(const line_graph_psite<P>&) const):
+	...these operators.
+	* mln/morpho/level_components.hh (morpho::level_components):
+	Remove the kludge: actually use an image of `bool' instead of an
+	image of `int' to tick the processed points.
+
 2008-02-21  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Enrich the p_graph interface.

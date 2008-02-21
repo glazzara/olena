@@ -122,10 +122,15 @@ namespace mln
     typedef V value;
 
     /// Return type of read-write access.
-    typedef V& lvalue;
+    ///
+    /// We use the associated type \c reference instead of a plain
+    /// reference on th value type (\v V), because it's the only way
+    /// to safely form a reference on the element in the case of a
+    /// std::vector<bool>.
+    typedef typename std::vector<V>::reference lvalue;
 
     /// Return type of read-only access.
-    typedef const V& rvalue;
+    typedef typename std::vector<V>::const_reference rvalue;
 
     /// Value set associated type.
     typedef mln::value::set<value> vset;
@@ -149,10 +154,10 @@ namespace mln
 	       const std::vector<V>& edge_val);
 
     /// Read-only access of pixel value at point site \p p.
-    const V& operator()(const line_graph_psite<P>& p) const;
+    rvalue operator()(const line_graph_psite<P>& p) const;
 
     /// Read-write access of pixel value at point site \p p.
-    V& operator()(const line_graph_psite<P>& p);
+    lvalue operator()(const line_graph_psite<P>& p);
 
     /// Accessors.
     /// \{
@@ -271,7 +276,7 @@ namespace mln
 
   template <typename P, typename V>
   inline
-  const V&
+  typename line_graph_image<P, V>::rvalue
   line_graph_image<P, V>::operator()(const line_graph_psite<P>& p) const
   {
     mln_precondition(&p.plg() == &this->data_->plg_);
@@ -281,7 +286,7 @@ namespace mln
 
   template <typename P, typename V>
   inline
-  V&
+  typename line_graph_image<P, V>::lvalue
   line_graph_image<P, V>::operator()(const line_graph_psite<P>& p)
   {
     mln_precondition(&p.plg() == &this->data_->plg_);
