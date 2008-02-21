@@ -1,3 +1,14 @@
+2008-02-21  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Enrich the p_graph interface.
+
+	* mln/core/p_graph.hh: Improve the p_graph interface.
+	* mln/core/graph_psite.hh,
+	* mln/core/graph_window_piter.hh,
+	* mln/core/graph_image.hh,
+	* mln/core/p_graph_piter.hh,
+	* mln/draw/graph.hh: Remove graph implementation details.
+
 2008-02-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have `make all' behave as expected in tests/accu/.

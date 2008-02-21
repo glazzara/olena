@@ -72,7 +72,31 @@ namespace mln
 
     bool has(const psite& p) const;
 
-    // FIXME: Should be private.
+    /// Return the graph point (FIXME site?) from an index
+    const P& point_from_id(const util::node_id& id) const;
+    P& point_from_id(const util::node_id& id);
+
+
+    /// Return the point contained in the first node adjacent
+    // to the edge id \a e.
+    const P& node1(const util::edge_id& e) const;
+    /// Return the point contained in the second node adjacent
+    /// to the edge  id \a e.
+    const P& node2(const util::edge_id& e) const;
+
+    /// Return true if the psites lhs and rhs are adjacent, or equal.
+    bool adjacent_or_equal(const psite& lhs, const psite& rhs) const;
+
+    /// Return true if the nodes lhs and rhs are adjacent, or equal
+    bool adjacent_or_equal(const util::node_id& lhs,
+			   const util::node_id& rhs) const;
+
+    /// Return the graph associated to the p_graph domain:
+    const graph& to_graph() const;
+    graph& to_graph();
+
+
+  private:
     graph gr_;
     // FIXME: (Roland) Is it really useful/needed?
     /* 2007-12-19: It seems so, since graph_image must implement a method
@@ -133,6 +157,86 @@ namespace mln
       // Check that the node id of P belongs to the range of valid node ids.
       (p.id() < gr_.nnodes());
   }
+
+  template <typename P>
+  const P&
+  p_graph<P>::point_from_id(const util::node_id& id) const
+  {
+    return this->gr_.node_data(id);
+  }
+
+  template <typename P>
+  P&
+  p_graph<P>::point_from_id(const util::node_id& id)
+  {
+    return this->gr_.node_data(id);
+  }
+
+  template <typename P>
+  const P&
+  p_graph<P>::node1(const util::edge_id& e) const
+  {
+    util::node_id n1 = this->gr_.edge(e).n1();
+    return this->point_from_id(n1);
+  }
+
+  template <typename P>
+  const P&
+  p_graph<P>::node2(const util::edge_id& e) const
+  {
+    util::node_id n2 = this->gr_.edge(e).n2();
+    return this->point_from_id(n2);
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_graph<P>::adjacent_or_equal(const psite& lhs, const psite& rhs) const
+  {
+    assert (&lhs.pg() == this && rhs.pg() == this);
+    return adjacent_or_equal(lhs.id(), rhs.id());
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_graph<P>::adjacent_or_equal(const util::node_id& lhs,
+				const util::node_id& rhs) const
+  {
+    // FIXME: Likewise, this is inefficient.
+
+    assert (lhs < this->npoints());
+    assert (rhs < this->npoints());
+
+    if (rhs == lhs)
+      return true;
+
+    // Check whether the iterator is among the neighbors of P_REF_.
+    typedef std::vector<util::node_id> adjacency_type;
+    const adjacency_type& lhs_neighbs = gr_.nodes()[lhs]->edges;
+
+    adjacency_type::const_iterator j =
+      std::find (lhs_neighbs.begin(), lhs_neighbs.end(), rhs);
+    if (j != lhs_neighbs.end())
+      return true;
+
+    return false;
+  }
+
+  template <typename P>
+  const typename p_graph<P>::graph&
+  p_graph<P>::to_graph() const
+  {
+    return this->gr_;
+  }
+
+  template <typename P>
+  typename p_graph<P>::graph&
+  p_graph<P>::to_graph()
+  {
+    return this->gr_;
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -21,7 +21,7 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  
+// License.
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
@@ -54,7 +54,7 @@ namespace mln
     typedef internal::point_iterator_base_< P, self_ > super_;
 
   public:
-    
+
     // Make definitions from super class available.
     enum { dim = super_::dim };
     typedef graph_psite<P> psite;
@@ -145,7 +145,7 @@ namespace mln
 
   template<typename P>
   inline
-  void 
+  void
   p_graph_piter_<P>::start()
   {
     id_ = 0;
@@ -155,7 +155,7 @@ namespace mln
 
   template<typename P>
   inline
-  void 
+  void
   p_graph_piter_<P>::next_()
   {
     ++id_;
@@ -171,7 +171,7 @@ namespace mln
     // Update psite_.
     psite_ = graph_psite<P>(pg_, id_);
     // Update p_.
-    p_ = pg_.gr_.node_data(id_);
+    p_ = pg_.point_from_id(id_);
   }
 
   template<typename P>
@@ -182,7 +182,7 @@ namespace mln
     /* We don't check whether the iterator is valid before returning
        the value using
 
-         mln_precondition(is_valid());
+       mln_precondition(is_valid());
 
        since this method may be called *before* the iterator is
        actually initialized.  This is the case for instance when this
@@ -201,7 +201,7 @@ namespace mln
     /* We don't check whether the iterator is valid before returning
        the value using
 
-         mln_precondition(is_valid());
+       mln_precondition(is_valid());
 
        since this method may be called *before* the iterator is
        actually initialized.  This is the case for instance when this

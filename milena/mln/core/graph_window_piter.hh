@@ -63,8 +63,8 @@ namespace mln
 
 
   /*----------------------------.
-  | graph_window_fwd_piter<P>.  |
-  `----------------------------*/
+    | graph_window_fwd_piter<P>.  |
+    `----------------------------*/
 
   template <typename P>
   class graph_window_fwd_piter :
@@ -94,6 +94,7 @@ namespace mln
     void start();
 
     void next_();
+
     bool adjacent_or_equal_to_p_ref_() const;
     /// Update the internal data of the iterator.
     void update_();
@@ -121,8 +122,8 @@ namespace mln
   };
 
   /*----------------------------.
-  | graph_window_bkd_piter<P>.  |
-  `----------------------------*/
+    | graph_window_bkd_piter<P>.  |
+    `----------------------------*/
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -147,10 +148,7 @@ namespace mln
   bool
   graph_window_fwd_piter<P>::is_valid() const
   {
-    // FIXME: We depend too much on the implementation of util::graph
-    // here.  The util::graph should provide the service to abstract
-    // these manipulations.
-    return id_ < p_ref_.pg().gr_.nnodes();
+    return id_ < p_ref_.pg().npoints();
   }
 
   template <typename P>
@@ -158,7 +156,7 @@ namespace mln
   void
   graph_window_fwd_piter<P>::invalidate()
   {
-    id_ = p_ref_.pg().gr_.nnodes();
+    id_ = p_ref_.pg().npoints();
   }
 
   template <typename P>
@@ -189,40 +187,21 @@ namespace mln
        window, which is not the case now!  (Currently, next_() behaves
        as win was always an elementary window.) */
     do
+    {
       ++id_;
+    }
     while (is_valid() && !adjacent_or_equal_to_p_ref_());
     if (is_valid())
       update_();
   }
+
 
   template <typename P>
   inline
   bool
   graph_window_fwd_piter<P>::adjacent_or_equal_to_p_ref_() const
   {
-    // FIXME: Likewise, this is inefficient.
-
-    // Check wether the iterator points to P_REF_.
-    if (id_ == p_ref_.id())
-      return true;
-
-    // Check whether the iterator is among the neighbors of P_REF_.
-    {
-      // Paranoid assertion.
-      assert (p_ref_.id() < p_ref_.pg().gr_.nnodes());
-      // FIXME: This is too low-level.  Yet another service the graph
-      // should provide.
-      typedef std::vector<util::node_id> adjacency_type;
-      const adjacency_type& p_ref_neighbs =
-	p_ref_.pg().gr_.nodes()[p_ref_.id()]->edges;
-      adjacency_type::const_iterator j =
-	std::find (p_ref_neighbs.begin(), p_ref_neighbs.end(), id_);
-      if (j != p_ref_neighbs.end())
-	return true;
-    }
-
-    // Otherwise, the iterator is not adjacent to P_REF_.
-    return false;
+    return p_ref_.pg().adjacent_or_equal(p_ref_.id(), id_);
   }
 
   template <typename P>
@@ -233,7 +212,7 @@ namespace mln
     // Update psite_.
     psite_ = graph_psite<P>(p_ref_.pg(), id_);
     // Update p_.
-    p_ = p_ref_.pg().gr_.node_data(id_);
+    p_ = p_ref_.pg().point_from_id(id_);
   }
 
   template <typename P>

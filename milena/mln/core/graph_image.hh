@@ -282,10 +282,7 @@ namespace mln
   const P&
   graph_image<P, V>::node1(const util::edge_id& e) const
   {
-    // FIXME: Improve the interface of graph to avoid these low-level
-    // manipulations.
-    util::node_id n1 = this->domain().gr_.edge(e).n1();
-    return this->domain().gr_.node_data(n1);
+    return this->domain().node1(e);
   }
 
   template <typename P, typename V>
@@ -293,10 +290,7 @@ namespace mln
   const P&
   graph_image<P, V>::node2(const util::edge_id& e) const
   {
-    // FIXME: Improve the interface of graph to avoid these low-level
-    // manipulations.
-    util::node_id n2 = this->domain().gr_.edge(e).n2();
-    return this->domain().gr_.node_data(n2);
+    return this->domain().node2(e);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

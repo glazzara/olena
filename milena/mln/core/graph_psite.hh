@@ -130,7 +130,7 @@ namespace mln
   inline
   graph_psite<P>::operator P() const
   {
-    return pg_.gr_.node_data(id_);
+    return pg_.point_from_id(id_);
   }
 
   template<typename P>
@@ -138,7 +138,7 @@ namespace mln
   const P&
   graph_psite<P>::to_point() const
   {
-    return pg_.gr_.node_data(id_);
+    return pg_.point_from_id(id_);
   }
 
   template<typename P>
