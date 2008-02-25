@@ -1,3 +1,63 @@
+2008-02-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Create FLLT directory in my sandbox and move fllt related
+	files into it.
+
+	* sandbox/garrigues/fllt: New.
+
+	* sandbox/garrigues/fllt.hh: Remove.
+	* sandbox/garrigues/fllt/fllt.hh: New.
+	* sandbox/garrigues/fllt/fllt2.hh: New.
+	* sandbox/garrigues/fllt/fllt_doc.hh: New.
+	* sandbox/garrigues/fllt/fllt_merge.hh: New.
+	* sandbox/garrigues/fllt/fllt_optimized.hh: New.
+	* sandbox/garrigues/fllt/fllt_types.hh: New.
+	* sandbox/garrigues/fllt/test_fllt.cc: New.
+	* sandbox/garrigues/fllt/test_fllt10.cc: New.
+	* sandbox/garrigues/fllt/test_fllt10_inv.cc: New.
+	* sandbox/garrigues/fllt/test_fllt12.cc: New.
+	* sandbox/garrigues/fllt/test_fllt13.cc: New.
+	* sandbox/garrigues/fllt/test_fllt15.cc: New.
+	* sandbox/garrigues/fllt/test_fllt2.cc: New.
+	* sandbox/garrigues/fllt/test_fllt3.cc: New.
+	* sandbox/garrigues/fllt/test_fllt3_inv.cc: New.
+	* sandbox/garrigues/fllt/test_fllt4.cc: New.
+	* sandbox/garrigues/fllt/test_fllt5.cc: New.
+	* sandbox/garrigues/fllt/test_fllt6.cc: New.
+	* sandbox/garrigues/fllt/test_fllt7.cc: New.
+	* sandbox/garrigues/fllt/test_fllt7_inv.cc: New.
+	* sandbox/garrigues/fllt/test_fllt8.cc: New.
+	* sandbox/garrigues/fllt/test_fllt9.cc: New.
+	* sandbox/garrigues/fllt/test_fllt_lena.cc: New.
+	* sandbox/garrigues/fllt/test_fllt_lena_tiles.cc: New.
+	* sandbox/garrigues/fllt/test_fllt_tiny.cc: New.
+	* sandbox/garrigues/fllt/test_flltb.cc: New.
+	* sandbox/garrigues/fllt2.hh: Remove.
+	* sandbox/garrigues/fllt_doc.hh: Remove.
+	* sandbox/garrigues/fllt_merge.hh: Remove.
+	* sandbox/garrigues/fllt_optimized.hh: Remove.
+	* sandbox/garrigues/fllt_types.hh: Remove.
+	* sandbox/garrigues/test_fllt.cc: Remove.
+	* sandbox/garrigues/test_fllt10.cc: Remove.
+	* sandbox/garrigues/test_fllt10_inv.cc: Remove.
+	* sandbox/garrigues/test_fllt12.cc: Remove.
+	* sandbox/garrigues/test_fllt13.cc: Remove.
+	* sandbox/garrigues/test_fllt15.cc: Remove.
+	* sandbox/garrigues/test_fllt2.cc: Remove.
+	* sandbox/garrigues/test_fllt3.cc: Remove.
+	* sandbox/garrigues/test_fllt3_inv.cc: Remove.
+	* sandbox/garrigues/test_fllt4.cc: Remove.
+	* sandbox/garrigues/test_fllt5.cc: Remove.
+	* sandbox/garrigues/test_fllt6.cc: Remove.
+	* sandbox/garrigues/test_fllt7.cc: Remove.
+	* sandbox/garrigues/test_fllt7_inv.cc: Remove.
+	* sandbox/garrigues/test_fllt8.cc: Remove.
+	* sandbox/garrigues/test_fllt9.cc: Remove.
+	* sandbox/garrigues/test_fllt_lena.cc: Remove.
+	* sandbox/garrigues/test_fllt_lena_tiles.cc: Remove.
+	* sandbox/garrigues/test_fllt_tiny.cc: Remove.
+	* sandbox/garrigues/test_flltb.cc: Remove.
+
 2008-02-21  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Chamfer DT algorithm.
