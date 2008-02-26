@@ -48,100 +48,100 @@ namespace mln
   {
 
     /// Fwd declarations.
-    template <typename T> class node;
+    template <typename T> class tree_node;
     template <typename T> class tree;
     template <typename T> class branch;
 
 
-    /*! \brief Class of generic node for tree.
+    /*! \brief Class of generic tree_node for tree.
      *
      */
     template <typename T>
-    class node
+    class tree_node
     {
     public:
 
-      typedef std::vector< node<T>* > children_t;
+      typedef std::vector< tree_node<T>* > children_t;
 
       /*! \brief Constructor.
        *
        */
-      node();
+      tree_node();
 
       /*! \brief Constructor.
        *
-       * \param[in] elt The element of node.
+       * \param[in] elt The element of tree_node.
        */
-      node(T elt);
+      tree_node(T elt);
 
 
       /*! \brief The getter of the element.
        *
-       * \return The element of the node.
+       * \return The element of the tree_node.
        */
       T& elt();
 
       /*! \brief The const getter of the element.
        *
-       * \return The element of the node in const.
+       * \return The element of the tree_node in const.
        */
       const T& elt() const;
 
 
       /*! \brief The getter of the children.
        *
-       * \return The children of the node.
+       * \return The children of the tree_node.
        */
       children_t& children();
 
 
       /*! \brief The getter of the children.
        *
-       * \return The children of the node in const.
+       * \return The children of the tree_node in const.
        */
       const children_t& children() const;
 
 
       /*! \brief The getter of the parent.
        *
-       * \return The parent of the node.
+       * \return The parent of the tree_node.
        */
-      node<T>* parent();
+      tree_node<T>* parent();
 
 
-      /*! \brief Create a node with \p elt which become the child of
-       *  the current node.
+      /*! \brief Create a tree_node with \p elt which become the child of
+       *  the current tree_node.
        *
        * \param[in] elt The element of the new child to add.
        *
-       * \return The new node created.
+       * \return The new tree_node created.
        */
-      node<T>* add_child(T elt);
+      tree_node<T>* add_child(T elt);
 
-      /*! \brief Bind \p node to the current node and become its
+      /*! \brief Bind \p tree_node to the current tree_node and become its
        *  child.
        *
-       * \param[in] node The new child node.
+       * \param[in] tree_node The new child tree_node.
        *
-       * \return The child node.
+       * \return The child tree_node.
        */
-      node<T>* add_child(node<T>* node);
+      tree_node<T>* add_child(tree_node<T>* tree_node);
 
-      /*! \brief Bind \p node to the current node and become its
+      /*! \brief Bind \p tree_node to the current tree_node and become its
        *  parent.
        *
-       * \param[in] parent The new parent node.
+       * \param[in] parent The new parent tree_node.
        *
        */
-      void set_parent(node<T>* parent);
+      void set_parent(tree_node<T>* parent);
 
-      /*! \brief Delete the current node.
+      /*! \brief Delete the current tree_node.
        *
        */
-      node<T>* delete_node();
+      tree_node<T>* delete_tree_node();
 
       /*! \brief Print on \p ostr the arborescence with the current
-       *  node as root.
+       *  tree_node as root.
        *
        * \param[in] ostr The output stream.
        * \param[in] level The deep level
@@ -149,35 +149,35 @@ namespace mln
        */
       void print(std::ostream& ostr, int level = 0);
 
-      /*! \brief Check the consistency of the node.
+      /*! \brief Check the consistency of the tree_node.
        *
        *  \return true if no error, else false.
        */
       bool check_consistency();
 
 
-      /*! \brief Search the node with value \p elt in the arborescence
-       *  of the current node.
+      /*! \brief Search the tree_node with value \p elt in the arborescence
+       *  of the current tree_node.
        *
-       *  \param[in] elt The value of the searched node.
+       *  \param[in] elt The value of the searched tree_node.
        *
-       *  \return If not found 0 else the node with \p elt value.
+       *  \return If not found 0 else the tree_node with \p elt value.
        */
-      node<T>* search(T& elt);
+      tree_node<T>* search(T& elt);
 
       /// The using method for method search.
-      int  search_rec(node<T>** res, T& elt);
+      int  search_rec(tree_node<T>** res, T& elt);
 
     private:
 
       /// The value.
       T elt_;
 
-      /// The node parent.
-      node<T>* parent_;
+      /// The tree_node parent.
+      tree_node<T>* parent_;
 
       /// The children.
-      std::vector< node<T>* > child_;
+      std::vector< tree_node<T>* > child_;
     };
 
 
@@ -190,7 +190,7 @@ namespace mln
     {
     public:
 
-      typedef node<T> node_t;
+      typedef tree_node<T> tree_node_t;
 
       /*! \brief Constructor.
        *
@@ -201,18 +201,18 @@ namespace mln
        *
        * \param[in] root The root of the tree.
        */
-      tree(node<T>* root);
+      tree(tree_node<T>* root);
 
 
       /*! \brief The getter of the root.
        *
-       * \return The root's node of the the current tree.
+       * \return The root's tree_node of the the current tree.
        */
-      node<T>* root();
+      tree_node<T>* root();
 
       /*! \brief Convert the tree into brach.
        *
-       * \return The root's node of the the current tree.
+       * \return The root's tree_node of the the current tree.
        */
       branch<T> main_branch();
 
@@ -225,22 +225,22 @@ namespace mln
 
       /*! \brief Bind a new tree upper the current.
        *
-       *  \param[in] elt The new value of the new node of the new tree
+       *  \param[in] elt The new value of the new tree_node of the new tree
        *  add upper the current.
        */
       void add_tree_up (T& elt);
 
       /*! \brief Bind a new tree downer the current.
        *
-       *  \param[in] elt The new value of the new node of the new tree
+       *  \param[in] elt The new value of the new tree_node of the new tree
        *  add downer the current.
        */
       void add_tree_down (T& elt);
 
     private:
 
-      /// The root's node.
-      node<T>* root_;
+      /// The root's tree_node.
+      tree_node<T>* root_;
     };
 
 
@@ -257,13 +257,13 @@ namespace mln
        * \param[in] tree The tree of the branch.
        * \param[in] apex The apex of the branch.
        */
-      branch(tree<T>& tree, node<T>& apex);
+      branch(tree<T>& tree, tree_node<T>& apex);
 
       /*! \brief The getter of the appex.
        *
-       *  \return The node appex of the current branch.
+       *  \return The tree_node appex of the current branch.
        */
-      node<T>& apex();
+      tree_node<T>& apex();
 
       /*! \brief The getter of the tree.
        *
@@ -275,8 +275,8 @@ namespace mln
       /// The tree of this branch.
       util::tree<T>& tree_;
 
-      /// The node apex of this branch.
-      node<T>& apex_;
+      /// The tree_node apex of this branch.
+      tree_node<T>& apex_;
     };
 
 
@@ -291,7 +291,7 @@ namespace mln
 
     template <typename T>
     inline
-    tree<T>::tree(node<T>* root)
+    tree<T>::tree(tree_node<T>* root)
       : root_ (root)
     {
       mln_assertion (root != 0);
@@ -299,7 +299,7 @@ namespace mln
 
     template <typename T>
     inline
-    node<T>*
+    tree_node<T>*
     tree<T>::root()
     {
       return root_;
@@ -318,7 +318,7 @@ namespace mln
     void
     tree<T>::add_tree_up(T& elt)
     {
-      node<T>* n = new node<T> (elt);
+      tree_node<T>* n = new tree_node<T> (elt);
       root_->set_parent(n);
       n->children().push_back (root_);
       root_ = n;
@@ -329,7 +329,7 @@ namespace mln
     void
     tree<T>::add_tree_down(T& elt)
     {
-      node<T>* n = new node<T> (elt);
+      tree_node<T>* n = new tree_node<T> (elt);
       root_->child_.push_back (n);
     }
 
@@ -344,14 +344,14 @@ namespace mln
 
     template <typename T>
     inline
-    node<T>::node()
+    tree_node<T>::tree_node()
       : parent_ (0)
     {
     }
 
     template <typename T>
     inline
-    node<T>::node(T elt)
+    tree_node<T>::tree_node(T elt)
       : elt_ (elt),
 	parent_ (0)
     {
@@ -360,7 +360,7 @@ namespace mln
     template <typename T>
     inline
     const T&
-    node<T>::elt() const
+    tree_node<T>::elt() const
     {
       return elt_;
     }
@@ -368,7 +368,7 @@ namespace mln
     template <typename T>
     inline
     T&
-    node<T>::elt()
+    tree_node<T>::elt()
     {
       return elt_;
     }
@@ -376,26 +376,26 @@ namespace mln
 
     template <typename T>
     inline
-    std::vector< node<T>* >&
-    node<T>::children()
+    std::vector< tree_node<T>* >&
+    tree_node<T>::children()
     {
       return child_;
     }
 
     template <typename T>
     inline
-    const std::vector< node<T>* >&
-    node<T>::children() const
+    const std::vector< tree_node<T>* >&
+    tree_node<T>::children() const
     {
       return child_;
     }
 
     template <typename T>
     inline
-    node<T>*
-    node<T>::add_child(T elt)
+    tree_node<T>*
+    tree_node<T>::add_child(T elt)
     {
-      node<T>* s = new node<T>(elt);
+      tree_node<T>* s = new tree_node<T>(elt);
 
       s->parent_ = this;
       this->child_.push_back(s);
@@ -405,33 +405,33 @@ namespace mln
 
     template <typename T>
     inline
-    node<T>*
-    node<T>::add_child(node<T>* node)
+    tree_node<T>*
+    tree_node<T>::add_child(tree_node<T>* tree_node)
     {
-      if (node->parent_)
+      if (tree_node->parent_)
 	{
-	  for (typename std::vector<util::node<T>* >::iterator it = node->parent()->children().begin();
-	       it != node->parent()->children().end(); ++it)
-	    if ((*it) == node)
+	  for (typename std::vector<util::tree_node<T>* >::iterator it = tree_node->parent()->children().begin();
+	       it != tree_node->parent()->children().end(); ++it)
+	    if ((*it) == tree_node)
 	    {
-	      node->parent()->children().erase(it);
+	      tree_node->parent()->children().erase(it);
 	      break;
 	    }
 	}
-      node->parent_ = this;
-      this->children().push_back(node);
-      return node;
+      tree_node->parent_ = this;
+      this->children().push_back(tree_node);
+      return tree_node;
     }
 
     template <typename T>
     inline
-    node<T>*
-    node<T>::delete_node()
+    tree_node<T>*
+    tree_node<T>::delete_tree_node()
     {
       mln_assertion(parent_ != 0);
-      node<T>* res = parent_;
+      tree_node<T>* res = parent_;
 
-      typename std::vector<node<T>* >::iterator it = parent_->children().begin();
+      typename std::vector<tree_node<T>* >::iterator it = parent_->children().begin();
       for (; it < parent_->children().end(); ++it)
 	if ((*it) == this)
 	  {
@@ -439,7 +439,7 @@ namespace mln
 	    break;
 	  }
 
-      for (typename std::vector<node<T>* >::iterator it = this->child_.begin();
+      for (typename std::vector<tree_node<T>* >::iterator it = this->child_.begin();
 	   it != this->child_.end(); ++it)
 	parent_->add_child(*it);
       return (res);
@@ -448,14 +448,14 @@ namespace mln
     template <typename T>
     inline
     void
-    node<T>::print(std::ostream& ostr, int level)
+    tree_node<T>::print(std::ostream& ostr, int level)
     {
       ostr << level << std::endl;
 
       ostr << " elt " << this->elt() << std::endl;
 
 
-      for (typename std::vector<node<T>* >::iterator it = this->child_.begin();
+      for (typename std::vector<tree_node<T>* >::iterator it = this->child_.begin();
 	   it != this->child_.end(); ++it)
 	{
 	  (*it)->print(level + 1);
@@ -466,7 +466,7 @@ namespace mln
     template <typename T>
     inline
     void
-    node<T>::set_parent(node<T>* parent)
+    tree_node<T>::set_parent(tree_node<T>* parent)
     {
       mln_assertion(parent != 0);
       parent_ = parent;
@@ -475,8 +475,8 @@ namespace mln
 
     template <typename T>
     inline
-    node<T>*
-    node<T>::parent()
+    tree_node<T>*
+    tree_node<T>::parent()
     {
       return parent_;
     }
@@ -484,7 +484,7 @@ namespace mln
     template <typename T>
     inline
     int
-    node<T>::search_rec(node<T>** res, T& elt)
+    tree_node<T>::search_rec(tree_node<T>** res, T& elt)
     {
       if (elt == this->elt_)
       {
@@ -493,7 +493,7 @@ namespace mln
       }
       else
       {
-	for (typename std::vector<node<T>* >::iterator it = this->child_.begin();
+	for (typename std::vector<tree_node<T>* >::iterator it = this->child_.begin();
 	     it != this->child_.end(); ++it)
 	{
 	  if ((**it).search_rec(res, elt))
@@ -505,10 +505,10 @@ namespace mln
 
     template <typename T>
     inline
-    node<T>*
-    node<T>::search(T& elt)
+    tree_node<T>*
+    tree_node<T>::search(T& elt)
     {
-      node<T>* res = 0;
+      tree_node<T>* res = 0;
 
       if (search_rec(&res, elt))
 	return res;
@@ -518,9 +518,9 @@ namespace mln
     template <typename T>
     inline
     bool
-    node<T>::check_consistency()
+    tree_node<T>::check_consistency()
     {
-      for (typename std::vector<node<T>* >::iterator it = this->child_.begin();
+      for (typename std::vector<tree_node<T>* >::iterator it = this->child_.begin();
 	   it != this->child_.end(); ++it)
       {
 	if ((**it).parent() != this)
@@ -537,7 +537,7 @@ namespace mln
     template <typename T>
     inline
     branch<T>::branch(util::tree<T>& tree,
-		      util::node<T>& apex)
+		      util::tree_node<T>& apex)
       : tree_(tree),
 	apex_(apex)
     {
@@ -546,7 +546,7 @@ namespace mln
 
     template <typename T>
     inline
-    util::node<T>&
+    util::tree_node<T>&
     branch<T>::apex()
     {
       return apex_;

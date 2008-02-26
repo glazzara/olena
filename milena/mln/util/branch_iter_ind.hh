@@ -46,7 +46,7 @@ namespace mln
     template<typename T>
     struct bi_elt
     {
-      typedef std::vector< util::node<T>* > child_list;
+      typedef std::vector< util::tree_node<T>* > child_list;
 
       bi_elt(child_list* list)
 	: list_(list),
@@ -54,7 +54,7 @@ namespace mln
 	  pos_(-1) {}
 
       child_list* list_;
-      util::node<T>* previous_;
+      util::tree_node<T>* previous_;
       int pos_;
     };
 
@@ -71,8 +71,8 @@ namespace mln
       branch_iter_ind(branch<T> branch);
 
       /// Convertion to node.
-      operator util::node<T>&() const;
-      util::node<T>& operator *();
+      operator util::tree_node<T>&() const;
+      util::tree_node<T>& operator *();
 
       /// Test the iterator validity.
       bool is_valid() const;
@@ -96,7 +96,7 @@ namespace mln
       /// Store child().begin() and child().end().
       std::stack< bi_elt<T> > s_;
 
-      util::node<T>* n_;
+      util::tree_node<T>* n_;
     };
 
 # ifndef MLN_INCLUDE_ONLY
@@ -112,7 +112,7 @@ namespace mln
 
     template <typename T>
     inline
-    branch_iter_ind<T>::operator node<T>&() const
+    branch_iter_ind<T>::operator tree_node<T>&() const
     {
       mln_assertion(n_);
       return *n_;
@@ -120,7 +120,7 @@ namespace mln
 
     template <typename T>
     inline
-    util::node<T>&
+    util::tree_node<T>&
     branch_iter_ind<T>::operator*()
     {
       mln_assertion(n_);
@@ -134,7 +134,7 @@ namespace mln
     {
       mln_assertion(is_valid());
       unsigned i = 0;
-      node<T>* p = n_;
+      tree_node<T>* p = n_;
       while (p)
       {
 	p = p->parent();

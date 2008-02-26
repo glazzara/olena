@@ -57,8 +57,8 @@ namespace mln
       branch_iter(branch<T> branch);
 
       /// Convertion to node.
-      operator util::node<T>&() const;
-      util::node<T>& operator *();
+      operator util::tree_node<T>&() const;
+      util::tree_node<T>& operator *();
 
       /// Test the iterator validity.
       bool is_valid() const;
@@ -78,12 +78,12 @@ namespace mln
       /// The branch to iter.
       util::branch<T> branch_;
 
-      typedef typename std::vector< util::node<T>* >::iterator child_iter;
+      typedef typename std::vector< util::tree_node<T>* >::iterator child_iter;
       typedef std::pair<child_iter, child_iter> iter_pair;
       /// Store child().begin() and child().end().
       std::stack< iter_pair > s_;
 
-      util::node<T>* n_;
+      util::tree_node<T>* n_;
     };
 
 
@@ -100,7 +100,7 @@ namespace mln
 
     template <typename T>
     inline
-    branch_iter<T>::operator node<T>&() const
+    branch_iter<T>::operator tree_node<T>&() const
     {
       mln_assertion(n_);
       return *n_;
@@ -108,7 +108,7 @@ namespace mln
 
     template <typename T>
     inline
-    util::node<T>&
+    util::tree_node<T>&
     branch_iter<T>::operator*()
     {
       mln_assertion(n_);
@@ -122,7 +122,7 @@ namespace mln
     {
       mln_assertion(is_valid());
       unsigned i = 0;
-      node<T>* p = n_;
+      tree_node<T>* p = n_;
       while (p)
       {
 	p = p->parent();
