@@ -1,3 +1,20 @@
+2008-02-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Split fllt.hh in my sanbox.
+
+	* sandbox/garrigues/fllt/compute_level_set.hh: New, compute the level sets.
+	* sandbox/garrigues/fllt/debug.hh: New, debug routines for FLLT.
+	* sandbox/garrigues/fllt/doc.hh: New, some comments from the monasse's paper.
+	* sandbox/garrigues/fllt/lower.hh: New, the struct used to compute the
+	lower level set.
+	* sandbox/garrigues/fllt/upper.hh: New, the struct used to compute the
+	upper level set.
+	* sandbox/garrigues/fllt/types.hh: New, type defined for FLLT.
+	* sandbox/garrigues/fllt/merge.hh: New, routines to merge the lower
+	level set and the upper level set.
+	* sandbox/garrigues/fllt/fllt.hh: Split this file.
+	* sandbox/garrigues/fllt/test_fllt10.cc: Update includes.
+
 2008-02-26  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Chamfer DT visual tests (beautiful images inside !).
