@@ -49,8 +49,6 @@
 # include <mln/debug/println.hh>
 # include <mln/debug/println_with_border.hh>
 
-# include <mln/convert/to_image.hh>
-
 # include <mln/border/fill.hh>
 
 # include <mln/level/compute.hh>
@@ -97,7 +95,7 @@ namespace mln
     };
 
 # define fllt_tree(P, V)  util::tree< fllt_node_elt<P, V> >
-# define fllt_node(P, V)  util::node< fllt_node_elt<P, V> >
+# define fllt_node(P, V)  util::tree_node< fllt_node_elt<P, V> >
 # define fllt_branch(P, V)  util::branch< fllt_node_elt<P, V> >
 # define fllt_branch_iter_ind(P, V)  util::branch_iter_ind< fllt_node_elt<P, V> >
 
@@ -278,7 +276,7 @@ namespace mln
 
 
 	// Count the number of conected components of the border of R.
-	static image2d<int>  tmp(u.domain().to_larger(1));
+	static image2d<unsigned>  tmp(u.domain().to_larger(1));
 	static image2d<bool> border_ima(tmp.domain());
 	level::fill(border_ima, false);
 
@@ -292,7 +290,7 @@ namespace mln
 	    border_ima(z) = true;
 	  }
 	unsigned n;
-	labeling::level(border_ima, true, F::bdr_nbh(), tmp, n);
+	tmp = labeling::level(border_ima, true, F::bdr_nbh(), n);
 
 	//     debug::println(border_ima);
 	//std::cout << "nb composantes :" << n << std::endl;
@@ -392,8 +390,8 @@ namespace mln
 
       // FIXME: not nice.
       typedef     mln::image_if<
-	mln::image2d<V>,
-	mln::fun::greater_p2b_expr_<mln::pw::value_<mln::image2d<V> >,
+	mln::image2d<unsigned>,
+	mln::fun::greater_p2b_expr_<mln::pw::value_<mln::image2d<unsigned> >,
 	mln::pw::cst_<int> >
 	> I_IF;
 
@@ -404,7 +402,7 @@ namespace mln
       p_set<P> R, N, A;
       V g, gn;
       point2d x0;
-      image2d<V> min_locals(ima.domain());
+      image2d<unsigned> min_locals(ima.domain());
       image2d<V> u = clone(ima);
       border::fill(u, 0);
 
@@ -426,7 +424,7 @@ namespace mln
 
       // Get the locals extremums
       unsigned nlabels;
-      F::regional_extremum(ima, F::reg_nbh(), min_locals, nlabels);
+      min_locals = F::regional_extremum(ima, F::reg_nbh(), nlabels);
 
       //       debug::println(min_locals);
       //       debug::println(min_locals | (pw::value(min_locals) > pw::cst(0)));
@@ -519,13 +517,11 @@ namespace mln
 	return u < v;
       }
 
-      template <typename I, typename N, typename O>
-      static bool
-      regional_extremum(const Image<I>& input, const Neighborhood<N>& nbh,
-			Image<O>& output, unsigned& nlabels)
+      template <typename I, typename N, typename L>
+      static mln_ch_value(I, L)
+      regional_extremum(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels)
       {
-	return labeling::regional_minima(input, nbh,
-					 output, nlabels);
+	return labeling::regional_minima(input, nbh, nlabels);
       }
 
       static const int inc = 1;
@@ -551,13 +547,11 @@ namespace mln
 	return u > v;
       }
 
-      template <typename I, typename N, typename O>
-      static bool
-      regional_extremum(const Image<I>& input, const Neighborhood<N>& nbh,
-			Image<O>& output, unsigned& nlabels)
+      template <typename I, typename N, typename L>
+      static mln_ch_value(I, L)
+      regional_extremum(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels)
       {
-	return labeling::regional_maxima(input, nbh,
-					 output, nlabels);
+	return labeling::regional_maxima(input, nbh, nlabels);
       }
 
       static const int inc = -1;
@@ -849,7 +843,7 @@ namespace mln
 
 
       //      util::display_tree(ima, lower_tree);
-      //draw_tree(ima, result_tree);
+      draw_tree(ima, result_tree);
 
       //       debug::println(ima);
       //       debug::println(output);

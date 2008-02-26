@@ -1,5 +1,12 @@
 2008-02-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Make FLLT compile.
+
+	* sandbox/garrigues/fllt/fllt2.hh: Update due to the new tree_node
+	name and the update of labeling algorithms.
+
+2008-02-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Rename util::node (of util::tree) as util::tree_node.
 
 	* mln/util/branch_iter.hh,
