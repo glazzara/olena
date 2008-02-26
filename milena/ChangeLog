@@ -1,3 +1,9 @@
+2008-02-26  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Chamfer DT visual tests (beautiful images inside !).
+	* sandbox/folio/chamfer_dt.cc: New visual tests inside
+        (Beware! There's a picasso painting here !).
+
 2008-02-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Make FLLT compile.

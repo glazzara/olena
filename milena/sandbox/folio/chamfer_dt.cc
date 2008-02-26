@@ -29,7 +29,6 @@
 
 #include <mln/core/image2d.hh>
 #include <mln/level/fill.hh>
-#include <mln/debug/println.hh>
 #include <mln/make/win_chamfer.hh>
 #include <mln/accu/min.hh>
 
@@ -40,13 +39,13 @@ namespace mln
 {
   template<typename I>
   inline
-  mln_ch_value(I, float)
+  mln_ch_value(I, int)
   chamfer_dt(const Image<I>& input_)
   {
     const I& input = exact(input_);
     mln_precondition(input.has_data());
 
-    mln_ch_value(I, float) output;
+    mln_ch_value(I, int) output;
     initialize(output, input);
 
     accu::min_<int> min;
@@ -98,19 +97,46 @@ namespace mln
 
 #endif /* ! CHAMFER_DT_HH */
 
+#include <mln/debug/println.hh>
+#include <mln/level/stretch.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/io/pgm/load.hh>
+#include <tests/data.hh>
+
 int main()
 {
   using namespace mln;
 
-  image2d<bool> ima(5,5);
-  bool vals[] = { 1, 1, 1, 0, 0,
-                  0, 0, 1, 0, 0,
-                  0, 0, 1, 0, 0,
-                  0, 0, 0, 0, 0,
-		  0, 0, 0, 0, 0 };
+  {
+    image2d<bool> ima(5,5);
+    bool vals[] = { 1, 1, 1, 0, 0,
+		    0, 0, 1, 0, 0,
+		    0, 0, 1, 0, 0,
+		    0, 0, 0, 0, 0,
+		    0, 0, 0, 0, 0 };
 
-  level::fill(ima, vals);
+    level::fill(ima, vals);
+    debug::println(ima);
 
-  debug::println(ima);
-  debug::println(chamfer_dt(ima));
+    image2d<int> out = chamfer_dt(ima);
+    debug::println(out);
+
+    image2d<value::int_u8> out2;
+    initialize(out2, out);
+    level::stretch(out, out2);
+    io::pgm::save(out2, "./out.pgm");
+  }
+
+  {
+    image2d<value::int_u8> ima;
+    io::pgm::load(ima, MLN_IMG_DIR "/picasso.pgm");
+
+    image2d<int> out = chamfer_dt(ima);
+
+    image2d<value::int_u8> out2;
+    initialize(out2, out);
+    level::stretch(out, out2);
+    io::pgm::save(out2, "./out2.pgm");
+  }
 }
