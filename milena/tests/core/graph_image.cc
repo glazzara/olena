@@ -75,6 +75,7 @@ int main()
   `-------*/
 
   p_graph<point2d> pg(g);
+  g.print_debug(std::cout);
 
   /*-------------.
   | Graph image.  |

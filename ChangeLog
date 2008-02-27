@@ -1,3 +1,14 @@
+2008-02-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the pretty-printer of util::internal::graph_base.
+
+	* milena/mln/util/internal/graph_base.hh (node<void>::edges):
+	Use a std::vector (as in node<T>), not a std::list.
+	(util::internal::graph_base<N, E>::print_debug): Fix the iteration
+	on the edges adjacent to a vertex.
+	* milena/tests/core/graph_image.cc: Exercise
+	util::internal::graph_base<N, E>::print_debug
+
 2008-02-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update the list of Makefiles to be configured.

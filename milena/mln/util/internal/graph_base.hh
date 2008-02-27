@@ -82,7 +82,7 @@ namespace mln
     template<>
     struct node<void>
     {
-      std::list<edge_id> edges;
+      std::vector<edge_id> edges;
     };
 
 
@@ -386,7 +386,10 @@ namespace mln
 	     n != nodes_.end (); ++n, ++i)
 	  {
 	    ostr << "node: " << i << std::endl << " -- adjacent nodes: ";
-	    for (typename edges_t::const_iterator e = (*n)->edges.begin();
+	    /* FIXME: We shouldn't manipulate std::vector<edge_id>
+	       directly, but use a typedef instead.  */
+	    for (typename std::vector<util::edge_id>::const_iterator e =
+		   (*n)->edges.begin();
 		 e != (*n)->edges.end(); ++e)
 	      ostr << *e << " ";
 	    ostr << std::endl;
