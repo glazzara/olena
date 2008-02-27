@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include <mln/core/image_if_value.hh>
 #include <mln/core/inplace.hh>
 #include <mln/core/w_window2d_int.hh>
@@ -8,12 +10,75 @@
 
 #include "my_hsi.hh"
 
-namespace mln {
-  namespace convert {
+
+
+namespace mln
+{
+
+
+  namespace fun
+  {
+
+    namespace v2v
+    {
+
+      // NEW
+
+      template <typename T_hsi>
+      struct f_rgb_to_hsi_ : public Function_v2v< f_rgb_to_hsi_<T_hsi> >
+      {
+	typedef T_hsi result;
+
+	template <typename T_rgb>
+	T_hsi operator()(const T_rgb& rgb) const
+	{
+	  // Locals.
+	  static const double sqrt3_3 = std::sqrt(3) / 3;
+	  static const double inv_sqrt6 = 1 / std::sqrt(6);
+	  static const double inv_sqrt2 = 1 / std::sqrt(2);
+
+	  T_hsi hsi;
+
+	  double alpha = inv_sqrt2 * rgb.green() - inv_sqrt2 * rgb.blue();
+	  double beta = 2 * inv_sqrt6 * rgb.red() - inv_sqrt6 * rgb.green() - inv_sqrt6 * rgb.blue();
+
+
+	  float tmp = atan2(beta, alpha) / 3.1415 * 180.0;
+	  if (tmp < 0 or tmp > 1)
+	    {
+	      std::cout << "FIXME: " << tmp << std::endl;
+	    }
+
+	  hsi.h() = atan2(beta, alpha) / 3.1415 * 180.0;
+	  if (hsi.h() < 0)
+	    hsi.h() = hsi.h() + 360.0;
+	  mln_invariant(hsi.h() >= 0);
+	  hsi.s() = std::sqrt(alpha * alpha + beta * beta);
+	  hsi.i() = sqrt3_3 * rgb.red() + sqrt3_3 * rgb.green() + sqrt3_3 * rgb.blue();
+
+	  return hsi;
+	}
+      };
+
+      typedef f_rgb_to_hsi_<value::hsi_3x8> f_rgb_to_hsi_3x8_t;
+
+      f_rgb_to_hsi_3x8_t f_rgb_to_hsi_3x8;
+
+      // end of NEW
+
+    } // end of namespace fun::v2v
+
+  } // end of namespace fun
+
+
+
+
+  namespace convert
+  {
+
     struct f_rgb_to_hsi
     {
-      struct value::hsi<8>
-      doit(const struct value::rgb<8> rgb) const
+      value::hsi<8> operator()(const value::rgb<8>& rgb) const
       {
 	struct value::hsi<8> hsi;
 	double sqrt3_3 = sqrt(3) / 3;
@@ -30,14 +95,15 @@ namespace mln {
 	hsi.s(sqrt(alpha * alpha + beta * beta));
 	hsi.i(sqrt3_3 * rgb.red() + sqrt3_3 * rgb.green() + sqrt3_3 * rgb.blue());
 
-	return (hsi);
+	return hsi;
       }
     };
+
     
     struct f_hsi_to_rgb
     {
-      struct value::rgb<8>
-      doit(const struct value::hsi<8> hsi) const
+
+      value::rgb<8> doit(const value::hsi<8>& hsi) const
       {
 	int r;
 	int g;
@@ -55,10 +121,12 @@ namespace mln {
 	g = int(sqrt3_3 * hsi.i() + inv_sqrt2 * alpha - inv_sqrt6 * beta);
 	b = int(sqrt3_3 * hsi.i() - inv_sqrt2 * alpha - inv_sqrt6 * beta);
 
-	struct value::rgb<8> rgb(r, g, b); 
+	value::rgb<8> rgb(r, g, b); 
 	
-	return (rgb);
+	return rgb;
       }
     };
-  }
-}
+
+  } // end of FIXME
+
+} // end of FIXME
