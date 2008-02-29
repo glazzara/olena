@@ -1,3 +1,17 @@
+2008-02-29  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	sandbox:Subsampling function.
+
+	* sandbox/jardonnet/subsampling: New.
+	* sandbox/jardonnet/subsampling/subsampling_2d.hh: Subsamples 2d image.
+	* sandbox/jardonnet/subsampling/sub_sampled_image.hh: Draft morpher.
+	* sandbox/jardonnet/test: New temporary test directory.
+	* sandbox/jardonnet/test/test.cc: Base.
+	* sandbox/jardonnet/test/subsampling.cc: Subsampling test.
+	* sandbox/jardonnet/test/Makefile: New.
+     	* tests/subsampling: New.
+	* tests/subsampling/type.cc: New.
+
 2008-02-27  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add base decorator for boost graph.

@@ -30,6 +30,8 @@
  * \brief Test on mln::binarization::thresholding
  */
 
+// FIXME for make check
+
 
 #include <mln/core/image2d.hh>
 #include <mln/binarization/thresholding.hh>

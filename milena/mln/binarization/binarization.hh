@@ -103,4 +103,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_BINARIZATION_THRESHOLDING_HH
+#endif // ! MLN_BINARIZATION_BINARIZATION_HH
