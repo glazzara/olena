@@ -1,0 +1,364 @@
+		-*- outline -*-
+
+
+* image interface
+
+** at a glance
+
+ima :  domain ->  destination
+       p      ->  ima(p)
+
+
+object            type
+---------------------------
+ima               I
+
+ima.domain        I::pset
+ima.destination() I::vset
+
+p		  like I::site
+ima(p)            like I::value
+
+
+impl detail:
+signature is "ima(p : psite) : rvalue"
+
+
+** about domain and destination
+
+ima.domain is usually a mathematical set.  Yet it can be a
+multiset (a bag) but then weird things might happen...
+
+ima.destination is a set.  Every value, that is ima(p) with p in
+ima.domain, is taken from this set.  For instance, a color image can
+be defined with the destination being of type value::set<rgb_3x8>.
+
+Classically, some image types are defined by couples (p,v) where v =
+ima(p).  A given cell, location in RAM or in a file, corresponds to a
+point p and stores the corresponding value.  So when we have N points,
+we also have N value cells.  To iterate over pixel values, we then
+iterate over the definition domain and access values through ima(p):
+
+code A)
+  for all p of ima.domain
+  | v = ima(p)
+  | print v.
+
+The set of possible taken values in ima is the destination set.  If
+this set has a reasonable size, we can iterate over:
+ 
+code B)
+  for all v of ima.destination
+  | print v.
+
+Sometimes, the number of value cells is much less than the number of
+points.  To access the image values, it is more efficient to iterate
+over those cells:
+
+code C)
+  for all v of ima.values
+  | print v.
+
+Consider for instance the following image:
+
++-----+
+| 2   |
+|  111|
+|  22 |
++-----+
+
+The value type is int_u2 (unsigned integer on 2 bit), that is, the
+type of the interval [0,3] of N.  The image is defined by a run-length
+encoding with a single value per run.  Precisely, this image is:
+
+{ ((a,1),2), ((b,3),1), ((c,2),2) }
+    ^^^  ^
+1st run  |
+        value of the 1st run
+
+where a, b, and c designate the respective starting point of each run:
+
++-----+
+| a   |
+|  b  |
+|  c  |
++-----+
+
+It leads to:
+  code A) 211122  because we browse points
+  code B) 0123    because we browse [0,3]N
+and with :
+  code C) 212     because we browse the image value cells;
+                  those cells are depicted below.
+                           v          v          v
+                  { ((a,1),2), ((b,3),1), ((c,2),2) }
+
+
+** associated types
+
+mesh  (? support)
+pset  (? domain_t)
+site
+psite
+
+value
+rvalue
+lvalue
+vset
+
+coord
+dpoint
+
+fwd_piter
+bkd_piter
+
+skeleton
+
+
+** methods
+
+*** values
+
+bool has_data() const
+// FIXME: ? better name is is_allocated  Nota bene: is_initialized means "has relevant data"!
+
+const pset& domain() const
+bool has(const psite& p) const
+bool owns_(const psite& p) const
+
+const box_<point>& bbox() const
+std::size_t npoints() const
+
+rvalue operator()(const psite& p) const
+lvalue operator()(const psite& p)
+
+const vset& destination() const // was: values()
+
+
+
+* properties
+
+
+** general
+
+
+*** category
+|
++ -- primary
+|
++ -- /morpher/
+       |
+       + -- identity_morpher
+       |
+       + -- domain_morpher
+       |
+       + -- value_morpher
+
+**** primary
+
+Image type instantiable at the first place (without any prior image
+being defined).
+
+**** morpher
+
+Image type that relies on another image type or on several
+ones; it looks like M<I>.  In the following, ima' (of type I') is a
+morpher instance where ima (of type I) is the underlying pre-existing
+image.
+
+**** domain_morpher
+
+A morpher that only changes the definition domain;
+we have ima'.domain != ima.domain but I'::value == I::value and
+for all p in ima'.domain inter ima.domain, ima'(p) == ima(p).
+
+The resulting domain can be larger or smaller than the first one.
+
+FIXME: What about changing only the "extended domain" (via modifying
+the behavior of owns_)?
+
+**** value_morpher
+
+A morpher that only changes the values; we have ima'.domain ==
+ima.domain but the function ima' is different from ima because either
+some values change (for some p, ima'(p) != ima(p)) or the type of
+values change.
+
+**** identity_morpher
+
+A morpher that does not change the domain nor the values.
+So ima'.domain == ima.domain and for all p, ima'(p) == ima(p).
+
+
+
+** related to value
+
+
+*** kind
+|
++ -- color
+|
++ -- gray
+|
++ ----------- label
+|              |
+|              +-- named
++ -- /logic/   |
+|      |       |
+|      + -- /mvlogic/
+|      |      |
+|      |      + -- binary
+|      |      |
+|      |      + -- ternary
+|      |
+|      + -- fuzzy
+|
++ -- data
+|
+|
++ -- /map/
+       |
+       + -- distance
+
+FIXME: Apply change on mln.
+IDEA: map or field (for deformation field).
+
+Nota bene: mvlogic stands for "multi-valued logic".
+
+
+*** quant
+|
++ -- low
+|
++ -- high
+
+**** 
+
+*** value
+|
++ -- scalar
+|
++ -- vectorial
+|
++ -- structed
+|
++ -- pointer
+
+FIXME: Make the difference between homogeneous and heterogeneous
+vectors...
+
+
+
+** related to pset
+
+
+*** access
+|
++ -- random
+|
++ -- browsing
+
+
+*** space
+|
++ -- one_d
+|
++ -- two_d
+|
++ -- three_d
+
+
+*** size
+|
++ -- huge
+|
++ -- regular
+
+
+*** support
+|
++ -- irregular
+|
++ -- regular
+       |
+       + -- aligned
+
+
+** global
+
+
+*** border
+|
++ -- none
+|
++ -- /some/
+       |
+       + -- stored
+       |
+       + -- computed
+
+
+*** neighb
+|
++ -- none
+|
++ -- /some/
+
+
+*** data
+|
++ -- stored
+|     |
+|     + -- semilinear
+|           |
+|           + --  oneblock
+|
++ -- computed
+
+Was: stored > linear > raw.
+
+FIXME: What about mmap?
+
+
+*** io
+|
++ ------------------------ /read/
+|                            | \
+|                            |  + -- read_only
+|                            |
++ -- /write/                 |
+       | \                   |
+       |  + -- write_only    |
+       |                     |
+        \_________________   |
+                           \ |
+                          read_write
+
+*** speed
+|
++ -- slow
+|
++ -- fast
+      |
+      + -- fastest
+
+fastest = (    data    = oneblock
+           and border  = stored
+           and support = aligned
+           and size    = regular )
+
+
+* primary images
+
+** image2d<T>
+
+** fun_image<S,F>
+
+pset = S
+f : p -> v
+read_only
+
+
+* value morpher
+
+pset is
