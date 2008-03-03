@@ -1,3 +1,4 @@
+
 #include <cmath>
 
 #include <mln/core/image_if_value.hh>
@@ -49,11 +50,11 @@ namespace mln
 	      std::cout << "FIXME: " << tmp << std::endl;
 	    }
 
-	  hsi.h() = atan2(beta, alpha) / 3.1415 * 180.0;
-	  if (hsi.h() < 0)
-	    hsi.h() = hsi.h() + 360.0;
-	  mln_invariant(hsi.h() >= 0);
-	  hsi.s() = std::sqrt(alpha * alpha + beta * beta);
+	  hsi.hue() = atan2(beta, alpha) / 3.1415 * 180.0;
+	  if (hsi.hue() < 0)
+	    hsi.hue() = hsi.hue() + 360.0;
+	  mln_invariant(hsi.hue() >= 0);
+	  hsi.sat() = std::sqrt(alpha * alpha + beta * beta);
 	  hsi.i() = sqrt3_3 * rgb.red() + sqrt3_3 * rgb.green() + sqrt3_3 * rgb.blue();
 
 	  return hsi;
@@ -65,6 +66,45 @@ namespace mln
       f_rgb_to_hsi_3x8_t f_rgb_to_hsi_3x8;
 
       // end of NEW
+
+            // NEW2
+
+      template <typename T_rgb>
+      struct f_hsi_to_rgb_ : public Function_v2v< f_hsi_to_rgb_<T_rgb> >
+      {
+	typedef T_rgb result;
+
+	template <typename T_hsi>
+	T_rgb operator()(const T_hsi& hsi) const
+	{
+	  int r;
+	  int g;
+	  int b;
+	  
+	  static const double sqrt3_3 = sqrt(3) / 3;
+	  static const double inv_sqrt6 = 1 / sqrt(6);
+	  static const double inv_sqrt2 = 1 / sqrt(2);
+
+	  double h = hsi.hue() / 180.0 * 3.1415;
+	  double alpha = hsi.sat() * cos(h);
+	  double beta = hsi.sat() * sin(h);
+	  
+	  r = int(sqrt3_3 * hsi.i() + 2 * inv_sqrt6 * beta);
+	  g = int(sqrt3_3 * hsi.i() + inv_sqrt2 * alpha - inv_sqrt6 * beta);
+	  b = int(sqrt3_3 * hsi.i() - inv_sqrt2 * alpha - inv_sqrt6 * beta);
+	  
+	  T_rgb rgb(r, g, b); 
+	  
+	  return rgb;
+	}
+      };
+
+      typedef f_hsi_to_rgb_<value::rgb8> f_hsi_to_rgb_3x8_t;
+
+      f_hsi_to_rgb_3x8_t f_hsi_to_rgb_3x8;
+
+      // end of NEW2
+
 
     } // end of namespace fun::v2v
 
@@ -88,11 +128,11 @@ namespace mln
 	double alpha = inv_sqrt2 * rgb.green() - inv_sqrt2 * rgb.blue();
 	double beta = 2 * inv_sqrt6 * rgb.red() - inv_sqrt6 * rgb.green() - inv_sqrt6 * rgb.blue();
 
-	hsi.h(atan2(beta, alpha) / 3.1415 * 180.0);
-	if (hsi.h() < 0)
-	  hsi.h(hsi.h() + 360.0);
-	mln_precondition(hsi.h() >= 0);
-	hsi.s(sqrt(alpha * alpha + beta * beta));
+	hsi.hue(atan2(beta, alpha) / 3.1415 * 180.0);
+	if (hsi.hue() < 0)
+	  hsi.hue(hsi.hue() + 360.0);
+	mln_precondition(hsi.hue() >= 0);
+	hsi.sat(sqrt(alpha * alpha + beta * beta));
 	hsi.i(sqrt3_3 * rgb.red() + sqrt3_3 * rgb.green() + sqrt3_3 * rgb.blue());
 
 	return hsi;
@@ -113,9 +153,9 @@ namespace mln
 	double inv_sqrt6 = 1 / sqrt(6);
 	double inv_sqrt2 = 1 / sqrt(2);
 
-	double h = hsi.h() / 180.0 * 3.1415;
-	double alpha = hsi.s() * cos(h);
-	double beta = hsi.s() * sin(h);
+	double h = hsi.hue() / 180.0 * 3.1415;
+	double alpha = hsi.sat() * cos(h);
+	double beta = hsi.sat() * sin(h);
 
 	r = int(sqrt3_3 * hsi.i() + 2 * inv_sqrt6 * beta);
 	g = int(sqrt3_3 * hsi.i() + inv_sqrt2 * alpha - inv_sqrt6 * beta);

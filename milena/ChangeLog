@@ -1,3 +1,14 @@
+2008-03-03  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	loading image and convertion in new color mode test.
+	* color/is_HSI.cc: test conversion.
+	* color/my_hsi.hh: correct a bug.
+	* color/rgb_to_hsi.hh: correct a bug.
+	* color/rgb_to_xyz.hh: correct a bug.
+	* color/tests.cc: test conversion.
+	* load.cc: New loader.
+	* tests.cc: New tests.
+
 2008-02-29  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	sandbox:Subsampling function.

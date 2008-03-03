@@ -21,14 +21,14 @@ namespace mln
     {
     };
 
-    template <typename F>
-    class hsi_ : public HSI< hsi_<F> >
+    template <typename H, typename S, typename I>
+    class hsi_ : public HSI< hsi_<H,S,I> >
     {
     public:
 
-      typedef F h_type;
-      typedef F s_type;
-      typedef F i_type;
+      typedef H h_type;
+      typedef S s_type;
+      typedef I i_type;
 
       /// Constructor without argument.
       hsi_()
@@ -36,50 +36,50 @@ namespace mln
       }
       
       /// Constructor from component values.
-      hsi_(const F& h, const F& s, const F& i)
-	: h_(h),
-	  s_(s),
-	  i_(i)
+      hsi_(const H& hue, const S& sat, const I& i)
+	: hue_(hue),
+	  sat_(sat),
+	  int_(i)
       {
       }
 
-      /// Read-only access to the h component.
-      const F& h() const
+      /// Read-only access to the hue component.
+      const H& hue() const
       {
-	return this->h_;
+	return this->hue_;
       }
-      const F& s() const
+      const S& sat() const
       {
-	return this->s_;
+	return this->sat_;
       }
-      const F& i() const
+      const I& i() const
       {
-	return this->i_;
+	return this->int_;
       }
 
-      /// Read-write access to the h component.
-      F& h()	
+      /// Read-write access to the hue component.
+      H& hue()	
       { 
-	return this->h_;
+	return this->hue_;
       }
-      F& s()
+      S& sat()
       {
-	return this->s_;
+	return this->sat_;
       }
-      F& i()
+      I& i()
       {
-	return this->i_;
+	return this->int_;
       }
     
     private:
-      F h_;
-      F s_;
-      F i_;
+      H hue_;
+      S sat_;
+      I int_;
     };
 
-    typedef hsi_<float01_8> hsi_3x8;
+    typedef hsi_<float, float, float> hsi_3x8;
 
-    typedef hsi_<double> hsi_d;
+    typedef hsi_<double, double, double> hsi_d;
 
 
 
@@ -91,32 +91,32 @@ namespace mln
       hsi<n>();
       
       /// Constructor from component values.
-      hsi<n>(int h, int s, int i);
+      hsi<n>(double hue, double sat, double i);
 
       /// Access to component values.
-      double h() const	{ return this->h_; }
-      double s() const	{ return this->s_; }
-      double i() const	{ return this->i_; }
+      double hue() const	{ return this->hue_; }
+      double sat() const	{ return this->sat_; }
+      double i() const	{ return this->int_; }
 
       /// Set component values.
-      void h(double h)	
+      void hue(double hue)	
       { 
-	this->h_ = h;
+	this->hue_ = hue;
       }
-      void s(double s)	
+      void sat(double sat)	
       { 
-	this->s_ = s;
+	this->sat_ = sat;
       }
       void i(double i)	
       { 
 	mln_precondition(i >= 0);
-	this->i_ = i;
+	this->int_ = i;
       }
     
     private:
-      double h_;
-      double s_;
-      double i_;
+      double hue_;
+      double sat_;
+      double int_;
     };
 
 
@@ -125,19 +125,19 @@ namespace mln
     template <unsigned n>
     inline
     hsi<n>::hsi()
-      :h_(0), s_(0), i_(0)
+      :hue_(0), sat_(0), int_(0)
     {
     }
 
     template <unsigned n>
     inline
-    hsi<n>::hsi(int h, int s, int i)
+    hsi<n>::hsi(double h, double sat, double i)
     {
-      mln_precondition(h >= 0);
-      mln_precondition(s >= 0);
-      mln_precondition(i >= 0);
-      this->h_ = h;
-      this->s_ = s;
+      mln_invariant(h >= 0);
+      mln_invariant(sat >= 0);
+      mln_invariant(i >= 0);
+      this->hue_ = h;
+      this->sat_ = sat;
       this->i_ = i;
     }
 

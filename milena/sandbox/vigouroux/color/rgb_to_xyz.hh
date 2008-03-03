@@ -25,7 +25,7 @@ namespace mln {
 	xyz.z(0.010 * rgb.green() + 0.990 * rgb.blue());
 
 	return (xyz);
-_      }
+      }
     };
     
     struct f_xyz_to_rgb
@@ -33,7 +33,6 @@ _      }
       struct value::rgb<8>
       doit(const struct value::xyz<8> xyz) const
       {
-	struct value::rgb<8> rgb;
 	int r;
 	int g;
 	int b;
