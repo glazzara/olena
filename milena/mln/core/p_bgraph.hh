@@ -1,0 +1,221 @@
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+// Boston, MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.
+// reasons why the executable file might be covered by the GNU General
+// Public License.
+
+#ifndef MLN_CORE_BGRAPH_P_HH
+# define MLN_CORE_BGRAPH_P_HH
+
+# include <utility>
+
+# include <mln/core/concept/point_site.hh>
+# include <mln/core/internal/point_set_base.hh>
+# include <mln/accu/bbox.hh>
+# include <mln/util/internal/boost_graph.hh>
+# include <mln/core/bgraph_psite.hh>
+# include <mln/core/p_bgraph_piter.hh>
+
+
+
+/// \file mln/core/p_bgraph.hh
+/// \brief Definition of a point set based on a boost graph.
+
+namespace mln
+{
+
+  template<typename P> class p_bgraph_piter_;
+
+  template<typename P>
+  struct p_bgraph
+    : public internal::point_set_base_< graph_psite<P>, p_bgraph<P> >
+  {
+    typedef util::internal::boost_graph<P, util::empty> graph;
+
+    /// Construct a graph psite set from a graph of points.
+    p_bgraph (graph& gr);
+
+    /// Point_Site associated type.
+    typedef bgraph_psite<P> psite;
+
+    /// Forward Point_Iterator associated type.
+    typedef p_bgraph_piter_<P> fwd_piter;
+
+    /// Backward Point_Iterator associated type.
+    typedef p_bgraph_piter_<P> bkd_piter;
+
+    /// Graph vertex/edge identifier
+    typedef typename graph::vertex_descriptor node_id;
+    typedef typename graph::edge_descriptor edge_id;
+
+    /// Graph vertex/edge iterator
+    typedef typename graph::vertex_iterator node_iterator;
+    typedef typename graph::edge_iterator edge_iterator;
+    typedef std::pair<node_iterator, node_iterator> node_iterators;
+
+
+    /// Return The number of points (i.e., nodes) in the graph.
+    std::size_t npoints() const;
+
+    /// Return The number of lines (i.e., edges) in the graph.
+    std::size_t nlines() const;
+
+    /// Give the exact bounding box.
+    const box_<P>& bbox() const;
+
+    bool has(const psite& p) const;
+
+    /// Return the graph point (FIXME site?) from an index
+    const P& point_from_id(const node_id& id) const;
+    P& point_from_id(const node_id& id);
+
+    /// Return the point contained in the first node adjacent
+    // to the edge id \a e.
+    const P& node1(const edge_id& e) const;
+    /// Return the point contained in the second node adjacent
+    /// to the edge  id \a e.
+    const P& node2(const edge_id& e) const;
+
+    /// Return the graph associated to the p_bgraph domain:
+    const graph& to_graph() const;
+    graph& to_graph();
+
+
+  private:
+    graph gr_;
+    // FIXME: (Roland) Is it really useful/needed?
+    /* 2007-12-19: It seems so, since graph_image must implement a method
+       named bbox().  Now the question is: should each image type have a
+       bounding box?  */
+    box_<P> bb_;
+  };
+
+# ifndef MLN_INCLUDE_ONLY
+
+  template<typename P>
+  inline
+  p_bgraph<P>::p_bgraph (typename p_bgraph<P>::graph& gr)
+    : gr_ (gr)
+  {
+    // FIXME: Warning: if the underlying graph is updated later, this
+    // won't be taken into account by this p_bgraph!
+    accu::bbox<P> a;
+
+    for (node_iterators iter = boost::vertices(gr_);
+	 iter.first != iter.second;
+	 ++iter.first)
+      a.take(gr_[*iter.first]);
+    bb_ = a.to_result();
+  }
+
+  template<typename P>
+  inline
+  std::size_t
+  p_bgraph<P>::npoints() const
+  {
+    return boost::num_vertices((gr_));
+  }
+
+  template<typename P>
+  inline
+  std::size_t
+  p_bgraph<P>::nlines() const
+  {
+    return boost::num_edges(gr_.nedges());
+  }
+
+  template<typename P>
+  inline
+  const box_<P>&
+  p_bgraph<P>::bbox() const
+  {
+    return bb_;
+  }
+
+  template<typename P>
+  inline
+  bool
+  p_bgraph<P>::has(const psite& p) const
+  {
+    return
+      // Check whether P is compatible with this psite set.
+      (&p.pg() == this) &&
+      // Check that the node id of P belongs to the range of valid node ids.
+      (p.id() < this->npoints());
+  }
+
+
+  template <typename P>
+  const P&
+  p_bgraph<P>::point_from_id(const typename p_bgraph<P>::node_id& id) const
+  {
+    return this->gr_[id];
+  }
+
+  template <typename P>
+  P&
+  p_bgraph<P>::point_from_id(const typename p_bgraph<P>::node_id& id)
+  {
+    return this->gr_[id];
+  }
+
+
+  /// FIXME: Compare to p_bgraph, here we are loosing the vertex ordering
+  /// information. Is it bad??
+  template <typename P>
+  const P&
+  p_bgraph<P>::node1(const typename p_bgraph<P>::edge_id& e) const
+  {
+    return this->point_from_id(source(e, this->gr_));
+  }
+
+  /// FIXME: same as node1...
+  template <typename P>
+  const P&
+  p_bgraph<P>::node2(const typename p_bgraph<P>::edge_id& e) const
+  {
+    return this->point_from_id(target(e, this->gr_));
+  }
+
+  template <typename P>
+  const typename p_bgraph<P>::graph&
+  p_bgraph<P>::to_graph() const
+  {
+    return this->gr_;
+  }
+
+  template <typename P>
+  typename p_bgraph<P>::graph&
+  p_bgraph<P>::to_graph()
+  {
+    return this->gr_;
+  }
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+} // end of mln
+
+
+#endif // MLN_CORE_BGRAPH_P_HH

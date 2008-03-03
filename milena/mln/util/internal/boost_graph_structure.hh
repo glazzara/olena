@@ -64,7 +64,8 @@ namespace boost
   std::pair<typename mlnu::boost_graph<VProp, EProp>::edge_descriptor, bool>
   add_edge(typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor u,
 	   typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor v,
-	   const typename mlnu::boost_graph<VProp, EProp>::EdgeProperties& p,
+	   const typename mlnu::boost_graph<VProp, EProp>::
+	   edge_property_type& p,
 	   typename mlnu::boost_graph<VProp, EProp>& g);
 
   /// \brief Removes the edge (u,v) from the graph.
@@ -122,7 +123,8 @@ namespace boost
   ///        Returns the vertex descriptor for the new vertex.
   template <typename VProp, typename EProp>
   typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor
-  add_vertex(const typename mlnu::boost_graph<VProp, EProp>::VertexProperties& p,
+  add_vertex(const typename mlnu::boost_graph<VProp, EProp>::
+	     vertex_property_type& p,
 	     typename mlnu::boost_graph<VProp, EProp>& g);
 
   /// \brief Removes all edges to and from vertex u.
@@ -170,7 +172,8 @@ namespace boost
 	    bool>
   add_edge(typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor u,
 	   typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor v,
-	   const typename mlnu::boost_graph<VProp, EProp>::EdgeProperties& p,
+	   const typename mlnu::boost_graph<VProp, EProp>::
+	   edge_property_type& p,
 	   typename mlnu::boost_graph<VProp, EProp>& g)
   {
     return add_edge(u, v, p, g.graph());
@@ -235,7 +238,8 @@ namespace boost
 
   template <typename VProp, typename EProp>
   typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor
-  add_vertex(const typename mlnu::boost_graph<VProp, EProp>::VertexProperties& p,
+  add_vertex(const typename mlnu::boost_graph<VProp, EProp>::
+	     vertex_property_type& p,
 	     typename mlnu::boost_graph<VProp, EProp>& g)
   {
     return add_vertex(p, g.graph());

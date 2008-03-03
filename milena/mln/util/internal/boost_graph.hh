@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_BOOST_GRAPH_HH
-# define MLN_UTIL_BOOST_GRAPH_HH
+#ifndef MLN_UTIL_INTERNAL_BOOST_GRAPH_HH
+# define MLN_UTIL_INTERNAL_BOOST_GRAPH_HH
 
 /// \file mln/util/internal/boost_graph.hh
 /// \brief Definition of the boost::adjacenly_list decorator.
@@ -39,12 +39,15 @@ namespace mln
   namespace util
   {
 
+    struct empty {};
+
     namespace internal
     {
 
       /// \brief Boost graph decorator base
       /// Graph class which rests on boost::adjacency_list class.
-      template <typename VertexProperty, typename EdgeProperty>
+      template <typename VertexProperty = empty,
+		typename EdgeProperty = empty>
       class boost_graph
       {
 	typedef boost_graph<VertexProperty, EdgeProperty> self_type;
@@ -74,7 +77,11 @@ namespace mln
 	typedef typename decorated::edge_parallel_category
 	edge_parallel_category;
 	typedef typename decorated::vertex_property_type vertex_property_type;
+	typedef typename decorated::edge_property_type edge_property_type;
 	typedef typename decorated::graph_tag graph_tag;
+
+	/// Properties.
+	typedef typename decorated::vertex_bundled vertex_bundled;
 
 	/// Sizes.
 	typedef typename decorated::vertices_size_type vertices_size_type;
@@ -107,6 +114,10 @@ namespace mln
 	/// Return the boost decorated graph (const version).
 	const decorated&
 	graph() const;
+
+	/// Provides acces to the graph bundle properties
+	vertex_bundled&	operator[](vertex_descriptor v);
+	const vertex_bundled& operator[](vertex_descriptor v) const;
 
 
       protected:
@@ -161,17 +172,37 @@ namespace mln
       }
 
       template <typename VertexProp, typename EdgeProp>
-      inline typename boost_graph<VertexProp, EdgeProp>::decorated&
+      inline
+      typename boost_graph<VertexProp, EdgeProp>::decorated&
       boost_graph<VertexProp, EdgeProp>::graph()
       {
 	return this->graph_;
       }
 
       template <typename VertexProp, typename EdgeProp>
-      inline const typename boost_graph<VertexProp, EdgeProp>::decorated&
+      inline
+      const typename boost_graph<VertexProp, EdgeProp>::decorated&
       boost_graph<VertexProp, EdgeProp>::graph() const
       {
 	return this->graph_;
+      }
+
+      template <typename V, typename E>
+      inline
+      typename boost_graph<V, E>::vertex_bundled&
+      boost_graph<V, E>::operator[](typename boost_graph<V, E>::
+				    vertex_descriptor v)
+      {
+	return this->graph_[v];
+      }
+
+      template <typename V, typename E>
+      inline
+      const typename boost_graph<V, E>::vertex_bundled&
+      boost_graph<V, E>::operator[](typename boost_graph<V, E>::
+				    vertex_descriptor v) const
+      {
+	return this->graph_[v];
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -186,4 +217,4 @@ namespace mln
 # include "boost_graph_structure.hh"
 # include "boost_graph_property.hh"
 
-#endif // ! MLN_UTIL_BOOST_GRAPH_HH
+#endif // ! MLN_UTIL_INTERNAL_BOOST_GRAPH_HH
