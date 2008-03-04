@@ -1,3 +1,9 @@
+2008-03-04  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	test conversion with lena image.
+	* color/rgb_to_hsi.hh: .
+	* load.cc: test.
+
 2008-03-03  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add an image type based on boost adjacency_list.

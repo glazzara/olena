@@ -45,10 +45,10 @@ namespace mln
 
 
 	  float tmp = atan2(beta, alpha) / 3.1415 * 180.0;
-	  if (tmp < 0 or tmp > 1)
-	    {
-	      std::cout << "FIXME: " << tmp << std::endl;
-	    }
+// 	  if (tmp < 0 or tmp > 1)
+// 	    {
+// 	      std::cout << "FIXME: " << tmp << std::endl;
+// 	    }
 
 	  hsi.hue() = atan2(beta, alpha) / 3.1415 * 180.0;
 	  if (hsi.hue() < 0)
