@@ -21,6 +21,7 @@
 #include <mln/core/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/make/pixel.hh>
+#include <cmath>
 
 #include <iostream>
 
@@ -43,10 +44,17 @@
 // }
 
 template <typename I, typename O, typename W>
-void test_fill (I& ima, O& out, W& win)
+float moyenne (I& ima, O& out, W& win)
 {
   mln::value::hsi_3x8 c_hsi;
   mln::value::rgb8 c2;
+  float distred = 0;
+  float distgreen = 0;
+  float distblue = 0;
+  float sum = 0;
+  float nb_ct = 0;
+  float moy = 0;
+  
   mln_piter(I) p(out.domain());
   mln_qixter(I, W) q(ima, win, p);
   for_all(p)
@@ -55,9 +63,17 @@ void test_fill (I& ima, O& out, W& win)
       {
 	c_hsi = mln::fun::v2v::f_rgb_to_hsi_3x8(q.val());
 	c2 = mln::fun::v2v::f_hsi_to_rgb_3x8(c_hsi);
+	distred = c2.red() - q.val().red();
+	distgreen = c2.green() - q.val().green();
+	distblue = c2.blue() - q.val().blue();
       }
+      nb_ct += 3;
+      sum += distred * distred + distblue * distblue + distgreen * distgreen;
       out(p) = c2;
     }
+  moy = sqrt(sum / nb_ct);
+  std::cout << "nb_point: " << nb_ct / 3 << std::endl;
+  return (moy);
 }
 
 int main()
@@ -69,10 +85,13 @@ int main()
   image2d<mln::value::hsi_3x8>  inter(lena.domain());
   image2d<mln::value::rgb8>  out(lena.domain());
   const image2d<mln::value::rgb8> input = exact(lena);
+  float lol;
 
   win::rectangle2d rect(3, 3);
-  test_fill(input, out, rect);
+  lol = moyenne(input, out, rect);
   
+  std::cout << "moyenne: " << lol << std::endl; 
+
   display::save_and_show (out, "display", 50);
 }
 

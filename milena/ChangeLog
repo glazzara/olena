@@ -1,5 +1,11 @@
 2008-03-04  Caroline Vigouroux  <vigour_c@epita.fr>
 
+	Root Mean Square of error.
+	* load.cc: .
+	* moyenne.cc: New Root Mean Square function.
+
+2008-03-04  Caroline Vigouroux  <vigour_c@epita.fr>
+
 	test conversion with lena image.
 	* color/rgb_to_hsi.hh: .
 	* load.cc: test.
