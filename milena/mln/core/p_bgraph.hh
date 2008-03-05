@@ -53,9 +53,6 @@ namespace mln
   {
     typedef util::internal::boost_graph<P, util::empty> graph;
 
-    /// Construct a graph psite set from a graph of points.
-    p_bgraph (graph& gr);
-
     /// Point_Site associated type.
     typedef bgraph_psite<P> psite;
 
@@ -74,6 +71,11 @@ namespace mln
     typedef typename graph::edge_iterator edge_iterator;
     typedef std::pair<node_iterator, node_iterator> node_iterators;
 
+
+    /// Construct a graph psite set from a graph of points.
+    /// \p gr is a pointer on a boost graph.
+    /// This boost graph must have been allocated dynamically.
+    p_bgraph (graph* gr);
 
     /// Return The number of points (i.e., nodes) in the graph.
     std::size_t npoints() const;
@@ -103,11 +105,7 @@ namespace mln
 
 
   private:
-    graph gr_;
-    // FIXME: (Roland) Is it really useful/needed?
-    /* 2007-12-19: It seems so, since graph_image must implement a method
-       named bbox().  Now the question is: should each image type have a
-       bounding box?  */
+    graph* gr_;
     box_<P> bb_;
   };
 
@@ -115,17 +113,18 @@ namespace mln
 
   template<typename P>
   inline
-  p_bgraph<P>::p_bgraph (typename p_bgraph<P>::graph& gr)
+  p_bgraph<P>::p_bgraph (typename p_bgraph<P>::graph* gr)
     : gr_ (gr)
   {
+    mln_precondition(gr != 0);
     // FIXME: Warning: if the underlying graph is updated later, this
     // won't be taken into account by this p_bgraph!
     accu::bbox<P> a;
 
-    for (node_iterators iter = boost::vertices(gr_);
+    for (node_iterators iter = boost::vertices(*gr_);
 	 iter.first != iter.second;
 	 ++iter.first)
-      a.take(gr_[*iter.first]);
+      a.take((*gr_)[*iter.first]);
     bb_ = a.to_result();
   }
 
@@ -134,7 +133,7 @@ namespace mln
   std::size_t
   p_bgraph<P>::npoints() const
   {
-    return boost::num_vertices((gr_));
+    return boost::num_vertices(*gr_);
   }
 
   template<typename P>
@@ -142,7 +141,7 @@ namespace mln
   std::size_t
   p_bgraph<P>::nlines() const
   {
-    return boost::num_edges(gr_.nedges());
+    return boost::num_edges(gr_->nedges());
   }
 
   template<typename P>
@@ -170,14 +169,14 @@ namespace mln
   const P&
   p_bgraph<P>::point_from_id(const typename p_bgraph<P>::node_id& id) const
   {
-    return this->gr_[id];
+    return this->gr_->operator[](id);
   }
 
   template <typename P>
   P&
   p_bgraph<P>::point_from_id(const typename p_bgraph<P>::node_id& id)
   {
-    return this->gr_[id];
+    return this->gr_->operator[](id);
   }
 
 
@@ -187,7 +186,7 @@ namespace mln
   const P&
   p_bgraph<P>::node1(const typename p_bgraph<P>::edge_id& e) const
   {
-    return this->point_from_id(source(e, this->gr_));
+    return this->point_from_id(source(e, *this->gr_));
   }
 
   /// FIXME: same as node1...
@@ -195,21 +194,21 @@ namespace mln
   const P&
   p_bgraph<P>::node2(const typename p_bgraph<P>::edge_id& e) const
   {
-    return this->point_from_id(target(e, this->gr_));
+    return this->point_from_id(target(e, *this->gr_));
   }
 
   template <typename P>
   const typename p_bgraph<P>::graph&
   p_bgraph<P>::to_graph() const
   {
-    return this->gr_;
+    return *this->gr_;
   }
 
   template <typename P>
   typename p_bgraph<P>::graph&
   p_bgraph<P>::to_graph()
   {
-    return this->gr_;
+    return *this->gr_;
   }
 
 

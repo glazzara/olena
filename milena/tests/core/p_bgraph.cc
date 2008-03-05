@@ -73,7 +73,7 @@ int main()
   `-----------*/
 
   /// Creation
-  p_bgraph<point2d> pset(g);
+  p_bgraph<point2d> pset(&g);
 
   /// Iterator
   p_bgraph_piter_<point2d> p(pset);

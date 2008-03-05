@@ -53,15 +53,15 @@ namespace mln
     template <typename P, typename V>
     struct data_< bgraph_image<P, V> >
     {
+      /// Data stores a **copy** of the pset g.
+      /// But, the pset g and the data_ copy will shared the same
+      /// underlaying graph.
       data_(const p_bgraph<P>& g, const std::vector<V>& val);
 
+
+      p_bgraph<P> pg_;
+
       std::vector<V> val_;
-      /* The graph point set is handled by address, so that we can
-         check the compatibility of images w.r.t. to their point
-         sites.  We could use a safer (and more complex) facility to
-         ensure (memory) equality of line graph point sets, but using
-         addresses is simple and efficient enough for the moment.  */
-      const p_bgraph<P>& pg_;
     };
 
   } // end of namespace mln::internal
@@ -76,7 +76,6 @@ namespace mln
     {
       typedef trait::image::category::primary category;
 
-      // FIXME: Is that right?
       typedef trait::image::access::random                    access;
       typedef typename trait::image::space_from_point<P>::ret space;
       typedef trait::image::size::regular                     size;
@@ -85,7 +84,6 @@ namespace mln
       typedef trait::image::border::none                      border;
       typedef trait::image::data::stored                      data;
       typedef trait::image::io::read_write                    io;
-      // FIXME: Is that right?
       typedef trait::image::speed::fast                       speed;
     };
 
@@ -150,8 +148,6 @@ namespace mln
     const std::vector<V>& node_values() const;
     /// \}
 
-    /* FIXME: Do we want to provide these two methods? (at least, in
-       the interface of the class?  */
 
     /// Return the point of the first node adjacent to the edge with
     /// id \a e.
@@ -191,8 +187,8 @@ namespace mln
     inline
     data_< bgraph_image<P, V> >::data_(const p_bgraph<P>& g,
 				       const std::vector<V>& val)
-      : val_ (val),
-	pg_ (g)
+      : pg_ (g),
+	val_ (val)
     {
     }
 
@@ -228,11 +224,6 @@ namespace mln
   void
   bgraph_image<P, V>::init_(const p_bgraph<P>& g, const std::vector<V>& val)
   {
-    /* FIXME: We leak memory here: calling init_ twice loses the
-       previous content pointed by data_.
-
-       We should definitely write down formal guidelines on
-       initialization and memory management in general!  */
     this->data_ = new internal::data_< bgraph_image<P, V> > (g, val);
   }
 
@@ -245,7 +236,7 @@ namespace mln
   typename bgraph_image<P, V>::rvalue
   bgraph_image<P, V>::operator()(const bgraph_psite<P>& p) const
   {
-    mln_precondition(&p.pg() == &this->data_->pg_);
+    mln_precondition(&p.pg().to_graph() == &this->data_->pg_.to_graph());
     mln_precondition(p.id() < this->data_->val_.size());
     return this->data_->val_[p.id()];
   }
@@ -255,7 +246,7 @@ namespace mln
   typename bgraph_image<P, V>::lvalue
   bgraph_image<P, V>::operator()(const bgraph_psite<P>& p)
   {
-    mln_precondition(&p.pg() == &this->data_->pg_);
+    mln_precondition(&p.pg().to_graph() == &this->data_->pg_.to_graph());
     mln_precondition(p.id() < this->data_->val_.size());
     return this->data_->val_[p.id()];
   }

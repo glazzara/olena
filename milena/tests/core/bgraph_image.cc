@@ -29,8 +29,13 @@
 /// \brief Tests on mln::bgraph_image.
 
 #include <vector>
-#include <mln/core/point2d.hh>
+
+#include <mln/value/int_u8.hh>
+#include <mln/core/image2d.hh>
 #include <mln/core/bgraph_image.hh>
+#include <mln/level/fill.hh>
+#include <mln/level/paste.hh>
+#include <mln/debug/println.hh>
 
 
 
@@ -56,7 +61,7 @@ int main()
 
   const int num_edges = sizeof(edge_array)/sizeof(edge_array[0]);
   // declare a graph object
-  Graph g(num_vertices);
+  Graph& g = *new Graph(num_vertices);
 
   // add the edges to the graph object
   for (int i = 0; i < num_edges; ++i)
@@ -85,10 +90,18 @@ int main()
   values.push_back(4);
   values.push_back(5);
 
-  ima_type ima(g, values);
+  ima_type ima(&g, values);
   mln_piter_(ima_type) p(ima.domain());
   for_all(p)
-    std::cout << ima(p) << std::endl;
+    std::cout << p << ' ' << ima(p) << std::endl;
 
-  return 0;
+  {
+    using value::int_u8;
+    image2d<int_u8> ima_(ima.bbox());
+    level::fill(ima_, 0);
+    level::paste(ima, ima_);
+    debug::println(ima_);
+  }
+
+  delete &g;
 }

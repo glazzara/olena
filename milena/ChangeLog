@@ -1,3 +1,14 @@
+2008-03-05  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Fix bgraph_image construction bug.
+
+	* tests/core/bgraph_image.cc,
+	* tests/core/p_bgraph.cc: update the tests.
+	* mln/core/p_bgraph_piter.hh,
+	* mln/core/bgraph_image.hh,
+	* mln/core/p_bgraph.hh,
+	* mln/core/bgraph_psite.hh: fix the bug (thanks to Theo).
+
 2008-03-04  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	Root Mean Square of error.

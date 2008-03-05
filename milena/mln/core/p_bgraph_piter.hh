@@ -106,6 +106,7 @@ namespace mln
 
   private:
     iterators_type_ iterators_;
+    typename p_bgraph<P>::node_iterator cur_;
   };
 
 
@@ -120,9 +121,7 @@ namespace mln
       psite_(pg, pg_.npoints()),
       p_()
   {
-    // Initialize the iterators
-    start();
-
+    iterators_ = boost::vertices(pg_.to_graph());
     // Invalidate id_.
     invalidate();
   }
@@ -140,7 +139,7 @@ namespace mln
   bool
   p_bgraph_piter_<P>::is_valid() const
   {
-    return iterators_.first != iterators_.second;
+    return cur_ != iterators_.second;
   }
 
   template<typename P>
@@ -148,7 +147,7 @@ namespace mln
   void
   p_bgraph_piter_<P>::invalidate()
   {
-    iterators_.first == iterators_.second;
+    cur_ = iterators_.second; // Past the end iterator.
   }
 
   template<typename P>
@@ -156,9 +155,10 @@ namespace mln
   void
   p_bgraph_piter_<P>::start()
   {
+    cur_ = iterators_.first;
     /// FIXME: Hide implementation details?
-    iterators_ = boost::vertices(pg_.to_graph());
-    update_();
+    if (is_valid())
+      update_();
   }
 
   template<typename P>
@@ -166,8 +166,9 @@ namespace mln
   void
   p_bgraph_piter_<P>::next_()
   {
-    ++iterators_.first;
-    update_();
+    ++cur_;
+    if (is_valid())
+      update_();
   }
 
   template<typename P>
@@ -176,9 +177,9 @@ namespace mln
   p_bgraph_piter_<P>::update_()
   {
     // Update psite_.
-    psite_ = bgraph_psite<P>(pg_, *iterators_.first);
+    psite_ = bgraph_psite<P>(pg_, *cur_);
     // Update p_.
-    p_ = pg_.point_from_id(*iterators_.first);
+    p_ = pg_.point_from_id(*cur_);
   }
 
   template<typename P>
@@ -233,7 +234,8 @@ namespace mln
   p_bgraph_piter_<P>::operator bgraph_psite<P>() const
   {
     mln_precondition(is_valid());
-    return psite_;
+    bgraph_psite<P> tmp(pg_, *cur_);
+    return tmp; // psite_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

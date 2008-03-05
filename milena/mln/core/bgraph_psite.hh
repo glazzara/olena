@@ -85,8 +85,6 @@ namespace mln
     typename p_bgraph<P>::node_id id_;
   };
 
-
-
 # ifndef MLN_INCLUDE_ONLY
 
   template<typename P>
@@ -118,7 +116,7 @@ namespace mln
       return *this;
     // Assigning a psite from a graph point set to a psite from
     // another graph point set is meaningless.
-    mln_assertion(&pg_ == &rhs.pg_);
+    mln_assertion(&pg_.to_graph() == &rhs.pg_.to_graph());
     id_ = rhs.id_;
     return *this;
   }
