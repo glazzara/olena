@@ -59,6 +59,14 @@ code C)
   for all v of ima.values
   | print v.
 
+For such image types, we have several points (sites) associated with a
+single value cell.  It is rather different from having couples (p,v);
+we actually have one value cell -> a set of points.  Such data
+structure allows for compressing data because each value cell is
+shared by several points.
+
+*** Example 1
+
 Consider for instance the following image:
 
 +-----+
@@ -66,6 +74,8 @@ Consider for instance the following image:
 |  111|
 |  22 |
 +-----+
+
+We have one value per run.
 
 The value type is int_u2 (unsigned integer on 2 bit), that is, the
 type of the interval [0,3] of N.  The image is defined by a run-length
@@ -92,6 +102,115 @@ and with :
                   those cells are depicted below.
                            v          v          v
                   { ((a,1),2), ((b,3),1), ((c,2),2) }
+
+**** A clue?
+
+***** part 1
+
+When we have value cells, it is usually related to the fact that the
+image is not point-wise writable.  For instance, with the image type
+having one value per run, the operation "ima(p) := v" is not possible.
+Otherwise, that would mean that a run is split on such a write access,
+which is too slow (thus not allowed).
+
+Some rare image types can be both point-wise writable and value cell
+iterable.  For instance:
+
+  image<int_u8> data;
+  map<int_u8, rgb_3x8> lut; // with i != j => lut[i] != lut[j]
+  map<rgb_3x8, int_u8> reverse_lut;
+
+The keys, resp. the values, of the lut are the values, resp. the keys,
+of the reverse_lut.  With this structure, we can have a rather efficient
+point-wise writable image.
+
+ima(p) <- v {
+  it <- reverse_lut.find(v)
+  if (it is not found)
+     ++n
+     lut(n) <- v
+     reverse_lut(v) <- n
+     data(p) <- n
+  else
+    data(p) <- it.key
+}
+
+***** part 2
+
+When an image is value-wise writable, we can form:
+  ima.value(red) = blue;
+It means that we can quickly access to the cell (or the cells)
+having the value 'red'.
+
+When an image is value-cell writable, we can have:
+  for v in ima.values()
+    ima.cell(v) = v'
+In that case, a 'v' is a value cell, not a value.
+
+***** part 3
+
+Is the notion of value-wise readable relevant?
+  ima.value(red) // read-access
+gives:
+   - red, which is dummy!
+or - the corresponding point set, which can be great!
+
+This is another property...
+
+
+*** Example 2
+
+Consider this image type:
+
+{ data =
+    +-----------+
+    | 0 2 1 0 2 |
+    | 0 0 3 2 1 |
+    | 2 1 2 2 0 |
+    +-----------+;
+  lut =
+    +---+---------------+
+    | 0 | (255,  0,  0) |  red (r)
+    | 1 | (127,127,127) |  medium grey (m)
+    | 2 | (  0,  0,255) |  blue (b)
+    | 3 | (127,127,127) |  medium grey (m) again
+    +---+---------------+
+}
+
+This image is defined with a look-up table; its external
+representation actually is:
+
+    +-----------+
+    | r b m r b |
+    | r r m b m |
+    | b m b b r |
+    +-----------+
+
+(conversely, the internal representation is the 'data' image.)
+
+We have I::value == rgb_3x8
+so the image appears to be highly quantized (24 bit).
+
+Yet the number of possible values is limited (here up to 4, even if
+two value cells are identical) and stored by the image in the look-up
+table.
+
+It leads to:
+  code A) rbmrbrrmbmbmbbr
+  code B) rmb
+  code C) rmbm
+
+ima.destination (browsed by code B) is an instance of
+value::subset<rgb_3x8>.
+
+FIXME: OR (?)
+
+It leads to:
+  code A) rbmrbrrmbmbmbbr
+  code B) impossible because 24bit data
+  code C) rmbm
+
+and I.destination gives value::set<rgb_3x8>.
 
 
 ** associated types
@@ -232,7 +351,15 @@ Nota bene: mvlogic stands for "multi-valued logic".
 |
 + -- high
 
-**** 
+**** low
+
+I::value defines a set of possible values whose cardinality is less
+than or equal to 2^16.
+
+FIXME: OR (?)
+
+I.destination (same definition)
+
 
 *** value
 |
