@@ -25,16 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_SUBSAMPLING_SUBSAMPLING_2D_HH
-# define MLN_SUBSAMPLING_SUBSAMPLING_2D_HH
+#ifndef MLN_SUBSAMPLING_GAUSSIAN_SUBSAMPLING_HH
+# define MLN_SUBSAMPLING_GAUSSIAN_SUBSAMPLING_HH
 
 /*! \file mln/binarization/threshold.hh
  *
- * \brief Threshold the contents of an image into another binary one.
+ * \brief Produce a subsampled image
  */
 
 # include <mln/geom/ncols.hh>
 # include <mln/geom/nrows.hh>
+
+
+# include <mln/linear/gaussian.hh>
+# include <mln/subsampling/subsampling.hh>
+
 
 
 namespace mln
@@ -43,75 +48,46 @@ namespace mln
   namespace subsampling
   {    
 
-    /*! Subsampling FIXME : doxy
+    /*! Gaussian subsampling FIXME : doxy
      *
      *
      */
     template <typename I>
     inline
     mln_concrete(I)
-    subsampling_2d(const Image<I>& input,
-                   const mln_dpoint(I)& first_p,
-                   const mln_coord(I)& gap);
+    gaussian_subsampling(const Image<I>& input, float sigma
+                         const mln_dpoint(I)& first_p,
+                         const mln_coord(I)& gap);
 
 # ifndef MLN_INCLUDE_ONLY
-
-    namespace impl
-    {
-
-      template <typename I>
-      inline
-      mln_concrete(I)
-      subsampling_2d_(const I& input,
-                      const mln_dpoint(I)& first_p,
-                      const mln_coord(I)& gap)
-      {
-	trace::entering("subsampling_2d::impl::subsampling_2d_");
-        mln_concrete(I) output(geom::nrows(input) / gap,
-                               geom::ncols(input) / gap);
-
-        for (unsigned j = 0; j < geom::ncols(output); ++j)
-          for (unsigned i = 0; i < geom::nrows(output); ++i)
-            {
-              point2d p1(i, j);
-              point2d p2(first_p[0] + i * gap, first_p[1] + j * gap);
-              std::cout << p1 << ' ' << p2 << std::endl;
-              output(p1) = input(p2);
-            }
-
-	trace::exiting("subsampling_2d::impl::subsampling_2d_");
-	return output;
-      }
-
-    } // end of namespace mln::subsampling_2d::impl
 
 
     template <typename I>
     inline
     mln_concrete(I)
-    subsampling_2d(const Image<I>& input,
-                   const mln_dpoint(I)& first_p,
-                   const mln_coord(I)& gap)
+    gaussian_subsampling(const Image<I>& input, float sigma,
+                         const mln_dpoint(I)& first_p,
+                         const mln_coord(I)& gap)
     {
-      trace::entering("subsampling::subsampling_2d");
+      trace::entering("subsampling::gaussian_subsampling");
       mln_precondition(exact(input).has_data());
 
+      mln_concrete(I) temp(exact(input).domain());
       mln_concrete(I) output(geom::nrows(input) / gap,
-                             geom::ncols(input) / gap);
+                             geom::ncols(input) / gap); //FIXME : image2d only
 
-      std::cout << geom::nrows(output) << ' ' << geom::ncols(output) << std::endl;
-      
-      output = impl::subsampling_2d_(exact(input), first_p, gap);
+      linear::gaussian(input, 0.1, temp);
+      output = impl::subsampling_(exact(temp), first_p, gap);
 
-      trace::exiting("subsampling::subsampling_2d");
+      trace::exiting("subsampling::gaussian_subsampling");
       return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::subsampling_2d
+  } // end of namespace mln::subsampling
 
 } // end of namespace mln
 
 
-#endif // ! MLN_SUBSAMPLING_SUBSAMPLING_2D_HH
+#endif // ! MLN_SUBSAMPLING_GAUSSIAN_SUBSAMPLING_HH

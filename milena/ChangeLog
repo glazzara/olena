@@ -1,3 +1,18 @@
+2008-03-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Subsampling. Draft icp.
+
+	* mln/subsampling: New.
+	* mln/subsampling/subsampling.hh: New.
+	* mln/subsampling/gaussian_subsampling.hh: gaussian blur + subsampling.
+	* mln/algebra: New.
+	* mln/algebra/vec.hh: Copy of metal::vec.
+	* sandbox/jardonnet/test/gaussian_subsampling.cc: New Test.
+	* sandbox/jardonnet/subsampling/subsampling_2d.hh: Remove.
+	* sandbox/jardonnet/subsampling/gaussian_subsampling.hh: New.
+	* sandbox/jardonnet/registration: New.
+	* sandbox/jardonnet/registration/icp.hh: Draft.
+
 2008-03-05  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Fix bgraph_image construction bug.
