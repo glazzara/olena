@@ -1,3 +1,24 @@
+2008-03-10  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Start a site/psite refactorization example.
+
+	* sandbox/ballas/refactorization: New.
+	* sandbox/ballas/refactorization/test: New.
+	* sandbox/ballas/refactorization/test/test.cc: New.
+	* sandbox/ballas/refactorization/metal: New.
+	* sandbox/ballas/refactorization/metal/equal.hh: New.
+	* sandbox/ballas/refactorization/metal/bool.hh: New.
+	* sandbox/ballas/refactorization/metal/bexpr.hh: New.
+	* sandbox/ballas/refactorization/exact.hh: New.
+	* sandbox/ballas/refactorization/concept.hh: New.
+	* sandbox/ballas/refactorization/internal: New.
+	* sandbox/ballas/refactorization/internal/exact.hh: New.
+	* sandbox/ballas/refactorization/internal/pset_base.hh: New.
+	* sandbox/ballas/refactorization/internal/image_base.hh: New.
+	* sandbox/ballas/refactorization/internal/piter_base.hh: New.
+	* sandbox/ballas/refactorization/internal/site_base.hh: New.
+	* sandbox/ballas/refactorization/internal/psite_base.hh: New.
+
 2008-03-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Subsampling. Draft icp.
