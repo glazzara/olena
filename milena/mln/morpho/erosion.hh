@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,8 @@
 #ifndef MLN_MORPHO_EROSION_HH
 # define MLN_MORPHO_EROSION_HH
 
-/*! \file mln/morpho/erosion.hh
- *
- * \brief Morphological erosion.
- */
+/// \file mln/morpho/erosion.hh
+/// \brief Morphological erosion.
 
 # include <mln/morpho/includes.hh>
 

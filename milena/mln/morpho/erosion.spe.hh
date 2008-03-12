@@ -79,7 +79,7 @@ namespace mln
     // Fwd decl of the facade.
     template <typename I, typename W>
     mln_concrete(I)
-      erosion(const Image<I>& input, const Window<W>& win);
+    erosion(const Image<I>& input, const Window<W>& win);
 
 
     namespace impl
@@ -88,21 +88,23 @@ namespace mln
       namespace generic
       {
 	// Fwd decl.
+	// Implementation is in mln/morpho/erosion.hh.
 	template <typename I, typename W>
 	mln_concrete(I)
-	  erosion_on_function_(const I& input, const W& win);
+	erosion_on_function_(const I& input, const W& win);
 
 	// Fwd decl.
+	// Implementation is in mln/morpho/erosion.hh.
 	template <typename I, typename W>
 	mln_concrete(I)
-	  erosion_on_set_(const I& input, const W& win);
+	erosion_on_set_(const I& input, const W& win);
       }
 
 
       template <typename I, typename W>
       inline
       mln_concrete(I)
-	erosion_iterative_(trait::image::kind::any,
+      erosion_iterative_(trait::image::kind::any,
 			   trait::image::speed::any,
 			   const I& input, const W& win)
       {
@@ -113,9 +115,9 @@ namespace mln
       template <typename I, typename W>
       inline
       mln_concrete(I)
-	erosion_iterative_(trait::image::kind::any,
-			   trait::image::speed::fastest,
-			   const I& input, const W& win)
+      erosion_iterative_(trait::image::kind::any,
+			 trait::image::speed::fastest,
+			 const I& input, const W& win)
       {
 	trace::entering("morpho::impl::erosion_iterative_(kind::any, speed::fastest)");
 
@@ -147,9 +149,9 @@ namespace mln
       template <typename I, typename W>
       inline
       mln_concrete(I)
-	erosion_iterative_(trait::image::kind::logic,
-			   trait::image::speed::any,
-			   const I& input, const W& win)
+      erosion_iterative_(trait::image::kind::logic,
+			 trait::image::speed::any,
+			 const I& input, const W& win)
       {
 	return generic::erosion_on_set_(input, win);
       }
@@ -158,9 +160,9 @@ namespace mln
       template <typename I, typename W>
       inline
       mln_concrete(I)
-	erosion_iterative_(trait::image::kind::logic,
-			   trait::image::speed::fastest,
-			   const I& input, const W& win)
+      erosion_iterative_(trait::image::kind::logic,
+			 trait::image::speed::fastest,
+			 const I& input, const W& win)
       {
 	trace::entering("morpho::impl::erosion_iterative_(kind::logic, speed::fastest)");
 
@@ -344,7 +346,7 @@ namespace mln
       template <typename I, typename W>
       inline
       mln_concrete(I)
-	erosion_(const I& input, const W& win)
+      erosion_(const I& input, const W& win)
       {
 	// FIXME
 	return impl::erosion_iterative_(input, win);
@@ -370,7 +372,7 @@ namespace mln
       template <typename I>
       inline
       mln_concrete(I)
-	erosion_(const I& input, const win::octagon2d& win)
+      erosion_(const I& input, const win::octagon2d& win)
       {
 	trace::entering("morpho::impl::erosion_(win::octagon2d)");
 	const unsigned len = win.length() / 3 + 1;

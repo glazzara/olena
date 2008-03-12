@@ -211,7 +211,8 @@ namespace mln
   dpoints_fwd_pixter<I>::next_()
   {
     ++i_;
-    this->value_ptr_ += offset_[i_];
+    if (is_valid())
+      this->value_ptr_ += offset_[i_];
   }
 
   template <typename I>

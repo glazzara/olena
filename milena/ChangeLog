@@ -1,5 +1,14 @@
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix morphological erosion implementation based on pixters.
+
+	* mln/core/dpoints_pixter.hh (dpoints_fwd_pixter<I>::next_): Don't
+	update member value_ptr_ when the pixter is invalid.
+	* mln/morpho/erosion.hh, mln/morpho/erosion.spe.hh: Fix indentation.
+	Aesthetic chnanges.
+
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Partially check point sets compatibility.
 
 	* tests/core/point_set_compatibility.cc: New test.
