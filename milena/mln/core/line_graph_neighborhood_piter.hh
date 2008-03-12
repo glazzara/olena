@@ -29,7 +29,7 @@
 # define MLN_CORE_LINE_GRAPH_NEIGHBORHOOD_PITER_HH
 
 /// \file   mln/core/line_graph_neighborhood_piter.hh
-/// \brief  Definition of a point iterator on a line_graph neighborhood.
+/// \brief  Definition of a point iterator on a line graph neighborhood.
 
 /* FIXME: Factor those classes:
 
@@ -37,9 +37,6 @@
    - mln::graph_neighborhood_fwd_piter
    - mln::line_graph_window_fwd_piter
    - mln::line_graph_neighborhood_fwd_piter.
-
-   and later (when they get implemented):
-
    - mln::graph_window_bkd_piter
    - mln::graph_neighborhood_bkd_piter
    - mln::line_graph_window_bkd_piter
@@ -48,9 +45,6 @@
 # include <mln/core/concept/point_iterator.hh>
 # include <mln/core/p_line_graph.hh>
 # include <mln/core/line_graph_psite.hh>
-# include <mln/core/point_pair.hh>
-
-/* FIXME: Doc.  */
 
 /* FIXME: Due to the poor interface of mln::p_line_graph and
    mln::util::graph, we show to much implementation details here.
@@ -67,6 +61,7 @@ namespace mln
   | line_graph_neighborhood_fwd_piter<P>.  |
   `---------------------------------------*/
 
+  /// \brief Backward iterator on line graph neighborhood.
   template <typename P>
   class line_graph_neighborhood_fwd_piter :
     public Point_Iterator< line_graph_neighborhood_fwd_piter<P> > // or Iterator<...>?
@@ -75,39 +70,55 @@ namespace mln
     typedef Point_Iterator< self_ > super_;
 
   public:
-    typedef line_graph_psite<P> psite;
-
+    // Make definitions from super class available.
     enum { dim = P::dim };
-    // FIXME: Dummy value.
-    typedef void mesh;
 
-    typedef point_pair<P> point;
+    typedef line_graph_psite<P> psite;
+    typedef P point;
+    typedef mln_coord(point) coord;
     // FIXME: Dummy typedef.
     typedef void dpoint;
-    typedef mln_coord(point) coord;
+    // FIXME: Dummy typedef.
+    typedef void mesh;
 
   public:
+    /// Construction.
+    /// \{
     template <typename N, typename Pref>
     line_graph_neighborhood_fwd_piter(const N& nbh,
 				      const Point_Site<Pref>& p_ref);
+    /// \}
 
+    /// Manipulation.
+    /// \{
+    /// Test if the iterator is valid.
     bool is_valid() const;
+    /// Invalidate the iterator.
     void invalidate();
+    /// Start an iteration.
     void start();
 
+    /// Go to the next point.
     void next_();
+    /// Is the piter adjacent or equal to the reference point?
     bool adjacent_or_equal_to_p_ref_() const;
     /// Update the internal data of the iterator.
     void update_();
+    /// \}
 
+    /// Conversion and accessors.
+    /// \{
+    /// Reference to the corresponding point.
     const point& to_point() const;
+    /// Reference to the corresponding point site.
     const psite& to_psite() const;
-
-    operator point() const;
+    /// Convert the iterator into a line graph psite.
     operator psite() const;
 
-    /// Return the \a i th coordinate of the (iterated) point.
+    /// Read-only access to the \a i-th coordinate.
+    // FIXME: Dummy.
     coord operator[](unsigned i) const;
+    /// \}
 
   private:
     /// The ``central'' psite of the neighborhood.
@@ -117,6 +128,8 @@ namespace mln
     /// The psite corresponding to this iterator.
     psite psite_;
     /// The point corresponding to this iterator.
+    /* FIXME: Dummy value.  To be removed as soon as the conversion
+       from psite to point is no longer mandatory.  */
     point p_;
   };
 
@@ -135,10 +148,95 @@ namespace mln
   | line_graph_neighborhood_bkd_piter<P>.  |
   `---------------------------------------*/
 
-  // FIXME: Implement line_graph_neighborhood_bkd_piter.
+  /// \brief Backward iterator on line graph neighborhood.
+  template <typename P>
+  class line_graph_neighborhood_bkd_piter :
+    public Point_Iterator< line_graph_neighborhood_bkd_piter<P> > // or Iterator<...>?
+  {
+    typedef line_graph_neighborhood_bkd_piter<P> self_;
+    typedef Point_Iterator< self_ > super_;
+
+  public:
+    // Make definitions from super class available.
+    enum { dim = P::dim };
+
+    typedef line_graph_psite<P> psite;
+    typedef P point;
+    typedef mln_coord(point) coord;
+    // FIXME: Dummy typedef.
+    typedef void dpoint;
+    // FIXME: Dummy typedef.
+    typedef void mesh;
+
+  public:
+    /// Construction.
+    /// \{
+    template <typename N, typename Pref>
+    line_graph_neighborhood_bkd_piter(const N& nbh,
+				      const Point_Site<Pref>& p_ref);
+    /// \}
+
+    /// Manipulation.
+    /// \{
+    /// Test if the iterator is valid.
+    bool is_valid() const;
+    /// Invalidate the iterator.
+    void invalidate();
+    /// Start an iteration.
+    void start();
+
+    /// Go to the next point.
+    void next_();
+    /// Is the piter adjacent or equal to the reference point?
+    bool adjacent_or_equal_to_p_ref_() const;
+    /// Update the internal data of the iterator.
+    void update_();
+    /// \}
+
+    /// Conversion and accessors.
+    /// \{
+    /// Reference to the corresponding point.
+    const point& to_point() const;
+    /// Reference to the corresponding point site.
+    const psite& to_psite() const;
+    /// Convert the iterator into a line graph psite.
+    operator psite() const;
+
+    /// Read-only access to the \a i-th coordinate.
+    // FIXME: Dummy.
+    coord operator[](unsigned i) const;
+    /// \}
+
+  private:
+    /// The ``central'' psite of the neighborhood.
+    const psite& p_ref_;
+    /// An internal iterator on the set of edges of the underlying graph.
+    util::edge_id id_;
+    /// The psite corresponding to this iterator.
+    psite psite_;
+    /// The point corresponding to this iterator.
+    /* FIXME: Dummy value.  To be removed as soon as the conversion
+       from psite to point is no longer mandatory.  */
+    point p_;
+  };
+
+  /* FIXME: This hand-made delegation is painful.  We should rely on
+     the general mechanism provided by Point_Site.  But then again, we
+     need to refine/adjust the interface of Point_Site w.r.t. the
+     mandatory conversions to points.  */
+  template <typename P>
+  inline
+  std::ostream&
+  operator<<(std::ostream& ostr,
+	     const line_graph_neighborhood_bkd_piter<P>& p);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  /*---------------------------------------.
+  | line_graph_neighborhood_fwd_piter<P>.  |
+  `---------------------------------------*/
 
   // FIXME: Currently, argument nbh is ignored.
   template <typename P>
@@ -146,10 +244,12 @@ namespace mln
   inline
   line_graph_neighborhood_fwd_piter<P>::line_graph_neighborhood_fwd_piter(const N& /* nbh */,
 									  const Point_Site<Pref>& p_ref)
+    /* FIXME: We should use a routine actually checking the
+       conversion, since to_psite() checks nothing (as of
+       2008-03-05).  */
     : p_ref_(exact(p_ref).to_psite()),
       // Initialize psite_ to a dummy value.
-      psite_(p_ref_.plg(), p_ref_.plg().nlines()),
-      p_()
+      psite_()
   {
     // Invalidate id_.
     invalidate();
@@ -171,7 +271,7 @@ namespace mln
   void
   line_graph_neighborhood_fwd_piter<P>::invalidate()
   {
-    id_ = p_ref_.plg().gr_.nedges();
+    id_ = -1;
   }
 
   template <typename P>
@@ -247,16 +347,11 @@ namespace mln
   {
     // Update psite_.
     psite_ = line_graph_psite<P>(p_ref_.plg(), id_);
-    // Update p_.
-    // FIXME: These repeated assignments might be very costly.
-    /* FIXME: Likewise, it's hard to read.  Simplify accesses to the graph.  */
-    p_ = point(p_ref_.plg().gr_.node_data(p_ref_.plg().gr_.edge(id_).n1()),
-	       p_ref_.plg().gr_.node_data(p_ref_.plg().gr_.edge(id_).n2()));
   }
 
   template <typename P>
   inline
-  const point_pair<P>&
+  const P&
   line_graph_neighborhood_fwd_piter<P>::to_point() const
   {
     return p_;
@@ -272,14 +367,6 @@ namespace mln
 
   template <typename P>
   inline
-  line_graph_neighborhood_fwd_piter<P>::operator point_pair<P>() const
-  {
-    mln_precondition(is_valid());
-    return p_;
-  }
-
-  template <typename P>
-  inline
   line_graph_neighborhood_fwd_piter<P>::operator line_graph_psite<P> () const
   {
     mln_precondition(is_valid());
@@ -288,7 +375,7 @@ namespace mln
 
   template <typename P>
   inline
-  mln_coord(point_pair<P>)
+  mln_coord(P)
   line_graph_neighborhood_fwd_piter<P>::operator[](unsigned i) const
   {
     assert(i < dim);
@@ -301,11 +388,170 @@ namespace mln
   operator<<(std::ostream& ostr,
 	     const line_graph_neighborhood_fwd_piter<P>& p)
   {
-    return ostr << p.to_point();
+    return ostr << p.to_psite();
+  }
+
+
+  /*---------------------------------------.
+  | line_graph_neighborhood_bkd_piter<P>.  |
+  `---------------------------------------*/
+
+  // FIXME: Currently, argument nbh is ignored.
+  template <typename P>
+  template <typename N, typename Pref>
+  inline
+  line_graph_neighborhood_bkd_piter<P>::line_graph_neighborhood_bkd_piter(const N& /* nbh */,
+									  const Point_Site<Pref>& p_ref)
+    /* FIXME: We should use a routine actually checking the
+       conversion, since to_psite() checks nothing (as of
+       2008-03-05).  */
+    : p_ref_(exact(p_ref).to_psite()),
+      // Initialize psite_ to a dummy value.
+      psite_()
+  {
+    // Invalidate id_.
+    invalidate();
+  }
+
+  template <typename P>
+  inline
+  bool
+  line_graph_neighborhood_bkd_piter<P>::is_valid() const
+  {
+    // FIXME: We depend too much on the implementation of util::graph
+    // here.  The util::graph should provide the service to abstract
+    // these manipulations.
+    return id_ < p_ref_.plg().gr_.nedges();
+  }
+
+  template <typename P>
+  inline
+  void
+  line_graph_neighborhood_bkd_piter<P>::invalidate()
+  {
+    id_ = -1;
+  }
+
+  template <typename P>
+  inline
+  void
+  line_graph_neighborhood_bkd_piter<P>::start()
+  {
+    id_ = p_ref_.plg().gr_.nedges() - 1;
+    if (!adjacent_or_equal_to_p_ref_())
+      next_();
+    /* FIXME: This is redundant with the end of next_(), but we might
+       change the implementation of start_() when we'll fix it later,
+       and no longer use next_().  */
+    if (is_valid())
+      update_();
+  }
+
+  template <typename P>
+  inline
+  void
+  line_graph_neighborhood_bkd_piter<P>::next_()
+  {
+    /* FIXME: This is inefficient.  The graph structure should be able
+       to produce the set of adjacent edges fast.  Boost Graphs
+       probably provides adequates structures to fetch these
+       neighbors in constant time.  */
+    /* FIXME: Moreover, the behavior of next shall depend on the
+       neighborhood, which is not the case now! (Currently, next_()
+       behaves as nbh was always an elementary neighborhood.) */
+    do
+      --id_;
+    while (is_valid() && !adjacent_or_equal_to_p_ref_());
+    if (is_valid())
+      update_();
+  }
+
+  template <typename P>
+  inline
+  bool
+  line_graph_neighborhood_bkd_piter<P>::adjacent_or_equal_to_p_ref_() const
+  {
+    // Check wether the iterator points to P_REF_.
+    if (id_ == p_ref_.id())
+      return true;
+
+    // Check whether the iterator is among the neighbors of P_REF_.
+    {
+      // Paranoid assertion.
+      assert (p_ref_.id() < p_ref_.plg().gr_.nedges());
+      /* FIXME: We should have a convenient shortcut for these
+	 repetitive accesses to p_ref_.plg().gr_ (e.g., a method gr()
+	 or g() in this class.  */
+      const typename p_line_graph<P>::graph& gr = p_ref_.plg().gr_;
+      // Check whether the edge this iterator points to is adjacent to
+      // the one p_ref points to, by comparing their ajacent nodes.
+      /* FIXME: This is too low-level.  Yet another service the graph
+      // should provide.  */
+      if (gr.edge(id_).n1() == gr.edge(p_ref_.id()).n1() ||
+	  gr.edge(id_).n1() == gr.edge(p_ref_.id()).n2() ||
+	  gr.edge(id_).n2() == gr.edge(p_ref_.id()).n1() ||
+	  gr.edge(id_).n2() == gr.edge(p_ref_.id()).n2())
+	return true;
+    }
+
+    // Otherwise, the iterator is not adjacent to P_REF_.
+    return false;
+  }
+
+  template <typename P>
+  inline
+  void
+  line_graph_neighborhood_bkd_piter<P>::update_()
+  {
+    // Update psite_.
+    psite_ = line_graph_psite<P>(p_ref_.plg(), id_);
+  }
+
+  template <typename P>
+  inline
+  const P&
+  line_graph_neighborhood_bkd_piter<P>::to_point() const
+  {
+    return p_;
+  }
+
+  template <typename P>
+  inline
+  const line_graph_psite<P>&
+  line_graph_neighborhood_bkd_piter<P>::to_psite() const
+  {
+    return psite_;
+  }
+
+  template <typename P>
+  inline
+  line_graph_neighborhood_bkd_piter<P>::operator line_graph_psite<P> () const
+  {
+    mln_precondition(is_valid());
+    return psite_;
+  }
+
+  template <typename P>
+  inline
+  mln_coord(P)
+  line_graph_neighborhood_bkd_piter<P>::operator[](unsigned i) const
+  {
+    assert(i < dim);
+    return p_[i];
+  }
+
+  template <typename P>
+  inline
+  std::ostream&
+  operator<<(std::ostream& ostr,
+	     const line_graph_neighborhood_bkd_piter<P>& p)
+  {
+    return ostr << p.to_psite();
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
 
 #endif // ! MLN_CORE_LINE_GRAPH_NEIGHBORHOOD_PITER_HH

@@ -1,5 +1,44 @@
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add backward iterators on line graph windows and neighborhoods.
+
+	* mln/core/line_graph_window_piter.hh: Add more documentation.
+	(mln::line_graph_window_fwd_piter<P>::point): Set typedef to P.
+	(mln::line_graph_window_fwd_piter<P>::to_point)
+	(mln::line_graph_window_fwd_piter<P>::operator[](unsigned)):
+	Adjust return types.
+	(mln::line_graph_window_fwd_piter<P>::operator point): Remove.
+	(line_graph_window_fwd_piter(const W&, const Point_Site<Pref>&))
+	(line_graph_window_fwd_piter<P>::invalidate)
+	Adjust to the new interface of mln::p_line_graph<P>.
+	(line_graph_window_fwd_piter<P>::update_): Don't update
+	member p_.
+	(operator<<(std::ostream&, const line_graph_window_fwd_piter<P>&)):
+	Print the associated psite, not the associated point.
+	(mln::line_graph_window_bkd_piter<P>)
+	(operator<<(std::ostream&, const line_graph_window_bkd_piter<P>&)):
+	New.
+	* mln/core/line_graph_neighborhood_piter.hh Add more documentation.
+	(mln::line_graph_neighborhood_fwd_piter<P>::point): Set typedef to
+	P.
+	(mln::line_graph_neighborhood_fwd_piter<P>::to_point)
+	(mln::line_graph_neighborhood_fwd_piter<P>::operator[](unsigned)):
+	Adjust return types.
+	(mln::line_graph_neighborhood_fwd_piter<P>::operator point):
+	Remove.
+	(line_graph_neighborhood_fwd_piter(const N&, const Point_Site<Pref>&):
+	(mln::line_graph_neighborhood_fwd_piter<P>::invalidate)
+	Adjust to the new interface of mln::p_line_graph<P>.
+	(mln::line_graph_neighborhood_fwd_piter<P>::update_): Don't update
+	member p_.
+	(operator<<(std::ostream&,const line_graph_neighborhood_fwd_piter<P>&)):
+	Print the associated psite, not the associated point.
+	(mln::line_graph_neighborhood_bkd_piter<P>)
+	(operator<<(std::ostream&,const line_graph_neighborhood_bkd_piter<P>&)):
+	New.
+
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a backward iterator on p_line_graph.
 
 	* mln/core/p_line_graph_piter.hh
