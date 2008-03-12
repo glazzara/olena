@@ -34,6 +34,7 @@
 # include <mln/core/internal/image_identity.hh>
 # include <mln/core/concept/neighborhood.hh>
 
+// FIXME: Handle the constness of the underlying image.
 
 namespace mln
 {
@@ -106,20 +107,54 @@ namespace mln
       /// Skeleton.
       typedef image< tag::image_<I>, tag::neighb_<N> > skeleton;
 
-      /// Constructor.
+      /// Constructors.
+      /// \{
+      image();
       image(Image<I>& ima, const Neighborhood<N>& nbh);
+      /// \}
 
       /// Test if this image has been initialized.
       bool has_data() const;
 
+      /// Accessors.
+      /// \{
+      /// Return the underlying image, read-only.
+      const I& ima() const;
+      /// Return the underlying image, read-write.
+      I& ima();
+      // FIXME: Rename to nbh().
       /// Return the neighborhood associated to this image.
       const neighb& neighborhood() const;
+      /// \}
+
+      /// Initialize an empty image.
+      void init_(Image<I>& ima, const Neighborhood<N>& nbh);
     }; 
 
   } // end of namespace mln::neighb
 
 
+  // Fwd decl.
+  template <typename I, typename J, typename N>
+  void init_(tag::image_t,
+	     neighb::image<I, N>& target, const neighb::image<J, N>& model);
+
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+  /*-----------------.
+  | Initialization.  |
+  `-----------------*/
+
+  template <typename I, typename J, typename N>
+  void init_(tag::image_t,
+	     neighb::image<I, N>& target, const neighb::image<J, N>& model)
+  {
+    I ima;
+    initialize(ima, model.ima());
+    target.init_(ima, model.neighborhood());
+  }
 
   /*------------.
   | operator+.  |
@@ -133,9 +168,9 @@ namespace mln
     return tmp;
   }
 
-  /*--------------------------------------.
-  | internal::data_< cast_image_<T,I> >.  |
-  `--------------------------------------*/
+  /*-----------------------------------------.
+  | internal::data_< neighb::image_<T,I> >.  |
+  `-----------------------------------------*/
 
   namespace internal
   {
@@ -157,8 +192,23 @@ namespace mln
 
     template <typename I, typename N>
     inline
+    image<I, N>::image()
+    {
+    }
+
+    template <typename I, typename N>
+    inline
     image<I, N>::image(Image<I>& ima, const Neighborhood<N>& nbh)
     {
+      init_(ima, nbh);
+    }
+
+    template <typename I, typename N>
+    inline
+    void
+    image<I, N>::init_(Image<I>& ima, const Neighborhood<N>& nbh)
+    {
+      mln_precondition(! this->has_data());
       this->data_ =
 	new mln::internal::data_< mln::neighb::image<I, N> >(exact(ima),
 							     exact(nbh));
@@ -169,7 +219,23 @@ namespace mln
     bool
     image<I, N>::has_data() const
     {
-      return this->delegatee_()->has_data();
+      return this->delegatee_() && this->delegatee_()->has_data();
+    }
+
+    template <typename I, typename N>
+    inline
+    I&
+    image<I, N>::ima()
+    {
+      return this->data_->ima_;
+    }
+
+    template <typename I, typename N>
+    inline
+    const I&
+    image<I, N>::ima() const
+    {
+      return this->data_->ima_;
     }
 
     template <typename I, typename N>

@@ -1,5 +1,21 @@
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix mln::neighb::image<P> initializations.
+
+	* mln/neighb/image.hh (mln::neighb::image<P>::image): New ctor.
+	(mln::neighb::image<P>::ima, mln::neighb::image<P>::nbh): New
+	accessors.
+	(init_(tag::image_t, neighb::image<I, N>&, const neighb::image<J, N>&)):
+	New.
+	(mln::neighb::image<P>::init_): New.
+	Use this method...
+	(mln::neighb::image<I, N>::image(Image<I>&, const Neighborhood<N>&)):
+	...here.
+	(mln::neighb::image<I, N>::has_data): Ensure the delegatee is not
+	null.
+
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have area closing and opening work on line graph images.
 
 	* mln/core/concept/point_set.hh (mln::Point_Set<E>::Point_Set):
