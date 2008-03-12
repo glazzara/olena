@@ -68,7 +68,7 @@ namespace mln
 # include <mln/level/naive/all.hh>
 # include <mln/level/paste.hh>
 # include <mln/level/saturate.hh>
-# include <mln/level/sort_points.hh>
+# include <mln/level/sort_psites.hh>
 # include <mln/level/stretch.hh>
 # include <mln/level/take.hh>
 # include <mln/level/to_enc.hh>

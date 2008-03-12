@@ -20,7 +20,8 @@ check_PROGRAMS =				\
   memset_					\
   paste						\
   saturate					\
-  sort_points					\
+  sort_psites					\
+  sort_psites_full				\
   stretch					\
   take						\
   transform
@@ -40,9 +41,12 @@ memcpy__SOURCES = memcpy_.cc
 memset__SOURCES = memset_.cc
 paste_SOURCES = paste.cc
 saturate_SOURCES = saturate.cc
-sort_points_SOURCES = sort_points.cc
+sort_psites_SOURCES = sort_psites.cc
 stretch_SOURCES = stretch.cc
 take_SOURCES = take.cc
 transform_SOURCES = transform.cc
+
+# Lengthy tests.
+sort_psites_full_SOURCES = sort_psites_full.cc
 
 TESTS = $(check_PROGRAMS)

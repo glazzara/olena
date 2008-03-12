@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,7 +51,7 @@
 
 #include <mln/level/saturate.hh>
 #include <mln/level/paste.hh>
-#include <mln/level/sort_points.hh>
+#include <mln/level/sort_psites.hh>
 
 
 
@@ -104,8 +104,8 @@ namespace mln
   {
     I& input = exact(input_);
 
-    p_array<J> array_inc = level::sort_points_increasing(input);
-    p_array<J> array_dec = level::sort_points_decreasing(input);
+    p_array<J> array_inc = level::sort_psites_increasing(input);
+    p_array<J> array_dec = level::sort_psites_decreasing(input);
 
     mln_assertion(array_inc == array_inc_ref);
     mln_assertion(array_dec == array_dec_ref);
@@ -306,7 +306,7 @@ int main()
   int rows =  8;
   int cols =  8;
 
-  std::cerr << "Tests level::sort_points:" << std::endl;
+  std::cerr << "Tests level::sort_psites:" << std::endl;
   std::cerr << "in int:" << std::endl;
   chk<int>(slis, rows, cols);
   std::cerr << "in unsigned:" << std::endl;

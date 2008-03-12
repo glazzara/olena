@@ -107,8 +107,7 @@ namespace mln
 	regional_minima_functor(const I_& input, const N_& nbh)
 	  : input(input),
 	    nbh(nbh),
-	    s(level::sort_psites_increasing(input)), // FIXME:
-	                                             // sort_psites_increasing
+	    s(level::sort_psites_increasing(input)),
 	    attr(input.domain())
 	{
 	}
@@ -122,8 +121,7 @@ namespace mln
 
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
-	  regional_minima_(const I& input, const N& nbh,
-			   L& nlabels)
+	regional_minima_(const I& input, const N& nbh, L& nlabels)
 	{
 	  trace::entering("labeling::impl::generic::regional_minima_");
 

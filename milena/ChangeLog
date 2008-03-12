@@ -1,3 +1,26 @@
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Finish the conversion of level::sort_points to level::sort_psites.
+
+	* mln/level/sort_points.hh: Remove.
+	* mln/level/all.hh: s/sort_point.hh/sort_psite.hh/.
+	* mln/labeling/regional_minima.hh: s/point/psite/.
+	* mln/labeling/regional_minima.hh
+	(impl::regional_minima_functor<I_, N_, L_>::regional_minima_functor):
+	Remove outdated FIXME.
+	* tests/level/sort_points.cc, tests/level/sort_points_full.cc:
+	Rename as...
+	* tests/level/sort_psites.cc, tests/level/sort_psites_full.cc:
+	...these.
+	s/sort_points/sort_psites/.
+	* tests/level/Makefile.am (check_PROGRAMS):
+	s/sort_points/sort_psites/.
+	Add sort_psites_full.
+	(sort_points_SOURCES): Likewise.
+	Rename as...
+	(sort_psites_SOURCES): ...this.
+	(sort_psites_full_SOURCES): New.
+
 2008-03-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add to sanbox an image type maped on the hard disk.

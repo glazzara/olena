@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/sort_points.cc
+/*! \file tests/level/sort_psites.cc
  *
- * \brief Tests on mln::level::sort_points.
+ * \brief Tests on mln::level::sort_psites.
  */
 
 #include <mln/core/image2d.hh>
 #include <mln/debug/iota.hh>
-#include <mln/level/sort_points.hh>
+#include <mln/level/sort_psites.hh>
 #include <mln/core/p_array.hh>
 
 
@@ -42,8 +42,8 @@ int main ()
 
   image2d<int> ima(3, 3);
   debug::iota (ima);
-  p_array<point2d> array_inc = level::sort_points_increasing(ima);
-  p_array<point2d> array_dec = level::sort_points_decreasing(ima);
+  p_array<point2d> array_inc = level::sort_psites_increasing(ima);
+  p_array<point2d> array_dec = level::sort_psites_decreasing(ima);
 
   p_array<point2d> array_inc_ref;
   p_array<point2d> array_dec_ref;

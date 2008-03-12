@@ -38,7 +38,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/canvas/labeling.hh>
 # include <mln/level/fill.hh>
-# include <mln/level/sort_points.hh>
+# include <mln/level/sort_psites.hh>
 
 
 namespace mln
@@ -108,8 +108,7 @@ namespace mln
 	regional_maxima_functor(const I_& input, const N_& nbh)
 	  : input(input),
 	    nbh(nbh),
-	    s(level::sort_points_decreasing(input)), // FIXME:
-	                                             // sort_psites_decreasing
+	    s(level::sort_psites_decreasing(input)),
 	    attr(input.domain())
 	{
 	}
