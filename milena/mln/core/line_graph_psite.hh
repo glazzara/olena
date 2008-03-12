@@ -32,7 +32,6 @@
 /// \brief Definition of a line graph-based point site.
 
 # include <mln/core/p_line_graph.hh>
-# include <mln/core/point_pair.hh>
 
 /* FIXME: This class shares a lot with graph_psite.  Factor as much as
    possible.  */
@@ -52,7 +51,7 @@ namespace mln
     typedef line_graph_psite<P> self_;
 
   public:
-    typedef point_pair<P> point;
+    typedef P point;
     typedef mln_mesh(point) mesh;
     enum { dim = point::dim };
     typedef mln_dpoint(point) dpoint;
@@ -60,9 +59,9 @@ namespace mln
 
     /// Construction and assignment.
     /// \{
-    line_graph_psite(const p_line_graph<P>& plg_, unsigned id);
+    line_graph_psite();
+    line_graph_psite(const p_line_graph<P>& plg, unsigned id);
     line_graph_psite(const self_& rhs);
-    /// \pre This psite must have the same graph point set as \a rhs.
     self_& operator= (const self_& rhs);
     /// \}
 
@@ -71,25 +70,27 @@ namespace mln
 
     /// Access to point.
     /// \{
-    operator point() const;
     const point& to_point() const;
     coord operator[](unsigned id) const;
     /// \}
 
     /// Return the mln::p_line_graph this point site belongs to.
     const p_line_graph<P>& plg() const;
-    /// Return the node id of this point site.
-    util::node_id id() const;
+    /// Return the edge id of this point site.
+    util::edge_id id() const;
+
+    /// Return the first associated point (vertex).
+    P first() const;
+    /// Return the second associated point (vertex).
+    P second() const;
 
   private:
-    /// Update \a p_.
-    void update_();
     /// Is this psite valid?
     bool is_valid_() const;
 
   private:
     /// The p_line_graph this point site belongs to.
-    const p_line_graph<P>& plg_;
+    const p_line_graph<P>* plg_;
     /// The id of the edge this psite is pointing towards.
     util::edge_id id_;
     /** \brief The point associated to this psite.
@@ -101,8 +102,16 @@ namespace mln
         since points associated to edges are computed on the fly
         (storing them in the graph could be possible, but too costly
         in space).  */
+    // FIXME: Actually, this is a dummy value!
     point p_;
   };
+
+  /// Compare two mln::line_graph_psite<P> instances.
+  /* FIXME: Shouldn't this comparison be part of a much general
+     mechanism?  */
+  template <typename P>
+  bool
+  operator==(const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs);
 
   /* FIXME: This hand-made delegation is painful.  We should rely on
      the general mechanism provided by Point_Site.  But then again, we
@@ -123,9 +132,19 @@ namespace mln
 
   template<typename P>
   inline
-  line_graph_psite<P>::line_graph_psite(const p_line_graph<P>& g,
+  line_graph_psite<P>::line_graph_psite()
+    // Dummy initializations.
+    : plg_(0),
+      id_(-1),
+      p_()
+  {
+  }
+
+  template<typename P>
+  inline
+  line_graph_psite<P>::line_graph_psite(const p_line_graph<P>& plg,
 					util::edge_id id)
-    : plg_(g),
+    : plg_(&plg),
       id_(id),
       p_()
   {
@@ -135,31 +154,21 @@ namespace mln
   inline
   line_graph_psite<P>::line_graph_psite(const line_graph_psite<P>& rhs)
     : plg_(rhs.plg_),
-      id_(rhs.id_)
+      id_(rhs.id_),
+      p_()
   {
   }
 
   template<typename P>
   inline
   line_graph_psite<P>&
-  line_graph_psite<P>::operator= (const line_graph_psite<P>& rhs)
+  line_graph_psite<P>::operator=(const line_graph_psite<P>& rhs)
   {
     if (&rhs == this)
       return *this;
-    // Assigning a psite from a line graph point set to a psite from
-    // another line graph point set is meaningless.
-    mln_assertion(&plg_ == &rhs.plg_);
+    plg_ = rhs.plg_;
     id_ = rhs.id_;
-    update_();
     return *this;
-  }
-
-  template<typename P>
-  inline
-  line_graph_psite<P>::operator point_pair<P>() const
-  {
-    mln_assertion (is_valid_());
-    return p_;
   }
 
   template<typename P>
@@ -167,7 +176,7 @@ namespace mln
   bool
   line_graph_psite<P>::is_valid_() const
   {
-    return id_ < plg_.gr_.nedges();
+    return plg_ && id_ < plg_->gr_.nedges();
   }
 
   template<typename P>
@@ -180,28 +189,20 @@ namespace mln
 
   template<typename P>
   inline
-  const point_pair<P>&
+  const P&
   line_graph_psite<P>::to_point() const
   {
+    // Dummy value.
     return p_;
   }
 
   template<typename P>
   inline
-  mln_coord(point_pair<P>)
+  mln_coord(P)
   line_graph_psite<P>::operator[](unsigned i) const
   {
-    mln_assertion (is_valid_());
+    mln_assertion(is_valid_());
     return to_point()[i];
-  }
-
-  template<typename P>
-  inline
-  void
-  line_graph_psite<P>::update_()
-  {
-    p_ = point(plg_.gr_.node_data(plg_.gr_.edge(id_).n1()),
-	       plg_.gr_.node_data(plg_.gr_.edge(id_).n2()));
   }
 
   template<typename P>
@@ -209,7 +210,8 @@ namespace mln
   const p_line_graph<P>&
   line_graph_psite<P>::plg() const
   {
-    return plg_;
+    mln_assertion(plg_);
+    return *plg_;
   }
 
   template<typename P>
@@ -220,13 +222,39 @@ namespace mln
     return id_;
   }
 
+  template<typename P>
+  inline
+  P
+  line_graph_psite<P>::first() const
+  {
+    mln_assertion(is_valid_());
+    return plg().gr_.node_data(plg().gr_.edge(id_).n1());
+  }
+
+  template<typename P>
+  inline
+  P
+  line_graph_psite<P>::second() const
+  {
+    mln_assertion(is_valid_());
+    return plg().gr_.node_data(plg().gr_.edge(id_).n2());
+  }
+
+
+  template <typename P>
+  bool
+  operator==(const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs)
+  {
+    return &lhs.plg() == &rhs.plg() && lhs.id() == rhs.id();
+  }
+
 
   template <typename P>
   inline
   std::ostream&
   operator<<(std::ostream& ostr, const line_graph_psite<P>& p)
   {
-    return ostr << p.to_point();
+    return ostr << '(' << p.first() << " -- " << p.second() << ')';
   }
 
 # endif // ! MLN_INCLUDE_ONLY

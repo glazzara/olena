@@ -107,21 +107,22 @@ namespace mln
 
   } // end of namespace mln::trait
 
-  /*! \brief Kind of image based on graph structure.
-   *
-   */
+
+  /// \brief Image based on a graph.
+  ///
+  /// Values are stored on the vertices of the graph.
   template <typename P, typename V>
   struct line_graph_image :
     public internal::image_primary_< p_line_graph<P>, line_graph_image<P, V> >
   {
-
+    /// Super type.
     typedef mln::internal::image_base_< p_line_graph<P>,
 					line_graph_image<P, V> > super_;
 
     /// Value associated type.
     typedef V value;
 
-    /// Return type of read-write access.
+    /// \brief Return type of read-write access.
     ///
     /// We use the associated type \c reference instead of a plain
     /// reference on th value type (\v V), because it's the only way
@@ -134,7 +135,6 @@ namespace mln
 
     /// Value set associated type.
     typedef mln::value::set<value> vset;
-
 
     /// Skeleton.
     typedef line_graph_image< tag::psite_<P>, tag::value_<V> > skeleton;
@@ -184,10 +184,10 @@ namespace mln
 };
 
   // Fwd decl.
-  template <typename P, typename V>
+  template <typename P, typename V, typename W>
   void init_(tag::image_t,
 	     line_graph_image<P, V>& target,
-	     const line_graph_image<P, V>& model);
+	     const line_graph_image<P, W>& model);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -196,17 +196,15 @@ namespace mln
   | Initialization.  |
   `-----------------*/
 
-  /* FIXME: We should check the expected behavior of init_ here.  As
-     far as I (Roland) can recall, it was not meant to initialize
-     data/values.  We should probably just create vectors of values of
-     the same size, not copy the values. */
-  template <typename P, typename V>
+  template <typename P, typename V, typename W>
   inline
   void init_(tag::image_t,
 	     line_graph_image<P, V>& target,
-	     const line_graph_image<P, V>& model)
+	     const line_graph_image<P, W>& model)
   {
-    target.init_(model.domain(), model.node_values(), model.edge_values());
+    target.init_(model.domain(),
+		 std::vector<V>(model.node_values().size()),
+		 std::vector<V>(model.edge_values().size()));
   }
 
   /*-------.
@@ -242,7 +240,7 @@ namespace mln
   inline
   line_graph_image<P, V>::line_graph_image(const p_line_graph<P>& g)
   {
-    init_(g, std::vector<V>(g.npoints()), std::vector<V>(g.nlines()));
+    init_(g, std::vector<V>(g.nnodes()), std::vector<V>(g.nedges()));
   }
 
   template <typename P, typename V>
@@ -261,11 +259,7 @@ namespace mln
 				const std::vector<V>& node_val,
 				const std::vector<V>& edge_val)
   {
-    /* FIXME: We leak memory here: calling init_ twice loses the
-       previous content pointed by data_.
-
-       We should definitely write down formal guidelines on
-       initialization and memory management in general!  */
+    mln_precondition(! this->has_data());
     this->data_ =
       new internal::data_< line_graph_image<P, V> >(g, node_val, edge_val);
   }

@@ -1,5 +1,46 @@
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix mln::line_graph_image<P> initializations and associated entitites.
+
+	* mln/core/line_graph_image.hh: Add some more documentation.
+	(mln::init_(tag::image_t, line_graph_image<P,V>&, const line_graph_image<P,V>):
+	Turn the signature of this routine into...
+	(mln::init_(tag::image_t, line_graph_image<P,V>&, const line_graph_image<P,W>):
+	...this.
+	Don't copy values from the model.  Instead, initialize with a
+	vector of the same size.
+	(mln::line_graph_image<P, V>::line_graph_image(const p_line_graph<P>&)):
+	s/g.npoints()/g.nnodes()/.
+	s/g.nlines()/g.nedges()/.
+	(mln::line_graph_image<P, V>::init_): Ensure there are no data before
+	initializing new ones.
+	* mln/core/internal/image_morpher.hh: Remove spurious FIXMEs.
+	* mln/core/line_graph_psite.hh 
+	(mln::line_graph_psite<P>::point): Set typedef to P.
+	(mln::line_graph_psite<P>::operator[]): Adjust return type.
+	(mln::line_graph_psite<P>::line_graph_psite): New ctor.
+	(mln::line_graph_psite<P>::plg_): Change the type of this member from
+	const p_line_graph<P>& to const p_line_graph<P>*.
+	(line_graph_psite(const p_line_graph<P>&, util::node_id))
+	(mln::line_graph_psite<P>::operator= (const mln::line_graph_psite<P>&))
+	(mln::line_graph_psite<P>::to_point)
+	(line_graph_psite<P>::is_valid_):
+	Adjust.
+	(mln::line_graph_psite<P>::plg): Likewise: ensure member plg_ is not
+	null.
+	(mln::line_graph_psite<P>::id): Fix return type.
+	(mln::line_graph_psite<P>::first)
+	(mln::line_graph_psite<P>::second):
+	New accessors.
+	(mln::line_graph_psite<P>::update_): Remove.
+	(mln::line_graph_psite<P>::operator P): Remove.
+	(operator<<(std::ostream&, const line_graph_psite<P>&)):
+	Adjust implementation accordingly.
+	(operator==(const line_graph_psite<P>&, const line_graph_psite<P>&)):
+	New.
+
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix mln::graph_image<P> initializations and associated entitites.
 
 	* mln/core/graph_image.hh: Add some more documentation.
