@@ -38,7 +38,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/canvas/labeling.hh>
 # include <mln/level/fill.hh>
-# include <mln/level/sort_points.hh>
+# include <mln/level/sort_psites.hh>
 
 
 namespace mln
@@ -107,7 +107,7 @@ namespace mln
 	regional_minima_functor(const I_& input, const N_& nbh)
 	  : input(input),
 	    nbh(nbh),
-	    s(level::sort_points_increasing(input)), // FIXME:
+	    s(level::sort_psites_increasing(input)), // FIXME:
 	                                             // sort_psites_increasing
 	    attr(input.domain())
 	{

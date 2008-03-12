@@ -1,5 +1,55 @@
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have area closing and opening work on line graph images.
+
+	* mln/core/concept/point_set.hh (mln::Point_Set<E>::Point_Set):
+	No longer require the presence of a bounding box.
+	* mln/core/concept/point_site.hh: Add a FIXME.
+	* mln/level/sort_points.hh: Wrap long lines.
+	(sort_points_increasing_(trait::image::quant::low, const I&))
+	(sort_points_decreasing_(trait::image::quant::low, const I&)):
+	Fix the initialization of the return value.
+	* mln/level/sort_psites.hh: New.
+	Use it...
+	* mln/morpho/closing_attribute.hh,
+	* mln/morpho/opening_attribute.hh: ...here.
+	s/point/psite/
+	* mln/canvas/morpho/algebraic_union_find.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/convert/to_p_array.hh:
+	Likewise.
+	* mln/core/p_array.hh
+	(mln::p_array<P>::psite, mln::p_array<P>::point): New typedefs.
+	(mln::p_array<P>::has): Tale a psite as argument, not a point.
+	s/box_<P>/box_<point>/.
+	* mln/core/p_array_piter.hh
+	(mln::p_array_fwd_piter_<P>::psite)
+	(mln::p_array_fwd_piter_<P>::point):
+	(mln::p_array_bkd_piter_<P>::psite)
+	(mln::p_array_bkd_piter_<P>::point):
+	New typedefs.
+	(mln::p_array_fwd_piter_<P>::to_psite)
+	(mln::p_array_fwd_piter_<P>::operator psite):
+	(mln::p_array_bkd_piter_<P>::to_psite)
+	(mln::p_array_bkd_piter_<P>::operator psite):
+	New.
+	(mln::p_array_fwd_piter_<P>::operator P):
+	(mln::p_array_bkd_piter_<P>::operator P):
+	Remove.
+	(mln::p_array_fwd_piter_<P>::p_)
+	(mln::p_array_bkd_piter_<P>::p_):
+	Change the type of this member from P to psite.
+	(mln::p_array_fwd_piter_<P>::to_point)
+	(mln::p_array_fwd_piter_<P>::operator[](unsigned)):
+	(mln::p_array_bkd_piter_<P>::to_point)
+	(mln::p_array_bkd_piter_<P>::operator[](unsigned)):
+	Fix return types.
+	* tests/morpho/lena_line_graph_image_wst2.cc: Simplify the line
+	graph image using an area closing, instead of simplifying the
+	initial (image2d) image.
+
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix morphological erosion implementation based on pixters.
 
 	* mln/core/dpoints_pixter.hh (dpoints_fwd_pixter<I>::next_): Don't

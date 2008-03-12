@@ -77,8 +77,10 @@ namespace mln
       typedef bkd_piter;
 
       bool has(const psite& p) const;
-      const box_<point>& bbox() const;
       std::size_t npoints() const;
+
+      // FIXME: No longer required (at least, not this way).
+      const box_<point>& bbox() const;
      */
 
   protected:
@@ -157,8 +159,9 @@ namespace mln
     
     bool (E::*m1)(const psite& p) const = & E::has;
     m1 = 0;
-    const box_<point>& (E::*m2)() const = & E::bbox;
-    m2 = 0;
+      // FIXME: No longer required (at least, not this way).
+//     const box_<point>& (E::*m2)() const = & E::bbox;
+//     m2 = 0;
     std::size_t (E::*m3)() const = & E::npoints;
     m3 = 0;
   }

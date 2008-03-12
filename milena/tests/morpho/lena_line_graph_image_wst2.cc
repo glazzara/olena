@@ -33,7 +33,6 @@
 /** \file tests/core/lena_line_graph_image_wst2.cc
     \brief More tests on the Watershed Transform (WST) on a
     mln::line_graph_image.
-
    
     The scenario is as follows:
     \li load a 2-D, gray-level image from a PGM file;
@@ -99,14 +98,6 @@ int main()
   image2d<input_val_t> input;
   io::pgm::load(input, MLN_IMG_DIR "/small.pgm");
 
-  /* FIXME: In fact, we'd probably want to compute the gradient
-     /before/ simplfying the image, but as the area closing doesn't
-     work (yet) on graph images, hence we cannot do this yet.  */
-
-  // Simplify the input image.
-  image2d<input_val_t> work(input.domain());
-  morpho::closing_area(input, c8(), 500, work);
-
   /*-------------.
   | Line graph.  |
   `-------------*/
@@ -118,18 +109,18 @@ int main()
   // Points.
   /* FIXME: The need for such a structure during the conversion
      exhibits the lack of a service from util::graph (or a another,
-     missing tool) regarding the retrieval of node ids from
+     missing tool) regarding the retrieval of nodes' ids from
      points.  */
   std::map<point2d, util::node_id> points;
   util::node_id id = 0;
 
   // Nodes.
   std::vector<input_val_t> node_values;
-  mln_fwd_piter_(image2d<input_val_t>) p(work.domain());
+  mln_fwd_piter_(image2d<input_val_t>) p(input.domain());
   for_all (p)
   {
     g.add_node (p);
-    node_values.push_back (work(p));
+    node_values.push_back (input(p));
     /* FIXME: ``Guessing'' the id of the point just being inserted
        is bad.  utill:graph<N,E>::add_node should return this
        id.  */
@@ -144,17 +135,17 @@ int main()
   mln_fwd_qiter_(window2d) q(next_c4_win, p); 
   for_all (p)
     for_all (q)
-    if (work.has(q))
+    if (input.has(q))
       {
 	g.add_edge(points[p], points[q]);
 	// The computed value is a kind of norm of the gradient
 	// bewteen P and Q.
-	edge_values.push_back(math::abs(work(p) - work(q)));
+	edge_values.push_back(math::abs(input(p) - input(q)));
       }
 
   // Line graph point set.
   p_line_graph<point2d> plg(g);
-  
+
   // Line graph image.
   typedef line_graph_image<point2d, input_val_t> ima_t;
   ima_t lg_ima(plg, node_values, edge_values);
@@ -163,21 +154,27 @@ int main()
   | Simplification.  |
   `-----------------*/
 
-  // FIXME: Adjust the area closing filter, so that we can apply it on
-  // graph images.
+  typedef line_graph_elt_neighborhood<point2d> nbh_t;
+  nbh_t nbh;
+
+  ima_t closed_lg_ima (lg_ima.domain());
+  /* FIXME: We should change the attribute closing performed here;
+     instead of computing the area using the data on the lines
+     (edges), whe should use the data on the pixels (vertices).
+
+     The best way is probably to create another attribute-functor and
+     use the algebraic_union_find canvas. */
+  morpho::closing_area(lg_ima, nbh, 20, closed_lg_ima);
 
   /*------.
   | WST.  |
   `------*/
 
-  typedef line_graph_elt_neighborhood<point2d> nbh_t;
-  nbh_t nbh;
-
   // Perform a Watershed Transform.
   typedef int_u16 wst_full_val_t;
   wst_full_val_t nbasins;
   typedef line_graph_image<point2d, wst_full_val_t> wst_full_ima_t;
-  wst_full_ima_t wshed_full = morpho::meyer_wst(lg_ima, nbh, nbasins);
+  wst_full_ima_t wshed_full = morpho::meyer_wst(closed_lg_ima, nbh, nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
   // Reduce the value set to 8-bit.
@@ -243,7 +240,7 @@ int main()
   {
     if (wshed(pw) == 0)
       {
-	mln_point_(wst_ima_t) pp(pw);
+	mln_psite_(wst_ima_t) pp(pw);
 	// Equivalent of the line (edge) PP in OUTPUT.
 	int row1 = pp.first()[0] * 2;
 	int col1 = pp.first()[1] * 2;

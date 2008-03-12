@@ -45,14 +45,14 @@ namespace mln
 
     /// Convert a point set \p pset into a p_array (point set vector).
     template <typename S>
-    p_array<mln_point(S)> to_p_array(const Point_Set<S>& pset);
+    p_array<mln_psite(S)> to_p_array(const Point_Set<S>& pset);
 
 
     /// Convert a window \p win centered at point \p p into a p_array
     /// (point set vector).
     template <typename W>
-    p_array<mln_point(W)> to_p_array(const Window<W>& win,
-				     const mln_point(W)& p);
+    p_array<mln_psite(W)> to_p_array(const Window<W>& win,
+				     const mln_psite(W)& p);
 
 
 
@@ -60,10 +60,10 @@ namespace mln
 
     template <typename S>
     inline
-    p_array<mln_point(S)> to_p_array(const Point_Set<S>& pset_)
+    p_array<mln_psite(S)> to_p_array(const Point_Set<S>& pset_)
     {
       const S& pset = exact(pset_);
-      p_array<mln_point(S)> v;
+      p_array<mln_psite(S)> v;
       v.reserve(pset.npoints());
       mln_fwd_piter(S) p(pset);
       for_all(p)
@@ -73,10 +73,10 @@ namespace mln
 
     template <typename W>
     inline
-    p_array<mln_point(W)> to_p_array(const Window<W>& win,
-				     const mln_point(W)& p)
+    p_array<mln_psite(W)> to_p_array(const Window<W>& win,
+				     const mln_psite(W)& p)
     {
-      p_array<mln_point(W)> v;
+      p_array<mln_psite(W)> v;
       v.reserve(exact(win).ndpoints());
       mln_qiter(W) q(win, p);
       for_all(q)

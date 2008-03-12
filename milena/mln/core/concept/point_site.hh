@@ -338,6 +338,8 @@ namespace mln
     return tmp;
   }
 
+  // FIXME: We shall not rely on a point object associted to the point
+  // site!  (Such an object does not always exist.)
   template <typename P>
   inline
   std::ostream& operator<<(std::ostream& ostr, const Point_Site<P>& p_)

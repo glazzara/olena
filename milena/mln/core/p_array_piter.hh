@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,8 @@
 #ifndef MLN_CORE_P_ARRAY_PITER_HH
 # define MLN_CORE_P_ARRAY_PITER_HH
 
-/*! \file mln/core/p_array_piter.hh
- *
- * \brief Definition of point iterators on mln::p_array.
- */
+/// \file mln/core/p_array_piter.hh
+/// \brief Definition of point iterators on mln::p_array.
 
 # include <mln/core/p_array.hh>
 
@@ -39,28 +37,34 @@
 namespace mln
 {
 
-  /*! \brief Forward iterator on points of a p_array<P>.
-   *
-   */
+  /// \brief Forward iterator on points of a p_array<P>.
   template <typename P>
-  struct p_array_fwd_piter_ : public internal::point_iterator_base_< P, p_array_fwd_piter_<P> >
+  struct p_array_fwd_piter_
+    : public internal::point_iterator_base_< P, p_array_fwd_piter_<P> >
   {
     typedef p_array_fwd_piter_<P> self_;
     typedef internal::point_iterator_base_< P, self_ > super_;
   public:
-    
-    // Make definitions from super class available.
+    /// The associated psite type.
+    typedef P psite;
+
+    /// The associated point type.
+    typedef mln_point(P) point;
+
     enum { dim = super_::dim };
 
     /// Coordinate associated type.
     template <typename S>
     p_array_fwd_piter_(const Point_Set<S>& s);
 
+    /// Reference of the corresponding psite.
+    const psite& to_psite() const;
+
     /// Reference of the corresponding point.
-    const P& to_point() const;
+    const point& to_point() const;
 
     /// Read-only access to the \p i-th coordinate.
-    mln_coord(P) operator[](unsigned i) const;
+    mln_coord(point) operator[](unsigned i) const;
 
     /// Test if the iterator is valid.
     bool is_valid() const;
@@ -74,39 +78,46 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-    /// Convert the iterator into a point.
-    operator P() const;
+    /// Convert the iterator into a psite.
+    operator psite() const;
 
   protected:
     const std::vector<P>& vect_;
-    unsigned i_; // FIXME: Why it's unsigned in fwd iterator and signed in the bkd one ?
-    P p_;
+    // FIXME: Why it's unsigned in fwd iterator and signed in the bkd one ?
+    unsigned i_;
+    psite p_;
   };
 
 
 
-  /*! \brief Backward iterator on points of a p_array<P>.
-   *
-   */
+  /// \brief Backward iterator on points of a p_array<P>.
   template <typename P>
-  struct p_array_bkd_piter_ : public internal::point_iterator_base_< P, p_array_bkd_piter_<P> >
+  struct p_array_bkd_piter_
+    : public internal::point_iterator_base_< P, p_array_bkd_piter_<P> >
   {
     typedef p_array_bkd_piter_<P> self_;
     typedef internal::point_iterator_base_< P, self_ > super_;
   public:
-    
-    // Make definitions from super class available.
+    /// The associated psite type.
+    typedef P psite;
+
+    /// The associated point type.
+    typedef mln_point(P) point;
+
     enum { dim = super_::dim };
 
     /// Coordinate associated type.
     template <typename S>
     p_array_bkd_piter_(const Point_Set<S>& s);
 
+    /// Reference of the corresponding psite.
+    const psite& to_psite() const;
+
     /// Reference of the corresponding point.
-    const P& to_point() const;
+    const point& to_point() const;
 
     /// Read-only access to the \p i-th coordinate.
-    mln_coord(P) operator[](unsigned i) const;
+    mln_coord(point) operator[](unsigned i) const;
 
     /// Test if the iterator is valid.
     bool is_valid() const;
@@ -120,20 +131,28 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-    /// Convert the iterator into a point.
-    operator P() const;
+    /// Convert the iterator into a psite.
+    operator psite() const;
 
   protected:
     const std::vector<P>& vect_;
+    /* FIXME: See the comment on p_array_fwd_piter_<P>::i_ above.  We
+       could turn this `int' into an `unsigned'.  Then,
+       - setting the value of i_ to -1 (== UINT_MAX) in invalidate(),
+       - and having valid() test whether i_ is strictly smaller than
+         vect_.size()
+       should work in both iterators (fwd and bkd).  */
     int i_;
-    P p_;
+    psite p_;
   };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // p_array_fwd_piter_<P>
+  /*------------------------.
+  | p_array_fwd_piter_<P>.  |
+  `------------------------*/
 
   template <typename P>
   template <typename S>
@@ -147,19 +166,27 @@ namespace mln
   template <typename P>
   inline
   const P&
-  p_array_fwd_piter_<P>::to_point() const
+  p_array_fwd_piter_<P>::to_psite() const
   {
     return p_;
   }
 
   template <typename P>
   inline
-  mln_coord(P)
+  const mln_point(P)&
+  p_array_fwd_piter_<P>::to_point() const
+  {
+    return p_.to_point();
+  }
+
+  template <typename P>
+  inline
+  mln_coord(mln_point_(P))
   p_array_fwd_piter_<P>::operator[](unsigned i) const
   {
     mln_precondition(i < dim);
     mln_precondition(is_valid());
-    return p_[i];
+    return p_.to_point()[i];
   }
 
   template <typename P>
@@ -207,7 +234,9 @@ namespace mln
   }
 
 
-  // p_array_bkd_piter_<P>
+  /*------------------------.
+  | p_array_bkd_piter_<P>.  |
+  `------------------------*/
 
   template <typename P>
   template <typename S>
@@ -221,19 +250,27 @@ namespace mln
   template <typename P>
   inline
   const P&
-  p_array_bkd_piter_<P>::to_point() const
+  p_array_bkd_piter_<P>::to_psite() const
   {
     return p_;
   }
 
   template <typename P>
   inline
-  mln_coord(P)
+  const mln_point(P)&
+  p_array_bkd_piter_<P>::to_point() const
+  {
+    return p_.to_point();
+  }
+
+  template <typename P>
+  inline
+  mln_coord(mln_point_(P))
   p_array_bkd_piter_<P>::operator[](unsigned i) const
   {
     mln_precondition(i < dim);
     mln_precondition(is_valid());
-    return p_[i];
+    return p_.to_point()[i];
   }
 
   template <typename P>

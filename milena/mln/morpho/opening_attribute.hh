@@ -35,7 +35,7 @@
 
 # include <mln/morpho/includes.hh>
 # include <mln/canvas/morpho/algebraic_union_find.hh>
-# include <mln/level/sort_points.hh>
+# include <mln/level/sort_psites.hh>
 # include <mln/util/pix.hh>
 
 
@@ -66,7 +66,7 @@ namespace mln
 		typename I_, typename N_, typename O_>
       struct opening_attribute_t
       {
-	typedef mln_point(I_) P;
+	typedef mln_psite(I_) P;
 
 	// requirements from mln::canvas::morpho::algebraic_union_find
 
@@ -108,7 +108,7 @@ namespace mln
 	opening_attribute_t(const I_& input, const N_& nbh,
 			    mln_result(A) lambda, O_& output)
 	  : input(input), nbh(nbh), lambda(lambda), output(output),
-	    s(level::sort_points_decreasing(input))
+	    s(level::sort_psites_decreasing(input))
 	{
 	}
 

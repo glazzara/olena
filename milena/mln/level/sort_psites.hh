@@ -25,15 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_SORT_POINTS_HH
-# define MLN_LEVEL_SORT_POINTS_HH
+#ifndef MLN_LEVEL_SORT_PSITES_HH
+# define MLN_LEVEL_SORT_PSITES_HH
 
-/*! \file mln/level/sort_points.hh
+/*! \file mln/level/sort_psites.hh
  *
- * \brief Sort_Points the contents of an image into another one.
+ * \brief Sort_Psites the contents of an image into another one.
  *
  * \todo Factor code + optimize.
  */
+
+/* FIXME: Factor with mln/level/sort_points.hh, if needed (maybe wait
+   for the upcoming big changes regarding types associated to images
+   (point -> site, etc.).  */
 
 # include <algorithm>
 
@@ -48,7 +52,7 @@ namespace mln
   namespace level
   {
 
-    /*! Sort points the image \p input through a function \p f to set
+    /*! Sort psites the image \p input through a function \p f to set
      *  the \p output image in increasing way.
      *
      * \param[in] input The input image.
@@ -56,9 +60,9 @@ namespace mln
      * \pre \p input.has_data
      */
     template <typename I>
-    p_array<mln_point(I)> sort_points_increasing(const Image<I>& input);
+    p_array<mln_psite(I)> sort_psites_increasing(const Image<I>& input);
 
-    /*! Sort points the image \p input through a function \p f to set
+    /*! Sort psites the image \p input through a function \p f to set
      *  the \p output image in decreasing way.
      *
      * \param[in] input The input image.
@@ -66,7 +70,7 @@ namespace mln
      * \pre \p input.has_data
      */
     template <typename I>
-    p_array<mln_point(I)> sort_points_decreasing(const Image<I>& input);
+    p_array<mln_psite(I)> sort_psites_decreasing(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -77,19 +81,19 @@ namespace mln
       // utility
 
       template <typename I>
-      struct value_point_less_
+      struct value_psite_less_
       {
 	const I& ima_;
 
 	inline
-	value_point_less_(const I& ima)
+	value_psite_less_(const I& ima)
 	  : ima_(ima)
 	{
 	}
 
 	inline
-	bool operator()(const mln_point(I)& lhs,
-			const mln_point(I)& rhs) const
+	bool operator()(const mln_psite(I)& lhs,
+			const mln_psite(I)& rhs) const
 	{
 	  return ima_(lhs) < ima_(rhs) || (ima_(lhs) == ima_(rhs)
 					   && lhs < rhs);
@@ -97,19 +101,19 @@ namespace mln
       };
 
       template <typename I>
-      struct value_point_greater_
+      struct value_psite_greater_
       {
 	const I& ima_;
 
 	inline
-	value_point_greater_(const I& ima)
+	value_psite_greater_(const I& ima)
 	  : ima_(ima)
 	{
 	}
 
 	inline
-	bool operator()(const mln_point(I)& lhs,
-			const mln_point(I)& rhs) const
+	bool operator()(const mln_psite(I)& lhs,
+			const mln_psite(I)& rhs) const
 	{
 	  return ima_(lhs) > ima_(rhs) || (ima_(lhs) == ima_(rhs)
 					   && lhs > rhs);
@@ -121,20 +125,20 @@ namespace mln
 
       template <typename I>
       inline
-      p_array<mln_point(I)>
-      sort_points_increasing_(trait::image::quant::any, // general case
+      p_array<mln_psite(I)>
+      sort_psites_increasing_(trait::image::quant::any, // general case
 			      const I& input)
       {
-	p_array<mln_point(I)> v = convert::to_p_array(input.domain());
+	p_array<mln_psite(I)> v = convert::to_p_array(input.domain());
 	std::sort(v.hook_().begin(), v.hook_().end(),
-		  value_point_less_<I>(input));
+		  value_psite_less_<I>(input));
 	return v;
       }
 
       template <typename I>
       inline
-      p_array<mln_point(I)>
-      sort_points_increasing_(trait::image::quant::low, // low quantization
+      p_array<mln_psite(I)>
+      sort_psites_increasing_(trait::image::quant::low, // low quantization
 			      const I& input)
       {
 	typedef mln_vset(I) S;
@@ -151,12 +155,12 @@ namespace mln
 	  loc[i] = loc[i-1] + h[i-1];
 
 	// computing output data
-	std::vector<mln_point(I)> vec(input.npoints());
+	std::vector<mln_psite(I)> vec(input.npoints());
 	mln_fwd_piter(I) p(input.domain());
 	for_all(p)
 	  vec[loc[vset.index_of(input(p))]++] = p;
 
-	p_array<mln_point(I)> v(vec);
+ 	p_array<mln_psite(I)> v(vec);
 	return v;
       }
 
@@ -165,20 +169,20 @@ namespace mln
 
       template <typename I>
       inline
-      p_array<mln_point(I)>
-      sort_points_decreasing_(trait::image::quant::any, // general case
+      p_array<mln_psite(I)>
+      sort_psites_decreasing_(trait::image::quant::any, // general case
 			      const I& input)
       {
-	p_array<mln_point(I)> v = convert::to_p_array(input.domain());
+	p_array<mln_psite(I)> v = convert::to_p_array(input.domain());
 	std::sort(v.hook_().begin(), v.hook_().end(),
-		  value_point_greater_<I>(input));
+		  value_psite_greater_<I>(input));
 	return v;
       }
 
       template <typename I>
       inline
-      p_array<mln_point(I)>
-      sort_points_decreasing_(trait::image::quant::low, // low quantization
+      p_array<mln_psite(I)>
+      sort_psites_decreasing_(trait::image::quant::low, // low quantization
 			      const I& input)
       {
 	typedef mln_vset(I) S;
@@ -195,12 +199,12 @@ namespace mln
 	  loc[i] = loc[i+1] + h[i+1];
 
 	// computing output data
-	std::vector<mln_point(I)> vec(input.npoints());
+	std::vector<mln_psite(I)> vec(input.npoints());
 	mln_fwd_piter(I) p(input.domain());
 	for_all(p)
 	  vec[loc[vset.index_of(input(p))]++] = p;
 
-	p_array<mln_point(I)> v(vec);
+ 	p_array<mln_psite(I)> v(vec);
 	return v;
       }
 
@@ -212,21 +216,21 @@ namespace mln
 
     template <typename I>
     inline
-    p_array<mln_point(I)>
-    sort_points_increasing(const Image<I>& input)
+    p_array<mln_psite(I)>
+    sort_psites_increasing(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      return impl::sort_points_increasing_(mln_trait_image_quant(I)(),
+      return impl::sort_psites_increasing_(mln_trait_image_quant(I)(),
 					   exact(input));
     }
 
     template <typename I>
     inline
-    p_array<mln_point(I)>
-    sort_points_decreasing(const Image<I>& input)
+    p_array<mln_psite(I)>
+    sort_psites_decreasing(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      return impl::sort_points_decreasing_(mln_trait_image_quant(I)(),
+      return impl::sort_psites_decreasing_(mln_trait_image_quant(I)(),
 					   exact(input));
     }
 
@@ -237,4 +241,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_SORT_POINTS_HH
+#endif // ! MLN_LEVEL_SORT_PSITES_HH

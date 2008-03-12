@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -60,11 +60,11 @@ namespace mln
 	typedef typename F::O O;
 	typedef typename F::S S;
 	typedef typename F::A A;
-	typedef mln_point(I) point;
+	typedef mln_psite(I) psite;
 
 	// aux:
 	mln_ch_value(O, bool)  deja_vu;
-	mln_ch_value(O, point) parent;
+	mln_ch_value(O, psite) parent;
 	mln_ch_value(O, A)     data;
 
 	algebraic_union_find(F& f)
@@ -83,6 +83,7 @@ namespace mln
 	    initialize(data, f.input);
 	    f.init();
 	  }
+
 	  // first pass
 	  {
 	    mln_fwd_piter(S) p(f.s);
@@ -116,18 +117,18 @@ namespace mln
 
 	} // end of run()
 
-	void make_set(const point& p)
+	void make_set(const psite& p)
 	{
 	  parent(p) = p;
 	  data(p).take_as_init(make::pix(f.input, p)); // FIXME: algebraic so p!
 	}
 
-	bool is_root(const point& p) const
+	bool is_root(const psite& p) const
 	{
 	  return parent(p) == p;
 	}
 
-	point find_root(const point& x)
+	psite find_root(const psite& x)
 	{
 	  if (parent(x) == x)
 	    return x;
@@ -135,15 +136,15 @@ namespace mln
 	    return parent(x) = find_root(parent(x));
 	}
 
-	bool equiv(const point2d& r, const point2d& p)
+	bool equiv(const psite& r, const psite& p)
 	{
 	  // Either a flat zone or the component of r is still growing.
 	  return f.input(r) == f.input(p) || f.is_active(data(r));
 	}
 
-	void do_union(const point& n, const point& p)
+	void do_union(const psite& n, const psite& p)
 	{
-	  point r = find_root(n);
+	  psite r = find_root(n);
 	  if (r != p)
 	    {
 	      if (equiv(r, p))

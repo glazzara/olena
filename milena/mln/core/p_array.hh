@@ -60,6 +60,11 @@ namespace mln
   class p_array : public internal::point_set_base_< P, p_array<P> >
   {
   public:
+    /// The associated psite type.
+    typedef P psite;
+
+    /// The associated point type.
+    typedef mln_point(P) point;
 
     /// Forward Point_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
@@ -77,13 +82,13 @@ namespace mln
     void reserve(std::size_t n);
 
     /// Test is \p p belongs to this point set.
-    bool has(const P& p) const;
+    bool has(const psite& p) const;
 
     /// Give the number of points.
     std::size_t npoints() const;
 
     /// Give the exact bounding box.
-    const box_<P>& bbox() const;
+    const box_<point>& bbox() const;
 
     /// Append a point \p p.
     p_array<P>& append(const P& p);
@@ -103,7 +108,7 @@ namespace mln
   protected:
 
     std::vector<P> vect_;
-    mutable accu::bbox<P> bb_;
+    mutable accu::bbox<point> bb_;
     mutable bool bb_needs_update_;
 
     void update_bb_() const;
@@ -177,7 +182,7 @@ namespace mln
 
   template <typename P>
   inline
-  const box_<P>&
+  const box_<mln_point(P)>&
   p_array<P>::bbox() const
   {
     mln_precondition(npoints() != 0);
