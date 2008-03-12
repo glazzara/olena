@@ -36,6 +36,8 @@
 
 // FIXME: More doc!
 
+// FIXME: Rename node(s) as vertex (vertices).
+
 
 namespace mln
 {

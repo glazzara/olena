@@ -1,3 +1,35 @@
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix mln::graph_image<P> initializations and associated entitites.
+
+	* mln/core/graph_image.hh: Add some more documentation.
+	(mln::init_(tag::image_t, graph_image<P,V>&, const graph_image<P,V>):
+	Turn the signature of this routine into...
+	(mln::init_(tag::image_t, graph_image<P,V>&, const graph_image<P,W>):
+	...this.
+	Don't copy values from the model.  Instead, initialize with a
+	vector of the same size.
+	(mln::graph_image<P, V>::graph_image(const p_graph<P>&)):
+	s/g.npoints()/g.nnodes()/.
+	(mln::graph_image<P, V>::init_): Ensure there are no data before
+	initializing new ones.
+	* mln/core/graph_psite.hh (mln::graph_psite<P>::graph_psite):
+	New ctor.
+	(mln::graph_psite<P>::pg_): Change the type of this member from
+	const p_graph<P>& to const p_graph<P>*.
+	(mln::graph_psite<P>::graph_psite(const p_graph<P>&, util::node_id))
+	(mln::graph_psite<P>::operator= (const mln::graph_psite<P>&))
+	(mln::graph_psite<P>::to_point):
+	Adjust.
+	(mln::graph_psite<P>::pg): Likewise: ensure member pg_ is not
+	null.
+	(mln::graph_psite<P>::is_valid_): New method.
+	Use it...
+	(mln::graph_psite<P>::operator[]): ...here.
+	(mln::graph_psite<P>::operator P): Remove.
+	(operator==(const graph_psite<P>&, const graph_psite<P>&)): New.
+	* mln/util/graph.hh, mln/util/internal/graph_base.hh: More FIXMEs.
+
 2008-03-10  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Start a site/psite refactorization example.

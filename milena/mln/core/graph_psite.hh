@@ -56,9 +56,9 @@ namespace mln
 
     /// Construction and assignment.
     /// \{
+    graph_psite();
     graph_psite(const p_graph<P>& pg_, unsigned id);
     graph_psite(const self_& rhs);
-    /// \pre This psite must have the same graph point set as \a rhs.
     self_& operator= (const self_& rhs);
     /// \}
 
@@ -67,7 +67,6 @@ namespace mln
 
     /// Access to point.
     /// \{
-    operator P() const;
     const point& to_point() const;
     coord operator[](unsigned id) const;
     /// \}
@@ -78,20 +77,39 @@ namespace mln
     util::node_id id() const;
 
   private:
+    /// Is this psite valid?
+    bool is_valid_() const;
+
+  private:
     /// The p_graph this point site belongs to.
-   const p_graph<P>& pg_;
+   const p_graph<P>* pg_;
     /// The id of the node this psite is pointing towards.
     util::node_id id_;
   };
 
+  /// Compare two mln::graph_psite<P> instances.
+  /* FIXME: Shouldn't this comparison be part of a much general
+     mechanism?  */
+  template <typename P>
+  bool
+  operator==(const graph_psite<P>& lhs, const graph_psite<P>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
   template<typename P>
   inline
+  graph_psite<P>::graph_psite()
+    // Dummy initializations.
+    : pg_(0),
+      id_(-1)
+  {
+  }
+
+  template<typename P>
+  inline
   graph_psite<P>::graph_psite(const p_graph<P>& g, util::node_id id)
-    : pg_(g),
+    : pg_(&g),
       id_(id)
   {
   }
@@ -111,11 +129,17 @@ namespace mln
   {
     if (&rhs == this)
       return *this;
-    // Assigning a psite from a graph point set to a psite from
-    // another graph point set is meaningless.
-    mln_assertion(&pg_ == &rhs.pg_);
+    pg_ = rhs.pg_;
     id_ = rhs.id_;
     return *this;
+  }
+
+  template<typename P>
+  inline
+  bool
+  graph_psite<P>::is_valid_() const
+  {
+    return pg_ && id_ < pg_->gr_.nnodes();
   }
 
   template<typename P>
@@ -128,17 +152,10 @@ namespace mln
 
   template<typename P>
   inline
-  graph_psite<P>::operator P() const
-  {
-    return pg_.point_from_id(id_);
-  }
-
-  template<typename P>
-  inline
   const P&
   graph_psite<P>::to_point() const
   {
-    return pg_.point_from_id(id_);
+    return pg().point_from_id(id_);
   }
 
   template<typename P>
@@ -146,6 +163,7 @@ namespace mln
   mln_coord(P)
   graph_psite<P>::operator[](unsigned i) const
   {
+    mln_assertion(is_valid_());
     return to_point()[i];
   }
 
@@ -154,7 +172,8 @@ namespace mln
   const p_graph<P>&
   graph_psite<P>::pg() const
   {
-    return pg_;
+    mln_assertion(pg_);
+    return *pg_;
   }
 
   template<typename P>
@@ -164,6 +183,14 @@ namespace mln
   {
     return id_;
   }
+
+  template <typename P>
+  bool
+  operator==(const graph_psite<P>& lhs, const graph_psite<P>& rhs)
+  {
+    return &lhs.pg() == &rhs.pg() && lhs.id() == rhs.id();
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -39,6 +39,8 @@
 # include <algorithm>
 # include <mln/util/ordpair.hh>
 
+// FIXME: Rename node(s) as vertex (vertices).
+
 namespace mln
 {
 

@@ -90,20 +90,21 @@ namespace mln
 
   } // end of namespace mln::trait
 
-  /*! \brief Kind of image based on graph structure.
-   *
-   */
+
+  /// \brief Image based on a line graph.
+  ///
+  /// Values are stored on the edges of the graph, not on its vertices.
   template <typename P, typename V>
   struct graph_image :
     public internal::image_primary_< p_graph<P>, graph_image<P, V> >
   {
-
+    /// Super type.
     typedef mln::internal::image_base_< p_graph<P>, graph_image<P, V> > super_;
 
     /// Value associated type.
     typedef V value;
 
-    /// Return type of read-write access.
+    /// \brief Return type of read-write access.
     ///
     /// We use the associated type \c reference instead of a plain
     /// reference on th value type (\v V), because it's the only way
@@ -116,7 +117,6 @@ namespace mln
 
     /// Value set associated type.
     typedef mln::value::set<value> vset;
-
 
     /// Skeleton.
     typedef graph_image< tag::psite_<P>, tag::value_<V> > skeleton;
@@ -160,9 +160,9 @@ namespace mln
 };
 
   // Fwd decl.
-  template <typename P, typename V>
+  template <typename P, typename V, typename W>
   void init_(tag::image_t,
-	     graph_image<P, V>& target, const graph_image<P, V>& model);
+	     graph_image<P, V>& target, const graph_image<P, W>& model);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -171,12 +171,13 @@ namespace mln
   | Initialization.  |
   `-----------------*/
 
-  template <typename P, typename V>
+  template <typename P, typename V, typename W>
   inline
   void init_(tag::image_t,
-	     graph_image<P, V>& target, const graph_image<P, V>& model)
+	     graph_image<P, V>& target, const graph_image<P, W>& model)
   {
-    target.init_(model.domain(), model.node_values ());
+    target.init_(model.domain(),
+		 std::vector<V>(model.node_values().size()));
   }
 
   /*-------.
@@ -210,7 +211,7 @@ namespace mln
   inline
   graph_image<P, V>::graph_image(const p_graph<P>& g)
   {
-    init_(g, std::vector<V>(g.npoints()));
+    init_(g, std::vector<V>(g.nnodes()));
   }
 
   template <typename P, typename V>
@@ -225,11 +226,7 @@ namespace mln
   void
   graph_image<P, V>::init_(const p_graph<P>& g, const std::vector<V>& val)
   {
-    /* FIXME: We leak memory here: calling init_ twice loses the
-       previous content pointed by data_.
-
-       We should definitely write down formal guidelines on
-       initialization and memory management in general!  */
+    mln_precondition(! this->has_data());
     this->data_ = new internal::data_< graph_image<P, V> > (g, val);
   }
 
