@@ -1,4 +1,3 @@
-
 // Copyright (C) 2001, 2002, 2003, 2004 EPITA Research and Development
 // Laboratory
 //
@@ -40,6 +39,8 @@
 # include <mln/level/paste.hh>
 # include <mln/geom/ncols.hh>
 # include <mln/geom/nrows.hh>
+
+# include <mln/algebra/vec.hh>
 
 # include <vector>
 # include <cmath>
@@ -209,7 +210,7 @@ namespace mln
 
 	// Non causal part
 
-	tmp2[len - 1] = 0;
+	tmp2[len - 1] = WorkType(); // FIXME : = 0, literal::zero ...?
 
 	tmp2[len - 2] =
 	  c.nm[1] * ima(finish);
@@ -260,7 +261,7 @@ namespace mln
 
 	// Apply on rows.
 	for (unsigned j = 0; j < geom::ncols(img); ++j)
-	  recursivefilter_<float>(img, coef,
+	  recursivefilter_< mln_value(I) >(img, coef,
 				  make::point2d(-img.border(), j),
 				  make::point2d(geom::nrows(img) - 1 + img.border(), j),
 				  geom::nrows(img) + 2 * img.border(),
@@ -268,7 +269,7 @@ namespace mln
 
 	// Apply on columns.
 	for (unsigned i = 0; i < geom::nrows(img); ++i)
-	  recursivefilter_<float>(img, coef,
+	  recursivefilter_< mln_value(I) >(img, coef,
 				  make::point2d(i, -img.border()),
 				  make::point2d(i, geom::ncols(img) - 1 + img.border()),
 				  geom::ncols(img) + 2 * img.border(),
@@ -280,41 +281,65 @@ namespace mln
       template <class I, class F, class O>
       inline
       void
-      gaussian_common_(const Image<I>& in,
+      gaussian_common_(trait::value::nature::scalar,
+                       const Image<I>& in,
 		       const F& coef,
 		       float sigma,
-		       Image<O>& out)
+                       Image<O>& out)
       {
-	mln_ch_value(O, float) work_img(exact(in).domain());
-	level::paste(in, work_img);
-
-	// On tiny sigma, Derich algorithm doesn't work.
-	// It is the same thing that to convolve with a Dirac.
-	if (sigma > 0.006)
-	  gaussian_(work_img, coef);
-	/* Convert the result image to the user-requested datatype.
-	   FIXME: We are making an unnecessary copy in case the
-	   user expects a ntg::float_s image.  */
-	level::paste(work_img, out);
+      	mln_ch_value(O, float) work_img(exact(in).domain());
+      	level::paste(in, work_img);
+      
+      	// On tiny sigma, Derich algorithm doesn't work.
+      	// It is the same thing that to convolve with a Dirac.
+      	if (sigma > 0.006)
+      	  gaussian_(work_img, coef);
+      	/* Convert the result image to the user-requested datatype.
+      	   FIXME: We are making an unnecessary copy in case the
+      	   user expects a ntg::float_s image.  */
+      	level::paste(work_img, out);
       }
 
-    } // end of namespace mln::linear::impl
 
+      template <class I, class F, class O>
+      inline
+      void
+      gaussian_common_(trait::value::nature::vectorial,
+                       const Image<I>& in,
+		       const F& coef,
+		       float sigma,
+                       Image<O>& out)
+      {
+        // typedef algebra::vec<3, float> vec3f;
+        // mln_ch_value(O, vec3f) work_img(exact(in).domain());
+        // FIXME : paste does not work (rgb8 -> vec3f).
+        level::paste(in, out);
+
+	if (sigma > 0.006)
+	  gaussian_(out, coef);
+      }
+      
+    } // end of namespace mln::linear::impl
+    
     // Facade.
 
     template <class I, class O>
     inline
     void
     gaussian(const Image<I>& input, float sigma,
-	     Image<O>& output)
+	     Image<O>& out)
     {
+      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(output).has_data());
+      
       impl::recursivefilter_coef_
 	coef(1.68f, 3.735f,
 	     1.783f, 1.723f,
 	     -0.6803f, -0.2598f,
 	     0.6318f, 1.997f,
 	     sigma);
-      impl::gaussian_common_(input, coef, sigma, output);
+      impl::gaussian_common_(mln_trait_value_nature(mln_value(I))(),
+                             input, coef, sigma, out);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

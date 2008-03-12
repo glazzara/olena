@@ -38,6 +38,7 @@
 #include <mln/level/all.hh>
 
 #include <mln/io/pgm/load.hh>
+#include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
 
 //#include "tests/data.hh"
@@ -47,10 +48,19 @@ int main(int argc, char **)
   using namespace mln;
   using value::int_u8;
  
-  typedef image2d<int_u8> I;
-  
-  I lena;
-  io::pgm::load(lena, "../../img/lena.pgm");
+  { 
+    image2d<int_u8> lena;
+    io::pgm::load(lena, "../../img/lena.pgm");
+    io::pbm::save(binarization::thresholding(lena, argc), "out1.pgm");
+  }
 
-  io::pbm::save(binarization::thresholding(lena, argc), "out1.pgm");
+  {
+    image2d<int_u8> l;
+    image2d<int> lena;
+    io::pgm::load(l, "../../img/lena.pgm");
+    
+    level::paste(l, lena);
+    
+    io::pbm::save(binarization::thresholding(lena, argc), "out2.pgm");
+  }
 }

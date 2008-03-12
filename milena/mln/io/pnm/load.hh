@@ -76,13 +76,14 @@ namespace mln
 	v.blue() = c;
       }
 
+      
       //read a scalar value (sizeof(int_u8) != 1)
       template <class V>
       inline
       void read_value(std::ifstream& file,
 		      V& v)
       {
-	typedef typename V::enc E;
+	typedef typename V::enc E; // FIXME : if V = int
 
 	E c;
 	file.read((char*)(&c), sizeof(E));

@@ -10,5 +10,8 @@ sub:
 gsub:
 	g++ gaussian_subsampling.cc $(FLAG) -o '+gsub.exe'
 
+gau:
+	g++ gaussian.cc $(FLAG) -o '+gau.exe'
+
 run:
 	time ./+sub.exe . . ; time ./+gsub.exe . .

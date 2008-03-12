@@ -46,7 +46,7 @@ namespace mln
      *
      *
      */
-    template <typename I>
+    template <typename I, template J>
     inline
     void
     icp(const Image<I>& cloud,
@@ -56,8 +56,6 @@ namespace mln
 
     namespace impl
     {
-
-      //FIXME : add version for every image types.
 
       template <typename I, typename J>
       inline
@@ -74,18 +72,16 @@ namespace mln
         quat old_qk, qk;
         unsigned int k;
 
-
         k = 0;
         Pk = P;
         do {
           //projection
           
           old_qk = qk;
-          
           //qk = match(P, mu_P, Xk, mu_Xk);
 
-          // error = 
-          
+          // error =
+          ++k;
         } while (k < 3 || (qk - old_qk).sqr_norm() > epsilon);
 
         
@@ -94,7 +90,8 @@ namespace mln
 
     } // end of namespace mln::registration::impl
 
-
+    
+    // this version could convert image cloud in a vector of point?
     template <typename I, typename J>
     inline
     void
@@ -105,12 +102,12 @@ namespace mln
       mln_precondition(exact(cloud).has_data());
       mln_precondition(exact(surface).has_data());
 
+
+      
       output = impl::icp_(exact(cloud), exact(surface));
 
       trace::exiting("registration::icp");
     }
-
-    //cloud == image ?
 
 # endif // ! MLN_INCLUDE_ONLY
 

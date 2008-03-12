@@ -1,3 +1,14 @@
+2008-03-12  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Make the gaussian filter work using algebra::vec.
+
+	* mln/linear/gaussian.hh: use algebra::vec.
+	* mln/io/pnm/load.hh: comments.
+	* sandbox/jardonnet/test/Makefile: test.
+	* sandbox/jardonnet/test/gaussian.cc: test.
+	* sandbox/jardonnet/TODO: New.
+	* sandbox/jardonnet/icc.txt: New.
+
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add more documentation to forward iterators on graph neighborhoods

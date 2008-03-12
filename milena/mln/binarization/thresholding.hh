@@ -66,6 +66,7 @@ namespace mln
     thresholding(const Image<I>& input, const mln_value(I) threshold)
     {
       trace::entering("binarization::thresholding");
+  
       mln_precondition(exact(input).has_data());
       mlc_is(mln_trait_value_nature(mln_value(I)),
 	     trait::value::nature::scalar)::check();
