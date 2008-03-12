@@ -34,7 +34,6 @@
 # include <mln/util/graph.hh>
 # include <mln/core/line_graph_psite.hh>
 # include <mln/core/p_line_graph_piter.hh>
-# include <mln/core/point_pair.hh>
 
 /* FIXME: This class shares a lot with p_graph.  Factor as much as
    possible.  */
@@ -45,17 +44,9 @@
 
 namespace mln
 {
-
-  // FIXME: Dummy specialization, only to have this first version of
-  // our code compile.
-  template <typename P>
-  struct box_< point_pair<P> > : public Box< box_<P> >
-  {
-    // Nothing.
-  };
-
-
-  template<typename P> class p_line_graph_piter_;
+  /* FIXME: Contray to, e.g., p_array, the sole parameter P of
+     p_line_graph is expected to be a point, not a psite!!  We should
+     have a uniform scheme for point site sets.  */
 
   template<typename P>
   struct p_line_graph
@@ -69,24 +60,24 @@ namespace mln
     /// Point_Site associated type.
     typedef line_graph_psite<P> psite;
 
-    /// Point associated type.
-    typedef point_pair<P> point;
-
     /// Forward Point_Iterator associated type.
-    typedef p_line_graph_piter_<P> fwd_piter;
+    typedef p_line_graph_fwd_piter_<P> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef p_line_graph_piter_<P> bkd_piter;
+    typedef p_line_graph_bkd_piter_<P> bkd_piter;
 
-    /// Return The number of points (i.e., nodes) in the graph.
+    /// Return The number of points (sites) of the set, i.e., the
+    /// number of \em edges, since this is a point set based on a line
+    /// graph.
     std::size_t npoints() const;
 
-    /// Return The number of lines (i.e., edges) in the graph.
-    std::size_t nlines() const;
+    /// Return The number of nodes (vertices) in the graph.
+    std::size_t nnodes() const;
+    /// Return The number of edges in the graph.
+    std::size_t nedges() const;
 
     /// Give the exact bounding box.
-    // FIXME: Dummy.
-    const box_<point>& bbox() const;
+    const box_<P>& bbox() const;
 
     bool has(const psite& p) const;
 
@@ -95,11 +86,19 @@ namespace mln
     // FIXME: (Roland) Is it really useful/needed?
     /* 2007-12-19: It seems so, since graph_image must implement a
        method named bbox().  Now the question is: should each image
-       type have a bounding box?  In particular, an image whose sites
-       are actually /pairs of points/! */
-    // FIXME: Dummy.
-    box_<point> bb_;
+       type have a bounding box?  */
+    box_<P> bb_;
   };
+
+
+  /// \brief Comparison between two mln::p_line_graph's.
+  ///
+  /// Two mln::p_line_graph's are considered equal if they have the
+  /// same address.
+  template <typename P>
+  bool
+  operator==(const p_line_graph<P>& lhs, const p_line_graph<P>& rhs);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -108,22 +107,26 @@ namespace mln
   p_line_graph<P>::p_line_graph (util::graph<P>& gr)
     : gr_ (gr)
   {
-    // FIXME: Dummy initialization of bb_.
-//     // FIXME: Warning: if the underlying graph is updated later, this
-//     // won't be taken into account by this p_line_graph!
-//     accu::bbox<point> a;
-//     for (util::edge_id e = 0; e < nlines(); ++e)
-//       a.take(point(gr_.node_data(gr_.edge(e).n1()),
-// 		   gr_.node_data(gr_.edge(e).n2())));
-//     bb_ = a.to_result();
+    // FIXME: Warning: if the underlying graph is updated later, this
+    // won't be taken into account by this p_line_graph!
+    accu::bbox<P> a;
+    for (unsigned i = 0; i < nnodes(); ++i)
+      a.take(gr_.node_data(i));
+    bb_ = a.to_result();
   }
 
-  // FIXME: Rename to npsites?  In fact, this depends on the
-  // interface expected from models of Point_Sets.
   template<typename P>
   inline
   std::size_t
   p_line_graph<P>::npoints() const
+  {
+    return nedges();
+  }
+
+  template<typename P>
+  inline
+  std::size_t
+  p_line_graph<P>::nnodes() const
   {
     return this->gr_.nnodes();
   }
@@ -131,14 +134,14 @@ namespace mln
   template<typename P>
   inline
   std::size_t
-  p_line_graph<P>::nlines() const
+  p_line_graph<P>::nedges() const
   {
     return this->gr_.nedges();
   }
 
   template<typename P>
   inline
-  const box_< point_pair<P> >&
+  const box_<P>&
   p_line_graph<P>::bbox() const
   {
     return bb_;
@@ -154,6 +157,14 @@ namespace mln
       (&p.plg() == this) &&
       // Check that the edge id of P belongs to the range of valid edge ids.
       (p.id() < gr_.nedges());
+  }
+
+
+  template <typename P>
+  bool
+  operator==(const p_line_graph<P>& lhs, const p_line_graph<P>& rhs)
+  {
+    return &lhs == &rhs;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

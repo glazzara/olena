@@ -31,12 +31,9 @@
 # include <mln/core/internal/point_iterator_base.hh>
 # include <mln/core/p_line_graph.hh>
 # include <mln/core/line_graph_psite.hh>
-# include <mln/core/point_pair.hh>
 
-/*! \file mln/core/p_line_graph_piter.hh
- *
- * \brief Definition of point iterator on graph-based point set.
- */
+/// \file mln/core/p_line_graph_piter.hh
+/// \brief Definition of point iterator on line graph-based point set.
 
 namespace mln
 {
@@ -45,66 +42,75 @@ namespace mln
   template<typename P> class line_graph_psite;
 
 
-  // FIXME: Why `p_line_graph_piter_' and not `p_line_graph_piter'
-  // (without `_')?
+  /*-----------------------------.
+  | p_line_graph_fwd_piter_<P>.  |
+  `-----------------------------*/
 
+  /// \brief Forward iterator on point sites of a mln::p_line_graph<P>.
   template<typename P>
-  class p_line_graph_piter_
-    : public internal::point_iterator_base_< P, p_line_graph_piter_<P> >
+  class p_line_graph_fwd_piter_
+    : public internal::point_iterator_base_< P, p_line_graph_fwd_piter_<P> >
   {
-    typedef p_line_graph_piter_<P> self_;
+    typedef p_line_graph_fwd_piter_<P> self_;
     typedef internal::point_iterator_base_< P, self_ > super_;
 
-  public:
-    
+  public:    
     // Make definitions from super class available.
     enum { dim = super_::dim };
+
     typedef line_graph_psite<P> psite;
-    typedef point_pair<P> point;
-    typedef mln_coord(point_pair<P>) coord;
+    typedef P point;
+    typedef mln_coord(point) coord;
 
-    p_line_graph_piter_(const p_line_graph<P>& plg);
+    /// Construction and assignment.
+    /// \{
+    p_line_graph_fwd_piter_(const p_line_graph<P>& plg);
+    p_line_graph_fwd_piter_(const self_& rhs);
+    self_& operator= (const self_& rhs);
+    /// \}
 
-    /// Read-only access to the \p i-th coordinate.
-    mln_coord(point) operator[](unsigned i) const;
-
+    /// Manipulation.
+    /// \{
     /// Test if the iterator is valid.
     bool is_valid() const;
-
     /// Invalidate the iterator.
     void invalidate();
-
     /// Start an iteration.
     void start();
 
     /// Go to the next point.
     void next_();
-
     /// Update the internal data of the iterator.
     void update_();
+    /// \}
 
+    /// Conversion and accessors.
+    /// \{
     /// Reference to the corresponding point.
+    // FIXME: Dummy.
     const point& to_point () const;
-
     /// Reference to the corresponding point site.
     const psite& to_psite () const;
-
-    /// Convert the iterator into a point.
-    operator point() const;
-
-    /// Convert the iterator into a graph psite.
+    /// Convert the iterator into a line graph psite.
     operator psite() const;
 
-  protected:
+    /// Read-only access to the \a i-th coordinate.
+    coord operator[](unsigned i) const;
+    /// \}
+
+  private:
     /// The p_line_graph this point site belongs to.
-    const p_line_graph<P>& plg_;
+    const p_line_graph<P>* plg_;
     /// The id of the edge this psite is pointing towards.
     util::edge_id id_;
     /// The psite corresponding to this iterator.
     psite psite_;
-    /// The psite corresponding to this iterator.
+    /// The point corresponding to this iterator.
+    /* FIXME: Dummy value.  To be removed as soon as the conversion
+       from psite to point is no longer mandatory.  */
     point p_;
   };
+
 
   /* FIXME: This hand-made delegation is painful.  We should rely on
      the general mechanism provided by Point_Site.  But then again, we
@@ -113,18 +119,101 @@ namespace mln
   template <typename P>
   inline
   std::ostream&
-  operator<<(std::ostream& ostr, const p_line_graph_piter_<P>& p);
+  operator<<(std::ostream& ostr, const p_line_graph_fwd_piter_<P>& p);
+
+
+  /*-----------------------------.
+  | p_line_graph_bkd_piter_<P>.  |
+  `-----------------------------*/
+
+  /// \brief Backward iterator on point sites of a mln::p_line_graph<P>.
+  template<typename P>
+  class p_line_graph_bkd_piter_
+    : public internal::point_iterator_base_< P, p_line_graph_bkd_piter_<P> >
+  {
+    typedef p_line_graph_bkd_piter_<P> self_;
+    typedef internal::point_iterator_base_< P, self_ > super_;
+
+  public:    
+    // Make definitions from super class available.
+    enum { dim = super_::dim };
+
+    typedef line_graph_psite<P> psite;
+    typedef P point;
+    typedef mln_coord(point) coord;
+
+    /// Construction and assignment.
+    /// \{
+    p_line_graph_bkd_piter_(const p_line_graph<P>& plg);
+    p_line_graph_bkd_piter_(const self_& rhs);
+    self_& operator= (const self_& rhs);
+    /// \}
+
+    /// Manipulation.
+    /// \{
+    /// Test if the iterator is valid.
+    bool is_valid() const;
+    /// Invalidate the iterator.
+    void invalidate();
+    /// Start an iteration.
+    void start();
+
+    /// Go to the next point.
+    void next_();
+    /// Update the internal data of the iterator.
+    void update_();
+    /// \}
+
+    /// Conversion and accessors.
+    /// \{
+    /// Reference to the corresponding point.
+    // FIXME: Dummy.
+    const point& to_point () const;
+    /// Reference to the corresponding point site.
+    const psite& to_psite () const;
+    /// Convert the iterator into a line graph psite.
+    operator psite() const;
+
+    /// Read-only access to the \a i-th coordinate.
+    mln_coord(point) operator[](unsigned i) const;
+    /// \}
+
+  protected:
+    /// The p_line_graph this point site belongs to.
+    const p_line_graph<P>* plg_;
+    /// The id of the edge this psite is pointing towards.
+    util::edge_id id_;
+    /// The psite corresponding to this iterator.
+    psite psite_;
+    /// The point corresponding to this iterator.
+    /* FIXME: Dummy value.  To be removed as soon as the conversion
+       from psite to point is no longer mandatory.  */
+    point p_;
+  };
+
+
+  /* FIXME: This hand-made delegation is painful.  We should rely on
+     the general mechanism provided by Point_Site.  But then again, we
+     need to refine/adjust the interface of Point_Site w.r.t. the
+     mandatory conversions to points.  */
+  template <typename P>
+  inline
+  std::ostream&
+  operator<<(std::ostream& ostr, const p_line_graph_bkd_piter_<P>& p);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+  /*-----------------------------.
+  | p_line_graph_fwd_piter_<P>.  |
+  `-----------------------------*/
+
   template<typename P>
   inline
-  p_line_graph_piter_<P>::p_line_graph_piter_(const p_line_graph<P>& plg)
-    : plg_(plg),
+  p_line_graph_fwd_piter_<P>::p_line_graph_fwd_piter_(const p_line_graph<P>& plg)
+    : plg_(&plg),
       // Initialize psite_ to a dummy value.
-      psite_(plg, plg_.nlines()),
-      p_()
+      psite_(plg, -1)
   {
     // Invalidate id_.
     invalidate();
@@ -132,32 +221,55 @@ namespace mln
 
   template<typename P>
   inline
-  mln_coord(point_pair<P>)
-  p_line_graph_piter_<P>::operator[](unsigned i) const
+  p_line_graph_fwd_piter_<P>::p_line_graph_fwd_piter_(const p_line_graph_fwd_piter_<P>& rhs)
+    : plg_(rhs.plg_),
+      id_(rhs.id_),
+      psite_(rhs.psite_)
   {
+  }
+
+  template<typename P>
+  inline
+  p_line_graph_fwd_piter_<P>&
+  p_line_graph_fwd_piter_<P>::operator=(const p_line_graph_fwd_piter_<P>& rhs)
+  {
+    if (&rhs == this)
+      return *this;
+    plg_ = rhs.plg_;
+    id_ = rhs.id_;
+    psite_ = rhs.psite_;
+    return *this;
+  }
+
+  template<typename P>
+  inline
+  mln_coord(P)
+  p_line_graph_fwd_piter_<P>::operator[](unsigned i) const
+  {
+    // Dummy value.
     return p_[i];
   }
 
   template<typename P>
   inline
   bool
-  p_line_graph_piter_<P>::is_valid() const
+  p_line_graph_fwd_piter_<P>::is_valid() const
   {
-    return id_ < plg_.nlines();
+    return plg_ && id_ < plg_->nedges();
   }
 
   template<typename P>
   inline
   void
-  p_line_graph_piter_<P>::invalidate()
+  p_line_graph_fwd_piter_<P>::invalidate()
   {
-    id_ = plg_.nlines();
+    id_ = -1;
   }
 
   template<typename P>
   inline
   void 
-  p_line_graph_piter_<P>::start()
+  p_line_graph_fwd_piter_<P>::start()
   {
     id_ = 0;
     if (is_valid())
@@ -167,7 +279,7 @@ namespace mln
   template<typename P>
   inline
   void 
-  p_line_graph_piter_<P>::next_()
+  p_line_graph_fwd_piter_<P>::next_()
   {
     ++id_;
     if (is_valid())
@@ -177,39 +289,25 @@ namespace mln
   template<typename P>
   inline
   void
-  p_line_graph_piter_<P>::update_()
+  p_line_graph_fwd_piter_<P>::update_()
   {
     // Update psite_.
-    psite_ = line_graph_psite<P>(plg_, id_);
-    // Update p_.
-    // FIXME: These repeated assignments might be very costly.
-    p_ = point(plg_.gr_.node_data(plg_.gr_.edge(id_).n1()),
-	       plg_.gr_.node_data(plg_.gr_.edge(id_).n2()));
+    psite_ = line_graph_psite<P>(*plg_, id_);
   }
 
   template<typename P>
   inline
-  const point_pair<P>&
-  p_line_graph_piter_<P>::to_point() const
+  const P&
+  p_line_graph_fwd_piter_<P>::to_point() const
   {
-    /* We don't check whether the iterator is valid before returning
-       the value using
-
-         mln_precondition(is_valid());
-
-       since this method may be called *before* the iterator is
-       actually initialized.  This is the case for instance when this
-       point iterator (say, P) is used to initialize another iterator
-       on window or neighborhood (say, Q); most of the time, for_all()
-       is responsible for the initialization of P, but it takes place
-       *after* the creation of Q.  */
+    // Dummy value.
     return p_;
   }
 
   template<typename P>
   inline
   const line_graph_psite<P>&
-  p_line_graph_piter_<P>::to_psite() const
+  p_line_graph_fwd_piter_<P>::to_psite() const
   {
     /* We don't check whether the iterator is valid before returning
        the value using
@@ -227,15 +325,7 @@ namespace mln
 
   template<typename P>
   inline
-  p_line_graph_piter_<P>::operator point_pair<P>() const
-  {
-    mln_precondition(is_valid());
-    return p_;
-  }
-
-  template<typename P>
-  inline
-  p_line_graph_piter_<P>::operator line_graph_psite<P>() const
+  p_line_graph_fwd_piter_<P>::operator line_graph_psite<P>() const
   {
     mln_precondition(is_valid());
     return psite_;
@@ -245,9 +335,150 @@ namespace mln
   template <typename P>
   inline
   std::ostream&
-  operator<<(std::ostream& ostr, const p_line_graph_piter_<P>& p)
+  operator<<(std::ostream& ostr, const p_line_graph_fwd_piter_<P>& p)
   {
-    return ostr << p.to_point();
+    // FIXME: We should use p.to_psite() here, but as it lacks the
+    // precondition the conversion operator has, we use the latter.
+    return ostr << static_cast< line_graph_psite<P> >(p);
+  }
+
+
+  /*-----------------------------.
+  | p_line_graph_bkd_piter_<P>.  |
+  `-----------------------------*/
+
+  template<typename P>
+  inline
+  p_line_graph_bkd_piter_<P>::p_line_graph_bkd_piter_(const p_line_graph<P>& plg)
+    : plg_(&plg),
+      // Initialize psite_ to a dummy value.
+      psite_(plg, -1)
+  {
+    // Invalidate id_.
+    invalidate();
+  }
+
+  template<typename P>
+  inline
+  p_line_graph_bkd_piter_<P>::p_line_graph_bkd_piter_(const p_line_graph_bkd_piter_<P>& rhs)
+    : plg_(rhs.plg_),
+      id_(rhs.id_),
+      psite_(rhs.psite_)
+  {
+  }
+
+  template<typename P>
+  inline
+  p_line_graph_bkd_piter_<P>&
+  p_line_graph_bkd_piter_<P>::operator=(const p_line_graph_bkd_piter_<P>& rhs)
+  {
+    if (&rhs == this)
+      return *this;
+    plg_ = rhs.plg_;
+    id_ = rhs.id_;
+    psite_ = rhs.psite_;
+    // FIXME: Probably superfluous.
+//     update_();
+    return *this;
+  }
+
+  template<typename P>
+  inline
+  mln_coord(P)
+  p_line_graph_bkd_piter_<P>::operator[](unsigned i) const
+  {
+    // Dummy value.
+    return p_[i];
+  }
+
+  template<typename P>
+  inline
+  bool
+  p_line_graph_bkd_piter_<P>::is_valid() const
+  {
+    return plg_ && id_ < plg_->nedges();
+  }
+
+  template<typename P>
+  inline
+  void
+  p_line_graph_bkd_piter_<P>::invalidate()
+  {
+    id_ = -1;
+  }
+
+  template<typename P>
+  inline
+  void 
+  p_line_graph_bkd_piter_<P>::start()
+  {
+    id_ = plg_->nedges() - 1;
+    if (is_valid())
+      update_();
+  }
+
+  template<typename P>
+  inline
+  void 
+  p_line_graph_bkd_piter_<P>::next_()
+  {
+    --id_;
+    if (is_valid())
+      update_();
+  }
+
+  template<typename P>
+  inline
+  void
+  p_line_graph_bkd_piter_<P>::update_()
+  {
+    // Update psite_.
+    psite_ = line_graph_psite<P>(*plg_, id_);
+  }
+
+  template<typename P>
+  inline
+  const P&
+  p_line_graph_bkd_piter_<P>::to_point() const
+  {
+    // Dummy value.
+    return p_;
+  }
+
+  template<typename P>
+  inline
+  const line_graph_psite<P>&
+  p_line_graph_bkd_piter_<P>::to_psite() const
+  {
+    /* We don't check whether the iterator is valid before returning
+       the value using
+
+         mln_precondition(is_valid());
+
+       since this method may be called *before* the iterator is
+       actually initialized.  This is the case for instance when this
+       point iterator (say, P) is used to initialize another iterator
+       on window or neighborhood (say, Q); most of the time, for_all()
+       is responsible for the initialization of P, but it takes place
+       *after* the creation of Q.  */
+    return psite_;
+  }
+
+  template<typename P>
+  inline
+  p_line_graph_bkd_piter_<P>::operator line_graph_psite<P>() const
+  {
+    mln_precondition(is_valid());
+    return psite_;
+  }
+
+
+  template <typename P>
+  inline
+  std::ostream&
+  operator<<(std::ostream& ostr, const p_line_graph_bkd_piter_<P>& p)
+  {
+    return ostr << static_cast< line_graph_psite<P> >(p);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -255,4 +486,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_P_LINE_GRAPH_PITER_HH
+#endif // ! MLN_CORE_P_LINE_GRAPH_PITER_HH

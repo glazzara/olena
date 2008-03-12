@@ -1,5 +1,47 @@
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a backward iterator on p_line_graph.
+
+	* mln/core/p_line_graph_piter.hh
+	(p_line_graph_piter_<P>): Rename as...
+	(p_line_graph_fwd_piter_<P>): ...this.
+	(p_line_graph_fwd_piter_<P>::self_): Adjust.
+	(p_line_graph_fwd_piter_<P>::point): Set typedef to P.
+	(p_line_graph_fwd_piter_<P>::coord): Set typedef to
+	mln_coord(point).
+	(p_line_graph_fwd_piter_(const p_line_graph_fwd_piter_&))
+	(operator= (const p_line_graph_fwd_piter_&)):
+	New.
+	(p_line_graph_fwd_piter_<P>::operator point): Remove.
+	(p_line_graph_fwd_piter_<P>::operator psite): New.
+	(p_line_graph_fwd_piter_<P>::plg_):  Change the type of this
+	member from const p_line_graph<P>& to const p_line_graph<P>*.
+	(p_line_graph_fwd_piter_(const p_line_graph<P>&))
+	(p_line_graph_fwd_piter_<P>::is_valid)
+	(p_line_graph_fwd_piter_<P>::invalidate):
+	Adjust.
+	(p_line_graph_fwd_piter_<P>::update_): Don't update member p_.
+	(p_line_graph_bkd_piter_<P>): New.
+	(operator<<(std::ostream&, const p_line_graph_fwd_piter_<P>&))
+	(operator<<(std::ostream&, const p_line_graph_bkd_piter_<P>&))
+	* mln/core/p_line_graph.hh (mln::box_< point_pair<P> >): Remove
+	this specialization.
+	(mln::p_line_graph<P>::point): Remove typedef.
+	(mln::p_line_graph<P>::fwd_piter): Adjust to the new name
+	of mln::p_line_graph_fwd_piter_<P>.
+	(mln::p_line_graph<P>::bkd_piter): New typedef.
+	(mln::p_line_graph<P>::nlines): Rename as...
+	(mln::p_line_graph<P>::nedges): ..this.
+	(mln::p_line_graph<P>::npoints): Rename as...
+	(mln::p_line_graph<P>::nnodes): ...this.
+	(mln::p_line_graph<P>::npoints): New.
+	s/box_<point>/box_<P>/.
+	(mln::p_line_graph<P>::p_line_graph (util::graph<P>&)):
+	Fix the initialization of bb_.
+	(operator==(const p_line_graph<P>&, const p_line_graph<P>&)): New.
+
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a backward iterator on p_graph.
 
 	* mln/core/p_graph_piter.hh
