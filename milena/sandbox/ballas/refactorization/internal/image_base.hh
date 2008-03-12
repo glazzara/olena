@@ -19,6 +19,8 @@ namespace mln
       typedef typename S::fwd_piter fwd_piter;
       typedef typename S::bkd_piter bkd_piter;
 
+      bool has(const psite&) const;
+
     protected:
       image_base_();
     };
@@ -31,6 +33,7 @@ namespace mln
     image_base_<S, E>::image_base_()
     {
     }
+
 
 # endif // ! MLN_INCLUDE_ONLY
   }

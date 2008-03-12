@@ -1,3 +1,21 @@
+2008-03-12  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	sandbox: continuing the psite/site factorization example.
+
+	* sandbox/ballas/refactorization/test/box2d.cc,
+	* sandbox/ballas/refactorization/test/image2d.cc,
+	* sandbox/ballas/refactorization/test/test.cc: tests.
+	* sandbox/ballas/refactorization/internal/impl.hh: New,base impl class.
+	* sandbox/ballas/refactorization/box2d.hh,
+	* sandbox/ballas/refactorization/point2d.hh,
+	* sandbox/ballas/refactorization/point2d_impl.hh,
+	* sandbox/ballas/refactorization/image2d.hh: New, add a light image2d.
+	* sandbox/ballas/refactorization/concept.hh:,
+	* sandbox/ballas/refactorization/internal/pset_base.hh:,
+	* sandbox/ballas/refactorization/internal/image_base.hh:,
+	* sandbox/ballas/refactorization/internal/piter_base.hh:,
+	* sandbox/ballas/refactorization/internal/psite_base.hh: Update.
+
 2008-03-12  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Make the gaussian filter work using algebra::vec.

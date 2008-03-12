@@ -10,8 +10,8 @@ namespace mln
   {
 
     template <typename E>
-    struct psite_base : public Psite<E>
-    /// FIXME Get implementation
+    struct psite_base : public Psite<E>,
+			public impl<typename E::site>
     {
       operator typename E::psite () const;
 

@@ -24,18 +24,29 @@ namespace mln
     /*
       typedef site
       typedef dsite;
-
-      const psite& ref_();
     */
   protected:
     Site();
   };
 
 
+  template <typename E>
+  struct Dsite : public Object<E>
+  {
+    /*
+      typedef dsite;
+
+      const dsite& to_dsite() const;
+    */
+  protected:
+    Dsite();
+  };
+
+
   /// Psite Concept
   /// Do we need a concept for representing psite?
   template <typename E>
-  struct Psite : public Object<E>
+  struct Psite : public Site<E>
   {
     /*
       // Site must be different from psite,
@@ -53,6 +64,18 @@ namespace mln
 
   protected:
     Psite();
+  };
+
+  template <typename E>
+  struct Dpsite : public Object<E>
+  {
+    /*
+      typedef dpsite;
+
+      const dpsite& to_dpsite() const;
+    */
+  protected:
+    Dpsite();
   };
 
   /// Piter concept
@@ -108,6 +131,7 @@ namespace mln
       typedef values;
       typedef rvalues;
       typedef lvalues;
+
       //typedef vset;
       //const vset& destination() const;
       // const vset& values() const;
@@ -119,6 +143,9 @@ namespace mln
       lvalue operator() (const psite);
       bool owns_(const psite&) const;
       bool has(const psite&) const;
+
+      typedef pset;
+      const pset& domain() const;
 
       typedef fwd_piter;
       typedef bkd_piter;
@@ -146,6 +173,20 @@ namespace mln
     /// FIXME
   }
 
+  template <typename E>
+  inline
+  Dsite<E>::Dsite()
+  {
+    /// FIXME
+  }
+
+  template <typename E>
+  inline
+  Dpsite<E>::Dpsite()
+  {
+    /// FIXME
+  }
+
   /// Psite
   template <typename E>
   inline
@@ -165,6 +206,12 @@ namespace mln
   Piter<E>::next()
   {
     exact(this)->next_();
+  }
+
+  template <typename E>
+  Pset<E>::Pset()
+  {
+    /// FIXME
   }
 
   template <typename E>

@@ -30,13 +30,13 @@ namespace mln
     };
 
     /// Piter base
-    template <typename E>
+    template <typename E, typename Site, typename Psite>
     struct piter_base_ :
       public piter_base_site_cast<E,
-				  typename mlc_equal(typename E::site,
-						     typename E::psite)::eval>
+				  typename mlc_equal(Site,
+						     Psite)::eval>
     {
-      operator typename E::psite() const;
+      operator Psite () const;
 
     protected:
       piter_base_();
@@ -52,15 +52,15 @@ namespace mln
     }
 
 
-    template <typename E>
-    piter_base_<E>::operator typename E::psite () const
+    template <typename E, typename Site, typename Psite>
+    piter_base_<E, Site, Psite>::operator Psite () const
     {
       return exact(this)->to_site();
     }
 
 
-    template <typename E>
-    piter_base_<E>::piter_base_()
+    template <typename E, typename Site, typename Psite>
+    piter_base_<E, Site, Psite>::piter_base_()
     {
     }
 

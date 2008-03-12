@@ -1,7 +1,6 @@
-#include <internal/image_base.hh>
+#include <box2d.hh>
 
 
 int main()
 {
-  return 0;
 }
