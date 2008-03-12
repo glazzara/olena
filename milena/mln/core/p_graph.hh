@@ -40,8 +40,9 @@
 
 namespace mln
 {
-
-  template<typename P> class p_graph_piter_;
+  /* FIXME: Contray to, e.g., p_array, the sole parameter P of p_graph
+     is expected to be a point, not a psite!!  We should have a
+     uniform scheme for point site sets.  */
 
   template<typename P>
   struct p_graph
@@ -56,16 +57,19 @@ namespace mln
     typedef graph_psite<P> psite;
 
     /// Forward Point_Iterator associated type.
-    typedef p_graph_piter_<P> fwd_piter;
+    typedef p_graph_fwd_piter_<P> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef p_graph_piter_<P> bkd_piter;
+    typedef p_graph_bkd_piter_<P> bkd_piter;
 
-    /// Return The number of points (i.e., nodes) in the graph.
+    /// Return The number of points (sites) of the set, i.e., the
+    /// number of \em vertices.
     std::size_t npoints() const;
 
-    /// Return The number of lines (i.e., edges) in the graph.
-    std::size_t nlines() const;
+    /// Return The number of nodes (vertices) in the graph.
+    std::size_t nnodes() const;
+    /// Return The number of edges in the graph.
+    std::size_t nedges() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -96,14 +100,26 @@ namespace mln
     graph& to_graph();
 
 
-  private:
+    // FIXME: Should be private.
+  public:
     graph gr_;
     // FIXME: (Roland) Is it really useful/needed?
     /* 2007-12-19: It seems so, since graph_image must implement a method
        named bbox().  Now the question is: should each image type have a
        bounding box?  */
+  private:
     box_<P> bb_;
   };
+
+
+  /// \brief Comparison between two mln::p_graph's.
+  ///
+  /// Two mln::p_graph's are considered equal if they have the
+  /// same address.
+  template <typename P>
+  bool
+  operator==(const p_graph<P>& lhs, const p_graph<P>& rhs);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -120,12 +136,18 @@ namespace mln
     bb_ = a.to_result();
   }
 
-  // FIXME: Rename to npsites?  In fact, this depends on the
-  // interface expected from models of Point_Sets.
   template<typename P>
   inline
   std::size_t
   p_graph<P>::npoints() const
+  {
+    return nnodes();
+  }
+
+  template<typename P>
+  inline
+  std::size_t
+  p_graph<P>::nnodes() const
   {
     return this->gr_.nnodes();
   }
@@ -133,7 +155,7 @@ namespace mln
   template<typename P>
   inline
   std::size_t
-  p_graph<P>::nlines() const
+  p_graph<P>::nedges() const
   {
     return this->gr_.nedges();
   }
@@ -237,6 +259,13 @@ namespace mln
     return this->gr_;
   }
 
+
+  template <typename P>
+  bool
+  operator==(const p_graph<P>& lhs, const p_graph<P>& rhs)
+  {
+    return &lhs == &rhs;
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

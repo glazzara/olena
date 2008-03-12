@@ -1,5 +1,42 @@
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a backward iterator on p_graph.
+
+	* mln/core/p_graph_piter.hh
+	(p_graph_piter_<P>): Rename as...
+	(p_graph_fwd_piter_<P>): ...this.
+	(p_graph_fwd_piter_<P>::operator point): Remove.
+	(p_graph_fwd_piter_<P>::pg_): Change the type of this member from
+	const p_graph<P>& to const p_graph<P>*.
+	(p_graph_fwd_piter_<P>::p_graph_fwd_piter_(const p_graph<P>&))
+	(p_graph_fwd_piter_<P>::is_valid)
+	(p_graph_fwd_piter_<P>::invalidate)
+	(p_graph_fwd_piter_<P>::update_):
+	Adjust.
+	(p_graph_fwd_piter_<P>::coord): New typedef.
+	(p_graph_fwd_piter_(const p_graph_fwd_piter_<P>&)): New ctor.
+	(p_graph_fwd_piter_<P>::operator= (const p_graph_fwd_piter_<P>&)):
+	New operator.
+	(p_graph_piter_<P>::operator P): Remove.
+	(p_graph_bkd_piter_<P>): New.
+	(operator<<(std::ostream&, const p_graph_fwd_piter_<P>&))
+	(operator<<(std::ostream&, const p_graph_bkd_piter_<P>&)):
+	New.
+	* mln/core/p_graph.hh
+	(mln::p_graph<P>::fwd_piter): Adjust to the new name
+	of mln::p_graph_fwd_piter_<P>.
+	(mln::p_graph<P>::bkd_piter): New typedef.
+	(mln::p_graph<P>::nlines): Rename as...
+	(mln::p_graph<P>::nedges): ..this.
+	(mln::p_graph<P>::npoints): Rename as...
+	(mln::p_graph<P>::nnodes): ...this.
+	(mln::p_graph<P>::npoints): New.
+	(operator==(const p_graph<P>&, const p_graph<P>&)): New.
+	* mln/draw/graph.hh
+	(graph(Image<I>&, const graph_image<P, V>&, mln_value(I))): Adjust.
+
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix mln::line_graph_image<P> initializations and associated entitites.
 
 	* mln/core/line_graph_image.hh: Add some more documentation.

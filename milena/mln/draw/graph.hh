@@ -116,10 +116,10 @@ namespace mln
       // Draw the background.
       level::fill(ima, 0);
       // Draw the lines (edges).
-      for (size_t l = 0; l < gi.domain().nlines(); ++l)
+      for (size_t l = 0; l < gi.domain().nedges(); ++l)
 	line (exact(ima), gi.node1(l), gi.node2(l), link_v);
       // Draw the points (nodes).
-      for (size_t p = 0; p < gi.domain().npoints(); ++p)
+      for (size_t p = 0; p < gi.domain().nnodes(); ++p)
  	exact(ima)(gi.domain().point_from_id(p)) = gi.node_values()[p];
     }
 
