@@ -70,7 +70,6 @@ namespace mln
     typedef Point_Iterator< self_ > super_;
 
   public:
-    // Make definitions from super class available.
     enum { dim = P::dim };
 
     typedef line_graph_psite<P> psite;
@@ -154,7 +153,6 @@ namespace mln
     typedef Point_Iterator< self_ > super_;
 
   public:
-    // Make definitions from super class available.
     enum { dim = P::dim };
 
     typedef line_graph_psite<P> psite;

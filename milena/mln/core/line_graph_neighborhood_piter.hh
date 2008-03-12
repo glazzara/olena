@@ -61,7 +61,7 @@ namespace mln
   | line_graph_neighborhood_fwd_piter<P>.  |
   `---------------------------------------*/
 
-  /// \brief Backward iterator on line graph neighborhood.
+  /// \brief Forward iterator on line graph neighborhood.
   template <typename P>
   class line_graph_neighborhood_fwd_piter :
     public Point_Iterator< line_graph_neighborhood_fwd_piter<P> > // or Iterator<...>?
@@ -70,7 +70,6 @@ namespace mln
     typedef Point_Iterator< self_ > super_;
 
   public:
-    // Make definitions from super class available.
     enum { dim = P::dim };
 
     typedef line_graph_psite<P> psite;
@@ -157,7 +156,6 @@ namespace mln
     typedef Point_Iterator< self_ > super_;
 
   public:
-    // Make definitions from super class available.
     enum { dim = P::dim };
 
     typedef line_graph_psite<P> psite;
@@ -244,9 +242,6 @@ namespace mln
   inline
   line_graph_neighborhood_fwd_piter<P>::line_graph_neighborhood_fwd_piter(const N& /* nbh */,
 									  const Point_Site<Pref>& p_ref)
-    /* FIXME: We should use a routine actually checking the
-       conversion, since to_psite() checks nothing (as of
-       2008-03-05).  */
     : p_ref_(exact(p_ref).to_psite()),
       // Initialize psite_ to a dummy value.
       psite_()
@@ -402,9 +397,6 @@ namespace mln
   inline
   line_graph_neighborhood_bkd_piter<P>::line_graph_neighborhood_bkd_piter(const N& /* nbh */,
 									  const Point_Site<Pref>& p_ref)
-    /* FIXME: We should use a routine actually checking the
-       conversion, since to_psite() checks nothing (as of
-       2008-03-05).  */
     : p_ref_(exact(p_ref).to_psite()),
       // Initialize psite_ to a dummy value.
       psite_()

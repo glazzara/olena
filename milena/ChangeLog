@@ -1,5 +1,27 @@
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add more documentation to forward iterators on graph neighborhoods
+	and windows, and add backward iterators.
+
+	* mln/core/graph_neighborhood_piter.hh: More documentation.
+	(graph_neighborhood_fwd_piter(const N&, const Point_Site<Pref>&):
+	Adopt the uniform initialization scheme used in other iterators on
+	graph-related structures.
+	(mln::graph_neighborhood_fwd_piter<P>::operator point): Remove.
+	(mln::graph_neighborhood_fwd_piter<P>::invalidate): Initialize
+	member id_ to -1.
+	(mln::graph_neighborhood_bkd_piter<P>): New class.
+	* mln/core/graph_window_piter.hh: More documentation.
+	(mln::graph_window_fwd_piter<P>::operator point): Remove.
+	(mln::graph_window_fwd_piter<P>::invalidate): Initialize
+	member id_ to -1.
+	(mln::graph_window_bkd_piter<P>): New class.
+	* mln/core/line_graph_window_piter.hh,
+	* mln/core/line_graph_neighborhood_piter.hh: Remove spurious
+	comments.
+
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Finish the conversion of level::sort_points to level::sort_psites.
 
 	* mln/level/sort_points.hh: Remove.
