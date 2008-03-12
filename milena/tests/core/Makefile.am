@@ -22,6 +22,7 @@ check_PROGRAMS =				\
   p_queue					\
   p_queue_fast					\
   p_runs					\
+  point_set_compatibility			\
   rle_image					\
   sparse_image					\
   t_image					\
@@ -46,6 +47,7 @@ p_priority_queue_fast_with_array_SOURCES = p_priority_queue_fast.cc
 p_queue_SOURCES = p_priority_queue_fast.cc
 p_queue_fast_SOURCES = p_priority_queue_fast.cc
 p_runs_SOURCES = p_runs.cc
+point_set_compatibility_SOURCES = point_set_compatibility.cc
 rle_image_SOURCES = rle_image.cc
 sparse_image_SOURCES = sparse_image.cc
 t_image_SOURCES = t_image.cc

@@ -1,5 +1,14 @@
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Partially check point sets compatibility.
+
+	* tests/core/point_set_compatibility.cc: New test.
+	* tests/core/Makefile.am (check_PROGRAMS): Add
+	point_set_compatibility.
+	(point_set_compatibility_SOURCES): New.
+
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add backward iterators on line graph windows and neighborhoods.
 
 	* mln/core/line_graph_window_piter.hh: Add more documentation.
