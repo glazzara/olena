@@ -1,3 +1,33 @@
+2008-03-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add to sanbox an image type maped on the hard disk.
+
+	* milena/sandbox/garrigues/tiled_image2d: New.
+	* milena/sandbox/garrigues/tiled_image2d/tiled_image2d.cc: New.
+	* milena/sandbox/garrigues/tiled_image2d/tiled_image2d.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/backend/file.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/backend/ios.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/backend/mmap.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/backend: New.
+	* milena/sandbox/garrigues/tiled_image2d/block.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/context.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/layout/all.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/layout/image2d/all.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/layout/image2d/lrtb.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/layout/image2d/tblr.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/layout/image2d: New.
+	* milena/sandbox/garrigues/tiled_image2d/layout/layout2d.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/layout/page2d/all.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/layout/page2d/lrtb.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/layout/page2d/tblr.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/layout/page2d: New.
+	* milena/sandbox/garrigues/tiled_image2d/layout: New.
+	* milena/sandbox/garrigues/tiled_image2d/page.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/paged_image.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/support/lru.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/support/simple.hh: New.
+	* milena/sandbox/garrigues/tiled_image2d/support: New.
+
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Miscellaneous fixes on morphological tests.
