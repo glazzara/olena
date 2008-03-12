@@ -28,11 +28,8 @@
 #ifndef MLN_MORPHO_DILATION_HH
 # define MLN_MORPHO_DILATION_HH
 
-/*! \file mln/morpho/dilation.hh
- *
- * \brief Morphological dilation.
- *
- */
+/// \file mln/morpho/dilation.hh
+/// \brief Morphological dilation.
 
 # include <mln/morpho/includes.hh>
 
@@ -47,14 +44,19 @@ namespace mln
     ///
     /// \{
 
-    /// Perform a morphological dilation of \a input using its
-    /// neighborhood and store the result into \a output.
-    ///
-    /// \pre \a input must be an image with a neighborhood.
-    /* FIXME: Do we want to keep this version?  */
-    template <typename I, typename O>
-    void
-    dilation(const Image<I>& input, Image<O>& output);
+    /* FIXME: We'll probably get rid of the neighborhood-based
+       versions for Olena 1.0, and try to re-introduce them for
+       Olena 1.1.  */
+
+    /* FIXME: Unless there's a good reason, we should get rid of this
+       version.  */
+//     /// Perform a morphological dilation of \a input using its
+//     /// neighborhood and store the result into \a output.
+//     ///
+//     /// \pre \a input must be an image with a neighborhood.
+//     template <typename I, typename O>
+//     void
+//     dilation(const Image<I>& input, Image<O>& output);
 
     /// Perform a morphological dilation of \a input using its
     /// neighborhood and return the result.
@@ -71,12 +73,13 @@ namespace mln
     /// images.
     ///
     /// \{
-    /// Perform a morphological dilation of \a input using \a win and
-    /// store the result into \a output.
-    /* FIXME: Do we want to keep this version?  */
-    template <typename I, typename W, typename O>
-    void
-    dilation(const Image<I>& input, const Window<W>& win, Image<O>& output);
+    /* FIXME: Unless there's a good reason, we should get rid of this
+       version.  */
+//     /// Perform a morphological dilation of \a input using \a win and
+//     /// store the result into \a output.
+//     template <typename I, typename W, typename O>
+//     void
+//     dilation(const Image<I>& input, const Window<W>& win, Image<O>& output);
 
     /// Perform a morphological dilation of \a input using \a win and
     /// return the result.
@@ -286,7 +289,7 @@ namespace mln
 
       mln_precondition(exact(output).domain() == exact(input).domain());
 
-     typedef mln_neighb(I) neighb;
+      typedef mln_neighb(I) neighb;
 
       impl::dilation_wrt_nbh(input, exact(input).neighborhood(), output);
 
@@ -334,6 +337,8 @@ namespace mln
     dilation(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::dilation");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output;
       initialize(output, input);

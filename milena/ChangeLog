@@ -1,5 +1,26 @@
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Miscellaneous fixes on morphological tests.
+
+	* mln/morpho/dilation.hh
+	(mln::morpho::dilation(const Image<I>&, Image<O>&))
+	(mln::morpho::dilation(const Image<I>&, const Window<W>&, Image<O>&)):
+	Disable these routines.
+	(mln::morpho::dilation(const Image<I>&, const Window<W>&)):
+	Add preconditions.
+	* mln/win/rectangle2d.hh (mln::win::rectangle2d::psite): New
+	typedef.
+	* tests/morpho/Makefile.am (CXXFLAGS_SPEED): Append -DNDEBUG to
+	speed up lengthy tests.
+	* tests/morpho/dilation.cc: No longer use the dilation facades
+	taking the output image as argument; instead, use the facades
+	returning the output images as return value.
+	* tests/morpho/lena_line_graph_image_wst1.cc: Use the psite
+	associated to a point iterator on a line_graph_image, not the
+	point.
+
+2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix mln::neighb::image<P> initializations.
 
 	* mln/neighb/image.hh (mln::neighb::image<P>::image): New ctor.

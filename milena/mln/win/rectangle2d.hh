@@ -59,6 +59,9 @@ namespace mln
     struct rectangle2d : public Window< rectangle2d >,
 			 public internal::dpoints_base_< dpoint2d, rectangle2d >
     {
+      /// Point Site associated type.
+      typedef point2d psite;
+
       /// Point associated type.
       typedef point2d point;
 

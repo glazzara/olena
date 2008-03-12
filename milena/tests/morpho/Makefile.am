@@ -38,7 +38,7 @@ meyer_wst_SOURCES = meyer_wst.cc
 
 # FIXME: We should isolate those tests, as they take a long time to
 # execute.
-CXXFLAGS_SPEED = -O3 -ggdb
+CXXFLAGS_SPEED = -O3 -ggdb -DNDEBUG
 lena_line_graph_image_wst1_SOURCES = lena_line_graph_image_wst1.cc
 lena_line_graph_image_wst1_CXXFLAGS = $(CXXFLAGS_SPEED)
 lena_line_graph_image_wst2_SOURCES = lena_line_graph_image_wst2.cc

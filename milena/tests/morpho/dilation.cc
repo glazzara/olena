@@ -74,27 +74,23 @@ int main()
 
   { 
     win::rectangle2d rec(5, 3);
-    image2d<int_u8> out(lena.domain());
-    morpho::dilation(lena, rec, out);
+    image2d<int_u8> out = morpho::dilation(lena, rec);
     io::pgm::save(out, "out1.pgm");
   }
 
   {
     win::octagon2d oct(7);
-    image2d<int_u8> out(lena.domain());
-    morpho::dilation(lena, oct, out);
+    image2d<int_u8> out = morpho::dilation(lena, oct);
     io::pgm::save(out, "out2.pgm");
   }
 
   {
-    image2d<int_u8> out(lena.domain());
-    morpho::dilation(lena + c4(), out);
+    image2d<int_u8> out = morpho::dilation(lena + c4());
     io::pgm::save(out, "out3.pgm");
   }
 
   {
-    image2d<int_u8> out(lena.domain());
-    morpho::dilation(lena + c8(), out);
+    image2d<int_u8> out = morpho::dilation(lena + c8());
     io::pgm::save(out, "out4.pgm");
   }
 

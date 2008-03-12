@@ -221,7 +221,7 @@ int main()
   {
     if (wshed(pw) == 0)
       {
-	mln_point_(wst_ima_t) pp(pw);
+	mln_psite_(wst_ima_t) pp(pw);
 	// Equivalent of the line (edge) PP in OUTPUT.
 	int row1 = pp.first()[0] * 2;
 	int col1 = pp.first()[1] * 2;
