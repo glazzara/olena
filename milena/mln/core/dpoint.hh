@@ -36,7 +36,7 @@
 # include <mln/core/concept/dpoint.hh>
 # include <mln/core/internal/coord_impl.hh>
 # include <mln/fun/i2v/all.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/metal/converts_to.hh>
 
 
@@ -113,15 +113,15 @@ namespace mln
     /// Set all coordinates to the value \p c.
     void set_all(C c);
 
-    /// Conversion towards a metal::vec.
+    /// Conversion towards a algebra::vec.
     template <typename Q>
-    operator metal::vec<M::dim, Q>() const;
+    operator algebra::vec<M::dim, Q>() const;
 
     /// Explicit conversion.
-    metal::vec<M::dim, C> to_vec() const;
+    algebra::vec<M::dim, C> to_vec() const;
 
   protected:
-    metal::vec<M::dim, C> coord_;
+    algebra::vec<M::dim, C> coord_;
   };
 
 
@@ -232,14 +232,14 @@ namespace mln
   template <typename M, typename C>
   template <typename Q>
   inline
-  dpoint_<M,C>::operator metal::vec<M::dim, Q> () const
+  dpoint_<M,C>::operator algebra::vec<M::dim, Q> () const
   {
     return coord_;
   }
 
   template <typename M, typename C>
   inline
-  metal::vec<M::dim, C>
+  algebra::vec<M::dim, C>
   dpoint_<M,C>::to_vec() const
   {
     return coord_;

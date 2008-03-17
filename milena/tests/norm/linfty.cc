@@ -32,7 +32,7 @@
 
 #include <tests/norm/common.hh>
 
-#include <mln/metal/vec.hh>
+#include <mln/algebra/vec.hh>
 #include <mln/math/abs.hh>
 #include <mln/norm/linfty.hh>
 
@@ -59,7 +59,7 @@ namespace test
 
 int main()
 {
-  typedef mln::metal::vec<3, int> vec_t;
+  typedef mln::algebra::vec<3, int> vec_t;
 
   // Reference value.
   float d = std::max(std::abs(4 - 2),

@@ -27,10 +27,10 @@
 
 /*! \file tests/metal_vec.cc
  *
- * \brief Test on mln::metal::vec.
+ * \brief Test on mln::algebra::vec.
  */
 
-#include <mln/metal/vec.hh>
+#include <mln/algebra/vec.hh>
 #include <mln/value/int_u8.hh>
 
 
@@ -40,8 +40,8 @@ int main()
 {
   using namespace mln;
 
-  metal::vec<3,int> v_int = make::vec(3, 6, 7);
-  metal::vec<3,float> v_f = make::vec(2.6, 1.9, 5.2);
+  algebra::vec<3,int> v_int = make::vec(3, 6, 7);
+  algebra::vec<3,float> v_f = make::vec(2.6, 1.9, 5.2);
 
   mln_assertion((v_int + v_f) == ((v_f + v_int)));
   mln_assertion((v_f / 3) == ((3 * v_f) / 9));

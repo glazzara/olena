@@ -48,7 +48,7 @@ int main()
     b = 0,
     c = 2.9;
 
-  metal::vec<3,float> vec1 = make::vec(a, b, c);
+  algebra::vec<3,float> vec1 = make::vec(a, b, c);
   fun::x2x::translation<3,float> tr(all_to(1.6));
   fun::x2x::rotation<3,float> rot(0.3, 1);
 

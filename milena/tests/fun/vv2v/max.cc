@@ -30,7 +30,7 @@
 
 #include <cassert>
 
-#include <mln/metal/vec.hh>
+#include <mln/algebra/vec.hh>
 #include <mln/fun/vv2v/max.hh>
 
 int main()
@@ -43,7 +43,7 @@ int main()
   // work.
 #if 0
   // Vectors.
-  typedef mln::metal::vec<3, int> vec_t;
+  typedef mln::algebra::vec<3, int> vec_t;
   mln::fun::vv2v::max<vec_t> max_vec_t;
   vec_t t, u;
   t.set (1, -2, 3);

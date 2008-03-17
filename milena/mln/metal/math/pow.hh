@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_MATH_POW_HH
 # define MLN_METAL_MATH_POW_HH
 
-/*! \file mln/metal/math/pow.hh
+/*! \file mln/algebra/math/pow.hh
  *
  * \brief Definition of the 'power' static function.
  */
@@ -37,8 +37,8 @@
 # include <mln/metal/int.hh>
 
 
-# define mlc_pow(X, N)      typename mln::metal::math::pow< X, N >::ret
-# define mlc_pow_int(x, n)           mln::metal::math::pow_int< x, n >::value
+# define mlc_pow(X, N)      typename mln::algebra::math::pow< X, N >::ret
+# define mlc_pow_int(x, n)           mln::algebra::math::pow_int< x, n >::value
 
 
 
@@ -105,7 +105,7 @@ namespace mln
       };
 
 
-    } // end of namespace mln::metal::math
+    } // end of namespace mln::algebra::math
 
   } // end of namespace mln::metal
 

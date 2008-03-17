@@ -33,7 +33,7 @@
  * \brief Definition of a vector with homogeneous coordinates.
  */
 
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/literal/one.hh>
 
 namespace mln
@@ -86,7 +86,7 @@ namespace mln
    *
    */
   template <unsigned d, typename C>
-  struct h_vec : public metal::vec<d + 1, C>
+  struct h_vec : public algebra::vec<d + 1, C>
   {
     /// Dimension is the 'natural' one (3 for 3D), not the one of the vector (dim + 1).
     enum { dim = d };
@@ -94,12 +94,12 @@ namespace mln
     /// Constructor without argument.
     h_vec();
     /// Constructor with the underlying vector.
-    h_vec(const metal::vec<d+1, C>& other);
+    h_vec(const algebra::vec<d+1, C>& other);
 
-    h_vec& operator=(const metal::vec<d+1, C>& rhs);
+    h_vec& operator=(const algebra::vec<d+1, C>& rhs);
 
     /// Back to the natural (non-homogeneous) space.
-    metal::vec<d,C> to_vec() const;
+    algebra::vec<d,C> to_vec() const;
   };
 
 
@@ -119,18 +119,18 @@ namespace mln
 
   template <unsigned d, typename C>
   inline
-  h_vec<d,C>::h_vec(const metal::vec<d+1, C>& other)
-    : metal::vec<d+1, C>(other)
+  h_vec<d,C>::h_vec(const algebra::vec<d+1, C>& other)
+    : algebra::vec<d+1, C>(other)
   {
   }
 
   template <unsigned d, typename C>
   inline
-  h_vec<d,C>& h_vec<d,C>::operator=(const metal::vec<d+1, C>& rhs)
+  h_vec<d,C>& h_vec<d,C>::operator=(const algebra::vec<d+1, C>& rhs)
   {
     if (& rhs == this)
       return *this;
-    this->metal::vec<d+1, C>::operator=(rhs);
+    this->algebra::vec<d+1, C>::operator=(rhs);
     return *this;
   }
 
@@ -154,12 +154,12 @@ namespace mln
 
   template <unsigned d, typename C>
   inline
-  metal::vec<d,C> h_vec<d,C>::to_vec() const
+  algebra::vec<d,C> h_vec<d,C>::to_vec() const
   {
     const C w = this->data_[d];
     mln_assertion(w != 0);
 
-    metal::vec<d,C> tmp;
+    algebra::vec<d,C> tmp;
     for (unsigned i = 0; i < d; ++i)
       tmp[i] = this->data_[i] / w;
     return tmp;

@@ -25,28 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_REGISTRATION_REGISTRATION_HH
-# define MLN_REGISTRATION_REGISTRATION_HH
+#ifndef MLN_REGISTRATION_ICP_HH
+# define MLN_REGISTRATION_ICP_HH
 
-/*! \file mln/binarization/threshold.hh
+/*! \file mln/registration/icp.hh
  *
- * \brief Produce a subsampled image
+ * \brief image registration
  */
 
 # include <mln/value/quat.hh>
 # include <mln/algebra/vec.hh>
 
+
+typedef mln::algebra::vec<3, float> vec3f;
+typedef std::vector< vec3f > vecs_t;
+  
+#include "cloud.hh"
+#include "quat7.hh"
+#include "projection.hh"
+
 namespace mln
 {
-
+  
   namespace registration
-  {    
+  {
 
     /*! Registration FIXME : doxy
      *
      *
      */
-    template <typename I, template J>
+    template <typename I, typename J>
     inline
     void
     icp(const Image<I>& cloud,
@@ -57,40 +65,49 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename J>
       inline
       void
-      icp_(const I& P,
-           const J& X)
+      icp_(const vecs_t& P,
+           const vecs_t& X)
       {
 	trace::entering("registration::impl::icp_");
 
-        mln_concrete(I) Pk(cloud.domain());
+        unsigned int k;
+        quat7 old_qk, qk;
+        float err, err_bis;
+
+        vecs_t Pk(P.size()), Xk(Pk.size());
+        vec3f mu_P = center(P), mu_Xk;
 
         const float epsilon = 1e-3;
-        float err, err_bis;
-        quat old_qk, qk;
-        unsigned int k;
 
+        //step 1
         k = 0;
         Pk = P;
-        do {
-          //projection
-          
-          old_qk = qk;
-          //qk = match(P, mu_P, Xk, mu_Xk);
 
-          // error =
+        do {
+          //step 2 FIXME : etienne
+          projection::de_base(Pk, X, Xk, mu_Xk, err_bis);
+          
+          // step 3
+          old_qk = qk;
+          qk = match(P, mu_P, Xk, mu_Xk);
+
+          // step 4
+          qk.apply_on(P, Pk); // Pk+1 = qk(P)
+
+          // err = d(Pk+1,Xk)
+          err = rms(Pk, Xk);
+
           ++k;
         } while (k < 3 || (qk - old_qk).sqr_norm() > epsilon);
 
-        
 	trace::exiting("registration::impl::icp_");
       }
 
     } // end of namespace mln::registration::impl
 
-    
+
     // this version could convert image cloud in a vector of point?
     template <typename I, typename J>
     inline
@@ -102,9 +119,9 @@ namespace mln
       mln_precondition(exact(cloud).has_data());
       mln_precondition(exact(surface).has_data());
 
+      vecs_t a,b; // FIXME : to built.
 
-      
-      output = impl::icp_(exact(cloud), exact(surface));
+      impl::icp_(a, b);
 
       trace::exiting("registration::icp");
     }

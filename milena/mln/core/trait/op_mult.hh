@@ -101,43 +101,43 @@ namespace mln
     };
 
     template <unsigned n, typename T, typename U>
-    struct op_mult<metal::vec<n, T>, U>
+    struct op_mult<algebra::vec<n, T>, U>
     {
-      typedef metal::vec<n, mln_op_mult(T, U)> ret;
+      typedef algebra::vec<n, mln_op_mult(T, U)> ret;
     };
     template <typename U, unsigned n, typename T>
-    struct op_mult<U, metal::vec<n, T> >
+    struct op_mult<U, algebra::vec<n, T> >
     {
-      typedef metal::vec<n, mln_op_mult(T, U)> ret;
+      typedef algebra::vec<n, mln_op_mult(T, U)> ret;
     };
 
     template <unsigned n, unsigned m, typename T, typename U>
-    struct op_mult<metal::mat<n, m, T>, U>
+    struct op_mult<algebra::mat<n, m, T>, U>
     {
-      typedef metal::mat<n, m, mln_op_mult(T, U)> ret;
+      typedef algebra::mat<n, m, mln_op_mult(T, U)> ret;
     };
     template <typename U, unsigned n, unsigned m, typename T>
-    struct op_mult<U, metal::mat<n, m, T> >
+    struct op_mult<U, algebra::mat<n, m, T> >
     {
-      typedef metal::mat<n, m, mln_op_mult(T, U)> ret;
+      typedef algebra::mat<n, m, mln_op_mult(T, U)> ret;
     };
 
     template <unsigned n, unsigned o, typename T, unsigned m, typename U>
-    struct op_mult<metal::mat<n, o, T>, metal::mat<o, m, U> >
+    struct op_mult<algebra::mat<n, o, T>, algebra::mat<o, m, U> >
     {
-      typedef metal::mat<n, m, mln_op_mult(T, U)> ret;
+      typedef algebra::mat<n, m, mln_op_mult(T, U)> ret;
     };
 
     template <unsigned m, unsigned n, typename T, typename U>
-    struct op_mult<metal::mat<m, n, T>, metal::vec<n, U> >
+    struct op_mult<algebra::mat<m, n, T>, algebra::vec<n, U> >
     {
-      typedef metal::mat<m, 1, mln_op_mult(T, U)> ret;
+      typedef algebra::mat<m, 1, mln_op_mult(T, U)> ret;
     };
 
     template <unsigned n, typename U, unsigned m, typename T>
-    struct op_mult< metal::vec<n, U>, metal::mat<n, m, T> >
+    struct op_mult< algebra::vec<n, U>, algebra::mat<n, m, T> >
     {
-      typedef metal::mat<1, m, mln_op_mult(T, U)> ret;
+      typedef algebra::mat<1, m, mln_op_mult(T, U)> ret;
     };
 
 

@@ -55,7 +55,7 @@ namespace mln
     template <typename I>
     inline
     mln_concrete(I)
-    gaussian_subsampling(const Image<I>& input, float sigma
+    gaussian_subsampling(const Image<I>& input, float sigma,
                          const mln_dpoint(I)& first_p,
                          const mln_coord(I)& gap);
 
@@ -76,7 +76,7 @@ namespace mln
       mln_concrete(I) output(geom::nrows(input) / gap,
                              geom::ncols(input) / gap); //FIXME : only for image2d.
 
-      linear::gaussian(input, 0.1, temp);
+      linear::gaussian(input, sigma, temp);
       output = impl::subsampling_(exact(temp), first_p, gap);
 
       trace::exiting("subsampling::gaussian_subsampling");

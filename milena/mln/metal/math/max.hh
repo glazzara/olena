@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_MATH_MAX_HH
 # define MLN_METAL_MATH_MAX_HH
 
-/*! \file mln/metal/math/max.hh
+/*! \file mln/algebra/math/max.hh
  *
  * \brief Definition of the 'max' static function.
  */
@@ -36,8 +36,8 @@
 # include <mln/metal/bool.hh>
 # include <mln/metal/int.hh>
 
-# define mlc_max(X, Y)      typename mln::metal::math::max< X, Y >::ret
-# define mlc_max_int(x, y)           mln::metal::math::max_int< x, y >::value
+# define mlc_max(X, Y)      typename mln::algebra::math::max< X, Y >::ret
+# define mlc_max_int(x, y)           mln::algebra::math::max_int< x, y >::value
 
 namespace mln
 {
@@ -69,7 +69,7 @@ namespace mln
       };
 
 
-    } // end of namespace mln::metal::math
+    } // end of namespace mln::algebra::math
 
   } // end of namespace mln::metal
 

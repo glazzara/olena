@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_MATH_SQRT_HH
 # define MLN_METAL_MATH_SQRT_HH
 
-/*! \file mln/metal/math/sqrt.hh
+/*! \file mln/algebra/math/sqrt.hh
  *
  * \brief Definition of the 'sqrt' static function.
  */
@@ -82,7 +82,7 @@ namespace mln
 	{
 	};
 
-      } // end of namespace mln::metal::math::impl
+      } // end of namespace mln::algebra::math::impl
 
       template <int n>
       struct sqrt_int : impl::sqrt_int_if_< n, (n >= 0) >
@@ -102,7 +102,7 @@ namespace mln
       };
 
 
-    } // end of namespace mln::metal::math
+    } // end of namespace mln::algebra::math
 
   } // end of namespace mln::metal
 

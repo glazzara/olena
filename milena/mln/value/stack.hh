@@ -35,7 +35,7 @@
 
 # include <mln/core/internal/image_value_morpher.hh>
 
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/value/set.hh>
 # include <mln/value/proxy.hh>
 
@@ -57,8 +57,8 @@ namespace mln
     struct data_< value::stack_image<n, I> >
     {
     public:
-      data_(const metal::vec<n,I>& imas);
-      metal::vec<n,I> imas_;
+      data_(const algebra::vec<n,I>& imas);
+      algebra::vec<n,I> imas_;
       I& ima_;
     };
 
@@ -83,7 +83,7 @@ namespace mln
       template <unsigned n, typename I>
       struct helper_stack_image_lvalue_< n, const I >
       {
-	typedef metal::vec<n, mln_value(I)> ret;
+	typedef algebra::vec<n, mln_value(I)> ret;
 	static ret make(stack_image<n, const I>& ima, const mln_psite(I)& p)
 	{
 	  return ima.read_(p);
@@ -102,7 +102,7 @@ namespace mln
     template <unsigned n, typename I>
     struct image_< mln::value::stack_image<n, I> >
       : default_image_morpher_< I,
-				metal::vec<n, mln_value(I)>,
+				algebra::vec<n, mln_value(I)>,
 				mln::value::stack_image<n, I> >
     {
       // FIXME: We shall carefully define the missing required traits
@@ -155,7 +155,7 @@ namespace mln
       typedef mln_pset(I) pset;
 
       /// Value associated type.
-      typedef metal::vec<n, mln_value(I)> value;
+      typedef algebra::vec<n, mln_value(I)> value;
 
       /// Return type of read-only access.
       typedef value rvalue;
@@ -173,7 +173,7 @@ namespace mln
 
       /// Constructors.
       /// \{
-      stack_image(const metal::vec<n,I>& imas);
+      stack_image(const algebra::vec<n,I>& imas);
       stack_image();
       /// \}
 
@@ -215,7 +215,7 @@ namespace mln
 
     template <unsigned n, typename I>
     inline
-    data_< value::stack_image<n,I> >::data_(const metal::vec<n,I>& imas)
+    data_< value::stack_image<n,I> >::data_(const algebra::vec<n,I>& imas)
       : imas_(imas),
 	ima_(imas_[0])
     {
@@ -236,7 +236,7 @@ namespace mln
 
     template <unsigned n, typename I>
     inline
-    stack_image<n,I>::stack_image(const metal::vec<n,I>& imas)
+    stack_image<n,I>::stack_image(const algebra::vec<n,I>& imas)
     {
       this->data_ = new mln::internal::data_< stack_image<n, I> >(imas);
       for (unsigned i = 0; i < n; ++i)
@@ -256,11 +256,11 @@ namespace mln
 
     template <unsigned n, typename I>
     inline
-    metal::vec<n, mln_value(I)>
+    algebra::vec<n, mln_value(I)>
     stack_image<n,I>::read_(const psite& p) const
     {
       mln_precondition(this->owns_(p));
-      metal::vec<n, mln_value(I)> tmp;
+      algebra::vec<n, mln_value(I)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = this->data_->imas_[i].operator()(p);
       return tmp;
@@ -268,7 +268,7 @@ namespace mln
 
     template <unsigned n, typename I>
     inline
-    metal::vec<n, mln_value(I)>
+    algebra::vec<n, mln_value(I)>
     stack_image<n,I>::operator()(const psite& p) const
     {
       return read_(p);
@@ -295,7 +295,7 @@ namespace mln
 
     template <unsigned n, typename I>
     inline
-    const mln::value::set< metal::vec<n, mln_value(I)> >&
+    const mln::value::set< algebra::vec<n, mln_value(I)> >&
     stack_image<n,I>::values() const
     {
       return vset::the();
@@ -309,7 +309,7 @@ namespace mln
     stack(const Image<I>& ima1, const Image<I>& ima2)
     {
       mln_precondition(exact(ima1).domain() == exact(ima2).domain());
-      metal::vec<2, const I> imas;
+      algebra::vec<2, const I> imas;
       imas[0] = exact(ima1);
       imas[1] = exact(ima2);
       return imas;
@@ -321,7 +321,7 @@ namespace mln
     stack(Image<I>& ima1, Image<I>& ima2)
     {
       mln_precondition(exact(ima1).domain() == exact(ima2).domain());
-      metal::vec<2, I> imas;
+      algebra::vec<2, I> imas;
       imas[0] = exact(ima1);
       imas[1] = exact(ima2);
       return imas;

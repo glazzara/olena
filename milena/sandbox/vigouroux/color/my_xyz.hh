@@ -2,7 +2,7 @@
 
 // #include <mln/value/concept/vectorial.hh>
 // #include <mln/value/int_u.hh>
-// #include <mln/metal/vec.hh>
+// #include <mln/algebra/vec.hh>
 
 #ifndef MLN_VALUE_XYZ_HH
 # define MLN_VALUE_XYZ_HH

@@ -38,7 +38,7 @@
 # include <cmath>
 
 # include <mln/core/internal/image_identity.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/value/set.hh>
 
 
@@ -114,18 +114,18 @@ namespace mln
     using super_::owns_;
 
     /// Test if a pixel value is accessible at \p v.
-    bool owns_(const mln::metal::vec<I::point::dim, float>& v) const;
+    bool owns_(const mln::algebra::vec<I::point::dim, float>& v) const;
 
     using super_::has;
 
     /// Test if a pixel value is belonging to image at \p v.
-    bool has(const mln::metal::vec<I::point::dim, float>& v) const;
+    bool has(const mln::algebra::vec<I::point::dim, float>& v) const;
 
     /// Read-only access of pixel value at point site \p p.
     /// Mutable access is only OK for reading (not writing).
     using super_::operator();
 
-    mln_value(I) operator()(const mln::metal::vec<I::point::dim, float>& v) const;
+    mln_value(I) operator()(const mln::algebra::vec<I::point::dim, float>& v) const;
 
     void set_tr(T& tr);
   };
@@ -173,10 +173,10 @@ namespace mln
 
   template <typename T, typename I>
   inline
-  bool tr_image<T,I>::owns_(const metal::vec<I::point::dim, float>& v) const
+  bool tr_image<T,I>::owns_(const algebra::vec<I::point::dim, float>& v) const
   {
     mln_point(I) p;
-    metal::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
+    algebra::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));
     return this->delegatee_().owns_(p);
@@ -184,10 +184,10 @@ namespace mln
 
   template <typename T, typename I>
   inline
-  bool tr_image<T,I>::has(const metal::vec<I::point::dim, float>& v) const
+  bool tr_image<T,I>::has(const algebra::vec<I::point::dim, float>& v) const
   {
     mln_point(I) p;
-    metal::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
+    algebra::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));
     return this->delegatee_()->domain().has(p);
@@ -196,10 +196,10 @@ namespace mln
   template <typename T, typename I>
   inline
   mln_value(I)
-  tr_image<T,I>::operator()(const metal::vec<I::point::dim, float>& v) const
+  tr_image<T,I>::operator()(const algebra::vec<I::point::dim, float>& v) const
   {
     mln_point(I) p;
-    metal::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
+    algebra::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));
     mln_assertion(this->delegatee_()->owns_(p));

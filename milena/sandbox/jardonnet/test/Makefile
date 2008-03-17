@@ -1,7 +1,7 @@
 SOURCE=test.cc subsampling.cc
-FLAG=-Wall -W -I../../.. -g
+FLAG=-Wall -W -pedantic -I../../.. -g
 
-all: sub gsub
+all: sub gsub gau icp
 	
 
 sub:
@@ -13,5 +13,9 @@ gsub:
 gau:
 	g++ gaussian.cc $(FLAG) -o '+gau.exe'
 
+icp:
+	g++ icp.cc $(FLAG) -o '+icp.exe'
+
 run:
 	time ./+sub.exe . . ; time ./+gsub.exe . .
+

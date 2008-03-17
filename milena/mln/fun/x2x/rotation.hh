@@ -35,8 +35,8 @@
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/x2x_linear_impl.hh>
-# include <mln/metal/vec.hh>
-# include <mln/metal/mat.hh>
+# include <mln/algebra/vec.hh>
+# include <mln/algebra/mat.hh>
 # include <cmath>
 
 namespace mln
@@ -53,10 +53,10 @@ namespace mln
        */
       template <unsigned n, typename C>
       struct rotation
-	: internal::x2x_linear_impl_< metal::vec<n,C>, rotation<n,C> >
+	: internal::x2x_linear_impl_< algebra::vec<n,C>, rotation<n,C> >
 	, public Bijection_x2x< rotation<n,C> >
       {
-	typedef fun::internal::x2x_linear_impl_< metal::vec<n,C>, rotation<n,C> > super_;
+	typedef fun::internal::x2x_linear_impl_< algebra::vec<n,C>, rotation<n,C> > super_;
 
 	/// Type of the inverse function.
 	typedef rotation<n,C> invert;
@@ -70,7 +70,7 @@ namespace mln
 
         using super_::operator();
 	/// Perform the rotation of the given vector.
-        metal::vec<n,C> operator()(const metal::vec<n,C>& v) const;
+        algebra::vec<n,C> operator()(const algebra::vec<n,C>& v) const;
 
 	/// Set a new grade alpha.
         void set_alpha(float alpha);
@@ -106,12 +106,12 @@ namespace mln
 
       template <unsigned n, typename C>
       inline
-      metal::vec<n,C>
-      rotation<n,C>::operator()(const metal::vec<n,C>& v) const
+      algebra::vec<n,C>
+      rotation<n,C>::operator()(const algebra::vec<n,C>& v) const
       {
-	metal::mat<n+1,1,C> hmg;
-	metal::mat<n+1,1,C> tmp;
-	metal::vec<n,C> res;
+	algebra::mat<n+1,1,C> hmg;
+	algebra::mat<n+1,1,C> tmp;
+	algebra::vec<n,C> res;
 
 	for (unsigned i = 0; i < n; ++i)
 	  hmg(i,0) = v[i];
@@ -158,7 +158,7 @@ namespace mln
       {
 	const float cos_a = cos(alpha_);
 	const float sin_a = sin(alpha_);
-	const metal::vec<4,float> vec = make::vec(cos_a, -sin_a, sin_a, cos_a);
+	const algebra::vec<4,float> vec = make::vec(cos_a, -sin_a, sin_a, cos_a);
 
 	unsigned k = 0;
 	for (unsigned i = 0; i < n; ++i)

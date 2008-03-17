@@ -27,10 +27,10 @@
 
 /*! \file tests/metal_mat.cc
  *
- * \brief Test on mln::metal::mat.
+ * \brief Test on mln::algebra::mat.
  */
 
-#include <mln/metal/mat.hh>
+#include <mln/algebra/mat.hh>
 #include <mln/value/int_u8.hh>
 
 
@@ -47,18 +47,18 @@ int main()
   //     tab2[6]  = {2, 5, 1, 0, 7, 2},
   //     tab3[6]  = {3, 1, 6, 2, 1, 0};
 
-  //   metal::mat<3,6,int> mat36   = make::mat<3,6,18>(tab1);
-  //   metal::mat<2,3,int> mat23_1 = make::mat<2,3,6>(tab2);
-  //   metal::mat<2,3,int> mat23_2 = make::mat<2,3,6>(tab3);
+  //   algebra::mat<3,6,int> mat36   = make::mat<3,6,18>(tab1);
+  //   algebra::mat<2,3,int> mat23_1 = make::mat<2,3,6>(tab2);
+  //   algebra::mat<2,3,int> mat23_2 = make::mat<2,3,6>(tab3);
 
-  //   metal::mat<2,3,float> mat23_3 = mat23_1 - mat23_2;
+  //   algebra::mat<2,3,float> mat23_3 = mat23_1 - mat23_2;
 
   //   std::cout << mat23_3 << std::endl << mat23_3 * mat36 << std::endl;
 
-  using metal::vec;
+  using algebra::vec;
   vec<2,int> v = make::vec(5,1);
 
-  using metal::mat;
+  using algebra::mat;
   mat<2,2, vec<2,int> > mv;
   mv.set_all(v);
   // std::cout << mv << std::endl;

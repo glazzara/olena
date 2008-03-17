@@ -38,7 +38,7 @@
 # include <mln/fun/i2v/all_to.hh>
 
 # include <mln/metal/bool.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/metal/converts_to.hh>
 # include <mln/core/h_vec.hh>
 
@@ -62,7 +62,7 @@ namespace mln
     template <typename M, typename C>
     struct point_to_
     {
-      typedef metal::vec<M::dim, C> metal_vec;
+      typedef algebra::vec<M::dim, C> metal_vec;
       typedef h_vec<M::dim, C> h_vec;
     };
 
@@ -143,17 +143,17 @@ namespace mln
     point_<M,C>& operator-=(const dpoint& dp);
 
     /// Type of the array of coordinates.
-    typedef metal::vec<M::dim, C> vec_t;
+    typedef algebra::vec<M::dim, C> vec_t;
 
     /// Hook to coordinates.
     operator typename internal::point_to_<M, C>::metal_vec () const;
-    operator metal::vec<M::dim, float> () const;
+    operator algebra::vec<M::dim, float> () const;
 
     /// Transform to point in homogene coordinate system.
     h_vec<M::dim, C> to_h_vec() const;
 
   protected:
-    metal::vec<M::dim, C> coord_;
+    algebra::vec<M::dim, C> coord_;
   };
 
 
@@ -312,9 +312,9 @@ namespace mln
 
   template <typename M, typename C>
   inline
-  point_<M,C>::operator metal::vec<M::dim, float> () const
+  point_<M,C>::operator algebra::vec<M::dim, float> () const
   {
-    metal::vec<dim, float> tmp;
+    algebra::vec<dim, float> tmp;
     for (unsigned i = 0; i < dim; ++i)
       tmp[i] = coord_[i];
     return tmp;

@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/x2x_linear_impl.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/core/h_mat.hh>
 # include <mln/fun/i2v/all.hh>
 
@@ -54,11 +54,11 @@ namespace mln
       template <unsigned n, typename C>
       struct translation
 
-	: internal::x2x_linear_impl_< metal::vec<n,C>, translation<n,C> >
+	: internal::x2x_linear_impl_< algebra::vec<n,C>, translation<n,C> >
 	,
 	  public Bijection_x2x< translation<n,C> >
       {
-	typedef fun::internal::x2x_linear_impl_< metal::vec<n,C>, translation<n,C> > super_;
+	typedef fun::internal::x2x_linear_impl_< algebra::vec<n,C>, translation<n,C> > super_;
 
 	/// Type of the inverse function.
 	typedef translation<n,C> invert;
@@ -68,19 +68,19 @@ namespace mln
 	/// Constructor without argument.
 	translation();
 	/// Constructor with the translation vector.
-	translation(const metal::vec<n,C>& t);
+	translation(const algebra::vec<n,C>& t);
 
 	using super_::operator();
 	/// Perform the translation of the given vector
-	metal::vec<n,C> operator()(const metal::vec<n,C>& v) const;
+	algebra::vec<n,C> operator()(const algebra::vec<n,C>& v) const;
 
 	/// Set a net translation vector.
-	void set_t(const metal::vec<n,C>& t);
+	void set_t(const algebra::vec<n,C>& t);
 
       protected:
 	void update();
 
-	metal::vec<n,C> t_;
+	algebra::vec<n,C> t_;
       };
 
 
@@ -94,7 +94,7 @@ namespace mln
 
       template <unsigned n, typename C>
       inline
-      translation<n,C>::translation(const metal::vec<n,C>& t)
+      translation<n,C>::translation(const algebra::vec<n,C>& t)
 	:t_(t)
       {
 	this->m_ = h_mat<n,C>::Id;
@@ -103,8 +103,8 @@ namespace mln
 
       template <unsigned n, typename C>
       inline
-      metal::vec<n,C>
-      translation<n,C>::operator()(const metal::vec<n,C>& v) const
+      algebra::vec<n,C>
+      translation<n,C>::operator()(const algebra::vec<n,C>& v) const
       {
 	return v + t_;
       }
@@ -122,7 +122,7 @@ namespace mln
       template <unsigned n, typename C>
       inline
       void
-      translation<n,C>::set_t(const metal::vec<n,C>& t)
+      translation<n,C>::set_t(const algebra::vec<n,C>& t)
       {
 	this->t_ = t;
 	this->update();

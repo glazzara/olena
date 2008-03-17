@@ -38,7 +38,7 @@
 # include <mln/value/ops.hh>
 
 # include <mln/core/contract.hh>
-# include <mln/metal/math/pow.hh>
+# include <mln/algebra/math/pow.hh>
 # include <mln/metal/bexpr.hh>
 # include <mln/literal/ops.hh>
 
@@ -225,7 +225,7 @@ namespace mln
       template <unsigned n>
       gray_f::gray_f(const gray_<n>& rhs)
       {
-	static const float denom = float(metal::math::pow_int<2, n>::value) - 1.f;
+	static const float denom = float(algebra::math::pow_int<2, n>::value) - 1.f;
 	this->v_ = float(rhs.value()) / denom;
       }
 
@@ -233,7 +233,7 @@ namespace mln
       gray_f&
       gray_f::operator=(const gray_<n>& rhs)
       {
-	static const float denom = float(metal::math::pow_int<2, n>::value) - 1.f;
+	static const float denom = float(algebra::math::pow_int<2, n>::value) - 1.f;
 	this->v_ = float(rhs.value()) / denom;
 	return *this;
       }

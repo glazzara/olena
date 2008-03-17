@@ -36,7 +36,7 @@
 using namespace mln;
 
 
-void run_in_3d(const metal::vec<3, int>&)
+void run_in_3d(const algebra::vec<3, int>&)
 {
 }
 
@@ -53,7 +53,7 @@ void foo(const mln::h_vec<3,float>&)
 int main()
 {
 
-  metal::vec<3, int> x;
+  algebra::vec<3, int> x;
   h_vec<3, int> w = x.to_h_vec();
 
   typedef h_vec<3, int> p3d;
@@ -65,7 +65,7 @@ int main()
   run_in_3d_h(k.to_h_vec());
 
   {
-    metal::vec<3,float> v;
+    algebra::vec<3,float> v;
     h_vec<3,float> w(v.to_h_vec());
     w = v.to_h_vec();
     foo(v.to_h_vec());

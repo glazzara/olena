@@ -35,7 +35,7 @@
  */
 
 # include <mln/math/abs.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 
 // FIXME: Use mln_sum_x (to be renamed as mln_sum_product) instead of
 // mln_sum.
@@ -52,7 +52,7 @@ namespace mln
     mln_sum(C) l1(const C (&vec)[n]);
 
     template <unsigned n, typename C>
-    mln_sum(C) l1(const metal::vec<n,C>& vec);
+    mln_sum(C) l1(const algebra::vec<n,C>& vec);
     /// \}
 
     /// L1-norm distance between vectors \a vec1 and \a vec2.
@@ -61,8 +61,8 @@ namespace mln
     mln_sum(C) l1_distance(const C (&vec1)[n], const C (&vec2)[n]);
 
     template <unsigned n, typename C>
-    mln_sum(C) l1_distance(const metal::vec<n,C>& vec1,
-			   const metal::vec<n,C>& vec2);
+    mln_sum(C) l1_distance(const algebra::vec<n,C>& vec1,
+			   const algebra::vec<n,C>& vec2);
     /// \}
 
 
@@ -110,7 +110,7 @@ namespace mln
     template <unsigned n, typename C>
     inline
     mln_sum(C)
-    l1(const metal::vec<n,C>& vec)
+    l1(const algebra::vec<n,C>& vec)
     {
       return impl::l1_<n, C>(vec);
     }
@@ -126,7 +126,7 @@ namespace mln
     template <unsigned n, typename C>
     inline
     mln_sum(C)
-    l1_distance(const metal::vec<n,C>& vec1, const metal::vec<n,C>& vec2)
+    l1_distance(const algebra::vec<n,C>& vec1, const algebra::vec<n,C>& vec2)
     {
       return impl::l1_distance_<n, C>(vec1, vec2);
     }

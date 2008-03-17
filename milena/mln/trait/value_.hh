@@ -37,11 +37,11 @@
 # include <string>
 
 # include <mln/metal/int.hh>
-# include <mln/metal/math/pow.hh>
+# include <mln/algebra/math/pow.hh>
 # include <mln/metal/if.hh>
 
 # include <mln/trait/value/all.hh>
-# include <mln/metal/math/pow.hh>
+# include <mln/algebra/math/pow.hh>
 
 
 # define mln_trait_value_nature(V) typename mln::trait::value_< V >::nature

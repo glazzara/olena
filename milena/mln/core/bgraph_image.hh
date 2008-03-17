@@ -33,7 +33,7 @@
 
 # include <mln/trait/images.hh>
 # include <mln/core/internal/image_primary.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 
 # include <mln/core/p_bgraph.hh>
 # include <mln/core/bgraph_psite.hh>

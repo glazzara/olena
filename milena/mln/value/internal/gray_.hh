@@ -37,8 +37,8 @@
 # include <iostream>
 # include <cmath>
 
-# include <mln/metal/math/max.hh>
-# include <mln/metal/math/pow.hh>
+# include <mln/algebra/math/max.hh>
+# include <mln/algebra/math/pow.hh>
 
 # include <mln/value/concept/integer.hh>
 
@@ -312,7 +312,7 @@ namespace mln
       inline
       gray_<n>::operator graylevel_f() const
       {
-	static const float denom = float(metal::math::pow_int<2, n>::value) - 1.f;
+	static const float denom = float(algebra::math::pow_int<2, n>::value) - 1.f;
 	return graylevel_f(float(this->v_) / denom);
       }
 

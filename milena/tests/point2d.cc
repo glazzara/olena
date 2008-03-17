@@ -74,5 +74,5 @@ int main()
   for (unsigned i = 0; i < p.dim; ++i)
     mln_assertion(q[i] == 0);
 
-  std::cout << 3.4 * metal::vec<2, int>(p) << std::endl;
+  std::cout << 3.4 * algebra::vec<2, int>(p) << std::endl;
 }

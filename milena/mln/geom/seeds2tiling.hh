@@ -40,7 +40,7 @@
 # include <mln/core/clone.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 
 
 namespace mln

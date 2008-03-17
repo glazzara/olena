@@ -39,7 +39,7 @@
 # include <mln/core/internal/image_identity.hh>
 # include <mln/core/clone.hh>
 
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 
 
 namespace mln

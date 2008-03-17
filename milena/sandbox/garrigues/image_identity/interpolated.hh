@@ -36,7 +36,7 @@
 # include <cmath>
 
 # include "image_identity.hh"
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 
 
 namespace mln
@@ -99,13 +99,13 @@ namespace mln
     using super_::owns_;
 
     /// Test if a pixel value is accessible at \p v.
-    bool owns_(const mln::metal::vec<I::point::dim, float>& v) const;
+    bool owns_(const mln::algebra::vec<I::point::dim, float>& v) const;
 
     /// Read-only access of pixel value at point site \p p.
     /// Mutable access is only OK for reading (not writing).
     using super_::operator();
 
-    mln_value(I) operator()(const mln::metal::vec<I::point::dim, float>& v) const;
+    mln_value(I) operator()(const mln::algebra::vec<I::point::dim, float>& v) const;
 
 
     /// Give the set of values of the image.
@@ -149,7 +149,7 @@ namespace mln
   }
 
   template <typename I>
-  bool interpolated<I>::owns_(const mln::metal::vec<I::point::dim, float>& v) const
+  bool interpolated<I>::owns_(const mln::algebra::vec<I::point::dim, float>& v) const
   {
     mln_point(I) p;
     for (unsigned i = 0; i < I::point::dim; ++i)
@@ -159,7 +159,7 @@ namespace mln
 
   template <typename I>
   mln_value(I)
-  interpolated<I>::operator()(const mln::metal::vec<I::point::dim, float>& v) const
+  interpolated<I>::operator()(const mln::algebra::vec<I::point::dim, float>& v) const
   {
     mln_point(I) p;
     for (unsigned i = 0; i < I::point::dim; ++i)

@@ -32,7 +32,7 @@
 
 #include <tests/norm/common.hh>
 
-#include <mln/metal/vec.hh>
+#include <mln/algebra/vec.hh>
 #include <mln/norm/l1.hh>
 
 
@@ -58,12 +58,12 @@ namespace test
 
 int main()
 {
-  typedef mln::metal::vec<3, int> vec_t;
+  typedef mln::algebra::vec<3, int> vec_t;
 
   // Reference value.
   int d = (5 - 1) + (1 + 2) + 3;
 
-  // Tests using mln::metal::vec.
+  // Tests using mln::algebra::vec.
   vec_t t, u;
   t.set(1, -2, 3);
   u.set(5,  1, 0);

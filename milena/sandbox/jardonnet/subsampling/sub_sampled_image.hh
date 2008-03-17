@@ -34,7 +34,7 @@
 
 # include <mln/core/internal/image_morpher.hh>
 # include <mln/convert/to_dpoint.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/value/set.hh>
 
 
@@ -214,7 +214,7 @@ namespace mln
   sub_sampled_image<I>::translate_coords_(const mln_point(I)& p) const
   {
    
-    return mln_point(I)(metal::vec<2, int>(p) * gap + metal::vec<2, int>(first_p));
+    return mln_point(I)(algebra::vec<2, int>(p) * gap + algebra::vec<2, int>(first_p));
   }
   
   

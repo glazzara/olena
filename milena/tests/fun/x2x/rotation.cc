@@ -59,7 +59,7 @@ int main()
   
   for_all(p)
     {
-      metal::vec<2,float> v = rot1.inv()((point2d::vec_t)(point2d)p);
+      algebra::vec<2,float> v = rot1.inv()((point2d::vec_t)(point2d)p);
       if (inter.owns_(v))
 	out(p) = inter(v);
       else

@@ -60,7 +60,7 @@
 # include <mln/core/clone.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 
 # include <mln/norm/l2.hh>
 # include <mln/norm/l1.hh>

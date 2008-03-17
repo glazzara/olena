@@ -74,10 +74,10 @@ namespace mln
 # include <mln/metal/unqualif.hh>
 # include <mln/metal/is_unqualif.hh>
 
-# include <mln/metal/vec.hh>
-# include <mln/metal/mat.hh>
+# include <mln/algebra/vec.hh>
+# include <mln/algebra/mat.hh>
 
-# include <mln/metal/math/all.hh>
+# include <mln/algebra/math/all.hh>
 
 // FIXME: Remove the following includes below!
 # include <mln/metal/same_coord.hh>

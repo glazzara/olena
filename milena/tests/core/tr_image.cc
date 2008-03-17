@@ -58,7 +58,7 @@ int main()
   
   for_all(p)
     {
-      metal::vec<3,int> vec = (image3d<int_u8>::point)p;
+      algebra::vec<3,int> vec = (image3d<int_u8>::point)p;
       if (inter.has(vec))
 	out(p) = inter(vec);
       else

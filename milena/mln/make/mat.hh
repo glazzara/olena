@@ -30,17 +30,17 @@
 
 /*! \file mln/make/mat.hh
  *
- * \brief Routine to construct an mln::metal::mat.
+ * \brief Routine to construct an mln::algebra::mat.
  */
 
-# include <mln/metal/mat.hh>
+# include <mln/algebra/mat.hh>
 
 namespace mln
 {
 
   namespace make
   {
-    /*! \brief Create an mln::metal::mat<n,m,T>.
+    /*! \brief Create an mln::algebra::mat<n,m,T>.
      *
      * \param[in] tab Tab of value.
      *
@@ -48,21 +48,32 @@ namespace mln
      * with n and m, the dimensions oh the matrix.
      */
     template <unsigned n, unsigned m, unsigned N, typename T>
-    metal::mat<n,m,T> mat(const T tab[N]);
+    algebra::mat<n,m,T> mat(const T tab[N]);
+    
+    template <unsigned n, unsigned m, typename T>
+    algebra::mat<n,m,T> mat(algebra::vec<n,T> v);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned n, unsigned m, unsigned N, typename T>
     inline
-    metal::mat<n,m,T> mat(const T tab[N])
+    algebra::mat<n,m,T> mat(const T tab[N])
     {
       mln_precondition(n * m == N);
-      metal::mat<n,m,T> tmp;
+      algebra::mat<n,m,T> tmp;
       for (unsigned i = 0; i < N; ++i)
 	tmp(i / m, i % m) = tab[i];
       return tmp;
     }
 
+    template <unsigned n, typename T>
+    algebra::mat<n,1,T> mat(algebra::vec<n,T> v)
+    {
+      algebra::mat<n,1,T> tmp;
+      for (unsigned i = 0; i < n; i++)
+        tmp(i,1) = v[i];
+      return tmp;
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

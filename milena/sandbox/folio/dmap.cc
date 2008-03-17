@@ -34,7 +34,7 @@ namespace mln
           for_all(q)
             if (input(q) == true) // q is in the object.
               {
-                metal::vec<2,int> vp = p.to_point(), vq = q.to_point();
+                algebra::vec<2,int> vp = p.to_point(), vq = q.to_point();
                 min.take(norm::l2_distance(vp, vq));
               }
           output(p) = min;

@@ -35,7 +35,7 @@
 #include <mln/core/image2d.hh>
 #include <mln/core/interpolated.hh>
 
-#include <mln/metal/vec.hh>
+#include <mln/algebra/vec.hh>
 
 #include <mln/level/fill.hh>
 
@@ -60,8 +60,8 @@ int main()
 
   interpolated< image2d<float> > inter(f);
 
-  metal::vec<2, float> v1 = make::vec(2.3, 0.6);
-  metal::vec<2, float> v2 = make::vec(3.2, 1.8);
+  algebra::vec<2, float> v1 = make::vec(2.3, 0.6);
+  algebra::vec<2, float> v2 = make::vec(3.2, 1.8);
 
   debug::println(f);
 

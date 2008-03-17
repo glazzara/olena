@@ -38,7 +38,7 @@
 
 # include <mln/value/concept/vectorial.hh>
 # include <mln/value/int_u.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 
 
 namespace mln
@@ -137,7 +137,7 @@ namespace mln
       typedef trait::value::kind::color       kind;
       typedef mln_value_quant_from_(card)     quant;
 
-      typedef metal::vec<3, float> sum;
+      typedef algebra::vec<3, float> sum;
     };
 
   } // end of namespace trait
@@ -155,9 +155,9 @@ namespace mln
       :
       public Vectorial< rgb<n> >
       ,
-      public internal::value_like_< metal::vec< 3, int_u<n> >, // Equivalent.
-				    metal::vec< 3, int_u<n> >, // Encoding.
-				    metal::vec< 3, int >,      // Interoperation.
+      public internal::value_like_< algebra::vec< 3, int_u<n> >, // Equivalent.
+				    algebra::vec< 3, int_u<n> >, // Encoding.
+				    algebra::vec< 3, int >,      // Interoperation.
 				    rgb<n> >                   // Exact.
     {
     public:
@@ -179,15 +179,15 @@ namespace mln
       /// Constructor from component values.
       rgb<n>(int r, int g, int b);
 
-      /// Constructor from a metal::vec.
-      rgb<n>(const metal::vec<3, int>& rhs);
-      rgb<n>(const metal::vec<3, unsigned>& rhs);
-      rgb<n>(const metal::vec<3, int_u<n> >& rhs);
+      /// Constructor from a algebra::vec.
+      rgb<n>(const algebra::vec<3, int>& rhs);
+      rgb<n>(const algebra::vec<3, unsigned>& rhs);
+      rgb<n>(const algebra::vec<3, int_u<n> >& rhs);
 
       // Conversion to the interoperation type.
-      operator metal::vec<3, int>() const   { return this->v_; }
+      operator algebra::vec<3, int>() const   { return this->v_; }
       // Conversion to the sum type.
-      operator metal::vec<3, float>() const { return this->v_; }
+      operator algebra::vec<3, float>() const { return this->v_; }
 
       /// \{ Constructors with literals.
       rgb<n>(const literal::white_t&);
@@ -293,21 +293,21 @@ namespace mln
 
     template <unsigned n>
     inline
-    rgb<n>::rgb(const metal::vec<3, int>& v)
+    rgb<n>::rgb(const algebra::vec<3, int>& v)
     {
       this->v_ = v;
     }
 
     template <unsigned n>
     inline
-    rgb<n>::rgb(const metal::vec<3, unsigned>& v)
+    rgb<n>::rgb(const algebra::vec<3, unsigned>& v)
     {
       this->v_ = v;
     }
 
     template <unsigned n>
     inline
-    rgb<n>::rgb(const metal::vec<3, int_u<n> >& v)
+    rgb<n>::rgb(const algebra::vec<3, int_u<n> >& v)
     {
       this->v_ = v;
     }

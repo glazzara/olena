@@ -44,7 +44,7 @@ int main()
   image2d<int> ima5(b), ima1(b);
 
   point2d p = make::point2d(0, 0);
-  metal::vec<2, int> v = make::vec(5, 1);
+  algebra::vec<2, int> v = make::vec(5, 1);
 
   value::stack(ima5, ima1)(p) = v;
   mln_assertion(value::stack(ima5, ima1)(p) == v);

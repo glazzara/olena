@@ -36,7 +36,7 @@
  */
 
 # include <mln/math/abs.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 
 
 namespace mln
@@ -51,7 +51,7 @@ namespace mln
     C linfty(const C (&vec)[n]);
 
     template <unsigned n, typename C>
-    C linfty(const metal::vec<n,C>& vec);
+    C linfty(const algebra::vec<n,C>& vec);
     /// \}
 
 
@@ -61,8 +61,8 @@ namespace mln
     C linfty_distance(const C (&vec1)[n], const C (&vec2)[n]);
 
     template <unsigned n, typename C>
-    C linfty_distance(const metal::vec<n,C>& vec1,
-		      const metal::vec<n,C>& vec2);
+    C linfty_distance(const algebra::vec<n,C>& vec1,
+		      const algebra::vec<n,C>& vec2);
     /// \}
 
 
@@ -119,7 +119,7 @@ namespace mln
 
     template <unsigned n, typename C>
     inline
-    C linfty(const metal::vec<n,C>& vec)
+    C linfty(const algebra::vec<n,C>& vec)
     {
       return impl::linfty_<n, C>(vec);
     }
@@ -133,8 +133,8 @@ namespace mln
 
     template <unsigned n, typename C>
     inline
-    C linfty_distance(const metal::vec<n,C>& vec1,
-		      const metal::vec<n,C>& vec2)
+    C linfty_distance(const algebra::vec<n,C>& vec1,
+		      const algebra::vec<n,C>& vec2)
     {
       return impl::linfty_distance_<n, C>(vec1, vec2);
     }

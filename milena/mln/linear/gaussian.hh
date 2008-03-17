@@ -327,7 +327,7 @@ namespace mln
     inline
     void
     gaussian(const Image<I>& input, float sigma,
-	     Image<O>& out)
+	     Image<O>& output)
     {
       mln_precondition(exact(input).has_data());
       mln_precondition(exact(output).has_data());
@@ -339,7 +339,7 @@ namespace mln
 	     0.6318f, 1.997f,
 	     sigma);
       impl::gaussian_common_(mln_trait_value_nature(mln_value(I))(),
-                             input, coef, sigma, out);
+                             input, coef, sigma, output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/x2x_linear_impl.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/metal/is.hh>
 # include <mln/metal/bexpr.hh>
 # include <mln/core/h_mat.hh>

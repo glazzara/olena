@@ -33,7 +33,7 @@
  * \brief Definition of a matrix with homogeneous coordinates.
  */
 
-# include <mln/metal/mat.hh>
+# include <mln/algebra/mat.hh>
 
 
 namespace mln
@@ -43,7 +43,7 @@ namespace mln
    *
    */
   template <unsigned d, typename T>
-  struct h_mat : public metal::mat<d+1, d+1, T>
+  struct h_mat : public algebra::mat<d+1, d+1, T>
   {
     /// Dimension is the 'natural' one (3 for 3D), not the one of the vector (dim + 1)
     enum { N = d,
@@ -53,7 +53,7 @@ namespace mln
     /// Constructor without argument.
     h_mat();
     /// Constructor with the underlying matrix.
-    h_mat(const metal::mat<d+1, d+1, T>& x);
+    h_mat(const algebra::mat<d+1, d+1, T>& x);
   };
 
 
@@ -62,14 +62,14 @@ namespace mln
   template <unsigned d, typename T>
   inline
   h_mat<d,T>::h_mat()
-    : metal::mat<d+1, d+1, T>(metal::mat<d+1, d+1, T>::Id)
+    : algebra::mat<d+1, d+1, T>(algebra::mat<d+1, d+1, T>::Id)
   {
   }
 
   template <unsigned d, typename T>
   inline
-  h_mat<d,T>::h_mat(const metal::mat<d+1, d+1, T>& x)
-    : metal::mat<d+1, d+1, T>(x)
+  h_mat<d,T>::h_mat(const algebra::mat<d+1, d+1, T>& x)
+    : algebra::mat<d+1, d+1, T>(x)
   {
   }
 

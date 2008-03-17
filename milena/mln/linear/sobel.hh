@@ -243,7 +243,7 @@ namespace mln
       // The type of a component of a vector from the gradient.
       typedef mln_sum(mln_value(I)) gradient_val_t;
       // The type of a vector from the gradient.
-      typedef mln::metal::vec<I::point::dim, gradient_val_t> gradient_vec_t;
+      typedef mln::algebra::vec<I::point::dim, gradient_val_t> gradient_vec_t;
       return sobel_norm(input,
 			fun::v2v::l1_norm<gradient_vec_t, gradient_val_t>());
     }

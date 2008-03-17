@@ -35,7 +35,7 @@
 
 #include <tests/norm/common.hh>
 
-#include <mln/metal/vec.hh>
+#include <mln/algebra/vec.hh>
 #include <mln/norm/l2.hh>
 
 
@@ -61,14 +61,14 @@ namespace test
 
 int main()
 {
-  typedef mln::metal::vec<3, int> vec_t;
+  typedef mln::algebra::vec<3, int> vec_t;
 
   // Reference value.
   float d = std::sqrt((4 - 2) * (4 - 2) +
 		      (1 + 2) * (1 + 2) +
 		      (0 - 3) * (0 - 3));
 
-  // Tests using mln::metal::vec.
+  // Tests using mln::algebra::vec.
   vec_t t, u;
   t.set(2, -2, 3);
   u.set(4,  1, 0);

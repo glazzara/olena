@@ -17,7 +17,7 @@
 #include <algorithm> 
 #include <utility> 
 #include <map> 
-#include <mln/metal/vec.hh>
+#include <mln/algebra/vec.hh>
 
 namespace mln
 {
@@ -64,7 +64,7 @@ namespace mln
     graph_with_no_border (Image<I>& ima_,
 			  const Neighborhood<N>& nbh)
     {
-      typedef metal::vec<2,float> X;
+      typedef algebra::vec<2,float> X;
       typedef mln_value(I) V;
       typedef mln_psite(I) P;
 
@@ -111,7 +111,7 @@ namespace mln
 	     Image<I>& orig_,
 	     const Neighborhood<N>& nbh)
     {
-      typedef metal::vec<2,float> X;
+      typedef algebra::vec<2,float> X;
       typedef mln_value(I) V;
       typedef mln_psite(I) P;
 

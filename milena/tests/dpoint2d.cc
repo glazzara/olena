@@ -48,7 +48,7 @@ int main()
   mln_assertion(dp == q - p);
   mln_assertion(q == p + dp);
 
-  metal::vec<2, float> v = dp;
+  algebra::vec<2, float> v = dp;
   mln_assertion(v[0] / 2 == 1.5);
 
   p += dp;

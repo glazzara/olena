@@ -36,7 +36,7 @@
 # include <cmath>
 
 # include <mln/core/internal/image_identity.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 # include "mesh_p.hh"
 # include "mesh_psite.hh"
 # include <vector>

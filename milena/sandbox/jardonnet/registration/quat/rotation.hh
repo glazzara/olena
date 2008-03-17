@@ -1,0 +1,60 @@
+#ifndef ROTATION_HH
+# define ROTATION_HH
+
+# include <stdlib.h>
+//# include "quat.hh"
+
+//# include "mat.hh"
+
+# include <mln/algebra/mat.hh>
+# include <mln/algebra/vec.hh>
+# include <mln/make/vec.hh>
+# include <mln/make/mat.hh>
+# include <mln/value/quat.hh>
+
+
+// FIXME: rotation should be an abstract class
+// and derived classes encapsulate either a quaternion or a algebra::matrix
+namespace mln
+{
+
+  vec3f rotate(const value::quat& q, const vec3f& p)
+  {
+ 
+    return (q * value::quat(0. ,p) * q.inv()).v();
+  }
+
+
+  bool check_rotation(const algebra::mat<3,3,float>& mat,
+                      const value::quat& q)
+  {
+    assert(q.is_unit());
+    vec3f
+      tmp = make::vec(rand(), rand(), rand()),
+      p = tmp / norm::l2(tmp),
+      p_rot_1 = rotate(q, p),
+      p_rot_2 = mat * p;
+    return about_equal(norm::l2(p_rot_1 - p_rot_2), 0.f);
+  }
+
+
+  algebra::mat<3,3,float> quat2mat(const value::quat& q)
+  {
+    assert(q.is_unit());
+    float
+      w = q.to_vec()[0],
+      x = q.to_vec()[1],  x2 = 2*x*x,  xw = 2*x*w,
+      y = q.to_vec()[2],  y2 = 2*y*y,  xy = 2*x*y,  yw = 2*y*w,
+      z = q.to_vec()[3],  z2 = 2*z*z,  xz = 2*x*z,  yz = 2*y*z,  zw = 2*z*w;
+    float t[9] = {1.f - y2 - z2,  xy - zw,  xz + yw,
+                  xy + zw,  1.f - x2 - z2,  yz - xw,
+                  xz - yw,  yz + xw,  1.f - x2 - y2};
+    algebra::mat<3,3,float> tmp = make::mat<3,3,9,float>(t);
+    // postcondition
+    assert(check_rotation(tmp, q));
+    return tmp;
+  }
+}
+
+
+#endif // ndef ROTATION_HH

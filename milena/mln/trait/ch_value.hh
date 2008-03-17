@@ -98,7 +98,7 @@ namespace mln
       {
 	/* FIXME: The code used to read
 
-	     typedef metal::vec<n, V> value;
+	     typedef algebra::vec<n, V> value;
 	     typedef mln_ch_value(I, value) ret;
 
 	   here.  But this is wrong IMHO (Roland).  Changing the value

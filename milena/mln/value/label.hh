@@ -33,7 +33,7 @@
  * \brief Define a generic class for labels.
  */
 
-# include <mln/metal/math/pow.hh>
+# include <mln/algebra/math/pow.hh>
 # include <mln/value/concept/symbolic.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/internal/convert.hh>

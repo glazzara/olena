@@ -30,10 +30,10 @@
 
 /*! \file mln/make/vec.hh
  *
- * \brief Routine to construct an mln::metal::vec.
+ * \brief Routine to construct an mln::algebra::vec.
  */
 
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/core/concept/function.hh>
 
 namespace mln
@@ -43,16 +43,16 @@ namespace mln
   {
 
 
-    /*! \brief Create an mln::metal::vec<n,T>.
+    /*! \brief Create an mln::algebra::vec<n,T>.
      *
      * \param[in] v_0 First coordinate.
      *
      * \return A 1D vector.
      */
     template <typename T>
-    metal::vec<1, T> vec(const T& v_0);
+    algebra::vec<1, T> vec(const T& v_0);
 
-    /*! \brief Create an mln::metal::vec<2,T>.
+    /*! \brief Create an mln::algebra::vec<2,T>.
      *
      * \param[in] v_0 First coordinate.
      * \param[in] v_1 Second coordinate.
@@ -60,9 +60,9 @@ namespace mln
      * \return A 2D vector.
      */
     template <typename T>
-    metal::vec<2, T> vec(const T& v_0, const T& v_1);
+    algebra::vec<2, T> vec(const T& v_0, const T& v_1);
 
-    /*! \brief Create an mln::metal::vec<3,T>.
+    /*! \brief Create an mln::algebra::vec<3,T>.
      *
      * \param[in] v_0 First coordinate.
      * \param[in] v_1 Second coordinate.
@@ -71,9 +71,9 @@ namespace mln
      * \return A 3D vector.
      */
     template <typename T>
-    metal::vec<3, T> vec(const T& v_0, const T& v_1, const T& v_2);
+    algebra::vec<3, T> vec(const T& v_0, const T& v_1, const T& v_2);
 
-    /*! \brief Create an mln::metal::vec<4,T>.
+    /*! \brief Create an mln::algebra::vec<4,T>.
      *
      * \param[in] v_0 First coordinate.
      * \param[in] v_1 Second coordinate.
@@ -83,25 +83,25 @@ namespace mln
      * \return A 4D vector.
      */
     template <typename T>
-    metal::vec<4, T> vec(const T& v_0, const T& v_1, const T& v_2, const T& v_3);
+    algebra::vec<4, T> vec(const T& v_0, const T& v_1, const T& v_2, const T& v_3);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
     inline
-    metal::vec<1, T> vec(const T& v_0)
+    algebra::vec<1, T> vec(const T& v_0)
     {
-      metal::vec<1, T> tmp;
+      algebra::vec<1, T> tmp;
       tmp[0] = v_0;
       return tmp;
     }
 
     template <typename T>
     inline
-    metal::vec<2, T> vec(const T& v_0, const T& v_1)
+    algebra::vec<2, T> vec(const T& v_0, const T& v_1)
     {
-      metal::vec<2, T> tmp;
+      algebra::vec<2, T> tmp;
       tmp[0] = v_0;
       tmp[1] = v_1;
       return tmp;
@@ -109,9 +109,9 @@ namespace mln
 
     template <typename T>
     inline
-    metal::vec<3, T> vec(const T& v_0, const T& v_1, const T& v_2)
+    algebra::vec<3, T> vec(const T& v_0, const T& v_1, const T& v_2)
     {
-      metal::vec<3, T> tmp;
+      algebra::vec<3, T> tmp;
       tmp[0] = v_0;
       tmp[1] = v_1;
       tmp[2] = v_2;
@@ -120,9 +120,9 @@ namespace mln
 
     template <typename T>
     inline
-    metal::vec<4, T> vec(const T& v_0, const T& v_1, const T& v_2, const T& v_3)
+    algebra::vec<4, T> vec(const T& v_0, const T& v_1, const T& v_2, const T& v_3)
     {
-      metal::vec<4, T> tmp;
+      algebra::vec<4, T> tmp;
       tmp[0] = v_0;
       tmp[1] = v_1;
       tmp[2] = v_2;

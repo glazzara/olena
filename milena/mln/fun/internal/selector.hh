@@ -38,7 +38,7 @@
 # include <mln/metal/unqualif.hh>
 # include <mln/metal/if.hh>
 # include <mln/metal/is_a.hh>
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 
 
 namespace mln
@@ -152,7 +152,7 @@ namespace mln
       };
 
       template <unsigned n, typename T>
-      struct tag_< metal::vec<n,T> >
+      struct tag_< algebra::vec<n,T> >
       {
 	enum { value = x_ };
       };

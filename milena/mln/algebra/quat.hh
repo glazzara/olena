@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_QUAT_HH
-# define MLN_VALUE_QUAT_HH
+#ifndef MLN_ALGEBRA_QUAT_HH
+# define MLN_ALGEBRA_QUAT_HH
 
-/*! \file mln/value/quat.hh
+/*! \file mln/algebra/quat.hh
  *
  * \brief Define a class for quaternion values.
  */
@@ -41,7 +41,7 @@
 # include <mln/value/internal/value_like.hh>
 # include <mln/trait/value_.hh>
 
-# include <mln/metal/vec.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/norm/l2.hh>
 
 
@@ -59,35 +59,35 @@ namespace mln
     // quat OP quat
 
     template <>
-    struct set_precise_binary_< op::plus, mln::value::quat, mln::value::quat >
+    struct set_precise_binary_< op::plus, mln::algebra::quat, mln::algebra::quat >
     {
-      typedef mln::value::quat ret;
+      typedef mln::algebra::quat ret;
     };
 
     template <>
-    struct set_precise_binary_< op::minus, mln::value::quat, mln::value::quat >
+    struct set_precise_binary_< op::minus, mln::algebra::quat, mln::algebra::quat >
     {
-      typedef mln::value::quat ret;
+      typedef mln::algebra::quat ret;
     };
 
     template <>
-    struct set_precise_binary_< op::times, mln::value::quat, mln::value::quat >
+    struct set_precise_binary_< op::times, mln::algebra::quat, mln::algebra::quat >
     {
-      typedef mln::value::quat ret;
+      typedef mln::algebra::quat ret;
     };
 
     // quat OP scalar
 
     template < typename S >
-    struct set_precise_binary_< op::times, mln::value::quat, mln::value::scalar_<S> >
+    struct set_precise_binary_< op::times, mln::algebra::quat, mln::value::scalar_<S> >
     {
-      typedef mln::value::quat ret;
+      typedef mln::algebra::quat ret;
     };
 
     template < typename S >
-    struct set_precise_binary_< op::div, mln::value::quat, mln::value::scalar_<S> >
+    struct set_precise_binary_< op::div, mln::algebra::quat, mln::value::scalar_<S> >
     {
-      typedef mln::value::quat ret;
+      typedef mln::algebra::quat ret;
     };
 
 
@@ -95,7 +95,7 @@ namespace mln
 
 
     template <>
-    struct value_< mln::value::quat >
+    struct value_< mln::algebra::quat >
     {
       typedef trait::value::nature::vectorial nature;
       typedef trait::value::kind::data        kind;
@@ -106,7 +106,7 @@ namespace mln
 	card  = 0
       };
 
-      typedef mln::value::quat sum;
+      typedef mln::algebra::quat sum;
     };
     
 
@@ -123,9 +123,9 @@ namespace mln
       :
       public Vectorial< quat >
       ,
-      public internal::value_like_< metal::vec<4, float>, // Equivalent.
-				    metal::vec<4, float>, // Encoding.
-				    metal::vec<4, float>, // Interoperation.
+      public internal::value_like_< algebra::vec<4, float>, // Equivalent.
+				    algebra::vec<4, float>, // Encoding.
+				    algebra::vec<4, float>, // Interoperation.
 				    quat >                // Exact.
     {
     public:
@@ -137,14 +137,14 @@ namespace mln
       quat(float s, float x, float y, float z);
 
       /// Constructor from a scalar and a 3D vector.
-      quat(float s, const metal::vec<3,float>& v);
+      quat(float s, const algebra::vec<3,float>& v);
 
 
       /// Constructor from a 4D vector.
-      quat(const metal::vec<4,float>& v);
+      quat(const algebra::vec<4,float>& v);
 
       /// Assignment from a 4D vector.
-      quat& operator=(const metal::vec<4,float>& v);
+      quat& operator=(const algebra::vec<4,float>& v);
 
 
       /// \{ Constructors/assignments with literals zero and one.
@@ -155,8 +155,8 @@ namespace mln
       /// \}
 
 
-      /// Explicit conversion to a 4D metal::vec.
-      const metal::vec<4,float>& to_vec() const;
+      /// Explicit conversion to a 4D algebra::vec.
+      const algebra::vec<4,float>& to_vec() const;
 
 
       /// Give the scalar part.
@@ -165,8 +165,8 @@ namespace mln
       /// Access to the scalar part.
       float& s();
 
-      const metal::vec<3,float>& v() const;
-      metal::vec<3,float>& v();
+      const algebra::vec<3,float>& v() const;
+      algebra::vec<3,float>& v();
 
       void set_v(float x, float y, float z);
 
@@ -193,18 +193,18 @@ namespace mln
 
       /// Transform into unit quaternion.
       template <typename T>
-      void set_unit(float theta, const metal::vec<3,T>& uv);
+      void set_unit(float theta, const algebra::vec<3,T>& uv);
 
       // only for unit quaternions described by theta and uv such as:
       // q = ( cos(theta), sin(theta) * uv )
 
-      quat(unsigned one, float theta, const metal::vec<3,float>& uv);
+      quat(unsigned one, float theta, const algebra::vec<3,float>& uv);
 
       float theta() const;
       void set_theta(float theta);
 
-      metal::vec<3,float> uv() const;
-      void set_uv(const metal::vec<3,float>& uv);
+      algebra::vec<3,float> uv() const;
+      void set_uv(const algebra::vec<3,float>& uv);
     };
 
 
@@ -269,21 +269,21 @@ namespace mln
     }
 
     inline
-    quat::quat(float s, const metal::vec<3,float>& v)
+    quat::quat(float s, const algebra::vec<3,float>& v)
     {
       v_[0] = s;
       this->v() = v;
     }
 
     inline
-    quat::quat(const metal::vec<4,float>& v)
+    quat::quat(const algebra::vec<4,float>& v)
     {
       this->v_ = v;
     }
 
     inline
     quat&
-    quat::operator=(const metal::vec<4,float>& v)
+    quat::operator=(const algebra::vec<4,float>& v)
     {
       this->v_ = v;
       return *this;
@@ -324,7 +324,7 @@ namespace mln
 
 
     inline
-    const metal::vec<4,float>&
+    const algebra::vec<4,float>&
     quat::to_vec() const
     {
       return this->v_;
@@ -345,18 +345,18 @@ namespace mln
     }
 
     inline
-    const metal::vec<3, float>&
+    const algebra::vec<3, float>&
     quat::v() const
     {
-      return *(const metal::vec<3, float>*)(const void*)(& this->v_[1]);
+      return *(const algebra::vec<3, float>*)(const void*)(& this->v_[1]);
       // return make::vec(this->v_[1], this->v_[2], this->v_[3]);
     }
 
     inline
-    metal::vec<3, float>&
+    algebra::vec<3, float>&
     quat::v()
     {
-      return *(metal::vec<3, float>*)(void*)(& this->v_[1]);
+      return *(algebra::vec<3, float>*)(void*)(& this->v_[1]);
     }
 
     inline
@@ -415,7 +415,7 @@ namespace mln
 
     template <typename T>
     inline
-    void quat::set_unit(float theta, const metal::vec<3,T>& uv)
+    void quat::set_unit(float theta, const algebra::vec<3,T>& uv)
     {
       static const float pi = 3.14159265358979323846;
 
@@ -434,7 +434,7 @@ namespace mln
     // q = ( cos(theta), sin(theta) * uv )
 
     inline
-    quat::quat(unsigned one, float theta, const metal::vec<3,float>& uv)
+    quat::quat(unsigned one, float theta, const algebra::vec<3,float>& uv)
     {
       mln_precondition(one == 1);
       set_unit(theta, uv);
@@ -455,15 +455,15 @@ namespace mln
     }
 
     inline
-    metal::vec<3, float> quat::uv() const
+    algebra::vec<3, float> quat::uv() const
     {
       mln_precondition(is_unit());
-      metal::vec<3, float> w = v();
+      algebra::vec<3, float> w = v();
       return w.normalize();
     }
 
     inline
-    void quat::set_uv(const metal::vec<3,float>& uv)
+    void quat::set_uv(const algebra::vec<3,float>& uv)
     {
       mln_precondition(is_unit());
       set_unit(theta(), uv);
@@ -496,7 +496,7 @@ namespace mln
     quat operator*(const quat& lhs, const quat& rhs)
     {
       quat tmp(lhs.s() * rhs.s() - lhs.v() * rhs.v(),
-	       metal::vprod(lhs.v(), rhs.v()) + lhs.s() * rhs.v() + rhs.s() * lhs.v());
+	       algebra::vprod(lhs.v(), rhs.v()) + lhs.s() * rhs.v() + rhs.s() * lhs.v());
       return tmp;
     }
 
@@ -535,10 +535,10 @@ namespace mln
     quat exp(const quat& q)
     {
       mln_precondition(about_equal(q.s(), 0.f));
-      metal::vec<3, float> v = q.v();
+      algebra::vec<3, float> v = q.v();
       float theta = norm::l2(v);
       mln_precondition(!about_equal(theta, 0.f));
-      metal::vec<3, float> uv = v / theta;
+      algebra::vec<3, float> uv = v / theta;
       return quat(cos(theta), sin(theta) * uv);
     }
 
@@ -645,4 +645,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_VALUE_QUAT_HH
+#endif // ! MLN_ALGEBRA_QUAT_HH

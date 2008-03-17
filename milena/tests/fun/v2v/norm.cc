@@ -30,7 +30,7 @@
  *  \brief Test the norm functors.
  */
 
-#include <mln/metal/vec.hh>
+#include <mln/algebra/vec.hh>
 #include <mln/fun/v2v/norm.hh>
 
 #include <tests/norm/common.hh>
@@ -38,7 +38,7 @@
 
 int main()
 {
-  typedef mln::metal::vec<3, int> vec_t;
+  typedef mln::algebra::vec<3, int> vec_t;
 
   // L1-norm.
   {
