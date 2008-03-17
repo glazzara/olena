@@ -2,6 +2,8 @@
 # define INTERNAL_PITER_BASE_HH_
 
 # include <concept.hh>
+# include <point2d_impl.hh>
+
 # include <exact.hh>
 # include <metal/bool.hh>
 # include <metal/equal.hh>
@@ -13,49 +15,48 @@ namespace mln
   {
 
     /// fwd declaration
-    template <typename E, typename B>
+    template <typename E, typename Site, typename B>
     struct piter_base_site_cast;
 
     /// Psite = Site
-    template <typename E>
-    struct piter_base_site_cast<E, metal::true_> : public Piter<E>
+    template <typename E, typename Site>
+    struct piter_base_site_cast<E, Site, metal::true_> : public Piter<E>
     {
     };
 
     /// Psite != site
-    template <typename E>
-    struct piter_base_site_cast<E, metal::false_> : public Piter<E>
+    template <typename E, typename Site>
+    struct piter_base_site_cast<E, Site, metal::false_> : public Piter<E>
     {
-      operator typename E::site() const;
+      operator Site() const;
     };
 
     /// Piter base
     template <typename E, typename Site, typename Psite>
     struct piter_base_ :
-      public piter_base_site_cast<E,
-				  typename mlc_equal(Site,
-						     Psite)::eval>
+      public impl<Site>,
+      public piter_base_site_cast<E, Site,
+				  typename mlc_equal(Site, Psite)::eval>
     {
       operator Psite () const;
 
     protected:
       piter_base_();
-
     };
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename E>
-    piter_base_site_cast<E, metal::false_>::operator typename E::site () const
+    template <typename E, typename Site>
+    piter_base_site_cast<E, Site, metal::false_>::operator Site () const
     {
       return exact(this)->to_site();
     }
 
 
     template <typename E, typename Site, typename Psite>
-    piter_base_<E, Site, Psite>::operator Psite () const
+    piter_base_<E, Site, Psite>::operator Psite() const
     {
-      return exact(this)->to_site();
+      return exact(this)->to_psite();
     }
 
 

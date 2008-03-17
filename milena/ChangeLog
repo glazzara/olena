@@ -1,3 +1,19 @@
+2008-03-17  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	sandbox: psite/site refactorization: add the rle image type.
+
+	* sandbox/ballas/refactorization/test/rle.cc: New tests.
+	* sandbox/ballas/refactorization/p_run.hh,
+	* sandbox/ballas/refactorization/rle_pset.hh,
+	* sandbox/ballas/refactorization/rle_psite.hh,
+	* sandbox/ballas/refactorization/rle_image.hh: New, rle image type.
+	* sandbox/ballas/refactorization/internal/pset_base.hh,
+	* sandbox/ballas/refactorization/internal/image_base.hh,
+	* sandbox/ballas/refactorization/internal/piter_base.hh,
+	* sandbox/ballas/refactorization/internal/psite_base.hh,
+	* sandbox/ballas/refactorization/box2d.hh,
+	* sandbox/ballas/refactorization/point2d.hh: update
+
 2008-03-12  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	sandbox: continuing the psite/site factorization example.

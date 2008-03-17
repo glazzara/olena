@@ -9,26 +9,26 @@ namespace mln
   namespace internal
   {
 
-    template <typename E>
-    struct psite_base : public Psite<E>,
-			public impl<typename E::site>
+    template <typename E, typename P>
+    struct psite_base_ : public Psite<E>,
+			 public impl<P>
     {
-      operator typename E::psite () const;
+      operator E() const;
 
     protected:
-      psite_base();
+      psite_base_();
     };
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename E>
-    psite_base<E>::operator typename E::psite () const
+    template <typename E, typename P>
+    psite_base_<E, P>::operator E() const
     {
-      return exact(this)->to_site();
+      return exact(this)->to_psite();
     }
 
-    template <typename E>
-    psite_base<E>::psite_base()
+    template <typename E, typename P>
+    psite_base_<E, P>::psite_base_()
     {
     }
 

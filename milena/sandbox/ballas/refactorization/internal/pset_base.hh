@@ -3,6 +3,7 @@
 
 
 # include <concept.hh>
+# include <exact.hh>
 
 namespace mln
 {
@@ -15,9 +16,33 @@ namespace mln
     template <typename P, typename E>
     struct pset_base_ : public Pset<E>
     {
+      /// !!!
       typedef typename P::site site;
       typedef P psite;
+
+
+      bool has(const P& ps) const;
+    protected:
+      pset_base_();
     };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename P, typename E>
+    pset_base_<P, E>::pset_base_()
+    {
+    }
+
+    template <typename P, typename E>
+    bool
+    pset_base_<P, E>::has(const P& ps) const
+    {
+      return exact(this)->owns_(ps);
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
   }
 }
 

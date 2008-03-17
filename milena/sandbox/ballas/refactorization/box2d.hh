@@ -36,7 +36,7 @@ namespace mln
     box2d();
     box2d(const site& pmin, const site& pmax);
 
-    bool has(const site& p) const;
+    bool owns_(const site& p) const;
 
   protected:
     point2d<C> pmin_, pmax_;
@@ -98,7 +98,7 @@ namespace mln
   template <typename C>
   inline
   bool
-  box2d<C>::has(const site& p) const
+  box2d<C>::owns_(const site& p) const
   {
     for (unsigned i = 0; i < C::dim; ++i)
       if (p[i] < pmin_[i] || p[i] > pmax_[i])

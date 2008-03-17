@@ -38,6 +38,7 @@ namespace mln
 
     enum { dim = 2 };
     typedef dpoint2d<C> dpoint;
+    typedef point2d<C> site;
     typedef C coord;
 
 
@@ -51,6 +52,7 @@ namespace mln
 
     point2d<C>& operator+=(const dpoint& dp);
     point2d<C>& operator-=(const dpoint& dp);
+    point2d<C>& operator=(const point2d<C>& p);
 
   protected:
     std::vector<C> coord_;
@@ -186,6 +188,17 @@ namespace mln
   bool operator!=(const point2d<C>& lhs, const point2d<C>& rhs)
   {
     return !(lhs == rhs);
+  }
+
+  template <typename C>
+  inline
+  point2d<C>&
+  point2d<C>::operator=(const point2d<C>& p)
+  {
+    if (&p != this)
+      for (unsigned i = 0; i < dim; ++i)
+	this->coord_[i] = p.coord_[i];
+    return *this;
   }
 
   template <typename C>

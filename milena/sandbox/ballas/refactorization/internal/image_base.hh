@@ -19,7 +19,7 @@ namespace mln
       typedef typename S::fwd_piter fwd_piter;
       typedef typename S::bkd_piter bkd_piter;
 
-      bool has(const psite&) const;
+      bool has(const psite& ps) const;
 
     protected:
       image_base_();
@@ -32,6 +32,13 @@ namespace mln
     template <typename S, typename E>
     image_base_<S, E>::image_base_()
     {
+    }
+
+    template <typename S, typename E>
+    bool
+    image_base_<S, E>::has(const psite& ps) const
+    {
+      return exact(this)->owns_(ps);
     }
 
 
