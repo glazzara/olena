@@ -34,7 +34,7 @@ namespace mln
     /// Piter base
     template <typename E, typename Site, typename Psite>
     struct piter_base_ :
-      public impl<Site>,
+      public impl<E, Site>,
       public piter_base_site_cast<E, Site,
 				  typename mlc_equal(Site, Psite)::eval>
     {

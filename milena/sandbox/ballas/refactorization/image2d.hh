@@ -26,6 +26,7 @@ namespace mln
 
     image2d(int nrows, int ncols);
     image2d(const box2d<int>& b);
+    ~image2d();
 
     ///typedef mln::value::set<T> vset;
     //  const vset& values() const;
@@ -39,7 +40,7 @@ namespace mln
 
 
   private:
-    T  value_;
+    T*  values_;
     box2d<int> b_;
     bool is_ready_;
   };
@@ -51,6 +52,8 @@ namespace mln
     b_(nrows, ncols),
     is_ready_(false)
   {
+    values_ = new T[nrows * ncols];
+    is_ready_ = true;
   }
 
   template <typename T>
@@ -58,6 +61,15 @@ namespace mln
     b_(b),
     is_ready_(false)
   {
+    values_ = new T[(b.pmax()[0] - b.pmin()[0] + 1) *
+		    (b.pmax()[1] - b.pmin()[1] + 1)];
+    is_ready_ = true;
+  }
+
+  template <typename T>
+  image2d<T>::~image2d()
+  {
+    delete[] values_;
   }
 
   template <typename T>
@@ -69,17 +81,16 @@ namespace mln
 
   template <typename T>
   const T&
-  image2d<T>::operator()(const point2d<int>&) const
+  image2d<T>::operator()(const point2d<int>& p) const
   {
-    return value_;
+    return values_[p[0] * b_.pmax()[1] + p[1]];
   }
 
   template <typename T>
   T&
-  image2d<T>::operator()(const point2d<int>&)
+  image2d<T>::operator()(const point2d<int>& p)
   {
-    is_ready_ = true;
-    return value_;
+    return values_[p[0] * b_.pmax()[1] + p[1]];
   }
 
   template <typename T>

@@ -1,3 +1,18 @@
+2008-03-18  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Sandbox: Site/Psite refactorization: finalize the example.
+
+	* sandbox/ballas/refactorization/test/test.cc: Remove this tes.
+	* sandbox/ballas/refactorization/test/rle.cc,
+	* sandbox/ballas/refactorization/test/image2d.cc: update tests.
+	* sandbox/ballas/refactorization/image2d.hh: update values_.
+	* sandbox/ballas/refactorization/concept.hh: u.
+	* sandbox/ballas/refactorization/internal/impl.hh,
+	* sandbox/ballas/refactorization/internal/force_exact.hh,
+	* sandbox/ballas/refactorization/internal/piter_base.hh,
+	* sandbox/ballas/refactorization/internal/psite_base.hh,
+	* sandbox/ballas/refactorization/point2d_impl.hh: Impl recovering.
+
 2008-03-17  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Icp legacy. algebra:: now contains types vec, mat and quat.

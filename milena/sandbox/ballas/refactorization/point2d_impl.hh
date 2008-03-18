@@ -2,6 +2,7 @@
 # define POINT2D_IMPL_HH_
 
 # include <internal/impl.hh>
+# include <internal/force_exact.hh>
 
 
 namespace mln
@@ -11,8 +12,8 @@ namespace mln
   template <typename C>
   struct point2d;
 
-  template <typename C>
-  struct impl< point2d<C> >
+  template <typename E, typename C>
+  struct impl< E, point2d<C> >
   {
     C  operator[](unsigned i) const;
 
@@ -26,11 +27,11 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename C>
+  template <typename E, typename C>
   C
-  impl< point2d<C> >::operator[] (unsigned i) const
+  impl< E, point2d<C> >::operator[] (unsigned i) const
   {
-    return this->to_site()[i];
+    return internal::force_exact<E>(*this).to_site()[i];
   }
 
 # endif // ! MLN_INCLUDE_ONLY

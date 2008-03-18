@@ -11,7 +11,7 @@ namespace mln
 
     template <typename E, typename P>
     struct psite_base_ : public Psite<E>,
-			 public impl<P>
+			 public impl<E, P>
     {
       operator E() const;
 

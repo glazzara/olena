@@ -4,7 +4,7 @@
 namespace mln
 {
 
-  template <typename S>
+  template <typename E, typename S>
   struct impl
   {
     /// empty implementation

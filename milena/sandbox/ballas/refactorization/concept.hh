@@ -67,7 +67,7 @@ namespace mln
   };
 
   template <typename E>
-  struct Dpsite : public Object<E>
+  struct Dpsite : public Dsite<E>
   {
     /*
       typedef dpsite;
