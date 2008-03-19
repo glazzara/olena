@@ -33,12 +33,12 @@
  * \brief image registration
  */
 
-# include <mln/value/quat.hh>
+# include <mln/algebra/quat.hh>
 # include <mln/algebra/vec.hh>
 
 
-typedef mln::algebra::vec<3, float> vec3f;
-typedef std::vector< vec3f > vecs_t;
+//typedef mln::algebra::vec<3, float> vec3f;
+//typedef mln::p_array< vec3f > vecs_t;
   
 #include "cloud.hh"
 #include "quat7.hh"
@@ -65,39 +65,44 @@ namespace mln
     namespace impl
     {
 
+      template <typename P>
       inline
       void
-      icp_(const vecs_t& P,
-           const vecs_t& X)
+      icp_(const p_array<P>& C,
+           const p_array<P>& X)
       {
 	trace::entering("registration::impl::icp_");
 
         unsigned int k;
-        quat7 old_qk, qk;
+        quat7<P::dim> old_qk, qk;
         float err, err_bis;
 
-        vecs_t Pk(P.size()), Xk(Pk.size());
-        vec3f mu_P = center(P), mu_Xk;
+        p_array<P> Ck, Xk;
+        Ck.reserve(C.npoints());
+        Xk.reserve(Ck.npoints());
+        algebra::vec<P::dim,float> mu_C = center(C), mu_Xk;
 
         const float epsilon = 1e-3;
 
         //step 1
         k = 0;
-        Pk = P;
+        Ck = C;
 
         do {
           //step 2 FIXME : etienne
-          projection::de_base(Pk, X, Xk, mu_Xk, err_bis);
-          
+          projection::de_base(Ck, X, Xk, err_bis);
+
+          mu_Xk = center(Xk);
+
           // step 3
           old_qk = qk;
-          qk = match(P, mu_P, Xk, mu_Xk);
+          qk = match(C, mu_C, Xk, mu_Xk);
 
           // step 4
-          qk.apply_on(P, Pk); // Pk+1 = qk(P)
+          qk.apply_on(C, Ck); // Ck+1 = qk(C)
 
-          // err = d(Pk+1,Xk)
-          err = rms(Pk, Xk);
+          // err = d(Ck+1,Xk)
+          err = rms(Ck, Xk);
 
           ++k;
         } while (k < 3 || (qk - old_qk).sqr_norm() > epsilon);
@@ -119,7 +124,7 @@ namespace mln
       mln_precondition(exact(cloud).has_data());
       mln_precondition(exact(surface).has_data());
 
-      vecs_t a,b; // FIXME : to built.
+      p_array<mln_point(I)> a,b; // FIXME : to built.
 
       impl::icp_(a, b);
 

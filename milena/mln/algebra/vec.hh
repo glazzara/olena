@@ -203,7 +203,7 @@ namespace mln
       unsigned size() const;
 
       const vec<n, T>& normalize();
-
+   
       /// Constructor; coordinates are set by function \p f.
       template <typename F>
       vec(const Function_i2v<F>& f);
@@ -549,6 +549,18 @@ namespace mln
       return tmp;
     }
 
+    
+    template <typename P, unsigned n>
+    inline
+    P
+    to_point(const vec<n,float>& v)
+    {
+      P tmp;
+      for (unsigned i = 0; i < P::dim; ++i)
+        tmp[i] = round(v[i]);
+      return tmp;
+    }  
+    
 # endif // MLN_INCLUDE_ONLY
 
   } // end of namespace mln::algebra

@@ -6,6 +6,7 @@
 # include <algorithm>
 
 # include <mln/algebra/mat.hh>
+# include <mln/core/p_array.hh>
 
 # include "quat/all.hh"
 # include "jacobi.hh"
@@ -49,16 +50,17 @@ namespace mln
 namespace mln
 {
 
+  template <unsigned n>
   struct quat7
   {
-    value::quat _qR;
-    vec3f _qT;
+    algebra::quat _qR;
+    algebra::vec<n,float> _qT;
     
     quat7()
     {
     }
     
-    quat7(const value::quat& qR, const vec3f& qT) :
+    quat7(const algebra::quat& qR, const algebra::vec<n,float>& qT) :
       _qR(qR),
       _qT(qT)
     {
@@ -76,19 +78,21 @@ namespace mln
     
     // quat7 is an object-function
     
-    vec3f operator()(const vec3f& v) const
+    algebra::vec<n,float> operator()(const algebra::vec<n,float>& v) const
     {
       return rotate(_qR, v) + _qT;
     }
-    
-    void apply_on(const std::vector< vec3f >& input, std::vector< vec3f >& output) const
+
+    template <typename P>
+    void apply_on(const p_array<P>& input, p_array<P>& output) const
     {
-      assert(input.size() == output.size());
+      assert(input.npoints() == output.npoints());
       assert(_qR.is_unit());
-      
-      std::transform(input.begin(), input.end(),
-                     output.begin(),
-                     *this);
+
+      //FIXME utiliser equivalent pour p_array
+      //std::transform(input.begin(), input.end(),
+      //             output.begin(),
+      //             *this);
     }
   };
   
@@ -107,42 +111,48 @@ namespace mln
   }
 
 
-  quat7 match(const vecs_t& P,
-              const vec3f& mu_P,
-              const vecs_t& Xk,
-              const vec3f& mu_Xk)
+  template <typename P>
+  quat7<P::dim> match(const p_array<P>& C,
+                      const algebra::vec<P::dim,float>& mu_C,
+                      const p_array<P>& Xk,
+                      const algebra::vec<P::dim,float>& mu_Xk)
   {
-    assert(P.size() == Xk.size());
+    assert(C.npoints() == Xk.npoints());
     
     // qR
+
+    //FIXME : use P::dim ?
+    algebra::mat<P::dim,P::dim,float> Mk;
+    for (unsigned i = 0; i < C.npoints(); ++i)
+      {
+        algebra::vec<P::dim,float> Ci = C[i];
+        algebra::vec<P::dim,float> Xki = Xki;
+        Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
+      }
+    Mk /= C.npoints();
     
-    algebra::mat<3,3,float> Ck;
-    for (unsigned i = 0; i < P.size(); ++i)
-      Ck += make::mat(P[i] - mu_P) * trans(make::mat(Xk[i] - mu_Xk));
-    Ck /= P.size();
-    
-    const algebra::mat<3,3,float> Ak = Ck - trans(Ck);
+    const algebra::mat<P::dim,P::dim,float> Ak = Mk - trans(Mk);
 
     const float v[3] = {Ak(1,2), Ak(2,0), Ak(0,1)};
     const algebra::mat<3,1,float> D = make::mat<3,1,3,float>(v); // FIXME why <...>
     
     algebra::mat<4,4,float> Qk;
-    Qk(0,0) = tr(Ck);
+    Qk(0,0) = tr(Mk);
     put(trans(D), 0,1, Qk);
     put(D, 1,0, Qk);
 
-    put(Ck + trans(Ck) - algebra::mat<3,3,float>::identity() * tr(Ck), 1,1, Qk);
+    put(Mk + trans(Mk) - algebra::mat<P::dim,P::dim,float>::identity() * tr(Mk), 1,1, Qk);
     
-    value::quat qR;
+    algebra::quat qR;
     jacobi(Qk, qR);
     
     // qT
     
-    const vec3f qT = mu_Xk - rotate(qR, mu_P);
+    const algebra::vec<P::dim,float> qT = mu_Xk - rotate(qR, mu_C);
     
-    return quat7(qR, qT);
+    return quat7<P::dim>(qR, qT);
   }
   
-}
+} //end of namespace mln
 
 #endif // ndef QUAT7_HH

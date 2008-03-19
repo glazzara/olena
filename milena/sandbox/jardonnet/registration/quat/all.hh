@@ -2,7 +2,6 @@
 # define QUAT_ALL_HH
 
 
-# include "interpol.hh"
 # include "rotation.hh"
 
 

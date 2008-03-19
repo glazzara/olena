@@ -10,26 +10,30 @@
 # include <mln/algebra/vec.hh>
 # include <mln/make/vec.hh>
 # include <mln/make/mat.hh>
-# include <mln/value/quat.hh>
+# include <mln/algebra/quat.hh>
 
+# include "misc.hh"
 
 // FIXME: rotation should be an abstract class
 // and derived classes encapsulate either a quaternion or a algebra::matrix
 namespace mln
 {
 
-  vec3f rotate(const value::quat& q, const vec3f& p)
+  // FIXME : quat is not appriate here
+  template <unsigned n>
+  algebra::vec<n,float> rotate(const algebra::quat& q, const algebra::vec<n,float>& p)
   {
  
-    return (q * value::quat(0. ,p) * q.inv()).v();
+    return (q * algebra::quat(0. ,p) * q.inv()).v();
   }
 
-
-  bool check_rotation(const algebra::mat<3,3,float>& mat,
-                      const value::quat& q)
+  //FIXME : check if correct with n != 3
+  template <unsigned n>
+  bool check_rotation(const algebra::mat<n,n,float>& mat,
+                      const algebra::quat& q)
   {
     assert(q.is_unit());
-    vec3f
+    algebra::vec<n,float>
       tmp = make::vec(rand(), rand(), rand()),
       p = tmp / norm::l2(tmp),
       p_rot_1 = rotate(q, p),
@@ -38,7 +42,8 @@ namespace mln
   }
 
 
-  algebra::mat<3,3,float> quat2mat(const value::quat& q)
+  //FIXME : switch to n dim.
+  algebra::mat<3,3,float> quat2mat(const algebra::quat& q)
   {
     assert(q.is_unit());
     float

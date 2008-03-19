@@ -309,7 +309,7 @@ namespace mln
   {
     return coord_; // FIXME: Is-it OK?
   }
-
+  
   template <typename M, typename C>
   inline
   point_<M,C>::operator algebra::vec<M::dim, float> () const
@@ -319,7 +319,7 @@ namespace mln
       tmp[i] = coord_[i];
     return tmp;
   }
-
+  
   template <typename M, typename C>
   inline
   h_vec<M::dim, C> point_<M,C>::to_h_vec() const

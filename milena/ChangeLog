@@ -1,3 +1,21 @@
+2008-03-19  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Icp : n dim, refactored, uses p_array, vec -> rounded point proc.
+
+	* mln/core/point.hh: Fix convertion to vec.
+	* mln/algebra/quat.hh: Fix namespace.
+	* mln/algebra/vec.hh: add to_point procedure.
+	* sandbox/jardonnet/test/icp.cc,
+	* sandbox/jardonnet/registration/quat7.hh,
+	* sandbox/jardonnet/registration/cloud.hh,
+	* sandbox/jardonnet/registration/jacobi.hh,
+	* sandbox/jardonnet/registration/icp.hh,
+	* sandbox/jardonnet/registration/projection.hh,
+	* sandbox/jardonnet/registration/quat/all.hh,
+	* sandbox/jardonnet/registration/quat/rotation.hh: Update for p_array and n dim (not ready yet).
+
+	* sandbox/jardonnet/registration/quat/interpol.hh: Remove. Provided by qut.hh
+
 2008-03-19  Michel Pellegrin  <pellegrin@lrde.epita.fr>
 
 	Fix some mistakes, Add.

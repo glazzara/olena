@@ -30,7 +30,7 @@
 
 /*! \file mln/algebra/quat.hh
  *
- * \brief Define a class for quaternion values.
+ * \brief Define a class for quaternion algebra values.
  */
 
 # include <cmath>
@@ -44,12 +44,13 @@
 # include <mln/algebra/vec.hh>
 # include <mln/norm/l2.hh>
 
+//FIXME: pow, exp etc... are def here and in value::...
 
 namespace mln
 {
 
   // Fwd decls.
-  namespace value { class quat; }
+  namespace algebra { class quat; }
   namespace literal { struct zero_t; struct one_t; }
 
 
@@ -114,19 +115,18 @@ namespace mln
 
 
 
-  namespace value
+  namespace algebra
   {
 
-    // FIXME doesn't compile
-
+    // FIXME value::Vectorial ??? value ???
     class quat
       :
-      public Vectorial< quat >
+      public value::Vectorial< quat >
       ,
-      public internal::value_like_< algebra::vec<4, float>, // Equivalent.
-				    algebra::vec<4, float>, // Encoding.
-				    algebra::vec<4, float>, // Interoperation.
-				    quat >                // Exact.
+      public value::internal::value_like_< algebra::vec<4, float>, // Equivalent.
+                                    algebra::vec<4, float>, // Encoding.
+                                    algebra::vec<4, float>, // Interoperation.
+                                    quat >                // Exact.
     {
     public:
 
@@ -606,7 +606,7 @@ namespace mln
     quat slerp_2(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
-      quat tmp = p * value::pow(p.conj() * q, h);
+      quat tmp = p * pow(p.conj() * q, h);
       assert(about_equal(tmp, slerp(p, q, h)));
       return tmp;
     }
@@ -615,7 +615,7 @@ namespace mln
     quat slerp_3(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
-      quat tmp = value::pow(p * q.conj(), 1 - h) * q;
+      quat tmp = pow(p * q.conj(), 1 - h) * q;
       assert(about_equal(tmp, slerp(p, q, h)));
       return tmp;
     }
@@ -624,7 +624,7 @@ namespace mln
     quat slerp_4(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
-      quat tmp = value::pow(q * p.conj(), h) * p;
+      quat tmp = pow(q * p.conj(), h) * p;
       assert(about_equal(tmp, slerp(p, q, h)));
       return tmp;
     }
@@ -633,7 +633,7 @@ namespace mln
     quat slerp_5(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
-      quat tmp = q * value::pow(q.conj() * p, 1 - h);
+      quat tmp = q * pow(q.conj() * p, 1 - h);
       assert(about_equal(tmp, slerp(p, q, h)));
       return tmp;
     }
@@ -641,7 +641,7 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::value
+  } // end of namespace mln::algebra
 
 } // end of namespace mln
 

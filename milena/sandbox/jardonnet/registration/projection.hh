@@ -10,40 +10,37 @@ namespace mln
   namespace projection
   {
 
-    template <class Pk_t, class X_t, class Xk_t>
+    template <typename P>
     void de_base(// input
-                 const Pk_t& Pk,
-                 const X_t& X,
+                 const p_array<P>& Ck,
+                 const p_array<P>& X,
                  // inout
-                 Xk_t& Xk,
-                 // output
-                 algebra::vec<3, float>& mu_Xk,
+                 p_array<P>& Xk,
                  float& err)
     {
-      assert(Pk.size() == Xk.size());
+      assert(Ck.npoints() == Xk.npoints());
 
       err = 0.f;
-      mu_Xk = make::vec(0,0,0);
 
-      for (size_t i = 0; i < Pk.size(); ++i)
+      for (size_t i = 0; i < Ck.npoints(); ++i)
         {
-          algebra::vec<3,float> best_x = X[0];
-          float best_d = norm::l2(Pk[i] - best_x);
-          for (size_t j = 1; j < X.size(); ++j)
+          algebra::vec<P::dim,float> Cki = Ck[i];
+          algebra::vec<P::dim,float> best_x = X[0];
+          float best_d = norm::l2(Cki - best_x);
+          for (size_t j = 1; j < X.npoints(); ++j)
             {
-              float d = norm::l2(Pk[i] - X[j]);
+              algebra::vec<P::dim,float> Xj = X[j];
+              float d = norm::l2(Cki - Xj);
               if (d < best_d)
                 {
                   best_d = d;
-                  best_x = X[j];
+                  best_x = Xj;
                 }
             }
-          Xk[i] = best_x;
-          mu_Xk += Xk[i];
+          Xk.hook_()[i] = algebra::to_point<P>(best_x);
           err += best_d;
         }
-      mu_Xk /= Pk.size();
-      err /= Pk.size();
+      err /= Ck.npoints();
     }
 
   }
