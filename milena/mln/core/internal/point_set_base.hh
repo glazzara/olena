@@ -45,7 +45,6 @@ namespace mln
 
     /*! \internal A base class for point set classes.
      * \p P is a point site type.
-     *
      */
     template <typename P, typename E>
     struct point_set_base_ : public Point_Set<E>

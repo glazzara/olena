@@ -1,3 +1,44 @@
+2008-03-19  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
+	Commit of Sandbox.
+	* mln/core/internal/point_set_base.hh: Header.
+	* mln/core/line2d.hh: No append in line2d.
+	* mln/core/p_graph.hh: Typos.
+	* mln/util/lazy_set.hh: Disambiguization.
+	* sandbox/pellegrin/cond_inheritance/Makefile: .
+	* sandbox/pellegrin/cond_inheritance/concept/point_set.hh: .
+	* sandbox/pellegrin/cond_inheritance/internal/multi_set.hh: .
+	* sandbox/pellegrin/cond_inheritance/internal/point_set_base.hh: .
+	* sandbox/pellegrin/cond_inheritance/internal/uni_set.hh: .
+	* sandbox/pellegrin/cond_inheritance/p_array.hh: .
+	* sandbox/pellegrin/cond_inheritance/p_set.hh: .
+	* sandbox/pellegrin/cond_inheritance/test_cond_inherit.cc: .
+	* sandbox/pellegrin/first_test.cc: .
+	* sandbox/pellegrin/set/Makefile: .
+	* sandbox/pellegrin/set/core/concept/point_set.hh: New.
+	* sandbox/pellegrin/set/core/concept: New.
+	* sandbox/pellegrin/set/core/internal: New.
+	* sandbox/pellegrin/set/core/line2d.hh: New.
+	* sandbox/pellegrin/set/core/p_array.hh: New.
+	* sandbox/pellegrin/set/core/p_bgraph.hh: New.
+	* sandbox/pellegrin/set/core/p_graph.hh: New.
+	* sandbox/pellegrin/set/core/p_line_graph.hh: New.
+	* sandbox/pellegrin/set/core/p_priority_queue.hh: New.
+	* sandbox/pellegrin/set/core/p_priority_queue_fast.hh: New.
+	* sandbox/pellegrin/set/core/p_priority_queue_fast_with_array.hh: New.
+	* sandbox/pellegrin/set/core/p_queue.hh: New.
+	* sandbox/pellegrin/set/core/p_queue_fast.hh: New.
+	* sandbox/pellegrin/set/core/p_set.hh: New.
+	* sandbox/pellegrin/set/core/pset_if.hh: New.
+	* sandbox/pellegrin/set/core/runs_psite.hh: New.
+	* sandbox/pellegrin/set/core: New.
+	* sandbox/pellegrin/set/multi_set.hh: .
+	* sandbox/pellegrin/set/test_set.cc: .
+	* sandbox/pellegrin/set/trait/point_set.hh: New.
+	* sandbox/pellegrin/set/trait: New.
+	* sandbox/pellegrin/set/types_de_points.txt: New.
+	* sandbox/pellegrin/set/uni_set.hh: .
+
 2008-03-19  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix auto name substitution for vec and metal::math.

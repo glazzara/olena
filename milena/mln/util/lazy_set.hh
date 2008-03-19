@@ -220,7 +220,7 @@ namespace mln
       s_.insert(elt);
       if (needs_update_ == false)
 	needs_update_ = true;
-      return internal::force_exact< lazy_set_<E> >(*this);
+      return mln::internal::force_exact< lazy_set_<E> >(*this);
     }
 
     template <typename E>
@@ -233,7 +233,7 @@ namespace mln
       std::remove(s_.begin(), s_.end(), elt);
       if (needs_update_ == false)
 	needs_update_ = true;
-      return internal::force_exact< lazy_set_<E> >(*this);
+      return mln::internal::force_exact< lazy_set_<E> >(*this);
     }
 
     template <typename E>

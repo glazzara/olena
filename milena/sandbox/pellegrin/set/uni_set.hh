@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,8 +26,8 @@
 // Public License.
 
 
-#ifndef __UNI_SET_HH__
-# define __UNI_SET_HH__
+#ifndef UNI_SET_HH
+# define UNI_SET_HH
 
 /*! \file sandbox/pellegrin/set/uni_set.hh
  *
@@ -173,4 +173,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! __UNI_SET_HH__
+#endif // ! UNI_SET_HH

@@ -44,6 +44,17 @@
 namespace mln
 {
 
+  namespace trait
+  {
+
+    template <typename P>
+    struct point_set_<line2d> : public default_point_set_<P>
+    {
+      typedef trait::point_set::arity::unique   arity;
+      typedef trait::point_set::has_speed::fast has_speed;
+    }
+
+  }
 
   /*! \brief 2D line point set class.
    */

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,43 +25,58 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#ifndef MLN_CORE_P_SET_HH
+# define MLN_CORE_P_SET_HH
 
-#ifndef MULTI_SET_HH
-# define MULTI_SET_HH
-
-/*! \file sandbox/pellegrin/set/multi_set.hh
+/*! \file mln/core/p_set.hh
  *
- * \brief Definition of a point multi-set class.
+ * \brief Definition of a point set class based on std::set.
  */
 
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/set_of.hh>
+# include <mln/accu/bbox.hh>
+# include <mln/core/p_array.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Point set class.
+  namespace trait
+  {
+
+    template <typename P>
+    struct point_set_<line2d> : public default_point_set_<P>
+    {
+      typedef trait::point_set::arity::unique   arity;
+      typedef trait::point_set::has_speed::fast has_speed;
+    }
+
+  }
+
+  /*! \brief Point set class based on std::set.
    *
-   * This is a mathematical multi-set of points.  The
+   * This is a mathematical set of points (not a multi-set).  The
    * parameter \p P shall be a Point type.
    *
-   * \todo All.
+   * \todo Test if \p P being a Point_Site is ok.
    */
   template <typename P>
-  class multi_set : public internal::point_set_base_< P, p_set<P> >,
-		    private internal::set_of_<P>
+  class p_set : public internal::point_set_base_< P, p_set<P> >,
+		private internal::set_of_<P>
   {
     typedef internal::set_of_<P> super_;
 
   public:
+
     /// Forward Point_Iterator associated type.
-    typedef multi_set_fwd_piter_<P> fwd_piter;
+    typedef p_array_fwd_piter_<P> fwd_piter;
+
     /// Backward Point_Iterator associated type.
-    typedef multi_set_bkd_piter_<P> bkd_piter;
+    typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
-    multi_set();
+    p_set();
 
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
@@ -73,7 +88,7 @@ namespace mln
     std::size_t npoints() const;
 
     /// Insert a point \p p.
-    multi_set<P>& insert(const P& p);
+    p_set<P>& insert(const P& p);
 
     // FIXME : doesn't compile
     //     /// Remove a point \p p.
@@ -99,14 +114,14 @@ namespace mln
 
   template <typename P>
   inline
-  multi_set<P>::multi_set()
+  p_set<P>::p_set()
   {
   }
 
   template <typename P>
   inline
   bool
-  multi_set<P>::has(const P& p) const
+  p_set<P>::has(const P& p) const
   {
     return this->super_::has(p);
   }
@@ -114,15 +129,15 @@ namespace mln
   template <typename P>
   inline
   std::size_t
-  multi_set<P>::npoints() const
+  p_set<P>::npoints() const
   {
     return this->super_::nelements();
   }
 
   template <typename P>
   inline
-  multi_set<P>&
-  multi_set<P>::insert(const P& p)
+  p_set<P>&
+  p_set<P>::insert(const P& p)
   {
     this->super_::insert(p);
     bb_.take(p);
@@ -144,7 +159,7 @@ namespace mln
   template <typename P>
   inline
   const P&
-  multi_set<P>::operator[](unsigned i) const
+  p_set<P>::operator[](unsigned i) const
   {
     mln_precondition(i < npoints());
     return this->super_::element(i);
@@ -153,7 +168,7 @@ namespace mln
   template <typename P>
   inline
   void
-  multi_set<P>::clear()
+  p_set<P>::clear()
   {
     this->super_::clear();
     bb_.init();
@@ -162,7 +177,7 @@ namespace mln
   template <typename P>
   inline
   const box_<mln_point(P)>&
-  multi_set<P>::bbox() const
+  p_set<P>::bbox() const
   {
     mln_precondition(npoints() != 0);
     return bb_.to_result();
@@ -173,4 +188,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MULTI_SET_HH
+#endif // ! MLN_CORE_P_SET_HH
