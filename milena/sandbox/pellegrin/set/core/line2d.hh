@@ -39,16 +39,20 @@
 # include <mln/core/p_array_piter.hh>
 # include <mln/core/box2d.hh>
 # include <mln/math/all.hh>
+# include <mln/trait/point_set.hh>
 
 
 namespace mln
 {
 
+  // Fwd decl.
+  template <typename P> struct line2d;
+
   namespace trait
   {
 
-    template <typename P>
-    struct point_set_<line2d> : public default_point_set_<P>
+    template <>
+    struct point_set_<line2d> : public default_point_set_<line2d>
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::fast has_speed;

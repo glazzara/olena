@@ -34,6 +34,8 @@
 # include <mln/util/graph.hh>
 # include <mln/core/graph_psite.hh>
 # include <mln/core/p_graph_piter.hh>
+# include <mln/trait/point_set.hh>
+
 
 /// \file mln/core/p_graph.hh
 /// \brief Definition of a point set based on graph.
@@ -41,13 +43,15 @@
 namespace mln
 {
 
-  template<typename P> class p_graph_piter_;
+  // Fwd decls.
+  template <typename P> struct p_graph;
+  template <typename P> class  p_graph_piter_;
 
   namespace trait
   {
 
     template <typename P>
-    struct point_set_<line2d> : public default_point_set_<P>
+    struct point_set_< p_graph<P> > : public default_point_set_< p_graph<P> >
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::fast has_speed;

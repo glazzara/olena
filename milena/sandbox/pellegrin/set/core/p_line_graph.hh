@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_LINE_GRAPH_P_HH
-# define MLN_CORE_LINE_GRAPH_P_HH
+#ifndef MLN_CORE_P_LINE_GRAPH_HH
+# define MLN_CORE_P_LINE_GRAPH_HH
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/point_set_base.hh>
@@ -35,10 +35,11 @@
 # include <mln/core/line_graph_psite.hh>
 # include <mln/core/p_line_graph_piter.hh>
 # include <mln/core/point_pair.hh>
+# include <mln/trait/point_set.hh>
+
 
 /* FIXME: This class shares a lot with p_graph.  Factor as much as
    possible.  */
-
 
 /// \file mln/core/p_line_graph.hh
 /// \brief Definition of a point set based on line graph.
@@ -54,14 +55,15 @@ namespace mln
     // Nothing.
   };
 
-
-  template<typename P> class p_line_graph_piter_;
+  // Fwd decl.
+  template <typename P> struct p_line_graph;
+  template <typename P> class  p_line_graph_piter_;
 
   namespace trait
   {
 
     template <typename P>
-    struct point_set_<line2d> : public default_point_set_<P>
+    struct point_set_< p_line_graph<P> > : public default_point_set_< p_line_graph<P> >
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::fast has_speed;
@@ -172,5 +174,4 @@ namespace mln
 
 } // end of mln
 
-
-#endif // MLN_CORE_P_GRAPH_HH
+#endif // MLN_CORE_P_LINE_GRAPH_HH

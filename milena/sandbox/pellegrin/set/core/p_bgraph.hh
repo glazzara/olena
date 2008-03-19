@@ -25,8 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BGRAPH_P_HH
-# define MLN_CORE_BGRAPH_P_HH
+#ifndef MLN_CORE_P_BGRAPH_HH
+# define MLN_CORE_P_BGRAPH_HH
+
+/// \file mln/core/p_bgraph.hh
+/// \brief Definition of a point set based on a boost graph.
 
 # include <utility>
 
@@ -36,22 +39,21 @@
 # include <mln/util/internal/boost_graph.hh>
 # include <mln/core/bgraph_psite.hh>
 # include <mln/core/p_bgraph_piter.hh>
+# include <mln/trait/point_set.hh>
 
-
-
-/// \file mln/core/p_bgraph.hh
-/// \brief Definition of a point set based on a boost graph.
 
 namespace mln
 {
 
-  template<typename P> class p_bgraph_piter_;
+  // Fwd decls.
+  template <typename P> struct p_bgraph;
+  template <typename P> class  p_bgraph_piter_;
 
   namespace trait
   {
 
     template <typename P>
-    struct point_set_<line2d> : public default_point_set_<P>
+    struct point_set_< p_bgraph<P> > : public default_point_set_< p_bgraph<P> >
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::fast has_speed;
@@ -229,4 +231,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_CORE_BGRAPH_P_HH
+#endif // MLN_CORE_P_BGRAPH_HH

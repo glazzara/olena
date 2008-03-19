@@ -1,3 +1,23 @@
+2008-03-19  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
+	Fix some mistakes, Add.
+	* sandbox/pellegrin/set/core/line2d.hh,
+	* sandbox/pellegrin/set/core/p_array.hh,
+	* sandbox/pellegrin/set/core/p_bgraph.hh,
+	* sandbox/pellegrin/set/core/p_graph.hh,
+	* sandbox/pellegrin/set/core/p_line_graph.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue_fast.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue_fast_with_array.hh,
+	* sandbox/pellegrin/set/core/p_queue.hh,
+	* sandbox/pellegrin/set/core/p_queue_fast.hh,
+	* sandbox/pellegrin/set/core/p_set.hh,
+	* sandbox/pellegrin/set/core/pset_if.hh: traits are up-to-date
+	 (or not, i have to check it with theo) and add the fwd decls.
+	* sandbox/pellegrin/set/core/p_run.hh: New.
+	* sandbox/pellegrin/set/core/p_runs.hh: New.
+	* sandbox/pellegrin/set/core/runs_psite.hh: Remove (not a point_set).
+
 2008-03-19  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	rms.

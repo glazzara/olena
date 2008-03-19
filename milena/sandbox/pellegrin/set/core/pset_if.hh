@@ -35,6 +35,7 @@
 
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/concept/function.hh>
+# include <mln/trait/point_set.hh>
 
 
 namespace mln
@@ -48,11 +49,11 @@ namespace mln
   namespace trait
   {
 
-    template <typename P>
-    struct point_set_< pset_if<> > : public default_point_set_<P>
+    template <typename S, typename F>
+    struct point_set_< pset_if<S, F> > : public default_point_set_< pset_if<S, F> >
     {
       typedef trait::point_set::arity::unique   arity;
-      typedef trait::point_set::has_speed::fast has_speed;
+      typedef trait::point_set::has_speed::slow has_speed;
     }
 
   }

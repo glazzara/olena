@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_SET_HH
-# define MLN_CORE_P_SET_HH
+#ifndef MLN_CORE_P_RUN_HH
+# define MLN_CORE_P_RUN_HH
 
-/*! \file mln/core/p_set.hh
+/*! \file mln/core/p_run.hh
  *
  * \brief Definition of a point set class based on std::set.
  */
@@ -36,7 +36,6 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/set_of.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/core/p_array.hh>
 # include <mln/trait/point_set.hh>
 
 
@@ -44,13 +43,15 @@ namespace mln
 {
 
   // Fwd decls.
-  template <typename P> struct p_set;
+  template <typename P> struct p_run;
+  template <typename P> struct p_run_fwd_piter_;
+  template <typename P> struct p_run_bkd_piter_;
 
   namespace trait
   {
 
     template <typename P>
-    struct point_set_< p_set<P> > : public default_point_set_< p_set<P> >
+    struct point_set_< p_run<P> > : public default_point_set_< p_run<P> >
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::fast has_speed;
@@ -58,7 +59,7 @@ namespace mln
 
   }
 
-  /*! \brief Point set class based on std::set.
+  /*! \brief Point set class in run.
    *
    * This is a mathematical set of points (not a multi-set).  The
    * parameter \p P shall be a Point type.
@@ -66,130 +67,184 @@ namespace mln
    * \todo Test if \p P being a Point_Site is ok.
    */
   template <typename P>
-  class p_set : public internal::point_set_base_< P, p_set<P> >,
-		private internal::set_of_<P>
+  class p_run : public internal::point_set_base_< P, p_run<P> >
   {
-    typedef internal::set_of_<P> super_;
-
   public:
 
     /// Forward Point_Iterator associated type.
-    typedef p_array_fwd_piter_<P> fwd_piter;
+    typedef p_run_fwd_piter_<P> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef p_array_bkd_piter_<P> bkd_piter;
+    typedef p_run_bkd_piter_<P> bkd_piter;
+
+    /// Constructor without argument.
+    p_run();
 
     /// Constructor.
-    p_set();
+    p_run(const P& start, std::size_t len);
+
+    /// Set the starting point.
+    void set_run(const P& start, std::size_t len);
 
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
 
-    /// Return the corresponding std::vector of points.
-    using super_::vect;
-
     /// Give the number of points.
     std::size_t npoints() const;
 
-    /// Insert a point \p p.
-    p_set<P>& insert(const P& p);
-
-    // FIXME : doesn't compile
-    //     /// Remove a point \p p.
-    //     p_set<P>& remove(P& p);
+    /// Give the length of the run.
+    std::size_t length() const;
 
     /// Return the \p i-th point.
-    const P& operator[](unsigned i) const;
+    P operator[](unsigned i) const;
 
-    /// Clear this set.
-    void clear();
+    /// Return the first point.
+    const P& first() const;
 
     /// Give the exact bounding box.
     const box_<mln_point(P)>& bbox() const;
+
+    /// Set a relation order to p_run.
+    bool operator<(const p_run<P>& rhs) const;
 
   protected:
 
     accu::bbox<P> bb_;
     // FIXME: Add invariant  bb_.is_valid() <=> npoints() != 0
+
+    /// The first point of the run.
+    P p_;
+
+    /// The length of the run.
+    std::size_t len_;
+
+    /// For internal use.
+    bool is_valid_;
   };
 
+  template <typename P>
+  std::ostream& operator<<(std::ostream& out, const p_run<P>& pr)
+  {
+    out << "Run: (" << pr.first() << ", " << pr.length() << ")";
+    return out;
+  }
 
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
   inline
-  p_set<P>::p_set()
+  p_run<P>::p_run()
   {
+    is_valid_ = false;
   }
 
   template <typename P>
   inline
-  bool
-  p_set<P>::has(const P& p) const
+  p_run<P>::p_run(const P& start, std::size_t len)
+    : p_(start),
+      len_(len)
   {
-    return this->super_::has(p);
-  }
-
-  template <typename P>
-  inline
-  std::size_t
-  p_set<P>::npoints() const
-  {
-    return this->super_::nelements();
-  }
-
-  template <typename P>
-  inline
-  p_set<P>&
-  p_set<P>::insert(const P& p)
-  {
-    this->super_::insert(p);
+    mln_precondition(len != 0);
+    P p = start;
+    bb_.init();
     bb_.take(p);
-    return *this;
-  }
-
-
-  // FIXME : finish it.
-  //   template <typename P>
-  //   p_set<P>&
-  //   p_set<P>::remove(P& p)
-  //   {
-  //     this->super_::remove(p);
-  //     // FIXME: need to rebuild bb_ ?
-  //     //bb_.untake(p);
-  //     return *this;
-  //   }
-
-  template <typename P>
-  inline
-  const P&
-  p_set<P>::operator[](unsigned i) const
-  {
-    mln_precondition(i < npoints());
-    return this->super_::element(i);
+    p[P::dim - 1] += len - 1;
+    bb_.take(p);
+    is_valid_ = true;
   }
 
   template <typename P>
   inline
   void
-  p_set<P>::clear()
+  p_run<P>::set_run(const P& start, std::size_t len)
   {
-    this->super_::clear();
+    mln_precondition(len != 0);
+    p_ = start;
+    len_ = len;
+    P p = start;
     bb_.init();
+    bb_.take(p);
+    p[P::dim - 1] += len - 1;
+    bb_.take(p);
+    is_valid_ = true;
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_run<P>::has(const P& p) const
+  {
+    mln_precondition(is_valid_);
+    bool res = true;
+    for (int i = P::dim - 2; i >= 0; --i)
+      if (!(res = (res && p[i] == p_[i])))
+	return false;
+    return (p[P::dim - 1] >= p_[P::dim - 1]
+	    && p[P::dim - 1] < p_[P::dim - 1] + (signed)len_);
+  }
+
+  template <typename P>
+  inline
+  std::size_t
+  p_run<P>::npoints() const
+  {
+    mln_precondition(is_valid_);
+    return len_;
+  }
+
+  template <typename P>
+  inline
+  std::size_t
+  p_run<P>::length() const
+  {
+    mln_precondition(is_valid_);
+    return len_;
+  }
+
+  template <typename P>
+  inline
+  P
+  p_run<P>::operator[](unsigned i) const
+  {
+    mln_precondition(is_valid_);
+    mln_precondition(i < npoints());
+    P p = p_;
+    p[P::dim - 1] += i;
+    return p;
+  }
+
+  template <typename P>
+  inline
+  const P&
+  p_run<P>::first() const
+  {
+    return p_;
   }
 
   template <typename P>
   inline
   const box_<mln_point(P)>&
-  p_set<P>::bbox() const
+  p_run<P>::bbox() const
   {
+    mln_precondition(is_valid_);
     mln_precondition(npoints() != 0);
     return bb_.to_result();
   }
+
+  template <typename P>
+  inline
+  bool
+  p_run<P>::operator<(const p_run<P>& rhs) const
+  {
+    return (this->p_ < rhs.p_)
+      || (this->p_ == rhs.p_ && this->len_ < rhs.len_);
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
+# include <mln/core/p_run_piter.hh>
 
-#endif // ! MLN_CORE_P_SET_HH
+#endif // ! MLN_CORE_P_RUN_HH

@@ -42,12 +42,14 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/p_array_piter.hh>
 # include <mln/accu/bbox.hh>
+# include <mln/trait/point_set.hh>
 
 
 namespace mln
 {
 
   // Fwd decls.
+  template <typename P> struct p_queue_fast;
   template <typename P> struct p_array_fwd_piter_;
   template <typename P> struct p_array_bkd_piter_;
 
@@ -55,9 +57,9 @@ namespace mln
   {
 
     template <typename P>
-    struct point_set_<line2d> : public default_point_set_<P>
+    struct point_set_< p_queue_fast<P> > : public default_point_set_< p_queue_fast<P> >
     {
-      typedef trait::point_set::arity::unique   arity;
+      typedef trait::point_set::arity::multiple arity;
       typedef trait::point_set::has_speed::fast has_speed;
     }
 
