@@ -1,3 +1,15 @@
+2008-03-19  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	correct structures.
+	* my_cmy.hh: correction.
+	* my_hsi.hh: correction.
+	* my_hsl.hh: correction.
+	* my_hsv.hh: correction.
+	* my_xyz.hh: correction.
+	* my_yiq.hh: correction.
+	* my_yuv.hh: correction.
+	* rgb_to_hsi.hh: correction.
+
 2008-03-18  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Sandbox: Site/Psite refactorization: finalize the example.

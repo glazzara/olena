@@ -34,7 +34,7 @@ namespace mln
       hsi_()
       {
       }
-      
+
       /// Constructor from component values.
       hsi_(const H& hue, const S& sat, const I& i)
 	: hue_(hue),
@@ -58,8 +58,8 @@ namespace mln
       }
 
       /// Read-write access to the hue component.
-      H& hue()	
-      { 
+      H& hue()
+      {
 	return this->hue_;
       }
       S& sat()
@@ -70,7 +70,7 @@ namespace mln
       {
 	return this->int_;
       }
-    
+
     private:
       H hue_;
       S sat_;
@@ -83,63 +83,63 @@ namespace mln
 
 
 
-    template <unsigned n>
-    struct hsi
-    {
-    public:
-      /// Constructor without argument.
-      hsi<n>();
-      
-      /// Constructor from component values.
-      hsi<n>(double hue, double sat, double i);
+//     template <unsigned n>
+//     struct hsi
+//     {
+//     public:
+//       /// Constructor without argument.
+//       hsi<n>();
 
-      /// Access to component values.
-      double hue() const	{ return this->hue_; }
-      double sat() const	{ return this->sat_; }
-      double i() const	{ return this->int_; }
+//       /// Constructor from component values.
+//       hsi<n>(double hue, double sat, double i);
 
-      /// Set component values.
-      void hue(double hue)	
-      { 
-	this->hue_ = hue;
-      }
-      void sat(double sat)	
-      { 
-	this->sat_ = sat;
-      }
-      void i(double i)	
-      { 
-	mln_precondition(i >= 0);
-	this->int_ = i;
-      }
-    
-    private:
-      double hue_;
-      double sat_;
-      double int_;
-    };
+//       /// Access to component values.
+//       double hue() const	{ return this->hue_; }
+//       double sat() const	{ return this->sat_; }
+//       double i() const	{ return this->int_; }
+
+//       /// Set component values.
+//       void hue(double hue)
+//       {
+// 	this->hue_ = hue;
+//       }
+//       void sat(double sat)
+//       {
+// 	this->sat_ = sat;
+//       }
+//       void i(double i)
+//       {
+// 	mln_precondition(i >= 0);
+// 	this->int_ = i;
+//       }
+
+//     private:
+//       double hue_;
+//       double sat_;
+//       double int_;
+//     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <unsigned n>
-    inline
-    hsi<n>::hsi()
-      :hue_(0), sat_(0), int_(0)
-    {
-    }
+//     template <unsigned n>
+//     inline
+//     hsi<n>::hsi()
+//       :hue_(0), sat_(0), int_(0)
+//     {
+//     }
 
-    template <unsigned n>
-    inline
-    hsi<n>::hsi(double h, double sat, double i)
-    {
-      mln_invariant(h >= 0);
-      mln_invariant(sat >= 0);
-      mln_invariant(i >= 0);
-      this->hue_ = h;
-      this->sat_ = sat;
-      this->i_ = i;
-    }
+//     template <unsigned n>
+//     inline
+//     hsi<n>::hsi(double h, double sat, double i)
+//     {
+//       mln_invariant(h >= 0);
+//       mln_invariant(sat >= 0);
+//       mln_invariant(i >= 0);
+//       this->hue_ = h;
+//       this->sat_ = sat;
+//       this->i_ = i;
+//     }
 
 # endif // ! MLN_INCLUDE_ONLY
 

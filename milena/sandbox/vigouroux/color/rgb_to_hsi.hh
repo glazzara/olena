@@ -8,6 +8,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/display/save_and_show.hh>
 #include <mln/level/fill.hh>
+#include <mln/math/round.hh>
 
 #include "my_hsi.hh"
 
@@ -77,24 +78,31 @@ namespace mln
 	template <typename T_hsi>
 	T_rgb operator()(const T_hsi& hsi) const
 	{
-	  int r;
-	  int g;
-	  int b;
-	  
-	  static const double sqrt3_3 = sqrt(3) / 3;
-	  static const double inv_sqrt6 = 1 / sqrt(6);
-	  static const double inv_sqrt2 = 1 / sqrt(2);
+	  typedef typename T_rgb::red_t   red_t;
+	  typedef typename T_rgb::green_t green_t;
+	  typedef typename T_rgb::blue_t  blue_t;
 
-	  double h = hsi.hue() / 180.0 * 3.1415;
-	  double alpha = hsi.sat() * cos(h);
-	  double beta = hsi.sat() * sin(h);
-	  
-	  r = int(sqrt3_3 * hsi.i() + 2 * inv_sqrt6 * beta);
-	  g = int(sqrt3_3 * hsi.i() + inv_sqrt2 * alpha - inv_sqrt6 * beta);
-	  b = int(sqrt3_3 * hsi.i() - inv_sqrt2 * alpha - inv_sqrt6 * beta);
-	  
-	  T_rgb rgb(r, g, b); 
-	  
+	  static math::round<red_t>   to_r;
+	  static math::round<green_t> to_g;
+	  static math::round<blue_t>  to_b;
+
+	  static const float
+	    sqrt3_3 = std::sqrt(3) / 3,
+	    inv_sqrt6 = 1 / std::sqrt(6),
+	    inv_sqrt2 = 1 / std::sqrt(2);
+
+	  float
+	    h = hsi.hue() / 180.0 * 3.1415,
+	    alpha = hsi.sat() * std::cos(h),
+	    beta = hsi.sat() * std::sin(h);
+
+
+	  red_t   r = to_r(sqrt3_3 * hsi.i() + 2 * inv_sqrt6 * beta);
+	  green_t g = to_g(sqrt3_3 * hsi.i() + inv_sqrt2 * alpha - inv_sqrt6 * beta);
+	  blue_t  b = to_b(sqrt3_3 * hsi.i() - inv_sqrt2 * alpha - inv_sqrt6 * beta);
+
+	  T_rgb rgb(r, g, b);
+
 	  return rgb;
 	}
       };
@@ -110,63 +118,63 @@ namespace mln
 
   } // end of namespace fun
 
+}
 
 
+ //  namespace convert
+//   {
 
-  namespace convert
-  {
+//     struct f_rgb_to_hsi
+//     {
+//       value::hsi<8> operator()(const value::rgb<8>& rgb) const
+//       {
+// 	struct value::hsi<8> hsi;
+// 	double sqrt3_3 = sqrt(3) / 3;
+// 	double inv_sqrt6 = 1 / sqrt(6);
+// 	double inv_sqrt2 = 1 / sqrt(2);
 
-    struct f_rgb_to_hsi
-    {
-      value::hsi<8> operator()(const value::rgb<8>& rgb) const
-      {
-	struct value::hsi<8> hsi;
-	double sqrt3_3 = sqrt(3) / 3;
-	double inv_sqrt6 = 1 / sqrt(6);
-	double inv_sqrt2 = 1 / sqrt(2);
+// 	double alpha = inv_sqrt2 * rgb.green() - inv_sqrt2 * rgb.blue();
+// 	double beta = 2 * inv_sqrt6 * rgb.red() - inv_sqrt6 * rgb.green() - inv_sqrt6 * rgb.blue();
 
-	double alpha = inv_sqrt2 * rgb.green() - inv_sqrt2 * rgb.blue();
-	double beta = 2 * inv_sqrt6 * rgb.red() - inv_sqrt6 * rgb.green() - inv_sqrt6 * rgb.blue();
+// 	hsi.hue(atan2(beta, alpha) / 3.1415 * 180.0);
+// 	if (hsi.hue() < 0)
+// 	  hsi.hue(hsi.hue() + 360.0);
+// 	mln_precondition(hsi.hue() >= 0);
+// 	hsi.sat(sqrt(alpha * alpha + beta * beta));
+// 	hsi.i(sqrt3_3 * rgb.red() + sqrt3_3 * rgb.green() + sqrt3_3 * rgb.blue());
 
-	hsi.hue(atan2(beta, alpha) / 3.1415 * 180.0);
-	if (hsi.hue() < 0)
-	  hsi.hue(hsi.hue() + 360.0);
-	mln_precondition(hsi.hue() >= 0);
-	hsi.sat(sqrt(alpha * alpha + beta * beta));
-	hsi.i(sqrt3_3 * rgb.red() + sqrt3_3 * rgb.green() + sqrt3_3 * rgb.blue());
+// 	return hsi;
+//       }
+//     };
 
-	return hsi;
-      }
-    };
 
-    
-    struct f_hsi_to_rgb
-    {
+//     struct f_hsi_to_rgb
+//     {
 
-      value::rgb<8> doit(const value::hsi<8>& hsi) const
-      {
-	int r;
-	int g;
-	int b;
+//       value::rgb<8> doit(const value::hsi<8>& hsi) const
+//       {
+// 	int r;
+// 	int g;
+// 	int b;
 
-	double sqrt3_3 = sqrt(3) / 3;
-	double inv_sqrt6 = 1 / sqrt(6);
-	double inv_sqrt2 = 1 / sqrt(2);
+// 	double sqrt3_3 = sqrt(3) / 3;
+// 	double inv_sqrt6 = 1 / sqrt(6);
+// 	double inv_sqrt2 = 1 / sqrt(2);
 
-	double h = hsi.hue() / 180.0 * 3.1415;
-	double alpha = hsi.sat() * cos(h);
-	double beta = hsi.sat() * sin(h);
+// 	double h = hsi.hue() / 180.0 * 3.1415;
+// 	double alpha = hsi.sat() * cos(h);
+// 	double beta = hsi.sat() * sin(h);
 
-	r = int(sqrt3_3 * hsi.i() + 2 * inv_sqrt6 * beta);
-	g = int(sqrt3_3 * hsi.i() + inv_sqrt2 * alpha - inv_sqrt6 * beta);
-	b = int(sqrt3_3 * hsi.i() - inv_sqrt2 * alpha - inv_sqrt6 * beta);
+// 	r = int(sqrt3_3 * hsi.i() + 2 * inv_sqrt6 * beta);
+// 	g = int(sqrt3_3 * hsi.i() + inv_sqrt2 * alpha - inv_sqrt6 * beta);
+// 	b = int(sqrt3_3 * hsi.i() - inv_sqrt2 * alpha - inv_sqrt6 * beta);
 
-	value::rgb<8> rgb(r, g, b); 
-	
-	return rgb;
-      }
-    };
+// 	value::rgb<8> rgb(r, g, b);
 
-  } // end of FIXME
+// 	return rgb;
+//       }
+//     };
 
-} // end of FIXME
+//   } // end of FIXME
+
+// } // end of FIXME
