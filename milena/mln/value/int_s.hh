@@ -35,7 +35,7 @@
 
 # include <mln/value/ops.hh>
 
-# include <mln/algebra/math/pow.hh>
+# include <mln/metal/math/pow.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/concept/integer.hh>
 # include <mln/value/internal/encoding.hh>
@@ -180,7 +180,7 @@ namespace mln
     inline
     int_s<n>::int_s(int i)
     {
-      static const int max = algebra::math::pow_int<2, n-1>::value - 1;
+      static const int max = metal::math::pow_int<2, n-1>::value - 1;
       static const int min = - max;
       mln_precondition(i >= min);
       mln_precondition(i <= max);
@@ -192,7 +192,7 @@ namespace mln
     int_s<n>&
     int_s<n>::operator=(int i)
     {
-      static const int max = algebra::math::pow_int<2, n-1>::value - 1;
+      static const int max = metal::math::pow_int<2, n-1>::value - 1;
       static const int min = - max;
       mln_precondition(i >= min);
       mln_precondition(i <= max);

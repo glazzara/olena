@@ -34,7 +34,7 @@
  * behavior.
  */
 
-# include <mln/algebra/math/pow.hh>
+# include <mln/metal/math/pow.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/concept/integer.hh>
 # include <mln/value/internal/encoding.hh>
@@ -59,7 +59,7 @@ namespace mln
     struct value_< mln::value::int_u_sat<n> >
     {
       // FIXME: Overhaul these traits (see other value traits).
-      static const std::size_t card = algebra::math::pow_int<2, n>::value;
+      static const std::size_t card = metal::math::pow_int<2, n>::value;
       static const mln::value::int_u_sat<n> min() { return 0; }
       static const mln::value::int_u_sat<n> max() { return card - 1; }
       static const unsigned nbits = n;

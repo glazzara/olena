@@ -28,7 +28,7 @@
 #ifndef MLN_METAL_MATH_ALL_HH
 # define MLN_METAL_MATH_ALL_HH
 
-/*! \file mln/algebra/math/all.hh
+/*! \file mln/metal/math/all.hh
  *
  * \brief Include all static mathematical functions.
  */
@@ -43,7 +43,7 @@ namespace mln
     /// Namespace of static mathematical functions.
     namespace math
     {
-      /// \internal Implementation namespace of algebra::math namespace.
+      /// \internal Implementation namespace of metal::math namespace.
       namespace impl {}
     }
 
@@ -53,9 +53,9 @@ namespace mln
 
 
 
-# include <mln/algebra/math/pow.hh>
-# include <mln/algebra/math/sqrt.hh>
-# include <mln/algebra/math/max.hh>
+# include <mln/metal/math/pow.hh>
+# include <mln/metal/math/sqrt.hh>
+# include <mln/metal/math/max.hh>
 // ...
 
 

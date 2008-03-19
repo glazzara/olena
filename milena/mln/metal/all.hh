@@ -77,7 +77,7 @@ namespace mln
 # include <mln/algebra/vec.hh>
 # include <mln/algebra/mat.hh>
 
-# include <mln/algebra/math/all.hh>
+# include <mln/metal/math/all.hh>
 
 // FIXME: Remove the following includes below!
 # include <mln/metal/same_coord.hh>

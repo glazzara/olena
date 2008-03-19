@@ -27,12 +27,12 @@
 
 /*! \file tests/metal_pow.cc
  *
- * \brief Test on mln::algebra::math.
+ * \brief Test on mln::metal::math.
  */
 
 #include <iostream>
 #include <mln/core/contract.hh>
-#include <mln/algebra/math/pow.hh>
+#include <mln/metal/math/pow.hh>
 
 
 int main()
@@ -40,8 +40,8 @@ int main()
   using namespace mln;
   using namespace mln::metal;
 
-  int res = algebra::math::pow_int<2,3>::value;
+  int res = metal::math::pow_int<2,3>::value;
   mln_assertion(res == 8);
 
-  std::cout << algebra::math::pow< int_<2>, int_<3> >::ret().name() << std::endl;
+  std::cout << metal::math::pow< int_<2>, int_<3> >::ret().name() << std::endl;
 }

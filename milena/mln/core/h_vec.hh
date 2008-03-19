@@ -134,7 +134,7 @@ namespace mln
     return *this;
   }
 
-  namespace metal
+  namespace algebra
   {
 
     // Immersion of a vector in its homogeneous space.
@@ -149,7 +149,7 @@ namespace mln
       return tmp;
     }
 
-  } // end of namespace mln::metal
+  } // end of namespace mln::algebra
 
 
   template <unsigned d, typename C>

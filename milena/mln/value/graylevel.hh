@@ -38,8 +38,8 @@
 # include <mln/value/ops.hh>
 
 # include <mln/core/contract.hh>
-# include <mln/algebra/math/pow.hh>
-# include <mln/algebra/math/max.hh>
+# include <mln/metal/math/pow.hh>
+# include <mln/metal/math/max.hh>
 # include <mln/metal/bexpr.hh>
 # include <mln/literal/ops.hh>
 
@@ -513,7 +513,7 @@ namespace mln
     inline
     graylevel<n>::graylevel(const literal::medium_gray_t&)
     {
-      this->v_ = algebra::math::pow_int<2, n - 1>::value;
+      this->v_ = metal::math::pow_int<2, n - 1>::value;
     }
 
     template <unsigned n>
@@ -521,7 +521,7 @@ namespace mln
     graylevel<n>&
     graylevel<n>::operator=(const literal::medium_gray_t&)
     {
-      this->v_ = algebra::math::pow_int<2, n - 1>::value;
+      this->v_ = metal::math::pow_int<2, n - 1>::value;
       return *this;
     }
 
@@ -555,7 +555,7 @@ namespace mln
     float
     graylevel<n>::to_float() const
     {
-      static const float denom = float(algebra::math::pow_int<2, n>::value) - 1.f;
+      static const float denom = float(metal::math::pow_int<2, n>::value) - 1.f;
       return float(this->v_) / denom;
     }
 

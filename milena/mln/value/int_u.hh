@@ -35,7 +35,7 @@
 
 # include <mln/value/ops.hh>
 
-# include <mln/algebra/math/pow.hh>
+# include <mln/metal/math/pow.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/internal/encoding.hh>
 # include <mln/value/concept/integer.hh>

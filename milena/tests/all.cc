@@ -48,7 +48,7 @@
 #include <mln/math/all.hh>
 //#include <mln/set/all.hh>
 #include <mln/draw/all.hh>
-#include <mln/algebra/math/all.hh>
+#include <mln/metal/math/all.hh>
 #include <mln/metal/all.hh>
 #include <mln/morpho/all.hh>
 #include <mln/io/pfm/all.hh>

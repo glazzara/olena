@@ -35,7 +35,7 @@
 
 # include <iostream>
 # include <mln/core/contract.hh>
-# include <mln/algebra/math/pow.hh>
+# include <mln/metal/math/pow.hh>
 # include <mln/metal/bexpr.hh>
 
 # include <mln/value/int_u.hh>

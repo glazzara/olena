@@ -45,7 +45,7 @@ namespace mln
 {
 
   // Fwd decl.
-  namespace metal { template <unsigned n, typename T> class vec; }
+  namespace algebra { template <unsigned n, typename T> class vec; }
 
 
 
