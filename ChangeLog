@@ -1,3 +1,11 @@
+2008-03-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update test on rgb/hsi conversion.
+
+	* milena/doc/tutorial/image_types.txt: Augment.
+	* milena/mln/value/rgb.hh (red_t, green_t, blue_t): New.
+	* milena/sandbox/vigouroux/moyenne.cc: Update.
+
 2008-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Augment tutorial on image types.

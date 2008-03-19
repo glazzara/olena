@@ -1,7 +1,9 @@
 #include "color/my_hsi.hh"
 #include "color/rgb_to_hsi.hh"
-#include <mln/display/save_and_show.hh>
-#include <mln/value/rgb.hh>
+
+#include <cmath>
+
+#include <mln/core/image2d.hh>
 #include <mln/value/rgb8.hh>
 
 #include <mln/io/ppm/load.hh>
@@ -9,58 +11,53 @@
 #include <mln/math/round.hh>
 #include <mln/level/transform.hh>
 
-#include <mln/core/image2d.hh>
-#include <cmath>
 
-#include <iostream>
 
-template <typename I, typename O>
-float rms (const I& ima, O& out)
+template <typename I1, typename I2>
+float rms(const mln::Image<I1>& ima1_, const mln::Image<I2>& ima2_)
 {
-  mln::value::rgb8 c1;
-  mln::value::rgb8 c2;
-  float distred = 0;
-  float distgreen = 0;
-  float distblue = 0;
-  float sum = 0;
-  float nb = 0;
-  float moy = 0;
+  const I1& ima1 = exact(ima1_);
+  const I2& ima2 = exact(ima2_);
 
-  mln_piter(I) p(out.domain());
+  mln_precondition(ima1.has_data() && ima2.has_data());
+
+  double sum = 0, nb = 0;
+
+  mln_piter(I1) p(ima1.domain());
   for_all(p)
   {
-    c1 = ima(p);
-    c2 = out(p);
-    distred = c2.red() - c1.red();
-    distgreen = c2.green() - c1.green();
-    distblue = c2.blue() - c1.blue();
+    mln_value(I1) c1 = ima1(p);
+    mln_value(I2) c2 = ima2(p);
+    double
+      distred = c2.red() - c1.red(),
+      distgreen = c2.green() - c1.green(),
+      distblue = c2.blue() - c1.blue();
 
     ++nb;
     sum += distred * distred + distblue * distblue + distgreen * distgreen;
   }
-  moy = std::sqrt(sum / nb);
-  return (moy);
+
+  if (nb == 0)
+    return 0;
+
+  return std::sqrt(sum / nb);
 }
+
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
+
   image2d<value::rgb8> lena;
   io::ppm::load(lena, "../../img/lena.ppm");
 
   image2d<value::hsi_3x8> lena_hsi = level::transform(lena,
-					       fun::v2v::f_rgb_to_hsi_3x8);
+						      fun::v2v::f_rgb_to_hsi_3x8);
 
-  image2d<value::rgb8>  lena_rgb = level::transform(lena_hsi,
-					       fun::v2v::f_hsi_to_rgb_3x8);
+  image2d<value::rgb8> lena_rgb = level::transform(lena_hsi,
+						   fun::v2v::f_hsi_to_rgb_3x8);
 
-
-  float err = rms(lena, lena_rgb);
-
+  double err = rms(lena, lena_rgb);
   std::cout << "err: " << err << std::endl;
-
-  display::save_and_show (lena_rgb, "display", 50);
-  return (0);
 }
 

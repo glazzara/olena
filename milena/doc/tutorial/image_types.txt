@@ -46,7 +46,7 @@ code A)
 
 The set of possible taken values in ima is the destination set.  If
 this set has a reasonable size, we can iterate over:
- 
+
 code B)
   for all v of ima.destination
   | print v.
@@ -236,23 +236,95 @@ skeleton
 
 ** methods
 
-*** values
+*** about the image variable
 
+**** has_data
+
+sig is:
 bool has_data() const
-// FIXME: ? better name is is_allocated  Nota bene: is_initialized means "has relevant data"!
 
+is "is_allocated" / "is_ready" a better name?
+
+Nota bene: "is_initialized" is consistent with the "initialize"
+routine; yet, it means "has relevant data", which is not really
+what it meant!
+
+**** name_it(string)
+
+Later...
+
+*** about definition domain
+
+**** domain
 const pset& domain() const
+
+**** has & owns_
+
 bool has(const psite& p) const
 bool owns_(const psite& p) const
 
-const box_<point>& bbox() const
-std::size_t npoints() const
+Major question: is ima.has(p) equivalent to ima.domain().has(p)?  or
+(if it is equivalent) do we feature a specific method has_extended()?
+
+Remember that in the case of a window, we want to write:
+
+for_all(p)
+  for_all(q)
+    if (ima.has(q))
+      ..
+
+so that there is a decoupling between a window and an image.  More
+precisely a site q of a window centered at p can lay outside the
+definition domain, thus we need the "has" test.  Such a decoupling is
+great since we can reuse some window or neighborhood definition over a
+domain which is compatible but restricted.  This is also true for a
+graph on which some window (resp. neighborhood) is defined and can be
+applied over a sub-graph.
+
+The owns_ method is weird because it is only internal.
+
+**** suggestion
+
+"has(p)" means that there is a value for p.  The set of sites p that
+verify "has(p) = true" is the "extended domain."  Some image types
+features such an extension; some other do not.
+
+We always have:
+  ima.domain().has(p)   =>  ima.has(p)
+
+If the image ima does not extend the definition domain, we have:
+  ima.domain().has(p)  <=>  ima.has(p)
+
+A site p is in the extended domain iff:
+  ima.has(p) and not ima.domain().has(p).
+
+*** about data access
 
 rvalue operator()(const psite& p) const
 lvalue operator()(const psite& p)
 
+*** about destination space
+
 const vset& destination() const // was: values()
 
+*** obsolete methods
+
+**** bbox
+
+const box_<point>& bbox() const
+
+too ambiguous because we want a bounding box:
+- either precise or approximative (larger)
+- on a grid (if possible)
+- on the space (if sites are located)
+
+remember that some image have sites that are not localized (and then a
+bbox, if it exists, can only be a index range for instance)
+
+**** npoints
+
+std::size_t npoints() const
+is useless since the user can write ima.domain().nsites()
 
 
 * properties

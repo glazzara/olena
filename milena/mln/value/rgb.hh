@@ -162,6 +162,10 @@ namespace mln
     {
     public:
 
+      typedef int_u<n> red_t;
+      typedef int_u<n> green_t;
+      typedef int_u<n> blue_t;
+
       /// \{ Acces to red/green/blue component.
       int_u<n>  red() const   { return this->v_[0]; }
       int_u<n>& red()         { return this->v_[0]; }
