@@ -1,3 +1,11 @@
+2008-03-20  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add a benchmark on run_image types compression efficiency.
+
+	* doc/benchmark: New.
+	* doc/benchmark/compression.txt: New, doc.
+	* img/space_debris.pgm: a new image.
+
 2008-03-19  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Icp : n dim, refactored, uses p_array, vec -> rounded point proc.

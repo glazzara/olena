@@ -1,0 +1,47 @@
+	-*- outline -*-
+
+* Compression ratio benchmarks:
+
+** Test process:
+   - Load the initial image.
+   - Label the image using the labelling::blobs algorithm.
+   - Do a fold transformation on the loaded image.
+   - Encode the loaded image into the destination type.
+   - Compute the compression ratio of the encoded image.
+
+** Compression ratio:
+The compression ratio is computed the following way:
+    CR = image_memory_size / size_of(point) * number_of_image_points
+
+** Tested images:
+
+--- Images		-	Size  ---
+trunk/img/small.pgm		4.1K
+trunk/img/space_debris.pgm	1.3M
+
+
+** rle_image:
+
+--- Images		-	Compression Ratio -	Time ---
+trunk/img/small.pgm		0.494708		0.052s
+trunk/img/space_debris.pgm	0.112602		34.440s
+
+
+** sparse_image:
+
+--- Images		-	Compression Ratio -	Time ---
+trunk/img/small.pgm		0.596522		0.054s
+trunk/img/space_debris.pgm	0.144853		34.637
+
+
+** mono_rle_image:
+
+--- Images		-	Compression Ratio -	Time ---
+trunk/img/small.pgm		0.610811		0.044s
+trunk/img/space_debris.pgm	0.000688533		10.604s
+
+** mono_obased_rle_image:
+
+--- Images		-	Compression Ratio -	Time ---
+trunk/img/small.pgm		0.955393		0.067s
+trunk/img/space_debris.pgm	0.216746		40.001
