@@ -38,7 +38,7 @@
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/concept/point_iterator.hh>
-# include <mln/trait/point_set.hh>
+# include <trait/point_set.hh>
 
 
 namespace mln
@@ -96,7 +96,6 @@ namespace mln
   bool operator==(const Point_Set<Sl>& lhs, const Point_Set<Sr>& rhs);
 
 
-
   /*! \brief Inclusion test between point sets \p lhs and \p rhs.
    *
    * \param[in] lhs A point set (included?).
@@ -106,7 +105,6 @@ namespace mln
    */
   template <typename Sl, typename Sr>
   bool operator<=(const Point_Set<Sl>& lhs, const Point_Set<Sr>& rhs);
-
 
 
   /*! \brief Strict inclusion test between point sets \p lhs and \p
@@ -121,7 +119,6 @@ namespace mln
   bool operator<(const Point_Set<Sl>& lhs, const Point_Set<Sr>& rhs);
 
 
-
   /*! \brief Print a point set \p pset into the output stream \p
    *  ostr.
    *
@@ -134,7 +131,6 @@ namespace mln
    */
   template <typename S>
   std::ostream& operator<<(std::ostream& ostr, const Point_Set<S>& pset);
-
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -245,8 +241,6 @@ namespace mln
 
 } // end of namespace mln
 
-
 # include <mln/core/ops.hh>
-
 
 #endif // ! MLN_CORE_CONCEPT_POINT_SET_HH

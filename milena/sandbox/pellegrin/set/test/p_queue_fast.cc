@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,23 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file sandbox/pellegrin/set/test_set.cc
+/*! \file tests/core/p_queue_fast.cc
  *
- * \brief Test my work on set.
+ * \brief Tests on mln::p_queue_fast.
  */
 
-#include <mln/core/image2d.hh>
-#include "uni_set.hh"
-#include "multi_set.hh"
+#include <mln/core/point2d.hh>
+#include <mln/core/p_queue_fast.hh>
 
 
-int main ()
+
+int main()
 {
-  mln::image2d<value::int_u8> I = io::pgm::load ("../img/lena.pgm");
-  mln::image2d<value::int_u8>::fwd_piter p (I.domain ());
+  using namespace mln;
 
-  for_all (p)
-  {
-  }
+  p_queue_fast<point2d> q;
+  q
+    .push(make::point2d(6, 9))
+    .push(make::point2d(5, 1))
+    .push(make::point2d(4, 2));
+  mln_assertion(q.npoints() == 3);
+
+  std::cout << q.bbox() << std::endl;
+  std::cout << q << std::endl;
+
+  q.pop();
+  mln_assertion(q.npoints() == 2);
+  point2d p = q.front();
+  mln_assertion(q.npoints() == 2);
+  mln_assertion(p == make::point2d(5, 1));
 }
-

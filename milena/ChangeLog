@@ -1,3 +1,43 @@
+2008-03-21  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
+	Fix some typos, add existant tests.
+	* sandbox/pellegrin/set/Makefile: Remove.
+	* sandbox/pellegrin/set/core/concept/point_set.hh: Modified.
+	* sandbox/pellegrin/set/core/internal/multi_set.hh,
+	* sandbox/pellegrin/set/core/internal/uni_set.hh: New.
+	* sandbox/pellegrin/set/core/line2d.hh,
+	* sandbox/pellegrin/set/core/p_array.hh,
+	* sandbox/pellegrin/set/core/p_bgraph.hh,
+	* sandbox/pellegrin/set/core/p_graph.hh,
+	* sandbox/pellegrin/set/core/p_line_graph.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue_fast.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue_fast_with_array.hh,
+	* sandbox/pellegrin/set/core/p_queue.hh,
+	* sandbox/pellegrin/set/core/p_queue_fast.hh,
+	* sandbox/pellegrin/set/core/p_run.hh,
+	* sandbox/pellegrin/set/core/p_runs.hh,
+	* sandbox/pellegrin/set/core/p_set.hh,
+	* sandbox/pellegrin/set/core/pset_if.hh: Modify an #include and add a
+	  semi-colon after the trait struct.
+	* sandbox/pellegrin/set/multi_set.hh: Remove.
+	* sandbox/pellegrin/set/test: New folder containing tests.
+	* sandbox/pellegrin/set/test/Makefile,
+	* sandbox/pellegrin/set/test/test.sh,
+	* sandbox/pellegrin/set/test/detest.sh: New, for the compilation.
+	* sandbox/pellegrin/set/test/p_bgraph.cc,
+	* sandbox/pellegrin/set/test/p_priority_queue.cc,
+	* sandbox/pellegrin/set/test/p_priority_queue_fast.cc,
+	* sandbox/pellegrin/set/test/p_priority_queue_fast_with_array.cc,
+	* sandbox/pellegrin/set/test/p_queue.cc,
+	* sandbox/pellegrin/set/test/p_queue_fast.cc,
+	* sandbox/pellegrin/set/test/p_runs.cc,
+	* sandbox/pellegrin/set/test/p_set.cc,
+	* sandbox/pellegrin/set/test/pset_if.cc: New tests.
+	* sandbox/pellegrin/set/test_set.cc: Remove.
+	* sandbox/pellegrin/set/trait/point_set.hh: Minor fix.
+	* sandbox/pellegrin/set/uni_set.hh: Remove.
+
 2008-03-20  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add a benchmark on run_image types compression efficiency.

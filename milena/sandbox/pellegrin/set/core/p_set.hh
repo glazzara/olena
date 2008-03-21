@@ -37,7 +37,7 @@
 # include <mln/core/internal/set_of.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/core/p_array.hh>
-# include <mln/trait/point_set.hh>
+# include <trait/point_set.hh>
 
 
 namespace mln
@@ -54,7 +54,7 @@ namespace mln
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::fast has_speed;
-    }
+    };
 
   }
 

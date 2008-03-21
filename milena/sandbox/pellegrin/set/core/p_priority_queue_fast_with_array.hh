@@ -44,27 +44,27 @@
 # include <mln/core/p_array_piter.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/core/p_queue_fast.hh>
-# include <mln/trait/point_set.hh>
+# include <trait/point_set.hh>
 
 
 namespace mln
 {
 
   // Fwd decls.
-  template <typename P, typename T, typename S> struct p_priority_queue_fast_with_array;
+  template <typename P, typename T, unsigned S> struct p_priority_queue_fast_with_array;
   template <typename P> struct p_array_fwd_piter_;
   template <typename P> struct p_array_bkd_piter_;
 
   namespace trait
   {
 
-    template <typename P, typename T, typename S>
+    template <typename P, typename T, unsigned S>
     struct point_set_< p_priority_queue_fast_with_array<P, T, S> >
     : public default_point_set_< p_priority_queue_fast_with_array<P, T, S> >
     {
       typedef trait::point_set::arity::multiple arity;
       typedef trait::point_set::has_speed::fast has_speed;
-    }
+    };
 
   }
 

@@ -41,7 +41,7 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/p_array_piter.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/trait/point_set.hh>
+# include <trait/point_set.hh>
 
 
 namespace mln
@@ -59,8 +59,8 @@ namespace mln
     struct point_set_< p_queue<P> > : public default_point_set_< p_queue<P> >
     {
       typedef trait::point_set::arity::unique   arity;
-      typedef trait::point_set::has_speed::slow	has_speed;
-    }
+      typedef trait::point_set::has_speed::slow has_speed;
+    };
 
   }
 

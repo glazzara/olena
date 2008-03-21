@@ -39,7 +39,7 @@
 # include <mln/util/internal/boost_graph.hh>
 # include <mln/core/bgraph_psite.hh>
 # include <mln/core/p_bgraph_piter.hh>
-# include <mln/trait/point_set.hh>
+# include <trait/point_set.hh>
 
 
 namespace mln
@@ -57,7 +57,7 @@ namespace mln
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::fast has_speed;
-    }
+    };
 
   }
 

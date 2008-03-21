@@ -35,7 +35,7 @@
 # include <mln/core/line_graph_psite.hh>
 # include <mln/core/p_line_graph_piter.hh>
 # include <mln/core/point_pair.hh>
-# include <mln/trait/point_set.hh>
+# include <trait/point_set.hh>
 
 
 /* FIXME: This class shares a lot with p_graph.  Factor as much as
@@ -67,7 +67,7 @@ namespace mln
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::fast has_speed;
-    }
+    };
 
   }
 

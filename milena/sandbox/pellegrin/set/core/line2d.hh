@@ -39,7 +39,7 @@
 # include <mln/core/p_array_piter.hh>
 # include <mln/core/box2d.hh>
 # include <mln/math/all.hh>
-# include <mln/trait/point_set.hh>
+# include <trait/point_set.hh>
 
 
 namespace mln
@@ -56,7 +56,7 @@ namespace mln
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::fast has_speed;
-    }
+    };
 
   }
 

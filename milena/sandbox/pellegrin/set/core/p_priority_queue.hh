@@ -44,7 +44,7 @@
 # include <mln/core/p_array_piter.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/core/p_queue.hh>
-# include <mln/trait/point_set.hh>
+# include <trait/point_set.hh>
 
 
 namespace mln
@@ -58,13 +58,13 @@ namespace mln
   namespace trait
   {
 
-    template <typename P>
-    struct point_set_< p_priority_queue<P> >
-    : public default_point_set_< p_priority_queue<P> >
+    template <typename P, typename T>
+    struct point_set_< p_priority_queue<P, T> >
+    : public default_point_set_< p_priority_queue<P, T> >
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::slow has_speed;
-    }
+    };
 
   }
 

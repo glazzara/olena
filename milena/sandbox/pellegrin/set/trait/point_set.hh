@@ -49,7 +49,7 @@ namespace mln
   template <typename P> struct p_line_graph;
   template <typename P, typename T> struct p_priority_queue;
   template <typename P, typename T> struct p_priority_queue_fast;
-  template <typename P, typename T, typename S> struct p_priority_queue_fast_with_array;
+  template <typename P, typename T, unsigned S> struct p_priority_queue_fast_with_array;
   template <typename P> struct p_queue;
   template <typename P> struct p_queue_fast;
   template <typename P> struct p_run;
