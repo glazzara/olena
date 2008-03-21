@@ -38,11 +38,14 @@
 # include <mln/core/box2d.hh>
 # include <mln/core/inplace.hh>
 # include <mln/core/init.hh>
+# include <mln/core/line_piter.hh>
+
+# include <mln/geom/size2d.hh>
+
 
 # include <mln/border/thickness.hh>
 # include <mln/value/set.hh>
 # include <mln/fun/i2v/all_to.hh>
-# include <mln/core/line_piter.hh>
 # include <fcntl.h>
 
 # include "support/lru.hh"
@@ -52,7 +55,8 @@
 # include "page.hh"
 
 // FIXME : give the side's side of the square of the block.
-# define SIDE 128
+# define BLOCK_SIDE 128
+# define BLOCK_SIZE (BLOCK_SIDE * BLOCK_SIDE)
 
 namespace mln
 {
@@ -68,10 +72,10 @@ namespace mln
     template <typename T>
     struct data_< tiled_image2d<T> >
     {
-      typedef block<T, SIDE * SIDE>          block;
+      typedef block<T, BLOCK_SIZE>          block;
       typedef mmap_backend<block>   backend;
       typedef lru_support<backend>  support;
-      typedef layout2d<SIDE, SIDE>      layout;
+      typedef layout2d<BLOCK_SIDE, BLOCK_SIDE>      layout;
 
       data_(const box2d& b);
       ~data_();
@@ -149,12 +153,12 @@ namespace mln
     typedef mln::value::set<T> vset;
 
     /// Block type.
-    typedef block<T, SIDE * SIDE> block;
+    typedef block<T, BLOCK_SIZE> block;
 
     /// Support type.
     typedef lru_support<mmap_backend<block> > support;
     /// Layout type
-    typedef layout2d<SIDE, SIDE>                       layout;
+    typedef layout2d<BLOCK_SIDE, BLOCK_SIDE>                       layout;
     /// Page type
     typedef page<T, layout> page;
 
@@ -238,11 +242,20 @@ namespace mln
     data_< tiled_image2d<T> >::data_(const box2d& b)
       : b_ (b),
 	// FIXME : hard coded path.
-	support_(*new support(*new backend( open("/tmp/milena_tiled.image", O_RDWR | O_CREAT | O_TRUNC, 0664), b.npoints()) ))
+	support_(*new support(
+			       *new backend( open("/tmp/milena_tiled.image", O_RDWR | O_CREAT | O_TRUNC, 0664),
+					     layout::image_layout::size(geom::nrows(b), geom::ncols(b))),
+			       1500 // Fixme : size of lru cache.
+			      )
+		 )
     {
-      std::cout << b.npoints() * sizeof(T) << std::endl;
+      std::cout << layout::image_layout::size(geom::nrows(b), geom::ncols(b)) << " block dans l'image."  << std::endl;
+      std::cout << layout::image_layout::size(geom::nrows(b), geom::ncols(b)) * BLOCK_SIZE * sizeof(T) << " o au total." << std::endl;
+      std::cout << layout::image_layout::size(geom::nrows(b), geom::ncols(b)) * BLOCK_SIZE * sizeof(T) / 1024. << " Ko au total." << std::endl;
+      std::cout << layout::image_layout::size(geom::nrows(b), geom::ncols(b)) * BLOCK_SIZE * sizeof(T) / (1024 * 1024.) << " Mo au total." << std::endl;
+
       char a = 0;
-      lseek(support_.backend_.fd_, b.npoints() * sizeof(T) - 1, SEEK_SET);
+      lseek(support_.backend_.fd_, layout::image_layout::size(geom::nrows(b), geom::ncols(b)) * BLOCK_SIZE * sizeof(T), SEEK_SET);
       write(support_.backend_.fd_, &a, 1);
     }
 

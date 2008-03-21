@@ -1,3 +1,18 @@
+2008-03-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Debug tiled_image2d.
+	* sandbox/garrigues/tiled_image2d/block.hh: Remove the union, to use a
+	block with a value type of milena.
+	* sandbox/garrigues/tiled_image2d/layout/image2d/lrtb.hh: in a
+	milena's point2d, we have p[0] = row index, p[1] = col index, update
+	to respect this.
+	* sandbox/garrigues/tiled_image2d/layout/page2d/lrtb.hh: likewise,
+	(unsigned image2d_lrtb::size(unsigned nrows, unsigned ncols)) New.
+	* sandbox/garrigues/tiled_image2d/tiled_image2d.cc: Test the type with
+	a big image.
+	* sandbox/garrigues/tiled_image2d/tiled_image2d.hh: Allocate enough
+	space for the image. Fixme : some debug will be removed later.
+
 2008-03-21  Michel Pellegrin  <pellegrin@lrde.epita.fr>
 
 	Fix some typos, add existant tests.

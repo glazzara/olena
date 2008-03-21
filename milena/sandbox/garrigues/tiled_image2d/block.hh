@@ -37,20 +37,25 @@ namespace mln
   struct block : public Object< block<T, size> > {
     typedef T value_type;
     enum { nitems = size, nbytes = size * sizeof(T) };
-    union {
-      char bytes[nbytes];
-      T array[nitems];
-    };
+
+    char bytes[nitems];
+
+//      union {
+//        char bytes[nbytes];
+//       T array[nitems];
+//      };
 
     T& operator[](unsigned p)
     {
       assert(p < nitems);
+      T* array = (T*)(void*) bytes;
       return array[p];
     }
 
     const T& operator[](unsigned p) const
     {
       assert(p < nbytes);
+      T* array = (T*)(void*) bytes;
       return array[p];
     }
   };

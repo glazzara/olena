@@ -32,14 +32,23 @@
 
 #include "tiled_image2d.hh"
 
+#include <mln/core/cast_image.hh>
+
 #include <mln/level/fill.hh>
+#include <mln/value/int_u8.hh>
 #include <mln/debug/println.hh>
+#include <mln/debug/iota.hh>
+#include <mln/io/pgm/save.hh>
 
 int main()
 {
   using namespace mln;
 
-  tiled_image2d<int> ima(10700, 10700);
+  std::cout << "allocate the image." << std::endl;
+  tiled_image2d<value::int_u8> ima(1024 * 1024, 1024 * 1.5);
+  std::cout << "fill the image." << std::endl;
+  debug::iota(ima);
 
-  level::fill(ima, 6);
+  std::cout << "save the image." << std::endl;
+  io::pgm::save(ima, "test.pgm");
 }

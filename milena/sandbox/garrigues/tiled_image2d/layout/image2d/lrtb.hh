@@ -36,29 +36,34 @@ namespace mln
   namespace layout {
 
     template<unsigned W, unsigned H>
-    struct image2d_lrtb : public Object<image2d_lrtb<W, H> > {
+    struct image2d_lrtb {
       enum { dim = 2, page_width = W, page_height = H };
 
       template<typename Image>
       static unsigned size(const Image& im) {
 	const typename Image::domain_type& d = im.domain();
-	return (d.len(0) / page_width ) * (d.len(1) / page_height);
+	return (1 + d.len(0) / page_width ) * (1 + d.len(1) / page_height);
+      }
+
+
+      static unsigned size(unsigned nrows, unsigned ncols) {
+	return (1 + ncols / page_width ) * (1 + nrows / page_height);
       }
 
       template<typename Image>
       static unsigned page_at(const Image& im, const point2d& p)
       {
-	return (p[1] / page_height) * (im.domain().len(0) / page_width) + p[0] / page_width;
+	unsigned n = (p[0] / page_height) * (1 + im.domain().len(1) / page_width) + (p[1] / page_width);
+	return n;
       };
 
       static point2d changeref(const point2d& p)
       {
-	return point2d(p[0] % page_width, p[1] % page_height);
+	return point2d(p[0] % page_height, p[1] % page_width);
       }
     };
 
   }
-
 
 } // end of namespace mln
 

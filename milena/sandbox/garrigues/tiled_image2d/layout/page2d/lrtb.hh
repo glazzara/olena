@@ -41,7 +41,7 @@ namespace mln
 
       static unsigned pixel_at(const point2d& p)
       {
-	return p[1] * width + p[0];
+	return p[0] * width + p[1];
       }
     };
 
