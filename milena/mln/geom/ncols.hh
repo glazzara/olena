@@ -47,6 +47,10 @@ namespace mln
     template <typename I>
     unsigned ncols(const Image<I>& ima);
 
+    /// Give the number of cols of a box 2d or 3d.
+    template <typename B>
+    unsigned ncols(const Box<B>& b);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -56,6 +60,14 @@ namespace mln
     {
       mln_precondition(exact(ima).has_data());
       return geom::max_col(ima) - geom::min_col(ima) + 1;
+    }
+
+
+    template <typename B>
+    unsigned ncols(const Box<B>& b)
+    {
+      metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
+      return geom::max_col(b) - geom::min_col(b) + 1;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

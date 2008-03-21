@@ -46,6 +46,10 @@ namespace mln
     template <typename I>
     mln_coord(I) min_col(const Image<I>& ima);
 
+    /// Give the minimum column of an box 2d or 3d.
+    template <typename B>
+    mln_coord(B::point) min_col(const Box<B>& b);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -55,6 +59,15 @@ namespace mln
     {
       mln_precondition(exact(ima).has_data());
       return exact(ima).bbox().pmin().col();
+    }
+
+
+    template <typename B>
+    inline
+    mln_coord(B::point) min_col(const Box<B>& b)
+    {
+      metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
+      return exact(b).pmin().col();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

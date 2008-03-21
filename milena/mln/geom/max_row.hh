@@ -47,6 +47,10 @@ namespace mln
     mln_coord(I) max_row(const Image<I>& ima);
 
 
+    /// Give the maximum row of an box 2d or 3d.
+    template <typename B>
+    mln_coord(B::point) max_row(const Box<B>& b);
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
@@ -55,6 +59,15 @@ namespace mln
     {
       mln_precondition(exact(ima).has_data());
       return exact(ima).bbox().pmax().row();
+    }
+
+
+    template <typename B>
+    inline
+    mln_coord(B::point) max_row(const Box<B>& b)
+    {
+      metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
+      return exact(b).pmax().row();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

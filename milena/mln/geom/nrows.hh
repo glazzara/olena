@@ -47,6 +47,10 @@ namespace mln
     template <typename I>
     unsigned nrows(const Image<I>& ima);
 
+    /// Give the number of rows of a box 2d or 3d.
+    template <typename B>
+    unsigned nrows(const Box<B>& b);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -56,6 +60,13 @@ namespace mln
     {
       mln_precondition(exact(ima).has_data());
       return geom::max_row(ima) - geom::min_row(ima) + 1;
+    }
+
+    template <typename B>
+    unsigned nrows(const Box<B>& b)
+    {
+      metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
+      return geom::max_row(b) - geom::min_row(b) + 1;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
