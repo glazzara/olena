@@ -1,5 +1,10 @@
 2008-03-22  Etienne FOLIO  <folio@lrde.epita.fr>
 
+	Naive DT rebuilt. Does not compile.
+	* naive.cc: Uses a given function to calculate the norm.
+
+2008-03-22  Etienne FOLIO  <folio@lrde.epita.fr>
+
 	Chamfer DT with nearest point calculus.
 	* chamfer.cc: Returns a pair containing the two maps.
 
