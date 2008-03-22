@@ -1,3 +1,8 @@
+2008-03-22  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Chamfer DT with nearest point calculus.
+	* chamfer.cc: Returns a pair containing the two maps.
+
 2008-03-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add geom routine for Box.
