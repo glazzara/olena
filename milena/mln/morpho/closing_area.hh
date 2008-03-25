@@ -43,11 +43,6 @@ namespace mln
   namespace morpho
   {
 
-    /* FIXME: The neighborhood shall not be passed as argument, but
-       bound to the input image.  We can also optionnaly provide a
-       version of this function for regular-grid-based images where
-       the neighborhood is replaced by a (user-provided) window.  */
-
     /// Morphological area closing.
     template <typename I, typename N, typename O>
     void closing_area(const Image<I>& input, const Neighborhood<N>& nbh,

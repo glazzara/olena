@@ -42,13 +42,13 @@
         between the values on the nodes	adjacent to the edge, so as to
         create a (norm of the gradient) ``between the pixels'' of the
         input image;
-    \li (insert an minima-killer pass here, as soon as it works on
-        graph-based images);
-    \li perform a WST on the line graph image;
+    \li reduce the number of minima using an area opening (computing the
+        area using the vertices, not the edges);
+    \li perform a WST on this simplified line graph image;
     \li reduce the quantification of the result of the WST;
     \li create an 2-D, color output image with height and width double
         the size the original one, and copy the data of the input image
-	in it, interpolating inter-pixel points;
+        in it, interpolating inter-pixel points;
     \li print the watershed on lines into that same image, and save it.  */
 
 #include <vector>
@@ -63,7 +63,7 @@
 #include <mln/core/line_graph_neighborhood_piter.hh>
 
 #include <mln/morpho/line_gradient.hh>
-#include <mln/morpho/closing_area.hh>
+#include <mln/morpho/closing_area_on_vertices.hh>
 #include <mln/morpho/meyer_wst.hh>
 #include <mln/level/stretch.hh>
 
@@ -114,13 +114,7 @@ int main()
   nbh_t nbh;
 
   ima_t closed_lg_ima (lg_ima.domain());
-  /* FIXME: We should change the attribute closing performed here;
-     instead of computing the area using the data on the lines
-     (edges), whe should use the data on the pixels (vertices).
-
-     The best way is probably to create another attribute-functor and
-     use the algebraic_union_find canvas. */
-  morpho::closing_area(lg_ima, nbh, 20, closed_lg_ima);
+  morpho::closing_area_on_vertices(lg_ima, nbh, 20, closed_lg_ima);
 
   /*------.
   | WST.  |

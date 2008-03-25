@@ -25,16 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_OPENING_AREA_HH
-# define MLN_MORPHO_OPENING_AREA_HH
+#ifndef MLN_MORPHO_OPENING_AREA_ON_VERTICES_HH
+# define MLN_MORPHO_OPENING_AREA_ON_VERTICES_HH
 
-/*! \file mln/morpho/opening_area.hh
- *
- * \brief Morphological area opening.
- */
+/// \file mln/morpho/opening_area_on_vertices.hh
+/// \brief Morphological area opening on a line graph image computing
+/// the area in terms of adjacent vertices.
 
+# include <mln/core/line_graph_image.hh>
 # include <mln/morpho/opening_attribute.hh>
-# include <mln/accu/count.hh>
+# include <mln/accu/count_adjacent_vertices.hh>
 
 
 namespace mln
@@ -43,23 +43,26 @@ namespace mln
   namespace morpho
   {
 
-    /// Morphological area opening.
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh,
-		      std::size_t lambda, Image<O>& output);
+    /// Morphological area opening on a mln::line_graph_image computing
+    /// the area in terms of adjacent vertices.
+    template <typename P, typename V, typename N, typename O>
+    void opening_area_on_vertices(const line_graph_image<P, V>& input,
+				  const Neighborhood<N>& nbh,
+				  std::size_t lambda, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
+    template <typename P, typename V, typename N, typename O>
     inline
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh,
-		      std::size_t lambda, Image<O>& output)
+    void opening_area_on_vertices(const line_graph_image<P, V>& input,
+				  const Neighborhood<N>& nbh,
+				  std::size_t lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
+      typedef accu::count_adjacent_vertices_<P, V> attribute_t;
       // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
+      opening_attribute<attribute_t>(input, nbh, lambda, output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -69,4 +72,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_OPENING_AREA_HH
+#endif // ! MLN_MORPHO_OPENING_AREA_ON_VERTICES_HH

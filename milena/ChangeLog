@@ -1,5 +1,29 @@
 2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Area closing/opening for line graph images based on adjacent
+	vertices.
+
+	* mln/core/line_graph_psite.hh
+	(mln::line_graph_psite<P>::first_id)
+	(mln::line_graph_psite<P>::second_id):
+	New methods.
+	Use them to simplify...
+	(mln::line_graph_psite<P>::first)
+	(mln::line_graph_psite<P>::second): ...these ones.
+	* mln/accu/count_adjacent_vertices.hh: New accumulator.
+	* mln/morpho/closing_area_on_vertices.hh,
+	* mln/morpho/opening_area_on_vertices.hh:
+	New filters.
+	* mln/morpho/closing_area.hh,
+	* mln/morpho/opening_area.hh,
+	* mln/morpho/closing_attribute.hh,
+	* mln/morpho/opening_attribute.hh:
+	Remove spurious comments.
+	* tests/morpho/lena_line_graph_image_wst2.cc: Use
+	morpho::closing_area_on_vertices instead of morpho::closing.
+
+2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Line gradient computation.
 
 	* tests/morpho/lena_line_graph_image_wst1.cc: Fix comments.

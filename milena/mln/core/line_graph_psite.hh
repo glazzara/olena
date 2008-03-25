@@ -79,10 +79,15 @@ namespace mln
     /// Return the edge id of this point site.
     util::edge_id id() const;
 
-    /// Return the first associated point (vertex).
+    /// Return the first associated vertex.
     P first() const;
-    /// Return the second associated point (vertex).
+    /// Return the second associated vertex.
     P second() const;
+
+    /// Return the id of the first associated vertex.
+    util::node_id first_id() const;
+    /// Return the id of the second associated vertex.
+    util::node_id second_id() const;
 
   private:
     /// Is this psite valid?
@@ -228,7 +233,7 @@ namespace mln
   line_graph_psite<P>::first() const
   {
     mln_assertion(is_valid_());
-    return plg().gr_->node_data(plg().gr_->edge(id_).n1());
+    return plg().gr_->node_data(first_id());
   }
 
   template<typename P>
@@ -237,7 +242,26 @@ namespace mln
   line_graph_psite<P>::second() const
   {
     mln_assertion(is_valid_());
-    return plg().gr_->node_data(plg().gr_->edge(id_).n2());
+    return plg().gr_->node_data(second_id());
+  }
+
+
+  template<typename P>
+  inline
+  util::node_id
+  line_graph_psite<P>::first_id() const
+  {
+    mln_assertion(is_valid_());
+    return plg().gr_->edge(id_).n1();
+  }
+
+  template<typename P>
+  inline
+  util::node_id
+  line_graph_psite<P>::second_id() const
+  {
+    mln_assertion(is_valid_());
+    return plg().gr_->edge(id_).n2();
   }
 
 
