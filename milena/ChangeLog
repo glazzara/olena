@@ -1,5 +1,42 @@
 2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have piters on graph windows actually use the window.
+
+	* mln/core/graph_window_piter.hh
+	(mln::graph_window_fwd_piter<P, W>)
+	(mln::graph_window_bkd_piter<P, W>):
+	Have these class templates take a window type as second,
+	additional parameter.
+	(mln::graph_window_fwd_piter<P, W>::win_)
+	(mln::graph_window_bkd_piter<P, W>::win_):
+	New attributes.
+	(mln::graph_window_fwd_piter<P, W>::graph_window_fwd_piter)
+	(mln::graph_window_bkd_piter<P, W>::graph_window_bkd_piter):
+	Adjust ctors.
+	(mln::graph_window_fwd_piter<P, W>::first_)
+	(mln::graph_window_fwd_piter<P, W>::step_)
+	(mln::graph_window_bkd_piter<P, W>::first_)
+	(mln::graph_window_bkd_piter<P, W>::step_):
+	New methods.
+	(mln::graph_window_fwd_piter<P, W>::start)
+	(mln::graph_window_fwd_piter<P, W>::next_)
+	(mln::graph_window_bkd_piter<P, W>::start)
+	(mln::graph_window_bkd_piter<P, W>::next_):
+	Delegate the body of the routine to the window.
+	* mln/core/graph_elt_window.hh
+	(mln::graph_elt_window<P>::fwd_qiter)
+	(mln::graph_elt_window<P>::bkd_qiter):
+	Adjust typedefs.
+	(mln::graph_elt_window<P>::psite):
+	New typedef.
+	(mln::graph_elt_window<P>::start)
+	(mln::graph_elt_window<P>::next_):
+	New methods.
+	* tests/core/graph_elt_window.cc: Exercise more features of the
+	elementary window, and piters.
+
+2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have Meyer's WST depend less on the old code base.
 
 	* mln/morpho/meyer_wst.hh: Use labeling::regional_minima instead

@@ -50,8 +50,8 @@
 namespace mln
 {
   // Fwd decls.
-  template <typename P> class graph_window_fwd_piter;
-  template <typename P> class graph_window_bkd_piter;
+  template <typename P, typename W> class graph_window_fwd_piter;
+  template <typename P, typename W> class graph_window_bkd_piter;
 
 
   /*! \brief Elementary window on graph class.
@@ -66,23 +66,21 @@ namespace mln
   public:
     /// Associated types.
     /// \{
-    /// The type of point stored into the window.
-    // FIXME: Is this right, if we consider that this window stores
-    // psites, not points?
+    /// The type of point corresponding to the window.
     typedef P point;
+    /// The type of psite corresponding to the window.
+    typedef graph_psite<P> psite;
 
     // FIXME: This is a dummy value.
     typedef void dpoint;
 
-    /*! \brief Point_Iterator type to browse the points of a generic window
-     * w.r.t. the ordering of delta-points.
-     */
-    typedef graph_window_fwd_piter<P> fwd_qiter;
+    /// \brief Point_Iterator type to browse the psites of the window
+    /// w.r.t. the ordering of vertices.
+    typedef graph_window_fwd_piter<P, self_> fwd_qiter;
 
-    /*! \brief Point_Iterator type to browse the points of a generic window
-     * w.r.t. the reverse ordering of delta-points.
-     */
-    typedef graph_window_bkd_piter<P> bkd_qiter;
+    /// \brief Point_Iterator type to browse the psites of the window
+    /// w.r.t. the ordering of vertices.
+    typedef graph_window_bkd_piter<P, self_> bkd_qiter;
 
     /// The default qiter type.
     typedef fwd_qiter qiter;
@@ -91,16 +89,25 @@ namespace mln
     /// Construct an elementary graph window.
     graph_elt_window();
 
+    /// Services for iterators.
+    /// \{
+    /// Move \a piter to the beginning of the iteration on this window.
+    template <typename Piter>
+    void start(Point_Iterator<Piter>& piter) const;
+    /// Move \a piter to the next site on this window.
+    template <typename Piter>
+    void next_(Point_Iterator<Piter>& piter) const;
+    /// \}
+
+    /// Interface of the concept Window.
+    /// \{
     /// Is the window is empty?
     bool is_empty() const;
-
     /// Is the window centered?
     bool is_centered() const;
-
     /// Is the window symmetric?
     // FIXME: We should defin this more precisely.
     bool is_symmetric() const;
-
     /// Return the maximum coordinate gap between the window center
     /// and a window point.
     /* FIXME: This method returns a dummy value (0), since the delta
@@ -114,9 +121,9 @@ namespace mln
        It raises another question: should delta() be part of the
        concept ``Window''?  */
     unsigned delta() const;
-
     /// Apply a central symmetry to the target window.
     self_& sym();
+    /// \}
   };
 
 
@@ -126,6 +133,34 @@ namespace mln
   inline
   graph_elt_window<P>::graph_elt_window()
   {
+  }
+
+  template <typename P>
+  template <typename Piter>
+  inline
+  void
+  graph_elt_window<P>::start(Point_Iterator<Piter>& piter_) const
+  {
+    Piter& piter = exact(piter_);
+    piter.first_();
+    if (!piter.adjacent_or_equal_to_p_ref_())
+      next_(piter);
+  }
+
+  template <typename P>
+  template <typename Piter>
+  inline
+  void
+  graph_elt_window<P>::next_(Point_Iterator<Piter>& piter_) const
+  {
+    Piter& piter = exact(piter_);
+    /* FIXME: This is inefficient.  The graph structure should be able
+       to produce the set of adjacent nodes fast.  Boost Graphs
+       probably provides adequates structures to fetch these
+       neighbors in constant time.  */
+    do
+      piter.step_();
+    while (piter.is_valid() && !piter.adjacent_or_equal_to_p_ref_());
   }
 
   template <typename P>

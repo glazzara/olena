@@ -30,6 +30,8 @@
  *  \brief Tests on mln::graph_elt_window.
  */
 
+#include <iostream>
+
 #include <vector>
 
 #include <mln/core/point2d.hh>
@@ -48,6 +50,19 @@ int main()
   /*--------.
   | Graph.  |
   `--------*/
+
+  /* The graph is as follows:
+
+            0 1 2 3 4
+         .-----------
+         |
+       0 |  0       2
+       1 |    \   / |
+       2 |      1   |
+       3 |       \  |
+       4 |        3-4
+
+  */
 
   // Points associated to nodes.
   std::vector<p_t> points;
@@ -76,7 +91,18 @@ int main()
   // Graph psite set.
   p_graph<p_t> pg(g);
   // Graph point site.
-  graph_psite<p_t> psite(pg, 0);
+  graph_psite<p_t> p(pg, 1);
   // ``Sliding'' window of a psite of PG.
-  graph_elt_window<p_t> win;
+  typedef graph_elt_window<p_t> win_t;
+  win_t win;
+
+  mln_fwd_qiter_(win_t) fq(win, p);
+  for_all(fq)
+    std::cout << fq << " ";
+  std::cout << std::endl;
+
+  mln_bkd_qiter_(win_t) bq(win, p);
+  for_all(bq)
+    std::cout << bq << " ";
+  std::cout << std::endl;
 }
