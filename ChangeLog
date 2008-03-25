@@ -1,3 +1,18 @@
+2008-03-25  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	gradation for image valued by integers.
+	* milena/mln/fun/v2v/rgb_to_hsi.hh: Added in milena.
+	* milena/mln/value/hsi.hh: Added in milena.
+	* milena/sandbox/vigouroux/color.cc: New test.
+	* milena/sandbox/vigouroux/color/my_hsi.hh: changed.
+	* milena/sandbox/vigouroux/color/rgb_to_hsi.hh: changed.
+	* milena/sandbox/vigouroux/gradation.hh: New gradation.
+	* milena/sandbox/vigouroux/lap.cc: New gradation test.
+	* milena/sandbox/vigouroux/lap.hh: New lap filter.
+	* milena/sandbox/vigouroux/moyenne.cc: .
+	* milena/tests/fun/v2v/Makefile.am: .
+	* milena/tests/fun/v2v/rgb_hsi_conversion.cc: New test.
+
 2008-03-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update test on rgb/hsi conversion.

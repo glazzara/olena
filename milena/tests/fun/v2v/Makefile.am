@@ -4,6 +4,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS = norm
 
-norm_SOURCES = norm.cc
+norm_SOURCES = norm.cc rgb_hsi_conversion.cc
 
 TESTS = $(check_PROGRAMS)

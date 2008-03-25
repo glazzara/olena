@@ -1,16 +1,10 @@
 
 #include <cmath>
 
-#include <mln/core/image_if_value.hh>
-#include <mln/core/inplace.hh>
-#include <mln/core/w_window2d_int.hh>
-#include <mln/display/show.hh>
-#include <mln/io/ppm/save.hh>
-#include <mln/display/save_and_show.hh>
-#include <mln/level/fill.hh>
+#include <mln/value/rgb8.hh>
 #include <mln/math/round.hh>
 
-#include "my_hsi.hh"
+#include <mln/value/hsi.hh>
 
 
 
