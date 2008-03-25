@@ -1,5 +1,15 @@
 2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Line gradient computation.
+
+	* tests/morpho/lena_line_graph_image_wst1.cc: Fix comments.
+	* tests/morpho/lena_line_graph_image_wst2.cc: Fix the
+	initialization of the watershed image.
+	Reify and move the line gradient computation...
+	* mln/morpho/line_gradient.hh: ...here (new file).
+
+2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix some memory management problems w.r.t. graph-based images.
 
 	* mln/core/p_graph.hh (mln::p_graph<P>::gr_): Handle the

@@ -90,11 +90,8 @@ int main()
   image2d<input_val_t> input;
   io::pgm::load(input, MLN_IMG_DIR "/tiny.pgm");
 
-  /* FIXME: Don't compute a gradient on the image2d input.  Instead,
-     have the values of the line graph image /behaves/ as the gradient
-     of the input, i.e., edges should hold the absolute difference
-     between gray levels.
-   */
+  // In this test, the gradient is directly computed on the input
+  // image, not on the edges of the line graph image.
   image2d<input_val_t> gradient =
     morpho::gradient (input, convert::to_window(c4()));
 
@@ -126,7 +123,7 @@ int main()
     g.add_node (p);
     node_values.push_back (work(p));
     /* FIXME: ``Guessing'' the id of the point just being inserted
-       is bad.  utill:graph<N,E>::add_node should return this
+       is bad.  util:graph<N,E>::add_node should return this
        id.  */
     points[p] = id;
     ++id;

@@ -62,7 +62,7 @@
 #include <mln/core/line_graph_elt_neighborhood.hh>
 #include <mln/core/line_graph_neighborhood_piter.hh>
 
-#include <mln/morpho/gradient.hh>
+#include <mln/morpho/line_gradient.hh>
 #include <mln/morpho/closing_area.hh>
 #include <mln/morpho/meyer_wst.hh>
 #include <mln/level/stretch.hh>
@@ -98,57 +98,13 @@ int main()
   image2d<input_val_t> input;
   io::pgm::load(input, MLN_IMG_DIR "/small.pgm");
 
-  /*-------------.
-  | Line graph.  |
-  `-------------*/
-
-  // FIXME: Inlined conversion, to be reifed into a routine.
-
-  util::graph<point2d> g;
-
-  // Points.
-  /* FIXME: The need for such a structure during the conversion
-     exhibits the lack of a service from util::graph (or a another,
-     missing tool) regarding the retrieval of nodes' ids from
-     points.  */
-  std::map<point2d, util::node_id> points;
-  util::node_id id = 0;
-
-  // Nodes.
-  std::vector<input_val_t> node_values;
-  mln_fwd_piter_(image2d<input_val_t>) p(input.domain());
-  for_all (p)
-  {
-    g.add_node (p);
-    node_values.push_back (input(p));
-    /* FIXME: ``Guessing'' the id of the point just being inserted
-       is bad.  utill:graph<N,E>::add_node should return this
-       id.  */
-    points[p] = id;
-    ++id;
-  }
-
-  // Edges.
-  window2d next_c4_win;
-  next_c4_win.insert(0, 1).insert(1, 0);
-  std::vector<input_val_t> edge_values;
-  mln_fwd_qiter_(window2d) q(next_c4_win, p); 
-  for_all (p)
-    for_all (q)
-    if (input.has(q))
-      {
-	g.add_edge(points[p], points[q]);
-	// The computed value is a kind of norm of the gradient
-	// bewteen P and Q.
-	edge_values.push_back(math::abs(input(p) - input(q)));
-      }
-
-  // Line graph point set.
-  p_line_graph<point2d> plg(g);
+  /*----------------.
+  | Line gradient.  |
+  `----------------*/
 
   // Line graph image.
   typedef line_graph_image<point2d, input_val_t> ima_t;
-  ima_t lg_ima(plg, node_values, edge_values);
+  ima_t lg_ima = morpho::line_gradient(input);
 
   /*-----------------.
   | Simplification.  |
@@ -180,10 +136,8 @@ int main()
   // Reduce the value set to 8-bit.
   typedef int_u8 wst_val_t;
   typedef line_graph_image<point2d, wst_val_t> wst_ima_t;
-  // FIXME: Initializations should not be that complicated.
-  wst_ima_t wshed (plg,
-		   std::vector<wst_val_t>(node_values.size()),
-		   std::vector<wst_val_t>(edge_values.size()));
+  wst_ima_t wshed;
+  initialize(wshed, wshed_full);
   level::stretch(wshed_full, wshed);
 
   /*---------.
@@ -202,7 +156,7 @@ int main()
 		      input.domain().pmax()[1] * 2);
   output_t output(box2d(output_pmin, output_pmax));
   level::fill(output, literal::black);
-  // Reuse the piter on INPUT.
+  mln_fwd_piter_(image2d<input_val_t>) p(input.domain());
   for_all(p)
   {
     // Equivalent of P in OUTPUT.
@@ -214,7 +168,6 @@ int main()
   }
   // Interpolate missing points in OUTPUT.
   mln_piter_(output_t) p_out(output.domain());
-//   mln_niter_(neighb2d) n_out(c4(), p_out);
   for_all(p_out)
   {
     // Process points on even rows and odd columns
