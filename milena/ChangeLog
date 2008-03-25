@@ -1,3 +1,49 @@
+2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix some memory management problems w.r.t. graph-based images.
+
+	* mln/core/p_graph.hh (mln::p_graph<P>::gr_): Handle the
+	underlying graph as a tracked pointer.
+	(mln::p_graph<P>::p_graph(const graph&))
+	(mln::p_graph<P>::nnodes)
+	(mln::p_graph<P>::point_from_id)
+	(mln::p_graph<P>::node1, mln::p_graph<P>::node2)
+	(mln::p_graph<P>::has(const psite&))
+	(mln::p_graph<P>::adjacent_or_equal)
+	(mln::operator==(const p_graph<P>&, const p_graph<P>&)):
+	Adjust.
+	* mln/core/graph_image.hh
+	(mln::internal::data_< graph_image<P, V> >::pg_): Handle the
+	p_graph by copy, as the tracked pointer takes care of the
+	memory management.
+	(mln::graph_image<P, V>::operator()(const graph_psite<P>&)):
+	Adjust operators.
+	* mln/core/graph_psite.hh,
+	* mln/core/graph_window_piter.hh:
+	Adjust.
+	* mln/core/graph_neighborhood_piter.hh: Likewise.
+	(mln::graph_neighborhood_fwd_piter<P>::adjacent_or_equal_to_p_ref_)
+	(mln::graph_neighborhood_bkd_piter<P>::adjacent_or_equal_to_p_ref_):
+	Simplify using mln::p_graph<P>::adjacent_or_equal.
+
+	* mln/core/p_line_graph.hh (mln::p_line_graph<P>::gr_): Handle the
+	underlying graph as a tracked pointer.
+	(mln::p_line_graph<P>::p_line_graph(const graph&))
+	(mln::p_line_graph<P>::nnodes, mln::p_line_graph<P>::nedges)
+	(mln::p_line_graph<P>::has(const psite&))
+	(mln::operator==(const p_line_graph<P>&, const p_line_graph<P>&)):
+	Adjust.
+	* mln/core/line_graph_image.hh
+	(mln::internal::data_< line_graph_image<P, V> >::plg_): Handle the
+	p_line_graph by copy, as the tracked pointer takes care of the
+	memory management.
+	(mln::line_graph_image<P, V>::operator()(const line_graph_psite<P>&)):
+	Adjust operators.
+	* mln/core/line_graph_psite.hh,
+	* mln/core/line_graph_neighborhood_piter.hh,
+	* mln/core/line_graph_window_piter.hh:
+	Adjust.
+
 2008-03-22  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Cleanup of the sandbox.

@@ -32,6 +32,7 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/graph.hh>
+# include <mln/util/tracked_ptr.hh>
 # include <mln/core/line_graph_psite.hh>
 # include <mln/core/p_line_graph_piter.hh>
 
@@ -54,8 +55,13 @@ namespace mln
   {
     typedef util::graph<P> graph;
 
-    /// Construct a line graph psite set from a graph of points.
-    p_line_graph (graph& gr);
+    /// \brief Construct a line graph psite set from a graph of points.
+    ///
+    /// \param gr The graph upon which the line graph psite set is built.
+    ///
+    /// \a gr is \em copied internally, so that the line graph psite
+    /// set is still valid after the initial graph has been removed.
+    p_line_graph (const graph& gr);
 
     /// Point_Site associated type.
     typedef line_graph_psite<P> psite;
@@ -82,7 +88,7 @@ namespace mln
     bool has(const psite& p) const;
 
     // FIXME: Should be private.
-    graph gr_;
+    util::tracked_ptr<graph> gr_;
     // FIXME: (Roland) Is it really useful/needed?
     /* 2007-12-19: It seems so, since graph_image must implement a
        method named bbox().  Now the question is: should each image
@@ -93,8 +99,8 @@ namespace mln
 
   /// \brief Comparison between two mln::p_line_graph's.
   ///
-  /// Two mln::p_line_graph's are considered equal if they have the
-  /// same address.
+  /// Two mln::p_line_graph's are considered equal if they share the
+  /// same graph.
   template <typename P>
   bool
   operator==(const p_line_graph<P>& lhs, const p_line_graph<P>& rhs);
@@ -104,14 +110,14 @@ namespace mln
 
   template<typename P>
   inline
-  p_line_graph<P>::p_line_graph (util::graph<P>& gr)
-    : gr_ (gr)
+  p_line_graph<P>::p_line_graph (const util::graph<P>& gr)
+    : gr_ (new util::graph<P>(gr))
   {
     // FIXME: Warning: if the underlying graph is updated later, this
     // won't be taken into account by this p_line_graph!
     accu::bbox<P> a;
     for (unsigned i = 0; i < nnodes(); ++i)
-      a.take(gr_.node_data(i));
+      a.take(gr_->node_data(i));
     bb_ = a.to_result();
   }
 
@@ -128,7 +134,7 @@ namespace mln
   std::size_t
   p_line_graph<P>::nnodes() const
   {
-    return this->gr_.nnodes();
+    return this->gr_->nnodes();
   }
 
   template<typename P>
@@ -136,7 +142,7 @@ namespace mln
   std::size_t
   p_line_graph<P>::nedges() const
   {
-    return this->gr_.nedges();
+    return this->gr_->nedges();
   }
 
   template<typename P>
@@ -156,7 +162,7 @@ namespace mln
       // Check whether P is compatible with this psite set.
       (&p.plg() == this) &&
       // Check that the edge id of P belongs to the range of valid edge ids.
-      (p.id() < gr_.nedges());
+      (p.id() < gr_->nedges());
   }
 
 
@@ -164,7 +170,7 @@ namespace mln
   bool
   operator==(const p_line_graph<P>& lhs, const p_line_graph<P>& rhs)
   {
-    return &lhs == &rhs;
+    return lhs.gr_.ptr_ == rhs.gr_.ptr_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

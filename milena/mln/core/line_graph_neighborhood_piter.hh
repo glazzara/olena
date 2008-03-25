@@ -258,7 +258,7 @@ namespace mln
     // FIXME: We depend too much on the implementation of util::graph
     // here.  The util::graph should provide the service to abstract
     // these manipulations.
-    return id_ < p_ref_.plg().gr_.nedges();
+    return id_ < p_ref_.plg().gr_->nedges();
   }
 
   template <typename P>
@@ -315,19 +315,20 @@ namespace mln
     // Check whether the iterator is among the neighbors of P_REF_.
     {
       // Paranoid assertion.
-      assert (p_ref_.id() < p_ref_.plg().gr_.nedges());
+      assert (p_ref_.id() < p_ref_.plg().gr_->nedges());
       /* FIXME: We should have a convenient shortcut for these
 	 repetitive accesses to p_ref_.plg().gr_ (e.g., a method gr()
 	 or g() in this class.  */
-      const typename p_line_graph<P>::graph& gr = p_ref_.plg().gr_;
+      const util::tracked_ptr<typename p_line_graph<P>::graph>& gr =
+	p_ref_.plg().gr_;
       // Check whether the edge this iterator points to is adjacent to
       // the one p_ref points to, by comparing their ajacent nodes.
       /* FIXME: This is too low-level.  Yet another service the graph
       // should provide.  */
-      if (gr.edge(id_).n1() == gr.edge(p_ref_.id()).n1() ||
-	  gr.edge(id_).n1() == gr.edge(p_ref_.id()).n2() ||
-	  gr.edge(id_).n2() == gr.edge(p_ref_.id()).n1() ||
-	  gr.edge(id_).n2() == gr.edge(p_ref_.id()).n2())
+      if (gr->edge(id_).n1() == gr->edge(p_ref_.id()).n1() ||
+	  gr->edge(id_).n1() == gr->edge(p_ref_.id()).n2() ||
+	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n1() ||
+	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n2())
 	return true;
     }
 
@@ -413,7 +414,7 @@ namespace mln
     // FIXME: We depend too much on the implementation of util::graph
     // here.  The util::graph should provide the service to abstract
     // these manipulations.
-    return id_ < p_ref_.plg().gr_.nedges();
+    return id_ < p_ref_.plg().gr_->nedges();
   }
 
   template <typename P>
@@ -429,7 +430,7 @@ namespace mln
   void
   line_graph_neighborhood_bkd_piter<P>::start()
   {
-    id_ = p_ref_.plg().gr_.nedges() - 1;
+    id_ = p_ref_.plg().gr_->nedges() - 1;
     if (!adjacent_or_equal_to_p_ref_())
       next_();
     /* FIXME: This is redundant with the end of next_(), but we might
@@ -470,19 +471,20 @@ namespace mln
     // Check whether the iterator is among the neighbors of P_REF_.
     {
       // Paranoid assertion.
-      assert (p_ref_.id() < p_ref_.plg().gr_.nedges());
+      assert (p_ref_.id() < p_ref_.plg().gr_->nedges());
       /* FIXME: We should have a convenient shortcut for these
 	 repetitive accesses to p_ref_.plg().gr_ (e.g., a method gr()
 	 or g() in this class.  */
-      const typename p_line_graph<P>::graph& gr = p_ref_.plg().gr_;
+      const util::tracked_ptr<typename p_line_graph<P>::graph>& gr =
+	p_ref_.plg().gr_;
       // Check whether the edge this iterator points to is adjacent to
       // the one p_ref points to, by comparing their ajacent nodes.
       /* FIXME: This is too low-level.  Yet another service the graph
       // should provide.  */
-      if (gr.edge(id_).n1() == gr.edge(p_ref_.id()).n1() ||
-	  gr.edge(id_).n1() == gr.edge(p_ref_.id()).n2() ||
-	  gr.edge(id_).n2() == gr.edge(p_ref_.id()).n1() ||
-	  gr.edge(id_).n2() == gr.edge(p_ref_.id()).n2())
+      if (gr->edge(id_).n1() == gr->edge(p_ref_.id()).n1() ||
+	  gr->edge(id_).n1() == gr->edge(p_ref_.id()).n2() ||
+	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n1() ||
+	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n2())
 	return true;
     }
 

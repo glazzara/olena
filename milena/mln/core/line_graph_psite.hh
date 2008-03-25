@@ -176,7 +176,7 @@ namespace mln
   bool
   line_graph_psite<P>::is_valid_() const
   {
-    return plg_ && id_ < plg_->gr_.nedges();
+    return plg_ && id_ < plg_->gr_->nedges();
   }
 
   template<typename P>
@@ -228,7 +228,7 @@ namespace mln
   line_graph_psite<P>::first() const
   {
     mln_assertion(is_valid_());
-    return plg().gr_.node_data(plg().gr_.edge(id_).n1());
+    return plg().gr_->node_data(plg().gr_->edge(id_).n1());
   }
 
   template<typename P>
@@ -237,7 +237,7 @@ namespace mln
   line_graph_psite<P>::second() const
   {
     mln_assertion(is_valid_());
-    return plg().gr_.node_data(plg().gr_.edge(id_).n2());
+    return plg().gr_->node_data(plg().gr_->edge(id_).n2());
   }
 
 

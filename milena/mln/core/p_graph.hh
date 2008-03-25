@@ -31,6 +31,7 @@
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/accu/bbox.hh>
+# include <mln/util/tracked_ptr.hh>
 # include <mln/util/graph.hh>
 # include <mln/core/graph_psite.hh>
 # include <mln/core/p_graph_piter.hh>
@@ -50,8 +51,13 @@ namespace mln
   {
     typedef util::graph<P> graph;
 
-    /// Construct a graph psite set from a graph of points.
-    p_graph (graph& gr);
+    /// \brief Construct a graph psite set from a graph of points.
+    ///
+    /// \param gr The graph upon which the graph psite set is built.
+    ///
+    /// \a gr is \em copied internally, so that the graph psite set is
+    /// still valid after the initial graph has been removed.
+    p_graph (const graph& gr);
 
     /// Point_Site associated type.
     typedef graph_psite<P> psite;
@@ -102,7 +108,7 @@ namespace mln
 
     // FIXME: Should be private.
   public:
-    graph gr_;
+    util::tracked_ptr<graph> gr_;
     // FIXME: (Roland) Is it really useful/needed?
     /* 2007-12-19: It seems so, since graph_image must implement a method
        named bbox().  Now the question is: should each image type have a
@@ -114,8 +120,8 @@ namespace mln
 
   /// \brief Comparison between two mln::p_graph's.
   ///
-  /// Two mln::p_graph's are considered equal if they have the
-  /// same address.
+  /// Two mln::p_graph's are considered equal if they share the
+  /// same graph.
   template <typename P>
   bool
   operator==(const p_graph<P>& lhs, const p_graph<P>& rhs);
@@ -125,14 +131,14 @@ namespace mln
 
   template<typename P>
   inline
-  p_graph<P>::p_graph (util::graph<P>& gr)
-    : gr_ (gr)
+  p_graph<P>::p_graph (const util::graph<P>& gr)
+    : gr_ (new util::graph<P>(gr))
   {
     // FIXME: Warning: if the underlying graph is updated later, this
     // won't be taken into account by this p_graph!
     accu::bbox<P> a;
     for (unsigned i = 0; i < npoints(); ++i)
-      a.take(gr_.node_data(i));
+      a.take(gr_->node_data(i));
     bb_ = a.to_result();
   }
 
@@ -149,7 +155,7 @@ namespace mln
   std::size_t
   p_graph<P>::nnodes() const
   {
-    return this->gr_.nnodes();
+    return this->gr_->nnodes();
   }
 
   template<typename P>
@@ -157,7 +163,7 @@ namespace mln
   std::size_t
   p_graph<P>::nedges() const
   {
-    return this->gr_.nedges();
+    return this->gr_->nedges();
   }
 
   template<typename P>
@@ -177,28 +183,28 @@ namespace mln
       // Check whether P is compatible with this psite set.
       (&p.pg() == this) &&
       // Check that the node id of P belongs to the range of valid node ids.
-      (p.id() < gr_.nnodes());
+      (p.id() < gr_->nnodes());
   }
 
   template <typename P>
   const P&
   p_graph<P>::point_from_id(const util::node_id& id) const
   {
-    return this->gr_.node_data(id);
+    return this->gr_->node_data(id);
   }
 
   template <typename P>
   P&
   p_graph<P>::point_from_id(const util::node_id& id)
   {
-    return this->gr_.node_data(id);
+    return this->gr_->node_data(id);
   }
 
   template <typename P>
   const P&
   p_graph<P>::node1(const util::edge_id& e) const
   {
-    util::node_id n1 = this->gr_.edge(e).n1();
+    util::node_id n1 = this->gr_->edge(e).n1();
     return this->point_from_id(n1);
   }
 
@@ -206,7 +212,7 @@ namespace mln
   const P&
   p_graph<P>::node2(const util::edge_id& e) const
   {
-    util::node_id n2 = this->gr_.edge(e).n2();
+    util::node_id n2 = this->gr_->edge(e).n2();
     return this->point_from_id(n2);
   }
 
@@ -225,7 +231,7 @@ namespace mln
   p_graph<P>::adjacent_or_equal(const util::node_id& lhs,
 				const util::node_id& rhs) const
   {
-    // FIXME: Likewise, this is inefficient.
+    // FIXME: This is inefficient.
 
     assert (lhs < this->npoints());
     assert (rhs < this->npoints());
@@ -235,7 +241,7 @@ namespace mln
 
     // Check whether the iterator is among the neighbors of P_REF_.
     typedef std::vector<util::node_id> adjacency_type;
-    const adjacency_type& lhs_neighbs = gr_.nodes()[lhs]->edges;
+    const adjacency_type& lhs_neighbs = gr_->nodes()[lhs]->edges;
 
     adjacency_type::const_iterator j =
       std::find (lhs_neighbs.begin(), lhs_neighbs.end(), rhs);
@@ -264,7 +270,7 @@ namespace mln
   bool
   operator==(const p_graph<P>& lhs, const p_graph<P>& rhs)
   {
-    return &lhs == &rhs;
+    return lhs.gr_.ptr_ == rhs.gr_.ptr_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

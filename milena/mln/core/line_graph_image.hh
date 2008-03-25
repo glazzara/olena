@@ -72,12 +72,7 @@ namespace mln
 
       std::vector<V> node_val_;
       std::vector<V> edge_val_;
-      /* The line graph point set is handled by address, so that we
-         can check the compatibility of images w.r.t. to their point
-         sites.  We could use a safer (and more complex) facility to
-         ensure (memory) equality of line graph point sets, but using
-         addresses is simple and efficient enough for the moment.  */
-      const p_line_graph<P>& plg_;
+      const p_line_graph<P> plg_;
     };
 
   } // end of namespace mln::internal
@@ -273,7 +268,7 @@ namespace mln
   typename line_graph_image<P, V>::rvalue
   line_graph_image<P, V>::operator()(const line_graph_psite<P>& p) const
   {
-    mln_precondition(&p.plg() == &this->data_->plg_);
+    mln_precondition(p.plg() == this->data_->plg_);
     mln_precondition(p.id() < this->data_->edge_val_.size());
     return this->data_->edge_val_[p.id()];
   }
@@ -283,7 +278,7 @@ namespace mln
   typename line_graph_image<P, V>::lvalue
   line_graph_image<P, V>::operator()(const line_graph_psite<P>& p)
   {
-    mln_precondition(&p.plg() == &this->data_->plg_);
+    mln_precondition(p.plg() == this->data_->plg_);
     mln_precondition(p.id() < this->data_->edge_val_.size());
     return this->data_->edge_val_[p.id()];
   }

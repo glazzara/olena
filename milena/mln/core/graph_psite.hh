@@ -139,7 +139,7 @@ namespace mln
   bool
   graph_psite<P>::is_valid_() const
   {
-    return pg_ && id_ < pg_->gr_.nnodes();
+    return pg_ && id_ < pg_->gr_->nnodes();
   }
 
   template<typename P>

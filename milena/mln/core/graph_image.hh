@@ -56,12 +56,7 @@ namespace mln
       data_(const p_graph<P>& g, const std::vector<V>& val);
 
       std::vector<V> val_;
-      /* The graph point set is handled by address, so that we can
-         check the compatibility of images w.r.t. to their point
-         sites.  We could use a safer (and more complex) facility to
-         ensure (memory) equality of line graph point sets, but using
-         addresses is simple and efficient enough for the moment.  */
-      const p_graph<P>& pg_;
+      const p_graph<P> pg_;
     };
 
   } // end of namespace mln::internal
@@ -239,7 +234,7 @@ namespace mln
   typename graph_image<P, V>::rvalue
   graph_image<P, V>::operator()(const graph_psite<P>& p) const
   {
-    mln_precondition(&p.pg() == &this->data_->pg_);
+    mln_precondition(p.pg() == this->data_->pg_);
     mln_precondition(p.id() < this->data_->val_.size());
     return this->data_->val_[p.id()];
   }
@@ -249,7 +244,7 @@ namespace mln
   typename graph_image<P, V>::lvalue
   graph_image<P, V>::operator()(const graph_psite<P>& p)
   {
-    mln_precondition(&p.pg() == &this->data_->pg_);
+    mln_precondition(p.pg() == this->data_->pg_);
     mln_precondition(p.id() < this->data_->val_.size());
     return this->data_->val_[p.id()];
   }
