@@ -43,11 +43,10 @@
 
 # include <mln/trait/ch_value.hh>
 
+// FIXME: See below.
 # include <mln/util/greater_psite.hh>
 # include <mln/morpho/includes.hh>
-// FIXME: See below.
-// # include <mln/labeling/regional_minima.hh>
-# include <mln/morpho/extrema_components.hh>
+# include <mln/labeling/regional_minima.hh>
 
 
 
@@ -120,13 +119,15 @@ namespace mln
 	 limitation.  As soon as labeling::regional_minima work, get rid of
 	 - mln/morpho/level_components.hh, and
 	 - mln/morpho/extrema_components.hh.  */
-//    mln_ch_value(I, marker) markers =
-// 	labeling::regional_minima (input, nbh, nbasins);
       mln_ch_value(I, marker) markers =
-	minima_components(input, convert::to_window(nbh), nbasins); 
+	labeling::regional_minima (input, nbh, nbasins);
+
+      typedef mln_psite(I) psite;
 
       // Ordered queue.
-      typedef mln_psite(I) psite;
+      /* FIXME: Milena probably already provides an ordered queue
+	 facility via the mln::p_priority_queue class.  Try to use it
+	 instead, and get rid of mln/util/greater_psite.hh.  */
       typedef
 	std::priority_queue< psite, std::vector<psite>, util::greater_psite<I> >
 	ordered_queue_type;

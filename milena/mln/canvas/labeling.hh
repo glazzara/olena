@@ -59,11 +59,11 @@ namespace mln
       typedef typename F::S S;
 
       // Local type.
-      typedef mln_psite(I) point;
+      typedef mln_psite(I) psite;
 
       // Auxiliary data.
       mln_ch_value(I, bool)  deja_vu;
-      mln_ch_value(I, point) parent;
+      mln_ch_value(I, psite) parent;
 
       // Output.
       mln_ch_value(I, L) output;
@@ -82,16 +82,18 @@ namespace mln
 
       // Auxiliary methods.
 
-      void make_set(const point& p);
+      void make_set(const psite& p);
 
-      bool is_root(const point& p) const;
+      bool is_root(const psite& p) const;
 
-      point find_root(const point& x);
+      psite find_root(const psite& x);
 
-      void do_union(const point& n, const point& p);
+      void do_union(const psite& n, const psite& p);
 
     };
 
+
+    // Fastest version.
 
     template <typename F>
     struct labeling_fastest
@@ -131,6 +133,10 @@ namespace mln
     };
 
 # ifndef MLN_INCLUDE_ONLY
+
+    /*-------------------.
+    | canvas::labeling.  |
+    `-------------------*/
 
     template <typename F>
     labeling<F>::labeling(F& f)
@@ -204,7 +210,7 @@ namespace mln
 
     template <typename F>
     void
-    labeling<F>::make_set(const point& p)
+    labeling<F>::make_set(const psite& p)
     {
       parent(p) = p;
       f.init_attr(p);
@@ -212,14 +218,14 @@ namespace mln
 
     template <typename F>
     bool
-    labeling<F>::is_root(const point& p) const
+    labeling<F>::is_root(const psite& p) const
     {
       return parent(p) == p;
     }
 
     template <typename F>
-    typename labeling<F>::point
-    labeling<F>::find_root(const point& x)
+    typename labeling<F>::psite
+    labeling<F>::find_root(const psite& x)
     {
       if (parent(x) == x)
 	return x;
@@ -229,15 +235,20 @@ namespace mln
 
     template <typename F>
     void
-    labeling<F>::do_union(const point& n, const point& p)
+    labeling<F>::do_union(const psite& n, const psite& p)
     {
-      point r = find_root(n);
+      psite r = find_root(n);
       if (r != p)
 	{
 	  parent(r) = p;
 	  f.merge_attr(r, p);
 	}
     }
+
+
+    /*---------------------------.
+    | canvas::labeling_fastest.  |
+    `---------------------------*/
 
     template <typename F>
     labeling_fastest<F>::labeling_fastest(F& f)

@@ -1,5 +1,16 @@
 2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have Meyer's WST depend less on the old code base.
+
+	* mln/morpho/meyer_wst.hh: Use labeling::regional_minima instead
+	of morpho::minima_components.
+	* mln/morpho/extrema_components.hh,
+	* mln/morpho/level_components.hh:
+	Remove.
+	* mln/canvas/labeling.hh: s/point/psite/.
+
+2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix validity checks on iterators on graph neighborhoods and windows.
 
 	* mln/core/graph_psite.hh
