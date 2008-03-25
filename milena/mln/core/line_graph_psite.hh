@@ -89,9 +89,8 @@ namespace mln
     /// Return the id of the second associated vertex.
     util::node_id second_id() const;
 
-  private:
     /// Is this psite valid?
-    bool is_valid_() const;
+    bool is_valid() const;
 
   private:
     /// The p_line_graph this point site belongs to.
@@ -179,7 +178,7 @@ namespace mln
   template<typename P>
   inline
   bool
-  line_graph_psite<P>::is_valid_() const
+  line_graph_psite<P>::is_valid() const
   {
     return plg_ && id_ < plg_->gr_->nedges();
   }
@@ -206,7 +205,7 @@ namespace mln
   mln_coord(P)
   line_graph_psite<P>::operator[](unsigned i) const
   {
-    mln_assertion(is_valid_());
+    mln_assertion(is_valid());
     return to_point()[i];
   }
 
@@ -232,7 +231,7 @@ namespace mln
   P
   line_graph_psite<P>::first() const
   {
-    mln_assertion(is_valid_());
+    mln_assertion(is_valid());
     return plg().gr_->node_data(first_id());
   }
 
@@ -241,7 +240,7 @@ namespace mln
   P
   line_graph_psite<P>::second() const
   {
-    mln_assertion(is_valid_());
+    mln_assertion(is_valid());
     return plg().gr_->node_data(second_id());
   }
 
@@ -251,7 +250,7 @@ namespace mln
   util::node_id
   line_graph_psite<P>::first_id() const
   {
-    mln_assertion(is_valid_());
+    mln_assertion(is_valid());
     return plg().gr_->edge(id_).n1();
   }
 
@@ -260,7 +259,7 @@ namespace mln
   util::node_id
   line_graph_psite<P>::second_id() const
   {
-    mln_assertion(is_valid_());
+    mln_assertion(is_valid());
     return plg().gr_->edge(id_).n2();
   }
 

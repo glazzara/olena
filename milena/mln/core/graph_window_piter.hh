@@ -228,7 +228,7 @@ namespace mln
   bool
   graph_window_fwd_piter<P>::is_valid() const
   {
-    return id_ < p_ref_.pg().npoints();
+    return p_ref_.is_valid() && id_ < p_ref_.pg().npoints();
   }
 
   template <typename P>
@@ -351,7 +351,7 @@ namespace mln
   bool
   graph_window_bkd_piter<P>::is_valid() const
   {
-    return id_ < p_ref_.pg().npoints();
+    return p_ref_.is_valid() && id_ < p_ref_.pg().npoints();
   }
 
   template <typename P>

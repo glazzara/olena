@@ -76,9 +76,8 @@ namespace mln
     /// Return the node id of this point site.
     util::node_id id() const;
 
-  private:
     /// Is this psite valid?
-    bool is_valid_() const;
+    bool is_valid() const;
 
   private:
     /// The p_graph this point site belongs to.
@@ -137,7 +136,7 @@ namespace mln
   template<typename P>
   inline
   bool
-  graph_psite<P>::is_valid_() const
+  graph_psite<P>::is_valid() const
   {
     return pg_ && id_ < pg_->gr_->nnodes();
   }
@@ -163,7 +162,7 @@ namespace mln
   mln_coord(P)
   graph_psite<P>::operator[](unsigned i) const
   {
-    mln_assertion(is_valid_());
+    mln_assertion(is_valid());
     return to_point()[i];
   }
 

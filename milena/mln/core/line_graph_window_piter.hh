@@ -252,7 +252,7 @@ namespace mln
     // FIXME: We depend too much on the implementation of util::graph
     // here.  The util::graph should provide the service to abstract
     // these manipulations.
-    return id_ < p_ref_.plg().gr_->nedges();
+    return p_ref_.is_valid() && id_ < p_ref_.plg().gr_->nedges();
   }
 
   template <typename P>
@@ -407,7 +407,7 @@ namespace mln
     // FIXME: We depend too much on the implementation of util::graph
     // here.  The util::graph should provide the service to abstract
     // these manipulations.
-    return id_ < p_ref_.plg().gr_->nedges();
+    return p_ref_.is_valid() && id_ < p_ref_.plg().gr_->nedges();
   }
 
   template <typename P>

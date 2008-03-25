@@ -1,5 +1,34 @@
 2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix validity checks on iterators on graph neighborhoods and windows.
+
+	* mln/core/graph_psite.hh
+	(mln::graph_psite<P>::is_valid_): Set it public.
+	Rename as...
+	(mln::graph_psite<P>::is_valid): ...this.
+	Adjust callers.
+	* mln/core/graph_neighborhood_piter.hh
+	(mln::graph_neighborhood_fwd_piter<P>::is_valid):
+	(mln::graph_neighborhood_bkd_piter<P>::is_valid):
+	* mln/core/graph_window_piter.hh
+	(mln::graph_window_fwd_piter<P>::is_valid):
+	(mln::graph_window_bkd_piter<P>::is_valid):
+	Use mln::graph_psite<P>::is_valid.
+	* mln/core/line_graph_psite.hh
+	(mln::line_graph_psite<P>::is_valid_): Set it public.
+	Rename as...
+	(mln::line_graph_psite<P>::is_valid): ...this.
+	Adjust callers.
+	* mln/core/line_graph_neighborhood_piter.hh
+	(mln::line_graph_neighborhood_fwd_piter<P>::is_valid):
+	(mln::line_graph_neighborhood_bkd_piter<P>::is_valid):
+	* mln/core/line_graph_window_piter.hh
+	(mln::line_graph_window_fwd_piter<P>::is_valid):
+	(mln::line_graph_window_bkd_piter<P>::is_valid):
+	Use mln::line_graph_psite<P>::is_valid.
+
+2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
+
 	Area closing/opening for line graph images based on adjacent
 	vertices.
 
