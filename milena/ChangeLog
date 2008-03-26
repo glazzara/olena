@@ -1,5 +1,41 @@
 2008-03-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have piters on graph neighborhoods actually use the neighborhood.
+
+	* mln/core/graph_neighborhood_piter.hh
+	(mln::graph_neighborhood_fwd_piter<P, W>)
+	(mln::graph_neighborhood_bkd_piter<P, W>):
+	Have these class templates take a neighborhood type as second,
+	additional parameter.
+	(mln::graph_neighborhood_fwd_piter<P, W>::nbh_)
+	(mln::graph_neighborhood_bkd_piter<P, W>::nbh_):
+	New attributes.
+	(mln::graph_neighborhood_fwd_piter<P, W>::graph_neighborhood_fwd_piter)
+	(mln::graph_neighborhood_bkd_piter<P, W>::graph_neighborhood_bkd_piter):
+	Adjust ctors.
+	(mln::graph_neighborhood_fwd_piter<P, W>::first_)
+	(mln::graph_neighborhood_fwd_piter<P, W>::step_)
+	(mln::graph_neighborhood_bkd_piter<P, W>::first_)
+	(mln::graph_neighborhood_bkd_piter<P, W>::step_):
+	New methods.
+	(mln::graph_neighborhood_fwd_piter<P, W>::start)
+	(mln::graph_neighborhood_fwd_piter<P, W>::next_)
+	(mln::graph_neighborhood_bkd_piter<P, W>::start)
+	(mln::graph_neighborhood_bkd_piter<P, W>::next_):
+	Delegate the body of the routine to the neighborhood.
+	* mln/core/graph_elt_neighborhood.hh
+	(mln::graph_elt_neighborhood<P>::fwd_qiter)
+	(mln::graph_elt_neighborhood<P>::bkd_qiter):
+	Adjust typedefs.
+	(mln::graph_elt_neighborhood<P>::psite):
+	New typedef.
+	(mln::graph_elt_neighborhood<P>::start)
+	(mln::graph_elt_neighborhood<P>::next_):
+	New methods.
+	* tests/core/graph_elt_neighborhood.cc: New test.
+
+2008-03-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix a bug in graph_neighborhood_bkd_piter.
 
 	* mln/core/graph_neighborhood_piter.hh

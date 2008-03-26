@@ -50,8 +50,8 @@
 namespace mln
 {
   // Fwd decls.
-  template <typename P> class graph_neighborhood_fwd_piter;
-  template <typename P> class graph_neighborhood_bkd_piter;
+  template <typename P, typename W> class graph_neighborhood_fwd_piter;
+  template <typename P, typename W> class graph_neighborhood_bkd_piter;
 
 
   /*! \brief Elementary neighborhood on graph class.
@@ -67,28 +67,68 @@ namespace mln
   public:
     /// Associated types.
     /// \{
-    /// The type of point stored into the neighborhood.
-    // FIXME: Is this right, if we consider that this neighborhood stores
-    // psites, not points?
+    /// The type of point corresponding to the neighborhood.
     typedef P point;
+    /// The type of psite corresponding to the neighborhood.
+    typedef graph_psite<P> psite;
 
     // FIXME: This is a dummy value.
     typedef void dpoint;
 
-    /*! \brief Point_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the ordering of delta-points.
-     */
-    typedef graph_neighborhood_fwd_piter<P> fwd_qiter;
+    /// \brief Point_Iterator type to browse the psites of the
+    /// neighborhood w.r.t. the ordering of vertices.
+    typedef graph_neighborhood_fwd_piter<P, self_> fwd_niter;
 
-    /*! \brief Point_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the reverse ordering of delta-points.
-     */
-    typedef graph_neighborhood_bkd_piter<P> bkd_qiter;
+    /// \brief Point_Iterator type to browse the psites of the
+    /// neighborhood w.r.t. the ordering of vertices.
+    typedef graph_neighborhood_bkd_piter<P, self_> bkd_niter;
 
-    /// The default qiter type.
-    typedef fwd_qiter qiter;
+    /// The default niter type.
+    typedef fwd_niter niter;
+    /// \}
+
+    /// Services for iterators.
+    /// \{
+    /// Move \a piter to the beginning of the iteration on this neighborhood.
+    template <typename Piter>
+    void start(Point_Iterator<Piter>& piter) const;
+    /// Move \a piter to the next site on this neighborhood.
+    template <typename Piter>
+    void next_(Point_Iterator<Piter>& piter) const;
     /// \}
   };
+
+# ifndef MLN_INCLUDE_ONLY
+
+  template <typename P>
+  template <typename Piter>
+  inline
+  void
+  graph_elt_neighborhood<P>::start(Point_Iterator<Piter>& piter_) const
+  {
+    Piter& piter = exact(piter_);
+    piter.first_();
+    if (!piter.adjacent_or_equal_to_p_ref_())
+      next_(piter);
+  }
+
+  template <typename P>
+  template <typename Piter>
+  inline
+  void
+  graph_elt_neighborhood<P>::next_(Point_Iterator<Piter>& piter_) const
+  {
+    Piter& piter = exact(piter_);
+    /* FIXME: This is inefficient.  The graph structure should be able
+       to produce the set of adjacent nodes fast.  Boost Graphs
+       probably provides adequates structures to fetch these
+       neighbors in constant time.  */
+    do
+      piter.step_();
+    while (piter.is_valid() && !piter.adjacent_or_equal_to_p_ref_());
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

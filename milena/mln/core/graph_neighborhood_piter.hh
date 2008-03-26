@@ -57,16 +57,15 @@ namespace mln
   template <typename P> class graph_psite;
 
 
-  /*----------------------------------.
-  | graph_neighborhood_fwd_piter<P>.  |
-  `----------------------------------*/
+  /*-------------------------------------.
+  | graph_neighborhood_fwd_piter<P, N>.  |
+  `-------------------------------------*/
 
-  /// \brief Forward iterator on graph neighborhood.
-  template <typename P>
+  template <typename P, typename N>
   class graph_neighborhood_fwd_piter :
-    public Point_Iterator< graph_neighborhood_fwd_piter<P> > // or Iterator<...>?
+    public Point_Iterator< graph_neighborhood_fwd_piter<P, N> >
   {
-    typedef graph_neighborhood_fwd_piter<P> self_;
+    typedef graph_neighborhood_fwd_piter<P, N> self_;
     typedef Point_Iterator< self_ > super_;
 
   public:
@@ -83,7 +82,7 @@ namespace mln
   public:
     /// Construction.
     /// \{
-    template <typename N, typename Pref>
+    template <typename Pref>
     graph_neighborhood_fwd_piter(const N& nbh, const Point_Site<Pref>& p_ref);
     /// \}
 
@@ -115,11 +114,23 @@ namespace mln
     /// Read-only access to the \a i-th coordinate.
     coord operator[](unsigned i) const;
 
-  private:
-    /// The ``central'' psite of the neighborhood.
-    const psite& p_ref_;
+    /// Internals, used by the neighborhood.
+    /// \{
+  public:
+    /// Set the iterator to the first site of the graph.
+    void first_();
+    /// Advance the position of the iterator by one step.
+    void step_();
+
     /// An internal iterator on the set of nodes of the underlying graph.
     util::node_id id_;
+    /// \}
+
+  private:
+    /// The neighborhood.
+    const N& nbh_;
+    /// The ``central'' psite of the neighborhood.
+    const psite& p_ref_;
     /// The psite corresponding to this iterator.
     psite psite_;
     /// The point corresponding to this iterator.
@@ -127,16 +138,15 @@ namespace mln
   };
 
 
-  /*----------------------------------.
-  | graph_neighborhood_bkd_piter<P>.  |
-  `----------------------------------*/
+  /*-------------------------------------.
+  | graph_neighborhood_bkd_piter<P, N>.  |
+  `-------------------------------------*/
 
-  /// \brief Backward iterator on graph neighborhood.
-  template <typename P>
+  template <typename P, typename N>
   class graph_neighborhood_bkd_piter :
-    public Point_Iterator< graph_neighborhood_bkd_piter<P> > // or Iterator<...>?
+    public Point_Iterator< graph_neighborhood_bkd_piter<P, N> >
   {
-    typedef graph_neighborhood_bkd_piter<P> self_;
+    typedef graph_neighborhood_bkd_piter<P, N> self_;
     typedef Point_Iterator< self_ > super_;
 
   public:
@@ -153,7 +163,7 @@ namespace mln
   public:
     /// Construction.
     /// \{
-    template <typename N, typename Pref>
+    template <typename Pref>
     graph_neighborhood_bkd_piter(const N& nbh, const Point_Site<Pref>& p_ref);
     /// \}
 
@@ -185,11 +195,23 @@ namespace mln
     /// Read-only access to the \a i-th coordinate.
     coord operator[](unsigned i) const;
 
-  private:
-    /// The ``central'' psite of the neighborhood.
-    const psite& p_ref_;
+    /// Internals, used by the neighborhood.
+    /// \{
+  public:
+    /// Set the iterator to the first site of the graph.
+    void first_();
+    /// Advance the position of the iterator by one step.
+    void step_();
+
     /// An internal iterator on the set of nodes of the underlying graph.
     util::node_id id_;
+    /// \}
+
+  private:
+    /// The neighborhood.
+    const N& nbh_;
+    /// The ``central'' psite of the neighborhood.
+    const psite& p_ref_;
     /// The psite corresponding to this iterator.
     psite psite_;
     /// The point corresponding to this iterator.
@@ -200,17 +222,17 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  /*----------------------------------.
-  | graph_neighborhood_fwd_piter<P>.  |
-  `----------------------------------*/
+  /*-------------------------------------.
+  | graph_neighborhood_fwd_piter<P, N>.  |
+  `-------------------------------------*/
 
-  // FIXME: Currently, argument nbh is ignored.
-  template <typename P>
-  template <typename N, typename Pref>
+  template <typename P, typename N>
+  template <typename Pref>
   inline
-  graph_neighborhood_fwd_piter<P>::graph_neighborhood_fwd_piter(const N& /* nbh */,
-								const Point_Site<Pref>& p_ref)
-    : p_ref_(exact(p_ref).to_psite()),
+  graph_neighborhood_fwd_piter<P, N>::graph_neighborhood_fwd_piter(const N& nbh,
+								   const Point_Site<Pref>& p_ref)
+    : nbh_(exact(nbh)),
+      p_ref_(exact(p_ref).to_psite()),
       // Initialize psite_ to a dummy value.
       psite_(),
       p_()
@@ -219,10 +241,10 @@ namespace mln
     invalidate();
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   bool
-  graph_neighborhood_fwd_piter<P>::is_valid() const
+  graph_neighborhood_fwd_piter<P, N>::is_valid() const
   {
     // FIXME: We depend too much on the implementation of util::graph
     // here.  The util::graph should provide the service to abstract
@@ -230,60 +252,63 @@ namespace mln
     return p_ref_.is_valid() && id_ < p_ref_.pg().gr_->nnodes();
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   void
-  graph_neighborhood_fwd_piter<P>::invalidate()
+  graph_neighborhood_fwd_piter<P, N>::invalidate()
   {
-    id_ = -1
+    id_ = -1;
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   void
-  graph_neighborhood_fwd_piter<P>::start()
+  graph_neighborhood_fwd_piter<P, N>::start()
+  {
+    nbh_.start(*this);
+    if (is_valid())
+      update_();
+  }
+
+  template <typename P, typename N>
+  inline
+  void
+  graph_neighborhood_fwd_piter<P, N>::next_()
+  {
+    nbh_.next_(*this);
+    if (is_valid())
+      update_();
+  }
+
+  template <typename P, typename N>
+  inline
+  void
+  graph_neighborhood_fwd_piter<P, N>::first_()
   {
     id_ = 0;
-    if (!adjacent_or_equal_to_p_ref_())
-      next_();
-    /* FIXME: This is redundant with the end of next_(), but we might
-       change the implementation of start_() when we'll fix it later,
-       and no longer use next_().  */
-    if (is_valid())
-      update_();
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   void
-  graph_neighborhood_fwd_piter<P>::next_()
+  graph_neighborhood_fwd_piter<P, N>::step_()
   {
-    /* FIXME: This is inefficient.  The graph structure should be able
-       to produce the set of adjacent nodes fast.  Boost Graphs
-       probably provides adequates structures to fetch these
-       neighbors in constant time.  */
-    /* FIXME: Moreover, the behavior of next shall depend on the
-       neighborhood, which is not the case now!  (Currently, next_() behaves
-       as nbh was always an elementary neighborhood.) */
-    do
-      ++id_;
-    while (is_valid() && !adjacent_or_equal_to_p_ref_());
-    if (is_valid())
-      update_();
+    ++id_;
   }
 
-  template <typename P>
+
+  template <typename P, typename N>
   inline
   bool
-  graph_neighborhood_fwd_piter<P>::adjacent_or_equal_to_p_ref_() const
+  graph_neighborhood_fwd_piter<P, N>::adjacent_or_equal_to_p_ref_() const
   {
     return p_ref_.pg().adjacent_or_equal(p_ref_.id(), id_);
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   void
-  graph_neighborhood_fwd_piter<P>::update_()
+  graph_neighborhood_fwd_piter<P, N>::update_()
   {
     // Update psite_.
     psite_ = graph_psite<P>(p_ref_.pg(), id_);
@@ -291,51 +316,51 @@ namespace mln
     p_ = p_ref_.pg().gr_->node_data(id_);
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   const P&
-  graph_neighborhood_fwd_piter<P>::to_point() const
+  graph_neighborhood_fwd_piter<P, N>::to_point() const
   {
     return p_;
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   const graph_psite<P>&
-  graph_neighborhood_fwd_piter<P>::to_psite() const
+  graph_neighborhood_fwd_piter<P, N>::to_psite() const
   {
     return psite_;
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
-  graph_neighborhood_fwd_piter<P>::operator graph_psite<P>() const
+  graph_neighborhood_fwd_piter<P, N>::operator graph_psite<P>() const
   {
     mln_precondition(is_valid());
     return psite_;
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   mln_coord(P)
-  graph_neighborhood_fwd_piter<P>::operator[](unsigned i) const
+  graph_neighborhood_fwd_piter<P, N>::operator[](unsigned i) const
   {
     assert(i < dim);
     return p_[i];
   }
 
 
-  /*----------------------------------.
-  | graph_neighborhood_bkd_piter<P>.  |
-  `----------------------------------*/
+  /*-------------------------------------.
+  | graph_neighborhood_bkd_piter<P, N>.  |
+  `-------------------------------------*/
 
-  // FIXME: Currently, argument nbh is ignored.
-  template <typename P>
-  template <typename N, typename Pref>
+  template <typename P, typename N>
+  template <typename Pref>
   inline
-  graph_neighborhood_bkd_piter<P>::graph_neighborhood_bkd_piter(const N& /* nbh */,
-								const Point_Site<Pref>& p_ref)
-    : p_ref_(exact(p_ref).to_psite()),
+  graph_neighborhood_bkd_piter<P, N>::graph_neighborhood_bkd_piter(const N& nbh,
+								   const Point_Site<Pref>& p_ref)
+    : nbh_(nbh),
+      p_ref_(exact(p_ref).to_psite()),
       // Initialize psite_ to a dummy value.
       psite_(),
       p_()
@@ -344,10 +369,10 @@ namespace mln
     invalidate();
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   bool
-  graph_neighborhood_bkd_piter<P>::is_valid() const
+  graph_neighborhood_bkd_piter<P, N>::is_valid() const
   {
     // FIXME: We depend too much on the implementation of util::graph
     // here.  The util::graph should provide the service to abstract
@@ -355,60 +380,63 @@ namespace mln
     return p_ref_.is_valid() && id_ < p_ref_.pg().gr_->nnodes();
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   void
-  graph_neighborhood_bkd_piter<P>::invalidate()
+  graph_neighborhood_bkd_piter<P, N>::invalidate()
   {
     id_ = -1;
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   void
-  graph_neighborhood_bkd_piter<P>::start()
+  graph_neighborhood_bkd_piter<P, N>::start()
+  {
+    nbh_.start(*this);
+    if (is_valid())
+      update_();
+  }
+
+  template <typename P, typename N>
+  inline
+  void
+  graph_neighborhood_bkd_piter<P, N>::next_()
+  {
+    nbh_.next_(*this);
+    if (is_valid())
+      update_();
+  }
+
+  template <typename P, typename N>
+  inline
+  void
+  graph_neighborhood_bkd_piter<P, N>::first_()
   {
     id_ = p_ref_.pg().gr_->nnodes() - 1;
-    if (!adjacent_or_equal_to_p_ref_())
-      next_();
-    /* FIXME: This is redundant with the end of next_(), but we might
-       change the implementation of start_() when we'll fix it later,
-       and no longer use next_().  */
-    if (is_valid())
-      update_();
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   void
-  graph_neighborhood_bkd_piter<P>::next_()
+  graph_neighborhood_bkd_piter<P, N>::step_()
   {
-    /* FIXME: This is inefficient.  The graph structure should be able
-       to produce the set of adjacent nodes fast.  Boost Graphs
-       probably provides adequates structures to fetch these
-       neighbors in constant time.  */
-    /* FIXME: Moreover, the behavior of next shall depend on the
-       neighborhood, which is not the case now!  (Currently, next_() behaves
-       as nbh was always an elementary neighborhood.) */
-    do
-      --id_;
-    while (is_valid() && !adjacent_or_equal_to_p_ref_());
-    if (is_valid())
-      update_();
+    --id_;
   }
 
-  template <typename P>
+
+  template <typename P, typename N>
   inline
   bool
-  graph_neighborhood_bkd_piter<P>::adjacent_or_equal_to_p_ref_() const
+  graph_neighborhood_bkd_piter<P, N>::adjacent_or_equal_to_p_ref_() const
   {
     return p_ref_.pg().adjacent_or_equal(p_ref_.id(), id_);
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   void
-  graph_neighborhood_bkd_piter<P>::update_()
+  graph_neighborhood_bkd_piter<P, N>::update_()
   {
     // Update psite_.
     psite_ = graph_psite<P>(p_ref_.pg(), id_);
@@ -416,34 +444,34 @@ namespace mln
     p_ = p_ref_.pg().gr_->node_data(id_);
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   const P&
-  graph_neighborhood_bkd_piter<P>::to_point() const
+  graph_neighborhood_bkd_piter<P, N>::to_point() const
   {
     return p_;
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   const graph_psite<P>&
-  graph_neighborhood_bkd_piter<P>::to_psite() const
+  graph_neighborhood_bkd_piter<P, N>::to_psite() const
   {
     return psite_;
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
-  graph_neighborhood_bkd_piter<P>::operator graph_psite<P>() const
+  graph_neighborhood_bkd_piter<P, N>::operator graph_psite<P>() const
   {
     mln_precondition(is_valid());
     return psite_;
   }
 
-  template <typename P>
+  template <typename P, typename N>
   inline
   mln_coord(P)
-  graph_neighborhood_bkd_piter<P>::operator[](unsigned i) const
+  graph_neighborhood_bkd_piter<P, N>::operator[](unsigned i) const
   {
     assert(i < dim);
     return p_[i];
