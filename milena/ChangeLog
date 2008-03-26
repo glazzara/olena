@@ -1,3 +1,10 @@
+2008-03-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix a bug in graph_neighborhood_bkd_piter.
+
+	* mln/core/graph_neighborhood_piter.hh
+	(mln::graph_neighborhood_bkd_piter<P>::start): Typo.
+
 2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have piters on graph windows actually use the window.

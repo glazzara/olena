@@ -368,7 +368,7 @@ namespace mln
   void
   graph_neighborhood_bkd_piter<P>::start()
   {
-    id_ = p_ref_.plg().gr_->nnodes() - 1;
+    id_ = p_ref_.pg().gr_->nnodes() - 1;
     if (!adjacent_or_equal_to_p_ref_())
       next_();
     /* FIXME: This is redundant with the end of next_(), but we might
