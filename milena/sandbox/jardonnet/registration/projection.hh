@@ -18,7 +18,7 @@ namespace mln
                  p_array<P>& Xk,
                  float& err)
     {
-      assert(Ck.npoints() == Xk.npoints());
+      //      assert(Ck.npoints() == Xk.npoints());
 
       err = 0.f;
 
@@ -37,7 +37,8 @@ namespace mln
                   best_x = Xj;
                 }
             }
-          Xk.hook_()[i] = algebra::to_point<P>(best_x);
+          if (i < Xk.npoints()) // FIXME:double hack
+            Xk.hook_()[i] = algebra::to_point<P>(best_x);
           err += best_d;
         }
       err /= Ck.npoints();

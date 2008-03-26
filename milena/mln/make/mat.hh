@@ -71,7 +71,7 @@ namespace mln
     {
       algebra::mat<n,1,T> tmp;
       for (unsigned i = 0; i < n; i++)
-        tmp(i,1) = v[i];
+        tmp(i,0) = v[i];
       return tmp;
     }
 

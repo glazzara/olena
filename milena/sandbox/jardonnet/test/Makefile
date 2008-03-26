@@ -16,6 +16,9 @@ gau:
 icp:
 	g++ icp.cc $(FLAG) -o '+icp.exe'
 
+icp++:
+	g++ icp.cc -I../../.. -O3 -o '+icp.exe'
+
 run:
 	time ./+sub.exe . . ; time ./+gsub.exe . .
 

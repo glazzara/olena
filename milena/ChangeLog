@@ -1,3 +1,16 @@
+2008-03-26  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: draft improvment.
+
+	* sandbox/jardonnet/test/Makefile: -O3 version.
+	* sandbox/jardonnet/test/icp.cc: image loading.
+	* sandbox/jardonnet/registration/quat7.hh: Update.
+	* sandbox/jardonnet/registration/chamfer.hh: Etienne's.
+	* sandbox/jardonnet/registration/cloud.hh: Correction.
+	* sandbox/jardonnet/registration/icp.hh: Update.
+	* sandbox/jardonnet/registration/projection.hh: To be removed.
+	* sandbox/jardonnet/registration/quat/rotation.hh: s/3/n/.
+
 2008-03-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	Enable tests/core/graph_elt_neighborhood.

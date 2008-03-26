@@ -1,16 +1,22 @@
 #include <mln/core/image3d.hh>
 
-#include <mln/io/ppm/load.hh>
-#include <mln/io/ppm/save.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/io/pbm/save.hh>
 
 #include <sandbox/jardonnet/registration/icp.hh>
 
-int main(int, char*)
+int main(int, char* argv[])
 {
   using namespace mln;
 
-  image3d< value::rgb8 > img;
-  
-  registration::icp(img,img);
+  image2d< bool > img1;
+  image2d< bool > img2;
+
+  io::pbm::load(img1, argv[1]);
+  io::pbm::load(img2, argv[2]);  
+
+  image2d< bool > res(img1.domain());
+
+  io::pbm::save(registration::icp(img1,img2,res), "./+registred.pbm");
 }
 

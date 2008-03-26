@@ -35,9 +35,14 @@ namespace mln
     assert(q.is_unit());
     algebra::vec<n,float>
       tmp = make::vec(rand(), rand(), rand()),
-      p = tmp / norm::l2(tmp),
+      p;
+    float nl2= norm::l2(tmp);
+    if(nl2 != 0)
+      p = tmp / nl2;
+    algebra::vec<n,float>
       p_rot_1 = rotate(q, p),
       p_rot_2 = mat * p;
+    
     return about_equal(norm::l2(p_rot_1 - p_rot_2), 0.f);
   }
 

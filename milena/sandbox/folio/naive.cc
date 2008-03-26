@@ -54,8 +54,9 @@ namespace mln
      *
      * \fixme Use instead of R the result type of F::operator().
      */
-    template <typename I, typename F, typename R>
-    mln_ch_value(I, R)
+    template <typename I, typename F>
+    inline
+    mln_ch_value(I, typename F::ret)
     naive(const Image<I>& input_, F& fun_);
 
 
@@ -63,15 +64,15 @@ namespace mln
 
     // Facade.
 
-    template <typename I, typename F, typename R>
+    template <typename I, typename F>
     inline
-    mln_ch_value(I, R)
+    mln_ch_value(I, typename F::ret)
     naive(const Image<I>& input_, F& fun_)
     {
       const I& input = exact(input_);
       mln_precondition(input.has_data());
 
-      mln_ch_value(I, R) output;
+      mln_ch_value(I, typename F::ret) output;
       initialize(input.domain());
 
       mln_piter(I) p(input.domain());
@@ -82,7 +83,7 @@ namespace mln
 	else
 	{
 	  // p is in the background so the distance has to be computed.
-	  accu::min_<R> min;
+	  accu::min_<typename F::ret> min;
           min.init();
 
           mln_piter(I) q(input.domain());
@@ -117,6 +118,7 @@ namespace mln
 
 struct l2norm
 {
+  typedef float ret;
   template <typename C, typename D>
   D
   operator()(C a, C b)

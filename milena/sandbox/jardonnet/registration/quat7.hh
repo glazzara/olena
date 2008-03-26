@@ -122,19 +122,22 @@ namespace mln
     // qR
 
     //FIXME : use P::dim ?
+    std::cout << "loop" << std::endl;
     algebra::mat<P::dim,P::dim,float> Mk;
     for (unsigned i = 0; i < C.npoints(); ++i)
       {
         algebra::vec<P::dim,float> Ci = C[i];
-        algebra::vec<P::dim,float> Xki = Xki;
+        algebra::vec<P::dim,float> Xki = Xk[i];
         Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
       }
     Mk /= C.npoints();
+    std::cout << "loop end" << std::endl;
     
     const algebra::mat<P::dim,P::dim,float> Ak = Mk - trans(Mk);
 
     const float v[3] = {Ak(1,2), Ak(2,0), Ak(0,1)};
     const algebra::mat<3,1,float> D = make::mat<3,1,3,float>(v); // FIXME why <...>
+
     
     algebra::mat<4,4,float> Qk;
     Qk(0,0) = tr(Mk);

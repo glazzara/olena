@@ -32,9 +32,12 @@ namespace mln
     
     // FIXME : move //exist for P?
     template <typename P>
-    float sqr_norm(const P& v)
+    mln_coord(P) sqr_norm(const P& v)
     {
-      return v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+      mln_coord(P) tmp = 0;
+      for (unsigned i = 0; i < P::dim; i++)
+        tmp += v[i] * v[i];
+      return tmp;
     }
 
     template <typename P>
