@@ -1,5 +1,13 @@
 2008-03-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Enable tests/core/graph_elt_neighborhood.
+
+	* tests/core/Makefile.am (check_PROGRAMS): Add
+	graph_elt_neighborhood.
+	(graph_elt_neighborhood_SOURCES): New.
+
+2008-03-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have piters on graph neighborhoods actually use the neighborhood.
 
 	* mln/core/graph_neighborhood_piter.hh

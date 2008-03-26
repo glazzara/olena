@@ -8,6 +8,7 @@ check_PROGRAMS =				\
   exact						\
   h_vec						\
   initialize					\
+  graph_elt_neighborhood			\
   graph_elt_window				\
   graph_image					\
   line_graph_elt_window				\
@@ -33,6 +34,7 @@ clone_SOURCES = clone.cc
 exact_SOURCES = exact.cc
 h_vec_SOURCES = h_vec.cc
 initialize_SOURCES = initialize.cc
+graph_elt_neighborhood_SOURCES = graph_elt_neighborhood.cc
 graph_elt_window_SOURCES = graph_elt_window.cc
 graph_image_SOURCES = graph_image.cc
 line_graph_elt_window_SOURCES = line_graph_elt_window.cc
