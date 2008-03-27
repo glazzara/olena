@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BINARIZATION_THRESHOLDING_HH
-# define MLN_BINARIZATION_THRESHOLDING_HH
+#ifndef MLN_BINARIZATION_THRESHOLD_HH
+# define MLN_BINARIZATION_THRESHOLD_HH
 
-/*! \file mln/binarization/thresholding.hh
+/*! \file mln/binarization/threshold.hh
  *
  * \brief Threshold the contents of an image into another binary one.
  */
@@ -55,7 +55,7 @@ namespace mln
      */
     template <typename I>
     mln_concrete_ch_value(I, bool)
-    thresholding(const Image<I>& input, const mln_value(I) threshold);
+    threshold(const Image<I>& input, const mln_value(I) threshold);
 
     
 # ifndef MLN_INCLUDE_ONLY
@@ -63,9 +63,9 @@ namespace mln
     template <typename I>
     inline
     mln_concrete_ch_value(I, bool)
-    thresholding(const Image<I>& input, const mln_value(I) threshold)
+    threshold(const Image<I>& input, const mln_value(I) value)
     {
-      trace::entering("binarization::thresholding");
+      trace::entering("binarization::threshold");
   
       mln_precondition(exact(input).has_data());
       mlc_is(mln_trait_value_nature(mln_value(I)),
@@ -73,10 +73,10 @@ namespace mln
 
       mln_concrete_ch_value(I, bool) output(exact(input).domain());
       
-      fun::v2b::threshold< mln_value(I) > f(threshold);
+      fun::v2b::threshold< mln_value(I) > f(value);
       output = binarization::binarization(exact(input), f);
      
-      trace::exiting("binarization::thresholding");
+      trace::exiting("binarization::threshold");
       return output;
     }
 
@@ -87,4 +87,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_BINARIZATION_THRESHOLDING_HH
+#endif // ! MLN_BINARIZATION_THRESHOLD_HH

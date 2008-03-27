@@ -1,3 +1,14 @@
+2008-03-27  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: use of projection maps.
+
+	* mln/binarization/thresholding.hh: Renamed as
+	* mln/binarization/threshold.hh.
+
+	* sandbox/jardonnet/test/icp.cc: Update: maps.
+	* sandbox/jardonnet/registration/icp.hh: .
+	* sandbox/jardonnet/registration/projection.hh: .
+
 2008-03-26  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: draft improvment.

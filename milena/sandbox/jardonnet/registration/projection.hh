@@ -10,6 +10,27 @@ namespace mln
   namespace projection
   {
 
+    template <typename P, typename T1, typename T2>
+    float fill_Xk(const p_array<P>& Ck,
+                  std::pair<T1,T2>& map,
+                  p_array<P>& Xk)
+    {
+      assert(Ck.npoints() == Xk.npoints());
+      
+      float err = 0.f;
+
+      for (size_t i = 0; i < Ck.npoints(); ++i)
+        {
+          //x[i] := Ck[i] closest point in X
+          Xk.hook_()[i] = map.second(Ck[i]);
+          //err := Distance between Ck[i] and its closest point
+          err += map.first(Ck[i]);
+        }
+      return err /= Ck.npoints();
+    }
+    
+
+    
     template <typename P>
     void de_base(// input
                  const p_array<P>& Ck,
@@ -18,7 +39,7 @@ namespace mln
                  p_array<P>& Xk,
                  float& err)
     {
-      //      assert(Ck.npoints() == Xk.npoints());
+      assert(Ck.npoints() == Xk.npoints());
 
       err = 0.f;
 
@@ -37,13 +58,11 @@ namespace mln
                   best_x = Xj;
                 }
             }
-          if (i < Xk.npoints()) // FIXME:double hack
-            Xk.hook_()[i] = algebra::to_point<P>(best_x);
+          Xk.hook_()[i] = algebra::to_point<P>(best_x);
           err += best_d;
         }
       err /= Ck.npoints();
     }
-
   }
 }
 

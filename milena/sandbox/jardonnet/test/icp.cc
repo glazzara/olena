@@ -15,8 +15,6 @@ int main(int, char* argv[])
   io::pbm::load(img1, argv[1]);
   io::pbm::load(img2, argv[2]);  
 
-  image2d< bool > res(img1.domain());
-
-  io::pbm::save(registration::icp(img1,img2,res), "./+registred.pbm");
+  io::pbm::save(registration::icp(img1,img2), "./+registred.pbm");
 }
 
