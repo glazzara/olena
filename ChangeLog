@@ -1,5 +1,11 @@
 2008-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix naive DT in Etienne's sandbox.
+
+	* milena/sandbox/folio/naive.cc: Fix.
+
+2008-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Augment doc about image types.
 
 	* milena/doc/tutorial/image_types.txt: Augment.

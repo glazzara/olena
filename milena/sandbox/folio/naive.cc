@@ -35,6 +35,7 @@
 # define MLN_DT_NAIVE_HH
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/concept/function.hh>
 # include <mln/literal/zero.hh>
 # include <mln/accu/min.hh>
 
@@ -56,8 +57,8 @@ namespace mln
      */
     template <typename I, typename F>
     inline
-    mln_ch_value(I, typename F::ret)
-    naive(const Image<I>& input_, F& fun_);
+    mln_ch_value(I, mln_result(F))
+    naive(const Image<I>& input_, const Function_v2v<F>& fun_);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -66,14 +67,15 @@ namespace mln
 
     template <typename I, typename F>
     inline
-    mln_ch_value(I, typename F::ret)
-    naive(const Image<I>& input_, F& fun_)
+    mln_ch_value(I, mln_result(F))
+    naive(const Image<I>& input_, const Function_v2v<F>& fun_)
     {
       const I& input = exact(input_);
+      const F& fun   = exact(fun_);
       mln_precondition(input.has_data());
 
-      mln_ch_value(I, typename F::ret) output;
-      initialize(input.domain());
+      mln_ch_value(I, mln_result(F)) output;
+      initialize(output, input);
 
       mln_piter(I) p(input.domain());
       for_all(p)
@@ -83,7 +85,7 @@ namespace mln
 	else
 	{
 	  // p is in the background so the distance has to be computed.
-	  accu::min_<typename F::ret> min;
+	  accu::min_<mln_result(F)> min;
           min.init();
 
           mln_piter(I) q(input.domain());
@@ -93,7 +95,7 @@ namespace mln
 		// q is in the object.
 //                 metal::vec<2, int> vp = p.to_point(), vq = q.to_point();
 //                 min.take(fun_(vp, vq));
-		min.take(fun_(p, q));
+		min.take(fun(p - q));
               }
           output(p) = min;
 	}
@@ -114,18 +116,7 @@ namespace mln
 #include <mln/debug/println.hh>
 #include <mln/core/image2d.hh>
 #include <mln/level/fill.hh>
-#include <mln/norm/l2.hh>
-
-struct l2norm
-{
-  typedef float ret;
-  template <typename C, typename D>
-  D
-  operator()(C a, C b)
-  {
-    return mln::norm::l2(a, b);
-  }
-};
+#include <mln/fun/v2v/norm.hh>
 
 int main()
 {
@@ -142,8 +133,8 @@ int main()
     level::fill(ima, vals);
     debug::println(ima);
 
-    l2norm fun;
-    image2d<float> out = dt::naive(ima, fun);
+    typedef fun::v2v::l2_norm< algebra::vec<2,float>, float > L2;
+    image2d<float> out = dt::naive(ima, L2());
 
     std::cerr << "Distance:" << std::endl;
     debug::println(out);
