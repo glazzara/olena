@@ -1,3 +1,9 @@
+2008-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment doc about image types.
+
+	* milena/doc/tutorial/image_types.txt: Augment.
+
 2008-03-25  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	gradation for image valued by integers.

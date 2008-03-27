@@ -24,10 +24,141 @@ impl detail:
 signature is "ima(p : psite) : rvalue"
 
 
-** about domain and destination
+** about domain, site, and psite
 
-ima.domain is usually a mathematical set.  Yet it can be a
-multiset (a bag) but then weird things might happen...
+*** need for psite
+
+Sometimes, accessing a value in constant-time complexity, O(1), is not
+possible with a site object.
+
+Example with a run-length encoded image :
+
+    c  6 7 8 9
+   r
+      +-+-+-+
+   3  | |x| |
+      +-+-+-+-+
+   4      | | |
+          +-+-+
+
+The site x is the point (3, 7).  The image values are stored in a
+multi-array where the first index is the one of the run and the second
+index the offset of the cell from the beginning of the run.  The site
+x thus corresponds to the cell (0, 1).
+
+    j= 0 1 2
+      +-+-+-+
+i= 0  | |x| |
+      +-+-+-+-+
+i= 1      | | |
+          +-+-+
+        j= 0 1
+
+Here we have:
+
+  I::site == point2d  but  I::psite == run_point2d
+
+where, roughly, run_point2d = { i_of_run, i_in_run, run_ptr }.
+
+
+*** from psite to site
+
+Consider that we have an image type I such as I::site != I::psite.  In
+that case, an object of type I::psite is convertible towards an object
+of type I::site.  Furthermore, a psite shall behave as if it was a
+site.
+
+Design note: it seems impossible to offer through the interface of
+some psite what is expected from its corresponding site.  For
+instance, when a site has a given feature, say a method "m", then this
+method has to appear in the psite interface.  Idea: thanks to
+inheritance, we fetch an interface + an implementation that delegates
+to the site.
+
+Example: run_point2d has a method ::row() because point2d provides
+such a method.  How it works: a psite inherits from
+internal::site_impl<site> which is specialized for every site type;
+for instance, internal::site_impl<point2d> owns the method "coord
+row() const" which is defined as "return exact(this)->to_site().row()"
+
+This is of course only true for read-only methods.
+
+
+*** site location
+
+A point of a space (the 2D plane or 3D space) is about equivalent to a
+vector.  We do not distinguish between those two notions: a point M is
+like the vector OM where O is the origin of the space.
+
+We have mln::vec<dim,coord> (space vector) built over
+metal::array<n,T> (static container).  When dim = 2, we have vec::x()
+and vec::y() to access the coordinates, in addition to the more
+general method vec::op[](i).  On the other side, we have
+array::element<i>() to access the i-th element.
+
+We do not ambiguity: grid point 2d (i,j) v. 2D plane point
+(x,y) v. 2D vector (x,y)
+
+ideas: gpoint2d v. spoint2d !!!
+
+
+*** iterating and ordering
+
+The iteration mechanism for images is directly derived from the
+mechanism for site set.  A site set is iterable in a forward way.
+This way depends on the structure of the set; Cf. the documentation.
+The reserve iteration way, called backward, can always be defined
+because we only provide bidirectional containers.  The ordering
+relationship corresponding to the forward iteration browsing is
+"fwd_less".
+
+The basic iterator has the only property of browsing every site once.
+It is often identical to the forward iterator but it is not a
+requirement.  FIXME: find an example where it is not the case.
+
+When sites are localized, a special ordering between such sites is
+defined, based on the site localization.  More precisely, it is a
+lexicographical ordering considering the coordinates going from the
+first component (at index 0) to the last one (at index dim - 1).  This
+is location_less.  In most cases, we cannot provide an iterator that
+follows this spatial ordering because the underlying structures are
+usually not suited for such an iterator to be efficient.
+
+FIXME: hypothesis and property for superior_window and inferior_window.
+
+
+*** arithmetics over sites
+
+psite + dpsite -> psite when compatible (?)
+ site + dpsite = (re-written) site + dsite (when possible) -> site
+psite +  dsite = (re-written) site + dsite (when possible) -> site
+
+Example:
+run_psite2d + dpoint2d -> point2d
+
+
+FIXME: more examples
+
+
+** about value, rvalue, and lvalue
+
+Image types provide a method to access values, namely "operator() const".
+Yet, its signature is NOT "value operator()(const site& p) const"
+but "rvalue operator()(const psite& p) const"
+
+For instance, with I being image2d<int_u8>, we have :
+
+    I::value == int_u8  but  I::rvalue == const int_u8&
+
+so copying the value when the call "f(p)" returns is avoided.
+In that case, it is a low-level implementation issue that makes rvalue
+be different from value.  In some other cases, the difference can be
+more fundamental.  For instance, a proxy is returned so that some extra
+code is performed if this value is eventually read (FIXME: take a better
+example).
+
+
+** about destination
 
 ima.destination is a set.  Every value, that is ima(p) with p in
 ima.domain, is taken from this set.  For instance, a color image can
@@ -215,6 +346,8 @@ and I.destination gives value::set<rgb_3x8>.
 
 ** associated types
 
+*** list of associated types
+
 mesh  (? support)
 pset  (? domain_t)
 site
@@ -232,6 +365,41 @@ fwd_piter
 bkd_piter
 
 skeleton
+
+*** value
+Type of values enclosed in the image container.
+By copie; not by reference (not T&).
+Might be a pointer (T*).
+Assignable and copiable (not a shallow copy).
+
+Ex: int_u8, etc.
+
+*** site
+Type of the cell containing a value.
+
+*** required for implementation purpose
+rvalue, lvalue, and psite; see later.
+
+*** location
+A site can be localized into a given space, e.g., the 2D plane and can
+be point-wise.  In that case, the associated type "location" gives the
+corresponding type of space vector.  For instance, with a classical 2D
+image, a site is a 2D point (node of the regular square grid) and the
+location is trivially a vector of the 2D plane.
+
+When a site is not point-wise, some implementation can also provide a
+location; this can be convenient in order to get a spacial
+representation of sites and images.  For instance, consider that we
+have a tesselation computed from point seeds (a Voronoi diagram for
+instance) and a structure (the corresponding Delaunay triangulation)
+where a site is a tile of this tesselation.  A tile can be identified
+without ambiguity through its seed; this seed point is then the
+representative point for that tile.  By extension, we can state that
+the location of a tile is its seed.
+
+For some image types, sites are not localized and a special type is
+used to define ::location.
+
 
 
 ** methods
@@ -551,6 +719,13 @@ fastest = (    data    = oneblock
 
 ** image2d<T>
 
+regular square grid where grid nodes are objects of type point2d =
+(row, col), a couple of integer coordinates
+
+psite = point2d == point_<grid2d,int>
+site  = point2d
+location = vec<2,int> (more precise than vec<2,float>)
+
 ** fun_image<S,F>
 
 pset = S
@@ -558,6 +733,43 @@ f : p -> v
 read_only
 
 
+** geometrical transformation (morpher)
+
+An image computed on the fly from another image on which a geometrical
+transformation is applied.  A geometrical transformation is either a
+function
+
+  site_set   ->  site_set
+    site    |->    site
+
+or a function
+
+  site_set_in   ->  site_set_out
+    site_in    |->    site_out
+
+In the first case, the resulting image has the same point set as the
+initial image (example : clock-wise rotation of 90°, translation of a
+vector with integral coordinates).
+
+In the second case, the resulting image has a different point set,
+reflecting a possibly different domain or topology (example: arbitrary
+rotation).
+
+
+images (f, T) -> g
+
+
+g(p) = f( T(p) )
+so :
+g( T_1(p) ) = f(p)
+
+or :
+
+g( T(p) ) = f(p)
+
+
+FIXME: to be continued.
+
 * value morpher
 
-pset is
+FIXME
