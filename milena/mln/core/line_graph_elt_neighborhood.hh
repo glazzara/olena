@@ -28,17 +28,11 @@
 #ifndef MLN_CORE_LINE_GRAPH_ELT_NEIGHBORHOOD_HH
 # define MLN_CORE_LINE_GRAPH_ELT_NEIGHBORHOOD_HH
 
-/*! \file mln/core/line_graph_elt_neighborhood.hh
- *
- *  \brief Definition of the elementary ``window'' on a line graph.
- *
- *  \todo Make naming coherent: we have window (without '_') but
- *  point_, neighb_, etc.
- */
+/// \file mln/core/line_graph_elt_neighborhood.hh
+/// \brief Definition of the elementary ``window'' on a line graph.
 
-# include <mln/core/concept/neighborhood.hh>
-# include <mln/core/line_graph_psite.hh>
-# include <mln/core/line_graph_neighborhood_piter.hh>
+/* FIXME: Have a consistent naming: we have window (without '_') but
+   point_, neighb_, etc.  */
 
 /* FIXME: Factor those classes:
    - mln::graph_elt_window
@@ -46,17 +40,19 @@
    - mln::line_graph_elt_window
    - mln::line_graph_elt_neighborhood.  */
 
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/core/line_graph_psite.hh>
+# include <mln/core/line_graph_neighborhood_piter.hh>
+
+
 namespace mln
 {
   // Fwd decls.
-  template <typename P> class line_graph_neighborhood_fwd_piter;
-  template <typename P> class line_graph_neighborhood_bkd_piter;
+  template <typename P, typename N> class line_graph_neighborhood_fwd_piter;
+  template <typename P, typename N> class line_graph_neighborhood_bkd_piter;
 
 
-  /*! \brief Elementary neighborhood on line graph class.
-   *
-   *  FIXME: Doc.
-   */
+  /// \brief Elementary neighborhood on line graph class.
   template <typename P>
   class line_graph_elt_neighborhood
     : public Neighborhood< line_graph_elt_neighborhood<P> >
@@ -66,28 +62,68 @@ namespace mln
   public:
     /// Associated types.
     /// \{
-    /// The type of point stored into the neighborhood.
-    // FIXME: Is this right, if we consider that this neighborhood stores
-    // psites, not points?
+    /// The type of point corresponding to the neighborhood.
     typedef P point;
+    /// The type of psite corresponding to the neighborhood.
+    typedef line_graph_psite<P> psite;
 
     // FIXME: This is a dummy value.
     typedef void dpoint;
 
-    /*! \brief Point_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the ordering of delta-points.
-     */
-    typedef line_graph_neighborhood_fwd_piter<P> fwd_niter;
+    /// \brief Point_Iterator type to browse the psites of the
+    /// neighborhood w.r.t. the ordering of edges.
+    typedef line_graph_neighborhood_fwd_piter<P, self_> fwd_niter;
 
-    /*! \brief Point_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the reverse ordering of delta-points.
-     */
-    typedef line_graph_neighborhood_bkd_piter<P> bkd_niter;
+    /// \brief Point_Iterator type to browse the psites of the
+    /// neighborhood w.r.t. the reverse ordering of edges.
+    typedef line_graph_neighborhood_bkd_piter<P, self_> bkd_niter;
 
     /// The default qiter type.
     typedef fwd_niter niter;
     /// \}
+
+    /// Services for iterators.
+    /// \{
+    /// Move \a piter to the beginning of the iteration on this neighborhood.
+    template <typename Piter>
+    void start(Point_Iterator<Piter>& piter) const;
+    /// Move \a piter to the next site on this neighborhood.
+    template <typename Piter>
+    void next_(Point_Iterator<Piter>& piter) const;
+    /// \}
   };
+
+# ifndef MLN_INCLUDE_ONLY
+
+  template <typename P>
+  template <typename Piter>
+  inline
+  void
+  line_graph_elt_neighborhood<P>::start(Point_Iterator<Piter>& piter_) const
+  {
+    Piter& piter = exact(piter_);
+    piter.first_();
+    if (!piter.adjacent_or_equal_to_p_ref_())
+      next_(piter);
+  }
+
+  template <typename P>
+  template <typename Piter>
+  inline
+  void
+  line_graph_elt_neighborhood<P>::next_(Point_Iterator<Piter>& piter_) const
+  {
+    Piter& piter = exact(piter_);
+    /* FIXME: This is inefficient.  The graph structure should be able
+       to produce the set of adjacent nodes fast.  Boost Graphs
+       probably provides adequates structures to fetch these
+       neighbors in constant time.  */
+    do
+      piter.step_();
+    while (piter.is_valid() && !piter.adjacent_or_equal_to_p_ref_());
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

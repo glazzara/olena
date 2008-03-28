@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/line_graph_elt_window.cc
+/*! \file tests/core/line_graph_elt_neighborhood.cc
  *
- *  \brief Tests on mln::line_graph_elt_window.
+ *  \brief Tests on mln::line_graph_elt_neighborhood.
  */
 
 #include <vector>
 
 #include <mln/core/point2d.hh>
-#include <mln/core/line_graph_elt_window.hh>
+#include <mln/core/line_graph_elt_neighborhood.hh>
 
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
@@ -83,24 +83,24 @@ int main()
   g.add_edge(3, 4);
   g.add_edge(4, 2);
 
-  /*------------------.
-  | Graph and window.  |
-  `------------------*/
+  /*-------------------------.
+  | Graph and neighborhood.  |
+  `-------------------------*/
 
   // Line graph psite set.
   p_line_graph<p_t> plg(g);
   // Line graph point site.
   line_graph_psite<p_t> p(plg, 1);
-  // ``Sliding'' window of a psite of PLG.
-  typedef line_graph_elt_window<p_t> win_t;
-  win_t win;
+  // ``Sliding'' neighborhood of a psite of PLG.
+  typedef line_graph_elt_neighborhood<p_t> nbh_t;
+  nbh_t nbh;
 
-  mln_fwd_qiter_(win_t) fq(win, p);
+  mln_fwd_niter_(nbh_t) fq(nbh, p);
   for_all(fq)
     std::cout << fq << " ";
   std::cout << std::endl;
 
-  mln_bkd_qiter_(win_t) bq(win, p);
+  mln_bkd_niter_(nbh_t) bq(nbh, p);
   for_all(bq)
     std::cout << bq << " ";
   std::cout << std::endl;

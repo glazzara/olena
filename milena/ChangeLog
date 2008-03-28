@@ -1,3 +1,71 @@
+2008-03-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have piters on line graph windows and neighborhoods actually use
+	them.
+
+	* mln/core/line_graph_window_piter.hh
+	(mln::line_graph_window_fwd_piter<P, W>)
+	(mln::line_graph_window_bkd_piter<P, W>):
+	Have these class templates take a window type as second,
+	additional parameter.
+	(mln::line_graph_window_fwd_piter<P, W>::nbh_)
+	(mln::line_graph_window_bkd_piter<P, W>::nbh_):
+	New attributes.
+	(line_graph_window_fwd_piter)
+	(line_graph_window_bkd_piter):
+	Adjust ctors.
+	(mln::line_graph_window_fwd_piter<P, W>::first_)
+	(mln::line_graph_window_fwd_piter<P, W>::step_)
+	(mln::line_graph_window_bkd_piter<P, W>::first_)
+	(mln::line_graph_window_bkd_piter<P, W>::step_):
+	New methods.
+	(mln::line_graph_window_fwd_piter<P, W>::start)
+	(mln::line_graph_window_fwd_piter<P, W>::next_)
+	(mln::line_graph_window_bkd_piter<P, W>::start)
+	(mln::line_graph_window_bkd_piter<P, W>::next_):
+	Delegate the body of the routine to the window.
+	* mln/core/line_graph_elt_window.hh
+	(mln::line_graph_elt_window<P>::fwd_qiter)
+	(mln::line_graph_elt_window<P>::bkd_qiter):
+	Adjust typedefs.
+	(mln::line_graph_elt_window<P>::psite):
+	New typedef.
+	(mln::line_graph_elt_window<P>::start)
+	(mln::line_graph_elt_window<P>::next_):
+	New methods.
+	* mln/core/line_graph_neighborhood_piter.hh
+	(mln::line_graph_neighborhood_fwd_piter<P, N>)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>):
+	Have these class templates take a neighborhood type as second,
+	additional parameter.
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::nbh_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::nbh_):
+	New attributes.
+	(line_graph_neighborhood_fwd_piter)
+	(line_graph_neighborhood_bkd_piter):
+	Adjust ctors.
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::first_)
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::step_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::first_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::step_):
+	New methods.
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::start)
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::next_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::start)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::next_):
+	Delegate the body of the routine to the neighborhood.
+	* mln/core/line_graph_elt_neighborhood.hh
+	(mln::line_graph_elt_neighborhood<P>::fwd_qiter)
+	(mln::line_graph_elt_neighborhood<P>::bkd_qiter):
+	Adjust typedefs.
+	(mln::line_graph_elt_neighborhood<P>::psite):
+	New typedef.
+	(mln::line_graph_elt_neighborhood<P>::start)
+	(mln::line_graph_elt_neighborhood<P>::next_):
+	New methods.
+	* tests/core/line_graph_elt_window.cc: Update test.
+	* tests/core/line_graph_elt_neighborhood.cc: New test.
+
 2008-03-27  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: use of projection maps.
