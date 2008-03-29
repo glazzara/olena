@@ -51,7 +51,7 @@ namespace mln
       return f / a1.npoints();
     }
 
-  }
-}
+  } // end of namespace registration
+} // end of namespace mln
 
 #endif // ndef CLOUD_HH

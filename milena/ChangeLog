@@ -1,3 +1,17 @@
+2008-03-29  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP : projection::memo.
+
+	* sandbox/jardonnet/test/icp.cc: Update.
+	* sandbox/jardonnet/test/check: Test projection techniques.
+	* sandbox/jardonnet/TODO: Update.
+	* sandbox/jardonnet/registration/quat7.hh: Correction.
+	* sandbox/jardonnet/registration/cloud.hh: Correction.
+	* sandbox/jardonnet/registration/jacobi.hh: Add FIXME (nD).
+	* sandbox/jardonnet/registration/icp.hh: Improvment.
+	* sandbox/jardonnet/registration/projection.hh: Add a projection technique "memo" computing closest point only if needed.
+	* sandbox/jardonnet/registration/tools.hh: Gather together tools to add  to milena.
+
 2008-03-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have piters on line graph windows and neighborhoods actually use

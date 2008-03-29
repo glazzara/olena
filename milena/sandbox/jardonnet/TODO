@@ -6,3 +6,17 @@ gaussian.cc: In function 'int main(int, char*)':
 gaussian.cc:22: error: no match for 'operator==' in 'img == out'
 - -
 
+adapt test for threshold (old thresholding)
+- -
+
+- Enlever static dans projection::memo
+
+Note:
++01.bmp: 943 pts
+30 itérations :   30*943 =  28290 calcul de ppp
+Domaine +02.bmp: 777x480 = 362082
+nb de ppp calculé memo   =  11749
+
+map       1:40
+de_base   10.5
+memo      9.5

@@ -62,7 +62,7 @@ namespace mln
     inline
     mln::window3d window3d(bool (&values)[M])
     {
-      int h = unsigned(std::pow(float(M), 1 / 3)) / 2;
+      int h = unsigned(std::pow(float(M), float(1. / 3.))) / 2;
       mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == M);
       mln::window3d tmp;
       unsigned i = 0;

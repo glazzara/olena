@@ -35,7 +35,10 @@
 
 # include <mln/algebra/quat.hh>
 # include <mln/algebra/vec.hh>
-# include <mln/core/w_window.hh>
+# include <mln/make/w_window.hh>
+# include <mln/make/window3d.hh>
+
+# include "tools.hh"
 
 # include "cloud.hh"
 # include "quat7.hh"
@@ -66,91 +69,53 @@ namespace mln
       template <typename P, typename T1, typename T2>
       inline
       p_array<P>
-      icp_(const p_array<P>& C,
-           const p_array<P>&,
-           std::pair<T1,T2>& map)
+      icp_(p_array<P>& C,
+           const p_array<P>& X,
+           std::pair<T1,T2>&)
       {
 	trace::entering("registration::impl::icp_");
 
         unsigned int  k;
         quat7<P::dim> old_qk, qk;
-        float         err, err_bis;
-        p_array<P>    Ck(C), Xk(C);
-        
+        float         err;
+        float         err_bis;
+        p_array<P>    Ck(C), Xk(C); //FIXME: Xk copy C
+
         algebra::vec<P::dim,float> mu_C = center(C), mu_Xk;
 
-        const float epsilon = 1e-3;
+        const float epsilon = 1e-2;
 
-        //step 1
+        //// step 1
         k = 0;
-        Ck = C;
+        do {   
+          //// step 2
+          //err_bis = projection::fill_Xk(Ck, map, Xk);
+          //projection::de_base(Ck, X, Xk, err_bis);
+          projection::memo(Ck, X, Xk, err_bis);
 
-        do {
-          std::cout << "step2: projection" << std::endl;
-          //step 2
-          err_bis = projection::fill_Xk(Ck, map, Xk);
-
-          std::cout << "step2.1: center" << std::endl;
           mu_Xk = center(Xk);
 
-          std::cout << "step3: Compute qk" << std::endl;
-          // step 3
+          //// step 3
           old_qk = qk;
           qk = match(C, mu_C, Xk, mu_Xk);
 
-          std::cout << "step4: apply qk" << std::endl;
-          // step 4
+          //// step 4
           qk.apply_on(C, Ck); // Ck+1 = qk(C)
 
-          // err = d(Ck+1,Xk)
+          //// err = d(Ck+1,Xk)
           err = rms(Ck, Xk);
+          std::cout << "error :" << err << std::endl;
 
           ++k;
-          std::cout << "error is " << err << std::endl;
         } while (k < 3 || (qk - old_qk).sqr_norm() > epsilon);
 
+        std::cout << "nb of iterations : " << k << std::endl;
         trace::exiting("registration::impl::icp_");
         return Ck;
       }
 
     } // end of namespace mln::registration::impl
 
-
-    //FIXME: move?
-    namespace convert
-    {
-      template <typename T>
-      const image3d<T>&
-      to_image_3d(const image3d<T>& img)
-      {
-        return img;
-      }
-      
-      template <typename T>
-      image3d<T>&
-      to_image_3d(image3d<T>& img)
-      {
-        return img;
-      }
-    
-      template <typename T>
-      image3d<T>
-      to_image_3d(const image2d<T>& img)
-      {
-        point3d pmin(img.domain().pmin()[0], img.domain().pmin()[1], -10);
-        point3d pmax(img.domain().pmax()[0], img.domain().pmax()[1], 10);
-        image3d<T> img3d(box3d(pmin,pmax));
-        
-        mln_piter(image3d<T>) p(img3d.domain());
-        for_all(p)
-        {
-          if (p[2] == 0)
-            img3d(p) = exact(img)(point2d(p[0],p[1]));
-        }
-        return img3d;
-      }
-    }
-    
 
     //Only for 2d and 3d image
     template <typename I, typename J>
@@ -163,45 +128,39 @@ namespace mln
       mln_precondition(exact(cloud_).has_data());
       mln_precondition(exact(surface_).has_data());
 
-      std::cout << "convert to image3d" << std::endl;
       //convert to image: time consuming
       typedef image3d<mln_value(I)> I3d;
       I3d cloud = convert::to_image_3d(exact(cloud_));
       const I3d surface = convert::to_image_3d(exact(surface_));
-      
-      
-      std::cout << "chamfer" << std::endl;
-      
-      //FIXME: not a chamfer. etienne?
+
+      /*
       //create a pair (distance map, closest point)
-      // window<dpoint3d> win3d;
-      w_window<dpoint3d, float> chamfer; // = make::w_window(win3d, fun);
-      std::pair<mln_ch_value(I3d,float), mln_ch_value(I3d,mln_point(I3d)) > maps =
-        dt::chamfer(surface, chamfer);
+      bool w[27] = {true, true, true, true, true, true, true, true, true,
+                    true, true, true, true, true, true, true, true, true,
+                    true, true, true, true, true, true, true, true, true};
+      window<mln_dpoint(I3d)> win3d = make::window3d(w);
+      fun::cham<point3d> fun;
+      w_window<mln_dpoint(I3d), float> chamfer = make::w_window(win3d, fun);
+      */
+      std::pair<mln_ch_value(I3d,float), mln_ch_value(I3d,mln_point(I3d)) > maps;// =
+        //dt::chamfer(surface, chamfer);
       
-      std::cout << "Build p_array" << std::endl;
+      
       //build p_arrays.
-      p_array<mln_point(I3d)> c,x;
+      p_array<mln_point(I3d)> c = convert::to_p_array(cloud);
+      p_array<mln_point(I3d)> x = convert::to_p_array(surface);
 
-      mln_piter(I3d) p1(cloud.domain());
-      for_all(p1)
-        if (exact(cloud)(p1))
-          c.append(p1);
-      
-      mln_piter(I3d) p2(surface.domain());
-      for_all(p2)
-        if (exact(surface)(p2))
-          x.append(p2);
-
-      std::cout << "Start ICP" << std::endl;
       p_array<mln_point(I3d)> res = impl::icp_(c, x, maps);
 
       //to 2d : projection (FIXME:if 3d)
+      //mln_concrete(I) output = convert::to_image2d(res)?
       mln_concrete(I) output(exact(cloud_).domain());
-      for (unsigned i; i < res.npoints(); i++)
+      for (size_t i = 0; i < res.npoints(); i++)
         {
           point2d p(res[i][0], res[i][1]);
-          output(p) = true;
+          //FIXME: not necessary if output(res.bbox())
+          //if (output.has(p))
+            output(p) = true;
         }
 
       trace::exiting("registration::icp");

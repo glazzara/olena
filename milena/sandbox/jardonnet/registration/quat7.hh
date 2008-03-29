@@ -15,37 +15,9 @@
 
 # include <mln/trait/all.hh>
 
+# include <mln/make/vec.hh>
 
-// FIXME : move elsewhere
-namespace mln
-{
-  namespace algebra
-  {
-    
-    template<unsigned n, unsigned m, typename T>
-    mat<m,n,T>
-    trans(const mat<n,m,T>& matrice)
-    {
-      mat<m,n,T> tmp;
-      for (unsigned i = 0; i < n; ++i)
-        for (unsigned j = 0; j < m; ++j)
-          tmp(j,i) = matrice(i,j);
-      return tmp;
-    }
-    
-    // trace
-    
-    template<unsigned n, typename T> inline
-    float tr(const mat<n,n,T>& m)
-    {
-      float f = 0.f;
-      for (unsigned i = 0; i < n; ++i)
-        f += m(i,i);
-      return f;
-    }
-    
-  }
-}
+# include "tools.hh"
 
 namespace mln
 {
@@ -89,10 +61,15 @@ namespace mln
       assert(input.npoints() == output.npoints());
       assert(_qR.is_unit());
 
-      //FIXME utiliser equivalent pour p_array
-      //std::transform(input.begin(), input.end(),
-      //             output.begin(),
-      //             *this);
+      for (size_t i = 0; i < input.npoints(); i++)
+        output.hook_()[i] = algebra::to_point<P>((*this)(input[i]));
+    }
+    
+    friend std::ostream& operator << (std::ostream& os, quat7& q)
+    {
+      std::cout << q._qR << std::endl;
+      std::cout << q._qT << std::endl;
+      return os;
     }
   };
   
@@ -121,8 +98,6 @@ namespace mln
     
     // qR
 
-    //FIXME : use P::dim ?
-    std::cout << "loop" << std::endl;
     algebra::mat<P::dim,P::dim,float> Mk;
     for (unsigned i = 0; i < C.npoints(); ++i)
       {
@@ -131,12 +106,11 @@ namespace mln
         Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
       }
     Mk /= C.npoints();
-    std::cout << "loop end" << std::endl;
     
     const algebra::mat<P::dim,P::dim,float> Ak = Mk - trans(Mk);
 
     const float v[3] = {Ak(1,2), Ak(2,0), Ak(0,1)};
-    const algebra::mat<3,1,float> D = make::mat<3,1,3,float>(v); // FIXME why <...>
+    const algebra::mat<3,1,float> D = make::mat<3,1,3,float>(v);
 
     
     algebra::mat<4,4,float> Qk;
