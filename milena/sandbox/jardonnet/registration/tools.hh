@@ -6,9 +6,75 @@
 # include <mln/algebra/mat.hh>
 # include <mln/core/p_array.hh>
 
+
 namespace mln
 {
+
   
+  //FIXME: Shall we use something *really* lazy
+  template <typename I>
+  struct lazy_map
+  {
+    template <typename P>
+    lazy_map(const box_<P>& domain)
+      : map(domain), known(domain)
+    { }
+
+    lazy_map(int nrows, int ncols, int bdr = 3)
+      : map(nrows, ncols, bdr), known(nrows,ncols,bdr)
+    { }
+
+    mln_ch_value(I, mln_point(I)) map;
+    mln_ch_value(I, bool)         known;
+  };
+
+
+  // Point
+  
+  template <typename P>
+  P min(const P& a, const P& b)
+  {
+    if (a > b)
+      return b;
+    return a;
+  }
+
+  template <typename P>
+  P max(const P& a, const P& b)
+  {
+    if (a < b)
+      return b;
+    return a;
+  }
+
+  
+  // Box
+
+  template <typename P>
+  inline
+  const box_<P>&            //dif
+  enlarge(const box_<P>& box, unsigned b)
+  {
+    for (unsigned i = 0; i < P::dim; ++i)
+    {
+      box.pmin()[i] -= b;
+      box.pmax()[i] += b;
+    }
+    return box;
+  }
+  
+  template <typename P>
+  box_<P> bigger(box_<P> a, box_<P> b)
+  {
+    P pmin,pmax;
+    
+    pmin = min(a.pmin(), b.pmin());
+    pmax = max(a.pmax(), b.pmax());
+    
+    return box_<P>(pmin, pmax);
+  }
+
+
   //FIXME: move?
   namespace convert
   {

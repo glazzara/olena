@@ -14,7 +14,7 @@ int main(int, char* argv[])
   
   io::pbm::load(img1, argv[1]);
   io::pbm::load(img2, argv[2]);
-
+  
   io::pbm::save(registration::icp(img1,img2), "./+registred.pbm");
 }
 

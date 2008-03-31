@@ -1,3 +1,15 @@
+2008-03-31  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: 'lazy'_map.
+
+	* sandbox/jardonnet/test/icp.cc: Update.
+	* sandbox/jardonnet/test/reduce.cc: New: image scaling.
+	* sandbox/jardonnet/test/01.pbm,
+	* sandbox/jardonnet/test/02.pbm: New: test images.
+	* sandbox/jardonnet/registration/icp.hh: Use type lazy_map instead of std::pair, in order to use spécific constructors.
+	* sandbox/jardonnet/registration/projection.hh: update.
+	* sandbox/jardonnet/registration/tools.hh: Add tools for boxes (to include in Milena?).
+
 2008-03-29  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP : projection::memo.
