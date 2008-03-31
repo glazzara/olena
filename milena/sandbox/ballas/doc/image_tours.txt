@@ -1,0 +1,486 @@
+-*-  outline -*-
+
+* Introduction
+
+
+* What is a property?
+
+** Two types of properties
+
+
+*** Declaratif mode: (find an exemple).
+
+
+Here, the properties must be define by the image type programmer. They cannot
+be deduce from the image associated type. So we can't find the properties by
+introspecting the image type (with introspection).
+
+
+ declaration        definition     ..... I check
+ -------          ----------
+|       |       /            \
+| Props | ----> | Image Type |
+|       |       \ ___________/
+ -------
+
+
+
+*** Automatic mode: (find an exemple).
+
+Here, we get the image properties from the image associated type
+(site, pset...).
+
+
+  -----------
+ /            \
+ | Image Type |   automatic
+  and associated    ----->       Props
+  type
+ \ ___________/
+
+
+
+** Semantic
+
+Properties are a way to classify the images depends or their type.
+
+*** Static Checking
+
+  Some operators are only define in special cases. Properties provide a way to
+check that the operator input type respect the operator requirement.
+
+*** Specialization of an Algorithm
+  (ex: dilatation/erosion).
+TODO: detail the example.
+
+*** Implementation inherentence
+
+Milena image types are property driven.
+It is possible to get a special behavior (not describe in the Image Concept)
+depends on the property define in the property associated for the image
+type. So, it is possible to recover some piece of interface depending on the
+image type properties.
+For instance an Image2d has the bidimensional, and random value access.
+ properties. Hence, Image2d automatically provides a row/column access:
+V at(Point2d<T>::coord x, Point2d<T>::coord y).
+
+
+
+
+*** Difference between a property and its values
+
+*** Hierarchie of property (scalar/integer)
+
+** Implementation of properties in Milena
+
+* Algorithm and Properties
+
+** Specialization
+
+** Static checking
+
+
+* Image Properties:
+
+** global Properties:
+  category: primary,
+            { domain_morpher, value_morpher,  identity_morpher } < morpher
+
+  border:  none,
+           { stored, computed } < some
+
+  neighb: none,
+          some
+
+  data: stored,
+        linear < stored
+        raw < linear,
+        computed
+
+  io:  read,
+       write,
+       read_only < read,
+       write_only < write,
+       read_write < both read'n write
+
+  speed: slow,
+         fast,
+         fastest
+
+
+** Properties related to I::value
+    kind: color,
+          gray,
+	  label,
+	  logic < label,
+          binary < logic,
+          data
+
+    quant: low,
+           high
+
+    value: scalar,
+           vectorial,
+           structed,
+           pointer
+
+
+** Properties related to I::pset
+      access: random,
+              browsing
+
+      space:  one_d,
+              two_d,
+              three_d
+
+      size:   huge,
+              regular
+
+      support: irregular,
+               regular
+               aligned < regular
+
+
+* Values Properties:
+      nature: scalar,
+              { integer, floating } < scalar,
+              vectorial,
+	      matric,
+	      symbolic,
+	      strutured,
+	      unknow
+
+      kind: color,
+            grey,
+            label,
+            logic < label,
+            binary < logic,
+	    data
+
+      quant: low,
+             high
+
+
+
+* Image types and their associated properties
+
+** Primitive Image
+
+Primitive image are image which are not based on another image type.
+
+A primitive image type property can be either declared or automatically get
+back with the help of associated types.
+
+
+FIXME: find a good notation...
+
+** Image nD
+
+Image on regular grid where grides nodes are points.
+To gain efficienty, Images nD have a virtual borders.
+All these image are templated by T, the image value type.
+
+*** Image1d<T>
+
+**** Associated types:
+
+value = T
+
+site  = point1d
+psite = point1d == point_<tick,int>
+pset = box1d
+
+**** Properties:
+
+--> global properties
+
+category = primary
+border = stored
+neighb: none
+data = raw
+io = read_write
+speed = fastest
+
+--> properties related to values
+
+// Depend on T FIXME, where the property are defined??
+kind =
+quant =
+value =
+
+--> properties related to the pset
+
+access = random
+space = one_d
+size = regular
+support = aligned
+
+**** Specific interface:
+  FIXME....
+
+
+
+
+
+
+*** Image2d<T>
+
+**** Associated types:
+
+value = T
+
+site  = point2d
+psite = point2d == point_<square,int>
+pset = box2d
+
+**** Properties:
+
+--> global properties
+
+category = primary
+border = stored
+neighb: none
+data = raw
+io = read_write
+speed = fastest
+
+--> properties related to values
+
+// Depend on T FIXME, where the property are defined??
+kind =
+quant =
+value =
+
+--> properties related to the pset
+
+access = random
+space = two_d
+size = regular
+support = aligned
+
+**** Specific interface:
+  FIXME....
+
+
+
+*** Image3d<T>
+
+**** Associated types:
+
+value = T
+
+site  = point3d
+psite = point3d == point_<cube,int>
+pset = box3d
+
+**** Properties:
+
+--> global properties
+
+category = primary
+border = stored
+neighb: none
+data = raw
+io = read_write
+speed = fastest
+
+--> properties related to values
+
+// Depend on T FIXME, where the property are defined??
+kind =
+quant =
+value =
+
+--> properties related to the pset
+
+access = random
+space = three_d
+size = regular
+support = aligned
+
+**** Specific interface:
+  FIXME....
+
+
+
+
+** Image based on function
+
+The images based on function are templated by F and P, where
+F is p2v function type and P a psite
+
+Question: Is there any restriction on F and S ??
+-> S must be include in the definition set of F
+
+*** pw::image<F, S>
+
+**** Associated types:
+
+value = F::result
+
+site  = S::site
+psite = S::pset
+pset = S
+
+**** Properties:
+
+--> global properties
+
+category = primary
+border = none
+neighb: none
+data = computed // computed => read_only!
+io = read_only
+speed = fast
+
+--> properties related to values
+
+kind =??
+quant =??
+value = fixme
+
+--> properties related to the pset
+
+access = browsing // Why the access property is set to browsing?
+space = fixme_
+size = regular
+support = fixme
+
+FIXME: see how to fix all the fixme in the pw::image properties.
+How to deal with the lvalue??
+
+Is there any lvalue for image with computed data?
+lvalue just for image with stored//read_only data?
+
+**** Specific interface:
+  FIXME....
+
+
+
+
+** Run based Encoded image
+
+All the run based encoded images have their definition domains encoded by ...
+runs. These images types are not morpher types since these do not lie on
+another image type.
+A run is a "continuous" (note this is wrong, cf graph index) set of sites.
+It is define by a site start, and a length.
+All the run based encoded image are templated by P, T where P is a site type
+and T a value type.
+
+
+
+Note:
+type one shot (const)!!!
+Do we store the the null value in the rle encoding.
+(Do we compress all the images values, or only the image objects...)
+Is there any restriction on P and T?
+Can we compress all the image types or only the point wise image type
+(cf the on_the_same_line in the encode algorithm).
+
+How the properties are setted and to which values?
+
+Depend on the PointWise property ??
+
+*** RLE Image
+
+A RLE image can be defined as the following:
+{(p, v)} where p is a run of P and v is a value of type T.
+
+
+**** Associated types:
+
+value = T
+
+site  = P
+psite = runs_psite<P>
+pset = p_runs_<P>
+
+**** Properties:
+
+--> global properties
+
+category = primary
+border = none
+neighb: none
+data = linear
+io = read_only
+speed = slow
+
+--> properties related to values
+
+// Depend on T FIXME, where the property are defined??
+kind =
+quant =
+value =
+
+--> properties related to the pset
+
+access = browsing
+space = depend on P //FIXME the property setted in the milena code is wrong.
+size = regular  // Should we say compressed?
+support = depend on P // The property setted in the milena code is wrong
+
+
+*** Compact RLE
+
+*** Sparse Image
+
+A RLE image can be defined as the following:
+{(p, [v])} where p is a run of P and v is a value of type T, and [v] is an
+array of size p.length().
+
+
+**** Associated types:
+
+value = T
+
+site  = P
+psite = runs_psite<P>
+pset = p_runs_<P>
+
+**** Properties:
+
+Same properties than the RLE Image type.
+
+
+*** Value encoded image
+
+
+** Graph Image
+
+FIXME: See with roland
+
+**** Connectivity based on a graph.
+
+
+** Morpher (Derived Image)
+
+Mopher are Image types which transform an Image type into a new type. So, they
+rest upon another images types. Most of the mopher properties are
+transformation of the input image type properties.
+
+A morpher image type property can be declared, automatically get back with
+the help of the associated type or be a transformation of a property of the
+input image type.
+
+*** Identity morpher
+
+*** Domain morpher
+
+*** Value morpher
+
+
+*** Image_if
+
+???
+
+
+
+
+Note:
+The different grid (retrieve from point_ class):
+ - tick,
+ - square,
+ - hexa,
+ - cube

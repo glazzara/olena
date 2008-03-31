@@ -1,3 +1,10 @@
+2008-03-31  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Start a doc about the Milena images types and their properties.
+
+	* sandbox/ballas/doc: New.
+	* sandbox/ballas/doc/image_tours.txt: New.
+
 2008-03-31  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: 'lazy'_map.
