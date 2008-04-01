@@ -22,13 +22,13 @@ namespace mln
       for (size_t i = 0; i < Ck.npoints(); ++i)
         {
           //FIXME: bof
-          //if (map.second.has(Ck[i]))
-          //{
+          if (map.second.has(Ck[i]))
+            {
               //x[i] := Ck[i] closest point in X
               Xk.hook_()[i] = map.second(Ck[i]);
               //err := Distance between Ck[i] and its closest point
               err += map.first(Ck[i]);
-              //}
+            }
         }
       return err /= Ck.npoints();
     }

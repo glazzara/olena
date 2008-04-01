@@ -36,7 +36,7 @@
 # include <mln/algebra/quat.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/make/w_window.hh>
-# include <mln/make/window3d.hh>
+# include <mln/make/w_window3d.hh>
 
 # include "tools.hh"
 
@@ -66,12 +66,12 @@ namespace mln
     namespace impl
     {
 
-      template <typename P, typename T>
+      template <typename P, typename M>
       inline
       p_array<P>
       icp_(p_array<P>& C,
-           const p_array<P>& X,
-           lazy_map<T>& map)
+           const p_array<P>&,
+           M& map)
       {
 	trace::entering("registration::impl::icp_");
 
@@ -87,24 +87,28 @@ namespace mln
 
         //// step 1
         k = 0;
-        do {   
+        do {
+          std::cout << "step 2" << std::endl;
           //// step 2
-          //err_bis = projection::fill_Xk(Ck, map, Xk);
+          projection::fill_Xk(Ck, map, Xk);
           //projection::de_base(Ck, X, Xk, err_bis);
-          projection::memo(Ck, X, Xk, map);
+          //projection::memo(Ck, X, Xk, map);
 
           mu_Xk = center(Xk);
 
+          //std::cout << "step 3" << std::endl;
           //// step 3
           old_qk = qk;
           qk = match(C, mu_C, Xk, mu_Xk);
 
+          //std::cout << "step 4" << std::endl;
           //// step 4
           qk.apply_on(C, Ck); // Ck+1 = qk(C)
 
+          //std::cout << "step err" << std::endl;
           //// err = d(Ck+1,Xk)
           err = rms(Ck, Xk);
-          std::cout << k << ' ' << err << std::endl; //plot file
+          std::cout << k << ' ' << err << ' ' << (qk - old_qk).sqr_norm() << std::endl; //plot file
 
           ++k;
         } while (k < 3 || (qk - old_qk).sqr_norm() > epsilon);
@@ -132,17 +136,14 @@ namespace mln
       I3d cloud = convert::to_image_3d(exact(cloud_));
       const I3d surface = convert::to_image_3d(exact(surface_));
 
-      /*
+      
       //create a pair (distance map, closest point)
-      bool w[27] = {true, true, true, true, true, true, true, true, true,
-                    true, true, true, true, true, true, true, true, true,
-                    true, true, true, true, true, true, true, true, true};
-      window<mln_dpoint(I3d)> win3d = make::window3d(w);
-      fun::cham<point3d> fun;
-      w_window<mln_dpoint(I3d), float> chamfer = make::w_window(win3d, fun);
-      */
-      //std::pair<mln_ch_value(I3d,float), mln_ch_value(I3d,mln_point(I3d)) > maps;// =
-      //dt::chamfer(surface, chamfer);
+      float w[27] = {1.4142, 1, 1.4142,  1.4142, 1, 1.4142,  0, 0, 0,
+                     1,      1, 1,       1,      1, 0,       0, 0, 0,
+                     1.4142, 1, 1.4142,  0,      0, 0,       0, 0, 0};
+      w_window<mln_dpoint(I3d), float> chamfer = make::w_window3d(w);
+      std::pair<mln_ch_value(I3d,float), mln_ch_value(I3d,mln_point(I3d)) > map =
+        dt::chamfer(surface, chamfer);
       
       
       //build p_arrays.
@@ -151,7 +152,7 @@ namespace mln
 
       //build closest point map
       //lazy_map<I3d> map(enlarge(bigger(c.bbox(),x.bbox()),50));
-      lazy_map<I3d> map(1000,1000,50);
+      //lazy_map<I3d> map(1000,1000,50);
       
       p_array<mln_point(I3d)> res = impl::icp_(c, x, map);
 
@@ -162,8 +163,8 @@ namespace mln
         {
           point2d p(res[i][0], res[i][1]);
           //FIXME: not necessary if output(res.bbox())
-          //if (output.has(p))
-          output(p) = true;
+          if (output.has(p))
+            output(p) = true;
         }
 
       trace::exiting("registration::icp");

@@ -1,3 +1,16 @@
+2008-04-01  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Fix distance map version: 0.5s for 01.pbm over 02.pbm.
+
+	* mln/algebra/vec.hh: Add check for dimension in to_point().
+	* sandbox/jardonnet/test/plotscript: Add gnuplot script.
+	* sandbox/jardonnet/test/Makefile: Add g++ flags: Unexpected behavior disappear with -ffloat-store (float are not stored in register).
+	* sandbox/jardonnet/test/check: Update test script.
+	* sandbox/jardonnet/registration/quat7.hh: .
+	* sandbox/jardonnet/registration/icp.hh: .
+	* sandbox/jardonnet/registration/projection.hh: .
+	* sandbox/jardonnet/registration/tools.hh: .
+
 2008-04-01  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Add personal folder in sandbox with prototype of najman component tree.

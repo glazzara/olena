@@ -3,11 +3,17 @@
 touch log
 
 echo "### report : projection" >> log
+
 echo "*** maps ***" >> log
 time ./+icp_maps.exe +01.pbm +02.pbm >> log
+
+
 echo "*** de_base ***" >> log
 time ./+icp_base.exe +01.pbm +02.pbm >> log
+
+
 echo "*** memo ***" >> log
 time ./+icp_memo.exe +01.pbm +02.pbm >> log
+
 
 cat log

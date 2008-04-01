@@ -550,10 +550,10 @@ namespace mln
     }
 
     
-    template <typename P, unsigned n>
+    template <typename P>
     inline
     P
-    to_point(const vec<n,float>& v)
+    to_point(const vec<P::dim,float>& v)
     {
       P tmp;
       for (unsigned i = 0; i < P::dim; ++i)

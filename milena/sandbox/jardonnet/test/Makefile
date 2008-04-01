@@ -17,8 +17,15 @@ icp:
 	g++ icp.cc $(FLAG) -o '+icp.exe'
 
 icp++:
-	g++ icp.cc -I../../.. -O3 -o '+icp.exe'
+	g++ icp.cc -ffloat-store -I../../.. -O3 -DNDEBUG -o '+icp.exe'
+
+icpsafe:
+	g++ icp.cc -fsignaling-nans -ffloat-store -I../../.. -O1 -o '+icp.exe'
 
 run:
 	time ./+sub.exe . . ; time ./+gsub.exe . .
+
+plot: icp
+	./+icp.exe 01.pbm 02.pbm > log
+	gnuplot plotscript
 

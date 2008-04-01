@@ -99,7 +99,7 @@ namespace mln
     // qR
 
     algebra::mat<P::dim,P::dim,float> Mk;
-    for (unsigned i = 0; i < C.npoints(); ++i)
+    for (size_t i = 0; i < C.npoints(); ++i)
       {
         algebra::vec<P::dim,float> Ci = C[i];
         algebra::vec<P::dim,float> Xki = Xk[i];

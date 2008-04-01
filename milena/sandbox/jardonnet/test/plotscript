@@ -1,0 +1,5 @@
+set xlabel "k"
+set ylabel "err" 
+set zlabel "dQk"
+splot "log"
+pause -1

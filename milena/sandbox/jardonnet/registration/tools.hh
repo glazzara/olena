@@ -133,8 +133,8 @@ namespace mln
     image3d<T>
     to_image_3d(const image2d<T>& img)
     {
-      point3d pmin(img.domain().pmin()[0], img.domain().pmin()[1], -1);
-      point3d pmax(img.domain().pmax()[0], img.domain().pmax()[1], 1);
+      point3d pmin(img.domain().pmin()[0], img.domain().pmin()[1], 0);
+      point3d pmax(img.domain().pmax()[0], img.domain().pmax()[1], 0);
       image3d<T> img3d(box3d(pmin,pmax));
         
       mln_piter(image3d<T>) p(img3d.domain());
