@@ -1,3 +1,16 @@
+2008-04-01  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add personal folder in sandbox with prototype of najman component tree.
+
+	* sandbox/abraham: New.
+	* sandbox/abraham/morpho: New.
+	* sandbox/abraham/morpho/basic_najman.hh: New, contains Najman component tree.
+	* sandbox/abraham/morpho/test.cc: New.
+	* sandbox/abraham/morpho/images: New.
+	* sandbox/abraham/morpho/images/test_component_tree.pgm: New.
+	* sandbox/abraham/morpho/topo_wst.hh: New, draft of topological watershed.
+	* sandbox/abraham/morpho/Makefile: New.
+
 2008-03-31  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Start a doc about the Milena images types and their properties.
