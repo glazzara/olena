@@ -49,6 +49,7 @@ namespace mln
   class line_graph_psite : public Point_Site< line_graph_psite<P> >
   {
     typedef line_graph_psite<P> self_;
+    typedef Point_Site<self_> super_;
 
   public:
     typedef P point;
@@ -138,7 +139,8 @@ namespace mln
   inline
   line_graph_psite<P>::line_graph_psite()
     // Dummy initializations.
-    : plg_(0),
+    : super_(),
+      plg_(0),
       id_(-1),
       p_()
   {
@@ -148,7 +150,8 @@ namespace mln
   inline
   line_graph_psite<P>::line_graph_psite(const p_line_graph<P>& plg,
 					util::edge_id id)
-    : plg_(&plg),
+    : super_(),
+      plg_(&plg),
       id_(id),
       p_()
   {
@@ -157,7 +160,8 @@ namespace mln
   template<typename P>
   inline
   line_graph_psite<P>::line_graph_psite(const line_graph_psite<P>& rhs)
-    : plg_(rhs.plg_),
+    : super_(),
+      plg_(rhs.plg_),
       id_(rhs.id_),
       p_()
   {

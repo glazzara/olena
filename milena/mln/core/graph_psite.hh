@@ -46,6 +46,7 @@ namespace mln
   class graph_psite : public Point_Site< graph_psite<P> >
   {
     typedef graph_psite<P> self_;
+    typedef Point_Site<self_> super_;
 
   public:
     typedef mln_mesh(P) mesh;
@@ -100,7 +101,8 @@ namespace mln
   inline
   graph_psite<P>::graph_psite()
     // Dummy initializations.
-    : pg_(0),
+    : super_(),
+      pg_(0),
       id_(-1)
   {
   }
@@ -108,7 +110,8 @@ namespace mln
   template<typename P>
   inline
   graph_psite<P>::graph_psite(const p_graph<P>& g, util::node_id id)
-    : pg_(&g),
+    : super_(),
+      pg_(&g),
       id_(id)
   {
   }
@@ -116,7 +119,8 @@ namespace mln
   template<typename P>
   inline
   graph_psite<P>::graph_psite(const graph_psite<P>& rhs)
-    : pg_(rhs.pg_),
+    : super_(),
+      pg_(rhs.pg_),
       id_(rhs.id_)
   {
   }
