@@ -126,6 +126,18 @@ namespace mln
   bool
   operator==(const p_graph<P>& lhs, const p_graph<P>& rhs);
 
+  /// \brief Inclusion of a mln::p_graph in another one.
+  ///
+  /// This inclusion relation is very strict for the moment, since our
+  /// infrastrure for graphs i simple: a mln::p_graph is included
+  /// in another one if their are equal.
+  ///
+  /// \todo Refine this later, when we are able to express subgraph
+  /// relations.
+  template <typename P>
+  bool
+  operator<=(const p_graph<P>& lhs, const p_graph<P>& rhs);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -271,6 +283,13 @@ namespace mln
   operator==(const p_graph<P>& lhs, const p_graph<P>& rhs)
   {
     return lhs.gr_.ptr_ == rhs.gr_.ptr_;
+  }
+
+  template <typename P>
+  bool
+  operator<=(const p_graph<P>& lhs, const p_graph<P>& rhs)
+  {
+    return lhs == rhs;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

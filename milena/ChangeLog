@@ -1,5 +1,15 @@
 2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add inclusion operators for mln::p_graph and mln::p_line_graph.
+
+	* mln/core/p_graph.hh
+	(operator<=(const p_graph<P>&, const p_graph<P>&))
+	* mln/core/p_line_graph.hh
+	(operator<=(const p_line_graph<P>&, const p_line_graph<P>&)):
+	New operators.
+
+2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve ctors of mln::graph_psite and mln::line_graph_psite.
 
 	* mln/core/graph_psite.hh (super_): New typedef.
