@@ -1,5 +1,9 @@
 2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/morpho/line_gradient.hh: Add a missing header inclusion.
+
+2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the interface of some graph-related piters.
 
 	* mln/core/graph_window_piter.hh
