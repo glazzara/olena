@@ -28,13 +28,11 @@
 #ifndef MLN_CORE_GRAPH_ELT_WINDOW_HH
 # define MLN_CORE_GRAPH_ELT_WINDOW_HH
 
-/*! \file mln/core/graph_elt_window.hh
- *
- *  \brief Definition of the elementary ``window'' on a graph.
- *
- *  \todo Make naming coherent: we have window (without '_') but
- *  point_, neighb_, etc.
- */
+/// \file mln/core/graph_elt_window.hh
+/// \brief Definition of the elementary ``window'' on a graph.
+
+/* FIXME: Have a consistent naming: we have window (without '_') but
+   point_, neighb_, etc.  */
 
 /* FIXME: Factor those classes:
    - mln::graph_elt_window
@@ -54,10 +52,7 @@ namespace mln
   template <typename P, typename W> class graph_window_bkd_piter;
 
 
-  /*! \brief Elementary window on graph class.
-   *
-   *  FIXME: Doc.
-   */
+  /// \brief Elementary window on graph class.
   template <typename P>
   class graph_elt_window : public Window< graph_elt_window<P> >
   {
@@ -79,7 +74,7 @@ namespace mln
     typedef graph_window_fwd_piter<P, self_> fwd_qiter;
 
     /// \brief Point_Iterator type to browse the psites of the window
-    /// w.r.t. the ordering of vertices.
+    /// w.r.t. the reverse ordering of vertices.
     typedef graph_window_bkd_piter<P, self_> bkd_qiter;
 
     /// The default qiter type.
@@ -106,7 +101,7 @@ namespace mln
     /// Is the window centered?
     bool is_centered() const;
     /// Is the window symmetric?
-    // FIXME: We should defin this more precisely.
+    // FIXME: We should define this more precisely.
     bool is_symmetric() const;
     /// Return the maximum coordinate gap between the window center
     /// and a window point.

@@ -28,13 +28,11 @@
 #ifndef MLN_CORE_GRAPH_ELT_NEIGHBORHOOD_HH
 # define MLN_CORE_GRAPH_ELT_NEIGHBORHOOD_HH
 
-/*! \file mln/core/graph_elt_neighborhood.hh
- *
- *  \brief Definition of the elementary ``neighborhood'' on a graph.
- *
- *  \todo Make naming coherent: we have neighborhood (without '_') but
- *  point_, neighb_, etc.
- */
+/// \file mln/core/graph_elt_neighborhood.hh
+/// \brief Definition of the elementary ``neighborhood'' on a graph.
+
+/* FIXME: Have a consistent naming: we have neighborhood (without '_')
+   but point_, neighb_, etc.  */
 
 /* FIXME: Factor those classes:
    - mln::graph_elt_window
@@ -50,14 +48,11 @@
 namespace mln
 {
   // Fwd decls.
-  template <typename P, typename W> class graph_neighborhood_fwd_piter;
-  template <typename P, typename W> class graph_neighborhood_bkd_piter;
+  template <typename P, typename N> class graph_neighborhood_fwd_piter;
+  template <typename P, typename N> class graph_neighborhood_bkd_piter;
 
 
-  /*! \brief Elementary neighborhood on graph class.
-   *
-   *  FIXME: Doc.
-   */
+  /// Elementary neighborhood on graph class.
   template <typename P>
   class graph_elt_neighborhood
     : public Neighborhood< graph_elt_neighborhood<P> >
@@ -80,7 +75,7 @@ namespace mln
     typedef graph_neighborhood_fwd_piter<P, self_> fwd_niter;
 
     /// \brief Point_Iterator type to browse the psites of the
-    /// neighborhood w.r.t. the ordering of vertices.
+    /// neighborhood w.r.t. the reverse ordering of vertices.
     typedef graph_neighborhood_bkd_piter<P, self_> bkd_niter;
 
     /// The default niter type.
@@ -97,6 +92,7 @@ namespace mln
     void next_(Point_Iterator<Piter>& piter) const;
     /// \}
   };
+
 
 # ifndef MLN_INCLUDE_ONLY
 

@@ -84,7 +84,7 @@ namespace mln
     /// Construction.
     /// \{
     template <typename Pref>
-    graph_window_fwd_piter(const W& win, const Point_Site<Pref>& p_ref);
+    graph_window_fwd_piter(const Window<W>& win, const Point_Site<Pref>& p_ref);
     /// \}
 
     /// Manipulation.
@@ -168,7 +168,7 @@ namespace mln
     /// Construction.
     /// \{
     template <typename Pref>
-    graph_window_bkd_piter(const W& win, const Point_Site<Pref>& p_ref);
+    graph_window_bkd_piter(const Window<W>& win, const Point_Site<Pref>& p_ref);
     /// \}
 
     /// Manipulation.
@@ -235,7 +235,7 @@ namespace mln
   template <typename P, typename W>
   template <typename Pref>
   inline
-  graph_window_fwd_piter<P, W>::graph_window_fwd_piter(const W& win,
+  graph_window_fwd_piter<P, W>::graph_window_fwd_piter(const Window<W>& win,
 						       const Point_Site<Pref>& p_ref)
     : win_(exact(win)),
       p_ref_(exact(p_ref).to_psite()),
@@ -360,7 +360,7 @@ namespace mln
   template <typename P, typename W>
   template <typename Pref>
   inline
-  graph_window_bkd_piter<P, W>::graph_window_bkd_piter(const W& win,
+  graph_window_bkd_piter<P, W>::graph_window_bkd_piter(const Window<W>& win,
 						       const Point_Site<Pref>& p_ref)
     : win_(exact(win)),
       p_ref_(exact(p_ref).to_psite()),

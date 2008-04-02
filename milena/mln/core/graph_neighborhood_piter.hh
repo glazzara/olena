@@ -83,7 +83,8 @@ namespace mln
     /// Construction.
     /// \{
     template <typename Pref>
-    graph_neighborhood_fwd_piter(const N& nbh, const Point_Site<Pref>& p_ref);
+    graph_neighborhood_fwd_piter(const Neighborhood<N>& nbh,
+				 const Point_Site<Pref>& p_ref);
     /// \}
 
     /// Manipulation.
@@ -164,7 +165,8 @@ namespace mln
     /// Construction.
     /// \{
     template <typename Pref>
-    graph_neighborhood_bkd_piter(const N& nbh, const Point_Site<Pref>& p_ref);
+    graph_neighborhood_bkd_piter(const Neighborhood<N>& nbh,
+				 const Point_Site<Pref>& p_ref);
     /// \}
 
     /// Manipulation.
@@ -229,7 +231,7 @@ namespace mln
   template <typename P, typename N>
   template <typename Pref>
   inline
-  graph_neighborhood_fwd_piter<P, N>::graph_neighborhood_fwd_piter(const N& nbh,
+  graph_neighborhood_fwd_piter<P, N>::graph_neighborhood_fwd_piter(const Neighborhood<N>& nbh,
 								   const Point_Site<Pref>& p_ref)
     : nbh_(exact(nbh)),
       p_ref_(exact(p_ref).to_psite()),
@@ -357,9 +359,9 @@ namespace mln
   template <typename P, typename N>
   template <typename Pref>
   inline
-  graph_neighborhood_bkd_piter<P, N>::graph_neighborhood_bkd_piter(const N& nbh,
+  graph_neighborhood_bkd_piter<P, N>::graph_neighborhood_bkd_piter(const Neighborhood<N>& nbh,
 								   const Point_Site<Pref>& p_ref)
-    : nbh_(nbh),
+    : nbh_(exact(nbh)),
       p_ref_(exact(p_ref).to_psite()),
       // Initialize psite_ to a dummy value.
       psite_(),

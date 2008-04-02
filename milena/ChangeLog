@@ -1,5 +1,24 @@
 2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the interface of some graph-related piters.
+
+	* mln/core/graph_window_piter.hh
+	(graph_window_fwd_piter::graph_window_fwd_piter)
+	(graph_window_bkd_piter::graph_window_bkd_piter):
+	Fix the signatures of these ctors w.r.t. the Window concept.
+	* mln/core/graph_neighborhood_piter.hh:
+	(graph_neighborhood_fwd_piter::graph_neighborhood_fwd_piter)
+	(graph_neighborhood_bkd_piter::graph_neighborhood_bkd_piter):
+	Likewise, w.r.t. the Neighborhood concept.
+	(graph_neighborhood_bkd_piter::graph_neighborhood_bkd_piter):
+	Fix the initialization of nbh_.
+	* mln/core/graph_elt_window.hh: Fix comments.
+	* mln/core/graph_elt_neighborhood.hh: Likewise.
+	Use `N' instead of `W' for the parameter representing the
+	neighborhood type.
+
+2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove outdated comments about neighborhoods.
 
 	* mln/geom/seeds2tiling_roundness.hh,
