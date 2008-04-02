@@ -1,5 +1,13 @@
 2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/accu/count_adjacent_vertices.hh,
+	* mln/morpho/meyer_wst.hh,
+	* tests/morpho/lena_line_graph_image_wst1.cc,
+	* tests/morpho/lena_line_graph_image_wst2.cc:
+	Fix comments.
+
+2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Enable tests/core/line_graph_elt_neighborhood.
 
 	* tests/core/Makefile.am (check_PROGRAMS): Add

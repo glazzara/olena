@@ -113,12 +113,6 @@ namespace mln
       const marker unmarked = mln_min(marker);
 
       // Initialize the output with the markers (minima components).
-      /* FIXME: labeling::regional_minima doesn't work on non
-	 point-accessible images!  We temporarily reuse the old
-	 morpho::minima_components routine to work-around this
-	 limitation.  As soon as labeling::regional_minima work, get rid of
-	 - mln/morpho/level_components.hh, and
-	 - mln/morpho/extrema_components.hh.  */
       mln_ch_value(I, marker) markers =
 	labeling::regional_minima (input, nbh, nbasins);
 

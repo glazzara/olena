@@ -26,17 +26,16 @@
 // Public License.
 
 /* FIXME: We should factor as much things as possible between
-   tests/core/lena_line_graph_image_wst1.cc and
-   tests/core/lena_line_graph_image_wst2.cc, starting from conversion
+   tests/morpho/lena_line_graph_image_wst1.cc and
+   tests/morpho/lena_line_graph_image_wst2.cc, starting from conversion
    routines.  */
 
-/** \file tests/core/lena_line_graph_image_wst2.cc
+/** \file tests/morpho/lena_line_graph_image_wst2.cc
     \brief More tests on the Watershed Transform (WST) on a
     mln::line_graph_image.
    
     The scenario is as follows:
     \li load a 2-D, gray-level image from a PGM file;
-    \li simplify the image to reduce the number of local minima;
     \li convert this 2-D image into a line graph-based one, where values
         on edges are computed as the absolute value f the difference
         between the values on the nodes	adjacent to the edge, so as to

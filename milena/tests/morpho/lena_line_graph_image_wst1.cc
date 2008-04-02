@@ -26,11 +26,11 @@
 // Public License.
 
 /* FIXME: We should factor as much things as possible between
-   tests/core/lena_line_graph_image_wst1.cc and
-   tests/core/lena_line_graph_image_wst2.cc, starting from conversion
+   tests/morpho/lena_line_graph_image_wst1.cc and
+   tests/morpho/lena_line_graph_image_wst2.cc, starting from conversion
    routines.  */
 
-/** \file tests/core/lena_line_graph_image_wst1.cc
+/** \file tests/morpho/lena_line_graph_image_wst1.cc
     \brief Tests on the Watershed Transform (WST) on a mln::line_graph_image.
    
     The scenario is as follows:
