@@ -82,7 +82,7 @@ namespace mln
 
 	  for_all(q)
 	    if (input.has(q) && outputDistance(q) != mln_max(T))
-	    {
+              {
 	      T v = outputDistance(q) + q.w();
 
 	      if (v < min.first)

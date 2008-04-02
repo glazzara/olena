@@ -70,7 +70,7 @@ namespace mln
       inline
       p_array<P>
       icp_(p_array<P>& C,
-           const p_array<P>&,
+           const p_array<P>& X,
            M& map)
       {
 	trace::entering("registration::impl::icp_");
@@ -92,9 +92,7 @@ namespace mln
           //std::cout << "step 2" << std::endl;
 
           //// step 2
-          projection::fill_Xk(Ck, map, Xk);
-          //projection::de_base(Ck, X, Xk, err_bis);
-          //projection::memo(Ck, X, Xk, map);
+          projection::memo(Ck, X, Xk, map);
 
           mu_Xk = center(Xk);
 
@@ -137,24 +135,14 @@ namespace mln
       typedef image3d<mln_value(I)> I3d;
       I3d cloud = convert::to_image_3d(exact(cloud_));
       const I3d surface = convert::to_image_3d(exact(surface_));
-
-      
-      //create a pair (distance map, closest point)
-      float w[27] = {1.4142, 1, 1.4142,  1.4142, 1, 1.4142,  0, 0, 0,
-                     1,      1, 1,       1,      1, 0,       0, 0, 0,
-                     1.4142, 1, 1.4142,  0,      0, 0,       0, 0, 0};
-      w_window<mln_dpoint(I3d), float> chamfer = make::w_window3d(w);
-      std::pair<mln_ch_value(I3d,float), mln_ch_value(I3d,mln_point(I3d)) > map =
-        dt::chamfer(surface, chamfer);
-      
       
       //build p_arrays.
       p_array<mln_point(I3d)> c = convert::to_p_array(cloud);
       p_array<mln_point(I3d)> x = convert::to_p_array(surface);
 
       //build closest point map
-      //lazy_map<I3d> map(enlarge(bigger(c.bbox(),x.bbox()),50));
-      //lazy_map<I3d> map(1000,1000,50);
+      //FIXME: like that lazy_map<I3d> map(enlarge(bigger(c.bbox(),x.bbox()),50));
+      lazy_map<I3d> map(1000,1000,50);
       
       p_array<mln_point(I3d)> res = impl::icp_(c, x, map);
 

@@ -1,3 +1,22 @@
+2008-04-02  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Make check.
+
+	* sandbox/jardonnet/test/icp_check.sh: New Check Script.
+	* sandbox/jardonnet/test/bin: New Bin directory.
+	* sandbox/jardonnet/test/Makefile: Update for testes.
+
+     	* sandbox/jardonnet/test/icp_lazy.cc: New dedicated to lazy_map.
+	* sandbox/jardonnet/registration/icp_lazy.hh: New dedicated to lazy map.
+	* sandbox/jardonnet/registration/quat7.hh: Update.
+	* sandbox/jardonnet/registration/chamfer.hh: Update.
+	* sandbox/jardonnet/registration/icp.hh: Update (dedicated to distance_map).
+
+	* sandbox/jardonnet/registration/misc.hh: Move outside quat/ (removed).
+	* sandbox/jardonnet/registration/rotation.hh: Move outside quat/ (removed).
+
+	* sandbox/jardonnet/test/check: Remove old test script.
+
 2008-04-02  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	change RGB encoding from int_u to float01_.

@@ -8,7 +8,7 @@
 # include <mln/algebra/mat.hh>
 # include <mln/core/p_array.hh>
 
-# include "quat/all.hh"
+# include "rotation.hh"
 # include "jacobi.hh"
 
 # include <mln/norm/l2.hh>
