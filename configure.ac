@@ -42,7 +42,14 @@ fi
 AC_ARG_VAR([TESTS_CXXFLAGS])
 # We want no optimization for the tests (too slow), and a lot of debugging.
 if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS"; then
-  TESTS_CXXFLAGS="-O0 -ggdb -Wall -pipe"
+  TESTS_CXXFLAGS="-O0 -ggdb -Wall -W"
+fi
+
+# C++ compiler flags for tools.
+AC_ARG_VAR([TOOLS_CXXFLAGS])
+# On the contrary, we want fast binaries for tools.
+if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
+  TOOLS_CXXFLAGS="-O3 -NDEBUG -ggdb"
 fi
 
 
@@ -71,6 +78,7 @@ AC_CONFIG_FILES([
   Makefile
     milena/Makefile
       milena/doc/Makefile
+      milena/tools/Makefile
 ])
 
 
