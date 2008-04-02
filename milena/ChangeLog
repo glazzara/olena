@@ -1,3 +1,9 @@
+2008-04-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Improve ctors of mln::algebra::mat.
+
+	* mln/algebra/mat.hh (mat(const literal::zero_t&)): Add ctor.
+
 2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Initiate a set of command-line tools.

@@ -95,9 +95,9 @@ namespace mln
       
       static const mat<n,m,T> Id;
 
-      mat()
-      {
-      }
+      mat();
+      
+      mat(const literal::zero_t&);
 
       template <typename U>
       mat(const mat<n,m,U>& rhs);
@@ -279,6 +279,19 @@ namespace mln
       return id_;
     }
 
+    template <unsigned n, unsigned m, typename T>
+    inline
+    mat<n,m,T>::mat()
+    {
+    }
+    
+    template <unsigned n, unsigned m, typename T>
+    inline
+    mat<n,m,T>::mat(const literal::zero_t&)
+    {
+      this->set_all(0);
+    }
+    
     template <unsigned n, unsigned m, typename T>
     template <typename U>
     inline
