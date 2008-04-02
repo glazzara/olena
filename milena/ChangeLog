@@ -1,5 +1,14 @@
 2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Initiate a set of command-line tools.
+
+	* tools/: New directory.
+	* tools/area_flooding.cc: New.
+	* tools/Makefile.am, tools/tools.mk: New.
+	* Makefile.am (SUBDIRS): Add tools.
+
+2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add inclusion operators for mln::p_graph and mln::p_line_graph.
 
 	* mln/core/p_graph.hh

@@ -1,6 +1,6 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-SUBDIRS = doc tests
+SUBDIRS = doc tests tools
 
 .PHONY: doc
 doc:
