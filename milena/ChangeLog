@@ -1,3 +1,20 @@
+2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove outdated comments about neighborhoods.
+
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/labeling/background.hh,
+	* mln/labeling/blobs.hh,
+	* mln/labeling/flat_zones.hh,
+	* mln/labeling/foreground.hh,
+	* mln/labeling/level.hh,
+	* mln/labeling/level.spe.hh,
+	* mln/labeling/regional_maxima.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/make/voronoi.hh,
+	* mln/morpho/Rd.hh:
+	Remove outdated FIXME.
+
 2008-04-02  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Make check.

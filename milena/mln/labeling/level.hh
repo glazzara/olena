@@ -50,9 +50,6 @@ namespace mln
   namespace labeling
   {
 
-    /* FIXME: The neighborhood shall not be passed as argument, but
-       bound to the input image.  */
-
     /*! Connected component labeling of the image objects at a given
      * level.
      *

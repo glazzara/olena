@@ -44,9 +44,6 @@ namespace mln
   namespace labeling
   {
 
-    /* FIXME: The neighborhood shall not be passed as argument, but
-       bound to the input image.  */
-
     /*! Connected component labeling of the flat zones of an image.
      *
      * \param[in]  input    The input image.

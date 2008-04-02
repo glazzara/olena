@@ -47,11 +47,6 @@ namespace mln
   namespace make
   {
 
-    /* FIXME: The neighborhood shall not be passed as argument, but
-       bound to the input image.  We can also optionnaly provide a
-       version of this function for regular-grid-based images where
-       the neighborhood is replaced by a (user-provided) window.  */
-
     /*!
      *  \brief Apply the Voronoi algorithm on \p ima_ with the original
      *  image \p orig_ for node computing with neighborhood \p nbh.
