@@ -1,3 +1,10 @@
+2008-04-02  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	change RGB encoding from int_u to float01_.
+	* sandbox/vigouroux/color/my_hsi.hh: plug HSI on value.
+	* sandbox/vigouroux/color/rgb_to_hsi.hh: .
+	* sandbox/vigouroux/moyenne.cc: test new HSI and RGB.
+
 2008-04-01  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Fix distance map version: 0.5s for 01.pbm over 02.pbm.

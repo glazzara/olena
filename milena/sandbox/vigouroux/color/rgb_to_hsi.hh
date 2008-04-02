@@ -88,9 +88,9 @@ namespace mln
 	    beta = hsi.sat() * std::sin(h);
 
 
-	  red_t   r = to_r(sqrt3_3 * hsi.inty() + 2 * inv_sqrt6 * beta);
-	  green_t g = to_g(sqrt3_3 * hsi.inty() + inv_sqrt2 * alpha - inv_sqrt6 * beta);
-	  blue_t  b = to_b(sqrt3_3 * hsi.inty() - inv_sqrt2 * alpha - inv_sqrt6 * beta);
+	  red_t   r = sqrt3_3 * hsi.inty() + 2 * inv_sqrt6 * beta;
+	  green_t g = sqrt3_3 * hsi.inty() + inv_sqrt2 * alpha - inv_sqrt6 * beta;
+	  blue_t  b = sqrt3_3 * hsi.inty() - inv_sqrt2 * alpha - inv_sqrt6 * beta;
 
 	  T_rgb rgb(r, g, b);
 

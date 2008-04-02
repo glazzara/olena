@@ -1,10 +1,10 @@
 #include <mln/value/hsi.hh>
-#include <mln/fun/v2v/rgb_to_hsi.hh>
+#include "color/rgb_to_hsi.hh"
 
 #include <cmath>
 
 #include <mln/core/image2d.hh>
-#include <mln/value/rgb8.hh>
+#include "rgb.hh"
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
@@ -52,7 +52,7 @@ int main()
   io::ppm::load(lena, "../../img/lena.ppm");
 
   image2d<value::hsi_f> lena_hsi = level::transform(lena,
-						      fun::v2v::f_rgb_to_hsi_f);
+						    fun::v2v::f_rgb_to_hsi_f);
 
   image2d<value::rgb8> lena_rgb = level::transform(lena_hsi,
 						   fun::v2v::f_hsi_to_rgb_3x8);

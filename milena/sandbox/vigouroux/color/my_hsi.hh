@@ -18,6 +18,11 @@ namespace mln
 
     template <typename E>
     struct HSI
+      :
+      public internal::value_like_< algebra::vec< 3, float01_<n> >, // Equivalent.
+				    algebra::vec< 3, float01_<n> >, // Encoding.
+				    algebra::vec< 3, float01_<n> >,      // Interoperation.
+				    HSI<E> >
     {
     };
 
