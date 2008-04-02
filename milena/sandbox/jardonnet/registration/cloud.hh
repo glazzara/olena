@@ -9,6 +9,7 @@
 
 # include <mln/algebra/vec.hh>
 # include <mln/core/p_array.hh>
+# include <mln/norm/l2.hh>
 
 namespace mln
 {
@@ -32,9 +33,9 @@ namespace mln
     
     // FIXME : move //exist for P?
     template <typename P>
-    mln_coord(P) sqr_norm(const P& v)
+    float sqr_norm(const P& v)
     {
-      mln_coord(P) tmp = 0;
+      float tmp = 0;
       for (unsigned i = 0; i < P::dim; i++)
         tmp += v[i] * v[i];
       return tmp;
@@ -45,9 +46,18 @@ namespace mln
               const p_array<P>& a2)
     {
       assert(a1.npoints() == a2.npoints());
+      /*
       float f = 0.f;
       for (size_t i = 0; i < a1.npoints(); ++i)
         f += sqr_norm(a1[i] - a2[i]);
+      return f / a1.npoints();*/
+      float f = 0.f;
+      for (size_t i = 0; i < a1.npoints(); ++i)
+        {
+          algebra::vec<3,float> a1f = a1[i];
+          algebra::vec<3,float> a2f = a2[i];
+          f += norm::l2_distance(a1f,a2f);
+        }
       return f / a1.npoints();
     }
 

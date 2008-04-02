@@ -14,7 +14,10 @@ gau:
 	g++ gaussian.cc $(FLAG) -o '+gau.exe'
 
 icp:
-	g++ icp.cc -ffloat-store -I../../.. -O3 -DNDEBUG -o '+icp.exe'
+	g++ icp.cc -I../../.. -O1 -DNDEBUG -g -o '+icp.exe'
+
+icp++:
+	g++ icp.cc -I../../.. -O3 -DNDEBUG -o '+icp.exe'
 
 icpsafe:
 	g++ icp.cc -fsignaling-nans -ffloat-store -I../../.. -O1 -o '+icp.exe'

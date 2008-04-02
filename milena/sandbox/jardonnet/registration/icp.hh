@@ -89,7 +89,6 @@ namespace mln
         k = 0;
 
         do {
-          //std::cout << "step 2" << std::endl;
 
           //// step 2
           projection::fill_Xk(Ck, map, Xk);
@@ -98,16 +97,13 @@ namespace mln
 
           mu_Xk = center(Xk);
 
-          //std::cout << "step 3" << std::endl;
           //// step 3
           old_qk = qk;
           qk = match(C, mu_C, Xk, mu_Xk);
 
-          //std::cout << "step 4" << std::endl;
           //// step 4
           qk.apply_on(C, Ck); // Ck+1 = qk(C)
 
-          //std::cout << "step err" << std::endl;
           //// err = d(Ck+1,Xk)
           err = rms(Ck, Xk);
           std::cout << k << ' ' << err << ' ' << (qk - old_qk).sqr_norm() << std::endl; //plot file

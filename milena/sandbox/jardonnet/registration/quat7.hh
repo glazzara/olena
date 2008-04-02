@@ -98,7 +98,7 @@ namespace mln
     
     // qR
 
-    algebra::mat<P::dim,P::dim,float> Mk;
+    algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
     for (size_t i = 0; i < C.npoints(); ++i)
       {
         algebra::vec<P::dim,float> Ci = C[i];
@@ -113,14 +113,16 @@ namespace mln
     const algebra::mat<3,1,float> D = make::mat<3,1,3,float>(v);
 
     
-    algebra::mat<4,4,float> Qk;
+    algebra::mat<4,4,float> Qk(literal::zero);
     Qk(0,0) = tr(Mk);
     put(trans(D), 0,1, Qk);
     put(D, 1,0, Qk);
-
+    
     put(Mk + trans(Mk) - algebra::mat<P::dim,P::dim,float>::identity() * tr(Mk), 1,1, Qk);
     
-    algebra::quat qR;
+    algebra::quat qR(literal::zero);
+
+    //std::cout << qR << std::endl;
     jacobi(Qk, qR);
     
     // qT

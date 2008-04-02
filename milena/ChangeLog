@@ -1,5 +1,14 @@
 2008-04-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Sandbox: ICP: Fix quaternion computation.
+
+	* sandbox/jardonnet/test/Makefile: Add rules for ICP.
+	* sandbox/jardonnet/registration/quat7.hh (match): Fix matrix instantiation.
+	* sandbox/jardonnet/registration/cloud.hh (rms): Make it use norm::l2.
+	* sandbox/jardonnet/registration/jacobi.hh: Add safer checks, on float values.
+
+2008-04-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Improve ctors of mln::algebra::mat.
 
 	* mln/algebra/mat.hh (mat(const literal::zero_t&)): Add ctor.

@@ -4,6 +4,8 @@
 
 
 #include <mln/algebra/mat.hh>
+#include <cmath>
+#include "misc.hh"
 
 // from num. rec. in C
 
@@ -35,7 +37,7 @@ namespace mln
         for (iq=ip+1;iq<4;iq++)
           sm += fabs(a(ip,iq));
       }
-      if (sm < 1e-12) {
+      if (sm < 1e-6) { //1e-12
         dd = d[0];
         iq = 0;
         for (ip=1;ip<4;ip++)
@@ -61,14 +63,17 @@ namespace mln
 
           /* unusefull */
           g=100.0*fabs(a(ip,iq));
-          if (i > 4 && (float)(fabs(d[ip])+g) == (float)fabs(d[ip])
-              && (float)(fabs(d[iq])+g) == (float)fabs(d[iq]))
+          //if (i > 4 && (float)(fabs(d[ip])+g) == (float)fabs(d[ip])
+          //    && (float)(fabs(d[iq])+g) == (float)fabs(d[iq]))
+          if (i > 4 && about_equal((float)(fabs(d[ip])+g), (float)fabs(d[ip]))
+              && about_equal((float)(fabs(d[iq])+g), (float)fabs(d[iq])))
             a(ip,iq)=0.0;
           /* unusefull */
 
           else if (fabs(a(ip,iq)) > tresh) {
             h=d[iq]-d[ip];
-            if ((float)(fabs(h)+g) == (float)fabs(h))
+            //if ((float)(fabs(h)+g) == (float)fabs(h)) // unsafe ?
+            if (about_equal((float)(fabs(h)+g), (float)fabs(h)))
               t=(a(ip,iq))/h;
             else {
               theta=0.5*h/(a(ip,iq));
