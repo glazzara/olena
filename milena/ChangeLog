@@ -1,5 +1,13 @@
 2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
 
+	Enable tests/core/line_graph_elt_neighborhood.
+
+	* tests/core/Makefile.am (check_PROGRAMS): Add
+	line_graph_elt_neighborhood.
+	(line_graph_elt_neighborhood_SOURCES): New.
+
+2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/morpho/line_gradient.hh: Add a missing header inclusion.
 
 2008-04-02  Roland Levillain  <roland@lrde.epita.fr>

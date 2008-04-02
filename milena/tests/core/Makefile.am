@@ -11,6 +11,7 @@ check_PROGRAMS =				\
   graph_elt_neighborhood			\
   graph_elt_window				\
   graph_image					\
+  line_graph_elt_neighborhood			\
   line_graph_elt_window				\
   line_graph_image				\
   line_graph_image_wst				\
@@ -37,6 +38,7 @@ initialize_SOURCES = initialize.cc
 graph_elt_neighborhood_SOURCES = graph_elt_neighborhood.cc
 graph_elt_window_SOURCES = graph_elt_window.cc
 graph_image_SOURCES = graph_image.cc
+line_graph_elt_neighborhood_SOURCES = line_graph_elt_neighborhood.cc
 line_graph_elt_window_SOURCES = line_graph_elt_window.cc
 line_graph_image_SOURCES = line_graph_image.cc
 line_graph_image_wst_SOURCES = line_graph_image_wst.cc
