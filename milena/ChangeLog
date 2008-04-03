@@ -1,3 +1,19 @@
+2008-04-03  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add icp_subsampled.
+
+	* sandbox/jardonnet/test/bench: New info file.
+
+	* sandbox/jardonnet/test/icp_check.sh: Update.
+	* sandbox/jardonnet/test/Makefile: Add rules icp_sub.
+	* sandbox/jardonnet/test/icp_subsampled.cc: New icp_sub.
+	* sandbox/jardonnet/registration/icp_subsampled.hh: New. Registers, at
+	first, a subset of the cloud.
+
+	* sandbox/jardonnet/TODO: Update.
+	* sandbox/jardonnet/registration/quat7.hh: Fix vec initialisation.
+	* sandbox/jardonnet/registration/cloud.hh: Fix vec initialisation.
+
 2008-04-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Fix quaternion computation.

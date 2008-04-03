@@ -20,7 +20,7 @@ namespace mln
     template <typename P>
     P center(const p_array<P>& a)
     {
-      algebra::vec<P::dim,float> c;
+      algebra::vec<P::dim,float> c(literal::zero);
       for (size_t i = 0; i < a.npoints(); ++i)
         {
           algebra::vec<P::dim,float> ai = a[i];

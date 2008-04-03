@@ -23,7 +23,6 @@ namespace mln
   template <unsigned n>
   algebra::vec<n,float> rotate(const algebra::quat& q, const algebra::vec<n,float>& p)
   {
- 
     return (q * algebra::quat(0. ,p) * q.inv()).v();
   }
 

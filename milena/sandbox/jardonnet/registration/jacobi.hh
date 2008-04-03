@@ -20,11 +20,12 @@ namespace mln
   void jacobi(algebra::mat<4,4,float> a, algebra::quat& q)
   {
     float dd, d[4];
-    algebra::mat<4,4,float> v;
+    algebra::mat<4,4,float> v(literal::zero);
     int j,iq,ip,i = 0;
     float tresh,theta,tau,t,sm,s,h,g,c,b[4],z[4];
     for (ip=0;ip<4;ip++) {
-      for (iq=0;iq<4;iq++) v(ip,iq)=0.0;
+      for (iq=0;iq<4;iq++)
+        v(ip,iq)=0.0;
       v(ip,ip)=1.0;
     }
     for (ip=0;ip<4;ip++) {

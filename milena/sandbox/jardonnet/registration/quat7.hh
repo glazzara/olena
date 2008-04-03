@@ -29,6 +29,7 @@ namespace mln
     algebra::vec<n,float> _qT;
     
     quat7()
+      : _qR(1,0,0,0), _qT(literal::zero)
     {
     }
     
@@ -59,6 +60,9 @@ namespace mln
     void apply_on(const p_array<P>& input, p_array<P>& output) const
     {
       assert(input.npoints() == output.npoints());
+
+      std::cout << _qR << std::endl;
+      
       assert(_qR.is_unit());
 
       for (size_t i = 0; i < input.npoints(); i++)

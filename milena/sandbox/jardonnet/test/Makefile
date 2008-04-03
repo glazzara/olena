@@ -13,17 +13,22 @@ gsub:
 gau:
 	g++ gaussian.cc $(FLAG) -o '+gau.exe'
 
+run:
+	time ./+sub.exe . . ; time ./+gsub.exe . .
+
+
+
 icp:
-	g++ icp.cc -I../../.. -O1 -DNDEBUG -g -o '+icp.exe'
+	g++ icp.cc -I../../.. -g -o '+icp_map.exe'
 
 icp++:
-	g++ icp.cc -I../../.. -O3 -DNDEBUG -o '+icp.exe'
+	g++ icp.cc -I../../.. -O3 -DNDEBUG -o '+icp_map.exe'
+
+icp_sub:
+	g++ icp_subsampled.cc -I../../.. -O3 -DNDEBUG -g -o '+icp_sub.exe'
 
 icpsafe:
 	g++ icp.cc -fsignaling-nans -ffloat-store -I../../.. -O1 -o '+icp.exe'
-
-run:
-	time ./+sub.exe . . ; time ./+gsub.exe . .
 
 plot: icp
 	./+icp.exe 01.pbm 02.pbm > log
@@ -46,8 +51,9 @@ check: clean
 	g++ icp_lazy.cc -I../../.. -O3 -ffloat-store -o './bin/+icp_lazy_3f'
 	g++ icp_lazy.cc -I../../.. -O3 -DNDEBUG -o './bin/+icp_lazy_3D'
 	g++ icp_lazy.cc -I../../.. -O3 -DNDEBUG -ffloat-store -o './bin/+icp_lazy_3df'
+	./icp_check.sh
 
 clean:
-	rm -- ./bin/*
+	rm -f -- ./bin/*
 
 .PHONY: check
