@@ -29,7 +29,7 @@
 # define MLN_CORE_P_IMAGE2D_PITER_HH
 
 /// \file mln/core/p_image2d_piter.hh
-/// \brief Definition of point iterators on mln::p_array.
+/// \brief Definition of point iterators on mln::p_image2d.
 
 # include <mln/core/p_image2d.hh>
 # include <mln/core/box_piter.hh>

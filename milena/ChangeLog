@@ -1,5 +1,11 @@
 2008-04-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix documentation and guards in p_image2d.
+	* mln/core/p_image2d.hh: Fix documentation and guards.
+	* mln/core/p_image2d_piter.hh: Fix documentation.
+
+2008-04-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	A fast point2d set : p_image2d.
 
 	* mln/core/p_image2d.hh: The new set.

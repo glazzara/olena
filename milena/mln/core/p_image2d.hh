@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_SET_HH
-# define MLN_CORE_P_SET_HH
+#ifndef MLN_CORE_P_IMAGE2D_HH
+# define MLN_CORE_P_IMAGE2D_HH
 
 
-/*! \file mln/core/p_set.hh
+/*! \file mln/core/p_image2d.hh
  *
- * \brief Definition of a point set class based on std::set.
+ * \brief Definition of a point set class based on a image of booleans.
  */
 
 # include <mln/core/internal/point_set_base.hh>
@@ -206,4 +206,4 @@ namespace mln
 # include <mln/core/p_image2d_piter.hh>
 
 
-#endif // ! MLN_CORE_P_SET_HH
+#endif // ! MLN_CORE_P_IMAGE2D_HH
