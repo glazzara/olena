@@ -1,3 +1,14 @@
+2008-04-03  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix a bug in basic_najman.
+
+	* sandbox/abraham/morpho/basic_najman.hh:
+	(mln::morpho::basic_najman<I,N>::BuildComponentTree):
+	Fix a bug, the algorithm is still bugged but now gives a nice
+	tree.
+	* sandbox/abraham/morpho/test.cc: Add picture inversion for test
+	purpose.
+
 2008-04-03  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Add icp_subsampled.

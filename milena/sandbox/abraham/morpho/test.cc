@@ -25,16 +25,24 @@ int main ()
   image2d<int_u8> input;
   io::pgm::load(input, "./images/test_component_tree.pgm");
 
+
+  for(unsigned int i = 0; i < input.domain().len(0); ++i)
+  for(unsigned int j = 0; j < input.domain().len(1); ++j)
+    input.at(i, j) = 255 - input.at(i, j);
+
+
   morpho::basic_najman< image2d<int_u8>, neighb2d> n(input, c8());
   n.image_output(input);
   n.go();
   n.image_output(n.Par_tree);
   n.print_tree(n.Root);
-  n.image_output(n.par);
+  n.image_output(n.Par_node);
   std::cout << " --------------------------- " << std::endl;
   n.image_output(n.Rnk_tree);
   std::cout << " --------------------------- " << std::endl;
   n.image_output(n.Rnk_node);
+  std::cout << " --------------------------- " << std::endl;
+  n.print_sup_tree();
 
   // image2d<int_u8> output = morpho::topo_wst(input, c4());
   //  io::pgm::save(output, "out.pgm");

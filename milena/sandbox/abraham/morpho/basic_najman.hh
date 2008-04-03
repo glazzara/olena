@@ -37,13 +37,13 @@ namespace mln
 
       const Image<I>& ima;
       const Neighborhood<N>& nbh;
-      mln_ch_value(I, psite) par;
+      mln_ch_value(I, psite) Par_node;
 
       mln_ch_value(I, psite) Par_tree;
       // Par_node is handled by par (from ap_maxtree)
       mln_ch_value(I, int) Rnk_tree;
       mln_ch_value(I, int) Rnk_node;
-      mln_ch_value(I, psite) lowestNode;
+      mln_ch_value(I, psite) subtreeRoot;
       mln_ch_value(I, node) nodes;
       mln_ch_value(I, bool) isproc;
       psite Root;
@@ -54,11 +54,11 @@ namespace mln
 		   const Neighborhood<N>& n)
 	: ima(i),
 	  nbh(n),
-	  par(exact(i).domain(), exact(i).border()),
+	  Par_node(exact(i).domain(), exact(i).border()),
 	  Par_tree(exact(i).domain(), exact(i).border()),
 	  Rnk_tree(exact(i).domain(), exact(i).border()),
 	  Rnk_node(exact(i).domain(), exact(i).border()),
-	  lowestNode(exact(i).domain(), exact(i).border()),
+	  subtreeRoot(exact(i).domain(), exact(i).border()),
 	  nodes(exact(i).domain(), exact(i).border()),
 	  isproc(exact(i).domain(), exact(i).border())
       {
@@ -73,7 +73,7 @@ namespace mln
 
       void MakeSet_node(psite x)
       {
-	par(x) = x; // was Par_node(x) = x;
+	Par_node(x) = x; // was Par_node(x) = x;
 	Rnk_node(x) = 0;
       }
 
@@ -91,29 +91,29 @@ namespace mln
 	y = memo;
       }
 
-      bool is_root(const psite& x) const
-      {
-	return par(x) == x;
-      }
+//       bool is_root(const psite& x) const
+//       {
+// 	return Par_node(x) == x;
+//       }
 
-      bool is_level_root(const psite& x) const
-      {
-	return is_root(x) || exact(ima)(par(x)) < exact(ima)(x);
-      }
+//       bool is_level_root(const psite& x) const
+//       {
+// 	return is_root(x) || exact(ima)(Par_node(x)) < exact(ima)(x);
+//       }
 
-      psite find_level_root(const psite& x)
-      {
-	if (is_level_root(x))
-	  return x;
-	else
-	  return par(x) = find_level_root(par(x));
-      }
+//       psite find_level_root(const psite& x)
+//       {
+// 	if (is_level_root(x))
+// 	  return x;
+// 	else
+// 	  return Par_node(x) = find_level_root(Par_node(x));
+//       }
 
       psite Find_node(psite x)
       {
-	if (par(x) != x)
-	  par(x) = Find_node(par(x));
-	return par(x);
+	if (Par_node(x) != x)
+	  Par_node(x) = Find_node(Par_node(x));
+	return Par_node(x);
       }
 
       void go()
@@ -135,8 +135,8 @@ namespace mln
 	    psite p = S[ip];
 	    MakeSet_node(p);
 	    MakeSet_tree(p);
-	    // 	      if (lowestNode.hold(p))
-	    lowestNode(p) = p;
+	    // 	      if (subtreeRoot.hold(p))
+	    subtreeRoot(p) = p;
 	    // 	      if (nodes.hold(p))
 	    nodes(p) = MakeNode(exact(ima)(p));
 	  }
@@ -148,22 +148,32 @@ namespace mln
 	for (int ip = 0; ip < int(S.npoints()); ++ip)
 	  {
 	    psite p = S[ip];
-	    isproc(p) = true;
+	    //	    isproc(p) = true;
 
 	    psite curTree = Find_tree(p);
-	    psite curNode = Find_node(lowestNode(curTree));
+	    psite curNode = Find_node(subtreeRoot(curTree));
 
 	    mln_niter(N) q(nbh, p);
 
 	    for_all(q)
-	      if (exact(ima).has(q) and isproc(q) and exact(ima)(q) >= exact(ima)(p)) // f[q] >= f[p] parce qu'on prend l'ordre de l'histogramme
+	      if (exact(ima).has(q) and isproc(q) and exact(ima)(q) <= exact(ima)(p))
 		{
 		  psite adjTree = Find_tree(q);
-		  psite adjNode = Find_node(lowestNode(adjTree));
+		  psite adjNode = Find_node(subtreeRoot(adjTree));
 		  if (curNode != adjNode)
 		    {
+		      std::cout << "curNode != adjNode; " << nodes(curNode).level << " vs. " << nodes(adjNode).level << std::endl;
 		      if (nodes(curNode).level == nodes(adjNode).level)
-			curNode = MergeNode(adjNode, curNode);
+			{
+			  // curNode = MergeNode(adjNode, curNode);
+			  psite tmpNode = MergeNode(adjNode, curNode);
+			  /*if (tmpNode == curNode)
+			    nodes(curNode).addChildren(nodes(adjNode));
+			  else
+			    nodes(adjNode).addChildren(nodes(curNode));
+			    nodes(adjNode) = nodes(curNode);*/
+			  curNode = tmpNode;
+			}
 		      else
 			{
 			  // we have nodes[curNode].level < nodes[adjNode].level
@@ -172,12 +182,16 @@ namespace mln
 			  nodes(curNode).area += nodes(adjNode).area;
 			  nodes(curNode).highest += nodes(adjNode).highest;
 			}
+		      // curTree = Link_tree(adjTree, curTree);
+		      // subtreeRoot(curTree) = curNode;
+
 		    }
 		  curTree = Link_tree(adjTree, curTree);
-		  lowestNode(curTree) = curNode;
+		  subtreeRoot(curTree) = curNode;
 		}
+	    isproc(p) = true;
 	  }
-	Root = lowestNode(Find_tree(Find_node(psite(0, 0))));
+	Root = subtreeRoot(Find_tree(Find_node(psite(0, 0))));
 	// Pour garder une map de correspondance point <-> local_root
 	//            for (int ip = 0; ip < int(S.size()); ++ip)
 	//              {
@@ -185,9 +199,10 @@ namespace mln
 	// 	       M(p) = Find_node(p);
 	// 	     }
 
-	mln_piter(I) r(par.domain());
+	mln_piter(I) r(Par_node.domain());
 	for_all(r)
-	  par(r) = Find_node(r);
+	  Par_node(r) = Find_node(r);
+
       }
 
 
@@ -228,7 +243,7 @@ namespace mln
 	else
 	  if (Rnk_node(x) == Rnk_node(y))
 	    Rnk_node(y) += 1;
-	par(x) = y; // was Par_node(x) = y;
+	Par_node(x) = y; // was Par_node(x) = y;
 	return y;
       }
 
@@ -260,7 +275,7 @@ namespace mln
       void print_tree(psite p)
       {
 	node& n = nodes(p);
-	std::cout << "psite " << p << "=" << (p.row() * exact(lowestNode).domain().len(1) + p.col()) << " : ";
+	std::cout << "psite " << p << "=" << (p.row() * exact(subtreeRoot).domain().len(1) + p.col()) << " : ";
 
 	typename p_array<mln_psite(I)>::fwd_piter it(n.children);
 	for (it.start();
@@ -268,7 +283,7 @@ namespace mln
 	     it.next())
 	  {
 	    psite q = it.to_psite();
-	    std::cout << q << "=" << (q.row() * lowestNode.domain().len(2) + q.col()) << " ";
+	    std::cout << q << "=" << (q.row() * subtreeRoot.domain().len(1) + q.col()) << " ";
 	  }
 	std::cout << std::endl;
 
@@ -278,6 +293,20 @@ namespace mln
 	  {
 	    print_tree(it.to_psite());
 	  }
+      }
+
+      void print_sup_tree()
+      {
+	psite max = psite(0, 0);
+
+	for(unsigned int i = 0; i < nodes.domain().len(0); ++i)
+	  for(unsigned int j = 0; j < nodes.domain().len(1); ++j)
+	    {
+	      if (nodes(psite(i, j)).area > nodes(max).area)
+		max = psite(i, j);
+	    }
+
+	print_tree(max);
       }
 
     }; // struct basic_najman
