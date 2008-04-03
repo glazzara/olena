@@ -17,12 +17,15 @@ run:
 	time ./+sub.exe . . ; time ./+gsub.exe . .
 
 
-
 icp:
 	g++ icp.cc -I../../.. -g -o '+icp_map.exe'
 
 icp++:
-	g++ icp.cc -I../../.. -O3 -DNDEBUG -o '+icp_map.exe'
+	g++ icp.cc -I../../.. -O3 -DNDEBUG -pg  -o '+icp_map.exe'
+
+icp_lazy++:
+	g++ icp_lazy.cc -I../../.. -O3 -DNDEBUG -pg  -o '+icp_lazy.exe'
+
 
 icp_sub:
 	g++ icp_subsampled.cc -I../../.. -O3 -DNDEBUG -g -o '+icp_sub.exe'
@@ -42,7 +45,7 @@ check: clean
 	g++ icp.cc -I../../.. -O3 -o './bin/+icp_3'
 	g++ icp.cc -I../../.. -O3 -ffloat-store -o './bin/+icp_3f'
 	g++ icp.cc -I../../.. -O3 -DNDEBUG -o './bin/+icp_3D'
-	g++ icp.cc -I../../.. -O3 -DNDEBUG -ffloat-store -o './bin/+icp_3df'
+	g++ icp.cc -I../../.. -O3 -DNDEBUG -ffloat-store -o './bin/+icp_3Df'
 	g++ icp_lazy.cc -I../../.. -O0 -o './bin/+icp_lazy_0'
 	g++ icp_lazy.cc -I../../.. -O0 -ffloat-store -o './bin/+icp_lazy_0f'
 	g++ icp_lazy.cc -I../../.. -O0 -DNDEBUG -o './bin/+icp_lazy_0D'
@@ -50,7 +53,7 @@ check: clean
 	g++ icp_lazy.cc -I../../.. -O3 -o './bin/+icp_lazy_3'
 	g++ icp_lazy.cc -I../../.. -O3 -ffloat-store -o './bin/+icp_lazy_3f'
 	g++ icp_lazy.cc -I../../.. -O3 -DNDEBUG -o './bin/+icp_lazy_3D'
-	g++ icp_lazy.cc -I../../.. -O3 -DNDEBUG -ffloat-store -o './bin/+icp_lazy_3df'
+	g++ icp_lazy.cc -I../../.. -O3 -DNDEBUG -ffloat-store -o './bin/+icp_lazy_3Df'
 	./icp_check.sh
 
 clean:

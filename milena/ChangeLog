@@ -1,3 +1,11 @@
+2008-04-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandboc : ICP: Update check script (gprof).
+
+	* sandbox/jardonnet/test/bench: Add info.
+	* sandbox/jardonnet/test/icp_check.sh: Update testes.
+	* sandbox/jardonnet/test/Makefile: Update rule for gprof.
+
 2008-04-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix documentation and guards in p_image2d.

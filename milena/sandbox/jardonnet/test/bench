@@ -29,4 +29,6 @@
  +icp_3f   	 +icp_lazy_3f   
     0m6.468s 	    0m1.212s 
  	
- 	
+
+gprof icp_map  1  call chamfer 0.33s
+      icp_lazy 16 call memo    0.21
