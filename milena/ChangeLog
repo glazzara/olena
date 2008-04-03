@@ -1,3 +1,11 @@
+2008-04-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	A fast point2d set : p_image2d.
+
+	* mln/core/p_image2d.hh: The new set.
+	* mln/core/p_image2d_piter.hh: To iter on it.
+	* tests/core/p_image2d.cc: some small tests.
+
 2008-04-03  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Fix a bug in basic_najman.
