@@ -10,42 +10,95 @@
 namespace mln
 {
 
-  
-  //FIXME: Shall we use something *really* lazy
-  template <typename I>
-  struct lazy_map
+  template <typename P>
+  struct c_point
   {
-    template <typename P>
-    lazy_map(const box_<P>& domain)
-      : map(domain), known(domain)
+    typedef P input;
+    typedef P result;
+    
+    c_point(const p_array<P>& X)
+      : X(X)
     { }
 
-    lazy_map(int nrows, int ncols, int bdr = 3)
-      : map(nrows, ncols, bdr), known(nrows,ncols,bdr)
+    result
+    //inline
+    operator () (const P& Ck)
+    {
+      algebra::vec<P::dim,float> Cki = Ck;
+      algebra::vec<P::dim,float> best_x = X[0];
+      float best_d = norm::l2(Cki - best_x);
+      for (size_t j = 1; j < X.npoints(); ++j)
+        {
+          algebra::vec<P::dim,float> Xj = X[j];
+          float d = norm::l2(Cki - Xj);
+          if (d < best_d)
+            {
+              best_d = d;
+              best_x = Xj;
+            }
+        }
+      return algebra::to_point<P>(best_x);
+    }
+
+    const box_<P> domain()
+    {
+      return X.bbox();
+    }
+    
+    const p_array<P>& X;
+  };
+  
+
+  // FIXME: Should be a morpher ?
+  // we could acces domain of a lazy map, iterator etc...
+  template < typename F>
+  struct lazy_image
+  { 
+    // Fun is potentially an image.
+    lazy_image(F& fun)
+      : value(fun.domain()), is_known(fun.domain()), functor(fun)
+    {
+    }
+
+    // FIXME: remove this constructor
+    lazy_image(const F& fun, int nrows, int ncols)
+      : value(nrows, ncols), is_known(nrows,ncols), functor(fun)
     { }
 
-    mln_ch_value(I, mln_point(I)) map;
-    mln_ch_value(I, bool)         known;
+    const mln_result(F)
+    //inline
+    operator() (const typename F::input& p)
+    {
+      if (is_known(p))
+        return value(p);
+      value(p) = functor(p);
+      return value(p);
+    }
+
+    //FIXME: 3d -> //mln_dim(ml_input(input))
+    image3d<mln_result(F)> value;
+    image3d<bool>          is_known;
+    F&               functor;
   };
 
 
-  // Point
+//   // Point
   
-  template <typename P>
-  P min(const P& a, const P& b)
-  {
-    if (a > b)
-      return b;
-    return a;
-  }
+//   template <typename P>
+//   P min(const P& a, const P& b)
+//   {
+//     if (a > b)
+//       return b;
+//     return a;
+//   }
 
-  template <typename P>
-  P max(const P& a, const P& b)
-  {
-    if (a < b)
-      return b;
-    return a;
-  }
+//   template <typename P>
+//   P max(const P& a, const P& b)
+//   {
+//     if (a < b)
+//       return b;
+//     return a;
+//   }
 
   
   // Box

@@ -89,8 +89,6 @@ namespace mln
         k = 0;
 
         do {
-          //std::cout << "step 2" << std::endl;
-
           //// step 2
           projection::memo(Ck, X, Xk, map);
 

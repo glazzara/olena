@@ -1,3 +1,20 @@
+2008-04-04  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Improve lazy_image implementation.
+
+	* sandbox/jardonnet/test/Makefile: Add rules for the lazy version.
+	* sandbox/jardonnet/registration/icp_map.hh:
+	  New dedicated version to map.
+
+	* sandbox/jardonnet/registration/icp_lazy.hh:
+	  Rename lazy_map as lazy_image. Improve implementation.
+
+	* sandbox/jardonnet/registration/icp.hh (icp_): Refactoring.
+	* sandbox/jardonnet/registration/projection.hh (memo):
+	   Make a projection using the new lazy_image interface.
+
+	* sandbox/jardonnet/registration/tools.hh (c_point): Add functor.
+
 2008-04-04  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	sandbox: Continue documentation about image types and properties.
