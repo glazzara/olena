@@ -1,3 +1,10 @@
+2008-04-04  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	sandbox: Continue documentation about image types and properties.
+
+	* sandbox/ballas/doc/image_tours.txt: update documentation.
+	* sandbox/ballas/doc/draft.txt: New file about the images properties.
+
 2008-04-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add bounding box computation to p_image2d.

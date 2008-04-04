@@ -7,36 +7,36 @@
 
 ** Two types of properties
 
-
-*** Declaratif mode: (find an exemple).
-
+*** Declarative mode: (find an example).
 
 Here, the properties must be define by the image type programmer. They cannot
 be deduce from the image associated type. So we can't find the properties by
-introspecting the image type (with introspection).
+introspecting the image type.
 
 
  declaration        definition     ..... I check
  -------          ----------
 |       |       /            \
 | Props | ----> | Image Type |
-|       |       \ ___________/
+|       |       \ __________ /
  -------
 
 
 
-*** Automatic mode: (find an exemple).
+*** Automatic mode: (find an example).
 
 Here, we get the image properties from the image associated type
 (site, pset...).
 
 
-  -----------
+   ----------
  /            \
- | Image Type |   automatic
-  and associated    ----->       Props
-  type
- \ ___________/
+ |            |
+ | Image Type |
+ |     and    |   automatic ----->       Props
+ |  associated|
+ |     type   |
+ \ __________ /
 
 
 
@@ -53,41 +53,34 @@ check that the operator input type respect the operator requirement.
   (ex: dilatation/erosion).
 TODO: detail the example.
 
-*** Implementation inherentence
+*** Implementation inheritance
 
 Milena image types are property driven.
 It is possible to get a special behavior (not describe in the Image Concept)
 depends on the property define in the property associated for the image
 type. So, it is possible to recover some piece of interface depending on the
 image type properties.
-For instance an Image2d has the bidimensional, and random value access.
+For instance an Image2d has the bi-dimensional, and random value access.
  properties. Hence, Image2d automatically provides a row/column access:
 V at(Point2d<T>::coord x, Point2d<T>::coord y).
 
 
-
-
 *** Difference between a property and its values
 
-*** Hierarchie of property (scalar/integer)
+*** Hierarchies of property (scalar/integer)
 
 ** Implementation of properties in Milena
 
-* Algorithm and Properties
 
-** Specialization
-
-** Static checking
-
-
-* Image Properties:
+* List of the image properties:
 
 ** global Properties:
+
   category: primary,
             { domain_morpher, value_morpher,  identity_morpher } < morpher
 
-  border:  none,
-           { stored, computed } < some
+  border: none,
+          { stored, computed } <some
 
   neighb: none,
           some
@@ -176,15 +169,44 @@ FIXME: find a good notation...
 
 ** Image nD
 
-Image on regular grid where grides nodes are points.
-To gain efficienty, Images nD have a virtual borders.
+Image on regular grid where grid nodes are points.
+To gain efficiency, Images nD have a virtual borders.
 All these image are templated by T, the image value type.
 
-*** Image1d<T>
+
+*** Common Associated type//properties between imageND
 
 **** Associated types:
 
 value = T
+
+**** Properties:
+
+--> global properties
+
+category = primary
+border = stored
+neighb: none
+data = raw
+io = read_write
+speed = fastest
+
+--> properties related to values
+
+// Depend on T FIXME, where the property are defined??
+kind =
+quant =
+value =
+
+--> properties related to the pset
+
+access = random
+size = regular // this a global property
+support = aligned
+
+*** Image1d<T>
+
+**** Associated types:
 
 site  = point1d
 psite = point1d == point_<tick,int>
@@ -192,42 +214,15 @@ pset = box1d
 
 **** Properties:
 
---> global properties
-
-category = primary
-border = stored
-neighb: none
-data = raw
-io = read_write
-speed = fastest
-
---> properties related to values
-
-// Depend on T FIXME, where the property are defined??
-kind =
-quant =
-value =
-
---> properties related to the pset
-
-access = random
 space = one_d
-size = regular
-support = aligned
+
 
 **** Specific interface:
   FIXME....
 
-
-
-
-
-
 *** Image2d<T>
 
 **** Associated types:
-
-value = T
 
 site  = point2d
 psite = point2d == point_<square,int>
@@ -235,33 +230,11 @@ pset = box2d
 
 **** Properties:
 
---> global properties
-
-category = primary
-border = stored
-neighb: none
-data = raw
-io = read_write
-speed = fastest
-
---> properties related to values
-
-// Depend on T FIXME, where the property are defined??
-kind =
-quant =
-value =
-
---> properties related to the pset
-
-access = random
 space = two_d
-size = regular
-support = aligned
+
 
 **** Specific interface:
   FIXME....
-
-
 
 *** Image3d<T>
 
@@ -269,38 +242,12 @@ support = aligned
 
 value = T
 
-site  = point3d
-psite = point3d == point_<cube,int>
-pset = box3d
-
 **** Properties:
 
---> global properties
-
-category = primary
-border = stored
-neighb: none
-data = raw
-io = read_write
-speed = fastest
-
---> properties related to values
-
-// Depend on T FIXME, where the property are defined??
-kind =
-quant =
-value =
-
---> properties related to the pset
-
-access = random
 space = three_d
-size = regular
-support = aligned
 
 **** Specific interface:
   FIXME....
-
 
 
 
@@ -355,32 +302,44 @@ lvalue just for image with stored//read_only data?
 **** Specific interface:
   FIXME....
 
-
-
-
 ** Run based Encoded image
 
-All the run based encoded images have their definition domains encoded by ...
-runs. These images types are not morpher types since these do not lie on
-another image type.
-A run is a "continuous" (note this is wrong, cf graph index) set of sites.
-It is define by a site start, and a length.
-All the run based encoded image are templated by P, T where P is a site type
-and T a value type.
-
-
+All the run based encoded images have their definition domains encoded by runs.
+These images types are not morpher types since these do not lie on another
+image type.A run is a "continuous" (note this is wrong, cf graph index) set of
+sites.It is define by a site start, and a length. All the run based encoded
+image are templated by P, T where P is a site type and T a value type.
 
 Note:
 type one shot (const)!!!
 Do we store the the null value in the rle encoding.
 (Do we compress all the images values, or only the image objects...)
 Is there any restriction on P and T?
-Can we compress all the image types or only the point wise image type
-(cf the on_the_same_line in the encode algorithm).
 
 How the properties are setted and to which values?
 
-Depend on the PointWise property ??
+
+*** Criteria needed by images to be encoded in runs
+
+Can we compress all the image types or only the piece wise image type
+(cf the on_the_same_line in the encode algorithm).
+
+Currently, *encode function just work with image based on a **Point** set.
+cf:
+for (unsigned n = 0; same_line && n < dim - 1; ++n)
+    same_line = (p1[n] == p2[n]);
+
+Problem generalization:
+  A p_run take a Site as a parameter.
+  a p_run must be able to be casted into the Site (actually, const Site).
+  The only information that we have in the p_run is a len (integer).
+  So we must be able to refind all the site in the run from the site start,
+and a addition with an integer.
+
+  How do we name this property?
+
+
+
 
 *** RLE Image
 
@@ -469,7 +428,6 @@ input image type.
 *** Domain morpher
 
 *** Value morpher
-
 
 *** Image_if
 
