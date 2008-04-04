@@ -1,3 +1,15 @@
+2008-04-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add bounding box computation to p_image2d.
+	* mln/core/p_image2d.hh:
+	(p_image2d<P>::box_<mln_point(P)>& bbox()): New, give the exact
+	boungind box.
+	(p_image2d<P>::insert(const p_image2d& set)): Rename as..
+	(p_image2d<P>::insert(const Point_Set<S>& set)): ...this, and update it
+	to be more generic.
+	(p_image2d<P>::remove(const p_image2d& set)): Rename as..
+	(p_image2d<P>::remove(const Point_Set<S>& set)): ...this, likewise.
+
 2008-04-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandboc : ICP: Update check script (gprof).
